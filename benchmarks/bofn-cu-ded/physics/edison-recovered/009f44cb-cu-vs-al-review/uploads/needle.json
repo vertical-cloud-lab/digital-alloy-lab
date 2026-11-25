@@ -1,0 +1,22 @@
+{
+ "aluminum (kappa = 1)": {
+  "value_at_optimum_check": 1.0006377447090455,
+  "optimum composition, random settings: share >= 60%": 0.08655,
+  "optimum composition, random settings: share > 0": 0.39052,
+  "random composition, optimum settings: share >= 60%": 0.66102,
+  "random composition, its best of 2,048 settings: share >= 60%": 0.839,
+  "random composition, its best of 2,048 settings: share > 0": 1.0
+ },
+ "copper (1, 1)": {
+  "value_at_optimum_check": 1.0000773421975475,
+  "optimum composition, random settings: share >= 60%": 0.027435,
+  "optimum composition, random settings: share > 0": 0.108045,
+  "random composition, optimum settings: share >= 60%": 0.053115,
+  "random composition, its best of 2,048 settings: share >= 60%": 0.30633333333333335,
+  "random composition, its best of 2,048 settings: share > 0": 0.6646666666666666,
+  "random designs passing immersion": 0.031975,
+  "random designs that would pass if deposited fully dense": 0.617395,
+  "random designs with rho_m >= 0.9": 0.0014275,
+  "immersion index lost per 0.1 of rho_m (gate scale 0.05)": 0.03
+ }
+}

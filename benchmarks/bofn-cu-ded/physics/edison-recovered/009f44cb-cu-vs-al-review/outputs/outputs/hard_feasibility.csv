@@ -1,0 +1,9 @@
+policy,seeds_with_new_demonstrated_pass,seeds_with_any_demonstrated_pass
+pkgfn,18,18
+eifn,17,17
+eifn_reuse,17,17
+ei,5,5
+random,12,16
+tiered,0,5
+tiered_ni,5,10
+tiered_ni_ref,10,13

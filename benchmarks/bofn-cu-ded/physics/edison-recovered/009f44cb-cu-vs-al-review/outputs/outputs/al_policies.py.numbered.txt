@@ -1,0 +1,415 @@
+1: """Sampling policies compared on the synthetic alloy network, all on equal $ budgets.
+2: 
+3: Every policy starts from the same data (CALPHAD on 32 compositions plus five
+4: fully evaluated random designs) and is scored the way Buathong et al. (2024)
+5: score them: the true objective of the design that maximizes the *network*
+6: posterior mean fitted to that policy's data ("recommended alloy"), plus the
+7: best objective among designs actually carried through tensile testing
+8: ("best validated alloy").
+9: """
+10: 
+11: from __future__ import annotations
+12: 
+13: import os
+14: import time
+15: 
+16: import torch
+17: 
+18: import bofn_alloy
+19: from bofn_alloy import (
+20:     COMP,
+21:     COSTS,
+22:     D,
+23:     IA,
+24:     IPV,
+25:     GROUPS,
+26:     LAMBDA,
+27:     SPEC,
+28:     AlloyTruth,
+29:     Data,
+30:     Lab,
+31:     Network,
+32:     TinyGP,
+33:     burden,
+34:     design_of_build,
+35:     gauss_hermite,
+36:     local_perturb,
+37:     normal_qmc,
+38:     sobol,
+39: )
+40: 
+41: N_CALPHAD0, N_FULL0 = 32, 5
+42: SCREEN_N, SCREEN_TOP, F_SAFE = 256, 4, 0.25
+43: NC = len(COMP)
+44: S_REC = 64
+45: S_ACQ = int(os.environ.get("BOFN_SACQ", 64))  # MC base samples inside pKGFN
+46: N_CAND = int(os.environ.get("BOFN_NCAND", 16))  # candidates per stage scored by pKGFN each iteration
+47: 
+48: 
+49: def initial_data(truth, seed):
+50:     d = Data()
+51:     lab = Lab(truth, d)
+52:     for c in sobol(N_CALPHAD0, NC, seed=1000 + seed):
+53:         lab.calphad(c)
+54:     g = torch.Generator().manual_seed(2000 + seed)
+55:     for x in torch.rand(N_FULL0, D, generator=g):
+56:         lab.full_eval(x)
+57:     d.spent = 0.0  # seed data is shared and sunk; budgets count new spend only
+58:     return d, lab
+59: 
+60: 
+61: def eps_for(m, S, seed):
+62:     g = torch.Generator().manual_seed(seed)
+63:     return {n: torch.randn(m, S, generator=g) for n in SPEC}
+64: 
+65: 
+66: def recommend(net: Network, d: Data, truth: AlloyTruth, it: int):
+67:     """True objective at argmax of the network posterior mean (paper's metric)."""
+68:     g = torch.Generator().manual_seed(77 + it)
+69:     pool = [sobol(1024, D, seed=it)]
+70:     if d.full:
+71:         pool.append(torch.stack([x for x, _ in d.full]))
+72:     if d.builds:
+73:         pool.append(torch.stack([design_of_build(d, j) for j in range(len(d.builds))]))
+74:     P = torch.cat(pool)
+75:     nu = net.mean(P, eps_for(P.shape[0], S_REC, 5))
+76:     for _ in range(2):
+77:         top = P[nu.topk(8).indices]
+78:         Q = local_perturb(top, 32, 0.04, g)
+79:         nq = net.mean(Q, eps_for(Q.shape[0], S_REC, 5))
+80:         P, nu = torch.cat([P, Q]), torch.cat([nu, nq])
+81:     xr = P[nu.argmax()]
+82:     return float(truth.objective(xr)), xr
+83: 
+84: 
+85: class Recorder:
+86:     def __init__(self, truth, d):
+87:         self.truth, self.d = truth, d
+88:         self.rows = []
+89: 
+90:     def __call__(self, net, it, action):
+91:         if os.environ.get("BOFN_NO_REC"):  # skip the (noisy, slow) paper-protocol recommender
+92:             rec, xr = float("nan"), torch.zeros(D)
+93:         else:
+94:             rec, xr = recommend(net, self.d, self.truth, it)
+95:         best = max(v for _, v in self.d.full) if self.d.full else float("nan")
+96:         # best printed alloy by the model (tensile-tested or not), scored by its true value
+97:         Xb = torch.stack([design_of_build(self.d, j) for j in range(len(self.d.builds))])
+98:         nub = net.mean(Xb, eps_for(Xb.shape[0], S_REC, 6))
+99:         printed = float(self.truth.objective(Xb[nub.argmax()]))
+100:         self.rows.append(
+101:             {"spent": self.d.spent, "rec": rec, "best_validated": best, "rec_printed": printed,
+102:              "action": action, "x_rec": [round(v, 4) for v in xr.tolist()]}
+103:         )
+104: 
+105: 
+106: def network_ei_pool(net, d, P, eps, best):
+107:     smp = net.samples(P, eps)
+108:     return (smp - best).clamp_min(0).mean(-1), smp.mean(-1)
+109: 
+110: 
+111: # --------------------------------------------------------------------------- full-evaluation policies
+112: def expected_improvement(gp, P, best):
+113:     m, v = gp.post_std(P)
+114:     mu, sd = m * gp.ys + gp.ym, v.sqrt() * gp.ys
+115:     z = (mu - best) / sd
+116:     nrm = torch.distributions.Normal(0.0, 1.0)
+117:     return sd * (z * nrm.cdf(z) + nrm.log_prob(z).exp())
+118: 
+119: 
+120: def calphad_shortlist(d, lab, seed):
+121:     """Stage 1 of tiered screening: simulate SCREEN_N compositions, keep the
+122:     SCREEN_TOP strongest that CALPHAD predicts crack-free (freezing-range index
+123:     below F_SAFE), net of the critical-mineral penalty."""
+124:     for c in sobol(SCREEN_N, NC, seed=4000 + seed)[: SCREEN_N - N_CALPHAD0]:
+125:         lab.calphad(c)
+126:     comps = torch.tensor([list(k) for k in d.calphad])
+127:     s = torch.tensor([v["s"] for v in d.calphad.values()])
+128:     f = torch.tensor([v["f"] for v in d.calphad.values()])
+129:     fom = s - LAMBDA * burden(torch.cat([comps, torch.zeros(len(comps), D - NC)], -1))
+130:     fom = torch.where(f <= F_SAFE, fom, torch.full_like(fom, -9.0))
+131:     return comps[fom.topk(SCREEN_TOP).indices]
+132: 
+133: 
+134: def run_full_policy(kind, truth, seed, budget):
+135:     d, lab = initial_data(truth, seed)
+136:     rec = Recorder(truth, d)
+137:     net = Network(d)
+138:     rec(net, 0, "init")
+139:     g = torch.Generator().manual_seed(3000 + seed)
+140:     it = 0
+141:     if kind.startswith("tiered"):
+142:         shortlist = calphad_shortlist(d, lab, seed)
+143:         net = Network(d)
+144:         it += 1
+145:         rec(net, it, "C-screen")
+146:     reuse = kind in ("tiered", "tiered_pu", "eifn_reuse")
+147:     cheapest = COSTS["L"] + COSTS["T"] if reuse else COSTS["A"] + COSTS["L"] + COSTS["T"] + COSTS["C"]
+148:     while d.spent + cheapest <= budget:
+149:         it += 1
+150:         X = torch.stack([x for x, _ in d.full])
+151:         y = torch.tensor([v for _, v in d.full])
+152:         if kind == "eifn_reuse":
+153:             # ablation: network EI per dollar over new designs and reprints of
+154:             # existing powders (partial evaluation without KG's stage choice)
+155:             best = float(y.max())
+156:             Pn = torch.cat([sobol(1024, D, seed=it + 50 * seed), local_perturb(X, 16, 0.05, g)])
+157:             pools, lots = [Pn], [-1] * Pn.shape[0]
+158:             costs = [torch.full((Pn.shape[0],), COSTS["C"] + COSTS["A"] + COSTS["L"] + COSTS["T"])]
+159:             for i, L in enumerate(d.lots):
+160:                 pv = sobol(64, 2, seed=it + 50 * seed + i)
+161:                 pools.append(torch.cat([L["c"].expand(64, NC), torch.full((64, 1), L["a"]), pv], -1))
+162:                 costs.append(torch.full((64,), COSTS["L"] + COSTS["T"]))
+163:                 lots += [i] * 64
+164:             P, cost = torch.cat(pools), torch.cat(costs)
+165:             ei, _ = network_ei_pool(net, d, P, eps_for(P.shape[0], 64, it), best)
+166:             score = ei / cost
+167:             score[cost > budget - d.spent] = -1.0
+168:             j = int(score.argmax())
+169:             if float(score[j]) < 0:  # nothing affordable (e.g. no lot to reuse and no room for a new pipeline)
+170:                 break
+171:             if lots[j] >= 0:
+172:                 lab.tensile(lab.print_(lots[j], P[j, IPV]))
+173:             else:
+174:                 lab.full_eval(P[j])
+175:             net = Network(d)
+176:             rec(net, it, "reuse" if lots[j] >= 0 else "full")
+177:             continue
+178:         if reuse:
+179:             # Stage 2, done the way a careful lab would: BO on the shortlist only,
+180:             # reusing each powder lot across LPBF trials ("tiered_pu": EI per dollar).
+181:             gp = TinyGP(X, y)
+182:             pools, costs, lots = [], [], []
+183:             for c in shortlist:
+184:                 for i, L in enumerate(d.lots):
+185:                     if torch.allclose(L["c"], c):
+186:                         pv = sobol(64, 2, seed=it + 50 * seed + i)
+187:                         pools.append(torch.cat([c.expand(64, NC), torch.full((64, 1), L["a"]), pv], -1))
+188:                         costs.append(torch.full((64,), COSTS["L"] + COSTS["T"]))
+189:                         lots += [i] * 64
+190:                 apv = sobol(128, 3, seed=it + 50 * seed)
+191:                 pools.append(torch.cat([c.expand(128, NC), apv], -1))
+192:                 costs.append(torch.full((128,), COSTS["A"] + COSTS["L"] + COSTS["T"]))
+193:                 lots += [-1] * 128
+194:             P, cost = torch.cat(pools), torch.cat(costs)
+195:             score = expected_improvement(gp, P, y.max()) / (cost if kind == "tiered_pu" else 1.0)
+196:             score[cost > budget - d.spent] = -1.0
+197:             j = int(score.argmax())
+198:             if float(score[j]) < 0:  # only new $4,200 pipelines left and they do not fit
+199:                 break
+200:             if lots[j] >= 0:
+201:                 lab.tensile(lab.print_(lots[j], P[j, IPV]))
+202:             else:
+203:                 lab.full_eval(P[j])
+204:             net = Network(d)
+205:             rec(net, it, "reuse" if lots[j] >= 0 else "full")
+206:             continue
+207:         if kind == "random":
+208:             x = torch.rand(D, generator=g)
+209:         elif kind in ("ei", "tiered_naive"):
+210:             gp = TinyGP(X, y)
+211:             if kind == "ei":
+212:                 P = torch.cat([sobol(2048, D, seed=it + 50 * seed), local_perturb(X[y.topk(min(5, len(y))).indices], 64, 0.05, g)])
+213:             else:
+214:                 apv = sobol(256, 3, seed=it + 50 * seed)
+215:                 P = torch.cat([torch.cat([c.expand(256, NC), apv], -1) for c in shortlist])
+216:             x = P[expected_improvement(gp, P, y.max()).argmax()]
+217:         elif kind == "eifn":
+218:             best = float(y.max())
+219:             P = torch.cat([sobol(1024, D, seed=it + 50 * seed), local_perturb(X, 16, 0.05, g)])
+220:             ei, _ = network_ei_pool(net, d, P, eps_for(P.shape[0], 64, it), best)
+221:             Q = local_perturb(P[ei.topk(8).indices], 32, 0.03, g)
+222:             eq, _ = network_ei_pool(net, d, Q, eps_for(Q.shape[0], 64, it), best)
+223:             P, ei = torch.cat([P, Q]), torch.cat([ei, eq])
+224:             x = P[ei.argmax()]
+225:         else:
+226:             raise KeyError(kind)
+227:         lab.full_eval(x)
+228:         net = Network(d)
+229:         rec(net, it, "full")
+230:     return rec.rows, d
+231: 
+232: 
+233: # --------------------------------------------------------------------------- pKGFN
+234: def run_pkgfn(truth, seed, budget, verbose=False, lookahead=False, free_comp=False):
+235:     """pKGFN; with lookahead=True, new powders are also valued by what printing
+236:     them would reveal (atomize + print as one $4,000 move, q plugged in at its
+237:     posterior mean), which one-step KG otherwise cannot see."""
+238:     d, lab = initial_data(truth, seed)
+239:     rec = Recorder(truth, d)
+240:     net = Network(d)
+241:     rec(net, 0, "init")
+242:     g = torch.Generator().manual_seed(5000 + seed)
+243:     gh_t, gh_w = gauss_hermite(10)
+244:     w1 = gh_t.unsqueeze(-1)
+245:     # 3-output CALPHAD fantasy: 2-point Gauss-Hermite product rule
+246:     pm = torch.tensor([-1.0, 1.0])
+247:     w3 = torch.cartesian_prod(pm, pm, pm)
+248:     ww3 = torch.full((8,), 1 / 8)
+249:     it = 0
+250:     min_cost = min(COSTS.values())
+251:     while d.spent + min_cost <= budget:
+252:         it += 1
+253:         t0 = time.time()
+254:         left = budget - d.spent
+255:         # ---- pool and anchoring set
+256:         Xv = torch.stack([x for x, _ in d.full])
+257:         P = torch.cat([sobol(512, D, seed=it + 100 * seed), local_perturb(Xv, 8, 0.05, g)])
+258:         epsP = eps_for(P.shape[0], S_ACQ, 10_000 + it)
+259:         smp = net.samples(P, epsP)
+260:         nuP = smp.mean(-1)
+261:         inc = nuP.max()
+262:         Q = local_perturb(P[nuP.topk(8).indices], 24, 0.03, g)
+263:         nuQ = net.mean(Q, eps_for(Q.shape[0], S_ACQ, 20_000 + it))
+264:         P, nuP = torch.cat([P, Q]), torch.cat([nuP, nuQ])
+265:         smpP = net.samples(P, eps_for(P.shape[0], S_ACQ, 30_000 + it))
+266:         inc = smpP.mean(-1).max()
+267:         eiP = (smpP - inc).clamp_min(0).mean(-1)
+268:         anchors = [P[nuP.topk(32).indices], P[eiP.topk(16).indices]]
+269:         cands = {}
+270:         # ---- CALPHAD candidates: compositions of promising designs, plus space filling
+271:         cx = torch.cat([P[eiP.topk(N_CAND - 4).indices], P[nuP.topk(4).indices]])
+272:         cx = torch.cat([cx, torch.cat([sobol(4, NC, seed=it + 7 * seed), cx[:4, NC:]], -1)])
+273:         cands["C"] = (cx[:, COMP], cx)
+274:         ei_of = {"C": eiP.topk(N_CAND - 4).values.tolist() + [0.0] * 8}
+275:         # ---- atomization candidates: simulated compositions, best (a, P, v) for each
+276:         comps = torch.tensor([list(k) for k in d.calphad])
+277:         gvals = torch.tensor([v["g"] for v in d.calphad.values()])
+278:         apv = sobol(48, 3, seed=it + 11 * seed)
+279:         PA = torch.cat([comps.unsqueeze(1).expand(-1, 48, -1), apv.unsqueeze(0).expand(len(comps), -1, -1)], -1)
+280:         sA = net.samples(PA.reshape(-1, D), eps_for(PA.shape[0] * 48, S_ACQ, 40_000 + it))
+281:         eiA = (sA - inc).clamp_min(0).mean(-1).reshape(len(comps), 48)
+282:         best_apv = eiA.argmax(1)
+283:         score = eiA.max(1).values
+284:         keep = score.topk(min(N_CAND, len(comps))).indices
+285:         xa = PA[keep, best_apv[keep]]
+286:         za = torch.stack([xa[:, IA], gvals[keep]], -1)
+287:         fa = torch.tensor([v["f"] for v in d.calphad.values()])[keep]
+288:         ga, sa_ = gvals[keep], score[keep]
+289:         if free_comp:
+290:             # also allow alloys never simulated: CALPHAD runs automatically
+291:             # before melting ($10), and its outputs enter KG at their GP means
+292:             xn = torch.cat([P[eiP.topk(N_CAND).indices], P[nuP.topk(4).indices]])
+293: 
+294:             def gmean(n, X):
+295:                 m_, _ = net.gp[n].post_std(X[:, COMP])
+296:                 return m_ * net.gp[n].ys + net.gp[n].ym
+297: 
+298:             xa = torch.cat([xa, xn])
+299:             fa = torch.cat([fa, gmean("f", xn)])
+300:             ga = torch.cat([ga, gmean("g", xn)])
+301:             sa_ = torch.cat([sa_, torch.cat([eiP.topk(N_CAND).values, eiP[nuP.topk(4).indices]])])
+302:             za = torch.stack([xa[:, IA], ga], -1)
+303:         cands["A"] = (za, xa)
+304:         ei_of["A"] = sa_.tolist()
+305:         if lookahead:
+306:             mq, _ = net.gp["q"].post_std(za)
+307:             qhat = mq * net.gp["q"].ys + net.gp["q"].ym
+308:             z_virt = torch.cat([xa[:, IPV], fa.unsqueeze(-1), ga.unsqueeze(-1), qhat.unsqueeze(-1)], -1)
+309:         # ---- LPBF candidates: existing powder lots, promising (P, v) for each
+310:         if d.lots:
+311:             pv = sobol(32, 2, seed=it + 13 * seed)
+312:             rows, xs = [], []
+313:             for i, L in enumerate(d.lots):
+314:                 cal = lab.calphad(L["c"])
+315:                 xs.append(torch.cat([L["c"].expand(32, NC), torch.full((32, 1), L["a"]), pv], -1))
+316:                 rows.append(torch.cat([pv, torch.tensor([[cal["f"], cal["g"], L["q"]]]).expand(32, 3)], -1))
+317:             XL, ZL = torch.cat(xs), torch.cat(rows)
+318:             sL = net.samples(XL, eps_for(XL.shape[0], S_ACQ, 50_000 + it))
+319:             eiL = (sL - inc).clamp_min(0).mean(-1) + 1e-9 * sL.mean(-1)
+320:             keep = eiL.topk(min(N_CAND, XL.shape[0])).indices
+321:             cands["L"] = (ZL[keep], XL[keep])
+322:             ei_of["L"] = eiL[keep].tolist()
+323:         # ---- tensile candidates: untested builds
+324:         untested = [j for j, B in enumerate(d.builds) if not B["tested"]]
+325:         if untested:
+326:             ZT, XT = [], []
+327:             for j in untested:
+328:                 B = d.builds[j]
+329:                 cal = lab.calphad(d.lots[B["lot"]]["c"])
+330:                 ZT.append(torch.tensor([cal["s"], B["rho"]]))
+331:                 XT.append(design_of_build(d, j))
+332:             cands["T"] = (torch.stack(ZT), torch.stack(XT))
+333:             sT = net.samples(cands["T"][1], eps_for(len(untested), S_ACQ, 55_000 + it))
+334:             ei_of["T"] = (sT - inc).clamp_min(0).mean(-1).tolist()
+335:         # ---- shared inner-max set (anchored on the incumbent) and CRN base samples
+336:         Xi = torch.cat(anchors + [v[1] for v in cands.values()])
+337:         eps = eps_for(Xi.shape[0], S_ACQ, 60_000 + it)
+338:         best = (None, -1.0, None)
+339:         kg_log = {}
+340: 
+341:         def cost_of(grp, Xz):
+342:             """Per-candidate cost; a never-simulated alloy also pays its $10 CALPHAD call."""
+343:             c = torch.full((Xz.shape[0],), COSTS[grp])
+344:             if grp == "A":
+345:                 c += torch.tensor([COSTS["C"] if tuple(round(float(v), 6) for v in x[COMP]) not in d.calphad else 0.0 for x in Xz])
+346:             return c
+347: 
+348:         if lookahead:
+349:             cv = cost_of("A", xa) + COSTS["L"]
+350:             kv = net.kg("L", z_virt, Xi, eps, w1, gh_w).clamp_min(0) / cv
+351:             kv[cv > left] = -1.0
+352:             jv = int(kv.argmax())
+353:             if float(kv[jv]) >= 0:
+354:                 kg_log["A+L"] = float(kv[jv]) * float(cv[jv])
+355:                 best = ("A", float(kv[jv]), jv)
+356:         for grp, (Z, Xz) in cands.items():
+357:             cv = cost_of(grp, Xz)
+358:             if float(cv.min()) > left:
+359:                 continue
+360:             w, ww = (w3, ww3) if grp == "C" else (w1, gh_w)
+361:             kg = net.kg(grp, Z, Xi, eps, w, ww).clamp_min(0)
+362:             ratio = kg / cv
+363:             ratio[cv > left] = -1.0
+364:             j = int(ratio.argmax())
+365:             kg_log[grp] = float(kg[j])
+366:             if float(ratio[j]) > best[1]:
+367:                 best = (grp, float(ratio[j]), j)
+368:         grp, ratio, j = best
+369:         if grp is None or ratio < 1e-10:
+370:             # KG is flat (no single result can move the incumbent on this
+371:             # discretization): fall back to network EI per dollar on the same
+372:             # candidates, as fast-pKGFN does to propose candidates
+373:             fb = [(e / float(c), k, i) for k in ("A", "L", "T") if k in cands for (i, e), c in zip(enumerate(ei_of.get(k, [])[: len(cands[k][0])]), cost_of(k, cands[k][1])) if float(c) <= left]
+374:             fb = [t for t in fb if t[0] > 0]
+375:             if not fb:
+376:                 break
+377:             _, grp, j = max(fb)
+378:             kg_log["fallback"] = grp
+379:         Z, Xz = cands[grp]
+380:         if grp == "C":
+381:             lab.calphad(Z[j])
+382:             changed = GROUPS["C"]
+383:         elif grp == "A":
+384:             new_alloy = tuple(round(float(v), 6) for v in Xz[j, COMP]) not in d.calphad
+385:             lab.atomize(Xz[j, COMP], Xz[j, IA])
+386:             changed = (GROUPS["C"] if new_alloy else []) + ["q"]
+387:         elif grp == "L":
+388:             # map the chosen design back to its lot
+389:             xj = Xz[j]
+390:             lot = next(i for i, L in enumerate(d.lots) if torch.allclose(L["c"], xj[COMP]) and abs(L["a"] - float(xj[IA])) < 1e-9)
+391:             lab.print_(lot, xj[IPV])
+392:             changed = ["rho"]
+393:         else:
+394:             lab.tensile(untested[j])
+395:             changed = ["U"]
+396:         net.refit(d, changed)
+397:         rec(net, it, grp)
+398:         rec.rows[-1]["fallback"] = "fallback" in kg_log  # True when KG was flat and EI per dollar chose the purchase
+399:         if verbose:
+400:             r = rec.rows[-1]
+401:             print(f"it {it:3d} {grp} spent ${d.spent:8.0f} rec {r['rec']:.3f} best_val {r['best_validated']:.3f} KG {kg_log} {time.time() - t0:.1f}s", flush=True)
+402:     return rec.rows, d
+403: 
+404: 
+405: def run(kind, kappa, seed, budget):
+406:     truth = AlloyTruth(kappa)
+407:     torch.manual_seed(seed)
+408:     bofn_alloy.FIT_LOG.update(calls=0, failures=0)
+409:     if kind in ("pkgfn", "pkgfn_la", "pkgfn_free"):
+410:         rows, d = run_pkgfn(truth, seed, budget, lookahead=kind != "pkgfn", free_comp=kind == "pkgfn_free")
+411:     else:
+412:         rows, d = run_full_policy(kind, truth, seed, budget)
+413:     counts = {grp: sum(1 for g, _ in d.log if g == grp) for grp in COSTS}
+414:     settings = {"S_ACQ": S_ACQ, "N_CAND": N_CAND, "S_REC": S_REC}
+415:     return {"kind": kind, "kappa": kappa, "seed": seed, "budget": budget, "rows": rows, "counts": counts, "settings": settings, "gp_fits": dict(bofn_alloy.FIT_LOG)}

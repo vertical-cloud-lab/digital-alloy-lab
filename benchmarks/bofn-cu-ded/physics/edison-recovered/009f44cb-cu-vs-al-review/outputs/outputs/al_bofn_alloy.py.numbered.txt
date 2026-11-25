@@ -1,0 +1,346 @@
+1: """Cost-aware Bayesian optimization of a synthetic alloy function network.
+2: 
+3: Preliminary benchmark for the MS&T26 talk (issue 83): does choosing *which
+4: stage to run next* (pKGFN, Buathong et al. ICML 2024) beat tiered screening
+5: and full-pipeline BO when stages cost $10 to $2,500 each?
+6: 
+7: Design vector x (all scaled to [0, 1]):
+8:     x0 c1  main solute (Zn+Mg)        x4 a  ultrasonic atomization setting
+9:     x1 c2  secondary solute (Cu)      x5 P  laser power
+10:     x2 c3  Zr (grain refiner)         x6 v  scan speed
+11:     x3 c4  Sc (refiner + strengthener, most critical)
+12: 
+13: Function network (one GP per node, outputs feed children):
+14:     CALPHAD   (c)             -> s (strengthening phase), f (freezing range), g (primary nucleant)
+15:     Atomize   (a, g)          -> q (powder quality)
+16:     LPBF      (P, v, f, g, q) -> rho (printability / dense, crack-free fraction)
+17:     Tensile   (s, rho)        -> U (strength)
+18:     objective = U - LAMBDA * B(c), B = USGS-style critical-mineral burden (known)
+19: 
+20: The simulation-vs-experiment bias is `kappa`: how strongly the nucleant g
+21: suppresses hot cracking in LPBF. A CALPHAD-only screen (freezing range below a
+22: crack threshold) cannot see it, which is the documented behaviour of
+23: Zr-inoculated 7075/6061 (Martin et al., Nature 2017). kappa = 0 makes the
+24: screen's crack criterion exactly right.
+25: """
+26: 
+27: from __future__ import annotations
+28: 
+29: import math
+30: 
+31: import torch
+32: from botorch.fit import fit_gpytorch_mll
+33: from botorch.models import SingleTaskGP
+34: from gpytorch.mlls import ExactMarginalLogLikelihood
+35: 
+36: torch.set_default_dtype(torch.double)
+37: 
+38: D = 7
+39: COMP, IA, IPV = [0, 1, 2, 3], 4, [5, 6]
+40: COSTS = {"C": 10.0, "A": 1500.0, "L": 2500.0, "T": 200.0}
+41: FULL_COST = sum(COSTS.values())
+42: LAMBDA = 0.3
+43: 
+44: # node -> (design dims, parent nodes); order is topological
+45: SPEC = {
+46:     "s": (COMP, []),
+47:     "f": (COMP, []),
+48:     "g": (COMP, []),
+49:     "q": ([IA], ["g"]),
+50:     "rho": (IPV, ["f", "g", "q"]),
+51:     "U": ([], ["s", "rho"]),
+52: }
+53: ORDER = list(SPEC)
+54: GROUPS = {"C": ["s", "f", "g"], "A": ["q"], "L": ["rho"], "T": ["U"]}
+55: GROUP_OF = {n: g for g, ns in GROUPS.items() for n in ns}
+56: 
+57: 
+58: def burden(x):
+59:     """Critical-mineral burden of the composition (known, free to compute)."""
+60:     return 0.15 * x[..., 0] + 0.1 * x[..., 1] + 0.2 * x[..., 2] + 1.0 * x[..., 3]
+61: 
+62: 
+63: # --------------------------------------------------------------------------- truth
+64: class AlloyTruth:
+65:     def __init__(self, kappa: float = 1.0):
+66:         self.kappa = kappa
+67: 
+68:     def node(self, name, inp):
+69:         """Evaluate one node on its own input vector (design dims + parent outputs)."""
+70:         if name in ("s", "f", "g"):
+71:             c1, c2, c3, c4 = inp[..., 0], inp[..., 1], inp[..., 2], inp[..., 3]
+72:             if name == "s":
+73:                 return (1 - torch.exp(-(1.4 * c1 + 0.9 * c2 + 1.5 * c1 * c2)) + 0.1 * c3 + 0.3 * c4) / 1.2
+74:             if name == "f":
+75:                 return 0.65 * c1 + 0.55 * c2 - 0.25 * c1 * c2 + 0.05 * c3 + 0.03 * c4
+76:             return (0.6 * c3.clamp(min=0) ** 1.5 + 0.9 * c4.clamp(min=0) ** 1.2) * (1 + 0.2 * c1) / 1.8
+77:         if name == "q":
+78:             a, g = inp[..., 0], inp[..., 1]
+79:             a_opt = 0.3 + 0.45 * g
+80:             return torch.exp(-(((a - a_opt) / 0.28) ** 2)) * (0.9 + 0.1 * (1 - g))
+81:         if name == "rho":
+82:             P, v, f, g, q = inp[..., 0], inp[..., 1], inp[..., 2], inp[..., 3], inp[..., 4]
+83:             # dense parts lie along a constant-energy-density ridge in (P, v) whose
+84:             # offset grows with freezing range; very high power keyholes
+85:             u = P - v - (0.05 + 0.25 * f)
+86:             window = torch.exp(-((u / 0.2) ** 2)) * (1 - 0.35 * torch.sigmoid((P - 0.85) / 0.05))
+87:             g = g.clamp(min=0)
+88:             f_eff = f * (1 - self.kappa * 0.85 * g / (g + 0.12))
+89:             crack = torch.sigmoid((f_eff - 0.38) / 0.05)
+90:             return window * q.clamp(min=0) ** 0.3 * (1 - 0.75 * crack)
+91:         if name == "U":
+92:             s, rho = inp[..., 0], inp[..., 1]
+93:             return (0.25 + 0.75 * s) * rho
+94:         raise KeyError(name)
+95: 
+96:     def full(self, x):
+97:         """All node outputs for designs x [..., D]."""
+98:         out = {}
+99:         for n in ORDER:
+100:             dims, parents = SPEC[n]
+101:             inp = torch.cat([x[..., dims]] + [out[p].unsqueeze(-1) for p in parents], -1)
+102:             out[n] = self.node(n, inp)
+103:         return out
+104: 
+105:     def objective(self, x):
+106:         return self.full(x)["U"] - LAMBDA * burden(x)
+107: 
+108: 
+109: # --------------------------------------------------------------------------- GP
+110: FIT_LOG = {"calls": 0, "failures": 0}  # per process; policies.run() resets it and stores it in the run JSON
+111: 
+112: 
+113: class TinyGP:
+114:     """Exact GP with BoTorch-fitted RBF hyperparameters and cheap batched posteriors."""
+115: 
+116:     def __init__(self, X, y, noise=1e-6):
+117:         n, d = X.shape
+118:         self.X, self.y = X, y
+119:         self.ym = y.mean()
+120:         # node outputs live on [0, 1]: keep a physical prior scale even when early
+121:         # observations are all alike (e.g. every random print cracked)
+122:         self.ys = y.std().clamp_min(0.25) if n > 1 else torch.tensor(0.25)
+123:         Y = ((y - self.ym) / self.ys).unsqueeze(-1)
+124:         model = SingleTaskGP(X, Y, train_Yvar=torch.full_like(Y, noise), outcome_transform=None)
+125:         FIT_LOG["calls"] += 1
+126:         try:
+127:             fit_gpytorch_mll(ExactMarginalLogLikelihood(model.likelihood, model))
+128:         except Exception:  # keep the prior/partially fitted hyperparameters, but count it
+129:             FIT_LOG["failures"] += 1
+130:         self.ls = model.covar_module.lengthscale.detach().reshape(-1)
+131:         self.const = model.mean_module.constant.detach().reshape(())
+132:         self.noise = noise
+133:         self.Xs = X / self.ls
+134:         K = self._k(self.Xs, self.Xs) + (noise + 1e-8) * torch.eye(n)
+135:         L = torch.linalg.cholesky(K)
+136:         self.Linv = torch.linalg.solve_triangular(L, torch.eye(n), upper=False)
+137:         self.alpha = self.Linv.T @ (self.Linv @ (Y.squeeze(-1) - self.const))
+138: 
+139:     @staticmethod
+140:     def _k(A, B):
+141:         d2 = (A * A).sum(-1, keepdim=True) - 2 * A @ B.T + (B * B).sum(-1)
+142:         return torch.exp(-0.5 * d2.clamp_min(0))
+143: 
+144:     def post_std(self, U, return_V=False):
+145:         """Posterior mean/var in standardized units for raw inputs U [..., d]."""
+146:         Kx = self._k(U / self.ls, self.Xs)
+147:         mean = self.const + Kx @ self.alpha
+148:         V = Kx @ self.Linv.T
+149:         var = (1.0 - (V * V).sum(-1)).clamp_min(1e-12)
+150:         return (mean, var, V) if return_V else (mean, var)
+151: 
+152:     def cov_std(self, U, VU, Z, VZ):
+153:         """Posterior covariance between U [..., d] and candidates Z [b, d] -> [..., b]."""
+154:         return self._k(U / self.ls, Z / self.ls) - VU @ VZ.T
+155: 
+156: 
+157: def node_input(name, x, vals):
+158:     dims, parents = SPEC[name]
+159:     shape = torch.broadcast_shapes(*[vals[p].shape for p in parents]) if parents else x[..., 0].shape
+160:     xs = x[..., dims].expand(*shape, len(dims)) if dims else None
+161:     parts = ([xs] if xs is not None else []) + [vals[p].expand(shape).unsqueeze(-1) for p in parents]
+162:     return torch.cat(parts, -1)
+163: 
+164: 
+165: # --------------------------------------------------------------------------- data
+166: class Data:
+167:     """Per-node observations plus the physical inventory (powder lots, builds)."""
+168: 
+169:     def __init__(self):
+170:         self.obs = {n: ([], []) for n in ORDER}
+171:         self.calphad = {}  # composition tuple -> dict(s, f, g)
+172:         self.lots = []  # dict(c, a, q)
+173:         self.builds = []  # dict(lot, pv, rho, tested, U)
+174:         self.full = []  # (x, objective) fully validated designs
+175:         self.spent = 0.0
+176:         self.log = []  # (group, spent after)
+177: 
+178:     def add(self, name, inp, val):
+179:         self.obs[name][0].append(inp.detach().clone())
+180:         self.obs[name][1].append(float(val))
+181: 
+182:     def tensors(self, name):
+183:         X, y = self.obs[name]
+184:         return torch.stack(X), torch.tensor(y)
+185: 
+186: 
+187: class Lab:
+188:     """Runs stages against the truth, enforcing upstream requirements and costs."""
+189: 
+190:     def __init__(self, truth: AlloyTruth, data: Data):
+191:         self.t, self.d = truth, data
+192: 
+193:     def _pay(self, group):
+194:         self.d.spent += COSTS[group]
+195:         self.d.log.append((group, self.d.spent))
+196: 
+197:     def calphad(self, c):
+198:         key = tuple(round(float(v), 6) for v in c)
+199:         if key in self.d.calphad:
+200:             return self.d.calphad[key]
+201:         out = {n: float(self.t.node(n, c)) for n in GROUPS["C"]}
+202:         for n, v in out.items():
+203:             self.d.add(n, c, v)
+204:         self.d.calphad[key] = out
+205:         self._pay("C")
+206:         return out
+207: 
+208:     def atomize(self, c, a):
+209:         cal = self.calphad(c)
+210:         inp = torch.tensor([float(a), cal["g"]])  # node q input order: (a, g)
+211:         q = float(self.t.node("q", inp))
+212:         self.d.add("q", inp, q)
+213:         self.d.lots.append({"c": c.clone(), "a": float(a), "q": q})
+214:         self._pay("A")
+215:         return len(self.d.lots) - 1
+216: 
+217:     def print_(self, lot, pv):
+218:         L = self.d.lots[lot]
+219:         cal = self.calphad(L["c"])
+220:         pv = [float(v) for v in pv]
+221:         inp = torch.tensor(pv + [cal["f"], cal["g"], L["q"]])
+222:         rho = float(self.t.node("rho", inp))
+223:         self.d.add("rho", inp, rho)
+224:         self.d.builds.append({"lot": lot, "pv": pv, "rho": rho, "tested": False})
+225:         self._pay("L")
+226:         return len(self.d.builds) - 1
+227: 
+228:     def tensile(self, build):
+229:         B = self.d.builds[build]
+230:         L = self.d.lots[B["lot"]]
+231:         cal = self.calphad(L["c"])
+232:         inp = torch.tensor([cal["s"], B["rho"]])
+233:         U = float(self.t.node("U", inp))
+234:         self.d.add("U", inp, U)
+235:         B["tested"], B["U"] = True, U
+236:         x = torch.cat([L["c"], torch.tensor([L["a"]] + B["pv"])])
+237:         self.d.full.append((x, U - LAMBDA * float(burden(x))))
+238:         self._pay("T")
+239: 
+240:     def full_eval(self, x):
+241:         lot = self.atomize(x[COMP], x[IA])
+242:         b = self.print_(lot, x[IPV])
+243:         self.tensile(b)
+244: 
+245: 
+246: def design_of_build(d: Data, j):
+247:     B = d.builds[j]
+248:     L = d.lots[B["lot"]]
+249:     return torch.cat([L["c"], torch.tensor([L["a"]] + B["pv"])])
+250: 
+251: 
+252: # --------------------------------------------------------------------------- network model
+253: class Network:
+254:     def __init__(self, data: Data):
+255:         self.gp = {n: TinyGP(*data.tensors(n)) for n in ORDER}
+256: 
+257:     def refit(self, data: Data, names):
+258:         for n in names:
+259:             self.gp[n] = TinyGP(*data.tensors(n))
+260: 
+261:     def _sample(self, n, inp, eps):
+262:         gp = self.gp[n]
+263:         m, v = gp.post_std(inp)
+264:         return (m + v.sqrt() * eps) * gp.ys + gp.ym
+265: 
+266:     def samples(self, x, eps):
+267:         """Objective samples at designs x [m, D] with base samples eps[node] [m, S] -> [m, S]."""
+268:         vals = {}
+269:         xe = x.unsqueeze(-2)  # [m, 1, D]
+270:         for n in ORDER:
+271:             inp = node_input(n, xe, vals) if SPEC[n][1] else x[..., SPEC[n][0]].unsqueeze(-2)
+272:             vals[n] = self._sample(n, inp, eps[n])
+273:         return vals["U"] - LAMBDA * burden(x).unsqueeze(-1)
+274: 
+275:     def mean(self, x, eps):
+276:         return self.samples(x, eps).mean(-1)
+277: 
+278:     def kg(self, group, Z, Xi, eps, w, ww, chunk=4):
+279:         """pKGFN value of evaluating `group` at candidate node inputs Z [b, d] (Buathong et al. 2024).
+280: 
+281:         Discrete inner max over the shared, incumbent-anchored design set Xi [m, D];
+282:         fantasies w [nf, r] with weights ww [nf]; common random numbers eps.
+283:         """
+284:         nodes = GROUPS[group]
+285:         out = []
+286:         for i in range(0, Z.shape[0], chunk):
+287:             Zc = Z[i : i + chunk]
+288:             b = Zc.shape[0]
+289:             vals = {}
+290:             xe = Xi.unsqueeze(-2)  # [m, 1, D]
+291:             for n in ORDER:
+292:                 gp = self.gp[n]
+293:                 if SPEC[n][1]:
+294:                     inp = node_input(n, xe, vals)
+295:                 else:
+296:                     inp = Xi[..., SPEC[n][0]].unsqueeze(-2).expand(-1, eps[n].shape[-1], -1)
+297:                 if n in nodes:
+298:                     r = nodes.index(n)
+299:                     mu, var, VU = gp.post_std(inp, return_V=True)  # [..., m, S]
+300:                     mz, vz, VZ = gp.post_std(Zc, return_V=True)  # [b]
+301:                     cov = gp.cov_std(inp, VU, Zc, VZ)  # [..., m, S, b]
+302:                     cov = cov.movedim(-1, 0)  # [b, ..., m, S]
+303:                     sz = (vz + gp.noise).sqrt().view(b, *([1] * (cov.dim() - 1)))
+304:                     # broadcast fantasy dim: result [b, nf, ..., m, S]
+305:                     shift = (cov / sz).unsqueeze(1) * w[:, r].view(1, -1, *([1] * (cov.dim() - 1)))
+306:                     vplus = (var.unsqueeze(0) - (cov / sz) ** 2).clamp_min(1e-12).unsqueeze(1)
+307:                     if mu.dim() > 2:  # already carries [b, nf] from an upstream group node
+308:                         mu_b = mu
+309:                     else:
+310:                         mu_b = mu.view(1, 1, *mu.shape)
+311:                     vals[n] = (mu_b + shift + vplus.sqrt() * eps[n]) * gp.ys + gp.ym
+312:                 else:
+313:                     mu, var = gp.post_std(inp)
+314:                     vals[n] = (mu + var.sqrt() * eps[n]) * gp.ys + gp.ym
+315:             obj = vals["U"] - LAMBDA * burden(Xi).unsqueeze(-1)
+316:             obj = obj.expand(b, w.shape[0], *obj.shape[-2:]) if obj.dim() == 4 else obj
+317:             nu = obj.mean(-1)  # [b, nf, m]
+318:             best = nu.max(-1).values  # [b, nf]
+319:             # current value from the same fantasy-averaged estimator, so KG >= 0
+320:             # by Jensen and the MC error largely cancels between the two terms
+321:             base = (nu * ww.view(1, -1, 1)).sum(1).max(-1).values  # [b]
+322:             out.append((best * ww).sum(-1) - base)
+323:         return torch.cat(out)
+324: 
+325: 
+326: def sobol(n, d, seed):
+327:     eng = torch.quasirandom.SobolEngine(d, scramble=True, seed=seed)
+328:     return eng.draw(n).double()
+329: 
+330: 
+331: def normal_qmc(shape, seed):
+332:     m, s = shape
+333:     u = sobol(s, m, seed).T.clamp(1e-6, 1 - 1e-6)  # [m, s]
+334:     return torch.distributions.Normal(0.0, 1.0).icdf(u)
+335: 
+336: 
+337: def gauss_hermite(k):
+338:     import numpy as np
+339: 
+340:     t, w = np.polynomial.hermite_e.hermegauss(k)
+341:     return torch.tensor(t), torch.tensor(w / w.sum())
+342: 
+343: 
+344: def local_perturb(x, n, scale, gen):
+345:     pts = x.unsqueeze(1) + scale * torch.randn(x.shape[0], n, x.shape[-1], generator=gen)
+346:     return pts.reshape(-1, x.shape[-1]).clamp(0, 1)

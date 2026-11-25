@@ -1,0 +1,25 @@
+{
+ "upload_id": null,
+ "timeout": null,
+ "max_steps": null,
+ "agent": null,
+ "environment_config": {
+  "data_storage_uris": [
+   "data_entry:6e085905-33f9-4bdf-8858-725fb346726b",
+   "data_entry:92583b72-b8a9-4662-9014-cff1d2112a6d",
+   "data_entry:40461a8a-af22-43ee-87ef-e7df31112d8c",
+   "data_entry:7d0d6762-8dfc-4fd4-8014-6bd8d7fe2fe1",
+   "data_entry:1d4f50c1-5013-4a2f-a0b6-a662765f2193",
+   "data_entry:fab2bc34-2e93-45c9-86ef-537bcdea45d8",
+   "data_entry:09a950ed-ffaf-4afe-9f9e-6b9fdf0b8c4f",
+   "data_entry:82df79ef-9fcf-4815-8aa3-56644e3a8bb7",
+   "data_entry:c4fa56ef-2c55-4609-b77a-217f69a4747f",
+   "data_entry:98538076-7385-4020-90ec-b8e73d29a998",
+   "data_entry:a920239a-27c1-4d0f-8269-4586538a5cc5",
+   "data_entry:7f8185cc-c333-4ad9-a577-c5c4db88a16c",
+   "data_entry:76140e05-554d-41ef-93a3-3bbdd3194dab"
+  ]
+ },
+ "continued_job_id": null,
+ "world_model_id": null
+}

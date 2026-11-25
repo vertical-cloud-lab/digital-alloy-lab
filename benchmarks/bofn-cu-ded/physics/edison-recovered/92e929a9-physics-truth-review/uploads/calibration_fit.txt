@@ -1,0 +1,15 @@
+loss 0.5951
+{'a_al': 0.05, 'a_ni0': 0.1003, 'a_ni': 0.513, 'a_fe': 0.5773, 'tau': np.float64(10.0), 'K_cu': 100000.0, 'i_fl': 3.604} (tau in days)
+  90-10 / 70-30, 30 d                      model    1.241  target    1.400
+  Cu / 70-30, 30 d                         model    3.469  target    3.000
+  Al bronze (C61400) / 70-30, 30 d         model    1.818  target    2.100
+  Cu-10Ni-0Fe / Cu-10Ni-1.5Fe, 60 d        model    2.597  target    3.100
+  Cu rate days 16-78 / days 0-5            model    0.876  target    0.700
+  Cu20Ni rate days 16-78 / days 0-5        model    0.340  target    0.360
+  Cu30Ni rate days 16-78 / days 0-5        model    0.250  target    0.180
+  Cu i(2 h), uA/cm2                        model    6.026  target    7.897
+  Cu9.3Ni i(2 h), uA/cm2                   model    5.685  target    4.701
+  Cu18.8Ni i(2 h), uA/cm2                  model    5.359  target    3.778
+  Cu28.4Ni i(2 h), uA/cm2                  model    5.049  target    2.479
+  Cu7Al i(2 h), uA/cm2                     model    5.509  target    3.162
+  70-30 mean current over 30 d, uA/cm2     model    1.117  target    2.000

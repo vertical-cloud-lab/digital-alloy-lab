@@ -1,0 +1,542 @@
+1: """Cost-aware Bayesian optimization of a synthetic copper/DED alloy function network.
+2: 
+3: Copper/DED version of `benchmarks/bofn-prelim/bofn_alloy.py` (the aluminum LPBF
+4: network behind the MS&T26 preliminary results), built for the ONR YIP copper
+5: proposal (issue 205). Same question: does choosing *which stage to run next*
+6: (pKGFN, Buathong et al. ICML 2024) beat tiered screening and full-pipeline BO
+7: when stages cost $10 to $3,100 each?
+8: 
+9: Design vector x (all scaled to [0, 1]; copper is the balance):
+10:     x0 Ni  0-30 wt%        x4 a  ultrasonic atomizer setting
+11:     x1 Al  0-9.5 wt%       x5 P  laser power (Utah's MX-Lab capped at 0.5)
+12:     x2 Fe  0-4.5 wt%       x6 v  travel speed
+13:     x3 Mn  0-4 wt%
+14: 
+15: Function network (one GP per node, outputs feed children), eight priced stages:
+16:     C  CALPHAD + heat flow (c)              -> s strengthening potential, f solidification
+17:                                                index, g nucleant fraction (Fe-rich kappa),
+18:                                                h heat-flow (conductivity) index (added so the
+19:                                                lack-of-fusion term is a function of node inputs)
+20:     A  ultrasonic 0.5 kg lot (a, Mn, f)     -> q powder quality
+21:     U  small DED, Utah (P<=0.5, v, f, g, h, q)      -> rho_u dense, crack-free index
+22:     M  large DED, Mines (P, v, f, g, h, q, rho_u)   -> rho_m dense, crack-free fraction
+23:     S  microscopy (Al, Ni, P, v, rho_m)     -> beta retained beta-prime index
+24:     T  tensile (s, rho_m, beta)             -> U strength
+25:     K  one-hour screen (Ni, Al, Fe, rho_m, beta)    -> w screen index
+26:     I  30-day immersion (Ni, Al, Fe, rho_m, beta, w) -> m immersion index
+27:     objective J = U * sigmoid((m - m_ref) / 0.05) - LAMBDA * B(c)
+28:     B = 1.0 Ni + 0.3 Al + 0.2 Mn (known critical-mineral burden), m_ref = immersion
+29:     index of dense 70-30 Cu-Ni (C71500) at its best settings.
+30: 
+31: `rho_u` is a model input of `rho_m` and `w` a model input of `m` so the GPs can learn
+32: the small-step-to-large-step and screen-to-immersion transfers; the truth links each
+33: pair only through shared parents (the truth ignores those two coordinates).
+34: 
+35: Two bias knobs: `kappa` (how much the Fe-rich kappa nucleant suppresses hot tearing,
+36: which the Scheil crack index cannot see) and `eta` (how blind the one-hour screen is
+37: to the selective attack of beta-prime that immersion finds, and to the slow-forming
+38: film of low-nickel alloys). The constants below were tuned so the required properties
+39: in README.md hold (checked by `check_truth.py`).
+40: """
+41: 
+42: from __future__ import annotations
+43: 
+44: import math
+45: import os
+46: 
+47: import torch
+48: from botorch.fit import fit_gpytorch_mll
+49: from botorch.models import SingleTaskGP
+50: from gpytorch.mlls import ExactMarginalLogLikelihood
+51: 
+52: torch.set_default_dtype(torch.double)
+53: 
+54: D = 7
+55: COMP, IA, IPV = [0, 1, 2, 3], 4, [5, 6]
+56: INI, IAL, IFE, IMN = 0, 1, 2, 3
+57: P_CAP = 0.5  # Utah's MX-Lab laser power cap on the scaled axis (about 500 W of 1 kW)
+58: 
+59: # round all-in step costs (the project's own estimates; see README)
+60: COSTS = {"C": 10.0, "A": 400.0, "U": 500.0, "M": 1500.0, "S": 100.0, "T": 200.0, "K": 50.0, "I": 400.0}
+61: M_SCALE_UP = 1600.0  # the 2 kg scale-up lot, paid with the first Mines session on a lot
+62: SESSIONS_PER_LOT = 4  # a scaled-up lot supports about four Mines sessions
+63: M_FIRST = COSTS["M"] + M_SCALE_UP  # $3,100 for the first Mines session on a composition
+64: FULL_COST = COSTS["C"] + COSTS["A"] + COSTS["U"] + M_FIRST + COSTS["S"] + COSTS["T"] + COSTS["K"] + COSTS["I"]  # $4,760
+65: LAMBDA = 0.3
+66: BURDEN_W = torch.tensor([1.0, 0.3, 0.0, 0.2])  # Ni, Al, Fe, Mn
+67: GATE_SCALE = 0.05
+68: NOGATE = bool(os.environ.get("BOFN_NOGATE"))  # ablation (compare/): J = U - 0.3 B, no immersion gate; same network, stages and costs
+69: 
+70: # node -> (design dims, parent nodes); order is topological
+71: SPEC = {
+72:     "s": (COMP, []),
+73:     "f": (COMP, []),
+74:     "g": (COMP, []),
+75:     "h": (COMP, []),
+76:     "q": ([IA, IMN], ["f"]),
+77:     "rho_u": (IPV, ["f", "g", "h", "q"]),
+78:     "rho_m": (IPV, ["f", "g", "h", "q", "rho_u"]),
+79:     "beta": ([IAL, INI] + IPV, ["rho_m"]),
+80:     "U": ([], ["s", "rho_m", "beta"]),
+81:     "w": ([INI, IAL, IFE], ["rho_m", "beta"]),
+82:     "m": ([INI, IAL, IFE], ["rho_m", "beta", "w"]),
+83: }
+84: ORDER = list(SPEC)
+85: GROUPS = {"C": ["s", "f", "g", "h"], "A": ["q"], "U": ["rho_u"], "M": ["rho_m"], "S": ["beta"], "T": ["U"], "K": ["w"], "I": ["m"]}
+86: GROUP_OF = {n: g for g, ns in GROUPS.items() for n in ns}
+87: STAGE_NAMES = {"C": "CALPHAD + heat flow", "A": "Atomize (0.5 kg)", "U": "Small DED (Utah)", "M": "Large DED (Mines)",
+88:                "S": "Microscopy", "T": "Tensile", "K": "1-h screen", "I": "30-d immersion"}
+89: 
+90: # truth constants (tuned; see README "The truth functions and the optimum")
+91: F_CRACK = 0.56  # crack onset on the effective solidification index
+92: F_SAFE = 0.34  # the CALPHAD crack screen's threshold (conservative: about 1% crack probability at kappa = 0)
+93: 
+94: # reference alloys (scaled levels): Ni, Al, Fe, Mn
+95: REFERENCE = {
+96:     "C71500 (70-30 Cu-Ni)": [1.0, 0.0, 0.15, 0.20],
+97:     "C70600 (90-10 Cu-Ni)": [0.333, 0.0, 0.31, 0.20],
+98:     "C95800 (NAB)": [0.15, 0.95, 0.90, 0.30],
+99: }
+100: 
+101: 
+102: def burden(x):
+103:     """Critical-mineral burden of the composition (known, free to compute)."""
+104:     return (x[..., :4] * BURDEN_W).sum(-1)
+105: 
+106: 
+107: def transform(name, inp):
+108:     """Per-node input transform: the Utah machine runs at min(P, P_CAP)."""
+109:     if name == "rho_u":
+110:         inp = inp.clone()
+111:         inp[..., 0] = inp[..., 0].clamp(max=P_CAP)
+112:     return inp
+113: 
+114: 
+115: def sig(z):
+116:     return torch.sigmoid(z)
+117: 
+118: 
+119: # --------------------------------------------------------------------------- truth
+120: class AlloyTruth:
+121:     def __init__(self, kappa: float = 1.0, eta: float = 1.0, m_ref: float | None = None):
+122:         self.kappa, self.eta = kappa, eta
+123:         self.m_ref = M_REF if m_ref is None else m_ref
+124: 
+125:     def node(self, name, inp):
+126:         """Evaluate one node on its own input vector (design dims + parent outputs)."""
+127:         if name in ("s", "f", "g", "h"):
+128:             ni, al, fe, mn = inp[..., 0], inp[..., 1], inp[..., 2], inp[..., 3]
+129:             if name == "s":  # solid-solution Ni; kappa/beta from Al; the Ni-Al (kappa-III, NiAl) synergy
+130:                 return (1 - torch.exp(-(0.6 * ni + 0.9 * al + 3.0 * ni * al)) + 0.1 * fe + 0.05 * mn) / 1.15
+131:             if name == "f":  # Cu-Ni wide, NAB narrow, the Ni-Al corner wide again (primary B2)
+132:                 return (0.65 * ni + 0.30 * mn - 0.35 * al + 2.5 * ni * al + 0.05 * fe).clamp(0, 1)
+133:             if name == "g":  # Fe-rich primary kappa particles nucleate alpha and refine grains
+134:                 return (0.7 * fe.clamp(min=0) * (1 + 0.5 * al) + 0.15 * al * ni) / 1.2
+135:             return 0.6 * (1 - ni).clamp(min=0) ** 2 * (1 - 0.6 * al)  # h: conductivity index (falls with Ni and Al)
+136:         if name == "q":
+137:             a, mn, f = inp[..., 0], inp[..., 1], inp[..., 2]
+138:             a_opt = 0.35 + 0.40 * f  # hotter melts need another setting; near the atomizer's limit the powder coarsens
+139:             return torch.exp(-(((a - a_opt) / 0.28) ** 2)) * (1 - 0.35 * f**2) * (1 - 0.10 * mn)
+140:         if name in ("rho_u", "rho_m"):
+141:             P, v, f, g, h, q = (inp[..., i] for i in range(6))
+142:             u = P - v - (0.05 + 0.25 * f)
+143:             window = torch.exp(-((u / 0.2) ** 2)) * (1 - 0.35 * sig((P - 0.85) / 0.05))  # energy-density ridge, keyholing
+144:             lof = sig((h - P) / 0.08)  # lack of fusion below a conductivity-set power threshold
+145:             g = g.clamp(min=0)
+146:             f_eff = f * (1 - self.kappa * 0.85 * g / (g + 0.12))
+147:             crack = sig((f_eff - F_CRACK) / 0.05)
+148:             rho = window * q.clamp(min=0) ** 0.3 * (1 - 0.75 * crack) * (1 - lof)
+149:             if name == "rho_u":  # P already capped by `transform`; thin walls hide a little porosity
+150:                 rho = rho * (0.95 + 0.05 * q.clamp(min=0))
+151:             return rho
+152:         if name == "beta":
+153:             al, ni, P, v = inp[..., 0], inp[..., 1], inp[..., 2], inp[..., 3]
+154:             return al.clamp(min=0) ** 1.5 * (1 - 0.5 * ni) * sig((v - P + 0.2) / 0.15)  # retained beta-prime: Al, fast cooling
+155:         if name == "U":
+156:             s, rho_m, beta = inp[..., 0], inp[..., 1], inp[..., 2]
+157:             return (0.25 + 0.75 * s) * rho_m * (1 + 0.15 * beta)
+158:         if name in ("w", "m"):
+159:             ni, al, fe, rho_m, beta = (inp[..., i] for i in range(5))
+160:             film = 1 - torch.exp(-ni.clamp(min=0) / 0.15)  # the protective film saturates by 90-10
+161:             fe_sol = 0.30 * fe.clamp(0, 0.4)  # iron in solution helps the film (why 90-10 carries 1.5% Fe)
+162:             if name == "m":
+163:                 return (0.30 + 0.55 * film + 0.15 * al - 0.60 * al * beta + fe_sol - 0.15 * (fe - 0.5).clamp(min=0) - 0.30 * (1 - rho_m)).clamp(0, 1)
+164:             # the one-hour screen: at eta = 1 it rates fresh films (Ni^0.7, Al's oxide) and is blind to beta-prime
+165:             # attack and to slow-forming films; at eta = 0 it agrees with immersion up to its constants
+166:             ni_term = self.eta * (0.4 * ni.clamp(min=0) ** 0.7 + 0.6 * film) + (1 - self.eta) * film
+167:             return (0.35 + 0.50 * ni_term + 0.25 * al - 0.10 * (1 - rho_m) - (1 - self.eta) * (0.60 * al * beta - fe_sol)).clamp(0, 1)
+168:         raise KeyError(name)
+169: 
+170:     def full(self, x):
+171:         """All node outputs for designs x [..., D]."""
+172:         out = {}
+173:         for n in ORDER:
+174:             inp = node_input(n, x, out)
+175:             out[n] = self.node(n, inp)
+176:         return out
+177: 
+178:     def objective(self, x, full=None):
+179:         out = full or self.full(x)
+180:         return objective_from(out["U"], out["m"], x, self.m_ref)
+181: 
+182: 
+183: def gate(m, m_ref):
+184:     """Strength counts only if the alloy passes immersion (m >= m_ref); 1 everywhere in the no-gate ablation."""
+185:     return torch.ones_like(m) if NOGATE else sig((m - m_ref) / GATE_SCALE)
+186: 
+187: 
+188: def objective_from(U, m, x, m_ref):
+189:     return U * gate(m, m_ref) - LAMBDA * burden(x)
+190: 
+191: 
+192: def _reference_m(kappa=1.0, eta=1.0):
+193:     """Immersion index of C71500 deposited dense at its best (a, P, v), from the truth."""
+194:     t = AlloyTruth(kappa, eta, m_ref=0.0)
+195:     c = torch.tensor(REFERENCE["C71500 (70-30 Cu-Ni)"])
+196:     apv = torch.quasirandom.SobolEngine(3, scramble=True, seed=0).draw(16384).double()
+197:     X = torch.cat([c.expand(apv.shape[0], 4), apv], -1)
+198:     out = t.full(X)
+199:     j = out["rho_m"].argmax()
+200:     return float(out["m"][j]), float(out["rho_m"][j]), X[j]
+201: 
+202: 
+203: 
+204: 
+205: # --------------------------------------------------------------------------- GP
+206: FIT_LOG = {"calls": 0, "failures": 0}  # per process; policies.run() resets it and stores it in the run JSON
+207: 
+208: 
+209: class TinyGP:
+210:     """Exact GP with BoTorch-fitted RBF hyperparameters and cheap batched posteriors."""
+211: 
+212:     def __init__(self, X, y, noise=1e-6):
+213:         n, d = X.shape
+214:         self.X, self.y = X, y
+215:         self.ym = y.mean()
+216:         # node outputs live on [0, 1]: keep a physical prior scale even when early
+217:         # observations are all alike (e.g. every seed build cracked)
+218:         self.ys = y.std().clamp_min(0.25) if n > 1 else torch.tensor(0.25)
+219:         Y = ((y - self.ym) / self.ys).unsqueeze(-1)
+220:         model = SingleTaskGP(X, Y, train_Yvar=torch.full_like(Y, noise), outcome_transform=None)
+221:         FIT_LOG["calls"] += 1
+222:         try:
+223:             fit_gpytorch_mll(ExactMarginalLogLikelihood(model.likelihood, model))
+224:         except Exception:  # keep the prior/partially fitted hyperparameters, but count it
+225:             FIT_LOG["failures"] += 1
+226:         self.ls = model.covar_module.lengthscale.detach().reshape(-1)
+227:         self.const = model.mean_module.constant.detach().reshape(())
+228:         self.noise = noise
+229:         self.Xs = X / self.ls
+230:         K = self._k(self.Xs, self.Xs) + (noise + 1e-8) * torch.eye(n)
+231:         L = torch.linalg.cholesky(K)
+232:         self.Linv = torch.linalg.solve_triangular(L, torch.eye(n), upper=False)
+233:         self.alpha = self.Linv.T @ (self.Linv @ (Y.squeeze(-1) - self.const))
+234: 
+235:     @staticmethod
+236:     def _k(A, B):
+237:         d2 = (A * A).sum(-1, keepdim=True) - 2 * A @ B.T + (B * B).sum(-1)
+238:         return torch.exp(-0.5 * d2.clamp_min(0))
+239: 
+240:     def post_std(self, U, return_V=False):
+241:         """Posterior mean/var in standardized units for raw inputs U [..., d]."""
+242:         Kx = self._k(U / self.ls, self.Xs)
+243:         mean = self.const + Kx @ self.alpha
+244:         V = Kx @ self.Linv.T
+245:         var = (1.0 - (V * V).sum(-1)).clamp_min(1e-12)
+246:         return (mean, var, V) if return_V else (mean, var)
+247: 
+248:     def mean_raw(self, U):
+249:         m, _ = self.post_std(U)
+250:         return m * self.ys + self.ym
+251: 
+252:     def cov_std(self, U, VU, Z, VZ):
+253:         """Posterior covariance between U [..., d] and candidates Z [b, d] -> [..., b]."""
+254:         return self._k(U / self.ls, Z / self.ls) - VU @ VZ.T
+255: 
+256: 
+257: def node_input(name, x, vals):
+258:     """Input vector of `name` at designs x [..., D] given parent values; applies the node's transform."""
+259:     dims, parents = SPEC[name]
+260:     shape = torch.broadcast_shapes(*[vals[p].shape for p in parents]) if parents else x[..., 0].shape
+261:     xs = x[..., dims].expand(*shape, len(dims)) if dims else None
+262:     parts = ([xs] if xs is not None else []) + [vals[p].expand(shape).unsqueeze(-1) for p in parents]
+263:     return transform(name, torch.cat(parts, -1))
+264: 
+265: 
+266: M_REF, RHO_REF, X_REF = _reference_m()  # fixed across cells: a property of dense 70-30 Cu-Ni in the headline world
+267: 
+268: 
+269: # --------------------------------------------------------------------------- data
+270: class Data:
+271:     """Per-node observations plus the physical inventory (powder lots, builds)."""
+272: 
+273:     def __init__(self):
+274:         self.obs = {n: ([], []) for n in ORDER}
+275:         self.calphad = {}  # composition tuple -> dict(s, f, g, h)
+276:         self.lots = []  # dict(c, a, q, sessions_left, utah=[(P_u, v, rho_u)])
+277:         self.builds = []  # dict(lot, pv, rho_u_in, rho_m, beta, U, w, m, J)
+278:         self.full = []  # (x, objective) fully validated designs (tensile + immersion)
+279:         self.spent = 0.0
+280:         self.log = []  # (group, spent after)
+281:         self.events = []  # audit trail: dict(kind, ...)
+282: 
+283:     def add(self, name, inp, val):
+284:         self.obs[name][0].append(inp.detach().clone())
+285:         self.obs[name][1].append(float(val))
+286: 
+287:     def tensors(self, name):
+288:         X, y = self.obs[name]
+289:         return torch.stack(X), torch.tensor(y)
+290: 
+291: 
+292: def comp_key(c):
+293:     return tuple(round(float(v), 6) for v in c)
+294: 
+295: 
+296: class Lab:
+297:     """Runs stages against the truth, enforcing upstream requirements and costs."""
+298: 
+299:     def __init__(self, truth: AlloyTruth, data: Data):
+300:         self.t, self.d = truth, data
+301:         self.net = None  # the policy's current network model, used to estimate rho_u for a Mines run without a matching Utah run
+302: 
+303:     def _pay(self, group, amount=None):
+304:         self.d.spent += COSTS[group] if amount is None else amount
+305:         self.d.log.append((group, self.d.spent))
+306: 
+307:     def calphad(self, c):
+308:         key = comp_key(c)
+309:         if key in self.d.calphad:
+310:             return self.d.calphad[key]
+311:         out = {n: float(self.t.node(n, c)) for n in GROUPS["C"]}
+312:         for n, v in out.items():
+313:             self.d.add(n, c, v)
+314:         self.d.calphad[key] = out
+315:         self._pay("C")
+316:         return out
+317: 
+318:     def atomize(self, c, a):
+319:         cal = self.calphad(c)
+320:         inp = torch.tensor([float(a), float(c[IMN]), cal["f"]])  # node q input order: (a, Mn, f)
+321:         q = float(self.t.node("q", inp))
+322:         self.d.add("q", inp, q)
+323:         self.d.lots.append({"c": c.clone(), "a": float(a), "q": q, "sessions_left": 0, "utah": []})
+324:         self._pay("A")
+325:         return len(self.d.lots) - 1
+326: 
+327:     def _lot_inputs(self, lot):
+328:         L = self.d.lots[lot]
+329:         cal = self.calphad(L["c"])
+330:         return L, cal
+331: 
+332:     def utah(self, lot, pv):
+333:         L, cal = self._lot_inputs(lot)
+334:         pv = [float(v) for v in pv]
+335:         inp = transform("rho_u", torch.tensor(pv + [cal["f"], cal["g"], cal["h"], L["q"]]))
+336:         rho_u = float(self.t.node("rho_u", inp))
+337:         self.d.add("rho_u", inp, rho_u)
+338:         L["utah"].append((float(inp[0]), pv[1], rho_u))
+339:         self._pay("U")
+340:         return rho_u
+341: 
+342:     def estimate_rho_u(self, lot, pv):
+343:         """What the lab believes the small step would read at these settings: the measured value if
+344:         Utah ran this lot at exactly these (capped) settings, else the current model's posterior mean."""
+345:         L, cal = self._lot_inputs(lot)
+346:         inp = transform("rho_u", torch.tensor([float(pv[0]), float(pv[1]), cal["f"], cal["g"], cal["h"], L["q"]]))
+347:         for Pu, v, r in L["utah"]:
+348:             if abs(Pu - float(inp[0])) < 1e-9 and abs(v - float(inp[1])) < 1e-9:
+349:                 return r
+350:         if self.net is not None:
+351:             return float(self.net.gp["rho_u"].mean_raw(inp.unsqueeze(0))[0])
+352:         return float(sum(r for _, _, r in L["utah"]) / len(L["utah"])) if L["utah"] else 0.5
+353: 
+354:     def mines_cost(self, lot):
+355:         return COSTS["M"] if self.d.lots[lot]["sessions_left"] > 0 else M_FIRST
+356: 
+357:     def mines(self, lot, pv, rho_u_in=None):
+358:         L, cal = self._lot_inputs(lot)
+359:         pv = [float(v) for v in pv]
+360:         if rho_u_in is None:
+361:             rho_u_in = self.estimate_rho_u(lot, pv)
+362:         inp = torch.tensor(pv + [cal["f"], cal["g"], cal["h"], L["q"], float(rho_u_in)])
+363:         rho_m = float(self.t.node("rho_m", inp))
+364:         self.d.add("rho_m", inp, rho_m)
+365:         cost = self.mines_cost(lot)
+366:         if L["sessions_left"] == 0:
+367:             L["sessions_left"] = SESSIONS_PER_LOT
+368:         L["sessions_left"] -= 1
+369:         self.d.builds.append({"lot": lot, "pv": pv, "rho_u_in": float(rho_u_in), "rho_m": rho_m, "beta": None, "U": None, "w": None, "m": None, "J": None})
+370:         self._pay("M", cost)
+371:         return len(self.d.builds) - 1
+372: 
+373:     def _build(self, build):
+374:         B = self.d.builds[build]
+375:         L, cal = self._lot_inputs(B["lot"])
+376:         return B, L, cal
+377: 
+378:     def microscopy(self, build):
+379:         B, L, cal = self._build(build)
+380:         inp = torch.tensor([float(L["c"][IAL]), float(L["c"][INI]), B["pv"][0], B["pv"][1], B["rho_m"]])
+381:         beta = float(self.t.node("beta", inp))
+382:         self.d.add("beta", inp, beta)
+383:         B["beta"] = beta
+384:         self._pay("S")
+385:         return beta
+386: 
+387:     def tensile(self, build):
+388:         B, L, cal = self._build(build)
+389:         assert B["beta"] is not None, "microscopy comes before tensile"
+390:         inp = torch.tensor([cal["s"], B["rho_m"], B["beta"]])
+391:         U = float(self.t.node("U", inp))
+392:         self.d.add("U", inp, U)
+393:         B["U"] = U
+394:         self._pay("T")
+395:         self._maybe_full(build)
+396:         return U
+397: 
+398:     def screen(self, build):
+399:         B, L, cal = self._build(build)
+400:         assert B["beta"] is not None, "microscopy comes before the screen"
+401:         inp = torch.tensor([float(L["c"][INI]), float(L["c"][IAL]), float(L["c"][IFE]), B["rho_m"], B["beta"]])
+402:         w = float(self.t.node("w", inp))
+403:         self.d.add("w", inp, w)
+404:         B["w"] = w
+405:         self._pay("K")
+406:         return w
+407: 
+408:     def immersion(self, build):
+409:         B, L, cal = self._build(build)
+410:         assert B["w"] is not None, "the screen comes before immersion"
+411:         inp = torch.tensor([float(L["c"][INI]), float(L["c"][IAL]), float(L["c"][IFE]), B["rho_m"], B["beta"], B["w"]])
+412:         m = float(self.t.node("m", inp))
+413:         self.d.add("m", inp, m)
+414:         B["m"] = m
+415:         self._pay("I")
+416:         self._maybe_full(build)
+417:         return m
+418: 
+419:     def _maybe_full(self, build):
+420:         B = self.d.builds[build]
+421:         if B["U"] is not None and B["m"] is not None and B["J"] is None:
+422:             x = design_of_build(self.d, build)
+423:             B["J"] = float(objective_from(torch.tensor(B["U"]), torch.tensor(B["m"]), x, self.t.m_ref))
+424:             self.d.full.append((x, B["J"]))
+425: 
+426:     def full_eval(self, x, utah=True):
+427:         """Every stage on one design (the full-pipeline policies)."""
+428:         lot = self.atomize(x[COMP], x[IA])
+429:         if utah:
+430:             self.utah(lot, x[IPV])
+431:         b = self.mines(lot, x[IPV])
+432:         self.microscopy(b)
+433:         self.tensile(b)
+434:         self.screen(b)
+435:         self.immersion(b)
+436:         return b
+437: 
+438: 
+439: def design_of_build(d: Data, j):
+440:     B = d.builds[j]
+441:     L = d.lots[B["lot"]]
+442:     return torch.cat([L["c"], torch.tensor([L["a"]] + B["pv"])])
+443: 
+444: 
+445: # --------------------------------------------------------------------------- network model
+446: class Network:
+447:     def __init__(self, data: Data, m_ref: float | None = None):
+448:         self.m_ref = M_REF if m_ref is None else m_ref
+449:         self.gp = {n: TinyGP(*data.tensors(n)) for n in ORDER}
+450: 
+451:     def refit(self, data: Data, names):
+452:         for n in names:
+453:             self.gp[n] = TinyGP(*data.tensors(n))
+454: 
+455:     def _sample(self, n, inp, eps):
+456:         gp = self.gp[n]
+457:         m, v = gp.post_std(inp)
+458:         return (m + v.sqrt() * eps) * gp.ys + gp.ym
+459: 
+460:     def samples(self, x, eps):
+461:         """Objective samples at designs x [m, D] with base samples eps[node] [m, S] -> [m, S]."""
+462:         vals = {}
+463:         xe = x.unsqueeze(-2)  # [m, 1, D]
+464:         for n in ORDER:
+465:             inp = node_input(n, xe, vals) if SPEC[n][1] else x[..., SPEC[n][0]].unsqueeze(-2)
+466:             vals[n] = self._sample(n, inp, eps[n])
+467:         return vals["U"] * gate(vals["m"], self.m_ref) - LAMBDA * burden(x).unsqueeze(-1)
+468: 
+469:     def mean(self, x, eps):
+470:         return self.samples(x, eps).mean(-1)
+471: 
+472:     def kg(self, group, Z, Xi, eps, w, ww, chunk=4):
+473:         """pKGFN value of evaluating `group` at candidate node inputs Z [b, d] (Buathong et al. 2024).
+474: 
+475:         Discrete inner max over the shared, incumbent-anchored design set Xi [m, D];
+476:         fantasies w [nf, r] with weights ww [nf]; common random numbers eps.
+477:         """
+478:         nodes = GROUPS[group]
+479:         out = []
+480:         m_, S_ = Xi.shape[0], eps[ORDER[0]].shape[-1]
+481:         for i in range(0, Z.shape[0], chunk):
+482:             Zc = Z[i : i + chunk]
+483:             b = Zc.shape[0]
+484:             vals = {}
+485:             xe = Xi.unsqueeze(-2)  # [m, 1, D]
+486:             for n in ORDER:
+487:                 gp = self.gp[n]
+488:                 if SPEC[n][1]:
+489:                     inp = node_input(n, xe, vals)
+490:                 else:
+491:                     inp = Xi[..., SPEC[n][0]].unsqueeze(-2).expand(-1, eps[n].shape[-1], -1)
+492:                 if n in nodes:
+493:                     r = nodes.index(n)
+494:                     mu, var, VU = gp.post_std(inp, return_V=True)  # [..., m, S]
+495:                     mz, vz, VZ = gp.post_std(Zc, return_V=True)  # [b]
+496:                     cov = gp.cov_std(inp, VU, Zc, VZ)  # [..., m, S, b]
+497:                     cov = cov.movedim(-1, 0)  # [b, ..., m, S]
+498:                     sz = (vz + gp.noise).sqrt().view(b, *([1] * (cov.dim() - 1)))
+499:                     # broadcast fantasy dim: result [b, nf, ..., m, S]
+500:                     shift = (cov / sz).unsqueeze(1) * w[:, r].view(1, -1, *([1] * (cov.dim() - 1)))
+501:                     vplus = (var.unsqueeze(0) - (cov / sz) ** 2).clamp_min(1e-12).unsqueeze(1)
+502:                     if mu.dim() > 2:  # already carries [b, nf] from an upstream group node
+503:                         mu_b = mu
+504:                     else:
+505:                         mu_b = mu.view(1, 1, *mu.shape)
+506:                     vals[n] = (mu_b + shift + vplus.sqrt() * eps[n]) * gp.ys + gp.ym
+507:                 else:
+508:                     mu, var = gp.post_std(inp)
+509:                     vals[n] = (mu + var.sqrt() * eps[n]) * gp.ys + gp.ym
+510:             obj = vals["U"] * gate(vals["m"], self.m_ref) - LAMBDA * burden(Xi).unsqueeze(-1)
+511:             if obj.dim() == 2:  # the fantasized node does not reach the objective (cannot happen: every node is upstream of U or m)
+512:                 obj = obj.expand(b, w.shape[0], m_, S_)
+513:             nu = obj.mean(-1)  # [b, nf, m]
+514:             best = nu.max(-1).values  # [b, nf]
+515:             # current value from the same fantasy-averaged estimator, so KG >= 0
+516:             # by Jensen and the MC error largely cancels between the two terms
+517:             base = (nu * ww.view(1, -1, 1)).sum(1).max(-1).values  # [b]
+518:             out.append((best * ww).sum(-1) - base)
+519:         return torch.cat(out)
+520: 
+521: 
+522: def sobol(n, d, seed):
+523:     eng = torch.quasirandom.SobolEngine(d, scramble=True, seed=seed)
+524:     return eng.draw(n).double()
+525: 
+526: 
+527: def normal_qmc(shape, seed):
+528:     m, s = shape
+529:     u = sobol(s, m, seed).T.clamp(1e-6, 1 - 1e-6)  # [m, s]
+530:     return torch.distributions.Normal(0.0, 1.0).icdf(u)
+531: 
+532: 
+533: def gauss_hermite(k):
+534:     import numpy as np
+535: 
+536:     t, w = np.polynomial.hermite_e.hermegauss(k)
+537:     return torch.tensor(t), torch.tensor(w / w.sum())
+538: 
+539: 
+540: def local_perturb(x, n, scale, gen):
+541:     pts = x.unsqueeze(1) + scale * torch.randn(x.shape[0], n, x.shape[-1], generator=gen)
+542:     return pts.reshape(-1, x.shape[-1]).clamp(0, 1)

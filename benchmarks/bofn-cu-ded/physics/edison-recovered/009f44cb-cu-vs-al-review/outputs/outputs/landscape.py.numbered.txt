@@ -1,0 +1,165 @@
+1: """Why the copper results differ from the aluminum ones: the two truths side by side.
+2: 
+3:     python compare/landscape.py            # writes compare/landscape.json and prints a summary
+4:     python compare/landscape.py --maps     # compare/compare_landscape_maps.png: composition slices through each optimum
+5: 
+6: For each truth (aluminum `../bofn-prelim` at kappa = 1; copper at (kappa, eta) = (1, 1), with and
+7: without the immersion gate) it samples uniform random designs and reports how much of the design
+8: space is good, what the seed data and a random search should reach, and how the copper truth's
+9: dense, crack-free index splits into its factors.
+10: """
+11: 
+12: from __future__ import annotations
+13: 
+14: import importlib.util
+15: import json
+16: import sys
+17: from pathlib import Path
+18: 
+19: import torch
+20: 
+21: HERE = Path(__file__).parent
+22: CU = HERE.parent
+23: AL = CU.parent / "bofn-prelim"
+24: N = 1_000_000
+25: 
+26: 
+27: def load(path, name):
+28:     spec = importlib.util.spec_from_file_location(name, path)
+29:     mod = importlib.util.module_from_spec(spec)
+30:     sys.modules[name] = mod
+31:     spec.loader.exec_module(mod)
+32:     return mod
+33: 
+34: 
+35: al = load(AL / "bofn_alloy.py", "al_alloy")
+36: cu = load(CU / "bofn_alloy.py", "cu_alloy")
+37: torch.set_default_dtype(torch.double)
+38: 
+39: 
+40: def refine(f, x0, g, D, rounds=3):
+41:     """Multi-start local search: perturbations at four scales around each start, repeated `rounds` times."""
+42:     best_x, best_y = None, -1e9
+43:     for x in x0:
+44:         xb, yb = x, float(f(x.unsqueeze(0))[0])
+45:         for _ in range(rounds):
+46:             for scale in (0.03, 0.01, 0.003, 0.001):
+47:                 P = (xb + scale * torch.randn(4000, D, generator=g)).clamp(0, 1)
+48:                 yp = f(P)
+49:                 if float(yp.max()) > yb:
+50:                     xb, yb = P[yp.argmax()], float(yp.max())
+51:         if yb > best_y:
+52:             best_x, best_y = xb, yb
+53:     return best_x, best_y
+54: 
+55: 
+56: def best_of(y, n, reps=20000, g=None):
+57:     """Expected best of n uniform random designs (as a fraction of the values in y)."""
+58:     idx = torch.randint(0, y.shape[0], (reps, n), generator=g)
+59:     return float(y[idx].max(1).values.mean())
+60: 
+61: 
+62: def summary(name, f, D, opt, g, extra=None):
+63:     X = torch.rand(N, D, generator=g)
+64:     y = f(X) / opt
+65:     q = torch.tensor([0.5, 0.9, 0.99, 0.999])
+66:     out = {"truth": name, "optimum": opt, "mean_pct": float(y.mean()), "quantiles_pct": dict(zip(["50%", "90%", "99%", "99.9%"], [float(v) for v in y.quantile(q)])),
+67:            "share_above": {f"{t:.0%}": float((y >= t).double().mean()) for t in (0.0, 0.5, 0.6, 0.7, 0.8, 0.9)},
+68:            "expected_best_of": {str(n): best_of(y, n, g=g) for n in (5, 10, 21, 24, 26, 29)}}
+69:     if extra:
+70:         out.update(extra(X))
+71:     return out
+72: 
+73: 
+74: def main():
+75:     g = torch.Generator().manual_seed(0)
+76:     res = []
+77:     # aluminum, kappa = 1 (the bofn-prelim headline), normalized by bofn-prelim's own optimum (analyze.optimum)
+78:     ta = al.AlloyTruth(1.0)
+79:     fa = lambda X: ta.objective(X)
+80:     opt_a = json.loads((HERE / "al_optimum.json").read_text())["kappa1"]
+81:     res.append(summary("aluminum LPBF (kappa = 1)", fa, al.D, opt_a, g))
+82:     # copper, (1, 1), as benchmarked, normalized by truth_tables.json (check_truth.py), as in analyze.py
+83:     tc = cu.AlloyTruth(1.0, 1.0)
+84:     fc = lambda X: tc.objective(X)
+85:     opt_c = next(r["optimum"] for r in json.loads((CU / "truth_tables.json").read_text()) if (r["kappa"], r["eta"]) == (1.0, 1.0))
+86: 
+87:     def cu_extra(X):
+88:         o = tc.full(X)
+89:         passes = o["m"] >= tc.m_ref
+90:         return {"share_passing_immersion": float(passes.double().mean()), "share_dense_rho_m_0.7": float((o["rho_m"] >= 0.7).double().mean()),
+91:                 "share_passing_immersion_given_Ni_below_0.2": float(passes[X[:, 0] < 0.2].double().mean()),
+92:                 "share_with_J_above_zero": float((tc.objective(X, o) > 0).double().mean())}
+93: 
+94:     res.append(summary("copper DED (1, 1), immersion-gated objective", fc, cu.D, opt_c, g, cu_extra))
+95:     # copper without the immersion gate: J = U - 0.3 B (same network, same costs)
+96:     fn = lambda X: (lambda o: o["U"] - cu.LAMBDA * cu.burden(X))(tc.full(X))
+97:     X = torch.rand(400_000, cu.D, generator=g)
+98:     xn, opt_n = refine(fn, X[fn(X).topk(50).indices], g, cu.D)
+99:     r = summary("copper DED (1, 1), no immersion gate (J = U - 0.3 B)", fn, cu.D, opt_n, g)
+100:     r["x_opt"] = [round(v, 3) for v in xn.tolist()]
+101:     r["gated_J_at_nogate_optimum_pct"] = float(fc(xn.unsqueeze(0))[0] / opt_c)
+102:     res.append(r)
+103:     # the seed data each benchmark starts from (5 random designs per seed, generator 2000 + seed)
+104:     seeds = {}
+105:     for nm, mod, t in (("aluminum", al, ta), ("copper", cu, tc)):
+106:         vals = []
+107:         for s in range(20):
+108:             gg = torch.Generator().manual_seed(2000 + s)
+109:             Xs = torch.rand(5, mod.D, generator=gg)
+110:             vals.append(float(t.objective(Xs).max()))
+111:         opt = opt_a if nm == "aluminum" else opt_c
+112:         seeds[nm] = {"mean_best_seed_pct": sum(vals) / len(vals) / opt, "per_seed_pct": [round(v / opt, 3) for v in vals]}
+113:     res.append({"seed_data": seeds})
+114:     (HERE / "landscape.json").write_text(json.dumps(res, indent=1))
+115:     print(json.dumps(res, indent=1))
+116: 
+117: 
+118: if __name__ == "__main__" and "--maps" not in sys.argv:
+119:     main()
+120: 
+121: 
+122: def maps(n=61):
+123:     """Best objective over (a, P, v) on a composition slice through each optimum, as % of that optimum."""
+124:     import matplotlib
+125: 
+126:     matplotlib.use("Agg")
+127:     import matplotlib.pyplot as plt
+128: 
+129:     sys.path.insert(0, str(CU))
+130:     import plot as PL  # noqa: F401  (the benchmark's fonts)
+131: 
+132:     apv = torch.quasirandom.SobolEngine(3, scramble=True, seed=3).draw(2048).double()
+133:     opt_a = json.loads((HERE / "al_optimum.json").read_text())["kappa1"]
+134:     opt_c = next(r["optimum"] for r in json.loads((CU / "truth_tables.json").read_text()) if (r["kappa"], r["eta"]) == (1.0, 1.0))
+135:     ta, tc = al.AlloyTruth(1.0), cu.AlloyTruth(1.0, 1.0)
+136:     g = torch.linspace(0, 1, n)
+137:     panels = [("Aluminum LPBF (kappa = 1)", ta, opt_a, (0, 1), "Zn + Mg (scaled)", "Cu (scaled)", [None, None, 1.0, 0.0], None),
+138:               ("Copper DED (1, 1)", tc, opt_c, (0, 1), "Ni, wt%", "Al, wt%", [None, None, 0.5, 0.0], (30.0, 9.5))]
+139:     fig, axes = plt.subplots(1, 2, figsize=(13, 5.4))
+140:     for ax, (title, t, opt, _, xl, yl, comp, scale) in zip(axes, panels):
+141:         Z = torch.empty(n, n)
+142:         for i, a in enumerate(g):
+143:             c = torch.tensor([[float(a), float(b), comp[2], comp[3]] for b in g])  # [n, 4]
+144:             X = torch.cat([c.unsqueeze(1).expand(n, apv.shape[0], 4), apv.unsqueeze(0).expand(n, -1, -1)], -1).reshape(-1, 7)
+145:             Z[:, i] = (t.objective(X).reshape(n, -1).max(1).values / opt)
+146:         ext = [0, scale[0], 0, scale[1]] if scale else [0, 1, 0, 1]
+147:         im = ax.imshow(Z.numpy() * 100, origin="lower", extent=ext, aspect="auto", cmap="RdGy_r", vmin=-100, vmax=100)
+148:         ax.contour(torch.linspace(ext[0], ext[1], n).numpy(), torch.linspace(ext[2], ext[3], n).numpy(), Z.numpy() * 100, levels=[0, 60], colors=["#262626", "#262626"],
+149:                    linewidths=[1.0, 1.8], linestyles=["--", "-"])
+150:         ax.set_title(title, fontsize=15, loc="left")
+151:         ax.set_xlabel(xl)
+152:         ax.set_ylabel(yl)
+153:         share = float((Z >= 0.6).double().mean())
+154:         ax.text(0.98, 0.03, f"{share:.0%} of this slice\nwithin 60% of J*", transform=ax.transAxes, ha="right", va="bottom", fontsize=12,
+155:                 bbox=dict(fc="white", ec="none", alpha=0.8))
+156:     cb = fig.colorbar(im, ax=axes, fraction=0.025, pad=0.02)
+157:     cb.set_label("best over atomizer, power, speed (% of J*)")
+158:     axes[0].text(0.02, 0.97, "Zr = 1, Sc = 0", transform=axes[0].transAxes, va="top", fontsize=12)
+159:     axes[1].text(0.02, 0.97, "Fe = 2.25 wt%, Mn = 0", transform=axes[1].transAxes, va="top", fontsize=12)
+160:     fig.savefig(HERE / "compare_landscape_maps.png", bbox_inches="tight")
+161:     plt.close(fig)
+162: 
+163: 
+164: if __name__ == "__main__" and "--maps" in sys.argv:
+165:     maps()

@@ -1,0 +1,304 @@
+1: """Copper against aluminum: why the bofn-prelim headline does not carry over.
+2: 
+3:     python compare/landscape.py      # first: the two truths on random designs (landscape.json)
+4:     python compare/compare.py        # tables.md and the compare_*.png figures
+5: 
+6: Tables: the two benchmarks' results side by side; the copper network with and without the
+7: immersion gate (compare/results-nogate/, run with BOFN_NOGATE=1); pKGFN at the light Monte Carlo
+8: settings of the first copper sweep (quality/results-light/) against the aluminum production
+9: settings (results/); tiered screening against corrosion-aware tiered screening.
+10: """
+11: 
+12: from __future__ import annotations
+13: 
+14: import json
+15: import sys
+16: from pathlib import Path
+17: 
+18: import numpy as np
+19: 
+20: HERE = Path(__file__).parent
+21: CU = HERE.parent
+22: AL = CU.parent / "bofn-prelim"
+23: sys.path.insert(0, str(CU))
+24: from analyze import GRID, SHORT, at, cost_to, curve, fmt_cost, optimum  # noqa: E402
+25: 
+26: AL_OPT = json.loads((HERE / "al_optimum.json").read_text())["kappa1"]
+27: LAND = json.loads((HERE / "landscape.json").read_text())
+28: NOGATE_OPT = next(r["optimum"] for r in LAND if "no immersion gate" in r.get("truth", ""))
+29: CU_OPT = optimum(1.0, 1.0)
+30: AL_SHORT = {"pkgfn": "pKGFN: picks the stage", "pkgfn_free": "pKGFN, any alloy", "eifn": "BOFN, full pipeline", "eifn_reuse": "BOFN + powder (lot) reuse",
+31:             "tiered": "Tiered screening", "tiered_naive": "Tiered, no powder reuse", "ei": "Standard BO", "random": "Random"}
+32: 
+33: 
+34: def load_dir(path):
+35:     out = {}
+36:     for p in sorted(Path(path).glob("*.json")):
+37:         r = json.loads(p.read_text())
+38:         out.setdefault(r["kind"], []).append(r)
+39:     for k in out:
+40:         out[k].sort(key=lambda r: r["seed"])
+41:     return out
+42: 
+43: 
+44: def curves(runs, ystar):
+45:     return np.stack([curve(r["rows"]) for r in runs]) / ystar
+46: 
+47: 
+48: def ms(c, spend):
+49:     v = at(c, spend) * 100
+50:     return f"{np.nanmean(v):.0f}% ± {np.nanstd(v) / np.sqrt(len(v)):.0f}"
+51: 
+52: 
+53: def wilcoxon_row(A, B, ystar_a, ystar_b, spends=(25_000, 50_000, 100_000)):
+54:     from scipy.stats import wilcoxon
+55: 
+56:     a = {r["seed"]: curve(r["rows"]) / ystar_a for r in A}
+57:     b = {r["seed"]: curve(r["rows"]) / ystar_b for r in B}
+58:     seeds = sorted(set(a) & set(b))
+59:     cells = []
+60:     for s_ in spends:
+61:         i = int(np.searchsorted(GRID, s_))
+62:         d = np.array([a[s][i] - b[s][i] for s in seeds])
+63:         p = wilcoxon(d).pvalue if np.any(d != 0) else 1.0
+64:         cells.append(f"{d.mean() * 100:+.0f} points ({(d > 0).sum()}/{(d == 0).sum()}/{(d < 0).sum()}; p = {p:.2g})")
+65:     return len(seeds), cells
+66: 
+67: 
+68: def needle_table():
+69:     p = HERE / "needle.json"
+70:     if not p.exists():
+71:         return ""
+72:     n = json.loads(p.read_text())
+73:     a, c = n["aluminum (kappa = 1)"], n["copper (1, 1)"]
+74:     keys = ["optimum composition, random settings: share >= 60%", "optimum composition, random settings: share > 0", "random composition, optimum settings: share >= 60%",
+75:             "random composition, its best of 2,048 settings: share >= 60%", "random composition, its best of 2,048 settings: share > 0"]
+76:     rows = ["| Share of designs (`needle.py`) | Al (kappa = 1) | Cu (1, 1) |", "|---|---|---|"]
+77:     rows += [f"| {k.replace('share >= 60%', 'J at least 60% of J*').replace('share > 0', 'J > 0')} | {a[k]:.1%} | {c[k]:.1%} |" for k in keys]
+78:     rows += [f"| random designs passing immersion | | {c['random designs passing immersion']:.1%} |",
+79:              f"| the same designs, had they deposited fully dense | | {c['random designs that would pass if deposited fully dense']:.1%} |",
+80:              f"| random designs depositing at rho_m >= 0.9 | | {c['random designs with rho_m >= 0.9']:.2%} |"]
+81:     return "\n".join(rows)
+82: 
+83: 
+84: def side_by_side():
+85:     al = load_dir(AL / "results" / "k1")
+86:     cu = load_dir(CU / "results" / "k1e1")
+87:     rows = ["| Policy | Al (kappa = 1): n | start | $25k | $50k | $100k | Cu (1, 1): n | start | $25k | $50k | $100k |", "|---|---|---|---|---|---|---|---|---|---|---|"]
+88:     for k in ("pkgfn", "eifn_reuse", "eifn", "ei", "random", "tiered", "tiered_naive", "tiered_ni", "tiered_ni_ref", "pkgfn_free"):
+89:         cells = []
+90:         for data, ystar in ((al, AL_OPT), (cu, CU_OPT)):
+91:             if k not in data:
+92:                 cells += ["", "", "", "", ""]
+93:                 continue
+94:             c = curves(data[k], ystar)
+95:             cells += [str(len(c)), f"{np.nanmean(c[:, 0]) * 100:.0f}%", ms(c, 25_000), ms(c, 50_000), ms(c, 100_000)]
+96:         rows.append(f"| {SHORT.get(k, AL_SHORT.get(k, k))} | " + " | ".join(cells) + " |")
+97:     return "\n".join(rows)
+98: 
+99: 
+100: def landscape_table():
+101:     a, c, n = LAND[0], LAND[1], LAND[2]
+102:     seeds = LAND[3]["seed_data"]
+103:     rows = ["| Uniform random designs (10^6 per truth) | Al (kappa = 1) | Cu (1, 1) | Cu (1, 1) without the immersion gate |", "|---|---|---|---|"]
+104:     rows.append(f"| optimum J* | {a['optimum']:.3f} | {c['optimum']:.3f} | {n['optimum']:.3f} |")
+105:     rows.append(f"| median design (% of J*) | {a['quantiles_pct']['50%'] * 100:.0f}% | {c['quantiles_pct']['50%'] * 100:.0f}% | {n['quantiles_pct']['50%'] * 100:.0f}% |")
+106:     for t in ("0%", "50%", "60%", "70%", "80%"):
+107:         lab = "share with J > 0" if t == "0%" else f"share with J at least {t} of J*"
+108:         rows.append(f"| {lab} | {a['share_above'][t]:.3%} | {c['share_above'][t]:.3%} | {n['share_above'][t]:.3%} |")
+109:     for k in ("5", "21", "24", "26", "29"):
+110:         rows.append(f"| expected best of {k} random designs (% of J*) | {a['expected_best_of'][k] * 100:.0f}% | {c['expected_best_of'][k] * 100:.0f}% | {n['expected_best_of'][k] * 100:.0f}% |")
+111:     rows.append(f"| the five shared seed designs: mean best (% of J*), 20 seeds | {seeds['aluminum']['mean_best_seed_pct'] * 100:.0f}% | {seeds['copper']['mean_best_seed_pct'] * 100:.0f}% | |")
+112:     rows.append(f"| share passing immersion (m >= m_ref) | | {c['share_passing_immersion']:.1%} | |")
+113:     return "\n".join(rows)
+114: 
+115: 
+116: def gate_table():
+117:     gated = load_dir(CU / "results" / "k1e1")
+118:     nog = load_dir(HERE / "results-nogate" / "k1e1")
+119:     al = load_dir(AL / "results" / "k1")
+120:     rows = ["| Policy | Cu (1, 1) as benchmarked: n | start | $25k | $50k | $100k | Cu without the immersion gate: n | start | $25k | $50k | $100k | Al (kappa = 1) $100k |",
+121:             "|---|---|---|---|---|---|---|---|---|---|---|---|"]
+122:     for k in ("eifn_reuse", "eifn", "ei", "random", "pkgfn"):
+123:         cells = []
+124:         for data, ystar in ((gated, CU_OPT), (nog, NOGATE_OPT)):
+125:             if k not in data:
+126:                 cells += ["", "", "", "", ""]
+127:                 continue
+128:             c = curves(data[k], ystar)
+129:             cells += [str(len(c)), f"{np.nanmean(c[:, 0]) * 100:.0f}%", ms(c, 25_000), ms(c, 50_000), ms(c, 100_000)]
+130:         cells.append(ms(curves(al[k], AL_OPT), 100_000) if k in al else "")
+131:         rows.append(f"| {SHORT[k]} | " + " | ".join(cells) + " |")
+132:     return "\n".join(rows)
+133: 
+134: 
+135: def fidelity_table():
+136:     light = load_dir(CU / "quality" / "results-light" / "k1e1").get("pkgfn", [])
+137:     hf = load_dir(CU / "results" / "k1e1").get("pkgfn", [])
+138:     if not light or not hf:
+139:         return "", ""
+140:     rows = ["| pKGFN settings | n | $25k | $50k | $100k | median $ to 60% | median $ to 70% | KG-flat fallback share | C | A | U | M | S | T | K | I |", "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
+141:     for name, runs in (("light (first sweep): S = 32, 10 candidates, 256 pool, old fallback test", light), ("high fidelity (aluminum production): S = 64, 16 candidates, 512 pool, fixes", hf)):
+142:         c = curves(runs, CU_OPT)
+143:         fb = sum(sum(1 for x in r["rows"][1:] if x.get("fallback")) for r in runs) / sum(len(r["rows"]) - 1 for r in runs)
+144:         cnt = {g: np.mean([r["counts"][g] for r in runs]) for g in "CAUMSTKI"}
+145:         cells = [str(len(c)), ms(c, 25_000), ms(c, 50_000), ms(c, 100_000)] + [f"{fmt_cost(np.median(cost_to(c, t)))} ({np.isfinite(cost_to(c, t)).mean():.0%})" for t in (0.6, 0.7)]
+146:         cells += [f"{fb:.0%}"] + [f"{cnt[g]:.1f}" for g in "CAUMSTKI"]
+147:         rows.append(f"| {name} | " + " | ".join(cells) + " |")
+148:     n, cells = wilcoxon_row(hf, light, CU_OPT, CU_OPT)
+149:     pair = f"Matched seeds, high fidelity minus light (n = {n}; wins/ties/losses; Wilcoxon): $25k {cells[0]}; $50k {cells[1]}; $100k {cells[2]}."
+150:     return "\n".join(rows), pair
+151: 
+152: 
+153: def tiered_table():
+154:     cu = load_dir(CU / "results" / "k1e1")
+155:     rows = ["| Policy | n | $25k | $50k | $100k | builds immersed per run | of which pass immersion | builds stopped by the one-hour screen per run | lots retired at Utah per run |", "|---|---|---|---|---|---|---|---|---|"]
+156:     from bofn_alloy import M_REF
+157: 
+158:     for k in ("tiered", "tiered_ni", "tiered_ni_ref"):
+159:         if k not in cu:
+160:             continue
+161:         runs = cu[k]
+162:         c = curves(runs, CU_OPT)
+163:         imm = [sum(1 for b in r["builds"][5:] if b["m"] is not None) for r in runs]
+164:         ok = [sum(1 for b in r["builds"][5:] if b["m"] is not None and b["m"] >= M_REF) for r in runs]
+165:         stop = [sum(1 for x in r["rows"] if x["action"] == "screen-fail") for r in runs]
+166:         ret = [sum(1 for L in r["lots"][5:] if len(L["utah"]) >= 3 and max(u[2] for u in L["utah"]) < 0.5) for r in runs]
+167:         rows.append(f"| {SHORT[k]} | {len(c)} | {ms(c, 25_000)} | {ms(c, 50_000)} | {ms(c, 100_000)} | {np.mean(imm):.1f} | {np.mean(ok):.1f} | {np.mean(stop):.1f} | {np.mean(ret):.1f} |")
+168:     return "\n".join(rows)
+169: 
+170: 
+171: def first_positive_table():
+172:     """How long each policy takes to demonstrate its first alloy with J > 0 (it must pass immersion and
+173:     out-earn its burden), and how often pKGFN's KG was flat before and after that point."""
+174:     cu = load_dir(CU / "results" / "k1e1")
+175:     light = load_dir(CU / "quality" / "results-light" / "k1e1")
+176:     rows = ["| Policy | n | seeds whose shared seed data already holds an alloy with J > 0 | median new spend to the first alloy with J > 0 (seeds that reach it) | KG-flat fallback share before it | after it |", "|---|---|---|---|---|---|"]
+177:     sets = [(k, cu[k]) for k in ("pkgfn", "eifn_reuse", "eifn", "ei", "random", "tiered", "tiered_ni", "tiered_ni_ref") if k in cu]
+178:     if "pkgfn" in light:
+179:         sets.insert(1, ("pkgfn (light settings)", light["pkgfn"]))
+180:     for k, runs in sets:
+181:         start = sum(1 for r in runs if r["rows"][0]["best_validated"] > 0)
+182:         sp, fb_b, fb_a = [], [0, 0], [0, 0]
+183:         for r in runs:
+184:             hit = next((x["spent"] for x in r["rows"] if x["best_validated"] > 0), None)
+185:             sp.append(hit if hit is not None else np.inf)
+186:             for x in r["rows"][1:]:
+187:                 if "fallback" not in x:
+188:                     continue
+189:                 tgt = fb_b if x["best_validated"] <= 0 else fb_a
+190:                 tgt[0] += int(x["fallback"])
+191:                 tgt[1] += 1
+192:         sp = np.array(sp)
+193:         fb = (f"{fb_b[0] / fb_b[1]:.0%} of {fb_b[1]}" if fb_b[1] else "", f"{fb_a[0] / fb_a[1]:.0%} of {fb_a[1]}" if fb_a[1] else "")
+194:         name = SHORT.get(k, k)
+195:         rows.append(f"| {name} | {len(runs)} | {start} | {fmt_cost(np.median(sp))} ({np.isfinite(sp).sum()} of {len(sp)}) | {fb[0]} | {fb[1]} |")
+196:     return "\n".join(rows)
+197: 
+198: 
+199: def figures():
+200:     import matplotlib
+201: 
+202:     matplotlib.use("Agg")
+203:     import matplotlib.pyplot as plt
+204: 
+205:     import plot as PL  # the benchmark's styles and fonts
+206: 
+207:     # (1) the landscape: share of random designs at or above each fraction of the optimum
+208:     import torch
+209: 
+210:     sys.path.insert(0, str(HERE))
+211:     from landscape import al, cu  # noqa: F401  (the two truth modules, loaded side by side)
+212: 
+213:     g = torch.Generator().manual_seed(1)
+214:     ta, tc = al.AlloyTruth(1.0), cu.AlloyTruth(1.0, 1.0)
+215:     Xa, Xc = torch.rand(400_000, al.D, generator=g), torch.rand(400_000, cu.D, generator=g)
+216:     ya = (ta.objective(Xa) / AL_OPT).numpy()
+217:     oc = tc.full(Xc)
+218:     yc = (tc.objective(Xc, oc) / CU_OPT).numpy()
+219:     yn = ((oc["U"] - cu.LAMBDA * cu.burden(Xc)) / NOGATE_OPT).numpy()
+220:     fig, ax = plt.subplots(figsize=(9.5, 5.4))
+221:     t = np.linspace(0, 1, 201)
+222:     for y, lab, col, ls in ((ya, "Aluminum LPBF (kappa = 1)", PL.INK, "-"), (yn, "Copper DED, no immersion gate", "#8C8C8C", (0, (4, 2))), (yc, "Copper DED (1, 1), as benchmarked", PL.RED, "-")):
+223:         surv = np.array([(y >= v).mean() for v in t])
+224:         ax.semilogy(t * 100, np.clip(surv, 1e-6, None), color=col, lw=2.6, ls=ls, label=lab)
+225:     ax.set_xlabel("Fraction of the optimum, J / J* (%)")
+226:     ax.set_ylabel("Share of random designs\nat or above it")
+227:     ax.set_xlim(0, 100)
+228:     ax.set_ylim(1e-5, 1)
+229:     ax.yaxis.grid(True, color="#E6E6E6", lw=0.8)
+230:     ax.legend(frameon=False, fontsize=13, loc="lower left")
+231:     fig.tight_layout()
+232:     fig.savefig(HERE / "compare_landscape.png")
+233:     plt.close(fig)
+234:     # (2) the two benchmarks side by side
+235:     al_runs = load_dir(AL / "results" / "k1")
+236:     cu_runs = load_dir(CU / "results" / "k1e1")
+237:     nog = load_dir(HERE / "results-nogate" / "k1e1")
+238:     kinds = ("pkgfn", "eifn_reuse", "eifn", "ei", "random", "tiered", "tiered_ni_ref")
+239:     fig, axes = plt.subplots(1, 3, figsize=(17, 5.6), sharey=True)
+240:     x = GRID / 1e3
+241:     for ax, data, ystar, title in ((axes[0], al_runs, AL_OPT, "Aluminum LPBF (kappa = 1)"), (axes[1], cu_runs, CU_OPT, "Copper DED (1, 1), as benchmarked"),
+242:                                    (axes[2], nog, NOGATE_OPT, "Copper DED, no immersion gate")):
+243:         for k in kinds:
+244:             if k not in data:
+245:                 continue
+246:             c = curves(data[k], ystar) * 100
+247:             m, se = np.nanmean(c, 0), np.nanstd(c, 0) / np.sqrt(len(c))
+248:             st = PL.STYLE[k]
+249:             ax.fill_between(x, m - se, m + se, color=st["color"], alpha=0.08, lw=0)
+250:             ax.plot(x, m, color=st["color"], lw=st["lw"], ls=st["ls"], label=f"{SHORT[k]} (n = {len(c)})")
+251:             ax.text(101, m[-1], f"{m[-1]:.0f}", fontsize=11, va="center", color=st["color"] if st["color"] != "#D0D0D0" else "#A0A0A0")
+252:         ax.set_title(title, fontsize=15, loc="left", color=PL.INK)
+253:         ax.set_xlim(0, 100)
+254:         ax.set_xlabel("New spend ($k)")
+255:         ax.yaxis.grid(True, color="#E6E6E6", lw=0.8)
+256:         ax.axhline(0, color="#BFBFBF", lw=0.8)
+257:     axes[0].set_ylabel("Best alloy demonstrated\n(% of true optimum)")
+258:     handles, labels = axes[1].get_legend_handles_labels()
+259:     fig.legend(handles, [l.split(" (n")[0] for l in labels], loc="lower center", ncol=7, frameon=False, fontsize=12)
+260:     fig.tight_layout(rect=(0, 0.08, 1, 1))
+261:     fig.savefig(HERE / "compare_al_vs_cu.png")
+262:     plt.close(fig)
+263:     # (3) pKGFN light against high fidelity, every seed
+264:     light = load_dir(CU / "quality" / "results-light" / "k1e1").get("pkgfn", [])
+265:     hf = cu_runs.get("pkgfn", [])
+266:     if light and hf:
+267:         fig, ax = plt.subplots(figsize=(9.5, 5.4))
+268:         for runs, col, lab in ((light, "#BDBDBD", "light (S = 32, 10 candidates)"), (hf, PL.RED, "high fidelity (S = 64, 16 candidates)")):
+269:             c = curves(runs, CU_OPT) * 100
+270:             for row in c:
+271:                 ax.plot(x, row, color=col, lw=0.7, alpha=0.5)
+272:             ax.plot(x, np.nanmean(c, 0), color=col if col != "#BDBDBD" else "#7F7F7F", lw=3, label=f"{lab}, mean of {len(c)}")
+273:         ax.plot(x, np.nanmean(curves(cu_runs["eifn"], CU_OPT) * 100, 0), color="#404040", lw=2, ls=(0, (4, 2)), label=f"BOFN, full pipeline, mean of {len(cu_runs['eifn'])}")
+274:         ax.set_xlim(0, 100)
+275:         ax.set_xlabel("New spend ($k)")
+276:         ax.set_ylabel("pKGFN, best alloy demonstrated\n(% of true optimum)")
+277:         ax.yaxis.grid(True, color="#E6E6E6", lw=0.8)
+278:         ax.legend(frameon=False, fontsize=12, loc="upper left")
+279:         fig.tight_layout()
+280:         fig.savefig(HERE / "compare_pkgfn_fidelity.png")
+281:         plt.close(fig)
+282: 
+283: 
+284: def main():
+285:     L = ["# Copper against aluminum (written by `compare/compare.py`)", "",
+286:          f"Optima: aluminum (kappa = 1) {AL_OPT:.3f}; copper (1, 1) {CU_OPT:.3f}; copper (1, 1) without the immersion gate {NOGATE_OPT:.3f}. "
+287:          "Every percentage is of the optimum of the truth the runs were scored on.", "",
+288:          "## The two truths on random designs", "", landscape_table(), "",
+289:          "## Composition or process? Where the copper needle is", "", needle_table(), "",
+290:          "## The two benchmarks' results", "", side_by_side(), "",
+291:          "## The copper network without the immersion gate (J = U - 0.3 B; same network, stages, costs and seeds)", "", gate_table(), ""]
+292:     ft, pair = fidelity_table()
+293:     if ft:
+294:         L += ["## pKGFN: light against high-fidelity Monte Carlo settings", "", ft, "", pair, ""]
+295:     L += ["## Tiered screening against corrosion-aware tiered screening", "", tiered_table(), ""]
+296:     L += ["## Finding the feasible region first", "", "The copper objective is gated: an alloy that fails immersion scores minus 0.3 times its burden. "
+297:           "Before a policy has demonstrated an alloy with J > 0, one-step KG has little to improve on.", "", first_positive_table(), ""]
+298:     (HERE / "tables.md").write_text("\n".join(L) + "\n")
+299:     print("\n".join(L))
+300:     figures()
+301: 
+302: 
+303: if __name__ == "__main__":
+304:     main()

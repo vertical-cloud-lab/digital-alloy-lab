@@ -1,0 +1,9 @@
+All originals were left unchanged.
+Run python review/audit_reproduce.py to refit original targets and optimize both nickel floors, with deposited and wrought-reference bars.
+Run python review/verify_all_floors.py to independently rerun all stored-refit floor searches (several minutes).
+refits.json contains the alternative fitted constants, original-objective losses where comparable, feature modes, and predicted calibration values.
+refit_parameters_and_floors.csv contains numerical results; tau is seconds, compositions are wt%.
+floor_sensitivities_verified.json contains numerical floor witnesses, process settings, densities and mass losses.
+Run BOFN_REF=C71500 python review/check_phys_adapter.py, and then BOFN_REF=C70600 python review/check_phys_adapter.py, to reproduce available checks. The adapter uses TP.feasible because bofn_alloy was not supplied. The seed-design statistic is explicitly omitted (NaN), not imputed.
+Original-run failure logs, reproduced calibration, primary-source texts, and source metadata are also saved here. Citation BibTeX is under /workspace/citations/local-physics-audit/.
+Search: a is eliminated analytically by maximizing q; the remaining six variables (four compositions, P, v) use differential evolution plus constrained SLSQP, splitting Al regimes at 1.5 and 7 wt% for discontinuous feasibility rules. These are numerical minima, not formal proofs of global optimality. m saturation is avoided by comparing raw integrated mass loss. References are recomputed under each fit.

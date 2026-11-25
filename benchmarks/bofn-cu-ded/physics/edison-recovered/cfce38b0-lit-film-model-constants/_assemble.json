@@ -1,0 +1,14 @@
+{
+ "copied": [
+  "outputs/Measured Constants and Data Gaps"
+ ],
+ "excluded": [
+  {
+   "file": "outputs/tmp/tmpqzkio74u.pkl",
+   "bytes": 98815439,
+   "sha256": "20324a67177b63755c3d1efb2c2827c04214e6f34da984de9fe21b15da4ce3ed",
+   "reason": "PaperQA's pickled cache of the parsed papers: third-party full text, and a pickle is unsafe to load"
+  }
+ ],
+ "redacted_files": {}
+}

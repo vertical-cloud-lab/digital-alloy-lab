@@ -1,0 +1,416 @@
+[
+ {
+  "entry_id": "74f128d7-5fc1-4e2d-bae0-3e298bbe4f0a",
+  "name": "bofn_alloy.py",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/bofn_alloy.py",
+  "created_at": "2026-10-27T19:23:27.557822Z",
+  "storage_types": [
+   "gcs"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "bofn_alloy.py",
+    "bytes": 24404,
+    "sha256": "7e7d4c13572a8d63096106f2b9fe3c9289e9400ca5141cea981c7b3c723d2f16"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "efc6cc8e-98c2-47d4-89c9-b2d43cc8c591",
+  "name": "policies.py",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/policies.py",
+  "created_at": "2026-10-27T19:23:29.399691Z",
+  "storage_types": [
+   "gcs"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "policies.py",
+    "bytes": 38025,
+    "sha256": "3fcebb560f5162fed2c5cdfe845ed127121a9a275d43ccde0e989f41b20b20f5"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "7c58dd65-7a12-45ab-b67e-1aa624ac0217",
+  "name": "analyze.py",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/analyze.py",
+  "created_at": "2026-10-27T19:23:31.279705Z",
+  "storage_types": [
+   "gcs"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "analyze.py",
+    "bytes": 20261,
+    "sha256": "8d3263015e676e0386211449a64e64a9c80dcdfe5aabf170a22031537e2fd717"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "6dfd2797-2aec-45fa-bf83-d536d9adb382",
+  "name": "README.md",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/README.md",
+  "created_at": "2026-10-27T19:23:32.927144Z",
+  "storage_types": [
+   "raw_content"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "README.md",
+    "bytes": 44002,
+    "sha256": "3bf52a6c9229512dd32d8e74ab557b81e9e5b9948598e3b4bbd0786dc830dcdf"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "4f903b0e-8bca-44b1-ae89-9e2e3cb03452",
+  "name": "tables.md",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/tables.md",
+  "created_at": "2026-10-27T19:23:33.171995Z",
+  "storage_types": [
+   "raw_content"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "tables.md",
+    "bytes": 9409,
+    "sha256": "dd5d39def2266369303ec18f4888ef3b13424201a8057e72fa799c3af7c1a627"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "34df7f59-ed10-47b4-b3e0-889df6bb8a1b",
+  "name": "truth_tables.md",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/truth_tables.md",
+  "created_at": "2026-10-27T19:23:33.379972Z",
+  "storage_types": [
+   "raw_content"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "truth_tables.md",
+    "bytes": 5632,
+    "sha256": "f02efb66b1c18b1d530a04499774c840545e67e430eeda237ad92442ad62c418"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "d4be7fa6-86a2-479e-8017-b1cc880d1e1e",
+  "name": "truth_tables.json",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/truth_tables.json",
+  "created_at": "2026-10-27T19:23:33.549159Z",
+  "storage_types": [
+   "raw_content"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "truth_tables.json",
+    "bytes": 19064,
+    "sha256": "8d2267e897c65a9d4da51e335f85b774e03c0c32b45504b1703494dae3b5c3bb"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "a30f4dad-d6bc-459d-a6ab-5e940d5566df",
+  "name": "settings.md",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/edison/settings.md",
+  "created_at": "2026-10-27T19:23:33.754042Z",
+  "storage_types": [
+   "raw_content"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "settings.md",
+    "bytes": 3596,
+    "sha256": "e1c92c67f993ff689795d0dd679ed35117ba83b077948d8cf190bf331aa3c58f"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "a8146aef-141a-4dde-aefd-d6ff9b7b4d39",
+  "name": "landscape.py",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/compare/landscape.py",
+  "created_at": "2026-10-27T19:23:33.946951Z",
+  "storage_types": [
+   "gcs"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "landscape.py",
+    "bytes": 7819,
+    "sha256": "a2148540f86e5b83740673c2d5453076e545f1eb4c5f99e2cf3b85233440cd15"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "05f00001-60c6-4485-93c1-9b53212d6ebd",
+  "name": "landscape.json",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/compare/landscape.json",
+  "created_at": "2026-10-27T19:23:35.918804Z",
+  "storage_types": [
+   "raw_content"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "landscape.json",
+    "bytes": 2887,
+    "sha256": "86f00acc60e470f173e65ac6b21da157fd10aef45aa3d0eb445d2cbcf6f7f374"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "96004f24-4af6-4153-b8d9-8f892474fc97",
+  "name": "needle.py",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/compare/needle.py",
+  "created_at": "2026-10-27T19:23:36.236624Z",
+  "storage_types": [
+   "gcs"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "needle.py",
+    "bytes": 3511,
+    "sha256": "693c0c2bb9ded64f9b0aa2f537e9853e8eba8e365a65886dc51f13d92045d92f"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "6ee0532c-51d0-4680-88e8-428b2728832e",
+  "name": "needle.json",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/compare/needle.json",
+  "created_at": "2026-10-27T19:23:38.380013Z",
+  "storage_types": [
+   "raw_content"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "needle.json",
+    "bytes": 1084,
+    "sha256": "9b337c25b9a60ef72492da5f4519192e41be4ffd896a31f985d96a2c07363bfb"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "152ef5d1-1c48-46c2-8fd2-4a1b2d684001",
+  "name": "density.py",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/compare/density.py",
+  "created_at": "2026-10-27T19:23:38.590850Z",
+  "storage_types": [
+   "gcs"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "density.py",
+    "bytes": 4606,
+    "sha256": "3c04bead6a4c70be868463ceb3690e8c1d45b5d195ad06d072ae0efee5894f91"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "a669bef0-41bc-4bac-b9be-50d3ffb5be15",
+  "name": "density.json",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/compare/density.json",
+  "created_at": "2026-10-27T19:23:40.331126Z",
+  "storage_types": [
+   "raw_content"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "density.json",
+    "bytes": 1315,
+    "sha256": "850ff44cf3d9ade0bc9d524c8a3c55d6a453eddb8001284496461b4d3199205c"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "9ff71a1a-7c91-4150-adab-e05810371bf6",
+  "name": "compare.py",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/compare/compare.py",
+  "created_at": "2026-10-27T19:23:40.497839Z",
+  "storage_types": [
+   "gcs"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "compare.py",
+    "bytes": 16867,
+    "sha256": "b109531de8264e3c2b9bff92462b80ea9fbeec47aa95874adcc267da9fb52448"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "3b2dcc67-773d-4f02-8fc4-c470fbcc78fd",
+  "name": "compare_tables.md",
+  "file_path": "/tmp/edison-upload-cu/compare_tables.md",
+  "created_at": "2026-10-27T19:23:42.492744Z",
+  "storage_types": [
+   "raw_content"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "compare_tables.md",
+    "bytes": 5433,
+    "sha256": "f36ce6c3af1e12b5bc4a1e7231b59aa72f82da61101db76754bb1025acf88500"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "8e284d69-fe25-4e04-9a93-dd03dd2b6cc7",
+  "name": "al_optimum.json",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/compare/al_optimum.json",
+  "created_at": "2026-10-27T19:23:42.686144Z",
+  "storage_types": [
+   "raw_content"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "al_optimum.json",
+    "bytes": 31,
+    "sha256": "b501b4321d3913d14fd5b979d7683a1ceccd0a1181743391632212661caccfe4"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "62016fc4-251a-44e2-b7e1-48a9190f3b99",
+  "name": "al_bofn_alloy.py",
+  "file_path": "/tmp/edison-upload-cu/al_bofn_alloy.py",
+  "created_at": "2026-10-27T19:23:42.846746Z",
+  "storage_types": [
+   "gcs"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "al_bofn_alloy.py",
+    "bytes": 13992,
+    "sha256": "fbd79c9da726b112d6a2bb4e6f5f806e1c6613bd21db41338f91c22f43b5613e"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "04b45a86-79bc-4308-87ad-1ddaf2214571",
+  "name": "al_policies.py",
+  "file_path": "/tmp/edison-upload-cu/al_policies.py",
+  "created_at": "2026-10-27T19:23:44.738359Z",
+  "storage_types": [
+   "gcs"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "al_policies.py",
+    "bytes": 18704,
+    "sha256": "55036cdff0ce6036f6b5407fc2f0f2f0f64cc6bdf7c79a9a706d9c445f63a670"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "290ee087-a027-43d1-b845-36253ca00348",
+  "name": "al_analyze.py",
+  "file_path": "/tmp/edison-upload-cu/al_analyze.py",
+  "created_at": "2026-10-27T19:23:46.468639Z",
+  "storage_types": [
+   "gcs"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "al_analyze.py",
+    "bytes": 7811,
+    "sha256": "c26856911d739a50e9610bd6dd3b84791fa0d056e3fe3feff5ab1626414d7fab"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "3bff2ef3-108f-4a34-8471-48eaef246cd0",
+  "name": "al_README.md",
+  "file_path": "/tmp/edison-upload-cu/al_README.md",
+  "created_at": "2026-10-27T19:23:48.132485Z",
+  "storage_types": [
+   "raw_content"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "al_README.md",
+    "bytes": 33135,
+    "sha256": "2874bc91cd99d5df7736a507dc5a86b0547a15b763d9965d5ddb5e353dd64b10"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "c56aa936-a7bc-4de5-afba-5370e65d88db",
+  "name": "cu_results.zip",
+  "file_path": "/tmp/edison-upload-cu/cu_results.zip",
+  "created_at": "2026-10-27T19:23:48.347837Z",
+  "storage_types": [
+   "gcs"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "cu_results.zip",
+    "bytes": 1269205,
+    "sha256": "91c8ef6214b223e950df687bb5eb02d4b4b8bfa28083b20ee792d9ec750ad0b0"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "aa036e93-c501-49b5-bc13-978c181f7e28",
+  "name": "al_results.zip",
+  "file_path": "/tmp/edison-upload-cu/al_results.zip",
+  "created_at": "2026-10-27T19:23:50.144887Z",
+  "storage_types": [
+   "gcs"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "al_results.zip",
+    "bytes": 209465,
+    "sha256": "e57cdc3e182389961bf84de82cb13ac7798987bdcad8635ba1746fed1fe5cc37"
+   }
+  ],
+  "error": null
+ }
+]

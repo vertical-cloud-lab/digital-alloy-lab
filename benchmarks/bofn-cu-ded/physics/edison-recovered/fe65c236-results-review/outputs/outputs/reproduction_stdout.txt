@@ -1,0 +1,1055 @@
+/workspace
+/workspace/truth_tables.md
+/workspace/settings.md
+/workspace/memory
+/workspace/lost+found
+/workspace/results
+/workspace/analyze.py
+/workspace/quality
+/workspace/compare
+/workspace/outputs
+/workspace/.config
+/workspace/plot.py
+/workspace/.skills
+/workspace/bofn_cu_best_vs_spend_k1_partial_vs_full.png
+/workspace/.kernel_llm_logs_1.jsonl
+/workspace/bofn_alloy.py
+/workspace/bofn_cu_best_vs_spend_k1_partial_vs_full_current.png
+/workspace/.prompts
+/workspace/compare_tables.md
+/workspace/policies.py
+/workspace/README.md
+/workspace/truth_tables.json
+/workspace/tables.md
+results [('results/k0e0/eifn_s0.json', 17240), ('results/k0e0/eifn_reuse_s0.json', 20410), ('results/k1e1/ei_s4.json', 16974), ('results/k1e1/pkgfn_s5.json', 37703), ('results/k1e1/eifn_s10.json', 17289), ('results/k1e1/tiered_ni_ref_s8.json', 33262), ('results/k1e1/ei_s18.json', 17072), ('results/k1e1/tiered_ni_s2.json', 37939), ('results/k1e1/ei_s6.json', 17205), ('results/k1e1/tiered_s15.json', 35776), ('results/k1e1/tiered_ni_ref_s16.json', 36836), ('results/k1e1/random_s0.json', 17569), ('results/k1e1/eifn_reuse_s14.json', 19189), ('results/k1e1/eifn_reuse_s7.json', 19334), ('results/k1e1/eifn_reuse_s2.json', 20268), ('results/k1e1/random_s15.json', 17763), ('results/k1e1/eifn_s18.json', 17304), ('results/k1e1/eifn_s8.json', 17320), ('results/k1e1/tiered_ni_ref_s14.json', 22043), ('results/k1e1/eifn_reuse_s17.json', 20099), ('results/k1e1/random_s7.json', 17700), ('results/k1e1/ei_s16.json', 16771), ('results/k1e1/pkgfn_s2.json', 38450), ('results/k1e1/tiered_ni_s19.json', 20412), ('results/k1e1/tiered_ni_s3.json', 23129)]
+quality [('quality/results-light/k0e0/pkgfn_s5.json', 36891), ('quality/results-light/k0e0/pkgfn_s6.json', 37137), ('quality/results-light/k0e0/pkgfn_s2.json', 37668), ('quality/results-light/k0e0/pkgfn_s4.json', 39257), ('quality/results-light/k0e0/pkgfn_s9.json', 33837), ('quality/results-light/k0e0/pkgfn_s1.json', 35952), ('quality/results-light/k0e0/pkgfn_s11.json', 34269), ('quality/results-light/k0e0/pkgfn_s3.json', 35559), ('quality/results-light/k0e0/pkgfn_s0.json', 33906), ('quality/results-light/k0e0/pkgfn_s7.json', 39007), ('quality/results-light/k1e1/pkgfn_s5.json', 37617), ('quality/results-light/k1e1/pkgfn_s6.json', 35942), ('quality/results-light/k1e1/pkgfn_s2.json', 39816), ('quality/results-light/k1e1/pkgfn_s15.json', 38121), ('quality/results-light/k1e1/pkgfn_s8.json', 37613), ('quality/results-light/k1e1/pkgfn_s13.json', 34673), ('quality/results-light/k1e1/pkgfn_s12.json', 34136), ('quality/results-light/k1e1/pkgfn_s4.json', 35401), ('quality/results-light/k1e1/pkgfn_s14.json', 38139), ('quality/results-light/k1e1/pkgfn_s9.json', 31827), ('quality/results-light/k1e1/pkgfn_s10.json', 36888), ('quality/results-light/k1e1/pkgfn_s18.json', 37591), ('quality/results-light/k1e1/pkgfn_s1.json', 40531), ('quality/results-light/k1e1/pkgfn_s19.json', 36079), ('quality/results-light/k1e1/pkgfn_s11.json', 37511)]
+compare [('compare/results-nogate/k1e1/ei_s4.json', 17395), ('compare/results-nogate/k1e1/eifn_s10.json', 17333), ('compare/results-nogate/k1e1/ei_s18.json', 17313), ('compare/results-nogate/k1e1/ei_s6.json', 17287), ('compare/results-nogate/k1e1/random_s0.json', 17650), ('compare/results-nogate/k1e1/eifn_reuse_s14.json', 20425), ('compare/results-nogate/k1e1/eifn_reuse_s7.json', 19381), ('compare/results-nogate/k1e1/eifn_reuse_s2.json', 20822), ('compare/results-nogate/k1e1/random_s15.json', 17817), ('compare/results-nogate/k1e1/eifn_s18.json', 17313), ('compare/results-nogate/k1e1/eifn_s8.json', 17125), ('compare/results-nogate/k1e1/eifn_reuse_s17.json', 21099), ('compare/results-nogate/k1e1/random_s7.json', 17699), ('compare/results-nogate/k1e1/ei_s16.json', 17545), ('compare/results-nogate/k1e1/random_s9.json', 17672), ('compare/results-nogate/k1e1/eifn_s7.json', 17251), ('compare/results-nogate/k1e1/eifn_reuse_s15.json', 21200), ('compare/results-nogate/k1e1/ei_s9.json', 17237), ('compare/results-nogate/k1e1/eifn_s4.json', 17355), ('compare/results-nogate/k1e1/eifn_s16.json', 17090), ('compare/results-nogate/k1e1/ei_s13.json', 17285), ('compare/results-nogate/k1e1/eifn_reuse_s8.json', 20688), ('compare/results-nogate/k1e1/ei_s1.json', 17239), ('compare/results-nogate/k1e1/eifn_reuse_s5.json', 20782), ('compare/results-nogate/k1e1/ei_s14.json', 17378)]
+.prompts [('.prompts/MEMORY.md', 783), ('.prompts/USER.md', 708), ('.prompts/BOOTSTRAP.md', 5614)]
+README
+ # BOFN on a copper/DED network: does choosing the stage beat tiered screening?
+
+Copper and blown-powder DED version of [`../bofn-prelim/`](../bofn-prelim/README.md), the aluminum LPBF benchmark behind the MS&T26 preliminary results, built for the ONR YIP copper proposal (`near-term-submissions/onr-yip/onr-yip-technical-proposal-cu-ded.tex`, Figs. `fig:synth` and `fig:sim`; issue 205). It asks the same question on the copper workflow: with eight priced stages from a $10 calculation to a $3,100 deposition session, does cost-aware partial evaluation (pKGFN, [Buathong et al., ICML 2024](https://proceedings.mlr.press/v235/buathong24a.html)) reach good alloys with less money than tiered screening or whole-pipeline BO? `bofn-prelim/` and its 292 stored runs are unchanged.
+
+<!-- RESULTS -->
+## Bottom line (Oct 27)
+
+**The aluminum headline does not carry over to copper as specified, and the reason is clear: the immersion gate.** At `(kappa, eta) = (1, 1)` (both screens biased), best alloy demonstrated at $100k, % of the optimum:
+
+| Policy | n | $25k | $50k | $100k |
+|---|---|---|---|---|
+| BOFN, full pipeline | 20 | 15% ± 6 | 39% ± 9 | **73% ± 7** |
+| BOFN + lot reuse | 20 | 14% ± 5 | 32% ± 8 | **72% ± 7** |
+| pKGFN, aluminum production settings (Oct 27) | 7 | 3% ± 5 | 25% ± 10 | **59% ± 11** |
+| pKGFN, light settings (first sweep) | 20 | 12% ± 6 | 27% ± 7 | 59% ± 5 |
+| Tiered, Ni ≥ 10 wt%, reference screen (Oct 27) | 20 | 8% ± 4 | 16% ± 4 | **24% ± 5** |
+| Random | 20 | −1% ± 4 | 7% ± 5 | 22% ± 5 |
+| Standard BO | 20 | 6% ± 3 | 7% ± 3 | 14% ± 6 |
+| Tiered, Ni ≥ 10 wt% (Oct 27) | 20 | −7% ± 5 | 1% ± 5 | 10% ± 6 |
+| Tiered screening (the spec's rule) | 20 | −9% ± 5 | −9% ± 5 | −8% ± 5 |
+
+- **Network-aware BO wins by a wide margin.** BOFN reaches 73% (full pipeline) and 72% (lot reuse), against 14% for standard BO and 22% for random designs.
+- **Against a fair tiered baseline, the aluminum-style speed-up comes back for BOFN.** Corrosion-aware tiered screening (`tiered_ni_ref`) ends at 24%.
+  - BOFN on the full pipeline first reaches that level at $34k: **3.0× less spend** (90% bootstrap CI 1.7–4.2).
+  - BOFN + lot reuse reaches it at $35k: 2.8× (1.7–4.1).
+  - pKGFN at the aluminum settings (7 seeds) reaches it at $47k: 2.1× (90% CI 0.9–2.4).
+  - The light-settings pKGFN reached it at $47k: 2.1× (1.5–3.9).
+  - At $100k BOFN is ahead of it by 49 points (17 of 20 matched seeds; Wilcoxon p = 0.0003).
+  - The spec's tiered rule (−8%) gives no meaningful speed-up, because every policy passes its level in its first few purchases.
+- **pKGFN at the aluminum production settings.** Seeds 0 to 5 and 7 end at 59% ± 11 (65, 86, −1, 78, 58, 91, 35). The same seeds at the light settings end at 64% ± 4 (63, 47, 60, 78, 73, 77, 51; 3 wins, 0 ties and 4 losses for the high-fidelity runs, Wilcoxon p = 0.69). BOFN on the full pipeline ends at 87% ± 4 on those seeds (1 win, 0 ties and 6 losses for the high-fidelity runs, Wilcoxon p = 0.047). So the lighter settings were not why pKGFN lags. Per run it still deposits about 38 builds at Mines and completes only 5 through tensile and immersion; per $100k it buys 38 Mines sessions, 6 tensile tests and 11 immersions. On 3 of the 7 seeds KG was flat for most of the budget: the EI fallback made 70% and 67% and 89% of the purchases on seeds 1 and 2 and 7, against 1% and 3% and 27% and 5% on the others. The fallback prices the whole path to a validated build but buys only the next step, and the next decision rarely finishes the path. BOFN + lot reuse, which buys the whole path at once, reaches 72%.
+- **Corrosion-aware tiered screening** (two new variants, 20 seeds each):
+  - A 10 wt% Ni floor on the shortlist raises its ceiling from −19% to 60%, but alone it reaches only 10%. The spec's one-hour-screen gate (top quartile of everything screened so far, which the high-Ni seed builds set) stops most of its Cu-Ni builds before immersion: 2.5 immersions per run.
+  - Gating the screen on a dense 90-10 Cu-Ni reference coupon gives 9.9 immersions per run, 2.6 of which pass, and 24%. That is random's level (22%), a pattern seen in aluminum too, where tiered screening ended below random.
+  - Its weak seeds spend most of the budget on lots that fail Utah's density gate: new lots atomized at poor settings.
+- **Why copper differs from aluminum** (next section): the immersion gate acting on the deposit's density.
+  - 62% of random copper designs have a composition that would pass immersion if deposited fully dense, but only 3.2% pass as deposited, and the five shared seed alloys start at −10% of the optimum (aluminum: +35%).
+  - On the same copper network without the gate, BOFN reaches 85 to 88% (aluminum: 86 to 90%), standard BO 65% (gated: 14%) and random 51% (gated: 22%).
+- **The "density" of 0.40 is not a density.** It is the lack-of-fusion factor of a multiplicative deposit-quality index, a strength knockdown. Read as relative density through a porosity-strength relation, 0.40 is about 87% dense and Utah's gate of 0.5 about 90%, far laxer than the proposal's 99%. The section [The deposition index is not a density](#the-deposition-index-is-not-a-density) gives two ways to fix it; both need your call.
+
+**What the data supports for the proposal.** "In a synthetic version of the copper workflow, with both screens biased, searches that model the linked steps reached about 73% of the optimum after $100,000, against 14% for standard Bayesian optimization and 24% for screening with a nickel floor for seawater, which they matched with about a third of the spend. The immersion requirement separates them: a deposit that is not nearly fully dense fails it, and a model of the linked steps learns that from the intermediate measurements." The published one-step cost-aware rule reached 59% at the aluminum benchmark's production settings (7 of 20 seeds so far; 59% at the first sweep's light settings). The claim that choosing the stage beats running the full chain is not supported on this network. Edison's suggested wording is under Quality checks.
+
+**The proposal is unchanged this session.** Fig. `fig:sim` (`bofn_cu_best_vs_spend_k1_partial_vs_full.png`) and the paragraph still show the first sweep: light-settings pKGFN and the spec's tiered rule. [`variants/bofn_cu_best_vs_spend_k1_partial_vs_full_current.png`](variants/bofn_cu_best_vs_spend_k1_partial_vs_full_current.png) has the high-fidelity pKGFN, and [`variants/bofn_cu_best_vs_spend_k1_partial_vs_full_corrosion_aware_tiered.png`](variants/bofn_cu_best_vs_spend_k1_partial_vs_full_corrosion_aware_tiered.png) uses the corrosion-aware tiered baseline. Switching the proposal is a decision: `python plot.py --proposal` overwrites Fig. `fig:sim`, and the PDF then needs a rebuild.
+
+**Not done yet** ([`logs/plan.sh`](logs/plan.sh) resumes where this session stopped):
+- pKGFN at the aluminum settings for the remaining seeds (6 and 8 to 19).
+- The sensitivity cells (0, 0), (1, 0) and (0, 1).
+- The new policies (`pkgfn_screen`, `pkgfn_audit`, `mines_only`, `funnel`), and with them the screen-audit and two-step tables.
+- The S = 256 fidelity check.
+- A decision on the deposition index and the Utah gate.
+- The Edison analysis review of the high-fidelity results.
+
+![partial vs full evaluation, current runs](variants/bofn_cu_best_vs_spend_k1_partial_vs_full_current.png)
+
+*Best alloy demonstrated against new spend at `(kappa, eta) = (1, 1)`, with pKGFN at the aluminum production settings (7 seeds) and every other policy at 20 seeds. The proposal's Fig. `fig:sim` is the same plot from the first sweep (light-settings pKGFN, 20 seeds): [`bofn_cu_best_vs_spend_k1_partial_vs_full.png`](bofn_cu_best_vs_spend_k1_partial_vs_full.png).*
+
+![corrosion-aware tiered baseline](variants/bofn_cu_best_vs_spend_k1_partial_vs_full_corrosion_aware_tiered.png)
+
+*The same with corrosion-aware tiered screening (Ni ≥ 10 wt%, reference-coupon screen gate) as the tiered baseline.*
+
+![all policies](bofn_cu_best_vs_spend_k1e1_all_policies.png)
+
+![where the money went](bofn_cu_allocation_k1e1.png)
+
+*Purchases per $100k (mean over seeds) at (1, 1), excluding the shared seed data.*
+
+### Every policy, best alloy demonstrated (% of optimum, mean ± SE over seeds)
+
+**`(kappa, eta) = (1, 1)`** (the crack screen misses the nucleant; the one-hour screen misses beta-prime):
+
+| Policy | n | $25k | $50k | $100k | median $ to 60% | median $ to 70% | median $ to 80% |
+|---|---|---|---|---|---|---|---|
+| pKGFN: picks the stage | 7 | 3% ± 5 | 25% ± 10 | 59% ± 11 | $100k (57% of seeds) | >$100k (43% of seeds) | >$100k (29% of seeds) |
+| pKGFN, light settings (first sweep) | 20 | 12% ± 6 | 27% ± 7 | 59% ± 5 | $86k (60% of seeds) | >$100k (35% of seeds) | >$100k (5% of seeds) |
+| BOFN, full pipeline | 20 | 15% ± 6 | 39% ± 9 | 73% ± 7 | $67k (85% of seeds) | $74k (75% of seeds) | $88k (70% of seeds) |
+| BOFN + lot reuse | 20 | 14% ± 5 | 32% ± 8 | 72% ± 7 | $54k (85% of seeds) | $65k (85% of seeds) | $81k (65% of seeds) |
+| Tiered screening | 20 | -9% ± 5 | -9% ± 5 | -8% ± 5 | >$100k (0% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
+| Tiered, Ni ≥ 10 wt% | 20 | -7% ± 5 | 1% ± 5 | 10% ± 6 | >$100k (0% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
+| Tiered, Ni ≥ 10 wt%, reference screen | 20 | 8% ± 4 | 16% ± 4 | 24% ± 5 | >$100k (10% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
+| Standard BO | 20 | 6% ± 3 | 7% ± 3 | 14% ± 6 | >$100k (15% of seeds) | >$100k (5% of seeds) | >$100k (5% of seeds) |
+| Random | 20 | -1% ± 4 | 7% ± 5 | 22% ± 5 | >$100k (5% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
+
+Scored by the deposited alloy each policy's own model ranks best (`rec_printed`), which credits builds not yet tested:
+
+| Policy | n | $25k | $50k | $100k | median $ to 60% | median $ to 70% | median $ to 80% |
+|---|---|---|---|---|---|---|---|
+| pKGFN: picks the stage | 7 | 19% ± 10 | 30% ± 12 | 71% ± 6 | $54k (86% of seeds) | $92k (57% of seeds) | >$100k (29% of seeds) |
+| pKGFN, light settings (first sweep) | 20 | 19% ± 6 | 37% ± 7 | 68% ± 4 | $52k (80% of seeds) | $78k (60% of seeds) | >$100k (25% of seeds) |
+| BOFN, full pipeline | 20 | 15% ± 6 | 39% ± 9 | 73% ± 7 | $67k (85% of seeds) | $74k (75% of seeds) | $88k (70% of seeds) |
+| BOFN + lot reuse | 20 | 13% ± 4 | 32% ± 8 | 72% ± 7 | $54k (85% of seeds) | $65k (85% of seeds) | $81k (65% of seeds) |
+| Tiered screening | 20 | -8% ± 5 | -8% ± 5 | -6% ± 5 | >$100k (0% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
+| Tiered, Ni ≥ 10 wt% | 20 | 2% ± 4 | 7% ± 4 | 13% ± 5 | >$100k (0% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
+| Tiered, Ni ≥ 10 wt%, reference screen | 20 | 8% ± 4 | 16% ± 4 | 24% ± 5 | >$100k (10% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
+| Standard BO | 20 | 6% ± 3 | 7% ± 3 | 14% ± 6 | >$100k (15% of seeds) | >$100k (5% of seeds) | >$100k (5% of seeds) |
+| Random | 20 | -1% ± 4 | 7% ± 5 | 22% ± 5 | >$100k (5% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
+
+Matched seeds (Wilcoxon signed-rank; every pair and both speed-up tables in [`tables.md`](tables.md)):
+
+| pKGFN: picks the stage against | n | $25k: mean difference (wins/ties/losses; p) | $50k | $100k |
+|---|---|---|---|---|
+| pKGFN, light settings (first sweep) | 7 | -11 points (3/0/4; p = 0.58) | -2 points (3/0/4; p = 0.94) | -5 points (3/0/4; p = 0.69) |
+| Tiered screening | 7 | +17 points (6/1/0; p = 0.031) | +37 points (7/0/0; p = 0.016) | +69 points (7/0/0; p = 0.016) |
+| Tiered, Ni ≥ 10 wt% | 7 | +14 points (5/1/1; p = 0.094) | +30 points (6/0/1; p = 0.047) | +53 points (7/0/0; p = 0.016) |
+| Tiered, Ni ≥ 10 wt%, reference screen | 7 | -7 points (2/0/5; p = 0.47) | +4 points (5/0/2; p = 0.69) | +31 points (6/0/1; p = 0.047) |
+| BOFN, full pipeline | 7 | -21 points (0/0/7; p = 0.016) | -21 points (1/0/6; p = 0.22) | -29 points (1/0/6; p = 0.047) |
+| BOFN + lot reuse | 7 | -14 points (1/0/6; p = 0.11) | -15 points (2/0/5; p = 0.38) | -3 points (3/0/4; p = 0.81) |
+| Standard BO | 7 | -0 points (2/1/4; p = 0.84) | +20 points (4/0/3; p = 0.22) | +47 points (5/0/2; p = 0.078) |
+| Random | 7 | +4 points (4/1/2; p = 0.56) | +22 points (5/0/2; p = 0.16) | +40 points (6/0/1; p = 0.031) |
+
+Purchases per $100k:
+
+| Policy | n | C ($10) | A ($400) | U ($500) | M ($1,500+) | S ($100) | T ($200) | K ($50) | I ($400) | new lots | Mines sessions that paid a scale-up |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| pKGFN: picks the stage | 7 | 4.6 | 17.6 | 16.3 | 37.9 | 13.4 | 5.9 | 11.9 | 11.3 | 17.6 | 12.7 |
+| pKGFN, light settings (first sweep) | 20 | 6.7 | 12.4 | 11.3 | 40.5 | 15.7 | 7.2 | 14.0 | 12.8 | 12.4 | 12.3 |
+| BOFN, full pipeline | 20 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 |  |
+| BOFN + lot reuse | 20 | 12.6 | 12.6 | 12.6 | 29.3 | 29.3 | 29.3 | 29.3 | 29.3 | 12.6 |  |
+| Tiered screening | 20 | 224.0 | 22.8 | 44.2 | 24.9 | 24.9 | 24.9 | 24.9 | 4.0 | 22.8 |  |
+| Tiered, Ni ≥ 10 wt% | 20 | 224.0 | 31.0 | 67.4 | 18.4 | 18.4 | 18.4 | 18.4 | 2.5 | 31.0 |  |
+| Tiered, Ni ≥ 10 wt%, reference screen | 20 | 224.0 | 26.5 | 53.6 | 21.1 | 21.1 | 21.1 | 21.1 | 9.9 | 26.5 |  |
+| Standard BO | 20 | 19.7 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 |  |
+| Random | 20 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 |  |
+
+
+<!-- /RESULTS -->
+
+<!-- WHY -->
+## Why the copper results differ from the aluminum ones
+
+[`compare/`](compare/) puts the two benchmarks side by side; every table is in [`compare/tables.md`](compare/tables.md). The two use the same baseline code, the same five seed draws per seed (uniform on [0, 1]^7, mapped onto different truths), the same GP code and the same budget. Four differences explain the gap, in this order:
+
+**1. The copper objective is a needle; the aluminum one is a hill. The needle is the immersion gate acting on the deposit's density.** On 10^6 uniform random designs ([`compare/landscape.py`](compare/landscape.py), [`compare/needle.py`](compare/needle.py)):
+
+| | Al (kappa = 1) | Cu (1, 1) | Cu (1, 1), no immersion gate |
+|---|---|---|---|
+| share of designs with J > 0 | 28% | **3.0%** | 20% |
+| share with J at least 60% of J* | 3.3% | **0.23%** (14× less) | 0.78% |
+| share with J at least 80% of J* | 0.51% | **0.012%** (43× less) | 0.036% |
+| expected best of the 26 designs a random search sees (5 seed + 21 new) | 62% | **12%** | 45% |
+| the five shared seed designs (mean best over 20 seeds) | +35% | **−10%** | |
+
+- **Most of the needle is in the deposit, not the composition.**
+  - Only 3.2% of random copper designs pass immersion (`m >= m_ref`). Had the same designs deposited fully dense, 62% would. Edison reproduced this independently: 3.19% and 61.5%.
+  - The immersion index loses 0.03 for every 0.1 of `rho_m` (the `0.30 (1 − rho_m)` term), against a sigmoid gate 0.05 wide. A deposit below about 0.9 therefore fails immersion and forfeits most of its strength credit; an alloy well below the reference scores about minus 0.3 times its burden. Only 0.14% of random designs deposit that densely.
+  - In aluminum a porous build lost strength in proportion and kept the rest.
+  - Composition matters too, though less. At each composition's best settings, 84% of random aluminum compositions and 31% of copper ones can reach 60% of the optimum. At the optimum's settings, 66% and 5% can.
+- **The burden also fights the gate.** It puts its heaviest weight (1.0) on Ni, the element immersion needs. In aluminum the heavily weighted element, Sc, had a cheap substitute, Zr, for the same nucleant.
+- **The random rows follow the landscape.** Random reached 68% in aluminum and 22% in copper, against expected bests of 62% and 12% for its 26 designs.
+
+![the two landscapes](compare/compare_landscape.png)
+
+*Share of uniform random designs that reach each fraction of the optimum (log scale).*
+
+![composition slices](compare/compare_landscape_maps.png)
+
+*A composition slice through each optimum, each point at its best atomizer, power and speed (2,048 settings). At the best settings both are broad hills. The copper needle comes from the process: a deposit that is not nearly fully dense fails immersion.*
+
+**2. The gate is what breaks the model-free baselines, and the network's intermediate outputs are what let BOFN through it.** On the same copper network, stages, costs and seeds, the ablation scores J = U − 0.3 B instead of the gated objective ([`compare/results-nogate/`](compare/results-nogate/), 20 seeds each, as % of that truth's optimum, 0.745):
+
+| Policy | Cu (1, 1) as benchmarked | Cu without the immersion gate | Al (kappa = 1) |
+|---|---|---|---|
+| BOFN + lot reuse | 72% ± 7 | **88% ± 2** | 90% ± 2 |
+| BOFN, full pipeline | 73% ± 7 | **85% ± 5** | 86% ± 4 |
+| Standard BO | 14% ± 6 | **65% ± 4** | 84% ± 3 |
+| Random | 22% ± 5 | **51% ± 3** | 68% ± 2 |
+| the shared seed data (start) | −10% | 23% | 35% |
+
+- **Without the gate, the network-aware policies land where they did in aluminum.** The model-free baselines recover most of the way: in Edison's words, the gains are about 73% (standard BO) and 62% (random) of their Al-to-Cu drops "numerically, not as identified causal fractions". The rest is the narrower copper landscape: the expected best of 26 random designs is 45%, against 62% in aluminum.
+- **This is a compound ablation.** Removing the gate also changes what BOFN and standard BO buy. Only for random are the designs identical with and without the gate, which makes its row a clean rescoring.
+- **With the gate, standard BO's GP learns the wrong lesson.** 97% of designs return only minus their burden, a sloped floor that tells it to cut nickel, away from the alloys that pass.
+- **BOFN models density, the immersion index and strength as separate nodes.** Those nodes carry signal even when an alloy fails immersion. That is the network's advantage on this problem, and why it is so large.
+
+**3. A copper composition shows its value only after four or five more purchases, and one-step KG is flat until something passes immersion.** An aluminum powder needed a print and a tensile test. A copper lot needs a Mines session, microscopy, tensile, the one-hour screen and immersion. While no demonstrated alloy has J > 0, KG has nothing to improve on. This is the aluminum README's finding ("one-step KG can't see that a powder's value only shows once it is printed"), with two to three times as many steps between a purchase and its payoff.
+
+| Policy, (1, 1), 20 seeds | median new spend to the first demonstrated alloy with J > 0 (all seeds) | seeds that reach one by $100k |
+|---|---|---|
+| BOFN, full pipeline | $14k | 20 |
+| Tiered, Ni ≥ 10 wt%, reference screen | $19k | 17 |
+| BOFN + lot reuse | $21k | 20 |
+| Standard BO | $24k | 20 |
+| Random | $31k | 17 |
+| pKGFN, light settings (first sweep) | $39k | 19 |
+| pKGFN, aluminum settings (7 seeds so far) | $47k | 6 of 7 |
+
+Medians are over all 20 seeds; a seed that never demonstrates one counts as more than $100k. The shared seed data of five seeds already holds such an alloy. J > 0 is not the same as a hard immersion pass, because the gate is a sigmoid. Of the light-settings pKGFN's purchases made before it had such an alloy, the EI fallback made 42% because KG was flat; after, it made 4% ([`compare/tables.md`](compare/tables.md); each purchase is classified by the state when it was made, as Edison corrected).
+
+**Unfinished builds matter more.** The light-settings pKGFN deposited about 40 builds per run at Mines but carried only about 6 through tensile and immersion; BOFN carried all 21 of its builds through. Edison scored every deposited design against the truth, an oracle the policy cannot use. The best of pKGFN's builds is worth 68.5% of the optimum, against 58.6% demonstrated, so unfinished validation explains at most about 10 of its 15-point gap to BOFN.
+
+**4. Tiered screening's shortlist rule fails for a different reason on each network.**
+- In aluminum, the shortlist was the right family with the optimum screened out: a 65% ceiling, and tiered screening reached 63%.
+- In copper, ranking by CALPHAD strength net of a Ni-heavy burden picks aluminum bronzes with 2 to 6 wt% Ni. None of the 80 shortlisted compositions (20 seeds × 4) can pass immersion at any settings: the ceiling is −19%.
+- A corrosion-aware shortlist (Ni ≥ 10 wt%) raises the ceiling to 60%. The bottom line has what it reaches.
+
+**What does not explain it.**
+- **Costs.** $4,760 against $4,210 per full chain: the copper runs fit 21 full chains, the aluminum ones 23. Edison cut the aluminum runs at 21 chains: standard BO, random and BOFN drop by only 3.3, 3.6 and 0.7 points, against Al-to-Cu drops of 69, 46 and 13.
+- **The baselines' code.** EIFN, BOFN + reuse, standard BO and random use the same pools (1,024 or 2,048 Sobol designs plus local perturbations), the same 64 Monte Carlo samples and the same GP code in both benchmarks.
+- **pKGFN's code.** It differs from the aluminum version in ways that matter for pKGFN alone:
+  - EI is measured from the best demonstrated alloy, not the best posterior mean.
+  - The fallback prices the path to a validated build.
+  - There are three test bundles.
+  - Tests are limited to N_CAND candidates per stage; in aluminum every untested build was a candidate.
+  - The first sweep's settings were lighter.
+  
+  The re-run at the aluminum settings tests the last one (bottom line). None of these touches the baselines' 40 to 70 point drops.
+<!-- /WHY -->
+
+## The deposition index is not a density
+
+The two DED nodes return `rho = window × q^0.3 × (1 − 0.75 crack) × (1 − lof)`, with an extra factor of `0.95 + 0.05 q` at Utah. It is a product of four factors on [0, 1], strength is proportional to it (`U ∝ rho_m`), and it lowers the immersion index. Calling it a "dense, crack-free index" invites reading it as relative density, and read that way its values make no sense. The median 0.40 that copper-rich alloys reach at Utah would mean 60% porosity, which no DED deposit has: an under-powered copper deposit is roughly 80 to 95% dense, or it does not build at all.
+
+![the deposition index, factor by factor](compare/density_factors.png)
+
+*The 200 copper-rich compositions of required property 4 (Ni and Al under about 2 wt% each), each at its best Utah and Mines settings over 16,384 settings ([`compare/density.py`](compare/density.py), [`compare/density.json`](compare/density.json)).*
+
+- **Where the 0.40 comes from.** It is the lack-of-fusion factor alone. At their best settings, the process window, the powder and the crack factor are 0.96 to 1.00 at both sites. `1 − lof = sig((P − h)/0.08)` is 0.41 at Utah, where power is capped at 0.5 and copper-rich alloys have a conductivity index `h` of about 0.53. At Mines (best P about 0.75) it is 0.94.
+- **What the index can stand for.** The exponential porosity-strength relation, `index = exp(−b φ)` with porosity φ and b between 4 and 10, reads the index as the strength knockdown of a porous deposit. Under that reading the values become plausible relative densities (b = 7, with b = 4 to 10 in brackets):
+  - 0.40 is 87% dense (77 to 91%).
+  - Utah's gate of 0.5 is 90% dense (83 to 93%).
+  - 0.88, copper-rich at Mines, is 98.2% dense.
+  - 0.93, the optimum at Mines, is 99.0% dense.
+  
+  So the shape of the truth is defensible, but its name and the Utah gate are not.
+- **The gate does not match the proposal.** The proposal scales up "only compositions whose small blocks at Utah reach 99% relative density" (`onr-yip-technical-proposal-cu-ded.tex`, line 907). Under the b = 7 reading that is an index of about 0.93. The benchmark's gate, `rho_u >= 0.5` (tiered screening, the funnel and the screen-trusting pKGFN variants), is about 90%, much laxer.
+- **Options for the next round (your call).**
+  - (a) Keep the truth. Call the node "deposit quality (a strength knockdown; 0.93 is about 99% dense)" in the README and in Fig. `fig:synth` (now "Dense index" and "Dense fraction"), report the implied relative density, and move the Utah gate to the proposal's 99% (index 0.93).
+  - (b) Rewrite the two nodes to return relative density, `1 − φ`, with lack-of-fusion porosity up to about 20% and keyhole porosity up to about 10%, plus a separate crack index, and knock strength down by `exp(−b φ)`.
+  
+  (b) is more physical, but it changes what every GP models, so every run would have to be redone. Neither changes the runs reported here: the policies see the node only through their GPs.
+
+
+![network](bofn_cu_network_strip.png)
+
+- **Design space (7-D, all scaled to [0, 1]; copper is the balance):** Ni 0 to 30 wt%, Al 0 to 9.5, Fe 0 to 4.5, Mn 0 to 4 (the proposal's Table `tab:space`); ultrasonic atomizer setting; laser power (about 0 to 1 kW; Utah's MX-Lab is capped at 0.5 of the scale); travel speed.
+- **Network:** one GP per node, and each node's output feeds its children.
+  - CALPHAD and heat flow return four things in one call: strengthening potential `s`, solidification index `f`, nucleant fraction `g` (the iron-rich primary kappa particles) and a conductivity index `h`. The spec named three outputs; `h` was added so the lack-of-fusion term is a function of node inputs.
+  - Atomization returns powder quality `q` from the atomizer setting, Mn and `f` (which stands in for the liquidus margin, since both rise with nickel).
+  - Small DED at Utah returns a deposit-quality index `rho_u` (dense and crack-free, 0 to 1; a strength knockdown, not a relative density: see [The deposition index is not a density](#the-deposition-index-is-not-a-density)) from power (capped at 0.5), speed, `f`, `g`, `h` and `q`.
+  - Large DED at Mines returns the same index `rho_m` from the same inputs at full power. Its GP also takes `rho_u` as an input so the model can learn the small-to-large transfer; the truth links the two only through shared parents.
+  - Microscopy returns retained beta-prime `beta` (Al, Ni, P, v, `rho_m`). Tensile returns strength `U` (`s`, `rho_m`, `beta`). The one-hour screen returns `w` and the 30-day immersion `m` (Ni, Al, Fe, `rho_m`, `beta`; the immersion GP also takes `w`, which the truth ignores).
+  - The objective is `J = U * sigmoid((m - m_ref) / 0.05) - 0.3 B`: strength, counted only if the alloy passes immersion, minus 0.3 times the critical-mineral burden `B = 1.0 Ni + 0.3 Al + 0.2 Mn` (known and free to compute). `m_ref = 0.849` is the immersion index of 70-30 copper-nickel (C71500) deposited dense at its best settings in the headline world, so "passes immersion" means "no worse than the reference alloy", the proposal's H5 definition. It is fixed in every cell.
+- **Costs per query (round all-in estimates: materials, student time, facility time, shipping):** CALPHAD and heat flow $10; ultrasonic atomization of one 0.5 kg lot $400; small DED at the University of Utah $500 (an allowance like SEM time); large DED at the Colorado School of Mines $3,100 for the first session on a composition ($1,600 for the 2 kg scale-up lot, four more atomizer runs, plus $1,500 for the session: machine time at posted external rates, a certified chemistry check and shipping) and $1,500 for each repeat session on the same lot; microscopy (SEM, EDS, EBSD) $100; tensile $200; one-hour corrosion screen $50; 30-day immersion $400. A full chain on a new composition costs $4,760, so $100k buys about 21 full cycles (PR 86's aluminum chain was $4,210, about 24).
+- **Physical rules:** CALPHAD runs automatically before the first experiment on a composition; a 0.5 kg lot must exist before Utah; the scale-up (paid inside the first Mines session) before Mines; a Mines build before microscopy; microscopy before tensile and the screen; the screen before immersion. One lot supports many Utah visits and, once scaled up, four Mines sessions. Reprints and repeat sessions reuse lots.
+- **Two bias knobs.** `kappa`: the iron-rich kappa particles nucleate alpha and suppress hot tearing, which a Scheil solidification index cannot see (the copper analogue of Zr inoculation in aluminum, [Martin et al., Nature 2017](https://doi.org/10.1038/nature23894)). At `kappa = 1` they cut the effective index by up to 85%; at `kappa = 0` they do nothing and the screen's physics is right. `eta`: at `eta = 1` the one-hour screen rates fresh films and is blind to the selective attack of retained beta-prime that 30-day immersion finds (welded NAB is attacked selectively in seawater, [Dobson et al. 2024](https://doi.org/10.1016/j.corsci.2024.112004); a quick measurement in air ranked NAB's phases opposite to the order in which they corroded, [Iannuzzi et al. 2017](https://doi.org/10.1149/2.0391709jes)) and to the slow-forming film of low-nickel alloys; at `eta = 0` it agrees with immersion up to its constants. Headline cell `(kappa, eta) = (1, 1)`; sensitivity cells (0, 0), (1, 0) and (0, 1).
+- **New for copper: lack of fusion.** `lof = sigmoid((h - P) / 0.08)` with `h = 0.6 (1 - Ni)^2 (1 - 0.6 Al)`: copper-rich, high-conductivity compositions need more laser power than Utah's cap gives, so the small step is blind exactly where Mines can still fuse them.
+- **Shared start:** every policy and seed starts from the same data: CALPHAD on 32 compositions plus five random designs carried through every stage (Utah included). That seed data is sunk, and the x-axis counts only new spend, up to $100k.
+- **Scoring:** "best alloy demonstrated" is the true `J` of the best design deposited at Mines and carried through tensile *and* immersion. pKGFN gets no credit for builds it has not tested. `rec_printed` (the deposited alloy the policy's own model ranks best, tested or not) is kept as a secondary metric.
+
+## The truth functions and the optimum
+
+Hand-written closed forms on [0, 1] inputs, nothing fitted, as in PR 86. The spec gave the shapes and left the constants to this implementation; where the constants differ from the spec, the reason is the required property they serve (checked by [`check_truth.py`](check_truth.py), which writes [`truth_tables.md`](truth_tables.md)). `sig` is the logistic function.
+
+| Node | Function (inputs on [0, 1]) | Differs from the spec |
+|---|---|---|
+| strengthening `s` | `(1 - exp(-(0.6 Ni + 0.9 Al + 3.0 Ni Al)) + 0.1 Fe + 0.05 Mn) / 1.15` | constants: a stronger Ni-Al (kappa-III, NiAl) synergy |
+| solidification index `f` | `clamp(0.65 Ni + 0.30 Mn - 0.35 Al + 2.5 Ni Al + 0.05 Fe, 0, 1)` | Ni-Al term 2.5 (spec 0.6), so the Ni-Al corner freezes wide again, as the `mc_ni` composition map shows |
+| nucleant `g` | `(0.7 Fe (1 + 0.5 Al) + 0.15 Al Ni) / 1.2` | Fe linear (spec Fe^1.3) |
+| conductivity `h` | `0.6 (1 - Ni)^2 (1 - 0.6 Al)` | an added CALPHAD output; the spec's `cond` |
+| powder quality `q` | `exp(-((a - a*)/0.28)^2) (1 - 0.35 f^2)(1 - 0.10 Mn)`, `a* = 0.35 + 0.40 f` | `f` in place of Ni (the spec's node inputs are `a` and `f`) |
+| dense, crack-free `rho_m` (Mines) | `window q^0.3 (1 - 0.75 crack)(1 - lof)`, `window = exp(-(u/0.2)^2)(1 - 0.35 sig((P - 0.85)/0.05))`, `u = P - v - (0.05 + 0.25 f)`, `crack = sig((f_eff - 0.56)/0.05)`, `f_eff = f (1 - kappa 0.85 g/(g + 0.12))`, `lof = sig((h - P)/0.08)` | crack onset 0.56 (spec 0.38), so 70-30 Cu-Ni deposits dense at `kappa = 1` |
+| `rho_u` (Utah) | the same at `P_u = min(P, 0.5)`, times `(0.95 + 0.05 q)` | none |
+| retained beta-prime `beta` | `Al^1.5 (1 - 0.5 Ni) sig((v - P + 0.2)/0.15)` | none |
+| strength `U` | `(0.25 + 0.75 s) rho_m (1 + 0.15 beta)` | none |
+| immersion `m` | `clamp(0.30 + 0.55 film + 0.15 Al - 0.60 Al beta + 0.30 min(Fe, 0.4) - 0.15 relu(Fe - 0.5) - 0.30 (1 - rho_m), 0, 1)`, `film = 1 - exp(-Ni/0.15)` | the film saturates by 90-10 (spec Ni^0.7) and iron in solution helps it, so 90-10 Cu-Ni passes |
+| one-hour screen `w` | `clamp(0.35 + 0.50 n + 0.25 Al - 0.10 (1 - rho_m) - (1 - eta)(0.60 Al beta - 0.30 min(Fe, 0.4)), 0, 1)`, `n = eta (0.4 Ni^0.7 + 0.6 film) + (1 - eta) film` | at `eta = 1` it also misses part of the slow-forming film |
+| objective | `U sig((m - 0.849)/0.05) - 0.3 (Ni + 0.3 Al + 0.2 Mn)` | none |
+
+The CALPHAD crack screen keeps compositions with `f <= 0.34` (about 1% crack probability at `kappa = 0`). The one-hour screen's gate, for the policies that use it, is the top quartile of every screened build so far.
+
+**The optimum**, by multi-start local search from the 20 best of 400,000 random designs (`check_truth.py`; every "% of optimum" in this README is normalized by it):
+
+| (kappa, eta) | J* | Ni | Al | Fe | Mn | a | P | v | s | f | g | h | q | rho_u | rho_m | beta | U | w | m | burden |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| (1, 1) headline | **0.492** | 0.43 | 0.58 | 0.50 | 0.00 | 0.64 | 0.58 | 0.34 | 0.73 | 0.74 | 0.41 | 0.12 | 0.81 | 0.79 | 0.93 | 0.15 | 0.76 | 0.88 | 0.95 | 0.61 |
+| (0, 0) | **0.382** | 0.32 | 0.38 | 0.40 | 0.00 | 0.50 | 0.63 | 0.48 | 0.55 | 0.40 | 0.29 | 0.21 | 0.94 | 0.63 | 0.95 | 0.11 | 0.64 | 0.97 | 0.92 | 0.43 |
+| (1, 0) | **0.492** | 0.43 | 0.58 | 0.50 | 0.00 | 0.64 | 0.58 | 0.34 | 0.73 | 0.74 | 0.41 | 0.12 | 0.81 | 0.79 | 0.93 | 0.15 | 0.76 | 1.00 | 0.95 | 0.61 |
+| (0, 1) | **0.382** | 0.32 | 0.38 | 0.40 | 0.00 | 0.50 | 0.63 | 0.48 | 0.55 | 0.40 | 0.29 | 0.21 | 0.94 | 0.63 | 0.95 | 0.11 | 0.64 | 0.79 | 0.92 | 0.43 |
+
+- At `kappa = 1` the optimum is a copper-nickel-aluminum alloy with iron and no manganese: about 13 wt% Ni, 5.6 wt% Al and 2.2 wt% Fe, in the family of the high-strength Cu-Ni-Al alloys. Its solidification index is 0.74, far above the screen's 0.34, yet it deposits 93% dense because the iron-rich nucleant cuts the effective index to about a third. `eta` changes only the one-hour screen, so (1, 0) has the same optimum, and (0, 1) the same as (0, 0).
+- At `kappa = 0` the optimum is leaner (about 10 wt% Ni, 3.6 wt% Al, 1.8 wt% Fe) at `f` = 0.40, just above the screen's cutoff.
+
+**Required property 1 (the screens and the optimum).** At (1, 1) the optimum fails the CALPHAD crack screen (`f` = 0.74 > 0.34). The best design that passes it scores 72% of the optimum (about 8.5 wt% Ni, 3.3 wt% Al, 2.3 wt% Fe), which is the ceiling for tiered screening. At (0, 0) the best design passing both screens keeps 92% of the optimum (the spec asks for at least 85%). The one-hour screen ranks the optimum at the top of the dense candidates in every cell, so it is the CALPHAD screen that cuts the optimum off (see Caveats).
+
+**Required property 2 (reference alloys at their best settings for J, headline world).**
+
+| Alloy | J (% of J*) | strength U | rho_m | beta | immersion m | passes immersion | burden |
+|---|---|---|---|---|---|---|---|
+| C71500 (70-30 Cu-Ni) | -0.073 (-15%) | 0.48 | 0.85 | 0.00 | 0.85 | yes | 1.04 |
+| C70600 (90-10 Cu-Ni) | 0.120 (24%) | 0.38 | 0.96 | 0.00 | 0.87 | yes | 0.37 |
+| C95800 (NAB) | -0.146 (-30%) | 0.79 | 0.92 | 0.48 | 0.55 | no | 0.49 |
+
+C71500 passes by definition (`m_ref` is its immersion index); C70600 is weaker and passes with a third of the nickel; C95800 (NAB) is the strongest but carries retained beta-prime (0.48) and fails. C71500 and NAB score below zero because of their burden and the immersion gate. At `kappa = 0` C71500 cracks (see Caveats).
+
+**Required property 3 (a ridge, not a point).** With the other inputs at the optimum, 17 points of a 101 × 101 (P, v) grid lie within 0.5% of J* (P from 0.53 to 0.64 along P − v ≈ 0.23) and 63 within 2% (P from 0.47 to 0.68). The ridge is shorter than the aluminum one because lack of fusion ends it at low power and keyholing at high power.
+
+**Required property 4 (Utah's power cap).** For 200 random copper-rich compositions (Ni ≤ 0.07 and Al ≤ 0.2 scaled, under about 2 wt% each), the median best `rho_u` at Utah's cap is 0.40 against 0.88 at Mines; 15% cannot reach 0.3 at Utah, and 100% reach 0.7 at Mines. At the optimum's composition the cap does not bind (0.92 at Utah, 0.93 at Mines).
+
+Every value above is in [`truth_tables.md`](truth_tables.md), for all four cells.
+
+## Policies (all on equal $100k of new spend)
+
+| Policy | What it does each step |
+|---|---|
+| **pKGFN** | For each stage (CALPHAD; atomize a simulated composition; Utah or Mines on an existing lot; microscopy, tensile, screen or immersion on an existing build), it computes the knowledge gradient per dollar of one more query and buys the best one. It also prices three test bundles (microscopy + tensile, microscopy + screen + immersion, screen + immersion), each valued by the knowledge gradient of its last stage with the intermediate outputs at their posterior means, because one-step KG gives microscopy almost no value of its own (its value is to unlock the tests). |
+| BOFN, full pipeline (EIFN) | The same network model. It picks a design by network expected improvement, then runs all eight stages on it ([Astudillo & Frazier 2021](https://arxiv.org/abs/2112.15311)). |
+| Tiered screening | As the spec describes it: CALPHAD on 256 compositions (224 new calls on top of the 32 seed compositions; with the five seed alloys, it ranks 261); keep the four strongest with `f <= 0.34`, net of burden; then EI on its own records over those four, where each step is a chain: Utah tracks until the small blocks reach the density target (`rho_u >= 0.5`), scanning travel speed at Utah's full capped power (0.25, 0.45, 0.65) and retiring a lot that fails all three; then Mines (the first build on a lot at the setting that passed at Utah, later ones at the EI choice), microscopy, tensile, the screen, and immersion only if the screen passes. Lots and scale-ups are reused. The first version drew Utah settings from EI on records that a Utah failure leaves flat, and spent about $90k on 182 Utah sessions of one lot that cannot pass; those runs were discarded. On this network the shortlist is aluminum bronzes with 2 to 6 wt% Ni that fail immersion (see Bottom line). |
+| Standard BO (EI) | A single GP from the 7 inputs to the objective, all eight stages run per design. |
+| Random | Uniform designs, all eight stages run. |
+| *Ablation:* BOFN + lot reuse | Network EI per dollar over new designs *and* new Mines sessions on existing lots (every later stage runs). This is partial evaluation without KG's choice of stage. |
+| `tiered_ni` (corrosion-aware tiered screening, Oct 27) | Tiered screening whose shortlist keeps only compositions with at least 10 wt% Ni, the 90-10 Cu-Ni seawater floor. Few compositions with 10 wt% Ni pass the crack screen (none in 14 of 20 seeds), so the rule needs a decision. When fewer than four pass, the shortlist is filled with the eligible compositions CALPHAD rates least crack-prone (lowest `f`): the crack screen becomes a ranking rather than a cutoff. Everything else is as in tiered screening, including the spec's one-hour-screen gate (top quartile of every screened build so far). |
+| `tiered_ni_ref` (Oct 27) | `tiered_ni` with a corrosion-aware screen gate: a build goes to immersion if its one-hour screen is at least that of a reference coupon, dense C70600 (90-10 Cu-Ni, `w` = 0.71 at `eta = 1`). C70600 passes immersion in every cell. A lab would run the coupon alongside its builds; its screen value comes from the truth, as `m_ref` does. |
+| `pkgfn_screen` | pKGFN that trusts the screens: it does not atomize a composition the CALPHAD screen rejects, does not send a lot to Mines before its Utah blocks pass the density gate, and does not immerse a build the one-hour screen stops. |
+| `pkgfn_audit` | `pkgfn_screen` with Advance 5's audit: about one in ten candidates a screen would stop goes on anyway (a fixed hash of seed, gate and candidate), plus every candidate that misses a cutoff by less than 0.03 (the CALPHAD screen, the one-hour screen) or 0.05 (the Utah density gate). |
+| `mines_only` | pKGFN with no new Utah purchases (the five seed designs' Utah results stay in the data): every new composition goes straight to a 2 kg lot and Mines. The difference to pKGFN is what the two-step DED split buys, the premise of the budget. |
+| `funnel` | A fixed top-k funnel at every gate (Reyes, Liu and Diaz Vargas, JOM 2022, found that a sensible funnel can lose to random): the CALPHAD shortlist's top 12, atomized at a = 0.5; the top 6 by powder quality; three Utah settings each and the top 3 by density; two Mines sessions each; the top 3 by the screen go to immersion; then the tiered loop on the finalists. Each gate's false rejections are judged from the truth afterwards. |
+
+### pKGFN implementation notes
+
+[`bofn_alloy.py`](bofn_alloy.py) implements the method from scratch, as `bofn-prelim` does, and does not use the upstream `partial_kgfn` package.
+
+- **GPs:** each node is an exact GP with BoTorch-fitted RBF hyperparameters; fantasy updates are closed-form rank-one, so every KG candidate is scored in one vectorized pass. Fit failures are counted (`gp_fits` in every run JSON).
+- **KG:** the inner max runs over a shared design set: every deposited design (the incumbent among them), the top posterior-mean and top-EI designs of the pool, and the design attached to every candidate, deduplicated (since Oct 27, after the Edison code review's finding F2; before, the set was not explicitly anchored and duplicate designs got independent Monte Carlo errors). Fantasies use 10 Gauss-Hermite nodes, and a 2-point-per-output product rule (16 points) for the four CALPHAD outputs. The current value comes from the same fantasy-averaged estimator, so the estimated KG is never negative. Base samples are common random numbers across candidates and fantasies.
+- **Candidates** for each stage are the EI-ranked members of a Sobol pool plus perturbations of validated designs. They are ranked by network EI over the best alloy demonstrated so far, as in EIFN. The aluminum version measured EI from the best posterior mean; on this network that is a pure-copper design whose immersion gate is shut (its burden is zero and so is its strength once gated), every EI came out zero, and on one seed the first runs stopped after $4,750. Ties at zero EI are broken by the posterior mean.
+- **Fallback:** when KG is numerically zero for every candidate, the policy buys the candidate with the highest network EI per dollar of the cheapest path to a validated build (this purchase plus whatever Mines session and tests it still needs), and if every EI is zero too, the one with the most optimistic posterior sample, so it does not stop while a stage other than CALPHAD is affordable. Until Oct 27 the EI tested for Utah and Mines candidates included the 1e-9 posterior-mean tie-break, so an all-zero case could take the EI branch (Edison finding F4); the tie-break now only ranks. The aluminum version divided EI by the cost of the next stage alone. On the copper network, where KG is often flat until some alloy passes immersion, that made the first headline runs buy 58 to 68 lots and 87 to 121 Utah sessions per $100k and validate almost nothing (seeds 2 and 3 ended below zero); those runs were discarded and the sweep restarted. The share of purchases made by the fallback is in the quality table.
+- **Monte Carlo settings (Oct 27): the aluminum benchmark's production settings.** 64 base samples, 16 candidates per stage, a 512-design Sobol pool, 32 + 16 anchors and 24 perturbations of each of the 8 best pool designs, as in `bofn-prelim`. The first copper sweep ran lighter on every one of these (32, 10, 256, 24 + 12 and 16), "because the copper network has eight stages and three test bundles to score"; those 20 runs are kept in [`quality/results-light/`](quality/results-light/) and compared below. At these settings a run takes about 25 to 35 minutes on one core, 2.9 times the light setting. Every run stores its settings and `CODE_VERSION`, and `run_sweep.py` will not resume a stored run whose settings differ from the code's (Edison finding F9).
+
+## Caveats (read before quoting numbers)
+
+- **Synthetic truth.** The node functions are hand-built to mirror the qualitative metallurgy (solid-solution and kappa strengthening, a Scheil-type crack criterion with nucleant-driven suppression, a constant-energy-density process ridge with keyholing and lack of fusion, a nickel film, selective attack of beta-prime). Nothing is fitted to data. The bias knobs are the places the benchmark is designed to make the screens wrong.
+- **At `kappa = 0`, 70-30 Cu-Ni cracks.** In the world where the Scheil index is taken as exactly right, the wide Scheil range of 70-30 Cu-Ni (`f = 0.72`) makes it crack (`rho_m = 0.26` at its best settings) and fail immersion. 70-30 copper-nickel is routinely welded, which is one reason to read `kappa = 1` as the more realistic copper world, but the sensitivity cells keep `kappa = 0` as the case where the crack screen is right.
+- **The one-hour screen never stops the optimum.** In every cell the optimum ranks in the top quartile of dense candidates on the one-hour screen, so the screen's blind spot (`eta = 1`) costs wasted immersions and false rejections of other candidates, not the optimum itself. The CALPHAD screen is the one that cuts the optimum off at `kappa = 1`.
+- **Simplifications.** Observations are noise-free. There is one scalar objective (strength gated by immersion, minus the burden), not the proposal's several objectives (Advance 1). One experiment at a time, with no delays (the delays are in `step-costs` but not modelled; Advance 2 is future work). One parameter set per Mines build.
+- **Costs.** The step costs are the project's own round all-in estimates. Outside the loop and not modelled: the yearly gas atomization of the finalist (about $12,500 a run), the combustible-dust tests, and the flowing-seawater tests at Carderock (free to the project, months).
+- **pKGFN implementation.** It is discrete and one-step myopic. Since Oct 27 it runs at the aluminum benchmark's production Monte Carlo settings; the first sweep's lighter runs are kept for comparison. Treat its numbers as those of this implementation at these settings.
+
+## Quality checks
+
+**GP fitting.** Fit failures are counted in every run (`gp_fits`); the table at the end of [`tables.md`](tables.md) sums them per cell, with the share of pKGFN-type purchases chosen by the EI fallback because KG was flat. In the replayed seed-0 run below, none of 137 fits failed; fitted lengthscales ranged from 0.13 to 254 (median 0.91), none at BoTorch's lower bound of 0.025 and 3% above 10 (input directions learned as nearly flat).
+
+**Monte-Carlo noise in the knowledge gradient** ([`quality/mc_noise.py`](quality/mc_noise.py), seed 0 at (1, 1)). The run was replayed (it reproduces the stored run: 62.8% of the optimum at $100k), and at iterations 4, 12, 24 and 40 the very same candidate sets were re-scored with five other base-sample draws at S = 32 (for the MC standard error) and with S = 1,024 as a reference:
+
+| iteration | stage chosen at S = 32 | stage at S = 1,024 | same design | gap between best and second-best stage, in MC standard errors |
+|---|---|---|---|---|
+| 4 | Mines | Mines | no | 1.6 |
+| 12 | microscopy + screen + immersion | microscopy + screen + immersion | yes | 0.7 |
+| 24 | tensile | tensile | yes | 0.4 |
+| 40 | Mines | CALPHAD | no | 0.3 |
+
+The stage choice survived at three of four probed iterations and the design at two. The gaps between the best and second-best stage were all within 1.6 MC standard errors, so these were close calls, and at iteration 40 the reference put CALPHAD first by a wide margin (KG per dollar 3.3e-5 against 4.4e-7 for the Mines session chosen at S = 32), where S = 32 returned zero for CALPHAD. As in the aluminum version, the production setting underestimates the small knowledge gradients of cheap stages. Results are in [`quality/mc_noise_k1e1_s0.json`](quality/mc_noise_k1e1_s0.json).
+
+**Independent review** (Edison Analysis, task `42ee31fc`, Oct 25; report [`edison/results/code-review.md`](edison/results/code-review.md), full transcript [`edison/results/code-review.json`](edison/results/code-review.json), brief [`edison/brief-code.md`](edison/brief-code.md)). Uploaded: the code, this README as it then stood, `settings.md` and the 78 headline runs finished at the time (no tiered runs yet; an earlier submission failed without an answer and one was cancelled after the fallback fix, both kept in `edison/results/`). It verified the GP posterior against BoTorch and a dense solve, the rank-one fantasy update against explicitly augmented GPs for all eight stages, and the cost ledger of every uploaded run, and found no GP-fit failure in 18,774 fits. It ran its own 20 tiered runs: they end at -7.7% of the optimum, and none of their 80 new immersions passes, which matches the stored runs. Its findings, and what was done about each on Oct 27:
+
+- The speed-up over tiered screening is measured against a level below where the other policies start, so it measures nothing useful. **Addressed:** the speed-up is now also measured against corrosion-aware tiered screening (`tiered_ni_ref`, 24% at $100k), a level the other policies have to work for.
+- The inner maximization is not explicitly anchored on the incumbent, and duplicate designs get different Monte Carlo estimates. At S = 32 the stage ranking is unstable: at iteration 40, five other draws chose M, M, M, U and A where S = 1,024 chose CALPHAD, as the noise check above found. **Fixed:** every deposited design is now in the inner set, which is deduplicated, and the production settings are the aluminum ones (S = 64).
+- **A bug:** the fallback's test for positive EI on Utah and Mines candidates includes the 1e-9 posterior-mean tie-break, so a case where every EI is zero can take the EI branch instead of the optimistic-sample branch. **Fixed**, and pKGFN is being re-run (below).
+- The test bundles are plug-in, last-stage heuristics, not multistage KG. Still open.
+- `check_truth.py` prints the required properties but asserts none of them. Property 4 holds for the median copper-rich composition, not for all of them: 15% can still pass Utah's density gate. **Fixed:** `check_required` asserts all four, and `python check_truth.py --check-stored` checks `truth_tables.json`; all hold.
+- `run_sweep.py` resumes from any existing file without checking its settings or code version. **Fixed:** it compares the stored settings and `CODE_VERSION` and refuses to resume a mismatch unless given `--rerun`.
+- The audit table is descriptive, not an unbiased estimate: near-cutoff cases are oversampled, and the truth check uses the final gate. Still open (no audit runs yet).
+- Wording, fixed above: the fallback does stop if only CALPHAD is affordable; `mines_only` keeps the five seed Utah results.
+
+**Independent review: copper against aluminum** (Edison Analysis, task `009f44cb`, Oct 27). Report: [`edison/results/compare-review.md`](edison/results/compare-review.md); its recomputation, notebook and CSVs: `edison/results/compare-review-*`; brief: [`edison/brief-compare.md`](edison/brief-compare.md). Uploaded: both benchmarks' code, the copper README as it stood mid-session, [`compare/`](compare/) with its tables, and both result sets. That is 186 copper runs (the high-fidelity pKGFN re-runs had not finished) and 164 aluminum runs.
+- **Every number reproduces.** It recomputed every populated cell of the side-by-side, no-gate and tiered tables from the JSON, independently of our scripts, and found no discrepancy.
+- **Ranked explanations.** First, the immersion and deposition geometry plus the seed state dominate the model-free drops. Second, the shortlist rule causes the tiered drop. Third, the long validation path, myopic KG and unfinished builds cause pKGFN's. The effect sizes of the pKGFN implementation differences (EI incumbent, path-priced fallback, bundles, light settings) are "not identified". Cost differences are small. This README's section on the differences follows that ranking and quotes its numbers.
+- **Corrections, applied above.**
+  - The first-alloy medians are over all seeds.
+  - The fallback split classifies each purchase by the state before it (42% and 4%).
+  - J > 0 is not a hard immersion pass.
+  - Aluminum fit 23 full chains, not 24.
+  - The no-gate comparison is a compound ablation except for random.
+- **Corrosion-aware tiered.** It calls `tiered_ni_ref` "a defensible corrosion-informed comparator", with two caveats. Its reference screen value comes from the truth (a real coupon would cost money and carry noise). And its filled shortlists mostly violate the crack screen (6 of 80 compositions pass it). Its Utah failures reflect powder and settings, not chemistry: every stored Ni shortlist composition can pass Utah's gate at the right atomizer setting.
+- **Density.** It agrees the index "can serve as a qualitative build-quality utility … but not as a measured fraction of theoretical density". It proposes a calibrated replacement: relative density from powder, lack-of-fusion and keyhole porosity; a separate crack index; and a fitted knockdown `U = U_dense (1 − φ)^n exp(−a φ_LOF − b c_crack)`.
+- **Metric.** "Best alloy demonstrated" differs from the published pKGFN objective, which values the posterior-mean recommendation. Scored by `rec_printed`, light pKGFN is 67.9%, 5.4 points behind BOFN rather than 14.7.
+- **Its proposal wording:** "In a synthetic copper directed-energy-deposition benchmark with a deliberately biased corrosion screen, full-pipeline function-network Bayesian optimization reached 73% of the truth's optimum after $100,000 of new purchases, compared with 14% for conventional Bayesian optimization; a corrosion-aware tiered comparator reached 24%. A light-setting partial-evaluation knowledge-gradient implementation reached 59% and did not beat full-pipeline search, so we will test whether validated, physically calibrated deposition and corrosion models and higher-fidelity acquisition settings change that ranking."
+
+**Higher fidelity (Oct 27): pKGFN at the aluminum production settings.** The first sweep ran pKGFN lighter than bofn-prelim's production run on every setting: S = 32 base samples, 10 candidates per stage, a 256-design pool, 24 + 12 anchors and 16 perturbations. The headline pKGFN runs now use the aluminum settings (64, 16, 512, 32 + 16 and 24), with the two Edison fixes (F2 anchoring, F4 fallback). The settings and the fixes changed together, so this comparison does not separate them.
+
+| pKGFN settings | n | $25k | $50k | $100k | median $ to 60% | median $ to 70% | KG-flat fallback share | C | A | U | M | S | T | K | I |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| light (first sweep): S = 32, 10 candidates, 256 pool, old fallback test; all seeds | 20 | 12% ± 6 | 27% ± 7 | 59% ± 5 | $86k (60%) | >$100k (35%) | 22% | 6.7 | 12.4 | 11.3 | 40.5 | 15.7 | 7.2 | 14.0 | 12.8 |
+| light, the 7 seeds re-run so far | 7 | 15% ± 10 | 27% ± 12 | 64% ± 4 | $60k (71%) | >$100k (43%) | 27% | 6.9 | 15.1 | 10.4 | 39.6 | 16.9 | 7.6 | 15.4 | 14.1 |
+| high fidelity (aluminum production): S = 64, 16 candidates, 512 pool, fixes F2 and F4 | 7 | 3% ± 5 | 25% ± 10 | 59% ± 11 | $100k (57%) | >$100k (43%) | 39% | 4.6 | 17.6 | 16.3 | 37.9 | 13.4 | 5.9 | 11.9 | 11.3 |
+
+Matched seeds, high fidelity minus light (n = 7; wins/ties/losses; Wilcoxon): $25k -11 points (3/0/4; p = 0.58); $50k -2 points (3/0/4; p = 0.94); $100k -5 points (3/0/4; p = 0.69). BOFN (full pipeline) on the same seeds: 87% ± 4 at $100k; high-fidelity pKGFN minus BOFN: $25k -21 points (0/0/7; p = 0.016); $50k -21 points (1/0/6; p = 0.22); $100k -29 points (1/0/6; p = 0.047).
+
+![fidelity](compare/compare_pkgfn_fidelity.png)
+
+*pKGFN's best alloy demonstrated for every seed at both settings (thin lines) and their means (thick), with BOFN's mean (full pipeline) for reference.*
+
+The S = 256 check stays queued at the end of [`logs/plan.sh`](logs/plan.sh).
+
+## Reproduce
+
+```bash
+python -m venv /tmp/bofn-venv && /tmp/bofn-venv/bin/pip install torch --index-url https://download.pytorch.org/whl/cpu
+/tmp/bofn-venv/bin/pip install botorch matplotlib scipy
+cd benchmarks/bofn-cu-ded
+python check_truth.py             # required properties, truth_tables.md
+logs/plan.sh                      # the sweep in priority order (resumable; one JSON per run)
+python analyze.py                 # tables.md
+python plot.py                    # figures
+python compare/landscape.py       # copper against aluminum: the two truths on random designs
+python compare/density.py         # the deposition index, factor by factor
+python compare/compare.py         # compare/tables.md and the compare_*.png figures (needs compare/results-nogate/)
+```
+
+The no-gate ablation runs with `BOFN_NOGATE=1 python run_sweep.py --cells 1,1 --seeds 0-19 --kinds eifn eifn_reuse ei random --out compare/results-nogate`.
+
+The figures need the Aptos fonts in `~/.local/share/fonts/aptos/` (Microsoft's zip: `download.microsoft.com/download/8/6/0/860a94fa-7feb-44ef-ac79-c072d9113d69/Microsoft%20Aptos%20Fonts.zip`).
+
+Per-run JSON (every purchase, spend and score, the builds and lots, GP-fit counts, and for the audit the screen and immersion events) is in `results/k<kappa>e<eta>/<policy>_s<seed>.json`.
+
+TABLES
+ # Tables (written by `analyze.py`)
+
+Best alloy demonstrated (deposited at Mines and carried through tensile and immersion), as a percentage of the true optimum of each cell, mean ± SE over seeds. New spend only; the shared seed data is sunk.
+
+## Cell (kappa, eta) = (1, 1): both screens biased; optimum J* = 0.492
+
+| Policy | n | $25k | $50k | $100k | median $ to 60% | median $ to 70% | median $ to 80% |
+|---|---|---|---|---|---|---|---|
+| pKGFN: picks the stage | 7 | 3% ± 5 | 25% ± 10 | 59% ± 11 | $100k (57% of seeds) | >$100k (43% of seeds) | >$100k (29% of seeds) |
+| pKGFN, light settings (first sweep) | 20 | 12% ± 6 | 27% ± 7 | 59% ± 5 | $86k (60% of seeds) | >$100k (35% of seeds) | >$100k (5% of seeds) |
+| BOFN, full pipeline | 20 | 15% ± 6 | 39% ± 9 | 73% ± 7 | $67k (85% of seeds) | $74k (75% of seeds) | $88k (70% of seeds) |
+| BOFN + lot reuse | 20 | 14% ± 5 | 32% ± 8 | 72% ± 7 | $54k (85% of seeds) | $65k (85% of seeds) | $81k (65% of seeds) |
+| Tiered screening | 20 | -9% ± 5 | -9% ± 5 | -8% ± 5 | >$100k (0% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
+| Tiered, Ni ≥ 10 wt% | 20 | -7% ± 5 | 1% ± 5 | 10% ± 6 | >$100k (0% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
+| Tiered, Ni ≥ 10 wt%, reference screen | 20 | 8% ± 4 | 16% ± 4 | 24% ± 5 | >$100k (10% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
+| Standard BO | 20 | 6% ± 3 | 7% ± 3 | 14% ± 6 | >$100k (15% of seeds) | >$100k (5% of seeds) | >$100k (5% of seeds) |
+| Random | 20 | -1% ± 4 | 7% ± 5 | 22% ± 5 | >$100k (5% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
+
+Scored by the deposited alloy each policy's own model ranks best (`rec_printed`), which credits builds not yet tested:
+
+| Policy | n | $25k | $50k | $100k | median $ to 60% | median $ to 70% | median $ to 80% |
+|---|---|---|---|---|---|---|---|
+| pKGFN: picks the stage | 7 | 19% ± 10 | 30% ± 12 | 71% ± 6 | $54k (86% of seeds) | $92k (57% of seeds) | >$100k (29% of seeds) |
+| pKGFN, light settings (first sweep) | 20 | 19% ± 6 | 37% ± 7 | 68% ± 4 | $52k (80% of seeds) | $78k (60% of seeds) | >$100k (25% of seeds) |
+| BOFN, full pipeline | 20 | 15% ± 6 | 39% ± 9 | 73% ± 7 | $67k (85% of seeds) | $74k (75% of seeds) | $88k (70% of seeds) |
+| BOFN + lot reuse | 20 | 13% ± 4 | 32% ± 8 | 72% ± 7 | $54k (85% of seeds) | $65k (85% of seeds) | $81k (65% of seeds) |
+| Tiered screening | 20 | -8% ± 5 | -8% ± 5 | -6% ± 5 | >$100k (0% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
+| Tiered, Ni ≥ 10 wt% | 20 | 2% ± 4 | 7% ± 4 | 13% ± 5 | >$100k (0% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
+| Tiered, Ni ≥ 10 wt%, reference screen | 20 | 8% ± 4 | 16% ± 4 | 24% ± 5 | >$100k (10% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
+| Standard BO | 20 | 6% ± 3 | 7% ± 3 | 14% ± 6 | >$100k (15% of seeds) | >$100k (5% of seeds) | >$100k (5% of seeds) |
+| Random | 20 | -1% ± 4 | 7% ± 5 | 22% ± 5 | >$100k (5% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
+
+### Speed-up over tiered screening
+
+Target: tiered screening's mean at $100k, -7.7% of the optimum, which it first reaches at $99k.
+
+| Method | n | $ to reach the target (mean curve) | speed-up | 90% bootstrap CI (seeds resampled per policy) | 90% CI, matched-seed bootstrap | P(speed-up ≥ 3) |
+|---|---|---|---|---|---|---|
+| pKGFN: picks the stage | 7 | $6k | **17.3×** | 2.7–397.0 | 11.5–20.8 | 0.95 |
+| pKGFN, light settings (first sweep) | 20 | $6k | **17.3×** | 5.8–397.0 | 12.0–21.9 | 0.99 |
+| BOFN + lot reuse | 20 | $5k | **19.9×** | 10.9–397.0 | 18.4–43.9 | 1.00 |
+| BOFN, full pipeline | 20 | $5k | **19.9×** | 18.4–397.0 | 18.4–19.9 | 0.99 |
+| Standard BO | 20 | $5k | **19.9×** | 5.2–397.0 | 18.4–19.9 | 0.98 |
+| Random | 20 | $10k | **10.2×** | 2.3–397.0 | 9.4–19.9 | 0.87 |
+| Tiered, Ni ≥ 10 wt% | 20 | $23k | **4.3×** | 1.2–397.0 | 2.7–7.2 | 0.55 |
+
+### Speed-up over corrosion-aware tiered screening (Ni ≥ 10 wt%, reference screen)
+
+Target: tiered, ni ≥ 10 wt%, reference screen's mean at $100k, 24.2% of the optimum, which it first reaches at $100k.
+
+| Method | n | $ to reach the target (mean curve) | speed-up | 90% bootstrap CI (seeds resampled per policy) | 90% CI, matched-seed bootstrap | P(speed-up ≥ 3) |
+|---|---|---|---|---|---|---|
+| pKGFN: picks the stage | 7 | $47k | **2.1×** | 0.9–2.4 | 0.8–2.0 | 0.01 |
+| pKGFN, light settings (first sweep) | 20 | $47k | **2.1×** | 1.5–3.9 | 1.5–3.5 | 0.12 |
+| BOFN + lot reuse | 20 | $35k | **2.8×** | 1.7–4.1 | 1.7–3.9 | 0.38 |
+| BOFN, full pipeline | 20 | $34k | **3.0×** | 1.7–4.2 | 1.7–3.5 | 0.16 |
+| Standard BO | 20 | >$100k | **0.0×** | 0.0–1.0 | 0.0–0.0 | 0.00 |
+| Random | 20 | >$100k | **0.0×** | 0.0–1.6 | 0.0–1.6 | 0.00 |
+| Tiered screening | 20 | >$100k | **0.0×** | 0.0–0.0 | 0.0–0.0 | 0.00 |
+| Tiered, Ni ≥ 10 wt% | 20 | >$100k | **0.0×** | 0.0–0.0 | 0.0–0.0 | 0.00 |
+
+### Matched seeds (Wilcoxon signed-rank)
+
+| pKGFN: picks the stage against | n | $25k: mean difference (wins/ties/losses; p) | $50k | $100k |
+|---|---|---|---|---|
+| pKGFN, light settings (first sweep) | 7 | -11 points (3/0/4; p = 0.58) | -2 points (3/0/4; p = 0.94) | -5 points (3/0/4; p = 0.69) |
+| Tiered screening | 7 | +17 points (6/1/0; p = 0.031) | +37 points (7/0/0; p = 0.016) | +69 points (7/0/0; p = 0.016) |
+| Tiered, Ni ≥ 10 wt% | 7 | +14 points (5/1/1; p = 0.094) | +30 points (6/0/1; p = 0.047) | +53 points (7/0/0; p = 0.016) |
+| Tiered, Ni ≥ 10 wt%, reference screen | 7 | -7 points (2/0/5; p = 0.47) | +4 points (5/0/2; p = 0.69) | +31 points (6/0/1; p = 0.047) |
+| BOFN, full pipeline | 7 | -21 points (0/0/7; p = 0.016) | -21 points (1/0/6; p = 0.22) | -29 points (1/0/6; p = 0.047) |
+| BOFN + lot reuse | 7 | -14 points (1/0/6; p = 0.11) | -15 points (2/0/5; p = 0.38) | -3 points (3/0/4; p = 0.81) |
+| Standard BO | 7 | -0 points (2/1/4; p = 0.84) | +20 points (4/0/3; p = 0.22) | +47 points (5/0/2; p = 0.078) |
+| Random | 7 | +4 points (4/1/2; p = 0.56) | +22 points (5/0/2; p = 0.16) | +40 points (6/0/1; p = 0.031) |
+
+### Purchases per $100k (mean over seeds, new purchases only)
+
+| Policy | n | C ($10) | A ($400) | U ($500) | M ($1,500+) | S ($100) | T ($200) | K ($50) | I ($400) | new lots | Mines sessions that paid a scale-up |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| pKGFN: picks the stage | 7 | 4.6 | 17.6 | 16.3 | 37.9 | 13.4 | 5.9 | 11.9 | 11.3 | 17.6 | 12.7 |
+| pKGFN, light settings (first sweep) | 20 | 6.7 | 12.4 | 11.3 | 40.5 | 15.7 | 7.2 | 14.0 | 12.8 | 12.4 | 12.3 |
+| BOFN, full pipeline | 20 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 |  |
+| BOFN + lot reuse | 20 | 12.6 | 12.6 | 12.6 | 29.3 | 29.3 | 29.3 | 29.3 | 29.3 | 12.6 |  |
+| Tiered screening | 20 | 224.0 | 22.8 | 44.2 | 24.9 | 24.9 | 24.9 | 24.9 | 4.0 | 22.8 |  |
+| Tiered, Ni ≥ 10 wt% | 20 | 224.0 | 31.0 | 67.4 | 18.4 | 18.4 | 18.4 | 18.4 | 2.5 | 31.0 |  |
+| Tiered, Ni ≥ 10 wt%, reference screen | 20 | 224.0 | 26.5 | 53.6 | 21.1 | 21.1 | 21.1 | 21.1 | 9.9 | 26.5 |  |
+| Standard BO | 20 | 19.7 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 |  |
+| Random | 20 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 |  |
+
+## Cell (kappa, eta) = (0, 0): both screens right; optimum J* = 0.382
+
+| Policy | n | $25k | $50k | $100k | median $ to 60% | median $ to 70% | median $ to 80% |
+|---|---|---|---|---|---|---|---|
+| pKGFN, light settings (first sweep) | 10 | -6% ± 4 | -0% ± 4 | 9% ± 7 | >$100k (0% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
+| BOFN, full pipeline | 1 | 12% ± 0 | 19% ± 0 | 92% ± 0 | $52k (100% of seeds) | $72k (100% of seeds) | $76k (100% of seeds) |
+| BOFN + lot reuse | 1 | 12% ± 0 | 68% ± 0 | 95% ± 0 | $46k (100% of seeds) | $54k (100% of seeds) | $58k (100% of seeds) |
+
+### Matched seeds (Wilcoxon signed-rank)
+
+| pKGFN: picks the stage against | n | $25k: mean difference (wins/ties/losses; p) | $50k | $100k |
+|---|---|---|---|---|
+
+### Purchases per $100k (mean over seeds, new purchases only)
+
+| Policy | n | C ($10) | A ($400) | U ($500) | M ($1,500+) | S ($100) | T ($200) | K ($50) | I ($400) | new lots | Mines sessions that paid a scale-up |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| pKGFN, light settings (first sweep) | 10 | 3.8 | 17.9 | 10.3 | 39.1 | 12.0 | 6.4 | 11.4 | 9.2 | 17.9 | 13.9 |
+| BOFN, full pipeline | 1 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 |  |
+| BOFN + lot reuse | 1 | 10.0 | 10.0 | 10.0 | 31.0 | 31.0 | 31.0 | 31.0 | 31.0 | 10.0 |  |
+
+## Sensitivity over the four cells
+
+At $100k:
+
+| Policy | (1, 1) both screens biased | (0, 0) both screens right | (1, 0) crack screen biased only | (0, 1) one-hour screen biased only |
+|---|---|---|---|---|
+| pKGFN: picks the stage | 59% ± 11 (n = 7) |  |  |  |
+| pKGFN, light settings (first sweep) | 59% ± 5 (n = 20) | 9% ± 7 (n = 10) |  |  |
+| BOFN, full pipeline | 73% ± 7 (n = 20) | 92% ± 0 (n = 1) |  |  |
+| BOFN + lot reuse | 72% ± 7 (n = 20) | 95% ± 0 (n = 1) |  |  |
+| Tiered screening | -8% ± 5 (n = 20) |  |  |  |
+| Tiered, Ni ≥ 10 wt% | 10% ± 6 (n = 20) |  |  |  |
+| Tiered, Ni ≥ 10 wt%, reference screen | 24% ± 5 (n = 20) |  |  |  |
+| Standard BO | 14% ± 6 (n = 20) |  |  |  |
+| Random | 22% ± 5 (n = 20) |  |  |  |
+
+At $50k:
+
+| Policy | (1, 1) both screens biased | (0, 0) both screens right | (1, 0) crack screen biased only | (0, 1) one-hour screen biased only |
+|---|---|---|---|---|
+| pKGFN: picks the stage | 25% ± 10 (n = 7) |  |  |  |
+| pKGFN, light settings (first sweep) | 27% ± 7 (n = 20) | -0% ± 4 (n = 10) |  |  |
+| BOFN, full pipeline | 39% ± 9 (n = 20) | 19% ± 0 (n = 1) |  |  |
+| BOFN + lot reuse | 32% ± 8 (n = 20) | 68% ± 0 (n = 1) |  |  |
+| Tiered screening | -9% ± 5 (n = 20) |  |  |  |
+| Tiered, Ni ≥ 10 wt% | 1% ± 5 (n = 20) |  |  |  |
+| Tiered, Ni ≥ 10 wt%, reference screen | 16% ± 4 (n = 20) |  |  |  |
+| Standard BO | 7% ± 3 (n = 20) |  |  |  |
+| Random | 7% ± 5 (n = 20) |  |  |  |
+
+## Screen audit (Advance 5)
+
+From the `pkgfn_audit` runs: about one in ten builds the one-hour screen stops goes on to immersion anyway, plus those within 0.03 of the cutoff. `m_ref` = 0.849. The truth columns judge every screened build of the same runs by its true immersion index, which a lab cannot see; they say whether the audit's estimate is right.
+
+| Cell | runs | screen ranks pairs as immersion does: audited builds (90% CI) | same, every screened build judged by the truth | screen-stopped builds that pass immersion: audit estimate (90% CI; n) | same, truth on every screen-stopped build (n) | screen-passed builds that fail immersion (90% CI; n) | why each immersion ran |
+|---|---|---|---|---|---|---|---|
+
+## Quality: GP fits and the KG fallback
+
+| Cell | runs | GP fits | fit failures | pKGFN-type purchases chosen by the EI fallback (KG flat) |
+|---|---|---|---|---|
+| (1, 1) | 167 | 75,434 | 0 | 26% of 2,633 |
+| (0, 0) | 12 | 1,919 | 0 | 45% of 952 |
+
+
+results/k1e1/pkgfn_s5.json dict_keys(['kind', 'kappa', 'eta', 'seed', 'budget', 'm_ref', 'rows', 'counts', 'settings', 'gp_fits', 'builds', 'lots', 'w_gate_final', 'events', 'wall_s'])
+{'kind': 'pkgfn', 'kappa': 1.0, 'eta': 1.0, 'seed': 5, 'budget': 100000, 'm_ref': 0.8491354040681073, 'rows': [{'spent': 0.0, 'rec': nan, 'best_validated': 0.07743165757655146, 'rec_printed': 0.07743165757655146, 'action': 'init', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}, {'spent': 500.0, 'rec': nan, 'best_validated': 0.07743165757655146, 'rec_printed': 0.07743165757655146, 'action': 'U', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 510.0, 'rec': nan, 'best_validated': 0.07743165757655146, 'rec_printed': 0.07743165757655146, 'action': 'C', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 520.0, 'rec': nan, 'best_validated': 0.07743165757655146, 'rec_printed': 0.07743165757655146, 'action': 'C', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 530.0, 'rec': nan, 'best_validated': 0.07743165757655146, 'rec_printed': 0.07743165757655146, 'action': 'C', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 930.0, 'rec': nan, 'best_validated': 0.07743165757655146, 'rec_printed': 0.07743165757655146, 'action': 'A', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 2430.0, 'rec': nan, 'best_validated': 0.07743165757655146, 'rec_printed': 0.07743165757655146, 'action': 'M', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 2980.0, 'rec': nan, 'best_validated': 0.07743165757655146, 'rec_printed': 0.07743165757655146, 'action': 'S+K+I', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 3480.0, 'rec': nan, 'best_validated': 0.07743165757655146, 'rec_printed': 0.07743165757655146, 'action': 'U', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 3980.0, 'rec': nan, 'best_validated': 0.07743165757655146, 'rec_printed': 0.07743165757655146, 'action': 'U', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 4480.0, 'rec': nan, 'best_validated': 0.07743165757655146, 'rec_printed': 0.07743165757655146, 'action': 'U', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 5980.0, 'rec': nan, 'best_validated': 0.07743165757655146, 'rec_printed': 0.07743165757655146, 'action': 'M', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 6530.0, 'rec': nan, 'best_validated': 0.07743165757655146, 'rec_printed': 0.07743165757655146, 'action': 'S+K+I', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 6930.0, 'rec': nan, 'best_validated': 0.07743165757655146, 'rec_printed': 0.07743165757655146, 'action': 'A', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 10030.0, 'rec': nan, 'best_validated': 0.07743165757655146, 'rec_printed': 0.07743165757655146, 'action': 'M', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 10230.0, 'rec': nan, 'best_validated': 0.07743165757655146, 'rec_printed': 0.07743165757655146, 'action': 'T', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 10780.0, 'rec': nan, 'best_validated': 0.07743165757655146, 'rec_printed': 0.14598222135057176, 'action': 'S+K+I', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 11280.0, 'rec': nan, 'best_validated': 0.07743165757655146, 'rec_printed': 0.14598222135057176, 'action': 'U', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 11680.0, 'rec': nan, 'best_validated': 0.07743165757655146, 'rec_printed': 0.14598222135057176, 'action': 'A', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 11880.0, 'rec': nan, 'best_validated': 0.14598210630339647, 'rec_printed': 0.14598222135057176, 'action': 'T', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 12380.0, 'rec': nan, 'best_validated': 0.14598210630339647, 'rec_printed': 0.14598222135057176, 'action': 'U', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 12880.0, 'rec': nan, 'best_validated': 0.14598210630339647, 'rec_printed': 0.14598222135057176, 'action': 'U', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 13380.0, 'rec': nan, 'best_validated': 0.14598210630339647, 'rec_printed': 0.14598222135057176, 'action': 'U', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 14880.0, 'rec': nan, 'best_validated': 0.14598210630339647, 'rec_printed': 0.14598222135057176, 'action': 'M', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 16380.0, 'rec': nan, 'best_validated': 0.14598210630339647, 'rec_printed': 0.14598222135057176, 'action': 'M', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 16480.0, 'rec': nan, 'best_validated': 0.14598210630339647, 'rec_printed': 0.14598222135057176, 'action': 'S', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 16930.0, 'rec': nan, 'best_validated': 0.14598210630339647, 'rec_printed': 0.14598222135057176, 'action': 'K+I', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 17030.0, 'rec': nan, 'best_validated': 0.14598210630339647, 'rec_printed': 0.14598222135057176, 'action': 'S', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 17530.0, 'rec': nan, 'best_validated': 0.14598210630339647, 'rec_printed': 0.14598222135057176, 'action': 'U', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 17930.0, 'rec': nan, 'best_validated': 0.14598210630339647, 'rec_printed': 0.14598222135057176, 'action': 'A', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 18430.0, 'rec': nan, 'best_validated': 0.14598210630339647, 'rec_printed': 0.14598222135057176, 'action': 'U', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 18880.0, 'rec': nan, 'best_validated': 0.14598210630339647, 'rec_printed': 0.14598222135057176, 'action': 'K+I', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 21980.0, 'rec': nan, 'best_validated': 0.14598210630339647, 'rec_printed': 0.2008041556009957, 'action': 'M', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 23480.0, 'rec': nan, 'best_validated': 0.14598210630339647, 'rec_printed': 0.2008041556009957, 'action': 'M', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 23580.0, 'rec': nan, 'best_validated': 0.14598210630339647, 'rec_printed': 0.2008041556009957, 'action': 'S', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 23630.0, 'rec': nan, 'best_validated': 0.14598210630339647, 'rec_printed': 0.2008041556009957, 'action': 'K', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 24130.0, 'rec': nan, 'best_validated': 0.14598210630339647, 'rec_printed': 0.07743165757655146, 'action': 'U', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 24530.0, 'rec': nan, 'best_validated': 0.14598210630339647, 'rec_printed': 0.2008041556009957, 'action': 'I', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 25030.0, 'rec': nan, 'best_validated': 0.14598210630339647, 'rec_printed': 0.2008041556009957, 'action': 'U', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 25530.0, 'rec': nan, 'best_validated': 0.14598210630339647, 'rec_printed': 0.2008041556009957, 'action': 'U', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 27030.0, 'rec': nan, 'best_validated': 0.14598210630339647, 'rec_printed': 0.14598222135057176, 'action': 'M', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 30130.0, 'rec': nan, 'best_validated': 0.14598210630339647, 'rec_printed': 0.14598222135057176, 'action': 'M', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 30680.0, 'rec': nan, 'best_validated': 0.1459821063033
+[{'kappa': 1.0, 'eta': 1.0, 'optimum': 0.492187251856002, 'x_opt': [0.434, 0.585, 0.5, 0.0, 0.643, 0.582, 0.343], 'nodes_opt': {'s': 0.728, 'f': 0.737, 'g': 0.408, 'h': 0.125, 'q': 0.81, 'rho_u': 0.794, 'rho_m': 0.932, 'beta': 0.153, 'U': 0.759, 'w': 0.884, 'm': 0.953}, 'burden_opt': 0.6093136765285487, 'optimum_fails_calphad_screen': True, 'F_SAFE': 0.34, 'w_gate_top_quartile_of_dense': 0.6988394908994753, 'optimum_w_percentile_among_dense': 1.0, 'optimum_below_top_quartile': False, 'best_passing_calphad_screen': {'J': 0.35538767462610227, 'pct': 0.7220578616897562, 'x': [0.285, 0.352, 0.515, 0.002, 0.48, 0.707, 0.576], 'nodes': {'s': 0.52, 'f': 0.34, 'g': 0.366, 'h': 0.242, 'q': 0.959, 'rho_u': 0.311, 'rho_m': 0.965, 'beta': 0.11, 'U': 0.628, 'w': 0.773, 'm': 0.905}}, 'best_passing_both_screens': {'J': 0.3547451492268922, 'pct': 0.7207524126014526, 'x': [0.292, 0.327, 0.495, 0.0, 0.49, 0.722, 0.588], 'nodes': {'s': 0.504, 'f': 0.339, 'g': 0.348, 'h': 0.241, 'q': 0.959, 'rho_u': 0.273, 'rho_m': 0.96, 'beta': 0.097, 'U': 0.612, 'w': 0.77, 'm': 0.91}}, 'ridge': {'0.5%': {'frac_of_grid': 0.0016665032839917656, 'n_points': 17, 'P_range': [0.53, 0.64], 'v_range': [0.29, 0.4], 'P_minus_v_range': [0.22999999999999993, 0.24000000000000005]}, '1.0%': {'frac_of_grid': 0.0036270953828056074, 'n_points': 37, 'P_range': [0.51, 0.66], 'v_range': [0.27, 0.42], 'P_minus_v_range': [0.22999999999999993, 0.25000000000000006]}, '2.0%': {'frac_of_grid': 0.006175865111263602, 'n_points': 63, 'P_range': [0.47000000000000003, 0.6799999999999999], 'v_range': [0.23, 0.44], 'P_minus_v_range': [0.21999999999999997, 0.25000000000000006]}}, 'reference_alloys': {'C71500 (70-30 Cu-Ni)': {'J': -0.07343115953285703, 'pct_of_optimum': -0.1491935422056413, 'rho_m': 0.8499393185535409, 'U': 0.47643996889145174, 'beta': 0.0, 'm': 0.8492818469753255, 'w': 0.8346121417149521, 'f': 0.7174999999999999, 'passes_immersion': True, 'passes_calphad_screen': False, 'burden': 1.04, 'x': [1.0, 0.0, 0.15, 0.2, 0.628, 0.576, 0.35], 'densest': {'rho_m': 0.8499393185535409, 'm': 0.8492818469753255, 'beta': 0.0, 'U': 0.47643996889145174, 'passes_immersion': True, 'x': [1.0, 0.0, 0.15, 0.2, 0.628, 0.576, 0.35]}}, 'C70600 (90-10 Cu-Ni)': {'J': 0.11997240865147518, 'pct_of_optimum': 0.2437535880888179, 'rho_m': 0.9613719729672837, 'U': 0.37959907220291506, 'beta': 0.0, 'm': 0.8716765820364581, 'w': 0.7061821814387427, 'f': 0.29195000000000004, 'passes_immersion': True, 'passes_calphad_screen': True, 'burden': 0.373, 'x': [0.333, 0.0, 0.31, 0.2, 0.464, 0.583, 0.472], 'densest': {'rho_m': 0.9613719729672837, 'm': 0.8716765820364581, 'beta': 0.0, 'U': 0.37959907220291506, 'passes_immersion': True, 'x': [0.333, 0.0, 0.31, 0.2, 0.464, 0.583, 0.472]}}, 'C95800 (NAB)': {'J': -0.1464396247857092, 'pct_of_optimum': -0.2975282765522596, 'rho_m': 0.9188922139114549, 'U': 0.7934312356761367, 'beta': 0.48112718843673763, 'm': 0.5515914741202028, 'w': 0.8220275866547901, 'f': 0.25625, 'passes_immersion': False, 'passes_calphad_screen': True, 'burden': 0.49499999999999994, 'x': [0.15, 0.95, 0.9, 0.3, 0.446, 0.645, 0.482], 'densest': {'rho_m': 0.9748466593210721, 'm': 0.5283929672762127, 'beta': 0.55127603136108, 'U': 0.8500068801147989, 'passes_immersion': False, 'x': [0.15, 0.95, 0.9, 0.3, 0.464, 0.583, 0.472]}}}, 'utah_cap': {'copper-rich (Ni <= 0.07, Al <= 0.2, i.e. under about 2 wt% Ni and 2 wt% Al)': {'n': 200, 'median_best_rho_u': 0.40483118009862645, 'median_best_rho_m': 0.8815186371269255, 'frac_rho_u_below_0.3': 0.15, 'frac_rho_m_above_0.7': 1.0}, 'optimum composition': {'best_rho_u': 0.9195455537095922, 'best_rho_m': 0.9302381316990496}}}, {'kappa': 0.0, 'eta': 0.0, 'optimum': 0.381561510051002, 'x_opt': [0.319, 0.375, 0.401, 0.0, 0.504, 0.627, 0.476], 'nodes_opt': {'s': 0.547, 'f': 0.396, 'g': 0.293, 'h': 0.215, 'q': 0.945, 'rho_u': 0.628, 'rho_m': 0.947, 'beta': 0.112, 'U': 0.636, 'w': 0.974, 'm': 0.92}, 'burden_opt': 0.4320406856139271, 'optimum_fails_calphad_screen': True, 'F_SAFE': 0.34, 'w_gate_top_quartile_of_dense': 0.7719969754165643, 'optimum_w_percentile_among_dense': 1.0, 'optimum_below_top_quartile': False, 'best_passing_calphad_screen': {'J': 0.35142183035673, 'pct': 0.9210096435297069, 'x': [0.293, 0.331, 0.436, 0.0, 0.476, 0.704, 0.572], 'nodes': {'s': 0.503, 'f': 0.339, 'g': 0.309, 'h': 0.24, 'q': 0.959, 'rho_u': 0.324, 'rho_m': 0.958, 'beta': 0.1, 'U': 0.61, 'w': 0.958, 'm': 0.909}}, 'best_passing_both_screens': {'J': 0.35142183035673, 'pct': 0.921009643529706
+schema keys dict_keys(['kind', 'kappa', 'eta', 'seed', 'budget', 'm_ref', 'rows', 'counts', 'settings', 'gp_fits', 'builds', 'lots', 'w_gate_final', 'events', 'wall_s'])
+metadata {'kind': 'pkgfn', 'kappa': 1.0, 'eta': 1.0, 'seed': 5, 'budget': 100000, 'm_ref': 0.8491354040681073, 'counts': {'C': 7, 'A': 8, 'U': 19, 'M': 42, 'S': 13, 'T': 6, 'K': 10, 'I': 9}, 'settings': {'S_ACQ': 64, 'N_CAND': 16, 'N_POOL': 512, 'N_ANCHOR': [32, 16], 'N_PERTURB': 24, 'S_REC': 64, 'REC': False, 'RHO_GATE': 0.5, 'W_QUANTILE': 0.75, 'F_SAFE': 0.34, 'CODE_VERSION': '2026-10-27', 'NOGATE': False}, 'gp_fits': {'calls': 146, 'failures': 0}, 'w_gate_final': 0.852723827398624, 'events': [{'it': 7, 'build': 5, 'w': 0.7890004871929781, 'gate': 0.8116003363299518, 'screen_pass': False, 'how': 'nogate-bundle', 'm': 0.7534634232302013, 'immersion_pass': False}, {'it': 12, 'build': 6, 'w': 0.8261190410651177, 'gate': 0.8218979772511059, 'screen_pass': True, 'how': 'pass-bundle', 'm': 0.7308524045106554, 'immersion_pass': False}, {'it': 16, 'build': 7, 'w': 0.8119015017423995, 'gate': 0.8205157983133579, 'screen_pass': False, 'how': 'nogate-bundle', 'm': 0.880803275954379, 'immersion_pass': True}, {'it': 26, 'build': 9, 'w': 0.8371220261814092, 'gate': 0.8246623351266023, 'screen_pass': True, 'how': 'pass-bundle', 'm': 0.8772251532352122, 'immersion_pass': True}, {'it': 31, 'build': 8, 'w': 0.8078655218932652, 'gate': 0.8232801561888541, 'screen_pass': False, 'how': 'nogate-bundle', 'm': 0.8693555004366261, 'immersion_pass': True}, {'it': 37, 'build': 10, 'w': 0.8609648039125909, 'gate': 0.8253906880958599, 'screen_pass': True, 'how': 'pass', 'm': 0.8801972471241288, 'immersion_pass': True}, {'it': 42, 'build': 13, 'w': 0.8794877640166563, 'gate': 0.8288697873441906, 'screen_pass': True, 'how': 'pass-bundle', 'm': 0.8998881946360143, 'immersion_pass': True}, {'it': 49, 'build': 12, 'w': 0.844482850884657, 'gate': 0.8371220261814092, 'screen_pass': True, 'how': 'pass-bundle', 'm': 0.8451860841800787, 'immersion_pass': False}, {'it': 101, 'build': 21, 'w': 0.8823140514245638, 'gate': 0.8426426447088451, 'screen_pass': True, 'how': 'pass', 'm': 0.9256754282275262, 'immersion_pass': True}], 'wall_s': 2103.754255056381}
+rows <class 'list'> 104 [{'spent': 0.0, 'rec': nan, 'best_validated': 0.07743165757655146, 'rec_printed': 0.07743165757655146, 'action': 'init', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}, {'spent': 500.0, 'rec': nan, 'best_validated': 0.07743165757655146, 'rec_printed': 0.07743165757655146, 'action': 'U', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 510.0, 'rec': nan, 'best_validated': 0.07743165757655146, 'rec_printed': 0.07743165757655146, 'action': 'C', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 520.0, 'rec': nan, 'best_validated': 0.07743165757655146, 'rec_printed': 0.07743165757655146, 'action': 'C', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 530.0, 'rec': nan, 'best_validated': 0.07743165757655146, 'rec_printed': 0.07743165757655146, 'action': 'C', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 930.0, 'rec': nan, 'best_validated': 0.07743165757655146, 'rec_printed': 0.07743165757655146, 'action': 'A', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 2430.0, 'rec': nan, 'best_validated': 0.07743165757655146, 'rec_printed': 0.07743165757655146, 'action': 'M', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 2980.0, 'rec': nan, 'best_validated': 0.07743165757655146, 'rec_printed': 0.07743165757655146, 'action': 'S+K+I', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 3480.0, 'rec': nan, 'best_validated': 0.07743165757655146, 'rec_printed': 0.07743165757655146, 'action': 'U', 'x_rec': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'fallback': False}, {'spent': 3980.0, 'rec': nan, 'best_validated': 0.07743165757655146, 'rec_printed': 0.07743165757655146, 'action': 'U', 'x_rec': [0.0, 0.0, 0.0, 
+counts <class 'dict'> 8 {'C': 7, 'A': 8, 'U': 19, 'M': 42, 'S': 13, 'T': 6, 'K': 10, 'I': 9}
+builds <class 'list'> 47 [{'c': [0.799, 0.0135, 0.1833, 0.9725], 'a': 0.9618529429162629, 'pv': [0.012076640724371979, 0.9656026368071361], 'q': 0.25889607981686413, 'rho_u_in': 2.4079223526646896e-17, 'rho_m': 2.5005819053026295e-17, 'beta': 0.0009450865505590664, 'U': 1.3997007494431122e-17, 'w': 0.7228558595245022, 'm': 0.6043429329096943, 'J': -0.2992725603535783}, {'c': [0.4377, 0.6918, 0.3716, 0.3429], 'a': 0.07471712924770046, 'pv': [0.2521657592355123, 0.38073427144739735], 'q': 0.003446085671446937, 'rho_u_in': 0.002247013639273187, 'rho_m': 0.002364848595505454, 'beta': 0.40423548322505654, 'U': 0.0020795649317020292, 'w': 0.8191336193756097, 'm': 0.5684392052692069, 'J': -0.21413679002128153}, {'c': [0.6553, 0.2168, 0.8713, 0.3624], 'a': 0.5001529638425973, 'pv': [0.3524347209182962, 0.10891816189210823], 'q': 0.4452575410485258, 'rho_u_in': 0.7337634208621677, 'rho_m': 0.7546965313400543, 'beta': 0.029054254156912897, 'U': 0.5566520444035463, 'w': 0.8246623351266023, 'm': 0.8624949722780837, 'J': 0.07743165757655146}, {'c': [0.1519, 0.153, 0.0777, 0.3685], 'a': 0.9067972373933989, 'pv': [0.9632060495910225, 0.45001194950295165], 'q': 0.05678505725616082, 'rho_u_in': 0.2970267793509568, 'rho_m': 0.004426083559197096, 'beta': 0.006095323142247841, 'U': 0.0019288006552626597, 'w': 0.5331726195193542, 'm': 0.39721731338828237, 'J': -0.08144125818221362}, {'c': [0.5124, 0.3974, 0.2817, 0.5977], 'a': 0.5607546911684107, 'pv': [0.8187019162898055, 0.8762896692741841], 'q': 0.5115591268318624, 'rho_u_in': 1.962452049629185e-05, 'rho_m': 0.04451185345558031, 'beta': 0.1579472417189595, 'U': 0.03453667112687519, 'w': 0.7691708295289372, 'm': 0.6517366085861822, 'J': -0.2246755879870727}, {'c': [0.6553, 0.2168, 0.8713, 0.3624], 'a': 0.5001529638425973, 'pv': [0.4572869064286351, 0.356530830264
+lots <class 'list'> 13 [{'c': [0.799, 0.0135, 0.1833, 0.9725], 'a': 0.9618529429162629, 'q': 0.25889607981686413, 'utah': [[0.012076640724371979, 0.9656026368071361, 2.4079223526646896e-17]], 'sessions_left': 3}, {'c': [0.4377, 0.6918, 0.3716, 0.3429], 'a': 0.07471712924770046, 'q': 0.003446085671446937, 'utah': [[0.2521657592355123, 0.38073427144739735, 0.002247013639273187]], 'sessions_left': 0}, {'c': [0.6553, 0.2168, 0.8713, 0.3624], 'a': 0.5001529638425973, 'q': 0.4452575410485258, 'utah': [[0.3524347209182962, 0.10891816189210823, 0.7337634208621677], [0.5, 0.10882249660789967, 0.5072280885007159], [0.28685511369258165, 0.17853820510208607, 0.39063797282407614], [0.387470874004066, 0.36354232765734196, 0.1763724883036086], [0.287569728679955, 0.021052570082247257, 0.7185463987922633]], 'sessions_left': 2}, {'c': [0.1519, 0.153, 0.0777, 0.3685], 'a': 0.9067972373933989, 'q': 0.05678505725616082, 'utah': [[0.5, 0.45001194950295165, 0.2970267793509568]], 'sessions_left': 3}, {'c': [0.5124, 0.3974, 0.2817, 0.5977], 'a': 0.5607546911684107, 'q': 0.5115591268318624, 'utah': [[0.5, 0.8762896692741841, 1.962452049629185e-05]], 'sessions_left': 1}, {'c': [0.6006, 0.1839, 0.8231, 0.463], 'a': 0.7260324284434319, 'q': 0.7122939882359973, 'utah': [[0.3817692808806896, 0.07695641089230776, 0.7949390646021073], [0.25776482000947, 0.0761095155030489, 0.7196573373916484], [0.5, 0.011952340602874756, 0.2032583971557869], [0.2516640704125166, 0.03434452787041664, 0.7749295300099497]], 'sessions_left': 3}, {'c': [0.5985, 0.4764, 0.2751, 0.4094], 'a': 0.6604110579937696, 'q': 0.5627293064073132, 'utah': [[0.38067395985126495, 0.06188263650983572, 0.7516816851028066]], 'sessions_left': 0}, {'c': [0.3774, 0.6511, 0.4376, 0.0638], 'a': 0.6539805186912417, 'q': 0.8233339396095022, 'utah': [[0.5, 0.047634086571
+inventory Counter({('k1e1', 'ei'): 20, ('k1e1', 'eifn'): 20, ('k1e1', 'tiered_ni_ref'): 20, ('k1e1', 'tiered_ni'): 20, ('k1e1', 'tiered'): 20, ('k1e1', 'random'): 20, ('k1e1', 'eifn_reuse'): 20, ('k1e1', 'pkgfn'): 7, ('k0e0', 'eifn'): 1, ('k0e0', 'eifn_reuse'): 1})
+compare files ['compare/results-nogate']
+  cell        policy  n     start  mean25000  se25000  mean50000  se50000  mean100000  se100000     median60   hit60    median70   hit70    median80   hit80
+(0, 0)    eifn_reuse  1  11.83111   11.83111      NaN   67.67248      NaN    95.19460       NaN  46500.00000 1.00000 53500.00000 1.00000 58250.00000 1.00000
+(0, 0)          eifn  1  11.83111   11.83111      NaN   19.48662      NaN    92.25496       NaN  52500.00000 1.00000 71500.00000 1.00000 76250.00000 1.00000
+(1, 1)            ei 20  -9.60955    5.68040  3.41324    7.18040  3.29873    14.42051   6.25620          inf 0.15000         inf 0.05000         inf 0.05000
+(1, 1)    eifn_reuse 20  -9.60955   14.35254  4.70224   32.27423  7.80548    72.03264   7.04636  54375.00000 0.85000 64625.00000 0.85000 80625.00000 0.65000
+(1, 1)          eifn 20  -9.60955   14.97670  5.74505   38.77389  9.11598    73.21174   7.32195  66750.00000 0.85000 73875.00000 0.75000 88125.00000 0.70000
+(1, 1)         pkgfn  7 -13.83079    3.34113  5.43279   24.57194 11.10896    58.85574  12.20791 100000.00000 0.57143         inf 0.42857         inf 0.28571
+(1, 1)        random 20  -9.60955   -0.61159  4.53179    6.90386  4.97712    22.29270   5.02394          inf 0.05000         inf 0.00000         inf 0.00000
+(1, 1) tiered_ni_ref 20  -9.60955    7.85838  4.22545   16.13587  3.95997    24.23313   4.74996          inf 0.10000         inf 0.00000         inf 0.00000
+(1, 1)     tiered_ni 20  -9.60955   -6.64402  5.49666    0.76200  5.53710    10.21720   6.38229          inf 0.00000         inf 0.00000         inf 0.00000
+(1, 1)        tiered 20  -9.60955   -9.42677  5.50035   -9.10581  5.47261    -7.69082   5.36623          inf 0.00000         inf 0.00000         inf 0.00000
+(0, 0)   pkgfn_light 10 -24.42666   -5.62181  4.72401   -0.35633  3.83634     9.37251   7.47393          inf 0.00000         inf 0.00000         inf 0.00000
+(1, 1)   pkgfn_light 20  -9.60955   11.95089  6.55933   27.43986  7.38484    58.55212   4.84439  85500.00000 0.60000         inf 0.35000         inf 0.05000
+Initial rows Counter({(0.0, 'init'): 179})
+      against  budget  n  difference  wins  ties  losses  p_dropzero  p_scipy_default
+  pkgfn_light   25000  7  -11.322800     3     0       4    0.578125         0.578125
+  pkgfn_light   50000  7   -2.099425     3     0       4    0.937500         0.937500
+  pkgfn_light  100000  7   -5.336754     3     0       4    0.687500         0.687500
+         eifn   25000  7  -20.507426     0     0       7    0.015625         0.015625
+         eifn   50000  7  -20.773717     1     0       6    0.218750         0.218750
+         eifn  100000  7  -28.510794     1     0       6    0.046875         0.046875
+   eifn_reuse   25000  7  -14.006848     1     0       6    0.109375         0.109375
+   eifn_reuse   50000  7  -14.940369     2     0       5    0.375000         0.375000
+   eifn_reuse  100000  7   -3.053437     3     0       4    0.812500         0.812500
+       tiered   25000  7   16.649669     6     1       0    0.031250         0.031250
+       tiered   50000  7   36.963451     7     0       0    0.015625         0.015625
+       tiered  100000  7   69.289938     7     0       0    0.015625         0.015625
+    tiered_ni   25000  7   13.921472     5     1       1    0.093750         0.093750
+    tiered_ni   50000  7   30.180930     6     0       1    0.046875         0.046875
+    tiered_ni  100000  7   53.369696     7     0       0    0.015625         0.015625
+tiered_ni_ref   25000  7   -6.759339     2     0       5    0.468750         0.468750
+tiered_ni_ref   50000  7    3.639693     5     0       2    0.687500         0.687500
+tiered_ni_ref  100000  7   31.041159     6     0       1    0.046875         0.046875
+           ei   25000  7   -0.308817     2     1       4    0.843750         0.843750
+           ei   50000  7   20.041027     4     0       3    0.218750         0.218750
+           ei  100000  7   46.761196     5     0       2    0.078125         0.078125
+       random   25000  7    3.774304     4     1       2    0.562500         0.562500
+       random   50000  7   21.813453     5     0       2    0.156250         0.156250
+       random  100000  7   39.951966     6     0       1    0.031250         0.031250
+     baseline        policy   target  baseline_cost  method_cost    ratio  independent_lo  independent_hi  independent_undefined  independent_zero_cost  independent_Pge3  matched_lo  matched_hi  matched_undefined  matched_zero_cost  matched_Pge3
+       tiered         pkgfn -7.69082    99250.00000   5750.00000 17.26087         2.51370             inf                0.00040                0.24905           0.93875    11.52632    20.78947            0.00200            0.00200       0.99800
+       tiered   pkgfn_light -7.69082    99250.00000   5750.00000 17.26087         5.75362             inf                0.00085                0.39830           0.99140    12.03030    21.94444            0.00255            0.00255       0.99745
+       tiered          eifn -7.69082    99250.00000   5000.00000 19.85000        18.35000             inf                0.00085                0.39830           0.99575    18.35000    19.85000            0.00255            0.00255       0.99745
+       tiered    eifn_reuse -7.69082    99250.00000   5000.00000 19.85000        10.95000             inf                0.00085                0.39830           0.99605    18.35000    43.88889            0.00255            0.00255       0.99745
+       tiered     tiered_ni -7.69082    99250.00000  23250.00000  4.26882         1.15072             inf                0.00085                0.39830           0.54915     2.60284     7.21818            0.00255            0.00255       0.66865
+       tiered tiered_ni_ref -7.69082    99250.00000   9000.00000 11.02778         4.95946             inf                0.00085                0.39830           0.98545     7.21818    14.17857            0.00255            0.00255       0.99745
+       tiered            ei -7.69082    99250.00000   5000.00000 19.85000         5.15584             inf                0.00085                0.39830           0.97880    18.35000    19.85000            0.00255            0.00255       0.99745
+       tiered        random -7.69082    99250.00000   9750.00000 10.17949         2.30814             inf                0.00085                0.39830           0.87420     9.41026    19.85000            0.00255            0.00255       0.99620
+tiered_ni_ref         pkgfn 24.23313   100000.00000  47250.00000  2.11640         0.87657         2.42424                0.00000                0.00000           0.00975     0.80856     1.98788            0.00000            0.00000       0.00025
+tiered_ni_ref   pkgfn_light 24.23313   100000.00000  46750.00000  2.13904         1.49327         4.09412                0.00000                0.00000           0.12690     1.49356     3.38983            0.00000            0.00000       0.06835
+tiered_ni_ref          eifn 24.23313   100000.00000  33500.00000  2.98507         1.61290         4.16667                0.00000                0.00000           0.16710     1.74672     3.47826            0.00000            0.00000       0.10565
+tiered_ni_ref    eifn_reuse 24.23313   100000.00000  35250.00000  2.83688         1.64609         4.25532                0.00000                0.00000           0.38855     1.68116     3.92157            0.00000            0.00000       0.38890
+tiered_ni_ref        tiered 24.23313   100000.00000          inf  0.00000         0.00000         0.00000                0.00000                0.00000           0.00000     0.00000     0.00000            0.00000            0.00000       0.00000
+tiered_ni_ref     tiered_ni 24.23313   100000.00000          inf  0.00000         0.00000         0.00000                0.00000                0.00000           0.00000     0.00000     0.00000            0.00000            0.00000       0.00000
+tiered_ni_ref            ei 24.23313   100000.00000          inf  0.00000         0.00000         1.00000                0.00000                0.00000           0.00075     0.00000     0.00000            0.00000            0.00000       0.00000
+tiered_ni_ref        random 24.23313   100000.00000          inf  0.00000         0.00000         1.61290                0.00000                0.00000           0.00010     0.00000     1.61290            0.00000            0.00000       0.00000
+DIFF count 0
+
+Max curve difference (percentage points) 0
+SciPy 1.17.1
+SE correction factors [(7, np.float64(1.0801234497346435)), (10, np.float64(1.0540925533894598)), (20, np.float64(1.025978352085154))]
+pkgfn 3% ± 5; 25% ± 11; 59% ± 12
+pkgfn_light 12% ± 7; 27% ± 7; 59% ± 5
+eifn 15% ± 6; 39% ± 9; 73% ± 7
+eifn_reuse 14% ± 5; 32% ± 8; 72% ± 7
+tiered -9% ± 6; -9% ± 5; -8% ± 5
+tiered_ni -7% ± 5; 1% ± 6; 10% ± 6
+tiered_ni_ref 8% ± 4; 16% ± 4; 24% ± 5
+ei 6% ± 3; 7% ± 3; 14% ± 6
+random -1% ± 5; 7% ± 5; 22% ± 5
+counts log schemas by policy
+
+ pkgfn keys ['kind', 'kappa', 'eta', 'seed', 'budget', 'm_ref', 'rows', 'counts', 'settings', 'gp_fits', 'builds', 'lots', 'w_gate_final', 'events', 'wall_s', '_path'] rows 87 actions {'init': 1, 'M': 44, 'C': 8, 'A': 7, 'S+K+I': 12, 'U': 7, 'T': 3, 'S+T': 2, 'K': 1, 'K+I': 1, 'S': 1}
+build keys dict_keys(['c', 'a', 'pv', 'q', 'rho_u_in', 'rho_m', 'beta', 'U', 'w', 'm', 'J']) lastbuild {'c': [0.7612, 0.6999, 0.448, 0.4431], 'a': 0.5203814760846887, 'pv': [0.5345384115353227, 0.11808257270604372], 'q': 0.3170765427959693, 'rho_u_in': 0.6346560830723116, 'rho_m': 0.49914769321996566, 'beta': None, 'U': None, 'w': None, 'm': None, 'J': None}
+lot keys dict_keys(['c', 'a', 'q', 'utah', 'sessions_left']) events [{'it': 7, 'build': 8, 'w': 0.9227099291860619, 'gate': 0.8852095677617525, 'screen_pass': True, 'how': 'pass-bundle', 'm': 0.7814019885946341, 'immersion_pass': False}, {'it': 9, 'build': 9, 'w': 0.7093165464728123, 'gate': 0.8795138894571175, 'screen_pass': False, 'how': 'nogate-bundle', 'm': 0.7692185970485652, 'immersion_pass': False}, {'it': 1
+
+ pkgfn_light keys ['kind', 'kappa', 'eta', 'seed', 'budget', 'm_ref', 'rows', 'counts', 'settings', 'gp_fits', 'builds', 'lots', 'w_gate_final', 'events', 'wall_s', '_path'] rows 89 actions {'init': 1, 'M': 41, 'C': 5, 'A': 11, 'S+K+I': 11, 'T': 6, 'U': 11, 'S': 2, 'S+T': 1}
+build keys dict_keys(['c', 'a', 'pv', 'q', 'rho_u_in', 'rho_m', 'beta', 'U', 'w', 'm', 'J']) lastbuild {'c': [0.721, 0.238, 0.4528, 0.0584], 'a': 0.7996165109798312, 'pv': [0.4694347623735666, 0.27468543592840433], 'q': 0.6381119553097443, 'rho_u_in': 0.7729799760769006, 'rho_m': 0.7669325223934867, 'beta': None, 'U': None, 'w': None, 'm': None, 'J': None}
+lot keys dict_keys(['c', 'a', 'q', 'utah', 'sessions_left']) events [{'it': 7, 'build': 8, 'w': 0.7638706197199138, 'gate': 0.842059554565864, 'screen_pass': False, 'how': 'nogate-bundle', 'm': 0.8893953090184622, 'immersion_pass': True}, {'it': 12, 'build': 11, 'w': 0.7603527268646639, 'gate': 0.8159965762838806, 'screen_pass': False, 'how': 'nogate-bundle', 'm': 0.8793704493878608, 'immersion_pass': True}, {'it':
+
+ eifn keys ['kind', 'kappa', 'eta', 'seed', 'budget', 'm_ref', 'rows', 'counts', 'settings', 'gp_fits', 'builds', 'lots', 'w_gate_final', 'wall_s', '_path'] rows 22 actions {'init': 1, 'full': 21}
+build keys dict_keys(['c', 'a', 'pv', 'q', 'rho_u_in', 'rho_m', 'beta', 'U', 'w', 'm', 'J']) lastbuild {'c': [0.4219, 0.4604, 0.5497, 0.0], 'a': 0.562549969023336, 'pv': [0.6422956244302676, 0.4327288130905104], 'q': 0.8470125531188836, 'rho_u_in': 0.5738473015194199, 'rho_m': 0.9434822888113157, 'beta': 0.11932373615538434, 'U': 0.7214656289948727, 'w': 0.850766522761, 'm': 0.9486769363413766, 'J': 0.466747856547182}
+lot keys dict_keys(['c', 'a', 'q', 'utah', 'sessions_left']) events []
+
+ eifn_reuse keys ['kind', 'kappa', 'eta', 'seed', 'budget', 'm_ref', 'rows', 'counts', 'settings', 'gp_fits', 'builds', 'lots', 'w_gate_final', 'wall_s', '_path'] rows 34 actions {'init': 1, 'reuse': 23, 'full': 10}
+build keys dict_keys(['c', 'a', 'pv', 'q', 'rho_u_in', 'rho_m', 'beta', 'U', 'w', 'm', 'J']) lastbuild {'c': [0.3728, 0.2234, 0.4475, 0.138], 'a': 0.6201129613361542, 'pv': [0.34743775706738234, 0.3173695718869567], 'q': 0.8191024050728923, 'rho_u_in': 0.8912085391736306, 'rho_m': 0.5322660048767878, 'beta': 0.06496375051089573, 'U': 0.32442386907146503, 'w': 0.7343178048984398, 'm': 0.8086594325561323, 'J': -0.04029936100510596}
+lot keys dict_keys(['c', 'a', 'q', 'utah', 'sessions_left']) events []
+
+ tiered keys ['kind', 'kappa', 'eta', 'seed', 'budget', 'm_ref', 'rows', 'counts', 'settings', 'gp_fits', 'builds', 'lots', 'w_gate_final', 'wall_s', '_path'] rows 36 actions {'init': 1, 'C-screen': 1, 'utah-fail': 6, 'screen-fail': 26, 'full': 2}
+build keys dict_keys(['c', 'a', 'pv', 'q', 'rho_u_in', 'rho_m', 'beta', 'U', 'w', 'm', 'J']) lastbuild {'c': [0.129, 0.8916, 0.4727, 0.656], 'a': 0.6473709354177117, 'pv': [0.11113353446125984, 0.2199850995093584], 'q': 0.5861467518667485, 'rho_u_in': 0.4526160503272614, 'rho_m': 0.05097282331742588, 'beta': 0.6984209551990671, 'U': 0.04295584711997793, 'w': 0.6987689268264613, 'm': None, 'J': None}
+lot keys dict_keys(['c', 'a', 'q', 'utah', 'sessions_left']) events []
+
+ tiered_ni keys ['kind', 'kappa', 'eta', 'seed', 'budget', 'm_ref', 'rows', 'counts', 'settings', 'gp_fits', 'builds', 'lots', 'w_gate_final', 'shortlist', 'wall_s', '_path'] rows 82 actions {'init': 1, 'C-screen': 1, 'utah-fail': 65, 'screen-fail': 11, 'full': 4}
+build keys dict_keys(['c', 'a', 'pv', 'q', 'rho_u_in', 'rho_m', 'beta', 'U', 'w', 'm', 'J']) lastbuild {'c': [0.4194, 0.1549, 0.3289, 0.1064], 'a': 0.7095148647204041, 'pv': [0.5967141352593899, 0.5289074806496501], 'q': 0.5901246673082731, 'rho_u_in': 0.35979504276944785, 'rho_m': 0.6929373613527121, 'beta': 0.034062485062228864, 'U': 0.3928786877548656, 'w': 0.7485586873573915, 'm': 0.8430334596763135, 'J': 0.038322399110213345}
+lot keys dict_keys(['c', 'a', 'q', 'utah', 'sessions_left']) events []
+
+ tiered_ni_ref keys ['kind', 'kappa', 'eta', 'seed', 'budget', 'm_ref', 'rows', 'counts', 'settings', 'gp_fits', 'builds', 'lots', 'w_gate_final', 'shortlist', 'w_ref', 'wall_s', '_path'] rows 37 actions {'init': 1, 'C-screen': 1, 'utah-fail': 7, 'screen-fail': 6, 'full': 22}
+build keys dict_keys(['c', 'a', 'pv', 'q', 'rho_u_in', 'rho_m', 'beta', 'U', 'w', 'm', 'J']) lastbuild {'c': [0.4194, 0.1549, 0.3289, 0.1064], 'a': 0.5506858630105853, 'pv': [0.6879333648830652, 0.48730327282100916], 'q': 0.9156897844183371, 'rho_u_in': 0.592184424771209, 'rho_m': 0.9148725825354246, 'beta': 0.024035822358325586, 'U': 0.5179344040336895, 'w': 0.7707522094756627, 'm': 0.910545807806866, 'J': 0.2544795632376947}
+lot keys dict_keys(['c', 'a', 'q', 'utah', 'sessions_left']) events []
+
+ ei keys ['kind', 'kappa', 'eta', 'seed', 'budget', 'm_ref', 'rows', 'counts', 'settings', 'gp_fits', 'builds', 'lots', 'w_gate_final', 'wall_s', '_path'] rows 22 actions {'init': 1, 'full': 21}
+build keys dict_keys(['c', 'a', 'pv', 'q', 'rho_u_in', 'rho_m', 'beta', 'U', 'w', 'm', 'J']) lastbuild {'c': [0.4217, 0.2285, 0.3526, 0.0486], 'a': 0.6392093237184362, 'pv': [0.5947731094729418, 0.4338803635959201], 'q': 0.8042000888385842, 'rho_u_in': 0.7073655530433552, 'rho_m': 0.9286052940696204, 'beta': 0.04869488122999394, 'U': 0.578063508902095, 'w': 0.7912178600568586, 'm': 0.9288845727613582, 'J': 0.3305731359151293}
+lot keys dict_keys(['c', 'a', 'q', 'utah', 'sessions_left']) events []
+
+ random keys ['kind', 'kappa', 'eta', 'seed', 'budget', 'm_ref', 'rows', 'counts', 'settings', 'gp_fits', 'builds', 'lots', 'w_gate_final', 'wall_s', '_path'] rows 22 actions {'init': 1, 'full': 21}
+build keys dict_keys(['c', 'a', 'pv', 'q', 'rho_u_in', 'rho_m', 'beta', 'U', 'w', 'm', 'J']) lastbuild {'c': [0.8915, 0.1356, 0.9217, 0.7709], 'a': 0.7318964372040491, 'pv': [0.7015618868253107, 0.4431503542521451], 'q': 0.5973888099846, 'rho_u_in': 0.1903292207630406, 'rho_m': 0.8034359927169357, 'beta': 0.011172157677003556, 'U': 0.6052946769262368, 'w': 0.8479940108453782, 'm': 0.8657532226174223, 'J': 0.026583943976932534}
+lot keys dict_keys(['c', 'a', 'q', 'utah', 'sessions_left']) events []
+policy function lines
+72 CODE_VERSION = "2026-10-27"  # fallback EI test without the tie-break; inner set anchored on every deposited design, deduplicated
+79 def initial_data(truth, seed):
+88     d.log = []  # and purchase counts are new purchases only
+92 def eps_for(m, S, seed):
+97 def recommend(net: Network, d: Data, truth: AlloyTruth, it: int):
+117     def __init__(self, truth, d):
+121     def __call__(self, net, it, action):
+131         self.rows.append(
+132             {"spent": self.d.spent, "rec": rec, "best_validated": best, "rec_printed": printed, "action": action, "x_rec": [round(v, 4) for v in xr.tolist()]}
+136 def w_gate(d: Data):
+144 def w_reference(truth: AlloyTruth):
+156 def network_ei_pool(net, d, P, eps, best):
+162 def expected_improvement(gp, P, best):
+170 def calphad_shortlist(d, lab, seed, top=SCREEN_TOP, ni_floor=None):
+197 def lab_gp(rows):
+201 def lot_passed_utah(L):
+205 def chain(lab, d, lot, pv, need_utah, rows, w_ref=None):
+218             rows.append((xu, -LAMBDA * float(burden(xu))))  # did not deposit dense: recorded as a failure
+230         rows.append((x, d.builds[b]["J"]))
+232     rows.append((x, U * float(sig(torch.tensor((w - gate) / 0.05))) - LAMBDA * float(burden(x))))  # the screen stands in for immersion
+236 def run_funnel_stages(lab, d, comps, fom, fvals, rows):
+273             rows.append((x, B["J"]))
+275             rows.append((x, B["U"] * float(sig(torch.tensor((B["w"] - d.builds[keep4[-1]]["w"]) / 0.05))) - LAMBDA * float(burden(x))))
+281 def run_full_policy(kind, truth, seed, budget):
+329                 break
+365                 break
+371                 break
+405 def run_pkgfn(truth, seed, budget, verbose=False, utah=True, screens=False, audit=False):
+426     def passes(kind_, key, value, cutoff, above=True):
+476         best_apv = (eiA + 1e-9 * mA).argmax(1)  # the posterior mean breaks ties when EI is zero
+515                 # the posterior mean breaks ties for the ranking only; the fallback tests the raw EI (Edison F4)
+526         def build_cands(grp, cond, zfun, sd):
+540         def binfo(j):
+545         def z_beta(j):
+549         def z_U(j):
+553         def z_corr(j, with_w=False):
+567         def z_U_hat(j):
+572         def z_m_hat(j, beta_known):
+591         def cost_of(grp, Z):
+610         def to_validation(k, i, c):
+640                 break
+645             kg_log["fallback"] = grp if pos else grp + " (optimistic)"
+697         rec.rows[-1]["fallback"] = "fallback" in kg_log  # True when KG was flat and EI per dollar chose the purchase
+700             print(f"it {it:3d} {grp} spent ${d.spent:8.0f} best_val {r['best_validated']:.3f} printed {r['rec_printed']:.3f} KG {{{', '.join(f'{k}: {v:.2e}' if isinstance(v, float) else f'{k}: {v}' for k, v in kg_log.items())}}} {time.time() - t0:.1f}s", flush=True)
+704 def run(kind, kappa, eta, seed, budget, verbose=False):
+712     counts = {grp: sum(1 for g_, _ in d.log if g_ == grp) for grp in COSTS}
+720     lots = [{"c": [round(float(v), 4) for v in L["c"]], "a": L["a"], "q": L["q"], "utah": L["utah"], "sessions_left": L["sessions_left"]} for L in d.lots]
+721     out = {"kind": kind, "kappa": kappa, "eta": eta, "seed": seed, "budget": budget, "m_ref": truth.m_ref, "rows": rows, "counts": counts, "settings": settings,
+747         out["final_best_validated"] = final
+Edge curve at 0,250,500,750,1000,99750,100000: [nan nan 0.2 0.2 0.3 0.3 0.4]
+Edge cost_to .2,.3,.4,.5: [[500.0], [1000.0], [100000.0], [inf]]
+shuffled seed match [2 0] [0 2] [(2, 2), (7, 7)]
+actual duplicate seeds 12 True
+         base        policy       est        lo         hi     p3       mlo       mhi  matched_point  matched_target
+       tiered         pkgfn 17.260870  2.719178 397.000000 0.9485 11.526316 20.789474      20.789474      -10.434198
+       tiered   pkgfn_light 17.260870  5.753623 397.000000 0.9885 11.969697 21.944444      17.260870       -7.690822
+       tiered          eifn 19.850000 18.350000 397.000000 0.9925 18.350000 19.850000      19.850000       -7.690822
+       tiered    eifn_reuse 19.850000 10.950000 397.000000 0.9955 18.350000 43.888889      19.850000       -7.690822
+       tiered     tiered_ni  4.268817  1.150725 397.000000 0.5535  2.682863  7.218182       4.268817       -7.690822
+       tiered tiered_ni_ref 11.027778  5.025316 397.000000 0.9870  7.218182 14.178571      11.027778       -7.690822
+       tiered            ei 19.850000  5.155844 397.000000 0.9760 18.350000 19.850000      19.850000       -7.690822
+       tiered        random 10.179487  2.308140 397.000000 0.8690  9.410256 19.850000      10.179487       -7.690822
+tiered_ni_ref         pkgfn  2.116402  0.876574   2.424242 0.0065  0.808564  1.987879       1.407725       27.814581
+tiered_ni_ref   pkgfn_light  2.139037  1.493274   3.917647 0.1155  1.493562  3.508772       2.139037       24.233129
+tiered_ni_ref          eifn  2.985075  1.655961   4.166667 0.1560  1.657143  3.478261       2.985075       24.233129
+tiered_ni_ref    eifn_reuse  2.836879  1.657143   4.094118 0.3790  1.681159  3.921569       2.836879       24.233129
+tiered_ni_ref        tiered  0.000000  0.000000   0.000000 0.0000  0.000000  0.000000       0.000000       24.233129
+tiered_ni_ref     tiered_ni  0.000000  0.000000   0.000000 0.0000  0.000000  0.000000       0.000000       24.233129
+tiered_ni_ref            ei  0.000000  0.000000   1.000000 0.0000  0.000000  0.000000       0.000000       24.233129
+tiered_ni_ref        random  0.000000  0.000000   1.612903 0.0000  0.000000  1.612903       0.000000       24.233129
+Fixed target first crossings        policy   cost0  cost24.233129   cost55  cost60  cost65
+        pkgfn 12000.0        47250.0 100000.0     inf     inf
+  pkgfn_light 12250.0        46750.0 100000.0     inf     inf
+         eifn  5000.0        33500.0  76250.0 85750.0 85750.0
+   eifn_reuse  5000.0        35250.0  65750.0 71000.0 81000.0
+       tiered     inf            inf      inf     inf     inf
+    tiered_ni 47250.0            inf      inf     inf     inf
+tiered_ni_ref 14750.0       100000.0      inf     inf     inf
+           ei  9750.0            inf      inf     inf     inf
+       random 28750.0            inf      inf     inf     inf
+Holm minimum 0.375
+      against  budget  p_scipy_default  p_holm_24
+  pkgfn_light   25000         0.578125    1.00000
+  pkgfn_light   50000         0.937500    1.00000
+  pkgfn_light  100000         0.687500    1.00000
+         eifn   25000         0.015625    0.37500
+         eifn   50000         0.218750    1.00000
+         eifn  100000         0.046875    0.84375
+   eifn_reuse   25000         0.109375    1.00000
+   eifn_reuse   50000         0.375000    1.00000
+   eifn_reuse  100000         0.812500    1.00000
+       tiered   25000         0.031250    0.62500
+       tiered   50000         0.015625    0.37500
+       tiered  100000         0.015625    0.37500
+    tiered_ni   25000         0.093750    1.00000
+    tiered_ni   50000         0.046875    0.84375
+    tiered_ni  100000         0.015625    0.37500
+tiered_ni_ref   25000         0.468750    1.00000
+tiered_ni_ref   50000         0.687500    1.00000
+tiered_ni_ref  100000         0.046875    0.84375
+           ei   25000         0.843750    1.00000
+           ei   50000         0.218750    1.00000
+           ei  100000         0.078125    1.00000
+       random   25000         0.562500    1.00000
+       random   50000         0.156250    1.00000
+       random  100000         0.031250    0.62500
+Key BOFN comparisons    p             q  budget  n      diff  wins  ties  losses     pval  p_holm108
+eifn    eifn_reuse  100000 20  1.179099    10     0      10 0.728506   1.000000
+eifn        tiered  100000 20 80.902565    20     0       0 0.000002   0.000206
+eifn     tiered_ni  100000 20 62.994539    19     0       1 0.000010   0.000944
+eifn tiered_ni_ref  100000 20 48.978614    17     0       3 0.000322   0.027399
+eifn            ei  100000 20 58.791237    18     0       2 0.000013   0.001268
+eifn        random  100000 20 50.919046    19     0       1 0.000010   0.000944
+Matched pkgfn [0 1 2 3 4 5 7] values [64.98546 86.11221 -0.57406 77.92775 57.57181 90.80018 35.16684] mean ± sample SE [(np.float64(3.34113), np.float64(5.43279)), (np.float64(24.57194), np.float64(11.10896)), (np.float64(58.85574), np.float64(12.20791))] median60 100000.0
+Matched pkgfn_light [0 1 2 3 4 5 7] values [62.79775 47.37475 60.19647 77.95688 72.67755 77.48231 50.86175] mean ± sample SE [(np.float64(14.66393), np.float64(11.01075)), (np.float64(26.67137), np.float64(12.49212)), (np.float64(64.19249), np.float64(4.67142))] median60 59500.0
+Matched eifn [0 1 2 3 4 5 7] values [94.83136 80.76478 88.39515 93.14626 67.22583 90.91695 96.28541] mean ± sample SE [(np.float64(23.84856), np.float64(12.18683)), (np.float64(45.34566), np.float64(16.3725)), (np.float64(87.36653), np.float64(3.87781))] median60 43000.0
+Matched eifn_reuse [0 1 2 3 4 5 7] values [8.455157e+01 1.900000e-03 8.886538e+01 8.932228e+01 8.206702e+01
+ 8.855608e+01 2.000000e-05] mean ± sample SE [(np.float64(17.34798), np.float64(6.76074)), (np.float64(39.51231), np.float64(15.11476)), (np.float64(61.90918), np.float64(16.0152))] median60 52500.0
+Matched tiered_ni_ref [0 1 2 3 4 5 7] values [60.16707 29.95243 -6.55884 -2.57362 30.4858  42.93243 40.2968 ] mean ± sample SE [(np.float64(10.10047), np.float64(6.01377)), (np.float64(20.93225), np.float64(6.90524)), (np.float64(27.81458), np.float64(9.19073))] median60 inf
+End-of-budget pkgfn
+0 [(97330.0, 'U', 64.98546), (97880.0, 'S+K+I', 64.98546), (99380.0, 'M', 64.98546), (99880.0, 'U', 64.98546), (99980.0, 'S', 64.98546)] last250_jump 0.0
+1 [(99250.0, 'T', 86.11221), (99800.0, 'S+K+I', 86.11221), (99810.0, 'C', 86.11221), (99910.0, 'S', 86.11221), (99960.0, 'K', 86.11221)] last250_jump 0.0
+2 [(98910.0, 'M', -0.57406), (99210.0, 'S+T', -0.57406), (99710.0, 'U', -0.57406), (99760.0, 'K', -0.57406), (99960.0, 'T', -0.57406)] last250_jump 0.0
+3 [(98910.0, 'T', 57.15342), (99310.0, 'A', 57.15342), (99760.0, 'K+I', 77.92775), (99860.0, 'S', 77.92775), (99960.0, 'S', 77.92775)] last250_jump 20.774328073226208
+4 [(96030.0, 'M', 57.57181), (99130.0, 'M', 57.57181), (99680.0, 'S+K+I', 57.57181), (99880.0, 'T', 57.57181), (99980.0, 'S', 57.57181)] last250_jump 0.0
+5 [(99370.0, 'T', 42.78524), (99420.0, 'K', 42.78524), (99820.0, 'I', 90.80018), (99920.0, 'S', 90.80018), (99970.0, 'K', 90.80018)] last250_jump 48.01494035970336
+7 [(98650.0, 'M', 15.46462), (99200.0, 'S+K+I', 15.46462), (99210.0, 'C', 15.46462), (99510.0, 'S+T', 15.46462), (99960.0, 'K+I', 35.16684)] last250_jump 19.702223302490403
+                  spend  steps  fallback  fbshare  scaleups       C      A      U      M      S      T      K      I  new_lots  validated  no_T_or_I   no_T   no_I  imm_pass  dupl_lots  dupl_builds  dupl_utah  zero_spend_steps  maxplateau  cheap_streak  cheap_streak_spend
+policy                                                                                                                                                                                                                                                                         
+ei            99947.000 21.000     0.000    0.000    21.000  19.700 21.000 21.000 21.000 21.000 21.000 21.000 21.000    21.000     21.000      0.000  0.000  0.000     1.550      0.050        0.000      0.000             0.000   42358.000         0.000               0.000
+eifn          99960.000 21.000     0.000    0.000    21.000  21.000 21.000 21.000 21.000 21.000 21.000 21.000 21.000    21.000     21.000      0.000  0.000  0.000     7.500      0.000        0.000      0.000             0.000   39032.000         0.000               0.000
+eifn_reuse    98785.500 29.300     0.000    0.000    13.400  12.550 12.550 12.550 29.300 29.300 29.300 29.300 29.300    12.550     29.300      0.000  0.000  0.000    11.100      0.000        0.000      0.000             0.000   28333.500         0.000               0.000
+pkgfn         99967.143 98.429    38.143    0.374    12.714   4.571 17.571 16.286 37.857 13.429  5.857 11.857 11.286    17.571      5.286     26.000 32.000 26.571     3.286      0.000        0.000      0.000             0.000   56295.714         6.857            2781.429
+pkgfn_light   99977.000 97.200    20.900    0.196    12.300   6.700 12.450 11.300 40.500 15.700  7.200 14.000 12.850    12.450      6.150     26.600 33.300 27.650     4.500      0.000        0.000      0.000             0.000   56678.500         7.600            2541.000
+random        99960.000 21.000     0.000    0.000    21.000  21.000 21.000 21.000 21.000 21.000 21.000 21.000 21.000    21.000     21.000      0.000  0.000  0.000     1.000      0.000        0.000      0.000             0.000   71400.000         0.000               0.000
+tiered        98657.500 60.550     0.000    0.000    11.000 224.000 22.800 44.250 24.850 24.850 24.850 24.850  4.000    22.800      4.000      0.000  0.000 20.850     0.000      0.000        0.000      0.000             0.000   88676.000         2.150            1075.000
+tiered_ni     98907.500 77.850     0.000    0.000     9.750 224.000 31.000 67.400 18.350 18.350 18.350 18.350  2.550    31.000      2.550      0.000  0.000 15.800     0.750      0.000        0.000      0.000             0.000   76940.500         3.600            1800.000
+tiered_ni_ref 98912.500 66.550     0.000    0.000    10.100 224.000 26.500 53.650 21.150 21.150 21.150 21.150  9.900    26.500      9.900      0.000  0.000 11.250     2.650      0.000        0.000      0.000             0.000   60602.500         3.350            1675.000
+end spend min/max                    min       max
+policy                          
+ei             99820.0   99960.0
+eifn           99960.0   99960.0
+eifn_reuse     97880.0   99870.0
+pkgfn          99960.0   99980.0
+pkgfn_light    99920.0  100000.0
+random         99960.0   99960.0
+tiered         97790.0   99490.0
+tiered_ni      97840.0   99640.0
+tiered_ni_ref  97840.0   99990.0
+fallback per seed high  seed  steps  fallback  fbshare  fb_spend  validated  no_T_or_I   spend
+    0     86         1 0.011628     100.0          4         30 99980.0
+    1     97        68 0.701031   62650.0          6         20 99960.0
+    2    103        69 0.669903   67750.0          3         21 99960.0
+    3     90         3 0.033333     750.0          5         34 99960.0
+    4    105        28 0.266667   29600.0          8         23 99980.0
+    5    103         5 0.048544     800.0          5         32 99970.0
+    7    105        93 0.885714   90800.0          6         22 99960.0
+fallback fractions and counts, action/spend
+('(0, 0)', 'pkgfn_light') fb 424 / 952 0.44537815126050423 spend 0.38522327144686297 pre 396 730 post 28 222
+('(1, 1)', 'pkgfn') fb 267 / 689 0.3875181422351234 spend 0.3607613930291381 pre 255 383 post 12 306
+('(1, 1)', 'pkgfn_light') fb 418 / 1944 0.21502057613168724 spend 0.1802664612860958 pre 380 907 post 38 1037
+longest plateaus    policy  seed  maxplateau  cheap_streak  cheap_streak_spend
+       ei     0     99960.0             0                 0.0
+   random    11     99960.0             0                 0.0
+   random    12     99960.0             0                 0.0
+   random     5     99960.0             0                 0.0
+   random     9     99960.0             0                 0.0
+tiered_ni    12     99590.0             4              2000.0
+tiered_ni    11     99540.0             5              2500.0
+tiered_ni     1     99490.0             6              3000.0
+tiered_ni     2     99490.0             7              3500.0
+   tiered    10     99490.0             2              1000.0
+   tiered    11     99490.0             1               500.0
+tiered_ni    16     99490.0             5              2500.0
+   tiered    18     99490.0             3              1500.0
+tiered_ni     9     99390.0             5              2500.0
+   tiered     7     99390.0             3              1500.0
+duplicates   cell policy  seed  dupl_lots  dupl_builds  dupl_utah  zero_spend_steps
+(1, 1)     ei    19          1            0          0                 0
+matched ratio tiered target -10.434197542794156 baseline$ 98750.0 method$ 4750.0
+matched ratio tiered_ni_ref target 27.814581422447475 baseline$ 82000.0 method$ 58250.0
+        metric   cell      policy  budget  old_exact  new_exact printed_old printed_new
+best_validated (0, 0)  eifn_reuse   25000   0.000000        NaN           0         nan
+best_validated (0, 0)  eifn_reuse   50000   0.000000        NaN           0         nan
+best_validated (0, 0)  eifn_reuse  100000   0.000000        NaN           0         nan
+best_validated (0, 0)        eifn   25000   0.000000        NaN           0         nan
+best_validated (0, 0)        eifn   50000   0.000000        NaN           0         nan
+best_validated (0, 0)        eifn  100000   0.000000        NaN           0         nan
+best_validated (1, 1)       pkgfn   50000  10.284898  11.108960          10          11
+best_validated (1, 1)       pkgfn  100000  11.302330  12.207911          11          12
+best_validated (1, 1)      random   25000   4.417041   4.531789           4           5
+best_validated (1, 1)   tiered_ni   50000   5.396902   5.537105           5           6
+best_validated (1, 1)      tiered   25000   5.361078   5.500350           5           6
+best_validated (0, 0) pkgfn_light   25000   4.481588   4.724008           4           5
+best_validated (1, 1) pkgfn_light   25000   6.393247   6.559333           6           7
+   rec_printed (1, 1)       pkgfn   25000  10.479330  11.318970          10          11
+   rec_printed (1, 1)       pkgfn   50000  11.813721  12.760277          12          13
+   rec_printed (1, 1)       pkgfn  100000   6.447084   6.963647           6           7
+   rec_printed (1, 1)      random   25000   4.417041   4.531789           4           5
+   rec_printed (1, 1) pkgfn_light  100000   4.402465   4.516834           4           5
+              no_gain_run max_no_gain_spend          max_no_gain_actions
+                      sum              mean      max                 max
+policy                                                                  
+ei                      0      39028.500000  95200.0                  20
+eifn                    0      35700.000000  80920.0                  17
+eifn_reuse              0      25101.000000  40890.0                  14
+pkgfn                   0      56117.142857  77900.0                  77
+pkgfn_light             0      56548.500000  80750.0                  75
+random                  4      69734.000000  99960.0                  21
+tiered                 15      88121.000000  99490.0                 131
+tiered_ni              11      75980.000000  99590.0                 133
+tiered_ni_ref           3      59427.500000  99340.0                 109
+high cheap worst  seed  cheap_streak  cheap_streak_spend
+    5            10              3510.0
+    1             9              3800.0
+    3             7              2900.0
+    4             7              3500.0
+    7             7              2550.0
+    2             5              2400.0
+    0             3               810.0
+light cheap worst  seed  cheap_streak  cheap_streak_spend
+   15            20              5570.0
+   14            16              7900.0
+    6            14              5720.0
+    1            10               100.0
+    8             8              3700.0
+high minus light endpoint mean, sampleSE,90%bootCI -5.336754398093985 11.59941183691252 [-23.78386755  11.72120336]
+se matched light [(25000, np.float64(10.193978114428742), np.float64(11.010754807476228)), (50000, np.float64(11.565453256810681), np.float64(12.492117269491118)), (100000, np.float64(4.3248977971753995), np.float64(4.671423528434851))]
+pkgfn settings variants Counter({(('S_ACQ', '64'), ('N_CAND', '16'), ('N_POOL', '512'), ('N_ANCHOR', '[32, 16]'), ('N_PERTURB', '24'), ('CODE_VERSION', '2026-10-27'), ('NOGATE', 'False')): 7})
+pkgfn_light settings variants Counter({(('S_ACQ', '32'), ('N_CAND', '10'), ('N_POOL', '256'), ('N_ANCHOR', 'None'), ('N_PERTURB', 'None'), ('CODE_VERSION', 'None'), ('NOGATE', 'None')): 20})
+eifn settings variants Counter({(('S_ACQ', '32'), ('N_CAND', '10'), ('N_POOL', '256'), ('N_ANCHOR', 'None'), ('N_PERTURB', 'None'), ('CODE_VERSION', 'None'), ('NOGATE', 'None')): 20})
+eifn_reuse settings variants Counter({(('S_ACQ', '32'), ('N_CAND', '10'), ('N_POOL', '256'), ('N_ANCHOR', 'None'), ('N_PERTURB', 'None'), ('CODE_VERSION', 'None'), ('NOGATE', 'None')): 20})
+tiered settings variants Counter({(('S_ACQ', '32'), ('N_CAND', '10'), ('N_POOL', '256'), ('N_ANCHOR', 'None'), ('N_PERTURB', 'None'), ('CODE_VERSION', 'None'), ('NOGATE', 'None')): 20})
+tiered_ni settings variants Counter({(('S_ACQ', '64'), ('N_CAND', '16'), ('N_POOL', '512'), ('N_ANCHOR', '[32, 16]'), ('N_PERTURB', '24'), ('CODE_VERSION', '2026-10-27'), ('NOGATE', 'False')): 20})
+tiered_ni_ref settings variants Counter({(('S_ACQ', '64'), ('N_CAND', '16'), ('N_POOL', '512'), ('N_ANCHOR', '[32, 16]'), ('N_PERTURB', '24'), ('CODE_VERSION', '2026-10-27'), ('NOGATE', 'False')): 20})
+ei settings variants Counter({(('S_ACQ', '32'), ('N_CAND', '10'), ('N_POOL', '256'), ('N_ANCHOR', 'None'), ('N_PERTURB', 'None'), ('CODE_VERSION', 'None'), ('NOGATE', 'None')): 20})
+random settings variants Counter({(('S_ACQ', '32'), ('N_CAND', '10'), ('N_POOL', '256'), ('N_ANCHOR', 'None'), ('N_PERTURB', 'None'), ('CODE_VERSION', 'None'), ('NOGATE', 'None')): 20})
+inventory all 149 30 80
+exactly identical table lines reused in README 39
+no gate first {'kind': 'ei', 'kappa': 1.0, 'eta': 1.0, 'seed': 4, 'budget': 100000, 'm_ref': 0.8491354040681073, 'counts': {'C': 21, 'A': 21, 'U': 21, 'M': 21, 'S': 21, 'T': 21, 'K': 21, 'I': 21}, 'settings': {'S_ACQ': 64, 'N_CAND': 16, 'N_POOL': 512, 'N_ANCHOR': [32, 16], 'N_PERTURB': 24, 'S_REC': 64, 'REC': False, 'RHO_GATE': 0.5, 'W_QUANTILE': 0.75, 'F_SAFE': 0.34, 'CODE_VERSION': '2026-10-27', 'NOGATE': True}, 'gp_fits': {'calls': 263, 'failures': 0}, 'w_gate_final': 0.7967718083029393, 'wall_s': 60.12045168876648}
+independently optimized no-gate values [(np.float64(0.7450514788538778), array([1.61251403e-01, 1.00000000e+00, 1.00000000e+00, 2.94151103e-11,
+       4.33177212e-01, 6.06112855e-01, 5.07889184e-01]), True), (np.float64(0.745051478834349), array([1.61253320e-01, 1.00000000e+00, 1.00000000e+00, 1.51255120e-11,
+       4.33179863e-01, 6.06109368e-01, 5.07884272e-01]), True), (np.float64(0.7450514788314337), array([1.61252742e-01, 1.00000000e+00, 1.00000000e+00, 4.19226462e-11,
+       4.33177075e-01, 6.06108831e-01, 5.07884171e-01]), True)]
+    policy  n    start  mean25000  se25000  published_se25000  mean50000  se50000  published_se50000  mean100000  se100000  published_se100000
+        ei 20 22.51825   38.94622  5.95415            5.80339   48.80072  5.52940            5.38939    65.15631   4.61025             4.49351
+      eifn 20 22.51825   43.72614  6.11034            5.95562   66.78169  5.14828            5.01792    84.77406   4.85349             4.73059
+eifn_reuse 20 22.51825   47.11737  5.65277            5.50964   71.17078  3.53902            3.44941    87.55458   2.19754             2.14189
+    random 20 22.51825   43.24767  4.54259            4.42757   47.33418  3.61761            3.52601    50.86716   3.30048             3.21691
+random no gate identical designs True
+oracle all deposited pkgfn 70.81672704087505 validated mean 58.85574037083206
+oracle all deposited pkgfn_light 68.49591658050606 validated mean 58.55212235453249
+oracle all deposited eifn 73.21148797287506 validated mean 73.21174313092197
+bofn_cu_best_vs_spend_k1_partial_vs_full.png (3300, 1860) {'Software': 'Matplotlib version3.11.2, https://matplotlib.org/', 'dpi': (299.9994, 299.9994)}
+bofn_cu_best_vs_spend_k1_partial_vs_full_current.png (3300, 1860) {'Software': 'Matplotlib version3.11.2, https://matplotlib.org/', 'dpi': (299.9994, 299.9994)}
+font availability /home/kerneluser []
+dimensions (1860, 3300, 3)
+long axis y [1518 1519 1520] [1518 1519 1520]
+1518 362 2113 1752
+1519 362 2113 1752
+1520 362 2113 1752
+transform -18.60955489703411 77.21174313092199 1469.4 260.40000000000003
+     policy  budget  read_off  curve  x_pixel  pixel_hits
+pkgfn_light   25000    12.015 11.951      800          39
+       eifn   25000       NaN 14.977      800           0
+         ei   25000     5.477  5.680      800           6
+     tiered   25000    -9.384 -9.427      800          27
+pkgfn_light   50000    27.232 27.440     1238          58
+       eifn   50000       NaN 38.774     1238           0
+         ei   50000     7.220  7.180     1238          30
+     tiered   50000    -9.067 -9.106     1238          27
+pkgfn_light  100000    58.261 58.552     2112          22
+       eifn  100000       NaN 73.212     2112           0
+         ei  100000    14.036 14.421     2112          20
+     tiered  100000    -7.640 -7.691     2112           9
+wall pkgfn all mean min max mins 62.39207427899043 32.65662939548493 83.50889884233474
+matched wall mean 62.39207427899043
+wall pkgfn_light all mean min max mins 9.294701427022614 6.518983813126882 12.716295369466145
+matched wall mean 11.227966862633114
+BOFN raster 25000 15.14585521885217
+BOFN raster 50000 38.80396726297532
+BOFN raster 100000 73.08247131350552
+worst high plateau  seed  maxplateau
+    2     77900.0
+    5     68440.0
+    3     58730.0
+    4     52960.0
+    1     50250.0
+    7     44000.0
+    0     41790.0
+first>0 pkgfn 47250.0 6 2
+first>0 pkgfn_light 38875.0 19 5
+first>0 eifn 14500.0 20 5
+first>0 eifn_reuse 21375.0 20 5
+first>0 tiered inf 5 5
+first>0 tiered_ni 43000.0 13 5
+first>0 tiered_ni_ref 19125.0 17 5
+first>0 ei 24000.0 20 5
+first>0 random 31125.0 17 5
+quality [{'cell': (1, 1), 'runs': 167, 'gp_fits': 75434, 'fit_failures': 0, 'fallback': 685, 'purchases': 2633}, {'cell': (0, 0), 'runs': 12, 'gp_fits': 1919, 'fit_failures': 0, 'fallback': 424, 'purchases': 952}]
+high wall per seed [(0, 81.988), (1, 78.321), (2, 83.509), (3, 81.623), (4, 43.584), (5, 35.063), (7, 32.657)]
+light matched fallback fraction 0.2743988684582744
+cheap_records extremes [{'policy': 'pkgfn_light', 'seed': 15, 'count': 20, 'spend': np.float64(5570.0), 'start': 27920.0, 'end': 33490.0}, {'policy': 'pkgfn_light', 'seed': 14, 'count': 16, 'spend': np.float64(7900.0), 'start': 50230.0, 'end': 58130.0}, {'policy': 'pkgfn_light', 'seed': 6, 'count': 14, 'spend': np.float64(5720.0), 'start': 11050.0, 'end': 16770.0}, {'policy': 'pkgfn', 'seed': 5, 'count': 10, 'spend': np.float64(3510.0), 'start': 33850.0, 'end': 37360.0}, {'policy': 'pkgfn_light', 'seed': 1, 'count': 10, 'spend': np.float64(100.0), 'start': 90650.0, 'end': 90750.0}]
+no-gain run counts strict vs numerical tolerances
+ei 0 0
+random 4 4
+tiered 15 15
+tiered_ni 11 11
+tiered_ni_ref 3 3
+pkgfn mean sunk-inclusive seeds valid 35
+pkgfn_light mean sunk-inclusive seeds valid 100
+eifn mean sunk-inclusive seeds valid 100
+eifn_reuse mean sunk-inclusive seeds valid 100
+tiered mean sunk-inclusive seeds valid 100
+tiered_ni mean sunk-inclusive seeds valid 100
+tiered_ni_ref mean sunk-inclusive seeds valid 100
+ei mean sunk-inclusive seeds valid 100
+random mean sunk-inclusive seeds valid 100
+duplicate lot seed19 [((0.0, 0.0, 1.0, 0.0, 0.0), [14, 20])]
+full/reuse fixed 55 1.1596958174904943
+full/reuse fixed 60 1.2077464788732395
+full/reuse fixed 65 1.058641975308642
+pkgfn mean 99.75k ->100k [46.21409869 58.85574037]
+light mean 99.75k ->100k [53.34305277 58.55212235]
+Reuse raster 25000 14.947713576941588 expected 14.3525437184516
+Reuse raster 50000 32.304921408308324 expected 32.27422874692295
+Reuse raster 100000 72.01250644718837 expected 72.03264442442
+Inventory cost reconciliations 179 all exact
+stored best_validated decreases 0
+Initial values identical across all common seeds
+| Policy | n | My $25k | Supplied $25k | My $50k | Supplied $50k | My $100k | Supplied $100k |
+|---|---|---|---|---|---|---|---|
+| pKGFN, production | 7 | 3.341 ± 5.433 | 3 ± 5 | 24.572 ± 11.109 | 25 ± 10 | 58.856 ± 12.208 | 59 ± 11 |
+| pKGFN, light | 20 | 11.951 ± 6.559 | 12 ± 6 | 27.440 ± 7.385 | 27 ± 7 | 58.552 ± 4.844 | 59 ± 5 |
+| BOFN, full | 20 | 14.977 ± 5.745 | 15 ± 6 | 38.774 ± 9.116 | 39 ± 9 | 73.212 ± 7.322 | 73 ± 7 |
+| BOFN + reuse | 20 | 14.353 ± 4.702 | 14 ± 5 | 32.274 ± 7.805 | 32 ± 8 | 72.033 ± 7.046 | 72 ± 7 |
+| Tiered, spec | 20 | -9.427 ± 5.500 | -9 ± 5 | -9.106 ± 5.473 | -9 ± 5 | -7.691 ± 5.366 | -8 ± 5 |
+| Tiered, Ni floor | 20 | -6.644 ± 5.497 | -7 ± 5 | 0.762 ± 5.537 | 1 ± 5 | 10.217 ± 6.382 | 10 ± 6 |
+| Tiered, Ni + reference | 20 | 7.858 ± 4.225 | 8 ± 4 | 16.136 ± 3.960 | 16 ± 4 | 24.233 ± 4.750 | 24 ± 5 |
+| Standard BO | 20 | 5.680 ± 3.413 | 6 ± 3 | 7.180 ± 3.299 | 7 ± 3 | 14.421 ± 6.256 | 14 ± 6 |
+| Random | 20 | -0.612 ± 4.532 | -1 ± 4 | 6.904 ± 4.977 | 7 ± 5 | 22.293 ± 5.024 | 22 ± 5 |
+report file /workspace/outputs/report.md chars 38880 lines 238
+listed audit files [('SE_rounding_changes.csv', 1302), ('action_audit_per_seed.csv', 22449), ('all_SE_comparisons.csv', 7131), ('all_policy_pairs.csv', 8790), ('audit_notebook.ipynb', 81413), ('audit_reproduce.py', 72498), ('figure_raster_readings.csv', 685), ('fixed_target_costs.csv', 387), ('independent_core.py', 2210), ('independent_paired.csv', 1601), ('independent_speedups.csv', 2619), ('independent_summary.csv', 2208), ('inventory_cost_ledger.csv', 11449), ('nogate_summary.csv', 892), ('quality_checks.json', 303), ('replicated_bootstrap.csv', 1938), ('report.md', 39326), ('reproduction_stderr.txt', 425), ('reproduction_stdout.txt', 0), ('supplied_tables_regenerated.md', 11039)]

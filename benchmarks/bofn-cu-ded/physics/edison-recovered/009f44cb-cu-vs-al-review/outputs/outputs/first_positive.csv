@@ -1,0 +1,9 @@
+policy,start,reach,median_all,median_reachers,median_new_reachers
+ei,5,20,23800.0,23800.0,23800.0
+eifn,5,20,14280.0,14280.0,19040.0
+eifn_reuse,5,20,21160.0,21160.0,28040.0
+pkgfn,5,19,38730.0,38390.0,51175.0
+random,5,17,30940.0,19040.0,38080.0
+tiered,5,5,inf,0.0,
+tiered_ni,5,13,42890.0,23090.0,37315.0
+tiered_ni_ref,5,17,18965.0,15940.0,20115.0

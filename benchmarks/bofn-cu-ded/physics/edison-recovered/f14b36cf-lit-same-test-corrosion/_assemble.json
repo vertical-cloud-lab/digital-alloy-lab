@@ -1,0 +1,17 @@
+{
+ "copied": [
+  "outputs/Same-Test Copper-Alloy Comparisons"
+ ],
+ "excluded": [
+  {
+   "file": "outputs/tmp/tmpacje7mqh.pkl",
+   "bytes": 27448838,
+   "sha256": "4b35fdb6ca6ced905153d580db5fb01c40bb8c48e4f76f4c4bf28e1db838dc22",
+   "reason": "PaperQA's pickled cache of the parsed papers: third-party full text, and a pickle is unsafe to load"
+  }
+ ],
+ "redacted_files": {
+  "task.json": 18,
+  "trajectory.json": 494
+ }
+}

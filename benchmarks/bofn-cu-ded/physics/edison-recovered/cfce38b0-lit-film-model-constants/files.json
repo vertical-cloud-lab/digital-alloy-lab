@@ -1,0 +1,81 @@
+{
+ "data": [
+  {
+   "id": 30116490,
+   "data_storage_id": "8c6a9c2f-6407-4def-8cd1-0dde98fb1678",
+   "operation": "create",
+   "actor_id": "cfce38b0-cab4-4625-b966-0049fcb0920c",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-27T19:25:38.512173Z",
+   "data_storage": {
+    "name": "pqa:docs:cfce38b0-cab4-4625-b966-0049fcb0920c",
+    "description": null,
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "user_id": "UxTMERa8SbeYkryBDMlwEgoJNF53",
+    "label": "f75cceb6ab01",
+    "parent_id": null,
+    "dataset_id": "731d70f2-5f86-41f6-bb32-87d2652aed6c",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "8c6a9c2f-6407-4def-8cd1-0dde98fb1678",
+    "path": "f75cceb6ab01",
+    "created_at": "2026-10-27T19:25:38.443527Z",
+    "modified_at": "2026-10-27T19:25:41.680016Z",
+    "tags": null,
+    "file_path": "/tmp/tmpqzkio74u.pkl",
+    "metadata": {
+     "size": 98815439
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30116249,
+   "data_storage_id": "ac2feaba-2bd1-41e0-83d9-86e783fec94c",
+   "operation": "create",
+   "actor_id": "cfce38b0-cab4-4625-b966-0049fcb0920c",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-27T19:23:08.900418Z",
+   "data_storage": {
+    "name": "Measured Constants and Data Gaps",
+    "description": "Auditable measurements relevant to the proposed electrochemical model, with processing and exposure conditions, benchmark-box conflicts, and unavailable quantities stated explicitly. Sterling G. Baird publications are excluded.",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "user_id": "UxTMERa8SbeYkryBDMlwEgoJNF53",
+    "label": "db807383a443",
+    "parent_id": null,
+    "dataset_id": "ce44278f-4a2c-4c0b-808d-e88ca30196f3",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "ac2feaba-2bd1-41e0-83d9-86e783fec94c",
+    "path": "db807383a443",
+    "created_at": "2026-10-27T19:23:08.868156Z",
+    "modified_at": "2026-10-27T19:23:08.868156Z",
+    "tags": null,
+    "file_path": null,
+    "metadata": {
+     "session_id": "cfce38b0-cab4-4625-b966-0049fcb0920c",
+     "artifact_id": "b2ffb266-ec60-4ea5-a44d-924e24177df9",
+     "state_artifact_id": "artifact-00",
+     "artifact_type": "table",
+     "artifact_title": "Measured Constants and Data Gaps",
+     "artifact_caption": "Auditable measurements relevant to the proposed electrochemical model, with processing and exposure conditions, benchmark-box conflicts, and unavailable quantities stated explicitly. Sterling G. Baird publications are excluded."
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  }
+ ]
+}
