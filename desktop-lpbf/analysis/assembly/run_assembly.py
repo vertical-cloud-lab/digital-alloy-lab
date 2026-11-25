@@ -37,6 +37,8 @@ import cell as C  # noqa: E402
 import checks as CK  # noqa: E402
 import sequence as SQ  # noqa: E402
 import tooling as TL  # noqa: E402
+import commit as CM  # noqa: E402  (round 7: recording, ASM_RECORD)
+import record as RECM  # noqa: E402
 from cell import Tm, inv, rot, Group, Body  # noqa: E402
 
 OUT = HERE.parent / "out" / "assembly"
@@ -434,6 +436,7 @@ def arm_place(run, st, idx, path, state, actor, tool, holdname, grasp=None, extr
             path_q, info = run.plan_to(actor, fr["qs"][0], close, allow=allow, exclude=idx)
             res["plan"] = info
             res["plan_ok"] = path_q is not None
+            res["path"] = path_q
             if path_q is not None:
                 best = res
                 break
@@ -449,7 +452,10 @@ def arm_place(run, st, idx, path, state, actor, tool, holdname, grasp=None, extr
     why = "" if ok else (fr["hit"] if not fr["ok"] else f"approach: {best.get('plan', {}).get('reason', '?')}")
     if not fr["ok"] and fr["at"] is not None:
         why += f" at {fr['at'] * DS:.0f} mm along the insertion"
-    return dict(ok=ok, why=why, dock=best["dock"], min_d=fr["min_d"], min_with=fr["with_"], dest=sorted(dest)[:4],
+    acc = {}
+    if CM.on():
+        CM.place(run, st, idx, actor, tool, best, body, off, G, T_obj, close_for(run, actor, width, internal), state, acc)
+    return dict(ok=ok, why=why, dock=best["dock"], fetch=acc.get("fetch"), fetch_why=acc.get("fetch_why"), min_d=fr["min_d"], min_with=fr["with_"], dest=sorted(dest)[:4],
                 planned=best.get("plan", {}).get("planned"), waypoints=best.get("plan", {}).get("waypoints"),
                 grasp_width=round(width, 1), push_mm=fr.get("push_mm"), drop_mm=fr.get("drop_mm"))
 
@@ -482,6 +488,7 @@ def retreat(run, n, dist=60.0, near=(), names=()):
     Ts = [T @ Tm(p=(0, 0, -s)) for s in np.linspace(0, dist, 7)]
     allow = frozenset([("tool", run.sc.label(i)) for i in near] + [("tool", nm) for nm in names])
     fr = run.follow(n, Ts, a.close, allow, dist_every=99)
+    CM.release(run, n, fr["qs"])
     if fr["qs"]:
         run.q[n] = fr["qs"][-1]
     return fr["ok"]
@@ -491,6 +498,7 @@ def go_park(run, n):
     a = run.arm(n)
     a.release()
     path, info = run.plan_to(n, a.park_q(), a.close)
+    CM.park(run, n, path)
     if path is not None:
         run.q[n] = a.park_q()
     else:
@@ -542,6 +550,10 @@ def do_place(run, st, row):
         r = arm_place(run, st, u, path, state, actor, tool, f"held:{st['id']}:{sc.short(u[0])[:30]}", st.get("grasp"),
                       extra, internal=bool(st.get("grasp", {}).get("internal")), rot_deg=st.get("rot"))
         arm_all.append(r["ok"])
+        if r.get("fetch"):
+            row.setdefault("fetches", []).append(r["fetch"])
+            if r.get("fetch_why"):
+                row.setdefault("fetch_whys", []).append(r["fetch_why"])
         if not r["ok"]:
             why.append(f"arm {actor}: {r['why']}")
         if r.get("min_d") is not None:
@@ -571,6 +583,10 @@ def do_place(run, st, row):
     row.update(sweep="PASS" if all(sw_all) else "FAIL", arm="PASS" if all(arm_all) else "FAIL", gap=gmin[0], gap_with=gmin[1],
                arm_clear=dmin[0], arm_clear_with=dmin[1], why="; ".join(why)[:400], docks=sorted(d for d in docks if d is not None),
                n_units=len(units))
+    if row.get("fetches"):
+        fs = row.pop("fetches")
+        row["fetch"] = "FAIL" if "FAIL" in fs else ("person" if "person" in fs else ("PASS" if "PASS" in fs else "-"))
+        row["fetch_why"] = "; ".join(row.pop("fetch_whys", []))[:300]
 
 
 def force_check(run, st, actor, path):
@@ -686,7 +702,8 @@ def drive_screw(run, i, phase, actor, long_bit=None, state=None, torque=None, fo
                         else:
                             info = dict(reason=f"no clear way in to the hole's mouth ({fr_in['hit']})")
                     if path_q is not None:
-                        best = dict(ok=True, dock=dk, roll=roll, qs=fr["qs"], planned=info.get("planned"))
+                        best = dict(ok=True, dock=dk, roll=roll, qs=fr["qs"], planned=info.get("planned"), path=path_q, off=off,
+                                    pre_qs=fr_in["qs"] if info.get("via") == "pre-approach" else None)
                         break
                     if best is None or best.get("why", "").startswith("no ") or not best.get("qs"):
                         best = dict(ok=False, dock=dk, roll=roll, qs=fr["qs"], why=f"approach: {info.get('reason')}")
@@ -717,7 +734,11 @@ def drive_screw(run, i, phase, actor, long_bit=None, state=None, torque=None, fo
         if y is not None and d < math.inf:
             md = (round(float(d), 1), f"{x.name.split('/')[-1]} to {y.name[:50]}")
     run.snapshot(f"screw:{i}")
+    acc = {}
+    if CM.on():
+        CM.screw(run, i, actor, best, tool, long_bit, round(1.15 * s_hex + 0.2, 1), torque, L, s_hex, acc)
     return dict(ok=best["ok"], why=best.get("why", ""), dock=best["dock"], roll=best["roll"], withdraw=wd["ok"],
+                presenter_ok=acc.get("presenter_ok", 0), presenter_fail=acc.get("presenter_fail"),
                 withdraw_by=wd["blocked_by"], clear=md, hex=s_hex, L=L, tool=tool, tool_why=tool_why, drive_ok=drive_ok, dest=sorted(dest))
 
 
@@ -749,6 +770,11 @@ def do_screws(run, st, row, near=None, actor=None):
     go_park(run, actor)
     nok = sum(1 for _, r in per if r["ok"])
     ndrive = sum(1 for _, r in per if r["drive_ok"])
+    if CM.on():
+        row["presenter"] = f"{sum(int(r.get('presenter_ok') or 0) for _, r in per)}/{nok}"
+        pf = [x for _, r in per for x in (r.get("presenter_fail") or [])]
+        if pf:
+            row["presenter_why"] = "; ".join(pf[:2])[:200]
     nwd = sum(1 for _, r in per if not r["withdraw"])
     clears = [r["clear"] for _, r in per if r.get("clear")]
     fails = [f"{run.sc.short(i)[-6:]}: {r['why'][:90]}" for i, r in per if not r["ok"]]
@@ -837,6 +863,7 @@ def do_flip(run, st, row):
             p, info = run.plan_to(actor, fr["qs"][0], close, allow=allow_f)
             fr["plan_ok"] = p is not None
             fr["plan"] = info
+            fr["plan_path"] = p
         if best is None or (fr["ok"] and fr.get("plan_ok")) or len(fr["qs"]) > len(best[1]["qs"]):
             best = (dk, fr)
         if fr["ok"] and fr.get("plan_ok"):
@@ -848,6 +875,7 @@ def do_flip(run, st, row):
         a.place(run.q[actor], a.close)
     ok = fr["ok"] and fr.get("plan_ok", False)
     why = "" if ok else (fr["hit"] or f"approach: {fr.get('plan', {}).get('reason')}")
+    CM.flip(run, st, actor, fr, idx, G_m, close_for(run, actor, width), T0, fr.get("plan_path"))
     run.snapshot(st["id"])
     taker_ok = None
     if st.get("taker"):
@@ -1005,6 +1033,14 @@ def do_dual(run, st, row):
         if res["ok"]:
             break
     A, B = cl.A, cl.B
+    if CM.on():
+        if getattr(run, "table", None) is not None:
+            run.table.remove(idx)
+        if not (st.get("flip") or st.get("whole")):
+            RECM.REC.put(idx, frames[0], {}, why="staged")
+        cg = A.close_for_gap(float(st.get("grip_gap", 16.0 if "Base plate" in st["label"] or "bridge" in st["label"].lower() else 30.0)))
+        dres = CM.dual(run, st, best, frames, body, idx, gA, gB, cg, cg)
+        row["approach"] = (dres or {}).get("approach")
     if best.get("qsA"):
         run.q["A"], run.q["B"] = best["qsA"][-1], best["qsB"][-1]
         A.place(run.q["A"], A.close)
@@ -1124,6 +1160,7 @@ def do_rotate(run, st, row):
                 md, worst = d, f"{x.name[:20]} to {y.name[:40]}"
     jaws.place(TT @ Tm(rot((1, 0, 0), sign * 180.0)) @ inv(TT) @ J0)
     cl.static["Trunnion jaws"] = jaws
+    CM.rotate(run, idx, T0, TT, sign)
     run.add(idx, grp, st["to"])
     run.snapshot(st["id"])
     row.update(sweep="-", arm="PASS" if not hits else "FAIL", why="" if not hits else f"at {hits[0][0]} deg: {hits[0][1][0][:30]} hits {hits[0][1][1][:50]}",
@@ -1132,6 +1169,7 @@ def do_rotate(run, st, row):
 
 def do_note(run, st, row):
     row.update(sweep="-", arm="-", who=st["who"], why=st["why"])
+    CM.note(run, st, row)
 
 
 # ================================================================================================ seals
@@ -1311,6 +1349,7 @@ def roller_traverse(run, st):
                     run.arm(n).place(run.q[n])
                     p, info = run.plan_to(n, fr["qs"][0], 0.0)
                     if p is not None:
+                        CM.roller(run, n, dk, p, fr["qs"])
                         run.q[n] = fr["qs"][-1]
                         run.arm(n).place(run.q[n])
                         out["docks"].append(dk)
@@ -1341,6 +1380,17 @@ def main(argv):
     OUT.mkdir(parents=True, exist_ok=True)
     run = Run()
     log(f"scene ready: {run.sc.n} objects")
+    if RECM.start(run) is not None:
+        import fetch as FE
+        run.table = FE.Table(run)
+        log(f"recording to {RECM.REC.dir}: {len(run.table.on)} objects on the long table")
+        _orig_put = run.cl.put
+
+        def _put(idx, T, state=None, _o=_orig_put):
+            _o(idx, T, state)
+            RECM.REC.put([i for i in idx if run.sc.objs[i]["V"] is not None], T, run.cl.state if state is None else state)
+        run.cl.put = _put
+        save_scene(run)
     # the part list report.py's replay file matches step keys against (name, explode offset, motion group)
     ASM_DIR.mkdir(parents=True, exist_ok=True)
     plist = run.sc.parts.values() if isinstance(run.sc.parts, dict) else run.sc.parts
@@ -1353,6 +1403,7 @@ def main(argv):
         row = dict(id=st["id"], label=st["label"], do=st["do"], tool=st.get("tool"), actor=st.get("actor"), holder=st.get("holder"),
                    phase=st.get("phase"), joint=st.get("joint"))
         t = time.time()
+        CM.begin(run, st)
         try:
             {"place": do_place, "screws": do_screws, "seal": do_seal, "flip": do_flip, "dual": do_dual, "note": do_note,
              "rotate": do_rotate}[st["do"]](run, st, row)
@@ -1360,6 +1411,8 @@ def main(argv):
             row.update(arm="ERROR", why=f"{type(e).__name__}: {e}"[:300])
             traceback.print_exc()
         row["seconds"] = round(time.time() - t, 1)
+        row["compute_s"] = row["seconds"]
+        CM.end(run, row)
         run.rows.append(row)
         for sr in getattr(run, "sub_rows", []):
             run.rows.append(sr)
@@ -1367,7 +1420,30 @@ def main(argv):
         log(st["id"], row.get("sweep"), row.get("arm"), row.get("gap"), row.get("arm_clear"), (row.get("why") or "")[:160])
         save(run)
     save(run, final=True)
+    if RECM.REC is not None:
+        RECM.REC.flush()
+        RECM.REC.save_summary("/tmp/robotbuild/data/assembly.json")
     log("done")
+
+
+def save_scene(run):
+    """Meshes of every object (decimated for drawing), their names and colours, and where each sits on the long table at
+    the start: /tmp/robotbuild/traj/asm_scene.pkl, for the renderer."""
+    import pickle
+    sc = run.sc
+    objs = {}
+    for i, o in enumerate(sc.objs):
+        if o.get("V") is None:
+            continue
+        V, F = o["V"], o["F"]
+        if len(F) > 12000:
+            V, F = C.decimate(V, F, 12000)
+        p = sc.parts[o["part"]]
+        objs[i] = dict(name=sc.label(i), part=o["part"], item=o.get("item"), color=p.color, V=np.asarray(V, np.float32),
+                       F=np.asarray(F, np.int32), kind=o.get("kind"))
+    table_T = {i: run.table.T_item(i) for i in run.table.on}
+    pickle.dump(dict(objs=objs, table_T=table_T, split=run.split), open(RECM.REC.dir / "asm_scene.pkl", "wb"))
+    log(f"scene for the renderer: {len(objs)} objects, {len(table_T)} on the table")
 
 
 TAG = os.environ.get("ASM_TAG", "")
