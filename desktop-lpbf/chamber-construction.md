@@ -281,8 +281,8 @@ The full plan is in [`analysis/out/machining/setup_plan.json`](analysis/out/mach
   - **CAMotics, all eight final programs:** no gouges and no rapids through stock. The frame's leftover deeper than
     1 mm is 0.017 cm³, at the two SAE ports, for the port tool (it was 31.8 cm³ of unprogrammed wall features).
   - **Holder check:** no holder, spindle or fixture collisions.
-  - **Cutting time:** 64.7 min for the frame and 69.2 min for the floor plate (with the zero-point posts' holes, on the
-    merged model of 4e95878; the frame didn't change).
+  - **Cutting time:** 64.7 min for the frame and 69.1 min for the floor plate (with the zero-point posts' holes, on the
+    merged model of 4599d9f; the frame didn't change).
   - **Drills:** the insert and dowel holes now get the STI or ream-under drill for what goes in them. The lid's M5 STI
     holes had a 6.0 mm drill.
   - **Fixture plate:** the dummy-floor plate is cut flush with the frame, 312 x 222.
@@ -301,7 +301,7 @@ The per-part model is [`hours.py`](analysis/machining/hours.py), output
 | Chamber body | CAM | Setups | Run | Deburr + inspect | Total |
 |---|---|---|---|---|---|
 | Before: block, 6 setups | 12.8 h | 7.5 h | 15.5 h (conservative) / 3.5-5 h (vendor feeds) | 1 h | 37 h (25-26 h at vendor feeds) |
-| Now: frame (3 setups with a 4th axis) + floor plate (2) + waterjet | 8.5 h | 7.5 h | 7.4 h / 3.3 h (2.3 h in the programmed G-code, round 6) | 2 h | 25 h (21 h) |
+| Now: frame (3 setups with a 4th axis) + floor plate (2) + waterjet | 8.5 h | 7.5 h | 7.4 h / 3.3 h (2.2 h in the programmed G-code, round 6) | 2 h | 25 h (21 h) |
 
 The machine as a whole is in [`machining.md`](machining.md#hours-for-the-whole-machine).
 
