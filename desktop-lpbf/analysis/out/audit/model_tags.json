@@ -202,6 +202,22 @@
   "tags": []
  },
  {
+  "part": "Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm plate under the clamping module)",
+  "bom": "B3",
+  "mcm": "",
+  "mat": "al6061",
+  "module": "process",
+  "tags": []
+ },
+ {
+  "part": "Zero-point clamping pins M50 (2 x SCHUNK VERO-S SPC mini 20 class, Ø20, 14 mm into the module; centring clearance, no alignment)",
+  "bom": "B3",
+  "mcm": "",
+  "mat": "steel",
+  "module": "process",
+  "tags": []
+ },
+ {
   "part": "Build plate M50 (Ø50.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
   "bom": "B1",
   "mcm": "",
@@ -302,7 +318,7 @@
   ]
  },
  {
-  "part": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
+  "part": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
   "bom": "H1",
   "mcm": "",
   "mat": "ss316l",
@@ -348,7 +364,7 @@
   "tags": []
  },
  {
-  "part": "Overflow port (KF-40, weld stub to 42 mm)",
+  "part": "Overflow port (KF-40, weld stub to 40 mm)",
   "bom": "G7",
   "mcm": "KF40_WELD",
   "mat": "ss304",
@@ -356,7 +372,7 @@
   "tags": []
  },
  {
-  "part": "Overflow jar (KF-40 flange on a 2 in. 316L cup, 45 mm, ~65 cm3, welded bottom)",
+  "part": "Overflow jar (KF-40 flange on a 2.5 in. 316L cup, 47 mm, ~104 cm3, welded bottom)",
   "bom": "M4",
   "mcm": "KF40_NIPPLE",
   "mat": "ss304",
@@ -380,10 +396,58 @@
   "tags": []
  },
  {
-  "part": "Overflow-jar sensor bracket (6061, 6 mm, on the right-hand leg)",
+  "part": "Overflow-jar sensor bracket (6061, 6 mm, on the front-right leg)",
   "bom": "A1",
   "mcm": "",
   "mat": "al6061",
+  "module": "process",
+  "tags": []
+ },
+ {
+  "part": "Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: Ø88 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)",
+  "bom": "B3",
+  "mcm": "SCHUNK 1460874",
+  "mat": "steel",
+  "module": "process",
+  "tags": []
+ },
+ {
+  "part": "Zero-point module plates (2 x 6061, 10 mm, each on two posts)",
+  "bom": "B3",
+  "mcm": "",
+  "mat": "al6061",
+  "module": "process",
+  "tags": []
+ },
+ {
+  "part": "Zero-point posts (4 x 6061, 16 x 16, M6 studs into floor inserts)",
+  "bom": "B3",
+  "mcm": "",
+  "mat": "al6061",
+  "module": "process",
+  "tags": []
+ },
+ {
+  "part": "Zero-point release valve (3/2 NC, 24 V DC, on a single-station sub-base; envelope)",
+  "bom": "B4",
+  "mcm": "",
+  "mat": "misc",
+  "module": "process",
+  "tags": []
+ },
+ {
+  "part": "Zero-point push-in fittings (2 x M5 elbow on the modules' release ports)",
+  "bom": "B4",
+  "mcm": "",
+  "mat": "misc",
+  "module": "process",
+  "tags": []
+ },
+ {
+  "part": "Zero-point release-air line (Ø4 tube, valve to a union Y to each module)",
+  "bom": "B4",
+  "mcm": "",
+  "mat": "misc",
   "module": "process",
   "tags": []
  },
@@ -764,7 +828,7 @@
   "tags": []
  },
  {
-  "part": "Field-stop aperture (Ø36, passive beam limit)",
+  "part": "Field-stop aperture, M50 insert (Ø41, passive beam limit; swapped with the module)",
   "bom": "L7",
   "mcm": "",
   "mat": "al6061",
@@ -1036,7 +1100,7 @@
   "tags": []
  },
  {
-  "part": "Pressure transducer (7/16-20 SAE-4 O-ring-boss port)",
+  "part": "Pressure transducer (7/16-20 SAE-4 O-ring-boss port; McMaster 3861N11 on an SAE-4 x 1/4 NPT adapter)",
   "bom": "G7",
   "mcm": "TRANSDUCER",
   "mat": "ss316l",
@@ -1258,7 +1322,7 @@
   ]
  },
  {
-  "part": "Dry scroll pump (≤ 0.3 mbar, 6 m3/h class)",
+  "part": "Dry scroll pump (Edwards nXDS6i, A73501983: 432 x 282 x 302 mm, NW25 inlet and exhaust)",
   "bom": "G2",
   "mcm": "PUMP",
   "mat": "misc",
@@ -1274,10 +1338,10 @@
   "tags": []
  },
  {
-  "part": "Sealed cyclone + HEPA housing (316L, valves off for passivation)",
+  "part": "Sealed cyclone + HEPA housing (McMaster 5169K72 + 9179K14 HEPA element on KF-25 adapters and elbows; cyclone stage not chosen)",
   "bom": "G5",
   "mcm": "FILTER",
-  "mat": "ss316l",
+  "mat": "steel",
   "module": "gas",
   "tags": []
  },
@@ -1597,28 +1661,6 @@
   "tags": [
    "fastener",
    "floor_dowels"
-  ]
- },
- {
-  "part": "Captive M6 panel screws on the module flange (knurled, 18-8) (2 x McMaster 95966A705)",
-  "bom": "B2",
-  "mcm": "95966A705",
-  "mat": "ss304",
-  "module": "process",
-  "tags": [
-   "fastener",
-   "module_flange"
-  ]
- },
- {
-  "part": "Captive-screw retainers (18-8) (2 x McMaster 91065A610)",
-  "bom": "B2",
-  "mcm": "91065A610",
-  "mat": "ss304",
-  "module": "process",
-  "tags": [
-   "fastener",
-   "module_flange"
   ]
  },
  {
@@ -2055,7 +2097,7 @@
   ]
  },
  {
-  "part": "Jar-sensor bracket screws, M4 x 10 316, into the right-hand leg (2 x McMaster 92290A144)",
+  "part": "Jar-sensor bracket screws, M4 x 10 316, into the front-right leg (2 x McMaster 92290A144)",
   "bom": "A1",
   "mcm": "92290A144",
   "mat": "ss316l",
@@ -2063,6 +2105,17 @@
   "tags": [
    "fastener",
    "jar_sensor"
+  ]
+ },
+ {
+  "part": "Zero-point post helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
+  "bom": "B3",
+  "mcm": "91732A262",
+  "mat": "ss304",
+  "module": "process",
+  "tags": [
+   "fastener",
+   "zp_posts"
   ]
  },
  {
@@ -2168,7 +2221,7 @@
   ]
  },
  {
-  "part": "Liner pull tab, left (316L, 2 mm, 12 mm off the left side liner, spot-welded)",
+  "part": "Liner pull tab, left (316L, 2 mm hanger: a web from the left side liner in to a grip plate 44 mm off it, inside the door opening's width; spot-welded)",
   "bom": "RA6",
   "mcm": "",
   "mat": "ss316l",
@@ -2178,7 +2231,7 @@
   ]
  },
  {
-  "part": "Liner pull tab, right (316L, 2 mm, 12 mm off the right side liner, spot-welded)",
+  "part": "Liner pull tab, right (316L, 2 mm hanger: a web from the right side liner in to a grip plate 44 mm off it, inside the door opening's width; spot-welded)",
   "bom": "RA6",
   "mcm": "",
   "mat": "ss316l",
@@ -2190,6 +2243,16 @@
  {
   "part": "AprilTag plates (2 x tag36h11, 56 mm, on the guard's front-left post: wrist-camera re-registration)",
   "bom": "RA7",
+  "mcm": "",
+  "mat": "al6061",
+  "module": "process",
+  "tags": [
+   "automation"
+  ]
+ },
+ {
+  "part": "Overflow jar grip fin (6061: tab on the cup, riser at x 117-125, I-section grip block at y -156 to -126, z -65 to -25, for the 2F-85)",
+  "bom": "M4",
   "mcm": "",
   "mat": "al6061",
   "module": "process",

@@ -15,7 +15,7 @@ bom.csv line,bom.csv,C6,,"4U control drawer, PB2 box and DIN hardware",2,C6,
 bom.csv line,bom.csv,M1,,Recoater axis (less servo),12,M1,
 bom.csv line,bom.csv,M2,,Servo motors,2,M2,
 bom.csv line,bom.csv,M3,,Z stage (less servo): integrated actuator under the floor,5,M3,
-bom.csv line,bom.csv,M4,,"Metering base, roller drive and overflow",7,M4,
+bom.csv line,bom.csv,M4,,"Metering base, roller drive and overflow",8,M4,
 bom.csv line,bom.csv,M5,,Recoater blade cartridges,4,M5,
 bom.csv line,bom.csv,M6,,Layer camera + lighting,4,M6,
 bom.csv line,bom.csv,G1,,"Process chamber: through-frame, floor plate, lid, door and their small parts",23,G1,
@@ -47,14 +47,16 @@ bom.csv line,bom.csv,H1,,"Heater stacks for the three build modules, rod-end fee
 bom.csv line,bom.csv,H2,,"Heater power, switching, independent limit and the plate < 50 C channel",0,H2,
 bom.csv line,bom.csv,H3,,Module cooling fan under the floor,0,H3,
 bom.csv line,bom.csv,B1,,"Three build modules (Ø25 / Ø50 / Ø75): cylinders, spigot-flanges, pistons, plates, hollow rods",7,B1,
-bom.csv line,bom.csv,B2,,"Module seals, clamping and Z coupling",7,B2,
+bom.csv line,bom.csv,B2,,"Module seals, clamping and Z coupling",5,B2,
+bom.csv line,bom.csv,B3,,Zero-point module clamps (round 6),5,B3,
+bom.csv line,bom.csv,B4,,Zero-point release air (round 6),3,B4,
 bom.csv line,bom.csv,R1,,Reservoirs S / M / L (38 / 97 / 233 cm3) with shutters,6,R1,
 bom.csv line,bom.csv,A1,,"Step-confirm sensors, reservoir ID and weighing",8,A1,
 bom.csv line,bom.csv,A2,,Cleaning and consumables,7,A2,
 bom.csv line,bom.csv,A3,,"Pneumatic door drive and latch actuators, valves and air prep; robot handles and tags",11,A3,
 bom.csv line,bom.csv,D1,,Tray dock (tray half) and umbilicals,6,D1,
 bom.csv line,bom.csv,D2,,"UPS (2U, in the rack)",1,D2,
-bom.csv line,bom.csv,FX,,"Screws, helical inserts, dowels, set screws, retainers and disc springs",44,FX,
+bom.csv line,bom.csv,FX,,"Screws, helical inserts, dowels, set screws, retainers and disc springs",45,FX,
 bom.csv line,bom.csv,E1,,"Power box PB1: main disconnect, branch protection, contactors",4,E1,
 bom.csv line,bom.csv,E2,,Ethernet switch,0,E2,
 bom.csv line,bom.csv,E3,,Axis home sensors and chamber-at-ambient switch,6,E3,
@@ -88,7 +90,6 @@ purchase row,mcmaster-parts.csv,M4,4518K43,"Quick-Clamp High-Vacuum Fitting for 
 purchase row,mcmaster-parts.csv,M4,3487N257,"Force Sensor for Tension and Compression, S-Shape, 25-lb. Capacity",0,M4,stale: line M4's notes retire it
 purchase row,mcmaster-parts.csv,G2,4396K21,"Electric Vacuum Pump, 115V AC, NEMA 5-15 Plug, 3 CFM Maximum Flow Rate",0,G2,alternative in line G2
 purchase row,mcmaster-parts.csv,G2,3394N12,"High-Vacuum Inline Filter, Quick-Clamp Connection, Flange Size 25, 1.57"" Flange OD",0,G2,
-purchase row,mcmaster-parts.csv,G5,9179K14,"HEPA Polyester Plastic and Fiberglass Element for Vacuum-Rated Air Intake Filter, 2-11/16"" High",0,G5,
 purchase row,mcmaster-parts.csv,G4,8677K32,"Edge-Flow Equipment-Cooling Blower, 24V DC, 5.31"" Square",0,,alternative (qty 0)
 purchase row,mcmaster-parts.csv,G4,9960K51,"High-Flow Low-Pressure Compressed Air Blower, Single Stage, Single Phase, 27 CFM @ 0 PSI",0,,alternative (qty 0)
 purchase row,mcmaster-parts.csv,G7,5539N26,"Differential Pressure Transmitter for Air, 4-20 mA Output Signal, 0 to 10 in. of H2O",0,G7,
@@ -104,7 +105,9 @@ purchase row,mcmaster-parts.csv,C6,7812K14,"Powder-Coated Steel Watertight Enclo
 purchase row,mcmaster-parts.csv,C6,7812K54,"11"" x 9"" Steel Panel for Powder-Coated Steel Watertight Enclosure",0,C6,stale: line C6 no longer cites mcmaster-parts.csv
 purchase row,mcmaster-parts.csv,C6,8961K15,"Steel DIN 3 Rail, 7.5mm Deep, 1m Long",0,C6,stale: line C6 no longer cites mcmaster-parts.csv
 purchase row,mcmaster-parts.csv,C6,69915K54,"Liquid-Tight Plastic Cord Grip, Straight, for 0.2""-0.35"" Cord OD, 1/2 NPT Thread, Nylon",0,C6,stale: line C6 no longer cites mcmaster-parts.csv
+purchase row,fasteners.csv,row2,95966A705,"Socket Head Captive Panel Screw, M6 x 1 mm Thread, 20 mm Long (6 mm thread, 4.2 mm reduced shank)",0,FX,
 purchase row,fasteners.csv,row7,91732A767,"18-8 Stainless Steel Helical Threaded Insert, Pronged, M2.5 x 0.45 mm Thread Size, 3.8 mm Installed Length",0,FX,
+purchase row,fasteners.csv,row15,91065A610,"Retainer for M6 x 1 mm Thread Size Captive Panel Screws, 18-8 Stainless Steel",0,FX,
 purchase row,fasteners.csv,row16,92029A142,"316 Stainless Steel Cup-Point Set Screw, M4 x 0.7 mm Thread, 6 mm Long",0,FX,
 purchase row,fasteners.csv,row18,92290A854,"316 Stainless Steel Socket Head Screw, M2.5 x 0.45 mm Thread, 30 mm Long, Fully Threaded",0,FX,
 purchase row,seal-parts.csv,row4,2-110 9464K977,Rod glands S25 (2),0,G8,stock for custom parts
@@ -126,7 +129,7 @@ purchase row,seal-parts.csv,row36,,"Window and camera-window flat clamp rings, F
 purchase row,vendor-parts.csv,row10,4518K73,,0,G7,
 purchase row,vendor-parts.csv,row14,4396K21,,0,G2,
 purchase row,safety-parts.csv,SP1,0-25 % O2 2 relays 4-20 mA LED Macurco OX-6,Fixed O2 monitor for the lab room (breathing height and near the argon cylinder),0,C5,"room safety, PPE or option"
-purchase row,safety-parts.csv,SP2,Macurco OX-6 same part,Fixed O2 monitor inside the Kardex Shuttle shaft (low) and one at the tray bay,0,M4,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP2,Macurco OX-6 same part,Fixed O2 monitor inside the Kardex Shuttle shaft (low) and one at the tray bay,0,M3,"room safety, PPE or option"
 purchase row,safety-parts.csv,SP3,18995T81 McMaster 18995T81 portable O2 detector nonreplaceable battery,Personal O2 monitor for filter changes and any entry,0,S7,"room safety, PPE or option"
 purchase row,safety-parts.csv,SP5,"Critical-flow orifice, 0.5-1 mm class Lee Co. or O'Keefe Controls",Critical-flow (sonic) orifice in the argon line,0,,"room safety, PPE or option"
 purchase row,safety-parts.csv,SP6,34.5 mbar 4277T52 McMaster 4277T52 nylon relief 0.5 psi,Low-pressure relief on the chamber (BOM part),0,G7,"room safety, PPE or option"
@@ -176,7 +179,6 @@ purchase row,robot-tooling.csv,RA6,automation.py,liner pull tabs,0,,robot cell
 purchase row,robot-tooling.csv,RA7,automation.py,AprilTag plates,0,,robot cell
 purchase row,robot-tooling.csv,RA8,49517 receiver 49607 shank,build-plate drawbar ball lock,0,,robot cell
 purchase row,robot-tooling.csv,RA9,CDQ2B40-10DCMZ,drawbar release cylinder,0,,robot cell
-purchase row,robot-tooling.csv,RA10,1460874,module zero-point clamps,0,,robot cell
 purchase row,robot-tooling.csv,RA12,SS5Y3-45FD-05U-N7,valve manifold,0,A3,robot cell
 purchase row,robot-tooling.csv,RA13,modules_low.py MODULE_GRIP,module grip block,0,,robot cell
 purchase row,assembly-tooling.csv,E1,UR12e,UR12e collaborative arm (the UR10e renamed),0,,tool or fixture
@@ -217,6 +219,8 @@ purchase row,options-mcmaster.csv,B1,9260K5,"Highly Corrosion-Resistant 316/316L
 purchase row,options-mcmaster.csv,B1,11119N35,"Highly Corrosion-Resistant 316 Stainless Steel Round Tube, 0.065"" Thick Wall, 5/8"" OD, Welded",0,B1,stock for custom parts
 purchase row,options-mcmaster.csv,B2,9464K367,"Chemical-Resistant Viton® Fluoroelastomer O-Ring, 1/8 Fractional Width, Dash Number 240",0,B2,
 purchase row,options-mcmaster.csv,B2,9464K982,"Chemical-Resistant Viton® Fluoroelastomer O-Ring, 3/32 Fractional Width, Dash Number 114",0,B2,
+purchase row,options-mcmaster.csv,B2,95966A705,"Socket Head Captive Panel Screw, M6 x 1 mm Thread, 20 mm Long",0,B2,
+purchase row,options-mcmaster.csv,B2,91065A610,Retainers for M6 x 1 mm Thread Size Captive Panel Screws,0,B2,
 purchase row,options-mcmaster.csv,B2,6435K35,"Clamping Shaft Collar for 5/8"" Diameter, 303 Stainless Steel",0,B2,
 purchase row,options-mcmaster.csv,R1,8983K56,"Multipurpose 304 Stainless Steel Sheet, 0.036"" Thick, 12"" x 24""",0,R1,stock for custom parts
 purchase row,options-mcmaster.csv,R1,8969T3,"316 Stainless Steel Corrosion-Resistant Compression Springs, 1"" Long, 0.25"" OD, 0.192"" ID",0,R1,
