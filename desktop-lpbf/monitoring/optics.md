@@ -208,8 +208,8 @@ The camera (c) is the one that images the pool edge and the mushy zone:
 - **With a notch dichroic** (no CW rating) the same camera would see 650–800 K, but it would be over-exposed at its 15 µs
   minimum on the depression.
 
-Route (a) needs no change to the 500 W path. On A's fields it reaches the top of 6061's solidification range (855–925 K)
-and 7075's (750–908 K) only at 9 kHz. Three cautions:
+Route (a) needs no change to the 500 W path. On A's fields it reaches 6061's solidification range (855–925 K) and the top
+of 7075's (750–908 K) only at 9 kHz, and only as an average over the field. Three cautions:
 - **Al I 1671.9 and 1675.1 nm fall in its band** (lines.md). Check with a spectrometer on the first builds, or narrow it to
   FBH1650-12.
 - **The DMSP1000's transmission above 1600 nm is typical data, not a spec,** and it varies lot to lot. Check the unit in hand.
@@ -249,9 +249,9 @@ It is collected through NA 0.0375 (the 12 mm design beam), then through:
 - pools 0.25–0.44 mm long, 0.04–0.11 mm² of liquid, and a 0.003–0.005 mm² depression footprint (`above_boil`).
 
 `radiometry.py --fields <path>` reads them. Without the file it falls back to its own Eagar–Tsai fields (clipped at boiling),
-which give brighter, larger pools: about 2× the signals below.
+which give brighter, larger pools: 2–3× the signals below.
 
-| AlSi10Mg, 320 W, 1.1 m/s, 25 °C plate (ε 0.12 at 1 µm) | Signal | At 90 kHz (40 dB) | At 9 kHz (60 dB) | Saturates |
+| AlSi10Mg, 320 W, 1.1 m/s, 25 °C plate (ε 0.12 at 1 µm) | Signal | Fast: 90 kHz (40 dB) or a short exposure | Slow: 9 kHz (60 dB) or a longer exposure | Saturates |
 |---|---:|---:|---:|---|
 | PD-A 700/40 | 13.6 nA (2.0 mV) | SNR 22 | SNR 57 | no: 10 V needs 67 µA |
 | PD-B 900/40 | 30.5 nA (4.6 mV) | SNR 49 | SNR 127 | no |
