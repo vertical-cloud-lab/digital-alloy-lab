@@ -1,29 +1,5 @@
 [
  {
-  "step": "M13",
-  "arm": "A",
-  "direction": [
-   0,
-   0,
-   -1
-  ],
-  "payload_kg": 0.2,
-  "max_push_N": 156.0,
-  "holding_torque_frac": 0.34
- },
- {
-  "step": "M27",
-  "arm": "A",
-  "direction": [
-   0,
-   0,
-   -1
-  ],
-  "payload_kg": 0.1,
-  "max_push_N": 164.0,
-  "holding_torque_frac": 0.32
- },
- {
   "step": "C02",
   "arm": "A",
   "direction": [
@@ -37,15 +13,15 @@
  },
  {
   "step": "C10",
-  "arm": "A",
+  "arm": "B",
   "direction": [
    0,
    0,
    -1
   ],
   "payload_kg": 2.7,
-  "max_push_N": 119.0,
-  "holding_torque_frac": 0.47
+  "max_push_N": 132.0,
+  "holding_torque_frac": 0.39
  },
  {
   "step": "F39",
@@ -70,6 +46,30 @@
   "payload_kg": 0.6,
   "max_push_N": 191.0,
   "holding_torque_frac": 0.37
+ },
+ {
+  "step": "M13",
+  "arm": "A",
+  "direction": [
+   0,
+   0,
+   -1
+  ],
+  "payload_kg": 0.2,
+  "max_push_N": 156.0,
+  "holding_torque_frac": 0.34
+ },
+ {
+  "step": "M27",
+  "arm": "A",
+  "direction": [
+   0,
+   0,
+   -1
+  ],
+  "payload_kg": 0.1,
+  "max_push_N": 164.0,
+  "holding_torque_frac": 0.32
  },
  {
   "step": "F30",

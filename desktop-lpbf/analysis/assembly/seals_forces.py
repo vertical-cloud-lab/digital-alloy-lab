@@ -190,7 +190,8 @@ def main():
                    "with retaining compound so the robot only inserts it"),
         dict(step="C10", what="spigot's 2-238 entering the Ø96 floor port", need_N=spig["running_N"], peak_N=spig["breakout_N"],
              basis=f"Parker 5.11.2: fc {spig['fc_lb_in']} lb/in at {spig['squeeze_pct']} % over pi x 96 mm; break-out 3x",
-             robot="robot starts it on the lead-in chamfer (<= 50 N in force mode), the two captive M6 screws pull it home"),
+             robot="robot starts it on the lead-in chamfer (<= 50 N in force mode) and pushes it home in force mode; the two zero-point "
+                   "modules then lock its pins (round 6: no captive M6)"),
         dict(step="M13", what="hollow rod, top end first, through the two 2-114 rod O-rings", need_N=rod["running_N"], peak_N=rod["breakout_N"],
              basis=f"Parker 5.11.2: fc {rod['fc_lb_in']} lb/in at {rod['squeeze_pct']} % over pi x 15.875 mm, two rings",
              robot="yes in force mode with a PFPE film (lubricated, about half); dry break-out is at the F/T range"),

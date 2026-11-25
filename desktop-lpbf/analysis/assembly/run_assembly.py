@@ -90,8 +90,14 @@ class Run:
         """Parts drawn as one compound of several solids that the arms place one at a time: one object per solid."""
         sc = self.sc
         self.split = {}
-        for key in ("Chamber legs", "Optics bridge posts", "Macor standoff rings", "Radiation shields"):
-            i0 = sc.find(key, fasteners=False)[0]
+        # round 6 (the merged layout): the zero-point clamps' posts, plates and modules, and the module's arms and pins, are pairs or
+        # fours drawn as one compound each
+        for key in ("Chamber legs", "Optics bridge posts", "Macor standoff rings", "Radiation shields", "Zero-point posts",
+                    "Zero-point module plates", "Zero-point clamping modules", "Zero-point arms", "Zero-point clamping pins"):
+            found = sc.find(key, fasteners=False)
+            if not found:
+                continue
+            i0 = found[0]
             p = sc.parts[sc.objs[i0]["part"]]
             new = []
             for k, s in enumerate(p.shape.Solids()):
@@ -117,6 +123,8 @@ class Run:
                 out += [i for i in self.split["Macor standoff rings" if k == "Macor standoff" else "Radiation shields"] if i not in out]
             elif k == "@chamberset":
                 out += sorted(self.asm.get("chamber", ()))
+            elif k in self.split:
+                out += [i for i in self.split[k] if i not in out]
             else:
                 out += [i for i in sc.find(k, exclude=tuple(exclude)) if i not in out]
         out = [i for i in out if sc.objs[i]["V"] is not None]
@@ -614,6 +622,7 @@ def drive_screw(run, i, phase, actor, long_bit=None, state=None, torque=None, fo
     L = float(c.get("L", 10.0))
     if c.get("kind") == "captive" or str(sc.objs[i].get("pn")) == "95966A705":
         L = 10.0                       # a captive screw already sits in its flange: only its last turns into the insert are driven
+        #                                (none left since round 6: the zero-point clamps replaced the module's captive M6)
     engage = 0.6 * s_hex
     body = run.held_body([i], f"screw:{sc.short(i)[:30]}", st_)
     body.place(T)

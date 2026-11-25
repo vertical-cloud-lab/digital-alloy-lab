@@ -106,7 +106,7 @@ def steps(module="M50"):
     # (M18, M26, M28) grip it. Run 3's automatic grasp took the flange's top slice, 119 mm across the dowel lugs, wider than the
     # 2F-85's 85 mm stroke. The nest's posts (20/90/160 deg) leave the front free for the fingers.
     a(P("M16", "Welded module body onto its upright nest (flange on the nest's three posts), gripped across the tube",
-        ["Build module"], "body", "body_up", [(0, 0, 0), (0, 0, 120)], exclude=["Captive", "retainers"],
+        ["Build module"], "body", "body_up", [(0, 0, 0), (0, 0, 120)],
         grasp=dict(point=(0.0, 0.0, -60.0), z=(0.0, 1.0, 0.0), x=(-1.0, 0.0, 0.0), width=56.8)))
     a(dict(do="seal", id="M17", label="Spigot O-ring (2-238) over the mandrel into the spigot groove (before the stack: the mandrel reaches into the bore)",
            keys=["Spigot O-ring"], grp="body", phase="body_up", method="mandrel", ring="spigot", tool="gripper", actor="A", holder="B",
@@ -128,11 +128,12 @@ def steps(module="M50"):
     # drops its two side arms through the type K sleeves (run 4's first pass: blocked after 18 mm). Round 6: lowered 15 mm in
     # front of its seat, where the side arms' back ends (y -43.4) clear the sleeves (y >= -34) and the power sleeve (x +-6.3),
     # then slid the last 15 mm back along the gland plate's face, 17 mm above the sleeves. Held from above by the riser in front of
-    # the collar (48 x 6 mm, fingers across its 6 mm, the back finger in the 20 mm between riser and collar, between the side
-    # arms): run 4's second pass held the grip block's web from the front, and arm A's upper arm met its own wrist 2.
+    # the collar, the fingers on its two ends (48 mm across x), so both fingers stay at y <= -52, in front of the sleeves (y >= -43):
+    # run 4's second pass held the grip block's web from the front (arm A's upper arm met its own wrist 2), and run 5 held the
+    # riser across its 6 mm with one finger behind it (that finger met the power sleeve).
     a(P("M21", "Handle lowered in front of the rod end's sleeves, then slid 15 mm back onto the gland plate (module upside down; held by "
-        "its riser from above)", ["handle (6061"], "body", "body_inv", [(0, 0, 0), (0, -15, 0), (0, -15, -40)],
-        grasp=dict(point=(0.0, -63.4, -90.0), z=UP, x=(0.0, 1.0, 0.0), width=6.0)))
+        "its riser's two ends from above)", ["handle (6061"], "body", "body_inv", [(0, 0, 0), (0, -15, 0), (0, -15, -40)],
+        grasp=dict(point=(0.0, -63.4, -88.0), z=UP, x=(1.0, 0.0, 0.0), width=48.0)))
     a(S("M22", "Two M4 handle screws", f"handle_{m}", "body", "body_inv", torque_Nm=2.2))
     a(P("M23", "Striker disc onto the rod end", ["Striker disc"], "body", "body_inv", [(0, 0, 0), (0, 0, -60)]))
     a(S("M24", "Three M3 x 10 flat-head striker screws", f"striker_{m}", "body", "body_inv", torque_Nm=1.1))
@@ -151,13 +152,25 @@ def steps(module="M50"):
         grasp=dict(point=(0.0, 0.0, 5.5), z=DN, x=(1.0, 0.0, 0.0), width=50.5)))
     a(dict(do="flip", id="M28", label="Module turned upside down again (wrist roll) onto its spigot nest, ready for the chamber (C10)",
            grp="body", frm="body_up", to="body_inv", actor="A"))
+    # round 6 (the merged layout, hot-swap.md 3.2a): the module side of the two SCHUNK NSE-HT zero-point clamps. Each 6061 arm hangs
+    # from an ear of the flange (50 and 135 deg) and carries a SPC mini 20 class clamping pin under a zero-point module
+    # (modules_low.zp_arms). On the upside-down module each arm goes on from above, after the last turn-over (the arms reach r ~110
+    # and would meet the upright nest's posts), with its pin already screwed in on the bench: the pin's Ø20 head stands on the side of
+    # the plate that faces the clamp, so it can't go in from above (run 5's first pass). Arm A holds each by its plate, 20 mm short
+    # of the pin, across the plate's 24 mm: the automatic grasp took the plate near the hanger, where a fingertip met the rod end.
+    a(P("M29", "Right zero-point arm with its clamping pin (SPC mini 20 class, screwed in on the bench) onto the flange's ear at 50 deg; "
+        "its screws into the ear are not drawn", [f"Zero-point arms {m} #1", f"Zero-point clamping pins {m} #1"], "body", "body_inv",
+        [(0, 0, 0), (0, 0, -60)], grasp=dict(point=(80.2, 42.5, -113.0), z=UP, x=(0.124, 0.992, 0.0), width=24.0)))
+    a(P("M30", "Left zero-point arm with its clamping pin onto the flange's ear at 135 deg", [f"Zero-point arms {m} #2",
+        f"Zero-point clamping pins {m} #2"], "body", "body_inv", [(0, 0, 0), (0, 0, -60)],
+        grasp=dict(point=(-89.2, -10.6, -113.0), z=UP, x=(0.768, -0.640, 0.0), width=24.0)))
     # =========================================================== chapter 4a: the chamber, upside down on Fixture C
     # chamber-construction.md (landed 2026-11-20 22:58 UTC): a through-frame and a bolted 20 mm floor plate with a second 3.53 mm cord.
     # Floor plate face up on Fixture P (a pedestal on the floor, so the arms reach under its edges), its cord rolled in, the frame
     # lowered onto it (two dowels locate it), the 18 floor screws driven up from under the plate's edge, then both arms turn the
     # chamber over onto Fixture C for the under-floor work.
     fp_ins = ["Chamber floor plate", "Helical inserts for the module screws", "Z-flange helical inserts", "Leg helical inserts",
-              "Outlet-plenum helical", "Overflow-funnel helical", "Floor-plate dowels"]
+              "Outlet-plenum helical", "Overflow-funnel helical", "Floor-plate dowels", "Zero-point post helical"]
     fr_ins = ["Process chamber body", "Lid screw helical inserts", "Recoater rail helical inserts", "Inlet-plenum helical",
               "Vacuum-port adapter helical", "Bearing-cap helical"]
     a(P("C00a", "Floor plate (inserts and the two frame dowels already in) onto Fixture P, gland face up, by the vacuum gripper", fp_ins,
@@ -189,19 +202,40 @@ def steps(module="M50"):
         "chamber", "chamber_inv", [(0, 0, 0), (0, 0, -200)], merge="funnel"))
     a(S("C08", "Four M4 x 12 overflow-funnel screws", "funnel", "chamber", "chamber_inv", torque_Nm=2.2))
     a(P("C09", "Module-present sensor", ["Module-present sensor"], "chamber", "chamber_inv", "explode", note="its bracket screws are not drawn"))
+    # round 6: the Z flange and its screws now go on before the module and the zero-point clamps (run 2's fix for C12, whose fingers
+    # met the module's gland plate; run 5 found them on its back-arc screws, and C13's driver on a zero-point arm). The module's
+    # swap path passes 12 mm under the flange (machine z), so it doesn't block C10.
+    a(P("C12", "Z mounting flange alone onto the floor (the actuator goes on after the module, its screws now)", ["Z mounting flange"],
+        "chamber", "chamber_inv", [(0, 0, 0), (0, 0, -150)]))
+    a(S("C13", "Four counterbored M5 x 12 Z-flange screws", "zmount", "chamber", "chamber_inv", torque_Nm=4.2))
+    # round 6 (the merged layout, hot-swap.md 3.2a): the two SCHUNK NSE-HT mini 88-20 zero-point modules hang from the floor at
+    # (100, 40) and (-102, -26), each under a 10 mm 6061 plate on two 16 x 16 posts with an M6 stud into a floor insert. With the
+    # chamber upside down the posts stand up off the floor and the plates and modules go on from above, pin face up. The plates'
+    # and modules' own screws are not drawn.
+    a(P("C09b", "Four zero-point posts turned into the floor's M6 inserts by their studs", ["Zero-point posts"], "chamber", "chamber_inv",
+        [(0, 0, 0), (0, 0, -80)], per_solid=True, note="threaded: turned by wrist rotation with regrasps, which a straight sweep can't show"))
+    a(P("C09c", "Two zero-point module plates (10 mm 6061) onto the posts; their screws into the posts' ends are not drawn",
+        ["Zero-point module plates"], "chamber", "chamber_inv", [(0, 0, 0), (0, 0, -80)], per_solid=True, tool="vacuum"))
+    a(P("C09d", "Two SCHUNK NSE-HT mini 88-20 zero-point modules (Ø88, 1.0 kg) onto the plates, pin face up: the vacuum gripper on the "
+        "pin face (Ø88 is past the 2F-85's stroke)", ["Zero-point clamping modules"], "chamber", "chamber_inv", [(0, 0, 0), (0, 0, -80)],
+        per_solid=True, tool="vacuum"))
+    a(N("C09e", "M5 push-in elbows into the modules' release ports, and a temporary Ø4 release-air line from the cell's supply", "person",
+        "Small threaded fittings with a tube to follow. The modules have to be open (6 bar) for the clamping pins to enter in C10."))
     # round 6: runs 1-3 held the module at (0, 0, -62) with the fingertips pointing along its axis, 40 mm apart: inside the bore,
     # past the gland plate and the rod end. The check never tested the fingers against the part they hold, so that passed. Arm B
     # now takes the handle's grip block (40 mm web) from behind the upside-down chamber (its front faces the back there), as the
-    # tending robot takes it from the front of the machine (robot-ops.md).
-    a(P("C10", "Build module (upside down) down into the Ø96 floor port, held by its handle's grip block; dowel and diamond pin "
-        "through its flange lugs", ["@module"], "chamber", "chamber_inv", [(0, 0, 0), (0, 0, -150)], merge="body", moved=True,
+    # tending robot takes it from the front of the machine (robot-ops.md). Its two arms' clamping pins enter the open zero-point
+    # modules on the way in. Since round 6 it comes in along the machine's own swap path (lpbf_low.MODULE_PATH, reversed): run 5's
+    # straight 150 mm drop along the axis took the flange's tab through the left zero-point plate, which is cut back only to clear
+    # that path. So: in 158 mm behind the port (the module's front leads), 40 mm "below" it (machine z), then up into the port.
+    a(P("C10", "Build module (upside down) into the Ø96 floor port along its swap path, held by its handle's grip block; dowel and "
+        "diamond pin through its flange lugs, clamping pins into the open zero-point modules", ["@module"], "chamber", "chamber_inv",
+        [(0, 0, 0), (0, 0, -40), (0, -158, -40), (0, -158, -150)], merge="body", moved=True,
         force="spigot", actor="B", grasp=dict(point=(0.0, -141.0, -47.0), z=(0.0, 1.0, 0.0), x=(1.0, 0.0, 0.0), width=40.0)))
-    a(S("C11", "Two captive M6 screws pull the flange onto the floor (they also finish pushing the spigot seal home); inline nutrunner on a "
-        "130 mm extension, so its body clears the module's gland plate", "module_flange", "chamber", "chamber_inv", pn="95966A705", torque_Nm=4.0,
-        driver="nutrunner", long_bit=130.0))
-    a(P("C12", "Z mounting flange alone onto the floor (the actuator goes on after its screws, which sit beside it)", ["Z mounting flange"],
-        "chamber", "chamber_inv", [(0, 0, 0), (0, 0, -150)]))
-    a(S("C13", "Four counterbored M5 x 12 Z-flange screws", "zmount", "chamber", "chamber_inv", torque_Nm=4.2))
+    # round 6: the captive M6 and their retainers are gone (joints.py section 2); the clamps hold the module (hot-swap.md 3.2a)
+    a(N("C11", "Release air off: the zero-point modules' springs lock both clamping pins (2 x 0.5 kN); no screws", "machine",
+        "The cell vents the temporary line. 1 kN holds 4.6x the worst separating load (hot-swap.md 3.2a). The spigot ring is already "
+        "home: arm B pushed the module in at C10 (132 N running). The captive M6 are gone; the floor keeps their inserts for a hand fallback."))
     a(P("C13b", "Z actuator, belt fold, servo, carriage, arm and magnet (pre-assembled) onto the flange",
         ["Z actuator", "Z bracket", "Z servo", "Z carriage", "Z lift arm", "Pot magnet"], "chamber", "chamber_inv",
         [(0, 0, 0), (0, 0, -150)], grasp=dict(point=(0.0, 80.0, -170.0), z=UP, x=(1.0, 0.0, 0.0)), note="its screws to the flange are not drawn"))
@@ -214,21 +248,37 @@ def steps(module="M50"):
                    "B": dict(point=(260.0, 215.0, -167.5), z=(0.0, -1.0, 0.0), x=(0.0, 0.0, 1.0))}))
     a(N("F02", "Levelling mounts", "person", "They thread in when the finished process module goes onto the tray (chapter 5); "
         "until then Fixture B carries the plate on its ends."))
+    # round 6 (the merged layout): the zero-point release valve stands on the base plate behind the left-hand module, under the floor
+    # once the chamber is on, so it goes on first
+    a(P("F02b", "Zero-point release valve (3/2 NC, 24 V, on its sub-base) onto the base plate; its screws are not drawn",
+        ["Zero-point release valve"], "machine", "upright", [(0, 0, 0), (0, 0, 120)]))
     # =========================================================== the turn-over
     a(dict(do="rotate", id="F05", label="The trunnion turns the chamber assembly (module, Z stage, legs) back upright", grp="chamber",
            frm="chamber_inv", to="chamber_up_T", sign=-1.0))
-    a(dict(do="dual", id="F05b", label="Chamber assembly (15.8 kg) carried upright by both arms, each holding a leg, from the trunnion onto the "
-           "base plate", keys=["@chamberset"], grp="machine", phase="upright", frm="chamber_up_T", whole=True, merge="chamber",
+    a(dict(do="dual", id="F05b", label="Chamber assembly (with the module, zero-point clamps, Z stage and legs) carried upright by both "
+           "arms, each holding a leg, from the trunnion onto the base plate", keys=["@chamberset"], grp="machine", phase="upright", frm="chamber_up_T", whole=True, merge="chamber",
            path=[(0, 0, 0), (0, 0, 120)], docks="TB", grip_gap=30.0, lift=320.0,
-           grasps={"A": dict(point=(-135.0, -90.0, -95.0), z=(0.0, 1.0, 0.0), x=(1.0, 0.0, 0.0)),
-                   "B": dict(point=(135.0, 90.0, -95.0), z=(0.0, -1.0, 0.0), x=(1.0, 0.0, 0.0))}))
+           # round 6: each leg held 40 mm lower (machine z -135), below the zero-point modules (z -109 to -89): at -95 arm B's inner
+           # finger on the back-right leg (x 126-156, y 81-111 since round 6; B's grasp now on its centre) ran into the right module
+           grasps={"A": dict(point=(-135.0, -90.0, -135.0), z=(0.0, 1.0, 0.0), x=(1.0, 0.0, 0.0)),
+                   "B": dict(point=(141.0, 96.0, -135.0), z=(0.0, -1.0, 0.0), x=(1.0, 0.0, 0.0))}))
     a(S("F06", "Eight M6 x 25 base-plate-to-leg screws, from under the plate", "legs_base", "machine", "upright", torque_Nm=7.4))
-    a(P("F07", "Overflow jar in from the right under the floor, up onto its KF-40 port", ["Overflow jar"], "machine", "upright",
-        [(0, 0, 0), (0, 0, -8), (260, 0, -8)], actor="B", grasp=dict(point=(100.0, 0.0, -110.0), z=(-1.0, 0.0, 0.0), x=(0.0, 1.0, 0.0))))
-    a(N("F08", "KF-40 clamp round the jar's flange (wing nut)", "person",
-        "A hinged KF clamp needs its ring opened round the flange and a wing nut turned; nothing on the 2F-85 or the screwdriver does that. "
-        "A robot-friendly alternative is a lever (over-centre) KF clamp."))
-    a(P("F09", "Overflow-jar sensor", ["Overflow-jar present"], "machine", "upright", "explode", actor="B"))
+    a(N("F06b", "Release-air line: Ø4 tube from the valve through a union Y to both zero-point modules' push-in elbows (in place of the "
+        "temporary line); the valve's supply comes from the rack's air prep in chapter 5", "person",
+        "Tube routing (deformable), as the hoses in chapter 5. The modules stay locked while the line is swapped: their springs hold."))
+    # round 6 (the merged layout): the jar sits at the overflow slot's front end, (94, -46), its KF-40 joint at z -82, and has a grip
+    # fin: an I-section level with the module's grip block and 100 mm to its right (automation.py section 8). It comes in from the
+    # front along its lane and up 8 mm onto the centring ring (operations.md U4.7 reversed); arm A holds the fin's 40 mm web from the
+    # front, as the tending robot does.
+    a(P("F07", "Overflow jar in from the front along its lane and up 8 mm onto its KF-40 port, held by its grip fin", ["Overflow jar"],
+        "machine", "upright", [(0, 0, 0), (0, 0, -8), (0, -260, -8)], actor="A",
+        grasp=dict(point=(100.0, -141.0, -45.0), z=(0.0, 1.0, 0.0), x=(1.0, 0.0, 0.0), width=40.0)))
+    a(N("F08", "KF-40 toggle clamp (MKS 100318805) round the jar's flange, lever to the front", "person",
+        "Its hinged ring has to be held open round both flanges before one push on the lever locks it; nothing on the 2F-85 holds "
+        "the ring open. An air-released KF clamp would let the robot do it (hot-swap.md)."))
+    a(P("F09", "Overflow-jar sensor and its bracket, onto the front-right leg's back face", ["Overflow-jar present", "Overflow-jar sensor bracket"],
+        "machine", "upright", "explode", actor="A"))
+    a(S("F09b", "Two M4 x 10 jar-sensor bracket screws into the front-right leg", "jar_sensor", "machine", "upright", torque_Nm=2.2))
     a(P("F11", "LED bar (small-part vacuum nozzle on its top face)", ["Layer-light"], "machine", "upright", "explode", tool="nozzle"))
     a(P("F10", "Lift-out wall liners into the open chamber", ["Lift-out wall liner"], "machine", "upright", "explode", tool="vacuum"))
     a(N("F12", "Through-beam fibre heads with their 2-010 O-rings, threaded into the side walls from outside", "person",
@@ -351,7 +401,8 @@ def steps(module="M50"):
         "the UPS and the laser exceed a UR12e's 12.5 kg; cage nuts and screws are not drawn"))
     a(N("T03", "Gas module: base plate, scroll pump (26 kg), blower, filter housing, O2 box, argon manifold", "person + lift",
         "the pump exceeds 12.5 kg; the units' screws are not drawn"))
-    a(N("T04", "KF-25 bellows, vacuum valve, argon and O2 lines", "person", "hose and tube routing (deformable, KF wing-nut clamps)"))
+    a(N("T04", "KF-25 bellows, vacuum valve, argon and O2 lines, and the zero-point valve's air supply", "person",
+        "hose and tube routing (deformable, KF wing-nut clamps)"))
     a(N("T05", "Tray dock and umbilicals", "person", "cable and hose routing"))
     a(N("T06", "Leak check: rate of rise from <= 1 mbar, O2 drift at +20 mbar argon", "machine", "the seal verification in assembly.md"))
     return out
