@@ -305,6 +305,11 @@ def main():
             continue
         shp = load(pathlib.Path(a.parts) / f"{p['slug']}.brep")
         sols = solids(shp)
+        # pieces, not fragments: a boolean can leave slivers as loose solids (the M50 rod end's feedthrough block has eight,
+        # 0-39 mm3, where its wire channel cuts between the bores; 2026-11-25), and each piece is timed in full below
+        svol = [(lambda g: (BRepGProp.VolumeProperties_s(s_, g), g.Mass())[1])(GProp_GProps()) for s_ in sols]
+        fragments = sum(1 for v_ in svol if v_ < 0.02 * max(svol))
+        sols = [s_ for s_, v_ in zip(sols, svol) if v_ >= 0.02 * max(svol)]
         s0 = max(sols, key=lambda s: (lambda g: (BRepGProp.VolumeProperties_s(s, g), g.Mass())[1])(GProp_GProps()))
         A = analyse(s0)
         pns = sorted({pn for c in p["cuts"] for pn in c["pns"]})
@@ -370,7 +375,7 @@ def main():
         t_setup = 20.0 * nset * (2.0 if "process_chamber_body" in p["slug"] else 1.0)
         n_pieces = len(sols) if "macor" not in p["slug"] else 1
         sti_short = [h for h in holes if h["kind"] == "sti" and h["blind"]]
-        row = dict(slug=p["slug"], name=p["name"], mat=mat, n_pieces=len(sols), bbox_mm=[round(x, 1) for x in dims[::-1]], volume_cm3=round(vol / 1000, 1),
+        row = dict(slug=p["slug"], name=p["name"], mat=mat, n_pieces=len(sols), loose_fragments=fragments, bbox_mm=[round(x, 1) for x in dims[::-1]], volume_cm3=round(vol / 1000, 1),
                    machine="CNC lathe + VMC" if is_round else "3-axis VMC", stock=stock, stock_cm3=round(sv / 1000, 1) if sv else None,
                    removed_pct=round(100 * removed / sv, 0) if sv else None, setups=sw.get("setups"), unreachable_pct=round(100 * sw.get("unreachable_frac", 0), 2),
                    n_faces=A["n_faces"], holes=holes, hole_counts=dict(counts), min_corner_r=min_r,

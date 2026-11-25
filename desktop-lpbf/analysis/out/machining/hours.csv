@@ -1,49 +1,58 @@
-part,slug,mat,setups_3axis,setups_4th_axis,holes,cam_h,setup_h_3axis,setup_h_4th,run_h,run_h_vendor,deburr_inspect_h,special,total_h_3axis,total_h_4th
-"Base plate, process module (MIC-6, 15 mm)",base_plate_process_module_mic_6_15_mm,mic6,2,2,24,2.1,2.5,2.5,3.9,,0.25,,8.8,8.8
-"Base plate, gas module (MIC-6, 15 mm)",base_plate_gas_module_mic_6_15_mm,mic6,2,2,4,1.8,2.5,2.5,2.97,,0.25,,7.5,7.5
-"Chamber legs (6061, 30 x 30)",chamber_legs_6061_30_x_30,al6061,2,1,4,1.8,1.5,1.5,0.53,,0.25,,4.1,4.1
-Z mounting flange (bolted under the floor),z_mounting_flange_bolted_under_the_floor,al6061,2,1,8,1.8,1.5,1.5,0.12,,0.25,,3.7,3.7
-Z bracket + fold-back belt housing (2:1),z_bracket_fold_back_belt_housing_2_1,al6061,2,1,1,1.7,1.5,1.5,0.18,,0.25,,3.6,3.6
-"Z lift arm (6061, 12 mm, pot-magnet coupling)",z_lift_arm_6061_12_mm_pot_magnet_coupling,al6061,2,1,1,1.7,1.5,1.5,0.07,,0.25,,3.5,3.5
-"Build module M50: spigot, flange, honed 316L cylinder (Ø50.8 bore, 3 mm wall) and bottom c",build_module_m50_spigot_flange_honed_316l_cylinder_50_8_bore,ss316l,4,1,13,4.1,3.0,1.5,0.58,,1.0,spigot's radial O-ring groove and the bore: turned after welding; honing outsourced,8.7,7.2
-"Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 ro",module_m50_bottom_flange_gland_plate_316l_bolted_to_the_weld,ss316l,3,1,11,3.5,2.2,1.5,0.48,,0.25,rod-gland grooves: internal grooving tool on the lathe,6.4,5.7
-"Module M50 handle (6061, screwed under the gland plate; for a hand or a gripper)",module_m50_handle_6061_screwed_under_the_gland_plate_for_a_h,al6061,2,1,2,1.7,1.5,1.5,0.03,,0.25,,3.5,3.5
-"Build plate M50 (Ø50.5 x 10, 6061-T6; bayonet spigot, gripper groove)",build_plate_m50_50_5_x_10_6061_t6_bayonet_spigot_gripper_gro,al6061,5,2,0,4.5,3.8,2.2,0.03,,0.25,bayonet lugs and the gripper groove are undercuts: turn and groove on the lathe,8.6,7.0
-"Heater block M50 (6061-T6, bayonet socket)",heater_block_m50_6061_t6_bayonet_socket,al6061,3,1,13,3.5,2.2,1.5,0.2,,0.25,bayonet socket undercut: internal grooving tool on the lathe + three milled entry slots,6.2,5.5
-"Macor standoff rings M50 (3 standoffs x 3 rings, Ø8, cut from 8489K75 rod; thermal break)",macor_standoff_rings_m50_3_standoffs_x_3_rings_8_cut_from_84,macor,2,1,1,2.7,1.5,1.5,0.02,,0.25,,4.5,4.5
-"Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",piston_head_m50_6061_t6_cool_side_of_the_break_tier_b_316l_w,al6061,6,3,9,5.2,4.5,3.0,0.12,,0.25,seal grooves are radial: turned,10.1,8.6
-"Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it ru",hollow_piston_rod_m50_5_8_in_x_0_065_in_seamless_316_polishe,ss316l,2,1,1,1.7,1.5,1.5,0.07,,0.25,,3.5,3.5
-"Rod end M50: end cap with a side boss for the hermetic connector (316L, rod welded in)",rod_end_m50_end_cap_with_a_side_boss_for_the_hermetic_connec,ss316l,3,1,5,3.4,2.2,1.5,0.15,,0.25,,6.0,5.3
-"Striker disc M50 (416 stainless, on the pot magnet)",striker_disc_m50_416_stainless_on_the_pot_magnet,steel,2,1,6,2.8,1.5,1.5,0.07,,0.25,,4.6,4.6
-"Overflow funnel block (316L, bolted, FKM face O-ring)",overflow_funnel_block_316l_bolted_fkm_face_o_ring,ss316l,2,1,9,1.8,1.5,1.5,0.7,,1.0,,5.0,5.0
-"Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor ",process_chamber_body_6061_t6_through_frame_from_5_5_in_plate,al6061,6,3,102,5.6,7.5,4.5,4.98,1.87,1.0,,19.1,16.1
-"Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module po",chamber_floor_plate_6061_t6_20_mm_bolted_under_the_frame_flo,al6061,2,2,63,2.6,2.5,2.5,2.1,0.85,1.0,,8.2,8.2
-Recoater carriage block (6061),recoater_carriage_block_6061,al6061,2,1,1,1.7,1.5,1.5,0.15,,0.25,,3.6,3.6
-"Recoater arm (6061, 40 x 14 web)",recoater_arm_6061_40_x_14_web,al6061,2,1,0,1.7,1.5,1.5,0.02,,0.25,,3.5,3.5
-"Blade holder (6061, 18 x 31, quick-swap)",blade_holder_6061_18_x_31_quick_swap,al6061,2,1,2,1.7,1.5,1.5,0.1,,0.25,,3.6,3.6
-"Recoater feedthrough spacer ring (6061, 9 mm, FKM face O-rings both sides)",recoater_feedthrough_spacer_ring_6061_9_mm_fkm_face_o_rings_,al6061,2,1,2,1.7,1.5,1.5,0.05,,1.0,,4.2,4.2
-"Recoater floating bearing housing (blind cap, FKM face O-ring)",recoater_floating_bearing_housing_blind_cap_fkm_face_o_ring,al6061,2,1,6,2.8,1.5,1.5,0.1,,1.0,,5.4,5.4
-Recoater motor standoff,recoater_motor_standoff,al6061,2,1,1,2.7,1.5,1.5,0.23,,0.25,,4.7,4.7
-Recoater motor bracket,recoater_motor_bracket,al6061,2,1,0,1.7,1.5,1.5,0.28,,0.25,,3.7,3.7
-"Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",chamber_lid_6061_t6_16_mm_cover_slide_drawer_slot,al6061,2,1,48,2.4,2.5,2.0,1.37,,1.0,the cover-slide drawer slot is enclosed (machining.md): open it from the underside (then a 1/4 in. keyseat cutter for the ledges) or sinker EDM; still drawn enclosed in lpbf_low section 7,7.3,6.8
-"Window flange (6061, two FKM O-ring grooves)",window_flange_6061_two_fkm_o_ring_grooves,al6061,2,1,22,3.0,1.5,1.5,0.33,,1.0,,5.8,5.8
-Window retaining ring (spigot bottoms metal-to-metal: squeeze set by geometry),window_retaining_ring_spigot_bottoms_metal_to_metal_squeeze_,al6061,2,1,7,2.8,1.5,1.5,0.15,,0.25,,4.7,4.7
-"Field-stop aperture (Ø36, passive beam limit)",field_stop_aperture_36_passive_beam_limit,al6061,2,1,1,2.7,1.5,1.5,0.03,,0.25,,4.5,4.5
-"Cover-slide drawer (6061, robot pull tab, half-dovetail seal groove)",cover_slide_drawer_6061_robot_pull_tab_half_dovetail_seal_gr,al6061,4,1,3,2.9,3.0,1.5,0.62,,1.0,half-dovetail O-ring groove on the front plate: dovetail cutter,7.5,6.0
-"Metering base (6061, fluted roller over a 100 mm dose line, two FKM face O-rings)",metering_base_6061_fluted_roller_over_a_100_mm_dose_line_two,al6061,3,2,7,2.4,2.2,2.2,0.22,,1.0,,5.8,5.8
-Reservoir M lid with robot handle (grip plane z = 258 for every size; FKM O-ring face seal,reservoir_m_lid_with_robot_handle_grip_plane_z_258_for_every,al6061,2,1,2,1.7,1.5,1.5,0.05,,0.25,,3.5,3.5
-"Camera viewport adapter + boss (6061; Ø1 in. window, 1070 nm blocking filter; FKM face O-r",camera_viewport_adapter_boss_6061_1_in_window_1070_nm_blocki,al6061,5,2,5,3.6,3.8,2.2,0.18,,1.0,"bore and boss on a compound angle (the line of sight from (75, -45) to the plate centre): two rotations, so a 4th axis alone can't square it up; a sine plate + 4th axis, a 5-axis, or make the boss a turned part on a single-tilt seat",8.6,7.0
-Camera window retaining ring (bottoms metal-to-metal on the boss),camera_window_retaining_ring_bottoms_metal_to_metal_on_the_b,al6061,2,1,1,2.7,1.5,1.5,0.03,,0.25,,4.5,4.5
-"Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears)",chamber_door_6061_t6_15_mm_drops_down_half_dovetail_seal_gro,al6061,2,1,0,1.7,2.5,2.0,0.47,,1.0,half-dovetail O-ring groove: a dovetail cutter (special tool) or a plain groove with a moulded seal,5.7,5.2
-Door handle,door_handle,al6061,2,1,0,1.7,1.5,1.5,0.08,,0.25,,3.5,3.5
-"Optics bridge (6061, 25 mm)",optics_bridge_6061_25_mm,al6061,2,2,10,1.8,2.5,2.5,3.5,,0.25,,8.1,8.1
-"Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",optics_bridge_posts_60_x_60_x_5_square_6061_tube_10_mm_end_c,al6061,2,2,4,1.8,2.5,2.5,1.58,,0.25,closed inside of the welded tube (expected),6.1,6.1
-"f-theta adapter ring (6061, M85x1 internal thread, bolted under the bridge)",f_theta_adapter_ring_6061_m85x1_internal_thread_bolted_under,al6061,2,1,1,2.7,1.5,1.5,0.25,,0.25,,4.7,4.7
-"Galvo riser plate (6061, 10 mm)",galvo_riser_plate_6061_10_mm,al6061,2,1,0,1.7,1.5,1.5,0.18,,0.25,,3.6,3.6
-Enclosed beam tube,enclosed_beam_tube,al6061,2,1,1,1.7,1.5,1.5,0.08,,0.25,,3.5,3.5
-"Guard-door handle for the robot (Ø12 x 130 bar on two Ø10 standoffs, 6061)",guard_door_handle_for_the_robot_12_x_130_bar_on_two_10_stand,al6061,2,1,0,1.7,1.5,1.5,0.13,,0.25,,3.6,3.6
-"Door damper bracket (6061, 4 mm, flanged onto the chamber's left side face)",door_damper_bracket_6061_4_mm_flanged_onto_the_chamber_s_lef,al6061,2,1,0,1.7,1.5,1.5,0.07,,0.25,,3.5,3.5
-Door damper shaft and drive disc (Ø6 D-shaft keyed into a 6061 disc screwed to the door's ,door_damper_shaft_and_drive_disc_6_d_shaft_keyed_into_a_6061,al6061,2,1,0,1.7,1.5,1.5,0.02,,0.25,,3.5,3.5
-"Door lift lug for the robot (6061, 20 x 18 x 4 mm on the door's top edge, left end)",door_lift_lug_for_the_robot_6061_20_x_18_x_4_mm_on_the_door_,al6061,2,1,0,1.7,1.5,1.5,0.0,,0.25,,3.5,3.5
-"Blade-cartridge grip fin (6061, 4 mm, on the holder's front end)",blade_cartridge_grip_fin_6061_4_mm_on_the_holder_s_front_end,al6061,2,1,0,1.7,1.5,1.5,0.0,,0.25,,3.5,3.5
-"AprilTag plates (2 x tag36h11, 56 mm, on the guard's front-left post: wrist-camera re-regi",apriltag_plates_2_x_tag36h11_56_mm_on_the_guard_s_front_left,al6061,2,1,0,1.7,2.5,2.0,0.07,,0.25,,4.5,4.0
+part,slug,mat,setups_3axis,setups_4th_axis,holes,cam_h,setup_h_3axis,setup_h_4th,run_h,run_h_vendor,run_h_program,deburr_inspect_h,special,total_h_3axis,total_h_4th
+"Base plate, process module (MIC-6, 15 mm)",base_plate_process_module_mic_6_15_mm,mic6,2,2,26,2.1,2.5,2.5,3.97,,,0.25,,8.8,8.8
+"Base plate, gas module (MIC-6, 15 mm)",base_plate_gas_module_mic_6_15_mm,mic6,2,2,4,1.8,2.5,2.5,2.97,,,0.25,,7.5,7.5
+"Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",chamber_legs_6061_30_x_30_the_right_hand_one_28_x_30_at_the_,al6061,2,1,4,1.8,2.5,2.0,0.58,,,0.25,,5.1,4.6
+Z mounting flange (bolted under the floor),z_mounting_flange_bolted_under_the_floor,al6061,2,1,8,1.8,1.5,1.5,0.08,,,0.25,,3.6,3.6
+Z bracket + fold-back belt housing (2:1),z_bracket_fold_back_belt_housing_2_1,al6061,2,1,2,1.7,1.5,1.5,0.18,,,0.25,,3.6,3.6
+"Z lift arm (6061, 12 mm, pot-magnet coupling)",z_lift_arm_6061_12_mm_pot_magnet_coupling,al6061,2,1,1,1.7,1.5,1.5,0.07,,,0.25,,3.5,3.5
+"Build module M50: spigot, flange, honed 316L cylinder (Ø50.8 bore, 3 mm wall) and bottom c",build_module_m50_spigot_flange_honed_316l_cylinder_50_8_bore,ss316l,4,1,11,4.1,3.0,1.5,0.58,,,1.0,spigot's radial O-ring groove and the bore: turned after welding; honing outsourced,8.7,7.2
+"Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 ro",module_m50_bottom_flange_gland_plate_316l_bolted_to_the_weld,ss316l,3,1,11,3.5,2.2,1.5,0.48,,,0.25,rod-gland grooves: internal grooving tool on the lathe,6.4,5.7
+"Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot gri",module_m50_handle_6061_screwed_under_the_gland_plate_riser_a,al6061,3,1,2,2.3,2.2,1.5,0.77,,,0.25,,5.5,4.8
+"Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm pla",zero_point_arms_m50_2_x_6061_12_x_16_hanger_under_a_flange_e,al6061,2,1,1,1.7,1.5,1.5,1.72,,,0.25,,5.2,5.2
+"Build plate M50 (Ø50.5 x 10, 6061-T6; bayonet spigot, gripper groove)",build_plate_m50_50_5_x_10_6061_t6_bayonet_spigot_gripper_gro,al6061,5,2,0,4.5,3.8,2.2,0.03,,,0.25,bayonet lugs and the gripper groove are undercuts: turn and groove on the lathe,8.6,7.0
+"Heater block M50 (6061-T6, bayonet socket)",heater_block_m50_6061_t6_bayonet_socket,al6061,3,1,12,3.5,2.2,1.5,0.2,,,0.25,bayonet socket undercut: internal grooving tool on the lathe + three milled entry slots,6.2,5.5
+"Macor standoff rings M50 (3 standoffs x 3 rings, Ø8, cut from 8489K75 rod; thermal break)",macor_standoff_rings_m50_3_standoffs_x_3_rings_8_cut_from_84,macor,2,1,1,2.7,1.5,1.5,0.02,,,0.25,,4.5,4.5
+"Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",piston_head_m50_6061_t6_cool_side_of_the_break_tier_b_316l_w,al6061,6,3,8,5.2,4.5,3.0,0.12,,,0.25,seal grooves are radial: turned,10.1,8.6
+"Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it ru",hollow_piston_rod_m50_5_8_in_x_0_065_in_seamless_316_polishe,ss316l,2,1,1,1.7,1.5,1.5,0.07,,,0.25,,3.5,3.5
+"Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",rod_end_m50_316l_feedthrough_block_rod_welded_into_its_top_8,ss316l,3,1,11,3.5,2.2,1.5,0.93,,,0.25,,6.9,6.2
+"Striker disc M50 (416 stainless, on the pot magnet)",striker_disc_m50_416_stainless_on_the_pot_magnet,steel,2,1,6,2.8,1.5,1.5,0.07,,,0.25,,4.6,4.6
+"Overflow funnel block (316L, bolted, FKM face O-ring)",overflow_funnel_block_316l_bolted_fkm_face_o_ring,ss316l,2,1,9,1.8,1.5,1.5,0.83,,,1.0,,5.1,5.1
+"Overflow-jar sensor bracket (6061, 6 mm, on the front-right leg)",overflow_jar_sensor_bracket_6061_6_mm_on_the_front_right_leg,al6061,2,1,3,1.7,1.5,1.5,0.05,,,0.25,,3.5,3.5
+"Zero-point module plates (2 x 6061, 10 mm, each on two posts)",zero_point_module_plates_2_x_6061_10_mm_each_on_two_posts,al6061,2,1,0,1.7,1.5,1.5,0.07,,,0.25,,3.5,3.5
+"Zero-point posts (4 x 6061, 16 x 16, M6 studs into floor inserts)",zero_point_posts_4_x_6061_16_x_16_m6_studs_into_floor_insert,al6061,2,1,0,1.7,1.5,1.5,0.03,,,0.25,,3.5,3.5
+"Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor ",process_chamber_body_6061_t6_through_frame_from_5_5_in_plate,al6061,6,3,108,5.7,7.5,4.5,5.05,1.63,1.09,1.0,,19.2,16.2
+"Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module po",chamber_floor_plate_6061_t6_20_mm_bolted_under_the_frame_flo,al6061,2,2,71,2.8,2.5,2.5,2.38,0.88,1.16,1.0,,8.7,8.7
+Recoater carriage block (6061),recoater_carriage_block_6061,al6061,2,1,1,1.7,1.5,1.5,0.15,,,0.25,,3.6,3.6
+"Recoater arm (6061, 40 x 14 web)",recoater_arm_6061_40_x_14_web,al6061,2,1,3,1.7,1.5,1.5,0.05,,,0.25,,3.5,3.5
+"Blade holder (6061, 18 x 31, quick-swap)",blade_holder_6061_18_x_31_quick_swap,al6061,2,1,4,1.8,1.5,1.5,0.12,,,0.25,,3.7,3.7
+"Recoater feedthrough spacer ring (6061, 9 mm, FKM face O-rings both sides)",recoater_feedthrough_spacer_ring_6061_9_mm_fkm_face_o_rings_,al6061,2,1,2,1.7,1.5,1.5,0.05,,,1.0,,4.2,4.2
+"Recoater floating bearing housing (blind cap, FKM face O-ring)",recoater_floating_bearing_housing_blind_cap_fkm_face_o_ring,al6061,2,1,8,2.8,1.5,1.5,0.12,,,1.0,,5.4,5.4
+Recoater motor standoff,recoater_motor_standoff,al6061,2,1,1,2.7,1.5,1.5,0.23,,,0.25,,4.7,4.7
+Recoater motor bracket,recoater_motor_bracket,al6061,2,1,0,1.7,1.5,1.5,0.28,,,0.25,,3.7,3.7
+"Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",chamber_lid_6061_t6_16_mm_cover_slide_drawer_slot,al6061,2,1,48,2.4,2.5,2.0,1.38,,,1.0,the cover-slide drawer slot is enclosed (machining.md): open it from the underside (then a 1/4 in. keyseat cutter for the ledges) or sinker EDM; still drawn enclosed in lpbf_low section 7,7.3,6.8
+"Window flange (6061, two FKM O-ring grooves)",window_flange_6061_two_fkm_o_ring_grooves,al6061,2,1,22,3.0,1.5,1.5,0.33,,,1.0,,5.8,5.8
+Window retaining ring (spigot bottoms metal-to-metal: squeeze set by geometry),window_retaining_ring_spigot_bottoms_metal_to_metal_squeeze_,al6061,2,1,7,2.8,1.5,1.5,0.15,,,0.25,,4.7,4.7
+"Field-stop aperture, M50 insert (Ø41, passive beam limit; swapped with the module)",field_stop_aperture_m50_insert_41_passive_beam_limit_swapped,al6061,2,1,1,2.7,1.5,1.5,0.03,,,0.25,,4.5,4.5
+"Cover-slide drawer (6061, robot pull tab, half-dovetail seal groove)",cover_slide_drawer_6061_robot_pull_tab_half_dovetail_seal_gr,al6061,4,1,4,3.0,3.0,1.5,0.62,,,1.0,half-dovetail O-ring groove on the front plate: dovetail cutter,7.6,6.1
+"Metering base (6061, fluted roller over a 100 mm dose line, two FKM face O-rings)",metering_base_6061_fluted_roller_over_a_100_mm_dose_line_two,al6061,3,2,7,2.4,2.2,2.2,0.22,,,1.0,,5.8,5.8
+Reservoir M lid with robot handle (grip plane z = 258 for every size; FKM O-ring face seal,reservoir_m_lid_with_robot_handle_grip_plane_z_258_for_every,al6061,2,1,2,1.7,1.5,1.5,0.05,,,0.25,,3.5,3.5
+"Reservoir M pull tab (6061, 8 mm fin, the lid's handle carried 70 mm forward, in front of ",reservoir_m_pull_tab_6061_8_mm_fin_the_lid_s_handle_carried_,al6061,2,1,0,1.7,1.5,1.5,0.02,,,0.25,,3.5,3.5
+"Camera viewport adapter + boss (6061; Ø30 bore on the line of sight, Ø20 aperture, Ø1 in. ",camera_viewport_adapter_boss_6061_30_bore_on_the_line_of_sig,al6061,5,2,4,3.6,3.8,2.2,0.28,,,1.0,"bore and boss on a compound angle (the line of sight from (75, -45) to the plate centre): two rotations, so a 4th axis alone can't square it up; a sine plate + 4th axis, a 5-axis, or make the boss a turned part on a single-tilt seat",8.7,7.1
+Camera window retaining ring (bottoms metal-to-metal on the boss),camera_window_retaining_ring_bottoms_metal_to_metal_on_the_b,al6061,2,1,1,2.7,1.5,1.5,0.03,,,0.25,,4.5,4.5
+"Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears)",chamber_door_6061_t6_15_mm_drops_down_half_dovetail_seal_gro,al6061,2,1,0,1.7,1.5,1.5,0.42,,,1.0,half-dovetail O-ring groove: a dovetail cutter (special tool) or a plain groove with a moulded seal,4.6,4.6
+"Draw-latch brackets on the door's ears (2 x 6061, 6 mm plate on a foot bolted to each ear'",draw_latch_brackets_on_the_door_s_ears_2_x_6061_6_mm_plate_o,al6061,2,1,0,1.7,1.5,1.5,0.32,,,0.25,,3.8,3.8
+Door handle,door_handle,al6061,2,1,0,1.7,1.5,1.5,0.08,,,0.25,,3.5,3.5
+"Optics bridge (6061, 25 mm)",optics_bridge_6061_25_mm,al6061,2,2,14,1.9,2.5,2.5,3.53,,,0.25,,8.2,8.2
+"Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",optics_bridge_posts_60_x_60_x_5_square_6061_tube_10_mm_end_c,al6061,2,2,4,1.8,2.5,2.5,1.6,,,0.25,closed inside of the welded tube (expected),6.2,6.2
+"f-theta adapter ring (6061, 13 mm, M85x1 internal thread, bolted under the bridge)",f_theta_adapter_ring_6061_13_mm_m85x1_internal_thread_bolted,al6061,2,1,1,2.7,1.5,1.5,0.2,,,0.25,,4.7,4.7
+"Galvo riser plate (6061, 5 mm, Ø56 bore: clears the f-theta's Ø53 nose over the shim range",galvo_riser_plate_6061_5_mm_56_bore_clears_the_f_theta_s_53_,al6061,2,1,1,1.7,1.5,1.5,0.22,,,0.25,,3.7,3.7
+"Enclosed beam tubes (6061, Ø18 x 2: dichroic to galvo, fold leg)",enclosed_beam_tubes_6061_18_x_2_dichroic_to_galvo_fold_leg,al6061,2,1,1,1.7,1.5,1.5,0.22,,,0.25,,3.7,3.7
+"Guard-door handle for the robot (Ø12 x 130 bar on two Ø10 standoffs, 6061)",guard_door_handle_for_the_robot_12_x_130_bar_on_two_10_stand,al6061,2,1,0,1.7,1.5,1.5,0.13,,,0.25,,3.6,3.6
+"Door drive bracket (6061, 4 mm, flanged onto the chamber's left side face)",door_drive_bracket_6061_4_mm_flanged_onto_the_chamber_s_left,al6061,2,1,0,1.7,1.5,1.5,0.07,,,0.25,,3.5,3.5
+Door drive shaft and disc (Ø6 D-shaft keyed into a 6061 disc screwed to the door's left ed,door_drive_shaft_and_disc_6_d_shaft_keyed_into_a_6061_disc_s,al6061,2,1,0,1.7,1.5,1.5,0.02,,,0.25,,3.5,3.5
+"Blade-cartridge grip fin (6061, 4 mm, on the holder's front end)",blade_cartridge_grip_fin_6061_4_mm_on_the_holder_s_front_end,al6061,2,1,0,1.7,1.5,1.5,0.0,,,0.25,,3.5,3.5
+"AprilTag plates (2 x tag36h11, 56 mm, on the guard's front-left post: wrist-camera re-regi",apriltag_plates_2_x_tag36h11_56_mm_on_the_guard_s_front_left,al6061,2,1,0,1.7,2.5,2.0,0.07,,,0.25,,4.5,4.0
+"Overflow jar grip fin (6061: tab on the cup, riser at x 117-125, I-section grip block at y",overflow_jar_grip_fin_6061_tab_on_the_cup_riser_at_x_117_125,al6061,2,1,0,1.7,1.5,1.5,0.62,,,0.25,,4.1,4.1
+"PB1 stand (2 x 30 x 15 mm 6061 rails, bolted to the tray)",pb1_stand_2_x_30_x_15_mm_6061_rails_bolted_to_the_tray,al6061,2,1,0,1.7,1.5,1.5,0.13,,,0.25,,3.6,3.6
+"Z sensor bracket (6061, clamped to the actuator body's -x side)",z_sensor_bracket_6061_clamped_to_the_actuator_body_s_x_side,al6061,2,1,2,1.7,1.5,1.5,0.12,,,0.25,,3.6,3.6
+"Recoater sensor clamps (6061, split clamp on each post)",recoater_sensor_clamps_6061_split_clamp_on_each_post,al6061,2,1,1,1.7,1.5,1.5,0.08,,,0.25,,3.5,3.5

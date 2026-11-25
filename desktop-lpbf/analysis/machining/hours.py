@@ -10,6 +10,11 @@ Setups: the count from setup_plan.json (3-axis, or with a 4th axis where it swin
 Run: dfm.py's conservative model (16 cm3/min roughing in 6061, 3 in 316L; 40 / 10 cm2/min finishing; per-hole times) for every
   part, and for the chamber also setup_plan.py's vendor-feed model (Helical / Haas data, 60 % efficiency).
 Deburr and inspect: 0.25 h a part, 1 h for a part with a sealing face.
+Programmed run (frame and floor plate only, since 2026-11-25): the cutting time of freecad_cam.py's posted G-code for every
+  setup (frame B, A and setup C's four A indexes; floor A and B), as CAMotics counts it with the VF-4's 25.4 m/min rapids
+  (camotics_sim.py; else freecad_cam.py's recount), plus 4.2 s per tool change (VF-4 tool to tool) and 3 s per A index
+  (ASSUMED: unclamp, index, clamp). The taps, STI taps, reamers, spot drills and SAE port tools are not programmed, so this
+  is a floor on the run time, not a replacement for the two estimates.
 The 'before' column is the 37-part review in machining.md (dfm.json at 2026-11-20 14:00-22:00 UTC, the block chamber body).
 
 Run: /tmp/venv/bin/python desktop-lpbf/analysis/machining/hours.py   (reads dfm.json and setup_plan.json; writes hours.json, hours.csv)
@@ -38,8 +43,36 @@ def setup_h(n, large, rotary=False):
     return n * (1.25 if large else 0.75) + (0.75 if rotary else 0.0)
 
 
+def program_run_min():
+    """{"frame": (minutes, detail), "floor": ...} from freecad_cam.json and camotics/camotics_sim.json, if present"""
+    fc_p, cs_p = OUT / "freecad_cam.json", OUT / "camotics" / "camotics_sim.json"
+    if not fc_p.exists():
+        return {}
+    fc = json.loads(fc_p.read_text())
+    cs = json.loads(cs_p.read_text()).get("setups", {}) if cs_p.exists() else {}
+    out = {}
+    for part, d in fc.get("parts", {}).items():
+        cut, changes, idx, src = 0.0, 0, 0, set()
+        for su in d["setups"]:
+            c = cs.get(su["setup"], {}).get("time", {})
+            if c.get("with_vf4_rapids_min") is not None:
+                cut += c["with_vf4_rapids_min"]
+                src.add("CAMotics")
+            else:
+                cut += su["totals"]["total_min"]
+                src.add("recount")
+            changes += su["totals"]["tool_changes"]
+            idx += 1 if su.get("a_deg") is not None else 0
+        idx += 1 if idx else 0          # back to A0 at the end
+        total = cut + changes * 4.2 / 60 + idx * 3.0 / 60
+        out[part] = (total, dict(cutting_min=round(cut, 1), tool_changes=changes, a_indexes=idx, total_min=round(total, 1),
+                                 source=" and ".join(sorted(src)), setups=[su["setup"] for su in d["setups"]]))
+    return out
+
+
 def main():
     dfm = {r["slug"]: r for r in json.loads((OUT / "dfm.json").read_text())["parts"]}
+    prog = program_run_min()
     plan = json.loads((OUT / "setup_plan.json").read_text())
     rows = []
     for slug, p in plan["parts"].items():
@@ -50,18 +83,22 @@ def main():
         n3, n4 = p["n3"], p.get("n4_used", p["n3"])
         seal = any(slug.startswith(k) for k in SEAL)
         run = d.get("time_total_min", 0.0) - d.get("time_min", {}).get("setup", 0.0)     # dfm's machine time without its own setup allowance
+        run_p = None
         if slug.startswith("process_chamber_body"):
             n3, n4 = 6, 3                                  # top, bottom, 4 walls; or top, bottom + one rotary clamping (setup_plan F-S1..F-S3)
             run_v = plan["frame"]["run_minutes_on_mill"]
+            run_p = prog.get("frame")
         elif slug.startswith("chamber_floor_plate"):
             n3 = n4 = 2
             run_v = plan["floor"]["run_minutes_on_mill"]
+            run_p = prog.get("floor")
         else:
             run_v = None
         r = dict(part=p["name"][:90], slug=slug, mat=p["mat"], setups_3axis=n3, setups_4th_axis=n4, holes=n_holes,
                  cam_h=round(cam_h(n3, n_holes, lathe), 1), setup_h_3axis=round(setup_h(n3, large), 1),
                  setup_h_4th=round(setup_h(n4, large, n4 < n3), 1), run_h=round(run / 60.0, 2),
-                 run_h_vendor=round(run_v / 60.0, 2) if run_v else None, deburr_inspect_h=1.0 if seal else 0.25,
+                 run_h_vendor=round(run_v / 60.0, 2) if run_v else None,
+                 run_h_program=round(run_p[0] / 60.0, 2) if run_p else None, deburr_inspect_h=1.0 if seal else 0.25,
                  special=p.get("special", ""))
         r["total_h_3axis"] = round(r["cam_h"] + r["setup_h_3axis"] + r["run_h"] + r["deburr_inspect_h"], 1)
         r["total_h_4th"] = round(r["cam_h"] + r["setup_h_4th"] + r["run_h"] + r["deburr_inspect_h"], 1)
@@ -72,8 +109,11 @@ def main():
     old_body["total_h_3axis"] = round(old_body["cam_h"] + old_body["setup_h_3axis"] + old_body["run_h"] + old_body["deburr_inspect_h"], 1)
     fr = [r for r in rows if r["slug"].startswith(("process_chamber_body", "chamber_floor_plate"))]
     new_body = dict(cam_h=sum(r["cam_h"] for r in fr), setup_h=sum(r["setup_h_4th"] for r in fr) + 0.5, run_h=sum(r["run_h"] for r in fr),
-                    run_h_vendor=sum(r["run_h_vendor"] or 0 for r in fr) + 0.75, deburr_inspect_h=2.0,
-                    note="frame + floor plate; setups include 0.5 h on the waterjet; vendor run time adds 45 min of waterjet")
+                    run_h_vendor=sum(r["run_h_vendor"] or 0 for r in fr) + 0.75,
+                    run_h_program=round(sum(r["run_h_program"] or 0 for r in fr), 2) if all(r["run_h_program"] for r in fr) else None,
+                    program_detail={k: v[1] for k, v in prog.items()}, deburr_inspect_h=2.0,
+                    note="frame + floor plate; setups include 0.5 h on the waterjet; vendor run time adds 45 min of waterjet; the "
+                         "programmed run time is the posted G-code's (taps, reamers and port tools not programmed), without the waterjet")
     new_body["total_h"] = round(new_body["cam_h"] + new_body["setup_h"] + new_body["run_h"] + new_body["deburr_inspect_h"], 1)
     tot = {k: round(sum(r[k] for r in rows), 1) for k in ("cam_h", "setup_h_3axis", "setup_h_4th", "run_h", "deburr_inspect_h", "total_h_3axis", "total_h_4th")}
     tot["parts"] = len(rows)

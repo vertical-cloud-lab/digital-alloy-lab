@@ -16,11 +16,19 @@ plan for the chamber's through-frame and floor plate (chamber-construction.md).
 Writes desktop-lpbf/analysis/out/machining/setup_plan.json (the build animation reads it).
 
 Run after inventory.py:  OMP_NUM_THREADS=1 /tmp/capmem 3 /tmp/venv/bin/python desktop-lpbf/analysis/machining/setup_plan.py
-(~3 min: one model build for the op volumes, then the voxel reach of 47 parts).
+(~3 min: one model build for the op volumes, then the voxel reach of every part). $MACH_PARTS overrides inventory.py's
+output folder (default /tmp/mach-work/parts).
+
+Since 2026-11-25 the frame and floor-plate setups also carry what freecad_cam.py actually programs ("program": the FreeCAD
+jobs, the G-code recount and the CAMotics time, from freecad_cam.json and camotics/camotics_sim.json when they exist), the
+workholding holder_check.py checked (edge clamps, no end tabs; the dummy-floor plate flush with the frame; the floor
+plate held through its port), and F-S3 as programmed per A index: programmed minutes from the G-code plus an estimate for
+the spot drills, taps, STI taps, reamers and SAE port tools, which are not programmed.
 """
 from __future__ import annotations
 
 import json
+import os
 import math
 import pathlib
 import sys
@@ -36,7 +44,7 @@ sys.path.insert(0, str(REPO / "desktop-lpbf" / "cad"))
 import cam_sim as CS  # noqa: E402
 
 OUT = REPO / "desktop-lpbf" / "analysis" / "out" / "machining"
-PARTS = pathlib.Path("/tmp/mach-work/parts")
+PARTS = pathlib.Path(os.environ.get("MACH_PARTS", "/tmp/mach-work/parts"))
 IN = 25.4
 
 # ---------------------------------------------------------------------------------------------------------------- machines
@@ -85,7 +93,8 @@ def rpm(d_mm, sfm):
 EFF = 0.6
 TOOLS = {
     "T1": dict(type="indexable face mill, 2-1/2 in., 4 inserts (HPAL2-type)", d=63.5, flutes=4, stick_out=None, holder="CT40 shell-mill arbor"),
-    "T2": dict(type="3-flute carbide end mill, 3/4 in., 1-1/2 in. LOC, 4 in. OAL", d=19.05, flutes=3, stick_out=63.0, holder="CT40 ER32 or side-lock, Ø50 nose"),
+    "T2": dict(type="3-flute carbide end mill, 3/4 in., 1-1/2 in. LOC, 4 in. OAL", d=19.05, flutes=3, stick_out=66.0,
+               holder="CT40 ER32 collet chuck, 2-1/2 in. gauge (Haas 04-0010; holder_check.py: a side-lock at 63 mm had 1.0 mm over the top face)"),
     "T3": dict(type="3-flute carbide end mill, 1/2 in., 1 in. LOC, 3 in. OAL", d=12.7, flutes=3, stick_out=38.0, holder="CT40 ER32"),
     "T4": dict(type="2-flute carbide end mill, 4 mm (O-ring grooves: R4 / R6 gland corners)", d=4.0, flutes=2, stick_out=16.0, holder="CT40 ER20"),
     "T5": dict(type="3-flute carbide end mill, 1/4 in.", d=6.35, flutes=3, stick_out=25.0, holder="CT40 ER20"),
@@ -100,7 +109,31 @@ TOOLS = {
     "T14": dict(type="SAE J1926 -4 port tool (spot face, O-ring cone, thread relief) + 7/16-20 UNF tap", d=12.9, flutes=2, stick_out=40.0, holder="CT40 ER32"),
     "T15": dict(type="carbide drill 5.2 mm + M6 x 0.75 tap (fibre heads)", d=6.0, flutes=2, stick_out=30.0, holder="CT40 ER20"),
     "T16": dict(type="2-flute carbide end mill, 1/16 in. (2-010 face groove, 2.3 wide)", d=1.5875, flutes=2, stick_out=6.0, holder="CT40 ER11"),
+    "T17": dict(type="carbide drill 2.9 mm + 3 mm H7 reamer (3 mm dowel pins)", d=2.9, flutes=2, stick_out=25.0, holder="CT40 ER16"),
+    "T18": dict(type="carbide drill 6.3 mm (M6 STI, tooling-bom D11)", d=6.3, flutes=2, stick_out=40.0, holder="CT40 ER16"),
 }
+# freecad_cam.py numbers its tools differently; its T -> this table's T (for the "program" records)
+FC_TOOL = {1: "T1", 2: "T2", 3: "T3", 4: "T4", 5: "T9", 6: "T7", 7: "T8", 8: "T13", 9: "T5", 10: "T15", 11: "T17", 12: "T9", 13: "T18",
+           14: "T13"}
+
+
+def program_info():
+    """what freecad_cam.py programs per setup (recount and CAMotics minutes), if its outputs exist"""
+    fc_p, cs_p = OUT / "freecad_cam.json", OUT / "camotics" / "camotics_sim.json"
+    if not fc_p.exists():
+        return {}
+    fc = json.loads(fc_p.read_text())
+    cs = json.loads(cs_p.read_text()) if cs_p.exists() else {}
+    out = {}
+    for part in fc.get("parts", {}).values():
+        for su in part["setups"]:
+            c = cs.get("setups", {}).get(su["setup"], {})
+            out[su["setup"]] = dict(
+                recount_min=su["totals"]["total_min"], tool_changes=su["totals"]["tool_changes"],
+                camotics_min=c.get("time", {}).get("camotics_min"), rapids_through_stock=c.get("n_rapids_through_stock"),
+                ops=[dict(label=m.get("label"), tool=FC_TOOL.get(m.get("tool"), m.get("tool")),
+                          minutes=round(m.get("cut_time_min", 0) + m.get("rapid_time_min", 0), 2)) for m in su["ops"] if "error" not in m])
+    return out
 
 
 def t_mill(vol_cm3, tool, mode="hem"):
@@ -315,20 +348,21 @@ def main():
                      "the core from each side in F-S1 and F-S2 (+~40 min), or a contour bandsaw with the blade threaded through the start hole and welded",
                      extra=dict(machine_note="off the mill"))]),
         dict(id="F-S1", name="bottom up: datum face, rebate, lower halves, floor-screw and dowel holes", machine="VF-4, 3-axis",
-             fixture=("blank on four 1-1/2 in. riser blocks on the table, 4 toe clamps on the 1 in. end tabs (x); the opening and the outer faces "
-                      "are clear of the clamps; probe the blank for x, y, z zero"),
+             fixture=("blank on four 1-1/2 in. riser blocks on the table, held by four low-profile edge clamps (McMaster 2172A42, BOM L3) on its x-end "
+                      "faces below model z 63 (5 mm under this setup's deepest cut, z 58 from the bottom); no end tabs: holder_check.py found the face "
+                      "mill and T2's outside passes running into toe clamps on 1 in. tabs (213 collisions, 2026-11-23); probe the blank for x, y, z zero"),
              face_up="-z", rotation_model_to_machine=rot("-z"),
              ops=[op("F-S1-1", "face the bottom (the skirt face, z -3.9)", ["FR-01"], "T1", tf, f"face mill, {ff['rpm']} rpm, {ff['feed_mm_min']} mm/min, {ff['passes']} passes",
                      extra=dict(note="FR-01 is shared: bottom face here, top face in F-S2, outer profile half and half")),
                   op("F-S1-2", "outer profile 312 x 222 R8, from the bottom up to mid-height (z 58.5)", ["FR-01"], "T2", tr_out + fin_out / 2,
-                     f"HEM, RDOC 1.9 mm, ADOC 38 mm, {fr_out['rpm']} rpm, {fr_out['feed_mm_min']} mm/min; finish 0.25 mm"),
+                     f"HEM, RDOC 1.9 mm, ADOC 38 mm, {fr_out['rpm']} rpm, {fr_out['feed_mm_min']} mm/min; finish 0.25 mm; T2 66 mm out of an ER32 chuck"),
                   op("F-S1-3", "opening finished from the bottom to mid-height: 280 x 190, R10 corners", ["FR-04"], "T2", t34 + fin_in / 2,
-                     "HEM off the 3 mm waterjet stock, then two finishing springs; 63 mm stick-out (3.3:1)"),
+                     "HEM off the 3 mm waterjet stock, then the finish in two passes (A5 has 38.1 mm of flutes); 66 mm stick-out (3.5:1)"),
                   op("F-S1-4", "rebate 8 x 3.9 round the bottom of the opening", ["FR-05"], "T2", trb + 2.0, "one level, two passes"),
                   op("F-S1-5", f"18 floor-screw holes M4 x 0.7 (Ø3.3 x 11, rigid tap 9) and 2 dowel holes Ø6 H7 x 10.4", ["J:floor", "J:floor_dowels"], "T7",
                      t_holes(18, 11, ["spot", "drill", "tap"]) + t_holes(2, 10.4, ["drill", "ream"]), "spot T6, drill T7, tap T10, dowels T13")]),
         dict(id="F-S2", name="top up: top face, upper halves, lid gland, lid inserts", machine="VF-4, 3-axis",
-             fixture=("saw the end tabs off first. 'Dummy floor' fixture plate (1 in. MIC-6, 330 x 240, its own 18 Ø4.5 holes and 2 Ø6 pins matching the "
+             fixture=("'Dummy floor' fixture plate (1 in. MIC-6, 312 x 222, flush with the frame; its own 18 Ø4.5 holes and 2 Ø6 pins matching the "
                       "frame's) on the table; the frame sits on its skirt face on the plate and is pulled down by the 18 M4 screws from below: "
                       "nothing on top or outside is in the way"),
              face_up="+z", rotation_model_to_machine=rot("+z"),
@@ -338,59 +372,114 @@ def main():
                      "blended by the finishing springs (< 0.02 mm step with one tool and a probed z)"),
                   op("F-S2-4", "lid O-ring face gland (4.6 x 2.65, R4/R6 corners)", ["FR-06"], "T4", t_gl, "2 depth steps x 2 side passes; Ra <= 0.8 um floor"),
                   op("F-S2-5", "20 lid-screw insert holes M5 STI (Ø5.3 x 10.5, STI tap 7.5)", ["J:lid"], "T9", t_holes(20, 10.5, ["spot", "drill", "tap"]),
-                     "spot T6, drill T9, STI tap T12")]),
+                     "spot T6, drill T9, STI tap T12 (freecad_cam.py drills these 6.0 then 5.0 mm, the model's two steps: use the 5.3 mm STI drill)")]),
         dict(id="F-S3", name="the four walls on the 4th axis (one clamping, four index angles)", machine="VF-4 with an HRT210-class rotary (A axis along machine X)",
-             fixture=(f"the same dummy-floor plate bolted to the HRT210 platter, the frame on it with its bottom against the plate (2 pins + 18 M4 screws), so the "
-                      f"frame's z axis is the A axis. The frame swings {math.hypot(P['cx'] - 8, P['cy'] - 8) + 8:.1f} mm about it, more than the HRT210's 152.4 mm "
-                      "centre height: put the rotary on a 2-1/2 in. (63.5 mm) riser so A sits 215.9 mm above the table (27 mm clear). No tailstock: the open top "
-                      "overhangs ~150 mm, 4.3 kg + the plate, inside the 38.6 kg unsupported rating"),
+             fixture=(f"the same dummy-floor plate (312 x 222, flush with the frame) bolted to the HRT210 platter, the frame on it with its bottom against the "
+                      f"plate (2 pins + 18 M4 screws), so the frame's z axis is the A axis. The frame swings {math.hypot(P['cx'] - 8, P['cy'] - 8) + 8:.1f} mm "
+                      "about it, more than the HRT210's 152.4 mm centre height: put the rotary on a 2-1/2 in. (63.5 mm) riser so A sits 215.9 mm above the "
+                      "table (27 mm clear). No tailstock: the open top overhangs ~150 mm, 4.3 kg + the plate, inside the 38.6 kg unsupported rating. "
+                      "Z to machine home before every index (the plate's corners swing 192 mm)"),
              face_up="A-indexed",
              alternatives=("A along the frame's x instead (it swings only 127 mm, so no riser), held by its side walls between a platter plate and the "
                            "tailstock: one clamping for top, bottom, front and back, but the two side walls then need their own setups, and the big sealing "
                            "faces are cut on the rotary rather than flat on the table. Same three setups; this plan keeps the faces that matter most on "
                            "the table."),
              a_axis=dict(axis_in_model="+z (frame bottom on the platter side)", centre_above_table_mm=152.4 + 63.5, riser_mm=63.5,
-                                              swing_radius_mm=round(math.hypot(P["cx"] - 8, P["cy"] - 8) + 8, 1), index=RA),
-             ops=[op("F-S3-1", "front: door opening 220 x 92, R6.5 corners, through the 16 mm wall", ["FR-07"], "T3", t_mill(220 * 92 * 16 / 1000, "T3")[0] + 3.0,
-                     "HEM pocket through, then finish; the door's sealing land round it is the as-faced front face", A=0),
-                  op("F-S3-2", "left: recoater bore Ø18, through-beam M6 x 0.75 + 2-010 face groove", ["FR-10", "FR-13"], "T3", 6.0,
-                     "helical interpolate Ø18; drill T15 + tap; groove T16", A=90),
-                  op("F-S3-3", "back: inlet slot 120 x 8, argon SAE-4 port, 7 inlet-plenum insert holes M4 STI, 4 rail holes M4 tapped THROUGH + plug spot faces",
-                     ["FR-08", "FR-09", "J:plenum_in", "J:rail"], "T5", 5.0 + t_holes(7, 7.5, ["spot", "drill", "tap"]) + t_holes(4, 16, ["spot", "drill", "tap"]) + 3.0,
-                     "slot with the 1/4 in. end mill (two passes); port tool T14; inserts T8 + T11; rail holes T7 + T10 through the wall from outside", A=180),
-                  op("F-S3-4", "right: KF-25 bore Ø25.4, 4 vacuum-adapter M5 STI, 4 bearing-cap M4 STI, O2 SAE-4 port, recoater bore Ø18, through-beam",
-                     ["FR-10", "FR-11", "FR-12", "FR-13", "J:vac_port", "J:bearing_cap"], "T3", 8.0 + t_holes(8, 7.5, ["spot", "drill", "tap"]) + 3.0,
-                     "helical interpolate the bores; T14 for the SAE port; inserts T8/T9 + T11/T12", A=270)]),
+                         swing_radius_mm=round(math.hypot(P["cx"] - 8, P["cy"] - 8) + 8, 1), index=RA,
+                         program=("freecad_cam.py jobs frame_C0, frame_C90, frame_C180, frame_C270 (one per index, each in the machine frame at that "
+                                  "index, work zero on the A axis), joined into one Haas program with the A moves: gcode/frame_C_haas.nc "
+                                  "(G53 G00 Z0. / M11 / G00 A<deg>. / M10 before each index)")),
+             ops=[op("F-S3-1", "front: door opening 220 x 92, R6.5 corners, through the 16 mm wall", ["FR-07"], "T3", t_mill(v["FR-07"], "T3")[0] + 3.0,
+                     "programmed: T3 adaptive through the wall (the window goes to chips); the door's sealing land round it is the as-faced front face", A=0),
+                  op("F-S3-2", "left: recoater bore Ø18 through; through-beam M6 x 0.75 through with a Ø10.8 x 1.32 O-ring counterbore outside",
+                     ["FR-10", "FR-13"], "T3", t_mill(v["FR-10"] / 2, "T3")[0] + t_mill(v["FR-13"] / 2, "T5")[0] + t_holes(1, 14.7, ["drill", "tap"]) + 1.0,
+                     "programmed: Ø18 helix-milled with T3, the counterbore helix-milled with T5, the 5.2 mm tap drill through (T15); not programmed: "
+                     "the M6 x 0.75 tap", A=90),
+                  op("F-S3-3", "back: inlet slot 120 x 8 through, argon SAE-4 port, 7 inlet-plenum M4 STI holes and 2 Ø3 pin holes, 4 rail holes M4 "
+                     "tapped THROUGH (the plugs' bonded seal washers seat on the as-faced wall)",
+                     ["FR-08", "FR-09", "J:plenum_in", "J:plenum_in_pins", "J:rail"], "T5",
+                     t_mill(v["FR-08"], "T5", "slot")[0] + t_mill(v["FR-09"], "T5")[0] + 1.0 + t_holes(7, 11.5, ["spot", "drill", "tap"])
+                     + t_holes(2, 5.5, ["drill", "ream"]) + t_holes(4, 16, ["spot", "drill", "tap"]) + t_holes(1, 4.5, ["drill"]) + 2.0,
+                     "programmed: the slot profiled with T5 in 3 mm steps; the port helix-milled to its 25/64 in. tap drill with T5 and its Ø4 passage "
+                     "drilled 3.3 mm (T7); inserts 4.2 mm (T8); pins 2.9 mm (T17); rail holes 3.3 mm through (T7); not programmed: spot drills, "
+                     "the SAE port tool T14 (spot face, cone, 7/16-20 thread), the STI taps T11, the M4 tap T10, the 3 mm reamer", A=180),
+                  op("F-S3-4", "right: KF-25 bore Ø25.4, recoater bore Ø18, through-beam as on the left, O2 SAE-4 port, 4 vacuum-adapter M5 STI, "
+                     "4 bearing-cap M4 STI, 4 Ø3 pin holes",
+                     ["FR-10", "FR-11", "FR-12", "FR-13", "J:vac_port", "J:vac_port_pins", "J:bearing_cap", "J:bearing_cap_pins"], "T3",
+                     t_mill(v["FR-11"], "T3")[0] + t_mill(v["FR-10"] / 2, "T3")[0] + t_mill(v["FR-13"] / 2, "T5")[0] + t_holes(1, 14.7, ["drill", "tap"])
+                     + t_mill(v["FR-12"], "T5")[0] + 1.0 + t_holes(1, 4.5, ["drill"]) + t_holes(4, 12.5, ["spot", "drill", "tap"])
+                     + t_holes(4, 7.5, ["spot", "drill", "tap"]) + t_holes(4, 5.5, ["drill", "ream"]) + 2.0,
+                     "programmed: the KF-25 and Ø18 bores helix-milled with T3; the counterbore and the O2 port (to its tap drill) with T5; drills 5.3 mm "
+                     "(T9: M5 STI), 5.2 mm (T15: the through-beam), 4.2 mm (T8: M4 STI), 3.3 mm (T7: the port's passage), 2.9 mm (T17: pins); not programmed: "
+                     "spot drills, the taps and STI taps, the port tool T14, the reamer", A=270)]),
     ]
+    # the CAM blank's ring outside the 312 x 222 R8 outline, 8 mm tall: what P-S1-2b (z -4..-12) and P-S2-2 (z -12..-20) each
+    # remove (freecad_cam.FLOOR_BLANK, 317.5 x 228.6: no end tabs since the edge clamps)
+    import freecad_cam as FCAM
+    ring8_cm3 = (FCAM.FLOOR_BLANK[0] * FCAM.FLOOR_BLANK[1] - (312 * 222 - (4 - math.pi) * 8 ** 2)) * 8 / 1000
     floor_setups = [
         dict(id="P-S0", name="saw the blank", machine="bandsaw", fixture="-", face_up="+z", rotation_model_to_machine=rot("+z"),
              ops=[op("P-S0-1", f"saw {FR['floor_blank_in'][0]:g} x {FR['floor_blank_in'][1]:g} in. from 1 in. 6061-T651 (McMaster 89155K165, 12 x 24 in., $267.02)",
                      [], "T6", 10.0, "")]),
         dict(id="P-S1", name="top up: datum face, pad step, gland, port, slots, dowel and clearance holes", machine="VF-4, 3-axis",
-             fixture="blank on parallels (kept clear of the port and the slots), 4 toe clamps on the 1 in. end tabs", face_up="+z", rotation_model_to_machine=rot("+z"),
+             fixture=("blank on 1/2 x 1-1/2 in. parallels along x (kept clear of the port and the slots), held by four low-profile edge clamps (L3) on its "
+                      "x-end faces under model z -15, 3 mm below this setup's outside passes; no end tabs (holder_check.py, 2026-11-23: the face mill ran into "
+                      "toe clamps on tabs and T2's outside passes through the tab roots). Check that the clamps, gripping the bottom 7.7 mm of the 1 in. "
+                      "blank, hold against the adaptive cuts"),
+             face_up="+z", rotation_model_to_machine=rot("+z"),
              ops=[op("P-S1-1", "face the top (the pad face, z 0)", ["FP-01"], "T1", t_face(312 * 222 / 100 * 1.3, 2.7)[0], "face mill"),
                   op("P-S1-2", "step the edge band down 4 mm, leaving the 4 mm pad (295.5 x 205.5, R17.75)", ["FP-02"], "T2", t_mill(pv["op_cm3"]["FP-02"], "T2")[0] + 3.0,
-                     "HEM, one level; the band's outer edge is cut with the profile in P-S2"),
+                     "HEM, one level"),
+                  op("P-S1-2b", "outer profile 312 x 222 R8 from the band (z -4) down to z -12 only; P-S2 cuts the rest", ["FP-01"], "T2",
+                     t_mill(ring8_cm3, "T2")[0] + 1.0, "HEM, one level; the edge clamps sit 3 mm below"),
                   op("P-S1-3", "floor O-ring face gland (4.6 x 2.65, 1.5 mm outside the walls)", ["FP-03"], "T4", t_gl * 0.95, "as the lid gland; Ra <= 0.8 um"),
                   op("P-S1-4", "module port Ø96 H7 through", ["FP-04"], "T2", t_mill(pv["op_cm3"]["FP-04"], "T2")[0] + 4.0,
-                     "helical interpolation, finish to H7 with a probed bore check (or bore with a boring head)"),
+                     "helical trepan through with T2 at radius 48 - D/2, 0.5 mm past the blank, so the slug drops here (programmed); finish to H7 with a "
+                     "probed bore check (or bore with a boring head)"),
                   op("P-S1-5", "outlet slot 124 x 8 and overflow slot 20 x 104 through", ["FP-05", "FP-06"], "T5",
-                     t_mill(pv["op_cm3"]["FP-05"] + pv["op_cm3"]["FP-06"], "T5", "slot")[0] + 3.0, "1/4 in. end mill, trochoidal slotting"),
+                     t_mill(pv["op_cm3"]["FP-05"] + pv["op_cm3"]["FP-06"], "T5", "slot")[0] + 3.0,
+                     "1/4 in. end mill round each slot's outline, 0.5 mm past the blank (programmed): the 20 x 104 slot's 7 x 91 core drops, so hold it"),
                   op("P-S1-6", "2 dowel holes Ø6 H7 x 10.5 in the band; 18 clearance holes Ø4.5 through the band", ["J:floor_dowels", "J:floor"], "T13",
                      t_holes(2, 10.5, ["drill", "ream"]) + t_holes(18, 16, ["spot", "drill"]), "")]),
         dict(id="P-S2", name="bottom up: face to thickness, outer profile, U-notches, blind holes for every under-floor mount", machine="VF-4, 3-axis",
-             fixture=("saw the end tabs off. Fixture plate with 2 Ø6 pins in the floor plate's dowel holes and a central M12 stud through the Ø96 port with a "
-                      "Ø104 clamp washer; the outer profile and the whole underside are free"),
+             fixture=("the dummy-floor plate (L7) as a fixture plate, with 2 Ø6 pins in the floor plate's dowel holes; an expanding ID clamp (L10, about Ø94, "
+                      "shop-made) in the Ø96 port, its top 5 mm under the faced bottom, pulls the plate down. The outer profile and the whole underside are "
+                      "free (setup_plan's earlier centre stud and Ø104 washer sat on the face this setup faces: holder_check.py, 2026-11-23)"),
              face_up="-z", rotation_model_to_machine=rot("-z"),
              ops=[op("P-S2-1", "face the bottom to 20.0 mm", ["FP-01"], "T1", t_face(312 * 222 / 100 * 1.3, 2.7)[0], "face mill"),
-                  op("P-S2-2", "outer profile 312 x 222 R8, full 20 mm (the 9 mm margins go to chips)", ["FP-01"], "T2", t_mill(pv["op_cm3"]["FP-01"] * 0.6, "T2")[0] + 3.0,
-                     "HEM, one level 20 mm"),
-                  op("P-S2-3", "18 U-notches 8 wide x 8 deep at the edge", ["J:floor"], "T3", 18 * 0.4, "1/2 in. end mill plunge + out to the edge"),
+                  op("P-S2-2", "outer profile 312 x 222 R8 below z -12, the ring of blank outside it, and the 18 U-notches 8 wide x 8 deep, in one adaptive",
+                     ["FP-01", "J:floor"], "T5", t_mill(ring8_cm3, "T5")[0] + 18 * 0.4 + 3.0,
+                     "1/4 in. end mill adaptive outside the outline, 4 mm steps (programmed: 14.2 min in the G-code)"),
                   op("P-S2-4", "module-screw M6 STI and dowel / diamond-pin holes; outlet-plenum, funnel and Z-flange inserts (M4/M5 STI); leg inserts (M6 STI)",
                      ["FP-07", "J:module_flange", "J:plenum_out", "J:funnel", "J:zmount", "J:legs"], "T8",
                      t_holes(2, 13.5, ["spot", "drill", "tap"]) + t_holes(10, 7.5, ["spot", "drill", "tap"]) + t_holes(4, 9, ["spot", "drill", "tap"]) + t_holes(4, 11, ["spot", "drill", "tap"]),
                      "spot T6; STI drills T8/T9/6.3 mm; STI taps")]),
     ]
+    # joints the floor has that no op above lists (e.g. holes added to the model since this plan was written): one more op
+    # in P-S2, from below like the other under-floor mounts (the side is ASSUMED; freecad_cam.py finds it on the model),
+    # timed as tapped holes 10 mm deep per cut joints.py makes (an upper bound: a stepped hole is two cuts)
+    listed = {c[2:] for su_ in floor_setups for o_ in su_["ops"] for c in o_["cuts"] if c.startswith("J:")}
+    extra = {k: n for k, n in pv["joint_holes"].items() if k not in listed}
+    if extra:
+        ps2 = next(x for x in floor_setups if x["id"] == "P-S2")
+        ps2["ops"].append(op("P-S2-5", "joint holes not listed above: " + ", ".join(f"{k} ({n} cuts)" for k, n in extra.items()),
+                             ["J:" + k for k in extra], "T7", t_holes(sum(extra.values()), 10.0, ["spot", "drill", "tap"]),
+                             "spot T6, tap drill, tap; side and depth ASSUMED (from below, 10 mm)"))
+    prog = program_info()
+    for su_, names in (("F-S1", ["frame_B"]), ("F-S2", ["frame_A"]), ("F-S3", ["frame_C0", "frame_C90", "frame_C180", "frame_C270"]),
+                       ("P-S1", ["floor_A"]), ("P-S2", ["floor_B"])):
+        rec = next(x for x in frame_setups + floor_setups if x["id"] == su_)
+        if all(n in prog for n in names):
+            rec["program"] = dict(freecad_jobs=names, gcode=[f"gcode/{n}.ngc" for n in names] + (["gcode/frame_C_haas.nc"] if su_ == "F-S3" else []),
+                                  recount_min=round(sum(prog[n]["recount_min"] for n in names), 2),
+                                  camotics_min=(round(sum(prog[n]["camotics_min"] for n in names), 2)
+                                                if all(prog[n]["camotics_min"] is not None for n in names) else None),
+                                  tool_changes=sum(prog[n]["tool_changes"] for n in names),
+                                  rapids_through_stock=(sum(prog[n]["rapids_through_stock"] for n in names)
+                                                        if all(prog[n]["rapids_through_stock"] is not None for n in names) else None),
+                                  ops={n: prog[n]["ops"] for n in names},
+                                  note="cutting time in the posted G-code (length / F, rapids at 25.4 m/min) and CAMotics' own count; no "
+                                       "acceleration, tool changes or A indexing; taps, STI taps, reamers and port tools are not programmed")
     run_f = sum(o["minutes"] for s in frame_setups for o in s["ops"] if not s["id"].endswith("S0"))
     run_p = sum(o["minutes"] for s in floor_setups for o in s["ops"] if not s["id"].endswith("S0"))
     plan = dict(
@@ -406,12 +495,18 @@ def main():
                    blank=dict(size_in=bl, size_mm=[round(x * IN, 1) for x in bl], mass_kg=round(m_blank, 1),
                               source="5-1/2 in. 6061-T651 plate cut to size (Metals Depot lists 5, 5-1/2 and 6 in. plate; McMaster's rolled plate stops at 4 in.)",
                               why_5_5=("5 in. plate is +/-0.130 in. (+/-3.3 mm) thick per OnlineMetals' table, so it can arrive thinner than the 123.9 mm frame"),
-                              end_tabs="1 in. at each x end for F-S1's toe clamps, sawn off before F-S2"),
+                              end_tabs=("none since 2026-11-23: F-S1 holds the blank with edge clamps on its x-end faces (toe clamps on 1 in. end tabs "
+                                        "were in the face mill's and T2's way), so the 15 in. length can be cut to 13 in."),
+                              cam_blank_mm=("freecad_cam.py and CAMotics cut a 317.5 x 228.6 x 127 box (12.5 x 9 x 5 in.), the frame plus 2.75-3.3 mm a "
+                                            "side and 1.55 mm a face; from 5-1/2 in. plate the two face ops take 7.9 mm a face, 2-4 more "
+                                            "passes each, roughly 4-7 min a face (not programmed)")),
                    core=dict(volume_cm3=core_cm3, mass_kg=round(core_cm3 * 2.7e-3, 1), route="waterjet (default) / trepan on the mill / contour bandsaw",
                              waterjet_min=[round(x) for x in wj_min]),
                    model_volumes_cm3=fv, setups=frame_setups, run_minutes_on_mill=round(run_f), part_handling="the frame weighs 4.3 kg finished; the blank 39 kg"),
         floor=dict(part=pv["name"], material="6061-T651",
                    blank=dict(size_in=FR["floor_blank_in"], size_mm=[round(x * IN, 1) for x in FR["floor_blank_in"]],
+                              end_tabs=("none since 2026-11-23: P-S1 holds the blank with edge clamps on its x-end faces, so 12.5 x 9 in. "
+                                        "will do (freecad_cam.py and CAMotics cut a 317.5 x 228.6 x 25.4 box)"),
                               source="1 in. 6061-T651 oversized plate 12 x 24 in., McMaster 89155K165, $267.02 (fetched 22:33-22:37 UTC)"),
                    model_volumes_cm3=pv, setups=floor_setups, run_minutes_on_mill=round(run_p)),
     )

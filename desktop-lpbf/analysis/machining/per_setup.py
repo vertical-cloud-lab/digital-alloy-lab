@@ -6,6 +6,7 @@ setup necessary). Run after inventory.py:
 Writes desktop-lpbf/analysis/out/machining/per_setup.json (~4 min).
 """
 import json
+import os
 import pathlib
 import sys
 
@@ -15,7 +16,7 @@ HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import cam_sim as CS  # noqa: E402
 
-PARTS = pathlib.Path("/tmp/mach-work/parts")
+PARTS = pathlib.Path(os.environ.get("MACH_PARTS", "/tmp/mach-work/parts"))
 
 
 def main():

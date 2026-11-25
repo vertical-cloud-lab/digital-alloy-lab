@@ -1,0 +1,26 @@
+{
+ "program": [
+  "G21 G90 G17",
+  "G92 Z1000.0",
+  "M6 T1",
+  "G0 Z30",
+  "G0 X10 Y0",
+  "G1 Z15 F500",
+  "G0 Z30",
+  "G0 A90",
+  "G0 X30 Y0",
+  "G1 Z15 F500",
+  "G0 Z30",
+  "M2"
+ ],
+ "camsim_log_for_the_A_move": [
+  "/work/./atest.ngc:8:Machine: Move to (10,0,-970)mm"
+ ],
+ "hole1_top_x10_cut": true,
+ "hole2_top_x30_cut": true,
+ "side_faces_cut": false,
+ "removed_cm3": 0.56,
+ "two_holes_cm3": 0.565,
+ "a_simulated": false,
+ "verdict": "CAMotics 1.2.0 ignores the A axis: the hole after G0 A90 was cut from the top, as at A0"
+}
