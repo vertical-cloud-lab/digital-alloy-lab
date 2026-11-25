@@ -489,8 +489,12 @@ def write_meta():
         lead = dict(rows=lead_rows, highlight=[])
         if ph == "open":
             cap = "Every part of one machine, as it arrives, on 12 m of table"
-            sub = "Machined parts are still stock blanks; parts over the UR12e's 12.5 kg wait on pallets for a person " \
-                  "and a lift. " + src_note
+            if t_in < 3.5:
+                sub = "Machined parts are still stock blanks; parts over the UR12e's 12.5 kg wait on pallets for a " \
+                      "person and a lift. " + src_note
+            else:
+                sub = "On the right: the running cost (new at spec against used where a sensible listing exists) and " \
+                      "every order's lead time in weeks, the longest first"
             cost = dict(cat="", n_cats=n_cats, run_new=[0, 0], run_used=[0, 0], items=[], foot=foot,
                         note="new at spec against used where a sensible listing exists" if at_spec else "")
         elif ph in ("cat", "item") and cat in cats:
