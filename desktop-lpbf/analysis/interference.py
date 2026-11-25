@@ -212,9 +212,8 @@ JOINTS = [
     ("AE sensor strap", "Rod end", "strap screwed to the rod end"),
     ("AE sensor strap", "AE sensor (", "strap over the sensor"),
     ("AE preamplifier", "Base plate, process module", "preamp on the base plate"),
-    ("Digitizer bracket", "Rack side panels", "bracket on the rack's side panel"),
-    ("Digitizer PicoScope", "Digitizer bracket", "digitizer on its bracket"),
-    ("Sync breakout box", "Digitizer bracket", "box on the bracket"),
+    ("Digitizer PicoScope", "DIN-rail drawer", "digitizer on the drawer's floor (the drawer is drawn as an envelope)"),
+    ("Sync breakout box", "DIN-rail drawer", "box on the drawer's floor (the drawer is drawn as an envelope)"),
 ]
 
 ALLOW_HOSE_THROUGH = ("Laser guard panels", "Guard frame")   # hoses pass the guard through bulkheads

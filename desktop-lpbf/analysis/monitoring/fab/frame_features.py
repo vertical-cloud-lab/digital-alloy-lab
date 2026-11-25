@@ -54,6 +54,11 @@ CORNER_R = 8.0
 FLAT_X = OUTER["x"] - CORNER_R      # the back wall's outer face is flat for |x| <= 148
 LINER = dict(side_z=(16.0, 104.0), back_lo_z=(16.0, 32.0), back_lo_left_x=(-130.5, -0.5), gap=0.1, t=0.5)
 SAE4 = dict(thread_d=11.11, depth=11.5, csk_d=12.9, csk_depth=1.6, drill_d=4.0)   # lpbf_low sae_port (SAE J1926 -4)
+# the plate-height through-beam's fibre head on the left wall's outer face (lpbf_low section 5: M6 head with a Ø13 x 2.5 flange at
+# y 0, z 5). With the Ø40 window the LW clamp ring is Ø58 and reaches it, so the ring gets a flat toward it, 1 mm clear, and its
+# four holes start at 60 deg (were 45, which left 0.6 mm between the flat and a hole; mechanics.md §2)
+FIBRE_HEAD = dict(yz=(0.0, 5.0), flange_r=6.5, clear=1.0)
+LW_HOLE0_DEG = 60.0
 GASKET = 0.75        # squeezed FKM flat gasket under the window and flat ring over it (the layer camera's window, lpbf_low)
 LAND_MIN = 3.0       # flat gasket land wanted round an opening (mm)
 SEAT_SHIFT = 1.0     # BW: the seat's centre moved this far toward +x along the slot (keeps it off the R8 corner)
@@ -140,6 +145,20 @@ def rrect_face_y(c, u, L, W, rad, y):
     return cq.Face.makeFromWires(cq.Wire.assembleEdges(edges))
 
 
+def _ring_flat(cen, r_out, bc_r, holes):
+    """the flat on the LW clamp ring toward the through-beam's fibre head: its distance from the ring's centre, its direction (y, z),
+    and the metal left between it and the nearest clearance hole (Ø4.5)"""
+    fy, fz = FIBRE_HEAD["yz"]
+    v = np.array([fy - cen[1], fz - cen[2]])
+    dist = float(np.linalg.norm(v))
+    u = v / dist
+    d_flat = dist - FIBRE_HEAD["flange_r"] - FIBRE_HEAD["clear"]
+    if d_flat >= r_out:
+        return None
+    web = min(d_flat - float(np.dot(np.array([y - cen[1], z - cen[2]]), u)) - 2.25 for y, z in holes)
+    return dict(dist_mm=round(d_flat, 2), dir_yz=[round(float(u[0]), 4), round(float(u[1]), 4)], web_to_hole_mm=round(web, 2))
+
+
 def lw_features(frame):
     """left-wall viewport, cut at A90 with the tool along x"""
     s = MS.VIEWPORTS["LW"]
@@ -162,8 +181,8 @@ def lw_features(frame):
     seat_depth = GASKET + win["t"] + GASKET
     land = r_seat - 0.1 - R               # gasket land between the bore and the window's edge
     bc_r = ceil_to(r_seat + 1.65 + 3.0, 0.5)   # M4 tap drill 3.3 with 3 mm of wall outside the seat
-    holes = [(float(cen[1] + bc_r * math.cos(math.radians(45 + 90 * k))),
-              float(cen[2] + bc_r * math.sin(math.radians(45 + 90 * k)))) for k in range(4)]
+    holes = [(float(cen[1] + bc_r * math.cos(math.radians(LW_HOLE0_DEG + 90 * k))),
+              float(cen[2] + bc_r * math.sin(math.radians(LW_HOLE0_DEG + 90 * k)))) for k in range(4)]
     ring_od = 2 * (bc_r + 4.0)
     # argon purge: SAE-4 port above the clamp ring (its fitting's 9/16 in. hex is ~16.5 mm across the corners)
     purge = (float(cen[1]), float(cen[2] + ring_od / 2 + 8.3 + 1.0))
@@ -191,6 +210,7 @@ def lw_features(frame):
                   note="concentric with the bore, flat on the wall: %.2f mm gasket, %.1f mm window, %.2f mm flat ring; "
                        "the clamp ring bottoms on the wall face" % (GASKET, win["t"], GASKET)),
         clamp_ring=dict(bolt_circle_d=2 * bc_r, od=ring_od, id=2 * R, screws="4 x M4 x 0.7, tapped 8 deep (3.3 drill 10 deep)",
+                        hole0_deg=LW_HOLE0_DEG, flat=_ring_flat(cen, ring_od / 2, bc_r, holes),
                         holes_yz=[[round(y, 2), round(z, 2)] for y, z in holes]),
         purge_port=dict(yz=[round(py, 2), round(pz, 2)], kind="SAE-4 (7/16-20 UNF) O-ring boss + Ø4 passage through"),
         liner_hole=dict(liner="Lift-out wall liner, left", centre_yz=[round(float(lc[1]), 2), round(float(lc[2]), 2)], d=2 * r_lin),

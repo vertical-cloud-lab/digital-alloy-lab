@@ -120,7 +120,14 @@ def _lw(parts, add, h):
     ring = tube(cr["od"] / 2, cr["id"] / 2, (x_out, yc, zc), "-x", 6.35)
     for (y, z) in cr["holes_yz"]:
         ring = ring.cut(cyl(2.25, (x_out + 1, y, z), "-x", 9.0))
-    add(f"LW window clamp ring (6061, 1/4 in. plate, Ø{cr['od']:.0f} x Ø{cr['id']:.0f}, 4 x M4 on Ø{cr['bolt_circle_d']:.0f}; bottoms on the wall face)",
+    if cr.get("flat"):                       # flat toward the plate-height through-beam's fibre head (frame_features.FIBRE_HEAD)
+        fl = cr["flat"]
+        uy, uz = fl["dir_yz"]
+        ang = math.degrees(math.atan2(uz, uy))
+        cutter = box(x_out - 10, x_out + 1, fl["dist_mm"], fl["dist_mm"] + 40, -40, 40).rotate(V(0, 0, 0), V(1, 0, 0), ang)
+        ring = ring.cut(cutter.translate(V(0, yc, zc)))
+    add(f"LW window clamp ring (6061, 1/4 in. plate, Ø{cr['od']:.0f} x Ø{cr['id']:.0f}, 4 x M4 on Ø{cr['bolt_circle_d']:.0f}, a flat clear of the "
+        f"through-beam's fibre head; bottoms on the wall face)",
         ring, C["anod"], 5, (-240, 0, 0), mat="al6061", bom="M0-13", tags=TAG)
     # cover slide on the liner's inner face, centred on the sight line, and its sheet clip
     c, d = np.array(s["centre"], float), np.array(MS.axis_to_target(s["centre"]))
@@ -149,11 +156,12 @@ def _lw(parts, add, h):
     add("LW purge fitting (SAE-4 7/16-20 O-ring boss x 1/8 in. tube, 316, bored through; envelope)", fit, C["ss"], 5, (-200, 0, 0),
         mat="ss316l", mass_kg=0.03, bom="M0-12", tags=TAG)
     x_in_tube = x_lin_in + 2.4
-    tube_in = h.polyline_pipe([(x_out - 40.0, py, pz), (x_lin_in + 0.5, py, pz), (x_in_tube, py, pz - 4.0), (x_in_tube, py, ps[2] + 21.0)], 1.5875, 6)
+    tube_in = h.polyline_pipe([(x_out - 16.0, py, pz + 34.0), (x_out - 16.0, py, pz + 6.0), (x_out - 12.0, py, pz), (x_lin_in + 0.5, py, pz),
+                               (x_in_tube, py, pz - 4.0), (x_in_tube, py, ps[2] + 21.0)], 1.5875, 6)
     tip = box(x_in_tube - 0.6, x_in_tube + 0.6, py - 3.0, py + 3.0, ps[2] + 18.5, ps[2] + 21.0)
     add("LW purge tube (1/8 in. 316, through the wall's Ø4 passage; bent down inside, tip flattened to a 6 x 1 slot over the slide)",
         comp([tube_in, tip]), C["ss"], 5, (-200, 0, 0), mat="ss316l", mass_kg=0.02, bom="M0-12", tags=TAG)
-    nv = fuse([box(x_out - 75.0, x_out - 40.0, py - 9.0, py + 9.0, pz - 9.0, pz + 9.0), cyl(5.0, (x_out - 57.5, py, pz + 9.0), "z", 18.0)])
+    nv = fuse([box(x_out - 25.0, x_out - 7.0, py - 9.0, py + 9.0, pz + 34.0, pz + 69.0), cyl(5.0, (x_out - 25.0, py, pz + 51.5), "-x", 18.0)])
     add("LW purge needle valve (1/8 in. tube, 316, metering; envelope); argon from the purge manifold (route not drawn)", nv, C["ss"], 5,
         (-260, 0, 0), mat="misc", mass_kg=0.12, bom="M0-08", tags=TAG)
     REPORT["LW"] = dict(bore_d=info["bore"]["d"], seat=info["seat"], clamp_ring=cr, purge=info["purge_port"], liner_hole=lh,
@@ -169,8 +177,9 @@ def _chronos(parts, add, h, c, d, x_face):
     sc = MS.SIDE_CAMERA
     L, W, H = sc["body_mm"]
     so = sc["standoff_mm"]
-    p_f = c + (t0 + 3.0) * a
-    filt = _cyl_ax(17.0, p_f, a, so - 3.0)
+    t_f = 1.0 + 17.0 * math.sqrt(max(0.0, 1.0 - a[0] ** 2))         # the holder's rim, tilted to the ring's face, stays 1 mm off it
+    p_f = c + (t0 + t_f) * a
+    filt = _cyl_ax(17.0, p_f, a, so - t_f)
     lens_l, lens_r = 50.0, 16.0
     p_l = c + (t0 + so) * a
     lens = _cyl_ax(lens_r, p_l, a, lens_l)
@@ -223,12 +232,18 @@ def _bw(parts, add, h):
         bom="M0-06", tags=TAG)
     add(f"BW light window ({Lw:.1f} x {Ww:.1f} x 3 mm N-BK7 or fused silica, corners chamfered; flat on the back wall)",
         rrect(Lw, Ww, 2.0, y_floor + gk, 3.0), C["glass"], 5, (0, 220, 0), mat="fused_silica", bom="M0-03", opacity=0.45, tags=TAG)
-    fr = rrect(st["L"] + 16.0, st["W"] + 18.0, 5.0, y_out, 4.76).cut(cq.Solid.extrudeLinear(
+    fr = rrect(st["L"] + 18.0, st["W"] + 22.0, 6.0, y_out, 4.76).cut(cq.Solid.extrudeLinear(
         FF.stadium_face_y(e1, e2, sl["radius"] + 1.0, y_out - 1.0), V(0, 7.0, 0)))
     for (x, z) in info["clamp_frame"]["holes_xz"]:
         fr = fr.cut(cyl(2.25, (x, y_out - 1, z), "y", 8.0))
     # keep the frame on the wall's flat face (|x| <= 148) and above the frame's bottom edge (z -3.9)
     fr = fr.intersect(box(-FF.FLAT_X + 0.5, 0.0, y_out - 1, y_out + 10, -3.4, 200.0))
+    for q in parts:                          # 1 mm clear of the inlet plenum's flange and of the recoater sensor clamp above
+        if q.name.startswith("Cross-flow inlet plenum") or q.name.startswith("Recoater sensor clamps"):
+            for sol in q.shape.Solids():
+                b = sol.BoundingBox()
+                if b.xmax > -160 and b.xmin < -60:
+                    fr = fr.cut(box(b.xmin - 1, b.xmax + 1, y_out - 2, y_out + 12, b.zmin - 1, b.zmax + 1))
     add("BW window clamp frame (6061, 3/16 in. plate, 3 x M4; trimmed to the wall's flat face and bottom edge)", fr, C["anod"], 5,
         (0, 240, 0), mat="al6061", bom="M0-14", tags=TAG)
     # lower back liner, left piece: starts past the slot's opening (frame_features' liner range)
@@ -240,10 +255,10 @@ def _bw(parts, add, h):
     s = MS.VIEWPORTS["BW"]
     c, d = np.array(s["centre"], float), np.array(MS.axis_to_target(s["centre"]))
     a, up, side = _frame(-d)
-    t1 = (y_out + 4.76 + 10.0 - c[1]) / a[1]
-    L_led, r_led = 70.0, 28.0
-    led = fuse([_cyl_ax(r_led, c + t1 * a, a, L_led), _cyl_ax(20.0, c + (t1 + L_led) * a, a, 20.0)])
-    add("BW 850 nm LED light (collimated mounted LED, Ø56 x 90 envelope; SOLIS-850C class if the room allows) on the BW sight line",
+    L_led, r_led = 60.0, 20.0
+    t1 = (y_out + 4.76 + 3.0 + r_led * math.sqrt(1.0 - a[1] ** 2) - c[1]) / a[1]
+    led = _cyl_ax(r_led, c + t1 * a, a, L_led)
+    add("BW 850 nm LED light (mounted LED + collimator, envelope Ø40 x 60; a SOLIS-850C-sized head does not fit here) on the BW sight line",
         led, C["black"], 5, (0, 260, 0), mat="misc", mass_kg=0.4, bom="M7-05", tags=TAG)
     REPORT["BW"] = dict(centre=list(s["centre"]), slot=sl, seat=st, liner_x0=x_new, led_front=(c + t1 * a).round(1).tolist())
 
@@ -276,6 +291,16 @@ def lp_geometry(centre=None):
                 normal_bore_centre=cen, normal=seal_room(cen[0], cen[1], R_normal), on_axis=seal_room(c[0], c[1], r_ell))
 
 
+def lp_adapter_holes(c, r_a):
+    """4 x M4 on the LP adapter (and its blanking cap), 3.5 mm in from its edge, none on the side facing the window flange"""
+    to_c = _unit([-c[0], -c[1], 0.0])
+    out = []
+    for k in range(4):
+        ang = math.atan2(-to_c[1], -to_c[0]) + math.radians(-105 + 70 * k)
+        out.append((c[0] + (r_a - 3.5) * math.cos(ang), c[1] + (r_a - 3.5) * math.sin(ang)))
+    return out
+
+
 def _lp(parts, add, h):
     C, box, cyl, tube, comp, fuse = h.C, h.box, h.cyl, h.tube, h.comp, h.fuse
     F = MP.FACE_1P78
@@ -283,7 +308,8 @@ def _lp(parts, add, h):
     c, d = g["c"], g["d"]
     a, up, side = _frame(-d)                                             # outward
     lz0, lz1 = 120.0, 136.0
-    # bore on the line of sight through the lid (Ø24), adapter flange on the lid round its ellipse, face O-ring groove
+    # bore on the line of sight through the lid (Ø24); the face O-ring groove is cut in the lid round the bore's ellipse, so the
+    # adapter's face (and the flat blanking cap that stands in for it until the camera is bought) seal on it (fabrication.md §3)
     r_b = g["r_bore"]
     sr = g["on_axis"]
     r_g, r_a = sr["r_groove"], sr["r_adapter"]
@@ -293,27 +319,22 @@ def _lp(parts, add, h):
     r_bo = 17.0
     boss = _cyl_ax(r_bo, c - 12.0 * a, a, s_top + 12.0 - 3.0).intersect(box(-1e3, 1e3, -1e3, 1e3, lz1, 1e3))
     body = fuse([flange, boss])
-    body = body.cut(tube(r_go, r_g, (c[0], c[1], lz1 - 0.01), "z", F["depth"] + 0.01))
     bore = _cyl_ax(r_b, c + 30.0 * d, -d, 30.0 + s_top)                  # from under the lid up through the boss
     body = body.cut(bore)
     p_w = c + (s_top - 3.0 - 0.75) * a                                    # window seat: 3 mm window on a 0.75 mm gasket
     body = body.cut(_cyl_ax(12.8, p_w - 0.75 * a, a, 5.0))
     p_s = c + 12.0 * a                                                    # slide pocket in the boss, under the window
     body = body.cut(_cyl_ax(12.75, p_s, a, 1.6))
-    holes = []
-    to_c = _unit([-c[0], -c[1], 0.0])                                     # toward the lid's centre (the window flange)
-    for k in range(4):                                                    # 4 x M4 on the adapter, none on the flange's side
-        ang = math.atan2(-to_c[1], -to_c[0]) + math.radians(-105 + 70 * k)
-        x, y = c[0] + (r_a - 3.5) * math.cos(ang), c[1] + (r_a - 3.5) * math.sin(ang)
-        holes.append((x, y))
+    holes = lp_adapter_holes(c, r_a)
+    for x, y in holes:
         body = body.cut(cyl(2.25, (x, y, lz1 - 1), "z", 10.0))
-    add(f"LP adapter boss (6061; Ø{2 * r_a:.0f} flange, FKM face O-ring; Ø{2 * r_b:.0f} bore and window square to the line of sight; "
-        f"cover slide inside)", body, C["anod"], 7, (0, 0, 300), mat="al6061", bom="M7-16", tags=TAG)
+    add(f"LP adapter boss (6061; Ø{2 * r_a:.0f} flange on the lid's face O-ring; Ø{2 * r_b:.0f} bore and window square to the line of "
+        f"sight; cover slide inside)", body, C["anod"], 7, (0, 0, 300), mat="al6061", bom="M7-16", tags=TAG)
     pk = MP.pick_ring(2 * math.pi * r_g)
-    add(f"LP adapter O-ring (FKM 75A {pk[0]}, face seal on the lid)", tube(r_go - 0.3, r_g, (c[0], c[1], lz1), "z", F["depth"]),
+    add(f"LP adapter O-ring (FKM 75A {pk[0]}, in the lid's face groove)", tube(r_go - 0.3, r_g, (c[0], c[1], lz1 - F["depth"]), "z", F["depth"]),
         C["black"], 7, (0, 0, 300), mat="fkm", bom="M0-07", tags=TAG)
     h.GLANDS["lp_adapter"] = dict(kind="face", ring=pk[0], cs=F["cs"], depth=F["depth"], width=F["width"], groove_id=2 * r_g,
-                                  groove_mat="al", T=60.0, closure="LP adapter boss on the lid")
+                                  groove_mat="al", T=60.0, closure="LP adapter boss (or blanking cap) on the lid")
     add("LP window (Ø25.4 x 3 mm UV fused silica, square to the line of sight)", _cyl_ax(12.7, p_w, a, 3.0), C["glass"], 7, (0, 0, 330),
         mat="fused_silica", bom="M7-17", opacity=0.5, tags=TAG)
     add("LP window gasket and flat ring (FKM 75A sheet, 1.0 mm squeezed to 0.75)",
@@ -325,16 +346,21 @@ def _lp(parts, add, h):
     add("LP cover slide (Ø25 x 1 mm fused silica, in the boss under the window; consumable)", _cyl_ax(12.5, p_s + 0.3 * a, a, 1.0),
         C["glass"], 7, (0, 0, 320), mat="fused_silica", bom="M7-18", opacity=0.5, tags=TAG)
     # the lid's bore on the line of sight and the adapter's tapped holes
-    _cut(parts, "Chamber lid (6061-T6", [_cyl_ax(r_b, c + 30.0 * d, -d, 40.0)] + [cyl(1.65, (x, y, lz1 - 8.0), "z", 8.1) for x, y in holes])
+    _cut(parts, "Chamber lid (6061-T6", [_cyl_ax(r_b, c + 30.0 * d, -d, 40.0), tube(r_go, r_g, (c[0], c[1], lz1 - F["depth"]), "z", F["depth"] + 0.01)]
+         + [cyl(1.65, (x, y, lz1 - 8.0), "z", 8.1) for x, y in holes])
     # camera: filters + Kowa 50 mm + IMX296 board in a 40 x 40 x 30 housing
-    so = 15.0
+    so = float(MS.LID_CAMERA.get("standoff_mm", 15.0))
     p_f = c + (s_top + 3.0) * a
     filt = _cyl_ax(16.0, p_f, a, so - 3.0)
     p_l = c + (s_top + so) * a
     lens = _cyl_ax(16.0, p_l, a, 45.0)
     bw_, bh_, bl_ = MS.LID_CAMERA["body_mm"]
     p_b = p_l + 45.0 * a
-    cam = _local(box(-bh_ / 2, bh_ / 2, -bw_ / 2, bw_ / 2, 0.0, bl_), p_b, a, up)
+    # the housing turned about its axis so a face, not a corner, faces +x: PB2 stands on the bridge just past the cut-out
+    wx = np.array([1.0, 0.0, 0.0]) - a[0] * a
+    th = math.atan2(float(wx @ side), float(wx @ up))
+    up2 = math.cos(th) * up + math.sin(th) * side
+    cam = _local(box(-bh_ / 2, bh_ / 2, -bw_ / 2, bw_ / 2, 0.0, bl_), p_b, a, up2)
     add("LP camera filters (FBH850-10 + FESH1000 in an SM1 holder; envelope)", filt, C["black"], 7, (0, 0, 340), mat="misc", mass_kg=0.04,
         bom="M7-14", tags=TAG)
     add("LP camera lens (Kowa LM50JC10M, 50 mm C-mount; envelope Ø32 x 45)", lens, C["black"], 7, (0, 0, 350), mat="misc", mass_kg=0.2,
@@ -460,7 +486,7 @@ def _ae(parts, add, h, module):
         r, deg = AE_XY[module]
         x, y = r * math.cos(math.radians(deg)), r * math.sin(math.radians(deg))
         z_top = z["zb1"] - 4.0                                            # the plate spigot's underside
-        z_bot = zc + 9.0 - 5.0                                            # 5 mm into an M2 thread in the rod end's bore floor
+        z_bot = zc + 9.0 - 3.0                                            # 3 mm into an M2 thread in the rod end's bore floor (striker below)
         wg = cyl(1.0, (x, y, z_bot), "z", z_top - z_bot)
         add(f"AE waveguide {module} (Ø2 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed "
             f"into the rod end)", wg, C["ss"], 4, (0, 0, 260), mat="ss316l", bom="M4-06", section=True, **pg)
@@ -471,10 +497,10 @@ def _ae(parts, add, h, module):
         REPORT["AE"] = dict(waveguide_xy=(round(x, 2), round(y, 2)), z_top=z_top, z_bottom=z_bot, length=round(z_top - z_bot, 1))
     # sensor on the rod end's back face (+y), at x -26: outside the gas boundary; spring strap screwed to the same face
     yb = RF["back_y"]
-    zs = zc + RF["face_z0"] + 10.0                                    # Ø20 sensor from the block's bottom face up
+    zs = zc + RF["face_z0"] + 11.0                                    # Ø19 sensor, 1.5 mm above the block's bottom face (Z arm below)
     xs = -26.0
-    sens = fuse([cyl(10.0, (xs, yb, zs), "y", 16.0), cyl(3.0, (xs + 10.0, yb + 8.0, zs), "x", 8.0)])
-    add("AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope Ø20 x 16 with a side connector) on the rod end's back face",
+    sens = fuse([cyl(9.5, (xs, yb, zs), "y", 16.0), cyl(3.0, (xs + 9.0, yb + 8.0, zs), "x", 8.0)])
+    add("AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope Ø19 x 16 with a side connector) on the rod end's back face",
         sens, C["blue"], 4, (0, 160, 0), mat="misc", mass_kg=0.03, bom="M4-01", section=True, **pg)
     strap = fuse([box(xs - 14.5, xs + 14.5, yb + 16.0, yb + 19.0, zs - 4.0, zs + 4.0),
                   box(xs - 14.5, xs - 11.5, yb, yb + 16.0, zs - 4.0, zs + 4.0), box(xs + 11.5, xs + 14.5, yb, yb + 16.0, zs - 4.0, zs + 4.0)])
@@ -482,24 +508,21 @@ def _ae(parts, add, h, module):
         mat="al6061", bom="M4-09", section=True, **pg)
     # preamp on the process base plate, behind-left of the Z stage (<= 1 m of cable; the sensor's lead unplugs at a module swap)
     zbp = h.P["z_base1"]
-    pre = box(-260.0, -150.0, 20.0, 80.0, zbp, zbp + 30.0)
+    pre = box(-300.0, -190.0, -230.0, -170.0, zbp, zbp + 30.0)
     add("AE preamplifier (MISTRAS 2/4/6 class, 40 dB; envelope 110 x 60 x 30) on the process base plate", pre, C["blue"], 4, (0, 0, -150),
         mat="misc", mass_kg=0.25, bom="M4-02", tags=TAG)
 
 
 # ======================================================================================================== digitizer, sync box
 def _daq(parts, add, h):
-    C, box, fuse = h.C, h.box, h.fuse
-    x_side = -990.0 - 2.0                                                # the rack's left side panel's outer face
-    z0 = -212.0 + 25.0 + 7 * 44.45
-    brk = fuse([box(x_side - 3.0, x_side, -110.0, 110.0, z0 - 20.0, z0 + 200.0), box(x_side - 48.0, x_side, -110.0, 110.0, z0 - 23.0, z0 - 20.0)])
-    add("Digitizer bracket (6061, 3 mm, on the rack's left side panel)", brk, C["alu_dark"], 2, (-200, 0, 0), mat="al6061", module="rack",
-        bom="M1-01", tags=TAG)
-    add("Digitizer PicoScope 4444 (190 x 170 x 40 mm; in the 4U drawer if its layout has room)",
-        box(x_side - 43.0, x_side - 3.0, -95.0, 95.0, z0 - 20.0, z0 + 150.0), C["blue"], 2, (-220, 0, 0), mat="misc", mass_kg=1.0, module="rack",
-        bom="M1-01", tags=TAG)
-    add("Sync breakout box (bought enclosure, BNC bulkheads, isolator boards)", box(x_side - 43.0, x_side - 3.0, -60.0, 60.0, z0 + 155.0, z0 + 195.0),
-        C["anod"], 2, (-220, 0, 0), mat="misc", mass_kg=0.4, module="rack", bom="M1-07", tags=TAG)
+    """PicoScope 4444 and the sync breakout box on the floor of the 4U drawer (sync-and-data.md §2.1); the drawer is an envelope here"""
+    C, box = h.C, h.box
+    dr = _find(parts, "DIN-rail drawer")[0].shape.BoundingBox()
+    x0, y1, z0 = dr.xmin + 12.0, dr.ymax - 12.0, dr.zmin + 3.0
+    add("Digitizer PicoScope 4444 (190 x 170 x 40 mm) on the 4U drawer's floor", box(x0, x0 + 190.0, y1 - 170.0, y1, z0, z0 + 40.0), C["blue"], 2,
+        (0, -400, 0), mat="misc", mass_kg=1.0, module="rack", bom="M1-01", tags=TAG)
+    add("Sync breakout box (bought enclosure, BNC bulkheads, isolator boards) in the 4U drawer", box(x0 + 200.0, x0 + 320.0, y1 - 80.0, y1, z0, z0 + 40.0),
+        C["anod"], 2, (0, -400, 0), mat="misc", mass_kg=0.4, module="rack", bom="M1-07", tags=TAG)
 
 
 def apply(parts, add, h, module="M50"):

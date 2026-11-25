@@ -1,5 +1,5 @@
 {
- "frame": "/tmp/fab-e/parts/process_chamber_body_6061_t6_through_frame_from_5_5_in_plate.brep",
+ "frame": "/tmp/fab-e/parts/process_chamber_body_model.brep",
  "LW": {
   "port": "LW",
   "index_deg": 90,
@@ -29,44 +29,53 @@
    "note": "normal to the wall; holds the clear \u00d825 cylinder on the sight line across the 16 mm wall"
   },
   "seat": {
-   "d": 38.3,
-   "depth": 6.5,
+   "d": 40.2,
+   "depth": 5.5,
    "window": {
-    "d": 38.1,
-    "t": 5.0,
-    "mat": "UV fused silica, AR 650-1050 nm"
+    "d": 40.0,
+    "t": 4.0,
+    "mat": "UV fused silica, NIR I AR 600-1050 nm (Edmund 36-983)"
    },
-   "gasket_land_mm": 3.55,
-   "note": "concentric with the bore, flat on the wall: 0.75 mm gasket, 5.0 mm window, 0.75 mm flat ring; the clamp ring bottoms on the wall face"
+   "gasket_land_mm": 4.5,
+   "note": "concentric with the bore, flat on the wall: 0.75 mm gasket, 4.0 mm window, 0.75 mm flat ring; the clamp ring bottoms on the wall face"
   },
   "clamp_ring": {
-   "bolt_circle_d": 48.0,
-   "od": 56.0,
+   "bolt_circle_d": 50.0,
+   "od": 58.0,
    "id": 31.0,
    "screws": "4 x M4 x 0.7, tapped 8 deep (3.3 drill 10 deep)",
+   "hole0_deg": 60.0,
+   "flat": {
+    "dist_mm": 27.28,
+    "dir_yz": [
+     0.5455,
+     -0.8381
+    ],
+    "web_to_hole_mm": 2.75
+   },
    "holes_yz": [
     [
-     -2.0,
-     51.12
+     -6.47,
+     55.8
     ],
     [
-     -35.94,
-     51.12
+     -40.62,
+     46.65
     ],
     [
-     -35.94,
-     17.18
+     -31.47,
+     12.5
     ],
     [
-     -2.0,
-     17.18
+     2.68,
+     21.65
     ]
    ]
   },
   "purge_port": {
    "yz": [
     -18.97,
-    71.45
+    72.45
    ],
    "kind": "SAE-4 (7/16-20 UNF) O-ring boss + \u00d84 passage through"
   },
@@ -96,14 +105,14 @@
   "spec_centre": [
    -125.0,
    111.0,
-   25.0
+   29.5
   ],
   "centre_used": [
    -125.0,
    111.0,
    29.5
   ],
-  "z_shift_mm": 4.5,
+  "z_shift_mm": 0.0,
   "sight_axis": [
    0.7364,
    -0.6539,
@@ -183,42 +192,42 @@
   ],
   "as_specified": {
    "seat": {
-    "L": 57,
+    "L": 58,
     "W": 27,
     "corner_r": 4.0,
     "depth": 4.5,
-    "window": "56.7 x 26.7 x 3.0 mm, corners chamfered 2 mm (rectangular N-BK7 or fused silica)",
-    "x_min": -145.6,
-    "z_min": 4.17,
+    "window": "57.7 x 26.7 x 3.0 mm, corners chamfered 2 mm (rectangular N-BK7 or fused silica)",
+    "x_min": -146.34,
+    "z_min": 7.34,
     "on_flat_face": true,
-    "clear_of_floor_screws": false
+    "clear_of_floor_screws": true
    },
    "slot": {
     "kind": "obround, normal to the wall, through",
-    "length": 50.99,
+    "length": 51.22,
     "width": 20.5,
     "end_centres_xz": [
      [
-      -130.7,
-      26.14
+      -130.69,
+      30.84
      ],
      [
       -101.29,
-      20.26
+      23.9
      ]
     ],
     "radius": 10.25,
-    "long_axis_deg_from_x": -11.31,
-    "round_bore_needed_d": 50.5
+    "long_axis_deg_from_x": -13.28,
+    "round_bore_needed_d": 50.7
    },
-   "elevation_deg": 8.51
+   "elevation_deg": 10.01
   }
  },
  "checks": {
   "frame_volume_cm3": {
    "before": 1582.512,
-   "after": 1547.806,
-   "removed": 34.706
+   "after": 1547.559,
+   "removed": 34.953
   },
   "clear_aperture_blocked_mm3": {
    "LW": 0.0,
@@ -235,7 +244,7 @@
     ]
    },
    "LW window seat": {
-    "min_gap_mm": 9.5,
+    "min_gap_mm": 8.55,
     "to": "CYLINDER",
     "at": [
      -152.0,
@@ -245,9 +254,17 @@
    },
    "LW clamp-ring hole 1 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": null,
    "LW clamp-ring hole 2 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": null,
-   "LW clamp-ring hole 3 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": null,
+   "LW clamp-ring hole 3 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": {
+    "min_gap_mm": 9.78,
+    "to": "CYLINDER",
+    "at": [
+     -152.0,
+     -20.0,
+     0.8
+    ]
+   },
    "LW clamp-ring hole 4 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": {
-    "min_gap_mm": 4.95,
+    "min_gap_mm": 9.47,
     "to": "CYLINDER",
     "at": [
      -155.3,
@@ -297,51 +314,6 @@
   "bw_shift_search": [
    {
     "z_shift": 0.0,
-    "seat_z_min": 4.17,
-    "seat_x_min": -145.6
-   },
-   {
-    "z_shift": 0.5,
-    "seat_z_min": 4.44,
-    "seat_x_min": -146.12
-   },
-   {
-    "z_shift": 1.0,
-    "seat_z_min": 4.8,
-    "seat_x_min": -146.15
-   },
-   {
-    "z_shift": 1.5,
-    "seat_z_min": 5.16,
-    "seat_x_min": -146.18
-   },
-   {
-    "z_shift": 2.0,
-    "seat_z_min": 5.52,
-    "seat_x_min": -146.21
-   },
-   {
-    "z_shift": 2.5,
-    "seat_z_min": 5.89,
-    "seat_x_min": -146.24
-   },
-   {
-    "z_shift": 3.0,
-    "seat_z_min": 6.25,
-    "seat_x_min": -146.26
-   },
-   {
-    "z_shift": 3.5,
-    "seat_z_min": 6.61,
-    "seat_x_min": -146.29
-   },
-   {
-    "z_shift": 4.0,
-    "seat_z_min": 6.98,
-    "seat_x_min": -146.32
-   },
-   {
-    "z_shift": 4.5,
     "seat_z_min": 7.34,
     "seat_x_min": -146.34
    }

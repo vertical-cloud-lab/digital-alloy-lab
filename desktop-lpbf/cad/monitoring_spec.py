@@ -83,7 +83,8 @@ SIDE_CAMERA = dict(
     lens_options=["50 mm f/2.8-4 C-mount", "75 mm f/4 C-mount"], standoff_mm=15.0,       # lens front 15 mm off the window adapter
     room_note="monitoring.md §3: behind a 60 mm lens a Ø120 body has 180 mm before the guard panel (140 mm behind a 100 mm lens)",
 )
-LID_CAMERA = dict(port="LP", body="monochrome IMX296 global-shutter board in a housing", lens="50 mm C-mount", body_mm=(40.0, 40.0, 30.0))
+LID_CAMERA = dict(port="LP", body="monochrome IMX296 global-shutter board in a housing", lens="50 mm C-mount", body_mm=(40.0, 40.0, 30.0),
+                  standoff_mm=15.0)                  # lens front 15 mm off the LP window's retaining ring (monitoring_parts.py)
 
 # Coaxial branch (monitoring.md §0 item 3): the existing DMSP1000 cube stays where it is; the SM1 photodiode tube behind it becomes
 # a 30 mm cage with two more cubes. Free room above the bridge (monitoring.md fits.json): x -230..-170, y -200..-62 (front branch),
