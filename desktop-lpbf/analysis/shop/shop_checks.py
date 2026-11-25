@@ -263,9 +263,10 @@ def detach(arm):
 # ----------------------------------------------------------------------------------------------- parts
 FRAME_B = dict(L=330.2, W=241.3, H=139.7, core=(274.0, 184.0))   # the chamber worker's blank: 13 x 9.5 x 5.5 in. plate,
                                                                    # its 274 x 184 core out as one slug first (dfm.json).
-# The chamber study's final setup_plan.json uses a 15 in. long blank (1 in. end tabs for F-S1's toe clamps): 34.7 kg delivered,
-# 15.7 kg with the core out, so it needs two arms for F-S1 (robot-shop.md). P1 keeps the 13 in. blank, the part after the tabs
-# are sawn off (F-S2), which is what one arm can carry.
+# The chamber study's setup_plan.json still lists the model's 15 in. long blank, from when F-S1 held it by 1 in. end tabs in
+# toe clamps (34.7 kg delivered, 15.7 kg with the core out: two arms, robot-shop.md). Since 2026-11-23 F-S1 holds the blank by
+# low-profile edge clamps on its x ends, with no tabs, and the CAM cuts a 12.5 x 9 in. footprint (machining.md), so the 13 in.
+# blank P1 uses is enough, and one arm can carry it.
 
 
 def frame_blank_B():
