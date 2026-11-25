@@ -123,7 +123,7 @@ class MirVis:
 class Hall:
     def __init__(self, pl=None, kit="stock", shop=True, bench=True, robots=True, person=True, size=(common.W, common.H)):
         """kit: "stock" (every part as delivered: machined parts as their blanks), "finished", or None (empty table)."""
-        self.pl = pl if pl is not None else common.plotter(size)
+        self.pl = pl if pl is not None else pvscene.plotter(size)
         self.sc = pvscene.PVScene(self.pl)
         self.kit_items = []                  # kit_table.py's layout (what is on the long table), when loaded
         self.kt = None

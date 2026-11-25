@@ -1028,7 +1028,7 @@ def _preview():
     }
     cams = {"front": [(1500, 2600, 1500), (0, 0, 950), (0, 0, 1)], "side": [(2900, 300, 1400), (0, 150, 950), (0, 0, 1)],
             "back": [(-1300, -2600, 1700), (0, 0, 950), (0, 0, 1)], "face": [(250, 900, 1620), (0, 0, 1560), (0, 0, 1)]}
-    pl = common.plotter((640, 720))
+    pl = pvscene.plotter((640, 720))
     sc = pvscene.PVScene(pl)
     sc.add("floor", pv.Plane(center=(0, 0, -1), i_size=4000, j_size=4000), common.FLOOR, specular=0.0)
     can = pv.Cylinder(center=(420.0, 300.0, 61.0), direction=(0, 0, 1), radius=33.0, height=122.0, resolution=40)

@@ -172,7 +172,7 @@ def lift_meshes(h):
 def main():
     import people
     t0 = time.time()
-    pl = common.plotter()
+    pl = HL.pvscene.plotter()
     sc = HL.pvscene.PVScene(pl)
     sc.add("floor", pv.Plane(center=(0.0, 0.0, -1.0), i_size=16000.0, j_size=16000.0), common.FLOOR, specular=0.0)
     for k, (nm, m, col) in enumerate(vlm_meshes()):
