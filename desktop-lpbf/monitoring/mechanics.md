@@ -85,13 +85,15 @@ Static clearances, nearest non-monitoring part (FCL distance on 0.2 mm meshes):
 | Photodiode B | process fibre; guard side panel | 14.1; 21.7 |
 | Coaxial cube 2 | safety shutter | 13.1 |
 | Chronos 2.1-HD | recoater motor standoff | 23.6 |
+| Side camera bracket | a floor-plate screw's head (its root covers that screw's U-notch: take the bracket off to reach it) | 0.5 |
+| AE preamp | the guard's bottom front rail | 5.0 |
 
 The first run, and what changed:
 
 | Pair | Overlap (mm³) | Fix |
 |---|---:|---|
 | PicoScope and its bracket × PB1 (the power box stands against the rack's left side) | 283,607 | moved onto the 4U drawer's floor, where sync-and-data.md §2.1 puts it first |
-| AE preamp × recoater motor bracket, then × the bridge's front-left post | 3,420; 4,750 | moved to the base plate's front-left (x −265…−155, y −245…−185) |
+| AE preamp × recoater motor bracket, then × the bridge's front-left post | 3,420; 4,750 | moved to the base plate's front-left (x −265…−155, y −240…−180) |
 | LW purge needle valve × Chronos and its lens | 3,245 | valve stood vertical above the fitting, tube bent up to it |
 | LP camera × PB2 and PB2's screws | 758 | housing turned about its axis; PB2 moved 12 mm to +x ([`electrical_parts.py`](../cad/electrical_parts.py)) |
 | BW clamp frame × inlet plenum's flange | 136 | frame trimmed 1 mm clear (§6) |
@@ -129,7 +131,7 @@ camera, its bracket and photodiode B all stand inside it.
 ## 3. LP at (−40, 60)
 
 - **Why there:** plume.md §0 item 3: a port at (−40, 60), under the upper slot's sweep, collects ~50× less condensate than one
-  at (−60, −80). The coordinator asked for the room outside to be checked, with (−20, 80) as the fallback.
+  at (−60, −80). Plume.md left the room outside to be checked on the model, with (−20, 80) as the fallback.
 - **The bore:** at 62.1° the clear Ø20 cylinder needs a Ø31.7 hole normal to the lid (Ø33 cut). The face seal round it
   (2 mm land, a 1.78 mm cord's 2.3 mm groove, 2.5 mm outside) needs a Ø47.6 adapter, whose edge would sit 5.9 mm inside
   the main window's Ø100 flange. A Ø24 bore on the line of sight makes a 27.2 × 24 mm ellipse on the lid's top face. Round
@@ -163,15 +165,15 @@ camera, its bracket and photodiode B all stand inside it.
   is taken. The striker disc and the pot magnet that couple the Z arm sit under the rod's axis. The seven weld-in
   feedthroughs fill the front face. The rod's bore (Ø12.7) is narrower than the 316L block, so a straight rod can't reach its
   back or sides, and a 3 mm rod can't bend through 90° inside the bore. So it is screwed 3 mm into the bore floor, and the
-  sensor sits on the rod end's back face, outside the gas boundary. The path gains one threaded joint (Al/316 bonded is ~1 dB,
-  Checks §6) but skips the graphite foil and the Macor stacks (26–52 dB on the rod end alone).
+  sensor sits on the rod end's back face, outside the gas boundary. The path gains a 316-in-316 thread, whose loss depends on
+  how well it seats (not estimated), but skips the graphite foil and the Macor stacks (26–52 dB on the rod end alone, Checks §6).
 - **What isn't solved: the preload.** The checks want a domed tip of R ≥ 25 mm held at 10–20 N; a 0.05 mm dome at Ø3 is not
   drawn. A rod fixed at both ends can't hold a steady force across a 200 °C plate and a swapped plate. That needs a spring:
   - a sprung tip in the heater block puts the spring into the path;
   - a rod end redesigned with a side exit (a cavity wide enough for an R ≥ 15 mm bend, an O-ring gland on the back face, the
     spring and the sensor outside) keeps it out.
-  The second changes a part the hot-swap and electrical notes own; it is a decision for them. Until then, the sensor on the
-  rod end works on its own, at 26–52 dB more loss.
+  The second changes a part the hot-swap and electrical notes own; it is a decision for them. Until then the drawn waveguide
+  has no defined contact force, and the sensor on the rod end hears the plate only through the stack, at 26–52 dB.
 - **Temperatures:** the rod end runs at 61 °C, or 74 °C with powder in the gaps (Checks §6), against ~75 °C for a sensor there.
   The preamp sits on the base plate.
 
@@ -374,6 +376,8 @@ Bar velocity 4915 m/s.
 - **`cad/electrical_parts.py`:** PB2 at x −28 (was −40).
 - **`cad/lpbf_low.py`:** a `monitoring` argument on `build()`, off by default.
 - **`analysis/interference.py`:** the monitoring parts' designed contacts, and its own output file when `LPBF_MONITORING=1`.
+- **`analysis/optics/monitoring_views.py`:** a `--drawn` mode (§2.2).
+- **`analysis/monitoring/fab/build_bom.py`:** four SEL lines (§6).
 
 ## 6. Not done, and limits
 
@@ -386,6 +390,9 @@ Bar velocity 4915 m/s.
   wall, the recoater sensor post and the guard's back panel on this line. The BOM's M7-05 is a SOLIS-850C: at BW it would
   need a smaller head, or another place, which wasn't checked.
 - **The LP's view of the whole L75 plate** is trimmed at its rim (§2.2). The planned camera's field isn't.
+- **The LP bore's machining:** a Ø24 bore on the line of sight needs the lid tilted (sine plate or angle plate), as the layer
+  camera's Ø30 bore does. `hours_monitoring.py` and fabrication.md §3 still describe a Ø37 bore normal to the lid and a Ø64
+  cap, so their hours for it are low.
 - **Envelopes, not drawings:** the Kowa lens (Ø32 × 50 here, Ø36 × 51 in the checks), the IMX296 housing (40 × 40 × 30), the
   AE sensor (Ø19 × 16), the preamp, the beam trap, the cage cubes (Thorlabs sizes not read off drawings), the LED.
 - **The PicoScope** is drawn on the 4U drawer's floor, which the model draws as one closed envelope. The drawer's real layout
@@ -395,5 +402,6 @@ Bar velocity 4915 m/s.
   stiff than their cantilever's, so take the next plate up or add a gusset if f1 must stay over 150 Hz.
 - **Not drawn:** §1's list, and the waveguide's preload (§4).
 - **Not reviewed:** no LSO review of the new ports, and no review by the shop.
-- **No BOM lines changed here.** Checks §2 and §3 change M0-06 (1.0 mm FKM sheet), M0-03 (fused silica only) and M7-08 (the
-  5/8 in. plate and wedge), and §6 above changes M7-05. All are in `build_bom.py`'s SEL list.
+- **BOM:** M0-03 (fused silica only), M0-04 (the LP cap's new outline), M0-06 (1.0 mm FKM sheet) and M7-08 (the 5/8 in. plate
+  and wedge) changed in `build_bom.py`'s SEL list, which was re-run; prices are unchanged. M7-05 (the BW light, above) and the
+  `in_model` column of the other drawn parts were left as they were.

@@ -517,7 +517,7 @@ def _ae(parts, add, h, module):
         mat="al6061", bom="M4-09", section=True, **pg)
     # preamp on the process base plate, behind-left of the Z stage (<= 1 m of cable; the sensor's lead unplugs at a module swap)
     zbp = h.P["z_base1"]
-    pre = box(-265.0, -155.0, -245.0, -185.0, zbp, zbp + 30.0)      # front-left: clear of the bridge posts (x <= -285) and the legs
+    pre = box(-265.0, -155.0, -240.0, -180.0, zbp, zbp + 30.0)      # front-left: 5 mm off the guard's bottom rail, clear of the bridge posts and legs
     add("AE preamplifier (MISTRAS 2/4/6 class, 40 dB; envelope 110 x 60 x 30) on the process base plate", pre, C["blue"], 4, (0, 0, -150),
         mat="misc", mass_kg=0.25, bom="M4-02", tags=TAG)
 
