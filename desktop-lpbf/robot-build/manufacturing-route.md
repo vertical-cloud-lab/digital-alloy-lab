@@ -13,6 +13,8 @@ ordered, built or quoted by a person; the live quotes are instant web prices rea
   - 46 % of the total is CAM programming (132 h) and 34 % is setups (99 h). Cutting is 33 h (12 %).
   - Each of the 57 parts carries a floor of about 3.5 h of CAM, setups and inspection, however small it is. 25 parts take
     4 h or less each: together 90 h, with 2.7 h of cutting.
+  - Those CAM and setup allowances are estimates. With the smaller ones robot-shop.md used, the same parts come to 121 h.
+    Nobody has timed a part yet.
 - **Printing the chamber would not change that.** JLC3DP priced the frame and floor as one printed body at $4,826.37 in
   316L and $2,916.58 in its SLM aluminium, with a 3-day build (live, before review).
   - Finishing it here would still take 10-14 h, against 24.9 h to machine it. That saves 11-17 h, or 4-6 % of the total.
@@ -109,6 +111,7 @@ per part in [`route-hours-by-part.csv`](route-hours-by-part.csv) and by group in
 | Frame (16.2) + floor plate (8.7) | 24.9 | 8.7 % |
 | + lid (6.8) and door (4.6): the shell | 36.3 | 12.6 % |
 | + the module body (7.2): spigot, flange, cylinder, weld | 43.5 | 15.1 % |
+| The shell + every part that seals into it or hangs on it (drawer, windows, camera boss, feedthroughs, overflow funnel, door hardware) | 93.5 | 32.5 % |
 
 - **Frame and floor cutting.** Of their 24.9 h, cutting is 7.4 h by dfm.py's conservative rates, 3.3 h at vendor feeds
   (45 min of it on the waterjet), and 2.2 h in the posted G-code. The G-code figure leaves out the taps, reamers and port tool.
@@ -143,7 +146,9 @@ The top 10 are 86 h (30 %). The other 47 parts average 4.3 h each.
 | Edison r7 robot-build review, §5 (estimate) | 1 machine | 100-180 h machining; 360-740 h for the whole manual build | an outside estimate of the same job |
 | Edison r7 chamber-route review, §5 (estimate) | 57 | 120-180 h achievable | with CAM templates (35-80 % less programming in the cited thesis), fixture plates and selective outsourcing |
 
-- **The CAM and setup allowances are the uncertain inputs.** They are what separates 137 h from 287 h.
+- **The CAM and setup allowances are the uncertain inputs.** They are what separates 137 h from 287 h. With
+  robot-shop.md's allowances (35 h of CAM per 48 parts, 20 min a setup), the same 57 parts come to 121 h: CAM 41.6,
+  69 setups 23.0, cutting 33.2, deburr and inspection 23.2. Every route's BYU hours scale the same way.
 - **Nobody has timed them.** A BYU machinist's estimate for three representative parts (the frame, a bracket and a lathe
   part) would pin the total down better than any further modelling.
 - **Out of scope here:** the 18 sheet parts (41.5 h if made here; outsourcing.md buys them cut and bent and welds five
@@ -308,6 +313,13 @@ UTC). Edison's literature review is [`edison/r7-chamber-route/answer.md`](../edi
   731 ± 98 ppm; TruPrint 1000 is ≤ 3,000 ppm standard. Pump-down machines claim 25-100 ppm.
 - **Ours sits with the pump-down machines,** and is more thorough: 1 mbar three times, 1-2 ppm O₂ in theory
   ([`vacuum-and-purge.md`](../vacuum-and-purge.md)).
+- **What purge-only would cost in argon and time** (estimates, perfect mixing × 2-3 for real chambers):
+  - From air to 100 ppm, the 11.3 L loop needs ~170-260 L. That is 17-26 min at 10 L/min, or 4-7 min at 40 L/min.
+  - Building, small flow-purged machines run 2-5 L/min (SLM 125, Aconity), so 1.2-3 m³ for a 10 h build.
+  - Our vacuum purge uses ~34 L of back-fill plus ~47 sccm of make-up, so ~60 L for the same build.
+  - At an assumed $100-300 per 300 cu ft (9.5 m³) cylinder of UHP argon (the helper's estimate; the suppliers' prices
+    are behind logins), flow-purging costs about $15-100 a build against $1-2.
+  - The bigger cost is the O₂ and water floor (option 6 below), not the gas.
 - **Why the vacuum matters for aluminium: water.** Van Cauwenbergh et al. (2019) printed AlSi7Mg after a vacuum
   pre-cycle at ~3 ppm O₂. Parts held 13 ± 4 ppm hydrogen, against 45 ± 11 ppm in the powder. Edison r7 §3.3 recommends
   the vacuum purge for aluminium on the same grounds.
@@ -339,6 +351,10 @@ Each option is priced for one chamber body (frame + floor, or its equivalent). T
 - **It doesn't remove the finishing.** Every O-ring land (Ra ≤ 0.8 µm, 0.025 mm flat), the Ø96 port, the insert holes,
   the KF bore and the door land still need the mill. As-built surfaces are Ra 3.2-12 µm and ±0.4 % (JLC3DP's stated
   spec).
+- **Touching up by hand isn't enough for the seals.** Lapping a 312 mm face flat to 0.025 mm by hand isn't practical,
+  and neither is holding the Ø96 H7 port or the Ø18 recoater bores. The lands and bores need the mill, or a surface
+  grinder for the two big faces. What can be done by hand: tap threads into printed pilot holes, or fit helical inserts
+  in them. That saves some drilling but none of the three setups.
 - **Leak-tightness isn't the risk.** No published AM vacuum part needed HIP. 316L LPBF walls have been gas-tight at
   0.3 mm (Grinschek et al. 2022). As-printed or sawn flange faces leaked at 10⁻⁷ to 10⁻⁵ mbar·L/s until they were
   machined (LAL Orsay, IPAC'17).
@@ -414,6 +430,8 @@ Each option is priced for one chamber body (frame + floor, or its equivalent). T
 - **It keeps at BYU the parts whose seal faces and fits we need to control and rework,** and whose CAM (frame, floor) is
   already done.
 - **It is no slower than all in house with two machinists,** and it needs one.
+- **It holds up if the instant prices don't.** If JLCCNC's review doubled the 33 parts' price, the hybrid would cost
+  about $22.0k. At US prices it is $27.0k (c2). Both are still below all in house ($28.7k).
 
 **Next steps, in order:**
 
@@ -466,6 +484,8 @@ Each option is priced for one chamber body (frame + floor, or its equivalent). T
 **Read the JLC prices as lower bounds:**
 
 - Both say the final price is subject to review.
+- For the same files, JLCCNC's prices are 8-13 times below SendCutSend's of 2026-11-22: lid $64.99 against $637.94, floor
+  plate $83.68 against $1,075.62, door $33.74 against $454.14.
 - The CNC prices assume no drawing, no threads, ISO 2768-m and the default anodize. Threads need a drawing upload, and the
   earlier run found they add about 25 %.
 - The five 316L and 416 parts were quoted as 6061; route b scales them by 3.74.

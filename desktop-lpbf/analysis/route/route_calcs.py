@@ -178,6 +178,11 @@ def hours_tables(rows):
     split = dict(one_off_cam=tot["cam"], per_batch_setups=tot["setup"], per_machine_run_deburr=round(tot["run"] + tot["deburr"], 1))
     split.update({k + "_pct": round(100 * v / tot["total"], 1) for k, v in list(split.items())})
     second_machine_later = round(tot["setup"] + tot["run"] + tot["deburr"], 1)
+    # sensitivity: robot-shop.md's "by hand" allowances (35 h of CAM for 48 parts, 20 min a setup), same cutting and deburr
+    n_setups = sum(r["setups"] for r in rows)
+    low = dict(cam=round(35.0 * len(rows) / 48, 1), setup=round(n_setups * 20 / 60, 1), run=tot["run"], deburr=tot["deburr"],
+               setups=n_setups)
+    low["total"] = round(low["cam"] + low["setup"] + low["run"] + low["deburr"], 1)
     two_together = round(tot["total"] + tot["run"] + tot["deburr"], 1)
     return dict(totals=tot, groups=groups, top10=[dict(part=r["part"], group=SHORT[r["group"]], total=r["total"], cam=r["cam"],
                                                        setup=r["setup"], run=r["run"], deburr=r["deburr"]) for r in top],
@@ -192,7 +197,7 @@ def hours_tables(rows):
                 small_parts=dict(n=len(small), h=round(sum(r["total"] for r in small), 1),
                                  cutting_h=round(sum(r["run"] for r in small), 2)),
                 fixed_overhead_h=round(fixed, 1), split=split,
-                second_machine_later_h=second_machine_later, two_machines_together_h=two_together)
+                second_machine_later_h=second_machine_later, two_machines_together_h=two_together, low_allowances=low)
 
 
 def reconcile():
@@ -649,6 +654,49 @@ def fig_gantt(R, S, path):
     plt.close(fig)
 
 
+def video_panel(H, R, C):
+    """Short strings for the video's chapter 60 panel (all from the tables above)."""
+    T = H["totals"]
+
+    def weeks(v):
+        lo, hi = v["ready_weeks"]
+        return f"{lo:.0f}" if round(lo) == round(hi) else f"{lo:.0f}-{hi:.0f}"
+
+    names = [("a1", "All at BYU, 1 machinist"), ("a2", "All at BYU, 2 machinists"), ("a3", "All at BYU, shop shared 20 h/wk"),
+             ("b_cn", "All outsourced (JLCCNC)"), ("b_us", "All outsourced (US shops)"), ("c_cn", "Hybrid (recommended)"),
+             ("d", "Robot shop (first machine)")]
+    routes = []
+    for k, n in names:
+        v = R[k]
+        h = v["labour_h"]
+        c0, c1 = v["total_usd_at_65"]
+        eq = v.get("equipment_usd") or 0
+        if eq:
+            cost = f"${(c0 - eq) / 1000:.0f}k-{(c1 - eq) / 1000:.0f}k + ${eq / 1000:.0f}k of equipment"
+        else:
+            cost = f"${c0 / 1000:.0f}k-{c1 / 1000:.0f}k" if c0 != c1 else f"${c0 / 1000:.1f}k"
+        routes.append(dict(route=n, byu_hours=(f"{h[0]:,}-{h[1]:,}" if isinstance(h, list) else f"{h:.0f}"), cost_usd=cost,
+                           weeks_to_leak_test=weeks(v), set_by=v["critical"].split(" (")[0]))
+    short = {"1.": ("Machined 6061 frame + floor (now)", "keep: 25 h, CAM already done"),
+             "2a": ("LPBF 316L, one body, then machined", "+$2k, saves 11-15 h"),
+             "2b": ("LPBF aluminium, one body, then machined", "same cost, saves 13-17 h: the fallback"),
+             "3.": ("DED 316L, machined all over", "no: machined all over anyway"),
+             "4.": ("Welded box, machined after", "no: same machining + weld risk"),
+             "5.": ("Catalogue vacuum chamber, modified", "no: doesn't fit 312 x 222"),
+             "6.": ("Purge-only enclosure (no vacuum)", "no: O2 and water floor for aluminium"),
+             "7.": ("Bolted box of six plates", "no: 8 three-way O-ring junctions"),
+             "8.": ("Casting", "no: porous, slow, one-off tooling")}
+    cham = [dict(option=short[c["option"][:2]][0], verdict=short[c["option"][:2]][1]) for c in C]
+    ch = H["chamber"]
+    return dict(headline=f"{T['total']:.0f} h = CAM {T['cam']:.0f} + setups {T['setup']:.0f} + cutting {T['run']:.0f} + "
+                         f"deburr/inspect {T['deburr']:.0f}; the chamber's frame + floor are {ch['frame_floor_h']:.0f} h "
+                         f"({ch['frame_floor_pct']:.0f} %)",
+                chamber_line=f"Chamber shell {ch['shell_h']:.0f} h ({ch['shell_pct']:.0f} %); printing it saves 11-17 h",
+                routes=routes, chamber_options=cham,
+                note="labour at BYU's $65/h; weeks from the PO to the first leak test, daytime only; estimates labelled in "
+                     "desktop-lpbf/robot-build/manufacturing-route.md")
+
+
 def write_csv(path, rows):
     with path.open("w", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=list(rows[0].keys()))
@@ -693,6 +741,7 @@ def main():
                    deburr_inspect=H["totals"]["deburr"], parts=len(rows), chamber=H["chamber"], split=H["split"],
                    fixed_overhead_h=H["fixed_overhead_h"], small_parts=H["small_parts"],
                    second_machine_later_h=H["second_machine_later_h"], two_machines_together_h=H["two_machines_together_h"],
+                   low_allowances=H["low_allowances"],
                    top10=H["top10"], groups=[dict(group=SHORT[g["group"]], h=g["total"], pct=g["share_pct"]) for g in H["groups"]]),
         routes={k: dict(label=v["label"], labour_h=v["labour_h"], labour_usd=v["labour_usd"], outside_usd=v["outside_usd"],
                         materials_usd=v.get("materials_usd"), equipment_usd=v.get("equipment_usd"),
@@ -708,6 +757,7 @@ def main():
                     jlc3dp_build_days=3, jlccnc_62_pieces_qty1=2437.49, jlccnc_lead_days="7 + 2-4 UPS",
                     jlccnc_lid=64.99, jlccnc_floor=83.68, jlccnc_door=33.74, jlccnc_frame="manual quote"),
         laser_weeks=dict(new_ipg=[round(83 / 7, 1), round(105 / 7, 1)], used=[0.4, 1.1]),
+        video=video_panel(H, R, C),
         extras=X)
     (RB / "route-summary.json").write_text(json.dumps(summary, indent=1))
     TMPJSON.parent.mkdir(parents=True, exist_ok=True)
@@ -717,7 +767,7 @@ def main():
           f"deburr {T['deburr']}")
     print("chamber:", H["chamber"])
     print("split:", H["split"], "second machine later", H["second_machine_later_h"], "two together", H["two_machines_together_h"])
-    print("fixed overhead", H["fixed_overhead_h"], "small parts", H["small_parts"])
+    print("fixed overhead", H["fixed_overhead_h"], "small parts", H["small_parts"], "low allowances", H["low_allowances"])
     for g in H["groups"]:
         print(f"  {SHORT[g['group']]:18s} {g['parts']:3d} parts {g['total']:6.1f} h {g['share_pct']:5.1f} %  CAM {g['cam']:5.1f} "
               f"setup {g['setup']:5.1f} run {g['run']:5.1f} deburr {g['deburr']:4.1f}")

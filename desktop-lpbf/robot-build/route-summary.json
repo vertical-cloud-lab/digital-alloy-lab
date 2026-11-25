@@ -34,6 +34,14 @@
   },
   "second_machine_later_h": 155.0,
   "two_machines_together_h": 343.7,
+  "low_allowances": {
+   "cam": 41.6,
+   "setup": 23.0,
+   "run": 33.2,
+   "deburr": 23.2,
+   "setups": 69,
+   "total": 121.0
+  },
   "top10": [
    {
     "part": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor ",
@@ -473,6 +481,100 @@
    0.4,
    1.1
   ]
+ },
+ "video": {
+  "headline": "287 h = CAM 132 + setups 99 + cutting 33 + deburr/inspect 23; the chamber's frame + floor are 25 h (9 %)",
+  "chamber_line": "Chamber shell 36 h (13 %); printing it saves 11-17 h",
+  "routes": [
+   {
+    "route": "All at BYU, 1 machinist",
+    "byu_hours": "291",
+    "cost_usd": "$28.7k",
+    "weeks_to_leak_test": "8-12",
+    "set_by": "machining"
+   },
+   {
+    "route": "All at BYU, 2 machinists",
+    "byu_hours": "291",
+    "cost_usd": "$28.7k",
+    "weeks_to_leak_test": "7-12",
+    "set_by": "honing loop"
+   },
+   {
+    "route": "All at BYU, shop shared 20 h/wk",
+    "byu_hours": "291",
+    "cost_usd": "$28.7k",
+    "weeks_to_leak_test": "15",
+    "set_by": "machining"
+   },
+   {
+    "route": "All outsourced (JLCCNC)",
+    "byu_hours": "72",
+    "cost_usd": "$11.1k",
+    "weeks_to_leak_test": "7-13",
+    "set_by": "the module weldment"
+   },
+   {
+    "route": "All outsourced (US shops)",
+    "byu_hours": "72",
+    "cost_usd": "$33.2k",
+    "weeks_to_leak_test": "7-13",
+    "set_by": "the module weldment"
+   },
+   {
+    "route": "Hybrid (recommended)",
+    "byu_hours": "134",
+    "cost_usd": "$19.6k",
+    "weeks_to_leak_test": "7-12",
+    "set_by": "honing loop"
+   },
+   {
+    "route": "Robot shop (first machine)",
+    "byu_hours": "1,430-2,850",
+    "cost_usd": "$103k-195k + $329k of equipment",
+    "weeks_to_leak_test": "22-42",
+    "set_by": "commissioning the cell"
+   }
+  ],
+  "chamber_options": [
+   {
+    "option": "Machined 6061 frame + floor (now)",
+    "verdict": "keep: 25 h, CAM already done"
+   },
+   {
+    "option": "LPBF 316L, one body, then machined",
+    "verdict": "+$2k, saves 11-15 h"
+   },
+   {
+    "option": "LPBF aluminium, one body, then machined",
+    "verdict": "same cost, saves 13-17 h: the fallback"
+   },
+   {
+    "option": "DED 316L, machined all over",
+    "verdict": "no: machined all over anyway"
+   },
+   {
+    "option": "Welded box, machined after",
+    "verdict": "no: same machining + weld risk"
+   },
+   {
+    "option": "Catalogue vacuum chamber, modified",
+    "verdict": "no: doesn't fit 312 x 222"
+   },
+   {
+    "option": "Purge-only enclosure (no vacuum)",
+    "verdict": "no: O2 and water floor for aluminium"
+   },
+   {
+    "option": "Bolted box of six plates",
+    "verdict": "no: 8 three-way O-ring junctions"
+   },
+   {
+    "option": "Casting",
+    "verdict": "no: porous, slow, one-off tooling"
+   }
+  ],
+  "note": "labour at BYU's $65/h; weeks from the PO to the first leak test, daytime only; estimates labelled in desktop-lpbf/robot-build/manufacturing-route.md"
  },
  "extras": {
   "stock_usd": 5598,
