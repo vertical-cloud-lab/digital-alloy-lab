@@ -11,25 +11,25 @@ bom.csv line,bom.csv,C2,,Supervisor computer,0,C2,
 bom.csv line,bom.csv,C3,,Motion controller and stepper drive,0,C3,
 bom.csv line,bom.csv,C4,,DC supplies (UPS-backed) and 24 V branch protection,0,C4,
 bom.csv line,bom.csv,C5,,Process I/O PLC and thermocouple inputs,0,C5,
-bom.csv line,bom.csv,C6,,"4U control drawer, PB2 box and DIN hardware",1,C6,
+bom.csv line,bom.csv,C6,,"4U control drawer, PB2 box and DIN hardware",2,C6,
 bom.csv line,bom.csv,M1,,Recoater axis (less servo),12,M1,
 bom.csv line,bom.csv,M2,,Servo motors,2,M2,
 bom.csv line,bom.csv,M3,,Z stage (less servo): integrated actuator under the floor,5,M3,
 bom.csv line,bom.csv,M4,,"Metering base, roller drive and overflow",7,M4,
-bom.csv line,bom.csv,M5,,Recoater blade cartridges,2,M5,
-bom.csv line,bom.csv,M6,,Layer camera + lighting,3,M6,
-bom.csv line,bom.csv,G1,,"Process chamber: through-frame, floor plate, lid, door and their small parts",22,G1,
+bom.csv line,bom.csv,M5,,Recoater blade cartridges,4,M5,
+bom.csv line,bom.csv,M6,,Layer camera + lighting,4,M6,
+bom.csv line,bom.csv,G1,,"Process chamber: through-frame, floor plate, lid, door and their small parts",23,G1,
 bom.csv line,bom.csv,G2,,Vacuum pump,2,G2,
 bom.csv line,bom.csv,G3,,Argon supply,1,G3,
 bom.csv line,bom.csv,G4,,Recirculation blower,1,G4,
 bom.csv line,bom.csv,G5,,Filter train,1,G5,
 bom.csv line,bom.csv,G6,,O2 analyzer,1,G6,
-bom.csv line,bom.csv,G7,,Valves / fittings / gauges,16,G7,
-bom.csv line,bom.csv,G8,,"Chamber, module and port seals",26,G8,
+bom.csv line,bom.csv,G7,,Valves / fittings / gauges,20,G7,
+bom.csv line,bom.csv,G8,,"Chamber, module and port seals",24,G8,
 bom.csv line,bom.csv,G9,,Dew-point / moisture sensor,0,G9,
 bom.csv line,bom.csv,S1,,Safety controller and final elements,0,S1,
-bom.csv line,bom.csv,S2,,Guard lock and guard-position switch,1,S2,
-bom.csv line,bom.csv,S3,,"E-stops (rack, guard front, gas module, spare)",1,S3,
+bom.csv line,bom.csv,S2,,Guard lock and guard-position switch,2,S2,
+bom.csv line,bom.csv,S3,,"E-stops (rack, guard front, gas module, spare)",5,S3,
 bom.csv line,bom.csv,S4,,Key switch + emission indicator + manual reset + HOT lamp,4,S4,
 bom.csv line,bom.csv,S5,,Laser-safe viewing window,1,S5,
 bom.csv line,bom.csv,S6,,Laser safety eyewear (service/alignment),0,S6,
@@ -38,26 +38,26 @@ bom.csv line,bom.csv,S8,,Class D extinguisher,0,S8,
 bom.csv line,bom.csv,S9,,"Rack, guard frame, guard panels and sliding guard door",6,S9,
 bom.csv line,bom.csv,F3,,Levelling mounts (process and gas modules),2,F3,
 bom.csv line,bom.csv,F4,,Module base plates (process and gas),2,F4,
-bom.csv line,bom.csv,F5,,"Optics bridge, posts and beam-path mounts",6,F5,
+bom.csv line,bom.csv,F5,,"Optics bridge, posts and beam-path mounts",7,F5,
 bom.csv line,bom.csv,P1,,Glovebox,0,P1,
-bom.csv line,bom.csv,T1,,Laser power sensor,0,T1,
-bom.csv line,bom.csv,T2,,Melt-pool photodiode and its optics,0,T2,
+bom.csv line,bom.csv,T1,,Laser power sensor (calibration head on the plate),0,T1,
+bom.csv line,bom.csv,T2,,Melt-pool photodiode and its optics,3,T2,
 bom.csv line,bom.csv,T3,,Calibration tools,0,T3,
-bom.csv line,bom.csv,H1,,"Heater stacks for the three build modules, rod-end feedthroughs and thermocouple wiring",7,H1,
+bom.csv line,bom.csv,H1,,"Heater stacks for the three build modules, rod-end feedthroughs and thermocouple wiring",6,H1,
 bom.csv line,bom.csv,H2,,"Heater power, switching, independent limit and the plate < 50 C channel",0,H2,
 bom.csv line,bom.csv,H3,,Module cooling fan under the floor,0,H3,
 bom.csv line,bom.csv,B1,,"Three build modules (Ø25 / Ø50 / Ø75): cylinders, spigot-flanges, pistons, plates, hollow rods",7,B1,
 bom.csv line,bom.csv,B2,,"Module seals, clamping and Z coupling",7,B2,
-bom.csv line,bom.csv,R1,,Reservoirs S / M / L (38 / 97 / 233 cm3) with shutters,5,R1,
-bom.csv line,bom.csv,A1,,"Step-confirm sensors, reservoir ID and weighing",7,A1,
-bom.csv line,bom.csv,A2,,Cleaning and consumables,2,A2,
-bom.csv line,bom.csv,A3,,"Pneumatic door drive and latch actuators, valves and air prep; robot handles and tags",10,A3,
-bom.csv line,bom.csv,D1,,Tray dock (tray half) and umbilicals,5,D1,
+bom.csv line,bom.csv,R1,,Reservoirs S / M / L (38 / 97 / 233 cm3) with shutters,6,R1,
+bom.csv line,bom.csv,A1,,"Step-confirm sensors, reservoir ID and weighing",8,A1,
+bom.csv line,bom.csv,A2,,Cleaning and consumables,7,A2,
+bom.csv line,bom.csv,A3,,"Pneumatic door drive and latch actuators, valves and air prep; robot handles and tags",11,A3,
+bom.csv line,bom.csv,D1,,Tray dock (tray half) and umbilicals,6,D1,
 bom.csv line,bom.csv,D2,,"UPS (2U, in the rack)",1,D2,
-bom.csv line,bom.csv,FX,,"Screws, helical inserts, dowels, set screws, retainers and disc springs",38,FX,
-bom.csv line,bom.csv,E1,,"Power box PB1: main disconnect, branch protection, contactors",0,E1,
+bom.csv line,bom.csv,FX,,"Screws, helical inserts, dowels, set screws, retainers and disc springs",44,FX,
+bom.csv line,bom.csv,E1,,"Power box PB1: main disconnect, branch protection, contactors",4,E1,
 bom.csv line,bom.csv,E2,,Ethernet switch,0,E2,
-bom.csv line,bom.csv,E3,,Axis home sensors and chamber-at-ambient switch,0,E3,
+bom.csv line,bom.csv,E3,,Axis home sensors and chamber-at-ambient switch,6,E3,
 bom.csv line,bom.csv,E4,,"Bulk wire, bonding straps, ESD",0,E4,
 bom.csv line,bom.csv,E5,,"Optional: milliohm meter, UPS network card, LED-bar feedthrough",0,E5,
 bom.csv line,bom.csv,X1,,Machining and fabrication of the custom parts not costed elsewhere,0,X1,
@@ -95,8 +95,8 @@ purchase row,mcmaster-parts.csv,G7,5539N26,"Differential Pressure Transmitter fo
 purchase row,mcmaster-parts.csv,G7,4277T52,"Compact Nylon Pressure-Relief Valve for Air, 1/4 NPT Male",0,G7,stale: line G7's notes retire it
 purchase row,mcmaster-parts.csv,G7,7833K76,"High-Pressure Precision Flow-Adjustment Valve, Metal-to-Metal Seat, Brass Body, 1/4 NPT Female x Female",0,G7,
 purchase row,mcmaster-parts.csv,G7,5182K111,"Yor-Lok Fitting for Stainless Steel Tubing, Straight Adapter for 1/4"" Tube OD x 1/4 NPT Male",0,G7,stock for custom parts
-purchase row,mcmaster-parts.csv,G7,4518K72,"Wing Nut Clamp for 1"" Tube OD Quick-Clamp High-Vacuum Fitting",0,G7,stock for custom parts
 purchase row,mcmaster-parts.csv,G7,4518K63,"Fluoroelastomer Rubber O-Ring for 1"" Tube OD Quick-Clamp High-Vacuum Fitting",0,G7,stock for custom parts
+purchase row,mcmaster-parts.csv,G7,4518K73,"Wing Nut Clamp for 1-1/2"" Tube OD Quick-Clamp High-Vacuum Fitting",0,G7,stock for custom parts
 purchase row,mcmaster-parts.csv,G7,4518K64,"Fluoroelastomer Rubber O-Ring for 1.5"" Tube OD Quick-Clamp High-Vacuum Fitting",0,G7,stock for custom parts
 purchase row,mcmaster-parts.csv,S4,7545K7,Lens Cap for 22 mm Panel Cutout Diameter Oil-Resistant Panel Light with Screw Terminals,0,S4,stale: line S4 no longer cites mcmaster-parts.csv
 purchase row,mcmaster-parts.csv,S4,1577T43,"Surface-Mount LED Stack Light, 3 Lights, 6-3/8"" High",0,S4,stale: line S4 no longer cites mcmaster-parts.csv
@@ -104,11 +104,14 @@ purchase row,mcmaster-parts.csv,C6,7812K14,"Powder-Coated Steel Watertight Enclo
 purchase row,mcmaster-parts.csv,C6,7812K54,"11"" x 9"" Steel Panel for Powder-Coated Steel Watertight Enclosure",0,C6,stale: line C6 no longer cites mcmaster-parts.csv
 purchase row,mcmaster-parts.csv,C6,8961K15,"Steel DIN 3 Rail, 7.5mm Deep, 1m Long",0,C6,stale: line C6 no longer cites mcmaster-parts.csv
 purchase row,mcmaster-parts.csv,C6,69915K54,"Liquid-Tight Plastic Cord Grip, Straight, for 0.2""-0.35"" Cord OD, 1/2 NPT Thread, Nylon",0,C6,stale: line C6 no longer cites mcmaster-parts.csv
-purchase row,fasteners.csv,row6,91732A767,"18-8 Stainless Steel Helical Threaded Insert, Pronged, M2.5 x 0.45 mm Thread Size, 3.8 mm Installed Length",0,FX,
-purchase row,fasteners.csv,row14,92029A142,"316 Stainless Steel Cup-Point Set Screw, M4 x 0.7 mm Thread, 6 mm Long",0,FX,
-purchase row,fasteners.csv,row16,92290A854,"316 Stainless Steel Socket Head Screw, M2.5 x 0.45 mm Thread, 30 mm Long, Fully Threaded",0,FX,
+purchase row,fasteners.csv,row7,91732A767,"18-8 Stainless Steel Helical Threaded Insert, Pronged, M2.5 x 0.45 mm Thread Size, 3.8 mm Installed Length",0,FX,
+purchase row,fasteners.csv,row16,92029A142,"316 Stainless Steel Cup-Point Set Screw, M4 x 0.7 mm Thread, 6 mm Long",0,FX,
+purchase row,fasteners.csv,row18,92290A854,"316 Stainless Steel Socket Head Screw, M2.5 x 0.45 mm Thread, 30 mm Long, Fully Threaded",0,FX,
 purchase row,seal-parts.csv,row4,2-110 9464K977,Rod glands S25 (2),0,G8,stock for custom parts
 purchase row,seal-parts.csv,row7,2-041 9464K836,Gland-plate face seal L75,0,G8,stock for custom parts
+purchase row,seal-parts.csv,row8,2-014,Hermetic-connector face seal on each rod end (3 modules),0,G8,stock for custom parts
+purchase row,seal-parts.csv,row16,2-022 9464K492,Camera adapter to lid; reservoir S lid,0,G8,
+purchase row,seal-parts.csv,row18,2-017 9464K457,Camera window seat,0,G8,
 purchase row,seal-parts.csv,row21,2-904 5267T786,"SAE J1926 -4 port O-rings (argon in, O2 sample, transducer, relief valve)",0,G8,
 purchase row,seal-parts.csv,row24,5174A35,"Door: robot alternative, pneumatic hold-down clamp (not drawn; same side faces)",0,G8,
 purchase row,seal-parts.csv,row25,802-U,"Door: robot alternative, pneumatic clamp (not drawn)",0,G8,
@@ -117,13 +120,13 @@ purchase row,seal-parts.csv,row27,5210N21,Drawer latch candidate (does not fit t
 purchase row,seal-parts.csv,row30,FD-F1-0250-LC FD-F1-KF25-0250-LC Ideal Vacuum P107199 P107199 spec sheet model F,Rotary feedthrough with a published price (alternative),0,G8,alternative (qty 0)
 purchase row,seal-parts.csv,row31,9C-K16 PN 100011,"Rod-end hermetic feedthrough meeting the spec (9 pins, KF-16): not drawn, needs a KF-16 port on the rod end",0,G8,stock for custom parts
 purchase row,seal-parts.csv,row32,A0408-2-QF Ideal Vacuum P108063 P108063,Rod-end type K thermocouple feedthrough (KF-16): not drawn,0,G8,stock for custom parts
+purchase row,seal-parts.csv,row33,HGG.1B.310.CLLPV,Rod-end connector drawn (LEMO 1B envelope): fails the spec,0,G8,alternative (qty 0)
 purchase row,seal-parts.csv,row34,5182K862,"Argon-in and O2-sample fittings, 1/4 in. tube x 7/16-20 SAE O-ring boss, 316",0,G8,stock for custom parts
-purchase row,seal-parts.csv,row35,85015A47,"Reservoir dock detent (spring plunger, existing BOM line R1)",0,G8,
 purchase row,seal-parts.csv,row36,,"Window and camera-window flat clamp rings, FKM sheet 1.0 mm",0,G8,stock for custom parts
-purchase row,vendor-parts.csv,row9,4518K72,,0,,
+purchase row,vendor-parts.csv,row10,4518K73,,0,G7,
 purchase row,vendor-parts.csv,row14,4396K21,,0,G2,
 purchase row,safety-parts.csv,SP1,0-25 % O2 2 relays 4-20 mA LED Macurco OX-6,Fixed O2 monitor for the lab room (breathing height and near the argon cylinder),0,C5,"room safety, PPE or option"
-purchase row,safety-parts.csv,SP2,Macurco OX-6 same part,Fixed O2 monitor inside the Kardex Shuttle shaft (low) and one at the tray bay,0,S7,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP2,Macurco OX-6 same part,Fixed O2 monitor inside the Kardex Shuttle shaft (low) and one at the tray bay,0,M4,"room safety, PPE or option"
 purchase row,safety-parts.csv,SP3,18995T81 McMaster 18995T81 portable O2 detector nonreplaceable battery,Personal O2 monitor for filter changes and any entry,0,S7,"room safety, PPE or option"
 purchase row,safety-parts.csv,SP5,"Critical-flow orifice, 0.5-1 mm class Lee Co. or O'Keefe Controls",Critical-flow (sonic) orifice in the argon line,0,,"room safety, PPE or option"
 purchase row,safety-parts.csv,SP6,34.5 mbar 4277T52 McMaster 4277T52 nylon relief 0.5 psi,Low-pressure relief on the chamber (BOM part),0,G7,"room safety, PPE or option"
@@ -168,14 +171,12 @@ purchase row,robot-tooling.csv,RA3c,D-M9B,clamp-closed sensors,0,A3,robot cell
 purchase row,robot-tooling.csv,RA4,automation.py,drawer latch wing heads,0,,robot cell
 purchase row,robot-tooling.csv,RA4b,MKB25-10LZ MKB25-10RZ,drawer clamp (powered alternative to RA4),0,,robot cell
 purchase row,robot-tooling.csv,RA5,automation.py,blade-cartridge grip fin,0,,robot cell
-purchase row,robot-tooling.csv,RA5b,85015A47 McMaster 85015A47 ball plungers as the reservoir's,blade-cartridge retention,0,R1,robot cell
 purchase row,robot-tooling.csv,RA5c,94748A956,blade-cartridge pin (alternative to RA5b),0,,robot cell
 purchase row,robot-tooling.csv,RA6,automation.py,liner pull tabs,0,,robot cell
 purchase row,robot-tooling.csv,RA7,automation.py,AprilTag plates,0,,robot cell
 purchase row,robot-tooling.csv,RA8,49517 receiver 49607 shank,build-plate drawbar ball lock,0,,robot cell
 purchase row,robot-tooling.csv,RA9,CDQ2B40-10DCMZ,drawbar release cylinder,0,,robot cell
 purchase row,robot-tooling.csv,RA10,1460874,module zero-point clamps,0,,robot cell
-purchase row,robot-tooling.csv,RA11,100318805,overflow jar lever clamp,0,,robot cell
 purchase row,robot-tooling.csv,RA12,SS5Y3-45FD-05U-N7,valve manifold,0,A3,robot cell
 purchase row,robot-tooling.csv,RA13,modules_low.py MODULE_GRIP,module grip block,0,,robot cell
 purchase row,assembly-tooling.csv,E1,UR12e,UR12e collaborative arm (the UR10e renamed),0,,tool or fixture
@@ -218,12 +219,12 @@ purchase row,options-mcmaster.csv,B2,9464K367,"Chemical-Resistant Viton® Fluoro
 purchase row,options-mcmaster.csv,B2,9464K982,"Chemical-Resistant Viton® Fluoroelastomer O-Ring, 3/32 Fractional Width, Dash Number 114",0,B2,
 purchase row,options-mcmaster.csv,B2,6435K35,"Clamping Shaft Collar for 5/8"" Diameter, 303 Stainless Steel",0,B2,
 purchase row,options-mcmaster.csv,R1,8983K56,"Multipurpose 304 Stainless Steel Sheet, 0.036"" Thick, 12"" x 24""",0,R1,stock for custom parts
-purchase row,options-mcmaster.csv,R1,85015A47,"18-8 Stainless Steel Slotted Ball-Nose Spring Plunger with 440C Stainless Steel Nose, M6x1, 2-2.9 lb. Nose For",0,R1,
 purchase row,options-mcmaster.csv,R1,8969T3,"316 Stainless Steel Corrosion-Resistant Compression Springs, 1"" Long, 0.25"" OD, 0.192"" ID",0,R1,
 purchase row,options-mcmaster.csv,A2,4123K47,"On/Off Valve with Ultra-High-Vacuum Fittings, Valve Trade Number 40, for 1-1/2"" Tube OD",0,A2,alternative in line A2
 purchase row,options-mcmaster.csv,A2,5572N116,"Vacuum System for Powered Sanders, Air-Powered, Wall-Mount, 1-1/2 Gallon Capacity",0,A2,
 purchase row,options-vendors.csv,H1,P-IH5-0069-24V,"Industrial Heater (50W 24V), Bare Leads",0,H1,stale: line H1 no longer cites options-vendors.csv
 purchase row,options-vendors.csv,H1,24V option Standard Heater Cartridge 40W,Standard Heater Cartridge 40W,0,H1,stale: line H1 no longer cites options-vendors.csv
+purchase row,options-vendors.csv,H1,RT240,TCO FUSE 250 15A 240C AXIAL,0,H1,stale: line H1 no longer cites options-vendors.csv
 purchase row,options-vendors.csv,H1,100801,2 Pairs of Thermocouple pins and two Power Pins Feedthrough - KF50,0,H1,stale: line H1 no longer cites options-vendors.csv
 purchase row,options-vendors.csv,H1,TFT2KY00008,"THERMOCOUPLE FEEDTHROUGH, SINGLE ENDED, 2 PAIR TYPE K, MINI PLUG STYLE ATM CONNECTOR, MOUNTED ON A QF16 FLANGE",0,,alternative (qty 0)
 purchase row,options-vendors.csv,H1,1205020022,"CIRC CBL 5POS RCPT TO WIRE 1.64' (Brad M12 Power L-Code; receptacle, male pins, panel mount, wire leads)",0,H1,stale: line H1 no longer cites options-vendors.csv
@@ -239,6 +240,7 @@ purchase row,options-vendors.csv,A1,E3NX-FA41 E3NX-FA41 2M,FIBER AMP 1-OUT PNP P
 purchase row,options-vendors.csv,A1,3001300,Beontag Ironside Micro NFC Tag | NXP NTAG213,0,A1,stale: line A1 no longer cites options-vendors.csv
 purchase row,options-vendors.csv,A1,DTI410,RFID read/write head HF for flush mounting (IO-Link),0,,alternative (qty 0)
 purchase row,options-vendors.csv,A1,SEN-15242,SparkFun Qwiic Scale - NAU7802,0,A1,stale: line A1 no longer cites options-vendors.csv
+purchase row,options-vendors.csv,A2,25-250,"50.8mm Dia. 3mm Thick Uncoated, 1λ Fused Silica Window",0,A2,stale: line A2 no longer cites options-vendors.csv
 purchase row,options-vendors.csv,A2,11-742,"Thin Fused Silica Laser Window, 50.80 mm dia. x 1.00 mm, BBAR (950-1150nm)",0,,alternative (qty 0)
 purchase row,options-vendors.csv,A2,MX200 MX200 Series,"MX200 Series: Compact C2D2, Universities and Labs (listed under Group E Metals, Immersion Separators)",0,A2,stale: line A2 no longer cites options-vendors.csv
 purchase row,options-vendors.csv,A2,Mini Immersion Separator Wet Mix for 3D Printing,"Mini Immersion Separator ""Wet (Water) Mix"" Models for 3D Printing and Additive Manufacturing",0,,alternative (qty 0)
@@ -257,7 +259,7 @@ purchase row,plate-materials.csv,B1,,"(spray-formed hypereutectic Al-Si, e.g. CE
 purchase row,vendor-lookups.csv,row3,FTH254-1064,"F-Theta Lens, EFL 254 mm, M85x1.0",0,L6,
 purchase row,vendor-lookups.csv,row4,FTHW75-1064,Replacement protective window for FTH100/FTH160,0,L6,
 purchase row,vendor-lookups.csv,row5,GVS012,"2D Large Beam (10 mm) Galvo System, Silver-Coated Mirrors, PSU Not Included",0,,
-purchase row,vendor-lookups.csv,row6,GBE02-C,"2X Achromatic Galilean Beam Expander, AR 1050-1650 nm",0,L3,
+purchase row,vendor-lookups.csv,row6,GBE02-C,"2X Achromatic Galilean Beam Expander, AR 1050-1650 nm",0,,
 purchase row,vendor-lookups.csv,row7,GBE03-C,"3X Achromatic Galilean Beam Expander, AR 1050-1650 nm",0,,
 purchase row,vendor-lookups.csv,row8,WG41050-C,"Ø1"" UVFS Broadband Precision Window, AR 1050-1700 nm, t = 5 mm",0,L7,
 purchase row,vendor-lookups.csv,row10,LG1,"Laser Safety Glasses, Light Green Lenses, 59% VLT, Universal Style",0,,

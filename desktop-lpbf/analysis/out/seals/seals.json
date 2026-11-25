@@ -43,19 +43,6 @@
     "ring_id": 15.54,
     "path": 112.70463644753383
    },
-   "hermetic_M50": {
-    "kind": "face",
-    "ring": "2-014",
-    "cs": 1.78,
-    "depth": 1.32,
-    "width": 2.3,
-    "groove_id": 12.6,
-    "groove_mat": "ss",
-    "T": 40.0,
-    "closure": "hermetic connector on the rod end (M50)",
-    "ring_id": 12.42,
-    "path": 46.80973053848791
-   },
    "overflow_funnel": {
     "kind": "face",
     "ring": "2-042",
@@ -254,29 +241,16 @@
    },
    "camera_adapter": {
     "kind": "face",
-    "ring": "2-022",
+    "ring": "2-030",
     "cs": 1.78,
     "depth": 1.32,
     "width": 2.3,
-    "groove_id": 25.8,
+    "groove_id": 42.0,
     "groove_mat": "al",
     "T": 45.0,
     "closure": "camera adapter on the lid",
-    "ring_id": 25.12,
-    "path": 88.27875356587319
-   },
-   "camera_window": {
-    "kind": "face",
-    "ring": "2-017",
-    "cs": 1.78,
-    "depth": 1.32,
-    "width": 2.3,
-    "groove_id": 17.6,
-    "groove_mat": "al",
-    "T": 45.0,
-    "closure": "camera window on the boss",
-    "ring_id": 17.17,
-    "path": 62.51769380643689
+    "ring_id": 41.0,
+    "path": 139.1725545540278
    },
    "sae4_ports": {
     "kind": "sae",
@@ -441,7 +415,7 @@
   "slot_w": 8.0,
   "rod_od": 15.875,
   "area_walls_cm2": 2192.0,
-  "n_parts": 224
+  "n_parts": 268
  },
  "sources": {
   "1": "Parker O-Ring Handbook ORD 5700: Design Chart 4-3 (face glands), Design Table 4-2 (static radial glands), \u00a73.11 vacuum sealing and Table 3-20 (finish), \u00a73.12.1 leak-rate approximation and Fig. 3-11 (Q), Table 3-24 (permeability), Figs. 2-4..2-6 (compression load). https://nfc.arizona.edu/sites/default/files/2022-02/parker_o-ring_handbook.pdf",
@@ -455,7 +429,9 @@
   "9": "Airgas/Linde argon 5.0 (UHP) typical limits: O2 <= 1-2 ppm, H2O <= 1-3 ppm",
   "10": "Sturm et al. (2004), Permeation of atmospheric gases through polymer O-rings used in flasks for air sampling, J. Geophys. Res. 109, D04309, https://doi.org/10.1029/2003JD004073: Viton O2 1.0-1.1e-15 and H2O ~220e-15 m2/(s hPa) (= 1.05e-8 and 2.2e-6 std cc cm/(cm2 s bar)); via Edison",
   "11": "Lubkowitz et al. (2024): new AlSi10Mg powder 0.015 wt% moisture (Karl Fischer); Van Cauwenbergh et al. (2019): AlSi7Mg0.6 powder 45 +/- 11 ppm H, parts 13 +/- 4 ppm; via Edison, desktop-lpbf/edison/followup-sealing-o2/answer.md",
-  "12": "Pauzon et al. (2021), control of residual oxygen in LPBF (TruPrint 1000): a zirconia lambda probe read +50 ppm where an electrochemical cell read +700 ppm (H2 cross-sensitivity); leak-plus-outgassing drift ~1.7 ppm O2/min; via Edison"
+  "12": "Pauzon et al. (2021), control of residual oxygen in LPBF (TruPrint 1000): a zirconia lambda probe read +50 ppm where an electrochemical cell read +700 ppm (H2 cross-sensitivity); leak-plus-outgassing drift ~1.7 ppm O2/min; via Edison",
+  "13": "Solid Sealing Technology, General Product Specifications: every hermetic part helium leak-tested, guaranteed < 1e-10 atm cc/s He; 'weldable feedthroughs are designed to have the adapter welded on the vacuum side of flanges or chambers'. https://www.solidsealing.com/img/documents/SST_General_Product_Specifications-406829.pdf (linked from the FA11631 page; read 2026-11-25 through the lab Pi). FA11631: 10 V, -269 to 450 C, 3500 psig, weld mount, $44 (https://www.solidsealing.com/products/1851/)",
+  "14": "Solid Sealing Technology NS13003, 26482 circular connectors, welding instructions: mating hardware 304 or 316; 'preferred orientation is with the weld on the vacuum side'; pulsed TIG 20-25 A, heat sinks on both sides, tack welds, segments of 3-4 s (never over 4 s), inert gas on the far side. https://www.solidsealing.com/img/resources/NS13003_887844.pdf (read 2026-11-25; SST lists no sheet for the single-lead and 4-pin weld-ins)"
  },
  "inventory": [
   {
@@ -469,10 +445,10 @@
   {
    "key": "door",
    "seal": "Door: 1.78 mm FKM 75A cord (McMaster 96515K123) in a half-dovetail groove, depth 1.32, 2.3 wide at the bottom, 24 deg undercut",
-   "held_by": "2 x McMaster 1807A61 draw latches (800 lb) on the chamber's side faces pulling strikes on two door ears; floating (slotted) hinge holes",
+   "held_by": "2 x McMaster 1807A61 draw latches (800 lb) on 6061 brackets bolted to the door's two ears, pointing forward, pulling strikes on the chamber's side faces (since 2026-11-23); the hinge holds the bottom edge (round pin holes, knuckles shimmed at assembly, since 2026-11-25; they were slotted so the door floated)",
    "status": "CHECK",
-   "in_model": "groove, cord, ears, strikes, latch bodies, slotted hinge knuckles",
-   "note": "set each latch to >= the preload in the clamp table; the half-dovetail is overfilled at worst tolerance (gland table); robot: same faces take a pneumatic latch/hold-down clamp (not drawn)"
+   "in_model": "groove, cord, ears, latch brackets, latch bodies, strikes, hinge knuckles with round pin holes",
+   "note": "set each latch to ~0.75 kN and no more: the latches pull 12 mm outboard of the ears' tips, so more preload pries the door off its seal (door_seal_fea.md); the hinge pins need a close fit; the half-dovetail is overfilled at worst tolerance (gland table); the brackets' screws are not drawn (mech.md C); robot: a pneumatic clamp would go on the same brackets (not drawn)"
   },
   {
    "key": "window",
@@ -612,11 +588,11 @@
   },
   {
    "key": "rod_end",
-   "seal": "Rod end: hermetic receptacle on a side boss, 2-014 FKM face O-ring",
-   "held_by": "panel nut",
+   "seal": "Rod end: 316L block, the rod TIG-welded into its top; seven Solid Sealing weld-in feedthroughs TIG-welded at its 72 x 16 mm front face: 3 x FA11631 (Chromel) + 3 x FA11632 (Alumel) single-lead type K in \u00d86.27 x 38 sleeves, 1 x FA10443 4-pin 16 A Cu in a \u00d812.62 x 24 sleeve. The six type K sleeves sit 26 mm deep in blind bores joined to the rod bore by one \u00d84 cross-drilling whose two ends are welded shut",
+   "held_by": "welds (metal, glass-ceramic and welds: no elastomer)",
    "status": "CHECK",
-   "in_model": "boss, groove, ring, connector envelope (LEMO 1B HGG.1B.310); rod end 24 mm tall (was 14)",
-   "note": "the LEMO part's published 2 A / 1e-7 mbar L/s misses the spec; KF-16 feedthroughs that meet it (Accu-Glass 9C-K16, MPF A0408-2-QF) need a KF-16 port on the rod end"
+   "in_model": "block, rod socket, bores, cross-drilling, power pocket and channel, seven sleeves at the catalogue's diameters and lengths",
+   "note": "SST guarantees < 1e-10 atm cc/s He per part [13], so the seven parts are < 7e-10, far under the 1e-4 mbar L/s budget; the welds (7 sleeves + 2 cross-drilling plugs + the rod) set the real leak rate: helium-test the welded block before the module is assembled. SST designs its weld-ins to be welded on the vacuum side [13, 14]; here the welds are at the block's outer (air) face, so each type K sleeve's annulus in its 26 mm bore is a crevice open to the chamber gas (a slow virtual leak and a moisture trap; ~13 mm3 each at 0.05 mm clearance). Ask SST about the blind-bore weld, weld access and the weld side, and follow its pulsed-TIG procedure (heat sinks, segments <= 4 s) [14]"
   },
   {
    "key": "gas_loop",
@@ -751,44 +727,6 @@
    "dovetail": false,
    "parker": null,
    "verdict": "OK"
-  },
-  "hermetic_M50": {
-   "cs": 1.78,
-   "depth": 1.32,
-   "width": 2.3,
-   "stretch_pct": 1.449275362318847,
-   "squeeze_nom": 25.3776588510388,
-   "squeeze_min": 19.074125122206368,
-   "squeeze_max": 31.161850955155835,
-   "fill_nom": 80.94652999611506,
-   "fill_max_cold": 93.55192226973244,
-   "fill_max_hot": 94.26402632513258,
-   "T_service": 40.0,
-   "kind": "face",
-   "ring": "2-014",
-   "closure": "hermetic connector on the rod end (M50)",
-   "path": 46.80973053848791,
-   "stretch_signed_pct": 1.449275362318847,
-   "dovetail": false,
-   "parker": {
-    "depth": [
-     1.27,
-     1.37
-    ],
-    "w_gas": [
-     2.13,
-     2.26
-    ],
-    "w_liq": [
-     2.57,
-     2.72
-    ],
-    "sq": [
-     19,
-     32
-    ]
-   },
-   "verdict": "fill > 90 % at worst tolerance, warm"
   },
   "overflow_funnel": {
    "cs": 1.78,
@@ -1366,57 +1304,19 @@
    "cs": 1.78,
    "depth": 1.32,
    "width": 2.3,
-   "stretch_pct": 2.7070063694267565,
-   "squeeze_nom": 24.969330073218618,
-   "squeeze_min": 18.611310450986565,
-   "squeeze_max": 30.80077136368708,
-   "fill_nom": 80.06787974770705,
-   "fill_max_cold": 92.57816693137173,
-   "fill_max_hot": 93.4587448135526,
+   "stretch_pct": 2.4390243902439046,
+   "squeeze_nom": 25.056705984662376,
+   "squeeze_min": 18.7103646094132,
+   "squeeze_max": 30.878023007914447,
+   "fill_nom": 80.25468985154994,
+   "fill_max_cold": 92.7852157574817,
+   "fill_max_hot": 93.66776303074954,
    "T_service": 45.0,
    "kind": "face",
-   "ring": "2-022",
+   "ring": "2-030",
    "closure": "camera adapter on the lid",
-   "path": 88.27875356587319,
-   "stretch_signed_pct": 2.7070063694267565,
-   "dovetail": false,
-   "parker": {
-    "depth": [
-     1.27,
-     1.37
-    ],
-    "w_gas": [
-     2.13,
-     2.26
-    ],
-    "w_liq": [
-     2.57,
-     2.72
-    ],
-    "sq": [
-     19,
-     32
-    ]
-   },
-   "verdict": "fill > 90 % at worst tolerance, warm"
-  },
-  "camera_window": {
-   "cs": 1.78,
-   "depth": 1.32,
-   "width": 2.3,
-   "stretch_pct": 2.5043680838672033,
-   "squeeze_nom": 25.035419345402477,
-   "squeeze_min": 18.686233859288805,
-   "squeeze_max": 30.85920217000243,
-   "fill_nom": 80.20911872800288,
-   "fill_max_cold": 92.73470844829856,
-   "fill_max_hot": 93.61677531003065,
-   "T_service": 45.0,
-   "kind": "face",
-   "ring": "2-017",
-   "closure": "camera window on the boss",
-   "path": 62.51769380643689,
-   "stretch_signed_pct": 2.5043680838672033,
+   "path": 139.1725545540278,
+   "stretch_signed_pct": 2.4390243902439046,
    "dovetail": false,
    "parker": {
     "depth": [
@@ -1811,12 +1711,6 @@
     "H2O_sccs": 5.805302971915448e-06
    },
    {
-    "seal": "hermetic_M50 (2-014)",
-    "T_C": 40.0,
-    "O2_sccs": 2.635122320428509e-08,
-    "H2O_sccs": 2.3736151273216584e-07
-   },
-   {
     "seal": "overflow_funnel (2-042)",
     "T_C": 50.0,
     "O2_sccs": 2.637054474595628e-07,
@@ -1907,16 +1801,10 @@
     "H2O_sccs": 9.585123154216633e-07
    },
    {
-    "seal": "camera_adapter (2-022)",
+    "seal": "camera_adapter (2-030)",
     "T_C": 45.0,
-    "O2_sccs": 6.61489884048968e-08,
-    "H2O_sccs": 5.958442168610812e-07
-   },
-   {
-    "seal": "camera_window (2-017)",
-    "T_C": 45.0,
-    "O2_sccs": 4.554026101431346e-08,
-    "H2O_sccs": 4.102088605441791e-07
+    "O2_sccs": 1.0686379129848826e-07,
+    "H2O_sccs": 9.625872378773998e-07
    },
    {
     "seal": "SAE-4 port O-rings (4 x 3-904)",
@@ -1937,8 +1825,8 @@
     "H2O_sccs": 4.0475792413329724e-06
    }
   ],
-  "total_O2_sccs": 7.01336329476271e-06,
-  "total_H2O_sccs": 6.317363365183058e-05,
+  "total_O2_sccs": 6.982186613437703e-06,
+  "total_H2O_sccs": 6.289280629957055e-05,
   "Ea_He_kJ": 37.1421382251633,
   "Ea_N2_kJ": 58.29112969138964
  },
@@ -1960,12 +1848,12 @@
    "fix": "edge-welded bellows over the rod"
   },
   {
-   "src": "potted stranded leads at the rod end",
+   "src": "rod end: 7 weld-in feedthroughs (SST: each < 1e-10 atm cc/s He [13]) and their welds; the potted stranded leads it replaced were 1e-5 to 1e-2",
    "air_mbarLs": [
-    1e-05,
-    0.01
+    7e-10,
+    1e-09
    ],
-   "fix": "glass-to-metal hermetic connector or KF feedthrough"
+   "fix": "helium-test the welded rod-end block before the module is assembled and accept < 1e-9 mbar L/s (the upper value): the welds, not the parts, set it"
   },
   {
    "src": "threaded NPT ports (5-8 joints)",
@@ -1994,8 +1882,8 @@
  },
  "budget": {
   "V_L": 11.262865037529748,
-  "O2_permeation_ppm_per_h": 2.1983212362902798,
-  "H2O_permeation_ppm_per_h": 19.80161793902053,
+  "O2_permeation_ppm_per_h": 2.1885489832708194,
+  "H2O_permeation_ppm_per_h": 19.713593305722924,
   "area_al_cm2": 4605.28,
   "area_fkm_cm2": 17.5267326447668,
   "q_al_mbarLs": 3.6833029439999996e-05,
@@ -2011,17 +1899,17 @@
   ]
  },
  "makeup": {
-  "O2_in_sccm": 0.0004208017976857626,
-  "H2O_in_sccm": 0.007354957711513929,
-  "f_for_O2_10ppm_sccm": 46.75575529841807,
-  "f_for_H2O_minus40C_sccm": 58.37268025011055
+  "O2_in_sccm": 0.0004189311968062622,
+  "H2O_in_sccm": 0.007338108070378326,
+  "f_for_O2_10ppm_sccm": 46.54791075625136,
+  "f_for_H2O_minus40C_sccm": 58.238952939510526
  },
  "purge": {
   "S_pump_Ls": 1.4158499999999998,
   "S_eff_at_800mbar_Ls": 1.415665903743135,
   "S_eff_at_10mbar_Ls": 1.4012697266261072,
   "S_eff_at_1mbar_Ls": 1.2822350255492507,
-  "t_to_1mbar_s": 55.88097964797489,
+  "t_to_1mbar_s": 55.880979647974875,
   "tau_at_atm_s": 7.955877871855092,
   "cycles": [
    {
@@ -2087,7 +1975,7 @@
   "q_std_L_min": 26.69809153478593,
   "Cv": 0.13781575568560098,
   "t_to_100mbar_s": 58.609085539642564,
-  "t_total_to_1mbar_s": 96.06328327495265,
+  "t_total_to_1mbar_s": 96.06328327495267,
   "note": "metering valve with Cv >= this in parallel with the KF-25 valve; open the main valve below ~100 mbar. Back-fill through the same limit (the flowmeter-regulator 78595A5 set <= 25 L/min) and a sintered diffuser"
  },
  "reservoir_open_path": {

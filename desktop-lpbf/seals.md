@@ -14,6 +14,42 @@ The machine has to hold two quite different states:
 - **+5 to +20 mbar of argon** for hours during a build. Here bulk leaks run outward, but O₂ and water still come in by
   permeation and back-diffusion. A closure that only the atmosphere was holding shut now has only its latches.
 
+## Round 6 (2026-11-25): the door with its latches on the door, and the rod end's weld-ins
+
+**The door** (§0 item 2; [`door_seal_fea.md`](analysis/out/seals/door_seal_fea.md)). Round 5 moved the draw latches onto
+brackets on the door's ears, and the door-seal FEA hadn't been re-run since. It now reads the latches, brackets and hinges from
+the model, and models three things the old run left out: the cord's stiffness, the floating hinges, and the door's land touching
+the chamber where the latches pull it on.
+- **As drawn in round 5, the latches pry the door off its seal.** Their pull line is at x ±158, 12 mm outboard of the ears' tips
+  (x ±146), where the door bears on the chamber, and outside the chamber's front face (x ±156). With each latch preloaded to
+  1.2 kN, the door touches the chamber at 34 of its 2,920 land nodes, all at the ears' outer edges, and 1.6 kN goes through them.
+  The land opens by up to 192 µm at the top and bottom centres, and the squeeze there falls to **15.2 %**: 9.0 % at the gland's
+  worst tolerance, against the 15 % the gland check asks for. More preload makes it worse, not better.
+- **The old run's boundary conditions hid this.** They held the ears' front faces fixed and the hinges in y, which can't show a
+  pull outboard of the bearing. On the new geometry they still give the round-4 answer: about 35 µm lost (case C).
+- **Fix, drawn in `cad/lpbf_low.py`:**
+  - **The hinge now holds the door's bottom edge.** The pin holes are round, where they were slotted ±0.6 mm. The chamber's knuckle
+    blocks go on shims chosen at assembly, so the shut door's land just touches.
+  - **Each latch is set to about 0.75 kN, and no more.** That is the cord's 1.48 kN plus the +20 mbar on the door, shared by two.
+  - **Result:** squeeze **23.6-25.8 %** along the gland, 17.3 % at worst tolerance. The top centre is lowest, with the land open by
+    44 µm there.
+  - **What it asks of the hinge:** each hinge pulls the door's bottom edge in with 1.1 kN. Its Ø5 pin is then at 28 MPa in double
+    shear. The pins need a close fit (reamed knuckles, H7/g6), because the FEA takes the hinge as rigid with no play.
+- **Not drawn:** a rib along the door's top edge, which would lift the top centre further. Its run was stopped for time (case F
+  in the script).
+
+**The rod end** (§0 item 7). Round 5 replaced the rod end's hermetic connector, its 2-014 O-ring and the thermal cutoff with a
+316L block carrying seven Solid Sealing weld-in feedthroughs ([`electrical.md`](electrical.md) §13.3-13.4). `seals.py` still
+described the connector; it now lists the block, its welds and its weld-ins:
+- **No elastomer at the rod end.** The 2-014 left the permeation budget with the connector (results below).
+- **Leak rate.** Solid Sealing guarantees each part < 1e-10 atm·cc/s He, so the seven are < 7e-10 mbar·L/s. The welds decide
+  the real number: helium-test the welded block and accept < 1e-9 mbar·L/s before the module is assembled. The potted leads
+  this replaced were estimated at 1e-5 to 1e-2.
+- **Weld side, an open question for Solid Sealing.** Its weld-ins are designed to be welded on the vacuum side. Here the welds
+  are on the block's outer face, which is the air side, so each type K sleeve's annulus in its 26 mm blind bore is a crevice
+  open to the chamber gas (~13 mm³ each at 0.05 mm diametral clearance). That is a slow virtual leak and a place moisture
+  hides. Ask about it with the blind-bore weld and the weld access.
+
 ## 0. What the model now has (added 2026-11-20)
 
 Every fix in §3 is now drawn in the low-profile model (`cad/lpbf_low.py`, `modules_low.py`, `module_params.py`, `joints.py`).
@@ -24,12 +60,12 @@ Each gland the model draws is registered in `lpbf_low.GLANDS`, and `analysis/sea
 | Item | Now in the model | Parts (McMaster unless noted) | Check | Still open |
 |---|---|---|---|---|
 | 1. Reservoir | 2-040 face O-ring in the dock face round a 12 × 100 mm opening. One 30 × 112.4 mm base plate for S, M and L. Rail lips over the plate's edges. Welded 304 top frame with an O-ring-sealed lid on 2 × M3 in blind holes. Shutter slot closed at both ends. NFC antenna moved to the dock's side face. | 2-040 9464K825; lid rings 2-022 9464K492 (S), 2-030 9464K774 (M), 2-042 9464K849 (L); detent 85015A47 | dock O-ring 508 N at 25 %. With 2° ramps under the lips and μ 0.15, the push home is 94 N, pull-out 58 N, self-locking | the ramps and the detent are not drawn (0.5 mm over 15 mm); the shutter's drive through its closed slot (e.g. magnetic) is not designed; μ is assumed |
-| 2. Door | 1.78 mm cord in a half-dovetail groove: 1.32 deep, 2.3 wide at the bottom, outer wall undercut 24°. Slotted (±0.6 mm) hinge holes. Two ears at mid-height (x ±124 to ±146) carry 6061 brackets, and the two draw latches sit on the brackets pointing forward, with their strikes on the chamber's side faces (since 2026-11-23: on the side faces the right latch was behind the front-right optics post, operations.md U2.2). They still pull straight back at the seal's centroid height, one each side of the centre line | cord 96515K123 ($1.40/ft); latches 1807A61 (800 lb, adjustable grip) | each latch needs **725 N** of preload at +20 mbar for 25 % squeeze (328 N for 15 %), against a 3.56 kN rating. CalculiX: the door loses ≤ 34 µm of squeeze (margin 178 µm), and the hinges carry nothing ([`door_seal_fea.md`](analysis/out/seals/door_seal_fea.md)) | **the half-dovetail is overfilled**: 94 % nominal, 111 % at worst tolerance when warm, and its 1.71 mm face opening doesn't hold the smallest in-tolerance cord. See note (a) below. Splice: vulcanized, not McMaster's glue kit (9262N11). Robot clamps: see (b) |
+| 2. Door | 1.78 mm cord in a half-dovetail groove: 1.32 deep, 2.3 wide at the bottom, outer wall undercut 24°. Round hinge pin holes since 2026-11-25 (they were slotted ±0.6 mm so the door floated): the hinge holds the bottom edge, its knuckle blocks shimmed at assembly. Two ears at mid-height (x ±124 to ±146) carry 6061 brackets, and the two draw latches sit on the brackets pointing forward, with their strikes on the chamber's side faces (since 2026-11-23: on the side faces the right latch was behind the front-right optics post, operations.md U2.2). They still pull straight back at the seal's centroid height, one each side of the centre line | cord 96515K123 ($1.40/ft); latches 1807A61 (800 lb, adjustable grip) | set each latch to **~0.75 kN** (a rigid door would need 725 N for 25 %, 328 N for 15 %), against a 3.56 kN rating. **CalculiX, round 6** ([`door_seal_fea.md`](analysis/out/seals/door_seal_fea.md), and the Round 6 note above): with the round-5 floating hinge the latches pry the door off its seal, because they pull 12 mm outboard of the ears' tips (1.2 kN latches: 15.2 % squeeze at the top and bottom centres). With the hinge holding the bottom edge: 23.6-25.8 % at 0.75 kN, 17.3 % at worst tolerance, and each hinge carries 1.1 kN. The round-4 "≤ 34 µm lost, hinges carry nothing" came from boundary conditions that held the ears fixed | **the half-dovetail is overfilled**: 94 % nominal, 111 % at worst tolerance when warm, and its 1.71 mm face opening doesn't hold the smallest in-tolerance cord. See note (a) below. Splice: vulcanized, not McMaster's glue kit (9262N11). Robot clamps: see (b) |
 | 3. Window | 2-031 under the window in a seat groove, a 1 mm FKM flat ring on top, and a retaining ring whose spigot bottoms metal-to-metal on the flange. 2-036 face O-ring from the flange to the lid. Flange bore Ø42 (the Ø36 field stop still limits the beam) | 2-031 9464K775; 2-036 9464K793 | both glands 25 % (19–31 %) | FKM sheet for the flat ring not sourced |
 | 4. Drawer | 2-033 in a half-dovetail on the front plate. The plate is widened to ±64 mm. Two quarter-turn latch studs in the plate, receptacles in the lid between the lid screws. Drawer sensor moved | 2-033 9464K788 | 358 N to squeeze: 180 N per latch | the same overfill as the door. **No catalogue quarter-turn latch fits**: 5210N21 holds 0.53 kN but needs a Ø22 hole; Southco's E3 compact holds 450 N but has a Ø29 head; the 5009N12 holds only 0.36 kN. The latches are drawn as an envelope |
 | 5. Spigot, gland plate | spigot groove root Ø90.5 × 4.8. Gland-plate groove 2.6 wide, sized per module so a standard ring sits on the inner wall at 1.5–3.3 % stretch | 2-238 9464K365; 2-024 9464K753 (S25), 2-034 9464K791 (M50), 2-041 9464K836 (L75) | spigot 21 % (17–25 %), ≤ 81 % fill. Gland plate up to 32.2 % squeeze at worst tolerance | gland plate: make it 1.35 deep (now 1.30) to stay under 32 % |
 | 6. Rod gland | two Parker rod grooves Ø20.0, throat Ø15.93, 3.6 wide (S25: 2-110, Ø13.64). The gland plate is now **14 mm thick (was 10)** to hold them with 2.3 mm lands. Rod labelled seamless, polished Ra ≤ 0.2 µm | 2-114 9464K982; 2-110 9464K977; 6 × M4 × 20 (was × 16) | 21 % (16–25 %), ≤ 82 % fill at 110 °C | friction against the Z coupling (§4) |
-| 7. Rod end | the end cap is now 19 mm (rod end 24 mm, was 14) with a side boss: Ø12 bore, 2-014 face O-ring, connector envelope | envelope: LEMO 1B hermetic receptacle HGG.1B.310 (M12 × 1) | – | **the LEMO part misses the spec** (2 A per contact, 1e-7 mbar·L/s). The parts that meet it are KF-16 feedthroughs: Accu-Glass 9C-K16 ($324, 9 pins, 5 A) for the heaters and MPF A0408-2-QF ($361.63, 2 type K pairs). They need a KF-16 port on the rod end, which doesn't fit the Ø22 cap. The 2-014 ring isn't confirmed at McMaster |
+| 7. Rod end | **since 2026-11-23 (electrical.md §13.3): a 316L block,** the rod TIG-welded into its top, and seven weld-in feedthroughs TIG-welded at its 72 × 16 mm front face. The six type K sleeves sit 26 mm deep in blind bores joined to the rod bore by one Ø4 cross-drilling (both ends welded shut); the power sleeve stands over a pocket. No O-ring and no connector: the gas boundary is metal, glass-ceramic and welds (it was a LEMO 1B receptacle on a 2-014, which missed the spec) | Solid Sealing 3 × FA11631 + 3 × FA11632 single-lead type K ($44 each), 1 × FA10443 4-pin 16 A Cu ($92): $356 per module (electrical-bom.csv E6-01..03) | Solid Sealing guarantees < 1e-10 atm·cc/s He per part ([General Product Specifications](https://www.solidsealing.com/img/documents/SST_General_Product_Specifications-406829.pdf), read 2026-11-25), so the seven are < 7e-10, far under the 1e-4 mbar·L/s budget. The welds set the real leak rate | **Weld side.** Solid Sealing designs its weld-ins to be welded on the vacuum side ("weldable feedthroughs are designed to have the adapter welded on the vacuum side"; its [26482 welding sheet NS13003](https://www.solidsealing.com/img/resources/NS13003_887844.pdf): "preferred orientation is with the weld on the vacuum side"). Here the welds are on the block's outer, air-side face, so each type K sleeve's annulus in its 26 mm bore is a crevice open to the chamber gas: ~13 mm³ at 0.05 mm diametral clearance, a slow virtual leak and a place moisture hides. Ask Solid Sealing about the blind-bore weld, the weld side and weld access (electrical.md asks the first two). Helium-test the welded block, accepting < 1e-9 mbar·L/s, before the module is assembled. Weld it as NS13003 says: pulsed TIG at 20-25 A, heat sinks both sides, segments of ≤ 4 s. How the leads in the rod join the weld-ins' vacuum-side ends inside the welded block is not drawn |
 | 8. Shafts | recoater: Ferrotec SFL-006-NN magnetic-fluid feedthrough (Ø52 flange, Ø28 housing, 82 mm, 15 mm vacuum shaft) on a 9 mm spacer ring (2 × 2-024), with a clamp coupling to the screw inside the wall bore; the servo moved 41 mm outboard on a 25 mm standoff. Roller: Ferrotec SSL-005-NN (Ø16, M8 × 1 nose, 65.5 mm) with a 2-012 shoulder ring; stepper moved back | Ferrotec prices not published; Rigaku FD-F1-KF25-0250-LC $921.57 is a priced alternative | – | how the overall lengths split between flange, housing and air shaft is assumed. Check the axial load rating of the SFL-006 against the ball screw. 2-012 not confirmed |
 | 9. Ports | argon in, O₂ sample, transducer and relief valve are SAE J1926 -4 (7/16-20) O-ring-boss ports (thread, 12° O-ring chamfer, Ø4 drilling). The vacuum port's KF-25 stub is welded into a 304 adapter plate, bolted with 4 × M5 over a 2-024 | fittings 5182K862 ($21.77); port O-rings AS568-904 5267T786 | – | the transducer and relief valve must come with SAE-4 male ends (not confirmed) |
 | 10. Other holes | inlet plenum: a bolting flange, 9 × M4, 2-044. Outlet plenum: 10 mm flanges each side of the opening, 6 counterbored M4, 2-044. Overflow funnel: 4 counterbored M4, 2-042 (316L is never welded to 6061). Metering base on the lid: 2-040. Camera adapter: 2-022. Camera window: 2-017 plus an FKM flat ring under a screwed retaining ring. Fibre heads: M6 threaded heads with 2-010. Right recoater bearing: blind cap with 2-019. The side reservoir port is a KF-16 machined in the 6061 base | as listed | all 1.78 mm face glands: 25 % (19–31 %) | see (c). The camera boss now sits on the line of sight; the old Ø22 bore broke through its wall. Fibre head part not chosen |
@@ -68,14 +104,14 @@ Notes:
 2. **The window isn't held down.** It sits loose on its O-ring with a 2 mm gap under the retaining ring. At +20 mbar the window carries 3.3 N upward against its 0.35 N weight, so it lifts and the seal opens. The window flange also has no seal to the lid.
    - Fix: clamp the window between two O-rings, with the retaining ring bottoming metal-to-metal so the squeeze is set by the geometry, and add a face O-ring under the flange.
 3. **The rod-end "potted cable exit" leaks along the strands.** Stranded heater and thermocouple leads wick gas along the strands through any potting compound.
-   - Fix: a glass-to-metal hermetic connector in the rod end cap, or solid pins potted with their insulation stripped.
+   - Fix: a glass-to-metal hermetic connector in the rod end cap, or solid pins potted with their insulation stripped. (Done since 2026-11-23 with seven weld-in feedthroughs: §0 item 7.)
 
 **Closures whose holding force was never sized:**
 
 4. **The door.**
    - Squeezing its 3.53 mm FKM 75A cord 25 % along the 669 mm seal takes ~2.8 kN (Lindley's relation with Gent's modulus, within Parker's chart range of 1.5–6.4 kN). That is more than the 2.4 kN the atmosphere puts on the door at full vacuum, which seats it at ~23 %.
    - During a build only the latches hold it. At +20 mbar they must each carry **~800 N to keep 25 %**, or ~350 N to keep 15 %. The FEA had sized them for 60 N.
-   - CalculiX shows the 15 mm door itself is stiff enough: **≤ 26 µm of squeeze lost** at the top centre, against 350 µm of margin.
+   - CalculiX shows the 15 mm door itself is stiff enough: **≤ 26 µm of squeeze lost** at the top centre, against 350 µm of margin. (Superseded on 2026-11-25: those boundary conditions held the ears fixed; see the Round 6 note at the top.)
    - The groove as drawn (2.8 deep × 4.0 wide) is not the specified 2.65 × 4.6. It fills to 97 % at worst-case tolerance when warm.
 5. **The cover-slide drawer.** Its O-ring needs ~350 N to squeeze, but nothing clamps the drawer, and +20 mbar pushes it out.
 
@@ -107,7 +143,8 @@ Before the fixes it had 21 rows: 2 OK, 7 CHECK (works, but a number needs fixing
 7 MISSING (a hole through the envelope with no seal drawn). With the fixes drawn (§0) it has 22 rows:
 - **OK:** 14;
 - **CHECK:** 8. Drawn, with an open item: the door and drawer half-dovetails, the drawer latches, the reservoir's ramps and shutter drive,
-  the rod glands' friction, the rod-end connector, the fibre heads, and the gas loop and O₂ analyser (unchanged);
+  the rod glands' friction, the rod end's weld-ins (the weld side and the blind-bore weld, since 2026-11-23; it was the connector), the fibre
+  heads, and the gas loop and O₂ analyser (unchanged);
 - **FIX** and **MISSING:** none.
 
 ## 3. The fixes, closure by closure
@@ -121,7 +158,7 @@ Before the fixes it had 21 rows: 2 OK, 7 CHECK (works, but a number needs fixing
 | Spigot | groove root Ø90.5, width 4.8 | overfill at tolerance; light squeeze |
 | Gland plate | groove width 2.6 | 94 % fill |
 | Rod | two 2-114 grooves, seamless polished 316 rod (or an edge-welded bellows) | grooves not drawn; friction (§4) |
-| Rod end | hermetic connector | stranded leads leak |
+| Rod end | weld-in feedthroughs in a welded 316L block (since 2026-11-23; a hermetic connector on an O-ring before that) | stranded leads leak; the LEMO connector missed the leak and current spec |
 | Shafts | magnetic-fluid feedthroughs (or magnetic couplings) | V-rings don't seal vacuum |
 | Ports | O-ring-boss or VCR/KF instead of NPT | thread leaks and galling |
 | Plenums, metering base, camera, right bearing, fibre heads | face O-rings and a blind bearing cap | holes with no seal |
@@ -149,8 +186,12 @@ From [`seals.md` (results)](analysis/out/seals/seals.md):
   - HEPA housing 2.3 L;
   - hoses 1.5 L;
   - plenums and blower 1.1 L.
-- **Permeation through every FKM seal adds 1.7 ppm O₂/h and 2.7 ppm H₂O/h**, using Parker's leak-rate approximation, Arrhenius-scaled to each seal's temperature. 35 sccm of Ar 5.0 make-up flow holds 10 ppm O₂ against it, about 2 L/h.
-- **Wall outgassing dominates the water** (unbaked 6061 and FKM after ~1 h, O'Hanlon): ~19 ppm H₂O/h, falling roughly as 1/t. ~33 sccm of make-up holds a −40 °C dew point against it.
+- **Permeation through every FKM seal adds 2.19 ppm O₂/h and 19.7 ppm H₂O/h**, using Parker's leak-rate approximation, Arrhenius-scaled to
+  each seal's temperature, with Sturm's measured Viton permeabilities. 46.5 sccm of Ar 5.0 make-up flow holds 10 ppm O₂ against it, about
+  2.8 L/h. (Re-run 2026-11-25. The rod end's 2-014 left with the connector: 2.20 → 2.19 ppm O₂/h, 27 glands, was 28. The 1.7 ppm and 35 sccm
+  this line gave until now were from 2026-11-20; the results file has said 2.20 ppm and 46.8 sccm since the 2026-11-21 re-run.)
+- **Wall outgassing is as large as the water's permeation** (unbaked 6061 and FKM after ~1 h, O'Hanlon): ~19 ppm H₂O/h, falling roughly
+  as 1/t. ~58 sccm of make-up holds a −40 °C dew point against outgassing and permeation together.
 - **The powder can swamp all of that.** 150 g holding 50–300 ppm water by mass carries 8–45 mg, which is 830–5,000 ppmv in the loop if a 200 °C plate drives it off.
   - So dry the powder (vacuum oven) and load it dry.
   - Fit the dew-point sensor (BOM line G9).

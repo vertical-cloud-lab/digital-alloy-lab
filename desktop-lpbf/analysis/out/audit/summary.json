@@ -1,21 +1,21 @@
 {
- "bom": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/desktop-lpbf/bom.csv",
- "parts": 223,
+ "bom": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/.claude/worktrees/agent-a2f6c019d9f105e21/desktop-lpbf/bom.csv",
+ "parts": 264,
  "by_status": {
-  "real part priced": 117,
-  "real part unpriced": 4,
-  "generic": 26,
-  "custom": 65,
-  "missing from BOM": 1,
+  "real part priced": 125,
+  "real part unpriced": 3,
+  "generic": 46,
+  "custom": 78,
+  "missing from BOM": 2,
   "inconsistent": 9,
   "excluded": 1
  },
  "by_kind": {
-  "bought": 113,
-  "custom (machined)": 55,
-  "custom (sheet)": 13,
-  "fastener": 41,
-  "excluded": 1
+  "custom (machined)": 69,
+  "bought": 133,
+  "custom (sheet)": 12,
+  "excluded": 1,
+  "fastener": 49
  },
  "bom_lines": 62,
  "bom_lines_without_model_part": [
@@ -32,13 +32,10 @@
   "S8",
   "P1",
   "T1",
-  "T2",
   "T3",
   "H2",
   "H3",
-  "E1",
   "E2",
-  "E3",
   "E4",
   "E5",
   "X1"
@@ -53,8 +50,8 @@
   "RA7"
  ],
  "bom_total_usd": [
-  70478,
-  154119
+  70364,
+  154515
  ],
  "extra": [
   "desktop-lpbf/electrical-bom.csv",

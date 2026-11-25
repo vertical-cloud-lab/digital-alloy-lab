@@ -5,6 +5,89 @@ Written 2026-11-20 for [PR #266](https://github.com/vertical-cloud-lab/digital-a
 This note covers what a person does. Automated operations (the build loop, robot plate and reservoir handling) are
 covered separately. Nothing has been built or tried on a mock-up.
 
+## Round 6 (2026-11-25)
+
+**All of M50 on the merged round-6 model: 98 pass / 1 warn / 24 fail** (round 5: 90 / 2 / 34;
+[`results-M50-r6.md`](analysis/out/ops/results-M50-r6.md), with pictures).
+- **The model** is 4e95878. It has the zero-point clamps in place of the captive M6, the jar at (94, −46) with a grip fin, the
+  Z servo folded back, and the legs and outlet hose moved. It also has the 81 mm rod-end block, the liners' hanger tabs, the
+  9.53 mm window and 2 mm slide, the refined pump, HEPA housing and transmitter, and the door hinge without its float.
+- **Before the step fixes** below, the first run gave 88 / 1 / 35. A2, M12 and M5 were then re-run with their steps corrected
+  (`results-M50-r6-a2`, `-r6-m12`, `-r6-m5`), and those three operations replace the first run's in `results-M50-r6`.
+
+| Op | Round 5 | Round 6 | What changed |
+|---|---|---|---|
+| A1 module on the bench | 16 / 0 / 1 | **17 / 0 / 0** | A1.20 passes: a torque screwdriver now reaches all six gland-plate M4 past the 81 mm rod-end block (round 6). A1.14 is a note |
+| A2 process module | 41 / 2 / 15 | **48 / 1 / 8** | A2.18 passes (liners through the door), and 8 steps passed once their paths were corrected (below). The captive-M6 step (a WARN) is now a release-air note. New real fail: A2.36 |
+| M7 module seals | 1 / 0 / 1 | **2 / 0 / 0** | M7.1 passes, as A1.20 |
+| M12 HEPA | 3 / 0 / 0 | 2 / 0 / 0 | rewritten for the McMaster 5169K72 housing: the hand goes to a bail clip, and the inlet's hose stays on (it is on the side boss now) |
+| M5 window | 1 / 0 / 2 | 2 / 0 / 1 | M5.3 passes once the upper FKM clamp ring comes off with the retaining ring (an error in this list since round 3); M5.1 (ring screws under the lens) is real |
+| S2 module swap | 3 / 0 / 0 | 2 / 0 / 0 | the captive-screw step is a release-air note (zero-point clamps). S2.4, the swap path, passes at 0.1 mm |
+| U1-U4, M1-M3, M8-M11, S1, S3 | | same | U4.5 and U4.7 pass with the moved jar (0.3 mm). M3's six liners pass with the hanger tabs (0.36 mm) |
+
+**Step definitions corrected** (checker artefacts: the animation's straight line runs through a part while the checker's own search
+found a free path, as fix 14 below lists). Each step now uses that path, and each passes:
+- A2.2 legs from above;
+- A2.10 outlet plenum from the front;
+- A2.12 funnel from the right;
+- A2.14 the two sensors each along its own line (moved together, the module-present sensor ran into the funnel);
+- A2.28 carriage down then 30 mm back onto the rail;
+- A2.29 ball screw along x through the left wall's bore;
+- A2.33 blade cartridge with the recoater at mid-stroke: at the park end the left liner's new hanger web is over it;
+- A2.61 adapter ring, riser and galvo along y.
+
+**The 24 fails left on M50:**
+
+| Steps | Fails because | Real or artefact |
+|---|---|---|
+| A2.3, A2.5, A2.58 | screws up from under the base plate, which sits 37 mm over the tray on its mounts | real for this order: fix 11 (base plate on blocks, chamber upside down) |
+| A2.35, A2.62 | the Z stage has no way in once the chamber is on its legs; the lens can't thread in from below past the window ring | real for this order: fixes 13 and 12 |
+| A2.13 | one funnel screw's key swing meets the funnel block and its port (30°) | real: bolt the funnel to the floor plate on the bench (round 5) |
+| **A2.36** (new) | 2 of the 4 Z-flange M5 can't come out past the folded-back Z servo's belt housing, and the torque driver meets the actuator | **real, from the Z-servo move**: drive those two before the belt housing goes on, or move them |
+| A2.51 | two metering-base screws under the roller feedthrough | real: fix 10 |
+| M4.2-M4.4 | camera, lid screw #4 and the lid against the optics bridge | real: fix 6 |
+| M5.1, M6.2 | window-ring screws under the lens; the galvo 4 mm under the guard's top panel | real: fix 5 |
+| M8.1-M8.3 | recoater servo against the front-left optics post and the bridge | real: fix 8 |
+| M9.1, M9.2 | dosing stepper and roller feedthrough boxed in by the bridge | real: fix 9 |
+| M10.1-M10.4, M11.1, M11.2 | the straight 90 × 65 mm forearm meets the guard, legs, hoses or chamber | model limit: check on a mock-up |
+
+**S25 and L75** (S1, S2, S3, U1, U2, U4, M3 and M8, each with its own reservoir, on the merged model;
+[`results-S25-r6.md`](analysis/out/ops/results-S25-r6.md), [`results-L75-r6.md`](analysis/out/ops/results-L75-r6.md)): **20 pass /
+0 warn / 3 fail on each.** This is the first time the access fixes' operations have been run on S25 and L75.
+- **Passing on both:**
+  - the reservoir's pull tab (U1.1, which failed on both in round 4);
+  - both draw latches on the door (U2.2, U2.3);
+  - the jar's clamp and the jar (U4.5, U4.7, 0.3 mm; L75 failed both in round 4);
+  - all six liners (M3.2-M3.8, 0.36 mm);
+  - the feedthrough out to the front (M8.4);
+  - the plate (2.0 mm), the module swap (S2.4, 0.1 mm at the floor plate) and the reservoir (0.85 mm).
+- **Failing on both:** M8.1-M8.3, the recoater servo against the front-left post and the bridge, the same as M50. Nothing in
+  them depends on the module.
+
+**Baseline before the merge** (the round-5 model plus the round-6 optics merge, bbdf626, plus the door-hinge change; all of M50, no
+pictures; [`results-M50-r6-base.md`](analysis/out/ops/results-M50-r6-base.md)): **91 pass / 2 warn / 33 fail** (round 5: 90 / 2 / 34
+and one step that matched no part). A2.18 passes through the door, 0.36 mm from the frame at the tightest; A1.14 is a note. Nothing
+else changed.
+
+**What changed in the operation list and the checker** (`analysis/ops/`, 2026-11-25):
+- **Stale part names.** Round 5 replaced the rod end's hermetic connector with a 316L block carrying seven Solid Sealing
+  weld-in feedthroughs, and dropped the thermal cutoff ([`electrical.md`](electrical.md) §13.3-13.4). The list still named both:
+  - A1.4 placed a "Thermal cutoff" that no longer exists. It now places the thermocouples only.
+  - **A1.14** ("Hermetic connector with its O-ring into the rod end's side boss") matched no part. It is now a note: the
+    weld-ins are welded into the block by the shop and come in with the rod at A1.12, whose key ("Rod end") takes the block
+    and its weld-ins. Their air-side plugs go on at a module swap. How the heater and thermocouple leads join the weld-ins'
+    vacuum-side ends inside the welded block is not drawn anywhere; that is an open item for the electrical design.
+  - A1.19 and M7.2 no longer list the connector and its O-ring among the parts that move with the stack. M7's notes now
+    say the leads run to the weld-ins.
+- **A2.18, the liners, now go in through the door opening.** Until round 5 the step used the animation's straight lines from
+  above. M3.2-M3.8 take the six liners out through the door, so A2.18 now puts them in along the same six paths, reversed:
+  the back halves first (lower then upper, left then right), then each side liner. Each piece is checked with the pieces
+  before it already in. The paths live in one table (`LINER_PATHS` in `operations.py`) that M3 uses too.
+- **Checker.** `run_ops.py` takes a `part_paths` list on a place step: each group of parts along its own path, in order.
+  `checks.py` reads its tessellation cache directory from `OPS_CACHE`, so parallel runs don't share one cache file.
+
+## Earlier updates (rounds 4 and 5)
+
 > **Update 2026-11-23 (round 5, access fixes): U1.1, U2.2, M3.2 and M8.4 now pass.** U1, U2, M3 and M8 re-run on M50: 12 pass /
 > 0 warn / 3 fail, against 3 / 0 / 7 in round 4 ([`results-M50-a2.md`](analysis/out/ops/results-M50-a2.md); M3 is now six removal
 > steps instead of one; the full run in `results-M50.md` is from round 4 and was not repeated). The three fails left are M8.1-M8.3,
@@ -325,18 +408,18 @@ Ranked by how often the job is done. Fixes have not yet been checked on the mode
 | ![M4.4](analysis/out/ops/fail-M50-M4-4.png) M4.4 lid moving out | ![M7.2](analysis/out/ops/fail-M50-M7-2.png) M7.2 before round 4: the gland plate pulled down alone against the welded rod end (it now comes out with the stack and passes) |
 | ![M3.2](analysis/out/ops/fail-M50-M3-2.png) M3.2 before round 5: the one-piece liners against the carriage block (they now pass) | ![M8.2](analysis/out/ops/fail-M50-M8-2.png) M8.2 recoater servo against the front-left post |
 
-There are more in [`analysis/out/ops/`](analysis/out/ops/): M9.1, A2.3, A2.2, A2.5, A2.7 and A1.20 (that last one is an
-error in my list, above).
+There are more in [`analysis/out/ops/`](analysis/out/ops/), redrawn on the round-6 model: M9.1, A2.3, A2.5, A2.8, A2.13, A2.35, A2.58 and
+A2.62. (The round-5 pictures of A1.20, A2.2, A2.7, A2.10 and A2.12 are gone: those steps pass.)
 
 ## What was assumed and not checked
 
-- **The full catalogue was run on the M50 machine only.** U1, U4 and S1-S3 were also run on S25 and L75, with their own
-  reservoirs ([`results-S25.md`](analysis/out/ops/results-S25.md), [`results-L75.md`](analysis/out/ops/results-L75.md)).
-  Both match M50: the overflow jar and the reservoir handle fail; the module swap, plate swap and reservoir slide-out pass.
+- **The full catalogue was run on the M50 machine only.** U1, U2, U4, M3, M8 and S1-S3 were also run on S25 and L75 in round 6, with
+  their own reservoirs ([`results-S25-r6.md`](analysis/out/ops/results-S25-r6.md), [`results-L75-r6.md`](analysis/out/ops/results-L75-r6.md)).
+  Both match M50: only the recoater servo (M8.1-M8.3) fails. The round-4 runs are `results-S25.md` and `results-L75.md`.
 - **Parts the model doesn't draw are not checked:** hinge and latch screws, the KF clamps' wing nuts, the rack and gas-module
   units' screws, cables and hoses as they are routed, and the guard's own fasteners. Paths are straight lines or two legs;
   threading motions (ball nut, f-theta lens) are not simulated.
-- **The model treats the three liners as one part,** and the dose chute and gas knife as hung from the lid.
+- **The dose chute and gas knife are taken as hung from the lid.** (The liners are six parts since round 5.)
 - **The guard panels are fixed.** No path may go through them, so every exit is through the guard door.
 - **The torque screwdriver's handle and chuck diameters and the forearm size are assumed.** The hand points for the reach
   checks were chosen by hand.
@@ -349,8 +432,8 @@ error in my list, above).
 
 ```bash
 OMP_NUM_THREADS=1 /tmp/capmem 4 xvfb-run -a -s "-screen 0 1280x960x24" \
-    /tmp/venv/bin/python desktop-lpbf/analysis/ops/run_ops.py desktop-lpbf/cad M50      # ~4 min on 9e6464a
-/tmp/venv/bin/python desktop-lpbf/analysis/ops/run_ops.py desktop-lpbf/cad L75 --no-png --only=S1,S2,S3,U1,U4   # ~1 min
+    /tmp/venv/bin/python desktop-lpbf/analysis/ops/run_ops.py desktop-lpbf/cad M50 --tag=-r6    # ~16 min checks + pictures on 4e95878 (shared runner)
+OPS_CACHE=/tmp/<you>/ops /tmp/venv/bin/python desktop-lpbf/analysis/ops/run_ops.py desktop-lpbf/cad L75 --no-png --only=S1,S2,S3,U1,U2,U4,M3,M8 --tag=-r6
 ```
 
-`--only=U4,M3` runs some operations. `--no-png` skips the pictures. A changed model is tessellated again (~1 min).
+`--only=U4,M3` runs some operations. `--no-png` skips the pictures. `--tag=-x` writes `results-<module>-x.*`. A changed model is tessellated again (~2-5 min); `OPS_CACHE` sets where (default `/tmp/ops-work/cache`).

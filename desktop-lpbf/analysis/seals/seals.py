@@ -322,10 +322,12 @@ def main():
              note="cord spliced into a ring: specify a vulcanized (hot) splice or a molded ring, never a glued joint, for vacuum"),
         dict(key="door", seal="Door: 1.78 mm FKM 75A cord (McMaster 96515K123) in a half-dovetail groove, depth 1.32, 2.3 wide at the bottom, 24 deg undercut",
              held_by="2 x McMaster 1807A61 draw latches (800 lb) on 6061 brackets bolted to the door's two ears, pointing forward, pulling strikes on the "
-                     "chamber's side faces (since 2026-11-23); floating (slotted) hinge holes",
-             status="CHECK", in_model="groove, cord, ears, latch brackets, latch bodies, strikes, slotted hinge knuckles",
-             note="set each latch to >= the preload in the clamp table; the half-dovetail is overfilled at worst tolerance (gland table); the brackets' "
-                  "screws are not drawn (mech.md C); robot: a pneumatic clamp would go on the same brackets (not drawn)"),
+                     "chamber's side faces (since 2026-11-23); the hinge holds the bottom edge (round pin holes, knuckles shimmed at assembly, "
+                     "since 2026-11-25; they were slotted so the door floated)",
+             status="CHECK", in_model="groove, cord, ears, latch brackets, latch bodies, strikes, hinge knuckles with round pin holes",
+             note="set each latch to ~0.75 kN and no more: the latches pull 12 mm outboard of the ears' tips, so more preload pries the door off "
+                  "its seal (door_seal_fea.md); the hinge pins need a close fit; the half-dovetail is overfilled at worst tolerance (gland table); "
+                  "the brackets' screws are not drawn (mech.md C); robot: a pneumatic clamp would go on the same brackets (not drawn)"),
         dict(key="window", seal="Window: O-ring sandwich, 2-031 FKM under the Ø50.8 x 8 window, 1 mm FKM flat ring over it",
              held_by="retaining ring whose spigot bottoms metal-to-metal on the flange (6 x M3)", status="OK", in_model="seat groove, both rings, stepped retaining ring",
              note="squeeze set by geometry; the flat ring takes the window's thickness tolerance (FKM sheet not yet sourced)"),

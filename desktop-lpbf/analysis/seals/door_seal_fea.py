@@ -22,10 +22,14 @@ Cases:
   B  as A with the hinge pins at the ends of their slots (y and z held);
   C  the boundary conditions used up to round 5, for comparison: the door alone, the brackets' feet's footprints held in
      y, the hinges in y and z, no cord stiffness;
-  D  the design case: each latch preloaded to 0.75, 1.2 or 1.78 kN (a force on its reference node), hinges floating, and
-     the door's land (its back face where the frame or the floor plate is behind it) in contact with the chamber's
+  D  the round-5 design: each latch preloaded to 0.75, 1.2 or 1.78 kN (a force on its reference node), hinges floating,
+     and the door's land (its back face where the frame or the floor plate is behind it) in contact with the chamber's
      front face. Contact is solved by an active set of penalty springs: on where the door presses, off where it would
      pull, re-solved until the set stops changing. The squeeze is then measured from the land's metal-to-metal 25.8 %.
+     The latches pull 12 mm outboard of the ears' tips, so the door pivots on them and opens in the middle (D1200);
+  E  the fix drawn since 2026-11-25: as D, with the hinge holding the door's bottom edge where its land touches
+     (round pin holes, the chamber's knuckle blocks shimmed at assembly; the FEA takes the hinge as rigid);
+  F  a what-if, not drawn: E plus a rib along the door's top edge (DOOR_FEA_RIB="h,d,half-length").
 Results: squeeze, line load and contact pressure along the gland (also at the gland's worst tolerance, from seals.py's
 gland check), the land gap, the latch and hinge loads against the latch's rating, and von Mises in the door, ears and
 brackets against 6061-T6's yield.
@@ -497,7 +501,7 @@ def write_md(R):
          f"the pull line is {abs(L0['x_pull']) - max(abs(L0['foot_x'][0]), abs(L0['foot_x'][1])):.0f} mm outboard of the feet's outer edge "
          f"and {abs(L0['x_pull']) - 116.0:.0f} mm outboard of the gland's side runs;",
          f"- hinge leaves on the door's front face: x {h[0]['x'][0]:.0f} to {h[0]['x'][1]:.0f} and {h[1]['x'][0]:.0f} to {h[1]['x'][1]:.0f}, "
-         f"z {h[0]['z'][0]:.0f}-{h[0]['z'][1]:.0f}; pin axis (y, z) = ({G['hinge_axis'][0]:.0f}, {G['hinge_axis'][1]:.0f}), holes slotted ±{SLOT} mm in y;",
+         f"z {h[0]['z'][0]:.0f} to {h[0]['z'][1]:.0f}; pin axis (y, z) = ({G['hinge_axis'][0]:.0f}, {G['hinge_axis'][1]:.0f}); the pin holes were slotted ±{SLOT} mm in y until 2026-11-25 (A and D float on them, B and C hold the pins at the slots' ends) and are round since (E, F);",
          f"- the land: {R['land_nodes']} nodes of the door's back face with the frame or the floor plate behind them (outside the door opening).", "",
          f"The gland itself spans {gt['squeeze_min']:.1f}-{gt['squeeze_max']:.1f} % squeeze over its tolerances (nominal {gt['squeeze_nom']:.1f} %, seals.py), "
          f"so the fifth column takes {tol:.1f} % off the lowest squeeze; it should stay at or above 15 %.", "",
@@ -527,15 +531,25 @@ def write_md(R):
                  f"{r['sf_yield']:.1f}{sfp} | {r['hinge_y_travel_um'][0]:.0f} to {r['hinge_y_travel_um'][1]:.0f} µm (slot ±{1000 * SLOT:.0f}) |")
     its = [r for r in cases if r.get("iterations")]
     if its:
-        L += ["", "Contact (cases D): the land is a set of penalty springs (" + f"{K_PEN:.0e}" + " N/mm per node) switched on where the door presses on the "
+        L += ["", "Contact (cases D-F): the land is a set of penalty springs (" + f"{K_PEN:.0e}" + " N/mm per node) switched on where the door presses on the "
               "chamber and off where it would pull; " + "; ".join(f"{r['case']}: {len(r['iterations'])} solves, {r['iterations'][-1]['active']} nodes touching, "
                                                                   f"{r['iterations'][-1]['contact_N']:.0f} N through the land" for r in its) + "."]
     if R.get("clearances_mm"):
         L += ["", "Clearances, door shut (exact OpenCascade distances): " + "; ".join(f"{k.replace(' | ', ' to ')} {v:.2f} mm" for k, v in R["clearances_mm"].items() if v is not None) + "."]
-    L += ["", "Notes:",
-          "- Squeeze is read at the groove floor's nodes: the case's reference squeeze (25 % for A-C, metal-to-metal for D) plus the door's displacement "
-          "toward the chamber over the cord's 1.78 mm. A-C hold the latch hooks (or the ears) where the squeeze would be 25 % with a rigid door; "
-          "D applies the latch preload as a force and lets the door find its place on the cord and the land.",
+    L += ["", "What it means:",
+          "- **The round-5 latches pry the door open (cases D).** Each pulls on a line 12 mm outboard of its ear's tip, and the ear's tip is the "
+          "outermost place the door bears on the chamber (the chamber's front face ends at x ±156). So the door pivots on the ear tips: "
+          "the preload goes through the tips, and the door's middle lifts off its land and its cord. More preload, more lift.",
+          "- **The fix drawn since 2026-11-25 (cases E): the hinge holds the door's bottom edge.** Round pin holes in place of the ±0.6 mm "
+          "slots, and the chamber's knuckle blocks shimmed at assembly so the shut door's land just touches. Set each latch to about 0.75 kN, "
+          "and no more: that is the cord's force at metal-to-metal plus +20 mbar, over two latches. The hinge pins need a close fit; "
+          "the FEA takes the hinge as rigid.",
+          "- Case C repeats the round-4/5 boundary conditions on the new geometry: they hold the ears' front faces, so they can't show a pull "
+          "outboard of the bearing.",
+          "", "Notes:",
+          "- Squeeze is read at the groove floor's nodes: the case's reference squeeze (25 % for A-C, metal-to-metal for D-F) plus the door's "
+          "displacement toward the chamber over the cord's 1.78 mm. A-C hold the latch hooks (or the ears) where the squeeze would be 25 % with a "
+          "rigid door; D-F apply the latch preload as a force and let the door find its place on the cord and the land.",
           "- Contact pressure: Hertz line contact of a cord on a flat (E* = E / 0.75), from the local line load. Rough at 20-30 % squeeze; the line load is the firmer number.",
           "- The latch is rigid from its base to its hook: the latch's own stretch, and how its preload changes with the +20 mbar increment, are not modelled.",
           "- The brackets' feet are bonded to the ears: their screws (not drawn in the model) carry the prying from the pull line's offset (mech.md §C)."]
