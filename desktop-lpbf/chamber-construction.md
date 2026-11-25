@@ -301,7 +301,7 @@ The per-part model is [`hours.py`](analysis/machining/hours.py), output
 | Chamber body | CAM | Setups | Run | Deburr + inspect | Total |
 |---|---|---|---|---|---|
 | Before: block, 6 setups | 12.8 h | 7.5 h | 15.5 h (conservative) / 3.5-5 h (vendor feeds) | 1 h | 37 h (25-26 h at vendor feeds) |
-| Now: frame (3 setups with a 4th axis) + floor plate (2) + waterjet | 8.5 h | 7.5 h | 7.4 h / 3.3 h (2.3 h in the programmed G-code, round 6) | 2 h | 25 h (21 h) |
+| Now: frame (3 setups with a 4th axis) + floor plate (2) + waterjet | 8.5 h | 7.5 h | 7.4 h / 3.3 h (2.2 h in the programmed G-code, round 6) | 2 h | 25 h (21 h) |
 
 The machine as a whole is in [`machining.md`](machining.md#hours-for-the-whole-machine).
 

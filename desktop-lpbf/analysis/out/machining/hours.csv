@@ -2,7 +2,7 @@ part,slug,mat,setups_3axis,setups_4th_axis,holes,cam_h,setup_h_3axis,setup_h_4th
 "Base plate, process module (MIC-6, 15 mm)",base_plate_process_module_mic_6_15_mm,mic6,2,2,26,2.1,2.5,2.5,3.97,,,0.25,,8.8,8.8
 "Base plate, gas module (MIC-6, 15 mm)",base_plate_gas_module_mic_6_15_mm,mic6,2,2,4,1.8,2.5,2.5,2.97,,,0.25,,7.5,7.5
 "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",chamber_legs_6061_30_x_30_the_right_hand_one_28_x_30_at_the_,al6061,2,1,4,1.8,2.5,2.0,0.58,,,0.25,,5.1,4.6
-Z mounting flange (bolted under the floor),z_mounting_flange_bolted_under_the_floor,al6061,2,1,8,1.8,1.5,1.5,0.08,,,0.25,,3.6,3.6
+Z mounting flange (bolted under the floor),z_mounting_flange_bolted_under_the_floor,al6061,2,1,8,1.8,1.5,1.5,0.1,,,0.25,,3.6,3.6
 Z bracket + fold-back belt housing (2:1),z_bracket_fold_back_belt_housing_2_1,al6061,2,1,2,1.7,1.5,1.5,0.18,,,0.25,,3.6,3.6
 "Z lift arm (6061, 12 mm, pot-magnet coupling)",z_lift_arm_6061_12_mm_pot_magnet_coupling,al6061,2,1,1,1.7,1.5,1.5,0.07,,,0.25,,3.5,3.5
 "Build module M50: spigot, flange, honed 316L cylinder (Ø50.8 bore, 3 mm wall) and bottom c",build_module_m50_spigot_flange_honed_316l_cylinder_50_8_bore,ss316l,4,1,11,4.1,3.0,1.5,0.58,,,1.0,spigot's radial O-ring groove and the bore: turned after welding; honing outsourced,8.7,7.2
@@ -14,14 +14,14 @@ Z bracket + fold-back belt housing (2:1),z_bracket_fold_back_belt_housing_2_1,al
 "Macor standoff rings M50 (3 standoffs x 3 rings, Ø8, cut from 8489K75 rod; thermal break)",macor_standoff_rings_m50_3_standoffs_x_3_rings_8_cut_from_84,macor,2,1,1,2.7,1.5,1.5,0.02,,,0.25,,4.5,4.5
 "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",piston_head_m50_6061_t6_cool_side_of_the_break_tier_b_316l_w,al6061,6,3,8,5.2,4.5,3.0,0.12,,,0.25,seal grooves are radial: turned,10.1,8.6
 "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it ru",hollow_piston_rod_m50_5_8_in_x_0_065_in_seamless_316_polishe,ss316l,2,1,1,1.7,1.5,1.5,0.07,,,0.25,,3.5,3.5
-"Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",rod_end_m50_316l_feedthrough_block_rod_welded_into_its_top_8,ss316l,3,1,11,3.5,2.2,1.5,0.93,,,0.25,,6.9,6.2
+"Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",rod_end_m50_316l_feedthrough_block_rod_welded_into_its_top_8,ss316l,3,1,12,3.5,2.2,1.5,0.97,,,0.25,,6.9,6.2
 "Striker disc M50 (416 stainless, on the pot magnet)",striker_disc_m50_416_stainless_on_the_pot_magnet,steel,2,1,6,2.8,1.5,1.5,0.07,,,0.25,,4.6,4.6
 "Overflow funnel block (316L, bolted, FKM face O-ring)",overflow_funnel_block_316l_bolted_fkm_face_o_ring,ss316l,2,1,9,1.8,1.5,1.5,0.83,,,1.0,,5.1,5.1
 "Overflow-jar sensor bracket (6061, 6 mm, on the front-right leg)",overflow_jar_sensor_bracket_6061_6_mm_on_the_front_right_leg,al6061,2,1,3,1.7,1.5,1.5,0.05,,,0.25,,3.5,3.5
 "Zero-point module plates (2 x 6061, 10 mm, each on two posts)",zero_point_module_plates_2_x_6061_10_mm_each_on_two_posts,al6061,2,1,0,1.7,1.5,1.5,0.07,,,0.25,,3.5,3.5
 "Zero-point posts (4 x 6061, 16 x 16, M6 studs into floor inserts)",zero_point_posts_4_x_6061_16_x_16_m6_studs_into_floor_insert,al6061,2,1,0,1.7,1.5,1.5,0.03,,,0.25,,3.5,3.5
 "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor ",process_chamber_body_6061_t6_through_frame_from_5_5_in_plate,al6061,6,3,108,5.7,7.5,4.5,5.05,1.63,1.09,1.0,,19.2,16.2
-"Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module po",chamber_floor_plate_6061_t6_20_mm_bolted_under_the_frame_flo,al6061,2,2,71,2.8,2.5,2.5,2.38,0.88,1.16,1.0,,8.7,8.7
+"Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module po",chamber_floor_plate_6061_t6_20_mm_bolted_under_the_frame_flo,al6061,2,2,71,2.8,2.5,2.5,2.38,0.88,1.15,1.0,,8.7,8.7
 Recoater carriage block (6061),recoater_carriage_block_6061,al6061,2,1,1,1.7,1.5,1.5,0.15,,,0.25,,3.6,3.6
 "Recoater arm (6061, 40 x 14 web)",recoater_arm_6061_40_x_14_web,al6061,2,1,3,1.7,1.5,1.5,0.05,,,0.25,,3.5,3.5
 "Blade holder (6061, 18 x 31, quick-swap)",blade_holder_6061_18_x_31_quick_swap,al6061,2,1,4,1.8,1.5,1.5,0.12,,,0.25,,3.7,3.7
