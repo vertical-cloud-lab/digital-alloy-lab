@@ -83,10 +83,11 @@ def charge_tile():
 
 def pulled_bars_tile():
     """The five pulled bars, turned so they lie across the tile. The crop
-    starts just below a strip of labelling tape."""
+    starts just below a strip of labelling tape and is 3:4, so the turned
+    tile is 4:3 with no padding."""
     im = Image.open(IMG / "lab-pulled-bars.jpg").convert("RGB")
     w, h = im.size
-    im = im.crop((int(0.205 * w), int(0.262 * h), int(0.735 * w), int(0.752 * h)))
+    im = im.crop((int(0.212 * w), int(0.275 * h), int(0.722 * w), int(0.785 * h)))
     im = im.transpose(Image.Transpose.ROTATE_90)  # grips to the left
     return fit(im, (0, 0, 1, 1))
 
