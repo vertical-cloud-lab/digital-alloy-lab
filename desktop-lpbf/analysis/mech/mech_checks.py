@@ -308,7 +308,7 @@ def main():
               f"{b['e_plate_mm']:.0f} mm outboard of the 6 mm plate's mid-plane and {b['pull_line_x'] - b['foot_x'][1]:.0f} mm outboard of the foot):", "",
               f"- plate ({b['plate_t']:.0f} × {b['plate_h']:.0f} mm section), out-of-plane bending plus tension: {b['plate_sigma_MPa']:.1f} MPa, SF {b['plate_sf']:.1f} on 6061-T6 yield;",
               f"- foot: it tips about its outer edge, so the screws (at x ±{b['screw_x']:.0f}) carry {b['screw_tension_N']:.0f} N together and the edge "
-              f"{b['edge_compression_N']:.0f} N. With 2 × M5 A4-70 (assumed; {b['note'].split(': ')[1]}) at {b['screw_preload_N']:.0f} N preload "
+              f"{b['edge_compression_N']:.0f} N. With 2 × M5 A4-70 into the 6061 ear (assumed: the brackets' screws are not drawn; ≥ 8 mm of thread or a helical insert) at {b['screw_preload_N']:.0f} N preload "
               f"({b['screw_torque_Nm']:.1f} N·m, K = 0.2): separation factor {b['screw_sep_factor']:.1f}, load factor {b['screw_load_factor']:.0f} (Shigley 8-28, 8-29, C = 0.25);",
               f"- ear as a cantilever from the door's edge to the pull line: {b['ear_moment_Nmm'] / 1000:.1f} N·m, {b['ear_sigma_MPa']:.1f} MPa, SF {b['ear_sf']:.0f}."]
     L += ["", "## D. Chamber warm-up over a 10 h build (lumped; natural convection + radiation + argon loop)", "",

@@ -5,6 +5,34 @@ Written 2026-11-20 for [PR #266](https://github.com/vertical-cloud-lab/digital-a
 This note covers what a person does. Automated operations (the build loop, robot plate and reservoir handling) are
 covered separately. Nothing has been built or tried on a mock-up.
 
+## Round 6 (2026-11-25)
+
+<!-- ROUND6-MERGED -->
+
+**Baseline before the merge** (the round-5 model plus the round-6 optics merge, bbdf626, plus the door-hinge change; all of M50, no
+pictures; [`results-M50-r6-base.md`](analysis/out/ops/results-M50-r6-base.md)): **91 pass / 2 warn / 33 fail** (round 5: 90 / 2 / 34
+and one step that matched no part). A2.18 passes through the door, 0.36 mm from the frame at the tightest; A1.14 is a note. Nothing
+else changed.
+
+**What changed in the operation list and the checker** (`analysis/ops/`, 2026-11-25):
+- **Stale part names.** Round 5 replaced the rod end's hermetic connector with a 316L block carrying seven Solid Sealing
+  weld-in feedthroughs, and dropped the thermal cutoff ([`electrical.md`](electrical.md) §13.3-13.4). The list still named both:
+  - A1.4 placed a "Thermal cutoff" that no longer exists. It now places the thermocouples only.
+  - **A1.14** ("Hermetic connector with its O-ring into the rod end's side boss") matched no part. It is now a note: the
+    weld-ins are welded into the block by the shop and come in with the rod at A1.12, whose key ("Rod end") takes the block
+    and its weld-ins. Their air-side plugs go on at a module swap. How the heater and thermocouple leads join the weld-ins'
+    vacuum-side ends inside the welded block is not drawn anywhere; that is an open item for the electrical design.
+  - A1.19 and M7.2 no longer list the connector and its O-ring among the parts that move with the stack. M7's notes now
+    say the leads run to the weld-ins.
+- **A2.18, the liners, now go in through the door opening.** Until round 5 the step used the animation's straight lines from
+  above. M3.2-M3.8 take the six liners out through the door, so A2.18 now puts them in along the same six paths, reversed:
+  the back halves first (lower then upper, left then right), then each side liner. Each piece is checked with the pieces
+  before it already in. The paths live in one table (`LINER_PATHS` in `operations.py`) that M3 uses too.
+- **Checker.** `run_ops.py` takes a `part_paths` list on a place step: each group of parts along its own path, in order.
+  `checks.py` reads its tessellation cache directory from `OPS_CACHE`, so parallel runs don't share one cache file.
+
+## Earlier updates (rounds 4 and 5)
+
 > **Update 2026-11-23 (round 5, access fixes): U1.1, U2.2, M3.2 and M8.4 now pass.** U1, U2, M3 and M8 re-run on M50: 12 pass /
 > 0 warn / 3 fail, against 3 / 0 / 7 in round 4 ([`results-M50-a2.md`](analysis/out/ops/results-M50-a2.md); M3 is now six removal
 > steps instead of one; the full run in `results-M50.md` is from round 4 and was not repeated). The three fails left are M8.1-M8.3,

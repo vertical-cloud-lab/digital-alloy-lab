@@ -68,13 +68,58 @@
    "torque_Nm": 0.0441
   },
   "galling": "316 screws in 18-8 helical inserts gall; the lid and window screws sit outside the seal, so use anti-seize there, or silver-plated / Nitronic 60 screws",
-  "door_1p78": {
-   "latch_each_N": 723.7640678833576,
+  "door_D1200": {
+   "label": "design: each latch preloaded to 1.20 kN (34 % of its rating), hinges floating, the door's land in contact with the chamber's front face where pulled onto it, cord stiffness",
+   "latch_each_N": 1200.0,
    "latch_rating_N": 3558.4000000000005,
-   "latch_sf": 4.916519288400865,
-   "hinge_each_N": 0.0,
-   "hinge_pin_shear_MPa": 0.0,
-   "squeeze_lost_um": 34.4171
+   "latch_sf": 2.9653333333333336,
+   "hinge_each_N": 1.3210305e-10,
+   "hinge_pin_shear_MPa": 3.3639765448025286e-12,
+   "squeeze_lost_um": 174.39500000000007,
+   "squeeze_pct": [
+    15.202528089887634,
+    22.022567415730336
+   ],
+   "sf_yield": 5.4006994943603335
+  },
+  "door_E750": {
+   "label": "as D at 0.75 kN, but the hinge pins hold the door's bottom edge where its land touches (no float: the hinge set at assembly and locked)",
+   "latch_each_N": 750.0,
+   "latch_rating_N": 3558.4000000000005,
+   "latch_sf": 4.744533333333334,
+   "hinge_each_N": 1118.4615,
+   "hinge_pin_shear_MPa": 28.48138822127614,
+   "squeeze_lost_um": 25.428100000000065,
+   "squeeze_pct": [
+    23.571455056179772,
+    25.843128349999994
+   ],
+   "sf_yield": 7.992939119217633
+  },
+  "latch_bracket": {
+   "latch_load_N": 1200.0,
+   "pull_line_x": 158.0,
+   "plate_mid_x": 143.0,
+   "plate_t": 6.0,
+   "plate_h": 66.0,
+   "e_plate_mm": 15.0,
+   "plate_sigma_MPa": 48.484848484848484,
+   "plate_sf": 5.6925,
+   "foot_x": [
+    128.0,
+    146.0
+   ],
+   "screw_x": 137.0,
+   "screw_tension_N": 1600.0,
+   "edge_compression_N": 2800.0,
+   "screw_preload_N": 3594.374999999999,
+   "screw_torque_Nm": 3.5943749999999994,
+   "screw_sep_factor": 5.990624999999999,
+   "screw_load_factor": 10.783125000000005,
+   "ear_moment_Nmm": 40800.0,
+   "ear_sigma_MPa": 30.22222222222222,
+   "ear_sf": 9.132352941176471,
+   "note": "brackets' screws not drawn: 2 x M5 A4-70 into the ear assumed (6061, >= 8 mm engagement or a helical insert)"
   }
  },
  "D": {

@@ -25,7 +25,16 @@ Critical speed 14418 rpm vs 900 rpm at 150 mm/s (margin 13× at 80 %); buckling 
 
 Lid: the O-ring needs 205 N per screw and +20 mbar adds 6 N. Recommend 2500 N preload (2.5 N·m, K = 0.2); A4-70's 75 % of proof is 4792 N (4.8 N·m). Window ring: 6 × M3 at 0.04 N·m to a metal stop. 316 screws in 18-8 helical inserts gall; the lid and window screws sit outside the seal, so use anti-seize there, or silver-plated / Nitronic 60 screws.
 
-- Door, 1.78 mm cord: each latch 724 N (rating 3558 N, SF 4.9); each hinge 0 N, Ø5 pin in double shear 0 MPa; squeeze lost 34 µm
+Door latches and hinges, from the CalculiX door model (`door_seal_fea.md`; 1.78 mm cord at 25 %, +20 mbar):
+
+- case D1200 (design: each latch preloaded to 1.20 kN (34 % of its rating), hinges floating, the door's land in contact with the chamber's front face where pulled onto it, cord stiffness): each latch 1200 N (rating 3558 N, SF 3.0); each hinge 0 N, Ø5 pin in double shear 0.0 MPa; squeeze 15.2–22.0 % along the gland, squeeze lost up to 174 µm; door, ears and brackets SF 5.4 on yield
+- case E750 (as D at 0.75 kN, but the hinge pins hold the door's bottom edge where its land touches (no float: the hinge set at assembly and locked)): each latch 750 N (rating 3558 N, SF 4.7); each hinge 1118 N, Ø5 pin in double shear 28.5 MPa; squeeze 23.6–25.8 % along the gland, squeeze lost up to 25 µm; door, ears and brackets SF 8.0 on yield
+
+Latch brackets at 1200 N per latch, the highest latch load of the door cases (the pull line at x ±158 is 15 mm outboard of the 6 mm plate's mid-plane and 12 mm outboard of the foot):
+
+- plate (6 × 66 mm section), out-of-plane bending plus tension: 48.5 MPa, SF 5.7 on 6061-T6 yield;
+- foot: it tips about its outer edge, so the screws (at x ±137) carry 1600 N together and the edge 2800 N. With 2 × M5 A4-70 into the 6061 ear (assumed: the brackets' screws are not drawn; ≥ 8 mm of thread or a helical insert) at 3594 N preload (3.6 N·m, K = 0.2): separation factor 6.0, load factor 11 (Shigley 8-28, 8-29, C = 0.25);
+- ear as a cantilever from the door's edge to the pull line: 40.8 N·m, 30.2 MPa, SF 9.
 
 ## D. Chamber warm-up over a 10 h build (lumped; natural convection + radiation + argon loop)
 

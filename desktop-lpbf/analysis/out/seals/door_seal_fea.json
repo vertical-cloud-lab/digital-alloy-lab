@@ -1,29 +1,483 @@
 {
+ "geometry": {
+  "dy0": -126.0,
+  "dy1": -111.0,
+  "door_bbox": [
+   -146.0000001,
+   -126.0000001,
+   -6.000000100000001,
+   146.0000001,
+   -111.0,
+   114.0000001
+  ],
+  "latches": [
+   {
+    "sx": 1.0,
+    "x_base": 146.0,
+    "x_pull": 158.0,
+    "z_pull": 54.0,
+    "latch_y": [
+     -207.0,
+     -127.0
+    ],
+    "latch_z": [
+     34.0,
+     76.225
+    ],
+    "bracket_bbox": [
+     128.0,
+     -208.0,
+     34.0,
+     146.0,
+     -126.0,
+     100.0
+    ],
+    "plate_t": 6.0,
+    "foot_x": [
+     128.0,
+     146.0
+    ],
+    "foot_z": [
+     36.0,
+     72.0
+    ],
+    "patch_nodes": 726
+   },
+   {
+    "sx": -1.0,
+    "x_base": -146.0,
+    "x_pull": -158.0,
+    "z_pull": 54.0,
+    "latch_y": [
+     -207.0,
+     -127.0
+    ],
+    "latch_z": [
+     34.0,
+     76.225
+    ],
+    "bracket_bbox": [
+     -146.0,
+     -208.0,
+     34.0,
+     -128.0,
+     -126.0,
+     100.0
+    ],
+    "plate_t": 6.0,
+    "foot_x": [
+     -146.0,
+     -128.0
+    ],
+    "foot_z": [
+     36.0,
+     72.0
+    ],
+    "patch_nodes": 741
+   }
+  ],
+  "hinge_leaves": [
+   {
+    "x": [
+     -100.0,
+     -80.0
+    ],
+    "z": [
+     -6.000000100000001,
+     30.0
+    ]
+   },
+   {
+    "x": [
+     80.0,
+     100.0
+    ],
+    "z": [
+     -6.000000100000001,
+     30.0
+    ]
+   }
+  ],
+  "hinge_axis": [
+   -132.0,
+   -12.0
+  ],
+  "latch_pn": "McMaster 1807A61",
+  "latch_rating_N": 3558.4000000000005,
+  "latch_pos": {
+   "ear_x": 146.0,
+   "bracket_x": [
+    128.0,
+    146.0
+   ],
+   "bracket_len": 82.0,
+   "strike_y": [
+    -100.0,
+    -72.0
+   ]
+  },
+  "rib": {
+   "h": 12.0,
+   "d": 20.0,
+   "x": 112.0,
+   "z": [
+    102.0000001,
+    114.0000001
+   ],
+   "y": [
+    -146.0,
+    -126.0
+   ]
+  }
+ },
  "path_mm": 662.4716784548467,
- "groove_floor_area_mm2": 1520.0700000000013,
- "nodes": 67236,
- "elements": 40652,
+ "groove_depth_mm": 1.32,
+ "cord_mm": 1.78,
+ "E_fkm_MPa": 7.052854049401784,
+ "F_oring_N": 1401.0103967034265,
+ "F_oring_metal_N": 1489.6081339536086,
+ "squeeze_metal_pct": 25.842696629213478,
+ "k_line_N_per_mm2": 8.67831650609985,
+ "hmax_mm": 5.0,
+ "hmin_mm": 1.5,
+ "nodes": 76248,
+ "nodes_door_only": 67687,
+ "land_nodes": 2920,
+ "clearances_mm": {
+  "Draw latches on the door | Optics bridge posts": 2.25,
+  "Draw-latch brackets on the door | Optics bridge posts": 34.0,
+  "Draw-latch actuators | Optics bridge posts": 14.0
+ },
  "cases": [
   {
+   "case": "D1200",
+   "label": "design: each latch preloaded to 1.20 kN (34 % of its rating), hinges floating, the door's land in contact with the chamber's front face where pulled onto it, cord stiffness",
    "cord": 1.78,
-   "label": "1.78 mm cord at 25 % (gland 1.32 x 2.3)",
-   "F_oring_N": 1401.0103967034265,
-   "F_overpressure_N": 46.51773906328873,
-   "squeeze_mm": 0.445,
-   "lost_max_um": 34.3551,
+   "nodes": 76603,
+   "squeeze_ref_pct": 25.842696629213478,
+   "F_oring_ref_N": 1489.6081339536086,
+   "F_overpressure_N": 46.68225999999999,
+   "squeeze_min_pct": 15.202528089887634,
+   "squeeze_min_at": [
+    2.042810365310288e-13,
+    -112.32,
+    0.8500000000000014
+   ],
+   "squeeze_max_pct": 22.022567415730336,
+   "squeeze_max_at": [
+    117.14999999999999,
+    -112.32,
+    54.00000000000007
+   ],
+   "lost_max_um": 174.39500000000007,
    "lost_at": [
-    2.557953848736365e-13,
+    2.042810365310288e-13,
+    -112.32,
+    0.8500000000000014
+   ],
+   "margin_to_15pct_um": 3.6049999999999076,
+   "line_load_N_per_mm": [
+    0.9379325786149431,
+    1.6934064480800934
+   ],
+   "contact_width_mm": [
+    0.6723788626328415,
+    0.9034598272026737
+   ],
+   "contact_mean_MPa": [
+    1.3949465557889043,
+    1.8743572177672605
+   ],
+   "contact_peak_MPa": [
+    1.7761011176225479,
+    2.386505730621053
+   ],
+   "land_gap": {
+    "max_um": 191.56699999999998,
+    "at": [
+     -1.9895196601282805e-13,
+     -111.0,
+     -6.0
+    ],
+    "nominal_um": 0.0,
+    "in_contact": 34,
+    "of": 2921
+   },
+   "cord_force_N": 745.3004805399262,
+   "latch_load_each_N": 1200.0,
+   "latch_loads_N": [
+    1200.0,
+    1200.0
+   ],
+   "hinge_load_each_N": 1.3210305e-10,
+   "hinge_y_travel_um": [
+    -136.956,
+    -101.922
+   ],
+   "latch_rating_N": 3558.4000000000005,
+   "latch_sf": 2.9653333333333336,
+   "vm": {
+    "door": [
+     36.58739554008788,
+     [
+      -46.5267154841672,
+      -126.0,
+      64.36217121018356
+     ]
+    ],
+    "ears": [
+     51.104491240109226,
+     [
+      -146.0,
+      -126.0,
+      36.0
+     ]
+    ],
+    "brackets": [
+     30.480356945864333,
+     [
+      138.58598104257123,
+      -132.0,
+      70.50698314895223
+     ]
+    ],
+    "brackets_at_patch": [
+     62.16399819373831,
+     [
+      146.0,
+      -126.75777222831138,
+      35.75
+     ]
+    ]
+   },
+   "sf_yield": 5.4006994943603335,
+   "sf_yield_at_patch": 4.439868863322261,
+   "iterations": [
+    {
+     "it": 0,
+     "active": 2921,
+     "next": 596,
+     "contact_N": 863.9378028224003
+    },
+    {
+     "it": 1,
+     "active": 596,
+     "next": 294,
+     "contact_N": 876.8760560000002
+    },
+    {
+     "it": 2,
+     "active": 294,
+     "next": 182,
+     "contact_N": 1083.084191
+    },
+    {
+     "it": 3,
+     "active": 182,
+     "next": 111,
+     "contact_N": 1160.907575
+    },
+    {
+     "it": 4,
+     "active": 111,
+     "next": 70,
+     "contact_N": 1217.18936
+    },
+    {
+     "it": 5,
+     "active": 70,
+     "next": 34,
+     "contact_N": 1571.2905999999998
+    },
+    {
+     "it": 6,
+     "active": 34,
+     "next": 34,
+     "contact_N": 1607.6553999999999
+    }
+   ],
+   "ok": true,
+   "profile": {
+    "top centre": 15.203707865168536,
+    "bottom centre": 15.202528089887634,
+    "top, x = +/-60": 16.83337078651685,
+    "bottom, x = +/-60": 16.839887640449437,
+    "corners, top": 21.021528089887635,
+    "corners, bottom": 21.035556179775277,
+    "sides, mid-height (latch line)": 22.01805617977528
+   },
+   "png": "door_seal_D1200.png",
+   "squeeze_min_worst_tol_pct": 8.960770427810298,
+   "ok_worst_tol": false
+  },
+  {
+   "case": "E750",
+   "label": "as D at 0.75 kN, but the hinge pins hold the door's bottom edge where its land touches (no float: the hinge set at assembly and locked)",
+   "cord": 1.78,
+   "nodes": 76248,
+   "squeeze_ref_pct": 25.842696629213478,
+   "F_oring_ref_N": 1489.6081339536086,
+   "F_overpressure_N": 46.68225999999999,
+   "squeeze_min_pct": 23.571455056179772,
+   "squeeze_min_at": [
+    2.042810365310288e-13,
     -112.32,
     107.15
    ],
-   "margin_to_15pct_um": 178.0,
-   "vm_max": 17.3462114173989,
-   "latch_reaction_N": null,
+   "squeeze_max_pct": 25.843128349999994,
+   "squeeze_max_at": [
+    91.65240278232969,
+    -112.32,
+    3.1499999999999986
+   ],
+   "lost_max_um": 25.428100000000065,
+   "lost_at": [
+    2.042810365310288e-13,
+    -112.32,
+    107.15
+   ],
+   "margin_to_15pct_um": 152.57189999999994,
+   "line_load_N_per_mm": [
+    1.9035330458559891,
+    2.2486316353968996
+   ],
+   "contact_width_mm": [
+    0.9578741473604777,
+    1.0410879020954542
+   ],
+   "contact_mean_MPa": [
+    1.9872475430111287,
+    2.1598864330965295
+   ],
+   "contact_peak_MPa": [
+    2.53024215693956,
+    2.7500528187554796
+   ],
+   "land_gap": {
+    "max_um": 43.8059,
+    "at": [
+     -1.9895196601282805e-13,
+     -111.0,
+     114.0
+    ],
+    "nominal_um": 0.0,
+    "in_contact": 385,
+    "of": 2920
+   },
+   "cord_force_N": 1402.9090212243582,
+   "latch_load_each_N": 750.0,
+   "latch_loads_N": [
+    750.0,
+    750.0
+   ],
+   "hinge_load_each_N": 1118.4615,
+   "hinge_y_travel_um": [
+    0.0,
+    0.0
+   ],
+   "latch_rating_N": 3558.4000000000005,
+   "latch_sf": 4.744533333333334,
+   "vm": {
+    "door": [
+     23.577744778470652,
+     [
+      -83.47169490759813,
+      -126.0,
+      30.667452549528424
+     ]
+    ],
+    "ears": [
+     34.53047694763569,
+     [
+      -146.0,
+      -126.0,
+      36.0
+     ]
+    ],
+    "brackets": [
+     19.40772153592335,
+     [
+      138.58598104257123,
+      -132.0,
+      37.493016851047784
+     ]
+    ],
+    "brackets_at_patch": [
+     43.076213279296034,
+     [
+      -146.0,
+      -126.09805793208943,
+      37.19549886798054
+     ]
+    ]
+   },
+   "sf_yield": 7.992939119217633,
+   "sf_yield_at_patch": 6.407248432225946,
+   "iterations": [
+    {
+     "it": 0,
+     "active": 2920,
+     "next": 488,
+     "contact_N": 34.50886317700004
+    },
+    {
+     "it": 1,
+     "active": 488,
+     "next": 293,
+     "contact_N": 875.949393438
+    },
+    {
+     "it": 2,
+     "active": 293,
+     "next": 319,
+     "contact_N": 1690.5184882
+    },
+    {
+     "it": 3,
+     "active": 319,
+     "next": 285,
+     "contact_N": 1844.8426174699998
+    },
+    {
+     "it": 4,
+     "active": 285,
+     "next": 505,
+     "contact_N": 2177.7358944999996
+    },
+    {
+     "it": 5,
+     "active": 505,
+     "next": 419,
+     "contact_N": 2262.799230188
+    },
+    {
+     "it": 6,
+     "active": 419,
+     "next": 385,
+     "contact_N": 2285.8625579
+    },
+    {
+     "it": 7,
+     "active": 385,
+     "next": 385,
+     "contact_N": 2287.3687178
+    }
+   ],
    "ok": true,
-   "latch_load_each_N": 723.7640678833576,
-   "hinge_load_each_N": 0.0,
-   "png": "door_seal_1p78.png"
+   "profile": {
+    "top centre": 23.571455056179772,
+    "bottom centre": 25.623303932584268,
+    "top, x = +/-60": 23.82030898876404,
+    "bottom, x = +/-60": 25.799932808988764,
+    "corners, top": 24.378792134831457,
+    "corners, bottom": 25.84170306741573,
+    "sides, mid-height (latch line)": 25.51764831460674
+   },
+   "png": "door_seal_E750.png",
+   "squeeze_min_worst_tol_pct": 17.329697394102435,
+   "ok_worst_tol": true
   }
  ],
- "groove_depth_mm": 1.32
+ "groove_floor_area_mm2": 1520.0700000000013,
+ "F_overpressure_N": 46.68225999999999
 }

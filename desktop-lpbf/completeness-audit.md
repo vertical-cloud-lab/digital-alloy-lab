@@ -5,7 +5,30 @@ question: "Have you been thorough in terms of both mechanical and electrical com
 This note covers the mechanical and whole-machine side. The electrical design and the optics audit are separate notes.
 Nothing here has been built, quoted by a shop or reviewed by BYU's LSO or EHS.
 
-## Short answer
+## Round 6 (2026-11-25): stale names, and the model's own part list
+
+The audit was re-run on the round-5 model with the round-6 optics merge (bbdf626) and the door-hinge change. The counts table
+below is generated; the "Short answer" and the gap list after it are from 2026-11-22 and were not rewritten.
+- **The part list is now the model's own.** The audit read its parts from `analysis/out/mass.json`, which lags behind renamed and
+  new parts until `mass_budget.py` is re-run. It now takes them from the model's tags, re-dumped from the current model
+  (`model_tags.json`, 268 parts; the VLM tray is context and is skipped), with mass and material from `mass.json` where the
+  name matches. That is **264 parts, against 223 on 2026-11-22**: rounds 4 and 5 drew the electrical parts (power boxes, sensors,
+  E-stops, the Pirani gauge), the six liners, the coaxial monitor's optics, the calibration fixtures and more.
+- **Stale names.** Round 5 replaced the rod end's hermetic connector and its O-ring with seven Solid Sealing weld-ins, and dropped
+  the thermal cutoff. The audit still mapped the connector, its O-ring and the cutoff, and its B1 entry took the weld-ins as a
+  machined part. They now map to H1 as bought parts, priced in `electrical-bom.csv` E6-01..03. They show as **inconsistent**
+  only because bom.csv H1's spec column still says "potted cable exit"; its candidate column lists the weld-ins.
+- **Overflow jar.** Round 5 renamed the jar, its port and its clamp, so three entries matched nothing. They are fixed: the port
+  (5786N25 stub) and the MKS 100318805 toggle clamp are priced, and the jar (a KF-40 flange welded into a 2 in. cup) is custom.
+- **Window and cover slide** (the optics worker's merge): drawn as Edmund 38-990 (Ø50.8 × 9.53 mm, L7) and 36-299 (Ø50 × 2 mm, A2),
+  and both are now priced. The window was "generic", and the slide was matched to a part number the model no longer uses.
+- **Counts now:** 125 priced, 3 unpriced, 46 generic, 78 custom, 2 missing from the BOM and 9 inconsistent, of 264. The two
+  missing parts are the scan PC (as before) and round 5's recoater sensor posts (tagged E3, which doesn't list them).
+- **Not done.** The 2026-11-22 short answer counted 26 generic parts; most of the 20 new ones are round 5's electrical parts, which
+  have no entries in the audit's map (their part numbers are in `electrical-bom.csv`). The automation parts' tags (RA1-RA7) are
+  robot-tooling lines, not bom.csv lines.
+
+## Short answer (2026-11-22)
 
 **Before this audit, no.** The model's part list (`analysis/out/mass.json`, 223 parts) was checked part by part
 against `bom.csv` and the part-number lists. At the start of the audit (bom.csv as committed in `cc1e0a1`):
@@ -22,9 +45,9 @@ total is $62,770 – $133,349. Before the merge, this audit's own changes alone 
 ## How it was checked
 
 [`analysis/audit/completeness.py`](analysis/audit/completeness.py) reads:
-- the part list in `analysis/out/mass.json`;
+- the part list: since 2026-11-25 the model's own (its tags, below), with mass and material from `analysis/out/mass.json`;
 - each part's own BOM tag and part number (`bom`, `mcm` in `cad/lpbf_low.py`), dumped to
-  [`analysis/out/audit/model_tags.json`](analysis/out/audit/model_tags.json) from a snapshot of `97882b9` (the 12U-rack model; first run on `cc1e0a1`).
+  [`analysis/out/audit/model_tags.json`](analysis/out/audit/model_tags.json) from the current model (re-dumped 2026-11-25 on bbdf626 plus the door-hinge change; before: a snapshot of `97882b9`, the 12U-rack model).
 
 It maps every part to a bom.csv line and to rows of `mcmaster-parts.csv`, `fasteners.csv`, `seal-parts.csv`,
 `vendor-parts.csv`, `safety-parts.csv`, `robot-tooling.csv`, `assembly-tooling.csv`, `options-*.csv`,
@@ -83,7 +106,9 @@ python desktop-lpbf/analysis/audit/completeness.py --dump-tags SNAPSHOT_REPO    
 7. **Vacuum feedthroughs and connectors have no price.**
    - The two Ferrotec magnetic-fluid feedthroughs (SFL-006-NN on the recoater, SSL-005-NN on the roller) have no
      published price. They are estimated at $500-1,500 and $400-1,000, against Rigaku's $921.57 alternative.
-   - The drawn LEMO 1B rod-end connector fails the seal spec (`seal-parts.csv`).
+   - The rod end's LEMO 1B connector, which failed the seal spec, and the thermal cutoff are gone since 2026-11-23: the rod end is a
+     316L block with seven Solid Sealing weld-ins (3 × FA11631, 3 × FA11632, 1 × FA10443; $356 per module, priced in
+     `electrical-bom.csv` E6-01..03, H1). See the 2026-11-25 note above for what that changed here.
 8. **Chamber stock.** McMaster sells no 6061 plate thicker than 4 in. Midwest Steel & Aluminum cuts the 5-1/2 x 9.5 x
    15 in. 6061-T651 frame blank for $590.89 (read 2026-11-22), so G1 now names a distributor for it.
 9. **Small parts with no catalogue match:**
@@ -145,39 +170,39 @@ Every item is counted once, in one bom.csv line:
 
 | Status | Before (bom.csv at the start of this audit) | Now, bom.csv | Now, bom.csv + electrical-bom.csv, optics-bom.csv |
 |---|---|---|---|
-| real part priced | 87 | 117 | 117 |
-| real part unpriced | 2 | 4 | 4 |
-| generic | 7 | 26 | 26 |
-| custom | 26 | 65 | 65 |
-| missing from BOM | 71 | 1 | 1 |
+| real part priced | 87 | 125 | 125 |
+| real part unpriced | 2 | 3 | 3 |
+| generic | 7 | 46 | 46 |
+| custom | 26 | 78 | 78 |
+| missing from BOM | 71 | 2 | 2 |
 | inconsistent | 29 | 9 | 9 |
 | excluded | 1 | 1 | 1 |
-| **total** | 223 | 223 | 223 |
+| **total** | 223 | 264 | 264 |
 
-Model tags with no bom.csv line: RA1, RA2, RA3, RA4, RA5, RA6, RA7. BOM total now $70,478 - $154,119. Extra purchase lists read: electrical-bom.csv, optics-bom.csv.
+Model tags with no bom.csv line: RA1, RA2, RA3, RA4, RA5, RA6, RA7. BOM total now $70,364 - $154,515. Extra purchase lists read: electrical-bom.csv, optics-bom.csv.
 
 
 ## BOM lines this audit changed (generated from [`analysis/out/audit/bom_before.csv`](analysis/out/audit/bom_before.csv), the BOM at the start)
 
 | Line | Item now | Was (USD, qty x unit) | Now (USD) | Candidate now |
 |---|---|---|---|---|
-| L3 | Collimator / beam expander | 0 – 512 | 0 – 512 | IPG collimator with a ~3.2 mm beam (custom diameter, 'other diameters on request': quote) |
+| L3 | Collimator / beam expander | 0 – 512 | 0 – 790 | IPG affixed 2.5 mm collimator, ordered with the laser (price: ask with the laser order): drawn |
 | L6 | F-theta lens | 486 – 2,500 | 1,256 – 2,500 | Thorlabs FTH160-1064 ($1,011.78) + 2 x FTHW75-1064 spare protective windows ($122.03 each) |
 | L7 | Chamber laser window | 254 – 800 | 295 – 295 | Edmund Optics 38-990 |
 | C1 | Scan + laser controller | 60 – 6,000 | 125 – 6,065 | SCANLAB RTC6 (quote); adds the RTC6 laser-connector breakout (ZL-RTB-DB15 + ZL-DB15-CBL-2) |
 | C3 | Motion controller and stepper drive | 150 – 400 | 319 – 400 | Teknic ClearCore CLCR-4-13 + DIN-MNT + 2 ClearPath cable sets + SureStep STP-DRV-4830 |
 | C4 | DC supplies (UPS-backed) and 24 V branch protection | 151 – 151 | 405 – 553 | Mean Well SDR-240-24 + SDR-240-48 + HDR-100-24 + DDR-30G-5 + Phoenix CBMC E4 (high: Teknic IPC-5 for the servo bus) |
 | C5 | Process I/O PLC and thermocouple inputs | 35 – 35 | 1,092 – 1,092 | AutomationDirect Productivity1000: P1-540 + 2 P1-16ND3 + 4 P1-08TD2 + P1-04THM + P1-08ADL-1 + P1-04ADL-2 + P1-04DAL-2 + terminal blocks (replaces 2 MAX31856 ... |
-| C6 | 4U control drawer, PB2 box and DIN hardware | 275 – 275 | 815 – 815 | 4U rack drawer (Middle Atlantic UD class) + PB2 box + 80 mm fan + DIN terminals, rail, duct, ferrules (replaces the 10 x 12 x 6 in enclosure) |
+| C6 | 4U control drawer, PB2 box and DIN hardware | 275 – 275 | 795 – 795 | 4U rack drawer (Middle Atlantic UD class) + PB2 box (Hammond 1554JGY, 160 x 90 x 60.5 mm, on the optics bridge) + 80 mm fan + DIN terminals, rail, duct, ferr... |
 | M1 | Recoater axis (less servo) | 881 – 2,481 | 1,326 – 2,346 | McMaster 4566N101 M12 x 10 mm lead screw (cut) + 4566N401 nut, 6709K33 rail + 6709K12 carriage, 6446K781 coupling; Ferrotec SFL-006-NN magnetic-fluid feedthr... |
 | M2 | Servo motors | 530 – 972 | 530 – 586 | Teknic ClearPath-SD CPM-SDSK-2311S-RLN (recoater and Z; vendor-parts.csv) |
 | M3 | Z stage (less servo): integrated actuator under the floor | 752 – 852 | 923 – 1,113 | THK KR2602A-0110-0-01A0 KR26 actuator, 2 mm lead, 110 mm stroke (Oriental Motor, a THK reseller: $883.00); GT2/HTD belt and two pulleys; custom Z flange, bel... |
 | M4 | Metering base, roller drive and overflow | 282 – 682 | 776 – 1,851 | McMaster 6627T91 NEMA 17 stepper; Ferrotec SSL-005-NN feedthrough (5 mm shaft; drawn); 5-to-5 mm coupling; custom metering base and roller; overflow jar from... |
-| M5 | Recoater blade cartridges | 127 – 527 | 275 – 675 | McMaster 2634T15 HSS flat stock (hard blade, the model's default) + 1187N14 3 mm silicone cord (compliant); custom quick-swap holders |
+| M5 | Recoater blade cartridges | 127 – 527 | 275 – 675 | McMaster 2634T15 HSS flat stock (hard blade, the model's default) + 1187N14 3 mm silicone cord (compliant); custom quick-swap holders, each located in the ar... |
 | M6 | Layer camera + lighting | 100 – 300 | 304 – 454 | Raspberry Pi HQ camera (Adafruit 4561, $55) + 12 mm C-mount lens (not chosen) + Thorlabs FESH0950 short-pass filter ($169.26) behind a plain window + 2.2 deg... |
 | G1 | Process chamber: through-frame, floor plate, lid, door and their small parts | 2,435 – 6,435 | 1,323 – 1,623 | Midwest Steel & Aluminum 6061-T651 plate 5-1/2 in. cut to 9.5 x 15 in. (frame blank; McMaster stops at 4 in.), McMaster 89155K165 1 in. plate (floor), 89155K... |
-| G2 | Vacuum pump | 2,079 – 5,491 | 5,470 – 7,469 | Edwards nXDS6i dry scroll (A73501983; 0.02 mbar, 6.8 m3/h, 26.2 kg) + McMaster 3394N12 KF-25 inlet filter + 2 x 3497N23 KF-25 hose |
-| G7 | Valves / fittings / gauges | 3,281 – 3,781 | 3,680 – 3,980 | McMaster: 3861N11 0-15 psia + 5539N26 0-10 inH2O transmitters, 2 x 8077K237 24 V NC solenoids, 4123K45 KF-25 ball valve, 7833K76 needle valve, KF-25/40 alumi... |
+| G2 | Vacuum pump | 2,079 – 5,491 | 5,470 – 7,469 | Edwards nXDS6i dry scroll (A73501983; 0.02 mbar, 6.2 m3/h pumping speed (6.8 displacement), 26.2 kg) + McMaster 3394N12 KF-25 inlet filter + 2 x 3497N23 KF-2... |
+| G7 | Valves / fittings / gauges | 3,281 – 3,781 | 3,890 – 4,190 | McMaster: 3861N11 0-15 psia + 5539N26 0-10 inH2O transmitters, 2 x 8077K237 24 V NC solenoids, 4123K45 KF-25 ball valve, 7833K76 needle valve, KF-25/40 alumi... |
 | G8 | Chamber, module and port seals | 16 – 16 | 231 – 291 | McMaster 96515K127 0.139 in. cord (10 ft), 96515K123 0.070 in. cord (3 ft), 16 packs of 9464K AS568 rings and 5267T786 port rings (seal-parts.csv), 9262N11 s... |
 | G9 | Dew-point / moisture sensor | 1,000 – 2,500 | 1,868 – 2,282 | Vaisala DMT143 (Selectum, a Vaisala distributor: $2,281.70) |
 | S1 | Safety controller and final elements | 275 – 275 | 2,376 – 2,376 | Banner XS26-2 + XS16si + XS2so + SC-USB2 + 4 WEG CWBS9-33-30C03 (K3A, K3B, K4, K5) |
@@ -188,11 +213,11 @@ Model tags with no bom.csv line: RA1, RA2, RA3, RA4, RA5, RA6, RA7. BOM total no
 | S9 | Rack, guard frame, guard panels and sliding guard door | 2,009 – 2,309 | 1,136 – 1,786 | 12U 4-post open-frame rack, ~560 mm tall (StarTech 4POSTRACK12U class: price not shown, not chosen); McMaster 20 mm T-slot 5537T101 x 4 (8 ft), corner bracke... |
 | F3 | Levelling mounts (process and gas modules) | new line | 61 – 61 | McMaster 5537T983 |
 | F4 | Module base plates (process and gas) | new line | 1,349 – 1,499 | McMaster 86825K49 5/8 in. MIC-6, 24 x 72 in. (one sheet nests both plates) |
-| F5 | Optics bridge, posts and beam-path mounts | new line | 871 – 1,096 | McMaster 89155K86 (bridge), 6546K31 (posts); 3/8 in. 6061 offcuts for the riser, ring and aperture |
-| T1 | Laser power sensor | 1,691 – 4,000 | 3,849 – 3,849 | Gentec-EO UP55G-600F-HD-D0 (201878B) 600 W fan-cooled head ($3,033) + U-LINK USB interface ($816) |
-| T2 | Melt-pool photodiode and its optics | 400 – 400 | 1,687 – 1,837 | Thorlabs PDA36A2 ($400.01) + DMSP1000 dichroic ($331.76) + NF1064-44 ($635.55) + FESH1000 ($169.26) + AC254-050-B lens and SM1 parts |
+| F5 | Optics bridge, posts and beam-path mounts | new line | 958 – 1,216 | McMaster 89155K86 (bridge), 6546K31 (posts); 3/8 in. 6061 offcuts for the riser, ring and aperture; McMaster 95055K25 / 95055K19 / 95055K13 shim stock |
+| T1 | Laser power sensor (calibration head on the plate) | 1,691 – 4,000 | 2,785 – 2,785 | Gentec-EO UP55M-500W-H12-D0 500 W water-cooled head, 89 x 89 x 43 mm ($1,969) + U-LINK USB interface ($816) |
+| T2 | Melt-pool photodiode and its optics | 400 – 400 | 2,059 – 2,409 | Thorlabs PDA36A2 ($400.01) + DMSP1000 dichroic ($331.76) + NB1-K14 fold mirror ($172.87) + NF1064-44 ($635.55) + FESH1000 ($169.26) + AC254-050-B lens and SM... |
 | T3 | Calibration tools | new line | 811 – 891 | McMaster anodised sheet (not chosen) + Edmund 57-983 ($670) + Thorlabs VRC2 ($100.63) |
-| H1 | Heater stacks for the three build modules, rod-end feedthroughs and thermocouple wiring | 2,241 – 4,100 | 3,760 – 4,280 | McMaster 3714N36 x10, 3871K606 x9 + 3869K35/34 plugs, 8489K75 Macor, 2317K275 shim; Cantherm RT240 x6; Molex 1205020022/1205000300 M12 x3; rod-end weld-in fe... |
+| H1 | Heater stacks for the three build modules, rod-end feedthroughs and thermocouple wiring | 2,241 – 4,100 | 3,754 – 4,274 | McMaster 3714N36 x10, 3871K606 x9 + 3869K35/34 plugs, 8489K75 Macor, 2317K275 shim; Molex 1205020022/1205000300 M12 x3; rod-end weld-in feedthroughs (per mod... |
 | H2 | Heater power, switching, independent limit and the plate < 50 C channel | 325 – 770 | 862 – 862 | Mean Well LRS-350-24 + Crydom D1D20 + HS151 + 2 WEG CWBS12-33-30C03 (K1, K2) + DwyerOmega CN708 + Omron K8DT-TH1CD |
 | H3 | Module cooling fan under the floor | new line | 44 – 74 | McMaster 1939K12 |
 | B2 | Module seals, clamping and Z coupling | 81 – 218 | 111 – 318 | McMaster 9464K982, 95966A705 + 91065A610, 91732A782, 5679K95, 89095K23, 6435K35; 2-238 FKM (same family as 9464K367, not fetched) |
@@ -202,14 +227,14 @@ Model tags with no bom.csv line: RA1, RA2, RA3, RA4, RA5, RA6, RA7. BOM total no
 | A3 | Pneumatic door drive and latch actuators, valves and air prep; robot handles and tags | new line | 1,139 – 1,289 | SMC CDRQ2BS20-180 rotary actuator, 2 x CDQ2B20-15DZ-F7PS cylinders, SS5Y3-45FD-05U-N7 manifold + 2 x SY3140-5LOZ valves, 4 x AS2201F-01-06S speed controllers... |
 | D1 | Tray dock (tray half) and umbilicals | new line | 539 – 5,628 | HARTING Han-Modular docking frame 09140161701 + carrier 09140161711 + float washers, Han C power and Han DD signal modules, RJ45 and pneumatic modules (elect... |
 | D2 | UPS (2U, in the rack) | new line | 1,138 – 2,707 | Eaton 5PX1500RTG2 (1440 VA / 1440 W, line-interactive; CDW $1,137.99) |
-| E1 | Power box PB1: main disconnect, branch protection, contactors | new line | 925 – 925 | Power box PB1: Socomec 22013003 UL 98 disconnect + 147E1111 handle + shaft, 6 Eaton FAZ UL 489 MCBs, 3 WEG CWB9-11-30C03 contactors, overload, 16 x 12 x 6 in... |
+| E1 | Power box PB1: main disconnect, branch protection, contactors | new line | 914 – 914 | Power box PB1: Socomec 22013003 UL 98 disconnect + 147E1111 handle + shaft, 6 Eaton FAZ UL 489 MCBs (Q3 2P D10 for the nXDS6i at 208 V), 3 WEG CWB9-11-30C03 ... |
 | E2 | Ethernet switch | new line | 124 – 124 | AutomationDirect STRIDE SE3-SW8U Ethernet switch |
-| E3 | Axis home sensors and chamber-at-ambient switch | new line | 200 – 200 | 4 inductive M8 home/over-travel sensors + a +/-5 mbar chamber-at-ambient pressure switch (estimates) |
+| E3 | Axis home sensors and chamber-at-ambient switch | new line | 517 – 517 | 2 AutomationDirect KSE-AP-3F (Z home, lower limit) + 2 Turck BIM-M12E-AP4X-H1141 with DMR20-10-4 magnets (recoater home, over-travel, through the back wall) ... |
 | E4 | Bulk wire, bonding straps, ESD | new line | 190 – 190 | bulk wire, braided bonding straps, ESD wrist strap |
 | E5 | Optional: milliohm meter, UPS network card, LED-bar feedthrough | new line | 0 – 1,571 | FLIR Extech 380580 milliohm meter, Eaton NETWORK-M3 card, SST FA11643 LED-bar feedthrough |
 | X1 | Machining and fabrication of the custom parts not costed elsewhere | new line | 7,708 – 20,770 | BYU ME Prototyping Lab (Haas VF-4 + HRT210) or a job shop |
 
-BOM total: $39,440 – $112,978 before, $70,478 – $154,119 now.
+BOM total: $39,440 – $112,978 before, $70,364 – $154,515 now.
 
 
 ## Every model part (generated; also in [`analysis/out/audit/model_vs_bom.csv`](analysis/out/audit/model_vs_bom.csv))
@@ -221,19 +246,29 @@ Fasteners (tag `fastener`, all McMaster and all in `fasteners.csv` / line FX) ar
 | inconsistent | Load cell (single-point, 2 kg, carries the dock rails: reservoir inventory) | bought | A1 | ALLUE3 | model label 2 kg; A1 lists a 3 kg Laumas ALLUE3 |
 | inconsistent | Chilled-water supply + return to the laser | bought | D1 | – | model runs chilled water to the laser; the quoted IPG YLR-500-U3-SM-AC is air-cooled (L2), and heat.md says decide water vs air first |
 | inconsistent | UPS (Eaton 5PX1500RTG2, 2U) | bought | D2 | 5PX1500RTG2 | model tag is C6 (controls enclosure), which has no UPS; model draws an Eaton 5PX1500RTG2; analysis/out/tray/tray_budget.md sizes the UPS as a Vertiv GXT5LI-1500 |
-| inconsistent | Door hinge knuckles on the chamber (304 SS) | custom (machined) | G1 | 1151A87 | not in machining/hours.csv; model labels the hinge McMaster 1151A87 but draws custom 304 knuckles; the real 1151A87 is a 3 x 3 in. two-leaf lift-off hinge (real-parts.md) |
-| inconsistent | Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge) | custom (machined) | G1 | 1151A87 | not in machining/hours.csv; model labels the hinge McMaster 1151A87 but draws custom 304 knuckles; the real 1151A87 is a 3 x 3 in. two-leaf lift-off hinge (real-parts.md) |
+| inconsistent | Door hinge knuckles on the chamber (304 SS, shimmed at assembly so the shut door's land just... | custom (machined) | G1 | 1151A87 | not in machining/hours.csv; model labels the hinge McMaster 1151A87 but draws custom 304 knuckles; the real 1151A87 is a 3 x 3 in. two-leaf lift-off hinge (real-parts.md) |
+| inconsistent | Door hinge leaves + knuckles (304 SS, round pin holes: the hinge holds the door's bottom edg... | custom (machined) | G1 | 1151A87 | not in machining/hours.csv; model labels the hinge McMaster 1151A87 but draws custom 304 knuckles; the real 1151A87 is a 3 x 3 in. two-leaf lift-off hinge (real-parts.md) |
 | inconsistent | Sealed side-channel blower (gas-tight, ~100 L/min) | bought | G4 | – | no gas-tight blower of this size found (real-parts.md); model label says ~100 L/min; the CFD needs 140-200 L/min at 1.5-3 kPa (gas-flow.md, G4 spec) |
-| inconsistent | Hermetic connector M50 on the rod end (hermetic receptacle, LEMO 1B envelope (HGG.1B.310)) | bought | H1 | HGG.1B.310.CLLPV | seal-parts.csv: the drawn LEMO 1B receptacle fails the spec; the Accu-Glass 9C-K16 that meets it needs a KF-16 port on the rod end |
 | inconsistent | Radiation shields M50 (2 x 0.3 mm polished 316, clamped between the Macor rings) | custom (sheet) | H1 | 2317K275 | model's shields are 0.3 mm; H1's 2317K275 shim is 0.005 in. (0.13 mm) |
+| inconsistent | Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel ... | bought | H1 | FA10443 FA11631 FA11631/FA11632/FA10443 FA11632 | 3 x FA11631 + 3 x FA11632 single-lead type K and 1 x FA10443 4-pin power per module: electrical-bom.csv E6-01..03; bom.csv H1's spec still says 'potted cable exit'; its candidate column and the model have the weld-in rod end (electrical.md 13.3) |
 | inconsistent | HSS recoater blade (1.5 mm, wide nose) | bought | M5 | 2634T15 9011K104 | cut from M2 HSS sheet; the model's part-number tag is still 9011K104, the 18-8 shim, though the part is named HSS |
+| missing from BOM | Recoater sensor posts (2 x 20 mm T-slot, McMaster 47065T101 class, on the process base plate) | bought | – | 47065T101 | model tag E3 does not cover it |
 | missing from BOM | Scan + laser controller PC (2U) | bought | – | – | C1 is the RTC6 card; no 2U PC is chosen; model tag C1 does not cover it |
 | generic | Bore seal M50 (aramid felt + carbon-filled PTFE scraper) | bought | B2 | – | carbon-filled PTFE / aramid felt: no stock part number chosen |
 | generic | Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out of the hot gap) | bought | B2 | – | carbon-filled PTFE / aramid felt: no stock part number chosen |
 | generic | DIN-rail drawer: 24 V supply, safety relay, ClearCore, Pi 5 (4U: the safety controller stand... | bought | C6 | – | contents in C3, C4, S1, C2 |
+| generic | PB2 process-module box: Raspberry Pi 5, PN532 NFC, NAU7802 load-cell ADC, DDR-30G-5, E3NX am... | bought | C6 | – |  |
 | generic | Argon supply from the dock | bought | D1 | – |  |
+| generic | Dock PE contacts (2 x leading protective-earth contacts on the dock's face, 10 AWG each to P... | bought | D1 | – |  |
 | generic | Pump exhaust to the dock | bought | D1 | – |  |
 | generic | Tray dock (CombiTac-type, mates sideways) | bought | D1 | – |  |
+| generic | PB1 disconnect handle Q0 (Socomec 147E1111, red/yellow, padlockable in OFF; 22013003 UL 98 s... | bought | E1 | – |  |
+| generic | PB1 filter fan Fandis FF12D24UN (27 CFM, 24 V DC) and exhaust grille on the door | bought | E1 | – |  |
+| generic | Power box PB1: main disconnect Q0, branch breakers Q1-Q4, KM0-KM2, K1/K2, SSR and the DC sup... | bought | E1 | – |  |
+| generic | Recoater home and over-travel sensors (2 x Turck BIM-M12E-AP4X-H1141 magnetic-field sensor M... | bought | E3 | – |  |
+| generic | Recoater position magnet (NdFeB Ø12 x 3, bonded into a pocket in the carriage block's back f... | bought | E3 | – |  |
+| generic | Z home and lower-limit sensors (2 x AutomationDirect KSE-AP-3F inductive M8, PNP NO, 3 mm fl... | bought | E3 | – |  |
+| generic | Z sensor flag (2 mm steel tab on the carriage's -x side) | bought | E3 | – |  |
 | generic | Drawer latch receptacles in the lid (2 x quarter-turn latch) | bought | G1 | – | seals.md: no catalogue quarter-turn latch fits the 20 mm plate |
 | generic | Drawer latches: 2 x quarter-turn latch studs (envelope) | bought | G1 | – | seals.md: no catalogue quarter-turn latch fits the 20 mm plate |
 | generic | Blower inlet (KF-25) | bought | G7 | – | adapters to the filter's 1/2 NPSC ports / the blower not chosen |
@@ -242,19 +277,29 @@ Fasteners (tag `fastener`, all McMaster and all in `fasteners.csv` / line FX) ar
 | generic | Filter outlet (KF-25) | bought | G7 | – | adapters to the filter's 1/2 NPSC ports / the blower not chosen |
 | generic | O2 sample line (1/8 in. 316L) | bought | G7 | – |  |
 | generic | Overpressure relief valve (316 SS, FKM seat, +34 mbar; SAE-4 O-ring-boss port) | bought | G7 | – |  |
+| generic | Pirani transmitter Vacuum Research 902377 on the vacuum line (NW-16, 0-10 V; envelope Ø35 x ... | bought | G7 | – |  |
+| generic | Vacuum line Pirani reducer (KF-25 to KF-16, 304 SS) | bought | G7 | – |  |
+| generic | Vacuum line Pirani tee (KF-25 304 SS tee on the isolation valve's pump-side flange) | bought | G7 | – |  |
 | generic | Camera window flat ring (FKM 75A sheet, 1.0 mm, squeezed to 0.75) | bought | G8 | – | FKM sheet: part number not confirmed (seal-parts.csv) |
 | generic | Rail-hole bonded seal washers (4 x M4, 316 ring + FKM lip, Dowty type; seal the through-tapp... | bought | G8 | – | Dowty-type M4 washer: no part number chosen |
 | generic | Window clamp ring, upper (FKM 75A sheet, 1.0 mm, squeezed to 0.75) | bought | G8 | – | FKM sheet: part number not confirmed (seal-parts.csv) |
-| generic | Collimator (IPG, 5 mm beam, 128 mm + 78 mm strain relief) on V-mount | bought | L3 | – | custom-diameter IPG collimator: not priced by IPG yet |
+| generic | Collimator (IPG affixed, 2.5 mm beam: 96 µm at f = 160; housing drawn as the 5 mm unit, 128 ... | bought | L3 | – | custom-diameter IPG collimator: not priced by IPG yet |
 | generic | Safety shutter + beam dump | bought | L4 | – | no shutter chosen (L4: quote) |
-| generic | Ø2 in. fused-silica window, 8 mm, AR 1064 | bought | L7 | – | L7 names a Ø1 in. Thorlabs WG41050-C; the model's Ø2 in. x 8 mm window has no part number |
 | generic | Recoater shaft coupling (clamp type, 6 to 8 mm, in the wall bore) | bought | M1 | – |  |
 | generic | Roller drive coupling (5 mm to 5 mm) | bought | M4 | – |  |
-| generic | Camera window (Ø1 in. x 3 mm fused silica, 1070 nm blocking coating) | bought | M6 | FESH0900 FESH0950 | no BOM line has a Ø1 in. window with a 1070 nm blocking coating (optics-bom.csv O21 proposes a plain window + a Thorlabs short-pass filter) |
-| generic | Layer-light LED bar | bought | M6 | – |  |
+| generic | Camera window (Ø1 in. x 3 mm fused silica; FESH0950 short-pass filter behind it in the lens) | bought | M6 | FESH0900 FESH0950 | no BOM line has a Ø1 in. window with a 1070 nm blocking coating (optics-bom.csv O21 proposes a plain window + a Thorlabs short-pass filter) |
+| generic | Camera window gasket, under the window (FKM 75A sheet, 1.0 mm, squeezed to 0.75; ID 21) | bought | M6 | – |  |
+| generic | Layer-light LED bar (on the lid's underside, along the right wall) | bought | M6 | – |  |
 | generic | Side reservoir port (KF-16 flange machined in the 6061 base, blanked; reserved for a >= 500 ... | bought | R1 | – | KF-16 blank: no part number |
+| generic | Guard-position switch IDEC HS6B-12B05 (2NC + 1NO, tongue actuator on the door; separate from... | bought | S2 | – |  |
+| generic | E-stop enclosure, front of the gas module's O2 box (1-hole yellow, 70 x 70 x 70 mm class) | bought | S3 | – |  |
+| generic | E-stop enclosure, guard right side, near the front (1-hole yellow, 70 x 70 x 70 mm class) | bought | S3 | – |  |
+| generic | E-stops IDEC XW1E-BV402M-R, front of the gas module's O2 box (40 mm mushroom, 2 NC) | bought | S3 | – |  |
+| generic | E-stops IDEC XW1E-BV402M-R, guard right side, near the front (40 mm mushroom, 2 NC) | bought | S3 | – |  |
 | generic | 19 in. rack frame (12U, 560 mm tall) | bought | S9 | – | 12U open frame, 560 mm tall: not chosen (StarTech 4POSTRACK12U class, price not shown) |
-| real part unpriced | Hermetic-connector O-ring M50 (FKM 75A 2-014, face seal under the flange) | bought | G8 | 2-014 |  |
+| generic | Coaxial photodiode chain (SM1 tube: FESH1000 short-pass, NF1064-44 notch, AC254-050-B lens; ... | bought | T2 | – |  |
+| generic | Coaxial-monitoring dichroic (Thorlabs DMSP1000, 45 deg: reflects 1070 nm into the galvo, pas... | bought | T2 | – |  |
+| generic | Fold mirror (Thorlabs NB1-K14, Ø1 in. Nd:YAG laser-line mirror, 45 deg) in a 30 mm cage cube | bought | T2 | – |  |
 | real part unpriced | Roller feedthrough O-ring (FKM 75A 2-012, under the housing's shoulder) | bought | G8 | 2-012 |  |
 | real part unpriced | Recoater fixed bearing: magnetic-fluid rotary feedthrough Ferrotec SFL-006-NN on the left wa... | bought | M1 | SFL-006-NN |  |
 | real part unpriced | Roller shaft: magnetic-fluid rotary feedthrough Ferrotec SSL-005-NN in the metering base (M8... | bought | M4 | SSL-005-NN |  |
@@ -264,14 +309,15 @@ Fasteners (tag `fastener`, all McMaster and all in `fasteners.csv` / line FX) ar
 | real part priced | Overflow-jar present sensor (inductive M12, PNP) | bought | A1 | PAM-AP-1H |  |
 | real part priced | Plate-height through-beam (M6 threaded fibre heads in the side walls, z +5 mm) | bought | A1 | E32-T61-S |  |
 | real part priced | Reservoir-docked sensor (inductive M12, at the back of the dock) | bought | A1 | PAM-AP-1H |  |
-| real part priced | Cover slide (Ø2 in. x 3 mm fused silica, consumable) | bought | A2 | 25-250 |  |
+| real part priced | Cover slide (Ø50 x 2 mm fused silica, 1064 nm V-coat, Edmund 36-299; consumable) | bought | A2 | 36-299 | Edmund 36-299, Ø50 x 2 mm (optics-bom.csv O12) |
 | real part priced | Door drive: pneumatic rotary actuator on the hinge axis, SMC CRQ2 size 20 class (~1.8 N m at... | bought | A3 | 6597K124 CDRQ2BS20-180 |  |
 | real part priced | Draw-latch actuators: 2 x Ø20 compact air cylinders (SMC CJ2/CQ2 class, 157 N at 0.5 MPa) th... | bought | A3 | CDQ2B20-15DZ-F7PS |  |
 | real part priced | Pot magnet (NdFeB in a steel cup, Ø25 x 7, 44 lbf, holds the rod's striker) | bought | B2 | 5679K95 | heat.md: swap the NdFeB cup for SmCo |
 | real part priced | Leveling mounts, gas module (McMaster 5537T983: Ø25 base, M8 stem threaded up through the pl... | bought | F3 | 5537T983 |  |
 | real part priced | Leveling mounts, process module (McMaster 5537T983: Ø25 base, M8 stem threaded up through th... | bought | F3 | 5537T983 |  |
-| real part priced | Draw latches on the chamber's side faces (2 x McMaster 1807A61, 304 SS, 3.6 kN rated, preloa... | bought | G1 | 1807A61 |  |
-| real part priced | Draw-latch strikes on the door's ears (1807A61 strike plates) | bought | G1 | 1807A61 |  |
+| real part priced | f-theta focus shims (85.5 x 105 rings cut from McMaster 95055K25 / K19 / K13 18-8 shim stock... | bought | F5 | 95055K25 |  |
+| real part priced | Draw latches on the door's latch brackets, pointing forward (2 x McMaster 1807A61, 304 SS, 3... | bought | G1 | 1807A61 |  |
+| real part priced | Draw-latch strikes on the chamber's side faces (1807A61 strike plates) | bought | G1 | 1807A61 |  |
 | real part priced | Dry scroll pump (≤ 0.3 mbar, 6 m3/h class) | bought | G2 | A73501983 |  |
 | real part priced | Pump inlet (KF-25) | bought | G2 | 4518K49 | the nXDS6i inlet is NW25; only the 4396K21 alternative needs a flare-to-NPT adapter + 4518K49 |
 | real part priced | Argon pressure regulator + flowmeter | bought | G3 | 78595A5 |  |
@@ -282,13 +328,13 @@ Fasteners (tag `fastener`, all McMaster and all in `fasteners.csv` / line FX) ar
 | real part priced | Gas-loop + vacuum hoses (KF-25 SS bellows) | bought | G7 | 3497N23 | real-parts.md: routed lengths not matched to the 24 in. hose |
 | real part priced | Inlet plenum port (KF-25) | bought | G7 | 5786N23 |  |
 | real part priced | Outlet plenum port (KF-25) | bought | G7 | 5786N23 |  |
-| real part priced | Overflow clamp (KF-40) | bought | G7 | 4518K73 |  |
-| real part priced | Overflow port (KF-40) | bought | G7 | 5786N25 |  |
+| real part priced | Overflow clamp (KF-40 toggle, MKS 100318805; lever to the front) | bought | G7 | 100318805 | MKS 100318805 KF-40 toggle clamp (round 5) |
+| real part priced | Overflow port (KF-40, weld stub to 42 mm) | bought | G7 | 5786N25 | KF-40 weld stub cut to 42 mm (round 5) |
 | real part priced | Pressure transducer (7/16-20 SAE-4 O-ring-boss port) | bought | G7 | 3861N11 |  |
 | real part priced | Vacuum isolation valve (McMaster 4123K45 KF-25 manual ball valve) | bought | G7 | 4123K45 |  |
+| real part priced | Vacuum line Pirani tee clamp (KF-25 wing-nut clamp, McMaster 4518K72) | bought | G7 | 4518K72 |  |
 | real part priced | Vacuum port (KF-25, stub welded into the adapter plate) | bought | G7 | 5786N23 |  |
-| real part priced | Camera adapter O-ring (FKM 75A 2-022, face seal on the lid) | bought | G8 | 2-022 |  |
-| real part priced | Camera window O-ring (FKM 75A 2-017, under the window) | bought | G8 | 2-017 |  |
+| real part priced | Camera adapter O-ring (FKM 75A 2-030, face seal on the lid) | bought | G8 | 2-030 |  |
 | real part priced | Door O-ring (FKM 75A 1.78 mm cord, vulcanized splice, in a half-dovetail groove) | bought | G8 | 96515K123 |  |
 | real part priced | Drawer O-ring (FKM 75A 2-033 in a half-dovetail groove, seals on the lid's front face) | bought | G8 | 2-033 |  |
 | real part priced | Fibre-head O-rings (2 x FKM 75A 2-010, face seals) | bought | G8 | 2-010 |  |
@@ -309,12 +355,12 @@ Fasteners (tag `fastener`, all McMaster and all in `fasteners.csv` / line FX) ar
 | real part priced | Window O-ring, lower (FKM 75A 2-031, under the window) | bought | G8 | 2-031 |  |
 | real part priced | Window-flange O-ring (FKM 75A 2-036, face seal on the lid) | bought | G8 | 2-036 |  |
 | real part priced | Cartridge heaters M50 (3 x 50 W, 24 V, Ø6 x 22) | bought | H1 | 3714N36 |  |
-| real part priced | Thermal cutoff M50 (240 C, in series with the heaters) | bought | H1 | RT240 | model tag H2; the RT240 is costed in H1 |
 | real part priced | Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath) | bought | H1 | 3871K606 |  |
 | real part priced | Fiber laser source, 500 W single-mode, IPG YLR-500-U3-SM-AC (4U) | bought | L1 | YLR-500-U3-SM-AC |  |
 | real part priced | Process fiber (armoured, ≥ 100 mm bend radius) | bought | L1 | YLR-500-U3-SM-AC | comes fitted to the laser |
 | real part priced | 2-axis galvo scan head (SCANLAB basiCube 20) | bought | L5 | basiCube 20 |  |
 | real part priced | f-theta lens, f = 160 mm (Thorlabs FTH160-1064) | bought | L6 | FTH160-1064 |  |
+| real part priced | Ø2 in. fused-silica window, 9.53 mm, AR 1064 (Edmund 38-990) | bought | L7 | 38-990 | Edmund 38-990, Ø50.8 x 9.53 mm (optics-bom.csv O11) |
 | real part priced | Recoater ball nut (flange on the +x face) | bought | M1 | 4566N401 |  |
 | real part priced | Recoater ball screw (M12, 10 mm lead) | bought | M1 | 4566N101 |  |
 | real part priced | Recoater carriage (15 mm rail) | bought | M1 | 6709K12 |  |
@@ -324,7 +370,6 @@ Fasteners (tag `fastener`, all McMaster and all in `fasteners.csv` / line FX) ar
 | real part priced | Z actuator body (KR-class U-rail, 2 mm lead, 100 mm stroke class) | bought | M3 | KR2602A-0110-0-01A0 | the carriage is part of the actuator |
 | real part priced | Z carriage | bought | M3 | KR2602A-0110-0-01A0 | the carriage is part of the actuator |
 | real part priced | Dosing stepper (NEMA 17) | bought | M4 | 6627T91 |  |
-| real part priced | Overflow jar (KF-40 half nipple, 90 mm, ~120 cm3 + blank) | bought | M4 | 4518K42 |  |
 | real part priced | Layer camera (Pi HQ + C-mount lens) | bought | M6 | 4561 |  |
 | real part priced | Guard-locking door switch (Omron D4JL) | bought | S2 | D4JL-4NFA-C5-NPT |  |
 | real part priced | E-stop | bought | S3 | XA1E-BV3U02-R |  |
@@ -334,7 +379,13 @@ Fasteners (tag `fastener`, all McMaster and all in `fasteners.csv` / line FX) ar
 | real part priced | OD 7+ viewing window (1070 nm, polycarbonate) | bought | S5 | LW1P1/M |  |
 | real part priced | Guard door rail (top + bottom) | bought | S9 | 5537T353 | rails are the frame's own 20 mm T-slot; McMaster 5537T353 rollers |
 | real part priced | Guard frame (20 mm T-slot) | bought | S9 | 5537T101 |  |
-| custom | Lift-out wall liners (0.5 mm 316L, back + sides, spring clips) | custom (sheet) | A2 | 2317K278 |  |
+| custom | Overflow-jar sensor bracket (6061, 6 mm, on the right-hand leg) | custom (machined) | A1 | – | not in machining/hours.csv |
+| custom | Lift-out wall liner, back lower left (0.5 mm 316L, behind the ball screw, spring clips) | custom (machined) | A2 | 2317K278 | not in machining/hours.csv |
+| custom | Lift-out wall liner, back lower right (0.5 mm 316L, behind the ball screw, spring clips) | custom (machined) | A2 | 2317K278 | not in machining/hours.csv |
+| custom | Lift-out wall liner, back upper left (0.5 mm 316L, behind the ball screw, spring clips) | custom (machined) | A2 | 2317K278 | not in machining/hours.csv |
+| custom | Lift-out wall liner, back upper right (0.5 mm 316L, behind the ball screw, spring clips) | custom (machined) | A2 | 2317K278 | not in machining/hours.csv |
+| custom | Lift-out wall liner, left (0.5 mm 316L, screw hole slotted to the back edge, spring clips) | custom (machined) | A2 | 2317K278 | not in machining/hours.csv |
+| custom | Lift-out wall liner, right (0.5 mm 316L, screw hole slotted to the back edge, spring clips) | custom (machined) | A2 | 2317K278 | not in machining/hours.csv |
 | custom | AprilTag plates (2 x tag36h11, 56 mm, on the guard's front-left post: wrist-camera re-regist... | custom (machined) | A3 | – |  |
 | custom | Blade-cartridge grip fin (6061, 4 mm, on the holder's front end) | custom (machined) | A3 | – |  |
 | custom | Door drive bracket (6061, 4 mm, flanged onto the chamber's left side face) | custom (machined) | A3 | – | not in machining/hours.csv |
@@ -342,34 +393,39 @@ Fasteners (tag `fastener`, all McMaster and all in `fasteners.csv` / line FX) ar
 | custom | Drawer latch wing head, left (26 mm wing on the quarter-turn stud: the robot turns it 90 deg) | custom (machined) | A3 | – | not in machining/hours.csv |
 | custom | Drawer latch wing head, right (26 mm wing on the quarter-turn stud: the robot turns it 90 deg) | custom (machined) | A3 | – | not in machining/hours.csv |
 | custom | Guard-door handle for the robot (Ø12 x 130 bar on two Ø10 standoffs, 6061) | custom (machined) | A3 | – |  |
-| custom | Liner pull tabs (316L, 2 mm, 12 mm off each side liner, spot-welded) | custom (machined) | A3 | – | not in machining/hours.csv |
+| custom | Liner pull tab, left (316L, 2 mm, 12 mm off the left side liner, spot-welded) | custom (machined) | A3 | – | not in machining/hours.csv |
+| custom | Liner pull tab, right (316L, 2 mm, 12 mm off the right side liner, spot-welded) | custom (machined) | A3 | – | not in machining/hours.csv |
 | custom | Build module M50: spigot, flange, honed 316L cylinder (Ø50.8 bore, 3 mm wall) and bottom col... | custom (machined) | B1 | – |  |
 | custom | Build plate M50 (Ø50.5 x 10, 6061-T6; bayonet spigot, gripper groove) | custom (machined) | B1 | – |  |
 | custom | Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs... | custom (machined) | B1 | – |  |
 | custom | Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod ... | custom (machined) | B1 | 2-114 |  |
 | custom | Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip ... | custom (machined) | B1 | – |  |
 | custom | Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel) | custom (machined) | B1 | – |  |
-| custom | Rod end M50: end cap with a side boss for the hermetic connector (316L, rod welded in) | custom (machined) | B1 | – |  |
+| custom | Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front | custom (machined) | B1 | – | not in machining/hours.csv |
 | custom | Striker disc M50 (416 stainless, on the pot magnet) | custom (machined) | B2 | 89095K23 |  |
 | custom | Umbilical duct along the back edge | custom (sheet) | D1 | – |  |
+| custom | PB1 stand (2 x 30 x 15 mm 6061 rails, bolted to the tray) | custom (machined) | E1 | – | not in machining/hours.csv |
+| custom | Recoater sensor clamps (6061, split clamp on each post) | custom (machined) | E3 | – | not in machining/hours.csv |
+| custom | Z sensor bracket (6061, clamped to the actuator body's -x side) | custom (machined) | E3 | – | not in machining/hours.csv |
 | custom | Base plate, gas module (MIC-6, 15 mm) | custom (machined) | F4 | – |  |
 | custom | Base plate, process module (MIC-6, 15 mm) | custom (machined) | F4 | – |  |
-| custom | Enclosed beam tube | custom (machined) | F5 | – |  |
+| custom | Enclosed beam tubes (6061, Ø18 x 2: dichroic to galvo, fold leg) | custom (machined) | F5 | – | not in machining/hours.csv |
 | custom | Field-stop aperture (Ø36, passive beam limit) | custom (machined) | F5 | – |  |
-| custom | Galvo riser plate (6061, 10 mm) | custom (machined) | F5 | – |  |
+| custom | Galvo riser plate (6061, 5 mm, Ø56 bore: clears the f-theta's Ø53 nose over the shim range a... | custom (machined) | F5 | – | not in machining/hours.csv |
 | custom | Optics bridge (6061, 25 mm) | custom (machined) | F5 | – |  |
 | custom | Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in) | custom (machined) | F5 | – |  |
-| custom | f-theta adapter ring (6061, M85x1 internal thread, bolted under the bridge) | custom (machined) | F5 | – |  |
-| custom | Camera viewport adapter + boss (6061; Ø1 in. window, 1070 nm blocking filter; FKM face O-rin... | custom (machined) | G1 | – |  |
+| custom | f-theta adapter ring (6061, 13 mm, M85x1 internal thread, bolted under the bridge) | custom (machined) | F5 | – | not in machining/hours.csv |
+| custom | Camera viewport adapter + boss (6061; Ø30 bore on the line of sight, Ø20 aperture, Ø1 in. wi... | custom (machined) | G1 | – | not in machining/hours.csv |
 | custom | Camera window retaining ring (bottoms metal-to-metal on the boss) | custom (machined) | G1 | – |  |
 | custom | Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears) | custom (machined) | G1 | – |  |
 | custom | Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port... | custom (machined) | G1 | – |  |
-| custom | Chamber legs (6061, 30 x 30) | custom (machined) | G1 | – |  |
+| custom | Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side) | custom (machined) | G1 | – | not in machining/hours.csv |
 | custom | Chamber lid (6061-T6, 16 mm, cover-slide drawer slot) | custom (machined) | G1 | – |  |
 | custom | Cover-slide drawer (6061, robot pull tab, half-dovetail seal groove) | custom (machined) | G1 | – |  |
 | custom | Cross-flow inlet plenum + nozzle (316L, bolted flange) | custom (sheet) | G1 | – | model tag G4 (blower), which does not cost them |
 | custom | Cross-flow outlet plenum under the floor (316L, flat over the module path, bolted flange) | custom (sheet) | G1 | – | model tag G4 (blower), which does not cost them |
 | custom | Door handle | custom (machined) | G1 | – |  |
+| custom | Draw-latch brackets on the door's ears (2 x 6061, 6 mm plate on a foot bolted to each ear's ... | custom (machined) | G1 | – | two 6061 brackets that carry the latches on the door (2026-11-23); not in machining/hours.csv |
 | custom | Gas knife (cover-slide purge, 316L) | custom (sheet) | G1 | – |  |
 | custom | Hinge pins (Ø5, 316) | custom (machined) | G1 | – | not in machining/hours.csv |
 | custom | Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor pl... | custom (machined) | G1 | – |  |
@@ -390,10 +446,12 @@ Fasteners (tag `fastener`, all McMaster and all in `fasteners.csv` / line FX) ar
 | custom | Dose chute (316L) | custom (sheet) | M4 | – |  |
 | custom | Metering base (6061, fluted roller over a 100 mm dose line, two FKM face O-rings) | custom (machined) | M4 | – |  |
 | custom | Overflow funnel block (316L, bolted, FKM face O-ring) | custom (machined) | M4 | – |  |
+| custom | Overflow jar (KF-40 flange on a 2 in. 316L cup, 45 mm, ~65 cm3, welded bottom) | custom (machined) | M4 | 4518K42 | KF-40 flange (4518K42 half nipple cut to 6 mm) welded into a 2 in. 316L cup (round 5); not in machining/hours.csv |
 | custom | Blade holder (6061, 18 x 31, quick-swap) | custom (machined) | M5 | – |  |
 | custom | Dovetail rails for the reservoirs (lips pull the plate onto the dock O-ring) | custom (machined) | R1 | – | machined 316L; not in hours.csv |
 | custom | Reservoir M (97 cm3, 304 SS wedge hopper, 70 mm outlet for the M50 module; same 30 x 112 mm ... | custom (sheet) | R1 | – |  |
 | custom | Reservoir M lid with robot handle (grip plane z = 258 for every size; FKM O-ring face seal o... | custom (machined) | R1 | – |  |
+| custom | Reservoir M pull tab (6061, 8 mm fin, the lid's handle carried 70 mm forward, in front of th... | custom (machined) | R1 | – | 6061 fin, extends the lid handle (2026-11-23); not in machining/hours.csv |
 | custom | Reservoir M shutter (shown open, as docked; in a slot closed at both ends, springs shut when... | custom (sheet) | R1 | – |  |
 | custom | Operator panel box (on the rack's front post) | custom (sheet) | S4 | – |  |
 | custom | Laser guard panels (1.5 mm aluminium) | custom (sheet) | S9 | 88895K51 | cut from 5052 sheet |
@@ -417,25 +475,25 @@ Fasteners (tag `fastener`, all McMaster and all in `fasteners.csv` / line FX) ar
 | C3 | Motion controller and stepper drive | **none** | inside the drawn DIN-rail drawer |
 | C4 | DC supplies (UPS-backed) and 24 V branch protection | **none** | inside the drawn DIN-rail drawer |
 | C5 | Process I/O PLC and thermocouple inputs | **none** | inside the drawn DIN-rail drawer |
-| C6 | 4U control drawer, PB2 box and DIN hardware | 1 |  |
+| C6 | 4U control drawer, PB2 box and DIN hardware | 2 |  |
 | M1 | Recoater axis (less servo) | 12 |  |
 | M2 | Servo motors | 2 |  |
 | M3 | Z stage (less servo): integrated actuator under the floor | 5 |  |
 | M4 | Metering base, roller drive and overflow | 7 |  |
-| M5 | Recoater blade cartridges | 2 |  |
-| M6 | Layer camera + lighting | 3 |  |
-| G1 | Process chamber: through-frame, floor plate, lid, door and their small parts | 22 |  |
+| M5 | Recoater blade cartridges | 4 |  |
+| M6 | Layer camera + lighting | 4 |  |
+| G1 | Process chamber: through-frame, floor plate, lid, door and their small parts | 23 |  |
 | G2 | Vacuum pump | 2 |  |
 | G3 | Argon supply | 1 |  |
 | G4 | Recirculation blower | 1 |  |
 | G5 | Filter train | 1 |  |
 | G6 | O2 analyzer | 1 |  |
-| G7 | Valves / fittings / gauges | 16 |  |
-| G8 | Chamber, module and port seals | 26 |  |
+| G7 | Valves / fittings / gauges | 20 |  |
+| G8 | Chamber, module and port seals | 24 |  |
 | G9 | Dew-point / moisture sensor | **none** | inside the drawn O2 / dew-point panel box (G6) |
 | S1 | Safety controller and final elements | **none** | inside the drawn DIN-rail drawer |
-| S2 | Guard lock and guard-position switch | 1 |  |
-| S3 | E-stops (rack, guard front, gas module, spare) | 1 |  |
+| S2 | Guard lock and guard-position switch | 2 |  |
+| S3 | E-stops (rack, guard front, gas module, spare) | 5 |  |
 | S4 | Key switch + emission indicator + manual reset + HOT lamp | 4 |  |
 | S5 | Laser-safe viewing window | 1 |  |
 | S6 | Laser safety eyewear (service/alignment) | **none** | PPE |
@@ -444,26 +502,26 @@ Fasteners (tag `fastener`, all McMaster and all in `fasteners.csv` / line FX) ar
 | S9 | Rack, guard frame, guard panels and sliding guard door | 6 |  |
 | F3 | Levelling mounts (process and gas modules) | 2 |  |
 | F4 | Module base plates (process and gas) | 2 |  |
-| F5 | Optics bridge, posts and beam-path mounts | 6 |  |
+| F5 | Optics bridge, posts and beam-path mounts | 7 |  |
 | P1 | Glovebox | **none** | off the tray |
-| T1 | Laser power sensor | **none** | commissioning tool |
-| T2 | Melt-pool photodiode and its optics | **none** | not drawn |
+| T1 | Laser power sensor (calibration head on the plate) | **none** | commissioning tool |
+| T2 | Melt-pool photodiode and its optics | 3 |  |
 | T3 | Calibration tools | **none** |  |
-| H1 | Heater stacks for the three build modules, rod-end feedthroughs and thermocouple wiring | 7 |  |
+| H1 | Heater stacks for the three build modules, rod-end feedthroughs and thermocouple wiring | 6 |  |
 | H2 | Heater power, switching, independent limit and the plate < 50 C channel | **none** | inside the drawn DIN-rail drawer |
 | H3 | Module cooling fan under the floor | **none** | not drawn yet (heat.md) |
 | B1 | Three build modules (Ø25 / Ø50 / Ø75): cylinders, spigot-flanges, pistons, plates, hollow rods | 7 |  |
 | B2 | Module seals, clamping and Z coupling | 7 |  |
-| R1 | Reservoirs S / M / L (38 / 97 / 233 cm3) with shutters | 5 |  |
-| A1 | Step-confirm sensors, reservoir ID and weighing | 7 |  |
-| A2 | Cleaning and consumables | 2 |  |
-| A3 | Pneumatic door drive and latch actuators, valves and air prep; robot handles and tags | 10 |  |
-| D1 | Tray dock (tray half) and umbilicals | 5 |  |
+| R1 | Reservoirs S / M / L (38 / 97 / 233 cm3) with shutters | 6 |  |
+| A1 | Step-confirm sensors, reservoir ID and weighing | 8 |  |
+| A2 | Cleaning and consumables | 7 |  |
+| A3 | Pneumatic door drive and latch actuators, valves and air prep; robot handles and tags | 11 |  |
+| D1 | Tray dock (tray half) and umbilicals | 6 |  |
 | D2 | UPS (2U, in the rack) | 1 |  |
-| FX | Screws, helical inserts, dowels, set screws, retainers and disc springs | 38 |  |
-| E1 | Power box PB1: main disconnect, branch protection, contactors | **none** |  |
+| FX | Screws, helical inserts, dowels, set screws, retainers and disc springs | 44 |  |
+| E1 | Power box PB1: main disconnect, branch protection, contactors | 4 |  |
 | E2 | Ethernet switch | **none** |  |
-| E3 | Axis home sensors and chamber-at-ambient switch | **none** |  |
+| E3 | Axis home sensors and chamber-at-ambient switch | 6 |  |
 | E4 | Bulk wire, bonding straps, ESD | **none** |  |
 | E5 | Optional: milliohm meter, UPS network card, LED-bar feedthrough | **none** |  |
 | X1 | Machining and fabrication of the custom parts not costed elsewhere | **none** | labour |
@@ -476,16 +534,16 @@ Most of these are expected: stock for the custom parts (a plate or bar has no pa
 |---|---|---|
 | assembly-tooling.csv | 26 | tool or fixture 26 |
 | audit-prices.csv | 26 | alternative (qty 0) 5; other 12; stock for custom parts 9 |
-| electrical-bom.csv | 93 | alternative (qty 0) 16; other 59; stale: line C5's notes retire it 7; stale: line C6's notes retire it 1; stale: line S2's notes retire it 3; stock for custom parts 7 |
+| electrical-bom.csv | 97 | alternative (qty 0) 18; other 62; stale: line C5's notes retire it 7; stale: line S2's notes retire it 3; stock for custom parts 7 |
 | fasteners.csv | 3 | other 3 |
 | mcmaster-parts.csv | 43 | alternative (qty 0) 4; alternative in line G2 1; other 5; stale: line C6 no longer cites mcmaster-parts.csv 4; stale: line G1 no longer cites mcmaster-parts.csv 3; stale: line G7's notes retire it 1; stale: line G8's notes retire it 1; stale: line M1's notes retire it 2; stale: line M3 no longer cites mcmaster-parts.csv 6; stale: line M4's notes retire it 3; stale: line S4 no longer cites mcmaster-parts.csv 2; stale: line S9's notes retire it 6; stock for custom parts 5 |
-| optics-bom.csv | 30 | alternative (qty 0) 6; alternative in line L4 1; other 18; stock for custom parts 5 |
-| options-mcmaster.csv | 18 | alternative in line A2 1; other 6; stale: line H1 no longer cites options-mcmaster.csv 5; stock for custom parts 6 |
-| options-vendors.csv | 21 | alternative (qty 0) 6; stale: line A1 no longer cites options-vendors.csv 3; stale: line A2 no longer cites options-vendors.csv 2; stale: line H1 no longer cites options-vendors.csv 7; stale: line H2 no longer cites options-vendors.csv 3 |
+| optics-bom.csv | 36 | alternative (qty 0) 12; alternative in line L4 1; other 17; stock for custom parts 6 |
+| options-mcmaster.csv | 17 | alternative in line A2 1; other 5; stale: line H1 no longer cites options-mcmaster.csv 5; stock for custom parts 6 |
+| options-vendors.csv | 23 | alternative (qty 0) 6; stale: line A1 no longer cites options-vendors.csv 3; stale: line A2 no longer cites options-vendors.csv 3; stale: line H1 no longer cites options-vendors.csv 8; stale: line H2 no longer cites options-vendors.csv 3 |
 | plate-materials.csv | 11 | plate-material options (study) 11 |
-| robot-tooling.csv | 28 | robot cell 28 |
+| robot-tooling.csv | 26 | robot cell 26 |
 | safety-parts.csv | 28 | room safety, PPE or option 28 |
-| seal-parts.csv | 13 | alternative (qty 0) 1; other 5; stock for custom parts 7 |
+| seal-parts.csv | 16 | alternative (qty 0) 2; other 6; stock for custom parts 8 |
 | vendor-lookups.csv | 29 | other 29 |
 | vendor-parts.csv | 2 | other 2 |
 
@@ -528,6 +586,7 @@ Rows their own BOM line has retired (the tall model's parts, and parts moved to 
 | options-mcmaster.csv | H1 | 3869K34 | Thermocouple Connector, Flat-Pin Mini, Female Connection, Type K, 400 Degree F Maximum |
 | options-vendors.csv | H1 | P-IH5-0069-24V | Industrial Heater (50W 24V), Bare Leads |
 | options-vendors.csv | H1 | 24V option Standard Heater Cartridge 40W | Standard Heater Cartridge 40W |
+| options-vendors.csv | H1 | RT240 | TCO FUSE 250 15A 240C AXIAL |
 | options-vendors.csv | H1 | 100801 | 2 Pairs of Thermocouple pins and two Power Pins Feedthrough - KF50 |
 | options-vendors.csv | H1 | 1205020022 | CIRC CBL 5POS RCPT TO WIRE 1.64' (Brad M12 Power L-Code; receptacle, male pins, panel mount, wire leads) |
 | options-vendors.csv | H1 | 1205000300 | CIRC CBL 5POS PLUG TO WIRE 3.28' (Brad M12 Power L-Code; plug, female sockets, free-hanging, wire leads) |
@@ -539,6 +598,7 @@ Rows their own BOM line has retired (the tall model's parts, and parts moved to 
 | options-vendors.csv | A1 | E3NX-FA41 E3NX-FA41 2M | FIBER AMP 1-OUT PNP PW |
 | options-vendors.csv | A1 | 3001300 | Beontag Ironside Micro NFC Tag | NXP NTAG213 |
 | options-vendors.csv | A1 | SEN-15242 | SparkFun Qwiic Scale - NAU7802 |
+| options-vendors.csv | A2 | 25-250 | 50.8mm Dia. 3mm Thick Uncoated, 1λ Fused Silica Window |
 | options-vendors.csv | A2 | MX200 MX200 Series | MX200 Series: Compact C2D2, Universities and Labs (listed under Group E Metals, Immersion Separators) |
 | options-vendors.csv | A2 | FSD75-AP-6H | ProSense liquid flow switch, spring-supported piston, 3/4in female NPT process connection, 0.26 to 6.6 GPM, Ou |
 | electrical-bom.csv | C5 | P1-540 | Productivity1000 CPU, Ethernet, Modbus TCP |
@@ -551,5 +611,4 @@ Rows their own BOM line has retired (the tall model's parts, and parts moved to 
 | electrical-bom.csv | S2 | HS5L-VC44M-G | Guard lock, spring lock / power to unlock, 1,400 N, 24 VDC |
 | electrical-bom.csv | S2 | HS9Z-A51 | Straight actuator key for HS5L |
 | electrical-bom.csv | S2 | HS6B-12B05 | Guard-position interlock, separate from the lock (2NC + 1NO) |
-| electrical-bom.csv | C6 | class | PB2 box on the process module (~200 x 150 x 100 mm, DIN rail) |
 

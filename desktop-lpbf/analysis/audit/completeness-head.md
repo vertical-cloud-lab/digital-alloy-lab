@@ -5,7 +5,30 @@ question: "Have you been thorough in terms of both mechanical and electrical com
 This note covers the mechanical and whole-machine side. The electrical design and the optics audit are separate notes.
 Nothing here has been built, quoted by a shop or reviewed by BYU's LSO or EHS.
 
-## Short answer
+## Round 6 (2026-11-25): stale names, and the model's own part list
+
+The audit was re-run on the round-5 model with the round-6 optics merge (bbdf626) and the door-hinge change. The counts table
+below is generated; the "Short answer" and the gap list after it are from 2026-11-22 and were not rewritten.
+- **The part list is now the model's own.** The audit read its parts from `analysis/out/mass.json`, which lags behind renamed and
+  new parts until `mass_budget.py` is re-run. It now takes them from the model's tags, re-dumped from the current model
+  (`model_tags.json`, 268 parts; the VLM tray is context and is skipped), with mass and material from `mass.json` where the
+  name matches. That is **264 parts, against 223 on 2026-11-22**: rounds 4 and 5 drew the electrical parts (power boxes, sensors,
+  E-stops, the Pirani gauge), the six liners, the coaxial monitor's optics, the calibration fixtures and more.
+- **Stale names.** Round 5 replaced the rod end's hermetic connector and its O-ring with seven Solid Sealing weld-ins, and dropped
+  the thermal cutoff. The audit still mapped the connector, its O-ring and the cutoff, and its B1 entry took the weld-ins as a
+  machined part. They now map to H1 as bought parts, priced in `electrical-bom.csv` E6-01..03. They show as **inconsistent**
+  only because bom.csv H1's spec column still says "potted cable exit"; its candidate column lists the weld-ins.
+- **Overflow jar.** Round 5 renamed the jar, its port and its clamp, so three entries matched nothing. They are fixed: the port
+  (5786N25 stub) and the MKS 100318805 toggle clamp are priced, and the jar (a KF-40 flange welded into a 2 in. cup) is custom.
+- **Window and cover slide** (the optics worker's merge): drawn as Edmund 38-990 (Ø50.8 × 9.53 mm, L7) and 36-299 (Ø50 × 2 mm, A2),
+  and both are now priced. The window was "generic", and the slide was matched to a part number the model no longer uses.
+- **Counts now:** 125 priced, 3 unpriced, 46 generic, 78 custom, 2 missing from the BOM and 9 inconsistent, of 264. The two
+  missing parts are the scan PC (as before) and round 5's recoater sensor posts (tagged E3, which doesn't list them).
+- **Not done.** The 2026-11-22 short answer counted 26 generic parts; most of the 20 new ones are round 5's electrical parts, which
+  have no entries in the audit's map (their part numbers are in `electrical-bom.csv`). The automation parts' tags (RA1-RA7) are
+  robot-tooling lines, not bom.csv lines.
+
+## Short answer (2026-11-22)
 
 **Before this audit, no.** The model's part list (`analysis/out/mass.json`, 223 parts) was checked part by part
 against `bom.csv` and the part-number lists. At the start of the audit (bom.csv as committed in `cc1e0a1`):
@@ -22,9 +45,9 @@ total is $62,770 – $133,349. Before the merge, this audit's own changes alone 
 ## How it was checked
 
 [`analysis/audit/completeness.py`](analysis/audit/completeness.py) reads:
-- the part list in `analysis/out/mass.json`;
+- the part list: since 2026-11-25 the model's own (its tags, below), with mass and material from `analysis/out/mass.json`;
 - each part's own BOM tag and part number (`bom`, `mcm` in `cad/lpbf_low.py`), dumped to
-  [`analysis/out/audit/model_tags.json`](analysis/out/audit/model_tags.json) from a snapshot of `97882b9` (the 12U-rack model; first run on `cc1e0a1`).
+  [`analysis/out/audit/model_tags.json`](analysis/out/audit/model_tags.json) from the current model (re-dumped 2026-11-25 on bbdf626 plus the door-hinge change; before: a snapshot of `97882b9`, the 12U-rack model).
 
 It maps every part to a bom.csv line and to rows of `mcmaster-parts.csv`, `fasteners.csv`, `seal-parts.csv`,
 `vendor-parts.csv`, `safety-parts.csv`, `robot-tooling.csv`, `assembly-tooling.csv`, `options-*.csv`,
@@ -83,7 +106,9 @@ python desktop-lpbf/analysis/audit/completeness.py --dump-tags SNAPSHOT_REPO    
 7. **Vacuum feedthroughs and connectors have no price.**
    - The two Ferrotec magnetic-fluid feedthroughs (SFL-006-NN on the recoater, SSL-005-NN on the roller) have no
      published price. They are estimated at $500-1,500 and $400-1,000, against Rigaku's $921.57 alternative.
-   - The drawn LEMO 1B rod-end connector fails the seal spec (`seal-parts.csv`).
+   - The rod end's LEMO 1B connector, which failed the seal spec, and the thermal cutoff are gone since 2026-11-23: the rod end is a
+     316L block with seven Solid Sealing weld-ins (3 × FA11631, 3 × FA11632, 1 × FA10443; $356 per module, priced in
+     `electrical-bom.csv` E6-01..03, H1). See the 2026-11-25 note above for what that changed here.
 8. **Chamber stock.** McMaster sells no 6061 plate thicker than 4 in. Midwest Steel & Aluminum cuts the 5-1/2 x 9.5 x
    15 in. 6061-T651 frame blank for $590.89 (read 2026-11-22), so G1 now names a distributor for it.
 9. **Small parts with no catalogue match:**

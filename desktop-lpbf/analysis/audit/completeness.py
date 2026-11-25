@@ -1,7 +1,7 @@
 """Completeness audit: every part in the model against its purchase record (issue #260).
 
-Reads the model's part list (analysis/out/mass.json, written by analysis/mass_budget.py) and the model's own BOM tags
-(analysis/out/audit/model_tags.json: each part's `bom` line, `mcm` part number, material and tags, dumped from
+Reads the model's own BOM tags as its part list (since 2026-11-25; mass and material from analysis/out/mass.json, written by
+analysis/mass_budget.py, where the names match) (analysis/out/audit/model_tags.json: each part's `bom` line, `mcm` part number, material and tags, dumped from
 cad/lpbf_low.build() by `--dump-tags`). Maps every part to a bom.csv line and to a row in the part-number lists, or to
 the custom-part list (analysis/out/machining/hours.csv and the sheet parts of cad/render_build.kind()), and gives it one
 status:
@@ -79,9 +79,9 @@ MAP = [
     (r"^Radiation shields M50", "H1", r"2317K275|shim", "custom", ["2317K275"], ""),
     (r"^Striker disc M50", "B2", r"striker|416", "custom", ["89095K23"], ""),
     (r"^Overflow funnel block", "M4", r"overflow", "custom", [], ""),
-    (r"^Overflow port \(KF-40\)", "G7", r"5786N25", "bought", ["5786N25"], ""),
-    (r"^Overflow jar \(KF-40 half nipple", "M4", r"half nipple", "bought", ["4518K42"], ""),
-    (r"^Overflow clamp \(KF-40\)", "G7", r"KF-40|4518K73", "bought", ["4518K73"], ""),
+    (r"^Overflow port \(KF-40", "G7", r"5786N25|weld", "bought", ["5786N25"], "KF-40 weld stub cut to 42 mm (round 5)"),
+    (r"^Overflow jar \(KF-40", "M4", r"cup|half nipple", "custom", ["4518K42"], "KF-40 flange (4518K42 half nipple cut to 6 mm) welded into a 2 in. 316L cup (round 5)"),
+    (r"^Overflow clamp \(KF-40", "G7", r"100318805|toggle|KF-40", "bought", ["100318805"], "MKS 100318805 KF-40 toggle clamp (round 5)"),
     (r"present sensor \(inductive M12|^Drawer-closed sensor|^Reservoir-docked sensor", "A1", r"PAM-AP-1H", "bought", ["PAM-AP-1H"], ""),
     (r"^Process chamber body", "G1", r"through-frame|5-1/2 in\.|5\.5 in\.", "custom", [], ""),
     (r"^Chamber floor plate", "G1", r"floor plate", "custom", [], ""),
@@ -401,6 +401,16 @@ def main():
 
     mass = json.loads((LPBF / "analysis/out/mass.json").read_text())["parts"]
     tags = {t["part"]: t for t in json.loads(tags_path.read_text())}
+    # 2026-11-25: the part list is the model's own (model_tags.json, dumped from the current model), not mass.json's, which
+    # lags behind renamed and new parts until mass_budget.py is re-run; mass and material still come from mass.json where
+    # the name (or its first 40 characters) matches. Context parts (the VLM tray) are not purchases.
+    by_name = {p["part"]: p for p in mass}
+    mass = []
+    for n, tg in tags.items():
+        if "context" in tg.get("tags", []):
+            continue
+        p = by_name.get(n) or next((q for k, q in by_name.items() if k[:40] == n[:40]), None) or {}
+        mass.append(dict(part=n, module=p.get("module", tg.get("module", "")), material=p.get("material", tg.get("mat", "")), mass_kg=p.get("mass_kg")))
     bom = {}
     for r in read_csv(a.bom):
         r["_text"] = " ".join(r.get(c, "") for c in ("item", "spec", "candidate", "alternative", "notes"))

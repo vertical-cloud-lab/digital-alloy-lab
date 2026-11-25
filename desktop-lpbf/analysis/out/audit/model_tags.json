@@ -90,7 +90,7 @@
   "tags": []
  },
  {
-  "part": "Chamber legs (6061, 30 x 30)",
+  "part": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
   "bom": "G1",
   "mcm": "",
   "mat": "al6061",
@@ -252,16 +252,6 @@
   ]
  },
  {
-  "part": "Thermal cutoff M50 (240 C, in series with the heaters)",
-  "bom": "H2",
-  "mcm": "",
-  "mat": "misc",
-  "module": "process",
-  "tags": [
-   "in_module"
-  ]
- },
- {
   "part": "Macor standoff rings M50 (3 standoffs x 3 rings, Ø8, cut from 8489K75 rod; thermal break)",
   "bom": "H1",
   "mcm": "",
@@ -312,8 +302,8 @@
   ]
  },
  {
-  "part": "Rod end M50: end cap with a side boss for the hermetic connector (316L, rod welded in)",
-  "bom": "H2",
+  "part": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
+  "bom": "H1",
   "mcm": "",
   "mat": "ss316l",
   "module": "process",
@@ -322,20 +312,10 @@
   ]
  },
  {
-  "part": "Hermetic connector M50 on the rod end (hermetic receptacle, LEMO 1B envelope (HGG.1B.310))",
-  "bom": "H2",
-  "mcm": "",
+  "part": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, Ø6.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, Ø12.62 x 24 sleeve)",
+  "bom": "H1",
+  "mcm": "FA11631/FA11632/FA10443",
   "mat": "ss316l",
-  "module": "process",
-  "tags": [
-   "in_module"
-  ]
- },
- {
-  "part": "Hermetic-connector O-ring M50 (FKM 75A 2-014, face seal under the flange)",
-  "bom": "H2",
-  "mcm": "",
-  "mat": "fkm",
   "module": "process",
   "tags": [
    "in_module"
@@ -368,7 +348,7 @@
   "tags": []
  },
  {
-  "part": "Overflow port (KF-40)",
+  "part": "Overflow port (KF-40, weld stub to 42 mm)",
   "bom": "G7",
   "mcm": "KF40_WELD",
   "mat": "ss304",
@@ -376,7 +356,7 @@
   "tags": []
  },
  {
-  "part": "Overflow jar (KF-40 half nipple, 90 mm, ~120 cm3 + blank)",
+  "part": "Overflow jar (KF-40 flange on a 2 in. 316L cup, 45 mm, ~65 cm3, welded bottom)",
   "bom": "M4",
   "mcm": "KF40_NIPPLE",
   "mat": "ss304",
@@ -384,9 +364,9 @@
   "tags": []
  },
  {
-  "part": "Overflow clamp (KF-40)",
+  "part": "Overflow clamp (KF-40 toggle, MKS 100318805; lever to the front)",
   "bom": "G7",
-  "mcm": "KF40_CLAMP",
+  "mcm": "KF40_TOGGLE",
   "mat": "al6061",
   "module": "process",
   "tags": []
@@ -396,6 +376,14 @@
   "bom": "A1",
   "mcm": "",
   "mat": "misc",
+  "module": "process",
+  "tags": []
+ },
+ {
+  "part": "Overflow-jar sensor bracket (6061, 6 mm, on the right-hand leg)",
+  "bom": "A1",
+  "mcm": "",
+  "mat": "al6061",
   "module": "process",
   "tags": []
  },
@@ -504,7 +492,7 @@
   "tags": []
  },
  {
-  "part": "Layer-light LED bar",
+  "part": "Layer-light LED bar (on the lid's underside, along the right wall)",
   "bom": "M6",
   "mcm": "",
   "mat": "misc",
@@ -512,7 +500,47 @@
   "tags": []
  },
  {
-  "part": "Lift-out wall liners (0.5 mm 316L, back + sides, spring clips)",
+  "part": "Lift-out wall liner, left (0.5 mm 316L, screw hole slotted to the back edge, spring clips)",
+  "bom": "A2",
+  "mcm": "",
+  "mat": "ss316l",
+  "module": "process",
+  "tags": []
+ },
+ {
+  "part": "Lift-out wall liner, right (0.5 mm 316L, screw hole slotted to the back edge, spring clips)",
+  "bom": "A2",
+  "mcm": "",
+  "mat": "ss316l",
+  "module": "process",
+  "tags": []
+ },
+ {
+  "part": "Lift-out wall liner, back upper left (0.5 mm 316L, behind the ball screw, spring clips)",
+  "bom": "A2",
+  "mcm": "",
+  "mat": "ss316l",
+  "module": "process",
+  "tags": []
+ },
+ {
+  "part": "Lift-out wall liner, back upper right (0.5 mm 316L, behind the ball screw, spring clips)",
+  "bom": "A2",
+  "mcm": "",
+  "mat": "ss316l",
+  "module": "process",
+  "tags": []
+ },
+ {
+  "part": "Lift-out wall liner, back lower left (0.5 mm 316L, behind the ball screw, spring clips)",
+  "bom": "A2",
+  "mcm": "",
+  "mat": "ss316l",
+  "module": "process",
+  "tags": []
+ },
+ {
+  "part": "Lift-out wall liner, back lower right (0.5 mm 316L, behind the ball screw, spring clips)",
   "bom": "A2",
   "mcm": "",
   "mat": "ss316l",
@@ -696,7 +724,7 @@
   "tags": []
  },
  {
-  "part": "Ø2 in. fused-silica window, 8 mm, AR 1064",
+  "part": "Ø2 in. fused-silica window, 9.53 mm, AR 1064 (Edmund 38-990)",
   "bom": "L7",
   "mcm": "",
   "mat": "fused_silica",
@@ -752,7 +780,7 @@
   "tags": []
  },
  {
-  "part": "Cover slide (Ø2 in. x 3 mm fused silica, consumable)",
+  "part": "Cover slide (Ø50 x 2 mm fused silica, 1064 nm V-coat, Edmund 36-299; consumable)",
   "bom": "A2",
   "mcm": "",
   "mat": "fused_silica",
@@ -936,6 +964,14 @@
   "tags": []
  },
  {
+  "part": "Reservoir M pull tab (6061, 8 mm fin, the lid's handle carried 70 mm forward, in front of the beam tube)",
+  "bom": "R1",
+  "mcm": "",
+  "mat": "al6061",
+  "module": "process",
+  "tags": []
+ },
+ {
   "part": "Load cell (single-point, 2 kg, carries the dock rails: reservoir inventory)",
   "bom": "M4",
   "mcm": "LOADCELL_SP",
@@ -944,7 +980,7 @@
   "tags": []
  },
  {
-  "part": "Camera viewport adapter + boss (6061; Ø1 in. window, 1070 nm blocking filter; FKM face O-rings)",
+  "part": "Camera viewport adapter + boss (6061; Ø30 bore on the line of sight, Ø20 aperture, Ø1 in. window; FKM seals)",
   "bom": "M6",
   "mcm": "",
   "mat": "al6061",
@@ -952,7 +988,7 @@
   "tags": []
  },
  {
-  "part": "Camera adapter O-ring (FKM 75A 2-022, face seal on the lid)",
+  "part": "Camera adapter O-ring (FKM 75A 2-030, face seal on the lid)",
   "bom": "M6",
   "mcm": "",
   "mat": "fkm",
@@ -960,7 +996,7 @@
   "tags": []
  },
  {
-  "part": "Camera window (Ø1 in. x 3 mm fused silica, 1070 nm blocking coating)",
+  "part": "Camera window (Ø1 in. x 3 mm fused silica; FESH0950 short-pass filter behind it in the lens)",
   "bom": "M6",
   "mcm": "",
   "mat": "fused_silica",
@@ -968,7 +1004,7 @@
   "tags": []
  },
  {
-  "part": "Camera window O-ring (FKM 75A 2-017, under the window)",
+  "part": "Camera window gasket, under the window (FKM 75A sheet, 1.0 mm, squeezed to 0.75; ID 21)",
   "bom": "M6",
   "mcm": "",
   "mat": "fkm",
@@ -1032,7 +1068,7 @@
   "tags": []
  },
  {
-  "part": "Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge)",
+  "part": "Door hinge leaves + knuckles (304 SS, round pin holes: the hinge holds the door's bottom edge on its land)",
   "bom": "G1",
   "mcm": "1151A87",
   "mat": "ss304",
@@ -1040,7 +1076,7 @@
   "tags": []
  },
  {
-  "part": "Door hinge knuckles on the chamber (304 SS)",
+  "part": "Door hinge knuckles on the chamber (304 SS, shimmed at assembly so the shut door's land just touches)",
   "bom": "G1",
   "mcm": "1151A87",
   "mat": "ss304",
@@ -1056,7 +1092,15 @@
   "tags": []
  },
  {
-  "part": "Draw latches on the chamber's side faces (2 x McMaster 1807A61, 304 SS, 3.6 kN rated, preload set >= 0.4 kN)",
+  "part": "Draw-latch brackets on the door's ears (2 x 6061, 6 mm plate on a foot bolted to each ear's front face)",
+  "bom": "G1",
+  "mcm": "",
+  "mat": "al6061",
+  "module": "process",
+  "tags": []
+ },
+ {
+  "part": "Draw latches on the door's latch brackets, pointing forward (2 x McMaster 1807A61, 304 SS, 3.6 kN rated, preload set to ~0.75 kN)",
   "bom": "G1",
   "mcm": "1807A61",
   "mat": "ss304",
@@ -1064,7 +1108,7 @@
   "tags": []
  },
  {
-  "part": "Draw-latch strikes on the door's ears (1807A61 strike plates)",
+  "part": "Draw-latch strikes on the chamber's side faces (1807A61 strike plates)",
   "bom": "G1",
   "mcm": "1807A61",
   "mat": "ss304",
@@ -1104,8 +1148,16 @@
   "tags": []
  },
  {
-  "part": "f-theta adapter ring (6061, M85x1 internal thread, bolted under the bridge)",
-  "bom": "L6",
+  "part": "f-theta focus shims (85.5 x 105 rings cut from McMaster 95055K25 / K19 / K13 18-8 shim stock; 2.83 mm nominal stack: 0-6 mm: lens 2.83 mm up to 3.17 mm down)",
+  "bom": "F5",
+  "mcm": "95055K25",
+  "mat": "ss304",
+  "module": "process",
+  "tags": []
+ },
+ {
+  "part": "f-theta adapter ring (6061, 13 mm, M85x1 internal thread, bolted under the bridge)",
+  "bom": "F5",
   "mcm": "",
   "mat": "al6061",
   "module": "process",
@@ -1120,18 +1172,34 @@
   "tags": []
  },
  {
-  "part": "Galvo riser plate (6061, 10 mm)",
-  "bom": "L5",
+  "part": "Galvo riser plate (6061, 5 mm, Ø56 bore: clears the f-theta's Ø53 nose over the shim range and the scanned beam)",
+  "bom": "F5",
   "mcm": "",
   "mat": "al6061",
   "module": "process",
   "tags": []
  },
  {
-  "part": "Enclosed beam tube",
-  "bom": "L4",
+  "part": "Enclosed beam tubes (6061, Ø18 x 2: dichroic to galvo, fold leg)",
+  "bom": "F5",
   "mcm": "",
   "mat": "al6061",
+  "module": "process",
+  "tags": []
+ },
+ {
+  "part": "Coaxial-monitoring dichroic (Thorlabs DMSP1000, 45 deg: reflects 1070 nm into the galvo, passes 520-985 nm) in a 30 mm cage cube",
+  "bom": "T2",
+  "mcm": "",
+  "mat": "misc",
+  "module": "process",
+  "tags": []
+ },
+ {
+  "part": "Fold mirror (Thorlabs NB1-K14, Ø1 in. Nd:YAG laser-line mirror, 45 deg) in a 30 mm cage cube",
+  "bom": "T2",
+  "mcm": "",
+  "mat": "misc",
   "module": "process",
   "tags": []
  },
@@ -1144,7 +1212,15 @@
   "tags": []
  },
  {
-  "part": "Collimator (IPG, 5 mm beam, 128 mm + 78 mm strain relief) on V-mount",
+  "part": "Coaxial photodiode chain (SM1 tube: FESH1000 short-pass, NF1064-44 notch, AC254-050-B lens; Thorlabs PDA36A2)",
+  "bom": "T2",
+  "mcm": "",
+  "mat": "misc",
+  "module": "process",
+  "tags": []
+ },
+ {
+  "part": "Collimator (IPG affixed, 2.5 mm beam: 96 µm at f = 160; housing drawn as the 5 mm unit, 128 mm + 78 mm strain relief) on V-mount",
   "bom": "L3",
   "mcm": "",
   "mat": "misc",
@@ -1158,6 +1234,28 @@
   "mat": "misc",
   "module": "rack",
   "tags": []
+ },
+ {
+  "part": "Calibration power head on the plate (Gentec-EO UP55M-500W-H12-D0, water-cooled 500 W, aperture z 95; calibration state only)",
+  "bom": "T1",
+  "mcm": "",
+  "mat": "misc",
+  "module": "process",
+  "tags": [
+   "context",
+   "calibration"
+  ]
+ },
+ {
+  "part": "Calibration stand for the power head (6061: Ø24 foot on the plate, Ø12 column, 60 x 60 table)",
+  "bom": "T1",
+  "mcm": "",
+  "mat": "al6061",
+  "module": "process",
+  "tags": [
+   "context",
+   "calibration"
+  ]
  },
  {
   "part": "Dry scroll pump (≤ 0.3 mbar, 6 m3/h class)",
@@ -1246,6 +1344,56 @@
   "mat": "brass",
   "module": "gas",
   "tags": []
+ },
+ {
+  "part": "Vacuum line Pirani tee (KF-25 304 SS tee on the isolation valve's pump-side flange)",
+  "bom": "G7",
+  "mcm": "",
+  "mat": "ss304",
+  "module": "process",
+  "tags": [
+   "electrical"
+  ]
+ },
+ {
+  "part": "Vacuum line Pirani reducer (KF-25 to KF-16, 304 SS)",
+  "bom": "G7",
+  "mcm": "",
+  "mat": "ss304",
+  "module": "process",
+  "tags": [
+   "electrical"
+  ]
+ },
+ {
+  "part": "Pirani transmitter Vacuum Research 902377 on the vacuum line (NW-16, 0-10 V; envelope Ø35 x 76 mm + connector, assumed)",
+  "bom": "G7",
+  "mcm": "",
+  "mat": "misc",
+  "module": "process",
+  "tags": [
+   "electrical"
+  ]
+ },
+ {
+  "part": "Vacuum line Pirani tee clamp (KF-25 wing-nut clamp, McMaster 4518K72)",
+  "bom": "G7",
+  "mcm": "4518K72",
+  "mat": "ss304",
+  "module": "process",
+  "tags": [
+   "electrical"
+  ]
+ },
+ {
+  "part": "Vacuum line Pirani tee clamp (KF-25 wing-nut clamp, McMaster 4518K72)",
+  "bom": "G7",
+  "mcm": "4518K72",
+  "mat": "ss304",
+  "module": "process",
+  "tags": [
+   "electrical"
+  ]
  },
  {
   "part": "Vacuum isolation valve (McMaster 4123K45 KF-25 manual ball valve)",
@@ -1621,6 +1769,28 @@
   ]
  },
  {
+  "part": "Blade-cartridge dowels, Ø3 x 10 316 (pressed into the arm's pocket, slip fit in the holder's back face) (2 x McMaster 93600A304)",
+  "bom": "M5",
+  "mcm": "93600A304",
+  "mat": "ss316l",
+  "module": "process",
+  "tags": [
+   "fastener",
+   "blade_cartridge"
+  ]
+ },
+ {
+  "part": "Blade-cartridge ball plungers, M6 x 1 18-8 with 440C ball, in the arm's pocket walls (detents in the holder's sides) (2 x McMaster 85015A47)",
+  "bom": "M5",
+  "mcm": "85015A47",
+  "mat": "ss304",
+  "module": "process",
+  "tags": [
+   "fastener",
+   "blade_cartridge"
+  ]
+ },
+ {
   "part": "Window-flange screws, M4 x 16 316 (6 x McMaster 92290A154)",
   "bom": "L7",
   "mcm": "92290A154",
@@ -1698,6 +1868,17 @@
   ]
  },
  {
+  "part": "Inlet-plenum locating dowels, Ø3 x 10 316 (pressed 5 mm into the wall, slip fit in the flange) (2 x McMaster 93600A304)",
+  "bom": "G4",
+  "mcm": "93600A304",
+  "mat": "ss316l",
+  "module": "process",
+  "tags": [
+   "fastener",
+   "plenum_in_pins"
+  ]
+ },
+ {
   "part": "Outlet-plenum screws, M4 x 12 316, counterbored (6 x McMaster 92290A148)",
   "bom": "G4",
   "mcm": "92290A148",
@@ -1764,6 +1945,17 @@
   ]
  },
  {
+  "part": "Vacuum-port adapter locating dowels, Ø3 x 10 316 (pressed 5 mm into the wall, slip fit in the flange) (2 x McMaster 93600A304)",
+  "bom": "G7",
+  "mcm": "93600A304",
+  "mat": "ss316l",
+  "module": "process",
+  "tags": [
+   "fastener",
+   "vac_port_pins"
+  ]
+ },
+ {
   "part": "Bearing-cap screws, M4 x 20 316 (4 x McMaster 92290A168)",
   "bom": "M1",
   "mcm": "92290A168",
@@ -1783,6 +1975,17 @@
   "tags": [
    "fastener",
    "bearing_cap"
+  ]
+ },
+ {
+  "part": "Bearing-cap locating dowels, Ø3 x 10 316 (pressed 5 mm into the wall, slip fit in the flange) (2 x McMaster 93600A304)",
+  "bom": "M1",
+  "mcm": "93600A304",
+  "mat": "ss316l",
+  "module": "process",
+  "tags": [
+   "fastener",
+   "bearing_cap_pins"
   ]
  },
  {
@@ -1849,6 +2052,17 @@
   "tags": [
    "fastener",
    "legs_base"
+  ]
+ },
+ {
+  "part": "Jar-sensor bracket screws, M4 x 10 316, into the right-hand leg (2 x McMaster 92290A144)",
+  "bom": "A1",
+  "mcm": "92290A144",
+  "mat": "ss316l",
+  "module": "process",
+  "tags": [
+   "fastener",
+   "jar_sensor"
   ]
  },
  {
@@ -1954,7 +2168,17 @@
   ]
  },
  {
-  "part": "Liner pull tabs (316L, 2 mm, 12 mm off each side liner, spot-welded)",
+  "part": "Liner pull tab, left (316L, 2 mm, 12 mm off the left side liner, spot-welded)",
+  "bom": "RA6",
+  "mcm": "",
+  "mat": "ss316l",
+  "module": "process",
+  "tags": [
+   "automation"
+  ]
+ },
+ {
+  "part": "Liner pull tab, right (316L, 2 mm, 12 mm off the right side liner, spot-welded)",
   "bom": "RA6",
   "mcm": "",
   "mat": "ss316l",
@@ -1971,6 +2195,210 @@
   "module": "process",
   "tags": [
    "automation"
+  ]
+ },
+ {
+  "part": "Power box PB1: main disconnect Q0, branch breakers Q1-Q4, KM0-KM2, K1/K2, SSR and the DC supplies (16 x 12 x 6 in steel NEMA 12 wall-mount enclosure, McMaster 7812K class (envelope from the nominal size))",
+  "bom": "E1",
+  "mcm": "",
+  "mat": "steel",
+  "module": "tray",
+  "tags": [
+   "electrical"
+  ]
+ },
+ {
+  "part": "PB1 stand (2 x 30 x 15 mm 6061 rails, bolted to the tray)",
+  "bom": "E1",
+  "mcm": "",
+  "mat": "al6061",
+  "module": "tray",
+  "tags": [
+   "electrical"
+  ]
+ },
+ {
+  "part": "PB1 disconnect handle Q0 (Socomec 147E1111, red/yellow, padlockable in OFF; 22013003 UL 98 switch inside)",
+  "bom": "E1",
+  "mcm": "",
+  "mat": "misc",
+  "module": "tray",
+  "tags": [
+   "electrical"
+  ]
+ },
+ {
+  "part": "PB1 filter fan Fandis FF12D24UN (27 CFM, 24 V DC) and exhaust grille on the door",
+  "bom": "E1",
+  "mcm": "",
+  "mat": "misc",
+  "module": "tray",
+  "tags": [
+   "electrical"
+  ]
+ },
+ {
+  "part": "PB2 process-module box: Raspberry Pi 5, PN532 NFC, NAU7802 load-cell ADC, DDR-30G-5, E3NX amplifier, M12 junction (Hammond 1554JGY polycarbonate box, IP66, 160 x 90 x 60.5 mm)",
+  "bom": "C6",
+  "mcm": "",
+  "mat": "pc",
+  "module": "process",
+  "tags": [
+   "electrical"
+  ]
+ },
+ {
+  "part": "PB2 to the optics bridge, M4 x 10 (4 x McMaster 92290A144)",
+  "bom": "C6",
+  "mcm": "92290A144",
+  "mat": "ss316l",
+  "module": "process",
+  "tags": [
+   "fastener",
+   "electrical_pb2",
+   "electrical"
+  ]
+ },
+ {
+  "part": "Z sensor flag (2 mm steel tab on the carriage's -x side)",
+  "bom": "E3",
+  "mcm": "",
+  "mat": "steel",
+  "module": "process",
+  "tags": [
+   "electrical"
+  ]
+ },
+ {
+  "part": "Z sensor bracket (6061, clamped to the actuator body's -x side)",
+  "bom": "E3",
+  "mcm": "",
+  "mat": "al6061",
+  "module": "process",
+  "tags": [
+   "electrical"
+  ]
+ },
+ {
+  "part": "Z home and lower-limit sensors (2 x AutomationDirect KSE-AP-3F inductive M8, PNP NO, 3 mm flush, 40 mm long; 1 mm to the flag)",
+  "bom": "E3",
+  "mcm": "",
+  "mat": "misc",
+  "module": "process",
+  "tags": [
+   "electrical"
+  ]
+ },
+ {
+  "part": "Recoater position magnet (NdFeB Ø12 x 3, bonded into a pocket in the carriage block's back face)",
+  "bom": "E3",
+  "mcm": "",
+  "mat": "steel",
+  "module": "process",
+  "tags": [
+   "electrical"
+  ]
+ },
+ {
+  "part": "Recoater sensor posts (2 x 20 mm T-slot, McMaster 47065T101 class, on the process base plate)",
+  "bom": "E3",
+  "mcm": "TSLOT",
+  "mat": "al6061",
+  "module": "process",
+  "tags": [
+   "electrical"
+  ]
+ },
+ {
+  "part": "Recoater sensor clamps (6061, split clamp on each post)",
+  "bom": "E3",
+  "mcm": "",
+  "mat": "al6061",
+  "module": "process",
+  "tags": [
+   "electrical"
+  ]
+ },
+ {
+  "part": "Recoater home and over-travel sensors (2 x Turck BIM-M12E-AP4X-H1141 magnetic-field sensor M12, PNP NO, 62 mm long; see the magnet through the back wall)",
+  "bom": "E3",
+  "mcm": "",
+  "mat": "misc",
+  "module": "process",
+  "tags": [
+   "electrical"
+  ]
+ },
+ {
+  "part": "Recoater sensor posts to the base plate, M5 x 25 into the post's tapped core (2 x McMaster 92290A252)",
+  "bom": "E3",
+  "mcm": "92290A252",
+  "mat": "ss316l",
+  "module": "process",
+  "tags": [
+   "fastener",
+   "electrical_recoater_posts",
+   "electrical"
+  ]
+ },
+ {
+  "part": "Guard-position switch IDEC HS6B-12B05 (2NC + 1NO, tongue actuator on the door; separate from the guard lock, ISO 14119)",
+  "bom": "S2",
+  "mcm": "",
+  "mat": "misc",
+  "module": "process",
+  "tags": [
+   "electrical"
+  ]
+ },
+ {
+  "part": "E-stop enclosure, guard right side, near the front (1-hole yellow, 70 x 70 x 70 mm class)",
+  "bom": "S3",
+  "mcm": "",
+  "mat": "misc",
+  "module": "process",
+  "tags": [
+   "electrical"
+  ]
+ },
+ {
+  "part": "E-stops IDEC XW1E-BV402M-R, guard right side, near the front (40 mm mushroom, 2 NC)",
+  "bom": "S3",
+  "mcm": "",
+  "mat": "misc",
+  "module": "process",
+  "tags": [
+   "electrical"
+  ]
+ },
+ {
+  "part": "E-stop enclosure, front of the gas module's O2 box (1-hole yellow, 70 x 70 x 70 mm class)",
+  "bom": "S3",
+  "mcm": "",
+  "mat": "misc",
+  "module": "gas",
+  "tags": [
+   "electrical"
+  ]
+ },
+ {
+  "part": "E-stops IDEC XW1E-BV402M-R, front of the gas module's O2 box (40 mm mushroom, 2 NC)",
+  "bom": "S3",
+  "mcm": "",
+  "mat": "misc",
+  "module": "gas",
+  "tags": [
+   "electrical"
+  ]
+ },
+ {
+  "part": "Dock PE contacts (2 x leading protective-earth contacts on the dock's face, 10 AWG each to PB1's PE bar)",
+  "bom": "D1",
+  "mcm": "",
+  "mat": "misc",
+  "module": "tray",
+  "tags": [
+   "electrical"
   ]
  }
 ]
