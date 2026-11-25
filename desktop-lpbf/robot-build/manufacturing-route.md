@@ -109,6 +109,7 @@ per part in [`route-hours-by-part.csv`](route-hours-by-part.csv) and by group in
 | Frame (16.2) + floor plate (8.7) | 24.9 | 8.7 % |
 | + lid (6.8) and door (4.6): the shell | 36.3 | 12.6 % |
 | + the module body (7.2): spigot, flange, cylinder, weld | 43.5 | 15.1 % |
+| The shell + every part that seals into it or hangs on it (drawer, windows, camera boss, feedthroughs, overflow funnel, door hardware) | 93.5 | 32.5 % |
 
 - **Frame and floor cutting.** Of their 24.9 h, cutting is 7.4 h by dfm.py's conservative rates, 3.3 h at vendor feeds
   (45 min of it on the waterjet), and 2.2 h in the posted G-code. The G-code figure leaves out the taps, reamers and port tool.
@@ -308,6 +309,13 @@ UTC). Edison's literature review is [`edison/r7-chamber-route/answer.md`](../edi
   731 ± 98 ppm; TruPrint 1000 is ≤ 3,000 ppm standard. Pump-down machines claim 25-100 ppm.
 - **Ours sits with the pump-down machines,** and is more thorough: 1 mbar three times, 1-2 ppm O₂ in theory
   ([`vacuum-and-purge.md`](../vacuum-and-purge.md)).
+- **What purge-only would cost in argon and time** (estimates, perfect mixing × 2-3 for real chambers):
+  - From air to 100 ppm, the 11.3 L loop needs ~170-260 L. That is 17-26 min at 10 L/min, or 4-7 min at 40 L/min.
+  - Building, small flow-purged machines run 2-5 L/min (SLM 125, Aconity), so 1.2-3 m³ for a 10 h build.
+  - Our vacuum purge uses ~34 L of back-fill plus ~47 sccm of make-up, so ~60 L for the same build.
+  - At an assumed $100-300 per 300 cu ft (9.5 m³) cylinder of UHP argon (the helper's estimate; the suppliers' prices
+    are behind logins), flow-purging costs about $15-100 a build against $1-2.
+  - The bigger cost is the O₂ and water floor (option 6 below), not the gas.
 - **Why the vacuum matters for aluminium: water.** Van Cauwenbergh et al. (2019) printed AlSi7Mg after a vacuum
   pre-cycle at ~3 ppm O₂. Parts held 13 ± 4 ppm hydrogen, against 45 ± 11 ppm in the powder. Edison r7 §3.3 recommends
   the vacuum purge for aluminium on the same grounds.
@@ -466,6 +474,8 @@ Each option is priced for one chamber body (frame + floor, or its equivalent). T
 **Read the JLC prices as lower bounds:**
 
 - Both say the final price is subject to review.
+- For the same files, JLCCNC's prices are 8-13 times below SendCutSend's of 2026-11-22: lid $64.99 against $637.94, floor
+  plate $83.68 against $1,075.62, door $33.74 against $454.14.
 - The CNC prices assume no drawing, no threads, ISO 2768-m and the default anodize. Threads need a drawing upload, and the
   earlier run found they add about 25 %.
 - The five 316L and 416 parts were quoted as 6061; route b scales them by 3.74.
