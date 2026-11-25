@@ -188,7 +188,7 @@ def overlay(base, m, clock, frac, ticks, ch_title, ch_alpha, cost_scale, rows):
         P.lead_panel(d, lr, m["lead"].get("highlight"), y0=y)
     P.labels(d, m.get("labels"))
     if not m.get("no_clock"):
-        P.clocks(d, clock)
+        P.clocks(d, clock, speed=float(m.get("proc_s", 1.0 / FPS) or 0.0) * FPS)
     P.chapter_title(d, ch_title, ch_alpha)
     P.progress(d, frac, ticks)
     img.alpha_composite(lay)

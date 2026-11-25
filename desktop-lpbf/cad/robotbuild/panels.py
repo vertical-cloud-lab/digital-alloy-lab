@@ -175,8 +175,17 @@ def caption_bar(d, caption, sub, who, status, chapter_no=None, step=""):
 
 
 # ------------------------------------------------------------------------------------------------ the clocks
-def clocks(d, st, y_bottom=H - 14):
-    """st: dict(t_s, machine_h, robot_h, person_h, cam_h, outsourced_d). Project time in 8 h working days."""
+def speed_text(speed):
+    """How fast the frame's real-world time runs: "real time", or "time-lapse x60" (two significant figures)."""
+    if speed <= 1.5:
+        return "real time"
+    e = 10 ** max(0, math.floor(math.log10(speed)) - 1)
+    return f"time-lapse x{round(speed / e) * e:,.0f}"
+
+
+def clocks(d, st, y_bottom=H - 14, speed=None):
+    """st: dict(t_s, machine_h, robot_h, person_h, cam_h, outsourced_d). Project time in 8 h working days; speed: the
+    frame's real-world seconds per second of video (proc_s x FPS), shown as "real time" or "time-lapse xN"."""
     t_h = st.get("t_s", 0.0) / 3600.0
     day = int(t_h // 8.0) + 1
     into = t_h - 8.0 * (day - 1)
@@ -195,6 +204,13 @@ def clocks(d, st, y_bottom=H - 14):
     d.text((x0 + 10, y0 + 5), f"Day {day}", font=fb, fill=INK)
     dw = d.textlength(f"Day {day}", font=fb)
     d.text((x0 + 18 + dw, y0 + 12), f"+{hh}:{mm:02d} h   (8 h working days)", font=fl, fill=INK2)
+    if speed is not None and speed > 0:
+        t = speed_text(speed)
+        ft = font(10, bold=True)
+        tw = d.textlength(t, font=ft)
+        col = (90, 96, 104) if speed <= 1.5 else (176, 96, 20)
+        d.rounded_rectangle((x0 + w - tw - 14, y0 - 20, x0 + w, y0 - 3), 8, fill=(255, 255, 255, 220), outline=RULE)
+        d.text((x0 + w - tw - 7, y0 - 18), t, font=ft, fill=col)
     for k, (name, v, unit, col) in enumerate(rows):
         cx = x0 + 10 + (k % 2) * 122
         cy = y0 + 32 + (k // 2) * 16
