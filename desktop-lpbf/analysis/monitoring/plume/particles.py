@@ -294,10 +294,13 @@ def track_spatter(cs, vps, d_um, n_per=500, slow=False, seed=5, dt=5e-5, t_max=2
         fate[gone] = "outlet slot"
         alive[gone] = False
     keys = sorted(set(fate))
+    pm = pos * 1e3
+    landed = np.where((fate == "plate") | (fate == "floor"))[0][:400]           # landing points for the map (first 400)
     return dict(d_um=d_um, n=n, slow=slow, fates={k: float((fate == k).mean()) for k in keys},
                 windows={k: float((fate == f"{k} window").mean()) for k in vps},
                 windows_by_release={k: [float(((fate == f"{k} window") & (src == i)).sum() / n_per) for i in range(len(RELEASES))] for k in vps},
-                median_rise_mm=float(np.median(zmax) * 1e3), p95_rise_mm=float(np.percentile(zmax, 95) * 1e3))
+                median_rise_mm=float(np.median(zmax) * 1e3), p95_rise_mm=float(np.percentile(zmax, 95) * 1e3),
+                landings_xy_mm=[[round(float(pm[i, 0]), 1), round(float(pm[i, 1]), 1)] for i in landed])
 
 
 def deposition(conc, ustar, vps):
@@ -325,7 +328,22 @@ def figure(name, res):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    fig, axs = plt.subplots(1, 2, figsize=(12, 4.2), constrained_layout=True)
+    fig, axs = plt.subplots(1, 3, figsize=(17, 4.6), constrained_layout=True)
+    al = res["spatter"].get("Al lognormal (median 2.5 m/s)", {})
+    for d_s, c in (("20", "#2a78d6"), ("50", "#1baf7a"), ("100", "#eb6834"), ("200", "#6250d6")):
+        pts = np.array(al.get(d_s, {}).get("landings_xy_mm", []))
+        if len(pts):
+            axs[2].scatter(pts[:, 0], pts[:, 1], s=3, color=c, alpha=0.6, label=f"{d_s} um")
+    axs[2].add_patch(plt.Rectangle((-140, -95), 280, 190, fill=False, ec="#52514e", lw=0.8))
+    axs[2].add_patch(plt.Circle((0, 0), 37.5, fill=False, ec="#0b0b0b", lw=0.8, ls="--"))
+    axs[2].plot([-62, 62], [-90, -90], color="#1baf7a", lw=3)
+    axs[2].set_aspect("equal")
+    axs[2].set_xlim(-142, 142)
+    axs[2].set_ylim(-97, 97)
+    axs[2].set_xlabel("x (mm)")
+    axs[2].set_ylabel("y (mm), back wall up; flow runs down")
+    axs[2].set_title("Where Al spatter lands on the floor (Al-like speeds;\ndashed: Ø75 plate; green: outlet slot)", fontsize=9)
+    axs[2].legend(fontsize=7, frameon=False, markerscale=3, loc="upper right")
     wins = list(res["spatter"]["Ly 2017 speeds"]["100"]["windows"].keys())
     ds = sorted(int(k) for k in res["spatter"]["Ly 2017 speeds"])
     cols = ("#eb6834", "#1baf7a", "#6250d6", "#52514e", "#2a78d6")

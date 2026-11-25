@@ -47,7 +47,7 @@ Bed: 2.95 m/s mean at 3 mm over Ø75 (2.60–3.33); under the laser slide (z 121
 | 0.5-5 mm | 10000 | 99.5 % | 0.039 | 0.7 % | 0.04 % | 0.03 % | 0.27 % | 0.14 % | 0.02 % |
 | 5-20 mm | 10000 | 95.1 % | 0.062 | 7.2 % | 0.24 % | 0.25 % | 2.59 % | 0.86 % | 0.14 % |
 
-Condensate concentration per unit source, C/S (s/m³), next to each window and at other places:
+Condensate concentration per unit source, C/S (s/m³), next to each window and at other places (in brackets: how many tracers visited; the counting noise is ~1/sqrt of it):
 
 | Control volume | 0.5-5 mm | 5-20 mm |
 |---|---|---|
@@ -82,26 +82,91 @@ Condensate concentration per unit source, C/S (s/m³), next to each window and a
 
 Spatter (Al) landing on each window, share of launches:
 
-| Speeds | d (µm) | laser slide (lid, centre) | LW slide (left wall, 13°) | LP slide (lid, front-left, 54°) | layer-camera bore (lid) | BW light window (back wall, 8°) | plate (Ø75) | floor | outlet | lid | walls and parts |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| Ly 2017 speeds | 20 | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.0 % | 20.0 % | 13.9 % | 0.9 % | 65.0 % |
-| Ly 2017 speeds | 35 | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.0 % | 2.9 % | 1.3 % | 0.0 % | 95.9 % |
-| Ly 2017 speeds | 50 | 0.07 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.5 % | 13.5 % | 2.5 % | 0.3 % | 83.2 % |
-| Ly 2017 speeds | 100 | 8.00 % | 0.00 % | 0.17 % | 0.00 % | 0.00 % | 1.5 % | 21.2 % | 2.6 % | 26.5 % | 40.0 % |
-| Ly 2017 speeds | 150 | 11.92 % | 0.00 % | 0.17 % | 0.00 % | 0.00 % | 0.8 % | 7.2 % | 0.4 % | 35.4 % | 44.0 % |
-| Ly 2017 speeds | 200 | 12.00 % | 0.08 % | 0.25 % | 0.00 % | 0.00 % | 0.0 % | 2.5 % | 0.1 % | 37.7 % | 47.4 % |
-| slow (speeds / 2) | 20 | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.0 % | 19.9 % | 38.5 % | 0.0 % | 41.7 % |
-| slow (speeds / 2) | 35 | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.0 % | 3.5 % | 2.7 % | 0.0 % | 93.9 % |
-| slow (speeds / 2) | 50 | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.0 % | 7.0 % | 1.7 % | 0.0 % | 91.3 % |
-| slow (speeds / 2) | 100 | 5.25 % | 0.00 % | 0.08 % | 0.00 % | 0.00 % | 1.5 % | 18.6 % | 3.7 % | 15.1 % | 55.8 % |
-| slow (speeds / 2) | 150 | 8.75 % | 0.00 % | 0.17 % | 0.00 % | 0.00 % | 2.2 % | 17.2 % | 1.3 % | 27.1 % | 43.3 % |
-| slow (speeds / 2) | 200 | 9.92 % | 0.00 % | 0.08 % | 0.00 % | 0.00 % | 1.9 % | 14.9 % | 0.9 % | 28.2 % | 44.1 % |
-| Al lognormal (median 2.5 m/s) | 20 | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.0 % | 25.6 % | 58.5 % | 0.0 % | 15.9 % |
-| Al lognormal (median 2.5 m/s) | 35 | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.0 % | 6.7 % | 4.7 % | 0.0 % | 88.6 % |
-| Al lognormal (median 2.5 m/s) | 50 | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.0 % | 3.4 % | 1.5 % | 0.0 % | 95.1 % |
-| Al lognormal (median 2.5 m/s) | 100 | 1.75 % | 0.08 % | 0.00 % | 0.00 % | 0.00 % | 2.5 % | 34.2 % | 4.6 % | 3.8 % | 53.1 % |
-| Al lognormal (median 2.5 m/s) | 150 | 4.17 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 3.2 % | 30.9 % | 2.7 % | 12.0 % | 47.1 % |
-| Al lognormal (median 2.5 m/s) | 200 | 6.83 % | 0.08 % | 0.00 % | 0.00 % | 0.00 % | 3.6 % | 24.5 % | 1.4 % | 17.1 % | 46.5 % |
+| Speeds | d (µm) | laser slide (lid, centre) | LW slide (left wall, 13°) | LP slide (lid, front-left, 54°) | layer-camera bore (lid) | BW light window (back wall, 8°) | plate (Ø75) | floor | outlet | lid | door side | other walls and parts |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Ly 2017 speeds | 20 | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.0 % | 20.0 % | 13.9 % | 0.9 % | – | 65.0 % |
+| Ly 2017 speeds | 35 | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.0 % | 2.9 % | 1.3 % | 0.0 % | – | 95.9 % |
+| Ly 2017 speeds | 50 | 0.07 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.5 % | 13.5 % | 2.5 % | 0.3 % | – | 83.2 % |
+| Ly 2017 speeds | 100 | 8.00 % | 0.00 % | 0.17 % | 0.00 % | 0.00 % | 1.5 % | 21.2 % | 2.6 % | 26.5 % | – | 40.0 % |
+| Ly 2017 speeds | 150 | 11.92 % | 0.00 % | 0.17 % | 0.00 % | 0.00 % | 0.8 % | 7.2 % | 0.4 % | 35.4 % | – | 44.0 % |
+| Ly 2017 speeds | 200 | 12.00 % | 0.08 % | 0.25 % | 0.00 % | 0.00 % | 0.0 % | 2.5 % | 0.1 % | 37.7 % | – | 47.4 % |
+| slow (speeds / 2) | 20 | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.0 % | 19.9 % | 38.5 % | 0.0 % | – | 41.7 % |
+| slow (speeds / 2) | 35 | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.0 % | 3.5 % | 2.7 % | 0.0 % | – | 93.9 % |
+| slow (speeds / 2) | 50 | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.0 % | 7.0 % | 1.7 % | 0.0 % | – | 91.3 % |
+| slow (speeds / 2) | 100 | 5.25 % | 0.00 % | 0.08 % | 0.00 % | 0.00 % | 1.5 % | 18.6 % | 3.7 % | 15.1 % | – | 55.8 % |
+| slow (speeds / 2) | 150 | 8.75 % | 0.00 % | 0.17 % | 0.00 % | 0.00 % | 2.2 % | 17.2 % | 1.3 % | 27.1 % | – | 43.3 % |
+| slow (speeds / 2) | 200 | 9.92 % | 0.00 % | 0.08 % | 0.00 % | 0.00 % | 1.9 % | 14.9 % | 0.9 % | 28.2 % | – | 44.1 % |
+| Al lognormal (median 2.5 m/s) | 20 | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.0 % | 25.6 % | 58.5 % | 0.0 % | – | 15.9 % |
+| Al lognormal (median 2.5 m/s) | 35 | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.0 % | 6.7 % | 4.7 % | 0.0 % | – | 88.6 % |
+| Al lognormal (median 2.5 m/s) | 50 | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.0 % | 3.4 % | 1.5 % | 0.0 % | – | 95.1 % |
+| Al lognormal (median 2.5 m/s) | 100 | 1.75 % | 0.08 % | 0.00 % | 0.00 % | 0.00 % | 2.5 % | 34.2 % | 4.6 % | 3.8 % | – | 53.1 % |
+| Al lognormal (median 2.5 m/s) | 150 | 4.17 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 3.2 % | 30.9 % | 2.7 % | 12.0 % | – | 47.1 % |
+| Al lognormal (median 2.5 m/s) | 200 | 6.83 % | 0.08 % | 0.00 % | 0.00 % | 0.00 % | 3.6 % | 24.5 % | 1.4 % | 17.1 % | – | 46.5 % |
+
+### p200_lw3: 200 + 40 L/min, LW purge 3 L/min, 285k cells, 400 iterations
+
+Bed: 2.95 m/s mean at 3 mm over Ø75 (2.60–3.33); under the laser slide (z 121): 0.36 m/s, Uy -0.35.
+
+| Released | n | Out in 8 s | Median time out (s) | Near the beam axis under the lid | Entered laser recess | Entered LW recess | Entered LP recess | Entered LC recess | Entered BW recess |
+|---|---|---|---|---|---|---|---|---|---|
+| 0.5-5 mm | 10000 | 99.6 % | 0.039 | 0.4 % | 0.01 % | 0.04 % | 0.25 % | 0.11 % | 0.00 % |
+| 5-20 mm | 10000 | 95.0 % | 0.059 | 5.4 % | 0.21 % | 0.50 % | 2.06 % | 0.64 % | 0.08 % |
+
+Condensate concentration per unit source, C/S (s/m³), next to each window and at other places (in brackets: how many tracers visited; the counting noise is ~1/sqrt of it):
+
+| Control volume | 0.5-5 mm | 5-20 mm |
+|---|---|---|
+| LW recess | 10.7 | 95.3 |
+| LW near face | 0 | 11.1 |
+| BW recess | 0 | 241 |
+| BW near face | 0 | 13 |
+| LP recess | 185 | 1.43e+03 |
+| LP near face | 229 | 1.59e+03 |
+| LC recess | 64.1 | 287 |
+| LC near face | 59.1 | 422 |
+| laser recess | 0.02 | 11.7 |
+| laser near face | 0 | 8.19 |
+| beam column z 20-120 (r < 5 mm) | 15.9 | 246 |
+| over plate z 0-20 | 125 | 220 |
+| ceiling layer at lid candidate (-60, -80) | 53.5 | 519 |
+| ceiling layer at lid candidate (-40, 60) | 2.54 | 12.5 |
+| ceiling layer at lid candidate (-20, 80) | 0.542 | 16 |
+| ceiling layer at lid candidate (80, 80) | 22.2 | 435 |
+| left-wall layer at y -60, z 22-44 | 46.3 | 381 |
+| left-wall layer at y -20, z 22-44 | 32.3 | 274 |
+| left-wall layer at y 20, z 22-44 | 66 | 1.03e+03 |
+| left-wall layer at y 60, z 22-44 | 88 | 913 |
+
+| Window | u* (m/s) | gas speed 1 mm off the face (m/s) |
+|---|---|---|
+| laser slide (lid, centre) | 0.066 | 0.1 |
+| LW slide (left wall, 13°) | 0.14 | 0.82 |
+| LP slide (lid, front-left, 54°) | 0.059 | 0.23 |
+| layer-camera bore (lid) | 0.032 | 0.11 |
+| BW light window (back wall, 8°) | 0.0088 | 0.0053 |
+
+Spatter (Al) landing on each window, share of launches:
+
+| Speeds | d (µm) | laser slide (lid, centre) | LW slide (left wall, 13°) | LP slide (lid, front-left, 54°) | layer-camera bore (lid) | BW light window (back wall, 8°) | plate (Ø75) | floor | outlet | lid | door side | other walls and parts |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Ly 2017 speeds | 20 | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.0 % | 19.7 % | 14.5 % | 0.1 % | 61.8 % | 2.9 % |
+| Ly 2017 speeds | 35 | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.0 % | 3.3 % | 2.0 % | 0.0 % | 94.3 % | 0.4 % |
+| Ly 2017 speeds | 50 | 0.07 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.5 % | 13.6 % | 2.2 % | 0.3 % | 76.1 % | 7.3 % |
+| Ly 2017 speeds | 100 | 8.17 % | 0.00 % | 0.17 % | 0.00 % | 0.00 % | 1.3 % | 22.0 % | 1.9 % | 26.2 % | 17.8 % | 22.3 % |
+| Ly 2017 speeds | 150 | 11.92 % | 0.00 % | 0.17 % | 0.00 % | 0.00 % | 0.8 % | 7.2 % | 0.4 % | 35.5 % | 15.5 % | 28.5 % |
+| Ly 2017 speeds | 200 | 12.00 % | 0.08 % | 0.33 % | 0.00 % | 0.00 % | 0.0 % | 2.3 % | 0.1 % | 37.8 % | 14.2 % | 33.2 % |
+| slow (speeds / 2) | 20 | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.0 % | 20.8 % | 39.0 % | 0.0 % | 40.2 % | 0.0 % |
+| slow (speeds / 2) | 35 | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.0 % | 4.6 % | 2.8 % | 0.0 % | 92.5 % | 0.1 % |
+| slow (speeds / 2) | 50 | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.0 % | 6.1 % | 1.9 % | 0.0 % | 91.7 % | 0.3 % |
+| slow (speeds / 2) | 100 | 5.08 % | 0.00 % | 0.08 % | 0.00 % | 0.00 % | 1.8 % | 18.8 % | 3.5 % | 14.9 % | 38.2 % | 17.5 % |
+| slow (speeds / 2) | 150 | 8.67 % | 0.00 % | 0.17 % | 0.00 % | 0.00 % | 2.1 % | 17.0 % | 1.2 % | 27.3 % | 22.5 % | 21.0 % |
+| slow (speeds / 2) | 200 | 9.83 % | 0.00 % | 0.08 % | 0.00 % | 0.00 % | 1.7 % | 15.7 % | 0.8 % | 27.9 % | 17.5 % | 26.6 % |
+| Al lognormal (median 2.5 m/s) | 20 | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.0 % | 25.5 % | 59.7 % | 0.0 % | 14.7 % | 0.0 % |
+| Al lognormal (median 2.5 m/s) | 35 | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.0 % | 7.1 % | 4.7 % | 0.0 % | 88.1 % | 0.0 % |
+| Al lognormal (median 2.5 m/s) | 50 | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.0 % | 3.8 % | 1.5 % | 0.0 % | 94.7 % | 0.1 % |
+| Al lognormal (median 2.5 m/s) | 100 | 1.75 % | 0.08 % | 0.00 % | 0.00 % | 0.00 % | 2.3 % | 34.8 % | 4.3 % | 3.8 % | 44.8 % | 8.1 % |
+| Al lognormal (median 2.5 m/s) | 150 | 4.17 % | 0.00 % | 0.08 % | 0.00 % | 0.00 % | 2.9 % | 31.8 % | 2.8 % | 12.2 % | 27.9 % | 18.1 % |
+| Al lognormal (median 2.5 m/s) | 200 | 6.83 % | 0.08 % | 0.00 % | 0.00 % | 0.00 % | 3.6 % | 24.3 % | 1.2 % | 17.3 % | 21.0 % | 25.6 % |
 
 ## Fouling (fouling.py)
 
@@ -202,6 +267,85 @@ Condensate source, g per hour of lasing (from measured Mg / Zn losses x 1.5 for 
 | LC | Al lognormal (median 2.5 m/s) | 0 | 0.0 |
 | laser | Al lognormal (median 2.5 m/s) | 1476 | 176.0 |
 
+### p200_lw3
+
+| Window | Released | Size, ΔT | Alloy | mg/m² per h of lasing | h to the limit, dense Al film | h, porous Al (f 0.1) |
+|---|---|---|---|---|---|---|
+| LP | 0.5-5 mm | 0.05 um, dT 0 K | AlSi10Mg | 0.156 | 6.99 | 3.64e+03 |
+| LP | 0.5-5 mm | 0.05 um, dT 0 K | 7075 | 0.964 | 1.13 | 589 |
+| LP | 0.5-5 mm | 0.1 um, dT 0 K | AlSi10Mg | 0.0583 | 18.7 | 9.73e+03 |
+| LP | 0.5-5 mm | 0.1 um, dT 0 K | 7075 | 0.361 | 3.02 | 1.57e+03 |
+| LP | 0.5-5 mm | 0.3 um, dT 0 K | AlSi10Mg | 0.000671 | 1.62e+03 | 8.46e+05 |
+| LP | 0.5-5 mm | 0.3 um, dT 0 K | 7075 | 0.00415 | 263 | 1.37e+05 |
+| LP | 0.5-5 mm | 0.1 um, dT 10 K | AlSi10Mg | 1.46 | 0.744 | 388 |
+| LP | 0.5-5 mm | 0.1 um, dT 10 K | 7075 | 9.05 | 0.12 | 62.7 |
+| LC | 0.5-5 mm | 0.05 um, dT 0 K | AlSi10Mg | 0.0212 | 51.3 | 2.67e+04 |
+| LC | 0.5-5 mm | 0.05 um, dT 0 K | 7075 | 0.131 | 8.29 | 4.32e+03 |
+| LC | 0.5-5 mm | 0.1 um, dT 0 K | AlSi10Mg | 0.00694 | 157 | 8.17e+04 |
+| LC | 0.5-5 mm | 0.1 um, dT 0 K | 7075 | 0.043 | 25.4 | 1.32e+04 |
+| LC | 0.5-5 mm | 0.3 um, dT 0 K | AlSi10Mg | 0.000173 | 6.28e+03 | 3.27e+06 |
+| LC | 0.5-5 mm | 0.3 um, dT 0 K | 7075 | 0.00107 | 1.02e+03 | 5.29e+05 |
+| LC | 0.5-5 mm | 0.1 um, dT 10 K | AlSi10Mg | 0.37 | 2.94 | 1.53e+03 |
+| LC | 0.5-5 mm | 0.1 um, dT 10 K | 7075 | 2.29 | 0.476 | 248 |
+| LW | 5-20 mm | 0.05 um, dT 0 K | AlSi10Mg | 0.018 | 60.4 | 3.15e+04 |
+| LW | 5-20 mm | 0.05 um, dT 0 K | 7075 | 0.112 | 9.76 | 5.08e+03 |
+| LW | 5-20 mm | 0.1 um, dT 0 K | AlSi10Mg | 0.00786 | 139 | 7.22e+04 |
+| LW | 5-20 mm | 0.1 um, dT 0 K | 7075 | 0.0486 | 22.4 | 1.17e+04 |
+| LW | 5-20 mm | 0.3 um, dT 0 K | AlSi10Mg | 0.00251 | 434 | 2.26e+05 |
+| LW | 5-20 mm | 0.3 um, dT 0 K | 7075 | 0.0155 | 70.2 | 3.66e+04 |
+| LW | 5-20 mm | 0.1 um, dT 10 K | AlSi10Mg | 0.0761 | 14.3 | 7.45e+03 |
+| LW | 5-20 mm | 0.1 um, dT 10 K | 7075 | 0.471 | 2.31 | 1.2e+03 |
+| BW | 5-20 mm | 0.05 um, dT 0 K | AlSi10Mg | 0.00136 | 1.66e+03 | 7.86e+05 |
+| BW | 5-20 mm | 0.05 um, dT 0 K | 7075 | 0.00844 | 269 | 1.27e+05 |
+| BW | 5-20 mm | 0.1 um, dT 0 K | AlSi10Mg | 0.000594 | 3.82e+03 | 1.81e+06 |
+| BW | 5-20 mm | 0.1 um, dT 0 K | 7075 | 0.00367 | 617 | 2.92e+05 |
+| BW | 5-20 mm | 0.3 um, dT 0 K | AlSi10Mg | 0.000189 | 1.2e+04 | 5.68e+06 |
+| BW | 5-20 mm | 0.3 um, dT 0 K | 7075 | 0.00117 | 1.94e+03 | 9.19e+05 |
+| BW | 5-20 mm | 0.1 um, dT 10 K | AlSi10Mg | 0.0803 | 28.2 | 1.33e+04 |
+| BW | 5-20 mm | 0.1 um, dT 10 K | 7075 | 0.497 | 4.56 | 2.16e+03 |
+| LP | 5-20 mm | 0.05 um, dT 0 K | AlSi10Mg | 1.09 | 1 | 522 |
+| LP | 5-20 mm | 0.05 um, dT 0 K | 7075 | 6.73 | 0.162 | 84.4 |
+| LP | 5-20 mm | 0.1 um, dT 0 K | AlSi10Mg | 0.407 | 2.68 | 1.39e+03 |
+| LP | 5-20 mm | 0.1 um, dT 0 K | 7075 | 2.52 | 0.433 | 225 |
+| LP | 5-20 mm | 0.3 um, dT 0 K | AlSi10Mg | 0.00468 | 233 | 1.21e+05 |
+| LP | 5-20 mm | 0.3 um, dT 0 K | 7075 | 0.0289 | 37.6 | 1.96e+04 |
+| LP | 5-20 mm | 0.1 um, dT 10 K | AlSi10Mg | 10.2 | 0.107 | 55.6 |
+| LP | 5-20 mm | 0.1 um, dT 10 K | 7075 | 63.2 | 0.0172 | 8.98 |
+| LC | 5-20 mm | 0.05 um, dT 0 K | AlSi10Mg | 0.152 | 7.18 | 3.74e+03 |
+| LC | 5-20 mm | 0.05 um, dT 0 K | 7075 | 0.939 | 1.16 | 604 |
+| LC | 5-20 mm | 0.1 um, dT 0 K | AlSi10Mg | 0.0496 | 22 | 1.14e+04 |
+| LC | 5-20 mm | 0.1 um, dT 0 K | 7075 | 0.307 | 3.55 | 1.85e+03 |
+| LC | 5-20 mm | 0.3 um, dT 0 K | AlSi10Mg | 0.00124 | 879 | 4.58e+05 |
+| LC | 5-20 mm | 0.3 um, dT 0 K | 7075 | 0.00766 | 142 | 7.4e+04 |
+| LC | 5-20 mm | 0.1 um, dT 10 K | AlSi10Mg | 2.64 | 0.412 | 215 |
+| LC | 5-20 mm | 0.1 um, dT 10 K | 7075 | 16.4 | 0.0666 | 34.7 |
+| laser | 5-20 mm | 0.05 um, dT 0 K | AlSi10Mg | 0.00631 | 1.16 | 1.16e+03 |
+| laser | 5-20 mm | 0.05 um, dT 0 K | 7075 | 0.0391 | 0.187 | 188 |
+| laser | 5-20 mm | 0.1 um, dT 0 K | AlSi10Mg | 0.0024 | 3.04 | 3.05e+03 |
+| laser | 5-20 mm | 0.1 um, dT 0 K | 7075 | 0.0149 | 0.492 | 494 |
+| laser | 5-20 mm | 0.3 um, dT 0 K | AlSi10Mg | 3.47e-05 | 211 | 2.12e+05 |
+| laser | 5-20 mm | 0.3 um, dT 0 K | 7075 | 0.000214 | 34.1 | 3.43e+04 |
+| laser | 5-20 mm | 0.1 um, dT 10 K | AlSi10Mg | 0.0527 | 0.139 | 139 |
+| laser | 5-20 mm | 0.1 um, dT 10 K | 7075 | 0.326 | 0.0224 | 22.5 |
+
+| Window, speeds | Spatter hits per hour of lasing at 100 spatters/s | splat area (mm²/h) |
+|---|---|---|
+| LW | Ly 2017 speeds | 3 | 0.7 |
+| BW | Ly 2017 speeds | 0 | 0.0 |
+| LP | Ly 2017 speeds | 96 | 9.6 |
+| LC | Ly 2017 speeds | 0 | 0.0 |
+| laser | Ly 2017 speeds | 5136 | 507.3 |
+| LW | slow (speeds / 2) | 0 | 0.0 |
+| BW | slow (speeds / 2) | 0 | 0.0 |
+| LP | slow (speeds / 2) | 57 | 5.7 |
+| LC | slow (speeds / 2) | 0 | 0.0 |
+| laser | slow (speeds / 2) | 3432 | 359.6 |
+| LW | Al lognormal (median 2.5 m/s) | 33 | 2.5 |
+| BW | Al lognormal (median 2.5 m/s) | 0 | 0.0 |
+| LP | Al lognormal (median 2.5 m/s) | 12 | 1.6 |
+| LC | Al lognormal (median 2.5 m/s) | 0 | 0.0 |
+| laser | Al lognormal (median 2.5 m/s) | 1476 | 176.0 |
+
 ## Spatter glow and blur (spatter.py)
 
 | Spatter | Camera, exposure | visible above (K) | glows for (ms) | over (mm) |
@@ -210,28 +354,28 @@ Condensate source, g per hour of lasing (from measured Mg / Zn losses x 1.5 for 
 | Al, 35 um, T0 2200 K, 5 m/s | LW Chronos 2.1-HD + 50 mm f/4, 850 +/- 5 nm, 100 us | 1516 | 2.4 | 9 |
 | Al, 35 um, T0 2200 K, 5 m/s | LW Chronos 2.1-HD + 50 mm f/4, 450-950 nm (notch at 1070), 10 us | 1181 | 4.5 | 14 |
 | Al, 35 um, T0 2200 K, 5 m/s | LW Chronos 2.1-HD + 50 mm f/4, 450-950 nm (notch at 1070), 100 us | 1143 | 4.8 | 15 |
-| Al, 35 um, T0 2200 K, 5 m/s | LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 10 us | 1880 | 0.9 | 4 |
+| Al, 35 um, T0 2200 K, 5 m/s | LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 30 us | 1816 | 1.2 | 5 |
 | Al, 35 um, T0 2200 K, 5 m/s | LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 100 us | 1788 | 1.3 | 5 |
 | Al, 35 um, T0 2200 K, 5 m/s | Layer camera Pi HQ + 12 mm f/2.8, 400-650 nm (its IR-cut filter), 10000 us | 1822 | 1.1 | 5 |
 | Al, 50 um, T0 2200 K, 5 m/s | LW Chronos 2.1-HD + 50 mm f/4, 850 +/- 5 nm, 10 us | 1554 | 4.3 | 16 |
 | Al, 50 um, T0 2200 K, 5 m/s | LW Chronos 2.1-HD + 50 mm f/4, 850 +/- 5 nm, 100 us | 1473 | 5.0 | 18 |
 | Al, 50 um, T0 2200 K, 5 m/s | LW Chronos 2.1-HD + 50 mm f/4, 450-950 nm (notch at 1070), 10 us | 1165 | 8.9 | 27 |
 | Al, 50 um, T0 2200 K, 5 m/s | LW Chronos 2.1-HD + 50 mm f/4, 450-950 nm (notch at 1070), 100 us | 1118 | 9.7 | 28 |
-| Al, 50 um, T0 2200 K, 5 m/s | LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 10 us | 1841 | 2.1 | 9 |
+| Al, 50 um, T0 2200 K, 5 m/s | LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 30 us | 1763 | 2.6 | 11 |
 | Al, 50 um, T0 2200 K, 5 m/s | LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 100 us | 1728 | 2.8 | 12 |
 | Al, 50 um, T0 2200 K, 5 m/s | Layer camera Pi HQ + 12 mm f/2.8, 400-650 nm (its IR-cut filter), 10000 us | 1775 | 2.5 | 10 |
 | Al, 100 um, T0 2200 K, 5 m/s | LW Chronos 2.1-HD + 50 mm f/4, 850 +/- 5 nm, 10 us | 1514 | 16.5 | 60 |
 | Al, 100 um, T0 2200 K, 5 m/s | LW Chronos 2.1-HD + 50 mm f/4, 850 +/- 5 nm, 100 us | 1399 | 20.7 | 70 |
 | Al, 100 um, T0 2200 K, 5 m/s | LW Chronos 2.1-HD + 50 mm f/4, 450-950 nm (notch at 1070), 10 us | 1142 | 33.5 | 94 |
 | Al, 100 um, T0 2200 K, 5 m/s | LW Chronos 2.1-HD + 50 mm f/4, 450-950 nm (notch at 1070), 100 us | 1073 | 37.9 | 100 |
-| Al, 100 um, T0 2200 K, 5 m/s | LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 10 us | 1785 | 8.5 | 36 |
+| Al, 100 um, T0 2200 K, 5 m/s | LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 30 us | 1681 | 11.3 | 45 |
 | Al, 100 um, T0 2200 K, 5 m/s | LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 100 us | 1628 | 12.8 | 50 |
 | Al, 100 um, T0 2200 K, 5 m/s | Layer camera Pi HQ + 12 mm f/2.8, 400-650 nm (its IR-cut filter), 10000 us | 1689 | 11.0 | 44 |
 | Al, 200 um, T0 2200 K, 5 m/s | LW Chronos 2.1-HD + 50 mm f/4, 850 +/- 5 nm, 10 us | 1489 | 59.7 | 203 |
 | Al, 200 um, T0 2200 K, 5 m/s | LW Chronos 2.1-HD + 50 mm f/4, 850 +/- 5 nm, 100 us | 1339 | 80.8 | 247 |
 | Al, 200 um, T0 2200 K, 5 m/s | LW Chronos 2.1-HD + 50 mm f/4, 450-950 nm (notch at 1070), 10 us | 1128 | 120.6 | 308 |
 | Al, 200 um, T0 2200 K, 5 m/s | LW Chronos 2.1-HD + 50 mm f/4, 450-950 nm (notch at 1070), 100 us | 1037 | 143.1 | 334 |
-| Al, 200 um, T0 2200 K, 5 m/s | LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 10 us | 1751 | 31.8 | 127 |
+| Al, 200 um, T0 2200 K, 5 m/s | LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 30 us | 1623 | 44.3 | 164 |
 | Al, 200 um, T0 2200 K, 5 m/s | LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 100 us | 1547 | 52.7 | 186 |
 | Al, 200 um, T0 2200 K, 5 m/s | Layer camera Pi HQ + 12 mm f/2.8, 400-650 nm (its IR-cut filter), 10000 us | 1610 | 45.6 | 168 |
 
