@@ -1004,10 +1004,10 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     dy1 = -cy
     dy0 = dy1 - 15.0
     # door seal (item 2): 1.78 mm FKM 75A cord (spliced ring) in a half-dovetail groove, Parker depth 1.32, width 2.3; the
-    # groove's centre line is the old 232 x 104 rectangle. Two ears at the top corners carry the draw latches' strikes.
+    # groove's centre line is the old 232 x 104 rectangle. Two ears at mid-height carry the draw latches' brackets (since 2026-11-23).
     LT = LATCH_1807A61
-    zl_c = 54.0                                            # latch centre line at the seal's centroid height: with floating hinges the
-                                                           # latches alone set the squeeze, so they pull the door flat (seals.md)
+    zl_c = 54.0                                            # latch centre line at the seal's centroid height (seals.md); since
+                                                           # 2026-11-25 the hinge holds the bottom edge too (see the hinge below)
     ex_ = LATCH_POS["ear_x"]                               # ears end at x +/-146 (were +/-156): the latch brackets bolt to their front faces
     door = fuse([rbox(-124, 124, dy0, dy1, -6, 114, 6, "|Y")] + [box(124.0, ex_, dy0, dy1, zl_c - 18.0, zl_c + 18.0), box(-ex_, -124.0, dy0, dy1, zl_c - 18.0, zl_c + 18.0)])
     dw_in, dh_in, dr_in = 232.0 - 2.3, 104.0 - 2.3, 4.4
@@ -1021,23 +1021,29 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     DOOR_HINGE = (hy, hz)
     hx = (-100.0, 80.0)
     leaves = []
-    for x in hx:                                           # door leaf + middle knuckle, rotates with the door; the pin hole is a
-        # slot +/-0.6 mm across the door (y) so the door floats onto its seal and the latches, not the hinge, set the squeeze
-        kslot = fuse([cyl(2.6, (x - 1, hy - 0.6, hz), "x", 22), cyl(2.6, (x - 1, hy + 0.6, hz), "x", 22), box(x - 1, x + 21, hy - 0.6, hy + 0.6, hz - 2.6, hz + 2.6)])
+    for x in hx:                                           # door leaf + middle knuckle, rotates with the door
+        # round pin hole (2026-11-25; it was a +/-0.6 mm slot so the door floated and the latches alone set the squeeze). The latches
+        # pull 12 mm outboard of the ears' tips, where the door bears on the chamber, so on their own they pry the door off its seal:
+        # 15 % squeeze at the top and bottom centres with 1.2 kN latches (door_seal_fea.md D1200). With the hinge holding the bottom
+        # edge on its land, 23.6-25.8 % at 0.75 kN (E750). Reamed for a close-fit pin; drawn Ø5.2 like the chamber's knuckles.
+        kslot = cyl(2.6, (x - 1, hy, hz), "x", 22)
         leaves += [box(x, x + 20, dy0 - 3, dy0, hz + 5, 30), cyl(6, (x, hy, hz), "x", 20).cut(kslot)]
-    add("Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge)", comp(leaves), C["ss"], 8, (0, -240, 0), group="door", mat="ss304", bom="G1", mcm="1151A87", section=True)
+    add("Door hinge leaves + knuckles (304 SS, round pin holes: the hinge holds the door's bottom edge on its land)", comp(leaves), C["ss"], 8, (0, -240, 0),
+        group="door", mat="ss304", bom="G1", mcm="1151A87", section=True)
     blocks = []
-    for x in hx:                                           # outer knuckles bolted to the chamber's front face
-        for xa, xb in ((x - 12.0, x - 0.5), (x + 20.5, x + 32.0)):
+    for x in hx:                                           # outer knuckles bolted to the chamber's front face, on shims chosen at assembly
+        for xa, xb in ((x - 12.0, x - 0.5), (x + 20.5, x + 32.0)):    # so the shut door's bottom land just touches (the shims are not drawn)
             blocks.append(fuse([box(xa, xb, hy, dy1, zf, hz), cyl(6, (xa, hy, hz), "x", xb - xa)]).cut(cyl(2.6, (xa - 1, hy, hz), "x", xb - xa + 2)))
-    add("Door hinge knuckles on the chamber (304 SS)", comp(blocks), C["ss"], 8, (0, -240, 0), mat="ss304", bom="G1", mcm="1151A87", section=True)
+    add("Door hinge knuckles on the chamber (304 SS, shimmed at assembly so the shut door's land just touches)", comp(blocks), C["ss"], 8, (0, -240, 0),
+        mat="ss304", bom="G1", mcm="1151A87", section=True)
     add("Hinge pins (Ø5, 316)", comp([cyl(2.5, (x - 12.0, hy, hz), "x", 44) for x in hx]), C["steel"], 8, (0, -240, 0), mat="ss316l", bom="G1", section=True)
     # draw latches (McMaster 1807A61, 800 lb, adjustable grip), mirrored onto the door (operations.md U2.2, 2026-11-23): each latch sits on a
     # bracket bolted to the front face of a door ear and points forward, so its lever is in front of the door at y -207, ahead of the
     # front-right optics post (x 180..240, y -185..-125) that hid the right latch when it was on the chamber's side face. The strike moved
     # to the chamber's side face, 35..63 mm behind the latch (the 1807A61's latching distance). The pull is still straight back (+y) on
     # the ears at the seal's centroid height (z 54), one each side of the door's centre line (x +/-158), so the resultant stays at the
-    # seal's centroid; the brackets load the ears' front faces where door_seal_fea.py holds them. Set each to >= 0.4 kN (seals.md).
+    # seal's centroid. Set each to ~0.75 kN and no more (door_seal_fea.md, 2026-11-25): the pull line is 12 mm outboard of the ears' tips,
+    # so extra preload goes into prying the door about them, not into the seal.
     # This also takes the left latch off the chamber's left side face, out of the recoater feedthrough's way to the front (M8.4).
     lb_ = LT["body_L"]
     xb0, xb1 = LATCH_POS["bracket_x"]                      # bracket: 6 mm plate (x 140..146) on an 18 x 6 foot on the ear's front face
@@ -1046,7 +1052,7 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     add("Draw-latch brackets on the door's ears (2 x 6061, 6 mm plate on a foot bolted to each ear's front face)", comp([brk, brk.mirror("YZ")]), C["alu_dark"], 8,
         (0, -240, 0), group="door", mat="al6061", bom="G1", section=True)
     lat_r = box(xb1, xb1 + LT["H"], dy0 - 1.0 - lb_, dy0 - 1.0, zl_c - LT["W"] / 2, zl_c + LT["W"] / 2)
-    add(f"Draw latches on the door's latch brackets, pointing forward (2 x McMaster 1807A61, 304 SS, {LT['rating_N'] / 1000:.1f} kN rated, preload set >= 0.4 kN)",
+    add(f"Draw latches on the door's latch brackets, pointing forward (2 x McMaster 1807A61, 304 SS, {LT['rating_N'] / 1000:.1f} kN rated, preload set to ~0.75 kN)",
         comp([lat_r, lat_r.mirror("YZ")]), C["ss"], 8, (0, -240, 0), group="door", mat="ss304", mass_kg=2 * 0.25, bom="G1", mcm="1807A61", section=True)
     ys0_, ys1_ = LATCH_POS["strike_y"]
     strike = [box(cx, cx + 3.0, ys0_, ys1_, zl_c - 14.0, zl_c + 14.0), box(-cx - 3.0, -cx, ys0_, ys1_, zl_c - 14.0, zl_c + 14.0)]

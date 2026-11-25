@@ -65,16 +65,18 @@ MAP = [
     (r"^Z servo|^Recoater servo", "M2", r"ClearPath", "bought", ["CPM-SDSK-2311S-RLN"], ""),
     (r"^Z lift arm", "M3", r"lift arm", "custom", [], ""),
     (r"^Pot magnet", "B2", r"magnet", "bought", ["5679K95"], "heat.md: swap the NdFeB cup for SmCo"),
+    # since 2026-11-23 the rod end is a 316L block with seven Solid Sealing weld-ins (electrical.md 13.3); they replace the hermetic connector
+    # and its O-ring, and there is no thermal cutoff (13.4). This entry comes before B1's "^Rod end M50", which would take the weld-ins as custom.
+    (r"^Rod end M50 feedthroughs, welded in", "H1", r"FA11631", "bought", ["FA11631", "FA11632", "FA10443"],
+     "3 x FA11631 + 3 x FA11632 single-lead type K and 1 x FA10443 4-pin power per module: electrical-bom.csv E6-01..03"),
     (r"^Build module M50|^Module M50 bottom flange|^Module M50 handle|^Build plate M50|^Piston head M50|^Hollow piston rod M50|^Rod end M50",
      "B1", r"module", "custom", [], ""),
     (r"^Plate rim wiper M50|^Bore seal M50", "B2", r"wiper|felt", "generic", [], "carbon-filled PTFE / aramid felt: no stock part number chosen"),
     (r"^Heater block M50", "H1", r"heater", "custom", [], ""),
     (r"^Cartridge heaters M50", "H1", r"3714N36", "bought", ["3714N36"], ""),
     (r"^Type K thermocouples M50", "H1", r"3871K606", "bought", ["3871K606"], ""),
-    (r"^Thermal cutoff M50", "H1", r"RT240", "bought", ["RT240"], "model tag H2; the RT240 is costed in H1"),
     (r"^Macor standoff rings", "H1", r"8489K75", "custom", ["8489K75"], "cut from 8489K75 rod"),
     (r"^Radiation shields M50", "H1", r"2317K275|shim", "custom", ["2317K275"], ""),
-    (r"^Hermetic connector M50", "H1", r"LEMO|HGG|connector|feedthrough", "bought", ["HGG.1B.310.CLLPV"], ""),
     (r"^Striker disc M50", "B2", r"striker|416", "custom", ["89095K23"], ""),
     (r"^Overflow funnel block", "M4", r"overflow", "custom", [], ""),
     (r"^Overflow port \(KF-40\)", "G7", r"5786N25", "bought", ["5786N25"], ""),
@@ -102,10 +104,11 @@ MAP = [
     (r"^Gas knife", "G1", r"gas knife", "custom", [], ""),
     (r"^Door handle$", "G1", r"door handle", "custom", [], ""),
     (r"^Hinge pins", "G1", r"pins", "custom", [], ""),
-    (r"^Ø2 in\. fused-silica window", "L7", r"window", "generic", [], "L7 names a Ø1 in. Thorlabs WG41050-C; the model's Ø2 in. x 8 mm window has no part number"),
+    # round 6 (2026-11-25, optics worker): the window and the cover slide are drawn as the BOM's Edmund parts
+    (r"^Ø2 in\. fused-silica window", "L7", r"38-990", "bought", ["38-990"], "Edmund 38-990, Ø50.8 x 9.53 mm (optics-bom.csv O11)"),
     (r"^Window clamp ring|^Camera window flat ring", "G8", r"seal-parts|FKM sheet", "generic", [], "FKM sheet: part number not confirmed (seal-parts.csv)"),
     (r"^Field-stop aperture|^f-theta adapter ring|^Galvo riser plate|^Enclosed beam tube|^Optics bridge", "F5", r"optics bridge", "custom", [], ""),
-    (r"^Cover slide \(", "A2", r"25-250", "bought", ["25-250"], ""),
+    (r"^Cover slide \(", "A2", r"36-299", "bought", ["36-299"], "Edmund 36-299, Ø50 x 2 mm (optics-bom.csv O12)"),
     (r"^Drawer latches: 2 x quarter-turn|^Drawer latch receptacles", "G1", r"quarter-turn", "generic", [], "seals.md: no catalogue quarter-turn latch fits the 20 mm plate"),
     (r"^Dose chute", "M4", r"chute|dosing", "custom", [], ""),
     (r"^Metering base \(", "M4", r"metering", "custom", [], ""),
@@ -206,7 +209,10 @@ RULES = [
      "model's relief is 316 SS with an FKM seat on an SAE-4 port; G7 lists the nylon/Buna-N 4277T52 (low-profile.md §3 says replace it)"),
     (r"^Pressure transducer \(7/16-20 SAE-4", lambda b, c: "" if "SAE" in _t(b, "G7") else
      "lid port is SAE-4 (7/16-20); G7's 3861N11 needs an adapter (vendor-parts.csv)"),
-    (r"^Hermetic connector M50", lambda b, c: "seal-parts.csv: the drawn LEMO 1B receptacle fails the spec; the Accu-Glass 9C-K16 that meets it needs a KF-16 port on the rod end"),
+    (r"^Rod end M50 feedthroughs, welded in", lambda b, c: "bom.csv H1's spec still says 'potted cable exit'; its candidate column and the model have "
+     "the weld-in rod end (electrical.md 13.3)" if re.search(r"potted cable exit", b.get("H1", {}).get("spec", ""), re.I) else ""),
+    (r"^Heater block M50|^Cartridge heaters M50", lambda b, c: "bom.csv H1 still buys a thermal cutoff, which the model no longer has (electrical.md 13.4)"
+     if re.search(r"RT240", b.get("H1", {}).get("candidate", "")) else ""),
     (r"^Load cell \(single-point, 2 kg", lambda b, c: "model label 2 kg; A1 lists a 3 kg Laumas ALLUE3" if "3 kg" in _t(b, "A1") else ""),
     (r"^O2 sample line \(1/8 in\.", lambda b, c: "" if "1/8 in." in _t(b, "G7") + _t(b, "G6") else
      "model draws a 1/8 in. O2 sample line; G7 lists only 1/4 in. 316 tube (89785K824) for the argon and O2 lines"),
@@ -253,6 +259,8 @@ def kind_of(tag):
         return "sheet"
     if mat in ("al6061", "mic6", "macor") and not mcm.startswith(("KF", "9572", "TSLOT", "SHEET")):
         return "stock"
+    if "feedthroughs, welded in" in n:
+        return "bought"                    # the rod end's Solid Sealing weld-ins (316L sleeves, but bought parts)
     if mat == "ss316l" and any(k in n for k in ("Build module", "bottom flange", "Rod end", "Hollow piston rod", "Overflow funnel")):
         return "stock"
     if "Striker" in n:

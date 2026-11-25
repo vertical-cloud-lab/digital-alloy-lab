@@ -81,23 +81,33 @@ def main(argv):
                     elif st["path"] is None:
                         r.update(status="-", detail="placed by hand or welded on; no path check")
                     else:
-                        groups = {}
-                        if st["path"] == "explode" and st.get("per_part"):
+                        groups = []                                      # (path, parts moving together)
+                        seq_groups = bool(st.get("part_paths"))
+                        if seq_groups:
+                            # each group along its own path, in the listed order; the groups before it are already in (2026-11-25, A2.18)
+                            for pk, pth in st["part_paths"]:
+                                gi = [i for i in objs_for(pk) if i in mov]
+                                if gi:
+                                    groups.append(([tuple(map(float, q)) for q in pth], gi))
+                        elif st["path"] == "explode" and st.get("per_part"):
+                            by = {}
                             for i in mov:
-                                groups.setdefault(tuple(sc.parts[sc.objs[i]["part"]].explode), []).append(i)
+                                by.setdefault(tuple(sc.parts[sc.objs[i]["part"]].explode), []).append(i)
+                            groups = [([(0, 0, 0), ex], gi) for ex, gi in by.items() if np.linalg.norm(ex) >= 1e-6]
                         elif st["path"] == "explode":
                             # the step's parts move together, along the first (non-fastener) part's explode offset
                             lead = next((i for i in mov if sc.objs[i]["item"] is None), mov[0])
-                            groups[tuple(sc.parts[sc.objs[lead]["part"]].explode)] = mov
+                            ex = tuple(sc.parts[sc.objs[lead]["part"]].explode)
+                            groups = [([(0, 0, 0), ex], mov)] if np.linalg.norm(ex) >= 1e-6 else []
                         else:
-                            groups[None] = mov
+                            groups = [(st["path"], mov)]
                         pre = CK.rot((0, 0, 1), st["rot"]) if st.get("rot") else None
                         details, ok_all, tight = [], True, None
-                        for ex, gi in groups.items():
-                            path = [(0, 0, 0), ex] if ex is not None else st["path"]
-                            if ex is not None and np.linalg.norm(ex) < 1e-6:
-                                continue
-                            res = path_check_rot(sc, state, present_now(), gi, path, pre)
+                        for path, gi in groups:
+                            pres_g = [i for i in present_now() if i not in gi]
+                            if seq_groups:
+                                placed.extend(i for i in gi if i not in placed)
+                            res = path_check_rot(sc, state, pres_g, gi, path, pre)
                             if res["ok"]:
                                 g = res["min_gap"]
                                 tight = g if tight is None or (g is not None and g < tight) else tight
@@ -106,15 +116,15 @@ def main(argv):
                             ok_all = False
                             free = []
                             for nm, d in CK.AXES.items():
-                                rr = path_check_rot(sc, state, present_now(), gi, [(0, 0, 0), tuple(np.array(d) * 520.0)], pre, ds=5.0, exact=False)
+                                rr = path_check_rot(sc, state, pres_g, gi, [(0, 0, 0), tuple(np.array(d) * 520.0)], pre, ds=5.0, exact=False)
                                 if rr["ok"]:
                                     free.append(nm)
-                            two = "" if free else two_leg(sc, state, present_now(), gi, pre)
+                            two = "" if free else two_leg(sc, state, pres_g, gi, pre)
                             details.append(f"documented path {tuple(round(float(x)) for x in path[-1])} blocked by {res['blocked_by'][:50]} "
                                            f"after {res['at_s']} mm; free straight directions: {', '.join(free) or 'none'}"
                                            + (f"; {two}" if two else ""))
                             renders.append(dict(kind="path", sid=sid, mov=gi, at=res["at"], blocker=res["blocker"], state=state,
-                                                present=present_now(), title=f"{sid} {st['label'][:70]}: blocked by {sc.short(res['blocker'])}"))
+                                                present=pres_g, title=f"{sid} {st['label'][:70]}: blocked by {sc.short(res['blocker'])}"))
                         r.update(status="PASS" if ok_all else "FAIL", detail="; ".join(details), clearance=tight)
                     placed.extend(i for i in mov if i not in placed)
                 elif st["do"] == "module":
