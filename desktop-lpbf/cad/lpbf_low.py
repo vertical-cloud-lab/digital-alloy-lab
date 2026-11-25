@@ -599,7 +599,7 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     # down before the cup widens, so the toggle clamp's lower lip (to 9.5 mm under the joint, r >= 22.5) wraps the flange's back taper
     # clear of the cup. Round 6: a 2.5 in. x 0.065 in. cup (round 5: 2 in., ~65 cm3), down to z -129 as before (dropped 8 mm it still
     # passes 3 mm over the guard's bottom front rail, and the right-hand zero-point pin passes 6 mm under it on the module's path):
-    # ~115 cm3 with the neck, so L75's ~70 cm3 of overflow per 15 mm of build fills it in ~24 mm of build
+    # ~104 cm3 with the neck, so L75's ~70 cm3 of overflow per 15 mm of build fills it in ~22 mm of build
     cr, ct, zb_ = JAR["cup_r"], JAR["cup_t"], JAR["z_bot"]
     jar = fuse([place(VP.kf_weld_stub(40, 11), (jx, jy, zj), (1, 0, 0), (0, 0, 1)), tube(cr, 16.94, (jx, jy, zj - 12.5), "z", 1.5),
                 tube(cr, cr - ct, (jx, jy, zb_ + 2.0), "z", (zj - 12.5) - (zb_ + 2.0)), cyl(cr, (jx, jy, zb_), "z", 2.0)])

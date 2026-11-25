@@ -44,11 +44,11 @@ gland plate, window, Z flange, legs and optics posts. It is also the build modul
 | Interface | Swapped | Today | Recommendation |
 |---|---|---|---|
 | **Build plate** on the 200–225 °C heater block | every build, by a robot | 60° bayonet, no preload | **Robot cell: a drawbar.** A pull stud in the plate, a ball lock in the block, and disc springs and the release at the cold end of the hollow rod. Only passive parts sit at 225 °C, the robot places and lifts, and a small air cylinder pushes to release (141 / 280 / 656 N). **Until then:** keep the bayonet and add a 718 nickel disc spring (McMaster 97125K111) for the 0.1 MPa the graphite foil needs. L75's lugs would yield at that preload in CalculiX, so they need more metal. Not screws (§3.1) |
-| **Build module** under the floor | between campaigns | 2 captive M6, dowel + diamond pin | **By hand: keep the captive screws** (24× against the worst load), at about half today's torque, with a non-galling screw or insert. **For a robot:** two spring-locked, air-released zero-point modules rated for the heat (STARK.easyclick FKM 150 °C, SCHUNK NSE-AM/HT 200 °C), or a three-groove kinematic seat with hardened vees preloaded by them. Replace the Z pot magnet with a switched coupling |
+| **Build module** under the floor | between campaigns | **since round 6 (2026-11-25): two SCHUNK NSE-HT mini 88-20 V1 zero-point modules** pull two SPC-HT mini 20 pins on arms from the module flange; dowel + diamond pin locate; the captive M6 are gone, their floor inserts kept for a hand fallback (§3.2a) | Drawn (§3.2a). Was: by hand, the captive screws (24× against the worst load). Still to do: replace the Z pot magnet with a switched coupling |
 | **Heater stack** (not swapped, but heat-cycled) | – | M3 316 screws through Macor rings | Keep, with a light 302 disc spring so the block slides in its slots; Ti-6Al-4V screws are better if they can be sourced (§4) |
 | **Reservoir** on the dock | each alloy | dovetail, 3 ball plungers, cam-opened shutter | Already fastener-free: 40 N detent hold against 2 N in transit |
 | **Recoater blade** in its holder | each alloy | 2 × M3 316 | A Ø6 ball-lock pin (push-button, ~20× the 50 N strike), or two dowels and two magnets as a crash fuse |
-| **Overflow jar**, **cover-slide drawer** | each build | KF-40 wing-nut clamp; drawer with an O-ring and pull tab | Fine for a person; a robot cell needs a lever-type KF clamp or a bayonet jar (not analysed) |
+| **Overflow jar**, **cover-slide drawer** | each build | KF-40 toggle clamp (MKS 100318805, round 5); since round 6 the jar has a robot grip fin; drawer with an O-ring and pull tab | Fine for a person. A robot still can't open the toggle clamp: an air-released KF clamp or a bayonet jar (not analysed) |
 
 ## 1. What LPBF machines and automation use
 
@@ -176,7 +176,7 @@ until a lug meets the ledge.
 |---|---|---|---|---|---|
 | **2 captive M6** (95966A705) into 18-8 inserts, F_i = 0.75 F_p | 4,364 | 24× (separation) | dowel + diamond pin, face contact | steel | 3.9 N·m dry, 2.4 N·m with anti-seize. The 18-8 screw in an 18-8 insert is the galling pair; the 4.2 mm reduced shank sets the proof load. Heating to 85 °C adds 98 N |
 | **2 zero-point modules**: STARK.easyclick D085 (FKM) / SCHUNK NSE-AM mini 78-20 | 2 × 5,000 / 2 × 1,500 | 46× / 14× | < 10 / < 5 µm | 150 / 200 °C | spring-locked, opened by 4–6 bar air, seat check and blow-off available. Ø78–88 mm each: the flange needs arms to about x = ±95 mm, clear of the overflow funnel |
-| **2 SCHUNK NSE-HT mini 88-20 V1** (ID 1460874; the part §3.2a places) | 2 × 500, 2 × 2,500 with turbo | 4.6× / 23× | < 5 µm | 200 °C | Ø88 × Ø73 × 20, 1.0 kg, opens at 6 bar, closes by spring; $2,680 each (MROSupply, re-checked 2026-11-23), sold without pins. **Not drawn (2026-11-23): no place for the right-hand one while the overflow jar stays removable (§3.2a)** |
+| **2 SCHUNK NSE-HT mini 88-20 V1** (ID 1460874; the part §3.2a places) | 2 × 500, 2 × 2,500 with turbo | 4.6× / 23× | < 5 µm | 200 °C | Ø88 × Ø73 × 20, 1.0 kg, opens at 6 bar, closes by spring; $2,680 each (MROSupply, re-checked 2026-11-23; its site was down for maintenance on 2026-11-25), sold without pins. **Drawn in round 6 (2026-11-25, §3.2a)**; the arms are sized for the 0.5 kN pull, so the turbo port stays unconnected |
 | **Kendrion fail-safe magnets** (power to release) on a 430 plate | 78–250 each at 0 gap | needs 3–12 | – | coil 120 °C | lose half their force at 0.05 mm; only ~25–35 % in shear |
 | **plain electromagnet** (Kendrion GTB040) | 301 at 0 gap, 84 °C | 1.4× | – | 550 °C | **drops the module on a power cut** |
 | **3-groove kinematic seat**: Ø16 Si₃N₄ balls in 17-4 H900 or 440C vees, preloaded by one of the above | the preload | – | 0.05–1 µm clean (Slocum); ~1–2 µm offset from a crushed Al grain | – | 6061 or 316 vees yield at this preload |
@@ -254,6 +254,136 @@ re-run 2026-11-23), and 23× with turbo. The 132 N spigot O-ring and the module'
 
 They would hang from the floor on two posts each. Until then, the module keeps its two captive M6, and the robot job assumes they are
 released. The robot side is drawn: the grip block on the handle (robot-ops.md).
+
+**Round 6 (2026-11-25): drawn.** Sterling: "having something automation friendly sounds appealing". All four moves are in the model
+(`cad/lpbf_low.py` sections 1, 3, 4 and 11, `cad/modules_low.py` `add_zstage` and `zp_arms`, `cad/joints.py`, `cad/automation.py`).
+Where the model said no, the plan changed; the table gives what was drawn.
+
+| | Round 5 | Round 6 | Why |
+|---|---|---|---|
+| Z servo | beside the actuator at (64, 80), x 34–94, y 28–110 | behind it at (0, 130), connector block to −x; the bracket and 2:1 belt housing (60 wide) run back to y 160, 52 mm behind the Z flange; the base plate's window reaches y 166; the Z flange shrinks to x −40..48 and its screw at (94, 102) moves to (40, 66) | frees the right-hand module's place |
+| Overflow outlet, jar | (100, 0); joint z −84; 2 in. cup, ~65 cm³ | **(94, −46)**, the slot's front end; joint z −82; **2.5 in. × 0.065 in. 316L cup down to z −129, ~104 cm³** | x 94 keeps the cup's lane (x 62.25–125.75) 12 mm inside the front-right leg. 2 mm higher, the clamp's ring (it now reaches x 58.5) passes 2.5 mm under the module flange's tabs on the module's path |
+| Funnel block | x 78–122, y ±59, flat 11 mm pocket over a centre outlet | front part extended to y −73 and x 72; the pocket floor slopes 13° down to the outlet; the front screw pair moves from (83/117, −40) to (79, −67) and (116, −67) | the outlet moved; see the flow caveat below |
+| Right-hand zero-point module | – | **(100, 40)**, pin face z −109, top z −89 | behind the jar's cup (10.5 mm) |
+| Left-hand zero-point module | – | **(−102, −26)** | 2.1 mm from the outlet plenum's KF-25 port. The pair's mid-point is (−1, 7), 7 mm from the module's axis |
+| Legs | right-side leg x 128–156, y 26–56; back-right x 120–150, y 75–105 | front-right **18 × 36 at x 138–156, y −111..−75** (its two base screws on its long axis); back-right at the floor's corner, x 126–156, y 81–111 | the right-hand module stands where the side leg was; the toggle clamp's side links reach x 135.8 |
+| Outlet hose | down at (−86, −90), back along x −86 at z −145..−109, behind the chamber at y 166 | down at (−86, −90), forward under the plenum, left in front of the front-left leg, back along x −172, behind the chamber at y 178, behind the back-right optics post at y 192, forward at x 262 to the old route; ~0.7 m longer | the left arm's way out sweeps x −116 to −34 down to z −157; the moved back-right leg closes the gap the hose used to take next to the optics post |
+| Captive M6 | 2 on the flange tabs | **removed** (screws and retainers); the tabs keep their Ø6.8 holes and the floor its two M6 inserts | below |
+
+**The clamp hardware** (each module hangs pin-face-down):
+- **SCHUNK NSE-HT mini 88-20 V1** (ID 1460874), drawn as Ø88 × 20 at z −109 to −89 with a Ø20.4 pin bore. Each hangs from a 10 mm 6061
+  plate on two 16 × 16 6061 posts. Each post stands on an M6 stud in a helical insert in the floor plate. The module is screwed to the
+  plate from below; the plate goes onto the posts with countersunk M6, flush, because the module covers its underside. The right
+  plate is cut back to y −4, so the jar clamp's hinge passes 2 mm in front of it.
+- **Pins: SCHUNK SPC-HT mini 20, ID 1393006** ("clamping pin with centring clearance ... without alignment function", stainless,
+  0.03 kg, with its mounting screw; holding force 15 kN with an M6 screw up to 200 °C, 6 kN at 200–520 °C;
+  [schunk.com p/1393006](https://schunk.com/us/en/p/000000000001393006), read 2026-11-25 through the lab tunnel). The standard SPC mini 20
+  is ID 0435630 (15 / 25 kN with M6 / M8, [p/0435630](https://schunk.com/us/en/p/000000000000435630)). The HT pin matches the 200 °C
+  module. Neither page shows the pin's dimensions as read (the drawing tab loads separately), and SCHUNK's manual for 1460874
+  (IM0029727) returned 403. So the pin is drawn as Ø20 × 14 mm into the module on an M8 screw.
+  TODO: check the pin's height and the module's pin bore against SCHUNK's drawing before the arms are machined.
+- **Arms** (`modules_low.zp_arms`, one pair per module; the same parts fit S25, M50 and L75, because all three have the same Ø100
+  flange). The flange gets two ears, at 50° and 135°, r 45–68. A 12 × 16 6061 hanger is bolted under each ear and runs down to an
+  8 mm plate at z −117 to −109, which carries the pin. The ears and hangers stay outside L75's r 53.1 collar. The right one is at
+  50°, not 45°, so its hanger passes the jar clamp's side links on the module's way out. Nothing of the plate lies inside r 53.5,
+  clear of L75's gland-plate screw heads.
+  - **Sizing:** at a 0.5 kN pull, the plate sees ~110 MPa and the hanger ~73 MPa (6061-T6 yields at 276 MPa; hand calculation, no FEA).
+    The 2.5 kN turbo would overload them, so it stays unconnected.
+  - **Why the plate is 8 mm thick:** on the module's way out it drops to 3.0 mm over the base plate, and the right pin's top then passes
+    6 mm under the jar's cup.
+- **The joint:** the dowel and diamond pin keep locating the module, and the two NSE pull only (2 × 500 N = 4.6× LC2's 218 N).
+  The SPC's centring clearance stops the pins fighting the dowels.
+- **Release air:** one 3/2 normally-closed 24 V DC valve on the base plate behind the left module, drawn as an envelope. Candidate:
+  SMC VT307-5DZ1-01N, list $34.48 at Motion as a search snippet, quote required. From it, a union Y and Ø4 tube run to an M5 elbow on
+  each module's release port; the right tube goes behind the folded Z servo at y 172, under the outlet hose. With air on, both
+  modules open; with air or power off, their springs keep the module clamped. The valve's supply comes from the A3 air prep (not
+  drawn). It needs one 24 V output and a cable, which electrical.md doesn't have yet.
+  - **Tube:** SMC TH0425 FEP, −20 to 200 °C; the 20 m roll is $154.08 list at Motion.
+  - **Fittings:** SMC KQ2L04-M5A, $3.55 each at Zoro, is rated −5 to 60 °C. If the floor's underside runs hotter than that near the
+    modules, use a stainless KQG2L04-M5. The underside temperature there isn't modelled.
+- **The captive M6 come off:**
+  - Their knurled heads hang 6 mm under the tabs. With the jar's toggle clamp now at x 94, they would hit its ring on the module's way out.
+  - The robot can't turn them.
+  - With the zero-point pair they would only be a third, redundant clamp.
+  - The tabs keep their Ø6.8 holes and the floor its two M6 x 12 inserts. With a module's arms unbolted, a person can screw it up with
+    two plain M6 x 16 (a hand fallback, e.g. with no air).
+  - **Note for the other checks:** `ops/operations.py` (lines 92, 195, 420, 423), `assembly/sequence.py` (C11),
+    `assembly/run_assembly.py`, `render_build.py` and `robot/ops.py` still name the captive screws.
+
+**Robot side:** the module swap no longer needs anything released by hand:
+1. Air on: both modules open.
+2. The Z arm drops 45 mm, and the robot takes the grip block and follows the module's path out.
+3. A new module goes in the reverse way onto the dowels.
+4. Air off: the springs pull it home.
+
+The robot jobs and the hand operations that name the screws need re-running on this model.
+
+**Clearances.** The static ones are measured on the drawn geometry. The ones on the module's way out are the swept minimum gaps of
+`analysis/interference.py` (L75, the largest module). The full M50, S25 and L75 results are in
+[`interference.md`](analysis/out/interference.md) and [`variants/`](analysis/out/variants/).
+- **Right-hand module:**
+  - to the back-right leg, 4.5 mm;
+  - to the jar's cup, 10.5 mm;
+  - to the toggle clamp's ring, 6.7 mm in plan, where their heights overlap;
+  - to the clamp's hinge, 0.5 mm in height and 2 mm in plan (the hinge sits in front of the module). The hinge's shape is assumed (round 5).
+- **Left-hand module:**
+  - to the outlet plenum's KF-25 port, 2.1 mm;
+  - to the front-left leg, 8.2 mm;
+  - to the hose's drop, 9 mm.
+- **On the module's way out:**
+  - the arms pass 3.0 mm over the base plate;
+  - the right pin passes 6 mm under the jar;
+  - the right hanger passes 2.4 mm from the clamp's side links;
+  - the flange's tabs pass 2.5 mm over the clamp's ring.
+- **Posts and hangers:** every post stands at least 6 mm outside the paths of the hangers and the flange's tabs, and the left hanger
+  stays 3.3 mm in front of the Z sensor bracket.
+- **The front-right leg:** 12 mm outside the jar's lane and 2.2 mm from the clamp's side links; the jar sensor's bracket bolts to its back face.
+
+**Floor-plate holes this adds or moves** (for [`machining.md`](machining.md): floor plate's underside, mm from the port's centre):
+
+| What | At | Hole |
+|---|---|---|
+| zero-point posts (new) | (64, 40), (136, 40), (−80, −45), (−138, −28) | M6 × 9 helical insert, blind, 10.5 mm deep (9.5 mm of floor left) |
+| funnel screws, front pair (moved) | (79, −67), (116, −67); were (83, −40), (117, −40) | M4 × 6 insert, as before |
+| Z flange screw (moved) | (40, 66); was (94, 102) | M5 × 7.5 insert, as before |
+| leg screws (moved) | front-right (147, −93), was (142, 41); back-right (141, 96), was (135, 90) | M6 × 9 insert, as before |
+| captive-screw inserts | (±58, 0) | unchanged, kept for the hand fallback |
+
+**Other changes elsewhere:**
+- **Base plate:** a new window for the servo (x −57..34, y 96..166) and the leg screws at the moved legs.
+- **Funnel block:** a new outline and the sloped pocket.
+- **Module flange:** two ears.
+- **New parts to machine:** two NSE plates, four posts and six arms.
+- **Electrical:**
+  - the Z servo's cable leaves behind the chamber now;
+  - the jar sensor is on the front-right leg's back face;
+  - the release valve needs a 24 V output.
+- **Gas flow:** the outlet hose is ~0.7 m longer.
+- **FEA:** `analysis/fea/fea.py` places the legs itself and should read `lpbf_low.LEG_BOXES`.
+
+**The jar** has a robot grip fin (`cad/automation.py` §8):
+- **Shape:** an I-section level with the module's grip block, at y −156 to −126 and z −65 to −25, x 72–128 (100 mm right of the
+  module's): a 40 × 30 web between 56 mm flanges.
+- **Mounting:** a riser at x 117–125 beside the clamp's side links carries it, from a tab welded to the cup's front-right.
+- **Clearances:** 3 mm from the module's right-hand arm on its way out, 3 mm from the front-right leg, 8 mm from the module flange's
+  tab path, 5 mm under the door's hinge knuckles.
+- **Robot not re-run:** the robot job needs re-running on it, with the gripper coming in level from the front at z ≈ −45, as for the
+  module.
+- **The clamp:** a hand still opens it, reaching the lever's end (94, −122, −82) under the fin's bottom flange.
+- **Emptying:** ~104 cm³ takes L75's ~70 cm³ of overflow per 15 mm of build for ~22 mm of build (round 5: ~14 mm), and an M50 or S25
+  build of any height this machine makes.
+
+**Not solved: the funnel can't drain the slot's back end by gravity.** Round 5 warned about this. A chute steep enough for fine Al
+powder (55–60°) needs ~1.6 mm of drop per mm of run. Powder that falls at the slot's back end (y +52) has 79 mm to run to the
+outlet's back edge (y −27), and the 22 mm block allows 13°. So the back of the pocket will fill until the blade drags the powder back.
+Round 5's centred outlet had the same flat pocket over 33 mm each side.
+
+Options, none drawn:
+1. A small pneumatic vibrator on the funnel block, pulsed after each recoat (the machine has air).
+2. An argon pulse along the pocket from its back end.
+3. A slot-length overflow bin instead of a round jar, which takes the right-hand module's place again.
+
+Decide before the funnel block is machined.
 
 ### 3.3 Reservoir, blade, jar and drawer
 
@@ -376,6 +506,8 @@ dovetail. The recommendations above are not drawn yet.
 
    Status 2026-11-22: the robot's handle is drawn (a grip block in front of the door; the robot module swap passes on S25, M50
    and L75, robot-ops.md). The clamps are not drawn: a pair fits under the floor only once the overflow jar moves (§3.2a).
+   **Status 2026-11-25 (round 6): drawn** (§3.2a): two SCHUNK NSE-HT mini 88-20 V1, SPC-HT mini 20 pins on arms, release air; the
+   captive M6 removed. Left: the funnel's drainage, the pins' dimensions from SCHUNK's drawing, and the robot job re-run.
 4. **Blade:** a ball-lock-pin cartridge.
 5. **Quotes:** none of the vendor parts above is quoted. The SCHUNK NSE-M mini 90 (manual) lists at $1,430 at one reseller, so
    expect ~$1–2k per powered module.
