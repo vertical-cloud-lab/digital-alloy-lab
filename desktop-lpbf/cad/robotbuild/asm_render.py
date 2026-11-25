@@ -540,7 +540,16 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=(), fail_
     nfr = plan_frames(ev, scale)
     tot_frames = sum(n for n, _ in nfr.values())
     print(f"{name}: {len(ev)} events -> about {tot_frames} frames ({tot_frames / FPS / 60:.1f} min)", flush=True)
-    ch = common.Chapter(name, title)
+    # ASM_PART="k/n": render only the k-th of n slices of the frames (by global frame index) into <name>.part<k>, the rest
+    # replayed without drawing; merge_parts.py joins the slices into the chapter's folder (frames keep global numbers)
+    part = os.environ.get("ASM_PART")
+    lo, hi = 0, 10 ** 9
+    if part:
+        k_, n_ = (int(x) for x in part.split("/"))
+        lo = int(tot_frames * k_ / n_)
+        hi = int(tot_frames * (k_ + 1) / n_) if k_ < n_ - 1 else 10 ** 9
+    ch = common.Chapter(f"{name}.part{k_}" if part else name, title)
+    ch.n = lo
     rows = {}
     for e in ev:
         if e["kind"] == "step_end" and not e.get("failed_run"):
@@ -552,7 +561,7 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=(), fail_
     carry = dict(s=0.0, robot=0.0)
 
     def emit(caption, sub="", who=(), proc=1.0 / FPS, add=None, status=None):
-        img = rp.shot()
+        img = rp.shot if not (lo <= tot["n"] < hi) else rp.shot()     # outside this slice: no drawing
         st = status if status is not None else cur["status"]
         if carry["s"] > 0.0:            # motions not drawn (capped mode): their real time goes with this frame
             proc += carry["s"]
@@ -563,7 +572,8 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=(), fail_
         meta = dict(sub=sub, who=list(who), step=cur["id"], status=st, proc_s=round(proc, 4))
         if add:
             meta["add"] = add
-        ch.frame(img, caption, **meta)
+        if lo <= tot["n"] < hi:
+            ch.frame(img() if callable(img) else img, caption, **meta)
         tot["n"] += 1
         cur["t"] += proc
         return max_frames is not None and tot["n"] >= max_frames
