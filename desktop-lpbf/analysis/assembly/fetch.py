@@ -184,14 +184,21 @@ def frames_line(T0, T1, ds=4.0):
     return out
 
 
-def follow(run, n, Ts, close, allow, chk, seed):
-    """IK along Ts with one branch held, each frame checked against chk's world. -> (ok, qs, why)."""
+def follow(run, n, Ts, close, allow, chk, seed, ik_close=None, strict=False):
+    """IK along Ts with one branch held, each frame checked against chk's world. -> (ok, qs, why).
+    ik_close: the gripper opening whose TCP the IK places on Ts (the fingers may be checked open, `close`, while the arm already
+    stands where the closed fingers' TCP will be: no arm motion when they close). strict: start on the seed's own branch."""
     a = run.arm(n)
+    ikc = close if ik_close is None else ik_close
+    a.close = ikc
     firsts = a.ik_all(Ts[0], seed=seed)
-    best = (False, [], "no IK at the start")
+    if strict:
+        firsts = [q for q in firsts if np.abs(q - np.asarray(seed, float)).max() < 1e-2][:1]
+    best = (False, [], "no IK at the start" + (" on the same branch" if strict else ""))
     for q0 in firsts[:8]:
         qs, prev, ok, why = [], q0, True, ""
         for k, T in enumerate(Ts):
+            a.close = ikc
             sols = a.ik_all(T, seed=prev)
             if not sols:
                 ok, why = False, f"no IK {k * 4:.0f} mm along"
@@ -279,7 +286,7 @@ def pick_plan(run, n, idx, body, off, G_rel, close, tool, slot):
     item_names = [cl.body(i).name for i in idx]
     furn = [b.name for b in T.furn.get(slot["key"], [])]
     allow_tool = frozenset([("tool", nm) for nm in item_names] + [("tool", nm) for nm in furn])
-    allow_held = frozenset([("held", nm) for nm in furn + ["long table top"]])
+    allow_held = frozenset([("held", nm) for nm in furn + ["long table top"]] + [("tool", nm) for nm in furn + ["long table top"]])
     for xb in (gx - 350.0, gx + 350.0, gx, gx - 600.0, gx + 600.0):
         cl.move_mir(n, xb)
         q_park = a.park_q()
@@ -289,12 +296,12 @@ def pick_plan(run, n, idx, body, off, G_rel, close, tool, slot):
         chk = checker(run, n, [tw, mir_group(run, n), Group([cl.static["floor"]])])
         P0 = G @ Tm(p=(0.0, 0.0, -PICK_BACK))
         c_open = 0.0 if tool.startswith("gripper") else 0.0
-        ok, qs_in, why = follow(run, n, frames_line(P0, G), c_open, allow_tool, chk, q_park)
+        ok, qs_in, why = follow(run, n, frames_line(P0, G), c_open, allow_tool, chk, q_park, ik_close=close)
         if not ok:
             out["why"] = f"in to the grasp: {why}"
             continue
         a.place(q_park, c_open)
-        p1, info1 = chk.plan(q_park, qs_in[0], c_open, iters=400)
+        p1, info1 = chk.plan(q_park, qs_in[0], c_open, iters=1200)
         if p1 is None:
             out["why"] = f"park to the item: {info1.get('reason')}"
             continue
@@ -303,13 +310,13 @@ def pick_plan(run, n, idx, body, off, G_rel, close, tool, slot):
         a.hold(body, off)
         chk2 = checker(run, n, [tw2, mir_group(run, n), Group([cl.static["floor"]])])
         Gl = Tm(p=(0.0, 0.0, LIFT)) @ G
-        ok, qs_up, why = follow(run, n, frames_line(G, Gl), close, allow_held, chk2, qs_in[-1])
+        ok, qs_up, why = follow(run, n, frames_line(G, Gl), close, allow_held, chk2, qs_in[-1], strict=True)
         if not ok:
             a.release()
             out["why"] = f"lift: {why}"
             continue
         a.place(qs_up[-1], close)
-        p2, info2 = chk2.plan(qs_up[-1], q_park, close, allow=allow_held, iters=600)
+        p2, info2 = chk2.plan(qs_up[-1], q_park, close, allow=allow_held, iters=1200)
         a.release()
         if p2 is None:
             out["why"] = f"back to park holding it: {info2.get('reason')}"

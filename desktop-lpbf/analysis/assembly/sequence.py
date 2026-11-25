@@ -88,6 +88,7 @@ def steps(module="M50"):
         ["bottom flange: gland plate", "gland-plate O-ring"], "gland", "body_inv", [(0, 0, 0), (0, 0, -80)], moved=True))
     a(dict(do="seal", id="M12", label="Two 2-114 rod O-rings folded through the Ø15.93 throat into their grooves (ring loader), plate on its nest",
            keys=["Rod O-rings"], grp="gland", phase="body_inv", method="loader", ring="rod_M50", tool="ring_loader", actor="A",
+           inspect="a person looks into the throat with a light for a twisted or unseated ring (occluded grooves: Edison r7 keeps this manual until validated)",
            path=[(0, 0, 0), (0, 0, -120)]))
     a(P("M13", "Rod (its rod end welded on by the shop: a 316L block with seven weld-in feedthroughs) lowered top end first through "
         "the gland plate's two rod O-rings, on its PEEK bullet",
@@ -259,8 +260,8 @@ def steps(module="M50"):
         "person (bench)", "A leg on a nest is open on every side; on the machine its back face is hemmed in by the frame, the other legs, "
         "the Z servo and (upright) the base plate. Not checked here: the bench nest is not modelled."))
     # =========================================================== chapter 4b: base plate and posts on Fixture B
-    a(dict(do="dual", id="F01", label="Process base plate onto Fixture B (both arms, one at each end)", keys=["Base plate, process"],
-           grp="machine", phase="upright", path=[(0, 0, 0), (0, 0, 150)],
+    a(dict(do="dual", id="F01", label="Process base plate (11.8 kg) onto Fixture B: the hoist lifts, both arms guide", keys=["Base plate, process"],
+           grp="machine", phase="upright", path=[(0, 0, 0), (0, 0, 150)], lift_aid="hoist: a person runs a small chain hoist on a jib with a lifting bar; the two arms only guide the part along the checked path (Edison r7 review: no standard or precedent for two arms on separate MiR250s sharing a load over ~10 kg)",
            grasps={"A": dict(point=(-370.0, -265.0, -167.5), z=(0.0, 1.0, 0.0), x=(0.0, 0.0, 1.0)),
                    "B": dict(point=(260.0, 215.0, -167.5), z=(0.0, -1.0, 0.0), x=(0.0, 0.0, 1.0))}))
     a(N("F02", "Levelling mounts", "person", "They thread in when the finished process module goes onto the tray (chapter 5); "
@@ -272,8 +273,8 @@ def steps(module="M50"):
     # =========================================================== the turn-over
     a(dict(do="rotate", id="F05", label="The trunnion turns the chamber assembly (module, Z stage, legs) back upright", grp="chamber",
            frm="chamber_inv", to="chamber_up_T", sign=-1.0))
-    a(dict(do="dual", id="F05b", label="Chamber assembly (with the module, zero-point clamps, Z stage and legs) carried upright by both "
-           "arms, each holding a leg, from the trunnion onto the base plate", keys=["@chamberset"], grp="machine", phase="upright", frm="chamber_up_T", whole=True, merge="chamber",
+    a(dict(do="dual", id="F05b", label="Chamber assembly (19.6 kg, with the module, zero-point clamps, Z stage and legs) from the trunnion "
+           "onto the base plate: the hoist lifts, both arms guide it by two legs", keys=["@chamberset"], lift_aid="hoist: a person runs a small chain hoist on a jib with a lifting bar; the two arms only guide the part along the checked path (Edison r7 review: no standard or precedent for two arms on separate MiR250s sharing a load over ~10 kg)", grp="machine", phase="upright", frm="chamber_up_T", whole=True, merge="chamber",
            path=[(0, 0, 0), (0, 0, 120)], docks="TB", grip_gap=30.0, lift=320.0,
            # round 6: at z -95 arm B's inner finger on the back-right leg (x 126-156, y 81-111 since round 6) ran into the right
            # zero-point module (z -109 to -89); at -135 arm A's adapter met the base plate at the end of the carry (run 5). So A keeps
@@ -346,7 +347,8 @@ def steps(module="M50"):
     a(S("F19", "Five M4 x 16 rail screws, driven from inside the chamber toward the back wall", "rail", "machine", "upright", actor="A",
         torque_Nm=2.2))
     a(P("F21", "Ball screw in through the right wall's bore and turned through the ball nut (30 turns at 10 mm lead) into the left bore",
-        ["Recoater ball screw"], "machine", "upright", [(0, 0, 0), (420, 0, 0)]))
+        ["Recoater ball screw"], "machine", "upright", [(0, 0, 0), (420, 0, 0)],
+        inspect="a person turns the screw by hand over its stroke for smoothness (ball circuits, preload: Edison r7 would keep the install manual)"))
     a(P("F22", "Feedthrough spacer, its two 2-024 O-rings, the Ferrotec unit and the coupling on the left wall",
         ["Recoater feedthrough", "Recoater fixed bearing", "Recoater shaft coupling"], "machine", "upright", "explode",
         note="the feedthrough's own 6 x M4 are not drawn"))
@@ -393,6 +395,8 @@ def steps(module="M50"):
         torque_Nm=0.8))
     a(P("F39", "Cover-slide drawer (2-033 in its half-dovetail, put in on the bench) into the lid's front edge",
         ["Cover-slide drawer", "Cover slide (", "Drawer O-ring", "Drawer latches"], "machine", "upright", [(0, 0, 0), (0, -200, 0)],
+        bench_person=("the 2-033 pressed into the drawer's half-dovetail and inspected by a person on the bench (stretched under the "
+                      "retaining lip: Edison r7 keeps this manual until validated)", 3.0),
         force="drawer", grasp=dict(point=(0.0, -126.0, 127.0), z=(0.0, 1.0, 0.0), x=(1.0, 0.0, 0.0))))
     a(N("F40", "Quarter-turn drawer latches", "robot (custom bit)", "Two quarter-turn studs, turned with a slotted bit on the "
         "screwdriver; the latch hardware is an envelope in the model (seals.md: no catalogue latch fits)."))
@@ -445,7 +449,9 @@ def steps(module="M50"):
     a(P("F51", "Door (cord rolled into its half-dovetail on the bench) brought in, knuckles in line", ["Chamber door", "Door O-ring",
                                                                                                    "Door hinge leaves", "Draw-latch brackets", "Draw latches",
                                                                                                    "Door handle"],
-        "machine", "upright", [(0, 0, 0), (0, -200, 0)], grasp=dict(point=(0.0, -150.0, 95.0), z=(0.0, 1.0, 0.0), x=(1.0, 0.0, 0.0))))
+        "machine", "upright", [(0, 0, 0), (0, -200, 0)], grasp=dict(point=(0.0, -150.0, 95.0), z=(0.0, 1.0, 0.0), x=(1.0, 0.0, 0.0)),
+        bench_person=("the 1.78 mm cord rolled into the door's half-dovetail and inspected by a person on the bench (Edison r7: keep "
+                      "manual until validated)", 5.0)))
     # round 7 (run 8): run 7 slid both pins together 160 mm along x, held at the right one, and arm A's upper arm met its cabinet.
     # Each Ø5 x 44 pin now goes in from its own outer side along the hinge axis, held at its outer end by the fingers across it and
     # pushed home on its end face (the pick-insert-push): the left one from the left (the door drive on that axis goes on after it),
@@ -460,7 +466,8 @@ def steps(module="M50"):
     a(N("F53", "f-theta lens threaded into its adapter ring over its 3 mm shim stack, under the bridge (on the bench, bridge upside down)", "person",
         "The Ø90 lens is wider than the 2F-85's 85 mm stroke and threads M85 x 1; a strap wrench by hand (operations.md: lens and ring "
         "fitted to the bridge on the bench)."))
-    a(dict(do="dual", id="F54", label="Optics bridge (13.3 kg, lens and ring under it) onto the four posts, one arm at each end",
+    a(dict(do="dual", id="F54", label="Optics bridge (13.3 kg, lens and ring under it) onto the four posts: the hoist lifts, both arms guide",
+           lift_aid="hoist: a person runs a small chain hoist on a jib with a lifting bar; the two arms only guide the part along the checked path (Edison r7 review: no standard or precedent for two arms on separate MiR250s sharing a load over ~10 kg)",
            keys=["Optics bridge (", "f-theta lens", "f-theta focus shims", "f-theta adapter ring"], grp="machine", phase="upright", path=[(0, 0, 0), (0, 0, 80)],
            grip_gap=25.5,
            grasps={"A": dict(point=(-330.0, -190.0, 220.2), z=(0.0, 1.0, 0.0), x=(0.0, 0.0, 1.0)),
@@ -474,6 +481,8 @@ def steps(module="M50"):
         ["Enclosed beam tube", "Coaxial-monitoring dichroic", "Fold mirror", "Safety shutter", "Coaxial photodiode chain", "Collimator"], "machine", "upright",
         [(0, 0, 0), (0, 0, 60)], per_solid=True, note="round 7: from 60 mm above, the three beam tubes one at a time (run 7: 340 mm up, no IK; the tubes as one part "
                                                      "107 mm across)"))
+    a(N("F57b", "Beam alignment and scan-field calibration (alignment laser, power head, test marks)", "person",
+        "Optics alignment and calibration need judgment and instruments (Edison r7 review); the robot only placed the parts."))
     a(N("F58", "Process fiber routed to the collimator", "person", "Armoured fiber, >= 100 mm bend radius: cable routing stays manual."))
     a(N("F59", "Class 1 laser guard: T-slot frame, panels, door rail, sliding door, guard lock, operator panel", "person",
         "T-slot nuts and 1.5 mm panels up to 730 mm wide; its hardware is not drawn (joints.NOT_DRAWN)."))

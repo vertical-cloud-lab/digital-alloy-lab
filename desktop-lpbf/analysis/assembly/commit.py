@@ -7,6 +7,7 @@ own and reported in each row as `fetch` (PASS/FAIL/person/-) and `presenter` (sc
 from __future__ import annotations
 
 import math
+import os
 
 import numpy as np
 
@@ -39,14 +40,22 @@ def begin(run, st):
             R.state[n]["q"] = run.arm(n).park_q()
             R.tool(n, "gripper", tool_spec(run, n))
     R.begin(st, chapter_of(st["id"]))
+    run._cur_st = st
+    if st.get("bench_person"):
+        what, minutes = st["bench_person"]
+        R.wait(60.0 * minutes, who="person", what=what)
 
 
 def end(run, row):
     if not on():
         return
     R = RECM.REC
+    st = getattr(run, "_cur_st", None) or {}
+    if st.get("inspect"):
+        R.wait(30.0, who="person", what="check: " + st["inspect"])
+        row["inspect"] = st["inspect"]
     R.end(row)
-    R.save_summary("/tmp/robotbuild/data/assembly.json")
+    R.save_summary(os.environ.get("ASM_SUMMARY", "/tmp/robotbuild/data/assembly.json"))
 
 
 def note(run, st, row):
@@ -136,6 +145,8 @@ def place(run, st, idx, actor, tool, best, body, off, G, T_obj, close, state, ro
     if slot is not None and multi and getattr(run, "_tray_step", None) == st["id"]:
         # the step's later pieces: the arm brought the whole kit tray (or nest) over on its MiR deck with the first one
         fetch_res = "tray"
+    if slot is not None and (st.get("moved") or st.get("merge")):
+        slot = None                    # a sub-assembly moved from its nest: nothing comes from the table
     if slot is not None and fetch_res == "-":
         G_rel = inv(T_obj) @ G
         pk = FE.pick_plan(run, actor, idx, body, off, G_rel, close, tool, slot)
@@ -269,7 +280,9 @@ def dual(run, st, best, frames, body, idx, gA, gB, cA, cB):
     import cell2 as K
     xA, xB = K.DOCKS[dA], K.DOCKS[dB]
     res = {}
-    if st["id"] in STAGED:
+    if st.get("lift_aid"):
+        R.wait(180.0, who="person", what="rigs the hoist's lifting bar on the part (Edison r7: a rated lifting device over ~10 kg)")
+    elif st["id"] in STAGED:
         R.wait(120.0, who="person", what="stages the part at the station on a cart")
     for n, x in (("A", xA), ("B", xB)):
         goto(run, n, x)
@@ -315,7 +328,9 @@ def dual(run, st, best, frames, body, idx, gA, gB, cA, cB):
     tcpA = np.array([run.arm("A").tcp(q, cA)[:3, 3] for q in QA])
     dur = RECM.joint_time(QA, tcpA, cart=True) * 1.5            # a two-arm carry runs slower: 1.5x (estimate)
     R._ev("move2", arm="A+B", qA=QA.astype(np.float32), qB=QB.astype(np.float32), closeA=cA, closeB=cB, dur=round(dur, 2),
-          frames=np.array(frames[:len(QA)], np.float32))
+          frames=np.array(frames[:len(QA)], np.float32), lift_aid=bool(st.get("lift_aid")))
+    if st.get("lift_aid") and R.step is not None:
+        R.step["person_s"] += dur
     R.state["A"]["q"], R.state["B"]["q"] = QA[-1].copy(), QB[-1].copy()
     if R.step is not None:
         R.step["robot_s"]["B"] += dur

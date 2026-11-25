@@ -131,6 +131,10 @@ class Replay:
         self.TT = Tm((K.STATIONS["T"], 0.0, TL.TRUNNION["h_axis"]))
         sc.gmat["jaws"] = self.TT
         self.jaw = 0.0
+        # ---- a hoist hook and chain for the hoist-assisted lifts (drawn above the carried part)
+        hook = pv.Box(bounds=(-30, 30, -12, 12, 0, 50)).triangulate().merge(pv.Cylinder(center=(0, 0, 1000), direction=(0, 0, 1), radius=4,
+                                                                                          height=1900).triangulate())
+        sc.add("hoist", hook, "#e2b007", group="hoist", specular=0.3, shown=False)
         # ---- a person for the person steps
         self.person = None
         if people_ok:
@@ -237,39 +241,133 @@ class Replay:
         return self.sc.render()
 
 
-def run(chapter, max_frames=None, budget_s=None):
+# ------------------------------------------------------------------------------------------------ timing
+# relative time-lapse weight per event kind inside a step (drives and tool changes go faster than the work itself)
+KW = dict(drive=10.0, tool=6.0, plan=1.5, cart=1.0, grip=1.0, screw=1.0, screw_rep=4.0, wait=30.0, turn=1.0, move2=1.0)
+# seconds of video a step gets at most (its events are sped up together to fit; never slower than real time)
+BUDGET = dict(place=3.6, screws=4.0, seal=10.0, flip=6.0, dual=6.0, rotate=5.0, note=2.5)
+CLOSE_STEPS = ("seal",)
+
+
+def kind_key(e, rep):
+    k = e["kind"]
+    if k == "move":
+        return "plan" if e.get("how") == "plan" else "cart"
+    if k == "screw":
+        return "screw" if rep == 0 else "screw_rep"
+    return k
+
+
+def plan_frames(events, scale=1.0):
+    """Frames per event: each step's events are sped up together so the step fits its budget (BUDGET x scale)."""
+    out = {}
+    cur, buf = None, []
+
+    def close_step(sid, do, buf):
+        if not buf:
+            return
+        w = sum(float(e.get("dur", 0.0)) / KW.get(kk, 1.0) for e, kk in buf)
+        B = BUDGET.get(do, 4.0) * scale
+        if do == "screws":
+            B = scale * min(10.0, 2.0 + 0.6 * sum(1 for e, kk in buf if e["kind"] == "screw"))
+        f = max(1.0, w / max(B, 0.5))
+        for e, kk in buf:
+            d = float(e.get("dur", 0.0))
+            if d <= 0:
+                continue
+            n = int(round(d * FPS / (KW.get(kk, 1.0) * f)))
+            if e["kind"] in ("grip", "tool"):
+                n = max(n, 3)
+            elif e["kind"] == "wait":
+                n = max(n, 18)
+            else:
+                n = max(n, 2)
+            out[id(e)] = (n, d / n)
+    reps = {}
+    for e in events:
+        if e["kind"] == "step":
+            close_step(cur[0] if cur else None, cur[1] if cur else None, buf)
+            cur, buf = (e["id"], e.get("do")), []
+            reps = {}
+            continue
+        if e.get("dur", 0.0) and e["kind"] in ("move", "drive", "grip", "tool", "screw", "turn", "move2", "wait"):
+            r = reps.get(e.get("arm"), 0) if e["kind"] == "screw" else 0
+            if e["kind"] == "screw":
+                reps[e.get("arm")] = r + 1
+            buf.append((e, kind_key(e, r)))
+    close_step(cur[0] if cur else None, cur[1] if cur else None, buf)
+    return out
+
+
+def merge_fails(ev, ev_fail, steps):
+    """Chapter events with, before each step in `steps`, the failed attempt recorded by an earlier run (status fail)."""
+    by = {}
+    cur = None
+    for e in ev_fail:
+        if e["kind"] == "step":
+            cur = e["id"]
+            if cur in steps:
+                by[cur] = [dict(e, failed_run=True)]
+            continue
+        if cur in by:
+            by[cur].append(dict(e, failed_run=True))
+    out = []
+    for e in ev:
+        if e["kind"] == "step" and e["id"] in by:
+            out.append(dict(kind="snapshot", step=e["id"]))
+            out += by[e["id"]]
+            out.append(dict(kind="restore", step=e["id"]))
+        out.append(e)
+    return out
+
+
+def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=()):
     rp = Replay(chapter)
     name, title = CHAP[chapter]
+    ev = rp.ev
+    if fail_pkl and fail_steps:
+        ev_f = pickle.load(open(fail_pkl, "rb"))["events"]
+        ev = merge_fails(ev, ev_f, set(fail_steps))
+    nfr = plan_frames(ev, scale)
+    tot_frames = sum(n for n, _ in nfr.values())
+    print(f"{name}: {len(ev)} events -> about {tot_frames} frames ({tot_frames / FPS / 60:.1f} min)", flush=True)
     ch = common.Chapter(name, title)
-    steps = {}
     rows = {}
-    # the step table (status, why) from the events
-    for e in rp.ev:
-        if e["kind"] == "step_end":
+    for e in ev:
+        if e["kind"] == "step_end" and not e.get("failed_run"):
             rows[e["id"]] = e
-    cur = dict(id="", label="", status="", actor="A")
-    tot = dict(robot_s=0.0, person_s=0.0, n=0)
-    screws_seen = {}
+    cur = dict(id="", label="", status="", actor="A", do="", t=0.0, failed=False)
+    tot = dict(n=0)
+    snap = {}
 
     def emit(caption, sub="", who=(), proc=1.0 / FPS, add=None, status=None):
         img = rp.shot()
-        meta = dict(sub=sub, who=list(who), step=cur["id"], status=status if status is not None else cur["status"], proc_s=round(proc, 4))
+        st = status if status is not None else cur["status"]
+        meta = dict(sub=sub, who=list(who), step=cur["id"], status=st, proc_s=round(proc, 4))
         if add:
             meta["add"] = add
         ch.frame(img, caption, **meta)
         tot["n"] += 1
+        cur["t"] += proc
         return max_frames is not None and tot["n"] >= max_frames
 
-    def status_of(sid):
+    def step_status(sid, failed_run):
+        if failed_run:
+            return "fail"
         e = rows.get(sid)
-        return "" if e is None else e["status"]
+        if e is None:
+            return ""
+        s = e["status"]
+        if s == "pass" and sid in fail_steps:
+            return "redesign"
+        return s
 
-    def focus_for(n):
-        p = rp.tcp(n)
-        return p
+    def lapse_txt(real_per_frame):
+        x = real_per_frame * FPS
+        return "" if x < 1.3 else f"; x{x:.0f} time-lapse"
 
     stop = False
-    for e in rp.ev:
+    for e in ev:
         if stop:
             break
         k = e["kind"]
@@ -283,12 +381,37 @@ def run(chapter, max_frames=None, budget_s=None):
                 rp.set_arm(n)
             for i, T in e["present"].items():
                 rp.put([i], T)
-            rp.aim(focus_for("A"), "wide", "A", snap=True)
+            rp.aim(rp.tcp("A"), "wide", "A", snap=True)
+            continue
+        if k == "snapshot":
+            snap = dict(G={kk: v.copy() for kk, v in rp.sc.gmat.items()}, A={kk: v for kk, v in rp.sc.alpha.items()},
+                        st={n: dict(rp.st[n]) for n in ("A", "B")})
+            continue
+        if k == "restore":
+            if snap:
+                rp.sc.gmat.update(snap["G"])
+                rp.sc.alpha.update(snap["A"])
+                for n in ("A", "B"):
+                    rp.st[n] = dict(snap["st"][n])
+                    rp.set_arm(n)
             continue
         if k == "step":
-            cur = dict(id=e["id"], label=e["label"], status=status_of(e["id"]), actor=e.get("actor") or "A", do=e.get("do"))
+            failed = bool(e.get("failed_run"))
+            label = e["label"]
+            if failed:
+                label = "[first attempt, round 6 design] " + label
+            elif e["id"] in fail_steps:
+                label = "[redesigned, round 7] " + label
+            cur = dict(id=e["id"], label=label, status=step_status(e["id"], failed), actor=e.get("actor") or "A", do=e.get("do"),
+                       t=0.0, failed=failed)
             continue
         if k == "step_end":
+            if cur["status"] in ("fail",) or e.get("status") == "fail":
+                why = (e.get("row") or {}).get("why") or ""
+                for _ in range(int(FPS * 2.5)):
+                    stop = emit(cur["label"], f"FAILED: {why[:110]}", [], status="fail")
+                    if stop:
+                        break
             continue
         n = e.get("arm")
         if n == "A+B":
@@ -296,149 +419,152 @@ def run(chapter, max_frames=None, budget_s=None):
         side = n or cur.get("actor") or "A"
         if side not in ("A", "B"):
             side = "A"
-        who = [f"robot {side}"] if k not in ("wait", "turn") else []
-        dur = float(e.get("dur", 0.0))
+        who = [f"robot {side}"]
+        nf, per = nfr.get(id(e), (0, 1.0 / FPS))
         if k == "put":
             rp.put(e["objs"], e["T"])
         elif k == "attach":
-            h = dict(objs=e["objs"], off=np.asarray(e["off"], float))
-            rp.st[n]["held"] = h
+            rp.st[n]["held"] = dict(objs=e["objs"], off=np.asarray(e["off"], float))
             rp.set_arm(n)
         elif k == "detach":
             rp.st[n]["held"] = None
         elif k == "tool":
             rp.set_arm(n, tool=e["tool"])
-            if dur > 0:
-                for f in range(max(1, int(round(dur * FPS / rp.lapse["tool"])))):
-                    rp.aim(focus_for(n), "mid", side)
-                    stop = emit(cur["label"], f"tool change at the MiR's tool stand: {e['tool']} (ATI QC-21; {dur:.0f} s, estimate)",
-                                who, proc=rp.lapse["tool"] / FPS, add={"robot_h": rp.lapse["tool"] / FPS / 3600.0})
-                    if stop:
-                        break
+            for f in range(nf):
+                rp.aim(rp.tcp(n), "mid", side)
+                stop = emit(cur["label"], f"tool change at the MiR's stand: {e['tool']} (ATI QC-21; {e['dur']:.0f} s, estimate)",
+                            who, proc=per, add={"robot_h": per / 3600.0})
+                if stop:
+                    break
         elif k == "grip":
-            nf = max(2, int(round(dur * FPS)))
             for f in range(nf):
                 s = smooth((f + 1) / nf)
                 rp.set_arm(n, close=e["c0"] + (e["c1"] - e["c0"]) * s)
-                rp.aim(focus_for(n), "close", side)
-                stop = emit(cur["label"], "2F-85 " + ("closes" if e["c1"] > e["c0"] else "opens"), who, add={"robot_h": 1.0 / FPS / 3600.0})
+                rp.aim(rp.tcp(n), "close" if cur["do"] in CLOSE_STEPS else "mid", side)
+                stop = emit(cur["label"], "2F-85 " + ("closes" if e["c1"] > e["c0"] else "opens"), who, proc=per,
+                            add={"robot_h": per / 3600.0})
                 if stop:
                     break
         elif k == "drive":
-            lap = rp.lapse["drive"]
-            nf = max(2, int(round(dur * FPS / lap)))
             for f in range(nf):
                 s = smooth((f + 1) / nf)
                 x = e["x0"] + (e["x1"] - e["x0"]) * s
                 rp.set_arm(n, x=x)
-                foc = np.array([x, (-1 if n == "A" else 1) * 640.0, 900.0])
-                rp.aim(foc, "wide", side, el=24.0)
+                rp.aim(np.array([x, (-1 if n == "A" else 1) * 500.0, 950.0]), "wide", side, el=22.0)
                 chk = e.get("check") or {}
-                sub = f"MiR {n} drives {abs(e['x1'] - e['x0']) / 1000:.1f} m along its lane ({dur:.0f} s at 1 m/s; x{lap:.0f} time-lapse)"
+                sub = (f"MiR {n} drives {abs(e['x1'] - e['x0']) / 1000:.1f} m "
+                       + ("to the parts table" if e["x1"] > 2000 else "back to the bench")
+                       + f" ({e['dur']:.0f} s at 0.3 m/s2, 1 m/s{lapse_txt(per)})")
                 if chk and not chk.get("ok", True):
-                    sub += f"; sweep: {chk.get('why', '')[:60]}"
-                stop = emit(cur["label"], sub, who, proc=lap / FPS, add={"robot_h": lap / FPS / 3600.0})
+                    sub += f"; sweep: {chk.get('why', '')[:50]}"
+                stop = emit(cur["label"], sub, who, proc=per, add={"robot_h": per / 3600.0})
                 if stop:
                     break
         elif k in ("move", "screw"):
             Q = e.get("q")
             if Q is None or len(Q) == 0:
                 if k == "screw":
-                    stop = emit(cur["label"], f"screw {e.get('obj')}: no collision-free way to drive it ({e.get('why', '')[:70]})",
-                                who, status="fail")
+                    for _ in range(int(FPS * 1.0)):
+                        stop = emit(cur["label"], f"screw not driven: {e.get('why', '')[:90]}", who, status="fail")
                 continue
             Q = np.asarray(Q, float)
-            if k == "screw":
-                key = (cur["id"], n)
-                rep = screws_seen.get(key, 0)
-                screws_seen[key] = rep + 1
-                lap = rp.lapse["screw"] if rep == 0 else rp.lapse["screw_rep"]
-            else:
-                lap = rp.lapse["plan"] if e.get("how") == "plan" else rp.lapse["cart"]
-            nf = max(2, int(round(dur * FPS / lap)))
-            # resample Q by arc length in joint space
-            d = np.r_[0.0, np.cumsum(np.abs(np.diff(Q, axis=0)).max(axis=1))]
+            d = np.r_[0.0, np.cumsum(np.abs(np.diff(Q, axis=0)).max(axis=1))] if len(Q) > 1 else np.array([0.0])
             L = d[-1] if d[-1] > 0 else 1.0
+            in_table = rp.st[n]["x"] > 2000.0
             for f in range(nf):
                 s = smooth((f + 1) / nf) * L
-                j = int(np.searchsorted(d, s, side="right") - 1)
-                j = min(max(j, 0), len(Q) - 2) if len(Q) > 1 else 0
                 if len(Q) > 1:
+                    j = int(min(max(np.searchsorted(d, s, side="right") - 1, 0), len(Q) - 2))
                     t = (s - d[j]) / max(d[j + 1] - d[j], 1e-9)
                     q = Q[j] * (1 - t) + Q[j + 1] * t
                 else:
                     q = Q[0]
                 if k == "screw" and rp.st[n]["held"] is not None:
-                    # the screw turns with the bit as it advances: one turn per pitch
-                    ang = 360.0 * (f + 1) / nf * (e["L"] / max(e["pitch"], 0.1))
-                    rp.st[n]["held"]["spin"] = {}
+                    ang = 360.0 * ((f + 1) / nf) * (e["L"] / max(e["pitch"], 0.1))
+                    i0 = rp.st[n]["held"]["objs"][0]
+                    # spin the screw about its own axis (the TCP's z), as the bit turns it
+                    rp.st[n]["held"]["spin"] = None
                 rp.set_arm(n, q=q, close=e.get("close"))
-                shot = "close" if (k == "screw" or e.get("how") == "cart") else "mid"
-                rp.aim(focus_for(n), shot, side)
                 if k == "screw":
-                    sub = (f"{e['tool']}: M{'' if not e.get('pitch') else {0.5: 3, 0.7: 4, 0.8: 5, 1.0: 6}.get(round(e['pitch'], 1), '')} screw "
-                           f"advances {e['L']:.0f} mm, then {e['torque'] or 0:.1f} N m ({dur:.0f} s"
-                           + (f"; x{lap:.0f} time-lapse)" if lap > 1 else ")"))
-                elif e.get("how") == "plan":
-                    sub = "planned move (RRT-Connect / straight joint line, collision-checked)" + (f" x{lap:.1f}" if lap > 1 else "")
+                    shot = "close"
+                elif in_table:
+                    shot = "mid"
+                elif e.get("how") == "cart" or cur["do"] in CLOSE_STEPS:
+                    shot = "close"
                 else:
-                    sub = "checked straight-line move" + (" carrying the part" if e.get("held") else "")
-                stop = emit(cur["label"], sub, who, proc=lap / FPS, add={"robot_h": lap / FPS / 3600.0})
+                    shot = "mid"
+                rp.aim(rp.tcp(n), shot, side)
+                if k == "screw":
+                    msz = {0.5: 3, 0.7: 4, 0.8: 5, 1.0: 6}.get(round(float(e.get("pitch", 0.7)), 1), "")
+                    sub = (f"{e['tool']}: M{msz} screw runs down {e['L']:.0f} mm and is torqued to {float(e.get('torque') or 0):.1f} N m "
+                           f"({e['dur']:.0f} s{lapse_txt(per)})")
+                elif in_table and e.get("how") == "cart":
+                    sub = "pick at the parts table (checked against the table, its nest and the neighbouring parts)"
+                elif e.get("how") == "plan":
+                    sub = f"planned move, collision-checked{lapse_txt(per)}"
+                else:
+                    sub = "checked straight-line move" + (" with the part" if e.get("held") else "") + lapse_txt(per)
+                stop = emit(cur["label"], sub, who, proc=per, add={"robot_h": per / 3600.0})
                 if stop:
                     break
         elif k == "move2":
             QA, QB = np.asarray(e["qA"], float), np.asarray(e["qB"], float)
-            lap = rp.lapse["move2"]
-            nf = max(2, int(round(dur * FPS / lap)))
             for f in range(nf):
                 j = min(len(QA) - 1, int(round(smooth((f + 1) / nf) * (len(QA) - 1))))
                 rp.set_arm("A", q=QA[j], close=e["closeA"])
                 rp.set_arm("B", q=QB[j], close=e["closeB"])
-                foc = 0.5 * (rp.tcp("A") + rp.tcp("B"))
-                rp.aim(foc, "mid", "C")
-                stop = emit(cur["label"], "both arms carry it together (checked frame by frame)", ["robot A", "robot B"], proc=lap / FPS,
-                            add={"robot_h": 2 * lap / FPS / 3600.0})
+                mid = 0.5 * (rp.tcp("A") + rp.tcp("B"))
+                rp.aim(mid, "mid", "C")
+                if e.get("lift_aid"):
+                    rp.sc.alpha["hoist"] = 1.0
+                    rp.sc.gmat["hoist"] = Tm((float(mid[0]), float(mid[1]), float(mid[2]) + 60.0))
+                    stop = emit(cur["label"], f"a small hoist takes the load (person at its pendant); both arms guide it along the checked path"
+                                f"{lapse_txt(per)}", ["robot A", "robot B", "person"], proc=per,
+                                add={"robot_h": 2 * per / 3600.0, "person_h": per / 3600.0})
+                else:
+                    stop = emit(cur["label"], f"both arms carry it together, checked frame by frame{lapse_txt(per)}", ["robot A", "robot B"],
+                                proc=per, add={"robot_h": 2 * per / 3600.0})
                 if stop:
                     break
+            rp.sc.alpha["hoist"] = 0.0
         elif k == "turn":
-            lap = rp.lapse["turn"]
-            nf = max(2, int(round(dur * FPS / lap)))
             T0 = np.asarray(e["T0"], float)
             TT = np.asarray(e["TT"], float)
+            J0 = rp.sc.gmat["jaws"].copy()
             for f in range(nf):
                 th = e["sign"] * 180.0 * smooth((f + 1) / nf)
                 Rm = TT @ rot_axis((1, 0, 0), th) @ np.linalg.inv(TT)
                 rp.put(e["objs"], Rm @ T0)
-                rp.sc.gmat["jaws"] = Rm @ rp.sc.gmat.get("jaws_base", rp.TT) if "jaws_base" in rp.sc.gmat else Rm @ rp.TT
+                rp.sc.gmat["jaws"] = Rm @ J0
                 rp.aim(TT[:3, 3], "mid", "A", az=-50.0)
-                stop = emit(cur["label"], "the trunnion turns the chamber over (both arms parked)", ["machine"], proc=lap / FPS)
+                stop = emit(cur["label"], "the trunnion turns the chamber over; both arms parked", ["machine"], proc=per)
                 if stop:
                     break
-            rp.sc.gmat["jaws_base"] = rp.sc.gmat["jaws"] @ np.linalg.inv(rp.TT) @ rp.TT
         elif k == "wait":
-            lap = rp.lapse["wait"] if dur > 60 else 1.0
-            nf = max(6, int(round(dur * FPS / lap)))
             wh = e.get("who", "person")
             if wh == "person" and rp.person is not None:
                 rp.person.show(1.0)
-                rp.person.set(x=-1900.0 if cur["id"].startswith("M") else 900.0, y=-1250.0, hd=90.0, amp=0.0)
+                xp = -1900.0 if cur["id"].startswith("M") else 900.0
+                rp.person.set(x=xp, y=-1150.0, hd=90.0, amp=0.0, look=(xp, -200.0, 950.0))
+            foc = np.array([-1300.0 if cur["id"].startswith("M") else 700.0, -500.0, 1000.0])
             for f in range(nf):
-                rp.aim(np.array([-1300.0 if cur["id"].startswith("M") else 700.0, -300.0, 1000.0]), "mid", "A")
-                stop = emit(cur["label"], f"{e.get('what', '')[:80]} ({dur / 60:.0f} min, estimate; x{lap:.0f})" if wh == "person" else
-                            e.get("what", "")[:90], [wh] if wh in ("person", "machine") else ["robot A"], proc=lap / FPS,
-                            add={"person_h": lap / FPS / 3600.0} if wh == "person" else None,
+                rp.aim(foc, "mid", "A")
+                sub = (f"{e.get('what', '')[:80]} ({e['dur'] / 60:.0f} min, estimate{lapse_txt(per)})" if wh == "person" else
+                       f"{e.get('what', '')[:80]} ({e['dur']:.0f} s)")
+                stop = emit(cur["label"], sub, [wh] if wh in ("person", "machine") else ["robot A"], proc=per,
+                            add={"person_h": per / 3600.0} if wh == "person" else ({"robot_h": per / 3600.0} if wh == "robot" else None),
                             status="person" if wh == "person" else None)
                 if stop:
                     break
             if rp.person is not None:
                 rp.person.show(0.0)
-        # jumps, marks, takes: no frames
     ch.close()
-    print(f"{name}: {tot['n']} frames ({tot['n'] / FPS / 60:.1f} min)")
+    print(f"{name}: {tot['n']} frames ({tot['n'] / FPS / 60:.1f} min)", flush=True)
     return tot
 
 
 if __name__ == "__main__":
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
-    mx = next((int(a.split("=")[1]) for a in sys.argv if a.startswith("--max=")), None)
-    run(args[0] if args else "module", max_frames=mx)
+    opt = {a.split("=")[0][2:]: (a.split("=", 1)[1] if "=" in a else "1") for a in sys.argv[1:] if a.startswith("--")}
+    run(args[0] if args else "module", max_frames=int(opt["max"]) if "max" in opt else None, scale=float(opt.get("scale", 1.0)),
+        fail_pkl=opt.get("fails"), fail_steps=tuple(x for x in opt.get("fail_steps", "").split(",") if x))

@@ -127,7 +127,7 @@ class Rec:
         else:
             s["status"] = "pass" if arm in ("PASS", "-") and str(row.get("sweep", "PASS")) in ("PASS", "-", "?") else \
                 ("fail" if arm in ("FAIL", "ERROR", "PART") or str(row.get("sweep")) == "FAIL" else "pass")
-            s["who"] = [f"robot {n}" for n in ("A", "B") if s["robot_s"][n] > 0.0]
+            s["who"] = [f"robot {n}" for n in ("A", "B") if s["robot_s"][n] > 0.0] + (["person"] if s["person_s"] > 0.0 else [])
         s["why"] = str(row.get("why", ""))[:300]
         s["fetch"] = row.get("fetch")
         self._ev("step_end", id=s["id"], status=s["status"], dur=0.0, row={k: row.get(k) for k in

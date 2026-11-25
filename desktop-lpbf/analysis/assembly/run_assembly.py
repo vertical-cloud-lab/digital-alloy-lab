@@ -1395,6 +1395,7 @@ def main(argv):
         def _put(idx, T, state=None, _o=_orig_put):
             _o(idx, T, state)
             RECM.REC.put([i for i in idx if run.sc.objs[i]["V"] is not None], T, run.cl.state if state is None else state)
+            run.table.remove(idx)          # in the cell now, so no longer on the table (seals fitted by their tools, merges)
         run.cl.put = _put
         save_scene(run)
     # the part list report.py's replay file matches step keys against (name, explode offset, motion group)
@@ -1428,7 +1429,7 @@ def main(argv):
     save(run, final=True)
     if RECM.REC is not None:
         RECM.REC.flush()
-        RECM.REC.save_summary("/tmp/robotbuild/data/assembly.json")
+        RECM.REC.save_summary(os.environ.get("ASM_SUMMARY", "/tmp/robotbuild/data/assembly.json"))
     log("done")
 
 
