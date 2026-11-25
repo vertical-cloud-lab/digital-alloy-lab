@@ -18,18 +18,21 @@ Reads
   ../out/machining/hours.json          machining hours per part (CAM, setups, run, deburr and inspection)
   ../out/shop/timeline.json            the robot shop's hand-vs-robot timeline (older 48-part dfm.json basis)
   ../out/assembly/results.json, sequence.json   the two-arm assembly's checked steps
-  leadtime-lookups.csv                 new-part lead times and stock read from vendor pages on 2026-11-25
+  leadtimes.py, leadtime-lookups.csv   new-part lead times and stock read from vendor pages on 2026-11-25, BYU's PO step
+  ebay-recheck.csv                     the used picks re-read on 2026-11-25: still listed or ended, price, delivery to Provo
 
 Writes
-  ../../robot-build/hud.json           everything below, for the compositor (also copied to /tmp/robotbuild/data/hud.json)
-  ../../robot-build/costs-leadtimes.csv   one row per category and per item, with source columns
+  ../../robot-build/hud.json           everything below, for the compositor (also copied to /tmp/robotbuild/data/hud.json);
+                                       start with "tour" (display strings in tour order) and "headline"
+  ../../robot-build/costs-leadtimes.csv   one row per category, item and BOM line, with source columns
   ../../robot-build/times.csv          machining per part, the robot-shop timeline, assembly per step, person steps
 
-Two things in the inputs are stale and this script says so rather than hiding it (hud.json "consistency"):
+Things in the inputs that are stale, which this script reports rather than hides (hud.json "consistency"):
   * cost-scenarios.md's totals were written on 2026-11-20 for a $39k-113k BOM; bom.csv is now $76k-161k.
   * several used-options.csv base values predate bom.csv changes (L3, L6, G2, G7 Pirani, G9, T1, M2), so
-    cost_scenarios.py's "used" totals mis-state those lines. USED_REBASE re-bases them on today's lines; both results
-    are written.
+    cost_scenarios.py's "used" totals mis-state those lines. USED_REBASE re-bases them on today's lines, and listings
+    that ended by 2026-11-25 are dropped; cost_scenarios.py's own figures are written beside them.
+  * 25 counted cheaper-equivalents rows replace parts no longer in their line; they are left out (consistency.cheaper_dropped).
 
 Run from the repo root (standard library only):
     python desktop-lpbf/analysis/robotbuild_data/build_hud.py
@@ -169,10 +172,6 @@ def num(x):
     return CS.num(x)
 
 
-def used_cost(r):
-    return sum(num(r[k]) or 0.0 for k in ("price_usd", "shipping_usd", "extra_usd"))
-
-
 RECHECK_CSV = HERE / "ebay-recheck.csv"   # the used picks re-read on 2026-11-25 (ebay_recheck.py, fetch_pages.py)
 
 
@@ -193,7 +192,8 @@ def live(r):
     return not rc or rc["status_2026_11_25"] == "still listed"
 
 
-def used_cost(r):  # noqa: F811  (re-defined: the 2026-11-25 price where the listing was re-read)
+def used_cost(r):
+    """A used listing's price + shipping + estimated extras, at its 2026-11-25 price where it was re-read."""
     rc = recheck_for(r["url"])
     price = num(rc["price_usd_now"]) if rc and num(rc["price_usd_now"]) is not None else num(r["price_usd"])
     return (price or 0.0) + (num(r["shipping_usd"]) or 0.0) + (num(r["extra_usd"]) or 0.0)
