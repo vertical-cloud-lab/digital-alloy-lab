@@ -44,6 +44,7 @@ A_FLOOR = 0.15
 HATCH, LAYER = 0.10e-3, 30e-6
 SPOTS = {"48 um (IPG 5 mm)": 48e-6, "57 um (f 30)": 57e-6, "75 um (custom f 23)": 75e-6, "96 um (IPG 2.5 mm, drawn)": 96e-6}
 V_GALVO = 1.1
+KE_MEASURED = 13.1    # highest Ke (this script's A) at which Patel & Vlasea's AlSi10Mg tracks were still conduction-shaped (D/W 0.34)
 REGIMES = ["lack of fusion", "conduction", "transition", "keyhole", "unstable keyhole"]
 COLORS = {"lack of fusion": "#f2a600", "conduction": "#257de0", "transition": "#00b894", "keyhole": "#f47230",
           "unstable keyhole": "#6a4ce2"}
@@ -128,6 +129,8 @@ def plot_maps(maps, fname, title):
         ball = np.array([[p["balling"] for p in row] for row in rows])
         if ball.any():
             ax.contourf(V, Pm, ball.astype(float), levels=[0.5, 1.5], colors="none", hatches=["////"])
+        cs3 = ax.contour(V, Pm, Ke, levels=[KE_MEASURED], colors="#191919", linewidths=1.4, linestyles=":")
+        ax.clabel(cs3, fmt=lambda x: f"Ke {x:.0f}: measured", fontsize=7)
         dH = np.array([[p["dH_hs"] for p in row] for row in rows])
         cs2 = ax.contour(V, Pm, dH, levels=[30.0], colors="#191919", linewidths=1.2, linestyles="--")
         ax.clabel(cs2, fmt=lambda x: "dH/h_s 30", fontsize=7)
@@ -138,16 +141,19 @@ def plot_maps(maps, fname, title):
                         fontsize=7, arrowprops=dict(arrowstyle="-", lw=0.6, color="#191919"))
         ax.axvspan(V_GALVO, vs.max() + 0.05, color="white", alpha=0.55, lw=0)
         ax.axvline(V_GALVO, color="#191919", lw=1.0)
-        ax.text(V_GALVO + 0.03, Ps.min() + 10, "beyond the galvo's\n1.1 m/s", fontsize=7, color="#191919", va="bottom")
+        ax.text(V_GALVO + 0.03, Ps.max() - 5, "beyond the galvo's\n1.1 m/s", fontsize=7, color="#191919", va="top")
         ax.set_title(lab, fontsize=9)
         ax.set_xlabel("scan speed (m/s)")
         ax.set_xlim(vs.min() - 0.05, vs.max() + 0.05)
         ax.grid(alpha=0.2)
     np.atleast_1d(axs)[0].set_ylabel("laser power (W)")
-    handles = [Patch(color=COLORS[r], label=r) for r in REGIMES] + [Patch(facecolor="none", hatch="////", label="balling (L/W > pi)")]
-    fig.legend(handles=handles, loc="lower center", ncol=6, fontsize=8, frameon=False)
+    from matplotlib.lines import Line2D
+    handles = [Patch(color=COLORS[r], label=r) for r in REGIMES] + [Patch(facecolor="none", hatch="////", label="balling (L/W > pi)"),
+               Line2D([], [], color="#191919", lw=1.4, ls=":", label="Ke 13: measured AlSi10Mg tracks still conduction-shaped below"),
+               Line2D([], [], color="#191919", lw=1.2, ls="--", label="King's dH/h_s = 30 (316L keyhole onset)")]
+    fig.legend(handles=handles, loc="lower center", ncol=4, fontsize=8, frameon=False)
     fig.suptitle(title, fontsize=10)
-    fig.tight_layout(rect=(0, 0.07, 1, 0.95))
+    fig.tight_layout(rect=(0, 0.12, 1, 0.95))
     fig.savefig(OUT / fname, dpi=120)
     plt.close(fig)
 

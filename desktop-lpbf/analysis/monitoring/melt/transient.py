@@ -256,7 +256,7 @@ def plots(te, bu):
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     cols = ["#257de0", "#f47230", "#00b894", "#6a4ce2"]
-    fig, axs = plt.subplots(1, 2, figsize=(11, 3.8))
+    fig, axs = plt.subplots(1, 2, figsize=(11, 4.6))
     for (lab, d), ccol in zip(te["cases"].items(), cols):
         axs[0].plot(d["t_us"], d["signal_rel"], color=ccol, lw=1.6, label=lab)
         axs[1].plot(d["t_us"], d["liquid_area_rel"], color=ccol, lw=1.6)
@@ -265,10 +265,10 @@ def plots(te, bu):
         ax.set_xlabel("time from the end of the commanded vector (us)")
         ax.set_ylabel(yl)
         ax.grid(alpha=0.25)
-    axs[0].legend(fontsize=7, loc="upper left", frameon=False)
+    fig.legend(*axs[0].get_legend_handles_labels(), loc="lower center", ncol=2, fontsize=7, frameon=False)
     fig.suptitle(f"Track end at {te['v']} m/s, {te['P']:.0f} W, {te['d'] * 1e6:.0f} um, {te['alloy']} (galvo lag 0.25 ms, "
                  "first-order; constant-property superposition)", fontsize=9)
-    fig.tight_layout()
+    fig.tight_layout(rect=(0, 0.13, 1, 1))
     fig.savefig(OUT / "track_ends.png", dpi=120)
     plt.close(fig)
     fig, ax = plt.subplots(figsize=(6.4, 3.6))

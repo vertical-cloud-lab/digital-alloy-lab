@@ -121,19 +121,26 @@ def collect():
                          T0_K=c["T0"], f_M=c["f_M"], layer_um=c["t_layer"] * 1e6, T_sol_K=r["T_sol"], T_liq_K=r["T_liq"],
                          T_boil_alloy_1atm_K=r["T_boil_alloy"], T_peak_K=r["T_peak"],
                          pool_L_um=r["liquid"]["L"] * 1e6, pool_W_um=r["liquid"]["W"] * 1e6, pool_D_um=r["liquid"]["D"] * 1e6))
+    import evap as EV
+    import props as PR
+    for m in meta:
+        m["T_wall_K"] = EV.T_wall(PR.Alloy(m["alloy"]), m["spot_1e2_um"] * 0.5e-6)
     T = np.stack(T)
     Tb = np.array([m["T_boil_alloy_1atm_K"] for m in meta])[:, None, None]
+    Tw = np.array([m["T_wall_K"] for m in meta])[:, None, None]
     np.savez_compressed(
         OUT / "surface_fields.npz",
         x_um=XG.astype(np.float32), y_um=YG.astype(np.float32), T_K=T.astype(np.float32),
-        T_capped_K=np.minimum(T, Tb).astype(np.float32),
+        T_capped_K=np.minimum(T, Tw).astype(np.float32),
         liquid=np.stack(liq), mushy=np.stack(mush), above_boil=(T >= Tb),
         cases=np.array([m["tag"] for m in meta]), meta_json=np.array(json.dumps(meta)),
         README=np.array("Surface temperature T_K[case, ix, iy] (K) on the powder/melt surface, beam frame: the beam centre is at "
                         "(0, 0) and moves toward +x, so the melt pool trails toward -x. x_um, y_um: cell-centre coordinates in um "
                         "(4 um grid). From fv3d.py (3D quasi-steady conduction, see melt-pool.md): no free surface, so where "
-                        "T_K exceeds the alloy's 1 atm boiling point the real surface is a vapour depression whose wall sits near "
-                        "that temperature; T_capped_K = min(T_K, T_boil) is that reading. liquid: T >= liquidus; mushy: solidus "
+                        "T_K exceeds the alloy's 1 atm boiling point (meta T_boil_alloy_1atm_K) the real surface is a vapour "
+                        "depression; its wall sits near T_wall_K, where the recoil pressure 0.54 p_sat holds a hole of the beam's "
+                        "radius open against 1 atm and surface tension. T_capped_K = min(T_K, T_wall_K) is that reading (use it "
+                        "for emission). liquid: T >= liquidus; mushy: solidus "
                         "<= T < liquidus; above_boil: T >= boiling point (depression). meta_json: per-case inputs and pool "
                         "sizes. Emissivity is not applied here."))
     print("wrote", OUT / "surface_fields.npz", T.shape, [m["tag"] for m in meta])
