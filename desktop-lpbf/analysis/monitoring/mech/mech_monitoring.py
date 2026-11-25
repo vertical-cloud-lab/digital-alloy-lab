@@ -165,7 +165,7 @@ def check_seals():
         lo, nom, hi = squeeze_range(t0, MI.GASKET_INSTALLED_MM, 2 * MI.WINDOW_T_TOL_MM / 2)
         ok = lo >= MI.FKM["squeeze_flat"][0] and hi <= MI.FKM["squeeze_flat"][1] + 0.05
         flat.append(dict(sheet=sname, t0_mm=t0, installed_mm=MI.GASKET_INSTALLED_MM, squeeze_min=lo, squeeze_nom=nom, squeeze_max=hi,
-                         pass_=ok))
+                         glass_bearing_max_MPa=MI.FKM["E_c_MPa"][1] * max(hi, 0.0), pass_=bool(ok)))
     sc = MI.SCREW_M4
     T_rec = 2.0                                              # N m, recommended torque (bottomed clamp: preload only needs to beat the gasket)
     F_screw = T_rec / (sc["K_nut"] * sc["d"] * 1e-3)         # N
@@ -250,9 +250,10 @@ def check_side_camera():
         r = f_exc / f1
         rel = x_base * r ** 2 / abs(1 - r ** 2)
         static_img = abs(v) + abs(th) * wd * 1e-3
+        dyn = rel * 1e6 * gain
         rows.append(dict(t_in=t_in, t_mm=t * 1e3, f1_hz=f1, f2_hz=f2, sag_um=v * 1e6, tilt_urad=th * 1e6,
-                         static_image_shift_um=static_img * 1e6, dyn_image_um_at_60Hz=rel * 1e6 * gain,
-                         pass_=bool(f1 >= 2.5 * f_exc and static_img * 1e6 < px_obj)))
+                         static_image_shift_um=static_img * 1e6, dyn_image_um_at_60Hz=dyn,
+                         pass_=bool(f1 >= 2.5 * f_exc and dyn < 0.5 * px_obj)))
     pick = next((r for r in rows if r["pass_"]), None)
     return dict(reach_mm=L, camera_kg=m, J_kgm2=J, wd_mm=wd, px_across_um=px_obj, um_per_urad=wd * 1e-3,
                 excitation=dict(f_hz=f_exc, base_um=x_base * 1e6, note="side-channel blower (bom.csv G4, model not chosen): a 2-pole motor "
@@ -260,7 +261,8 @@ def check_side_camera():
                 bracket_width_mm=b * 1e3, rows=rows, pick=pick, pass_=pick is not None,
                 method="cantilever plate from the chamber's left wall to the camera's centre of mass, camera as a rigid body (mass and "
                        "pitch inertia) at the tip: 2-DOF eigenvalues with the plate's consistent mass; image shift = translation + "
-                       "tilt x working distance; criterion f1 >= 2.5 x 60 Hz and static shift < 1 px")
+                       "tilt x working distance (mode 1's shape for the vibration); criterion f1 >= 2.5 x 60 Hz and vibration "
+                       "< 0.5 px; the static sag is aimed out when the camera is set up")
 
 
 # ============================================================================================ 4. coaxial cage
@@ -484,6 +486,33 @@ def check_ae():
 
 
 # ============================================================================================ 7. temperatures at the ports
+def slide_with_purge(windows, flows_lpm=(1.0, 3.0), T_gas=(25.0, 60.0), T_purge=(22.0, 30.0)):
+    """The LW slide's temperature with the argon purge blowing across its chamber face. plume.md §4.3: a slide 10 K colder than
+    the gas next to it collects 20-120x more condensate. Purge: laminar flat plate over the slide (Nu = 0.664 Re^0.5 Pr^(1/3)) at the
+    Ø4 passage's exit velocity; the far face sees the outer window across the bore (argon conduction + glass-to-glass radiation)."""
+    s = next(x for x in windows["slides"] if x["port"].startswith("LW"))
+    D = s["d_mm"] * 1e-3
+    d_pass = 4.0e-3                                          # frame_features LW purge: "Ø4 passage through"
+    nu, k, pr, rho, cp = 1.40e-5, MI.ARGON_K, 0.67, 1.623, 520.0   # argon at 300 K, 1 atm
+    gap = (abs(MS.VIEWPORTS["LW"]["centre"][0]) - 140.0) * 1e-3      # outer face to the inner face of the 16 mm wall
+    q = s["worst"]["q_W_m2"]
+    rows = []
+    for Q in flows_lpm:
+        u = Q / 60e3 / (math.pi * d_pass ** 2 / 4)
+        Re = u * D / nu
+        h_p = 0.664 * Re ** 0.5 * pr ** (1 / 3) * k / D
+        for tg in T_gas:
+            h_c = k / gap + 4 * 0.75 * SIGMA * (tg + 273.15) ** 3
+            for tp in T_purge:
+                Ts = (h_p * tp + h_c * tg + q) / (h_p + h_c)
+                heater_W = rho * Q / 60e3 * cp * max(tg - tp, 0.0)
+                rows.append(dict(purge_lpm=Q, u_m_s=u, h_purge=h_p, h_back=h_c, T_gas=tg, T_purge=tp, T_slide=Ts,
+                                 colder_than_gas_K=tg - Ts, heater_to_match_W=heater_W))
+    off = [dict(T_gas=tg, T_slide=tg + q / (4 * 0.75 * SIGMA * (tg + 273.15) ** 3 + k / gap + 5.0)) for tg in T_gas]
+    return dict(rows=rows, purge_off=off, worst_colder_K=max(r["colder_than_gas_K"] for r in rows),
+                heater_max_W=max(r["heater_to_match_W"] for r in rows))
+
+
 def check_port_thermal(windows):
     T_room = 22.0
     vlm = dict(typical=30.0, busy=(38.0, 43.0), src="heat.md §2: Shuttle air ~30 C in a typical build with Shuttle 1 idling, 38-43 C in "
@@ -503,7 +532,8 @@ def check_port_thermal(windows):
                  limit="Kron's operating range not found in the repo (machine-vision cameras: typically 0-40 or 0-45 C)", ok=None),
             dict(item="IMX296 lid camera and coaxial cage", T_C=f"{vlm['typical']:.0f}-{vlm['busy'][1]:.0f}",
                  basis="above the lid/bridge, in the guard's air", limit="InnoMaker board: check (Pi GS camera 0-50 C)", ok=None)]
-    return dict(rows=rows, vlm=vlm, radiation_from_wall_W=q_wall, pass_=None,
+    purge = slide_with_purge(windows)
+    return dict(rows=rows, vlm=vlm, radiation_from_wall_W=q_wall, purge=purge, pass_=None,
                 flag="the busy-VLM air (38-43 C) is at or above a 40 C camera limit; the cameras need the same answer as the laser "
                      "(heat.md §2: chilled water or a ducted exhaust)")
 
@@ -545,11 +575,13 @@ def write_md(R):
     L.append("### 2. Seals and clamps\n")
     L.append("The fabrication worker's seats bottom the clamp on the wall, with 0.75 mm left for each flat FKM gasket (under the window and "
              "over it). The squeeze then depends on the sheet and on the window's thickness tolerance, which the two gaskets share:\n")
-    L.append("| FKM sheet | Squeeze: thinnest / nominal / thickest window | Within 15-35 %? |")
-    L.append("|---|---|---|")
+    L.append("| FKM sheet | Squeeze: thinnest / nominal / thickest window | Within 15-35 %? | Most the glass bears (MPa) |")
+    L.append("|---|---|---|---:|")
     for f in s["flat_gasket"]:
-        L.append(f"| {f['sheet']} ({f['t0_mm']:.2f} mm) | {100 * f['squeeze_min']:.0f} / {100 * f['squeeze_nom']:.0f} / {100 * f['squeeze_max']:.0f} % | {fmt(f['pass_'])} |")
-    L.append("")
+        L.append(f"| {f['sheet']}: {f['t0_mm']:.2f} mm | {100 * f['squeeze_min']:.0f} / {100 * f['squeeze_nom']:.0f} / {100 * f['squeeze_max']:.0f} % | "
+                 f"{fmt(f['pass_'])} | {f['glass_bearing_max_MPa']:.1f} |")
+    L.append("\nThe glass touches only FKM, on both faces at the same radii, so the clamp puts no bending into it. "
+             f"Window thickness tolerance taken as ±{MI.WINDOW_T_TOL_MM:g} mm.\n")
     L.append("| Port | Gasket area (mm²) | Gasket force, max (N) | +20 mbar (N) | Screws | Preload each at "
              f"{s['torque_Nm']:.1f} N·m (N) | Margin against lift-off | Thread strip in 6061 (N) |")
     L.append("|---|---:|---:|---:|---:|---:|---:|---:|")
@@ -586,7 +618,11 @@ def write_md(R):
     L.append(f"- **Camera branch** ({g['branch_len_mm']:.0f} mm of rods off cube 2, unsupported): tip sag "
              f"{g['branch_sag_um']['rods acting together']:.2f}-{g['branch_sag_um']['rods alone']:.1f} µm, "
              f"{g['branch_pointing_um_at_plate']['rods acting together']:.2f}-{g['branch_pointing_um_at_plate']['rods alone']:.1f} µm at the plate "
-             f"against a {g['px_at_plate_um']:.1f} µm pixel there. Static, so it calibrates out; a post at the end removes it.")
+             f"against a {g['px_at_plate_um']:.1f} µm pixel there; its first mode {g['branch_f1_hz']['rods alone']:.0f}-"
+             f"{g['branch_f1_hz']['rods acting together']:.0f} Hz. The sag is static and calibrates out, but the low end of that mode "
+             "sits near the bridge's own 128 Hz: a post at the branch's end removes both.")
+    L.append("- The added mass counts PD-A, which moves from cube 1's chain (already in fea.py case 6's 0.5 kg tap mass), so it is an "
+             "upper bound.")
     L.append(f"- **Thermal drift:** {g['drift_um_per_K_post_difference']:.2f} µm at the plate per K of difference between two "
              f"{g['post_height_mm']:.0f} mm aluminium posts ({g['drift_um_per_K_post_difference'] / g['px_at_plate_um']:.2f} px/K); "
              f"{g['axial_mismatch_um_per_K']:.1f} µm/K of steel rod against aluminium bridge along the beam (it loads the cube clamps, "
@@ -649,6 +685,20 @@ def write_md(R):
     for r in t["rows"]:
         L.append(f"| {r['item']} | {r['T_C']} | {r['basis']} | {r['limit']} |")
     L.append(f"\n- **Flag:** {t['flag']}.")
+    pg = t["purge"]
+    L.append("\n**The LW slide with its argon purge.** The purge blows bottled argon across the slide's chamber face; the slide's other "
+             "face looks at the outer window across the bore. plume.md (§4.3) found that a slide 10 K colder than the gas next to it "
+             "collects 20–120× more condensate:\n")
+    L.append("| Purge (L/min) | Exit speed (m/s) | h, purge side / window side (W/m²K) | Chamber gas (°C) | Purge gas (°C) | Slide (°C) | Colder than the gas (K) | Heater to warm the purge to the gas (W) |")
+    L.append("|---:|---:|---|---:|---:|---:|---:|---:|")
+    for r in pg["rows"]:
+        L.append(f"| {r['purge_lpm']:g} | {r['u_m_s']:.1f} | {r['h_purge']:.0f} / {r['h_back']:.0f} | {r['T_gas']:.0f} | {r['T_purge']:.0f} | "
+                 f"{r['T_slide']:.1f} | {r['colder_than_gas_K']:.1f} | {r['heater_to_match_W']:.2f} |")
+    L.append(f"\n- With the purge off the slide sits {min(o['T_slide'] - o['T_gas'] for o in pg['purge_off']):.1f}-"
+             f"{max(o['T_slide'] - o['T_gas'] for o in pg['purge_off']):.1f} K above the gas (the plate's radiation): it repels condensate.")
+    L.append(f"- **A room-temperature purge makes the slide up to {pg['worst_colder_K']:.0f} K colder than a hot chamber's gas**, which can "
+             f"undo what the purge gains (13–45×, plume.md). Warm the purge to the chamber gas: at most {pg['heater_max_W']:.1f} W, a "
+             "heater-taped stainless tube before the needle valve with a thermocouple, or take the purge from the recirculation loop.")
     return "\n".join(L) + "\n"
 
 
@@ -716,8 +766,9 @@ def summary_rows(R):
          f"sheet**. Clamp screws at {s['torque_Nm']:.0f} N·m: lift-off margin {min(x['separation_margin'] for x in s['clamps']):.1f} or more."),
         ("3. Side camera bracket", "pass" if c["pass_"] else "FAIL",
          (f"a {pick['t_in']:g} in. ({pick['t_mm']:.1f} mm) x {c['bracket_width_mm']:.0f} mm 6061 plate, {c['reach_mm']:.0f} mm reach: f1 "
-          f"{pick['f1_hz']:.0f} Hz, static shift {pick['static_image_shift_um']:.0f} µm < 1 px ({c['px_across_um']:.0f} µm); 1/2 in. "
-          f"gives {c['rows'][2]['f1_hz']:.0f} Hz. A fixed wedge, not a ball head.") if pick else "no plate up to 1 in. passes"),
+          f"{pick['f1_hz']:.0f} Hz (≥ 150 wanted, 2.5x the blower's 60 Hz), vibration {pick['dyn_image_um_at_60Hz']:.1f} µm at the plate "
+          f"against a {c['px_across_um']:.0f} µm pixel; 1/2 in. gives {c['rows'][2]['f1_hz']:.0f} Hz. A fixed 13° wedge, not a ball head.")
+         if pick else "no plate up to 1 in. passes"),
         ("4. Coaxial cage", "pass" if g["pass_"] else "FAIL",
          f"{g['mass_kg']:.2f} kg added; post every cube and each branch end; drift {g['drift_um_per_K_post_difference']:.1f} µm/K at the "
          f"plate; bridge sway {g['bridge_f1_hz']:.0f} -> {g['bridge_f1_with_cage_hz']:.0f} Hz."),
@@ -733,8 +784,9 @@ def summary_rows(R):
          f"loss {a['total_waveguide_dB'][0]:.0f}-{a['total_waveguide_dB'][1]:.0f} dB greased vs {a['total_rod_end_dB'][0]:.0f}-"
          f"{a['total_rod_end_dB'][1]:.0f} dB at the rod end; rod end {a['rod_end_max_C']:.0f} °C ({a['rod_end_powder_gaps_C']:.0f} with powder in the gaps)."),
         ("7. Temperatures at the ports", "flag",
-         "windows and slides at wall temperature (25-61 °C), fine for FKM and fused silica; the cameras sit in the Shuttle's air, "
-         "38-43 °C in the busy case, at or above a 40 °C camera rating."),
+         f"windows and slides at wall temperature (25-61 °C), fine for FKM and fused silica; but a room-temperature purge makes the LW "
+         f"slide up to {t['purge']['worst_colder_K']:.0f} K colder than a hot chamber's gas, which draws condensate (plume.md): warm the purge "
+         f"(≤ {t['purge']['heater_max_W']:.1f} W). The cameras sit in the Shuttle's air, 38-43 °C in the busy case, at or above a 40 °C rating."),
     ]
 
 

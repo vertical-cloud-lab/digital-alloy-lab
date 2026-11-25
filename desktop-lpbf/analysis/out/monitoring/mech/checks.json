@@ -290,6 +290,7 @@
     "squeeze_min": -0.07086614173228349,
     "squeeze_nom": 0.055118110236220416,
     "squeeze_max": 0.18110236220472434,
+    "glass_bearing_max_MPa": 2.173228346456692,
     "pass_": false
    },
    {
@@ -299,6 +300,7 @@
     "squeeze_min": 0.15000000000000002,
     "squeeze_nom": 0.25,
     "squeeze_max": 0.35,
+    "glass_bearing_max_MPa": 4.199999999999999,
     "pass_": true
    }
   ],
@@ -477,7 +479,7 @@
    "pass_": true
   },
   "pass_": true,
-  "method": "cantilever plate from the chamber's left wall to the camera's centre of mass, camera as a rigid body (mass and pitch inertia) at the tip: 2-DOF eigenvalues with the plate's consistent mass; image shift = translation + tilt x working distance; criterion f1 >= 2.5 x 60 Hz and static shift < 1 px"
+  "method": "cantilever plate from the chamber's left wall to the camera's centre of mass, camera as a rigid body (mass and pitch inertia) at the tip: 2-DOF eigenvalues with the plate's consistent mass; image shift = translation + tilt x working distance (mode 1's shape for the vibration); criterion f1 >= 2.5 x 60 Hz and vibration < 0.5 px; the static sag is aimed out when the camera is set up"
  },
  "4": {
   "items": [
@@ -4989,8 +4991,112 @@
    -0.20654683318775888,
    0.2303109076493338
   ],
+  "purge": {
+   "rows": [
+    {
+     "purge_lpm": 1.0,
+     "u_m_s": 1.3262911924324614,
+     "h_purge": 18.2751553561965,
+     "h_back": 5.614805293614951,
+     "T_gas": 25.0,
+     "T_purge": 22.0,
+     "T_slide": 23.32191206096493,
+     "colder_than_gas_K": 1.6780879390350698,
+     "heater_to_match_W": 0.042198
+    },
+    {
+     "purge_lpm": 1.0,
+     "u_m_s": 1.3262911924324614,
+     "h_purge": 18.2751553561965,
+     "h_back": 5.614805293614951,
+     "T_gas": 25.0,
+     "T_purge": 30.0,
+     "T_slide": 29.441689527016386,
+     "colder_than_gas_K": -4.441689527016386,
+     "heater_to_match_W": 0.0
+    },
+    {
+     "purge_lpm": 1.0,
+     "u_m_s": 1.3262911924324614,
+     "h_purge": 18.2751553561965,
+     "h_back": 7.396275586467773,
+     "T_gas": 60.0,
+     "T_purge": 22.0,
+     "T_slide": 33.52232161053019,
+     "colder_than_gas_K": 26.47767838946981,
+     "heater_to_match_W": 0.534508
+    },
+    {
+     "purge_lpm": 1.0,
+     "u_m_s": 1.3262911924324614,
+     "h_purge": 18.2751553561965,
+     "h_back": 7.396275586467773,
+     "T_gas": 60.0,
+     "T_purge": 30.0,
+     "T_slide": 39.2174167992676,
+     "colder_than_gas_K": 20.782583200732397,
+     "heater_to_match_W": 0.42198
+    },
+    {
+     "purge_lpm": 3.0,
+     "u_m_s": 3.9788735772973842,
+     "h_purge": 31.65349759314684,
+     "h_back": 5.614805293614951,
+     "T_gas": 25.0,
+     "T_purge": 22.0,
+     "T_slide": 22.8473803385928,
+     "colder_than_gas_K": 2.1526196614072006,
+     "heater_to_match_W": 0.12659399999999998
+    },
+    {
+     "purge_lpm": 3.0,
+     "u_m_s": 3.9788735772973842,
+     "h_purge": 31.65349759314684,
+     "h_back": 5.614805293614951,
+     "T_gas": 25.0,
+     "T_purge": 30.0,
+     "T_slide": 29.642108328074844,
+     "colder_than_gas_K": -4.642108328074844,
+     "heater_to_match_W": 0.0
+    },
+    {
+     "purge_lpm": 3.0,
+     "u_m_s": 3.9788735772973842,
+     "h_purge": 31.65349759314684,
+     "h_back": 7.396275586467773,
+     "T_gas": 60.0,
+     "T_purge": 22.0,
+     "T_slide": 29.574806700242476,
+     "colder_than_gas_K": 30.425193299757524,
+     "heater_to_match_W": 1.603524
+    },
+    {
+     "purge_lpm": 3.0,
+     "u_m_s": 3.9788735772973842,
+     "h_purge": 31.65349759314684,
+     "h_back": 7.396275586467773,
+     "T_gas": 60.0,
+     "T_purge": 30.0,
+     "T_slide": 36.05955578138103,
+     "colder_than_gas_K": 23.94044421861897,
+     "heater_to_match_W": 1.26594
+    }
+   ],
+   "purge_off": [
+    {
+     "T_gas": 25.0,
+     "T_slide": 26.388250733810683
+    },
+    {
+     "T_gas": 60.0,
+     "T_slide": 61.18874504969903
+    }
+   ],
+   "worst_colder_K": 30.425193299757524,
+   "heater_max_W": 1.603524
+  },
   "pass_": null,
   "flag": "the busy-VLM air (38-43 C) is at or above a 40 C camera limit; the cameras need the same answer as the laser (heat.md \u00a72: chilled water or a ducted exhaust)"
  },
- "run_utc": "2026-11-25 21:37"
+ "run_utc": "2026-11-25 21:42"
 }
