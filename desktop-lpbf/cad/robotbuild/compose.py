@@ -267,7 +267,7 @@ def main(argv=None):
     for ci, ch in enumerate(chapters):
         n = len(ch["meta"])
         card = P.title_card(ch["card"]["title"], ch["card"]["lines"], ch["card"]["note"]) if ch["card"] else None
-        pick = {int(n * f) for f in (0.12, 0.38, 0.62, 0.88)}
+        pick = {int(n * f) for f in (0.12, 0.38, 0.62, 0.88)} if card is None else {n // 2}   # one thumb for a card
         title = ch["meta"][0].get("chapter") or ch["name"]
         for i, m in enumerate(ch["meta"]):
             if card is not None:
