@@ -3,6 +3,8 @@
 Inputs (all in this folder):
   raw/unknowns/*.msa, raw/standards/*.msa   spectra as posted in vertical-cloud-lab/caliber
   dtsa2-results.csv                         DTSA-II results, transcribed from the reports
+  dtsa2-rerun/broadened.csv                 the DTSA-II re-run (dtsa2-rerun/run.sh) with the
+                                            0.96 us runs fitted against broadened standards
 
 Outputs:
   results.csv                one row per run: acquisition settings read from the .msa headers,
@@ -195,8 +197,21 @@ def main():
     amp_time_check()
 
 
+def refit_metals():
+    """Mg and Si renormalized without O, from the DTSA-II re-run with broadened standards,
+    for the 0.96 us runs at 5 kV."""
+    out = {}
+    with open(HERE / "dtsa2-rerun/broadened.csv", newline="") as f:
+        for r in csv.DictReader(f):
+            if r["amp_time_us"] == "0.96" and r["beam_kV"] == "5":
+                metals = sum(float(r[f"{el}_wt_norm"]) for el in ("Mg", "Al", "Si"))
+                out[r["run"]] = {el: 100 * float(r[f"{el}_wt_norm"]) / metals for el in ("Mg", "Si")}
+    return out
+
+
 def plot(rows):
     ink, ink2, grid = "#191919", "#666666", "#e6e6e6"
+    refit = refit_metals()
     groups = [  # (label, colour, marker, x offset, test)
         ("Matched settings, analytical total 1.03 (11-06)", "#257de0", "o", -0.6,
          lambda r: r["usable"] == "yes"),
@@ -213,6 +228,7 @@ def plot(rows):
         ref = STANDARDLESS_FEEDSTOCK[el]
         ax.axhline(ref, color=ink2, lw=1.2, ls=(0, (4, 3)), zorder=1)
         ax.text(26.9, ref, "standardless,\nfeedstock\npowder", va="center", ha="left", fontsize=8.5, color=ink2)
+        xpos = {}
         for label, colour, marker, dx, test in groups:
             sel = [r for r in rows if test(r)]
             xs, ys = [], []
@@ -222,8 +238,21 @@ def plot(rows):
                 for j, r in zip(jit, at):
                     xs.append(kv + dx + j)
                     ys.append(r[f"{el}_wt_metals"])
+                    xpos[r["run"]] = (kv + dx + j, r[f"{el}_wt_metals"])
             ax.plot(xs, ys, ls="none", marker=marker, ms=8.5, mfc=colour, mec="white", mew=1.0,
                     label=label if el == "Mg" else None, zorder=3)
+        # The same 11-18 runs at 5 kV, re-fitted in DTSA-II against standards broadened to
+        # their resolution (dtsa2-rerun/). The 5 kV standards are the sound ones.
+        xs, ys = [], []
+        for run, (x, y0) in xpos.items():
+            if run in refit:
+                y1 = refit[run][el]
+                ax.plot([x, x], [y0, y1], color="#f47230", lw=1.0, alpha=0.7, zorder=2)
+                xs.append(x)
+                ys.append(y1)
+        ax.plot(xs, ys, ls="none", marker="s", ms=8.5, mfc="white", mec="#f47230", mew=1.6, zorder=3,
+                label="Same 11-18 runs at 5 kV, re-fitted against standards broadened to match"
+                if el == "Mg" else None)
         ax.set_ylabel(f"{el} (wt %, Al + Si + Mg = 100)", color=ink)
         ax.grid(axis="y", color=grid, lw=0.8)
         ax.set_axisbelow(True)
