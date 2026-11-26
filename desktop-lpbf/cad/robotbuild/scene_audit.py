@@ -779,9 +779,9 @@ def run(chapter, every=1, stills=0, quiet=False, max_frames=None, only=None):
                     if dep > v["worst"]:
                         v["worst"], v["frame"] = dep, n
                         v["snap"] = ((x.geom.V, x.geom.F), x.M.copy(), (y.geom.V, y.geom.F), y.M.copy())   # arrays only, no BVHs
-        if not quiet and checked % 200 == 0:
+        if not quiet and checked % 50 == 0:
             print(f"  {tag}: frame {n}, {checked} checked, {len(viol)} violating pairs, {n_fcl} narrow checks, "
-                  f"{len(rp.geoms)} meshes, {time.time() - t0:.0f} s", flush=True)
+                  f"{len(rp.geoms)} meshes, {time.time() - t0:.0f} s, peak {_rss_mb()} MB", flush=True)
     # rigid pairs: relative pose and meshes constant over every recorded change of either actor
     rigid = {}
     for k in list(viol):
@@ -845,6 +845,11 @@ def asm_labels():
     except Exception:                                               # noqa: BLE001
         return {}
     return {f"o{i}": f"{o.get('kind', '')}: {str(o.get('name', ''))[:70]}" for i, o in objs.items()}
+
+
+def _rss_mb():
+    import resource
+    return resource.getrusage(resource.RUSAGE_SELF).ru_maxrss // 1024
 
 
 def _js(o):

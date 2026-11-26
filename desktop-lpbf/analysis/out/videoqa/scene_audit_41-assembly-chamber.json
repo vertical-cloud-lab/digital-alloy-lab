@@ -1,0 +1,4528 @@
+{
+ "chapter": "41-assembly-chamber",
+ "threshold_mm": 1.5,
+ "opaque_min": 0.3,
+ "recordings": [
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part0",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part1",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part2",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part3",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part4",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part5",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part6",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part7",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part8",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part9",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part10",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part11"
+ ],
+ "frames_recorded": 10325,
+ "frames_checked": 10325,
+ "subsample": "every recorded frame",
+ "recorded_every": 1,
+ "actors": 628,
+ "movers": 521,
+ "mover_names": [
+  "A/base/0",
+  "A/base/1",
+  "A/cap/plate/left_finger_tip",
+  "A/cap/plate/right_finger_tip",
+  "A/changer",
+  "A/forearm/0",
+  "A/forearm/1",
+  "A/forearm/2",
+  "A/forearm/3",
+  "A/gr/adapter/0",
+  "A/gr/adapter/1",
+  "A/gr/base/0",
+  "A/gr/base/1",
+  "A/gr/camera/0",
+  "A/gr/camera/1",
+  "A/gr/camera/2",
+  "A/gr/camera/3",
+  "A/gr/camera/4",
+  "A/gr/left_finger/0",
+  "A/gr/left_finger/1",
+  "A/gr/left_finger_tip/0",
+  "A/gr/left_finger_tip/1",
+  "A/gr/left_inner_knuckle/0",
+  "A/gr/left_inner_knuckle/1",
+  "A/gr/left_knuckle/0",
+  "A/gr/right_finger/0",
+  "A/gr/right_finger/1",
+  "A/gr/right_finger_tip/0",
+  "A/gr/right_finger_tip/1",
+  "A/gr/right_inner_knuckle/0",
+  "A/gr/right_inner_knuckle/1",
+  "A/gr/right_knuckle/0",
+  "A/shoulder/0",
+  "A/shoulder/1",
+  "A/shoulder/2",
+  "A/tool/nozzle/0/None",
+  "A/tool/nutrunner/0/3.6",
+  "A/tool/nutrunner/0/6.0",
+  "A/tool/nutrunner/165/6.0",
+  "A/tool/nutrunner_angle/0/3.6",
+  "A/tool/nutrunner_angle/0/6.0",
+  "A/tool/nutrunner_angle/30/3.6",
+  "A/tool/pinrod/0/None",
+  "A/tool/ringpad/0/None",
+  "A/tool/roller/0/None",
+  "A/tool/screwdriver/0/3.1",
+  "A/tool/screwdriver/0/3.6",
+  "A/tool/screwdriver/0/4.8",
+  "A/tool/screwdriver/60/3.6",
+  "A/tool/vacuum/0/None",
+  "A/tool/wand/0/None",
+  "A/upper_arm/0",
+  "A/upper_arm/1",
+  "A/upper_arm/2",
+  "A/upper_arm/3",
+  "A/wrist1/0",
+  "A/wrist1/1",
+  "A/wrist1/2",
+  "A/wrist2/0",
+  "A/wrist2/1",
+  "A/wrist2/2",
+  "A/wrist3/0",
+  "B/base/0",
+  "B/base/1",
+  "B/cap/ring/left_finger_tip",
+  "B/cap/ring/right_finger_tip",
+  "B/changer",
+  "B/forearm/0",
+  "B/forearm/1",
+  "B/forearm/2",
+  "B/forearm/3",
+  "B/gr/adapter/0",
+  "B/gr/adapter/1",
+  "B/gr/base/0",
+  "B/gr/base/1",
+  "B/gr/camera/0",
+  "B/gr/camera/1",
+  "B/gr/camera/2",
+  "B/gr/camera/3",
+  "B/gr/camera/4",
+  "B/gr/left_finger/0",
+  "B/gr/left_finger/1",
+  "B/gr/left_finger_tip/0",
+  "B/gr/left_finger_tip/1",
+  "B/gr/left_inner_knuckle/0",
+  "B/gr/left_inner_knuckle/1",
+  "B/gr/left_knuckle/0",
+  "B/gr/right_finger/0",
+  "B/gr/right_finger/1",
+  "B/gr/right_finger_tip/0",
+  "B/gr/right_finger_tip/1",
+  "B/gr/right_inner_knuckle/0",
+  "B/gr/right_inner_knuckle/1",
+  "B/gr/right_knuckle/0",
+  "B/shoulder/0",
+  "B/shoulder/1",
+  "B/shoulder/2",
+  "B/tool/nutrunner_angle/0/6.0",
+  "B/tool/nutrunner_angle/0/None",
+  "B/tool/roller/0/None",
+  "B/tool/screwdriver/0/4.8",
+  "B/tool/screwdriver/100/3.6",
+  "B/tool/screwdriver/60/3.6",
+  "B/upper_arm/0",
+  "B/upper_arm/1",
+  "B/upper_arm/2",
+  "B/upper_arm/3",
+  "B/wrist1/0",
+  "B/wrist1/1",
+  "B/wrist1/2",
+  "B/wrist2/0",
+  "B/wrist2/1",
+  "B/wrist2/2",
+  "B/wrist3/0",
+  "hoist",
+  "jaws",
+  "mirA/A MiR250",
+  "mirA/A cabinet",
+  "mirA/A mounting plate",
+  "mirA/A screw presenter",
+  "mirA/A tool stand",
+  "mirA/light strip",
+  "mirA/top",
+  "mirB/B MiR250",
+  "mirB/B cabinet",
+  "mirB/B mounting plate",
+  "mirB/B screw presenter",
+  "mirB/B tool stand",
+  "mirB/light strip",
+  "mirB/top",
+  "o1",
+  "o100",
+  "o101",
+  "o102",
+  "o103",
+  "o104",
+  "o105",
+  "o106",
+  "o107",
+  "o108",
+  "o109",
+  "o110",
+  "o111",
+  "o112",
+  "o113",
+  "o114",
+  "o115",
+  "o116",
+  "o117",
+  "o118",
+  "o119",
+  "o12",
+  "o120",
+  "o121",
+  "o122",
+  "o123",
+  "o124",
+  "o125",
+  "o126",
+  "o127",
+  "o128",
+  "o129",
+  "o13",
+  "o130",
+  "o131",
+  "o132",
+  "o133",
+  "o134",
+  "o135",
+  "o136",
+  "o137",
+  "o138",
+  "o14",
+  "o141",
+  "o142",
+  "o143",
+  "o144",
+  "o145",
+  "o147",
+  "o148",
+  "o149",
+  "o15",
+  "o150",
+  "o151",
+  "o153",
+  "o154",
+  "o155",
+  "o156",
+  "o157",
+  "o16",
+  "o17",
+  "o18",
+  "o19",
+  "o195",
+  "o196",
+  "o197",
+  "o198",
+  "o199",
+  "o20",
+  "o200",
+  "o201",
+  "o202",
+  "o203",
+  "o204",
+  "o205",
+  "o206",
+  "o207",
+  "o208",
+  "o209",
+  "o21",
+  "o210",
+  "o211",
+  "o212",
+  "o213",
+  "o214",
+  "o215",
+  "o216",
+  "o217",
+  "o218",
+  "o219",
+  "o22",
+  "o220",
+  "o221",
+  "o222",
+  "o223",
+  "o224",
+  "o225",
+  "o226",
+  "o227",
+  "o228",
+  "o229",
+  "o23",
+  "o230",
+  "o231",
+  "o232",
+  "o233",
+  "o234",
+  "o235",
+  "o236",
+  "o237",
+  "o238",
+  "o239",
+  "o24",
+  "o240",
+  "o241",
+  "o242",
+  "o243",
+  "o244",
+  "o245",
+  "o246",
+  "o247",
+  "o248",
+  "o249",
+  "o250",
+  "o251",
+  "o252",
+  "o253",
+  "o254",
+  "o255",
+  "o256",
+  "o257",
+  "o258",
+  "o259",
+  "o260",
+  "o261",
+  "o262",
+  "o263",
+  "o264",
+  "o265",
+  "o266",
+  "o267",
+  "o268",
+  "o269",
+  "o27",
+  "o270",
+  "o271",
+  "o272",
+  "o273",
+  "o274",
+  "o275",
+  "o276",
+  "o277",
+  "o278",
+  "o279",
+  "o28",
+  "o280",
+  "o282",
+  "o283",
+  "o284",
+  "o29",
+  "o296",
+  "o297",
+  "o298",
+  "o299",
+  "o30",
+  "o300",
+  "o301",
+  "o302",
+  "o303",
+  "o304",
+  "o305",
+  "o306",
+  "o307",
+  "o308",
+  "o309",
+  "o31",
+  "o310",
+  "o311",
+  "o312",
+  "o313",
+  "o314",
+  "o315",
+  "o316",
+  "o317",
+  "o318",
+  "o319",
+  "o320",
+  "o321",
+  "o322",
+  "o323",
+  "o324",
+  "o325",
+  "o326",
+  "o327",
+  "o329",
+  "o330",
+  "o331",
+  "o332",
+  "o333",
+  "o334",
+  "o335",
+  "o338",
+  "o339",
+  "o34",
+  "o340",
+  "o341",
+  "o342",
+  "o343",
+  "o344",
+  "o345",
+  "o346",
+  "o347",
+  "o348",
+  "o349",
+  "o35",
+  "o354",
+  "o355",
+  "o356",
+  "o357",
+  "o358",
+  "o359",
+  "o36",
+  "o360",
+  "o361",
+  "o362",
+  "o363",
+  "o364",
+  "o365",
+  "o368",
+  "o369",
+  "o37",
+  "o370",
+  "o371",
+  "o372",
+  "o373",
+  "o374",
+  "o375",
+  "o378",
+  "o379",
+  "o38",
+  "o380",
+  "o381",
+  "o382",
+  "o383",
+  "o384",
+  "o385",
+  "o386",
+  "o387",
+  "o388",
+  "o389",
+  "o39",
+  "o390",
+  "o391",
+  "o392",
+  "o393",
+  "o394",
+  "o395",
+  "o396",
+  "o397",
+  "o398",
+  "o399",
+  "o40",
+  "o400",
+  "o401",
+  "o402",
+  "o403",
+  "o406",
+  "o407",
+  "o408",
+  "o409"
+ ],
+ "method": "translational penetration depth (26 directions, ladder 1.5-100 mm, bisection-refined), python-fcl BVH meshes of the recorded triangles, containment by winding numbers; a pair is re-checked when a mesh or the relative pose changes; a pair deeper than its limit is re-checked every frame at the limit, its depth re-measured at most every 6 frames",
+ "narrow_checks": 227092,
+ "pairs_tested": 227092,
+ "violations": 209,
+ "worst_mm": ">100",
+ "worst": {
+  "a": "mirA/A tool stand",
+  "b": "op/trousers",
+  "worst_mm": ">100",
+  "worst_frame": 429,
+  "frames": 192,
+  "frame_ranges": [
+   [
+    429,
+    452
+   ],
+   [
+    3881,
+    3904
+   ],
+   [
+    4384,
+    4419
+   ],
+   [
+    10217,
+    10324
+   ]
+  ],
+  "limit_mm": 1.5,
+  "rule": null
+ },
+ "pairs": [
+  {
+   "a": "mirA/A tool stand",
+   "b": "op/trousers",
+   "worst_mm": ">100",
+   "worst_frame": 429,
+   "frames": 192,
+   "frame_ranges": [
+    [
+     429,
+     452
+    ],
+    [
+     3881,
+     3904
+    ],
+    [
+     4384,
+     4419
+    ],
+    [
+     10217,
+     10324
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "jaws",
+   "b": "st/Trunnion stands",
+   "worst_mm": 87.5,
+   "worst_frame": 0,
+   "frames": 10325,
+   "frame_ranges": [
+    [
+     0,
+     10324
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "hoist",
+   "b": "o19",
+   "b_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
+   "worst_mm": 50.0,
+   "worst_frame": 3297,
+   "frames": 80,
+   "frame_ranges": [
+    [
+     3297,
+     3376
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/left_finger_tip/0",
+   "b": "o150",
+   "b_is": "part: 2-axis galvo scan head (SCANLAB basiCube 20)",
+   "worst_mm": 43.8,
+   "worst_frame": 10109,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     10073,
+     10073
+    ],
+    [
+     10109,
+     10109
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o253",
+   "b_is": "dowel: Floor-plate dowels, \u00d86 x 20 316 #1",
+   "worst_mm": 40.6,
+   "worst_frame": 145,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     145,
+     148
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o254",
+   "b_is": "dowel: Floor-plate dowels, \u00d86 x 20 316 #2",
+   "worst_mm": 40.6,
+   "worst_frame": 145,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     145,
+     148
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o53",
+   "b": "o68",
+   "a_is": "part: Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 in",
+   "b_is": "part: Lift-out wall liner, right (0.5 mm 316L, screw hole slotted to the bac",
+   "worst_mm": 37.5,
+   "worst_frame": 4365,
+   "frames": 14,
+   "frame_ranges": [
+    [
+     4365,
+     4378
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o78",
+   "b": "o93",
+   "a_is": "part: Recoater carriage block (6061)",
+   "b_is": "part: Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "worst_mm": 37.5,
+   "worst_frame": 6167,
+   "frames": 1258,
+   "frame_ranges": [
+    [
+     6167,
+     7424
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/wrist2/1",
+   "b": "o340",
+   "b_is": "shcs: Outlet-plenum screws, M4 x 12 316, counterbored #3",
+   "worst_mm": 35.9,
+   "worst_frame": 1414,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     1414,
+     1417
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table stretchers",
+   "b": "mirA/A MiR250",
+   "worst_mm": 34.4,
+   "worst_frame": 166,
+   "frames": 12,
+   "frame_ranges": [
+    [
+     166,
+     171
+    ],
+    [
+     1232,
+     1237
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "hoist",
+   "b": "o27",
+   "b_is": "part: Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "worst_mm": 34.4,
+   "worst_frame": 3297,
+   "frames": 80,
+   "frame_ranges": [
+    [
+     3297,
+     3376
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "hoist",
+   "b": "o29",
+   "b_is": "part: Heater block M50 (6061-T6, bayonet socket)",
+   "worst_mm": 34.4,
+   "worst_frame": 3297,
+   "frames": 80,
+   "frame_ranges": [
+    [
+     3297,
+     3376
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/right_finger_tip/1",
+   "b": "o150",
+   "b_is": "part: 2-axis galvo scan head (SCANLAB basiCube 20)",
+   "worst_mm": 32.8,
+   "worst_frame": 10073,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     10073,
+     10073
+    ],
+    [
+     10109,
+     10109
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/tool/nutrunner_angle/0/6.0",
+   "b": "B/tool/nutrunner_angle/0/6.0",
+   "worst_mm": 31.2,
+   "worst_frame": 3641,
+   "frames": 7,
+   "frame_ranges": [
+    [
+     3635,
+     3641
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/right_finger_tip/0",
+   "b": "o150",
+   "b_is": "part: 2-axis galvo scan head (SCANLAB basiCube 20)",
+   "worst_mm": 28.1,
+   "worst_frame": 10073,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     10073,
+     10073
+    ],
+    [
+     10109,
+     10109
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o77",
+   "b": "o93",
+   "a_is": "part: Recoater carriage (15 mm rail)",
+   "b_is": "part: Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "worst_mm": 25.0,
+   "worst_frame": 6167,
+   "frames": 1258,
+   "frame_ranges": [
+    [
+     6167,
+     7424
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o53",
+   "b": "o93",
+   "a_is": "part: Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 in",
+   "b_is": "part: Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "worst_mm": 24.2,
+   "worst_frame": 6167,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     6167,
+     6168
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o54",
+   "b_is": "part: Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-r",
+   "worst_mm": 23.4,
+   "worst_frame": 145,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     145,
+     148
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o487",
+   "b_is": "part: Zero-point clamping modules #1",
+   "worst_mm": 23.4,
+   "worst_frame": 2295,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     2295,
+     2298
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "hoist",
+   "b": "o30",
+   "b_is": "part: Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
+   "worst_mm": 23.4,
+   "worst_frame": 3297,
+   "frames": 80,
+   "frame_ranges": [
+    [
+     3297,
+     3376
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "hoist",
+   "b": "o480",
+   "b_is": "part: Radiation shields M50 #2",
+   "worst_mm": 23.4,
+   "worst_frame": 3297,
+   "frames": 80,
+   "frame_ranges": [
+    [
+     3297,
+     3376
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o19",
+   "b": "o54",
+   "a_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
+   "b_is": "part: Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-r",
+   "worst_mm": 21.8,
+   "worst_frame": 3159,
+   "frames": 19,
+   "frame_ranges": [
+    [
+     2506,
+     2508
+    ],
+    [
+     3157,
+     3159
+    ],
+    [
+     3162,
+     3162
+    ],
+    [
+     3169,
+     3175
+    ],
+    [
+     3182,
+     3186
+    ],
+    [
+     3193,
+     3195
+    ],
+    [
+     3200,
+     3202
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "hoist",
+   "b": "o479",
+   "b_is": "part: Radiation shields M50 #1",
+   "worst_mm": 20.9,
+   "worst_frame": 3297,
+   "frames": 80,
+   "frame_ranges": [
+    [
+     3297,
+     3376
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/left_finger_tip/1",
+   "b": "o150",
+   "b_is": "part: 2-axis galvo scan head (SCANLAB basiCube 20)",
+   "worst_mm": 20.9,
+   "worst_frame": 10109,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     10073,
+     10073
+    ],
+    [
+     10109,
+     10109
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o481",
+   "b": "o485",
+   "a_is": "part: Zero-point posts #1",
+   "b_is": "part: Zero-point module plates #1",
+   "worst_mm": 20.1,
+   "worst_frame": 2231,
+   "frames": 8,
+   "frame_ranges": [
+    [
+     2231,
+     2238
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o482",
+   "b": "o485",
+   "a_is": "part: Zero-point posts #2",
+   "b_is": "part: Zero-point module plates #1",
+   "worst_mm": 20.1,
+   "worst_frame": 2231,
+   "frames": 8,
+   "frame_ranges": [
+    [
+     2231,
+     2238
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/tool/wand/0/None",
+   "b": "o71",
+   "b_is": "part: Lift-out wall liner, back lower left (0.5 mm 316L, behind the ball scr",
+   "worst_mm": 20.1,
+   "worst_frame": 4002,
+   "frames": 32,
+   "frame_ranges": [
+    [
+     3984,
+     4015
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/tool/wand/0/None",
+   "b": "o72",
+   "b_is": "part: Lift-out wall liner, back lower right (0.5 mm 316L, behind the ball sc",
+   "worst_mm": 20.1,
+   "worst_frame": 4223,
+   "frames": 31,
+   "frame_ranges": [
+    [
+     4211,
+     4241
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o483",
+   "b": "o486",
+   "a_is": "part: Zero-point posts #3",
+   "b_is": "part: Zero-point module plates #2",
+   "worst_mm": 19.3,
+   "worst_frame": 2256,
+   "frames": 8,
+   "frame_ranges": [
+    [
+     2256,
+     2263
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o484",
+   "b": "o486",
+   "a_is": "part: Zero-point posts #4",
+   "b_is": "part: Zero-point module plates #2",
+   "worst_mm": 19.3,
+   "worst_frame": 2256,
+   "frames": 8,
+   "frame_ranges": [
+    [
+     2256,
+     2263
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/tool/wand/0/None",
+   "b": "o70",
+   "b_is": "part: Lift-out wall liner, back upper right (0.5 mm 316L, behind the ball sc",
+   "worst_mm": 19.3,
+   "worst_frame": 4294,
+   "frames": 34,
+   "frame_ranges": [
+    [
+     4288,
+     4321
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/right_inner_knuckle/0",
+   "b": "o150",
+   "b_is": "part: 2-axis galvo scan head (SCANLAB basiCube 20)",
+   "worst_mm": 19.3,
+   "worst_frame": 10073,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     10073,
+     10073
+    ],
+    [
+     10109,
+     10109
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o485",
+   "b_is": "part: Zero-point module plates #1",
+   "worst_mm": 18.5,
+   "worst_frame": 2202,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     2202,
+     2205
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "hoist",
+   "b": "o473",
+   "b_is": "part: Macor standoff rings M50 #4",
+   "worst_mm": 18.5,
+   "worst_frame": 3297,
+   "frames": 80,
+   "frame_ranges": [
+    [
+     3297,
+     3376
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "hoist",
+   "b": "o474",
+   "b_is": "part: Macor standoff rings M50 #5",
+   "worst_mm": 18.5,
+   "worst_frame": 3297,
+   "frames": 80,
+   "frame_ranges": [
+    [
+     3297,
+     3376
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "hoist",
+   "b": "o475",
+   "b_is": "part: Macor standoff rings M50 #6",
+   "worst_mm": 18.5,
+   "worst_frame": 3297,
+   "frames": 80,
+   "frame_ranges": [
+    [
+     3297,
+     3376
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/tool/wand/0/None",
+   "b": "o69",
+   "b_is": "part: Lift-out wall liner, back upper left (0.5 mm 316L, behind the ball scr",
+   "worst_mm": 18.5,
+   "worst_frame": 4069,
+   "frames": 32,
+   "frame_ranges": [
+    [
+     4069,
+     4100
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/tool/ringpad/0/None",
+   "b": "o129",
+   "b_is": "part: Camera window (\u00d81 in. x 3 mm fused silica; FESH0950 short-pass filter ",
+   "worst_mm": 18.5,
+   "worst_frame": 8463,
+   "frames": 5,
+   "frame_ranges": [
+    [
+     8463,
+     8467
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "hoist",
+   "b": "o34",
+   "b_is": "part: Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a ",
+   "worst_mm": 17.7,
+   "worst_frame": 3297,
+   "frames": 80,
+   "frame_ranges": [
+    [
+     3297,
+     3376
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/wrist1/1",
+   "b": "B/gr/camera/1",
+   "worst_mm": 17.7,
+   "worst_frame": 6262,
+   "frames": 9,
+   "frame_ranges": [
+    [
+     6262,
+     6270
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o147",
+   "b": "o151",
+   "a_is": "part: f-theta lens, f = 160 mm (Thorlabs FTH160-1064)",
+   "b_is": "part: Galvo riser plate (6061, 5 mm, \u00d856 bore: clears the f-theta's \u00d853 nose",
+   "worst_mm": 17.7,
+   "worst_frame": 9871,
+   "frames": 8,
+   "frame_ranges": [
+    [
+     9871,
+     9878
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o53",
+   "b": "o67",
+   "a_is": "part: Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 in",
+   "b_is": "part: Lift-out wall liner, left (0.5 mm 316L, screw hole slotted to the back",
+   "worst_mm": 16.9,
+   "worst_frame": 4151,
+   "frames": 14,
+   "frame_ranges": [
+    [
+     4145,
+     4158
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/wrist1/1",
+   "b": "B/gr/camera/0",
+   "worst_mm": 16.9,
+   "worst_frame": 6262,
+   "frames": 9,
+   "frame_ranges": [
+    [
+     6262,
+     6270
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/wrist1/1",
+   "b": "B/gr/camera/2",
+   "worst_mm": 16.9,
+   "worst_frame": 6262,
+   "frames": 9,
+   "frame_ranges": [
+    [
+     6262,
+     6270
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/left_finger_tip/0",
+   "b": "o101",
+   "b_is": "part: Cover-slide drawer (6061, robot pull tab, half-dovetail seal groove)",
+   "worst_mm": 16.9,
+   "worst_frame": 7518,
+   "frames": 36,
+   "frame_ranges": [
+    [
+     7518,
+     7553
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/left_finger_tip/0",
+   "b": "o144",
+   "b_is": "part: Door handle",
+   "worst_mm": 16.9,
+   "worst_frame": 8733,
+   "frames": 23,
+   "frame_ranges": [
+    [
+     8733,
+     8755
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/right_finger_tip/0",
+   "b": "o144",
+   "b_is": "part: Door handle",
+   "worst_mm": 16.1,
+   "worst_frame": 8733,
+   "frames": 23,
+   "frame_ranges": [
+    [
+     8733,
+     8755
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o255",
+   "b_is": "insert: Helical inserts for the module screws, M6 x 12 18-8, in the floor #1",
+   "worst_mm": 15.2,
+   "worst_frame": 145,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     145,
+     148
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o256",
+   "b_is": "insert: Helical inserts for the module screws, M6 x 12 18-8, in the floor #2",
+   "worst_mm": 15.2,
+   "worst_frame": 145,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     145,
+     148
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o76",
+   "b": "o93",
+   "a_is": "part: Recoater guide rail (15 mm, 260 mm)",
+   "b_is": "part: Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "worst_mm": 15.2,
+   "worst_frame": 6167,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     6167,
+     6167
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/right_finger_tip/0",
+   "b": "o101",
+   "b_is": "part: Cover-slide drawer (6061, robot pull tab, half-dovetail seal groove)",
+   "worst_mm": 15.2,
+   "worst_frame": 7524,
+   "frames": 36,
+   "frame_ranges": [
+    [
+     7518,
+     7553
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o487",
+   "b": "o491",
+   "a_is": "part: Zero-point clamping modules #1",
+   "b_is": "part: Zero-point clamping pins M50 #1",
+   "worst_mm": 14.4,
+   "worst_frame": 2506,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     2506,
+     2506
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o488",
+   "b": "o492",
+   "a_is": "part: Zero-point clamping modules #2",
+   "b_is": "part: Zero-point clamping pins M50 #2",
+   "worst_mm": 14.4,
+   "worst_frame": 2506,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     2506,
+     2506
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/right_finger/0",
+   "b": "o150",
+   "b_is": "part: 2-axis galvo scan head (SCANLAB basiCube 20)",
+   "worst_mm": 13.6,
+   "worst_frame": 10073,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     10073,
+     10073
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o485",
+   "b": "o487",
+   "a_is": "part: Zero-point module plates #1",
+   "b_is": "part: Zero-point clamping modules #1",
+   "worst_mm": 12.8,
+   "worst_frame": 2325,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     2325,
+     2325
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o109",
+   "b": "o114",
+   "a_is": "part: Metering base (6061, fluted roller over a 100 mm dose line, two FKM fa",
+   "b_is": "part: Roller shaft: magnetic-fluid rotary feedthrough Ferrotec SSL-005-NN in",
+   "worst_mm": 12.8,
+   "worst_frame": 7879,
+   "frames": 822,
+   "frame_ranges": [
+    [
+     7879,
+     7879
+    ],
+    [
+     7888,
+     8708
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/right_finger_tip/0",
+   "b": "o127",
+   "b_is": "part: Camera viewport adapter + boss (6061; \u00d830 bore on the line of sight, \u00d8",
+   "worst_mm": 12.8,
+   "worst_frame": 8367,
+   "frames": 50,
+   "frame_ranges": [
+    [
+     8367,
+     8416
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o392",
+   "b_is": "insert: Leg helical inserts, M6 x 9 18-8, in the floor #1",
+   "worst_mm": 12.0,
+   "worst_frame": 145,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     145,
+     148
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o393",
+   "b_is": "insert: Leg helical inserts, M6 x 9 18-8, in the floor #2",
+   "worst_mm": 12.0,
+   "worst_frame": 145,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     145,
+     148
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o394",
+   "b_is": "insert: Leg helical inserts, M6 x 9 18-8, in the floor #3",
+   "worst_mm": 12.0,
+   "worst_frame": 145,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     145,
+     148
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o395",
+   "b_is": "insert: Leg helical inserts, M6 x 9 18-8, in the floor #4",
+   "worst_mm": 12.0,
+   "worst_frame": 145,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     145,
+     148
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o406",
+   "b_is": "insert: Zero-point post helical inserts, M6 x 9 18-8, in the floor #1",
+   "worst_mm": 12.0,
+   "worst_frame": 145,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     145,
+     148
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o407",
+   "b_is": "insert: Zero-point post helical inserts, M6 x 9 18-8, in the floor #2",
+   "worst_mm": 12.0,
+   "worst_frame": 145,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     145,
+     148
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o408",
+   "b_is": "insert: Zero-point post helical inserts, M6 x 9 18-8, in the floor #3",
+   "worst_mm": 12.0,
+   "worst_frame": 145,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     145,
+     148
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o409",
+   "b_is": "insert: Zero-point post helical inserts, M6 x 9 18-8, in the floor #4",
+   "worst_mm": 12.0,
+   "worst_frame": 145,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     145,
+     148
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o42",
+   "b_is": "part: Overflow port (KF-40, weld stub to 40 mm)",
+   "worst_mm": 12.0,
+   "worst_frame": 154,
+   "frames": 8,
+   "frame_ranges": [
+    [
+     148,
+     155
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o486",
+   "b": "o488",
+   "a_is": "part: Zero-point module plates #2",
+   "b_is": "part: Zero-point clamping modules #2",
+   "worst_mm": 12.0,
+   "worst_frame": 2346,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     2346,
+     2346
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "B/gr/left_finger_tip/0",
+   "b": "o77",
+   "b_is": "part: Recoater carriage (15 mm rail)",
+   "worst_mm": 12.0,
+   "worst_frame": 5018,
+   "frames": 180,
+   "frame_ranges": [
+    [
+     5018,
+     5197
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "hoist",
+   "b": "o35",
+   "b_is": "part: Bore seal M50 (aramid felt + carbon-filled PTFE scraper)",
+   "worst_mm": 11.6,
+   "worst_frame": 3297,
+   "frames": 80,
+   "frame_ranges": [
+    [
+     3297,
+     3376
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "hoist",
+   "b": "o260",
+   "b_is": "shcs: Heater-stack screws M50, M3 x 25 316, up through slotted counterbores ",
+   "worst_mm": 11.6,
+   "worst_frame": 3297,
+   "frames": 80,
+   "frame_ranges": [
+    [
+     3297,
+     3376
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/wrist3/0",
+   "b": "o340",
+   "b_is": "shcs: Outlet-plenum screws, M4 x 12 316, counterbored #3",
+   "worst_mm": 10.9,
+   "worst_frame": 1419,
+   "frames": 9,
+   "frame_ranges": [
+    [
+     1419,
+     1427
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "hoist",
+   "b": "o263",
+   "b_is": "insert: Heater-block helical inserts M50, M3 18-8 #2",
+   "worst_mm": 10.9,
+   "worst_frame": 3297,
+   "frames": 80,
+   "frame_ranges": [
+    [
+     3297,
+     3376
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/tool/pinrod/0/None",
+   "b": "o500",
+   "b_is": "part: Hinge pins #1",
+   "worst_mm": 10.9,
+   "worst_frame": 8824,
+   "frames": 24,
+   "frame_ranges": [
+    [
+     8812,
+     8835
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/tool/pinrod/0/None",
+   "b": "o501",
+   "b_is": "part: Hinge pins #2",
+   "worst_mm": 10.9,
+   "worst_frame": 8901,
+   "frames": 26,
+   "frame_ranges": [
+    [
+     8883,
+     8908
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o384",
+   "b_is": "insert: Z-flange helical inserts, M5 x 7.5 18-8, in the floor #1",
+   "worst_mm": 10.5,
+   "worst_frame": 145,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     145,
+     148
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o385",
+   "b_is": "insert: Z-flange helical inserts, M5 x 7.5 18-8, in the floor #2",
+   "worst_mm": 10.5,
+   "worst_frame": 145,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     145,
+     148
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o386",
+   "b_is": "insert: Z-flange helical inserts, M5 x 7.5 18-8, in the floor #3",
+   "worst_mm": 10.5,
+   "worst_frame": 145,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     145,
+     148
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o387",
+   "b_is": "insert: Z-flange helical inserts, M5 x 7.5 18-8, in the floor #4",
+   "worst_mm": 10.5,
+   "worst_frame": 145,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     145,
+     148
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o388",
+   "b": "o392",
+   "a_is": "shcs: Leg-to-floor screws, M6 x 25 316, up each leg's \u00d811 bore #1",
+   "b_is": "insert: Leg helical inserts, M6 x 9 18-8, in the floor #1",
+   "worst_mm": 10.5,
+   "worst_frame": 3187,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     3158,
+     3158
+    ],
+    [
+     3187,
+     3187
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o389",
+   "b": "o393",
+   "a_is": "shcs: Leg-to-floor screws, M6 x 25 316, up each leg's \u00d811 bore #2",
+   "b_is": "insert: Leg helical inserts, M6 x 9 18-8, in the floor #2",
+   "worst_mm": 10.5,
+   "worst_frame": 3187,
+   "frames": 3,
+   "frame_ranges": [
+    [
+     3158,
+     3158
+    ],
+    [
+     3187,
+     3187
+    ],
+    [
+     3202,
+     3202
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o390",
+   "b": "o394",
+   "a_is": "shcs: Leg-to-floor screws, M6 x 25 316, up each leg's \u00d811 bore #3",
+   "b_is": "insert: Leg helical inserts, M6 x 9 18-8, in the floor #3",
+   "worst_mm": 10.5,
+   "worst_frame": 3187,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     3158,
+     3158
+    ],
+    [
+     3187,
+     3187
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o391",
+   "b": "o395",
+   "a_is": "shcs: Leg-to-floor screws, M6 x 25 316, up each leg's \u00d811 bore #4",
+   "b_is": "insert: Leg helical inserts, M6 x 9 18-8, in the floor #4",
+   "worst_mm": 10.5,
+   "worst_frame": 3187,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     3158,
+     3158
+    ],
+    [
+     3187,
+     3187
+    ],
+    [
+     3200,
+     3202
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o145",
+   "b": "o151",
+   "a_is": "part: Optics bridge (6061, 25 mm)",
+   "b_is": "part: Galvo riser plate (6061, 5 mm, \u00d856 bore: clears the f-theta's \u00d853 nose",
+   "worst_mm": 9.8,
+   "worst_frame": 9870,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     9870,
+     9871
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o107",
+   "b": "o94",
+   "a_is": "part: Gas knife (cover-slide purge, 316L)",
+   "b_is": "part: Window flange (6061, two FKM O-ring grooves)",
+   "worst_mm": 9.4,
+   "worst_frame": 6772,
+   "frames": 3,
+   "frame_ranges": [
+    [
+     6772,
+     6774
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o344",
+   "b_is": "insert: Outlet-plenum helical inserts, M4 x 6 18-8, in the floor #1",
+   "worst_mm": 9.0,
+   "worst_frame": 145,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     145,
+     148
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o345",
+   "b_is": "insert: Outlet-plenum helical inserts, M4 x 6 18-8, in the floor #2",
+   "worst_mm": 9.0,
+   "worst_frame": 145,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     145,
+     148
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o346",
+   "b_is": "insert: Outlet-plenum helical inserts, M4 x 6 18-8, in the floor #3",
+   "worst_mm": 9.0,
+   "worst_frame": 145,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     145,
+     148
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o347",
+   "b_is": "insert: Outlet-plenum helical inserts, M4 x 6 18-8, in the floor #4",
+   "worst_mm": 9.0,
+   "worst_frame": 145,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     145,
+     148
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o348",
+   "b_is": "insert: Outlet-plenum helical inserts, M4 x 6 18-8, in the floor #5",
+   "worst_mm": 9.0,
+   "worst_frame": 145,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     145,
+     148
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o349",
+   "b_is": "insert: Outlet-plenum helical inserts, M4 x 6 18-8, in the floor #6",
+   "worst_mm": 9.0,
+   "worst_frame": 145,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     145,
+     148
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o354",
+   "b_is": "insert: Overflow-funnel helical inserts, M4 x 6 18-8, in the floor #1",
+   "worst_mm": 9.0,
+   "worst_frame": 145,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     145,
+     148
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o355",
+   "b_is": "insert: Overflow-funnel helical inserts, M4 x 6 18-8, in the floor #2",
+   "worst_mm": 9.0,
+   "worst_frame": 145,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     145,
+     148
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o356",
+   "b_is": "insert: Overflow-funnel helical inserts, M4 x 6 18-8, in the floor #3",
+   "worst_mm": 9.0,
+   "worst_frame": 145,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     145,
+     148
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o357",
+   "b_is": "insert: Overflow-funnel helical inserts, M4 x 6 18-8, in the floor #4",
+   "worst_mm": 9.0,
+   "worst_frame": 145,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     145,
+     148
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o105",
+   "b": "o53",
+   "a_is": "part: Drawer latch receptacles in the lid (2 x quarter-turn latch)",
+   "b_is": "part: Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 in",
+   "worst_mm": 9.0,
+   "worst_frame": 6167,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     6167,
+     6167
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o150",
+   "b": "o151",
+   "a_is": "part: 2-axis galvo scan head (SCANLAB basiCube 20)",
+   "b_is": "part: Galvo riser plate (6061, 5 mm, \u00d856 bore: clears the f-theta's \u00d853 nose",
+   "worst_mm": 9.0,
+   "worst_frame": 9939,
+   "frames": 10,
+   "frame_ranges": [
+    [
+     9939,
+     9948
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o42",
+   "b": "st/Trunnion stands",
+   "a_is": "part: Overflow port (KF-40, weld stub to 40 mm)",
+   "worst_mm": 8.6,
+   "worst_frame": 231,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     231,
+     231
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o20",
+   "b": "o54",
+   "a_is": "part: Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove ro",
+   "b_is": "part: Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-r",
+   "worst_mm": 8.6,
+   "worst_frame": 3158,
+   "frames": 3757,
+   "frame_ranges": [
+    [
+     2396,
+     2455
+    ],
+    [
+     2502,
+     3296
+    ],
+    [
+     3334,
+     3335
+    ],
+    [
+     7425,
+     10324
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o53",
+   "b": "o71",
+   "a_is": "part: Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 in",
+   "b_is": "part: Lift-out wall liner, back lower left (0.5 mm 316L, behind the ball scr",
+   "worst_mm": 8.6,
+   "worst_frame": 4007,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     4007,
+     4007
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o53",
+   "b": "o69",
+   "a_is": "part: Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 in",
+   "b_is": "part: Lift-out wall liner, back upper left (0.5 mm 316L, behind the ball scr",
+   "worst_mm": 8.6,
+   "worst_frame": 4091,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     4091,
+     4091
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o53",
+   "b": "o72",
+   "a_is": "part: Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 in",
+   "b_is": "part: Lift-out wall liner, back lower right (0.5 mm 316L, behind the ball sc",
+   "worst_mm": 8.2,
+   "worst_frame": 4231,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     4231,
+     4232
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o53",
+   "b": "o70",
+   "a_is": "part: Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 in",
+   "b_is": "part: Lift-out wall liner, back upper right (0.5 mm 316L, behind the ball sc",
+   "worst_mm": 8.2,
+   "worst_frame": 4310,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     4310,
+     4311
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/left_finger_tip/0",
+   "b": "o62",
+   "b_is": "part: Outlet plenum port (KF-25)",
+   "worst_mm": 7.9,
+   "worst_frame": 3271,
+   "frames": 18,
+   "frame_ranges": [
+    [
+     3271,
+     3288
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "hoist",
+   "b": "o36",
+   "b_is": "part: Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <",
+   "worst_mm": 7.9,
+   "worst_frame": 3304,
+   "frames": 80,
+   "frame_ranges": [
+    [
+     3297,
+     3376
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o67",
+   "b": "o93",
+   "a_is": "part: Lift-out wall liner, left (0.5 mm 316L, screw hole slotted to the back",
+   "b_is": "part: Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "worst_mm": 7.9,
+   "worst_frame": 6167,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     6167,
+     6168
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o68",
+   "b": "o93",
+   "a_is": "part: Lift-out wall liner, right (0.5 mm 316L, screw hole slotted to the bac",
+   "b_is": "part: Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "worst_mm": 7.9,
+   "worst_frame": 6167,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     6167,
+     6168
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "B/gr/left_finger_tip/0",
+   "b": "o94",
+   "b_is": "part: Window flange (6061, two FKM O-ring grooves)",
+   "worst_mm": 7.9,
+   "worst_frame": 7041,
+   "frames": 15,
+   "frame_ranges": [
+    [
+     7029,
+     7043
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "B/gr/right_finger_tip/0",
+   "b": "o94",
+   "b_is": "part: Window flange (6061, two FKM O-ring grooves)",
+   "worst_mm": 7.9,
+   "worst_frame": 7041,
+   "frames": 15,
+   "frame_ranges": [
+    [
+     7029,
+     7043
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o135",
+   "b": "o93",
+   "a_is": "part: Overpressure relief valve (316 SS, FKM seat, +34 mbar; SAE-4 O-ring-bo",
+   "b_is": "part: Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "worst_mm": 7.5,
+   "worst_frame": 8640,
+   "frames": 1685,
+   "frame_ranges": [
+    [
+     8640,
+     10324
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/left_finger_tip/0",
+   "b": "o12",
+   "b_is": "part: Z mounting flange (bolted under the floor)",
+   "worst_mm": 7.1,
+   "worst_frame": 1844,
+   "frames": 3,
+   "frame_ranges": [
+    [
+     1844,
+     1846
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/right_finger_tip/0",
+   "b": "o12",
+   "b_is": "part: Z mounting flange (bolted under the floor)",
+   "worst_mm": 7.1,
+   "worst_frame": 1844,
+   "frames": 3,
+   "frame_ranges": [
+    [
+     1844,
+     1846
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o149",
+   "b": "o151",
+   "a_is": "part: f-theta adapter ring (6061, 13 mm, M85x1 internal thread, bolted under",
+   "b_is": "part: Galvo riser plate (6061, 5 mm, \u00d856 bore: clears the f-theta's \u00d853 nose",
+   "worst_mm": 7.1,
+   "worst_frame": 9872,
+   "frames": 7,
+   "frame_ranges": [
+    [
+     9872,
+     9878
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o149",
+   "b": "o150",
+   "a_is": "part: f-theta adapter ring (6061, 13 mm, M85x1 internal thread, bolted under",
+   "b_is": "part: 2-axis galvo scan head (SCANLAB basiCube 20)",
+   "worst_mm": 7.1,
+   "worst_frame": 9942,
+   "frames": 7,
+   "frame_ranges": [
+    [
+     9942,
+     9948
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o107",
+   "b": "o93",
+   "a_is": "part: Gas knife (cover-slide purge, 316L)",
+   "b_is": "part: Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "worst_mm": 6.8,
+   "worst_frame": 6167,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     6167,
+     6167
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "hoist",
+   "b": "o266",
+   "b_is": "disc: Disc springs under the stack screws M50 #2",
+   "worst_mm": 6.4,
+   "worst_frame": 3297,
+   "frames": 80,
+   "frame_ranges": [
+    [
+     3297,
+     3376
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "B/gr/right_finger_tip/0",
+   "b": "o77",
+   "b_is": "part: Recoater carriage (15 mm rail)",
+   "worst_mm": 6.4,
+   "worst_frame": 5018,
+   "frames": 179,
+   "frame_ranges": [
+    [
+     5018,
+     5196
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "B/cap/ring/left_finger_tip",
+   "b": "o96",
+   "b_is": "part: Window O-ring, lower (FKM 75A 2-031, under the window)",
+   "worst_mm": 6.4,
+   "worst_frame": 6979,
+   "frames": 74,
+   "frame_ranges": [
+    [
+     6967,
+     7040
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "B/cap/ring/right_finger_tip",
+   "b": "o96",
+   "b_is": "part: Window O-ring, lower (FKM 75A 2-031, under the window)",
+   "worst_mm": 6.4,
+   "worst_frame": 6979,
+   "frames": 74,
+   "frame_ranges": [
+    [
+     6967,
+     7040
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "hoist",
+   "b": "o28",
+   "b_is": "part: Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out o",
+   "worst_mm": 6.0,
+   "worst_frame": 3297,
+   "frames": 80,
+   "frame_ranges": [
+    [
+     3297,
+     3376
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o340",
+   "b": "o346",
+   "a_is": "shcs: Outlet-plenum screws, M4 x 12 316, counterbored #3",
+   "b_is": "insert: Outlet-plenum helical inserts, M4 x 6 18-8, in the floor #3",
+   "worst_mm": 5.8,
+   "worst_frame": 3200,
+   "frames": 13,
+   "frame_ranges": [
+    [
+     3158,
+     3160
+    ],
+    [
+     3170,
+     3174
+    ],
+    [
+     3183,
+     3187
+    ],
+    [
+     3197,
+     3200
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o341",
+   "b": "o347",
+   "a_is": "shcs: Outlet-plenum screws, M4 x 12 316, counterbored #4",
+   "b_is": "insert: Outlet-plenum helical inserts, M4 x 6 18-8, in the floor #4",
+   "worst_mm": 5.8,
+   "worst_frame": 3200,
+   "frames": 13,
+   "frame_ranges": [
+    [
+     3158,
+     3160
+    ],
+    [
+     3170,
+     3174
+    ],
+    [
+     3183,
+     3187
+    ],
+    [
+     3197,
+     3200
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "B/cap/ring/left_finger_tip",
+   "b": "o94",
+   "b_is": "part: Window flange (6061, two FKM O-ring grooves)",
+   "worst_mm": 5.8,
+   "worst_frame": 7039,
+   "frames": 11,
+   "frame_ranges": [
+    [
+     7033,
+     7043
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o94",
+   "b": "o99",
+   "a_is": "part: Window flange (6061, two FKM O-ring grooves)",
+   "b_is": "part: Window retaining ring (spigot bottoms metal-to-metal: squeeze set by g",
+   "worst_mm": 5.8,
+   "worst_frame": 7266,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     7266,
+     7267
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/left_finger_tip/0",
+   "b": "o103",
+   "b_is": "part: Drawer O-ring (FKM 75A 2-033 in a half-dovetail groove, seals on the l",
+   "worst_mm": 5.6,
+   "worst_frame": 7524,
+   "frames": 35,
+   "frame_ranges": [
+    [
+     7518,
+     7552
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/right_finger_tip/0",
+   "b": "o103",
+   "b_is": "part: Drawer O-ring (FKM 75A 2-033 in a half-dovetail groove, seals on the l",
+   "worst_mm": 5.6,
+   "worst_frame": 7524,
+   "frames": 35,
+   "frame_ranges": [
+    [
+     7518,
+     7552
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o383",
+   "b": "o387",
+   "a_is": "shcs: Z-flange screws, M5 x 12 316, counterbored #4",
+   "b_is": "insert: Z-flange helical inserts, M5 x 7.5 18-8, in the floor #4",
+   "worst_mm": 5.4,
+   "worst_frame": 3170,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     3170,
+     3170
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/left_finger_tip/0",
+   "b": "o95",
+   "b_is": "part: \u00d82 in. fused-silica window, 9.53 mm, AR 1064 (Edmund 38-990)",
+   "worst_mm": 5.4,
+   "worst_frame": 7120,
+   "frames": 49,
+   "frame_ranges": [
+    [
+     7120,
+     7168
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/right_finger_tip/0",
+   "b": "o95",
+   "b_is": "part: \u00d82 in. fused-silica window, 9.53 mm, AR 1064 (Edmund 38-990)",
+   "worst_mm": 5.2,
+   "worst_frame": 7120,
+   "frames": 48,
+   "frame_ranges": [
+    [
+     7120,
+     7167
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o462",
+   "b": "o485",
+   "a_is": "part: Chamber legs #1",
+   "b_is": "part: Zero-point module plates #1",
+   "worst_mm": 5.1,
+   "worst_frame": 2213,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     2213,
+     2213
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "B/cap/ring/right_finger_tip",
+   "b": "o94",
+   "b_is": "part: Window flange (6061, two FKM O-ring grooves)",
+   "worst_mm": 5.1,
+   "worst_frame": 7038,
+   "frames": 12,
+   "frame_ranges": [
+    [
+     7032,
+     7043
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o95",
+   "b": "o99",
+   "a_is": "part: \u00d82 in. fused-silica window, 9.53 mm, AR 1064 (Edmund 38-990)",
+   "b_is": "part: Window retaining ring (spigot bottoms metal-to-metal: squeeze set by g",
+   "worst_mm": 5.1,
+   "worst_frame": 7266,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     7266,
+     7266
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/left_finger_tip/1",
+   "b": "o144",
+   "b_is": "part: Door handle",
+   "worst_mm": 5.1,
+   "worst_frame": 8733,
+   "frames": 21,
+   "frame_ranges": [
+    [
+     8733,
+     8753
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/right_finger_tip/1",
+   "b": "o144",
+   "b_is": "part: Door handle",
+   "worst_mm": 5.1,
+   "worst_frame": 8733,
+   "frames": 21,
+   "frame_ranges": [
+    [
+     8733,
+     8753
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "hoist",
+   "b": "o276",
+   "b_is": "set: Rod set screws M50, M4 cup point 316 #1",
+   "worst_mm": 4.9,
+   "worst_frame": 3297,
+   "frames": 80,
+   "frame_ranges": [
+    [
+     3297,
+     3376
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/left_inner_knuckle/0",
+   "b": "o150",
+   "b_is": "part: 2-axis galvo scan head (SCANLAB basiCube 20)",
+   "worst_mm": 4.7,
+   "worst_frame": 10073,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     10073,
+     10073
+    ],
+    [
+     10109,
+     10109
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o338",
+   "b": "o344",
+   "a_is": "shcs: Outlet-plenum screws, M4 x 12 316, counterbored #1",
+   "b_is": "insert: Outlet-plenum helical inserts, M4 x 6 18-8, in the floor #1",
+   "worst_mm": 4.5,
+   "worst_frame": 3172,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     3172,
+     3172
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o339",
+   "b": "o345",
+   "a_is": "shcs: Outlet-plenum screws, M4 x 12 316, counterbored #2",
+   "b_is": "insert: Outlet-plenum helical inserts, M4 x 6 18-8, in the floor #2",
+   "worst_mm": 4.5,
+   "worst_frame": 3172,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     3172,
+     3172
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o342",
+   "b": "o348",
+   "a_is": "shcs: Outlet-plenum screws, M4 x 12 316, counterbored #5",
+   "b_is": "insert: Outlet-plenum helical inserts, M4 x 6 18-8, in the floor #5",
+   "worst_mm": 4.5,
+   "worst_frame": 3172,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     3172,
+     3172
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o343",
+   "b": "o349",
+   "a_is": "shcs: Outlet-plenum screws, M4 x 12 316, counterbored #6",
+   "b_is": "insert: Outlet-plenum helical inserts, M4 x 6 18-8, in the floor #6",
+   "worst_mm": 4.5,
+   "worst_frame": 3172,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     3172,
+     3172
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "hoist",
+   "b": "o470",
+   "b_is": "part: Macor standoff rings M50 #1",
+   "worst_mm": 4.5,
+   "worst_frame": 3297,
+   "frames": 80,
+   "frame_ranges": [
+    [
+     3297,
+     3376
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "hoist",
+   "b": "o471",
+   "b_is": "part: Macor standoff rings M50 #2",
+   "worst_mm": 4.5,
+   "worst_frame": 3297,
+   "frames": 80,
+   "frame_ranges": [
+    [
+     3297,
+     3376
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "hoist",
+   "b": "o472",
+   "b_is": "part: Macor standoff rings M50 #3",
+   "worst_mm": 4.5,
+   "worst_frame": 3297,
+   "frames": 80,
+   "frame_ranges": [
+    [
+     3297,
+     3376
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o358",
+   "b": "o362",
+   "a_is": "shcs: Vacuum-port adapter screws, M5 x 20 316 #1",
+   "b_is": "insert: Vacuum-port adapter helical inserts, M5 x 7.5 18-8, in the right wall ",
+   "worst_mm": 4.5,
+   "worst_frame": 4904,
+   "frames": 2521,
+   "frame_ranges": [
+    [
+     4904,
+     7424
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o359",
+   "b": "o363",
+   "a_is": "shcs: Vacuum-port adapter screws, M5 x 20 316 #2",
+   "b_is": "insert: Vacuum-port adapter helical inserts, M5 x 7.5 18-8, in the right wall ",
+   "worst_mm": 4.5,
+   "worst_frame": 4922,
+   "frames": 2503,
+   "frame_ranges": [
+    [
+     4922,
+     7424
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o360",
+   "b": "o364",
+   "a_is": "shcs: Vacuum-port adapter screws, M5 x 20 316 #3",
+   "b_is": "insert: Vacuum-port adapter helical inserts, M5 x 7.5 18-8, in the right wall ",
+   "worst_mm": 4.5,
+   "worst_frame": 4940,
+   "frames": 2485,
+   "frame_ranges": [
+    [
+     4940,
+     7424
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o361",
+   "b": "o365",
+   "a_is": "shcs: Vacuum-port adapter screws, M5 x 20 316 #4",
+   "b_is": "insert: Vacuum-port adapter helical inserts, M5 x 7.5 18-8, in the right wall ",
+   "worst_mm": 4.5,
+   "worst_frame": 4958,
+   "frames": 2467,
+   "frame_ranges": [
+    [
+     4958,
+     7424
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o368",
+   "b": "o372",
+   "a_is": "shcs: Bearing-cap screws, M4 x 20 316 #1",
+   "b_is": "insert: Bearing-cap helical inserts, M4 x 6 18-8, in the right wall #1",
+   "worst_mm": 4.1,
+   "worst_frame": 5504,
+   "frames": 1921,
+   "frame_ranges": [
+    [
+     5504,
+     7424
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o369",
+   "b": "o373",
+   "a_is": "shcs: Bearing-cap screws, M4 x 20 316 #2",
+   "b_is": "insert: Bearing-cap helical inserts, M4 x 6 18-8, in the right wall #2",
+   "worst_mm": 4.1,
+   "worst_frame": 5521,
+   "frames": 1904,
+   "frame_ranges": [
+    [
+     5521,
+     7424
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o370",
+   "b": "o374",
+   "a_is": "shcs: Bearing-cap screws, M4 x 20 316 #3",
+   "b_is": "insert: Bearing-cap helical inserts, M4 x 6 18-8, in the right wall #3",
+   "worst_mm": 4.1,
+   "worst_frame": 5538,
+   "frames": 1887,
+   "frame_ranges": [
+    [
+     5538,
+     7424
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o371",
+   "b": "o375",
+   "a_is": "shcs: Bearing-cap screws, M4 x 20 316 #4",
+   "b_is": "insert: Bearing-cap helical inserts, M4 x 6 18-8, in the right wall #4",
+   "worst_mm": 4.1,
+   "worst_frame": 5555,
+   "frames": 1870,
+   "frame_ranges": [
+    [
+     5555,
+     7424
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/left_finger_tip/1",
+   "b": "o62",
+   "b_is": "part: Outlet plenum port (KF-25)",
+   "worst_mm": 3.9,
+   "worst_frame": 3271,
+   "frames": 21,
+   "frame_ranges": [
+    [
+     3271,
+     3288
+    ],
+    [
+     3377,
+     3379
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o147",
+   "b": "o150",
+   "a_is": "part: f-theta lens, f = 160 mm (Thorlabs FTH160-1064)",
+   "b_is": "part: 2-axis galvo scan head (SCANLAB basiCube 20)",
+   "worst_mm": 3.9,
+   "worst_frame": 9939,
+   "frames": 10,
+   "frame_ranges": [
+    [
+     9939,
+     9948
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "B/gr/left_finger_tip/0",
+   "b": "o76",
+   "b_is": "part: Recoater guide rail (15 mm, 260 mm)",
+   "worst_mm": 3.8,
+   "worst_frame": 5018,
+   "frames": 16,
+   "frame_ranges": [
+    [
+     5018,
+     5030
+    ],
+    [
+     5195,
+     5197
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o145",
+   "b": "o150",
+   "a_is": "part: Optics bridge (6061, 25 mm)",
+   "b_is": "part: 2-axis galvo scan head (SCANLAB basiCube 20)",
+   "worst_mm": 3.8,
+   "worst_frame": 9939,
+   "frames": 11,
+   "frame_ranges": [
+    [
+     9932,
+     9932
+    ],
+    [
+     9939,
+     9948
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/right_inner_knuckle/0",
+   "b": "o13",
+   "b_is": "part: Z actuator body (KR-class U-rail, 2 mm lead, 100 mm stroke class)",
+   "worst_mm": 3.4,
+   "worst_frame": 2557,
+   "frames": 17,
+   "frame_ranges": [
+    [
+     2557,
+     2573
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/left_inner_knuckle/0",
+   "b": "o13",
+   "b_is": "part: Z actuator body (KR-class U-rail, 2 mm lead, 100 mm stroke class)",
+   "worst_mm": 3.2,
+   "worst_frame": 2557,
+   "frames": 17,
+   "frame_ranges": [
+    [
+     2557,
+     2573
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/left_finger_tip/0",
+   "b": "o13",
+   "b_is": "part: Z actuator body (KR-class U-rail, 2 mm lead, 100 mm stroke class)",
+   "worst_mm": 3.2,
+   "worst_frame": 2557,
+   "frames": 17,
+   "frame_ranges": [
+    [
+     2557,
+     2573
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/right_finger_tip/0",
+   "b": "o13",
+   "b_is": "part: Z actuator body (KR-class U-rail, 2 mm lead, 100 mm stroke class)",
+   "worst_mm": 3.2,
+   "worst_frame": 2557,
+   "frames": 17,
+   "frame_ranges": [
+    [
+     2557,
+     2573
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o98",
+   "b": "o99",
+   "a_is": "part: Window-flange O-ring (FKM 75A 2-036, face seal on the lid)",
+   "b_is": "part: Window retaining ring (spigot bottoms metal-to-metal: squeeze set by g",
+   "worst_mm": 3.2,
+   "worst_frame": 7267,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     7267,
+     7267
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o100",
+   "b": "o99",
+   "a_is": "part: Field-stop aperture, M50 insert (\u00d841, passive beam limit; swapped with",
+   "b_is": "part: Window retaining ring (spigot bottoms metal-to-metal: squeeze set by g",
+   "worst_mm": 3.0,
+   "worst_frame": 7267,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     7267,
+     7267
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o134",
+   "b": "o150",
+   "a_is": "part: Pressure transducer (7/16-20 SAE-4 O-ring-boss port; McMaster 3861N11 ",
+   "b_is": "part: 2-axis galvo scan head (SCANLAB basiCube 20)",
+   "worst_mm": 2.9,
+   "worst_frame": 9942,
+   "frames": 7,
+   "frame_ranges": [
+    [
+     9942,
+     9948
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o54",
+   "b": "o55",
+   "a_is": "part: Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-r",
+   "b_is": "part: Floor O-ring (FKM 75A, 3.53 mm cord, vulcanized splice, 25 % squeeze; ",
+   "worst_mm": 2.8,
+   "worst_frame": 1086,
+   "frames": 9896,
+   "frame_ranges": [
+    [
+     429,
+     10324
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/left_finger/0",
+   "b": "o62",
+   "b_is": "part: Outlet plenum port (KF-25)",
+   "worst_mm": 2.8,
+   "worst_frame": 1633,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     1633,
+     1634
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o134",
+   "b": "o151",
+   "a_is": "part: Pressure transducer (7/16-20 SAE-4 O-ring-boss port; McMaster 3861N11 ",
+   "b_is": "part: Galvo riser plate (6061, 5 mm, \u00d856 bore: clears the f-theta's \u00d853 nose",
+   "worst_mm": 2.8,
+   "worst_frame": 9872,
+   "frames": 7,
+   "frame_ranges": [
+    [
+     9872,
+     9878
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o40",
+   "b_is": "part: Overflow funnel block (316L, bolted, FKM face O-ring)",
+   "worst_mm": 2.7,
+   "worst_frame": 145,
+   "frames": 6,
+   "frame_ranges": [
+    [
+     145,
+     150
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "kt/long table top",
+   "b": "o41",
+   "b_is": "part: Overflow funnel O-ring (FKM 75A 2-042, face seal under the floor)",
+   "worst_mm": 2.7,
+   "worst_frame": 145,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     145,
+     148
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o40",
+   "b": "o485",
+   "a_is": "part: Overflow funnel block (316L, bolted, FKM face O-ring)",
+   "b_is": "part: Zero-point module plates #1",
+   "worst_mm": 2.7,
+   "worst_frame": 2233,
+   "frames": 6,
+   "frame_ranges": [
+    [
+     2233,
+     2238
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o80",
+   "b": "o93",
+   "a_is": "part: Recoater ball nut (flange on the +x face)",
+   "b_is": "part: Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "worst_mm": 2.7,
+   "worst_frame": 6168,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     6168,
+     6168
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o93",
+   "b": "o94",
+   "a_is": "part: Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "b_is": "part: Window flange (6061, two FKM O-ring grooves)",
+   "worst_mm": 2.7,
+   "worst_frame": 6769,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     6769,
+     6772
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o93",
+   "b": "o98",
+   "a_is": "part: Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "b_is": "part: Window-flange O-ring (FKM 75A 2-036, face seal on the lid)",
+   "worst_mm": 2.7,
+   "worst_frame": 6769,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     6769,
+     6770
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o100",
+   "b": "o94",
+   "a_is": "part: Field-stop aperture, M50 insert (\u00d841, passive beam limit; swapped with",
+   "b_is": "part: Window flange (6061, two FKM O-ring grooves)",
+   "worst_mm": 2.7,
+   "worst_frame": 6769,
+   "frames": 3,
+   "frame_ranges": [
+    [
+     6769,
+     6771
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o145",
+   "b": "o466",
+   "a_is": "part: Optics bridge (6061, 25 mm)",
+   "b_is": "part: Optics bridge posts #1",
+   "worst_mm": 2.6,
+   "worst_frame": 9536,
+   "frames": 789,
+   "frame_ranges": [
+    [
+     9536,
+     10324
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o145",
+   "b": "o467",
+   "a_is": "part: Optics bridge (6061, 25 mm)",
+   "b_is": "part: Optics bridge posts #2",
+   "worst_mm": 2.6,
+   "worst_frame": 9536,
+   "frames": 789,
+   "frame_ranges": [
+    [
+     9536,
+     10324
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o145",
+   "b": "o468",
+   "a_is": "part: Optics bridge (6061, 25 mm)",
+   "b_is": "part: Optics bridge posts #3",
+   "worst_mm": 2.6,
+   "worst_frame": 9536,
+   "frames": 789,
+   "frame_ranges": [
+    [
+     9536,
+     10324
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o145",
+   "b": "o469",
+   "a_is": "part: Optics bridge (6061, 25 mm)",
+   "b_is": "part: Optics bridge posts #4",
+   "worst_mm": 2.6,
+   "worst_frame": 9536,
+   "frames": 789,
+   "frame_ranges": [
+    [
+     9536,
+     10324
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o79",
+   "b": "o80",
+   "a_is": "part: Recoater ball screw (M12, 10 mm lead)",
+   "b_is": "part: Recoater ball nut (flange on the +x face)",
+   "worst_mm": 2.5,
+   "worst_frame": 5277,
+   "frames": 2148,
+   "frame_ranges": [
+    [
+     5277,
+     7424
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o148",
+   "b": "o151",
+   "a_is": "part: f-theta focus shims (85.5 x 105 rings cut from McMaster 95055K25 / K19",
+   "b_is": "part: Galvo riser plate (6061, 5 mm, \u00d856 bore: clears the f-theta's \u00d853 nose",
+   "worst_mm": 2.5,
+   "worst_frame": 9873,
+   "frames": 6,
+   "frame_ranges": [
+    [
+     9873,
+     9878
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/wrist2/0",
+   "b": "o340",
+   "b_is": "shcs: Outlet-plenum screws, M4 x 12 316, counterbored #3",
+   "worst_mm": 2.4,
+   "worst_frame": 1417,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     1417,
+     1417
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "hoist",
+   "b": "o265",
+   "b_is": "disc: Disc springs under the stack screws M50 #1",
+   "worst_mm": 2.4,
+   "worst_frame": 3297,
+   "frames": 80,
+   "frame_ranges": [
+    [
+     3297,
+     3376
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/left_finger_tip/0",
+   "b": "o94",
+   "b_is": "part: Window flange (6061, two FKM O-ring grooves)",
+   "worst_mm": 2.3,
+   "worst_frame": 7165,
+   "frames": 5,
+   "frame_ranges": [
+    [
+     7165,
+     7169
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o434",
+   "b": "o93",
+   "a_is": "part: Liner pull tab, left (316L, 2 mm hanger: a web from the left side line",
+   "b_is": "part: Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "worst_mm": 2.2,
+   "worst_frame": 6167,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     6167,
+     6168
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o435",
+   "b": "o93",
+   "a_is": "part: Liner pull tab, right (316L, 2 mm hanger: a web from the right side li",
+   "b_is": "part: Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "worst_mm": 2.2,
+   "worst_frame": 6167,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     6167,
+     6168
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o133",
+   "b": "o151",
+   "a_is": "part: Layer camera (Pi HQ + C-mount lens)",
+   "b_is": "part: Galvo riser plate (6061, 5 mm, \u00d856 bore: clears the f-theta's \u00d853 nose",
+   "worst_mm": 2.2,
+   "worst_frame": 9871,
+   "frames": 8,
+   "frame_ranges": [
+    [
+     9871,
+     9878
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "B/gr/left_finger_tip/0",
+   "b": "o96",
+   "b_is": "part: Window O-ring, lower (FKM 75A 2-031, under the window)",
+   "worst_mm": 2.2,
+   "worst_frame": 6979,
+   "frames": 69,
+   "frame_ranges": [
+    [
+     6967,
+     7035
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "B/gr/right_finger_tip/0",
+   "b": "o96",
+   "b_is": "part: Window O-ring, lower (FKM 75A 2-031, under the window)",
+   "worst_mm": 2.2,
+   "worst_frame": 6979,
+   "frames": 69,
+   "frame_ranges": [
+    [
+     6967,
+     7035
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/right_finger_tip/0",
+   "b": "o94",
+   "b_is": "part: Window flange (6061, two FKM O-ring grooves)",
+   "worst_mm": 2.2,
+   "worst_frame": 7165,
+   "frames": 5,
+   "frame_ranges": [
+    [
+     7165,
+     7169
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o54",
+   "b": "st/Fixture P",
+   "a_is": "part: Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-r",
+   "worst_mm": 2.1,
+   "worst_frame": 241,
+   "frames": 10,
+   "frame_ranges": [
+    [
+     241,
+     250
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o255",
+   "b": "st/Fixture P",
+   "a_is": "insert: Helical inserts for the module screws, M6 x 12 18-8, in the floor #1",
+   "worst_mm": 2.1,
+   "worst_frame": 241,
+   "frames": 10,
+   "frame_ranges": [
+    [
+     241,
+     250
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o256",
+   "b": "st/Fixture P",
+   "a_is": "insert: Helical inserts for the module screws, M6 x 12 18-8, in the floor #2",
+   "worst_mm": 2.1,
+   "worst_frame": 241,
+   "frames": 10,
+   "frame_ranges": [
+    [
+     241,
+     250
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o384",
+   "b": "st/Fixture P",
+   "a_is": "insert: Z-flange helical inserts, M5 x 7.5 18-8, in the floor #1",
+   "worst_mm": 2.1,
+   "worst_frame": 241,
+   "frames": 10,
+   "frame_ranges": [
+    [
+     241,
+     250
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o387",
+   "b": "st/Fixture P",
+   "a_is": "insert: Z-flange helical inserts, M5 x 7.5 18-8, in the floor #4",
+   "worst_mm": 2.1,
+   "worst_frame": 241,
+   "frames": 10,
+   "frame_ranges": [
+    [
+     241,
+     250
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o408",
+   "b": "st/Fixture P",
+   "a_is": "insert: Zero-point post helical inserts, M6 x 9 18-8, in the floor #3",
+   "worst_mm": 2.1,
+   "worst_frame": 241,
+   "frames": 10,
+   "frame_ranges": [
+    [
+     241,
+     250
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o481",
+   "b": "o487",
+   "a_is": "part: Zero-point posts #1",
+   "b_is": "part: Zero-point clamping modules #1",
+   "worst_mm": 2.1,
+   "worst_frame": 2325,
+   "frames": 8,
+   "frame_ranges": [
+    [
+     2325,
+     2332
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o482",
+   "b": "o487",
+   "a_is": "part: Zero-point posts #2",
+   "b_is": "part: Zero-point clamping modules #1",
+   "worst_mm": 2.1,
+   "worst_frame": 2325,
+   "frames": 8,
+   "frame_ranges": [
+    [
+     2325,
+     2332
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "B/gr/right_finger_tip/0",
+   "b": "o76",
+   "b_is": "part: Recoater guide rail (15 mm, 260 mm)",
+   "worst_mm": 2.1,
+   "worst_frame": 5018,
+   "frames": 13,
+   "frame_ranges": [
+    [
+     5018,
+     5030
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/tool/nutrunner/0/3.6",
+   "b": "o109",
+   "b_is": "part: Metering base (6061, fluted roller over a 100 mm dose line, two FKM fa",
+   "worst_mm": 2.1,
+   "worst_frame": 7773,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     7773,
+     7773
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "hoist",
+   "b": "o259",
+   "b_is": "shcs: Heater-stack screws M50, M3 x 25 316, up through slotted counterbores ",
+   "worst_mm": 2.0,
+   "worst_frame": 3297,
+   "frames": 80,
+   "frame_ranges": [
+    [
+     3297,
+     3376
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o133",
+   "b": "o150",
+   "a_is": "part: Layer camera (Pi HQ + C-mount lens)",
+   "b_is": "part: 2-axis galvo scan head (SCANLAB basiCube 20)",
+   "worst_mm": 2.0,
+   "worst_frame": 9942,
+   "frames": 7,
+   "frame_ranges": [
+    [
+     9942,
+     9948
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o483",
+   "b": "o488",
+   "a_is": "part: Zero-point posts #3",
+   "b_is": "part: Zero-point clamping modules #2",
+   "worst_mm": 1.9,
+   "worst_frame": 2346,
+   "frames": 8,
+   "frame_ranges": [
+    [
+     2346,
+     2353
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o484",
+   "b": "o488",
+   "a_is": "part: Zero-point posts #4",
+   "b_is": "part: Zero-point clamping modules #2",
+   "worst_mm": 1.9,
+   "worst_frame": 2346,
+   "frames": 8,
+   "frame_ranges": [
+    [
+     2346,
+     2353
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o93",
+   "b": "o99",
+   "a_is": "part: Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "b_is": "part: Window retaining ring (spigot bottoms metal-to-metal: squeeze set by g",
+   "worst_mm": 1.9,
+   "worst_frame": 7267,
+   "frames": 3,
+   "frame_ranges": [
+    [
+     7267,
+     7269
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/left_finger_tip/0",
+   "b": "o109",
+   "b_is": "part: Metering base (6061, fluted roller over a 100 mm dose line, two FKM fa",
+   "worst_mm": 1.9,
+   "worst_frame": 8149,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     8149,
+     8152
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/right_finger_tip/0",
+   "b": "o109",
+   "b_is": "part: Metering base (6061, fluted roller over a 100 mm dose line, two FKM fa",
+   "worst_mm": 1.9,
+   "worst_frame": 8149,
+   "frames": 3,
+   "frame_ranges": [
+    [
+     8149,
+     8151
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/wrist3/0",
+   "b": "o342",
+   "b_is": "shcs: Outlet-plenum screws, M4 x 12 316, counterbored #5",
+   "worst_mm": 1.8,
+   "worst_frame": 1382,
+   "frames": 15,
+   "frame_ranges": [
+    [
+     1376,
+     1390
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/wrist2/1",
+   "b": "o342",
+   "b_is": "shcs: Outlet-plenum screws, M4 x 12 316, counterbored #5",
+   "worst_mm": 1.7,
+   "worst_frame": 1372,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     1372,
+     1375
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o109",
+   "b": "o113",
+   "a_is": "part: Metering base (6061, fluted roller over a 100 mm dose line, two FKM fa",
+   "b_is": "part: Dovetail rails for the reservoirs (lips pull the plate onto the dock O",
+   "worst_mm": 1.7,
+   "worst_frame": 8189,
+   "frames": 520,
+   "frame_ranges": [
+    [
+     8189,
+     8708
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o109",
+   "b": "o120",
+   "a_is": "part: Metering base (6061, fluted roller over a 100 mm dose line, two FKM fa",
+   "b_is": "part: Reservoir M (97 cm3, 304 SS wedge hopper, 70 mm outlet for the M50 mod",
+   "worst_mm": 1.7,
+   "worst_frame": 8336,
+   "frames": 365,
+   "frame_ranges": [
+    [
+     8336,
+     8344
+    ],
+    [
+     8353,
+     8708
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o111",
+   "b": "o120",
+   "a_is": "part: Metering-base dock-face O-ring (FKM 75A 2-040, seals the reservoir's b",
+   "b_is": "part: Reservoir M (97 cm3, 304 SS wedge hopper, 70 mm outlet for the M50 mod",
+   "worst_mm": 1.7,
+   "worst_frame": 8337,
+   "frames": 364,
+   "frame_ranges": [
+    [
+     8337,
+     8344
+    ],
+    [
+     8353,
+     8708
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o113",
+   "b": "o120",
+   "a_is": "part: Dovetail rails for the reservoirs (lips pull the plate onto the dock O",
+   "b_is": "part: Reservoir M (97 cm3, 304 SS wedge hopper, 70 mm outlet for the M50 mod",
+   "worst_mm": 1.6,
+   "worst_frame": 8347,
+   "frames": 6,
+   "frame_ranges": [
+    [
+     8347,
+     8352
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  }
+ ],
+ "rigid_pairs": [
+  {
+   "a": "mirA/A MiR250",
+   "b": "mirA/light strip",
+   "worst_mm": ">100",
+   "frames": 10325
+  },
+  {
+   "a": "mirB/B MiR250",
+   "b": "mirB/light strip",
+   "worst_mm": ">100",
+   "frames": 10325
+  },
+  {
+   "a": "o19",
+   "b": "o35",
+   "worst_mm": 48.4,
+   "frames": 3695
+  },
+  {
+   "a": "o23",
+   "b": "o36",
+   "worst_mm": 23.4,
+   "frames": 6
+  },
+  {
+   "a": "o14",
+   "b": "o15",
+   "worst_mm": 17.7,
+   "frames": 10325
+  },
+  {
+   "a": "o19",
+   "b": "o20",
+   "worst_mm": 16.9,
+   "frames": 10193
+  },
+  {
+   "a": "o37",
+   "b": "o38",
+   "worst_mm": 16.9,
+   "frames": 10325
+  },
+  {
+   "a": "o101",
+   "b": "o104",
+   "worst_mm": 16.9,
+   "frames": 5
+  },
+  {
+   "a": "o21",
+   "b": "o23",
+   "worst_mm": 13.6,
+   "frames": 7852
+  },
+  {
+   "a": "o29",
+   "b": "o30",
+   "worst_mm": 13.6,
+   "frames": 7
+  },
+  {
+   "a": "o29",
+   "b": "o31",
+   "worst_mm": 12.8,
+   "frames": 5
+  },
+  {
+   "a": "o105",
+   "b": "o93",
+   "worst_mm": 12.8,
+   "frames": 7
+  },
+  {
+   "a": "o490",
+   "b": "o492",
+   "worst_mm": 10.1,
+   "frames": 6229
+  },
+  {
+   "a": "o84",
+   "b": "o86",
+   "worst_mm": 9.8,
+   "frames": 29
+  },
+  {
+   "a": "o266",
+   "b": "o34",
+   "worst_mm": 9.0,
+   "frames": 19
+  },
+  {
+   "a": "o34",
+   "b": "o36",
+   "worst_mm": 8.6,
+   "frames": 10325
+  },
+  {
+   "a": "o489",
+   "b": "o491",
+   "worst_mm": 8.6,
+   "frames": 6233
+  },
+  {
+   "a": "o17",
+   "b": "o18",
+   "worst_mm": 8.6,
+   "frames": 32
+  },
+  {
+   "a": "o265",
+   "b": "o34",
+   "worst_mm": 7.9,
+   "frames": 1
+  },
+  {
+   "a": "o267",
+   "b": "o34",
+   "worst_mm": 7.9,
+   "frames": 1
+  },
+  {
+   "a": "o85",
+   "b": "o87",
+   "worst_mm": 7.5,
+   "frames": 6
+  },
+  {
+   "a": "o57",
+   "b": "o59",
+   "worst_mm": 6.4,
+   "frames": 10325
+  },
+  {
+   "a": "o259",
+   "b": "o262",
+   "worst_mm": 5.2,
+   "frames": 23
+  },
+  {
+   "a": "o261",
+   "b": "o264",
+   "worst_mm": 5.2,
+   "frames": 18
+  },
+  {
+   "a": "o260",
+   "b": "o263",
+   "worst_mm": 5.2,
+   "frames": 645
+  },
+  {
+   "a": "o27",
+   "b": "o29",
+   "worst_mm": 4.3,
+   "frames": 10325
+  },
+  {
+   "a": "mirA/A MiR250",
+   "b": "mirA/top",
+   "worst_mm": 4.1,
+   "frames": 10325
+  },
+  {
+   "a": "mirB/B MiR250",
+   "b": "mirB/top",
+   "worst_mm": 4.1,
+   "frames": 10325
+  },
+  {
+   "a": "o37",
+   "b": "o39",
+   "worst_mm": 4.1,
+   "frames": 58
+  },
+  {
+   "a": "o101",
+   "b": "o102",
+   "worst_mm": 3.9,
+   "frames": 6
+  },
+  {
+   "a": "o19",
+   "b": "o28",
+   "worst_mm": 3.2,
+   "frames": 10223
+  },
+  {
+   "a": "mirA/A cabinet",
+   "b": "mirA/top",
+   "worst_mm": 2.1,
+   "frames": 10325
+  },
+  {
+   "a": "mirB/B cabinet",
+   "b": "mirB/top",
+   "worst_mm": 2.1,
+   "frames": 10325
+  }
+ ],
+ "allowed": [
+  {
+   "rule": "person's own layers",
+   "depth_allowed_mm": null,
+   "reason": "one person's skin, clothes, shoes and glasses are layers of one skinned body (people.py offsets the clothes from it)",
+   "pairs_in_contact": 16,
+   "pair_frames": 384,
+   "examples": [
+    [
+     "op/brow",
+     "op/skin"
+    ],
+    [
+     "op/coat",
+     "op/coat skirt"
+    ],
+    [
+     "op/coat",
+     "op/glove"
+    ],
+    [
+     "op/coat",
+     "op/shirt"
+    ],
+    [
+     "op/coat",
+     "op/skin"
+    ],
+    [
+     "op/coat",
+     "op/trousers"
+    ],
+    [
+     "op/coat skirt",
+     "op/glove"
+    ],
+    [
+     "op/coat skirt",
+     "op/trousers"
+    ],
+    [
+     "op/glasses frame",
+     "op/skin"
+    ],
+    [
+     "op/glasses lens",
+     "op/skin"
+    ],
+    [
+     "op/glove",
+     "op/trousers"
+    ],
+    [
+     "op/hair",
+     "op/skin"
+    ]
+   ],
+   "worst_mm": null
+  },
+  {
+   "rule": "adjacent UR links",
+   "depth_allowed_mm": null,
+   "reason": "neighbouring UR12e links meet at their joint (the pieces of one link, and the planner's ADJACENT pairs in cell.py)",
+   "pairs_in_contact": 148,
+   "pair_frames": 574659,
+   "examples": [
+    [
+     "A/base/0",
+     "A/base/1"
+    ],
+    [
+     "A/base/0",
+     "A/shoulder/1"
+    ],
+    [
+     "A/forearm/0",
+     "A/forearm/1"
+    ],
+    [
+     "A/forearm/0",
+     "A/forearm/2"
+    ],
+    [
+     "A/forearm/0",
+     "A/forearm/3"
+    ],
+    [
+     "A/forearm/0",
+     "A/upper_arm/0"
+    ],
+    [
+     "A/forearm/0",
+     "A/upper_arm/1"
+    ],
+    [
+     "A/forearm/0",
+     "A/upper_arm/2"
+    ],
+    [
+     "A/forearm/0",
+     "A/upper_arm/3"
+    ],
+    [
+     "A/forearm/0",
+     "A/wrist1/0"
+    ],
+    [
+     "A/forearm/0",
+     "A/wrist1/1"
+    ],
+    [
+     "A/forearm/0",
+     "A/wrist1/2"
+    ]
+   ],
+   "worst_mm": null
+  },
+  {
+   "rule": "flange stack",
+   "depth_allowed_mm": null,
+   "reason": "the tool changer, the 2F-85 and its fingers, caps and the wrist camera are bolted to the flange and to each other",
+   "pairs_in_contact": 363,
+   "pair_frames": 704492,
+   "examples": [
+    [
+     "A/cap/plate/left_finger_tip",
+     "A/cap/plate/right_finger_tip"
+    ],
+    [
+     "A/cap/plate/left_finger_tip",
+     "A/gr/base/0"
+    ],
+    [
+     "A/cap/plate/left_finger_tip",
+     "A/gr/base/1"
+    ],
+    [
+     "A/cap/plate/left_finger_tip",
+     "A/gr/left_finger/0"
+    ],
+    [
+     "A/cap/plate/left_finger_tip",
+     "A/gr/left_finger/1"
+    ],
+    [
+     "A/cap/plate/left_finger_tip",
+     "A/gr/left_finger_tip/0"
+    ],
+    [
+     "A/cap/plate/left_finger_tip",
+     "A/gr/left_finger_tip/1"
+    ],
+    [
+     "A/cap/plate/left_finger_tip",
+     "A/gr/left_inner_knuckle/0"
+    ],
+    [
+     "A/cap/plate/left_finger_tip",
+     "A/gr/left_inner_knuckle/1"
+    ],
+    [
+     "A/cap/plate/left_finger_tip",
+     "A/gr/right_finger/0"
+    ],
+    [
+     "A/cap/plate/left_finger_tip",
+     "A/gr/right_finger/1"
+    ],
+    [
+     "A/cap/plate/left_finger_tip",
+     "A/gr/right_finger_tip/0"
+    ]
+   ],
+   "worst_mm": null
+  },
+  {
+   "rule": "screw in its hole",
+   "depth_allowed_mm": 40.0,
+   "reason": "a socket-head, flat-head or set screw, insert, dowel or plunger drawn in its hole: its thread or shank is drawn inside the part it fastens (the CAD's holes are not threaded), up to 40 mm",
+   "pairs_in_contact": 276,
+   "pair_frames": 1156494,
+   "examples": [
+    [
+     "o1",
+     "o396"
+    ],
+    [
+     "o1",
+     "o397"
+    ],
+    [
+     "o1",
+     "o398"
+    ],
+    [
+     "o1",
+     "o399"
+    ],
+    [
+     "o1",
+     "o400"
+    ],
+    [
+     "o1",
+     "o401"
+    ],
+    [
+     "o1",
+     "o402"
+    ],
+    [
+     "o1",
+     "o403"
+    ],
+    [
+     "o1",
+     "o418"
+    ],
+    [
+     "o1",
+     "o419"
+    ],
+    [
+     "o1",
+     "o420"
+    ],
+    [
+     "o1",
+     "o421"
+    ]
+   ],
+   "worst_mm": 25.0
+  },
+  {
+   "rule": "driver on its screw",
+   "depth_allowed_mm": 30.0,
+   "reason": "the nutrunner's or screwdriver's bit or socket on the screw it turns, up to 30 mm (the socket's depth)",
+   "pairs_in_contact": 52,
+   "pair_frames": 786,
+   "examples": [
+    [
+     "A/tool/nutrunner/0/3.6",
+     "o314"
+    ],
+    [
+     "A/tool/nutrunner/0/3.6",
+     "o315"
+    ],
+    [
+     "A/tool/nutrunner/0/3.6",
+     "o316"
+    ],
+    [
+     "A/tool/nutrunner/0/3.6",
+     "o317"
+    ],
+    [
+     "A/tool/nutrunner/0/6.0",
+     "o410"
+    ],
+    [
+     "A/tool/nutrunner/0/6.0",
+     "o411"
+    ],
+    [
+     "A/tool/nutrunner/0/6.0",
+     "o412"
+    ],
+    [
+     "A/tool/nutrunner/0/6.0",
+     "o413"
+    ],
+    [
+     "A/tool/nutrunner/0/6.0",
+     "o414"
+    ],
+    [
+     "A/tool/nutrunner/0/6.0",
+     "o415"
+    ],
+    [
+     "A/tool/nutrunner/0/6.0",
+     "o416"
+    ],
+    [
+     "A/tool/nutrunner/0/6.0",
+     "o417"
+    ]
+   ],
+   "worst_mm": 25.0
+  }
+ ],
+ "seconds": 518.4,
+ "stills": [
+  "desktop-lpbf/analysis/out/videoqa/scene_audit_41-assembly-chamber_1.png",
+  "desktop-lpbf/analysis/out/videoqa/scene_audit_41-assembly-chamber_2.png"
+ ]
+}

@@ -1,0 +1,651 @@
+{
+ "chapter": "41-assembly-chamber",
+ "frames_recorded": 10325,
+ "recordings": [
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part0",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part1",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part2",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part3",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part4",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part5",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part6",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part7",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part8",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part9",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part10",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part11"
+ ],
+ "people": [
+  {
+   "person": "op",
+   "frames": 880,
+   "walked_mm": 250,
+   "stances": 14,
+   "slip_per_stance_mm": {
+    "max": 327.0,
+    "p95": 236.2,
+    "mean": 36.7
+   },
+   "worst_stances": [
+    {
+     "foot": "R",
+     "start": 5301,
+     "end": 7859,
+     "frames": 189,
+     "slip_mm": 327.0,
+     "max_frame_mm": 327.0
+    },
+    {
+     "foot": "L",
+     "start": 5301,
+     "end": 7859,
+     "frames": 189,
+     "slip_mm": 187.3,
+     "max_frame_mm": 187.3
+    },
+    {
+     "foot": "L",
+     "start": 48,
+     "end": 83,
+     "frames": 36,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 48,
+     "end": 83,
+     "frames": 36,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "L",
+     "start": 429,
+     "end": 2857,
+     "frames": 118,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 429,
+     "end": 2857,
+     "frames": 118,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "L",
+     "start": 3000,
+     "end": 5008,
+     "frames": 213,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 3000,
+     "end": 5008,
+     "frames": 213,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "L",
+     "start": 7932,
+     "end": 7979,
+     "frames": 48,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 7932,
+     "end": 7979,
+     "frames": 48,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    }
+   ],
+   "slipping_frames": 2,
+   "slipping_frame_list": [
+    [
+     7473,
+     "L",
+     187.3
+    ],
+    [
+     7473,
+     "R",
+     327.0
+    ]
+   ],
+   "gliding_frames": 1,
+   "gliding_ranges": [
+    [
+     7473,
+     7473
+    ]
+   ],
+   "gliding_worst": [
+    [
+     7473,
+     250.0,
+     30.0
+    ]
+   ],
+   "jumps": [
+    [
+     429,
+     1250
+    ],
+    [
+     3000,
+     1428
+    ],
+    [
+     5301,
+     2754
+    ],
+    [
+     7932,
+     1000
+    ],
+    [
+     8083,
+     2900
+    ],
+    [
+     9410,
+     1350
+    ]
+   ]
+  }
+ ],
+ "mirs": [
+  {
+   "mir": "mirA",
+   "frames": 10177,
+   "driven_mm": 10147,
+   "forward": "local +x",
+   "forward_mm": 6663,
+   "reverse_mm": 3485,
+   "reverse_legs": 11,
+   "longest_reverse_leg_mm": 500,
+   "reverse_leg_list": [
+    {
+     "start": 3238,
+     "end": 3243,
+     "mm": 500
+    },
+    {
+     "start": 5059,
+     "end": 5063,
+     "mm": 440
+    },
+    {
+     "start": 6572,
+     "end": 6576,
+     "mm": 440
+    },
+    {
+     "start": 8966,
+     "end": 8970,
+     "mm": 440
+    },
+    {
+     "start": 9615,
+     "end": 9618,
+     "mm": 392
+    },
+    {
+     "start": 3048,
+     "end": 3051,
+     "mm": 220
+    },
+    {
+     "start": 3501,
+     "end": 3504,
+     "mm": 220
+    },
+    {
+     "start": 6026,
+     "end": 6029,
+     "mm": 220
+    },
+    {
+     "start": 8215,
+     "end": 8218,
+     "mm": 220
+    },
+    {
+     "start": 10078,
+     "end": 10081,
+     "mm": 220
+    },
+    {
+     "start": 6287,
+     "end": 6289,
+     "mm": 172
+    }
+   ],
+   "sideways_mm": {
+    "total": 1.0,
+    "max_frame": 0.14,
+    "frames_over_1mm": 0
+   },
+   "sideways_worst": [],
+   "pivot_frames": 52,
+   "turned_deg": 720.0,
+   "jumps": [
+    [
+     86,
+     194,
+     194,
+     0
+    ],
+    [
+     87,
+     253,
+     253,
+     0
+    ],
+    [
+     88,
+     300,
+     300,
+     0
+    ],
+    [
+     89,
+     337,
+     337,
+     0
+    ],
+    [
+     90,
+     364,
+     364,
+     0
+    ],
+    [
+     91,
+     379,
+     379,
+     0
+    ],
+    [
+     92,
+     383,
+     383,
+     0
+    ],
+    [
+     93,
+     376,
+     376,
+     0
+    ],
+    [
+     94,
+     359,
+     359,
+     0
+    ],
+    [
+     95,
+     331,
+     331,
+     0
+    ],
+    [
+     96,
+     292,
+     292,
+     0
+    ],
+    [
+     97,
+     241,
+     241,
+     0
+    ],
+    [
+     98,
+     180,
+     180,
+     0
+    ],
+    [
+     183,
+     181,
+     181,
+     0
+    ],
+    [
+     184,
+     255,
+     255,
+     0
+    ],
+    [
+     185,
+     312,
+     312,
+     0
+    ],
+    [
+     186,
+     353,
+     353,
+     0
+    ],
+    [
+     187,
+     378,
+     378,
+     0
+    ],
+    [
+     188,
+     386,
+     386,
+     0
+    ],
+    [
+     189,
+     378,
+     378,
+     0
+    ],
+    [
+     190,
+     353,
+     353,
+     0
+    ],
+    [
+     191,
+     313,
+     313,
+     0
+    ],
+    [
+     192,
+     255,
+     255,
+     0
+    ],
+    [
+     193,
+     182,
+     182,
+     0
+    ],
+    [
+     1144,
+     169,
+     169,
+     0
+    ],
+    [
+     1145,
+     229,
+     229,
+     0
+    ],
+    [
+     1146,
+     284,
+     284,
+     0
+    ],
+    [
+     1147,
+     334,
+     334,
+     0
+    ],
+    [
+     1148,
+     380,
+     380,
+     0
+    ],
+    [
+     1149,
+     421,
+     421,
+     0
+    ],
+    [
+     1150,
+     458,
+     458,
+     0
+    ],
+    [
+     1151,
+     490,
+     490,
+     0
+    ],
+    [
+     1152,
+     517,
+     517,
+     0
+    ],
+    [
+     1153,
+     540,
+     540,
+     0
+    ],
+    [
+     1154,
+     558,
+     558,
+     0
+    ],
+    [
+     1155,
+     572,
+     572,
+     0
+    ],
+    [
+     1156,
+     581,
+     581,
+     0
+    ],
+    [
+     1157,
+     585,
+     585,
+     0
+    ],
+    [
+     1158,
+     585,
+     585,
+     0
+    ],
+    [
+     1159,
+     580,
+     580,
+     0
+    ]
+   ]
+  },
+  {
+   "mir": "mirB",
+   "frames": 10296,
+   "driven_mm": 5108,
+   "forward": "local +x",
+   "forward_mm": 3728,
+   "reverse_mm": 1380,
+   "reverse_legs": 5,
+   "longest_reverse_leg_mm": 440,
+   "reverse_leg_list": [
+    {
+     "start": 4456,
+     "end": 4460,
+     "mm": 440
+    },
+    {
+     "start": 3255,
+     "end": 3258,
+     "mm": 280
+    },
+    {
+     "start": 6169,
+     "end": 6172,
+     "mm": 220
+    },
+    {
+     "start": 9315,
+     "end": 9318,
+     "mm": 220
+    },
+    {
+     "start": 9498,
+     "end": 9501,
+     "mm": 220
+    }
+   ],
+   "sideways_mm": {
+    "total": 0.5,
+    "max_frame": 0.13,
+    "frames_over_1mm": 0
+   },
+   "sideways_worst": [],
+   "pivot_frames": 26,
+   "turned_deg": 360.0,
+   "jumps": [
+    [
+     350,
+     178,
+     178,
+     0
+    ],
+    [
+     351,
+     193,
+     193,
+     0
+    ],
+    [
+     352,
+     176,
+     176,
+     0
+    ],
+    [
+     1704,
+     7882,
+     -7882,
+     0
+    ],
+    [
+     1781,
+     172,
+     172,
+     0
+    ],
+    [
+     1782,
+     185,
+     185,
+     0
+    ],
+    [
+     1783,
+     166,
+     166,
+     0
+    ],
+    [
+     2418,
+     190,
+     190,
+     0
+    ],
+    [
+     2419,
+     209,
+     209,
+     0
+    ],
+    [
+     2420,
+     198,
+     198,
+     0
+    ],
+    [
+     2421,
+     157,
+     157,
+     0
+    ],
+    [
+     2889,
+     186,
+     186,
+     0
+    ],
+    [
+     2890,
+     212,
+     212,
+     0
+    ],
+    [
+     2891,
+     210,
+     210,
+     0
+    ],
+    [
+     2892,
+     180,
+     180,
+     0
+    ],
+    [
+     7860,
+     1000,
+     1000,
+     0
+    ],
+    [
+     8051,
+     220,
+     220,
+     0
+    ],
+    [
+     8956,
+     780,
+     780,
+     0
+    ]
+   ]
+  }
+ ],
+ "limits": {
+  "foot_down_mm": 4.0,
+  "contact_mm": 2.0,
+  "slip_frame_mm": 5.0,
+  "glide_mm": 1.0,
+  "glide_deg": 0.3,
+  "legs_still_mm": 0.5,
+  "jump_mm": 250.0,
+  "mir_jump_mm": 150.0
+ },
+ "seconds": 1.2
+}
