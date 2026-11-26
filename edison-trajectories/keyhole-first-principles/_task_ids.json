@@ -1,0 +1,21 @@
+{
+  "job": "job-futurehouse-paperqa3-high",
+  "submitted_utc": "2026-11-26T06:36:30Z",
+  "tasks": {
+    "properties": {
+      "task_id": "7600f983-bf68-438a-89cf-8bd0ba87cde4",
+      "title": "Temperature-dependent properties of liquid and solid Al and Al-Si for a keyhole model",
+      "outfile": "properties.md"
+    },
+    "models": {
+      "task_id": "52847744-b063-4698-9d64-4fb14c1801a0",
+      "title": "Physics-based keyhole models: equations, assumptions and measured-depth errors",
+      "outfile": "models.md"
+    },
+    "absorptance": {
+      "task_id": "0a888818-0c16-42ab-a76e-c0e2a1bbdc1b",
+      "title": "Measured absorptance against keyhole depth and aspect ratio",
+      "outfile": "absorptance.md"
+    }
+  }
+}

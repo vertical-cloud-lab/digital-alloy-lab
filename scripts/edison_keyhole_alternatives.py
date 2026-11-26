@@ -41,6 +41,8 @@ RAW_DIR = OUT_DIR / "raw"
 TASK_FILE = OUT_DIR / "_task_ids.json"
 TERMINAL = {"success", "fail", "failed", "cancelled", "error"}
 EMAIL_RE = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
+# Named in each fetched report's header; scripts that reuse fetch_one() set their own.
+PROMPT_SCRIPT = "scripts/edison_keyhole_alternatives.py"
 
 KH_CONTEXT = (
     "Context: we use ArroyaveLab's open-source `eagar-tsai` Python package (a conduction-mode "
@@ -262,7 +264,7 @@ def fetch_one(c: EdisonClient, key: str, meta: dict) -> str:
         f"Task ID: {meta['task_id']}\n"
         f"Created: {dump.get('created_at')}  Status: {status}\n"
         "Retrieved with edison-client from GitHub Actions for issue #235.\n"
-        "Prompt: QUERIES['" + key + "'] in scripts/edison_keyhole_alternatives.py\n"
+        "Prompt: QUERIES['" + key + "'] in " + PROMPT_SCRIPT + "\n"
         "-->\n\n"
     )
     body = formatted or plain
