@@ -45,9 +45,9 @@ def _seedwise(policies, seeds, **kw):
 EXPERIMENTS = {
     "smoke": [cfg(p, 0, days=40) for p in ("bad_value", "drop", "retry", "viability_x", "viability_node", "oracle",
                                             "heuristic")],
-    # the main benchmark: the lab's record (learning curve, damage), six strategies, five seeds, paired (a BOFN year
+    # the main benchmark: the lab's record (learning curve, damage), six strategies, seven seeds, paired (a BOFN year
     # with both campaigns took 13-19 min with four on the runner, so this is what fit in the job's six hours)
-    "main": _seedwise(STRATS_MAIN, range(5), regime="lab"),
+    "main": _seedwise(STRATS_MAIN, range(7), regime="lab"),
     # the cheap baselines on every regime, eight seeds
     "base": [cfg(p, s, regime=r) for s in range(8) for r in ("lab", "lab_region", "twin") for p in BASE],
     # the cheap references that fit: round 3's heuristic, random and GP-BO with round 3's own failure handling

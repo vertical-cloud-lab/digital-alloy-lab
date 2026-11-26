@@ -193,7 +193,14 @@ def load_all():
             row = per_run(r)
             row["seed"] = c["seed"]
             data.setdefault(c["regime"], {}).setdefault(c["policy"], {})[c["seed"]] = row   # one row per seed
-    return {reg: {pol: list(s.values()) for pol, s in P.items()} for reg, P in data.items()}
+    # keep only seeds every failure-handling strategy of a regime has finished, so each summary is on the same
+    # seeds (a run cut short at the job's limit leaves a partial seed)
+    out = {}
+    for reg, P in data.items():
+        fm = [p for p in P if p not in ("heuristic", "random", "gpbo")]
+        common = set.intersection(*[set(P[p]) for p in fm]) if fm else set()
+        out[reg] = {p: [r for sd, r in sorted(S.items()) if p not in fm or sd in common] for p, S in P.items()}
+    return out
 
 
 def analyse():

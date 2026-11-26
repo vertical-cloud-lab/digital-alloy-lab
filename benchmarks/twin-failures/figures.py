@@ -175,7 +175,8 @@ def main(out, data):
                      ("twin", "Regime 'twin' (round 3's own failure law)")):
         if reg in raw:
             strat = [p for p in main_s + ("viability_node_nodiag", "oracle") if p in raw[reg]]
-            n = min(len(raw[reg][p]) for p in strat)
+            if not strat:                                 # only the cheap references ran in this regime
+                continue
             best_vs_days(raw, reg, strat, T, f"twinfail_{reg}_best_vs_days.png",
                          f"{ttl}: best new alloy so far, median of seeds")
             paired_forest(out, reg, strat, f"twinfail_{reg}_paired.png", ttl)
