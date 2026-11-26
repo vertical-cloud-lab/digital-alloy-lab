@@ -91,6 +91,8 @@ class Rec:
     # ---------------------------------------------------------------- bookkeeping
     def _ev(self, kind, **kw):
         kw["kind"] = kind
+        if getattr(self, "mute", False):        # a fast-forwarded step (run_assembly ASM_FF_UNTIL): nothing is recorded
+            return kw
         kw["step"] = self.step["id"] if self.step else ""
         self.events.append(kw)
         if self.step is not None:
