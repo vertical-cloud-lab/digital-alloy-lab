@@ -155,7 +155,7 @@ cost $27 an hour.
 | Tiered screening against BOFN on aluminium | BOFN ahead when the screen misses an effect (62.7 % against 85.8 %); level when it doesn't | 0.34 against 0.65 | **Agree**, and the twin's notes say why. |
 | BOFN on copper | `bofn-cu-ded`, 20 seeds: [BOFN 73 %, random 22 %, standard BO 14 %, tiered −8 %][cuded] | Tiered 0.69, `bofn_blend` 0.67 (0.58 at 24 seeds), GP-BO 0.53, random 0.35, plain BOFN 0.33 | **Reversed.** The twin's notes explain tiered (nothing in its truth is hidden from the screen). They do not explain plain BOFN falling below GP-BO (−0.20, −0.39 to −0.01, p = 0.066). From common seeds the two are level (0.64 against 0.63). |
 | A speed-up number | "3.8×" is spend against tiered screening, from mean curves, at one setting; [only 4 of 24 comparisons survive Holm](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/117#issuecomment-7175746177) | Days between two labs, from per-seed medians | **Not comparable.** Neither supports "BOFN is N× faster" in general. |
-| Noise | None in any of this repo's benchmarks | Simulated instruments | The twin is the only one with noise, so it cannot be checked against the others on that. |
+| Noise | None in `bofn-prelim` or `bofn-cu-ded` ("observations are noise-free") | Simulated instruments | The twin is the only one of the three with measurement noise, so it cannot be checked against the others on that. |
 | Issue 265's test function | [No campaign has been run on it](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/265#issuecomment-7047070034) | Not used | Nothing to compare. |
 
 ## 4. Suggested rewording
