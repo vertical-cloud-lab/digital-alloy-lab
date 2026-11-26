@@ -13,6 +13,16 @@ Line links below point at those commits.
 
 ## Summary
 
+- **Update, 2026-11-26: the benchmark on the lab's own networks**
+  ([`benchmarks/bofn-failures/`](benchmarks/bofn-failures/README.md)). On the aluminum LPBF and copper
+  DED networks (four cells, 1,000+ campaigns of $100k), the four ways Ax can record a failed run
+  without learning from it, `FAILED`, `ABANDONED`, and `COMPLETED` with partial data, pending or not,
+  end within noise of each other and 23 to 28 points of the optimum behind node-level viability
+  (pooled over the cells, Holm p < 1e-6). Any failure model recovers most or all of the loss:
+  node-level viability, imputing the worst value measured so far, and Ax's `AddExecutionViability`
+  are within a few points of each other, and node-level viability ends level with a campaign that
+  has no failures at all. Imputing far below anything measured costs 7 to 16 points. Transient faults
+  alone cost money but not results, whatever status they get.
 - **Ax's definitions.** `FAILED` means a possibly transient error, so the arm may be suggested
   again. `ABANDONED` means "don't run this again": either a person decided so, or the
   parameterization makes the trial fail every time. By default the model fits on neither
@@ -392,6 +402,12 @@ ranking.
 It would add the case the toy leaves out: node 3 sometimes run on intermediates that don't come
 from `x` (purchased powder). It would also label some failures `unknown`, and measure regret
 against cumulative cost, cost spent on failed evaluations, and repeated suggestions.
+
+**Update, 2026-11-26.** That benchmark was run on the lab's own networks rather than the 5-node chain:
+[`benchmarks/bofn-failures/`](benchmarks/bofn-failures/README.md). It has transient and input-caused
+failures at every physical stage (input-caused ones depend on the stage's inputs, including measured
+intermediates), lots reused across prints, wrong labels, and the cost spent on failed stages and on
+repeats. It leaves out purchased intermediates and `unknown` labels.
 
 ## 6. Ax issues and PRs to read alongside this
 
