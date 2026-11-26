@@ -89,6 +89,7 @@ Rendered in this cut (from [`compose.json`](../cad/img/robotbuild/compose.json))
 
 ## Caveats
 
+- **The assembly chapters replay run 10.** Run 11, after the video was composed, passes one more step (F45) and plans two more table picks (M13, C00a); see [`assembly.md`](../assembly.md) round 7.
 - **Ten assembly steps still fail in run 10** (C00d, F15, F18, F26, F27, F45, F45d, F48b, F54, F57); the video shows each failed attempt with a FAIL badge, and moves on. Those steps would fall to a person (the time estimates count 5 min each, or 1 min a screw), who is not drawn for them. Their next changes are in [`assembly.md`](../assembly.md). Ten picks at the table are not planned (the part is shown in the gripper, with a note): the held part at the table doesn't match the part on the table for M13 and C00a, and the others touch a riser, a tray rim or a line (assembly.md, run 10).
 - **The integration chapter's person and lift table are illustrations, not plans.** The steps and who does them are
   sequence.py's (T01-T06). The lift table drawn is the shop's (Vestil SCTAB-1000-2040-AC, 20 x 40 in, 1,000 lb, from
