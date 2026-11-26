@@ -1,0 +1,24 @@
+vertical lab + bofn_blend vs conventional + bofn | flaime_al | days AF rerun 1.889 (1.072-3.354390465501577) stored 1.8889787490320917 (1.071889299089811-3.354390465501577)
+    cash               rerun 0.632 (0.357-1.019)  stored 0.632 (0.357-1.019)  medians rerun 61421/38845
+    operating, alone   rerun 1.364 (0.779-2.398)  stored 1.364 (0.779-2.398)  medians rerun 122000/166371
+    operating, shared  rerun 0.838 (0.466-1.420)  stored 0.838 (0.466-1.420)  medians rerun 122000/102209
+    full, alone        rerun 1.998 (1.139-3.568)  stored 1.998 (1.139-3.568)  medians rerun 150284/300288
+    full, shared       rerun 1.135 (0.631-1.964)  stored 1.135 (0.631-1.964)  medians rerun 150284/170616
+vertical lab + bofn_blend vs conventional + bofn | onr_cu | days AF rerun 3.727 (2.040-inf) stored 3.726833664043183 (2.03987162243145-inf)
+    cash               rerun 0.415 (0.000-0.743)  stored 0.415 (0.000-0.743)  medians rerun 119811/49687
+    operating, alone   rerun 0.837 (0.000-1.497)  stored 0.837 (0.000-1.497)  medians rerun 195488/163637
+    operating, shared  rerun 0.416 (0.000-0.746)  stored 0.416 (0.000-0.746)  medians rerun 195488/81360
+    full, alone        rerun 1.154 (0.000-2.054)  stored 1.154 (0.000-2.054)  medians rerun 237673/274337
+    full, shared       rerun 0.482 (0.000-0.853)  stored 0.482 (0.000-0.853)  medians rerun 237673/114512
+vertical lab + bofn_blend vs conventional + heuristic | flaime_al | days AF rerun 1.055 (0.691-2.2463587963505875) stored 1.0545599242880497 (0.6913705583756347-2.2463587963505875)
+    cash               rerun 1.230 (0.495-2.109)  stored 1.230 (0.495-2.109)  medians rerun 31577/38845
+    operating, alone   rerun 2.646 (1.138-4.224)  stored 2.646 (1.138-4.224)  medians rerun 62886/166371
+    operating, shared  rerun 1.625 (0.684-2.530)  stored 1.625 (0.684-2.530)  medians rerun 62886/102209
+    full, alone        rerun 3.807 (1.647-5.860)  stored 3.807 (1.647-5.860)  medians rerun 78885/300288
+    full, shared       rerun 2.163 (0.930-3.287)  stored 2.163 (0.930-3.287)  medians rerun 78885/170616
+vertical lab + bofn_blend vs conventional + heuristic | onr_cu | days AF rerun 2.176 (1.732-2.6072157913975875) stored 2.1755691982616647 (1.7321887070486055-2.6072157913975875)
+    cash               rerun 0.775 (0.614-1.025)  stored 0.775 (0.614-1.025)  medians rerun 64107/49687
+    operating, alone   rerun 1.552 (1.286-1.961)  stored 1.552 (1.286-1.961)  medians rerun 105445/163637
+    operating, shared  rerun 0.772 (0.640-0.978)  stored 0.772 (0.640-0.978)  medians rerun 105445/81360
+    full, alone        rerun 2.157 (1.790-2.721)  stored 2.157 (1.790-2.721)  medians rerun 127184/274337
+    full, shared       rerun 0.900 (0.740-1.135)  stored 0.900 (0.740-1.135)  medians rerun 127184/114512
