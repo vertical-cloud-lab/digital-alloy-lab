@@ -55,6 +55,9 @@ assembly planner with the fixes the first had listed, and composed the video.
    screws. **Ten steps still fail**, each with its next change listed: one floor screw, one inlet-plenum screw, the rail's held
    screws, the blade holder and its screws, the roller feedthrough and the dock parts on the metering base, the camera window
    stack, the optics bridge and the beam line. They would fall to a person; the video shows the failed attempts.
+   **Run 11** (not in the video) adds a fix for the table picks (plan each with only the part that is on the table) and
+   four next changes: **99 of 108 steps and 57 of 74 picks** (F45 passes with a 35 mm axial leg; M13's and C00a's picks
+   plan); F15, F18 and F26 still fail, each now for a reason the change ruled in.
 6. **Where a person is needed in the assembly**, among others: the felt bore seal (M09), the two half-dovetail O-rings on the bench (F39,
    F51), the f-theta lens on its M85 thread (F53), alignment and calibration (F57b), the process fiber (F58), the laser guard
    (F59), tube and hose routing, the hoist for the three carries over 10 kg, and checks after the rod-gland O-rings (M12) and the
@@ -65,10 +68,11 @@ assembly planner with the fixes the first had listed, and composed the video.
    roller, pin caps, nozzle, liner wand, ring pad, pin pusher, bit extensions, the trunnion, Fixtures P and B and the nests.
 
 ### Still not done
-- **Run 11:** the next change for each of run 10's ten failing steps is listed in [`assembly.md`](assembly.md); none is run.
-- **The table picks:** the 10 unplanned picks are mismatches between the part on the table and the part the arm holds (M13
-  carries its station-fitted PEEK bullet, C00a the funnel fitted on the bench) or contacts with a riser, a tray rim and a line;
-  the fix in `commit.place` is described there and not made.
+- **Run 12:** the next change for each of run 11's nine failing steps is listed in [`assembly.md`](assembly.md). The video
+  replays run 10; a re-render from the latest run would show F45 passing and two more picks.
+- **The table picks:** run 11 still has 8 unplanned picks: a fingertip meets a riser (M04), a tray rim (F02b, F45d), the O₂
+  sample line (F36), the drawer-latch studs (F39) or the part's own rail (F18), and MiR B's drive is swept into the release-air
+  tube lying on the table (F45, F45b).
 - **The shop:** MiR drives between stations are not animated; the floor plate's turnover between its setups, unloading the
   lathe and the F-S3 bolt-up are not planned (robot-shop.md).
 - **Not built, quoted by a shop, wired, or reviewed** by BYU's LSO, EHS or an electrician.

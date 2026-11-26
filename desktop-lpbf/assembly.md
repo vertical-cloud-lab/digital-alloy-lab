@@ -36,6 +36,29 @@ design, render, and simulate usage of these, though)". Run 7 (round 6) checked e
 in the gripper. Round 7 adds where the part comes from, records every committed motion, and redesigns the steps that failed.
 Nothing here has been built or tried on hardware.
 
+### Run 11 (2026-11-26, 00:20-01:13 UTC): the table-pick fix and four next changes (not in the video)
+
+The video replays run 10. Run 11 adds the table-pick fix (fe7b30c: a pick is planned with only the objects in the item's slot,
+without the extras fitted at the station) and the next change for four of run 10's failing steps. Results:
+[`results_run11.json`](analysis/out/assembly/results_run11.json); against run 10:
+[`round7_run11.json`](analysis/out/assembly/round7_run11.json); real time per step:
+[`run11_times.json`](analysis/out/assembly/run11_times.json).
+
+| | Run 10 | Run 11 |
+|---|---|---|
+| checked steps passed | 98 of 108 | **99 of 108** |
+| screws driven | 124 of 129 | 124 of 129 |
+| picks at the long table on a planned path | 55 of 74 | **57 of 74** |
+| planner's compute time | 4,688 s | 3,180 s |
+
+| Step | Change in run 11 | Result |
+|---|---|---|
+| M13, C00a (picks) | the pick planned with the table item alone | **both picks plan** |
+| F45 | a 35 mm axial leg before the lift (was 12 mm) | **PASS**: the shaft clears the metering base, and arm B carries it |
+| F15 | a 100 mm bit extension (was 60) | 6 of 7: the screwdriver's body still meets the plenum's KF-25 port on screw 7, so the length isn't the cause; the side-mounted driver's body is. Next: the angle-head nutrunner for that screw, or the screw moved along the flange |
+| F18 | a 30 mm bit on the held rail screws (run 10: 60 mm) | 3 of 4: now arm A's forearm meets the base plate. Next: arm B drives that screw from above the open top while arm A holds |
+| F26 | in 15 mm high (run 10: 9 mm) | the same: the right fingertip meets the chamber body 117 mm into the move, so it is the fingers' width, not the height. Next: fingers along z, or the blade cartridge put in by its fin as the tending robot does |
+
 ### Run 10 (2026-11-25, 21:19-22:37 UTC): run 9's next fixes, recorded again for the video
 
 Run 9's recording lived in `/tmp` on a runner that is gone, so the video's assembly chapters are rendered from run 10. Run 10
@@ -249,21 +272,21 @@ Rendered with [`cad/robotbuild/asm_render.py`](cad/robotbuild/asm_render.py) fro
 
 ### Open points
 
-**Still failing in run 10, and the next change for each** (run 10's changes are in the table above; none of these is
-re-run):
+**Still failing in run 10, and the next change for each** (run 10's changes are in the table above; run 11 tried four of
+these, noted on each):
 - **F15** (6 of 7 screws: the driver meets the plenum's KF-25 port on one, with or without the 60 mm extension): drive that
-  screw before the port's stub goes on (the stub is welded, so: a shorter stub, or the screw moved 5 mm along the flange).
+  screw before the port's stub goes on (the stub is welded, so: a shorter stub, or the screw moved 5 mm along the flange). Run 11's 100 mm extension didn't help: the side-mounted driver's body meets the port, so try the
+  angle-head nutrunner on that screw.
 - **F18** (3 of 4 held rail screws): with the 60 mm extension arm A's wrist 1 meets the base plate; without it the driver met
   the chamber body. Try a 30 mm extension between the two, or swap the roles back for that one screw (arm A holds, arm B
-  drives from above the open top).
+  drives from above the open top). Run 11's 30 mm bit: arm A's forearm meets the base plate instead.
 - **F26** (blade holder): the part's path passes since run 10; the right fingertip meets the chamber body. Take the holder
   by its top and bottom faces (fingers along z) or with a narrower fingertip pair, or fit the blade cartridge to the arm on a
   bench nest and put the whole cartridge in by its fin (robot-ops.md's blade-cartridge job passes that way on the finished
-  machine).
+  machine). Run 11 entered 15 mm high: the same fingertip contact, so it is the fingers' width.
 - **F27** (blade screws): arm B's driver meets the overflow funnel block. Drive them on the bench with the cartridge on a
   nest before F26 (the cartridge is quick-swap anyway, with dowels and ball plungers).
-- **F45** (roller feedthrough): the part's own path. Unscrew 30-40 mm along the axis before lifting, if the metering base's
-  bore leaves room, or fit the feedthrough before the metering base goes onto the lid.
+- **F45** (roller feedthrough): the part's own path. **Fixed in run 11** with a 35 mm axial leg before the lift.
 - **F45d**: the NFC reader's antenna meets the metering base on its 70 mm drop: bring it in from the side, or fit it before
   F43.
 - **F48b** (camera window stack): the ring pad meets the camera boss at the seat, not on the way; check the pad's axis
