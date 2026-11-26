@@ -47,6 +47,7 @@ PLAN = json.loads((LPBF / "analysis" / "out" / "machining" / "setup_plan.json").
 CH = SS.CHAMBER
 EVERY = 1
 STILL = False
+ONLY = {int(v) for v in os.environ.get("SHOP_ONLY_FRAMES", "").split(",") if v.strip()}
 SUMMARY = {}          # chapter -> clip -> dict(who, status, machine_h, robot_h, person_h, frames)
 
 
@@ -88,6 +89,14 @@ class Writer:
         self.n_in += 1
         if (self.n_in - 1) % EVERY:
             return
+        if ONLY:                                  # SHOP_ONLY_FRAMES=a,b,c: render just those frames (quick stills)
+            if self.n_in - 1 not in ONLY:
+                return
+            if self.n_in - 1 >= max(ONLY):
+                img = scn.render(cam)
+                self.ch.frame(img, caption, sub=sub, who=list(who), step=step, status=status, proc_s=proc_s, **kw)
+                raise StopIteration
+
         ps = proc_s * EVERY
         a = dict(add or {})
         who = list(who)
@@ -591,6 +600,20 @@ def cut_program(w, scn, vf4, stock, names, part_obj, Q_of, cam, cap, seconds, st
     P_part = sc.gmat[g_obj]
     tot_min = 0.0
     tool_now = None
+    # Round 8 (video_qa on the composed MP4): at 49-192x a fixed station camera saw the table jump to each sample's
+    # tool position. The camera now rides on the table (CAM-simulation style): the shot is framed for the part's centre
+    # under the spindle, and every frame adds the table's offset from there, so the part stays still and the spindle
+    # moves over it. The loading, lifts and door shots keep their fixed station cameras.
+    Q0 = Q_of(GS.Program(names[0]).a_deg)
+    c0 = (stock.g.lo + stock.g.hi) / 2 if hasattr(stock.g, "hi") else np.zeros(3)
+    q0 = Q0[:3, :3] @ c0 + Q0[:3, 3]
+    ref = (-q0[0], E.VF4["spindle_y"] - q0[1])
+    Mv = Mst("vf4")
+
+    def tcam():
+        d = Mv[:3, :3] @ np.array([vf4.state["table_x"] - ref[0], vf4.state["table_y"] - ref[1], 0.0])
+        return [tuple(np.asarray(cam[0], float) + d), tuple(np.asarray(cam[1], float) + d), cam[2]]
+
     for name, secs in zip(names, seconds):
         prog = GS.Program(name)
         a = prog.a_deg
@@ -602,13 +625,13 @@ def cut_program(w, scn, vf4, stock, names, part_obj, Q_of, cam, cap, seconds, st
             z0 = vf4.state["z"]
             for i in range(4):
                 vf4.set(z=z0 * (1 - ease((i + 1) / 4)))
-                w.frame(scn, cam, cap, sub=f"{prog.src} line {prog.index_lines['home']}: G53 G00 Z0. (Z home "
+                w.frame(scn, tcam(), cap, sub=f"{prog.src} line {prog.index_lines['home']}: G53 G00 Z0. (Z home "
                         f"before the index)", who=["machine"], step=step, status="pass",
                         proc_s=max(z0, 1.0) / (25400.0 / 60.0) / 4)
             a0 = vf4.state["a"]
             for i in range(8):
                 vf4.set(a=a0 + (a - a0) * ease((i + 1) / 8))
-                w.frame(scn, cam, cap, sub=f"{prog.src} line {prog.index_lines['a']}: M11, G00 A{a}., M10 (unclamp, "
+                w.frame(scn, tcam(), cap, sub=f"{prog.src} line {prog.index_lines['a']}: M11, G00 A{a}., M10 (unclamp, "
                         f"index, clamp: ~3 s, our estimate)", who=["machine"], step=step, status="pass",
                         proc_s=3.0 / 8)
         cut = GS.Cutter(prog, stock.g, stock.occ)
@@ -646,7 +669,7 @@ def cut_program(w, scn, vf4, stock, names, part_obj, Q_of, cam, cap, seconds, st
                                 t_s=round(t, 2), work_xyz=[round(float(c), 3) for c in pos], tool=T, op=label,
                                 table_xy=[round(tx, 1), round(ty, 1)], head_z=round(z, 1),
                                 in_travel=bool(-635.0 <= tx <= 635.0 and -5.0 <= ty <= 513.0 and -1.0 <= z <= 636.0)))
-            w.frame(scn, cam, cap, sub=f"{prog.src} line {ln}: T{T}, {label[:58]} | {factor:.0f}x time-lapse of "
+            w.frame(scn, tcam(), cap, sub=f"{prog.src} line {ln}: T{T}, {label[:58]} | {factor:.0f}x time-lapse of "
                     f"{prog.total_s / 60:.1f} min", who=["machine"], step=step, status="pass",
                     proc_s=prog.total_s / n)
         cut.finish()
@@ -661,13 +684,13 @@ def cut_program(w, scn, vf4, stock, names, part_obj, Q_of, cam, cap, seconds, st
     z0 = vf4.state["z"]
     for i in range(8):
         vf4.set(z=z0 * (1 - ease((i + 1) / 8)))
-        w.frame(scn, cam, cap, sub="Program end: Z home (rapid)", who=["machine"], step=step, status="pass",
+        w.frame(scn, tcam(), cap, sub="Program end: Z home (rapid)", who=["machine"], step=step, status="pass",
                 proc_s=max(z0, 1.0) / (25400.0 / 60.0) / 8)
     if a_end is not None and abs(vf4.state["a"] - a_end) > 0.1:
         a0 = vf4.state["a"]
         for i in range(8):
             vf4.set(a=a0 + (a_end - a0) * ease((i + 1) / 8))
-            w.frame(scn, cam, cap, sub=f"{GS.HAAS}: M11, G00 A0., M10, M30 (the program's end; ~3 s, our estimate)",
+            w.frame(scn, tcam(), cap, sub=f"{GS.HAAS}: M11, G00 A0., M10, M30 (the program's end; ~3 s, our estimate)",
                     who=["machine"], step=step, status="pass", proc_s=3.0 / 8)
     return tot_min
 
@@ -1254,7 +1277,7 @@ def main(argv):
         print(f"chapter {k}: {n} frames in {time.time() - t1:.0f} s", flush=True)
     OUT.mkdir(parents=True, exist_ok=True)
     pj = OUT / "shop_person.json"
-    if PERSON_RESULTS and EVERY == 1 and not STILL:     # round 8: the two-person lifts replace round 7's jib lifts
+    if PERSON_RESULTS and EVERY == 1 and not STILL and not ONLY:     # round 8: the two-person lifts replace round 7's jib lifts
         prev_l = {}
         if pj.exists():
             prev_ = json.loads(pj.read_text())
@@ -1271,7 +1294,7 @@ def main(argv):
                                     "HSE L23, Manual Handling Operations Regulations 1992, guidance on team handling: "
                                     "a team of two can handle about two-thirds of the sum of their capabilities"]),
             lifts=prev_l), indent=1, default=str))
-    if GFRAMES and EVERY == 1 and not STILL:   # every drawn cutter position: its program, line and time
+    if GFRAMES and EVERY == 1 and not STILL and not ONLY:   # every drawn cutter position: its program, line and time
         gj = LPBF / "analysis" / "out" / "videoqa" / "gcode_frames.json"
         gj.parent.mkdir(parents=True, exist_ok=True)
         prev = json.loads(gj.read_text()) if gj.exists() else {}
