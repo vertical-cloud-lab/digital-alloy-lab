@@ -426,9 +426,19 @@ def _steps(kind):
             else:
                 out.append(("", str(r), ""))
     if kind == "person":                                       # the shop's person lifts (shop.json)
-        for name, r in ((load("shop.json") or {}).get("person_lifts") or {}).items():
-            out.append(("shop", f"Chamber blank at the VF-4: {name}, {float(r.get('kg', 0)):.1f} kg",
-                        "a person with the vacuum lifter on the jib (the shop worker's person lifts)"))
+        pl = (load("shop.json") or {}).get("person_lifts") or {}
+        if isinstance(pl.get("lifts"), dict):                  # round 8: two-person lifts by hand, no lifter
+            g = (pl.get("guideline") or {}).get("team_of_two_kg", 30.7)
+            for name, r in pl["lifts"].items():
+                if not isinstance(r, dict):
+                    continue
+                out.append(("shop", f"{r.get('caption') or name} ({float(r.get('kg', 0)):.1f} kg)",
+                            f"two people by hand; guideline for two {g:.1f} kg (NIOSH 23 kg x 2 x 2/3, HSE L23)"))
+        else:                                                  # round 7's format
+            for name, r in pl.items():
+                if isinstance(r, dict):
+                    out.append(("shop", f"Chamber blank at the VF-4: {name}, {float(r.get('kg', 0)):.1f} kg",
+                                "a person with the vacuum lifter on the jib (the shop worker's person lifts)"))
     if kind == "redesign":                                     # the assembly's failed steps and their round-7 fixes
         notes = load("asm_fail_notes.json") or {}
         have = {o[0] for o in out}
