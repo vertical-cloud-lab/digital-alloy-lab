@@ -30,8 +30,8 @@ Optics (f = 254 mm, M2 1.1):
 
 Cost by alternative (parts.csv):
 
-- **FT0**: $13,130-22,185; vendors at or over $3,500 (PO): none
-  - Laser and optics (used): $4,691-6,440
+- **FT0**: $13,230-23,685; vendors at or over $3,500 (PO): none
+  - Laser and optics (used): $4,791-7,940
   - Scan control and computing: $1,670-2,850
   - Motion: $150-600
   - Enclosure and chamber: $750-1,350
@@ -40,8 +40,8 @@ Cost by alternative (parts.csv):
   - Safety: $2,668-3,530
   - Stock and fabrication: $1,000-1,575
   - Powder handling: $0-2,730
-- **FT1**: $20,334-29,708; vendors at or over $3,500 (PO): Zaber ($6,238)
-  - Laser and optics (used): $4,691-6,440
+- **FT1**: $20,434-31,208; vendors at or over $3,500 (PO): Zaber ($6,238)
+  - Laser and optics (used): $4,791-7,940
   - Scan control and computing: $1,670-2,850
   - Motion: $6,318-6,438
   - Enclosure and chamber: $750-1,350
@@ -50,8 +50,8 @@ Cost by alternative (parts.csv):
   - Safety: $2,668-3,530
   - Stock and fabrication: $1,975-3,200
   - Powder handling: $0-2,730
-- **FT1V**: $30,969-41,278; vendors at or over $3,500 (PO): Zaber ($6,238), Ideal Vacuum ($9,450)
-  - Laser and optics (used): $4,691-6,440
+- **FT1V**: $31,069-42,778; vendors at or over $3,500 (PO): Zaber ($6,238), Ideal Vacuum ($9,450)
+  - Laser and optics (used): $4,791-7,940
   - Scan control and computing: $1,670-2,850
   - Motion: $6,318-6,438
   - Enclosure and chamber: $11,060-12,400

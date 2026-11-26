@@ -35,11 +35,11 @@ in an Al alloy: the smallest result that shows a working LPBF machine.
   - **Powder bed:** two stock Zaber stages (1–5 day lead time): a vertical stage lowers a Ø40 mm heated plate in a
     heated aluminium well, and a linear stage moves a small gravity-fed hopper with the blade, as Heriot-Watt's rig did.
   - **Custom parts:** about 12 simple parts, 25–40 shop hours. No honing, no vacuum seals, no 4th axis.
-  - **Cost:** **$20.3k–29.7k** in parts and shop time, against $70.5k–154.1k for PR 266's BOM.
+  - **Cost:** **$20.4k–31.2k** in parts and shop time, against $70.5k–154.1k for PR 266's BOM.
   - **Time:** **first tracks at 2.2–4.4 weeks and first coupons at 3.2–6.4 weeks** if the two stages go on separate
     vendors' PCard orders; 4.2–8.0 weeks if they share one purchase order.
 - **FT-0 is FT-1's first half:** the same optics, box and heated plate without the stages, spread by hand with a film
-  applicator. It lays single tracks and single-layer pads at **1.6–4.2 weeks for $13.1k–22.2k**, and it is worth doing
+  applicator. It lays single tracks and single-layer pads at **1.6–4.2 weeks for $13.2k–23.7k**, and it is worth doing
   even if FT-1 follows, because it checks the used laser chain inside its return windows.
 - **What FT-1 gives up**, all of which can come back later:
   - O₂ of 100–1000 ppm by flow purge, against PR 266's 1–10 ppm by pump-purge. EOS M 290 work on Al uses a 1000 ppm
@@ -95,9 +95,9 @@ The parts that make the machine slow come from requirements a first machine does
 | | Alternative | Parts + shop time | First tracks | First coupons | O₂ | Heated plate | Main risk | Verdict |
 |---|---|---|---|---|---|---|---|---|
 | A | PR 266's design, fast-tracked (used majors, swapped switches, outsourcing split) | $70k–76k at spec with used majors (`lead-times.md`) | ~11.3–13.5 wk | ~12–15 wk | 1–10 ppm | Ø25/50/75 modules | honing, 134+ BYU hours | the long-term machine, not a 6-week one |
-| **FT-0** | **Single-track bench**: used laser chain over a heated plate in a stainless box, hand-spread layers | **$13.1k–22.2k** | **1.6–4.2 wk** | single layers and pads only | 100–1000 ppm (flow) | Ø40, 200 °C | the used laser's condition | **do first** |
-| **FT-1** | **Purge-box LPBF**: FT-0 plus a heated well, a piston stage and a hopper-blade stage | **$20.3k–29.7k** | **2.2–4.4 wk** (PCard stages) / 3.2–6.0 wk (one PO) | **3.2–6.4 wk** / 4.2–8.0 wk | 100–1000 ppm (flow) | Ø40 well, 200 °C | approvals; hopper flow with fine Al | **recommended** |
-| FT-1V | FT-1 in a stock vacuum cube with a pump-purge kit | $31.0k–41.3k | 3.4–6.4 wk | 4.4–8.4 wk | < 100 ppm in 2–3 cycles | Ø40 well, 200 °C | stages and grease under vacuum; two POs | if O₂ below 100 ppm is required from day 1 |
+| **FT-0** | **Single-track bench**: used laser chain over a heated plate in a stainless box, hand-spread layers | **$13.2k–23.7k** | **1.6–4.2 wk** | single layers and pads only | 100–1000 ppm (flow) | Ø40, 200 °C | the used laser's condition | **do first** |
+| **FT-1** | **Purge-box LPBF**: FT-0 plus a heated well, a piston stage and a hopper-blade stage | **$20.4k–31.2k** | **2.2–4.4 wk** (PCard stages) / 3.2–6.0 wk (one PO) | **3.2–6.4 wk** / 4.2–8.0 wk | 100–1000 ppm (flow) | Ø40 well, 200 °C | approvals; hopper flow with fine Al | **recommended** |
+| FT-1V | FT-1 in a stock vacuum cube with a pump-purge kit | $31.1k–42.8k | 3.4–6.4 wk | 4.4–8.4 wk | < 100 ppm in 2–3 cycles | Ø40 well, 200 °C | stages and grease under vacuum; two POs | if O₂ below 100 ppm is required from day 1 |
 | E | Laser engraver as the base (PR 266 §1b) | $7.5k–9.5k for a 200 W MOPA engraver | – | – | – | add-on | pulsed only: Monport's GT 200W has no CW or quasi-CW mode, and its board is closed (Sterling's 2026-11-19 update) | no: with a CW laser swapped in it becomes FT-0 with marking-grade optics |
 | F | Buy a commercial desktop unit (AO Metal A30, Xact XM200C, ...) | $59k–130k (PR 266 §2.2) | vendor lead time + PO and any bid steps | – | ≤ 1000–3000 ppm typical | none listed on the desktop units | lead times not published; no heated plate | the go/no-go fallback, not a 6-week route |
 | G | Reduced-build-volume insert in BYU's Concept Laser M2 | an insert, ~$1k–5k (estimate) | 2–6 wk (estimate; depends on that lab) | same | the M2's | check whether the M2 has one | the lab's willingness, warranty and schedule | ask this week |
@@ -154,14 +154,25 @@ it off the lens before cutting the frame. Not a CAD model: no interference, FEA 
 | LINOS F-Theta-Ronar f = 254 mm, 1064 nm | [eBay 298724791756](https://www.ebay.com/itm/298724791756) | $539.99 or Best Offer | "Free shipping and returns"; 30-day warranty | "Estimated between Mon, Nov 30 and Thu, Dec 3" |
 | Backup laser: IPG YLR-200-SM-EOS, "Refurbished by the original Manufacturer" | [eBay 257041174571](https://www.ebay.com/itm/257041174571) | $2,450.00 | "Returns accepted" | not shown |
 
+- **What the sellers' own descriptions say** (read today in the listings' description frames):
+  - **hurrySCAN 25:** "removed from a system that we saw working before it was decommissioned several years ago. That
+    system used a 400 watt laser. We did not test this scanner separately." It comes with an objective of unknown focal
+    length (Photonic Devices, marked "5428AO-A"), an adjustable focusing input lens, a goniometer-adjustable input mirror
+    and a **water-cooled entrance aperture**, and no cables or manual. So the LINOS lens is only needed if the included
+    objective's focal length is wrong, and the aperture needs water (parts line L10).
+  - **RTC5:** "tested using an IPG Photonics YLR-Series Laser System and is in good working condition" (P/N 117540.04,
+    0–10 V analog out, 16-bit digital I/O). That is the same laser family as L1.
+  - **YLR-400-SM-EOS:** "USED - GOOD CONDITION", "Unit in mint condition", "All warranty seals are in place", a 100 lb
+    crate. Cooling, supply voltage, hours and the fibre end are not stated. If it is water-cooled it needs a ~1.5–3 kW
+    chiller, which parts line L10 allows for (up to $1.5k, estimate).
 - **Each of these is under BYU's $3,500 PCard limit** ([finserve.byu.edu](https://finserve.byu.edu/paying-for-goods-and-services)),
   so none waits for a purchase order. The scan head and RTC5 sellers share a location; together they come to about
   $2.8k. Whether a PCard may be used on eBay was not checked.
 - **Check each on arrival, inside its return window:**
   1. the laser's interface: an EOS unit may carry EOS-specific settings. Find the analog power input (0–10 V), the
      modulation or gate input, the hardware interlock loop and the guide laser, from IPG's YLR user guide;
-  2. its hours, fault log and cooling (forced air or water), and its mains supply (probably 200–240 V single phase;
-     check the label, and ask for a circuit on day 0 if the room has none);
+  2. its hours, fault log and cooling (forced air, or water and a chiller), and its mains supply (probably 200–240 V
+     single phase; check the label, and ask for a circuit on day 0 if the room has none);
   3. whether the fibre ends in a collimator, and its beam diameter. IPG's standard beams are 5 mm (76 µm spot at
      f = 254 mm) and 7.5 mm (51 µm). A used IPG collimator was listed at $495 on 2026-11-20;
   4. output power against setpoint, with a calorimetric check: Thorlabs' LB2L/M 500 W water-cooled dump, a flowmeter
@@ -169,8 +180,9 @@ it off the lens before cutting the frame. Not a CAD model: no interference, FEA 
      short lines on anodised aluminium at low power, stepping the plate height, and measure the line widths. Edison
      found no published acceptance test of ex-EOS IPG lasers, and recommends exactly these checks plus a fibre
      inspection and a scanner field calibration before any powder;
-  5. the scan head's mirrors and coatings (it is rated to 1500 W at 1064 nm), its ±15 V supply and its XY2-100 link,
-     driven by the RTC5 with the guide laser only.
+  5. the scan head's mirrors and coatings (it is rated to 1500 W at 1064 nm), its ±15 V supply, its link to the RTC5
+     (XY2-100 or SL2-100), its water-cooled aperture, and the focal length of its own objective, with the guide laser
+     only.
 - **RTC5 software** (the RTC5 DLL and correXion) comes from SCANLAB's download portal after registration. The RTC5's
   correction file for this head and lens has to be made with correXion and a burned grid.
 - **The new alternatives are slower or dearer:** Thorlabs' QS20XY-Y1 galvo is "Available: Today" at $5,893.56 but needs
@@ -303,7 +315,7 @@ From [`parts.csv`](parts.csv) (`python fast_track.py`):
 
 | Group | FT-0 | FT-1 | FT-1V |
 |---|---:|---:|---:|
-| Laser and optics (used) | $4.7k–6.4k | $4.7k–6.4k | $4.7k–6.4k |
+| Laser and optics (used) | $4.8k–7.9k | $4.8k–7.9k | $4.8k–7.9k |
 | Scan control and computing | $1.7k–2.9k | $1.7k–2.9k | $1.7k–2.9k |
 | Motion | $0.2k–0.6k | $6.3k–6.4k | $6.3k–6.4k |
 | Enclosure or chamber | $0.8k–1.4k | $0.8k–1.4k | $11.1k–12.4k |
@@ -312,7 +324,7 @@ From [`parts.csv`](parts.csv) (`python fast_track.py`):
 | Safety | $2.7k–3.5k | $2.7k–3.5k | $2.7k–3.5k |
 | Stock and shop time | $1.0k–1.6k | $2.0k–3.2k | $2.3k–3.7k |
 | Glovebox (if the lab has none free) | $0–2.7k | $0–2.7k | $0–2.7k |
-| **Total** | **$13.1k–22.2k** | **$20.3k–29.7k** | **$31.0k–41.3k** |
+| **Total** | **$13.2k–23.7k** | **$20.4k–31.2k** | **$31.1k–42.8k** |
 
 - **Purchase orders.** FT-1 needs one only if both Zaber stages go on one order ($6,238). Buying the piston stage from
   Thorlabs instead (MTS50/M-Z8 + KDC101, $2,179.18, both "Available: Today") keeps every order under $3,500. Check
