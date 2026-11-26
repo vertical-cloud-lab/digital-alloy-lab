@@ -1,0 +1,581 @@
+{
+ "states": {
+  "S1": {
+   "n_parts": 13,
+   "clashes": [],
+   "contacts": [
+    {
+     "a": "Collimator (L2 if the fibre has none)",
+     "b": "Process fibre",
+     "volume_mm3": 4.0,
+     "why": "fibre connector in the collimator"
+    },
+    {
+     "a": "IPG YLR-400-SM-EOS (envelope, est.)",
+     "b": "Process fibre",
+     "volume_mm3": 84.9,
+     "why": "fibre leaves the laser's front panel"
+    }
+   ],
+   "beam_hits": [],
+   "beam_nearest": []
+  },
+  "S2": {
+   "n_parts": 31,
+   "clashes": [],
+   "contacts": [
+    {
+     "a": "Collimator (L2 if the fibre has none)",
+     "b": "Process fibre",
+     "volume_mm3": 4.0,
+     "why": "fibre connector in the collimator"
+    },
+    {
+     "a": "IPG YLR-400-SM-EOS (envelope, est.)",
+     "b": "Process fibre",
+     "volume_mm3": 84.9,
+     "why": "fibre leaves the laser's front panel"
+    },
+    {
+     "a": "Water-cooled beam dump, 500 W (Thorlabs LB2L/M class, envelope)",
+     "b": "Dump water lines",
+     "volume_mm3": 26.3,
+     "why": "hose on the dump"
+    }
+   ],
+   "beam_hits": [],
+   "beam_nearest": [
+    {
+     "part": "Water-cooled beam dump, 500 W (Thorlabs LB2L/M class, envelope)",
+     "clearance_mm": 2.7
+    },
+    {
+     "part": "Cover-slide holder (MK-02)",
+     "clearance_mm": 5.66
+    },
+    {
+     "part": "Inner clamp ring (MK-02)",
+     "clearance_mm": 8.17
+    },
+    {
+     "part": "Window ring (MK-02)",
+     "clearance_mm": 8.53
+    },
+    {
+     "part": "Window retaining flange (MK-02)",
+     "clearance_mm": 9.07
+    },
+    {
+     "part": "Box lid (the door), window bore",
+     "clearance_mm": 12.94
+    },
+    {
+     "part": "Beam tube, long, with lens collar (MK-10)",
+     "clearance_mm": 14.27
+    },
+    {
+     "part": "Dump water lines",
+     "clearance_mm": 31.26
+    }
+   ]
+  },
+  "FT-0": {
+   "n_parts": 47,
+   "clashes": [],
+   "contacts": [
+    {
+     "a": "Collimator (L2 if the fibre has none)",
+     "b": "Process fibre",
+     "volume_mm3": 4.0,
+     "why": "fibre connector in the collimator"
+    },
+    {
+     "a": "IPG YLR-400-SM-EOS (envelope, est.)",
+     "b": "Process fibre",
+     "volume_mm3": 84.9,
+     "why": "fibre leaves the laser's front panel"
+    }
+   ],
+   "beam_hits": [],
+   "beam_nearest": [
+    {
+     "part": "Well block, \u00d840.00 bore (MK-03)",
+     "clearance_mm": 0.0
+    },
+    {
+     "part": "Substrate disc \u00d839.8 x 6 (MK-05)",
+     "clearance_mm": 0.0
+    },
+    {
+     "part": "Cover-slide holder (MK-02)",
+     "clearance_mm": 5.66
+    },
+    {
+     "part": "Heater plate \u00d839.8 x 28 (MK-04)",
+     "clearance_mm": 6.0
+    },
+    {
+     "part": "Slot nozzle 45 x 4 mm (MK-11)",
+     "clearance_mm": 6.9
+    },
+    {
+     "part": "Exhaust collector (MK-11)",
+     "clearance_mm": 6.9
+    },
+    {
+     "part": "Inner clamp ring (MK-02)",
+     "clearance_mm": 8.17
+    },
+    {
+     "part": "Window ring (MK-02)",
+     "clearance_mm": 8.53
+    }
+   ]
+  },
+  "FT-1": {
+   "n_parts": 60,
+   "clashes": [],
+   "contacts": [
+    {
+     "a": "Collimator (L2 if the fibre has none)",
+     "b": "Process fibre",
+     "volume_mm3": 4.0,
+     "why": "fibre connector in the collimator"
+    },
+    {
+     "a": "IPG YLR-400-SM-EOS (envelope, est.)",
+     "b": "Process fibre",
+     "volume_mm3": 84.9,
+     "why": "fibre leaves the laser's front panel"
+    },
+    {
+     "a": "Carriage bracket and arm (MK-08)",
+     "b": "Vibration motor",
+     "volume_mm3": 863.9,
+     "why": "motor clamped on the arm"
+    }
+   ],
+   "beam_hits": [],
+   "beam_nearest": [
+    {
+     "part": "Well block, \u00d840.00 bore (MK-03)",
+     "clearance_mm": 0.0
+    },
+    {
+     "part": "Substrate disc \u00d839.8 x 6 (MK-05)",
+     "clearance_mm": 0.0
+    },
+    {
+     "part": "Cord clamp (MK-08)",
+     "clearance_mm": 3.54
+    },
+    {
+     "part": "Silicone-cord blade, 3 mm",
+     "clearance_mm": 3.96
+    },
+    {
+     "part": "Cover-slide holder (MK-02)",
+     "clearance_mm": 5.66
+    },
+    {
+     "part": "Heater plate \u00d839.8 x 28 (MK-04)",
+     "clearance_mm": 6.0
+    },
+    {
+     "part": "Slot nozzle 45 x 4 mm (MK-11)",
+     "clearance_mm": 6.9
+    },
+    {
+     "part": "Exhaust collector (MK-11)",
+     "clearance_mm": 6.9
+    }
+   ],
+   "recoater_clashes": [],
+   "recoater_gaps": [
+    {
+     "mover": "Carriage bracket and arm (MK-08)",
+     "part": "Stage shield (MK-12)",
+     "min_gap_mm": 2.0,
+     "at_hx": -37.5
+    },
+    {
+     "mover": "Hopper, ~30 cm3 (MK-08)",
+     "part": "Well block, \u00d840.00 bore (MK-03)",
+     "min_gap_mm": 2.0,
+     "at_hx": -37.5
+    },
+    {
+     "mover": "Hopper, ~30 cm3 (MK-08)",
+     "part": "Substrate disc \u00d839.8 x 6 (MK-05)",
+     "min_gap_mm": 2.0,
+     "at_hx": -12.5
+    },
+    {
+     "mover": "X-LSQ carriage",
+     "part": "Stage shield (MK-12)",
+     "min_gap_mm": 3.0,
+     "at_hx": -37.5
+    },
+    {
+     "mover": "Cord clamp (MK-08)",
+     "part": "Well block, \u00d840.00 bore (MK-03)",
+     "min_gap_mm": 3.0,
+     "at_hx": -25.0
+    },
+    {
+     "mover": "Cord clamp (MK-08)",
+     "part": "Substrate disc \u00d839.8 x 6 (MK-05)",
+     "min_gap_mm": 3.0,
+     "at_hx": -6.2
+    },
+    {
+     "mover": "Hopper, ~30 cm3 (MK-08)",
+     "part": "Slot nozzle 45 x 4 mm (MK-11)",
+     "min_gap_mm": 4.0,
+     "at_hx": -37.5
+    },
+    {
+     "mover": "Hopper, ~30 cm3 (MK-08)",
+     "part": "Exhaust collector (MK-11)",
+     "min_gap_mm": 4.0,
+     "at_hx": -37.5
+    },
+    {
+     "mover": "Silicone-cord blade, 3 mm",
+     "part": "Slot nozzle 45 x 4 mm (MK-11)",
+     "min_gap_mm": 4.0,
+     "at_hx": -12.5
+    },
+    {
+     "mover": "Silicone-cord blade, 3 mm",
+     "part": "Exhaust collector (MK-11)",
+     "min_gap_mm": 4.0,
+     "at_hx": -18.8
+    }
+   ],
+   "piston": {
+    "pz=-15": {
+     "clashes": [],
+     "plate_bottom_above_deck_mm": 3.7,
+     "clamp_top_below_gland_mm": 23.0,
+     "rope_inside_bore": true
+    },
+    "pz=+5": {
+     "clashes": [],
+     "plate_bottom_above_deck_mm": 23.7,
+     "clamp_top_below_gland_mm": 3.0,
+     "rope_inside_bore": true
+    },
+    "rod_length_mm": 81.6,
+    "stage_stroke_used_mm": 20.0,
+    "X_VSR20A_travel_mm": 20.0,
+    "atm_force_on_rod_N": 12.8
+   }
+  },
+  "FT-1V": {
+   "n_parts": 65,
+   "clashes": [],
+   "contacts": [
+    {
+     "a": "Collimator (L2 if the fibre has none)",
+     "b": "Process fibre",
+     "volume_mm3": 4.0,
+     "why": "fibre connector in the collimator"
+    },
+    {
+     "a": "IPG YLR-400-SM-EOS (envelope, est.)",
+     "b": "Process fibre",
+     "volume_mm3": 84.9,
+     "why": "fibre leaves the laser's front panel"
+    },
+    {
+     "a": "KF-25 ports: pump, Pirani, argon, exhaust, 2 electrical feedthroughs",
+     "b": "KF-25 pump hose and valve",
+     "volume_mm3": 31.6,
+     "why": "hose on the pump port"
+    },
+    {
+     "a": "Carriage bracket and arm (MK-08)",
+     "b": "Vibration motor",
+     "volume_mm3": 863.9,
+     "why": "motor clamped on the arm"
+    }
+   ],
+   "beam_hits": [],
+   "beam_nearest": [
+    {
+     "part": "Well block, \u00d840.00 bore (MK-03)",
+     "clearance_mm": 0.0
+    },
+    {
+     "part": "Substrate disc \u00d839.8 x 6 (MK-05)",
+     "clearance_mm": 0.0
+    },
+    {
+     "part": "Cord clamp (MK-08)",
+     "clearance_mm": 3.54
+    },
+    {
+     "part": "Silicone-cord blade, 3 mm",
+     "clearance_mm": 3.96
+    },
+    {
+     "part": "Heater plate \u00d839.8 x 28 (MK-04)",
+     "clearance_mm": 6.0
+    },
+    {
+     "part": "Slot nozzle 45 x 4 mm (MK-11)",
+     "clearance_mm": 6.9
+    },
+    {
+     "part": "Exhaust collector (MK-11)",
+     "clearance_mm": 6.9
+    },
+    {
+     "part": "Hopper, ~30 cm3 (MK-08)",
+     "clearance_mm": 7.67
+    }
+   ],
+   "recoater_clashes": [],
+   "recoater_gaps": [
+    {
+     "mover": "Carriage bracket and arm (MK-08)",
+     "part": "Stage shield (MK-12)",
+     "min_gap_mm": 2.0,
+     "at_hx": -37.5
+    },
+    {
+     "mover": "Hopper, ~30 cm3 (MK-08)",
+     "part": "Well block, \u00d840.00 bore (MK-03)",
+     "min_gap_mm": 2.0,
+     "at_hx": -37.5
+    },
+    {
+     "mover": "Hopper, ~30 cm3 (MK-08)",
+     "part": "Substrate disc \u00d839.8 x 6 (MK-05)",
+     "min_gap_mm": 2.0,
+     "at_hx": -18.8
+    },
+    {
+     "mover": "X-LSQ carriage",
+     "part": "Stage shield (MK-12)",
+     "min_gap_mm": 3.0,
+     "at_hx": -37.5
+    },
+    {
+     "mover": "Cord clamp (MK-08)",
+     "part": "Well block, \u00d840.00 bore (MK-03)",
+     "min_gap_mm": 3.0,
+     "at_hx": -25.0
+    },
+    {
+     "mover": "Cord clamp (MK-08)",
+     "part": "Substrate disc \u00d839.8 x 6 (MK-05)",
+     "min_gap_mm": 3.0,
+     "at_hx": -6.2
+    },
+    {
+     "mover": "Hopper, ~30 cm3 (MK-08)",
+     "part": "Slot nozzle 45 x 4 mm (MK-11)",
+     "min_gap_mm": 4.0,
+     "at_hx": -37.5
+    },
+    {
+     "mover": "Hopper, ~30 cm3 (MK-08)",
+     "part": "Exhaust collector (MK-11)",
+     "min_gap_mm": 4.0,
+     "at_hx": -37.5
+    },
+    {
+     "mover": "Silicone-cord blade, 3 mm",
+     "part": "Slot nozzle 45 x 4 mm (MK-11)",
+     "min_gap_mm": 4.0,
+     "at_hx": -12.5
+    },
+    {
+     "mover": "Silicone-cord blade, 3 mm",
+     "part": "Exhaust collector (MK-11)",
+     "min_gap_mm": 4.0,
+     "at_hx": -18.8
+    }
+   ],
+   "piston": {
+    "pz=-15": {
+     "clashes": [],
+     "plate_bottom_above_deck_mm": 3.7,
+     "clamp_top_below_gland_mm": 23.0,
+     "rope_inside_bore": true
+    },
+    "pz=+5": {
+     "clashes": [],
+     "plate_bottom_above_deck_mm": 23.7,
+     "clamp_top_below_gland_mm": 3.0,
+     "rope_inside_bore": true
+    },
+    "rod_length_mm": 102.6,
+    "stage_stroke_used_mm": 20.0,
+    "X_VSR20A_travel_mm": 20.0,
+    "atm_force_on_rod_N": 12.8
+   }
+  }
+ },
+ "travel": {
+  "beam_r_at_hopper_top_mm": 17.88,
+  "left_park": -30.9,
+  "right_park": 35.5,
+  "travel_needed_mm": 66.4,
+  "X_LSQ075B_travel": 75.0,
+  "X_LSQ150B_travel": 150.0
+ },
+ "fit": {
+  "deck_mm": [
+   250.0,
+   250.0
+  ],
+  "cube_inside_mm": 289.6,
+  "cube_face_opening_mm_est": 266.0,
+  "deck_through_opening_margin_mm": 16.0,
+  "box_inside_mm": [
+   406.4,
+   304.8,
+   203.2
+  ],
+  "deck_in_box_margins_mm": [
+   78.2,
+   27.4
+  ],
+  "X-LSQ075B_length_mm_est": 241.0,
+  "X-LSQ075B_fits_cube_square": true,
+  "X-LSQ075B_fits_deck": true,
+  "X-LSQ150B_length_mm_est": 316.0,
+  "X-LSQ150B_fits_cube_square": false,
+  "X-LSQ150B_fits_deck": false,
+  "window_above_bed_box_mm": 145.4,
+  "beam_at_window_box_mm": 2.86,
+  "window_irradiance_box_kW_cm2_at_400W": 6.2,
+  "window_above_bed_cube_mm": 251.8,
+  "beam_at_window_cube_mm": 4.96,
+  "window_irradiance_cube_kW_cm2_at_400W": 2.1,
+  "cassette_height_above_floor_mm": 102.7,
+  "cube_inside_height_mm": 289.6,
+  "box_inside_height_mm": 203.2,
+  "substrate_M3_head_outer_r_mm": 21.0,
+  "substrate_M3_fits": false,
+  "substrate_M2.5_head_outer_r_mm": 20.0,
+  "substrate_M2.5_fits": false,
+  "substrate_M2_head_outer_r_mm": 19.0,
+  "substrate_M2_fits": true
+ },
+ "gas": {
+  "FT-0": {
+   "inside_L": 25.17,
+   "vendor_L": null,
+   "parts_inside_L": 0.98,
+   "gas_L": 24.2
+  },
+  "FT-1": {
+   "inside_L": 25.17,
+   "vendor_L": null,
+   "parts_inside_L": 1.67,
+   "gas_L": 23.5
+  },
+  "FT-1V": {
+   "inside_L": 23.83,
+   "vendor_L": 22.6,
+   "parts_inside_L": 1.63,
+   "gas_L": 22.2
+  }
+ },
+ "purge": [
+  {
+   "state": "FT-0",
+   "method": "flow purge at 20 L/min",
+   "target_ppm": 1000,
+   "minutes": "6.5 ideal, 13-32 expected",
+   "argon_L": "259-646"
+  },
+  {
+   "state": "FT-0",
+   "method": "flow purge at 20 L/min",
+   "target_ppm": 100,
+   "minutes": "9.3 ideal, 19-46 expected",
+   "argon_L": "370-925"
+  },
+  {
+   "state": "FT-1",
+   "method": "flow purge at 20 L/min",
+   "target_ppm": 1000,
+   "minutes": "6.3 ideal, 13-31 expected",
+   "argon_L": "251-628"
+  },
+  {
+   "state": "FT-1",
+   "method": "flow purge at 20 L/min",
+   "target_ppm": 100,
+   "minutes": "9.0 ideal, 18-45 expected",
+   "argon_L": "359-898"
+  },
+  {
+   "state": "FT-1V",
+   "method": "pump to 1 mbar, backfill argon",
+   "target_ppm": 100,
+   "minutes": "2 cycles x (2.6 min pump + ~1 min fill) = 7",
+   "argon_L": "44"
+  },
+  {
+   "state": "FT-1V",
+   "method": "pump to 1 mbar, backfill argon",
+   "target_ppm": 10,
+   "minutes": "2 cycles x (2.6 min pump + ~1 min fill) = 7",
+   "argon_L": "44"
+  },
+  {
+   "state": "FT-1V",
+   "method": "pump to 5 mbar, backfill argon",
+   "target_ppm": 100,
+   "minutes": "2 cycles x (2.0 min pump + ~1 min fill) = 6",
+   "argon_L": "44"
+  },
+  {
+   "state": "FT-1V",
+   "method": "pump to 5 mbar, backfill argon",
+   "target_ppm": 10,
+   "minutes": "2 cycles x (2.0 min pump + ~1 min fill) = 6",
+   "argon_L": "44"
+  }
+ ],
+ "heat": [
+  {
+   "enclosure": "box (FT-0, FT-1)",
+   "area_m2": 0.537,
+   "cooling": "still air",
+   "rise_K": "32-46",
+   "air_C": "71",
+   "stage_limit_C": 50.0
+  },
+  {
+   "enclosure": "box (FT-0, FT-1)",
+   "area_m2": 0.537,
+   "cooling": "fan",
+   "rise_K": "10-14",
+   "air_C": "39",
+   "stage_limit_C": 50.0
+  },
+  {
+   "enclosure": "cube (FT-1V)",
+   "area_m2": 0.675,
+   "cooling": "still air",
+   "rise_K": "25-36",
+   "air_C": "61",
+   "stage_limit_C": 50.0
+  },
+  {
+   "enclosure": "cube (FT-1V)",
+   "area_m2": 0.675,
+   "cooling": "fan",
+   "rise_K": "8-11",
+   "air_C": "36",
+   "stage_limit_C": 50.0
+  }
+ ]
+}

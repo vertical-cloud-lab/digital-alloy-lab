@@ -74,7 +74,7 @@ WINDOW_ABOVE_BED_MM = BOX_IN[2] * IN * 1000 - BED_Z_MM      # window in the lid 
 # The box sheds the heat through its walls; with a fan on the outside the wall coefficient rises (estimates).
 H_BOX_STILL, H_BOX_FAN = 6.0, 20.0        # W/m2K overall, inside-to-outside, per box area
 ABSORPTIVITY = (0.3, 0.6)                 # share of the beam absorbed by Al powder in LPBF, conduction to keyhole (estimate)
-STAGE_MAX_C = 50.0                        # Zaber X-LSQ150B operating range 0-50 C (read 2026-11-26)
+STAGE_MAX_C = 50.0                        # Zaber X-LSQ075B and X-VSR20A operating range 0-50 C (datasheets, read 2026-11-26)
 
 # Optics: used IPG YLR-400-SM (M2 <= 1.1, 1.07 µm) with IPG's standard collimators, through a used
 # hurrySCAN 25 (25 mm aperture) and a LINOS f = 254 mm F-Theta-Ronar.
@@ -231,7 +231,7 @@ ALTERNATIVES = {
     },
     "FT-1 purge-box LPBF (stages on PCards)": {
         **COMMON,
-        "stages arrive (PCard)": ((3, 10), [], "Zaber X-LSQ150B 'Lead Time: 1-5 Days' + transit; Thorlabs MTS50/M-Z8 + KDC101 'Available: Today'"),
+        "stages arrive (PCard)": ((3, 10), [], "Zaber X-LSQ075B 'Lead Time: 1-5 Days' + transit; Thorlabs MTS50/M-Z8 + KDC101 'Available: Today'"),
         "enclosure arrives": ((3, 8), [], "estimate: distributor stock, ground"),
         "12 simple parts made": ((5, 10), ["McMaster stock and hardware"], "estimate: ~25-40 shop hours, one person at least half time"),
         "bench check of laser + scan head": ((2, 4), ["used optics chain arrives", "PC + RTC5 software", "LSO registration and SOP", "safety parts and eyewear"], "estimate"),

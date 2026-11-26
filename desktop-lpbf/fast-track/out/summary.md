@@ -40,21 +40,21 @@ Cost by alternative (parts.csv):
   - Safety: $2,668-3,530
   - Stock and fabrication: $1,000-1,575
   - Powder handling: $0-2,730
-- **FT1**: $20,434-31,208; vendors at or over $3,500 (PO): Zaber ($6,238)
+- **FT1**: $20,144-30,918; vendors at or over $3,500 (PO): Zaber ($5,948)
   - Laser and optics (used): $4,791-7,940
   - Scan control and computing: $1,670-2,850
-  - Motion: $6,318-6,438
+  - Motion: $6,028-6,148
   - Enclosure and chamber: $750-1,350
   - Heated plate: $691-1,071
   - Gas and O2: $1,571-2,099
   - Safety: $2,668-3,530
   - Stock and fabrication: $1,975-3,200
   - Powder handling: $0-2,730
-- **FT1V**: $31,069-42,778; vendors at or over $3,500 (PO): Zaber ($6,238), Ideal Vacuum ($9,450)
+- **FT1V**: $31,079-43,188; vendors at or over $3,500 (PO): Zaber ($5,948), Ideal Vacuum ($9,450)
   - Laser and optics (used): $4,791-7,940
   - Scan control and computing: $1,670-2,850
-  - Motion: $6,318-6,438
-  - Enclosure and chamber: $11,060-12,400
+  - Motion: $6,028-6,148
+  - Enclosure and chamber: $11,360-13,100
   - Heated plate: $691-1,071
   - Gas and O2: $1,571-2,099
   - Safety: $2,668-3,530
