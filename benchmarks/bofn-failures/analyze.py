@@ -99,6 +99,71 @@ def paired(a, b):
     return dict(n=len(seeds), mean=float(d.mean()), ci=(lo, hi), wins=w, ties=t, losses=l_, p=p)
 
 
+def spend_to(curve, target_pct, cell):
+    """First spend at which the best alloy demonstrated reaches target_pct of the optimum (None if never)."""
+    J = optimum(cell)
+    for c in curve:
+        if 100.0 * c["best"] / J >= target_pct:
+            return c["spent"]
+    return None
+
+
+def median_spend(R, cell, target):
+    """Median spend to reach target (seeds that never reach it count as above the budget)."""
+    v = [spend_to(R[s]["curve"], target, cell) for s in sorted(R)]
+    reached = [x for x in v if x is not None]
+    arr = np.array([x if x is not None else np.inf for x in v])
+    med = float(np.median(arr))
+    return med, len(reached) / len(v)
+
+
+def fmt_spend(med, share):
+    return (f"${med / 1000:.0f}k" if np.isfinite(med) else ">$100k") + f" ({100 * share:.0f}%)"
+
+
+def cross_cell(runs, scen="mixed", cells=("al-k1", "al-k0", "cu-toy-k1", "cu-phys-k1")):
+    """Strategy x cell table of % at $100k, mean rank, and viab_node vs each strategy pooled over cells."""
+    cells = [c for c in cells if c in runs and scen in runs[c]]
+    strats = [s for s in ORDER if all(s in runs[c][scen] and runs[c][scen][s] for c in cells)]
+    if not cells or len(strats) < 2:
+        return [], {}
+    lines = [f"## Across cells, scenario `{scen}`", "", "Best alloy demonstrated at $100k, % of each cell's optimum (mean ± SE), and the strategy's mean rank over the cells (1 = best; `nofail` excluded from the ranks).", "",
+             "| Strategy | " + " | ".join(CELL_NAME[c] for c in cells) + " | mean rank |", "|---|" + "---|" * (len(cells) + 1)]
+    means = {c: {st: np.mean([pct(runs[c][scen][st][s], c, 100_000) for s in runs[c][scen][st]]) for st in strats} for c in cells}
+    ranks = {st: [] for st in strats}
+    for c in cells:
+        order = sorted([st for st in strats if st != "nofail"], key=lambda st: -means[c][st])
+        for k, st in enumerate(order):
+            ranks[st].append(k + 1)
+    for st in strats:
+        cols = []
+        for c in cells:
+            v = np.array([pct(runs[c][scen][st][s], c, 100_000) for s in sorted(runs[c][scen][st])])
+            cols.append(f"{v.mean():.1f} ± {v.std(ddof=1) / np.sqrt(len(v)):.1f} (n={len(v)})")
+        lines.append(f"| {LABEL[st]} | " + " | ".join(cols) + f" | {np.mean(ranks[st]):.1f} |" if ranks[st] else f"| {LABEL[st]} | " + " | ".join(cols) + " | – |")
+    lines += ["", "viab_node against each strategy, all matched seeds of these cells pooled (points of the optimum at $100k; Wilcoxon two-sided, Holm over the rows):", "",
+              "| Comparison | pairs | mean difference (90% CI) | wins / ties / losses | p | p (Holm) |", "|---|---|---|---|---|---|"]
+    res, names = [], []
+    for st in strats:
+        if st == "viab_node" or "viab_node" not in strats:
+            continue
+        a, b = {}, {}
+        for c in cells:
+            for s in runs[c][scen]["viab_node"]:
+                if s in runs[c][scen][st]:
+                    a[(c, s)] = pct(runs[c][scen]["viab_node"][s], c, 100_000)
+                    b[(c, s)] = pct(runs[c][scen][st][s], c, 100_000)
+        if a:
+            res.append(paired(a, b))
+            names.append(st)
+    adj = holm([r["p"] for r in res]) if res else []
+    pooled = {}
+    for st, r, pa in zip(names, res, adj):
+        lines.append(f"| viab_node − {st} | {r['n']} | {r['mean']:+.1f} ({r['ci'][0]:+.1f} to {r['ci'][1]:+.1f}) | {r['wins']} / {r['ties']} / {r['losses']} | {fmt_p(r['p'])} | {fmt_p(pa)} |")
+        pooled[st] = dict(r, p_holm=pa)
+    return lines + [""], {"means": means, "ranks": {k: float(np.mean(v)) for k, v in ranks.items() if v}, "pooled_vs_viab_node": pooled}
+
+
 def fmt_p(p):
     return f"{p:.2g}" if p >= 1e-3 else f"{p:.1e}"
 
@@ -136,6 +201,12 @@ def main():
                     n=len(seeds), **{f"pct_{b // 1000}k": [float(vals[b].mean()), float(se(vals[b]))] for b in BUDGETS},
                     failed_spend_k=float(f_spent.mean()), input_failures=float(inp.mean()), repeats=float(rep.mean()),
                     transient_failures=float(tr.mean()), validated=float(val.mean()))
+            lines += ["", "Median spend to reach 60 / 70 / 80 % of the optimum (share of seeds that reach it within $100k):", "",
+                      "| Strategy | 60% | 70% | 80% |", "|---|---|---|---|"]
+            for st in strats:
+                cells_ = [median_spend(S[st], cell, t) for t in (60, 70, 80)]
+                lines.append(f"| {LABEL[st]} | " + " | ".join(fmt_spend(m, sh) for m, sh in cells_) + " |")
+                summary[cell][scen][st]["median_spend_to"] = {str(t): [m if np.isfinite(m) else None, sh] for t, (m, sh) in zip((60, 70, 80), cells_)}
             # paired comparisons (pre-registered): viab_node vs every other; partial vs abandon and drop
             comps = [("viab_node", o) for o in strats if o != "viab_node"] + [("partial", "abandon"), ("partial", "drop"), ("keep", "partial"), ("viab_x_partial", "viab_x")]
             comps = [(a, b) for a, b in comps if a in score and b in score]
@@ -148,6 +219,11 @@ def main():
                     lines.append(f"| {a} − {b} | {r['n']} | {r['mean']:+.1f} ({r['ci'][0]:+.1f} to {r['ci'][1]:+.1f}) | {r['wins']} / {r['ties']} / {r['losses']} | {fmt_p(r['p'])} | {fmt_p(pa)} |")
                     summary[cell][scen].setdefault("paired", {})[f"{a}-{b}"] = dict(r, p_holm=pa)
             lines.append("")
+    for scen in ("mixed", "mislabel"):
+        xl, xs = cross_cell(runs, scen)
+        if xl:
+            lines += xl
+            summary.setdefault("_across", {})[scen] = xs
     (HERE / "tables.md").write_text("\n".join(lines) + "\n")
     (HERE / "summary.json").write_text(json.dumps(summary, indent=1) + "\n")
     print("\n".join(lines))
