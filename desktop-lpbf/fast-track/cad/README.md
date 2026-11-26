@@ -51,9 +51,10 @@ The Python packages are in [`../../analysis/requirements.txt`](../../analysis/re
   the bulkheads and the cable glands.
   - **FT-0 → FT-1 is a 1–2 day job inside the box:** take the collar off, clamp the rod to the X-VSR20A under the box,
     bolt the recoater onto the pre-drilled deck, and put two heaters into the block.
-  - **FT-1 → FT-1V moves the cassette, the rod gland, the window stack and both stages across unchanged.** The new made
-    parts are the cube's top and bottom plates, a rod 21 mm longer and a short beam tube. The gantry's cross-beam slides
-    up 21 mm, because the cube's floor plate is that much thicker than the box's sheet floor.
+  - **FT-1 → FT-1V moves the cassette, with the recoater on it, and the window stack across unchanged.** The rod gland
+    is re-bolted under the cube's floor. The X-VSR20A doesn't move: the cube's underside lands where the box's was. The
+    new made parts are the cube's top and bottom plates, a rod 21 mm longer and a short beam tube. The gantry's
+    cross-beam slides up 21 mm, because the cube's floor plate is that much thicker than the box's sheet floor.
 - **The checks are clean in all five states:**
   - no clashes and nothing in the scanned-beam envelope;
   - the hopper-blade swept over its full 75 mm and the plate over its full 20 mm without contact;
