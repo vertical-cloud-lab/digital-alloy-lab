@@ -98,7 +98,7 @@ counts as failed.
 | `bad_value` | none: "soft pushing" (Xavier, in #274) | 0 yield in the atomize node, as round 3 does | as round 3: aluminium never again; copper lots topped up again and again | P(yield > 3 %), as round 3 |
 | `drop` | `FAILED` (Ax ≤ 1.2.3 also for missing metrics) | none | may come back, with no memory of the failure | P(yield > 3 %) on successes only |
 | `abandon` | `ABANDONED` | none | pending for good: never retried, and new designs keep their distance | as `drop` |
-| `retry` | none: Xavier's "make sure it's the material" | none | one rerun at the same settings, then abandoned | as `drop` |
+| `retry` | none: Xavier's "make sure it's the material" | none | one rerun at the same settings, queued first and allowed the atomizer's next free slot within 3 days (dropped after 30 days, counted); a second failure abandons it | as `drop` |
 | `viability_x` | `ABANDONED` + `AddExecutionViability` (Ax 1.3, opt-in) | a GP on 0/1 over the whole design, one label per attempt | pending for good | P(f(x) ≥ 0.8), once 3 attempts have failed (Ax's defaults) |
 | `viability_node` | the node-level version proposed in `bofn-failed-vs-abandoned.md` §4 | a GP on 0/1 over the atomize node's inputs (composition, CALPHAD liquidus, atomizer settings), one label per run; runs diagnosed transient left out | diagnosed transient: back, as `FAILED`; diagnosed intrinsic: abandoned | P(f(x_node) ≥ 0.8), once 3 runs are labelled 0 |
 | `viability_node_nodiag` | | as above, every failure labelled 0 | abandoned | as above |
@@ -119,6 +119,16 @@ companion's names map as follows:
   Round 3 admits an action if its gating station can take it within 2 h of queue wait. It measures that wait against
   an idle station, and an idle station also waits out a repair, so the wait looked short. Without the change, a
   two-week repair let powder actions queue up behind it. The twin's own 36-hour breakdowns are left as they are.
+- **A queued rerun (`retry`) may book the atomizer's next free slot up to 3 days out**, where round 3 allows 2 hours.
+  Round 3 checks each action's slot at the hour its own charge will be ready, and that hour depends on the alloy, so
+  new designs kept taking the slots a top-ranked rerun needed. In a first version, 4 of 28 reruns ran in a year.
+- **Two fixes in `strategies.py` that the first runs needed, both applied before the results below:**
+  - round 3's BOFN, when it refreshes its new designs, keeps only candidates without a design id, so queued reruns
+    vanished;
+  - hiding or abandoning a lot didn't change the artifact count `Net3.propose` watches, so the candidate list waited for
+    the next part to come back.
+
+  Every strategy except `bad_value`, which neither change touches, was rerun from seed 0 on the fixed code.
 - **Failures are drawn when a run is booked**, as the twin draws everything, and damage starts at the end of the
   failed run. Runs already booked inside a repair window still run. `overlap_h` in each run's result counts those
   hours, so the approximation stays visible.

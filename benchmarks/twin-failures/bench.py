@@ -45,14 +45,18 @@ def _seedwise(policies, seeds, **kw):
 EXPERIMENTS = {
     "smoke": [cfg(p, 0, days=40) for p in ("bad_value", "drop", "retry", "viability_x", "viability_node", "oracle",
                                             "heuristic")],
-    # the main benchmark: the lab's record (learning curve, damage), six strategies, seven seeds, paired
-    "main": _seedwise(STRATS_MAIN, range(7), regime="lab"),
+    # the main benchmark: the lab's record (learning curve, damage), six strategies, five seeds, paired (a BOFN year
+    # with both campaigns took 13-19 min with four on the runner, so this is what fit in the job's six hours)
+    "main": _seedwise(STRATS_MAIN, range(5), regime="lab"),
     # the cheap baselines on every regime, eight seeds
     "base": [cfg(p, s, regime=r) for s in range(8) for r in ("lab", "lab_region", "twin") for p in BASE],
+    # the cheap references that fit: round 3's heuristic, random and GP-BO with round 3's own failure handling
+    "base_lite": ([cfg(p, s, regime="lab") for s in range(5) for p in BASE] +
+                  [cfg(p, s, regime="lab_region") for s in range(3) for p in ("heuristic", "random")]),
     # round 3's own failure law: does the ranking hold when failures are rare?
     "twin": _seedwise(("bad_value", "drop", "abandon", "viability_x", "viability_node"), range(6), regime="twin"),
     # the hidden region that won't atomize: when abandoning a composition is right
-    "region": _seedwise(("bad_value", "drop", "abandon", "viability_x", "viability_node"), range(4),
+    "region": _seedwise(("bad_value", "drop", "abandon", "viability_x", "viability_node"), range(3),
                         regime="lab_region"),
     # what the diagnosis is worth: no diagnosis, the lab's (0.8), perfect
     "diag": _seedwise(("viability_node_nodiag", "oracle"), range(4), regime="lab"),

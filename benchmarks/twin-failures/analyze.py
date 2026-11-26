@@ -94,6 +94,15 @@ def holm(ps):
     return adj
 
 
+ATOM_DAYS = {"flaime_al": (0, 1, 2, 3), "onr_cu": (4, 5)}     # twin/facility.py ATOMIZER_SPLIT (day 0 is a Monday)
+
+
+def _days_in(t0, days, dows, horizon):
+    """Whole calendar days of the given weekdays inside [t0, t0 + days), within the horizon."""
+    a, b = int(math.ceil(t0)), int(math.floor(min(t0 + days, horizon)))
+    return sum(1 for d in range(a, b) if d % 7 in dows)
+
+
 def per_run(r):
     horizon = r["cfg"]["days"]
     out = {}
@@ -116,6 +125,9 @@ def per_run(r):
         dm = [d for d in r["fail"]["damage"] if d["campaign"] == k]
         out[k]["repairs"] = len(dm)
         out[k]["repair_days"] = float(sum(d["days"] for d in dm))
+        # the other campaign's atomizer days inside those repairs (the week is split: Al Mon-Thu, Cu Fri-Sat)
+        other = ATOM_DAYS["onr_cu" if k == "flaime_al" else "flaime_al"]
+        out[k]["other_days_lost"] = float(sum(_days_in(d["t_h"] / 24.0, d["days"], other, horizon) for d in dm))
     out["overlap_h"] = r["fail"].get("overlap_h", 0.0)
     out["atomizer_busy_h"] = r.get("atomizer_busy_h")
     out["seconds"] = r["seconds"]
@@ -138,6 +150,7 @@ def summarize(rows, horizon=365):
         d["ledger"] = {kk: float(np.mean([l[kk] for l in L])) for kk in L[0]}
         d["repairs"] = float(np.mean([x.get("repairs", 0) for x in R]))
         d["repair_days"] = float(np.mean([x.get("repair_days", 0.0) for x in R]))
+        d["other_days_lost"] = float(np.mean([x.get("other_days_lost", 0.0) for x in R]))
         S[k] = d
     S["both"] = {m: float(np.mean([r["both"][m] for r in rows])) for m in ("T1_rmst", "T2_rmst", "best")}
     S["down_days"] = float(np.mean([r["down_days"] for r in rows]))
@@ -211,8 +224,9 @@ def fmt_table(out):
     for reg, E in out["regimes"].items():
         lines.append(f"\n#### Regime `{reg}`\n")
         lines.append("| Strategy | n | Al best new | Al T1 hit, KM median day | Al T2 hit | Cu best new | Cu T1 hit, "
-                     "KM median day | Cu T2 hit | Al runs failed (inputs / transient) | Cu runs failed | atomizer down, d |")
-        lines.append("|---|---|---|---|---|---|---|---|---|---|---|")
+                     "KM median day | Cu T2 hit | Al runs failed (inputs / transient) | Cu runs failed | atomizer down, d | "
+                     "repairs set off by Al / Cu | Cu atomizer days lost to Al's repairs |")
+        lines.append("|---|---|---|---|---|---|---|---|---|---|---|---|---|")
         for p in ORDER:
             if p not in E["strategies"]:
                 continue
@@ -225,7 +239,8 @@ def fmt_table(out):
                 f"{md(a['T1']['km_median'])} | {a['T2']['hit']}/{s['n']} | {c['best_mean']:.3f} ± {c['best_se']:.3f} | "
                 f"{c['T1']['hit']}/{s['n']}, {md(c['T1']['km_median'])} | {c['T2']['hit']}/{s['n']} | "
                 f"{la['failed']:.0f} of {la['runs']:.0f} ({la['failed_intrinsic']:.0f} / {la['failed_transient']:.0f}) | "
-                f"{lc['failed']:.0f} of {lc['runs']:.0f} | {s['down_days']:.0f} |")
+                f"{lc['failed']:.0f} of {lc['runs']:.0f} | {s['down_days']:.0f} | {a['repairs']:.1f} / {c['repairs']:.1f} | "
+                f"{a['other_days_lost']:.0f} |")
         if E.get("paired"):
             lines.append(f"\nPaired against `{BASELINE}`, seed by seed: mean difference (95 % bootstrap interval) and p. "
                          f"Days are restricted means to the target, censored at day 365, so negative is sooner. The "

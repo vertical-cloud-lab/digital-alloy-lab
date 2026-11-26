@@ -170,11 +170,13 @@ def main(out, data):
     raw = {g: {p: list(s.values()) for p, s in P.items()} for g, P in raw.items()}
     T = out["targets"]
     main_s = ("bad_value", "drop", "abandon", "retry", "viability_x", "viability_node")
-    for reg, ttl in (("lab", "The lab's failure record (learning curve, damage): best new alloy against days"),
-                     ("lab_region", "With a hidden region that won't atomize"),
-                     ("twin", "Round 3's own failure law")):
+    for reg, ttl in (("lab", "Regime 'lab' (the lab's record: learning curve, damage)"),
+                     ("lab_region", "Regime 'lab_region' (plus a hidden region that won't atomize)"),
+                     ("twin", "Regime 'twin' (round 3's own failure law)")):
         if reg in raw:
             strat = [p for p in main_s + ("viability_node_nodiag", "oracle") if p in raw[reg]]
-            best_vs_days(raw, reg, strat, T, f"twinfail_{reg}_best_vs_days.png", ttl)
+            n = min(len(raw[reg][p]) for p in strat)
+            best_vs_days(raw, reg, strat, T, f"twinfail_{reg}_best_vs_days.png",
+                         f"{ttl}: best new alloy so far, median of seeds")
             paired_forest(out, reg, strat, f"twinfail_{reg}_paired.png", ttl)
-            atomizer_runs(out, reg, strat, f"twinfail_{reg}_atomizer.png", ttl + ": where the atomizer's runs went")
+            atomizer_runs(out, reg, strat, f"twinfail_{reg}_atomizer.png", f"{ttl}: where the atomizer's runs went")
