@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Composition lists for the CALPHAD screen (#275): named alloys, family grids and a small random pool.
+"""Composition lists for the CALPHAD screen (#275): named alloys and family grids.
 
 Named alloys are run on a pure-Al base and, for the seeds and their near neighbours, as they would come
 out of a charge built on 6063 (which brings about 0.55 Mg, 0.40 Si and 0.20 Fe; see process_models.recipe).
 Known crack-prone alloys (7075, 6061, 2024, Al-3Mg, a cracked Al-Mn-Cr-Zr-Mg variant) are included on
 purpose, to check whether the cracking indices rank them where experiments put them.
 
-    python bofn-seeding/first-six/make_lists.py      # writes lists/named.json, lists/grids.json, lists/pool.json
+    python bofn-seeding/first-six/make_lists.py      # writes lists/named.json and lists/grids.json
 """
 from __future__ import annotations
 
@@ -14,25 +14,25 @@ import itertools
 import json
 import pathlib
 
-import numpy as np
-
 from process_models import recipe
 
 HERE = pathlib.Path(__file__).resolve().parent
 
 # id: (composition wt%, group, also run on a 6063 base?, note)
 NAMED = {
-    # the six seeds and the optional three
+    # the six seeds (D1, D2, S1-S4) and the optional three (O1-O3)
     "D1": (dict(Si=10.0, Mg=0.35), "seed", True, "AlSi10Mg-type benchmark"),
     "D2": (dict(Mg=4.6, Sc=0.66, Zr=0.42, Mn=0.49), "seed", True, "Scalmalloy-type benchmark"),
     "S1": (dict(Mn=4.8, Cr=0.9, Zr=1.1, Mg=1.2), "seed", True, "Chalmers alloy F"),
-    "S1b": (dict(Mn=5.0, Cr=0.8, Zr=0.6), "seed", True, "Chalmers alloy C"),
+    "S1-noMg": (dict(Mn=5.0, Cr=0.8, Zr=0.6), "relative", True, "Chalmers alloy C: S1 without Mg and at 0.6 Zr"),
     "S2": (dict(Fe=1.87, Mg=1.02, Zr=1.03), "seed", True, "Al-Fe-Mg-Zr, Li et al. 2025"),
     "S3": (dict(Si=3.5, Mg=2.5), "seed", True, "AlSi3.5Mg2.5 nominal, Knoop et al. 2020"),
-    "S4": (dict(Mg=3.6, Zr=1.2), "seed", True, "Al-Mg-Zr, Croteau et al. 2018"),
-    "E1": (dict(Mn=4.8, Cr=0.8), "extra", True, "Zr-free Al-Mn-Cr, Chalmers alloy B"),
-    "E2": (dict(Zn=5.5, Mg=2.3, Cu=1.5, Zr=1.0), "extra", True, "7xxx + Zr (7A77-type window)"),
-    "E3": (dict(Mg=4.5, Mn=0.5, Zr=0.6), "extra", True, "Al-Mg-Mn-Er-Zr with the Er left out (Er is not in the database)"),
+    "S4": (dict(Mg=6.0, Si=2.5, Ti=0.7), "seed", True, "Al-Mg-Si-Ti, Wen et al. 2024 (exploratory)"),
+    "O1": (dict(Mg=3.6, Zr=1.2), "optional", True, "Al-Mg-Zr, Croteau et al. 2018"),
+    "O2-noEr": (dict(Mg=6.4, Mn=0.72, Zr=1.1), "optional", True, "Guo et al. 2022 Al-Mg-Mn-Er-Zr with the Er left out (Er is in neither database)"),
+    "O3": (dict(Mn=4.8, Cr=0.8), "optional", True, "Zr-free Al-Mn-Cr, Chalmers alloy B"),
+    "7xxx-Zr": (dict(Zn=5.5, Mg=2.3, Cu=1.5, Zr=1.0), "relative", True, "7xxx + Zr (7A77-type window)"),
+    "Mg4.5Mn0.5Zr0.6": (dict(Mg=4.5, Mn=0.5, Zr=0.6), "relative", True, "Al-Mg-Mn-Zr at lower Mg and Zr"),
     # close relatives and literature points
     "S3-measured": (dict(Si=3.3, Mg=2.3), "relative", False, "Knoop powder as measured"),
     "AlSi4Mg2": (dict(Si=4.0, Mg=2.0), "relative", False, "Kimura et al. 2019 ladder"),
@@ -43,6 +43,16 @@ NAMED = {
     "HS1": (dict(Mn=4.8, Cr=0.8, Zr=0.8), "relative", True, "Hoganas forAM Al-HS1 datasheet"),
     "Mair": (dict(Mn=4.8, Ti=0.82, Zr=0.71), "relative", True, "Al-Mn-Ti-Zr powder as measured, Mair et al. 2022"),
     "MnTi-noZr": (dict(Mn=4.8, Ti=0.8), "relative", True, "Mair's alloy without Zr"),
+    # other Zr-free candidates looked at for the exploratory seed
+    "Mg5Si2Ti0.7": (dict(Mg=5.0, Si=2.0, Ti=0.7), "exploratory", True, "Al-Mg-Si-Ti at lower Mg and Si"),
+    "S3-Ti": (dict(Si=3.5, Mg=2.5, Ti=0.7), "exploratory", True, "S3 plus Ti"),
+    "MgMnTi": (dict(Mg=4.5, Mn=0.5, Ti=0.8), "exploratory", True, "Ti in place of Sc and Zr in an Al-Mg-Mn alloy"),
+    "S2-Ti-noZr": (dict(Fe=1.9, Mg=1.0, Ti=0.8), "exploratory", True, "S2 with Ti in place of Zr"),
+    "S1-Ti-noZr": (dict(Mn=4.8, Cr=0.9, Mg=1.2, Ti=0.8), "exploratory", True, "S1 with Ti in place of Zr"),
+    "S1-noZr": (dict(Mn=4.7, Cr=0.8, Mg=1.0), "exploratory", True, "S1 without Zr: a cracking-boundary probe"),
+    "O1-Mn": (dict(Mg=3.6, Zr=1.2, Mn=0.5), "exploratory", True, "O1 with Mn"),
+    "Fe2.5Mn2Mg1": (dict(Fe=2.5, Mn=2.0, Mg=1.0), "exploratory", True, "Zr-free Al-Fe-Mn-Mg"),
+    "Mg5.4Zn3Si2Mn": (dict(Mg=5.39, Zn=3.08, Si=1.96, Mn=0.75), "exploratory", True, "Zr-free Al-Mg-Zn-Si-Mn, Yang et al. 2022 (as reported by Edison q4)"),
     "Mn7": (dict(Mn=7.0), "relative", False, "Al-7Mn patent example"),
     "CP1": (dict(Fe=1.0, Zr=1.0), "relative", True, "Aheadd CP1 mid-range"),
     "CP1-patentA": (dict(Fe=1.04, Zr=1.78), "relative", False, "patent example"),
@@ -84,7 +94,7 @@ def named():
             r = recipe(wt, base="6063")
             items.append({"name": f"{nid}|6063", "wt": up(r["melt_wt"]), "tags": {**tags, "base": "6063", "f_base": r["f_base"], "f_4047": r["f_4047"]}})
     # seeds first, so a partial run already covers them
-    order = {"seed": 0, "extra": 1, "known-cracker": 2, "baseline": 2, "relative": 3}
+    order = {"seed": 0, "optional": 1, "known-cracker": 2, "baseline": 2, "relative": 3, "exploratory": 4}
     items.sort(key=lambda it: order[it["tags"]["group"]])
     return items
 
@@ -118,29 +128,9 @@ def grids():
     return items
 
 
-# Random sparse pool in a box: PR #72's caps, with Fe, Ni and Mg opened to the published LPBF alloys.
-BOX = {"MN": 5.0, "CR": 3.0, "ZR": 1.5, "MG": 7.0, "SI": 12.0, "CU": 4.0, "TI": 1.0, "FE": 2.5, "NI": 3.0, "SC": 0.8, "ZN": 8.0}
-FLOOR = {"MN": 0.3, "CR": 0.2, "ZR": 0.2, "MG": 0.3, "SI": 0.5, "CU": 0.3, "TI": 0.1, "FE": 0.3, "NI": 0.3, "SC": 0.1, "ZN": 0.5}
-
-
-def pool(n=24, seed=0):
-    rng = np.random.default_rng(seed)
-    els = list(BOX)
-    items = []
-    while len(items) < n:
-        k = rng.choice([2, 3, 4], p=[0.35, 0.45, 0.20])
-        pick = rng.choice(els, size=k, replace=False)
-        wt = {e: float(np.round(FLOOR[e] + rng.random() ** 1.3 * (BOX[e] - FLOOR[e]), 2)) for e in pick}
-        if not 2.0 <= sum(wt.values()) <= 15.0:
-            continue
-        nm = "pool%03d:" % len(items) + "-".join(f"{k}{v:g}" for k, v in sorted(wt.items()))
-        items.append({"name": nm, "wt": wt, "tags": {"set": "pool"}})
-    return items
-
-
 if __name__ == "__main__":
     out = HERE / "lists"
     out.mkdir(exist_ok=True)
-    for name, items in (("named", named()), ("grids", grids()), ("pool", pool())):
+    for name, items in (("named", named()), ("grids", grids())):
         (out / f"{name}.json").write_text(json.dumps(items, indent=1) + "\n")
         print(name, len(items))

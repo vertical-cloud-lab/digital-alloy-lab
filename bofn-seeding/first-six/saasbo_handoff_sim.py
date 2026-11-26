@@ -6,8 +6,7 @@ It asks one question under stated assumptions: with 25 runs in batches of 3, is 
 
     A  hand the optimizer the six hand-picked seeds and let it choose the other 19,
     B  add three sparse Sobol points first (nine seeds), or
-    C  add three hand-picked "axis-covering" alloys first (nine seeds), each switching on
-       elements that none of the six contains,
+    C  add the three optional hand-picked alloys first (nine seeds),
 
 and does the answer change between SAASBO (fully Bayesian GP with the SAAS prior) and a standard GP?
 Controls: nine Sobol seeds with no hand-picked ones, and pure random search.
@@ -55,19 +54,22 @@ D = len(EL)
 UBV = np.array([UB[e] for e in EL])
 BUDGET, BATCH, NOISE = 25, 3, 10.0
 
-# The six seeds proposed in README.md, and the three optional extras (wt%).
+# The six seeds proposed in README.md and the three optional ones (wt%). A first batch of runs used a draft
+# seed set (S1 without Mg at 0.6 Zr, Al-Mg-Zr in place of S4, and three "axis-covering" extras with Zn, Cu,
+# Er, Ni and Ti); those rows carry seedset = "draft" in the results.
+SEEDSET = "final"
 SIX = {
-    "D1 AlSi10Mg": dict(Si=10.0, Mg=0.35),
+    "D1 AlSi10Mg-type": dict(Si=10.0, Mg=0.35),
     "D2 Scalmalloy-type": dict(Mg=4.6, Sc=0.66, Zr=0.42, Mn=0.49),
-    "S1 Al-Mn-Cr-Zr": dict(Mn=5.0, Cr=0.8, Zr=0.6),
-    "S2 Al-Fe-Mg-Zr": dict(Fe=1.9, Mg=1.0, Zr=1.0),
+    "S1 Al-Mn-Cr-Zr-Mg": dict(Mn=4.8, Cr=0.9, Zr=1.1, Mg=1.2),
+    "S2 Al-Fe-Mg-Zr": dict(Fe=1.87, Mg=1.02, Zr=1.03),
     "S3 AlSi3.5Mg2.5": dict(Si=3.5, Mg=2.5),
-    "S4 Al-Mg-Zr": dict(Mg=3.6, Zr=1.2),
+    "S4 Al-Mg-Si-Ti": dict(Mg=6.0, Si=2.5, Ti=0.7),
 }
-EXTRA_AXIS = {
-    "E1 Al-Zn-Mg-Cu-Zr": dict(Zn=5.5, Mg=2.3, Cu=1.5, Zr=1.0),
-    "E2 Al-Mg-Mn-Er-Zr": dict(Mg=4.5, Mn=0.5, Er=0.8, Zr=0.5),
-    "E3 Al-Ni-Mn-Ti": dict(Ni=3.0, Mn=2.0, Ti=0.5),
+EXTRA_AXIS = {  # the hand-picked three: O1, O2, O3
+    "O1 Al-Mg-Zr": dict(Mg=3.6, Zr=1.2),
+    "O2 Al-Mg-Mn-Er-Zr": dict(Mg=6.4, Mn=0.72, Er=0.4, Zr=1.1),
+    "O3 Al-Mn-Cr": dict(Mn=4.8, Cr=0.8),
 }
 FREE = {"6063": dict(Mg=0.55, Si=0.40, Fe=0.20)}  # the A-block runs: a point that costs no design run
 
@@ -302,7 +304,7 @@ def run_one(job):
     if pair is not None:
         found_pair = bool(((bo_rows[:, pair["a"]] > 0) & (bo_rows[:, pair["b"]] > 0)).any())
     return dict(
-        rep=rep, strategy=strategy, model=model_name, delay=delay, synergy=pair is not None,
+        rep=rep, strategy=strategy, model=model_name, delay=delay, seedset=SEEDSET, synergy=pair is not None,
         best=float(curve[-1]), best_seed=float(truth[:n_seed].max()), best_six=best_six,
         pool_max=float(f_pool.max()), regret=float(f_pool.max() - curve[-1]),
         gain_over_six=float(curve[-1] - best_six), beat_six_by_20=bool(curve[-1] > best_six + 20.0),
@@ -324,23 +326,25 @@ def summarize():
     if not rows:
         print("no runs yet")
         return
-    keys = sorted({(r["model"], r["strategy"], r["delay"]) for r in rows})
+    for r in rows:
+        r.setdefault("seedset", "draft")
+    keys = sorted({(r["seedset"], r["model"], r["strategy"], r["delay"]) for r in rows})
     # paired differences against six -> same model, same rep, same delay
-    by = {(r["model"], r["strategy"], r["delay"], r["rep"]): r for r in rows}
+    by = {(r["seedset"], r["model"], r["strategy"], r["delay"], r["rep"]): r for r in rows}
     out = []
-    for model, strat, delay in keys:
-        rr = [r for r in rows if (r["model"], r["strategy"], r["delay"]) == (model, strat, delay)]
+    for seedset, model, strat, delay in keys:
+        rr = [r for r in rows if (r["seedset"], r["model"], r["strategy"], r["delay"]) == (seedset, model, strat, delay)]
         n = len(rr)
 
         def m(key, sel=lambda r: True):
             vals = [r[key] for r in rr if sel(r)]
             return (st.mean(vals), st.stdev(vals) / len(vals) ** 0.5 if len(vals) > 1 else float("nan")) if vals else (float("nan"), float("nan"))
 
-        diffs = [r["best"] - by[(model, "six", delay, r["rep"])]["best"] for r in rr if (model, "six", delay, r["rep"]) in by]
+        diffs = [r["best"] - by[(seedset, model, "six", delay, r["rep"])]["best"] for r in rr if (seedset, model, "six", delay, r["rep"]) in by]
         dm = st.mean(diffs) if diffs else float("nan")
         dse = st.stdev(diffs) / len(diffs) ** 0.5 if len(diffs) > 1 else float("nan")
         out.append(dict(
-            model=model, strategy=strat, delay=delay, n=n,
+            seedset=seedset, model=model, strategy=strat, delay=delay, n=n,
             best=round(m("best")[0], 1), best_se=round(m("best")[1], 1),
             best_no_synergy=round(m("best", lambda r: not r["synergy"])[0], 1),
             best_synergy=round(m("best", lambda r: r["synergy"])[0], 1),
@@ -377,7 +381,7 @@ def main():
     if a.summarize:
         summarize()
         return
-    path = OUT / f"runs_{'-'.join(a.models)}_delay{a.delay}{a.tag}.jsonl"
+    path = OUT / f"runs_{'-'.join(a.models)}_delay{a.delay}_{SEEDSET}{a.tag}.jsonl"
     done = set()
     if path.exists():
         for line in open(path):

@@ -1,0 +1,17 @@
+{
+  "task_id": "c6766417-ba6a-4ecb-ac03-bb86dc5bf1f9",
+  "job": "ANALYSIS",
+  "submitted_utc": "2026-11-26T08:30:01.654762Z",
+  "uploaded": [
+    "README.md",
+    "seeds.csv",
+    "named.csv",
+    "liquidus_vs_content.csv",
+    "atomization.csv",
+    "lpbf_window.csv",
+    "recipes.csv",
+    "summary.csv",
+    "process_models.py",
+    "saasbo_handoff_sim.py"
+  ]
+}

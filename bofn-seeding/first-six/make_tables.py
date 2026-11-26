@@ -36,9 +36,9 @@ def f(x, nd=0):
 
 
 LABEL = {"D1": "Al–10Si–0.35Mg", "D2": "Al–4.6Mg–0.66Sc–0.42Zr–0.49Mn", "S1": "Al–4.8Mn–0.9Cr–1.1Zr–1.2Mg",
-         "S2": "Al–1.9Fe–1.0Mg–1.0Zr", "S3": "Al–3.5Si–2.5Mg", "X1": "Al–6Mg–2.5Si–0.7Ti", "O1": "Al–3.6Mg–1.2Zr",
+         "S2": "Al–1.9Fe–1.0Mg–1.0Zr", "S3": "Al–3.5Si–2.5Mg", "S4": "Al–6Mg–2.5Si–0.7Ti", "O1": "Al–3.6Mg–1.2Zr",
          "O2": "Al–6.4Mg–0.7Mn–0.4Er–1.1Zr", "O3": "Al–4.8Mn–0.8Cr"}
-CAL = {"D1": "D1", "D2": "D2", "S1": "S1", "S2": "S2", "S3": "S3", "X1": "X1", "O1": "S4", "O2": "O2-noEr", "O3": "E1"}
+CAL = {"D1": "D1", "D2": "D2", "S1": "S1", "S2": "S2", "S3": "S3", "S4": "S4", "O1": "O1", "O2": "O2-noEr", "O3": "O3"}
 PHASE = {"FCC_A1": "α-Al", "AL3ZR1": "Al₃Zr", "AL3ZR": "Al₃Zr", "AL3SC": "Al₃Sc", "AL4CR": "Al₄(Cr,Mn)", "AL3TI_L": "Al₃Ti",
          "AL3TI_H": "Al₃Ti", "AL3M_DO22": "Al₃Ti", "AL13FE4": "Al₁₃Fe₄", "AL6MN": "Al₆Mn", "ALSIZR_T1": "Al–Si–Zr τ1",
          "AL11MN4": "Al₁₁Mn₄", "AL4MN": "Al₄Mn", "AL13CR2": "Al₇Cr", "AL7CR": "Al₇Cr", "AL11CR2": "Al₁₁Cr₂", "AL8MN5": "Al₈Mn₅"}
@@ -60,7 +60,10 @@ def t_atomization():
     body = []
     for r in s:
         x = a.get(r["id"], {})
-        body.append([r["id"], f"{f(x.get('highest_liquidus_C'))} ({ph(x.get('highest_liquidus_phase'))})", f(x.get("alpha_start_C")),
+        top = f"{f(x.get('highest_liquidus_C'))} ({ph(x.get('highest_liquidus_phase'))})"
+        if x.get("setpoint_note"):
+            top = f"{f(x.get('liquidus_matcalc_C'))} or {f(x.get('liquidus_cost507_C'))}: the databases disagree"
+        body.append([r["id"], top, f(x.get("alpha_start_C")),
                      f"**{f(x.get('melt_setpoint_C'))}**", r["hold_min"], f(x.get("lang_d50_um")),
                      f"{100 * float(x.get('frac_20_63', 'nan')):.0f} %" if x else "–", x.get("flight_loss_60um", "–"),
                      x.get("cool_rate_60um_K_s", "–")])
@@ -94,8 +97,8 @@ def t_calphad():
 def t_validation():
     c = {(r["id"], r["base"]): r for r in rows(RES / "calphad" / "named.csv")}
     groups = [("Cracks in published builds", ["7075", "6061", "2024", "Mg3", "Mg6", "ChalmersE-cracked", "MnMgZr-Yu"]),
-              ("Prints crack-free with no grain refiner", ["D1", "A357", "S3", "AlMg9.6Si4.9", "E1", "S1b", "Fe2.5", "Fe2.5Mn2"]),
-              ("Prints crack-free with Zr, Sc or Ti", ["D2", "S1", "S4", "S2", "CP1", "Mair", "5083-0.7Zr", "6061-1Zr", "X1"])]
+              ("Prints crack-free with no grain refiner", ["D1", "A357", "S3", "AlMg9.6Si4.9", "O3", "S1-noMg", "Fe2.5", "Fe2.5Mn2"]),
+              ("Prints crack-free with Zr, Sc or Ti", ["D2", "S1", "O1", "S2", "CP1", "Mair", "5083-0.7Zr", "6061-1Zr", "S4"])]
     body = []
     for g, ids in groups:
         for i in ids:
@@ -107,12 +110,17 @@ def t_validation():
 
 def t_saasbo():
     s = rows(RES / "saasbo_handoff" / "summary.csv")
+    fin = [r for r in s if r.get("seedset", "draft") == "final" and r["model"] == "saasbo"]
+    use = "final" if len(fin) >= 4 and min(int(r["n"]) for r in fin) >= 12 else "draft"
+    s = [r for r in s if r.get("seedset", "draft") == use]
+    third = "six + O1, O2, O3, then the optimizer" if use == "final" else "six + 3 hand-picked (Zn-Cu, Er and Ni-Ti alloys), then the optimizer"
     name = {"six": "six seeds, then the optimizer", "six+3sobol": "six + 3 Sobol, then the optimizer",
-            "six+3axis": "six + 3 hand-picked, then the optimizer", "nine-sobol": "nine Sobol, then the optimizer"}
+            "six+3axis": third, "nine-sobol": "nine Sobol, then the optimizer"}
     model = {"saasbo": "SAASBO", "gp": "standard GP", "random": "random picks"}
     body = []
+    rank = {"six": 0, "six+3sobol": 1, "six+3axis": 2, "nine-sobol": 3}
     for m in ("saasbo", "gp", "random"):
-        for r in s:
+        for r in sorted(s, key=lambda r: rank.get(r["strategy"], 9)):
             if r["model"] != m or r["delay"] != "1":
                 continue
             diff = "–" if r["strategy"] == "six" else f"{float(r['paired_diff_vs_six']):+.0f} ± {float(r['paired_diff_se']):.0f}"
@@ -120,8 +128,11 @@ def t_saasbo():
                          f"{float(r['best']):.0f} ± {float(r['best_se']):.0f}", diff, f(r["regret"]),
                          f"{float(r['bo_new_element_runs']):.1f} of {float(r['n_bo']):.0f}",
                          f"{100 * float(r['found_hidden_pair']):.0f} %"])
-    return md(["Model", "Start", "Instances", "Best of 25, MPa (± s.e.)", "Paired difference from six seeds", "Regret, MPa",
-               "Optimizer runs with an element no seed has", "Found the hidden pair"], body)
+    note = ("Seed set: the six and the optional three exactly as proposed above." if use == "final" else
+            "Seed set: a draft of the six (S1 without Mg at 0.6 Zr, and O1 in place of S4). The rerun with the final six is in "
+            "`results/saasbo_handoff/`.")
+    return note + "\n\n" + md(["Model", "Start", "Instances", "Best of 25, MPa (± s.e.)", "Paired difference from six seeds", "Regret, MPa",
+                               "Optimizer runs with an element no seed has", "Found the hidden pair"], body)
 
 
 def t_liquidus():

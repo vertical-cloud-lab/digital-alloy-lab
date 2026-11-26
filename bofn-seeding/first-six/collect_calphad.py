@@ -21,6 +21,14 @@ HERE = pathlib.Path(__file__).resolve().parent
 OUT = HERE / "results" / "calphad"
 
 
+# Where the databases disagree badly, the setpoint is set by hand and the reason is kept with it.
+SETPOINT_OVERRIDE = {
+    "S4": (950, "databases disagree on the first solid: 755 C (MatCalc, Al3Ti) against 1009 C (COST 507, a Ti-Si compound "
+                "carried over from the binary with no ternary assessment). Set from the binary Al-0.7Ti liquidus, about "
+                "820 C in both, plus a margin. Check the powder for Ti-rich flakes and go hotter if they appear."),
+}
+
+
 def load(path):
     if not path.exists():
         return []
@@ -46,14 +54,25 @@ def main():
     for extra in sorted(src.glob("liquidus_cost507_*.jsonl")):
         liq2.update({r["name"]: r for r in load(extra) if r.get("ok")})
     named = [r for f in ("named.jsonl", "exploratory.jsonl", "x1.jsonl") for r in load(src / f) if r.get("ok")]
+    seen = set()                                   # one row per alloy and base, the first one wins
+    named = [r for r in named if not (r["name"] in seen or seen.add(r["name"]))]
     rows = []
     for r in named:
         t = r.get("tags", {})
         c = liq2.get(r["name"], {})
         l1, l2 = r.get("liquidus_C"), c.get("liquidus_C")
         top = max(x for x in (l1, l2) if x is not None)
+        if l2 is None and c.get("note") == "no solid at 607 C":
+            l2 = None
         top_phase = r.get("primary_phase") if (l2 is None or (l1 is not None and l1 >= l2)) else c.get("primary_phase")
         setpoint = max(math.ceil((top + 100.0) / 10.0) * 10, 820)
+        setpoint_note = ""
+        if l2 is None and r["wt"].get("ZR", 0) > 0.15:
+            # the MatCalc database has no Al3Zr liquidus, so without the COST 507 value there is no setpoint
+            top, top_phase, setpoint = float("nan"), "Al3Zr liquidus not computed", ""
+            setpoint_note = "no COST 507 liquidus for this Zr-bearing alloy"
+        if t.get("id") in SETPOINT_OVERRIDE:
+            setpoint, setpoint_note = SETPOINT_OVERRIDE[t["id"]]
         ph = r.get("phases", {})
         imc = sum(v for k, v in ph.items() if k not in ("FCC_A1",))
         rows.append(dict(
@@ -62,7 +81,7 @@ def main():
             liquidus_C=l1, primary_phase=r.get("primary_phase"),
             liquidus_cost507_C=l2 if l2 is not None else "", primary_phase_cost507=c.get("primary_phase") or "",
             cost507_left_out=" ".join(c.get("left_out", [])),
-            highest_liquidus_C=top, highest_liquidus_phase=top_phase, melt_setpoint_C=setpoint,
+            highest_liquidus_C=top, highest_liquidus_phase=top_phase, melt_setpoint_C=setpoint, setpoint_note=setpoint_note,
             T_fcc_start_C=round(r.get("T_fcc_start_C", float("nan")), 1), fs_at_fcc_start=round(r.get("fs_at_fcc_start", float("nan")), 3),
             T_end_C=round(r.get("T_end_C", float("nan")), 1), freezing_range_alpha_K=round(r.get("dT_fcc", float("nan")), 1),
             dT_90_99_K=round(r.get("dT_90_99", float("nan")), 1), dT_80_95_K=round(r.get("dT_80_95", float("nan")), 1),
@@ -85,7 +104,7 @@ def main():
         d["flag"] = ""
         if d["base"] == "6063" and (d["id"], "pureAl") in ends and d["T_end_C"] > ends[(d["id"], "pureAl")] + 5.0:
             d["flag"] = "ends above the pure-Al-base path: probably stopped early; use the pure-Al-base indices"
-    order = {"seed": 0, "extra": 1, "exploratory": 2, "relative": 3, "known-cracker": 4, "baseline": 5}
+    order = {"seed": 0, "optional": 1, "extra": 1, "exploratory": 4, "relative": 2, "known-cracker": 3, "baseline": 5}
     rows.sort(key=lambda d: (order.get(d["group"], 9), d["id"], d["base"]))
     if rows:
         with open(OUT / "named.csv", "w", newline="") as fh:
@@ -94,7 +113,7 @@ def main():
             w.writerows(rows)
         print("named.csv", len(rows))
     # grids and pool
-    for name in ("grids", "pool"):
+    for name in ("grids",):
         g = [r for r in load(src / f"{name}.jsonl") if r.get("ok")]
         out = []
         for r in g:

@@ -1,11 +1,10 @@
-seed,alloy,liquidus_C,alpha_start_C,melt_setpoint_C,surface_tension_N_m,density_kg_m3,lang_d50_um,d50_20kHz_um,d50_60kHz_um,frac_15_45,frac_20_63,frac_20_75,frac_45_106,cool_rate_60um_K_s,cool_rate_30um_K_s,liquid_time_60um_ms,flight_loss_60um,flight_loss_30um,crucible_loss_15min
-D1,Al-10Si-0.35Mg (AlSi10Mg-type),660,655,820,0.813,2360,59.7,94.8,45.6,0.16,0.57,0.78,0.81,4.4e+04,1.7e+05,16.2,Mg 0.6%,Mg 0.6%,Mg 0.04%
-D2,Al-4.6Mg-0.66Sc-0.42Zr-0.49Mn (Scalmalloy-type),660,655,820,0.79,2306,59.6,94.6,45.5,0.17,0.58,0.79,0.81,4.4e+04,1.7e+05,16.2,Mg 0.6%; Mn 0.0%,Mg 0.6%; Mn 0.0%,Mg 0.04%; Mn 0.00%
-S1,"Al-4.8Mn-0.9Cr-1.1Zr-1.2Mg (Al-Mn-Cr-Zr, Mg-bearing, high Zr)",660,655,820,0.822,2427,59.4,94.2,45.3,0.17,0.58,0.79,0.81,4.4e+04,1.7e+05,16.2,Mg 0.6%; Mn 0.0%,Mg 0.6%; Mn 0.0%,Mg 0.04%; Mn 0.00%
-S1b,"Al-5.0Mn-0.8Cr-0.6Zr (Al-Mn-Cr-Zr, Mg-free; needs a high-purity Al base)",660,655,820,0.835,2430,59.6,94.7,45.5,0.17,0.57,0.79,0.81,4.4e+04,1.7e+05,16.2,Mg 0.6%; Mn 0.0%,Mg 0.6%; Mn 0.0%,Mg 0.04%; Mn 0.00%
-S2,Al-1.9Fe-1.0Mg-1.0Zr (Al-Fe-Mg-Zr),660,655,820,0.825,2371,59.9,95.1,45.7,0.16,0.57,0.78,0.81,4.4e+04,1.7e+05,16.2,Mg 0.6%,Mg 0.6%,Mg 0.04%
-S3,Al-3.5Si-2.5Mg (AlSi3.5Mg2.5-type),660,655,820,0.798,2321,59.6,94.7,45.5,0.17,0.57,0.79,0.81,4.4e+04,1.7e+05,16.2,Mg 0.6%,Mg 0.6%,Mg 0.03%
-S4,Al-3.6Mg-1.2Zr (Al-Mg-Zr),660,655,820,0.796,2318,59.6,94.7,45.5,0.17,0.57,0.79,0.81,4.4e+04,1.7e+05,16.2,Mg 0.6%,Mg 0.6%,Mg 0.04%
-E1,Al-4.8Mn-0.8Cr (Zr-free Al-Mn-Cr),660,655,820,0.834,2418,59.7,94.8,45.6,0.16,0.57,0.78,0.81,4.4e+04,1.7e+05,16.2,Mg 0.6%; Mn 0.0%,Mg 0.6%; Mn 0.0%,Mg 0.04%; Mn 0.00%
-E2,Al-5.5Zn-2.3Mg-1.5Cu-1.0Zr (7xxx + Zr),660,655,820,0.791,2442,58.5,92.8,44.6,0.18,0.6,0.8,0.8,4.4e+04,1.7e+05,16.2,Mg 0.6%; Zn 6.9%,Mg 0.6%; Zn 7.0%,Mg 0.04%; Zn 0.35%
-E3,Al-4.5Mg-0.5Mn-0.8Er-0.6Zr (Er in place of Sc),660,655,820,0.791,2321,59.5,94.4,45.4,0.17,0.58,0.79,0.81,4.4e+04,1.7e+05,16.2,Mg 0.6%; Mn 0.0%,Mg 0.6%; Mn 0.0%,Mg 0.04%; Mn 0.00%
+seed,alloy,highest_liquidus_C,highest_liquidus_phase,liquidus_matcalc_C,liquidus_cost507_C,setpoint_note,alpha_start_C,melt_setpoint_C,surface_tension_N_m,density_kg_m3,lang_d50_um,d50_20kHz_um,d50_60kHz_um,frac_below_45,frac_20_63,frac_20_75,frac_63_150,cool_rate_60um_K_s,cool_rate_30um_K_s,liquid_time_60um_ms,flight_loss_60um,crucible_loss_15min
+D1,Al-10Si-0.35Mg (AlSi10Mg-type benchmark),595,FCC_A1,594.9,,,595,820,0.813,2360,59.7,94.8,45.6,0.16,0.57,0.78,0.43,4.4e+04,1.7e+05,19.4,Mg 0.5%,Mg 0.04%
+D2,Al-4.6Mg-0.66Sc-0.42Zr-0.49Mn (Scalmalloy-type benchmark),835,AL3ZR1,783.0,834.7,,634,940,0.772,2281,59.3,94.2,45.3,0.17,0.58,0.79,0.42,5.1e+04,2.0e+05,27.2,Mg 2.3%; Mn 0.0%,Mg 0.15%; Mn 0.00%
+S1,Al-4.8Mn-0.9Cr-1.1Zr-1.2Mg (Al-Mn-Cr-Zr with Mg and high Zr),932,AL3ZR1,827.8,932.4,,647,1040,0.788,2377,58.9,93.6,45.0,0.18,0.59,0.8,0.41,5.7e+04,2.3e+05,29.1,Mg 6.5%; Mn 0.0%,Mg 0.41%; Mn 0.00%
+S2,Al-1.9Fe-1.0Mg-1.0Zr (Al-Fe-Mg-Zr),910,AL3ZR1,819.0,909.9,,647,1010,0.796,2328,59.5,94.5,45.4,0.17,0.58,0.79,0.42,5.5e+04,2.2e+05,28.7,Mg 4.8%,Mg 0.30%
+S3,Al-3.5Si-2.5Mg (AlSi3.5Mg2.5-type),628,FCC_A1,628.3,627.2,,628,820,0.798,2321,59.6,94.7,45.5,0.17,0.57,0.79,0.42,4.4e+04,1.7e+05,19.0,Mg 0.5%,Mg 0.03%
+S4,Al-6Mg-2.5Si-0.7Ti (Ti as the grain refiner; exploratory),1009,SI1TI1,754.8,1009.1,"databases disagree on the first solid: 755 C (MatCalc, Al3Ti) against 1009 C (COST 507, a Ti-Si compound carried over from the binary with no ternary assessment). Set from the binary Al-0.7Ti liquidus, about 820 C in both, plus a margin. Check the powder for Ti-rich flakes and go hotter if they appear.",621,950,0.759,2262,59.2,93.9,45.2,0.17,0.59,0.79,0.41,5.2e+04,2.0e+05,20.1,Mg 2.6%,Mg 0.16%
+O1,Al-3.6Mg-1.2Zr (Al-Mg-Zr),943,AL3ZR1,857.7,943.0,,640,1050,0.761,2268,59.2,93.9,45.1,0.17,0.59,0.79,0.41,5.8e+04,2.3e+05,29.2,Mg 6.9%,Mg 0.43%
+O2,Al-6.4Mg-0.7Mn-0.4Er-1.1Zr (Er in place of Sc),958,AL3ZR1,883.1,958.0,,624,1060,0.746,2254,58.9,93.5,45.0,0.18,0.59,0.8,0.41,5.8e+04,2.3e+05,29.8,Mg 7.5%; Mn 0.0%,Mg 0.47%; Mn 0.00%
+O3,Al-4.8Mn-0.8Cr (Zr-free Al-Mn-Cr),810,AL4CR,810.2,726.4,,650,920,0.819,2395,59.5,94.5,45.4,0.17,0.58,0.79,0.42,5.0e+04,2.0e+05,20.9,Mg 1.9%; Mn 0.0%,Mg 0.12%; Mn 0.00%

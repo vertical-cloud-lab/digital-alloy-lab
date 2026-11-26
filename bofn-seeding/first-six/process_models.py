@@ -34,7 +34,7 @@ MASS = dict(Al=26.9815, Mn=54.938, Cr=51.9961, Zr=91.224, Mg=24.305, Si=28.0855,
             Ni=58.6934, Ce=140.116, Sc=44.9559, Li=6.94, Er=167.259, Zn=65.38, Sn=118.71)
 
 # ----------------------------------------------------------------------------- seeds
-# The six seeds (D1, D2, S1, S2, S3, X1) and the three optional ones (O1, O2, O3). Target compositions in wt%.
+# The six seeds (D1, D2, S1, S2, S3, S4) and the three optional ones (O1, O2, O3). Target compositions in wt%.
 # "ref" is the published parameter set the print window is transferred from: power W, speed mm/s, hatch um,
 # layer um, 1/e2 spot diameter um, plate C. "calphad" is the id of the matching row in results/calphad/named.csv.
 # "plate" is the build-plate temperature to start at, "age" the direct-ageing schedule (no solution treatment).
@@ -54,15 +54,15 @@ SEEDS = {
     "S3": dict(name="Al-3.5Si-2.5Mg (AlSi3.5Mg2.5-type)", wt=dict(Si=3.5, Mg=2.5), calphad="S3", plate=50,
                age="170 C / 1 h",
                ref=dict(P=370, v=1200, h=100, t=50, spot=70, plate=50, src="SLM 125HL, Knoop et al. 2020, 10.3390/met10040514; speed and hatch from Solanki et al. 2026, 10.1007/s40964-026-01583-1")),
-    "X1": dict(name="Al-6Mg-2.5Si-0.7Ti (Ti as the grain refiner; exploratory)", wt=dict(Mg=6.0, Si=2.5, Ti=0.7), calphad="X1",
+    "S4": dict(name="Al-6Mg-2.5Si-0.7Ti (Ti as the grain refiner; exploratory)", wt=dict(Mg=6.0, Si=2.5, Ti=0.7), calphad="S4",
                plate=100, age="as built; screen 170 C / 1-2 h",
                ref=dict(P=370, v=1200, h=100, t=50, spot=70, plate=50, src="no parameter set read for this alloy (Wen et al. 2024 seen as abstract only); S3's set is used as the starting point")),
-    "O1": dict(name="Al-3.6Mg-1.2Zr (Al-Mg-Zr)", wt=dict(Mg=3.6, Zr=1.2), calphad="S4", plate=100, age="400 C / 8 h",
+    "O1": dict(name="Al-3.6Mg-1.2Zr (Al-Mg-Zr)", wt=dict(Mg=3.6, Zr=1.2), calphad="O1", plate=100, age="400 C / 8 h",
                ref=dict(P=200, v=200, h=135, t=30, spot=90, plate=25, src="Concept Laser M2, Croteau et al. 2018, 10.1016/j.actamat.2018.04.053")),
     "O2": dict(name="Al-6.4Mg-0.7Mn-0.4Er-1.1Zr (Er in place of Sc)", wt=dict(Mg=6.4, Mn=0.72, Er=0.4, Zr=1.1), calphad="O2-noEr",
                plate=100, age="375 C / 10 h",
                ref=dict(P=350, v=1000, h=130, t=30, spot=80, plate=25, src="SLM 280, Guo et al. 2022, 10.1016/j.matdes.2022.111064 (as reported by Edison q7; spot size assumed)")),
-    "O3": dict(name="Al-4.8Mn-0.8Cr (Zr-free Al-Mn-Cr)", wt=dict(Mn=4.8, Cr=0.8), calphad="E1", plate=35,
+    "O3": dict(name="Al-4.8Mn-0.8Cr (Zr-free Al-Mn-Cr)", wt=dict(Mn=4.8, Cr=0.8), calphad="O3", plate=35,
                age="375 C / 1-4 h (over-ages quickly without Zr)",
                ref=dict(P=170, v=1500, h=100, t=30, spot=40, plate=25, src="EOS M100, Mehta et al. 2022, 10.1016/j.jallcom.2022.165870")),
 }
@@ -89,7 +89,7 @@ EVIDENCE = {
                as_built="270 / 442 / 12.7 on a 50 C plate; 381 / 483 / 6.1 on a 100 C plate; 417 / 506 / 10.1 on a Concept Laser M2 (10.3390/met10040514)",
                aged="170 C / 1 h: 348 / 484 / 10.5; 190 C / 30 min: 411 / 485 / 4.7", read="paper in full (open access)",
                microstructure="grains about 6 um, columnar with equiaxed grains at the pool bottom; cells under 1 um with a Si-rich film; Mg2Si eutectic; Mg-Si clusters after a warm plate or 170 C"),
-    "X1": dict(role="exploratory", needs="on hand (4047, 6063, Mg, Ti powder)", hold_min=15,
+    "S4": dict(role="exploratory", needs="on hand (4047, 6063, Mg, Ti powder)", hold_min=15,
                as_built="UTS 447.8, elongation 9.1; yield not in the abstract (10.1080/17452759.2024.2378930)", aged="not reported in the abstract",
                read="abstract only (publisher and repository copies were unreachable)",
                microstructure="expected: equiaxed alpha-Al nucleated on Al3Ti, with Al / Mg2Si eutectic filling the last liquid"),
@@ -406,7 +406,10 @@ def fmt(wt):
     return "Al-" + "-".join(f"{v:g}{k}" for k, v in sorted(wt.items(), key=lambda kv: -kv[1]))
 
 
-OVERCHARGE = dict(Mg=0.05, Zn=0.15)      # relative extra to weigh in, until the first ICP result says otherwise
+def overcharge_for(setpoint_C):
+    """Relative extra to weigh in until the first ICP result says otherwise. The droplet model puts the in-flight
+    Mg loss near 0.5-2 % below about 950 C and 5-8 % at 1010-1060 C."""
+    return dict(Mg=0.05 if setpoint_C < 950 else 0.10, Zn=0.15)
 
 
 def main():
@@ -415,11 +418,6 @@ def main():
     rows_r, rows_a, rows_l, rows_d = [], [], [], []
     for sid, s in SEEDS.items():
         wt = s["wt"]
-        for base in ("6063", "pure Al"):
-            r = recipe(wt, base=base, overcharge=OVERCHARGE)
-            rows_r.append(dict(seed=sid, alloy=s["name"], base=base, charge_g=250,
-                               weigh="; ".join(f"{k} {v} g" for k, v in r["masses"].items()),
-                               melt_wt="-".join(f"{v:g}{k}" for k, v in sorted(r["melt_wt"].items(), key=lambda kv: -kv[1]))))
         melt = recipe(wt, base="6063")["melt_wt"]
         c = cal.get(f"{s['calphad']}|6063") or cal.get(f"{s['calphad']}|pureAl") or {}
         if not c:
@@ -429,6 +427,15 @@ def main():
         T_fcc = num("T_fcc_start_C", 650.0)
         T_end = num("T_end_C", T_fcc - 40.0)
         T_set = num("melt_setpoint_C", max(T_top + 100.0, 820.0))
+        if c.get("flag"):                               # the 6063-base Scheil path stopped early: use the pure-base end
+            cp = cal.get(f"{s['calphad']}|pureAl") or {}
+            if cp.get("T_end_C") not in (None, "", "nan"):
+                T_end = float(cp["T_end_C"])
+        for base in ("6063", "pure Al"):
+            r = recipe(wt, base=base, overcharge=overcharge_for(T_set))
+            rows_r.append(dict(seed=sid, alloy=s["name"], base=base, charge_g=250,
+                               weigh="; ".join(f"{k} {v} g" for k, v in r["masses"].items()),
+                               melt_wt="-".join(f"{v:g}{k}" for k, v in sorted(r["melt_wt"].items(), key=lambda kv: -kv[1]))))
         sig, rho = melt_props(melt, T_set)
         d50 = lang_d50(sig, rho)
         dh60 = droplet_history(melt, 60.0, T_set, T_fcc, T_end)
@@ -436,6 +443,7 @@ def main():
         cl = crucible_loss(melt, T_set, hold_min=15.0)
         rows_a.append(dict(
             seed=sid, alloy=s["name"], highest_liquidus_C=round(T_top), highest_liquidus_phase=c.get("highest_liquidus_phase", ""),
+            liquidus_matcalc_C=c.get("liquidus_C", ""), liquidus_cost507_C=c.get("liquidus_cost507_C", ""), setpoint_note=c.get("setpoint_note", ""),
             alpha_start_C=round(T_fcc), melt_setpoint_C=round(T_set),
             surface_tension_N_m=round(sig, 3), density_kg_m3=round(rho), lang_d50_um=round(d50, 1),
             d50_20kHz_um=round(lang_d50(sig, rho, 20e3), 1), d50_60kHz_um=round(lang_d50(sig, rho, 60e3), 1),

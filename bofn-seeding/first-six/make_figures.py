@@ -69,48 +69,53 @@ def num(x):
 
 # ------------------------------------------------------------------ A. Scheil paths, two bases
 NINE = [("D1", "D1", "Al-10Si-0.35Mg"), ("D2", "D2", "Al-4.6Mg-0.66Sc-0.42Zr-0.49Mn"), ("S1", "S1", "Al-4.8Mn-0.9Cr-1.1Zr-1.2Mg"),
-        ("S2", "S2", "Al-1.9Fe-1.0Mg-1.0Zr"), ("S3", "S3", "Al-3.5Si-2.5Mg"), ("X1", "X1", "Al-6Mg-2.5Si-0.7Ti"),
-        ("O1", "S4", "Al-3.6Mg-1.2Zr"), ("O2", "O2-noEr", "Al-6.4Mg-0.7Mn-1.1Zr (Er left out)"), ("O3", "E1", "Al-4.8Mn-0.8Cr")]
+        ("S2", "S2", "Al-1.9Fe-1.0Mg-1.0Zr"), ("S3", "S3", "Al-3.5Si-2.5Mg"), ("S4", "S4", "Al-6Mg-2.5Si-0.7Ti"),
+        ("O1", "O1", "Al-3.6Mg-1.2Zr"), ("O2", "O2-noEr", "Al-6.4Mg-0.7Mn-1.1Zr, no Er"), ("O3", "O3", "Al-4.8Mn-0.8Cr")]
 
 
 def fig_scheil(th, mode):
     paths = {r["name"]: r for r in read_jsonl(RES / "calphad" / "scheil_paths.jsonl")}
     if not paths:
         return
+    flagged = {(r["id"], r["base"]) for r in read_csv(RES / "calphad" / "named.csv") if r.get("flag")}
     fig, axes = plt.subplots(3, 3, figsize=(10.5, 8.2), sharex=True, sharey=True)
     for ax, (sid, cid, label) in zip(axes.ravel(), NINE):
         for base, col, nm in (("pureAl", th["series"][0], "high-purity Al base"), ("6063", th["series"][1], "6063 base")):
             r = paths.get(f"{cid}|{base}")
             if not r:
                 continue
+            if (cid, base) in flagged:               # this path stopped early in the solver: do not draw it
+                ax.text(0.04, 0.06, "6063-base path stopped early; not drawn", transform=ax.transAxes, fontsize=7.5, color=th["ink2"])
+                continue
             fs, T = np.array(r["fs_grid"]), np.array(r["scheil_T_at_fs"])
             ax.plot(fs, T, color=col, label=nm)
             ax.plot([fs[-1]], [T[-1]], "o", ms=6, color=col, mec=th["surface"], mew=1.5)
         ax.set_title(f"{sid}  {label}", fontsize=9)
         ax.set_ylim(430, 680)
-        ax.set_xlim(0, 1.02)
+        ax.set_xlim(0, 1.03)
+        ax.set_xticks([0, 0.25, 0.5, 0.75, 1.0], ["0", "0.25", "0.5", "0.75", "1"])
     for ax in axes[-1]:
         ax.set_xlabel("fraction solid (Scheil)")
     for ax in axes[:, 0]:
         ax.set_ylabel("temperature (°C)")
-    h, lab = axes[0, 0].get_legend_handles_labels()
+    h, lab = max((ax.get_legend_handles_labels() for ax in axes.ravel()), key=lambda hl: len(hl[0]))
     fig.legend(h, lab, loc="upper center", ncol=2, bbox_to_anchor=(0.5, 0.955))
     fig.suptitle("Where each seed finishes freezing, on two base metals", x=0.06, ha="left", fontsize=12, fontweight="bold", y=0.995)
     fig.text(0.06, 0.965, "MatCalc open Al database; the path starts where alpha-Al appears. A long tail to low temperature is the hot-tearing risk.",
              ha="left", fontsize=8.5, color=th["ink2"])
-    fig.subplots_adjust(top=0.9, hspace=0.28, wspace=0.08)
+    fig.subplots_adjust(top=0.9, hspace=0.28, wspace=0.1)
     save(fig, "scheil_paths", mode)
 
 
 # ------------------------------------------------------------------ B. cracking index against what experiments found
 OUTCOME = {  # id -> (class, label). Classes: 0 crack-free without a grain refiner, 1 crack-free with Zr/Sc/Ti, 2 cracks
     "D1": (0, "AlSi10Mg"), "A357": (0, "AlSi7Mg0.6"), "S3": (0, "AlSi3.5Mg2.5"), "AlMg9.6Si4.9": (0, "Al-9.6Mg-4.9Si"),
-    "E1": (0, "Al-4.8Mn-0.8Cr (no Zr)"), "S1b": (0, "Al-5Mn-0.8Cr-0.6Zr (columnar)"), "Fe2.5": (0, "Al-2.5Fe"),
+    "O3": (0, "Al-4.8Mn-0.8Cr (no Zr)"), "S1-noMg": (0, "Al-5Mn-0.8Cr-0.6Zr (columnar)"), "Fe2.5": (0, "Al-2.5Fe"),
     "Fe2.5Mn2": (0, "Al-2.5Fe-2Mn"),
     "D2": (1, "Scalmalloy"), "S1": (1, "Al-4.8Mn-0.9Cr-1.1Zr-1.2Mg"), "ChalmersD": (1, "Al-4.7Mn-0.8Cr-1.2Zr"),
-    "Mair": (1, "Al-4.8Mn-0.8Ti-0.7Zr"), "CP1": (1, "Al-1Fe-1Zr"), "S2": (1, "Al-1.9Fe-1Mg-1Zr"), "S4": (1, "Al-3.6Mg-1.2Zr"),
+    "Mair": (1, "Al-4.8Mn-0.8Ti-0.7Zr"), "CP1": (1, "Al-1Fe-1Zr"), "S2": (1, "Al-1.9Fe-1Mg-1Zr"), "O1": (1, "Al-3.6Mg-1.2Zr"),
     "5083-0.7Zr": (1, "5083 + 0.7Zr"), "AlMnSc": (1, "Al-4.5Mn-1.3Mg-0.8Sc-0.7Zr"), "6061-1Zr": (1, "6061 + 1Zr"),
-    "X1": (1, "Al-6Mg-2.5Si-0.7Ti"), "AlMg8Si1.3ScZr": (1, "Al-8Mg-1.3Si-Sc-Zr"),
+    "S4": (1, "Al-6Mg-2.5Si-0.7Ti"), "AlMg8Si1.3ScZr": (1, "Al-8Mg-1.3Si-Sc-Zr"),
     "7075": (2, "7075"), "6061": (2, "6061"), "2024": (2, "2024"), "Mg3": (2, "Al-3Mg"), "Mg6": (2, "Al-6Mg"),
     "ChalmersE-cracked": (2, "Al-4.7Mn-0.8Cr-0.7Zr-1.0Mg"), "MnMgZr-Yu": (2, "Al-5.8Mn-2.7Mg-0.5Zr (+Er)"),
 }
@@ -126,20 +131,24 @@ def fig_cracking(th, mode):
     if not pts:
         return
     names = ["prints crack-free without a grain refiner", "prints crack-free with Zr, Sc or Ti", "cracks in published builds"]
-    order = sorted(pts, key=lambda p: (p[0], p[1]))
+    slot = {0: 0, 2: 1, 1: 2}                      # blue: prints unaided; orange: cracks; aqua: prints with a refiner
+    order = sorted(pts, key=lambda p: ({0: 0, 2: 1, 1: 2}[p[0]], p[1]))
     fig, ax = plt.subplots(figsize=(8.6, 0.27 * len(order) + 1.6))
+    ax.axvline(430, color=th["axis"], lw=1, zorder=1)
+    ax.text(430 * 0.9, len(order) - 0.4, "without a refiner: prints below, cracks above", ha="right", va="center", fontsize=8, color=th["ink2"])
     for i, (cls, k, label) in enumerate(order):
-        ax.plot([k], [i], "o", ms=9, color=th["series"][cls], mec=th["surface"], mew=2, zorder=3)
+        ax.plot([k], [i], "o", ms=9, color=th["series"][slot[cls]], mec=th["surface"], mew=2, zorder=3)
         ax.text(k * 1.25, i, label, va="center", fontsize=8.5, color=th["ink"])
-    for cls in range(3):
-        ax.plot([], [], "o", ms=9, color=th["series"][cls], label=names[cls])
+    for cls in (0, 2, 1):
+        ax.plot([], [], "o", ms=9, color=th["series"][slot[cls]], label=names[cls])
+    ax.set_ylim(-0.8, len(order) + 0.3)
     ax.set_xscale("log")
     ax.set_xlim(0.3, 60000)
     ax.set_yticks([])
     ax.grid(axis="y", visible=False)
     ax.set_xlabel("Kou index, max |dT/d(fs^0.5)| for fs 0.87-0.94 (K), Scheil, pure-Al base")
     ax.legend(loc="lower right", fontsize=8.5)
-    ax.set_title("A solidification index alone does not say which alloys print")
+    ax.set_title("The index sorts alloys that have no grain refiner; a refiner overrides it")
     save(fig, "cracking_index", mode)
 
 
@@ -148,7 +157,12 @@ def fig_saasbo(th, mode):
     runs = [r for p in sorted((RES / "saasbo_handoff").glob("runs_*.jsonl")) for r in read_jsonl(p)]
     if not runs:
         return
-    strat = [("six", "six seeds, then the optimizer"), ("six+3sobol", "six + 3 Sobol"), ("six+3axis", "six + 3 hand-picked"),
+    n_fin = min((sum(1 for r in runs if r.get("seedset") == "final" and r["model"] == "saasbo" and r["strategy"] == k)
+                 for k in ("six", "six+3sobol", "six+3axis", "nine-sobol")), default=0)
+    use = "final" if n_fin >= 12 else "draft"
+    runs = [r for r in runs if r.get("seedset", "draft") == use]
+    strat = [("six", "six seeds, then the optimizer"), ("six+3sobol", "six + 3 Sobol"),
+             ("six+3axis", "six + O1, O2, O3" if use == "final" else "six + 3 hand-picked"),
              ("nine-sobol", "nine Sobol, no hand-picked")]
     fig, axes = plt.subplots(1, 2, figsize=(10.5, 4.2), sharey=True)
     for ax, model, title in zip(axes, ("saasbo", "gp"), ("SAASBO", "Standard GP")):
