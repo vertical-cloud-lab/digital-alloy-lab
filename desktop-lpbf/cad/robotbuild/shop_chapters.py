@@ -384,7 +384,7 @@ class Crew:
 PERSON_RESULTS = {}
 
 
-def stance_xy(i, mid):
+def stance_xy(i, mid, y_max=Y_BODY_MAX):
     """Person i's body origin (station x, y) and lean for hands around `mid` (station): turned HD[i] in towards its
     end of the load, the hands 60 mm to its inner side and 380 mm ahead; never past Y_BODY_MAX (outside the machine),
     leaning to reach."""
@@ -393,8 +393,8 @@ def stance_xy(i, mid):
     right = np.array([math.cos(a), math.sin(a)])
     inner = right if i == 0 else -right
     b = np.asarray(mid, float)[:2] - 60.0 * inner - 380.0 * fwd
-    if b[1] > Y_BODY_MAX:
-        b = b - fwd * (b[1] - Y_BODY_MAX) / fwd[1]
+    if y_max is not None and b[1] > y_max:
+        b = b - fwd * (b[1] - y_max) / fwd[1]
     reach = float((np.asarray(mid, float)[:2] - b) @ fwd)
     # people.Person's arms are 520 mm shoulder to palm: probed, a lean of 40 deg reaches 600 mm ahead at 0.95-1.1 m,
     # 55 deg 760 mm (gaps under 15 mm); so the lean grows with the reach and with how low the hands are
@@ -427,13 +427,15 @@ def end_hands(m, P, side, fz=0.45, fy=(0.15, 0.42)):
 
 
 def team_lift(w, scn, crew, name, spec, P_from, P_to, kg, caption, sub, step, cam=None, hand_pts=None, lift_mm=70.0,
-              check_items=None, n_move=None, walk_from=None, hide_after=True):
+              check_items=None, n_move=None, walk_from=None, hide_after=True, M_st=None, y_max=Y_BODY_MAX):
     """Two people lift a load from P_from to P_to (station-frame poses of the load's own frame) together: they walk
     to their ends of it, put both hands on it, lift, carry it (walking forward, leaning to reach), set it down and let
     go. The load turns from P_from's to P_to's orientation during the carry (slerp). hand_pts: {person: (left hand,
     right hand)} in the load's frame (default: the end faces at P_from, see end_hands)."""
     from scipy.spatial.transform import Rotation, Slerp
-    M = Mst("vf4")
+    M = Mst("vf4") if M_st is None else M_st
+    yaw0 = math.degrees(math.atan2(M[1, 0], M[0, 0]))     # the frame's yaw: HD is relative to its +y
+    hds = [HD[0] + yaw0, HD[1] + yaw0]
     cam = cam or cam_at("vf4", *CAM_OUT)
     m, _ = scn.obj_mesh(spec)
     if hand_pts is None:
@@ -463,7 +465,7 @@ def team_lift(w, scn, crew, name, spec, P_from, P_to, kg, caption, sub, step, ca
         return [tuple(P[:3, :3] @ q + P[:3, 3] for q in hand_pts[i]) for i in range(2)]
 
     def stance(i, hw):
-        return stance_xy(i, (np.asarray(hw[0]) + np.asarray(hw[1])) / 2)
+        return stance_xy(i, (np.asarray(hw[0]) + np.asarray(hw[1])) / 2, y_max)
 
     def world(p):
         return (M @ np.r_[p, 1.0])[:3]
@@ -477,7 +479,7 @@ def team_lift(w, scn, crew, name, spec, P_from, P_to, kg, caption, sub, step, ca
             if not crew.st[i]["placed"]:
                 pw = world(np.array([walk_from[i][0], walk_from[i][1], 0.0]))
                 crew.place(i, pw[0], pw[1], 0.0)
-    crew.walk_to(w, [tuple(world(np.array([s_[0], s_[1], 0.0]))[:2]) for s_ in st0], cam, caption, sub, step)
+    crew.walk_to(w, [tuple(world(np.array([s_[0], s_[1], 0.0]))[:2]) for s_ in st0], cam, caption, sub, step, face=hds)
     poses = []
     n_reach, n_rel = 8, 8
     total = n_reach + n_move + n_rel
@@ -503,7 +505,7 @@ def team_lift(w, scn, crew, name, spec, P_from, P_to, kg, caption, sub, step, ca
                 qw = world(q)
                 rest = p.rest_hand(side)
                 tgt[side] = tuple(qw) if u >= 1.0 else tuple(rest + (qw - rest) * u)
-            crew.step(i, pw[0], pw[1], HD[i], hands=tgt, look=tuple(world((hw[i][0] + hw[i][1]) / 2)),
+            crew.step(i, pw[0], pw[1], hds[i], hands=tgt, look=tuple(world((hw[i][0] + hw[i][1]) / 2)),
                       lean=lean * (u if (k < n_reach or k >= n_reach + n_move) else 1.0))
             if u >= 1.0:
                 for side, q in zip(("l", "r"), hw[i]):
@@ -1185,7 +1187,52 @@ def chapter_32():
     return w.close()
 
 
-CHAPTERS = {"20": chapter_20, "30": chapter_30, "31": chapter_31, "32": chapter_32}
+def chapter_29():
+    """The stock (round 8, the lead's ask after Sterling's "Probably just a two person job for that part"): two people
+    lift the chamber frame's plate as delivered, 13 x 9.5 x 5.5 in. 6061-T651, from the receiving lift table onto a
+    narrow cart, which takes it to the waterjet for its core. Facing the table, they back away with it (a backwards
+    gait), the cart passing between them. One fixed camera."""
+    w = Writer("29-stock", "The stock: two people carry the 5.5 in. plate")
+    scn = Shop()
+    scn.add_person2()
+    context_vf4(scn)
+    crew = Crew(scn)
+    # the scene frame: the receiving lift table at its spot (station y 520), +y towards the table and the wall;
+    # the aisle (and the cart) at -y
+    M29 = Mst("receiving") @ E.T((0.0, 520.0, 0.0))
+    top = 900.0                                                      # the lift table raised to the cart's height
+    scn.add_parts("lift29", E.lift_table(top), M29)
+    cart_y = -1450.0
+    scn.add_parts("cart29", E.bench(CART["w"], CART["d"], CART["h"]), M29 @ E.T((0.0, cart_y - CART["d"] / 2, 0.0)))
+    L, W_, H = 13 * E.INCH, 9.5 * E.INCH, 5.5 * E.INCH
+    kg = L * W_ * H * 2.70e-6                                        # 6061: 2.70 g/cm3
+    kg15 = 15 * E.INCH * W_ * H * 2.70e-6
+    spec = dict(kind="box", b=(-L / 2, L / 2, -W_ / 2, W_ / 2, 0.0, H), color="#c9ced3")
+    P_from = E.T((0.0, -254.0 + W_ / 2 + 30.0, top))                 # on the table, 30 mm in from its near edge
+    P_to = E.T((0.0, cart_y, CART["h"]))
+    within = "within it, just" if kg <= TEAM_KG else "over it"
+    cap = f"Two people carry the frame's plate: {kg:.1f} kg"
+    sub = (f"13 x 9.5 x 5.5 in. 6061-T651 as delivered; 2/3 x (23 + 23) = {TEAM_KG:.1f} kg two-person guideline "
+           f"(NIOSH, HSE L23): {within} (a 15 in. plate, {kg15:.1f} kg, would be over)")
+    cam = [tuple((M29 @ np.r_[3900.0, -900.0, 3500.0, 1.0])[:3]), tuple((M29 @ np.r_[0.0, -700.0, 800.0, 1.0])[:3]),
+           (0, 0, 1)]                                            # from the side, high: the table, the carry, the cart
+    for i in range(2):
+        pw = (M29 @ np.r_[-1500.0 + 3000.0 * i, -2600.0, 0.0, 1.0])[:3]
+        crew.place(i, pw[0], pw[1], 0.0)
+    crew.show(1.0)
+    res = team_lift(w, scn, crew, "plate", spec, P_from, P_to, kg, cap, sub, "stock", cam=cam, M_st=M29, y_max=None,
+                    n_move=int(5.5 * FPS))
+    crew.step_back(w, cam, cap, "they step back", "stock")
+    cap2 = "Next: its core cut out by waterjet, off site"
+    sub2 = ("setup_plan.json F-S0: BYU's ME prototyping lab (the robot shop has no waterjet); the 274 x 184 mm core "
+            "out as one slug, then F-S1 on the VF-4")
+    for i in range(int(3.5 * FPS)):
+        w.frame(scn, cam, cap2, sub=sub2, who=["person"], step="stock", status="person")
+    del res
+    return w.close()
+
+
+CHAPTERS = {"20": chapter_20, "29": chapter_29, "30": chapter_30, "31": chapter_31, "32": chapter_32}
 
 
 def main(argv):
@@ -1208,16 +1255,22 @@ def main(argv):
     OUT.mkdir(parents=True, exist_ok=True)
     pj = OUT / "shop_person.json"
     if PERSON_RESULTS and EVERY == 1 and not STILL:     # round 8: the two-person lifts replace round 7's jib lifts
+        prev_l = {}
+        if pj.exists():
+            prev_ = json.loads(pj.read_text())
+            if "guideline" in prev_:                         # the round-8 file: keep the other chapters' lifts
+                prev_l = prev_.get("lifts", {})
+        prev_l.update(PERSON_RESULTS)
         pj.write_text(json.dumps(dict(
-            what="chapter 30's two-person lifts (shop_chapters.team_lift): the load's mass against a two-person "
-                 "guideline, the hands' largest gap to their grip points on the load (mm), and the load's path "
-                 "against the VF-4 (FCL; clear_mm, contact)",
+            what="chapters 29 and 30's two-person lifts (shop_chapters.team_lift): the load's mass against a two-person "
+                 "guideline, the hands' largest gap to their grip points on the load (mm), and, at the VF-4, the load's "
+                 "path against the machine (FCL; clear_mm, contact)",
             guideline=dict(single_person_kg=NIOSH_KG, team_factor=round(TEAM_FACTOR, 3), team_of_two_kg=round(TEAM_KG, 1),
                            sources=["NIOSH, Applications Manual for the Revised NIOSH Lifting Equation (DHHS (NIOSH) "
                                     "Publication No. 94-110, 1994): load constant 23 kg",
                                     "HSE L23, Manual Handling Operations Regulations 1992, guidance on team handling: "
                                     "a team of two can handle about two-thirds of the sum of their capabilities"]),
-            lifts=PERSON_RESULTS), indent=1, default=str))
+            lifts=prev_l), indent=1, default=str))
     if GFRAMES and EVERY == 1 and not STILL:   # every drawn cutter position: its program, line and time
         gj = LPBF / "analysis" / "out" / "videoqa" / "gcode_frames.json"
         gj.parent.mkdir(parents=True, exist_ok=True)

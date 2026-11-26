@@ -1,5 +1,5 @@
 {
- "what": "chapter 30's two-person lifts (shop_chapters.team_lift): the load's mass against a two-person guideline, the hands' largest gap to their grip points on the load (mm), and the load's path against the VF-4 (FCL; clear_mm, contact)",
+ "what": "chapters 29 and 30's two-person lifts (shop_chapters.team_lift): the load's mass against a two-person guideline, the hands' largest gap to their grip points on the load (mm), and, at the VF-4, the load's path against the machine (FCL; clear_mm, contact)",
  "guideline": {
   "single_person_kg": 23.0,
   "team_factor": 0.667,
@@ -201,6 +201,50 @@
    "samples": 33,
    "caption": "Two people set the frame and its plate on the 4th axis",
    "sub": "frame 5.3 kg + MIC-6 plate 4.8 kg, turned 90 deg onto the platter; 4 bolts through the opening (not shown); two-person guideline 2/3 x (23 + 23) = 30.7 kg (NIOSH load constant, HSE L23 team rule)"
+  },
+  "stock: Two people carry the frame's plate: 30.1 kg": {
+   "kg": 30.05,
+   "team_guideline_kg": 30.7,
+   "under_guideline": true,
+   "frames": 82,
+   "hand_gap_mm_max": 3.1,
+   "hand_gap_mm_p95": 2.4,
+   "worst": [
+    [
+     3.1,
+     44,
+     0.561,
+     1,
+     "r",
+     33.4
+    ],
+    [
+     3.1,
+     44,
+     0.561,
+     1,
+     "l",
+     33.4
+    ],
+    [
+     3.1,
+     44,
+     0.561,
+     0,
+     "r",
+     33.4
+    ],
+    [
+     3.1,
+     44,
+     0.561,
+     0,
+     "l",
+     33.4
+    ]
+   ],
+   "caption": "Two people carry the frame's plate: 30.1 kg",
+   "sub": "13 x 9.5 x 5.5 in. 6061-T651 as delivered; 2/3 x (23 + 23) = 30.7 kg two-person guideline (NIOSH, HSE L23): within it, just (a 15 in. plate, 34.7 kg, would be over)"
   }
  }
 }
