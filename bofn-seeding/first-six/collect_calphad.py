@@ -78,6 +78,13 @@ def main():
             if "scheil_T_at_fs" in r:
                 fh.write(json.dumps({"name": f"{t.get('id', r['name'])}|{t.get('base', '')}", "fs_grid": r["fs_grid"],
                                      "scheil_T_at_fs": r["scheil_T_at_fs"]}) + "\n")
+    # sanity flag: impurities from the 6063 base can only lower the end of freezing. A 6063-base path that ends
+    # more than 5 K above the pure-Al-base path of the same alloy most likely stopped early.
+    ends = {(d["id"], d["base"]): d["T_end_C"] for d in rows}
+    for d in rows:
+        d["flag"] = ""
+        if d["base"] == "6063" and (d["id"], "pureAl") in ends and d["T_end_C"] > ends[(d["id"], "pureAl")] + 5.0:
+            d["flag"] = "ends above the pure-Al-base path: probably stopped early; use the pure-Al-base indices"
     order = {"seed": 0, "extra": 1, "exploratory": 2, "relative": 3, "known-cracker": 4, "baseline": 5}
     rows.sort(key=lambda d: (order.get(d["group"], 9), d["id"], d["base"]))
     if rows:

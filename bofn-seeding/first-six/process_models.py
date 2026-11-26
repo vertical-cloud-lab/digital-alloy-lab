@@ -67,6 +67,46 @@ SEEDS = {
                ref=dict(P=170, v=1500, h=100, t=30, spot=40, plate=25, src="EOS M100, Mehta et al. 2022, 10.1016/j.jallcom.2022.165870")),
 }
 
+# What is published for each seed, and how it was read. YS / UTS in MPa, elongation in %.
+EVIDENCE = {
+    "D1": dict(role="benchmark", needs="on hand (4047, 6063, Mg)", hold_min=5,
+               as_built="233-270 / 461-466 / 6-10 (EOS datasheet, 30 um); 209 / 315 / 7.3 (Concept Laser M2, 10.1038/nature23894)",
+               aged="T6 250-260 / 310-320 / 11 (EOS datasheet)", read="vendor datasheet; Nature paper in full",
+               microstructure="columnar alpha-Al grains with sub-micron cells walled by eutectic Si; Mg in solution"),
+    "D2": dict(role="benchmark", needs="Sc on hand; Zr to buy (Al-10Zr)", hold_min=20,
+               as_built="275-295 / 350-355 / 22-23 (Colibrium M2 datasheet)",
+               aged="325 C / 4 h: 465-500 / 505-530 / 11.5-16 (Colibrium, 3D Systems, APWORKS datasheets)", read="vendor datasheets",
+               microstructure="bimodal: sub-micron equiaxed grains at melt-pool boundaries nucleated on primary Al3(Sc,Zr), fine columnar grains inside; coherent Al3(Sc,Zr) after ageing"),
+    "S1": dict(role="literature pick", needs="Mn, Cr, Mg on hand; Zr to buy (Al-10Zr)", hold_min=20,
+               as_built="390 / 450 / 17 (10.1016/j.matdes.2024.113160 and the Chalmers thesis)",
+               aged="375 C / 8 h: 500 / 560 / 5; hardness 132 -> 172 HV", read="papers and thesis in full (open copies)",
+               microstructure="grains refined to about 1 um by primary L1_2 Al3Zr (26 um without the extra Zr); Mn and Cr held in solid solution; Mn-rich particles at melt-pool boundaries; Al12Mn/Al6Mn and Al3Zr precipitates after ageing"),
+    "S2": dict(role="literature pick", needs="Mg on hand; Fe and Zr to buy", hold_min=20,
+               as_built="218 / 310 / 13.2 (10.1080/17452759.2025.2516663)", aged="400 C / 4 h: 376 / 406 / 11.1; 400 C / 100 h: 302 / 351 / 9.8",
+               read="paper in full, through the BYU tunnel",
+               microstructure="grains about 2 um; cellular (pool boundary) and lamellar (pool interior) alpha-Al / Al6Fe eutectic; Al13Fe4 plates and L1_2 Al3Zr after 400 C"),
+    "S3": dict(role="literature pick", needs="on hand (4047, 6063, Mg)", hold_min=5,
+               as_built="270 / 442 / 12.7 on a 50 C plate; 381 / 483 / 6.1 on a 100 C plate; 417 / 506 / 10.1 on a Concept Laser M2 (10.3390/met10040514)",
+               aged="170 C / 1 h: 348 / 484 / 10.5; 190 C / 30 min: 411 / 485 / 4.7", read="paper in full (open access)",
+               microstructure="grains about 6 um, columnar with equiaxed grains at the pool bottom; cells under 1 um with a Si-rich film; Mg2Si eutectic; Mg-Si clusters after a warm plate or 170 C"),
+    "X1": dict(role="exploratory", needs="on hand (4047, 6063, Mg, Ti powder)", hold_min=15,
+               as_built="UTS 447.8, elongation 9.1; yield not in the abstract (10.1080/17452759.2024.2378930)", aged="not reported in the abstract",
+               read="abstract only (publisher and repository copies were unreachable)",
+               microstructure="expected: equiaxed alpha-Al nucleated on Al3Ti, with Al / Mg2Si eutectic filling the last liquid"),
+    "O1": dict(role="optional", needs="Mg on hand; Zr to buy", hold_min=20,
+               as_built="220 / 290 / 29 (10.1016/j.actamat.2018.04.053); EOS Al5X1 datasheet 240-260 / 310 / 23",
+               aged="400 C / 8 h: 350 / 385 / 17-19; Al5X1 400 C / 6 h: 380 / 415 / 14.5", read="accepted manuscript in full; vendor datasheet",
+               microstructure="bimodal: 0.8 um equiaxed grains on cuboidal primary L1_2 Al3Zr at pool boundaries, 1 x 5-10 um columnar grains; L1_2 Al3Zr precipitates after 400 C"),
+    "O2": dict(role="optional", needs="Mg, Mn, Er on hand; Zr to buy", hold_min=20,
+               as_built="325 / 438 / 18 (10.1016/j.matdes.2022.111064)", aged="375 C / 10 h: 440 / 520 / 15.5",
+               read="abstract by us; full text by Edison (q4, q5)",
+               microstructure="bimodal grains on primary Al3Zr; core-shell Al3(Er,Zr) precipitates after ageing"),
+    "O3": dict(role="optional", needs="on hand (Mn, Cr)", hold_min=15,
+               as_built="99 HV, crack-free, no tensile data (10.1016/j.jallcom.2022.165870)", aged="over-ages after about 1 h at 405 C",
+               read="papers in full (open copies)",
+               microstructure="columnar grains tens of um wide (no refiner); Mn and Cr in solid solution; Mn-rich particles at melt-pool boundaries"),
+}
+
 BASE_6063 = dict(Mg=0.55, Si=0.40, Fe=0.20)   # typical 6063 bar (limits: Mg 0.45-0.9, Si 0.2-0.6, Fe <= 0.35)
 ROD_4047 = dict(Si=12.0, Fe=0.30)             # Al-12Si rod (Fe <= 0.8)
 MASTER = dict(Zr=0.10)                         # Zr as Al-10Zr; every other addition as the element
@@ -362,6 +402,10 @@ def load_calphad():
     return out
 
 
+def fmt(wt):
+    return "Al-" + "-".join(f"{v:g}{k}" for k, v in sorted(wt.items(), key=lambda kv: -kv[1]))
+
+
 OVERCHARGE = dict(Mg=0.05, Zn=0.15)      # relative extra to weigh in, until the first ICP result says otherwise
 
 
@@ -413,6 +457,26 @@ def main():
             if layer == 50.0:
                 for row in doe(melt, T_fcc, tr, plate_C=s["plate"]):
                     rows_d.append(dict(seed=sid, plate_C=s["plate"], **row))
+    seeds_rows = []
+    for sid, s in SEEDS.items():
+        ev = EVIDENCE[sid]
+        rec = next(r for r in rows_r if r["seed"] == sid and r["base"] == "6063")
+        at = next(r for r in rows_a if r["seed"] == sid)
+        lp = next(r for r in rows_l if r["seed"] == sid and r["layer_um"] == 50)
+        seeds_rows.append(dict(
+            id=sid, role=ev["role"], target_wt=fmt(s["wt"]), melt_wt_on_6063=rec["melt_wt"], feedstock=ev["needs"],
+            charge_250g=rec["weigh"], melt_setpoint_C=at["melt_setpoint_C"], highest_liquidus_C=at["highest_liquidus_C"],
+            first_solid=at["highest_liquidus_phase"], hold_min=ev["hold_min"], frequency_kHz=40, booster="1.5:1", plate="Mo",
+            amplitude_pct="90-100", pour_pressure_bar=0.19, expected_d50_um=at["lang_d50_um"], sieve_cut_um="20-63 (pass the 63 um sieve)",
+            expected_fraction_in_cut=at["frac_20_63"], layer_um=50, laser_W=lp["midi_P_W"], speed_mm_s=lp["midi_v_mm_s"],
+            hatch_um=lp["midi_hatch_um"], spot_um=80, build_plate_C=s["plate"], direct_age=s["age"],
+            published_as_built_YS_UTS_El=ev["as_built"], published_aged_YS_UTS_El=ev["aged"], how_read=ev["read"],
+            expected_microstructure=ev["microstructure"]))
+    with open(HERE / "seeds.csv", "w", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=list(seeds_rows[0]))
+        w.writeheader()
+        w.writerows(seeds_rows)
+    print("wrote seeds.csv", len(seeds_rows))
     for name, rows in (("recipes.csv", rows_r), ("atomization.csv", rows_a), ("lpbf_window.csv", rows_l), ("lpbf_doe.csv", rows_d)):
         with open(OUT / name, "w", newline="") as fh:
             w = csv.DictWriter(fh, fieldnames=list(rows[0]))
