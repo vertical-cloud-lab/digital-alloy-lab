@@ -74,6 +74,19 @@ def surface_style(shininess: float) -> dict:
     return dict(specular=0.30 * s * s, specular_power=12.0 + 68.0 * s)
 
 
+def _audit(scene):
+    """Round 8: with ROBOTBUILD_AUDIT set, record what this frame draws (audit_rec.py; scene_audit.py checks it)."""
+    import os
+    if os.environ.get("ROBOTBUILD_AUDIT", "") in ("", "0"):
+        return
+    try:
+        import audit_rec
+        import common
+    except ImportError:
+        return
+    audit_rec.record(scene, common.CURRENT)
+
+
 class PVScene:
     def __init__(self, pl: pv.Plotter | None = None, size=None):
         if pl is None:
@@ -191,5 +204,6 @@ class PVScene:
         self.apply()
         if cam is not None:
             self.camera(cam, view_angle)
+        _audit(self)
         self.pl.render()
         return np.asarray(self.pl.screenshot(return_img=True))[:, :, :3]

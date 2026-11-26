@@ -47,6 +47,7 @@ FRAMES = ROOT / "frames"
 TRAJ = ROOT / "traj"
 DATA = ROOT / "data"
 REPO = pathlib.Path(__file__).resolve().parents[3]
+CURRENT = None                       # the open Chapter (audit_rec.py numbers its records by its frame count)
 LPBF = REPO / "desktop-lpbf"
 
 # ------------------------------------------------------------------ the hall (cell2's frame)
@@ -103,6 +104,8 @@ class Chapter:
         self.meta = open(self.dir / "meta.jsonl", "w")
         self.n = 0
         self.title = title
+        global CURRENT
+        CURRENT = self
 
     def frame(self, img, caption, **meta):
         """img: an HxWx3 uint8 array (pyvista screenshot) or a PIL image."""
@@ -121,6 +124,14 @@ class Chapter:
     def close(self):
         self.meta.close()
         (self.dir / "done").write_text(str(self.n))
+        global CURRENT
+        try:
+            import audit_rec
+            audit_rec.close(self)
+        except ImportError:
+            pass
+        if CURRENT is self:
+            CURRENT = None
 
 
 def project(pl, pts):
