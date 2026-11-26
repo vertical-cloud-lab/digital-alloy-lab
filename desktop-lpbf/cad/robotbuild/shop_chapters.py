@@ -338,6 +338,18 @@ class Crew:
                 p.set(hands=fix)
         self.log.append((i, round(d, 2), round(dph, 4), amp))
 
+    def step_back(self, w, cam, caption, sub, step, dist=380.0, n=18):
+        """Both take a few steps back (a backwards gait: the phase runs back with the distance), arms down."""
+        st0 = [(s_["x"], s_["y"], s_["hd"]) for s_ in self.st]
+        for k in range(n):
+            u = ease((k + 1) / n)
+            for i, (x0, y0, hd) in enumerate(st0):
+                a = math.radians(hd)
+                self.step(i, x0 + math.sin(a) * dist * u, y0 - math.cos(a) * dist * u, hd)
+            w.frame(self.scn, cam, caption, sub=sub, who=["person"], step=step, status="person")
+        for i, (x0, y0, hd) in enumerate(st0):
+            self.step(i, self.st[i]["x"], self.st[i]["y"], hd)
+
     def walk_to(self, w, targets, cam, caption, sub, step, speed=900.0, face=HD):
         """Both turn towards their targets [(x, y)] (small steps), walk there (heading along the way), then turn on
         the spot to `face` (deg)."""
@@ -962,14 +974,13 @@ def chapter_30():
               f"shown); {rule}", "F-S2", cam=cam_wide, check_items=check, n_move=int(5.5 * FPS), hand_pts=hp_flip)
     scn.hide_obj("load")
     vf4.part("frame part", spec1, P2)
-    for i in range(int(2.0 * FPS)):
-        w.frame(scn, cam_wide, capF, sub="the people step clear", who=["person"], step="F-S2", status="person")
-    crew.show(0.0)
-    show_cart(0.0)
+    crew.step_back(w, cam_wide, capF, "they step back from the doors", "F-S2")
     for i in range(18):
         vf4.set(door=1.0 - ease((i + 1) / 18))
         w.frame(scn, cam_wide, "Doors shut; cycle start", sub="the auto door (option), ~1.5 s", who=["machine"],
                 step="F-S2", status="pass", proc_s=1.5 / 18)
+    crew.show(0.0)                                   # at the cut to the inside view
+    show_cart(0.0)
     vf4.set(front_alpha=0.0)
     capA = "F-S2: the top down, cut by frame_A.ngc as posted"
     m2 = cut_program(w, scn, vf4, fr, ["frame_A"], "frame part", lambda a: P2, cam_in, capA, [13.0], "F-S2")
@@ -1011,13 +1022,12 @@ def chapter_30():
     for n in vf4.sc.members("vf4/rotfix"):
         vf4.sc.alpha[n] = 1.0
     vf4.part("frame part", fr.spec(), P3, rot=True)
-    for i in range(int(1.5 * FPS)):
-        w.frame(scn, cam_out, capC, sub="the people step clear", who=["person"], step="F-S3", status="person")
-    crew.show(0.0)
+    crew.step_back(w, cam_out, capC, "they step back from the doors", "F-S3")
     for i in range(18):
         vf4.set(door=1.0 - ease((i + 1) / 18))
         w.frame(scn, cam_out, "Doors shut; cycle start", sub="the auto door (option), ~1.5 s", who=["machine"],
                 step="F-S3", status="pass", proc_s=1.5 / 18)
+    crew.show(0.0)                                   # at the cut to the inside view
     vf4.set(front_alpha=0.0)
     capR = "F-S3: the four walls on the HRT210, frame_C_haas.nc as posted"
     m3 = cut_program(w, scn, vf4, fr, ["frame_C0", "frame_C90", "frame_C180", "frame_C270"], "frame part", Q_at,
@@ -1057,15 +1067,20 @@ def chapter_31():
     scn.add_parts("lathe", E.st10(door=1.0, jaw_open=6.0)[0], Mst("lathe"))
     scn.drop_context("saw")
     scn.add_parts("saw", E.s20a(head=1.0)[0], Mst("saw"))
-    play(w, scn, "vf4_vise_part", cam_at("vf4", (-1300, -2300, 2200), (0, 450, 1050)))
+    cam_v = cam_at("vf4", (-1300, -2300, 2200), (0, 450, 1050))
+    play(w, scn, "vf4_vise_part", cam_v)
+    # the bracket cut in the vise: it has no posted program, so (round 8) no tool path is drawn: the doors shut and
+    # the machine clock runs through the vise class's ~20 min, seen from outside in the same camera
+    n_v = int(5 * FPS)
+    scn.show_arm("A", False)                     # at the cut: arm A has driven off (its arm was in the door's path)
+    cam_v2 = cam_at("vf4", *CAM_VF4_ARM)
+    for i in range(n_v):
+        vf4.set(door=1.0 - ease(min(1.0, (i + 1) / 18)))
+        w.frame(scn, cam_v2, "The bracket cut in the vise, doors shut",
+                sub="time-lapse of about 20 min (setup_plan.json's vise class); no program is posted for it, so no tool "
+                    "path is drawn", who=["machine"], step="vise class", status="pass",
+                proc_s=(1.5 / 18) if i < 18 else (20 * 60.0 - 1.5) / (n_v - 18))
     scn.show_arm("A", False)
-    # the bracket cut in the vise (time-lapse, the vise class's setup time from setup_plan: a representative part)
-    for i in range(int(6 * FPS)):
-        s = i / (6 * FPS)
-        vf4.set(door=max(0.0, 1.0 - 3 * s), z=300.0 + 40 * math.sin(12 * s), table_y=200.0 * min(1.0, 3 * s))
-        w.frame(scn, cam_at("vf4", (-520.0, 120.0, 1720.0), (60.0, 760.0, 1010.0)), "The bracket cut in the vise",
-                sub="time-lapse: a vise part's setup, about 20 min of cutting (setup_plan.json's class)", who=["machine"],
-                step="vise class", status="pass", proc_s=20 * 60.0 / (6 * FPS))
     vf4.set(door=1.0, z=0.0, table_y=0.0)
     play(w, scn, "saw_bar", cam_at("saw", (-2400, -2500, 2200), (-1300, 450, 900)))
     scn.show_arm("B", False)
