@@ -21,11 +21,13 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 OUT = HERE / "results"
-ALL = ("nofail", "drop", "abandon", "partial", "impute", "viab_x", "viab_x_partial", "viab_node")
+ALL = ("nofail", "drop", "abandon", "partial", "keep", "impute", "viab_x", "viab_x_partial", "viab_node", "viab_node_ec")
 
 
 def path_for(net, kappa, scenario, strategy, seed, out=OUT):
-    return Path(out) / f"{net}-k{kappa:g}" / scenario / f"{strategy}_s{seed}.json"
+    """`net` may carry "+full" for the full-pipeline policy (no lot reuse): results/<net>-k<kappa>-full/..."""
+    base, _, variant = net.partition("+")
+    return Path(out) / (f"{base}-k{kappa:g}" + (f"-{variant}" if variant else "")) / scenario / f"{strategy}_s{seed}.json"
 
 
 def one(job):
@@ -41,11 +43,14 @@ def one(job):
     from netload import load
     from policy import run
 
-    net = load(net_name)
+    base, _, variant = net_name.partition("+")
+    net = load(base)
     t0 = time.time()
     try:
         # the "nofail" reference keeps every result (any strategy gives the same run without failures)
-        res = run(net, "partial" if strategy == "nofail" else strategy, "nofail" if strategy == "nofail" else scenario, kappa, seed)
+        res = run(net, "partial" if strategy == "nofail" else strategy, "nofail" if strategy == "nofail" else scenario, kappa, seed,
+                  reuse=variant != "full")
+        res["variant"] = variant or "reuse"
         res["strategy"], res["scenario"] = strategy, scenario
     except Exception:
         return str(path), time.time() - t0, "ERROR " + traceback.format_exc()[-600:]
@@ -68,7 +73,7 @@ def jobs_from(net, kappa, scenario, strategies, seeds, out):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--net", choices=("al", "cu-toy", "cu-phys"))
+    ap.add_argument("--net", help="al, cu-toy or cu-phys; add +full for the full-pipeline policy")
     ap.add_argument("--kappa", type=float, default=1.0)
     ap.add_argument("--scenario", default="mixed")
     ap.add_argument("--strategies", nargs="+", default=["all"])

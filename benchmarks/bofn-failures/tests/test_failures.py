@@ -155,6 +155,7 @@ def test_strategy_rules():
     assert o["impute"]["blocked_obs_kept"] == o["impute"]["blocked_obs"] and o["impute"]["pending"] == 0
     assert o["impute"]["imputed"] == sum(o["impute"]["n_input_rows"].values())
     assert o["viab_x"]["blocked_obs_kept"] == 0 and o["viab_x"]["pending"] == ni and o["viab_x"]["vx_zeros"] == ni
+    assert o["viab_x_partial"]["blocked_obs_kept"] == o["viab_x_partial"]["blocked_obs"]
     assert o["viab_x_partial"]["pending"] == ni and o["viab_x_partial"]["vx_zeros"] == ni
     assert o["viab_node"]["blocked_obs_kept"] == o["viab_node"]["blocked_obs"] and o["viab_node"]["pending"] == 0
     assert o["viab_node"]["vnode_zeros"] == o["viab_node"]["n_input_rows"]

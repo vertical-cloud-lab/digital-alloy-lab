@@ -16,13 +16,24 @@ in what they do with a failed run, named for the Ax behaviour each mimics:
     viab_x          Ax >= 1.3 with AddExecutionViability: transient -> FAILED, input-caused ->
                     ABANDONED (not fit, pending), and a GP on 0/1 labels over the design x
                     constrains P(viable) >= 0.8 once 3 runs are abandoned.
-    viab_x_partial  as viab_x, plus fit_abandoned=True: an abandoned run's completed stages are fit
-                    (pending only for what it lacks). The best an Ax user can do today.
+    viab_x_partial  as viab_x, plus fit_abandoned=True, which makes Ax fit the completed stages of
+                    every run, FAILED and ABANDONED alike; an abandoned design stays pending for what
+                    it lacks, and a FAILED run with data counts as viable (Ax labels every
+                    non-ABANDONED training row 1). The best an Ax user can do today.
+    keep            the completed stages are fit and nothing is pending: what Ax >= 1.2.4 does in
+                    practice below 100 trials when a partly measured arm has any objective or
+                    constraint metric (X_pending is the intersection over those metrics).
     viab_node       node-level ledger (the note's proposal): every completed stage is fit, nothing is
                     pending, and each stage with input-labelled failures gets a GP on 0/1 labels over
                     that stage's own inputs (design variables and parent outputs). An MC sample of the
                     network counts as an improvement only if every blocking stage on its path is
                     viable (0.8 bound, 3-failure trigger, as in Ax).
+    viab_node_ec    viab_node, plus failures priced into the acquisition: EI times the chance of no
+                    transient fault (per-stage rates from the ledger, Beta(1, 9) prior), divided by
+                    the expected cost of a chain that stops at its first blocking failure.
+
+`run(..., reuse=False)` is the full-pipeline policy (the source `eifn`): every decision is a new
+design taken through every stage.
 
 A run is "blocked" when a failure stops it before the objective is measured; the copper small-DED
 step (Utah) is a side screen, so its failure doesn't block. CALPHAD is a simulation that never
@@ -45,7 +56,8 @@ from failmodel import Q_MIN, FailureModel
 
 torch.set_default_dtype(torch.double)
 
-STRATEGIES = ("drop", "abandon", "partial", "impute", "viab_x", "viab_x_partial", "viab_node")
+STRATEGIES = ("drop", "abandon", "partial", "keep", "impute", "viab_x", "viab_x_partial", "viab_node", "viab_node_ec")
+NODE_LEVEL = ("viab_node", "viab_node_ec")
 VIABLE_BOUND = 0.8  # AddExecutionViability's feasibility threshold
 MIN_ZEROS = 3  # its trigger: at least this many abandoned (input-labelled) runs
 ETA = 1e-3  # BoTorch's default temperature for the sigmoid on outcome constraints
@@ -368,11 +380,8 @@ class DataView:
             rows = [fl.rows[i] for i in t["rows"]]
             blk = t["blocked"]
             observed = {n for r in rows for n, _ in r["obs"]}
-            discard = blk is not None and (
-                strategy in ("drop", "abandon")
-                or (strategy == "viab_x")
-                or (strategy == "viab_x_partial" and blk["label"] == "transient")
-            )
+            # fit_abandoned=True makes Ax fit every status, FAILED included, so viab_x_partial keeps everything
+            discard = blk is not None and strategy in ("drop", "abandon", "viab_x")
             if not discard:
                 for r in rows:
                     for n, i in r["obs"]:
@@ -391,6 +400,11 @@ class DataView:
             if strategy in ("viab_x", "viab_x_partial") and blk["label"] == "input":
                 self.vx[0].append(t["x"])
                 self.vx[1].append(0.0)
+            elif strategy == "viab_x_partial" and observed - calphad_nodes:
+                # AddExecutionViability labels every non-ABANDONED row of the training data 1, and with
+                # fit_abandoned=True a FAILED run's completed stages are in the training data
+                self.vx[0].append(t["x"])
+                self.vx[1].append(1.0)
         if strategy == "impute":
             # every input-labelled failed stage (blocking or not): its output at its inputs = worst seen
             for r in fl.rows:
@@ -410,7 +424,7 @@ class DataView:
                 self.vx[1].append(1.0)
         # node-level viability: every completed attempt of a stage is a 1, every input-labelled failure a 0
         self.vnode = {}
-        if strategy == "viab_node":
+        if strategy in NODE_LEVEL:
             for st, n in stage_nodes.items():
                 Z = [d.obs[n][0][i] for i in range(len(d.obs[n][1]))]
                 y = [1.0] * len(Z)
@@ -445,7 +459,7 @@ class Model:
             self._condition_pending()
         self.vx = fit_viability(*self.view.vx) if strategy in ("viab_x", "viab_x_partial") else None
         self.vnode = {}
-        if strategy == "viab_node":
+        if strategy in NODE_LEVEL:
             for st, (Z, y) in self.view.vnode.items():
                 gp = fit_viability(Z, y)
                 if gp is not None:
@@ -495,10 +509,12 @@ def node_samples(fl: FailLab, network, x, eps):
     return vals, obj
 
 
-def gated_ei(fl: FailLab, model: Model, P, is_new, eps, best, it, chunk=8192):
-    """Network EI with the strategy's viability gates; is_new [m] marks new-design chains."""
+def gated_ei(fl: FailLab, model: Model, P, is_new, eps, best, it, chunk=8192, want_gates=False):
+    """Network EI with the strategy's viability gates; is_new [m] marks new-design chains.
+    With want_gates, also return each gated stage's mean gate per candidate (its P(viable))."""
     BA, net = fl.BA, fl.net
     out = []
+    gmean = {}
     for i0 in range(0, P.shape[0], chunk):
         x = P[i0 : i0 + chunk]
         nw = is_new[i0 : i0 + chunk]
@@ -524,12 +540,57 @@ def gated_ei(fl: FailLab, model: Model, P, is_new, eps, best, it, chunk=8192):
                     gate = torch.where(nw.unsqueeze(-1), gate, torch.ones_like(gate))
                 if st in GATED[net.family]["new"] or st in GATED[net.family]["reuse"]:
                     w = w * gate
+                    gmean.setdefault(st, []).append(gate.mean(-1))
         out.append(((obj - best).clamp_min(0) * w).mean(-1))
+    if want_gates:
+        return torch.cat(out), {st: torch.cat(v) for st, v in gmean.items()}
     return torch.cat(out)
 
 
+def transient_rates(fl: FailLab):
+    """Per-stage transient failure rate from the ledger: Beta(1, 9) prior (mean 0.1), labels as recorded."""
+    out = {}
+    for st in "AULMSTKI":
+        n = sum(1 for r in fl.rows if r["stage"] == st and not r["precondition"])
+        k = sum(1 for r in fl.rows if r["stage"] == st and r["status"] == "FAILED" and r["label"] == "transient")
+        out[st] = (k + 1.0) / (n + 10.0)
+    return out
+
+
+def expected_cost_and_success(fl: FailLab, is_new, gates, cost_new, cost_reuse_by_lot, lots):
+    """For viab_node_ec: E[cost] of each candidate's chain when it stops at the first blocking
+    failure, and its probability of finishing, from the transient rates and the viability gates."""
+    C = fl.net.COSTS
+    p = transient_rates(fl)
+    m = is_new.shape[0]
+    one = torch.ones(m)
+    vg = {st: gates.get(st, one) for st in ("A", "L", "M")}
+    if fl.cu:
+        tail_ok = (1 - p["T"]) * (1 - p["I"])
+        pm = (1 - p["M"]) * vg["M"]
+        # after Mines: microscopy (never fails), tensile, the screen (never fails), immersion
+        tail_cost = C["S"] + C["T"] + (1 - p["T"]) * (C["K"] + C["I"])
+        reuse_cost = torch.tensor([cost_reuse_by_lot.get(l, 0.0) for l in lots])  # Mines session (first or repeat)
+        pa = (1 - p["A"]) * vg["A"]
+        first_mines = cost_new - (C["C"] + C["A"] + C["U"] + C["S"] + C["T"] + C["K"] + C["I"])
+        e_new = C["C"] + C["A"] + pa * (C["U"] + first_mines + pm * tail_cost)
+        e_reuse = reuse_cost + pm * tail_cost
+        succ = torch.where(is_new, pa * pm * tail_ok, pm * tail_ok)
+    else:
+        pl = (1 - p["L"]) * vg["L"]
+        pa = (1 - p["A"]) * vg["A"]
+        e_new = C["C"] + C["A"] + pa * (C["L"] + pl * C["T"])
+        e_reuse = C["L"] + pl * C["T"]
+        succ = torch.where(is_new, pa * pl * (1 - p["T"]), pl * (1 - p["T"]))
+    ecost = torch.where(is_new, e_new * one, e_reuse * one)
+    # the transient part of success scales EI; the viability part is already inside the gated EI
+    tr_ok = torch.where(is_new, ((1 - p["A"]) * ((1 - p["M"]) * tail_ok if fl.cu else (1 - p["L"]) * (1 - p["T"]))) * one,
+                        (((1 - p["M"]) * tail_ok) if fl.cu else (1 - p["L"]) * (1 - p["T"])) * one)
+    return ecost, tr_ok, succ
+
+
 # --------------------------------------------------------------------------- the campaign
-def run(net, strategy: str, scenario: str, kappa: float, seed: int, budget: float = 100_000.0, eta: float = 1.0, verbose: bool = False):
+def run(net, strategy: str, scenario: str, kappa: float, seed: int, budget: float = 100_000.0, eta: float = 1.0, verbose: bool = False, reuse: bool = True):
     BA, POL = net.BA, net.POL
     truth = net.truth(kappa, eta)
     torch.manual_seed(seed)
@@ -546,6 +607,8 @@ def run(net, strategy: str, scenario: str, kappa: float, seed: int, budget: floa
     else:
         full_cost = COSTS["C"] + COSTS["A"] + COSTS["L"] + COSTS["T"]
         cheapest = COSTS["L"] + COSTS["T"]
+    if not reuse:  # full-pipeline BOFN (the source `eifn`): every decision is a new design through every stage
+        cheapest = full_cost
     curve = [dict(spent=0.0, best=max(v for _, v in d.full), action="init")]
     it = 0
     t0 = time.time()
@@ -563,7 +626,7 @@ def run(net, strategy: str, scenario: str, kappa: float, seed: int, budget: floa
         Pn = net.feasible(torch.cat([BA.sobol(1024, D, seed=it + 50 * seed), BA.local_perturb(X, 16, 0.05, g)]))
         pools, lots = [Pn], [-1] * Pn.shape[0]
         costs = [torch.full((Pn.shape[0],), full_cost)]
-        for i, L in enumerate(d.lots):
+        for i, L in enumerate(d.lots if reuse else []):
             pv = BA.sobol(64, 2, seed=it + 50 * seed + i)  # drawn for every lot, as in the source, so pools stay aligned
             if i in fl.unprintable:
                 continue
@@ -577,8 +640,14 @@ def run(net, strategy: str, scenario: str, kappa: float, seed: int, budget: floa
         eps["_vx"] = torch.randn(P.shape[0], S_MC, generator=gv)
         for st in ("A", "L", "U", "M"):
             eps["_v" + st] = torch.randn(P.shape[0], S_MC, generator=gv)
-        ei = gated_ei(fl, model, P, is_new, eps, best, it)
-        score = ei / cost
+        if strategy == "viab_node_ec":
+            ei, gates = gated_ei(fl, model, P, is_new, eps, best, it, want_gates=True)
+            reuse_cost = {i: lab.mines_cost(i) for i in range(len(d.lots))} if fl.cu else {}
+            ecost, tr_ok, _ = expected_cost_and_success(fl, is_new, gates, full_cost, reuse_cost, lots)
+            score = ei * tr_ok / ecost
+        else:
+            ei = gated_ei(fl, model, P, is_new, eps, best, it)
+            score = ei / cost
         score[cost > left] = -1.0
         j = int(score.argmax())
         if float(score[j]) < 0:
