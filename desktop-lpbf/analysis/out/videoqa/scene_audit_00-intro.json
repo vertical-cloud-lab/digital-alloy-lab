@@ -1,0 +1,213 @@
+{
+ "chapter": "00-intro",
+ "threshold_mm": 1.5,
+ "opaque_min": 0.3,
+ "recordings": [
+  "/tmp/robotbuild/frames/00-intro/audit"
+ ],
+ "frames_recorded": 669,
+ "frames_checked": 669,
+ "subsample": "every recorded frame",
+ "recorded_every": 1,
+ "actors": 481,
+ "movers": 51,
+ "mover_names": [
+  "A/base/0",
+  "A/base/1",
+  "A/changer",
+  "A/forearm/0",
+  "A/forearm/1",
+  "A/forearm/2",
+  "A/forearm/3",
+  "A/gr/adapter/0",
+  "A/gr/adapter/1",
+  "A/gr/base/0",
+  "A/gr/base/1",
+  "A/gr/camera/0",
+  "A/gr/camera/1",
+  "A/gr/camera/2",
+  "A/gr/camera/3",
+  "A/gr/camera/4",
+  "A/gr/left_finger/0",
+  "A/gr/left_finger/1",
+  "A/gr/left_finger_tip/0",
+  "A/gr/left_finger_tip/1",
+  "A/gr/left_inner_knuckle/0",
+  "A/gr/left_inner_knuckle/1",
+  "A/gr/left_knuckle/0",
+  "A/gr/right_finger/0",
+  "A/gr/right_finger/1",
+  "A/gr/right_finger_tip/0",
+  "A/gr/right_finger_tip/1",
+  "A/gr/right_inner_knuckle/0",
+  "A/gr/right_inner_knuckle/1",
+  "A/gr/right_knuckle/0",
+  "A/shoulder/0",
+  "A/shoulder/1",
+  "A/shoulder/2",
+  "A/upper_arm/0",
+  "A/upper_arm/1",
+  "A/upper_arm/2",
+  "A/upper_arm/3",
+  "A/wrist1/0",
+  "A/wrist1/1",
+  "A/wrist1/2",
+  "A/wrist2/0",
+  "A/wrist2/1",
+  "A/wrist2/2",
+  "A/wrist3/0",
+  "mirA/A MiR250",
+  "mirA/A cabinet",
+  "mirA/A mounting plate",
+  "mirA/A screw presenter",
+  "mirA/A tool stand",
+  "mirA/light strip",
+  "mirA/top"
+ ],
+ "method": "translational penetration depth (26 directions, ladder 1.5-100 mm, bisection-refined), python-fcl BVH meshes of the recorded triangles, containment by winding numbers; a pair is re-checked when a mesh or the relative pose changes; a pair deeper than its limit is re-checked every frame at the limit, its depth re-measured at most every 6 frames",
+ "narrow_checks": 255,
+ "pairs_tested": 255,
+ "violations": 0,
+ "worst_mm": 0.0,
+ "worst": null,
+ "pairs": [],
+ "rigid_pairs": [
+  {
+   "a": "mirA/A MiR250",
+   "b": "mirA/light strip",
+   "worst_mm": ">100",
+   "frames": 669
+  },
+  {
+   "a": "mirA/A MiR250",
+   "b": "mirA/top",
+   "worst_mm": 4.1,
+   "frames": 669
+  },
+  {
+   "a": "mirA/A cabinet",
+   "b": "mirA/top",
+   "worst_mm": 2.1,
+   "frames": 669
+  }
+ ],
+ "allowed": [
+  {
+   "rule": "adjacent UR links",
+   "depth_allowed_mm": null,
+   "reason": "neighbouring UR12e links meet at their joint (the pieces of one link, and the planner's ADJACENT pairs in cell.py)",
+   "pairs_in_contact": 30,
+   "pair_frames": 2370,
+   "examples": [
+    [
+     "A/base/0",
+     "A/base/1"
+    ],
+    [
+     "A/base/0",
+     "A/shoulder/1"
+    ],
+    [
+     "A/forearm/0",
+     "A/forearm/1"
+    ],
+    [
+     "A/forearm/0",
+     "A/forearm/2"
+    ],
+    [
+     "A/forearm/0",
+     "A/forearm/3"
+    ],
+    [
+     "A/forearm/0",
+     "A/upper_arm/0"
+    ],
+    [
+     "A/forearm/0",
+     "A/upper_arm/1"
+    ],
+    [
+     "A/forearm/0",
+     "A/upper_arm/3"
+    ],
+    [
+     "A/forearm/0",
+     "A/wrist1/1"
+    ],
+    [
+     "A/forearm/1",
+     "A/forearm/2"
+    ],
+    [
+     "A/forearm/1",
+     "A/forearm/3"
+    ],
+    [
+     "A/forearm/1",
+     "A/upper_arm/0"
+    ]
+   ],
+   "worst_mm": null
+  },
+  {
+   "rule": "flange stack",
+   "depth_allowed_mm": null,
+   "reason": "the tool changer, the 2F-85 and its fingers, caps and the wrist camera are bolted to the flange and to each other",
+   "pairs_in_contact": 56,
+   "pair_frames": 4424,
+   "examples": [
+    [
+     "A/changer",
+     "A/gr/adapter/0"
+    ],
+    [
+     "A/changer",
+     "A/gr/camera/0"
+    ],
+    [
+     "A/gr/adapter/0",
+     "A/gr/adapter/1"
+    ],
+    [
+     "A/gr/adapter/0",
+     "A/gr/base/0"
+    ],
+    [
+     "A/gr/adapter/1",
+     "A/gr/base/0"
+    ],
+    [
+     "A/gr/base/0",
+     "A/gr/left_inner_knuckle/0"
+    ],
+    [
+     "A/gr/base/0",
+     "A/gr/left_inner_knuckle/1"
+    ],
+    [
+     "A/gr/base/0",
+     "A/gr/left_knuckle/0"
+    ],
+    [
+     "A/gr/base/0",
+     "A/gr/right_inner_knuckle/0"
+    ],
+    [
+     "A/gr/base/0",
+     "A/gr/right_inner_knuckle/1"
+    ],
+    [
+     "A/gr/base/0",
+     "A/gr/right_knuckle/0"
+    ],
+    [
+     "A/gr/base/1",
+     "A/gr/left_inner_knuckle/0"
+    ]
+   ],
+   "worst_mm": null
+  }
+ ],
+ "seconds": 2.5
+}

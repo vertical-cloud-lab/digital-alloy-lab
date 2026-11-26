@@ -1,5 +1,5 @@
 """Chapter 50-integration of the robot-built desktop LPBF video: the finished modules onto the VLM tray, the hoses and the
-dock, and the leak check (about 75 s).
+dock, and the leak check (about 85 s).
 
     xvfb-run -a -s "-screen 0 1920x1080x24" /tmp/capmem 3G /tmp/venv/bin/python desktop-lpbf/cad/robotbuild/ch_integration.py
 
@@ -19,6 +19,18 @@ The two arms stay parked at the VLM's face beside the opening (240 mm in front o
 T01-T06 is planned for them, so no arm moves here. Times (proc_s) are estimates for a person with the lift and are shown time-lapsed; the
 leak check's curve is the expected one (seals.md: pump-down to 1 mbar in about a minute, rise about 8e-4 mbar/min), not
 a measurement.
+
+Round 8 (Sterling, 2026-11-26: "moonwalk, motion sickness, collisions and interference"): fixed cameras or slow drifts,
+cuts between them, every shot at least 4 s. The person is posed by Mover: when they walk, the gait phase follows the
+distance (2 pi per people.Person.STRIDE), amp > 0 only while stepping, turns are small steps, and they never move on still
+legs. But walk.py's scan of people.py's gait (phase from distance) found the planted foot sliding 0.34-1.0 m for every metre
+walked, whatever the amp, because people.py doesn't lock the stance foot; so here the person changes place only across a
+cut (the time-lapse), and on screen stands, leans, reaches and pushes. Loads slide 26 mm over the tray floor (its rim is
+20 mm high) and settle; the lift table stands in front of the VLM's access table (its platform can't pass over it); the
+person stands 850 mm in front of the tray's edge at the access table, or behind the lift table, and pushes on the guard
+frame's posts, the rack's posts, the units' front panels and the base plates' edges with the fingertips (people.py's wrists
+don't bend, so the palm stays 135 mm off what it pushes, the fingers flat). The frames are recorded with ROBOTBUILD_AUDIT=1 and checked by
+scene_audit.py (collisions over 1.5 mm) and walk.py (foot slip, gliding).
 """
 from __future__ import annotations
 
@@ -39,6 +51,7 @@ for p in (HERE, CAD):
         sys.path.insert(0, str(p))
 import common  # noqa: E402
 import hall as HL  # noqa: E402
+import people  # noqa: E402
 
 FPS = common.FPS
 NAME, TITLE = "50-integration", "Onto the VLM tray: rack, gas module, hoses, leak check"
@@ -113,6 +126,10 @@ def group_of(name, step):
     for key, g in UNITS:
         if key in name:
             return g
+    if name.startswith("E-stop") and "gas module" in name:      # on the O2 box's front: it comes with the O2 box
+        return "gas:Trace O2 analyzer + dew-point transmitter"
+    if name.startswith("E-stop") and "guard" in name:           # on the process module's guard
+        return "proc"
     if "Rack side panels" in name or name.startswith(RACK_FRONT):
         return "rackrest"
     if step in (3, 4, 5, 6, 7, 8, 9, 12):
@@ -168,9 +185,115 @@ def lift_meshes(h):
     return base.triangulate().merge(top.triangulate()), arms[0].merge(arms[1:])
 
 
+def lift_handle():
+    """The lift table's push handle on its -x end (on the base, so it doesn't rise): two uprights and a bar at 990 mm."""
+    L, Wd = LIFT["L"], LIFT["W"]
+    x = -L / 2 - 60.0
+    parts = []
+    for y in (-Wd / 2 + 40.0, Wd / 2 - 40.0):
+        parts.append(pv.Cylinder(center=(x, y, 525.0), direction=(0, 0, 1), radius=14.0, height=930.0, resolution=16))
+        parts.append(pv.Cylinder(center=(x + 30.0, y, 80.0), direction=(1, 0, 0), radius=14.0, height=60.0, resolution=16))
+    parts.append(pv.Cylinder(center=(x, 0.0, 990.0), direction=(0, 1, 0), radius=14.0, height=Wd - 80.0 + 28.0,
+                             resolution=16))
+    m = parts[0].triangulate()
+    return m.merge([q.triangulate() for q in parts[1:]])
+
+
+# ------------------------------------------------------------------------------------------------ the person
+def wrap(a):
+    return (a + 180.0) % 360.0 - 180.0
+
+
+class Mover:
+    """Moves people.Person the way walk.py checks it (round 8; Sterling, 2026-11-26: "moonwalk"): the gait phase follows
+    the distance walked (2 pi per people.Person.STRIDE), amp > 0 only while stepping, a turn is small steps on the spot
+    (the phase follows the feet's arc), and the body never moves while the legs stand still. Every method is a generator
+    that poses the person and yields once per frame."""
+
+    AMP = 0.6            # people.py's gait slides its planted foot least at amp 0.6 with the phase from distance (walk.py
+                         # scan, 2026-11-26: about 0.34 m of slip per metre walked, against 0.65 m at amp 1.0)
+    V = 55.0             # mm a frame (0.66 m/s): a careful walk in a machine bay (people.py's gait slides less per
+                         # metre the faster it walks: walk.py scan, 0.58 m a metre at 40 mm a frame, 0.34 at 100)
+    TURN_R = 160.0       # mm: the feet's arc when turning on the spot
+    TURN_STEP = 5.0      # deg a frame
+
+    def __init__(self, op, x, y, hd):
+        self.op, self.x, self.y, self.hd, self.ph = op, float(x), float(y), float(hd), 0.0
+        self.arm = dict(hands={"l": None, "r": None}, lean=0.0, look=None, grip={"l": 0.3, "r": 0.3},
+                        palm={"l": None, "r": None})
+
+    def place(self, x, y, hd):
+        """Across a cut only (the time-lapse moves the person between shots)."""
+        self.x, self.y, self.hd = float(x), float(y), float(hd)
+        self.pose()
+
+    def pose(self, amp=0.0, **kw):
+        for k, v in kw.items():
+            if k in ("hands", "grip", "palm"):
+                self.arm[k] = dict(self.arm[k], **v)
+            else:
+                self.arm[k] = v
+        self.op.set(x=self.x, y=self.y, hd=self.hd, amp=amp, phase=self.ph, **self.arm)
+
+    def turn_to(self, hd1, **kw):
+        d = wrap(hd1 - self.hd)
+        n = int(math.ceil(abs(d) / self.TURN_STEP))
+        for k in range(n):
+            self.hd += d / n
+            self.ph += math.radians(abs(d) / n) * self.TURN_R * 2 * math.pi / people.Person.STRIDE
+            self.pose(amp=0.35 * min(1.0, (k + 1) / 3.0, (n - k) / 3.0), **kw)
+            yield
+        self.pose(**kw)
+
+    def walk_to(self, x1, y1, hd_end=None, v=None, face=None, **kw):
+        """Turn to the leg's direction (or keep `face`, a heading for a few side or back steps), walk it, turn to hd_end."""
+        v = v or self.V
+        dx, dy = x1 - self.x, y1 - self.y
+        L = math.hypot(dx, dy)
+        if L > 1.0:
+            head = math.degrees(math.atan2(-dx, dy)) if face is None else face
+            if abs(wrap(head - self.hd)) > 4.0:
+                yield from self.turn_to(head, **kw)
+            n = max(6, int(math.ceil(L / v)) + 4)
+            w = np.array([min(1.0, (k + 1) / 4.0, (n - k) / 4.0) for k in range(n)])
+            ds = w / w.sum() * L
+            s = 0.0
+            for k in range(n):
+                s += ds[k]
+                self.x += dx / L * ds[k]
+                self.y += dy / L * ds[k]
+                self.ph += 2 * math.pi * ds[k] / people.Person.STRIDE
+                self.pose(amp=self.AMP * min(1.0, 0.25 + s / 150.0, 0.15 + (L - s) / 150.0), **kw)
+                yield
+        if hd_end is not None and abs(wrap(hd_end - self.hd)) > 1.0:
+            yield from self.turn_to(hd_end, **kw)
+        self.pose(**kw)
+
+    def stand(self, n, **kw):
+        for _ in range(n):
+            self.pose(**kw)
+            yield
+
+
+def nearest(sc, group, p):
+    """The point of a group's drawn meshes (world) nearest p: where a hand goes, so it rests on something drawn."""
+    best, bd = None, 1e18
+    M = sc.world(group)
+    p = np.asarray(p, float)
+    for nm in sc.members(group):
+        P = np.asarray(sc.actors[nm].GetMapper().GetInput().GetPoints().GetData())
+        if not len(P):
+            continue
+        W = P @ M[:3, :3].T + M[:3, 3]
+        i = int(np.argmin(np.sum((W - p) ** 2, axis=1)))
+        d = float(np.sum((W[i] - p) ** 2))
+        if d < bd:
+            best, bd = W[i], d
+    return tuple(best) if best is not None else tuple(p)
+
+
 # ------------------------------------------------------------------------------------------------ the chapter
 def main():
-    import people
     t0 = time.time()
     pl = HL.pvscene.plotter()
     sc = HL.pvscene.PVScene(pl)
@@ -178,39 +301,37 @@ def main():
     for k, (nm, m, col) in enumerate(vlm_meshes()):
         sc.add(f"{nm}/{k}", m, col, specular=0.15, ambient=0.45 if col == "#e3e6ea" else 0.22)
     Z0 = TRAY_FLOOR - (-212.0)                           # machine z -> bay z (lpbf_low.Z_TRAY = -212)
-    groups = {}
-    ex = {}
-    zmin = {}
+    groups, bounds = {}, {}
     for k, (name, step, col, op, xpl, mesh) in enumerate(machine_meshes()):
         g = group_of(name, step)
         groups.setdefault(g, []).append(name)
-        ex.setdefault(g, xpl)
         m = mesh.translate((0.0, 0.0, Z0), inplace=False)
-        zmin[g] = min(zmin.get(g, 1e9), float(m.bounds[4]))
-        sc.add(f"m/{k}", m, col, group=g, opacity=op, specular=0.3)
+        b = np.array(m.bounds)
+        bounds[g] = b if g not in bounds else np.r_[np.minimum(bounds[g][::2], b[::2]),
+                                                     np.maximum(bounds[g][1::2], b[1::2])][[0, 3, 1, 4, 2, 5]]
+        sc.add(f"m/{k} {name.split(' (')[0].replace('/', '-')[:48]}", m, col, group=g, opacity=op, specular=0.3)
     print(f"machine: {sum(len(v) for v in groups.values())} parts in {len(groups)} moves, {time.time() - t0:.0f} s",
           flush=True)
     gas_groups = sorted(g for g in groups if g.startswith("gas:"))
 
-    def show(g, on):
+    def show(g, a):
         for n in sc.members(g):
-            sc.alpha[n] = 1.0 if on else 0.0
+            sc.alpha[n] = float(a)
     for g in groups:
         if g != "tray":
-            show(g, False)
-    # the lift table
-    lt_h = [LIFT["lo"]]
-    body, arms = lift_meshes(LIFT["lo"])
-    sc.add("lift/body", body, "#2f6db5", group="lift", specular=0.3)
-    sc.add("lift/arms", arms, "#5f6870", group="lift", specular=0.3)
+            show(g, 0.0)
+    lt_h = [None]
 
-    def lift_at(x, y, h):
-        if abs(h - lt_h[0]) > 0.5:
+    def lift_at(x, y, h, shown=True):
+        if lt_h[0] is None or abs(h - lt_h[0]) > 0.5:
             b, a = lift_meshes(h)
             sc.add("lift/body", b, "#2f6db5", group="lift", specular=0.3)
             sc.add("lift/arms", a, "#5f6870", group="lift", specular=0.3)
+            sc.add("lift/handle", lift_handle(), "#3d4247", group="lift", specular=0.3)
             lt_h[0] = h
         sc.gmat["lift"] = T((x, y, 0.0))
+        for nm in ("lift/body", "lift/arms", "lift/handle"):
+            sc.alpha[nm] = 1.0 if shown else 0.0
     # the robots, parked at the VLM face (PR 318: arm base 240 mm in front of it)
     import cell2 as K
     for tag, x in (("A", -2550.0), ("B", 2550.0)):
@@ -218,7 +339,7 @@ def main():
         arm.move_base(x)
         arm.q = arm.park_q()
         arm.place()
-        av = HL.ArmVis(sc, arm, "r" + tag)
+        HL.ArmVis(sc, arm, "r" + tag)
         mv = HL.MirVis(sc, "r" + tag, "front")
         mv.at(x)
         shift = (FACE_Y - 240.0) - (-K.ARM_Y)           # cell2's front lane (arm at y = -640) to 240 mm off the face
@@ -228,7 +349,6 @@ def main():
                 sc.parent[g] = "shift" + tag
     op = people.Person(sc, "op", gloves=True)
     ch = common.Chapter(NAME, TITLE)
-    clock = dict(t=0.0)
 
     def frame(cam, caption, sub, who, step, status="person", proc_s=0.0, add=None, labels=(), chart=None, va=30.0):
         img = sc.render(cam, va)
@@ -247,171 +367,375 @@ def main():
     def cam_at(f, d, az, el):
         return [HL.orbit(f, d, az, el), f, (0.0, 0.0, 1.0)]
 
-    # 1. the empty tray at the face of the VLM; the process module waits on the lift table
-    ym_final = -25.0                                     # the process module's base-plate centre on the tray (y)
-    xm = -55.0
-    ly = -432.0 - LIFT["W"] / 2 - 10.0                   # lift table centre: its far edge 10 mm short of the tray's
-    feet0 = LIFT["lo"]                                   # module feet on the platform at its transport height
-    sc.gmat["proc"] = T((0.0, ly - ym_final, feet0 - TRAY_FLOOR))
-    show("proc", True)
-    lift_at(xm, ly, LIFT["lo"])
-    py = ly - LIFT["W"] / 2 - 380.0
-    op.set(x=xm + 520.0, y=py + 120.0, hd=-15.0, amp=0.0, hands={"l": None, "r": None}, look=(xm, ly, 1100.0))
-    F1 = (0.0, -300.0, 1000.0)
-    c1 = cam_at(F1, 5600.0, -32.0, 20.0)
-    c2 = cam_at(F1, 5000.0, -22.0, 18.0)
-    n = 5 * FPS
-    for i in range(n):
-        u = ease(i / (n - 1))
-        frame([lerp(c1[0], c2[0], u), lerp(c1[1], c2[1], u), (0, 0, 1)],
-              "T01: the 84 kg process module to the VLM tray: a person and a lift table",
-              "84 kg is 3.4 times two UR12e payloads. Kardex tray 2450 x 864 mm, floor 857 mm up; both arms parked "
-              "beside the opening (sequence.py: T01-T05 are person steps)",
-              ["person"], "T01", proc_s=0.0, labels=[("VLM tray, 857 mm", (900.0, -300.0, TRAY_FLOOR)),
-                                                                   ("lift table", (xm + 300.0, ly - 200.0, LIFT["lo"]))])
-    # 2. up to the tray's height, then pushed onto it
-    n = 4 * FPS
-    for i in range(n):
-        u = ease(i / (n - 1))
-        h = LIFT["lo"] + (TRAY_FLOOR + 3.0 - LIFT["lo"]) * u
-        lift_at(xm, ly, h)
-        sc.gmat["proc"] = T((0.0, ly - ym_final, h - TRAY_FLOOR))
-        op.set(hands={"r": (xm + 330.0, py + 380.0, 1050.0), "l": None}, look=(xm, ly, h + 200.0))
-        frame(c2, "T01: the lift table raises the module to the tray's floor (857 mm)",
-              "The shop's scissor table (Vestil SCTAB-1000-2040-AC, 20 x 40 in, 1,000 lb; robot-shop-equipment.csv), "
-              "turned so the 730 mm base sits along its 40 in. side", ["person"], "T01",
-              proc_s=180.0 / n, add=dict(person_h=180.0 / n / 3600.0))
-    # walk behind it and push it in
-    n = 2 * FPS
-    p0 = (xm + 520.0, py + 120.0)
-    p1 = (xm, py - 60.0)
-    for i in range(n):
-        u = ease(i / (n - 1))
-        x, y = lerp(p0, p1, u)
-        op.set(x=x, y=y, hd=-15.0 * (1 - u), amp=0.8 * math.sin(math.pi * u), phase=2 * math.pi * 900.0 * u / people.Person.STRIDE,
-               hands={"l": None, "r": None}, look=(xm, ly + 300.0, 1000.0))
-        frame(c2, "T01: the person pushes the module off the lift table onto the tray",
-              "It slides on its four levelling mounts (McMaster 5537T983); the mounts are threaded down on the tray",
-              ["person"], "T01", proc_s=60.0 / n, add=dict(person_h=60.0 / n / 3600.0))
-    d_push = ym_final - ly
-    n = 5 * FPS
-    back = -265.0 - (-25.0)                              # base plate's back edge from its centre (y)
-    c3 = cam_at((0.0, -200.0, 1000.0), 4300.0, -50.0, 16.0)
-    for i in range(n):
-        u = ease(i / (n - 1))
-        yc = ly + d_push * u
-        sc.gmat["proc"] = T((0.0, yc - ym_final, 3.0 * (1 - u)))
-        edge = yc + back
-        stand = min(edge - 520.0, ly - LIFT["W"] / 2 - 70.0)  # behind the lift table, reaching over it at the end
-        op.set(x=xm, y=stand, hd=0.0, amp=0.5 if edge - 520.0 < stand + 1.0 else 0.0,
-               phase=2 * math.pi * (900.0 + min(d_push * u, 380.0)) / people.Person.STRIDE,
-               lean=18.0 + 14.0 * max(0.0, u - 0.5) * 2, hands={"l": (xm - 220.0, edge - 12.0, 925.0), "r": (xm + 220.0, edge - 12.0, 925.0)},
-               look=(xm, edge + 300.0, 950.0))
-        frame([lerp(c2[0], c3[0], u), lerp(c2[1], c3[1], u), (0, 0, 1)],
-              "T01: the process module on the VLM tray",
-              f"Pushed {d_push:.0f} mm in on its mounts; then levelled (sequence.py T01: person + hoist or lift table)",
-              ["person"], "T01", proc_s=600.0 / n, add=dict(person_h=600.0 / n / 3600.0))
-    # 3. the rack and its units, with the lift table
-    op.set(amp=0.0, lean=0.0, hands={"l": None, "r": None})
-    xr = (-990.0 - 430.0) / 2
-    c4 = cam_at((-700.0, -250.0, 1150.0), 3500.0, -38.0, 14.0)
-    lift_at(xr, ly, TRAY_FLOOR + 3.0)
-    show("rack", True)
-    n = 3 * FPS
-    for i in range(n):
-        u = ease(i / (n - 1))
-        sc.gmat["rack"] = T((0.0, (ly - 0.0) * (1 - u), 3.0 * (1 - u)))
-        op.set(x=xr + 80.0, y=ly - LIFT["W"] / 2 - 420.0 + 300.0 * u, hd=0.0, amp=0.5 * math.sin(math.pi * u),
-               phase=2 * math.pi * 300.0 * u / people.Person.STRIDE, lean=12.0 * u,
-               hands={"l": (xr - 150.0, -300.0 + (ly) * (1 - u) - 15.0, 1250.0),
-                      "r": (xr + 150.0, -300.0 + (ly) * (1 - u) - 15.0, 1250.0)} if u > 0.2 else {"l": None, "r": None},
-               look=(xr, -100.0, 1200.0))
-        frame([lerp(c3[0], c4[0], u), lerp(c3[1], c4[1], u), (0, 0, 1)],
-              "T02: the 12U rack (22 kg) onto the tray's left end, from the lift table",
-              "19 in. 4-post rack, 560 mm tall: the UPS, laser, PC and DIN drawer go in it next",
-              ["person"], "T02", proc_s=600.0 / n, add=dict(person_h=600.0 / n / 3600.0))
+    def shot(cam0, cam1, gen, n_min, caption, sub, step, secs, labels=(), who=("person",), status="person"):
+        """Render a frame per yield of `gen` (and at least n_min frames, the person as last posed): the camera drifts from
+        cam0 to cam1 over the first n_min frames, then holds (a fixed shot when they are the same). `secs` of person time
+        are spread over n_min frames (rescale_meta() then makes each step's total hud.json's)."""
+        gen = iter(gen) if gen is not None else iter(())
+        i, live = 0, True
+        while True:
+            if live:
+                try:
+                    next(gen)
+                except StopIteration:
+                    live = False
+            if not live and i >= n_min:
+                break
+            u = ease(min(1.0, i / max(1, n_min - 1)))
+            c = [lerp(cam0[0], cam1[0], u), lerp(cam0[1], cam1[1], u), (0.0, 0.0, 1.0)]
+            frame(c, caption, sub, list(who), step, status=status, proc_s=secs / n_min,
+                  add=dict(person_h=secs / n_min / 3600.0) if "person" in who else None, labels=labels)
+            i += 1
+        return i
+
+    # ---------------------------------------------------------------- where things are (bay frame)
+    ly = -600.0 - LIFT["W"] / 2       # lift table centre: its far edge 8 mm in front of the VLM's access table (y -592;
+                                      # its platform, 815-860 mm, can't pass over the table's 803-833)
+    y_back = ly - LIFT["W"] / 2 - 230.0   # the person behind the lift table (toes 80 mm off its base)
+    y_front = -850.0                  # the person at the access table (toes ~130 mm off the VLM's front skin, legs clear of
+                                      # the table: the round-8 audit found shoes and thighs in them at -745)
+    LIP = 26.0                        # loads slide with their feet 26 mm over the tray floor: the tray's rim is 20 mm high
+    h0, h1 = LIFT["lo"], TRAY_FLOOR + LIP
+    FWD = (0.0, 1.0, 0.0)             # palms turned to the load
+    TIP = 135.0                       # people.py's wrists don't bend, so the fingers point along the forearm: the palm's
+                                      # centre stays this far in front of the face pushed, the fingertips on it (the round-8
+                                      # audit found fingers 70-100 mm inside the loads with the palm 16 mm off, 40 at 105 mm)
+    REACH = {"chest": 640.0, "low": 570.0}
+
+    def push(pl_, pr_, **kw):
+        return dict(hands={"l": pl_, "r": pr_}, palm={"l": FWD, "r": FWD}, grip={"l": 0.05, "r": 0.05}, **kw)   # flat fingers
+
+    def free(**kw):
+        return dict(hands={"l": None, "r": None}, palm={"l": None, "r": None}, grip={"l": 0.3, "r": 0.3}, **kw)
+
+    def check_reach(who, pts):
+        """Warn when a hand target is beyond the reach used here, measured from its own shoulder (190 mm to the side)."""
+        c, s_ = math.cos(math.radians(m.hd)), math.sin(math.radians(m.hd))
+        for side, p in zip(("l", "r"), pts):
+            sx = -190.0 if side == "l" else 190.0
+            sh = (m.x + sx * c, m.y + sx * s_)
+            d = math.hypot(p[0] - sh[0], p[1] - sh[1])
+            lim = REACH["chest"] if p[2] > 1050.0 else REACH["low"]
+            if d > lim + 1.0:
+                print(f"  reach: {who} {side} {d:.0f} mm ahead of the shoulder (limit {lim:.0f})", flush=True)
+
+    # ---------------------------------------------------------------- T01: the process module, person + lift table
+    xm = -55.0                                            # the process module's base plate centre (x)
+    POST = {"l": -410.0, "r": 300.0}                      # the guard frame's front posts (x); their front face y = -265
+    off0 = ly - (-25.0)                                   # the module rides on the lift table, centred on it
+    lift_at(xm, ly, h0)
+    sc.gmat["proc"] = T((0.0, off0, h0 - TRAY_FLOOR))
+    show("proc", 1.0)
+    hx = xm - LIFT["L"] / 2 - 60.0                        # the handle's bar (x)
+    m = Mover(op, hx - 320.0, ly, -90.0)                  # at the handle, facing the table (+x)
+    grip = dict(hands={"l": (hx - 30.0, ly + 150.0, 990.0 + 34.0), "r": (hx - 30.0, ly - 150.0, 990.0 + 34.0)},
+                palm={"l": "down", "r": "down"}, grip={"l": 0.35, "r": 0.35})
+    m.pose(lean=6.0, look=(xm, ly, 1000.0), **grip)
+    a1 = cam_at((0.0, -450.0, 1050.0), 5600.0, -32.0, 19.0)
+    b1 = cam_at((0.0, -450.0, 1050.0), 5380.0, -28.0, 19.0)
+    labs1 = [("VLM tray, 857 mm", (900.0, -300.0, TRAY_FLOOR)), ("lift table", (xm + 300.0, ly - 200.0, LIFT["lo"]))]
+    shot(a1, b1, None, 6 * FPS, "T01: the 84 kg process module to the VLM tray: a person and a lift table",
+         "84 kg is 3.4 times two UR12e payloads. Kardex tray 2450 x 864 mm, floor 857 mm up; both arms parked beside "
+         "the opening (sequence.py: T01-T05 are person steps)", "T01", 120.0, labels=labs1)
+    c2 = cam_at((-300.0, -850.0, 1000.0), 4300.0, 30.0, 16.0)      # from the right: the person at the handle stays in view
+    c2b = cam_at((-300.0, -850.0, 1000.0), 4200.0, 27.0, 16.0)
+
+    def raise_lift(n):
+        for i in range(n):
+            u = ease(i / (n - 1))
+            h = h0 + (h1 - h0) * u
+            lift_at(xm, ly, h)
+            sc.gmat["proc"] = T((0.0, off0, h - TRAY_FLOOR))
+            m.pose(look=(xm, ly, h + 150.0), **grip)
+            yield
+    shot(c2, c2b, raise_lift(4 * FPS), 5 * FPS, "T01: the lift table raises the module over the tray's rim",
+         "The shop's scissor table (Vestil SCTAB-1000-2040-AC, 20 x 40 in, 1,000 lb; robot-shop-equipment.csv), turned so "
+         "the 730 mm base sits along its 40 in. side; its platform 26 mm over the tray floor, clear of the 20 mm rim", "T01",
+         180.0)
+    # cut: behind the table, hands on the guard frame's front posts at chest height, pushing as far as the arms reach
+    zp = 1150.0 + LIP
+
+    def post_pts(off, z=zp):
+        return {s: (x, -265.0 + off - TIP, z) for s, x in POST.items()}
+    m.place(xm, -265.0 + off0 - TIP - 260.0, 0.0)
+    pp = post_pts(off0)
+    m.pose(lean=4.0, look=(xm, -265.0 + off0 + 400.0, 1150.0), **push(pp["l"], pp["r"]))
+    st = {}
+
+    def push_lift():
+        yield from m.stand(6)
+        far = (m.y + REACH["chest"]) - (-265.0 - TIP)       # the offset at which the hands are REACH ahead
+        n = int(3.2 * FPS)
+        for i in range(n):
+            u = ease((i + 1) / n)
+            off = off0 + (far - off0) * u
+            sc.gmat["proc"] = T((0.0, off, LIP))
+            q = post_pts(off)
+            m.pose(lean=4.0 + 14.0 * u, look=(xm, -265.0 + off + 400.0, 1150.0), **push(q["l"], q["r"]))
+            yield
+        check_reach("T01 push", post_pts(far).values())
+        st["off"] = far
+    c3 = cam_at((-100.0, -800.0, 1050.0), 4100.0, -36.0, 16.0)
+    shot(c3, cam_at((-100.0, -800.0, 1050.0), 4000.0, -34.0, 16.0), push_lift(), 5 * FPS,
+         "T01: the person pushes the module off the lift table onto the tray",
+         "It slides on its four levelling mounts (McMaster 5537T983), over the rim; from behind the table the arms reach "
+         "this far", "T01", 240.0)
+    # cut: the lift table rolled away; from the access table the last 0.15 m, the module down on the tray floor
+    lift_at(3200.0, -2600.0, LIFT["lo"], shown=False)
+    sc.gmat["proc"] = T((0.0, -150.0, 0.0))
+    m.place(xm, y_front, 0.0)
+    pp = post_pts(-150.0, 1150.0)
+    m.pose(lean=8.0, look=(xm, 0.0, 1100.0), **push(pp["l"], pp["r"]))
+
+    def push_home():
+        yield from m.stand(8)
+        n = int(2.2 * FPS)
+        for i in range(n):
+            u = ease((i + 1) / n)
+            off = -150.0 * (1.0 - u)
+            sc.gmat["proc"] = T((0.0, off, 0.0))
+            q = post_pts(off, 1150.0)
+            m.pose(lean=8.0 + 10.0 * u, look=(xm, 0.0, 1100.0), **push(q["l"], q["r"]))
+            yield
+        check_reach("T01 home", post_pts(0.0, 1150.0).values())
+        for _ in range(10):
+            yield
+        m.pose(lean=0.0, look=(xm, 0.0, 1100.0), **free())
+    c4 = cam_at((-100.0, -350.0, 1050.0), 3500.0, -24.0, 20.0)
+    shot(c4, cam_at((-100.0, -350.0, 1050.0), 3400.0, -21.0, 20.0), push_home(), 5 * FPS,
+         "T01: the process module on the VLM tray",
+         "Pushed home from the access table and levelled on its mounts (sequence.py T01: person + hoist or lift table)",
+         "T01", 600.0)
+    sc.gmat["proc"] = np.eye(4)
+    # ---------------------------------------------------------------- T02: the rack, then its units
+    rb = bounds["rack"]
+    xr = 0.5 * (rb[0] + rb[1])
+    RPOST = {"l": rb[0] + 15.0, "r": rb[1] - 15.0}
+
+    def rpost(off, z):
+        return {s: (x, rb[2] + off - TIP, z) for s, x in RPOST.items()}
+    lift_at(xr, ly, h1)
+    roff0 = ly
+    sc.gmat["rack"] = T((0.0, roff0, LIP))
+    show("rack", 1.0)
+    m.place(xr + 40.0, rb[2] + roff0 - TIP - 260.0, 0.0)
+    q = rpost(roff0, 1180.0 + LIP)
+    m.pose(lean=4.0, look=(xr, rb[2] + roff0 + 400.0, 1150.0), **push(q["l"], q["r"]))
+
+    def push_rack():
+        yield from m.stand(6)
+        far = (m.y + REACH["chest"]) - (rb[2] - TIP)
+        n = int(3.0 * FPS)
+        for i in range(n):
+            u = ease((i + 1) / n)
+            off = roff0 + (far - roff0) * u
+            sc.gmat["rack"] = T((0.0, off, LIP))
+            q = rpost(off, 1180.0 + LIP)
+            m.pose(lean=4.0 + 14.0 * u, look=(xr, rb[2] + off + 400.0, 1150.0), **push(q["l"], q["r"]))
+            yield
+        check_reach("T02 push", rpost(far, 1180.0 + LIP).values())
+    c5 = cam_at((-650.0, -800.0, 1150.0), 3500.0, -40.0, 14.0)
+    shot(c5, cam_at((-650.0, -800.0, 1150.0), 3400.0, -37.0, 14.0), push_rack(), 5 * FPS,
+         "T02: the 12U rack (22 kg) onto the tray's left end, from the lift table",
+         "19 in. 4-post rack, 560 mm tall: the UPS, laser, PC and DIN drawer go in it next", "T02", 300.0)
+    lift_at(3200.0, -2600.0, LIFT["lo"], shown=False)
+    RH = 100.0                        # the rack's front feet just inside the tray's rim
+    sc.gmat["rack"] = T((0.0, -RH, 0.0))
+    m.place(xr + 40.0, y_front, 0.0)
+    q = rpost(-RH, 1180.0)
+    m.pose(lean=6.0, look=(xr, 0.0, 1150.0), **push(q["l"], q["r"]))
+
+    def rack_home():
+        yield from m.stand(8)
+        n = int(2.0 * FPS)
+        for i in range(n):
+            u = ease((i + 1) / n)
+            off = -RH * (1.0 - u)
+            sc.gmat["rack"] = T((0.0, off, 0.0))
+            q = rpost(off, 1180.0)
+            m.pose(lean=6.0 + 10.0 * u, look=(xr, 0.0, 1150.0), **push(q["l"], q["r"]))
+            yield
+        check_reach("T02 home", rpost(0.0, 1180.0).values())
+        for _ in range(8):
+            yield
+        m.pose(lean=0.0, **free())
+    c6 = cam_at((-650.0, -450.0, 1150.0), 3100.0, -48.0, 16.0)       # from the left: the person doesn't hide the rack
+    c6b = cam_at((-650.0, -450.0, 1150.0), 3050.0, -46.0, 16.0)
+    shot(c6, c6b, rack_home(), 5 * FPS, "T02: the rack pushed home from the access table",
+         "Then levelled; the units slide in on the rack's rails", "T02", 300.0)
+    sc.gmat["rack"] = np.eye(4)
+    # the units: each rests on the rails 120 mm out and is pushed home, palms on its front
+    SLIDE = 120.0
     for g, kg, label in (("ups", 23.0, "UPS (Eaton 5PX, 2U), 23 kg"), ("laser", 40.0, "fiber laser (IPG YLR-500, 4U), 40 kg"),
                          ("pc", 8.0, "controller PC with the RTC6 (2U), 8 kg"), ("din", 9.0, "DIN-rail drawer (4U), 9 kg")):
         if g not in groups:
             continue
-        show(g, True)
-        e = np.array(ex.get(g, (0.0, -400.0, 0.0)), float)
-        if np.linalg.norm(e) < 1:
-            e = np.array([0.0, -400.0, 0.0])
-        lift_at(xr, ly, zmin.get(g, TRAY_FLOOR) - 2.0)
+        b = bounds[g]
+        zc = min(0.5 * (b[4] + b[5]), b[5] - 20.0)
+        sc.gmat[g] = T((0.0, -SLIDE, 0.0))
+        show(g, 1.0)
+
+        def unit_in(g=g, b=b, zc=zc):
+            # the hands where the unit's front really is (the nearest drawn point to each), 16 mm in front of it
+            # on the unit's front panel (its bounding box's front, inside the rack's ears), fingertips on it
+            pts = {s: np.array([x, b[2] - SLIDE - TIP, zc]) for s, x in (("l", b[0] + 90.0), ("r", b[1] - 90.0))}
+
+            def at(dy):
+                return {s: tuple(p + (0.0, dy, 0.0)) for s, p in pts.items()}
+            h_ = at(0.0)
+            for i in range(6):
+                m.pose(lean=14.0 + 2.0 * i, look=(xr, b[2], zc), **push(h_["l"], h_["r"]))
+                yield
+            n = int(1.5 * FPS)
+            for i in range(n):
+                u = ease((i + 1) / n)
+                sc.gmat[g] = T((0.0, -SLIDE * (1.0 - u), 0.0))
+                h_ = at(SLIDE * u)
+                m.pose(lean=24.0 + 6.0 * u, look=(xr, b[2], zc), **push(h_["l"], h_["r"]))
+                yield
+            check_reach(f"T02 {g}", at(SLIDE).values())
+            sc.gmat[g] = np.eye(4)
+            for _ in range(4):
+                yield
+            m.pose(lean=0.0, **free())
+        shot(c6b, c6b, unit_in(), int(2.6 * FPS), f"T02: the {label} slides into the rack",
+             "Pushed home on the rack's rails from the lift table: " +
+             ("over a UR12e's 12.5 kg payload" if kg > 12.5 else
+              "light enough for an arm, but the rails and cage nuts need a person's hands (not planned for the arms)"),
+             "T02", 420.0)
+    show("rackrest", 1.0)
+    # ---------------------------------------------------------------- T03: the gas module
+    gb = bounds["gasbase"]
+    xg = 0.5 * (gb[0] + gb[1])
+    goff0 = ly - 0.5 * (gb[2] + gb[3])
+
+    def gplate(off, z):
+        return {"l": (gb[0] + 80.0, gb[2] + off - TIP, z), "r": (gb[1] - 80.0, gb[2] + off - TIP, z)}
+    lift_at(xg, ly, h1)
+    sc.gmat["gasbase"] = T((0.0, goff0, LIP))
+    show("gasbase", 1.0)
+    m.place(xg, gb[2] + goff0 - TIP - 240.0, 0.0)
+    zg = 909.0 + LIP - 2.0
+    q = gplate(goff0, zg)
+    m.pose(lean=16.0, look=(xg, gb[2] + goff0 + 300.0, 950.0), **push(q["l"], q["r"]))
+
+    def push_gas():
+        yield from m.stand(6)
+        far = (m.y + REACH["low"]) - (gb[2] - TIP)
+        far = min(far, -278.0 - (gb[3] - 18.0) - 10.0)   # its studs, 26 mm up, stop short of the guard door's rail
         n = int(2.5 * FPS)
         for i in range(n):
-            u = ease(i / (n - 1))
-            sc.gmat[g] = T(tuple(e * (1 - u)))
-            op.set(x=xr + 40.0, y=-532.0 - 560.0 + 0.0 * u, hd=0.0, lean=14.0, amp=0.0,
-                   hands={"l": (xr - 160.0, -300.0 + e[1] * (1 - u) - 20.0, 1000.0),
-                          "r": (xr + 160.0, -300.0 + e[1] * (1 - u) - 20.0, 1000.0)},
-                   look=(xr, -250.0, 1000.0))
-            who = ["person"]
-            frame(c4, f"T02: the {label} slides into the rack",
-                  "On the lift table at the slot's height: " + ("over a UR12e's 12.5 kg payload" if kg > 12.5 else
-                                                                 "light enough for an arm, but the rack's slides and cage "
-                                                                 "nuts need a person's hands (not planned for the arms)"),
-                  who, "T02", proc_s=420.0 / n, add=dict(person_h=420.0 / n / 3600.0))
-    show("rackrest", True)
-    # 4. the gas module
-    xg = (400.0 + 990.0) / 2
-    c5 = cam_at((650.0, -200.0, 1100.0), 3400.0, -20.0, 18.0)
-    lift_at(xg, ly, TRAY_FLOOR + 3.0)
-    show("gasbase", True)
-    n = int(2.5 * FPS)
-    for i in range(n):
-        u = ease(i / (n - 1))
-        sc.gmat["gasbase"] = T((0.0, ly * (1 - u), 0.0))
-        op.set(x=xg - 60.0, y=-532.0 - 600.0, hd=0.0, lean=14.0, amp=0.0,
-               hands={"l": (xg - 250.0, -250.0 + ly * (1 - u) - 15.0, 935.0), "r": (xg + 250.0, -250.0 + ly * (1 - u) - 15.0, 935.0)},
-               look=(xg, -200.0, 950.0))
-        frame([lerp(c4[0], c5[0], u), lerp(c4[1], c5[1], u), (0, 0, 1)],
-              "T03: the gas module's MIC-6 base plate onto the tray's right end", "On its four levelling mounts",
-              ["person"], "T03", proc_s=300.0 / n, add=dict(person_h=300.0 / n / 3600.0))
+            u = ease((i + 1) / n)
+            off = goff0 + (far - goff0) * u
+            sc.gmat["gasbase"] = T((0.0, off, LIP))
+            q = gplate(off, zg)
+            m.pose(lean=16.0 + 18.0 * u, look=(xg, gb[2] + off + 300.0, 950.0), **push(q["l"], q["r"]))
+            yield
+        check_reach("T03 push", gplate(far, zg).values())
+    c7 = cam_at((650.0, -800.0, 1050.0), 3500.0, -22.0, 17.0)
+    shot(c7, cam_at((650.0, -800.0, 1050.0), 3400.0, -25.0, 17.0), push_gas(), 4 * FPS,
+         "T03: the gas module's MIC-6 base plate onto the tray's right end", "On its four levelling mounts, from the lift "
+         "table; then pushed home from the access table and levelled", "T03", 600.0)
+    lift_at(3200.0, -2600.0, LIFT["lo"], shown=False)
+    sc.gmat["gasbase"] = np.eye(4)
+    m.place(xg - 60.0, y_front, 0.0)
+    m.pose(lean=0.0, look=(xg, 0.0, 1050.0), **free())
+    c8 = cam_at((700.0, -300.0, 1050.0), 3000.0, 32.0, 24.0)        # from the right: the person (x 635) beside the parts
+    # the gas parts whose front the person reaches from the access table slide in, palms on them; the rest (and the
+    # fittings) are fitted in place, shown appearing in the time-lapse
     for g in gas_groups:
-        show(g, True)
+        b = bounds[g]
         nm = g.split(":", 1)[1]
         heavy = "pump" in nm.lower()
-        n = int((2.2 if heavy else 1.0) * FPS)
-        for i in range(n):
-            u = ease(i / (n - 1))
-            sc.gmat[g] = T((0.0, -450.0 * (1 - u), 0.0))
-            op.set(x=xg - 60.0, y=-532.0 - 600.0, hd=0.0, lean=14.0, amp=0.0,
-                   hands={"l": (xg - 120.0, -480.0 - 450.0 * (1 - u) + 200.0, 1000.0),
-                          "r": (xg + 120.0, -480.0 - 450.0 * (1 - u) + 200.0, 1000.0)},
-                   look=(xg, -200.0, 1000.0))
-            frame(c5, f"T03: {nm}" + (" (26 kg, from the lift table)" if heavy else ""),
-                  "Gas module: dry scroll pump, sealed blower, cyclone + HEPA, O2 / dew-point box, argon manifold "
-                  "and regulator (their screws are not drawn)", ["person"], "T03",
-                  proc_s=(600.0 if heavy else 240.0) / n, add=dict(person_h=(600.0 if heavy else 240.0) / n / 3600.0))
-    # 5. hoses and lines, then the dock
-    c6 = cam_at((300.0, -100.0, 1100.0), 3800.0, -10.0, 30.0)
-    lift_at(3000.0, -3000.0, LIFT["lo"])                  # the lift table rolled away
-    for g, cap, sub, secs, step in (
+        small = any(k in nm.lower() for k in ("inlet", "outlet", "manifold", "regulator"))
+        reach_ok = math.hypot(0.5 * (b[0] + b[1]) - (xg - 60.0), b[2] - TIP - y_front) <= REACH["low"] and not small
+        xc = 0.5 * (b[0] + b[1])
+        zc = min(0.5 * (b[4] + b[5]), 1080.0)
+        GS = 120.0                    # set down from this high onto the base plate
+
+        def gas_in(g=g, b=b, xc=xc, zc=zc, reach_ok=reach_ok):
+            if not reach_ok:
+                for i in range(8):
+                    show(g, (i + 1) / 8.0)
+                    m.pose(look=(xc, 0.5 * (b[2] + b[3]), zc))
+                    yield
+                return
+            sc.gmat[g] = T((0.0, 0.0, GS))
+            show(g, 1.0)
+            hw = max(25.0, min(110.0, 0.5 * (b[1] - b[0]) - 25.0))
+            pts = {s: np.array([x, b[2] - TIP, zc]) for s, x in (("l", xc - hw), ("r", xc + hw))}
+
+            def at(dz):
+                return {s: tuple(p + (0.0, 0.0, dz)) for s, p in pts.items()}
+            h_ = at(GS)
+            for i in range(6):
+                m.pose(lean=12.0 + 2.0 * i, look=(xc, b[2], zc), **push(h_["l"], h_["r"]))
+                yield
+            n = int(1.4 * FPS)
+            for i in range(n):
+                u = ease((i + 1) / n)
+                sc.gmat[g] = T((0.0, 0.0, GS * (1.0 - u)))
+                h_ = at(GS * (1.0 - u))
+                m.pose(lean=22.0 + 6.0 * u, look=(xc, b[2], zc), **push(h_["l"], h_["r"]))
+                yield
+            check_reach(f"T03 {nm}", at(0.0).values())
+            sc.gmat[g] = np.eye(4)
+            m.pose(lean=0.0, **free())
+        if small:
+            continue
+        shot(c8, c8, gas_in(), int(2.2 * FPS), f"T03: {nm}" + (" (26 kg)" if heavy else ""),
+             "Gas module: dry scroll pump, sealed blower, cyclone + HEPA, O2 / dew-point box, argon manifold and "
+             "regulator (their screws are not drawn)", "T03", 600.0 if heavy else 240.0)
+
+    def fittings():
+        for g in gas_groups:
+            nm = g.split(":", 1)[1].lower()
+            if any(k in nm for k in ("inlet", "outlet", "manifold", "regulator")):
+                for i in range(6):
+                    show(g, (i + 1) / 6.0)
+                    yield
+    shot(c8, c8, fittings(), int(4.0 * FPS), "T03: inlets, outlets, the argon manifold and regulator fitted",
+         "Time-lapse: fittings are a person's job (wrenches, thread sealant)", "T03", 600.0)
+    # ---------------------------------------------------------------- T04, T05: hoses and lines, the dock
+    c9 = cam_at((250.0, -250.0, 1100.0), 3700.0, -12.0, 30.0)
+    c9b = cam_at((700.0, -200.0, 1100.0), 3300.0, 18.0, 26.0)
+    for g, cap, sub, secs, step, spots in (
             ("hoses", "T04: KF-25 bellows, the vacuum valve, the argon and O2 lines",
-             "Hoses and wing-nut clamps are a person's job (deformable parts; sequence.py T04)", 2700.0, "T04"),
+             "Hoses and wing-nut clamps are a person's job (deformable parts; sequence.py T04); shown fitted in the "
+             "time-lapse", 2700.0, "T04", (350.0,)),
             ("dock", "T05: the tray dock, the umbilicals and the power box",
-             "Power, Ethernet, argon, water and exhaust mate sideways at the tray's back-right corner", 1200.0, "T05")):
+             "Power, Ethernet, argon, water and exhaust mate sideways at the tray's back-right corner", 1200.0, "T05",
+             (950.0,))):
         if g not in groups:
             continue
-        show(g, True)
-        e = np.array(ex.get(g, (0.0, 0.0, 200.0)), float)
-        if np.linalg.norm(e) < 1:
-            e = np.array([0.0, 0.0, 200.0])
-        n = 4 * FPS
-        for i in range(n):
-            u = ease(i / (n - 1))
-            sc.gmat[g] = T(tuple(e * (1 - u)))
-            op.set(x=250.0 + 400.0 * math.sin(math.pi * u), y=-532.0 - 520.0, hd=0.0, lean=20.0, amp=0.0,
-                   hands={"l": (250.0 + 400.0 * math.sin(math.pi * u) - 120.0, -420.0, 1050.0),
-                          "r": (250.0 + 400.0 * math.sin(math.pi * u) + 120.0, -420.0, 1050.0)},
-                   look=(300.0, -200.0, 1000.0))
-            frame([lerp(c5[0], c6[0], u), lerp(c5[1], c6[1], u), (0, 0, 1)] if g == "hoses" else c6, cap, sub,
-                  ["person"], step, proc_s=secs / n, add=dict(person_h=secs / n / 3600.0))
-    # 6. the leak check: pump down, hold, isolate, the rate of rise (expected values, seals.md section 7)
-    op.set(x=-1300.0 + 2600.0, y=-1700.0, hd=-30.0, lean=0.0, amp=0.0, hands={"l": None, "r": None},
-           look=(0.0, -100.0, 1100.0))
+
+        def fit(g=g, spots=spots):
+            for k, xs in enumerate(spots):
+                m.place(xs, y_front, 0.0)                 # across the cut into this shot
+                m.pose(lean=0.0, look=(xs, 0.0, 1050.0), **free())
+                if k == 0:
+                    for i in range(8):
+                        show(g, (i + 1) / 8.0)
+                        yield
+                tgt = nearest(sc, g, (xs, y_front + REACH["chest"], 1100.0))
+                if math.hypot(tgt[0] - m.x, tgt[1] - m.y) > REACH["chest"] - 20.0:   # out of reach here: look, no touch
+                    yield from m.stand(14, look=tgt)
+                    continue
+                for i in range(int(2.0 * FPS)):
+                    m.pose(lean=18.0, look=tgt, hands={"l": (tgt[0] - 60.0, tgt[1] - TIP, tgt[2]),
+                                                       "r": (tgt[0] + 30.0, tgt[1] - TIP, tgt[2] + 15.0)},
+                           palm={"l": FWD, "r": FWD})
+                    yield
+                m.pose(lean=0.0, **free())
+        shot(c9 if g == "hoses" else c9b, c9 if g == "hoses" else c9b, fit(), 5 * FPS, cap, sub, step, secs)
+    # ---------------------------------------------------------------- T06: the leak check
+    def step_back():
+        m.place(m.x - 250.0, -1650.0, -20.0)          # across the cut into the leak check
+        m.pose(lean=0.0, look=(0.0, -100.0, 1100.0), **free())
+        while True:
+            m.pose(look=(0.0, -100.0, 1100.0))
+            yield
+    sb = step_back()
     ts = list(np.linspace(0.0, 75.0, 151))
 
     def p_of(t):
@@ -421,9 +745,11 @@ def main():
             return max(0.05, 1.0 * math.exp(-(t - 1.2) / 6.0))             # down to the scroll pump's ~0.05 mbar
         return 0.05 + 8e-4 * (t - 64.0)                                   # valve closed: 8e-4 mbar/min expected
     ps = [p_of(t) for t in ts]
-    c7 = cam_at((-50.0, -100.0, 1150.0), 2600.0, -18.0, 22.0)
+    c10 = cam_at((-50.0, -400.0, 1150.0), 3500.0, -24.0, 20.0)
+    c10b = cam_at((-50.0, -400.0, 1150.0), 3350.0, -20.0, 20.0)
     n = 10 * FPS
     for i in range(n):
+        next(sb)
         u = i / (n - 1)
         k = int(round(u * (len(ts) - 1)))
         t_min = ts[k]
@@ -433,7 +759,7 @@ def main():
         if t_min >= 74.0:
             val = "rise 8e-4 mbar/min"
             verdict = "pass"
-        frame([lerp(c6[0], c7[0], ease(u * 3)), lerp(c6[1], c7[1], ease(u * 3)), (0, 0, 1)],
+        frame([lerp(c10[0], c10b[0], ease(u)), lerp(c10[1], c10b[1], ease(u)), (0, 0, 1)],
               f"T06: the leak check, {phase}",
               "After >= 1 h at <= 1 mbar the valve closes; the Pirani must rise < 1e-3 mbar/min over 10 min "
               "(seals.md section 7). Expected, not measured",
@@ -441,12 +767,14 @@ def main():
               chart=dict(title="Chamber pressure, expected", x=ts, y=ps, now=k, ylog=True, xlabel="minutes",
                          ylabel="mbar", xticks=[0, 15, 30, 45, 60, 75], ref=1.0, ref_label="1 mbar",
                          value=val, verdict=verdict))
-    # 7. a last look
+    # ---------------------------------------------------------------- a last look (cut)
     n = 5 * FPS
-    c8 = cam_at((0.0, -100.0, 1100.0), 5200.0, -40.0, 18.0)
+    c11 = cam_at((0.0, -200.0, 1100.0), 5600.0, -40.0, 18.0)
+    c11b = cam_at((0.0, -200.0, 1100.0), 5400.0, -37.0, 18.0)
     for i in range(n):
+        next(sb)
         u = ease(i / (n - 1))
-        frame([lerp(c7[0], c8[0], u), lerp(c7[1], c8[1], u), (0, 0, 1)],
+        frame([lerp(c11[0], c11b[0], u), lerp(c11[1], c11b[1], u), (0, 0, 1)],
               "The desktop LPBF on its VLM tray, ready for its first build",
               "Process module, 12U rack and gas module side by side on one 2450 x 864 mm tray; the tray goes back "
               "into the Kardex", [], "", status="", proc_s=0.0)

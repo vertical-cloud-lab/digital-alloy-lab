@@ -1,0 +1,198 @@
+{
+ "chapter": "50-integration",
+ "frames_recorded": 996,
+ "recordings": [
+  "/tmp/robotbuild/frames/50-integration/audit"
+ ],
+ "people": [
+  {
+   "person": "op",
+   "frames": 996,
+   "walked_mm": 0,
+   "stances": 20,
+   "slip_per_stance_mm": {
+    "max": 0.0,
+    "p95": 0.0,
+    "mean": 0.0
+   },
+   "worst_stances": [
+    {
+     "foot": "L",
+     "start": 0,
+     "end": 131,
+     "frames": 132,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 0,
+     "end": 131,
+     "frames": 132,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "L",
+     "start": 132,
+     "end": 191,
+     "frames": 60,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 132,
+     "end": 191,
+     "frames": 60,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "L",
+     "start": 192,
+     "end": 251,
+     "frames": 60,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 192,
+     "end": 251,
+     "frames": 60,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "L",
+     "start": 252,
+     "end": 311,
+     "frames": 60,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 252,
+     "end": 311,
+     "frames": 60,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "L",
+     "start": 312,
+     "end": 495,
+     "frames": 184,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 312,
+     "end": 495,
+     "frames": 184,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    }
+   ],
+   "slipping_frames": 0,
+   "slipping_frame_list": [],
+   "gliding_frames": 0,
+   "gliding_ranges": [],
+   "gliding_worst": [],
+   "jumps": [
+    [
+     132,
+     1092
+    ],
+    [
+     192,
+     639
+    ],
+    [
+     252,
+     931
+    ],
+    [
+     312,
+     699
+    ],
+    [
+     496,
+     1514
+    ],
+    [
+     544,
+     657
+    ],
+    [
+     696,
+     285
+    ],
+    [
+     756,
+     600
+    ],
+    [
+     816,
+     838
+    ]
+   ]
+  }
+ ],
+ "mirs": [
+  {
+   "mir": "mirrA",
+   "frames": 996,
+   "driven_mm": 0,
+   "forward": "local +x",
+   "forward_mm": 0,
+   "reverse_mm": 0,
+   "reverse_legs": 0,
+   "longest_reverse_leg_mm": 0,
+   "reverse_leg_list": [],
+   "sideways_mm": {
+    "total": 0.0,
+    "max_frame": 0.0,
+    "frames_over_1mm": 0
+   },
+   "sideways_worst": [],
+   "pivot_frames": 0,
+   "turned_deg": 0.0,
+   "jumps": []
+  },
+  {
+   "mir": "mirrB",
+   "frames": 996,
+   "driven_mm": 0,
+   "forward": "local +x",
+   "forward_mm": 0,
+   "reverse_mm": 0,
+   "reverse_legs": 0,
+   "longest_reverse_leg_mm": 0,
+   "reverse_leg_list": [],
+   "sideways_mm": {
+    "total": 0.0,
+    "max_frame": 0.0,
+    "frames_over_1mm": 0
+   },
+   "sideways_worst": [],
+   "pivot_frames": 0,
+   "turned_deg": 0.0,
+   "jumps": []
+  }
+ ],
+ "limits": {
+  "foot_down_mm": 4.0,
+  "contact_mm": 2.0,
+  "slip_frame_mm": 5.0,
+  "glide_mm": 1.0,
+  "glide_deg": 0.3,
+  "legs_still_mm": 0.5,
+  "jump_mm": 250.0,
+  "mir_jump_mm": 150.0
+ },
+ "seconds": 0.8
+}
