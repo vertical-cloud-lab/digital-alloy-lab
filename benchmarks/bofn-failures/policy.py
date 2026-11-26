@@ -13,6 +13,8 @@ in what they do with a failed run, named for the Ax behaviour each mimics:
                     stages are fit; the design stays pending for the metrics it lacks.
     impute          "soft pushing": a failure labelled input-caused is recorded as the worst value
                     seen so far at the failed stage's output; a transient one is dropped.
+    impute_extreme  the same, but one observed range below the worst value (a "terrible result"
+                    outside anything measured).
     viab_x          Ax >= 1.3 with AddExecutionViability: transient -> FAILED, input-caused ->
                     ABANDONED (not fit, pending), and a GP on 0/1 labels over the design x
                     constrains P(viable) >= 0.8 once 3 runs are abandoned.
@@ -56,7 +58,7 @@ from failmodel import Q_MIN, FailureModel
 
 torch.set_default_dtype(torch.double)
 
-STRATEGIES = ("drop", "abandon", "partial", "keep", "impute", "viab_x", "viab_x_partial", "viab_node", "viab_node_ec")
+STRATEGIES = ("drop", "abandon", "partial", "keep", "impute", "impute_extreme", "viab_x", "viab_x_partial", "viab_node", "viab_node_ec")
 NODE_LEVEL = ("viab_node", "viab_node_ec")
 VIABLE_BOUND = 0.8  # AddExecutionViability's feasibility threshold
 MIN_ZEROS = 3  # its trigger: at least this many abandoned (input-labelled) runs
@@ -405,7 +407,7 @@ class DataView:
                 # fit_abandoned=True a FAILED run's completed stages are in the training data
                 self.vx[0].append(t["x"])
                 self.vx[1].append(1.0)
-        if strategy == "impute":
+        if strategy in ("impute", "impute_extreme"):
             # every input-labelled failed stage (blocking or not): its output at its inputs = worst seen
             for r in fl.rows:
                 if r["status"] == "FAILED" and r["label"] == "input" and r["stage"] in stage_nodes:
@@ -416,6 +418,8 @@ class DataView:
             if self.imputed[n][0]:
                 yk = torch.tensor([d.obs[n][1][i] for i in sorted(keep[n])])
                 worst = float(yk.min())
+                if strategy == "impute_extreme":
+                    worst -= float(yk.max() - yk.min())
                 self.imputed[n] = (self.imputed[n][0], [worst] * len(self.imputed[n][0]))
         # viability over x: every completed run (seed runs included) is a 1
         if strategy in ("viab_x", "viab_x_partial"):

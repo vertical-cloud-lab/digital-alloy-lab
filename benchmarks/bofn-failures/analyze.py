@@ -24,14 +24,14 @@ CELLS = {"al-k1": "al kappa=1 eta=1", "al-k0": "al kappa=0 eta=1", "cu-toy-k1": 
          "al-k1-full": "al kappa=1 eta=1", "cu-toy-k1-full": "cu-toy kappa=1 eta=1"}
 CELL_NAME = {"al-k1": "Aluminum, kappa = 1", "al-k0": "Aluminum, kappa = 0", "cu-toy-k1": "Copper, hand-written truth", "cu-phys-k1": "Copper, physics truth",
              "al-k1-full": "Aluminum, kappa = 1, full-pipeline BOFN", "cu-toy-k1-full": "Copper, hand-written truth, full-pipeline BOFN"}
-ORDER = ["nofail", "drop", "abandon", "partial", "keep", "impute", "viab_x", "viab_x_partial", "viab_node", "viab_node_ec"]
+ORDER = ["nofail", "drop", "abandon", "partial", "keep", "impute", "impute_extreme", "viab_x", "viab_x_partial", "viab_node", "viab_node_ec"]
 LABEL = {"nofail": "no failures (reference)", "drop": "drop (all FAILED)", "abandon": "abandon (all ABANDONED)", "partial": "partial (Ax >= 1.2.4, pending)",
-         "keep": "keep partial data, nothing pending", "impute": "impute worst value", "viab_x": "viability on x (Ax 1.3)",
+         "keep": "keep partial data, nothing pending", "impute": "impute worst value", "impute_extreme": "impute far below the worst", "viab_x": "viability on x (Ax 1.3)",
          "viab_x_partial": "viability on x + fit_abandoned", "viab_node": "node-level viability", "viab_node_ec": "node-level viability + failure-priced EI"}
 # strategies that ignore labels run identically in `mislabel` and `mixed` (same failure draws); in `transient`,
 # viab_x and viab_x_partial reduce to drop, and impute, keep and viab_node coincide
 STAND_IN = {"mislabel": {"drop": "mixed", "abandon": "mixed", "partial": "mixed", "keep": "mixed", "nofail": "mixed"},
-            "transient": {"viab_x": ("transient", "drop"), "viab_x_partial": ("transient", "drop"), "impute": ("transient", "viab_node"),
+            "transient": {"viab_x": ("transient", "drop"), "viab_x_partial": ("transient", "drop"), "impute": ("transient", "viab_node"), "impute_extreme": ("transient", "viab_node"),
                           "keep": ("transient", "viab_node"), "nofail": "mixed"}}
 BUDGETS = (25_000, 50_000, 100_000)
 

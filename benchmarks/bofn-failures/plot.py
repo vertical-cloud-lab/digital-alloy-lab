@@ -25,10 +25,11 @@ HERE = Path(__file__).resolve().parent
 FIG = HERE / "figures"
 INK, INK2, GRID, AXIS = "#191919", "#666666", "#e7e7e7", "#c2c2c2"
 BLUE, ORANGE, AQUA, GRAY, LIGHT = "#257de0", "#f47230", "#00b894", "#666666", "#c9c9c9"
-FAMILY = {"nofail": GRAY, "drop": ORANGE, "abandon": ORANGE, "partial": ORANGE, "keep": ORANGE, "impute": AQUA, "viab_x": BLUE, "viab_x_partial": BLUE,
+FAMILY = {"nofail": GRAY, "drop": ORANGE, "abandon": ORANGE, "partial": ORANGE, "keep": ORANGE, "impute": AQUA, "impute_extreme": AQUA, "viab_x": BLUE, "viab_x_partial": BLUE,
           "viab_node": BLUE, "viab_node_ec": BLUE}
 SHORT = {"nofail": "no failures (reference)", "drop": "drop: all FAILED (Ax 1.2.2–1.2.3)", "abandon": "abandon: all ABANDONED", "partial": "partial, pending (Ax ≥ 1.2.4)",
-         "keep": "partial, nothing pending", "impute": "impute the worst value", "viab_x": "viability on x (Ax 1.3)", "viab_x_partial": "viability on x + fit_abandoned",
+         "keep": "partial, nothing pending", "impute": "impute the worst value", "impute_extreme": "impute far below the worst", "viab_x": "viability on x (Ax 1.3)",
+         "viab_x_partial": "viability on x + fit_abandoned",
          "viab_node": "node-level viability", "viab_node_ec": "node-level + failure-priced EI"}
 CELLS = ["al-k1", "al-k0", "cu-toy-k1", "cu-phys-k1"]
 FULL = ["al-k1-full", "cu-toy-k1-full"]
@@ -148,6 +149,8 @@ def fig_curves(runs, scen="mixed", highlight=("nofail", "drop", "partial", "viab
 def fig_scenarios(runs, budget=100_000):
     """Mixed vs 30% mislabelled vs transient-only, per strategy, for the cells that have them."""
     cells = [c for c in CELLS if c in runs and ("mislabel" in runs[c] or "transient" in runs[c])]
+    if not cells:
+        return
     strategies = [s for s in A.ORDER if s != "nofail"]
     scen_style = [("mixed", BLUE, "o", "both kinds, labelled correctly"), ("mislabel", ORANGE, "D", "both kinds, 30% of labels wrong"),
                   ("transient", AQUA, "s", "transient failures only")]
@@ -184,8 +187,45 @@ def fig_scenarios(runs, budget=100_000):
     plt.close(fig)
 
 
+def fig_classifier():
+    """AUC of the viability model against the number of labelled designs, over x and over the stage inputs."""
+    import json
+
+    path = HERE / "classifier_check.json"
+    if not path.exists():
+        return
+    res = json.loads(path.read_text())
+    names = {"al-k1": A.CELL_NAME["al-k1"], "al-k0": A.CELL_NAME["al-k0"], "cu-toy-k1": A.CELL_NAME["cu-toy-k1"], "cu-phys-k1": A.CELL_NAME["cu-phys-k1"]}
+    fig, axes = plt.subplots(1, len(res), figsize=(2.6 * len(res), 2.9), sharey=True)
+    for ax, c in zip(axes, res):
+        ns = sorted({r["n"] for r in c["rows"]})
+        for key, col, lab in (("node", BLUE, "over the stage's inputs (node level)"), ("x", ORANGE, "over the design x (Ax's AddExecutionViability)")):
+            m, se = [], []
+            for n in ns:
+                v = np.array([r[f"auc_{key}"] for r in c["rows"] if r["n"] == n and not r.get("skipped")])
+                m.append(v.mean())
+                se.append(v.std(ddof=1) / np.sqrt(len(v)))
+            m, se = np.array(m), np.array(se)
+            ax.fill_between(ns, m - se, m + se, color=col, alpha=0.10, lw=0)
+            ax.plot(ns, m, color=col, lw=2, marker="o", ms=5, mec="white", mew=1.2, label=lab)
+        ax.set_xscale("log", base=2)
+        ax.set_xticks(ns)
+        ax.set_xticklabels([str(n) for n in ns])
+        ax.set_title(names[c["cell"]], fontsize=9)
+        ax.set_xlabel("labelled designs")
+        style(ax)
+        ax.grid(axis="y", color=GRID, linewidth=0.8)
+    axes[0].set_ylabel("held-out AUC of P(viable)")
+    h, l = axes[0].get_legend_handles_labels()
+    fig.legend(h, l, loc="lower center", ncol=2, bbox_to_anchor=(0.5, -0.08))
+    fig.tight_layout()
+    fig.savefig(FIG / "bofn_failures_classifier.png")
+    plt.close(fig)
+
+
 def main():
     FIG.mkdir(exist_ok=True)
+    fig_classifier()
     runs = A.load()
     fig_final(runs)
     fig_final(runs, budget=50_000, name="final_50k")
