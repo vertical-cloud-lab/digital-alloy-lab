@@ -149,7 +149,12 @@ def place(run, st, idx, actor, tool, best, body, off, G, T_obj, close, state, ro
         slot = None                    # a sub-assembly moved from its nest: nothing comes from the table
     if slot is not None and fetch_res == "-":
         G_rel = inv(T_obj) @ G
-        pk = FE.pick_plan(run, actor, idx, body, off, G_rel, close, tool, slot)
+        # after run 10 (2026-11-26): plan the pick with the part as it lies on the table: only the objects in this slot, and
+        # none of the extras fitted at the station. In run 10 M13's held body carried its PEEK rod bullet (a tool fitted at the
+        # station) 20 mm into the table top, and C00a's the overflow funnel that a person fits on the bench in C00 (62 mm)
+        on_slot = [i for i in idx if tbl.on.get(i) is slot]
+        body_t = run.held_body(on_slot, f"held:{st['id']}:table", state, None) if on_slot and hasattr(run, "held_body") else body
+        pk = FE.pick_plan(run, actor, on_slot or idx, body_t, off, G_rel, close, tool, slot)
         cl.move_mir(actor, x_pl)
         a.release()
         if held_pl is not None:

@@ -335,8 +335,9 @@ def steps(module="M50"):
     # before the 2-044 is squeezed, so the plenum hangs there on its own while arm B changes to the screwdriver (assembly.md round 7)
     a(P("F14", "Inlet plenum with its O-ring and KF-25 port onto the back wall's two dowels by arm B (it hangs there on its own)",
         ["inlet plenum", "Inlet plenum O-ring", "Inlet plenum port"], "machine", "upright", "explode", actor="B", merge="plenum_in"))
-    a(S("F15", "Nine M4 x 16 inlet-plenum screws into the back wall (60 mm bit extension: run 9 met the KF-25 port on one)", "plenum_in",
-        "machine", "upright", actor="B", torque_Nm=2.2, long_bit=60.0))
+    # run 11: 100 mm (run 10 with 60 mm: the driver still met the KF-25 port on screw 7)
+    a(S("F15", "Nine M4 x 16 inlet-plenum screws into the back wall (100 mm bit extension: runs 9-10 met the KF-25 port on one)",
+        "plenum_in", "machine", "upright", actor="B", torque_Nm=2.2, long_bit=100.0))
     # round 7 (run 8): hangs on its two Ø3 dowels (transition fit), so no arm holds it while the screws go in (run 7: arm B's
     # screwdriver met arm A's wrist on all four)
     a(P("F16", "Vacuum-port adapter (KF-25 stub welded in) with its 2-024 O-ring onto the right wall's two dowels (it hangs there)",
@@ -345,9 +346,10 @@ def steps(module="M50"):
     a(P("F18", "Recoater rail with its carriage, carriage block, ball nut and arm (bought and pre-assembled on the rail) onto the back wall",
         ["Recoater guide rail", "Recoater carriage (", "Recoater carriage block", "Recoater ball nut", "Recoater arm"], "machine", "upright",
         [(0, 0, 0), (0, 0, 220)], hold_for="rail", actor="B", grasp=dict(point=(-106.0, 72.0, 92.0), z=DN, x=(1.0, 0.0, 0.0), width=44.0)))
-    # run 10: a 60 mm bit extension (run 9: with the roles swapped, arm A's driver met the chamber body on one rail screw)
-    a(S("F19", "Five M4 x 16 rail screws, driven from inside the chamber toward the back wall (60 mm bit extension)", "rail", "machine",
-        "upright", actor="A", torque_Nm=2.2, long_bit=60.0))
+    # run 10: a 60 mm bit extension (run 9: with the roles swapped, arm A's driver met the chamber body on one rail screw); run 11:
+    # 30 mm (run 10 with 60 mm: arm A's wrist 1 met the base plate instead)
+    a(S("F19", "Five M4 x 16 rail screws, driven from inside the chamber toward the back wall (30 mm bit extension)", "rail", "machine",
+        "upright", actor="A", torque_Nm=2.2, long_bit=30.0))
     a(P("F21", "Ball screw in through the right wall's bore and turned through the ball nut (30 turns at 10 mm lead) into the left bore",
         ["Recoater ball screw"], "machine", "upright", [(0, 0, 0), (420, 0, 0)],
         inspect="a person turns the screw by hand over its stroke for smoothness (ball circuits, preload: Edison r7 would keep the install manual)"))
@@ -366,11 +368,12 @@ def steps(module="M50"):
     a(P("F25c", "Recoater servo onto the bracket, its shaft into the coupling along +x", ["Recoater servo"], "machine", "upright",
         [(0, 0, 0), (-40, 0, 0), (-40, 0, 120)], note="its screws are not drawn"))
     a(P("F26", "Blade holder and blade, in through the door opening and up under the recoater arm", ["Blade holder", "HSS recoater blade"],
-        "machine", "upright", [(0, 0, 0), (0, -12, 0), (0, -12, 9), (6, -12, 9), (6, -200, 9)],
+        "machine", "upright", [(0, 0, 0), (0, -12, 0), (0, -12, 15), (6, -12, 15), (6, -200, 15)],
         grasp=dict(point=(-106.0, -45.0, 18.0), z=(0.0, 1.0, 0.0), x=(1.0, 0.0, 0.0), width=18.0),
         note="round 7: in 9 mm high over the door opening's sill (run 7's straight path met the frame below the opening), then down "
              "and 12 mm back onto the arm's dowels; run 10: in 6 mm right of the seat and slid left inside the chamber (run 9: at the "
-             "recoater's park the holder, x -115 to -97, stands 5 mm outside the door opening's |x| < 110)"))
+             "recoater's park the holder, x -115 to -97, stands 5 mm outside the door opening's |x| < 110); run 11: 15 mm high (run 10 at 9: "
+             "the part's path passed, the right fingertip met the chamber body)"))
     a(S("F27", "Two M3 x 8 blade screws by arm B from the back (100 mm bit extension: run 7's driver met the module and Fixture B; "
         "run 9's arm A met Fixture B)", "blade", "machine", "upright", actor="B", torque_Nm=1.1, long_bit=100.0))
     a(P("F28", "Gas knife and dose chute", ["Gas knife", "Dose chute"], "machine", "upright", "explode", per_part=True,
@@ -416,7 +419,7 @@ def steps(module="M50"):
         torque_Nm=2.2))
     # run 10: F45-F45c by arm B from the back (run 9: arm A's upper arm met the base plate, or found no pose, at the lid's back left)
     a(P("F45", "Roller feedthrough (M8 x 1 nose over its 2-012) into the metering base along its axis (arm B)", ["Roller shaft:", "Roller feedthrough O-ring"],
-        "machine", "upright", [(0, 0, 0), (0, 12, 0), (0, 12, 70)], actor="B",
+        "machine", "upright", [(0, 0, 0), (0, 35, 0), (0, 35, 70)], actor="B",
         note="round 7: threaded, turned in (8 turns) by wrist rotation with regrasps, which a straight sweep does not show"))
     a(P("F45b", "Roller drive coupling onto the feedthrough's shaft (arm B)", ["Roller drive coupling"], "machine", "upright",
         [(0, 0, 0), (0, 25, 0), (0, 25, 70)], actor="B"))
