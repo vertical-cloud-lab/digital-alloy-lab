@@ -1,0 +1,107 @@
+1. (EP2766136B1 pages 3-5): Frank Palm. Surface passivation of aluminium-containing powder. Patent (WO,EP,DE), 2019.
+
+2. (schimback2022alloydesignstrategy pages 1-2): D. Schimbäck, P. Mair, M. Bärtl, F. Palm, G. Leichtfried, S. Mayer, P.J. Uggowitzer, and S. Pogatscher. Alloy design strategy for microstructural-tailored scandium-modified aluminium alloys for additive manufacturing. Scripta Materialia, 207:114277, Jan 2022. URL: https://doi.org/10.1016/j.scriptamat.2021.114277, doi:10.1016/j.scriptamat.2021.114277. This article has 78 citations and is from a highest quality peer-reviewed journal.
+
+3. (cerri2024mainheattreatments pages 1-2): Emanuela Cerri, Lorenzo Curti, and Emanuele Ghio. Main heat treatments currently applied on laser powder bed-fused scalmalloy®: a review. Crystals, 15:25, Dec 2024. URL: https://doi.org/10.3390/cryst15010025, doi:10.3390/cryst15010025. This article has 17 citations.
+
+4. (cerri2024mainheattreatments pages 16-18): Emanuela Cerri, Lorenzo Curti, and Emanuele Ghio. Main heat treatments currently applied on laser powder bed-fused scalmalloy®: a review. Crystals, 15:25, Dec 2024. URL: https://doi.org/10.3390/cryst15010025, doi:10.3390/cryst15010025. This article has 17 citations.
+
+5. (mehta2021laserpowderbed pages 7-10): Bharat Mehta, Arvid Svanberg, and Lars Nyborg. Laser powder bed fusion of an al-mg-sc-zr alloy: manufacturing, peak hardening response and thermal stability at peak hardness. Metals, 12:57, Dec 2021. URL: https://doi.org/10.3390/met12010057, doi:10.3390/met12010057. This article has 21 citations.
+
+6. (US20220186346A1 pages 1-4): Frank Palm. Cr-rich al alloy with high compressive and shear strength. Patent (WO,EP,US,CN,JP,KR,DE), 2022.
+
+7. (US20220168811A1 pages 4-5): Frank Palm. Aluminium alloy and process for additive manufacture of lightweight components. Patent (WO,EP,US,CN,JP,KR,DE), 2022.
+
+8. (US20240082913A1 pages 46-48): John H. Martin. Additive manufacturing with nanofunctionalized precursors. Patent (WO,EP,US,CN), 2024.
+
+9. (US11919085B2 pages 31-34): John H. Martin. Additive manufacturing with nanofunctionalized precursors. Patent (WO,EP,US,CN), 2024.
+
+10. (US11053571B2 pages 32-33): John H. Martin. Aluminum with grain refiners, and methods for making and using the same. Patent (WO,EP,US,CN), 2021.
+
+11. (US11286543B2 pages 32-33): John H. Martin. Aluminum alloy components from additive manufacturing. Patent (US), 2022.
+
+12. (US11578389B2 pages 30-33): John H. Martin. Aluminum alloy feedstocks for additive manufacturing. Patent (US), 2023.
+
+13. (US11578389B2 pages 7-10): John H. Martin. Aluminum alloy feedstocks for additive manufacturing. Patent (US), 2023.
+
+14. (US11603583B2 pages 18-20): Nhon Q. Vo. Ribbons and powders from high strength corrosion resistant aluminum alloys. Patent (WO,EP,US,CN,JP), 2023.
+
+15. (US11603583B2 pages 6-9): Nhon Q. Vo. Ribbons and powders from high strength corrosion resistant aluminum alloys. Patent (WO,EP,US,CN,JP), 2023.
+
+16. (US11603583B2 pages 1-4): Nhon Q. Vo. Ribbons and powders from high strength corrosion resistant aluminum alloys. Patent (WO,EP,US,CN,JP), 2023.
+
+17. (US10941473B2 pages 21-22): David R. Snyder. Aluminum alloys. Patent (WO,EP,US,JP), 2021.
+
+18. (US20210254196A1 pages 11-12): Joseph R. Croteau. High-performance al-zn-mg-zr base aluminum alloys for welding and additive …. Patent (WO,EP,US,CN,JP,KR), 2021.
+
+19. (US20210254196A1 pages 1-10): Joseph R. Croteau. High-performance al-zn-mg-zr base aluminum alloys for welding and additive …. Patent (WO,EP,US,CN,JP,KR), 2021.
+
+20. (US20260002237A1 pages 55-57): Seyedeh Mohadeseh Taheri Mousavi. Methodologies for formulating compositions, including aluminum alloys with high …. Patent (WO,US), 2026.
+
+21. (US20260002237A1 pages 29-32): Seyedeh Mohadeseh Taheri Mousavi. Methodologies for formulating compositions, including aluminum alloys with high …. Patent (WO,US), 2026.
+
+22. (WO2020095009A2 pages 1-4): Bechir CHEHAB. Method for manufacturing an aluminum alloy part. Patent (WO), 2020.
+
+23. (CA3162961C pages 1-3): Viktor Khrist'yanovich MANN. Heat-resistant aluminium powder material. Patent (WO,EP,US,CN,JP,CA,RU), 2024.
+
+24. (CA3162961C pages 3-5): Viktor Khrist'yanovich MANN. Heat-resistant aluminium powder material. Patent (WO,EP,US,CN,JP,CA,RU), 2024.
+
+25. (CA3162961C pages 8-9): Viktor Khrist'yanovich MANN. Heat-resistant aluminium powder material. Patent (WO,EP,US,CN,JP,CA,RU), 2024.
+
+26. (US11976343B2 pages 7-9): Paul ROMETSCH. High strength aluminium alloy for rapid solidification manufacturing processes. Patent (WO,EP,US,CN,JP,AU,CA,EA,IL,MX,SA,SG,UA,ZA), 2024.
+
+27. (US11976343B2 pages 9-12): Paul ROMETSCH. High strength aluminium alloy for rapid solidification manufacturing processes. Patent (WO,EP,US,CN,JP,AU,CA,EA,IL,MX,SA,SG,UA,ZA), 2024.
+
+28. (US11976343B2 pages 14-16): Paul ROMETSCH. High strength aluminium alloy for rapid solidification manufacturing processes. Patent (WO,EP,US,CN,JP,AU,CA,EA,IL,MX,SA,SG,UA,ZA), 2024.
+
+29. (US11976343B2 pages 16-17): Paul ROMETSCH. High strength aluminium alloy for rapid solidification manufacturing processes. Patent (WO,EP,US,CN,JP,AU,CA,EA,IL,MX,SA,SG,UA,ZA), 2024.
+
+30. (US20160138400A1 pages 1-4): Lynette M. Karabin. Aluminum alloys having iron, silicon, vanadium and copper. Patent (WO,EP,US,CN,JP,KR,CA), 2016.
+
+31. (US20160138400A1 pages 6-7): Lynette M. Karabin. Aluminum alloys having iron, silicon, vanadium and copper. Patent (WO,EP,US,CN,JP,KR,CA), 2016.
+
+32. (WO2018052517A9 pages 12-15): David Weiss. Additive manufacturing methods using aluminum-rare earth alloys and products …. Patent (WO,US), 2019.
+
+33. (WO2018052517A9 pages 38-40): David Weiss. Additive manufacturing methods using aluminum-rare earth alloys and products …. Patent (WO,US), 2019.
+
+34. (WO2018052517A9 pages 36-38): David Weiss. Additive manufacturing methods using aluminum-rare earth alloys and products …. Patent (WO,US), 2019.
+
+35. (WO2018052517A9 pages 23-25): David Weiss. Additive manufacturing methods using aluminum-rare earth alloys and products …. Patent (WO,US), 2019.
+
+36. (WO2018052517A9 pages 34-36): David Weiss. Additive manufacturing methods using aluminum-rare earth alloys and products …. Patent (WO,US), 2019.
+
+37. (US12305267B2 pages 7-9): Orlando RIOS. Rapidly solidified aluminum-rare earth element alloy and method of making the …. Patent (WO,US), 2025.
+
+38. (US12305267B2 pages 37-39): Orlando RIOS. Rapidly solidified aluminum-rare earth element alloy and method of making the …. Patent (WO,US), 2025.
+
+39. (guo2022microstructureandmechanical pages 10-11): Yanwu Guo, Wu Wei, Wei Shi, Xiaorong Zhou, Shengping Wen, Xiaolan Wu, Kunyuan Gao, Dongyun Zhang, Peng Qi, Hui Huang, and Zuoren Nie. Microstructure and mechanical properties of al-mg-mn-er-zr alloys fabricated by laser powder bed fusion. Materials &amp; Design, 222:111064, Oct 2022. URL: https://doi.org/10.1016/j.matdes.2022.111064, doi:10.1016/j.matdes.2022.111064. This article has 60 citations and is from a highest quality peer-reviewed journal.
+
+40. (guo2022microstructureandmechanical pages 1-2): Yanwu Guo, Wu Wei, Wei Shi, Xiaorong Zhou, Shengping Wen, Xiaolan Wu, Kunyuan Gao, Dongyun Zhang, Peng Qi, Hui Huang, and Zuoren Nie. Microstructure and mechanical properties of al-mg-mn-er-zr alloys fabricated by laser powder bed fusion. Materials &amp; Design, 222:111064, Oct 2022. URL: https://doi.org/10.1016/j.matdes.2022.111064, doi:10.1016/j.matdes.2022.111064. This article has 60 citations and is from a highest quality peer-reviewed journal.
+
+41. (US12104237B2 pages 1-4): Amir Rezaei Farkoosh. Ultra-strong aluminum alloys for ambient and high-temperature applications. Patent (US), 2024.
+
+42. (US12104237B2 pages 17-20): Amir Rezaei Farkoosh. Ultra-strong aluminum alloys for ambient and high-temperature applications. Patent (US), 2024.
+
+43. (cerri2024mainheattreatments pages 2-5): Emanuela Cerri, Lorenzo Curti, and Emanuele Ghio. Main heat treatments currently applied on laser powder bed-fused scalmalloy®: a review. Crystals, 15:25, Dec 2024. URL: https://doi.org/10.3390/cryst15010025, doi:10.3390/cryst15010025. This article has 17 citations.
+
+44. (US20240082913A1 pages 64-66): John H. Martin. Additive manufacturing with nanofunctionalized precursors. Patent (WO,EP,US,CN), 2024.
+
+45. (US20260002237A1 pages 1-4): Seyedeh Mohadeseh Taheri Mousavi. Methodologies for formulating compositions, including aluminum alloys with high …. Patent (WO,US), 2026.
+
+46. (CA3162961C pages 5-8): Viktor Khrist'yanovich MANN. Heat-resistant aluminium powder material. Patent (WO,EP,US,CN,JP,CA,RU), 2024.
+
+47. (US20160138400A1 pages 4-5): Lynette M. Karabin. Aluminum alloys having iron, silicon, vanadium and copper. Patent (WO,EP,US,CN,JP,KR,CA), 2016.
+
+48. (EP2766136B1 pages 1-2): Frank Palm. Surface passivation of aluminium-containing powder. Patent (WO,EP,DE), 2019.
+
+49. (US11919085B2 pages 18-20): John H. Martin. Additive manufacturing with nanofunctionalized precursors. Patent (WO,EP,US,CN), 2024.
+
+50. (EP2766136B1 pages 2-3): Frank Palm. Surface passivation of aluminium-containing powder. Patent (WO,EP,DE), 2019.
+
+51. (US11976343B2 pages 4-7): Paul ROMETSCH. High strength aluminium alloy for rapid solidification manufacturing processes. Patent (WO,EP,US,CN,JP,AU,CA,EA,IL,MX,SA,SG,UA,ZA), 2024.
+
+52. (US11578389B2 pages 1-4): John H. Martin. Aluminum alloy feedstocks for additive manufacturing. Patent (US), 2023.
+
+53. (US11578389B2 pages 4-7): John H. Martin. Aluminum alloy feedstocks for additive manufacturing. Patent (US), 2023.
+
+54. (US11976343B2 pages 1-4): Paul ROMETSCH. High strength aluminium alloy for rapid solidification manufacturing processes. Patent (WO,EP,US,CN,JP,AU,CA,EA,IL,MX,SA,SG,UA,ZA), 2024.

@@ -1,0 +1,67 @@
+1. (eriksson2021highdimensionalbayesianoptimization pages 3-4): David Eriksson and Martin Jankowiak. High-dimensional bayesian optimization with sparse axis-aligned subspaces. Preprint, Jan 2021. URL: https://doi.org/10.48550/arxiv.2103.00349, doi:10.48550/arxiv.2103.00349. This article has 369 citations.
+
+2. (eriksson2021highdimensionalbayesianoptimization pages 13-14): David Eriksson and Martin Jankowiak. High-dimensional bayesian optimization with sparse axis-aligned subspaces. Preprint, Jan 2021. URL: https://doi.org/10.48550/arxiv.2103.00349, doi:10.48550/arxiv.2103.00349. This article has 369 citations.
+
+3. (eriksson2021highdimensionalbayesianoptimization pages 16-17): David Eriksson and Martin Jankowiak. High-dimensional bayesian optimization with sparse axis-aligned subspaces. Preprint, Jan 2021. URL: https://doi.org/10.48550/arxiv.2103.00349, doi:10.48550/arxiv.2103.00349. This article has 369 citations.
+
+4. (papenmeier2023increasingthescope pages 6-8): Leonard Papenmeier, Luigi Nardi, and Matthias Poloczek. Increasing the scope as you learn: adaptive bayesian optimization in nested subspaces. ArXiv, Apr 2023. URL: https://doi.org/10.48550/arxiv.2304.11468, doi:10.48550/arxiv.2304.11468. This article has 105 citations.
+
+5. (hvarfner2402vanillabayesianoptimization pages 6-7): Carl Hvarfner, Erik Orm Hellsten, and Luigi Nardi. Vanilla bayesian optimization performs great in high dimensions. ArXiv, Feb 2024. URL: https://doi.org/10.48550/arxiv.2402.02229, doi:10.48550/arxiv.2402.02229. This article has 206 citations.
+
+6. (xu2402standardgaussianprocess pages 8-9): Zhitong Xu, Haitao Wang, Jeff M Phillips, and Shandian Zhe. Standard gaussian process is all you need for high-dimensional bayesian optimization. ArXiv, Feb 2024. URL: https://doi.org/10.48550/arxiv.2402.02746, doi:10.48550/arxiv.2402.02746. This article has 75 citations.
+
+7. (baird2203highdimensionalbayesianoptimization pages 1-2): Sterling G. Baird, Marianne Liu, and Taylor D. Sparks. High-dimensional bayesian optimization of hyperparameters for an attention-based network to predict materials property: a case study on crabnet using ax and saasbo. Text, Jan 2022. URL: https://doi.org/10.48550/arxiv.2203.12597, doi:10.48550/arxiv.2203.12597. This article has 2 citations and is from a peer-reviewed journal.
+
+8. (baird2022highdimensionalbayesianoptimizationa pages 1-2): Sterling G. Baird, Marianne Liu, and Taylor D. Sparks. High-dimensional bayesian optimization of 23 hyperparameters over 100 iterations for an attention-based network to predict materials property: a case study on crabnet using ax platform and saasbo. Computational Materials Science, 211:111505, Aug 2022. URL: https://doi.org/10.1016/j.commatsci.2022.111505, doi:10.1016/j.commatsci.2022.111505. This article has 38 citations and is from a domain leading peer-reviewed journal.
+
+9. (eriksson2021highdimensionalbayesianoptimization pages 5-6): David Eriksson and Martin Jankowiak. High-dimensional bayesian optimization with sparse axis-aligned subspaces. Preprint, Jan 2021. URL: https://doi.org/10.48550/arxiv.2103.00349, doi:10.48550/arxiv.2103.00349. This article has 369 citations.
+
+10. (eriksson2021highdimensionalbayesianoptimization pages 9-10): David Eriksson and Martin Jankowiak. High-dimensional bayesian optimization with sparse axis-aligned subspaces. Preprint, Jan 2021. URL: https://doi.org/10.48550/arxiv.2103.00349, doi:10.48550/arxiv.2103.00349. This article has 369 citations.
+
+11. (hvarfner2402vanillabayesianoptimization pages 4-5): Carl Hvarfner, Erik Orm Hellsten, and Luigi Nardi. Vanilla bayesian optimization performs great in high dimensions. ArXiv, Feb 2024. URL: https://doi.org/10.48550/arxiv.2402.02229, doi:10.48550/arxiv.2402.02229. This article has 206 citations.
+
+12. (hvarfner2402vanillabayesianoptimization pages 5-6): Carl Hvarfner, Erik Orm Hellsten, and Luigi Nardi. Vanilla bayesian optimization performs great in high dimensions. ArXiv, Feb 2024. URL: https://doi.org/10.48550/arxiv.2402.02229, doi:10.48550/arxiv.2402.02229. This article has 206 citations.
+
+13. (eriksson2021highdimensionalbayesianoptimization pages 4-5): David Eriksson and Martin Jankowiak. High-dimensional bayesian optimization with sparse axis-aligned subspaces. Preprint, Jan 2021. URL: https://doi.org/10.48550/arxiv.2103.00349, doi:10.48550/arxiv.2103.00349. This article has 369 citations.
+
+14. (hvarfner2402vanillabayesianoptimization pages 8-10): Carl Hvarfner, Erik Orm Hellsten, and Luigi Nardi. Vanilla bayesian optimization performs great in high dimensions. ArXiv, Feb 2024. URL: https://doi.org/10.48550/arxiv.2402.02229, doi:10.48550/arxiv.2402.02229. This article has 206 citations.
+
+15. (xu2402standardgaussianprocess pages 1-2): Zhitong Xu, Haitao Wang, Jeff M Phillips, and Shandian Zhe. Standard gaussian process is all you need for high-dimensional bayesian optimization. ArXiv, Feb 2024. URL: https://doi.org/10.48550/arxiv.2402.02746, doi:10.48550/arxiv.2402.02746. This article has 75 citations.
+
+16. (xu2402standardgaussianprocess pages 9-11): Zhitong Xu, Haitao Wang, Jeff M Phillips, and Shandian Zhe. Standard gaussian process is all you need for high-dimensional bayesian optimization. ArXiv, Feb 2024. URL: https://doi.org/10.48550/arxiv.2402.02746, doi:10.48550/arxiv.2402.02746. This article has 75 citations.
+
+17. (xu2402standardgaussianprocess pages 4-6): Zhitong Xu, Haitao Wang, Jeff M Phillips, and Shandian Zhe. Standard gaussian process is all you need for high-dimensional bayesian optimization. ArXiv, Feb 2024. URL: https://doi.org/10.48550/arxiv.2402.02746, doi:10.48550/arxiv.2402.02746. This article has 75 citations.
+
+18. (papenmeier2023increasingthescope pages 1-3): Leonard Papenmeier, Luigi Nardi, and Matthias Poloczek. Increasing the scope as you learn: adaptive bayesian optimization in nested subspaces. ArXiv, Apr 2023. URL: https://doi.org/10.48550/arxiv.2304.11468, doi:10.48550/arxiv.2304.11468. This article has 105 citations.
+
+19. (hastings2026leveragingdomainknowledge pages 4-5): Trevor Hastings, James D. Paramore, Brady G. Butler, and R. Arróyave. Leveraging domain knowledge for optimal initialization in bayesian materials optimization. Digital Discovery, 5:277-289, Jan 2026. URL: https://doi.org/10.1039/d5dd00361j, doi:10.1039/d5dd00361j. This article has 4 citations and is from a peer-reviewed journal.
+
+20. (hastings2026leveragingdomainknowledge pages 11-13): Trevor Hastings, James D. Paramore, Brady G. Butler, and R. Arróyave. Leveraging domain knowledge for optimal initialization in bayesian materials optimization. Digital Discovery, 5:277-289, Jan 2026. URL: https://doi.org/10.1039/d5dd00361j, doi:10.1039/d5dd00361j. This article has 4 citations and is from a peer-reviewed journal.
+
+21. (hastings2026leveragingdomainknowledge pages 3-4): Trevor Hastings, James D. Paramore, Brady G. Butler, and R. Arróyave. Leveraging domain knowledge for optimal initialization in bayesian materials optimization. Digital Discovery, 5:277-289, Jan 2026. URL: https://doi.org/10.1039/d5dd00361j, doi:10.1039/d5dd00361j. This article has 4 citations and is from a peer-reviewed journal.
+
+22. (ruza2025autonomousdiscoveryofa pages 1-4): Jurğis Ruža, Michael A. Stolberg, Sawyer Cawthern, Jeremiah A. Johnson, Yang Shao-Horn, and Rafael Gómez-Bombarelli. Autonomous discovery of polymer electrolyte formulations with warm-start batch bayesian optimization. Chemistry of Materials, 37:7771-7777, Sep 2025. URL: https://doi.org/10.1021/acs.chemmater.5c01209, doi:10.1021/acs.chemmater.5c01209. This article has 29 citations and is from a highest quality peer-reviewed journal.
+
+23. (poloczek2016warmstartingbayesian pages 12-14): Warm starting Bayesian optimization This article has 98 citations.
+
+24. (wu2024racetothe pages 11-11): Yifan Wu, Aron Walsh, and Alex Ganose. Race to the bottom: bayesian optimisation for chemical problems. Digital Discovery, Dec 2024. URL: https://doi.org/10.1039/d3dd00234a, doi:10.1039/d3dd00234a. This article has 122 citations and is from a peer-reviewed journal.
+
+25. (yu2026efficientandprincipled pages 19-21): Zhong-Wei Yu, Rasul Tutunov, A. Maraval, Zi-Kai Xie, Zhen-Zhi Tan, Jian-Kang Wang, Bin Cao, Zijing Li, Liangliang Xu, Qi Yang, Junze Jiang, Sanzhong Luo, Zhenxi Guo, Tong Zhang, H. Bou-Ammar, and Jun Wang. Efficient and principled scientific discovery through bayesian optimization: a tutorial. ArXiv, Apr 2026. URL: https://doi.org/10.48550/arxiv.2604.01328, doi:10.48550/arxiv.2604.01328. This article has 3 citations.
+
+26. (yu2026efficientandprincipled pages 21-23): Zhong-Wei Yu, Rasul Tutunov, A. Maraval, Zi-Kai Xie, Zhen-Zhi Tan, Jian-Kang Wang, Bin Cao, Zijing Li, Liangliang Xu, Qi Yang, Junze Jiang, Sanzhong Luo, Zhenxi Guo, Tong Zhang, H. Bou-Ammar, and Jun Wang. Efficient and principled scientific discovery through bayesian optimization: a tutorial. ArXiv, Apr 2026. URL: https://doi.org/10.48550/arxiv.2604.01328, doi:10.48550/arxiv.2604.01328. This article has 3 citations.
+
+27. (khatamsaz2023bayesianoptimizationwith pages 1-2): Danial Khatamsaz, Brent Vela, Prashant Singh, Duane D. Johnson, Douglas Allaire, and Raymundo Arróyave. Bayesian optimization with active learning of design constraints using an entropy-based approach. npj Computational Materials, 9:1-14, Apr 2023. URL: https://doi.org/10.1038/s41524-023-01006-7, doi:10.1038/s41524-023-01006-7. This article has 151 citations and is from a peer-reviewed journal.
+
+28. (desimpel2026bayesianoptimizationfor pages 12-13): Stefan Desimpel, Matthieu Dorbec, Kevin M. Van Geem, and Christian V. Stevens. Bayesian optimization for chemical reactions. Chemical Society Reviews, 55:2731-2775, Jan 2026. URL: https://doi.org/10.1039/d5cs00962f, doi:10.1039/d5cs00962f. This article has 56 citations and is from a highest quality peer-reviewed journal.
+
+29. (dai2023batchbayesianoptimization pages 9-10): Zhongxiang Dai, Quoc Phong Nguyen, Sebastian Shenghong Tay, Daisuke Urano, Richalynn Leong, Bryan Kian Hsiang Low, and Patrick Jaillet. Batch bayesian optimization for replicable experimental design. ArXiv, Nov 2023. URL: https://doi.org/10.48550/arxiv.2311.01195, doi:10.48550/arxiv.2311.01195. This article has 15 citations.
+
+30. (dai2022samplethenoptimizebatchneural pages 2-4): Zhongxiang Dai, Yao Shu, Bryan Kian Hsiang Low, and Patrick Jaillet. Sample-then-optimize batch neural thompson sampling. ArXiv, Oct 2022. URL: https://doi.org/10.48550/arxiv.2210.06850, doi:10.48550/arxiv.2210.06850. This article has 40 citations.
+
+31. (hvarfner2026pitfallsandremedies pages 1-3): Carl Hvarfner, Sam Daulton, Maximilian Balandat, and E. Bakshy. Pitfalls and remedies for multi-task bayesian optimization. ArXiv, Jul 2026. URL: https://doi.org/10.48550/arxiv.2607.09073, doi:10.48550/arxiv.2607.09073. This article has 2 citations.
+
+32. (bai2023transferlearningfor pages 13-15): Tianyi Bai, Yang Li, Yu Shen, Xinyi Zhang, Wentao Zhang, and Bin Cui. Transfer learning for bayesian optimization: a survey. ArXiv, Feb 2023. URL: https://doi.org/10.48550/arxiv.2302.05927, doi:10.48550/arxiv.2302.05927. This article has 87 citations.
+
+33. (ruza2025autonomousdiscoveryof pages 1-4): Jurgis Ruza, Michael Stolberg, Sawyer Cawthern, Jeremiah Johnson, Yang Shao-Horn, and Rafael Gomez-Bombarelli. Autonomous discovery of polymer electrolyte formulations with warm-start batch bayesian optimization. Apr 2025. URL: https://doi.org/10.26434/chemrxiv-2025-2cjbg, doi:10.26434/chemrxiv-2025-2cjbg. This article has 3 citations.
+
+34. (hastings2026leveragingdomainknowledge pages 7-8): Trevor Hastings, James D. Paramore, Brady G. Butler, and R. Arróyave. Leveraging domain knowledge for optimal initialization in bayesian materials optimization. Digital Discovery, 5:277-289, Jan 2026. URL: https://doi.org/10.1039/d5dd00361j, doi:10.1039/d5dd00361j. This article has 4 citations and is from a peer-reviewed journal.
