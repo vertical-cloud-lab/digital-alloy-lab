@@ -6,7 +6,7 @@ Reads results/<cell>/<scenario>/<strategy>_s<seed>.json. Scores are the best all
 (true objective of the best design carried through every test) as a % of the cell's true optimum
 (optima.json). Strategies that ignore failure labels (drop, abandon, partial) give the same run in
 `mislabel` as in `mixed` (same failure draws), so their `mixed` runs stand in for them there; the
-same holds in `transient` for viab_x and viab_x_partial (= drop) and impute (= viab_node).
+same holds in `transient` for viab_x (= drop) and impute, impute_extreme, keep and viab_x_partial (= viab_node).
 """
 
 from __future__ import annotations
@@ -29,9 +29,10 @@ LABEL = {"nofail": "no failures (reference)", "drop": "drop (all FAILED)", "aban
          "keep": "keep partial data, nothing pending", "impute": "impute worst value", "impute_extreme": "impute far below the worst", "viab_x": "viability on x (Ax 1.3)",
          "viab_x_partial": "viability on x + fit_abandoned", "viab_node": "node-level viability", "viab_node_ec": "node-level viability + failure-priced EI"}
 # strategies that ignore labels run identically in `mislabel` and `mixed` (same failure draws); in `transient`,
-# viab_x and viab_x_partial reduce to drop, and impute, keep and viab_node coincide
+# viab_x reduces to drop, and impute, impute_extreme, keep, viab_x_partial (fit_abandoned keeps FAILED runs' data)
+# and viab_node coincide
 STAND_IN = {"mislabel": {"drop": "mixed", "abandon": "mixed", "partial": "mixed", "keep": "mixed", "nofail": "mixed"},
-            "transient": {"viab_x": ("transient", "drop"), "viab_x_partial": ("transient", "drop"), "impute": ("transient", "viab_node"), "impute_extreme": ("transient", "viab_node"),
+            "transient": {"viab_x": ("transient", "drop"), "viab_x_partial": ("transient", "viab_node"), "impute": ("transient", "viab_node"), "impute_extreme": ("transient", "viab_node"),
                           "keep": ("transient", "viab_node"), "nofail": "mixed"}}
 BUDGETS = (25_000, 50_000, 100_000)
 

@@ -34,8 +34,9 @@ in what they do with a failed run, named for the Ax behaviour each mimics:
                     transient fault (per-stage rates from the ledger, Beta(1, 9) prior), divided by
                     the expected cost of a chain that stops at its first blocking failure.
 
-`run(..., reuse=False)` is the full-pipeline policy (the source `eifn`): every decision is a new
-design taken through every stage.
+`run(..., reuse=False)` is a full-pipeline policy: every decision is a new design taken through every
+stage, scored by the same network EI on the same pool (the source `eifn` also has a local refinement
+step, which this leaves out).
 
 A run is "blocked" when a failure stops it before the objective is measured; the copper small-DED
 step (Utah) is a side screen, so its failure doesn't block. CALPHAD is a simulation that never
@@ -611,7 +612,7 @@ def run(net, strategy: str, scenario: str, kappa: float, seed: int, budget: floa
     else:
         full_cost = COSTS["C"] + COSTS["A"] + COSTS["L"] + COSTS["T"]
         cheapest = COSTS["L"] + COSTS["T"]
-    if not reuse:  # full-pipeline BOFN (the source `eifn`): every decision is a new design through every stage
+    if not reuse:  # full-pipeline BOFN: every decision is a new design through every stage
         cheapest = full_cost
     curve = [dict(spent=0.0, best=max(v for _, v in d.full), action="init")]
     it = 0

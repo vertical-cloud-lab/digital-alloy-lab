@@ -65,10 +65,13 @@ failures switched off. Every number is in [`tables.md`](tables.md).*
    against 75 % without failures, while `drop` (Ax's `FAILED`, which discards them) ends at 59 %
    (−11 points against node-level viability, 7 wins and 5 losses, not significant). Abandoning a
    design for good after one bad plate cost nothing measurable in either network.
-6. **Wrong labels cost a few points.** With 30 % of the transient / input-caused labels wrong, the
-   strategies that read labels lose 2 to 4 points on aluminum at `kappa = 1` (node-level viability
-   90 % → 87 %, Ax's viability on x 89 % → 85 %, imputing the worst value 86 % → 82 %), and stay
-   17 or more points above the strategies without a failure model.
+6. **Wrong labels cost a few points, least for node-level viability.** With 30 % of the transient /
+   input-caused labels wrong, node-level viability loses at most 3 points in any cell and has the best
+   mean rank over the cells (1.8). Ax's viability on x loses up to 10 points (copper physics truth,
+   86 % → 76 %) and ends 6.4 points behind node-level viability pooled (90 % CI +0.1 to +12.5;
+   p = 0.035, Holm 0.14). Imputing the worst value loses up to 9 (aluminum at `kappa = 0`,
+   80 % → 72 %) and is level with node-level viability pooled (+0.5). All of them stay 24 to 26
+   points above the strategies without a failure model (Holm p < 1e-4).
 7. **Ax ≥ 1.2.4's partial data doesn't help on its own.** `partial` against `abandon` and `drop` is
    within noise in every cell. Whether it helps alongside a failure model isn't settled either:
    `viab_x_partial` against `viab_x` goes both ways. A node-level model needs it all the same, since
@@ -98,8 +101,8 @@ campaign (mean ± SE).*
 
 *The same strategies with both kinds of failure labelled correctly, with 30 % of labels wrong, and
 with transient faults only. Strategies that don't read labels run identically in the first two; in
-the third, `keep`, `impute` and node-level viability are the same campaign, as are `drop` and both
-viability-on-x variants.*
+the third, `keep`, both imputations, viability on x with `fit_abandoned` and node-level viability are
+the same campaign, as are `drop` and viability on x.*
 
 ![Learnability of the viability models](figures/bofn_failures_classifier.png)
 
@@ -112,13 +115,46 @@ viability-on-x variants.*
 |---|---|---|
 | H1 | `drop` does worst, with the most repeats | **Not as stated.** `drop` is bad, but so are `abandon`, `partial` and `keep`; which of the four is lowest changes with the cell (`keep` on aluminum, `abandon` on copper). |
 | H2 | Keeping completed stages helps (`partial` ≥ `abandon`, `viab_x_partial` ≥ `viab_x`) | **Not supported.** Both differences are within noise in every cell; `viab_x_partial` was 12.5 points *behind* `viab_x` on aluminum at `kappa = 1` (p = 0.027, not significant after correction), ahead on two of the other three cells and behind on the third. |
-| H3 | Abandoning transient failures costs something | **Not supported** (aluminum −0.1 points, copper +0.1 against node-level viability). Discarding their data (`drop`) is what cost points, on copper. |
+| H3 | Abandoning transient failures costs something | **Not supported**: `abandon` ends level with node-level viability in both networks (+0.1 points each). Discarding the failed runs' data (`drop`) is what cost points, on copper. |
 | H4 | A failure model means fewer input-caused failures than `partial` | **Supported** in every cell (aluminum at `kappa = 1`: 8.6 to 11.3 against 20.9). |
 | H5 | Node-level viability ≥ viability on x with `fit_abandoned`, with fewer failures | **Same direction, not significant**: +5.1 points pooled (p = 0.028, Holm 0.14), similar failure counts. |
-| H6 | `impute` competitive with correct labels, and hurt more by mislabels | **First half supported** (pooled −0.8 against node-level viability); **second half not** for the worst-value imputation. The extreme version shows it on aluminum but not on copper (above). |
+| H6 | `impute` competitive with correct labels, and hurt more by mislabels | **First half supported** (pooled −0.8 against node-level viability). **Second half weakly**: worst-value imputation lost more than node-level viability in two cells of four (most on aluminum at `kappa = 0`, −9 against +2), and pooled it moves from 0.8 ahead to 0.5 behind. The extreme version shows it clearly on aluminum, not on copper. |
 | H7 | Every strategy ends below the no-failure reference | **Not supported**: imputation and failure-priced node-level viability end above it on the copper physics truth and imputation on aluminum at `kappa = 0` (none significantly). A likely reason: failures here happen where alloys are poor, so a model of them steers the search away from poor regions about as well as measured low values do, and sometimes sooner. |
 
-<!-- SCENARIOS -->
+### The other scenarios and the full-pipeline check
+
+Best alloy demonstrated after $100k, % of the optimum (mean ± SE; strategies that don't read labels
+repeat their `mixed` numbers in the mislabelled columns; in the transient-only column, `keep`, both
+imputations, viability on x with `fit_abandoned` and node-level viability are one campaign, as are
+`drop` and viability on x):
+
+| Strategy | Cu hand-written, 30 % mislabelled | Cu hand-written, transient only | Cu physics, 30 % mislabelled | Al κ=0, 30 % mislabelled | Al κ=1, full pipeline | Cu hand-written, full pipeline |
+|---|---|---|---|---|---|---|
+| no failures (reference) | 75 ± 7 (n=16) | 75 ± 7 (n=16) | 82 ± 6 (n=12) | 77 ± 7 (n=16) | 82 ± 6 (n=12) | 53 ± 11 (n=12) |
+| drop (all FAILED) | 55 ± 9 (n=16) | 59 ± 10 (n=12) | 72 ± 10 (n=12) | 24 ± 5 (n=16) | 70 ± 9 (n=12) | 60 ± 11 (n=12) |
+| abandon (all ABANDONED) | 45 ± 10 (n=16) | 70 ± 7 (n=12) | 54 ± 13 (n=12) | 38 ± 8 (n=16) | 73 ± 7 (n=12) | 59 ± 11 (n=12) |
+| partial (Ax >= 1.2.4, pending) | 49 ± 10 (n=16) | 70 ± 8 (n=12) | 59 ± 12 (n=12) | 36 ± 8 (n=16) | 62 ± 10 (n=12) | 55 ± 10 (n=12) |
+| keep partial data, nothing pending | 65 ± 7 (n=16) | 70 ± 7 (n=12) | 74 ± 10 (n=12) | 22 ± 5 (n=16) | – | – |
+| impute worst value | 64 ± 10 (n=12) | 70 ± 7 (n=12) | 88 ± 2 (n=12) | 72 ± 6 (n=16) | 82 ± 4 (n=12) | 68 ± 5 (n=12) |
+| impute far below the worst | 65 ± 5 (n=12) | 70 ± 7 (n=12) | – | – | – | – |
+| viability on x (Ax 1.3) | 58 ± 11 (n=12) | 59 ± 10 (n=12) | 76 ± 8 (n=12) | 59 ± 5 (n=16) | 82 ± 4 (n=12) | 58 ± 11 (n=12) |
+| viability on x + fit_abandoned | 76 ± 3 (n=12) | 70 ± 7 (n=12) | 76 ± 7 (n=12) | 63 ± 8 (n=16) | – | – |
+| node-level viability | 70 ± 9 (n=12) | 70 ± 7 (n=12) | 80 ± 7 (n=12) | 68 ± 8 (n=16) | 77 ± 6 (n=12) | 70 ± 8 (n=12) |
+| node-level viability + failure-priced EI | 75 ± 6 (n=12) | – | – | – | – | – |
+
+- **Wrong labels:** point 6 above. Pooled over the four cells, node-level viability beats `drop`,
+  `abandon`, `partial` and `keep` by 24 to 26 points (60 matched campaigns, Holm p < 1e-4).
+- **Transient faults only, copper:** point 5 above. The strategies that keep a failed run's data end
+  at 70 % against 75 % without failures; `drop` and viability on x, which discard it (Ax `FAILED`),
+  at 59 %.
+- **Full pipeline (no lot reuse, 12 seeds).** The failure-model strategies still lead. On aluminum,
+  Ax's viability on x and worst-value imputation end at the no-failure level (82 %), against 62 % to
+  73 % without a failure model; node-level viability reaches 77 % (−4.9 against viability on x, not
+  significant). On copper, where this policy's no-failure runs reach only 53 %, node-level viability
+  and imputation reach 70 % and 68 % against 55 % to 60 %. On aluminum there are no repeated
+  failures without lot reuse, against about 9 a campaign for `drop` and `keep` with it: reprinting the
+  lots of failed runs is how an unmodelled failure repeats.
+
 
 ## What to do in the lab
 
@@ -160,7 +196,7 @@ one status. What each strategy does with a run that stopped early:
 | `keep` | the same, as Ax actually treats it below 100 trials when the arm has any objective or constraint metric | fit | no | none |
 | `impute` | "soft pushing" ([raised on #274](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/274#issuecomment-7053633447); BoTorch maintainers' advice in [#943](https://github.com/meta-pytorch/botorch/issues/943#issuecomment-918802564)): an input-caused failure is recorded as the worst value seen at that stage; a transient one is dropped | fit | no | implicit |
 | `impute_extreme` | the same, but one observed range *below* the worst value: a "terrible result" outside anything measured | fit | no | implicit |
-| `viab_x` | `AddExecutionViability` (1.3.0, opt-in): transient → `FAILED`, input-caused → `ABANDONED`; GP on 0/1 labels over the design, `P(viable) ≥ 0.8` after 3 abandoned runs | not fit | input-caused: yes | over the design `x` |
+| `viab_x` | `AddExecutionViability` (1.3.0, opt-in): transient → `FAILED`, input-caused → `ABANDONED`; a GP on 0/1 labels over the design, constrained to `execution_viable ≥ 0.8` once 3 runs are abandoned | not fit | input-caused: yes | over the design `x` |
 | `viab_x_partial` | the same with `fit_abandoned=True` (every status fit, `FAILED` included) | fit | input-caused: for the stages it lacks | over `x` |
 | `viab_node` | a node-level ledger (proposed in [`bofn-failed-vs-abandoned.md`](../../bofn-failed-vs-abandoned.md) §4) | fit | no | per stage, over that stage's own inputs |
 | `viab_node_ec` | `viab_node`, plus failures priced into the acquisition: EI × P(no transient fault) / expected cost of a chain that stops at its first failure | fit | no | per stage |
@@ -169,9 +205,10 @@ one status. What each strategy does with a run that stopped early:
 Every strategy runs the same search policy, the source benchmarks' best: BOFN with lot reuse
 (`eifn_reuse`: network expected improvement per dollar over new designs and new prints or DED
 sessions on powder lots already made). With failures switched off, every strategy reproduces the
-source run action for action on both networks (`tests/`). A full-pipeline variant (`+full`, every
-decision a new design through every stage, the source `eifn`) checks that the findings are not an
-artefact of lot reuse.
+source run action for action on both networks (`tests/`). A full-pipeline variant (`+full`) checks
+that the findings are not an artefact of lot reuse: every decision is a new design through every
+stage, scored by the same network EI on the same candidate pool. It is not the source `eifn`, which
+adds a local refinement step, so its no-failure runs differ from the source's.
 
 How each Ax behaviour is emulated, and where the emulation is a simplification:
 
@@ -263,6 +300,26 @@ check. Comparisons are on
 matched seeds (same seed data and failure draws): two-sided Wilcoxon signed-rank tests with a Holm
 correction within each cell and scenario, and 90 % bootstrap intervals of the mean difference.
 All tables: [`tables.md`](tables.md); per-run JSON: `results/<cell>/<scenario>/<strategy>_s<seed>.json`.
+
+## Caveats
+
+- **Synthetic, and assumed failures.** The truths are simulators and the failure rates and regions are
+  assumptions (sourced above). A real lab's failure regions may sit closer to its optimum than these
+  do; the Nov 20 toy ([`bofn-failed-vs-abandoned.md`](../../bofn-failed-vs-abandoned.md) §5), where the
+  optimum sits on a failure boundary, is the harsher case.
+- **Ax is emulated, not run.** The strategies reproduce what each Ax status does to the data, the pending
+  set and the viability labels, as checked against Ax's code and by running Ax 1.3.1
+  ([`survey/ax.md`](survey/ax.md)); the BOFN model itself has to run outside Ax. Pending points are a
+  kriging believer, not joint sampling, and Ax's `X_pending` intersection (above) means `keep` is
+  closer to what Ax does below 100 trials than `partial` is.
+- **One search policy**, BOFN with lot reuse, plus a full-pipeline check. Not pKGFN: a failure-aware
+  knowledge gradient (a fantasy over success and failure, `survey/botorch.md` §f4) is the obvious next
+  step.
+- **Noise-free observations**, as in the source benchmarks; `bofn-clocked` (#283) adds measurement
+  noise, time and capacity.
+- **The viability models are GP regressions on 0/1 labels**, as Ax fits them, not classifiers.
+- **12 to 20 seeds per cell.** Differences under about 10 points between failure-model strategies are
+  not resolved; the pooled comparison over cells is the most reliable number.
 
 ## Reproduce
 
