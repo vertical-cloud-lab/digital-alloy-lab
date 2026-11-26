@@ -51,6 +51,9 @@ quantified 17 EDS spectra of a polished Utah coupon in NIST DTSA-II. The standar
 pure Si and MgO, measured on the same SEM and detector. Details are in
 [`eds-standards-alsi10mg-utah/`](eds-standards-alsi10mg-utah/).
 
+The quantification was re-run from the raw spectra with DTSA-II's engine (NIST's EPQ library),
+headless and scripted, and reproduces all 17 results.
+
 - **Valid result.** In the one valid run (5 kV, analytical total 1.03), Mg is 0.35 wt %, inside
   the 0.20-0.45 % specification. Si is 11.1 wt %, at the 11.0 % limit. Standardless EDS of the
   same alloy had given 1.4-1.6 wt % Mg.
@@ -58,7 +61,12 @@ pure Si and MgO, measured on the same SEM and detector. Details are in
   - Most 10-25 kV runs used standards collected at 60-99 % dead time.
   - The 2026-11-18 runs were acquired at a different amp time from the standards (0.96 vs
     7.68 µs). That mismatch alone is enough to explain why their Mg reads about twice as high.
-  - Two runs entered the MgO standard as pure Mg.
+    Re-fitted against standards broadened to their resolution, the four at 5 kV give Mg
+    0.28-0.38 wt % and totals of 1.03-1.07.
+  - Two runs entered the MgO standard as pure Mg. Re-run with MgO, their Mg drops from 0.91 to
+    0.37 and from 0.47 to 0.17 wt %, but they keep the other two problems.
+- **Uncertainty.** DTSA-II's ±0.01 wt % on Mg is counting statistics only. The detector
+  resolution entered in DTSA-II moves Mg by up to 0.09 wt % on the same spectrum.
 - **What it doesn't cover.** It is one run on one area of a printed part. There is no
   standards-based EDS of any powder yet.
 
