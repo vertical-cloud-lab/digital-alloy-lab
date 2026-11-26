@@ -28,12 +28,12 @@ mapping from his byu-vcl feedback to this video's faults is ours.
 | Fault | Check | Where |
 |---|---|---|
 | Motion sickness | jumps per minute, steady-run length and camera speed, measured on the finished MP4's pixels (the 7-second panning rule) | [`cad/robotbuild/video_qa.py`](../cad/robotbuild/video_qa.py) |
-| Motion sickness, assembly chapters | shot length, cuts per minute and camera motion from each frame's recorded camera | `cad/robotbuild/camera_rig.py` |
+| Motion sickness, assembly chapters | shot length, cuts per minute and camera motion from each frame's recorded camera | `cad/robotbuild/asm_render.py`'s camera rig, results in `analysis/out/assembly/camera_rig.json` |
 | Moonwalk, people | stance-foot slip and gliding frames | `cad/robotbuild/walk.py` |
 | Moonwalk, bases | sideways slip, reversing distance, footprint clearance | `cad/robotbuild/scene_audit.py` |
 | Collisions and interference | every drawn frame, pairs deeper than 1.5 mm that aren't allowed contacts | `cad/robotbuild/scene_audit.py` |
 | Dummy tool paths | every drawn cutter position is a line of a posted program; minutes and removed volume against the CAM's own numbers | `cad/robotbuild/gcode_sim.py` |
 | One-armed work | steps with both arms working, holds used, not needed, or not possible, each with its reason | `analysis/assembly/two_hands.py` |
 
-Results are under [`analysis/out/videoqa/`](../analysis/out/videoqa/); [`robot-build/video.md`](../robot-build/video.md) says which of
-these exist and what they found.
+Results are under [`analysis/out/videoqa/`](../analysis/out/videoqa/); [`robot-build/video.md`](../robot-build/video.md) (round 8) says
+what they found on the round-8 cut, including what the frame audit still finds.

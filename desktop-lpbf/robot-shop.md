@@ -9,6 +9,10 @@ This note covers receiving, stock prep, machining, deburring, washing, measuring
 study in this PR (`analysis/assembly/`). Nothing here was built or run on real machines. The shop is a layout made up for
 the check, not a BYU room.
 
+## Round 8 (2026-11-26): no lifter, the real programs
+
+Sterling, 2026-11-26: "I don't think we have a vacuum chuck lift. Probably just a two person job for that part." In round 8 the shop chapters have no jib or vacuum tube lifter: two people lift by hand, each load against a two-person guideline of 2/3 x (23 + 23) = 30.7 kg (NIOSH's load constant, HSE L23's team rule) in [`analysis/out/shop/shop_person.json`](analysis/out/shop/shop_person.json). The plate as delivered (30.0 kg) is carried to a cart for the waterjet (chapter 29); the VF-4 loads are the cored stock (7.7 kg), the part after F-S1 (6.5 kg) and the frame with its plate (10.0 kg). There is no trepan: the programs start from the cored stock. Chapter 30 cuts the chamber with the posted programs ([`analysis/out/machining/gcode/`](analysis/out/machining/gcode/), [`cad/robotbuild/gcode_sim.py`](cad/robotbuild/gcode_sim.py)). The round-7 text below still describes the lifter and the trepan; read it with this note. See [`robot-build/video.md`](robot-build/video.md) round 8.
+
 ## Round 7 (2026-11-25): the shop modelled, every shown motion planned, and the video's shop chapters
 
 Sterling asked for the two mobile manipulators to be shown carrying out the machining and assembly steps, with a person

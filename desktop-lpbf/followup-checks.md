@@ -9,7 +9,11 @@ seal, use Shigley, heat transfer and CalculiX, and say what the machine costs us
 Nothing here has been built, quoted by a shop, or reviewed by BYU's Laser Safety Officer or EHS. Each note below has
 its own sources, assumptions and re-run instructions.
 
-## 0. Round 7 (2026-11-25): the machine built by two mobile manipulators, on video, and where the 287 shop hours go
+## 0. Round 8 (2026-11-26): the robot-build video re-made against "moonwalk, motion sickness, collisions and interference, dummy tool paths"
+
+Every chapter planned and rendered again ([`robot-build/video.md`](robot-build/video.md) round 8; 33 min 17 s). The chamber is cut by its eight posted programs with a voxel material-removal simulation of them ([`gcode_sim.py`](cad/robotbuild/gcode_sim.py)); two people lift by hand (no lifter; the 30.0 kg plate as delivered is inside a 30.7 kg two-person guideline, only just); every MiR move is pivot-drive-pivot (6.9 m of reversing in docking legs, against 402 m in round 7); the assembly is filmed from fixed tripods (6.5 and 10.3 jumps a minute, against 84 and 103); the second arm holds a part on its seal while the first drives the first screws (M19, C04, the lid F30; three more need a hold that Fixture B blocks). Assembly run 12 passes the same 99 of 108 steps as run 11 ([`round8_run12.md`](analysis/out/assembly/round8_run12.md)). A new audit of every drawn frame still finds collisions in chapters 20, 30, 31, 32 and 40 and sliding feet in the shop chapters' two-person carries; they are listed in video.md for the next round.
+
+## 0a. Round 7 (2026-11-25): the machine built by two mobile manipulators, on video, and where the 287 shop hours go
 
 Sterling asked on 2026-11-25 to see two UR12e arms, each on a MiR250, carry out the machining steps and the assembly (screws,
 seals, tightening) from the full set of parts on a long table, with a person only where one is really needed; with accurate

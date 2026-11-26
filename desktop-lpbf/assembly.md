@@ -28,6 +28,10 @@ Nothing here has been built or tried on hardware. The numbers come from the mode
 - the chamber change of [chamber-construction.md](chamber-construction.md): a through-frame and a bolted floor plate with a second 3.53 mm cord;
 - for run 2, two items from this note's patch list: the lid gland's R13 corners and the floor port's lead-in.
 
+## Round 8 (2026-11-26): run 12, two hands, MiRs that drive like MiRs, fixed cameras
+
+Run 12 passes the same steps as run 11 (99 of 108, 124 of 129 screws, 57 of 74 table picks). The placing arm now holds a part on its face seal while the other arm drives the first two screws (M19, C04, F30); F33b, F37b and F43 need the same hold, but arm B's upper arm meets Fixture B; the door before its hinge pins (F51-F52) was not tried. Every MiR move is pivot, drive forward, pivot (167 moves, 6.9 m of reversing in docking legs of at most 0.5 m; 4 moves at F45 and F45b not clear). Run 12 was planned in four processes joined at F29, F39 and F51 (`ASM_FF_UNTIL`, `ASM_CONTINUE`). Details: [`analysis/out/assembly/round8_run12.md`](analysis/out/assembly/round8_run12.md), [`two_hands.json`](analysis/out/assembly/two_hands.json), [`mir_drives.json`](analysis/out/assembly/mir_drives.json); the video: [`robot-build/video.md`](robot-build/video.md) round 8.
+
 ## Round 7 (2026-11-25): the build done by the two arms from the long parts table, recorded, and redesigned where it failed
 
 Sterling, 2026-11-25: "we should see the assembly being carried out **by** two UR12e units each on a MiR250 using the full set
