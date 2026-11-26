@@ -80,7 +80,15 @@ class FailNet3(N3.Net3):
         return "intrinsic"
 
     def _book(self, v):
-        """New attempts since the last call: hide (FAILED), kill (ABANDONED) or queue a retry, by strategy."""
+        """New attempts since the last call: hide (FAILED), kill (ABANDONED) or queue a retry, by strategy. Any change
+        makes ``Net3.propose`` rebuild its candidates (it otherwise waits for a new part, and a hidden lot doesn't
+        change the count it watches)."""
+        before = (len(self.hidden), len(self.dead), len(self.retry_q))
+        self._book_events(v)
+        if (len(self.hidden), len(self.dead), len(self.retry_q)) != before:
+            self._arts = None
+
+    def _book_events(self, v):
         for eid, g in sorted(self._events(v).items()):
             if eid in self._seen_ev:
                 continue
@@ -262,8 +270,9 @@ class FailNet3(N3.Net3):
                 a["_did"], a["_retry_key"] = r["did"], r["key"]
                 if not self.al:
                     a["_promote"] = r["did"]
+                # no 'did' key: Net3._refresh_new keeps only candidates without one when it refreshes new designs
                 R.append(dict(what="retry a failed powder at the same settings", acts=[a], always=True,
-                              did=r["did"]))
+                              retry_did=r["did"]))
             C = R + C
         return C
 

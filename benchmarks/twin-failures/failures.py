@@ -25,6 +25,7 @@ import numpy as np
 
 P_BASE_TWIN = 0.06            # twin/physics.py: the atomizer's chance failure rate at good settings
 PRE_W = None                  # optional: hours a powder action may queue for its charge before the atomizer gate
+RETRY_W = 72.0                # hours a queued rerun may wait for the atomizer's next free slot (strategy 'retry')
 
 # ------------------------------------------------------------------------------------------- the lab's own record
 # DAL PR 286 (atomizer-runs/runs.csv at 8320f13): every logged run of the rePOWDER, Oct 2 to Nov 13 2026, read for
@@ -169,7 +170,18 @@ def _wrap_gate(camp, state, pre_w=PRE_W):
     orig = camp.gate_ok
 
     def gate_ok(a, now_h):
-        if not orig(a, now_h):
+        if a.get("_retry_key") is not None:
+            # a rerun of a failed powder (strategy 'retry') books the atomizer's next free slot up to RETRY_W hours
+            # out, the way an operator reruns an alloy next; round 3's 2-hour rule evaluates each action at the hour
+            # its own charge is ready, so new designs kept taking the slots a queued rerun needed
+            camp.GATE_W = RETRY_W
+            try:
+                ok0 = orig(a, now_h)
+            finally:
+                del camp.GATE_W
+        else:
+            ok0 = orig(a, now_h)
+        if not ok0:
             return False
         if a.get("kind") != "powder":
             return True

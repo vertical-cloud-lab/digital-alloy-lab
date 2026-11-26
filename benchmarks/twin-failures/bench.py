@@ -45,8 +45,8 @@ def _seedwise(policies, seeds, **kw):
 EXPERIMENTS = {
     "smoke": [cfg(p, 0, days=40) for p in ("bad_value", "drop", "retry", "viability_x", "viability_node", "oracle",
                                             "heuristic")],
-    # the main benchmark: the lab's record (learning curve, damage), six strategies, eight seeds, paired
-    "main": _seedwise(STRATS_MAIN, range(8), regime="lab"),
+    # the main benchmark: the lab's record (learning curve, damage), six strategies, seven seeds, paired
+    "main": _seedwise(STRATS_MAIN, range(7), regime="lab"),
     # the cheap baselines on every regime, eight seeds
     "base": [cfg(p, s, regime=r) for s in range(8) for r in ("lab", "lab_region", "twin") for p in BASE],
     # round 3's own failure law: does the ranking hold when failures are rare?
