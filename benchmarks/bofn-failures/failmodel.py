@@ -47,7 +47,12 @@ SCENARIOS = {
     "mislabel": (True, 1.0, 0.3),  # both kinds, 30% of labels wrong
     "transient": (False, 1.0, 0.0),  # transient faults only
     "nofail": (False, 0.0, 0.0),  # reference: nothing fails (the source benchmarks' world)
+    "edge": (True, 1.0, 0.0),  # as mixed, but the aluminum crack crash reaches up to the optimum (CRACK_CRASH)
 }
+# the hot-cracking crash of an LPBF build: P(crash) = top * sigmoid((crack - mid) / width). By default only
+# the most cracked builds crash; in "edge" builds crash from a crack severity of about 0.12, which puts the
+# boundary next to the kappa = 1 optimum (crack 0.07 there: 6 % of its builds crash)
+CRACK_CRASH = {"default": dict(mid=0.9, width=0.03, top=0.6), "edge": dict(mid=0.12, width=0.02, top=0.9)}
 
 
 def sig(z: float) -> float:
@@ -57,7 +62,7 @@ def sig(z: float) -> float:
     return e / (1.0 + e)
 
 
-def p_input_lpbf(P, v, f, g, kappa):
+def p_input_lpbf(P, v, f, g, kappa, mid=0.9, width=0.03, top=0.6):
     """Aluminum LPBF build: P(crash) from the build's true inputs (bofn-prelim's rho terms).
 
     - severe hot cracking: up to 60% of the most cracked builds (crack severity above about 0.9)
@@ -70,7 +75,7 @@ def p_input_lpbf(P, v, f, g, kappa):
     g = max(g, 0.0)
     f_eff = f * (1 - kappa * 0.85 * g / (g + 0.12))
     crack = sig((f_eff - 0.38) / 0.05)  # the truth's crack term (bofn-prelim AlloyTruth, node rho)
-    p_crack = 0.6 * sig((crack - 0.9) / 0.03)
+    p_crack = top * sig((crack - mid) / width)
     p_lof = sig((-u - 0.35) / 0.03)
     p_key = sig((P - 0.92) / 0.02)
     return 1 - (1 - p_crack) * (1 - p_lof) * (1 - p_key), dict(crack=crack, u=u)
@@ -104,6 +109,7 @@ class FailureModel:
         self.inputs_on, scale, self.label_noise = SCENARIOS[scenario]
         self.p_tr = {s: min(1.0, p * scale) for s, p in P_TRANSIENT[family].items()}
         self.kappa, self.f_crack, self.p_cap = kappa, f_crack, p_cap
+        self.crash = CRACK_CRASH.get(scenario, CRACK_CRASH["default"])
         self._rng = {}
         self.seed = seed
         self.stage_index = {s: i for i, s in enumerate("CAULMSTKI")}
@@ -118,7 +124,7 @@ class FailureModel:
         if not self.inputs_on or stage not in INPUT_STAGES[self.family]:
             return 0.0, {}
         if self.family == "al":
-            return p_input_lpbf(z["P"], z["v"], z["f"], z["g"], self.kappa)
+            return p_input_lpbf(z["P"], z["v"], z["f"], z["g"], self.kappa, **self.crash)
         return p_input_ded(z["P"], z["v"], z["f"], z["g"], z["h"], self.kappa, self.f_crack, stage == "U", self.p_cap)
 
     def attempt(self, stage, z):

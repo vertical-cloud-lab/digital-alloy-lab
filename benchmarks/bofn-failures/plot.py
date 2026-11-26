@@ -158,7 +158,7 @@ def fig_scenarios(runs, budget=100_000):
     strategies = [s for s in A.ORDER if s != "nofail"]
     # scenarios in grays with distinct markers, so blue, orange and aqua keep meaning strategy families
     scen_style = [("mixed", "#191919", "o", "both kinds, labelled correctly"), ("mislabel", "#6e6e6e", "D", "both kinds, 30% of labels wrong"),
-                  ("transient", "#a3a3a3", "s", "transient failures only")]
+                  ("transient", "#a3a3a3", "s", "transient failures only"), ("edge", "#3d3d3d", "^", "failure boundary next to the optimum")]
     fig, axes = plt.subplots(len(cells), 1, figsize=(6.4, 2.6 * len(cells)))
     axes = np.atleast_1d(axes)
     for ax, cell in zip(axes, cells):
@@ -171,7 +171,7 @@ def fig_scenarios(runs, budget=100_000):
                     continue
                 v = [A.pct(S[st][s], cell, budget) for s in sorted(S[st])]
                 m, se = mean_se(v)
-                y = len(strategies) - 1 - k + (0.22 - 0.22 * j)
+                y = len(strategies) - 1 - k + (0.27 - 0.18 * j)
                 ax.plot([m - se, m + se], [y, y], color=col, lw=1.6, solid_capstyle="round", zorder=2)
                 ax.scatter([m], [y], s=30, marker=mk, color=col, edgecolor="white", linewidth=1.2, zorder=3, label=lab if k == 0 else None)
         ref = runs[cell]["mixed"].get("nofail")
@@ -186,7 +186,7 @@ def fig_scenarios(runs, budget=100_000):
         ax.set_title(A.CELL_NAME[cell])
         style(ax)
     h, l = axes[0].get_legend_handles_labels()
-    fig.legend(h, l, loc="lower center", ncol=3, bbox_to_anchor=(0.5, -0.03))
+    fig.legend(h, l, loc="lower center", ncol=2, bbox_to_anchor=(0.5, -0.05))
     fig.tight_layout(h_pad=1.6)
     fig.savefig(FIG / "bofn_failures_scenarios.png")
     plt.close(fig)

@@ -31,7 +31,8 @@ LABEL = {"nofail": "no failures (reference)", "drop": "drop (all FAILED)", "aban
 # strategies that ignore labels run identically in `mislabel` and `mixed` (same failure draws); in `transient`,
 # viab_x reduces to drop, and impute, impute_extreme, keep, viab_x_partial (fit_abandoned keeps FAILED runs' data)
 # and viab_node coincide
-STAND_IN = {"mislabel": {"drop": "mixed", "abandon": "mixed", "partial": "mixed", "keep": "mixed", "nofail": "mixed"},
+STAND_IN = {"edge": {"nofail": "mixed"},
+            "mislabel": {"drop": "mixed", "abandon": "mixed", "partial": "mixed", "keep": "mixed", "nofail": "mixed"},
             "transient": {"viab_x": ("transient", "drop"), "viab_x_partial": ("transient", "viab_node"), "impute": ("transient", "viab_node"), "impute_extreme": ("transient", "viab_node"),
                           "keep": ("transient", "viab_node"), "nofail": "mixed"}}
 BUDGETS = (25_000, 50_000, 100_000)
@@ -176,7 +177,7 @@ def main():
     for cell in CELLS:
         if cell not in runs:
             continue
-        for scen in ("mixed", "mislabel", "transient"):
+        for scen in ("mixed", "mislabel", "transient", "edge"):
             S = runs[cell].get(scen)
             if not S:
                 continue

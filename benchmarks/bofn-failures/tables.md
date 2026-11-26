@@ -152,6 +152,51 @@ Paired differences at $100k (points of the optimum; matched seeds; Wilcoxon two-
 | keep − partial | 20 | +2.0 (-2.5 to +7.0) | 10 / 1 / 9 | 0.44 | 1 |
 | viab_x_partial − viab_x | 20 | -0.5 (-3.4 to +2.7) | 3 / 10 / 7 | 0.17 | 1 |
 
+## Aluminum, kappa = 1 (`al-k1`), scenario `edge`
+
+| Strategy | n | $25k | $50k | $100k | spend on failed stages | input-caused failures | repeats | transient failures | runs validated | new alloys / runs |
+|---|---|---|---|---|---|---|---|---|---|---|
+| no failures (reference) | 20 | 60.9 ± 6.2 | 73.8 ± 5.2 | 89.9 ± 2.5 | $0.0k | 0.0 | 0.0 | 0.0 | 30.0 | 11.8 / 30.0 |
+| drop (all FAILED) | 16 | 42.3 ± 7.9 | 48.0 ± 7.2 | 51.1 ± 7.7 | $82.6k | 33.1 | 18.2 | 1.2 | 3.9 | 4.1 / 38.2 |
+| abandon (all ABANDONED) | 16 | 40.7 ± 8.1 | 47.7 ± 8.0 | 51.2 ± 8.7 | $76.7k | 30.9 | 20.1 | 1.8 | 4.8 | 6.8 / 37.4 |
+| partial (Ax >= 1.2.4, pending) | 16 | 41.1 ± 8.0 | 42.5 ± 8.4 | 50.8 ± 8.6 | $69.9k | 32.1 | 17.2 | 2.1 | 5.1 | 11.1 / 39.3 |
+| keep partial data, nothing pending | 16 | 41.5 ± 8.3 | 49.0 ± 7.8 | 52.4 ± 8.0 | $75.5k | 33.1 | 17.1 | 1.8 | 4.5 | 8.0 / 39.4 |
+| impute worst value | 16 | 49.8 ± 8.3 | 60.9 ± 8.2 | 76.5 ± 5.4 | $42.7k | 17.3 | 0.7 | 3.9 | 13.4 | 14.6 / 34.6 |
+| viability on x (Ax 1.3) | 16 | 45.5 ± 8.1 | 63.7 ± 6.7 | 77.1 ± 6.2 | $43.3k | 16.8 | 0.7 | 4.3 | 12.6 | 15.7 / 33.7 |
+| viability on x + fit_abandoned | 16 | 47.0 ± 8.4 | 60.3 ± 7.4 | 78.5 ± 5.5 | $44.4k | 18.8 | 0.7 | 4.4 | 11.9 | 16.6 / 35.2 |
+| node-level viability | 16 | 47.7 ± 8.3 | 57.9 ± 8.0 | 86.0 ± 2.6 | $44.0k | 17.7 | 0.6 | 4.0 | 13.1 | 14.6 / 34.8 |
+
+Median spend to reach 60 / 70 / 80 % of the optimum (share of seeds that reach it within $100k):
+
+| Strategy | 60% | 70% | 80% |
+|---|---|---|---|
+| no failures (reference) | $19k (100%) | $25k (90%) | $52k (85%) |
+| drop (all FAILED) | $67k (56%) | >$100k (31%) | >$100k (19%) |
+| abandon (all ABANDONED) | >$100k (50%) | >$100k (38%) | >$100k (25%) |
+| partial (Ax >= 1.2.4, pending) | >$100k (50%) | >$100k (38%) | >$100k (25%) |
+| keep partial data, nothing pending | $31k (56%) | >$100k (31%) | >$100k (19%) |
+| impute worst value | $30k (81%) | $36k (69%) | $63k (56%) |
+| viability on x (Ax 1.3) | $23k (88%) | $39k (81%) | $66k (69%) |
+| viability on x + fit_abandoned | $36k (88%) | $57k (75%) | $67k (56%) |
+| node-level viability | $33k (100%) | $41k (94%) | $78k (75%) |
+
+Paired differences at $100k (points of the optimum; matched seeds; Wilcoxon two-sided, Holm-adjusted within this table):
+
+| Comparison | n | mean difference (90% CI) | wins / ties / losses | p | p (Holm) |
+|---|---|---|---|---|---|
+| viab_node − nofail | 16 | -2.1 (-5.5 to +1.2) | 8 / 0 / 8 | 0.53 | 1 |
+| viab_node − drop | 16 | +34.9 (+23.0 to +47.3) | 15 / 0 / 1 | 1.5e-04 | 0.0014 |
+| viab_node − abandon | 16 | +34.8 (+23.2 to +46.6) | 15 / 0 / 1 | 6.1e-05 | 7.3e-04 |
+| viab_node − partial | 16 | +35.3 (+23.7 to +46.8) | 15 / 0 / 1 | 6.1e-05 | 7.3e-04 |
+| viab_node − keep | 16 | +33.7 (+23.2 to +45.1) | 15 / 0 / 1 | 6.1e-05 | 7.3e-04 |
+| viab_node − impute | 16 | +9.6 (+1.1 to +18.0) | 13 / 0 / 3 | 0.058 | 0.46 |
+| viab_node − viab_x | 16 | +9.0 (+0.0 to +19.7) | 10 / 0 / 6 | 0.27 | 1 |
+| viab_node − viab_x_partial | 16 | +7.5 (-0.7 to +17.8) | 8 / 0 / 8 | 0.38 | 1 |
+| partial − abandon | 16 | -0.5 (-4.6 to +4.3) | 4 / 6 / 6 | 0.51 | 1 |
+| partial − drop | 16 | -0.4 (-11.3 to +9.7) | 5 / 6 / 5 | 0.58 | 1 |
+| keep − partial | 16 | +1.6 (-2.2 to +5.7) | 7 / 6 / 3 | 0.44 | 1 |
+| viab_x_partial − viab_x | 16 | +1.5 (-5.2 to +9.6) | 8 / 3 / 5 | 0.97 | 1 |
+
 ## Aluminum, kappa = 0 (`al-k0`), scenario `mixed`
 
 | Strategy | n | $25k | $50k | $100k | spend on failed stages | input-caused failures | repeats | transient failures | runs validated | new alloys / runs |

@@ -80,6 +80,19 @@ failures switched off. Every number is in [`tables.md`](tables.md).*
    on average (−1.7 points against plain node-level viability, not significant): it was better on
    the copper physics truth (90 % against 83 %) and worse on aluminum (84 % against 90 % at `kappa = 1`).
 
+9. **When the failure boundary touches the optimum, node-level viability pulls ahead.** In a stress
+   test on aluminum at `kappa = 1` (`edge`, 16 seeds), builds crash from a crack severity of about 0.12
+   instead of 0.9. Then 6.6 % of builds at the optimum itself crash, and 12 % to 15 % of designs within
+   60 % to 80 % of it sit across the boundary (none did before). There node-level viability ends at
+   86 % against 90 % without failures. That is 7.5 to 9.6 points ahead of the other failure models:
+   viability on x with and without `fit_abandoned` reach 78.5 % and 77 %, and imputation 76.5 %
+   (node-level viability beats imputation on 13 of 16 matched seeds; p = 0.058, not significant after
+   correction). The strategies without a failure
+   model collapse to 51 % to 52 % and spend $70k to $83k of the $100k on failed builds, with 17 to 20
+   repeated failures per campaign. This is the case of the Nov 20 toy, where the optimum sat on a
+   failure boundary, and the case where a model of the failing stage's own inputs, which knows the
+   crack term from CALPHAD's `f` and `g`, has the most to offer.
+
 **Where node-level handling doesn't win.** On the copper physics truth, imputing the worst value
 (90 %), failure-priced node-level viability (90 %) and Ax's viability on x (86 %) all finish ahead of
 plain node-level viability (83 %); on aluminum at `kappa = 0`, imputation (80 %) is well ahead of it
@@ -99,8 +112,8 @@ campaign (mean ± SE).*
 
 ![Scenarios](figures/bofn_failures_scenarios.png)
 
-*The same strategies with both kinds of failure labelled correctly, with 30 % of labels wrong, and
-with transient faults only. Strategies that don't read labels run identically in the first two; in
+*The same strategies with both kinds of failure labelled correctly, with 30 % of labels wrong, with
+transient faults only, and (aluminum, `kappa = 1`) with the failure boundary next to the optimum. Strategies that don't read labels run identically in the first two; in
 the third, `keep`, both imputations, viability on x with `fit_abandoned` and node-level viability are
 the same campaign, as are `drop` and viability on x.*
 
@@ -117,7 +130,7 @@ the same campaign, as are `drop` and viability on x.*
 | H2 | Keeping completed stages helps (`partial` ≥ `abandon`, `viab_x_partial` ≥ `viab_x`) | **Not supported.** Both differences are within noise in every cell; `viab_x_partial` was 12.5 points *behind* `viab_x` on aluminum at `kappa = 1` (p = 0.027, not significant after correction), ahead on two of the other three cells and behind on the third. |
 | H3 | Abandoning transient failures costs something | **Not supported**: `abandon` ends level with node-level viability in both networks (+0.1 points each). Discarding the failed runs' data (`drop`) is what cost points, on copper. |
 | H4 | A failure model means fewer input-caused failures than `partial` | **Supported** in every cell (aluminum at `kappa = 1`: 8.6 to 11.3 against 20.9). |
-| H5 | Node-level viability ≥ viability on x with `fit_abandoned`, with fewer failures | **Same direction, not significant**: +5.1 points pooled (p = 0.028, Holm 0.14), similar failure counts. |
+| H5 | Node-level viability ≥ viability on x with `fit_abandoned`, with fewer failures | **Same direction, not significant**: +5.1 points pooled (p = 0.028, Holm 0.14), similar failure counts; +7.5 in the `edge` stress test. |
 | H6 | `impute` competitive with correct labels, and hurt more by mislabels | **First half supported** (pooled −0.8 against node-level viability). **Second half weakly**: worst-value imputation lost more than node-level viability in two cells of four (most on aluminum at `kappa = 0`, −9 against +2), and pooled it moves from 0.8 ahead to 0.5 behind. The extreme version shows it clearly on aluminum, not on copper. |
 | H7 | Every strategy ends below the no-failure reference | **Not supported**: imputation and failure-priced node-level viability end above it on the copper physics truth and imputation on aluminum at `kappa = 0` (none significantly). A likely reason: failures here happen where alloys are poor, so a model of them steers the search away from poor regions about as well as measured low values do, and sometimes sooner. |
 
@@ -271,6 +284,11 @@ CALPHAD's outputs:
 is a bad alloy or a bad setting). Of random designs, 64 % (`al-k1`), 86 % (`al-k0`), 52 %
 (`cu-toy-k1`) and 46 % (`cu-phys-k1`) would fail somewhere for input reasons.
 
+**The `edge` stress test** moves the hot-cracking crash on aluminum from a crack severity of about
+0.9 to about 0.12 (`CRACK_CRASH` in `failmodel.py`), so the failure boundary runs next to the
+`kappa = 1` optimum: 6.6 % of its builds crash, and 12 % to 15 % of designs within 60 % to 80 % of it
+are across the boundary.
+
 **Labels.** The lab writes down which kind each failure was. In the `mislabel` scenario 30 % of
 labels are wrong (the operator can't always tell a bad plate from a bad alloy; Oct 28 and Nov 13
 took a video review to trace). The precondition is always labelled correctly. One random stream
@@ -281,6 +299,8 @@ per (seed, stage), consumed in attempt order, gives every strategy the same faul
 Pre-registered in [`PREREGISTRATION.md`](PREREGISTRATION.md) before the sweep. Changes since,
 all made before the runs they affect:
 
+- **Added after the main sweep:** the `edge` stress test (point 9), run once every pre-registered line
+  had finished.
 - **Added strategies:** `keep` (after the Ax survey found that partly measured arms usually drop out
   of `X_pending`), `viab_node_ec`, `impute_extreme` (to test [the concern about imputed values](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/274#issuecomment-7053633447) directly), and the
   full-pipeline variant.

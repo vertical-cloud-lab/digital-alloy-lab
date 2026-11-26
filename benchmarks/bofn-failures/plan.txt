@@ -18,3 +18,6 @@ al+full 1 mixed 0-11 nofail drop abandon partial impute viab_x viab_node
 cu-toy+full 1 mixed 0-11 nofail drop abandon partial impute viab_x viab_node
 cu-phys 1 mislabel 0-11 impute viab_x viab_x_partial viab_node
 al 0 mislabel 0-15 impute viab_x viab_x_partial viab_node
+# Added at 11:07 UTC, after every line above had finished: a stress test with the aluminum crack-crash
+# boundary next to the kappa = 1 optimum (scenario "edge" in failmodel.py)
+al 1 edge 0-15 drop abandon partial keep impute viab_x viab_x_partial viab_node
