@@ -1,6 +1,6 @@
 {
  "what": "the chamber's posted programs parsed, timed and cut in the part frame (cad/robotbuild/gcode_sim.py)",
- "generated_utc": "2026-11-26T07:08Z",
+ "generated_utc": "2026-11-26T07:50Z",
  "resolution_mm": 0.75,
  "rapid_mm_min": 25400.0,
  "timing": "feeds as programmed, rapids at 25.4 m/min; tool changes and A indexes not timed (as freecad_cam.py's recount)",
@@ -160,15 +160,15 @@
    "path_rapid_mm": 2508.6,
    "timeline_min": 1.46,
    "timeline_feed_mm": 1354.0,
-   "timeline_rapid_mm": 2633.6,
-   "chords": 916,
-   "program_lines": 157,
+   "timeline_rapid_mm": 2458.6,
+   "chords": 915,
+   "program_lines": 156,
    "freecad_cam_json_min": 1.47,
    "freecad_cam_json_feed_mm": 1363.9,
    "freecad_cam_json_rapid_mm": 2508.6,
    "recount_vs_json_min": 0.0,
    "timeline_vs_json_min": -0.01,
-   "removed_cm3": 14.58,
+   "removed_cm3": 14.49,
    "tools": [
     3,
     6,
@@ -185,7 +185,7 @@
     "first": 15941,
     "last": 16285
    },
-   "gouge_cm3": 0.097
+   "gouge_cm3": 0.033
   },
   "floor_A": {
    "program": "analysis/out/machining/gcode/floor_A.ngc",
@@ -257,17 +257,17 @@
     "frame_C270"
    ],
    "initial_stock_cm3": 2832.4,
-   "final_cm3": 1599.4,
-   "removed_sim_cm3": 1233.0,
+   "final_cm3": 1599.5,
+   "removed_sim_cm3": 1232.9,
    "part_voxels_cm3": 1585.2,
    "removed_cad_cm3": 1247.3,
    "removed_sim_vs_cad_pct": -1.15,
-   "leftover_cm3": 15.64,
-   "gouge_cm3": 1.353,
-   "leftover_beyond_0.75mm_cm3": 0.096,
-   "gouge_beyond_0.75mm_cm3": 0.032,
+   "leftover_cm3": 15.67,
+   "gouge_cm3": 1.288,
+   "leftover_beyond_0.75mm_cm3": 0.097,
+   "gouge_beyond_0.75mm_cm3": 0.0,
    "leftover_beyond_1.5mm_cm3": 0.004,
-   "gouge_beyond_1.5mm_cm3": 0.001,
+   "gouge_beyond_1.5mm_cm3": 0.0,
    "leftover_largest": [
     {
      "cm3": 0.0,
@@ -368,5 +368,60 @@
    "part_kg_6061": 3.01
   }
  },
- "seconds": 3.8
+ "seconds": 6.8,
+ "drawn_frames": {
+  "source": "analysis/out/videoqa/gcode_frames.json",
+  "chapters": {
+   "30-machining-chamber": {
+    "frames": 564,
+    "on_their_program_line": 559,
+    "worst_off_line_mm": 0.000717,
+    "problems": [
+     {
+      "frame": 556,
+      "program": "frame_B.ngc",
+      "line": 688,
+      "off_mm": 0.0
+     },
+     {
+      "frame": 949,
+      "program": "frame_A.ngc",
+      "line": 621,
+      "off_mm": 0.0
+     },
+     {
+      "frame": 1211,
+      "program": "frame_C_haas.nc",
+      "line": 15583,
+      "off_mm": 0.0
+     },
+     {
+      "frame": 1349,
+      "program": "frame_C_haas.nc",
+      "line": 16280,
+      "off_mm": 0.0
+     },
+     {
+      "frame": 1617,
+      "program": "floor_A.ngc",
+      "line": 1906,
+      "off_mm": 0.0
+     }
+    ],
+    "out_of_travel": 0,
+    "programs": [
+     "floor_A.ngc",
+     "frame_A.ngc",
+     "frame_B.ngc",
+     "frame_C_haas.nc"
+    ],
+    "minutes": {
+     "F-S1 (frame_B)": 6.91,
+     "F-S2 (frame_A)": 41.62,
+     "F-S3 (frame_C)": 14.58
+    },
+    "statement": "SOME FRAMES ARE OFF THEIR LINE (see problems)"
+   }
+  }
+ }
 }

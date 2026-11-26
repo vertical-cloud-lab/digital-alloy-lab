@@ -113,8 +113,13 @@ class Program:
             # keep the file's line numbers: blank lines before and after this index's chunk; the index move itself
             # (G53 Z home, M11, G0 A, M10) is not a cutting move and is drawn by the chapter
             keep = [ln if l0 <= i + 1 <= l1 else "" for i, ln in enumerate(lines)]
-            keep[home - 1] = "(index move: Z to machine home)"
-            keep[aline - 1] = "(index move: A)"
+            # every G53 (machine-coordinate) move and A move is an index move, not a cutting move: the one before this
+            # index and, after the last index, the program's end (G53 G00 Z0. / G00 A0.). Left in, expand() would
+            # read "G53 G00 Z0." as a rapid to work Z 0, the A axis, through the part
+            for k in range(l0 - 1, l1):
+                t_ = keep[k].strip().upper()
+                if t_.startswith("G53") or re.match(r"G0?0 A", t_):
+                    keep[k] = "(index or end move: %s)" % t_
             text = "\n".join(keep)
             self.a_deg, self.index_lines = a, dict(home=home, a=aline, first=l0, last=l1)
         else:
@@ -487,7 +492,7 @@ def verify_frames(frames_json=None):
                 best = min(best, float(np.linalg.norm(a + t * ab - q)))
             n += 1
             worst = max(worst, best)
-            if best < 1e-3 and 0.0 <= r["t_s"] <= p.total_s + 1e-6:
+            if best < 1e-3 and 0.0 <= r["t_s"] <= p.total_s + 0.01:     # t_s is rounded to 0.01 s
                 good += 1
             elif len(bad) < 5:
                 bad.append(dict(frame=r["chapter_frame"], program=r["program"], line=r["line"], off_mm=best))

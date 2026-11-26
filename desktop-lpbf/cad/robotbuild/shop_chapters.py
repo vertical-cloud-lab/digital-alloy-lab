@@ -880,6 +880,7 @@ def chapter_30():
     cam_arm = cam_at("vf4", *CAM_VF4_ARM)
     cam_out = cam_at("vf4", *CAM_OUT)
     cam_wide = cam_at("vf4", *CAM_WIDE)
+    cam_flip = cam_at("vf4", (1750.0, -1550.0, 2750.0), (0.0, 280.0, 1000.0))   # from the right: the turn over
     cam_in = cam_at("vf4", *CAM_IN_FLAT)
     cart_parts = E.bench(CART["w"], CART["d"], CART["h"])
     scn.add_parts("cart", cart_parts, st @ E.T((CART["x"], CART["y"] - CART["d"] / 2, 0.0)))
@@ -971,13 +972,13 @@ def chapter_30():
                1: end_hands(m1_, P_cart2, 1, fz=0.5, fy=(0.33, 0.67))}
     team_lift(w, scn, crew, "load", spec1, P_cart2, M_tab @ P2, kg1, capF,
               f"{kg1:.1f} kg, turned 180 deg about the line between their hands; the 18 M4 screws from below (not "
-              f"shown); {rule}", "F-S2", cam=cam_wide, check_items=check, n_move=int(5.5 * FPS), hand_pts=hp_flip)
+              f"shown); {rule}", "F-S2", cam=cam_flip, check_items=check, n_move=int(5.5 * FPS), hand_pts=hp_flip)
     scn.hide_obj("load")
     vf4.part("frame part", spec1, P2)
-    crew.step_back(w, cam_wide, capF, "they step back from the doors", "F-S2")
+    crew.step_back(w, cam_flip, capF, "they step back from the doors", "F-S2")
     for i in range(18):
         vf4.set(door=1.0 - ease((i + 1) / 18))
-        w.frame(scn, cam_wide, "Doors shut; cycle start", sub="the auto door (option), ~1.5 s", who=["machine"],
+        w.frame(scn, cam_flip, "Doors shut; cycle start", sub="the auto door (option), ~1.5 s", who=["machine"],
                 step="F-S2", status="pass", proc_s=1.5 / 18)
     crew.show(0.0)                                   # at the cut to the inside view
     show_cart(0.0)
