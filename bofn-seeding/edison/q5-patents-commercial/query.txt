@@ -1,0 +1,29 @@
+Survey the PATENT literature and COMMERCIAL products for aluminium alloys designed for laser powder bed fusion (LPBF / SLM) and related powder routes, so that we can choose starting compositions for an alloy discovery campaign and know what is already claimed. We want published compositions, not marketing.
+
+For each entry give: assignee / vendor, product name if any, patent or application numbers (US, EP, WO, CN, JP, DE), priority year, the claimed composition RANGES and the worked EXAMPLE compositions (wt%), the cracking-control and strengthening mechanism claimed, recommended heat treatment, the properties reported in the patent or datasheet (yield, UTS, elongation, hardness, conductivity, test orientation), and whether the patent is granted, pending, expired or abandoned where known.
+
+Cover at least:
+1. Airbus / APWorks Scalmalloy (Al-Mg-Sc-Zr-Mn), and the earlier Al-Mg-Sc family patents; lower-Sc or Sc-free variants claimed by others.
+2. HRL Laboratories 7A77 and Zr / grain-refiner functionalized 7xxx, 6xxx, 2xxx powders.
+3. Aeromet / Aluminium Materials Technologies A20X (A205; Al-Cu-Ag-Mg-Ti-B).
+4. NanoAl / Unity Aluminum / Braidy Addalloy (Al-Mg-Zr and others) and Northwestern University Al-Zr-(Er, Sc, Yb, Si) patents.
+5. Constellium Aheadd CP1 (Al-Fe-Zr) and HT1 (Al-Ni-Mn-Cu-Zr-Fe class), and the C-TEC patent families (Al-Zr, Al-Fe-Zr, Al-Ni-Zr, Al-Mn-Zr, Al-Cr-Zr).
+6. Fehrmann AlMgty (Al-Mg-Si / high-Mg), Rheinfelden (Magsimal, Castasil, Castaduct for AM), AMAG, Hydro, Trimet.
+7. Elementum 3D A1000-RAM, A2024-RAM2, A6061-RAM2, A7050-RAM2 (reactive additive manufacturing, in-situ ceramic inoculants).
+8. Rusal / IL&M (RS-230, RS-300, RS-320, RS-333, RS-390, RS-553 and similar: Al-Si-Mg-Cu, Al-Mg-Sc, Al-Ni-Mn-Fe-Zr, Al-Cu-Ce), with compositions.
+9. Monash University / Amaero high-strength Al-Mn-Sc ("HOT Al"), and Al-Mg-Si-Sc-Zr.
+10. Chalmers / Hoganas Al-Mn-Cr-Zr; Hoganas forAM Al grades; Kymera / ECKA / AP&C / Equispheres / Valimet / Carpenter / Sandvik / Toyal / Eckart (e.g. Eckart TiB2- or Zr-modified, Toyal Hyper-Al) aluminium AM powders with published chemistries.
+11. Oak Ridge / Eck Industries / Ames Al-Ce alloys (Al-Ce-Mg, Al-Ce-Ni-Mn, Al-Cu-Mn-Zr / ACMZ, DuAlumin-3D), Lawrence Livermore Al-Ce.
+12. Alcoa / Arconic / Howmet AM aluminium (Al-Fe-V-Si, Al-Ni, Al-Mn, "A1000" class), QuesTek Al for AM (Sc-free, high-temperature), Citrine / HRL / NASA collaborations, NASA 7xxx / GRCop is out of scope.
+13. Japanese and Korean filings: Toyo Aluminium, Daido, Kobe Steel, UACJ, Nippon Light Metal, Sumitomo, Hitachi Metals, Toyota (Al-Fe, Al-Fe-Mn, Al-Fe-Cu, Al-Ni-Co, Al-Mn-Cr, Al-Si-Mg-Mn high-Mg).
+14. Chinese filings and products: CRRC / Central South University Al-Mg-Sc-Zr, Al-Mg-Er-Zr (Beijing University of Technology Er-microalloying patents), Al-Mn-Mg-Er-Zr, TiB2/AlSi10Mg (Shanghai Jiao Tong), Al-Zn-Mg-Sc-Zr, Sc-free high-strength Al for AM.
+15. EOS (Al2139 AM, Al5X1, AlF357), SLM Solutions / Nikon SLM, 3D Systems (A6061-RAM2 licence), Colibrium / GE Additive, Mercury Marine (Mercalloy A362 for AM), Gränges (Dispal-type Al-Si-Fe-Ni), PEAK Werkstoff / Erbslöh (Dispal S220/S250 Al-Si), Kaiser, Novelis, Uniformity Labs.
+16. Any patents specifically on aluminium powders made by ULTRASONIC atomization or small-batch atomization for alloy development.
+
+Then answer:
+A. Which claimed composition windows overlap a search space of Al >= 85 wt% with a few additions from Mn, Cr, Zr, Mg, Si, Cu, Ti, Fe, Ni, Ce, Sc, Li, Er, Zn, Sn? Where is there apparent white space (combinations nobody has claimed or published), especially Sc-free and with little or no Zr?
+B. Which commercial Sc-free alloys have the highest reported yield strength at >= 8 % elongation, and what do their datasheets give for as-built versus heat-treated?
+C. Which patent example compositions would make good seed experiments for us, given feedstock on hand (Al, Si, Mg, Mn, Cr, Zn, Sn, Ti, small Sc and Er; Fe, Cu and Ni easy to buy; Zr uncertain)?
+D. Anything in these patents about atomization practice (melt temperature, superheat for Zr/Ti/Cr/Mn-bearing melts, crucible materials, Mg loss) or about build-plate preheat that we should copy.
+
+Give patent numbers and URLs or DOIs for every claim. Say clearly when a composition comes from a datasheet, a patent example, a patent claim range, or a journal paper by the same group.

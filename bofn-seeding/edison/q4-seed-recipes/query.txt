@@ -1,0 +1,26 @@
+We must pick the first SIX aluminium alloy compositions (plus three optional extras) for a laser powder bed fusion (LPBF) alloy discovery campaign, and write a complete recipe for each. Please do a deep, quantitative literature review that lets us choose and specify them. Report MEASURED chemistries (ICP/OES of powder or part) rather than nominal ones wherever the paper gives them, and say which is which.
+
+CONTEXT
+- Goal: an alloy that is stronger than LPBF AlSi10Mg (as-built yield about 230-300 MPa) without relying on critical minerals, and/or one that approaches Scalmalloy (Al-4.6Mg-0.7Sc-0.3Zr, about 470-520 MPa yield when direct aged) with much less Sc. Strength first; ductility of at least about 8 %; relative density at least 99.5 %; crack-free.
+- Powder: made in-house by 40 kHz ultrasonic atomization of 170-350 g charges melted by induction at up to about 1300 C (so far run at 810-840 C), collected under argon. Median size is coarse (D50 roughly 55-65 um), so the LPBF cut will probably be 20-63 um.
+- Feedstock on hand: 6063 bar (carries about 0.5 Mg, 0.4 Si, 0.2 Fe), Al-12Si (4047) bar, Mg, Mn, Cr, Zn, Sn, Ti, Si, and small amounts of Sc and Er. Quick to buy: Fe, Cu, Ni. NOT yet on hand and uncertain: Zr (would come as Al-10Zr master alloy), Ce, Li.
+- Printer: Aconity MIDI (400 W-class single-mode fibre laser, about 80 um spot), argon, build-plate heating available. Sub-size tensile bars, as-built and direct-aged.
+- After the six seeds a sparse-axis-aligned-subspace Bayesian optimizer (SAASBO) picks the remaining runs over about 15 candidate elements, so the seeds should be mechanistically diverse, not six variants of one family.
+
+QUESTIONS
+1. For each family below, give the best-documented specific composition(s) and, per paper: measured composition (wt%), powder route and size, LPBF machine, laser power, scan speed, hatch, layer thickness, spot size, plate preheat, volumetric energy density, relative density, cracking observations, as-built and heat-treated yield strength / UTS / elongation (with build orientation and heat treatment), hardness, and the microstructure reported (grain size and morphology, primary and eutectic phases, precipitates, retained solute). Families:
+   a. Al-Mn-Cr-Zr (Chalmers group: Mehta, Nyborg, Hryha and co-workers) and Al-Mn-Ti-Zr (Mair et al.), and Zr-free Al-Mn-Cr or Al-Mn-Mg variants.
+   b. Al-Mg-Zr (Croteau, Dunand, Seidman et al.; Addalloy) and Al-Mg-Zr-Mn.
+   c. Al-Fe-Zr (Constellium Aheadd CP1 type), Al-Fe-Mg-Zr (Li et al. 2025), binary Al-Fe (Qi, Takata, Kimura), Al-Fe-Cr, Al-Fe-Mn, Al-Fe-Cu, Al-Fe-Ni (AlFeNi eutectic) and Al-Fe-V-Si (8009).
+   d. Al-Mg-Si eutectic-type alloys with high Mg (Al-Mg2Si pseudo-binary, Magsimal-59-like AlMg5Si2Mn, Fehrmann AlMgty, the Dreano Al-6.7Mg-3Si-1.4Ni-1Zn alloy) that print crack-free WITHOUT Zr, Sc or Ti grain refiners.
+   e. Modified Al-Si-Mg: AlSi7Mg0.6 (A357), AlSi10Mg with raised Mg (1-3 wt%), with Mn, Cu, Ni, Er, Zr or Sc additions; Al-Si-Ni and Al-Si-Fe-Mn; which of these beat standard AlSi10Mg as-built or direct-aged, and by how much.
+   f. Er as a Sc substitute: Al-Mg-Er-Zr, Al-Mg-Mn-Er-Zr, Al-Er-Zr, Al-Zr-Er-Yb, Al-Ni-Er-Zr (Taheri-Mousavi et al.). Is there any crack-free Er-bearing alloy WITHOUT Zr?
+   g. Low-Sc Al-Mg-Sc-Zr (Sc 0.1-0.4 wt%) and low-Sc Al-Mn-Sc; the lowest Sc level that still gives equiaxed, crack-free builds and an ageing response; Sc partially replaced by Zr, Er, Ti or Y.
+   h. Al-Ce(-Mg, -Mn, -Ni, -Zr), Al-Ni(-Mn, -Zr, -Sc), Al-Cu-Mn-Zr (ACMZ), Al-Cu-Mg with Ti, Zr or TiB2 (A20X, 2024+Zr), 7xxx with Zr (HRL 7A77) or with Si, and 6061 with Zr or Si.
+   i. Ti as the L1_2 / D0_22 former instead of Zr: Al-Ti, Al-Mg-Ti, Al-Mn-Ti, Al-Cu-Ti, Ti-modified 2xxx/7xxx, Al-5Ti-1B (TiB2) inoculated alloys made by melt routes.
+2. Zr is not yet on our shelf. Which compositions made ONLY from Al, Si, Mg, Mn, Cr, Zn, Sn, Ti, Fe, Cu, Ni, Sc and Er (no Zr, Ce, Li, Ag) have been printed crack-free by LPBF with as-built or aged yield strength above about 300 MPa? Rank them by evidence.
+3. For each of the top candidates, what microstructure should we expect from OUR route (coarser 20-63 um ultrasonically atomized powder, 80 um spot, 30-50 um layers, with 25 C versus 150-200 C plate), and which features decide success (primary Al3Zr/Al3Ti nucleants at the melt-pool boundary, eutectic fraction, Mn/Cr supersaturation, Mg loss)?
+4. Direct ageing (no solution treatment) schedules and expected hardening for each family, and which families lose strength on a heated plate or in stress relief.
+5. Recommend a set of six seeds (2 benchmarks, 3 literature picks, 1 exploratory) and three optional extras that are (i) mechanistically diverse, (ii) makeable from the feedstock above (flag each element that must be bought), (iii) meltable and castable below about 1000 C without primary Al3Zr / Al3Ti / Al-Cr-Mn sludge in the crucible (give the liquidus where known), and (iv) each informative about a different strengthening route. State what is known and unknown for each, and which published result we would be trying to reproduce.
+
+Give DOIs for every source and separate what the papers state from your inference.
