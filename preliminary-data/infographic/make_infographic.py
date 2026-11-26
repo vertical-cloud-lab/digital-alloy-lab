@@ -62,8 +62,8 @@ COUNTS = {
     "kpi": [
         ("~41,000", "files in six lab repos\n(all branches, each once)"),
         ("~12,000", "images: camera stills, SEM,\nvideo frames, plots"),
-        ("~2,700 h", "of video, mostly livestreams\nof the OT-2 and powder doser"),
-        ("~500,000", "sensor and balance readings\n(air quality, powder dosing)"),
+        ("~2,700 h", "of video, mostly\narchived livestreams"),
+        ("~500,000", "sensor and\nbalance readings"),
         ("~4,300", "physical tests and runs\n(3,660 of them drop tests)"),
         ("1,267", "issues and PRs,\n10,655 comments"),
     ],
