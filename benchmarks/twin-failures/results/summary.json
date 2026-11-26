@@ -1699,10 +1699,443 @@
      "n_damage": 4.333333333333333,
      "seconds": 48.06666666666666,
      "overlap_h": 56.406666666666666
+    },
+    "bad_value": {
+     "n": 1,
+     "seeds": [
+      0
+     ],
+     "flaime_al": {
+      "best_mean": 0.5188476839735027,
+      "best_se": 0.0,
+      "n_new": 7.0,
+      "spent": 86600.06,
+      "T1": {
+       "hit": 1,
+       "km_median": 168.942,
+       "rmst": 168.942
+      },
+      "T2": {
+       "hit": 0,
+       "km_median": null,
+       "rmst": 365.0
+      },
+      "ledger": {
+       "runs": 428.0,
+       "failed": 224.0,
+       "failed_intrinsic": 212.0,
+       "failed_transient": 12.0,
+       "misdiagnosed": 48.0,
+       "attempts": 214.0,
+       "failed_attempts": 81.0,
+       "designs": 214.0,
+       "given_up_transient": 1.0,
+       "given_up_intrinsic": 80.0,
+       "repeat_intrinsic": 0.0,
+       "retried_designs": 0.0
+      },
+      "repairs": 2.0,
+      "repair_days": 24.2,
+      "other_days_lost": 6.0
+     },
+     "onr_cu": {
+      "best_mean": 0.46212468161826264,
+      "best_se": 0.0,
+      "n_new": 4.0,
+      "spent": 63512.76,
+      "T1": {
+       "hit": 0,
+       "km_median": null,
+       "rmst": 365.0
+      },
+      "T2": {
+       "hit": 0,
+       "km_median": null,
+       "rmst": 365.0
+      },
+      "ledger": {
+       "runs": 61.0,
+       "failed": 22.0,
+       "failed_intrinsic": 18.0,
+       "failed_transient": 4.0,
+       "misdiagnosed": 3.0,
+       "attempts": 23.0,
+       "failed_attempts": 2.0,
+       "designs": 19.0,
+       "given_up_transient": 0.0,
+       "given_up_intrinsic": 2.0,
+       "repeat_intrinsic": 0.0,
+       "retried_designs": 4.0
+      },
+      "repairs": 1.0,
+      "repair_days": 19.88,
+      "other_days_lost": 11.0
+     },
+     "both": {
+      "T1_rmst": 266.971,
+      "T2_rmst": 365.0,
+      "best": 0.49048618279588263
+     },
+     "down_days": 44.08,
+     "n_damage": 3.0,
+     "seconds": 952.5,
+     "overlap_h": 39.05
+    },
+    "viability_x": {
+     "n": 1,
+     "seeds": [
+      0
+     ],
+     "flaime_al": {
+      "best_mean": 0.6957750603843279,
+      "best_se": 0.0,
+      "n_new": 25.0,
+      "spent": 119531.08,
+      "T1": {
+       "hit": 1,
+       "km_median": 175.567,
+       "rmst": 175.567
+      },
+      "T2": {
+       "hit": 1,
+       "km_median": 223.817,
+       "rmst": 223.817
+      },
+      "ledger": {
+       "runs": 406.0,
+       "failed": 235.0,
+       "failed_intrinsic": 225.0,
+       "failed_transient": 10.0,
+       "misdiagnosed": 52.0,
+       "attempts": 203.0,
+       "failed_attempts": 85.0,
+       "designs": 203.0,
+       "given_up_transient": 2.0,
+       "given_up_intrinsic": 83.0,
+       "repeat_intrinsic": 0.0,
+       "retried_designs": 0.0
+      },
+      "repairs": 2.0,
+      "repair_days": 45.400000000000006,
+      "other_days_lost": 14.0
+     },
+     "onr_cu": {
+      "best_mean": 0.47521527868845637,
+      "best_se": 0.0,
+      "n_new": 6.0,
+      "spent": 60449.64,
+      "T1": {
+       "hit": 0,
+       "km_median": null,
+       "rmst": 365.0
+      },
+      "T2": {
+       "hit": 0,
+       "km_median": null,
+       "rmst": 365.0
+      },
+      "ledger": {
+       "runs": 48.0,
+       "failed": 11.0,
+       "failed_intrinsic": 7.0,
+       "failed_transient": 4.0,
+       "misdiagnosed": 1.0,
+       "attempts": 16.0,
+       "failed_attempts": 1.0,
+       "designs": 16.0,
+       "given_up_transient": 0.0,
+       "given_up_intrinsic": 1.0,
+       "repeat_intrinsic": 0.0,
+       "retried_designs": 0.0
+      },
+      "repairs": 2.0,
+      "repair_days": 27.41,
+      "other_days_lost": 13.0
+     },
+     "both": {
+      "T1_rmst": 270.2835,
+      "T2_rmst": 294.4085,
+      "best": 0.5854951695363921
+     },
+     "down_days": 72.81,
+     "n_damage": 4.0,
+     "seconds": 1005.2,
+     "overlap_h": 97.01
+    },
+    "abandon": {
+     "n": 1,
+     "seeds": [
+      0
+     ],
+     "flaime_al": {
+      "best_mean": 0.7152458914130335,
+      "best_se": 0.0,
+      "n_new": 37.0,
+      "spent": 116092.75,
+      "T1": {
+       "hit": 1,
+       "km_median": 138.067,
+       "rmst": 138.067
+      },
+      "T2": {
+       "hit": 1,
+       "km_median": 161.942,
+       "rmst": 161.942
+      },
+      "ledger": {
+       "runs": 392.0,
+       "failed": 211.0,
+       "failed_intrinsic": 194.0,
+       "failed_transient": 17.0,
+       "misdiagnosed": 41.0,
+       "attempts": 196.0,
+       "failed_attempts": 79.0,
+       "designs": 196.0,
+       "given_up_transient": 1.0,
+       "given_up_intrinsic": 78.0,
+       "repeat_intrinsic": 0.0,
+       "retried_designs": 0.0
+      },
+      "repairs": 3.0,
+      "repair_days": 37.96,
+      "other_days_lost": 6.0
+     },
+     "onr_cu": {
+      "best_mean": 0.6854126734647512,
+      "best_se": 0.0,
+      "n_new": 11.0,
+      "spent": 60425.71,
+      "T1": {
+       "hit": 1,
+       "km_median": 316.026,
+       "rmst": 316.026
+      },
+      "T2": {
+       "hit": 1,
+       "km_median": 316.026,
+       "rmst": 316.026
+      },
+      "ledger": {
+       "runs": 49.0,
+       "failed": 7.0,
+       "failed_intrinsic": 5.0,
+       "failed_transient": 2.0,
+       "misdiagnosed": 2.0,
+       "attempts": 17.0,
+       "failed_attempts": 1.0,
+       "designs": 16.0,
+       "given_up_transient": 0.0,
+       "given_up_intrinsic": 0.0,
+       "repeat_intrinsic": 0.0,
+       "retried_designs": 1.0
+      },
+      "repairs": 0.0,
+      "repair_days": 0.0,
+      "other_days_lost": 0.0
+     },
+     "both": {
+      "T1_rmst": 227.0465,
+      "T2_rmst": 238.984,
+      "best": 0.7003292824388924
+     },
+     "down_days": 37.96,
+     "n_damage": 3.0,
+     "seconds": 1116.4,
+     "overlap_h": 26.51
+    },
+    "drop": {
+     "n": 1,
+     "seeds": [
+      0
+     ],
+     "flaime_al": {
+      "best_mean": 0.6839313280940142,
+      "best_se": 0.0,
+      "n_new": 46.0,
+      "spent": 119989.79,
+      "T1": {
+       "hit": 1,
+       "km_median": 133.817,
+       "rmst": 133.817
+      },
+      "T2": {
+       "hit": 1,
+       "km_median": 264.108,
+       "rmst": 264.108
+      },
+      "ledger": {
+       "runs": 400.0,
+       "failed": 206.0,
+       "failed_intrinsic": 185.0,
+       "failed_transient": 21.0,
+       "misdiagnosed": 42.0,
+       "attempts": 200.0,
+       "failed_attempts": 74.0,
+       "designs": 190.0,
+       "given_up_transient": 0.0,
+       "given_up_intrinsic": 64.0,
+       "repeat_intrinsic": 5.0,
+       "retried_designs": 9.0
+      },
+      "repairs": 3.0,
+      "repair_days": 65.28,
+      "other_days_lost": 18.0
+     },
+     "onr_cu": {
+      "best_mean": 0.47036366814254693,
+      "best_se": 0.0,
+      "n_new": 5.0,
+      "spent": 61876.12,
+      "T1": {
+       "hit": 0,
+       "km_median": null,
+       "rmst": 365.0
+      },
+      "T2": {
+       "hit": 0,
+       "km_median": null,
+       "rmst": 365.0
+      },
+      "ledger": {
+       "runs": 45.0,
+       "failed": 15.0,
+       "failed_intrinsic": 12.0,
+       "failed_transient": 3.0,
+       "misdiagnosed": 3.0,
+       "attempts": 15.0,
+       "failed_attempts": 2.0,
+       "designs": 14.0,
+       "given_up_transient": 0.0,
+       "given_up_intrinsic": 1.0,
+       "repeat_intrinsic": 0.0,
+       "retried_designs": 1.0
+      },
+      "repairs": 0.0,
+      "repair_days": 0.0,
+      "other_days_lost": 0.0
+     },
+     "both": {
+      "T1_rmst": 249.4085,
+      "T2_rmst": 314.554,
+      "best": 0.5771474981182806
+     },
+     "down_days": 65.28,
+     "n_damage": 3.0,
+     "seconds": 1145.7,
+     "overlap_h": 4.42
+    },
+    "viability_node": {
+     "n": 1,
+     "seeds": [
+      0
+     ],
+     "flaime_al": {
+      "best_mean": 0.6724858503768675,
+      "best_se": 0.0,
+      "n_new": 27.0,
+      "spent": 119990.78,
+      "T1": {
+       "hit": 1,
+       "km_median": 201.284,
+       "rmst": 201.284
+      },
+      "T2": {
+       "hit": 1,
+       "km_median": 258.942,
+       "rmst": 258.942
+      },
+      "ledger": {
+       "runs": 418.0,
+       "failed": 190.0,
+       "failed_intrinsic": 174.0,
+       "failed_transient": 16.0,
+       "misdiagnosed": 40.0,
+       "attempts": 209.0,
+       "failed_attempts": 70.0,
+       "designs": 208.0,
+       "given_up_transient": 3.0,
+       "given_up_intrinsic": 66.0,
+       "repeat_intrinsic": 0.0,
+       "retried_designs": 1.0
+      },
+      "repairs": 3.0,
+      "repair_days": 63.79,
+      "other_days_lost": 14.0
+     },
+     "onr_cu": {
+      "best_mean": 0.46676380136999873,
+      "best_se": 0.0,
+      "n_new": 5.0,
+      "spent": 63774.98,
+      "T1": {
+       "hit": 0,
+       "km_median": null,
+       "rmst": 365.0
+      },
+      "T2": {
+       "hit": 0,
+       "km_median": null,
+       "rmst": 365.0
+      },
+      "ledger": {
+       "runs": 51.0,
+       "failed": 10.0,
+       "failed_intrinsic": 7.0,
+       "failed_transient": 3.0,
+       "misdiagnosed": 1.0,
+       "attempts": 17.0,
+       "failed_attempts": 2.0,
+       "designs": 17.0,
+       "given_up_transient": 0.0,
+       "given_up_intrinsic": 2.0,
+       "repeat_intrinsic": 0.0,
+       "retried_designs": 0.0
+      },
+      "repairs": 0.0,
+      "repair_days": 0.0,
+      "other_days_lost": 0.0
+     },
+     "both": {
+      "T1_rmst": 283.142,
+      "T2_rmst": 311.971,
+      "best": 0.5696248258734331
+     },
+     "down_days": 63.79,
+     "n_damage": 3.0,
+     "seconds": 937.6,
+     "overlap_h": 4.42
     }
    },
    "paired": {},
-   "contrasts": []
+   "contrasts": [
+    {
+     "a": "viability_node",
+     "b": "viability_x",
+     "why": "node-level against Ax 1.3's design-level viability",
+     "both:T1_rmst": null,
+     "both:T2_rmst": null,
+     "flaime_al:best": null,
+     "onr_cu:best": null
+    },
+    {
+     "a": "viability_node",
+     "b": "drop",
+     "why": "a failure model against none",
+     "both:T1_rmst": null,
+     "both:T2_rmst": null,
+     "flaime_al:best": null,
+     "onr_cu:best": null
+    },
+    {
+     "a": "abandon",
+     "b": "drop",
+     "why": "ABANDONED against FAILED, no failure model",
+     "both:T1_rmst": null,
+     "both:T2_rmst": null,
+     "flaime_al:best": null,
+     "onr_cu:best": null
+    }
+   ]
   }
  }
 }

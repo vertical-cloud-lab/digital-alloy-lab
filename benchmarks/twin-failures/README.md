@@ -56,8 +56,8 @@ heuristic, random and GP-BO for reference.
   - Those repairs took 16 to 20 of copper's Friday and Saturday atomizer days a year.
 - **The lab's record hurts most where nothing models a failure.** Round 3's GP-BO, which never sees a failed design
   again, ended at 0.25 on aluminium. Random ended at 0.36 and the heuristic at 0.60 (5 seeds each).
-- **Not run** (section 7): the hidden region where abandoning a composition is right, and the value of the
-  diagnosis. They are wired up and calibrated; neither fit in the job.
+- **Piloted only:** the hidden region where abandoning a composition is right (section 5.1). **Not run:** the value
+  of the diagnosis (section 7).
 
 ## 1. The setting
 
@@ -233,24 +233,32 @@ all seven seeds the averages are 123 and 75; `viability_x`, at 79, did about as 
 
 ![anatomy of one simulated year](https://github.com/vertical-cloud-lab/digital-alloy-lab/blob/claude/issue-274-20261126-0642/benchmarks/twin-failures/figures/twinfail_timeline_lab_s0.png?raw=true)
 
-**The cheap references** use round 3's own handling. The heuristic, random and GP-BO ran 5 seeds each in the `lab`
-regime; their rows are in the tables above. The heuristic and random also ran 3 seeds each with the hidden region,
-in the table below. The BOFN strategies didn't run with the hidden region, so these rows only show what it does to
-policies that don't model failures.
+**The cheap references** use round 3's own handling: the heuristic, random and GP-BO, 5 seeds each in the `lab`
+regime. Their rows are in the tables above.
 
-#### Regime `lab_region`
+### 5.1 Pilot: the hidden region (regime `lab_region`)
 
-| Strategy | n | Al best new | Al T1 hit, KM median day | Al T2 hit | Cu best new | Cu T1 hit, KM median day | Cu T2 hit | Al runs failed (inputs / transient) | Cu runs failed | atomizer down, d | repairs set off by Al / Cu | Cu atomizer days lost to Al's repairs |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| `heuristic` | 3 | 0.569 ± 0.066 | 3/3, 138 | 1/3 | 0.495 ± 0.103 | 1/3, - | 0/3 | 145 of 383 (120 / 25) | 12 of 60 | 139 | 7.3 / 1.3 | 17 |
-| `random` | 3 | 0.240 ± 0.240 | 1/3, - | 1/3 | 0.143 ± 0.143 | 0/3, - | 0/3 | 258 of 417 (242 / 17) | 37 of 66 | 65 | 3.7 / 0.7 | 11 |
+A pilot, run in the job's last hour, with seed 0 for five strategies and a second seed where one finished. Treat it as a direction,
+not a result. Here 90 % of runs fail inside a region of compositions that no CALPHAD node sees, which is the case
+where abandoning a composition should pay. With the region, the heuristic and random (3 seeds each, round 3's
+handling) ended at heuristic 0.57 on aluminium and 0.50 on copper, random 0.24 on aluminium and 0.14 on copper.
 
-What each strategy spent and made in a year (means over seeds):
+In seed 0 the order matched the main regime. Round 3's `bad_value` was lowest on aluminium (0.519), and the four
+alternatives ranged from 0.672 to 0.715. `abandon` was highest, which is the case where giving up on a composition
+should pay, but one seed can't separate them. About half of aluminium's runs failed, and nine in ten of those failed
+from their inputs (the region, plus cold melts). The node-level viability model had the fewest failed runs, 190 of
+418. On seed 1, `drop` again beat `bad_value` on aluminium (0.704 against 0.638), but its copper campaign ended at
+0.164.
 
-| Strategy | Al spent | Al new alloys demonstrated | Al designs atomized | Al designs given up after transient failures only | Al repeat failures from the inputs | Cu spent | Cu new alloys |
-|---|---|---|---|---|---|---|---|
-| `heuristic` | $119k | 44.3 | 122 | 0.3 | 7.0 | $60k | 7.7 |
-| `random` | $119k | 32.0 | 209 | 0.7 | 0.0 | $59k | 9.3 |
+| Strategy | seed 0: Al best new, Cu best new, Al runs failed | seed 1: Al best new, Cu best new, Al runs failed |
+|---|---|---|
+| `bad_value` | 0.519, 0.462, 224 of 428 (212 from the inputs) | 0.638, 0.561, 215 of 370 (197 from the inputs) |
+| `drop` | 0.684, 0.470, 206 of 400 (185 from the inputs) | 0.704, 0.164, 238 of 412 (217 from the inputs) |
+| `abandon` | 0.715, 0.685, 211 of 392 (194 from the inputs) | not finished |
+| `viability_x` | 0.696, 0.475, 235 of 406 (225 from the inputs) | not finished |
+| `viability_node` | 0.672, 0.467, 190 of 418 (174 from the inputs) | not finished |
+
+Raw runs: `results/region.jsonl`.
 
 ## 6. What this means for the lab's ledger, and for Ax
 
@@ -282,9 +290,9 @@ What each strategy spent and made in a year (means over seeds):
 
 ## 7. Not run, and what would settle the open questions
 
-- **The hidden region (`lab_region`), where abandoning a composition is right.** It is calibrated
-  (`results/region_calibration.json`) and wired up, but there was no room for it in the job: 15 BOFN years, about an
-  hour on 4 cores. It is the experiment most likely to change a recommendation above.
+- **The hidden region (`lab_region`), where abandoning a composition is right,** ran only as a pilot (section
+  5.1). It needs 7 or more seeds, about 35 BOFN years. It is the experiment most likely to change a recommendation
+  above.
 - **The value of the diagnosis** (`diag`: viability node with no diagnosis, and with the true cause). That is 8 years.
 - **More seeds.** Seven per strategy leaves most paired intervals wide. Twelve would narrow them by about a third.
 - **GP-BO with Ax's statuses.** That is the closest thing to Ax out of the box. It appears here only with round 3's
