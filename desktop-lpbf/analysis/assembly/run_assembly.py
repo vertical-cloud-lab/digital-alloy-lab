@@ -583,6 +583,17 @@ def do_place(run, st, row):
             if not sub["ok"]:
                 why.append(sub["why"])
             retreat(run, actor, near=u)
+        elif st.get("hold_first") and r["ok"]:
+            # round 8 (two hands): keep it pressed on its seal while the other arm drives its first screws
+            run.add(u, st["grp"], st["phase"], state)
+            try:
+                hres = hold_first(run, st, u, actor)
+            except Exception as e:  # noqa: BLE001  (the hold is extra: an error in it must not fail the placement)
+                traceback.print_exc()
+                run._hold_trial = False
+                hres = dict(step=st["id"], status="error", why=f"{type(e).__name__}: {e}"[:200])
+            row.setdefault("holds", []).append(hres)
+            retreat(run, actor, near=u)
         else:
             retreat(run, actor)
             run.add(u, st["grp"], st["phase"], state)
@@ -821,6 +832,74 @@ def hold_and_drive(run, st, u, holder):
     run.sub_rows.append(row)
     ok = all(r["ok"] for _, r in per) if per else True
     return dict(ok=ok, why="" if ok else f"held-part screws: {row.get('why', '')[:150]}")
+
+
+def hold_first(run, st, u, holder):
+    """Round 8 (two hands, notes/2026-11-26-byu-vcl-video-lessons.md lesson 3): the arm that placed u keeps it pressed on its
+    seal (gripper or vacuum cup still on it) while the other arm drives the first k screws of its joint that it can reach,
+    spread round the part (the screws on the driver's side first); then the holder lets go and the joint's own step drives the
+    rest. Why each hold is there (the seal's squeeze force against the part's weight) is in two_hands.py. A screw the driver
+    can't reach while the part is held is not recorded: it is left for the joint's own step."""
+    sc = run.sc
+    hf = st["hold_first"]
+    joint, k = hf["joint"], int(hf.get("k", 2))
+    lo = np.min([sc.objs[i]["V"].min(0) for i in u], axis=0)
+    hi = np.max([sc.objs[i]["V"].max(0) for i in u], axis=0)
+    M = sc.pose(u[0], {})
+    lo, hi = (M[:3, :3] @ lo + M[:3, 3]), (M[:3, :3] @ hi + M[:3, 3])
+    lo, hi = np.minimum(lo, hi), np.maximum(lo, hi)
+    idx = screw_targets(run, joint, None, near=(lo, hi))
+    driver = run.other(holder)
+    res = dict(step=st["id"], joint=joint, holder=holder, driver=driver, k=k, n_joint=len(idx), driven=[], fails=[])
+    if not idx:
+        res["why"] = "no screws of the joint near the part"
+        return res
+    Tph = run.cl.T_phase(st["phase"])
+    s_dr = -1.0 if run.arm(driver).side == "front" else 1.0
+    Pw = {i: (Tph @ np.r_[np.asarray(sc.objs[i]["P"], float), 1.0])[:3] for i in idx}
+    near_side = sorted(idx, key=lambda i: -s_dr * Pw[i][1])
+    cand = near_side[:max(k, (len(idx) + 1) // 2)]
+    order = [cand[0]]
+    while len(order) < len(cand):                      # spread: farthest from those already chosen
+        rest = [i for i in cand if i not in order]
+        order.append(max(rest, key=lambda i: min(np.linalg.norm(Pw[i] - Pw[j]) for j in order)))
+    order += [i for i in near_side if i not in order]
+    a = run.arm(holder)
+    a.release()                    # the part is in the world now; the closed gripper (or the cup) stays on it
+    tq = next((x.get("torque_Nm") for x in SQ.steps() if x.get("joint") == joint and x.get("do") == "screws"), None)
+    lb = next((x.get("long_bit") for x in SQ.steps() if x.get("joint") == joint and x.get("do") == "screws"), None)
+    run._hold_trial = True
+    per = []
+    try:
+        for i in order[:k + 1]:
+            if len(res["driven"]) >= k:
+                break
+            r = drive_screw(run, i, st["phase"], driver, lb, torque=tq)
+            if r["ok"]:
+                r["arm"] = driver
+                retreat(run, driver, 30.0, names=r.get("dest", ()))
+                run.add([i], st["grp"], st["phase"])
+                run.done_screws.add(i)
+                res["driven"].append(sc.label(i))
+                per.append((i, r))
+            else:
+                res["fails"].append(f"{sc.short(i)[-8:]}: {r['why'][:100]}")
+                run.arm(driver).release()
+                run.q[driver] = run.arm(driver).park_q()     # nothing was recorded for the attempt: the arm is still parked
+                run.arm(driver).place(run.q[driver])
+    finally:
+        run._hold_trial = False
+    if res["driven"]:
+        go_park(run, driver)
+        run.sub_rows = getattr(run, "sub_rows", [])
+        run.sub_rows.append(dict(id=st["id"] + "h", label=f"{st['label'][:60]}: first {len(per)} screws of {joint} driven by arm {driver} "
+                                                         f"while arm {holder} holds it on its seal", do="screws", joint=joint, actor=driver,
+                                 holder=holder, phase=st.get("phase"), sweep="PASS", arm="PASS", n=len(per), n_ok=len(per),
+                                 n_drive=len(per), driver=sorted({r["tool"] for _, r in per}), hold_first=True,
+                                 per_screw=[dict(screw=sc.label(i), ok=True, dock=r["dock"], roll=r["roll"], driver=r["tool"], arm=driver)
+                                            for i, r in per], why="; ".join(res["fails"])[:300]))
+    res["status"] = "hold used" if res["driven"] else "not possible"
+    return res
 
 
 def do_flip(run, st, row):
@@ -1402,15 +1481,32 @@ def main(argv):
             RECM.REC.put([i for i in idx if run.sc.objs[i]["V"] is not None], T, run.cl.state if state is None else state)
             run.table.remove(idx)          # in the cell now, so no longer on the table (seals fitted by their tools, merges)
         run.cl.put = _put
-        save_scene(run)
+        if not os.environ.get("ASM_NO_SCENE"):
+            save_scene(run)
     # the part list report.py's replay file matches step keys against (name, explode offset, motion group)
     ASM_DIR.mkdir(parents=True, exist_ok=True)
     plist = run.sc.parts.values() if isinstance(run.sc.parts, dict) else run.sc.parts
     (ASM_DIR / "parts.json").write_text(json.dumps([dict(name=p.name, explode=[float(v) for v in p.explode], group=p.group)
                                                     for p in plist], indent=0))
     steps = SQ.steps("M50")
+    # round 8 (split runs): ASM_FF_UNTIL=<step>: every step before it is fast-forwarded (its end state only: the parts and screws
+    # at their seats, merges, turn-overs, the trunnion's jaws; nothing planned, nothing recorded); ASM_STOP_AT=<step>: stop
+    # before it; ASM_CONTINUE=<dir>: the recorder carries on from that run's chunks (arm states, chunk numbering), so its
+    # events continue the same stream. Lets the steps after a point be planned in parallel processes.
+    ff_until, stop_at = os.environ.get("ASM_FF_UNTIL"), os.environ.get("ASM_STOP_AT")
+    ff = bool(ff_until)
+    if ff and RECM.REC is not None:
+        RECM.REC.mute = True
     for st in steps:
         if only and not any(st["id"].startswith(o) for o in only):
+            continue
+        if stop_at and st["id"] == stop_at:
+            break
+        if ff and st["id"] == ff_until:
+            ff = False
+            ff_done(run)
+        if ff:
+            ff_step(run, st)
             continue
         row = dict(id=st["id"], label=st["label"], do=st["do"], tool=st.get("tool"), actor=st.get("actor"), holder=st.get("holder"),
                    phase=st.get("phase"), joint=st.get("joint"))
@@ -1434,9 +1530,125 @@ def main(argv):
         save(run)
     save(run, final=True)
     if RECM.REC is not None:
-        RECM.REC.flush()
+        if ff_until or stop_at:
+            RECM.REC._dump_chunk()         # a piece of a split run: its chunks only, never the chapter's full file
+        else:
+            RECM.REC.flush()
         RECM.REC.save_summary(os.environ.get("ASM_SUMMARY", "/tmp/robotbuild/data/assembly.json"))
     log("done")
+
+
+def ff_step(run, st):
+    """A step's end state without planning or recording (ASM_FF_UNTIL): what do_place, do_screws, do_seal, do_flip, do_dual and
+    do_rotate leave behind (run.add / merge / take, the jaws), whatever the arms did."""
+    sc, cl = run.sc, run.cl
+    do = st["do"]
+    if do == "place":
+        idx = run.resolve(st["keys"], st.get("exclude", ()), st.get("moved", False))
+        if not idx:
+            return
+        if st.get("merge"):
+            run.merge(st["merge"], st["grp"])
+        run.add(idx, st["grp"], st["phase"], dict(st.get("state", {})))
+        if st.get("hold_for"):
+            units = [[i] for i in idx] if (st.get("per_solid") or st.get("per_part")) else [idx]
+            for u in units:
+                lo = np.min([sc.objs[i]["V"].min(0) for i in u], axis=0)
+                hi = np.max([sc.objs[i]["V"].max(0) for i in u], axis=0)
+                M = sc.pose(u[0], {})
+                lo, hi = (M[:3, :3] @ lo + M[:3, 3]), (M[:3, :3] @ hi + M[:3, 3])
+                for i in screw_targets(run, st["hold_for"], None, near=(np.minimum(lo, hi), np.maximum(lo, hi))):
+                    run.add([i], st["grp"], st["phase"])
+                    run.done_screws.add(i)
+    elif do == "screws":
+        for i in screw_targets(run, st["joint"], st.get("pn"), None):
+            run.add([i], st["grp"], st["phase"])
+            run.done_screws.add(i)
+    elif do == "seal":
+        idx = run.resolve(st["keys"])
+        if idx:
+            run.add(idx, st["grp"], st["phase"])
+    elif do == "flip":
+        grp = st["grp"]
+        idx = sorted(run.asm.get(grp, set()))
+        cl.take(idx)
+        if st["to"] == "handoff":
+            T1 = cl.T_phase("body_up") @ Tm(p=(0.0, 0.0, 235.0))
+            cl.put(idx, T1)
+            for i in idx:
+                cl.where[i] = T1
+            run.phase_of[grp] = "handoff"
+        else:
+            run.add(idx, grp, st["to"])
+    elif do == "dual":
+        idx = run.resolve(st["keys"], moved=bool(st.get("flip") or st.get("whole")))
+        if st.get("flip") or st.get("whole"):
+            idx = sorted(run.asm.get("chamber", set()))
+        cl.take(idx)
+        if st.get("merge"):
+            run.merge(st["merge"], st["grp"]) if st["merge"] != "chamber" else None
+        run.add(idx, st["grp"], st["phase"])
+    elif do == "rotate":
+        grp = st["grp"]
+        idx = sorted(run.asm.get(grp, set()))
+        jaws = cl.static.pop("Trunnion jaws")
+        J0 = jaws.M.copy()
+        cl.take(idx)
+        TT = cl.T_fix["T"]
+        jaws.place(TT @ Tm(rot((1, 0, 0), float(st.get("sign", 1.0)) * 180.0)) @ inv(TT) @ J0)
+        cl.static["Trunnion jaws"] = jaws
+        run.add(idx, grp, st["to"])
+
+
+def ff_done(run):
+    """End of the fast-forward: both arms parked with the gripper, at the MiR positions the continued recording has (or where
+    the planner left them); the recorder unmuted, carrying on from ASM_CONTINUE's chunks if given."""
+    import pickle
+    cl = run.cl
+    for n in ("A", "B"):
+        run.arm(n).release()
+        run.set_tool(n, "gripper")
+        run.q[n] = run.arm(n).park_q()
+        run.arm(n).place(run.q[n])
+    R = RECM.REC
+    if R is None:
+        return
+    R.mute = False
+    cont = os.environ.get("ASM_CONTINUE")
+    if cont:
+        files = sorted(pathlib.Path(cont).glob("asm_chamber.chunk*.pkl"))
+        ev = []
+        for f in files:
+            ev += pickle.load(open(f, "rb"))["events"]
+        stt = {n: dict(q=None, x=None, tool="gripper", close=0.0, held=None, spec={}) for n in ("A", "B")}
+        for e in ev:
+            if e["kind"] == "init":
+                for n, a in e["arms"].items():
+                    stt[n].update({k: a[k] for k in ("q", "x", "tool", "close") if a.get(k) is not None})
+            n = e.get("arm")
+            if e["kind"] == "drive":
+                stt[n]["x"] = e["x1"]
+            elif e["kind"] in ("move", "screw") and e.get("q") is not None and len(e["q"]):
+                stt[n]["q"] = np.asarray(e["q"][-1], float)
+                if e.get("close") is not None:
+                    stt[n]["close"] = float(e["close"])
+            elif e["kind"] == "move2":
+                stt["A"]["q"], stt["B"]["q"] = np.asarray(e["qA"][-1], float), np.asarray(e["qB"][-1], float)
+            elif e["kind"] == "grip":
+                stt[n]["close"] = float(e["c1"])
+            elif e["kind"] == "tool":
+                stt[n]["tool"], stt[n]["spec"] = e["tool"], dict(e.get("spec") or {})
+        for n in ("A", "B"):
+            s = stt[n]
+            R.state[n] = dict(q=None if s["q"] is None else np.asarray(s["q"], float), x=s["x"], tool=s["tool"], close=s["close"],
+                              held=None, tool_key=(s["tool"], tuple(sorted(s["spec"].items()))))
+            if s["x"] is not None:
+                cl.move_mir(n, s["x"])
+        R.chapter = "chamber"
+        R.events = []
+        R._chunk_n = len(files)
+        R._dumped = 0
+        log(f"continuing {cont}: {len(files)} chunks, arm A at x {stt['A']['x']}, arm B at x {stt['B']['x']}")
 
 
 def save_scene(run):

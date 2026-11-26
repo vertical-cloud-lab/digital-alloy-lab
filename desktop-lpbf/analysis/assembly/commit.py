@@ -13,6 +13,7 @@ import numpy as np
 
 import record as RECM
 import fetch as FE
+import mir_route as MR
 from cell import Tm, inv  # noqa: F401
 
 # estimated minutes for the steps a person does (or a machine), for the time line; not measured
@@ -110,10 +111,37 @@ def goto(run, n, x, held_world=None):
     cl = run.cl
     a = run.arm(n)
     x_pl, q_pl = cl.dock[n], run.q[n].copy()
-    lo, hi = min(st["x"], x) - 900.0, max(st["x"], x) + 900.0
-    tw = run.table.world(lo, hi) if getattr(run, "table", None) is not None else None
-    ok, why = FE.sweep_drive(run, n, st["x"], x, a.park_q(), st["close"], extra_world=tw)
-    R.drive(n, x, check=dict(ok=ok, why=why))
+    x0 = st["x"]
+    # round 8: pivot, drive along the heading, pivot (mir_route.py), every pose swept against the cell, the long table and the
+    # other MiR and arm where the recording has them (not where the planner last left them)
+    o = "B" if n == "A" else "A"
+    so = R.state[o]
+    x_po, q_po = cl.dock[o], run.q[o].copy()
+    rt, why_rt = None, ""
+    try:
+        if so["x"] is not None:
+            cl.move_mir(o, so["x"])
+        run.arm(o).place(np.asarray(so["q"], float) if so["q"] is not None else run.arm(o).park_q())
+        lo, hi = min(x0, x) - MR.SPOT_BACK - 900.0, max(x0, x) + MR.SPOT_FWD + 900.0
+        world = cl.world(n)
+        for k in list(world.bodies):
+            if k.startswith(f"{n} "):          # its own MiR, cabinet, plate, stand and presenter move with it
+                world.remove(k)
+        if getattr(run, "table", None) is not None:
+            for b in run.table.world(lo, hi).bodies.values():
+                world.add(b)
+        rt = MR.plan(run, n, x0, x, a.park_q(), st["close"], world)
+    except Exception as e:  # noqa: BLE001
+        why_rt = f"route planner error: {type(e).__name__}: {e}"[:200]
+        rt = None
+    finally:
+        cl.move_mir(o, x_po)
+        run.arm(o).place(q_po)
+    if rt is not None and rt.get("legs"):
+        ok, why = rt["ok"], rt["why"]
+    else:
+        ok, why = False, (rt or {}).get("why") or why_rt or "no route"
+    R.drive(n, x, check=dict(ok=ok, why=why), route=rt if (rt is not None and rt.get("legs")) else None)
     cl.move_mir(n, x_pl)
     run.q[n] = q_pl
     a.place(q_pl)
@@ -233,6 +261,8 @@ def screw(run, i, actor, best, tool, long_bit, tip_d, torque, L, s_hex, row_acc)
     a = run.arm(actor)
     dk = best["dock"]
     if not best.get("ok"):
+        if getattr(run, "_hold_trial", False):
+            return                     # round 8: a screw the holding pair could not drive is left for the joint's own step
         R.screw(actor, i, None, L, 0.7, torque, tool, False, best.get("why", ""))     # shown as a failed screw, no motion
         return
     goto(run, actor, dk)

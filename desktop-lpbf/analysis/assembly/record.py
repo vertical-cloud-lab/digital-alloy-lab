@@ -91,6 +91,8 @@ class Rec:
     # ---------------------------------------------------------------- bookkeeping
     def _ev(self, kind, **kw):
         kw["kind"] = kind
+        if getattr(self, "mute", False):        # a fast-forwarded step (run_assembly ASM_FF_UNTIL): nothing is recorded
+            return kw
         kw["step"] = self.step["id"] if self.step else ""
         self.events.append(kw)
         if self.step is not None:
@@ -132,6 +134,7 @@ class Rec:
         self._ev("step_end", id=s["id"], status=s["status"], dur=0.0, row={k: row.get(k) for k in
                                                                             ("sweep", "arm", "why", "gap", "arm_clear", "n", "n_ok",
                                                                              "driver", "fetch", "fetch_why", "who", "method")})
+        self._dump_chunk()
         self.steps.append(dict(id=s["id"], label=s["label"], do=s["do"], who=s["who"], seconds=round(s["t"], 1),
                                robot_A_s=round(s["robot_s"]["A"], 1), robot_B_s=round(s["robot_s"]["B"], 1),
                                person_s=round(s["person_s"], 1), status=s["status"], why=s["why"][:200], chapter=self.chapter,
@@ -167,13 +170,16 @@ class Rec:
                  held=None if st["held"] is None else st["held"]["name"])
         st["q"] = Q[-1].copy()
 
-    def drive(self, n, x1, check=None):
+    def drive(self, n, x1, check=None, route=None):
+        """route (round 8, mir_route.plan): the legs (pivot / line, each with its duration) the MiR drives, pivot-drive-pivot;
+        None: no route was found, so the renderer must not animate this move (it cuts, and says so)."""
         st = self.state[n]
         x0 = st["x"]
         st["x"] = float(x1)
         if x0 is None or abs(float(x1) - x0) < 1e-6:
             return
-        self._ev("drive", arm=n, x0=float(x0), x1=float(x1), dur=round(drive_time(x1 - x0), 2), check=check,
+        dur = (float(route["dur"]) + T_DOCK) if route else drive_time(x1 - x0)
+        self._ev("drive", arm=n, x0=float(x0), x1=float(x1), dur=round(dur, 2), check=check, route=route,
                  held=None if st["held"] is None else st["held"]["name"])
 
     def set_x(self, n, x):
@@ -236,7 +242,23 @@ class Rec:
         self._ev("mark", what=what, dur=0.0, **kw)
 
     # ---------------------------------------------------------------- output
+    def _dump_chunk(self):
+        """Round 8: after every step, the chapter's new events go to asm_<chapter>.chunk<k>.pkl, so the renderer can draw the
+        steps already planned while the planner works on the rest (asm_render.py reads the chunks when the full file is absent)."""
+        if self.chapter is None:
+            return
+        k0 = getattr(self, "_dumped", 0)
+        if k0 >= len(self.events):
+            return
+        n = getattr(self, "_chunk_n", 0)
+        f = self.dir / f"asm_{self.chapter}.chunk{n:04d}.pkl"
+        tmp = f.with_suffix(".tmp")
+        pickle.dump(dict(chapter=self.chapter, events=self.events[k0:]), open(tmp, "wb"))
+        tmp.rename(f)
+        self._dumped, self._chunk_n = len(self.events), n + 1
+
     def flush(self):
+        self._dumped, self._chunk_n = 0, 0
         if self.chapter is None or not self.events:
             self.events = []
             return

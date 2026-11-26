@@ -39,15 +39,21 @@ the plotter and the frame writer; read its docstring first.
 
 ## Rendering the long assembly chapters in slices
 
-`asm_render.py` can draw one slice of a chapter's frames: `ASM_PART=k/n` (by the planned frame count) or `ASM_RANGE=lo:hi`
-with `ASM_RANGE_IDX=k` (explicit global frame numbers) writes frames `lo..hi-1` to `<chapter>.part<k>/`, replaying the rest
-without drawing and without the camera search, and stops after its range. `merge_parts.py <chapter>` joins the slices. Round 7's
-chapter 41 (4,600-4,700 frames) took about 35 min in four slices on the 4-core runner, against well over an hour in one process;
-`best_view`'s ray casts are most of the time.
+`asm_render.py` plays a chapter twice: pass 1 without drawing (where the work is in every frame, the tripods' occlusion once
+per step, then the shot plan), pass 2 draws. A slice draws only its frames, into `<chapter>.part<k>/`: `ASM_PART=k/n` (by the
+planned frame count), `ASM_RANGE=lo:hi` with `ASM_RANGE_IDX=k`, or, round 8, `ASM_STEPS=<first step>:<step after the last>`
+with `ASM_RANGE_IDX=k` and the same `ASM_CUTS` in every slice (a forced cut at each slice boundary, so nothing in the shot plan
+reaches across it). With `ASM_STEPS` a slice can be drawn as soon as the planner has finished its last step: record.py writes
+each step's events to `asm_<chapter>.chunk<k>.pkl` as it goes, and the renderer reads the chunks while the full file is
+absent. `merge_parts.py <chapter>` joins the slices and keeps each slice's `audit/` folder (`ROBOTBUILD_AUDIT=1`) as
+`<chapter>/audit.part<k>/`, listed with its frames in `<chapter>/audit_parts.json`. Round 8 has no per-motion camera search, so
+a frame costs about 0.5 s (SSAA) on the shared 4-core runner; `ROBOTBUILD_AA=fxaa` roughly halves it.
 
 ```
-for i in 0 1 2 3; do ASM_CAP=1 ASM_RANGE=<lo_i>:<hi_i> ASM_RANGE_IDX=$i ASM_TRAJ=/tmp/robotbuild/traj/run10 \
+# chapter 41, run 12, one of twelve slices (asm_slices.py starts each when the planner has passed its last step)
+ROBOTBUILD_AUDIT=1 ASM_TRAJ=/tmp/robotbuild/traj/run12 ASM_STEPS=F10a:F16 ASM_RANGE_IDX=4 ASM_UPTO=T01 \
+  ASM_CUTS=C09f,C14,F05b,F10a,F16,F25,F31,F39,F45,F51,F55 \
   xvfb-run -a -s "-screen 0 1920x1080x24" /tmp/capmem 3G /tmp/venv/bin/python asm_render.py chamber \
-  --fail_notes=/tmp/robotbuild/data/asm_fail_notes.json & done; wait
+  --fail_notes=desktop-lpbf/analysis/out/assembly/run10_fail_notes.json
 /tmp/venv/bin/python merge_parts.py 41-assembly-chamber
 ```
