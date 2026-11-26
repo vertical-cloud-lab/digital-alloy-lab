@@ -112,8 +112,8 @@ depreciation of the equipment ($5.40M automated, $0.54M conventional) and of the
 - **Outside users,** on the "shared" bases: assumed demand.
 - **Design and analysis time** is left out of both labs.
 
-*Favourable to the conventional lab:* BYU instruments it uses carry no charge or subsidised rates, and its students
-cost $27 an hour.
+*Favourable to the conventional lab:* BYU instruments it uses carry no charge or subsidised rates, and its hands-on
+hours are charged at a graduate student's stipend and tuition.
 
 ### The acceleration-factor method
 
