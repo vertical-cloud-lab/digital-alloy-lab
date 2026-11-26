@@ -1,7 +1,7 @@
 {
  "states": {
   "S1": {
-   "n_parts": 13,
+   "n_parts": 15,
    "clashes": [],
    "contacts": [
     {
@@ -21,7 +21,7 @@
    "beam_nearest": []
   },
   "S2": {
-   "n_parts": 31,
+   "n_parts": 33,
    "clashes": [],
    "contacts": [
     {
@@ -80,7 +80,7 @@
    ]
   },
   "FT-0": {
-   "n_parts": 47,
+   "n_parts": 49,
    "clashes": [],
    "contacts": [
     {
@@ -133,7 +133,7 @@
    ]
   },
   "FT-1": {
-   "n_parts": 60,
+   "n_parts": 62,
    "clashes": [],
    "contacts": [
     {
@@ -273,7 +273,7 @@
    }
   },
   "FT-1V": {
-   "n_parts": 65,
+   "n_parts": 67,
    "clashes": [],
    "contacts": [
     {

@@ -219,12 +219,15 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False):
         frame.append(tslot((x, ry[0] + h, zb + h), "y", ry[1] - ry[0] - 2 * h))
         for y in ry:
             frame.append(tslot((x, y, zb + 2 * h), "z", z_rail_top - zb - 4 * h))
-    # gantry: two uprights at y = yc + 115 (on the base rail), a cross-beam carrying the head plate
-    z_beam = L["head_bot"] - 12.0 + h                  # cross-beam centre: its underside on the head plate top
-    for x in ux:
-        frame.append(tslot((x, ry[1], z_rail_top), "z", z_beam + h - z_rail_top + 30))
-    frame.append(tslot((ux[0] - h, ry[1], z_beam + 12.0 + 0.0), "x", ux[1] - ux[0] + 2 * h))
-    add("T-slot frame and gantry", comp(frame), C["tslot"], "E4", "frame")
+    add("T-slot base and support rails", comp(frame), C["tslot"], "E4", "frame")
+    # gantry: two uprights at y = yc + 115 (on the base rail), tall enough for the cube; a cross-beam carrying the head
+    # plate, clamped at the height that puts the lens its working distance above the bed (21 mm higher for the cube)
+    z_beam = L["head_bot"] + h                         # cross-beam centre: its underside on the head plate top
+    z_up_top = P["lens_wd"] + P["dz_cube"] + P["lens_l"] + 60.0
+    ups = [tslot((x, ry[1], z_rail_top), "z", z_up_top - z_rail_top) for x in ux]
+    add("Gantry uprights", comp(ups), C["tslot"], "E4", "frame")
+    add("Gantry cross-beam (clamped at the lens height)", tslot((ux[0] + h, ry[1], z_beam), "x", ux[1] - ux[0] - 2 * h),
+        C["tslot"], "E4", "frame")
 
     # ---------------- optics (S1 on): head plate, hurrySCAN 25, lens, collimator, fibre, laser ----------------
     hb = L["head_bot"]
@@ -471,10 +474,10 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False):
         rl, ml = P["rc_rail_l"], P["rc_motor_l"]
         st = box(-rl / 2, rl / 2, yr - rw / 2, yr + rw / 2, z0, z0 + rh)
         st = st.fuse(box(-rl / 2 - ml, -rl / 2, yr - rw / 2 + 5, yr + rw / 2 - 5, z0, z0 + rh + 4))
-        add("Zaber X-LSQ075B-E01 recoater stage (body est.)", st, C["zaber"], "M1", "recoater")
+        add("Zaber X-LSQ075B-E01 recoater stage (body est.)", st, C["zaber"], "M1b", "recoater")
         cl_, cw_, ct_ = P["rc_car"]
         car = box(hx - cl_ / 2, hx + cl_ / 2, yr - cw_ / 2, yr + cw_ / 2, z0 + rh, z0 + rh + ct_)
-        add("X-LSQ carriage", car, C["zaber_top"], "M1", "recoater", "recoater")
+        add("X-LSQ carriage", car, C["zaber_top"], "M1b", "recoater", "recoater")
         ztop_car = z0 + rh + ct_
         hl, hw_, hh_ = P["hopper"]
         arm_z0 = zbed + hh_ - 8
@@ -528,20 +531,20 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False):
             "safety")
         add("E-stop", cyl(18, (360, -280, zb + 70), "z", 22), C["red"], "S1", "safety")
         add("Key switch", cyl(10, (420, -280, zb + 70), "z", 14), C["black"], "S1", "safety")
-        add("Emission lamp", cyl(14, (ux[1], ry[1], L["head_bot"] + 50), "z", 40), C["red"], "S1", "safety")
+        add("Emission lamp", cyl(14, (ux[1], ry[1], P["lens_wd"] + P["dz_cube"] + P["lens_l"] + 60.0), "z", 40), C["red"], "S1", "safety")
     if has_box:
         z_lid = L["roof_in"] + P["gasket"]
         sw_ = []
         for xx in (xc - 160, xc + 160):
             sw_.append(box(xx - 18, xx + 18, yc - by / 2 - t - 16, yc - by / 2 - t, z_lid - 48, z_lid - 22))
-        add("Coded lid switches (2), sensors on the box", comp(sw_), C["yellow"], "S1", "safety")
+        add("Coded lid switches (2)", comp(sw_), C["yellow"], "S1", "safety")
     if state == "FT-1V":
         F = P["cube_frame"]
         sw_ = []
         for xx in (xc - 110, xc + 110):
             fz_ = yc - F / 2 - (P["cube_plate_t"] - P["cube_boss"])
             sw_.append(box(xx - 18, xx + 18, fz_ - 16, fz_, L["cube_c"] + 60, L["cube_c"] + 86))
-        add("Coded lid switches (2), on the cube door", comp(sw_), C["yellow"], "S1", "safety")
+        add("Coded lid switches (2)", comp(sw_), C["yellow"], "S1", "safety")
     if has_cassette:
         add("Argon regulator and solenoid valve panel", box(-330, -230, -330, -250, zb, zb + 160), C["alu_dark"], "G1",
             "gas")
@@ -566,6 +569,21 @@ def bom_by_state():
     for s in STATES:
         out[s] = {p.name: p.pid for p in build(s)}
     return out
+
+
+def diff_states(a, b, tol=0.5):
+    """Parts added, moved and removed going from state a to state b (by name; moved = bounding box shifted)."""
+    def bbs(parts):
+        out = {}
+        for p in parts:
+            bb = p.shape.BoundingBox()
+            out[p.name] = (p.pid, (bb.xmin, bb.xmax, bb.ymin, bb.ymax, bb.zmin, bb.zmax))
+        return out
+    pa, pb = bbs(build(a)), bbs(build(b))
+    added = [(n, pb[n][0]) for n in pb if n not in pa]
+    removed = [(n, pa[n][0]) for n in pa if n not in pb]
+    moved = [(n, pb[n][0]) for n in pb if n in pa and max(abs(x - y) for x, y in zip(pa[n][1], pb[n][1])) > tol]
+    return dict(added=added, moved=moved, removed=removed, kept=len(pb) - len(added) - len(moved))
 
 
 def to_assembly(parts, name):

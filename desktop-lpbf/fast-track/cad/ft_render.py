@@ -22,7 +22,7 @@ IMG = HERE.parent / "img"
 W, H = 1200, 860
 FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 MAT = dict(smooth_shading=True, specular=0.3, specular_power=18, ambient=0.22, diffuse=0.85)
-CONTEXT = ("Bench top", "PC with", "IPG YLR", "Process fibre", "Safety relay", "E-stop", "Key switch", "Argon regulator",
+CONTEXT = ("Bench top", "Gantry", "PC with", "IPG YLR", "Process fibre", "Safety relay", "E-stop", "Key switch", "Argon regulator",
            "Exhaust HEPA", "Trace O2", "Rotary-vane", "KF-25 pump hose")
 ADDED, MOVED, REMOVED, KEPT = "#2bb24c", "#2b6cd2", "#d22b2b", "#c9ced4"
 
@@ -165,7 +165,7 @@ def sections():
     for s in ("FT-0", "FT-1", "FT-1V"):
         parts = M.build(s)
         pl = plotter()
-        add_parts(pl, parts, clip=True, hide=CONTEXT + ("Bench top", "T-slot frame", "120 mm fan"))
+        add_parts(pl, parts, clip=True, hide=CONTEXT + ("Bench top", "T-slot base", "120 mm fan"))
         beam(pl, s, 0.3)
         cam(pl, SEC)
         img = caption(shot(pl), f"{s}: section through the plate (y = 0)",
@@ -192,6 +192,8 @@ def steps():
             c = cls[k]
             if c == "added":
                 colors[k] = ADDED
+                if p.opacity < 1:
+                    opac[k] = 0.2
             elif c == "moved":
                 colors[k] = MOVED
             else:
@@ -202,7 +204,7 @@ def steps():
         for p in removed:
             m = tess(p.shape)
             if m is not None:
-                pl.add_mesh(m, color=hex2rgb(REMOVED), opacity=0.35, **MAT)
+                pl.add_mesh(m, color=hex2rgb(REMOVED), opacity=0.16, **MAT)
         cam(pl, ISO_WIDE if b in ("S2", "FT-1V") else ISO)
         n_add = sum(1 for v in cls.values() if v == "added")
         n_mov = sum(1 for v in cls.values() if v == "moved")

@@ -1,19 +1,19 @@
 # fast_track.py output
 
-Box 16 x 12 x 8 in: 25.2 L, gas volume ~21.2 L; purge at 20 L/min.
+Box 16 x 12 x 8 in: 25.2 L, gas volume ~23.5 L; purge at 20 L/min.
 
 | target_ppm | volume_changes | ideal_min | real_min_low | real_min_high | argon_L_low | argon_L_high |
 |---|---|---|---|---|---|---|
-| 1000 | 5.34 | 5.7 | 11.3 | 28.3 | 226 | 566 |
-| 500 | 6.04 | 6.4 | 12.8 | 31.9 | 256 | 639 |
-| 100 | 7.64 | 8.1 | 16.2 | 40.5 | 324 | 809 |
+| 1000 | 5.34 | 6.3 | 12.5 | 31.3 | 251 | 627 |
+| 500 | 6.04 | 7.1 | 14.2 | 35.4 | 283 | 708 |
+| 100 | 7.64 | 9.0 | 17.9 | 44.9 | 359 | 897 |
 
 Build time, argon and powder:
 
 | build_mm | layers | scan_s_per_layer | hours_low | hours_high | nozzle_L_min | argon_m3_low | argon_m3_high | builds_per_cylinder | argon_usd | powder_g |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 10.0 | 333 | 4.9 | 1.19 | 1.84 | 27.0 | 2.74 | 3.79 | 2.5-3.5 | 30-121 | 30 |
-| 15.0 | 500 | 4.9 | 1.79 | 2.76 | 27.0 | 3.71 | 5.29 | 1.8-2.6 | 41-169 | 45 |
+| 10.0 | 333 | 4.9 | 1.19 | 1.84 | 27.0 | 2.83 | 3.88 | 2.4-3.4 | 31-124 | 30 |
+| 15.0 | 500 | 4.9 | 1.79 | 2.76 | 27.0 | 3.8 | 5.37 | 1.8-2.5 | 42-172 | 45 |
 
 Heat budget at 200 °C (well block + plate on Macor standoffs):
 

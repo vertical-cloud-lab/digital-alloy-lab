@@ -168,12 +168,15 @@ def gantt(res):
     import matplotlib.pyplot as plt
     from matplotlib.patches import Patch
 
-    scns = list(res)
-    n = [len(res[s][0]) for s in scns]
-    fig, axes = plt.subplots(len(scns), 1, figsize=(12, 2.0 + 0.3 * sum(n)), gridspec_kw=dict(height_ratios=n))
+    keep_orders = ("used optics chain arrives", "enclosure arrives", "stages arrive", "cube frame and plates arrive (PO)",
+                   "LSO registration and SOP", "EHS review (Al powder)")
+    scns = list(res)[:2]
+    shown = {s: [k for k in res[s][1] if res[s][0][k][3] not in ("orders", "approvals") or k in keep_orders] for s in scns}
+    n = [len(shown[s]) for s in scns]
+    fig, axes = plt.subplots(len(scns), 1, figsize=(12, 1.6 + 0.27 * sum(n)), gridspec_kw=dict(height_ratios=n))
     for ax, scn in zip(axes, scns):
         tasks, f = res[scn]
-        names = sorted(f, key=lambda k: (f[k][2], f[k][3]))
+        names = sorted(shown[scn], key=lambda k: (f[k][2], f[k][3]))
         for i, k in enumerate(names):
             sl, sh, fl, fh = f[k]
             st = tasks[k][3]
@@ -193,12 +196,12 @@ def gantt(res):
         ax.grid(axis="x", color="#dddddd", lw=0.6)
         ax.set_axisbelow(True)
         ax.set_title(scn, fontsize=9.5, loc="left")
-    axes[0].legend(handles=[Patch(color=c, label=k) for k, c in COLORS.items()] + [Patch(color="#b2182b", label="milestone")],
-                   fontsize=7, ncol=8, loc="upper right", bbox_to_anchor=(1.0, 1.32))
+    fig.legend(handles=[Patch(color=c, label=k) for k, c in COLORS.items()] + [Patch(color="#b2182b", label="milestone")],
+               fontsize=7.5, ncol=8, loc="lower center")
     axes[-1].set_xlabel("weeks from the decision (5 working days); dark = earliest, light = to the late estimate; "
                         "green band = 3-6 weeks", fontsize=8)
-    fig.suptitle("One machine that grows: S1 -> S2 -> FT-0 -> FT-1 -> FT-1V as the parts arrive (estimates)", fontsize=10.5)
-    fig.tight_layout(rect=(0, 0, 1, 0.975))
+    fig.suptitle("One machine that grows: S1 -> S2 -> FT-0 -> FT-1 -> FT-1V as the parts arrive (estimates; scenario C in out/progression.md)", fontsize=10.5)
+    fig.tight_layout(rect=(0, 0.035, 1, 0.975))
     fig.savefig(IMG / "progression-gantt.png", dpi=125)
     plt.close(fig)
 
@@ -225,6 +228,15 @@ def main():
     for r in sp:
         md.append(f"| {r['state']} | {r['adds']} | ${r['added_low']:,}-{r['added_high']:,} | "
                   f"${r['cumulative_low']:,}-{r['cumulative_high']:,} |")
+    sys.path.insert(0, str(HERE))
+    import ft_model as M
+    md += ["", "What changes at each step (from the CAD model; moved = the part's bounding box shifted):", ""]
+    for x, y in zip(M.STATES[:-1], M.STATES[1:]):
+        d = M.diff_states(x, y)
+        fmt = lambda lst: "; ".join(f"{n} [{pid}]" if pid else n for n, pid in lst) or "none"  # noqa: E731
+        md += [f"**{x} -> {y}** ({len(d['added'])} added, {len(d['moved'])} moved, {len(d['removed'])} removed, "
+               f"{d['kept']} unchanged)", "", f"- added: {fmt(d['added'])}", f"- moved: {fmt(d['moved'])}",
+               f"- removed: {fmt(d['removed'])}", ""]
     (OUT / "progression.md").write_text("\n".join(md) + "\n")
     gantt(res)
     print("\n".join(md))

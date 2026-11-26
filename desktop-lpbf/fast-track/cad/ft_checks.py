@@ -34,6 +34,8 @@ GAP_WARN = 2.0     # mm
 P = M.P
 
 JOINTS = [
+    ("Gantry uprights", "Gantry cross-beam", "T-slot joint"),
+    ("Gantry uprights", "T-slot base", "uprights stand on the support rail"),
     ("Process fibre", "IPG YLR", "fibre leaves the laser's front panel"),
     ("Process fibre", "Collimator", "fibre connector in the collimator"),
     ("Argon feed tube", "Slot nozzle", "tube fitting in the nozzle's feed boss"),

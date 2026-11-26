@@ -31,7 +31,7 @@ AIR_O2_PPM = 209_000
 # Box: a 16 x 12 x 8 in 304 stainless NEMA 4X enclosure (catalogue size; internal ~ outside for a 14 ga box).
 BOX_IN = (16, 12, 8)
 BOX_L = BOX_IN[0] * BOX_IN[1] * BOX_IN[2] * IN**3 * 1000          # litres
-INTERNALS_L = 4.0                                                   # stages, well, deck, hopper (estimate)
+INTERNALS_L = 1.7                                                   # deck, well, plate, stage, hopper: measured in the CAD model (cad/ft_checks.py, FT-1)
 GAS_L = BOX_L - INTERNALS_L
 BOX_AREA_M2 = 2 * (BOX_IN[0] * BOX_IN[1] + BOX_IN[0] * BOX_IN[2] + BOX_IN[1] * BOX_IN[2]) * IN**2
 
@@ -381,7 +381,7 @@ def layout():
     box(cx - 30, -135, 60, 15, "#7f9cc9")
     # recoater stage (behind the section plane) and hopper-blade
     box(30, deck_t + 2, 330, 26, "#5b7fb5", ls="--", a=0.35)
-    ax.annotate("Zaber X-LSQ150B recoater stage\n(behind the well, under a shield;\nits arm reaches over the bed)", xy=(80, deck_t + 20),
+    ax.annotate("Zaber X-LSQ075B recoater stage\n(behind the well, under a shield;\nits arm reaches over the bed)", xy=(80, deck_t + 20),
                 xytext=(-185, -70), fontsize=6.5, arrowprops=dict(arrowstyle="->", lw=0.6))
     hx = cx - PLATE_D_MM / 2 - 38
     ax.add_patch(Polygon([(hx, bed_z + 45), (hx + 30, bed_z + 45), (hx + 18, bed_z + 6), (hx + 12, bed_z + 6)],

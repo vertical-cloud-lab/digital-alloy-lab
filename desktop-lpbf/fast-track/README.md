@@ -17,6 +17,7 @@ in an Al alloy: the smallest result that shows a working LPBF machine.
 | [`fast_track.py`](fast_track.py) | purge, argon, heat, optics and powder sizing; costs from `parts.csv`; the forward-pass schedule and Gantt chart |
 | [`out/`](out/) | the script's tables (`summary.md`, `schedule.csv`, `purge.csv`, `build.csv`, `optics.csv`) |
 | [`img/gantt.png`](img/gantt.png), [`img/ft1-section.png`](img/ft1-section.png) | the schedules, and FT-1's layout to scale |
+| [`cad/`](cad/) | **the CadQuery model of FT-0, FT-1 and FT-1V, and the progression between them as parts arrive** (model, checks, schedule, renders, STEP); see [`cad/README.md`](cad/README.md) |
 | [`../edison/ft-fast-track-review/`](../edison/ft-fast-track-review/) | Edison `LITERATURE_HIGH` review of minimal LPBF builds (query, answer, references, trajectory) |
 
 ## Short answer
@@ -35,7 +36,7 @@ in an Al alloy: the smallest result that shows a working LPBF machine.
   - **Powder bed:** two stock Zaber stages (1–5 day lead time): a vertical stage lowers a Ø40 mm heated plate in a
     heated aluminium well, and a linear stage moves a small gravity-fed hopper with the blade, as Heriot-Watt's rig did.
   - **Custom parts:** about 12 simple parts, 25–40 shop hours. No honing, no vacuum seals, no 4th axis.
-  - **Cost:** **$20.4k–31.2k** in parts and shop time, against $70.5k–154.1k for PR 266's BOM.
+  - **Cost:** **$20.1k–30.9k** in parts and shop time, against $70.5k–154.1k for PR 266's BOM.
   - **Time:** **first tracks at 2.2–4.4 weeks and first coupons at 3.2–6.4 weeks** if the two stages go on separate
     vendors' PCard orders; 4.2–8.0 weeks if they share one purchase order.
 - **FT-0 is FT-1's first half:** the same optics, box and heated plate without the stages, spread by hand with a film
@@ -45,7 +46,7 @@ in an Al alloy: the smallest result that shows a working LPBF machine.
   - O₂ of 100–1000 ppm by flow purge, against PR 266's 1–10 ppm by pump-purge. EOS M 290 work on Al uses a 1000 ppm
     threshold and small commercial machines purge to 1000–3000 ppm (PR 266 §2.3), and PR 266's own review found O₂
     matters less than the powder's water ([`vacuum-and-purge.md`](../vacuum-and-purge.md)).
-    FT-1V, the same machine in a stock vacuum cube, keeps pump-purge for $10.6k–11.6k more and 1–2 weeks longer than
+    FT-1V, the same machine in a stock vacuum cube, keeps pump-purge for $10.9k–12.3k more and 1–2 weeks longer than
     FT-1 on PCards.
   - One Ø40 mm plate instead of Ø25/50/75 modules; builds up to 15 mm.
   - No VLM tray fit, no robot features, no recirculating gas loop (argon runs once through, about 2–3.5 builds a
@@ -96,8 +97,8 @@ The parts that make the machine slow come from requirements a first machine does
 |---|---|---|---|---|---|---|---|---|
 | A | PR 266's design, fast-tracked (used majors, swapped switches, outsourcing split) | $70k–76k at spec with used majors (`lead-times.md`) | ~11.3–13.5 wk | ~12–15 wk | 1–10 ppm | Ø25/50/75 modules | honing, 134+ BYU hours | the long-term machine, not a 6-week one |
 | **FT-0** | **Single-track bench**: used laser chain over a heated plate in a stainless box, hand-spread layers | **$13.2k–23.7k** | **1.6–4.2 wk** | single layers and pads only | 100–1000 ppm (flow) | Ø40, 200 °C | the used laser's condition | **do first** |
-| **FT-1** | **Purge-box LPBF**: FT-0 plus a heated well, a piston stage and a hopper-blade stage | **$20.4k–31.2k** | **2.2–4.4 wk** (PCard stages) / 3.2–6.0 wk (one PO) | **3.2–6.4 wk** / 4.2–8.0 wk | 100–1000 ppm (flow) | Ø40 well, 200 °C | approvals; hopper flow with fine Al | **recommended** |
-| FT-1V | FT-1 in a stock vacuum cube with a pump-purge kit | $31.1k–42.8k | 3.4–6.4 wk | 4.4–8.4 wk | < 100 ppm in 2–3 cycles | Ø40 well, 200 °C | stages and grease under vacuum; two POs | if O₂ below 100 ppm is required from day 1 |
+| **FT-1** | **Purge-box LPBF**: FT-0 plus a heated well, a piston stage and a hopper-blade stage | **$20.1k–30.9k** | **2.2–4.4 wk** (PCard stages) / 3.2–6.0 wk (one PO) | **3.2–6.4 wk** / 4.2–8.0 wk | 100–1000 ppm (flow) | Ø40 well, 200 °C | approvals; hopper flow with fine Al | **recommended** |
+| FT-1V | FT-1 in a stock vacuum cube with a pump-purge kit | $31.1k–43.2k | 3.4–6.4 wk | 4.4–8.4 wk | < 100 ppm in 2–3 cycles | Ø40 well, 200 °C | stages and grease under vacuum; two POs | if O₂ below 100 ppm is required from day 1 |
 | E | Laser engraver as the base (PR 266 §1b) | $7.5k–9.5k for a 200 W MOPA engraver | – | – | – | add-on | pulsed only: Monport's GT 200W has no CW or quasi-CW mode, and its board is closed (Sterling's 2026-11-19 update) | no: with a CW laser swapped in it becomes FT-0 with marking-grade optics |
 | F | Buy a commercial desktop unit (AO Metal A30, Xact XM200C, ...) | $59k–130k (PR 266 §2.2) | vendor lead time + PO and any bid steps | – | ≤ 1000–3000 ppm typical | none listed on the desktop units | lead times not published; no heated plate | the go/no-go fallback, not a 6-week route |
 | G | Reduced-build-volume insert in BYU's Concept Laser M2 | an insert, ~$1k–5k (estimate) | 2–6 wk (estimate; depends on that lab) | same | the M2's | check whether the M2 has one | the lab's willingness, warranty and schedule | ask this week |
@@ -113,7 +114,8 @@ FT-1 and FT-1V come from `fast_track.py`. E, F, G and H are not costed in detail
 ![FT-1 side section, to scale](img/ft1-section.png)
 
 *FT-1 to scale, drawn by `fast_track.py` from its constants. The lens's working distance (~300 mm) is an estimate; read
-it off the lens before cutting the frame. Not a CAD model: no interference, FEA or CFD has been run on it.*
+it off the lens before cutting the frame. The CadQuery model of all three machines, with interference, beam, travel and
+fit checks, is in [`cad/`](cad/); no FEA or CFD has been run.*
 
 ```
                  IPG YLR-400-SM (on the bench or a cart) ── fibre ──┐
@@ -123,7 +125,7 @@ it off the lens before cutting the frame. Not a CAD model: no interference, FEA 
                                                      │ beam tube (enclosed, interlocked)
    ┌──────────── lid = the box's hinged door, Ø50.8 mm fused-silica window + cover slide ───────────┐
    │   argon in ▶ slot nozzle  ▼ beam (window ~140 mm above the bed)                     exhaust ▶ │── HEPA ── check valve ── building exhaust
-   │   [hopper+blade on the Zaber X-LSQ150B, under a sheet shield] ──▶ spreads left to right       │
+   │   [hopper+blade on the Zaber X-LSQ075B, under a sheet shield] ──▶ spreads left to right       │
    │                ┌─────── well block, 200 °C, Ø40 bore ───────┐   overflow cup                   │
    │                │   heated plate + substrate disc, 200 °C    │                                  │
    │  deck plate    └── Macor standoffs ──┘    │ rod             └── Macor standoffs                │
@@ -135,8 +137,8 @@ it off the lens before cutting the frame. Not a CAD model: no interference, FEA 
 - **The box** is a 16 × 12 × 8 in 304 stainless NEMA 4X enclosure with a continuous hinge and clamps (Saginaw
   SCE-16128CHNFSS class; the 12 × 10 × 6 in model read today at $442.14). It lies on its back, so the door is a
   hinged lid. Its foam gasket is replaced with an FKM or silicone cord. Holes: the window, two gas bulkheads, the O₂
-  sample line, IP68 cable glands, and the rod gland. Check the inside against Zaber's drawing of the X-LSQ150B before
-  ordering the size.
+  sample line, IP68 cable glands, and the rod gland. In the CAD model the 250 × 250 mm deck cassette sits inside it with
+  78 mm and 27 mm to spare ([`cad/`](cad/)).
 - **The beam path is enclosed from the fibre to the plate:** collimator, scan head, lens, a tube from the lens to the
   window ring, the window, the box. With the lid shut there is no open beam, so the machine is Class 1 by construction.
 - **The window** (Edmund 38-990, Ø50.8 × 9.53 mm fused silica, 1064 nm V-coat) sits in an O-ring ring clamp in the lid,
@@ -190,16 +192,19 @@ it off the lens before cutting the frame. Not a CAD model: no interference, FEA 
 
 ### 3.3 The powder bed
 
-- **A heated well, not a honed bore.** The plate (Ø39.8 mm 6061, with two 50 W cartridge heaters and a thermocouple)
+- **A heated well, not a honed bore.** The plate (Ø39.8 × 28 mm 6061, with two 1/4 × 1 in. 50 W cartridge heaters in
+  axial holes and a thermocouple, their leads run down the hollow rod; [`cad/`](cad/README.md#what-drawing-it-to-size-changed))
   rides in a Ø40.00 mm bore in a 6061 block. The block has its own two heaters and is held at the plate's temperature.
   Same alloy at the same temperature means the 0.1 mm radial clearance doesn't change when the machine heats up, which
   is what forced PR 266's honing and clearance study ([`preheat-and-plates.md`](../preheat-and-plates.md)). A fibreglass
   rope in a groove round the plate keeps powder out of the gap. Heat both together on start-up.
-- **Thermal break:** the block and the plate stand on Macor standoffs; the rod is thin-wall 304 tube.
+- **Thermal break:** the block stands on Macor standoffs. The plate sits on the rod, a thin-wall 1/2 in. 304 tube, which
+  is its thermal break (about 2 W at 200 °C) and carries its leads out below the box.
 - **The piston stage is outside the box,** under the floor: a Zaber X-VSR20A (20 mm travel, 0.095 µm microstep, 100 N).
   The rod enters through a lightly greased O-ring gland. With the box at +5–10 mbar of argon, that gland only has to
   stop gas, not hold vacuum. 20 mm of travel gives 15 mm builds and room to lift the plate for removal.
-- **The recoater is a moving hopper with the blade on it,** on a Zaber X-LSQ150B (150 mm, 1.4 kg, rated 0–50 °C) inside
+- **The recoater is a moving hopper with the blade on it,** on a Zaber X-LSQ075B (75 mm, rated 0–50 °C; $2,923, "Lead
+  Time: 1-5 Days"; the 20 mm hopper needs 66 mm of travel, and the X-LSQ150B doesn't fit the cube, [`cad/`](cad/)) inside
   the box under a stainless shield. This is Heriot-Watt's arrangement ([Bidare et al. 2017](https://doi.org/10.1016/j.addma.2017.06.007),
   via [Edison](../edison/ft-fast-track-review/answer.md)):
   - a gravity-fed V-shaped reservoir travelled with the spreader on a stepper and lead screw;
@@ -217,7 +222,8 @@ it off the lens before cutting the frame. Not a CAD model: no interference, FEA 
   plate edge, clamps the plate to the rod without any rotational freedom, and keeps a skirt round the well top.
 - **The sequence per layer:** scan, return the hopper-blade over the scanned layer, lower the plate one layer, spread
   forward into an overflow cup past the well. A compliant blade copes with raised edges on the return.
-- **The substrate disc** (Ø39.8 × 6 mm 6061, three countersunk M3 screws outside a Ø30 mm build area) lifts out with the
+- **The substrate disc** (Ø39.8 × 6 mm 6061, three countersunk M2 screws at r = 17.1 mm, outside a Ø30 mm build area;
+  an M3 head there would overhang the disc) lifts out with the
   coupons after a build. Make several.
 
 **Powder:** a 10 mm build on Ø40 mm takes about 30 g of AlSi10Mg at a 1.8× dose, and a 15 mm build about 45 g
@@ -227,11 +233,12 @@ it off the lens before cutting the frame. Not a CAD model: no interference, FEA 
 
 | O₂ target | Volume changes (perfect mixing) | Ideal time at 20 L/min | Expected (2–5× for dead space and porous powder) | Argon |
 |---|---:|---:|---:|---:|
-| 1000 ppm | 5.3 | 5.7 min | 11–28 min | 0.23–0.57 m³ |
-| 500 ppm | 6.0 | 6.4 min | 13–32 min | 0.26–0.64 m³ |
-| 100 ppm | 7.6 | 8.1 min | 16–41 min | 0.32–0.81 m³ |
+| 1000 ppm | 5.3 | 6.3 min | 13–31 min | 0.25–0.63 m³ |
+| 500 ppm | 6.0 | 7.1 min | 14–35 min | 0.28–0.71 m³ |
+| 100 ppm | 7.6 | 9.0 min | 18–45 min | 0.36–0.90 m³ |
 
-- **Box gas volume:** ~21 L (25.2 L less ~4 L of internals).
+- **Box gas volume:** ~23.5 L (25.2 L less 1.7 L of internals, measured in the CAD model; FT-1V's cube: ~22 L, which it
+  pump-purges below 100 ppm in about 7 minutes with ~44 L of argon, [`cad/out/checks.md`](cad/out/checks.md)).
 - **The nearest precedent got there by purging alone.** Heriot-Watt's 350 × 230 × 220 mm Perspex box reached < 0.5 % O₂;
   its reinforced high-pressure version reached < 0.1 % (1000 ppm) after about 10 min of argon
   ([Bidare et al. 2018](https://doi.org/10.1007/s00170-018-2495-7), via Edison). A sealed metal box should do at least
@@ -247,8 +254,8 @@ it off the lens before cutting the frame. Not a CAD model: no interference, FEA 
 - **Cross-flow:** a 45 × 4 mm slot nozzle at 2.5 m/s, ~27 L/min, a few mm above the bed, across the plate to an outlet
   on the far side. The exhaust goes through a HEPA housing (McMaster 5169K72 + 9179K14) and a check valve to the
   building exhaust. **Treat the filter as a fire hazard** (PR 266 §3.7): condensate can ignite on contact with air.
-- **Argon use:** about 2.7–5.3 m³ per 10–15 mm build including the purge, so about 2–3.5 builds per size-300 cylinder,
-  roughly $30–170 of argon a build (estimate). PR 266's recirculating loop is the fix once builds are routine.
+- **Argon use:** about 2.8–5.4 m³ per 10–15 mm build including the purge, so about 1.8–3.4 builds per size-300
+  cylinder, roughly $31–172 of argon a build (estimate). PR 266's recirculating loop is the fix once builds are routine.
 - **Water matters more than O₂ for Al** ([`vacuum-and-purge.md`](../vacuum-and-purge.md)): dry the powder in a vacuum
   oven and load it dry. Heating the plate drives water off the powder into the gas, which the once-through flow carries
   away.
@@ -317,16 +324,16 @@ From [`parts.csv`](parts.csv) (`python fast_track.py`):
 |---|---:|---:|---:|
 | Laser and optics (used) | $4.8k–7.9k | $4.8k–7.9k | $4.8k–7.9k |
 | Scan control and computing | $1.7k–2.9k | $1.7k–2.9k | $1.7k–2.9k |
-| Motion | $0.2k–0.6k | $6.3k–6.4k | $6.3k–6.4k |
-| Enclosure or chamber | $0.8k–1.4k | $0.8k–1.4k | $11.1k–12.4k |
+| Motion | $0.2k–0.6k | $6.0k–6.1k | $6.0k–6.1k |
+| Enclosure or chamber | $0.8k–1.4k | $0.8k–1.4k | $11.4k–13.1k |
 | Heated plate | $0.6k–1.0k | $0.7k–1.1k | $0.7k–1.1k |
 | Gas and O₂ | $1.6k–2.1k | $1.6k–2.1k | $1.6k–2.1k |
 | Safety | $2.7k–3.5k | $2.7k–3.5k | $2.7k–3.5k |
 | Stock and shop time | $1.0k–1.6k | $2.0k–3.2k | $2.3k–3.7k |
 | Glovebox (if the lab has none free) | $0–2.7k | $0–2.7k | $0–2.7k |
-| **Total** | **$13.2k–23.7k** | **$20.4k–31.2k** | **$31.1k–42.8k** |
+| **Total** | **$13.2k–23.7k** | **$20.1k–30.9k** | **$31.1k–43.2k** |
 
-- **Purchase orders.** FT-1 needs one only if both Zaber stages go on one order ($6,238). Buying the piston stage from
+- **Purchase orders.** FT-1 needs one only if both Zaber stages go on one order ($5,948). Buying the piston stage from
   Thorlabs instead (MTS50/M-Z8 + KDC101, $2,179.18, both "Available: Today") keeps every order under $3,500. Check
   Thorlabs' vertical load rating against the O-ring drag first. FT-1V adds a PO to Ideal Vacuum (~$9.3k).
 - **Prices read today** are in [`live-reads-2026-11-26.csv`](live-reads-2026-11-26.csv). eBay refused 7 of the 14 used
@@ -435,6 +442,17 @@ Edison's summary is that together these "can plausibly reduce the time to first 
 10–16 weeks to 3–6 weeks", which matches `fast_track.py`. Its cautions are in §5 and §3.3–§3.7: no published
 acceptance test of ex-EOS lasers, PTFE near its limit at 200 °C, piston rotation in a reduction kit, and O₂
 sensitivity of crack-prone alloys. Its time savings are engineering estimates, not sourced figures.
+
+## 6b. The CAD model and the progression
+
+[`cad/`](cad/README.md) models FT-0, FT-1 and FT-1V in CadQuery as one machine that grows through five states as the
+parts arrive. S1 is the optics bench with the guide laser, S2 the box closed round the beam with full power into a
+dump, then FT-0, FT-1 and FT-1V. Every state checks clean for interference and the beam path. With FT-0 built first,
+FT-1 reaches coupons at 3.2–6.6 weeks, against 3.2–6.4 standing alone. FT-1V reaches them at 3.8–7.8 weeks if the
+cube is ordered on day 0, or 5.2–8.8 if it waits for FT-0's O₂ log. The model changed four things here: the X-LSQ075B
+recoater, the 28 mm heater plate with its leads down the rod, M2 substrate screws, and KF-25 feedthroughs for FT-1V.
+
+![The five states](img/cad-progression.png)
 
 ## 7. Decisions for Sterling
 

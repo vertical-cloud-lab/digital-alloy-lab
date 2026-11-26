@@ -7,11 +7,11 @@ clash with a bought part's envelope means 'check against the maker's drawing', n
 
 | State | Parts | Clashes | Designed contacts | Beam envelope hits | Nearest parts to the beam (mm) |
 |---|---:|---:|---:|---:|---|
-| S1 | 13 | 0 | 2 | 0 | - |
-| S2 | 31 | 0 | 3 | 0 | Water-cooled beam dump, 500 W 2.7, Cover-slide holder 5.66, Inner clamp ring 8.17, Window ring 8.53 |
-| FT-0 | 47 | 0 | 2 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cover-slide holder 5.66, Heater plate Ø39.8 x 28 6.0 |
-| FT-1 | 60 | 0 | 3 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cord clamp 3.54, Silicone-cord blade, 3 mm 3.96 |
-| FT-1V | 65 | 0 | 4 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cord clamp 3.54, Silicone-cord blade, 3 mm 3.96 |
+| S1 | 15 | 0 | 2 | 0 | - |
+| S2 | 33 | 0 | 3 | 0 | Water-cooled beam dump, 500 W 2.7, Cover-slide holder 5.66, Inner clamp ring 8.17, Window ring 8.53 |
+| FT-0 | 49 | 0 | 2 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cover-slide holder 5.66, Heater plate Ø39.8 x 28 6.0 |
+| FT-1 | 62 | 0 | 3 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cord clamp 3.54, Silicone-cord blade, 3 mm 3.96 |
+| FT-1V | 67 | 0 | 4 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cord clamp 3.54, Silicone-cord blade, 3 mm 3.96 |
 
 Designed contacts (FT-1):
 
