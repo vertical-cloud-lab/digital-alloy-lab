@@ -319,6 +319,118 @@ def gantt(sched):
     plt.close(fig)
 
 
+def layout():
+    """To-scale side section of FT-1 (x along the box's 16 in axis, z up, mm). A sketch for agreeing the layout,
+    not a model: sizes are from the parts' listings where known and marked estimates otherwise."""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    from matplotlib.patches import Rectangle, Polygon, Circle
+
+    L, H = BOX_IN[0] * 25.4, BOX_IN[2] * 25.4        # 406 x 203 mm inside
+    wall = 2.0
+    deck_t = 10.0
+    standoff = 12.7
+    block_w, block_h = WELL_BLOCK_MM[0], WELL_BLOCK_MM[2]
+    cx = L / 2
+    block_z0 = deck_t + standoff
+    bed_z = block_z0 + block_h                            # powder plane = top of the well block
+    plate_stack = 18.0                                    # 12 mm heater plate + 6 mm substrate disc
+    lens_wd = 300.0                                       # LINOS f = 254 mm working distance (estimate; check the lens)
+    lens_z0 = bed_z + lens_wd
+    win_z = H
+    fig, ax = plt.subplots(figsize=(9.5, 8.6))
+
+    def box(x, z, w, h, fc, ec="k", lw=0.8, ls="-", a=1.0, label=None, fs=7, lx=None, lz=None, ha="center"):
+        ax.add_patch(Rectangle((x, z), w, h, fc=fc, ec=ec, lw=lw, ls=ls, alpha=a))
+        if label:
+            ax.text(lx if lx is not None else x + w / 2, lz if lz is not None else z + h / 2, label, fontsize=fs,
+                    ha=ha, va="center")
+
+    # stainless box (on its back: the hinged door is the lid)
+    box(-wall, -wall, L + 2 * wall, wall, "#9aa5b1")
+    box(-wall, 0, wall, H, "#9aa5b1")
+    box(L, 0, wall, H, "#9aa5b1")
+    box(-wall, H, cx - 32 + wall, wall, "#9aa5b1")
+    box(cx + 32, H, L - cx - 32 + wall, wall, "#9aa5b1")
+    ax.text(L - 4, H - 50, "16 x 12 x 8 in 304 box,\nlid = its hinged door", fontsize=7, ha="right")
+    # window and ring clamp, cover slide
+    box(cx - 25.4, H - 4.8, 50.8, 9.53, "#cfe8ff", label=None)
+    box(cx - 38, H + wall, 76, 8, "#c9c9c9", label="window ring", fs=6.5)
+    box(cx - 28, H - 14, 56, 1.5, "#e6f3ff")
+    ax.text(cx + 40, H - 14, "cover slide", fontsize=6.5, va="center")
+    # deck, standoffs, well block, plate
+    box(8, 0, L - 16, deck_t, "#c7ccd1", label="deck plate (6061, 10 mm)", fs=6.5, lx=70)
+    for dx in (-30, 30):
+        box(cx + dx - 3.2, deck_t, 6.4, standoff, "#f2e6c9")
+    box(cx - block_w / 2, block_z0, (block_w - PLATE_D_MM) / 2, block_h, "#e8a87c")
+    box(cx + PLATE_D_MM / 2, block_z0, (block_w - PLATE_D_MM) / 2, block_h, "#e8a87c")
+    ax.text(cx - block_w / 2 - 3, block_z0 + block_h / 2, "well block\n200 °C", fontsize=6.5, ha="right", va="center")
+    box(cx - PLATE_D_MM / 2 + 0.2, bed_z - plate_stack, PLATE_D_MM - 0.4, 6, "#d0d0d0")
+    box(cx - PLATE_D_MM / 2 + 0.2, bed_z - plate_stack - 12 + 6, PLATE_D_MM - 0.4, 12, "#e8a87c")
+    ax.text(cx + block_w / 2 + 3, bed_z - 4, "Ø40 plate + substrate, 200 °C", fontsize=6.5, va="center")
+    for dx in (-12, 12):
+        box(cx + dx - 3.2, bed_z - plate_stack - 12 - standoff + 6, 6.4, standoff, "#f2e6c9")
+    # rod, gland, stage below
+    rod_top = bed_z - plate_stack - 12 - standoff + 6
+    box(cx - 5, -120, 10, rod_top + 120, "#b0b7bf")
+    box(cx - 22, -wall - 10, 44, 10, "#c7ccd1", label="rod O-ring gland", fs=6.5, lx=cx + 26, ha="left")
+    box(cx - 40, -205, 80, 70, "#5b7fb5", label="Zaber X-VSR20A\n(20 mm, outside)", fs=6.5)
+    box(cx - 30, -135, 60, 15, "#7f9cc9")
+    # recoater stage (behind the section plane) and hopper-blade
+    box(30, deck_t + 2, 330, 26, "#5b7fb5", ls="--", a=0.35)
+    ax.annotate("Zaber X-LSQ150B recoater stage\n(behind the well, under a shield;\nits arm reaches over the bed)", xy=(80, deck_t + 20),
+                xytext=(-185, -70), fontsize=6.5, arrowprops=dict(arrowstyle="->", lw=0.6))
+    hx = cx - PLATE_D_MM / 2 - 38
+    ax.add_patch(Polygon([(hx, bed_z + 45), (hx + 30, bed_z + 45), (hx + 18, bed_z + 6), (hx + 12, bed_z + 6)],
+                         closed=True, fc="#d9d9d9", ec="k", lw=0.8))
+    box(hx + 21, bed_z, 3, 7, "#333333")
+    ax.text(hx + 15, bed_z + 52, "hopper + silicone-cord blade\n(moves with the stage)", fontsize=6.5, ha="center")
+    ax.annotate("", xy=(hx + 70, bed_z + 30), xytext=(hx + 35, bed_z + 30), arrowprops=dict(arrowstyle="->", lw=0.8))
+    # overflow cup
+    box(cx + block_w / 2 + 6, deck_t, 30, 45, "#eeeeee")
+    ax.annotate("overflow cup", xy=(cx + block_w / 2 + 21, deck_t + 30), xytext=(cx + 95, 25), fontsize=6.5,
+                arrowprops=dict(arrowstyle="->", lw=0.6))
+    # gas
+    box(0, bed_z + 2, 40, 5, "#9ecae1")
+    ax.annotate("argon slot nozzle\n45 x 4 mm, 2.5 m/s", xy=(40, bed_z + 4.5), xytext=(12, bed_z + 105), fontsize=6.5,
+                arrowprops=dict(arrowstyle="->", lw=0.6))
+    ax.annotate("", xy=(cx + 60, bed_z + 6), xytext=(45, bed_z + 6), arrowprops=dict(arrowstyle="->", color="#3182bd", lw=1.2))
+    box(L - 2, bed_z - 6, 16, 14, "#c9c9c9")
+    ax.text(L + 18, bed_z + 40, "exhaust -> HEPA ->\ncheck valve (+5-10 mbar)\n-> building exhaust", fontsize=6.5, va="center")
+    # fan on the box
+    ax.add_patch(Circle((L + 30, -40), 24, fc="#eeeeee", ec="k", lw=0.8))
+    ax.text(L + 30, -40, "fan on\nthe box", fontsize=6, ha="center", va="center")
+    # optics: lens, head, collimator, beam tube, beam cone
+    box(cx - 60, lens_z0, 120, 62, "#7d7d7d", label="LINOS f = 254 mm", fs=6.5)
+    box(cx - 70, lens_z0 + 62, 140, 120, "#4d4d4d", label="", fs=6.5)
+    ax.text(cx, lens_z0 + 122, "hurrySCAN 25", fontsize=7, ha="center", va="center", color="white")
+    box(cx + 70, lens_z0 + 110, 90, 26, "#999999", label="collimator <- fibre", fs=6.5)
+    box(cx - 30, H + wall + 8, 60, lens_z0 - H - wall - 8, "#eeeeee", a=0.6)
+    ax.text(cx + 34, (H + lens_z0) / 2, "beam tube\n(interlocked)", fontsize=6.5, va="center")
+    ax.add_patch(Polygon([(cx - 10, lens_z0), (cx + 10, lens_z0), (cx + PLATE_D_MM / 2, bed_z), (cx - PLATE_D_MM / 2, bed_z)],
+                         closed=True, fc="#ff6b6b", ec="none", alpha=0.35))
+    # T-slot frame
+    for x in (-60, L + 60 - 20):
+        box(x, -wall, 20, lens_z0 + 200, "#b9c0c7", a=0.6)
+    box(-60, lens_z0 + 182, L + 140, 20, "#b9c0c7", a=0.6, label="T-slot frame (head height set by the lens working distance)", fs=6.5)
+    # dimensions
+    ax.annotate("", xy=(-90, bed_z), xytext=(-90, lens_z0), arrowprops=dict(arrowstyle="<->", lw=0.6))
+    ax.text(-95, (bed_z + lens_z0) / 2, f"~{lens_wd:.0f} mm\nworking\ndistance\n(estimate)", fontsize=6.5, ha="right", va="center")
+    ax.annotate("", xy=(-30, bed_z), xytext=(-30, H), arrowprops=dict(arrowstyle="<->", lw=0.6))
+    ax.text(-34, (bed_z + H) / 2, f"{H - bed_z:.0f} mm\nbed to window", fontsize=6.5, ha="right", va="center")
+    ax.plot([-60, L + 60], [bed_z, bed_z], color="#999999", lw=0.5, ls=":")
+    ax.set_xlim(-190, L + 150)
+    ax.set_ylim(-215, lens_z0 + 215)
+    ax.set_aspect("equal")
+    ax.set_xlabel("mm")
+    ax.set_title("FT-1 purge-box LPBF: side section, to scale (sketch, not a model)", fontsize=10)
+    fig.tight_layout()
+    fig.savefig(IMG / "ft1-section.png", dpi=140)
+    plt.close(fig)
+    return dict(bed_z=bed_z, bed_to_window=H - bed_z, lens_z0=lens_z0, overall_height_mm=lens_z0 + 200 + 205)
+
+
 def md_table(rows, cols):
     head = "| " + " | ".join(cols) + " |\n|" + "---|" * len(cols) + "\n"
     return head + "".join("| " + " | ".join(str(r[c]) for c in cols) + " |\n" for r in rows)
@@ -364,6 +476,10 @@ def main():
             w.writerows(data)
     (OUT / "summary.md").write_text("\n".join(lines) + "\n")
     gantt(s)
+    lay = layout()
+    lines.append(f"\nLayout sketch: bed {lay['bed_z']:.0f} mm above the box floor, {lay['bed_to_window']:.0f} mm below the window; "
+                 f"lens {lay['lens_z0']:.0f} mm above the floor; overall ~{lay['overall_height_mm']:.0f} mm with the stage below.")
+    (OUT / "summary.md").write_text("\n".join(lines) + "\n")
     print("\n".join(lines))
 
 

@@ -70,3 +70,5 @@ Milestones (working days -> weeks):
 - FT-1 purge-box LPBF (stages on PCards): FIRST COUPONS at 16-32 working days = 3.2-6.4 weeks
 - FT-1V same, in a stock vacuum chamber: FIRST TRACKS at 17-32 working days = 3.4-6.4 weeks
 - FT-1V same, in a stock vacuum chamber: FIRST COUPONS at 22-42 working days = 4.4-8.4 weeks
+
+Layout sketch: bed 63 mm above the box floor, 140 mm below the window; lens 363 mm above the floor; overall ~768 mm with the stage below.

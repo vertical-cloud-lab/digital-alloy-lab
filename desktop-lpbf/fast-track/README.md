@@ -16,7 +16,7 @@ in an Al alloy: the smallest result that shows a working LPBF machine.
 | [`live-reads-2026-11-26.csv`](live-reads-2026-11-26.csv) | every listing and vendor page read today through the lab Pi (BYU network), including the ones eBay refused |
 | [`fast_track.py`](fast_track.py) | purge, argon, heat, optics and powder sizing; costs from `parts.csv`; the forward-pass schedule and Gantt chart |
 | [`out/`](out/) | the script's tables (`summary.md`, `schedule.csv`, `purge.csv`, `build.csv`, `optics.csv`) |
-| [`img/gantt.png`](img/gantt.png) | the schedules |
+| [`img/gantt.png`](img/gantt.png), [`img/ft1-section.png`](img/ft1-section.png) | the schedules, and FT-1's layout to scale |
 | [`../edison/ft-fast-track-review/`](../edison/ft-fast-track-review/) | Edison `LITERATURE_HIGH` review of minimal LPBF builds (query, answer, references, trajectory) |
 
 ## Short answer
@@ -108,6 +108,11 @@ FT-1 and FT-1V come from `fast_track.py`. E, F, G and H are not costed in detail
 ## 3. FT-1 in detail
 
 ### 3.1 Layout
+
+![FT-1 side section, to scale](img/ft1-section.png)
+
+*FT-1 to scale, drawn by `fast_track.py` from its constants. The lens's working distance (~300 mm) is an estimate; read
+it off the lens before cutting the frame. Not a CAD model: no interference, FEA or CFD has been run on it.*
 
 ```
                  IPG YLR-400-SM (on the bench or a cart) ── fibre ──┐
