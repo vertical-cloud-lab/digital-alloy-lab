@@ -364,15 +364,14 @@ def render():
         az_i, el_i = clear_view(c, slots, s, d, prefs)
         near = view(c, d, az_i, el_i, shift=0.16)
         lab = [(label.split(" (")[0], (c[0], c[1], bb[5]))]
-        cam = frames(int(1.6 * FPS), cam, near, shot, lab)
-        near2 = view(c, d * 0.93, az_i + 8.0, max(25.0, el_i - 2.0), shift=0.16)
-        frames(int(hold * FPS), near, near2, shot, lab)
+        # round 8: a CUT to the item and a slow push on it (round 7 flew there in 1.6 s and orbited 8 deg while holding)
+        near2 = view(c, d * 0.96, az_i + 3.0, max(25.0, el_i - 1.0), shift=0.16)
+        frames(int((hold + 1.0) * FPS), near, near2, shot, lab)
         return near2
 
     # the opening: the whole table from behind lane B
     c_open = view(((LT["x0"] + LT["x1"]) / 2, 400.0, 600.0), 11500.0, 200.0, 36.0, shift=0.12)
-    cam = frames(int(2.5 * FPS), cam, c_open, dict(phase="open"))
-    cam = frames(int(4.0 * FPS), c_open, c_open, dict(phase="open"))
+    cam = frames(int(6.5 * FPS), c_open, c_open, dict(phase="open"))          # round 8: starts on the overview, no fly-in
     for cat in CAT_ORDER:
         z = zones.get(cat)
         if z is None:
@@ -381,10 +380,13 @@ def render():
         w = x1 - x0
         dist = 2900.0 if w < 2500 else 3300.0
         a = view((x0 + min(0.25 * w, 600.0), 0.0, 880.0), dist, AZ, EL)
-        b = view((x1 - min(0.25 * w, 600.0), 0.0, 880.0), dist, AZ + 8.0, EL - 2.0)
+        b = view((x1 - min(0.25 * w, 600.0), 0.0, 880.0), dist, AZ + 3.0, EL - 1.0)
         lab = [(CAT_TITLE[cat].split(":")[0], (x0 + 0.5 * w, LT["y1"], LT["top"]))]
-        cam = frames(int(1.6 * FPS), cam, a, dict(phase="cat", cat=cat), lab)
-        cam = frames(int((6.5 if w > 2500 else 4.5) * FPS), a, b, dict(phase="cat", cat=cat), lab)
+        # round 8: a CUT to the zone, then a slow track along it, no faster than 1/8 of the frame width per second (the
+        # 7-second panning rule, with margin); at this distance and a 30 deg view angle the frame is about 1.9 x dist wide
+        travel = float(np.linalg.norm(np.asarray(b[1]) - np.asarray(a[1])))
+        secs = max(6.0 if w > 2500 else 5.0, travel / (0.125 * 1.9 * dist))
+        cam = frames(int(secs * FPS), a, b, dict(phase="cat", cat=cat), lab)
         for key, match, ids, label in BIG:
             s = next((s for s in slots if match.lower() in s["name"].lower()), None)
             if s is None or s["category"] != cat:
@@ -397,8 +399,7 @@ def render():
             continue
         cam = closeup(cam, s, label, dict(phase="long", item=key), hold=3.6)
     c_close = view(((LT["x0"] + LT["x1"]) / 2, 400.0, 600.0), 12500.0, 196.0, 40.0, shift=0.12)
-    cam = frames(int(2.5 * FPS), cam, c_close, dict(phase="close"))
-    frames(int(8.0 * FPS), c_close, c_close, dict(phase="close"))
+    frames(int(9.0 * FPS), c_close, c_close, dict(phase="close"))                # round 8: a cut back out
     ch.close()
     print(f"{NAME}: {ch.n} frames ({ch.n / FPS:.0f} s) in {time.time() - t0:.0f} s", flush=True)
 

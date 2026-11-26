@@ -25,6 +25,12 @@ shown: the frames' summed time is work time, not weeks from the order (chapter 1
 route.json).
 
     compose.py --step 4 --out /tmp/robotbuild/preview/test.mp4    # a quick check of every chapter: every 4th frame
+
+Round 8: `--reuse OLD.mp4 --reuse-json OLD_compose.json` fills a chapter that has no frames in this run with its frames from
+an earlier cut (cut out of OLD.mp4 by the frame counts in its compose.json), passed through with their panels as they were,
+a tag saying which cut they come from (`--reuse-tag`), this cut's progress bar, and this cut's running clocks drawn over the
+old ones (the reused chapter's own totals come from REUSE_ADD below, so the clocks after it stay right). Used when only some
+chapters were re-rendered; compose.json lists which chapters are reused footage.
 """
 from __future__ import annotations
 
@@ -60,6 +66,17 @@ EXPECTED = [  # the contract's chapters (README.md), with the title a missing on
     ("60-summary", "Time and cost: in-house, outsourced, robot shop"),
 ]
 COUNTERS = ("machine_h", "robot_h", "person_h", "cam_h", "outsourced_d")
+# What a reused chapter adds to the clocks (its frames carry no metadata any more): the shop chapters' totals are
+# analysis/out/shop/shop_summary.json's "chapters" (round 7); the integration chapter's are ch_integration.py's 4.25 h of a
+# person's work and 1.25 h of pumping and reading. Chapters not listed add nothing (no project time passes in them).
+REUSE_ADD = {
+    "20-receiving": dict(person_h=0.004, robot_h=0.004),
+    "30-machining-chamber": dict(person_h=0.023, robot_h=0.016, machine_h=1.852),
+    "31-machining-parts": dict(robot_h=4.64, machine_h=26.153, person_h=19.74, cam_h=123.6),
+    "32-finishing": dict(person_h=1.567, outsourced_d=10.0, robot_h=0.015),
+    "50-integration": dict(person_h=4.25, machine_h=1.25),
+}
+REUSE_DIR = common.ROOT / "reuse"
 CARD_S = 3.0
 TITLE_S = 2.6
 
@@ -109,6 +126,35 @@ def scan(partial=False, only=None):
             n = int(CARD_S * FPS)
             meta = [dict(caption=t, sub=f"{name}: {state} in this cut", chapter=t, proc_s=0.0) for _ in range(n)]
             chapters.append(dict(name=name, dir=None, meta=meta, done=False, card=card, state=state))
+    return chapters
+
+
+def reuse(chapters, old_mp4, old_json, tag):
+    """Chapters with no frames in this run (a card) get their frames from an earlier cut: cut out of old_mp4 as JPEGs under
+    /tmp/robotbuild/reuse/<chapter>/, by the frame counts in that cut's compose.json."""
+    old = json.loads(Path(old_json).read_text())
+    start, spans = 0, {}
+    titles = [c["title"] for c in old.get("youtube_chapters", [])]
+    for j, c in enumerate(old["chapters"]):
+        if c.get("state", "rendered") == "rendered" and not c.get("card"):
+            spans[c["folder"]] = (start, c["frames"], titles[j] if len(titles) == len(old["chapters"]) else c["folder"])
+        start += c["frames"]
+    for ch in chapters:
+        if ch["card"] is None or ch["name"] not in spans:
+            continue
+        f0, n, title = spans[ch["name"]]
+        d = REUSE_DIR / ch["name"]
+        if not (d / f"{n - 1:05d}.jpg").exists():
+            d.mkdir(parents=True, exist_ok=True)
+            subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(old_mp4), "-vf",
+                            f"trim=start_frame={f0}:end_frame={f0 + n},setpts=PTS-STARTPTS", "-q:v", "2", "-start_number", "0",
+                            str(d / "%05d.jpg")], check=True)
+        n = len(list(d.glob("*.jpg")))
+        add = {k: v / n for k, v in REUSE_ADD.get(ch["name"], {}).items()}
+        ch.update(dir=d, card=None, done=True, state=f"reused: {tag}", reused=True,
+                  meta=[dict(caption="", chapter=title, proc_s=0.0, add=add, passthrough=tag,
+                             reclock=ch["name"] in REUSE_ADD) for _ in range(n)])
+        print(f"  {ch['name']}: {n} frames reused from {Path(old_mp4).name} (frames {f0}-{f0 + n - 1})", flush=True)
     return chapters
 
 
@@ -242,6 +288,26 @@ def render_frame(task):
         if key not in _CARDS:
             _CARDS[key] = P.title_card(card["title"], card["lines"], card["note"]).tobytes()
         return _CARDS[key]
+    if m.get("passthrough"):
+        # an earlier cut's frame, panels and all: this cut's progress bar and clocks over its own, and a tag saying so
+        try:
+            base = Image.open(f"{d}/{i:05d}.jpg").convert("RGBA")
+        except Exception:                                        # noqa: BLE001
+            base = Image.new("RGBA", (W, H), "white")
+        lay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+        dr = ImageDraw.Draw(lay, "RGBA")
+        if m.get("reclock"):
+            dr.rounded_rectangle((10, H - 14 - 88, 12 + 254, H - 12), 8, fill=(255, 255, 255, 255))
+            P.clocks(dr, clock, speed=None)
+        dr.rectangle((0, H - 9, W, H), fill=(246, 247, 249, 255))
+        P.progress(dr, frac, ticks)
+        ft = P.font(12, bold=True)
+        txt = f"{m['passthrough']}: not re-rendered in this cut"
+        tw = dr.textlength(txt, font=ft)
+        dr.rounded_rectangle((W - tw - 30, H - 40, W - 12, H - 16), 8, fill=(255, 255, 255, 235), outline=(176, 96, 20, 255))
+        dr.text((W - tw - 21, H - 36), txt, font=ft, fill=(150, 80, 16, 255))
+        base.alpha_composite(lay)
+        return base.convert("RGB").tobytes()
     try:
         base = Image.open(f"{d}/{i:05d}.png").convert("RGB")
         if base.size != (W, H):
@@ -289,12 +355,17 @@ def main(argv=None):
     ap.add_argument("--stills", default="", help="comma-separated chapter:fraction, e.g. 10-parts:0.4,50-integration:0.7")
     ap.add_argument("--no-cards", action="store_true", help="leave missing chapters out instead of a title card")
     ap.add_argument("--max-mb", type=float, default=MAX_MB, help="size cap for the bit-rate limit (MB)")
+    ap.add_argument("--reuse", default="", help="an earlier cut's MP4: chapters with no frames now are taken from it")
+    ap.add_argument("--reuse-json", default="", help="that cut's compose.json (frame counts per chapter)")
+    ap.add_argument("--reuse-tag", default="round 7 footage", help="the tag drawn on reused frames")
     a = ap.parse_args(argv)
     only = set(a.only.split(",")) - {""} or None
     out = Path(a.out)
     odir = out.parent
     odir.mkdir(parents=True, exist_ok=True)
     chapters = scan(a.partial, only)
+    if a.reuse and a.reuse_json:
+        chapters = reuse(chapters, a.reuse, a.reuse_json, a.reuse_tag)
     if a.no_cards or only:
         chapters = [c for c in chapters if c["card"] is None]
     if not chapters:
@@ -398,7 +469,8 @@ def main(argv=None):
     rep = dict(mp4=str(out.relative_to(common.REPO)) if out.is_relative_to(common.REPO) else str(out),
                mb=round(size, 1), seconds=round(dur, 1), frames=total, fps=FPS, crf=a.crf, maxrate_kbps=maxrate,
                chapters=[dict(folder=c["name"], frames=len(c["meta"]), seconds=round(len(c["meta"]) / FPS, 1),
-                              finished=c["done"], card=c["card"] is not None, state=c.get("state", "rendered"))
+                              finished=c["done"], card=c["card"] is not None, state=c.get("state", "rendered"),
+                              reused=bool(c.get("reused")))
                          for c in chapters],
                youtube_chapters=[dict(at=stamp(f0), title=t) for f0, t in marks],
                counters={k: round(v, 2) for k, v in end.items()},

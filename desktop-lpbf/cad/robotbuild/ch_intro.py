@@ -1,12 +1,12 @@
-"""Chapter 00-intro of the robot-built desktop LPBF video: the hall from above, then a fly-over (about 40 s).
+"""Chapter 00-intro of the robot-built desktop LPBF video: the hall from above, then six fixed views of it (about 47 s).
 
     xvfb-run -a -s "-screen 0 1920x1080x24" /tmp/capmem 3G /tmp/venv/bin/python desktop-lpbf/cad/robotbuild/ch_intro.py
 
 What it shows (hall.py): the robot shop (analysis/shop/shop_cell.py at common.SHOP_IN_HALL), the long table with every
 part on it as delivered (kit_table.py, stock mode: machined parts as their blanks), the two-arm assembly bench
 (analysis/assembly/cell2.py), the two UR12e arms each on a MiR250 (byu-vcl PR 318's meshes), a person and a soda can.
-The only motion is MiR A driving along its own lane with its arm parked (cell2's park pose), at the shop's MiR speed
-(shop_cell.MIR_DRIVE: 1 m/s, 0.3 m/s^2); no arm moves. No project time passes (proc_s 0; the clocks are hidden).
+Nothing in the scene moves (round 8: round 7 had MiR A reverse 3 m down its lane here with the camera following it);
+each view is a cut, and inside a view the camera only drifts. No project time passes (proc_s 0; the clocks are hidden).
 """
 from __future__ import annotations
 
@@ -84,62 +84,57 @@ def main():
             img = h.sc.render(cam, va[0] + (va[1] - va[0]) * u)
             ch.frame(img, caption, sub=sub, who=list(who), labels=h.labels(labels), **base)
 
+    # Round 8 (Sterling, 2026-11-26: "motion sickness"): every change of place is a CUT, and inside a shot the camera only
+    # drifts: no shot sweeps the picture faster than the 7-second panning rule (1/7 of the frame width per second; video_qa.py
+    # measures it on the finished file). Round 7 flew from one vantage point to the next in 3 s (the shop to the far end of the
+    # table: 10 m and 200 deg of azimuth), and followed a MiR down its lane.
     # 1. the whole hall from high up, turning a little
     F = (7200.0, -3600.0, 0.0)
-    c0 = [HL.orbit(F, 25500.0, -28.0, 56.0), F]
-    c1 = [HL.orbit(F, 23500.0, -16.0, 50.0), F]
-    shot(8 * FPS, c0, c1, "One hall: a robot shop, a 12 m parts table and a two-arm assembly bench",
+    c0 = [HL.orbit(F, 25500.0, -24.0, 56.0), F]
+    c1 = [HL.orbit(F, 24500.0, -18.0, 53.0), F]
+    shot(8 * FPS, c0, c1, "One hall: robot shop, parts table, assembly bench",
          "Two UR12e arms, each on a MiR250, machine the parts and build the machine; a person steps in only where "
          "the arms can't",
          labels=["long table", "assembly bench", "Haas VF-4 + HRT210", "CNC lathe", "bandsaw", "receiving"])
-    # 2. down over the shop
-    F2 = (6200.0, -5600.0, 900.0)
-    c2 = [HL.orbit(F2, 9800.0, -10.0, 38.0), F2]
-    shot(3 * FPS, c1, c2, "The robot shop beside the bench",
+    # 2. cut: the shop, drifting along its north row
+    F2 = (6600.0, -5600.0, 900.0)
+    F3 = (8600.0, -5600.0, 900.0)
+    c2 = [HL.orbit(F2, 9800.0, -4.0, 38.0), F2]
+    c3 = [HL.orbit(F3, 9800.0, 2.0, 37.0), F3]
+    shot(9 * FPS, c2, c3, "The robot shop beside the bench",
          "Haas VF-4 with an HRT210 4th axis, a Haas ST-10 lathe, a bandsaw, deburr and wash, measuring, TIG welding, "
-         "receiving and racks", labels=shop_labels)
-    F3 = (9200.0, -5600.0, 900.0)
-    c3 = [HL.orbit(F3, 9200.0, 8.0, 34.0), F3]
-    shot(6 * FPS, c2, c3, "The robot shop beside the bench",
-         "Machines drawn from their published layout drawings (the shop worker's equipment.py); the layout is "
-         "analysis/shop/shop_cell.py's, a hypothetical shop", labels=shop_labels)
-    # 3. along the long table, from its far end back towards the bench
-    F4 = (13200.0, 0.0, 860.0)                           # from behind lane B: MiR A and the shop stay out of view
-    c4 = [HL.orbit(F4, 6200.0, 215.0, 36.0), F4]
-    shot(3 * FPS, c3, c4, "The long table: every part of one machine, as it arrives",
-         "12 m x 0.9 m, 860 mm high, in line with the assembly bench so both MiRs reach it from their own lane",
-         labels=["long table"])
-    F5 = (4300.0, 0.0, 860.0)
-    c5 = [HL.orbit(F5, 6000.0, 205.0, 32.0), F5]
-    shot(9 * FPS, c4, c5, "The long table: every part of one machine, as it arrives",
-         "Machined parts are still stock blanks; anything over the arm's 12.5 kg waits on a pallet behind lane B "
-         "for a person and a lift (kit_table.py)", labels=["long table"])
-    # 4. MiR A drives along its lane to the bench, its arm parked; the camera follows
-    d = xa0 - xa1
-    T = trap_T(d)
-    n = int(math.ceil((T + 1.0) * FPS))
-    F6a, F6b = (xa0 - 300.0, -600.0, 700.0), (xa1 + 200.0, -300.0, 800.0)
-    c6a = [HL.orbit(F6a, 5200.0, -48.0, 26.0), F6a]
-    c6b = [HL.orbit(F6b, 5200.0, -40.0, 28.0), F6b]
-
-    def drive(u, i):
-        h.mir_to("A", xa0 - trap(d, i / FPS))
-    shot(n, (c5[0], c5[1]), (c6b[0], c6b[1]), "Robot A drives along its lane to the bench, its arm parked",
-         f"MiR250 at 1 m/s (0.3 m/s^2), {d / 1000:.1f} m in {T:.0f} s; robot B waits at the trunnion on lane B "
-         "(analysis/assembly/cell2.py: trunnion, Fixture B, Fixture P, the nests)",
-         labels=["trunnion", "Fixture B"], who=["robot A"], update=drive)
-    # 5. scale: the person and the can at the table's first zone, then up and away
+         "receiving and racks (drawn from published layout drawings; a hypothetical shop)", labels=shop_labels)
+    # 3. cut: the long table, in two fixed halves (round 7 ran 9 m along it in 9 s)
+    for xa, xb, sub in ((12400.0, 10600.0, "12 m x 0.9 m, 860 mm high, in line with the assembly bench so both MiRs reach it "
+                                            "from their own lane"),
+                        (6900.0, 5100.0, "Machined parts are still stock blanks; anything over the arm's 12.5 kg waits on a "
+                                          "pallet behind lane B for a person and a lift (kit_table.py)")):
+        Fa, Fb = (xa, 0.0, 860.0), (xb, 0.0, 860.0)
+        ca = [HL.orbit(Fa, 7400.0, 212.0, 36.0), Fa]
+        cb = [HL.orbit(Fb, 7400.0, 208.0, 35.0), Fb]
+        shot(6 * FPS, ca, cb, "The long table: every part, as it arrives", sub, labels=["long table"])
+    # 4. cut: both mobile manipulators at the bench (round 7 followed MiR A reversing 3 m down its lane here; the assembly
+    #    chapters show the bases driving, pivot - drive - pivot)
+    h.mir_to("A", xa1)
+    F6 = (500.0, 0.0, 900.0)
+    c6a = [HL.orbit(F6, 6400.0, -52.0, 30.0), F6]
+    c6b = [HL.orbit(F6, 6100.0, -46.0, 29.0), F6]
+    shot(6 * FPS, c6a, c6b, "Two UR12e arms on MiR250s at the bench",
+         "Arm A on the front lane, arm B on the back lane (analysis/assembly/cell2.py: trunnion, Fixture B, Fixture P, "
+         "the nests); each carries its tools on the MiR", labels=["trunnion", "Fixture B"])
+    # 5. cut: scale, the person and the can at the table's first zone
     P = (0.5 * (LT["x0"] - 480.0 + LT["x0"] + 520.0), -130.0, 930.0)   # between the person and the can
-    c7 = [HL.orbit(P, 3800.0, 165.0, 14.0), P]          # from behind lane B (the VF-4 stands 2.7 m in front of lane A)
-    shot(3 * FPS, c6b, c7, "For scale: a 1.75 m person and a 355 ml soda can on the 860 mm table",
-         "MakeHuman's CC0 base mesh, skinned and dressed as in byu-vcl PR 318; safety glasses in the shop")
-    c8 = [HL.orbit(P, 3600.0, 140.0, 15.0), P]
-    shot(5 * FPS, c7, c8, "For scale: a 1.75 m person and a 355 ml soda can on the 860 mm table",
-         "MakeHuman's CC0 base mesh, skinned and dressed as in byu-vcl PR 318; safety glasses in the shop")
+    c7 = [HL.orbit(P, 3800.0, 158.0, 14.0), P]          # from behind lane B (the VF-4 stands 2.7 m in front of lane A)
+    c8 = [HL.orbit(P, 3700.0, 148.0, 15.0), P]
+    shot(7 * FPS, c7, c8, "For scale: a 1.75 m person and a soda can",
+         "A 355 ml can on the 860 mm table; MakeHuman's CC0 base mesh, skinned and dressed as in byu-vcl PR 318; safety "
+         "glasses in the shop")
+    # 6. cut: back out
     F9 = (6500.0, -2000.0, 0.0)
+    c9a = [HL.orbit(F9, 16500.0, -40.0, 46.0), F9]
     c9 = [HL.orbit(F9, 17000.0, -40.0, 46.0), F9]
-    shot(4 * FPS, c8, c9, "Next: what the parts cost, new and used, and how long they take to arrive",
-         "Then the shop makes the custom parts and the two arms build the machine")
+    shot(5 * FPS, c9a, c9, "Next: what the parts cost and when they arrive",
+         "New against used, and lead times; then the shop makes the custom parts and the two arms build the machine")
     ch.close()
     print(f"00-intro: {ch.n} frames ({ch.n / FPS:.0f} s) in {time.time() - t0:.0f} s", flush=True)
 
