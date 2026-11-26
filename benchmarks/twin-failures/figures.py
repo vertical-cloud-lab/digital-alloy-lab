@@ -91,10 +91,10 @@ def best_vs_days(raw, regime, strategies, targets, fname, title):
 
 def paired_forest(out, regime, strategies, fname, title):
     E = out["regimes"].get(regime, {}).get("paired", {})
-    panels = [("flaime_al", "best", "Aluminium: best new alloy\n(difference in utility)"),
-              ("flaime_al", "T1_rmst", "Aluminium: days to T1\n(restricted mean; negative is sooner)"),
-              ("onr_cu", "best", "Copper: best new alloy"),
-              ("onr_cu", "T1_rmst", "Copper: days to T1")]
+    panels = [("both", "T1_rmst", "Days to T1, both campaigns (primary)\nrestricted mean; negative is sooner"),
+              ("both", "T2_rmst", "Days to T2, both campaigns"),
+              ("flaime_al", "best", "Aluminium: best new alloy\n(difference in utility)"),
+              ("onr_cu", "best", "Copper: best new alloy\n(difference in utility)")]
     rows = [p for p in strategies if p in E]
     if not rows:
         return
@@ -106,7 +106,7 @@ def paired_forest(out, regime, strategies, fname, title):
                 continue
             y = len(rows) - 1 - i
             ax.plot([x["lo"], x["hi"]], [y, y], color=COL[p], lw=2, solid_capstyle="round")
-            sig = x.get("p_holm", 1.0) < 0.05
+            sig = (x.get("p_holm", 1.0) if metric == "T1_rmst" and camp == "both" else x.get("p_t", 1.0)) < 0.05
             ax.plot([x["mean"]], [y], "o", ms=8, mfc=COL[p] if sig else "white", mec=COL[p], mew=2)
         ax.axvline(0, color=TEXT2, lw=1)
         ax.set_title(lab, fontsize=8.5, color=TEXT, loc="left")
@@ -115,8 +115,9 @@ def paired_forest(out, regime, strategies, fname, title):
         ax.grid(axis="y", visible=False)
     axes[0].set_yticks(range(len(rows)))
     axes[0].set_yticklabels([LABEL[p] for p in reversed(rows)], fontsize=8, color=TEXT)
-    fig.suptitle(title + "\nmean paired difference from bad value (round 3), 95 % bootstrap interval; filled: Holm-"
-                 "corrected p < 0.05", fontsize=9.5, color=TEXT, x=0.01, ha="left")
+    fig.suptitle(title + "\nmean paired difference from bad value (round 3), 95 % bootstrap interval; filled: p < 0.05 "
+                 "(Holm-corrected on the primary panel, unadjusted on the others)", fontsize=9.5, color=TEXT, x=0.01,
+                 ha="left")
     fig.tight_layout(rect=(0, 0, 1, 0.9))
     fig.savefig(FIG / fname, dpi=150, bbox_inches="tight")
     plt.close(fig)

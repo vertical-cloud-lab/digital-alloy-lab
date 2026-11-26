@@ -6,8 +6,13 @@ Per experiment (regime) and strategy, for each campaign: the best new alloy at t
 policies never see it), the share of seeds reaching T1 (the state of the art) and T2 (halfway from it to the best the
 oracle found) with the Kaplan-Meier median day, the restricted mean days to each target (censored at the horizon), and
 where the atomizer's runs went. Each strategy is compared with ``bad_value`` (round 3 as it is) seed by seed: the mean
-paired difference, a bootstrap 95 % interval, an exact sign-flip p-value, and Holm's correction over all comparisons
-made in that experiment.
+paired difference, a bootstrap 95 % interval, a paired t-test and an exact sign-flip p-value.
+
+**Endpoints, fixed on 2026-11-26 at 07:45 UTC, when only seed 0 had run:** the primary endpoint is the days to T1
+(the state of the art) averaged over the two campaigns (restricted mean, censored at the horizon), the lab's "wall
+time to discovery". Its family is each strategy against ``bad_value`` within a regime, with Holm's correction on the
+paired t-test. Everything else (T2, the best new alloy, each campaign alone) is reported with unadjusted p-values as
+exploratory. With 8 seeds the exact sign-flip test can't go below p = 2/256, which is why it isn't the primary test.
 """
 from __future__ import annotations
 
@@ -102,6 +107,9 @@ def per_run(r):
             row[t + "_usd"] = h[1] if h else None
             row[t + "_rmst"] = rmst(row[t], horizon)
         out[k] = row
+    out["both"] = dict(T1_rmst=0.5 * (out["flaime_al"]["T1_rmst"] + out["onr_cu"]["T1_rmst"]),
+                       T2_rmst=0.5 * (out["flaime_al"]["T2_rmst"] + out["onr_cu"]["T2_rmst"]),
+                       best=0.5 * (out["flaime_al"]["best"] + out["onr_cu"]["best"]))
     out["down_days"] = r["fail"]["down_days"]
     out["n_damage"] = len(r["fail"]["damage"])
     for k in CAMPS:                                     # repairs each campaign's failed runs set off
@@ -131,6 +139,7 @@ def summarize(rows, horizon=365):
         d["repairs"] = float(np.mean([x.get("repairs", 0) for x in R]))
         d["repair_days"] = float(np.mean([x.get("repair_days", 0.0) for x in R]))
         S[k] = d
+    S["both"] = {m: float(np.mean([r["both"][m] for r in rows])) for m in ("T1_rmst", "T2_rmst", "best")}
     S["down_days"] = float(np.mean([r["down_days"] for r in rows]))
     S["n_damage"] = float(np.mean([r["n_damage"] for r in rows]))
     S["seconds"] = float(np.mean([r["seconds"] for r in rows]))
@@ -147,7 +156,10 @@ def paired(rows_a, rows_b, metric, camp):
     if len(d) < 2:
         return None
     lo, hi = boot_ci(d)
-    return dict(n=len(d), mean=float(d.mean()), se=float(d.std(ddof=1) / math.sqrt(len(d))), lo=lo, hi=hi,
+    se = float(d.std(ddof=1) / math.sqrt(len(d)))
+    from scipy.stats import t as tdist
+    p_t = 1.0 if se == 0 else float(2 * tdist.sf(abs(d.mean()) / se, len(d) - 1))
+    return dict(n=len(d), mean=float(d.mean()), se=se, lo=lo, hi=hi, p_t=p_t,
                 p=signflip_p(d), wins=int((d > 1e-9).sum()), losses=int((d < -1e-9).sum()))
 
 
@@ -169,22 +181,25 @@ def analyse():
     out = dict(targets=TARGETS, regimes={})
     for reg, P in data.items():
         E = dict(strategies={p: summarize(rows) for p, rows in P.items()}, paired={})
-        comps = []
+        prim = []
         if BASELINE in P:
             for p, rows in P.items():
                 if p == BASELINE or p in ("heuristic", "random", "gpbo"):
                     continue
-                for camp in CAMPS:
-                    for metric in ("best", "T1_rmst", "T2_rmst"):
+                for camp, metrics in (("both", ("T1_rmst", "T2_rmst", "best")),
+                                      ("flaime_al", ("best", "T1_rmst", "T2_rmst")),
+                                      ("onr_cu", ("best", "T1_rmst", "T2_rmst"))):
+                    for metric in metrics:
                         res = paired(rows, P[BASELINE], metric, camp)
                         if res:
                             E["paired"].setdefault(p, {}).setdefault(camp, {})[metric] = res
-                            comps.append((p, camp, metric, res["p"]))
-        if comps:
-            adj = holm(np.array([c[3] for c in comps]))
-            for (p, camp, metric, _), a in zip(comps, adj):
-                E["paired"][p][camp][metric]["p_holm"] = float(a)
-            E["n_comparisons"] = len(comps)
+                            if camp == "both" and metric == "T1_rmst":
+                                prim.append((p, res["p_t"]))
+        if prim:
+            adj = holm(np.array([x[1] for x in prim]))
+            for (p, _), a in zip(prim, adj):
+                E["paired"][p]["both"]["T1_rmst"]["p_holm"] = float(a)
+            E["n_primary"] = len(prim)
         out["regimes"][reg] = E
     (HERE / "results").mkdir(exist_ok=True)
     (HERE / "results" / "summary.json").write_text(json.dumps(out, indent=1, default=float))
@@ -212,24 +227,34 @@ def fmt_table(out):
                 f"{la['failed']:.0f} of {la['runs']:.0f} ({la['failed_intrinsic']:.0f} / {la['failed_transient']:.0f}) | "
                 f"{lc['failed']:.0f} of {lc['runs']:.0f} | {s['down_days']:.0f} |")
         if E.get("paired"):
-            lines.append(f"\nPaired against `{BASELINE}` (mean difference, 95 % bootstrap interval, Holm-adjusted "
-                         f"sign-flip p over {E.get('n_comparisons')} comparisons; days are restricted means to the "
-                         f"target, so negative is sooner):\n")
-            lines.append("| Strategy | Al best new | Al days to T1 | Cu best new | Cu days to T1 |")
-            lines.append("|---|---|---|---|---|")
+            lines.append(f"\nPaired against `{BASELINE}`, seed by seed: mean difference (95 % bootstrap interval) and p. "
+                         f"Days are restricted means to the target, censored at day 365, so negative is sooner. The "
+                         f"primary endpoint (days to T1, both campaigns) carries Holm's correction over its "
+                         f"{E.get('n_primary')} comparisons; the other columns are exploratory, with unadjusted paired "
+                         f"t-test p.\n")
+            lines.append("| Strategy | **Days to T1, both (primary)** | Days to T2, both | Al best new | Cu best new | "
+                         "Al days to T1 | Cu days to T1 | seeds better / worse on the primary |")
+            lines.append("|---|---|---|---|---|---|---|---|")
             for p in ORDER:
                 if p not in E["paired"]:
                     continue
+                Q = E["paired"][p]
                 cells = []
-                for camp in CAMPS:
-                    for metric in ("best", "T1_rmst"):
-                        x = E["paired"][p][camp].get(metric)
-                        if not x:
-                            cells.append("-")
-                            continue
-                        f = "{:+.3f} ({:+.3f} to {:+.3f}), p {:.2f}" if metric == "best" else \
-                            "{:+.0f} ({:+.0f} to {:+.0f}), p {:.2f}"
-                        cells.append(f.format(x["mean"], x["lo"], x["hi"], x["p_holm"]))
+                for camp, metric in (("both", "T1_rmst"), ("both", "T2_rmst"), ("flaime_al", "best"),
+                                     ("onr_cu", "best"), ("flaime_al", "T1_rmst"), ("onr_cu", "T1_rmst")):
+                    x = Q.get(camp, {}).get(metric)
+                    if not x:
+                        cells.append("-")
+                        continue
+                    if metric == "best":
+                        txt = f"{x['mean']:+.3f} ({x['lo']:+.3f} to {x['hi']:+.3f}), p {x['p_t']:.2f}"
+                    else:
+                        txt = f"{x['mean']:+.0f} ({x['lo']:+.0f} to {x['hi']:+.0f}), p {x['p_t']:.2f}"
+                    if camp == "both" and metric == "T1_rmst":
+                        txt += f", Holm {x['p_holm']:.2f}"
+                    cells.append(txt)
+                x = Q["both"]["T1_rmst"]
+                cells.append(f"{x['losses']} / {x['wins']}")     # fewer days is better
                 lines.append(f"| `{p}` | " + " | ".join(cells) + " |")
     return "\n".join(lines)
 
