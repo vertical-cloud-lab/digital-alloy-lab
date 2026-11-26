@@ -22,7 +22,7 @@ assembly planner with the fixes the first had listed, and composed the video.
 
 ### What it found
 
-1. **The video:** [`robot-build/video.md`](robot-build/video.md), VIDEO_STATS. Every arm motion in it is a collision-checked
+1. **The video:** [`robot-build/video.md`](robot-build/video.md): 23 min 12 s in 12 chapters, 53.5 MB ([`cad/img/robotbuild/robot-build.mp4`](cad/img/robotbuild/robot-build.mp4); chapter list in [`chapters.txt`](cad/img/robotbuild/chapters.txt)). Every arm motion in it is a collision-checked
    plan (FCL on meshes, RRT-Connect, byu-vcl PR 318's 1.5 mm audit); a person appears where the plan says one is needed.
 2. **The 287.3 h are not the chamber** ([`robot-build/manufacturing-route.md`](robot-build/manufacturing-route.md)). The frame
    and floor plate are 24.9 h (8.7 %); CAM is 46 % and setups 34 %, about 3.5 h of overhead per part however small. Printing

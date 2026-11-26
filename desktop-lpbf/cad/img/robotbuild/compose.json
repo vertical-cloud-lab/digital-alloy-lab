@@ -1,0 +1,166 @@
+{
+ "mp4": "desktop-lpbf/cad/img/robotbuild/robot-build.mp4",
+ "mb": 53.5,
+ "seconds": 1391.8,
+ "frames": 16702,
+ "fps": 12,
+ "crf": 28,
+ "maxrate_kbps": 502,
+ "chapters": [
+  {
+   "folder": "00-intro",
+   "frames": 582,
+   "seconds": 48.5,
+   "finished": true,
+   "card": false,
+   "state": "rendered"
+  },
+  {
+   "folder": "10-parts",
+   "frames": 1830,
+   "seconds": 152.5,
+   "finished": true,
+   "card": false,
+   "state": "rendered"
+  },
+  {
+   "folder": "15-estimates",
+   "frames": 366,
+   "seconds": 30.5,
+   "finished": true,
+   "card": false,
+   "state": "rendered"
+  },
+  {
+   "folder": "20-receiving",
+   "frames": 446,
+   "seconds": 37.2,
+   "finished": true,
+   "card": false,
+   "state": "rendered"
+  },
+  {
+   "folder": "30-machining-chamber",
+   "frames": 2495,
+   "seconds": 207.9,
+   "finished": true,
+   "card": false,
+   "state": "rendered"
+  },
+  {
+   "folder": "31-machining-parts",
+   "frames": 641,
+   "seconds": 53.4,
+   "finished": true,
+   "card": false,
+   "state": "rendered"
+  },
+  {
+   "folder": "32-finishing",
+   "frames": 925,
+   "seconds": 77.1,
+   "finished": true,
+   "card": false,
+   "state": "rendered"
+  },
+  {
+   "folder": "38-tools",
+   "frames": 684,
+   "seconds": 57.0,
+   "finished": true,
+   "card": false,
+   "state": "rendered"
+  },
+  {
+   "folder": "40-assembly-module",
+   "frames": 1967,
+   "seconds": 163.9,
+   "finished": true,
+   "card": false,
+   "state": "rendered"
+  },
+  {
+   "folder": "41-assembly-chamber",
+   "frames": 4672,
+   "seconds": 389.3,
+   "finished": true,
+   "card": false,
+   "state": "rendered"
+  },
+  {
+   "folder": "50-integration",
+   "frames": 814,
+   "seconds": 67.8,
+   "finished": true,
+   "card": false,
+   "state": "rendered"
+  },
+  {
+   "folder": "60-summary",
+   "frames": 1280,
+   "seconds": 106.7,
+   "finished": true,
+   "card": false,
+   "state": "rendered"
+  }
+ ],
+ "youtube_chapters": [
+  {
+   "at": "0:00",
+   "title": "The hall: two mobile manipulators, one long table"
+  },
+  {
+   "at": "0:48",
+   "title": "The parts: cost and lead time"
+  },
+  {
+   "at": "3:21",
+   "title": "Time estimates: machining, routes, assembly"
+  },
+  {
+   "at": "3:52",
+   "title": "Receiving and unpacking"
+  },
+  {
+   "at": "4:29",
+   "title": "Machining the chamber: the VF-4 and its 4th axis"
+  },
+  {
+   "at": "7:57",
+   "title": "Machining the other parts: vise, lathe, saw"
+  },
+  {
+   "at": "8:50",
+   "title": "Finishing: welding, honing, deburring, washing, measuring, kitting"
+  },
+  {
+   "at": "10:07",
+   "title": "The arms' custom tools and fixtures"
+  },
+  {
+   "at": "11:04",
+   "title": "Assembly 1: the build module, by two UR12e on MiR250s"
+  },
+  {
+   "at": "13:48",
+   "title": "Assembly 2: the chamber and the process module, by two UR12e on MiR250s"
+  },
+  {
+   "at": "20:17",
+   "title": "Onto the VLM tray: rack, gas module, hoses, leak check"
+  },
+  {
+   "at": "21:25",
+   "title": "Time and cost: in-house, outsourced, robot shop"
+  }
+ ],
+ "counters": {
+  "t_s": 161467.33,
+  "machine_h": 29.26,
+  "robot_h": 7.53,
+  "person_h": 31.95,
+  "cam_h": 123.6,
+  "outsourced_d": 10.0
+ },
+ "composed_utc": "2026-11-26T00:16Z"
+}

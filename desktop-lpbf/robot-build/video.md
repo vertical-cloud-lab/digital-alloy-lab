@@ -6,11 +6,18 @@ along a long table; every machining step and the assembly (screws, seals, tighte
 really needed; and, on screen, the running cost by category (new against used, with the expensive items one by one),
 the lead times (the long ones, and how short they get bought used), and time estimates for machining and assembly.
 
-**Video:** [`cad/img/robotbuild/robot-build.mp4`](../cad/img/robotbuild/robot-build.mp4) (STATUS_MP4).
+**Video:** [`cad/img/robotbuild/robot-build.mp4`](../cad/img/robotbuild/robot-build.mp4) (23 min 12 s, 16,702 frames at 12 fps, 1280 x 720, 53.5 MB; composed 2026-11-26 (00:16 UTC) from the frames rendered in that run).
 YouTube chapter list: [`chapters.txt`](../cad/img/robotbuild/chapters.txt); four frames of every chapter:
 [`contact-sheet.jpg`](../cad/img/robotbuild/contact-sheet.jpg); what went in: [`compose.json`](../cad/img/robotbuild/compose.json).
 
-STATUS_STILLS
+![The parts tour: running cost new against used, the category's big items, lead times](../cad/img/robotbuild/still-10-parts-42.png)
+![A person loads the 30 kg chamber blank onto the risers with a vacuum tube lifter](../cad/img/robotbuild/still-30-machining-chamber-07.png)
+![Chapter 38: the pin pusher, one of the three tools added in round 7](../cad/img/robotbuild/still-38-tools-52.png)
+![The module: two 2-114 rod O-rings through the throat by the ring loader](../cad/img/robotbuild/still-40-assembly-module-36.png)
+![The 19.6 kg chamber assembly on the hoist, both arms guiding](../cad/img/robotbuild/still-41-assembly-chamber-25.png)
+![The door's hinge pin slid in by the pin pusher](../cad/img/robotbuild/still-41-assembly-chamber-85.png)
+![Onto the VLM tray: a person and a lift table](../cad/img/robotbuild/still-50-integration-25.png)
+![The summary: where a person is needed](../cad/img/robotbuild/still-60-summary-45.png)
 
 ## How it is made
 
@@ -53,7 +60,22 @@ fetched at run time (sha256-pinned) and never committed.
 
 ## The chapters
 
-STATUS_TABLE
+Rendered in this cut (from [`compose.json`](../cad/img/robotbuild/compose.json)):
+
+| Chapter | Starts at | Frames | Length |
+|---|---|---:|---:|
+| `00-intro`: The hall: two mobile manipulators, one long table | 0:00 | 582 | 0:48 |
+| `10-parts`: The parts: cost and lead time | 0:48 | 1,830 | 2:32 |
+| `15-estimates`: Time estimates: machining, routes, assembly | 3:21 | 366 | 0:30 |
+| `20-receiving`: Receiving and unpacking | 3:52 | 446 | 0:37 |
+| `30-machining-chamber`: Machining the chamber: the VF-4 and its 4th axis | 4:29 | 2,495 | 3:28 |
+| `31-machining-parts`: Machining the other parts: vise, lathe, saw | 7:57 | 641 | 0:53 |
+| `32-finishing`: Finishing: welding, honing, deburring, washing, measuring, kitting | 8:50 | 925 | 1:17 |
+| `38-tools`: The arms' custom tools and fixtures | 10:07 | 684 | 0:57 |
+| `40-assembly-module`: Assembly 1: the build module, by two UR12e on MiR250s | 11:04 | 1,967 | 2:44 |
+| `41-assembly-chamber`: Assembly 2: the chamber and the process module, by two UR12e on MiR250s | 13:48 | 4,672 | 6:29 |
+| `50-integration`: Onto the VLM tray: rack, gas module, hoses, leak check | 20:17 | 814 | 1:08 |
+| `60-summary`: Time and cost: in-house, outsourced, robot shop | 21:25 | 1,280 | 1:47 |
 
 | Chapter | What it shows | Where its motion comes from | Time |
 |---|---|---|---|
