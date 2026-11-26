@@ -6,7 +6,7 @@ along a long table; every machining step and the assembly (screws, seals, tighte
 really needed; and, on screen, the running cost by category (new against used, with the expensive items one by one),
 the lead times (the long ones, and how short they get bought used), and time estimates for machining and assembly.
 
-**Video:** [`cad/img/robotbuild/robot-build.mp4`](../cad/img/robotbuild/robot-build.mp4) (33 min 17 s, 23,968 frames at 12 fps, 1280 x 720, 40.1 MB; composed 2026-11-26 (08:54 UTC) from the frames rendered in round 8; round 7's cut is in the history at a9cefef).
+**Video:** [`cad/img/robotbuild/robot-build.mp4`](../cad/img/robotbuild/robot-build.mp4) (33 min 17 s, 23,968 frames at 12 fps, 1280 x 720, 39.1 MB; composed 2026-11-26 (09:07 UTC) from the frames rendered in round 8; round 7's cut is in the history at a9cefef).
 YouTube chapter list: [`chapters.txt`](../cad/img/robotbuild/chapters.txt); four frames of every chapter:
 [`contact-sheet.jpg`](../cad/img/robotbuild/contact-sheet.jpg); what went in: [`compose.json`](../cad/img/robotbuild/compose.json).
 
@@ -35,19 +35,19 @@ was lost with its runner, so every chapter was planned and rendered again in thi
 | Two hands | 16 steps used both arms; holds had been designed out where one arm couldn't hold while the other drove | a part on a face seal floats on it until screws engage (the seal needs 10-100x the part's weight to squeeze), so the placing arm holds it while the other arm drives the first two screws: the module's gland plate (M19, 252 N against 10 N), the outlet plenum (C04, 439 N against 6 N) and the lid (F30, 2,737 N against 26 N, held by a vacuum cup). Three more need a hold and can't have one yet (window flange, retaining ring, metering base: arm B's upper arm meets Fixture B); the door before its hinge pins was not tried. 19 steps now use both arms | [`analysis/out/assembly/two_hands.json`](../analysis/out/assembly/two_hands.json), [`round8_run12.md`](../analysis/out/assembly/round8_run12.md) |
 | Moonwalk: MiRs | the bases slid along their lanes, 402 m of it in reverse | every one of 167 moves is pivot, drive forward, pivot (248 pivots at 30 deg/s, an estimate); reversing only in 29 docking legs of at most 0.5 m (6.9 m in all); every pose swept with FCL against the cell, the long table and the other MiR: 163 clear, 4 not (F45, F45b: MiR B's cabinet on the zero-point air line, as in run 10) | [`mir_route.py`](../analysis/assembly/mir_route.py), [`mir_drives.json`](../analysis/out/assembly/mir_drives.json) |
 | Moonwalk: people | people glided with their legs still; walk cycles were not tied to the distance covered | the gait phase now follows the distance walked and nobody slides standing still, but the frame audit shows that `people.py`'s gait itself does not lock the stance foot: planted feet still slide 0.3-1.0 m per metre walked, so the two-person carries in chapters 20, 29 and 30 still moonwalk. Chapter 50's person changes place only across cuts. **Not fixed:** it needs a foot lock in people.py | [`walk.py`](../cad/robotbuild/walk.py), the audit table below |
-| Motion sickness | the assembly chapters picked a new view for nearly every motion: 84 and 103 jumps a minute, steady stretches of 0.2-0.4 s | fixed tripods per place in the cell, one shot per step chosen by occlusion, changed only by a cut, never moved inside a shot; the shop chapters lost their orbiting camera; the tools turntable slowed | [`camera_rig.json`](../analysis/out/assembly/camera_rig.json), the camera check below |
+| Motion sickness | the assembly chapters picked a new view for nearly every motion: 84 and 103 jumps a minute, steady stretches of 0.2-0.4 s | fixed tripods per place in the cell, one shot per step chosen by occlusion, changed only by a cut, never moved inside a shot; the shop chapters lost their orbiting camera; chapter 30's cutting shots ride on the VF-4's table; the tools turntable slowed. The whole video now passes the camera check (8.1 jumps a minute against 42.9; median shot 5.7 s against 0.4 s); 31 and 41 still fail narrowly | [`camera_rig.json`](../analysis/out/assembly/camera_rig.json), the camera check below |
 | Collisions and interference | only the planned arm paths were checked | every rendered frame is recorded ([`audit_rec.py`](../cad/robotbuild/audit_rec.py)) and audited: everything that moves against everything visible, penetration deeper than 1.5 mm, a short list of allowed contacts ([`scene_audit.py`](../cad/robotbuild/scene_audit.py)); people's stance feet, gliding, and MiR sideways slip and reversing ([`walk.py`](../cad/robotbuild/walk.py)) | the audit table below |
 
-**The camera check on the finished file** ([`video_qa.py`](../cad/robotbuild/video_qa.py) on the MP4's pixels; [round 7](../analysis/out/videoqa/camera-round7-video.json), [round 8](../analysis/out/videoqa/camera-round8-video.json)). Limits: at most 10 jumps a minute, a median steady run of at least 4 s, at most 15 % of runs under 2 s, and a 95th-percentile camera speed of at most 0.14 frame widths a second (the 7-second panning rule).
+**The camera check on the finished file** ([`video_qa.py`](../cad/robotbuild/video_qa.py) on the MP4's pixels; [round 7](../analysis/out/videoqa/camera-round7-video.json), [round 8](../analysis/out/videoqa/camera-round8-video.json)). Limits: at most 10 jumps a minute, a median steady run of at least 4 s, at most 15 % of runs under 2 s (where a chapter has six or more jumps), and a 95th-percentile camera speed of at most 0.14 frame widths a second (the 7-second panning rule). Chapter 30's first render failed it (11.1 jumps a minute, a median run of 1.9 s, 0.95 frame widths a second): at 49-192x time-lapse the VF-4's table, which fills the picture, jumped to wherever the tool was in each frame. Its cutting shots now ride on the table, so the part stays still and the spindle moves over it, as in a CAM simulation.
 
 | Chapter | Round 7: jumps a minute, median run, result | Round 8: jumps a minute, median run, runs under 2 s, p95 speed (fw/s), result |
 |---|---|---|
 | The hall | 5.0, 2.2 s, FAIL | 8.6, 5.9 s, 11 %, 0.06, pass |
-| The parts | 8.6, 3.9 s, FAIL | 9.4, 5.9 s, 4 %, 0.06, pass |
+| The parts | 8.6, 3.9 s, FAIL | 9.8, 5.7 s, 3 %, 0.06, pass |
 | Time estimates | 3.9, 15.4 s, pass | 0.0, 30.0 s, 0 %, 0.00, pass |
 | Receiving and unpacking | 6.5, 6.1 s, pass | 6.5, 6.1 s, 20 %, 0.02, pass |
 | The stock | (new) | 7.5, 7.9 s, 50 %, 0.08, pass |
-| Machining the chamber | 11.5, 0.3 s, FAIL | 11.1, 1.9 s, 50 %, 0.95, FAIL |
+| Machining the chamber | 11.5, 0.3 s, FAIL | 4.4, 10.2 s, 0 %, 0.01, pass |
 | Machining the other parts | 4.5, 10.7 s, pass | 6.8, 9.9 s, 29 %, 0.01, FAIL |
 | Finishing | 4.7, 11.9 s, pass | 5.5, 9.8 s, 0 %, 0.01, pass |
 | The arms' custom tools and fixtures | 11.6, 3.1 s, FAIL | 5.7, 4.6 s, 0 %, 0.07, pass |
@@ -55,7 +55,9 @@ was lost with its runner, so every chapter was planned and rendered again in thi
 | Assembly 2 | 102.9, 0.2 s, FAIL | 10.3, 3.9 s, 26 %, 0.01, FAIL |
 | Onto the VLM tray | 0.9, 34.0 s, pass | 8.7, 4.9 s, 8 %, 0.01, pass |
 | Time and cost | 2.8, 10.6 s, pass | 2.3, 11.2 s, 0 %, 0.00, pass |
-| **Whole video** | 42.9, 0.4 s, FAIL | 8.5, 5.6 s, 18 %, 0.03, FAIL |
+| **Whole video** | 42.9, 0.4 s, FAIL | 8.1, 5.7 s, 14 %, 0.02, pass |
+
+Two chapters still fail narrowly: 41 (10.3 jumps a minute, a median run of 3.9 s, 26 % of runs under 2 s; mostly the cuts where a fetch from the table is cut out, and the forced cuts at F39 and F51) and 31 (29 % of runs under 2 s).
 
 <!-- audit -->
 **The audit of every drawn frame** ([`scene_audit.py`](../cad/robotbuild/scene_audit.py), [`walk.py`](../cad/robotbuild/walk.py); per chapter in [`analysis/out/videoqa/`](../analysis/out/videoqa/)). Every renderer ran with `ROBOTBUILD_AUDIT=1`, so [`audit_rec.py`](../cad/robotbuild/audit_rec.py) recorded each frame's meshes and poses as drawn. The audit replays them and checks everything that moves against everything visible and at least 30 % opaque: python-fcl BVH collision on the recorded triangles, then a translational penetration depth (26 directions, bisection-refined) and containment by winding numbers; pairs deeper than 1.5 mm count unless they are on the short allowed list (a person's own clothing layers, a screw, insert or dowel in its hole, a driver's socket on its screw, a held part in the fingers holding it, a load in the hands carrying it). Pairs of parts that never move against each other are listed apart as the CAD's own overlaps. `walk.py` follows each person's lowest shoe through each stance and each MiR's footprint: stance-foot slip, gliding (the body moving while both feet are planted), and MiR sideways slip and reversing.
