@@ -45,11 +45,11 @@ failures switched off. Every number is in [`tables.md`](tables.md).*
    +4.0 points pooled (90 % CI −0.7 to +9.1, not significant): ahead on aluminum at `kappa = 0`
    (+9.5) and on the hand-written copper truth (+9.2), level on aluminum at `kappa = 1` (+0.2), and
    behind on the copper physics truth (−3.7). Both models cut input-caused print and deposit failures
-   two to three times and end with similar counts, so the classifier's head start mostly goes unused:
-   the viability models switch on only after three failures, by which point the search has settled
-   where both are accurate enough.
+   two to three times and end with similar counts, so the classifier's head start mostly goes unused,
+   probably because the viability models switch on only after three failures, by which point the
+   search has settled where both are accurate enough (not tested directly).
 4. **Imputing the worst value seen is a good failure model in these networks, and imputing far below
-   it is not** (Xavier's question above). In these truths a failed build is a bad alloy or a bad
+   it is not** (the concern [raised on #274](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/274#issuecomment-7053633447)). In these truths a failed build is a bad alloy or a bad
    setting anyway (no design within 60 % of any optimum fails), so writing the failure down as the worst
    result seen teaches the network the right thing. It was the best strategy on the copper physics
    truth (90 %) and on aluminum at `kappa = 0` (80 %). Writing it down one observed range *below*
@@ -65,8 +65,9 @@ failures switched off. Every number is in [`tables.md`](tables.md).*
    90 % → 87 %, Ax's viability on x 89 % → 85 %, imputing the worst value 86 % → 82 %), and stay
    17 or more points above the strategies without a failure model.
 7. **Ax ≥ 1.2.4's partial data doesn't help on its own.** `partial` against `abandon` and `drop` is
-   within noise in every cell. Keeping completed stages matters only together with a failure model:
-   it is what lets a node-level model use the powder data of a run whose build crashed.
+   within noise in every cell. Whether it helps alongside a failure model isn't settled either:
+   `viab_x_partial` against `viab_x` goes both ways. A node-level model needs it all the same, since
+   its labels and powder data come from the runs that crashed.
 8. **Pricing failures into the acquisition** (EI × P(no transient fault) / expected cost) didn't help
    on average (−1.7 points against plain node-level viability, not significant): it was better on
    the copper physics truth (90 % against 83 %) and worse on aluminum (84 % against 90 % at `kappa = 1`).
@@ -110,7 +111,7 @@ viability-on-x variants.*
 | H4 | A failure model means fewer input-caused failures than `partial` | **Supported** in every cell (aluminum at `kappa = 1`: 8.6 to 11.3 against 20.9). |
 | H5 | Node-level viability ≥ viability on x with `fit_abandoned`, with fewer failures | **Same direction, not significant**: +5.1 points pooled (p = 0.028, Holm 0.14), similar failure counts. |
 | H6 | `impute` competitive with correct labels, and hurt more by mislabels | **First half supported** (pooled −0.8 against node-level viability); **second half not** for the worst-value imputation, but the extreme version shows it (above). |
-| H7 | Every strategy ends below the no-failure reference | **Not supported**: imputation and failure-priced node-level viability end above it on the copper physics truth and imputation on aluminum at `kappa = 0` (none significantly). Failures here happen where alloys are poor, so a model of them steers the search away from poor regions sooner than measured low values do. |
+| H7 | Every strategy ends below the no-failure reference | **Not supported**: imputation and failure-priced node-level viability end above it on the copper physics truth and imputation on aluminum at `kappa = 0` (none significantly). A likely reason: failures here happen where alloys are poor, so a model of them steers the search away from poor regions about as well as measured low values do, and sometimes sooner. |
 
 <!-- SCENARIOS -->
 
@@ -150,7 +151,7 @@ one status. What each strategy does with a run that stopped early:
 | `abandon` | every failure `ABANDONED` | not fit | yes, for good | none |
 | `partial` | `Client.complete_trial` with missing metrics (≥ 1.2.4): `COMPLETED`, partial data fit | fit | yes, for the stages it lacks | none |
 | `keep` | the same, as Ax actually treats it below 100 trials when the arm has any objective or constraint metric | fit | no | none |
-| `impute` | "soft pushing" (Xavier, above; BoTorch maintainers' advice in [#943](https://github.com/meta-pytorch/botorch/issues/943#issuecomment-918802564)): an input-caused failure is recorded as the worst value seen at that stage; a transient one is dropped | fit | no | implicit |
+| `impute` | "soft pushing" ([raised on #274](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/274#issuecomment-7053633447); BoTorch maintainers' advice in [#943](https://github.com/meta-pytorch/botorch/issues/943#issuecomment-918802564)): an input-caused failure is recorded as the worst value seen at that stage; a transient one is dropped | fit | no | implicit |
 | `impute_extreme` | the same, but one observed range *below* the worst value: a "terrible result" outside anything measured | fit | no | implicit |
 | `viab_x` | `AddExecutionViability` (1.3.0, opt-in): transient → `FAILED`, input-caused → `ABANDONED`; GP on 0/1 labels over the design, `P(viable) ≥ 0.8` after 3 abandoned runs | not fit | input-caused: yes | over the design `x` |
 | `viab_x_partial` | the same with `fit_abandoned=True` (every status fit, `FAILED` included) | fit | input-caused: for the stages it lacks | over `x` |
@@ -237,7 +238,7 @@ Pre-registered in [`PREREGISTRATION.md`](PREREGISTRATION.md) before the sweep. C
 all made before the runs they affect:
 
 - **Added strategies:** `keep` (after the Ax survey found that partly measured arms usually drop out
-  of `X_pending`), `viab_node_ec`, `impute_extreme` (to test Xavier's concern directly), and the
+  of `X_pending`), `viab_node_ec`, `impute_extreme` (to test [the concern about imputed values](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/274#issuecomment-7053633447) directly), and the
   full-pipeline variant.
 - **`viab_x_partial` corrected:** the survey showed that `fit_abandoned=True` makes Ax fit every
   status, `FAILED` included, and that Ax then labels those rows viable. Its first eight runs, made
