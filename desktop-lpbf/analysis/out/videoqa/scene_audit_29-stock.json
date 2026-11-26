@@ -1,0 +1,496 @@
+{
+ "chapter": "29-stock",
+ "threshold_mm": 1.5,
+ "opaque_min": 0.3,
+ "recordings": [
+  "/tmp/robotbuild/frames/29-stock/audit"
+ ],
+ "frames_recorded": 186,
+ "frames_checked": 186,
+ "subsample": "every recorded frame",
+ "recorded_every": 1,
+ "actors": 119,
+ "movers": 27,
+ "mover_names": [
+  "obj/plate",
+  "op/brow",
+  "op/coat",
+  "op/coat skirt",
+  "op/glasses frame",
+  "op/glasses lens",
+  "op/glove",
+  "op/hair",
+  "op/iris",
+  "op/sclera",
+  "op/shirt",
+  "op/shoes",
+  "op/skin",
+  "op/trousers",
+  "op2/brow",
+  "op2/coat",
+  "op2/coat skirt",
+  "op2/glasses frame",
+  "op2/glasses lens",
+  "op2/glove",
+  "op2/hair",
+  "op2/iris",
+  "op2/sclera",
+  "op2/shirt",
+  "op2/shoes",
+  "op2/skin",
+  "op2/trousers"
+ ],
+ "method": "translational penetration depth (26 directions, ladder 1.5-100 mm, bisection-refined), python-fcl BVH meshes of the recorded triangles, containment by winding numbers; a pair is re-checked when a mesh or the relative pose changes; a pair deeper than its limit is re-checked every frame at the limit, its depth re-measured at most every 6 frames",
+ "narrow_checks": 2603,
+ "pairs_tested": 2603,
+ "violations": 22,
+ "worst_mm": ">100",
+ "worst": {
+  "a": "obj/plate",
+  "b": "op2/glove",
+  "worst_mm": ">100",
+  "worst_frame": 55,
+  "frames": 71,
+  "frame_ranges": [
+   [
+    49,
+    119
+   ]
+  ],
+  "limit_mm": 1.5,
+  "rule": null
+ },
+ "pairs": [
+  {
+   "a": "obj/plate",
+   "b": "op2/glove",
+   "worst_mm": ">100",
+   "worst_frame": 55,
+   "frames": 71,
+   "frame_ranges": [
+    [
+     49,
+     119
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "obj/plate",
+   "b": "op/glove",
+   "worst_mm": 93.8,
+   "worst_frame": 54,
+   "frames": 73,
+   "frame_ranges": [
+    [
+     48,
+     120
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "obj/plate",
+   "b": "op/coat",
+   "worst_mm": 62.5,
+   "worst_frame": 55,
+   "frames": 71,
+   "frame_ranges": [
+    [
+     49,
+     119
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "cart29/static 1",
+   "b": "op/trousers",
+   "worst_mm": 56.2,
+   "worst_frame": 101,
+   "frames": 13,
+   "frame_ranges": [
+    [
+     95,
+     105
+    ],
+    [
+     127,
+     128
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "cart29/static 0",
+   "b": "op2/glove",
+   "worst_mm": 48.4,
+   "worst_frame": 127,
+   "frames": 9,
+   "frame_ranges": [
+    [
+     117,
+     122
+    ],
+    [
+     127,
+     129
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "op/coat",
+   "b": "op2/coat",
+   "worst_mm": 40.6,
+   "worst_frame": 115,
+   "frames": 71,
+   "frame_ranges": [
+    [
+     49,
+     119
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "lift29/static 0",
+   "b": "op/glove",
+   "worst_mm": 35.9,
+   "worst_frame": 48,
+   "frames": 5,
+   "frame_ranges": [
+    [
+     48,
+     52
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "cart29/static 1",
+   "b": "op/shoes",
+   "worst_mm": 35.9,
+   "worst_frame": 102,
+   "frames": 15,
+   "frame_ranges": [
+    [
+     96,
+     107
+    ],
+    [
+     126,
+     128
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "cart29/static 1",
+   "b": "op2/glove",
+   "worst_mm": 31.2,
+   "worst_frame": 127,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     127,
+     128
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "lift29/static 0",
+   "b": "op2/glove",
+   "worst_mm": 29.7,
+   "worst_frame": 47,
+   "frames": 6,
+   "frame_ranges": [
+    [
+     47,
+     52
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "cart29/static 0",
+   "b": "op/coat skirt",
+   "worst_mm": 28.1,
+   "worst_frame": 94,
+   "frames": 21,
+   "frame_ranges": [
+    [
+     82,
+     102
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "cart29/static 1",
+   "b": "op2/shoes",
+   "worst_mm": 26.6,
+   "worst_frame": 86,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     86,
+     87
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "cart29/static 0",
+   "b": "op2/coat skirt",
+   "worst_mm": 24.2,
+   "worst_frame": 94,
+   "frames": 23,
+   "frame_ranges": [
+    [
+     82,
+     104
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "cart29/static 0",
+   "b": "op/trousers",
+   "worst_mm": 16.9,
+   "worst_frame": 95,
+   "frames": 19,
+   "frame_ranges": [
+    [
+     83,
+     101
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "cart29/static 0",
+   "b": "op2/trousers",
+   "worst_mm": 16.1,
+   "worst_frame": 83,
+   "frames": 20,
+   "frame_ranges": [
+    [
+     83,
+     102
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "cart29/static 1",
+   "b": "op2/coat skirt",
+   "worst_mm": 12.0,
+   "worst_frame": 83,
+   "frames": 6,
+   "frame_ranges": [
+    [
+     83,
+     85
+    ],
+    [
+     96,
+     98
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "lift29/static 0",
+   "b": "op2/shoes",
+   "worst_mm": 10.5,
+   "worst_frame": 41,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     41,
+     41
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "obj/plate",
+   "b": "op2/coat",
+   "worst_mm": 10.1,
+   "worst_frame": 51,
+   "frames": 30,
+   "frame_ranges": [
+    [
+     51,
+     55
+    ],
+    [
+     73,
+     77
+    ],
+    [
+     84,
+     89
+    ],
+    [
+     98,
+     105
+    ],
+    [
+     112,
+     117
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "cart29/static 1",
+   "b": "op2/trousers",
+   "worst_mm": 10.1,
+   "worst_frame": 84,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     84,
+     87
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "cart29/static 1",
+   "b": "op/coat skirt",
+   "worst_mm": 6.0,
+   "worst_frame": 83,
+   "frames": 7,
+   "frame_ranges": [
+    [
+     83,
+     84
+    ],
+    [
+     95,
+     99
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "cart29/static 0",
+   "b": "op/glove",
+   "worst_mm": 4.7,
+   "worst_frame": 118,
+   "frames": 5,
+   "frame_ranges": [
+    [
+     118,
+     122
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "cart29/static 1",
+   "b": "op/glove",
+   "worst_mm": 1.9,
+   "worst_frame": 122,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     122,
+     122
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  }
+ ],
+ "rigid_pairs": [],
+ "allowed": [
+  {
+   "rule": "person's own layers",
+   "depth_allowed_mm": null,
+   "reason": "one person's skin, clothes, shoes and glasses are layers of one skinned body (people.py offsets the clothes from it)",
+   "pairs_in_contact": 49,
+   "pair_frames": 5772,
+   "examples": [
+    [
+     "op/brow",
+     "op/coat"
+    ],
+    [
+     "op/brow",
+     "op/skin"
+    ],
+    [
+     "op/coat",
+     "op/coat skirt"
+    ],
+    [
+     "op/coat",
+     "op/glasses frame"
+    ],
+    [
+     "op/coat",
+     "op/glasses lens"
+    ],
+    [
+     "op/coat",
+     "op/glove"
+    ],
+    [
+     "op/coat",
+     "op/hair"
+    ],
+    [
+     "op/coat",
+     "op/iris"
+    ],
+    [
+     "op/coat",
+     "op/sclera"
+    ],
+    [
+     "op/coat",
+     "op/shirt"
+    ],
+    [
+     "op/coat",
+     "op/skin"
+    ],
+    [
+     "op/coat",
+     "op/trousers"
+    ]
+   ],
+   "worst_mm": null
+  }
+ ],
+ "seconds": 14.2,
+ "stills": [
+  "desktop-lpbf/analysis/out/videoqa/scene_audit_29-stock_1.png"
+ ]
+}
