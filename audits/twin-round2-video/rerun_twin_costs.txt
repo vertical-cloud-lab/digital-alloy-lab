@@ -22,3 +22,27 @@ vertical lab + bofn_blend vs conventional + heuristic | onr_cu | days AF rerun 2
     operating, shared  rerun 0.772 (0.640-0.978)  stored 0.772 (0.640-0.978)  medians rerun 105445/81360
     full, alone        rerun 2.157 (1.790-2.721)  stored 2.157 (1.790-2.721)  medians rerun 127184/274337
     full, shared       rerun 0.900 (0.740-1.135)  stored 0.900 (0.740-1.135)  medians rerun 127184/114512
+
+cost per demonstrated alloy, USD (rerun / stored)
+    both       conventional, no capex                          9408 /      9408   n 1060 / 1060
+    both       conventional, with capex                       11573 /     11573   n 1060 / 1060
+    both       vertical lab, campaigns only, no capex         15734 /     15734   n 558 / 558
+    both       vertical lab, campaigns only, with capex       28635 /     28635   n 558 / 558
+    both       vertical lab, 60% utilized, no capex            4521 /      4521   n 558 / 558
+    both       vertical lab, 60% utilized, with capex          5869 /      5869   n 558 / 558
+    flaime_al  conventional, no capex                          8337 /      8337   n 837 / 837
+    flaime_al  conventional, with capex                       10291 /     10291   n 837 / 837
+    flaime_al  vertical lab, campaigns only, no capex         13496 /     13496   n 434 / 434
+    flaime_al  vertical lab, campaigns only, with capex       25124 /     25124   n 434 / 434
+    flaime_al  vertical lab, 60% utilized, no capex            3813 /      3813   n 434 / 434
+    flaime_al  vertical lab, 60% utilized, with capex          5189 /      5189   n 434 / 434
+    onr_cu     conventional, no capex                         13424 /     13424   n 223 / 223
+    onr_cu     conventional, with capex                       16385 /     16385   n 223 / 223
+    onr_cu     vertical lab, campaigns only, no capex         23568 /     23568   n 124 / 124
+    onr_cu     vertical lab, campaigns only, with capex       40925 /     40925   n 124 / 124
+    onr_cu     vertical lab, 60% utilized, no capex            6998 /      6998   n 124 / 124
+    onr_cu     vertical lab, 60% utilized, with capex          8249 /      8249   n 124 / 124
+
+share of capex by the kind of price source
+    vertical_lab $5,397,699 {'procurement': '56%', 'estimate': '23%', 'list': '20%', 'assumed': '1%'}
+    conventional $543,000 {'procurement': '76%', 'estimate': '24%'}

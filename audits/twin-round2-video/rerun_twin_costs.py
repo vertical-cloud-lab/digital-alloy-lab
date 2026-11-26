@@ -54,3 +54,31 @@ for name in ("vertical lab + bofn_blend vs conventional + bofn", "vertical lab +
             print(f"    {b:18s} rerun {y['ratio']:.3f} ({y['lo']:.3f}-{y['hi']:.3f})  stored {sy['ratio']:.3f} ({sy['lo']:.3f}-{sy['hi']:.3f})  medians rerun {y['median_ref']:.0f}/{y['median_new']:.0f}")
             out[f"{name}|{camp}|{b}"] = dict(rerun=y["ratio"], lo=y["lo"], hi=y["hi"], stored=sy["ratio"], median_ref=y["median_ref"], median_new=y["median_new"])
 json.dump(out, open(sys.argv[2], "w"), indent=1, default=str)
+
+# cost per demonstrated alloy (the results frame's bars): conventional BOFN and the automated lab's BOFN set B
+print("\ncost per demonstrated alloy, USD (rerun / stored)")
+conv_key = next(k for k in G if "|".join(k) == S["acceleration"]["vertical lab + bofn_blend vs conventional + bofn"]["flaime_al"]["ref"])
+vert_key = next(k for k in G if "|".join(k) == S["acceleration"]["vertical lab + bofn_blend vs conventional + bofn"]["flaime_al"]["new"])
+cases = [("conventional, no capex", conv_key, False, None), ("conventional, with capex", conv_key, True, None),
+         ("vertical lab, campaigns only, no capex", vert_key, False, None),
+         ("vertical lab, campaigns only, with capex", vert_key, True, None),
+         ("vertical lab, 60% utilized, no capex", vert_key, False, 0.6),
+         ("vertical lab, 60% utilized, with capex", vert_key, True, 0.6)]
+for camp in (None, "flaime_al", "onr_cu"):
+    for lab, key, inc, u in cases:
+        mb = E.mean_breakdown(G[key], inc, u, camp, events_of=events_of, shares_of=shares_of)
+        st = S["cost_per_experiment"]["cases"][camp or "both"][lab]
+        print(f"    {camp or 'both':10s} {lab:42s} {mb['per_total']:9.0f} / {st['per_total']:9.0f}   n {mb.get('n')} / {st.get('n')}")
+        out[f"cpe|{camp or 'both'}|{lab}"] = dict(rerun=mb["per_total"], stored=st["per_total"])
+
+# where the equipment prices come from, by share of each lab's capex
+print("\nshare of capex by the kind of price source")
+for fac in ("vertical_lab", "conventional"):
+    rows = E.equipment_table(fac)
+    tot = sum(r["capex"] for r in rows)
+    kinds = {}
+    for r in rows:
+        kinds[r["kind"]] = kinds.get(r["kind"], 0.0) + r["capex"]
+    print("   ", fac, f"${tot:,.0f}", {k: f"{v / tot:.0%}" for k, v in sorted(kinds.items(), key=lambda kv: -kv[1])})
+    out[f"capex_kinds|{fac}"] = {k: v / tot for k, v in kinds.items()}
+json.dump(out, open(sys.argv[2], "w"), indent=1, default=str)

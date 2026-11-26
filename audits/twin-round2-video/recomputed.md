@@ -167,6 +167,12 @@ The family: the two headline speed-ups, the two against the heuristic, the two c
 | video footer: automated `bofn_blend` vs conventional `heuristic` | ONR (Cu) | 6/12, 7/12 | 951.5, 277.9 | 3.42 | 0.00 to unbounded |
 | heuristic on both: automated `heuristic` vs conventional `heuristic` | FLAIME (Al) | 9/12, 3/12 | 690.6, unbounded | none (new arm's median unbounded) | 0.00 to 2.50 |
 | heuristic on both: automated `heuristic` vs conventional `heuristic` | ONR (Cu) | 6/12, 2/12 | 951.5, unbounded | none (new arm's median unbounded) | 0.00 to 0.00 |
+| stocking removed: automated lean `bofn` vs conventional lean `bofn` | FLAIME (Al) | 12/12, 6/12 | 289.5, 361.0 | 0.80 | 0.00 to 2.11 |
+| stocking removed: automated lean `bofn` vs conventional lean `bofn` | ONR (Cu) | 1/12, 4/12 | unbounded, unbounded | none (neither arm's median is bounded) | unbounded to unbounded |
+| stocking removed: automated lean `heuristic` vs conventional lean `heuristic` | FLAIME (Al) | 9/12, 2/12 | 690.6, unbounded | none (new arm's median unbounded) | 0.00 to 0.00 |
+| stocking removed: automated lean `heuristic` vs conventional lean `heuristic` | ONR (Cu) | 6/12, 2/12 | 951.5, unbounded | none (new arm's median unbounded) | 0.00 to 0.00 |
+| today's schedule: automated seeded `bofn` vs DAL 256 schedule seeded `bofn` | FLAIME (Al) | 9/12, 10/12 | 178.4, 130.6 | 1.37 | 0.77 to 3.84 |
+| today's schedule: automated seeded `bofn` vs DAL 256 schedule seeded `bofn` | ONR (Cu) | 1/12, 3/12 | unbounded, unbounded | none (neither arm's median is bounded) | unbounded to unbounded |
 
 ## 8. When each lab had its first new alloy, and what the year cost in cash
 

@@ -403,7 +403,7 @@ def main():
     P("## 7. The same headline at the harder target T2\n")
     P("| Comparison | Campaign | Reached (ref, new) | Median days (ref, new) | AF | 95% bootstrap interval |")
     P("|---|---|---|---|---|---|")
-    for lab, ref, new, _ in comps[:4]:
+    for lab, ref, new, _ in comps[:4] + [c for c in comps if c[0].startswith(("today's schedule", "stocking removed"))]:
         for camp in CAMPS:
             r = compare(ref, new, camp, T2[camp])
             out["t2"][f"{lab}|{camp}"] = r
