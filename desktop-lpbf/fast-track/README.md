@@ -28,7 +28,8 @@ in an Al alloy: the smallest result that shows a working LPBF machine.
 - **The recommended fast-track machine is FT-1, a "purge box" LPBF:** a small LPBF built almost entirely from things that
   ship within days.
   - **Optics:** a used IPG 400 W single-mode laser, a used SCANLAB hurrySCAN 25, a used f = 254 mm lens and a used RTC5
-    card. All four were still listed today, on US sellers with returns, for about $5.9k–6.6k together.
+    card. All four were still listed today on US sellers, three of them with returns or a warranty. With freight, and a
+    collimator if the laser lacks one, they come to about $5.2k–6.6k.
   - **Enclosure:** a stock 304 stainless NEMA 4X box laid on its back, so its hinged door is the lid with the laser
     window in it. Argon flows through it; there is no vacuum.
   - **Powder bed:** two stock Zaber stages (1–5 day lead time): a vertical stage lowers a Ø40 mm heated plate in a
@@ -47,7 +48,7 @@ in an Al alloy: the smallest result that shows a working LPBF machine.
     FT-1V, the same machine in a stock vacuum cube, keeps pump-purge for $10.6k–11.6k more and 1–2 weeks longer than
     FT-1 on PCards.
   - One Ø40 mm plate instead of Ø25/50/75 modules; builds up to 15 mm.
-  - No VLM tray fit, no robot features, no recirculating gas loop (argon runs once through, about 2–3 builds a
+  - No VLM tray fit, no robot features, no recirculating gas loop (argon runs once through, about 2–3.5 builds a
     cylinder), no coaxial monitoring.
 - **What it keeps:** the physics PR 266 chose. A CW single-mode fibre laser at 1070 nm with a galvo and f-theta (76 µm
   spot), argon, a 200 °C plate, a few tens of grams of powder per build, hardwired interlocks and Python control.
@@ -121,7 +122,7 @@ it off the lens before cutting the frame. Not a CAD model: no interference, FEA 
                      T-slot frame ──── hurrySCAN 25 + LINOS f = 254 mm
                                                      │ beam tube (enclosed, interlocked)
    ┌──────────── lid = the box's hinged door, Ø50.8 mm fused-silica window + cover slide ───────────┐
-   │   argon in ▶ slot nozzle  ▼ beam (window ~160 mm above the bed)                     exhaust ▶ │── HEPA ── check valve ── building exhaust
+   │   argon in ▶ slot nozzle  ▼ beam (window ~140 mm above the bed)                     exhaust ▶ │── HEPA ── check valve ── building exhaust
    │   [hopper+blade on the Zaber X-LSQ150B, under a sheet shield] ──▶ spreads left to right       │
    │                ┌─────── well block, 200 °C, Ø40 bore ───────┐   overflow cup                   │
    │                │   heated plate + substrate disc, 200 °C    │                                  │
@@ -139,8 +140,9 @@ it off the lens before cutting the frame. Not a CAD model: no interference, FEA 
 - **The beam path is enclosed from the fibre to the plate:** collimator, scan head, lens, a tube from the lens to the
   window ring, the window, the box. With the lid shut there is no open beam, so the machine is Class 1 by construction.
 - **The window** (Edmund 38-990, Ø50.8 × 9.53 mm fused silica, 1064 nm V-coat) sits in an O-ring ring clamp in the lid,
-  about 160 mm above the bed. A cover slide below it takes the spatter. At a 5 mm collimated beam the beam is 3.2 mm
-  across there: 5.1 kW/cm² at 400 W (`fast_track.py`).
+  about 140 mm above the bed. A cover slide below it takes the spatter. At a 5 mm collimated beam the beam is 2.8 mm
+  across there: 6.7 kW/cm² at 400 W (`fast_track.py`). The scan cone over the Ø40 mm plate needs about Ø30 mm of the
+  window's clear aperture at that height.
 
 ### 3.2 The laser chain, used
 
@@ -426,6 +428,7 @@ sensitivity of crack-prone alloys. Its time savings are engineering estimates, n
 
 1. FT-0 then FT-1, or straight to FT-1V if below 100 ppm O₂ is required from the start?
 2. Is a purge-only O₂ of 100–1000 ppm acceptable for the first coupons? EOS M 290 work on Al uses a 1000 ppm threshold.
-3. Buy the used laser chain now? It is returnable, about $5.9k–6.6k, and every route uses it, including PR 266's.
+3. Buy the used laser chain now? Three of its four parts are returnable, it is about $5.2k–6.6k, and every route uses
+   it, including PR 266's.
 4. Who asks BYU's metal-AM lab about a reduced-build-volume insert for its Concept Laser M2?
 5. Ø40 mm plate and 15 mm builds: enough for the first coupons?

@@ -25,8 +25,8 @@ Optics (f = 254 mm, M2 1.1):
 
 | beam_mm | spot_um | rayleigh_mm | spot_growth_at_5mm_defocus | beam_at_window_mm | window_kW_per_cm2_at_400W |
 |---|---|---|---|---|---|
-| 5.0 | 76 | 3.87 | 1.63 | 3.15 | 5.1 |
-| 7.5 | 51 | 1.72 | 3.08 | 4.72 | 2.3 |
+| 5.0 | 76 | 3.87 | 1.63 | 2.77 | 6.7 |
+| 7.5 | 51 | 1.72 | 3.08 | 4.15 | 3.0 |
 
 Cost by alternative (parts.csv):
 

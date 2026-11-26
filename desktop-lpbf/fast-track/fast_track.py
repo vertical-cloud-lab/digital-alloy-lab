@@ -68,6 +68,9 @@ SIGMA = 5.670e-8
 WELL_BLOCK_MM = (80.0, 80.0, 40.0)        # 6061 block with the Ø40 bore
 STANDOFF = dict(n=4 + 3, d_mm=6.35, L_mm=12.7, k=1.46)  # Macor (k 1.46 W/mK), 4 under the block, 3 under the plate
 HEATERS_W = 4 * 50.0                      # 4 x McMaster 3714N36 (24 V, 50 W): 2 in the plate, 2 in the block
+DECK_T_MM = 10.0                          # 6061 deck plate on the box floor
+BED_Z_MM = DECK_T_MM + STANDOFF["L_mm"] + WELL_BLOCK_MM[2]   # powder plane = top of the well block
+WINDOW_ABOVE_BED_MM = BOX_IN[2] * IN * 1000 - BED_Z_MM      # window in the lid (the box's door)
 # The box sheds the heat through its walls; with a fan on the outside the wall coefficient rises (estimates).
 H_BOX_STILL, H_BOX_FAN = 6.0, 20.0        # W/m2K overall, inside-to-outside, per box area
 ABSORPTIVITY = (0.3, 0.6)                 # share of the beam absorbed by Al powder in LPBF, conduction to keyhole (estimate)
@@ -77,7 +80,6 @@ STAGE_MAX_C = 50.0                        # Zaber X-LSQ150B operating range 0-50
 # hurrySCAN 25 (25 mm aperture) and a LINOS f = 254 mm F-Theta-Ronar.
 M2, LAMBDA_UM, F_MM = 1.1, 1.07, 254.0
 BEAMS_MM = (5.0, 7.5)                     # IPG's standard collimated beam diameters (IPG quote of 2026-11-18)
-WINDOW_ABOVE_BED_MM = 160.0               # window in the lid, bed ~40 mm above the box floor, 8 in box (layout)
 P_LASER_W = 400.0
 
 
@@ -329,12 +331,12 @@ def layout():
 
     L, H = BOX_IN[0] * 25.4, BOX_IN[2] * 25.4        # 406 x 203 mm inside
     wall = 2.0
-    deck_t = 10.0
-    standoff = 12.7
+    deck_t = DECK_T_MM
+    standoff = STANDOFF["L_mm"]
     block_w, block_h = WELL_BLOCK_MM[0], WELL_BLOCK_MM[2]
     cx = L / 2
     block_z0 = deck_t + standoff
-    bed_z = block_z0 + block_h                            # powder plane = top of the well block
+    bed_z = BED_Z_MM
     plate_stack = 18.0                                    # 12 mm heater plate + 6 mm substrate disc
     lens_wd = 300.0                                       # LINOS f = 254 mm working distance (estimate; check the lens)
     lens_z0 = bed_z + lens_wd
