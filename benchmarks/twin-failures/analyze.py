@@ -35,6 +35,13 @@ CNAME = {"flaime_al": "Aluminium (FLAIME)", "onr_cu": "Copper (ONR)"}
 ORDER = ("bad_value", "drop", "abandon", "retry", "viability_x", "viability_node", "viability_node_nodiag", "oracle",
          "heuristic", "random", "gpbo")
 BASELINE = "bad_value"
+# exploratory contrasts between strategies (a - b), named in the README; unadjusted
+CONTRASTS = [("viability_node", "viability_x", "node-level against Ax 1.3's design-level viability"),
+             ("viability_node", "drop", "a failure model against none"),
+             ("abandon", "drop", "ABANDONED against FAILED, no failure model"),
+             ("retry", "abandon", "one rerun before giving up, against giving up at once"),
+             ("oracle", "viability_node", "the true cause against the lab's diagnosis"),
+             ("viability_node", "viability_node_nodiag", "the lab's diagnosis against none")]
 
 
 def hit_day(curve, target):
@@ -208,6 +215,13 @@ def analyse():
                             E["paired"].setdefault(p, {}).setdefault(camp, {})[metric] = res
                             if camp == "both" and metric == "T1_rmst":
                                 prim.append((p, res["p_t"]))
+        E["contrasts"] = []
+        for a_, b_, why in CONTRASTS:
+            if a_ in P and b_ in P:
+                row = dict(a=a_, b=b_, why=why)
+                for camp, metric in (("both", "T1_rmst"), ("both", "T2_rmst"), ("flaime_al", "best"), ("onr_cu", "best")):
+                    row[f"{camp}:{metric}"] = paired(P[a_], P[b_], metric, camp)
+                E["contrasts"].append(row)
         if prim:
             adj = holm(np.array([x[1] for x in prim]))
             for (p, _), a in zip(prim, adj):
@@ -241,6 +255,17 @@ def fmt_table(out):
                 f"{la['failed']:.0f} of {la['runs']:.0f} ({la['failed_intrinsic']:.0f} / {la['failed_transient']:.0f}) | "
                 f"{lc['failed']:.0f} of {lc['runs']:.0f} | {s['down_days']:.0f} | {a['repairs']:.1f} / {c['repairs']:.1f} | "
                 f"{a['other_days_lost']:.0f} |")
+        lines.append("\nWhat each strategy spent and made in a year (means over seeds):\n")
+        lines.append("| Strategy | Al spent | Al new alloys demonstrated | Al designs atomized | Al designs given up after "
+                     "transient failures only | Al repeat failures from the inputs | Cu spent | Cu new alloys |")
+        lines.append("|---|---|---|---|---|---|---|---|")
+        for p in ORDER:
+            if p not in E["strategies"]:
+                continue
+            a, c = E["strategies"][p]["flaime_al"], E["strategies"][p]["onr_cu"]
+            lines.append(f"| `{p}` | ${a['spent'] / 1000:.0f}k | {a['n_new']:.1f} | {a['ledger']['designs']:.0f} | "
+                         f"{a['ledger']['given_up_transient']:.1f} | {a['ledger']['repeat_intrinsic']:.1f} | "
+                         f"${c['spent'] / 1000:.0f}k | {c['n_new']:.1f} |")
         if E.get("paired"):
             lines.append(f"\nPaired against `{BASELINE}`, seed by seed: mean difference (95 % bootstrap interval) and p. "
                          f"Days are restricted means to the target, censored at day 365, so negative is sooner. The "
@@ -271,6 +296,21 @@ def fmt_table(out):
                 x = Q["both"]["T1_rmst"]
                 cells.append(f"{x['losses']} / {x['wins']}")     # fewer days is better
                 lines.append(f"| `{p}` | " + " | ".join(cells) + " |")
+        if E.get("contrasts"):
+            lines.append("\nExploratory contrasts between strategies (a minus b, paired by seed, unadjusted t-test p):\n")
+            lines.append("| a − b | what it asks | Days to T1, both | Days to T2, both | Al best new | Cu best new |")
+            lines.append("|---|---|---|---|---|---|")
+            for row in E["contrasts"]:
+                cells = []
+                for key in ("both:T1_rmst", "both:T2_rmst", "flaime_al:best", "onr_cu:best"):
+                    x = row.get(key)
+                    if not x:
+                        cells.append("-")
+                    elif key.endswith("best"):
+                        cells.append(f"{x['mean']:+.3f} ({x['lo']:+.3f} to {x['hi']:+.3f}), p {x['p_t']:.2f}")
+                    else:
+                        cells.append(f"{x['mean']:+.0f} ({x['lo']:+.0f} to {x['hi']:+.0f}), p {x['p_t']:.2f}")
+                lines.append(f"| `{row['a']}` − `{row['b']}` | {row['why']} | " + " | ".join(cells) + " |")
     return "\n".join(lines)
 
 
