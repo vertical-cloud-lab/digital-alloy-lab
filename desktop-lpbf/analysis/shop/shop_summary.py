@@ -245,7 +245,7 @@ def chapter_totals():
     """Per rendered chapter (meta.jsonl): frames, video seconds, the hours its frames add (common.py's counters), and the
     seconds of video per status and per who."""
     out = {}
-    for ch in ("20-receiving", "30-machining-chamber", "31-machining-parts", "32-finishing"):
+    for ch in ("20-receiving", "29-stock", "30-machining-chamber", "31-machining-parts", "32-finishing"):
         p = pathlib.Path("/tmp/robotbuild/frames") / ch / "meta.jsonl"
         if not p.exists():
             continue
