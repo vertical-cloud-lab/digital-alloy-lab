@@ -1,0 +1,105 @@
+1. (schimback2024advancementsinmetal pages 2-3): D. Schimbäck, L. Kaserer, P. Mair, M.S. Mohebbi, P. Staron, V. Maier-Kiener, I. Letofsky-Papst, T. Kremmer, F. Palm, I. Montes, H.W. Höppel, G. Leichtfried, and S. Pogatscher. Advancements in metal additive manufacturing: in-situ heat treatment of aluminium alloys during the laser powder bed fusion process. Jul 2024. URL: https://doi.org/10.1016/j.msea.2024.146102, doi:10.1016/j.msea.2024.146102. This article has 32 citations.
+
+2. (schimback2022animprovedprocess pages 3-4): D. Schimbäck, Philipp Mair, Lukas Kaserer, Lukas Perfler, Frank Palm, Gerhard Leichtfried, and Stefan Pogatscher. An improved process scan strategy to obtain high-performance fatigue properties for scalmalloy®. SSRN Electronic Journal, Nov 2022. URL: https://doi.org/10.2139/ssrn.4201040, doi:10.2139/ssrn.4201040. This article has 42 citations.
+
+3. (mair2022microstructuralfeaturesand pages 1-2): Philipp Mair, Ilse Letofsky-Papst, and Gerhard Leichtfried. Microstructural features and mechanical properties of a novel ti- and zr-modified al-mn alloy processed by laser powder bed fusion. Journal of Alloys and Compounds, 897:163156, Mar 2022. URL: https://doi.org/10.1016/j.jallcom.2021.163156, doi:10.1016/j.jallcom.2021.163156. This article has 32 citations and is from a peer-reviewed journal.
+
+4. (wilsnack2023fabricationofan pages 1-3): C Wilsnack, J Moritz, A Reutlinger, and S Eberle. Fabrication of an athermal mirror from a hyper-eutectic alsi alloy via lpbf. Unknown journal, 2023.
+
+5. (riener2022processabilityofhighstrength pages 1-2): Kirstin Riener, Tino Pfalz, Florian Funcke, and Gerhard Leichtfried. Processability of high-strength aluminum 6182 series alloy via laser powder bed fusion (lpbf). The International Journal of Advanced Manufacturing Technology, 119:4963-4977, Jan 2022. URL: https://doi.org/10.1007/s00170-022-08673-8, doi:10.1007/s00170-022-08673-8. This article has 56 citations.
+
+6. (riener2022processabilityofhighstrength pages 10-12): Kirstin Riener, Tino Pfalz, Florian Funcke, and Gerhard Leichtfried. Processability of high-strength aluminum 6182 series alloy via laser powder bed fusion (lpbf). The International Journal of Advanced Manufacturing Technology, 119:4963-4977, Jan 2022. URL: https://doi.org/10.1007/s00170-022-08673-8, doi:10.1007/s00170-022-08673-8. This article has 56 citations.
+
+7. (clement2024investigationintothe pages 43-51): Catherine Dolly Clement. Investigation into the effects of heat treatment and nanoparticles on the microstructure and mechanical properties of lpbf'ed alsi10mgalloy. ArXiv, 2024. URL: https://doi.org/10.22215/etd/2024-16239, doi:10.22215/etd/2024-16239. This article has 1 citations.
+
+8. (macias2020influenceonmicrostructure pages 1-5): Juan Guillermo Santos Macías, Thierry Douillard, Lv Zhao, Eric Maire, Grzegorz Pyka, and Aude Simar. Influence on microstructure, strength and ductility of build platform temperature during laser powder bed fusion of alsi10mg. Acta Materialia, 201:231-243, Dec 2020. URL: https://doi.org/10.1016/j.actamat.2020.10.001, doi:10.1016/j.actamat.2020.10.001. This article has 278 citations and is from a highest quality peer-reviewed journal.
+
+9. (leis2021processwindowfor pages 1-2): Artur Leis, Rudolf Weber, and Thomas Graf. Process window for highly efficient laser-based powder bed fusion of alsi10mg with reduced pore formation. Oct 2021. URL: https://doi.org/10.18419/opus-11716, doi:10.18419/opus-11716. This article has 30 citations.
+
+10. (cerri2024mainheattreatments pages 14-16): Emanuela Cerri, Lorenzo Curti, and Emanuele Ghio. Main heat treatments currently applied on laser powder bed-fused scalmalloy®: a review. Crystals, 15:25, Dec 2024. URL: https://doi.org/10.3390/cryst15010025, doi:10.3390/cryst15010025. This article has 17 citations.
+
+11. (mehta2021laserpowderbed pages 10-11): Bharat Mehta, Arvid Svanberg, and Lars Nyborg. Laser powder bed fusion of an al-mg-sc-zr alloy: manufacturing, peak hardening response and thermal stability at peak hardness. Metals, 12:57, Dec 2021. URL: https://doi.org/10.3390/met12010057, doi:10.3390/met12010057. This article has 21 citations.
+
+12. (martucci2022theinfluenceof pages 2-4): Alessandra Martucci, Bharat Mehta, Mariangela Lombardi, and Lars Nyborg. The influence of processing parameters on the al-mn enriched nano-precipitates formation in a novel al-mn-cr-zr alloy tailored for power bed fusion-laser beam process. Metals, 12:1387, Aug 2022. URL: https://doi.org/10.3390/met12081387, doi:10.3390/met12081387. This article has 6 citations.
+
+13. (mehta2022effectofprecipitation pages 1-3): Bharat Mehta, Karin Frisk, and Lars Nyborg. Effect of precipitation kinetics on microstructure and properties of novel al-mn-cr-zr based alloys developed for powder bed fusion – laser beam process. Journal of Alloys and Compounds, 920:165870, Nov 2022. URL: https://doi.org/10.1016/j.jallcom.2022.165870, doi:10.1016/j.jallcom.2022.165870. This article has 22 citations and is from a peer-reviewed journal.
+
+14. (mehta2023advancingnovelalmncrzr pages 1-3): Bharat Mehta, Karin Frisk, and Lars Nyborg. Advancing novel al-mn-cr-zr based family of alloys tailored for powder bed fusion-laser beam process. Journal of Alloys and Compounds, 967:171685, Dec 2023. URL: https://doi.org/10.1016/j.jallcom.2023.171685, doi:10.1016/j.jallcom.2023.171685. This article has 15 citations and is from a peer-reviewed journal.
+
+15. (belelli2022investigationandcharacterization pages 8-14): F. Belelli, R. Casati, C. Andrianopoli, F. Cuccaro, and M. Vedani. Investigation and characterization of an al-mg-zr-sc alloy with reduced sc content for laser powder bed fusion. Journal of Alloys and Compounds, 924:166519, Nov 2022. URL: https://doi.org/10.1016/j.jallcom.2022.166519, doi:10.1016/j.jallcom.2022.166519. This article has 42 citations and is from a peer-reviewed journal.
+
+16. (guo2022microstructureandmechanical pages 1-2): Yanwu Guo, Wu Wei, Wei Shi, Xiaorong Zhou, Shengping Wen, Xiaolan Wu, Kunyuan Gao, Dongyun Zhang, Peng Qi, Hui Huang, and Zuoren Nie. Microstructure and mechanical properties of al-mg-mn-er-zr alloys fabricated by laser powder bed fusion. Materials &amp; Design, 222:111064, Oct 2022. URL: https://doi.org/10.1016/j.matdes.2022.111064, doi:10.1016/j.matdes.2022.111064. This article has 60 citations and is from a highest quality peer-reviewed journal.
+
+17. (pauzon2022anovellaser pages 1-4): Camille Pauzon, Maxence Buttard, Arthur Després, Béchir Chehab, Jean-Jacques Blandin, and Guilhem Martin. A novel laser powder bed fusion al-fe-zr alloy for superior strength-conductivity trade-off. Scripta Materialia, 219:114878, Oct 2022. URL: https://doi.org/10.1016/j.scriptamat.2022.114878, doi:10.1016/j.scriptamat.2022.114878. This article has 64 citations and is from a highest quality peer-reviewed journal.
+
+18. (li2025precipitationevolutionaging pages 1-3): Fengfan Li, Wei Zhang, Dan Li, Xiao Jia, Bart J. Kooi, and Yutao Pei. Precipitation evolution, aging strengthening and thermal stability in al–fe-mg-zr eutectic alloy via laser powder bed fusion. Virtual and Physical Prototyping, Jun 2025. URL: https://doi.org/10.1080/17452759.2025.2516663, doi:10.1080/17452759.2025.2516663. This article has 9 citations and is from a peer-reviewed journal.
+
+19. (li2025precipitationevolutionaging pages 3-4): Fengfan Li, Wei Zhang, Dan Li, Xiao Jia, Bart J. Kooi, and Yutao Pei. Precipitation evolution, aging strengthening and thermal stability in al–fe-mg-zr eutectic alloy via laser powder bed fusion. Virtual and Physical Prototyping, Jun 2025. URL: https://doi.org/10.1080/17452759.2025.2516663, doi:10.1080/17452759.2025.2516663. This article has 9 citations and is from a peer-reviewed journal.
+
+20. (li2024additivemanufacturingof pages 31-34): Ying-Jie Li. Additive manufacturing of 6061 and 7075 aluminium alloy with selective laser melting. Unknown journal, 2024. URL: https://doi.org/10.70675/5f083431z1407z40f1z83bfz19a675dc42f6, doi:10.70675/5f083431z1407z40f1z83bfz19a675dc42f6.
+
+21. (bradfordvialva2021developmentofa pages 113-115): RL Bradford-Vialva. Development of a metal-metal powder formulations approach for direct metal laser melting of high-strength aluminum alloys. Unknown journal, 2021.
+
+22. (guo2022microstructureandmechanical pages 2-3): Yanwu Guo, Wu Wei, Wei Shi, Xiaorong Zhou, Shengping Wen, Xiaolan Wu, Kunyuan Gao, Dongyun Zhang, Peng Qi, Hui Huang, and Zuoren Nie. Microstructure and mechanical properties of al-mg-mn-er-zr alloys fabricated by laser powder bed fusion. Materials &amp; Design, 222:111064, Oct 2022. URL: https://doi.org/10.1016/j.matdes.2022.111064, doi:10.1016/j.matdes.2022.111064. This article has 60 citations and is from a highest quality peer-reviewed journal.
+
+23. (velikajne2026influenceofbase pages 6-8): Nejc Velikajne, Jožef Medved, Črtomir Donik, and Irena Paulin. Influence of base plate preheating on laser powder bed fusion–processed en aw-7075 aluminium alloy. Materials, 19:970, Mar 2026. URL: https://doi.org/10.3390/ma19050970, doi:10.3390/ma19050970. This article has 2 citations.
+
+24. (velikajne2026influenceofbase pages 8-11): Nejc Velikajne, Jožef Medved, Črtomir Donik, and Irena Paulin. Influence of base plate preheating on laser powder bed fusion–processed en aw-7075 aluminium alloy. Materials, 19:970, Mar 2026. URL: https://doi.org/10.3390/ma19050970, doi:10.3390/ma19050970. This article has 2 citations.
+
+25. (velikajne2026influenceofbase pages 1-2): Nejc Velikajne, Jožef Medved, Črtomir Donik, and Irena Paulin. Influence of base plate preheating on laser powder bed fusion–processed en aw-7075 aluminium alloy. Materials, 19:970, Mar 2026. URL: https://doi.org/10.3390/ma19050970, doi:10.3390/ma19050970. This article has 2 citations.
+
+26. (hesselmann2022effectofprecipitationforming pages 3-5): Marcel Hesselmann, Daniel Knoop, Jérémy Epp, Volker Uhlenwinkel, Axel von Hehl, and Anastasiya Toenjes. Effect of precipitation-forming elements in a near-eutectic al-ce alloy for laser powder bed fusion. Additive Manufacturing, 57:102959, Sep 2022. URL: https://doi.org/10.1016/j.addma.2022.102959, doi:10.1016/j.addma.2022.102959. This article has 33 citations and is from a highest quality peer-reviewed journal.
+
+27. (agricola2025parameterstudyof pages 1-2): Barbara Agricola, Claas Bierwisch, Frank Palm, Eric A. Jägle, and Annegret Kerschenlohr. Parameter study of an al–cr–mo–sc–zr alloy processed by laser powder bed fusion reaching high build rates. Progress in Additive Manufacturing, 10:349-360, Jun 2024. URL: https://doi.org/10.1007/s40964-024-00627-8, doi:10.1007/s40964-024-00627-8. This article has 5 citations and is from a peer-reviewed journal.
+
+28. (bosio2021laserpowderbed pages 43-47): F Bosio. Laser powder bed fusion of alsi10mg+ 4cu and alsi10mg alloys. Unknown journal, 2021.
+
+29. (macias2020influenceonmicrostructure pages 5-9): Juan Guillermo Santos Macías, Thierry Douillard, Lv Zhao, Eric Maire, Grzegorz Pyka, and Aude Simar. Influence on microstructure, strength and ductility of build platform temperature during laser powder bed fusion of alsi10mg. Acta Materialia, 201:231-243, Dec 2020. URL: https://doi.org/10.1016/j.actamat.2020.10.001, doi:10.1016/j.actamat.2020.10.001. This article has 278 citations and is from a highest quality peer-reviewed journal.
+
+30. (schimback2024advancementsinmetal pages 1-2): D. Schimbäck, L. Kaserer, P. Mair, M.S. Mohebbi, P. Staron, V. Maier-Kiener, I. Letofsky-Papst, T. Kremmer, F. Palm, I. Montes, H.W. Höppel, G. Leichtfried, and S. Pogatscher. Advancements in metal additive manufacturing: in-situ heat treatment of aluminium alloys during the laser powder bed fusion process. Jul 2024. URL: https://doi.org/10.1016/j.msea.2024.146102, doi:10.1016/j.msea.2024.146102. This article has 32 citations.
+
+31. (cerri2024mainheattreatments pages 11-14): Emanuela Cerri, Lorenzo Curti, and Emanuele Ghio. Main heat treatments currently applied on laser powder bed-fused scalmalloy®: a review. Crystals, 15:25, Dec 2024. URL: https://doi.org/10.3390/cryst15010025, doi:10.3390/cryst15010025. This article has 17 citations.
+
+32. (mehta2022al–mn–cr–zrbasedalloystailored pages 10-10): Bharat Mehta, Lars Nyborg, Karin Frisk, and Eduard Hryha. Al–mn–cr–zr-based alloys tailored for powder bed fusion-laser beam process: alloy design, printability, resulting microstructure and alloy properties. Journal of Materials Research, 37:1256-1268, Mar 2022. URL: https://doi.org/10.1557/s43578-022-00533-1, doi:10.1557/s43578-022-00533-1. This article has 22 citations and is from a peer-reviewed journal.
+
+33. (zhu2023microstructuralanalysisof pages 3-5): Suming Zhu, Indrajeet Katti, Dong Qiu, Joy H. Forsmark, and Mark A. Easton. Microstructural analysis of the influences of platform preheating and post-build heat treatment on mechanical properties of laser powder bed fusion manufactured alsi10mg alloy. Materials Science and Engineering: A, 882:145486, Aug 2023. URL: https://doi.org/10.1016/j.msea.2023.145486, doi:10.1016/j.msea.2023.145486. This article has 39 citations.
+
+34. (mehta2022effectofprecipitation pages 5-7): Bharat Mehta, Karin Frisk, and Lars Nyborg. Effect of precipitation kinetics on microstructure and properties of novel al-mn-cr-zr based alloys developed for powder bed fusion – laser beam process. Journal of Alloys and Compounds, 920:165870, Nov 2022. URL: https://doi.org/10.1016/j.jallcom.2022.165870, doi:10.1016/j.jallcom.2022.165870. This article has 22 citations and is from a peer-reviewed journal.
+
+35. (hong2026fittingfreediagnosisof pages 4-5): Gisuk Hong, Jaebong Cho, and Hyunbo Cho. Fitting-free diagnosis of conduction-model breakdown in laser powder bed fusion. Materials, 19:3290, Aug 2026. URL: https://doi.org/10.3390/ma19153290, doi:10.3390/ma19153290. This article has 0 citations.
+
+36. (francis2017theeffectsof pages 67-70): Zachary Ryan Francis. The effects of laser and electron beam spot size in additive manufacturing processes. ArXiv, May 2017. URL: https://doi.org/10.1184/r1/6723563.v1, doi:10.1184/r1/6723563.v1. This article has 85 citations.
+
+37. (bajaj2020precipitationduringintrinsic pages 60-63): P. Bajaj, B. Svendsen, and D. Raabe. Precipitation during intrinsic heat treatment in laser additive manufacturing. ArXiv, pages 2020, Oct 2020. URL: https://doi.org/10.18154/rwth-2020-10461, doi:10.18154/rwth-2020-10461. This article has 3 citations.
+
+38. (bajaj2020precipitationduringintrinsic pages 58-60): P. Bajaj, B. Svendsen, and D. Raabe. Precipitation during intrinsic heat treatment in laser additive manufacturing. ArXiv, pages 2020, Oct 2020. URL: https://doi.org/10.18154/rwth-2020-10461, doi:10.18154/rwth-2020-10461. This article has 3 citations.
+
+39. (martucci2023developmentandcharacterisation pages 21-23): A Martucci. Development and characterisation of al-based alloys processed by pbf-lb/m. Unknown journal, 2023.
+
+40. (martucci2023developmentandcharacterisation pages 20-21): A Martucci. Development and characterisation of al-based alloys processed by pbf-lb/m. Unknown journal, 2023.
+
+41. (martucci2023developmentandcharacterisation pages 83-100): A Martucci. Development and characterisation of al-based alloys processed by pbf-lb/m. Unknown journal, 2023.
+
+42. (bertoli2018processstructurepropertiesrelationshipsin pages 35-39): US Bertoli. Process-structure-properties relationships in laser powder bed fusion additive manufacturing. Unknown journal, 2018.
+
+43. (bertoli2018processstructurepropertiesrelationshipsin pages 20-26): US Bertoli. Process-structure-properties relationships in laser powder bed fusion additive manufacturing. Unknown journal, 2018.
+
+44. (chia2022processparameteroptimization pages 11-13): Hou Yi Chia, Jianzhao Wu, Xinzhi Wang, and Wentao Yan. Process parameter optimization of metal additive manufacturing: a review and outlook. Journal of Materials Informatics, 2:16, Jan 2022. URL: https://doi.org/10.20517/jmi.2022.18, doi:10.20517/jmi.2022.18. This article has 152 citations.
+
+45. (yadegari2025aluminumlaseradditive pages 19-21): Mohammad Javad Yadegari, Alessandra Martucci, Sara Biamino, Daniele Ugues, Laura Montanaro, Paolo Fino, and Mariangela Lombardi. Aluminum laser additive manufacturing: a review on challenges and opportunities through the lens of sustainability. Applied Sciences, 15:2221, Feb 2025. URL: https://doi.org/10.3390/app15042221, doi:10.3390/app15042221. This article has 28 citations.
+
+46. (juhasz2020inandexsitu pages 104-109): MJ Juhasz. In and ex-situ process development in laser-based additive manufacturing. Unknown journal, 2020.
+
+47. (bosio2021laserpowderbed pages 90-93): F Bosio. Laser powder bed fusion of alsi10mg+ 4cu and alsi10mg alloys. Unknown journal, 2021.
+
+48. (cerri2024mainheattreatments pages 1-2): Emanuela Cerri, Lorenzo Curti, and Emanuele Ghio. Main heat treatments currently applied on laser powder bed-fused scalmalloy®: a review. Crystals, 15:25, Dec 2024. URL: https://doi.org/10.3390/cryst15010025, doi:10.3390/cryst15010025. This article has 17 citations.
+
+49. (mehta2022al–mn–cr–zrbasedalloystailored pages 2-3): Bharat Mehta, Lars Nyborg, Karin Frisk, and Eduard Hryha. Al–mn–cr–zr-based alloys tailored for powder bed fusion-laser beam process: alloy design, printability, resulting microstructure and alloy properties. Journal of Materials Research, 37:1256-1268, Mar 2022. URL: https://doi.org/10.1557/s43578-022-00533-1, doi:10.1557/s43578-022-00533-1. This article has 22 citations and is from a peer-reviewed journal.
+
+50. (zhu2023microstructuralanalysisof pages 9-12): Suming Zhu, Indrajeet Katti, Dong Qiu, Joy H. Forsmark, and Mark A. Easton. Microstructural analysis of the influences of platform preheating and post-build heat treatment on mechanical properties of laser powder bed fusion manufactured alsi10mg alloy. Materials Science and Engineering: A, 882:145486, Aug 2023. URL: https://doi.org/10.1016/j.msea.2023.145486, doi:10.1016/j.msea.2023.145486. This article has 39 citations.
+
+51. (martucci2022lowpowerlaserpowder pages 11-13): Alessandra Martucci, Alberta Aversa, Diego Manfredi, Federica Bondioli, Sara Biamino, Daniele Ugues, Mariangela Lombardi, and Paolo Fino. Low-power laser powder bed fusion processing of scalmalloy®. Materials, 15:3123, Apr 2022. URL: https://doi.org/10.3390/ma15093123, doi:10.3390/ma15093123. This article has 30 citations.
+
+52. (martucci2022lowpowerlaserpowder pages 2-4): Alessandra Martucci, Alberta Aversa, Diego Manfredi, Federica Bondioli, Sara Biamino, Daniele Ugues, Mariangela Lombardi, and Paolo Fino. Low-power laser powder bed fusion processing of scalmalloy®. Materials, 15:3123, Apr 2022. URL: https://doi.org/10.3390/ma15093123, doi:10.3390/ma15093123. This article has 30 citations.
+
+53. (yadegari2025aluminumlaseradditive pages 39-41): Mohammad Javad Yadegari, Alessandra Martucci, Sara Biamino, Daniele Ugues, Laura Montanaro, Paolo Fino, and Mariangela Lombardi. Aluminum laser additive manufacturing: a review on challenges and opportunities through the lens of sustainability. Applied Sciences, 15:2221, Feb 2025. URL: https://doi.org/10.3390/app15042221, doi:10.3390/app15042221. This article has 28 citations.
