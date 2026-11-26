@@ -33,8 +33,9 @@ way, and one exploratory alloy. The sources and how each was read are in
 1. **Order an Al–Zr master alloy now, and iron.** Five of the nine need Zr (D2, S1, S2, O1, O2):
    about 120 g of Al–10Zr for one 250 g charge of each. Zr isn't on the Nov 13 list in
    [#146](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/146#issuecomment-6842840090).
-   Every Sc-free commercial alloy we found with a published composition and a yield strength above
-   about 350 MPa relies on Zr or TiB₂ ([`research/datasheets.md`](research/datasheets.md)).
+   Among Sc-free commercial alloys with a published composition, a yield strength above about
+   350 MPa together with 8 % elongation comes only with Zr or TiB₂: Höganäs Al-HS1, EOS/Constellium
+   Al5X1, HRL 7A77 and A20X ([`research/datasheets.md`](research/datasheets.md)).
    **If Zr is late, run D1, S3, S4 and O3 first:** all four use only what is on the shelf.
 2. **Melt hotter for anything with Zr, Ti, Cr or Mn.** The runs so far were at 810–840 °C. The
    calculated liquidus is 835 °C for 0.6 wt% Zr and 895 °C for 1 wt% Zr in pure Al, and Mg raises
@@ -217,7 +218,7 @@ limit of 0.55). *Ask* the Utah MIDI facility for their AlSi10Mg parameter set.
 boundaries, nucleated on primary Al₃(Sc,Zr), and fine columnar grains inside; coherent Al₃(Sc,Zr)
 after 325 °C for 4 h. *Success* is 450 MPa or more after ageing. *Watch* the Sc stock (1.65 g per
 charge), Mg loss in printing (up to 1.2 wt% in keyhole mode per Edison q7), and the melt
-temperature: at 840 °C the 0.42 % Zr is not all dissolved. *Ask* the Innsbruck and Leoben groups,
+temperature: 840 °C is right at this alloy's Al₃Zr liquidus (835 °C), with no margin. *Ask* the Innsbruck and Leoben groups,
 who print Scalmalloy on an Aconity MIDI with and without a 200 °C plate.
 
 **S1, Al–4.8Mn–0.9Cr–1.1Zr–1.2Mg.** *Expect* grains near 1 µm where primary L1₂ Al₃Zr formed,
@@ -358,6 +359,7 @@ Mg-rich seeds) barely notice the base. The full table, with both bases for about
 | Prints crack-free with Zr, Sc or Ti | 1Fe-1Zr | 0 | 2 | 0.18 |
 | Prints crack-free with Zr, Sc or Ti | 4.8Mn-0.82Ti-0.71Zr | 0 | 2 | 0.08 |
 | Prints crack-free with Zr, Sc or Ti | 4.5Mg-0.7Mn-0.7Zr-0.15Cr | 106 | 3311 | 1.50 |
+| Prints crack-free with Zr, Sc or Ti | 1Zr-0.83Mg-0.62Si-0.25Fe-0.23Cu-0.08Cr | 75 | 1357 | 2.12 |
 | Prints crack-free with Zr, Sc or Ti | 6Mg-2.5Si-0.7Ti | 0 | 2 | 0.03 |
 <!-- /TABLE -->
 
@@ -617,6 +619,19 @@ python bofn-seeding/first-six/saasbo_handoff_sim.py --reps 30 --models gp random
 python bofn-seeding/first-six/saasbo_handoff_sim.py --summarize
 python bofn-seeding/first-six/make_figures.py && python bofn-seeding/first-six/make_tables.py
 ```
+
+## Notes for whoever reruns this
+
+- **The `scheil` package ends a path too early** when one equilibrium step fails. Use the loop in
+  `calphad_screen.py`, and distrust any path that ends above the path of the same alloy on a purer
+  base (`named.csv` flags those).
+- **The MatCalc open Al database has no Al₃Zr liquidus.** Take Zr liquidus values from COST 507 or
+  from Thermo-Calc.
+- **Both databases are open but neither is in this repo.** The docstrings say where they are.
+- **The Edison client did not install on Python 3.14** (a dependency caps Python below 3.14). A
+  Python 3.12 virtual environment worked.
+- **Publisher access through the Pi is partial.** Open-access copies in university repositories
+  were the reliable route for Elsevier papers.
 
 ## Caveats
 

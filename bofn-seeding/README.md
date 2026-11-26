@@ -1,5 +1,11 @@
 # Seeding the BOFN campaign: which experiments come first (#275)
 
+> **Update, Nov 26:** the concrete first six experiments, three optional ones, and their recipes
+> are in [`first-six/`](first-six/). That folder replaces the seed table below: S1 and S2 are now
+> the measured compositions from the papers, and the space-filling seed has become a hand-picked
+> exploratory alloy, with SAASBO taking over after six. The rest of this page (seeds for every
+> node, pseudo-data, databases, the benchmark) still stands.
+
 [#275](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/275) asks how to choose the
 initial experiments for the Al alloy campaign in
 [#255](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/255), which

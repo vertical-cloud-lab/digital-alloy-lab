@@ -1,0 +1,12 @@
+Please read this paper in full and report exactly what it says, quoting numbers: Wen, T. et al. (2024), "CALPHAD aided design of a crack-free Al-Mg-Si-Ti alloy with high strength: heterogeneous nucleation and eutectic filling during additive manufacturing", Virtual and Physical Prototyping 19(1), DOI 10.1080/17452759.2024.2378930 (Brunel University London, Central South University, RMIT).
+
+1. Every alloy composition studied, nominal and measured (ICP or similar), in wt%: Mg, Si, Ti, Fe, Mn and anything else. Is the final alloy Al-6Mg-2.5Si-0.7Ti, and what is the measured Ti (the abstract says 0.77 wt%)? Does it contain any Zr, Sc or B?
+2. How the powder was made (gas atomization? melt temperature if given), supplier, and the particle size distribution.
+3. LPBF machine, laser power, scan speed, hatch, layer thickness, spot size, scan strategy, build-plate temperature, atmosphere; the window tested and the optimum; relative density.
+4. Cracking: which compositions cracked and which did not, and the evidence (micrographs, crack density).
+5. Tensile properties for each alloy and condition: yield strength, ultimate tensile strength, elongation, build orientation, specimen size; hardness; any heat treatment.
+6. Microstructure: grain size and morphology, what the Ti-bearing primary phase is (Al3Ti D0_22 or L1_2, or an Al-Si-Ti phase such as Ti(Al,Si)3 or tau), eutectic fraction, Mg loss during printing.
+7. What the CALPHAD calculation gives for the liquidus of the Ti-bearing phase in this alloy, and the freezing range. If the paper does not give it, say so, and give the best estimate from the Al-Si-Ti and Al-Mg-Si-Ti literature for the temperature needed to dissolve 0.7 wt% Ti in an Al-6Mg-2.5Si melt.
+8. Any related papers by the same group on Ti-refined Al-Mg-Si or Al-Mg2Si LPBF alloys, with their compositions and properties.
+
+Say clearly which statements come from the paper's full text and which from the abstract only.
