@@ -1,12 +1,13 @@
 0:00 The hall: two mobile manipulators, one long table
-0:48 The parts: cost and lead time
-3:21 Time estimates: machining, routes, assembly
-3:52 Receiving and unpacking
-4:29 Machining the chamber: the VF-4 and its 4th axis
-7:57 Machining the other parts: vise, lathe, saw
-8:50 Finishing: welding, honing, deburring, washing, measuring, kitting
-10:07 The arms' custom tools and fixtures
-11:04 Assembly 1: the build module, by two UR12e on MiR250s
-13:48 Assembly 2: the chamber and the process module, by two UR12e on MiR250s
-20:17 Onto the VLM tray: rack, gas module, hoses, leak check
-21:25 Time and cost: in-house, outsourced, robot shop
+0:56 The parts: cost and lead time
+3:48 Time estimates: machining, routes, assembly
+4:18 Receiving and unpacking
+4:55 The stock: two people carry the 5.5 in. plate
+5:11 Machining the chamber: the VF-4 and its 4th axis
+7:26 Machining the other parts: vise, lathe, saw
+8:19 Finishing: welding, honing, deburring, washing, measuring, kitting
+9:36 The arms' custom tools and fixtures
+11:00 Assembly 1: the build module, by two UR12e on MiR250s
+15:47 Assembly 2: the chamber and the process module, by two UR12e on MiR250s
+30:08 Onto the VLM tray: rack, gas module, hoses, leak check
+31:31 Time and cost: in-house, outsourced, robot shop

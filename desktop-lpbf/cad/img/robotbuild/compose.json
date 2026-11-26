@@ -1,27 +1,29 @@
 {
  "mp4": "desktop-lpbf/cad/img/robotbuild/robot-build.mp4",
- "mb": 53.5,
- "seconds": 1391.8,
- "frames": 16702,
+ "mb": 40.1,
+ "seconds": 1997.3,
+ "frames": 23968,
  "fps": 12,
  "crf": 28,
- "maxrate_kbps": 502,
+ "maxrate_kbps": 350,
  "chapters": [
   {
    "folder": "00-intro",
-   "frames": 582,
-   "seconds": 48.5,
+   "frames": 669,
+   "seconds": 55.8,
    "finished": true,
    "card": false,
-   "state": "rendered"
+   "state": "rendered",
+   "reused": false
   },
   {
    "folder": "10-parts",
-   "frames": 1830,
-   "seconds": 152.5,
+   "frames": 2064,
+   "seconds": 172.0,
    "finished": true,
    "card": false,
-   "state": "rendered"
+   "state": "rendered",
+   "reused": false
   },
   {
    "folder": "15-estimates",
@@ -29,7 +31,8 @@
    "seconds": 30.5,
    "finished": true,
    "card": false,
-   "state": "rendered"
+   "state": "rendered",
+   "reused": false
   },
   {
    "folder": "20-receiving",
@@ -37,23 +40,35 @@
    "seconds": 37.2,
    "finished": true,
    "card": false,
-   "state": "rendered"
+   "state": "rendered",
+   "reused": false
+  },
+  {
+   "folder": "29-stock",
+   "frames": 186,
+   "seconds": 15.5,
+   "finished": true,
+   "card": false,
+   "state": "rendered",
+   "reused": false
   },
   {
    "folder": "30-machining-chamber",
-   "frames": 2495,
-   "seconds": 207.9,
+   "frames": 1626,
+   "seconds": 135.5,
    "finished": true,
    "card": false,
-   "state": "rendered"
+   "state": "rendered",
+   "reused": false
   },
   {
    "folder": "31-machining-parts",
-   "frames": 641,
-   "seconds": 53.4,
+   "frames": 629,
+   "seconds": 52.4,
    "finished": true,
    "card": false,
-   "state": "rendered"
+   "state": "rendered",
+   "reused": false
   },
   {
    "folder": "32-finishing",
@@ -61,39 +76,44 @@
    "seconds": 77.1,
    "finished": true,
    "card": false,
-   "state": "rendered"
+   "state": "rendered",
+   "reused": false
   },
   {
    "folder": "38-tools",
-   "frames": 684,
-   "seconds": 57.0,
+   "frames": 1008,
+   "seconds": 84.0,
    "finished": true,
    "card": false,
-   "state": "rendered"
+   "state": "rendered",
+   "reused": false
   },
   {
    "folder": "40-assembly-module",
-   "frames": 1967,
-   "seconds": 163.9,
+   "frames": 3448,
+   "seconds": 287.3,
    "finished": true,
    "card": false,
-   "state": "rendered"
+   "state": "rendered",
+   "reused": false
   },
   {
    "folder": "41-assembly-chamber",
-   "frames": 4672,
-   "seconds": 389.3,
+   "frames": 10325,
+   "seconds": 860.4,
    "finished": true,
    "card": false,
-   "state": "rendered"
+   "state": "rendered",
+   "reused": false
   },
   {
    "folder": "50-integration",
-   "frames": 814,
-   "seconds": 67.8,
+   "frames": 996,
+   "seconds": 83.0,
    "finished": true,
    "card": false,
-   "state": "rendered"
+   "state": "rendered",
+   "reused": false
   },
   {
    "folder": "60-summary",
@@ -101,7 +121,8 @@
    "seconds": 106.7,
    "finished": true,
    "card": false,
-   "state": "rendered"
+   "state": "rendered",
+   "reused": false
   }
  ],
  "youtube_chapters": [
@@ -110,57 +131,61 @@
    "title": "The hall: two mobile manipulators, one long table"
   },
   {
-   "at": "0:48",
+   "at": "0:56",
    "title": "The parts: cost and lead time"
   },
   {
-   "at": "3:21",
+   "at": "3:48",
    "title": "Time estimates: machining, routes, assembly"
   },
   {
-   "at": "3:52",
+   "at": "4:18",
    "title": "Receiving and unpacking"
   },
   {
-   "at": "4:29",
+   "at": "4:55",
+   "title": "The stock: two people carry the 5.5 in. plate"
+  },
+  {
+   "at": "5:11",
    "title": "Machining the chamber: the VF-4 and its 4th axis"
   },
   {
-   "at": "7:57",
+   "at": "7:26",
    "title": "Machining the other parts: vise, lathe, saw"
   },
   {
-   "at": "8:50",
+   "at": "8:19",
    "title": "Finishing: welding, honing, deburring, washing, measuring, kitting"
   },
   {
-   "at": "10:07",
+   "at": "9:36",
    "title": "The arms' custom tools and fixtures"
   },
   {
-   "at": "11:04",
+   "at": "11:00",
    "title": "Assembly 1: the build module, by two UR12e on MiR250s"
   },
   {
-   "at": "13:48",
+   "at": "15:47",
    "title": "Assembly 2: the chamber and the process module, by two UR12e on MiR250s"
   },
   {
-   "at": "20:17",
+   "at": "30:08",
    "title": "Onto the VLM tray: rack, gas module, hoses, leak check"
   },
   {
-   "at": "21:25",
+   "at": "31:31",
    "title": "Time and cost: in-house, outsourced, robot shop"
   }
  ],
  "counters": {
-  "t_s": 161467.33,
-  "machine_h": 29.26,
-  "robot_h": 7.53,
-  "person_h": 31.95,
+  "t_s": 146118.91,
+  "machine_h": 29.31,
+  "robot_h": 7.98,
+  "person_h": 27.69,
   "cam_h": 123.6,
   "outsourced_d": 10.0
  },
- "composed_utc": "2026-11-26T00:16Z"
+ "composed_utc": "2026-11-26T08:54Z"
 }
