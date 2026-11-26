@@ -1673,55 +1673,253 @@
   }
  ],
  "person_lifts": {
-  "F-S1 load": {
-   "kg": 30.05,
-   "frames": 288,
-   "person_contacts": 0,
-   "person_first": [],
-   "person_min_clear_mm": 0.0,
-   "clear_mm": 40.1,
-   "nearest": "vf4/table",
-   "contact": null,
-   "samples": 67
+  "what": "chapters 29 and 30's two-person lifts (shop_chapters.team_lift): the load's mass against a two-person guideline, the hands' largest gap to their grip points on the load (mm), and, at the VF-4, the load's path against the machine (FCL; clear_mm, contact)",
+  "guideline": {
+   "single_person_kg": 23.0,
+   "team_factor": 0.667,
+   "team_of_two_kg": 30.7,
+   "sources": [
+    "NIOSH, Applications Manual for the Revised NIOSH Lifting Equation (DHHS (NIOSH) Publication No. 94-110, 1994): load constant 23 kg",
+    "HSE L23, Manual Handling Operations Regulations 1992, guidance on team handling: a team of two can handle about two-thirds of the sum of their capabilities"
+   ]
   },
-  "F-S1 to F-S2 flip": {
-   "kg": 22.8,
-   "frames": 264,
-   "person_contacts": 1,
-   "person_first": [
-    [
-     108,
-     "person/glove",
-     "jib/boom"
-    ]
-   ],
-   "person_min_clear_mm": 0.0,
-   "clear_mm": 25.6,
-   "nearest": "vf4/table",
-   "contact": null,
-   "samples": 62
-  },
-  "core out": {
-   "kg": 13.0,
-   "frames": 216,
-   "person_contacts": 0,
-   "person_first": [],
-   "person_min_clear_mm": 0.0,
-   "clear_mm": 25.4,
-   "nearest": "vf4/table",
-   "contact": null,
-   "samples": 51
-  },
-  "F-S3 onto the rotary": {
-   "kg": 10.0,
-   "frames": 216,
-   "person_contacts": 0,
-   "person_first": [],
-   "person_min_clear_mm": 0.0,
-   "clear_mm": 25.4,
-   "nearest": "vf4/table",
-   "contact": null,
-   "samples": 51
+  "lifts": {
+   "F-S1: Two people set the 7.7 kg stock on the risers": {
+    "kg": 7.7,
+    "team_guideline_kg": 30.7,
+    "under_guideline": true,
+    "frames": 70,
+    "hand_gap_mm_max": 4.5,
+    "hand_gap_mm_p95": 3.8,
+    "worst": [
+     [
+      4.5,
+      43,
+      0.667,
+      0,
+      "l",
+      46.4
+     ],
+     [
+      4.3,
+      44,
+      0.685,
+      0,
+      "l",
+      49.3
+     ],
+     [
+      4.3,
+      43,
+      0.667,
+      0,
+      "r",
+      46.4
+     ],
+     [
+      4.2,
+      45,
+      0.704,
+      0,
+      "l",
+      51.9
+     ]
+    ],
+    "clear_mm": 40.3,
+    "nearest": "vf4/table",
+    "contact": null,
+    "samples": 27,
+    "caption": "Two people set the 7.7 kg stock on the risers",
+    "sub": "7.7 kg, a reach of ~0.6 m into the machine; two-person guideline 2/3 x (23 + 23) = 30.7 kg (NIOSH load constant, HSE L23 team rule)"
+   },
+   "F-S1: Doors open: the clamps off, two people take the part out": {
+    "kg": 6.49,
+    "team_guideline_kg": 30.7,
+    "under_guideline": true,
+    "frames": 70,
+    "hand_gap_mm_max": 3.8,
+    "hand_gap_mm_p95": 2.9,
+    "worst": [
+     [
+      3.8,
+      36,
+      0.537,
+      1,
+      "r",
+      32.0
+     ],
+     [
+      3.7,
+      36,
+      0.537,
+      1,
+      "l",
+      32.0
+     ],
+     [
+      3.6,
+      29,
+      0.407,
+      0,
+      "r",
+      32.0
+     ],
+     [
+      3.5,
+      41,
+      0.63,
+      0,
+      "l",
+      32.0
+     ]
+    ],
+    "clear_mm": 41.0,
+    "nearest": "vf4/table",
+    "contact": null,
+    "samples": 27,
+    "caption": "Doors open: the clamps off, two people take the part out",
+    "sub": "6.5 kg after F-S1; two-person guideline 2/3 x (23 + 23) = 30.7 kg (NIOSH load constant, HSE L23 team rule)"
+   },
+   "F-S2: Two people turn it over onto the dummy-floor plate for F-S2": {
+    "kg": 6.49,
+    "team_guideline_kg": 30.7,
+    "under_guideline": true,
+    "frames": 82,
+    "hand_gap_mm_max": 23.0,
+    "hand_gap_mm_p95": 3.8,
+    "worst": [
+     [
+      23.0,
+      73,
+      1.0,
+      0,
+      "l",
+      56.0
+     ],
+     [
+      22.5,
+      72,
+      0.985,
+      0,
+      "l",
+      56.0
+     ],
+     [
+      20.8,
+      71,
+      0.97,
+      0,
+      "l",
+      56.0
+     ],
+     [
+      18.2,
+      70,
+      0.955,
+      0,
+      "l",
+      56.0
+     ]
+    ],
+    "clear_mm": 26.5,
+    "nearest": "vf4/table",
+    "contact": null,
+    "samples": 33,
+    "caption": "Two people turn it over onto the dummy-floor plate for F-S2",
+    "sub": "6.5 kg, turned 180 deg about the line between their hands; the 18 M4 screws from below (not shown); two-person guideline 2/3 x (23 + 23) = 30.7 kg (NIOSH load constant, HSE L23 team rule)"
+   },
+   "F-S3: Two people set the frame and its plate on the 4th axis": {
+    "kg": 10.02,
+    "team_guideline_kg": 30.7,
+    "under_guideline": true,
+    "frames": 82,
+    "hand_gap_mm_max": 3.9,
+    "hand_gap_mm_p95": 3.7,
+    "worst": [
+     [
+      3.9,
+      43,
+      0.545,
+      1,
+      "l",
+      56.0
+     ],
+     [
+      3.9,
+      42,
+      0.53,
+      1,
+      "l",
+      56.0
+     ],
+     [
+      3.9,
+      41,
+      0.515,
+      1,
+      "l",
+      56.0
+     ],
+     [
+      3.9,
+      40,
+      0.5,
+      1,
+      "l",
+      56.0
+     ]
+    ],
+    "clear_mm": 6.0,
+    "nearest": "vf4/table",
+    "contact": null,
+    "samples": 33,
+    "caption": "Two people set the frame and its plate on the 4th axis",
+    "sub": "frame 5.3 kg + MIC-6 plate 4.8 kg, turned 90 deg onto the platter; 4 bolts through the opening (not shown); two-person guideline 2/3 x (23 + 23) = 30.7 kg (NIOSH load constant, HSE L23 team rule)"
+   },
+   "stock: Two people carry the frame's plate: 30.1 kg": {
+    "kg": 30.05,
+    "team_guideline_kg": 30.7,
+    "under_guideline": true,
+    "frames": 82,
+    "hand_gap_mm_max": 3.1,
+    "hand_gap_mm_p95": 2.4,
+    "worst": [
+     [
+      3.1,
+      44,
+      0.561,
+      1,
+      "r",
+      33.4
+     ],
+     [
+      3.1,
+      44,
+      0.561,
+      1,
+      "l",
+      33.4
+     ],
+     [
+      3.1,
+      44,
+      0.561,
+      0,
+      "r",
+      33.4
+     ],
+     [
+      3.1,
+      44,
+      0.561,
+      0,
+      "l",
+      33.4
+     ]
+    ],
+    "caption": "Two people carry the frame's plate: 30.1 kg",
+    "sub": "13 x 9.5 x 5.5 in. 6061-T651 as delivered; 2/3 x (23 + 23) = 30.7 kg two-person guideline (NIOSH, HSE L23): within it, just (a 15 in. plate, 34.7 kg, would be over)"
+   }
   }
  },
  "chapters": {
@@ -1745,30 +1943,44 @@
     "robot B": 10.5
    }
   },
-  "30-machining-chamber": {
-   "frames": 2495,
-   "video_s": 207.9,
-   "real_h": 1.89,
+  "29-stock": {
+   "frames": 186,
+   "video_s": 15.5,
+   "real_h": 0.0,
    "add": {
-    "person_h": 0.023,
-    "robot_h": 0.016,
-    "machine_h": 1.852
+    "person_h": 0.004
    },
    "video_s_by_status": {
-    "person": 82.0,
-    "pass": 125.4,
+    "person": 15.5
+   },
+   "video_s_by_who": {
+    "person": 15.5
+   }
+  },
+  "30-machining-chamber": {
+   "frames": 1626,
+   "video_s": 135.5,
+   "real_h": 1.93,
+   "add": {
+    "person_h": 0.011,
+    "robot_h": 0.009,
+    "machine_h": 1.91
+   },
+   "video_s_by_status": {
+    "person": 38.0,
+    "pass": 97.0,
     "-": 0.5
    },
    "video_s_by_who": {
-    "person": 82.0,
-    "robot A": 42.7,
-    "machine": 82.7,
+    "person": 38.0,
+    "robot A": 33.7,
+    "machine": 63.3,
     "-": 0.5
    }
   },
   "31-machining-parts": {
-   "frames": 641,
-   "video_s": 53.4,
+   "frames": 629,
+   "video_s": 52.4,
    "real_h": 26.16,
    "add": {
     "robot_h": 4.64,
@@ -1777,13 +1989,13 @@
     "cam_h": 123.6
    },
    "video_s_by_status": {
-    "pass": 51.9,
+    "pass": 50.9,
     "-": 1.5
    },
    "video_s_by_who": {
     "robot A": 33.7,
     "-": 1.5,
-    "machine": 16.0,
+    "machine": 15.0,
     "robot B": 22.2
    }
   },
