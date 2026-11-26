@@ -79,6 +79,7 @@ def campaign(spec):
                       cur_group=spec.get("cur_group", 0), powder_route=route)
     res = lab.run(P, stop_at=spec.get("stop_at", "T2"))
     res["kg_flat"], res["kg_used"] = getattr(P, "kg_flat", 0), getattr(P, "kg_used", 0)
+    res["zero_value"] = getattr(P, "zero_value", 0)
     res.update(exp=spec["exp"], kappa=kappa, fac=fac, pol=pol, seed=seed, opt=opt, targets=targets,
                budget=lab.budget, horizon=lab.horizon, seconds=round(time.time() - t0, 1),
                variant=spec.get("variant"), goal_idx=gi, campaign=spec.get("campaign"))
@@ -114,6 +115,25 @@ def _run_one(spec):
     except Exception as e:  # keep the sweep going; report the failure
         import traceback
         return f"{tag(spec)} FAILED {e!r}\n{traceback.format_exc()}"
+
+
+def _dispatch(job):
+    import experiments as X
+
+    kind, arg = job
+    try:
+        if kind == "camp":
+            return _run_one(arg)
+        if kind == "e3a":
+            return X._e3a_one(arg)
+        if kind == "e3b":
+            return X.tm_chain(arg)
+        if kind == "e5":
+            return X.e5_campaign(arg)
+    except Exception as e:  # keep the queue going; report the failure
+        import traceback
+        return f"{kind} FAILED {e!r}\n{traceback.format_exc()}"
+    raise KeyError(kind)
 
 
 def specs_e1(seeds):
@@ -162,6 +182,22 @@ if __name__ == "__main__":
         print("score_hist", r["score_hist"][:20])
     elif cmd in ("e1", "e2"):
         sweep({"e1": specs_e1, "e2": specs_e2}[cmd](seeds), workers)
+    elif cmd == "all":  # every pre-registered experiment in one queue, longest jobs first
+        import experiments as X
+
+        jobs = [("e3b", s) for s in range(8)]
+        camp = specs_e1(range(10)) + specs_e2(range(10))
+        rank = {"pkgfn": 0, "bofn_confirm": 1, "bofn_confirm_early": 1, "bofn": 2, "gpbo": 3, "tiered": 4, "random": 5, "conv": 6}
+        camp.sort(key=lambda sp: rank.get(sp["pol"], 9))
+        jobs += [("camp", sp) for sp in camp if sp["pol"] in ("pkgfn", "bofn_confirm", "bofn_confirm_early")]
+        jobs += [("e5", dict(seed=s, variant=v)) for s in range(8) for v in ("global", "7xxx", "AlSi", "AlMgSc")]
+        jobs += [("e3a", sp) for sp in X.specs_e3a(range(10))]
+        jobs += [("camp", sp) for sp in camp if sp["pol"] not in ("pkgfn", "bofn_confirm", "bofn_confirm_early")]
+        X.cross_opt()
+        t0 = time.time()
+        with Pool(workers) as pool:
+            for line in pool.imap_unordered(_dispatch, jobs):
+                print(f"[{time.time() - t0:7.0f}s] {line}", flush=True)
     else:
         import experiments  # provenance and stretch experiments
 

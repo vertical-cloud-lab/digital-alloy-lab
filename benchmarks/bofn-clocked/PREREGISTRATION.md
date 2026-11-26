@@ -111,4 +111,29 @@ it shows how the search behaves when boundaries blur, not that they do.
 
 ## Changes after registration
 
-(none yet)
+All made on 2026-11-26 before any of the final runs, which were started together afterwards
+(`python run.py all`). None was made after seeing a result of the experiments above.
+
+1. **E2b added (before any E2 run).** Sterling's comment asks for gas-atomized powder with its lead time and lot size
+   as a route, and for "intelligently moving to gas atomization and a distributed validation network". No policy uses
+   that route for discovery (51 days per lot can't shorten time to T1/T2), so E2b tests it where it matters: confirming
+   the claimed alloy on a gas-atomized lot printed on the partner's machine (targets T1c/T2c), ordering the lot either
+   after the claim or early (three bars at the top of the field plus a passing day-7 immersion reading). *Expected:*
+   ordering early confirms sooner on most seeds; *against:* no paired difference.
+2. **Policy fixes found in smoke-test campaigns** (single seeds run while writing the code, not the experiments):
+   - pKGFN valued a print by one coupon's fantasy; every KG was then exactly 0 on 95 % of decisions and the campaign
+     stalled. It now fantasizes a build's six coupons jointly, which is what a print returns.
+   - BOFN's constrained EI from 32 raw draws rounded to exactly 0 when the corrosion model expected a fail, and a
+     campaign stalled (E3a, seed 0, `separate`). EI is now computed in normal form with a smooth pass probability, as
+     byu-vcl's round 3 does, and an action needs EI ≥ 1e-4 to start (round 3's threshold).
+   - The EI incumbent was the largest single-bar reading, which is biased high once many parts are tested (the
+     winner's curse) and made EI vanish. It is now the model's posterior mean at tested parts likely to pass
+     corrosion (BOFN, pKGFN and GP-BO alike).
+   - Tiered screening and BOFN made powders they then didn't print. Every powder now gets at least one build at the
+     policy's own best settings, and an unprinted lot counts against the batch limit until it is printed.
+   - When nothing is worth its cost and nothing is in flight, a model-based policy makes its single best candidate
+     rather than ending the campaign with money left (counted as `zero_value` in every result file).
+   - The conventional baseline tracked its lots by predicted index and crashed when a lot failed; it now finds them
+     by composition.
+3. **A first E1 sweep was started and stopped.** It had finished 15 pKGFN campaigns with the code before fix 2; those
+   results were discarded, not used.

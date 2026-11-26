@@ -172,9 +172,7 @@ class Base:
         """Lots made or in flight that nothing has been learned from yet, and builds whose first bar isn't back."""
         printed = {b["lot"] for b in lab.builds} | {L["id"] for L in lab.lots if L["key"] in self.ref_lots}
         inflight = {i for k, i, _ in lab.inflight if k == "powder"}
-        # a lot ready for 2 days without a print no longer counts: the policy has decided it isn't worth printing
-        lots = sum(1 for L in lab.lots if L["id"] not in printed and (L["id"] in inflight or (
-            L["t_ready"] is not None and lab.now - L["t_ready"] < 2.0)))
+        lots = sum(1 for L in lab.lots if L["id"] not in printed and (L["id"] in inflight or L["t_ready"] is not None))
         builds = 0
         for b in lab.builds:
             if b.get("t_done") is None:
@@ -191,9 +189,27 @@ class Base:
         n_lots, n_builds = self.unlearned(lab)
         can_powder = lab.can_start(self.powder_route, t) and n_lots < self.WIP_LOTS
         mach = self.machine_pref(lab, t) if n_builds < self.WIP_BUILDS else None
-        if not can_powder and mach is None:
+        mach_any = self.machine_pref(lab, t)
+        if not can_powder and mach is None and mach_any is None:
             return acts
-        return acts + self.make(lab, t, can_powder, mach)
+        made = self.make(lab, t, can_powder, mach) if (can_powder or mach) else []
+        return acts + self.first_builds(lab, made, mach_any) + made
+
+    def first_builds(self, lab, made, mach):
+        """Every powder gets at least one build: a ready lot nobody has printed is printed at the policy's own best
+        settings for it (or space-filling ones), whatever its acquisition value, before anything new is made."""
+        if mach is None:
+            return []
+        planned = {a["lot"] for a in made if a["kind"] == "print"}
+        busy = {lab.builds[i]["lot"] for k, i, _ in lab.inflight if k == "print"}
+        printed = {b["lot"] for b in lab.builds}
+        out = []
+        for L in self.ready_lots(lab):
+            if L["id"] in printed or L["id"] in planned or L["id"] in busy:
+                continue
+            pv = getattr(self, "_pv_cache", {}).get(L["id"]) or self.default_pv(6, self.seed + L["id"])
+            out.append(dict(kind="print", lot=L["id"], pv=pv, machine=(mach, "pt")))
+        return out
 
     def init_powders(self, lab, k):
         out = []
@@ -262,7 +278,15 @@ class ObjModel:
             else:
                 pol.hyper[k + "_h"] = g.hyper
         self.ln_rmax = lab.truth.ln_rmax
-        self.best = max((lab.objective_meas(cp) for cp in lab.coupons if cp["bars"]), default=0.0)
+        # de-noised incumbent: the GP's posterior mean at tested designs likely to pass corrosion (not the raw max)
+        self.best = 0.0
+        if len(y):
+            Xa = np.array(X).reshape(-1, d)
+            m, _ = self.gp.predict(Xa)
+            mc, vc = self.gc.predict(Xa)
+            ok = norm.cdf((self.ln_rmax - mc) / np.sqrt(vc + 1e-12)) >= 0.5
+            if ok.any():
+                self.best = float(m[ok].max())
 
     def cei(self, F):
         m, v = self.gp.predict(F)
@@ -277,6 +301,7 @@ class ObjModel:
 class GPBO(Base):
     name = "gpbo"
     model_based = True
+    MIN_EI = 1e-4  # an action starts only if its EI is at least this (round 3's threshold for new designs)
     restrict = None  # tiered: list of allowed compositions
 
     def feats(self, X, pt, gas):
@@ -302,17 +327,23 @@ class GPBO(Base):
                 pv = sobol(128, 2, self.it * 7 + L["id"])
                 X = np.concatenate([np.repeat(L["c"][None], 128, 0), np.full((128, 1), a), pv], 1)
                 ei, _ = M.cei(self.feats(X, pt, float(L["route"] == "gas")))
-                acts.append((float(ei.max()), dict(kind="print", lot=L["id"], pv=self.pick_pv(pv, ei),
+                self._pv_cache = getattr(self, "_pv_cache", {})
+                self._pv_cache[L["id"]] = self.pick_pv(pv, ei)
+                acts.append((float(ei.max()), dict(kind="print", lot=L["id"], pv=self._pv_cache[L["id"]],
                                                    machine=(mach, "pt"))))
         if can_powder:
             P = self.pool(lab)
             if len(P):
                 ei, _ = M.cei(self.feats(P, 0.0, 0.0))
                 for j in self.diverse(P, ei, 2, self.pending_comps(lab)):
-                    acts.append((float(ei[j]) * 0.8, dict(kind="powder", c=P[j, : self.nc], a=float(P[j, self.nc]),
-                                                          route=self.powder_route)))
-        acts = [a for _, a in sorted(acts, key=lambda x: -x[0]) if _ > 1e-5]
-        return acts
+                    acts.append((float(ei[j]), dict(kind="powder", c=P[j, : self.nc], a=float(P[j, self.nc]),
+                                                    route=self.powder_route)))
+        live = [a for v, a in sorted(acts, key=lambda x: -x[0]) if v >= self.MIN_EI]
+        if not live and acts and not lab.inflight:
+            # the same last resort as the network policies: nothing worth it and nothing in flight
+            self.zero_value = getattr(self, "zero_value", 0) + 1
+            live = [max(acts, key=lambda x: x[0])[1]]
+        return live
 
     def pick_pv(self, pv, score, k=6, min_d=0.06):
         chosen = []
@@ -407,19 +438,30 @@ class Tiered(GPBO):
 class BOFN(GPBO):
     name = "bofn"
     S = 32
+    MIN_EI = 1e-4
 
     def network(self, lab):
         net = Network(lab.truth, lab.comps, records(lab, self.prior), self.group_mode, self.hyper, self.cur_group)
         self.hyper = net.hyper
         return net
 
-    def incumbent(self, lab):
-        """Best measured objective among tested parts not known to fail corrosion (the claim counts at its value)."""
-        best = 0.0
-        for cp in lab.coupons:
-            if cp["bars"] and not self.corr_fails(lab, cp):
-                best = max(best, lab.objective_meas(cp))
-        return best
+    def incumbent(self, lab, net):
+        """Best tested part, de-noised: the strength node's posterior mean at its measured density, minus the burden,
+        over tested parts that passed corrosion or that the corrosion node expects to pass (P >= 0.5). The raw
+        maximum of single-bar readings would be biased high (the winner's curse) and make every EI vanish."""
+        rows = [cp for cp in lab.coupons if cp["bars"] and not self.corr_fails(lab, cp)]
+        if not rows:
+            return 0.0
+        s_ = np.array([lab.comps[cp["key"]]["s"] for cp in rows])
+        r_ = np.array([cp["rho_meas"] for cp in rows])
+        C = np.array([cp["c"] for cp in rows])
+        mu_u, _ = net.gp_U.predict(np.stack([s_, r_], -1), net.cur)
+        obj = mu_u - net.lam * net.burden(C)
+        mc, vc = net.gp_corr.predict(np.concatenate([C, r_[:, None]], 1))
+        pp = norm.cdf((lab.truth.ln_rmax - mc) / np.sqrt(vc))
+        pp = np.where([cp["imm_final"] is not None for cp in rows], 1.0, pp)
+        ok = pp >= 0.5
+        return float(obj[ok].max()) if ok.any() else 0.0
 
     def path_cost(self, lab, stage, mach):
         r = lab.routes
@@ -434,10 +476,16 @@ class BOFN(GPBO):
         return dict(s=np.full(m, cal["s"]), f=np.full(m, cal["f"]), g=np.full(m, cal["g"]), q=np.full(m, L["q_meas"]))
 
     def ei(self, net, X, gas, pt, inc, seed, known=None):
+        """Constrained network EI in normal form (round 3's choice): the objective draws' mean and spread give the
+        EI, times the mean probability that the corrosion test passes. Unlike the EI of 32 raw draws, it is never
+        rounded to exactly 0 when the chance is small. Also returns the expected claim value."""
         eps = eps_for(X.shape[0], self.S, seed)
         obj, lnr, v = net.sample(X, np.full(X.shape[0], gas), np.full(X.shape[0], pt), eps, known)
-        val = net.claim_value(obj, lnr)
-        return np.maximum(val - inc, 0).mean(1), val.mean(1), (obj, lnr, v)
+        m, sd = obj.mean(1), np.maximum(obj.std(1), 1e-6)
+        pf = v["p_pass"].mean(1)
+        z = (m - inc) / sd
+        ei = pf * (sd * norm.pdf(z) + (m - inc) * norm.cdf(z))
+        return np.maximum(ei, 0.0), (obj * v["p_pass"]).mean(1), (obj, lnr, v)
 
     def make(self, lab, t, can_powder, mach):
         if sum(1 for cp in lab.coupons if cp["rho_meas"] is not None) < 12:
@@ -450,7 +498,7 @@ class BOFN(GPBO):
                 acts += self.init_powders(lab, 2)
             return acts
         net = self.network(lab)
-        inc = self.incumbent(lab)
+        inc = self.incumbent(lab, net)
         scored = []
         pt = float(mach == "pt")
         if mach:
@@ -460,23 +508,35 @@ class BOFN(GPBO):
                 X = np.concatenate([np.repeat(L["c"][None], len(pv), 0), np.full((len(pv), 1), a), pv], 1)
                 ei, mu, _ = self.ei(net, X, float(L["route"] == "gas"), pt, inc, self.it, self.lot_known(lab, L, len(pv)))
                 score = self.build_score(net, lab, L, X, ei, mu, pt, inc)
+                self._pv_cache = getattr(self, "_pv_cache", {})
+                self._pv_cache[L["id"]] = self.pick_pv(pv, ei + 1e-6 * mu)
                 scored.append((score / self.own_cost(lab, "build", mach),
-                               dict(kind="print", lot=L["id"], pv=self.pick_pv(pv, ei + 1e-6 * mu), machine=(mach, "pt")),
-                               float(ei.max()) / self.path_cost(lab, "build", mach)))
+                               dict(kind="print", lot=L["id"], pv=self._pv_cache[L["id"]], machine=(mach, "pt")),
+                               float(ei.max()) / self.path_cost(lab, "build", mach), float(ei.max()), float(mu.max())))
         if can_powder:
             P = self.pool(lab)
             ei, mu, _ = self.ei(net, P, 0.0, 0.0, inc, self.it + 1)
             for j in self.powder_choice(net, lab, P, ei, mu, inc):
                 scored.append((self.powder_score(net, lab, P, j, ei, mu, inc) / self.own_cost(lab, "powder", "ih"),
                                dict(kind="powder", c=P[j, : self.nc], a=float(P[j, self.nc]), route=self.powder_route),
-                               float(ei[j]) / self.path_cost(lab, "powder", "ih")))
-        if scored and max(x[0] for x in scored) <= 1e-9 and self.name == "pkgfn":
-            # every KG is flat: EI per cost of the remaining path decides (bofn-prelim's and round 3's fallback)
-            self.kg_flat = getattr(self, "kg_flat", 0) + 1
-            return [a for _, a, e in sorted(scored, key=lambda x: -x[2]) if e > 1e-9]
+                               float(ei[j]) / self.path_cost(lab, "powder", "ih"), float(ei[j]), float(mu[j])))
+        if not scored:
+            return []
+        # an action starts only if its EI is at least 1e-4 (round 3's threshold for new designs)
+        live = [x for x in scored if x[3] >= self.MIN_EI]
         if self.name == "pkgfn":
-            self.kg_used = getattr(self, "kg_used", 0) + 1
-        return [a for s, a, _ in sorted(scored, key=lambda x: -x[0]) if s > 1e-9]
+            if live and max(x[0] for x in live) > 1e-9:
+                self.kg_used = getattr(self, "kg_used", 0) + 1
+                live = [x for x in live if x[0] > 1e-9]
+            else:  # every KG is flat: EI per cost of the remaining path decides (bofn-prelim's and round 3's fallback)
+                self.kg_flat = getattr(self, "kg_flat", 0) + 1
+                live = [(x[2],) + x[1:] for x in live]
+        if not live and not lab.inflight:
+            # nothing is worth its cost by the model and nothing is in flight: rather than end the campaign with money
+            # left, make the single candidate with the best expected claim value; counted, as it means the model is stuck
+            self.zero_value = getattr(self, "zero_value", 0) + 1
+            return [max(scored, key=lambda x: x[4])[1]]
+        return [x[1] for x in sorted(live, key=lambda x: -x[0])]
 
     def own_cost(self, lab, stage, mach):
         """BOFN's denominator is the cost of the remaining path to a claim; pKGFN's (below) the step's own cost."""
@@ -552,8 +612,8 @@ class PKGFN(BOFN):
             U = mu_u + np.sqrt(var_u) * eps["U"]
             cin = np.concatenate([np.repeat(Xi[:, None, :nc], S, 1), rho[..., None]], -1)
             mc, vc = net.gp_corr.predict(cin)
-            lnr = mc + np.sqrt(vc) * eps["corr"]
-            nus.append(net.claim_value(U - burden_i, lnr).mean(1))
+            pp = norm.cdf((lab.truth.ln_rmax - mc) / np.sqrt(vc))
+            nus.append(((U - burden_i) * pp).mean(1))
         nus = np.array(nus)  # [F, m]
         return float(nus.max(1).mean() - nus.mean(0).max())
 
@@ -645,7 +705,6 @@ class BOFNConfirm(BOFN):
         if not gas or sum(1 for cp in lab.coupons if cp["rho_meas"] is not None) < 12:
             return acts
         net = self.network(lab)
-        inc = self.incumbent(lab)
         for L in gas:
             done = [cp for cp in lab.coupons if cp["lot"] == L["id"] and cp["rho_meas"] is not None]
             if any(lab.claimable(cp) for cp in done) or len([b for b in lab.builds if b["lot"] == L["id"]]) >= 4:
@@ -695,22 +754,34 @@ class Conv(Tiered):
         self.round_items = []  # builds or lots of the current round still to come back
         self.want = []  # designs of the current round waiting for their lot
 
+    def lot_for(self, lab, x):
+        """The lot for design x: ('ready', lot), ('waiting', lot) or (None, None) if there is none or it failed."""
+        key = lab.key(x[: self.nc])
+        inflight = {i for k, i, _ in lab.inflight if k == "powder"}
+        for L in lab.lots:
+            if L["key"] != key or (L["a"] is not None and abs(L["a"] - x[self.nc]) > 0.05):
+                continue
+            if L["t_ready"] is not None and L["uses_left"] > 0:
+                return "ready", L
+            if L["id"] in inflight:
+                return "waiting", L
+        return None, None
+
     def decide(self, lab, t):
         self.it += 1
         acts = self.conv_finishing(lab, t)
-        # prints for designs whose lot has arrived
+        # prints for this round's designs whose lot has arrived; reorder a lot that came back unusable
         still = []
-        for x, lot_id in self.want:
-            L = lab.lots[lot_id] if lot_id is not None else None
-            if L is not None and L["t_ready"] is not None and L["uses_left"] > 0:
+        for x in self.want:
+            state, L = self.lot_for(lab, x)
+            if state == "ready":
                 acts.append(dict(kind="print", lot=L["id"], pv=self.round_pv(lab, L, x), machine="pt"))
-            elif L is not None and L["t_ready"] is None and not any(k == "powder" and i == L["id"] for k, i, _ in lab.inflight):
-                # the lot came back unusable: order it again
-                acts.append(dict(kind="powder", c=x[: self.nc], a=float(x[self.nc]), route=self.powder_route))
-                still.append((x, len(lab.lots)))  # the reorder will get the next lot id
+            elif state == "waiting":
+                still.append(x)
             else:
-                still.append((x, lot_id))
-        self.want = [w for w in still if not any(a.get("lot") == w[1] for a in acts if a["kind"] == "print")]
+                acts.append(dict(kind="powder", c=x[: self.nc], a=float(x[self.nc]), route=self.powder_route))
+                still.append(x)
+        self.want = still
         busy = any(k in ("powder", "print", "bars") for k, _, _ in lab.inflight) or self.want
         untested = any(not lab.builds[cp["build"]]["failed"] and cp["rho_meas"] is not None and not cp["bars"]
                        and cp["bars_pending"] == 0 and cp["id"] in self._top_ids(lab) for cp in lab.coupons)
@@ -767,18 +838,13 @@ class Conv(Tiered):
             if float(ei[idx].max()) < 1e-4 and self.n_short < len(self.ranking(lab)):
                 self.n_short += SCREEN_TOP
         for x in designs:
-            key = lab.key(x[: self.nc])
-            inflight = {i for k, i, _ in lab.inflight if k == "powder"}
-            lot = next((L for L in lab.lots if L["key"] == key and L["uses_left"] > 0
-                        and (L["t_ready"] is not None or L["id"] in inflight)
-                        and (L["a"] is None or abs(L["a"] - x[self.nc]) < 0.05)), None)
-            if lot is not None and lot["t_ready"] is not None:
-                acts.append(dict(kind="print", lot=lot["id"], pv=self.round_pv(lab, lot, x), machine="pt"))
-            elif lot is not None:
-                self.want.append((x, lot["id"]))
+            state, L = self.lot_for(lab, x)
+            if state == "ready":
+                acts.append(dict(kind="print", lot=L["id"], pv=self.round_pv(lab, L, x), machine="pt"))
             else:
-                acts.append(dict(kind="powder", c=x[: self.nc], a=float(x[self.nc]), route=self.powder_route))
-                self.want.append((x, len(lab.lots) + sum(1 for a in acts if a["kind"] == "powder") - 1))
+                if state is None:
+                    acts.append(dict(kind="powder", c=x[: self.nc], a=float(x[self.nc]), route=self.powder_route))
+                self.want.append(x)
         return acts
 
 

@@ -18,6 +18,7 @@ import math
 import numpy as np
 from scipy.linalg import cho_solve, solve_triangular
 from scipy.optimize import minimize
+from scipy.stats import norm
 
 from truth import IMM_SIG, SIG_BAR, SIG_BUILD, SIG_COUPON, SIG_Q, burden
 
@@ -265,6 +266,7 @@ class Network:
         cin = np.concatenate([np.repeat(c[:, None, :], S, 1), v["rho"][..., None]], -1)
         mu, var = self.gp_corr.predict(cin)
         v["lnr"] = mu + np.sqrt(var) * eps["corr"]
+        v["p_pass"] = norm.cdf((self.truth.ln_rmax - mu) / np.sqrt(var))  # smooth, so a small chance isn't rounded to 0
         obj = v["U"] - self.lam * self.burden(c)[:, None]
         return obj, v["lnr"], v
 

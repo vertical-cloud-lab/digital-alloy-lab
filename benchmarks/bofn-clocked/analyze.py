@@ -185,6 +185,58 @@ def summarize_e1(G, lines, S, exp_name="E1"):
     return lines
 
 
+def summarize_counts(G, lines, kappa):
+    keys = [k for k in ORDER if (kappa, k[0], k[1], None) in G]
+    lines += ["", "What each campaign bought, to T2 or to its end (mean per campaign; bars count single bars):", "",
+              "| Lab and policy | powders | builds | bars | immersions | immersions stopped early | money spent, $k | "
+              "pKGFN decisions with every KG flat |", "|---|---|---|---|---|---|---|---|"]
+    for fac, pol in keys:
+        R = G[(kappa, fac, pol, None)]
+        c = lambda k: np.mean([r["counts"].get(k, 0) for r in R.values()])
+        flat = ""
+        if pol == "pkgfn":
+            f = sum(r.get("kg_flat", 0) for r in R.values())
+            u = sum(r.get("kg_used", 0) for r in R.values())
+            flat = f"{f}/{f + u} ({f / max(f + u, 1):.0%})"
+        lines.append(f"| {LABEL[(fac, pol)]} | {c('powder'):.1f} | {c('print'):.1f} | {c('bars'):.1f} | {c('imm'):.1f} | "
+                     f"{c('stop'):.1f} | {np.mean([r['spent'] for r in R.values()]) / 1e3:.0f} | {flat} |")
+
+
+def summarize_e2b(lines, S):
+    G = load("e2b")
+    if not G:
+        return lines
+    lines += ["\n### E2b, moving to production powder (`kappa = 1`, BOFN; confirmation = a claim on a gas-atomized lot "
+              "printed on the partner's machine)\n",
+              "| Ordering rule | n | days to T1 / T2 (median) | days to confirmed T1 / T2 (median; reached) | $k to confirmed T2, median |",
+              "|---|---|---|---|---|"]
+    D = {}
+    for pol in ("bofn_confirm", "bofn_confirm_early"):
+        R = G.get((1.0, "vertical", pol, None), {})
+        if not R:
+            continue
+        H = 365.0
+        row = [{"bofn_confirm": "order after the claim", "bofn_confirm_early": "order early (3 bars + a passing day-7 reading)"}[pol],
+               str(len(R))]
+        row.append(" / ".join(fmt_days(med([t_hit(r, T)[0] for r in R.values()]), H) for T in ("T1", "T2")))
+        cc = []
+        for T in ("T1c", "T2c"):
+            dd = [t_hit(r, T)[0] for r in R.values()]
+            cc.append(f"{fmt_days(med(dd), H)} ({sum(np.isfinite(dd))}/{len(R)})")
+            D[(pol, T)] = {s: min(t_hit(r, T)[0], H) for s, r in R.items()}
+        row.append(" / ".join(cc))
+        uu = [t_hit(r, "T2c")[1] for r in R.values() if np.isfinite(t_hit(r, "T2c")[1])]
+        row.append(f"{np.median(uu) / 1e3:.0f}" if uu else "–")
+        lines.append("| " + " | ".join(row) + " |")
+    for T in ("T1c", "T2c"):
+        if ("bofn_confirm_early", T) in D and ("bofn_confirm", T) in D:
+            pr = paired(D[("bofn_confirm_early", T)], D[("bofn_confirm", T)])
+            lines.append(f"\nEarly minus after, days to {T} (censored at 365): {pr['mean']:+.0f} ± {pr['se']:.0f}; early sooner on "
+                         f"{pr['a_better']}, later on {pr['b_better']}, tied on {pr['ties']} (Wilcoxon p = {pr['p']:.3g}).")
+            S.setdefault("e2b", {})[T] = pr
+    return lines
+
+
 def summarize_e3a(lines, S):
     G = load("e3a")
     if not G:
@@ -293,6 +345,8 @@ def main():
     G = load("e1")
     if G:
         summarize_e1(G, lines, S)
+        for kappa in (1.0, 0.0):
+            summarize_counts(G, lines, kappa)
     G2 = load("e2")
     if G2:
         for k, v in load("e1").items():
@@ -300,6 +354,7 @@ def main():
                 G2[k] = v
         lines.append("\n## E2, routes")
         summarize_e1(G2, lines, S.setdefault("e2", {}), "E2")
+    summarize_e2b(lines, S)
     summarize_e3a(lines, S)
     summarize_e3b(lines, S)
     summarize_e5(lines, S)
