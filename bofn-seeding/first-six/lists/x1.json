@@ -1,0 +1,33 @@
+[
+ {
+  "name": "X1|pureAl",
+  "wt": {
+   "MG": 6.0,
+   "SI": 2.5,
+   "TI": 0.7
+  },
+  "tags": {
+   "set": "named",
+   "id": "X1",
+   "group": "seed",
+   "note": "Al-Mg-Si-Ti, Wen et al. 2024",
+   "base": "pureAl"
+  }
+ },
+ {
+  "name": "X1|6063",
+  "wt": {
+   "MG": 6.0,
+   "SI": 2.5,
+   "TI": 0.7,
+   "FE": 0.21
+  },
+  "tags": {
+   "set": "named",
+   "id": "X1",
+   "group": "seed",
+   "note": "Al-Mg-Si-Ti, Wen et al. 2024",
+   "base": "6063"
+  }
+ }
+]

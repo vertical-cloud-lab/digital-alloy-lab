@@ -1,0 +1,404 @@
+[
+ {
+  "name": "liq-Zr:ZR0.2",
+  "wt": {
+   "ZR": 0.2
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Zr"
+  }
+ },
+ {
+  "name": "liq-Zr-Mg4.5:MG4.5-ZR0.2",
+  "wt": {
+   "ZR": 0.2,
+   "MG": 4.5
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Zr-Mg4.5"
+  }
+ },
+ {
+  "name": "liq-Zr:ZR0.4",
+  "wt": {
+   "ZR": 0.4
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Zr"
+  }
+ },
+ {
+  "name": "liq-Zr-Mg4.5:MG4.5-ZR0.4",
+  "wt": {
+   "ZR": 0.4,
+   "MG": 4.5
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Zr-Mg4.5"
+  }
+ },
+ {
+  "name": "liq-Zr:ZR0.6",
+  "wt": {
+   "ZR": 0.6
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Zr"
+  }
+ },
+ {
+  "name": "liq-Zr-Mg4.5:MG4.5-ZR0.6",
+  "wt": {
+   "ZR": 0.6,
+   "MG": 4.5
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Zr-Mg4.5"
+  }
+ },
+ {
+  "name": "liq-Zr:ZR0.8",
+  "wt": {
+   "ZR": 0.8
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Zr"
+  }
+ },
+ {
+  "name": "liq-Zr-Mg4.5:MG4.5-ZR0.8",
+  "wt": {
+   "ZR": 0.8,
+   "MG": 4.5
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Zr-Mg4.5"
+  }
+ },
+ {
+  "name": "liq-Zr:ZR1",
+  "wt": {
+   "ZR": 1.0
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Zr"
+  }
+ },
+ {
+  "name": "liq-Zr-Mg4.5:MG4.5-ZR1",
+  "wt": {
+   "ZR": 1.0,
+   "MG": 4.5
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Zr-Mg4.5"
+  }
+ },
+ {
+  "name": "liq-Zr:ZR1.2",
+  "wt": {
+   "ZR": 1.2
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Zr"
+  }
+ },
+ {
+  "name": "liq-Zr-Mg4.5:MG4.5-ZR1.2",
+  "wt": {
+   "ZR": 1.2,
+   "MG": 4.5
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Zr-Mg4.5"
+  }
+ },
+ {
+  "name": "liq-Zr:ZR1.5",
+  "wt": {
+   "ZR": 1.5
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Zr"
+  }
+ },
+ {
+  "name": "liq-Zr-Mg4.5:MG4.5-ZR1.5",
+  "wt": {
+   "ZR": 1.5,
+   "MG": 4.5
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Zr-Mg4.5"
+  }
+ },
+ {
+  "name": "liq-Zr:ZR2",
+  "wt": {
+   "ZR": 2.0
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Zr"
+  }
+ },
+ {
+  "name": "liq-Zr-Mg4.5:MG4.5-ZR2",
+  "wt": {
+   "ZR": 2.0,
+   "MG": 4.5
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Zr-Mg4.5"
+  }
+ },
+ {
+  "name": "liq-Zr:ZR3",
+  "wt": {
+   "ZR": 3.0
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Zr"
+  }
+ },
+ {
+  "name": "liq-Zr-Mg4.5:MG4.5-ZR3",
+  "wt": {
+   "ZR": 3.0,
+   "MG": 4.5
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Zr-Mg4.5"
+  }
+ },
+ {
+  "name": "liq-Ti:TI0.2",
+  "wt": {
+   "TI": 0.2
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Ti"
+  }
+ },
+ {
+  "name": "liq-Ti:TI0.5",
+  "wt": {
+   "TI": 0.5
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Ti"
+  }
+ },
+ {
+  "name": "liq-Ti:TI0.8",
+  "wt": {
+   "TI": 0.8
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Ti"
+  }
+ },
+ {
+  "name": "liq-Ti:TI1",
+  "wt": {
+   "TI": 1.0
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Ti"
+  }
+ },
+ {
+  "name": "liq-Ti:TI1.5",
+  "wt": {
+   "TI": 1.5
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Ti"
+  }
+ },
+ {
+  "name": "liq-Cr:CR0.5",
+  "wt": {
+   "CR": 0.5
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Cr"
+  }
+ },
+ {
+  "name": "liq-Cr:CR1",
+  "wt": {
+   "CR": 1.0
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Cr"
+  }
+ },
+ {
+  "name": "liq-Cr:CR2",
+  "wt": {
+   "CR": 2.0
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Cr"
+  }
+ },
+ {
+  "name": "liq-Cr:CR3",
+  "wt": {
+   "CR": 3.0
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Cr"
+  }
+ },
+ {
+  "name": "liq-Mn:MN2",
+  "wt": {
+   "MN": 2.0
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Mn"
+  }
+ },
+ {
+  "name": "liq-Mn:MN4",
+  "wt": {
+   "MN": 4.0
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Mn"
+  }
+ },
+ {
+  "name": "liq-Mn:MN5",
+  "wt": {
+   "MN": 5.0
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Mn"
+  }
+ },
+ {
+  "name": "liq-Mn:MN6",
+  "wt": {
+   "MN": 6.0
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Mn"
+  }
+ },
+ {
+  "name": "liq-Mn:MN7",
+  "wt": {
+   "MN": 7.0
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Mn"
+  }
+ },
+ {
+  "name": "liq-Fe:FE1",
+  "wt": {
+   "FE": 1.0
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Fe"
+  }
+ },
+ {
+  "name": "liq-Fe:FE2",
+  "wt": {
+   "FE": 2.0
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Fe"
+  }
+ },
+ {
+  "name": "liq-Fe:FE3",
+  "wt": {
+   "FE": 3.0
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Fe"
+  }
+ },
+ {
+  "name": "liq-Fe:FE4",
+  "wt": {
+   "FE": 4.0
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Fe"
+  }
+ },
+ {
+  "name": "liq-MnCr:CR0.4-MN4.8",
+  "wt": {
+   "MN": 4.8,
+   "CR": 0.4
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-MnCr"
+  }
+ },
+ {
+  "name": "liq-MnCr:CR0.8-MN4.8",
+  "wt": {
+   "MN": 4.8,
+   "CR": 0.8
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-MnCr"
+  }
+ },
+ {
+  "name": "liq-MnCr:CR1.6-MN4.8",
+  "wt": {
+   "MN": 4.8,
+   "CR": 1.6
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-MnCr"
+  }
+ }
+]

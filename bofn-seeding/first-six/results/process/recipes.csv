@@ -1,0 +1,21 @@
+seed,alloy,base,charge_g,weigh,melt_wt
+D1,Al-10Si-0.35Mg (AlSi10Mg-type),6063,250,Mg 0.64 g; 6063 bar/cups 42.4 g; 4047 rod 206.9 g,10Si-0.35Mg-0.28Fe
+D1,Al-10Si-0.35Mg (AlSi10Mg-type),pure Al,250,Mg 0.87 g; pure Al base 40.8 g; 4047 rod 208.3 g,10Si-0.35Mg-0.25Fe
+D2,Al-4.6Mg-0.66Sc-0.42Zr-0.49Mn (Scalmalloy-type),6063,250,Mg 10.26 g; Sc 1.65 g; Al-10Zr master 10.5 g; Mn 1.22 g; 6063 bar/cups 226.4 g,4.6Mg-0.66Sc-0.49Mn-0.42Zr-0.36Si-0.18Fe
+D2,Al-4.6Mg-0.66Sc-0.42Zr-0.49Mn (Scalmalloy-type),pure Al,250,Mg 11.5 g; Sc 1.65 g; Al-10Zr master 10.5 g; Mn 1.22 g; pure Al base 225.1 g,4.6Mg-0.66Sc-0.49Mn-0.42Zr
+S1,"Al-4.8Mn-0.9Cr-1.1Zr-1.2Mg (Al-Mn-Cr-Zr, Mg-bearing, high Zr)",6063,250,Mn 12.0 g; Cr 2.25 g; Al-10Zr master 27.5 g; Mg 1.87 g; 6063 bar/cups 206.4 g,4.8Mn-1.2Mg-1.1Zr-0.9Cr-0.33Si-0.17Fe
+S1,"Al-4.8Mn-0.9Cr-1.1Zr-1.2Mg (Al-Mn-Cr-Zr, Mg-bearing, high Zr)",pure Al,250,Mn 12.0 g; Cr 2.25 g; Al-10Zr master 27.5 g; Mg 3.0 g; pure Al base 205.2 g,4.8Mn-1.2Mg-1.1Zr-0.9Cr
+S1b,"Al-5.0Mn-0.8Cr-0.6Zr (Al-Mn-Cr-Zr, Mg-free; needs a high-purity Al base)",6063,250,Mn 12.5 g; Cr 2.0 g; Al-10Zr master 15.0 g; 6063 bar/cups 220.5 g,5Mn-0.8Cr-0.6Zr-0.49Mg-0.35Si-0.18Fe
+S1b,"Al-5.0Mn-0.8Cr-0.6Zr (Al-Mn-Cr-Zr, Mg-free; needs a high-purity Al base)",pure Al,250,Mn 12.5 g; Cr 2.0 g; Al-10Zr master 15.0 g; pure Al base 220.5 g,5Mn-0.8Cr-0.6Zr
+S2,Al-1.9Fe-1.0Mg-1.0Zr (Al-Fe-Mg-Zr),6063,250,Fe 4.24 g; Mg 1.36 g; Al-10Zr master 25.75 g; 6063 bar/cups 218.7 g,1.87Fe-1.03Zr-1.02Mg-0.35Si
+S2,Al-1.9Fe-1.0Mg-1.0Zr (Al-Fe-Mg-Zr),pure Al,250,Fe 4.68 g; Mg 2.55 g; Al-10Zr master 25.75 g; pure Al base 217.0 g,1.87Fe-1.03Zr-1.02Mg
+S3,Al-3.5Si-2.5Mg (AlSi3.5Mg2.5-type),6063,250,Mg 5.28 g; 6063 bar/cups 177.7 g; 4047 rod 67.0 g,3.5Si-2.5Mg-0.22Fe
+S3,Al-3.5Si-2.5Mg (AlSi3.5Mg2.5-type),pure Al,250,Mg 6.25 g; pure Al base 170.8 g; 4047 rod 72.9 g,3.5Si-2.5Mg-0.09Fe
+S4,Al-3.6Mg-1.2Zr (Al-Mg-Zr),6063,250,Mg 7.84 g; Al-10Zr master 30.0 g; 6063 bar/cups 212.2 g,3.6Mg-1.2Zr-0.34Si-0.17Fe
+S4,Al-3.6Mg-1.2Zr (Al-Mg-Zr),pure Al,250,Mg 9.0 g; Al-10Zr master 30.0 g; pure Al base 211.0 g,3.6Mg-1.2Zr
+E1,Al-4.8Mn-0.8Cr (Zr-free Al-Mn-Cr),6063,250,Mn 12.0 g; Cr 2.0 g; 6063 bar/cups 236.0 g,4.8Mn-0.8Cr-0.52Mg-0.38Si-0.19Fe
+E1,Al-4.8Mn-0.8Cr (Zr-free Al-Mn-Cr),pure Al,250,Mn 12.0 g; Cr 2.0 g; pure Al base 236.0 g,4.8Mn-0.8Cr
+E2,Al-5.5Zn-2.3Mg-1.5Cu-1.0Zr (7xxx + Zr),6063,250,Zn 13.75 g; Mg 4.64 g; Cu 3.75 g; Al-10Zr master 25.0 g; 6063 bar/cups 202.9 g,5.5Zn-2.3Mg-1.5Cu-1Zr-0.32Si-0.16Fe
+E2,Al-5.5Zn-2.3Mg-1.5Cu-1.0Zr (7xxx + Zr),pure Al,250,Zn 13.75 g; Mg 5.75 g; Cu 3.75 g; Al-10Zr master 25.0 g; pure Al base 201.7 g,5.5Zn-2.3Mg-1.5Cu-1Zr
+E3,Al-4.5Mg-0.5Mn-0.8Er-0.6Zr (Er in place of Sc),6063,250,Mg 10.04 g; Mn 1.25 g; Er 2.0 g; Al-10Zr master 15.0 g; 6063 bar/cups 221.7 g,4.5Mg-0.8Er-0.6Zr-0.5Mn-0.35Si-0.18Fe
+E3,Al-4.5Mg-0.5Mn-0.8Er-0.6Zr (Er in place of Sc),pure Al,250,Mg 11.25 g; Mn 1.25 g; Er 2.0 g; Al-10Zr master 15.0 g; pure Al base 220.5 g,4.5Mg-0.8Er-0.6Zr-0.5Mn

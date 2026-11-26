@@ -1,0 +1,352 @@
+[
+ {
+  "name": "X-MnTi|pureAl",
+  "wt": {
+   "MN": 4.8,
+   "TI": 0.8
+  },
+  "tags": {
+   "set": "named",
+   "id": "X-MnTi",
+   "group": "exploratory",
+   "note": "Al-Mn-Ti, Mair's alloy without Zr",
+   "base": "pureAl"
+  }
+ },
+ {
+  "name": "X-MnTi|6063",
+  "wt": {
+   "MN": 4.8,
+   "TI": 0.8,
+   "MG": 0.52,
+   "SI": 0.38,
+   "FE": 0.19
+  },
+  "tags": {
+   "set": "named",
+   "id": "X-MnTi",
+   "group": "exploratory",
+   "note": "Al-Mn-Ti, Mair's alloy without Zr",
+   "base": "6063"
+  }
+ },
+ {
+  "name": "X-Mg5Si2Ti|pureAl",
+  "wt": {
+   "MG": 5.0,
+   "SI": 2.0,
+   "TI": 0.7
+  },
+  "tags": {
+   "set": "named",
+   "id": "X-Mg5Si2Ti",
+   "group": "exploratory",
+   "note": "Al-Mg-Si-Ti, Ti as the nucleant",
+   "base": "pureAl"
+  }
+ },
+ {
+  "name": "X-Mg5Si2Ti|6063",
+  "wt": {
+   "MG": 5.0,
+   "SI": 2.0,
+   "TI": 0.7,
+   "FE": 0.2
+  },
+  "tags": {
+   "set": "named",
+   "id": "X-Mg5Si2Ti",
+   "group": "exploratory",
+   "note": "Al-Mg-Si-Ti, Ti as the nucleant",
+   "base": "6063"
+  }
+ },
+ {
+  "name": "X-S3Ti|pureAl",
+  "wt": {
+   "SI": 3.5,
+   "MG": 2.5,
+   "TI": 0.7
+  },
+  "tags": {
+   "set": "named",
+   "id": "X-S3Ti",
+   "group": "exploratory",
+   "note": "S3 plus Ti",
+   "base": "pureAl"
+  }
+ },
+ {
+  "name": "X-S3Ti|6063",
+  "wt": {
+   "SI": 3.5,
+   "MG": 2.5,
+   "TI": 0.7,
+   "FE": 0.22
+  },
+  "tags": {
+   "set": "named",
+   "id": "X-S3Ti",
+   "group": "exploratory",
+   "note": "S3 plus Ti",
+   "base": "6063"
+  }
+ },
+ {
+  "name": "X-MgTi|pureAl",
+  "wt": {
+   "MG": 4.5,
+   "MN": 0.5,
+   "TI": 0.8
+  },
+  "tags": {
+   "set": "named",
+   "id": "X-MgTi",
+   "group": "exploratory",
+   "note": "Al-Mg-Mn-Ti, Ti in place of Sc and Zr",
+   "base": "pureAl"
+  }
+ },
+ {
+  "name": "X-MgTi|6063",
+  "wt": {
+   "MG": 4.5,
+   "MN": 0.5,
+   "TI": 0.8,
+   "SI": 0.38,
+   "FE": 0.19
+  },
+  "tags": {
+   "set": "named",
+   "id": "X-MgTi",
+   "group": "exploratory",
+   "note": "Al-Mg-Mn-Ti, Ti in place of Sc and Zr",
+   "base": "6063"
+  }
+ },
+ {
+  "name": "X-FeMgTi|pureAl",
+  "wt": {
+   "FE": 1.9,
+   "MG": 1.0,
+   "TI": 0.8
+  },
+  "tags": {
+   "set": "named",
+   "id": "X-FeMgTi",
+   "group": "exploratory",
+   "note": "S2 with Ti in place of Zr",
+   "base": "pureAl"
+  }
+ },
+ {
+  "name": "X-FeMgTi|6063",
+  "wt": {
+   "FE": 1.9,
+   "MG": 1.0,
+   "TI": 0.8,
+   "SI": 0.39
+  },
+  "tags": {
+   "set": "named",
+   "id": "X-FeMgTi",
+   "group": "exploratory",
+   "note": "S2 with Ti in place of Zr",
+   "base": "6063"
+  }
+ },
+ {
+  "name": "X-MnCrMgTi|pureAl",
+  "wt": {
+   "MN": 4.8,
+   "CR": 0.9,
+   "MG": 1.2,
+   "TI": 0.8
+  },
+  "tags": {
+   "set": "named",
+   "id": "X-MnCrMgTi",
+   "group": "exploratory",
+   "note": "S1 with Ti in place of Zr",
+   "base": "pureAl"
+  }
+ },
+ {
+  "name": "X-MnCrMgTi|6063",
+  "wt": {
+   "MN": 4.8,
+   "CR": 0.9,
+   "MG": 1.2,
+   "TI": 0.8,
+   "SI": 0.37,
+   "FE": 0.19
+  },
+  "tags": {
+   "set": "named",
+   "id": "X-MnCrMgTi",
+   "group": "exploratory",
+   "note": "S1 with Ti in place of Zr",
+   "base": "6063"
+  }
+ },
+ {
+  "name": "X-MnCrMg|pureAl",
+  "wt": {
+   "MN": 4.7,
+   "CR": 0.8,
+   "MG": 1.0
+  },
+  "tags": {
+   "set": "named",
+   "id": "X-MnCrMg",
+   "group": "exploratory",
+   "note": "S1 without Zr: a deliberate cracking-boundary probe",
+   "base": "pureAl"
+  }
+ },
+ {
+  "name": "X-MnCrMg|6063",
+  "wt": {
+   "MN": 4.7,
+   "CR": 0.8,
+   "MG": 1.0,
+   "SI": 0.38,
+   "FE": 0.19
+  },
+  "tags": {
+   "set": "named",
+   "id": "X-MnCrMg",
+   "group": "exploratory",
+   "note": "S1 without Zr: a deliberate cracking-boundary probe",
+   "base": "6063"
+  }
+ },
+ {
+  "name": "O2-noEr|pureAl",
+  "wt": {
+   "MG": 6.4,
+   "MN": 0.72,
+   "ZR": 1.1
+  },
+  "tags": {
+   "set": "named",
+   "id": "O2-noEr",
+   "group": "exploratory",
+   "note": "Guo et al. Al-Mg-Mn-Er-Zr with the Er left out",
+   "base": "pureAl"
+  }
+ },
+ {
+  "name": "O2-noEr|6063",
+  "wt": {
+   "MG": 6.4,
+   "MN": 0.72,
+   "ZR": 1.1,
+   "SI": 0.33,
+   "FE": 0.16
+  },
+  "tags": {
+   "set": "named",
+   "id": "O2-noEr",
+   "group": "exploratory",
+   "note": "Guo et al. Al-Mg-Mn-Er-Zr with the Er left out",
+   "base": "6063"
+  }
+ },
+ {
+  "name": "O1-Mn|pureAl",
+  "wt": {
+   "MG": 3.6,
+   "ZR": 1.2,
+   "MN": 0.5
+  },
+  "tags": {
+   "set": "named",
+   "id": "O1-Mn",
+   "group": "exploratory",
+   "note": "Al-Mg-Zr with Mn",
+   "base": "pureAl"
+  }
+ },
+ {
+  "name": "O1-Mn|6063",
+  "wt": {
+   "MG": 3.6,
+   "ZR": 1.2,
+   "MN": 0.5,
+   "SI": 0.34,
+   "FE": 0.17
+  },
+  "tags": {
+   "set": "named",
+   "id": "O1-Mn",
+   "group": "exploratory",
+   "note": "Al-Mg-Zr with Mn",
+   "base": "6063"
+  }
+ },
+ {
+  "name": "Fe2.5Mn2Mg1|pureAl",
+  "wt": {
+   "FE": 2.5,
+   "MN": 2.0,
+   "MG": 1.0
+  },
+  "tags": {
+   "set": "named",
+   "id": "Fe2.5Mn2Mg1",
+   "group": "exploratory",
+   "note": "Zr-free Al-Fe-Mn-Mg",
+   "base": "pureAl"
+  }
+ },
+ {
+  "name": "Fe2.5Mn2Mg1|6063",
+  "wt": {
+   "FE": 2.5,
+   "MN": 2.0,
+   "MG": 1.0,
+   "SI": 0.38
+  },
+  "tags": {
+   "set": "named",
+   "id": "Fe2.5Mn2Mg1",
+   "group": "exploratory",
+   "note": "Zr-free Al-Fe-Mn-Mg",
+   "base": "6063"
+  }
+ },
+ {
+  "name": "Mg5.4Zn3Si2Mn|pureAl",
+  "wt": {
+   "MG": 5.39,
+   "ZN": 3.08,
+   "SI": 1.96,
+   "MN": 0.75
+  },
+  "tags": {
+   "set": "named",
+   "id": "Mg5.4Zn3Si2Mn",
+   "group": "exploratory",
+   "note": "Zr-free Al-Mg-Zn-Si-Mn, Yang et al. 2022",
+   "base": "pureAl"
+  }
+ },
+ {
+  "name": "Mg5.4Zn3Si2Mn|6063",
+  "wt": {
+   "MG": 5.39,
+   "ZN": 3.08,
+   "SI": 1.96,
+   "MN": 0.75,
+   "FE": 0.2
+  },
+  "tags": {
+   "set": "named",
+   "id": "Mg5.4Zn3Si2Mn",
+   "group": "exploratory",
+   "note": "Zr-free Al-Mg-Zn-Si-Mn, Yang et al. 2022",
+   "base": "6063"
+  }
+ }
+]

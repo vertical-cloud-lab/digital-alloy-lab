@@ -1,0 +1,742 @@
+[
+ {
+  "name": "SiMg:FE0.15-MG0.35",
+  "wt": {
+   "MG": 0.35,
+   "FE": 0.15
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "SiMg"
+  }
+ },
+ {
+  "name": "SiMg:FE0.15-MG1",
+  "wt": {
+   "MG": 1,
+   "FE": 0.15
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "SiMg"
+  }
+ },
+ {
+  "name": "SiMg:FE0.15-MG2.5",
+  "wt": {
+   "MG": 2.5,
+   "FE": 0.15
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "SiMg"
+  }
+ },
+ {
+  "name": "SiMg:FE0.15-MG4.5",
+  "wt": {
+   "MG": 4.5,
+   "FE": 0.15
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "SiMg"
+  }
+ },
+ {
+  "name": "SiMg:FE0.15-MG6.5",
+  "wt": {
+   "MG": 6.5,
+   "FE": 0.15
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "SiMg"
+  }
+ },
+ {
+  "name": "SiMg:FE0.15-MG0.35-SI2",
+  "wt": {
+   "SI": 2,
+   "MG": 0.35,
+   "FE": 0.15
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "SiMg"
+  }
+ },
+ {
+  "name": "SiMg:FE0.15-MG1-SI2",
+  "wt": {
+   "SI": 2,
+   "MG": 1,
+   "FE": 0.15
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "SiMg"
+  }
+ },
+ {
+  "name": "SiMg:FE0.15-MG2.5-SI2",
+  "wt": {
+   "SI": 2,
+   "MG": 2.5,
+   "FE": 0.15
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "SiMg"
+  }
+ },
+ {
+  "name": "SiMg:FE0.15-MG4.5-SI2",
+  "wt": {
+   "SI": 2,
+   "MG": 4.5,
+   "FE": 0.15
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "SiMg"
+  }
+ },
+ {
+  "name": "SiMg:FE0.15-MG6.5-SI2",
+  "wt": {
+   "SI": 2,
+   "MG": 6.5,
+   "FE": 0.15
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "SiMg"
+  }
+ },
+ {
+  "name": "SiMg:FE0.15-MG0.35-SI3.5",
+  "wt": {
+   "SI": 3.5,
+   "MG": 0.35,
+   "FE": 0.15
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "SiMg"
+  }
+ },
+ {
+  "name": "SiMg:FE0.15-MG1-SI3.5",
+  "wt": {
+   "SI": 3.5,
+   "MG": 1,
+   "FE": 0.15
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "SiMg"
+  }
+ },
+ {
+  "name": "SiMg:FE0.15-MG2.5-SI3.5",
+  "wt": {
+   "SI": 3.5,
+   "MG": 2.5,
+   "FE": 0.15
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "SiMg"
+  }
+ },
+ {
+  "name": "SiMg:FE0.15-MG4.5-SI3.5",
+  "wt": {
+   "SI": 3.5,
+   "MG": 4.5,
+   "FE": 0.15
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "SiMg"
+  }
+ },
+ {
+  "name": "SiMg:FE0.15-MG6.5-SI3.5",
+  "wt": {
+   "SI": 3.5,
+   "MG": 6.5,
+   "FE": 0.15
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "SiMg"
+  }
+ },
+ {
+  "name": "SiMg:FE0.15-MG0.35-SI6",
+  "wt": {
+   "SI": 6,
+   "MG": 0.35,
+   "FE": 0.15
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "SiMg"
+  }
+ },
+ {
+  "name": "SiMg:FE0.15-MG1-SI6",
+  "wt": {
+   "SI": 6,
+   "MG": 1,
+   "FE": 0.15
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "SiMg"
+  }
+ },
+ {
+  "name": "SiMg:FE0.15-MG2.5-SI6",
+  "wt": {
+   "SI": 6,
+   "MG": 2.5,
+   "FE": 0.15
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "SiMg"
+  }
+ },
+ {
+  "name": "SiMg:FE0.15-MG4.5-SI6",
+  "wt": {
+   "SI": 6,
+   "MG": 4.5,
+   "FE": 0.15
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "SiMg"
+  }
+ },
+ {
+  "name": "SiMg:FE0.15-MG6.5-SI6",
+  "wt": {
+   "SI": 6,
+   "MG": 6.5,
+   "FE": 0.15
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "SiMg"
+  }
+ },
+ {
+  "name": "SiMg:FE0.15-MG0.35-SI10",
+  "wt": {
+   "SI": 10,
+   "MG": 0.35,
+   "FE": 0.15
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "SiMg"
+  }
+ },
+ {
+  "name": "SiMg:FE0.15-MG1-SI10",
+  "wt": {
+   "SI": 10,
+   "MG": 1,
+   "FE": 0.15
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "SiMg"
+  }
+ },
+ {
+  "name": "SiMg:FE0.15-MG2.5-SI10",
+  "wt": {
+   "SI": 10,
+   "MG": 2.5,
+   "FE": 0.15
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "SiMg"
+  }
+ },
+ {
+  "name": "SiMg:FE0.15-MG4.5-SI10",
+  "wt": {
+   "SI": 10,
+   "MG": 4.5,
+   "FE": 0.15
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "SiMg"
+  }
+ },
+ {
+  "name": "SiMg:FE0.15-MG6.5-SI10",
+  "wt": {
+   "SI": 10,
+   "MG": 6.5,
+   "FE": 0.15
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "SiMg"
+  }
+ },
+ {
+  "name": "MnCr:MN3",
+  "wt": {
+   "MN": 3
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "MnCr"
+  }
+ },
+ {
+  "name": "MnCr:CR0.8-MN3",
+  "wt": {
+   "MN": 3,
+   "CR": 0.8
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "MnCr"
+  }
+ },
+ {
+  "name": "MnCr:CR1.6-MN3",
+  "wt": {
+   "MN": 3,
+   "CR": 1.6
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "MnCr"
+  }
+ },
+ {
+  "name": "MnCr:MN4.8",
+  "wt": {
+   "MN": 4.8
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "MnCr"
+  }
+ },
+ {
+  "name": "MnCr:CR0.8-MN4.8",
+  "wt": {
+   "MN": 4.8,
+   "CR": 0.8
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "MnCr"
+  }
+ },
+ {
+  "name": "MnCr:CR1.6-MN4.8",
+  "wt": {
+   "MN": 4.8,
+   "CR": 1.6
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "MnCr"
+  }
+ },
+ {
+  "name": "MnCr:MN6",
+  "wt": {
+   "MN": 6
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "MnCr"
+  }
+ },
+ {
+  "name": "MnCr:CR0.8-MN6",
+  "wt": {
+   "MN": 6,
+   "CR": 0.8
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "MnCr"
+  }
+ },
+ {
+  "name": "MnCr:CR1.6-MN6",
+  "wt": {
+   "MN": 6,
+   "CR": 1.6
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "MnCr"
+  }
+ },
+ {
+  "name": "FeX:FE1",
+  "wt": {
+   "FE": 1.0
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "FeX"
+  }
+ },
+ {
+  "name": "FeX:FE1-MN2",
+  "wt": {
+   "FE": 1.0,
+   "MN": 2.0
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "FeX"
+  }
+ },
+ {
+  "name": "FeX:FE1-MG1",
+  "wt": {
+   "FE": 1.0,
+   "MG": 1.0
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "FeX"
+  }
+ },
+ {
+  "name": "FeX:FE2",
+  "wt": {
+   "FE": 2.0
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "FeX"
+  }
+ },
+ {
+  "name": "FeX:FE2-MN2",
+  "wt": {
+   "FE": 2.0,
+   "MN": 2.0
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "FeX"
+  }
+ },
+ {
+  "name": "FeX:FE2-MG1",
+  "wt": {
+   "FE": 2.0,
+   "MG": 1.0
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "FeX"
+  }
+ },
+ {
+  "name": "FeX:FE3",
+  "wt": {
+   "FE": 3.0
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "FeX"
+  }
+ },
+ {
+  "name": "FeX:FE3-MN2",
+  "wt": {
+   "FE": 3.0,
+   "MN": 2.0
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "FeX"
+  }
+ },
+ {
+  "name": "FeX:FE3-MG1",
+  "wt": {
+   "FE": 3.0,
+   "MG": 1.0
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "FeX"
+  }
+ },
+ {
+  "name": "MgZr:MG3.5-ZR0.6",
+  "wt": {
+   "MG": 3.5,
+   "ZR": 0.6
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "MgZr"
+  }
+ },
+ {
+  "name": "MgZr:MG3.5-ZR1.2",
+  "wt": {
+   "MG": 3.5,
+   "ZR": 1.2
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "MgZr"
+  }
+ },
+ {
+  "name": "MgZr:MG6.5-ZR0.6",
+  "wt": {
+   "MG": 6.5,
+   "ZR": 0.6
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "MgZr"
+  }
+ },
+ {
+  "name": "MgZr:MG6.5-ZR1.2",
+  "wt": {
+   "MG": 6.5,
+   "ZR": 1.2
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "MgZr"
+  }
+ },
+ {
+  "name": "MnCrZr+base:CR0.8-MG0.3-MN5-ZR0.6",
+  "wt": {
+   "MN": 5.0,
+   "CR": 0.8,
+   "ZR": 0.6,
+   "MG": 0.3
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "MnCrZr+base"
+  }
+ },
+ {
+  "name": "MnCrZr+base:CR0.8-MG0.55-MN5-ZR0.6",
+  "wt": {
+   "MN": 5.0,
+   "CR": 0.8,
+   "ZR": 0.6,
+   "MG": 0.55
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "MnCrZr+base"
+  }
+ },
+ {
+  "name": "MnCrZr+base:CR0.8-MN5-SI0.2-ZR0.6",
+  "wt": {
+   "MN": 5.0,
+   "CR": 0.8,
+   "ZR": 0.6,
+   "SI": 0.2
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "MnCrZr+base"
+  }
+ },
+ {
+  "name": "MnCrZr+base:CR0.8-MN5-SI0.4-ZR0.6",
+  "wt": {
+   "MN": 5.0,
+   "CR": 0.8,
+   "ZR": 0.6,
+   "SI": 0.4
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "MnCrZr+base"
+  }
+ },
+ {
+  "name": "MnCrZr+base:CR0.8-MG0.3-MN5-SI0.2-ZR0.6",
+  "wt": {
+   "MN": 5.0,
+   "CR": 0.8,
+   "ZR": 0.6,
+   "SI": 0.2,
+   "MG": 0.3
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "MnCrZr+base"
+  }
+ },
+ {
+  "name": "MnCrZr+base:CR0.8-MG0.55-MN5-SI0.4-ZR0.6",
+  "wt": {
+   "MN": 5.0,
+   "CR": 0.8,
+   "ZR": 0.6,
+   "SI": 0.4,
+   "MG": 0.55
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "MnCrZr+base"
+  }
+ },
+ {
+  "name": "FeZr+base:FE1-MG0.55-ZR1",
+  "wt": {
+   "FE": 1.0,
+   "ZR": 1.0,
+   "MG": 0.55
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "FeZr+base"
+  }
+ },
+ {
+  "name": "FeZr+base:FE1-SI0.4-ZR1",
+  "wt": {
+   "FE": 1.0,
+   "ZR": 1.0,
+   "SI": 0.4
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "FeZr+base"
+  }
+ },
+ {
+  "name": "FeZr+base:FE1-MG0.55-SI0.4-ZR1",
+  "wt": {
+   "FE": 1.0,
+   "ZR": 1.0,
+   "SI": 0.4,
+   "MG": 0.55
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "FeZr+base"
+  }
+ },
+ {
+  "name": "liq-Sc:SC0.2",
+  "wt": {
+   "SC": 0.2
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Sc"
+  },
+  "liquidus_only": true
+ },
+ {
+  "name": "liq-Sc-Mg4.5:MG4.5-SC0.2",
+  "wt": {
+   "SC": 0.2,
+   "MG": 4.5
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Sc-Mg4.5"
+  },
+  "liquidus_only": true
+ },
+ {
+  "name": "liq-Sc:SC0.4",
+  "wt": {
+   "SC": 0.4
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Sc"
+  },
+  "liquidus_only": true
+ },
+ {
+  "name": "liq-Sc-Mg4.5:MG4.5-SC0.4",
+  "wt": {
+   "SC": 0.4,
+   "MG": 4.5
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Sc-Mg4.5"
+  },
+  "liquidus_only": true
+ },
+ {
+  "name": "liq-Sc:SC0.7",
+  "wt": {
+   "SC": 0.7
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Sc"
+  },
+  "liquidus_only": true
+ },
+ {
+  "name": "liq-Sc-Mg4.5:MG4.5-SC0.7",
+  "wt": {
+   "SC": 0.7,
+   "MG": 4.5
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Sc-Mg4.5"
+  },
+  "liquidus_only": true
+ },
+ {
+  "name": "liq-Sc:SC1",
+  "wt": {
+   "SC": 1.0
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Sc"
+  },
+  "liquidus_only": true
+ },
+ {
+  "name": "liq-Sc-Mg4.5:MG4.5-SC1",
+  "wt": {
+   "SC": 1.0,
+   "MG": 4.5
+  },
+  "tags": {
+   "set": "grid",
+   "grid": "liq-Sc-Mg4.5"
+  },
+  "liquidus_only": true
+ }
+]
