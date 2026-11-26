@@ -14,6 +14,8 @@ Each folder has its own README with sources, method and caveats.
 | SEM/EDS of atomized powders | **Partly.** SEM of eight Al lots and one NAB lot from the lab's own atomizer (EDS: spectrum screenshots, plus one raw spectrum). **Nothing** for the AMAZEMET-atomized blend that the claim refers to | [`sem-eds-atomized-powders/`](sem-eds-atomized-powders/) |
 | *Not on line 45:* standards-based EDS of AlSi10Mg | **Yes, on a printed part.** NIST DTSA-II against pure Al, Si and MgO standards, 17 runs on a polished Utah coupon. The one valid run gives Mg 0.35 and Si 11.1 wt % | [`eds-standards-alsi10mg-utah/`](eds-standards-alsi10mg-utah/) |
 
+**Everything else the lab has collected** in 2026, across all its repos (AirGradient, MongoDB, camera photos, robot arms, the powder doser, livestreams and more), is counted in [`DATA-INVENTORY.md`](DATA-INVENTORY.md). A one-slide summary with representative data is in [`infographic/`](infographic/).
+
 ## Tensile results against the datasheets
 
 All values are as built (no heat treatment) and at room temperature. Nikon's 95/95 minimum is in
