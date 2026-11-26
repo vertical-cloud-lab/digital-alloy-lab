@@ -778,7 +778,7 @@ def run(chapter, every=1, stills=0, quiet=False, max_frames=None, only=None):
                     active[k] = dep
                     if dep > v["worst"]:
                         v["worst"], v["frame"] = dep, n
-                        v["snap"] = (x.geom, x.M.copy(), y.geom, y.M.copy())
+                        v["snap"] = ((x.geom.V, x.geom.F), x.M.copy(), (y.geom.V, y.geom.F), y.M.copy())   # arrays only, no BVHs
         if not quiet and checked % 200 == 0:
             print(f"  {tag}: frame {n}, {checked} checked, {len(viol)} violating pairs, {n_fcl} narrow checks, "
                   f"{len(rp.geoms)} meshes, {time.time() - t0:.0f} s", flush=True)
@@ -916,7 +916,7 @@ def make_stills(chapter, viol, k):
         right = None
         try:
             pk, png_r = tmp / f"{idx}.pkl", tmp / f"{idx}.png"
-            pk.write_bytes(pickle.dumps(dict(A=(ga.V, ga.F, Ma), B=(gb.V, gb.F, Mb))))
+            pk.write_bytes(pickle.dumps(dict(A=(ga[0], ga[1], Ma), B=(gb[0], gb[1], Mb))))
             r = subprocess.run([sys.executable, str(Path(__file__).resolve()), "still", str(pk), str(png_r)],
                                capture_output=True, text=True, timeout=180)
             if r.returncode == 0 and png_r.exists():
