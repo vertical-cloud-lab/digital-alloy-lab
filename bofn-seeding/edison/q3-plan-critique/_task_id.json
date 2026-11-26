@@ -1,0 +1,14 @@
+{
+  "task_id": "53ab490c-74b7-4648-996a-f554d5087675",
+  "job": "ANALYSIS",
+  "submitted_utc": "2026-11-20T19:17:32.515865Z",
+  "uploaded": [
+    "README.md",
+    "seeds.csv",
+    "seed_design.py",
+    "space_filling_compare.csv",
+    "budget_split_sim.py",
+    "summary.csv",
+    "paired_vs_333.csv"
+  ]
+}

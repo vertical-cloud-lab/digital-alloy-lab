@@ -1,0 +1,12 @@
+You are reviewing a draft plan, attached as README.md, for choosing the seed (initial) experiments of a closed-loop Bayesian optimization over a function network (BOFN / p-KGFN) campaign that looks for new LPBF aluminium alloys. Also attached: seeds.csv (points already planned), seed_design.py (space-filling picks around those points: Sobol, Sobol with an exclusion radius, greedy maximin, greedy integrated-variance reduction), space_filling_compare.csv (its output), budget_split_sim.py (a toy flat-GP simulation of splitting 25 runs between seeds and qLogEI batches of 3), and its summary.csv and paired_vs_333.csv.
+
+Earlier, you reviewed the original "3 baselines + 3 agent-chosen + 3 space-filling seeds out of 25 runs" idea and recommended about 7 seeds with Kennard-Stone maximin augmentation. The draft agrees on about 6-7 seeds but recommends integrated-variance (IMSE) picks instead of maximin, because in its tests maximin put every point on several composition caps at once.
+
+Please act as a critical reviewer and answer briefly and concretely:
+1. Is anything in the draft wrong, overstated or internally inconsistent? Quote the sentence and say what to change.
+2. Check seed_design.py and budget_split_sim.py for bugs or choices that bias the conclusions. Examples: the distance and feature scaling, the element-set term, the min-total filter, the IMSE implementation and its length scale, how the agent and baseline seeds are generated, the paired comparison, and whether qLogEI over a discrete pool is a fair stand-in. Run them if you can.
+3. Is the IMSE-versus-maximin disagreement resolved correctly? Under what conditions would you still prefer maximin?
+4. Do the proposed seed set (D1, D2, B30, a changed B15, S1 = Al-4Mn-0.5Ti-0.5Zr, S2 = an Fe-based eutectic or Al-10Ce, S3/S4 space-filling) and its feedstock caveats make sense for the campaign's goal: stronger than AlSi10Mg and/or as strong as Scalmalloy with less critical-mineral content?
+5. What is missing that the team will regret before the first optimizer batch on Dec 18?
+
+Keep the answer under about 1,500 words and finish with a prioritized list of changes.

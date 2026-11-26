@@ -1,0 +1,25 @@
+scenario,split,n_instances,mean_diff,se_diff
+agent right,3+3+3 (proposed),30,0.0,0.0
+agent right,2+2+2,30,0.0215,0.0227
+agent right,2+3+1,30,0.0445,0.0202
+agent right,2+0+1,30,-0.0624,0.0367
+agent right,2+0+4,30,-0.0544,0.0432
+agent right,2+4+0,30,0.0331,0.0194
+agent right,3+3+6,30,0.0137,0.0127
+agent right,"2 + 23 Sobol, no optimizer",30,-0.1697,0.0436
+agent wrong,3+3+3 (proposed),30,0.0,0.0
+agent wrong,2+2+2,30,0.0379,0.0229
+agent wrong,2+3+1,30,0.0279,0.0262
+agent wrong,2+0+1,30,0.0332,0.0278
+agent wrong,2+0+4,30,0.0411,0.0316
+agent wrong,2+4+0,30,0.0337,0.0324
+agent wrong,3+3+6,30,-0.0018,0.0269
+agent wrong,"2 + 23 Sobol, no optimizer",30,-0.0741,0.0399
+both,3+3+3 (proposed),30,0.0,0.0
+both,2+2+2,30,0.0297,0.0172
+both,2+3+1,30,0.0362,0.0179
+both,2+0+1,30,-0.0146,0.0298
+both,2+0+4,30,-0.0066,0.0355
+both,2+4+0,30,0.0334,0.022
+both,3+3+6,30,0.0059,0.0167
+both,"2 + 23 Sobol, no optimizer",30,-0.1219,0.0396
