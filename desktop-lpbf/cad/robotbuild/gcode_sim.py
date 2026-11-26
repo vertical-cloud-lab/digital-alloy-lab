@@ -465,7 +465,48 @@ def regen_compare(new_json, out_path):
     return out
 
 
+def verify_frames(frames_json=None):
+    """Independent check of a render's cutting frames (shop_chapters.py writes analysis/out/videoqa/gcode_frames.json):
+    re-parse each program and confirm that every drawn cutter position lies on the chords of the program line the
+    frame names (distance under 0.001 mm), and that its time is in the program's run."""
+    fj = pathlib.Path(frames_json or (LPBF / "analysis" / "out" / "videoqa" / "gcode_frames.json"))
+    data = json.loads(fj.read_text())
+    out = {}
+    progs = {}
+    for ch, d in data.items():
+        worst, bad, n, good = 0.0, [], 0, 0
+        for r in d["rows"]:
+            p = progs.get(r["setup"]) or progs.setdefault(r["setup"], Program(r["setup"]))
+            ks = np.nonzero(p.line == r["line"])[0]
+            q = np.array(r["work_xyz"], float)
+            best = math.inf
+            for k in ks:
+                a, b = p.p0[k], p.p1[k]
+                ab = b - a
+                t = float(np.clip((q - a) @ ab / max(ab @ ab, 1e-12), 0.0, 1.0))
+                best = min(best, float(np.linalg.norm(a + t * ab - q)))
+            n += 1
+            worst = max(worst, best)
+            if best < 1e-3 and 0.0 <= r["t_s"] <= p.total_s + 1e-6:
+                good += 1
+            elif len(bad) < 5:
+                bad.append(dict(frame=r["chapter_frame"], program=r["program"], line=r["line"], off_mm=best))
+        out[ch] = dict(frames=n, on_their_program_line=good,
+                       worst_off_line_mm=round(worst, 6), problems=bad, out_of_travel=d.get("out_of_travel"),
+                       programs=d.get("programs"), minutes=d.get("minutes"),
+                       statement=("every drawn cutter position is interpolated on a line of a posted program: "
+                                  "re-parsed, each frame's position lies on the chords of the line it names")
+                       if good == n else "SOME FRAMES ARE OFF THEIR LINE (see problems)")
+    res = json.loads(OUT_JSON.read_text()) if OUT_JSON.exists() else {}
+    res["drawn_frames"] = dict(source=str(fj.relative_to(LPBF)), chapters=out)
+    OUT_JSON.write_text(json.dumps(res, indent=1))
+    return out
+
+
 def main(argv):
+    if "--verify-frames" in argv:
+        print(json.dumps(verify_frames(), indent=1))
+        return
     if "--regen-compare" in argv:
         i = argv.index("--regen-compare")
         out = regen_compare(argv[i + 1], argv[i + 2])
