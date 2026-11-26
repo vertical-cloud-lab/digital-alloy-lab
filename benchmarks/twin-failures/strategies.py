@@ -58,7 +58,7 @@ class FailNet3(N3.Net3):
         self.retry_q = []                              # retry: (design id, settings, runs, copper blend promote)
         self._seen_ev = set()
         self._set_cache = {}
-        self.fcounts = dict(attempts=0, failed_attempts=0, hidden=0, dead=0, retries=0, viab_fits=0,
+        self.fcounts = dict(attempts=0, failed_attempts=0, hidden=0, dead=0, retries=0, retries_run=0, viab_fits=0,
                             viab_active_at_h=None, topups_blocked=0)
 
     # ---------------------------------------------------------------------------------------------- the ledger
@@ -104,7 +104,8 @@ class FailNet3(N3.Net3):
                     self.fcounts["retries"] += 1
                     if not g["into"]:
                         self._forget(v, lot, did)
-                        self.retry_q.append(dict(did=did, proc=g["proc"], runs=g["n"]))
+                        self.retry_q.append(dict(did=did, proc=g["proc"], runs=g["n"], key=eid,
+                                                 t=float(v["now_h"])))
                     continue                          # a failed top-up: one more top-up is allowed
                 fm = "abandon"
             if fm == "drop":
@@ -251,18 +252,27 @@ class FailNet3(N3.Net3):
                 keep.append(c)
             C = keep
         if self.retry_q:
+            # a retry stays queued until the engine admits it (``admitted``), or for 30 days at most
+            now = v["now_h"]
+            self.retry_q = [r for r in self.retry_q if now - r["t"] <= 30 * 24.0]
             R = []
             for r in self.retry_q:
                 dsg = dict(v["design_inputs"][r["did"]], **r["proc"])
                 a = self.powder_action(dsg, runs=r["runs"], v=v)
-                a["_did"] = r["did"]
+                a["_did"], a["_retry_key"] = r["did"], r["key"]
                 if not self.al:
                     a["_promote"] = r["did"]
                 R.append(dict(what="retry a failed powder at the same settings", acts=[a], always=True,
                               did=r["did"]))
-            self.retry_q = []
             C = R + C
         return C
+
+    def admitted(self, a):
+        super().admitted(a)
+        k = a.get("_retry_key")
+        if k is not None and any(r["key"] == k for r in self.retry_q):
+            self.retry_q = [r for r in self.retry_q if r["key"] != k]
+            self.fcounts["retries_run"] += 1
 
     def _cands_new(self, v, P, pi, best_kb):
         out = super()._cands_new(v, P, pi, best_kb)

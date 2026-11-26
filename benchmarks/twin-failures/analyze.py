@@ -104,6 +104,11 @@ def per_run(r):
         out[k] = row
     out["down_days"] = r["fail"]["down_days"]
     out["n_damage"] = len(r["fail"]["damage"])
+    for k in CAMPS:                                     # repairs each campaign's failed runs set off
+        dm = [d for d in r["fail"]["damage"] if d["campaign"] == k]
+        out[k]["repairs"] = len(dm)
+        out[k]["repair_days"] = float(sum(d["days"] for d in dm))
+    out["overlap_h"] = r["fail"].get("overlap_h", 0.0)
     out["atomizer_busy_h"] = r.get("atomizer_busy_h")
     out["seconds"] = r["seconds"]
     return out
@@ -123,10 +128,13 @@ def summarize(rows, horizon=365):
                         rmst=float(np.mean([x[t + "_rmst"] for x in R])))
         L = [x["ledger"] for x in R]
         d["ledger"] = {kk: float(np.mean([l[kk] for l in L])) for kk in L[0]}
+        d["repairs"] = float(np.mean([x.get("repairs", 0) for x in R]))
+        d["repair_days"] = float(np.mean([x.get("repair_days", 0.0) for x in R]))
         S[k] = d
     S["down_days"] = float(np.mean([r["down_days"] for r in rows]))
     S["n_damage"] = float(np.mean([r["n_damage"] for r in rows]))
     S["seconds"] = float(np.mean([r["seconds"] for r in rows]))
+    S["overlap_h"] = float(np.mean([r.get("overlap_h", 0.0) for r in rows]))
     return S
 
 

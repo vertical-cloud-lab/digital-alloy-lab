@@ -151,3 +151,14 @@ def test_bench_experiments_are_seedwise():
     main = bench.EXPERIMENTS["main"]
     assert [c["seed"] for c in main[:6]] == [0] * 6
     assert len({bench.run_id(c) for c in main}) == len(main)
+
+
+def test_retry_waits_until_admitted():
+    p = ST.FailNet3("flaime_al", 0, fmode="retry")
+    v = _fake_view([dict(event=5, lot=5, design=9, ok=[False, False])], {5: dict(design=9)})
+    p._book(v)
+    assert len(p.retry_q) == 1 and p.retry_q[0]["key"] == 5
+    p.admitted(dict(kind="powder", _retry_key=99))
+    assert len(p.retry_q) == 1                            # not this retry
+    p.admitted(dict(kind="powder", _retry_key=5, _did=9))
+    assert not p.retry_q and p.fcounts["retries_run"] == 1 and 9 in p.started
