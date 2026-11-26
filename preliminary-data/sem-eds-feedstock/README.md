@@ -34,8 +34,12 @@ Si 7.9 and Mg 1.4 wt %.
 - The `consolidation-2` README says these values are "within nominal spec". They are not.
 - The likeliest cause is standardless EDS of loose, curved particles under a carbon-rich
   background, which skews light-element ratios, rather than an off-spec powder.
-- The supplier's certificate or ICP would settle it. The proposal already plans ICP-MS checks
-  against EDS.
+- **Standards-based EDS supports that.** A polished coupon printed from the lab's commercial
+  AlSi10Mg powder was quantified in NIST DTSA-II against pure Al, Si and MgO standards. It gives
+  Mg 0.35 and Si 11.1 wt % ([`../eds-standards-alsi10mg-utah/`](../eds-standards-alsi10mg-utah/)).
+  That is a printed part, though, not this powder.
+- For the powder itself, the supplier's certificate or ICP would settle it. The proposal already
+  plans ICP-MS checks against EDS.
 
 **Si 40 µm contamination.** This powder shows Fe 1.1, Al 1.5 and Ca 0.4 wt %.
 - The element map ([`eds-reports/Si-40-element-overlay.png`](eds-reports/Si-40-element-overlay.png))

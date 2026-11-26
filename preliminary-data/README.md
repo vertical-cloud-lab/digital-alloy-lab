@@ -12,6 +12,7 @@ Each folder has its own README with sources, method and caveats.
 | High-T tensile data | **None found** (below) | none |
 | SEM/EDS of precursor (feedstock) powders | **Yes.** AlSi10Mg 40 µm, Si 100-200 mesh and Si 40 µm: EDAX mapping reports, SEM images | [`sem-eds-feedstock/`](sem-eds-feedstock/) |
 | SEM/EDS of atomized powders | **Partly.** SEM of eight Al lots and one NAB lot from the lab's own atomizer (EDS: spectrum screenshots, plus one raw spectrum). **Nothing** for the AMAZEMET-atomized blend that the claim refers to | [`sem-eds-atomized-powders/`](sem-eds-atomized-powders/) |
+| *Not on line 45:* standards-based EDS of AlSi10Mg | **Yes, on a printed part.** NIST DTSA-II against pure Al, Si and MgO standards, 17 runs on a polished Utah coupon. The one valid run gives Mg 0.35 and Si 11.1 wt % | [`eds-standards-alsi10mg-utah/`](eds-standards-alsi10mg-utah/) |
 
 ## Tensile results against the datasheets
 
@@ -42,6 +43,24 @@ The datasheet sources are the EOS
 and Nikon SLM Solutions'
 [MDS_AlSi10Mg_2025-11.1_EN](https://nikon-slm-solutions.com/wp-content/uploads/2025/11/mds5123.pdf)
 (SLM 280 PRECISION), both read on 2026-11-25.
+
+## Composition: standards-based EDS of a printed coupon
+
+The CALIBER project ([vertical-cloud-lab/caliber](https://github.com/vertical-cloud-lab/caliber/issues/35))
+quantified 17 EDS spectra of a polished Utah coupon in NIST DTSA-II. The standards were pure Al,
+pure Si and MgO, measured on the same SEM and detector. Details are in
+[`eds-standards-alsi10mg-utah/`](eds-standards-alsi10mg-utah/).
+
+- **Valid result.** In the one valid run (5 kV, analytical total 1.03), Mg is 0.35 wt %, inside
+  the 0.20-0.45 % specification. Si is 11.1 wt %, at the 11.0 % limit. Standardless EDS of the
+  same alloy had given 1.4-1.6 wt % Mg.
+- **The other 16 runs aren't usable yet.**
+  - Most 10-25 kV runs used standards collected at 60-99 % dead time.
+  - The 2026-11-18 runs were acquired at a different amp time from the standards (0.96 vs
+    7.68 µs). That mismatch alone is enough to explain why their Mg reads about twice as high.
+  - Two runs entered the MgO standard as pure Mg.
+- **What it doesn't cover.** It is one run on one area of a printed part. There is no
+  standards-based EDS of any powder yet.
 
 ## High-temperature tensile: none found
 
