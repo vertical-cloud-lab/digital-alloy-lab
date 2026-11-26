@@ -29,7 +29,7 @@ cut (the time-lapse), and on screen stands, leans, reaches and pushes. Loads sli
 20 mm high) and settle; the lift table stands in front of the VLM's access table (its platform can't pass over it); the
 person stands 850 mm in front of the tray's edge at the access table, or behind the lift table, and pushes on the guard
 frame's posts, the rack's posts, the units' front panels and the base plates' edges with the fingertips (people.py's wrists
-don't bend, so the palm stays 105 mm off what it pushes). The frames are recorded with ROBOTBUILD_AUDIT=1 and checked by
+don't bend, so the palm stays 135 mm off what it pushes, the fingers flat). The frames are recorded with ROBOTBUILD_AUDIT=1 and checked by
 scene_audit.py (collisions over 1.5 mm) and walk.py (foot slip, gliding).
 """
 from __future__ import annotations
@@ -397,13 +397,13 @@ def main():
     LIP = 26.0                        # loads slide with their feet 26 mm over the tray floor: the tray's rim is 20 mm high
     h0, h1 = LIFT["lo"], TRAY_FLOOR + LIP
     FWD = (0.0, 1.0, 0.0)             # palms turned to the load
-    TIP = 105.0                       # people.py's wrists don't bend, so the fingers point along the forearm: the palm's
+    TIP = 135.0                       # people.py's wrists don't bend, so the fingers point along the forearm: the palm's
                                       # centre stays this far in front of the face pushed, the fingertips on it (the round-8
-                                      # audit found fingers 70-100 mm inside the loads with the palm 16 mm off)
+                                      # audit found fingers 70-100 mm inside the loads with the palm 16 mm off, 40 at 105 mm)
     REACH = {"chest": 640.0, "low": 570.0}
 
     def push(pl_, pr_, **kw):
-        return dict(hands={"l": pl_, "r": pr_}, palm={"l": FWD, "r": FWD}, **kw)
+        return dict(hands={"l": pl_, "r": pr_}, palm={"l": FWD, "r": FWD}, grip={"l": 0.05, "r": 0.05}, **kw)   # flat fingers
 
     def free(**kw):
         return dict(hands={"l": None, "r": None}, palm={"l": None, "r": None}, grip={"l": 0.3, "r": 0.3}, **kw)
@@ -640,7 +640,7 @@ def main():
     sc.gmat["gasbase"] = np.eye(4)
     m.place(xg - 60.0, y_front, 0.0)
     m.pose(lean=0.0, look=(xg, 0.0, 1050.0), **free())
-    c8 = cam_at((700.0, -300.0, 1050.0), 3000.0, -14.0, 22.0)
+    c8 = cam_at((700.0, -300.0, 1050.0), 3000.0, 32.0, 24.0)        # from the right: the person (x 635) beside the parts
     # the gas parts whose front the person reaches from the access table slide in, palms on them; the rest (and the
     # fittings) are fitted in place, shown appearing in the time-lapse
     for g in gas_groups:
