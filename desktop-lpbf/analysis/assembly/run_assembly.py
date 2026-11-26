@@ -583,6 +583,17 @@ def do_place(run, st, row):
             if not sub["ok"]:
                 why.append(sub["why"])
             retreat(run, actor, near=u)
+        elif st.get("hold_first") and r["ok"]:
+            # round 8 (two hands): keep it pressed on its seal while the other arm drives its first screws
+            run.add(u, st["grp"], st["phase"], state)
+            try:
+                hres = hold_first(run, st, u, actor)
+            except Exception as e:  # noqa: BLE001  (the hold is extra: an error in it must not fail the placement)
+                traceback.print_exc()
+                run._hold_trial = False
+                hres = dict(step=st["id"], status="error", why=f"{type(e).__name__}: {e}"[:200])
+            row.setdefault("holds", []).append(hres)
+            retreat(run, actor, near=u)
         else:
             retreat(run, actor)
             run.add(u, st["grp"], st["phase"], state)
@@ -821,6 +832,74 @@ def hold_and_drive(run, st, u, holder):
     run.sub_rows.append(row)
     ok = all(r["ok"] for _, r in per) if per else True
     return dict(ok=ok, why="" if ok else f"held-part screws: {row.get('why', '')[:150]}")
+
+
+def hold_first(run, st, u, holder):
+    """Round 8 (two hands, notes/2026-11-26-byu-vcl-video-lessons.md lesson 3): the arm that placed u keeps it pressed on its
+    seal (gripper or vacuum cup still on it) while the other arm drives the first k screws of its joint that it can reach,
+    spread round the part (the screws on the driver's side first); then the holder lets go and the joint's own step drives the
+    rest. Why each hold is there (the seal's squeeze force against the part's weight) is in two_hands.py. A screw the driver
+    can't reach while the part is held is not recorded: it is left for the joint's own step."""
+    sc = run.sc
+    hf = st["hold_first"]
+    joint, k = hf["joint"], int(hf.get("k", 2))
+    lo = np.min([sc.objs[i]["V"].min(0) for i in u], axis=0)
+    hi = np.max([sc.objs[i]["V"].max(0) for i in u], axis=0)
+    M = sc.pose(u[0], {})
+    lo, hi = (M[:3, :3] @ lo + M[:3, 3]), (M[:3, :3] @ hi + M[:3, 3])
+    lo, hi = np.minimum(lo, hi), np.maximum(lo, hi)
+    idx = screw_targets(run, joint, None, near=(lo, hi))
+    driver = run.other(holder)
+    res = dict(step=st["id"], joint=joint, holder=holder, driver=driver, k=k, n_joint=len(idx), driven=[], fails=[])
+    if not idx:
+        res["why"] = "no screws of the joint near the part"
+        return res
+    Tph = run.cl.T_phase(st["phase"])
+    s_dr = -1.0 if run.arm(driver).side == "front" else 1.0
+    Pw = {i: (Tph @ np.r_[np.asarray(sc.objs[i]["P"], float), 1.0])[:3] for i in idx}
+    near_side = sorted(idx, key=lambda i: -s_dr * Pw[i][1])
+    cand = near_side[:max(k, (len(idx) + 1) // 2)]
+    order = [cand[0]]
+    while len(order) < len(cand):                      # spread: farthest from those already chosen
+        rest = [i for i in cand if i not in order]
+        order.append(max(rest, key=lambda i: min(np.linalg.norm(Pw[i] - Pw[j]) for j in order)))
+    order += [i for i in near_side if i not in order]
+    a = run.arm(holder)
+    a.release()                    # the part is in the world now; the closed gripper (or the cup) stays on it
+    tq = next((x.get("torque_Nm") for x in SQ.steps() if x.get("joint") == joint and x.get("do") == "screws"), None)
+    lb = next((x.get("long_bit") for x in SQ.steps() if x.get("joint") == joint and x.get("do") == "screws"), None)
+    run._hold_trial = True
+    per = []
+    try:
+        for i in order[:k + 1]:
+            if len(res["driven"]) >= k:
+                break
+            r = drive_screw(run, i, st["phase"], driver, lb, torque=tq)
+            if r["ok"]:
+                r["arm"] = driver
+                retreat(run, driver, 30.0, names=r.get("dest", ()))
+                run.add([i], st["grp"], st["phase"])
+                run.done_screws.add(i)
+                res["driven"].append(sc.label(i))
+                per.append((i, r))
+            else:
+                res["fails"].append(f"{sc.short(i)[-8:]}: {r['why'][:100]}")
+                run.arm(driver).release()
+                run.q[driver] = run.arm(driver).park_q()     # nothing was recorded for the attempt: the arm is still parked
+                run.arm(driver).place(run.q[driver])
+    finally:
+        run._hold_trial = False
+    if res["driven"]:
+        go_park(run, driver)
+        run.sub_rows = getattr(run, "sub_rows", [])
+        run.sub_rows.append(dict(id=st["id"] + "h", label=f"{st['label'][:60]}: first {len(per)} screws of {joint} driven by arm {driver} "
+                                                         f"while arm {holder} holds it on its seal", do="screws", joint=joint, actor=driver,
+                                 holder=holder, phase=st.get("phase"), sweep="PASS", arm="PASS", n=len(per), n_ok=len(per),
+                                 n_drive=len(per), driver=sorted({r["tool"] for _, r in per}), hold_first=True,
+                                 per_screw=[dict(screw=sc.label(i), ok=True, dock=r["dock"], roll=r["roll"], driver=r["tool"], arm=driver)
+                                            for i, r in per], why="; ".join(res["fails"])[:300]))
+    res["status"] = "hold used" if res["driven"] else "not possible"
+    return res
 
 
 def do_flip(run, st, row):

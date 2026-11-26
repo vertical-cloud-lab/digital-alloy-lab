@@ -120,7 +120,7 @@ def steps(module="M50"):
          "Bore seal", "Hollow piston rod", "Heater-stack screws", "Heater-block helical inserts", "Disc springs under", "Rod set screws",
          "Rod end", "bottom flange: gland plate", "gland-plate O-ring", "Rod O-rings"],
         "body", "body_inv", [(0, 0, 0), (0, 0, -260)], merge="stack", moved=True,
-        grasp=ROD_END_GRASP,
+        grasp=ROD_END_GRASP, hold_first=dict(joint=f"gland_{m}", k=2),
         note="the bore seal and the block enter the honed bore square, over the bore's bottom lead-in"))
     a(S("M20", "Six M4 x 20 gland-plate screws on the arc behind the rod end's block (round 6, joints.py)", f"gland_{m}", "body", "body_inv",
         torque_Nm=2.2))
@@ -203,7 +203,7 @@ def steps(module="M50"):
            keys=["Outlet plenum O-ring"], grp="plenum_out", phase="chamber_inv", method="ring", ring="outlet_plenum", tool="gripper+caps",
            actor="B", path=[(0, 0, 0), (0, 0, 60)]))
     a(P("C04", "Outlet plenum with its O-ring and KF-25 port onto the floor", ["outlet plenum", "Outlet plenum O-ring", "Outlet plenum port"],
-        "chamber", "chamber_inv", [(0, 0, 0), (0, 0, -180)], merge="plenum_out"))
+        "chamber", "chamber_inv", [(0, 0, 0), (0, 0, -180)], merge="plenum_out", hold_first=dict(joint="plenum_out", k=2)))
     # round 6 (run 6): two of these sit beside the plenum's KF-25 port (moved to its left end in round 5); a 60 mm bit extension keeps
     # the driver's body above the port. (The funnel, C06-C08 until run 6, now goes on with the floor plate: C00.)
     a(S("C05", "Six M4 x 12 outlet-plenum screws (60 mm bit extension: two sit beside the KF-25 port)", "plenum_out", "chamber",
@@ -382,13 +382,15 @@ def steps(module="M50"):
            keys=["Lid O-ring"], grp="machine", phase="upright", method="roller", ring="lid", tool="roller", actor="A", holder="B"))
     a(P("F30", "Lid (inserts in) onto the cord, by the vacuum gripper", ["Chamber lid (", "Window-flange helical", "Metering-base helical",
                                                                          "Drawer latch receptacles"],
-        "machine", "upright", [(0, 0, 0), (0, 0, 340)], tool="vacuum", grasp=dict(point=(105.0, 40.0, 136.0), z=DN, x=(1.0, 0.0, 0.0))))
+        "machine", "upright", [(0, 0, 0), (0, 0, 340)], tool="vacuum", grasp=dict(point=(105.0, 40.0, 136.0), z=DN, x=(1.0, 0.0, 0.0)),
+        hold_first=dict(joint="lid", k=2)))
     a(S("F31", "Twenty M5 x 25 lid screws, star pattern", "lid", "machine", "upright", torque_Nm=4.2))
     a(dict(do="seal", id="F32", label="Window-flange O-ring (2-036) into the flange's lower groove, PFPE film", keys=["Window-flange O-ring"],
            grp="wflange", phase="upright", method="ring", ring="window_flange", tool="gripper+caps", actor="B", path=[(0, 0, 0), (0, 0, -60)]))
     a(P("F33", "Field stop", ["Field-stop"], "machine", "upright", "explode"))
     a(P("F33b", "Window flange with its O-ring (Ø100: the vacuum gripper)", ["Window flange", "Window-flange O-ring"], "machine", "upright",
-        "explode", merge="wflange", moved=True, tool="vacuum", grasp=dict(point=(0.0, 0.0, 158.0), z=DN, x=(1.0, 0.0, 0.0))))
+        "explode", merge="wflange", moved=True, tool="vacuum", grasp=dict(point=(0.0, 0.0, 158.0), z=DN, x=(1.0, 0.0, 0.0)),
+        hold_first=dict(joint="window", k=2)))
     a(S("F34", "Six counterbored M4 x 16 window-flange screws (torque-controlled)", "window", "machine", "upright", torque_Nm=2.2))
     a(dict(do="seal", id="F35", label="Window O-ring (2-031) into the flange's seat groove", keys=["Window O-ring"], grp="machine",
            phase="upright", method="ring", ring="window_lower", tool="gripper+caps", actor="B", path=[(0, 0, 0), (0, 0, 60)]))
@@ -396,7 +398,7 @@ def steps(module="M50"):
         grasp=dict(point=(0.0, 0.0, 152.0), z=DN, x=(1.0, 0.0, 0.0))))
     a(P("F37", "FKM flat ring", ["Window clamp ring"], "machine", "upright", "explode"))
     a(P("F37b", "Window retaining ring (Ø100: the vacuum gripper)", ["Window retaining ring"], "machine", "upright", "explode", tool="vacuum",
-        grasp=dict(point=(0.0, 0.0, 163.0), z=DN, x=(1.0, 0.0, 0.0))))
+        grasp=dict(point=(0.0, 0.0, 163.0), z=DN, x=(1.0, 0.0, 0.0)), hold_first=dict(joint="window_ring", k=2)))
     a(S("F38", "Six M3 x 10 retaining-ring screws (torque-controlled: clamp the silica evenly)", "window_ring", "machine", "upright",
         torque_Nm=0.8))
     a(P("F39", "Cover-slide drawer (2-033 in its half-dovetail, put in on the bench) into the lid's front edge",
@@ -414,7 +416,8 @@ def steps(module="M50"):
            phase="upright", method="ring", ring="metering_base", tool="gripper+caps", actor="B", path=[(0, 0, 0), (0, 0, 60)]))
     a(P("F43", "Metering base alone (feedthrough, coupling and stepper not yet on) onto the lid", ["Metering base", "Metering-base O-ring",
                                                                                                "Metering-base dock-face"],
-        "machine", "upright", "explode", merge="mbase", moved=True, grasp=dict(point=(-90.0, 0.0, 172.0), z=DN, x=(1.0, 0.0, 0.0))))
+        "machine", "upright", "explode", merge="mbase", moved=True, grasp=dict(point=(-90.0, 0.0, 172.0), z=DN, x=(1.0, 0.0, 0.0)),
+        hold_first=dict(joint="dose", k=2)))
     a(S("F44", "Four M4 x 16 metering-base screws (before the roller feedthrough covers two of them)", "dose", "machine", "upright",
         torque_Nm=2.2))
     # run 10: F45-F45c by arm B from the back (run 9: arm A's upper arm met the base plate, or found no pose, at the lid's back left)
