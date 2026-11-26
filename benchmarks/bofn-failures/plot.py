@@ -38,7 +38,7 @@ plt.rcParams.update({
     "font.family": "sans-serif", "font.size": 9, "axes.edgecolor": AXIS, "axes.linewidth": 0.8, "axes.labelcolor": INK2,
     "xtick.color": INK2, "ytick.color": INK, "xtick.labelsize": 8.5, "ytick.labelsize": 8.5, "axes.titlesize": 10,
     "axes.titlecolor": INK, "axes.titleweight": "bold", "axes.titlelocation": "left", "figure.dpi": 150, "savefig.dpi": 200,
-    "savefig.bbox": "tight", "savefig.facecolor": "white", "legend.frameon": False, "legend.fontsize": 8.5,
+    "savefig.bbox": "tight", "savefig.facecolor": "white", "legend.frameon": False, "legend.fontsize": 8.5, "text.parse_math": False,
 })
 
 
@@ -57,18 +57,22 @@ def mean_se(v):
 
 
 def dot_panel(ax, cell, S, metric, xlabel, strategies):
-    ys = []
+    ys, missing = [], []
     for k, st in enumerate(strategies):
+        y = len(strategies) - 1 - k
         if st not in S or not S[st]:
+            missing.append(y)
             continue
         R = S[st]
         v = [metric(R[s], cell) for s in sorted(R)]
         m, se = mean_se(v)
-        y = len(strategies) - 1 - k
         ax.plot([m - se, m + se], [y, y], color=FAMILY[st], lw=2, solid_capstyle="round", zorder=2)
         ax.scatter([m], [y], s=42, color=FAMILY[st], edgecolor="white", linewidth=1.6, zorder=3)
-        ax.text(m + se, y + 0.28, f" {m:.0f}", color=INK2, fontsize=7.5, va="bottom", ha="left")
+        ax.text(m + se, y, f"  {m:.0f}", color=INK2, fontsize=7.5, va="center", ha="left")
         ys.append(y)
+    lo = ax.get_xlim()[0]
+    for y in missing:
+        ax.text(lo, y, "  not run in this cell", color=INK2, fontsize=7.5, va="center", ha="left", style="italic")
     ax.set_yticks(range(len(strategies)))
     ax.set_yticklabels([SHORT[s] for s in reversed(strategies)])
     ax.set_ylim(-0.7, len(strategies) - 0.3)
@@ -113,11 +117,11 @@ def curve(R, cell, grid):
     return out.mean(0), out.std(0, ddof=1) / np.sqrt(len(out))
 
 
-def fig_curves(runs, scen="mixed", highlight=("nofail", "drop", "partial", "viab_node")):
+def fig_curves(runs, scen="mixed", highlight=("nofail", "drop", "impute", "viab_node")):
     cells = [c for c in CELLS if c in runs and scen in runs[c]]
     grid = np.arange(0, 100_001, 1000)
     fig, axes = plt.subplots(2, 2, figsize=(9.6, 6.4))
-    colors = {"nofail": GRAY, "drop": ORANGE, "partial": AQUA, "viab_node": BLUE}
+    colors = {st: FAMILY[st] for st in highlight}  # one strategy per family, in the family's color
     for ax, cell in zip(axes.flat, cells):
         S = runs[cell][scen]
         for st in A.ORDER:
@@ -139,7 +143,7 @@ def fig_curves(runs, scen="mixed", highlight=("nofail", "drop", "partial", "viab
         ax.grid(axis="y", color=GRID, linewidth=0.8)
     h, l = axes.flat[0].get_legend_handles_labels()
     h.append(plt.Line2D([], [], color=LIGHT, lw=1.2))
-    l.append("other strategies (abandon, impute, viability on x, ± fit_abandoned)")
+    l.append("the other strategies (table and dot plot)")
     fig.legend(h, l, loc="lower center", ncol=3, bbox_to_anchor=(0.5, -0.05))
     fig.tight_layout()
     fig.savefig(FIG / "bofn_failures_curves.png")
@@ -152,8 +156,9 @@ def fig_scenarios(runs, budget=100_000):
     if not cells:
         return
     strategies = [s for s in A.ORDER if s != "nofail"]
-    scen_style = [("mixed", BLUE, "o", "both kinds, labelled correctly"), ("mislabel", ORANGE, "D", "both kinds, 30% of labels wrong"),
-                  ("transient", AQUA, "s", "transient failures only")]
+    # scenarios in grays with distinct markers, so blue, orange and aqua keep meaning strategy families
+    scen_style = [("mixed", "#191919", "o", "both kinds, labelled correctly"), ("mislabel", "#6e6e6e", "D", "both kinds, 30% of labels wrong"),
+                  ("transient", "#a3a3a3", "s", "transient failures only")]
     fig, axes = plt.subplots(len(cells), 1, figsize=(6.4, 2.6 * len(cells)))
     axes = np.atleast_1d(axes)
     for ax, cell in zip(axes, cells):
@@ -172,7 +177,7 @@ def fig_scenarios(runs, budget=100_000):
         ref = runs[cell]["mixed"].get("nofail")
         if ref:
             m, _ = mean_se([A.pct(ref[s], cell, budget) for s in sorted(ref)])
-            ax.axvline(m, color=GRAY, lw=1, zorder=1)
+            ax.axvline(m, color=AXIS, lw=1, zorder=1)
             ax.text(m, len(strategies) - 0.35, " no failures", color=INK2, fontsize=7.5, va="bottom")
         ax.set_yticks(range(len(strategies)))
         ax.set_yticklabels([SHORT[s] for s in reversed(strategies)])
