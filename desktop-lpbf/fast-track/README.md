@@ -158,7 +158,10 @@ FT-1 and FT-1V come from `fast_track.py`. E, F, G and H are not costed in detail
   3. whether the fibre ends in a collimator, and its beam diameter. IPG's standard beams are 5 mm (76 µm spot at
      f = 254 mm) and 7.5 mm (51 µm). A used IPG collimator was listed at $495 on 2026-11-20;
   4. output power against setpoint, with a calorimetric check: Thorlabs' LB2L/M 500 W water-cooled dump, a flowmeter
-     and two thermocouples (power = flow × heat capacity × temperature rise);
+     and two thermocouples (power = flow × heat capacity × temperature rise). Then the spot: burn a focus ladder of
+     short lines on anodised aluminium at low power, stepping the plate height, and measure the line widths. Edison
+     found no published acceptance test of ex-EOS IPG lasers, and recommends exactly these checks plus a fibre
+     inspection and a scanner field calibration before any powder;
   5. the scan head's mirrors and coatings (it is rated to 1500 W at 1064 nm), its ±15 V supply and its XY2-100 link,
      driven by the RTC5 with the guide laser only.
 - **RTC5 software** (the RTC5 DLL and correXion) comes from SCANLAB's download portal after registration. The RTC5's
@@ -178,11 +181,21 @@ FT-1 and FT-1V come from `fast_track.py`. E, F, G and H are not costed in detail
   The rod enters through a lightly greased O-ring gland. With the box at +5–10 mbar of argon, that gland only has to
   stop gas, not hold vacuum. 20 mm of travel gives 15 mm builds and room to lift the plate for removal.
 - **The recoater is a moving hopper with the blade on it,** on a Zaber X-LSQ150B (150 mm, 1.4 kg, rated 0–50 °C) inside
-  the box under a stainless shield. Heriot-Watt's open-architecture rig moved its gravity-fed powder reservoir together
-  with its spreader on one lead-screw axis ([Bidare et al. 2017](https://doi.org/10.1016/j.addma.2017.06.007), via a
-  search snippet of its accepted manuscript), and reached > 99 % density on a ~30 × 30 mm bed (PR 266 §2.1). The hopper
-  holds ~30 cm³ and feeds through a slot with a small vibration motor. Blades: HSS by default, a silicone cord as
-  Heriot-Watt found best.
+  the box under a stainless shield. This is Heriot-Watt's arrangement ([Bidare et al. 2017](https://doi.org/10.1016/j.addma.2017.06.007),
+  via [Edison](../edison/ft-fast-track-review/answer.md)):
+  - a gravity-fed V-shaped reservoir travelled with the spreader on a stepper and lead screw;
+  - the build support descended like a piston behind a Teflon O-ring;
+  - rigid tungsten-carbide knife and cylindrical spreaders jammed, so it settled on a 3 mm silicone cord;
+  - it made > 99 % dense 5 mm cubes (~125 layers) in ~1.5 h each, set by its 10 mm/s recoater.
+
+  Our hopper holds ~30 cm³ and feeds through a slot with a small vibration motor. Start with the silicone cord; keep an
+  HSS blade as the alternative. PETRA III's synchrotron rig used the same idea, a gravity funnel with an elastomer lip
+  (Uhlmann and Krohmer 2020, via Edison).
+- **Seal and alignment details from a reduction kit.** An EOS build-volume reduction kit with a Teflon-ringed circular
+  piston suffered piston rotation, which drifted the scan pattern, and powder spread beyond its frame
+  ([Norouzi-Inallu et al. 2023](../edison/ft-fast-track-review/answer.md#2-fixed-powder-bed-designs-and-rectangular-piston-wells),
+  via Edison). PTFE is near its continuous-use limit at 200 °C. So FT-1 uses a fibreglass rope rather than PTFE at the
+  plate edge, clamps the plate to the rod without any rotational freedom, and keeps a skirt round the well top.
 - **The sequence per layer:** scan, return the hopper-blade over the scanned layer, lower the plate one layer, spread
   forward into an overflow cup past the well. A compliant blade copes with raised edges on the return.
 - **The substrate disc** (Ø39.8 × 6 mm 6061, three countersunk M3 screws outside a Ø30 mm build area) lifts out with the
@@ -200,6 +213,14 @@ FT-1 and FT-1V come from `fast_track.py`. E, F, G and H are not costed in detail
 | 100 ppm | 7.6 | 8.1 min | 16–41 min | 0.32–0.81 m³ |
 
 - **Box gas volume:** ~21 L (25.2 L less ~4 L of internals).
+- **The nearest precedent got there by purging alone.** Heriot-Watt's 350 × 230 × 220 mm Perspex box reached < 0.5 % O₂;
+  its reinforced high-pressure version reached < 0.1 % (1000 ppm) after about 10 min of argon
+  ([Bidare et al. 2018](https://doi.org/10.1007/s00170-018-2495-7), via Edison). A sealed metal box should do at least
+  as well.
+- **What 1000 ppm costs AlSi10Mg:** going from 1000 to 100 ppm changed elongation by about 5.7 %, UTS by about 3 % and
+  yield by about 1 %, at ~99.8 % density both ways (Baroutaji et al. 2023, via Edison). That is not evidence for 6061 or
+  7075. Edison expects crack-prone alloys to be more sensitive to oxide films, which is a reason to log O₂ with every
+  build and to keep FT-1V in view.
 - **The floor is set by leaks and permeation, not the purge.** The box runs at +5–10 mbar behind a check valve, so gaps
   leak outward. Gaskets still let oxygen through. The used trace O₂ analyzer (Alpha Omega Series 3000, $650, "Returns
   accepted", read today) gives the real number on the first purge. If it stalls above ~500 ppm, swap the gasket first,
@@ -248,7 +269,14 @@ FT-1 and FT-1V come from `fast_track.py`. E, F, G and H are not costed in detail
   E-stop and a key switch. They run into a safety relay (Omron G9SE-201 class), whose outputs open the laser's hardware
   interlock loop. Software can only request emission. An emission lamp sits on the frame.
 - **No viewing window at first.** A camera looks through the lid instead. A laser viewing panel (Thorlabs LW1P1/M) can
-  be added later.
+  be added later. A clear polymer process box, like Heriot-Watt's, would not be a laser enclosure on its own (Edison);
+  the stainless box is.
+- **Stray-beam sensors.** MIT's high-pressure testbed shut its laser down from thermistors placed near the optics, in
+  case a misaligned beam heated them (Griggs et al. 2022, via Edison). FT-1 puts two thermocouples on the beam tube and
+  window ring, wired to a temperature switch in the safety chain.
+- **Opening after a build.** NIST's AMMT let its door open only once the chamber O₂ was back above 19.5 % (Lane et al.
+  2016, via Edison). FT-1 lets air back in slowly through the inlet filter, which also passivates fresh condensate, and
+  the lid stays shut until the analyzer reads air.
 - **Alignment and service are Class 4:** a written SOP, the guide laser for alignment, Thorlabs LG1 glasses (confirm
   their OD at 1070 nm with the LSO), and a controlled area.
 - **Aluminium powder** (PR 266 §3.7, NFPA 484):
@@ -318,6 +346,24 @@ welding.
 - **Weeks 3–6:** dose and spread; single-layer pads; then cubes 5–10 mm tall in AlSi10Mg first, then the alloys to
   screen.
 
+### 3.11 The commissioning ladder
+
+Edison's review recommends milestones of single tracks, then single layers, then small coupons, rather than full-height
+specimens or robot-ready operation. Each rung below can start as soon as the one before works:
+
+1. **Bare-plate tracks** on 6061 substrate discs, at room temperature: laser, scanner and interlocks proven together.
+2. **Single-track screening on one powder layer** (FT-0 can do this). Bosio et al. (2019, via Edison) spread one 50 µm
+   layer on a **40 mm disc**, the size of FT-1's plate. They laid 9 mm tracks at 25 power–speed pairs and classed them
+   by continuity and regularity, then took the hatch spacing from the track widths.
+3. **The same at 200 °C,** once the heated well is in. Edison ranks a room-temperature start with AlSi10Mg as a way to
+   save days, so the heater does not gate rungs 1–2. It stays in FT-1 because the screening needs it.
+4. **Multi-layer coupons:** 10 × 10 × 5 mm cubes in AlSi10Mg first (Bosio's validation size gave < 1.5 % porosity in an
+   AlSi10Mg-4Cu alloy), then the crack-prone alloys.
+   - **Make them at least 2–5 mm tall (50–125 layers).** Single tracks miss interlayer remelting, heat build-up,
+     residual stress and hot cracking. Reviews warn this matters most for crack-prone aluminium (Martucci et al. 2023,
+     via Edison). Edison found no agreed minimum height for hot cracking. Heriot-Watt's bed reached a steady melted
+     layer after about 10 layers, so the first ~10 layers are not representative.
+
 ## 4. What carries over to PR 266's machine
 
 | FT-1 part | In PR 266's machine |
@@ -345,7 +391,33 @@ spot works.
 | Box air above the stages' 50 °C | thermocouple in the box during the first heat-up | fan, water-cooled deck, lower scan fill |
 | No 208–240 V circuit where the machine goes | read the laser's label on day 0 | a Physical Facilities work order, or a portable step-up transformer if the LSO and electricians allow |
 
-## 6. Decisions for Sterling
+## 6. What Edison's review adds
+
+Edison `LITERATURE_HIGH`, task `d0638a93…`, 61k characters, is in
+[`../edison/ft-fast-track-review/`](../edison/ft-fast-track-review/) with its references and full trajectory. It
+compared nine research LPBF platforms. Heriot-Watt, MIT's high-pressure testbed, NIST AMMT, KU Leuven, the ESRF, SSRL,
+Diamond and PETRA III replicators, and DTU's controller are in its table. It ranks ten simplifications by the time they
+save against the full design. Every one of them is in FT-1 or its commissioning plan:
+
+| Edison rank | Simplification | Time saved (Edison's estimate) | In FT-1 |
+|---:|---|---|---|
+| 1 | An in-stock tested laser, scanner and lens, new or used | up to 8–12 weeks | the used YLR-400-SM, hurrySCAN 25, LINOS lens; acceptance checks in §3.2 |
+| 2 | A small sealed metal box with flow-through argon instead of the machined vacuum chamber | 2–5 weeks | the stainless box (§3.1, §3.4) |
+| 3 | A SCANLAB RTC5 with its DLL, the open controller postponed | 1–4 engineering weeks | the used RTC5; the Teensy controller as the fallback |
+| 4 | One small circular bed, 3–10 mm usable height | 1–3 weeks | one Ø40 mm plate, 15 mm builds |
+| 5 | A simple small piston with a replaceable seal, no honed bore | 1–3 weeks | the heated well with a rope wiper, anti-rotation (§3.3) |
+| 6 | A travelling gravity reservoir with a compliant cord or lip | 1–2 weeks | the moving hopper with a silicone cord |
+| 7 | Hand-spread single layers for commissioning | days to 2 weeks | FT-0 |
+| 8 | Flow purge and once-through cross-flow | 1–3 weeks | §3.4 |
+| 9 | Commission at room temperature, heat later | days to 2 weeks | rungs 1–2 of §3.11 |
+| 10 | Milestones of tracks, layers, then 1–5 mm coupons | days to weeks of earlier data | §3.11 |
+
+Edison's summary is that together these "can plausibly reduce the time to first multi-layer AlSi10Mg test coupons from
+10–16 weeks to 3–6 weeks", which matches `fast_track.py`. Its cautions are in §5 and §3.3–§3.7: no published
+acceptance test of ex-EOS lasers, PTFE near its limit at 200 °C, piston rotation in a reduction kit, and O₂
+sensitivity of crack-prone alloys. Its time savings are engineering estimates, not sourced figures.
+
+## 7. Decisions for Sterling
 
 1. FT-0 then FT-1, or straight to FT-1V if below 100 ppm O₂ is required from the start?
 2. Is a purge-only O₂ of 100–1000 ppm acceptable for the first coupons? EOS M 290 work on Al uses a 1000 ppm threshold.
