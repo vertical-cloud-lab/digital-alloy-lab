@@ -104,7 +104,10 @@ def tool_polys(fn, args):
 def main():
     ch = common.Chapter(NAME, TITLE)
     pl = common.plotter()
-    n_turn, n_hold = int(2.6 * FPS), int(0.6 * FPS)
+    # round 8: 4.8 s a tool (0.8 s still, a 50 deg turn over 3.2 s, 0.8 s still). Round 7's 2.6 s, 150 deg turn and 0.6 s
+    # hold failed video_qa.py's camera gate (median shot 3.1 s against 4 s; 95th-percentile speed 0.18 frame widths a second
+    # against the 7-second rule's 0.14)
+    n_pre, n_turn, n_hold = int(0.8 * FPS), int(3.2 * FPS), int(0.8 * FPS)
     for (spec, title, what, made, status) in TOOLS:
         fn, args = spec[0], spec[1:]
         try:
@@ -132,9 +135,10 @@ def main():
         dims = " x ".join(f"{s:.0f}" for s in sorted(size, reverse=True))
         sub = what
         labels = [[70, 600, made], [70, 640, f"{dims} mm overall; the black bar is 50 mm"]]
-        for k in range(n_turn + n_hold):
-            u = min(k, n_turn) / n_turn
-            az = math.radians(-60.0 + 150.0 * u)
+        for k in range(n_pre + n_turn + n_hold):
+            u = min(max(k - n_pre, 0), n_turn) / n_turn
+            u = u * u * (3 - 2 * u)              # eased: no jolt where the turn starts and stops
+            az = math.radians(-50.0 + 50.0 * u)
             el = math.radians(28.0)
             eye = (R * math.cos(el) * math.cos(az), R * math.cos(el) * math.sin(az), R * math.sin(el))
             pl.camera_position = [eye, (0.0, 0.0, 0.0), (0.0, 0.0, 1.0)]
@@ -143,7 +147,7 @@ def main():
             pl.camera.zoom(1.25)
             img = pl.screenshot(return_img=True)
             ch.frame(img, title, sub=sub, who=[], status=status, proc_s=0.0, no_clock=True, labels=labels)
-        print(f"{fn}: {n_turn + n_hold} frames", flush=True)
+        print(f"{fn}: {n_pre + n_turn + n_hold} frames", flush=True)
     ch.close()
     print(f"{NAME}: {ch.n} frames ({ch.n / FPS:.0f} s)", flush=True)
 
