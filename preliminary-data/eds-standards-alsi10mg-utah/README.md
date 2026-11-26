@@ -154,9 +154,12 @@ So [`dtsa2-results.csv`](dtsa2-results.csv) is transcribed right. Nothing outsid
 the settings listed above went into the student's numbers.
 
 One difference: this build leaves the standard's own counting statistics (`I[std]`) out of the
-uncertainty of the un-normalized mass fractions. Only Al in `sobol_exp_1_1` shows it (±0.06
-here, ±0.13 wt % in the report), along with the analytical total (±0.0020 against ±0.0023). The
-uncertainties of the normalized values are the same.
+uncertainty of the un-normalized mass fractions.
+- **The totals.** Their uncertainties come out up to 0.0003 smaller (0.0020 against 0.0023 for
+  `sobol_exp_1_1`).
+- **Al in `sobol_exp_1_1`.** Its uncertainty is ±0.06 here against ±0.13 wt % in the report.
+- **The normalized values.** Their uncertainties, which the tables here use, match to rounding in
+  all 17 runs.
 
 ### Fixes software can make
 
