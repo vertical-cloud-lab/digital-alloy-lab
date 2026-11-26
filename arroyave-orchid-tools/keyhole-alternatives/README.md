@@ -8,7 +8,9 @@ looked in three ways:
 - reading the primary sources through a headed browser tunnelled out through a lab Pi;
 - testing the cheap candidates against the same in-house AM-module maps and melt-pool renders that #238 used.
 - then, as asked in #249, running the open CFD code (laserbeamFoam) at the AM module's melt-pool points and
-  combining it with the cheap models ([below](#laserbeamfoam-runs-and-the-methods-combined-against-the-am-module)).
+  combining it with the cheap models ([below](#laserbeamfoam-runs-and-the-methods-combined-against-the-am-module));
+- and, also asked in #249, writing our own first-principles keyhole and melt-pool model
+  ([below](#our-own-first-principles-model), full write-up in [`first-principles/`](first-principles/README.md)).
 
 ## Answer
 
@@ -17,6 +19,7 @@ looked in three ways:
 | **Keyhole boundary on a printability map** | **The keyhole number** Ke = ηP / ((T_l − T0) π ρ c_p √(α v r0³)) of [Gan et al. 2021](https://doi.org/10.1038/s41467-021-22704-0), or the normalized enthalpy of [King et al. 2014](https://doi.org/10.1016/j.jmatprotec.2014.06.005), which differs only in its constants and temperature scale. Use one threshold, calibrated on our own single tracks. | The AM module's keyhole boundary lies along a near-constant Ke on both maps (Ke stays within −3 % and +10 % of its median from 0.3 to 1.3 m/s). So the boundary's *shape* is reproduced, and only its level needs fitting. One fitted threshold per map gets 58 of 58 and 26 of 27 grid points; eagar-tsai's W/D test gets 18 and 15. Unfitted, with the keyhole width taken from laserbeamFoam, Gan's depth law and the AM module's own Wk/Dk ≤ 0.7 test give the same keyhole-or-not call at 55 of 58 and 25 of 27 points ([below](#the-combined-model-on-the-am-modules-maps)). | microseconds |
 | **Keyhole depth** | **Gan et al.'s depth law** e / r0 = 0.4 (Ke − 1.4) | On Gan et al.'s published X-ray keyhole depths (Ti-6Al-4V, Al6061, SS316) it is within 6–13 % (median). At the AM module's keyhole-mode render it gives a 322 µm keyhole under a 349 µm pool. eagar-tsai can't reach that pool depth at any absorptivity (#238). | microseconds |
 | **Keyhole-mode pool width and length, keyhole porosity** | **An open thermal-fluid code that resolves the keyhole**: [laserbeamFoam](https://github.com/laserbeamfoam/LaserbeamFoam) first (OpenFOAM, Fresnel ray tracing, recoil pressure, GPL-3.0, active); [meltPoolFoam](https://github.com/meltPoolFoam/meltPoolFoam), [MeltPoolDG](https://github.com/MeltPoolDG/MeltPoolDG) and [Lethe](https://github.com/chaos-polymtl/lethe) as alternatives | Run here, coarse (15–25 µm cells, 0.8–1.6 ms of track; [below](#laserbeamfoam-runs-and-the-methods-combined-against-the-am-module)). Given the AM module's absorbed power, laserbeamFoam's blend pool is about two-thirds as deep and half as wide as the AM module's, and its length settles near 250 µm against 1.47 mm. Its own Fresnel absorptivity either stays in conduction mode or keyholes and absorbs ~0.7, depending on a resistivity nobody has measured. No cheap open model gives keyhole-mode length or width. | CPU-hours to days per track, so use it to calibrate, not for maps |
+| **Our own model, from first principles** ([`first-principles/`](first-principles/README.md)) | Drude–Fresnel optics of the liquid alloy, a ray tracer for the keyhole's multiple reflections, an energy balance at a keyhole wall held at the boiling point (3D moving point sources), and the melt pool as an isotherm of the same sources. Properties from cited measurements (read through the Pi) and pycalphad + mc_al. Nothing fitted to keyhole data | Unfitted, it makes the AM module's keyhole-or-not call at **58 of 58 and 25 of 27** grid points, and gets the AM module's absorptivity at the AlSi10Mg render (0.315 against 0.307). On X-ray depths it is within a median 0.88× for Ti-6Al-4V (R² 0.93), but 2.2× too deep for Al6061, and its conduction pools are too small for the lack-of-fusion side. No melt flow, so pool length is short | 0.2 s |
 | **The approach** | **An ORCHID-style open benchmark.** Curate the measured keyhole data (X-ray depths, onset and porosity thresholds, our own tracks) with uncertainties, and score every cheap model against it, including the AM module. [`scripts/keyhole_open_models.py`](../../scripts/keyhole_open_models.py) is a first scorer. | See [below](#an-orchid-style-benchmark-for-keyhole-models) | |
 
 **Don't use:**
@@ -443,6 +446,42 @@ python scripts/keyhole_cfd_laserbeamfoam.py figures --post-dir $OUT --case-dirs 
 python scripts/keyhole_amalgamation.py --cfd-dir $OUT --out $OUT
 ```
 
+## Our own first-principles model
+
+Sterling asked in #249 for our own implementation from first principles, using the Pi for articles and databases
+and Edison as needed. [`scripts/keyhole_first_principles.py`](../../scripts/keyhole_first_principles.py) is written
+from scratch, and [`first-principles/README.md`](first-principles/README.md) has the physics, every property with its
+source, the checks and all the results. In short:
+
+- **The physics:**
+  - Drude–Fresnel optics of the liquid from its measured resistivity;
+  - a Monte Carlo ray tracer for multiple reflections in a conical keyhole opening one beam radius wide;
+  - the keyhole depth from an energy balance at a wall held at the boiling point (moving point sources on the axis,
+    with images, plus vapour outflow);
+  - the pool as the liquidus isotherm of the same sources, with latent heat from pycalphad + mc_al.
+- **Properties** are cited measurements read through the Pi: Leitner et al. 2017 (liquid Al), Brandt & Neuer 2007
+  (Al–Si resistivity), NIST-JANAF (boiling point and vaporisation), Kobatake et al. 2015 (Al–Si surface tension) and
+  Krishnan et al. 1993 (liquid Al optics). Kaplan 1994 and Lankalapalli et al. 1996 are checked against the papers.
+- **Against the AM module:**
+  - keyhole-or-not agrees at 58 of 58 AlSi10Mg and 25 of 27 blend grid points, unfitted;
+  - its keyhole line is at 0.95–1.02× (AlSi10Mg) and 1.16–1.22× (blend) the AM module's power;
+  - at the AlSi10Mg render it absorbs 0.315, against the AM module's 0.307.
+- **Against X-ray keyhole depths** (Gan et al., 87 rows), on its own absorptance:
+  - Ti-6Al-4V median 0.88× (R² 0.93); SS316 0.66×;
+  - Al6061 2.2× too deep, because the cone traps ~0.85 of the beam where Gan et al.'s η is 0.18.
+  - Its Ti-6Al-4V absorptance (median 0.77) is in the range Simonds et al. 2021 measured (0.66–0.84).
+- **What it can't do yet:**
+  - Lack of fusion is over-predicted: a flat liquid absorbs only 0.18–0.20.
+  - Keyhole-mode pool length is 473 µm at the liquidus at the blend render (1,129 µm at the solidus), against the AM
+    module's 1,470 µm. It has no melt flow.
+  - Deep Al keyholes absorb 0.87 against the AM module's 0.38. A paraboloidal keyhole gives 0.39, so the keyhole's
+    shape is the open question.
+- **The one measured aluminium point.** NIST's AM-Bench 2022 Al 5182 track (Simonds et al. 2024; 473 W, 0.7 m/s)
+  measured an absorbed fraction of 0.43 in the keyhole; the model gives 0.30. Its pool is 109 µm deep and 218 µm wide
+  against the measured 88.8 and 326. So the fixed-cone keyhole traps too little there, and too much at the blend
+  render.
+- **Edison's round 3 came back grounded** (51 of 52 DOIs correct). It found that Al 5182 lead.
+
 ## An ORCHID-style benchmark for keyhole models
 
 ORCHID ([`../orchid/`](../orchid/)) is useful because it pairs open models with curated, accepted reference values and
@@ -587,3 +626,6 @@ came back empty.
 | `cfd/logs/<run>-log.laserbeamFoam.digest.txt` | the start and end of each solver log (the full logs ran to gigabytes) |
 | `cfd/amalgamation-render-points.csv`, `cfd/amalgamation-map-classes.csv`, `cfd/amalgamation-summary.json` | the combined model at the CFD points and at every map grid point, and its scores |
 | `cfd/cfd-histories.png`, `cfd/cfd-sections.png`, `cfd/amalgamation-maps-vs-am-module.png` | the three CFD figures |
+| [`first-principles/`](first-principles/README.md) | our own first-principles model: write-up, per-point tables, sensitivity runs and figures |
+| [`../../scripts/keyhole_first_principles.py`](../../scripts/keyhole_first_principles.py), [`../../scripts/test_keyhole_first_principles.py`](../../scripts/test_keyhole_first_principles.py), [`../../scripts/keyhole_fp_enthalpy_mc_al.py`](../../scripts/keyhole_fp_enthalpy_mc_al.py) | the model, its 8 checks, and the pycalphad enthalpy table it reads |
+| [`../../edison-trajectories/keyhole-first-principles/`](../../edison-trajectories/keyhole-first-principles/) | Edison round 3 (grounded): three reports, raw trajectories and the DOI check ([`../../scripts/edison_keyhole_first_principles.py`](../../scripts/edison_keyhole_first_principles.py), [`../../scripts/edison_doi_check.py`](../../scripts/edison_doi_check.py)) |

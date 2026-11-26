@@ -1,0 +1,5 @@
+shape,variant,mode,A,A_keyhole,a0_um,d_um,Wk_over_Dk,T_w,T_peak_conduction,Q_cond_W,Q_evap_W,residual,hits_per_ray,pool_depth_um,pool_width_um,pool_length_um,pool_Dh_um,pool_depth_solidus_um,pool_width_solidus_um,pool_length_solidus_um,zc_abs,zc_loss,converged
+cone,own absorptance,keyhole,0.30234,0.27907,61.25,64.338,1.904,2824,4404.8,125.38,6.6208,9.7817e-10,1.9808,108.91,218.3,326.14,0,149.03,298.37,511.61,0.48517,0.103,True
+cone,absorptance fixed at the measured 0.43,keyhole,0.43,0.4062,61.25,117.43,1.0431,2824,10575,185.51,6.6208,8.3589e-09,2.9705,146.83,260.5,437.41,0,190.82,359.03,689.4,0.58931,0.25265,True
+paraboloid,own absorptance,keyhole,0.17178,0.14851,61.25,13.898,8.8144,2824,4404.8,63.624,6.6208,5.2337e-07,1,70.606,178.31,185.85,0,100.87,211.06,319.68,0.65616,0.065997,True
+paraboloid,absorptance fixed at the measured 0.43,keyhole,0.43,0.3978,61.25,85.285,1.4364,2824,10575,181.54,6.6208,1.522e-07,1.9614,141.61,265.52,443.04,0,187.75,363.18,695.94,0.73325,0.28392,True
