@@ -287,6 +287,11 @@ class Lab:
         """Admit an action if its first step can start within the window and the money is there."""
         if act["kind"] == "stop":
             return self._stop(act["coupon"], now)
+        if act["kind"] == "print" and isinstance(act["machine"], (tuple, list)):
+            for m in act["machine"]:  # first machine that can take it
+                if m in self.routes and self.submit(dict(act, machine=m), now, window):
+                    return True
+            return False
         p = self.plan(act, now)
         if p is None:
             return False
@@ -424,6 +429,16 @@ class Lab:
         raise KeyError(kind)
 
     # ------------------------------------------------------------ the claim
+    def can_start(self, route, now, window=None):
+        """Could an action on this route start within the admission window (ignoring money)?"""
+        r = self.routes.get(route)
+        if r is None:
+            return False
+        stn, h = self.stations[r["steps"][0][0]], r["steps"][0][1]
+        s, _, _ = stn.quote(now, h, now)
+        w = self.settings["admit_window"] if window is None else window
+        return s - (now + stn.lead) <= w + 1e-9
+
     def claimable(self, cp):
         return (len(cp["bars"]) >= 3 and cp["imm_final"] is not None and cp["imm_final"] <= self.truth.ln_rmax)
 
@@ -433,6 +448,7 @@ class Lab:
         return self.objective_meas(self.coupons[self.claim])
 
     def _update_claim(self, t):
+        self._update_confirmed(t)
         best, bid = None, None
         for cp in self.coupons:
             if self.claimable(cp):
@@ -450,6 +466,24 @@ class Lab:
         for name, lvl in self.targets.items():
             if name not in self.hit and val >= lvl - 1e-12:
                 self.hit[name] = (t, self.spent)
+
+    def _update_confirmed(self, t):
+        """Confirmation (E2b): the same claim rule on a production-representative lot, gas-atomized outside and
+        printed on the partner's machine. Its targets are named T1c and T2c."""
+        best, bid = None, None
+        for cp in self.coupons:
+            if cp["route"] == "gas" and cp["machine"] == "pt" and self.claimable(cp):
+                m = self.objective_meas(cp)
+                if best is None or m > best:
+                    best, bid = m, cp["id"]
+        if bid is None:
+            return
+        cp = self.coupons[bid]
+        val = self.truth.score(cp["c"], 0.5, cp["P"], cp["v"], "gas", "pt")
+        self.confirmed = bid
+        for name, lvl in self.targets.items():
+            if name + "c" not in self.hit and val >= lvl - 1e-12:
+                self.hit[name + "c"] = (t, self.spent)
 
     # ------------------------------------------------------------ the loop
     def run(self, policy, stop_at=None, max_decisions=100_000):

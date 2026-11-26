@@ -184,25 +184,23 @@ def optimum(truth: Truth, n=200_000, seed=0, constrained=True, comp_filter=None)
         return np.where(ok, obj, -9.0)
 
     y = val(X)
-    top = X[np.argsort(y)[-60:]]
-    best_y, best_x = -9.0, None
-    for x0 in top:
-        x = x0.copy()
-        yx = val(x[None])[0]
-        step = 0.05
-        while step > 1e-4:
-            improved = False
-            for j in range(len(x)):
-                for sgn in (1, -1):
-                    xn = x.copy()
-                    xn[j] = np.clip(xn[j] + sgn * step, 0, 1)
-                    yn = val(xn[None])[0]
-                    if yn > yx + 1e-12:
-                        x, yx, improved = xn, yn, True
-            if not improved:
-                step /= 2
-        if yx > best_y:
-            best_y, best_x = yx, x
+    Xt = X[np.argsort(y)[-60:]].copy()  # coordinate search from the 60 best, all at once
+    yt = val(Xt)
+    step = 0.05
+    while step > 1e-4:
+        improved = False
+        for j in range(Xt.shape[1]):
+            for sgn in (1, -1):
+                Xn = Xt.copy()
+                Xn[:, j] = np.clip(Xn[:, j] + sgn * step, 0, 1)
+                yn = val(Xn)
+                better = yn > yt + 1e-12
+                if better.any():
+                    Xt[better], yt[better], improved = Xn[better], yn[better], True
+        if not improved:
+            step /= 2
+    k = int(np.argmax(yt))
+    best_y, best_x = yt[k], Xt[k]
     return float(best_y), best_x
 
 

@@ -1,0 +1,7 @@
+pkgfn: n=8 best 51.6 ± 9.5% (per seed [76, 35, 78, 24, 14, 81, 38, 66]); restricted ceiling 81.6% at the start, 83.4% at the end (min 69.1%)
+   KG of a tensile test exactly 0 for 3835/5265 scored candidates (73%); best KG of atomizing 0 on 32% of steps, of CALPHAD 0 on 94%, of printing 0 on 1%; fallback on 1%
+   new purchases per run: C 1.8, A 6.0, L 35.6, T 7.9
+pkgfn_la: n=8 best 60.1 ± 9.4% (per seed [87, 47, 51, 65, 31, 87, 91, 23]); restricted ceiling 81.6% at the start, 85.1% at the end (min 69.1%)
+   KG of a tensile test exactly 0 for 3246/4848 scored candidates (67%); best KG of atomizing 0 on 52% of steps, of CALPHAD 0 on 94%, of printing 0 on 0%; fallback on 0%
+   new purchases per run: C 1.2, A 9.2, L 33.6, T 7.0
+pkgfn_la - pkgfn on 8 matched seeds: +8.5 ± 11.3 points, ahead on 6, behind on 2, p = 0.461
