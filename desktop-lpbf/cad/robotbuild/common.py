@@ -86,8 +86,8 @@ def plotter(size=(W, H)):
                           light_type="scene light"))
     pl.add_light(pv.Light(position=(0, 0, 1), focal_point=(0, 0, 0), intensity=0.25, positional=False,
                           light_type="scene light"))
-    try:
-        pl.enable_anti_aliasing("ssaa")
+    try:                             # ROBOTBUILD_AA=fxaa: the cheap filter, several times faster than SSAA on llvmpipe
+        pl.enable_anti_aliasing(os.environ.get("ROBOTBUILD_AA", "ssaa"))
     except Exception:
         pass
     return pl
