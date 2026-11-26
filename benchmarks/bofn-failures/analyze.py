@@ -181,8 +181,8 @@ def main():
                 continue
             strats = [s for s in ORDER if s in S and S[s]]
             lines += [f"## {CELL_NAME[cell]} (`{cell}`), scenario `{scen}`", ""]
-            lines += ["| Strategy | n | $25k | $50k | $100k | spend on failed stages | input-caused failures | repeats | transient failures | runs validated |",
-                      "|---|---|---|---|---|---|---|---|---|---|"]
+            lines += ["| Strategy | n | $25k | $50k | $100k | spend on failed stages | input-caused failures | repeats | transient failures | runs validated | new alloys / runs |",
+                      "|---|---|---|---|---|---|---|---|---|---|---|"]
             score = {}
             for st in strats:
                 R = S[st]
@@ -194,13 +194,15 @@ def main():
                 rep = np.array([R[s]["repeat_input_failures"] for s in seeds])
                 tr = np.array([sum(v for k, v in R[s]["failures"].items() if ":transient" in k) for s in seeds])
                 val = np.array([R[s]["trials_complete"] for s in seeds])
+                new = np.array([R[s]["trials_new"] for s in seeds])
+                tot = np.array([R[s]["trials"] for s in seeds])
                 se = lambda a: a.std(ddof=1) / np.sqrt(len(a)) if len(a) > 1 else float("nan")
                 lines.append(f"| {LABEL[st]} | {len(seeds)} | " + " | ".join(f"{vals[b].mean():.1f} ± {se(vals[b]):.1f}" for b in BUDGETS)
-                             + f" | ${f_spent.mean():.1f}k | {inp.mean():.1f} | {rep.mean():.1f} | {tr.mean():.1f} | {val.mean():.1f} |")
+                             + f" | ${f_spent.mean():.1f}k | {inp.mean():.1f} | {rep.mean():.1f} | {tr.mean():.1f} | {val.mean():.1f} | {new.mean():.1f} / {tot.mean():.1f} |")
                 summary.setdefault(cell, {}).setdefault(scen, {})[st] = dict(
                     n=len(seeds), **{f"pct_{b // 1000}k": [float(vals[b].mean()), float(se(vals[b]))] for b in BUDGETS},
                     failed_spend_k=float(f_spent.mean()), input_failures=float(inp.mean()), repeats=float(rep.mean()),
-                    transient_failures=float(tr.mean()), validated=float(val.mean()))
+                    transient_failures=float(tr.mean()), validated=float(val.mean()), new_alloys=float(new.mean()), runs=float(tot.mean()))
             lines += ["", "Median spend to reach 60 / 70 / 80 % of the optimum (share of seeds that reach it within $100k):", "",
                       "| Strategy | 60% | 70% | 80% |", "|---|---|---|---|"]
             for st in strats:

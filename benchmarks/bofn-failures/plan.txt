@@ -1,18 +1,20 @@
 # net kappa scenario seeds strategies...   (run in this order; see PREREGISTRATION.md)
 # "+full" = the full-pipeline policy (no lot reuse)
+# Reordered at 07:46 UTC when copper runs proved slower than timed (about 2 a minute on 4 cores):
+# the secondary copper lines run 12 seeds, and the cells come in this order.
 al 1 mixed 0-19 nofail drop abandon partial keep impute viab_x viab_x_partial viab_node viab_node_ec
 cu-toy 1 mixed 0-15 nofail drop abandon partial keep impute viab_x viab_x_partial viab_node viab_node_ec
 al 1 mislabel 0-19 impute viab_x viab_x_partial viab_node viab_node_ec
 al 1 transient 0-19 drop abandon partial viab_node
-cu-toy 1 mislabel 0-15 impute viab_x viab_x_partial viab_node viab_node_ec
-cu-toy 1 transient 0-15 drop abandon partial viab_node
 al 1 mixed 0-19 impute_extreme
 al 1 mislabel 0-19 impute_extreme
-cu-toy 1 mixed 0-15 impute_extreme
-cu-toy 1 mislabel 0-15 impute_extreme
-cu-phys 1 mixed 0-15 nofail drop abandon partial keep impute viab_x viab_x_partial viab_node viab_node_ec
-al 0 mixed 0-19 nofail drop abandon partial keep impute viab_x viab_x_partial viab_node viab_node_ec
+cu-toy 1 mislabel 0-11 impute viab_x viab_x_partial viab_node viab_node_ec
+cu-phys 1 mixed 0-11 nofail drop abandon partial keep impute viab_x viab_x_partial viab_node viab_node_ec
+al 0 mixed 0-15 nofail drop abandon partial keep impute viab_x viab_x_partial viab_node viab_node_ec
+cu-toy 1 transient 0-11 drop abandon partial viab_node
+cu-toy 1 mixed 0-11 impute_extreme
+cu-toy 1 mislabel 0-11 impute_extreme
 al+full 1 mixed 0-11 nofail drop abandon partial impute viab_x viab_node
 cu-toy+full 1 mixed 0-11 nofail drop abandon partial impute viab_x viab_node
-cu-phys 1 mislabel 0-15 impute viab_x viab_x_partial viab_node
-al 0 mislabel 0-19 impute viab_x viab_x_partial viab_node
+cu-phys 1 mislabel 0-11 impute viab_x viab_x_partial viab_node
+al 0 mislabel 0-15 impute viab_x viab_x_partial viab_node
