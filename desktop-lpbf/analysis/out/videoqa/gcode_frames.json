@@ -11865,6 +11865,7 @@
 "head_z": 533.5,
 "in_travel": true
 }
-]
+],
+"camera": "the cutting frames' camera rides on the VF-4's table (the part still, the spindle moving over it)"
 }
 }
