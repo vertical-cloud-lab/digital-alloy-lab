@@ -20,13 +20,19 @@ from scipy.stats import wilcoxon
 
 HERE = Path(__file__).resolve().parent
 RES = HERE / "results"
-CELLS = {"al-k1": "al kappa=1 eta=1", "al-k0": "al kappa=0 eta=1", "cu-toy-k1": "cu-toy kappa=1 eta=1", "cu-phys-k1": "cu-phys kappa=1 eta=1"}
-CELL_NAME = {"al-k1": "Aluminum, kappa = 1", "al-k0": "Aluminum, kappa = 0", "cu-toy-k1": "Copper, hand-written truth", "cu-phys-k1": "Copper, physics truth"}
-ORDER = ["nofail", "drop", "abandon", "partial", "impute", "viab_x", "viab_x_partial", "viab_node"]
-LABEL = {"nofail": "no failures (reference)", "drop": "drop (all FAILED)", "abandon": "abandon (all ABANDONED)", "partial": "partial (Ax >= 1.2.4)",
-         "impute": "impute worst value", "viab_x": "viability on x (Ax 1.3)", "viab_x_partial": "viability on x + fit_abandoned", "viab_node": "node-level viability"}
-STAND_IN = {"mislabel": {"drop": "mixed", "abandon": "mixed", "partial": "mixed", "nofail": "mixed"},
-            "transient": {"viab_x": ("mixed", "drop"), "viab_x_partial": ("mixed", "drop"), "impute": ("transient", "viab_node"), "nofail": "mixed"}}
+CELLS = {"al-k1": "al kappa=1 eta=1", "al-k0": "al kappa=0 eta=1", "cu-toy-k1": "cu-toy kappa=1 eta=1", "cu-phys-k1": "cu-phys kappa=1 eta=1",
+         "al-k1-full": "al kappa=1 eta=1", "cu-toy-k1-full": "cu-toy kappa=1 eta=1"}
+CELL_NAME = {"al-k1": "Aluminum, kappa = 1", "al-k0": "Aluminum, kappa = 0", "cu-toy-k1": "Copper, hand-written truth", "cu-phys-k1": "Copper, physics truth",
+             "al-k1-full": "Aluminum, kappa = 1, full-pipeline BOFN", "cu-toy-k1-full": "Copper, hand-written truth, full-pipeline BOFN"}
+ORDER = ["nofail", "drop", "abandon", "partial", "keep", "impute", "viab_x", "viab_x_partial", "viab_node", "viab_node_ec"]
+LABEL = {"nofail": "no failures (reference)", "drop": "drop (all FAILED)", "abandon": "abandon (all ABANDONED)", "partial": "partial (Ax >= 1.2.4, pending)",
+         "keep": "keep partial data, nothing pending", "impute": "impute worst value", "viab_x": "viability on x (Ax 1.3)",
+         "viab_x_partial": "viability on x + fit_abandoned", "viab_node": "node-level viability", "viab_node_ec": "node-level viability + failure-priced EI"}
+# strategies that ignore labels run identically in `mislabel` and `mixed` (same failure draws); in `transient`,
+# viab_x and viab_x_partial reduce to drop, and impute, keep and viab_node coincide
+STAND_IN = {"mislabel": {"drop": "mixed", "abandon": "mixed", "partial": "mixed", "keep": "mixed", "nofail": "mixed"},
+            "transient": {"viab_x": ("transient", "drop"), "viab_x_partial": ("transient", "drop"), "impute": ("transient", "viab_node"),
+                          "keep": ("transient", "viab_node"), "nofail": "mixed"}}
 BUDGETS = (25_000, 50_000, 100_000)
 
 
@@ -54,8 +60,6 @@ def load():
                 if strat in runs[cell][scen]:
                     continue
                 s_scen, s_strat = (src, strat) if isinstance(src, str) else src
-                if s_strat == "drop" and scen == "transient":
-                    s_scen = "transient"  # viab_x in transient == drop in transient
                 if s_strat in runs[cell].get(s_scen, {}):
                     runs[cell][scen][strat] = runs[cell][s_scen][s_strat]
     return runs
@@ -133,7 +137,7 @@ def main():
                     failed_spend_k=float(f_spent.mean()), input_failures=float(inp.mean()), repeats=float(rep.mean()),
                     transient_failures=float(tr.mean()), validated=float(val.mean()))
             # paired comparisons (pre-registered): viab_node vs every other; partial vs abandon and drop
-            comps = [("viab_node", o) for o in strats if o != "viab_node"] + [("partial", "abandon"), ("partial", "drop"), ("viab_x_partial", "viab_x")]
+            comps = [("viab_node", o) for o in strats if o != "viab_node"] + [("partial", "abandon"), ("partial", "drop"), ("keep", "partial"), ("viab_x_partial", "viab_x")]
             comps = [(a, b) for a, b in comps if a in score and b in score]
             res = [paired(score[a], score[b]) for a, b in comps]
             if res:

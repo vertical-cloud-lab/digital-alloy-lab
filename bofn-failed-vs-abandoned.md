@@ -45,6 +45,30 @@ Line links below point at those commits.
 
 ## 1. What Ax does with each status
 
+> **Update, 2026-11-26.** A full pass over Ax (every issue and PR with comments, code on every
+> branch, `main` at [`5beadc8`](https://github.com/meta/Ax/tree/5beadc82256d419f75768a89f1a4c357bc4a63c0),
+> behaviour checked by running Ax 1.3.1) corrects and extends this section. Details and links are in
+> [`benchmarks/bofn-failures/survey/ax.md`](benchmarks/bofn-failures/survey/ax.md).
+> - `FAILED` data has been left out of fitting only since **1.2.2** ([Ax PR #4614](https://github.com/meta/Ax/pull/4614));
+>   before that, everything but `ABANDONED` was fit. The `Client.complete_trial` rule that marked a
+>   trial with missing metrics `FAILED` dates from 0.5.0 ([#3121](https://github.com/meta/Ax/pull/3121)),
+>   and the deprecated `AxClient.complete_trial` still does it on `main`.
+> - **Pending is weaker than the table below says.** `X_pending` keeps only arms that are pending
+>   for *every* objective and constraint metric. Below 100 trials, a `COMPLETED` arm with partial
+>   data, a `RUNNING` arm with stage-1 data attached, or an `ABANDONED` arm with some data is
+>   therefore not pending; only exact deduplication protects it. At 100 or more trials a faster
+>   code path does include them.
+> - **`AddExecutionViability` crashes as shipped in 1.3.x and on `main`**:
+>   `KeyError: Metric 'execution_viable' not found` (since [#5000](https://github.com/meta/Ax/pull/5000)).
+>   Registering a tracking metric named `execution_viable` works around it. It fits an ordinary GP
+>   to the 0/1 labels (not a classifier), and `FAILED` trials get no label.
+> - `fit_abandoned=True` re-admits data from **every** status, `FAILED` included.
+> - `STALE` arms stay in the deduplication set, so despite the docstring they can't be suggested
+>   again exactly.
+>
+> The benchmark in [`benchmarks/bofn-failures/`](benchmarks/bofn-failures/README.md) emulates each
+> of these behaviours on the lab's aluminum and copper networks.
+
 From [`trial_status.py`](https://github.com/meta/Ax/blob/41cdcef7d6247571464ad333ae9266054009a31f/ax/core/trial_status.py#L14-L65):
 
 ```

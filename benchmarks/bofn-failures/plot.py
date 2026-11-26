@@ -25,10 +25,13 @@ HERE = Path(__file__).resolve().parent
 FIG = HERE / "figures"
 INK, INK2, GRID, AXIS = "#191919", "#666666", "#e7e7e7", "#c2c2c2"
 BLUE, ORANGE, AQUA, GRAY, LIGHT = "#257de0", "#f47230", "#00b894", "#666666", "#c9c9c9"
-FAMILY = {"nofail": GRAY, "drop": ORANGE, "abandon": ORANGE, "partial": ORANGE, "impute": AQUA, "viab_x": BLUE, "viab_x_partial": BLUE, "viab_node": BLUE}
-SHORT = {"nofail": "no failures (reference)", "drop": "drop: all FAILED (Ax ≤ 1.2.3)", "abandon": "abandon: all ABANDONED", "partial": "partial (Ax ≥ 1.2.4)",
-         "impute": "impute the worst value", "viab_x": "viability on x (Ax 1.3)", "viab_x_partial": "viability on x + fit_abandoned", "viab_node": "node-level viability"}
+FAMILY = {"nofail": GRAY, "drop": ORANGE, "abandon": ORANGE, "partial": ORANGE, "keep": ORANGE, "impute": AQUA, "viab_x": BLUE, "viab_x_partial": BLUE,
+          "viab_node": BLUE, "viab_node_ec": BLUE}
+SHORT = {"nofail": "no failures (reference)", "drop": "drop: all FAILED (Ax 1.2.2–1.2.3)", "abandon": "abandon: all ABANDONED", "partial": "partial, pending (Ax ≥ 1.2.4)",
+         "keep": "partial, nothing pending", "impute": "impute the worst value", "viab_x": "viability on x (Ax 1.3)", "viab_x_partial": "viability on x + fit_abandoned",
+         "viab_node": "node-level viability", "viab_node_ec": "node-level + failure-priced EI"}
 CELLS = ["al-k1", "al-k0", "cu-toy-k1", "cu-phys-k1"]
+FULL = ["al-k1-full", "cu-toy-k1-full"]
 
 plt.rcParams.update({
     "font.family": "sans-serif", "font.size": 9, "axes.edgecolor": AXIS, "axes.linewidth": 0.8, "axes.labelcolor": INK2,
