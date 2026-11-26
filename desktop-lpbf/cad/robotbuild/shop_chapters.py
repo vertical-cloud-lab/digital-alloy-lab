@@ -1088,7 +1088,7 @@ def chapter_31():
     lb = load("lathe_big")
     if lb is not None and (lb.get("result") or {}).get("ok", False):
         scn.add_parts("lathe", E.st10(door=1.0, jaw_open=33.0, jaw_deg=30.0)[0], Mst("lathe"))   # jaws opened, oriented
-        play(w, scn, "lathe_big", cam_at("lathe", (-1600, -2300, 2000), (100, 300, 1000)))
+        play(w, scn, "lathe_big", cam_at("lathe", (1500, -2300, 2100), (100, 300, 1000)))   # a cut: its own camera
     scn.show_arm("A", False)
     # the rest of the parts: the machine clock runs through setup_plan's other setups by motion class
     tot = PLAN["totals"]
@@ -1150,7 +1150,7 @@ def chapter_32():
     p.show(0.0)
     # ---- honing goes out
     for i in range(int(4 * FPS)):
-        w.frame(scn, cam_at("tig", (-1500, -1700, 1900), (0, 400, 950)), "Honing the 50.80 mm bore is sent out",
+        w.frame(scn, cam_at("tig", (-3600, -4300, 3600), (0, 400, 900)), "Honing the 50.80 mm bore is sent out",
                 sub="outsourced: a hone shop, about 10 working days (estimate) for one tube", who=["outsourced"],
                 step="hone", status="pass", proc_s=1.0 / FPS, add=dict(outsourced_d=10.0 / (4 * FPS)))
     play(w, scn, "deburr", cam_at("wash", (1600, -1800, 2000), (450, 340, 1050)))
