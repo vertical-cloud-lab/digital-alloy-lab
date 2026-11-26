@@ -61,10 +61,14 @@ FRAMES = ROOT / "frames"
 KEEP = Path(os.environ.get("AUDIT_KEEP", "/tmp/w3audit"))      # hard-linked copies of slices' audit folders (watch)
 
 DEPTH_MM = 1.5
+TOUCH_MM = 0.3                       # one mesh of a pair is shrunk this much first (byu-vcl collide._eroded, cell.py
+                                     # Body.eroded): a fit drawn at zero clearance (a pin in its bore, a screw in its hole,
+                                     # a part on its seat) reads as touching, not as its whole length deep
 OPAQUE = 0.3                         # actors fainter than this are not obstacles (glass at 0.38 is)
 LADDER = (1.5, 3.0, 6.0, 12.0, 25.0, 50.0, 100.0)
 DEEP = 999.0
 MAX_TRIS = int(os.environ.get("AUDIT_MAX_TRIS", "250000"))
+REFINE = int(os.environ.get("AUDIT_REFINE", "6"))   # a violating pair's depth is re-measured at most every REFINE frames
 _DIRS = np.array([d for d in product((-1, 0, 1), repeat=3) if any(d)], float)
 _DIRS /= np.linalg.norm(_DIRS, axis=1)[:, None]
 
@@ -76,6 +80,9 @@ RE_PERSON = re.compile(rf"^(?P<who>[^/]+)/{PERSON_PARTS}$")
 RE_LINK = re.compile(r"^(?P<arm>.+?)/(?P<link>base|shoulder|upper_arm|forearm|wrist1|wrist2|wrist3)/\d+$")
 # what rides on the flange: the tool changer, the 2F-85's parts, the wrist camera, fingertip caps, a quick-change plate and
 # the shop arms' alternative grippers
+# a person's eyes, brows, hair and glasses ride on the head, inside or just over its skin: the skin is checked for them
+# (and their own meshes are left out as movers, which saves rebuilding five more BVH models per person and frame)
+RE_RIDERS = re.compile(r"^[^/]+/(iris|sclera|brow|hair|glasses \w+)$")
 RE_FLANGE = re.compile(r"^(?P<arm>.+?)/(changer|gr/.*|cam/.*|cap/.*|qc|3fg/.*|vgp/.*)$")
 
 
@@ -131,7 +138,16 @@ def _pat(pa, pb):
 
 
 # (name, test, depth it may reach or None for any, reason). Chapter-specific entries are keyed by chapter prefix.
+RE_NOT_SOLID = re.compile(r"(^|/)[^/]*(water|coolant|\barc\b|glow|spray)[^/]*$", re.I)
+
+
+def _not_solid(a, b):
+    return bool(RE_NOT_SOLID.search(a) or RE_NOT_SOLID.search(b))
+
+
 ALLOWED_ALL = [
+    ("not a solid", _not_solid, None,
+     "water in a wash or rinse tank, coolant, a welding arc's glow: drawn volumes that things may enter"),
     ("person's own layers", _same_person, None,
      "one person's skin, clothes, shoes and glasses are layers of one skinned body (people.py offsets the clothes from it)"),
     ("adjacent UR links", _adjacent_links, None,
@@ -145,9 +161,9 @@ ALLOWED_CHAPTER = {
     "50-integration": [
         ("lift table's own parts", _pat(r"^lift/", r"^lift/"), None,
          "the scissor arms are pinned to the lift table's base and platform, and the handle is bolted to the base"),
-        ("hands on the load", _pat(r"^op/(glove|forearm|skin)$", r"^m/"), 25.0,
-         "the person's gloved hands on the module, rack, unit or gas part being pushed (the palm's target is the part's "
-         "edge, so the fingers close round it), up to 25 mm"),
+        ("hands on the load", _pat(r"^op/(glove|forearm|skin)$", r"^(m/|lift/handle$)"), 25.0,
+         "the person's gloved fingertips on the module, rack, unit or gas part being pushed, or the hands on the lift "
+         "table's handle bar (people.py's fingers curl a little into what they touch), up to 25 mm"),
         ("load on the lift table", _pat(r"^lift/body$", r"^m/"), 3.0,
          "a load standing on the lift table's platform (its feet 3 mm above the tray's floor), up to 3 mm"),
     ],
@@ -242,6 +258,7 @@ class Replay:
     def __init__(self, dirs, want=None):
         self.dirs, self.want = dirs, want
         self.geoms, self.refs = {}, {}
+        self.truncated = False
 
     def _ref(self, g, d):
         c = self.refs.get(g.gid, 0) + d
@@ -253,6 +270,7 @@ class Replay:
 
     def frames(self):
         for tag, d in self.dirs:
+            self.truncated = False
             mesh = Meshes(d / "meshes.pkl", self.want)
             actors = {}
             for r in stream(d / "frames.pkl"):
@@ -269,7 +287,13 @@ class Replay:
                     if a is None:
                         a = actors[name] = Actor(name)
                     if key != a.key:
-                        _, V, F = mesh.get(key)
+                        try:
+                            _, V, F = mesh.get(key)
+                        except KeyError:              # a recording still being written: its meshes end here
+                            print(f"  {tag}: mesh {key} not in meshes.pkl (still being written?); stopping at frame {n}",
+                                  flush=True)
+                            self.truncated = True
+                            break
                         g = gid_of(V, F)
                         if a.geom is None or g != a.geom.gid:
                             geo = self.geoms.get(g)
@@ -280,11 +304,14 @@ class Replay:
                                 self._ref(a.geom, -1)
                             a.geom = geo
                             a.obj = None
+                            a.eobj = None
                         a.key = key
                     a.M = np.asarray(M, np.float32)
                     a.op, a.vis = float(op), bool(vis)
                     a.lo, a.hi = world_box(a.geom.corners, a.M)
                     dirty.add(name)
+                if self.truncated:
+                    break
                 yield tag, n, actors, dirty
             for a in actors.values():
                 if a.geom is not None:
@@ -294,24 +321,33 @@ class Replay:
 def histories(dirs):
     """Pass 1 (frames.pkl only): per actor, its changes [(n, key, M, opacity, visible)], and the recorded frame numbers."""
     hist, ns = {}, []
-    for _, d in dirs:
+    for tag, d in dirs:
         for r in stream(d / "frames.pkl"):
             n = int(r["n"])
             ns.append(n)
             for name, (key, M, op, vis) in r["changed"].items():
-                hist.setdefault(name, []).append((n, key, np.asarray(M, np.float32), float(op), bool(vis)))
+                hist.setdefault(name, []).append((n, (tag, key), np.asarray(M, np.float32), float(op), bool(vis)))
             for name in r.get("removed", ()):
                 hist.setdefault(name, []).append((n, None, None, 0.0, False))
     return hist, ns
+
+
+def _keys_change(h):
+    """Does an actor's mesh change? Each slice of a chapter numbers its mesh versions afresh, so only a second version
+    within one recording counts."""
+    per = {}
+    for x in h:
+        if x[1] is not None:
+            per.setdefault(x[1][0], set()).add(x[1][1])
+    return any(len(v) > 1 for v in per.values())
 
 
 def movers_of(hist):
     """Actors whose matrix or mesh changes after they first appear."""
     out = set()
     for name, h in hist.items():
-        keys = {x[1] for x in h if x[1] is not None}
         Ms = [x[2] for x in h if x[2] is not None]
-        if len(keys) > 1 or any(not np.array_equal(Ms[0], M) for M in Ms[1:]):
+        if _keys_change(h) or any(not np.allclose(Ms[0], M, atol=1e-3) for M in Ms[1:]):
             out.add(name)
     return out
 
@@ -324,7 +360,7 @@ def _fcl():
 
 class Geom:
     """One mesh version: local bounding box corners and (lazily) its FCL model."""
-    __slots__ = ("V", "F", "corners", "gid", "_model", "ntri", "full", "_reps")
+    __slots__ = ("V", "F", "corners", "gid", "_model", "ntri", "full", "_reps", "_ero")
 
     def __init__(self, V, F, gid):
         self.V, self.F, self.gid = V, F, gid
@@ -334,6 +370,13 @@ class Geom:
         self.full = None
         self.ntri = len(F)
         self._reps = None
+        self._ero = None
+
+    def ero(self):
+        """FCL model of the mesh shrunk TOUCH_MM along its vertex normals."""
+        if self._ero is None:
+            self._ero = _bvh(_fcl(), eroded(self.V, self.F), self.F)
+        return self._ero
 
     def rep_pts(self):
         if self._reps is None:
@@ -354,6 +397,34 @@ class Geom:
             if len(F) == len(self.F):
                 self.full = self._model
         return self._model
+
+
+def eroded(V, F, mm=TOUCH_MM):
+    """V moved mm inwards along the vertex normals, each connected piece by the sign of its own volume (welded by position,
+    so a box drawn with its own vertices per face shrinks as one piece)."""
+    from scipy.sparse import coo_matrix
+    from scipy.sparse.csgraph import connected_components
+    V = np.asarray(V, float)
+    if not len(F):
+        return V
+    key = np.round(V * 1000.0).astype(np.int64)
+    _, first, inv = np.unique(key, axis=0, return_index=True, return_inverse=True)
+    inv = inv.ravel()
+    W = V[first]
+    Fw = inv[np.asarray(F, np.int64)]
+    a, b, c = W[Fw[:, 0]], W[Fw[:, 1]], W[Fw[:, 2]]
+    fn = np.cross(b - a, c - a)
+    e = np.r_[Fw[:, [0, 1]], Fw[:, [1, 2]]]
+    g = coo_matrix((np.ones(len(e)), (e[:, 0], e[:, 1])), shape=(len(W), len(W)))
+    nc, lab = connected_components(g, directed=False)
+    vol = np.bincount(lab[Fw[:, 0]], weights=np.einsum("ij,ij->i", a, np.cross(b, c)), minlength=nc)
+    sgn = np.where(vol >= 0.0, 1.0, -1.0)
+    vn = np.zeros_like(W)
+    for k in range(3):
+        np.add.at(vn, Fw[:, k], fn)
+    vn /= np.maximum(np.linalg.norm(vn, axis=1), 1e-12)[:, None]
+    Wm = W - mm * sgn[lab][:, None] * vn
+    return Wm[inv]
 
 
 def _bvh(fcl, V, F):
@@ -461,7 +532,7 @@ def collide(fcl, oa, ob):
     return fcl.collide(oa, ob, fcl.CollisionRequest(), fcl.CollisionResult()) > 0
 
 
-def tdepth(fcl, oa, Ma, ob, ca, cb, need=DEPTH_MM, ga=None, gb=None, Mb=None, swallow=True):
+def tdepth(fcl, oa, Ma, ob, ca, cb, need=DEPTH_MM, ga=None, gb=None, Mb=None, swallow=True, refine=True):
     """Translational penetration depth of oa (placed at Ma) into ob: 0 if apart, <= `need` if a translation of `need` frees
     it, else the refined smallest freeing translation over 26 directions (DEEP if 100 mm does not). With the Geoms (ga,
     gb, Mb) given, a translation that only swallows one mesh inside the other doesn't count as freeing it, and a mesh
@@ -483,6 +554,8 @@ def tdepth(fcl, oa, Ma, ob, ca, cb, need=DEPTH_MM, ga=None, gb=None, Mb=None, sw
         order = np.argsort(-(_DIRS @ (c / nrm))) if nrm > 1e-9 else np.arange(len(_DIRS))
         prev = 0.0
         for t in LADDER:
+            if t > need and not refine:
+                return -1.0                   # deeper than `need`, not measured further
             free = []
             for i in order:
                 M = M0.copy()
@@ -513,6 +586,16 @@ def tdepth(fcl, oa, Ma, ob, ca, cb, need=DEPTH_MM, ga=None, gb=None, Mb=None, sw
         oa.setTransform(fcl.Transform(R, p))
 
 
+def prep(fcl, x, y):
+    """Place the pair's FCL objects: the first one shrunk TOUCH_MM, the second as drawn."""
+    if x.eobj is None:
+        x.eobj = fcl.CollisionObject(x.geom.ero(), fcl.Transform())
+    x.eobj.setTransform(fcl.Transform(x.M[:3, :3].astype(float), x.M[:3, 3].astype(float)))
+    if y.obj is None:
+        y.obj = fcl.CollisionObject(y.geom.model(), fcl.Transform())
+    y.obj.setTransform(fcl.Transform(y.M[:3, :3].astype(float), y.M[:3, 3].astype(float)))
+
+
 def world_box(corners, M):
     w = corners @ M[:3, :3].T + M[:3, 3]
     return w.min(0), w.max(0)
@@ -520,7 +603,7 @@ def world_box(corners, M):
 
 # ================================================================================================ the audit
 class Actor:
-    __slots__ = ("name", "key", "M", "op", "vis", "geom", "lo", "hi", "obj")
+    __slots__ = ("name", "key", "M", "op", "vis", "geom", "lo", "hi", "obj", "eobj")
 
     def __init__(self, name):
         self.name = name
@@ -530,6 +613,7 @@ class Actor:
         self.geom = None
         self.lo = self.hi = None
         self.obj = None
+        self.eobj = None
 
 
 def _ranges(ns, gap):
@@ -598,7 +682,8 @@ def run(chapter, every=1, stills=0, quiet=False, max_frames=None, only=None):
             continue
         lo = np.array([a.lo for a in live])
         hi = np.array([a.hi for a in live])
-        mv = [i for i, a in enumerate(live) if a.name in movers and (only is None or re.search(only, a.name))]
+        mv = [i for i, a in enumerate(live) if a.name in movers and not RE_RIDERS.match(a.name)
+              and (only is None or re.search(only, a.name))]
         seen = set()
         for i in mv:
             ov = np.all((lo[i] <= hi) & (lo <= hi[i]), axis=1)
@@ -625,26 +710,33 @@ def run(chapter, every=1, stills=0, quiet=False, max_frames=None, only=None):
                 c = cache.get(k)
                 if c is not None and c[0] == sig:
                     dep = c[1]
+                elif c is not None and c[1] > lim and n - c[2] < REFINE:
+                    # a pair already deeper than its limit: only check it still is (the 1.5 mm rung); its depth is
+                    # measured again at most every REFINE frames, and carried in between
+                    n_pairs_tested += 1
+                    prep(fcl, x, y)
+                    n_fcl += 1
+                    cx, cy = 0.5 * (x.lo + x.hi), 0.5 * (y.lo + y.hi)
+                    q = tdepth(fcl, x.eobj, x.M, y.obj, cx, cy, need=lim, ga=x.geom, gb=y.geom, Mb=y.M, refine=False)
+                    dep = c[1] if q < 0 else q
+                    cache[k] = (sig, dep, c[2] if q < 0 else n)
                 else:
                     n_pairs_tested += 1
-                    for z in (x, y):
-                        if z.obj is None:
-                            z.obj = fcl.CollisionObject(z.geom.model(), fcl.Transform())
-                        z.obj.setTransform(fcl.Transform(z.M[:3, :3].astype(float), z.M[:3, 3].astype(float)))
+                    prep(fcl, x, y)
                     n_fcl += 1
                     cx, cy = 0.5 * (x.lo + x.hi), 0.5 * (y.lo + y.hi)
                     swallow = bool(np.all(x.lo >= y.lo) and np.all(x.hi <= y.hi)) or \
                         bool(np.all(y.lo >= x.lo) and np.all(y.hi <= x.hi))
-                    dep = tdepth(fcl, x.obj, x.M, y.obj, cx, cy, need=lim, ga=x.geom, gb=y.geom, Mb=y.M,
+                    dep = tdepth(fcl, x.eobj, x.M, y.obj, cx, cy, need=lim, ga=x.geom, gb=y.geom, Mb=y.M,
                                  swallow=swallow)
                     if dep > lim and (x.geom.model() is not x.geom.model(full=True) or
                                       y.geom.model() is not y.geom.model(full=True)):
-                        ox = fcl.CollisionObject(x.geom.model(full=True), fcl.Transform(x.M[:3, :3].astype(float),
+                        ox = fcl.CollisionObject(x.geom.ero(), fcl.Transform(x.M[:3, :3].astype(float),
                                                                                         x.M[:3, 3].astype(float)))
                         oy = fcl.CollisionObject(y.geom.model(full=True), fcl.Transform(y.M[:3, :3].astype(float),
                                                                                         y.M[:3, 3].astype(float)))
                         dep = tdepth(fcl, ox, x.M, oy, cx, cy, need=lim, ga=x.geom, gb=y.geom, Mb=y.M)
-                    cache[k] = (sig, dep)
+                    cache[k] = (sig, dep, n)
                 if ri >= 0:
                     ah = allowed_hits.setdefault(ri, dict(pairs=set(), frames=0, worst=0.0))
                     if dep > 0:
@@ -669,9 +761,11 @@ def run(chapter, every=1, stills=0, quiet=False, max_frames=None, only=None):
         if _rigid(hist, *k):
             rigid[k] = viol.pop(k)
     gap = max(1, every) + 1
+    lab = asm_labels() if any(re.match(r"^o\d+$", nm) for nm in hist) else {}
     rows = []
     for (a, b), v in sorted(viol.items(), key=lambda kv: -kv[1]["worst"]):
-        rows.append(dict(a=a, b=b, worst_mm=_r(v["worst"]), worst_frame=v["frame"], frames=len(v["frames"]),
+        rows.append(dict(a=a, b=b, **({"a_is": lab[a]} if a in lab else {}), **({"b_is": lab[b]} if b in lab else {}),
+                         worst_mm=_r(v["worst"]), worst_frame=v["frame"], frames=len(v["frames"]),
                          frame_ranges=_ranges(v["frames"], gap)[:40], limit_mm=v["lim"],
                          rule=rules[v["rule"]][0] if v["rule"] >= 0 else None))
     out = dict(
@@ -681,7 +775,9 @@ def run(chapter, every=1, stills=0, quiet=False, max_frames=None, only=None):
         recorded_every=_recorded_every(ns_all),
         actors=len(hist), movers=len(movers), mover_names=sorted(movers)[:400],
         method="translational penetration depth (26 directions, ladder 1.5-100 mm, bisection-refined), python-fcl BVH meshes "
-               "of the recorded triangles; a pair is re-checked when a mesh or the relative pose changes",
+               "of the recorded triangles, containment by winding numbers; a pair is re-checked when a mesh or the relative "
+               f"pose changes; a pair deeper than its limit is re-checked every frame at the limit, its depth re-measured "
+               f"at most every {REFINE} frames",
         narrow_checks=n_fcl, pairs_tested=n_pairs_tested,
         violations=len(rows), worst_mm=rows[0]["worst_mm"] if rows else 0.0,
         worst=rows[0] if rows else None, pairs=rows[:300],
@@ -695,15 +791,33 @@ def run(chapter, every=1, stills=0, quiet=False, max_frames=None, only=None):
     )
     OUT.mkdir(parents=True, exist_ok=True)
     path = OUT / f"scene_audit_{chapter}.json"
+    path.write_text(json.dumps(out, indent=1, default=_js) + "\n")
     if stills:
         out["stills"] = make_stills(chapter, viol, stills)
-    path.write_text(json.dumps(out, indent=1, default=_js) + "\n")
+        path.write_text(json.dumps(out, indent=1, default=_js) + "\n")
     print(f"{chapter}: {checked} frames checked, {len(rows)} violating pairs (worst {out['worst_mm']} mm), "
           f"{len(rigid)} rigid, {n_fcl} narrow checks, {out['seconds']} s -> {path}", flush=True)
     for r in rows[:25]:
         print(f"   {r['worst_mm']!s:>7} mm  {r['a']}  x  {r['b']}  frames {r['frames']} (worst {r['worst_frame']}) "
               f"{r['frame_ranges'][:4]}", flush=True)
     return out
+
+
+def asm_labels():
+    """The assembly chapters' objects are actors "o<i>": their names and kinds from the run's asm_scene.pkl (ASM_TRAJ, or the
+    newest under ROBOTBUILD/traj), for the report only."""
+    import glob
+    path = os.environ.get("ASM_TRAJ")
+    cands = [Path(path) / "asm_scene.pkl"] if path else [Path(x) for x in glob.glob(str(ROOT / "traj" / "*" / "asm_scene.pkl"))]
+    cands = [c for c in cands if c.exists()]
+    if not cands:
+        return {}
+    c = max(cands, key=lambda q: q.stat().st_mtime)
+    try:
+        objs = pickle.loads(c.read_bytes())["objs"]
+    except Exception:                                               # noqa: BLE001
+        return {}
+    return {f"o{i}": f"{o.get('kind', '')}: {str(o.get('name', ''))[:70]}" for i, o in objs.items()}
 
 
 def _js(o):
@@ -731,7 +845,7 @@ def _recorded_every(ns):
 
 def _rigid(hist, a, b):
     ha, hb = hist.get(a, []), hist.get(b, [])
-    if len({x[1] for x in ha if x[1]}) > 1 or len({x[1] for x in hb if x[1]}) > 1:
+    if _keys_change(ha) or _keys_change(hb):
         return False
     ns = sorted({x[0] for x in ha} | {x[0] for x in hb})
     rel0 = None
@@ -759,50 +873,72 @@ def _rigid(hist, a, b):
 # ================================================================================================ stills
 def make_stills(chapter, viol, k):
     """The worst k pairs: the frame as drawn (if its PNG is still there) beside a close-up of the two recorded meshes (the
-    moving one red, the other blue, both half see-through), aimed at the overlap of their bounding boxes."""
-    import pyvista as pv
-    from PIL import Image
+    moving one red, the other blue, both half see-through), aimed at the overlap of their bounding boxes. The close-up is
+    rendered in a child process (VTK can abort on a software display); without it the still is the frame alone."""
+    import subprocess
+    import tempfile
+    from PIL import Image, ImageDraw
     paths = []
     worst = sorted(viol.items(), key=lambda kv: -kv[1]["worst"])[:k]
+    tmp = Path(tempfile.mkdtemp(prefix="audit_stills_"))
     for idx, ((a, b), v) in enumerate(worst):
         snap = v.get("snap")
         if snap is None:
             continue
         ga, Ma, gb, Mb = snap
+        right = None
         try:
-            pl = pv.Plotter(off_screen=True, window_size=(640, 540))
-            pl.set_background("#f4f6f8")
-            meshes = []
-            for g, M, col in ((ga, Ma, "#d1495b"), (gb, Mb, "#2a7fff")):
-                P = g.V.astype(float) @ M[:3, :3].T.astype(float) + M[:3, 3].astype(float)
-                m = pv.PolyData(P, np.c_[np.full(len(g.F), 3), g.F].ravel())
-                meshes.append(m)
-                pl.add_mesh(m, color=col, opacity=0.55, smooth_shading=True)
-            lo = np.maximum(meshes[0].bounds[::2], meshes[1].bounds[::2])
-            hi = np.minimum(meshes[0].bounds[1::2], meshes[1].bounds[1::2])
-            c = 0.5 * (lo + hi)
-            size = float(max(np.max(np.abs(hi - lo)), 60.0))
-            size = min(size, 1500.0)
-            pos = c + np.array([1.6, -2.2, 1.4]) * size
-            pl.camera_position = [tuple(pos), tuple(c), (0, 0, 1)]
-            pl.add_text(f"{v['worst']:.1f} mm, frame {v['frame']}\n{a[:44]}\nx {b[:44]}", font_size=9, color="black")
-            img = pl.screenshot(return_img=True)
-            pl.close()
-            right = Image.fromarray(np.asarray(img)[:, :, :3])
-            png = frame_png(chapter, v["frame"])
-            if png is not None:
-                left = Image.open(png).convert("RGB").resize((960, 540))
-                canvas = Image.new("RGB", (1600, 540), "white")
-                canvas.paste(left, (0, 0))
-                canvas.paste(right, (960, 0))
-            else:
-                canvas = right
-            p = OUT / f"scene_audit_{chapter}_{idx + 1}.png"
-            canvas.save(p, optimize=True)
-            paths.append(str(p.relative_to(REPO)))
+            pk, png_r = tmp / f"{idx}.pkl", tmp / f"{idx}.png"
+            pk.write_bytes(pickle.dumps(dict(A=(ga.V, ga.F, Ma), B=(gb.V, gb.F, Mb))))
+            r = subprocess.run([sys.executable, str(Path(__file__).resolve()), "still", str(pk), str(png_r)],
+                               capture_output=True, text=True, timeout=180)
+            if r.returncode == 0 and png_r.exists():
+                right = Image.open(png_r).convert("RGB")
         except Exception as e:                                       # noqa: BLE001
-            print(f"  still {idx + 1} failed: {e!r}", flush=True)
+            print(f"  close-up {idx + 1} failed: {e!r}", flush=True)
+        png = frame_png(chapter, v["frame"])
+        left = Image.open(png).convert("RGB").resize((960, 540)) if png is not None else None
+        if left is None and right is None:
+            continue
+        canvas = Image.new("RGB", (960 + (640 if right is not None else 0) if left is not None else 640, 600), "white")
+        x0 = 0
+        if left is not None:
+            canvas.paste(left, (0, 60))
+            x0 = 960
+        if right is not None:
+            canvas.paste(right.resize((640, 540)), (x0, 60))
+        d = ImageDraw.Draw(canvas)
+        dep = f"{v['worst']:.1f} mm" if v["worst"] < DEEP else "over 100 mm"
+        d.text((10, 6), f"{chapter}, frame {v['frame']}: {dep} deep (limit {v['lim']} mm)", fill="black")
+        d.text((10, 24), f"{a}", fill="#d1495b")
+        d.text((10, 40), f"{b}", fill="#2a7fff")
+        p = OUT / f"scene_audit_{chapter}_{idx + 1}.png"
+        canvas.save(p, optimize=True)
+        paths.append(str(p.relative_to(REPO)))
     return paths
+
+
+def render_still(pk, out):
+    import pyvista as pv
+    d = pickle.loads(Path(pk).read_bytes())
+    pl = pv.Plotter(off_screen=True, window_size=(640, 540), lighting="three lights")
+    pl.set_background("#f4f6f8")
+    meshes = []
+    for (V, F, M), col in ((d["A"], "#d1495b"), (d["B"], "#2a7fff")):
+        P = np.asarray(V, float) @ np.asarray(M, float)[:3, :3].T + np.asarray(M, float)[:3, 3]
+        m = pv.PolyData(P, np.c_[np.full(len(F), 3), np.asarray(F, np.int64)].ravel())
+        meshes.append(m)
+        pl.add_mesh(m, color=col, opacity=0.55)
+    lo = np.maximum(meshes[0].bounds[::2], meshes[1].bounds[::2])
+    hi = np.minimum(meshes[0].bounds[1::2], meshes[1].bounds[1::2])
+    c = 0.5 * (lo + hi)
+    size = min(float(max(np.max(np.abs(hi - lo)), 60.0)), 1500.0)
+    pos = c + np.array([1.6, -2.2, 1.4]) * size
+    pl.camera_position = [tuple(pos), tuple(c), (0, 0, 1)]
+    img = pl.screenshot(return_img=True)
+    pl.close()
+    from PIL import Image
+    Image.fromarray(np.asarray(img)[:, :, :3]).save(out)
 
 
 # ================================================================================================ names, watch
@@ -838,6 +974,9 @@ def keep(folder):
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
+    if len(sys.argv) > 1 and sys.argv[1] == "still":
+        render_still(sys.argv[2], sys.argv[3])
+        sys.exit(0)
     ap.add_argument("cmd", choices=["run", "names", "keep"])
     ap.add_argument("chapter")
     ap.add_argument("--every", type=int, default=1, help="check every k-th recorded frame (all are replayed)")

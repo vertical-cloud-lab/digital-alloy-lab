@@ -1,5 +1,5 @@
 """Chapter 10-parts of the robot-built desktop LPBF video: the long-table tour, category by category, with the running
-cost (new against used) and the lead times on screen (about 2 minutes).
+cost (new against used) and the lead times on screen (about 3 minutes).
 
     xvfb-run -a -s "-screen 0 1920x1080x24" /tmp/capmem 3G /tmp/venv/bin/python desktop-lpbf/cad/robotbuild/ch_parts.py
     /tmp/venv/bin/python desktop-lpbf/cad/robotbuild/ch_parts.py meta      # numbers only: rewrite meta.jsonl
@@ -353,8 +353,9 @@ def render():
             ch.frame(img, "", shot=dict(shot, u=round(i / max(1, n - 1), 3)), labels=labs, proc_s=0.0, no_clock=True)
         return cam1
 
-    def closeup(cam, s, label, shot, hold=3.0):
-        """Fly to a slot's item (a camera no other item hides, clear_view) and hold on it."""
+    def closeup(cam, s, label, shot, hold=4.8):
+        """Cut to a slot's item (a camera no other item hides, clear_view) and hold on it. Round 8: holds of 5.8 s (6 s for the
+        long leads), so the tour's 28 cuts stay under video_qa.py's 10 a minute (4 s holds made 12.4 a minute)."""
         bb = np.asarray(s["bbox"], float)
         c = ((bb[0] + bb[1]) / 2, (bb[2] + bb[3]) / 2, (bb[4] + bb[5]) / 2)
         size = max(bb[1] - bb[0], bb[3] - bb[2], bb[5] - bb[4])
@@ -385,7 +386,7 @@ def render():
         # round 8: a CUT to the zone, then a slow track along it, no faster than 1/8 of the frame width per second (the
         # 7-second panning rule, with margin); at this distance and a 30 deg view angle the frame is about 1.9 x dist wide
         travel = float(np.linalg.norm(np.asarray(b[1]) - np.asarray(a[1])))
-        secs = max(6.0 if w > 2500 else 5.0, travel / (0.125 * 1.9 * dist))
+        secs = max(6.5, travel / (0.125 * 1.9 * dist))
         cam = frames(int(secs * FPS), a, b, dict(phase="cat", cat=cat), lab)
         for key, match, ids, label in BIG:
             s = next((s for s in slots if match.lower() in s["name"].lower()), None)
@@ -397,7 +398,7 @@ def render():
         s = next((s for s in slots if match.lower() in s["name"].lower()), None)
         if s is None:
             continue
-        cam = closeup(cam, s, label, dict(phase="long", item=key), hold=3.6)
+        cam = closeup(cam, s, label, dict(phase="long", item=key), hold=5.0)
     c_close = view(((LT["x0"] + LT["x1"]) / 2, 400.0, 600.0), 12500.0, 196.0, 40.0, shift=0.12)
     frames(int(9.0 * FPS), c_close, c_close, dict(phase="close"))                # round 8: a cut back out
     ch.close()

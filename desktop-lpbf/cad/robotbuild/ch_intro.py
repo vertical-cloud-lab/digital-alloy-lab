@@ -1,12 +1,15 @@
-"""Chapter 00-intro of the robot-built desktop LPBF video: the hall from above, then six fixed views of it (about 47 s).
+"""Chapter 00-intro of the robot-built desktop LPBF video: the hall from above, then seven fixed views of it (about 55 s).
 
     xvfb-run -a -s "-screen 0 1920x1080x24" /tmp/capmem 3G /tmp/venv/bin/python desktop-lpbf/cad/robotbuild/ch_intro.py
 
 What it shows (hall.py): the robot shop (analysis/shop/shop_cell.py at common.SHOP_IN_HALL), the long table with every
 part on it as delivered (kit_table.py, stock mode: machined parts as their blanks), the two-arm assembly bench
 (analysis/assembly/cell2.py), the two UR12e arms each on a MiR250 (byu-vcl PR 318's meshes), a person and a soda can.
-Nothing in the scene moves (round 8: round 7 had MiR A reverse 3 m down its lane here with the camera following it);
-each view is a cut, and inside a view the camera only drifts. No project time passes (proc_s 0; the clocks are hidden).
+Only MiR A moves: in one shot under a fixed camera it drives 3.15 m from the parts table to the bench along its own lane,
+nose first (a differential-drive MiR250 drives along its heading; round 7 had it reverse 3 m with the camera following it),
+on a trapezoid at shop_cell's MiR speed, its arm parked. Each view is a cut, and inside a view the camera only drifts.
+No project time passes (proc_s 0; the clocks are hidden). With ROBOTBUILD_AUDIT=1 the frames are recorded for
+scene_audit.py (collisions) and walk.py (the MiR's sideways slip and reversing).
 """
 from __future__ import annotations
 
@@ -113,8 +116,23 @@ def main():
         ca = [HL.orbit(Fa, 7400.0, 212.0, 36.0), Fa]
         cb = [HL.orbit(Fb, 7400.0, 208.0, 35.0), Fb]
         shot(6 * FPS, ca, cb, "The long table: every part, as it arrives", sub, labels=["long table"])
-    # 4. cut: both mobile manipulators at the bench (round 7 followed MiR A reversing 3 m down its lane here; the assembly
-    #    chapters show the bases driving, pivot - drive - pivot)
+    # 4. cut: MiR A drives in from the parts table to the bench, nose first along its own lane (round 8: a differential-drive
+    #    MiR250 drives along its heading; round 7 followed it reversing 3 m down its lane), then both arms at the bench.
+    #    A trapezoid at shop_cell's MiR speed (1 m/s, 0.3 m/s^2) under a fixed camera; the arm stays parked
+    d_drive = xa0 - xa1
+    T_drive = trap_T(d_drive)
+    F6 = (1500.0, -200.0, 800.0)
+    c6a = [HL.orbit(F6, 7600.0, -55.0, 38.0), F6]       # high enough to see the whole lane over the shop's VF-4
+    c6b = [HL.orbit(F6, 7400.0, -52.0, 37.0), F6]
+    t_start = 0.75
+
+    def drive(u, i):
+        t = i / FPS - t_start
+        h.mir_to("A", xa0 - trap(d_drive, t))
+    n4 = int(math.ceil((t_start + T_drive + 1.5) * FPS))
+    shot(n4, c6a, c6b, "MiR A drives from the parts table to the bench",
+         f"{d_drive / 1000:.1f} m along its own lane, nose first, at 1 m/s with 0.3 m/s² ramps (shop_cell's MiR speed); "
+         "the arm stays parked while it drives", update=drive)
     h.mir_to("A", xa1)
     F6 = (500.0, 0.0, 900.0)
     c6a = [HL.orbit(F6, 6400.0, -52.0, 30.0), F6]
