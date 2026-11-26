@@ -23,14 +23,15 @@ HERE = pathlib.Path(__file__).resolve().parent
 D = HERE.parents[2]
 OUT = D / "analysis" / "out" / "monitoring" / "fab"
 BOM = D / "monitoring-bom.csv"
-LOOK = {"p1": OUT / "price_lookups_optics.csv", "p2": OUT / "price_lookups_cameras.csv"}
+LOOK = {"p1": OUT / "price_lookups_optics.csv", "p2": OUT / "price_lookups_cameras.csv",
+        "p3": OUT / "price_lookups_round3.csv"}   # round 3 (2026-11-26): the AE preload, the BW light, cooling
 SCSQ = "analysis/out/monitoring/fab/quotes/sendcutsend_quotes.csv"
 STEPS = {"0": "before machining: the ports' parts", "1": "clock and recorder", "2": "spectral check of the scan head",
          "3": "layer camera tuned", "4": "acoustic emission", "5": "two-colour coaxial", "6": "coaxial camera",
          "7": "side high-speed camera (and the steep lid camera)", "8": "cooling through solidification"}
 
 # (id, step, group, element, source, qty, action, in_model, notes, used_keys)
-#   source: ("p1"|"p2", key)  - a lookup row;  ("est", low, high, basis, part_number, vendor)  - an estimate;
+#   source: ("p1"|"p2"|"p3", key)  - a lookup row;  ("est", low, high, basis, part_number, vendor)  - an estimate;
 #           ("custom", usd, basis)  - a custom part's outside price (hours_monitoring.csv)
 SEL = [
     # ---------------- step 0: the ports (bought when the ports are cut; blanks are not needed if the windows go in) ---------
@@ -266,12 +267,12 @@ def main():
     ap.add_argument("--mo", default=str(D / "monitoring" / "optics-parts.csv"),
                     help="the optics worker's coaxial, side and lid camera parts (prices taken from it, not re-read)")
     a = ap.parse_args()
-    src = {"p1": load(a.p1), "p2": load(a.p2), "mo": {r["id"]: r for r in csv.DictReader(open(a.mo))} if pathlib.Path(a.mo).exists() else {},
+    src = {"p1": load(a.p1), "p2": load(a.p2), "p3": load(LOOK["p3"]), "mo": {r["id"]: r for r in csv.DictReader(open(a.mo))} if pathlib.Path(a.mo).exists() else {},
            "tl": {r["part_number"]: r for r in csv.DictReader(open(OUT / "stock_reads_thorlabs.csv"))}
            if (OUT / "stock_reads_thorlabs.csv").exists() else {}}
     # stock or lead time by part number, from every read (Thorlabs stock reads first, then the two lookup files)
     stock = {}
-    for k in ("p2", "p1"):
+    for k in ("p3", "p2", "p1"):
         for lk in src[k].values():
             pn = (lk.get("part_number") or "").split(" (")[0].strip()
             if pn and lk.get("stock_or_lead") and num(lk.get("unit_usd")) is not None:
@@ -317,7 +318,7 @@ def main():
                     missing.append(rid)
                 if mo.get("notes"):
                     r["notes"] = (r["notes"] + " | " if r["notes"] else "") + "optics-parts.csv: " + mo["notes"][:240]
-        elif s[0] in ("p1", "p2"):
+        elif s[0] in ("p1", "p2", "p3"):
             lk = src[s[0]].get(s[1])
             fb = s[2] if len(s) > 2 else None          # a labelled estimate for a quote-only or unread line
             if lk is None or num(lk.get("unit_usd")) is None:
@@ -335,7 +336,8 @@ def main():
                 missing.append(rid)
             else:
                 u = num(lk["unit_usd"])
-                r["price_source"] = ("price_lookups_optics.csv " if s[0] == "p1" else "price_lookups_cameras.csv ") + s[1]
+                r["price_source"] = {"p1": "price_lookups_optics.csv ", "p2": "price_lookups_cameras.csv ",
+                                     "p3": "price_lookups_round3.csv "}[s[0]] + s[1]
                 r.update(part_number=lk["part_number"], vendor=lk["vendor"], unit_low_usd=u, unit_high_usd=u,
                          price_basis={"fetched": "fetched (list price)", "search-snippet": "search snippet (page did not show it)"}
                          .get(lk["basis"], lk["basis"]), url=lk["url"], fetched_utc=lk["fetched_utc"], stock_lead=lk["stock_or_lead"])
@@ -364,7 +366,7 @@ def main():
         # cheapest used listing
         best = None
         for uk in used_keys:
-            lk = src["p2"].get(uk) or src["p1"].get(uk)
+            lk = src["p3"].get(uk) or src["p2"].get(uk) or src["p1"].get(uk)
             if lk and num(lk.get("unit_usd")) is not None and (best is None or num(lk["unit_usd"]) < num(best["unit_usd"])):
                 best = lk
         if best:
