@@ -47,19 +47,24 @@ def fig_claim(G):
                 continue
             C = 100 * claim_curve(R, days)
             st = STYLE[key]
-            ax.plot(np.maximum(days, 1), C.mean(0), lw=1.6, label=f"{SHORT[key]} (n={len(R)})", **st)
+            H = next(iter(R.values()))["horizon"]  # automated campaigns end at 1 year: don't draw past it
+            keep = days <= H
+            ax.plot(np.maximum(days[keep], 1), C.mean(0)[keep], lw=1.6, label=f"{SHORT[key]} (n={len(R)})", **st)
         for frac, name in ((60, "T1"), (80, "T2")):
             ax.axhline(frac, color=TEXT2, lw=0.8, ls=":", zorder=0)
-            ax.text(1.05, frac + 1, name, color=TEXT2, fontsize=8)
+            ax.text(1400, frac + 1.2, name, color=TEXT2, fontsize=8, ha="right")
+        ax.axvline(31, color=TEXT2, lw=0.8, ls="--", zorder=0)
+        ax.text(29, 92, "no claim before\nday 31 (30-day\nimmersion)", color=TEXT2, fontsize=7.5, ha="right", va="top")
         ax.set_xscale("log")
-        ax.set_xlim(1, 1460)
-        ax.set_xticks([1, 7, 30, 90, 365, 1460], ["1", "7", "30", "90", "365", "1460"])
+        ax.set_xlim(7, 1460)
+        ax.set_xticks([7, 14, 30, 90, 365, 1460], ["7", "14", "30", "90", "365", "1460"])
         ax.set_ylim(0, 100)
         ax.grid(True, color=GRID, lw=0.6)
         ax.set_xlabel("days from the start of the campaign (log scale)")
         ax.set_title({1.0: "CALPHAD's crack screen misses the inoculant (kappa = 1)",
                       0.0: "CALPHAD's crack screen is right (kappa = 0)"}[kappa], loc="left")
-    axes[0].set_ylabel("claimed alloy, true value as % of the optimum\n(mean over seeds; 0 before the first claim)")
+    axes[0].set_ylabel("claimed alloy, true value as % of the optimum\n(mean over seeds; 0 before the first claim;\n"
+                       "automated campaigns stop at T2 or after 1 year)")
     h, l = axes[0].get_legend_handles_labels()
     fig.legend(h, l, loc="lower center", ncol=4, fontsize=8, bbox_to_anchor=(0.5, -0.02), labelcolor=TEXT)
     fig.tight_layout(rect=(0, 0.1, 1, 1))
@@ -92,6 +97,7 @@ def fig_days_dollars(G):
                                 fontsize=7.5, va="center")
                 ax.set_xscale("log")
                 if j == 0:
+                    ax.axvline(31, color=TEXT2, lw=0.8, ls="--", zorder=1)
                     ax.set_xlim(20, 1460)
                     ax.set_xticks([30, 60, 90, 180, 365, 730, 1460], ["30", "60", "90", "180", "365", "730", "1460"])
                     ax.set_xlabel(f"days to {T}")
@@ -102,8 +108,8 @@ def fig_days_dollars(G):
                 ax.set_yticks(range(len(keys)), [SHORT[k] for k in keys[::-1]])
                 ax.grid(True, axis="x", color=GRID, lw=0.6)
                 ax.tick_params(axis="y", length=0)
-        fig.suptitle({1.0: "Days and dollars to T1 (60 %) and T2 (80 %), kappa = 1: dots are seeds, bars medians",
-                      0.0: "Days and dollars to T1 (60 %) and T2 (80 %), kappa = 0: dots are seeds, bars medians"}[kappa],
+        fig.suptitle({1.0: "Days and dollars to T1 (60 %) and T2 (80 %), kappa = 1: dots are seeds, bars medians, dashed line the 30-day-immersion floor",
+                      0.0: "Days and dollars to T1 (60 %) and T2 (80 %), kappa = 0: dots are seeds, bars medians, dashed line the 30-day-immersion floor"}[kappa],
                      x=0.01, ha="left", color=TEXT, fontsize=10)
         fig.tight_layout(rect=(0, 0, 0.93, 0.96))
         fig.savefig(HERE / f"clocked_days_dollars_k{kappa:g}.png", dpi=150)

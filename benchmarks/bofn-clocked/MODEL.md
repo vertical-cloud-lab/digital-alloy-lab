@@ -2,7 +2,7 @@
 
 **Everything here is synthetic.** The truth is invented, the instruments are noise models, and the durations,
 capacities and prices are assumptions. Where an assumption has a source, the source is given; where it doesn't, it
-says "assumed". Partner prices in this table are not quotes.
+says "assumed". No price here is a quote or rate from a partner.
 
 ## The truth
 
@@ -45,9 +45,9 @@ barely moves the optimum (0.6937 against 0.6945 unconstrained). The CALPHAD scre
 | Ultrasonic atomizer, automated lab | 1; starts 08:00, 10:30, 13:00 Mon-Fri and 09:00 Sat (16 a week); 2.5 h a run; lot ready a day later | $1,500 a run; a lot feeds 2 builds | starts and run time: byu-vcl round 3's capacity table (FLAIME App. 2); cost: bofn-prelim (the abstract's); lot size assumed |
 | Ultrasonic atomizer, today's lab | one run a day Mon-Thu at 08:00 | as above | DAL #256's schedule, as encoded in byu-vcl's `facility.py` (`DAL256`) |
 | Custom powder lots from an outside supplier (conventional) | lead time lognormal, median 42 days, GSD 1.3 | $6,000 a lot; enough for every build | assumed, to match the Genesis draft's 8-32-week conventional cycle ([L1048-L1050](https://github.com/vertical-cloud-lab/digital-alloy-lab/blob/8098afb597f6fa5233e8c63527a6c4d560f8a0ed/genesis-mission-proposal/flaime-genesis-proposal.tex#L1048-L1050)) |
-| Outside gas atomization (the role Valimet has in FLAIME's plan) | 30-day booking lead, 21-day turnaround, one run a month, ≥ 50 kg | $20,000 a lot (assumed, not a quote) | timing: byu-vcl round 3's assumption for this route |
+| Outside gas atomization (production-representative powder) | 30-day booking lead, 21-day turnaround, one run a month, ≥ 50 kg | $20,000 a lot: a placeholder, not any supplier's price | timing: byu-vcl round 3's assumption for this route |
 | In-house LPBF (PR 318's Aconity MIDI) | 1, round the clock; 5 h a build + 3 h to cool, depowder and check density | $500 a build, marginal | 5 h: byu-vcl (PR 318 `timelapse.py`); post time and cost assumed |
-| Partner LPBF (Utah core facility) | ≤ 3 builds a week, 7-day booking lead, results 2 days after | $2,500 a build | timing: byu-vcl round 3's capacity table; cost: bofn-prelim |
+| Partner LPBF (a university core facility) | ≤ 3 builds a week, 7-day booking lead, results 2 days after | $2,500 a build | timing: byu-vcl round 3's capacity table; cost: bofn-prelim's per-build number (the abstract's), not the facility's rate |
 | Coupons per build | 6 laser settings, each a density cube, 3 bars and a corrosion coupon | | assumed |
 | Bars, automated lab | wire EDM and 2 frames in house, round the clock, 0.75 h a job | $50 a bar | PR 318 via byu-vcl; cost assumed |
 | Bars, conventional and today's lab | outside EDM (7 days), then the frame on the day shift (Thursdays only in `conv_atomizer`, as DAL #256 plans) | $200 a bar | byu-vcl `facility.py` (EDM service, DAL #256); cost: bofn-prelim |
@@ -62,8 +62,14 @@ Budget: $250k a campaign. Horizons: 1 year for the automated lab, 4 years for th
 - **Automated lab**: asynchronous. The policy is asked for a ranked list of actions whenever results come back (at
   most every 6 h) and at 08:00 every day; the lab admits each action whose first step can start within 12 h of the
   earliest time its booking lead allows, while money lasts. Every automated policy holds itself to the same batch:
-  at most 3 powders made but not yet printed and 4 builds whose first bar isn't back (a lot left unprinted for two
-  days stops counting).
+  at most 3 powders made but not yet printed and 4 builds whose first bar isn't back. Every powder gets at least one
+  build, at the policy's own best settings for it.
+- **Model-based policies** (GP-BO, tiered screening's second stage, BOFN, pKGFN): an action starts only if its
+  expected improvement is at least 1e-4 (round 3's threshold). EI is constrained by the corrosion test and computed in
+  normal form with a smooth pass probability, so a small chance isn't rounded to zero. The incumbent is the model's
+  posterior mean at tested parts likely to pass corrosion, not the largest single-bar reading (which the winner's
+  curse biases high). If nothing is worth its cost and nothing is in flight, the policy makes its single best
+  candidate rather than end the campaign with money left (counted as `zero_value` in the result files).
 - **Conventional**: rounds of 4 builds, decided at Monday 09:00 meetings once the previous round's bars are back
   (immersions run on in the background); three bars from each build's densest coupon; immersion when those bars
   could beat the claim; no interim actions.

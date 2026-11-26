@@ -655,14 +655,11 @@ class BOFNConfirm(BOFN):
     """BOFN plus the move to production powder (E2b): a gas-atomized lot of the best candidate, printed on the
     partner's machine, finished by the shared rules. `confirm` = "after": order once the alloy is claimed (30-day
     immersion passed); "early": order as soon as a candidate has three bars at the top of the field and an interim
-    immersion reading (day 7 or later) that passes with 80 % probability."""
+    immersion reading (day 7 or later) that passes with 80 % probability. Discovery stops once there is a claim and a
+    production lot on order (otherwise it keeps spending while the lot is out for 51 days)."""
 
     name = "bofn_confirm"
     confirm = "after"
-
-    def __init__(self, *a, **k):
-        super().__init__(*a, **k)
-        self.gas_keys = []
 
     def decide(self, lab, t):
         acts = super().decide(lab, t)
@@ -682,22 +679,30 @@ class BOFNConfirm(BOFN):
         p_pass = norm.cdf((lab.truth.ln_rmax - top["imm_read"][d]) / IMM_SIG[d])
         return top if p_pass >= 0.8 else None
 
+    def gas_alive(self, lab):
+        """Gas-atomized lots the lab has accepted that are in flight or came back usable."""
+        inflight = {i for k, i, _ in lab.inflight if k == "powder"}
+        return [L for L in lab.lots if L["route"] == "gas" and (L["id"] in inflight or L["t_ready"] is not None)]
+
     def confirm_actions(self, lab, t):
-        acts = []
         cp = self.candidate(lab)
-        if cp is not None and cp["key"] not in self.gas_keys and len(self.gas_keys) < 2:
-            if not any(lab.lots[i]["route"] == "gas" for k, i, _ in lab.inflight if k == "powder"):
-                # a newer, better candidate replaces an earlier order only once the earlier lot is back
-                acts.append(dict(kind="powder", c=cp["c"], a=0.5, route="gas"))
-                self.gas_keys.append(cp["key"])
-        return acts
+        if cp is None:
+            return []
+        alive = self.gas_alive(lab)
+        n_orders = sum(1 for L in lab.lots if L["route"] == "gas")
+        inflight = {i for k, i, _ in lab.inflight if k == "powder"}
+        if cp["key"] in {L["key"] for L in alive} or n_orders >= 3 or any(L["id"] in inflight for L in alive):
+            return []
+        # proposed every decision until the lab accepts it (the supplier takes one run a month)
+        return [dict(kind="powder", c=cp["c"], a=0.5, route="gas")]
 
     def ready_lots(self, lab):
         # gas lots are printed on the partner's machine (the second site of the validation network)
         return [L for L in super().ready_lots(lab) if L["route"] != "gas"]
 
     def make(self, lab, t, can_powder, mach):
-        acts = super().make(lab, t, can_powder, mach)
+        # once an alloy is claimed and its production lot is on order, discovery stops: the money goes to confirming
+        acts = [] if (lab.claim is not None and self.gas_alive(lab)) else super().make(lab, t, can_powder, mach)
         if not lab.can_start("pt", t):
             return acts
         busy = {lab.builds[i]["lot"] for k, i, _ in lab.inflight if k == "print"}

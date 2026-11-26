@@ -117,6 +117,21 @@ def _run_one(spec):
         return f"{tag(spec)} FAILED {e!r}\n{traceback.format_exc()}"
 
 
+def _done(job):
+    """True if this job's result file already exists (so a restarted queue only runs what is missing)."""
+    kind, arg = job
+    R = HERE / "results"
+    if kind == "camp":
+        return (R / arg["exp"] / (tag(arg) + ".json")).exists()
+    if kind == "e3a":
+        return (R / "e3a" / (tag(arg) + ".json")).exists()
+    if kind == "e3b":
+        return (R / "e3b" / f"chain_s{arg}.json").exists()
+    if kind == "e5":
+        return (R / "e5" / f"{arg['variant']}_s{arg['seed']}.json").exists()
+    return False
+
+
 def _dispatch(job):
     import experiments as X
 
@@ -194,6 +209,8 @@ if __name__ == "__main__":
         jobs += [("e3a", sp) for sp in X.specs_e3a(range(10))]
         jobs += [("camp", sp) for sp in camp if sp["pol"] not in ("pkgfn", "bofn_confirm", "bofn_confirm_early")]
         X.cross_opt()
+        jobs = [j for j in jobs if not _done(j)]
+        print(f"{len(jobs)} jobs to run", flush=True)
         t0 = time.time()
         with Pool(workers) as pool:
             for line in pool.imap_unordered(_dispatch, jobs):

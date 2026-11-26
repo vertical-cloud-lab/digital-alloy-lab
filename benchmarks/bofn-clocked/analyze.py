@@ -162,13 +162,17 @@ def summarize_e1(G, lines, S, exp_name="E1"):
         lines.append("\n\\* the baseline's median is censored (it reached the target on half its seeds or fewer), "
                      "so the baseline's time or money is a lower bound.")
         # paired differences against tiered screening on the same lab and between network policies
-        pairs = [(("vertical", "bofn"), ("vertical", "tiered")), (("vertical", "pkgfn"), ("vertical", "tiered")),
+        pairs = [(("vertical_ih", "bofn"), ("vertical", "bofn")), (("nearterm", "bofn"), ("vertical", "bofn")),
+                 (("vertical_ih", "tiered"), ("vertical", "tiered")), (("nearterm", "tiered"), ("vertical", "tiered")),
+                 (("nearterm", "bofn"), ("nearterm", "tiered")),
+                 (("vertical", "bofn"), ("vertical", "tiered")), (("vertical", "pkgfn"), ("vertical", "tiered")),
                  (("vertical", "gpbo"), ("vertical", "tiered")), (("vertical", "bofn"), ("vertical", "gpbo")),
                  (("vertical", "pkgfn"), ("vertical", "bofn")), (("vertical", "random"), ("vertical", "tiered")),
                  (("vertical", "tiered"), ("conv_lots", "conv")), (("vertical", "tiered"), ("conv_atomizer", "conv"))]
-        lines += ["", "Paired differences on matched seeds (A − B in days to the target, censored at the horizon; "
-                  "two-sided Wilcoxon signed-rank):", "",
-                  "| A | B | target | mean A − B ± SE (days) | A sooner / B sooner / tie | p |", "|---|---|---|---|---|---|"]
+        lines += ["", "Paired differences on matched seeds (A − B in days to the target, censored at the horizon; money "
+                  "only over seeds where both got there, count in brackets; two-sided Wilcoxon signed-rank):", "",
+                  "| A | B | target | days: mean A − B ± SE | A sooner / B sooner / tie | p | $k: mean A − B ± SE (n) | "
+                  "A cheaper / B cheaper | p |", "|---|---|---|---|---|---|---|---|---|"]
         for A, B in pairs:
             if (kappa, *A, None) not in G or (kappa, *B, None) not in G:
                 continue
@@ -177,17 +181,21 @@ def summarize_e1(G, lines, S, exp_name="E1"):
                 HA = max(next(iter(RA.values()))["horizon"], next(iter(RB.values()))["horizon"])
                 a = {s: min(t_hit(r, T)[0], HA) for s, r in RA.items()}
                 b = {s: min(t_hit(r, T)[0], HA) for s, r in RB.items()}
-                pr = paired(a, b)
+                au = {s: t_hit(r, T)[1] for s, r in RA.items() if np.isfinite(t_hit(r, T)[1])}
+                bu = {s: t_hit(r, T)[1] for s, r in RB.items() if np.isfinite(t_hit(r, T)[1])}
+                pr, pu = paired(a, b), paired(au, bu)
                 if pr:
+                    us = (f"{pu['mean'] / 1e3:+.0f} ± {pu['se'] / 1e3:.0f} ({pu['n']}) | {pu['a_better']} / {pu['b_better']} | "
+                          f"{pu['p']:.3g}") if pu and pu["n"] >= 2 else "– | – | –"
                     lines.append(f"| {LABEL[A]} | {LABEL[B]} | {T} | {pr['mean']:+.0f} ± {pr['se']:.0f} | "
-                                 f"{pr['a_better']} / {pr['b_better']} / {pr['ties']} | {pr['p']:.3g} |")
-                    S[f"k{kappa:g}"].setdefault("paired", {})[f"{A[0]}/{A[1]} - {B[0]}/{B[1]} {T}"] = pr
+                                 f"{pr['a_better']} / {pr['b_better']} / {pr['ties']} | {pr['p']:.3g} | {us} |")
+                    S[f"k{kappa:g}"].setdefault("paired", {})[f"{A[0]}/{A[1]} - {B[0]}/{B[1]} {T}"] = dict(days=pr, usd=pu)
     return lines
 
 
 def summarize_counts(G, lines, kappa):
     keys = [k for k in ORDER if (kappa, k[0], k[1], None) in G]
-    lines += ["", "What each campaign bought, to T2 or to its end (mean per campaign; bars count single bars):", "",
+    lines += ["", f"What each campaign bought, to T2 or to its end, `kappa = {kappa:g}` (mean per campaign; bars count single bars):", "",
               "| Lab and policy | powders | builds | bars | immersions | immersions stopped early | money spent, $k | "
               "pKGFN decisions with every KG flat |", "|---|---|---|---|---|---|---|---|"]
     for fac, pol in keys:
@@ -256,17 +264,21 @@ def summarize_e3a(lines, S):
             m, se = mean_se([min(x, H) for x in dd])
             row += [f"{sum(np.isfinite(dd))}/{len(R)}", f"{fmt_days(med(dd), H)} ({m:.0f} ± {se:.0f})"]
             days[(v, T)] = {s: min(t_hit(r, T)[0], H) for s, r in R.items()}
+            days[(v, T, "usd")] = {s: t_hit(r, T)[1] for s, r in R.items() if np.isfinite(t_hit(r, T)[1])}
         c = mean_se([100 * claim_at(r, 45) for r in R.values()])
         row.append(f"{c[0]:.0f} ± {c[1]:.0f}")
         lines.append("| " + " | ".join(row) + " |")
-    lines += ["", "| A | B | target | mean A − B ± SE (days) | A sooner / B sooner / tie | p |", "|---|---|---|---|---|---|"]
+    lines += ["", "| A | B | target | days: mean A − B ± SE | A sooner / B sooner / tie | p | $k: mean A − B ± SE "
+              "(seeds where both got there) | A cheaper / B cheaper | p |", "|---|---|---|---|---|---|---|---|---|"]
     for A, B in (("site", "separate"), ("naive", "separate"), ("site", "naive")):
         for T in ("T1", "T2"):
             if (A, T) in days and (B, T) in days:
                 pr = paired(days[(A, T)], days[(B, T)])
+                pu = paired(days[(A, T, "usd")], days[(B, T, "usd")])
                 lines.append(f"| {A} | {B} | {T} | {pr['mean']:+.0f} ± {pr['se']:.0f} | {pr['a_better']} / {pr['b_better']} / "
-                             f"{pr['ties']} | {pr['p']:.3g} |")
-                S.setdefault("e3a", {})[f"{A}-{B} {T}"] = pr
+                             f"{pr['ties']} | {pr['p']:.3g} | {pu['mean'] / 1e3:+.0f} ± {pu['se'] / 1e3:.0f} | {pu['a_better']} / "
+                             f"{pu['b_better']} | {pu['p']:.3g} |")
+                S.setdefault("e3a", {})[f"{A}-{B} {T}"] = dict(days=pr, usd=pu)
     return lines
 
 
@@ -291,17 +303,21 @@ def summarize_e3b(lines, S):
             row += [f"{sum(np.isfinite(dd))}/{len(R)}", f"{fmt_days(med(dd), 365)} ({m:.0f} ± {se:.0f})",
                     f"{np.median(uu) / 1e3:.0f}" if uu else "–"]
             D[(hist, camp, T)] = {r["seed"]: min(t_hit(r, T)[0], 365.0) for r in R}
+            D[(hist, camp, T, "usd")] = {r["seed"]: t_hit(r, T)[1] for r in R if np.isfinite(t_hit(r, T)[1])}
         lines.append("| " + " | ".join(row) + " |")
-    lines += ["", "| A | B | campaign | target | mean A − B ± SE (days) | A sooner / B sooner / tie | p |",
-              "|---|---|---|---|---|---|---|"]
+    lines += ["", "| A | B | campaign | target | days: mean A − B ± SE | A sooner / B sooner / tie | p | "
+              "$k: mean A − B ± SE (seeds where both got there) | A cheaper / B cheaper | p |",
+              "|---|---|---|---|---|---|---|---|---|---|"]
     for camp in (1, 2):
         for A, B in (("documented", "none"), ("poor", "none"), ("documented", "poor")):
             for T in ("T1", "T2"):
                 if (A, camp, T) in D and (B, camp, T) in D:
                     pr = paired(D[(A, camp, T)], D[(B, camp, T)])
+                    pu = paired(D[(A, camp, T, "usd")], D[(B, camp, T, "usd")])
                     lines.append(f"| {A} | {B} | {camp} | {T} | {pr['mean']:+.0f} ± {pr['se']:.0f} | {pr['a_better']} / "
-                                 f"{pr['b_better']} / {pr['ties']} | {pr['p']:.3g} |")
-                    S.setdefault("e3b", {})[f"{A}-{B} c{camp} {T}"] = pr
+                                 f"{pr['b_better']} / {pr['ties']} | {pr['p']:.3g} | {pu['mean'] / 1e3:+.0f} ± {pu['se'] / 1e3:.0f} | "
+                                 f"{pu['a_better']} / {pu['b_better']} | {pu['p']:.3g} |")
+                    S.setdefault("e3b", {})[f"{A}-{B} c{camp} {T}"] = dict(days=pr, usd=pu)
     return lines
 
 

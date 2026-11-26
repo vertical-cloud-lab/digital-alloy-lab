@@ -137,3 +137,9 @@ All made on 2026-11-26 before any of the final runs, which were started together
      by composition.
 3. **A first E1 sweep was started and stopped.** It had finished 15 pKGFN campaigns with the code before fix 2; those
    results were discarded, not used.
+4. **E2b's confirmation policy was fixed and E2b re-run.** In the first E2b runs the discovery loop kept spending
+   while the gas-atomized lot was out for 51 days, and 6 of 10 "after" campaigns ran out of money before confirming,
+   which says more about the budget than about when to order. Discovery now stops once an alloy is claimed and its
+   production lot is on order. The 14 finished E2b campaigns were discarded; no other experiment uses that policy.
+   A second bug in the same policy (a lot counted as ordered when proposed, not when the supplier accepted it, so one
+   campaign stopped discovery with nothing on order) was fixed before the final E2b run.
