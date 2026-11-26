@@ -10,6 +10,25 @@ event stream), writes /tmp/robotbuild/frames/40-assembly-module/ or 41-assembly-
 Time: every event carries its real-world duration (record.py's speeds); a frame stands for 1/12 s of it at real time, or
 more in a time-lapse (drives, repeated screws, a person's long jobs), and the frame's `proc_s` and `sub` say which. The
 `add` counters sum the robots' working time (robot_h: arm A and arm B separately added) and the persons'.
+
+Round 8 (Sterling, 2026-11-26: "moonwalk, motion sickness, collisions and interference"):
+  * Fixed tripods (the camera rig, RIG / cam_def): a few per place in the cell (the bench from its end and from above each
+    lane, Fixture P and the trunnion, Fixture B), three set up wherever a MiR stops at the parts table, a wide view of the
+    cell, and one down each lane for drives. Pass 1 plays the chapter without drawing and records where the work is in every
+    frame; the shot for a step at a place is the least occluded of that place's tripods (rays to points round the work, cast
+    a few times per step), a shot shorter than MIN_SHOT is merged into a neighbour that also shows its work, and pass 2 draws.
+    The camera never moves inside a shot; a cut is forced wherever something moved without being drawn (a fetch not shown,
+    a jump in the recording), always to a different tripod. Each frame's meta has `cam`.
+  * MiRs move as recorded by mir_route.py: pivot, drive along the heading, pivot (route legs in the drive event).
+  * Every arm motion is drawn (round 7's capped mode cut transit moves, so arms jumped inside a shot); the chapter's first
+    DRIVE_SHOW drives to and from the table and first PICK_SHOW picks are drawn, later ones are an ellipsis: checked and
+    timed, not drawn, with a cut and a line saying so. A pick the planner could not plan, or a move it could not plan, is
+    never animated: a card says what failed and who does it instead (a person brings the part; the person is drawn).
+  * Slices: ASM_PART=k/n (by frames), ASM_RANGE=lo:hi, or ASM_STEPS=<first step>:<step after the last> with ASM_RANGE_IDX=k,
+    and ASM_CUTS=<step,...> (a forced cut at each, the same in every slice) so a chapter can be rendered slice by slice while
+    the planner is still writing its chunks (record.py). ASM_UPTO=<step> stops before that step (41 stops before T01: the
+    integration chapter draws T01-T06). ASM_PLAN_ONLY=1: pass 1 only, the frame and shot plan to <data>/<chapter>-plan.json.
+    ASM_PICK=n,m,...: draw only those frames (a look at stills before a full render).
 """
 from __future__ import annotations
 
@@ -1123,9 +1142,15 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                     rp.st[n]["pose"] = None
                     rp.set_arm(n, x=e["x0"] + (e["x1"] - e["x0"]) * smooth((f + 1) / nf))
                 if rt:
-                    sub = (f"MiR {n}: pivot, drive, pivot, {rt['dist_mm'] / 1000:.1f} m and {rt['n_pivots']} pivots "
-                           + ("to the parts table" if e["x1"] > TABLE_X else ("back to the bench" if e["x0"] > TABLE_X else "along the bench"))
-                           + f" ({e['dur']:.0f} s: 1 m/s, 0.3 m/s2; pivots 30 deg/s, estimate{lapse_txt(per)})")
+                    where = ("to the parts table" if e["x1"] > TABLE_X else ("back to the bench" if e["x0"] > TABLE_X else
+                                                                            "to the next dock"))
+                    if rt.get("n_pivots"):
+                        sub = (f"MiR {n}: pivot, drive, pivot: {rt['dist_mm'] / 1000:.1f} m and {rt['n_pivots']} pivots {where} "
+                               f"({e['dur']:.0f} s: 1 m/s, 0.3 m/s2; pivots 30 deg/s, estimate{lapse_txt(per)})")
+                    else:
+                        rev = any(lg.get("rev") for lg in rt["legs"])
+                        sub = (f"MiR {n} {'reverses' if rev else 'drives forward'} {rt['dist_mm'] / 1000:.1f} m {where} "
+                               f"({e['dur']:.0f} s with docking{lapse_txt(per)})")
                 else:
                     sub = f"MiR {n} drives {abs(e['x1'] - e['x0']) / 1000:.1f} m ({e['dur']:.0f} s{lapse_txt(per)})"
                 if chk and not chk.get("ok", True):
