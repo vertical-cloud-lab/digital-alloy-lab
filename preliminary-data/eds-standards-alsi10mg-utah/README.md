@@ -89,7 +89,7 @@ correction. They are not run-to-run scatter.
 | Problem | Runs | Effect |
 |---|---|---|
 | Standards for 10-25 kV taken at 60-99 % dead time | `sobol_exp_2`-`6`, trials 15-17; also trials 6, 9, 11, 14 | Analytical totals 0.91-1.41, and Mg falls with kV, to 0 at 25 kV. Diagnosed in [caliber#35](https://github.com/vertical-cloud-lab/caliber/issues/35#issuecomment-6930731960). Fix: re-collect those standards at about 20,000 counts per second |
-| Unknown acquired at a 0.96 µs amp time, while every standard used 7.68 µs | trials 6 and 8-14 (all of 2026-11-18) | Al Kα is 90-92 eV wide against 75-77 eV in the 5 kV standards and the 7.68 µs unknowns. At 5 kV, Mg reads 0.63-0.73 wt % (normalized) and the totals 0.88-0.91. Fix: take standards at 0.96 µs too, or acquire at 7.68 µs |
+| Unknown acquired at a 0.96 µs amp time, while every standard used 7.68 µs | trials 6 and 8-14 (all of 2026-11-18) | Al Kα is 90-92 eV wide, against 75.7 eV in the 5 kV Al standard and 76.5 eV in `sobol_exp_1_1`. At 5 kV, Mg reads 0.63-0.73 wt % (normalized) and the totals 0.88-0.91. Fix: take standards at 0.96 µs too, or acquire at 7.68 µs |
 | MgO standard entered as "Pure magnesium", DTSA-II's default | trials 11 and 14 | Mg about 2.5-2.8 times too high, the error found in [caliber#35](https://github.com/vertical-cloud-lab/caliber/issues/35#issuecomment-6930731960) |
 
 **Checking the amp-time effect.** [`analyze_eds.py`](analyze_eds.py) fits the 5 kV spectra
