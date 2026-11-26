@@ -1,0 +1,11 @@
+# net kappa scenario seeds strategies...   (run in this order; see PREREGISTRATION.md)
+al 1 mixed 0-19 nofail drop abandon partial impute viab_x viab_x_partial viab_node
+cu-toy 1 mixed 0-15 nofail drop abandon partial impute viab_x viab_x_partial viab_node
+al 1 mislabel 0-19 impute viab_x viab_x_partial viab_node
+al 1 transient 0-19 drop abandon partial viab_node
+cu-toy 1 mislabel 0-15 impute viab_x viab_x_partial viab_node
+cu-toy 1 transient 0-15 drop abandon partial viab_node
+cu-phys 1 mixed 0-15 nofail drop abandon partial impute viab_x viab_x_partial viab_node
+al 0 mixed 0-19 nofail drop abandon partial impute viab_x viab_x_partial viab_node
+cu-phys 1 mislabel 0-15 impute viab_x viab_x_partial viab_node
+al 0 mislabel 0-19 impute viab_x viab_x_partial viab_node
