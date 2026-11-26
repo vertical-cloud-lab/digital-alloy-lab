@@ -1,0 +1,372 @@
+{
+ "what": "the chamber's posted programs parsed, timed and cut in the part frame (cad/robotbuild/gcode_sim.py)",
+ "generated_utc": "2026-11-26T07:08Z",
+ "resolution_mm": 0.75,
+ "rapid_mm_min": 25400.0,
+ "timing": "feeds as programmed, rapids at 25.4 m/min; tool changes and A indexes not timed (as freecad_cam.py's recount)",
+ "cutter": "flat-ended cylinders swept along every move (drills with a 118 deg point), the tool and holder coming in along the setup's tool axis",
+ "stock": "freecad_cam.py's: frame 317.5 x 228.6 x 127 with the 274 x 184 R7 core out (waterjet), floor 317.5 x 228.6 x 25.4",
+ "setups": {
+  "frame_B": {
+   "program": "analysis/out/machining/gcode/frame_B.ngc",
+   "plan_setup": "F-S1",
+   "recount_min": 6.9,
+   "path_feed_mm": 10550.6,
+   "path_rapid_mm": 6384.5,
+   "timeline_min": 6.91,
+   "timeline_feed_mm": 10550.3,
+   "timeline_rapid_mm": 6663.6,
+   "chords": 846,
+   "program_lines": 518,
+   "freecad_cam_json_min": 7.0,
+   "freecad_cam_json_feed_mm": 10655.7,
+   "freecad_cam_json_rapid_mm": 6157.3,
+   "recount_vs_json_min": -0.1,
+   "timeline_vs_json_min": -0.09,
+   "removed_cm3": 439.96,
+   "tools": [
+    1,
+    2,
+    3,
+    6,
+    14
+   ],
+   "slugs_dropped_cm3": [],
+   "gouge_cm3": 0.0
+  },
+  "frame_A": {
+   "program": "analysis/out/machining/gcode/frame_A.ngc",
+   "plan_setup": "F-S2",
+   "recount_min": 41.63,
+   "path_feed_mm": 21172.0,
+   "path_rapid_mm": 4859.2,
+   "timeline_min": 41.62,
+   "timeline_feed_mm": 21169.7,
+   "timeline_rapid_mm": 4906.1,
+   "chords": 1065,
+   "program_lines": 497,
+   "freecad_cam_json_min": 41.63,
+   "freecad_cam_json_feed_mm": 21172.0,
+   "freecad_cam_json_rapid_mm": 4859.2,
+   "recount_vs_json_min": 0.0,
+   "timeline_vs_json_min": -0.01,
+   "removed_cm3": 426.36,
+   "tools": [
+    1,
+    2,
+    4,
+    12
+   ],
+   "slugs_dropped_cm3": [],
+   "gouge_cm3": 1.233
+  },
+  "frame_C0": {
+   "program": "analysis/out/machining/gcode/frame_C_haas.nc",
+   "plan_setup": "F-S3",
+   "recount_min": 10.53,
+   "path_feed_mm": 17416.1,
+   "path_rapid_mm": 9756.7,
+   "timeline_min": 10.53,
+   "timeline_feed_mm": 17416.1,
+   "timeline_rapid_mm": 9796.7,
+   "chords": 15214,
+   "program_lines": 15214,
+   "freecad_cam_json_min": 10.53,
+   "freecad_cam_json_feed_mm": 17416.1,
+   "freecad_cam_json_rapid_mm": 9756.7,
+   "recount_vs_json_min": 0.0,
+   "timeline_vs_json_min": 0.0,
+   "removed_cm3": 330.41,
+   "tools": [
+    3
+   ],
+   "slugs_dropped_cm3": [],
+   "haas_index_lines": {
+    "home": 13,
+    "a": 15,
+    "first": 10,
+    "last": 15587
+   },
+   "gouge_cm3": 0.0
+  },
+  "frame_C90": {
+   "program": "analysis/out/machining/gcode/frame_C_haas.nc",
+   "plan_setup": "F-S3",
+   "recount_min": 0.35,
+   "path_feed_mm": 361.4,
+   "path_rapid_mm": 572.8,
+   "timeline_min": 0.35,
+   "timeline_feed_mm": 357.5,
+   "timeline_rapid_mm": 522.8,
+   "chords": 280,
+   "program_lines": 56,
+   "freecad_cam_json_min": 0.35,
+   "freecad_cam_json_feed_mm": 361.4,
+   "freecad_cam_json_rapid_mm": 572.8,
+   "recount_vs_json_min": 0.0,
+   "timeline_vs_json_min": 0.0,
+   "removed_cm3": 4.34,
+   "tools": [
+    3,
+    9,
+    10
+   ],
+   "slugs_dropped_cm3": [],
+   "haas_index_lines": {
+    "home": 15591,
+    "a": 15593,
+    "first": 15588,
+    "last": 15712
+   },
+   "gouge_cm3": 0.0
+  },
+  "frame_C180": {
+   "program": "analysis/out/machining/gcode/frame_C_haas.nc",
+   "plan_setup": "F-S3",
+   "recount_min": 2.24,
+   "path_feed_mm": 1767.2,
+   "path_rapid_mm": 3216.8,
+   "timeline_min": 2.23,
+   "timeline_feed_mm": 1764.0,
+   "timeline_rapid_mm": 3256.8,
+   "chords": 468,
+   "program_lines": 111,
+   "freecad_cam_json_min": 2.24,
+   "freecad_cam_json_feed_mm": 1767.2,
+   "freecad_cam_json_rapid_mm": 3216.8,
+   "recount_vs_json_min": 0.0,
+   "timeline_vs_json_min": -0.01,
+   "removed_cm3": 17.33,
+   "tools": [
+    6,
+    7,
+    9,
+    11
+   ],
+   "slugs_dropped_cm3": [],
+   "haas_index_lines": {
+    "home": 15716,
+    "a": 15718,
+    "first": 15713,
+    "last": 15940
+   },
+   "gouge_cm3": 0.023
+  },
+  "frame_C270": {
+   "program": "analysis/out/machining/gcode/frame_C_haas.nc",
+   "plan_setup": "F-S3",
+   "recount_min": 1.47,
+   "path_feed_mm": 1363.9,
+   "path_rapid_mm": 2508.6,
+   "timeline_min": 1.46,
+   "timeline_feed_mm": 1354.0,
+   "timeline_rapid_mm": 2633.6,
+   "chords": 916,
+   "program_lines": 157,
+   "freecad_cam_json_min": 1.47,
+   "freecad_cam_json_feed_mm": 1363.9,
+   "freecad_cam_json_rapid_mm": 2508.6,
+   "recount_vs_json_min": 0.0,
+   "timeline_vs_json_min": -0.01,
+   "removed_cm3": 14.58,
+   "tools": [
+    3,
+    6,
+    7,
+    9,
+    10,
+    11,
+    12
+   ],
+   "slugs_dropped_cm3": [],
+   "haas_index_lines": {
+    "home": 15944,
+    "a": 15946,
+    "first": 15941,
+    "last": 16285
+   },
+   "gouge_cm3": 0.097
+  },
+  "floor_A": {
+   "program": "analysis/out/machining/gcode/floor_A.ngc",
+   "plan_setup": "P-S1",
+   "recount_min": 51.03,
+   "path_feed_mm": 30585.3,
+   "path_rapid_mm": 2884.5,
+   "timeline_min": 51.03,
+   "timeline_feed_mm": 30577.3,
+   "timeline_rapid_mm": 3169.1,
+   "chords": 2825,
+   "program_lines": 1727,
+   "freecad_cam_json_min": 51.03,
+   "freecad_cam_json_feed_mm": 30585.3,
+   "freecad_cam_json_rapid_mm": 2884.5,
+   "recount_vs_json_min": 0.0,
+   "timeline_vs_json_min": 0.0,
+   "removed_cm3": 497.82,
+   "tools": [
+    1,
+    2,
+    4,
+    9,
+    14
+   ],
+   "slugs_dropped_cm3": [
+    60.9,
+    15.82
+   ],
+   "gouge_cm3": 0.174
+  },
+  "floor_B": {
+   "program": "analysis/out/machining/gcode/floor_B.ngc",
+   "plan_setup": "P-S2",
+   "recount_min": 17.42,
+   "path_feed_mm": 15727.4,
+   "path_rapid_mm": 9574.9,
+   "timeline_min": 17.43,
+   "timeline_feed_mm": 15727.4,
+   "timeline_rapid_mm": 9819.5,
+   "chords": 19195,
+   "program_lines": 18753,
+   "freecad_cam_json_min": 17.36,
+   "freecad_cam_json_feed_mm": 15703.0,
+   "freecad_cam_json_rapid_mm": 9545.6,
+   "recount_vs_json_min": 0.06,
+   "timeline_vs_json_min": 0.07,
+   "removed_cm3": 232.08,
+   "tools": [
+    1,
+    7,
+    9,
+    12,
+    13,
+    14
+   ],
+   "slugs_dropped_cm3": [],
+   "gouge_cm3": 0.107
+  }
+ },
+ "parts": {
+  "frame": {
+   "setups": [
+    "frame_B",
+    "frame_A",
+    "frame_C0",
+    "frame_C90",
+    "frame_C180",
+    "frame_C270"
+   ],
+   "initial_stock_cm3": 2832.4,
+   "final_cm3": 1599.4,
+   "removed_sim_cm3": 1233.0,
+   "part_voxels_cm3": 1585.2,
+   "removed_cad_cm3": 1247.3,
+   "removed_sim_vs_cad_pct": -1.15,
+   "leftover_cm3": 15.64,
+   "gouge_cm3": 1.353,
+   "leftover_beyond_0.75mm_cm3": 0.096,
+   "gouge_beyond_0.75mm_cm3": 0.032,
+   "leftover_beyond_1.5mm_cm3": 0.004,
+   "gouge_beyond_1.5mm_cm3": 0.001,
+   "leftover_largest": [
+    {
+     "cm3": 0.0,
+     "bbox_mm": [
+      155.7,
+      -43.5,
+      14.5,
+      155.7,
+      -43.5,
+      14.5
+     ]
+    },
+    {
+     "cm3": 0.0,
+     "bbox_mm": [
+      155.7,
+      -44.3,
+      20.5,
+      155.7,
+      -44.3,
+      20.5
+     ]
+    },
+    {
+     "cm3": 0.0,
+     "bbox_mm": [
+      104.7,
+      111.0,
+      98.5,
+      104.7,
+      111.0,
+      98.5
+     ]
+    },
+    {
+     "cm3": 0.0,
+     "bbox_mm": [
+      104.0,
+      111.0,
+      103.0,
+      104.0,
+      111.0,
+      103.0
+     ]
+    },
+    {
+     "cm3": 0.0,
+     "bbox_mm": [
+      104.0,
+      111.0,
+      97.0,
+      104.0,
+      111.0,
+      97.0
+     ]
+    },
+    {
+     "cm3": 0.0,
+     "bbox_mm": [
+      103.2,
+      111.0,
+      96.2,
+      103.2,
+      111.0,
+      96.2
+     ]
+    }
+   ],
+   "note": "leftover: stock the programs leave that the model doesn't have (taps, STI threads, reamed dowel holes, chamfers and other features not programmed, plus voxel steps); gouge: model volume the programs cut (voxel steps at walls)",
+   "cad_part_cm3": 1582.5,
+   "cad_blank_cm3": 2820.2,
+   "removed_exact_cad_cm3": 1237.7,
+   "blank_kg_6061": 7.61,
+   "part_kg_6061": 4.27
+  },
+  "floor": {
+   "setups": [
+    "floor_A",
+    "floor_B"
+   ],
+   "initial_stock_cm3": 1854.9,
+   "final_cm3": 1125.0,
+   "removed_sim_cm3": 729.9,
+   "part_voxels_cm3": 1121.2,
+   "removed_cad_cm3": 733.7,
+   "removed_sim_vs_cad_pct": -0.52,
+   "leftover_cm3": 4.08,
+   "gouge_cm3": 0.281,
+   "leftover_beyond_0.75mm_cm3": 0.111,
+   "gouge_beyond_0.75mm_cm3": 0.0,
+   "leftover_beyond_1.5mm_cm3": 0.0,
+   "gouge_beyond_1.5mm_cm3": 0.0,
+   "note": "leftover: stock the programs leave that the model doesn't have (taps, STI threads, reamed dowel holes, chamfers and other features not programmed, plus voxel steps); gouge: model volume the programs cut (voxel steps at walls)",
+   "cad_part_cm3": 1113.1,
+   "cad_blank_cm3": 1843.5,
+   "removed_exact_cad_cm3": 730.4,
+   "blank_kg_6061": 4.98,
+   "part_kg_6061": 3.01
+  }
+ },
+ "seconds": 3.8
+}

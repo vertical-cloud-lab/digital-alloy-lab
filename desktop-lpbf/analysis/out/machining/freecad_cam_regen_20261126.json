@@ -1,0 +1,157 @@
+{
+ "what": "freecad_cam.py re-run on 2026-11-26 (FreeCAD 1.0.2 conda AppImage, sha256 checked against the release's SHA256 file) against the committed analysis/out/machining/freecad_cam.json; the re-posted programs are the ones in analysis/out/machining/gcode/",
+ "freecad": "FreeCAD 1.0.2 (39319 (Git)), CAM workbench, run headless with freecadcmd",
+ "inputs": "inventory.py's frame and floor BREPs and parts.json, built 2026-11-26",
+ "setups": {
+  "floor_A": {
+   "committed_total_min": 51.03,
+   "regenerated_total_min": 51.03,
+   "d_min": 0.0,
+   "committed_feed_mm": 30585.3,
+   "regenerated_feed_mm": 30585.3,
+   "d_feed_mm": 0.0,
+   "committed_rapid_mm": 2884.5,
+   "regenerated_rapid_mm": 2884.5,
+   "d_rapid_mm": 0.0,
+   "tool_changes": [
+    6,
+    6
+   ],
+   "ops_that_differ": [],
+   "ngc_sha256": "614a13fb15917b20e1a3b0eb46cc2f7bb1d63c0d1134386c765b8e95f0a54c9a"
+  },
+  "floor_B": {
+   "committed_total_min": 17.36,
+   "regenerated_total_min": 17.42,
+   "d_min": 0.06,
+   "committed_feed_mm": 15703.0,
+   "regenerated_feed_mm": 15727.4,
+   "d_feed_mm": 24.4,
+   "committed_rapid_mm": 9545.6,
+   "regenerated_rapid_mm": 9574.9,
+   "d_rapid_mm": 29.3,
+   "tool_changes": [
+    7,
+    7
+   ],
+   "ops_that_differ": [
+    {
+     "label": "Outside below z -12 and the 18 U-notches 8 wide x 8 deep, adaptive outside the outline",
+     "cut_time_min": 0.06,
+     "rapid_time_min": 0.0
+    }
+   ],
+   "ngc_sha256": "93ed4ec69c9a17617953795abf9e71013aac21e34b6ddd513867a55337b7c4c5"
+  },
+  "frame_B": {
+   "committed_total_min": 7.0,
+   "regenerated_total_min": 6.9,
+   "d_min": -0.1,
+   "committed_feed_mm": 10655.7,
+   "regenerated_feed_mm": 10550.6,
+   "d_feed_mm": -105.1,
+   "committed_rapid_mm": 6157.3,
+   "regenerated_rapid_mm": 6384.5,
+   "d_rapid_mm": 227.2,
+   "tool_changes": [
+    6,
+    6
+   ],
+   "ops_that_differ": [
+    {
+     "label": "Outside 312x222 R8, adaptive, bottom up to mid-height",
+     "cut_time_min": -0.11,
+     "rapid_time_min": 0.0
+    }
+   ],
+   "ngc_sha256": "b1c9ef11b0f70031f3599ad44ace226a0d913d2f6fe37c5e0b3c1ba3467990c5"
+  },
+  "frame_A": {
+   "committed_total_min": 41.63,
+   "regenerated_total_min": 41.63,
+   "d_min": 0.0,
+   "committed_feed_mm": 21172.0,
+   "regenerated_feed_mm": 21172.0,
+   "d_feed_mm": 0.0,
+   "committed_rapid_mm": 4859.2,
+   "regenerated_rapid_mm": 4859.2,
+   "d_rapid_mm": 0.0,
+   "tool_changes": [
+    4,
+    4
+   ],
+   "ops_that_differ": [],
+   "ngc_sha256": "4486c0268db8c137766a817d895270ce30cc2446ab5f8e9ccea94bf197fe8539"
+  },
+  "frame_C0": {
+   "committed_total_min": 10.53,
+   "regenerated_total_min": 10.53,
+   "d_min": 0.0,
+   "committed_feed_mm": 17416.1,
+   "regenerated_feed_mm": 17416.1,
+   "d_feed_mm": 0.0,
+   "committed_rapid_mm": 9756.7,
+   "regenerated_rapid_mm": 9756.7,
+   "d_rapid_mm": 0.0,
+   "tool_changes": [
+    1,
+    1
+   ],
+   "ops_that_differ": [],
+   "ngc_sha256": "587d13f9e54cdcb48f6e4b8f034784f83370e8d183a782a7949619d09e33a789"
+  },
+  "frame_C90": {
+   "committed_total_min": 0.35,
+   "regenerated_total_min": 0.35,
+   "d_min": 0.0,
+   "committed_feed_mm": 361.4,
+   "regenerated_feed_mm": 361.4,
+   "d_feed_mm": 0.0,
+   "committed_rapid_mm": 572.8,
+   "regenerated_rapid_mm": 572.8,
+   "d_rapid_mm": 0.0,
+   "tool_changes": [
+    3,
+    3
+   ],
+   "ops_that_differ": [],
+   "ngc_sha256": "8f15b0c19b49d006c9e5a33c6a3cdcf4b1c6a966a6f05d5b7686c55410eaada8"
+  },
+  "frame_C180": {
+   "committed_total_min": 2.24,
+   "regenerated_total_min": 2.24,
+   "d_min": 0.0,
+   "committed_feed_mm": 1767.2,
+   "regenerated_feed_mm": 1767.2,
+   "d_feed_mm": 0.0,
+   "committed_rapid_mm": 3216.8,
+   "regenerated_rapid_mm": 3216.8,
+   "d_rapid_mm": 0.0,
+   "tool_changes": [
+    4,
+    4
+   ],
+   "ops_that_differ": [],
+   "ngc_sha256": "6c0838adb5f5efafaa501882dedc23bf45b99eccf57ed36b38df3bec9df281e7"
+  },
+  "frame_C270": {
+   "committed_total_min": 1.47,
+   "regenerated_total_min": 1.47,
+   "d_min": 0.0,
+   "committed_feed_mm": 1363.9,
+   "regenerated_feed_mm": 1363.9,
+   "d_feed_mm": 0.0,
+   "committed_rapid_mm": 2508.6,
+   "regenerated_rapid_mm": 2508.6,
+   "d_rapid_mm": 0.0,
+   "tool_changes": [
+    7,
+    7
+   ],
+   "ops_that_differ": [],
+   "ngc_sha256": "7b4232659ef190351f845052c23bca97026b29b90d70a97dd8dd362127312a15"
+  }
+ },
+ "haas_program_sha256": "b241852c1ad7c27f3f9db02503d0436a8dd9cfcbbc8788d9146678d1f89e08d5",
+ "note": "FreeCAD's Adaptive op is not bit-for-bit repeatable (a re-post moves its paths by ~0.01 mm, freecad_cam.py's docstring): frame_B and floor_B changed by a few tenths of a percent in feed length; every other setup is identical in minutes and path lengths. freecad_cam.json is left as it was."
+}
