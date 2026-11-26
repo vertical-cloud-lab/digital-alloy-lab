@@ -21,8 +21,9 @@ Line links below point at those commits.
   (pooled over the cells, Holm p < 1e-6). Any failure model recovers most or all of the loss:
   node-level viability, imputing the worst value measured so far, and Ax's `AddExecutionViability`
   are within a few points of each other, and node-level viability ends level with a campaign that
-  has no failures at all. Imputing far below anything measured costs 7 to 16 points. Transient faults
-  alone cost money but not results, whatever status they get.
+  has no failures at all. Imputing far below anything measured cost 7 to 16 points on aluminum (none
+  on copper). Transient faults alone cost money more than results, unless the failed run's data are
+  thrown away (`FAILED`), which cost 11 points on copper (not significant).
 - **Ax's definitions.** `FAILED` means a possibly transient error, so the arm may be suggested
   again. `ABANDONED` means "don't run this again": either a person decided so, or the
   parameterization makes the trial fail every time. By default the model fits on neither

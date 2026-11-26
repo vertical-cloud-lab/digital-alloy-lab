@@ -48,18 +48,23 @@ failures switched off. Every number is in [`tables.md`](tables.md).*
    two to three times and end with similar counts, so the classifier's head start mostly goes unused,
    probably because the viability models switch on only after three failures, by which point the
    search has settled where both are accurate enough (not tested directly).
-4. **Imputing the worst value seen is a good failure model in these networks, and imputing far below
-   it is not** (the concern [raised on #274](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/274#issuecomment-7053633447)). In these truths a failed build is a bad alloy or a bad
+4. **Imputing the worst value seen is a good failure model in these networks; imputing far below it
+   is a gamble** (the concern [raised on #274](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/274#issuecomment-7053633447)). In these truths a failed build is a bad alloy or a bad
    setting anyway (no design within 60 % of any optimum fails), so writing the failure down as the worst
    result seen teaches the network the right thing. It was the best strategy on the copper physics
    truth (90 %) and on aluminum at `kappa = 0` (80 %). Writing it down one observed range *below*
    anything measured, a "terrible result", cost 7 points on aluminum at `kappa = 1` (82 % against
    90 % for node-level viability, Holm p = 0.06), and 16 points once 30 % of labels were wrong (71 %,
-   Holm p = 0.009), while imputing the worst value seen lost under 4.
-5. **Transient faults alone are harmless, whatever status they get.** With transient failures only,
-   every strategy on aluminum ends at 87 % to 90 % of the optimum against 90 % without failures; the
-   faults cost about $10k per $100k. So `FAILED` or `ABANDONED` for a transient fault made no
-   measurable difference here, including abandoning a design for good after one bad plate.
+   Holm p = 0.009), while imputing the worst value seen lost under 4. On the hand-written copper truth
+   it did no harm (72 % against 61 % for the worst value seen and 72 % for node-level viability, 12
+   seeds, and 65 % with mislabels), so the damage depends on the network, which is the risk.
+5. **Transient faults alone cost money more than results, as long as the run's data are kept.** With
+   transient failures only, every strategy on aluminum ends at 87 % to 90 % of the optimum against
+   90 % without failures, and the faults cost about $10k per $100k. On copper, where every run passes
+   through five stages that can fail, the strategies that keep a failed run's data end at 70 %
+   against 75 % without failures, while `drop` (Ax's `FAILED`, which discards them) ends at 59 %
+   (−11 points against node-level viability, 7 wins and 5 losses, not significant). Abandoning a
+   design for good after one bad plate cost nothing measurable in either network.
 6. **Wrong labels cost a few points.** With 30 % of the transient / input-caused labels wrong, the
    strategies that read labels lose 2 to 4 points on aluminum at `kappa = 1` (node-level viability
    90 % → 87 %, Ax's viability on x 89 % → 85 %, imputing the worst value 86 % → 82 %), and stay
@@ -107,10 +112,10 @@ viability-on-x variants.*
 |---|---|---|
 | H1 | `drop` does worst, with the most repeats | **Not as stated.** `drop` is bad, but so are `abandon`, `partial` and `keep`; which of the four is lowest changes with the cell (`keep` on aluminum, `abandon` on copper). |
 | H2 | Keeping completed stages helps (`partial` ≥ `abandon`, `viab_x_partial` ≥ `viab_x`) | **Not supported.** Both differences are within noise in every cell; `viab_x_partial` was 12.5 points *behind* `viab_x` on aluminum at `kappa = 1` (p = 0.027, not significant after correction), ahead on two of the other three cells and behind on the third. |
-| H3 | Abandoning transient failures costs something | **Not supported** (aluminum: −0.1 points). |
+| H3 | Abandoning transient failures costs something | **Not supported** (aluminum −0.1 points, copper +0.1 against node-level viability). Discarding their data (`drop`) is what cost points, on copper. |
 | H4 | A failure model means fewer input-caused failures than `partial` | **Supported** in every cell (aluminum at `kappa = 1`: 8.6 to 11.3 against 20.9). |
 | H5 | Node-level viability ≥ viability on x with `fit_abandoned`, with fewer failures | **Same direction, not significant**: +5.1 points pooled (p = 0.028, Holm 0.14), similar failure counts. |
-| H6 | `impute` competitive with correct labels, and hurt more by mislabels | **First half supported** (pooled −0.8 against node-level viability); **second half not** for the worst-value imputation, but the extreme version shows it (above). |
+| H6 | `impute` competitive with correct labels, and hurt more by mislabels | **First half supported** (pooled −0.8 against node-level viability); **second half not** for the worst-value imputation. The extreme version shows it on aluminum but not on copper (above). |
 | H7 | Every strategy ends below the no-failure reference | **Not supported**: imputation and failure-priced node-level viability end above it on the copper physics truth and imputation on aluminum at `kappa = 0` (none significantly). A likely reason: failures here happen where alloys are poor, so a model of them steers the search away from poor regions about as well as measured low values do, and sometimes sooner. |
 
 <!-- SCENARIOS -->
@@ -121,12 +126,14 @@ viability-on-x variants.*
   executed, lot IDs, cost; the template is in [`bofn-failed-vs-abandoned.md`](../../bofn-failed-vs-abandoned.md) §4)
   and build the network's training sets from it. Ax's trial status can't hold this.
 - **Give every failure a model.** The cheapest one that worked: write an input-caused failure down as
-  the worst value measured so far at that stage. Never write it below anything measured. A viability
+  the worst value measured so far at that stage, not below anything measured (that cost up to 16 points
+  on aluminum, though nothing on copper). A viability
   model over the failing stage's inputs (powder yield, density, CALPHAD outputs) did as well on
   average and learns the region from fewer failures.
-- **Label each failure transient or input-caused when you can,** and don't worry much about the
-  status of a transient fault: retrying it, dropping it or abandoning the design cost nothing
-  measurable here. A 30 % error rate in these labels cost a few points.
+- **Label each failure transient or input-caused when you can,** and keep the data of a run that hit
+  a transient fault: whether the design is then retried or abandoned made no measurable difference,
+  but discarding the run's completed stages (`FAILED` in Ax ≥ 1.2.2) cost points on copper. A 30 %
+  error rate in these labels cost a few points.
 - **If Ax is the ledger** (details and links in [`survey/ax.md`](survey/ax.md) §f): use `Client` ≥ 1.2.4,
   `attach_data` each stage's metrics as it finishes, and for an input-caused failure call
   `complete_trial` with the measured stages plus a stage viability metric of 0, used as an outcome
