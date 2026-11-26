@@ -374,40 +374,9 @@
   "chapters": {
    "30-machining-chamber": {
     "frames": 564,
-    "on_their_program_line": 559,
+    "on_their_program_line": 564,
     "worst_off_line_mm": 0.000717,
-    "problems": [
-     {
-      "frame": 556,
-      "program": "frame_B.ngc",
-      "line": 688,
-      "off_mm": 0.0
-     },
-     {
-      "frame": 949,
-      "program": "frame_A.ngc",
-      "line": 621,
-      "off_mm": 0.0
-     },
-     {
-      "frame": 1211,
-      "program": "frame_C_haas.nc",
-      "line": 15583,
-      "off_mm": 0.0
-     },
-     {
-      "frame": 1349,
-      "program": "frame_C_haas.nc",
-      "line": 16280,
-      "off_mm": 0.0
-     },
-     {
-      "frame": 1617,
-      "program": "floor_A.ngc",
-      "line": 1906,
-      "off_mm": 0.0
-     }
-    ],
+    "problems": [],
     "out_of_travel": 0,
     "programs": [
      "floor_A.ngc",
@@ -418,9 +387,9 @@
     "minutes": {
      "F-S1 (frame_B)": 6.91,
      "F-S2 (frame_A)": 41.62,
-     "F-S3 (frame_C)": 14.58
+     "F-S3 (frame_C)": 14.57
     },
-    "statement": "SOME FRAMES ARE OFF THEIR LINE (see problems)"
+    "statement": "every drawn cutter position is interpolated on a line of a posted program: re-parsed, each frame's position lies on the chords of the line it names"
    }
   }
  }
