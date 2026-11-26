@@ -170,11 +170,37 @@ ALLOWED_CHAPTER = {
 }
 
 
-def allowed_rules(chapter):
+FASTENER_KINDS = ("shcs", "fhcs", "set", "insert", "dowel", "plunger")
+RE_DRIVER = re.compile(r"^[^/]+/tool/(nutrunner|screwdriver|driver|bit|socket)", re.I)
+
+
+def fastener_rules(kinds):
+    """The assembly chapters (actors "o<i>", kinds from the run's asm_scene.pkl): a screw, insert or dowel drawn in its
+    hole, and a driver's bit or socket on the screw it turns."""
+    def is_f(n):
+        return kinds.get(n) in FASTENER_KINDS
+
+    def screw_in_part(a, b):
+        return (is_f(a) and kinds.get(b) == "part") or (is_f(b) and kinds.get(a) == "part")
+
+    def driver_on_screw(a, b):
+        return (is_f(a) and RE_DRIVER.match(b) is not None) or (is_f(b) and RE_DRIVER.match(a) is not None)
+    return [
+        ("screw in its hole", screw_in_part, 40.0,
+         "a socket-head, flat-head or set screw, insert, dowel or plunger drawn in its hole: its thread or shank is drawn "
+         "inside the part it fastens (the CAD's holes are not threaded), up to 40 mm"),
+        ("driver on its screw", driver_on_screw, 30.0,
+         "the nutrunner's or screwdriver's bit or socket on the screw it turns, up to 30 mm (the socket's depth)"),
+    ]
+
+
+def allowed_rules(chapter, kinds=None):
     rules = list(ALLOWED_ALL)
     for pre, extra in ALLOWED_CHAPTER.items():
         if chapter.startswith(pre):
             rules += extra
+    if kinds:
+        rules += fastener_rules(kinds)
     return rules
 
 
@@ -634,7 +660,8 @@ def run(chapter, every=1, stills=0, quiet=False, max_frames=None, only=None):
         raise SystemExit(f"{chapter}: no recordings (run the renderer with ROBOTBUILD_AUDIT=1)")
     hist, ns_all = histories(dirs)
     movers = movers_of(hist)
-    rules = allowed_rules(chapter)
+    labels = asm_labels() if any(re.match(r"^o\d+$", nm) for nm in hist) else {}
+    rules = allowed_rules(chapter, {k: v.split(":")[0] for k, v in labels.items()})
     print(f"{chapter}: {len(ns_all)} recorded frames in {len(dirs)} recording(s), {len(hist)} actors, {len(movers)} move "
           f"({time.time() - t0:.0f} s)", flush=True)
     rule_of = {}                       # (a, b) -> rule index or -1
@@ -761,7 +788,7 @@ def run(chapter, every=1, stills=0, quiet=False, max_frames=None, only=None):
         if _rigid(hist, *k):
             rigid[k] = viol.pop(k)
     gap = max(1, every) + 1
-    lab = asm_labels() if any(re.match(r"^o\d+$", nm) for nm in hist) else {}
+    lab = labels
     rows = []
     for (a, b), v in sorted(viol.items(), key=lambda kv: -kv[1]["worst"]):
         rows.append(dict(a=a, b=b, **({"a_is": lab[a]} if a in lab else {}), **({"b_is": lab[b]} if b in lab else {}),
