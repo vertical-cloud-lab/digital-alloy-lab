@@ -77,8 +77,10 @@ What each change did:
 - C00a's held body carries the overflow funnel that a person fits on the bench in C00, which hangs 62 mm under the plate
   (z 798), while the table holds the bare plate.
 
-The fix is in `commit.place`: plan the pick with a body of the table item alone and attach the station's extras after
-the pick, and give C00a's sub-assembly a nest that clears the funnel. Not done in this run. The other failed picks: M04 (a
+The fix (fe7b30c, in `commit.place`): plan the pick with a body of only the objects in the item's slot, without the extras
+fitted at the station. Tested alone (`--only=M04,M13,C00a` with recording, 2026-11-26): M13's and C00a's picks now plan;
+M04's does not (a fingertip meets its riser on the lift, a separate cause). Physically C00a's plate comes off the bench with
+the funnel already on, so its pick belongs at the bench, not the table; the table holds the bare plate in the model. The other failed picks: M04 (a
 fingertip meets its riser on the lift), F02b, F18, F36 (a fingertip meets the O₂ sample line), F39 (the drawer-latch studs),
 F45d (a fingertip meets its tray's rim), and F45 and F45b, whose MiR drive is swept into the zero-point release-air line
 lying past the table's edge.
