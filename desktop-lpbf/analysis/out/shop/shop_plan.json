@@ -4,7 +4,7 @@
    "name": "VF-4 F-S1: arm A tightens the four edge clamps (nut runner)",
    "ok": true,
    "fail": null,
-   "time_s": 24.7,
+   "time_s": 25.0,
    "gripper": "2F-85",
    "fine_audit_0p2deg": [],
    "worst_torque_frac": 0.343,
@@ -20,7 +20,7 @@
      "kind": "joint",
      "note": "edge clamp 1: to the approach",
      "ok": true,
-     "t_s": 0.7,
+     "t_s": 0.6,
      "info": {
       "planned": false
      }
@@ -80,7 +80,7 @@
      "kind": "joint",
      "note": "edge clamp 3: to the approach",
      "ok": true,
-     "t_s": 0.4,
+     "t_s": 0.5,
      "info": {
       "planned": false
      }
@@ -140,32 +140,32 @@
      "kind": "joint",
      "note": "back to the carry pose",
      "ok": true,
-     "t_s": 4.2,
+     "t_s": 4.6,
      "info": {
       "planned": true,
-      "iterations": 117,
-      "nodes": 70,
-      "waypoints": 3
+      "iterations": 22,
+      "nodes": 42,
+      "waypoints": 4
      }
     }
    ],
    "clamps": 4,
    "blank_kg": 30.05,
    "tightest_transit": {
-    "clear_mm": 6.0,
-    "robot_body": "A/wrist2",
-    "world_body": "vf4/roof panel over the table",
-    "segment": "edge clamp 1: to the approach"
+    "clear_mm": 0.7,
+    "robot_body": "nut runner",
+    "world_body": "vf4/HRT210 motor box",
+    "segment": "back to the carry pose"
    }
   },
   "vf4_floor_load": {
    "name": "VF-4 P-S1: arm A (VGP20) loads the floor plate's blank onto the parallels",
    "ok": true,
    "fail": null,
-   "time_s": 8.9,
+   "time_s": 8.8,
    "gripper": "VGP20",
    "fine_audit_0p2deg": [],
-   "worst_torque_frac": 0.512,
+   "worst_torque_frac": 0.504,
    "segments": [
     {
      "kind": "joint",
@@ -203,7 +203,7 @@
      "kind": "joint",
      "note": "carry to above the place pose",
      "ok": true,
-     "t_s": 2.0,
+     "t_s": 1.9,
      "info": {
       "planned": false,
       "plan_s": 0.3
@@ -236,7 +236,7 @@
      "kind": "joint",
      "note": "out to home",
      "ok": true,
-     "t_s": 2.0,
+     "t_s": 1.9,
      "info": {
       "planned": false
      }
@@ -1688,5 +1688,5 @@
    "time_s": 14.61
   }
  },
- "run_utc": "2026-11-27T09:19Z"
+ "run_utc": "2026-11-27T10:02Z"
 }

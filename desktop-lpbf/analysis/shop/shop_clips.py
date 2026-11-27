@@ -104,7 +104,7 @@ def vf4_setup(fc, table_x=-100.0, k_state=0, part="frame", rots=None, a_deg=0.0,
         M_setup = Tm(None, (x_axis, yc, tz - fx["table_z"])) @ Tm(C.rot((1, 0, 0), a_deg))
         P = M_setup @ Tm(R)
     else:
-        M_setup = Tm(None, (meta["fixture_centre"][0], yc, tz - fx["table_z"]))
+        M_setup = Tm(None, (meta["fixture_centre"][0], meta["fixture_centre"][1], tz - fx["table_z"]))
         rest = max(p[5] for nm, kind, p in fx["pieces"] if nm in ("riser block", "parallel", "dummy-floor plate",
                                                                   "fixture plate") and kind == "box")
         v = np.asarray(m.points) @ R.T
