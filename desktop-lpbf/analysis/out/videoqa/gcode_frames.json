@@ -23,7 +23,7 @@
 "rows": [
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 455,
+"chapter_frame": 788,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 24,
@@ -36,15 +36,15 @@
 "tool": 1,
 "op": "Face bottom to z -3.9",
 "table_xy": [
-4.8,
-182.8
+-75.2,
+289.8
 ],
 "head_z": 418.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 456,
+"chapter_frame": 789,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 24,
@@ -57,15 +57,15 @@
 "tool": 1,
 "op": "Face bottom to z -3.9",
 "table_xy": [
--77.8,
-182.8
+-157.8,
+289.8
 ],
 "head_z": 418.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 457,
+"chapter_frame": 790,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 24,
@@ -78,15 +78,15 @@
 "tool": 1,
 "op": "Face bottom to z -3.9",
 "table_xy": [
--160.3,
-182.8
+-240.3,
+289.8
 ],
 "head_z": 418.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 458,
+"chapter_frame": 791,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 24,
@@ -99,15 +99,15 @@
 "tool": 1,
 "op": "Face bottom to z -3.9",
 "table_xy": [
--242.9,
-182.8
+-322.9,
+289.8
 ],
 "head_z": 418.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 459,
+"chapter_frame": 792,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 26,
@@ -120,15 +120,15 @@
 "tool": 1,
 "op": "Face bottom to z -3.9",
 "table_xy": [
--231.2,
-138.4
+-311.2,
+245.4
 ],
 "head_z": 418.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 460,
+"chapter_frame": 793,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 26,
@@ -141,15 +141,15 @@
 "tool": 1,
 "op": "Face bottom to z -3.9",
 "table_xy": [
--148.6,
-138.4
+-228.6,
+245.4
 ],
 "head_z": 418.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 461,
+"chapter_frame": 794,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 26,
@@ -162,15 +162,15 @@
 "tool": 1,
 "op": "Face bottom to z -3.9",
 "table_xy": [
--66.1,
-138.4
+-146.1,
+245.4
 ],
 "head_z": 418.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 462,
+"chapter_frame": 795,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 26,
@@ -183,15 +183,15 @@
 "tool": 1,
 "op": "Face bottom to z -3.9",
 "table_xy": [
-16.5,
-138.4
+-63.5,
+245.4
 ],
 "head_z": 418.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 463,
+"chapter_frame": 796,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 27,
@@ -204,15 +204,15 @@
 "tool": 1,
 "op": "Face bottom to z -3.9",
 "table_xy": [
-56.1,
-181.3
+-23.9,
+288.3
 ],
 "head_z": 418.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 464,
+"chapter_frame": 797,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 29,
@@ -225,15 +225,15 @@
 "tool": 1,
 "op": "Face bottom to z -3.9",
 "table_xy": [
-19.5,
-227.2
+-60.5,
+334.2
 ],
 "head_z": 418.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 465,
+"chapter_frame": 798,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 29,
@@ -246,15 +246,15 @@
 "tool": 1,
 "op": "Face bottom to z -3.9",
 "table_xy": [
--63.1,
-227.2
+-143.1,
+334.2
 ],
 "head_z": 418.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 466,
+"chapter_frame": 799,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 29,
@@ -267,15 +267,15 @@
 "tool": 1,
 "op": "Face bottom to z -3.9",
 "table_xy": [
--145.6,
-227.2
+-225.6,
+334.2
 ],
 "head_z": 418.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 467,
+"chapter_frame": 800,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 29,
@@ -288,15 +288,15 @@
 "tool": 1,
 "op": "Face bottom to z -3.9",
 "table_xy": [
--228.2,
-227.2
+-308.2,
+334.2
 ],
 "head_z": 418.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 468,
+"chapter_frame": 801,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 31,
@@ -309,15 +309,15 @@
 "tool": 1,
 "op": "Face bottom to z -3.9",
 "table_xy": [
--245.9,
-271.7
+-325.9,
+378.7
 ],
 "head_z": 418.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 469,
+"chapter_frame": 802,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 31,
@@ -330,15 +330,15 @@
 "tool": 1,
 "op": "Face bottom to z -3.9",
 "table_xy": [
--163.4,
-271.7
+-243.4,
+378.7
 ],
 "head_z": 418.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 470,
+"chapter_frame": 803,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 31,
@@ -351,15 +351,15 @@
 "tool": 1,
 "op": "Face bottom to z -3.9",
 "table_xy": [
--80.8,
-271.7
+-160.8,
+378.7
 ],
 "head_z": 418.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 471,
+"chapter_frame": 804,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 31,
@@ -372,15 +372,15 @@
 "tool": 1,
 "op": "Face bottom to z -3.9",
 "table_xy": [
-1.7,
-271.7
+-78.3,
+378.7
 ],
 "head_z": 418.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 472,
+"chapter_frame": 805,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 32,
@@ -393,15 +393,15 @@
 "tool": 1,
 "op": "Face bottom to z -3.9",
 "table_xy": [
-56.1,
-299.9
+-23.9,
+406.9
 ],
 "head_z": 418.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 473,
+"chapter_frame": 806,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 33,
@@ -414,15 +414,15 @@
 "tool": 1,
 "op": "Face bottom to z -3.9",
 "table_xy": [
--10.2,
-316.2
+-90.2,
+423.2
 ],
 "head_z": 418.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 474,
+"chapter_frame": 807,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 33,
@@ -435,15 +435,15 @@
 "tool": 1,
 "op": "Face bottom to z -3.9",
 "table_xy": [
--92.8,
-316.2
+-172.8,
+423.2
 ],
 "head_z": 418.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 475,
+"chapter_frame": 808,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 33,
@@ -456,15 +456,15 @@
 "tool": 1,
 "op": "Face bottom to z -3.9",
 "table_xy": [
--175.3,
-316.2
+-255.3,
+423.2
 ],
 "head_z": 418.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 476,
+"chapter_frame": 809,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 34,
@@ -477,15 +477,15 @@
 "tool": 1,
 "op": "Face bottom to z -3.9",
 "table_xy": [
--256.1,
-317.9
+-336.1,
+424.9
 ],
 "head_z": 418.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 477,
+"chapter_frame": 810,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 35,
@@ -498,15 +498,15 @@
 "tool": 1,
 "op": "Face bottom to z -3.9",
 "table_xy": [
--216.2,
-360.6
+-296.2,
+467.6
 ],
 "head_z": 418.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 478,
+"chapter_frame": 811,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 35,
@@ -519,15 +519,15 @@
 "tool": 1,
 "op": "Face bottom to z -3.9",
 "table_xy": [
--133.7,
-360.6
+-213.7,
+467.6
 ],
 "head_z": 418.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 479,
+"chapter_frame": 812,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 35,
@@ -540,15 +540,15 @@
 "tool": 1,
 "op": "Face bottom to z -3.9",
 "table_xy": [
--51.1,
-360.6
+-131.1,
+467.6
 ],
 "head_z": 418.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 480,
+"chapter_frame": 813,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 35,
@@ -561,15 +561,15 @@
 "tool": 1,
 "op": "Face bottom to z -3.9",
 "table_xy": [
-31.4,
-360.6
+-48.6,
+467.6
 ],
 "head_z": 418.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 481,
+"chapter_frame": 814,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 56,
@@ -582,15 +582,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
--262.5,
-371.5
+-342.5,
+478.5
 ],
 "head_z": 439.6,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 482,
+"chapter_frame": 815,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 63,
@@ -603,15 +603,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
--138.8,
-371.1
+-218.8,
+478.1
 ],
 "head_z": 443.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 483,
+"chapter_frame": 816,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 63,
@@ -624,15 +624,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
--7.2,
-371.1
+-87.2,
+478.1
 ],
 "head_z": 443.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 484,
+"chapter_frame": 817,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 74,
@@ -645,15 +645,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
-65.6,
-305.4
+-14.4,
+412.4
 ],
 "head_z": 443.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 485,
+"chapter_frame": 818,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 74,
@@ -666,15 +666,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
-65.7,
-173.8
+-14.3,
+280.8
 ],
 "head_z": 443.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 486,
+"chapter_frame": 819,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 85,
@@ -687,15 +687,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
--27.3,
-128.2
+-107.3,
+235.2
 ],
 "head_z": 443.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 487,
+"chapter_frame": 820,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 85,
@@ -708,15 +708,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
--158.9,
-128.1
+-238.9,
+235.1
 ],
 "head_z": 443.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 488,
+"chapter_frame": 821,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 96,
@@ -729,15 +729,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
--265.6,
-159.7
+-345.6,
+266.7
 ],
 "head_z": 443.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 489,
+"chapter_frame": 822,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 96,
@@ -750,15 +750,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
--265.6,
-291.3
+-345.6,
+398.3
 ],
 "head_z": 443.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 490,
+"chapter_frame": 823,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 115,
@@ -771,15 +771,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
--205.6,
-370.1
+-285.6,
+477.1
 ],
 "head_z": 443.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 491,
+"chapter_frame": 824,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 115,
@@ -792,15 +792,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
--74.0,
-370.1
+-154.0,
+477.1
 ],
 "head_z": 443.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 492,
+"chapter_frame": 825,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 121,
@@ -813,15 +813,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
-57.1,
-367.6
+-22.9,
+474.6
 ],
 "head_z": 443.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 493,
+"chapter_frame": 826,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 177,
@@ -834,15 +834,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
--52.0,
-128.9
+-132.0,
+235.9
 ],
 "head_z": 443.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 494,
+"chapter_frame": 827,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 177,
@@ -855,15 +855,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
--183.5,
-128.9
+-263.5,
+235.9
 ],
 "head_z": 443.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 495,
+"chapter_frame": 828,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 249,
@@ -876,15 +876,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
-66.6,
-225.9
+-13.4,
+332.9
 ],
 "head_z": 443.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 496,
+"chapter_frame": 829,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 266,
@@ -897,15 +897,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
--262.5,
-371.5
+-342.5,
+478.5
 ],
 "head_z": 450.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 497,
+"chapter_frame": 830,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 273,
@@ -918,15 +918,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
--179.3,
-371.2
+-259.3,
+478.2
 ],
 "head_z": 474.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 498,
+"chapter_frame": 831,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 273,
@@ -939,15 +939,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
--47.8,
-371.1
+-127.8,
+478.1
 ],
 "head_z": 474.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 499,
+"chapter_frame": 832,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 284,
@@ -960,15 +960,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
-65.6,
-346.0
+-14.4,
+453.0
 ],
 "head_z": 474.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 500,
+"chapter_frame": 833,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 284,
@@ -981,15 +981,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
-65.7,
-214.4
+-14.3,
+321.4
 ],
 "head_z": 474.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 501,
+"chapter_frame": 834,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 295,
@@ -1002,15 +1002,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
-13.3,
-128.2
+-66.7,
+235.2
 ],
 "head_z": 474.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 502,
+"chapter_frame": 835,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 295,
@@ -1023,15 +1023,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
--118.3,
-128.1
+-198.3,
+235.1
 ],
 "head_z": 474.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 503,
+"chapter_frame": 836,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 295,
@@ -1044,15 +1044,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
--249.9,
-128.0
+-329.9,
+235.0
 ],
 "head_z": 474.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 504,
+"chapter_frame": 837,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 306,
@@ -1065,15 +1065,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
--265.6,
-250.7
+-345.6,
+357.7
 ],
 "head_z": 474.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 505,
+"chapter_frame": 838,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 325,
@@ -1086,15 +1086,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
--246.2,
-370.1
+-326.2,
+477.1
 ],
 "head_z": 474.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 506,
+"chapter_frame": 839,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 325,
@@ -1107,15 +1107,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
--114.6,
-370.1
+-194.6,
+477.1
 ],
 "head_z": 474.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 507,
+"chapter_frame": 840,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 325,
@@ -1128,15 +1128,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
-17.0,
-370.0
+-63.0,
+477.0
 ],
 "head_z": 474.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 508,
+"chapter_frame": 841,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 387,
@@ -1149,15 +1149,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
--11.4,
-128.9
+-91.4,
+235.9
 ],
 "head_z": 474.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 509,
+"chapter_frame": 842,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 387,
@@ -1170,15 +1170,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
--143.0,
-128.9
+-223.0,
+235.9
 ],
 "head_z": 474.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 510,
+"chapter_frame": 843,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 416,
@@ -1191,15 +1191,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, bottom up to mid-height",
 "table_xy": [
--266.6,
-340.6
+-346.6,
+447.6
 ],
 "head_z": 474.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 511,
+"chapter_frame": 844,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 497,
@@ -1212,15 +1212,15 @@
 "tool": 3,
 "op": "Rebate 8 x 3.9 round the bottom of the opening",
 "table_xy": [
--241.6,
-186.1
+-321.6,
+293.1
 ],
 "head_z": 444.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 512,
+"chapter_frame": 845,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 497,
@@ -1233,15 +1233,15 @@
 "tool": 3,
 "op": "Rebate 8 x 3.9 round the bottom of the opening",
 "table_xy": [
--241.6,
-303.7
+-321.6,
+410.7
 ],
 "head_z": 444.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 513,
+"chapter_frame": 846,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 499,
@@ -1254,15 +1254,15 @@
 "tool": 3,
 "op": "Rebate 8 x 3.9 round the bottom of the opening",
 "table_xy": [
--161.4,
-346.2
+-241.4,
+453.2
 ],
 "head_z": 444.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 514,
+"chapter_frame": 847,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 499,
@@ -1275,15 +1275,15 @@
 "tool": 3,
 "op": "Rebate 8 x 3.9 round the bottom of the opening",
 "table_xy": [
--43.8,
-346.2
+-123.8,
+453.2
 ],
 "head_z": 444.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 515,
+"chapter_frame": 848,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 501,
@@ -1296,15 +1296,15 @@
 "tool": 3,
 "op": "Rebate 8 x 3.9 round the bottom of the opening",
 "table_xy": [
-41.7,
-308.9
+-38.3,
+415.9
 ],
 "head_z": 444.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 516,
+"chapter_frame": 849,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 501,
@@ -1317,15 +1317,15 @@
 "tool": 3,
 "op": "Rebate 8 x 3.9 round the bottom of the opening",
 "table_xy": [
-41.7,
-191.2
+-38.3,
+298.2
 ],
 "head_z": 444.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 517,
+"chapter_frame": 850,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 503,
@@ -1338,15 +1338,15 @@
 "tool": 3,
 "op": "Rebate 8 x 3.9 round the bottom of the opening",
 "table_xy": [
--42.6,
-152.9
+-122.6,
+259.8
 ],
 "head_z": 444.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 518,
+"chapter_frame": 851,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 503,
@@ -1359,15 +1359,15 @@
 "tool": 3,
 "op": "Rebate 8 x 3.9 round the bottom of the opening",
 "table_xy": [
--160.3,
-152.9
+-240.3,
+259.8
 ],
 "head_z": 444.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 519,
+"chapter_frame": 852,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 527,
@@ -1380,15 +1380,15 @@
 "tool": 2,
 "op": "Opening from bottom, rough, 2.7 mm radial",
 "table_xy": [
--230.1,
-164.4
+-310.1,
+271.4
 ],
 "head_z": 428.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 520,
+"chapter_frame": 853,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 530,
@@ -1401,15 +1401,15 @@
 "tool": 2,
 "op": "Opening from bottom, rough, 2.7 mm radial",
 "table_xy": [
--131.9,
-164.3
+-211.9,
+271.3
 ],
 "head_z": 445.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 521,
+"chapter_frame": 854,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 530,
@@ -1422,15 +1422,15 @@
 "tool": 2,
 "op": "Opening from bottom, rough, 2.7 mm radial",
 "table_xy": [
--0.4,
-164.3
+-80.4,
+271.3
 ],
 "head_z": 445.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 522,
+"chapter_frame": 855,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 534,
@@ -1443,15 +1443,15 @@
 "tool": 2,
 "op": "Opening from bottom, rough, 2.7 mm radial",
 "table_xy": [
-30.2,
-265.4
+-49.8,
+372.4
 ],
 "head_z": 445.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 523,
+"chapter_frame": 856,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 538,
@@ -1464,15 +1464,15 @@
 "tool": 2,
 "op": "Opening from bottom, rough, 2.7 mm radial",
 "table_xy": [
--32.2,
-334.7
+-112.2,
+441.7
 ],
 "head_z": 445.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 524,
+"chapter_frame": 857,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 538,
@@ -1485,15 +1485,15 @@
 "tool": 2,
 "op": "Opening from bottom, rough, 2.7 mm radial",
 "table_xy": [
--163.8,
-334.7
+-243.8,
+441.7
 ],
 "head_z": 445.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 525,
+"chapter_frame": 858,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 542,
@@ -1506,15 +1506,15 @@
 "tool": 2,
 "op": "Opening from bottom, rough, 2.7 mm radial",
 "table_xy": [
--230.2,
-269.4
+-310.2,
+376.4
 ],
 "head_z": 445.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 526,
+"chapter_frame": 859,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 545,
@@ -1527,15 +1527,15 @@
 "tool": 2,
 "op": "Opening from bottom, rough, 2.7 mm radial",
 "table_xy": [
--230.1,
-164.4
+-310.1,
+271.4
 ],
 "head_z": 458.6,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 527,
+"chapter_frame": 860,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 548,
@@ -1548,15 +1548,15 @@
 "tool": 2,
 "op": "Opening from bottom, rough, 2.7 mm radial",
 "table_xy": [
--130.0,
-164.3
+-210.0,
+271.3
 ],
 "head_z": 474.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 528,
+"chapter_frame": 861,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 548,
@@ -1569,15 +1569,15 @@
 "tool": 2,
 "op": "Opening from bottom, rough, 2.7 mm radial",
 "table_xy": [
-1.6,
-164.3
+-78.4,
+271.3
 ],
 "head_z": 474.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 529,
+"chapter_frame": 862,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 552,
@@ -1590,15 +1590,15 @@
 "tool": 2,
 "op": "Opening from bottom, rough, 2.7 mm radial",
 "table_xy": [
-30.2,
-267.4
+-49.8,
+374.4
 ],
 "head_z": 474.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 530,
+"chapter_frame": 863,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 556,
@@ -1611,15 +1611,15 @@
 "tool": 2,
 "op": "Opening from bottom, rough, 2.7 mm radial",
 "table_xy": [
--34.2,
-334.7
+-114.2,
+441.7
 ],
 "head_z": 474.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 531,
+"chapter_frame": 864,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 556,
@@ -1632,15 +1632,15 @@
 "tool": 2,
 "op": "Opening from bottom, rough, 2.7 mm radial",
 "table_xy": [
--165.7,
-334.7
+-245.7,
+441.7
 ],
 "head_z": 474.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 532,
+"chapter_frame": 865,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 560,
@@ -1653,15 +1653,15 @@
 "tool": 2,
 "op": "Opening from bottom, rough, 2.7 mm radial",
 "table_xy": [
--230.2,
-267.5
+-310.2,
+374.5
 ],
 "head_z": 474.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 533,
+"chapter_frame": 866,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 577,
@@ -1674,15 +1674,15 @@
 "tool": 2,
 "op": "Opening from bottom, finish, 0.3 mm radial, two 29 mm passes",
 "table_xy": [
--230.3,
-164.2
+-310.3,
+271.2
 ],
 "head_z": 419.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 534,
+"chapter_frame": 867,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 580,
@@ -1695,15 +1695,15 @@
 "tool": 2,
 "op": "Opening from bottom, finish, 0.3 mm radial, two 29 mm passes",
 "table_xy": [
--150.6,
-164.0
+-230.6,
+271.0
 ],
 "head_z": 445.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 535,
+"chapter_frame": 868,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 580,
@@ -1716,15 +1716,15 @@
 "tool": 2,
 "op": "Opening from bottom, finish, 0.3 mm radial, two 29 mm passes",
 "table_xy": [
--19.1,
-164.0
+-99.1,
+271.0
 ],
 "head_z": 445.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 536,
+"chapter_frame": 869,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 583,
@@ -1737,15 +1737,15 @@
 "tool": 2,
 "op": "Opening from bottom, finish, 0.3 mm radial, two 29 mm passes",
 "table_xy": [
-30.5,
-246.3
+-49.5,
+353.3
 ],
 "head_z": 445.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 537,
+"chapter_frame": 870,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 586,
@@ -1758,15 +1758,15 @@
 "tool": 2,
 "op": "Opening from bottom, finish, 0.3 mm radial, two 29 mm passes",
 "table_xy": [
--12.6,
-335.0
+-92.6,
+442.0
 ],
 "head_z": 445.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 538,
+"chapter_frame": 871,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 586,
@@ -1779,15 +1779,15 @@
 "tool": 2,
 "op": "Opening from bottom, finish, 0.3 mm radial, two 29 mm passes",
 "table_xy": [
--144.2,
-335.0
+-224.2,
+442.0
 ],
 "head_z": 445.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 539,
+"chapter_frame": 872,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 589,
@@ -1800,15 +1800,15 @@
 "tool": 2,
 "op": "Opening from bottom, finish, 0.3 mm radial, two 29 mm passes",
 "table_xy": [
--230.5,
-289.5
+-310.5,
+396.5
 ],
 "head_z": 445.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 540,
+"chapter_frame": 873,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 591,
@@ -1821,15 +1821,15 @@
 "tool": 2,
 "op": "Opening from bottom, finish, 0.3 mm radial, two 29 mm passes",
 "table_xy": [
--230.3,
-164.2
+-310.3,
+271.2
 ],
 "head_z": 448.5,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 541,
+"chapter_frame": 874,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 594,
@@ -1842,15 +1842,15 @@
 "tool": 2,
 "op": "Opening from bottom, finish, 0.3 mm radial, two 29 mm passes",
 "table_xy": [
--150.6,
-164.0
+-230.6,
+271.0
 ],
 "head_z": 474.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 542,
+"chapter_frame": 875,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 594,
@@ -1863,15 +1863,15 @@
 "tool": 2,
 "op": "Opening from bottom, finish, 0.3 mm radial, two 29 mm passes",
 "table_xy": [
--19.0,
-164.0
+-99.0,
+271.0
 ],
 "head_z": 474.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 543,
+"chapter_frame": 876,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 597,
@@ -1884,15 +1884,15 @@
 "tool": 2,
 "op": "Opening from bottom, finish, 0.3 mm radial, two 29 mm passes",
 "table_xy": [
-30.5,
-246.3
+-49.5,
+353.3
 ],
 "head_z": 474.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 544,
+"chapter_frame": 877,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 600,
@@ -1905,15 +1905,15 @@
 "tool": 2,
 "op": "Opening from bottom, finish, 0.3 mm radial, two 29 mm passes",
 "table_xy": [
--12.7,
-335.0
+-92.7,
+442.0
 ],
 "head_z": 474.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 545,
+"chapter_frame": 878,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 600,
@@ -1926,15 +1926,15 @@
 "tool": 2,
 "op": "Opening from bottom, finish, 0.3 mm radial, two 29 mm passes",
 "table_xy": [
--144.2,
-335.0
+-224.2,
+442.0
 ],
 "head_z": 474.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 546,
+"chapter_frame": 879,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 603,
@@ -1947,15 +1947,15 @@
 "tool": 2,
 "op": "Opening from bottom, finish, 0.3 mm radial, two 29 mm passes",
 "table_xy": [
--230.5,
-289.4
+-310.5,
+396.4
 ],
 "head_z": 474.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 547,
+"chapter_frame": 880,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 627,
@@ -1968,15 +1968,15 @@
 "tool": 6,
 "op": "Drill 18 M4 tap holes 3.3 mm",
 "table_xy": [
--216.8,
-162.2
+-296.8,
+269.2
 ],
 "head_z": 441.9,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 548,
+"chapter_frame": 881,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 632,
@@ -1989,15 +1989,15 @@
 "tool": 6,
 "op": "Drill 18 M4 tap holes 3.3 mm",
 "table_xy": [
--166.0,
-142.5
+-246.0,
+249.5
 ],
 "head_z": 448.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 549,
+"chapter_frame": 882,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 636,
@@ -2010,15 +2010,15 @@
 "tool": 6,
 "op": "Drill 18 M4 tap holes 3.3 mm",
 "table_xy": [
--252.0,
-187.5
+-332.0,
+294.5
 ],
 "head_z": 451.6,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 550,
+"chapter_frame": 883,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 640,
@@ -2031,15 +2031,15 @@
 "tool": 6,
 "op": "Drill 18 M4 tap holes 3.3 mm",
 "table_xy": [
--252.0,
-269.5
+-332.0,
+376.5
 ],
 "head_z": 455.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 551,
+"chapter_frame": 884,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 646,
@@ -2052,15 +2052,15 @@
 "tool": 6,
 "op": "Drill 18 M4 tap holes 3.3 mm",
 "table_xy": [
--182.0,
-356.5
+-262.0,
+463.5
 ],
 "head_z": 447.0,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 552,
+"chapter_frame": 885,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 650,
@@ -2073,15 +2073,15 @@
 "tool": 6,
 "op": "Drill 18 M4 tap holes 3.3 mm",
 "table_xy": [
-10.0,
-356.5
+-70.0,
+463.5
 ],
 "head_z": 449.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 553,
+"chapter_frame": 886,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 654,
@@ -2094,15 +2094,15 @@
 "tool": 6,
 "op": "Drill 18 M4 tap holes 3.3 mm",
 "table_xy": [
-52.0,
-269.5
+-28.0,
+376.5
 ],
 "head_z": 453.0,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 554,
+"chapter_frame": 887,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 658,
@@ -2115,15 +2115,15 @@
 "tool": 6,
 "op": "Drill 18 M4 tap holes 3.3 mm",
 "table_xy": [
-52.0,
-187.5
+-28.0,
+294.5
 ],
 "head_z": 456.5,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 555,
+"chapter_frame": 888,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 686,
@@ -2136,15 +2136,15 @@
 "tool": 14,
 "op": "Drill 2 dowel holes 5.8 mm, ream 6 H7 after",
 "table_xy": [
-48.2,
-146.3
+-31.8,
+253.3
 ],
 "head_z": 437.3,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 556,
+"chapter_frame": 889,
 "program": "frame_B.ngc",
 "setup": "frame_B",
 "line": 688,
@@ -2157,15 +2157,15 @@
 "tool": 14,
 "op": "Drill 2 dowel holes 5.8 mm, ream 6 H7 after",
 "table_xy": [
--248.2,
-352.7
+-328.2,
+459.7
 ],
 "head_z": 431.9,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 794,
+"chapter_frame": 1468,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 24,
@@ -2178,15 +2178,15 @@
 "tool": 1,
 "op": "Face top to z 120",
 "table_xy": [
--243.5,
-182.8
+-323.5,
+289.8
 ],
 "head_z": 432.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 795,
+"chapter_frame": 1469,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 26,
@@ -2199,15 +2199,15 @@
 "tool": 1,
 "op": "Face top to z 120",
 "table_xy": [
-12.3,
-138.4
+-67.7,
+245.4
 ],
 "head_z": 432.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 796,
+"chapter_frame": 1470,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 29,
@@ -2220,15 +2220,15 @@
 "tool": 1,
 "op": "Face top to z 120",
 "table_xy": [
--136.5,
-227.2
+-216.5,
+334.2
 ],
 "head_z": 432.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 797,
+"chapter_frame": 1471,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 31,
@@ -2241,15 +2241,15 @@
 "tool": 1,
 "op": "Face top to z 120",
 "table_xy": [
--94.8,
-271.7
+-174.8,
+378.7
 ],
 "head_z": 432.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 798,
+"chapter_frame": 1472,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 33,
@@ -2262,15 +2262,15 @@
 "tool": 1,
 "op": "Face top to z 120",
 "table_xy": [
--73.9,
-316.2
+-153.9,
+423.2
 ],
 "head_z": 432.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 799,
+"chapter_frame": 1473,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 35,
@@ -2283,15 +2283,15 @@
 "tool": 1,
 "op": "Face top to z 120",
 "table_xy": [
--157.5,
-360.6
+-237.5,
+467.6
 ],
 "head_z": 432.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 800,
+"chapter_frame": 1474,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 63,
@@ -2304,15 +2304,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, z 120 to 58",
 "table_xy": [
--184.5,
-371.2
+-264.5,
+478.2
 ],
 "head_z": 457.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 801,
+"chapter_frame": 1475,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 84,
@@ -2325,15 +2325,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, z 120 to 58",
 "table_xy": [
-26.3,
-129.0
+-53.7,
+236.0
 ],
 "head_z": 457.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 802,
+"chapter_frame": 1476,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 99,
@@ -2346,15 +2346,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, z 120 to 58",
 "table_xy": [
--263.7,
-361.0
+-343.7,
+468.0
 ],
 "head_z": 457.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 803,
+"chapter_frame": 1477,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 167,
@@ -2367,15 +2367,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, z 120 to 58",
 "table_xy": [
--109.2,
-128.9
+-189.2,
+235.9
 ],
 "head_z": 457.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 804,
+"chapter_frame": 1478,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 189,
@@ -2388,15 +2388,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, z 120 to 58",
 "table_xy": [
--50.4,
-371.1
+-130.4,
+478.1
 ],
 "head_z": 488.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 805,
+"chapter_frame": 1479,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 210,
@@ -2409,15 +2409,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, z 120 to 58",
 "table_xy": [
--107.8,
-128.5
+-187.8,
+235.5
 ],
 "head_z": 488.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 806,
+"chapter_frame": 1480,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 236,
@@ -2430,15 +2430,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, z 120 to 58",
 "table_xy": [
--132.9,
-370.0
+-212.9,
+477.0
 ],
 "head_z": 488.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 807,
+"chapter_frame": 1481,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 294,
@@ -2451,15 +2451,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, z 120 to 58",
 "table_xy": [
--243.3,
-128.9
+-323.3,
+235.9
 ],
 "head_z": 488.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 808,
+"chapter_frame": 1482,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 326,
@@ -2472,15 +2472,15 @@
 "tool": 2,
 "op": "Opening 280x190 R10 from top, rough, 2.7 mm radial",
 "table_xy": [
-30.2,
-329.0
+-49.8,
+436.0
 ],
 "head_z": 457.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 809,
+"chapter_frame": 1483,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 340,
@@ -2493,15 +2493,15 @@
 "tool": 2,
 "op": "Opening 280x190 R10 from top, rough, 2.7 mm radial",
 "table_xy": [
--209.8,
-164.3
+-289.8,
+271.3
 ],
 "head_z": 488.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 810,
+"chapter_frame": 1484,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 348,
@@ -2514,15 +2514,15 @@
 "tool": 2,
 "op": "Opening 280x190 R10 from top, rough, 2.7 mm radial",
 "table_xy": [
--78.1,
-334.7
+-158.1,
+441.7
 ],
 "head_z": 488.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 811,
+"chapter_frame": 1485,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 372,
@@ -2535,15 +2535,15 @@
 "tool": 2,
 "op": "Opening 280x190 R10 from top, finish, 0.3 mm radial, two 31 mm passes",
 "table_xy": [
--110.7,
-164.0
+-190.7,
+271.0
 ],
 "head_z": 457.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 812,
+"chapter_frame": 1486,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 378,
@@ -2556,15 +2556,15 @@
 "tool": 2,
 "op": "Opening 280x190 R10 from top, finish, 0.3 mm radial, two 31 mm passes",
 "table_xy": [
--176.3,
-335.0
+-256.3,
+442.0
 ],
 "head_z": 457.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 813,
+"chapter_frame": 1487,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 386,
@@ -2577,15 +2577,15 @@
 "tool": 2,
 "op": "Opening 280x190 R10 from top, finish, 0.3 mm radial, two 31 mm passes",
 "table_xy": [
-1.3,
-164.0
+-78.7,
+271.0
 ],
 "head_z": 488.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 814,
+"chapter_frame": 1488,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 395,
@@ -2598,15 +2598,15 @@
 "tool": 2,
 "op": "Opening 280x190 R10 from top, finish, 0.3 mm radial, two 31 mm passes",
 "table_xy": [
--230.5,
-276.9
+-310.5,
+383.9
 ],
 "head_z": 488.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 815,
+"chapter_frame": 1489,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 420,
@@ -2619,15 +2619,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--23.6,
-350.5
+-103.6,
+457.5
 ],
 "head_z": 481.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 816,
+"chapter_frame": 1490,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 420,
@@ -2640,15 +2640,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--111.4,
-350.5
+-191.4,
+457.5
 ],
 "head_z": 481.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 817,
+"chapter_frame": 1491,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 420,
@@ -2661,15 +2661,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--199.3,
-350.5
+-279.3,
+457.5
 ],
 "head_z": 481.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 818,
+"chapter_frame": 1492,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 422,
@@ -2682,15 +2682,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--246.0,
-302.5
+-326.0,
+409.5
 ],
 "head_z": 481.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 819,
+"chapter_frame": 1493,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 422,
@@ -2703,15 +2703,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--246.0,
-214.7
+-326.0,
+321.7
 ],
 "head_z": 481.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 820,
+"chapter_frame": 1494,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 424,
@@ -2724,15 +2724,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--217.4,
-148.5
+-297.4,
+255.5
 ],
 "head_z": 481.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 821,
+"chapter_frame": 1495,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 424,
@@ -2745,15 +2745,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--129.6,
-148.5
+-209.6,
+255.5
 ],
 "head_z": 481.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 822,
+"chapter_frame": 1496,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 424,
@@ -2766,15 +2766,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--41.8,
-148.5
+-121.8,
+255.5
 ],
 "head_z": 481.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 823,
+"chapter_frame": 1497,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 425,
@@ -2787,15 +2787,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-43.5,
-155.9
+-36.5,
+262.9
 ],
 "head_z": 481.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 824,
+"chapter_frame": 1498,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 426,
@@ -2808,15 +2808,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-46.0,
-243.3
+-34.0,
+350.3
 ],
 "head_z": 481.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 825,
+"chapter_frame": 1499,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 426,
@@ -2829,15 +2829,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-46.0,
-331.1
+-34.0,
+438.1
 ],
 "head_z": 481.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 826,
+"chapter_frame": 1500,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 433,
@@ -2850,15 +2850,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-4.0,
-349.1
+-76.0,
+456.1
 ],
 "head_z": 481.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 827,
+"chapter_frame": 1501,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 433,
@@ -2871,15 +2871,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--83.8,
-349.1
+-163.8,
+456.1
 ],
 "head_z": 481.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 828,
+"chapter_frame": 1502,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 433,
@@ -2892,15 +2892,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--171.6,
-349.1
+-251.6,
+456.1
 ],
 "head_z": 481.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 829,
+"chapter_frame": 1503,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 435,
@@ -2913,15 +2913,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--244.6,
-327.9
+-324.6,
+434.9
 ],
 "head_z": 481.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 830,
+"chapter_frame": 1504,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 435,
@@ -2934,15 +2934,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--244.6,
-240.1
+-324.6,
+347.1
 ],
 "head_z": 481.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 831,
+"chapter_frame": 1505,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 436,
@@ -2955,15 +2955,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--239.7,
-153.7
+-319.7,
+260.7
 ],
 "head_z": 481.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 832,
+"chapter_frame": 1506,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 437,
@@ -2976,15 +2976,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--152.8,
-149.9
+-232.8,
+256.9
 ],
 "head_z": 481.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 833,
+"chapter_frame": 1507,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 437,
@@ -2997,15 +2997,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--64.9,
-149.9
+-144.9,
+256.9
 ],
 "head_z": 481.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 834,
+"chapter_frame": 1508,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 437,
@@ -3018,15 +3018,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-22.9,
-149.9
+-57.1,
+256.9
 ],
 "head_z": 481.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 835,
+"chapter_frame": 1509,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 439,
@@ -3039,15 +3039,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-44.6,
-222.4
+-35.4,
+329.4
 ],
 "head_z": 481.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 836,
+"chapter_frame": 1510,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 439,
@@ -3060,15 +3060,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-44.6,
-310.2
+-35.4,
+417.2
 ],
 "head_z": 481.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 837,
+"chapter_frame": 1511,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 444,
@@ -3081,15 +3081,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--22.1,
-350.5
+-102.1,
+457.5
 ],
 "head_z": 481.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 838,
+"chapter_frame": 1512,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 444,
@@ -3102,15 +3102,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--109.9,
-350.5
+-189.9,
+457.5
 ],
 "head_z": 481.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 839,
+"chapter_frame": 1513,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 444,
@@ -3123,15 +3123,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--197.7,
-350.5
+-277.7,
+457.5
 ],
 "head_z": 481.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 840,
+"chapter_frame": 1514,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 446,
@@ -3144,15 +3144,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--246.0,
-304.0
+-326.0,
+411.0
 ],
 "head_z": 481.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 841,
+"chapter_frame": 1515,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 446,
@@ -3165,15 +3165,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--246.0,
-216.2
+-326.0,
+323.2
 ],
 "head_z": 481.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 842,
+"chapter_frame": 1516,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 448,
@@ -3186,15 +3186,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--219.0,
-148.5
+-299.0,
+255.5
 ],
 "head_z": 481.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 843,
+"chapter_frame": 1517,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 448,
@@ -3207,15 +3207,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--131.1,
-148.5
+-211.1,
+255.5
 ],
 "head_z": 481.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 844,
+"chapter_frame": 1518,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 448,
@@ -3228,15 +3228,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--43.3,
-148.5
+-123.3,
+255.5
 ],
 "head_z": 481.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 845,
+"chapter_frame": 1519,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 449,
@@ -3249,15 +3249,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-42.6,
-154.7
+-37.4,
+261.7
 ],
 "head_z": 481.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 846,
+"chapter_frame": 1520,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 450,
@@ -3270,15 +3270,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-46.0,
-241.7
+-34.0,
+348.7
 ],
 "head_z": 481.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 847,
+"chapter_frame": 1521,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 450,
@@ -3291,15 +3291,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-46.0,
-329.6
+-34.0,
+436.6
 ],
 "head_z": 481.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 848,
+"chapter_frame": 1522,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 457,
@@ -3312,15 +3312,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-6.6,
-349.1
+-73.4,
+456.1
 ],
 "head_z": 481.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 849,
+"chapter_frame": 1523,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 457,
@@ -3333,15 +3333,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--81.2,
-349.1
+-161.2,
+456.1
 ],
 "head_z": 481.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 850,
+"chapter_frame": 1524,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 457,
@@ -3354,15 +3354,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--169.1,
-349.1
+-249.1,
+456.1
 ],
 "head_z": 481.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 851,
+"chapter_frame": 1525,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 459,
@@ -3375,15 +3375,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--244.6,
-330.4
+-324.6,
+437.4
 ],
 "head_z": 481.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 852,
+"chapter_frame": 1526,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 459,
@@ -3396,15 +3396,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--244.6,
-242.6
+-324.6,
+349.6
 ],
 "head_z": 481.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 853,
+"chapter_frame": 1527,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 460,
@@ -3417,15 +3417,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--241.4,
-155.5
+-321.4,
+262.5
 ],
 "head_z": 481.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 854,
+"chapter_frame": 1528,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 461,
@@ -3438,15 +3438,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--155.3,
-149.9
+-235.3,
+256.9
 ],
 "head_z": 481.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 855,
+"chapter_frame": 1529,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 461,
@@ -3459,15 +3459,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--67.5,
-149.9
+-147.5,
+256.9
 ],
 "head_z": 481.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 856,
+"chapter_frame": 1530,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 461,
@@ -3480,15 +3480,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-20.4,
-149.9
+-59.6,
+256.9
 ],
 "head_z": 481.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 857,
+"chapter_frame": 1531,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 463,
@@ -3501,15 +3501,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-44.6,
-219.8
+-35.4,
+326.8
 ],
 "head_z": 481.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 858,
+"chapter_frame": 1532,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 463,
@@ -3522,15 +3522,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-44.6,
-307.7
+-35.4,
+414.7
 ],
 "head_z": 481.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 859,
+"chapter_frame": 1533,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 468,
@@ -3543,15 +3543,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--18.5,
-350.5
+-98.5,
+457.5
 ],
 "head_z": 482.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 860,
+"chapter_frame": 1534,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 468,
@@ -3564,15 +3564,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--106.4,
-350.5
+-186.4,
+457.5
 ],
 "head_z": 482.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 861,
+"chapter_frame": 1535,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 468,
@@ -3585,15 +3585,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--194.2,
-350.5
+-274.2,
+457.5
 ],
 "head_z": 482.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 862,
+"chapter_frame": 1536,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 470,
@@ -3606,15 +3606,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--246.0,
-307.6
+-326.0,
+414.6
 ],
 "head_z": 482.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 863,
+"chapter_frame": 1537,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 470,
@@ -3627,15 +3627,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--246.0,
-219.7
+-326.0,
+326.7
 ],
 "head_z": 482.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 864,
+"chapter_frame": 1538,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 472,
@@ -3648,15 +3648,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--222.5,
-148.5
+-302.5,
+255.5
 ],
 "head_z": 482.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 865,
+"chapter_frame": 1539,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 472,
@@ -3669,15 +3669,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--134.7,
-148.5
+-214.7,
+255.5
 ],
 "head_z": 482.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 866,
+"chapter_frame": 1540,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 472,
@@ -3690,15 +3690,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--46.9,
-148.5
+-126.9,
+255.5
 ],
 "head_z": 482.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 867,
+"chapter_frame": 1541,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 473,
@@ -3711,15 +3711,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-40.1,
-152.2
+-39.9,
+259.2
 ],
 "head_z": 482.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 868,
+"chapter_frame": 1542,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 474,
@@ -3732,15 +3732,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-46.0,
-238.2
+-34.0,
+345.2
 ],
 "head_z": 482.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 869,
+"chapter_frame": 1543,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 474,
@@ -3753,15 +3753,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-46.0,
-326.0
+-34.0,
+433.0
 ],
 "head_z": 482.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 870,
+"chapter_frame": 1544,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 481,
@@ -3774,15 +3774,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-11.1,
-349.1
+-68.9,
+456.1
 ],
 "head_z": 482.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 871,
+"chapter_frame": 1545,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 481,
@@ -3795,15 +3795,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--76.7,
-349.1
+-156.7,
+456.1
 ],
 "head_z": 482.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 872,
+"chapter_frame": 1546,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 481,
@@ -3816,15 +3816,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--164.5,
-349.1
+-244.5,
+456.1
 ],
 "head_z": 482.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 873,
+"chapter_frame": 1547,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 482,
@@ -3837,15 +3837,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--244.5,
-335.0
+-324.5,
+442.0
 ],
 "head_z": 482.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 874,
+"chapter_frame": 1548,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 483,
@@ -3858,15 +3858,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--244.6,
-247.2
+-324.6,
+354.2
 ],
 "head_z": 482.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 875,
+"chapter_frame": 1549,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 484,
@@ -3879,15 +3879,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--243.6,
-159.5
+-323.6,
+266.5
 ],
 "head_z": 482.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 876,
+"chapter_frame": 1550,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 485,
@@ -3900,15 +3900,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--159.9,
-149.9
+-239.9,
+256.9
 ],
 "head_z": 482.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 877,
+"chapter_frame": 1551,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 485,
@@ -3921,15 +3921,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--72.0,
-149.9
+-152.0,
+256.9
 ],
 "head_z": 482.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 878,
+"chapter_frame": 1552,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 485,
@@ -3942,15 +3942,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-15.8,
-149.9
+-64.2,
+256.9
 ],
 "head_z": 482.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 879,
+"chapter_frame": 1553,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 487,
@@ -3963,15 +3963,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-44.6,
-215.3
+-35.4,
+322.3
 ],
 "head_z": 482.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 880,
+"chapter_frame": 1554,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 487,
@@ -3984,15 +3984,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-44.6,
-303.1
+-35.4,
+410.1
 ],
 "head_z": 482.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 881,
+"chapter_frame": 1555,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 492,
@@ -4005,15 +4005,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--13.0,
-350.5
+-93.0,
+457.5
 ],
 "head_z": 482.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 882,
+"chapter_frame": 1556,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 492,
@@ -4026,15 +4026,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--100.8,
-350.5
+-180.8,
+457.5
 ],
 "head_z": 482.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 883,
+"chapter_frame": 1557,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 492,
@@ -4047,15 +4047,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--188.6,
-350.5
+-268.6,
+457.5
 ],
 "head_z": 482.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 884,
+"chapter_frame": 1558,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 494,
@@ -4068,15 +4068,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--246.0,
-313.1
+-326.0,
+420.1
 ],
 "head_z": 482.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 885,
+"chapter_frame": 1559,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 494,
@@ -4089,15 +4089,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--246.0,
-225.3
+-326.0,
+332.3
 ],
 "head_z": 482.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 886,
+"chapter_frame": 1560,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 496,
@@ -4110,15 +4110,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--228.1,
-148.5
+-308.1,
+255.5
 ],
 "head_z": 482.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 887,
+"chapter_frame": 1561,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 496,
@@ -4131,15 +4131,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--140.2,
-148.5
+-220.2,
+255.5
 ],
 "head_z": 482.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 888,
+"chapter_frame": 1562,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 496,
@@ -4152,15 +4152,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--52.4,
-148.5
+-132.4,
+255.5
 ],
 "head_z": 482.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 889,
+"chapter_frame": 1563,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 497,
@@ -4173,15 +4173,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-35.3,
-149.5
+-44.7,
+256.5
 ],
 "head_z": 482.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 890,
+"chapter_frame": 1564,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 498,
@@ -4194,15 +4194,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-46.0,
-232.6
+-34.0,
+339.6
 ],
 "head_z": 482.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 891,
+"chapter_frame": 1565,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 498,
@@ -4215,15 +4215,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-46.0,
-320.5
+-34.0,
+427.5
 ],
 "head_z": 482.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 892,
+"chapter_frame": 1566,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 505,
@@ -4236,15 +4236,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-17.7,
-349.1
+-62.3,
+456.1
 ],
 "head_z": 482.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 893,
+"chapter_frame": 1567,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 505,
@@ -4257,15 +4257,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--70.1,
-349.1
+-150.1,
+456.1
 ],
 "head_z": 482.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 894,
+"chapter_frame": 1568,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 505,
@@ -4278,15 +4278,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--158.0,
-349.1
+-238.0,
+456.1
 ],
 "head_z": 482.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 895,
+"chapter_frame": 1569,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 506,
@@ -4299,15 +4299,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--242.9,
-341.3
+-322.9,
+448.3
 ],
 "head_z": 482.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 896,
+"chapter_frame": 1570,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 507,
@@ -4320,15 +4320,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--244.6,
-253.7
+-324.6,
+360.7
 ],
 "head_z": 482.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 897,
+"chapter_frame": 1571,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 507,
@@ -4341,15 +4341,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--244.6,
-165.9
+-324.6,
+272.9
 ],
 "head_z": 482.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 898,
+"chapter_frame": 1572,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 509,
@@ -4362,15 +4362,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--166.4,
-149.9
+-246.4,
+256.9
 ],
 "head_z": 482.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 899,
+"chapter_frame": 1573,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 509,
@@ -4383,15 +4383,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--78.6,
-149.9
+-158.6,
+256.9
 ],
 "head_z": 482.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 900,
+"chapter_frame": 1574,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 509,
@@ -4404,15 +4404,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-9.3,
-149.9
+-70.7,
+256.9
 ],
 "head_z": 482.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 901,
+"chapter_frame": 1575,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 511,
@@ -4425,15 +4425,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-44.6,
-208.7
+-35.4,
+315.7
 ],
 "head_z": 482.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 902,
+"chapter_frame": 1576,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 511,
@@ -4446,15 +4446,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-44.6,
-296.6
+-35.4,
+403.6
 ],
 "head_z": 482.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 903,
+"chapter_frame": 1577,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 516,
@@ -4467,15 +4467,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--5.4,
-350.5
+-85.4,
+457.5
 ],
 "head_z": 483.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 904,
+"chapter_frame": 1578,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 516,
@@ -4488,15 +4488,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--93.2,
-350.5
+-173.2,
+457.5
 ],
 "head_z": 483.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 905,
+"chapter_frame": 1579,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 516,
@@ -4509,15 +4509,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--181.1,
-350.5
+-261.1,
+457.5
 ],
 "head_z": 483.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 906,
+"chapter_frame": 1580,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 518,
@@ -4530,15 +4530,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--246.0,
-320.7
+-326.0,
+427.7
 ],
 "head_z": 483.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 907,
+"chapter_frame": 1581,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 518,
@@ -4551,15 +4551,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--246.0,
-232.9
+-326.0,
+339.9
 ],
 "head_z": 483.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 908,
+"chapter_frame": 1582,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 519,
@@ -4572,15 +4572,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--235.5,
-149.5
+-315.5,
+256.5
 ],
 "head_z": 483.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 909,
+"chapter_frame": 1583,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 520,
@@ -4593,15 +4593,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--147.8,
-148.5
+-227.8,
+255.5
 ],
 "head_z": 483.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 910,
+"chapter_frame": 1584,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 520,
@@ -4614,15 +4614,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--60.0,
-148.5
+-140.0,
+255.5
 ],
 "head_z": 483.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 911,
+"chapter_frame": 1585,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 520,
@@ -4635,15 +4635,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-27.9,
-148.5
+-52.1,
+255.5
 ],
 "head_z": 483.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 912,
+"chapter_frame": 1586,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 522,
@@ -4656,15 +4656,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-46.0,
-225.1
+-34.0,
+332.1
 ],
 "head_z": 483.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 913,
+"chapter_frame": 1587,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 522,
@@ -4677,15 +4677,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-46.0,
-312.9
+-34.0,
+419.9
 ],
 "head_z": 483.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 914,
+"chapter_frame": 1588,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 529,
@@ -4698,15 +4698,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-26.3,
-349.1
+-53.7,
+456.1
 ],
 "head_z": 483.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 915,
+"chapter_frame": 1589,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 529,
@@ -4719,15 +4719,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--61.6,
-349.1
+-141.6,
+456.1
 ],
 "head_z": 483.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 916,
+"chapter_frame": 1590,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 529,
@@ -4740,15 +4740,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--149.4,
-349.1
+-229.4,
+456.1
 ],
 "head_z": 483.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 917,
+"chapter_frame": 1591,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 530,
@@ -4761,15 +4761,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--236.9,
-347.3
+-316.9,
+454.3
 ],
 "head_z": 483.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 918,
+"chapter_frame": 1592,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 531,
@@ -4782,15 +4782,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--244.6,
-262.3
+-324.6,
+369.3
 ],
 "head_z": 483.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 919,
+"chapter_frame": 1593,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 531,
@@ -4803,15 +4803,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--244.6,
-174.5
+-324.6,
+281.5
 ],
 "head_z": 483.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 920,
+"chapter_frame": 1594,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 533,
@@ -4824,15 +4824,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--175.0,
-149.9
+-255.0,
+256.9
 ],
 "head_z": 483.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 921,
+"chapter_frame": 1595,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 533,
@@ -4845,15 +4845,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--87.2,
-149.9
+-167.2,
+256.9
 ],
 "head_z": 483.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 922,
+"chapter_frame": 1596,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 533,
@@ -4866,15 +4866,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-0.7,
-149.9
+-79.3,
+256.9
 ],
 "head_z": 483.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 923,
+"chapter_frame": 1597,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 535,
@@ -4887,15 +4887,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-44.6,
-200.1
+-35.4,
+307.1
 ],
 "head_z": 483.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 924,
+"chapter_frame": 1598,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 535,
@@ -4908,15 +4908,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-44.6,
-288.0
+-35.4,
+395.0
 ],
 "head_z": 483.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 925,
+"chapter_frame": 1599,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 540,
@@ -4929,15 +4929,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-3.5,
-350.5
+-76.5,
+457.5
 ],
 "head_z": 483.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 926,
+"chapter_frame": 1600,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 540,
@@ -4950,15 +4950,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--84.4,
-350.5
+-164.4,
+457.5
 ],
 "head_z": 483.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 927,
+"chapter_frame": 1601,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 540,
@@ -4971,15 +4971,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--172.2,
-350.5
+-252.2,
+457.5
 ],
 "head_z": 483.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 928,
+"chapter_frame": 1602,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 542,
@@ -4992,15 +4992,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--246.0,
-329.6
+-326.0,
+436.6
 ],
 "head_z": 483.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 929,
+"chapter_frame": 1603,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 542,
@@ -5013,15 +5013,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--246.0,
-241.8
+-326.0,
+348.8
 ],
 "head_z": 483.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 930,
+"chapter_frame": 1604,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 543,
@@ -5034,15 +5034,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--242.6,
-154.7
+-322.6,
+261.7
 ],
 "head_z": 483.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 931,
+"chapter_frame": 1605,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 544,
@@ -5055,15 +5055,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--156.7,
-148.5
+-236.7,
+255.5
 ],
 "head_z": 483.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 932,
+"chapter_frame": 1606,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 544,
@@ -5076,15 +5076,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--68.9,
-148.5
+-148.9,
+255.5
 ],
 "head_z": 483.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 933,
+"chapter_frame": 1607,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 544,
@@ -5097,15 +5097,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-19.0,
-148.5
+-61.0,
+255.5
 ],
 "head_z": 483.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 934,
+"chapter_frame": 1608,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 546,
@@ -5118,15 +5118,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-46.0,
-216.2
+-34.0,
+323.2
 ],
 "head_z": 483.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 935,
+"chapter_frame": 1609,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 546,
@@ -5139,15 +5139,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-46.0,
-304.0
+-34.0,
+411.0
 ],
 "head_z": 483.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 936,
+"chapter_frame": 1610,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 552,
@@ -5160,15 +5160,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-35.3,
-348.0
+-44.7,
+455.0
 ],
 "head_z": 483.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 937,
+"chapter_frame": 1611,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 553,
@@ -5181,15 +5181,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--52.4,
-349.1
+-132.4,
+456.1
 ],
 "head_z": 483.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 938,
+"chapter_frame": 1612,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 553,
@@ -5202,15 +5202,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--140.2,
-349.1
+-220.2,
+456.1
 ],
 "head_z": 483.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 939,
+"chapter_frame": 1613,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 553,
@@ -5223,15 +5223,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--228.0,
-349.1
+-308.0,
+456.1
 ],
 "head_z": 483.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 940,
+"chapter_frame": 1614,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 555,
@@ -5244,15 +5244,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--244.6,
-271.5
+-324.6,
+378.5
 ],
 "head_z": 483.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 941,
+"chapter_frame": 1615,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 555,
@@ -5265,15 +5265,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--244.6,
-183.7
+-324.6,
+290.7
 ],
 "head_z": 483.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 942,
+"chapter_frame": 1616,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 557,
@@ -5286,15 +5286,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--184.2,
-149.9
+-264.2,
+256.9
 ],
 "head_z": 483.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 943,
+"chapter_frame": 1617,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 557,
@@ -5307,15 +5307,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--96.3,
-149.9
+-176.3,
+256.9
 ],
 "head_z": 483.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 944,
+"chapter_frame": 1618,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 557,
@@ -5328,15 +5328,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
--8.5,
-149.9
+-88.5,
+256.9
 ],
 "head_z": 483.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 945,
+"chapter_frame": 1619,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 559,
@@ -5349,15 +5349,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-44.6,
-191.0
+-35.4,
+298.0
 ],
 "head_z": 483.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 946,
+"chapter_frame": 1620,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 559,
@@ -5370,15 +5370,15 @@
 "tool": 4,
 "op": "Lid O-ring gland 4.6 x 2.65",
 "table_xy": [
-44.6,
-278.8
+-35.4,
+385.8
 ],
 "head_z": 483.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 947,
+"chapter_frame": 1621,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 587,
@@ -5391,15 +5391,15 @@
 "tool": 12,
 "op": "Drill 20 M5 STI insert holes 5.3 mm, 10.5 deep",
 "table_xy": [
--160.0,
-142.7
+-240.0,
+249.7
 ],
 "head_z": 461.0,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 948,
+"chapter_frame": 1622,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 605,
@@ -5412,15 +5412,15 @@
 "tool": 12,
 "op": "Drill 20 M5 STI insert holes 5.3 mm, 10.5 deep",
 "table_xy": [
--58.0,
-356.3
+-138.0,
+463.3
 ],
 "head_z": 461.0,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 949,
+"chapter_frame": 1623,
 "program": "frame_A.ngc",
 "setup": "frame_A",
 "line": 621,
@@ -5433,15 +5433,15 @@
 "tool": 12,
 "op": "Drill 20 M5 STI insert holes 5.3 mm, 10.5 deep",
 "table_xy": [
--40.0,
-142.7
+-120.0,
+249.7
 ],
 "head_z": 451.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1128,
+"chapter_frame": 2185,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 124,
@@ -5454,7 +5454,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-114.2,
+154.2,
 245.5
 ],
 "head_z": 284.3,
@@ -5462,7 +5462,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1129,
+"chapter_frame": 2186,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 244,
@@ -5475,7 +5475,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-112.5,
+152.5,
 251.7
 ],
 "head_z": 293.6,
@@ -5483,7 +5483,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1130,
+"chapter_frame": 2187,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 605,
@@ -5496,7 +5496,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-124.7,
+164.7,
 248.9
 ],
 "head_z": 293.6,
@@ -5504,7 +5504,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1131,
+"chapter_frame": 2188,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 923,
@@ -5517,7 +5517,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-110.8,
+150.8,
 240.4
 ],
 "head_z": 293.6,
@@ -5525,7 +5525,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1132,
+"chapter_frame": 2189,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 1205,
@@ -5538,7 +5538,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-103.6,
+143.6,
 247.0
 ],
 "head_z": 293.6,
@@ -5546,7 +5546,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1133,
+"chapter_frame": 2190,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 1478,
@@ -5559,7 +5559,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-131.4,
+171.4,
 244.4
 ],
 "head_z": 293.6,
@@ -5567,7 +5567,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1134,
+"chapter_frame": 2191,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 1750,
@@ -5580,7 +5580,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-133.1,
+173.1,
 256.0
 ],
 "head_z": 293.6,
@@ -5588,7 +5588,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1135,
+"chapter_frame": 2192,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 2023,
@@ -5601,7 +5601,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-135.5,
+175.5,
 244.7
 ],
 "head_z": 293.6,
@@ -5609,7 +5609,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1136,
+"chapter_frame": 2193,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 2295,
@@ -5622,7 +5622,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-109.8,
+149.8,
 230.1
 ],
 "head_z": 293.6,
@@ -5630,7 +5630,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1137,
+"chapter_frame": 2194,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 2566,
@@ -5643,7 +5643,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-110.4,
+150.4,
 270.9
 ],
 "head_z": 293.6,
@@ -5651,7 +5651,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1138,
+"chapter_frame": 2195,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 2831,
@@ -5664,7 +5664,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-123.8,
+163.8,
 226.7
 ],
 "head_z": 293.6,
@@ -5672,7 +5672,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1139,
+"chapter_frame": 2196,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 3082,
@@ -5685,7 +5685,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-124.2,
+164.2,
 273.7
 ],
 "head_z": 293.6,
@@ -5693,7 +5693,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1140,
+"chapter_frame": 2197,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 3326,
@@ -5706,7 +5706,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-91.1,
+131.1,
 243.1
 ],
 "head_z": 293.6,
@@ -5714,7 +5714,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1141,
+"chapter_frame": 2198,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 3559,
@@ -5727,7 +5727,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-127.1,
+167.1,
 223.5
 ],
 "head_z": 293.6,
@@ -5735,7 +5735,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1142,
+"chapter_frame": 2199,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 3774,
@@ -5748,7 +5748,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-146.3,
+186.3,
 253.4
 ],
 "head_z": 293.6,
@@ -5756,7 +5756,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1143,
+"chapter_frame": 2200,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 3985,
@@ -5769,7 +5769,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-129.7,
+169.7,
 277.3
 ],
 "head_z": 293.6,
@@ -5777,7 +5777,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1144,
+"chapter_frame": 2201,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 4188,
@@ -5790,7 +5790,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-107.4,
+147.4,
 279.5
 ],
 "head_z": 293.6,
@@ -5798,7 +5798,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1145,
+"chapter_frame": 2202,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 4383,
@@ -5811,7 +5811,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-93.6,
+133.6,
 272.1
 ],
 "head_z": 293.6,
@@ -5819,7 +5819,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1146,
+"chapter_frame": 2203,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 4571,
@@ -5832,7 +5832,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-87.5,
+127.5,
 265.7
 ],
 "head_z": 293.6,
@@ -5840,7 +5840,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1147,
+"chapter_frame": 2204,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 4763,
@@ -5853,7 +5853,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-85.7,
+125.7,
 264.5
 ],
 "head_z": 293.6,
@@ -5861,7 +5861,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1148,
+"chapter_frame": 2205,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 4949,
@@ -5874,7 +5874,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-87.2,
+127.2,
 269.2
 ],
 "head_z": 293.6,
@@ -5882,7 +5882,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1149,
+"chapter_frame": 2206,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 5129,
@@ -5895,7 +5895,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-94.0,
+134.0,
 278.1
 ],
 "head_z": 293.6,
@@ -5903,7 +5903,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1150,
+"chapter_frame": 2207,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 5296,
@@ -5916,7 +5916,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-109.3,
+149.3,
 286.5
 ],
 "head_z": 293.6,
@@ -5924,7 +5924,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1151,
+"chapter_frame": 2208,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 5448,
@@ -5937,7 +5937,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-132.7,
+172.7,
 285.3
 ],
 "head_z": 293.6,
@@ -5945,7 +5945,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1152,
+"chapter_frame": 2209,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 5614,
@@ -5958,7 +5958,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-149.2,
+189.2,
 274.0
 ],
 "head_z": 293.6,
@@ -5966,7 +5966,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1153,
+"chapter_frame": 2210,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 5786,
@@ -5979,7 +5979,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-156.2,
+196.2,
 260.0
 ],
 "head_z": 293.6,
@@ -5987,7 +5987,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1154,
+"chapter_frame": 2211,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 5930,
@@ -6000,7 +6000,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-148.0,
+188.0,
 221.2
 ],
 "head_z": 293.6,
@@ -6008,7 +6008,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1155,
+"chapter_frame": 2212,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 6101,
@@ -6021,7 +6021,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-89.4,
+129.4,
 282.6
 ],
 "head_z": 293.6,
@@ -6029,7 +6029,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1156,
+"chapter_frame": 2213,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 6267,
@@ -6042,7 +6042,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-92.8,
+132.8,
 287.7
 ],
 "head_z": 293.6,
@@ -6050,7 +6050,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1157,
+"chapter_frame": 2214,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 6431,
@@ -6063,7 +6063,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-89.8,
+129.8,
 288.4
 ],
 "head_z": 293.6,
@@ -6071,7 +6071,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1158,
+"chapter_frame": 2215,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 6599,
@@ -6084,7 +6084,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-83.4,
+123.4,
 286.0
 ],
 "head_z": 293.6,
@@ -6092,7 +6092,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1159,
+"chapter_frame": 2216,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 6766,
@@ -6105,7 +6105,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-77.2,
+117.2,
 279.9
 ],
 "head_z": 293.6,
@@ -6113,7 +6113,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1160,
+"chapter_frame": 2217,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 6937,
@@ -6126,7 +6126,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-153.2,
+193.2,
 291.5
 ],
 "head_z": 293.6,
@@ -6134,7 +6134,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1161,
+"chapter_frame": 2218,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 7103,
@@ -6147,7 +6147,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-139.5,
+179.5,
 303.0
 ],
 "head_z": 293.6,
@@ -6155,7 +6155,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1162,
+"chapter_frame": 2219,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 7263,
@@ -6168,7 +6168,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-121.8,
+161.8,
 309.3
 ],
 "head_z": 293.6,
@@ -6176,7 +6176,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1163,
+"chapter_frame": 2220,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 7418,
@@ -6189,7 +6189,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-102.6,
+142.6,
 309.9
 ],
 "head_z": 293.6,
@@ -6197,7 +6197,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1164,
+"chapter_frame": 2221,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 7576,
@@ -6210,7 +6210,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-83.8,
+123.8,
 304.4
 ],
 "head_z": 293.6,
@@ -6218,7 +6218,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1165,
+"chapter_frame": 2222,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 7751,
@@ -6231,7 +6231,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-155.5,
+195.5,
 303.1
 ],
 "head_z": 293.6,
@@ -6239,7 +6239,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1166,
+"chapter_frame": 2223,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 7910,
@@ -6252,7 +6252,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-136.8,
+176.8,
 316.9
 ],
 "head_z": 293.6,
@@ -6260,7 +6260,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1167,
+"chapter_frame": 2224,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 8066,
@@ -6273,7 +6273,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-114.5,
+154.5,
 321.9
 ],
 "head_z": 293.6,
@@ -6281,7 +6281,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1168,
+"chapter_frame": 2225,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 8220,
@@ -6294,7 +6294,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-91.9,
+131.9,
 319.6
 ],
 "head_z": 293.6,
@@ -6302,7 +6302,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1169,
+"chapter_frame": 2226,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 8384,
@@ -6315,7 +6315,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-136.5,
+176.5,
 310.9
 ],
 "head_z": 293.6,
@@ -6323,7 +6323,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1170,
+"chapter_frame": 2227,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 8545,
@@ -6336,7 +6336,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-139.9,
+179.9,
 326.4
 ],
 "head_z": 293.6,
@@ -6344,7 +6344,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1171,
+"chapter_frame": 2228,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 8698,
@@ -6357,7 +6357,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-115.8,
+155.8,
 332.3
 ],
 "head_z": 293.6,
@@ -6365,7 +6365,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1172,
+"chapter_frame": 2229,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 8843,
@@ -6378,7 +6378,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-91.3,
+131.3,
 330.3
 ],
 "head_z": 293.6,
@@ -6386,7 +6386,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1173,
+"chapter_frame": 2230,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 9009,
@@ -6399,7 +6399,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-156.2,
+196.2,
 322.0
 ],
 "head_z": 293.6,
@@ -6407,7 +6407,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1174,
+"chapter_frame": 2231,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 9169,
@@ -6420,7 +6420,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-136.5,
+176.5,
 338.0
 ],
 "head_z": 293.6,
@@ -6428,7 +6428,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1175,
+"chapter_frame": 2232,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 9318,
@@ -6441,7 +6441,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-111.0,
+151.0,
 342.4
 ],
 "head_z": 293.6,
@@ -6449,7 +6449,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1176,
+"chapter_frame": 2233,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 9464,
@@ -6462,7 +6462,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-86.1,
+126.1,
 339.3
 ],
 "head_z": 293.6,
@@ -6470,7 +6470,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1177,
+"chapter_frame": 2234,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 9636,
@@ -6483,7 +6483,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-153.5,
+193.5,
 338.0
 ],
 "head_z": 293.6,
@@ -6491,7 +6491,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1178,
+"chapter_frame": 2235,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 9792,
@@ -6504,7 +6504,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-129.4,
+169.4,
 349.8
 ],
 "head_z": 293.6,
@@ -6512,7 +6512,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1179,
+"chapter_frame": 2236,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 9925,
@@ -6525,7 +6525,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-103.4,
+143.4,
 351.9
 ],
 "head_z": 293.6,
@@ -6533,7 +6533,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1180,
+"chapter_frame": 2237,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 10102,
@@ -6546,7 +6546,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-139.6,
+179.6,
 353.0
 ],
 "head_z": 293.6,
@@ -6554,7 +6554,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1181,
+"chapter_frame": 2238,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 10508,
@@ -6567,7 +6567,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-77.1,
+117.1,
 348.8
 ],
 "head_z": 293.6,
@@ -6575,7 +6575,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1182,
+"chapter_frame": 2239,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 10814,
@@ -6588,7 +6588,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-122.1,
+162.1,
 206.3
 ],
 "head_z": 293.6,
@@ -6596,7 +6596,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1183,
+"chapter_frame": 2240,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 10990,
@@ -6609,7 +6609,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-122.8,
+162.8,
 204.2
 ],
 "head_z": 293.6,
@@ -6617,7 +6617,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1184,
+"chapter_frame": 2241,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 11160,
@@ -6630,7 +6630,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-129.0,
+169.0,
 202.9
 ],
 "head_z": 293.6,
@@ -6638,7 +6638,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1185,
+"chapter_frame": 2242,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 11329,
@@ -6651,7 +6651,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-138.7,
+178.7,
 204.0
 ],
 "head_z": 293.6,
@@ -6659,7 +6659,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1186,
+"chapter_frame": 2243,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 11495,
@@ -6672,7 +6672,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-150.0,
+190.0,
 208.1
 ],
 "head_z": 293.6,
@@ -6680,7 +6680,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1187,
+"chapter_frame": 2244,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 11669,
@@ -6693,7 +6693,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-77.2,
+117.2,
 217.7
 ],
 "head_z": 293.6,
@@ -6701,7 +6701,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1188,
+"chapter_frame": 2245,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 11843,
@@ -6714,7 +6714,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-86.7,
+126.7,
 201.2
 ],
 "head_z": 293.6,
@@ -6722,7 +6722,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1189,
+"chapter_frame": 2246,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 12005,
@@ -6735,7 +6735,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-104.0,
+144.0,
 191.2
 ],
 "head_z": 293.6,
@@ -6743,7 +6743,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1190,
+"chapter_frame": 2247,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 12164,
@@ -6756,7 +6756,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-124.2,
+164.2,
 187.6
 ],
 "head_z": 293.6,
@@ -6764,7 +6764,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1191,
+"chapter_frame": 2248,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 12325,
@@ -6777,7 +6777,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-144.8,
+184.8,
 190.6
 ],
 "head_z": 293.6,
@@ -6785,7 +6785,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1192,
+"chapter_frame": 2249,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 12498,
@@ -6798,7 +6798,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-77.1,
+117.1,
 201.3
 ],
 "head_z": 293.6,
@@ -6806,7 +6806,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1193,
+"chapter_frame": 2250,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 12668,
@@ -6819,7 +6819,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-93.8,
+133.8,
 184.1
 ],
 "head_z": 293.6,
@@ -6827,7 +6827,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1194,
+"chapter_frame": 2251,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 12822,
@@ -6840,7 +6840,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-116.9,
+156.9,
 177.2
 ],
 "head_z": 293.6,
@@ -6848,7 +6848,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1195,
+"chapter_frame": 2252,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 12980,
@@ -6861,7 +6861,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-140.6,
+180.6,
 178.1
 ],
 "head_z": 293.6,
@@ -6869,7 +6869,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1196,
+"chapter_frame": 2253,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 13152,
@@ -6882,7 +6882,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-77.5,
+117.5,
 191.5
 ],
 "head_z": 293.6,
@@ -6890,7 +6890,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1197,
+"chapter_frame": 2254,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 13324,
@@ -6903,7 +6903,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-94.5,
+134.5,
 173.5
 ],
 "head_z": 293.6,
@@ -6911,7 +6911,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1198,
+"chapter_frame": 2255,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 13481,
@@ -6924,7 +6924,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-119.4,
+159.4,
 166.9
 ],
 "head_z": 293.6,
@@ -6932,7 +6932,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1199,
+"chapter_frame": 2256,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 13638,
@@ -6945,7 +6945,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-144.6,
+184.6,
 168.5
 ],
 "head_z": 293.6,
@@ -6953,7 +6953,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1200,
+"chapter_frame": 2257,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 13810,
@@ -6966,7 +6966,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-78.8,
+118.8,
 175.8
 ],
 "head_z": 293.6,
@@ -6974,7 +6974,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1201,
+"chapter_frame": 2258,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 13968,
@@ -6987,7 +6987,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-101.2,
+141.2,
 161.1
 ],
 "head_z": 293.6,
@@ -6995,7 +6995,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1202,
+"chapter_frame": 2259,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 14117,
@@ -7008,7 +7008,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-127.4,
+167.4,
 156.9
 ],
 "head_z": 293.6,
@@ -7016,7 +7016,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1203,
+"chapter_frame": 2260,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 14274,
@@ -7029,7 +7029,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-152.8,
+192.8,
 161.1
 ],
 "head_z": 293.6,
@@ -7037,7 +7037,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1204,
+"chapter_frame": 2261,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 14447,
@@ -7050,7 +7050,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-86.0,
+126.0,
 158.9
 ],
 "head_z": 293.6,
@@ -7058,7 +7058,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1205,
+"chapter_frame": 2262,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 14602,
@@ -7071,7 +7071,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-111.5,
+151.5,
 149.1
 ],
 "head_z": 293.6,
@@ -7079,7 +7079,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1206,
+"chapter_frame": 2263,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 14743,
@@ -7092,7 +7092,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-138.2,
+178.2,
 147.9
 ],
 "head_z": 293.6,
@@ -7100,7 +7100,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1207,
+"chapter_frame": 2264,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 14925,
@@ -7113,7 +7113,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-85.3,
+125.3,
 150.1
 ],
 "head_z": 293.6,
@@ -7121,7 +7121,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1208,
+"chapter_frame": 2265,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 15355,
@@ -7134,7 +7134,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-144.4,
+184.4,
 146.4
 ],
 "head_z": 293.6,
@@ -7142,7 +7142,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1209,
+"chapter_frame": 2266,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 15559,
@@ -7155,7 +7155,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-156.3,
+196.3,
 285.6
 ],
 "head_z": 293.6,
@@ -7163,7 +7163,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1210,
+"chapter_frame": 2267,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 15570,
@@ -7176,7 +7176,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-77.1,
+117.1,
 281.8
 ],
 "head_z": 293.6,
@@ -7184,7 +7184,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1211,
+"chapter_frame": 2268,
 "program": "frame_C_haas.nc",
 "setup": "frame_C0",
 "line": 15583,
@@ -7197,7 +7197,7 @@
 "tool": 3,
 "op": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
 "table_xy": [
-156.3,
+196.3,
 146.4
 ],
 "head_z": 258.1,
@@ -7205,7 +7205,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1224,
+"chapter_frame": 2281,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15615,
@@ -7218,7 +7218,7 @@
 "tool": 3,
 "op": "Left wall: 1 x bore 18.00 mm, helix, z 139.50..156.00",
 "table_xy": [
-129.6,
+169.6,
 179.9
 ],
 "head_z": 232.3,
@@ -7226,7 +7226,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1225,
+"chapter_frame": 2282,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15617,
@@ -7239,7 +7239,7 @@
 "tool": 3,
 "op": "Left wall: 1 x bore 18.00 mm, helix, z 139.50..156.00",
 "table_xy": [
-128.1,
+168.1,
 177.5
 ],
 "head_z": 233.1,
@@ -7247,7 +7247,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1226,
+"chapter_frame": 2283,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15618,
@@ -7260,7 +7260,7 @@
 "tool": 3,
 "op": "Left wall: 1 x bore 18.00 mm, helix, z 139.50..156.00",
 "table_xy": [
-129.6,
+169.6,
 175.1
 ],
 "head_z": 233.9,
@@ -7268,7 +7268,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1227,
+"chapter_frame": 2284,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15620,
@@ -7281,7 +7281,7 @@
 "tool": 3,
 "op": "Left wall: 1 x bore 18.00 mm, helix, z 139.50..156.00",
 "table_xy": [
-132.4,
+172.4,
 175.6
 ],
 "head_z": 234.7,
@@ -7289,7 +7289,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1228,
+"chapter_frame": 2285,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15621,
@@ -7302,7 +7302,7 @@
 "tool": 3,
 "op": "Left wall: 1 x bore 18.00 mm, helix, z 139.50..156.00",
 "table_xy": [
-133.1,
+173.1,
 178.3
 ],
 "head_z": 235.4,
@@ -7310,7 +7310,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1229,
+"chapter_frame": 2286,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15623,
@@ -7323,7 +7323,7 @@
 "tool": 3,
 "op": "Left wall: 1 x bore 18.00 mm, helix, z 139.50..156.00",
 "table_xy": [
-131.0,
+171.0,
 180.1
 ],
 "head_z": 236.2,
@@ -7331,7 +7331,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1230,
+"chapter_frame": 2287,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15625,
@@ -7344,7 +7344,7 @@
 "tool": 3,
 "op": "Left wall: 1 x bore 18.00 mm, helix, z 139.50..156.00",
 "table_xy": [
-128.4,
+168.4,
 178.8
 ],
 "head_z": 237.0,
@@ -7352,7 +7352,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1231,
+"chapter_frame": 2288,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15626,
@@ -7365,7 +7365,7 @@
 "tool": 3,
 "op": "Left wall: 1 x bore 18.00 mm, helix, z 139.50..156.00",
 "table_xy": [
-128.6,
+168.6,
 176.0
 ],
 "head_z": 237.8,
@@ -7373,7 +7373,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1232,
+"chapter_frame": 2289,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15628,
@@ -7386,7 +7386,7 @@
 "tool": 3,
 "op": "Left wall: 1 x bore 18.00 mm, helix, z 139.50..156.00",
 "table_xy": [
-131.2,
+171.2,
 175.0
 ],
 "head_z": 238.6,
@@ -7394,7 +7394,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1233,
+"chapter_frame": 2290,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15630,
@@ -7407,7 +7407,7 @@
 "tool": 3,
 "op": "Left wall: 1 x bore 18.00 mm, helix, z 139.50..156.00",
 "table_xy": [
-133.2,
+173.2,
 176.9
 ],
 "head_z": 239.4,
@@ -7415,7 +7415,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1234,
+"chapter_frame": 2291,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15631,
@@ -7428,7 +7428,7 @@
 "tool": 3,
 "op": "Left wall: 1 x bore 18.00 mm, helix, z 139.50..156.00",
 "table_xy": [
-132.2,
+172.2,
 179.6
 ],
 "head_z": 240.2,
@@ -7436,7 +7436,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1235,
+"chapter_frame": 2292,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15633,
@@ -7449,7 +7449,7 @@
 "tool": 3,
 "op": "Left wall: 1 x bore 18.00 mm, helix, z 139.50..156.00",
 "table_xy": [
-129.4,
+169.4,
 179.8
 ],
 "head_z": 241.0,
@@ -7457,7 +7457,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1236,
+"chapter_frame": 2293,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15634,
@@ -7470,7 +7470,7 @@
 "tool": 3,
 "op": "Left wall: 1 x bore 18.00 mm, helix, z 139.50..156.00",
 "table_xy": [
-128.1,
+168.1,
 177.3
 ],
 "head_z": 241.8,
@@ -7478,7 +7478,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1237,
+"chapter_frame": 2294,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15636,
@@ -7491,7 +7491,7 @@
 "tool": 3,
 "op": "Left wall: 1 x bore 18.00 mm, helix, z 139.50..156.00",
 "table_xy": [
-129.9,
+169.9,
 175.1
 ],
 "head_z": 242.6,
@@ -7499,7 +7499,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1238,
+"chapter_frame": 2295,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15638,
@@ -7512,7 +7512,7 @@
 "tool": 3,
 "op": "Left wall: 1 x bore 18.00 mm, helix, z 139.50..156.00",
 "table_xy": [
-132.6,
+172.6,
 175.7
 ],
 "head_z": 243.4,
@@ -7520,7 +7520,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1239,
+"chapter_frame": 2296,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15639,
@@ -7533,7 +7533,7 @@
 "tool": 3,
 "op": "Left wall: 1 x bore 18.00 mm, helix, z 139.50..156.00",
 "table_xy": [
-133.1,
+173.1,
 178.5
 ],
 "head_z": 244.2,
@@ -7541,7 +7541,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1240,
+"chapter_frame": 2297,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15641,
@@ -7554,7 +7554,7 @@
 "tool": 3,
 "op": "Left wall: 1 x bore 18.00 mm, helix, z 139.50..156.00",
 "table_xy": [
-130.8,
+170.8,
 180.1
 ],
 "head_z": 245.0,
@@ -7562,7 +7562,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1241,
+"chapter_frame": 2298,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15643,
@@ -7575,7 +7575,7 @@
 "tool": 3,
 "op": "Left wall: 1 x bore 18.00 mm, helix, z 139.50..156.00",
 "table_xy": [
-128.4,
+168.4,
 178.6
 ],
 "head_z": 245.8,
@@ -7583,7 +7583,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1242,
+"chapter_frame": 2299,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15644,
@@ -7596,7 +7596,7 @@
 "tool": 3,
 "op": "Left wall: 1 x bore 18.00 mm, helix, z 139.50..156.00",
 "table_xy": [
-128.7,
+168.7,
 175.8
 ],
 "head_z": 246.5,
@@ -7604,7 +7604,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1243,
+"chapter_frame": 2300,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15646,
@@ -7617,7 +7617,7 @@
 "tool": 3,
 "op": "Left wall: 1 x bore 18.00 mm, helix, z 139.50..156.00",
 "table_xy": [
-131.4,
+171.4,
 175.0
 ],
 "head_z": 247.3,
@@ -7625,7 +7625,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1244,
+"chapter_frame": 2301,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15648,
@@ -7638,7 +7638,7 @@
 "tool": 3,
 "op": "Left wall: 1 x bore 18.00 mm, helix, z 139.50..156.00",
 "table_xy": [
-133.3,
+173.3,
 177.2
 ],
 "head_z": 248.1,
@@ -7646,7 +7646,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1245,
+"chapter_frame": 2302,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15649,
@@ -7659,7 +7659,7 @@
 "tool": 3,
 "op": "Left wall: 1 x bore 18.00 mm, helix, z 139.50..156.00",
 "table_xy": [
-132.1,
+172.1,
 179.7
 ],
 "head_z": 248.6,
@@ -7667,7 +7667,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1246,
+"chapter_frame": 2303,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15673,
@@ -7680,7 +7680,7 @@
 "tool": 9,
 "op": "Left wall: 1 x counterbore 10.80 mm, helix, z 154.68..156.00",
 "table_xy": [
-138.8,
+178.8,
 194.1
 ],
 "head_z": 223.1,
@@ -7688,7 +7688,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1247,
+"chapter_frame": 2304,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15678,
@@ -7701,7 +7701,7 @@
 "tool": 9,
 "op": "Left wall: 1 x counterbore 10.80 mm, helix, z 154.68..156.00",
 "table_xy": [
-165.7,
+205.7,
 247.3
 ],
 "head_z": 242.6,
@@ -7709,7 +7709,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1248,
+"chapter_frame": 2305,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15680,
@@ -7722,7 +7722,7 @@
 "tool": 9,
 "op": "Left wall: 1 x counterbore 10.80 mm, helix, z 154.68..156.00",
 "table_xy": [
-165.2,
+205.2,
 247.4
 ],
 "head_z": 243.3,
@@ -7730,7 +7730,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1249,
+"chapter_frame": 2306,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15682,
@@ -7743,7 +7743,7 @@
 "tool": 9,
 "op": "Left wall: 1 x counterbore 10.80 mm, helix, z 154.68..156.00",
 "table_xy": [
-164.7,
+204.7,
 247.5
 ],
 "head_z": 243.4,
@@ -7751,7 +7751,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1250,
+"chapter_frame": 2307,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15707,
@@ -7764,7 +7764,7 @@
 "tool": 10,
 "op": "Left wall: drill 1 x 5.2 mm for 6.000 mm, z 140.00..154.68, through",
 "table_xy": [
-165.7,
+205.7,
 249.5
 ],
 "head_z": 236.5,
@@ -7772,7 +7772,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1251,
+"chapter_frame": 2308,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15707,
@@ -7785,7 +7785,7 @@
 "tool": 10,
 "op": "Left wall: drill 1 x 5.2 mm for 6.000 mm, z 140.00..154.68, through",
 "table_xy": [
-165.7,
+205.7,
 249.5
 ],
 "head_z": 243.3,
@@ -7793,7 +7793,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1252,
+"chapter_frame": 2309,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15707,
@@ -7806,7 +7806,7 @@
 "tool": 10,
 "op": "Left wall: drill 1 x 5.2 mm for 6.000 mm, z 140.00..154.68, through",
 "table_xy": [
-165.7,
+205.7,
 249.5
 ],
 "head_z": 248.4,
@@ -7814,7 +7814,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1253,
+"chapter_frame": 2310,
 "program": "frame_C_haas.nc",
 "setup": "frame_C90",
 "line": 15707,
@@ -7827,7 +7827,7 @@
 "tool": 10,
 "op": "Left wall: drill 1 x 5.2 mm for 6.000 mm, z 140.00..154.68, through",
 "table_xy": [
-165.7,
+205.7,
 249.5
 ],
 "head_z": 216.1,
@@ -7835,7 +7835,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1266,
+"chapter_frame": 2323,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15739,
@@ -7848,7 +7848,7 @@
 "tool": 9,
 "op": "Inlet slot 120x8 through the back wall, profile",
 "table_xy": [
-163.5,
+203.5,
 196.7
 ],
 "head_z": 290.1,
@@ -7856,7 +7856,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1267,
+"chapter_frame": 2324,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15739,
@@ -7869,7 +7869,7 @@
 "tool": 9,
 "op": "Inlet slot 120x8 through the back wall, profile",
 "table_xy": [
-163.5,
+203.5,
 254.2
 ],
 "head_z": 290.1,
@@ -7877,7 +7877,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1268,
+"chapter_frame": 2325,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15742,
@@ -7890,7 +7890,7 @@
 "tool": 9,
 "op": "Inlet slot 120x8 through the back wall, profile",
 "table_xy": [
-161.9,
+201.9,
 302.0
 ],
 "head_z": 290.1,
@@ -7898,7 +7898,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1269,
+"chapter_frame": 2326,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15742,
@@ -7911,7 +7911,7 @@
 "tool": 9,
 "op": "Inlet slot 120x8 through the back wall, profile",
 "table_xy": [
-161.9,
+201.9,
 244.5
 ],
 "head_z": 290.1,
@@ -7919,7 +7919,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1270,
+"chapter_frame": 2327,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15744,
@@ -7932,7 +7932,7 @@
 "tool": 9,
 "op": "Inlet slot 120x8 through the back wall, profile",
 "table_xy": [
-162.1,
+202.1,
 192.9
 ],
 "head_z": 293.0,
@@ -7940,7 +7940,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1271,
+"chapter_frame": 2328,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15747,
@@ -7953,7 +7953,7 @@
 "tool": 9,
 "op": "Inlet slot 120x8 through the back wall, profile",
 "table_xy": [
-163.5,
+203.5,
 248.8
 ],
 "head_z": 293.1,
@@ -7961,7 +7961,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1272,
+"chapter_frame": 2329,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15748,
@@ -7974,7 +7974,7 @@
 "tool": 9,
 "op": "Inlet slot 120x8 through the back wall, profile",
 "table_xy": [
-163.2,
+203.2,
 306.1
 ],
 "head_z": 293.1,
@@ -7982,7 +7982,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1273,
+"chapter_frame": 2330,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15750,
@@ -7995,7 +7995,7 @@
 "tool": 9,
 "op": "Inlet slot 120x8 through the back wall, profile",
 "table_xy": [
-161.9,
+201.9,
 249.9
 ],
 "head_z": 293.1,
@@ -8003,7 +8003,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1274,
+"chapter_frame": 2331,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15752,
@@ -8016,7 +8016,7 @@
 "tool": 9,
 "op": "Inlet slot 120x8 through the back wall, profile",
 "table_xy": [
-162.1,
+202.1,
 192.9
 ],
 "head_z": 293.3,
@@ -8024,7 +8024,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1275,
+"chapter_frame": 2332,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15755,
@@ -8037,7 +8037,7 @@
 "tool": 9,
 "op": "Inlet slot 120x8 through the back wall, profile",
 "table_xy": [
-163.5,
+203.5,
 243.4
 ],
 "head_z": 296.1,
@@ -8045,7 +8045,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1276,
+"chapter_frame": 2333,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15755,
@@ -8058,7 +8058,7 @@
 "tool": 9,
 "op": "Inlet slot 120x8 through the back wall, profile",
 "table_xy": [
-163.5,
+203.5,
 300.8
 ],
 "head_z": 296.1,
@@ -8066,7 +8066,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1277,
+"chapter_frame": 2334,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15758,
@@ -8079,7 +8079,7 @@
 "tool": 9,
 "op": "Inlet slot 120x8 through the back wall, profile",
 "table_xy": [
-161.9,
+201.9,
 255.3
 ],
 "head_z": 296.1,
@@ -8087,7 +8087,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1278,
+"chapter_frame": 2335,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15758,
@@ -8100,7 +8100,7 @@
 "tool": 9,
 "op": "Inlet slot 120x8 through the back wall, profile",
 "table_xy": [
-161.9,
+201.9,
 197.8
 ],
 "head_z": 296.1,
@@ -8108,7 +8108,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1279,
+"chapter_frame": 2336,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15763,
@@ -8121,7 +8121,7 @@
 "tool": 9,
 "op": "Inlet slot 120x8 through the back wall, profile",
 "table_xy": [
-163.5,
+203.5,
 238.0
 ],
 "head_z": 299.1,
@@ -8129,7 +8129,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1280,
+"chapter_frame": 2337,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15763,
@@ -8142,7 +8142,7 @@
 "tool": 9,
 "op": "Inlet slot 120x8 through the back wall, profile",
 "table_xy": [
-163.5,
+203.5,
 295.4
 ],
 "head_z": 299.1,
@@ -8150,7 +8150,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1281,
+"chapter_frame": 2338,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15766,
@@ -8163,7 +8163,7 @@
 "tool": 9,
 "op": "Inlet slot 120x8 through the back wall, profile",
 "table_xy": [
-161.9,
+201.9,
 260.7
 ],
 "head_z": 299.1,
@@ -8171,7 +8171,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1282,
+"chapter_frame": 2339,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15766,
@@ -8184,7 +8184,7 @@
 "tool": 9,
 "op": "Inlet slot 120x8 through the back wall, profile",
 "table_xy": [
-161.9,
+201.9,
 203.2
 ],
 "head_z": 299.1,
@@ -8192,7 +8192,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1283,
+"chapter_frame": 2340,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15771,
@@ -8205,7 +8205,7 @@
 "tool": 9,
 "op": "Inlet slot 120x8 through the back wall, profile",
 "table_xy": [
-163.5,
+203.5,
 232.6
 ],
 "head_z": 302.1,
@@ -8213,7 +8213,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1284,
+"chapter_frame": 2341,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15771,
@@ -8226,7 +8226,7 @@
 "tool": 9,
 "op": "Inlet slot 120x8 through the back wall, profile",
 "table_xy": [
-163.5,
+203.5,
 290.0
 ],
 "head_z": 302.1,
@@ -8234,7 +8234,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1285,
+"chapter_frame": 2342,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15774,
@@ -8247,7 +8247,7 @@
 "tool": 9,
 "op": "Inlet slot 120x8 through the back wall, profile",
 "table_xy": [
-161.9,
+201.9,
 266.1
 ],
 "head_z": 302.1,
@@ -8255,7 +8255,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1286,
+"chapter_frame": 2343,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15774,
@@ -8268,7 +8268,7 @@
 "tool": 9,
 "op": "Inlet slot 120x8 through the back wall, profile",
 "table_xy": [
-161.9,
+201.9,
 208.6
 ],
 "head_z": 302.1,
@@ -8276,7 +8276,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1287,
+"chapter_frame": 2344,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15779,
@@ -8289,7 +8289,7 @@
 "tool": 9,
 "op": "Inlet slot 120x8 through the back wall, profile",
 "table_xy": [
-163.5,
+203.5,
 230.2
 ],
 "head_z": 303.6,
@@ -8297,7 +8297,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1288,
+"chapter_frame": 2345,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15779,
@@ -8310,7 +8310,7 @@
 "tool": 9,
 "op": "Inlet slot 120x8 through the back wall, profile",
 "table_xy": [
-163.5,
+203.5,
 287.7
 ],
 "head_z": 303.6,
@@ -8318,7 +8318,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1289,
+"chapter_frame": 2346,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15782,
@@ -8331,7 +8331,7 @@
 "tool": 9,
 "op": "Inlet slot 120x8 through the back wall, profile",
 "table_xy": [
-161.9,
+201.9,
 268.5
 ],
 "head_z": 303.6,
@@ -8339,7 +8339,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1290,
+"chapter_frame": 2347,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15782,
@@ -8352,7 +8352,7 @@
 "tool": 9,
 "op": "Inlet slot 120x8 through the back wall, profile",
 "table_xy": [
-161.9,
+201.9,
 211.0
 ],
 "head_z": 303.6,
@@ -8360,7 +8360,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1291,
+"chapter_frame": 2348,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15809,
@@ -8373,7 +8373,7 @@
 "tool": 9,
 "op": "Back wall: 1 x SAE-4 port to the 25/64 in. tap drill 11.11 mm, helix, z 99.50..111.00",
 "table_xy": [
-69.0,
+109.0,
 149.9
 ],
 "head_z": 291.0,
@@ -8381,7 +8381,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1292,
+"chapter_frame": 2349,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15822,
@@ -8394,7 +8394,7 @@
 "tool": 9,
 "op": "Back wall: 1 x SAE-4 port to the 25/64 in. tap drill 11.11 mm, helix, z 99.50..111.00",
 "table_xy": [
-69.1,
+109.1,
 149.0
 ],
 "head_z": 297.6,
@@ -8402,7 +8402,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1293,
+"chapter_frame": 2350,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15851,
@@ -8415,7 +8415,7 @@
 "tool": 6,
 "op": "Back wall: drill 4 x 3.3 mm for 4.000 mm, z 95.00..111.00, through",
 "table_xy": [
-88.7,
+128.7,
 239.5
 ],
 "head_z": 298.6,
@@ -8423,7 +8423,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1294,
+"chapter_frame": 2351,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15854,
@@ -8436,7 +8436,7 @@
 "tool": 6,
 "op": "Back wall: drill 4 x 3.3 mm for 4.000 mm, z 95.00..111.00, through",
 "table_xy": [
-88.7,
+128.7,
 312.9
 ],
 "head_z": 266.1,
@@ -8444,7 +8444,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1295,
+"chapter_frame": 2352,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15857,
@@ -8457,7 +8457,7 @@
 "tool": 6,
 "op": "Back wall: drill 4 x 3.3 mm for 4.000 mm, z 95.00..111.00, through",
 "table_xy": [
-88.7,
+128.7,
 179.5
 ],
 "head_z": 284.8,
@@ -8465,7 +8465,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1296,
+"chapter_frame": 2353,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15873,
@@ -8478,7 +8478,7 @@
 "tool": 6,
 "op": "Back wall: drill 1 x 3.3 mm for 4.000 mm, z 95.00..99.50, through",
 "table_xy": [
-70.7,
+110.7,
 149.5
 ],
 "head_z": 301.2,
@@ -8486,7 +8486,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1297,
+"chapter_frame": 2354,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15899,
@@ -8499,7 +8499,7 @@
 "tool": 7,
 "op": "Back wall: drill 7 x 4.2 mm for 4.908 mm, z 99.50..111.00",
 "table_xy": [
-136.7,
+176.7,
 289.5
 ],
 "head_z": 291.0,
@@ -8507,7 +8507,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1298,
+"chapter_frame": 2355,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15903,
@@ -8520,7 +8520,7 @@
 "tool": 7,
 "op": "Back wall: drill 7 x 4.2 mm for 4.908 mm, z 99.50..111.00",
 "table_xy": [
-166.2,
+206.2,
 320.5
 ],
 "head_z": 288.1,
@@ -8528,7 +8528,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1299,
+"chapter_frame": 2356,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15907,
@@ -8541,7 +8541,7 @@
 "tool": 7,
 "op": "Back wall: drill 7 x 4.2 mm for 4.908 mm, z 99.50..111.00",
 "table_xy": [
-148.7,
+188.7,
 178.5
 ],
 "head_z": 283.3,
@@ -8549,7 +8549,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1300,
+"chapter_frame": 2357,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15909,
@@ -8562,7 +8562,7 @@
 "tool": 7,
 "op": "Back wall: drill 7 x 4.2 mm for 4.908 mm, z 99.50..111.00",
 "table_xy": [
-166.2,
+206.2,
 178.5
 ],
 "head_z": 290.5,
@@ -8570,7 +8570,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1301,
+"chapter_frame": 2358,
 "program": "frame_C_haas.nc",
 "setup": "frame_C180",
 "line": 15935,
@@ -8583,7 +8583,7 @@
 "tool": 11,
 "op": "Back wall: drill 2 x 2.9 mm for 3.000 mm, z 105.50..111.00",
 "table_xy": [
-157.4,
+197.4,
 178.5
 ],
 "head_z": 271.1,
@@ -8591,7 +8591,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1314,
+"chapter_frame": 2371,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 15972,
@@ -8604,7 +8604,7 @@
 "tool": 3,
 "op": "Right wall: 1 x bore 18.00 mm, helix, z 139.50..156.00",
 "table_xy": [
-130.1,
+170.1,
 324.0
 ],
 "head_z": 234.2,
@@ -8612,7 +8612,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1315,
+"chapter_frame": 2372,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 15978,
@@ -8625,7 +8625,7 @@
 "tool": 3,
 "op": "Right wall: 1 x bore 18.00 mm, helix, z 139.50..156.00",
 "table_xy": [
-128.3,
+168.3,
 322.3
 ],
 "head_z": 237.0,
@@ -8633,7 +8633,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1316,
+"chapter_frame": 2373,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 15983,
@@ -8646,7 +8646,7 @@
 "tool": 3,
 "op": "Right wall: 1 x bore 18.00 mm, helix, z 139.50..156.00",
 "table_xy": [
-128.6,
+168.6,
 319.9
 ],
 "head_z": 239.8,
@@ -8654,7 +8654,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1317,
+"chapter_frame": 2374,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 15989,
@@ -8667,7 +8667,7 @@
 "tool": 3,
 "op": "Right wall: 1 x bore 18.00 mm, helix, z 139.50..156.00",
 "table_xy": [
-130.9,
+170.9,
 318.9
 ],
 "head_z": 242.5,
@@ -8675,7 +8675,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1318,
+"chapter_frame": 2375,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 15995,
@@ -8688,7 +8688,7 @@
 "tool": 3,
 "op": "Right wall: 1 x bore 18.00 mm, helix, z 139.50..156.00",
 "table_xy": [
-133.0,
+173.0,
 320.2
 ],
 "head_z": 245.3,
@@ -8696,7 +8696,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1319,
+"chapter_frame": 2376,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16000,
@@ -8709,7 +8709,7 @@
 "tool": 3,
 "op": "Right wall: 1 x bore 18.00 mm, helix, z 139.50..156.00",
 "table_xy": [
-133.0,
+173.0,
 322.7
 ],
 "head_z": 248.0,
@@ -8717,7 +8717,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1320,
+"chapter_frame": 2377,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16022,
@@ -8730,7 +8730,7 @@
 "tool": 3,
 "op": "Right wall: 1 x bore 25.40 mm, helix, z 139.50..156.00",
 "table_xy": [
-104.9,
+144.9,
 254.1
 ],
 "head_z": 232.5,
@@ -8738,7 +8738,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1321,
+"chapter_frame": 2378,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16025,
@@ -8751,7 +8751,7 @@
 "tool": 3,
 "op": "Right wall: 1 x bore 25.40 mm, helix, z 139.50..156.00",
 "table_xy": [
-106.6,
+146.6,
 247.2
 ],
 "head_z": 233.6,
@@ -8759,7 +8759,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1322,
+"chapter_frame": 2379,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16027,
@@ -8772,7 +8772,7 @@
 "tool": 3,
 "op": "Right wall: 1 x bore 25.40 mm, helix, z 139.50..156.00",
 "table_xy": [
-100.7,
+140.7,
 243.3
 ],
 "head_z": 234.8,
@@ -8780,7 +8780,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1323,
+"chapter_frame": 2380,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16029,
@@ -8793,7 +8793,7 @@
 "tool": 3,
 "op": "Right wall: 1 x bore 25.40 mm, helix, z 139.50..156.00",
 "table_xy": [
-94.9,
+134.9,
 247.2
 ],
 "head_z": 235.9,
@@ -8801,7 +8801,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1324,
+"chapter_frame": 2381,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16032,
@@ -8814,7 +8814,7 @@
 "tool": 3,
 "op": "Right wall: 1 x bore 25.40 mm, helix, z 139.50..156.00",
 "table_xy": [
-96.4,
+136.4,
 254.0
 ],
 "head_z": 237.1,
@@ -8822,7 +8822,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1325,
+"chapter_frame": 2382,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16034,
@@ -8835,7 +8835,7 @@
 "tool": 3,
 "op": "Right wall: 1 x bore 25.40 mm, helix, z 139.50..156.00",
 "table_xy": [
-103.3,
+143.3,
 255.1
 ],
 "head_z": 238.2,
@@ -8843,7 +8843,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1326,
+"chapter_frame": 2383,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16037,
@@ -8856,7 +8856,7 @@
 "tool": 3,
 "op": "Right wall: 1 x bore 25.40 mm, helix, z 139.50..156.00",
 "table_xy": [
-106.9,
+146.9,
 249.1
 ],
 "head_z": 239.4,
@@ -8864,7 +8864,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1327,
+"chapter_frame": 2384,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16039,
@@ -8877,7 +8877,7 @@
 "tool": 3,
 "op": "Right wall: 1 x bore 25.40 mm, helix, z 139.50..156.00",
 "table_xy": [
-102.6,
+142.6,
 243.6
 ],
 "head_z": 240.5,
@@ -8885,7 +8885,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1328,
+"chapter_frame": 2385,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16041,
@@ -8898,7 +8898,7 @@
 "tool": 3,
 "op": "Right wall: 1 x bore 25.40 mm, helix, z 139.50..156.00",
 "table_xy": [
-95.9,
+135.9,
 245.5
 ],
 "head_z": 241.7,
@@ -8906,7 +8906,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1329,
+"chapter_frame": 2386,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16044,
@@ -8919,7 +8919,7 @@
 "tool": 3,
 "op": "Right wall: 1 x bore 25.40 mm, helix, z 139.50..156.00",
 "table_xy": [
-95.3,
+135.3,
 252.5
 ],
 "head_z": 242.9,
@@ -8927,7 +8927,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1330,
+"chapter_frame": 2387,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16046,
@@ -8940,7 +8940,7 @@
 "tool": 3,
 "op": "Right wall: 1 x bore 25.40 mm, helix, z 139.50..156.00",
 "table_xy": [
-101.5,
+141.5,
 255.7
 ],
 "head_z": 244.0,
@@ -8948,7 +8948,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1331,
+"chapter_frame": 2388,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16048,
@@ -8961,7 +8961,7 @@
 "tool": 3,
 "op": "Right wall: 1 x bore 25.40 mm, helix, z 139.50..156.00",
 "table_xy": [
-106.7,
+146.7,
 251.1
 ],
 "head_z": 245.2,
@@ -8969,7 +8969,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1332,
+"chapter_frame": 2389,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16051,
@@ -8982,7 +8982,7 @@
 "tool": 3,
 "op": "Right wall: 1 x bore 25.40 mm, helix, z 139.50..156.00",
 "table_xy": [
-104.4,
+144.4,
 244.5
 ],
 "head_z": 246.3,
@@ -8990,7 +8990,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1333,
+"chapter_frame": 2390,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16053,
@@ -9003,7 +9003,7 @@
 "tool": 3,
 "op": "Right wall: 1 x bore 25.40 mm, helix, z 139.50..156.00",
 "table_xy": [
-97.4,
+137.4,
 244.2
 ],
 "head_z": 247.5,
@@ -9011,7 +9011,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1334,
+"chapter_frame": 2391,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16056,
@@ -9024,7 +9024,7 @@
 "tool": 3,
 "op": "Right wall: 1 x bore 25.40 mm, helix, z 139.50..156.00",
 "table_xy": [
-94.6,
+134.6,
 250.7
 ],
 "head_z": 248.6,
@@ -9032,7 +9032,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1335,
+"chapter_frame": 2392,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16084,
@@ -9045,7 +9045,7 @@
 "tool": 9,
 "op": "Right wall: 1 x counterbore 10.80 mm, helix, z 154.68..156.00",
 "table_xy": [
-165.3,
+205.3,
 251.6
 ],
 "head_z": 242.2,
@@ -9053,7 +9053,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1336,
+"chapter_frame": 2393,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16109,
@@ -9066,7 +9066,7 @@
 "tool": 9,
 "op": "Right wall: 1 x SAE-4 port to the 25/64 in. tap drill 11.11 mm, helix, z 144.50..156.00",
 "table_xy": [
-153.6,
+193.6,
 208.0
 ],
 "head_z": 242.7,
@@ -9074,7 +9074,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1337,
+"chapter_frame": 2394,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16118,
@@ -9087,7 +9087,7 @@
 "tool": 9,
 "op": "Right wall: 1 x SAE-4 port to the 25/64 in. tap drill 11.11 mm, helix, z 144.50..156.00",
 "table_xy": [
-151.9,
+191.9,
 211.0
 ],
 "head_z": 247.1,
@@ -9095,7 +9095,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1338,
+"chapter_frame": 2395,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16127,
@@ -9108,7 +9108,7 @@
 "tool": 9,
 "op": "Right wall: 1 x SAE-4 port to the 25/64 in. tap drill 11.11 mm, helix, z 144.50..156.00",
 "table_xy": [
-153.4,
+193.4,
 207.9
 ],
 "head_z": 251.4,
@@ -9116,7 +9116,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1339,
+"chapter_frame": 2396,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16158,
@@ -9129,7 +9129,7 @@
 "tool": 6,
 "op": "Right wall: drill 1 x 3.3 mm for 4.000 mm, z 140.00..144.50, through",
 "table_xy": [
-152.7,
+192.7,
 209.5
 ],
 "head_z": 253.4,
@@ -9137,7 +9137,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1340,
+"chapter_frame": 2397,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16184,
@@ -9150,7 +9150,7 @@
 "tool": 7,
 "op": "Right wall: drill 4 x 4.2 mm for 4.908 mm, z 148.50..156.00",
 "table_xy": [
-142.0,
+182.0,
 332.8
 ],
 "head_z": 238.4,
@@ -9158,7 +9158,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1341,
+"chapter_frame": 2398,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16186,
@@ -9171,7 +9171,7 @@
 "tool": 7,
 "op": "Right wall: drill 4 x 4.2 mm for 4.908 mm, z 148.50..156.00",
 "table_xy": [
-119.4,
+159.4,
 332.8
 ],
 "head_z": 245.5,
@@ -9179,7 +9179,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1342,
+"chapter_frame": 2399,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16212,
@@ -9192,7 +9192,7 @@
 "tool": 10,
 "op": "Right wall: drill 1 x 5.2 mm for 6.000 mm, z 140.00..154.68, through",
 "table_xy": [
-165.7,
+205.7,
 249.5
 ],
 "head_z": 237.2,
@@ -9200,7 +9200,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1343,
+"chapter_frame": 2400,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16236,
@@ -9213,7 +9213,7 @@
 "tool": 11,
 "op": "Right wall: drill 4 x 2.9 mm for 3.000 mm, z 150.50..156.00",
 "table_xy": [
-123.7,
+163.7,
 249.5
 ],
 "head_z": 243.4,
@@ -9221,7 +9221,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1344,
+"chapter_frame": 2401,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16238,
@@ -9234,7 +9234,7 @@
 "tool": 11,
 "op": "Right wall: drill 4 x 2.9 mm for 3.000 mm, z 150.50..156.00",
 "table_xy": [
-77.7,
+117.7,
 249.5
 ],
 "head_z": 248.9,
@@ -9242,7 +9242,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1345,
+"chapter_frame": 2402,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16242,
@@ -9255,7 +9255,7 @@
 "tool": 11,
 "op": "Right wall: drill 4 x 2.9 mm for 3.000 mm, z 150.50..156.00",
 "table_xy": [
-130.7,
+170.7,
 337.5
 ],
 "head_z": 245.1,
@@ -9263,7 +9263,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1346,
+"chapter_frame": 2403,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16266,
@@ -9276,7 +9276,7 @@
 "tool": 12,
 "op": "Right wall: drill 4 x 5.3 mm for 6.038 mm, z 143.50..156.00",
 "table_xy": [
-123.7,
+163.7,
 272.5
 ],
 "head_z": 242.4,
@@ -9284,7 +9284,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1347,
+"chapter_frame": 2404,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16268,
@@ -9297,7 +9297,7 @@
 "tool": 12,
 "op": "Right wall: drill 4 x 5.3 mm for 6.038 mm, z 143.50..156.00",
 "table_xy": [
-123.7,
+163.7,
 226.5
 ],
 "head_z": 244.6,
@@ -9305,7 +9305,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1348,
+"chapter_frame": 2405,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16270,
@@ -9318,7 +9318,7 @@
 "tool": 12,
 "op": "Right wall: drill 4 x 5.3 mm for 6.038 mm, z 143.50..156.00",
 "table_xy": [
-77.7,
+117.7,
 226.5
 ],
 "head_z": 246.0,
@@ -9326,7 +9326,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1349,
+"chapter_frame": 2406,
 "program": "frame_C_haas.nc",
 "setup": "frame_C270",
 "line": 16272,
@@ -9339,7 +9339,7 @@
 "tool": 12,
 "op": "Right wall: drill 4 x 5.3 mm for 6.038 mm, z 143.50..156.00",
 "table_xy": [
-77.7,
+117.7,
 272.5
 ],
 "head_z": 216.1,
@@ -9347,7 +9347,7 @@
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1498,
+"chapter_frame": 2726,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 26,
@@ -9360,15 +9360,15 @@
 "tool": 1,
 "op": "Face top to z 0",
 "table_xy": [
--86.5,
-146.6
+-166.5,
+253.6
 ],
 "head_z": 521.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1499,
+"chapter_frame": 2727,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 30,
@@ -9381,15 +9381,15 @@
 "tool": 1,
 "op": "Face top to z 0",
 "table_xy": [
--247.8,
-235.1
+-327.8,
+342.1
 ],
 "head_z": 521.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1500,
+"chapter_frame": 2728,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 33,
@@ -9402,15 +9402,15 @@
 "tool": 1,
 "op": "Face top to z 0",
 "table_xy": [
--102.2,
-307.9
+-182.2,
+414.9
 ],
 "head_z": 521.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1501,
+"chapter_frame": 2729,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 63,
@@ -9423,15 +9423,15 @@
 "tool": 2,
 "op": "Step the 4 mm band round the pad, adaptive outside the pad",
 "table_xy": [
--258.3,
-371.3
+-338.3,
+478.3
 ],
 "head_z": 519.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1502,
+"chapter_frame": 2730,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 166,
@@ -9444,15 +9444,15 @@
 "tool": 2,
 "op": "Step the 4 mm band round the pad, adaptive outside the pad",
 "table_xy": [
--206.1,
-127.6
+-286.1,
+234.6
 ],
 "head_z": 519.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1503,
+"chapter_frame": 2731,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 324,
@@ -9465,15 +9465,15 @@
 "tool": 2,
 "op": "Step the 4 mm band round the pad, adaptive outside the pad",
 "table_xy": [
-64.4,
-152.5
+-15.6,
+259.5
 ],
 "head_z": 519.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1504,
+"chapter_frame": 2732,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 509,
@@ -9486,15 +9486,15 @@
 "tool": 2,
 "op": "Step the 4 mm band round the pad, adaptive outside the pad",
 "table_xy": [
--1.3,
-367.5
+-81.3,
+474.5
 ],
 "head_z": 519.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1505,
+"chapter_frame": 2733,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 704,
@@ -9507,15 +9507,15 @@
 "tool": 2,
 "op": "Step the 4 mm band round the pad, adaptive outside the pad",
 "table_xy": [
--254.3,
-360.0
+-334.3,
+467.0
 ],
 "head_z": 519.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1506,
+"chapter_frame": 2734,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 861,
@@ -9528,15 +9528,15 @@
 "tool": 2,
 "op": "Step the 4 mm band round the pad, adaptive outside the pad",
 "table_xy": [
--239.4,
-133.5
+-319.4,
+240.5
 ],
 "head_z": 519.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1507,
+"chapter_frame": 2735,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 993,
@@ -9549,15 +9549,15 @@
 "tool": 2,
 "op": "Step the 4 mm band round the pad, adaptive outside the pad",
 "table_xy": [
--14.4,
-136.9
+-94.4,
+243.9
 ],
 "head_z": 519.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1508,
+"chapter_frame": 2736,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1059,
@@ -9570,15 +9570,15 @@
 "tool": 2,
 "op": "Step the 4 mm band round the pad, adaptive outside the pad",
 "table_xy": [
-57.3,
-273.5
+-22.7,
+380.5
 ],
 "head_z": 519.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1509,
+"chapter_frame": 2737,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1194,
@@ -9591,15 +9591,15 @@
 "tool": 2,
 "op": "Step the 4 mm band round the pad, adaptive outside the pad",
 "table_xy": [
--77.1,
-361.8
+-157.1,
+468.8
 ],
 "head_z": 519.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1510,
+"chapter_frame": 2738,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1285,
@@ -9612,15 +9612,15 @@
 "tool": 2,
 "op": "Step the 4 mm band round the pad, adaptive outside the pad",
 "table_xy": [
--257.3,
-325.2
+-337.3,
+432.2
 ],
 "head_z": 519.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1511,
+"chapter_frame": 2739,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1343,
@@ -9633,15 +9633,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, z -4 to -12",
 "table_xy": [
--127.3,
-128.5
+-207.3,
+235.5
 ],
 "head_z": 527.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1512,
+"chapter_frame": 2740,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1434,
@@ -9654,15 +9654,15 @@
 "tool": 2,
 "op": "Outside 312x222 R8, adaptive, z -4 to -12",
 "table_xy": [
--52.1,
-128.9
+-132.1,
+235.9
 ],
 "head_z": 527.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1513,
+"chapter_frame": 2741,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1511,
@@ -9675,15 +9675,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--54.8,
-349.0
+-134.8,
+456.0
 ],
 "head_z": 569.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1514,
+"chapter_frame": 2742,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1511,
@@ -9696,15 +9696,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--194.8,
-349.0
+-274.8,
+456.0
 ],
 "head_z": 569.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1515,
+"chapter_frame": 2743,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1513,
@@ -9717,15 +9717,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--244.5,
-252.5
+-324.5,
+359.5
 ],
 "head_z": 569.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1516,
+"chapter_frame": 2744,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1515,
@@ -9738,15 +9738,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--200.7,
-150.0
+-280.7,
+257.0
 ],
 "head_z": 569.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1517,
+"chapter_frame": 2745,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1515,
@@ -9759,15 +9759,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--60.8,
-150.0
+-140.8,
+257.0
 ],
 "head_z": 569.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1518,
+"chapter_frame": 2746,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1517,
@@ -9780,15 +9780,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
-44.5,
-191.0
+-35.5,
+298.0
 ],
 "head_z": 569.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1519,
+"chapter_frame": 2747,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1517,
@@ -9801,15 +9801,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
-44.5,
-331.0
+-35.5,
+438.0
 ],
 "head_z": 569.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1520,
+"chapter_frame": 2748,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1524,
@@ -9822,15 +9822,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--50.4,
-347.6
+-130.4,
+454.6
 ],
 "head_z": 569.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1521,
+"chapter_frame": 2749,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1524,
@@ -9843,15 +9843,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--190.4,
-347.6
+-270.4,
+454.6
 ],
 "head_z": 569.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1522,
+"chapter_frame": 2750,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1526,
@@ -9864,15 +9864,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--243.1,
-254.6
+-323.1,
+361.6
 ],
 "head_z": 569.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1523,
+"chapter_frame": 2751,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1528,
@@ -9885,15 +9885,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--200.7,
-151.4
+-280.7,
+258.4
 ],
 "head_z": 569.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1524,
+"chapter_frame": 2752,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1528,
@@ -9906,15 +9906,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--60.7,
-151.4
+-140.7,
+258.4
 ],
 "head_z": 569.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1525,
+"chapter_frame": 2753,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1530,
@@ -9927,15 +9927,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
-43.1,
-193.3
+-36.9,
+300.3
 ],
 "head_z": 569.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1526,
+"chapter_frame": 2754,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1530,
@@ -9948,15 +9948,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
-43.1,
-333.3
+-36.9,
+440.3
 ],
 "head_z": 569.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1527,
+"chapter_frame": 2755,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1535,
@@ -9969,15 +9969,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--95.0,
-349.0
+-175.0,
+456.0
 ],
 "head_z": 570.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1528,
+"chapter_frame": 2756,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1536,
@@ -9990,15 +9990,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--234.9,
-348.1
+-314.9,
+455.1
 ],
 "head_z": 570.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1529,
+"chapter_frame": 2757,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1537,
@@ -10011,15 +10011,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--244.5,
-212.2
+-324.5,
+319.2
 ],
 "head_z": 570.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1530,
+"chapter_frame": 2758,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1539,
@@ -10032,15 +10032,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--160.5,
-150.0
+-240.5,
+257.0
 ],
 "head_z": 570.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1531,
+"chapter_frame": 2759,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1539,
@@ -10053,15 +10053,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--20.5,
-150.0
+-100.5,
+257.0
 ],
 "head_z": 570.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1532,
+"chapter_frame": 2760,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1541,
@@ -10074,15 +10074,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
-44.5,
-231.2
+-35.5,
+338.2
 ],
 "head_z": 570.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1533,
+"chapter_frame": 2761,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1547,
@@ -10095,15 +10095,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
-43.1,
-334.7
+-36.9,
+441.7
 ],
 "head_z": 570.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1534,
+"chapter_frame": 2762,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1548,
@@ -10116,15 +10116,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--89.6,
-347.6
+-169.6,
+454.6
 ],
 "head_z": 570.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1535,
+"chapter_frame": 2763,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1548,
@@ -10137,15 +10137,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--229.6,
-347.6
+-309.6,
+454.6
 ],
 "head_z": 570.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1536,
+"chapter_frame": 2764,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1550,
@@ -10158,15 +10158,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--243.1,
-215.4
+-323.1,
+322.4
 ],
 "head_z": 570.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1537,
+"chapter_frame": 2765,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1552,
@@ -10179,15 +10179,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--161.4,
-151.4
+-241.4,
+258.4
 ],
 "head_z": 570.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1538,
+"chapter_frame": 2766,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1552,
@@ -10200,15 +10200,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--21.4,
-151.4
+-101.4,
+258.4
 ],
 "head_z": 570.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1539,
+"chapter_frame": 2767,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1554,
@@ -10221,15 +10221,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
-43.1,
-232.5
+-36.9,
+339.5
 ],
 "head_z": 570.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1540,
+"chapter_frame": 2768,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1559,
@@ -10242,15 +10242,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
-6.7,
-349.0
+-73.3,
+456.0
 ],
 "head_z": 570.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1541,
+"chapter_frame": 2769,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1559,
@@ -10263,15 +10263,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--133.3,
-349.0
+-213.3,
+456.0
 ],
 "head_z": 570.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1542,
+"chapter_frame": 2770,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1561,
@@ -10284,15 +10284,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--244.5,
-314.0
+-324.5,
+421.0
 ],
 "head_z": 570.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1543,
+"chapter_frame": 2771,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1561,
@@ -10305,15 +10305,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--244.5,
-174.0
+-324.5,
+281.0
 ],
 "head_z": 570.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1544,
+"chapter_frame": 2772,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1563,
@@ -10326,15 +10326,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--122.3,
-150.0
+-202.3,
+257.0
 ],
 "head_z": 570.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1545,
+"chapter_frame": 2773,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1563,
@@ -10347,15 +10347,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
-17.7,
-150.0
+-62.3,
+257.0
 ],
 "head_z": 570.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1546,
+"chapter_frame": 2774,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1565,
@@ -10368,15 +10368,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
-44.5,
-269.5
+-35.5,
+376.5
 ],
 "head_z": 570.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1547,
+"chapter_frame": 2775,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1572,
@@ -10389,15 +10389,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
-13.1,
-347.6
+-66.9,
+454.6
 ],
 "head_z": 570.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1548,
+"chapter_frame": 2776,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1572,
@@ -10410,15 +10410,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--126.9,
-347.6
+-206.9,
+454.6
 ],
 "head_z": 570.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1549,
+"chapter_frame": 2777,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1574,
@@ -10431,15 +10431,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--243.1,
-318.2
+-323.1,
+425.2
 ],
 "head_z": 570.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1550,
+"chapter_frame": 2778,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1574,
@@ -10452,15 +10452,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--243.1,
-178.2
+-323.1,
+285.2
 ],
 "head_z": 570.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1551,
+"chapter_frame": 2779,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1576,
@@ -10473,15 +10473,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--124.2,
-151.4
+-204.2,
+258.4
 ],
 "head_z": 570.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1552,
+"chapter_frame": 2780,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1576,
@@ -10494,15 +10494,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
-15.8,
-151.4
+-64.2,
+258.4
 ],
 "head_z": 570.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1553,
+"chapter_frame": 2781,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1578,
@@ -10515,15 +10515,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
-43.1,
-269.8
+-36.9,
+376.8
 ],
 "head_z": 570.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1554,
+"chapter_frame": 2782,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1583,
@@ -10536,15 +10536,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--29.5,
-349.0
+-109.5,
+456.0
 ],
 "head_z": 571.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1555,
+"chapter_frame": 2783,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1583,
@@ -10557,15 +10557,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--169.5,
-349.0
+-249.5,
+456.0
 ],
 "head_z": 571.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1556,
+"chapter_frame": 2784,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1585,
@@ -10578,15 +10578,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--244.5,
-277.8
+-324.5,
+384.8
 ],
 "head_z": 571.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1557,
+"chapter_frame": 2785,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1587,
@@ -10599,15 +10599,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--226.0,
-150.0
+-306.0,
+257.0
 ],
 "head_z": 571.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1558,
+"chapter_frame": 2786,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1587,
@@ -10620,15 +10620,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--86.0,
-150.0
+-166.0,
+257.0
 ],
 "head_z": 571.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1559,
+"chapter_frame": 2787,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1589,
@@ -10641,15 +10641,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
-44.5,
-165.7
+-35.5,
+272.7
 ],
 "head_z": 571.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1560,
+"chapter_frame": 2788,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1589,
@@ -10662,15 +10662,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
-44.5,
-305.7
+-35.5,
+412.7
 ],
 "head_z": 571.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1561,
+"chapter_frame": 2789,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1596,
@@ -10683,15 +10683,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--22.1,
-347.6
+-102.1,
+454.6
 ],
 "head_z": 571.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1562,
+"chapter_frame": 2790,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1596,
@@ -10704,15 +10704,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--162.1,
-347.6
+-242.1,
+454.6
 ],
 "head_z": 571.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1563,
+"chapter_frame": 2791,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1598,
@@ -10725,15 +10725,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--243.1,
-282.9
+-323.1,
+389.9
 ],
 "head_z": 571.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1564,
+"chapter_frame": 2792,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1600,
@@ -10746,15 +10746,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--229.0,
-151.4
+-309.0,
+258.4
 ],
 "head_z": 571.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1565,
+"chapter_frame": 2793,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1600,
@@ -10767,15 +10767,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--89.0,
-151.4
+-169.0,
+258.4
 ],
 "head_z": 571.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1566,
+"chapter_frame": 2794,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1602,
@@ -10788,15 +10788,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
-43.1,
-165.0
+-36.9,
+272.0
 ],
 "head_z": 571.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1567,
+"chapter_frame": 2795,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1602,
@@ -10809,15 +10809,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
-43.1,
-305.0
+-36.9,
+412.0
 ],
 "head_z": 571.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1568,
+"chapter_frame": 2796,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1607,
@@ -10830,15 +10830,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--63.7,
-349.0
+-143.7,
+456.0
 ],
 "head_z": 571.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1569,
+"chapter_frame": 2797,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1607,
@@ -10851,15 +10851,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--203.7,
-349.0
+-283.7,
+456.0
 ],
 "head_z": 571.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1570,
+"chapter_frame": 2798,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1609,
@@ -10872,15 +10872,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--244.5,
-243.6
+-324.5,
+350.6
 ],
 "head_z": 571.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1571,
+"chapter_frame": 2799,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1611,
@@ -10893,15 +10893,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--191.8,
-150.0
+-271.8,
+257.0
 ],
 "head_z": 571.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1572,
+"chapter_frame": 2800,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1611,
@@ -10914,15 +10914,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--51.8,
-150.0
+-131.8,
+257.0
 ],
 "head_z": 571.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1573,
+"chapter_frame": 2801,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1613,
@@ -10935,15 +10935,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
-44.5,
-199.9
+-35.5,
+306.9
 ],
 "head_z": 571.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1574,
+"chapter_frame": 2802,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1614,
@@ -10956,15 +10956,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
-43.4,
-339.8
+-36.6,
+446.8
 ],
 "head_z": 571.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1575,
+"chapter_frame": 2803,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1620,
@@ -10977,15 +10977,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--55.3,
-347.6
+-135.3,
+454.6
 ],
 "head_z": 571.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1576,
+"chapter_frame": 2804,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1620,
@@ -10998,15 +10998,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--195.3,
-347.6
+-275.3,
+454.6
 ],
 "head_z": 571.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1577,
+"chapter_frame": 2805,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1622,
@@ -11019,15 +11019,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--243.1,
-249.7
+-323.1,
+356.7
 ],
 "head_z": 571.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1578,
+"chapter_frame": 2806,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1624,
@@ -11040,15 +11040,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--195.8,
-151.4
+-275.8,
+258.4
 ],
 "head_z": 571.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1579,
+"chapter_frame": 2807,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1624,
@@ -11061,15 +11061,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--55.8,
-151.4
+-135.8,
+258.4
 ],
 "head_z": 571.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1580,
+"chapter_frame": 2808,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1626,
@@ -11082,15 +11082,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
-43.1,
-198.2
+-36.9,
+305.2
 ],
 "head_z": 571.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1581,
+"chapter_frame": 2809,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1630,
@@ -11103,15 +11103,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
-30.0,
-349.0
+-50.0,
+456.0
 ],
 "head_z": 565.1,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1582,
+"chapter_frame": 2810,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1631,
@@ -11124,15 +11124,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--96.6,
-349.0
+-176.6,
+456.0
 ],
 "head_z": 571.8,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1583,
+"chapter_frame": 2811,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1632,
@@ -11145,15 +11145,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--236.4,
-347.5
+-316.4,
+454.5
 ],
 "head_z": 571.8,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1584,
+"chapter_frame": 2812,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1633,
@@ -11166,15 +11166,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--244.5,
-210.7
+-324.5,
+317.7
 ],
 "head_z": 571.8,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1585,
+"chapter_frame": 2813,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1635,
@@ -11187,15 +11187,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--158.9,
-150.0
+-238.9,
+257.0
 ],
 "head_z": 571.8,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1586,
+"chapter_frame": 2814,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1635,
@@ -11208,15 +11208,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--18.9,
-150.0
+-98.9,
+257.0
 ],
 "head_z": 571.8,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1587,
+"chapter_frame": 2815,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1637,
@@ -11229,15 +11229,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
-44.5,
-232.8
+-35.5,
+339.8
 ],
 "head_z": 571.8,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1588,
+"chapter_frame": 2816,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1642,
@@ -11250,15 +11250,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
-43.1,
-334.5
+-36.9,
+441.5
 ],
 "head_z": 571.1,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1589,
+"chapter_frame": 2817,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1644,
@@ -11271,15 +11271,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--87.9,
-347.6
+-167.9,
+454.6
 ],
 "head_z": 571.8,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1590,
+"chapter_frame": 2818,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1644,
@@ -11292,15 +11292,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--227.9,
-347.6
+-307.9,
+454.6
 ],
 "head_z": 571.8,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1591,
+"chapter_frame": 2819,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1646,
@@ -11313,15 +11313,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--243.1,
-217.1
+-323.1,
+324.1
 ],
 "head_z": 571.8,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1592,
+"chapter_frame": 2820,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1648,
@@ -11334,15 +11334,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--163.2,
-151.4
+-243.2,
+258.4
 ],
 "head_z": 571.8,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1593,
+"chapter_frame": 2821,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1648,
@@ -11355,15 +11355,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
--23.2,
-151.4
+-103.2,
+258.4
 ],
 "head_z": 571.8,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1594,
+"chapter_frame": 2822,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1650,
@@ -11376,15 +11376,15 @@
 "tool": 4,
 "op": "Floor O-ring groove 4.6 x 2.65",
 "table_xy": [
-43.1,
-230.8
+-36.9,
+337.8
 ],
 "head_z": 571.8,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1595,
+"chapter_frame": 2823,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1676,
@@ -11397,15 +11397,15 @@
 "tool": 2,
 "op": "Port 96 mm through: helical trepan, slug drops",
 "table_xy": [
--82.3,
-283.5
+-162.3,
+390.5
 ],
 "head_z": 515.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1596,
+"chapter_frame": 2824,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1679,
@@ -11418,15 +11418,15 @@
 "tool": 2,
 "op": "Port 96 mm through: helical trepan, slug drops",
 "table_xy": [
--87.0,
-213.4
+-167.0,
+320.4
 ],
 "head_z": 517.7,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1597,
+"chapter_frame": 2825,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1682,
@@ -11439,15 +11439,15 @@
 "tool": 2,
 "op": "Port 96 mm through: helical trepan, slug drops",
 "table_xy": [
--135.4,
-264.4
+-215.4,
+371.4
 ],
 "head_z": 519.6,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1598,
+"chapter_frame": 2826,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1684,
@@ -11460,15 +11460,15 @@
 "tool": 2,
 "op": "Port 96 mm through: helical trepan, slug drops",
 "table_xy": [
--65.0,
-265.5
+-145.0,
+372.5
 ],
 "head_z": 521.6,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1599,
+"chapter_frame": 2827,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1687,
@@ -11481,15 +11481,15 @@
 "tool": 2,
 "op": "Port 96 mm through: helical trepan, slug drops",
 "table_xy": [
--111.9,
-213.0
+-191.9,
+320.0
 ],
 "head_z": 523.6,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1600,
+"chapter_frame": 2828,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1690,
@@ -11502,15 +11502,15 @@
 "tool": 2,
 "op": "Port 96 mm through: helical trepan, slug drops",
 "table_xy": [
--118.8,
-283.0
+-198.8,
+390.0
 ],
 "head_z": 525.6,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1601,
+"chapter_frame": 2829,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1693,
@@ -11523,15 +11523,15 @@
 "tool": 2,
 "op": "Port 96 mm through: helical trepan, slug drops",
 "table_xy": [
--62.6,
-240.7
+-142.6,
+347.7
 ],
 "head_z": 527.6,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1602,
+"chapter_frame": 2830,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1695,
@@ -11544,15 +11544,15 @@
 "tool": 2,
 "op": "Port 96 mm through: helical trepan, slug drops",
 "table_xy": [
--131.8,
-228.0
+-211.8,
+335.0
 ],
 "head_z": 529.6,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1603,
+"chapter_frame": 2831,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1698,
@@ -11565,15 +11565,15 @@
 "tool": 2,
 "op": "Port 96 mm through: helical trepan, slug drops",
 "table_xy": [
--94.3,
-287.5
+-174.3,
+394.5
 ],
 "head_z": 531.5,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1604,
+"chapter_frame": 2832,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1701,
@@ -11586,15 +11586,15 @@
 "tool": 2,
 "op": "Port 96 mm through: helical trepan, slug drops",
 "table_xy": [
--75.9,
-219.6
+-155.9,
+326.6
 ],
 "head_z": 533.5,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1605,
+"chapter_frame": 2833,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1704,
@@ -11607,15 +11607,15 @@
 "tool": 2,
 "op": "Port 96 mm through: helical trepan, slug drops",
 "table_xy": [
--138.3,
-252.0
+-218.3,
+359.0
 ],
 "head_z": 535.5,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1606,
+"chapter_frame": 2834,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1706,
@@ -11628,15 +11628,15 @@
 "tool": 2,
 "op": "Port 96 mm through: helical trepan, slug drops",
 "table_xy": [
--72.2,
-276.0
+-152.2,
+383.0
 ],
 "head_z": 537.5,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1607,
+"chapter_frame": 2835,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1709,
@@ -11649,15 +11649,15 @@
 "tool": 2,
 "op": "Port 96 mm through: helical trepan, slug drops",
 "table_xy": [
--99.4,
-211.1
+-179.4,
+318.1
 ],
 "head_z": 538.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1608,
+"chapter_frame": 2836,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1742,
@@ -11670,15 +11670,15 @@
 "tool": 9,
 "op": "Slots 124x8 and 20x104 through, profile",
 "table_xy": [
--102.7,
-338.7
+-182.7,
+445.7
 ],
 "head_z": 559.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1609,
+"chapter_frame": 2837,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1753,
@@ -11691,15 +11691,15 @@
 "tool": 9,
 "op": "Slots 124x8 and 20x104 through, profile",
 "table_xy": [
--129.2,
-340.3
+-209.2,
+447.3
 ],
 "head_z": 562.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1610,
+"chapter_frame": 2838,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1766,
@@ -11712,15 +11712,15 @@
 "tool": 9,
 "op": "Slots 124x8 and 20x104 through, profile",
 "table_xy": [
--44.9,
-338.7
+-124.9,
+445.7
 ],
 "head_z": 568.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1611,
+"chapter_frame": 2839,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1782,
@@ -11733,15 +11733,15 @@
 "tool": 9,
 "op": "Slots 124x8 and 20x104 through, profile",
 "table_xy": [
--137.5,
-338.7
+-217.5,
+445.7
 ],
 "head_z": 574.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1612,
+"chapter_frame": 2840,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1793,
@@ -11754,15 +11754,15 @@
 "tool": 9,
 "op": "Slots 124x8 and 20x104 through, profile",
 "table_xy": [
--96.1,
-340.3
+-176.1,
+447.3
 ],
 "head_z": 576.4,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1613,
+"chapter_frame": 2841,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1815,
@@ -11775,15 +11775,15 @@
 "tool": 9,
 "op": "Slots 124x8 and 20x104 through, profile",
 "table_xy": [
--206.8,
-229.1
+-286.8,
+336.1
 ],
 "head_z": 559.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1614,
+"chapter_frame": 2842,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1835,
@@ -11796,15 +11796,15 @@
 "tool": 9,
 "op": "Slots 124x8 and 20x104 through, profile",
 "table_xy": [
--206.8,
-289.4
+-286.8,
+396.4
 ],
 "head_z": 565.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1615,
+"chapter_frame": 2843,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1849,
@@ -11817,15 +11817,15 @@
 "tool": 9,
 "op": "Slots 124x8 and 20x104 through, profile",
 "table_xy": [
--193.2,
-265.9
+-273.2,
+372.9
 ],
 "head_z": 568.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1616,
+"chapter_frame": 2844,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1869,
@@ -11838,15 +11838,15 @@
 "tool": 9,
 "op": "Slots 124x8 and 20x104 through, profile",
 "table_xy": [
--193.2,
-205.6
+-273.2,
+312.6
 ],
 "head_z": 574.2,
 "in_travel": true
 },
 {
 "chapter": "30-machining-chamber",
-"chapter_frame": 1617,
+"chapter_frame": 2845,
 "program": "floor_A.ngc",
 "setup": "floor_A",
 "line": 1906,
@@ -11859,13 +11859,12 @@
 "tool": 14,
 "op": "Drill 2 x 5.8 mm for the floor_dowels holes, ream after, z -14.50..-4.00, setup",
 "table_xy": [
--248.2,
-146.3
+-328.2,
+253.3
 ],
 "head_z": 533.5,
 "in_travel": true
 }
-],
-"camera": "the cutting frames' camera rides on the VF-4's table (the part still, the spindle moving over it)"
+]
 }
 }

@@ -705,6 +705,11 @@ def clip_drive(name, chapter, akey, from_clip, to_clip, world_parts, caption, su
     arm.place(q0, c0)
     W0 = arm.base @ arm.fk()["tool0"]
     held = {}
+    if tool0 in ("nut runner", "cutter"):          # round 9: the tool in the gripper is swept too (the nut runner's
+        tb = nut_runner_body() if tool0 == "nut runner" else Body("box cutter", *S.box(-10, 10, -8, 8, -38, 42),
+                                                                  kind="held")
+        robot.add(tb)                              # extension went through the MiR's finger stand as the arm turned)
+        held["__tool"] = (arm.tcp_off(c0), tb)
     for o, Mo in fa["objs"].items():
         spec = a["objects"].get(o)
         if spec is None or spec.get("kind") != "box":
@@ -778,7 +783,8 @@ def clip_drive(name, chapter, akey, from_clip, to_clip, world_parts, caption, su
             u = ease((k + 1) / nf)
             place(M, qa + (qb - qa) * u, ca + (cb - ca) * u)
             for o, (rel, hb_) in held.items():
-                clip.obj(o, hb_.M)
+                if o != "__tool":
+                    clip.obj(o, hb_.M)
             clip.set_arm(akey, arm, tool1 if (label == "in" and u > 0.5) else tool0, mir=dict(M=M.copy(), arm_dx=arm_dx))
             clip.frame(1, sub=f"{sub} | " + ("the arm to its transport pose" if label == "out" else
                                                "the arm to its working pose"))
@@ -792,7 +798,8 @@ def clip_drive(name, chapter, akey, from_clip, to_clip, world_parts, caption, su
                 M = f((k + 1) / nf)
                 place(M, qt, c0)
                 for o, (rel, hb_) in held.items():
-                    clip.obj(o, hb_.M)
+                    if o != "__tool":
+                        clip.obj(o, hb_.M)
                 if k % 6 == 0:
                     d, _, _ = group_distance(robot, world, margin=300.0)
                     clear = min(clear, d)

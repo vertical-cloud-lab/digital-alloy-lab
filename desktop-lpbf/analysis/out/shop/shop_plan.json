@@ -206,7 +206,7 @@
      "t_s": 1.9,
      "info": {
       "planned": false,
-      "plan_s": 0.4
+      "plan_s": 0.3
      }
     },
     {
@@ -1188,7 +1188,7 @@
   "drive_vf4c_lathe": {
    "ok": true,
    "fail": null,
-   "poses_checked": 3178,
+   "poses_checked": 2405,
    "transport_turn_deg": -120.0,
    "tried": [
     {
@@ -1221,10 +1221,10 @@
     {
      "turn_deg": 60.0,
      "hit": [
-      "drive",
-      0.226,
-      "A/wrist2",
-      "vf4/front panel right of the door"
+      "arm",
+      0.942,
+      "nut runner",
+      "vf4/front sill trim"
      ]
     },
     {
@@ -1239,10 +1239,10 @@
     {
      "turn_deg": 90.0,
      "hit": [
-      "drive",
-      0.269,
-      "A/wrist2",
-      "vf4/front panel right of the door"
+      "arm",
+      0.628,
+      "nut runner",
+      "vf4/front sill trim"
      ]
     },
     {
@@ -1257,10 +1257,10 @@
     {
      "turn_deg": 120.0,
      "hit": [
-      "drive",
-      0.292,
-      "A/forearm",
-      "vf4/front panel right of the door"
+      "arm",
+      0.469,
+      "nut runner",
+      "vf4/front sill trim"
      ]
     },
     {
@@ -1584,7 +1584,7 @@
   "drive_bolts_lathe": {
    "ok": true,
    "fail": null,
-   "poses_checked": 3178,
+   "poses_checked": 2405,
    "transport_turn_deg": -120.0,
    "tried": [
     {
@@ -1617,10 +1617,10 @@
     {
      "turn_deg": 60.0,
      "hit": [
-      "drive",
-      0.226,
-      "A/wrist2",
-      "vf4/front panel right of the door"
+      "arm",
+      0.942,
+      "nut runner",
+      "vf4/front sill trim"
      ]
     },
     {
@@ -1635,10 +1635,10 @@
     {
      "turn_deg": 90.0,
      "hit": [
-      "drive",
-      0.269,
-      "A/wrist2",
-      "vf4/front panel right of the door"
+      "arm",
+      0.628,
+      "nut runner",
+      "vf4/front sill trim"
      ]
     },
     {
@@ -1653,10 +1653,10 @@
     {
      "turn_deg": 120.0,
      "hit": [
-      "drive",
-      0.292,
-      "A/forearm",
-      "vf4/front panel right of the door"
+      "arm",
+      0.469,
+      "nut runner",
+      "vf4/front sill trim"
      ]
     },
     {
@@ -1707,5 +1707,5 @@
    "transport_turn_deg": 30.0
   }
  },
- "run_utc": "2026-11-27T10:54Z"
+ "run_utc": "2026-11-27T11:38Z"
 }
