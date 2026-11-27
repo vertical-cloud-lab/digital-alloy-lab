@@ -117,7 +117,7 @@ def main(argv):
                             out_.append(objs[i])
             return out_
 
-        def check(n, kind_):
+        def check(n, kind_, where=""):
             place("A")
             place("B")
             gA, gB = Group(bodies("A")), Group(bodies("B"))
@@ -126,6 +126,8 @@ def main(argv):
                 if d > LIMIT:
                     key = ("arm-arm", x.name, y.name)
                     r = pairs.setdefault(key, dict(kind="arm-arm", a=x.name, b=y.name, step=step, worst=0.0, samples=0, steps=[]))
+                    if float(d) > r["worst"]:
+                        r["where"] = where
                     r["worst"] = max(r["worst"], float(d))
                     r["samples"] += 1
                     if step not in r["steps"]:
@@ -137,11 +139,14 @@ def main(argv):
                     continue
                 objs[i].place(pose[i])
                 w.add(objs[i])
-            for x, y in C.group_hits(Group(bodies(n, links_only=False) if fingers else bodies(n, links_only=True)), w):
+            mine = [b for b in (bodies(n, links_only=not fingers)) if not b.name.startswith("o")]     # not what it holds
+            for x, y in C.group_hits(Group(mine), w):
                 d = C.depth(x, y, upto=50.0)
                 if d > LIMIT:
                     key = ("arm-part", x.name, y.name)
                     r = pairs.setdefault(key, dict(kind="arm-part", a=x.name, b=y.name, step=step, worst=0.0, samples=0, steps=[]))
+                    if float(d) > r["worst"]:
+                        r["where"] = where
                     r["worst"] = max(r["worst"], float(d))
                     r["samples"] += 1
                     if step not in r["steps"]:
@@ -213,7 +218,7 @@ def main(argv):
                 idx = list(range(0, len(Q), every)) + [len(Q) - 1]
                 for j in sorted(set(idx)):
                     st[n]["q"] = Q[j]
-                    check(n, k)
+                    check(n, k, f"event {j_ev} {k}/{e.get('how', '')} arm {n} sample {j} of {len(Q)}")
                     n_samples += 1
                 st[n]["q"] = Q[-1]
             elif k == "move2":
@@ -221,7 +226,7 @@ def main(argv):
                 st["A"]["close"], st["B"]["close"] = float(e["closeA"]), float(e["closeB"])
                 for j in sorted(set(list(range(0, len(QA), every)) + [len(QA) - 1])):
                     st["A"]["q"], st["B"]["q"] = QA[j], QB[min(j, len(QB) - 1)]
-                    check("A", k)
+                    check("A", k, f"event {j_ev} move2 sample {j} of {len(QA)}")
                     n_samples += 1
             elif k == "turn":
                 TT = np.asarray(e["TT"], float)
@@ -235,7 +240,8 @@ def main(argv):
                                         arm_part=sum(1 for r in res if r["kind"] == "arm-part"), list=res)
         print(f"{chapter}: {n_samples} samples, {len(res)} pairs over {LIMIT} mm")
         for r in res[:40]:
-            print(f"  {r['kind']:8s} {r['worst']:6.1f} mm x{r['samples']:4d}  {r['a'][:40]:40s} {r['b'][:60]:60s} {','.join(r['steps'][:6])}")
+            print(f"  {r['kind']:8s} {r['worst']:6.1f} mm x{r['samples']:4d}  {r['a'][:40]:40s} {r['b'][:50]:50s} {','.join(r['steps'][:6])}  "
+                  f"[{r.get('where', '')}]")
     if opt.get("out"):
         pathlib.Path(opt["out"]).write_text(json.dumps(out, indent=1))
 

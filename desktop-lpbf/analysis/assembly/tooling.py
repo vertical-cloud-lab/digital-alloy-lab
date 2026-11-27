@@ -361,7 +361,11 @@ def liner_wand():
 # the 2F-85's fingertips do not fit (run 7: F48b) and the Ø6 nozzle cup is wider than the 2.1 mm ring. An annular silicone lip
 # (OD 24.6, ID 21.4, 3 mm) on a Ø8 stem under the VGC10's adaptor plate, with a soft centre plug so it also seals on the window.
 # run 10 (2026-11-25): stem 55 -> 100 mm: in run 9 the VGC10 body met the camera boss 63 mm along the line of sight (F48b)
-RINGPAD = dict(od=24.6, id=21.4, lip=3.0, stem_d=8.0, stem_l=100.0)
+# round 9: lip OD 24.6 -> 24.0. Runs 10-12 met the boss at the seat (63 mm along the line of sight, the counterbore's bottom)
+# whatever the stem: the 24.6 lip left 0.5 mm a side in the Ø25.6 counterbore, which the tessellations and a grasp centre taken
+# from the part's tilted mesh use up, and in a tilted bore no world-axis step frees a touching tool, so the depth check read
+# the touch as deep. At 24.0 (0.8 mm a side) the lip still covers the rings' 21.0-25.2 face from 21.4 to 24.0.
+RINGPAD = dict(od=24.0, id=21.4, lip=3.0, stem_d=8.0, stem_l=100.0)
 
 
 def ring_pad():

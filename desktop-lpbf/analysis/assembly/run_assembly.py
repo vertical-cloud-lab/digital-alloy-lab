@@ -452,6 +452,10 @@ def arm_place(run, st, idx, path, state, actor, tool, holdname, grasp=None, extr
             best = res
     a = run.arm(actor)
     fr = best["follow"]
+    if run.cl.dock[actor] != best["dock"]:
+        # round 9: the recording goes to the best attempt's dock; the planner's MiR must stand there too (it was left at the last
+        # dock tried, so after a failed placement the next motions were planned from another base than the one drawn)
+        run.cl.move_mir(actor, best["dock"])
     if fr["qs"]:
         a.place(fr["qs"][-1], a.close)
         run.q[actor] = fr["qs"][-1]
@@ -1022,6 +1026,8 @@ def do_flip(run, st, row):
             break
     dk, fr = best
     a = run.arm(actor)
+    if run.cl.dock[actor] != dk:
+        run.cl.move_mir(actor, dk)          # round 9: as in arm_place, the planner's MiR where the recording has it
     if fr["qs"]:
         run.q[actor] = fr["qs"][-1]
         a.place(run.q[actor], a.close)

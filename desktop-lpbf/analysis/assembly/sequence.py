@@ -435,14 +435,19 @@ def steps(module="M50"):
     a(P("F45c", "Dosing stepper, its shaft into the coupling (arm B)", ["Dosing stepper"], "machine", "upright", [(0, 0, 0), (0, 30, 0), (0, 30, 70)],
         actor="B", note="its screws are not drawn"))
     # run 9: the load cell carries the dock rails, so it goes first (the rails first blocked it)
-    a(P("F45d", "Load cell, then the dock rails on it, side port blank and docked sensor, from just above", ["Load cell",
-        "Dovetail rails", "Side reservoir port", "Reservoir-docked sensor"], "machine", "upright", [(0, 0, 0), (0, 0, 70)],
+    a(P("F45d", "Load cell, then the dock rails on it and the docked sensor, from just above", ["Load cell",
+        "Dovetail rails", "Reservoir-docked sensor"], "machine", "upright", [(0, 0, 0), (0, 0, 70)],
         per_part=True, note="their screws are not drawn"))
-    # round 9: the NFC reader's antenna sits in a pocket open to the metering base's -x side face (lpbf_low: x xd-17..xd-14), so it
-    # goes in from that side along +x, after coming down beside the base (runs 9-12 brought it straight down with F45d's other
-    # parts, and it met the metering base on the 70 mm drop)
+    # round 9: the NFC reader's antenna sits in a pocket open to the metering base's -x side face (lpbf_low: x xd-16.5..xd-14,
+    # z zd-21.5..zd-3.5), and the side port's blanked KF-16 stub stands out of that face along -x (its explode is -x). Both go in
+    # from that side along +x, after coming down beside the base, the fingers across y (level, clear of the lid 22 mm below).
+    # Runs 9-12 brought them straight down with F45d's other parts: the antenna met the metering base on the 70 mm drop, and
+    # with it out of the way (round 9's first try) the stub met the dock rails
     a(P("F45e", "NFC reader antenna into its pocket in the metering base's side face, from the side", ["NFC reader"], "machine", "upright",
-        [(0, 0, 0), (-40, 0, 0), (-40, 0, 70)], note="its cable is not drawn"))
+        [(0, 0, 0), (-40, 0, 0), (-40, 0, 70)], grasp=dict(point=(-106.5, -18.0, 167.5), z=(1.0, 0.0, 0.0), x=(0.0, 1.0, 0.0), width=19.0),
+        note="its cable is not drawn"))
+    a(P("F45f", "Side reservoir port's blanked KF-16 stub onto the metering base's side face, from the side", ["Side reservoir port"],
+        "machine", "upright", [(0, 0, 0), (-60, 0, 0), (-60, 0, 70)], note="its blank's clamp is not drawn"))
     a(P("F46", "Reservoir M slid onto the dovetail dock (about 94 N to seat on the dock O-ring)", [f"Reservoir {'M'}"], "machine", "upright",
         [(0, 0, 0), (0, -160, 0)], force="reservoir", grasp=dict(point=(-90.0, 0.0, 255.0), z=DN, x=(1.0, 0.0, 0.0))))
     a(dict(do="seal", id="F47", label="Camera adapter O-ring (2-022), PFPE film", keys=["Camera adapter O-ring"], grp="camad", phase="upright",
