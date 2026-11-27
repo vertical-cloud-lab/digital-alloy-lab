@@ -90,6 +90,17 @@ def cmd_info(a):
     print(f"total list time of the first {a.layers} layers: {tot:.1f} s")
 
 
+def cmd_study_dwell(a):
+    from .studies import dwell_study
+    prog = load_program(a.program)
+    rows = dwell_study(prog, a.out, a.layers)
+    keys = ["band_K", "plate_block_WK", "absorptivity", "result", "period_s", "period_without_dwell_s", "dwell_share",
+            "plate_max_C", "mean_absorbed_W", "build_10mm_h", "build_15mm_h"]
+    print(" | ".join(keys))
+    for r in rows:
+        print(" | ".join(str(r.get(k, "")) for k in keys))
+
+
 def cmd_interlock(a):
     from .interlock import report
     print(report())
@@ -115,6 +126,11 @@ def main(argv=None):
     i.add_argument("--program", default=None)
     i.add_argument("--layers", type=int, default=5)
     i.set_defaults(fn=cmd_info)
+    d = sub.add_parser("study-dwell", help="sweep the dwell band, plate-block conductance and absorptivity")
+    d.add_argument("--program", default=None)
+    d.add_argument("--layers", type=int, default=67)
+    d.add_argument("--out", default=str(pathlib.Path(__file__).resolve().parents[1] / "out" / "dwell-study.csv"))
+    d.set_defaults(fn=cmd_study_dwell)
     il = sub.add_parser("interlock")
     il.set_defaults(fn=cmd_interlock)
     a = p.parse_args(argv)
