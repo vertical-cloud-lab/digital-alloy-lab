@@ -345,12 +345,12 @@ def sheet_b_adapter(pdf):
         v = res.get(case, {}).get(key)
         return f"{v:.0f} C" if v is not None else "(not run)"
     fig, ax = sheet("B': turned KF-50 to 3 in adapter (concept)", 5,
-                    "316/316L round bar, 4 in (101.6) x 40",
+                    "316/316L round bar, 4 in (101.6) x 2 in (BOM line B'1)",
                     ["Replaces B's welded upper part (stub + reducer + ferrule, welds W1, W2a). Lathe: cam/gcode/B_adapter_op*.nc.",
                      "TC face: copy the gasket groove from a bought 3 in 14WMP ferrule *. KF face flat, Ra 0.8.",
                      "TC end first (bore, cone, face), then the KF end on soft jaws. Flange backs: grooving tool.",
-                     f"FEA, 816 g of shot: gasket {peak('B_816_adapter', 'gasket')} (split B "
-                     f"{peak('B_816', 'gasket')}), KF O-ring {peak('B_816_adapter', 'oring')}."])
+                     f"FEA, 816 g of shot: gasket {peak('B_816_adapter', 'N_GASKET')} (split B "
+                     f"{peak('B_816', 'N_GASKET')}), KF O-ring {peak('B_816_adapter', 'N_ORING')}."])
     ax.set_position([0.03, 0.17, 0.58, 0.78])
     z0 = z["z_fA"]
     sec = [(r, zz - z0) for r, zz in up]
@@ -369,6 +369,7 @@ def sheet_b_adapter(pdf):
     dim_h(ax, -Ri, Ri, 4, f"Ø{2 * Ri:.1f} bore (= the pot's tube bore)", fs=6.5)
     leader(ax, (rh, z_neck + 3), (rf + 22, z_neck + 9), f"neck Ø{kf.hub_od:.1f}")
     leader(ax, ((rh + trh) / 2 + 0.3, (z_neck + z_hub3) / 2), (rf + 22, z_neck - 1), "45 deg")
+    leader(ax, (-rh - 0.35, z_neck - 0.2), (-rf - 40, z_neck - 12), "R2")
     leader(ax, (-(rb + Ri) / 2 + 0.6, (z_c0 + z_c1) / 2), (-rf - 40, (z_c0 + z_c1) / 2 + 8), "45 deg inside")
     leader(ax, (rf - 2.5, H - kf.lip + 0.8), (rf + 22, H + 1), f"{kf.taper_deg:.0f} deg back (ISO-KF)")
     leader(ax, (trf - 2.0, tc.lip - 1.0), (trf + 12, tc.lip - 9), f"{tc.taper_deg:.0f} deg back from Ø{tc.hub_od:.1f} (tri-clamp)")
