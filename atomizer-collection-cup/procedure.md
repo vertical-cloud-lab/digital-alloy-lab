@@ -83,10 +83,10 @@ only to about 1.5 bar absolute, while the relief opens at about 1.8 bar absolute
    Keep the fibreglass leads (316 °C) off the hot wall.
 3. Connect both to the 2-channel meter (Auber SYL-2813AC). Each channel's relay drives the buzzer.
 
-| Channel | Alarm | Why |
+| Channel | Alarm | What the FEA says it means |
 |---|---|---|
-| Top | **120 °C** | With the pile at the bottom, the FEA keeps the top under about 60 °C even for 816 g of shot. A reading of 120 °C means hot metal is stuck near the joint, the Nov 13 failure. The FKM O-ring is rated 200 °C. |
-| Bottom | **150 °C** | Shot is in the cup. The FEA puts the bottom thermocouple at 100 °C 2–5 min after 400–816 g of shot lands, so this flags a bad pour after the fact, not during it. **The stop rule during the pour stays visual:** if the plate isn't making powder within 20–30 s, close the sealing rod. |
+| Top | **120 °C** | With the pile on the puck, the top stays at 27–51 °C even for 816 g of shot. 120 °C means hot metal is held near the joint, the Nov 13 failure mode. **This alarm can't save the O-ring.** With 25 g of shot fused in the bore under the joint, the O-ring passes 150 °C in 3 s and the alarm sounds at 7 s. It tells you to stop the pour and replace the O-ring. The protection is the geometry (nothing to hang up on) and the shields. |
+| Bottom | **150 °C** | Shot is in the cup. It sounds about 2 min after the metal lands (119 s for 816 g of shot, 136 s for 400 g). A good run's powder (816 g arriving at 400 °C) peaks at 86 °C, so the alarm marks a bad run after the fact; hold the cup until it cools. **The stop rule during the pour stays visual:** if the plate isn't making powder within 20–30 s, close the sealing rod. |
 
 ## 6. Install
 
@@ -102,9 +102,10 @@ only to about 1.5 bar absolute, while the relief opens at about 1.8 bar absolute
 
 ## 7. Run limits
 
-- Charge: B takes a full 1.1 kg charge. With the whole charge arriving as shot and piling on the puck, the FEA
-  puts the O-ring at 45 °C and the floor at 336 °C. The joint O-ring is the only seal near the cup's hot zone,
-  and the pile stays 160+ mm below it.
+- Charge: B takes a full 1.1 kg charge. With the whole 816 g Nov 13 charge arriving as shot and piling on the
+  puck, the FEA puts the O-ring at 44 °C and the floor at 348 °C (pile conductivity 2–20 W/m K: 42–45 °C). The
+  joint O-ring is the only seal in the cup, and the pile stays 160+ mm below it. Option A, if used in the
+  meantime, takes about 120 g of copper-alloy shot before its bottom O-ring passes 150 °C (220 g to 200 °C).
 - The O₂ hard stop and the plate stop rule from the Nov 13 analysis still apply. This cup survives a bad run;
   it doesn't make one good.
 - Don't add a splash plate, valve or any ledge inside the top of this cup. The Nov 13 seat burned because hot
@@ -113,7 +114,8 @@ only to about 1.5 bar absolute, while the relief opens at about 1.8 bar absolute
 ## 8. After the run
 
 1. Wait until the bottom thermocouple reads below 60 °C before you open anything. After a full charge of shot
-   the FEA's floor is still about 150 °C an hour later. After a good powder run it cools much sooner.
+   the bottom thermocouple still reads about 150 °C an hour later (FEA). After a good powder run it reads about
+   70 °C at an hour and falls from there.
 2. Take the clamp off, drop the cup 5 mm so the centring ring leaves the cone's 2 mm recess, slide it out
    toward you, and fit a KF-50 blank and clamp on top to carry it.
 3. Empty it by inverting over a sieve or a tray; the puck and liner come out too. Look at the liner and puck.

@@ -105,6 +105,8 @@ def material_cards(names, pile_k=5.0, ring_contact_h=1000.0, puck_contact_h=500.
         cp_mush = 480 + L_left / 100.0          # released between 1050 and 950 C (smoothed for Newton)
         add("PILE", [20, 500, 940, 950, 1050, 1060, 1200], [pile_k] * 7,
             [420, 460, 480, cp_mush, cp_mush, 530, 530], P.SHOT["rho"] * PILE_FRAC)
+    if "POWDER" in names:     # a good run's powder bed: ~100 um bronze in argon, solid, k gas-dominated
+        add("POWDER", [20, 500, 1000], [0.25, 0.32, 0.40], [420, 460, 480], P.SHOT["rho"] * PILE_FRAC)
     if "FKM" in names:
         add("FKM", [20, 600], [0.20, 0.20], [1400, 1400], 1850)
     if "EPDM" in names:
@@ -153,7 +155,9 @@ def pile_height(mass_g, radius):
     return mass_g * 1e-3 / (P.SHOT["rho"] * PILE_FRAC * math.pi * (radius * 1e-3) ** 2) * 1e3
 
 
-def design_B(mass_g, liner=True, puck=True, puck_mat="S304"):
+def design_B(mass_g, liner=True, puck=True, puck_mat="S304", pile_mat="PILE", pile_T=None, hangup=False):
+    """hangup=True: the mass is a lump of shot fused to the stub's bore just under the joint (the Nov 13 failure
+    mode: hot metal held near the seal), and nothing at the bottom. pile_mat="POWDER", pile_T: a good run."""
     import parts as PT
     b = P.B
     prof, z = PT.option_b_vessel_profile(recess=False)
@@ -175,8 +179,17 @@ def design_B(mass_g, liner=True, puck=True, puck_mat="S304"):
         regs.append(F.Region("liner", "S304", rect(li, lo, zz + 0.5, top_liner), 1.0))
         regs.append(F.Region("liner_gap", "GAP15", rect(lo, R_i, zz, top_liner), 0.7))
         r_pile = li
-    h = pile_height(mass_g, r_pile)
-    regs.append(F.Region("pile", "PILE", rect(0, r_pile, zz, zz + h), 2.0, init_T=T_SHOT))
+    T0 = pile_T if pile_T is not None else T_SHOT
+    if hangup:
+        rb_, r_in = P.JOINT.bore / 2, 14.0
+        h = mass_g * 1e-3 / (P.SHOT["rho"] * PILE_FRAC * math.pi * ((rb_ * 1e-3) ** 2 - (r_in * 1e-3) ** 2)) * 1e3
+        z0 = z["top"] - 2.0
+        regs.append(F.Region("pile", pile_mat, rect(r_in, rb_, z0 - h, z0), 1.0, init_T=T0))
+        info = dict(pile_top=z0, pile_r=rb_, pile_rin=r_in, pile_h=h)
+    else:
+        h = pile_height(mass_g, r_pile)
+        regs.append(F.Region("pile", pile_mat, rect(0, r_pile, zz, zz + h), 2.0, init_T=T0))
+        info = dict(pile_top=zz + h, pile_r=r_pile, pile_h=h)
     cavity = Polygon([(0, z["z_bot"]), (R_i + 0.01, z["z_bot"]), (R_i + 0.01, z["z_red"] + 8.0),
                       (P.JOINT.bore / 2 + 0.01, z["z_stub"] - 8.0),
                       (P.JOINT.bore / 2 + 0.01, P.JOINT.ring_thk / 2 + P.CONE_OUTLET_LEN), (0, P.JOINT.ring_thk / 2 + P.CONE_OUTLET_LEN)])
@@ -184,7 +197,7 @@ def design_B(mass_g, liner=True, puck=True, puck_mat="S304"):
               "TC_bottom": (z["R_o"], floor + 6.0),
               "flange_rim": (P.JOINT.flange_od / 2, -P.JOINT.ring_thk / 2 - 1.0),
               "bottom_centre": (0.0, z["z_bot"])}
-    return regs, cavity, probes, dict(pile_top=zz + h, pile_r=r_pile, pile_h=h)
+    return regs, cavity, probes, info
 
 
 def design_A(mass_g, liner=True, puck=True):
@@ -317,17 +330,78 @@ def design_C(mass_g, glass="QUARTZ", seal="FKM", sleeve=True, pan=True):
     return regs, cavity, probes, dict(pile_top=zz + h, pile_r=r_pile, pile_h=h)
 
 
-DESIGNS = {"A": design_A, "B": design_B, "C": design_C}
+def design_S(mass_g, r_in=14.0, where="seat"):
+    """Reconstruction of the Nov 13 failure in the stock cup (layout of parts._stock_z, sizes in params.STOCK):
+    the shot that hung up on the splash plate and the valve, as an annular pile of `mass_g` against the EPDM
+    seat's inner face, 1050 C. The splash plate and the valve disc are not axisymmetric and are left out; the
+    glass is borosilicate, the seals EPDM. Nothing else lands in the cup in this case."""
+    import parts as PT
+    kf, s = P.JOINT, P.STOCK
+    g = kf.ring_thk / 2
+    z = PT._stock_z()
+    regs = joint_regions()
+    neck = PT.kf_flange_profile(kf, z["face"], down=True, tube_len=s["neck_len"], recess=False)
+    r1, r2 = kf.tube_od / 2, s["reducer_d2"] / 2
+    rb = kf.bore / 2
+    z_n, z_r = z["neck"], z["valve_top"]
+    outline = [pt for pt in neck[:-2]] + [(r1, z_n), (r2, z_r), (r2 - 1.6, z_r), (rb + 0.2, z_n - 2.0), (rb, z_n - 2.0)]
+    regs.append(F.Region("neck_reducer", "S316L", outline, 1.0))
+    zt_v, zb_v = z["valve_top"], z["valve_bot"]
+    zc = (zt_v + zb_v) / 2
+    Ro, rv = s["valve_body_od"] / 2, s["valve_bore"] / 2
+    regs.append(F.Region("valve_body", "S316L", [(rv, zb_v), (Ro, zb_v), (Ro, zt_v), (rv, zt_v), (rv, zc + 10),
+                                                 (rv + 2, zc + 10), (rv + 2, zc - 10), (rv, zc - 10)], 1.5))
+    regs.append(F.Region("seat", "EPDM", rect(rv - 3, rv + 2, zc - 10, zc + 10), 0.5))
+    ro_g, ri_g = s["glass_od"] / 2, s["glass_od"] / 2 - s["glass_wall"]
+    g_out, g_in = ro_g + 1.5, ri_g - 1.5
+    gd, gk = s["seal_groove_d"], 2.0
+    zp = z["plate_bot"]
+    Rp = s["top_plate_od"] / 2
+    regs.append(F.Region("top_plate", "S316L", [(rv, zp), (g_in, zp), (g_in, zp + gd), (g_out, zp + gd), (g_out, zp),
+                                                (Rp, zp), (Rp, zb_v), (rv, zb_v)], 1.5))
+    zt_gl, zb_gl = z["glass_top"], z["glass_bot"]
+    regs.append(F.Region("seal_top", "EPDM", rect(g_in, g_out, zt_gl, zt_gl + gk), 0.5))
+    regs.append(F.Region("glass", "BORO", rect(ri_g, ro_g, zb_gl, zt_gl), 0.8))
+    regs.append(F.Region("seal_bot", "EPDM", rect(g_in, g_out, zb_gl - gk, zb_gl), 0.5))
+    zb_pl = z["bplate_top"]
+    Rb = s["bottom_plate_od"] / 2
+    regs.append(F.Region("bottom_plate", "S316L", [(0, z["bottom"]), (Rb, z["bottom"]), (Rb, zb_pl), (g_out, zb_pl),
+                                                   (g_out, zb_pl - gd), (g_in, zb_pl - gd), (g_in, zb_pl), (0, zb_pl)], 2.0))
+    r_out = rv - 3
+    if where == "seat":
+        h = mass_g * 1e-3 / (P.SHOT["rho"] * PILE_FRAC * math.pi * ((r_out * 1e-3) ** 2 - (r_in * 1e-3) ** 2)) * 1e3
+        regs.append(F.Region("pile", "PILE", rect(r_in, r_out, zc - 10, zc - 10 + h), 1.0, init_T=T_SHOT))
+        info = dict(pile_top=zc - 10 + h, pile_r=r_out, pile_rin=r_in, pile_h=h)
+    else:   # shot that fell through into the glass: a pile on the bottom plate against the glass wall
+        h = pile_height(mass_g, ri_g)
+        regs.append(F.Region("pile", "PILE", rect(0, ri_g, zb_pl, zb_pl + h), 1.5, init_T=T_SHOT))
+        info = dict(pile_top=zb_pl + h, pile_r=ri_g, pile_h=h)
+    top = g + P.CONE_OUTLET_LEN
+    e = 0.01
+    cavity = Polygon([(0, zb_pl), (ri_g + e, zb_pl), (ri_g + e, zt_gl), (g_in + e, zt_gl), (g_in + e, zp),
+                      (rv + e, zp), (rv + e, zc - 10), (r_out + e, zc - 10), (r_out + e, zc + 10), (rv + e, zc + 10),
+                      (rv + e, zt_v), (r2 - 1.6 + e, z_r), (rb + 0.2 + e, z_n - 2.0), (rb + e, z_n - 2.0),
+                      (rb + e, top), (0, top)])
+    probes = {"glass_rim_top": (ro_g, zt_gl - 1.0), "glass_bottom_out": (ro_g, zb_gl + 5.0),
+              "flange_rim": (kf.flange_od / 2, -g - 1.0), "valve_od": (Ro, zc)}
+    return regs, cavity, probes, info
+
+
+DESIGNS = {"A": design_A, "B": design_B, "C": design_C, "S": design_S}
 CASES = {
     "B_100": ("B", 100, {}), "B_400": ("B", 400, {}), "B_816": ("B", 816, {}),
     "B_816_k2": ("B", 816, {}, {"pile_k": 2.0}), "B_816_k20": ("B", 816, {}, {"pile_k": 20.0}),
     "B_816_noliner": ("B", 816, {"liner": False}), "B_816_cupuck": ("B", 816, {"puck_mat": "CU"}),
     "A_100": ("A", 100, {}), "A_250": ("A", 250, {}), "A_400": ("A", 400, {}),
     "C_400": ("C", 400, {}), "C_816": ("C", 816, {}),
+    "B_hangup_25": ("B", 25, {"hangup": True}), "B_hangup_100": ("B", 100, {"hangup": True}),
+    "B_816_powder400": ("B", 816, {"pile_mat": "POWDER", "pile_T": 400.0}),
+    "S_seat_120": ("S", 120, {}), "S_glass_300": ("S", 300, {"where": "glass"}),
     "C_400_boro": ("C", 400, {"glass": "BORO"}),
 }
-SEAL_SETS = {"A": ["oring", "boring"], "B": ["oring"], "C": ["oring", "seal_top", "seal_bot"]}
-GLASS_SETS = {"C": ["glass"]}
+SEAL_SETS = {"A": ["oring", "boring"], "B": ["oring"], "C": ["oring", "seal_top", "seal_bot"],
+             "S": ["oring", "seat", "seal_top", "seal_bot"]}
+GLASS_SETS = {"C": ["glass"], "S": ["glass"]}
 
 
 # ------------------------------------------------------------------------------------- view factors
@@ -342,8 +416,103 @@ def cavity_faces(m, cavity, exclude_regions=("pile",)):
     return faces
 
 
-def view_factors(m, faces, pile_r, pile_top, n_rays=200000, seed=1):
-    """Monte-Carlo view factors from the pile's top disk to each cavity face (first hit)."""
+def view_factors_general(m, emit, faces, n_rays=200000, seed=1):
+    """Monte-Carlo first-hit fractions of the power radiated by the pile's free faces (`emit`, each a ring of
+    the 2D boundary, uniform temperature assumed) onto the cavity faces `faces`. Rays that hit the pile itself
+    or leave through the outlet count as not absorbed by the walls."""
+    rng = np.random.default_rng(seed)
+    areas = np.array([F.ring_area(e, m.nodes) for e in emit])
+    share = areas / areas.sum()
+    targets = faces + emit
+    segs = np.array([[m.nodes[f["n"][0]][0], m.nodes[f["n"][0]][1], m.nodes[f["n"][1]][0], m.nodes[f["n"][1]][1]]
+                     for f in targets])
+    hits = np.zeros(len(targets))
+    counts = rng.multinomial(n_rays, share)
+    for e, n_e in zip(emit, counts):
+        if n_e == 0:
+            continue
+        (r1, z1), (r2, z2) = m.nodes[e["n"][0]], m.nodes[e["n"][1]]
+        u = rng.random(n_e)
+        if abs(r2 - r1) > 1e-9:       # area-weighted position along the edge (dA ~ r)
+            rr = np.sqrt(r1 ** 2 + u * (r2 ** 2 - r1 ** 2)) if r1 >= 0 and r2 >= 0 else r1 + u * (r2 - r1)
+            t = (rr - r1) / (r2 - r1)
+        else:
+            rr = np.full(n_e, r1)
+            t = u
+        zz = z1 + t * (z2 - z1)
+        ph = 2 * np.pi * rng.random(n_e)
+        nr, nz = e["normal"]
+        o = np.stack([rr * np.cos(ph), rr * np.sin(ph), zz], 1)
+        nvec = np.stack([nr * np.cos(ph), nr * np.sin(ph), np.full(n_e, nz)], 1)
+        o = o + 1e-4 * nvec
+        # tangent basis
+        a = np.where(np.abs(nvec[:, 2:3]) < 0.9, np.array([[0, 0, 1.0]]), np.array([[1.0, 0, 0]]))
+        t1 = np.cross(nvec, a)
+        t1 /= np.linalg.norm(t1, axis=1, keepdims=True)
+        t2 = np.cross(nvec, t1)
+        u1, u2 = rng.random(n_e), rng.random(n_e)
+        st = np.sqrt(u1)[:, None]
+        d = st * np.cos(2 * np.pi * u2)[:, None] * t1 + st * np.sin(2 * np.pi * u2)[:, None] * t2 + \
+            np.sqrt(1 - u1)[:, None] * nvec
+        idx = _trace(o, d, segs)
+        np.add.at(hits, idx[idx >= 0], 1)
+    frac = hits / n_rays
+    return frac[:len(faces)], 1.0 - frac.sum(), frac[len(faces):].sum()
+
+
+def _trace(o, d, segs, chunk=4000):
+    """Index of the first segment (revolved) each ray hits, or -1."""
+    out = np.full(len(o), -1)
+    r1, z1, r2, z2 = segs[:, 0], segs[:, 1], segs[:, 2], segs[:, 3]
+    horiz = np.abs(z2 - z1) < 1e-9
+    nz = ~horiz
+    b = np.zeros_like(r1)
+    b[nz] = (r2[nz] - r1[nz]) / (z2[nz] - z1[nz])
+    a_ = r1 - b * z1
+    zlo, zhi = np.minimum(z1, z2), np.maximum(z1, z2)
+    hz = np.where(horiz)[0]
+    for k0 in range(0, len(o), chunk):
+        oo, dd = o[k0:k0 + chunk], d[k0:k0 + chunk]
+        n = len(oo)
+        best = np.full(n, np.inf)
+        idx = np.full(n, -1)
+        ox, oy, oz = oo[:, 0:1], oo[:, 1:2], oo[:, 2:3]
+        dx, dy, dzv = dd[:, 0:1], dd[:, 1:2], dd[:, 2:3]
+        A = dx ** 2 + dy ** 2 - (b ** 2) * dzv ** 2
+        B = 2 * (ox * dx + oy * dy - (a_ + b * oz) * b * dzv)
+        C = ox ** 2 + oy ** 2 - (a_ + b * oz) ** 2
+        disc = B ** 2 - 4 * A * C
+        ok = disc >= 0
+        sq = np.sqrt(np.where(ok, disc, 0))
+        with np.errstate(divide="ignore", invalid="ignore"):
+            for sgn in (-1, 1):
+                t = np.where(np.abs(A) > 1e-12, (-B + sgn * sq) / (2 * A), -C / np.where(B == 0, 1e-30, B))
+                zh = oz + t * dzv
+                good = ok & (t > 1e-6) & (zh >= zlo - 1e-9) & (zh <= zhi + 1e-9) & ((a_ + b * zh) >= 0) & nz[None, :]
+                tt = np.where(good, t, np.inf)
+                j = np.argmin(tt, axis=1)
+                tm = tt[np.arange(n), j]
+                better = tm < best
+                best[better] = tm[better]
+                idx[better] = j[better]
+            if len(hz):
+                t = (z1[hz][None, :] - oz) / dzv
+                px, py = ox + t * dx, oy + t * dy
+                rad = np.hypot(px, py)
+                lo, hi = np.minimum(r1[hz], r2[hz]), np.maximum(r1[hz], r2[hz])
+                good = (t > 1e-6) & (rad >= lo[None, :] - 1e-9) & (rad <= hi[None, :] + 1e-9)
+                tt = np.where(good, t, np.inf)
+                j = np.argmin(tt, axis=1)
+                tm = tt[np.arange(n), j]
+                better = tm < best
+                best[better] = tm[better]
+                idx[better] = hz[j[better]]
+        out[k0:k0 + n] = idx
+    return out
+
+
+def view_factors(m, faces, pile_r, pile_top, n_rays=200000, seed=1, pile_rin=0.0):
+    """Monte-Carlo view factors from the pile's top disk (or annulus) to each cavity face (first hit)."""
     rng = np.random.default_rng(seed)
     segs = np.array([[m.nodes[f["n"][0]][0], m.nodes[f["n"][0]][1], m.nodes[f["n"][1]][0], m.nodes[f["n"][1]][1]]
                      for f in faces])
@@ -352,7 +521,7 @@ def view_factors(m, faces, pile_r, pile_top, n_rays=200000, seed=1):
     chunk = 4000
     for k0 in range(0, n_rays, chunk):
         n = min(chunk, n_rays - k0)
-        rr = pile_r * np.sqrt(rng.random(n))
+        rr = np.sqrt(pile_rin ** 2 + (pile_r ** 2 - pile_rin ** 2) * rng.random(n))
         ph = 2 * np.pi * rng.random(n)
         o = np.stack([rr * np.cos(ph), rr * np.sin(ph), np.full(n, pile_top + 1e-6)], 1)
         u1, u2 = rng.random(n), rng.random(n)
@@ -434,8 +603,8 @@ def write_deck(path, m, regs, cavity, probes, pile_info, extra, rad=None, design
             fixed_nodes.update(e["n"])
             continue
         if (e["elem"], e["face"]) in cav_ids:
-            if e["region"] == "pile" and e["normal"][1] > 0.5:
-                pile_top.append(e)
+            if e["region"] == "pile":
+                pile_top.append(e)          # every free face of the pile radiates (top, and any open side/bottom)
             continue
         ext.append(e)
     with open(path, "w") as f:
@@ -458,9 +627,10 @@ def write_deck(path, m, regs, cavity, probes, pile_info, extra, rad=None, design
                 f.write(f"*SOLID SECTION, ELSET=E_{reg.name}, MATERIAL={reg.material}\n")
         f.write(f"*PHYSICAL CONSTANTS, ABSOLUTE ZERO={F.ABS0}, STEFAN BOLTZMANN={F.SIGMA}\n")
         f.write(f"*INITIAL CONDITIONS, TYPE=TEMPERATURE\nNALL, {T_AMB}\n")
-        hot = m.region_nodes([r.name for r in regs if r.init_T is not None])
-        for n in hot:
-            f.write(f"{n}, {T_SHOT}\n")
+        for r in regs:
+            if r.init_T is not None:
+                for n in m.region_nodes(r.name):
+                    f.write(f"{n}, {r.init_T}\n")
         f.write("*TIME POINTS, NAME=TP, TIME=TOTAL TIME\n" + "\n".join(f"{t}," for t in TIME_POINTS) + "\n")
         if rad is not None:
             f.write("*AMPLITUDE, NAME=PRAD, TIME=TOTAL TIME\n")
@@ -535,9 +705,8 @@ def run_case(name, spec):
     F.run_ccx("pass1", d, threads=1)
     b1 = F.read_dat_blocks(d / "pass1.dat")
     tP, Pw = pile_power(m, b1, deck1["pile_top"])
-    faces = cavity_faces(m, cavity)
-    faces = [f for f in faces if f["mid"][1] > info["pile_top"] - 1e-6 and f["region"] != "pile"]
-    Fv, esc = view_factors(m, faces, info["pile_r"], info["pile_top"])
+    faces = [f for f in cavity_faces(m, cavity) if f["region"] != "pile"]
+    Fv, esc, back = view_factors_general(m, deck1["pile_top"], faces)
     Pref = max(Pw.max(), 1e-9)
     rad = {"t": [0.0] + list(tP), "a": [Pw[0] / Pref] + list(Pw / Pref), "faces": {}}
     for fc, fv in zip(faces, Fv):
@@ -550,6 +719,7 @@ def run_case(name, spec):
            "elements": len(m.elems), "pile_h_mm": round(info["pile_h"], 1),
            "pile_top_mm_below_joint": round(-info["pile_top"], 1),
            "view_factor_to_walls": round(float(Fv.sum()), 3), "escaped_through_outlet": round(esc, 3),
+           "returned_to_pile": round(float(back), 3),
            "pile_radiated_peak_W": round(float(Pw.max()) / 1e3, 1), "series": {}, "peaks": {},
            "runtime_s": None}
     sets = ["N_PILE"] + [p.upper() for p in probes] + ["N_" + s.upper() for s in SEAL_SETS.get(design, [])]
@@ -569,7 +739,7 @@ def run_case(name, spec):
             above = np.where(vs >= lim)[0]
             res["peaks"][s][f"t_first_{lim}C_s"] = round(float(ts[above[0]]), 1) if len(above) else None
     # glass: largest temperature difference across the glass at any time (thermal-shock indicator)
-    if design == "C":
+    if design in ("C", "S"):
         key = next(k for k in b2 if k[1] == "N_GLASS")
         dts = [(t, max(v[0] for v in vals.values()) - min(v[0] for v in vals.values())) for t, vals in b2[key]]
         tm, dm = max(dts, key=lambda x: x[1])

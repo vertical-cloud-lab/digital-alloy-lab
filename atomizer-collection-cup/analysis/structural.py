@@ -8,8 +8,9 @@ flange's back taper where the clamp bears. Load cases:
   B_pressure   +1.2 bar gauge inside (1.5 x the chamber's relief setting), 25 C
   B_vacuum     full vacuum: 1.0 bar outside, 25 C (Provo's room is ~0.86 bar, so this is ~16 % high)
   B_hot_<t>    the B_816 temperature field at t = 10 ... 3600 s, plus the run pressure (+0.15 bar)
-Glass (C): the tube alone, standing on its bottom gasket, 3 MPa of tie-rod clamping on its top end, with
-the C_400 (fused quartz) and C_400_boro (borosilicate) temperature fields at each saved time.
+Glass (C, and the stock cup on Nov 13): the tube alone, standing on its bottom gasket, 3 MPa of tie-rod clamping on
+its top end, with the C_400 / C_816 (fused quartz), C_400_boro and S_seat_120 (borosilicate, the Nov 13
+reconstruction) temperature fields at each saved time.
 
 Output: analysis/out/structural/<case>/ and analysis/out/structural_summary.{json,md}; field plots in
 analysis/img/.
@@ -278,13 +279,15 @@ def glass_cases():
     s = P.STOCK
     ro, ri = s["glass_od"] / 2, s["glass_od"] / 2 - s["glass_wall"]
     out = {}
-    for case, gname in (("C_400", "QUARTZ"), ("C_400_boro", "BORO"), ("C_816", "QUARTZ")):
+    for case, gname in (("C_400", "QUARTZ"), ("C_400_boro", "BORO"), ("C_816", "QUARTZ"), ("S_seat_120", "BORO"),
+                        ("S_glass_300", "BORO")):
         if not (TH.OUT / case / "pass2.frd").exists():
             continue
         spec = TH.CASES[case]
-        regs, cav, probes, info = TH.DESIGNS["C"](spec[1], **spec[2])
+        regs, cav, probes, info = TH.DESIGNS[spec[0]](spec[1], **spec[2])
         glass = next(r for r in regs if r.name == "glass")
         zb, zt = min(p[1] for p in glass.poly), max(p[1] for p in glass.poly)
+        ri, ro = min(p[0] for p in glass.poly), max(p[0] for p in glass.poly)    # quartz is 4 mm wall, stock 5
         m = F.build_mesh([F.Region("glass", gname, F_rect(ri, ro, zb, zt), 0.6)], order=2)
         g = GLASS[gname]
         cards = (f"*MATERIAL, NAME={gname}\n*ELASTIC\n{g['E']}, {g['nu']}\n*EXPANSION, ZERO=20.\n{g['alpha']:.3e}\n"

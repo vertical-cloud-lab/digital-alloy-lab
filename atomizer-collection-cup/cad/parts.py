@@ -375,7 +375,8 @@ def option_b(with_liner=True, with_puck=True, explode=0.0, tcs=True):
     vessel = revolve(prof).translate((0, 0, -explode))
     parts = [("B: welded 316L vessel", vessel, STEEL, "316L")]
     # weld beads (visual only, not separate parts in the interference check)
-    for zz, rr in ((z["z_stub"] - 8.0, kf.tube_od / 2), (z["z_red"] + 8.0, z["R_o"]), (z["z_bot"], z["R_o"])):
+    # W1: stub's tube end to the reducer's 2 in end; W2: reducer's 3 in end to the tube; W3: tube end to the disc
+    for zz, rr in ((z["z_stub"], kf.tube_od / 2), (z["z_red"], z["R_o"]), (z["floor"], z["R_o"])):
         bead = (cq.Workplane("XZ").center(rr + 0.2, zz - explode).circle(1.6)
                 .revolve(360, (-(rr + 0.2), 0, 0), (-(rr + 0.2), 1, 0)).val())
         parts.append((f"B: weld bead z={zz:.0f}", bead, STEEL_HOT, "weld"))

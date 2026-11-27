@@ -27,10 +27,10 @@
     "option_b": {
       "parts": 14,
       "mass_kg": 2.65,
-      "lowest_point_z_mm": -253.6,
-      "length_below_joint_mm": 253.6,
+      "lowest_point_z_mm": -252.0,
+      "length_below_joint_mm": 252.0,
       "max_radius_mm": 99.3,
-      "gap_to_mat_mm": 46.4,
+      "gap_to_mat_mm": 48.0,
       "drop_needed_to_remove_mm": 7.0,
       "fits": true,
       "interferences": []

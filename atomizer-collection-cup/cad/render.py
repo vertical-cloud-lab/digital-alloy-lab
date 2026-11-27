@@ -97,14 +97,16 @@ def lineup():
 def exploded(which):
     if which == "b":
         parts = PT.joint_hardware() + PT.option_b(explode=0.0)
-        stack = [("B: catch puck (304)", -170), ("B: sacrificial liner (304)", -90), ("B: thermocouple", 0),
-                 ("B: welded 316L vessel", 0), ("joint: centring ring", 45), ("joint: KF clamp", 0)]
-        labels = {"B: welded 316L vessel": "316L vessel: KF-50 stub + 2x3 in reducer\n+ 3 in tube + 8 mm welded floor",
-                  "B: sacrificial liner (304)": "304 liner (drops in, sacrificial)",
-                  "B: catch puck (304)": "304 catch puck (heat sink)",
-                  "joint: centring ring": "existing centring ring + FKM O-ring",
-                  "joint: KF clamp": "existing KF clamp",
-                  "B: thermocouple band clamp (bottom)": "type K band thermocouples (top, bottom)"}
+        stack = [("B: catch puck (304)", -110), ("B: sacrificial liner (304)", -245), ("joint: centring ring", 40),
+                 ("joint: O-ring", 40), ("joint: over-pressure ring", 40), ("joint: KF clamp", 85)]
+        labels = {"B: welded 316L vessel": "316L weldment: KF-50 stub + 3x2 in reducer\n+ 3 in tube + 8 mm floor (W1-W3)",
+                  "B: sacrificial liner (304)": "304 liner, 2-3/4 x 0.065 (drops in, sacrificial)",
+                  "B: catch puck (304)": "304 catch puck (sits on the floor)",
+                  "joint: centring ring": "centring ring + FKM O-ring (AS568-330)",
+                  "joint: over-pressure ring": "over-pressure ring (A&N 4000076)",
+                  "joint: KF clamp": "existing KF clamp (finger-tight)",
+                  "B: thermocouple band clamp (top)": "type K washer TC under a band (top)",
+                  "B: thermocouple band clamp (bottom)": "type K washer TC under a band (bottom)"}
     elif which == "a":
         parts = PT.joint_hardware() + PT.option_a()
         stack = [("A: KF-50 blank", -120), ("A: bottom clamp", -80), ("A: bottom centring ring", -95),
@@ -139,9 +141,9 @@ def exploded(which):
             txt.append(labels[name])
     pl.add_point_labels(pts, txt, font_size=20, text_color="black", shape_color="white", shape_opacity=0.8,
                         point_color="black", point_size=8, always_visible=True)
-    pl.camera_position = [(260, -1300, -60), (60, 0, -120), (0, 0, 1)]
+    pl.camera_position = [(260, -1300, -60), (60, 0, -150 if which == "b" else -120), (0, 0, 1)]
     pl.camera.parallel_projection = True
-    pl.camera.parallel_scale = 260
+    pl.camera.parallel_scale = 330 if which == "b" else 260
     pl.screenshot(str(IMG / f"option_{which}_exploded.png"))
     pl.close()
 

@@ -41,8 +41,11 @@ class KF:
 
 # KF-50: flange OD 74.93, 5.08 thick at the hub, 2.9 at the rim, 15 deg back taper (all vendors); face recess
 # 52.32 dia (McMaster STEP). Ring bore 49.4-50.0, body OD 51.9, 7.98 thick; O-ring AS568-330, 53.34 x 5.33
-# (Lesker QF50-200-SRV). McMaster's STEP gives a 2.6 mm recess, which with the 7.98 ring would squeeze the
-# O-ring by half; 2.0 mm (a 4.0 mm face gap, 25 % squeeze) is used until a flange is measured. Clamp: Lesker
+# (Lesker QF50-200-SRV). McMaster's STEP gives a 2.6 mm recess, which with the 7.98 ring would leave a 2.8 mm
+# face gap: the O-ring squeezed by half, and too thin for the over-pressure ring (A&N 4000076 / Lesker
+# QF50-200-OPR, 3.81 mm wide), which sits between the faces. A gap of at least 3.81 mm means a recess of at most
+# (7.98 - 3.81) / 2 = 2.09 mm, so 2.0 mm (4.0 mm gap, 25 % squeeze) is used; McMaster's models are approximate.
+# Clamp: Lesker
 # QF50-200-SSC body OD 82 x 20 wide, McMaster 4518K74 94 x 26.4; 90 x 22 is drawn.
 KF50 = KF("KF-50", flange_od=74.93, tube_od=50.8, tube_wall=1.65, lip=5.08, hub_od=58.6, taper_deg=15.0,
           ring_id=49.7, ring_od=53.34, ring_thk=4.0, oring_cs=5.33, clamp_od=90.0, clamp_w=22.0,

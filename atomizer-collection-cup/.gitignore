@@ -13,3 +13,4 @@ analysis/out/verify/
 analysis/out/structural/*/
 cad/out/stock.step
 cad/out/option_c.step
+analysis/out/thermal/*/field.png
