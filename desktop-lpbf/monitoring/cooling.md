@@ -53,8 +53,8 @@ part's name says "envelope".
    air. The fan coil puts 200–290 W on the chiller.
 8. **Cost:** $700–1,280 for the drawn cooling (BOM M0-C1 to M0-C8 and M7-C1 to M7-C4). Of that, $480–1,060 is the sheet metal and
    traps, which are estimates (§8).
-9. **The model:** 330 parts, 55 of them monitoring (was 318 and 43). The height is unchanged at 579.6 mm and so is the x envelope.
-   Interference: see §4.1.
+9. **The model:** 330 parts, 55 of them monitoring (was 318 and 43), ~4.2 kg more on the tray (the two traps are 2.4 kg of it). The
+   height is unchanged at 579.6 mm and so is the x envelope. Interference: see §4.1.
 
 ## 1. Ratings
 
@@ -93,8 +93,8 @@ Read 2026-11-27 08:25–08:35 UTC through the lab tunnel; the URLs and the exact
 `cooling.py` balances the guard as one well-mixed volume of air:
 
 - **In:** the devices (galvo 30 / 69 W typical / worst, Z and recoater servos 20 W, dosing stepper 5–10 W, PB2 8–12 W, the LP camera's
-  Pi 5–8 W, the Chronos 20–40 W, the two IMX296 boards 1.5–2 W, two PDA36A2 4–10 W, the LED 1–5 W, the AE preamp 1–2 W, the layer camera 1 W, and 5–12 W in the beam
-  path). Most of these are the tray budget's or electrical's estimates; the camera numbers are the vendors' ratings, or half of them
+  Pi 5–8 W, the Chronos 20–40 W, the two IMX296 boards 1.5–2 W, two PDA36A2 4–10 W, the LED 1–5 W, the AE preamp 1–2 W, the layer
+  camera 1 W, and 5–12 W in the beam path). Most of these are the tray budget's or electrical's estimates; the camera numbers are the vendors' ratings, or half of them
   where only a rating is published. Then there is **the chamber's outside**, taken at **60 °C**, thermal.json's hot-chamber bound. It
   gives up its heat by natural or mixed convection over 0.27 m², radiates from bare 6061 (ε 0.1), and conducts down the four legs
   into the base plate. That comes to 40–130 W with the guard ventilated.
@@ -228,11 +228,24 @@ panel, the floor plate, PB2 and the LP ring face to face, so they add no volume 
 |---|---|---|---|---|
 | M50 | 09:27–09:31 | 0 interferences in all six | 0 in all eight | 3.57 GB |
 | S25 | 09:31–09:34 | 0 interferences in all six | 0 in all eight | 3.65 GB |
-| L75 | L75_PENDING | | | |
+| L75 | 09:34–09:38 | 0 interferences in all six | 0 in all eight | 3.54 GB |
 
 The reports are [`interference-monitoring-M50-M.md`](../analysis/out/monitoring/mech/interference-monitoring-M50-M.md) and its S25
 and L75 siblings. Tightest static gaps between the cooling parts and the rest (exact OpenCascade distances, closed state):
-GAPS_PENDING
+
+| Cooling part | Nearest other part | Gap (mm) |
+|---|---|---:|
+| exhaust trap | optics bridge's back edge (y 180) | 1.5 |
+| LP camera's Pi case | the bridge under it (on 0.5 mm pads); the fold mirror's cage cube; the LP camera | 0.5; 1.3; 4.5 |
+| exhaust plenum, outside | guard frame | 1.9 |
+| hood duct | the bridge's back-left post; the bridge's underside; the BW LED | 2.0; 8.1; 9.5 |
+| inlet trap | guard frame; the bridge's back-left post | 4.0; 6.5 |
+| hood fan | the bridge's back-left post | 4.5 |
+| PB2 vent fan | PB2's screws; PB2 (drawn beside its tabs) | 4.3; 6.3 |
+| side camera hood | the Chronos; the door drive's bracket | 6.3; 14.0 |
+| G-10 pad | the chamber body above the floor plate | 0.1 |
+
+The frames, plenums, pad and ring are drawn touching what they fasten to.
 
 ## 5. The light traps: OD at 1070 nm
 

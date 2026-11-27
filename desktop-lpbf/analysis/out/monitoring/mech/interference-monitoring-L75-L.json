@@ -2,12 +2,12 @@
  "variant": "L75 module, L reservoir",
  "vol_tol_mm3": 0.5,
  "chord_mm": 0.05,
- "n_parts": 318,
+ "n_parts": 330,
  "states": [
   {
    "state": "closed, parked, piston up",
    "pose": {},
-   "pairs_checked": 2164,
+   "pairs_checked": 2222,
    "interferences": []
   },
   {
@@ -16,7 +16,7 @@
     "recoater": 206.0,
     "piston": -42.0
    },
-   "pairs_checked": 2106,
+   "pairs_checked": 2164,
    "interferences": []
   },
   {
@@ -26,7 +26,7 @@
     "gdoor": 515.0,
     "piston": 8.0
    },
-   "pairs_checked": 2171,
+   "pairs_checked": 2229,
    "interferences": []
   },
   {
@@ -37,7 +37,7 @@
     "cartridge": -125.0,
     "drawer": -120.0
    },
-   "pairs_checked": 2132,
+   "pairs_checked": 2190,
    "interferences": []
   },
   {
@@ -47,7 +47,7 @@
     "module": 40.0,
     "gdoor": 515.0
    },
-   "pairs_checked": 2073,
+   "pairs_checked": 2131,
    "interferences": []
   },
   {
@@ -56,7 +56,7 @@
     "_calibration": 1.0,
     "door": 95.0
    },
-   "pairs_checked": 2176,
+   "pairs_checked": 2234,
    "interferences": []
   }
  ],
@@ -4674,7 +4674,7 @@
   },
   {
    "group": "piston",
-   "at": -39.92,
+   "at": -21.17,
    "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
    "other": "Laser guard panels (1.5 mm aluminium)",
    "gap_mm": 193.0
@@ -4765,14 +4765,14 @@
   },
   {
    "group": "piston",
-   "at": -23.25,
+   "at": -21.17,
    "moving": "Striker disc L75 (416 stainless, on the pot magnet)",
    "other": "Laser guard panels (1.5 mm aluminium)",
    "gap_mm": 202.304
   },
   {
    "group": "piston",
-   "at": -17.0,
+   "at": 8.0,
    "moving": "Pot magnet (NdFeB in a steel cup, \u00d825 x 7, 44 lbf, holds the rod's striker)",
    "other": "Laser guard panels (1.5 mm aluminium)",
    "gap_mm": 202.504
@@ -6167,7 +6167,7 @@
    "group": "cartridge",
    "at": 0.0,
    "moving": "Reservoir L (233 cm3, 304 SS wedge hopper, 95 mm outlet for the L75 module; same 30 x 112 mm dock plate for every size)",
-   "other": "LP camera filters (FBH850-10 + FESH1000 in an SM1 holder; envelope)",
+   "other": "LP camera filters (FBH850-10 + FESH1000 in an SM1 holder on a 5 mm G-10 ring; envelope)",
    "gap_mm": 15.85
   },
   {
@@ -6176,6 +6176,13 @@
    "moving": "Reservoir L (233 cm3, 304 SS wedge hopper, 95 mm outlet for the L75 module; same 30 x 112 mm dock plate for every size)",
    "other": "LP camera lens (Kowa LM50JC10M, 50 mm C-mount; envelope \u00d832 x 45)",
    "gap_mm": 16.032
+  },
+  {
+   "group": "cartridge",
+   "at": 0.0,
+   "moving": "Reservoir L (233 cm3, 304 SS wedge hopper, 95 mm outlet for the L75 module; same 30 x 112 mm dock plate for every size)",
+   "other": "G-10 thermal break ring under the LP camera's filter holder (\u00d832 x \u00d825.4 x 5 mm, SM1-threaded both ends)",
+   "gap_mm": 16.473
   },
   {
    "group": "cartridge",
@@ -6202,7 +6209,7 @@
    "group": "cartridge",
    "at": 0.0,
    "moving": "Reservoir L shutter (shown open, as docked; in a slot closed at both ends, springs shut when the reservoir slides out)",
-   "other": "LP camera filters (FBH850-10 + FESH1000 in an SM1 holder; envelope)",
+   "other": "LP camera filters (FBH850-10 + FESH1000 in an SM1 holder on a 5 mm G-10 ring; envelope)",
    "gap_mm": 19.982
   },
   {
@@ -6218,6 +6225,13 @@
    "moving": "Reservoir L powder",
    "other": "f-theta focus shims (85.5 x 105 rings cut from McMaster 95055K25 / K19 / K13 18-8 shim stock; 2.83 mm nominal stack: 0-6 mm: lens 2.83 mm up to 3.17 mm down)",
    "gap_mm": 20.167
+  },
+  {
+   "group": "cartridge",
+   "at": 0.0,
+   "moving": "Reservoir L shutter (shown open, as docked; in a slot closed at both ends, springs shut when the reservoir slides out)",
+   "other": "G-10 thermal break ring under the LP camera's filter holder (\u00d832 x \u00d825.4 x 5 mm, SM1-threaded both ends)",
+   "gap_mm": 20.52
   },
   {
    "group": "cartridge",
@@ -12092,5 +12106,5 @@
    "why": "tube in the valve's push-in port"
   }
  ],
- "runtime_s": 302.8
+ "runtime_s": 206.3
 }

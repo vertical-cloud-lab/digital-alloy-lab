@@ -24,7 +24,7 @@ def recolour(p):
     if any(k in p.name for k in COOL):
         if "G-10" in p.name:
             return RP.hex2rgb("#e0a526")
-        if "fan" in p.name.lower():
+        if ("fan " in p.name.lower() or "fans " in p.name.lower()) and "fanless" not in p.name.lower():
             return RP.hex2rgb("#2b6cd2")
         if "light trap" in p.name:
             return RP.hex2rgb("#3a3f46")
@@ -36,8 +36,9 @@ def main():
     parts = RP.M.build(include_tray=True, module="M50", monitoring=True)
     img = RP.scene(parts, [(-900, 820, 700), (-80, 40, 110), (0, 0, 1)], box=(-430, 330, -300, 270, -175, 380),
                    keep=lambda p: p.module == "process" or any(k in p.name for k in COOL), recolour=recolour,
-                   title="Cooling, seen from the back left: inlet trap and filter (left), hood duct over the side camera, "
-                         "exhaust trap and fans (right), LP camera's Pi on the bridge. Guard panels hidden.")
+                   title="Cooling, seen from behind the machine: exhaust fans on their plenum (upper left), inlet filter over its trap "
+                         "(front), hood duct and hood round the side camera (light blue, right), LP camera's Pi on the bridge (middle). "
+                         "Guard panels hidden.")
     OUT.mkdir(parents=True, exist_ok=True)
     im = Image.fromarray(img).convert("RGB")
     path = OUT / "cooling_parts.png"
