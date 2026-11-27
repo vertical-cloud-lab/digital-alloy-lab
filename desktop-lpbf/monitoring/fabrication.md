@@ -42,7 +42,7 @@ Scripts (all in [`analysis/monitoring/fab/`](../analysis/monitoring/fab/)):
 | Port | Angle to the face's normal | The 4th axis takes out | It leaves | What to cut | Window |
 |---|---:|---|---|---|---|
 | LW, left wall | 14.8° | 7.3° (azimuth) | 12.9° (elevation) | **Ø31 bore normal to the wall at A90** (the clear Ø25 needs Ø30.5 across 16 mm), a Ø40.2 × 5.5 seat for the Edmund 36-983 window (Ø40 × 4) and 4 × M4 on Ø49.5, concentric with it | flat on the wall, 14.8° to the sight line: **0.10 mm of astigmatism, 3–5 µm of blur** against 10–29 µm pixels. Harmless |
-| BW, back wall | 49° | 48.4° | 8.5° | **an obround slot 51.2 × 20.5 mm normal to the wall at A180** (a round bore would be Ø51), with a 58 × 27 mm rectangular seat | flat on the wall. A light window, so the angle doesn't matter |
+| BW, back wall | 49° | 48.4° | 10.0° | **an obround slot 51.2 × 20.5 mm normal to the wall at A180** (a round bore would be Ø51), with a 58 × 27 mm rectangular seat | flat on the wall. A light window, so the angle doesn't matter |
 | LP, lid, at (−40, 60) | 27.9° | 23.8° (about the lid's x) | 15.1° | **a Ø24 bore on the line of sight, with the lid on a 27.93° sine plate**: one helix. The adapter's face O-ring groove (2-025) and its four M4 holes flat, in the lid's top setup | **on the adapter boss, square to the line of sight**, as the layer camera's is: no astigmatism. Flat on the lid, a 3 mm window would add 9–13 µm of blur against 11.4 µm pixels |
 
 - A tilted fixture for the frame would add a setup (~1.25 h), a fixture and a risk to the sealing faces, for viewports that
@@ -153,7 +153,7 @@ takes each port's sight line from `monitoring_spec.py` and the host face's norma
 | Port | Sight line (into the chamber) | To the face's normal | Index that takes out the turn | Tilt left |
 |---|---|---:|---|---:|
 | LW (−156, −20, 36) | (0.967, 0.124, −0.223) | 14.79° | A82.7 (azimuth 7.31°) | 12.89° |
-| BW (−125, 111, 25) | (0.740, −0.657, −0.148) | 48.95° | A131.6 (azimuth 48.39°) | 8.51° |
+| BW (−125, 111, 29.5), up from z 25 | (0.736, −0.654, −0.174) | 49.16° | A131.6 (azimuth 48.39°) | 10.01° |
 | LP (−40, 60, 136), moved from (−60, −80) | (0.260, −0.390, −0.883) | 27.93° | 23.8° about the lid's x | 15.06° |
 
 ### 1.2 Three ways to cut an oblique viewport, and the choice for each port
@@ -215,7 +215,7 @@ Checks on the model (`frame_features.json`):
 - **The LW clamp ring** (Ø58 × 6.35, ID 31): 2.0 mm of ring outside each Ø4.5 hole, 2.97 mm between its flat and the nearest
   hole, 3.0 mm of wall between each tap drill and the seat.
 - **The BW clamp frame** as the model trims it (to the wall's flat face, its bottom edge, and 1 mm clear of the inlet plenum's
-  flange): 4.2, 4.3 and 3.35 mm of metal outside its three holes (`clamp_frame.web_to_trimmed_edge_mm`). Before the move the
+  flange): 4.25, 4.25 and 3.35 mm of metal outside its three holes (`clamp_frame.web_to_trimmed_edge_mm`). Before the move the
   third had 1.16 mm. `bw_hole3()` searches the seat's +x end on a 0.1 mm grid for the point with the most metal that keeps
   1.5 mm between the M4 thread and the seat pocket and stays above the floor screws.
 - **The BW sits at z 29.5** (the spec moved it up from 25) so its seat clears the floor screws (they rise to z 5.5 at mid-wall;
