@@ -113,9 +113,10 @@ would be a standalone paper, which is the option ruled out on Nov 27.
    and p-KGFN adapted to an alloy chain with powder reuse, a screen-error knob, a full-chain KG
    counterpart, and a matched-seed protocol.
 3. **It keeps the *Advanced Materials* article on its own story.** The benchmark's findings are nuanced:
-   choosing the step buys an early lead but not a better final alloy; screen-then-test is the best policy
-   when the screen is right; expected improvement per dollar with powder reuse is the most robust policy;
-   and the knowledge gradient as implemented is competitive only when the screen is wrong. They need room to
+   choosing the step never buys a better final alloy, and a clear early lead only with the knowledge
+   gradient and a wrong screen; screen-then-test has the best mean only when the screen is right; the
+   expected-improvement network policies have the best worst case; and the knowledge gradient as
+   implemented never beats expected improvement per dollar. They need room to
    be stated with their caveats. Folded into the SI they either take that room or get cut to one line, and
    two of them bear on choices the *Advanced Materials* article still has to make (decisions M7, M8).
 4. **It does not cost the *Advanced Materials* article its novelty.** That article's claim is the physical
