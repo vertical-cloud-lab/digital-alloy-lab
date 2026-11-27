@@ -94,6 +94,14 @@ def main(argv):
             b.name = "kt/" + b.name
     except Exception as e:  # noqa: BLE001
         print("no long table model:", e)
+    tbox = np.array([[b.box()[0][0], b.box()[1][0]] for b in table]) if table else np.zeros((0, 2))
+
+    def table_near(x, reach=1600.0):
+        """The long table's bodies within an arm's reach of a MiR at x (the table has ~1,000 bodies: nests, trays, rims)."""
+        if not table:
+            return []
+        m = (tbox[:, 1] >= x - reach) & (tbox[:, 0] <= x + reach)
+        return [table[k] for k in np.nonzero(m)[0]]
     out = dict(traj=str(traj), every=every, limit_mm=LIMIT, grip_limit_mm=GRIP_LIMIT, chapters={})
     for chapter in chapters:
         ev = load(traj, chapter)
@@ -213,6 +221,8 @@ def main(argv):
             return ws
 
         def check(n, where=""):
+            if only_steps and step not in only_steps:
+                return                       # --steps: replay the state, check only the chosen steps
             place("A")
             place("B")
             # arm against arm (with what they hold)
@@ -224,7 +234,7 @@ def main(argv):
             held_ids = set(st[n]["held"]["objs"]) if st[n]["held"] else set()
             tool_name = st[n]["tool"]
             # the arm against the parts present (not its own step's parts), the cell and the table
-            w = Group(world_bodies(n) + list(statics.values()) + table)
+            w = Group(world_bodies(n) + list(statics.values()) + table_near(float(st[n]["x"])))
             test(Group(mine), w, lambda x, y: ("arm-part", LIMIT), where)
             # the links and camera against the step's own parts too (round 10)
             own_ids = [i for i in step_objs if i in present and i not in held_ids and i in objs and i not in hidden]
@@ -264,6 +274,8 @@ def main(argv):
 
         def check_put(objs_put, where):
             """A put into the long table or a fixture (not into parts: those are their designed poses)."""
+            if only_steps and step not in only_steps:
+                return
             bs = []
             for i in objs_put:
                 if i in objs and i not in hidden:
@@ -271,6 +283,25 @@ def main(argv):
                     bs.append(objs[i])
             if bs:
                 test(Group(bs), Group(list(statics.values()) + table), lambda x, y: ("put", LIMIT), where)
+                # round 10: and against the parts already present in another frame (another sub-assembly, or one put
+                # elsewhere): an overlap a put leaves stays drawn until the next put (round 9: the metering base 7 mm into the
+                # reservoir rails for 500 frames). Parts held by an arm are checked as they move, not here.
+                ids = set(objs_put)
+                held_all = set()
+                for m in ("A", "B"):
+                    if st[m]["held"] is not None:
+                        held_all |= set(st[m]["held"]["objs"])
+                others = []
+                for i in present:
+                    if i in ids or i in held_all or i in hidden or i not in objs:
+                        continue
+                    objs[i].place(pose[i])
+                    others.append(objs[i])
+                if others:
+                    def fn_put(x, y):
+                        xi, yi = int(x.name.split()[0][1:]), int(y.name.split()[0][1:])
+                        return None if same_frame(xi, yi) else ("put", LIMIT)
+                    test(Group(bs), Group(others), fn_put, where)
 
         unplanned = set()
         last = {}

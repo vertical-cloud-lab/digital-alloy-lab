@@ -32,6 +32,9 @@ Step fields (run_assembly.py reads them):
 from __future__ import annotations
 
 UP, DN = (0.0, 0.0, 1.0), (0.0, 0.0, -1.0)
+# round 10: where F18 leaves the recoater's carriage group (mm along +x from its park at x -106): the middle, the tending robot's
+# blade-cartridge position (analysis/robot/ops.py job_blade), so F26 puts the cartridge in by its fin as that job takes it out
+RECOATER_MID = 106.0
 # Round 6: the rod end is a 316L block (x +-40.5, y -22 to +6, zc + 1 to zc + 17 with zc = -141 at z_p = 0) with seven weld-in
 # sleeves standing 12-21 mm out of its front face (modules_low.ROD_FT). Run 3 held the rod by its Ø22 end cap with the fingers
 # along y, where the front finger now sits inside the block; so arm A takes the block by its two end faces, fingers along x
@@ -347,9 +350,18 @@ def steps(module="M50"):
     a(P("F16", "Vacuum-port adapter (KF-25 stub welded in) with its 2-024 O-ring onto the right wall's two dowels (it hangs there)",
         ["Vacuum port"], "machine", "upright", "explode"))
     a(S("F17", "Four M5 x 20 vacuum-port screws", "vac_port", "machine", "upright", torque_Nm=4.2))
-    a(P("F18", "Recoater rail with its carriage, carriage block, ball nut and arm (bought and pre-assembled on the rail) onto the back wall",
+    # round 10: rail screw #1 (x -110) lies under the carriage at its park (carriage x -134 to -72), so no bit reaches it there
+    # (runs 9-14: every driver and both arms failed on it). The carriage runs free on the rail until the ball screw is in (F21):
+    # once arm A has driven the other three, arm B, still closed on the carriage block, slides the carriage group 106 mm along the
+    # rail to the middle (where the blade cartridge goes in at F26, as the tending robot's job does), lets go and parks, and #1 is
+    # driven then. Arm B takes the block's front web (y 53-67) at its top: run 14's grasp (y 72) closed on the carriage itself,
+    # 62 mm long with its end seals, and opened that wide its fingertip met the left wall's top (round 10's first run of F18)
+    a(P("F18", "Recoater rail with its carriage, carriage block, ball nut and arm (bought and pre-assembled on the rail) onto the back wall; "
+               "after three screws arm B slides the carriage to the middle for the fourth",
         ["Recoater guide rail", "Recoater carriage (", "Recoater carriage block", "Recoater ball nut", "Recoater arm"], "machine", "upright",
-        [(0, 0, 0), (0, 0, 220)], hold_for="rail", actor="B", grasp=dict(point=(-106.0, 72.0, 92.0), z=DN, x=(1.0, 0.0, 0.0), width=44.0)))
+        [(0, 0, 0), (0, 0, 220)], hold_for="rail", actor="B", grasp=dict(point=(-106.0, 54.0, 92.0), z=DN, x=(1.0, 0.0, 0.0), width=44.0),
+        slide=dict(keys=["Recoater carriage (", "Recoater carriage block", "Recoater ball nut", "Recoater arm", "Recoater position magnet"],
+                   d=(RECOATER_MID, 0.0, 0.0), push_at=(-130.25, 58.0, 62.0))))
     # run 10: a 60 mm bit extension (run 9: with the roles swapped, arm A's driver met the chamber body on one rail screw); run 11:
     # 30 mm (run 10 with 60 mm: arm A's wrist 1 met the base plate instead)
     a(S("F19", "Five M4 x 16 rail screws, driven from inside the chamber toward the back wall (30 mm bit extension)", "rail", "machine",
@@ -371,15 +383,32 @@ def steps(module="M50"):
         [(0, 0, 0), (0, 0, 200)], note="its screws are not drawn"))
     a(P("F25c", "Recoater servo onto the bracket, its shaft into the coupling along +x", ["Recoater servo"], "machine", "upright",
         [(0, 0, 0), (-40, 0, 0), (-40, 0, 120)], note="its screws are not drawn"))
-    a(P("F26", "Blade holder and blade, in through the door opening and up under the recoater arm", ["Blade holder", "HSS recoater blade"],
-        "machine", "upright", [(0, 0, 0), (0, -12, 0), (0, -12, 15), (6, -12, 15), (6, -200, 15)],
-        grasp=dict(point=(-106.0, -45.0, 18.0), z=(0.0, 1.0, 0.0), x=(1.0, 0.0, 0.0), width=18.0),
-        note="round 7: in 9 mm high over the door opening's sill (run 7's straight path met the frame below the opening), then down "
-             "and 12 mm back onto the arm's dowels; run 10: in 6 mm right of the seat and slid left inside the chamber (run 9: at the "
-             "recoater's park the holder, x -115 to -97, stands 5 mm outside the door opening's |x| < 110); run 11: 15 mm high (run 10 at 9: "
-             "the part's path passed, the right fingertip met the chamber body)"))
-    a(S("F27", "Two M3 x 8 blade screws by arm B from the back (100 mm bit extension: run 7's driver met the module and Fixture B; "
-        "run 9's arm A met Fixture B)", "blade", "machine", "upright", actor="B", torque_Nm=1.1, long_bit=100.0))
+    # round 10 (F26-F27): runs 7-14 could neither drive the blade's two M3 in the chamber (they point -x, 14 mm over the floor:
+    # neither the side-mounted driver's 248 mm body nor the angle head's 46 mm head has room there, and arm B's driver met the
+    # overflow funnel block) nor put the holder in by its sides (the 2F-85's fingertip met the chamber body however high it came
+    # in). So the cartridge is built on a two-pin bench nest (tooling.nest_blade: the holder on its side on the arm pocket's two
+    # dowel positions, the blade face up), its screws are driven straight down there, and the whole cartridge goes in as the
+    # tending robot changes it (analysis/robot/ops.py job_blade, reversed): the plate fingers on its grip fin, in over the sill
+    # 12 mm high, down, and 10 mm back into the arm's pocket onto its dowels, with the recoater in the middle, where F18 left it
+    # (parked, the fin is 4 mm inside the door opening's side). F26a and F26b are "bench_place" so that kit_table.py keeps the
+    # holder and blade in their F26 slot and the fin in its own (the long table's layout does not change).
+    a(dict(P("F26a", "Blade holder (its grip fin fitted by the shop) onto the two-pin bench nest, on its side",
+             ["Blade holder", "Blade-cartridge grip fin"], "blade", "blade_nest", [(0, 0, 0), (0, -10, 0), (70, -10, 0)],
+             grasp=dict(point=(-106.0, -45.0, 18.0), z=(0.0, 1.0, 0.0), x=(1.0, 0.0, 0.0), width=18.0)), do="bench_place"))
+    a(dict(P("F26b", "HSS blade onto the holder's face on the nest (small-part vacuum nozzle)", ["HSS recoater blade"], "blade", "blade_nest",
+             [(0, 0, 0), (60, 0, 0)], tool="nozzle", grasp=dict(point=(-95.5, 0.0, 9.0), z=(-1.0, 0.0, 0.0), x=(0.0, 1.0, 0.0))),
+           do="bench_place"))
+    a(S("F27", "Two M3 x 8 blade screws straight down into the holder on the bench nest", "blade", "blade", "blade_nest", actor="A",
+        torque_Nm=1.1))
+    a(P("F26", "Blade cartridge (holder, grip fin, blade and its two screws) off the bench nest and into the recoater arm's pocket by its "
+               "fin (plate fingers), the recoater in the middle", ["Blade holder", "HSS recoater blade"], "machine", "upright",
+        [(0, 0, 0), (0, -10, 0), (0, -10, 12), (0, -300, 12)], tool="gripper+plate", moved=True,
+        carry=["Blade-cartridge grip fin", "Blade screws"], shift=(RECOATER_MID, 0.0, 0.0), sweep_state=dict(recoater=RECOATER_MID),
+        # job_blade's lips on the fin (z 22); cell2's gripper TCP is at the 2F-85 pads' level, which on the cranked plate fingers is
+        # their 45 mm drop above the lips (eoat.PLATE_FINGERS; cell.py's TCP is at the lips), so the grasp point is 45 mm higher
+        grasp=dict(point=(-106.0, -71.0, 22.0 + 45.0), z=(0.0, 1.0, 0.0), x=(1.0, 0.0, 0.0), width=4.1),
+        note="the plate fingers' lips on the fin as job_blade takes it; the last 10 mm over the pocket's two ball plungers (40 N) "
+             "onto its two dowels"))
     a(P("F28", "Gas knife and dose chute", ["Gas knife", "Dose chute"], "machine", "upright", "explode", per_part=True,
         note="how they hang from the walls is not drawn"))
     a(dict(do="seal", id="F29", label="Lid O-ring cord (3.53 mm) rolled into the body's top gland: arm A rolls, arm B feeds the cord",

@@ -240,9 +240,7 @@ def place(run, st, idx, actor, tool, best, body, off, G, T_obj, close, state, ro
             # the last few mm pushed home with the closed fingers on its back face, as arm_place checked it (as below)
             R.move(actor, fr["qs"][:k], "cart", close=close, seat_mm=0.0)
             h1 = hook_moves(run, R, actor, body, off, n1)
-            R.grip(actor, max(0.0, close - 0.12))
-            R.detach(actor)
-            R.grip(actor, float(fr.get("push_close", 1.0)))
+            push_regrip(R, actor, fr, close)
             R.attach(actor, idx, fr["push_off"], state, name=st["id"])
             n2 = len(R.events)
             R.move(actor, fr["qs"][k:], "cart", close=float(fr.get("push_close", 1.0)), seat_mm=10.0)
@@ -272,13 +270,25 @@ def place(run, st, idx, actor, tool, best, body, off, G, T_obj, close, state, ro
         # round 9 (pick-insert-push): in with the part held, let go short of the seat, close the fingers, then push it home on
         # its back face with the closed fingertips, as arm_place checked it (the part rides on the closed fingers' TCP)
         R.move(actor, fr["qs"][:k], "cart", close=close, seat_mm=0.0)
-        R.grip(actor, max(0.0, close - 0.12))
-        R.detach(actor)
-        R.grip(actor, float(fr.get("push_close", 1.0)))
+        push_regrip(R, actor, fr, close)
         R.attach(actor, idx, fr["push_off"], state, name=st["id"])
         R.move(actor, fr["qs"][k:], "cart", close=float(fr.get("push_close", 1.0)), seat_mm=10.0)
     elif fr["qs"]:
         R.move(actor, fr["qs"], "cart", close=close, seat_mm=10.0)
+
+
+def push_regrip(R, actor, fr, close):
+    """Round 10 (pick-insert-push): let go, back the opened fingers off along the tool axis, close them clear of the part and come
+    forward to the push's start (run_assembly.push_backoff, checked); then the caller re-attaches the part on the closed fingers.
+    Round 9 closed the fingers where they held the part (through it) and re-attached it there, on the push's offset."""
+    c_open = float(fr.get("push_open", max(0.0, close - 0.12)))
+    R.grip(actor, c_open)
+    R.detach(actor)
+    if fr.get("push_back"):
+        R.move(actor, fr["push_back"], "cart", close=c_open)
+    R.grip(actor, float(fr.get("push_close", 1.0)))
+    if fr.get("push_fwd"):
+        R.move(actor, fr["push_fwd"], "cart", close=float(fr.get("push_close", 1.0)))
 
 
 def _place_moves(R, actor, path, fr, close):
@@ -325,15 +335,18 @@ def hook_moves(run, R, n, body, off, n0, res=None):
     return ok_all, why_all
 
 
-def release(run, n, qs_back, opened=True, seat=None):
+def release(run, n, qs_back, opened=True, seat=None, open_to=None):
     """retreat(): let go (the gripper opens a little), then back off along the tool axis. Round 10, seat = (objects, T, state):
-    the objects let go of are put on their designed pose at once (see run_assembly.retreat)."""
+    the objects let go of are put on their designed pose at once (see run_assembly.retreat); open_to: the opening the planner
+    checked the back-off at (else 0.12 more open than the grasp, as before)."""
     if not on():
         return
     R = RECM.REC
     st = R.state[n]
+    if run.arm(n).tool_name == "gripper" and open_to is not None:
+        R.grip(n, float(open_to))
     if st["held"] is not None:
-        if run.arm(n).tool_name == "gripper" and opened:
+        if run.arm(n).tool_name == "gripper" and opened and open_to is None:
             R.grip(n, max(0.0, st["close"] - 0.12))
         R.detach(n)
         if seat is not None and seat[0]:
@@ -378,7 +391,11 @@ def screw(run, i, actor, best, tool, long_bit, tip_d, torque, L, s_hex, row_acc)
         q_pl = run.q[actor].copy()
         held = a.held
         a.release()
-        tr = FE.presenter_trip(run, actor, q_from, np.asarray(target, float))
+        # round 10: the trip's way up out of the presenter and on to the hole is checked with the screw on the bit (round 9
+        # planned it with the bit empty, and the screw's last degrees into the hole's mouth cut its edge: chapter 40, M20)
+        tr = FE.presenter_trip(run, actor, q_from, np.asarray(target, float),
+                               held=(held[0], off) if (held is not None and off is not None) else None,
+                               allow=best.get("allow") or frozenset())
         if held is not None:
             a.hold(*held)
         a.place(q_pl)

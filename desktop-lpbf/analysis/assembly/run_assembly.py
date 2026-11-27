@@ -143,7 +143,7 @@ class Run:
             self.module_set = [i for i in self.sc.group("module") if self.sc.objs[i]["V"] is not None and self.sc.objs[i].get("kind") != "tool"]
         return self.module_set
 
-    def add(self, idx, grp, phase, state=None):
+    def add(self, idx, grp, phase, state=None, T=None):
         for i in idx:
             old = self.grp_of.get(i)
             if old is not None and old != grp:
@@ -151,7 +151,7 @@ class Run:
             self.asm.setdefault(grp, set()).add(i)
             self.grp_of[i] = grp
         self.phase_of[grp] = phase
-        self.cl.put(idx, self.cl.T_phase(phase), state)
+        self.cl.put(idx, self.cl.T_phase(phase) if T is None else T, state)
 
     def merge(self, src, dst):
         if src not in self.asm:
@@ -215,13 +215,19 @@ class Run:
         self.arm(n).place(self.q[n])
 
     # ---- Cartesian path with one IK branch, checked frame by frame
-    def follow(self, n, Ts, close, allow, seeds=None, exclude=(), dist_every=6):
-        """Ts: list of TCP poses (world). Returns dict(ok, qs, hit, at, min_d, with)."""
+    def follow(self, n, Ts, close, allow, seeds=None, exclude=(), dist_every=6, strict=False):
+        """Ts: list of TCP poses (world). Returns dict(ok, qs, hit, at, min_d, with). Round 10, strict: only the IK branch the
+        arm is on (a retreat must start where the arm is: round 10's first chapter-41 test drew one on another branch, a
+        141 deg cut, C05)."""
         a = self.arm(n)
         chk = K.checker(self.cl, n, exclude)
         first = a.ik_all(Ts[0], seed=self.q[n])
         if seeds:
             first = seeds + first
+        if strict:
+            first = [q for q in first if np.abs(np.asarray(q) - np.asarray(self.q[n])).max() < 0.02][:1]
+            if not first:
+                return dict(ok=False, qs=[], hit="the arm's own branch does not reach the first pose", at=0, min_d=None, with_=None)
         best = None
         for q0 in first[:10]:
             qs, prev, ok, hit, at = [], q0, True, None, None
@@ -460,6 +466,8 @@ def arm_place(run, st, idx, path, state, actor, tool, holdname, grasp=None, extr
         T_obj = T @ Tm(rot((0, 0, 1), rot_deg))
     else:
         T_obj = T
+    if st.get("shift"):
+        T_obj = T_obj @ Tm(p=st["shift"])       # round 10 (F26): the part goes onto a group that has moved (the recoater, F18)
     d_w = T[:3, :3] @ unit(np.asarray(path[1], float) - np.asarray(path[0], float)) if len(path) > 1 else np.array([0, 0, 1.0])
     if grasp:
         G = given_grasp(grasp, T_obj)
@@ -507,18 +515,36 @@ def arm_place(run, st, idx, path, state, actor, tool, holdname, grasp=None, extr
             z_tip = fingertip_reach(a)
             Gb = G @ Tm(p=(0.0, 0.0, -inset))                     # the part's back face, on the tool axis
             close_p = 1.0
+            # round 10: the closed fingertips end on the back face's plane, but the face is not flat everywhere under them (a
+            # rim, a lip): start the push just far enough back that they touch it, at most 1.5 mm in (M27's plate: 3 mm)
+            gap = push_gap(run, actor, Gb, z_tip, close_p, body, T_obj)
+            Gb = Gb @ Tm(p=(0.0, 0.0, -gap))
             Tp = [T_obj @ Tm(p=o) @ inv(T_obj) @ Gb @ Tm(p=(0.0, 0.0, -(K.TC_H + z_tip))) @ a.tcp_local(close_p) for o in offs[k:]]
             off_push = inv(Gb @ Tm(p=(0.0, 0.0, -(K.TC_H + z_tip))) @ a.tcp_local(close_p)) @ T_obj
             a.hold(body, off_push)
-            fr2 = run.follow(actor, Tp, close_p, allow, exclude=idx)
+            # round 10: seeded at the release pose, so the push keeps the arm's branch and the back-off joins it
+            fr2 = run.follow(actor, Tp, close_p, allow, seeds=[np.asarray(fr["qs"][-1], float)] if fr["qs"] else None, exclude=idx)
             a.hold(body, off)
+            bk = None
+            if fr2["ok"]:
+                # round 10: between the release and the push, the open fingers back off along the tool axis until the closed
+                # fingertips will be clear of the part's back face, close there and come forward to the push's start; checked
+                # with the part let go of as an obstacle. Round 9 closed the fingers where they held the part (chapter 40's
+                # recording: fingertips 25 mm through the build plate, M27) and re-attached the part on the closed fingers'
+                # offset at the grasp pose, so it jumped 12-30 mm into the parts under it until the arm reached the push
+                bk = push_backoff(run, actor, fr["qs"][-1], close, Tp[0], close_p, body, T_obj @ Tm(p=offs[k]), allow, idx,
+                                  q_push0=fr2["qs"][0])
+                a.hold(body, off)
+                if not bk["ok"]:
+                    fr2 = dict(fr2, ok=False, hit=f"no clear way to close the fingers behind it ({bk['why']})")
             if fr2["ok"]:
                 # round 9: where the push starts (push_at) and the part's offset from the closed fingers' TCP (push_off), so the
                 # recording draws the push with the fingers closed, as it was checked (round 8 drew the whole path with the
                 # fingers at the grasp's opening, so the push's open fingertips stood in the parts beside the seat)
                 fr = dict(ok=True, qs=fr["qs"] + fr2["qs"], hit=None, at=None, min_d=fr2["min_d"] if fr["min_d"] is None else
                           min(x for x in (fr["min_d"], fr2["min_d"]) if x is not None), with_=fr2["with_"] or fr["with_"],
-                          push_mm=round((len(offs) - k) * DS, 0), push_at=len(fr["qs"]), push_off=off_push, push_close=close_p)
+                          push_mm=round((len(offs) - k) * DS, 0), push_at=len(fr["qs"]), push_off=off_push, push_close=close_p,
+                          push_back=bk["back"], push_fwd=bk["fwd"], push_open=bk["c_open"])
             elif st.get("drop_ok") and (len(offs) - fr["at"]) * DS <= float(st.get("drop_mm", 12.0)):
                 fr = dict(ok=True, qs=fr["qs"], hit=None, at=None, min_d=fr["min_d"], with_=fr["with_"],
                           drop_mm=round((len(offs) - fr["at"]) * DS, 0))
@@ -569,6 +595,9 @@ def arm_place(run, st, idx, path, state, actor, tool, holdname, grasp=None, extr
         # round 9: the recording goes to the best attempt's dock; the planner's MiR must stand there too (it was left at the last
         # dock tried, so after a failed placement the next motions were planned from another base than the one drawn)
         run.cl.move_mir(actor, best["dock"])
+    a.close = float(best.get("close", a.close))
+    if fr.get("push_close") is not None:
+        a.close = float(fr["push_close"])         # round 10: the push ends with the fingers closed, as drawn
     if fr["qs"]:
         a.place(fr["qs"][-1], a.close)
         run.q[actor] = fr["qs"][-1]
@@ -589,8 +618,98 @@ def arm_place(run, st, idx, path, state, actor, tool, holdname, grasp=None, extr
     return dict(ok=ok, why=why, dock=best["dock"], fetch=acc.get("fetch"), fetch_why=acc.get("fetch_why"), hoist_hook=acc.get("hoist_hook"),
                 min_d=fr["min_d"], min_with=fr["with_"], dest=sorted(dest)[:4],
                 planned=best.get("plan", {}).get("planned"), waypoints=best.get("plan", {}).get("waypoints"),
-                grasp_width=round(width, 1), push_mm=fr.get("push_mm"), drop_mm=fr.get("drop_mm"), tool_in=tool_in,
+                grasp_width=round(width, 1), push_mm=fr.get("push_mm"), drop_mm=fr.get("drop_mm"), tool_in=tool_in, dest_all=sorted(dest),
                 seat_in=sorted(seat_in)[:4] if seat_in else None, close=best.get("close"))
+
+
+def push_gap(run, n, Gb, z_tip, c_push, body, T_body, limit=1.5, most=8.0, step=0.5):
+    """Round 10: how far (mm, along the tool axis) to set the closed fingertips back from the back face's point Gb so that none is
+    more than `limit` mm into the part (at T_body)."""
+    a = run.arm(n)
+    import ur_arm
+    Gf = ur_arm.gripper_fk(c_push)
+    tips = [(k, b) for k, b in a.grip.items() if "finger" in k or "knuckle" in k or "pad" in k]
+    body.place(T_body)
+    g = 0.0
+    while g <= most + 1e-9:
+        W0 = Gb @ Tm(p=(0.0, 0.0, -(K.TC_H + z_tip + g)))
+        Wt = W0 @ Tm(p=(0.0, 0.0, K.TC_H))
+        d = 0.0
+        for k, b in tips:
+            b.place(Wt @ Gf[k])
+            d = max(d, C.depth(b, body, upto=limit))
+            if d > limit:
+                break
+        if d <= limit:
+            return g
+        g += step
+    return 0.0
+
+
+def push_backoff(run, n, q_rel, c_grasp, T_push0, c_push, body, T_part, allow, idx, margin=6.0, q_push0=None):
+    """Round 10 (pick-insert-push): from the release pose q_rel (TCP at the grasp, fingers at c_grasp) back the slightly opened
+    fingers off along the tool axis until the closed fingertips are `margin` mm behind where the push starts (T_push0, TCP at
+    c_push), close them there and come forward to T_push0. The part let go of lies at T_part, an obstacle the fingers may only
+    touch (1.5 mm). Returns dict(ok, back=[q], fwd=[q], c_open, why)."""
+    a = run.arm(n)
+    held = a.held
+    c_open = max(0.0, float(c_grasp) - 0.12)
+    a.release()
+    tmp0 = Body("released part", body.v, body.f, kind="machine")
+    tmp0.place(T_part)
+    run.cl.static["__released"] = tmp0
+    try:
+        chk0 = K.checker(run.cl, n, idx)
+        allow0 = frozenset(allow) | frozenset([("tool", "released part")])
+        for dc in (0.12, 0.06, 0.0):          # round 10: the widest opening clear where it lets go (C09: 0.12 met the KF-25 port)
+            c_try = max(0.0, float(c_grasp) - dc)
+            if not chk0.collisions(q_rel, c_try, allow0, first=True):
+                c_open = c_try
+                break
+    finally:
+        run.cl.static.pop("__released", None)
+    fl_rel = a.tcp(q_rel, c_grasp) @ inv(a.tcp_local(c_grasp))
+    fl_push = T_push0 @ inv(a.tcp_local(c_push))
+    dz = float((inv(fl_rel) @ fl_push)[2, 3])            # the push's flange lies dz along the tool axis from the release's
+    back = max(0.0, -dz) + margin
+    nb = max(2, int(math.ceil(back / DS)) + 1)
+    Tb = [fl_rel @ Tm(p=(0.0, 0.0, -s)) @ a.tcp_local(c_open) for s in np.linspace(0.0, back, nb)]
+    fwd = back + dz
+    nf = max(2, int(math.ceil(abs(fwd) / DS)) + 1)
+    fl_b = fl_rel @ Tm(p=(0.0, 0.0, -back))
+    Tf = [fl_b @ Tm(p=(0.0, 0.0, s)) @ a.tcp_local(c_push) for s in np.linspace(0.0, fwd, nf)]
+    tmp = Body("released part", body.v, body.f, kind="machine")
+    tmp.place(T_part)
+    run.cl.static["__released"] = tmp
+    allow2 = frozenset(allow) | frozenset([("tool", "released part")])
+    q_keep = run.q[n]
+    try:
+        run.q[n] = np.asarray(q_rel, float)
+        a.place(q_rel, c_open)
+        fb = run.follow(n, Tb, c_open, allow2, seeds=[np.asarray(q_rel, float)], exclude=idx, dist_every=99)
+        if not fb["ok"]:
+            return dict(ok=False, why=f"backing off: {fb['hit']}", c_open=c_open)
+        chk = K.checker(run.cl, n, idx)
+        c = chk.collisions(fb["qs"][-1], c_push, allow2, first=True)
+        if c:
+            return dict(ok=False, why=f"closing: {c[0][0]} hits {c[0][1]}", c_open=c_open)
+        run.q[n] = fb["qs"][-1]
+        ff = run.follow(n, Tf, c_push, allow2, seeds=[fb["qs"][-1]], exclude=idx, dist_every=99)
+        if not ff["ok"]:
+            return dict(ok=False, why=f"coming forward closed: {ff['hit']}", c_open=c_open)
+        fwd_qs = list(ff["qs"])
+        if q_push0 is not None:
+            gap = float(np.abs(np.asarray(fwd_qs[-1], float) - np.asarray(q_push0, float)).max())
+            if gap > math.radians(2.0):
+                return dict(ok=False, why=f"the push starts on another IK branch ({math.degrees(gap):.0f} deg)", c_open=c_open)
+            if gap > 1e-3:
+                fwd_qs.append(np.asarray(q_push0, float))
+        return dict(ok=True, back=fb["qs"], fwd=fwd_qs, c_open=c_open, back_mm=round(back, 1), why="")
+    finally:
+        run.cl.static.pop("__released", None)
+        run.q[n] = q_keep
+        if held is not None:
+            a.hold(*held)
 
 
 _TIP = {}
@@ -620,15 +739,32 @@ def retreat(run, n, dist=60.0, near=(), names=(), seat=None):
     a = run.arm(n)
     a.release()
     a.place(run.q[n])
-    T = a.tcp(run.q[n])
-    Ts = [T @ Tm(p=(0, 0, -s)) for s in np.linspace(0, dist, 7)]
     allow = frozenset([("tool", run.sc.label(i)) for i in near] + [("tool", nm) for nm in names])
-    fr = run.follow(n, Ts, a.close, allow, dist_every=99)
+    # round 10: the 2F-85 lets go by opening (the recording draws it 0.12 more open, then backs off). Round 9 checked the back-off
+    # and the move to park at the grasp's closure, so the wider drawn fingers could stand in the part's neighbours (M28: a
+    # fingertip 6 mm in the module's handle on the way to park). Now the widest opening of 0.12, 0.06 and 0 that is clear where it
+    # opens is the one checked and drawn, and the flange backs off straight (its TCP moves as the fingers open)
+    c0 = float(a.close)
+    c_open = c0
+    if a.tool_name == "gripper" and c0 > 0.0:
+        chk = K.checker(run.cl, n)
+        for dc in (0.12, 0.06, 0.0):
+            c = max(0.0, c0 - dc)
+            if not chk.collisions(run.q[n], c, allow, first=True):
+                c_open = c
+                break
+    # straight back along the tool's own axis (the TCP's z: a driver's bit, an angle head's socket), the TCP placed for the opening
+    T0 = a.tcp(run.q[n], c0)
+    Ts = [T0 @ Tm(p=(0, 0, -s)) @ inv(a.tcp_local(c0)) @ a.tcp_local(c_open) for s in np.linspace(0, dist, 7)]
+    a.close = c_open
+    fr = run.follow(n, Ts, c_open, allow, dist_every=99, strict=True)
+    if not fr["ok"]:
+        log(f"   retreat of arm {n} stops after {len(fr['qs'])} of {len(Ts)} frames: {fr['hit']}")
     put = None
     if seat is not None:
-        u, phase, state = seat
-        put = ([i for i in u if run.sc.objs[i]["V"] is not None], run.cl.T_phase(phase), state)
-    CM.release(run, n, fr["qs"], seat=put)
+        u, phase, state = seat               # phase: the phase's name, or the machine frame itself (a shifted step, F26)
+        put = ([i for i in u if run.sc.objs[i]["V"] is not None], run.cl.T_phase(phase) if isinstance(phase, str) else phase, state)
+    CM.release(run, n, fr["qs"], seat=put, open_to=c_open if a.tool_name == "gripper" else None)
     if fr["qs"]:
         run.q[n] = fr["qs"][-1]
     return fr["ok"]
@@ -648,11 +784,14 @@ def go_park(run, n):
 
 
 def do_place(run, st, row):
+    if st.get("units"):
+        return do_units(run, st, row)          # round 10 (F57): each piece its own way in
     sc = run.sc
     idx = run.resolve(st["keys"], st.get("exclude", ()), st.get("moved", False))
     if not idx:
         row.update(sweep="?", arm="?", why="no object matched")
         return
+    idx += carried(run, st, idx)
     state = dict(st.get("state", {}))
     units = [[i] for i in idx] if (st.get("per_solid") or st.get("per_part")) else [idx]
     if st.get("order") == "zdesc":          # build outward from the heater block (machine z decreasing)
@@ -667,7 +806,7 @@ def do_place(run, st, row):
     sw_all, arm_all, gaps, dmins, why, docks = [], [], [], [], [], set()
     for u in units:
         path = path_list(run, st, u)
-        sw = sweep(run, st, u, path, state, st.get("rot"))
+        sw = sweep(run, st, u, path, dict(state, **st.get("sweep_state", {})), st.get("rot"))
         sw_all.append(sw["ok"])
         if sw.get("min_gap") is not None:
             gaps.append((sw["min_gap"], sw.get("gap_with")))
@@ -721,7 +860,8 @@ def do_place(run, st, row):
             arm_all.append(sub["ok"])
             if not sub["ok"]:
                 why.append(sub["why"])
-            retreat(run, actor, near=u)
+            if not sub.get("released"):         # round 10 (F18): the holder already let go after its slide and parked
+                retreat(run, actor, near=u, names=r.get("dest_all") or ())
         elif st.get("hold_first") and r["ok"]:
             # round 8 (two hands): keep it pressed on its seal while the other arm drives its first screws
             run.add(u, st["grp"], st["phase"], state)
@@ -732,10 +872,12 @@ def do_place(run, st, row):
                 run._hold_trial = False
                 hres = dict(step=st["id"], status="error", why=f"{type(e).__name__}: {e}"[:200])
             row.setdefault("holds", []).append(hres)
-            retreat(run, actor, near=u)
+            retreat(run, actor, near=u, names=r.get("dest_all") or ())
         else:
-            retreat(run, actor, seat=(u, st["phase"], state))
-            run.add(u, st["grp"], st["phase"], state)
+            T_seat = shifted(run, st)
+            # round 10: the fingers or tool may still touch the part's seat contacts where they let go (1.5 mm), as when placing
+            retreat(run, actor, names=r.get("dest_all") or (), seat=(u, st["phase"] if T_seat is None else T_seat, state))
+            run.add(u, st["grp"], st["phase"], state, T=T_seat)
         go_park(run, actor)
     gmin = min(gaps) if gaps else (None, None)
     dmin = min(dmins) if dmins else (None, None)
@@ -746,6 +888,35 @@ def do_place(run, st, row):
         fs = row.pop("fetches")
         row["fetch"] = "FAIL" if "FAIL" in fs else ("person" if "person" in fs else ("PASS" if "PASS" in fs else "-"))
         row["fetch_why"] = "; ".join(row.pop("fetch_whys", []))[:300]
+
+
+def do_units(run, st, row):
+    """Round 10 (F57): a step whose pieces each go in their own way (keys, path, arm, tool, grasp in st["units"]), placed one after
+    the other as steps of their own (do_place), the rows joined. The beam line: each tube slides along its own axis into the part
+    placed before it and the next cube slides onto its free end along the same axis (a tube's ends sit in the cubes' ports)."""
+    subs = []
+    for u in st["units"]:
+        sub = dict(st, **u)
+        sub.pop("units", None)
+        sub["per_solid"] = False
+        r = {}
+        do_place(run, sub, r)
+        subs.append((u, r))
+        log(f"   {st['id']} {u['keys'][0][:30]}: {r.get('sweep')} {r.get('arm')} {(r.get('why') or '')[:120]}")
+    gaps = [(r["gap"], r.get("gap_with")) for _, r in subs if r.get("gap") is not None]
+    clears = [(r["arm_clear"], r.get("arm_clear_with")) for _, r in subs if r.get("arm_clear") is not None]
+    fetches = [r.get("fetch") for _, r in subs if r.get("fetch")]
+    row.update(sweep="PASS" if all(r.get("sweep") in ("PASS", "-") for _, r in subs) else "FAIL",
+               arm="PASS" if all(r.get("arm") == "PASS" for _, r in subs) else "FAIL",
+               gap=min(gaps)[0] if gaps else None, gap_with=min(gaps)[1] if gaps else None,
+               arm_clear=min(clears)[0] if clears else None, arm_clear_with=min(clears)[1] if clears else None,
+               why="; ".join(f"{u['keys'][0][:28]}: {r['why']}" for u, r in subs if r.get("why"))[:400],
+               docks=sorted({d for _, r in subs for d in (r.get("docks") or [])}), n_units=len(subs),
+               units=[dict(part=u["keys"][0], actor=u.get("actor", st.get("actor")), tool=u.get("tool", st.get("tool")), sweep=r.get("sweep"),
+                           arm=r.get("arm"), why=r.get("why"), fetch=r.get("fetch")) for u, r in subs])
+    if fetches:
+        row["fetch"] = "FAIL" if "FAIL" in fetches else ("person" if "person" in fetches else ("PASS" if "PASS" in fetches else "-"))
+        row["fetch_why"] = "; ".join(r.get("fetch_why") or "" for _, r in subs if r.get("fetch_why"))[:300]
 
 
 def force_check(run, st, actor, path):
@@ -788,6 +959,11 @@ def driver_for(run, i, phase, torque):
     if (torque or 0.0) > SD_MAX:
         return "nutrunner", f"{torque} N m > {SD_MAX} N m"
     return "screwdriver", ""
+
+
+def tail_ok(chk, path, close, allow, last_deg=12.0, step_deg=0.25):
+    """Round 10: cell.Checker.tail_free (the last degrees of a planned approach, checked every 0.25 deg)."""
+    return chk.tail_free(path, close, allow, last_deg, step_deg)
 
 
 def arm_state(run, n):
@@ -870,6 +1046,11 @@ def drive_screw(run, i, phase, actor, long_bit=None, state=None, torque=None, fo
                     # pre-approach pose 60 mm back along the screw axis (and, for the angle head, slid 220 mm out along the
                     # tool body, from under the plate), a checked Cartesian move in, and a plan only to the pre-approach pose
                     path_q, info = chk.plan(run.q[actor], fr["qs"][0], 0.0, allow=allow, iters=60)
+                    if path_q is not None and not tail_ok(chk, path_q, 0.0, allow):
+                        # round 10: the direct approach's last degrees, checked finely, clip the hole's edge with the screw (the
+                        # planner's 1.5 deg samples missed it: chapter 40's recording, the screw on the bit 6 mm into the piston
+                        # head at M08 and the gland plate at M20): come in along the axis instead
+                        path_q, info = None, dict(reason="direct approach clips the hole's edge")
                     if path_q is None:
                         T_s = Ts[0]
                         pre = [T_s @ Tm(p=(0, 0, -60.0 * k / 4)) for k in range(5)]
@@ -889,7 +1070,7 @@ def drive_screw(run, i, phase, actor, long_bit=None, state=None, torque=None, fo
                             info = dict(reason=f"no clear way in to the hole's mouth ({fr_in['hit']})")
                     if path_q is not None:
                         best = dict(ok=True, dock=dk, roll=roll, qs=fr["qs"], planned=info.get("planned"), path=path_q, off=off,
-                                    pre_qs=fr_in["qs"] if info.get("via") == "pre-approach" else None)
+                                    pre_qs=fr_in["qs"] if info.get("via") == "pre-approach" else None, allow=allow)
                         break
                     if best is None or best.get("why", "").startswith("no ") or not best.get("qs"):
                         best = dict(ok=False, dock=dk, roll=roll, qs=fr["qs"], why=f"approach: {info.get('reason')}")
@@ -998,14 +1179,166 @@ def hold_and_drive(run, st, u, holder):
     lb = next((x.get("long_bit") for x in SQ.steps() if x.get("joint") == st["hold_for"]), None)   # run 10: the joint's bit extension
     sub = dict(id=st["id"] + "h", joint=st["hold_for"], phase=st["phase"], grp=st["grp"], actor=run.other(holder), torque_Nm=tq,
                holder_busy=True, long_bit=lb)
+    sl = st.get("slide")
+    cov = slide_covered(run, st, sl, (lo, hi)) if sl else []
+    run.done_screws.update(cov)             # round 10 (F18): the screws under the part that slides are driven after the slide
     row = {}
     per = do_screws(run, sub, row, near=(lo, hi), actor=run.other(holder))
+    run.done_screws.difference_update(cov)
     run.sub_rows = getattr(run, "sub_rows", [])
     row.update(id=sub["id"], label=f"{st['label'][:60]}: screws of {st['hold_for']} driven while arm {holder} holds it", do="screws",
                joint=st["hold_for"], actor=run.other(holder), holder=holder)
     run.sub_rows.append(row)
     ok = all(r["ok"] for _, r in per) if per else True
-    return dict(ok=ok, why="" if ok else f"held-part screws: {row.get('why', '')[:150]}")
+    res = dict(ok=ok, why="" if ok else f"held-part screws: {row.get('why', '')[:150]}")
+    if cov:
+        r2 = slide_and_drive(run, st, holder, sl, sub, (lo, hi), ok)
+        res = dict(ok=ok and r2["ok"], why="; ".join(w for w in (res["why"], r2["why"]) if w), released=True)
+    return res
+
+
+def carried(run, st, idx):
+    """Round 10 (F26): objects a step carries along with its keys' parts (the blade cartridge's fin and screws, fitted on the
+    bench nest), named apart so that kit_table.py's slot for the step keeps its old members."""
+    return [i for i in run.resolve(st.get("carry", ()), moved=True) if i not in idx and i in run.cl.where]
+
+
+def shifted(run, st):
+    """Round 10 (F26): the machine frame of a step whose part goes onto a group that has moved (st["shift"], machine frame),
+    or None for the phase's own frame."""
+    return run.cl.T_phase(st["phase"]) @ Tm(p=st["shift"]) if st.get("shift") else None
+
+
+def slide_objs(run, sl):
+    """Round 10 (F18): the objects of a slide spec present in the cell (the recoater's carriage group)."""
+    return [i for i in run.resolve(sl["keys"], moved=True) if i in run.cl.where]
+
+
+def slide_covered(run, st, sl, box):
+    """Round 10 (F18): the joint's screws whose heads lie inside the box of the part that slides away: the recoater carriage
+    (x -134 to -72 at its park) stands over rail screw #1 (x -110), so no bit reaches it until the carriage has moved."""
+    idx = run.resolve(sl["keys"], moved=True)
+    if not idx:
+        return []
+
+    def mbox(i):
+        M = run.sc.pose(i, {})
+        v = run.sc.objs[i]["V"] @ M[:3, :3].T + M[:3, 3]
+        return v.min(0), v.max(0)
+    bs = [mbox(i) for i in idx]
+    lo, hi = np.min([b[0] for b in bs], axis=0), np.max([b[1] for b in bs], axis=0)
+    return [i for i in screw_targets(run, st["hold_for"], None, near=box) if np.all(mbox(i)[1] > lo) and np.all(mbox(i)[0] < hi)]
+
+
+def slide_and_drive(run, st, holder, sl, sub, box, held_ok):
+    """Round 10 (F18): once the screws the driver could reach hold the rail, the holder lets go and parks; the carriage group runs
+    free on the rail until the ball screw is in (F21), so an arm with the pin pusher (tooling.pin_pusher: a Ø4.5 x 60 rod) comes
+    down into the 11 mm between the carriage block's -x face and the left liner and pushes the group sl["d"] (machine frame) along
+    the rail (no gripper fits there: open round the 44 mm block, the 2F-85's fingertips meet the left wall, which is why F18's
+    placement ends in a push); then the screws the carriage covered are driven by the driver, or by the other arm."""
+    cl = run.cl
+    objs = slide_objs(run, sl)
+    T = cl.T_phase(st["phase"])
+    d = np.asarray(sl["d"], float)
+    retreat(run, holder, near=run.resolve(st["keys"], moved=True))
+    go_park(run, holder)
+    out = dict(ok=False, why="", slide_mm=round(float(np.linalg.norm(d)), 0))
+    tried = []
+    for n in (holder, run.other(holder)):
+        r = push_slide(run, st, n, objs, T, d, sl)
+        if r["ok"]:
+            out.update(ok=True, by=n)
+            break
+        tried.append(f"arm {n}: {r['why'][:90]}")
+    if not out["ok"]:
+        out["why"] = "slide: " + "; ".join(tried)
+        log(f"   {out['why']}")
+        return out
+    row2 = {}
+    sub2 = dict(sub, id=st["id"] + "s", holder_busy=False)
+    per = do_screws(run, sub2, row2, near=box, actor=sub["actor"])
+    row2.update(id=sub2["id"], label=f"{st['label'][:50]}: screws of {st['hold_for']} the carriage covered, driven after arm {out['by']} "
+                                     f"pushed it {out['slide_mm']:.0f} mm along the rail", do="screws", joint=st["hold_for"], actor=sub["actor"])
+    run.sub_rows.append(row2)
+    ok = all(r["ok"] for _, r in per) if per else True
+    out.update(ok=ok, why="" if ok else f"screws after the slide: {row2.get('why', '')[:150]}")
+    return out
+
+
+def push_slide(run, st, n, objs, T, d, sl, above=80.0):
+    """Round 10 (F18): arm n with the pin pusher: planned from park to `above` mm over the push point, straight down, the push
+    (the carriage group riding on the rod: a checked straight move), straight up, park. Recorded only if every part is clear."""
+    cl = run.cl
+    a = run.arm(n)
+    s_in = arm_state(run, n)
+    P0 = (T @ np.r_[np.asarray(sl["push_at"], float), 1.0])[:3]
+    Tw = frame_zx((0.0, 0.0, -1.0), T[:3, 0], P0)              # rod down, the tool's x along the push
+    dw = T[:3, :3] @ d
+    L = float(np.linalg.norm(dw))
+    names = [run.sc.label(i) for i in objs]
+    touch = frozenset(("tool", nm) for nm in names)
+    body = run.held_body(objs, f"held:{st['id']}:push", {})
+    body.place(T)
+    dest = contacts_at_seat(run, body, exclude=objs)
+    allow_p = frozenset([("held", nm) for nm in dest] + [("tool", nm) for nm in dest]) | touch
+    why = "no dock"
+    for dk in run.docks_for(float(P0[0]))[:2]:
+        run.dock(n, dk)
+        run.set_tool(n, "pinrod")
+        run.q[n] = a.park_q()
+        a.place(run.q[n])
+        down = [Tm(p=(0.0, 0.0, above * (1.0 - s))) @ Tw for s in np.linspace(0.0, 1.0, max(2, int(above / DS) + 1))]
+        fd = run.follow(n, down, 0.0, touch, dist_every=99)
+        if not fd["ok"]:
+            why = f"down to the push: {fd['hit']}"
+            continue
+        run.q[n] = a.park_q()
+        a.place(run.q[n])
+        path, info = run.plan_to(n, fd["qs"][0], 0.0)
+        if path is None:
+            why = f"approach: {info.get('reason')}"
+            continue
+        q_dn = fd["qs"][-1]
+        run.q[n] = q_dn
+        a.place(q_dn)
+        Tc = a.tcp(q_dn)
+        off = inv(Tc) @ T
+        a.hold(body, off)
+        nfr = max(2, int(math.ceil(L / DS)) + 1)
+        fp = run.follow(n, [Tm(p=dw * s) @ Tc for s in np.linspace(0.0, 1.0, nfr)], 0.0, allow_p, exclude=objs, dist_every=99)
+        a.release()
+        if not fp["ok"]:
+            why = f"push: {fp['hit']} at {(fp['at'] or 0) * L / (nfr - 1):.0f} mm"
+            continue
+        q_end = fp["qs"][-1]
+        K.Cell.put(cl, objs, T @ Tm(p=d))       # recorded below, in order
+        run.q[n] = q_end
+        a.place(q_end)
+        Te = a.tcp(q_end)
+        fu = run.follow(n, [Tm(p=(0.0, 0.0, above * s)) @ Te for s in np.linspace(0.0, 1.0, max(2, int(above / DS) + 1))], 0.0, touch,
+                        dist_every=99)
+        if not fu["ok"]:
+            K.Cell.put(cl, objs, T)
+            why = f"up from the push: {fu['hit']}"
+            continue
+        if CM.on():
+            R = RECM.REC
+            CM.goto(run, n, dk)
+            R.tool(n, "pinrod", CM.tool_spec(run, n))
+            R.move(n, path, "plan", close=0.0)
+            R.move(n, fd["qs"], "cart", close=0.0)
+            R.attach(n, objs, off, {}, name=st["id"] + ":push")
+            R.move(n, fp["qs"], "cart", close=0.0)
+            R.detach(n, T @ Tm(p=d))
+            R.put(objs, T @ Tm(p=d), {}, why="pushed along the rail")
+            R.move(n, fu["qs"], "cart", close=0.0)
+        run.q[n] = fu["qs"][-1]
+        a.place(run.q[n])
+        go_park(run, n)
+        log(f"   arm {n} pushed {len(objs)} objects {L:.0f} mm along the rail (dock {dk})")
+        return dict(ok=True, why="")
+    arm_restore(run, n, s_in)
+    return dict(ok=False, why=why)
 
 
 def hold_first(run, st, u, holder):
@@ -1201,7 +1534,8 @@ def do_flip(run, st, row):
         a.place(run.q[actor], a.close)
     ok = fr["ok"] and fr.get("plan_ok", False)
     why = "" if ok else (fr["hit"] or f"approach: {fr.get('plan', {}).get('reason')}")
-    CM.flip(run, st, actor, fr, idx, G_m, close_for(run, actor, width), T0, fr.get("plan_path"))
+    # round 10: the closure the turn-over was checked at (fit_close may have opened it), not close_for()'s
+    CM.flip(run, st, actor, fr, idx, G_m, float(a.close), T0, fr.get("plan_path"))
     run.snapshot(st["id"])
     taker_ok = None
     if st.get("taker"):
@@ -1242,7 +1576,7 @@ def do_flip(run, st, row):
     else:
         a.release()
         run.add(idx, grp, st["to"])
-        retreat(run, actor)
+        retreat(run, actor, near=idx)          # round 10: the fingers may touch the module they let go of (1.5 mm), nothing else
         go_park(run, actor)
     row.update(sweep="-", arm="PASS" if ok and taker_ok in (None, True) else "FAIL", why=why[:300], docks=[dk],
                arm_clear=fr["min_d"], arm_clear_with=fr["with_"], mass_kg=None)
@@ -1752,7 +2086,7 @@ def main(argv):
         CUR_STEP[0] = st["id"]
         CM.begin(run, st)
         try:
-            {"place": do_place, "screws": do_screws, "seal": do_seal, "flip": do_flip, "dual": do_dual, "note": do_note,
+            {"place": do_place, "bench_place": do_place, "screws": do_screws, "seal": do_seal, "flip": do_flip, "dual": do_dual, "note": do_note,
              "rotate": do_rotate}[st["do"]](run, st, row)
         except Exception as e:  # noqa: BLE001
             row.update(arm="ERROR", why=f"{type(e).__name__}: {e}"[:300])
@@ -1765,6 +2099,11 @@ def main(argv):
             run.rows.append(sr)
         run.sub_rows = []
         log(st["id"], row.get("sweep"), row.get("arm"), row.get("gap"), row.get("arm_clear"), (row.get("why") or "")[:160])
+        if C.CONTAIN_HITS:
+            top = sorted(C.CONTAIN_HITS.items(), key=lambda kv: -kv[1])[:4]
+            log("   containment hits: " + "; ".join(f"{a_} in/around {b_} x{k_}" for (a_, b_), k_ in top))
+            row["contain_hits"] = [dict(a=a_, b=b_, n=k_) for (a_, b_), k_ in top]
+            C.CONTAIN_HITS.clear()
         save(run)
     save(run, final=True)
     if RECM.REC is not None:
@@ -1781,13 +2120,14 @@ def ff_step(run, st):
     do_rotate leave behind (run.add / merge / take, the jaws), whatever the arms did."""
     sc, cl = run.sc, run.cl
     do = st["do"]
-    if do == "place":
+    if do in ("place", "bench_place"):
         idx = run.resolve(st["keys"], st.get("exclude", ()), st.get("moved", False))
         if not idx:
             return
+        idx += carried(run, st, idx)
         if st.get("merge"):
             run.merge(st["merge"], st["grp"])
-        run.add(idx, st["grp"], st["phase"], dict(st.get("state", {})))
+        run.add(idx, st["grp"], st["phase"], dict(st.get("state", {})), T=shifted(run, st))
         if st.get("hold_for"):
             units = [[i] for i in idx] if (st.get("per_solid") or st.get("per_part")) else [idx]
             for u in units:
@@ -1798,6 +2138,8 @@ def ff_step(run, st):
                 for i in screw_targets(run, st["hold_for"], None, near=(np.minimum(lo, hi), np.maximum(lo, hi))):
                     run.add([i], st["grp"], st["phase"])
                     run.done_screws.add(i)
+        if st.get("slide"):                 # round 10 (F18): the carriage group where the holder slid it
+            K.Cell.put(run.cl, slide_objs(run, st["slide"]), run.cl.T_phase(st["phase"]) @ Tm(p=st["slide"]["d"]))
     elif do == "screws":
         for i in screw_targets(run, st["joint"], st.get("pn"), None):
             run.add([i], st["grp"], st["phase"])
