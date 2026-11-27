@@ -477,8 +477,9 @@ back panel.
 
 ![Where the M850D3's light lands on the bed, and the side camera's signal per pixel against the process's own light](../analysis/out/monitoring/optics/bw_light.png)
 
-**At the side camera** (Chronos 2.1-HD + Kowa 50 mm at f/4, 25 µm/px; powder Lambertian, reflectance 0.5; 2 A pulses; e⁻ in
-one pixel, full well 15,000, read noise 25):
+**At the side camera** (Chronos 2.1-HD + Kowa 50 mm at f/4 and 176 mm, 25 µm/px; LW window, slide and lens 0.8 together, as in
+`viewports.py`; QE 0.185 at 850 nm and 0.17 at 865 nm; filters as listed, each behind the FESH1000; powder Lambertian, reflectance
+0.5; 2 A pulses; e⁻ in one pixel, full well 15,000 and read noise 25, the stand-in values):
 
 | Source | Filter | 10 µs | 20 µs |
 |---|---|---:|---:|
@@ -524,6 +525,9 @@ estimated; the guard's air at 40 °C):
 | 10,000 fps | 10 / 20 µs | 2.0 A | 0.14 / 0.24 | 0.27 / 0.47 A | 0.7 / 1.2 W | 46 / 50 °C | 53 / 63 °C |
 | CW (alignment, or the layer camera's raking light) | – | 1.0 / 1.5 A | 1 | 1.0 / 1.5 A | 2.1 / 3.4 W | 58 / 69 °C | 82 / 107 °C |
 
+- **Timing:** the Pico 2 already has a strobe output next to the Chronos's TRIG1 (sync-and-data.md §1.3). Raise the strobe one
+  edge (~2 µs) before each exposure starts, and drop it when the exposure ends. Find the exposure's start with sync-and-data.md's
+  step 3 calibration; Kron gives ≤ 0.5 µs of jitter.
 - **2 A pulses stay inside the LED's ratings at every frame rate planned:** at most 2 A (the pulsed maximum), at most 1.14 A on
   average (the CW maximum is 1.5 A). The DC2200's LED2 terminal reaches 27 kHz, above 24,046 fps.
 - **Bursts barely warm the heat sink.** Its time constant is ~670 s, and a burst is at most 15.5 s (32 GB at 24 kfps). The
