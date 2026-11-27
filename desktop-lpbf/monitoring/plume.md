@@ -15,11 +15,13 @@ Nothing here is built or measured. The geometry is the model's (`cad/lpbf_low.py
 | [`spatter.py`](../analysis/monitoring/plume/spatter.py) | spatter on its own: heights, ranges, a Monte Carlo against the chamber's windows, cooling, how long it glows for each camera, motion blur |
 | [`plume_jet.py`](../analysis/monitoring/plume/plume_jet.py) | the vapour jet by hand: vapour pressure over each alloy, evaporation, jet speed and momentum, rise in the cross-flow, primary particle size, Mie extinction of the condensate |
 | [`fouling.py`](../analysis/monitoring/plume/fouling.py) | the optics of a deposit on a slide, and hours to each window's limit |
+| [`growth.py`](../analysis/monitoring/plume/growth.py) | the condensate's growth in the jet and the bed jet (nucleation, condensation, coagulation, sintering, laser heating, oxidation), the beam's loss and the coaxial glow (§3.4, §3.6) |
 | [`summarize.py`](../analysis/monitoring/plume/summarize.py) → [`summary.md`](../analysis/out/monitoring/plume/summary.md) | every table below, regenerated from the JSON files |
-| [`analysis/out/monitoring/plume/`](../analysis/out/monitoring/plume/) | `particles.json`, `spatter.json`, `plume_jet.json`, `fouling.json` and the figures |
+| [`analysis/out/monitoring/plume/`](../analysis/out/monitoring/plume/) | `particles.json`, `spatter.json`, `plume_jet.json`, `fouling.json`, `growth.json` and the figures |
 
-Edison's two literature answers for this ([`r8-melt-plume`](../edison/r8-melt-plume/answer.md) and
-[`r8-viewports`](../edison/r8-viewports/answer.md)) are used throughout; §6 says where this note differs.
+Edison's literature answers for this ([`r8-melt-plume`](../edison/r8-melt-plume/answer.md),
+[`r8-viewports`](../edison/r8-viewports/answer.md) and, for the plume's growth and beam loss,
+[`r9-plume-growth`](../edison/r9-plume-growth/answer.md)) are used throughout; §6 says where this note differs.
 
 ## 0. Short answer
 
@@ -55,12 +57,21 @@ over the plate):
    film, the same mass costs the LP 10 % in ~0.3 h and the others in 3–10 h. Real condensate, chains of ~10 nm particles
    and partly oxidised, lies between. Nobody has published it for Al (Edison agrees), so check every slide's
    transmission each build (§4.5).
-7. **The plume costs the beam ~0.05–0.2 % at 1070 nm** (worker A's source terms at 320 W: 6061 to 7075; at most ~1 % if
-   all the vapour condensed above the spot) and the coaxial photodiode ~4× more at 850 nm, fluctuating with the keyhole;
-   the two-colour ratio cancels most of it (§3.4). These assume the condensate above the spot is still ~20 nm primaries;
-   grown into 300 nm agglomerates it would cost 3–11 %, the low end of what welding measures, so treat 0.05–0.2 % as the
-   low end until it is measured (§6, Edison's design review). It doesn't steer the beam. Old plume crosses the beam only where
-   vectors are shorter than ~1 mm (§5).
+7. **The plume costs the beam ~0.4 % at 1070 nm** (AlSi10Mg at 320 W and 200 + 40 L/min; range 0.15–1.5 %). It is ~0.25 %
+   for 6061 and ~0.2 % for 7075. Over loose powder it is ~0.75 %, and with no gas flow ~0.8 %, rising ~1 % per minute of
+   lasing as the chamber fills (§3.4).
+   - *Why no more:* a growth model (§3.6) finds that the beam keeps the condensate in its path at 2–5 nm, as molten
+     droplets at ~2,100 K, and evaporates much of what drifts across it higher up. The condensate grows into ~60–140 nm
+     fractal agglomerates only after the cross-flow has bent the jet off the beam, 1–3 mm up. So the 3–11 % that 300 nm
+     particles would cost doesn't arise.
+   - *Why no less:* the old 0.05–0.2 % undercounted the column and used bulk optics. Small, hot Al absorbs ~3× more per
+     kg.
+   - *Coaxial channels:* the beam-heated condensate adds ~1.5 % to the coaxial photodiodes (AlSi10Mg), not the 4–15 %
+     optics.md assumed, while the plume dims the pool's light by ~0.5–0.7 %. The two nearly cancel, and the 700/900 ratio
+     moves ~4 K.
+   - It doesn't steer the beam. Old plume crosses the beam only where vectors are shorter than ~1 mm (§5).
+   - *Testing it:* full against reduced cross-flow can't resolve it (the track narrows by < 0.05 %). The LW camera can, by
+     the height and brightness of the beam's own glowing thread above the pool (§3.6).
 8. **For the side camera: 10–20 µs exposures.** Al spatter moves at a few m/s, so 10 µs blurs it by under a pixel to
    ~3 pixels at 29 µm/px (§2.3). Above ~100 µs the plume's own light, about as bright in total as the pool's in a side
    view, swamps the image (Nagato et al. 2023). Through an 850 ± 5 nm filter, spatter glows above ~1,500 K: 100–200 µm
@@ -418,6 +429,9 @@ plume, Δz = 1.6 F^(1/3) x^(2/3) / U (Briggs). Cross-flow at 2.95 m/s (200 L/min
   speed is the cross-flow minus the scan: at 1.1 m/s, 1.85 m/s scanning with the flow and 4.05 m/s against it. Heights
   scale as U^(−2/3), so scanning with the flow lifts the plume ~1.4× and against it ~0.8×.
 - **At 140 L/min every height is ~1.3× the 200 L/min one.**
+- **The growth model's integral jet (§3.6) rises less:** ~4 mm up at 10 mm downstream and ~6 mm at 30 mm (AlSi10Mg, 200 + 40
+  L/min). It carries only A's `best` vapour (0.44× the `wall` reading's momentum), and the condensate's latent heat keeps its
+  mixture hot and spreading. That is nearer the measured plumes, and between §1.2's two release bands.
 
 ### 3.3 What it condenses into
 
@@ -428,40 +442,96 @@ plume, Δz = 1.6 F^(1/3) x^(2/3) / U (Briggs). Cross-flow at 2.95 m/s (200 L/min
 - **Measured, for comparison (stainless steel, no Al data found):** primary particles 4–16 nm, median 9.4 nm, with a metal
   core and oxide shell above ~30 nm (Noskov et al. 2020), in chain-like agglomerates 0.5 to > 10 µm long (Noskov et
   al. 2022). The jet case agrees.
+- **The growth model (§3.6) adds the beam and the latent heat.** While the jet runs up the beam, the condensate stays at 2–5 nm
+  molten droplets at ~2,100–2,200 K. Out of it, the primaries freeze at ~7.6 nm within 0.1 ms, and agglomerates reach
+  ~60 nm by 1 ms and ~140 nm by 1 s.
 - So the condensate that reaches a window is agglomerates of ~3–15 nm particles, Al-rich from AlSi10Mg and 6061 and Zn-
   and Mg-rich from 7075 (§3.1), partly oxidised. How much depends on the chamber's O₂ (not modelled); in air, at the next
   slide change, the rest oxidises.
 
 ### 3.4 What it does to the beam and the coaxial signal
 
-Mie extinction of the condensate, per kg (Al from Rakić 1995; alumina from Boidin et al. 2016):
+**The plume costs the beam ~0.4 % at 1070 nm for AlSi10Mg at 320 W, 1.1 m/s and 200 + 40 L/min, with a defensible range
+of 0.15–1.5 %. It is ~0.25 % for 6061 and ~0.2 % for 7075.** That replaces this note's earlier 0.05–0.2 %. That figure
+had two errors that both made it low, and one assumption that hid how the beam itself limits the loss:
+- it took the column above the spot at the vapour's own density (19 mg/m² for AlSi10Mg), where the cooled, mixed jet is up
+  to ~10× denser;
+- it read that column as ~20 nm primaries with bulk room-temperature aluminium's optics;
+- it didn't follow what the beam does to the condensate it heats.
 
-| Al spheres | 10 nm | 20 nm | 100 nm | 300 nm | 1 µm |
-|---|---|---|---|---|---|
-| at 1.07 µm (m²/kg) | 54 | 70 | 347 | 3,900 | 1,370 |
-| at 0.85 µm (m²/kg) | 218 | 266 | 1,084 | 5,396 | 1,384 |
+The growth model of §3.6 follows the vapour from the depression wall instead
+([`growth.py`](../analysis/monitoring/plume/growth.py) → [`growth.json`](../analysis/out/monitoring/plume/growth.json)).
+It finds four things:
+- **The column on the beam axis is 21–40 mg/m²** (6061 to 7075). The jet runs up the beam for its first ~0.6 mm. Above that
+  the bed's cross-flow bends it over, and only its edge still crosses the beam.
+- **The condensate in the beam path stays small.** While the jet runs up the beam (~30 µs), the beam holds the condensate
+  at 2,100–2,240 K: molten droplets of 2–5 nm that keep re-evaporating. Once out of the beam they freeze as ~7.6 nm
+  primaries and grow into fractal agglomerates: ~16 nm by 1 mm up, ~60 nm by 2.6 mm. **Nothing near 300 nm forms in the
+  beam path,** so the 3–11 % that 300 nm compact particles would cost (§6) doesn't happen.
+- **The beam evaporates much of what crosses it higher up.** Agglomerates that drift across the beam above ~0.6 mm are
+  heated to ~2,000–2,200 K in a fraction of a µs. During their ~10–40 µs transit they evaporate, until the vapour around
+  them stops it: 0.37 % instead of 0.56 % if they didn't.
+- **What sets the loss is that these are small, hot metal particles.** Electrons scatter at their surfaces, and the molten
+  ones also scatter as in liquid Al. Both damp them, so they absorb 185–205 m²/kg in the beam, against 50–70 m²/kg for
+  bulk room-temperature Al spheres of 2–20 nm. With bulk optics the loss would be 0.21 %. Scattering is under 1 % of it.
 
-Alumina spheres under 50 nm don't absorb and barely scatter (< 1 m²/kg). Al absorbs ~4× more at 850 nm than at 1070 nm
-(its interband absorption near 800 nm).
+**Beam lost at 1070 nm** (320 W, 1.1 m/s, 200 °C plate, 100 ppm O₂, scan across the flow; worker A's `best` vapour):
 
-- **Above the spot:** the beam crosses the plume's own column of condensing metal. With A's source terms (320 W,
-  `best`) it is 19 mg/m² for AlSi10Mg, 7 for 6061 and 31 for 7075. As 20 nm primaries that is an optical depth of
-  **0.13 % (AlSi10Mg), 0.05 % (6061) and 0.22 % (7075) at 1070 nm, and ~4× those at 850 nm (0.2–0.8 %)**. This note's
-  scenarios, which count all the vapour as condensing, give up to 0.3 % (AlSi10Mg) and 1.4 % (7075) at 1070 nm. In
-  conduction mode the column is ~100–400× smaller. Fully grown 300 nm agglomerates would extinguish ~50× more per mass,
-  but they form ms later, downstream.
-- **The plume doesn't steer or defocus the beam measurably:** hot argon and metal vapour change the refractive index by
-  ~10⁻⁴ over ~1 mm, which moves the beam by under a µm (estimate). Edison found no evidence of a plasma in CW LPBF of Al at
-  1 µm, only weakly ionised vapour; none is expected at ~10 MW/cm².
-- **The coaxial photodiode looks back through the same column.** At 700–900 nm it loses ~0.2–1 % to the plume (up to
-  ~5 % if all the vapour condensed), more in 7075 and in keyhole mode, and the loss fluctuates with the keyhole. It is
-  one more reason to use the two-colour ratio (monitoring.md §2.2), in which a grey loss cancels. Al's extinction falls by
-  ~27 % from 700 to 900 nm (20 nm spheres), so it cancels only partly: a 2 % loss at 700 nm biases a 700/900 nm ratio by
-  ~0.5 %, ~5 K at 2,000 K.
+| | AlSi10Mg | 6061 | 7075 |
+|---|---|---|---|
+| Condensate (A's `best`, g per hour of lasing) | 0.47 | 0.19 | 0.44 |
+| Column on the beam axis (mg/m²) | 36 | 21 | 40 |
+| **Fresh plume, 200 + 40 L/min** | **0.37 %** | **0.23 %** | **0.15 %** |
+| … of which below 1 mm | 0.30 % | 0.21 % | 0.15 % |
+| Older condensate: earlier tracks over a 10 mm part, plus the chamber's background (§1.2) | +0.05 % | +0.02 % | +0.03 % |
+| **Total, 200 + 40 L/min** | **0.42 %** | **0.25 %** | **0.18 %** |
+| Total, 140 + 30 L/min | 0.48 % | 0.28 % | 0.21 % |
+| Total with no gas flow (~0.25 m/s of convection over the part, assumed), before the chamber fills | 0.82 % | 0.39 % | 0.32 % |
+| … then, as the chamber fills (no flow, well mixed) | +1.2 % per min of lasing | +0.45 % per min | +0.85 % per min |
+| Power absorbed in the plume (200 + 40 L/min) | 0.8 W | 0.5 W | 0.6 W |
+
+*Edges at 200 + 40 L/min (totals):*
+- *AlSi10Mg: 0.07 % at 200 W, 0.36 % at 400 W, 0.32 % at 500 W (A's 400 W vapour; the hotter beam evaporates more),
+  0.45 % at 0.6 m/s, and **0.75 % over loose powder** (A's overhang case).*
+- *6061: 0.12 % at 200 W and 0.21 % at 400 W. 7075 with a Zn- and Mg-depleted surface: 0.42 %.*
+- *Scanning with the flow raises the fresh plume's share ~1.7×, and scanning against it lowers it ~0.9× (§3.6).*
+
+- **The range, and why.** At the nominal point (§3.6, one input at a time) the loss runs from 0.21 % (bulk Al optics) to
+  0.78 % (crossing agglomerates melt and don't evaporate).
+  - The combined optimistic case is 0.18 %: ×0.5 vapour, crossing condensate evaporating freely.
+  - The combined pessimistic case is 1.44 %: slow jet mixing, ×2 vapour, scanning with the flow, no evaporation on crossing.
+  - So read **0.4 % as the central value and 0.15–1.5 % as the range** for AlSi10Mg, and 0.1–1 % for 6061 and 7075.
+  - What matters: the vapour rate, the small-particle optics, and how much of the crossing condensate the beam evaporates.
+    That last one depends on the particles' size, through sticking and sintering (±20 %), and on their cooling (thermal
+    accommodation 0.1–1: 0.27–0.55 %).
+  - The fractal dimension and prefactor, the nucleation rate and the O₂ level move it by under 10 %.
+- **O₂ doesn't matter in the beam path at the machine's ≤ 100 ppm.** By 1–3 mm the jet has entrained too little argon to
+  oxidise more than ~1–5 % of the condensate: 1000 ppm moves the loss by under 10 % (0.37 → 0.40 %). Edison's r9 answer
+  argued that the condensate is alumina at 100–1000 ppm (§6), but it is metallic Al while it is in the beam. It oxidises
+  downstream: ~5 % by 1 ms, ~24 % by 10 ms, and ~60 % by 1 s, where a ~1 nm passivating shell stops it.
+- **It doesn't steer or defocus the beam measurably.** Hot argon and metal vapour change the refractive index by ~10⁻⁴ over
+  ~1 mm, which moves the beam by under a µm (estimate). Edison found no evidence of a plasma in CW LPBF of Al at 1 µm, only
+  weakly ionised vapour (r8, r9). None is expected at ~10 MW/cm².
+- **The coaxial channels see the plume twice: as a loss and as light.**
+  - *Loss.* The pool's light crosses the same column on its way up. The plume absorbs 0.74 % of it at 700 nm, 0.54 % at
+    900 nm and 0.46 % at 955–990 nm (AlSi10Mg), more in keyhole mode and over overhangs.
+  - *Light.* The beam heats the condensate in its path to ~2,000–2,200 K (§3.6). In the photodiodes' Ø1.6 mm field
+    (optics.md §3's method and pool signal), that glow adds **+1.5 % to PD-A 700/40 and +1.6 % to PD-B 900/40 for
+    AlSi10Mg** and +0.5–0.6 % for 6061. It adds ~0 for 7075, whose Mg/Zn condensate evaporates in the beam rather than
+    glowing (with Al's optics; §3.6).
+  - *Range.* The glow is +0.2 % at 200 W, +2.0–2.1 % at 400–500 W and **+7.6 % over loose powder**. It is +3.0 % if the
+    gas over the 200 °C plate is at 473 K, and +6.1 % if crossing agglomerates melt and don't evaporate; the combined
+    pessimistic case gives +16 %.
+  - *Camera.* At the beam centre the plume's radiance is 0.9 % of the depression's at 955–990 nm with emissivity 0.12, and
+    0.3 % with 0.35.
+  - *Net.* The two nearly cancel in each photodiode (net +0.8 % at 700 nm and +1.05 % at 900 nm), and the 700/900 ratio
+    moves by ~0.3 %, ~4 K at 2,600 K, against the ±75–125 K a 90 kHz sample already carries (optics.md §3). They fluctuate
+    with the keyhole and the plume.
+  - **So optics.md §3's 4–15 % (taken from 0.05–0.2 % of absorption at 2,700 K over a Ø0.3 mm column) should become
+    ~1.5 % (0.5–6 %; ~8 % over overhangs).**
 - **Away from the spot, the chamber's background is negligible.** Along the beam axis (z 20–120 mm) the CFD gives C/S of
-  22–270 s/m³ (§1.2), so 3–35 mg/m³ of condensate at A's 0.47 g/h for AlSi10Mg (about the same for 7075). Over the
-  100 mm path that is an optical depth of ~0.06 % as agglomerates of 10 nm primaries (absorption ~70 m²/kg plus their
-  scattering ~100 m²/kg, a Rayleigh–Debye estimate), and at most ~1.4 % if it were all compact 300 nm particles.
+  22–270 s/m³ (§1.2): 0.3–3.5 mg/m² of ~1 s-old condensate at A's 0.47 g/h for AlSi10Mg. Its agglomerates are ~140 nm
+  across, ~60 % oxidised, and absorb and scatter ~60 m²/kg, so they cost 0.002–0.02 % (§3.6).
 
 ### 3.5 What the side camera sees of the plume
 
@@ -473,6 +543,200 @@ Alumina spheres under 50 nm don't absorb and barely scatter (< 1 m²/kg). Al abs
 - It leans downstream, ~5–10° above the bed past the first mm, across the LW camera's view (the flow runs in −y, the camera
   looks along +x). Its length and tilt are a direct read-out of the cross-flow at the bed.
 - The condensate cloud further downstream is too thin to see without light: an optical depth of ~10⁻³.
+
+### 3.6 How far the condensate grows in the beam path (growth model)
+
+Nothing in §1–§3.3 modelled the condensate's growth while it is still in the beam, and the beam loss turns on it (§6,
+Edison's design review). [`growth.py`](../analysis/monitoring/plume/growth.py) does, for one parcel riding the jet's
+centreline from the depression wall to 1 s later, in the beam's frame. Results:
+[`growth.json`](../analysis/out/monitoring/plume/growth.json) (~1 s of CPU per case, 70 cases).
+
+**What it models, and where each rate comes from:**
+- **The jet.** A top-hat integral jet in a cross-flow (Lee & Cheung 1990): mass, momentum and enthalpy fluxes along the
+  trajectory.
+  - Entrainment is 2π b ρ_a (α_s |u − U cos θ| + α_n U sin θ). α_s = 0.08 reproduces Ricou & Spalding's measured jet
+    entrainment, and α_n = 0.6 is the usual cross-flow term (Hoult, Fay & Forney 1969).
+  - U is the bed jet's profile (gas-flow.md §0.5) combined with the scan, across the flow by default.
+  - The exit state (478 m/s, 2,326 K for AlSi10Mg) is worker A's `wall` reading. The mass is A's `best` vapour, so the
+    jet is 51 µm across.
+  - The enthalpy carries the latent heat the condensate gives up and the beam power the particles absorb.
+- **The aerosol.** A discrete-sectional model (Wu & Flagan 1988) from the single atom to ~4 µm, 2× in volume per section.
+  - Coagulation uses Jacobson et al.'s volume-conserving scheme with Fuchs's kernel, valid from free-molecular to
+    continuum.
+  - Nucleation and condensation are collisions with the monomer. Clusters lose atoms by Kelvin-enhanced evaporation at
+    their own temperature, with liquid Al's surface tension (Keene 1993), so the nucleation rate follows.
+  - Agglomerates are fractal (D_f 1.8, k_f 1.3: DLCA, Sorensen 2011). One primary size relaxes at the solid-state
+    sintering time 3kTN/(64πσD) (Koch & Friedlander 1990; Kruis et al. 1993) with Al's self-diffusion (Lundy & Murdock
+    1962). It relaxes instantly while the particles are molten, with the melting point lowered by Gibbs–Thomson.
+  - Mg (AlSi10Mg, 6061) or Zn (7075) condenses onto the particles once supersaturated.
+  - O₂ from the entrained argon reacts on collision, and a ~1 nm shell passivates cold Al (Jeurgens et al. 2002).
+- **The beam.** Each particle in the beam (w₀ 48 µm) absorbs and loses heat to the argon by free-molecular conduction
+  (accommodation 0.3; Michelsen et al. 2015 review 0.1–0.4) and by evaporation. Its temperature sets its evaporation,
+  sintering and glow.
+- **The optics at 1070, 975, 900 and 700 nm.**
+  - Compact particles use Mie theory, agglomerates RDG-FA (Dobbins & Megaridis 1991; Sorensen 2001).
+  - Al starts from Rakić's n, k. Electron scattering at the particle's surface adds Drude damping v_F/r (Kreibig &
+    Vollmer 1995), and so does liquid Al's resistivity when molten (24.2 µΩ cm, Desai et al. 1984).
+  - Oxides take n 1.665, k 0. 7075's Mg/Zn condensate takes Al's optics, which is pessimistic (§4.2).
+- **The loss and the glow.** The centreline's coefficients are integrated up the beam axis through the jet's Gaussian
+  cross-section, so the jet stops counting once it has bent off the beam.
+- **Condensate that crosses the beam above the jet's exit from it** is heated there to its own temperature, like the rest.
+  It evaporates at the Hertz–Knudsen rate (Kelvin included) during its transit 2w/v, with v the jet's speed across the
+  beam. It stops once the gas around it holds the vapour in equilibrium with the hot particles. The variants drop that
+  cap ('vacuum') or keep all of it.
+
+![Condensate growth along the plume](../analysis/out/monitoring/plume/growth_sizes.png)
+
+*AlSi10Mg, 320 W, 1.1 m/s, 200 + 40 L/min. Left: primary and agglomerate sizes against time; grey: while the centreline is
+in the beam. Middle: the size distribution by mass from 1 µs to 1 s. Right: gas and particle temperatures against the
+centreline's height.*
+
+**How it grows** (AlSi10Mg, nominal; the centreline parcel):
+
+| Time | Centreline: up / downstream | Gas (top-hat): T, speed | Particles | Primary | Agglomerate, mass-median collision diameter | Primaries each | Oxidised | m²/kg at 1070 nm: absorption + scattering |
+|---|---|---|---|---|---|---|---|---|
+| 1 µs | 0.10 / 0.00 mm | 2,200 K, 57 m/s | in the beam, molten at 2,230 K | 2.7 nm | 3.2 nm | 1 | 0.1 % | 176 + 0 |
+| 10 µs | 0.35 / 0.02 mm | 1,210 K, 18 m/s | in the beam, 2,130 K | 2.5 nm | 2.8 nm | 1 | 0.2 % | 185 + 0 |
+| 31 µs | 0.60 / 0.06 mm | 950 K, 9.5 m/s | leaving the beam | 4.3 nm | 4.7 nm | 1 | 0.5 % | 205 + 0 |
+| 0.1 ms | 1.0 / 0.19 mm | 650 K, 5.2 m/s | frozen | 7.6 nm | 16 nm | 10 | 1 % | 137 + 0.5 |
+| 1 ms | 2.6 / 2.5 mm | 370 K, 2.8 m/s | | 7.6 nm | 62 nm | 99 | 5 % | 126 + 4.6 |
+| 10 ms | 5.9 / 31 mm | 314 K | | 7.6 nm | 104 nm | 217 | 24 % | 100 + 7.8 |
+| 1 s | in the bed jet | 300 K | | 7.6 nm | 140 nm | 360 | 60 % | 53 + 7 |
+
+- **The beam keeps the condensate small while the jet runs up it.** The beam holds the particles at 2,100–2,240 K, where
+  they keep evaporating and recondensing as 2–5 nm molten droplets: 60–90 % of the vapour is condensed at any moment.
+- **They grow only after the cross-flow has bent the jet off the beam** (by ~0.6 mm up). The primaries freeze at ~7.6 nm
+  within ~0.1 ms, and agglomerates reach ~60 nm by 1 ms and ~140 nm by 1 s. By then the parcel is 2.5 mm, and then tens
+  of mm, downstream.
+- **The latent heat matters.** Condensing Al releases ~1.4 W in AlSi10Mg's jet, about seven times the vapour's sensible heat.
+  It keeps the entrained argon above ~1,700 K for the first 0.2 mm and makes the jet spread faster.
+- **0.8 W of the beam is absorbed in the plume** (AlSi10Mg, 200 + 40 L/min), about half the jet's own enthalpy flux. Most
+  of it goes into the gas.
+- **Above ~0.6 mm the beam clears part of the jet's edge.** The agglomerates crossing it heat to ~2,000–2,200 K within a
+  fraction of a µs. Over their 10–40 µs transit they would evaporate within a few µs, if the vapour didn't build up around
+  them. With that cap, the loss above 1 mm falls from 0.20 to 0.07 % (AlSi10Mg).
+
+![Beam loss by height, alloy, cross-flow, and the sensitivity](../analysis/out/monitoring/plume/growth_loss.png)
+
+*Left: beam lost below each height on the axis (fresh plume, 200 + 40 L/min). Middle: fresh plume and older condensate for
+each cross-flow (no gas flow: before the chamber fills). Right: AlSi10Mg's fresh-plume loss as each input moves.*
+
+**Sensitivity** (AlSi10Mg, 320 W, 1.1 m/s, 200 + 40 L/min, fresh plume; nominal 0.37 %):
+
+| Input | Low / high | Beam loss (%) | PD-A glow (% of the pool) |
+|---|---|---|---|
+| Fractal dimension D_f | 1.6 / 2.2 | 0.365 / 0.368 | 1.5 / 1.5 |
+| Fractal prefactor k_f | 1.0 / 2.4 | 0.364 / 0.368 | 1.5 / 1.5 |
+| Sticking (van der Waals ×2) | ×0.5 / ×2 | 0.44 / 0.30 | 1.2 / 2.0 |
+| Sintering rate | ×0.1 / ×10 | 0.39 / 0.31 | 1.5 / 1.4 |
+| Nucleation rate (cluster surface tension ×1.2 / ×0.8) | slower / faster | 0.37 / 0.36 | 1.4 / 1.6 |
+| Vapour rate | ×0.5 / ×2 | 0.26 / 0.48 | 0.8 / 3.2 |
+| O₂ | 10 / 1000 ppm (1000 with Wahl's oxide k 0.019) | 0.36 / 0.40 (0.38) | 1.5 / 1.5 |
+| Scan direction | against / with the flow | 0.32 / 0.61 | 1.4 / 2.1 |
+| Jet entrainment α_s | ×0.5 / ×2 | 0.36 / 0.42 | 3.1 / 0.9 |
+| Cross-flow entrainment α_n | 0.3 / 1.0 | 0.33 / 0.41 | 1.6 / 1.3 |
+| Jet momentum: A's `wall` vapour (×2.3) | – | 0.57 | 0.7 |
+| Al optics: bulk Rakić, no size or temperature damping | – | 0.21 | 0.55 |
+| No laser heating of particles | – | 0.62 | 0.8 |
+| Thermal accommodation | 0.1 / 1.0 | 0.27 / 0.55 | 1.4 / 1.2 |
+| Gas over the plate at 473 K | – | 0.28 | 3.0 |
+| Crossing condensate: doesn't evaporate / evaporates into vapour-free gas | – | 0.56 / 0.24 | 2.0 / 1.2 |
+| Crossing agglomerates melt into spheres: and don't evaporate / and evaporate | – | 0.78 / 0.26 | 6.1 / 1.3 |
+| Optimistic: vapour ×0.5, crossing condensate evaporating freely | – | 0.18 | 0.6 |
+| Pessimistic: slow mixing (α_s ×0.5, α_n 0.3), vapour ×2, scanning with the flow, no evaporation on crossing | – | 1.44 | 16 |
+
+- **Three things matter: the vapour, the optics, and what the beam does to the condensate that crosses it.**
+  - The loss goes as roughly the square root of the vapour rate, because more vapour also drives a stronger jet that mixes
+    faster.
+  - The size and temperature damping of the Al optics triples the absorption per kg. It raises the loss only 1.7× (0.21 →
+    0.37 %), because hotter particles also evaporate more.
+  - Whether the crossing condensate evaporates spans 0.24–0.78 %. That is also why sticking, sintering and the thermal
+    accommodation move the loss by ±20–50 %: they set how big and how hot the crossing particles get.
+- **The fractal parameters, the nucleation rate and O₂ barely matter** (under 10 %): in the beam the particles are molten
+  droplets that the beam holds small.
+- **The numbers are converged:** 4× finer coagulation steps with a 5× finer jet step move the loss by 4 % (0.366 →
+  0.381 %); sections up to ~6 µm instead of ~4 µm change nothing (`growth.json`, `convergence`).
+- **The glow is far more sensitive than the loss:** it rises ~8× from 2,000 to 2,500 K at 700 nm, and the particle
+  temperature depends on the particle's size and shape.
+
+**Against measurements:**
+- **The jet looks like measured LPBF plumes.**
+  - Its centreline (~2× the top-hat speed) rises at ~110 m/s at 0.1 mm and ~35 m/s at 0.35 mm, within the 38–97 m/s that
+    Mayi et al. (2020) measured.
+  - It bends over within 1–3 mm (0.2 mm downstream at 1 mm up, 2.5 mm at 2.6 mm up). Bitharas et al. (2022) saw ~1 mm of
+    rise in a 2.1 m/s cross-flow.
+  - It is ~4 mm high 10 mm downstream, against a visible plume 4–5 mm high (Shi et al. 2024). §3.2's scaling, with the
+    `wall` reading's momentum, put it at 11 mm.
+- **The sizes look like measured fume.**
+  - Primaries of 7.6 nm against Noskov et al.'s (2020) 4–16 nm (medians 8–11 nm, stainless-steel LPBF).
+  - Agglomerates of 60–140 nm from 1 ms to 1 s against a ~50 nm aerodynamic mode for AA6061 ablation (Kautz et al. 2023,
+    D_f ≈ 2) and 149–240 nm in welding fume (Isaxon 2008).
+  - Welding-fume models reach 100–200 nm in 0.5–2 ms (r9) from denser vapour. Here the cross-flow dilutes it faster.
+- **Wahl et al. (2026) couldn't be rerun as such:** their power, speed and sheet weren't in Edison's excerpts, and the
+  paper's pages were blocked to this runner. So a welding-like case was run with assumed inputs: 4 kW, a 0.3 mm waist,
+  2–20 mg/s of Al vapour at the same exit state, 0.05 m/s, in still gas.
+
+  | Welding-like case (assumed) | 2 mg/s | 7 mg/s | 20 mg/s |
+  |---|---|---|---|
+  | Metallic condensate (argon at 100 ppm O₂, or air with oxidation off) | 2.4 % | 4.9 % | 8.7 % |
+  | Condensate oxidised on its first O₂ collision (air) | 0.35 % | 0.84 % | 1.8 % |
+  | Share of the metallic loss below 5 / 10 mm | 53 / 79 % | 38 / 63 % | 25 / 47 % |
+
+  - **Magnitude.** Metallic condensate gives a few % to ~9 %, the range of Wahl's ~13 % for steel and Lou's 23 % (both
+    kW welds of unknown vapour rate). Wahl's ~3 % for Al in air sits between the model's metallic and fully oxidised
+    limits, as partial oxidation in air would give.
+  - **Height.** With the beam evaporating what crosses it, the model puts 25–53 % of the metallic loss below 5 mm and
+    47–79 % below 10 mm. Wahl measured ~45 % of the Al loss within 5 mm and nearly all of the steel loss within 10 mm. Their
+    path also ran 4 mm down through the keyhole, which the model doesn't have.
+  - **So the check says the model isn't 10× low for a metal plume, and its height profile is about right. It doesn't
+    validate the LPBF number.**
+
+**How to test it on this machine** (monitoring.md §10, risk 2):
+- **Full against reduced cross-flow can't resolve this loss.** The model's total goes from 0.42 to 0.48 % between 200 + 40
+  and 140 + 30 L/min. With width ∝ √P that narrows a track by 0.03 %, and moves the photodiode ~0.13 % (signal ∝ P²), far
+  inside the 3–5 % track-to-track scatter. Even no gas flow, before the chamber fills, adds only ~0.4 % (width −0.2 %).
+  - **That test can only falsify the model:** with ≥ 25 tracks per setting, a width difference above ~2 % between the two
+    flows would mean condensate growing or collecting in the beam far beyond what is modelled.
+- **The measurement that separates ~0.4 % from ~5 % is the beam's own glow, seen by the LW side camera.** The beam heats
+  the condensate in its path to ~2,000–2,200 K.
+  - *What the model predicts:* 90 % of that glow lies within 1.4 mm of the plate for AlSi10Mg (1.0 mm for 6061). At
+    900 nm it is ~2 × 10⁻³ of the depression's radiance at emissivity 0.12: a thread ~0.1 mm wide (3 px at 29 µm/px), 17–70
+    px above the pool.
+  - *Seeing it:* at a ~100 µs exposure with the pool saturated, averaging ~100 frames along a track gives a signal-to-noise
+    of ~15 for that column (estimate: ~20 e⁻ per pixel per frame against ~20 e⁻ of read noise).
+  - *If the loss were 3–10 %* because absorbing condensate collects in the beam, the thread would be several to ~20×
+    brighter (the glow scales with the power the condensate absorbs), and taller than 1.5–3 mm if the condensate builds up
+    along the path. A loss carried by scattering (large compact particles) wouldn't show this way; the model makes
+    scattering under 1 % of the loss, and the transverse measurement below would catch it.
+  - *7075:* its thread should be ~40× fainter, because its condensate evaporates in the beam.
+  - Run it with the 850/10 filter, at full and reduced cross-flow and on an overhang.
+- **A transverse extinction measurement would read the optical depth directly:** 0.24–0.48 % across the jet at 0.25–3 mm
+  up for AlSi10Mg (0.15–0.33 % for 6061) at 900 nm, against ≥ 3–5 % in the grown case. It needs an 850 nm light across the
+  plate at that height, into a photodiode or the LW camera. The chamber has none yet: the BW window is a raking light for
+  the layer camera.
+
+**What the model can't know:**
+- **How much vapour there is.** The loss goes as its square root. Over AlSi10Mg and 6061 it is mostly Al from the keyhole
+  wall, which nobody has measured (§4.1).
+- **The optics of 2–8 nm molten Al.** Nothing measured exists. The surface damping (v_F/r with A = 1) and liquid Al's
+  resistivity are why the loss is 0.37 % and not 0.21 %.
+- **The jet's first millimetre.** A 51 µm jet at Re ≈ 60, pulsing with the keyhole at 3–14 kHz, is modelled as a steady
+  turbulent integral jet. α_s and α_n over ×0.5–2 give ±10 %.
+- **What the beam does to the condensate it heats.** This is the largest open question.
+  - Above ~0.6 mm the agglomerates crossing the beam are taken to evaporate until the vapour around them stops it. Freely
+    evaporating they give 0.24 %, not evaporating 0.56 %, and melting without evaporating 0.78 %.
+  - Below 0.6 mm the parcel is treated as closed: its vapour stays with it. In fact the beam (Ø0.1 mm) covers only the
+    middle of a jet 0.2–1.3 mm wide, so vapour can diffuse out of the beam (~1 µs across 48 µm in hot argon) and the beam's
+    core may hold less condensate than modelled.
+  - Following both properly takes the jet's radial structure, which a single parcel doesn't have.
+- **The rest is approximate.**
+  - The aerosol at the beam axis is the centreline parcel's, and there is one primary size.
+  - RDG-FA is only approximate for metal primaries (|m| ≈ 10).
+  - 7075's condensate is Mg nucleating, Zn condensing onto it, with Al's optics.
+  - Spatter crossing the beam isn't included.
+  - The older-condensate terms are estimates: m/(2UW) over a 10 mm part, the CFD's background, and a well-mixed chamber
+    with no deposition when there is no gas flow.
+- **No LPBF measurement checks the number.** Only the sizes and the jet are checked against measurements.
 
 ## 4. Window fouling
 
@@ -543,6 +807,8 @@ size of a ~0.5 µm chain) and the CFD's friction velocity on each window. Source
 A's jets reach (§3.2); the 0.5–5 mm release gives 7–40× longer (and none reached the LW slide). The near-face values
 behind them rest on 15–430 tracers (§1.2), so take them to within ~2×.*
 
+- **The size assumed here holds up.** The growth model (§3.6) puts condensate 0.1–1 s old at a mass-median collision
+  diameter of ~120–140 nm (7.6 nm primaries, ~60 % oxidised at 100 ppm O₂), close to the 0.1 µm used for v_d.
 - **Thermophoresis decides it.** A window 10 K colder than the gas next to it collects 20–120× more than an isothermal
   one: 0.5 × ν ∇T/T ≈ 1 × 10⁻⁴ m/s across a 2 mm layer, against 1–5 × 10⁻⁶ m/s for Brownian and turbulent
   deposition. The other way round, **a camera slide kept a few K warmer than the gas repels sub-micron condensate.** The
@@ -612,8 +878,10 @@ deposited; no Al count was found) and a splat 2.75 d across for molten droplets 
 
 A scaling argument in place of a transient CFD of a plume puff (not run; §7):
 
-- **The beam always crosses its own plume** in the first 1–5 mm above the spot (§3.4). That costs ~0.05–0.2 % at 1070 nm
-  (≤ ~1 %) and can't be avoided; the cross-flow only decides how long the plume stays near the next track.
+- **The beam always crosses its own plume** in the first ~1 mm above the spot (§3.4, §3.6). That costs ~0.4 % at 1070 nm
+  for AlSi10Mg (0.15–1.5 %) and can't be avoided. The cross-flow changes it only a little (0.37 % at 200 + 40 L/min, 0.41 %
+  at 140 + 30, 0.50 % with no gas flow), by how fast it bends the jet off the beam; it mostly decides how long the plume
+  stays near the next track.
 - **It crosses an older plume only if the gas is too slow to clear the plume's width between passes.** Successive hatch
   vectors are ~0.1 mm apart and, for a 10 mm vector at 1 m/s, ~10 ms apart. In that time the bed jet carries the plume
   20–30 mm downstream (2–3 m/s at 1–3 mm). The plume is ~1.5 mm wide (Shi et al. 2024). So the beam meets old condensate
@@ -630,7 +898,7 @@ A scaling argument in place of a transient CFD of a plume puff (not run; §7):
 - **The upper chamber's slow recirculation is where old condensate meets the beam.** Along the beam axis above 20 mm the
   CFD's concentration is 0.2–1× the average over the plate's lowest 20 mm (C/S 22–270 against 130–240 s/m³): the
   condensate that rises out of the bed jet mixes through the upper chamber before it leaves. §3.4 shows it costs the beam
-  under 0.1 %.
+  0.002–0.02 %, and earlier tracks' plume over a 10 mm part ~0.03 % (0.3 % with no gas flow).
 
 ## 6. Against Edison's answers
 
@@ -657,18 +925,46 @@ Where this note differs or adds:
   recesses, and get ~10× less than the front lid port (§1.2).
 - **"Exposure ≤ 2.9 µs to keep blur to 10 µm"** is right for 10 µm pixels; at the LW port's 29 µm/px, 10 µs keeps the
   blur near a pixel for Al spatter (§2.3).
-- **Plume attenuation "a few percent per pass" from the welding literature** is too high for 200–350 W; §3.4 gives
-  ~0.05–0.2 % at 1070 nm with worker A's source terms, and at most ~1 % if all the vapour condensed above the spot.
+- **Plume attenuation "a few percent per pass" from the welding literature** is too high for 200–350 W with this cross-flow:
+  §3.4 and §3.6 give ~0.4 % at 1070 nm for AlSi10Mg (0.15–1.5 %), ~0.25 % for 6061 and ~0.2 % for 7075.
 - **Sacrificial cover slides of borosilicate or soda-lime glass** (r8-viewports) are fine for the camera ports, as long as
   each camera keeps its own 1070 nm blocking filter (monitoring.md §6); the laser slide stays fused silica (optics.md
   §2.2).
 - **Edison's later review of the whole design** ([`r8-design-review`](../edison/r8-design-review/answer.md), monitoring.md §10)
-  set §3.4's 0.05–0.2 % against **11–23 % measured in Yb-fibre welding at 1 atm** (~2 % at 3 kPa; Brown et al. 2024, a review).
-  Those are kW welds over mm-deep keyholes, with the beam in its own plume for tens of ms and no cross-flow. With §3.4's Mie
-  table, 11 % needs ~90× our column as 20 nm primaries, but only ~1.6× it as 300 nm agglomerates; our own columns, grown
-  fully, would cost 3–11 % (6061 to 7075). So the beam loss turns on how far the condensate grows in the < 1 ms before the
-  scan and the bed jet carry it off the beam. The CFD doesn't model that growth. Keep 0.05–0.2 % as the low end, not a
-  bound, and measure it (monitoring.md §10, risk 2).
+  set this note's earlier 0.05–0.2 % against **11–23 % measured in Yb-fibre welding at 1 atm** (~2 % at 3 kPa; Brown et al.
+  2024, a review). Grown into 300 nm agglomerates, our own columns would have cost 3–11 %, so the question was how far the
+  condensate grows before the scan and the bed jet carry it off the beam. §3.6 now models that growth:
+  - it doesn't grow in the beam path. The beam holds it at 2–5 nm molten droplets and evaporates much of what crosses it
+    higher up, and it agglomerates only after the jet has bent off the beam;
+  - the loss is still ~2–3× the old figure (~0.4 % for AlSi10Mg), from a denser column and the damped optics of small hot Al;
+  - the welding values come from kW keyholes with no cross-flow, the beam sitting in its own plume for tens of ms. A
+    welding-like run of the same model gives 2–9 % for metallic condensate, half or more of it within 10 mm (§3.6).
+
+[`r9-plume-growth`](../edison/r9-plume-growth/answer.md) (LITERATURE_HIGH, 2026-11-27, with its full trajectory) asked the
+literature for exactly this.
+
+Where r9 agrees with §3.6:
+- no plasma or inverse Bremsstrahlung worth counting at 1070 nm and ~3–10 MW/cm²;
+- nanometre primaries (Noskov et al.: 4–16 nm in stainless-steel LPBF fume; §3.6: 7.6 nm);
+- 100–300 nm agglomerates need milliseconds of coagulation, by when the plume is out of the beam (§3.6: 62 nm at 1 ms,
+  2.5 mm downstream);
+- aluminium attenuates least of the metals in welding (Wahl et al. 2026: ~3 % for Al, ~13 % for steel, ~5 % for copper),
+  absorption dominates, and most of it is near the keyhole;
+- no LPBF plume-transmission measurement, no height-resolved LPBF fume sizing and no LPBF plume aerosol model exist.
+
+Where §3.6 differs from r9:
+- **"At 100–1000 ppm O₂ the condensate is predominantly Al₂O₃"** (from Kautz et al.'s ns ablation of 6061, sampled well
+  downstream). In the beam path it isn't. By 1 mm the jet has entrained too little O₂ to oxidise more than ~1 %, and
+  1000 ppm changes the loss by under 10 %. Oxide forms downstream (~60 % by 1 s, where a ~1 nm shell passivates the rest).
+  Wahl's Al was welded in air, where oxidation is fast and the loss lower; the model gives 0.35–1.8 % with condensate
+  oxidised on first collision.
+- **"Most probably 1–3 %."** §3.6 puts the central value lower, ~0.4 % (0.15–1.5 %). The cross-flow bends the jet off the
+  beam within ~1 mm, and the beam evaporates much of what crosses it. Its pessimistic corner (1.4 %) meets r9's range.
+- **"20 nm Al₂O₃ primaries give ~0.1 %."** In the beam they are metallic and 2–8 nm, and their damped optics make them
+  absorb ~3× bulk Al.
+- **The single measurement r9 recommends, a coaxial probe beam through the plume (Wahl's method),** needs a full-penetration
+  keyhole. A powder bed has none. On this machine the LW camera can see the beam's own glowing thread instead, and a
+  transverse 850 nm extinction path would read the optical depth directly (§3.6, "How to test it").
 
 ## 7. Not done, and limits
 
@@ -702,6 +998,16 @@ Where this note differs or adds:
   scalings are for steady jets in a uniform stream, not a few-hundred-µm jet starting inside the bed's boundary layer;
   the one measurement found (Bitharas et al., SS316) is ~10× lower. This note's own scenarios use Raoult's law with
   activity = mole fraction and an assumed keyhole mouth (0.7 × the spot).
+- **The growth model (§3.6) is one parcel on the centreline of a steady integral jet.**
+  - Its inputs that matter are A's vapour (the loss goes as its square root) and the optics of 2–8 nm molten Al (the damping
+    model is a factor of 2.6). Neither is measured.
+  - What the beam does to the condensate it heats is the largest open question. Crossing condensate evaporating freely gives
+    0.24 %, not evaporating 0.56 %, and melting without evaporating 0.78 %. The beam's core may also lose vapour sideways,
+    which a single parcel can't follow.
+  - Its jet and sizes match the measured LPBF plume heights and speeds and fume primaries. The welding check had to use
+    assumed inputs: Wahl et al.'s power, speed and sheet weren't retrievable, the paper's open-access pages being blocked to
+    this runner.
+  - No LPBF beam-loss measurement exists to check it against.
 - **The deposit's optics** bracket rather than predict: a continuous film overstates absorption, Maxwell Garnett spheres
   understate it for chain-like agglomerates, and neither includes the haze a thick porous deposit scatters.
 - **Not run:** a transient puff (§5 is a scaling argument), the fine mesh, the upper slot at z 110–114 (gas-flow.md §0.1),
@@ -720,6 +1026,7 @@ for c in p200 p200_lw3 p140 p200_lw1 p200_lpback; do /tmp/capmem 4 $PY $M/partic
 /tmp/capmem 2 $PY $M/spatter.py                    # ~1-2 min
 /tmp/capmem 2 $PY $M/plume_jet.py                  # seconds; reads analysis/out/monitoring/melt/plume_source.json (--source)
 $PY $M/fouling.py && $PY $M/summarize.py           # fouling.json (same --source), summary.md
+/tmp/capmem 2 env OMP_NUM_THREADS=1 $PY $M/growth.py   # ~3 min, 70 cases: growth.json, growth_sizes.png, growth_loss.png (--quick: AlSi10Mg only)
 ```
 
 Here `plume_jet.py` and `fouling.py` read worker A's file from its own worktree with `--source` (the file wasn't on this
@@ -794,4 +1101,63 @@ Models and methods:
 - Malitson, I. H. (1965). Interspecimen comparison of the refractive index of fused silica. J. Opt. Soc. Am. 55:1205–1209.
   https://doi.org/10.1364/JOSA.55.001205
 - CRC Handbook of Chemistry and Physics (boiling points and enthalpies of vaporisation of Al, Mg, Zn, Si, Cu)
-- OpenFOAM v2406 (`opencfd/openfoam-run:2406`), as in gas-flow.md; miepython 3.3.1 for the Mie efficiencies
+- OpenFOAM v2406 (`opencfd/openfoam-run:2406`), as in gas-flow.md; miepython 3.3.1 for the Mie efficiencies (3.4.0 for
+  `growth.py`)
+
+For the growth model (§3.6), cited for its rates and constants (not re-read here unless stated):
+- Lee, J. H. W., Cheung, V. (1990). Generalized Lagrangian model for buoyant jets in current. J. Environ. Eng. 116:1085–1106.
+  https://doi.org/10.1061/(ASCE)0733-9372(1990)116:6(1085); Lee, J. H. W., Chu, V. H. (2003). Turbulent Jets and Plumes:
+  A Lagrangian Approach. Kluwer
+- Ricou, F. P., Spalding, D. B. (1961). Measurements of entrainment by axisymmetrical turbulent jets. J. Fluid Mech. 11:21–32.
+  https://doi.org/10.1017/S0022112061000834 (m/m0 = 0.32 (z/d)(rho_a/rho_j)^0.5, which alpha_s = 0.08 reproduces)
+- Hoult, D. P., Fay, J. A., Forney, L. J. (1969). A theory of plume rise compared with field observations. J. Air Pollut.
+  Control Assoc. 19:585–590. https://doi.org/10.1080/00022470.1969.10466526 (cross-flow entrainment, alpha_n ~0.6)
+- Wu, J. J., Flagan, R. C. (1988). A discrete-sectional solution to the aerosol dynamic equation. J. Colloid Interface Sci.
+  123:339–352. https://doi.org/10.1016/0021-9797(88)90255-X
+- Jacobson, M. Z., Turco, R. P., Jensen, E. J., Toon, O. B. (1994). Modeling coagulation among particles of different
+  composition and size. Atmos. Environ. 28:1327–1338. https://doi.org/10.1016/1352-2310(94)90280-1; Jacobson, M. Z. (2005).
+  Fundamentals of Atmospheric Modeling, 2nd ed. Cambridge University Press, ch. 15 (the semi-implicit scheme)
+- Fuchs, N. A. (1964). The Mechanics of Aerosols. Pergamon; Seinfeld, J. H., Pandis, S. N. (2016). Atmospheric Chemistry
+  and Physics, 3rd ed. Wiley, Table 13.1 (the kernel) and ch. 9 (slip correction, mean free path)
+- Sorensen, C. M. (2011). The mobility of fractal aggregates: a review. Aerosol Sci. Technol. 45:765–779.
+  https://doi.org/10.1080/02786826.2011.560909; Sorensen, C. M. (2001). Light scattering by fractal aggregates: a review.
+  Aerosol Sci. Technol. 35:648–687. https://doi.org/10.1080/02786820117868
+- Dobbins, R. A., Megaridis, C. M. (1991). Absorption and scattering of light by polydisperse aggregates. Appl. Opt.
+  30:4747–4754. https://doi.org/10.1364/AO.30.004747 (RDG-FA)
+- Koch, W., Friedlander, S. K. (1990). The effect of particle coalescence on the surface area of a coagulating aerosol.
+  J. Colloid Interface Sci. 140:419–427. https://doi.org/10.1016/0021-9797(90)90362-R; Kruis, F. E., Kusters, K. A.,
+  Pratsinis, S. E., Scarlett, B. (1993). A simple model for the evolution of the characteristics of aggregate particles
+  undergoing coagulation and sintering. Aerosol Sci. Technol. 19:514–526. https://doi.org/10.1080/02786829308959656
+- Lundy, T. S., Murdock, J. F. (1962). Diffusion of Al26 and Mn54 in aluminum. J. Appl. Phys. 33:1671–1673.
+  https://doi.org/10.1063/1.1728808 (D = 1.71 cm2/s exp(-142 kJ/mol / RT))
+- Gündüz, M., Hunt, J. D. (1985). The measurement of solid-liquid surface energies in the Al-Cu, Al-Si and Pb-Sn systems.
+  Acta Metall. 33:1651–1672. https://doi.org/10.1016/0001-6160(85)90161-5 (~0.15 J/m2 for Al, Gibbs–Thomson melting)
+- Keene, B. J. (1993). Review of data for the surface tension of pure metals. Int. Mater. Rev. 38:157–192.
+  https://doi.org/10.1179/imr.1993.38.4.157 (liquid Al 0.871 N/m at its melting point, -0.155 mN/m/K; Mg and Zn to ~10 %)
+- Kreibig, U., Vollmer, M. (1995). Optical Properties of Metal Clusters. Springer. https://doi.org/10.1007/978-3-662-09109-8
+  (surface damping v_F/r)
+- Desai, P. D., James, H. M., Ho, C. Y. (1984). Electrical resistivity of aluminum and manganese. J. Phys. Chem. Ref. Data
+  13:1131–1172. https://doi.org/10.1063/1.555725 (24.2 uOhm cm for liquid Al, as optics.md §3 uses)
+- Michelsen, H. A. et al. (2015). Laser-induced incandescence: particulate diagnostics for combustion, atmospheric, and
+  industrial applications. Prog. Energy Combust. Sci. 51:2–48. https://doi.org/10.1016/j.pecs.2015.07.001 (thermal
+  accommodation of hot nanoparticles in Ar and N2)
+- Filippov, A. V., Rosner, D. E. (2000). Energy transfer between an aerosol particle and gas at high temperature ratios in
+  the Knudsen transition regime. Int. J. Heat Mass Transfer 43:127–138. https://doi.org/10.1016/S0017-9310(99)00113-1
+- Lemmon, E. W., Jacobsen, R. T. (2004). Viscosity and thermal conductivity equations for nitrogen, oxygen, argon, and air.
+  Int. J. Thermophys. 25:21–69. https://doi.org/10.1023/B:IJOT.0000022327.04529.f3 (argon viscosity, fitted)
+- Jeurgens, L. P. H., Sloof, W. G., Tichelaar, F. D., Mittemeijer, E. J. (2002). Growth kinetics and mechanisms of
+  aluminum-oxide films formed by thermal oxidation of aluminum. J. Appl. Phys. 92:1649–1656. https://doi.org/10.1063/1.1491591
+  (a ~1 nm limiting oxide on cold Al)
+
+Via Edison r9-plume-growth (2026-11-27; not re-read here):
+- Wahl, J., Frey, C., Powell, J., Olschok, S., Reisgen, U., Hagenlocher, C., Graf, T. (2026). Measurement of beam
+  attenuation by the vapor plume during full-penetration laser welding of stainless steel, aluminum and copper. Opt. Laser
+  Technol. 204:116162. https://doi.org/10.1016/j.optlastec.2026.116162 (CC BY; abstract read via OpenAlex 2026-11-27, the
+  full text was blocked to this runner)
+- Brown et al. (2024), the welding-atmosphere review behind the 11–23 % (Lou et al.'s 23 % and ~2 % at 3 kPa), as cited in
+  [`r9-plume-growth/references.txt`](../edison/r9-plume-growth/references.txt)
+- Shcheglov, P. Yu. et al. (2011). Plume attenuation of laser radiation during high power fiber laser welding. Laser Phys.
+  Lett. 8:475–480. https://doi.org/10.1002/lapl.201110010
+- Kautz, E. J. et al. (2023), ns ablation of AA6061 in N2 and air: fractal agglomerates (D_f ≈ 2), Al2O3 and AlN; Isaxon
+  (2008), GMAW fume; Vishnyakov et al. (2019), Tashiro et al. (2013) and Zeniya et al. (2010), welding-fume models; Ye et
+  al. (2019), the 10 % LPBF plume-loss assumption: DOIs in [`references.txt`](../edison/r9-plume-growth/references.txt)

@@ -1242,3 +1242,121 @@ Condensate source, g per hour of lasing (file: analysis/out/monitoring/melt/plum
 | Ly 2017 speeds | 150 | 6.58 % | 0.00 % | 0.50 % | 1.4 % | 7.2 % | 0.2 % | 35.2 % | 15.0 % |
 | Ly 2017 speeds | 200 | 7.58 % | 0.08 % | 0.50 % | 0.2 % | 2.8 % | 0.0 % | 37.2 % | 13.9 % |
 
+## Condensate growth, beam loss and coaxial glow (growth.py)
+
+| Alloy | Flow | fresh plume | of which below 1 mm | older condensate (part + background) | total | column (mg/m2) | absorbed (W) | PD-A / PD-B glow | camera 975 glow (eps 0.12) | plume absorbs at 700 / 900 / 975 nm |
+|---|---|---|---|---|---|---|---|---|---|---|
+| AlSi10Mg | 200+40 L/min | 0.37 % | 0.30 % | 0.050 % | 0.42 % | 35.6 | 0.78 | 1.52 % / 1.59 % | 0.88 % | 0.74 % / 0.54 % / 0.46 % |
+| AlSi10Mg | 140+30 L/min | 0.41 % | 0.32 % | 0.073 % | 0.48 % | 41.5 | 0.91 | 1.67 % / 1.76 % | 0.97 % | 0.84 % / 0.61 % / 0.52 % |
+| AlSi10Mg | no gas flow | 0.50 % | 0.33 % | 0.313 % | 0.82 % | 53.8 | 1.03 | 1.87 % / 2.02 % | 1.11 % | 1.04 % / 0.76 % / 0.64 % (no flow: +1.20 % per min as the chamber fills) |
+| 6061 | 200+40 L/min | 0.23 % | 0.21 % | 0.021 % | 0.25 % | 21.0 | 0.52 | 0.52 % / 0.56 % | 0.85 % | 0.47 % / 0.33 % / 0.29 % |
+| 6061 | 140+30 L/min | 0.25 % | 0.22 % | 0.030 % | 0.28 % | 24.3 | 0.60 | 0.56 % / 0.61 % | 0.91 % | 0.51 % / 0.36 % / 0.32 % |
+| 6061 | no gas flow | 0.27 % | 0.23 % | 0.122 % | 0.39 % | 30.1 | 0.67 | 0.60 % / 0.66 % | 0.96 % | 0.55 % / 0.39 % / 0.34 % (no flow: +0.45 % per min as the chamber fills) |
+| 7075 | 200+40 L/min | 0.15 % | 0.15 % | 0.029 % | 0.18 % | 39.9 | 0.55 | 0.00 % / 0.00 % | 0.00 % | 0.30 % / 0.19 % / 0.18 % |
+| 7075 | 140+30 L/min | 0.16 % | 0.16 % | 0.043 % | 0.21 % | 46.6 | 0.62 | 0.00 % / 0.00 % | 0.00 % | 0.33 % / 0.22 % / 0.20 % |
+| 7075 | no gas flow | 0.18 % | 0.18 % | 0.141 % | 0.32 % | 60.4 | 0.69 | 0.00 % / 0.00 % | 0.01 % | 0.36 % / 0.23 % / 0.22 % (no flow: +0.85 % per min as the chamber fills) |
+
+| Edge case | Flow | fresh plume | total | PD-A glow |
+|---|---|---|---|---|
+| AlSi10Mg 200 W, 1.1 m/s | 200+40 L/min | 0.048 % | 0.066 % | 0.22 % |
+| AlSi10Mg 200 W, 1.1 m/s | no gas flow | 0.053 % | 0.171 % | 0.30 % |
+| AlSi10Mg 400 W, 1.1 m/s | 200+40 L/min | 0.296 % | 0.364 % | 2.08 % |
+| AlSi10Mg 400 W, 1.1 m/s | no gas flow | 0.362 % | 0.789 % | 2.36 % |
+| AlSi10Mg 320 W, 0.6 m/s | 200+40 L/min | 0.396 % | 0.448 % | 1.97 % |
+| AlSi10Mg 320 W, 0.6 m/s | no gas flow | 0.842 % | 1.187 % | 2.71 % |
+| 6061 200 W, 1.1 m/s | 200+40 L/min | 0.110 % | 0.122 % | 0.00 % |
+| 6061 200 W, 1.1 m/s | no gas flow | 0.128 % | 0.191 % | 0.00 % |
+| 6061 400 W, 1.1 m/s | 200+40 L/min | 0.184 % | 0.210 % | 0.57 % |
+| 6061 400 W, 1.1 m/s | no gas flow | 0.217 % | 0.372 % | 0.65 % |
+| 6061 320 W, 0.6 m/s | 200+40 L/min | 0.237 % | 0.256 % | 0.61 % |
+| 6061 320 W, 0.6 m/s | no gas flow | 0.371 % | 0.490 % | 0.82 % |
+| 7075 320 W, depleted surface (fvol 0.1) | 200+40 L/min | 0.328 % | 0.421 % | 0.75 % |
+| 7075 320 W, depleted surface (fvol 0.1) | no gas flow | 0.390 % | 0.954 % | 0.81 % |
+| 7075 320 W, 0.6 m/s | 200+40 L/min | 0.107 % | 0.122 % | 0.00 % |
+| 7075 320 W, 0.6 m/s | no gas flow | 0.151 % | 0.227 % | 0.00 % |
+| AlSi10Mg over loose powder (overhang) | 200+40 L/min | 0.582 % | 0.750 % | 7.56 % |
+| AlSi10Mg over loose powder (overhang) | no gas flow | 1.083 % | 2.169 % | 9.13 % |
+| pure Al 320 W | 200+40 L/min | 0.353 % | 0.397 % | 1.94 % |
+| pure Al 320 W | no gas flow | 0.483 % | 0.760 % | 2.38 % |
+| AlSi10Mg 500 W (400 W source, 500 W beam) | 200+40 L/min | 0.249 % | 0.317 % | 2.01 % |
+
+| Sensitivity (AlSi10Mg, 320 W, 1.1 m/s, 200 + 40 L/min) | fresh plume | absorption | scattering | PD-A glow |
+|---|---|---|---|---|
+| D_f 1.6 | 0.365 % | 0.364 % | 0.0009 % | 1.52 % |
+| D_f 2.2 | 0.368 % | 0.367 % | 0.0005 % | 1.52 % |
+| k_f 1.0 | 0.364 % | 0.363 % | 0.0008 % | 1.52 % |
+| k_f 2.4 | 0.368 % | 0.368 % | 0.0004 % | 1.52 % |
+| sticking x0.5 | 0.435 % | 0.434 % | 0.0005 % | 1.16 % |
+| sticking x2 (van der Waals) | 0.300 % | 0.299 % | 0.0007 % | 1.96 % |
+| sintering x0.1 | 0.387 % | 0.386 % | 0.0009 % | 1.54 % |
+| sintering x10 | 0.314 % | 0.314 % | 0.0003 % | 1.43 % |
+| nucleation slower (surface tension x1.2) | 0.371 % | 0.370 % | 0.0007 % | 1.44 % |
+| nucleation faster (surface tension x0.8) | 0.359 % | 0.359 % | 0.0006 % | 1.61 % |
+| vapour rate x0.5 | 0.262 % | 0.261 % | 0.0003 % | 0.77 % |
+| vapour rate x2 | 0.480 % | 0.479 % | 0.0013 % | 3.23 % |
+| O2 10 ppm | 0.363 % | 0.362 % | 0.0006 % | 1.52 % |
+| O2 1000 ppm | 0.402 % | 0.400 % | 0.0013 % | 1.51 % |
+| O2 1000 ppm, oxide k 0.019 (Wahl) | 0.383 % | 0.382 % | 0.0009 % | 1.51 % |
+| scan with the flow | 0.610 % | 0.607 % | 0.0035 % | 2.09 % |
+| scan against the flow | 0.321 % | 0.321 % | 0.0004 % | 1.35 % |
+| jet entrainment alpha_s x0.5 | 0.356 % | 0.356 % | 0.0003 % | 3.06 % |
+| jet entrainment alpha_s x2 | 0.416 % | 0.414 % | 0.0020 % | 0.89 % |
+| cross-flow entrainment alpha_n 0.3 | 0.327 % | 0.326 % | 0.0003 % | 1.63 % |
+| cross-flow entrainment alpha_n 1.0 | 0.407 % | 0.406 % | 0.0013 % | 1.31 % |
+| jet carries the wall reading's vapour (momentum x2.3) | 0.574 % | 0.572 % | 0.0022 % | 0.69 % |
+| bulk Al optics (Rakic, no size or temperature damping) | 0.214 % | 0.210 % | 0.0038 % | 0.55 % |
+| no laser heating of particles | 0.615 % | 0.611 % | 0.0042 % | 0.80 % |
+| condensate crossing the beam doesn't evaporate | 0.558 % | 0.555 % | 0.0024 % | 1.96 % |
+| crossing agglomerates melt into spheres, don't evaporate | 0.781 % | 0.779 % | 0.0026 % | 6.09 % |
+| crossing agglomerates melt into spheres and evaporate | 0.265 % | 0.264 % | 0.0000 % | 1.33 % |
+| crossing condensate evaporates into vapour-free gas | 0.239 % | 0.239 % | 0.0002 % | 1.21 % |
+| thermal accommodation 0.1 | 0.270 % | 0.270 % | 0.0001 % | 1.36 % |
+| thermal accommodation 1.0 | 0.547 % | 0.545 % | 0.0024 % | 1.21 % |
+| gas at 473 K (200 C plate) | 0.283 % | 0.283 % | 0.0001 % | 3.04 % |
+| upper bound: slow mixing + vapour x2 + scan with the flow + no evaporation on crossing | 1.444 % | 1.432 % | 0.0123 % | 16.05 % |
+| lower bound: vapour x0.5 + crossing condensate evaporates into vapour-free gas | 0.179 % | 0.179 % | 0.0001 % | 0.59 % |
+
+| Convergence | fresh plume | column (mg/m2) | steps |
+|---|---|---|---|
+| nominal (h_coag 2, h_jet 0.05, K 44) | 0.366 % | 35.60 | 1170 |
+| h_coag 0.5, h_jet 0.01 | 0.381 % | 36.16 | 4045 |
+| K 48 (sections to ~6 um) | 0.366 % | 35.60 | 1170 |
+
+AlSi10Mg at 200 + 40 L/min, the centreline parcel:
+
+| t (s) | z (mm) | x (mm) | gas T (K) | particle T (K) | in beam | primary (nm) | mass-median collision d (nm) | primaries each | oxidised | m2/kg abs + sca, 1070 nm |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 9.8e-07 | 0.10 | 0.00 | 2201 | 2234 | yes | 2.7 | 3.19 | 1 | 0.1 % | 176 + 0.0 |
+| 1e-05 | 0.35 | 0.02 | 1210 | 2126 | yes | 2.4 | 2.81 | 1 | 0.2 % | 185 + 0.0 |
+| 3.1e-05 | 0.60 | 0.06 | 952 | 952 | no | 4.3 | 4.71 | 1 | 0.5 % | 205 + 0.0 |
+| 9.6e-05 | 1.01 | 0.19 | 649 | 649 | no | 7.6 | 15.9 | 9.62 | 1.0 % | 137 + 0.5 |
+| 0.001 | 2.62 | 2.49 | 372 | 372 | no | 7.6 | 61.8 | 98.6 | 4.7 % | 126 + 4.6 |
+| 0.01 | 5.94 | 31.23 | 314 | 314 | no | 7.6 | 104 | 217 | 24.1 % | 100 + 7.8 |
+| 0.097 | 7.85 | 80.16 | 300 | 300 | no | 7.6 | 120 | 276 | 59.9 % | 53 + 5.8 |
+| 0.93 | 7.85 | 80.16 | 300 | 300 | no | 7.6 | 139 | 354 | 59.9 % | 53 + 7.1 |
+| 1 | 7.85 | 80.16 | 300 | 300 | no | 7.6 | 140 | 360 | 59.9 % | 53 + 7.2 |
+
+| Welding-like case (assumed inputs): vapour rate | Gas | loss | absorption | scattering | below 5 / 10 mm |
+|---|---|---|---|---|---|
+| 2 mg/s | air | 0.35 % | 0.03 % | 0.32 % | 11 % / 15 % |
+| 2 mg/s | air, oxidation off | 2.36 % | 2.36 % | 0.00 % | 52 % / 79 % |
+| 2 mg/s | argon, 100 ppm O2 | 2.35 % | 2.35 % | 0.00 % | 53 % / 79 % |
+| 7 mg/s | air | 0.84 % | 0.07 % | 0.77 % | 9 % / 12 % |
+| 7 mg/s | air, oxidation off | 4.87 % | 4.87 % | 0.00 % | 38 % / 63 % |
+| 7 mg/s | argon, 100 ppm O2 | 4.86 % | 4.85 % | 0.00 % | 38 % / 63 % |
+| 20 mg/s | air | 1.77 % | 0.12 % | 1.65 % | 8 % / 10 % |
+| 20 mg/s | air, oxidation off | 8.65 % | 8.60 % | 0.05 % | 25 % / 47 % |
+| 20 mg/s | argon, 100 ppm O2 | 8.71 % | 8.63 % | 0.08 % | 25 % / 47 % |
+
+| Risk 2 | flow | total loss | track width | photodiode (P^2) | glow 90 % below (mm) | side glow / pool | transverse optical depth at 900 nm, 0.25 / 0.5 / 1 / 2 / 3 mm |
+|---|---|---|---|---|---|---|---|
+| AlSi10Mg | 200+40 L/min | 0.42 % | -0.208 % | -0.83 % | 1.43 | 2.0e-03 | 0.24 % / 0.32 % / 0.48 % / 0.45 % / 0.34 % |
+| AlSi10Mg | 140+30 L/min | 0.48 % | -0.242 % | -0.97 % | 1.73 | 2.0e-03 | 0.24 % / 0.31 % / 0.47 % / 0.51 % / 0.43 % |
+| AlSi10Mg | no gas flow | 0.82 % | -0.408 % | -1.63 % | 2.79 | 2.0e-03 | 0.23 % / 0.30 % / 0.45 % / 0.53 % / 0.55 % |
+| 6061 | 200+40 L/min | 0.25 % | -0.126 % | -0.50 % | 1.01 | 2.5e-03 | 0.15 % / 0.33 % / 0.33 % / 0.23 % / 0.15 % |
+| 6061 | 140+30 L/min | 0.28 % | -0.141 % | -0.56 % | 1.19 | 2.5e-03 | 0.15 % / 0.24 % / 0.34 % / 0.30 % / 0.21 % |
+| 6061 | no gas flow | 0.39 % | -0.196 % | -0.79 % | 1.46 | 2.5e-03 | 0.15 % / 0.22 % / 0.33 % / 0.37 % / 0.33 % |
+| 7075 | 200+40 L/min | 0.18 % | -0.088 % | -0.35 % | 0.45 | 4.9e-05 | 0.09 % / 0.14 % / 0.40 % / 0.30 % / 0.20 % |
+| 7075 | 140+30 L/min | 0.21 % | -0.103 % | -0.41 % | 0.51 | 5.0e-05 | 0.08 % / 0.13 % / 0.40 % / 0.37 % / 0.28 % |
+| 7075 | no gas flow | 0.32 % | -0.160 % | -0.64 % | 0.53 | 5.0e-05 | 0.08 % / 0.11 % / 0.49 % / 0.43 % / 0.41 % |
+

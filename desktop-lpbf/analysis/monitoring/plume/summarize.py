@@ -1,6 +1,6 @@
 """Key tables from the plume study's JSON outputs, as Markdown (monitoring/plume.md quotes them).
 
-Run after plume_jet.py, spatter.py, particles.py and fouling.py:
+Run after plume_jet.py, spatter.py, particles.py, fouling.py and growth.py:
     /tmp/venv/bin/python desktop-lpbf/analysis/monitoring/plume/summarize.py
 Writes analysis/out/monitoring/plume/summary.md.
 """
@@ -124,6 +124,9 @@ def main():
         L.append("")
     if P and F and F.get("windows"):
         L += doc_tables(P, F)
+    G = load("growth.json")
+    if G:
+        L += growth_tables(G)
     (OUT / "summary.md").write_text("\n".join(L) + "\n")
     print("wrote", OUT / "summary.md")
 
@@ -172,6 +175,63 @@ def doc_tables(P, F):
                     L.append(f"| {lab} | {d} | " + " | ".join(pct(sp["windows"].get(w, 0.0), 2) for w in ("laser", "LW", "LP"))
                              + f" | {pct(f.get('plate', 0.0))} | {pct(f.get('floor', 0.0))} | {pct(f.get('outlet slot', 0.0))} | {pct(f.get('lid', 0.0))} | {pct(f.get('wall: door side', 0.0))} |")
         L.append("")
+    return L
+
+
+def growth_tables(G):
+    """The growth model's tables (growth.py; plume.md §3.4 and §3.6)."""
+    L = ["## Condensate growth, beam loss and coaxial glow (growth.py)", "",
+         "| Alloy | Flow | fresh plume | of which below 1 mm | older condensate (part + background) | total | column (mg/m2) | absorbed (W) | "
+         "PD-A / PD-B glow | camera 975 glow (eps 0.12) | plume absorbs at 700 / 900 / 975 nm |", "|---|---|---|---|---|---|---|---|---|---|---|"]
+    for k, r in G["runs"].items():
+        b, op = r["beam"], r["old_plume"]
+        em = b["emission_ratio"]
+        old = op["tau_old"] + op["tau_bg"][1]
+        row = (f"| {k} | {pct(b['tau_ext_1070'], 2)} | {pct(b['tau_ext_1070_below_1mm'], 2)} | {pct(old, 3)} | "
+               f"{pct(b['tau_ext_1070'] + old, 2)} | {b['column_kg_m2'] * 1e6:.1f} | {r['absorbed_in_jet_W']:.2f} | "
+               f"{pct(em['PD 700: plume/pool'], 2)} / {pct(em['PD 900: plume/pool'], 2)} | "
+               f"{pct(em['camera 975: plume/depression radiance (eps 0.12)'], 2)} | "
+               f"{pct(b['a_abs_700'], 2)} / {pct(b['a_abs_900'], 2)} / {pct(b['a_abs_975'], 2)}")
+        if "no_flow_tau_per_min" in op:
+            row += f" (no flow: +{pct(op['no_flow_tau_per_min'], 2)} per min as the chamber fills)"
+        L.append(row + " |")
+    L += ["", "| Edge case | Flow | fresh plume | total | PD-A glow |", "|---|---|---|---|---|"]
+    for k, r in G.get("edges", {}).items():
+        b, op = r["beam"], r["old_plume"]
+        L.append(f"| {k} | {pct(b['tau_ext_1070'], 3)} | {pct(b['tau_ext_1070'] + op['tau_old'] + op['tau_bg'][1], 3)} | "
+                 f"{pct(b['emission_ratio']['PD 700: plume/pool'], 2)} |")
+    L += ["", "| Sensitivity (AlSi10Mg, 320 W, 1.1 m/s, 200 + 40 L/min) | fresh plume | absorption | scattering | PD-A glow |",
+          "|---|---|---|---|---|"]
+    for k, r in G.get("sensitivity", {}).items():
+        b = r["beam"]
+        L.append(f"| {k} | {pct(b['tau_ext_1070'], 3)} | {pct(b['a_abs_1070'], 3)} | {pct(b['a_sca_1070'], 4)} | "
+                 f"{pct(b['emission_ratio']['PD 700: plume/pool'], 2)} |")
+    L += ["", "| Convergence | fresh plume | column (mg/m2) | steps |", "|---|---|---|---|"]
+    for k, c in G.get("convergence", {}).items():
+        L.append(f"| {k} | {pct(c['tau_ext_1070'], 3)} | {c['column_kg_m2'] * 1e6:.2f} | {c['steps']} |")
+    r = G["runs"].get("AlSi10Mg | 200+40 L/min")
+    if r:
+        L += ["", "AlSi10Mg at 200 + 40 L/min, the centreline parcel:", "",
+              "| t (s) | z (mm) | x (mm) | gas T (K) | particle T (K) | in beam | primary (nm) | mass-median collision d (nm) | "
+              "primaries each | oxidised | m2/kg abs + sca, 1070 nm |", "|---|---|---|---|---|---|---|---|---|---|---|"]
+        for q in r["records"]:
+            if any(abs(math.log10(q["t"]) - x) < 0.035 for x in (-6, -5, -4.5, -4, -3, -2, -1, 0)):
+                L.append(f"| {q['t']:.2g} | {q['z_mm']:.2f} | {q['x_mm']:.2f} | {q['T_g']:.0f} | {q['T_p']:.0f} | "
+                         f"{'yes' if q['in_beam'] else 'no'} | {q['d_p_nm']:.1f} | {fmt(q.get('d_c_massmedian_nm'), 3)} | "
+                         f"{fmt(q.get('n_p_mass_mean'), 3)} | {pct(q['f_ox'], 1)} | {q['k_abs_1070']:.0f} + {q['k_sca_1070']:.1f} |")
+    L += ["", "| Welding-like case (assumed inputs): vapour rate | Gas | loss | absorption | scattering | below 5 / 10 mm |", "|---|---|---|---|---|---|"]
+    for k, w in G.get("welding", {}).items():
+        tb = w["tau_by_height"]
+        L.append(f"| {k} | {pct(w['tau_ext'], 2)} | {pct(w['tau_abs'], 2)} | {pct(w['tau_sca'], 2)} | "
+                 f"{pct(tb['5 mm'] / max(tb['370 mm'], 1e-12), 0)} / {pct(tb['10 mm'] / max(tb['370 mm'], 1e-12), 0)} |")
+    L += ["", "| Risk 2 | flow | total loss | track width | photodiode (P^2) | glow 90 % below (mm) | side glow / pool | "
+          "transverse optical depth at 900 nm, 0.25 / 0.5 / 1 / 2 / 3 mm |", "|---|---|---|---|---|---|---|---|"]
+    for a, rows in G.get("risk2", {}).items():
+        for f, rr in rows.items():
+            tr = " / ".join(pct(v, 2) for v in rr["transverse_tau_900"].values())
+            L.append(f"| {a} | {f} | {pct(rr['tau_total'], 2)} | {pct(rr['track_width_change'], 3)} | {pct(rr['photodiode_change_P2'], 2)} | "
+                     f"{rr['glow_height_90pct_mm']:.2f} | {rr['side_view_glow_over_pool_radiance']:.1e} | {tr} |")
+    L.append("")
     return L
 
 
