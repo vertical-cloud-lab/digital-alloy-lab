@@ -385,3 +385,11 @@ python scripts/keyhole_first_principles.py all --out arroyave-orchid-tools/keyho
 pip install pycalphad==0.11.2 && git clone https://github.com/orchid-calphad/orchid-project.org /tmp/orchid
 OPEN_TDB_ROOT=/tmp/orchid/data/databases python scripts/keyhole_fp_enthalpy_mc_al.py
 ```
+
+**Reproducibility, checked in the final review (2026-11-27).** Rerun from a fresh checkout into an empty folder,
+under Python 3.14.4 with numpy 2.5.5, scipy 1.18.1 and pandas 3.1.1:
+- the 8 checks pass;
+- `all` reproduces every committed file;
+- the enthalpy table, regenerated with pycalphad 0.11.2 under Python 3.13 (symengine has no 3.14 wheel), is identical.
+
+`fp-summary.json` needed one fix first: its AM-Bench entry had been written by an earlier version of `run_ambench`, which the current code now matches.
