@@ -93,6 +93,19 @@ What it still finds:
   28 mm into the chamber body where they set a part. 23 more overlaps are parts at their designed positions, listed apart. Only
   41's last slice has the fix that stops a released part following the opening fingers, so earlier releases may sit about 2 mm
   off their seats.
+  **Classified pair by pair** in [`round9_41_pairs.md`](../analysis/out/videoqa/round9_41_pairs.md):
+  - 175 of the 238 are real clipping a viewer could see, in at least 1,278 of 13,640 frames (9.4 %). The causes:
+    - 73 parts in parts away from their seats;
+    - 45 fingers closed past the part;
+    - 30 from the staged put into the table top;
+    - 16 parts just off their seats;
+    - 7 tools through the part they work on;
+    - 2 the person's hands;
+    - 2 an arm link through a screw.
+  - 0 are artifacts of the drawn meshes: every pair reads the same depth on the planner's 0.1 mm meshes.
+  - 63 are fingertips within 5 mm on the part they hold.
+  - Of round 8's 209, 71 are gone, and 100 are new, 76 of them fingertips on parts.
+  - Chapter 40's 29 pairs are 17 real, 0 artifacts and 12 fingertip contacts.
 - **40, the module (29 pairs, round 8: 221; worst 10.5 mm, round 8: 78.1 mm):** fingertips up to 10.5 mm in the module handle
   during the turn-overs.
 - **30, the chamber's machining (42 pairs; its first full audit):** 25 are the two people at the lifts (coats and shoes
