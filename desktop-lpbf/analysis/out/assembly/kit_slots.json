@@ -5329,110 +5329,6 @@
 {
 "key": "F45d#3",
 "step": "F45d",
-"name": "NFC reader antenna",
-"part_indices": [
-112
-],
-"solids": null,
-"category": "motion",
-"T": [
-[
-1.0,
-0.0,
-0.0,
-8866.71
-],
-[
-0.0,
-1.0,
-0.0,
--290.5
-],
-[
-0.0,
-0.0,
-1.0,
-746.5
-],
-[
-0.0,
-0.0,
-0.0,
-1.0
-]
-],
-"bbox": [
-8760.21,
-8762.71,
--318.0,
--299.0,
-905.0,
-923.0
-],
-"support": "riser",
-"side": "A",
-"actor": "A",
-"tool": "gripper",
-"mass_kg": 0.01,
-"two_arm": false,
-"heavy": false,
-"label": "NFC reader antenna"
-},
-{
-"key": "F45d#4",
-"step": "F45d",
-"name": "Side reservoir port",
-"part_indices": [
-118
-],
-"solids": null,
-"category": "motion",
-"T": [
-[
-1.0,
-0.0,
-0.0,
-8885.21
-],
-[
-0.0,
-1.0,
-0.0,
--269.0
-],
-[
-0.0,
-0.0,
-1.0,
-756.0
-],
-[
-0.0,
-0.0,
-0.0,
-1.0
-]
-],
-"bbox": [
-8760.21,
-8778.21,
--249.0,
--219.0,
-905.0,
-935.0
-],
-"support": "riser",
-"side": "A",
-"actor": "A",
-"tool": "gripper",
-"mass_kg": 0.031,
-"two_arm": false,
-"heavy": false,
-"label": "Side reservoir port"
-},
-{
-"key": "F45d#5",
-"step": "F45d",
 "name": "Reservoir-docked sensor",
 "part_indices": [
 119
@@ -5450,7 +5346,7 @@
 0.0,
 1.0,
 0.0,
--229.0
+-378.0
 ],
 [
 0.0,
@@ -5468,8 +5364,8 @@
 "bbox": [
 8760.21,
 8772.21,
--169.0,
--139.0,
+-318.0,
+-288.0,
 905.0,
 917.0
 ],
@@ -5481,6 +5377,110 @@
 "two_arm": false,
 "heavy": false,
 "label": "Reservoir-docked sensor"
+},
+{
+"key": "F45e",
+"step": "F45e",
+"name": "NFC reader antenna",
+"part_indices": [
+112
+],
+"solids": null,
+"category": "motion",
+"T": [
+[
+0.0,
+0.0,
+1.0,
+8601.71
+],
+[
+0.0,
+1.0,
+0.0,
+-210.5
+],
+[
+-1.0,
+0.0,
+0.0,
+801.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8760.21,
+8778.21,
+-238.0,
+-219.0,
+905.0,
+907.5
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.01,
+"two_arm": false,
+"heavy": false,
+"label": "NFC reader antenna"
+},
+{
+"key": "F45f",
+"step": "F45f",
+"name": "Side reservoir port",
+"part_indices": [
+118
+],
+"solids": null,
+"category": "motion",
+"T": [
+[
+0.0,
+0.0,
+1.0,
+8611.21
+],
+[
+0.0,
+1.0,
+0.0,
+-189.0
+],
+[
+-1.0,
+0.0,
+0.0,
+798.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8760.21,
+8790.21,
+-169.0,
+-139.0,
+905.0,
+923.0
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.031,
+"two_arm": false,
+"heavy": false,
+"label": "Side reservoir port"
 },
 {
 "key": "F50#1",
