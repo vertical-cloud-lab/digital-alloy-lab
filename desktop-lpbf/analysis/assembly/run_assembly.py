@@ -1015,8 +1015,43 @@ def do_flip(run, st, row):
         allow_f = frozenset([("held", n) for n in seat] + [("tool", n) for n in seat])
         fr = run.follow(actor, Ts, close, allow_f, dist_every=8)
         if fr["ok"]:
-            a.place(run.q[actor], close)
-            p, info = run.plan_to(actor, fr["qs"][0], close, allow=allow_f)
+            # round 9: the approach is planned with the gripper open and the module still on its nest, an obstacle the open
+            # fingers may only touch, ending in a straight line in along the tool axis (70 mm, or 45 or 30 where the arm would
+            # fold too far). Round 8 planned it with the module
+            # already held and the fingers closed, so the fingers passed through it on the way in (chapter 40, M18: the
+            # knuckles 42 mm into the tube; M26: a fingertip in the handle)
+            a.release()
+            q_g = np.asarray(fr["qs"][0], float)
+            tmp = Body("flip part (start)", body.v, body.f, kind="machine")
+            tmp.place(T0)
+            cl.static["__flip"] = tmp
+            try:
+                Tg = a.tcp(q_g, 0.0)
+                allow_a = allow_f | frozenset([("tool", "flip part (start)")])
+                for L_in in (70.0, 45.0, 30.0):         # a shorter line where the arm folds too far 70 mm back (M26)
+                    pre = [Tg @ Tm(p=(0.0, 0.0, -L_in * (1.0 - s_))) for s_ in np.linspace(0.0, 1.0, int(L_in / 3.0) + 1)]
+                    a.close = 0.0
+                    fr_in = run.follow(actor, pre, 0.0, allow_a, seeds=[q_g], dist_every=99)
+                    if fr_in["ok"]:
+                        break
+                if fr_in["ok"]:
+                    a.place(run.q[actor], 0.0)
+                    p, info = run.plan_to(actor, fr_in["qs"][0], 0.0, allow=allow_f)
+                    if p is not None:
+                        p = [np.asarray(q, float) for q in p] + [np.asarray(q, float) for q in fr_in["qs"][1:]]
+                else:
+                    # no straight line in (M26: the arm folds onto itself behind the grasp): planned straight to the grasp, the
+                    # open fingers allowed only to touch the module (1.5 mm)
+                    a.place(run.q[actor], 0.0)
+                    p, info = run.plan_to(actor, q_g, 0.0, allow=allow_a)
+                    if p is None:
+                        info = dict(info, reason=f"no clear line in ({fr_in['hit']}) and no path to the grasp ({info.get('reason')})")
+                    else:
+                        info = dict(info, via="planned to the grasp (no straight line in)")
+            finally:
+                cl.static.pop("__flip", None)
+                a.hold(body, inv(G_m))
+                a.close = close
             fr["plan_ok"] = p is not None
             fr["plan"] = info
             fr["plan_path"] = p
