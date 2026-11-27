@@ -1,11 +1,11 @@
 {
  "mp4": "desktop-lpbf/cad/img/robotbuild/robot-build.mp4",
- "mb": 39.1,
- "seconds": 1997.3,
- "frames": 23968,
+ "mb": 41.5,
+ "seconds": 2456.1,
+ "frames": 29473,
  "fps": 12,
  "crf": 28,
- "maxrate_kbps": 350,
+ "maxrate_kbps": 284,
  "chapters": [
   {
    "folder": "00-intro",
@@ -36,8 +36,8 @@
   },
   {
    "folder": "20-receiving",
-   "frames": 446,
-   "seconds": 37.2,
+   "frames": 448,
+   "seconds": 37.3,
    "finished": true,
    "card": false,
    "state": "rendered",
@@ -45,8 +45,8 @@
   },
   {
    "folder": "29-stock",
-   "frames": 186,
-   "seconds": 15.5,
+   "frames": 275,
+   "seconds": 22.9,
    "finished": true,
    "card": false,
    "state": "rendered",
@@ -54,8 +54,8 @@
   },
   {
    "folder": "30-machining-chamber",
-   "frames": 1626,
-   "seconds": 135.5,
+   "frames": 2854,
+   "seconds": 237.8,
    "finished": true,
    "card": false,
    "state": "rendered",
@@ -63,8 +63,17 @@
   },
   {
    "folder": "31-machining-parts",
-   "frames": 629,
-   "seconds": 52.4,
+   "frames": 1088,
+   "seconds": 90.7,
+   "finished": true,
+   "card": false,
+   "state": "rendered",
+   "reused": false
+  },
+  {
+   "folder": "31b-machining-programs",
+   "frames": 736,
+   "seconds": 61.3,
    "finished": true,
    "card": false,
    "state": "rendered",
@@ -72,8 +81,8 @@
   },
   {
    "folder": "32-finishing",
-   "frames": 925,
-   "seconds": 77.1,
+   "frames": 1001,
+   "seconds": 83.4,
    "finished": true,
    "card": false,
    "state": "rendered",
@@ -90,8 +99,8 @@
   },
   {
    "folder": "40-assembly-module",
-   "frames": 3448,
-   "seconds": 287.3,
+   "frames": 2974,
+   "seconds": 247.8,
    "finished": true,
    "card": false,
    "state": "rendered",
@@ -99,8 +108,8 @@
   },
   {
    "folder": "41-assembly-chamber",
-   "frames": 10325,
-   "seconds": 860.4,
+   "frames": 13640,
+   "seconds": 1136.7,
    "finished": true,
    "card": false,
    "state": "rendered",
@@ -108,8 +117,8 @@
   },
   {
    "folder": "50-integration",
-   "frames": 996,
-   "seconds": 83.0,
+   "frames": 1070,
+   "seconds": 89.2,
    "finished": true,
    "card": false,
    "state": "rendered",
@@ -143,49 +152,49 @@
    "title": "Receiving and unpacking"
   },
   {
-   "at": "4:55",
+   "at": "4:56",
    "title": "The stock: two people carry the 5.5 in. plate"
   },
   {
-   "at": "5:11",
+   "at": "5:18",
    "title": "Machining the chamber: the VF-4 and its 4th axis"
   },
   {
-   "at": "7:26",
+   "at": "9:16",
    "title": "Machining the other parts: vise, lathe, saw"
   },
   {
-   "at": "8:19",
+   "at": "11:48",
    "title": "Finishing: welding, honing, deburring, washing, measuring, kitting"
   },
   {
-   "at": "9:36",
+   "at": "13:12",
    "title": "The arms' custom tools and fixtures"
   },
   {
-   "at": "11:00",
+   "at": "14:36",
    "title": "Assembly 1: the build module, by two UR12e on MiR250s"
   },
   {
-   "at": "15:47",
+   "at": "18:44",
    "title": "Assembly 2: the chamber and the process module, by two UR12e on MiR250s"
   },
   {
-   "at": "30:08",
+   "at": "37:40",
    "title": "Onto the VLM tray: rack, gas module, hoses, leak check"
   },
   {
-   "at": "31:31",
+   "at": "39:09",
    "title": "Time and cost: in-house, outsourced, robot shop"
   }
  ],
  "counters": {
-  "t_s": 146118.91,
-  "machine_h": 29.31,
-  "robot_h": 7.98,
-  "person_h": 27.69,
+  "t_s": 147595.94,
+  "machine_h": 29.45,
+  "robot_h": 8.02,
+  "person_h": 27.92,
   "cam_h": 123.6,
   "outsourced_d": 10.0
  },
- "composed_utc": "2026-11-26T09:07Z"
+ "composed_utc": "2026-11-27T12:11Z"
 }
