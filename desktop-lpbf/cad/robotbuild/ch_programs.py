@@ -54,29 +54,54 @@ FRAMES_JSON = CM.LPBF / "analysis" / "out" / "machining" / "gcode" / "parts" / "
 ROWS = []
 
 
-def set_vise(vf4, opening):
-    """The VF-4's vise group rebuilt at `opening` (VF4 draws it at 92); returns equipment.vf4's meta at table 0."""
+VISE_GROUP = {}                                             # opening -> the scene group drawing the vise at it
+
+
+def add_vises(vf4):
+    """One vise group per program's opening, each built once and shown in turn: VF4's own "vf4/vise" (92 mm, op 2's
+    grip) and "vf4/vise98" (op 1's). Rebuilding one group's meshes at op 2 made the vise's own pieces (the jaw plates
+    in their jaws) count as moving pairs in scene_audit; built once, they are rigid, as in chapter 31."""
     sc = vf4.sc
-    for n in sc.members("vf4/vise"):
-        sc.remove(n)
-    parts, meta = E.vf4(door=1.0, table_x=0.0, with_vise=True, vise_open=opening, with_hrt=True)
-    by = {}
-    for n, p in parts.items():
-        if n.startswith(("vise", "Kurt")):
-            by.setdefault((p.color, p.opacity), []).append(p.mesh.transform(p.M, inplace=False))
-    for i, ((c, op), ms) in enumerate(by.items()):
-        sc.add(f"vf4/vise/{i}", E.merge(ms), c, group="vf4/vise", opacity=op)
-    sc.parent["vf4/vise"] = "vf4/table"
-    sc.gmat["vf4/vise"] = np.eye(4)
-    vf4.set(vise=True)
-    return meta
+    VISE_GROUP[92.0] = "vf4/vise"
+    for o in sorted(set(OPENING.values())):
+        if o in VISE_GROUP:
+            continue
+        g = f"vf4/vise{o:.0f}"
+        parts, _ = E.vf4(door=1.0, table_x=0.0, with_vise=True, vise_open=o, with_hrt=True)
+        by = {}
+        for n, p in parts.items():
+            if n.startswith(("vise", "Kurt")):
+                by.setdefault((p.color, p.opacity), []).append(p.mesh.transform(p.M, inplace=False))
+        for i, ((c, op), ms) in enumerate(by.items()):
+            sc.add(f"{g}/{i}", E.merge(ms), c, group=g, opacity=op)
+        sc.parent[g] = "vf4/table"
+        sc.gmat[g] = np.eye(4)
+        VISE_GROUP[o] = g
+
+
+def set_vise(vf4, opening):
+    """Show the vise group at `opening`, hide the others; returns equipment.vf4's meta at table 0."""
+    for o, g in VISE_GROUP.items():
+        if g == "vf4/vise":
+            vf4.set(vise=(o == opening))
+        else:
+            for n in vf4.sc.members(g):
+                vf4.sc.alpha[n] = 1.0 if o == opening else 0.0
+    return E.vf4(door=1.0, table_x=0.0, with_vise=True, vise_open=opening, with_hrt=True)[1]
 
 
 def set_parallel(vf4, meta, width):
-    """The 1 in. parallel under the part (shop_clips.clip_vise_part's: 2 mm inside each jaw plate, 120 mm long)."""
+    """The 1 in. parallel under the part (shop_clips.clip_vise_part's: 2 mm inside each jaw plate, 120 mm long), one
+    actor per width, shown in turn."""
     vx, yv, zf = meta["vise_x_fixed"], meta["vise_centre"][1], meta["vise_floor_z"]
-    m = E.box(vx + 3.0, vx + 1.0 + width - 2.0, yv - 60.0, yv + 60.0, zf, zf + PC.PARALLEL)
-    vf4.sc.add("vf4/fixture/parallel", m, "#8e979f", group="vf4/fixture")
+    sc = vf4.sc
+    name = f"vf4/fixture/parallel {width:.0f}"
+    if name not in sc.actors:
+        m = E.box(vx + 3.0, vx + 1.0 + width - 2.0, yv - 60.0, yv + 60.0, zf, zf + PC.PARALLEL)
+        sc.add(name, m, "#8e979f", group="vf4/fixture")
+    for n in sc.members("vf4/fixture"):
+        if n.startswith("vf4/fixture/parallel"):
+            sc.alpha[n] = 1.0 if n == name else 0.0
 
 
 def part_pose(name, meta):
@@ -202,6 +227,7 @@ def chapter():
     scn = SC.Shop()
     vf4 = SC.VF4(scn)
     vf4.set(door=0.0, front_alpha=0.0)              # doors shut, the front hidden (chapter 30's inside view)
+    add_vises(vf4)
     stock = Stock()
     cache = pathlib.Path("/tmp/robotbuild/cache/shop/gcode")
     cache.mkdir(parents=True, exist_ok=True)
@@ -248,8 +274,8 @@ def chapter():
     # ---- the part as the programs leave it
     for i in range(int(4.0 * FPS)):
         w.frame(scn, tcam2(), "The bracket as its two programs leave it",
-                sub=f"{m1 + m2:.1f} min of cutting; the simulation removed {sim['removed_sim_cm3']:.1f} cm3 against "
-                    f"{sim['removed_exact_cm3']:.1f} cm3 of blank minus part ({sim['removed_sim_vs_cad_pct']:+.2f} %); "
+                sub=f"{m1 + m2:.1f} min of cutting; the simulation removed {sim['removed_sim_cm3']:.1f} cm3, blank minus "
+                    f"part {sim['removed_cad_voxels_cm3']:.1f} on the same voxels ({sim['removed_sim_vs_cad_pct']:+.2f} %); "
                     "the lathe slug has no program (FreeCAD 1.0.2's CAM has no turning)",
                 who=[], step="vise bracket", status="pass")
     n = w.close()
