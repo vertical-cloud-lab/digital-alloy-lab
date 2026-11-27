@@ -1,0 +1,47 @@
+{
+ "video": "/tmp/r9/w2/cam/32-finishing.mp4",
+ "tag": "",
+ "fps": 12.0,
+ "frames": 1001,
+ "seconds": 83.4,
+ "limits": {
+  "jumps_per_min": 10.0,
+  "jump_frame_share": 0.03,
+  "median_run_s": 4.0,
+  "short_run_share": 0.15,
+  "p95_speed_fw_s": 0.143
+ },
+ "method": "320x180 grey, picture area only; jump = large change with lost corner tracks (a cut or a change too large to follow), consecutive jump frames merged; camera speed = shift of the RANSAC similarity fitted to tracked corners, in frame-widths per second",
+ "overall": {
+  "seconds": 83.4,
+  "jumps": 6,
+  "jumps_per_min": 4.3,
+  "jump_frame_share": 0.006,
+  "median_run_s": 10.0,
+  "min_run_s": 3.92,
+  "short_run_share": 0.0,
+  "moving_share": 0.017,
+  "mean_speed_fw_s": 0.004,
+  "p95_speed_fw_s": 0.009,
+  "fails": [],
+  "pass": true
+ },
+ "chapters": [
+  {
+   "chapter": "whole video",
+   "start_s": 0,
+   "seconds": 83.4,
+   "jumps": 6,
+   "jumps_per_min": 4.3,
+   "jump_frame_share": 0.006,
+   "median_run_s": 10.0,
+   "min_run_s": 3.92,
+   "short_run_share": 0.0,
+   "moving_share": 0.017,
+   "mean_speed_fw_s": 0.004,
+   "p95_speed_fw_s": 0.009,
+   "fails": [],
+   "pass": true
+  }
+ ]
+}

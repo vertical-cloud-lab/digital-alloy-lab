@@ -1,0 +1,47 @@
+{
+ "video": "/tmp/r9/w2/cam/29-stock.mp4",
+ "tag": "",
+ "fps": 12.0,
+ "frames": 275,
+ "seconds": 22.9,
+ "limits": {
+  "jumps_per_min": 10.0,
+  "jump_frame_share": 0.03,
+  "median_run_s": 4.0,
+  "short_run_share": 0.15,
+  "p95_speed_fw_s": 0.143
+ },
+ "method": "320x180 grey, picture area only; jump = large change with lost corner tracks (a cut or a change too large to follow), consecutive jump frames merged; camera speed = shift of the RANSAC similarity fitted to tracked corners, in frame-widths per second",
+ "overall": {
+  "seconds": 22.9,
+  "jumps": 0,
+  "jumps_per_min": 0.0,
+  "jump_frame_share": 0.0,
+  "median_run_s": 22.9,
+  "min_run_s": 22.92,
+  "short_run_share": 0.0,
+  "moving_share": 0.196,
+  "mean_speed_fw_s": 0.0154,
+  "p95_speed_fw_s": 0.085,
+  "fails": [],
+  "pass": true
+ },
+ "chapters": [
+  {
+   "chapter": "whole video",
+   "start_s": 0,
+   "seconds": 22.9,
+   "jumps": 0,
+   "jumps_per_min": 0.0,
+   "jump_frame_share": 0.0,
+   "median_run_s": 22.9,
+   "min_run_s": 22.92,
+   "short_run_share": 0.0,
+   "moving_share": 0.196,
+   "mean_speed_fw_s": 0.0154,
+   "p95_speed_fw_s": 0.085,
+   "fails": [],
+   "pass": true
+  }
+ ]
+}

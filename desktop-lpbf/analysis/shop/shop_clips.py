@@ -72,6 +72,8 @@ def fixture_parts(fc, M_setup, skip=(), only=None):
             x0, x1, y0, y1, z0, z1 = p
             if nm == "edge clamp" and fc == "frame_B":   # round 9: the CAM's clamp boxes ran 5 mm into the risers'
                 y0, y1 = (y0, min(y1, 74.0)) if y0 > 0 else (max(y0, -74.0), y1)   # (y 75-125): drawn short of them
+            if nm == "edge clamp":                       # round 9: 1 mm off the blank's end faces (at 0.05 mm the voxel
+                x0, x1 = (max(x0, 159.8), x1) if x0 > 0 else (x0, min(x1, -159.8))   # stock touched both: a sandwich
             m = E.box(x0, x1, y0, y1, z0, z1)
             if nm == "edge clamp":
                 cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
@@ -372,7 +374,7 @@ def clip_deburr():
     job = Job("Deburr: arm A holds a part against the brush and the compliant spindle", "wash", parts,
               x_mir=560.0 - S.ARM_DX)
     L, W, H = 100.0, 72.0, 40.0
-    part = Body("bracket", *S.box(-L / 2, L / 2, -W / 2, W / 2, 0, H), kind="held", color="#d6dade")   # round 9: below
+    part = Body("bracket", *S.box(-W / 2, W / 2, -L / 2, L / 2, 0, H), kind="held", color="#d6dade")   # round 9: below
     # the TCP (z along the approach), its top in the pads; round 8 had it above, through the fingers' knuckles
     bx, by, bz = meta["brush"]
     tx, ty, tz = meta["deburr_tip"]
@@ -387,7 +389,7 @@ def clip_deburr():
     return simple_clip("deburr", "wash", "32-finishing", job, "A", "2F-85", "Arm A deburrs a bracket: brush, then the "
                        "compliant spindle", "part to tool: a brush wheel and an ATI compliant deburring spindle on the bench; "
                        "edges in deep pockets stay a person's job", "deburr class", mach=dict(lid_open=True),
-                       objs={"bracket": (np.eye(4), dict(kind="box", b=(-L / 2, L / 2, -W / 2, W / 2, 0, H),
+                       objs={"bracket": (np.eye(4), dict(kind="box", b=(-W / 2, W / 2, -L / 2, L / 2, 0, H),
                                                          color="#d6dade"))},
                        follow={"bracket": "bracket"}, extra=dict(part_kg=0.8))
 

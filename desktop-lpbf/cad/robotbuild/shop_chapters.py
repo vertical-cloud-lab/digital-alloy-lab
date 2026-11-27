@@ -479,7 +479,7 @@ def pair_lift(w, scn, crew, name, spec, keys, kg, caption, sub, step, cam, hand_
         for yl, z0_, z1_, x0_, x1_ in (fronts or ()):
             o_try = b_st - t * f_st
             if x0_ - 260.0 <= o_try[0] <= x1_ + 260.0 and f_st[1] > 1e-6:
-                lim = yl - 15.0 - SS.people.body_front(z0_, z1_, 0.0)
+                lim = yl - 15.0 - SS.people.body_front(z0_, z1_, 0.0) - 150.0   # 150: a foot planted ahead
                 t = max(t, (b_st[1] - lim) / f_st[1])
         corners = np.array([[x, y, z] for x in (lo[0], hi[0]) for y in (lo[1], hi[1]) for z in (lo[2], hi[2])])
         cw = corners @ P[:3, :3].T + P[:3, 3]
@@ -515,9 +515,13 @@ def pair_lift(w, scn, crew, name, spec, keys, kg, caption, sub, step, cam, hand_
         at h's height: it comes in level, never through the load or what it stands on."""
         pre = np.asarray(h, float) + 150.0 * np.asarray(away, float)
         r = p.rest_hand(s_)
-        if u < 0.55:
-            return tuple(r + (pre - r) * ease(u / 0.55))
-        return tuple(pre + (np.asarray(h, float) - pre) * ease((u - 0.55) / 0.45))
+        up = r.copy()
+        up[2] = max(r[2], float(h[2]) + 30.0)            # straight up first, clear of what the load stands on
+        if u < 0.3:
+            return tuple(r + (up - r) * ease(u / 0.3))
+        if u < 0.65:
+            return tuple(up + (pre - up) * ease((u - 0.3) / 0.35))
+        return tuple(pre + (np.asarray(h, float) - pre) * ease((u - 0.65) / 0.35))
 
     def away_of(i, P):
         nrm = M[:3, :3] @ P[:3, :3] @ np.array([1.0, 0.0, 0.0])
@@ -1255,6 +1259,8 @@ def chapter_30():
     cam_wide = cam_at("vf4", *CAM_WIDE)
     cam_in = cam_at("vf4", *CAM_IN_FLAT)
     CARTX, CARTY0, CARTY1, CARTH = (-1400.0, -800.0), -380.0, -40.0, 900.0     # station frame: x span, y span, top
+    scn.drop_context("lathe")                        # arm A's MiR drives to the lathe: its door open, as planned
+    scn.add_parts("lathe", E.st10(door=1.0, jaw_open=6.0)[0], Mst("lathe"))
     cart_parts = E.bench(CARTX[1] - CARTX[0], CARTY1 - CARTY0, CARTH)
     scn.add_parts("cart", cart_parts, st @ E.T(((CARTX[0] + CARTX[1]) / 2, CARTY0, 0.0)))
     cart_c = E.T(((CARTX[0] + CARTX[1]) / 2, (CARTY0 + CARTY1) / 2, 0.0))
@@ -1276,7 +1282,7 @@ def chapter_30():
             k.append((Pf, 3.2))
             Pa_up = Pf
         z_up = max(ca[2] + up_a, cb[2] + up_b)
-        y_out = min(ca[1], -260.0)
+        y_out = min(ca[1], -430.0)                     # round 9: behind the cart's edge, so no front clamps the people
         Pd = Pa_up.copy()
         Pd[:3, 3] += np.array([cb[0] - ca[0], y_out - ca[1], z_up - ca[2] - up_a])
         k.append((Pd, None))
@@ -1291,7 +1297,7 @@ def chapter_30():
         ca, cb = P_a[:3, 3], P_b[:3, 3]
         Pa_up = E.T((0, 0, up_a)) @ P_a
         Po = Pa_up.copy()
-        Po[:3, 3] += np.array([0.0, min(cb[1], -260.0) - ca[1], 0.0])
+        Po[:3, 3] += np.array([0.0, min(cb[1], -430.0) - ca[1], 0.0])
         Pc = P_b.copy()
         Pc[:3, 3] += np.array([0.0, 0.0, up_b])
         return [(P_a, None), (Pa_up, 0.9), (Po, None), (Pc, None), (P_b, 0.9)]
@@ -1308,8 +1314,8 @@ def chapter_30():
     P_cart1 = rest_on(spec0, scn, cart_c, CARTH, R_B)
     scn.set_obj("load", st @ P_cart1, spec0)
     # overview first: the station, the cart with the stock; the two people walk in from the aisle (lesson 5)
-    for i in range(2):
-        pw = (st @ np.r_[-3600.0 + 520.0 * i, -1300.0 - 260.0 * i, 0.0, 1.0])[:3]
+    for i in range(2):                               # 1.2 m apart (round 9: at 0.6 m their legs met on the way)
+        pw = (st @ np.r_[-3600.0, -900.0 - 1200.0 * i, 0.0, 1.0])[:3]
         crew.place(i, pw[0], pw[1], -90.0)
     crew.show(1.0)
     cap0 = "The chamber frame on the VF-4: three setups from the posted programs"

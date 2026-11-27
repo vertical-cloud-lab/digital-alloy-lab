@@ -1,6 +1,6 @@
 {
  "chapter": "31-machining-parts",
- "frames_recorded": 629,
+ "frames_recorded": 1088,
  "recordings": [
   "/tmp/robotbuild/frames/31-machining-parts/audit"
  ],
@@ -8,10 +8,10 @@
  "mirs": [
   {
    "mir": "mirA",
-   "frames": 296,
-   "driven_mm": 0,
+   "frames": 816,
+   "driven_mm": 4253,
    "forward": "local +x",
-   "forward_mm": 0,
+   "forward_mm": 4253,
    "reverse_mm": 0,
    "reverse_legs": 0,
    "longest_reverse_leg_mm": 0,
@@ -22,16 +22,9 @@
     "frames_over_1mm": 0
    },
    "sideways_worst": [],
-   "pivot_frames": 0,
-   "turned_deg": 0.0,
-   "jumps": [
-    [
-     345,
-     4253,
-     4250,
-     -170
-    ]
-   ]
+   "pivot_frames": 10,
+   "turned_deg": 4.6,
+   "jumps": []
   },
   {
    "mir": "mirB",
