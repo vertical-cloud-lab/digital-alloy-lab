@@ -178,14 +178,17 @@ air, the guard is at 48.8 °C, and the Chronos's hood air at 43.1 °C. All the c
 SoCs (90, 84) are over. With dock air, only the coaxial camera's board (51.8 against 50, on a 53.0 °C bridge) is over. With the fan
 coil, the coaxial camera (59.9), the Alvium (61.3), the galvo (39.2) and PB2's SoC (80.6) are over.
 
-- **What each part of the cooling does.** Ventilation does most of it, by taking the guard from 26–44 K over the Shuttle to 5–10 K over
-  its supply.
-  The hood puts the Chronos in supply air instead of guard air, 4–6 K cooler, which keeps it in rating in the busy case on Shuttle air
-  (38.5 against 42.7). The G-10 pad cuts the bracket's 1.3 W/K from the 60 °C floor plate to 0.1 W/K. The G-10 ring cuts the LP camera's
-  link to its 60 °C boss from 0.4 to 0.017 W/K: in the typical vented case that board would be 54 °C without the ring, over its 50,
-  and is 41.5 °C with it. The pad takes 6.5 K off the Chronos's body (44 °C with it). **PB2 sealed is the worst spot in the guard.** Its 8–12 W in a 160 × 90 × 60 mm polycarbonate box (UA 0.25 W/K) holds its air
-  ~25 K over the guard's. In the vented guard that is 63 °C and an 81 °C SoC in the typical case, 69 °C and 87 °C in the busy one. The
-  40 mm fan (~5 m³/h through a filtered vent) brings the box to ~3 K over the guard.
+- **What each part of the cooling does.**
+  - Ventilation does most of it, by taking the guard from 26–44 K over the Shuttle to 5–10 K over its supply.
+  - The hood puts the Chronos in supply air instead of guard air, 4–6 K cooler. That keeps it in rating in the busy case on Shuttle
+    air (38.5 against 42.7).
+  - The G-10 pad cuts the bracket's link to the 60 °C floor plate from 1.3 to 0.1 W/K, which takes 6.5 K off the Chronos's body
+    (44 °C with it, typical vented case).
+  - The G-10 ring cuts the LP camera's link to its 60 °C boss from 0.4 to 0.017 W/K. In the typical vented case that board would be
+    54 °C without the ring, over its 50, and is 41.5 °C with it.
+  - **PB2 sealed is the worst spot in the guard.** Its 8–12 W in a 160 × 90 × 60 mm polycarbonate box (UA 0.25 W/K) holds its air
+    ~25 K over the guard's: 63 °C and an 81 °C SoC in the vented guard in the typical case, 69 °C and 87 °C in the busy one. The
+    40 mm fan (~5 m³/h through a filtered vent) brings the box to ~3 K over the guard.
 - **The SoC figures use Geekworm's own test of its P573 passive case** (+35 K over a 26.9 °C room after 20 minutes of four-core stress;
   not steady, [geekworm.com](https://geekworm.com/blogs/news/p573-copper-thermal-paste-raspberry-pi-5-cooling-test)), taken for both
   Pis at full load and half that at the cameras-and-supervisor load. The Active Cooler is taken as the same. These are estimates.
@@ -214,15 +217,15 @@ coil, the coaxial camera (59.9), the Alvium (61.3), the galvo (39.2) and PB2's S
 
 - **Why the back panel.** The left panel is 8.5 mm from the rack's vented side panel, and its air is the rack's exhaust. The front has the
   door, its rail and the robot's AprilTags. The top would add height. The back faces the dock, where any duct would come from, and has
-  room inside above the bridge and beside its posts. The flow runs low-left to high-right, past the Chronos and the cage on the left,
-  over the bridge and PB2, and out.
+  room inside above the bridge and beside its posts. The air comes in low on the −x side, passes the Chronos and the cage there, crosses
+  over the bridge and PB2, and leaves on the +x side.
 - **The traps are clear of the beam's straight-line paths.** The collimator's beam runs along x at y ≈ 95, z 271, from x −387 to the
   fold mirror at −155. The inlet stops at x −218 and z 202, and the exhaust starts at x 40, behind PB2.
 
 ### 4.1 Interference
 
 [`interference.py`](../analysis/interference.py) with `LPBF_MONITORING=1`, 330 parts, on M50, S25 and L75. The cooling parts touch the
-panel, the floor plate, PB2 and the LP ring face to face, so they add no volume to any pair; nine designed contacts declare them anyway.
+panel, the floor plate and the LP ring face to face, so they add no volume to any pair; nine designed contacts declare them anyway.
 
 | Module | Run (UTC) | Static states | Motion sweeps | Peak memory |
 |---|---|---|---|---|
@@ -304,8 +307,8 @@ draw air in rather than letting it out. The fans take ~17 W from the 24 V CTRL r
 | Closed guard, chilled-water fan coil | +6 W | 203 / 218 / 288 W to the water | −0.6 / −0.7 / −0.9 K | chilled water at the dock (heat.md §2 option 1): add ~0.3 kW to the chiller's size |
 
 (Shuttle change from tray_budget.json's still-air Shuttle, 5.5 W/m²K over 55.9 m².) **Recommendation: decide the guard with the
-laser.** If the laser goes to chilled water, close the vents and fit the fan coil (option M0-C9). The drawn traps and fans then only
-stand by for the typical case. If the dock is ventilated, duct the inlet from it and the exhaust into it. Until either is decided,
+laser.** If the laser goes to chilled water, fit the fan coil (option M0-C9) and blank the drawn vents, or keep them for when the chiller
+is off. If the dock is ventilated, duct the inlet from it and the exhaust into it. Until either is decided,
 don't run the Chronos, the photodiodes or the galvo with the Shuttle's air above ~30 °C.
 
 ## 8. Parts and cost
