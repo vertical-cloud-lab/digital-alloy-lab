@@ -68,6 +68,7 @@ snoek2012	manual	cost-aware EI per second
 frazier2018	arxiv:1807.02811	BO tutorial
 liang2021	doi:10.1038/s41524-021-00656-9	BO benchmarking across experimental materials domains
 sabanzagil2025	doi:10.1038/s43588-025-00822-9	multi-fidelity BO best practices
+chawla2026	doi:10.1039/d5dd00518c	cost-aware BO run on a real nanoindentation workflow (within one instrument)
 mulukutla2024	doi:10.2139/ssrn.4968461	supply-risk-aware alloy design
 # --- CALPHAD, twins
 thermocalc2002	doi:10.1016/S0364-5916(02)00037-8	Thermo-Calc	withhold
