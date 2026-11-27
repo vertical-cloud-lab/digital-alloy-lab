@@ -130,6 +130,47 @@ SEL = [
     ("M0-C10", "0", "cooling (guard)", "Option, not recommended: thermoelectric air-to-air enclosure cooler, 24 V (TE Technology AC-094)",
      ("p3", "CL80"), 1, "option (not recommended)", "not drawn",
      "94 W at dT 0 is half the guard's load, and its ~240 W input goes into the Shuttle", []),
+    # ---------------- step 0: the guard's monitoring bulkhead, MN-28 (round 3, 2026-11-27; cad/monitoring_bulkhead.py) -----------
+    ("M0-B1", "0", "custom (guard bulkhead)", "Guard bulkhead plate MN-28: 6061-T6 0.080 in. (2.03 mm), 180 x 126 mm, laser-cut: four "
+     "D-size cut-outs (Ø24 + 2 x Ø3.2), an Ø16.1 hole, the KEL's 65 x 36 cut-out and 4 x Ø5.8, 8 x Ø4.5; bare or clear chromate (conductive)",
+     ("est", 15.0, 40.0, "estimate (laser-cut flat plate, not quoted; SendCutSend quoted the LW ring and the LP cap at $7.43-10.26 each "
+                         "on 2026-11-27, fabrication.md §4)", "custom (monitoring_bulkhead.py PLATE)", "SendCutSend"), 1, "outsource",
+     "drawn (monitoring_bulkhead.py)", "on the guard's back panel, upper left (x -400..-220, z 220..346), over a 152 x 98 mm cut-out in "
+     "the panel, 8 x M4 into rivet nuts (M0-B8). Cut the panel's cut-out with the vents' openings (S9)", []),
+    ("M0-B2", "0", "guard bulkhead", "Isolated BNC feedthroughs in black D-shape housings (Neutrik NBB75DFIB) for the two photodiodes "
+     "and the AE (MN-13, MN-14, MN-17)", ("p3", "BH1"), 3, "add", "drawn (monitoring_bulkhead.py, envelope)",
+     "isolated from the plate, so the cable shields stay off the guard (sync-and-data.md §2.3); 75 ohm, which doesn't matter below "
+     "1 MHz. Metal BNC caps on any unplugged (M0-B8)", []),
+    ("M0-B3", "0", "guard bulkhead", "RJ45 feedthrough, Cat6A, shielded, black D-shape (Neutrik NE8FDX-P6-B) for the Chronos's "
+     "Ethernet (MN-10)", ("p3", "BH2"), 1, "add", "drawn (monitoring_bulkhead.py, envelope)",
+     "a plain RJ45 plug mates it; a hinged cover (SCDX, M0-B8) closes it unplugged", []),
+    ("M0-B4", "0", "guard bulkhead", "M12 8-pole A-coded panel feed-through, male/female, shielded (Murrelektronik 7000-48111-0000000) "
+     "for the RTC6 bits (MN-02 to MN-05)", ("p3", "BH3"), 1, "add", "drawn (monitoring_bulkhead.py)",
+     "its brass housing bonds to the plate: keep the outside cordset's shield off its coupling nut, so MN-02's shield stays grounded "
+     "at the drawer only", []),
+    ("M0-B5", "0", "guard bulkhead", "Split cable entry frame for pre-terminated leads, six KT small grommets, IP54 (icotek KEL 10|6, "
+     "42216) for the Chronos's and the LDS12Bs' power leads (MN-11, MN-15)", ("p3", "BH4"), 1, "add",
+     "drawn (monitoring_bulkhead.py, frame solid)", "sold in packs of 10 by the US distributor read ($197.70); a single piece is "
+     "~EUR 28 in Europe", []),
+    ("M0-B5a", "0", "guard bulkhead", "KT grommets for the KEL frame: three sized to the leads (KT 5 clamps 5-6 mm), three blind for "
+     "the spare places", ("p3", "BH5"), 6, "add", "not drawn (inside the KEL frame)",
+     "measure the leads first; the spares can take the exhaust fans' leads if they are fed from PB2 (MN-29)", []),
+    ("M0-B6", "0", "custom (guard bulkhead)", "Light shroud over the KEL's inside: 1.5 mm 5052, bent and riveted, black anodised; a "
+     "labyrinth 34 mm deep with a 24 mm side channel, so no straight path reaches the grommets",
+     ("est", 40.0, 120.0, "estimate (small bent and riveted sheet part, black anodised with the traps' lot; not quoted)",
+      "custom (monitoring_bulkhead.py SHROUD)", "sheet-metal shop + anodiser"), 1, "make or outsource", "drawn (monitoring_bulkhead.py)",
+     "", []),
+    ("M0-B7", "0", "guard bulkhead", "Cables the bulkhead adds: inside, an M12 8-pole female cordset to PB2 (Murrelektronik "
+     "7000-17041-2920300, 3 m, $34.00 read: BH6); outside, a shielded M12 8-pole male cordset to the drawer's DIN breakout; one more "
+     "Cat6A S/FTP patch cable (the Chronos's run is now two)",
+     ("est", 75.0, 130.0, "estimate: $34.00 read (BH6) + a shielded male cordset $30-70 + a patch cable $8-25 (not read)",
+      "7000-17041-2920300 + M12 8-pole male shielded cordset + Cat6A S/FTP patch cable", "AutomationDirect / various"), 1, "add",
+     "drawn as envelopes (plugs and the first bends)", "the BNC runs each become two cables: M1-03's six 48 in. cables cover the "
+     "three", []),
+    ("M0-B8", "0", "guard bulkhead", "Bulkhead hardware: 8 x M4 steel rivet nuts and M4 screws with serrated washers (the plate's bond), "
+     "a bonding strap to the guard frame, 3 x metal BNC dust caps, a Neutrik SCDX hinged cover ($1.94 read: BH7), an M12 metal cap",
+     ("est", 20.0, 45.0, "estimate (McMaster-class hardware and caps, not read; the SCDX read $1.94)", "rivet nuts, screws, caps, strap",
+      "McMaster-Carr / Markertek"), 1, "add", "not drawn (their holes are)", "", []),
     # ---------------- step 1: clock and recorder -----------------------------------------------------------------------
     ("M1-01", "1", "recorder", "Digitizer: PicoScope 4444, 4 differential inputs, 12/14-bit, 20 MHz, 400 MS/s, 256 MS memory",
      ("p2", "D1"), 1, "add", "not drawn",
