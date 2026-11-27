@@ -633,7 +633,7 @@ def _ae(parts, add, h, module):
         xs = -26.0
         sens = fuse([cyl(9.5, (xs, yb, zs), "y", 16.0), cyl(3.0, (xs + 9.0, yb + 8.0, zs), "x", 8.0)])
         add("AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope Ø19 x 16 with a side connector) on the rod end's back face",
-            sens, C["blue"], 4, (0, 160, 0), mat="misc", mass_kg=0.03, bom="M4-01", section=True, **pg)
+            sens, C["blue"], 4, (0, 160, 0), mat="misc", mass_kg=0.03, bom="M4-09", section=True, **pg)
         strap = fuse([box(xs - 14.5, xs + 14.5, yb + 16.0, yb + 19.0, zs - 4.0, zs + 4.0),
                       box(xs - 14.5, xs - 11.5, yb, yb + 16.0, zs - 4.0, zs + 4.0), box(xs + 11.5, xs + 14.5, yb, yb + 16.0, zs - 4.0, zs + 4.0)])
         add("AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)", strap, C["alu_dark"], 4,

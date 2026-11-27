@@ -100,9 +100,11 @@ COAX = dict(
 
 AE = dict(
     options=["drawbar as the waveguide: sensor at its cold end, if the drawbar is drawn and runs down the rod",
-             "Ø3 mm 316 waveguide, spring-loaded tip on the plate's underside, down the hollow rod to a room-temperature sensor",
-             "sensor on the rod end (<= ~75 C)"],
+             "Ø3 mm 316 waveguide sliding free from the plate's spigot down the hollow rod; a spring under a miniature sensor in a "
+             "cartridge on the rod end's bore floor pushes both up (M50, L75; monitoring/mechanics.md §4, monitoring_parts.AE_CART)",
+             "sensor on the rod end (<= ~75 C; S25)"],
     sensor_room_temp="broadband AE sensor (e.g. MISTRAS WSa / Vallen VS900-M class) + 2/4/6 preamp, at <= 60 C",
+    sensor_in_rod="MISTRAS PICO, Ø5 x 4 mm, 200-750 kHz, -65 to 177 C, in the cartridge at <= 118 C (analysis/out/monitoring/mech/ae_preload.md)",
 )
 
 DAQ = dict(
