@@ -648,6 +648,9 @@ PICK_SHOW = int(os.environ.get("ASM_PICK_SHOW", "2"))     # round 9: 2, the visi
 DRIVE_LAPSE = 6.0
 TABLE_X = 2200.0
 JUMP_DEG = float(os.environ.get("ASM_JUMP_DEG", "5.0"))
+# ASM_DRIVE_HOLD=1 (chapter 41, round 9): a short MiR hop between the cell's docks (drawn, continuous) joins the shot before or
+# after it instead of a 1-2 s wide shot between two cuts; the caption says where the MiR drives
+DRIVE_HOLD = os.environ.get("ASM_DRIVE_HOLD", "0") == "1"
 
 
 def kind_key(e, rep):
@@ -940,6 +943,16 @@ def _choose_segment(plan, scores, i0, i1, prev):
                     break
             if changed:
                 break
+            # round 9: a short shot opened by a forced cut and followed by the camera before it (the cut can't join it): the
+            # next shot may take this one's camera instead, if that camera is one of its place's tripods and sees its work
+            j = k + 1
+            if forced and j < len(shots) and shots[j][2] == before and not plan[shots[j][0]].get("force") and \
+                    sh[2] in place_cands(shots[j][3][0][3]) and ok_from(sh[2], shots[j]):
+                o = shots[j]
+                shots[k] = [sh[0], o[1], sh[2], sh[3] + o[3]]
+                del shots[j]
+                changed = True
+                break
     # neighbours with the same camera after the merges
     out = []
     for sh in shots:
@@ -1019,7 +1032,7 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=(), fail_
         for i in range(1, len(cams) + 1):
             if i == len(cams) or cams[i] != cams[i0]:
                 print(f"   {i0:5d} {i - i0:4d} fr {(i - i0) / FPS:5.1f} s  {cams[i0]:9s} {plan[i0]['step']:6s} {plan[i0]['loc']}"
-                      f"{' forced' if plan[i0].get('force') else ''}", flush=True)
+                      f"{(' forced: ' + str(plan[i0]['force'])) if plan[i0].get('force') else ''}", flush=True)
                 i0 = i
     rp.restore(snap0)
     lo, hi, part, k_ = 0, 10 ** 9, None, None
@@ -1116,7 +1129,7 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
         if loc is None:
             loc = last["loc"]
         if any(not a_["drawn"] for a_ in away.values()):
-            force = True                   # the first frame drawn while a MiR is away on a drive not shown: it is gone from its
+            force = "away"                 # the first frame drawn while a MiR is away on a drive not shown: it is gone from its
             for a_ in away.values():       # dock (or now at the table), so this frame is a cut (round 9: only then)
                 a_["drawn"] = True
         force = force or last["force"]
@@ -1311,9 +1324,14 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                 if e["x1"] <= TABLE_X:
                     a0 = away.pop(n, None)
                     same = (a0 is not None and not a0["drawn"] and abs(float(e["x1"]) - a0["x"]) < 1.0
-                            and a0["tool"] == rp.st[n]["tool"] and float(np.max(np.abs(rp.st[n]["q"] - a0["q"]))) < 1e-3)
+                            and float(np.max(np.abs(rp.st[n]["q"] - a0["q"]))) < 1e-3)
+                    if same and a0["tool"] != rp.st[n]["tool"]:      # the tool was changed at the MiR's stand on the way
+                        note["txt"] += f"; {rp.st[n]['tool'].replace('_', ' ')} fitted at the MiR's tool stand"
                     if not same:
-                        last["force"] = True
+                        last["force"] = ("return" if a0 is None else
+                                         f"return dx {abs(float(e['x1']) - a0['x']):.0f} dq "
+                                         f"{float(np.degrees(np.max(np.abs(rp.st[n]['q'] - a0['q'])))):.1f} "
+                                         f"tool {a0['tool']}->{rp.st[n]['tool']} drawn {a0['drawn']}")
             elif k in ("move", "screw") and e.get("q") is not None and len(e["q"]):
                 rp.set_arm(n, q=np.asarray(e["q"][-1], float), close=e.get("close"))
                 if e.get("unplanned"):
@@ -1322,7 +1340,7 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                                     status="fail", loc=here(n))
                         if stop:
                             break
-                    last["force"] = True
+                    last["force"] = "unplanned"
             elif k == "tool":
                 rp.st[n]["spec"] = e.get("spec") or {}
                 rp.set_arm(n, tool=e["tool"])
@@ -1346,7 +1364,7 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                         break
                 continue
             rp.set_arm(n, q=q1)
-            last["force"] = True
+            last["force"] = f"jump {dq:.1f} deg"
             continue
         if k == "put":
             rp.put(e["objs"], e["T"])
@@ -1407,6 +1425,8 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                 mp = rp.sc.gmat.get(f"mir{n}")
                 wk = (np.asarray(mp, float)[:3, 3] + np.array([0.0, rp.yc0(n), 400.0]) if mp is not None and
                       rp.st[n].get("pose") is not None else np.array([float(rp.st[n]["x"]) + 350.0, rp.yc0(n), 400.0]))
+                if DRIVE_HOLD and loc[0] == "cell":
+                    wk = None          # a hop between the cell's docks may stay on the work's tripod (no cut either side)
                 stop = emit(cur["label"], sub, who, proc=per, add={"robot_h": per / 3600.0}, loc=loc, work=wk,
                             status="fail" if (chk and not chk.get("ok", True)) else None)
                 if stop:
