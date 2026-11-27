@@ -359,6 +359,18 @@ class Replay:
             if f"o{i}" in self.sc.actors:
                 self.sc.gmat[f"o{i}"] = np.asarray(T, float)
                 self.sc.alpha[f"o{i}"] = 1.0
+        # round 9: a put of parts an arm still holds (seated, then held while the other arm drives the first screws; a flip;
+        # a carry) re-anchors the hold at the put, so they stay where the planner seated them. Round 8 kept riding them on the
+        # drawn TCP until the release and left them there: M19's heater stack sat 2.4 mm off its bore's axis for 500 frames
+        # (the frame audit read the piston head 53 mm deep), until the next put of the module
+        for n in ("A", "B"):
+            h = self.st[n]["held"]
+            if h is not None and set(h["objs"]) & set(objs):
+                a = self.arm[n]
+                T_tcp = a.tcp(self.st[n]["q"], self.st[n]["close"])
+                if h.get("spin_deg"):
+                    T_tcp = T_tcp @ rot_axis((0, 0, 1), h["spin_deg"])
+                h["off"] = np.linalg.inv(T_tcp) @ np.asarray(T, float)
 
     def tcp(self, n):
         a = self.arm[n]
