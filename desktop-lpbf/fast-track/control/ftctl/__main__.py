@@ -94,11 +94,19 @@ def cmd_study_dwell(a):
     from .studies import dwell_study
     prog = load_program(a.program)
     rows = dwell_study(prog, a.out, a.layers)
-    keys = ["band_K", "plate_block_WK", "absorptivity", "result", "period_s", "period_without_dwell_s", "dwell_share",
-            "plate_max_C", "mean_absorbed_W", "build_10mm_h", "build_15mm_h"]
+    keys = ["band_K", "plate_block_WK", "absorptivity", "block_offset_K", "argon_low_in_dwell", "result", "period_s",
+            "dwell_share", "plate_max_C", "mean_absorbed_W", "build_10mm_h", "build_15mm_h", "argon_15mm_m3"]
     print(" | ".join(keys))
     for r in rows:
         print(" | ".join(str(r.get(k, "")) for k in keys))
+
+
+def cmd_plot(a):
+    from .plots import figure
+    prog = load_program(a.program)
+    n = int(round(a.height / prog.layer_mm))
+    s = figure(prog, n, a.out)
+    print(f"wrote {a.out}: {s['layers_done']} layers, {s['times_s']['total_s'] / 3600:.2f} h")
 
 
 def cmd_interlock(a):
@@ -131,6 +139,11 @@ def main(argv=None):
     d.add_argument("--layers", type=int, default=67)
     d.add_argument("--out", default=str(pathlib.Path(__file__).resolve().parents[1] / "out" / "dwell-study.csv"))
     d.set_defaults(fn=cmd_study_dwell)
+    pl = sub.add_parser("plot", help="figure of one simulated build")
+    pl.add_argument("--program", default=None)
+    pl.add_argument("--height", type=float, default=2.0)
+    pl.add_argument("--out", default=str(pathlib.Path(__file__).resolve().parents[1] / "img" / "sim-build-2mm.png"))
+    pl.set_defaults(fn=cmd_plot)
     il = sub.add_parser("interlock")
     il.set_defaults(fn=cmd_interlock)
     a = p.parse_args(argv)

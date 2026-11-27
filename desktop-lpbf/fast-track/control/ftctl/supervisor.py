@@ -119,6 +119,13 @@ class Supervisor:
             raise Fault(Code.OPERATOR_STOP, "abort requested", t)
         if not s["ROOM_O2_OK"] or s["room_o2_pct"] < g.room_alarm_pct:
             raise Fault(Code.ROOM_O2_LOW, f"room O2 {s['room_o2_pct']:.1f} %", t)
+        # a broken 4-20 mA loop reads NaN (below 3.6 mA): never treat a lost O2 signal as a good one
+        lost = [(k, c) for k, c in (("room_o2_pct", Code.ROOM_O2_LOW), ("o2_pct", Code.O2_HIGH))
+                if s[k] is None or math.isnan(s[k])]
+        if self.outputs.get("TRACE_SAMPLE") and (s["o2_ppm"] is None or math.isnan(s["o2_ppm"])):
+            lost.append(("o2_ppm", Code.O2_HIGH))
+        if lost:
+            raise Fault(lost[0][1], f"{lost[0][0]} signal lost (4-20 mA loop below 3.6 mA)", t)
         for k in ("plate_C", "block_C", "window", "beam_tube", "box_air", "stage"):
             if s[k] is None or math.isnan(s[k]):
                 raise Fault(Code.TC_OPEN, f"thermocouple '{k}' open", t)
@@ -314,6 +321,10 @@ class Supervisor:
         mo, th = self.cfg.motion, self.cfg.thermal
         lm = self.prog.layer_mm
         first = True
+        if th.block_offset_K:
+            self.m.block.set_sv(th.setpoint_C + th.block_offset_K)
+            self.m.block.run(True)
+            self.log.event("heaters", "BLOCK_OFFSET", f"block at {th.setpoint_C + th.block_offset_K:.0f} C during the build")
         for k in layers:
             if self.stop_request == "graceful":
                 raise Fault(Code.OPERATOR_STOP, "graceful stop between layers", self.clock.now())
@@ -381,9 +392,20 @@ class Supervisor:
         if self.snap["plate_C"] <= band:
             return 0.0
         self.sm.go(S.DWELL, f"plate {self.snap['plate_C']:.1f} C, {why}")
-        if not self.wait_until(lambda: self.snap["plate_C"] <= band, th.dwell_max_s, poll=0.5):
-            raise Fault(Code.DWELL_TIMEOUT, f"plate {self.snap['plate_C']:.1f} C after {th.dwell_max_s:.0f} s",
-                        self.clock.now())
+        save = self.cfg.argon_low_in_dwell and self.outputs.get("ARGON")
+        if save:
+            self.set_out("ARGON_LOW", True)
+            self.set_out("ARGON", False)
+        try:
+            if not self.wait_until(lambda: self.snap["plate_C"] <= band, th.dwell_max_s, poll=0.5):
+                raise Fault(Code.DWELL_TIMEOUT, f"plate {self.snap['plate_C']:.1f} C after {th.dwell_max_s:.0f} s",
+                            self.clock.now())
+        finally:
+            if save:
+                self.set_out("ARGON", True)
+                self.set_out("ARGON_LOW", False)
+        if save and why == "before the scan":
+            self.wait_until(lambda: False, self.cfg.flow_settle_s, poll=0.5)
         return self.clock.now() - t0
 
     def _photo(self, tag, k):

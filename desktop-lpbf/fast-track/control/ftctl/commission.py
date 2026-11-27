@@ -19,7 +19,6 @@ import numpy as np
 
 from .faults import Code, Fault
 from .scanprog import Layer
-from .states import S
 
 
 def ladder_layer(P_W: float = 50.0, v_mm_s: float = 500.0, x0: float = 8.0, y: float = 0.0, length: float = 5.0,
