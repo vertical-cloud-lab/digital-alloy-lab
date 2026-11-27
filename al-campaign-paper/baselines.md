@@ -179,7 +179,7 @@ The April Utah bars, as built, horizontal, as-printed surface, gave 228 ± 13 MP
 4.5 ± 0.5 % elongation (n = 4 valid; [PR #288](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/288)).
 Against the as-built datasheets (PR #285):
 
-- **Yield is 0.76-0.84 of the horizontal machined rows** (EOS 270, Nikon 300 MPa), and 0.86 of Nikon's
+- **Yield is 0.76-0.85 of the horizontal machined rows** (EOS 270, Nikon 300 MPa), and 0.86 of Nikon's
   as-printed-surface vertical bars (265 MPa). It is below EOS's lowest row (vertical, 233 MPa).
 - **Elongation is about half** the horizontal machined rows (EOS 10.2 %, Nikon 8 %), but above Nikon's as-printed
   bars (3 %).
@@ -207,7 +207,7 @@ Against the as-built datasheets (PR #285):
 5. **"On par with the datasheets" needs a rule fixed in advance.** Proposed: the in-house mean yield, in the
    vendor's condition and the matching orientation, is at least 90 % of the datasheet's typical value. That allows
    for as-printed sub-size bars against machined ones. Elongation is reported against the as-printed datasheet
-   rows where they exist. On April's numbers, AlSi10Mg is not on par: 228/270 = 0.84.
+   rows where they exist. On April's numbers, AlSi10Mg is not on par: 228/270 = 0.85, and 228/300 = 0.76.
 
 ## The burden metric to freeze before the screen ranks anything
 

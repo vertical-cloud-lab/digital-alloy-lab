@@ -8,7 +8,7 @@
 | Fig2 | CALPHAD screen and the compositions picked | drawn from 48 rows (preliminary) | Dec 04 | Jan 29, 2027 | 63 | G1 (Dec 4) | Xavier |
 | Fig3 | Powders made in-house | placeholder (no rows yet) | Jan 29 | Feb 12, 2027 | 77 | G3 (Jan 22) | Ronnie |
 | Fig4 | Printability | placeholder (no rows yet) | Jan 22 | Feb 05, 2027 | 70 | G2 (Jan 15) | Carl |
-| Fig5 | Strength and ductility | (a) placeholder; (b) placeholder; (c) in-house AlSi10Mg drawn | Jan 29 | Feb 12, 2027 | 77 | Freeze (Feb 12) | Carl |
+| Fig5 | Strength and ductility | (a) placeholder; (b) placeholder; (c) in-house AlSi10Mg drawn; (d) 1 of 8 powder-condition pairs drawn | Jan 29 | Feb 12, 2027 | 77 | Freeze (Feb 12) | Carl |
 | Fig6 | Corrosion in 3.5 wt% NaCl | placeholder (no rows yet) | Jan 29 | Feb 12, 2027 | 77 | Freeze (Feb 12) | Ben and Jarrett |
 | GA | Graphical abstract | Placeholder | Feb 05 | Feb 19, 2027 | 84 | G4 (Jan 29) | Sterling |
 | Tab1 | Compositions: target and measured; mineral burden | Benchmarks and the seven planned Sc-free #275 seeds filled, with burden; measured compositions pending | Jan 29 | Feb 19, 2027 | 84 | Outside (Feb 19) | Ronnie |

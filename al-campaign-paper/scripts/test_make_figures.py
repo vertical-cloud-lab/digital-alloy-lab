@@ -52,6 +52,10 @@ def main() -> int:
                                    for i, a in enumerate(alloys) for c in ("as built", "aged")])
     append(data / "tensile.csv", [{"specimen_id": f"t{a}{j}", "alloy_id": a, "ys_mpa": 260 + 20 * j, "uts_mpa": 320,
                                    "el_pct": 8 + j, "valid": "yes"} for a in alloys[1:] for j in range(3)])
+    # a bought baseline powder printed and tested in-house, as built and after the vendor's age
+    append(data / "tensile.csv", [{"specimen_id": f"b{c[:2]}{j}", "alloy_id": "Al5X1-commercial", "condition": c,
+                                   "ys_mpa": y + 5 * j, "uts_mpa": y + 40, "el_pct": 12 + j, "valid": "yes"}
+                                  for c, y in (("as-built", 245), ("direct aged 400 C 6 h", 360)) for j in range(3)])
     append(data / "corrosion.csv", [{"specimen_id": f"k{i}{j}", "alloy_id": a, "icorr_ua_cm2": 0.5 + i, "valid": "yes"}
                                     for i, a in enumerate(alloys) for j in range(3)])
     env = dict(os.environ, CAMPAIGN_DATA=str(data), CAMPAIGN_FIG=str(fig), CAMPAIGN_GEN=str(gen),
@@ -64,6 +68,12 @@ def main() -> int:
         return 1
     checks = {
         "Fig1 draws campaign tensile": "(a) campaign tensile drawn" in r.stdout,
+        "Fig1 draws in-house baselines": "(a) in-house baselines drawn" in r.stdout,
+        "Fig1 draws the in-house baseline front": "(b) in-house baseline front drawn" in r.stdout,
+        "Fig5d draws the baseline against its datasheet": "(d) 3 of 8" in r.stdout,
+        "baselines are not counted as campaign alloys": r"\newcommand{\NCompositions}{3}" in (gen / "numbers.tex").read_text(),
+        "in-house baseline rows in Table 2": "Al5X1 & This lab" in (gen / "tab-benchmarks.tex").read_text(),
+        "paired table written": (gen / "tab-paired.tex").exists(),
         "Fig2 drawn": "Fig2: drawn from" in r.stdout,
         "Fig3 drawn": "Fig3: drawn from" in r.stdout,
         "Fig4 drawn": "Fig4: drawn from" in r.stdout,
