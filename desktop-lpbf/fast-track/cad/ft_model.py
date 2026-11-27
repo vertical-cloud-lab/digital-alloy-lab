@@ -61,6 +61,7 @@ P = dict(
     blk_heaters=((-30.0, -15.0, 15.0, 30.0)),               # 4 in the well block from its -x face, at these y (this model)
     heater_r=11.5,               # plate heater pitch radius: clear of the rod socket and of the rope groove
     spreader=(48.0, 12.0, 30.0), # FT-0 spreader bar (width in y, thickness, height): fits the 54 mm between nozzle and collector
+    spreader_x=26.0,             # its parked position (x of its -x face): right of the plate, so MON2's light from -x is clear
     rod_od=12.7, rod_wall=0.89,  # 1/2 in. thin-wall 304 tube: rod, thermal break and wire duct (this model)
     socket=8.0,                  # rod socket depth in the heater plate
     lead_groove=(3.0, 2.5),      # lead grooves in the plate's underside, heater/TC hole -> socket (width, depth)
@@ -85,6 +86,8 @@ P = dict(
     vs_h=73.0, vs_travel=20.0, vs_foot=(88.0, 101.0), vs_plat=(64.0, 64.0, 7.0),
     blk_h=40.0, rod_end_z=18.0, gap_top=3.0,   # rod-end block (MK-15): height, rod end above its base, gap to the gland
     gland_t=12.0,
+    gland_screw=12.5,            # M5 gland screws at (+-12.5, +-12.5): inside the gland's face O-ring, so the box floor has no
+                                 # open screw holes outside the seal (fab worker); in the box they go into M5 taps in the deck
     # --- optics: LINOS 4401-288-000-20 (datasheet: WD 296.2, FFL 344.8, Ø118/119.8); hurrySCAN (20/30 drawing) ---
     lens_wd=299.5, lens_ffl=348.1, lens_d=119.8, lens_l=48.6, efl=254.4,   # datasheet WD 296.2 / FFL 344.8 + 3.27 mm
                                  # focus shift from the window (9.53) and cover slide (1.0) in the beam (process worker)
@@ -96,6 +99,7 @@ P = dict(
     win_c={"box": (0.0, -11.0), "cube": (0.0, -21.0)},   # window stack centres: where the scanned cone crosses them
     tube_c={"box": (0.0, -17.0), "cube": (0.0, -24.0)},  # beam-tube centre section (Ø54 bore) centres
     tube_spigot=(26.5, 3.0),     # outer radius and height of the locating spigots inside the section's ends (this model)
+    tube_split={"box": "x", "cube": "y"},   # the half-shells slide off along this axis (the split plane is normal to it)
     cs_id=44.0,                  # cover-slide holder opening (was 40): needs Ø41.6 (box), Ø43.4 (cube)
     cs_z=130.0, cs_c=(0.0, -11.0),  # cover slide's lower face above the bed, and its centre, in the box and the cube
     cs_drop_c=(0.0, -16.0),      # FT-1V drop tube axis: between the window (y -21) and the slide holder (y -11)
@@ -104,7 +108,8 @@ P = dict(
     bench_z=-272.6,               # bench top: leaves a 10 mm riser under the X-VSR20A
     rail_dy=5.25 * IN,            # support rails at the box's mounting holes (10.50 in. apart)
     # --- monitoring (MON parts; positions chosen here, checked in ft_checks) ---
-    cam_xy=(-70.0, -55.0),        # layer camera port, front-left of the window stack (upstream of the plume)
+    cam_xy=(-70.0, -55.0),        # layer camera port, front-left of the window stack (upstream of the plume): box door
+    cam_xy_cube=(-100.0, -50.0),  # on the cube's top plate: further out, so its sight lines pass outside the drop tube
     cam_f=(16.0, 25.0),           # C-mount lens focal length in the box, in the cube
     light_el=(15.0, 30.0),        # raking lights: from -x at 15 deg, from -y at 30 deg (over the nozzle)
     door_open_deg=24.0,           # box door opened this far for build(lid_open=True): free angle with the camera on it
@@ -297,7 +302,7 @@ def camera_geometry(state):
     """Layer camera: window centre, unit axis toward the camera, tilt off vertical, distance to the plate centre,
     focal length, magnification, um/px and the Scheimpflug angle (IMX477: 4056 x 3040 px of 1.55 um)."""
     L = levels(state)
-    cx, cy = P["cam_xy"]
+    cx, cy = P["cam_xy_cube"] if state == "FT-1V" else P["cam_xy"]
     zw = L["roof_out"] if state != "FT-1V" else L["roof_out"]
     W = (cx, cy, zw)
     bed = (0.0, 0.0, L["dz"])
@@ -425,6 +430,9 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
     deck_z0 = L["floor_top"] if (has_box or cube) else z_rail_top
     deck = box(deck_x0, deck_x1, deck_y0, deck_y1, deck_z0, deck_z0 + P["deck_t"])
     deck = deck.cut(cyl(10.0, (0, 0, deck_z0 - 1), "z", P["deck_t"] + 2))
+    for gx in (-P["gland_screw"], P["gland_screw"]):                           # M5 taps for the gland screws (box)
+        for gy in (-P["gland_screw"], P["gland_screw"]):
+            deck = deck.cut(cyl(2.1, (gx, gy, deck_z0 - 1), "z", 9.0))
     deck = deck.cut(box(P["ovf_x"][0] - 2, 62, -26, 26, deck_z0 - 1, deck_z0 + P["deck_t"] + 1))
     for sx in (-1, 1):                                                         # M6 clearance for the cube's deck screws
         for sy in (-1, 1):
@@ -453,9 +461,10 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
         T = V(xc, yc, z0)
         body = sag["body"].translate(T)
         body = body.cut(cyl(10.0, (0, 0, z0 - t - 1), "z", t + 2))                      # rod hole
-        for gx in (-21.0, 21.0):
-            for gy in (-21.0, 21.0):
-                body = body.cut(cyl(2.75, (gx, gy, z0 - t - 1), "z", t + 2))            # gland screws (M5)
+        g_ = P["gland_screw"]
+        for gx in (-g_, g_):
+            for gy in (-g_, g_):
+                body = body.cut(cyl(2.75, (gx, gy, z0 - t - 1), "z", t + 2))            # gland screws (M5), inside its face seal
         for p0, ax in (((x0 - t - 1, -60.0, 4.0), "x"), ((x1 - 1, 47.0, 5.0), "x")):
             body = body.cut(cyl(6.5, p0, ax, t + 2))                                     # gas bulkheads
         for gx, gz in ((-120.0, L["deck_top"] + 20.0), (-85.0, -10.0)):
@@ -673,7 +682,8 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
         gl = box(-30, 30, -30, 30, L["gland_bot"], L["under"]).cut(cyl(P["rod_od"] / 2 + 0.1, (0, 0, L["gland_bot"] - 1),
                                                                          "z", P["gland_t"] + 2))
         add("Rod gland plate, 2 O-rings (MK-07)", gl, C["ss_dark"], "MK-07", "drive")
-        gsc = [cyl(4.25, (gx, gy, L["gland_bot"]), "z", 5) for gx in (-21.0, 21.0) for gy in (-21.0, 21.0)]   # counterbored
+        g_ = P["gland_screw"]
+        gsc = [cyl(4.25, (gx, gy, L["gland_bot"]), "z", 5) for gx in (-g_, g_) for gy in (-g_, g_)]   # counterbored
         add("Gland screws M5 x 25 with bonded seals (4)", comp(gsc), C["ss_dark"], "MK-07", "drive")
         if state == "FT-0":
             coll = tube(15, P["rod_od"] / 2, (0, 0, z0), "z", 10).cut(box(-0.75, 0.75, 4, 16, z0 - 1, z0 + 11))
@@ -708,8 +718,9 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
             # a straight ground bar that rides on the block top between the nozzle and the collector (54 mm apart);
             # the layer depth is set by the plate's recess under the block top (shims under the FT-0 collar)
             sw2, st2, sh2 = P["spreader"]
-            app = box(-38, -38 + st2, -sw2 / 2, sw2 / 2, zbed, zbed + sh2 - 8).fuse(
-                box(-38 + 2, -38 + st2 - 2, -sw2 / 2 + 4, sw2 / 2 - 4, zbed + sh2 - 8, zbed + sh2))
+            xa = P["spreader_x"]                                       # parked at +x, out of MON2's light from -x
+            app = box(xa, xa + st2, -sw2 / 2, sw2 / 2, zbed, zbed + sh2 - 8).fuse(
+                box(xa + 2, xa + st2 - 2, -sw2 / 2 + 4, sw2 / 2 - 4, zbed + sh2 - 8, zbed + sh2))
             add("FT-0 spreader bar, 48 mm, ground edge, parked (M4)", app, C["ss_dark"], "M4", "cassette")
         # well-block heater and TC leads: out along -x, over the stage's motor end, to the back wall / feedthrough
         y_back = (y1 - 2) if has_box else (yc + P["cube_in"] / 2 - 4)
