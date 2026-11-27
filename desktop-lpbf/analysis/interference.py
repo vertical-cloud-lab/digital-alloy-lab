@@ -215,6 +215,16 @@ JOINTS = [
     ("AE preamplifier", "Base plate, process module", "preamp on the base plate"),
     ("Digitizer PicoScope", "DIN-rail drawer", "digitizer on the drawer's floor (the drawer is drawn as an envelope)"),
     ("Sync breakout box", "DIN-rail drawer", "box on the drawer's floor (the drawer is drawn as an envelope)"),
+    # cooling for the cameras and Pis (cad/monitoring_cooling.py, monitoring/cooling.md; LPBF_MONITORING=1 only)
+    ("light trap", "Laser guard panels", "trap's frame flange on the back panel's inside (riveted)"),
+    ("Hood duct", "Guard inlet light trap", "plenum riveted to the trap's frame"),
+    ("Guard inlet filter", "Laser guard panels", "filter frame on the back panel's outside"),
+    ("Guard exhaust plenum", "Laser guard panels", "plenum gasketed on the back panel's outside"),
+    ("G-10 thermal break under", "Chamber floor plate", "pad between the bracket's root and the floor plate's edge"),
+    ("G-10 thermal break under", "Side camera bracket", "pad under the bracket's root"),
+    ("G-10 thermal break ring", "LP window retaining ring", "ring on the boss's thread"),
+    ("G-10 thermal break ring", "LP camera filters", "filter holder screwed on the ring"),
+    ("PB2 vent fan", "PB2 process-module box", "fan screwed to PB2's end wall"),
 ]
 
 ALLOW_HOSE_THROUGH = ("Laser guard panels", "Guard frame")   # hoses pass the guard through bulkheads
