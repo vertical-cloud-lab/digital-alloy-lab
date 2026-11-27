@@ -246,8 +246,10 @@ def hrt210(a_deg=0.0, riser=63.5, with_tail=False, tail_x=420.0):
         "HRT210 motor box": Part(box(hx0, hx1, -342.9, -124.0, riser, zc + 124.0), C["rotary"]),
         "HRT210 badge": Part(box(hx0 + 30, hx1 - 30, -125.0, -124.0, zc + 40, zc + 90), C["haas_red"], collide=False),
     }
+    # the platter's six T-slot ribs stand 0.2 mm proud of its face (round 10: at 1.5 mm they read 1.6 mm deep in the
+    # dummy-floor plate bolted on it, frame audit of chapter 30)
     plat = merge([cyl((hx1, 0, zc), (0, 0, zc), 105.0, res=64)] +
-                 [box(-1, 1, -6, 6, 30, 100).transform(T((0.5, 0, zc), Rx(60 * k)), inplace=False) for k in range(6)])
+                 [box(-1, 1, -6, 6, 30, 100).transform(T((-0.8, 0, zc), Rx(60 * k)), inplace=False) for k in range(6)])
     parts["HRT210 platter"] = Part(plat, C["platter"], M=about(Rx(a_deg), (0, 0, zc)), group="A")
     if with_tail:
         parts["HPTS6 tailstock"] = Part(merge([box(tail_x + 20, tail_x + 170, -70, 70, riser, zc + 45),
@@ -257,13 +259,19 @@ def hrt210(a_deg=0.0, riser=63.5, with_tail=False, tail_x=420.0):
     return parts, dict(axis=(0.0, 0.0, zc), riser=riser)
 
 
-TABLE_LAYOUT = dict(hrt_face=-240.0, fixture=180.0, vise=300.0,   # table-local x of the platter face, the 3-axis
+TABLE_LAYOUT = dict(hrt_face=-420.0, fixture=180.0, vise=300.0,   # table-local x of the platter face, the 3-axis
+                    hrt_load_x=220.0,    # round 10: the table's X for loading and bolting the rotary (round 9's 40 with
+                                         # the platter at -240: the rotary where it was in the station)
+                    wips_x=600.0,        # round 10: the WIPS tool setter on the table's right end (the rotary's riser
+                                         # now covers the left end)
                     fixture_dy=-107.0)   # round 9: the 3-axis fixtures 107 mm in front of the table's centre line
                                          # (their part's near face 26 mm behind the table's front edge), so two
                                          # people at the door reach them; the spindle still reaches the far side
                                          # (table Y 243-471 of its 508)
 # (round 9: the HRT210 40 mm further left and the 3-axis fixtures 80 mm further right: with the floor plate's
 # O-ring groove cut at its left edge, the head came down onto the HRT210's housing)
+# (round 10: the HRT210 180 mm further left, its riser 27 mm inside the table's left end: two people leaning in at the
+# door to load the 3-axis setups stand 295 mm outside the part's ends, and the left one's head reached the rotary)
                                                                   # fixtures' centre and the vise's centre (our layout)
 
 
@@ -376,7 +384,9 @@ def vf4(door=1.0, table_x=0.0, table_y=0.0, spindle_z=None, vise_open=150.0, hrt
     out["carousel arm"] = Part(box(cxx, -262, cyy - 60, cyy + 60, cz + 150, cz + 260), C["haas_dark"])   # clear of the
     # head's side (x -250) at Z home (round 9: it reached x -200, into the head)
     out["coolant tank"] = Part(box(-W / 2 + 60, -W / 2 + 900, D - 700, D - 90, 0, 350), "#2f6f9f", collide=False)
-    out["work light"] = Part(box(-200, 200, 200, 260, H - 70, H - 30), "#f6f4d2", collide=False)
+    # round 10 (scene_audit, chapter 30: arm A's forearm 18.5 mm through the light under the roof, which the planner was
+    # told to ignore): an LED strip on the left wall, clear of the door and the arms' reach, and in the collision set
+    out["work light"] = Part(box(-W / 2 + 20, -W / 2 + 50, 250, 950, 1500, 1540), "#f6f4d2")
     # ---- workholding on the table: Kurt XL6A on the right half, HRT210 + riser + tailstock on the left half
     meta = dict(table_centre=(xc, yc, tz), table_top=tz, spindle=(0.0, ysp, nose), door=(dw, s0, s1), nose_z=nose)
     L_ = TABLE_LAYOUT
@@ -393,8 +403,8 @@ def vf4(door=1.0, table_x=0.0, table_y=0.0, spindle_z=None, vise_open=150.0, hrt
         out.update({n: Part(p.mesh, p.color, p.opacity, p.collide, Mh @ p.M, "table") for n, p in hparts.items()})
         meta.update(hrt_axis=tuple((Mh @ np.r_[hm["axis"], 1.0])[:3]), hrt_M=Mh)
     # WIPS (option): the tool setter on the table's left end
-    out["WIPS tool setter (option)"] = Part(cyl((xc - tL / 2 + 60, yc - 160, tz), (xc - tL / 2 + 60, yc - 160, tz + 95), 32.0),
-                                            C["dark"], group="table")
+    wx = xc + L_.get("wips_x", -tL / 2 + 60)
+    out["WIPS tool setter (option)"] = Part(cyl((wx, yc - 160, tz), (wx, yc - 160, tz + 95), 32.0), C["dark"], group="table")
     return out, meta
 
 

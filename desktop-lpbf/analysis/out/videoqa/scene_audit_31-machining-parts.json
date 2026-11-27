@@ -130,11 +130,13 @@
  "worst_mm": 0.0,
  "worst": null,
  "pairs": [],
+ "cad_overlaps": [],
+ "cad_overlap_note": "two parts drawn at their designed relative pose (one machine frame) and overlapping there: the CAD's own overlap (a groove or hole the model does not cut), listed apart and not counted",
  "rigid_pairs": [
   {
    "a": "lathe/door",
    "b": "lathe/door window",
-   "worst_mm": 16.1,
+   "worst_mm": 15.2,
    "frames": 1088
   }
  ],
@@ -256,7 +258,7 @@
    "worst_mm": null
   }
  ],
- "seconds": 15.2,
- "peak_rss_mb": 386,
+ "seconds": 23.1,
+ "peak_rss_mb": 391,
  "memory": "streamed: BVHs dropped every 200 recorded frames and past 1800 MB"
 }
