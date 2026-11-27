@@ -1,0 +1,37 @@
+{
+  "01-methods-novelty": {
+    "task_id": "3e37e5aa-b9dc-4ede-ace5-dd20993e4668",
+    "job": "LITERATURE_HIGH",
+    "submitted": "2026-10-06T19:03:19Z",
+    "status": "success",
+    "fetched": "2026-10-06T19:34:43Z"
+  },
+  "02-extreme-env-alloys": {
+    "task_id": "bf148e03-9f78-415b-b30f-ae10a5995bbb",
+    "job": "LITERATURE_HIGH",
+    "submitted": "2026-10-06T19:03:21Z",
+    "status": "success",
+    "fetched": "2026-10-06T19:34:44Z"
+  },
+  "03-feedstock-hte": {
+    "task_id": "60d47dd5-2b1c-407e-a086-39591978f49c",
+    "job": "LITERATURE_HIGH",
+    "submitted": "2026-10-06T19:03:22Z",
+    "status": "success",
+    "fetched": "2026-10-06T19:34:45Z"
+  },
+  "04-funding-policy-landscape": {
+    "task_id": "8c6f3634-78ca-4eda-9558-a179d5ef007f",
+    "job": "LITERATURE_HIGH",
+    "submitted": "2026-10-06T19:03:23Z",
+    "status": "success",
+    "fetched": "2026-10-06T19:34:47Z"
+  },
+  "05-precedent-novelty": {
+    "task_id": "4e6cabdf-216c-4c24-8310-161e896aa58a",
+    "job": "PRECEDENT",
+    "submitted": "2026-10-06T19:03:23Z",
+    "status": "success",
+    "fetched": "2026-10-06T19:34:48Z"
+  }
+}
