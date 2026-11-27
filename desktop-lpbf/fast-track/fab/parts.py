@@ -127,6 +127,7 @@ class Piece:
         self.stock, self.stock_pn, self.blank, self.seal, self.pos = stock, stock_pn, blank, seal, pos
         self.solid = None           # finished piece, part frame
         self.pre = None             # what the mill setups start from if not the blank (turned piece, bought plate)
+        self.cam_solid = None       # the piece without the features cut by hand after milling (CAM model, sim target)
         self.lathe_fill = None      # material the mill leaves for the lathe (sim target = solid + this)
         self.features = []          # CAM features
         self.holes = []             # hole table rows
@@ -176,7 +177,7 @@ class Piece:
         self.features.append(f)
         if kind == "cbore":
             cd, ch = T.CBORE[size]
-            self.features.append(dict(kind="cbore", hid=hid, axis=axis, d=cd, depth=ch, tool=3 if cd >= 8.0 else 4,
+            self.features.append(dict(kind="cbore", hid=hid, axis=axis, d=cd, depth=ch, tool=4,
                                       pts=[list(p) for p in pts], hole_d=dd))
         if kind == "csk":
             self.features.append(dict(kind="csk", hid=hid, axis=axis, d=T.CSK[size], tool=7, pts=[list(p) for p in pts]))
@@ -191,10 +192,12 @@ class Piece:
         self.holes.append(dict(id=hid, n=len(pts), kind=kind, size=size, callout=call + ((" - " + note) if note else ""),
                                axis=axis, pts=[[round(c, 2) for c in p] for p in pts]))
 
-    def pocket(self, name, solid, probe, axis="-z", tool=3, kind="pocket", note=""):
-        """cut a pocket, groove or step (solid) and record it: probe = a point on its floor (part frame)"""
+    def pocket(self, name, solid, probe, axis="-z", tool=3, kind="pocket", note="", z_top=None):
+        """cut a pocket, groove or step (solid) and record it: probe = a point on its floor (part frame); z_top = the
+        coordinate (along the axis) where the pocket starts, if not the part's face"""
         self.cut(solid)
-        self.features.append(dict(kind=kind, name=name, axis=axis, tool=tool, probe=list(probe), note=note))
+        self.features.append(dict(kind=kind, name=name, axis=axis, tool=tool, probe=list(probe), note=note,
+                                  z_top=z_top))
 
     def opening(self, name, solid, probe, z_exit, axis="-z", tool=3):
         """a through opening (non-round): profiled round its inside. probe = a point on the entry face next to it;
@@ -234,6 +237,42 @@ class Piece:
                     features=self.features, holes=self.holes, setups=self.setups, lathe=self.lathe,
                     manual=self.manual, tol=self.tol, notes=self.notes, changes=self.changes, finish=self.finish,
                     sheet=self.sheet, buy=self.buy, n_holes=self.n_holes())
+
+
+def raster_gcode(region, z_top, z_floor, tool, step=0.6, stepover=0.4):
+    """zig-zag raster and a finishing contour for an open pocket (FreeCAD 1.0.2's Pocket, Adaptive and MillFace do not
+    clear a floor face that is open to the side): region = shapely polygon of the pocket in the setup's XY; the tool
+    centre stays inside region eroded by its radius. Returns G-code lines in the setup frame (tool already loaded)."""
+    import shapely
+    from shapely.geometry import LineString
+    d = T.TOOLS[tool]["d"]
+    f = T.feed_mm_min(tool)
+    core = region.buffer(-d / 2 - 0.02)
+    lines = []
+    zs = []
+    z = z_top
+    while z > z_floor + 1e-6:
+        z = max(z - step, z_floor)
+        zs.append(z)
+    minx, miny, maxx, maxy = core.bounds
+    for z in zs:
+        y = miny
+        k = 0
+        while y <= maxy + 1e-9:
+            seg = core.intersection(LineString([(minx - 1, y), (maxx + 1, y)]))
+            parts = [g for g in getattr(seg, "geoms", [seg]) if not g.is_empty and g.length > 0]
+            for g in sorted(parts, key=lambda g: g.coords[0][0], reverse=bool(k % 2)):
+                c = list(g.coords) if k % 2 == 0 else list(g.coords)[::-1]
+                lines += ["G0 Z%.3f" % (z_top + 2.0), "G0 X%.3f Y%.3f" % c[0], "G1 Z%.3f F%.1f" % (z, f / 2),
+                          "G1 X%.3f Y%.3f F%.1f" % (c[-1][0], c[-1][1], f)]
+            y += stepover * d
+            k += 1
+        for ring in [core.exterior] + list(core.interiors):
+            c = list(ring.coords)
+            lines += ["G0 Z%.3f" % (z_top + 2.0), "G0 X%.3f Y%.3f" % c[0], "G1 Z%.3f F%.1f" % (z, f / 2)]
+            lines += ["G1 X%.3f Y%.3f F%.1f" % (x, y_, f) for x, y_ in c[1:]]
+    lines.append("G0 Z%.3f" % (z_top + 5.0))
+    return lines
 
 
 def blank_box(x0, x1, y0, y1, z0, z1):
@@ -360,9 +399,9 @@ def mk02_ring():
               kind="pocket")
     r0, r1, gd = win_groove()
     pc.pocket("window O-ring groove (AS568-030)", ring(r1, r0, WR_LIP - gd, WR_LIP + 0.1), ((r0 + r1) / 2, 0, WR_LIP - gd),
-              tool=5, kind="groove")
+              tool=5, kind="groove", z_top=WR_LIP)
     b0, b1, bd = base_groove()
-    pc.pocket("base O-ring groove (AS568-140)", ring(b1, b0, -0.1, bd), ((b0 + b1) / 2, 0, bd), axis="+z", tool=4,
+    pc.pocket("base O-ring groove (AS568-140)", ring(b1, b0, -0.1, bd), ((b0 + b1) / 2, 0, bd), axis="+z", tool=5,
               kind="groove")
     pc.hole("A", "clear", "M5", [(*polar(BC_R, 45 * k), WR_H) for k in range(8)], through=True,
             note="8 x M5 flat-head through flange, ring and lid into MK-02c (box) or MK-13 (cube)")
@@ -429,13 +468,17 @@ def mk02_holder():
     out = []
     pcb = Piece("MK-02d", "MK-02", "Cover-slide holder, base (slide pocket)", material="6061-T651", qty=1,
                 route="CNC mill", state="S2", stock="1/4 in. 6061 plate faced to 5.6, 76 x 76",
-                stock_pn="1/4 in. 6061 plate (PN not read)", blank=blank_box(-38, 38, -38, 38, -0.75, 5.6),
+                stock_pn="1/4 in. 6061 plate (PN not read)", blank=blank_box(-38, 38, -38, 38, 0.0, 6.35),
                 pos="part z 5.6 = slide plane; z 0 = holder bottom (world 124.5 box)")
     h = 5.6
     pcb.solid = cyl(35.0, 0, h)
     pcb.bore("aperture", 20.0, 0, 0, h, 0, tool=2)
     sl = cyl(25.3, h - 1.2, h + 1).fuse(box(0, 40, -25.3, 25.3, h - 1.2, h + 1))
-    pcb.pocket("slide pocket 50.6 x 1.2 deep, open to +x", sl, (22.0, 10.0, h - 1.2), tool=3)
+    pcb.cut(sl)
+    from shapely.geometry import Point, box as sbox
+    reg = Point(0, 0).buffer(25.3, 256).union(sbox(0, -25.3, 40.0, 25.3)).difference(Point(0, 0).buffer(19.0, 256))
+    pcb.features.append(dict(kind="custom_gcode", name="slide pocket 50.6 x 1.2 deep, open to +x (raster)", axis="-z",
+                             tool=3, late=True, gcode=raster_gcode(reg, h, h - 1.2, 3)))
     pcb.hole("A", "clear", "M4", [(*polar(30.0, a), h) for a in (90, 180, 270)], through=True)
     pcb.setup("+Z", face=(2, h), outline=(2, -0.3), label="top up: face, aperture, slide pocket, holes, outline")
     pcb.tol += ["slide pocket depth 1.20 +0.10/0 for a 1.0 mm cover slide"]
@@ -443,7 +486,7 @@ def mk02_holder():
                     "with an open 2.5D pocket and a plain cover, held by the same 3 x M4 screws"]
     pcc = Piece("MK-02e", "MK-02", "Cover-slide holder, cover", material="6061-T651", qty=1, route="CNC mill",
                 state="S2", stock="3/16 in. 6061 plate faced to 4.4, 76 x 76", stock_pn="3/16 in. 6061 plate (PN not read)",
-                blank=blank_box(-38, 38, -38, 38, -0.36, 4.76), pos="part z 0 = slide plane (stacks on the base)")
+                blank=blank_box(-38, 38, -38, 38, 0.0, 4.76), pos="part z 0 = slide plane (stacks on the base)")
     hc = 4.4
     pcc.solid = cyl(35.0, 0, hc)
     pcc.bore("aperture", 20.0, 0, 0, hc, 0, tool=2)
@@ -502,9 +545,9 @@ def mk03():
                 stock="McMaster 8489K75 Macor rod, 5/16 in. x 6 in. (parts.csv H4)", stock_pn="McMaster 8489K75",
                 blank=blank_cyl(mm(5 / 16) / 2, -0.5, 13.2))
     mac.solid = ring(mm(5 / 16) / 2, T.CLEAR["M3"] / 2, 0, P["so_l"])
-    mac.lathe_op("part off 4 x 13.2 (slow feed, carbide; Macor dust: wet)", 4 * 3.0)
-    mac.lathe_op("face both ends to 12.70 +-0.02", 4 * 2.5)
-    mac.lathe_op("drill 3.4 through (carbide, 0.02 mm/rev, pecking)", 4 * 2.5)
+    mac.lathe_op("part off at 13.2 (slow feed, carbide; Macor dust: wet), each", 3.0)
+    mac.lathe_op("face both ends to 12.70 +-0.02, each", 2.5)
+    mac.lathe_op("drill 3.4 through (carbide, 0.02 mm/rev, pecking), each", 2.5)
     mac.tol += ["length 12.70 +-0.02 (four alike within 0.01, so the block sits level)"]
     mac.changes += ["ft_model draws Ø6.35 (so_d); the H4 rod is 5/16 in. (7.94): set so_d = 7.94 or turn them down",
                     "drilled 3.4 for an M3 304 screw from under the deck. The four screws add ~3 W of conduction at "
@@ -609,7 +652,9 @@ def mk06(which):
     pc.solid = turned
     zt = ln
     win = box(-2.5, 2.5, -ro - 1, 0, zt - 19.0, zt - 9.0)
-    pc.pocket("lead window 5 x 10 through one wall", win, (0.0, -ri, zt - 14.0), axis="+y", tool=4, kind="opening")
+    pc.cut(win)
+    pc.features.append(dict(kind="custom_slot", name="lead window 5 x 10 through one wall", axis="+y", tool=4,
+                            center=[0.0, -ro, zt - 14.0], size=[5.0, 10.0], depth=P["rod_wall"] + 0.6))
     pc.hole("A", "plain", "2.5", [(ro, 0.0, zt - 4.0)], axis="-x", depth=P["rod_wall"] + 0.3,
             note="set-screw dimple, one wall", tool=T.drill_tool(2.5))
     pc.lathe_op("face both ends to length +-0.1, 0.5 x 15 deg lead-in chamfer at the top end",
@@ -650,7 +695,7 @@ def mk07():
         z0 = land + k * (gw + land)
         lathe_cut = lathe_cut.fuse(cyl(gdia / 2, z0, z0 + gw))
     pc.cut(lathe_cut)
-    pc.lathe_fill = lathe_cut
+    pc.pre = blank_solid(pc.blank).cut(lathe_cut)      # turned first (4-jaw on the sawn blank), then milled
     # face groove for AS568-031 round rod and bolts (vacuum sizing)
     oid, w = AS568["-031"]
     g0 = mm(oid) * FACE_ID_FACTOR / 2
@@ -662,7 +707,7 @@ def mk07():
             through=True, note="M5 SHCS up through the floor into the deck (box M5 x 25, cube M5 x 45)")
     pc.setup("+Z", face=(2, t), outline=(2, 3.0), label="top up: face, outline, face O-ring groove")
     pc.setup("-Z", face=(2, 0.0), outline=(2, -t - 0.3), label="bottom up: face to 12.0, rest of outline, c'bores")
-    pc.lathe_op("4-jaw, indicate on the outline: drill 12, bore the throat 12.95", drill_min(12.0, 14) +
+    pc.lathe_op("4-jaw on the sawn 64 x 64 blank: face, drill 12, bore the throat 12.95", face_min(64) + drill_min(12.0, 14) +
                 turn_min(12.0, THROAT, 13, f=0.08))
     pc.lathe_op("two internal grooves %.2f x %.2f wide (internal grooving tool, 3 mm insert, 2 plunges each)"
                 % (gdia, gw), 2 * 2 * 1.2 * (gdia - THROAT) / 2 / (0.03 * 1200))
@@ -788,16 +833,15 @@ def mk08_clamp():
                pos="part x 0 = face against hopper wall A; z 0 = blade plane (powder plane)")
     # part frame: x from -4 (outer) to 0 (wall side), z 1.5..10.5 (lowered 1.5 so the groove holds the cord centre)
     pc.solid = box(0, 4.0, -hw / 2, hw / 2, 1.5, 10.5)
-    cr = P["cord_d"] / 2 + 0.1
-    pc.pocket("cord groove R1.6 along y", cylax(cr, (2.0, -hw / 2 - 1, 1.5), (0, 1, 0), hw + 2), (2.0, 0, 1.5 + cr),
-              axis="+z", tool=4, kind="pocket", note="ball-end or 1/8 in. flat in 2 passes; cord bonded with RTV")
+    pc.pocket("cord slot 3.2 x 1.6 along y", box(0.4, 3.6, -hw / 2 - 1, hw / 2 + 1, 1.0, 3.1), (2.0, 0, 3.1),
+              axis="+z", tool=5, kind="pocket", note="the cord sits half in it, bonded with RTV")
     pc.hole("A", "tap", "M2", [(0.0, sy, 6.0) for sy in (-15.0, 15.0)], axis="+x", depth=3.5, thread="3",
             note="M2 x 5 through hopper wall A")
     pc.setup("+Z", face=(2, 10.5), outline=(3, 1.2), label="top up: face, outline")
     pc.setup("-Z", face=(2, -1.5), label="bottom up: face, cord groove")
     pc.setup("-X", label="wall face up: 2 x M2")
-    pc.changes += ["clamp lowered 1.5 mm (z 1.5..10.5) and given a R1.6 groove, so the cord's centre stays at the "
-                   "blade plane + 1.5", "added: 2 x M2 to wall A"]
+    pc.changes += ["clamp lowered 1.5 mm (z 1.5..10.5) with a 3.2 x 1.6 slot underneath, so the cord's centre stays "
+                   "at the blade plane + 1.5", "added: 2 x M2 to wall A"]
     return pc
 
 
@@ -817,7 +861,7 @@ def mk08_arm():
     pc.setup("+Z", face=(2, 8.0), outline=(2, -0.3), label="top up: face, outline through (on parallels, tabs "
                                                              "kept by 0.3 skin), c'bores")
     pc.setup("-Z", face=(2, 0.0), label="bottom up: face to 8.0")
-    pc.setup("+Y", label="hopper end up (vise): 2 x M3")
+    pc.setup("-Y", label="hopper end up (vise): 2 x M3")
     pc.changes += ["added: 2 M3 c'bored into the bracket notch, 2 M3 tapped into the hopper's end wall; the vibration "
                    "motor is held by a cable tie or hose clamp (not machined)"]
     return pc
@@ -835,15 +879,18 @@ def mk08_bracket():
     web = box(-20, 20, yr - 24, yr - 16, z_car, z_top)
     foot = box(-20, 20, yr - 24, yr + 16, z_car, z_car + 3.0)
     s = web.fuse(foot).clean()
+    rf = 6.5                         # inside corner = the 1/2 in. cutter's radius + 0.15
+    s = s.fuse(box(-20, 20, yr - 16, yr - 16 + rf, z_car + 3.0, z_car + 3.0 + rf).cut(
+        cylax(rf, (-21, yr - 16 + rf, z_car + 3.0 + rf), (1, 0, 0), 42)))
     pc.solid = s
-    pc.pocket("arm notch 16 x 8", box(-8.05, 8.05, yr - 25, yr - 15, z_top - 8.0, z_top + 1), (0, yr - 20, z_top - 8.0),
+    pc.pocket("arm notch 16 x 8", box(-8.05, 8.05, yr - 25, yr - 15, z_top - 8.0, z_top + 1), (5.0, yr - 20, z_top - 8.0),
               tool=3)
     pc.hole("A", "tap", "M3", [(0.0, yr - 20.0, z_top - 8.0)], depth=8.0, thread="6", note="arm screw")
     pc.hole("B", "csk", "M3", [(sx, yr + 8.0, z_car + 3.0) for sx in (-12.0, 12.0)], through=True,
             note="to the X-LSQ carriage: PATTERN EST., drill to Zaber's drawing; flat heads under the shield's 3 mm gap")
     pc.setup("+X", face=(2, 20.0), outline=(2, -19.0), label="L profile up (x up): face, outline of the L to x -19",
              hold="2 in. bar in the vise, 41 mm out")
-    pc.setup("-X", face=(2, 20.0), label="flip: face to 40.0 wide")
+    pc.setup("-X", face=(2, 20.0), outline=(2, 18.5), label="flip: face to 40.0 wide, last 1.5 mm of the outline")
     pc.setup("+Z", label="foot down on parallels: arm notch, M3, c'sinks", hold="vise on the web's y faces")
     pc.changes += ["the model's bracket is a plain plate standing on the carriage; it needs a foot to bolt down. The "
                    "shield leaves 3.0 mm over the carriage, so the foot is 3 mm thick with flat-head screws. A 4-6 mm "
@@ -881,25 +928,34 @@ def mk09_plate():
 
 
 def mk09_saddle():
-    pc = Piece("MK-09b", "MK-09", "Collimator saddle", material="6061-T651", qty=1, route="CNC mill", state="S1",
-               stock="1-1/4 in. 6061 plate (31.75), 90 x 52 offcut", stock_pn="1-1/4 in. 6061 plate (PN not read)",
-               blank=blank_box(-174.0, -86.0, -15.9, 15.9, -2.0, 49.0),
-               pos="part (x, y) = world (x, y); part z 0 = head-plate top (world z 366 box)")
     zc = P["head_in_z"]
-    rc = 20.0 + 0.25
-    prof = cq.Workplane("XZ").polyline([(-88.0, 0.0), (-88.0, 12.0), (-100.0, 12.0), (-100.0, 46.0), (-172.0, 46.0),
-                                        (-172.0, 0.0)]).close().extrude(15.0, both=True).val()
-    prof = prof.cut(cylax(rc, (-200.0, 0, zc), (1, 0, 0), 120.0))
+    rc = 20.0                       # collimator radius (envelope in ft_model: cyl(20))
+    w_slot = 30.0                   # the collimator rests on the slot's two top edges
+    z_top = zc - math.sqrt(rc ** 2 - (w_slot / 2) ** 2)        # 46.77: the edges at the contact height
+    W = 44.0
+    pc = Piece("MK-09b", "MK-09", "Collimator saddle", material="6061-T6511", qty=1, route="CNC mill", state="S1",
+               stock="6061 bar 1-3/4 x 2 in. (44.45 x 50.8) sawn 88 long",
+               stock_pn="6061 rectangular bar 1-3/4 x 2 in. (PN not read)",
+               blank=blank_box(-174.0, -86.0, -22.225, 22.225, -2.0, 48.8),
+               pos="part (x, y) = world (x, y); part z 0 = head-plate top (world z 366 box)")
+    prof = cq.Workplane("XZ").polyline([(-88.0, 0.0), (-88.0, 12.0), (-100.0, 12.0), (-100.0, z_top), (-172.0, z_top),
+                                        (-172.0, 0.0)]).close().extrude(W / 2, both=True).val()
     pc.solid = prof
+    pc.pocket("collimator slot 30 wide x 8 deep along x (the collimator sits on its edges)",
+              box(-173.0, -100.0, -w_slot / 2, w_slot / 2, z_top - 8.0, z_top + 1), (-136.0, 0.0, z_top - 8.0), tool=2,
+              kind="adaptive")
     pc.hole("A", "cbore", "M5", [(-94.0, sy * 9.0, 12.0) for sy in (-1, 1)], through=True, note="to the head plate")
-    pc.hole("B", "tap", "M4", [(-169.0, sy * 9.0, 46.0) for sy in (-1, 1)], depth=8.0, thread="6",
-            note="strap over the collimator (est.)")
-    pc.setup("+Y", face=(2, 15.0), outline=(2, -15.3), label="profile plane up (part +y up): face, L outline with the "
-                                                               "cradle", hold="vise, blank 31.75 thick standing")
-    pc.setup("-Y", face=(2, 15.0), label="flip: face to 30.0")
-    pc.setup("+Z", label="cradle up: holes A and B", hold="vise on the y faces")
-    pc.changes += ["new piece (the model has no saddle): a cradle bracket on the head plate's -x end under the "
-                   "collimator, R20.25 cradle at the collimator axis (z 60 above the plate), strap holes est."]
+    pc.hole("B", "tap", "M4", [(x, sy * 18.5, z_top) for x in (-165.0, -107.0) for sy in (-1, 1)], depth=8.0,
+            thread="6", note="strap over the collimator (est.)")
+    pc.setup("+Y", face=(2, W / 2), outline=(2, -6.5), label="profile plane up (part +y): face, L outline to y -6.5",
+             hold="vise, bar standing 44.45 tall")
+    pc.setup("-Y", face=(2, W / 2), outline=(2, 6.0), label="flip: face to 44.0, rest of the L outline")
+    pc.setup("+Z", label="slot up: collimator slot, holes A and B", hold="vise on the y faces")
+    pc.tol += ["slot edges at z %.2f +-0.05 above the plate: they set the collimator axis at z %.1f" % (z_top, zc),
+               "slot 30.00 +-0.05 wide, its edges broken 0.3 x 45 deg (line contact)"]
+    pc.changes += ["new piece (the model has no saddle): an L bracket on the head plate's -x end; the Ø40 collimator "
+                   "rests on the two edges of a 30 mm slot (2.5D from the top) instead of a round cradle along its "
+                   "axis, which no 3-axis setup reaches; strap holes est."]
     return pc
 
 
@@ -938,7 +994,7 @@ def mk10_collar():
                blank=blank_box(-65, 65, -65, 65, 0, H), pos="part z 0 = collar floor underside (world z 280 box)")
     ro, ri = 62.0, P["lens_d"] / 2 + 1.0
     pc.solid = cyl(ro, 0, H)
-    pc.pocket("lens bore 112 x 25.75 (adaptive)", cyl(ri, 6.0, H + 1), (ri - 6.0, 0, 6.0), tool=2, kind="adaptive")
+    pc.pocket("lens bore 112 x 25.75", cyl(ri, 6.0, H + 1), (ri - 6.0, 0, 6.0), tool=2, kind="pocket")
     pc.bore("tube bore 54", 27.0, 0, 0, 6.0, 0, axis="+z", tool=2)
     pc.pocket("tube socket 60.5 x 3", cyl(30.25, -1, 3.0), (29.0, 0, 3.0), axis="+z", tool=3)
     pc.hole("A", "clear", "M4", [(*polar(TIE_R, 22.5 + 90 * k), 6.0) for k in range(4)], through=True,
@@ -948,7 +1004,7 @@ def mk10_collar():
     pc.setup("+Z", outline=(2, 1.0), label="open end up: outline, lens bore", hold="blank on parallels, toe clamps")
     pc.setup("-Z", outline=(2, -H - 0.3), label="floor up: tube bore, socket, tie-rod holes, rest of the outline",
              hold="soft jaws in the lens bore (ID clamp)")
-    pc.setup("-X", label="on its side: 2 x M3 for the interlock switch", hold="vise, V-block")
+    pc.setup("+X", label="on its side: 2 x M3 for the interlock switch", hold="vise, V-block")
     pc.tol += ["lens bore 112 +0.5/0 (lens envelope 110 est.: measure the lens first)", "socket 60.50 +0.10/0"]
     pc.changes += ["collar height 32 -> 31.75 (1-1/4 in. plate, wall 25.75): no effect on fit",
                    "added: 4 x M4 tie-rod holes, socket for the tube, 2 x M3 for the interlock switch (est.)",
@@ -967,19 +1023,19 @@ def mk11_nozzle():
                pos="part (x, y) = world (x, y); part z 0 = well-block top (powder plane)")
     H = 12.0
     body = box(-30.5, 30.5, -46, -27, 0, H)
-    boss = cylax(5.0, (0, -52.0, 6.0), (0, 1, 0), 6.5)
+    boss = box(-5.0, 5.0, -52.0, -45.5, 0.0, H)
     pc.solid = body.fuse(boss).clean()
     pc.pocket("plenum 45 x 10 x 8 (open below, closed by the block top)", rbox(-22.5, 22.5, -39, -29, -1, 8.0, 1.6),
               (0, -34.0, 8.0), axis="+z", tool=4)
-    pc.pocket("slot exit 45 x 4 through the 2 mm front wall", box(-22.5, 22.5, -29.5, -26.0, 2.0, 6.0),
-              (0, -27.0, 4.0), axis="+y", tool=4, kind="opening")
+    pc.opening("slot exit 45 x 4 through the 2 mm front wall", box(-22.5, 22.5, -29.5, -26.0, 2.0, 6.0),
+               (0, -27.0, 9.0), -29.5, axis="-y", tool=4)
     pc.hole("A", "plain", "6.40", [(0.0, -52.0, 6.0)], axis="+y", depth=15.0,
             note="1/4 in. 316 feed tube (89785K824) bonded or pressed in")
     pc.hole("B", "cbore", "M3", [(sx, -33.5, H) for sx in (-27.0, 27.0)], through=True, note="to the well block")
     pc.setup("-Z", face=(2, 0.0), label="bottom up: face, plenum", hold="vise")
     pc.setup("+Z", face=(2, H), outline=(2, -0.3), label="top up: face to 12, outline with the boss, c'bores")
-    pc.setup("-Y", label="front face up: slot exit (1/8 in. end mill)", hold="vise on the x ends")
-    pc.setup("+Y", label="boss up: feed-tube hole", hold="vise on the x ends")
+    pc.setup("+Y", label="front face up: slot exit (1/8 in. end mill)", hold="vise on the x ends")
+    pc.setup("-Y", label="boss up: feed-tube hole", hold="vise on the x ends")
     pc.changes += ["6061 instead of 304 (machined block, argon at <= 200 C)", "12 mm tall (was 8) and 61 long (was 55): "
                    "room for a plenum, the 1/4 in. feed tube and two M3 screws",
                    "feed: a 6.4 mm socket in the model's Ø10 boss, tube bonded in; plenum sealed by the block top"]
@@ -993,19 +1049,19 @@ def mk11_collector():
                pos="part (x, y) = world (x, y); part z 0 = well-block top")
     H = 14.0
     body = box(-33, 33, 27, 40, 0, H)
-    boss = cylax(8.0, (0, 40.0 - 0.5, 7.0), (0, 1, 0), 8.5).intersect(box(-9, 9, 38, 49, 0, H))
+    boss = box(-8.0, 8.0, 39.5, 48.0, 0.0, H)
     pc.solid = body.fuse(boss).clean()
     pc.pocket("plenum 50 x 7 x 10 (open below)", rbox(-25, 25, 29.0, 36.0, -1, 10.0, 1.6), (0, 32.5, 10.0), axis="+z",
               tool=4)
-    pc.pocket("inlet window 50 x 6 through the 2 mm front wall", box(-25, 25, 26.0, 29.5, 2.0, 8.0), (0, 27.0, 5.0),
-              axis="-y", tool=4, kind="opening")
+    pc.opening("inlet window 50 x 6 through the 2 mm front wall", box(-25, 25, 26.0, 29.5, 2.0, 8.0),
+               (0, 27.0, 11.0), 29.5, axis="+y", tool=4)
     pc.hole("A", "plain", "9.6", [(0.0, 48.0, 7.0)], axis="-y", depth=13.0,
             note="3/8 in. exhaust tube bonded in, then the hose to the HEPA")
     pc.hole("B", "cbore", "M3", [(sx, 33.5, H) for sx in (-29.5, 29.5)], through=True, note="to the well block")
     pc.setup("-Z", face=(2, 0.0), label="bottom up: face, plenum")
     pc.setup("+Z", face=(2, H), outline=(2, -0.3), label="top up: face to 14, outline with the boss, c'bores")
-    pc.setup("+Y", label="front face up: inlet window")
-    pc.setup("-Y", label="boss up: exhaust-tube hole")
+    pc.setup("-Y", label="front face up: inlet window")
+    pc.setup("+Y", label="boss up: exhaust-tube hole")
     pc.changes += ["6061 instead of 304", "14 mm tall (was 10) and 66 long (was 60): plenum, a 3/8 in. outlet tube "
                    "and two M3 screws; the outlet's 9.6 bore halves the gas speed of a 1/8 NPT fitting"]
     return pc
@@ -1167,13 +1223,15 @@ def mk15_clamp():
                pos="part z 0 = clamp underside on the X-VSR20A platform")
     pc.solid = box(-15, 15, -15, 15, 0, ch)
     pc.bore("rod bore 12.95", THROAT / 2, 0, 0, ch, 0, tool=3)
-    pc.pocket("lead exit 6 x 6 toward -y", box(-3, 3, -16, 0, -1, 6.0), (0, -11.0, 6.0), axis="+z", tool=3)
-    pc.cut(box(-0.75, 0.75, 0, 16, -1, ch + 1))
+    pc.pocket("lead exit 6 x 6 toward -y", box(-3, 3, -16, 0, -1, 6.0), (0, -11.0, 6.0), axis="+z", tool=4,
+              kind="adaptive")
     pc.manual.append(("slit 1.5 wide from the bore to +y, full height (slitting saw or bandsaw)", 10.0))
     pc.hole("A", "cbore", "M4", [(sx * 10.5, -10.5, ch) for sx in (-1, 1)], through=True, note="to the stage platform "
                                                                                               "(pattern est.)")
     pc.hole("B", "cbore", "M3", [(-15.0, 10.75, z) for z in (8.0, 18.0)], axis="+x", through=True,
             note="clamp screws across the slit; the far half is tapped M3 by hand after drilling 2.5")
+    pc.cam_solid = pc.solid
+    pc.cut(box(-0.75, 0.75, 0, 16, -1, ch + 1))
     pc.setup("+Z", face=(2, ch), outline=(2, 1.0), label="top up: face, outline, rod bore, c'bores")
     pc.setup("-Z", face=(2, 0.0), outline=(2, -ch - 0.3), label="bottom up: face to 25, lead exit")
     pc.setup("-X", label="-X face up: clamp-screw holes", hold="vise on the y faces")
@@ -1214,9 +1272,8 @@ def mk18():
     stand.solid = box(-30, 30, -30, 30, 0, h)
     stand.hole("A", "clear", "M5", [(sx * 12.5, sy * 12.5, 0.0) for sx in (-1, 1) for sy in (-1, 1)], axis="+z",
                through=True, note="M5 x 20 down into the deck's gland taps")
-    stand.pocket("4 x 10.0 screw wells to 12 above the base", cq.Workplane().pushPoints(
-        [(sx * 12.5, sy * 12.5) for sx in (-1, 1) for sy in (-1, 1)]).circle(5.0).extrude(h).translate((0, 0, 12.0)).val(),
-        (12.5 + 4.0, 12.5, 12.0), tool=3, kind="pocket")
+    stand.hole("W", "plain", "10.0", [(sx * 12.5, sy * 12.5, h) for sx in (-1, 1) for sy in (-1, 1)], depth=h - 12.0 - 3.0,
+               note="screw wells, 10 x D: peck; the M5 head sits on the drill point 12 above the base (washer)")
     stand.hole("B", "tap", "M3", [(sx * 24.0, sy * 24.0, h) for sx in (-1, 1) for sy in (-1, 1)], depth=8.0, thread="6",
                note="target plate")
     stand.setup("+Z", face=(2, h), outline=(2, 1.0), label="top up: face, outline, wells, M3")
@@ -1251,16 +1308,42 @@ def build_all():
     return pcs
 
 
+def export_dxf(pc, path):
+    """flat pattern outline and holes (cut layer only; bend lines go on the drawing, not in the cut file)"""
+    import ezdxf
+    doc = ezdxf.new("R2010")
+    doc.units = ezdxf.units.MM
+    msp = doc.modelspace()
+    s = pc.sheet
+    msp.add_lwpolyline([tuple(q) for q in s["outline"]], close=True)
+    for x, y, d in s.get("holes", []):
+        msp.add_circle((x, y), d / 2)
+    if s.get("slot"):
+        sl = s["slot"]
+        r = (sl["v1"] - sl["v0"]) / 2
+        msp.add_line((sl["u0"] + r, sl["v0"]), (sl["u1"] - r, sl["v0"]))
+        msp.add_line((sl["u0"] + r, sl["v1"]), (sl["u1"] - r, sl["v1"]))
+        msp.add_arc((sl["u0"] + r, sl["v0"] + r), r, 90, 270)
+        msp.add_arc((sl["u1"] - r, sl["v0"] + r), r, -90, 90)
+    doc.saveas(str(path))
+
+
 def export(pcs):
     import time
+    (OUT / "dxf").mkdir(parents=True, exist_ok=True)
+    for pc in pcs:
+        if pc.sheet and pc.sheet.get("outline"):
+            export_dxf(pc, OUT / "dxf" / (pc.pid + ".dxf"))
     (SCRATCH / "pieces").mkdir(parents=True, exist_ok=True)
     OUT.mkdir(exist_ok=True)
     recs = []
     for pc in pcs:
         rec = pc.record()
         if pc.solid is not None:
-            pc.solid.exportBrep(str(SCRATCH / "pieces" / (pc.pid + ".brep")))
-            cq.exporters.export(cq.Workplane().add(pc.solid), str(SCRATCH / "pieces" / (pc.pid + ".stl")),
+            cs = pc.cam_solid if pc.cam_solid is not None else pc.solid
+            cs.exportBrep(str(SCRATCH / "pieces" / (pc.pid + ".brep")))
+            pc.solid.exportBrep(str(SCRATCH / "pieces" / (pc.pid + "_draw.brep")))
+            cq.exporters.export(cq.Workplane().add(cs), str(SCRATCH / "pieces" / (pc.pid + ".stl")),
                                 tolerance=0.02, angularTolerance=0.1)
         start = pc.pre if pc.pre is not None else (blank_solid(pc.blank) if pc.blank else None)
         if start is not None:
@@ -1269,7 +1352,8 @@ def export(pcs):
                                 tolerance=0.02, angularTolerance=0.1)
             rec["start_volume_cm3"] = round(start.Volume() / 1000, 2)
         if pc.lathe_fill is not None:
-            tgt = pc.solid.fuse(pc.lathe_fill.intersect(start if start is not None else pc.solid))
+            bb = pc.solid.BoundingBox()
+            tgt = pc.solid.fuse(pc.lathe_fill.intersect(box(bb.xmin, bb.xmax, bb.ymin, bb.ymax, bb.zmin, bb.zmax)))
             cq.exporters.export(cq.Workplane().add(tgt), str(SCRATCH / "pieces" / (pc.pid + "_target.stl")),
                                 tolerance=0.02, angularTolerance=0.1)
             rec["has_target"] = True

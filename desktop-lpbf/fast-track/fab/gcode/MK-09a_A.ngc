@@ -1,0 +1,46 @@
+(Exported by FreeCAD)
+(Post Processor: Path.Post.scripts.linuxcnc_post)
+(Output Time:2026-11-27 09:06:12.958942)
+(begin preamble)
+G17 G54 G40 G49 G80 G90
+G21
+(begin operation: TC1_Job_MK_09a_A)
+(machine units: mm/min)
+(TC1_Job_MK_09a_A) 
+M5
+M6 T1 
+G43 H1 
+M3 S3000 
+(finish operation: TC1_Job_MK_09a_A)
+(begin operation: Face top 0.35 to z 0.001)
+(machine units: mm/min)
+(Coolant On:Flood)
+M8
+(Face top 0.35 to z 0.001) 
+G0 Z5.350 
+G0 X100.100 Y47.150 
+G0 Z3.350 
+G1 X100.100 Y47.150 Z0.000 F609.600 
+G1 X-100.100 Y47.150 Z0.000 F1219.200 
+G1 X-100.100 Y90.100 Z0.000 F1219.200 
+G1 X100.100 Y90.100 Z0.000 F1219.200 
+G1 X100.100 Y47.150 Z0.000 F1219.200 
+G1 X100.100 Y2.700 Z0.000 F1219.200 
+G1 X-100.100 Y2.700 Z0.000 F1219.200 
+G1 X-100.100 Y-41.750 Z0.000 F1219.200 
+G1 X100.100 Y-41.750 Z0.000 F1219.200 
+G1 X100.100 Y-86.200 Z0.000 F1219.200 
+G1 X-100.100 Y-86.200 Z0.000 F1219.200 
+G1 X-100.100 Y-130.650 Z0.000 F1219.200 
+G1 X100.100 Y-130.650 Z0.000 F1219.200 
+G1 X100.100 Y-175.100 Z0.000 F1219.200 
+G1 X-100.100 Y-175.100 Z0.000 F1219.200 
+G0 Z5.350 
+G0 Z5.350 
+(finish operation: Face top 0.35 to z 0.001)
+(Coolant Off:Flood)
+M9
+(begin postamble)
+M05
+G17 G54 G90 G80 G40
+M2

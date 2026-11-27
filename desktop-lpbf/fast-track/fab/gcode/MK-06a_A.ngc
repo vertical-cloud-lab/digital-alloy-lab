@@ -1,0 +1,61 @@
+(Exported by FreeCAD)
+(Post Processor: Path.Post.scripts.linuxcnc_post)
+(Output Time:2026-11-27 09:40:03.422720)
+(begin preamble)
+G17 G54 G40 G49 G80 G90
+G21
+(begin operation: TC4_Job_MK_06a_A)
+(machine units: mm/min)
+(TC4_Job_MK_06a_A) 
+M5
+M6 T4 
+G43 H4 
+M3 S8100 
+(finish operation: TC4_Job_MK_06a_A)
+(begin operation: lead window 5 x 10 through one wall, custom zig-zag)
+(machine units: mm/min)
+(Coolant On:Flood)
+M8
+(lead window 5 x 10 through one wall, custom zig-zag) 
+(Begin Custom) 
+G0 X-0.913 Y-71.013 
+G0 Z8.350 
+G1 Z6.050 F164.598 
+G1 X-0.913 Y-71.013 F329.202 
+G1 X-0.913 Y-64.188 F329.202 
+G1 X0.913 Y-64.188 F329.202 
+G1 X0.913 Y-71.013 F329.202 
+G1 X-0.913 Y-71.013 F329.202 
+G1 Z5.750 F164.598 
+G1 X-0.913 Y-71.013 F329.202 
+G1 X-0.913 Y-64.188 F329.202 
+G1 X0.913 Y-64.188 F329.202 
+G1 X0.913 Y-71.013 F329.202 
+G1 X-0.913 Y-71.013 F329.202 
+G1 Z5.450 F164.598 
+G1 X-0.913 Y-71.013 F329.202 
+G1 X-0.913 Y-64.188 F329.202 
+G1 X0.913 Y-64.188 F329.202 
+G1 X0.913 Y-71.013 F329.202 
+G1 X-0.913 Y-71.013 F329.202 
+G1 Z5.150 F164.598 
+G1 X-0.913 Y-71.013 F329.202 
+G1 X-0.913 Y-64.188 F329.202 
+G1 X0.913 Y-64.188 F329.202 
+G1 X0.913 Y-71.013 F329.202 
+G1 X-0.913 Y-71.013 F329.202 
+G1 Z4.860 F164.598 
+G1 X-0.913 Y-71.013 F329.202 
+G1 X-0.913 Y-64.188 F329.202 
+G1 X0.913 Y-64.188 F329.202 
+G1 X0.913 Y-71.013 F329.202 
+G1 X-0.913 Y-71.013 F329.202 
+G0 Z11.350 
+(End Custom) 
+(finish operation: lead window 5 x 10 through one wall, custom zig-zag)
+(Coolant Off:Flood)
+M9
+(begin postamble)
+M05
+G17 G54 G90 G80 G40
+M2
