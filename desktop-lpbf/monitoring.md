@@ -305,11 +305,10 @@ and at 200 °C. Seleznev's gas-pump noise needed waveform-based filtering, so re
 
 ## 7. Not done, or open
 - **Drawn since round 2** (§9, `LPBF_MONITORING=1`): the ports, the bridge cut-out, the coaxial cage, the AE waveguide and the
-  digitizer. Round 3 (§9.1) added the waveguide's sprung cold end, the back-wall LED light, and the guard's vents, fans, hood and
-  thermal breaks. **Still not drawn:**
+  digitizer. Round 3 (§9.1) added the waveguide's sprung cold end, the back-wall LED light, the guard's vents, fans, hood and
+  thermal breaks, and its monitoring bulkhead. **Still not drawn:**
   - the trigger generator inside PB2, cables, and the purge's argon line;
   - the InGaAs and SWIR options;
-  - the guard's monitoring bulkhead;
   - a chilled-water fan coil, and PB2's filtered vent and Active Cooler;
   - the bayonet's disc spring that the AE preload needs.
 
@@ -362,10 +361,10 @@ the LSO.
 | [`optics.md`](monitoring/optics.md) | the f-theta traced 600–1700 nm, radiometry on the melt-pool fields, the side and lid cameras, light, 1070 nm at the ports, parts with list prices ([`optics-parts.csv`](monitoring/optics-parts.csv)) | new coaxial bands; silicon sees only the hot core, so a SWIR camera for the pool edge; every camera needs OD ≥ 8 at 1070 nm |
 | [`plume.md`](monitoring/plume.md) | CFD with the ports and the LW purge, condensate and spatter tracking, fouling, the plume jet | the bed jet removes the plume; LW is the cleanest window; LP belongs in the back half; spatter sets the laser slide's life; round 3: the plume costs the beam ~0.4 % |
 | [`mechanics.md`](monitoring/mechanics.md) | every port, window, camera, the coaxial cage, the AE path and the recorder drawn in the model ([`cad/monitoring_parts.py`](cad/monitoring_parts.py), `LPBF_MONITORING=1`); loads, seals, mounts, the bridge's modes in CalculiX, the AE path's temperature and losses | 0 interferences in six machine states and eight sweeps; LP moves to (−40, 60) through a bridge cut-out; 1.0 mm FKM gaskets; round 3: the AE waveguide sprung on a sensor in the rod end |
-| [`fabrication.md`](monitoring/fabrication.md) | the ports in setup C with CAM and CAMotics, small parts made or bought, live prices ([`monitoring-bom.csv`](monitoring-bom.csv)) | ports square to their faces; round 3: both frame ports re-posted and checked, LP on a sine plate, ~5.7 h on parts made anyway; steps 0–8 $23,555–27,138 |
+| [`fabrication.md`](monitoring/fabrication.md) | the ports in setup C with CAM and CAMotics, small parts made or bought, live prices ([`monitoring-bom.csv`](monitoring-bom.csv)) | ports square to their faces; round 3: both frame ports re-posted and checked, LP on a sine plate, ~5.7 h on parts made anyway; steps 0–8 $23,845–27,588 |
 | [`sync-and-data.md`](monitoring/sync-and-data.md) | timing budget, channel map ([`monitoring-io.csv`](monitoring-io.csv)), HDF5 layout, a reader checked on a synthetic build | the RTC6 has no analog input; fit the digitizer's clock every layer; correct the 0.25 ms lag |
 | [`cooling.md`](monitoring/cooling.md) (round 3) | the guard's air against every device's rating; light-trapped vents and fans, a hood for the Chronos and G-10 breaks, drawn and checked | closed, the guard runs 26–44 K over the Shuttle's air; vented, 5–10 K over its supply; the traps give OD 7.0–8.1 at 1070 nm |
-| [`review-packet.md`](monitoring/review-packet.md) (round 3) | a STEP file and views of every part monitoring makes or changes ([`review_packet.py`](analysis/monitoring/review/review_packet.py)), and the questions for the LSO and the shop | 20 made parts and 9 changed ones; L1–L9 for the LSO, S1–S13 for the shop |
+| [`review-packet.md`](monitoring/review-packet.md) (round 3) | a STEP file and views of every part monitoring makes or changes ([`review_packet.py`](analysis/monitoring/review/review_packet.py)), and the questions for the LSO and the shop | 22 made parts and 9 changed ones; L1–L9 for the LSO, S1–S14 for the shop |
 
 **The coaxial branch:**
 - **New bands.** The two-colour pair moves to 700/40 and 900/40 nm, and the camera to 955–990 nm, in place of §4's 850 nm. A
@@ -430,14 +429,14 @@ the LSO.
     or take it from the recirculation loop.
   - The cameras sit in the guard's air, not the Shuttle's, and closed it runs 26–44 K over it. Round 3 vents the guard (§9.1).
 
-**Cost**, rebuilt with round 3's lines on 2026-11-27: steps 0–8 come to $23,555–27,138 new, or $21,349 with used listings
+**Cost**, rebuilt with round 3's lines on 2026-11-27: steps 0–8 come to $23,845–27,588 new, or $21,638 with used listings
 ([`monitoring-bom.csv`](monitoring-bom.csv)), against §4's ~$20–38k. Round 2 had $23,096–25,558. [`bom.csv`](bom.csv) carries
 them as two lines:
-- T4: steps 0–6, $9,592–12,915 (was $8,391–10,853), in the machine's total;
+- T4: steps 0–6, $9,881–13,365 (was $8,391–10,853), in the machine's total;
 - T5: steps 7–8, $11,736–19,694 (was $12,477–20,176), an option outside it.
 
 What round 3 changed in them:
-- **Step 0** gains the guard's vents and fans (M0-C1 to C8, $530–950).
+- **Step 0** gains the guard's vents and fans (M0-C1 to C8, $530–950) and its monitoring bulkhead (M0-B1 to B8, $290–450).
 - **Step 4** gains the sprung AE cold end.
 - **Step 7** gains the side camera's hood and duct (M7-C1 to C4, $170–330).
 - **The BW light** (M850D3, asphere, heat sink, DC2200; $3,059–3,159) replaces the $3,971 of pulsed LED light that round 2 priced.
@@ -455,12 +454,13 @@ SSH tunnel to a lab Pi, which exits on BYU's network. Nothing is bought, measure
 | The plume's beam loss lay anywhere from 0.05 % to ~10 % | A condensate growth model (`growth.py`), and Edison's [`r9-plume-growth`](edison/r9-plume-growth/answer.md) | ~0.4 % for AlSi10Mg at 320 W (0.15–1.5 %), ~0.25 % for 6061, ~0.2 % for 7075. Its glow adds ~1.5 % to the coaxial photodiodes, not 4–15 % (§10) | [`plume.md`](monitoring/plume.md) §3.4, §3.6 |
 | The cameras sat in 38–43 °C air | A heat balance of the guard. Drawn: a light-trapped inlet and exhaust in the guard's back panel with two 120 mm fans, a duct and hood for the Chronos, G-10 breaks, a fan for PB2, and a place for the LP camera's Pi | The closed guard runs 26–44 K over the Shuttle's air. Vented, it runs 5–10 K over its supply: in rating on 30 °C Shuttle air, but not in the busy case, so the guard needs room air or a chilled-water fan coil (§7). The traps give OD 7.0–8.1 at 1070 nm with black hard anodise, against the 5.4 needed | [`cooling.md`](monitoring/cooling.md) |
 | The left wall's CAM program, the quotes and the LP hours were out of date | Both frame ports re-posted with FreeCAD 1.0.2, the A180 program now also drilling the BW light bracket's two M4, and the LP bore programmed with the lid on a 27.93° sine plate. CAMotics and the holder check found 0 gouges, 0 rapids through stock and 0 collisions. SendCutSend re-quoted the flat parts | Three parts changed on the way: the LP adapter's screws sat in its own O-ring groove; the LW ring's holes were too close to its edge for SendCutSend; the BW frame's third screw had 1.2 mm of metal round it. ~5.7 h of shop time on parts made anyway; the flat parts $7.43–10.26 each | [`fabrication.md`](monitoring/fabrication.md) §0 |
-| Nothing was reviewed | A review packet: a STEP file and views of every part monitoring makes or changes, and the questions for the LSO and the shop | 20 made parts and 9 changed ones on M50; L1–L9 for the LSO, S1–S13 for the shop | [`review-packet.md`](monitoring/review-packet.md) |
+| Nothing was reviewed | A review packet: a STEP file and views of every part monitoring makes or changes, and the questions for the LSO and the shop | 22 made parts and 9 changed ones on M50; L1–L9 for the LSO, S1–S14 for the shop | [`review-packet.md`](monitoring/review-packet.md) |
+| The guard's monitoring bulkhead (MN-28) wasn't drawn | Drawn on the guard's back panel, upper left (the left panel is 6.5 mm from the rack): 3 isolated BNC, an RJ45 and an M12 8-pole feedthrough, and a split cable entry under a black labyrinth shroud | No straight path through it: the shallowest ray lands 2.8 mm outside the opening. $290–450, with a $32.85 SendCutSend quote for the plate | [`mechanics.md`](monitoring/mechanics.md) §1 |
 | The renders predated PB2's move, and NIST blocked the runner | The default renders and the build sequence re-made. `lines.py` reached NIST through the tunnel | All nine line lists match their 2026-11-25 sha256s, so `lines.json` is unchanged | [`cad/img/low/`](cad/img/low/) |
 
-**Checked again after merging** (2026-11-27, 09:55–10:29 UTC; with monitoring, again after the BW bracket's holes moved into the
-frame's CAM geometry):
-- **Interference:** with every monitoring part from rounds 2 and 3 (337 parts on M50 and L75, 333 on S25), `interference.py` finds
+**Checked again after merging** (2026-11-27, 09:55–11:20 UTC; with monitoring, again after the BW bracket's holes moved into the
+frame's CAM geometry and after the bulkhead was drawn):
+- **Interference:** with every monitoring part from rounds 2 and 3 (345 parts on M50 and L75, 341 on S25), `interference.py` finds
   0 interferences in the six machine states and the eight motion sweeps on all three modules
   ([`M50`](analysis/out/monitoring/mech/interference-monitoring-M50-M.md),
   [`S25`](analysis/out/monitoring/mech/interference-monitoring-S25-S.md),

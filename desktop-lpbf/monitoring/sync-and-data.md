@@ -251,7 +251,8 @@ rules, on top of electrical.md §7:
   so round 3 (2026-11-27, [`mechanics.md`](mechanics.md) §4) put the sensor inside it, sprung up under the waveguide (MN-27). Its
   lead leaves through a Solid Sealing FA40102 Microdot weld-in in the rod end's cap (MN-16), an eighth weld-in, unplugged at a
   swap like the others.
-- **Guard: one bulkhead plate (MN-28)** on the panel nearest the rack: three isolated BNC (two photodiodes, AE), one RJ45 (Chronos),
+- **Guard: one bulkhead plate (MN-28)**, drawn in round 3 on the guard's back panel, upper left, since the left panel nearest the
+  rack is only 6.5 mm from it ([`mechanics.md`](mechanics.md) §1). It carries three isolated BNC (two photodiodes, AE), one RJ45 (Chronos),
   one M12 8-pin (RTC6 bits), and a split cable entry for pre-terminated leads (the Chronos's and the LDS12Bs' power). No opening
   gives a line of sight, so the guard stays light-tight. Show it to the LSO.
 - **Drawer:** DIN room for the decoupler and for the breakout of the RTC6's digital port (its connector type is to confirm with
@@ -450,9 +451,9 @@ permissive, reset the safety controller, or open the guard.
 - **Not checked:** the PicoScope 4444 streaming 8 MS/s for hours on Linux, and the wiring of its BNC-to-D9 adapter; the Vallen
   decoupler with a MISTRAS 2/4/6 (current draw); the guard's actual cable entries; room in the drawer and in PB2.
 - **Not written:** the Pico 2 firmware (PIO bursts and tags), the monitor's anomaly rules, the supervisor's hold and heartbeat.
-- **Not priced, and nothing added to bom.csv:** the Pico 2, the Vallen DCPL-24V-V1 (quote), a second LDS12B, the bulkhead plate,
-  the NVMe drives, an M.2 HAT+ and lab storage. The PicoScope's $2,485 is in monitoring.md §4.
-- **Not drawn:** the bulkhead plate, the Pico 2 in PB2, the drawer's new parts, any cable route.
+- **Not priced, and nothing added to bom.csv:** the Pico 2, the Vallen DCPL-24V-V1 (quote), a second LDS12B, the NVMe drives, an
+  M.2 HAT+ and lab storage. (The bulkhead plate is priced since round 3: monitoring-bom.csv M0-B1 to B8.) The PicoScope's $2,485 is in monitoring.md §4.
+- **Not drawn:** the Pico 2 in PB2, the drawer's new parts, any cable route. (The bulkhead plate is drawn since round 3.)
 - **The synthetic build tests the code and the method, not hardware.** The second-order head, the photodiode model, the noise and
   the AE are assumptions.
 - **EMI and ground loops** are not simulated (rules only, §2.3). The data volumes assume 100 mm²/s; compression on real data is
@@ -476,9 +477,10 @@ permissive, reset the safety controller, or open the guard.
   - `where` is the 4U drawer;
   - the "RTC6 layer-start / sync" signal is the laser-gate tap (MN-01);
   - add the AE decoupler and the trigger generator.
-- The model: the guard bulkhead plate (MN-28), the AE preamp's bracket, and the contents of the drawer and PB2. (The AE sensor
-  inside the rod end and its weld-in, MN-16 and MN-27, were drawn in round 3. So were the guard's fans, MN-29, which add ~17 W
-  to the 24 V CTRL rail.)
+- The model: the AE preamp's bracket, and the contents of the drawer and PB2. Round 3 drew the rest:
+  - the guard bulkhead plate (MN-28);
+  - the AE sensor inside the rod end and its weld-in (MN-16 and MN-27);
+  - the guard's fans (MN-29), which add ~17 W to the 24 V CTRL rail.
 
 ## 6. Sources
 
