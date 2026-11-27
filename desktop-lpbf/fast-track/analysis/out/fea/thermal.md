@@ -19,7 +19,8 @@ X-LSM100B and rod-end block drawn from the makers' STEP numbers, four Ø6 x 20 m
   block. **The X-LSM100B recoater stage takes the box air's temperature**: 37 °C mean, 39 °C max with the fan, but
   59 °C mean and 71 °C max in still air, above its 50 °C rating. The fan (or the supervisor's 45 °C box-air hold) is
   needed for the recoater, not for the piston stage. The gland O-rings run at 51/42 °C (upper/lower) with the fan,
-  65/55 °C in still air and 64/52 °C at the end of a 15 mm build: fine for FKM (and for nitrile).
+  65/55 °C in still air, 64/52 °C at the end of a 15 mm build and 77/65 °C at the end of a build in still air (the
+  worst case): fine for FKM (and for nitrile).
 - **The 0.1 mm plate-bore gap does not bind.** At 200 °C the plate is 2.5-5 K warmer than the bore wall, which
   closes the radial gap by 0.9-1.7 µm. It would take the plate running ~210 K above the block to close it. The worst
   cases modelled: −38 µm during warm-up with 2 x 50 W in the block (plate up to 80 K ahead of the block), −52 to −54 µm
@@ -47,14 +48,17 @@ X-LSM100B and rod-end block drawn from the makers' STEP numbers, four Ø6 x 20 m
 ### Case 1: steady at 200 °C
 
 Heaters controlled so that the substrate top centre and the well-block TC (8 mm below the block top, where CAD v2
-draws it) sit at 200 °C. 55.7k nodes (58.1k with the powder), 63-97 s a case.
+draws it) sit at 200 °C. 55.7k nodes (58.1k with the powder), 63-97 s a case. Bold: over a rating (the X-LSM100B's
+50 °C) or the worst case.
 
 | Case | Box air | Plate heaters | Block heaters | Ø30 area range | Plate TC | X-VSR20A platform | Rod-end block | O-rings upper / lower | Deck | Box floor mean / max | X-LSM100B mean / max | Gap change |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | FT-1, pz 0, fan | 39 °C | 11.0 W | 45.8 W | 0.22 K | 201.7 °C | 26.7 °C | 26.8 °C | 51 / 42 °C | 36.5-37.0 °C | 35.7 / 37.8 °C | 37.0 / 39.0 °C | −0.9 to −1.7 µm |
 | FT-1, pz 0, still air | 71 °C | 9.0 W | 35.9 W | 0.18 K | 201.4 °C | 27.9 °C | 28.1 °C | 65 / 55 °C | 56.5-57.2 °C | 54.7 / 56.6 °C | **58.9 / 71.0 °C** | −0.6 to −1.3 µm |
 | FT-1, pz −15, 15 mm of powder, fan | 39 °C | 7.6 W | 47.4 W | 0.13 K | 200.3 °C | 26.5 °C | 26.6 °C | 64 / 52 °C | 37.6-38.3 °C | 36.7 / 40.4 °C | 38.0 / 39.0 °C | −0.6 to −1.0 µm |
+| FT-1, pz −15, 15 mm of powder, still air | 71 °C | 6.3 W | 37.2 W | 0.10 K | 200.2 °C | 27.2 °C | 27.3 °C | **77 / 65 °C** | 57.4-58.1 °C | 55.4 / 58.2 °C | **59.7 / 71.0 °C** | −0.4 to −0.7 µm |
 | FT-1V, pz 0, fan (cube air) | 36 °C | 10.9 W | 46.8 W | 0.22 K | 201.8 °C | 26.1 °C | 26.2 °C | 40 / 35 °C | 33.4-33.7 °C | 33.2 / 33.3 °C (cube plate) | 33.8 / 36.0 °C | −0.8 to −1.7 µm |
+| FT-1V, pz 0, still air (cube air) | 61 °C | 9.3 W | 39.1 W | 0.19 K | 201.5 °C | 26.9 °C | 27.0 °C | 50 / 43 °C | 45.8-46.3 °C | 45.2 / 45.3 °C (cube plate) | 48.1 / **61.0 °C** | −0.6 to −1.4 µm |
 
 Where the heat goes (FT-1, pz 0, fan; W, from the FE's face fluxes):
 
@@ -209,8 +213,9 @@ O-rings at ~120 °C (FKM is rated to 200 °C), and a rod whose length follows th
 
 The cube case (cassette 21 mm higher on the 22.9 mm cube floor plate, cube air 36 °C with the fan per
 `cad/out/checks.md`) needs 10.9 W + 46.8 W, nearly the FT-1 numbers. The cube's aluminium floor plate spreads the
-heat: deck 33.4-33.7 °C, cube plate 33.2-33.3 °C, platform 26.1 °C, O-rings 40/35 °C. The cassette's thermal
-behaviour, and so case 3, carries over unchanged. Still air in the cube was not run.
+heat: deck 33.4-33.7 °C, cube plate 33.2-33.3 °C, platform 26.1 °C, O-rings 40/35 °C. Without the fan (cube air
+61 °C): 9.3 + 39.1 W, and the X-LSM100B reaches 48 °C mean and 61 °C max, so the cube needs its fan for the
+recoater too. The cassette's thermal behaviour, and so case 3, carries over unchanged.
 
 ### Method
 
@@ -277,5 +282,5 @@ behaviour, and so case 3, carries over unchanged. Still air in the cube was not 
   over 30 mm plus 304 over ~85 mm at half the plate's rise gives ~1.4 µm per K of plate temperature. So the +40 K
   climb of a no-dwell build at A = 0.3 lifts the surface by ~58 µm over its first 30-50 layers, and a ±10 K band
   moves it by ±14 µm against a 30 µm layer.
-- The warm-up assumes the box air is at 39 °C from switch-on. FT-1V in still air was not run.
+- The warm-up assumes the box air is at 39 °C from switch-on.
 - The PI settings are the control worker's simulated ones. The real SOLO controllers autotune.
