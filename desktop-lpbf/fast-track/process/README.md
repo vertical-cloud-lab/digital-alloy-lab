@@ -18,7 +18,7 @@ solves, checked against published data where it exists. Estimates are marked.
 ```bash
 python desktop-lpbf/fast-track/process/meltpool.py        # 42 s, 150 MB
 python desktop-lpbf/fast-track/process/scan_program.py    # 29 s, 115 MB (writes the NPZ and heat_input.csv)
-python desktop-lpbf/fast-track/process/optics.py          # 18 s, 390 MB (needs the NPZ)
+python desktop-lpbf/fast-track/process/optics.py          # 106 s, 390 MB (needs the NPZ; run it under capmem 2)
 python desktop-lpbf/fast-track/process/rtc5_list.py       # 6 s
 ```
 
@@ -76,7 +76,7 @@ python desktop-lpbf/fast-track/process/rtc5_list.py       # 6 s
 | Item | Value | Source |
 |---|---|---|
 | Laser | IPG YLR-400-SM-EOS (made 2015-02), 1070 ± 10 nm, M² < 1.1, CW or modulated to 50 kHz, power 10–100 %, a 5 mm affixed collimator up to 400 W (2.5 and 7.5 mm options) | [IPG YLR datasheet](https://cdn.ipgphotonics.com/6f98cba1-ae50-4feb-8635-b10901309bcd/IPG_YLR-Series_DS_EN_LTR.pdf) ("2/26"); label from the listing (lead) |
-| Scan head | SCANLAB hurrySCAN 25: 25 mm aperture, mirror spacing (beam displacement) 29.88 mm, ±0.26 rad (galvo 1) and ±0.40 rad (galvo 2) optical, tracking error 0.50 ms, step response 0.90 ms at 1 % of full scale, 0.8 m/s marking and 5.0 m/s positioning at f = 160, 1500 W at 1064 nm, 206.9 × 140 × 180 mm, 5.8 kg, XY2-100 | [SCANLAB product page](https://scanlab.de/en/print-product/609); this unit's SCANcheck sticker is dated 2003 (lead) |
+| Scan head | SCANLAB hurrySCAN 25: 25 mm aperture, beam displacement 29.88 mm (read here as the X-to-Y mirror spacing), ±0.26 rad (galvo 1) and ±0.40 rad (galvo 2) optical, tracking error 0.50 ms, step response 0.90 ms at 1 % of full scale, 0.8 m/s marking and 5.0 m/s positioning at f = 160, 1500 W at 1064 nm, 206.9 × 140 × 180 mm, 5.8 kg, XY2-100 | [SCANLAB product page](https://scanlab.de/en/print-product/609); this unit's SCANcheck sticker is dated 2003 (lead) |
 | Lens | LINOS F-Theta-Ronar 4401-288-000-20: EFL 254.4, BFL 299.1, WD 296.2, FFL 344.8 mm; design beam 20 mm; mirrors m1 25.6 / m2 23.0 mm; ±17.7°; field 157 × 157 mm; T > 96 %; back-reflex foci 14.2, 19.6, 52.6, 71.3, 72.4, 142.8, 457.8 mm from the first surface. Not given: telecentricity, field curvature, CW rating | [datasheet 2021.12-V4](https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/1068/4401-288-000-20_2021.12-V4.pdf) |
 | Window, slide | Edmund 38-990, Ø50.8 × 9.53 fused silica, V-coat, CA Ø45.72; cover slide Ø50 × 1 | `cad/ft_model.py`, PR 266 `beam_path.py` |
 | Heights above the bed | box: slide 129.0–130.0, window 145.4–154.9; cube: slide 221.4–222.4, window 251.8–261.3 | `cad/ft_model.py` `levels()` and `build()` |
@@ -413,7 +413,7 @@ Sent to the lead as `/tmp/ft-process/cad_changes.md`:
 
 - **Lens and scanner:** no lens prescription, so k (0.60–0.86), field curvature and ghost positions relative to the
   real mirrors are ranges or vendor numbers. The ghost check uses LINOS's recommended mirror distances and SCANLAB's
-  29.88 mm spacing; the real distances are unknown. The hurrySCAN delays are datasheet-based starting values for a
+  29.88 mm beam displacement read as the mirror spacing; the real distances are unknown. The hurrySCAN delays are datasheet-based starting values for a
   23-year-old head.
 - **Melt-pool model:**
   - Eagar-Tsai has no latent heat, no Marangoni flow and no powder layer. One absorptivity covers both modes, so
