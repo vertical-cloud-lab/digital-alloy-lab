@@ -12,7 +12,8 @@ aperture through the whole wall:
     the angle between the sight line and the wall's normal (computed here; the optics cost is in fabrication.md).
   * BW, at A180 (the back wall up): the sight line is ~49 deg off the back wall's normal, so a round normal bore would
     have to be ~49 mm across. It is a slot normal to the wall, shaped to the projection of the clear Ø20 cylinder
-    across the wall (an obround), with a rectangular window seat over it, flat on the wall, and four clamp holes.
+    across the wall (an obround), with a rectangular window seat over it, flat on the wall, and three clamp holes (the third
+    placed by bw_hole3() clear of the clamp frame's trim at the inlet plenum's flange).
     The A131.6 alternative (the rotary takes out the 49 deg azimuth) is checked in cam_monitoring.py's notes, not cut.
 It also checks each new cut against the frame's existing holes (wall left between them), the outer R8 corners, the floor
 screws under the back wall, and the liners (the hole or notch each liner needs).
@@ -59,6 +60,13 @@ SAE4 = dict(thread_d=11.11, depth=11.5, csk_d=12.9, csk_depth=1.6, drill_d=4.0) 
 # four holes start at 60 deg (were 45, which left 0.6 mm between the flat and a hole; mechanics.md §2)
 FIBRE_HEAD = dict(yz=(0.0, 5.0), flange_r=6.5, clear=1.0)
 LW_HOLE0_DEG = 60.0
+# the BW window clamp frame as cad/monitoring_parts._bw draws it: a rounded rectangle 18 x 22 mm bigger than the seat, R6, from
+# 3/16 in. plate with Ø4.5 clearance holes, trimmed to the back wall's flat face (x >= -147.5) and bottom edge (z >= -3.4), and 1 mm
+# clear of the cross-flow inlet plenum's bolting flange (lpbf_low: x -78..78, z up to 40, on the back wall's outer face). The trim
+# left 1.2 mm of metal outside the third screw's hole (mechanics.md §6), so that hole is placed by bw_hole3() below
+BW_FRAME = dict(grow_L=18.0, grow_W=22.0, r=6.0, x_min=-FLAT_X + 0.5, z_min=-3.4, plenum_x=-78.0, plenum_z_top=40.0, trim=1.0,
+                hole_clear_r=2.25)
+M4_MAJOR_R = 2.0     # an M4 thread's major radius: the wall to a pocket is measured from it
 GASKET = 0.75        # squeezed FKM flat gasket under the window and flat ring over it (the layer camera's window, lpbf_low)
 LAND_MIN = 3.0       # flat gasket land wanted round an opening (mm)
 SEAT_SHIFT = 1.0     # BW: the seat's centre moved this far toward +x along the slot (keeps it off the R8 corner)
@@ -145,6 +153,46 @@ def rrect_face_y(c, u, L, W, rad, y):
     return cq.Face.makeFromWires(cq.Wire.assembleEdges(edges))
 
 
+def _rrect_poly(c, u, L, W, rad):
+    """a rounded rectangle in the x-z plane (shapely), as rrect_face_y draws it"""
+    from shapely import affinity
+    from shapely.geometry import box as sbox
+    core = sbox(-(L / 2 - rad), -(W / 2 - rad), L / 2 - rad, W / 2 - rad).buffer(rad, quad_segs=32)
+    core = affinity.rotate(core, math.degrees(math.atan2(u[1], u[0])), origin=(0.0, 0.0))
+    return affinity.translate(core, float(c[0]), float(c[1]))
+
+
+def bw_clamp_outline(sc, u, L_seat, W_seat):
+    """the BW clamp frame's outline in the x-z plane (shapely), trimmed as monitoring_parts._bw trims it (BW_FRAME)"""
+    from shapely.geometry import box as sbox
+    f = BW_FRAME
+    fr = _rrect_poly(sc, u, L_seat + f["grow_L"], W_seat + f["grow_W"], f["r"])
+    fr = fr.intersection(sbox(f["x_min"], f["z_min"], 0.0, 200.0))
+    return fr.difference(sbox(f["plenum_x"] - f["trim"], -50.0, 0.0, f["plenum_z_top"] + f["trim"]))
+
+
+def bw_hole3(sc, u, n, L_seat, W_seat, seat_r):
+    """the third clamp screw, past the seat's +x end: the point that leaves the most metal round the clamp frame's Ø4.5 hole
+    (to the trimmed outline), keeping WALL_MIN between the M4 thread and the seat pocket and staying off the floor screws.
+    Searched on a 0.1 mm grid along the seat's +x end, from its middle down (the other two screws are above the seat)."""
+    from shapely.geometry import Point
+    seat = _rrect_poly(sc, u, L_seat, W_seat, seat_r)
+    frame = bw_clamp_outline(sc, u, L_seat, W_seat)
+    best = None
+    for a in np.arange(L_seat / 2, L_seat / 2 + 8.0 + 1e-9, 0.1):
+        for b in np.arange(-W_seat / 2, 1e-9, 0.1):
+            p = sc + a * u + b * n
+            wall = seat.exterior.distance(Point(*p)) - M4_MAJOR_R
+            if wall < WALL_MIN - 1e-9 or p[1] - M4_MAJOR_R < FLOOR_SCREW_TOP + WALL_MIN or not frame.contains(Point(*p)):
+                continue
+            web = frame.exterior.distance(Point(*p)) - BW_FRAME["hole_clear_r"]
+            if best is None or web > best[0] + 1e-6:
+                best = (web, p, a, b, wall)
+    web, p, a, b, wall = best
+    return tuple(p.tolist()), dict(along_slot_mm=round(a - (L_seat / 2 + 4.5), 2), across_mm=round(b, 2),
+                                   web_mm=round(web, 2), wall_to_seat_mm=round(wall, 2))
+
+
 def _ring_flat(cen, r_out, bc_r, holes):
     """the flat on the LW clamp ring toward the through-beam's fibre head: its distance from the ring's centre, its direction (y, z),
     and the metal left between it and the nearest clearance hole (Ø4.5)"""
@@ -180,10 +228,12 @@ def lw_features(frame):
     r_seat = (win["d"] + 0.2) / 2
     seat_depth = GASKET + win["t"] + GASKET
     land = r_seat - 0.1 - R               # gasket land between the bore and the window's edge
-    bc_r = ceil_to(r_seat + 1.65 + 3.0, 0.5)   # M4 tap drill 3.3 with 3 mm of wall outside the seat
+    # M4 tap drill 3.3 with 3 mm of wall outside the seat (rounded to 0.25 mm; it was 0.5, which put the holes on Ø50 and left
+    # 1.75 mm of ring outside their Ø4.5 clearance holes: SendCutSend's instant quote wants 1.90 mm, 2026-11-27)
+    bc_r = ceil_to(r_seat + 1.65 + 3.0, 0.25)
     holes = [(float(cen[1] + bc_r * math.cos(math.radians(LW_HOLE0_DEG + 90 * k))),
               float(cen[2] + bc_r * math.sin(math.radians(LW_HOLE0_DEG + 90 * k)))) for k in range(4)]
-    ring_od = 2 * (bc_r + 4.0)
+    ring_od = 2 * (bc_r + 4.25)                 # 2.0 mm of ring outside the clearance holes (was 4.0: 1.75 mm)
     # argon purge: SAE-4 port above the clamp ring (its fitting's 9/16 in. hex is ~16.5 mm across the corners)
     purge = (float(cen[1]), float(cen[2] + ring_od / 2 + 8.3 + 1.0))
     # liner hole (left liner at x -139.9..-139.4)
@@ -254,9 +304,18 @@ def bw_features(frame, z_shift=0.0):
     xmin = min(p[0] for p in corners)
     zmin = min(p[1] for p in corners)
     # three clamp screws: two above the seat and one past its +x end (below the seat are the floor screws, past the -x end
-    # the R8 corner)
+    # the R8 corner). The third was 4.5 mm past the seat's end on its centre line; the clamp frame's trim at the inlet plenum's
+    # flange left 1.2 mm of metal outside its hole there, so bw_hole3() moves it (2026-11-27)
     holes = [tuple((sc + sx * (L_seat / 2 - 6.0) * u + (W_seat / 2 + 4.5) * n).tolist()) for sx in (-1, 1)]
-    holes.append(tuple((sc + (L_seat / 2 + 4.5) * u).tolist()))
+    hole3_was = tuple((sc + (L_seat / 2 + 4.5) * u).tolist())
+    hole3, hole3_info = bw_hole3(sc, u, n, L_seat, W_seat, seat_r)
+    holes.append(hole3)
+    from shapely.geometry import Point
+    outline = bw_clamp_outline(sc, u, L_seat, W_seat)
+    seat_poly = _rrect_poly(sc, u, L_seat, W_seat, seat_r)
+    webs = [round(outline.exterior.distance(Point(*h_)) - BW_FRAME["hole_clear_r"], 2) for h_ in holes]
+    walls = [round(seat_poly.exterior.distance(Point(*h_)) - M4_MAJOR_R, 2) for h_ in holes]
+    web_was = round(outline.exterior.distance(Point(*hole3_was)) - BW_FRAME["hole_clear_r"], 2)
     # the slot stops at the inner face (y 95): past it, x < -140 is the left wall's material, not air
     slot = cq.Solid.extrudeLinear(stadium_face_y(e1, e2, r_s, y_out + 1.0), V(0, -(y_out - y_in) - 1.5, 0))
     slot = slot.cut(cq.Solid.makeBox(60.0, 10.0, 300.0, V(-INNER["x"] - 60.0, y_in - 10.0, -100.0)))
@@ -278,7 +337,13 @@ def bw_features(frame, z_shift=0.0):
         seat=dict(L=L_seat, W=W_seat, corner_r=seat_r, depth=round(seat_depth, 2), window=f"{L_seat - 0.3:.1f} x {W_seat - 0.3:.1f} x {win_t} mm, "
                   "corners chamfered 2 mm (rectangular N-BK7 or fused silica)", x_min=round(xmin, 2), z_min=round(zmin, 2),
                   on_flat_face=bool(xmin >= -FLAT_X + 0.5), clear_of_floor_screws=bool(zmin >= FLOOR_SCREW_TOP + WALL_MIN)),
-        clamp_frame=dict(holes_xz=[[round(x, 2), round(z, 2)] for x, z in holes], screws="3 x M4 x 0.7, tapped 8 deep"),
+        clamp_frame=dict(holes_xz=[[round(x, 2), round(z, 2)] for x, z in holes], screws="3 x M4 x 0.7, tapped 8 deep",
+                         web_to_trimmed_edge_mm=webs, thread_wall_to_seat_mm=walls,
+                         hole3=dict(was_xz=[round(hole3_was[0], 2), round(hole3_was[1], 2)], web_was_mm=web_was,
+                                    moved_xz=[round(hole3[0] - hole3_was[0], 2), round(hole3[1] - hole3_was[1], 2)], **hole3_info),
+                         outline_bbox_xz=[round(v, 2) for v in outline.bounds],
+                         note="webs: metal between each Ø4.5 clearance hole and the clamp frame's outline as monitoring_parts._bw "
+                              "trims it (BW_FRAME); walls: between each M4 thread (major Ø4) and the seat pocket"),
         liner=dict(liner="Lift-out wall liner, back lower left (z 16..32, x -130.5..-0.5)",
                    x_range=[round(float(lp[:, 0].min()) - 0.5, 1), round(float(lp[:, 0].max()) + 0.5, 1)],
                    z_range=[round(float(lp[:, 2].min()) - 0.5, 1), round(float(lp[:, 2].max()) + 0.5, 1)]),

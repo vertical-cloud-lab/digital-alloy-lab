@@ -6,10 +6,12 @@ setups 0.75 h; deburr and inspect 0.25 h, 1 h with a sealing face), applied to:
     the holes' CAM time, a stated allowance for each new non-circular feature (FEATURE_CAM_H, an estimate: hours.py has no
     rule for adding to a proven program), the run time, and the inspection of any new sealing face;
   * the new small parts (clamp rings, adapter boss, nozzle, holders, mounts, waveguide parts).
-Run time: the frame's new features from cam_monitoring.json (FreeCAD recount of the posted G-code, or CAMotics' time with
-the VF-4 rapids when it has run) plus the operations nobody programs (taps, the SAE-4 port tool) at stated minutes; the
-rest are estimates at hours.py's conservative rates (16 cm3/min roughing, 40 cm2/min finishing).
-Outside prices: SendCutSend's instant quotes for three of these parts (2026-11-25: the LW clamp ring, the BW clamp frame and
+Run time: the frame's and the lid's new features from cam_monitoring.json (FreeCAD recount of the posted G-code, or CAMotics'
+time with the VF-4 rapids when it has run; the lid's LP from lp_cam.py) plus the operations nobody programs (taps, the SAE-4
+port tool) at stated minutes; the rest are estimates at hours.py's conservative rates (16 cm3/min roughing, 40 cm2/min
+finishing). The LP bore is a new setup on the lid (the lid on a sine plate at 27.93 deg): hours.py's CAM and setup rules for
+one more setup of a large part, plus a stated allowance for setting the sine plate.
+Outside prices: SendCutSend's instant quotes for three of these parts (2026-11-27: the LW clamp ring, the BW clamp frame and
 the LP blanking cap, from flat_parts_dxf.py's DXFs; quotes/sendcutsend_quotes.csv), and for the rest the closest instant
 quote already in the repo (outsourcing-quotes.csv, 2026-11-22: SendCutSend's laser and CNC, OSH Cut, JLCCNC) for a part of the
 same kind and size, labelled "analogue".
@@ -35,6 +37,10 @@ FEATURE_CAM_H = 0.25         # h to program and prove one new non-circular featu
 TAP_MIN = 0.4                # min per tapped M4 hole, incl. approach (ASSUMED; setup_plan.py times taps from Haas charts)
 PORT_TOOL_MIN = 1.0          # min for the SAE-4 port tool (spot face, O-ring cone, 7/16-20 thread) (ASSUMED)
 TC_MIN = 4.2 / 60            # VF-4 tool to tool (hours.py)
+SINE_SET_H = 0.5             # h to set the sine plate (gauge blocks for 27.93 deg) and indicate the lid's -33.69 deg turn on it (ASSUMED)
+# the optics bridge's cut-out for the LP camera, as the monitoring model cuts it (inventory.py with LPBF_MONITORING=1, 2026-11-27):
+# a 54.7 x 60.1 mm hull through the 25 mm bridge, 74.55 cm3 out, 50.8 cm2 of wall; no program in the repo covers the bridge
+BRIDGE_CUT = dict(cm3=74.55, wall_cm2=50.8, size="54.7 x 60.1 mm")
 
 # outside-price analogues (outsourcing-quotes.csv rows, 2026-11-22, qty 1; price shown before any manufacturability review)
 ANALOGUE = {
@@ -45,18 +51,31 @@ ANALOGUE = {
     "osh_liner": (22.85, "OSH Cut, 316 sheet 0.036 in.: a lift-out liner ($22.85)"),
     "jlc_304": (79.18, "JLCCNC, SUS304, ISO 2768-m: the overflow block, a much bigger part ($79.18 without threads; + ~$26 UPS)"),
     # instant quotes for these parts themselves (2026-11-25, flat_parts_dxf.py's DXFs, quotes/sendcutsend_quotes.csv)
-    "scs_lw_ring": (9.83, "SendCutSend instant quote 2026-11-25, 6061-T6 1/4 in. (2 = $7.86, 10 = $6.68 each; arrives Nov 30)"),
-    "scs_bw_frame": (9.87, "SendCutSend instant quote 2026-11-25, 6061-T6 3/16 in. (2 = $7.89, 10 = $6.18 each; arrives Nov 30)"),
-    "scs_lp_cap": (11.44, "SendCutSend instant quote 2026-11-25, 6061-T6 1/4 in. (2 = $9.15, 10 = $7.21 each; arrives Nov 30)"),
+    "scs_lw_ring": (None, "SendCutSend instant quote 2026-11-27, 6061-T6 1/4 in."),
+    "scs_bw_frame": (None, "SendCutSend instant quote 2026-11-27, 6061-T6 3/16 in."),
+    "scs_lp_cap": (None, "SendCutSend instant quote 2026-11-27, 6061-T6 1/4 in."),
 }
 
 
+def scs_quotes():
+    """the three SendCutSend instant quotes (quotes/sendcutsend_quotes.csv) into ANALOGUE: unit price and its basis"""
+    qp = OUT / "quotes" / "sendcutsend_quotes.csv"
+    keys = dict(lw_clamp_ring="scs_lw_ring", bw_clamp_frame="scs_bw_frame", lp_blank_cap="scs_lp_cap")
+    for r in csv.DictReader(open(qp)):
+        k = keys.get(r["part"])
+        if k:
+            ANALOGUE[k] = (float(r["unit_usd"]), "SendCutSend instant quote %s, %s, %s (%s each; %s)%s" % (
+                r["fetched_utc"][:10], r["material"], r["envelope_shown"], r["qty_breaks_usd_each"], r["delivery"].split(" (")[0],
+                "; " + r["dfm"] if r.get("dfm") else ""))
+
+
 def part(name, where, kind, n_setups=0, holes=0, lathe=False, run_min=0.0, seal=False, extra_cam_h=0.0, deburr_h=None,
-         make_call="make", outside=None, outside_note="", buy_instead=None, note="", step="0"):
-    """one row: hours by hours.py's rules (new parts) or the add-on rule (features on existing parts)"""
+         make_call="make", outside=None, outside_note="", buy_instead=None, note="", step="0", extra_setup_h=0.0):
+    """one row: hours by hours.py's rules (new parts) or the add-on rule (features on existing parts; extra_setup_h for a
+    feature that needs a setup of its own, as the LP bore on the sine plate)"""
     if kind == "feature":
         cam = 0.015 * holes + extra_cam_h
-        setup = 0.0
+        setup = extra_setup_h
         deb = deburr_h if deburr_h is not None else (0.25 if seal else 0.0)
     else:
         cam = H.cam_h(n_setups, holes, lathe) + extra_cam_h
@@ -101,36 +120,53 @@ def main():
         bw_min = cs["mon_C180"]["time"]["with_vf4_rapids_min"]
     lw_extra = 4 * TAP_MIN + PORT_TOOL_MIN + 2 * TC_MIN       # 4 M4 taps, the purge port tool, 2 more tool changes
     bw_extra = 3 * TAP_MIN + 2 * TC_MIN
+    scs_quotes()
+    lp = cm.get("LP", {}).get("setups", {})
+    lp_top = lp.get("lid_LP_top", {}).get("totals", {}).get("total_min", 5.84)
+    lp_sine = lp.get("lid_LP_sine", {}).get("totals", {}).get("total_min", 1.05)
+    lp_geo = cm.get("LP", {}).get("geometry", {})
+    lp_tilt = lp_geo.get("off_lid_normal_deg", 27.93)
+    lp_groove = lp_geo.get("groove", {}).get("o_ring", "2-025")
+    bridge_min = BRIDGE_CUT["cm3"] / 16.0 + BRIDGE_CUT["wall_cm2"] / 40.0
     rows = [
         # --- features on parts that are made anyway -------------------------------------------------------------------
-        part("LW port in the left wall: Ø38.3 x 6.5 window seat, Ø31 bore, 4 x M4, SAE-4 purge port + Ø4 passage",
+        part("LW port in the left wall: Ø40.2 x 5.5 window seat, Ø31 bore, 4 x M4 on Ø49.5, SAE-4 purge port + Ø4 passage",
              "chamber frame, setup C at A90 (programmed, simulated, holder-checked)", "feature", holes=8, run_min=lw_min + lw_extra,
              seal=True, extra_cam_h=FEATURE_CAM_H, note="programmed time %.2f min + %.2f min of taps, port tool and tool changes" % (lw_min, lw_extra),
              step="0"),
-        part("BW port in the back wall: 58 x 27 R4 window seat 4.5 deep, 51.2 x 20.5 obround slot, 3 x M4",
+        part("BW port in the back wall: 58 x 27 R4 window seat 4.5 deep, 51.2 x 20.5 obround slot, 3 x M4 (the third at the seat's lower +x corner)",
              "chamber frame, setup C at A180 (programmed, simulated, holder-checked)", "feature", holes=3, run_min=bw_min + bw_extra,
              seal=True, extra_cam_h=2 * FEATURE_CAM_H,
              note="programmed time %.2f min + %.2f min of taps and tool changes; two non-circular features" % (bw_min, bw_extra), step="0"),
-        part("LP port in the lid: Ø37 bore normal to the lid, adapter face O-ring groove, 4 x M4 for the adapter boss",
-             "chamber lid, its existing +z setup (not programmed)", "feature", holes=6, run_min=1.0 + 1.3 + 0.4 + 4 * TAP_MIN + 2 * TC_MIN,
-             seal=True, extra_cam_h=FEATURE_CAM_H,
-             note="estimates: bore 1.0 min (as the LW bore), groove 1.3 min (scaled from the lid gland's 35 min), 4 holes", step="0"),
-        part("Optics-bridge cut-out for the LP camera (obround ~74 x 45 through 25 mm)", "optics bridge, its existing +z setup",
-             "feature", holes=0, run_min=4.7 + 1.5, extra_cam_h=FEATURE_CAM_H, deburr_h=0.1,
-             note="75 cm3 at 16 cm3/min + 60 cm2 of wall at 40 cm2/min; re-run the bridge FEA (case 6b, 128 Hz) before cutting", step="0"),
+        part("LP in the lid, flat: the adapter's face O-ring groove (%s, ID 31.2 x 2.3 x 1.32) and 4 x M4 on Ø48" % lp_groove,
+             "chamber lid, its +z setup (programmed in lp_cam.py, simulated, holder-checked)", "feature", holes=4,
+             run_min=lp_top + 4 * TAP_MIN + 2 * TC_MIN, seal=True, extra_cam_h=FEATURE_CAM_H,
+             note="programmed time %.2f min (the groove with a 2.0 mm end mill, 5.7 min) + 4 taps and 2 tool changes" % lp_top, step="0"),
+        part("LP bore Ø24 on the line of sight, the lid on a sine plate at %.2f deg: a new setup on the lid" % lp_tilt,
+             "chamber lid on a sine plate (programmed in lp_cam.py, simulated, holder-checked)", "feature", holes=0,
+             run_min=lp_sine + TC_MIN, seal=False, extra_cam_h=0.6 + FEATURE_CAM_H, deburr_h=0.25,
+             extra_setup_h=H.setup_h(1, True) + SINE_SET_H,
+             note="programmed time %.2f min (one helix, 1/2 in. end mill with 1-1/2 in. of flutes); CAM 0.6 h for the setup "
+                  "(hours.py) + 0.25 h; setup 1.25 h for a large part (hours.py) + %.1f h to set the sine plate; 0.25 h to check "
+                  "the bore against the groove" % (lp_sine, SINE_SET_H), step="7"),
+        part("Optics-bridge cut-out for the LP camera (%s through 25 mm, %.1f cm3; in no program)" % (BRIDGE_CUT["size"], BRIDGE_CUT["cm3"]),
+             "optics bridge, its existing +z setup (estimated)", "feature", holes=0, run_min=bridge_min, extra_cam_h=FEATURE_CAM_H,
+             deburr_h=0.1, note="%.1f cm3 at 16 cm3/min + %.1f cm2 of wall at 40 cm2/min = %.1f min; the bridge's modal check with the cut-out "
+                                "is mechanics.md Checks §5 (f1 128 Hz, -0.1 %%)" % (BRIDGE_CUT["cm3"], BRIDGE_CUT["wall_cm2"], bridge_min),
+             step="7"),
         part("Liner openings: Ø27 hole in the left liner; the lower back liner's left piece starts at x -90.8 (was -130.5)",
              "lift-out liners (sheet, outsourced anyway)", "feature", holes=0, run_min=0.0, deburr_h=0.0, make_call="outsource (with the liners)",
              outside=0.0, outside_note="a change to the DXF of a part already outsourced (OSH Cut / SendCutSend): about $0", step="0"),
         part("AE waveguide hole Ø2.5 through the heater block and piston head (only for the waveguide option)",
              "heater block, piston head: existing setups", "feature", holes=2, run_min=1.0, deburr_h=0.0, step="4"),
         # --- new parts ------------------------------------------------------------------------------------------------
-        part("LW window clamp ring, 6061, Ø56 x 6.35, ID 31, 4 x Ø4.5 on Ø48", "new", "part", n_setups=2, holes=4, lathe=True,
+        part("LW window clamp ring, 6061, Ø58 x 6.35 with a flat, ID 31, 4 x Ø4.5 on Ø49.5", "new", "part", n_setups=2, holes=4, lathe=True,
              run_min=8.0, make_call="outsource (laser-cut plate)", outside="scs_lw_ring",
              note="a flat ring: cut from 1/4 in. plate it needs no lathe; the plate's own face bottoms on the wall", step="0"),
-        part("LP blanking cap over the lid's Ø37 bore until the steep camera is bought, 6061 1/4 in., Ø64, 4 x Ø4.5", "new", "part",
+        part("LP blanking cap over the lid's face O-ring until the steep camera is bought, 6061 1/4 in., Ø40.8 with 4 lugs, 4 x Ø4.5 on Ø48", "new", "part",
              n_setups=1, holes=4, run_min=6.0, make_call="outsource (laser-cut plate)", outside="scs_lp_cap", step="0"),
-        part("LW blanking disc in place of the window until the camera is bought (Ø38.1 x 5, 6061)", "new", "part", n_setups=1, lathe=True,
-             run_min=5.0, make_call="buy instead", buy_instead="fit the Ø38.1 x 5 window from the start: it costs about what the blank does",
+        part("LW blanking disc in place of the window until the camera is bought (Ø40 x 4, 6061)", "new", "part", n_setups=1, lathe=True,
+             run_min=5.0, make_call="buy instead", buy_instead="fit the Ø40 x 4 window from the start: it costs about what the blank does",
              step="0"),
         part("LW purge nozzle inside the chamber", "new", "part", n_setups=2, holes=1, lathe=True, run_min=8.0,
              make_call="buy instead", buy_instead="1/8 in. 316 tube through a bored-through SAE-4 x 1/8 in. tube fitting, bent and flattened at the tip (estimate $40-70)",
@@ -139,9 +175,9 @@ def main():
              make_call="outsource (sheet clip with the liner)", outside="osh_liner", step="0"),
         part("LW camera bracket (flat 6061 plate under a ball head or tilt mount; the camera's line is set by the head)", "new", "part",
              n_setups=1, holes=6, run_min=10.0, make_call="outsource (laser-cut plate)", outside="scs_arm", step="7"),
-        part("BW window clamp frame, 6061 3/16 in., ~76 x 49 with a 53 x 22.5 opening, 3 x Ø4.5", "new", "part", n_setups=1, holes=3,
-             run_min=8.0, make_call="outsource (laser-cut plate)", outside="scs_bw_frame", step="0",
-             note="the quoted outline is a stand-in: it reaches below the frame's bottom edge at one corner and needs fitting"),
+        part("BW window clamp frame, 6061 3/16 in., 72.9 x 61.9 trimmed to the wall and the plenum's flange, 3 x Ø4.5", "new", "part",
+             n_setups=1, holes=3, run_min=8.0, make_call="outsource (laser-cut plate)", outside="scs_bw_frame", step="0",
+             note="the outline as the model trims it (frame_features.bw_clamp_outline)"),
         boss_row(),
         part("LP window retaining ring", "new", "part", n_setups=2, holes=1, lathe=True, run_min=2.0, make_call="buy instead",
              buy_instead="Thorlabs SM1 retaining ring or a laser-cut ring (should_cost.py: estimate $10)", outside="scs_cnc_ring", step="7"),

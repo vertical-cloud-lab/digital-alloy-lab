@@ -21,13 +21,18 @@ can cut at its existing A indexes. This script programs them and checks the prog
            with the ports: gouges, leftover, rapids through stock, CAMotics times. Its outputs go to /tmp, not to
            analysis/out/machining.
   holders  holder_check.main() on the same chain (holders, spindle, fixtures, travels).
-  summary  what the ports add: ops, tools, programmed time, CAMotics and holder results, hours -> cam_monitoring.json.
+  summary  what the ports add: ops, tools, programmed time, CAMotics and holder results, hours -> cam_monitoring.json
+           (lp_cam.py adds the lid's LP under "LP"; this keeps it).
+Re-run 2026-11-27 for the ports as drawn now (the LW seat Ø40.2 x 5.5, the clamp ring's holes at 60 deg on Ø49.5, the BW
+clamp frame's third screw moved): the frame's seven programs chained, 0 rapids through stock, no gouge deeper than 1 mm,
+0 holder or fixture collisions.
 
-Run (FreeCAD 1.0.2 conda AppImage extracted under /tmp, CAMotics image built from analysis/machining/camotics.Dockerfile):
+Run (FreeCAD 1.0.2: the conda AppImage FreeCAD_1.0.2-conda-Linux-x86_64-py311.AppImage, sha256 e00be00a...904f61 as the
+release's SHA256 file, extracted with --appimage-extract; CAMotics image built from analysis/machining/camotics.Dockerfile):
   P=desktop-lpbf/analysis/monitoring/fab/cam_monitoring.py
-  OMP_NUM_THREADS=1 /tmp/capmem 3 env FREECADCMD=/tmp/fab-e/freecad/squashfs-root/usr/bin/freecadcmd /tmp/venv/bin/python $P post
-  OMP_NUM_THREADS=1 /tmp/capmem 3 sg docker -c "/tmp/venv/bin/python $P sim"      (CAMOTICS_MEM=3g CAMOTICS_CPUS=1)
-  OMP_NUM_THREADS=1 /tmp/capmem 2 /tmp/venv/bin/python $P holders
+  OMP_NUM_THREADS=1 /tmp/capmem 3 env FREECADCMD=<squashfs-root>/usr/bin/freecadcmd /tmp/venv/bin/python $P post
+  /tmp/heavy 4 sg docker -c "env CAMOTICS_MEM=3g CAMOTICS_CPUS=1 /tmp/venv/bin/python $P sim"     (4-7 min, 2026-11-27)
+  /tmp/heavy 3 env OMP_NUM_THREADS=1 /tmp/venv/bin/python $P holders
   /tmp/venv/bin/python $P summary
 """
 from __future__ import annotations
@@ -258,6 +263,9 @@ def summary():
                                    for t, tv in v["tools"].items()}, travel=v["travel"])
                     for n, v in hc["setups"].items() if n in FROM_RUN2},
             stock_vs_model=hc.get("stock_vs_model"), stock_vs_camotics=hc.get("stock_vs_camotics"))
+    old = json.loads((OUT / "cam_monitoring.json").read_text()) if (OUT / "cam_monitoring.json").exists() else {}
+    if "LP" in old:                      # lp_cam.py's lid programs, kept across a re-run of this summary
+        res["LP"] = old["LP"]
     (OUT / "cam_monitoring.json").write_text(json.dumps(res, indent=1))
     print(json.dumps(res["recount"], indent=1))
     for m in new_ops:

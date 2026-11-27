@@ -1,10 +1,12 @@
 """SendCutSend instant quote, step by step, in headed Chrome through the lab's SOCKS tunnel (no account, nothing typed, nothing
 put in a cart): upload one DXF, then do the given steps in order, saving a screenshot and the page text after each.
-Steps: a visible text to click; "xy:X,Y" to click a point of the 1600 x 1200 window; "wait:N"; "shot".
+Steps: a visible text to click; "xy:X,Y" to click a point of the 1600 x 1200 window; "hover:X,Y"; "wait:N"; "shot".
 Usage: xvfb-run -a /tmp/venv/bin/python scs_quote.py OUTDIR file.dxf STEP ...
 The run of 2026-11-25 (prices in analysis/out/monitoring/fab/quotes/sendcutsend_quotes.csv) used, for 6061-T6 1/4 in.:
   "xy:1003,631" (the MM units button) "xy:1530,1162" (CONFIRM) "wait:4" "Metals" "Aluminum" "6061 T6 Aluminum"
-  '.250" (6.3 MM)' "wait:8"      and '.187" (4.7 MM)' for 3/16 in.; the price shows after the thickness."""
+  '.250" (6.3 MM)' "wait:8"      and '.187" (4.7 MM)' for 3/16 in.; the price shows after the thickness.
+The run of 2026-11-27 used the same steps (the page had not moved), then "hover:1302,634" (1/4 in.) or "hover:1302,558"
+(3/16 in.) over the thickness's warning icon to read its tooltip."""
 import pathlib
 import sys
 import time
@@ -35,6 +37,9 @@ with sync_playwright() as p:
             elif st.startswith("xy:"):
                 x, y = (float(v) for v in st[3:].split(","))
                 page.mouse.click(x, y)
+            elif st.startswith("hover:"):   # e.g. over a thickness's warning icon, to read its tooltip
+                x, y = (float(v) for v in st[6:].split(","))
+                page.mouse.move(x, y)
             elif st.startswith("css:"):
                 page.locator(st[4:]).first.click(timeout=15000)
             else:

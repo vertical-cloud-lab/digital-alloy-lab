@@ -1,5 +1,5 @@
 {
- "frame": "/tmp/fab-e/parts/process_chamber_body_model.brep",
+ "frame": "/tmp/fab-e/parts/process_chamber_body_6061_t6_through_frame_from_5_5_in_plate.brep",
  "LW": {
   "port": "LW",
   "index_deg": 90,
@@ -40,7 +40,7 @@
    "note": "concentric with the bore, flat on the wall: 0.75 mm gasket, 4.0 mm window, 0.75 mm flat ring; the clamp ring bottoms on the wall face"
   },
   "clamp_ring": {
-   "bolt_circle_d": 50.0,
+   "bolt_circle_d": 49.5,
    "od": 58.0,
    "id": 31.0,
    "screws": "4 x M4 x 0.7, tapped 8 deep (3.3 drill 10 deep)",
@@ -51,24 +51,24 @@
      0.5455,
      -0.8381
     ],
-    "web_to_hole_mm": 2.75
+    "web_to_hole_mm": 2.97
    },
    "holes_yz": [
     [
-     -6.47,
-     55.8
+     -6.6,
+     55.59
     ],
     [
-     -40.62,
-     46.65
+     -40.41,
+     46.53
     ],
     [
-     -31.47,
-     12.5
+     -31.35,
+     12.72
     ],
     [
-     2.68,
-     21.65
+     2.46,
+     21.78
     ]
    ]
   },
@@ -162,11 +162,43 @@
      39.38
     ],
     [
-     -82.41,
-     19.45
+     -85.99,
+     9.09
     ]
    ],
-   "screws": "3 x M4 x 0.7, tapped 8 deep"
+   "screws": "3 x M4 x 0.7, tapped 8 deep",
+   "web_to_trimmed_edge_mm": [
+    4.25,
+    4.25,
+    3.35
+   ],
+   "thread_wall_to_seat_mm": [
+    2.5,
+    2.5,
+    1.53
+   ],
+   "hole3": {
+    "was_xz": [
+     -82.41,
+     19.45
+    ],
+    "web_was_mm": 1.16,
+    "moved_xz": [
+     -3.57,
+     -10.36
+    ],
+    "along_slot_mm": -1.1,
+    "across_mm": -10.9,
+    "web_mm": 3.35,
+    "wall_to_seat_mm": 1.53
+   },
+   "outline_bbox_xz": [
+    -147.5,
+    -3.4,
+    -74.55,
+    58.5
+   ],
+   "note": "webs: metal between each \u00d84.5 clearance hole and the clamp frame's outline as monitoring_parts._bw trims it (BW_FRAME); walls: between each M4 thread (major \u00d84) and the seat pocket"
   },
   "liner": {
    "liner": "Lift-out wall liner, back lower left (z 16..32, x -130.5..-0.5)",
@@ -255,7 +287,7 @@
    "LW clamp-ring hole 1 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": null,
    "LW clamp-ring hole 2 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": null,
    "LW clamp-ring hole 3 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": {
-    "min_gap_mm": 9.78,
+    "min_gap_mm": 9.81,
     "to": "CYLINDER",
     "at": [
      -152.0,
@@ -264,7 +296,7 @@
     ]
    },
    "LW clamp-ring hole 4 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": {
-    "min_gap_mm": 9.47,
+    "min_gap_mm": 9.56,
     "to": "CYLINDER",
     "at": [
      -155.3,
@@ -302,12 +334,12 @@
    },
    "BW clamp-frame hole 2 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": null,
    "BW clamp-frame hole 3 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": {
-    "min_gap_mm": 7.24,
+    "min_gap_mm": 2.11,
     "to": "CYLINDER",
     "at": [
-     -71.0,
-     108.0,
-     22.0
+     -82.0,
+     107.0,
+     0.8
     ]
    }
   },
@@ -319,5 +351,5 @@
    }
   ]
  },
- "method": "cad/monitoring_spec.py puts a left-wall viewport (LW) and a back-wall light window (BW) on lines of sight to the plate\ncentre. Setup C holds the frame on the HRT210 with A along the frame's z (machining.md, setup C). Turning about A brings\nany horizontal direction up to the spindle, so a port's azimuth (its turn about z away from the wall's normal) is free.\nIts elevation (the tilt down toward the plate) is a turn about an axis across A: a 4th axis can't take it out. So this\nscript draws each port so a vertical tool at one A index cuts it, and checks that the optics still get their clear\naperture through the whole wall:\n  * LW, at A90 (the left wall up, as setup C has it): a bore normal to the wall, opened from the clear \u00d825 to the circle\n    that holds the \u00d825 cylinder on the sight line across the 16 mm wall; the window seat, flat gasket and clamp-ring\n    holes concentric with it, flat on the wall; an SAE-4 port and \u00d84 passage for the argon purge. The window then sits at\n    the angle between the sight line and the wall's normal (computed here; the optics cost is in fabrication.md).\n  * BW, at A180 (the back wall up): the sight line is ~49 deg off the back wall's normal, so a round normal bore would\n    have to be ~49 mm across. It is a slot normal to the wall, shaped to the projection of the clear \u00d820 cylinder\n    across the wall (an obround), with a rectangular window seat over it, flat on the wall, and four clamp holes.\n    The A131.6 alternative (the rotary takes out the 49 deg azimuth) is checked in cam_monitoring.py's notes, not cut.\nIt also checks each new cut against the frame's existing holes (wall left between them), the outer R8 corners, the floor\nscrews under the back wall, and the liners (the hole or notch each liner needs)."
+ "method": "cad/monitoring_spec.py puts a left-wall viewport (LW) and a back-wall light window (BW) on lines of sight to the plate\ncentre. Setup C holds the frame on the HRT210 with A along the frame's z (machining.md, setup C). Turning about A brings\nany horizontal direction up to the spindle, so a port's azimuth (its turn about z away from the wall's normal) is free.\nIts elevation (the tilt down toward the plate) is a turn about an axis across A: a 4th axis can't take it out. So this\nscript draws each port so a vertical tool at one A index cuts it, and checks that the optics still get their clear\naperture through the whole wall:\n  * LW, at A90 (the left wall up, as setup C has it): a bore normal to the wall, opened from the clear \u00d825 to the circle\n    that holds the \u00d825 cylinder on the sight line across the 16 mm wall; the window seat, flat gasket and clamp-ring\n    holes concentric with it, flat on the wall; an SAE-4 port and \u00d84 passage for the argon purge. The window then sits at\n    the angle between the sight line and the wall's normal (computed here; the optics cost is in fabrication.md).\n  * BW, at A180 (the back wall up): the sight line is ~49 deg off the back wall's normal, so a round normal bore would\n    have to be ~49 mm across. It is a slot normal to the wall, shaped to the projection of the clear \u00d820 cylinder\n    across the wall (an obround), with a rectangular window seat over it, flat on the wall, and three clamp holes (the third\n    placed by bw_hole3() clear of the clamp frame's trim at the inlet plenum's flange).\n    The A131.6 alternative (the rotary takes out the 49 deg azimuth) is checked in cam_monitoring.py's notes, not cut.\nIt also checks each new cut against the frame's existing holes (wall left between them), the outer R8 corners, the floor\nscrews under the back wall, and the liners (the hole or notch each liner needs)."
 }
