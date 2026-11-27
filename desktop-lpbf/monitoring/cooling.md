@@ -40,7 +40,7 @@ part's name says "envelope".
    galvo and the coaxial camera's board are over, and the Chronos, in its hood, is at 38.5 against 40. **So the cameras need the
    laser's answer (heat.md §2): air from outside the Shuttle, or chilled water.** Room air through a ventilated dock keeps everything
    in rating in the typical and busy cases (guard 28.7–29.3 °C; with the CFD's hot spots the warmest board, the LP camera's, is
-   ~42 °C against 50, §4.2), once the base plate's open window under the chamber is covered (item 10). A chilled-water fan coil in
+   ~41 °C against 50, §4.2), once the base plate's open window under the chamber is covered (item 10). A chilled-water fan coil in
    the closed guard (not drawn) does nearly as well (33.6–34.5 °C), with the galvo close to its limit. Whichever is chosen for the
    laser should be sized for the guard too.
 5. **The worst case (500 W continuous) still has one over, even with room air:** the coaxial camera's board, at 51.8 against 50 °C. The
@@ -58,16 +58,17 @@ part's name says "envelope".
    traps, which are estimates (§8).
 9. **The model:** 330 parts, 55 of them monitoring (was 318 and 43), ~4.2 kg more on the tray (the two traps are 2.4 kg of it). The
    height is unchanged at 579.6 mm and so is the x envelope. Interference: see §4.1.
-10. **A coarse CFD of the guard's air (§4.2): the drawn vents work, but the devices on and under the bridge sit 1–6 K above the
-    well-mixed air, the hood's air is the Chronos's own heat above the supply, and the guard's floor is open.** OpenFOAM, steady,
-    12 mm cells, the typical load: the exhaust leaves 5.0 K over the supply, against cooling.py's 5.4 K. The inlet's air goes to the
+10. **A coarse CFD of the guard's air (§4.2): the drawn vents work, but the devices on and under the bridge sit up to 4–6 K above
+    the well-mixed air, the hood's air carries the Chronos's own heat, and the guard's floor is open.** OpenFOAM, steady, 12 mm
+    cells: the exhaust leaves 5.0 K over the supply in the typical case, against cooling.py's 5.4 K. The inlet's air goes to the
     floor, forward along the left wall, along the front and up the right side to the exhaust: no short circuit along the back panel,
     no dead zone, and the air above the bridge is older (5.5 s against 3.3 s below) but no warmer on average. Round the devices it is
     warmer: the LP camera 11.7 K over the supply, its Pi 10.2, the coaxial camera 8.4, the photodiodes 5.9–6.8, PB2 6.7, the galvo
-    6.2. In the typical case only the galvo is over (36.4 against 35 °C); in the busy case the CFD adds the LP camera's board (54.1 against 50) and the Chronos's hood air to §3's five. **The Chronos's 20 W warms its hood's
-    20 m³/h by 3.1 K,** so in the busy case its air averages 41.2 °C (39.7 in its back half) against 40, not §3's 38.5. **The base plate's Z-stage window and
-    slot open the guard's floor to the Shuttle:** with cooling.py's fans and resistances they would take 133 of 160 m³/h, and the
-    inlet 6. A cover with a brush strip round the Z stage is the cheapest fix, and dock air needs it.
+    6.2 (1–3 K less on a 9 mm grid, so ±3 K). In the typical case only the galvo is over (36.4 against 35 °C). In the busy case the
+    CFD adds the LP camera's board (53.6 against 50) and the Chronos's hood air to §3's five. **The Chronos's 20 W warms its hood's
+    20.4 m³/h by 3.1 K,** so in the busy case its air averages 41.2 °C (39.7 in its back half) against 40, not §3's 38.5. **The base
+    plate's Z-stage window and slot open the guard's floor to the Shuttle:** with cooling.py's fans and resistances they would take
+    133 of 160 m³/h, and the inlet 6. A cover with a brush strip round the Z stage is the cheapest fix, and dock air needs it.
 
 ## 1. Ratings
 
@@ -289,36 +290,44 @@ reads it back into [`guard_cfd.json`](../analysis/out/monitoring/cooling/guard_c
   in it. The chamber's outside (body, floor plate, lid, door, build module) is held at 60 °C, as in cooling.py. Half of the legs'
   conduction, 52 W (37 W in the busy case), goes in as a flux on the base plate's top, as cooling.py counts it. No radiation.
 - **Panels.** The CFD's wall functions give the inside film. Outside, a fixed coefficient to the Shuttle's air: 2.6 W/m²K on the
-  bare sides, 3.3 on the top, 6.5 on the window and 1.9 under the base plate (cooling.py's convection and radiation).
+  bare sides, 3.3 on the top and 6.5 on the window (cooling.py's convection and radiation). The base plate's top only takes the
+  legs' flux.
 - **Solver.** OpenFOAM v2406 `buoyantSimpleFoam`, steady, buoyant, k-ε with wall functions, air as a perfect gas
   ([`run_guard_cfd.sh`](../analysis/monitoring/cooling/run_guard_cfd.sh)). The steady solution keeps oscillating a little, as buoyant
   plumes do, so T and U are averaged over the last 600–800 iterations and the heat balance over the last 500.
 
 **The air round each device.** "Air round it" is the mean of the air 12–36 mm from the device's cells, outside its own first layer
 of cells. For the boards, PB2's box and the Pi's SoC, the checked value is cooling.py's, moved by the CFD's local air minus the
-well-mixed air. Supply: 30.2 °C typical, 38.0 °C busy (the Shuttle's air, §2).
+well-mixed air, in proportion to the air's share of the part's coupling. The coaxial camera's board follows the bridge (1 W/K
+through its post), so it moves with the air round the bridge, 5.6 K over the supply. The CFD's own surface temperatures are not
+used: without radiation and with wall functions on 12 mm cells they run 20–40 K too hot. Supply: 30.2 °C typical, 38.0 °C busy (the
+Shuttle's air, §2).
 
 | Device | Rating (°C), checked on | Air over the supply (K), typical: well-mixed / CFD; busy: well-mixed / CFD | Checked (°C), typical: well-mixed / CFD | Checked (°C), busy: well-mixed / CFD |
 |---|---|---:|---:|---:|
 | Chronos 2.1-HD, in its hood | 40, air | 0.5 / 3.1; 0.5 / 3.2 | 30.7 / 33.3 | 38.5 / **41.2** |
 | coaxial cage | – | 5.4 / 7.5; 4.7 / 7.4 | – | – |
-| coaxial camera (IMX296) | 50, board | 5.4 / 8.4; 4.7 / 7.7 | 44.5 / 47.5 | **51.5** / **54.5** |
+| coaxial camera (IMX296) | 50, board | 5.4 / 8.4; 4.7 / 7.7 | 44.5 / 45.0 | **51.5** / **52.5** |
 | photodiode PD-A (PDA36A2) | 40, air | 5.4 / 6.8; 4.7 / 6.9 | 35.6 / 37.0 | **42.7** / **44.9** |
 | photodiode PD-B (PDA36A2) | 40, air | 5.4 / 5.9; 4.7 / 5.9 | 35.6 / 36.1 | **42.7** / **43.9** |
 | PB2 (Pi 5) | 70, PB2's air | 5.4 / 6.7; 4.7 / 6.1 | 39.9 / 41.2 | 46.9 / 48.3 |
-| LP camera (IMX296) | 50, board | 5.4 / 11.7; 4.7 / 11.0 | 41.5 / 47.8 | 47.8 / **54.1** |
+| LP camera (IMX296) | 50, board | 5.4 / 11.7; 4.7 / 11.0 | 41.5 / 47.2 | 47.8 / **53.6** |
 | LP camera's Pi 5 | 80, SoC | 5.4 / 10.2; 4.7 / 9.1 | 53.1 / 57.9 | 60.2 / 64.6 |
 | galvo (basiCube 20) | 35, air | 5.4 / 6.2; 4.7 / 6.2 | **35.6** / **36.4** | **42.7** / **44.2** |
 | BW 850 nm LED | 40, air | 5.4 / 7.1; 4.7 / 6.0 | 35.6 / 37.3 | **42.7** / **44.0** |
 
-- **The guard is close to well mixed on average, not round the devices.** The exhaust leaves 5.0 K over the supply in the typical case and 4.4 K in the busy one, against cooling.py's 5.4 and
-  4.7 K, and its heat closes: 195 W in (102.6 W from the devices, 40 W from the 60 °C chamber, 52 W from the legs), 9 W out
-  through the panels, 186 W out with the exhaust (−0.2 %, typical). The air above the bridge is not warmer on average (4.9 K over the
-  supply, below it 5.3 K). But the devices on and under the bridge sit 1–6 K above the mean: their own heat, the bridge's 26 W and
-  the 60 °C lid stay near them.
-- **Over its rating in the typical case: only the galvo,** at 36.4 against 35 °C (well-mixed 35.6). In the busy case on the Shuttle's air the CFD has §3's five over, and a little higher: the coaxial camera's board 54.5 against 50, PD-A 44.9 and PD-B 43.9 against 40, the LED 44.0, the galvo 44.2. It adds two: **the LP camera's board, 54.1 against 50, and the Chronos's hood air, 41.2 against 40.**
+- **The guard is close to well mixed on average, not round the devices.** The exhaust leaves 5.0 K over the supply in the typical
+  case and 4.4 K in the busy one, against cooling.py's 5.4 and 4.7 K, and its heat closes: 195 W in (102.6 W from the devices, 40 W
+  from the 60 °C chamber, 52 W from the legs), 9 W out through the panels, 186 W out with the exhaust (−0.2 %, typical). The air
+  above the bridge is not warmer on average (4.9 K over the supply, below it 5.3 K). But the devices on and under the bridge sit up
+  to 6 K above the well-mixed air on this grid, 4 K on the 9 mm one: their own heat, the bridge's 26 W and the 60 °C lid stay near
+  them.
+- **Over its rating in the typical case: only the galvo,** at 36.4 against 35 °C (well-mixed 35.6). In the busy case on the
+  Shuttle's air the CFD has §3's five over, and a little higher: the coaxial camera's board 52.5 against 50, PD-A 44.9 and PD-B
+  43.9 against 40, the LED 44.0, the galvo 44.2. It adds two: **the LP camera's board, 53.6 against 50, and the Chronos's hood air,
+  41.2 against 40.**
 - **The hot spots** are the pocket under the bridge over the chamber's lid, where the LP camera hangs (11.7 K over the supply), and the
-  corner behind the fold mirror, where the LP camera's Pi sits (10.2 K). Both are in rating in the typical case, with 2 K and 22 K to
+  corner behind the fold mirror, where the LP camera's Pi sits (10.2 K). Both are in rating in the typical case, with 3 K and 22 K to
   spare.
 
 **The flow path.** [Figure](../analysis/out/monitoring/cooling/guard_cfd_flow.png): the local mean age of the air (OpenFOAM's `age`:
@@ -334,46 +343,57 @@ seconds since it came in) and the velocity in four sections.
 - **No dead zone.** Apart from a 0.03 L pocket inside the build module's flange, no air is older than 3 V/Q. The stalest air, 1.5–2
   V/Q, is above the bridge at the front left, round the coaxial cage, PD-A and the coaxial camera, and behind the chamber.
 - **The inlet's direction doesn't matter.** Turned over, so that its air leaves upward, the trap changes no device's air by more than
-  0.6 K and leaves the ages as they were (case `flip12`). Buoyancy and the exhaust's place set the path, not the trap's 1.6 m/s jets.
+  0.6 K and leaves the ages as they were (case `flip12`). Buoyancy and the exhaust's place set the path, not the trap's ~2 m/s jets.
 
 ![Air temperature over the supply in four sections of the guard, typical load](../analysis/out/monitoring/cooling/guard_cfd_T.png)
 
 **The hood.** The duct's air keeps the back half of the Chronos within 1.7 K of the supply. But the camera's own 20 W goes into the
-hood's 20.4 m³/h, which warms it by 3.1 K on average and 5.3 K at the lens end. **So the hood does not hold the Chronos in supply air,
-as §3 assumes:** in the busy case the hood's air averages 41.2 °C (39.7 in its back half), against §3's 38.5 °C and the Chronos's 40 °C rating. Whether
-that is over depends on where the camera's own fan draws from, which Kron doesn't publish. Two things help. **The hood's flow is
+hood's 20.4 m³/h, which warms it by 3.1 K on average and 5.3 K at the lens end. **So the hood does not hold the Chronos in supply
+air, as §3 assumes:** in the busy case the hood's air averages 41.2 °C (39.7 in its back half), against §3's 38.5 °C and the
+Chronos's 40 °C rating. Whether that is over depends on where the camera's own fan draws from, which Kron doesn't publish. Two
+things help. **The hood's flow is
 probably larger than 20 m³/h:** the exhaust holds the guard ~40 Pa under the Shuttle, and the hood's path runs in parallel with the
-inlet, so with cooling.py's resistances it carries ~37 m³/h (`network()`, `guard_cfd.json` `meta.network_sealed`), which halves the
-rise. And the dock's 22 °C air, §2's answer for the busy case, leaves 15 K of room.
+inlet, so with cooling.py's resistances it carries ~37 m³/h (`network()`, `guard_cfd.json` `network.sealed`), which halves the
+rise. And the dock's 22 °C air, §2's answer for the busy case, puts the hood's air at ~25 °C.
 
 **The guard's floor is open.** The guard stands on the process base plate, and the plate has the Z stage's window, the slot to its
 front edge for the module's rod end, and the folded Z servo's window under the chamber (`lpbf_low.build`). They open into the 37 mm
-gap between the plate and the tray, which is open to the Shuttle all round: 0.041 m² of free area on this grid, about the inlet's
-face, without its 37 Pa of filter and trap. With cooling.py's resistances and fan curves (`network()`), **the floor then takes 133
-of 160 m³/h, the inlet trap 6 and the hood 21,** and the guard sits only 1 Pa under the Shuttle. The CFD with the floor open (case
-`floor12`) runs cooler on average (the exhaust 3.9 K over the supply, with more flow), but the air above the bridge at the back left
-goes stale: 3.1 L older than 3 V/Q, 6.8 K over the supply, round the LP camera's Pi and the collimator. **Worse, a dock duct on the
-inlet would then feed only a sixth of the guard's air; the rest would be the Shuttle's, unfiltered.** The window and slot need a
-cover: a sheet-metal plate on the base plate's underside round the Z stage, with a brush strip where the arm and the module's rod end
-pass. That is the cheapest fix the CFD points to, and it is needed before §2's dock air means anything.
+gap between the plate and the tray, which is open to the Shuttle all round: 0.041 m² of free area on this grid, three quarters of
+the inlet's face, without its 37 Pa of filter and trap. With cooling.py's resistances and fan curves (`network()`,
+`guard_cfd.json` `network.floor_open`), **the floor then takes 133 of 160 m³/h, the inlet trap 6 and the hood 21,** and the guard
+sits only 1 Pa under the Shuttle. The CFD with the
+floor open (case `floor12`) runs cooler on average (the exhaust 3.9 K over the supply, with more flow), but the air above the bridge
+at the back left goes stale: 3.1 L older than 3 V/Q, 6.8 K over the supply, round the collimator, the LP camera's Pi and PB2.
+**Worse, a dock duct on the inlet would then feed only a sixth of the guard's air; the rest would be the Shuttle's, unfiltered.**
+The window and slot need a cover: a sheet-metal plate on the base plate's underside round the Z stage, with a brush strip where the
+arm and the module's rod end pass. That is the cheapest fix the CFD points to, and it is needed before §2's dock air means anything.
 
-**Fixes for the hot spots.** In the typical case the galvo is the only device over, by 1.4 K, and it is §2's galvo problem (the
-laser's decision). In the busy case the CFD adds the LP camera's board and the Chronos's hood air to §3's list. No cheap change to
-the flow path fixes that: turning the inlet trap over does nothing, and the hot spots are where the bridge, the lid and the devices'
-own heat meet. What fixes them is the supply: with the dock's 22 °C air the warmest checked value, the LP camera's board, would be
-~40 °C against 50. The cover over the base plate's window is what makes that supply reach the guard.
+**Fixes for the hot spots.** In the typical case the galvo is the only device over, by 0.1–1.4 K (9 and 12 mm grids), and it is
+§2's galvo problem (the laser's decision). In the busy case the CFD adds the LP camera's board and the Chronos's hood air to §3's
+list. No cheap change to the flow path fixes that: turning the inlet trap over does nothing, and the hot spots are where the bridge,
+the lid and the devices' own heat meet. What fixes them is the supply: with the dock's 22 °C air, cooling.py's dock values moved by
+the CFD's local excess put the warmest board, the LP camera's, at ~41 °C against 50, the galvo at ~30 °C and the photodiodes at
+~31 °C. The cover over the base plate's window is what makes that supply reach the guard.
 
 **Mesh and convergence.**
 
 | Case | Cells | Exhaust over the supply (K) | Air above / below the bridge (K) | Coaxial camera / LP camera / LP Pi / galvo air (K over the supply) | Heat balance |
 |---|---:|---:|---:|---:|---:|
-MESH_TABLE
+| typical, 18 mm (`typ18`) | 45,912 | 4.9 | 3.0 / 4.3 | 4.6 / 5.5 / 4.3 / 3.5 | +1.3 % |
+| typical, 12 mm (`typ12a`) | 123,756 | 5.0 | 4.9 / 5.3 | 8.4 / 11.7 / 10.2 / 6.2 | −0.2 % |
+| typical, 9 mm (`typ9`) | 251,605 | 5.0 | 4.1 / 4.9 | 6.0 / 9.0 / 7.9 / 4.9 | −0.1 % |
 
 - The exhaust's temperature, which the heat balance fixes, doesn't change with the grid. The air round the devices does: the 18 mm
   grid closes the gaps round the bridge to 2–4 cells, sends more of the air straight to the exhaust (4.4 % younger than V/(4Q),
-  against 0.1 %) and puts the devices above the bridge 2–6 K cooler. MESH_NOTE
+  against 0.1 %) and puts the devices above the bridge 2–6 K cooler. The 9 mm grid keeps the flow path, the ages (5.2 s above the
+  bridge, 2.9 s below), the exhaust and the heat balance, and puts the hot spots 1–3 K under the 12 mm values: the LP camera 9.0 K
+  over the supply, its Pi 7.9, the coaxial camera 6.0, the galvo 4.9. The air round the devices is not grid-converged: read it as
+  ±3 K, with the 12 mm grid, which all the other cases use, on the warm side. The conclusions hold on both grids: the galvo is over
+  in the typical case (35.1 °C on 9 mm), the LP camera's board is over in the busy one (~51 °C on 9 mm), and the hood's air is 3.0 K
+  over the supply.
 - Every case is steady RANS that settles into a small oscillation, not a fixed point: the exhaust's temperature wanders by 0.07 K and
-  the mean by 0.04 K over the last 500 iterations of the typical case, and the residuals stop at 10⁻³–10⁻⁴. The fields are averaged.
+  the mean by 0.04 K over the last 500 iterations of the typical case, and the residuals stop at 3 × 10⁻³ for p_rgh and 5 × 10⁻⁴ or
+  less for the rest. The fields are averaged.
 
 ## 5. The light traps: OD at 1070 nm
 
@@ -485,10 +505,12 @@ From [`monitoring-bom.csv`](../monitoring-bom.csv) (rebuilt by `build_bom.py`), 
 
 - **The guard's air is a coarse CFD, not a measurement (§4.2).** §2 and §3 still use one well-mixed volume; §4.2 gives the local
   excess. The CFD is steady k-ε RANS on 12 mm cells with the parts as blocked cells, no radiation, the flows fixed at cooling.py's
-  operating point, the chamber held at 60 °C and the legs' heat spread over the base plate. MESH_LIMIT The worst load (500 W) was
-  not run; the coaxial camera's 3 K of local excess would take its board from §3's 51.8 to ~55 °C with dock air. Seams are not
-  modelled; with the base plate's window covered they are the guard's next leaks. Put thermocouples at the LP camera, the coaxial
-  camera and in the Chronos's hood in the built guard, and read the Chronos's own sensor.
+  operating point, the chamber held at 60 °C and the legs' heat spread over the base plate. The air round the devices moves by
+  2–6 K between the 18 and 12 mm grids and by 1–3 K between 12 and 9 mm, so read it as ±3 K; a finer or transient run would settle
+  it. The worst load (500 W) was not run; the CFD's local excess would add ~0.5 K to the coaxial camera's board (§3's 51.8 °C with
+  dock air) and ~5 K to the LP camera's. Seams are not modelled; with the base plate's window covered they are the guard's next
+  leaks. The hood's flow is cooling.py's 20.4 m³/h, though the network gives ~37 (§4.2). Put thermocouples at the LP camera, the
+  coaxial camera and in the Chronos's hood in the built guard, and read the Chronos's own sensor.
 - **The chamber's heat is a bound, not a balance.** Its outside is held at 60 °C. A typical build's ~300 W into the chamber is more than
   that releases; where the rest goes (gas loop, legs, a hotter wall) needs the chamber's own model.
 - **Most dissipations are estimates:** the galvo's 30 W, the servos, the Chronos's 20 W (Kron publishes only 40 W input), the PDA36A2's

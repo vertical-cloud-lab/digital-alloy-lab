@@ -3,8 +3,8 @@ analysis/out/monitoring/cooling/guard_cfd.json, guard_cfd.md, guard_cfd_T.png an
 
     /tmp/venv/bin/python desktop-lpbf/analysis/monitoring/cooling/guard_cfd.py post /tmp/guard-cfd/typ12 /tmp/guard-cfd/busy12 ...
 
-The first case named is the one the figures show. For each case: the air round each device (fluid cells within 3 cells, ~36 mm, of
-the device's cells: mean and highest), the hood's air, the mean air above and below the optics bridge, the local mean age of the
+The first case named is the one the figures show. For each case: the air round each device (fluid cells 2-3 cells, ~12-36 mm, from
+the device's cells: mean and 95th percentile), the hood's air, the mean air above and below the optics bridge, the local mean age of the
 air (OpenFOAM's age function object: seconds since the air came in), the heat balance (wallHeatFlux per patch, the exhaust's
 enthalpy) and the convergence (the last 500 iterations of the volume-mean and exhaust temperatures, the final residuals).
 """
@@ -221,10 +221,17 @@ def compare_wellmixed(r, cj):
         else:
             wm_air = Tg
             shift = air - Tg
-            if key == "camCoax":
-                wm_checked = rows["Coaxial camera (IMX296 board on the cage)"]["case_c"]
-            elif key == "camLP":
-                wm_checked = rows["LP camera (IMX296 board in a housing)"]["case_c"]
+            # boards bolted to something: cooling.py's device_T is linear, so only the air's share of the board's coupling moves
+            # with the air round it; the coaxial camera's mount is the bridge (1 W/K), which moves with the air round the bridge
+            bridge_shift = Ts + r["devices"]["bridge"]["mean_rise_k"] - Tg if "bridge" in r["devices"] else shift
+            if key in ("camCoax", "camLP"):
+                nm = "Coaxial camera (IMX296 board on the cage)" if key == "camCoax" else "LP camera (IMX296 board in a housing)"
+                wm_checked = rows[nm]["case_c"]
+                t = rows[nm]["terms"]
+                G = t["G_air"] + t["G_rad"] + t["G_mount"]
+                shift = (t["G_air"] * shift + (t["G_mount"] * bridge_shift if key == "camCoax" else 0.0)) / G
+            elif key == "bridge":
+                wm_checked = wm["bridge_c"]
             elif key == "aePre":
                 wm_checked = rows["AE preamp (PreAmp One)"]["case_c"]
             elif key == "pb2":
@@ -316,7 +323,7 @@ def figures(r, tag="typ"):
             fig.suptitle(f"Guard air, flow path ({r['meta']['variant']}): age of the air (yellow = fresh, dark = stale; 1 = V/Q = "
                          f"{tau:.1f} s) and the in-plane velocity (arrows); grey = parts", fontsize=12)
             fn = OUT / "guard_cfd_flow.png"
-        fig.savefig(fn, dpi=110)
+        fig.savefig(fn, dpi=95)
         plt.close(fig)
 
 
@@ -389,8 +396,10 @@ def main(cases):
         res["cases"][nm] = {k: v for k, v in r.items() if k != "_fields"}
         print(nm, json.dumps(res["cases"][nm]["heat"]), json.dumps(res["cases"][nm]["zones"]))
     figures(first)
+    res["network"] = dict(sealed=GC.network(0.0), floor_open=next((v["meta"].get("network") for v in res["cases"].values() if v["meta"].get("network")), None),
+                          note="guard_cfd.network(): the flows with cooling.py's resistances and fan curves, the hood path in parallel with the inlet")
     res["notes"] = ("Steady RANS (k-epsilon) of the guard's air on a Cartesian grid with the parts voxelised; see guard_cfd.py's docstring "
-                    "for every assumption. 'Air round it' = fluid cells within 3 cells of the device's own cells.")
+                    "for every assumption. 'Air round it' = fluid cells 2-3 cells (12-36 mm on the 12 mm grid) from the device's own cells.")
     json.dump(res, open(OUT / "guard_cfd.json", "w"), indent=1, default=float)
     write_md(res)
     print((OUT / "guard_cfd.md").read_text())

@@ -2,25 +2,26 @@
 
 ## Summary: air round each device, K over the supply (mean of the cells 2-3 cells from it)
 
-| Device | typ12a | busy12b | typ18 | flip12 | floor12 | typ12 |
+| Device | typ12a | busy12b | typ9 | typ18 | flip12 | floor12 |
 |---|---:|---:|---:|---:|---:|---:|
-| Chronos 2.1-HD, in its hood | 3.09 (back 1.68, lens end 5.28) | 3.16 (back 1.71, lens end 5.44) | 2.99 (back 1.75, lens end 4.89) | 3.08 (back 1.68, lens end 5.28) | 2.99 (back 1.64, lens end 5.05) | 3.07 (back 1.68, lens end 5.22) |
-| coaxial cage | 7.46 | 7.37 | 4.49 | 7.4 | 6.94 | 7.43 |
-| coaxial camera (IMX296) | 8.42 | 7.72 | 4.61 | 8.17 | 7.01 | 7.89 |
-| photodiode PD-A (PDA36A2) | 6.82 | 6.92 | 5.59 | 6.94 | 7.39 | 6.78 |
-| photodiode PD-B (PDA36A2) | 5.88 | 5.94 | 7.3 | 6.02 | 6.19 | 5.55 |
-| PB2 (Pi 5) | 6.72 | 6.12 | 4.41 | 6.25 | 8.02 | 6.8 |
-| LP camera (IMX296) | 11.66 | 11.04 | 5.52 | 11.27 | 9.64 | 11.14 |
-| LP camera's Pi 5 | 10.21 | 9.08 | 4.35 | 9.7 | 10.3 | 10.23 |
-| galvo (basiCube 20) | 6.2 | 6.23 | 3.48 | 6.23 | 5.34 | 6.35 |
-| BW 850 nm LED | 7.08 | 6.05 | 5.31 | 6.6 | 4.33 | 7.44 |
-| AE preamp | 2.72 | 2.15 | 2.93 | 2.61 | 8.32 | 2.75 |
-| layer camera (Pi HQ) | 5.37 | 5.14 | 4.68 | 5.4 | 3.46 | 5.28 |
-| air above the bridge | 4.86 | 4.71 | 3.0 | 4.78 | 4.38 | 4.88 |
-| air below the bridge | 5.31 | 4.53 | 4.35 | 5.28 | 3.38 | 5.3 |
-| all the air | 5.18 | 4.58 | 3.97 | 5.14 | 3.66 | 5.18 |
-| exhaust (flow-weighted) | 5.00 | 4.38 | 4.86 | 4.97 | 3.90 | 4.87 |
-| mean age above / below the bridge (s) | 5.5 / 3.3 | 5.2 / 3.3 | 4.1 / 3.2 | 5.3 / 3.3 | 5.3 / 2.1 | 5.4 / 3.3 |
+| Chronos 2.1-HD, in its hood | 3.09 (back 1.68, lens end 5.28) | 3.16 (back 1.71, lens end 5.44) | 2.96 (back 1.73, lens end 5.25) | 2.99 (back 1.75, lens end 4.89) | 3.08 (back 1.68, lens end 5.28) | 2.99 (back 1.64, lens end 5.05) |
+| coaxial cage | 7.46 | 7.37 | 6.03 | 4.49 | 7.4 | 6.94 |
+| coaxial camera (IMX296) | 8.42 | 7.72 | 6.03 | 4.61 | 8.17 | 7.01 |
+| photodiode PD-A (PDA36A2) | 6.82 | 6.92 | 5.72 | 5.59 | 6.94 | 7.39 |
+| photodiode PD-B (PDA36A2) | 5.88 | 5.94 | 6.07 | 7.3 | 6.02 | 6.19 |
+| PB2 (Pi 5) | 6.72 | 6.12 | 4.66 | 4.41 | 6.25 | 8.02 |
+| LP camera (IMX296) | 11.66 | 11.04 | 9.02 | 5.52 | 11.27 | 9.64 |
+| LP camera's Pi 5 | 10.21 | 9.08 | 7.87 | 4.35 | 9.7 | 10.3 |
+| galvo (basiCube 20) | 6.2 | 6.23 | 4.89 | 3.48 | 6.23 | 5.34 |
+| BW 850 nm LED | 7.08 | 6.05 | 7.3 | 5.31 | 6.6 | 4.33 |
+| AE preamp | 2.72 | 2.15 | 2.32 | 2.93 | 2.61 | 8.32 |
+| layer camera (Pi HQ) | 5.37 | 5.14 | 5.91 | 4.68 | 5.4 | 3.46 |
+| optics bridge (the air round it) | 5.62 | 5.47 | 5.28 | 4.34 | 5.65 | 4.9 |
+| air above the bridge | 4.86 | 4.71 | 4.1 | 3.0 | 4.78 | 4.38 |
+| air below the bridge | 5.31 | 4.53 | 4.88 | 4.35 | 5.28 | 3.38 |
+| all the air | 5.18 | 4.58 | 4.65 | 3.97 | 5.14 | 3.66 |
+| exhaust (flow-weighted) | 5.00 | 4.38 | 5.02 | 4.86 | 4.97 | 3.90 |
+| mean age above / below the bridge (s) | 5.5 / 3.3 | 5.2 / 3.3 | 5.2 / 2.9 | 4.1 / 3.2 | 5.3 / 3.3 | 5.3 / 2.1 |
 
 ## typ12a: as drawn, typical load, supply 30.2 °C, 12 mm cells (123756 cells)
 
@@ -32,16 +33,17 @@ Well-mixed (cooling.py): guard air 35.6 °C, 5.4 K over the supply. CFD exhaust 
 |---|---|---:|---:|---:|---:|---:|---:|---:|
 | Chronos 2.1-HD, in its hood | air | 40 | 33.3 / 39.7 | 3.1 | 30.7 | 30.7 | 33.3 | 6.7 |
 | coaxial cage | air | - | 37.7 / 44.0 | 7.5 | 35.6 | 35.6 | 37.7 | - |
-| coaxial camera (IMX296) | board | 50 | 38.6 / 40.7 | 8.4 | 35.6 | 44.5 | 47.5 | 2.5 |
+| coaxial camera (IMX296) | board | 50 | 38.6 / 40.7 | 8.4 | 35.6 | 44.5 | 45.0 | 5.0 |
 | photodiode PD-A (PDA36A2) | air | 40 | 37.0 / 41.8 | 6.8 | 35.6 | 35.6 | 37.0 | 3.0 |
 | photodiode PD-B (PDA36A2) | air | 40 | 36.1 / 39.7 | 5.9 | 35.6 | 35.6 | 36.1 | 3.9 |
 | PB2 (Pi 5) | box air | 70 | 36.9 / 44.3 | 6.7 | 35.6 | 39.9 | 41.2 | 28.8 |
-| LP camera (IMX296) | board | 50 | 41.9 / 48.1 | 11.7 | 35.6 | 41.5 | 47.8 | 2.2 |
+| LP camera (IMX296) | board | 50 | 41.9 / 48.1 | 11.7 | 35.6 | 41.5 | 47.2 | 2.8 |
 | LP camera's Pi 5 | SoC | 80 | 40.4 / 47.6 | 10.2 | 35.6 | 53.1 | 57.9 | 22.1 |
 | galvo (basiCube 20) | air | 35 | 36.4 / 43.4 | 6.2 | 35.6 | 35.6 | 36.4 | -1.4 |
 | BW 850 nm LED | air | 40 | 37.3 / 39.1 | 7.1 | 35.6 | 35.6 | 37.3 | 2.7 |
 | AE preamp | case | 65 | 32.9 / 35.4 | 2.7 | 35.6 | 36.7 | 34.0 | 31.0 |
 | layer camera (Pi HQ) | air | 50 | 35.6 / 37.5 | 5.4 | 35.6 | 35.6 | 35.6 | 14.4 |
+| optics bridge (the air round it) | air | - | 35.8 / 40.4 | 5.6 | 35.6 | 44.7 | 44.9 | - |
 
 Age of the air: V/Q 4.42 s; air-change effectiveness 0.566 (0.5 = fully mixed); mean age above the bridge 5.5 s, below 3.3 s; 0 % of the exhaust flow is younger than V/(4Q); 32 % of it leaves above the bridge. Air older than 3 V/Q: 0.0 % of the volume.
 
@@ -59,22 +61,47 @@ Well-mixed (cooling.py): guard air 42.7 °C, 4.7 K over the supply. CFD exhaust 
 |---|---|---:|---:|---:|---:|---:|---:|---:|
 | Chronos 2.1-HD, in its hood | air | 40 | 41.2 / 47.7 | 3.2 | 38.5 | 38.5 | 41.2 | -1.2 |
 | coaxial cage | air | - | 45.4 / 50.6 | 7.4 | 42.7 | 42.7 | 45.4 | - |
-| coaxial camera (IMX296) | board | 50 | 45.7 / 48.6 | 7.7 | 42.7 | 51.5 | 54.5 | -4.5 |
+| coaxial camera (IMX296) | board | 50 | 45.7 / 48.6 | 7.7 | 42.7 | 51.5 | 52.5 | -2.5 |
 | photodiode PD-A (PDA36A2) | air | 40 | 44.9 / 50.6 | 6.9 | 42.7 | 42.7 | 44.9 | -4.9 |
 | photodiode PD-B (PDA36A2) | air | 40 | 43.9 / 48.0 | 5.9 | 42.7 | 42.7 | 43.9 | -3.9 |
 | PB2 (Pi 5) | box air | 70 | 44.1 / 51.2 | 6.1 | 42.7 | 46.9 | 48.3 | 21.7 |
-| LP camera (IMX296) | board | 50 | 49.0 / 58.2 | 11.0 | 42.7 | 47.8 | 54.1 | -4.1 |
+| LP camera (IMX296) | board | 50 | 49.0 / 58.2 | 11.0 | 42.7 | 47.8 | 53.6 | -3.6 |
 | LP camera's Pi 5 | SoC | 80 | 47.1 / 55.1 | 9.1 | 42.7 | 60.2 | 64.6 | 15.4 |
 | galvo (basiCube 20) | air | 35 | 44.2 / 50.9 | 6.2 | 42.7 | 42.7 | 44.2 | -9.2 |
 | BW 850 nm LED | air | 40 | 44.0 / 45.4 | 6.0 | 42.7 | 42.7 | 44.0 | -4.0 |
 | AE preamp | case | 65 | 40.1 / 42.1 | 2.1 | 42.7 | 43.7 | 41.1 | 23.9 |
 | layer camera (Pi HQ) | air | 50 | 43.1 / 45.5 | 5.1 | 42.7 | 42.7 | 43.1 | 6.9 |
+| optics bridge (the air round it) | air | - | 43.5 / 48.0 | 5.5 | 42.7 | 51.7 | 52.5 | - |
 
 Age of the air: V/Q 4.42 s; air-change effectiveness 0.566 (0.5 = fully mixed); mean age above the bridge 5.2 s, below 3.3 s; 0 % of the exhaust flow is younger than V/(4Q); 32 % of it leaves above the bridge. Air older than 3 V/Q: 0.0 % of the volume.
 
 | Dead zone (age > 3 V/Q) | x (mm) | y (mm) | z (mm) | volume (L) | mean age (s) | rise (K) |
 |---|---|---|---|---:|---:|---:|
 | 1 | [-29, 28] | [-28, 27] | [-53, -20] | 0.03 | 102.6 | 19.8 |
+
+## typ9: as drawn, typical load, supply 30.2 °C, 9 mm cells (251605 cells)
+
+Flow 118.0 m³/h out (97.6 through the inlet, 20.4 through the hood). Heat in: sources 102.6 W, chamber at 60 °C 39.4 W, legs to the base plate 52.3 W; panels -7.6 W; exhaust 186.9 W at 35.22 °C (imbalance -0.1 %). Iterations 1500, final residuals {'k': 0.000262, 'epsilon': 0.000147, 'p_rgh': 0.00292, 'h': 0.000561, 'Uz': 0.000467, 'Uy': 0.000316, 'Ux': 0.000344}.
+
+Well-mixed (cooling.py): guard air 35.6 °C, 5.4 K over the supply. CFD exhaust 5.0 K, volume mean 4.65 K, above the bridge 4.1 K, below it 4.88 K.
+
+| Device | Checked on | Rating (°C) | CFD air round it (°C), mean / 95th percentile | rise (K) | well-mixed air (°C) | well-mixed checked (°C) | CFD checked (°C) | margin (K) |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| Chronos 2.1-HD, in its hood | air | 40 | 33.2 / 39.1 | 3.0 | 30.7 | 30.7 | 33.2 | 6.8 |
+| coaxial cage | air | - | 36.2 / 40.9 | 6.0 | 35.6 | 35.6 | 36.2 | - |
+| coaxial camera (IMX296) | board | 50 | 36.2 / 39.2 | 6.0 | 35.6 | 44.5 | 44.5 | 5.5 |
+| photodiode PD-A (PDA36A2) | air | 40 | 35.9 / 41.0 | 5.7 | 35.6 | 35.6 | 35.9 | 4.1 |
+| photodiode PD-B (PDA36A2) | air | 40 | 36.3 / 39.2 | 6.1 | 35.6 | 35.6 | 36.3 | 3.7 |
+| PB2 (Pi 5) | box air | 70 | 34.9 / 40.0 | 4.7 | 35.6 | 39.9 | 39.2 | 30.8 |
+| LP camera (IMX296) | board | 50 | 39.2 / 43.1 | 9.0 | 35.6 | 41.5 | 44.8 | 5.2 |
+| LP camera's Pi 5 | SoC | 80 | 38.1 / 42.5 | 7.9 | 35.6 | 53.1 | 55.6 | 24.4 |
+| galvo (basiCube 20) | air | 35 | 35.1 / 40.1 | 4.9 | 35.6 | 35.6 | 35.1 | -0.1 |
+| BW 850 nm LED | air | 40 | 37.5 / 43.0 | 7.3 | 35.6 | 35.6 | 37.5 | 2.5 |
+| AE preamp | case | 65 | 32.5 / 34.9 | 2.3 | 35.6 | 36.7 | 33.6 | 31.4 |
+| layer camera (Pi HQ) | air | 50 | 36.1 / 38.5 | 5.9 | 35.6 | 35.6 | 36.1 | 13.9 |
+| optics bridge (the air round it) | air | - | 35.5 / 39.5 | 5.3 | 35.6 | 44.7 | 44.6 | - |
+
+Age of the air: V/Q 4.32 s; air-change effectiveness 0.599 (0.5 = fully mixed); mean age above the bridge 5.2 s, below 2.9 s; 1 % of the exhaust flow is younger than V/(4Q); 32 % of it leaves above the bridge. Air older than 3 V/Q: 0.0 % of the volume.
 
 ## typ18: as drawn, typical load, supply 30.2 °C, 18 mm cells (45912 cells)
 
@@ -86,7 +113,7 @@ Well-mixed (cooling.py): guard air 35.6 °C, 5.4 K over the supply. CFD exhaust 
 |---|---|---:|---:|---:|---:|---:|---:|---:|
 | Chronos 2.1-HD, in its hood | air | 40 | 33.2 / 39.1 | 3.0 | 30.7 | 30.7 | 33.2 | 6.8 |
 | coaxial cage | air | - | 34.7 / 39.4 | 4.5 | 35.6 | 35.6 | 34.7 | - |
-| coaxial camera (IMX296) | board | 50 | 34.8 / 37.3 | 4.6 | 35.6 | 44.5 | 43.7 | 6.3 |
+| coaxial camera (IMX296) | board | 50 | 34.8 / 37.3 | 4.6 | 35.6 | 44.5 | 43.5 | 6.5 |
 | photodiode PD-A (PDA36A2) | air | 40 | 35.8 / 40.1 | 5.6 | 35.6 | 35.6 | 35.8 | 4.2 |
 | photodiode PD-B (PDA36A2) | air | 40 | 37.5 / 41.1 | 7.3 | 35.6 | 35.6 | 37.5 | 2.5 |
 | PB2 (Pi 5) | box air | 70 | 34.6 / 38.5 | 4.4 | 35.6 | 39.9 | 38.9 | 31.1 |
@@ -96,6 +123,7 @@ Well-mixed (cooling.py): guard air 35.6 °C, 5.4 K over the supply. CFD exhaust 
 | BW 850 nm LED | air | 40 | 35.5 / 36.8 | 5.3 | 35.6 | 35.6 | 35.5 | 4.5 |
 | AE preamp | case | 65 | 33.1 / 37.9 | 2.9 | 35.6 | 36.7 | 34.2 | 30.8 |
 | layer camera (Pi HQ) | air | 50 | 34.9 / 36.7 | 4.7 | 35.6 | 35.6 | 34.9 | 15.1 |
+| optics bridge (the air round it) | air | - | 34.5 / 38.4 | 4.3 | 35.6 | 44.7 | 43.6 | - |
 
 Age of the air: V/Q 4.46 s; air-change effectiveness 0.656 (0.5 = fully mixed); mean age above the bridge 4.1 s, below 3.2 s; 4 % of the exhaust flow is younger than V/(4Q); 15 % of it leaves above the bridge. Air older than 3 V/Q: 0.0 % of the volume.
 
@@ -113,16 +141,17 @@ Well-mixed (cooling.py): guard air 35.6 °C, 5.4 K over the supply. CFD exhaust 
 |---|---|---:|---:|---:|---:|---:|---:|---:|
 | Chronos 2.1-HD, in its hood | air | 40 | 33.3 / 39.6 | 3.1 | 30.7 | 30.7 | 33.3 | 6.7 |
 | coaxial cage | air | - | 37.6 / 43.4 | 7.4 | 35.6 | 35.6 | 37.6 | - |
-| coaxial camera (IMX296) | board | 50 | 38.4 / 41.2 | 8.2 | 35.6 | 44.5 | 47.3 | 2.7 |
+| coaxial camera (IMX296) | board | 50 | 38.4 / 41.2 | 8.2 | 35.6 | 44.5 | 45.0 | 5.0 |
 | photodiode PD-A (PDA36A2) | air | 40 | 37.1 / 42.6 | 6.9 | 35.6 | 35.6 | 37.1 | 2.9 |
 | photodiode PD-B (PDA36A2) | air | 40 | 36.2 / 40.8 | 6.0 | 35.6 | 35.6 | 36.2 | 3.8 |
 | PB2 (Pi 5) | box air | 70 | 36.5 / 43.4 | 6.3 | 35.6 | 39.9 | 40.8 | 29.2 |
-| LP camera (IMX296) | board | 50 | 41.5 / 48.3 | 11.3 | 35.6 | 41.5 | 47.4 | 2.6 |
+| LP camera (IMX296) | board | 50 | 41.5 / 48.3 | 11.3 | 35.6 | 41.5 | 46.8 | 3.2 |
 | LP camera's Pi 5 | SoC | 80 | 39.9 / 47.2 | 9.7 | 35.6 | 53.1 | 57.4 | 22.6 |
 | galvo (basiCube 20) | air | 35 | 36.4 / 43.3 | 6.2 | 35.6 | 35.6 | 36.4 | -1.4 |
 | BW 850 nm LED | air | 40 | 36.8 / 38.6 | 6.6 | 35.6 | 35.6 | 36.8 | 3.2 |
 | AE preamp | case | 65 | 32.8 / 35.2 | 2.6 | 35.6 | 36.7 | 33.9 | 31.1 |
 | layer camera (Pi HQ) | air | 50 | 35.6 / 37.9 | 5.4 | 35.6 | 35.6 | 35.6 | 14.4 |
+| optics bridge (the air round it) | air | - | 35.9 / 40.4 | 5.7 | 35.6 | 44.7 | 45.0 | - |
 
 Age of the air: V/Q 4.42 s; air-change effectiveness 0.566 (0.5 = fully mixed); mean age above the bridge 5.3 s, below 3.3 s; 0 % of the exhaust flow is younger than V/(4Q); 32 % of it leaves above the bridge. Air older than 3 V/Q: 0.0 % of the volume.
 
@@ -140,16 +169,17 @@ Well-mixed (cooling.py): guard air 35.6 °C, 5.4 K over the supply. CFD exhaust 
 |---|---|---:|---:|---:|---:|---:|---:|---:|
 | Chronos 2.1-HD, in its hood | air | 40 | 33.2 / 39.7 | 3.0 | 30.7 | 30.7 | 33.2 | 6.8 |
 | coaxial cage | air | - | 37.1 / 43.2 | 6.9 | 35.6 | 35.6 | 37.1 | - |
-| coaxial camera (IMX296) | board | 50 | 37.2 / 42.9 | 7.0 | 35.6 | 44.5 | 46.1 | 3.9 |
+| coaxial camera (IMX296) | board | 50 | 37.2 / 42.9 | 7.0 | 35.6 | 44.5 | 44.2 | 5.8 |
 | photodiode PD-A (PDA36A2) | air | 40 | 37.6 / 44.6 | 7.4 | 35.6 | 35.6 | 37.6 | 2.4 |
 | photodiode PD-B (PDA36A2) | air | 40 | 36.4 / 45.2 | 6.2 | 35.6 | 35.6 | 36.4 | 3.6 |
 | PB2 (Pi 5) | box air | 70 | 38.2 / 44.6 | 8.0 | 35.6 | 39.9 | 42.5 | 27.5 |
-| LP camera (IMX296) | board | 50 | 39.8 / 48.3 | 9.6 | 35.6 | 41.5 | 45.7 | 4.3 |
+| LP camera (IMX296) | board | 50 | 39.8 / 48.3 | 9.6 | 35.6 | 41.5 | 45.4 | 4.6 |
 | LP camera's Pi 5 | SoC | 80 | 40.5 / 50.2 | 10.3 | 35.6 | 53.1 | 58.0 | 22.0 |
 | galvo (basiCube 20) | air | 35 | 35.5 / 41.6 | 5.3 | 35.6 | 35.6 | 35.5 | -0.5 |
 | BW 850 nm LED | air | 40 | 34.5 / 36.8 | 4.3 | 35.6 | 35.6 | 34.5 | 5.5 |
 | AE preamp | case | 65 | 38.5 / 47.6 | 8.3 | 35.6 | 36.7 | 39.6 | 25.4 |
 | layer camera (Pi HQ) | air | 50 | 33.7 / 35.5 | 3.5 | 35.6 | 35.6 | 33.7 | 16.3 |
+| optics bridge (the air round it) | air | - | 35.1 / 41.3 | 4.9 | 35.6 | 44.7 | 44.2 | - |
 
 Age of the air: V/Q 3.25 s; air-change effectiveness 0.542 (0.5 = fully mixed); mean age above the bridge 5.3 s, below 2.1 s; 0 % of the exhaust flow is younger than V/(4Q); 40 % of it leaves above the bridge. Air older than 3 V/Q: 2.3 % of the volume.
 
@@ -159,31 +189,4 @@ Age of the air: V/Q 3.25 s; air-change effectiveness 0.542 (0.5 = fully mixed); 
 | 2 | [-336, -202] | [-62, -6] | [281, 327] | 0.07 | 10.0 | 7.98 |
 | 3 | [-336, -285] | [115, 167] | [127, 202] | 0.07 | 11.2 | 5.42 |
 | 4 | [-29, 28] | [-28, 27] | [-53, -20] | 0.03 | 97.2 | 26.36 |
-
-## typ12: as drawn, typical load, supply 30.2 °C, 12 mm cells (123756 cells)
-
-Flow 118.0 m³/h out (97.6 through the inlet, 20.4 through the hood). Heat in: sources 102.6 W, chamber at 60 °C 41.5 W, legs to the base plate 52.3 W; panels -9.2 W; exhaust 181.2 W at 35.07 °C (imbalance 3.1 %). Iterations 2500, final residuals {'k': 0.00013, 'epsilon': 4.82e-05, 'p_rgh': 0.00262, 'h': 0.00042, 'Uz': 0.000239, 'Uy': 0.000151, 'Ux': 0.000162}.
-
-Well-mixed (cooling.py): guard air 35.6 °C, 5.4 K over the supply. CFD exhaust 4.9 K, volume mean 5.18 K, above the bridge 4.88 K, below it 5.3 K.
-
-| Device | Checked on | Rating (°C) | CFD air round it (°C), mean / 95th percentile | rise (K) | well-mixed air (°C) | well-mixed checked (°C) | CFD checked (°C) | margin (K) |
-|---|---|---:|---:|---:|---:|---:|---:|---:|
-| Chronos 2.1-HD, in its hood | air | 40 | 33.3 / 39.7 | 3.1 | 30.7 | 30.7 | 33.3 | 6.7 |
-| coaxial cage | air | - | 37.6 / 44.6 | 7.4 | 35.6 | 35.6 | 37.6 | - |
-| coaxial camera (IMX296) | board | 50 | 38.1 / 40.6 | 7.9 | 35.6 | 44.5 | 47.0 | 3.0 |
-| photodiode PD-A (PDA36A2) | air | 40 | 37.0 / 41.7 | 6.8 | 35.6 | 35.6 | 37.0 | 3.0 |
-| photodiode PD-B (PDA36A2) | air | 40 | 35.8 / 38.9 | 5.6 | 35.6 | 35.6 | 35.8 | 4.2 |
-| PB2 (Pi 5) | box air | 70 | 37.0 / 44.3 | 6.8 | 35.6 | 39.9 | 41.3 | 28.7 |
-| LP camera (IMX296) | board | 50 | 41.3 / 49.2 | 11.1 | 35.6 | 41.5 | 47.2 | 2.8 |
-| LP camera's Pi 5 | SoC | 80 | 40.4 / 47.8 | 10.2 | 35.6 | 53.1 | 57.9 | 22.1 |
-| galvo (basiCube 20) | air | 35 | 36.5 / 43.8 | 6.3 | 35.6 | 35.6 | 36.5 | -1.5 |
-| BW 850 nm LED | air | 40 | 37.6 / 40.0 | 7.4 | 35.6 | 35.6 | 37.6 | 2.4 |
-| AE preamp | case | 65 | 33.0 / 35.4 | 2.8 | 35.6 | 36.7 | 34.1 | 30.9 |
-| layer camera (Pi HQ) | air | 50 | 35.5 / 37.5 | 5.3 | 35.6 | 35.6 | 35.5 | 14.5 |
-
-Age of the air: V/Q 4.42 s; air-change effectiveness 0.566 (0.5 = fully mixed); mean age above the bridge 5.4 s, below 3.3 s; 0 % of the exhaust flow is younger than V/(4Q); 32 % of it leaves above the bridge. Air older than 3 V/Q: 0.0 % of the volume.
-
-| Dead zone (age > 3 V/Q) | x (mm) | y (mm) | z (mm) | volume (L) | mean age (s) | rise (K) |
-|---|---|---|---|---:|---:|---:|
-| 1 | [-29, 28] | [-28, 27] | [-53, -20] | 0.03 | 99.7 | 26.68 |
 

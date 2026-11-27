@@ -165,6 +165,15 @@
      "p95_rise_k": 7.32,
      "mean_age_s": 4.4,
      "cells": 225
+    },
+    "bridge": {
+     "label": "optics bridge (the air round it)",
+     "rating_c": null,
+     "checked_on": "air",
+     "mean_rise_k": 5.62,
+     "p95_rise_k": 10.17,
+     "mean_age_s": 5.2,
+     "cells": 7997
     }
    },
    "zones": {
@@ -328,8 +337,8 @@
       "wellmixed_air_c": 35.6,
       "wellmixed_rise_k": 5.4,
       "wellmixed_checked_c": 44.5,
-      "cfd_checked_c": 47.5,
-      "margin_k": 2.5,
+      "cfd_checked_c": 45.0,
+      "margin_k": 5.0,
       "ok": true,
       "hood_back_c": null
      },
@@ -392,8 +401,8 @@
       "wellmixed_air_c": 35.6,
       "wellmixed_rise_k": 5.4,
       "wellmixed_checked_c": 41.5,
-      "cfd_checked_c": 47.8,
-      "margin_k": 2.2,
+      "cfd_checked_c": 47.2,
+      "margin_k": 2.8,
       "ok": true,
       "hood_back_c": null
      },
@@ -475,6 +484,22 @@
       "cfd_checked_c": 35.6,
       "margin_k": 14.4,
       "ok": true,
+      "hood_back_c": null
+     },
+     {
+      "key": "bridge",
+      "device": "optics bridge (the air round it)",
+      "checked_on": "air",
+      "rating_c": null,
+      "cfd_air_c": 35.8,
+      "cfd_air_rise_k": 5.6,
+      "cfd_air_p95_c": 40.4,
+      "wellmixed_air_c": 35.6,
+      "wellmixed_rise_k": 5.4,
+      "wellmixed_checked_c": 44.7,
+      "cfd_checked_c": 44.9,
+      "margin_k": null,
+      "ok": null,
       "hood_back_c": null
      }
     ]
@@ -656,6 +681,15 @@
      "p95_rise_k": 7.45,
      "mean_age_s": 4.5,
      "cells": 225
+    },
+    "bridge": {
+     "label": "optics bridge (the air round it)",
+     "rating_c": null,
+     "checked_on": "air",
+     "mean_rise_k": 5.47,
+     "p95_rise_k": 9.99,
+     "mean_age_s": 5.1,
+     "cells": 7997
     }
    },
    "zones": {
@@ -819,8 +853,8 @@
       "wellmixed_air_c": 42.7,
       "wellmixed_rise_k": 4.7,
       "wellmixed_checked_c": 51.5,
-      "cfd_checked_c": 54.5,
-      "margin_k": -4.5,
+      "cfd_checked_c": 52.5,
+      "margin_k": -2.5,
       "ok": false,
       "hood_back_c": null
      },
@@ -883,8 +917,8 @@
       "wellmixed_air_c": 42.7,
       "wellmixed_rise_k": 4.7,
       "wellmixed_checked_c": 47.8,
-      "cfd_checked_c": 54.1,
-      "margin_k": -4.1,
+      "cfd_checked_c": 53.6,
+      "margin_k": -3.6,
       "ok": false,
       "hood_back_c": null
      },
@@ -966,6 +1000,520 @@
       "cfd_checked_c": 43.1,
       "margin_k": 6.9,
       "ok": true,
+      "hood_back_c": null
+     },
+     {
+      "key": "bridge",
+      "device": "optics bridge (the air round it)",
+      "checked_on": "air",
+      "rating_c": null,
+      "cfd_air_c": 43.5,
+      "cfd_air_rise_k": 5.5,
+      "cfd_air_p95_c": 48.0,
+      "wellmixed_air_c": 42.7,
+      "wellmixed_rise_k": 4.7,
+      "wellmixed_checked_c": 51.7,
+      "cfd_checked_c": 52.5,
+      "margin_k": null,
+      "ok": null,
+      "hood_back_c": null
+     }
+    ]
+   }
+  },
+  "typ9": {
+   "case": "/tmp/guard-cfd/typ9",
+   "averaged_fields": true,
+   "time": "1500",
+   "meta": {
+    "h_mm": 9.0,
+    "load": "typical",
+    "supply_c": 30.2,
+    "q_exhaust_m3h": 118.0,
+    "q_hood_m3h": 20.4,
+    "q_inlet_m3h": 97.6,
+    "inlet_angle_deg": 61.92751306414704,
+    "heat_W": {
+     "galvo": 9.0,
+     "bridge": 26.0,
+     "servoR": 10.0,
+     "servoZ": 10.0,
+     "stepper": 5.0,
+     "pb2": 9.08,
+     "piLP": 5.0,
+     "chronos": 20.0,
+     "pdA": 2.0,
+     "pdB": 2.0,
+     "camLP": 0.75,
+     "camCoax": 0.75,
+     "led": 1.0,
+     "aePre": 1.0,
+     "camLayer": 1.0
+    },
+    "legs_to_floor_W": 52.337999999999994,
+    "wellmixed_guard_c": 35.6,
+    "variant": "as drawn",
+    "n": [
+     87,
+     58,
+     64
+    ],
+    "q_window_m3h": 0.0,
+    "network": null,
+    "network_sealed": {
+     "guard_suction_Pa": 39.73,
+     "q_exhaust_m3h": 114.6,
+     "q_inlet_main_m3h": 77.8,
+     "q_hood_m3h": 36.8,
+     "q_window_m3h": 0.0,
+     "A_window_m2": 0.0,
+     "K_window": 2.5
+    }
+   },
+   "cells": 251605,
+   "devices": {
+    "chronos": {
+     "label": "Chronos 2.1-HD, in its hood",
+     "rating_c": 40,
+     "checked_on": "air",
+     "mean_rise_k": 2.95,
+     "p95_rise_k": 8.36,
+     "mean_age_s": 0.6,
+     "cells": 1907,
+     "hood_all": {
+      "mean_rise_k": 2.96,
+      "p95_rise_k": 8.95,
+      "mean_age_s": 0.3,
+      "cells": 3756
+     },
+     "hood_back_half": {
+      "mean_rise_k": 1.73,
+      "p95_rise_k": 3.92,
+      "mean_age_s": 0.2,
+      "cells": 1674
+     },
+     "hood_lens_end": {
+      "mean_rise_k": 5.25,
+      "p95_rise_k": 15.13,
+      "mean_age_s": 0.4,
+      "cells": 1038
+     }
+    },
+    "cage": {
+     "label": "coaxial cage",
+     "rating_c": null,
+     "checked_on": "air",
+     "mean_rise_k": 6.03,
+     "p95_rise_k": 10.71,
+     "mean_age_s": 6.3,
+     "cells": 3706
+    },
+    "camCoax": {
+     "label": "coaxial camera (IMX296)",
+     "rating_c": 50,
+     "checked_on": "board",
+     "mean_rise_k": 6.03,
+     "p95_rise_k": 8.98,
+     "mean_age_s": 6.7,
+     "cells": 269
+    },
+    "pdA": {
+     "label": "photodiode PD-A (PDA36A2)",
+     "rating_c": 40,
+     "checked_on": "air",
+     "mean_rise_k": 5.72,
+     "p95_rise_k": 10.79,
+     "mean_age_s": 6.1,
+     "cells": 483
+    },
+    "pdB": {
+     "label": "photodiode PD-B (PDA36A2)",
+     "rating_c": 40,
+     "checked_on": "air",
+     "mean_rise_k": 6.07,
+     "p95_rise_k": 8.96,
+     "mean_age_s": 6.9,
+     "cells": 576
+    },
+    "pb2": {
+     "label": "PB2 (Pi 5)",
+     "rating_c": 70,
+     "checked_on": "box air",
+     "mean_rise_k": 4.66,
+     "p95_rise_k": 9.75,
+     "mean_age_s": 2.8,
+     "cells": 1351
+    },
+    "camLP": {
+     "label": "LP camera (IMX296)",
+     "rating_c": 50,
+     "checked_on": "board",
+     "mean_rise_k": 9.02,
+     "p95_rise_k": 12.94,
+     "mean_age_s": 3.1,
+     "cells": 248
+    },
+    "piLP": {
+     "label": "LP camera's Pi 5",
+     "rating_c": 80,
+     "checked_on": "SoC",
+     "mean_rise_k": 7.87,
+     "p95_rise_k": 12.28,
+     "mean_age_s": 4.2,
+     "cells": 639
+    },
+    "galvo": {
+     "label": "galvo (basiCube 20)",
+     "rating_c": 35,
+     "checked_on": "air",
+     "mean_rise_k": 4.89,
+     "p95_rise_k": 9.94,
+     "mean_age_s": 4.9,
+     "cells": 2174
+    },
+    "led": {
+     "label": "BW 850 nm LED",
+     "rating_c": 40,
+     "checked_on": "air",
+     "mean_rise_k": 7.3,
+     "p95_rise_k": 12.82,
+     "mean_age_s": 3.3,
+     "cells": 260
+    },
+    "aePre": {
+     "label": "AE preamp",
+     "rating_c": 65,
+     "checked_on": "case",
+     "mean_rise_k": 2.32,
+     "p95_rise_k": 4.7,
+     "mean_age_s": 1.3,
+     "cells": 696
+    },
+    "camLayer": {
+     "label": "layer camera (Pi HQ)",
+     "rating_c": 50,
+     "checked_on": "air",
+     "mean_rise_k": 5.91,
+     "p95_rise_k": 8.25,
+     "mean_age_s": 5.0,
+     "cells": 353
+    },
+    "bridge": {
+     "label": "optics bridge (the air round it)",
+     "rating_c": null,
+     "checked_on": "air",
+     "mean_rise_k": 5.28,
+     "p95_rise_k": 9.33,
+     "mean_age_s": 4.8,
+     "cells": 12271
+    }
+   },
+   "zones": {
+    "all": {
+     "mean_rise_k": 4.65,
+     "p95_rise_k": 10.49,
+     "mean_age_s": 3.6,
+     "cells": 251605
+    },
+    "above_bridge": {
+     "mean_rise_k": 4.1,
+     "p95_rise_k": 7.96,
+     "mean_age_s": 5.2,
+     "cells": 69390
+    },
+    "below_bridge": {
+     "mean_rise_k": 4.88,
+     "p95_rise_k": 11.45,
+     "mean_age_s": 2.9,
+     "cells": 176230
+    },
+    "upper_half": {
+     "mean_rise_k": 4.29,
+     "p95_rise_k": 8.89,
+     "mean_age_s": 4.4,
+     "cells": 134086
+    },
+    "lower_half": {
+     "mean_rise_k": 5.03,
+     "p95_rise_k": 12.33,
+     "mean_age_s": 2.8,
+     "cells": 117519
+    }
+   },
+   "flow": {
+    "fluid_volume_m3": 0.1415,
+    "nominal_time_constant_s": 4.32,
+    "air_change_effectiveness": 0.599,
+    "exhaust_flow_younger_than_quarter_tau": 0.009,
+    "exhaust_flow_from_above_bridge": 0.319,
+    "dead_zones_age_gt_3tau": [],
+    "dead_volume_fraction": 0.0
+   },
+   "heat": {
+    "Q_by_patch_W": {
+     "chamber": 39.37,
+     "servoZ": 10.0,
+     "servoR": 10.0,
+     "stepper": 5.0,
+     "camLayer": 1.0,
+     "bridge": 26.0,
+     "galvo": 9.0,
+     "pb2": 9.08,
+     "chronos": 20.0,
+     "led": 1.0,
+     "camLP": 0.75,
+     "camCoax": 0.75,
+     "pdB": 2.0,
+     "pdA": 2.0,
+     "aePre": 1.0,
+     "piLP": 5.0,
+     "panelL": -0.64,
+     "panelR": -0.92,
+     "panelF": -0.41,
+     "window": -1.38,
+     "panelB": -2.07,
+     "floor": 52.34,
+     "panelTop": -2.17
+    },
+    "sources_W": 102.6,
+    "chamber_W": 39.4,
+    "floor_legs_W": 52.3,
+    "panels_W": -7.6,
+    "in_W": 194.3,
+    "exhaust_W": 186.9,
+    "mdot_kg_s": 0.03763,
+    "q_exhaust_m3h": 119.9,
+    "T_exhaust_c": 35.22,
+    "T_supply_mix_c": 30.29,
+    "imbalance_W": -0.2,
+    "imbalance_pct": -0.1,
+    "exhaust_T_range_last500_k": 0.25,
+    "vol_T_drift_last500_k": -0.049
+   },
+   "convergence": {
+    "final_initial_residuals": {
+     "k": 0.000262,
+     "epsilon": 0.000147,
+     "p_rgh": 0.00292,
+     "h": 0.000561,
+     "Uz": 0.000467,
+     "Uy": 0.000316,
+     "Ux": 0.000344
+    },
+    "iterations": 1500,
+    "converged_to_tolerance": false
+   },
+   "wellmixed": {
+    "case": "typical",
+    "wellmixed_guard_c": 35.6,
+    "wellmixed_rise_k": 5.4,
+    "rows": [
+     {
+      "key": "chronos",
+      "device": "Chronos 2.1-HD, in its hood",
+      "checked_on": "air",
+      "rating_c": 40,
+      "cfd_air_c": 33.2,
+      "cfd_air_rise_k": 3.0,
+      "cfd_air_p95_c": 39.1,
+      "wellmixed_air_c": 30.7,
+      "wellmixed_rise_k": 0.5,
+      "wellmixed_checked_c": 30.7,
+      "cfd_checked_c": 33.2,
+      "margin_k": 6.8,
+      "ok": true,
+      "hood_back_c": 31.9
+     },
+     {
+      "key": "cage",
+      "device": "coaxial cage",
+      "checked_on": "air",
+      "rating_c": null,
+      "cfd_air_c": 36.2,
+      "cfd_air_rise_k": 6.0,
+      "cfd_air_p95_c": 40.9,
+      "wellmixed_air_c": 35.6,
+      "wellmixed_rise_k": 5.4,
+      "wellmixed_checked_c": 35.6,
+      "cfd_checked_c": 36.2,
+      "margin_k": null,
+      "ok": null,
+      "hood_back_c": null
+     },
+     {
+      "key": "camCoax",
+      "device": "coaxial camera (IMX296)",
+      "checked_on": "board",
+      "rating_c": 50,
+      "cfd_air_c": 36.2,
+      "cfd_air_rise_k": 6.0,
+      "cfd_air_p95_c": 39.2,
+      "wellmixed_air_c": 35.6,
+      "wellmixed_rise_k": 5.4,
+      "wellmixed_checked_c": 44.5,
+      "cfd_checked_c": 44.5,
+      "margin_k": 5.5,
+      "ok": true,
+      "hood_back_c": null
+     },
+     {
+      "key": "pdA",
+      "device": "photodiode PD-A (PDA36A2)",
+      "checked_on": "air",
+      "rating_c": 40,
+      "cfd_air_c": 35.9,
+      "cfd_air_rise_k": 5.7,
+      "cfd_air_p95_c": 41.0,
+      "wellmixed_air_c": 35.6,
+      "wellmixed_rise_k": 5.4,
+      "wellmixed_checked_c": 35.6,
+      "cfd_checked_c": 35.9,
+      "margin_k": 4.1,
+      "ok": true,
+      "hood_back_c": null
+     },
+     {
+      "key": "pdB",
+      "device": "photodiode PD-B (PDA36A2)",
+      "checked_on": "air",
+      "rating_c": 40,
+      "cfd_air_c": 36.3,
+      "cfd_air_rise_k": 6.1,
+      "cfd_air_p95_c": 39.2,
+      "wellmixed_air_c": 35.6,
+      "wellmixed_rise_k": 5.4,
+      "wellmixed_checked_c": 35.6,
+      "cfd_checked_c": 36.3,
+      "margin_k": 3.7,
+      "ok": true,
+      "hood_back_c": null
+     },
+     {
+      "key": "pb2",
+      "device": "PB2 (Pi 5)",
+      "checked_on": "box air",
+      "rating_c": 70,
+      "cfd_air_c": 34.9,
+      "cfd_air_rise_k": 4.7,
+      "cfd_air_p95_c": 40.0,
+      "wellmixed_air_c": 35.6,
+      "wellmixed_rise_k": 5.4,
+      "wellmixed_checked_c": 39.9,
+      "cfd_checked_c": 39.2,
+      "margin_k": 30.8,
+      "ok": true,
+      "hood_back_c": null
+     },
+     {
+      "key": "camLP",
+      "device": "LP camera (IMX296)",
+      "checked_on": "board",
+      "rating_c": 50,
+      "cfd_air_c": 39.2,
+      "cfd_air_rise_k": 9.0,
+      "cfd_air_p95_c": 43.1,
+      "wellmixed_air_c": 35.6,
+      "wellmixed_rise_k": 5.4,
+      "wellmixed_checked_c": 41.5,
+      "cfd_checked_c": 44.8,
+      "margin_k": 5.2,
+      "ok": true,
+      "hood_back_c": null
+     },
+     {
+      "key": "piLP",
+      "device": "LP camera's Pi 5",
+      "checked_on": "SoC",
+      "rating_c": 80,
+      "cfd_air_c": 38.1,
+      "cfd_air_rise_k": 7.9,
+      "cfd_air_p95_c": 42.5,
+      "wellmixed_air_c": 35.6,
+      "wellmixed_rise_k": 5.4,
+      "wellmixed_checked_c": 53.1,
+      "cfd_checked_c": 55.6,
+      "margin_k": 24.4,
+      "ok": true,
+      "hood_back_c": null
+     },
+     {
+      "key": "galvo",
+      "device": "galvo (basiCube 20)",
+      "checked_on": "air",
+      "rating_c": 35,
+      "cfd_air_c": 35.1,
+      "cfd_air_rise_k": 4.9,
+      "cfd_air_p95_c": 40.1,
+      "wellmixed_air_c": 35.6,
+      "wellmixed_rise_k": 5.4,
+      "wellmixed_checked_c": 35.6,
+      "cfd_checked_c": 35.1,
+      "margin_k": -0.1,
+      "ok": false,
+      "hood_back_c": null
+     },
+     {
+      "key": "led",
+      "device": "BW 850 nm LED",
+      "checked_on": "air",
+      "rating_c": 40,
+      "cfd_air_c": 37.5,
+      "cfd_air_rise_k": 7.3,
+      "cfd_air_p95_c": 43.0,
+      "wellmixed_air_c": 35.6,
+      "wellmixed_rise_k": 5.4,
+      "wellmixed_checked_c": 35.6,
+      "cfd_checked_c": 37.5,
+      "margin_k": 2.5,
+      "ok": true,
+      "hood_back_c": null
+     },
+     {
+      "key": "aePre",
+      "device": "AE preamp",
+      "checked_on": "case",
+      "rating_c": 65,
+      "cfd_air_c": 32.5,
+      "cfd_air_rise_k": 2.3,
+      "cfd_air_p95_c": 34.9,
+      "wellmixed_air_c": 35.6,
+      "wellmixed_rise_k": 5.4,
+      "wellmixed_checked_c": 36.7,
+      "cfd_checked_c": 33.6,
+      "margin_k": 31.4,
+      "ok": true,
+      "hood_back_c": null
+     },
+     {
+      "key": "camLayer",
+      "device": "layer camera (Pi HQ)",
+      "checked_on": "air",
+      "rating_c": 50,
+      "cfd_air_c": 36.1,
+      "cfd_air_rise_k": 5.9,
+      "cfd_air_p95_c": 38.5,
+      "wellmixed_air_c": 35.6,
+      "wellmixed_rise_k": 5.4,
+      "wellmixed_checked_c": 35.6,
+      "cfd_checked_c": 36.1,
+      "margin_k": 13.9,
+      "ok": true,
+      "hood_back_c": null
+     },
+     {
+      "key": "bridge",
+      "device": "optics bridge (the air round it)",
+      "checked_on": "air",
+      "rating_c": null,
+      "cfd_air_c": 35.5,
+      "cfd_air_rise_k": 5.3,
+      "cfd_air_p95_c": 39.5,
+      "wellmixed_air_c": 35.6,
+      "wellmixed_rise_k": 5.4,
+      "wellmixed_checked_c": 44.7,
+      "cfd_checked_c": 44.6,
+      "margin_k": null,
+      "ok": null,
       "hood_back_c": null
      }
     ]
@@ -1147,6 +1695,15 @@
      "p95_rise_k": 6.49,
      "mean_age_s": 3.8,
      "cells": 123
+    },
+    "bridge": {
+     "label": "optics bridge (the air round it)",
+     "rating_c": null,
+     "checked_on": "air",
+     "mean_rise_k": 4.34,
+     "p95_rise_k": 8.19,
+     "mean_age_s": 4.2,
+     "cells": 4340
     }
    },
    "zones": {
@@ -1310,8 +1867,8 @@
       "wellmixed_air_c": 35.6,
       "wellmixed_rise_k": 5.4,
       "wellmixed_checked_c": 44.5,
-      "cfd_checked_c": 43.7,
-      "margin_k": 6.3,
+      "cfd_checked_c": 43.5,
+      "margin_k": 6.5,
       "ok": true,
       "hood_back_c": null
      },
@@ -1457,6 +2014,22 @@
       "cfd_checked_c": 34.9,
       "margin_k": 15.1,
       "ok": true,
+      "hood_back_c": null
+     },
+     {
+      "key": "bridge",
+      "device": "optics bridge (the air round it)",
+      "checked_on": "air",
+      "rating_c": null,
+      "cfd_air_c": 34.5,
+      "cfd_air_rise_k": 4.3,
+      "cfd_air_p95_c": 38.4,
+      "wellmixed_air_c": 35.6,
+      "wellmixed_rise_k": 5.4,
+      "wellmixed_checked_c": 44.7,
+      "cfd_checked_c": 43.6,
+      "margin_k": null,
+      "ok": null,
       "hood_back_c": null
      }
     ]
@@ -1638,6 +2211,15 @@
      "p95_rise_k": 7.69,
      "mean_age_s": 4.6,
      "cells": 225
+    },
+    "bridge": {
+     "label": "optics bridge (the air round it)",
+     "rating_c": null,
+     "checked_on": "air",
+     "mean_rise_k": 5.65,
+     "p95_rise_k": 10.24,
+     "mean_age_s": 5.1,
+     "cells": 7997
     }
    },
    "zones": {
@@ -1801,8 +2383,8 @@
       "wellmixed_air_c": 35.6,
       "wellmixed_rise_k": 5.4,
       "wellmixed_checked_c": 44.5,
-      "cfd_checked_c": 47.3,
-      "margin_k": 2.7,
+      "cfd_checked_c": 45.0,
+      "margin_k": 5.0,
       "ok": true,
       "hood_back_c": null
      },
@@ -1865,8 +2447,8 @@
       "wellmixed_air_c": 35.6,
       "wellmixed_rise_k": 5.4,
       "wellmixed_checked_c": 41.5,
-      "cfd_checked_c": 47.4,
-      "margin_k": 2.6,
+      "cfd_checked_c": 46.8,
+      "margin_k": 3.2,
       "ok": true,
       "hood_back_c": null
      },
@@ -1948,6 +2530,22 @@
       "cfd_checked_c": 35.6,
       "margin_k": 14.4,
       "ok": true,
+      "hood_back_c": null
+     },
+     {
+      "key": "bridge",
+      "device": "optics bridge (the air round it)",
+      "checked_on": "air",
+      "rating_c": null,
+      "cfd_air_c": 35.9,
+      "cfd_air_rise_k": 5.7,
+      "cfd_air_p95_c": 40.4,
+      "wellmixed_air_c": 35.6,
+      "wellmixed_rise_k": 5.4,
+      "wellmixed_checked_c": 44.7,
+      "cfd_checked_c": 45.0,
+      "margin_k": null,
+      "ok": null,
       "hood_back_c": null
      }
     ]
@@ -2137,6 +2735,15 @@
      "p95_rise_k": 5.34,
      "mean_age_s": 2.2,
      "cells": 225
+    },
+    "bridge": {
+     "label": "optics bridge (the air round it)",
+     "rating_c": null,
+     "checked_on": "air",
+     "mean_rise_k": 4.9,
+     "p95_rise_k": 11.09,
+     "mean_age_s": 3.9,
+     "cells": 7997
     }
    },
    "zones": {
@@ -2351,8 +2958,8 @@
       "wellmixed_air_c": 35.6,
       "wellmixed_rise_k": 5.4,
       "wellmixed_checked_c": 44.5,
-      "cfd_checked_c": 46.1,
-      "margin_k": 3.9,
+      "cfd_checked_c": 44.2,
+      "margin_k": 5.8,
       "ok": true,
       "hood_back_c": null
      },
@@ -2415,8 +3022,8 @@
       "wellmixed_air_c": 35.6,
       "wellmixed_rise_k": 5.4,
       "wellmixed_checked_c": 41.5,
-      "cfd_checked_c": 45.7,
-      "margin_k": 4.3,
+      "cfd_checked_c": 45.4,
+      "margin_k": 4.6,
       "ok": true,
       "hood_back_c": null
      },
@@ -2499,490 +3106,47 @@
       "margin_k": 16.3,
       "ok": true,
       "hood_back_c": null
-     }
-    ]
-   }
-  },
-  "typ12": {
-   "case": "/tmp/guard-cfd/typ12",
-   "averaged_fields": false,
-   "time": "2500",
-   "meta": {
-    "h_mm": 12.0,
-    "load": "typical",
-    "supply_c": 30.2,
-    "q_exhaust_m3h": 118.0,
-    "q_hood_m3h": 20.4,
-    "q_inlet_m3h": 97.6,
-    "inlet_angle_deg": 61.92751306414704,
-    "heat_W": {
-     "galvo": 9.0,
-     "bridge": 26.0,
-     "servoR": 10.0,
-     "servoZ": 10.0,
-     "stepper": 5.0,
-     "pb2": 9.08,
-     "piLP": 5.0,
-     "chronos": 20.0,
-     "pdA": 2.0,
-     "pdB": 2.0,
-     "camLP": 0.75,
-     "camCoax": 0.75,
-     "led": 1.0,
-     "aePre": 1.0,
-     "camLayer": 1.0
-    },
-    "legs_to_floor_W": 52.337999999999994,
-    "wellmixed_guard_c": 35.6,
-    "variant": "as drawn",
-    "n": [
-     68,
-     46,
-     50
-    ]
-   },
-   "cells": 123756,
-   "devices": {
-    "chronos": {
-     "label": "Chronos 2.1-HD, in its hood",
-     "rating_c": 40,
-     "checked_on": "air",
-     "mean_rise_k": 3.19,
-     "p95_rise_k": 7.91,
-     "mean_age_s": 0.9,
-     "cells": 1216,
-     "hood_all": {
-      "mean_rise_k": 3.07,
-      "p95_rise_k": 9.47,
-      "mean_age_s": 0.3,
-      "cells": 1897
-     },
-     "hood_back_half": {
-      "mean_rise_k": 1.68,
-      "p95_rise_k": 3.49,
-      "mean_age_s": 0.2,
-      "cells": 875
-     },
-     "hood_lens_end": {
-      "mean_rise_k": 5.22,
-      "p95_rise_k": 13.4,
-      "mean_age_s": 0.5,
-      "cells": 548
-     }
-    },
-    "cage": {
-     "label": "coaxial cage",
-     "rating_c": null,
-     "checked_on": "air",
-     "mean_rise_k": 7.43,
-     "p95_rise_k": 14.42,
-     "mean_age_s": 6.9,
-     "cells": 2135
-    },
-    "camCoax": {
-     "label": "coaxial camera (IMX296)",
-     "rating_c": 50,
-     "checked_on": "board",
-     "mean_rise_k": 7.89,
-     "p95_rise_k": 10.38,
-     "mean_age_s": 7.0,
-     "cells": 228
-    },
-    "pdA": {
-     "label": "photodiode PD-A (PDA36A2)",
-     "rating_c": 40,
-     "checked_on": "air",
-     "mean_rise_k": 6.78,
-     "p95_rise_k": 11.5,
-     "mean_age_s": 7.0,
-     "cells": 322
-    },
-    "pdB": {
-     "label": "photodiode PD-B (PDA36A2)",
-     "rating_c": 40,
-     "checked_on": "air",
-     "mean_rise_k": 5.55,
-     "p95_rise_k": 8.72,
-     "mean_age_s": 6.7,
-     "cells": 358
-    },
-    "pb2": {
-     "label": "PB2 (Pi 5)",
-     "rating_c": 70,
-     "checked_on": "box air",
-     "mean_rise_k": 6.8,
-     "p95_rise_k": 14.13,
-     "mean_age_s": 4.9,
-     "cells": 757
-    },
-    "camLP": {
-     "label": "LP camera (IMX296)",
-     "rating_c": 50,
-     "checked_on": "board",
-     "mean_rise_k": 11.14,
-     "p95_rise_k": 18.96,
-     "mean_age_s": 5.1,
-     "cells": 161
-    },
-    "piLP": {
-     "label": "LP camera's Pi 5",
-     "rating_c": 80,
-     "checked_on": "SoC",
-     "mean_rise_k": 10.23,
-     "p95_rise_k": 17.57,
-     "mean_age_s": 5.4,
-     "cells": 415
-    },
-    "galvo": {
-     "label": "galvo (basiCube 20)",
-     "rating_c": 35,
-     "checked_on": "air",
-     "mean_rise_k": 6.35,
-     "p95_rise_k": 13.61,
-     "mean_age_s": 5.7,
-     "cells": 1265
-    },
-    "led": {
-     "label": "BW 850 nm LED",
-     "rating_c": 40,
-     "checked_on": "air",
-     "mean_rise_k": 7.44,
-     "p95_rise_k": 9.82,
-     "mean_age_s": 3.6,
-     "cells": 199
-    },
-    "aePre": {
-     "label": "AE preamp",
-     "rating_c": 65,
-     "checked_on": "case",
-     "mean_rise_k": 2.75,
-     "p95_rise_k": 5.21,
-     "mean_age_s": 1.5,
-     "cells": 386
-    },
-    "camLayer": {
-     "label": "layer camera (Pi HQ)",
-     "rating_c": 50,
-     "checked_on": "air",
-     "mean_rise_k": 5.28,
-     "p95_rise_k": 7.25,
-     "mean_age_s": 4.0,
-     "cells": 225
-    }
-   },
-   "zones": {
-    "all": {
-     "mean_rise_k": 5.18,
-     "p95_rise_k": 10.13,
-     "mean_age_s": 3.9,
-     "cells": 123756
-    },
-    "above_bridge": {
-     "mean_rise_k": 4.88,
-     "p95_rise_k": 10.85,
-     "mean_age_s": 5.4,
-     "cells": 32233
-    },
-    "below_bridge": {
-     "mean_rise_k": 5.3,
-     "p95_rise_k": 9.92,
-     "mean_age_s": 3.3,
-     "cells": 87860
-    },
-    "upper_half": {
-     "mean_rise_k": 4.79,
-     "p95_rise_k": 9.62,
-     "mean_age_s": 4.6,
-     "cells": 60992
-    },
-    "lower_half": {
-     "mean_rise_k": 5.55,
-     "p95_rise_k": 10.5,
-     "mean_age_s": 3.3,
-     "cells": 62764
-    }
-   },
-   "flow": {
-    "fluid_volume_m3": 0.1448,
-    "nominal_time_constant_s": 4.42,
-    "air_change_effectiveness": 0.566,
-    "exhaust_flow_younger_than_quarter_tau": 0.002,
-    "exhaust_flow_from_above_bridge": 0.316,
-    "dead_zones_age_gt_3tau": [
-     {
-      "volume_L": 0.03,
-      "x": [
-       -29,
-       28
-      ],
-      "y": [
-       -28,
-       27
-      ],
-      "z": [
-       -53,
-       -20
-      ],
-      "mean_age_s": 99.7,
-      "mean_rise_k": 26.68
-     }
-    ],
-    "dead_volume_fraction": 0.0
-   },
-   "heat": {
-    "Q_by_patch_W": {
-     "chamber": 41.54,
-     "servoZ": 10.0,
-     "servoR": 10.0,
-     "stepper": 5.0,
-     "camLayer": 1.0,
-     "bridge": 26.0,
-     "galvo": 9.0,
-     "pb2": 9.08,
-     "chronos": 20.0,
-     "led": 1.0,
-     "camLP": 0.75,
-     "camCoax": 0.75,
-     "pdB": 2.0,
-     "pdA": 2.0,
-     "aePre": 1.0,
-     "piLP": 5.0,
-     "panelL": -0.8,
-     "panelR": -1.45,
-     "panelF": -0.64,
-     "window": -2.01,
-     "panelB": -1.8,
-     "floor": 52.34,
-     "panelTop": -2.51
-    },
-    "sources_W": 102.6,
-    "chamber_W": 41.5,
-    "floor_legs_W": 52.3,
-    "panels_W": -9.2,
-    "in_W": 196.5,
-    "exhaust_W": 181.2,
-    "mdot_kg_s": 0.03763,
-    "q_exhaust_m3h": 119.9,
-    "T_exhaust_c": 35.07,
-    "T_supply_mix_c": 30.29,
-    "imbalance_W": 6.0,
-    "imbalance_pct": 3.1,
-    "exhaust_T_range_last500_k": 0.198,
-    "vol_T_drift_last500_k": 0.053
-   },
-   "convergence": {
-    "final_initial_residuals": {
-     "k": 0.00013,
-     "epsilon": 4.82e-05,
-     "p_rgh": 0.00262,
-     "h": 0.00042,
-     "Uz": 0.000239,
-     "Uy": 0.000151,
-     "Ux": 0.000162
-    },
-    "iterations": 2500,
-    "converged_to_tolerance": false
-   },
-   "wellmixed": {
-    "case": "typical",
-    "wellmixed_guard_c": 35.6,
-    "wellmixed_rise_k": 5.4,
-    "rows": [
-     {
-      "key": "chronos",
-      "device": "Chronos 2.1-HD, in its hood",
-      "checked_on": "air",
-      "rating_c": 40,
-      "cfd_air_c": 33.3,
-      "cfd_air_rise_k": 3.1,
-      "cfd_air_p95_c": 39.7,
-      "wellmixed_air_c": 30.7,
-      "wellmixed_rise_k": 0.5,
-      "wellmixed_checked_c": 30.7,
-      "cfd_checked_c": 33.3,
-      "margin_k": 6.7,
-      "ok": true,
-      "hood_back_c": 31.9
      },
      {
-      "key": "cage",
-      "device": "coaxial cage",
+      "key": "bridge",
+      "device": "optics bridge (the air round it)",
       "checked_on": "air",
       "rating_c": null,
-      "cfd_air_c": 37.6,
-      "cfd_air_rise_k": 7.4,
-      "cfd_air_p95_c": 44.6,
+      "cfd_air_c": 35.1,
+      "cfd_air_rise_k": 4.9,
+      "cfd_air_p95_c": 41.3,
       "wellmixed_air_c": 35.6,
       "wellmixed_rise_k": 5.4,
-      "wellmixed_checked_c": 35.6,
-      "cfd_checked_c": 37.6,
+      "wellmixed_checked_c": 44.7,
+      "cfd_checked_c": 44.2,
       "margin_k": null,
       "ok": null,
-      "hood_back_c": null
-     },
-     {
-      "key": "camCoax",
-      "device": "coaxial camera (IMX296)",
-      "checked_on": "board",
-      "rating_c": 50,
-      "cfd_air_c": 38.1,
-      "cfd_air_rise_k": 7.9,
-      "cfd_air_p95_c": 40.6,
-      "wellmixed_air_c": 35.6,
-      "wellmixed_rise_k": 5.4,
-      "wellmixed_checked_c": 44.5,
-      "cfd_checked_c": 47.0,
-      "margin_k": 3.0,
-      "ok": true,
-      "hood_back_c": null
-     },
-     {
-      "key": "pdA",
-      "device": "photodiode PD-A (PDA36A2)",
-      "checked_on": "air",
-      "rating_c": 40,
-      "cfd_air_c": 37.0,
-      "cfd_air_rise_k": 6.8,
-      "cfd_air_p95_c": 41.7,
-      "wellmixed_air_c": 35.6,
-      "wellmixed_rise_k": 5.4,
-      "wellmixed_checked_c": 35.6,
-      "cfd_checked_c": 37.0,
-      "margin_k": 3.0,
-      "ok": true,
-      "hood_back_c": null
-     },
-     {
-      "key": "pdB",
-      "device": "photodiode PD-B (PDA36A2)",
-      "checked_on": "air",
-      "rating_c": 40,
-      "cfd_air_c": 35.8,
-      "cfd_air_rise_k": 5.6,
-      "cfd_air_p95_c": 38.9,
-      "wellmixed_air_c": 35.6,
-      "wellmixed_rise_k": 5.4,
-      "wellmixed_checked_c": 35.6,
-      "cfd_checked_c": 35.8,
-      "margin_k": 4.2,
-      "ok": true,
-      "hood_back_c": null
-     },
-     {
-      "key": "pb2",
-      "device": "PB2 (Pi 5)",
-      "checked_on": "box air",
-      "rating_c": 70,
-      "cfd_air_c": 37.0,
-      "cfd_air_rise_k": 6.8,
-      "cfd_air_p95_c": 44.3,
-      "wellmixed_air_c": 35.6,
-      "wellmixed_rise_k": 5.4,
-      "wellmixed_checked_c": 39.9,
-      "cfd_checked_c": 41.3,
-      "margin_k": 28.7,
-      "ok": true,
-      "hood_back_c": null
-     },
-     {
-      "key": "camLP",
-      "device": "LP camera (IMX296)",
-      "checked_on": "board",
-      "rating_c": 50,
-      "cfd_air_c": 41.3,
-      "cfd_air_rise_k": 11.1,
-      "cfd_air_p95_c": 49.2,
-      "wellmixed_air_c": 35.6,
-      "wellmixed_rise_k": 5.4,
-      "wellmixed_checked_c": 41.5,
-      "cfd_checked_c": 47.2,
-      "margin_k": 2.8,
-      "ok": true,
-      "hood_back_c": null
-     },
-     {
-      "key": "piLP",
-      "device": "LP camera's Pi 5",
-      "checked_on": "SoC",
-      "rating_c": 80,
-      "cfd_air_c": 40.4,
-      "cfd_air_rise_k": 10.2,
-      "cfd_air_p95_c": 47.8,
-      "wellmixed_air_c": 35.6,
-      "wellmixed_rise_k": 5.4,
-      "wellmixed_checked_c": 53.1,
-      "cfd_checked_c": 57.9,
-      "margin_k": 22.1,
-      "ok": true,
-      "hood_back_c": null
-     },
-     {
-      "key": "galvo",
-      "device": "galvo (basiCube 20)",
-      "checked_on": "air",
-      "rating_c": 35,
-      "cfd_air_c": 36.5,
-      "cfd_air_rise_k": 6.3,
-      "cfd_air_p95_c": 43.8,
-      "wellmixed_air_c": 35.6,
-      "wellmixed_rise_k": 5.4,
-      "wellmixed_checked_c": 35.6,
-      "cfd_checked_c": 36.5,
-      "margin_k": -1.5,
-      "ok": false,
-      "hood_back_c": null
-     },
-     {
-      "key": "led",
-      "device": "BW 850 nm LED",
-      "checked_on": "air",
-      "rating_c": 40,
-      "cfd_air_c": 37.6,
-      "cfd_air_rise_k": 7.4,
-      "cfd_air_p95_c": 40.0,
-      "wellmixed_air_c": 35.6,
-      "wellmixed_rise_k": 5.4,
-      "wellmixed_checked_c": 35.6,
-      "cfd_checked_c": 37.6,
-      "margin_k": 2.4,
-      "ok": true,
-      "hood_back_c": null
-     },
-     {
-      "key": "aePre",
-      "device": "AE preamp",
-      "checked_on": "case",
-      "rating_c": 65,
-      "cfd_air_c": 33.0,
-      "cfd_air_rise_k": 2.8,
-      "cfd_air_p95_c": 35.4,
-      "wellmixed_air_c": 35.6,
-      "wellmixed_rise_k": 5.4,
-      "wellmixed_checked_c": 36.7,
-      "cfd_checked_c": 34.1,
-      "margin_k": 30.9,
-      "ok": true,
-      "hood_back_c": null
-     },
-     {
-      "key": "camLayer",
-      "device": "layer camera (Pi HQ)",
-      "checked_on": "air",
-      "rating_c": 50,
-      "cfd_air_c": 35.5,
-      "cfd_air_rise_k": 5.3,
-      "cfd_air_p95_c": 37.5,
-      "wellmixed_air_c": 35.6,
-      "wellmixed_rise_k": 5.4,
-      "wellmixed_checked_c": 35.6,
-      "cfd_checked_c": 35.5,
-      "margin_k": 14.5,
-      "ok": true,
       "hood_back_c": null
      }
     ]
    }
   }
  },
- "notes": "Steady RANS (k-epsilon) of the guard's air on a Cartesian grid with the parts voxelised; see guard_cfd.py's docstring for every assumption. 'Air round it' = fluid cells within 3 cells of the device's own cells."
+ "network": {
+  "sealed": {
+   "guard_suction_Pa": 39.73,
+   "q_exhaust_m3h": 114.6,
+   "q_inlet_main_m3h": 77.8,
+   "q_hood_m3h": 36.8,
+   "q_window_m3h": 0.0,
+   "A_window_m2": 0.0,
+   "K_window": 2.5
+  },
+  "floor_open": {
+   "guard_suction_Pa": 1.14,
+   "q_exhaust_m3h": 160.4,
+   "q_inlet_main_m3h": 6.2,
+   "q_hood_m3h": 21.2,
+   "q_window_m3h": 132.9,
+   "A_window_m2": 0.041,
+   "K_window": 2.5
+  },
+  "note": "guard_cfd.network(): the flows with cooling.py's resistances and fan curves, the hood path in parallel with the inlet"
+ },
+ "notes": "Steady RANS (k-epsilon) of the guard's air on a Cartesian grid with the parts voxelised; see guard_cfd.py's docstring for every assumption. 'Air round it' = fluid cells 2-3 cells (12-36 mm on the 12 mm grid) from the device's own cells."
 }

@@ -28,7 +28,7 @@ What is modelled (each an assumption, stated again in cooling.md §4.2):
     floor plate, lid, door, build module) is held at 60 C (cooling.py's bound); the half of its legs' conduction that
     cooling.py gives the guard's air goes in as a uniform flux on the base plate's top. No radiation.
   * Panels: the CFD resolves the inside film; the outside is a fixed coefficient to the Shuttle's air (cooling.py's formulas:
-    vertical bare panel 2.6, top 3.3, the polycarbonate window 6.5, the base plate's underside 1.9 W/m2K).
+    vertical bare panel 2.6, top 3.3, the polycarbonate window 6.5 W/m2K). The base plate's top only takes the legs' flux.
   * The steady solution keeps oscillating a little (buoyant plumes), so T and U are averaged over the last 600-800 iterations
     (fieldAverage) and the heat balance over the last 500.
 
@@ -46,8 +46,12 @@ Re-running (cases under /tmp/guard-cfd, nothing in the repo; each solve through 
     $PY $G/guard_cfd.py case --h 12 --supply-c 30.2 --iters 2000 --average-from 1200 --floor-open \
         --variant "base plate window open" --out /tmp/guard-cfd/floor12                      # run with typ12 as the map source
     $PY $G/guard_cfd.py case --h 18 --supply-c 30.2 --iters 2500 --average-from 1700 --out /tmp/guard-cfd/typ18
+    $PY $G/guard_cfd.py case --h 9 --supply-c 30.2 --iters 1500 --average-from 900 --out /tmp/guard-cfd/typ9   # map source typ12a
     $R "$G/run_guard_cfd.sh <case> [<map source>]" for each, then
-    $PY $G/guard_cfd.py post /tmp/guard-cfd/typ12a /tmp/guard-cfd/busy12b /tmp/guard-cfd/flip12 /tmp/guard-cfd/floor12 /tmp/guard-cfd/typ18
+    $PY $G/guard_cfd.py post /tmp/guard-cfd/typ12a /tmp/guard-cfd/busy12b /tmp/guard-cfd/typ9 /tmp/guard-cfd/typ18 /tmp/guard-cfd/flip12 \
+        /tmp/guard-cfd/floor12
+(As run: flip12 went from h-relax 0.3 to 0.6 at iteration ~220; floor12 and typ18 ran at 0.6 throughout, with fieldAverage added
+before they started; busy12b and typ9 exactly as written above.)
 """
 from __future__ import annotations
 
@@ -111,6 +115,7 @@ REPORT = [
     ("led", "BW 850 nm LED", 40, "air"),
     ("aePre", "AE preamp", 65, "case"),
     ("camLayer", "layer camera (Pi HQ)", 50, "air"),
+    ("bridge", "optics bridge (the air round it)", None, "air"),
 ]
 
 
