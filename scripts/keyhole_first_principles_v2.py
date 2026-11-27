@@ -361,6 +361,8 @@ def solve_point_v2(al: Alloy, P, v, r0, T0, A_override=None, hatch=None, want_po
     A_c, f_pow = A_liq, 0.0
     if powder is not None and A_override is None:
         A_c, f_pow = powder.conduction_absorptance(A_liq, P, v, r0, th_b)
+    if A_COND is not None and A_override is None:
+        A_c = A_COND  # sensitivity only: the conduction-mode absorptance fixed (the keyhole branch keeps its own)
     xs = np.linspace(-3 * r0, 1.0 * r0, 41)
     theta_peak = float(fp.gaussian_field(xs, 0.0, 0.0, A_c * P, r0, th_b.k, th_b.kappa, v).max())
     res = ResultV2(mode="conduction", A=A_c, A_conduction_flat=A_liq, beam_on_powder=f_pow, T_onset=T_on,
@@ -450,6 +452,7 @@ def solve_point_v2(al: Alloy, P, v, r0, T0, A_override=None, hatch=None, want_po
 
 
 TILT = True
+A_COND = None  # see run_conduction_sensitivity
 _RT: dict = {}
 
 
@@ -581,6 +584,8 @@ def _alloy_cached(spec):
 
 def _work(job):
     """One point in a worker process. job: dict with spec or a ready Alloy, P, v, r0, T0, and options."""
+    global A_COND
+    A_COND = job.get("A_cond")
     al = job["alloy"] if "alloy" in job else _alloy_cached(job["spec"])
     powder = job.get("powder")
     try:
@@ -675,7 +680,7 @@ def _powder(on=True, A=None):
     return pw.Powder(A_powder=pw.RUBENCHIK_AL_POWDER if A is None else A)
 
 
-def run_maps_v2(out: pathlib.Path, log=print, powder=True, tag="") -> dict:
+def run_maps_v2(out: pathlib.Path, log=print, powder=True, tag="", A_cond=None) -> dict:
     jobs = []
     for key, a in fp.ALLOYS.items():
         g = pd.read_csv(AM_DIR / f"{a['slug']}-am-module-grid-points.csv")
@@ -683,7 +688,7 @@ def run_maps_v2(out: pathlib.Path, log=print, powder=True, tag="") -> dict:
         for _, r in g.iterrows():
             jobs.append({"spec": ("alloy", key, True, 1.0, "drude-dc"), "P": float(r["power_W"]),
                          "v": float(r["speed_mm_s"]) / 1000.0, "r0": a["r0"], "T0": a["T0"], "hatch": a["hatch"],
-                         "powder": _powder(powder), "key": key, "am_class": r["am_class"]})
+                         "powder": _powder(powder), "key": key, "am_class": r["am_class"], "A_cond": A_cond})
     res = pmap(jobs)
     rows = []
     for j, rr in zip(jobs, res):
@@ -851,6 +856,13 @@ def run_ambench_v2(out: pathlib.Path, log=print) -> dict:
     return {"measured": a, "rows": len(rows)}
 
 
+def run_conduction_sensitivity(out: pathlib.Path, log=print) -> dict:
+    """The maps again with the conduction-mode absorptance fixed: at the 0.24 Simonds et al. 2024 measured on bare
+    Al 5182 before its keyhole formed, and at the AM module's 0.307 at its AlSi10Mg render. Keyhole points keep
+    their own absorptance."""
+    return {f"A_cond={a}": run_maps_v2(out, log, tag=f"-A_cond-{a}", A_cond=a) for a in (0.24, 0.307)}
+
+
 def run_powder_check(out: pathlib.Path, log=print) -> dict:
     """The homogenised powder-layer model against Boley et al. 2015 and Rubenchik et al. 2015."""
     import keyhole_fp_powder as pw
@@ -906,7 +918,8 @@ def run_mg_table(out: pathlib.Path, log=print) -> dict:
 def main() -> None:
     global NPROC
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("cmd", choices=["all", "point", "powder", "mg", "explore", "figures"])
+    ap.add_argument("cmd", choices=["all", "point", "powder", "mg", "explore", "figures", "meltflow", "conduction"])
+    ap.add_argument("--only", default=None)
     ap.add_argument("--out", type=pathlib.Path, default=V2_DIR)
     ap.add_argument("--cache", type=pathlib.Path, default=pathlib.Path("/tmp/keyhole-open-models-cache"))
     ap.add_argument("--alloy", choices=list(fp.ALLOYS) + ["al5182"], default="blend")
@@ -942,6 +955,14 @@ def main() -> None:
     if a.cmd == "mg":
         run_mg_table(a.out, log)
         return
+    if a.cmd == "conduction":
+        s_ = run_conduction_sensitivity(a.out, log)
+        (a.out / "v2-conduction-sensitivity-summary.json").write_text(json.dumps(s_, indent=1, default=str) + "\n")
+        return
+    if a.cmd == "meltflow":
+        run_meltflow_v2(a.out, log, only=a.only)
+        log("done in", round(time.time() - t0), "s")
+        return
     if a.cmd == "explore":
         s = run_gan_v2(a.out, a.cache, log, shape_model="free", fname="v2-explore-free-shape-gan2021.csv")
         (a.out / "v2-explore-free-shape-summary.json").write_text(json.dumps(s, indent=1) + "\n")
@@ -960,6 +981,69 @@ def main() -> None:
     summary["runtime_s"] = round(time.time() - t0, 1)
     (a.out / "v2-summary.json").write_text(json.dumps(summary, indent=1, default=str) + "\n")
     log("done in", summary["runtime_s"], "s")
+
+
+
+# --- melt flow: our own 3D beam-frame solver (scripts/keyhole_meltflow.py) at version 2's states -------------
+
+MELTFLOW_CASES = [
+    # (label, alloy, P, v, A_override or None)
+    ("alsi10mg-250W-0.9-own", "alsi10mg", 250.0, 0.9, None),
+    ("alsi10mg-250W-0.9-A_am", "alsi10mg", 250.0, 0.9, 0.3074),
+    ("alsi10mg-350W-0.9-own", "alsi10mg", 350.0, 0.9, None),
+    ("blend-375W-0.4-own", "blend", 375.0, 0.4, None),
+    ("blend-375W-0.4-A_am", "blend", 375.0, 0.4, 0.3841),
+    ("al5182-473W-0.7-own", "al5182", 473.0, 0.7, None),
+    ("al5182-473W-0.7-A_measured", "al5182", 473.0, 0.7, 0.43),
+]
+
+
+def run_meltflow_v2(out: pathlib.Path, log=print, only=None) -> dict:
+    """Each case's keyhole (shape, T_w, power outside the opening) from solve_point_v2, then the melt-flow solver
+    with Marangoni off and on. The materials are version 2's (sourced k(T)); viscosities as in keyhole_meltflow."""
+    import keyhole_meltflow as mf
+    rows, fields = [], {}
+    for label, key, P, v, Aov in MELTFLOW_CASES:
+        if only and only not in label:
+            continue
+        al = make_alloy(key)
+        if key == "al5182":
+            r0, T0, hatch = fp.AMB2022["r0"], fp.AMB2022["T0"], None
+        else:
+            a = fp.ALLOYS[key]
+            r0, T0, hatch = a["r0"], a["T0"], a["hatch"]
+        res, sol = solve_point_v2(al, P, v, r0, T0, A_override=Aov, hatch=hatch)
+        mu0, E = mf.VISCOSITY[key]
+        pr = mf.props_from_material(al.m, mu0=mu0, E_mu=E, dsigma_dT=mf.DSIGMA_DT_DEFAULT, C_darcy=mf.C_DARCY_DEFAULT,
+                                    evaporation=True)
+        kh = None
+        if sol:
+            kh = dict(z=np.asarray(sol["zn"]), xc=np.asarray(sol["xcn"]), r=np.asarray(sol["rn"]), T_w=sol["T_w"],
+                      P_wings=float(sol["A_sf"] * P), a0=res.a0_um * 1e-6)
+        g = mf.grid_for(r0, pool_D=max(1.3 * res.pool_depth_solidus_um, 120.0) * 1e-6,
+                        pool_W=max(1.5 * res.pool_width_solidus_um, 250.0) * 1e-6,
+                        pool_L_rear=max(1.2 * res.pool_length_solidus_um, 500.0) * 1e-6,
+                        keyhole_d=(res.d_um * 1e-6 if sol else 0.0), h_fine=r0 / 8)
+        case = mf.Case(label=label, props=pr, P=P, v=v, r0=r0, T0=T0, A=res.A, keyhole=kh, grid=g)
+        log(f"{label}: v2 keyhole d {res.d_um:.0f} um, A {res.A:.3f}; grid {g.shape} = {g.n} cells")
+        for flow in (False, True):
+            o, T, st, khm = mf.solve_case(case, flow=flow, log=log)
+            r = {"case": label, "alloy": key, "P_W": P, "v_m_s": v, "A": res.A, "A_fixed": Aov is not None,
+                 "keyhole_depth_um": res.d_um if sol else 0.0, "front_wall_deg": res.front_wall_deg,
+                 "analytic_pool_depth_um": res.pool_depth_um, "analytic_pool_width_um": res.pool_width_um,
+                 "analytic_pool_length_um": res.pool_length_um,
+                 "analytic_pool_length_solidus_um": res.pool_length_solidus_um, "analytic_Q_cond_W": res.Q_cond_W,
+                 **mf._row(case, o)}
+            rows.append(r)
+            log(json.dumps({k: (round(x, 2) if isinstance(x, float) else x) for k, x in r.items()}))
+            if flow:
+                fields[label] = (case, T, st, khm)
+    t = pd.DataFrame(rows)
+    t.to_csv(out / f"v2-meltflow-runs{'-' + only if only else ''}.csv", index=False, float_format="%.5g")
+    for label, (case, T, st, khm) in fields.items():
+        if label in ("blend-375W-0.4-own", "al5182-473W-0.7-A_measured"):
+            mf.figure(case, T, st, khm, out / f"v2-meltflow-{label}.png")
+    return {"rows": len(rows)}
 
 
 if __name__ == "__main__":

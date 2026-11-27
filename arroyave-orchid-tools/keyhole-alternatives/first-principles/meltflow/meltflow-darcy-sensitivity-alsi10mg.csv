@@ -1,0 +1,4 @@
+C_darcy,case,P_W,v_m_s,r0_um,A,flow,pool_depth_liquidus_um,pool_width_liquidus_um,pool_length_liquidus_um,pool_depth_solidus_um,pool_width_solidus_um,pool_length_solidus_um,pool_depth_max_liquidus_um,u_surface_max_rel_m_s,u_max_rel_m_s,T_peak_K,Q_in_surface_W,Q_keyhole_W,Q_out_W,energy_balance_rel_err,grid_cells,outer_iterations,runtime_s
+1e+08,alsi10mg-250W-0.9-conduction-A_am,250,0.9,40,0.3074,True,70.847,190.72,340.1,73.652,194.85,409.53,70.847,4.0399,4.1179,3957.9,76.85,0,76.85,2.2657e-06,278124,9,37.9
+1e+09,alsi10mg-250W-0.9-conduction-A_am,250,0.9,40,0.3074,True,70.855,190.32,342.04,73.661,194.39,410.96,70.855,4.0096,4.0896,3957.2,76.85,0,76.85,8.2642e-07,278124,10,37.9
+1e+10,alsi10mg-250W-0.9-conduction-A_am,250,0.9,40,0.3074,True,70.818,189.91,342.03,73.622,194.01,411.16,70.818,4.0296,4.1011,3956.7,76.85,0,76.85,5.1122e-06,278124,8,46.2
