@@ -9,7 +9,7 @@ Printable Aluminum Alloys* ("supply-secure" depends on D9)
   and four draft panels drawn from data that already exist (Fig. 1a, Fig. 5c's frame, Fig. 6b's layout, Figure S1).
 - **The optimizer's synthetic benchmark is in** (the short version of the BOFN methods work, issue #121): a paragraph
   and the statistics in the Experimental Section, two sentences in §2.6, and SI S12 and the synthetic part of S14,
-  with two figures and the 2 × 2 table. Every number is a `\stat` macro read from
+  with two figures and the 2 × 2 table. Every benchmark statistic is a `\stat` macro read from
   `../benchmarks/bofn-paper/paper-stats/numbers.tex`, the file the MethodsX draft reads too.
 - **What doesn't:** none of the article's own results exist yet.
 - **Target:** an *Advanced Materials* collection due early 2028, as a Research Article (typically 3,000–8,000 words in all,
@@ -73,7 +73,9 @@ plus Python with requests and matplotlib.
      screen-then-test's $100k result with 3.8× less spend (95 % CI 2.4–5.9), and pKGFN did too (1.9–6.3).
    - When the screen is right (κ = 0), screen-then-test wins: no network policy reached its $100k result, and its mean
      was 85 % of the optimum against 77 % for BOFN with powder reuse and 59 % for pKGFN. §2.6 and the outline now
-     say so (decision M8); they used to expect a tie.
+     say so (decision M8); they used to expect a tie. The lead is resolved against pKGFN, KGFN and standard BO, not
+     against the two BOFN policies. bofn-clocked (PR #297) found screen-then-test first to T1 on 10 of 10 seeds, but
+     BOFN $18–39k cheaper, so on the pre-registered spend endpoint a tie at κ = 0 is still possible.
    - Against running every candidate through the whole chain, choosing the step bought an early lead at most (16.5
      points at $25k for pKGFN over KGFN, 95 % CI 6.1–28.3), not a better final alloy.
    - The clocked benchmark (PR #297) found the automated lab 2.5–2.9× faster at 2.2–2.5× the money.
@@ -113,7 +115,7 @@ plus Python with requests and matplotlib.
 | D9 | The mineral-burden metric, frozen together with the campaign paper before its screen ranks anything: its proposed B_NIR = Σ wᵢ·NIRᵢ with MCS 2026 inputs, or an alternative | **Issue to fix: B_NIR counts Mg like Sc.** Scalmalloy's B (4.7–6.0 wt %) is mostly its 4.7 wt % Mg, so a lower-Mg alloy beats it unless it carries a lot of Mn, Cr or Si instead; Al5X1 does (3.1–4.2). Seed S1 (Al–4.8Mn–0.9Cr–1.1Zr–1.2Mg, the FLAIME focus family) scores *higher* than Scalmalloy (6.6–7.3), because Mn is 100 % imported and used at ~5 wt %, and Al-HS1 overlaps it (5.4–5.6). Zr is <25 % imported, so Zr-refined Al–Mg and Al–Fe alloys score lower (`tools/mineral_burden_check.py`, now on the campaign paper's inputs). Making the Sc-free front the headline moves the claim off Scalmalloy, but "below Scalmalloy" stays as a condition in both papers, and the Mg-against-Mn weighting still ranks the baselines. Also, the FLAIME abstract's "100 % of zirconium mineral concentrates" doesn't match MCS 2025 or 2026 (<25 %) |
 | D10 | Freeze the design space: Si in or out (EDS limit raised at the kickoff), and order Zr feedstock (5 of the 9 proposed seeds need it; not on the order) | The seeds and the screen depend on it |
 | D11 | Where data and code are deposited (e.g. Zenodo, with DOIs reserved only at submission) | The Data Availability Statement |
-| **M7** | **The live campaign's acquisition function** (from issue #121): pKGFN (the partial-evaluation knowledge gradient per cost) or BOFN with powder reuse (network EI per cost, new design or reprint) | Both are written out with their evidence in [`campaign2-preregistration.md`](campaign2-preregistration.md); this folder doesn't pick. pKGFN trailed when the screen was right; BOFN with powder reuse is robust across κ but never stops a candidate before printing, which narrows the novelty sentence and Fig. 5a. Decide before the pre-registration is frozen (June 2027) |
+| **M7** | **The live campaign's acquisition function** (from issue #121): pKGFN (the partial-evaluation knowledge gradient per cost) or BOFN with powder reuse (network EI per cost, new design or reprint) | Both are written out with their evidence in [`campaign2-preregistration.md`](campaign2-preregistration.md); this folder doesn't pick. pKGFN gave the only resolved early lead over full-chain evaluation and stops candidates at every step, but tied for the lowest $100k mean when the screen was right. BOFN with powder reuse is robust across κ, but its gain over full-chain BOFN isn't resolved at any κ, and it never stops a candidate before printing, which narrows the novelty sentence and Fig. 5a. Decide before the pre-registration is frozen (June 2027) |
 | M2 | MethodsX companion for the BOFN work, or folded in here only (issue #121) | Both work now: the short version is in, and `\bofncompanion` in `preamble.tex` cites a companion in one place and shrinks the SI part. Disclose the companion in the cover letter if it goes ahead |
 | M8 | **Decided (Sterling, Nov 27):** with a right screen, screen-then-test wins; 95 % intervals throughout | §2.6, abstract, limits, conclusion, outline §2 and §6, the pre-registration (H2 and its expectation) |
 | D12 | CLAUDE.md bars naming staff of partner companies "or at national labs". This folder withholds the author lists of cited papers by AMAZEMET and Thermo-Calc staff, but lists national-lab authors of published papers as ordinary citations. OK? | The bibliography is in a public repo |

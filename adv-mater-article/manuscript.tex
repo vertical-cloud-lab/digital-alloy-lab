@@ -431,9 +431,11 @@ Omitted from the clean build.}
 \note{Claim: a twin fitted to campaign 1 predicts campaign 2's spend within
 \tbd{x}\%; cost-aware network optimization reaches the target at \tbd{k}-fold
 lower cost than screen-then-test when the screen is wrong, and screen-then-test
-wins when the screen is right. That second half is what the synthetic benchmark
-(issue \#121) and the clocked benchmark (PR \#297) both found, so it is the
-expectation, not a tie (decision M8). Supplied by: the synthetic benchmark (SI
+wins when the screen is right. That second half is the expectation, not a tie
+(decision M8): the synthetic benchmark (issue \#121) found screen-then-test ahead,
+though not resolved against the two expected-improvement network policies, and
+the clocked benchmark (PR \#297) found it first to the first target on 10 of 10
+seeds, though more expensive. Supplied by: the synthetic benchmark (SI
 S14, now) and the twin (\#276), refit on lab records (results-needed.md,
 T1--T4).}
 
@@ -446,7 +448,9 @@ powder reuse) reached screen-then-test's \$100k result with
 nucleant-driven crack suppression, and did not reach it within the budget when
 the screen was right; screen-then-test then had the best mean
 (\stat{k0-tiered-v100-mean}\% of the optimum, against
-\stat{k0-eifn_reuse-v100-mean}\% for BOFN with powder reuse). The
+\stat{k0-eifn_reuse-v100-mean}\% for BOFN with powder reuse; difference
+\stat{k0-eifn_reuse-tiered-v100} points, \stat{k0-eifn_reuse-tiered-v100-ci},
+not resolved). The
 knowledge-gradient version (pKGFN) also needed \stat{k1-su-pkgfn-tiered}-fold
 less spend (\stat{k1-su-pkgfn-tiered-ci95}) with a wrong screen, and with a right
 one finished lower still (\stat{k0-pkgfn-v100-mean}\%). With a wrong screen, choosing the
@@ -486,7 +490,8 @@ right ($\kappa$ = 0), $\ge$20 seeds, 95\% matched-seed bootstrap intervals.
 \includegraphics[width=0.9\textwidth]{figures/fig6-draft-synthetic.pdf}
 \caption{\textbf{Draft only: layout for \cref{fig:twin}b from the synthetic
 benchmark} (SI Section~S14; noise-free, costs assumed, not calibrated to the
-lab). Best alloy printed and tested against new spend for the eight policies at
+lab). Best alloy printed and tested against new spend for seven of the eight
+policies (all but screen-then-test without powder reuse) at
 $\kappa$ = 0, 0.5 and 1: means over \stat{k0-n}, \stat{k05-n} and \stat{k1-n}
 matched seeds, 95\% t-intervals of the mean for pKGFN, BOFN with powder reuse
 and screen-then-test, and the spend ratio to screen-then-test's \$100k mean
@@ -771,8 +776,8 @@ dollar,\cite{buathong2024} network expected improvement per dollar with and
 without powder reuse,\cite{astudillo2021} standard Bayesian optimization,
 screen-then-test with and without powder reuse, and random sampling. For a given
 seed every policy started from the same data, and each then had \$100k of new
-budget. Runs were seeded and logged, and reruns reproduced them action for
-action.\bofncite
+budget. Runs were seeded and logged, and reruns of 252 stored runs reproduced
+them action for action.\bofncite
 
 \paragraph{Digital twin and benchmarks.}
 A simulator of the lab produced each step's outputs, duration, cost, noise and
@@ -802,7 +807,9 @@ every policy. Scores are
 the true objective of the best printed and tested alloy as a percentage of the
 optimum, reported as means over seeds; differences between policies are means
 over matched seeds with 95\% percentile bootstrap confidence intervals (10,000
-draws, seeds resampled jointly for both policies). No correction was made for
+draws, seeds resampled jointly for both policies). A policy's spend ratio over a
+baseline is the spend at which the baseline's mean curve reaches its own \$100k
+mean divided by the spend at which the policy's mean curve reaches it. No correction was made for
 multiple comparisons. Analysis in Python (NumPy, SciPy;
 \code{paper_stats.py}). As in the first
 campaign, a candidate expanded the baselines' front if it was stronger than in-house

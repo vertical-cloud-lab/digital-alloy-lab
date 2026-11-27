@@ -123,11 +123,11 @@ manuscript's novelty sentence, Fig. 5a (every candidate's stops, labelled) and t
 
 | For | Against |
 |---|---|
-| With a wrong screen (κ = 1) it needed 3.8× less spend than screen-then-test to reach that policy's $100k result (95 % CI 1.9–6.3). | With a right screen (κ = 0) it had the lowest mean of the model-based policies at $100k: 59 % [48, 70], against screen-then-test's 85 % [83, 88] and BOFN with powder reuse's 77 % [63, 89]. It atomizes only alloys it has simulated, and the κ = 0 optimum is a lean, nucleant-free alloy that the seed compositions don't reach. |
-| It gave the only resolved early lead of partial over full-chain evaluation: at $25k with κ = 1 it was 16.5 pp ahead of KGFN, its full-chain counterpart [6.1, 28.3]. | That lead was gone by $100k (−2.4 pp [−9.8, +5.9]). In four reruns with four times the Monte Carlo samples, its $25k result fell from 69 % to 46 % of the optimum, so the lead may depend on those settings. |
-| It actually stops candidates part-way. Per run at κ = 1 it ran 1.9 new CALPHAD calculations, made 4.8 powders, printed 36.3 times and tensile-tested 7.0 times. So Fig. 5a would show stops at several steps. | It never did better than expected improvement per dollar. With partial evaluation it trailed BOFN with powder reuse at $100k by 6.1 pp at κ = 1 [2.0, 10.0] and by 19.4 pp at κ = 0.5 [10.0, 29.0]. At κ = 0 it trailed by 17.5 pp, not resolved [−0.6, 34.2]. |
+| With a wrong screen (κ = 1) it needed 3.8× less spend than screen-then-test to reach that policy's $100k result (95 % CI 1.9–6.3). | With a right screen (κ = 0) it tied KGFN for the lowest mean of the model-based policies at $100k: 59 % [48, 70], against screen-then-test's 85 % [83, 88] and BOFN with powder reuse's 77 % [63, 89]. It atomizes only alloys it has simulated, and the κ = 0 optimum is a lean, nucleant-free alloy that the seed compositions don't reach. |
+| It gave the only resolved early lead of partial over full-chain evaluation: at $25k with κ = 1 it was 16.5 pp ahead of KGFN, its full-chain counterpart [6.1, 28.3], and 11.9 pp ahead of full-chain BOFN [3.7, 21.7]. | That lead was gone by $100k (−2.4 pp [−9.8, +5.9]). In four reruns with four times the Monte Carlo samples, its $25k result averaged 46 % of the optimum against 69 % for the same seeds' stored runs (two reruns higher, two lower), so its early budget depends on the Monte Carlo realization. |
+| It actually stops candidates part-way. Per run at κ = 1 it ran 1.9 new CALPHAD calculations, made 4.8 powders, printed 36.3 times and tensile-tested 7.0 times. So Fig. 5a would show stops at several steps. | With partial evaluation it was never resolved ahead of BOFN with powder reuse, and it trailed it at $100k by 6.1 pp at κ = 1 [2.0, 10.0] and by 19.4 pp at κ = 0.5 [10.0, 29.0]. At κ = 0 it trailed by 17.5 pp, not resolved [−0.6, 34.2]. |
 | It makes fewer powders per run (4.8, against 11.8 for option B). That would matter if the atomizer stays the bottleneck: it managed 1.7 runs a week in Oct–Nov 2026 (SI Table "Twin assumptions"). The benchmarks charge dollars only, not atomizer capacity. | Its knowledge gradient is often flat. In bofn-clocked, every KG was flat on 64–71 % of its decisions, so the EI fallback decided. In `bofn-prelim`, the tensile-test KG was exactly zero for 73 % of candidates at κ = 0, so it printed a few powders over and over. In the paper set, the fallback decided only 0.7–1.1 % of decisions. |
-| An **any-alloy variant** (`pkgfn_free`) may cure the κ = 0 failure. It may atomize compositions it has never simulated, and it values a new powder by atomizing and printing it as one $4,000 move. On the same 16 seeds at κ = 0 it reached 81 % [70, 90] at $100k, 21.8 pp above pKGFN [8.1, 35.9], and level with screen-then-test (−4.6 pp [−16.2, +5.3]) and with BOFN with powder reuse (+4.3 pp [−7.1, +16.2]). At κ = 0.5 it reached 79 % [67, 88], 12.1 pp above pKGFN [0.1, 22.0]. | The variant hasn't been run at κ = 1. It changes three things at once (the candidate rule, the $4,000 move and lighter Monte Carlo settings), so which one repairs pKGFN isn't known. Its stored runs predate a cost fix, which changes one decision on one seed. In bofn-clocked and the byu-vcl twin, a fixed pKGFN tied full-chain BOFN at best. The MethodsX draft calls its results "results of this implementation at these settings, not of p-KGFN in general". |
+| An **any-alloy variant** (`pkgfn_free`) may cure the κ = 0 failure. It may atomize compositions it has never simulated, and it values a new powder by atomizing and printing it as one $4,000 move. On the same 16 seeds at κ = 0 it reached 81 % [70, 90] at $100k, 21.8 pp above pKGFN [8.1, 35.9], and level with screen-then-test (−4.6 pp [−16.2, +5.3]) and with BOFN with powder reuse (+4.3 pp [−7.1, +16.2]). At κ = 0.5 it reached 79 % [67, 88], 12.1 pp above pKGFN [0.1, 22.0]. | At κ = 1 the variant isn't in the paper set. Earlier runs on 20 seeds (before the cost fix, never rerun; `benchmarks/bofn-paper/README.md`) gave 51 / 61 / 82 % at $25k / $50k / $100k, below pKGFN's 62 / 70 / 84 %, so with a wrong screen it gave up pKGFN's early lead. It changes three things at once (the candidate rule, the $4,000 move and lighter Monte Carlo settings), so which one repairs pKGFN isn't known. Its stored runs predate a cost fix, which changes one decision on one seed. In bofn-clocked and the byu-vcl twin, a fixed pKGFN tied full-chain BOFN at best. The MethodsX draft calls its results "results of this implementation at these settings, not of p-KGFN in general". |
 
 ### Option B: BOFN with powder reuse, network expected improvement per unit cost
 
@@ -144,8 +144,8 @@ larger network expected improvement per dollar.
 
 ### What would narrow the choice before June 2027 (evidence still to collect; not a pick)
 
-- Run the any-alloy pKGFN at κ = 1 on the paper set's 20 seeds.
-- Isolate which of its three changes repairs it.
+- Rerun the any-alloy pKGFN at κ = 1 under the paper set's protocol (its earlier 20-seed runs predate the cost fix).
+- If it still helps at κ = 0, isolate which of its three changes does it.
 - Run both options, with their full-chain counterparts, on the twin fitted to campaign 1 (T1), with the lab's
   measured costs and atomizer capacity. Dollars alone don't capture the atomizer as a bottleneck.
 - Decide what the stop audit means under option B, if B is chosen.
@@ -176,10 +176,14 @@ larger network expected improvement per dollar.
 - **H1** is rejected if the median spend to T is not lower than the full-chain counterpart's, and separately than
   the best-form screen's, at the measured κ. **H2** is rejected if the acceleration factor at κ = 1 is not larger than
   at κ = 0.
-- **Expected at κ = 0: screen-then-test wins** (decision M8). The paper set and bofn-clocked both found that. In the
-  paper set no network policy reached screen-then-test's $100k result when the screen was right. In bofn-clocked,
-  screen-then-test reached the first target sooner than BOFN on 10 of 10 seeds. A tie at κ = 0 would be a finding,
-  not the expectation.
+- **Expected at κ = 0: screen-then-test wins** (decision M8), not a tie. The evidence and its strength:
+  - In the paper set, screen-then-test had the best mean at $100k (85 %), and no network policy's mean curve reached
+    that level within the budget. Its lead is resolved against pKGFN, KGFN and standard BO. It is not resolved against
+    BOFN with powder reuse (−8.9 pp [−23.9, +4.8]) or full-chain BOFN (−11.3 pp [−25.1, +1.2]).
+  - bofn-clocked agrees on time, not on money. At κ = 0, screen-then-test reached the first target sooner than BOFN
+    on 10 of 10 seeds, but BOFN was level on time to the second target and $18–39k cheaper.
+  - This pre-registration's endpoint is spend, so a tie at κ = 0 remains possible. H2 tests whether the gain is larger
+    at κ = 1 than at κ = 0, not a win at κ = 0.
 
 ## What gets reported regardless
 

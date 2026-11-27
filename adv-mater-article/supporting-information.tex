@@ -247,7 +247,8 @@ step bought an early lead, \stat{k1-c-0-v25-abs} points over full-chain evaluati
 at \$25k under the knowledge gradient (difference \stat{k1-c-0-v25-ci}), which was
 gone by \$100k (\stat{k1-c-0-v100}, \stat{k1-c-0-v100-ci}); in four reruns
 with four times the Monte Carlo samples, pKGFN's \$25k result fell from 69\% to
-46\% of the optimum, so this lead may depend on its Monte Carlo settings. The knowledge
+46\% of the optimum (two reruns higher, two lower), so this lead depends on the
+Monte Carlo realization. The knowledge
 gradient was not better than expected improvement per dollar: with partial
 evaluation it finished \stat{k1-c-2-v100-abs} points behind (difference
 \stat{k1-c-2-v100-ci}), mostly
@@ -267,7 +268,9 @@ lean, nucleant-free alloy that the seed compositions do not reach.
 With the screen half right ($\kappa=0.5$), BOFN with powder reuse finished ahead
 of screen-then-test (\stat{k05-eifn_reuse-v100-mean}\% against
 \stat{k05-tiered-v100-mean}\%, difference \stat{k05-eifn_reuse-tiered-v100-ci}
-points), full-chain BOFN was level with it, and pKGFN trailed
+points), full-chain BOFN finished ahead of it on \stat{k05-eifn-tiered-v100-wins}
+of \stat{k05-n} seeds but not resolved (\stat{k05-eifn-tiered-v100} points,
+\stat{k05-eifn-tiered-v100-ci}), and pKGFN trailed
 (\stat{k05-pkgfn-v100-mean}\%).
 
 \paragraph{Validation.} Reruns of the stored runs with the pinned environment
