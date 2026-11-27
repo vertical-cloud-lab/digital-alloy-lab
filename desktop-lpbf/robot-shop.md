@@ -9,6 +9,72 @@ This note covers receiving, stock prep, machining, deburring, washing, measuring
 study in this PR (`analysis/assembly/`). Nothing here was built or run on real machines. The shop is a layout made up for
 the check, not a BYU room.
 
+## Round 9 (2026-11-27): what round 8's frame audit found, fixed; MiRs that drive; the lathe unload and the 4th-axis bolt-up
+
+Sterling on round 7 ("moonwalk, motion sickness, collisions and interference, dummy tool paths instead of real ones"),
+and on 2026-11-27: deal with what round 8's audit still found. Every shop chapter (20, 29, 30, 31, 32) was planned and
+rendered again with `ROBOTBUILD_AUDIT=1` and audited ([`scene_audit.py`](cad/robotbuild/scene_audit.py), pairs deeper
+than 1.5 mm; [`walk.py`](cad/robotbuild/walk.py), stance-foot slip and gliding). The numbers are in
+[`robot-build/video.md`](robot-build/video.md)'s audit table and [`analysis/out/videoqa/`](analysis/out/videoqa/).
+
+**People.** people.py's feet are locked (its `Gait`); the shop's people are moved by setting their body every frame
+and their feet step after it, so no shop chapter glides or slides a planted foot.
+- Chapter 29: the two carry the 30.0 kg plate by its ends as `people.carry()` stands them (each outside one end, facing
+  it, the hands on the sides beside the end, the body 30 mm off the plate), from a narrow receiving stand (two rails
+  120 mm apart: our estimate) onto the cart, side-stepping. The stand and the cart are narrower than the gap between
+  their feet, so round 8's legs in the cart are gone; each palm is seated 2.5 mm off the face it is on (one person's two
+  palms on opposite faces read, to the audit, as the plate inside the glove).
+- Chapter 30: two people side by side at the VF-4's door (`pair_lift`). The cart stands against the machine's front
+  left of the door, its long side along X, so they take a load off it, side-step to the door and reach in. Their bodies
+  stay behind the machine's face below the sill and the cart's edge, 30 mm off the load; their palms lie flat on its
+  end faces (people.py's `bend`); the lean comes from the posed model's reach (palms 400, 500, 600, 700 and 800 mm ahead
+  at leans of about 10, 20, 30, 40 and 50 deg). To bring the reach to 630-690 mm, the 3-axis fixtures sit 107 mm in front
+  of the table's centre line (the spindle still reaches the part's far side at table Y 243-471 of 508). The frame's
+  turn onto the 4th axis (90 deg about the machine's Y: the end faces two people hold don't stay level through it) is a
+  cut.
+- Chapter 20: the person pushes the pallet jack with the palms on its bar, seated off it (`seat_hands`).
+
+**Equipment and scene fixes** (each from a pair the audit found):
+
+| Chapter | Found (round 8 or a test render) | Fix |
+|---|---|---|
+| 20 | the pallet and a crate >100 mm in the stock rack's upright | the pallet turned so the jack's forks run along its stringers, between its bottom boards; its path 350 mm clear of the rack; the crates side by side, not through each other |
+| 20 | the tray lifted through the box's shut flaps and tape; arm B's fingertips 42 mm in them | the flaps opened and the tape cut before the unbox (the planned clip had them open); the flaps turn on their own hinges (round 7's hung detached) |
+| 20 | gloves 59 mm in the jack's handle | the palms on the bar, not in it |
+| 30 | the head inside its column hood | the hood a 4 mm shell open below, the roof open over it; the carousel arm clear of the head |
+| 30 | (test) the table, 508 mm of Y travel back, 164 mm into the column | the column's face at 1350 mm |
+| 30 | (test) the head down on the HRT210 while the floor plate's groove was cut | the HRT210 40 mm left and the 3-axis fixtures 80 mm right on the table |
+| 30 | (test) the doors shutting through arm A | arm A's MiR drives off before they shut |
+| 30 | (test) the F-S1 edge clamps 5 mm in the risers (freecad_cam.FIXTURES' boxes) | drawn short of them |
+| 30 | (test) the cutter 39 mm in the stock | `audit_rec.py` hashed only the first 2000 faces, so the re-meshed stock (600 k faces) was replayed on stale faces; it hashes every face now. The stock is re-meshed every cutting frame (was every third) and the path trail drawn 1.2 mm above the cut floor and cut back clear of the tool |
+| 31 | the VF-4's doors 20 mm through its sill trim | the trim stops 2 mm behind the doors |
+| 31 | (re-render) the lathe door's handle through arm A's upper arm | arm A turns 30 deg about its base, clear of the door at five positions, while the lathe runs; the door's foot out of the base's lip |
+| 32 | the basket inside the wash station's own basket | the station drawn without it where the chapter carries it |
+| 32 | (re-render) the deburred bracket through the gripper's knuckles | the bracket below the TCP, its top in the pads (it was planned above it) |
+| all | the normals pass of a smooth-shaded actor flipped faces of merged boxes (a basket 15 mm clear of a tank read as inside it, winding 0.54) | `equipment.merge` keeps each piece's own points |
+
+**New planned motions** ([`analysis/shop/shop_clips.py`](analysis/shop/shop_clips.py), results in
+[`shop_plan.json`](analysis/out/shop/shop_plan.json)):
+- **MiR drives between stations** (`clip_drive`): pivot on the spot to the straight line to the next dock, drive forward
+  (trapezoid 0.3 m/s², 1.0 m/s, the MiR250 datasheet's), pivot to the dock's heading; the arm first turns to a transport
+  pose (the smallest turn of its base whose whole drive is clear), every pose swept with FCL (pivots every 2 deg, the
+  line every 20 mm, the arm's moves every 0.5 deg); a part still in the gripper rides along and is swept too. No
+  reversing, no sideways slip (walk.py). Drives: the VF-4 to the lathe (chapter 31, after the vise part; chapter 30,
+  after the clamps, the floor plate and the platter screws: 4.25 m, 14.6 s, the arm turned -120 deg, 64 mm closest) and
+  the deburr spindle to the measuring station (chapter 32: 1.39 m, 6.3 s, 32 mm closest).
+- **The 4th-axis bolt-up** (`clip_hrt_bolts`, chapter 30): arm A drives the four M8 screws that hold the dummy-floor
+  plate to the HRT210's platter, through the frame's opening, with the nut runner, at A 90: 25.1 s, 37 % torque, 14 mm
+  closest pass. Round 8 left them to a person, not shown.
+- **The lathe unload** (chapter 31): after the slug is turned (the door shut, the clock), arm A takes the part out along
+  its loading path run back (planned and checked; the part is smaller than the slug it came from).
+- **What is drawn in the gripper:** the nut runner and the safety knife are drawn in the 2F-85 (round 8 drew an empty
+  gripper), and so is the deburred bracket.
+
+**Not done in round 9:** FreeCAD CAM for chapter 31's parts (FreeCAD isn't installed on this runner; its CAM workbench has
+no turning, and the vise bracket would need its own CAM job and gcode_sim support), so the vise bracket and the turned
+part are still shown with the door shut and the clock running, not cut; the floor plate's turnover between P-S1 and
+P-S2; the frame's turn onto the 4th axis is a cut.
+
 ## Round 8 (2026-11-26): no lifter, the real programs
 
 Sterling, 2026-11-26: "I don't think we have a vacuum chuck lift. Probably just a two person job for that part." In round 8 the shop chapters have no jib or vacuum tube lifter: two people lift by hand, each load against a two-person guideline of 2/3 x (23 + 23) = 30.7 kg (NIOSH's load constant, HSE L23's team rule) in [`analysis/out/shop/shop_person.json`](analysis/out/shop/shop_person.json). The plate as delivered (30.0 kg) is carried to a cart for the waterjet (chapter 29); the VF-4 loads are the cored stock (7.7 kg), the part after F-S1 (6.5 kg) and the frame with its plate (10.0 kg). There is no trepan: the programs start from the cored stock. Chapter 30 cuts the chamber with the posted programs ([`analysis/out/machining/gcode/`](analysis/out/machining/gcode/), [`cad/robotbuild/gcode_sim.py`](cad/robotbuild/gcode_sim.py)). The round-7 text below still describes the lifter and the trepan; read it with this note. See [`robot-build/video.md`](robot-build/video.md) round 8.

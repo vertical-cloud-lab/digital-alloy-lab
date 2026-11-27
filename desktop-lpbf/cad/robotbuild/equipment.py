@@ -257,7 +257,11 @@ def hrt210(a_deg=0.0, riser=63.5, with_tail=False, tail_x=420.0):
     return parts, dict(axis=(0.0, 0.0, zc), riser=riser)
 
 
-TABLE_LAYOUT = dict(hrt_face=-240.0, fixture=180.0, vise=300.0)   # table-local x of the platter face, the 3-axis
+TABLE_LAYOUT = dict(hrt_face=-240.0, fixture=180.0, vise=300.0,   # table-local x of the platter face, the 3-axis
+                    fixture_dy=-107.0)   # round 9: the 3-axis fixtures 107 mm in front of the table's centre line
+                                         # (their part's near face 26 mm behind the table's front edge), so two
+                                         # people at the door reach them; the spindle still reaches the far side
+                                         # (table Y 243-471 of its 508)
 # (round 9: the HRT210 40 mm further left and the 3-axis fixtures 80 mm further right: with the floor plate's
 # O-ring groove cut at its left edge, the head came down onto the HRT210's housing)
                                                                   # fixtures' centre and the vise's centre (our layout)
@@ -376,7 +380,7 @@ def vf4(door=1.0, table_x=0.0, table_y=0.0, spindle_z=None, vise_open=150.0, hrt
     # ---- workholding on the table: Kurt XL6A on the right half, HRT210 + riser + tailstock on the left half
     meta = dict(table_centre=(xc, yc, tz), table_top=tz, spindle=(0.0, ysp, nose), door=(dw, s0, s1), nose_z=nose)
     L_ = TABLE_LAYOUT
-    meta.update(fixture_centre=(xc + L_["fixture"], yc, tz))
+    meta.update(fixture_centre=(xc + L_["fixture"], yc + L_.get("fixture_dy", 0.0), tz))
     if with_vise:                     # jaws along X, the fixed jaw on the -x side, the air cylinder overhanging at +x
         vparts, vm = kurt_xl6a(vise_open)
         Mv = T((xc + L_["vise"], yc, tz), Rz(90.0))
@@ -462,7 +466,7 @@ def st10(door=1.0, jaw_open=0.0, chuck_d=165.0, p=None, jaw_deg=90.0):
     # the door: shut over the opening; open = slid left by its width less the overlap
     x0d = p["panel_x0"] - door * (p["panel_w"] - 20.0)
     pw = p["panel_w"]
-    out["door"] = Part(merge([box(x0d, x0d + pw, -30, -6, dz0 - 20, p["win_z0"]), box(x0d, x0d + pw, -30, -6, p["win_z1"], dz1 + 30),
+    out["door"] = Part(merge([box(x0d, x0d + pw, -30, -6, max(dz0 - 20, bh + 2.0), p["win_z0"]), box(x0d, x0d + pw, -30, -6, p["win_z1"], dz1 + 30),
                               box(x0d, x0d + p["win_x0"], -30, -6, p["win_z0"], p["win_z1"]),
                               box(x0d + p["win_x0"] + p["win_w"], x0d + pw, -30, -6, p["win_z0"], p["win_z1"]),
                               box(x0d + pw - 75, x0d + pw - 55, -70, -30, 1150, 1450)]), ST10_DOOR)

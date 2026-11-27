@@ -104,7 +104,7 @@ def vf4_setup(fc, table_x=-100.0, k_state=0, part="frame", rots=None, a_deg=0.0,
         M_setup = Tm(None, (x_axis, yc, tz - fx["table_z"])) @ Tm(C.rot((1, 0, 0), a_deg))
         P = M_setup @ Tm(R)
     else:
-        M_setup = Tm(None, (meta["fixture_centre"][0], yc, tz - fx["table_z"]))
+        M_setup = Tm(None, (meta["fixture_centre"][0], meta["fixture_centre"][1], tz - fx["table_z"]))
         rest = max(p[5] for nm, kind, p in fx["pieces"] if nm in ("riser block", "parallel", "dummy-floor plate",
                                                                   "fixture plate") and kind == "box")
         v = np.asarray(m.points) @ R.T
@@ -372,7 +372,8 @@ def clip_deburr():
     job = Job("Deburr: arm A holds a part against the brush and the compliant spindle", "wash", parts,
               x_mir=560.0 - S.ARM_DX)
     L, W, H = 100.0, 72.0, 40.0
-    part = Body("bracket", *S.box(-L / 2, L / 2, -W / 2, W / 2, -H, 0), kind="held", color="#d6dade")
+    part = Body("bracket", *S.box(-L / 2, L / 2, -W / 2, W / 2, 0, H), kind="held", color="#d6dade")   # round 9: below
+    # the TCP (z along the approach), its top in the pads; round 8 had it above, through the fingers' knuckles
     bx, by, bz = meta["brush"]
     tx, ty, tz = meta["deburr_tip"]
     wps = []
@@ -386,7 +387,7 @@ def clip_deburr():
     return simple_clip("deburr", "wash", "32-finishing", job, "A", "2F-85", "Arm A deburrs a bracket: brush, then the "
                        "compliant spindle", "part to tool: a brush wheel and an ATI compliant deburring spindle on the bench; "
                        "edges in deep pockets stay a person's job", "deburr class", mach=dict(lid_open=True),
-                       objs={"bracket": (np.eye(4), dict(kind="box", b=(-L / 2, L / 2, -W / 2, W / 2, -H, 0),
+                       objs={"bracket": (np.eye(4), dict(kind="box", b=(-L / 2, L / 2, -W / 2, W / 2, 0, H),
                                                          color="#d6dade"))},
                        follow={"bracket": "bracket"}, extra=dict(part_kg=0.8))
 
@@ -672,7 +673,7 @@ def arm_base_of(M, arm_dx):
     return p, _yaw(M)
 
 
-def clip_drive(name, chapter, akey, from_clip, to_clip, world_parts, caption, sub, step):
+def clip_drive(name, chapter, akey, from_clip, to_clip, world_parts, caption, sub, step, to_last=False):
     """Record MiR `akey` driving from the last frame of clip `from_clip` to the first of `to_clip` (both recorded),
     checked with FCL against world_parts [(station key, parts)]. The arm first turns to a transport pose (the clip's
     last pose turned about the base joint, the smallest turn whose whole drive is clear), the MiR pivots, drives and
@@ -681,7 +682,7 @@ def clip_drive(name, chapter, akey, from_clip, to_clip, world_parts, caption, su
     import pickle
     a = pickle.load(open(SP.TRAJ / f"shop_{from_clip}.pkl", "rb"))
     b = pickle.load(open(SP.TRAJ / f"shop_{to_clip}.pkl", "rb"))
-    fa, fb = a["frames"][-1], b["frames"][0]
+    fa, fb = a["frames"][-1], b["frames"][-1 if to_last else 0]
     M0, M1 = np.asarray(fa["mirs"][akey]["M"], float), np.asarray(fb["mirs"][akey]["M"], float)
     arm_dx = fa["mirs"][akey]["arm_dx"]
     q0, q1 = np.asarray(fa["arms"][akey]["q"], float), np.asarray(fb["arms"][akey]["q"], float)
@@ -840,6 +841,79 @@ def clip_drive_deburr_measure():
                       "every pose swept with FCL", "measure class")
 
 
+def clip_lathe_park():
+    """Chapter 31: arm A turns to a transport pose while the lathe's door shuts, the lathe runs and the door opens (the
+    door's handle sweeps through the upper arm at its home pose), then back for the unload. The two joint-space moves
+    are checked with FCL every 0.5 deg against the ST-10 with its door open; the transport pose against the door at 0,
+    0.25, 0.5, 0.75 and 1 open as well."""
+    import pickle
+    a = pickle.load(open(SP.TRAJ / "shop_lathe_slug.pkl", "rb"))
+    fa = a["frames"][-1]
+    akey = "A"
+    M0 = np.asarray(fa["mirs"][akey]["M"], float)
+    arm_dx = fa["mirs"][akey]["arm_dx"]
+    q0, c0 = np.asarray(fa["arms"][akey]["q"], float), float(fa["arms"][akey]["close"])
+    tool0 = fa["arms"][akey]["tool"]
+    open_items = SP.shop_world("lathe", E.st10(door=1.0, jaw_open=6.0)[0])
+    door_items = []
+    for d in (0.0, 0.25, 0.5, 0.75):
+        door_items += [(f"{n} at {d:.2f}", vf, col) for n, vf, col in
+                       SP.shop_world("lathe", {k: v for k, v in E.st10(door=d, jaw_open=6.0)[0].items()
+                                               if k.startswith("door")})]
+    w_open = Group([Body(n, *vf, kind="cell") for n, vf, col in open_items])
+    w_all = Group([Body(n, *vf, kind="cell") for n, vf, col in open_items + door_items])
+    base, yaw = arm_base_of(M0, arm_dx)
+    arm = SP.make_arm(akey, base, yaw, "2F-85")
+    arm.base = np.asarray(fa["arms"][akey]["base"], float)
+    robot = Group(arm.bodies())
+
+    def hit(q, world):
+        arm.place(q, c0)
+        h = group_hits(robot, world, first=True)
+        return None if not h else (h[0][0].name, h[0][1].name)
+
+    qt, tried, checked = None, [], 0
+    for turn in (-30.0, 30.0, -60.0, 60.0, -90.0, 90.0, -120.0, 120.0, -150.0, 150.0, 180.0):
+        cand = q0.copy()
+        cand[0] = q0[0] + math.radians(turn)
+        h = hit(cand, w_all)
+        checked += 1
+        if h is None:
+            n = max(2, int(abs(turn) / 0.5) + 1)
+            for k in range(n):
+                h = hit(q0 + (cand - q0) * (k / (n - 1)), w_open)
+                checked += 1
+                if h:
+                    break
+        tried.append(dict(turn_deg=turn, hit=h))
+        if h is None:
+            qt = cand
+            break
+    clip = Clip("lathe_park", "lathe", "31-machining-parts")
+    clip.meta.update(caption="Arm A clears the lathe's door", sub="its transport pose while the door shuts; FCL-checked",
+                     who=["robot A"], step="lathe class", status="pass")
+    for o, Mo in fa["objs"].items():
+        clip.obj(o, Mo, a["objects"].get(o))
+    ok = qt is not None
+    if ok:
+        for qa, qb, label in ((q0, qt, "the arm to its transport pose, clear of the door"),
+                              (qt, q0, "the arm back to the door")):
+            T = max(1.0, math.degrees(float(np.abs(qb - qa).max())) / 45.0)
+            nf = max(1, int(round(T * FPS)))
+            for k in range(nf):
+                u = ease((k + 1) / nf)
+                arm.place(qa + (qb - qa) * u, c0)
+                clip.set_arm(akey, arm, tool0, mir=dict(M=M0.copy(), arm_dx=arm_dx))
+                clip.frame(1, sub=label)
+    res = dict(ok=ok, fail=None if ok else f"no transport pose clears: {tried[-1]}", poses_checked=checked, tried=tried,
+               transport_turn_deg=tried[-1]["turn_deg"] if ok else None)
+    RESULTS["lathe_park"] = res
+    clip.result = res
+    clip.save()
+    print("lathe_park", "ok" if ok else "FAIL", res["fail"], "turn", res["transport_turn_deg"], flush=True)
+    return clip
+
+
 def clip_drive_vf4_lathe():
     """Chapter 31: MiR A from the VF-4 (after the vise part) to the lathe (before the slug), along the north row."""
     vf4p, _ = E.vf4(door=1.0, table_x=-E.TABLE_LAYOUT["vise"], with_vise=True, vise_open=120.0, with_hrt=True)
@@ -910,7 +984,7 @@ CLIPS = dict(vf4_clamps=clip_vf4_clamps, vf4_floor_load=clip_floor_load, vf4_vis
              measure=clip_measure, kit=clip_kit, recv_tape=clip_recv_tape, recv_unbox=clip_recv_unbox,
              drive_vf4_lathe=clip_drive_vf4_lathe, drive_vf4c_lathe=clip_drive_vf4c_lathe,
              drive_vf4f_lathe=clip_drive_vf4f_lathe, drive_deburr_measure=clip_drive_deburr_measure,
-             hrt_bolts=clip_hrt_bolts, drive_bolts_lathe=clip_drive_bolts_lathe)
+             hrt_bolts=clip_hrt_bolts, drive_bolts_lathe=clip_drive_bolts_lathe, lathe_park=clip_lathe_park)
 
 
 def main(argv):
