@@ -23,7 +23,7 @@ melt-pool data**. The sources were read through the lab Pi's browser route; Edis
 | Version 1's open item | What version 2 does | What it changed |
 |---|---|---|
 | **Mg evaporation** | The wall temperature is where the alloy's total vapour pressure equals the keyhole pressure. Pure-element vapour pressures come from JANAF, activities from mc_al, and Mg at the wall from a supply-against-outflow mass balance | **Little.** The melt can't resupply Mg as fast as the vapour carries it out, so the wall keeps 0.5–3 % of the bulk Mg. It is 1–7 K cooler for AlSi10Mg and the blend, and 28–96 K cooler for Al 5182. No map class changes |
-| **Powder layer** | Radiative transfer in the layer was checked against published values. It over-traps light, so the measured powder absorptance (0.53) is used for the part of the beam ahead of the melt | **Little.** The melt front runs ahead of the beam centre, so only 3–24 % of the beam lands on powder. The conduction-mode absorptance moves from 0.18–0.20 to 0.19–0.28. No map class changes |
+| **Powder layer** | Radiative transfer in the layer was checked against published values. It over-traps light, so the measured powder absorptance (0.53) is used for the part of the beam ahead of the melt | **Little.** The melt front runs ahead of the beam centre, so only 3–24 % of the beam lands on powder. The conduction-mode absorptance moves from 0.18–0.20 to 0.19–0.28. No map class changes. But AlSi10Mg measured in a commercial machine absorbs 0.65–0.76 with powder (Allen 2023), so this coupling is probably too weak (section 3) |
 | **Tilted keyhole** | The front wall leans back at Kaplan's (1994) angle, where the direct beam it catches balances its conduction loss. A new ray tracer handles the tilted shape | Front walls 7–26° from vertical in AlSi10Mg keyholes. Absorptance and depth barely move: X-ray depths 0.87× against version 1's 0.88× for Ti-6Al-4V |
 | **The keyhole's shape from the physics** | A free-form point-by-point wall balance (Kaplan's, with the reflections ray-traced) | **Not adopted.** It drives the keyhole to a funnel with a 20–34 µm shaft, which traps more light and makes the X-ray depths worse (Ti-6Al-4V 1.33×, Al6061 3.4×). Section 4 |
 | **Melt flow** | Our own 3D steady Navier–Stokes and energy solver in the beam frame. It has Marangoni shear on a flat surface, a mushy zone, and the keyhole as a fixed cavity at T_w | **Modest.** Marangoni flow widens pools by 7–12 % and moves depth and length by 6 % or less. Solving the conduction with the real temperature-dependent properties, which version 1 averaged, matters more: it lengthens the pools by 21–65 %. A recoil-driven experiment that pushes the melt round the keyhole at 3–7 m/s changes the pools by 10 % or less. Nothing reaches the AM module's 1.47 mm blend pool. Section 6 |
@@ -42,8 +42,9 @@ melt-pool data**. The sources were read through the lab Pi's browser route; Edis
 - **Lack of fusion: the model disagrees with the AM module at every one of its "no defect" points.**
   - That holds with the powder, with melt flow, and with the melt's absorptance raised to 0.24.
   - Most of those points are where our surface already boils, and the dimple there absorbs like the flat liquid, 0.18, where the AM module has 0.31.
-  - But every measured pre-keyhole absorptance of bare Al that Edison found is 0.06–0.24, so the AM module may be the one that is off.
-  - Our own single tracks would decide it.
+  - Measurements put the AM module's 0.31 between bare metal and a powder bed. On bare plates, pre-keyhole absorptance is 0.06–0.24, close to the model's 0.18. But in a commercial LPBF machine, Allen (2023) measured AlSi10Mg at 0.16–0.23 on an as-built surface and 0.65–0.76 with powder on it, in conduction mode.
+  - So for tracks on a powder bed the model's powder coupling is the likelier shortfall, not the AM module's 0.31. The model only lets the beam ahead of the melt front meet powder, and none once the surface boils.
+  - Our own single tracks, on an as-built surface and on a powder layer, would decide it.
 - **Deep aluminium keyholes absorb about twice too much.**
   - The model's 0.82–0.87 compares with about 0.4 from the AM module (blend render), NIST's Al 5182 (0.43) and Gan et al.'s Al6061 depths.
   - It is the likeliest reason Al6061 keyholes come out 2.3× too deep, as in version 1.
@@ -63,7 +64,7 @@ melt-pool data**. The sources were read through the lab Pi's browser route; Edis
 | Vapour pressure of Al, Mg, Si | Al only, Clausius–Clapeyron | each element, Kirchhoff-integrated from its JANAF 1-bar boiling point: Al 2,790.8 K, 294.0 kJ/mol; Mg 1,366.1 K, 127.9 kJ/mol; Si 3,504.6 K, 384.5 kJ/mol | NIST-JANAF tables Al-001, Mg-001, Si-001 |
 | Activities in the liquid | Raoult, Al only | γ from mc_al: γ_Al ≈ 1, γ_Si ≈ 0.6–0.7 and γ_Mg ≈ 1.4 at 2,800 K. γ_Mg is 0.25–0.7 near the liquidus; above about 2,000 K these values are an extrapolation | pycalphad 0.11.2 + MatCalc mc_al ([`mc_al-liquid-activity-coefficients.csv`](mc_al-liquid-activity-coefficients.csv)) |
 | Mg diffusivity in liquid Al | – | **proxy**: Cu in liquid Al80Cu20, D0 = 1.3×10⁻⁷ m²/s, Q = 0.34 eV | [Zhang, Griesche & Meyer 2009](https://doi.org/10.62721/diffusion-fundamentals.11.552) (X-ray radiography, open access). No open measurement for Mg was found; Du et al. 2003 is closed |
-| Powder absorptance | – | 0.53 | [Rubenchik et al. 2015](https://doi.org/10.1364/AO.54.007230), Fig. 5c (OSTI accepted manuscript): Al powder by calorimetry at 970 nm, 0.51–0.55 from 40 to 450 °C, read off the figure |
+| Powder absorptance | – | 0.53 | [Rubenchik et al. 2015](https://doi.org/10.1364/AO.54.007230), Fig. 5c (OSTI accepted manuscript): Al powder by calorimetry at 970 nm, 0.51–0.55 from 40 to 450 °C, read off the figure. For comparison, AlSi10Mg powder layers in a commercial machine: 0.65–0.76 at 1070 nm ([Allen 2023](https://hdl.handle.net/1974/32579), Fig. 5.6; found in the final review, not used in the runs) |
 
 ## 2. Mg and Si in the vapour
 
@@ -175,12 +176,19 @@ The points version 1 called no defect sat on a deeper root, like the 40 µm one 
   - The pools come out 11–18 % wider and 2–11 % deeper (medians) than the analytic ones.
   - All-class agreement goes to 20 (AlSi10Mg) and 7 (blend). Still none of the AM module's no-defect points comes out as no defect; 30 of 31 AlSi10Mg ones are lack of fusion at the hatch.
   - With the 0.24 optics as well, agreement is 25 and 7 (`v2-map-classes-optics-0.24-meltflow.csv`), and still no no-defect point comes out right. Reaching 30 µm deep at the 65 µm half-hatch needs a pool about 180 µm wide and 75 µm deep at 250 W. That is what the AM module's 0.31 gives in the solver.
-- **Is the AM module's 0.31 itself too high?**
-  - Edison's round 5 collected measured absorptance of bare Al before a keyhole forms. Every value is 0.06–0.24:
-    - Trapp et al. 2017, Al 1100 at 1.5 m/s: 0.10–0.15. Not read; the paper is behind a CAPTCHA.
-    - Simonds et al. 2024, Al 5182: 0.24, which I read.
-  - Version 2's 0.18–0.20 is inside that range; the AM module's 0.31 at a no-defect point is above it.
-  - So on the lack-of-fusion side the disagreement may be the AM module's absorptivity as much as ours. Our own single tracks would decide it.
+- **Is the AM module's 0.31 too high, or ours too low? It depends on the surface.** Edison's round 5 collected measured absorptance of Al alloys before a keyhole forms:
+  - **Bare plates: 0.06–0.24.**
+    - Machined AlSi10Mg: 0.06 ± 0.02 (Allen 2023, below).
+    - Al 1100 at 1.5 m/s: 0.10–0.15 (Trapp et al. 2017). Not read; the paper is behind a CAPTCHA.
+    - Polished Al 5182: 0.24 ([Simonds et al. 2024](https://doi.org/10.1007/s40192-023-00336-0)), which I read.
+  - **In a commercial LPBF machine, it depends on the surface** ([Allen 2023](https://hdl.handle.net/1974/32579), Queen's University PhD thesis, CC BY 4.0, Ch. 5, read in the source for this review).
+    - The measurements are time-resolved integrating-sphere radiometry inside a Renishaw AM 400, on AlSi10Mg at 1070 nm with a 70 µm spot.
+    - Averaged over 92 data sets up to 247 W, conduction mode: 0.02–0.09 on machined plate, 0.16–0.23 on an as-built surface without powder, and **0.65–0.76 with a powder layer** (Fig. 5.6).
+    - The thesis concludes that a powder bed's absorptance "cannot be predicted by bare plate measurements".
+    - Its powder layers were thicker than nominal, likely over 120 µm for a 30 µm recoat.
+  - **Version 2's 0.18–0.20 matches the bare and as-built surfaces.** The AM module's 0.31 is above those but well below a powder bed.
+  - **So for tracks on a powder bed, version 2's powder coupling is the likelier shortfall** (section 5). Only the beam ahead of the melt front meets powder, at Rubenchik et al.'s 0.53 for Al powder, and none once the surface boils.
+  - Our own single tracks would decide it, on an as-built surface and on a powder layer, since the two differ by about 3× in the measurements above.
 
 **At the render points** (pool at the liquidus, solidus length in brackets; µm):
 
@@ -236,7 +244,7 @@ scattering medium (Gusarov & Kruth 2005):
 | Al's textbook index, n = 1.244 + 10i (flat 0.047), a layer 1.5–2 particles thick, porosity 0.4–0.5 | 0.37–0.46 | 0.22, ray-traced close-packed bilayer on Al ([Boley et al. 2015](https://doi.org/10.1364/AO.54.002477), Table 1, OSTI manuscript) |
 | Real, oxidised Al: flat absorptance 0.20, 2–20 particles thick | 0.67–0.72 | 0.51–0.55, Al powder by calorimetry at 970 nm ([Rubenchik et al. 2015](https://doi.org/10.1364/AO.54.007230), Fig. 5c) |
 
-**The homogeneous model over-traps light in a layer only a couple of particles thick, by 1.3–2×.** So version 2 uses the measured 0.53 for the powder. Edison also pointed to Boley et al. 2016's 0.53 for Al powder and 0.58 for Al6061, but I didn't read that paper.
+**The homogeneous model over-traps light in a layer only a couple of particles thick, by 1.3–2×.** So version 2 uses the measured 0.53 for the powder. (Measured in a commercial machine, AlSi10Mg powder layers absorb more, 0.65–0.76 in conduction mode, on layers likely over 120 µm thick; Allen 2023, section 3.) Edison also pointed to Boley et al. 2016's 0.53 for Al powder and 0.58 for Al6061, but I didn't read that paper.
 
 **Coupling into the melt.**
 - In conduction mode, the beam's share ahead of the melt front lands on powder, at 0.53. The rest lands on the liquid. The melt front is the liquidus on the centre line, iterated with the absorptance.
@@ -383,10 +391,14 @@ A short matrix at the AM module's own render speeds covers both questions:
 Transverse sections give D, W and D/W, and with overlapping hatches the depth at the hatch. A longitudinal section,
 or in-situ thermal imaging, gives the length.
 
+**Run the low-power AlSi10Mg tracks twice, on an as-built surface and on a powder layer.** Allen (2023) measured
+AlSi10Mg in a commercial machine at 0.16–0.23 without powder and 0.65–0.76 with it (section 3). The track widths
+on the two surfaces would show how much of the lack-of-fusion disagreement is the powder.
+
 ## What is still not done
 
 - **A free surface.** The solver has Marangoni flow on a flat surface and a fixed keyhole. Imposing a recoil-driven flow round the keyhole changes the pools by 10 % or less (section 6). A deforming surface, with the melt ejected up the rear wall, is still untested. So is whether the AM module's long blend pool comes from its own inputs instead (properties, absorptivity, which edge it draws).
-- **Lack of fusion.** The AM module calls no defect where every version here calls lack of fusion, mostly at the hatch. That holds with melt flow, with the powder, and with a flat absorptance of 0.24. The AM module absorbs about 0.31 there; measured pre-keyhole values for bare Al are 0.06–0.24. Our own single tracks, sectioned, would say which is right.
+- **Lack of fusion.** The AM module calls no defect where every version here calls lack of fusion, mostly at the hatch. That holds with melt flow, with the powder, and with a flat absorptance of 0.24. The AM module absorbs about 0.31 there. Measured pre-keyhole values are 0.06–0.24 on bare plates and 0.16–0.23 on an as-built AlSi10Mg surface, but 0.65–0.76 with a powder layer (Allen 2023). So the model's powder coupling, which drops the powder once the surface boils, is the first thing to improve. Our own single tracks, sectioned, would say which is right.
 - **Deep aluminium keyholes absorb about twice too much**, so Al6061 keyholes are still 2.3× too deep. Neither the sourced optics, the tilt, the Mg nor melt flow changes that.
   - What makes an aluminium keyhole trap less light than a smooth Fresnel cone (Ti-6Al-4V's is right) is the open question.
   - One thing to check: whether it is held open less steadily (collapse, fluctuation), which the X-ray studies could show.
@@ -421,10 +433,11 @@ Two more LITERATURE_HIGH queries ([`scripts/edison_keyhole_not_done.py`](../../.
 Reports, raw trajectories and the DOI check are in
 [`edison-trajectories/keyhole-not-done-round5/`](../../../../edison-trajectories/keyhole-not-done-round5/).
 - **Grounded.** All 16 DOIs resolve to the works cited; 5 were checked by hand because the citing text is a table cell.
-- **Its two leads are used above, flagged as unread:**
-  - pre-keyhole absorptance of bare Al is 0.06–0.24 (Trapp et al. 2017, Simonds et al. 2024);
+- **Its leads are used above:**
+  - pre-keyhole absorptance on bare plates is 0.06–0.24 (Allen 2023, Trapp et al. 2017, Simonds et al. 2024);
+  - in a commercial LPBF machine, AlSi10Mg absorbs 0.16–0.23 on an as-built surface and 0.65–0.76 with powder (Allen 2023). The first write-up of round 5 left these out;
   - Guo et al. 2020's 1.2 mm or more of melt flow behind the depression.
-- Simonds et al.'s 0.24 is the only one I read.
+- Simonds et al. 2024 and Allen 2023 were read in the source. Allen's thesis was added in the final review, from Queen's University's open repository. Trapp et al. and Guo et al. are still unread.
 
 ## Files and rerunning
 
