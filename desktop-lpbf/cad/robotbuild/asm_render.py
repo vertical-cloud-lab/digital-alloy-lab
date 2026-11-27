@@ -592,6 +592,32 @@ class Replay:
             P += [a + (b - a) * k / n for k in range(n + 1)]
         return self._clear_pts(P, boxes, r) if P else True
 
+    def feet_clear(self, P, legs, h0, h1, boxes, clock0=0, margin=20.0):
+        """Round 10: the walk along `legs` (walk_seq, starting turned to h0, ending turned to h1) replayed on a copy of the
+        person's Gait: is every foot (a 150 mm circle round the forefoot, its centre 70 mm ahead of the ankle), planted or
+        swinging, at least `margin` mm clear of the floor plan's boxes? Round 9's first chapter-40 test had a shoe 31 mm in
+        MiR A as the person turned at the bench to walk out (the body's path was clear, the steps round it were not)."""
+        import copy
+        g = copy.deepcopy(P.gait)
+        g.explicit = True
+        g.reset(float(legs[0][0]), float(legs[0][1]), float(h0), clock=clock0)
+        k = clock0
+        pts = []
+        x, y = float(legs[-1][0]), float(legs[-1][1])
+        for x, y, h in self.walk_seq(legs, h0, h1):
+            k += 1
+            g.update(x, y, h, clock=k)
+            for fx, fy, psi, lift, pitch in g.pose():
+                a = math.radians(psi)
+                pts.append((fx - 70.0 * math.sin(a), fy + 70.0 * math.cos(a)))
+        for _ in range(8):                                    # the last steps settle
+            k += 1
+            g.update(x, y, h1, clock=k)
+            for fx, fy, psi, lift, pitch in g.pose():
+                a = math.radians(psi)
+                pts.append((fx - 70.0 * math.sin(a), fy + 70.0 * math.cos(a)))
+        return self._clear_pts(pts, boxes, 150.0 + margin) if pts else True
+
     def mir_room_moves(self, work, reach=1500.0):
         """Round 10: [(arm, x along its lane)] a MiR could back off to, to make room for a person working at `work`: MiRs within
         `reach` of the work along x whose arm is parked (park pose, nothing held), moved 900-1300 mm away along their own lane
@@ -887,6 +913,11 @@ NSPOT = int(os.environ.get("ASM_PERSON_SPOTS", "24"))
 # every slice of a chapter shares them (keyed by step, the job's number in the chapter, side and work point; delete the file
 # when the recording changes)
 _PCACHE = None
+
+
+def person_badness(hits):
+    """(collisions, mm the hands fall short) of what a person check found: fewer collisions first, then the shortest reach."""
+    return (sum(1 for h in hits if h[0] != "hand"), sum(float(h[2]) for h in hits if h[0] == "hand"))
 
 
 def person_cache():
@@ -1516,6 +1547,7 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
             tiers = []
         def search(tiers_, mir=None):
             nonlocal tried, worst
+            fboxes = rp.floor_boxes()
             for tier in tiers_:
                 cands = rp.person_spots(work[:2], side, **tier)
                 for k_, v_ in getattr(rp, "last_spot_why", {}).items():
@@ -1525,6 +1557,14 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                     c["relaxed"] = bool(tier.get("relaxed"))
                     c["mir"] = mir
                     xs, ys = c["spot"]
+                    if not c["relaxed"]:
+                        # the steps of the walk in and out, and the turns at each end, clear of the floor plan (feet_clear)
+                        xa_, ya_ = c["aisle"]
+                        hi_, hj_ = face_hd(xs - xa_, ys - ya_), face_hd(look[0] - xs, look[1] - ys)
+                        if not (rp.feet_clear(P, [(xa_, ya_), (xs, ys)], hi_, hj_, fboxes) and
+                                rp.feet_clear(P, [(xs, ys), (xa_, ya_)], hj_, hi_ + 180.0, fboxes)):
+                            why_all["feet"] = why_all.get("feet", 0) + 1
+                            continue
                     P.place(x=xs, y=ys, hd=face_hd(look[0] - xs, look[1] - ys), look=look, frame=tot["n"])
                     data = None
                     if fit is not None:
@@ -1533,8 +1573,7 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                         hits = rp.person_hits(P, limit=2)  # standing there
                     if not hits:
                         return (c, data)
-                    if mir is None and (worst is None or len(hits) < len(worst[1]) or
-                                        (len(hits) == len(worst[1]) and max(h[2] for h in hits) < max(h[2] for h in worst[1]))):
+                    if mir is None and (worst is None or person_badness(hits) < person_badness(worst[1])):
                         worst = ((c, data), hits)
             return None
         if tiers:
@@ -1740,9 +1779,12 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
         return out
 
     def fit_jobs(jobs):
-        """Round 10: fit(P) for person_job: for each of the person's jobs, the first hand pose (part_hand_cands; for a screw the
-        driver held 150, 200 or 120 mm up its axis) whose posed body, hands and driver are clear of everything drawn (the part
-        set, at its seat, and the screw driven may be touched by the hands up to Replay.OWN_MM). Returns (hits of the worst job,
+        """Round 10: fit(P) for person_job: for each of the person's jobs, a hand pose (part_hand_cands; for a screw the driver
+        held 150, 200 or 120 mm up its axis; each upright or leaning 15 or 28 deg) whose posed body, hands and driver are clear
+        of everything drawn (the part set, at its seat, and the screw driven may be touched by the hands up to
+        Replay.OWN_MM): the first that reaches (palm within 80 mm of its target; a screw: the hand on the driver's handle) and
+        is clear; else the clear one that comes closest; else the hands at the person's sides. Every pose drawn is checked.
+        Returns (what is wrong with the worst job: [(part, what, mm)], "hand"/"out of reach" for a reach short by mm;
         [pose per job])."""
         def fit(P):
             poses, worst = [], []
@@ -1753,7 +1795,6 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                         rp.sc.gmat[f"o{i}"] = np.asarray(T, float)
                     rp.sc.alpha[f"o{i}"] = 1.0
                 own = {f"o{i}" for i in objs}
-                best = None
                 if kind == "part":
                     W = np.vstack([obj_world(i, T) for i in objs])
                     cands = [(nm, hands, palm, None) for nm, hands, palm in part_hand_cands(P, W)]
@@ -1761,49 +1802,62 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                     h, u = screw_axis(objs[0])
                     cands = [(f"driver {d:.0f} mm", {"r": tuple(map(float, h + d * u)), "l": None}, {"l": None, "r": None},
                               (h, u)) for d in (150.0, 200.0, 120.0)]
-                done_ = False
-                for nm, hands, palm, hu in cands:
-                    for lean in (0.0, 15.0, 28.0):      # round 10: leaning in from the hips to reach further (people.py)
-                        P.set(hands=hands, palm=palm, lean=lean, frame=tot["n"])
-                        extra = ()
-                        if hu is not None:
-                            rp.sc.alpha["op/tool/screwdriver"] = 1.0
-                            place_driver(P, *hu)
-                            extra = ("op/tool/screwdriver",)
-                        tgt = [np.asarray(v, float) for v in hands.values() if v is not None]
-                        if hu is not None:
-                            # a screw: the right hand on the driver's handle (110-210 mm up from its bit), the bit on the
-                            # head (place_driver: the hand within 260 mm of it)
-                            L_ = float(np.linalg.norm(np.asarray(P.hand_point("r"), float) - hu[0]))
-                            reach = max(0.0, 110.0 - L_, L_ - 230.0)
-                        else:
-                            reach = max(float(np.linalg.norm(np.asarray(P.hand_point(s), float) - np.asarray(hands[s], float)))
-                                        for s in ("l", "r") if hands.get(s) is not None)
-                        if reach > 80.0:
-                            rp.sc.alpha["op/tool/screwdriver"] = 0.0
-                            if best is None or (1, True, 0.0, reach, lean) < best[0]:
-                                best = ((1, True, 0.0, reach, lean),
-                                        dict(name=nm + (f", leaning {lean:.0f} deg" if lean else ""), hands=hands, palm=palm,
-                                             look=tuple(np.mean(tgt, axis=0)), reach=reach, lean=lean), [])
-                            continue                    # out of reach: lean further, or the next pose (no check needed)
-                        hits = rp.person_hits(P, own=own, extra=extra, limit=3)
+
+                def pose_it(c_, lean):
+                    nm, hands, palm, hu = c_
+                    P.set(hands=hands, palm=palm, lean=lean, frame=tot["n"])
+                    if hu is not None:
+                        rp.sc.alpha["op/tool/screwdriver"] = 1.0
+                        place_driver(P, *hu)
+                        # a screw: the right hand on the driver's handle (110-230 mm up from its bit), the bit on the head
+                        L_ = float(np.linalg.norm(np.asarray(P.hand_point("r"), float) - hu[0]))
+                        return max(0.0, 110.0 - L_, L_ - 230.0)
+                    return max(float(np.linalg.norm(np.asarray(P.hand_point(s), float) - np.asarray(hands[s], float)))
+                               for s in ("l", "r") if hands.get(s) is not None)
+
+                def hits_now(c_):
+                    hs = rp.person_hits(P, own=own, extra=("op/tool/screwdriver",) if c_[3] is not None else (), limit=3)
+                    rp.sc.alpha["op/tool/screwdriver"] = 0.0
+                    return hs
+                reach_ok, short = [], []
+                for c_ in cands:
+                    for lean in (0.0, 15.0, 28.0):
+                        r_ = pose_it(c_, lean)
                         rp.sc.alpha["op/tool/screwdriver"] = 0.0
-                        score = (len(hits), reach > 80.0, max([h_[2] for h_ in hits], default=0.0), reach, lean)
-                        if best is None or score < best[0]:
-                            best = (score, dict(name=nm + (f", leaning {lean:.0f} deg" if lean else ""), hands=hands, palm=palm,
-                                                look=tuple(np.mean(tgt, axis=0)), reach=reach, lean=lean), hits)
-                        if not hits and reach <= 80.0:
-                            done_ = True
+                        if r_ <= 80.0:
+                            reach_ok.append((c_, lean, r_))
                             break
-                    if done_:
+                        if lean == 28.0:
+                            short.append((c_, lean, r_))
+                chosen = None
+                for c_, lean, r_ in reach_ok:
+                    pose_it(c_, lean)
+                    if not hits_now(c_):
+                        chosen = (c_, lean, r_, [])
                         break
+                if chosen is None:
+                    for c_, lean, r_ in sorted(short, key=lambda t: t[2])[:3]:
+                        pose_it(c_, lean)
+                        if not hits_now(c_):
+                            chosen = (c_, lean, r_, [("hand", "out of reach", round(r_, 1))])
+                            break
+                if chosen is None:
+                    # nothing clear: the hands at their sides (the person stands by; checked as they stand)
+                    P.set(hands={"l": None, "r": None}, palm={"l": None, "r": None}, lean=0.0, frame=tot["n"])
+                    hs = rp.person_hits(P, limit=3)
+                    c_ = ("hands at their sides", {"l": None, "r": None}, {"l": None, "r": None}, None)
+                    chosen = (c_, 0.0, 999.0, hs + [("hand", "out of reach", 999.0)])
+                (nm, hands, palm, hu), lean, r_, bad = chosen
+                tgt = [np.asarray(v, float) for v in hands.values() if v is not None]
+                look_ = tuple(np.mean(tgt, axis=0)) if tgt else tuple(np.mean(W, axis=0)) if kind == "part" else \
+                    tuple(map(float, screw_axis(objs[0])[0]))
+                poses.append(dict(name=nm + (f", leaning {lean:.0f} deg" if lean else ""), hands=hands, palm=palm, look=look_,
+                                  reach=r_, lean=lean))
                 for i, (M0, a0) in keep.items():
                     if M0 is not None:
                         rp.sc.gmat[f"o{i}"] = M0
                     rp.sc.alpha[f"o{i}"] = a0
-                poses.append(best[1])
-                bad = list(best[2]) + ([("hand", "out of reach", round(best[1]["reach"], 1))] if best[1]["reach"] > 80.0 else [])
-                if len(bad) > len(worst):
+                if person_badness(bad) > person_badness(worst):
                     worst = bad
             P.set(hands={"l": None, "r": None}, palm={"l": None, "r": None}, lean=0.0, frame=tot["n"])
             return worst, poses
