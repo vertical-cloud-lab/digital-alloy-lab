@@ -41,6 +41,12 @@ P = M.P
 
 JOINTS = [
     ("Gantry uprights", "Gantry cross-beam", "T-slot joint"),
+    ("Gantry braces", "Gantry uprights", "brace bolted to the post"),
+    ("Gantry braces", "Gantry cross-beam", "knee brace bolted under the cross-beam"),
+    ("Gantry braces", "T-slot base", "diagonal's foot at the back support rail"),
+    ("Front-post foot brackets", "Gantry uprights", "post on its foot"),
+    ("Front-post foot brackets", "T-slot base", "foot bolted to the front base rail"),
+    ("Scan-head flange plate", "Gantry cross-beam", "plate's front end bolted to the front cross-beam"),
     ("Gantry uprights", "T-slot base", "uprights stand on the support rail"),
     ("Process fibre", "Fibre bend restrictor", "fibre in its bend restrictor"),
     ("Fibre bend restrictor", "IPG YLR", "restrictor on the laser's front panel"),
@@ -452,7 +458,7 @@ def door_swing(state="FT-1", max_deg=90, step=1.0, camera=True):
     y_h, z_h = M.door_hinge(state)
     door = [p for p in parts if p.name.startswith(DOOR_GROUP) and (camera or not p.name.startswith("Layer camera"))]
     skip_names = ("Beam tube centre section", "Surface thermocouples", "Concealed hinges", "Poured-in-place", "Saginaw",
-                  "Coded lid switches", "Bench top", "Layer camera")
+                  "Lid interlock", "Bench top", "Layer camera")
     statics = [p for p in parts if p not in door and not p.name.startswith(skip_names)]
     pivot = np.array([0.0, y_h, z_h])
     poses = []

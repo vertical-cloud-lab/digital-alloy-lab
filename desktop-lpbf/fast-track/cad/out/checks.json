@@ -1,13 +1,25 @@
 {
  "states": {
   "S1": {
-   "n_parts": 21,
+   "n_parts": 24,
    "clashes": [],
    "contacts": [
     {
+     "a": "Gantry uprights",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 5294.3,
+     "why": "brace bolted to the post"
+    },
+    {
+     "a": "Gantry cross-beam (clamped at the head height)",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
      "a": "Fibre bend restrictor",
      "b": "Process fibre",
-     "volume_mm3": 557.8,
+     "volume_mm3": 563.1,
      "why": "fibre in its bend restrictor"
     }
    ],
@@ -15,13 +27,25 @@
    "beam_nearest": []
   },
   "S2": {
-   "n_parts": 45,
+   "n_parts": 48,
    "clashes": [],
    "contacts": [
     {
+     "a": "Gantry uprights",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 5294.3,
+     "why": "brace bolted to the post"
+    },
+    {
+     "a": "Gantry cross-beam (clamped at the head height)",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
      "a": "Fibre bend restrictor",
      "b": "Process fibre",
-     "volume_mm3": 557.8,
+     "volume_mm3": 563.1,
      "why": "fibre in its bend restrictor"
     },
     {
@@ -111,13 +135,25 @@
    }
   },
   "FT-0": {
-   "n_parts": 80,
+   "n_parts": 83,
    "clashes": [],
    "contacts": [
     {
+     "a": "Gantry uprights",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 5294.3,
+     "why": "brace bolted to the post"
+    },
+    {
+     "a": "Gantry cross-beam (clamped at the head height)",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
      "a": "Fibre bend restrictor",
      "b": "Process fibre",
-     "volume_mm3": 557.8,
+     "volume_mm3": 563.1,
      "why": "fibre in its bend restrictor"
     },
     {
@@ -194,13 +230,25 @@
    }
   },
   "FT-1": {
-   "n_parts": 98,
+   "n_parts": 101,
    "clashes": [],
    "contacts": [
     {
+     "a": "Gantry uprights",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 5294.3,
+     "why": "brace bolted to the post"
+    },
+    {
+     "a": "Gantry cross-beam (clamped at the head height)",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
      "a": "Fibre bend restrictor",
      "b": "Process fibre",
-     "volume_mm3": 557.8,
+     "volume_mm3": 563.1,
      "why": "fibre in its bend restrictor"
     },
     {
@@ -551,14 +599,38 @@
    }
   },
   "FT-1V": {
-   "n_parts": 100,
+   "n_parts": 103,
    "clashes": [],
    "contacts": [
     {
+     "a": "Gantry uprights",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 5294.3,
+     "why": "brace bolted to the post"
+    },
+    {
+     "a": "Gantry cross-beam (clamped at the head height)",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
      "a": "Fibre bend restrictor",
      "b": "Process fibre",
-     "volume_mm3": 582.1,
+     "volume_mm3": 587.8,
      "why": "fibre in its bend restrictor"
+    },
+    {
+     "a": "KF-25 ports: pump, Pirani, argon, exhaust, 2 electrical feedthroughs",
+     "b": "KF-25 pump hose and valve",
+     "volume_mm3": 47.6,
+     "why": "hose on the pump port"
+    },
+    {
+     "a": "Rotary-vane pump (McMaster 4396K21 class, envelope est.)",
+     "b": "KF-25 pump hose and valve",
+     "volume_mm3": 598.5,
+     "why": "hose on the pump inlet"
     },
     {
      "a": "Window retaining flange (MK-02)",
@@ -577,18 +649,6 @@
      "b": "Camera post, arm and foot (MK-20)",
      "volume_mm3": 141.8,
      "why": "clamp on the camera's mount ring"
-    },
-    {
-     "a": "KF-25 pump hose and valve",
-     "b": "KF-25 ports: pump, Pirani, argon, exhaust, 2 electrical feedthroughs",
-     "volume_mm3": 272.8,
-     "why": "hose on the pump port"
-    },
-    {
-     "a": "KF-25 pump hose and valve",
-     "b": "Rotary-vane pump (McMaster 4396K21 class, envelope est.)",
-     "volume_mm3": 598.5,
-     "why": "hose on the pump inlet"
     }
    ],
    "beam_hits": [],
@@ -914,13 +974,25 @@
    }
   },
   "FT-1 (Thorlabs piston)": {
-   "n_parts": 97,
+   "n_parts": 100,
    "clashes": [],
    "contacts": [
     {
+     "a": "Gantry uprights",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 5294.3,
+     "why": "brace bolted to the post"
+    },
+    {
+     "a": "Gantry cross-beam (clamped at the head height)",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
      "a": "Fibre bend restrictor",
      "b": "Process fibre",
-     "volume_mm3": 557.8,
+     "volume_mm3": 563.1,
      "why": "fibre in its bend restrictor"
     },
     {
@@ -1273,7 +1345,7 @@
   "beam_at_window_cube_mm": 4.95,
   "window_irradiance_cube_kW_cm2_at_400W": 2.1,
   "cover_slide_above_bed_cube_mm": 130.0,
-  "cassette_height_above_floor_mm": 102.7,
+  "cassette_height_above_floor_mm": 107.7,
   "cube_inside_height_mm": 289.6,
   "box_inside_height_mm": 210.8,
   "head_top_above_bed_box_mm": 528.1,
@@ -1398,30 +1470,5 @@
    "stage_limit_C": 50.0
   }
  ],
- "runtime_s": 1118,
- "late_fixes": {
-  "FT-1": {
-   "motor_in_arm_mm3": 0.0,
-   "motor_sweep_hits": [],
-   "motor_nearest_static": [
-    97.7,
-    "Saginaw SCE-16EL1208SSLP 304 box, 16 x 12 x 8 in. (body)",
-    -45.8
-   ],
-   "clashes": 0,
-   "beam_hits": 0
-  },
-  "FT-1V": {
-   "motor_in_arm_mm3": 0.0,
-   "motor_sweep_hits": [],
-   "motor_nearest_static": [
-    55.33,
-    "Well-block heater and TC leads",
-    -45.8
-   ],
-   "clashes": 0,
-   "beam_hits": 0
-  },
-  "hose_into_pump_inlet_mm": 4.0
- }
+ "runtime_s": 1051
 }
