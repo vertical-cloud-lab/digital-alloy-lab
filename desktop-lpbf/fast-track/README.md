@@ -25,6 +25,7 @@ in an Al alloy: the smallest result that shows a working LPBF machine.
 | [`analysis/`](analysis/) | round 2: structural and thermal FEA (CalculiX) and gas CFD (OpenFOAM) of FT-1/FT-1V |
 | [`fab/`](fab/) | round 2: fabrication-ready parts, FreeCAD CAM and G-code, voxel checks, drawings, shop hours |
 | [`../edison/ft-round2-review/`](../edison/ft-round2-review/answer.md) | Edison round 2: seven design risks and the top five with first-week checks |
+| [`video/`](video/README.md) | round 2: the progression video, S1 → FT-1V on the round-1 model with the real scan programs ([YouTube](https://youtu.be/kdaj7jzdJyI)), its pipeline, QA and frame audit |
 
 ## Short answer
 
@@ -112,6 +113,7 @@ in headed Chrome with real mouse clicks. Each finding below links the folder wit
 | **Structure** (CalculiX) | [`analysis/out/fea/struct.md`](analysis/out/fea/struct.md) | a **sponge silicone gasket**, not a solid cord (the cord needs 4.0 kN to close); the gantry as drawn has a **13 Hz** first mode, so **four 45 mm posts with braces** (79 Hz); the cube plate and window pass (SF 34 and 74); the X-VSR20A must pull the rod down past its O-ring drag (7–45 N); the Thorlabs stage needs one O-ring |
 | **Cross-flow** (OpenFOAM, laminar and k-ω SST, 237k cells) | [`analysis/out/cfd/`](analysis/out/cfd/) | the slot jet holds 2.6–2.7 m/s over the build area; bed shear 0.03–0.05 Pa, below the 0.053–0.118 Pa that starts to lift 63 µm powder; 96–99 % of tracers released 0.5–3 mm up reach the collector |
 | **Fabrication** (FreeCAD CAM, 66 setups, every program checked in a voxel simulation; 35 drawings) | [`fab/`](fab/) | with PR 266's per-part allowances, FT-1's parts need **about 59–123 shop hours, not 25–40**. The schedule below is redone on them |
+| **Progression video** (5:51; every frame audited for collisions; PR 266's camera check passes; scan vectors from the process program) | [`video/`](video/README.md), [YouTube](https://youtu.be/kdaj7jzdJyI) | shows round 1's model and numbers, labelled as such |
 | **Monitoring** after PR 266's `monitoring.md`: layer camera, two raking lights, a coaxial photodiode, acoustic emission, thermocouples, one digitizer on the laser's time base | [`cad/`](cad/README.md) (MON1–MON8), [`control/`](control/README.md) | $4.5k–6.2k at FT-0 and $5.3k–8.2k at FT-1 (`parts.csv` group "Monitoring") |
 | **Edison round 2:** seven design risks reviewed; the top five with first-week checks | [`../edison/ft-round2-review/`](../edison/ft-round2-review/answer.md) | back reflection, piston binding at 200 °C, purge leaks, hopper dosing of fine Al, cover-slide fouling; the commissioning steps in `control/ftctl/commission.py` follow them |
 

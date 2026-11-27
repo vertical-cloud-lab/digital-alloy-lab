@@ -5,6 +5,8 @@ For [issue #260](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/
 coupons as FT-1, and is moved into the vacuum cube as FT-1V. Calendar, state, running spend and the part going in are on
 screen in every frame.
 
+**On YouTube: https://youtu.be/kdaj7jzdJyI** (public, subscribers not notified; uploaded 2026-11-27).
+
 **Video:** [`out/fast-track-progression.mp4`](out/fast-track-progression.mp4): 5 min 51 s (351.5 s, 10,544 frames at 30 fps),
 1920 x 1080, H.264 (libx264, CRF 24, yuv420p), 9.2 MB; composed 2026-11-27. Chapter list:
 [`out/chapters.txt`](out/chapters.txt); four frames of every chapter: [`../img/video/contact-sheet.jpg`](../img/video/contact-sheet.jpg);
