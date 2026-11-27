@@ -37,12 +37,12 @@ part's name says "envelope".
    7–10 K on cooler air from the dock, which also takes in the warm Shuttle's heat through the panels.
 4. **Fed from the Shuttle, that is enough in the typical case and not in the busy one.** At 30.2 °C the guard is at 35.6 °C: everything
    is in rating, with the galvo at its limit (35.6 against 35). At 38.0 °C the guard is at 42.7 °C: the photodiodes, the LED, the
-   galvo and the coaxial camera's board are over, and the Chronos, in its hood, is at 38.5 against 40. **So the cameras need the
-   laser's answer (heat.md §2): air from outside the Shuttle, or chilled water.** Room air through a ventilated dock keeps everything
-   in rating in the typical and busy cases (guard 28.7–29.3 °C; with the CFD's hot spots the warmest board, the LP camera's, is
-   ~41 °C against 50, §4.2), once the base plate's open window under the chamber is covered (item 10). A chilled-water fan coil in
-   the closed guard (not drawn) does nearly as well (33.6–34.5 °C), with the galvo close to its limit. Whichever is chosen for the
-   laser should be sized for the guard too.
+   galvo and the coaxial camera's board are over, and the Chronos, in its hood, is at 38.5 against 40 (41.2 in the CFD, item 10).
+   **So the cameras need the laser's answer (heat.md §2): air from outside the Shuttle, or chilled water.** Room air through a
+   ventilated dock keeps everything in rating in the typical and busy cases (guard 28.7–29.3 °C; with the CFD's hot spots the warmest
+   board, the LP camera's, is ~41 °C against 50, §4.2), once the base plate's open window under the chamber is covered (item 10). A
+   chilled-water fan coil in the closed guard (not drawn) does nearly as well (33.6–34.5 °C), with the galvo close to its limit.
+   Whichever is chosen for the laser should be sized for the guard too.
 5. **The worst case (500 W continuous) still has one over, even with room air:** the coaxial camera's board, at 51.8 against 50 °C. The
    galvo heats the optics bridge 20 K above the guard's air, and the cage stands on posts on the bridge.
 6. **The light traps meet the Class 1 requirement (OD 5.4) with black anodise; OD 7, the margin, needs hard black anodise or a foil
@@ -195,7 +195,8 @@ coil, the coaxial camera (59.9), the Alvium (61.3), the galvo (39.2) and PB2's S
 - **What each part of the cooling does.**
   - Ventilation does most of it, by taking the guard from 26–44 K over the Shuttle to 5–10 K over its supply.
   - The hood puts the Chronos in supply air instead of guard air, 4–6 K cooler. That keeps it in rating in the busy case on Shuttle
-    air (38.5 against 42.7).
+    air (38.5 against 42.7). The CFD (§4.2) finds less: the camera's own 20 W warms the hood's 20 m³/h by ~3 K, to 41.2 °C on
+    average in the busy case.
   - The G-10 pad cuts the bracket's link to the 60 °C floor plate from 1.3 to 0.1 W/K, which takes 6.5 K off the Chronos's body
     (44 °C with it, typical vented case).
   - The G-10 ring cuts the LP camera's link to its 60 °C boss from 0.4 to 0.017 W/K. In the typical vented case that board would be
@@ -338,7 +339,7 @@ seconds since it came in) and the velocity in four sections.
 - **No short circuit along the back panel.** The inlet trap points its air at the floor. It runs forward along the left wall, along
   the front panel to the right, and up the right side to the exhaust. Only 0.1 % of the exhaust's flow is younger than a quarter of
   the nominal time V/Q = 4.4 s, and 32 % of it leaves above the bridge.
-- **The upper half is reached, more slowly.** The air comes up through the gaps round the bridge, mostly at the right and the front.
+- **The upper half is reached, more slowly.** The air comes up through the gaps round the bridge, mostly up the right side.
   Its mean age above the bridge is 5.5 s, below it 3.3 s. The air-change effectiveness is 0.57 (0.5 is a fully mixed room).
 - **No dead zone.** Apart from a 0.03 L pocket inside the build module's flange, no air is older than 3 V/Q. The stalest air, 1.5–2
   V/Q, is above the bridge at the front left, round the coaxial cage, PD-A and the coaxial camera, and behind the chamber.
@@ -351,10 +352,10 @@ seconds since it came in) and the velocity in four sections.
 hood's 20.4 m³/h, which warms it by 3.1 K on average and 5.3 K at the lens end. **So the hood does not hold the Chronos in supply
 air, as §3 assumes:** in the busy case the hood's air averages 41.2 °C (39.7 in its back half), against §3's 38.5 °C and the
 Chronos's 40 °C rating. Whether that is over depends on where the camera's own fan draws from, which Kron doesn't publish. Two
-things help. **The hood's flow is
-probably larger than 20 m³/h:** the exhaust holds the guard ~40 Pa under the Shuttle, and the hood's path runs in parallel with the
-inlet, so with cooling.py's resistances it carries ~37 m³/h (`network()`, `guard_cfd.json` `network.sealed`), which halves the
-rise. And the dock's 22 °C air, §2's answer for the busy case, puts the hood's air at ~25 °C.
+things help. **The hood's flow is probably larger than 20 m³/h:** the exhaust holds the guard ~40 Pa under the Shuttle, and the
+hood's path runs in parallel with the inlet, so with cooling.py's resistances it carries ~37 m³/h (`network()`, `guard_cfd.json`
+`network.sealed`), which halves the rise. The CFD keeps cooling.py's 20.4 m³/h. And the dock's 22 °C air, §2's answer for the busy
+case, puts the hood's air at ~25 °C.
 
 **The guard's floor is open.** The guard stands on the process base plate, and the plate has the Z stage's window, the slot to its
 front edge for the module's rod end, and the folded Z servo's window under the chamber (`lpbf_low.build`). They open into the 37 mm
