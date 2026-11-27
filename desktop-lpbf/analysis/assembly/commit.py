@@ -85,6 +85,7 @@ def park_if_needed(run, n):
         return True
     cl = run.cl
     x_pl, q_pl = cl.dock[n], run.q[n].copy()
+    c_pl = float(a.close)                 # round 10: the planner's opening, put back after (the recorded one is used here)
     cl.move_mir(n, st["x"])
     run.q[n] = np.asarray(st["q"], float)
     a.place(run.q[n], st["close"])
@@ -94,7 +95,7 @@ def park_if_needed(run, n):
         R.mark("unplanned", arm=n, note="move to park not planned")
     cl.move_mir(n, x_pl)
     run.q[n] = q_pl
-    a.place(q_pl)
+    a.place(q_pl, c_pl)
     return path is not None
 
 
@@ -111,6 +112,10 @@ def goto(run, n, x, held_world=None):
     cl = run.cl
     a = run.arm(n)
     x_pl, q_pl = cl.dock[n], run.q[n].copy()
+    # round 10: the route check places the arm at the recorded opening; the planner's own is put back after. Round 10's first
+    # run 15 start left it at the recorded one, so the retreat after M19's hold drew the fingers closing 0.057 -> 0.249 into the
+    # rod end instead of opening
+    c_pl = float(a.close)
     x0 = st["x"]
     # round 8: pivot, drive along the heading, pivot (mir_route.py), every pose swept against the cell, the long table and the
     # other MiR and arm where the recording has them (not where the planner last left them)
@@ -144,7 +149,7 @@ def goto(run, n, x, held_world=None):
     R.drive(n, x, check=dict(ok=ok, why=why), route=rt if (rt is not None and rt.get("legs")) else None)
     cl.move_mir(n, x_pl)
     run.q[n] = q_pl
-    a.place(q_pl)
+    a.place(q_pl, c_pl)
     return ok, why
 
 

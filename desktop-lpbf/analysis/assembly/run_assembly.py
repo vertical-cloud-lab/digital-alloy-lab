@@ -745,6 +745,8 @@ def retreat(run, n, dist=60.0, near=(), names=(), seat=None):
     # fingertip 6 mm in the module's handle on the way to park). Now the widest opening of 0.12, 0.06 and 0 that is clear where it
     # opens is the one checked and drawn, and the flange backs off straight (its TCP moves as the fingers open)
     c0 = float(a.close)
+    if CM.on() and a.tool_name == "gripper" and RECM.REC.state[n]["held"] is not None:
+        c0 = float(RECM.REC.state[n]["close"])     # round 10: open from the closure drawn (what the part was held at)
     c_open = c0
     if a.tool_name == "gripper" and c0 > 0.0:
         chk = K.checker(run.cl, n)
