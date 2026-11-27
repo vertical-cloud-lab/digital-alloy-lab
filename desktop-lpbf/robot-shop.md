@@ -102,6 +102,12 @@ chapter's raw frames; files in [`analysis/out/videoqa/`](analysis/out/videoqa/))
 - the HRT210's platter fins 1.6 mm into the dummy-floor plate (drawn 1.5 mm proud).
 Each is a scene fix (the people 120 mm further apart, the palms higher, the light on the side wall, the blocks on the
 deck); a test of the people's fix showed the reach growing past the arms, so it is not in this render.
+For the next render (tried after the cut, in a scratch render of the lift frames only, and not adopted): each person
+holding its end with the inner hand alone, the inner shoulder 120 mm outside that hand, the palm high and centred on the
+end face. The palms then land within 10 mm of the face in all three lifts, and lift 1's people pairs fell from about 14
+(84 mm) to 4 (10 mm); but in lifts 2a and 2b the left person, now further left, put its head 75 mm into the HRT210 while
+leaning in, and the feet and shirt hems still reached under the sill (25 mm). It needs the rotary farther left (or off
+the table for F-S1/F-S2) and a stance that keeps the feet behind the sill as the lean grows.
 
 **Not done in round 9:** FreeCAD CAM for chapter 31's parts (FreeCAD isn't installed on this runner; its CAM workbench has
 no turning, and the vise bracket would need its own CAM job and gcode_sim support), so the vise bracket and the turned
