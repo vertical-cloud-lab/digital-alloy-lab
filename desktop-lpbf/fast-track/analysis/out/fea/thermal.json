@@ -8,266 +8,266 @@
    "T_room": 25.0,
    "nodes": 55681,
    "heaters_W": {
-    "plate": 12.06,
-    "block": 44.85
+    "plate": 11.01,
+    "block": 45.78
    },
-   "heaters_total_W": 56.91,
+   "heaters_total_W": 56.78,
    "sensors": {
     "sub_top": 200.0,
     "tc_block": 200.0,
-    "tc_plate": 201.76
+    "tc_plate": 201.72
    },
    "substrate_top_r15": {
-    "min": 199.84,
+    "min": 199.85,
     "max": 200.08,
-    "range_K": 0.24,
+    "range_K": 0.22,
     "n": 210
    },
    "substrate_top_r19": {
-    "min": 199.8,
+    "min": 199.82,
     "max": 200.08,
-    "range_K": 0.28,
+    "range_K": 0.26,
     "n": 347
    },
    "bodies": {
     "substrate": {
-     "min": 199.79,
-     "mean": 200.02,
-     "max": 200.2
+     "min": 199.8,
+     "mean": 200.03,
+     "max": 200.19
     },
     "heater plate": {
-     "min": 201.52,
-     "mean": 202.07,
-     "max": 202.69
+     "min": 201.5,
+     "mean": 202.01,
+     "max": 202.58
     },
     "rope": {
-     "min": 184.25,
-     "mean": 200.85,
-     "max": 202.42
+     "min": 184.13,
+     "mean": 200.8,
+     "max": 202.33
     },
     "block": {
-     "min": 194.83,
-     "mean": 197.56,
-     "max": 201.1
+     "min": 194.75,
+     "mean": 197.51,
+     "max": 201.12
     },
     "standoffs": {
-     "min": 43.07,
-     "mean": 107.27,
-     "max": 181.59
+     "min": 42.85,
+     "mean": 107.15,
+     "max": 181.58
     },
     "deck": {
-     "min": 36.73,
-     "mean": 36.94,
-     "max": 37.29
+     "min": 36.53,
+     "mean": 36.71,
+     "max": 37.04
     },
     "floor": {
-     "min": 34.13,
-     "mean": 35.92,
-     "max": 38.47
+     "min": 34.05,
+     "mean": 35.72,
+     "max": 37.82
     },
     "rod": {
-     "min": 26.56,
-     "mean": 90.91,
-     "max": 201.36
+     "min": 26.85,
+     "mean": 93.69,
+     "max": 201.35
     },
     "gland": {
-     "min": 37.51,
-     "mean": 38.05,
-     "max": 40.17
+     "min": 37.09,
+     "mean": 37.51,
+     "max": 38.74
     },
     "clamp": {
-     "min": 26.52,
-     "mean": 26.55,
-     "max": 26.63
+     "min": 26.8,
+     "mean": 26.84,
+     "max": 26.93
     },
     "platform": {
-     "min": 26.36,
-     "mean": 26.43,
-     "max": 26.46
+     "min": 26.61,
+     "mean": 26.7,
+     "max": 26.73
     },
     "stage body": {
-     "min": 25.85,
-     "mean": 25.86,
-     "max": 25.87
+     "min": 26.01,
+     "mean": 26.02,
+     "max": 26.03
     },
     "riser": {
      "min": 25.0,
-     "mean": 25.13,
-     "max": 25.86
+     "mean": 25.15,
+     "max": 26.01
     },
     "recoater stage": {
-     "min": 36.98,
-     "mean": 37.2,
+     "min": 36.76,
+     "mean": 37.0,
      "max": 39.0
     },
     "nozzle": {
-     "min": 185.93,
-     "mean": 190.43,
-     "max": 194.31
+     "min": 185.88,
+     "mean": 190.38,
+     "max": 194.28
     },
     "collector": {
-     "min": 188.5,
-     "mean": 192.15,
-     "max": 195.24
+     "min": 188.42,
+     "mean": 192.1,
+     "max": 195.22
     }
    },
-   "oring_upper": 43.01,
-   "oring_lower": 38.49,
+   "oring_upper": 51.11,
+   "oring_lower": 42.2,
    "deck_under_recoater": {
-    "mean": 36.87,
-    "max": 37.03
+    "mean": 36.66,
+    "max": 36.81
    },
    "clearance": [
     {
      "z_mm": -29.0,
-     "T_plate": 202.09,
-     "T_bore_wall": 197.94,
-     "T_block": 197.78,
+     "T_plate": 202.03,
+     "T_bore_wall": 197.88,
+     "T_block": 197.73,
      "dT_plate_minus_bore": 4.14,
-     "d_clearance_um": -1.603
+     "d_clearance_um": -1.6
     },
     {
      "z_mm": -27.0,
-     "T_plate": 202.11,
-     "T_bore_wall": 197.82,
-     "T_block": 197.71,
-     "dT_plate_minus_bore": 4.29,
+     "T_plate": 202.05,
+     "T_bore_wall": 197.75,
+     "T_block": 197.66,
+     "dT_plate_minus_bore": 4.3,
      "d_clearance_um": -1.65
     },
     {
      "z_mm": -25.0,
-     "T_plate": 202.12,
-     "T_bore_wall": 197.77,
-     "T_block": 197.68,
-     "dT_plate_minus_bore": 4.35,
-     "d_clearance_um": -1.662
+     "T_plate": 202.06,
+     "T_bore_wall": 197.69,
+     "T_block": 197.63,
+     "dT_plate_minus_bore": 4.37,
+     "d_clearance_um": -1.66
     },
     {
      "z_mm": -23.0,
-     "T_plate": 202.14,
-     "T_bore_wall": 197.15,
-     "T_block": 197.75,
-     "dT_plate_minus_bore": 4.99,
-     "d_clearance_um": -1.643
+     "T_plate": 202.08,
+     "T_bore_wall": 197.05,
+     "T_block": 197.7,
+     "dT_plate_minus_bore": 5.03,
+     "d_clearance_um": -1.64
     },
     {
      "z_mm": -21.0,
-     "T_plate": 202.15,
-     "T_bore_wall": 197.99,
-     "T_block": 197.68,
-     "dT_plate_minus_bore": 4.16,
-     "d_clearance_um": -1.683
+     "T_plate": 202.09,
+     "T_bore_wall": 197.92,
+     "T_block": 197.63,
+     "dT_plate_minus_bore": 4.17,
+     "d_clearance_um": -1.68
     },
     {
      "z_mm": -19.0,
-     "T_plate": 202.14,
-     "T_bore_wall": 197.96,
-     "T_block": 197.85,
-     "dT_plate_minus_bore": 4.18,
-     "d_clearance_um": -1.593
+     "T_plate": 202.08,
+     "T_bore_wall": 197.89,
+     "T_block": 197.81,
+     "dT_plate_minus_bore": 4.19,
+     "d_clearance_um": -1.59
     },
     {
      "z_mm": -17.0,
-     "T_plate": 202.12,
-     "T_bore_wall": 197.8,
-     "T_block": 197.77,
-     "dT_plate_minus_bore": 4.33,
-     "d_clearance_um": -1.623
+     "T_plate": 202.07,
+     "T_bore_wall": 197.71,
+     "T_block": 197.72,
+     "dT_plate_minus_bore": 4.35,
+     "d_clearance_um": -1.62
     },
     {
      "z_mm": -15.0,
-     "T_plate": 202.12,
-     "T_bore_wall": 197.9,
-     "T_block": 197.66,
-     "dT_plate_minus_bore": 4.22,
-     "d_clearance_um": -1.674
+     "T_plate": 202.06,
+     "T_bore_wall": 197.83,
+     "T_block": 197.61,
+     "dT_plate_minus_bore": 4.24,
+     "d_clearance_um": -1.67
     },
     {
      "z_mm": -13.0,
-     "T_plate": 202.09,
-     "T_bore_wall": 197.18,
-     "T_block": 197.57,
-     "dT_plate_minus_bore": 4.91,
-     "d_clearance_um": -1.705
+     "T_plate": 202.04,
+     "T_bore_wall": 197.06,
+     "T_block": 197.52,
+     "dT_plate_minus_bore": 4.98,
+     "d_clearance_um": -1.7
     },
     {
      "z_mm": -11.0,
-     "T_plate": 201.99,
-     "T_bore_wall": 197.81,
-     "T_block": 197.52,
-     "dT_plate_minus_bore": 4.18,
-     "d_clearance_um": -1.681
+     "T_plate": 201.94,
+     "T_bore_wall": 197.73,
+     "T_block": 197.47,
+     "dT_plate_minus_bore": 4.21,
+     "d_clearance_um": -1.68
     },
     {
      "z_mm": -9.0,
-     "T_plate": 201.95,
-     "T_bore_wall": 197.75,
-     "T_block": 197.61,
-     "dT_plate_minus_bore": 4.2,
+     "T_plate": 201.9,
+     "T_bore_wall": 197.68,
+     "T_block": 197.56,
+     "dT_plate_minus_bore": 4.23,
      "d_clearance_um": -1.62
     },
     {
      "z_mm": -7.0,
-     "T_plate": 201.08,
-     "T_bore_wall": 197.55,
-     "T_block": 197.39,
-     "dT_plate_minus_bore": 3.53,
-     "d_clearance_um": -1.315
+     "T_plate": 201.05,
+     "T_bore_wall": 197.47,
+     "T_block": 197.33,
+     "dT_plate_minus_bore": 3.59,
+     "d_clearance_um": -1.33
     },
     {
      "z_mm": -5.0,
-     "T_plate": 200.9,
-     "T_bore_wall": 197.53,
-     "T_block": 197.4,
-     "dT_plate_minus_bore": 3.37,
-     "d_clearance_um": -1.225
+     "T_plate": 200.88,
+     "T_bore_wall": 197.44,
+     "T_block": 197.34,
+     "dT_plate_minus_bore": 3.44,
+     "d_clearance_um": -1.24
     },
     {
      "z_mm": -3.0,
      "T_plate": 200.03,
-     "T_bore_wall": 197.55,
-     "T_block": 197.27,
-     "dT_plate_minus_bore": 2.48,
-     "d_clearance_um": -0.877
+     "T_bore_wall": 197.47,
+     "T_block": 197.21,
+     "dT_plate_minus_bore": 2.56,
+     "d_clearance_um": -0.91
     },
     {
      "z_mm": -1.0,
-     "T_plate": 199.97,
-     "T_bore_wall": 197.58,
-     "T_block": 197.34,
-     "dT_plate_minus_bore": 2.39,
-     "d_clearance_um": -0.819
+     "T_plate": 199.98,
+     "T_bore_wall": 197.51,
+     "T_block": 197.28,
+     "dT_plate_minus_bore": 2.46,
+     "d_clearance_um": -0.85
     }
    ],
    "flows_W": {
-    "plate_stack_to_block": 4.137,
-    "plate_stack_to_rod": 2.655,
+    "plate_stack_to_block": 3.194,
+    "plate_stack_to_rod": 2.55,
     "plate_stack_to_powder": 0.0,
-    "plate_stack_exposed": 5.265,
-    "rod_to_clamp": 0.459,
-    "rod_to_gland": 1.257,
-    "block_to_standoffs": 2.599,
-    "block_to_nozzle_collector": 11.114,
-    "deck_to_floor": 2.399,
-    "jet_faces": 8.166,
-    "exposed_total": 56.908,
+    "plate_stack_exposed": 5.264,
+    "rod_to_clamp": 0.551,
+    "rod_to_gland": 0.985,
+    "block_to_standoffs": 2.601,
+    "block_to_nozzle_collector": 11.109,
+    "deck_to_floor": 2.532,
+    "jet_faces": 8.164,
+    "exposed_total": 56.783,
     "exposed_by_body": {
      "substrate": 3.943,
-     "heater plate": 1.315,
+     "heater plate": 1.314,
      "rope": 0.007,
-     "block": 35.274,
-     "standoffs": 1.183,
-     "deck": -0.312,
-     "floor": 3.152,
-     "rod": 0.771,
-     "gland": 0.517,
-     "clamp": 0.082,
-     "platform": 0.245,
-     "stage body": 0.114,
-     "riser": 0.019,
-     "recoater stage": -0.516,
-     "nozzle": 5.815,
-     "collector": 5.299
+     "block": 35.259,
+     "standoffs": 1.181,
+     "deck": -0.352,
+     "floor": 3.047,
+     "rod": 0.805,
+     "gland": 0.492,
+     "clamp": 0.1,
+     "platform": 0.293,
+     "stage body": 0.136,
+     "riser": 0.023,
+     "recoater stage": -0.574,
+     "nozzle": 5.813,
+     "collector": 5.297
     }
    },
    "heat_cap_JK": {
@@ -307,12 +307,11 @@
     "collector": 0.06
    },
    "run": {
-    "utc": "2026-11-27 10:31",
-    "commit": "2e2c30a",
-    "seconds": 84.7,
+    "utc": "2026-11-27 10:51",
+    "commit": "30fd3be",
+    "seconds": 64.1,
     "mesh_scale": 1.0
-   },
-   "png": "thermal-ft1-pz0-fan.png"
+   }
   },
   "ft1_pz0_still": {
    "label": "ft1_pz0_still",
@@ -322,266 +321,266 @@
    "T_room": 25.0,
    "nodes": 55681,
    "heaters_W": {
-    "plate": 9.79,
-    "block": 35.17
+    "plate": 8.96,
+    "block": 35.9
    },
-   "heaters_total_W": 44.96,
+   "heaters_total_W": 44.86,
    "sensors": {
     "sub_top": 200.0,
     "tc_block": 200.0,
-    "tc_plate": 201.41
+    "tc_plate": 201.38
    },
    "substrate_top_r15": {
-    "min": 199.87,
+    "min": 199.88,
     "max": 200.06,
-    "range_K": 0.19,
+    "range_K": 0.18,
     "n": 210
    },
    "substrate_top_r19": {
-    "min": 199.84,
-    "max": 200.07,
-    "range_K": 0.23,
+    "min": 199.85,
+    "max": 200.06,
+    "range_K": 0.21,
     "n": 347
    },
    "bodies": {
     "substrate": {
-     "min": 199.83,
+     "min": 199.84,
      "mean": 200.02,
      "max": 200.16
     },
     "heater plate": {
-     "min": 201.2,
-     "mean": 201.66,
-     "max": 202.16
+     "min": 201.18,
+     "mean": 201.62,
+     "max": 202.07
     },
     "rope": {
-     "min": 187.1,
-     "mean": 200.69,
-     "max": 201.95
+     "min": 187.01,
+     "mean": 200.65,
+     "max": 201.88
     },
     "block": {
-     "min": 195.96,
-     "mean": 198.08,
-     "max": 200.86
+     "min": 195.89,
+     "mean": 198.04,
+     "max": 200.88
     },
     "standoffs": {
-     "min": 62.7,
-     "mean": 119.82,
+     "min": 62.65,
+     "mean": 119.78,
      "max": 184.32
     },
     "deck": {
-     "min": 56.54,
-     "mean": 56.87,
-     "max": 57.23
+     "min": 56.5,
+     "mean": 56.83,
+     "max": 57.19
     },
     "floor": {
-     "min": 51.91,
-     "mean": 54.7,
-     "max": 56.62
+     "min": 51.89,
+     "mean": 54.66,
+     "max": 56.58
     },
     "rod": {
-     "min": 28.23,
-     "mean": 98.33,
-     "max": 201.03
+     "min": 28.13,
+     "mean": 99.96,
+     "max": 201.02
     },
     "gland": {
      "min": 54.88,
-     "mean": 55.54,
-     "max": 57.23
+     "mean": 55.4,
+     "max": 56.23
     },
     "clamp": {
-     "min": 28.14,
-     "mean": 28.2,
-     "max": 28.38
+     "min": 28.04,
+     "mean": 28.1,
+     "max": 28.27
     },
     "platform": {
-     "min": 27.79,
-     "mean": 27.95,
-     "max": 28.01
+     "min": 27.7,
+     "mean": 27.86,
+     "max": 27.91
     },
     "stage body": {
-     "min": 26.71,
-     "mean": 26.73,
-     "max": 26.75
+     "min": 26.66,
+     "mean": 26.68,
+     "max": 26.7
     },
     "riser": {
      "min": 25.0,
-     "mean": 25.26,
-     "max": 26.72
+     "mean": 25.25,
+     "max": 26.67
     },
     "recoater stage": {
-     "min": 57.39,
-     "mean": 58.94,
+     "min": 57.35,
+     "mean": 58.9,
      "max": 71.0
     },
     "nozzle": {
-     "min": 188.8,
-     "mean": 192.4,
-     "max": 195.48
+     "min": 188.76,
+     "mean": 192.36,
+     "max": 195.46
     },
     "collector": {
-     "min": 190.89,
-     "mean": 193.79,
-     "max": 196.23
+     "min": 190.83,
+     "mean": 193.75,
+     "max": 196.21
     }
    },
-   "oring_upper": 59.47,
-   "oring_lower": 54.09,
+   "oring_upper": 64.87,
+   "oring_lower": 54.56,
    "deck_under_recoater": {
-    "mean": 57.03,
-    "max": 57.23
+    "mean": 56.99,
+    "max": 57.19
    },
    "clearance": [
     {
      "z_mm": -29.0,
-     "T_plate": 201.67,
-     "T_bore_wall": 198.39,
-     "T_block": 198.26,
-     "dT_plate_minus_bore": 3.28,
-     "d_clearance_um": -1.182
+     "T_plate": 201.63,
+     "T_bore_wall": 198.34,
+     "T_block": 198.22,
+     "dT_plate_minus_bore": 3.29,
+     "d_clearance_um": -1.18
     },
     {
      "z_mm": -27.0,
-     "T_plate": 201.69,
-     "T_bore_wall": 198.29,
-     "T_block": 198.2,
-     "dT_plate_minus_bore": 3.4,
+     "T_plate": 201.65,
+     "T_bore_wall": 198.24,
+     "T_block": 198.16,
+     "dT_plate_minus_bore": 3.41,
      "d_clearance_um": -1.22
     },
     {
      "z_mm": -25.0,
-     "T_plate": 201.7,
-     "T_bore_wall": 198.25,
-     "T_block": 198.18,
-     "dT_plate_minus_bore": 3.45,
+     "T_plate": 201.65,
+     "T_bore_wall": 198.19,
+     "T_block": 198.14,
+     "dT_plate_minus_bore": 3.46,
      "d_clearance_um": -1.23
     },
     {
      "z_mm": -23.0,
-     "T_plate": 201.72,
-     "T_bore_wall": 197.77,
-     "T_block": 198.24,
-     "dT_plate_minus_bore": 3.95,
-     "d_clearance_um": -1.215
+     "T_plate": 201.67,
+     "T_bore_wall": 197.69,
+     "T_block": 198.2,
+     "dT_plate_minus_bore": 3.98,
+     "d_clearance_um": -1.21
     },
     {
      "z_mm": -21.0,
-     "T_plate": 201.73,
-     "T_bore_wall": 198.42,
-     "T_block": 198.18,
+     "T_plate": 201.68,
+     "T_bore_wall": 198.37,
+     "T_block": 198.14,
      "dT_plate_minus_bore": 3.31,
-     "d_clearance_um": -1.247
+     "d_clearance_um": -1.24
     },
     {
      "z_mm": -19.0,
-     "T_plate": 201.72,
-     "T_bore_wall": 198.4,
-     "T_block": 198.32,
-     "dT_plate_minus_bore": 3.32,
-     "d_clearance_um": -1.177
+     "T_plate": 201.67,
+     "T_bore_wall": 198.34,
+     "T_block": 198.28,
+     "dT_plate_minus_bore": 3.33,
+     "d_clearance_um": -1.17
     },
     {
      "z_mm": -17.0,
-     "T_plate": 201.71,
-     "T_bore_wall": 198.27,
-     "T_block": 198.25,
-     "dT_plate_minus_bore": 3.44,
-     "d_clearance_um": -1.201
+     "T_plate": 201.66,
+     "T_bore_wall": 198.21,
+     "T_block": 198.21,
+     "dT_plate_minus_bore": 3.45,
+     "d_clearance_um": -1.2
     },
     {
      "z_mm": -15.0,
-     "T_plate": 201.7,
-     "T_bore_wall": 198.35,
-     "T_block": 198.17,
-     "dT_plate_minus_bore": 3.35,
-     "d_clearance_um": -1.241
+     "T_plate": 201.66,
+     "T_bore_wall": 198.29,
+     "T_block": 198.12,
+     "dT_plate_minus_bore": 3.36,
+     "d_clearance_um": -1.24
     },
     {
      "z_mm": -13.0,
-     "T_plate": 201.68,
-     "T_bore_wall": 197.79,
-     "T_block": 198.1,
-     "dT_plate_minus_bore": 3.89,
-     "d_clearance_um": -1.264
+     "T_plate": 201.64,
+     "T_bore_wall": 197.69,
+     "T_block": 198.06,
+     "dT_plate_minus_bore": 3.95,
+     "d_clearance_um": -1.26
     },
     {
      "z_mm": -11.0,
-     "T_plate": 201.6,
-     "T_bore_wall": 198.28,
-     "T_block": 198.06,
-     "dT_plate_minus_bore": 3.32,
-     "d_clearance_um": -1.245
+     "T_plate": 201.56,
+     "T_bore_wall": 198.22,
+     "T_block": 198.01,
+     "dT_plate_minus_bore": 3.34,
+     "d_clearance_um": -1.25
     },
     {
      "z_mm": -9.0,
-     "T_plate": 201.57,
-     "T_bore_wall": 198.23,
-     "T_block": 198.12,
-     "dT_plate_minus_bore": 3.34,
-     "d_clearance_um": -1.198
+     "T_plate": 201.53,
+     "T_bore_wall": 198.18,
+     "T_block": 198.08,
+     "dT_plate_minus_bore": 3.36,
+     "d_clearance_um": -1.2
     },
     {
      "z_mm": -7.0,
-     "T_plate": 200.87,
-     "T_bore_wall": 198.08,
-     "T_block": 197.95,
-     "dT_plate_minus_bore": 2.79,
-     "d_clearance_um": -0.951
+     "T_plate": 200.85,
+     "T_bore_wall": 198.01,
+     "T_block": 197.9,
+     "dT_plate_minus_bore": 2.84,
+     "d_clearance_um": -0.96
     },
     {
      "z_mm": -5.0,
-     "T_plate": 200.72,
-     "T_bore_wall": 198.06,
-     "T_block": 197.96,
-     "dT_plate_minus_bore": 2.66,
-     "d_clearance_um": -0.878
+     "T_plate": 200.71,
+     "T_bore_wall": 197.99,
+     "T_block": 197.91,
+     "dT_plate_minus_bore": 2.71,
+     "d_clearance_um": -0.89
     },
     {
      "z_mm": -3.0,
-     "T_plate": 200.02,
-     "T_bore_wall": 198.08,
-     "T_block": 197.86,
-     "dT_plate_minus_bore": 1.95,
-     "d_clearance_um": -0.598
+     "T_plate": 200.03,
+     "T_bore_wall": 198.01,
+     "T_block": 197.81,
+     "dT_plate_minus_bore": 2.01,
+     "d_clearance_um": -0.62
     },
     {
      "z_mm": -1.0,
      "T_plate": 199.98,
-     "T_bore_wall": 198.1,
-     "T_block": 197.91,
-     "dT_plate_minus_bore": 1.87,
-     "d_clearance_um": -0.551
+     "T_bore_wall": 198.04,
+     "T_block": 197.87,
+     "dT_plate_minus_bore": 1.94,
+     "d_clearance_um": -0.57
     }
    ],
    "flows_W": {
-    "plate_stack_to_block": 3.28,
-    "plate_stack_to_rod": 2.301,
+    "plate_stack_to_block": 2.532,
+    "plate_stack_to_rod": 2.224,
     "plate_stack_to_powder": 0.0,
     "plate_stack_exposed": 4.208,
-    "rod_to_clamp": 1.01,
-    "rod_to_gland": 0.543,
+    "rod_to_clamp": 0.974,
+    "rod_to_gland": 0.453,
     "block_to_standoffs": 2.223,
-    "block_to_nozzle_collector": 8.854,
-    "deck_to_floor": 9.108,
-    "jet_faces": 6.549,
-    "exposed_total": 44.956,
+    "block_to_nozzle_collector": 8.85,
+    "deck_to_floor": 9.158,
+    "jet_faces": 6.548,
+    "exposed_total": 44.863,
     "exposed_by_body": {
      "substrate": 3.179,
      "heater plate": 1.023,
      "rope": 0.006,
-     "block": 27.368,
-     "standoffs": 0.91,
-     "deck": -3.077,
-     "floor": 8.246,
-     "rod": 0.607,
-     "gland": 1.415,
-     "clamp": 0.193,
-     "platform": 0.533,
-     "stage body": 0.241,
-     "riser": 0.042,
-     "recoater stage": -4.585,
-     "nozzle": 4.638,
-     "collector": 4.216
+     "block": 27.357,
+     "standoffs": 0.909,
+     "deck": -3.088,
+     "floor": 8.219,
+     "rod": 0.627,
+     "gland": 1.408,
+     "clamp": 0.186,
+     "platform": 0.514,
+     "stage body": 0.233,
+     "riser": 0.041,
+     "recoater stage": -4.601,
+     "nozzle": 4.636,
+     "collector": 4.214
     }
    },
    "heat_cap_JK": {
@@ -621,9 +620,9 @@
     "collector": 0.06
    },
    "run": {
-    "utc": "2026-11-27 10:33",
-    "commit": "2e2c30a",
-    "seconds": 81.2,
+    "utc": "2026-11-27 10:52",
+    "commit": "30fd3be",
+    "seconds": 67.1,
     "mesh_scale": 1.0
    }
   },
@@ -635,247 +634,247 @@
    "T_room": 25.0,
    "nodes": 58111,
    "heaters_W": {
-    "plate": 8.35,
-    "block": 46.95
+    "plate": 7.59,
+    "block": 47.36
    },
-   "heaters_total_W": 55.3,
+   "heaters_total_W": 54.96,
    "sensors": {
     "sub_top": 200.0,
     "tc_block": 200.0,
-    "tc_plate": 200.27
+    "tc_plate": 200.26
    },
    "substrate_top_r15": {
-    "min": 199.92,
-    "max": 200.07,
-    "range_K": 0.14,
+    "min": 199.93,
+    "max": 200.06,
+    "range_K": 0.13,
     "n": 210
    },
    "substrate_top_r19": {
-    "min": 199.9,
-    "max": 200.08,
-    "range_K": 0.18,
+    "min": 199.91,
+    "max": 200.07,
+    "range_K": 0.16,
     "n": 347
    },
    "bodies": {
     "substrate": {
-     "min": 199.89,
+     "min": 199.9,
      "mean": 200.0,
-     "max": 200.1
+     "max": 200.09
     },
     "heater plate": {
-     "min": 199.71,
-     "mean": 200.39,
-     "max": 200.81
+     "min": 199.74,
+     "mean": 200.36,
+     "max": 200.75
     },
     "rope": {
-     "min": 196.24,
-     "mean": 199.72,
-     "max": 200.7
+     "min": 196.16,
+     "mean": 199.69,
+     "max": 200.64
     },
     "block": {
-     "min": 194.69,
-     "mean": 197.48,
-     "max": 201.18
+     "min": 194.64,
+     "mean": 197.46,
+     "max": 201.19
     },
     "standoffs": {
-     "min": 44.4,
-     "mean": 107.89,
-     "max": 181.72
+     "min": 43.92,
+     "mean": 107.65,
+     "max": 181.69
     },
     "deck": {
-     "min": 38.03,
-     "mean": 38.33,
-     "max": 38.87
+     "min": 37.56,
+     "mean": 37.83,
+     "max": 38.3
     },
     "floor": {
-     "min": 34.67,
-     "mean": 37.08,
-     "max": 41.77
+     "min": 34.48,
+     "mean": 36.66,
+     "max": 40.42
     },
     "rod": {
-     "min": 26.15,
-     "mean": 78.4,
-     "max": 199.2
+     "min": 26.6,
+     "mean": 83.41,
+     "max": 199.32
     },
     "gland": {
-     "min": 39.93,
-     "mean": 41.07,
-     "max": 44.95
+     "min": 39.0,
+     "mean": 39.9,
+     "max": 42.13
     },
     "clamp": {
-     "min": 26.12,
-     "mean": 26.14,
-     "max": 26.19
+     "min": 26.56,
+     "mean": 26.59,
+     "max": 26.66
     },
     "platform": {
-     "min": 26.01,
-     "mean": 26.07,
-     "max": 26.09
+     "min": 26.4,
+     "mean": 26.48,
+     "max": 26.51
     },
     "stage body": {
-     "min": 25.94,
-     "mean": 25.95,
-     "max": 25.96
+     "min": 26.31,
+     "mean": 26.32,
+     "max": 26.33
     },
     "riser": {
      "min": 25.0,
-     "mean": 25.14,
-     "max": 25.95
+     "mean": 25.2,
+     "max": 26.32
     },
     "recoater stage": {
-     "min": 38.3,
-     "mean": 38.39,
+     "min": 37.82,
+     "mean": 37.96,
      "max": 39.0
     },
     "nozzle": {
-     "min": 185.81,
-     "mean": 190.31,
-     "max": 194.25
+     "min": 185.79,
+     "mean": 190.29,
+     "max": 194.24
     },
     "collector": {
-     "min": 188.35,
-     "mean": 192.05,
-     "max": 195.2
+     "min": 188.31,
+     "mean": 192.03,
+     "max": 195.19
     },
     "powder": {
-     "min": 105.82,
-     "mean": 175.84,
+     "min": 105.81,
+     "mean": 175.82,
      "max": 200.13
     }
    },
-   "oring_upper": 49.16,
-   "oring_lower": 42.99,
+   "oring_upper": 63.89,
+   "oring_lower": 51.68,
    "deck_under_recoater": {
-    "mean": 38.2,
-    "max": 38.43
+    "mean": 37.72,
+    "max": 37.93
    },
    "clearance": [
     {
      "z_mm": -39.0,
-     "T_plate": 200.37,
-     "T_bore_wall": 197.83,
-     "T_block": 197.56,
-     "dT_plate_minus_bore": 2.53,
-     "d_clearance_um": -0.896
+     "T_plate": 200.34,
+     "T_bore_wall": 197.79,
+     "T_block": 197.53,
+     "dT_plate_minus_bore": 2.55,
+     "d_clearance_um": -0.9
     },
     {
      "z_mm": -37.0,
-     "T_plate": 200.4,
-     "T_bore_wall": 197.71,
-     "T_block": 197.48,
-     "dT_plate_minus_bore": 2.69,
-     "d_clearance_um": -0.951
+     "T_plate": 200.37,
+     "T_bore_wall": 197.66,
+     "T_block": 197.45,
+     "dT_plate_minus_bore": 2.71,
+     "d_clearance_um": -0.95
     },
     {
      "z_mm": -35.0,
-     "T_plate": 200.41,
-     "T_bore_wall": 197.62,
-     "T_block": 197.43,
-     "dT_plate_minus_bore": 2.78,
-     "d_clearance_um": -0.978
+     "T_plate": 200.38,
+     "T_bore_wall": 197.57,
+     "T_block": 197.4,
+     "dT_plate_minus_bore": 2.81,
+     "d_clearance_um": -0.98
     },
     {
      "z_mm": -33.0,
-     "T_plate": 200.42,
-     "T_bore_wall": 197.9,
-     "T_block": 197.54,
-     "dT_plate_minus_bore": 2.52,
-     "d_clearance_um": -0.933
+     "T_plate": 200.39,
+     "T_bore_wall": 197.86,
+     "T_block": 197.51,
+     "dT_plate_minus_bore": 2.54,
+     "d_clearance_um": -0.94
     },
     {
      "z_mm": -31.0,
-     "T_plate": 200.44,
-     "T_bore_wall": 196.85,
-     "T_block": 197.47,
-     "dT_plate_minus_bore": 3.59,
+     "T_plate": 200.42,
+     "T_bore_wall": 196.78,
+     "T_block": 197.44,
+     "dT_plate_minus_bore": 3.63,
      "d_clearance_um": -0.98
     },
     {
      "z_mm": -29.0,
-     "T_plate": 200.44,
-     "T_bore_wall": 197.94,
-     "T_block": 197.75,
-     "dT_plate_minus_bore": 2.5,
-     "d_clearance_um": -0.844
+     "T_plate": 200.41,
+     "T_bore_wall": 197.9,
+     "T_block": 197.72,
+     "dT_plate_minus_bore": 2.51,
+     "d_clearance_um": -0.84
     },
     {
      "z_mm": -27.0,
-     "T_plate": 200.45,
-     "T_bore_wall": 197.78,
-     "T_block": 197.66,
-     "dT_plate_minus_bore": 2.67,
-     "d_clearance_um": -0.888
+     "T_plate": 200.42,
+     "T_bore_wall": 197.73,
+     "T_block": 197.63,
+     "dT_plate_minus_bore": 2.68,
+     "d_clearance_um": -0.89
     },
     {
      "z_mm": -25.0,
-     "T_plate": 200.43,
-     "T_bore_wall": 197.68,
-     "T_block": 197.63,
-     "dT_plate_minus_bore": 2.75,
-     "d_clearance_um": -0.896
+     "T_plate": 200.41,
+     "T_bore_wall": 197.64,
+     "T_block": 197.6,
+     "dT_plate_minus_bore": 2.77,
+     "d_clearance_um": -0.9
     },
     {
      "z_mm": -23.0,
-     "T_plate": 200.43,
-     "T_bore_wall": 197.01,
-     "T_block": 197.7,
-     "dT_plate_minus_bore": 3.42,
-     "d_clearance_um": -0.864
+     "T_plate": 200.4,
+     "T_bore_wall": 196.95,
+     "T_block": 197.67,
+     "dT_plate_minus_bore": 3.45,
+     "d_clearance_um": -0.87
     },
     {
      "z_mm": -21.0,
-     "T_plate": 200.22,
-     "T_bore_wall": 197.88,
-     "T_block": 197.61,
-     "dT_plate_minus_bore": 2.33,
-     "d_clearance_um": -0.805
+     "T_plate": 200.21,
+     "T_bore_wall": 197.85,
+     "T_block": 197.58,
+     "dT_plate_minus_bore": 2.36,
+     "d_clearance_um": -0.81
     },
     {
      "z_mm": -19.0,
      "T_plate": 200.0,
-     "T_bore_wall": 197.84,
-     "T_block": 197.78,
-     "dT_plate_minus_bore": 2.16,
-     "d_clearance_um": -0.621
+     "T_bore_wall": 197.8,
+     "T_block": 197.76,
+     "dT_plate_minus_bore": 2.2,
+     "d_clearance_um": -0.63
     },
     {
      "z_mm": -17.0,
      "T_plate": 200.0,
-     "T_bore_wall": 197.63,
-     "T_block": 197.69,
-     "dT_plate_minus_bore": 2.36,
-     "d_clearance_um": -0.663
+     "T_bore_wall": 197.6,
+     "T_block": 197.67,
+     "dT_plate_minus_bore": 2.4,
+     "d_clearance_um": -0.68
     }
    ],
    "flows_W": {
-    "plate_stack_to_block": 2.103,
-    "plate_stack_to_rod": 3.489,
-    "plate_stack_to_powder": 0.55,
+    "plate_stack_to_block": 1.677,
+    "plate_stack_to_rod": 3.157,
+    "plate_stack_to_powder": 0.552,
     "plate_stack_exposed": 2.208,
-    "rod_to_clamp": 0.291,
-    "rod_to_gland": 2.541,
-    "block_to_standoffs": 2.587,
-    "block_to_nozzle_collector": 11.104,
-    "deck_to_floor": 1.901,
-    "jet_faces": 6.481,
-    "exposed_total": 55.296,
+    "rod_to_clamp": 0.417,
+    "rod_to_gland": 1.974,
+    "block_to_standoffs": 2.591,
+    "block_to_nozzle_collector": 11.101,
+    "deck_to_floor": 2.161,
+    "jet_faces": 6.48,
+    "exposed_total": 54.957,
     "exposed_by_body": {
      "substrate": 0.0,
      "heater plate": 2.208,
      "rope": 0.0,
-     "block": 33.617,
-     "standoffs": 1.194,
-     "deck": -0.084,
-     "floor": 3.806,
-     "rod": 0.377,
-     "gland": 0.656,
-     "clamp": 0.057,
-     "platform": 0.133,
-     "stage body": 0.08,
-     "riser": 0.021,
-     "recoater stage": -0.165,
-     "nozzle": 5.809,
-     "collector": 5.295,
+     "block": 33.609,
+     "standoffs": 1.19,
+     "deck": -0.161,
+     "floor": 3.568,
+     "rod": 0.421,
+     "gland": 0.601,
+     "clamp": 0.084,
+     "platform": 0.189,
+     "stage body": 0.114,
+     "riser": 0.031,
+     "recoater stage": -0.289,
+     "nozzle": 5.808,
+     "collector": 5.294,
      "powder": 2.291
     }
    },
@@ -918,12 +917,11 @@
     "powder": 0.0254
    },
    "run": {
-    "utc": "2026-11-27 10:35",
-    "commit": "2e2c30a",
-    "seconds": 121.0,
+    "utc": "2026-11-27 10:53",
+    "commit": "30fd3be",
+    "seconds": 97.4,
     "mesh_scale": 1.0
-   },
-   "png": "thermal-ft1-pz-15-fan-powder.png"
+   }
   },
   "ft1v_pz0_fan": {
    "label": "ft1v_pz0_fan",
@@ -933,266 +931,266 @@
    "T_room": 25.0,
    "nodes": 53037,
    "heaters_W": {
-    "plate": 11.77,
-    "block": 45.97
+    "plate": 10.85,
+    "block": 46.84
    },
-   "heaters_total_W": 57.74,
+   "heaters_total_W": 57.7,
    "sensors": {
     "sub_top": 200.0,
     "tc_block": 200.0,
-    "tc_plate": 201.79
+    "tc_plate": 201.76
    },
    "substrate_top_r15": {
     "min": 199.85,
-    "max": 200.08,
-    "range_K": 0.23,
+    "max": 200.07,
+    "range_K": 0.22,
     "n": 210
    },
    "substrate_top_r19": {
-    "min": 199.8,
+    "min": 199.82,
     "max": 200.08,
-    "range_K": 0.27,
+    "range_K": 0.26,
     "n": 347
    },
    "bodies": {
     "substrate": {
-     "min": 199.79,
+     "min": 199.81,
      "mean": 200.03,
-     "max": 200.2
+     "max": 200.19
     },
     "heater plate": {
-     "min": 201.58,
-     "mean": 202.1,
-     "max": 202.72
+     "min": 201.57,
+     "mean": 202.06,
+     "max": 202.63
     },
     "rope": {
-     "min": 196.39,
-     "mean": 200.9,
-     "max": 202.44
+     "min": 196.29,
+     "mean": 200.85,
+     "max": 202.36
     },
     "block": {
-     "min": 194.78,
-     "mean": 197.57,
-     "max": 201.12
+     "min": 194.71,
+     "mean": 197.52,
+     "max": 201.15
     },
     "standoffs": {
-     "min": 39.46,
-     "mean": 104.9,
-     "max": 181.1
+     "min": 39.38,
+     "mean": 104.85,
+     "max": 181.09
     },
     "deck": {
-     "min": 33.46,
-     "mean": 33.55,
-     "max": 33.8
+     "min": 33.38,
+     "mean": 33.47,
+     "max": 33.71
     },
     "floor": {
-     "min": 33.22,
-     "mean": 33.32,
-     "max": 33.41
+     "min": 33.14,
+     "mean": 33.23,
+     "max": 33.31
     },
     "rod": {
-     "min": 26.01,
-     "mean": 89.82,
-     "max": 201.54
+     "min": 26.17,
+     "mean": 91.29,
+     "max": 201.5
     },
     "gland": {
-     "min": 33.28,
-     "mean": 33.45,
-     "max": 34.51
+     "min": 33.19,
+     "mean": 33.33,
+     "max": 33.87
     },
     "clamp": {
-     "min": 25.99,
-     "mean": 26.01,
-     "max": 26.06
+     "min": 26.14,
+     "mean": 26.16,
+     "max": 26.22
     },
     "platform": {
-     "min": 25.89,
-     "mean": 25.93,
-     "max": 25.95
+     "min": 26.02,
+     "mean": 26.07,
+     "max": 26.09
     },
     "stage body": {
-     "min": 25.56,
-     "mean": 25.57,
-     "max": 25.57
+     "min": 25.64,
+     "mean": 25.65,
+     "max": 25.66
     },
     "riser": {
      "min": 25.0,
-     "mean": 25.09,
-     "max": 25.57
+     "mean": 25.1,
+     "max": 25.65
     },
     "recoater stage": {
-     "min": 33.6,
-     "mean": 33.86,
+     "min": 33.52,
+     "mean": 33.79,
      "max": 36.0
     },
     "nozzle": {
-     "min": 185.78,
-     "mean": 190.33,
-     "max": 194.35
+     "min": 185.74,
+     "mean": 190.29,
+     "max": 194.34
     },
     "collector": {
-     "min": 188.26,
-     "mean": 191.97,
-     "max": 195.08
+     "min": 188.18,
+     "mean": 191.92,
+     "max": 195.06
     }
    },
-   "oring_upper": 36.0,
-   "oring_lower": 33.34,
+   "oring_upper": 40.48,
+   "oring_lower": 35.14,
    "deck_under_recoater": {
-    "mean": 33.52,
-    "max": 33.61
+    "mean": 33.44,
+    "max": 33.53
    },
    "clearance": [
     {
      "z_mm": -8.0,
-     "T_plate": 202.13,
-     "T_bore_wall": 197.89,
-     "T_block": 197.73,
-     "dT_plate_minus_bore": 4.23,
-     "d_clearance_um": -1.646
+     "T_plate": 202.08,
+     "T_bore_wall": 197.83,
+     "T_block": 197.68,
+     "dT_plate_minus_bore": 4.24,
+     "d_clearance_um": -1.64
     },
     {
      "z_mm": -6.0,
-     "T_plate": 202.16,
-     "T_bore_wall": 197.81,
-     "T_block": 197.69,
-     "dT_plate_minus_bore": 4.35,
-     "d_clearance_um": -1.678
+     "T_plate": 202.11,
+     "T_bore_wall": 197.74,
+     "T_block": 197.65,
+     "dT_plate_minus_bore": 4.37,
+     "d_clearance_um": -1.68
     },
     {
      "z_mm": -4.0,
-     "T_plate": 202.15,
-     "T_bore_wall": 198.02,
-     "T_block": 197.68,
-     "dT_plate_minus_bore": 4.13,
-     "d_clearance_um": -1.681
+     "T_plate": 202.1,
+     "T_bore_wall": 197.95,
+     "T_block": 197.63,
+     "dT_plate_minus_bore": 4.15,
+     "d_clearance_um": -1.68
     },
     {
      "z_mm": -2.0,
-     "T_plate": 202.19,
-     "T_bore_wall": 196.64,
-     "T_block": 197.75,
-     "dT_plate_minus_bore": 5.55,
-     "d_clearance_um": -1.663
+     "T_plate": 202.13,
+     "T_bore_wall": 196.53,
+     "T_block": 197.71,
+     "dT_plate_minus_bore": 5.61,
+     "d_clearance_um": -1.66
     },
     {
      "z_mm": -0.0,
-     "T_plate": 202.19,
-     "T_bore_wall": 198.12,
-     "T_block": 197.72,
-     "dT_plate_minus_bore": 4.06,
+     "T_plate": 202.14,
+     "T_bore_wall": 198.06,
+     "T_block": 197.67,
+     "dT_plate_minus_bore": 4.08,
      "d_clearance_um": -1.68
     },
     {
      "z_mm": 2.0,
-     "T_plate": 202.18,
-     "T_bore_wall": 197.93,
-     "T_block": 197.89,
-     "dT_plate_minus_bore": 4.25,
-     "d_clearance_um": -1.596
+     "T_plate": 202.13,
+     "T_bore_wall": 197.86,
+     "T_block": 197.84,
+     "dT_plate_minus_bore": 4.27,
+     "d_clearance_um": -1.59
     },
     {
      "z_mm": 4.0,
-     "T_plate": 202.16,
-     "T_bore_wall": 197.89,
-     "T_block": 197.79,
-     "dT_plate_minus_bore": 4.27,
-     "d_clearance_um": -1.632
+     "T_plate": 202.11,
+     "T_bore_wall": 197.82,
+     "T_block": 197.74,
+     "dT_plate_minus_bore": 4.29,
+     "d_clearance_um": -1.63
     },
     {
      "z_mm": 6.0,
-     "T_plate": 202.14,
-     "T_bore_wall": 197.49,
-     "T_block": 197.64,
-     "dT_plate_minus_bore": 4.65,
-     "d_clearance_um": -1.694
+     "T_plate": 202.09,
+     "T_bore_wall": 197.39,
+     "T_block": 197.59,
+     "dT_plate_minus_bore": 4.7,
+     "d_clearance_um": -1.69
     },
     {
      "z_mm": 8.0,
-     "T_plate": 202.11,
-     "T_bore_wall": 197.78,
-     "T_block": 197.59,
-     "dT_plate_minus_bore": 4.34,
-     "d_clearance_um": -1.706
+     "T_plate": 202.07,
+     "T_bore_wall": 197.71,
+     "T_block": 197.54,
+     "dT_plate_minus_bore": 4.37,
+     "d_clearance_um": -1.71
     },
     {
      "z_mm": 10.0,
-     "T_plate": 202.01,
-     "T_bore_wall": 197.8,
-     "T_block": 197.53,
-     "dT_plate_minus_bore": 4.21,
-     "d_clearance_um": -1.688
+     "T_plate": 201.98,
+     "T_bore_wall": 197.73,
+     "T_block": 197.48,
+     "dT_plate_minus_bore": 4.24,
+     "d_clearance_um": -1.69
     },
     {
      "z_mm": 12.0,
-     "T_plate": 201.97,
-     "T_bore_wall": 197.84,
-     "T_block": 197.63,
-     "dT_plate_minus_bore": 4.13,
-     "d_clearance_um": -1.619
+     "T_plate": 201.94,
+     "T_bore_wall": 197.78,
+     "T_block": 197.59,
+     "dT_plate_minus_bore": 4.16,
+     "d_clearance_um": -1.62
     },
     {
      "z_mm": 14.0,
-     "T_plate": 201.09,
-     "T_bore_wall": 197.93,
-     "T_block": 197.45,
-     "dT_plate_minus_bore": 3.16,
-     "d_clearance_um": -1.289
+     "T_plate": 201.07,
+     "T_bore_wall": 197.86,
+     "T_block": 197.41,
+     "dT_plate_minus_bore": 3.21,
+     "d_clearance_um": -1.3
     },
     {
      "z_mm": 16.0,
-     "T_plate": 200.9,
-     "T_bore_wall": 197.41,
-     "T_block": 197.39,
-     "dT_plate_minus_bore": 3.49,
-     "d_clearance_um": -1.231
+     "T_plate": 200.89,
+     "T_bore_wall": 197.34,
+     "T_block": 197.34,
+     "dT_plate_minus_bore": 3.55,
+     "d_clearance_um": -1.25
     },
     {
      "z_mm": 18.0,
      "T_plate": 200.03,
-     "T_bore_wall": 197.59,
-     "T_block": 197.29,
-     "dT_plate_minus_bore": 2.44,
-     "d_clearance_um": -0.866
+     "T_bore_wall": 197.52,
+     "T_block": 197.24,
+     "dT_plate_minus_bore": 2.51,
+     "d_clearance_um": -0.89
     },
     {
      "z_mm": 20.0,
-     "T_plate": 199.97,
-     "T_bore_wall": 197.61,
-     "T_block": 197.35,
-     "dT_plate_minus_bore": 2.36,
-     "d_clearance_um": -0.811
+     "T_plate": 199.98,
+     "T_bore_wall": 197.55,
+     "T_block": 197.31,
+     "dT_plate_minus_bore": 2.43,
+     "d_clearance_um": -0.84
     }
    ],
    "flows_W": {
-    "plate_stack_to_block": 4.096,
-    "plate_stack_to_rod": 2.321,
+    "plate_stack_to_block": 3.203,
+    "plate_stack_to_rod": 2.292,
     "plate_stack_to_powder": 0.0,
     "plate_stack_exposed": 5.357,
-    "rod_to_clamp": 0.289,
-    "rod_to_gland": 0.626,
+    "rod_to_clamp": 0.336,
+    "rod_to_gland": 0.494,
     "block_to_standoffs": 2.648,
-    "block_to_nozzle_collector": 11.38,
-    "deck_to_floor": 2.71,
-    "jet_faces": 8.321,
-    "exposed_total": 57.745,
+    "block_to_nozzle_collector": 11.375,
+    "deck_to_floor": 2.756,
+    "jet_faces": 8.319,
+    "exposed_total": 57.697,
     "exposed_by_body": {
-     "substrate": 4.014,
-     "heater plate": 1.343,
+     "substrate": 4.015,
+     "heater plate": 1.342,
      "rope": 0.0,
-     "block": 36.038,
-     "standoffs": 1.196,
-     "deck": -0.379,
-     "floor": 3.291,
-     "rod": 0.866,
-     "gland": 0.313,
-     "clamp": 0.049,
-     "platform": 0.155,
-     "stage body": 0.073,
-     "riser": 0.012,
-     "recoater stage": -0.607,
-     "nozzle": 5.98,
-     "collector": 5.4
+     "block": 36.024,
+     "standoffs": 1.195,
+     "deck": -0.394,
+     "floor": 3.247,
+     "rod": 0.876,
+     "gland": 0.308,
+     "clamp": 0.058,
+     "platform": 0.18,
+     "stage body": 0.084,
+     "riser": 0.014,
+     "recoater stage": -0.628,
+     "nozzle": 5.978,
+     "collector": 5.398
     }
    },
    "heat_cap_JK": {
@@ -1232,9 +1230,9 @@
     "collector": 0.06
    },
    "run": {
-    "utc": "2026-11-27 10:36",
-    "commit": "2e2c30a",
-    "seconds": 80.6,
+    "utc": "2026-11-27 10:54",
+    "commit": "30fd3be",
+    "seconds": 62.6,
     "mesh_scale": 1.0
    }
   }
