@@ -58,7 +58,7 @@
  },
  "ch3": {
   "chapter": 3,
-  "frames_checked": 940,
+  "frames_checked": 900,
   "movers": 36,
   "threshold_mm": 1.5,
   "opaque_min": 0.3,
@@ -72,11 +72,11 @@
     "pairs": [
      "Process fibre / IPG YLR-400-SM-EOS (envelope, est.)"
     ],
-    "pair_frames": 940,
+    "pair_frames": 900,
     "worst_mm": 2.9
    }
   ],
-  "seconds": 45.1
+  "seconds": 47.9
  },
  "ch4": {
   "chapter": 4,
@@ -112,7 +112,7 @@
  },
  "ch5": {
   "chapter": 5,
-  "frames_checked": 397,
+  "frames_checked": 341,
   "movers": 14,
   "threshold_mm": 1.5,
   "opaque_min": 0.3,
@@ -125,13 +125,13 @@
     "b": "Vibration motor",
     "worst_mm": 4.9,
     "worst_frame": 0,
-    "frames": 397,
+    "frames": 341,
     "first": 0,
-    "last": 896
+    "last": 784
    }
   ],
   "allowed": [],
-  "seconds": 3.9
+  "seconds": 4.0
  },
  "ch6": {
   "chapter": 6,

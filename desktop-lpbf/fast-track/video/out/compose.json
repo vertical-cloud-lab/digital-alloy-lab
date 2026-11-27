@@ -1,18 +1,18 @@
 {
  "file": "desktop-lpbf/fast-track/video/out/fast-track-progression.mp4",
- "frames": 10738,
+ "frames": 10544,
  "fps": 30,
- "seconds": 357.9,
- "bytes": 9207317,
+ "seconds": 351.5,
+ "bytes": 9215860,
  "chapters": [
   "0:00 The bench and the room",
   "0:17 S1: optics on the frame",
   "0:52 S2: the box closed round the beam",
   "1:31 FT-0: single tracks",
-  "2:51 FT-0 to FT-1: stages and recoater",
-  "4:04 FT-1: the first coupons",
-  "4:40 FT-1 to FT-1V: into the vacuum cube",
-  "5:42 Summary: weeks and dollars"
+  "2:49 FT-0 to FT-1: stages and recoater",
+  "4:02 FT-1: the first coupons",
+  "4:34 FT-1 to FT-1V: into the vacuum cube",
+  "5:36 Summary: weeks and dollars"
  ],
  "shots": [
   {
@@ -109,82 +109,82 @@
    "chapter": 3,
    "shot": "well",
    "start_s": 159.6,
-   "seconds": 12.17
+   "seconds": 9.43
   },
   {
    "chapter": 4,
    "shot": "core",
-   "start_s": 171.77,
+   "start_s": 169.03,
    "seconds": 10.5
   },
   {
    "chapter": 4,
    "shot": "box",
-   "start_s": 182.27,
-   "seconds": 9.36
+   "start_s": 179.53,
+   "seconds": 9.37
   },
   {
    "chapter": 4,
    "shot": "under",
-   "start_s": 191.63,
-   "seconds": 5.34
+   "start_s": 188.9,
+   "seconds": 5.33
   },
   {
    "chapter": 4,
    "shot": "box",
-   "start_s": 196.97,
+   "start_s": 194.23,
    "seconds": 28.4
   },
   {
    "chapter": 4,
    "shot": "core",
-   "start_s": 225.37,
+   "start_s": 222.63,
    "seconds": 9.0
   },
   {
    "chapter": 4,
    "shot": "well",
-   "start_s": 234.37,
+   "start_s": 231.63,
    "seconds": 10.6
   },
   {
    "chapter": 5,
    "shot": "well",
-   "start_s": 244.97,
-   "seconds": 17.8
+   "start_s": 242.23,
+   "seconds": 16.84
   },
   {
    "chapter": 5,
    "shot": "lowwell",
-   "start_s": 262.77,
-   "seconds": 18.1
+   "start_s": 259.07,
+   "seconds": 15.33
   },
   {
    "chapter": 6,
    "shot": "cube",
-   "start_s": 280.87,
-   "seconds": 21.46
+   "start_s": 274.4,
+   "seconds": 21.47
   },
   {
    "chapter": 6,
    "shot": "under",
-   "start_s": 302.33,
-   "seconds": 3.97
+   "start_s": 295.87,
+   "seconds": 3.96
   },
   {
    "chapter": 6,
    "shot": "cube",
-   "start_s": 306.3,
-   "seconds": 36.63
+   "start_s": 299.83,
+   "seconds": 36.64
   },
   {
    "chapter": 7,
    "shot": "cube",
-   "start_s": 342.93,
+   "start_s": 336.47,
    "seconds": 15.0
   }
  ],
- "shot_median_s": 10.87,
+ "shot_median_s": 10.735,
  "shot_min_s": 2.27,
- "composed_s": 568.8
+ "composed_s": 473.4
 }
