@@ -405,15 +405,17 @@ From [`parts.csv`](parts.csv) (`python fast_track.py`):
 | Group | FT-0 | FT-1 | FT-1V |
 |---|---:|---:|---:|
 | Laser and optics (used) | $4.8k–7.9k | $4.8k–7.9k | $4.8k–7.9k |
-| Scan control and computing | $1.7k–2.9k | $1.7k–2.9k | $1.7k–2.9k |
-| Motion | $0.2k–0.6k | $6.0k–6.1k | $6.0k–6.1k |
-| Enclosure or chamber | $0.8k–1.4k | $0.8k–1.4k | $11.4k–13.1k |
-| Heated plate | $0.6k–1.0k | $0.7k–1.1k | $0.7k–1.1k |
-| Gas and O₂ | $1.6k–2.1k | $1.6k–2.1k | $1.6k–2.1k |
-| Safety | $2.7k–3.5k | $2.7k–3.5k | $2.7k–3.5k |
-| Stock and shop time | $1.0k–1.6k | $2.0k–3.2k | $2.3k–3.7k |
+| Scan control and computing | $1.2k–2.5k | $1.4k–2.7k | $1.4k–2.7k |
+| Motion | $0.1k–0.6k | $6.0k–6.1k | $6.0k–6.1k |
+| Enclosure or chamber | $0.9k–1.2k | $0.9k–1.2k | $11.4k–13.1k |
+| Heated plate | $0.6k–1.0k | $0.9k–1.4k | $0.9k–1.4k |
+| Gas and O₂ | $2.7k–4.1k | $2.7k–4.1k | $2.7k–4.1k |
+| Safety | $2.8k–3.7k | $2.8k–3.7k | $2.8k–3.7k |
+| Stock and shop time ($65/h) | $3.2k–6.5k | $4.2k–8.5k | $4.7k–9.7k |
 | Glovebox (if the lab has none free) | $0–2.7k | $0–2.7k | $0–2.7k |
-| **Total** | **$13.2k–23.7k** | **$20.1k–30.9k** | **$31.1k–43.2k** |
+| Monitoring (camera, lights, photodiode, AE, digitizer) | $4.5k–6.2k | $5.3k–8.2k | $5.3k–8.2k |
+| **Total** | **$20.7k–36.5k** | **$28.8k–46.7k** | **$39.9k–59.7k** |
+| Total without monitoring | $16.3k–30.3k | $23.6k–38.4k | $34.6k–51.5k |
 
 - **Purchase orders.** FT-1 needs one only if both Zaber stages go on one order ($5,896). Buying the piston stage from
   Thorlabs instead (MTS50/M-Z8 + KDC101, $2,179.18, both "Available: Today") keeps every order under $3,500. Its 44 N
