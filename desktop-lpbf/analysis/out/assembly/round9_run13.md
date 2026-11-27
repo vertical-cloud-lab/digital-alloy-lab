@@ -110,8 +110,11 @@ events exactly as `asm_render.py` does (objects at their put poses, held parts o
 checks arm against arm and each arm against the parts present, with the planner's 0.1 mm meshes (the drawn meshes are decimated
 to 12,000 triangles, which closes counterbores). On the step tests before the freeze (F05b-F06, C00d-C05, the whole of chapter
 40, M18-M28) it found no pair over 1.5 mm once the fixes above were in; on the first of them it is what found the unchecked
-wrist camera (50 mm into the floor plate on C00d's move to park). It was not run on the whole of run 13 or 14: it was stopped to free
-memory for the renders (W4's frame audit covers the rendered chapters).
+wrist camera (50 mm into the floor plate on C00d's move to park). **On the whole of run 14** (run 13's recording to the end of F53, run 14's from F54; every
+3rd joint sample of every drawn arm motion): chapter 40, 4,210 samples, **0 pairs over 1.5 mm**; chapter 41, 20,439 samples,
+**0 pairs over 1.5 mm** ([`rec_check_run14.json`](rec_check_run14.json)). It checks the arms (links, tool or gripper with its
+fingers, wrist camera, changer, what they hold) against each other and against the parts present; not the MiRs (the route check
+above), the hook, or a body wholly inside another (FCL sees surfaces crossing); W4's frame audit covers what is drawn.
 
 ## Still open
 

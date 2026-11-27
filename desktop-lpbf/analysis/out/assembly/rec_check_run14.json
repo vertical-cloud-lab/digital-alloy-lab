@@ -1,0 +1,21 @@
+{
+ "traj": "/tmp/robotbuild/traj/run14",
+ "every": 3,
+ "limit_mm": 1.5,
+ "chapters": {
+  "module": {
+   "samples": 4210,
+   "pairs": 0,
+   "arm_arm": 0,
+   "arm_part": 0,
+   "list": []
+  },
+  "chamber": {
+   "samples": 20439,
+   "pairs": 0,
+   "arm_arm": 0,
+   "arm_part": 0,
+   "list": []
+  }
+ }
+}

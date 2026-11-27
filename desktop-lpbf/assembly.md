@@ -47,7 +47,8 @@ first (F51b). [`rec_check.py`](analysis/assembly/rec_check.py) replays a recordi
 them (no jump at the join): F54, the 13.3 kg optics bridge, now passes with the hoist taking its weight and arm A alone guiding
 it onto the posts' dowels (runs 9-13 found no pair of poses for a two-arm carry), so **105 of 110** steps pass; F57 by its tubes'
 axes was tried alone and still fails. Details: [`analysis/out/assembly/round9_run13.md`](analysis/out/assembly/round9_run13.md)
-(runs 13 and 14), [`results_run13.json`](analysis/out/assembly/results_run13.json),
+(runs 13 and 14; the recording of the whole run checked as drawn: 0 arm-arm or arm-part pairs over 1.5 mm in 24,649 samples,
+[`rec_check_run14.json`](analysis/out/assembly/rec_check_run14.json)), [`results_run13.json`](analysis/out/assembly/results_run13.json),
 [`results_run14.json`](analysis/out/assembly/results_run14.json) (run 13 to F53, run 14 from F54),
 [`two_hands.json`](analysis/out/assembly/two_hands.json), [`mir_drives.json`](analysis/out/assembly/mir_drives.json).
 
