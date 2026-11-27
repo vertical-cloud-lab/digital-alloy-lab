@@ -735,12 +735,15 @@ def ch3():
     s.cal("FT-0 FIRST TRACKS", "milestone")
     b.buy("S3", "S4", "P1")
     prog = SC.program()
-    tl.overlay("scan", prog["source"])
-    slow = 10.0
-    tl.caption("First single tracks", "25 tracks, 9 mm, 25 power-speed pairs")
-    s.speed(f"slow motion: 1/{slow:.0f} of real speed")
     tracks = prog["tracks"]
-    tt = SC.timeline(tracks)
+    tl.overlay("scan", prog["source"] if prog["placeholder"] else
+               f"process/out/{prog['tracks_file']} (the process worker's ladder, rung 2), RTC5 timing")
+    slow = 10.0
+    ln = float(np.median([math.hypot(x1 - x0, y1 - y0) for (x0, y0, x1, y1, *_) in tracks]))
+    pairs = len({(round(v, 1), round(pw, 1)) for (*_, v, pw) in tracks})
+    tl.caption("First single tracks", f"{len(tracks)} tracks, {ln:.0f} mm, {pairs} power-speed pairs")
+    s.speed(f"slow motion: 1/{slow:.0f} of real speed")
+    tt = SC.timeline(tracks, prog.get("tracks_timing"))
     t0 = tl.t + 0.8
 
     def draw_tracks(st, t, t0=t0):
@@ -760,8 +763,11 @@ def ch3():
             st["_fx"]["tracks hot"] = fx_lines("tracks hot", hot, "#ffb000", 4.0)
     tl.fx(draw_tracks, t0)
     T = tt[-1][1] * slow
-    tl.overlay("panel", [f"25 tracks drawn in {tt[-1][1]:.2f} s of laser time", "speeds 200-1400 mm/s, 150-350 W",
-                         "Bosio et al. 2019's screening on a 40 mm disc"], t0)
+    vs, pws = [x[4] for x in tracks], [x[5] for x in tracks]
+    tl.overlay("panel", [f"{len(tracks)} tracks drawn in {tt[-1][1]:.2f} s of scanner time",
+                         f"speeds {min(vs):.0f}-{max(vs):.0f} mm/s, {min(pws):.0f}-{max(pws):.0f} W",
+                         "placeholder tracks (process program not found)" if prog["placeholder"] else
+                         "ladder rung 2 (process/README.md), on the 50 um layer"], t0)
     tl.wait(0.8 + T + 3.0)
     tl.caption("FT-0 done: first tracks", "track widths give the hatch spacing")
     tl.wait(3.0)
@@ -871,12 +877,15 @@ def ch5():
     tl, b = s.tl, s.book
     prog = SC.program()
     cp = prog["coupons"]
-    tl.overlay("scan", prog["source"])
+    tl.overlay("scan", prog["source"] if prog["placeholder"] else
+               f"process/out/{cp['file']} (the process worker's build), the layer shown, RTC5 timing")
     piston = [k for k in tl.actors if tl.actors[k].group in ("piston", "column")]
     rec = [k for k in tl.actors if tl.actors[k].group == "recoater"]
     tl.shot(CAMS["well"])
     s.cal("FT-1 powder layers: dose, spread, pads")
-    tl.caption("One layer, in real time", "spread at 10 mm/s, scan at 1000 mm/s")
+    vh = sorted({float(q["v_hatch"]) for q in cp["psets"].values()}) if "psets" in cp else [cp.get("v_mm_s", 1000.0)]
+    tl.caption("One layer, in real time", f"spread at {SPREAD_V:.0f} mm/s, hatch at "
+               + (f"{vh[0]:.0f}-{vh[-1]:.0f}" if len(vh) > 1 else f"{vh[0]:.0f}") + " mm/s")
     s.speed("real time")
     # one full layer cycle in real time: (hopper at the left park) plate down one layer, spread to the right park, scan,
     # return to the left park
@@ -884,7 +893,7 @@ def ch5():
     t_sp = E.trapezoid(L, SPREAD_V, 50.0)[0]
     t_ret = E.trapezoid(L, RETURN_V, 200.0)[0]
     vec0 = cp["layer"](0)
-    tt0 = SC.timeline(vec0)
+    tt0 = SC.timeline(vec0, cp.get("timing"))
     t_scan = tt0[-1][1]
     t0 = tl.t + 0.6
     # timeline of the cycle
@@ -948,21 +957,23 @@ def ch5():
     # the time-lapse: one frame per layer, taken after each layer's scan
     tl.shot(CAMS["lowwell"])
     n = int(cp["n_layers"])
+    step = max(1, math.ceil(n / 340))                 # at most ~340 frames (11 s): 500 layers -> one frame per 2 layers
     s.cal("FT-1 FIRST COUPONS", "milestone")
     cyc = t_sp + t_scan + t_ret + 1.4
-    tl.caption("Coupons growing", f"{n} layers, 10 mm: one frame per layer")
-    s.speed(f"time-lapse x{cyc * E.FPS:.0f}: one frame per layer ({cyc:.0f} s of build)")
+    per = "one frame per layer" if step == 1 else f"one frame per {step} layers"
+    tl.caption("Coupons growing", f"{n} layers, {n * LAYER:.0f} mm: {per}")
+    s.speed(f"time-lapse x{cyc * step * E.FPS:.0f}: {per} ({cyc * step:.0f} s of build)")
     for k in tl.actors:
         if "Well block" in tl.actors[k].label or "Box lid" in tl.actors[k].label:
             tl.fade(k, 0.22, tl.t)
     t1 = tl.t + 1.0
-    T = n / E.FPS
+    T = math.ceil(n / step) / E.FPS
     boxes_ = cp["boxes"]
 
     def grow(st, t, t1=t1):
         if t < t1:
             return
-        k = min(n, int((t - t1) * E.FPS) + 1)
+        k = min(n, (int((t - t1) * E.FPS) + 1) * step)
         h = k * LAYER
         for a in piston:
             if tl.actors[a].group == "column":
@@ -982,11 +993,14 @@ def ch5():
         st["_fx"].pop("scan hot", None)
         st["_fx"].pop("fresh layer", None)
     tl.fx(grow, t1)
+    sizes = sorted({(q["sx"], q["sy"]) for q in cp.get("parts", [])}, reverse=True)
+    cnt = [sum(1 for q in cp.get("parts", []) if (q["sx"], q["sy"]) == sz) for sz in sizes]
+    ctxt = ", ".join(f"{c} of {a:.0f} x {b:.0f} mm" for c, (a, b) in zip(cnt, sizes)) or "4 coupons, 10 x 10 mm"
     tl.overlay("panel", [f"{n} layers x {LAYER * 1000:.0f} um = {n * LAYER:.1f} mm",
-                         f"~{cyc:.0f} s a layer: {n * cyc / 3600:.1f} h (study: 1.2-1.8 h)",
-                         "plate down one layer each time", "4 coupons, 10 x 10 mm"], t1)
+                         f"~{cyc:.0f} s a layer: {n * cyc / 3600:.1f} h of build",
+                         "plate down one layer each time", f"coupons: {ctxt}"], t1)
     tl.wait(1.0 + T + 2.5)
-    tl.caption("FT-1 done: first coupons", "10 x 10 x 10 mm, 100-1000 ppm O2")
+    tl.caption("FT-1 done: first coupons", f"{ctxt}, {n * LAYER:.0f} mm tall; 100-1000 ppm O2")
     tl.overlay("panel", None)
     tl.wait(3.5)
     b.close()

@@ -23,7 +23,33 @@ DELAY_S = 0.0003            # laser on/off and jump delays per vector (estimate)
 PROCESS = os.environ.get("FT_PROCESS", "/tmp/ft-process")
 
 
-def timeline(vecs):
+def timeline(vecs, timing=None, start=(0.0, 0.0)):
+    """(start, end) of each vector within its layer, s. With the program's `timing` (scanprog.DEFAULT_TIMING keys) by the
+    RTC5 rules of control/ftctl/scanprog.layer_time: 10 us ticks; a jump at v_jump with its variable jump delay before
+    every polyline (a run of vectors that start where the last ended, at one speed), a polygon delay between the vectors
+    of a run, a mark delay after it. Without it, the old estimate (JUMP_MM_S, DELAY_S)."""
+    if timing is not None:
+        tm = timing
+
+        def ticks(x):
+            return math.ceil(x / tm["tick"] - 1e-9) * tm["tick"]
+        t, out, pos, last = 0.0, [], np.asarray(start, float), None
+        for (x0, y0, x1, y1, v, *_) in vecs:
+            cont = last is not None and math.hypot(x0 - last[0], y0 - last[1]) <= 1e-3 and v == last[2]
+            if cont:
+                t += tm["polygon_delay"]
+            else:
+                if last is not None:
+                    t += tm["mark_delay"]
+                gap = math.hypot(x0 - pos[0], y0 - pos[1])
+                if gap > 1e-3:
+                    jd = tm["jump_delay"] if gap >= tm["jump_limit"] else (
+                        tm["jump_delay_min"] + (tm["jump_delay"] - tm["jump_delay_min"]) * gap / tm["jump_limit"])
+                    t += ticks(gap / tm["v_jump"]) + ticks(jd)
+            t1 = t + ticks(math.hypot(x1 - x0, y1 - y0) / max(v, 1e-6))
+            out.append((t, t1))
+            t, last, pos = t1, (x1, y1, v), np.array([x1, y1])
+        return out
     t, out, last = 0.0, [], None
     for (x0, y0, x1, y1, v, *_) in vecs:
         if last is not None:
@@ -97,11 +123,41 @@ def _find_program():
     return None
 
 
+FT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+TRACKS_NPZ = os.path.join(FT, "process", "out", "rung2_single_tracks.npz")
+BUILD_NPZ = os.path.join(FT, "process", "out", "build_first_coupons_15mm.npz")
+
+
 def program():
-    path = os.environ.get("FT_SCAN_PROGRAM") or None
-    if path and os.path.exists(path):
-        return load(path)
-    return placeholder()
+    """The process worker's programs (process/README.md), read with control/ftctl/scanprog.load_npz: chapter 3's tracks
+    from rung2_single_tracks.npz (ladder rung 2: 25 tracks of 9 mm, 25 power-speed pairs, on a 50 um layer), chapter 5's
+    layers from build_first_coupons_15mm.npz (500 layers of 30 um). Segments are x0 y0 x1 y1 in mm in the plate frame
+    (ft_model's: origin at the substrate top centre, +X recoat, +Y back); the lens axis offset does not change it. The
+    placeholder hatch generator is used only when the files are missing."""
+    if not (os.path.exists(TRACKS_NPZ) and os.path.exists(BUILD_NPZ)):
+        return placeholder()
+    import sys
+    sys.path.insert(0, os.path.join(FT, "control", "ftctl"))
+    import scanprog as SP
+    tp = SP.load_npz(TRACKS_NPZ)
+    L = tp.layer(0)
+    tracks = [(float(a), float(b), float(c), float(d), float(v), float(pw))
+              for (a, b, c, d), pw, v in zip(L.segs, L.power_W, L.speed_mm_s)]
+    bp = SP.load_npz(BUILD_NPZ)
+    parts = bp.meta["parts"]
+    boxes = [(q["cx"] - q["sx"] / 2, q["cy"] - q["sy"] / 2, q["cx"] + q["sx"] / 2, q["cy"] + q["sy"] / 2) for q in parts]
+
+    def layer(k, bp=bp):
+        Lk = bp.layer(k)
+        return [(float(a), float(b), float(c), float(d), float(v)) for (a, b, c, d), v in zip(Lk.segs, Lk.speed_mm_s)]
+    ps = bp.meta["psets"]
+    return dict(source=f"process/out/{os.path.basename(TRACKS_NPZ)} and {os.path.basename(BUILD_NPZ)} (the process "
+                       f"worker's scan programs)",
+                placeholder=False, tracks=tracks, tracks_timing=tp.timing(),
+                tracks_file=os.path.basename(TRACKS_NPZ),
+                coupons=dict(layer_um=bp.layer_mm * 1000.0, n_layers=bp.n_layers, boxes=boxes, parts=parts, psets=ps,
+                             layer=layer, timing=bp.timing(), file=os.path.basename(BUILD_NPZ),
+                             height_mm=bp.n_layers * bp.layer_mm))
 
 
 def load(path):
