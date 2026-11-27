@@ -101,50 +101,50 @@
   {
    "t_s": 10.0,
    "T_liner": 463,
-   "T_puck": 133,
+   "T_puck": 127,
    "T_vessel": 32,
    "liner_gap_mm": 1.24,
-   "puck_gap_mm": 1.387
+   "puck_gap_mm": 1.391
   },
   {
    "t_s": 60.0,
    "T_liner": 555,
-   "T_puck": 263,
-   "T_vessel": 90,
-   "liner_gap_mm": 1.209,
-   "puck_gap_mm": 1.337
+   "T_puck": 272,
+   "T_vessel": 86,
+   "liner_gap_mm": 1.206,
+   "puck_gap_mm": 1.329
   },
   {
    "t_s": 300.0,
-   "T_liner": 513,
-   "T_puck": 376,
-   "T_vessel": 249,
-   "liner_gap_mm": 1.337,
-   "puck_gap_mm": 1.359
+   "T_liner": 517,
+   "T_puck": 391,
+   "T_vessel": 243,
+   "liner_gap_mm": 1.331,
+   "puck_gap_mm": 1.345
   },
   {
    "t_s": 900.0,
-   "T_liner": 344,
-   "T_puck": 356,
-   "T_vessel": 243,
-   "liner_gap_mm": 1.453,
-   "puck_gap_mm": 1.369
+   "T_liner": 348,
+   "T_puck": 363,
+   "T_vessel": 246,
+   "liner_gap_mm": 1.452,
+   "puck_gap_mm": 1.366
   },
   {
    "t_s": 1800.0,
-   "T_liner": 250,
-   "T_puck": 277,
-   "T_vessel": 186,
-   "liner_gap_mm": 1.48,
-   "puck_gap_mm": 1.387
+   "T_liner": 253,
+   "T_puck": 281,
+   "T_vessel": 189,
+   "liner_gap_mm": 1.479,
+   "puck_gap_mm": 1.385
   },
   {
    "t_s": 3600.0,
-   "T_liner": 156,
-   "T_puck": 173,
-   "T_vessel": 118,
-   "liner_gap_mm": 1.499,
-   "puck_gap_mm": 1.413
+   "T_liner": 158,
+   "T_puck": 175,
+   "T_vessel": 119,
+   "liner_gap_mm": 1.498,
+   "puck_gap_mm": 1.412
   }
  ]
 }

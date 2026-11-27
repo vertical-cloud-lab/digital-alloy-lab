@@ -73,7 +73,7 @@ side, and the FEA shows at least 1.2 mm of it left when hot.
 | On the machine: soap at overpressure | chamber at its normal +150 mbar | no bubbles at the joint or welds |
 | AMAZEMET's one-minute rule | after a refill above +50 mbar, with the sensor's argon bleed flowing (blue cabinet) | O₂ below 1000 ppm within a minute and falling steadily |
 
-The FEA's stresses in this cup are tiny at these pressures: 6.8 MPa at +1.2 bar and 5.7 MPa under full vacuum,
+The FEA's stresses in this cup are tiny at these pressures: 4.4 MPa at +1.2 bar and 3.7 MPa under full vacuum,
 against a yield of 172 MPa. The joint is the weak point. Standard KF rings are rated by Pfeiffer and Edwards
 only to about 1.5 bar absolute, while the relief opens at about 1.8 bar absolute. So the over-pressure ring
 (A&N 4000076, 50 psig) is part of the design and is not optional.
@@ -115,7 +115,7 @@ only to about 1.5 bar absolute, while the relief opens at about 1.8 bar absolute
 ## 7. Run limits
 
 - Charge: B takes a full 1.1 kg charge. With the whole 816 g Nov 13 charge arriving as shot and piling on the
-  puck, the FEA puts the O-ring at 44 °C and the floor at 348 °C (pile conductivity 2–20 W/m K: 42–45 °C). The
+  puck, the FEA puts the O-ring at 44 °C and the floor at 345 °C (pile conductivity 2–20 W/m K: 42–45 °C). The
   joint O-ring is the only seal in the cup, and the pile stays 160+ mm below it. Option A, if used in the
   meantime, takes about 120 g of copper-alloy shot before its bottom O-ring passes 150 °C (220 g to 200 °C).
 - The O₂ hard stop and the plate stop rule from the Nov 13 analysis still apply. This cup survives a bad run;

@@ -1,0 +1,325 @@
+{
+ "open_deg": 110.0,
+ "drop_mm": 5.0,
+ "slide_dir": [
+  0.0,
+  -1.0
+ ],
+ "positions": 59,
+ "states": {
+  "clamp off": {
+   "hits": 0,
+   "detail": []
+  },
+  "clamp left on, open 110 deg": {
+   "hits": 38,
+   "detail": [
+    {
+     "phase": "rise",
+     "slide": 0.0,
+     "dz": -8.0,
+     "moving": "cup (vessel)",
+     "static": "KF clamp, open",
+     "mm3": 323.9
+    },
+    {
+     "phase": "rise",
+     "slide": 0.0,
+     "dz": -4.0,
+     "moving": "cup (vessel)",
+     "static": "KF clamp, open",
+     "mm3": 1065.1
+    },
+    {
+     "phase": "drop",
+     "slide": 0.0,
+     "dz": -0.5,
+     "moving": "cup (vessel)",
+     "static": "KF clamp, open",
+     "mm3": 45.9
+    },
+    {
+     "phase": "drop",
+     "slide": 0.0,
+     "dz": -1.0,
+     "moving": "cup (vessel)",
+     "static": "KF clamp, open",
+     "mm3": 207.9
+    },
+    {
+     "phase": "drop",
+     "slide": 0.0,
+     "dz": -1.5,
+     "moving": "cup (vessel)",
+     "static": "KF clamp, open",
+     "mm3": 369.8
+    },
+    {
+     "phase": "drop",
+     "slide": 0.0,
+     "dz": -2.0,
+     "moving": "cup (vessel)",
+     "static": "KF clamp, open",
+     "mm3": 531.8
+    },
+    {
+     "phase": "drop",
+     "slide": 0.0,
+     "dz": -2.5,
+     "moving": "cup (vessel)",
+     "static": "KF clamp, open",
+     "mm3": 693.7
+    },
+    {
+     "phase": "drop",
+     "slide": 0.0,
+     "dz": -3.0,
+     "moving": "cup (vessel)",
+     "static": "KF clamp, open",
+     "mm3": 855.7
+    },
+    {
+     "phase": "drop",
+     "slide": 0.0,
+     "dz": -3.5,
+     "moving": "cup (vessel)",
+     "static": "KF clamp, open",
+     "mm3": 1008.6
+    },
+    {
+     "phase": "drop",
+     "slide": 0.0,
+     "dz": -4.0,
+     "moving": "cup (vessel)",
+     "static": "KF clamp, open",
+     "mm3": 1065.1
+    },
+    {
+     "phase": "drop",
+     "slide": 0.0,
+     "dz": -4.5,
+     "moving": "cup (vessel)",
+     "static": "KF clamp, open",
+     "mm3": 1065.1
+    },
+    {
+     "phase": "drop",
+     "slide": 0.0,
+     "dz": -4.5,
+     "moving": "over-pressure ring",
+     "static": "KF clamp, open",
+     "mm3": 22.1
+    },
+    {
+     "phase": "drop",
+     "slide": 0.0,
+     "dz": -5.0,
+     "moving": "cup (vessel)",
+     "static": "KF clamp, open",
+     "mm3": 1065.1
+    },
+    {
+     "phase": "drop",
+     "slide": 0.0,
+     "dz": -5.0,
+     "moving": "over-pressure ring",
+     "static": "KF clamp, open",
+     "mm3": 46.1
+    },
+    {
+     "phase": "slide",
+     "slide": 0.0,
+     "dz": -5.0,
+     "moving": "cup (vessel)",
+     "static": "KF clamp, open",
+     "mm3": 1065.1
+    },
+    {
+     "phase": "slide",
+     "slide": 0.0,
+     "dz": -5.0,
+     "moving": "over-pressure ring",
+     "static": "KF clamp, open",
+     "mm3": 46.1
+    },
+    {
+     "phase": "slide",
+     "slide": 10.0,
+     "dz": -5.0,
+     "moving": "cup (vessel)",
+     "static": "KF clamp, open",
+     "mm3": 3603.8
+    },
+    {
+     "phase": "slide",
+     "slide": 10.0,
+     "dz": -5.0,
+     "moving": "centring ring",
+     "static": "KF clamp, open",
+     "mm3": 94.5
+    },
+    {
+     "phase": "slide",
+     "slide": 10.0,
+     "dz": -5.0,
+     "moving": "over-pressure ring",
+     "static": "KF clamp, open",
+     "mm3": 615.6
+    },
+    {
+     "phase": "slide",
+     "slide": 20.0,
+     "dz": -5.0,
+     "moving": "cup (vessel)",
+     "static": "KF clamp, open",
+     "mm3": 2220.6
+    },
+    {
+     "phase": "slide",
+     "slide": 20.0,
+     "dz": -5.0,
+     "moving": "centring ring",
+     "static": "KF clamp, open",
+     "mm3": 520.3
+    },
+    {
+     "phase": "slide",
+     "slide": 20.0,
+     "dz": -5.0,
+     "moving": "over-pressure ring",
+     "static": "KF clamp, open",
+     "mm3": 214.5
+    },
+    {
+     "phase": "slide",
+     "slide": 30.0,
+     "dz": -5.0,
+     "moving": "cup (vessel)",
+     "static": "KF clamp, open",
+     "mm3": 1365.5
+    },
+    {
+     "phase": "slide",
+     "slide": 30.0,
+     "dz": -5.0,
+     "moving": "centring ring",
+     "static": "KF clamp, open",
+     "mm3": 233.2
+    },
+    {
+     "phase": "slide",
+     "slide": 30.0,
+     "dz": -5.0,
+     "moving": "over-pressure ring",
+     "static": "KF clamp, open",
+     "mm3": 144.1
+    },
+    {
+     "phase": "slide",
+     "slide": 40.0,
+     "dz": -5.0,
+     "moving": "cup (vessel)",
+     "static": "KF clamp, open",
+     "mm3": 1094.0
+    },
+    {
+     "phase": "slide",
+     "slide": 40.0,
+     "dz": -5.0,
+     "moving": "centring ring",
+     "static": "KF clamp, open",
+     "mm3": 181.4
+    },
+    {
+     "phase": "slide",
+     "slide": 40.0,
+     "dz": -5.0,
+     "moving": "over-pressure ring",
+     "static": "KF clamp, open",
+     "mm3": 115.6
+    },
+    {
+     "phase": "slide",
+     "slide": 50.0,
+     "dz": -5.0,
+     "moving": "cup (vessel)",
+     "static": "KF clamp, open",
+     "mm3": 1016.0
+    },
+    {
+     "phase": "slide",
+     "slide": 50.0,
+     "dz": -5.0,
+     "moving": "centring ring",
+     "static": "KF clamp, open",
+     "mm3": 171.9
+    },
+    {
+     "phase": "slide",
+     "slide": 50.0,
+     "dz": -5.0,
+     "moving": "over-pressure ring",
+     "static": "KF clamp, open",
+     "mm3": 104.5
+    },
+    {
+     "phase": "slide",
+     "slide": 60.0,
+     "dz": -5.0,
+     "moving": "cup (vessel)",
+     "static": "KF clamp, open",
+     "mm3": 1218.6
+    },
+    {
+     "phase": "slide",
+     "slide": 60.0,
+     "dz": -5.0,
+     "moving": "centring ring",
+     "static": "KF clamp, open",
+     "mm3": 250.7
+    },
+    {
+     "phase": "slide",
+     "slide": 60.0,
+     "dz": -5.0,
+     "moving": "over-pressure ring",
+     "static": "KF clamp, open",
+     "mm3": 108.8
+    },
+    {
+     "phase": "slide",
+     "slide": 70.0,
+     "dz": -5.0,
+     "moving": "cup (vessel)",
+     "static": "KF clamp, open",
+     "mm3": 1281.2
+    },
+    {
+     "phase": "slide",
+     "slide": 70.0,
+     "dz": -5.0,
+     "moving": "centring ring",
+     "static": "KF clamp, open",
+     "mm3": 73.6
+    },
+    {
+     "phase": "slide",
+     "slide": 70.0,
+     "dz": -5.0,
+     "moving": "over-pressure ring",
+     "static": "KF clamp, open",
+     "mm3": 172.6
+    },
+    {
+     "phase": "slide",
+     "slide": 80.0,
+     "dz": -5.0,
+     "moving": "cup (vessel)",
+     "static": "KF clamp, open",
+     "mm3": 103.6
+    }
+   ]
+  }
+ },
+ "note": "rise: the cup alone (the ring is laid on its flange afterwards); drop and slide: cup + ring + over-pressure ring together. Overlaps under 1 mm3 are contact, not interference."
+}

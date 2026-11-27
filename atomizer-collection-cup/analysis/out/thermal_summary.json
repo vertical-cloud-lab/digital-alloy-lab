@@ -263,41 +263,42 @@
    "mass_g": 100,
    "options": {},
    "extra": {},
-   "nodes": 3153,
-   "elements": 5749,
+   "nodes": 3394,
+   "elements": 6231,
    "pile_h_mm": 6.3,
    "pile_top_mm_below_joint": 212.2,
-   "view_factor_to_walls": 0.991,
-   "escaped_through_outlet": 0.009,
+   "view_factor_to_walls": 0.992,
+   "escaped_through_outlet": 0.008,
+   "returned_to_pile": 0.0,
    "pile_radiated_peak_W": 379.2,
    "peaks": {
     "N_PILE": {
-     "T_max": 943.2,
+     "T_max": 941.0,
      "t_at_max_s": 0.5,
-     "T_at_60s": 206.2,
-     "T_at_300s": 134.5,
-     "T_at_3600s": 56.8,
+     "T_at_60s": 208.2,
+     "T_at_300s": 140.1,
+     "T_at_3600s": 57.2,
      "t_first_100C_s": 0.5,
      "t_first_150C_s": 0.5,
      "t_first_200C_s": 0.5
     },
     "TC_TOP": {
-     "T_max": 27.0,
+     "T_max": 27.1,
      "t_at_max_s": 1971.5,
      "T_at_60s": 25.5,
      "T_at_300s": 25.7,
-     "T_at_3600s": 26.4,
+     "T_at_3600s": 26.5,
      "t_first_100C_s": null,
      "t_first_150C_s": null,
      "t_first_200C_s": null
     },
     "TC_BOTTOM": {
-     "T_max": 107.6,
-     "t_at_max_s": 376.4,
-     "T_at_60s": 48.5,
-     "T_at_300s": 106.3,
-     "T_at_3600s": 52.1,
-     "t_first_100C_s": 239.6,
+     "T_max": 105.8,
+     "t_at_max_s": 450.0,
+     "T_at_60s": 41.9,
+     "T_at_300s": 101.5,
+     "T_at_3600s": 52.2,
+     "t_first_100C_s": 300.0,
      "t_first_150C_s": null,
      "t_first_200C_s": null
     },
@@ -312,12 +313,12 @@
      "t_first_200C_s": null
     },
     "BOTTOM_CENTRE": {
-     "T_max": 123.6,
-     "t_at_max_s": 300.0,
-     "T_at_60s": 63.0,
-     "T_at_300s": 123.6,
-     "T_at_3600s": 55.8,
-     "t_first_100C_s": 120.0,
+     "T_max": 120.5,
+     "t_at_max_s": 360.0,
+     "T_at_60s": 62.3,
+     "T_at_300s": 120.0,
+     "T_at_3600s": 55.5,
+     "t_first_100C_s": 131.2,
      "t_first_150C_s": null,
      "t_first_200C_s": null
     },
@@ -332,53 +333,54 @@
      "t_first_200C_s": null
     }
    },
-   "runtime_s": 203.5
+   "runtime_s": 234.4
   },
   "B_400": {
    "design": "B",
    "mass_g": 400,
    "options": {},
    "extra": {},
-   "nodes": 3340,
-   "elements": 6127,
+   "nodes": 3581,
+   "elements": 6609,
    "pile_h_mm": 25.2,
    "pile_top_mm_below_joint": 193.3,
-   "view_factor_to_walls": 0.99,
-   "escaped_through_outlet": 0.01,
+   "view_factor_to_walls": 0.989,
+   "escaped_through_outlet": 0.011,
+   "returned_to_pile": 0.0,
    "pile_radiated_peak_W": 375.4,
    "peaks": {
     "N_PILE": {
-     "T_max": 1000.0,
+     "T_max": 999.4,
      "t_at_max_s": 0.5,
-     "T_at_60s": 704.7,
-     "T_at_300s": 327.3,
-     "T_at_3600s": 116.3,
+     "T_at_60s": 705.6,
+     "T_at_300s": 337.0,
+     "T_at_3600s": 117.7,
      "t_first_100C_s": 0.5,
      "t_first_150C_s": 0.5,
      "t_first_200C_s": 0.5
     },
     "TC_TOP": {
-     "T_max": 34.0,
+     "T_max": 34.2,
      "t_at_max_s": 1350.0,
-     "T_at_60s": 27.8,
-     "T_at_300s": 30.2,
-     "T_at_3600s": 29.9,
+     "T_at_60s": 27.9,
+     "T_at_300s": 30.3,
+     "T_at_3600s": 30.0,
      "t_first_100C_s": null,
      "t_first_150C_s": null,
      "t_first_200C_s": null
     },
     "TC_BOTTOM": {
-     "T_max": 238.0,
-     "t_at_max_s": 450.0,
-     "T_at_60s": 66.0,
-     "T_at_300s": 227.2,
-     "T_at_3600s": 103.7,
-     "t_first_100C_s": 90.0,
-     "t_first_150C_s": 150.0,
-     "t_first_200C_s": 239.6
+     "T_max": 233.4,
+     "t_at_max_s": 510.0,
+     "T_at_60s": 55.8,
+     "T_at_300s": 212.6,
+     "T_at_3600s": 104.0,
+     "t_first_100C_s": 112.9,
+     "t_first_150C_s": 177.3,
+     "t_first_200C_s": 270.0
     },
     "FLANGE_RIM": {
-     "T_max": 31.5,
+     "T_max": 31.6,
      "t_at_max_s": 1530.0,
      "T_at_60s": 25.7,
      "T_at_300s": 28.1,
@@ -388,103 +390,104 @@
      "t_first_200C_s": null
     },
     "BOTTOM_CENTRE": {
-     "T_max": 264.3,
-     "t_at_max_s": 437.5,
-     "T_at_60s": 72.6,
-     "T_at_300s": 253.9,
-     "T_at_3600s": 113.6,
+     "T_max": 259.6,
+     "t_at_max_s": 480.0,
+     "T_at_60s": 72.1,
+     "T_at_300s": 244.9,
+     "T_at_3600s": 113.1,
      "t_first_100C_s": 83.5,
-     "t_first_150C_s": 120.0,
-     "t_first_200C_s": 177.3
+     "t_first_150C_s": 131.2,
+     "t_first_200C_s": 206.1
     },
     "N_ORING": {
-     "T_max": 31.6,
+     "T_max": 31.7,
      "t_at_max_s": 1530.0,
      "T_at_60s": 25.8,
-     "T_at_300s": 28.1,
-     "T_at_3600s": 28.8,
+     "T_at_300s": 28.2,
+     "T_at_3600s": 28.9,
      "t_first_100C_s": null,
      "t_first_150C_s": null,
      "t_first_200C_s": null
     }
    },
-   "runtime_s": 304.4
+   "runtime_s": 335.9
   },
   "B_816": {
    "design": "B",
    "mass_g": 816,
    "options": {},
    "extra": {},
-   "nodes": 3602,
-   "elements": 6656,
+   "nodes": 3843,
+   "elements": 7138,
    "pile_h_mm": 51.4,
    "pile_top_mm_below_joint": 167.1,
    "view_factor_to_walls": 0.987,
    "escaped_through_outlet": 0.013,
+   "returned_to_pile": 0.0,
    "pile_radiated_peak_W": 376.5,
    "peaks": {
     "N_PILE": {
-     "T_max": 1015.6,
+     "T_max": 1015.3,
      "t_at_max_s": 0.5,
-     "T_at_60s": 871.4,
-     "T_at_300s": 542.5,
-     "T_at_3600s": 170.1,
+     "T_at_60s": 871.8,
+     "T_at_300s": 548.9,
+     "T_at_3600s": 172.2,
      "t_first_100C_s": 0.5,
      "t_first_150C_s": 0.5,
      "t_first_200C_s": 0.5
     },
     "TC_TOP": {
-     "T_max": 51.0,
+     "T_max": 51.2,
      "t_at_max_s": 960.0,
      "T_at_60s": 29.4,
      "T_at_300s": 40.4,
-     "T_at_3600s": 34.8,
+     "T_at_3600s": 34.9,
      "t_first_100C_s": null,
      "t_first_150C_s": null,
      "t_first_200C_s": null
     },
     "TC_BOTTOM": {
-     "T_max": 320.8,
-     "t_at_max_s": 570.0,
-     "T_at_60s": 69.0,
-     "T_at_300s": 286.4,
-     "T_at_3600s": 151.1,
-     "t_first_100C_s": 83.5,
-     "t_first_150C_s": 120.0,
-     "t_first_200C_s": 177.3
+     "T_max": 316.4,
+     "t_at_max_s": 630.0,
+     "T_at_60s": 58.5,
+     "T_at_300s": 266.3,
+     "T_at_3600s": 151.4,
+     "t_first_100C_s": 97.1,
+     "t_first_150C_s": 150.0,
+     "t_first_200C_s": 206.1
     },
     "FLANGE_RIM": {
-     "T_max": 43.5,
+     "T_max": 43.6,
      "t_at_max_s": 1140.0,
      "T_at_60s": 26.0,
-     "T_at_300s": 33.1,
-     "T_at_3600s": 32.6,
+     "T_at_300s": 33.0,
+     "T_at_3600s": 32.7,
      "t_first_100C_s": null,
      "t_first_150C_s": null,
      "t_first_200C_s": null
     },
     "BOTTOM_CENTRE": {
-     "T_max": 348.0,
-     "t_at_max_s": 600.0,
-     "T_at_60s": 72.7,
-     "T_at_300s": 301.4,
-     "T_at_3600s": 166.2,
+     "T_max": 344.6,
+     "t_at_max_s": 630.0,
+     "T_at_60s": 72.3,
+     "T_at_300s": 291.4,
+     "T_at_3600s": 165.2,
      "t_first_100C_s": 83.5,
      "t_first_150C_s": 120.0,
      "t_first_200C_s": 177.3
     },
     "N_ORING": {
-     "T_max": 43.7,
+     "T_max": 43.8,
      "t_at_max_s": 1140.0,
      "T_at_60s": 26.3,
-     "T_at_300s": 33.4,
-     "T_at_3600s": 32.6,
+     "T_at_300s": 33.3,
+     "T_at_3600s": 32.7,
      "t_first_100C_s": null,
      "t_first_150C_s": null,
      "t_first_200C_s": null
     }
    },
-   "runtime_s": 367.6
+   "runtime_s": 377.1
   },
   "B_816_cupuck": {
    "design": "B",
@@ -493,28 +496,106 @@
     "puck_mat": "CU"
    },
    "extra": {},
-   "nodes": 3602,
-   "elements": 6656,
+   "nodes": 3843,
+   "elements": 7138,
    "pile_h_mm": 51.4,
    "pile_top_mm_below_joint": 167.1,
    "view_factor_to_walls": 0.987,
    "escaped_through_outlet": 0.013,
+   "returned_to_pile": 0.0,
    "pile_radiated_peak_W": 376.5,
    "peaks": {
     "N_PILE": {
-     "T_max": 1001.3,
+     "T_max": 1001.2,
      "t_at_max_s": 0.5,
-     "T_at_60s": 847.6,
-     "T_at_300s": 534.7,
-     "T_at_3600s": 165.4,
+     "T_at_60s": 851.1,
+     "T_at_300s": 543.7,
+     "T_at_3600s": 167.4,
+     "t_first_100C_s": 0.5,
+     "t_first_150C_s": 0.5,
+     "t_first_200C_s": 0.5
+    },
+    "TC_TOP": {
+     "T_max": 50.9,
+     "t_at_max_s": 990.0,
+     "T_at_60s": 29.4,
+     "T_at_300s": 40.1,
+     "T_at_3600s": 34.8,
+     "t_first_100C_s": null,
+     "t_first_150C_s": null,
+     "t_first_200C_s": null
+    },
+    "TC_BOTTOM": {
+     "T_max": 341.0,
+     "t_at_max_s": 540.0,
+     "T_at_60s": 80.7,
+     "T_at_300s": 308.2,
+     "T_at_3600s": 148.4,
+     "t_first_100C_s": 83.5,
+     "t_first_150C_s": 112.9,
+     "t_first_200C_s": 150.0
+    },
+    "FLANGE_RIM": {
+     "T_max": 43.5,
+     "t_at_max_s": 1170.0,
+     "T_at_60s": 26.0,
+     "T_at_300s": 32.9,
+     "T_at_3600s": 32.6,
+     "t_first_100C_s": null,
+     "t_first_150C_s": null,
+     "t_first_200C_s": null
+    },
+    "BOTTOM_CENTRE": {
+     "T_max": 374.1,
+     "t_at_max_s": 510.0,
+     "T_at_60s": 141.2,
+     "T_at_300s": 346.1,
+     "T_at_3600s": 162.0,
+     "t_first_100C_s": 39.4,
+     "t_first_150C_s": 71.9,
+     "t_first_200C_s": 112.9
+    },
+    "N_ORING": {
+     "T_max": 43.6,
+     "t_at_max_s": 1140.0,
+     "T_at_60s": 26.3,
+     "T_at_300s": 33.2,
+     "T_at_3600s": 32.7,
+     "t_first_100C_s": null,
+     "t_first_150C_s": null,
+     "t_first_200C_s": null
+    }
+   },
+   "runtime_s": 401.2
+  },
+  "B_816_fine": {
+   "design": "B",
+   "mass_g": 816,
+   "options": {},
+   "extra": {},
+   "nodes": 11439,
+   "elements": 21904,
+   "pile_h_mm": 51.4,
+   "pile_top_mm_below_joint": 167.1,
+   "view_factor_to_walls": 0.986,
+   "escaped_through_outlet": 0.014,
+   "returned_to_pile": 0.0,
+   "pile_radiated_peak_W": 381.4,
+   "peaks": {
+    "N_PILE": {
+     "T_max": 1018.8,
+     "t_at_max_s": 0.5,
+     "T_at_60s": 870.9,
+     "T_at_300s": 542.2,
+     "T_at_3600s": 170.4,
      "t_first_100C_s": 0.5,
      "t_first_150C_s": 0.5,
      "t_first_200C_s": 0.5
     },
     "TC_TOP": {
      "T_max": 50.6,
-     "t_at_max_s": 990.0,
-     "T_at_60s": 29.4,
+     "t_at_max_s": 960.0,
+     "T_at_60s": 29.5,
      "T_at_300s": 40.1,
      "T_at_3600s": 34.7,
      "t_first_100C_s": null,
@@ -522,47 +603,47 @@
      "t_first_200C_s": null
     },
     "TC_BOTTOM": {
-     "T_max": 346.8,
-     "t_at_max_s": 480.0,
-     "T_at_60s": 103.1,
-     "T_at_300s": 327.6,
-     "T_at_3600s": 148.0,
-     "t_first_100C_s": 60.0,
-     "t_first_150C_s": 90.0,
-     "t_first_200C_s": 131.2
+     "T_max": 311.3,
+     "t_at_max_s": 630.0,
+     "T_at_60s": 55.1,
+     "T_at_300s": 259.2,
+     "T_at_3600s": 150.3,
+     "t_first_100C_s": 112.9,
+     "t_first_150C_s": 150.0,
+     "t_first_200C_s": 206.1
     },
     "FLANGE_RIM": {
-     "T_max": 43.3,
+     "T_max": 43.4,
      "t_at_max_s": 1140.0,
      "T_at_60s": 26.0,
      "T_at_300s": 33.0,
-     "T_at_3600s": 32.5,
+     "T_at_3600s": 32.6,
      "t_first_100C_s": null,
      "t_first_150C_s": null,
      "t_first_200C_s": null
     },
     "BOTTOM_CENTRE": {
-     "T_max": 378.3,
-     "t_at_max_s": 510.0,
-     "T_at_60s": 143.2,
-     "T_at_300s": 356.3,
-     "T_at_3600s": 162.5,
-     "t_first_100C_s": 45.7,
-     "t_first_150C_s": 71.9,
-     "t_first_200C_s": 97.1
+     "T_max": 338.3,
+     "t_at_max_s": 630.0,
+     "T_at_60s": 69.1,
+     "T_at_300s": 284.2,
+     "T_at_3600s": 163.4,
+     "t_first_100C_s": 83.5,
+     "t_first_150C_s": 131.2,
+     "t_first_200C_s": 177.3
     },
     "N_ORING": {
-     "T_max": 43.5,
+     "T_max": 43.6,
      "t_at_max_s": 1140.0,
      "T_at_60s": 26.3,
-     "T_at_300s": 33.2,
-     "T_at_3600s": 32.6,
+     "T_at_300s": 33.3,
+     "T_at_3600s": 32.7,
      "t_first_100C_s": null,
      "t_first_150C_s": null,
      "t_first_200C_s": null
     }
    },
-   "runtime_s": 453.9
+   "runtime_s": 1289.4
   },
   "B_816_k2": {
    "design": "B",
@@ -571,76 +652,77 @@
    "extra": {
     "pile_k": 2.0
    },
-   "nodes": 3602,
-   "elements": 6656,
+   "nodes": 3843,
+   "elements": 7138,
    "pile_h_mm": 51.4,
    "pile_top_mm_below_joint": 167.1,
    "view_factor_to_walls": 0.987,
    "escaped_through_outlet": 0.013,
+   "returned_to_pile": 0.0,
    "pile_radiated_peak_W": 381.9,
    "peaks": {
     "N_PILE": {
-     "T_max": 1020.3,
+     "T_max": 1020.0,
      "t_at_max_s": 0.5,
-     "T_at_60s": 901.5,
-     "T_at_300s": 671.8,
-     "T_at_3600s": 172.4,
+     "T_at_60s": 901.7,
+     "T_at_300s": 675.6,
+     "T_at_3600s": 174.7,
      "t_first_100C_s": 0.5,
      "t_first_150C_s": 0.5,
      "t_first_200C_s": 0.5
     },
     "TC_TOP": {
-     "T_max": 52.5,
+     "T_max": 52.6,
      "t_at_max_s": 990.0,
      "T_at_60s": 29.1,
-     "T_at_300s": 39.6,
-     "T_at_3600s": 34.6,
+     "T_at_300s": 39.5,
+     "T_at_3600s": 34.8,
      "t_first_100C_s": null,
      "t_first_150C_s": null,
      "t_first_200C_s": null
     },
     "TC_BOTTOM": {
-     "T_max": 297.3,
-     "t_at_max_s": 720.0,
-     "T_at_60s": 60.8,
-     "T_at_300s": 247.1,
-     "T_at_3600s": 153.5,
-     "t_first_100C_s": 97.1,
-     "t_first_150C_s": 150.0,
-     "t_first_200C_s": 206.1
+     "T_max": 294.7,
+     "t_at_max_s": 750.0,
+     "T_at_60s": 52.3,
+     "T_at_300s": 229.2,
+     "T_at_3600s": 153.9,
+     "t_first_100C_s": 112.9,
+     "t_first_150C_s": 177.3,
+     "t_first_200C_s": 270.0
     },
     "FLANGE_RIM": {
      "T_max": 44.6,
      "t_at_max_s": 1170.0,
      "T_at_60s": 25.9,
-     "T_at_300s": 32.5,
-     "T_at_3600s": 32.5,
+     "T_at_300s": 32.4,
+     "T_at_3600s": 32.6,
      "t_first_100C_s": null,
      "t_first_150C_s": null,
      "t_first_200C_s": null
     },
     "BOTTOM_CENTRE": {
-     "T_max": 319.9,
-     "t_at_max_s": 780.0,
-     "T_at_60s": 61.9,
-     "T_at_300s": 250.8,
-     "T_at_3600s": 169.2,
+     "T_max": 318.5,
+     "t_at_max_s": 799.0,
+     "T_at_60s": 61.4,
+     "T_at_300s": 243.5,
+     "T_at_3600s": 168.3,
      "t_first_100C_s": 97.1,
      "t_first_150C_s": 150.0,
-     "t_first_200C_s": 210.0
+     "t_first_200C_s": 239.6
     },
     "N_ORING": {
      "T_max": 44.8,
      "t_at_max_s": 1170.0,
      "T_at_60s": 26.2,
-     "T_at_300s": 32.8,
-     "T_at_3600s": 32.5,
+     "T_at_300s": 32.7,
+     "T_at_3600s": 32.7,
      "t_first_100C_s": null,
      "t_first_150C_s": null,
      "t_first_200C_s": null
     }
    },
-   "runtime_s": 385.4
+   "runtime_s": 391.8
   },
   "B_816_k20": {
    "design": "B",
@@ -649,76 +731,77 @@
    "extra": {
     "pile_k": 20.0
    },
-   "nodes": 3602,
-   "elements": 6656,
+   "nodes": 3843,
+   "elements": 7138,
    "pile_h_mm": 51.4,
    "pile_top_mm_below_joint": 167.1,
    "view_factor_to_walls": 0.987,
    "escaped_through_outlet": 0.013,
+   "returned_to_pile": 0.0,
    "pile_radiated_peak_W": 377.1,
    "peaks": {
     "N_PILE": {
-     "T_max": 1013.6,
+     "T_max": 1013.3,
      "t_at_max_s": 0.5,
-     "T_at_60s": 801.2,
-     "T_at_300s": 478.0,
-     "T_at_3600s": 170.3,
+     "T_at_60s": 802.2,
+     "T_at_300s": 488.4,
+     "T_at_3600s": 172.3,
      "t_first_100C_s": 0.5,
      "t_first_150C_s": 0.5,
      "t_first_200C_s": 0.5
     },
     "TC_TOP": {
-     "T_max": 48.2,
-     "t_at_max_s": 1050.0,
+     "T_max": 48.6,
+     "t_at_max_s": 1080.0,
      "T_at_60s": 29.9,
      "T_at_300s": 38.2,
-     "T_at_3600s": 35.2,
+     "T_at_3600s": 35.3,
      "t_first_100C_s": null,
      "t_first_150C_s": null,
      "t_first_200C_s": null
     },
     "TC_BOTTOM": {
-     "T_max": 349.4,
-     "t_at_max_s": 450.0,
-     "T_at_60s": 84.2,
-     "T_at_300s": 332.5,
-     "T_at_3600s": 150.0,
-     "t_first_100C_s": 71.9,
-     "t_first_150C_s": 97.1,
-     "t_first_200C_s": 131.2
+     "T_max": 341.2,
+     "t_at_max_s": 510.0,
+     "T_at_60s": 69.8,
+     "T_at_300s": 310.3,
+     "T_at_3600s": 150.1,
+     "t_first_100C_s": 83.5,
+     "t_first_150C_s": 120.0,
+     "t_first_200C_s": 152.5
     },
     "FLANGE_RIM": {
-     "T_max": 41.6,
-     "t_at_max_s": 1255.0,
+     "T_max": 41.9,
+     "t_at_max_s": 1260.0,
      "T_at_60s": 26.1,
      "T_at_300s": 32.1,
-     "T_at_3600s": 32.9,
+     "T_at_3600s": 33.0,
      "t_first_100C_s": null,
      "t_first_150C_s": null,
      "t_first_200C_s": null
     },
     "BOTTOM_CENTRE": {
-     "T_max": 383.4,
-     "t_at_max_s": 450.0,
-     "T_at_60s": 93.2,
-     "T_at_300s": 363.7,
-     "T_at_3600s": 164.5,
+     "T_max": 375.2,
+     "t_at_max_s": 480.0,
+     "T_at_60s": 92.6,
+     "T_at_300s": 349.1,
+     "T_at_3600s": 163.4,
      "t_first_100C_s": 71.9,
      "t_first_150C_s": 90.0,
      "t_first_200C_s": 120.0
     },
     "N_ORING": {
-     "T_max": 41.8,
-     "t_at_max_s": 1230.0,
+     "T_max": 42.1,
+     "t_at_max_s": 1255.0,
      "T_at_60s": 26.4,
      "T_at_300s": 32.3,
-     "T_at_3600s": 32.9,
+     "T_at_3600s": 33.1,
      "t_first_100C_s": null,
      "t_first_150C_s": null,
      "t_first_200C_s": null
     }
    },
-   "runtime_s": 293.6
+   "runtime_s": 308.2
   },
   "B_816_noliner": {
    "design": "B",
@@ -727,76 +810,77 @@
     "liner": false
    },
    "extra": {},
-   "nodes": 2520,
-   "elements": 4499,
+   "nodes": 2910,
+   "elements": 5279,
    "pile_h_mm": 42.9,
    "pile_top_mm_below_joint": 175.6,
    "view_factor_to_walls": 0.988,
    "escaped_through_outlet": 0.012,
-   "pile_radiated_peak_W": 454.4,
+   "returned_to_pile": 0.0,
+   "pile_radiated_peak_W": 454.9,
    "peaks": {
     "N_PILE": {
-     "T_max": 1015.9,
+     "T_max": 1016.8,
      "t_at_max_s": 0.5,
-     "T_at_60s": 849.2,
-     "T_at_300s": 491.0,
-     "T_at_3600s": 128.6,
+     "T_at_60s": 853.7,
+     "T_at_300s": 497.5,
+     "T_at_3600s": 128.9,
      "t_first_100C_s": 0.5,
      "t_first_150C_s": 0.5,
      "t_first_200C_s": 0.5
     },
     "TC_TOP": {
-     "T_max": 50.3,
+     "T_max": 50.4,
      "t_at_max_s": 780.0,
-     "T_at_60s": 29.7,
-     "T_at_300s": 41.3,
+     "T_at_60s": 29.8,
+     "T_at_300s": 41.4,
      "T_at_3600s": 31.8,
      "t_first_100C_s": null,
      "t_first_150C_s": null,
      "t_first_200C_s": null
     },
     "TC_BOTTOM": {
-     "T_max": 344.8,
-     "t_at_max_s": 437.5,
-     "T_at_60s": 193.8,
-     "T_at_300s": 334.4,
-     "T_at_3600s": 129.0,
-     "t_first_100C_s": 21.6,
-     "t_first_150C_s": 39.4,
-     "t_first_200C_s": 71.9
+     "T_max": 340.0,
+     "t_at_max_s": 480.0,
+     "T_at_60s": 165.4,
+     "T_at_300s": 320.3,
+     "T_at_3600s": 128.6,
+     "t_first_100C_s": 25.1,
+     "t_first_150C_s": 53.2,
+     "t_first_200C_s": 97.1
     },
     "FLANGE_RIM": {
-     "T_max": 42.8,
-     "t_at_max_s": 930.0,
+     "T_max": 42.9,
+     "t_at_max_s": 960.0,
      "T_at_60s": 26.1,
-     "T_at_300s": 33.3,
-     "T_at_3600s": 30.3,
+     "T_at_300s": 33.4,
+     "T_at_3600s": 30.4,
      "t_first_100C_s": null,
      "t_first_150C_s": null,
      "t_first_200C_s": null
     },
     "BOTTOM_CENTRE": {
-     "T_max": 353.5,
+     "T_max": 351.6,
      "t_at_max_s": 510.0,
-     "T_at_60s": 77.7,
-     "T_at_300s": 326.3,
-     "T_at_3600s": 134.2,
+     "T_at_60s": 78.2,
+     "T_at_300s": 320.7,
+     "T_at_3600s": 133.3,
      "t_first_100C_s": 83.5,
      "t_first_150C_s": 112.9,
      "t_first_200C_s": 150.0
     },
     "N_ORING": {
-     "T_max": 42.9,
+     "T_max": 43.0,
      "t_at_max_s": 930.0,
      "T_at_60s": 26.4,
-     "T_at_300s": 33.6,
-     "T_at_3600s": 30.3,
+     "T_at_300s": 33.7,
+     "T_at_3600s": 30.4,
      "t_first_100C_s": null,
      "t_first_150C_s": null,
      "t_first_200C_s": null
     }
    },
-   "runtime_s": 242.3
+   "runtime_s": 276.4
   },
   "B_816_powder400": {
    "design": "B",
@@ -806,8 +890,8 @@
     "pile_T": 400.0
    },
    "extra": {},
-   "nodes": 3602,
-   "elements": 6656,
+   "nodes": 3843,
+   "elements": 7138,
    "pile_h_mm": 51.4,
    "pile_top_mm_below_joint": 167.1,
    "view_factor_to_walls": 0.987,
@@ -816,11 +900,11 @@
    "pile_radiated_peak_W": 25.0,
    "peaks": {
     "N_PILE": {
-     "T_max": 386.1,
+     "T_max": 386.0,
      "t_at_max_s": 0.5,
      "T_at_60s": 348.6,
-     "T_at_300s": 294.8,
-     "T_at_3600s": 96.7,
+     "T_at_300s": 295.1,
+     "T_at_3600s": 97.4,
      "t_first_100C_s": 0.5,
      "t_first_150C_s": 0.5,
      "t_first_200C_s": 0.5
@@ -836,11 +920,11 @@
      "t_first_200C_s": null
     },
     "TC_BOTTOM": {
-     "T_max": 86.4,
-     "t_at_max_s": 1380.0,
-     "T_at_60s": 30.5,
-     "T_at_300s": 62.1,
-     "T_at_3600s": 70.1,
+     "T_max": 86.3,
+     "t_at_max_s": 1440.0,
+     "T_at_60s": 29.1,
+     "T_at_300s": 58.6,
+     "T_at_3600s": 70.3,
      "t_first_100C_s": null,
      "t_first_150C_s": null,
      "t_first_200C_s": null
@@ -856,11 +940,11 @@
      "t_first_200C_s": null
     },
     "BOTTOM_CENTRE": {
-     "T_max": 91.8,
-     "t_at_max_s": 1530.0,
-     "T_at_60s": 31.6,
-     "T_at_300s": 62.7,
-     "T_at_3600s": 75.7,
+     "T_max": 91.9,
+     "t_at_max_s": 1500.0,
+     "T_at_60s": 31.4,
+     "T_at_300s": 61.6,
+     "T_at_3600s": 75.5,
      "t_first_100C_s": null,
      "t_first_150C_s": null,
      "t_first_200C_s": null
@@ -876,7 +960,7 @@
      "t_first_200C_s": null
     }
    },
-   "runtime_s": 103.1
+   "runtime_s": 68.4
   },
   "B_hangup_100": {
    "design": "B",
@@ -885,8 +969,8 @@
     "hangup": true
    },
    "extra": {},
-   "nodes": 3632,
-   "elements": 6639,
+   "nodes": 3954,
+   "elements": 7283,
    "pile_h_mm": 19.0,
    "pile_top_mm_below_joint": 4.0,
    "view_factor_to_walls": 0.678,
@@ -897,7 +981,7 @@
     "N_PILE": {
      "T_max": 991.6,
      "t_at_max_s": 0.5,
-     "T_at_60s": 456.5,
+     "T_at_60s": 456.6,
      "T_at_300s": 233.8,
      "T_at_3600s": 26.5,
      "t_first_100C_s": 0.5,
@@ -905,9 +989,9 @@
      "t_first_200C_s": 0.5
     },
     "TC_TOP": {
-     "T_max": 703.1,
+     "T_max": 703.2,
      "t_at_max_s": 5.6,
-     "T_at_60s": 453.1,
+     "T_at_60s": 453.2,
      "T_at_300s": 231.5,
      "T_at_3600s": 26.4,
      "t_first_100C_s": 0.5,
@@ -916,7 +1000,7 @@
     },
     "TC_BOTTOM": {
      "T_max": 26.3,
-     "t_at_max_s": 2010.0,
+     "t_at_max_s": 2070.0,
      "T_at_60s": 25.0,
      "T_at_300s": 25.2,
      "T_at_3600s": 26.0,
@@ -925,18 +1009,18 @@
      "t_first_200C_s": null
     },
     "FLANGE_RIM": {
-     "T_max": 380.4,
+     "T_max": 380.5,
      "t_at_max_s": 61.8,
      "T_at_60s": 380.2,
-     "T_at_300s": 233.6,
+     "T_at_300s": 233.7,
      "T_at_3600s": 26.4,
      "t_first_100C_s": 8.7,
      "t_first_150C_s": 11.8,
      "t_first_200C_s": 15.9
     },
     "BOTTOM_CENTRE": {
-     "T_max": 26.2,
-     "t_at_max_s": 2490.0,
+     "T_max": 26.3,
+     "t_at_max_s": 2460.0,
      "T_at_60s": 25.0,
      "T_at_300s": 25.2,
      "T_at_3600s": 26.1,
@@ -945,7 +1029,7 @@
      "t_first_200C_s": null
     },
     "N_ORING": {
-     "T_max": 388.7,
+     "T_max": 388.8,
      "t_at_max_s": 53.2,
      "T_at_60s": 386.8,
      "T_at_300s": 233.9,
@@ -955,7 +1039,7 @@
      "t_first_200C_s": 4.1
     }
    },
-   "runtime_s": 431.7
+   "runtime_s": 310.1
   },
   "B_hangup_25": {
    "design": "B",
@@ -964,8 +1048,8 @@
     "hangup": true
    },
    "extra": {},
-   "nodes": 3461,
-   "elements": 6298,
+   "nodes": 3784,
+   "elements": 6944,
    "pile_h_mm": 4.7,
    "pile_top_mm_below_joint": 4.0,
    "view_factor_to_walls": 0.811,
@@ -984,7 +1068,7 @@
      "t_first_200C_s": 0.5
     },
     "TC_TOP": {
-     "T_max": 158.0,
+     "T_max": 157.9,
      "t_at_max_s": 25.1,
      "T_at_60s": 147.3,
      "T_at_300s": 89.1,
@@ -995,7 +1079,7 @@
     },
     "TC_BOTTOM": {
      "T_max": 25.3,
-     "t_at_max_s": 2040.0,
+     "t_at_max_s": 2100.0,
      "T_at_60s": 25.0,
      "T_at_300s": 25.1,
      "T_at_3600s": 25.2,
@@ -1015,7 +1099,7 @@
     },
     "BOTTOM_CENTRE": {
      "T_max": 25.3,
-     "t_at_max_s": 2490.0,
+     "t_at_max_s": 2460.0,
      "T_at_60s": 25.0,
      "T_at_300s": 25.1,
      "T_at_3600s": 25.2,
@@ -1034,7 +1118,86 @@
      "t_first_200C_s": null
     }
    },
-   "runtime_s": 372.6
+   "runtime_s": 275.6
+  },
+  "B_hangup_25_fine": {
+   "design": "B",
+   "mass_g": 25,
+   "options": {
+    "hangup": true
+   },
+   "extra": {},
+   "nodes": 11126,
+   "elements": 21141,
+   "pile_h_mm": 4.7,
+   "pile_top_mm_below_joint": 4.0,
+   "view_factor_to_walls": 0.814,
+   "escaped_through_outlet": 0.162,
+   "returned_to_pile": 0.024,
+   "pile_radiated_peak_W": 281.0,
+   "peaks": {
+    "N_PILE": {
+     "T_max": 972.2,
+     "t_at_max_s": 0.5,
+     "T_at_60s": 186.6,
+     "T_at_300s": 93.6,
+     "T_at_3600s": 25.2,
+     "t_first_100C_s": 0.5,
+     "t_first_150C_s": 0.5,
+     "t_first_200C_s": 0.5
+    },
+    "TC_TOP": {
+     "T_max": 154.5,
+     "t_at_max_s": 25.1,
+     "T_at_60s": 143.9,
+     "T_at_300s": 87.1,
+     "T_at_3600s": 25.2,
+     "t_first_100C_s": 5.6,
+     "t_first_150C_s": 18.5,
+     "t_first_200C_s": null
+    },
+    "TC_BOTTOM": {
+     "T_max": 25.3,
+     "t_at_max_s": 2130.0,
+     "T_at_60s": 25.0,
+     "T_at_300s": 25.1,
+     "T_at_3600s": 25.2,
+     "t_first_100C_s": null,
+     "t_first_150C_s": null,
+     "t_first_200C_s": null
+    },
+    "FLANGE_RIM": {
+     "T_max": 179.5,
+     "t_at_max_s": 39.4,
+     "T_at_60s": 173.2,
+     "T_at_300s": 94.0,
+     "T_at_3600s": 25.2,
+     "t_first_100C_s": 11.8,
+     "t_first_150C_s": 20.0,
+     "t_first_200C_s": null
+    },
+    "BOTTOM_CENTRE": {
+     "T_max": 25.3,
+     "t_at_max_s": 2460.0,
+     "T_at_60s": 25.0,
+     "T_at_300s": 25.1,
+     "T_at_3600s": 25.2,
+     "t_first_100C_s": null,
+     "t_first_150C_s": null,
+     "t_first_200C_s": null
+    },
+    "N_ORING": {
+     "T_max": 187.8,
+     "t_at_max_s": 21.6,
+     "T_at_60s": 172.6,
+     "T_at_300s": 93.9,
+     "T_at_3600s": 25.2,
+     "t_first_100C_s": 1.4,
+     "t_first_150C_s": 4.1,
+     "t_first_200C_s": null
+    }
+   },
+   "runtime_s": 851.5
   },
   "C_400": {
    "design": "C",
@@ -1623,11 +1786,15 @@
     ],
     [
      400,
-     31.6
+     31.7
     ],
     [
      816,
-     43.7
+     43.6
+    ],
+    [
+     816,
+     43.8
     ]
    ],
    "to_150C": "> 816 (largest case run)",
@@ -1671,18 +1838,18 @@
  "alarms": {
   "B_400": {
    "tc_top_120C_s": null,
-   "tc_bottom_150C_s": 136.0,
+   "tc_bottom_150C_s": 165.0,
    "oring_150C_s": null,
    "oring_200C_s": null,
-   "tc_bottom_at_60s": 66.0,
+   "tc_bottom_at_60s": 56.0,
    "tc_bottom_at_3600s": 104.0
   },
   "B_816": {
    "tc_top_120C_s": null,
-   "tc_bottom_150C_s": 119.0,
+   "tc_bottom_150C_s": 141.0,
    "oring_150C_s": null,
    "oring_200C_s": null,
-   "tc_bottom_at_60s": 69.0,
+   "tc_bottom_at_60s": 58.0,
    "tc_bottom_at_3600s": 151.0
   },
   "B_816_powder400": {
@@ -1690,7 +1857,7 @@
    "tc_bottom_150C_s": null,
    "oring_150C_s": null,
    "oring_200C_s": null,
-   "tc_bottom_at_60s": 30.0,
+   "tc_bottom_at_60s": 29.0,
    "tc_bottom_at_3600s": 70.0
   },
   "B_hangup_25": {

@@ -4,16 +4,18 @@ Every case: the shot (or powder) lands all at once at t = 0 and the run is follo
 
 | Case | What lands, where | Joint O-ring max (C) [at s] | Other seal max (C) | TC top max | TC bottom max | Floor/plate max | Glass dT max (K) |
 |---|---|---|---|---:|---:|---:|---:|
-| B_100 | 100 g shot on the puck | 26 [2130] |  | 27 | 108 | 124 |  |
-| B_400 | 400 g shot on the puck | 32 [1530] |  | 34 | 238 | 264 |  |
-| B_816 | 816 g shot on the puck (Nov 13 charge) | 44 [1140] |  | 51 | 321 | 348 |  |
-| B_816_k2 | 816 g, pile k 2 W/m K | 45 [1170] |  | 52 | 297 | 320 |  |
-| B_816_k20 | 816 g, pile k 20 W/m K (fused) | 42 [1230] |  | 48 | 349 | 383 |  |
-| B_816_noliner | 816 g, no liner | 43 [930] |  | 50 | 345 | 354 |  |
-| B_816_cupuck | 816 g, copper puck | 44 [1140] |  | 51 | 347 | 378 |  |
+| B_100 | 100 g shot on the puck | 26 [2130] |  | 27 | 106 | 120 |  |
+| B_400 | 400 g shot on the puck | 32 [1530] |  | 34 | 233 | 260 |  |
+| B_816 | 816 g shot on the puck (Nov 13 charge) | 44 [1140] |  | 51 | 316 | 345 |  |
+| B_816_k2 | 816 g, pile k 2 W/m K | 45 [1170] |  | 53 | 295 | 318 |  |
+| B_816_k20 | 816 g, pile k 20 W/m K (fused) | 42 [1255] |  | 49 | 341 | 375 |  |
+| B_816_noliner | 816 g, no liner | 43 [930] |  | 50 | 340 | 352 |  |
+| B_816_cupuck | 816 g, copper puck | 44 [1140] |  | 51 | 341 | 374 |  |
 | B_816_powder400 | 816 g of powder at 400 C (a good run) | 29 [1770] |  | 30 | 86 | 92 |  |
 | B_hangup_25 | 25 g of shot fused in the bore just under the joint | 195 [22] |  | 158 | 25 | 25 |  |
 | B_hangup_100 | 100 g of shot fused in the bore just under the joint | 389 [53] |  | 703 | 26 | 26 |  |
+| B_816_fine | B_816 on a 0.55x finer mesh (convergence) | 44 [1140] |  | 51 | 311 | 338 |  |
+| B_hangup_25_fine | B_hangup_25 on a 0.55x finer mesh | 188 [22] |  | 154 | 25 | 25 |  |
 | A_100 | 100 g shot on the puck | 37 [1230] | bottom O-ring 138 [480] | 41 | 107 | 154 |  |
 | A_250 | 250 g shot on the puck | 66 [870] | bottom O-ring 215 [630] | 80 | 182 | 234 |  |
 | A_400 | 400 g shot on the puck | 110 [720] | bottom O-ring 248 [750] | 141 | 221 | 269 |  |
@@ -29,7 +31,7 @@ Linear interpolation between the mass cases (base cases only).
 
 | Design | Seal | to 150 C (g) | to 200 C (g) | cases (mass g, seal peak C) |
 |---|---|---|---|---|
-| B (joint O-ring) | oring | > 816 (largest case run) | > 816 (largest case run) | 100: 26, 400: 32, 816: 44 |
+| B (joint O-ring) | oring | > 816 (largest case run) | > 816 (largest case run) | 100: 26, 400: 32, 816: 44, 816: 44 |
 | A (bottom O-ring) | boring | 123 | 221 | 100: 138, 250: 215, 400: 248 |
 | C (bottom glass seal) | seal_bot | < 400 | < 400 | 400: 264, 816: 333 |
 
@@ -39,9 +41,9 @@ Top thermocouple alarm 120 C, bottom 150 C; blank = never within the hour.
 
 | Case | top TC >= 120 C | bottom TC >= 150 C | O-ring >= 150 C | O-ring >= 200 C | bottom TC at 60 s | at 1 h |
 |---|---:|---:|---:|---:|---:|---:|
-| B_400 |  | 136 |  |  | 66.0 | 104.0 |
-| B_816 |  | 119 |  |  | 69.0 | 151.0 |
-| B_816_powder400 |  |  |  |  | 30.0 | 70.0 |
+| B_400 |  | 165 |  |  | 56.0 | 104.0 |
+| B_816 |  | 141 |  |  | 58.0 | 151.0 |
+| B_816_powder400 |  |  |  |  | 29.0 | 70.0 |
 | B_hangup_25 | 7 |  | 3 |  | 25.0 | 25.0 |
 | B_hangup_100 | 0 |  | 2 | 4 | 25.0 | 26.0 |
 | A_100 |  |  |  |  | 55.0 | 49.0 |
