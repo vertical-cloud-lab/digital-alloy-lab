@@ -13,7 +13,7 @@ CMD='cd /case && checkMesh > log.checkMesh 2>&1; '
 if [ -n "$SRC" ]; then
   SRC=$(realpath "$SRC")
   EXTRA=(-v "$SRC":/src:ro)
-  CMD+='mapFields /src -consistent -sourceTime latestTime > log.mapFields 2>&1; '
+  CMD+='mapFields /src -consistent -sourceTime latestTime > log.mapFields 2>&1; rm -f 0/TMean 0/UMean; '
 fi
 CMD+="foamDictionary -entry numberOfSubdomains -set $NP system/decomposeParDict > /dev/null && "
 CMD+='rm -rf processor* && decomposePar -force > log.decomposePar 2>&1 && '

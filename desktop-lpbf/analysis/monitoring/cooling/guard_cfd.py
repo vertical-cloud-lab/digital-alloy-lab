@@ -29,6 +29,25 @@ What is modelled (each an assumption, stated again in cooling.md §4.2):
     cooling.py gives the guard's air goes in as a uniform flux on the base plate's top. No radiation.
   * Panels: the CFD resolves the inside film; the outside is a fixed coefficient to the Shuttle's air (cooling.py's formulas:
     vertical bare panel 2.6, top 3.3, the polycarbonate window 6.5, the base plate's underside 1.9 W/m2K).
+  * The steady solution keeps oscillating a little (buoyant plumes), so T and U are averaged over the last 600-800 iterations
+    (fieldAverage) and the heat balance over the last 500.
+
+Re-running (cases under /tmp/guard-cfd, nothing in the repo; each solve through the heavy-job queue, one at a time):
+    PY=/tmp/venv/bin/python; G=desktop-lpbf/analysis/monitoring/cooling; R="/tmp/heavy 4 sg docker -c"
+    /tmp/heavy 2 $PY $G/guard_cfd.py dump
+    $PY $G/guard_cfd.py case --h 12 --supply-c 30.2 --iters 2500 --h-relax 0.3 --out /tmp/guard-cfd/typ12
+    $R "$G/run_guard_cfd.sh /tmp/guard-cfd/typ12"
+    # typ12a: typ12 continued from iteration 2500 to 3300 at h-relax 0.6, T and U averaged over those 800; equivalent to
+    $PY $G/guard_cfd.py case --h 12 --supply-c 30.2 --iters 800 --average-from 1 --init-from /tmp/guard-cfd/typ12 --out /tmp/guard-cfd/typ12a
+    $PY $G/guard_cfd.py case --h 12 --supply-c 38.0 --iters 1500 --average-from 900 --init-from /tmp/guard-cfd/typ12 --init-dT 7 \
+        --out /tmp/guard-cfd/busy12b
+    $PY $G/guard_cfd.py case --h 12 --supply-c 30.2 --iters 1500 --average-from 800 --inlet-angle -61.9 \
+        --variant "inlet trap turned over (air leaves upward)" --out /tmp/guard-cfd/flip12    # run with typ12 as the map source
+    $PY $G/guard_cfd.py case --h 12 --supply-c 30.2 --iters 2000 --average-from 1200 --floor-open \
+        --variant "base plate window open" --out /tmp/guard-cfd/floor12                      # run with typ12 as the map source
+    $PY $G/guard_cfd.py case --h 18 --supply-c 30.2 --iters 2500 --average-from 1700 --out /tmp/guard-cfd/typ18
+    $R "$G/run_guard_cfd.sh <case> [<map source>]" for each, then
+    $PY $G/guard_cfd.py post /tmp/guard-cfd/typ12a /tmp/guard-cfd/busy12b /tmp/guard-cfd/flip12 /tmp/guard-cfd/floor12 /tmp/guard-cfd/typ18
 """
 from __future__ import annotations
 
@@ -520,6 +539,24 @@ def write_polymesh(case, X, Y, Z, lab, names, baffles, special):
 
 
 # ------------------------------------------------------------------------------------------------ case
+def init_from(src, dst, dT):
+    """copy the internal fields of src's latest solved time into dst/0 (same grid), T shifted by dT; dst keeps its own boundaries"""
+    import re
+    ts = max((p for p in src.iterdir() if p.is_dir() and re.fullmatch(r"\d+", p.name) and p.name != "0"), key=lambda p: int(p.name))
+    for f in ("T", "U", "p", "p_rgh", "k", "epsilon", "nut", "alphat"):
+        s = (ts / f).read_text()
+        m = re.search(r"internalField\s+nonuniform\s+List<(scalar|vector)>\s*\n?(\d+)\s*\n?\(", s)
+        end = s.index("\n)\n", m.end()) + 3
+        block = s[m.start():end].rstrip() + ";"
+        if f == "T":
+            vals = s[m.end():end - 3].split()
+            block = "internalField nonuniform List<scalar>\n%d\n(\n%s\n)\n;" % (int(m.group(2)), "\n".join("%.4f" % (float(v) + dT) for v in vals))
+        d = (dst / "0" / f).read_text()
+        d2, k = re.subn(r"internalField\s+uniform\s+[^;]+;", lambda _: block, d, count=1)
+        assert k == 1, f
+        (dst / "0" / f).write_text(d2)
+
+
 def write_case(args):
     cj = load_cooling()
     out = pathlib.Path(args.out)
@@ -620,6 +657,9 @@ def write_case(args):
         s.append(f"    \"({'|'.join(walls_adiabatic)})\" {{ type zeroGradient; }}")
         return "\n".join(s)
 
+    avg = "" if args.average_from is None else (
+        f"    fieldAverage1 {{ type fieldAverage; libs (fieldFunctionObjects); timeStart {args.average_from}; writeControl writeTime;\n"
+        "                    fields ( T { mean on; prime2Mean off; base iteration; } U { mean on; prime2Mean off; base iteration; } ); }\n")
     allwalls = [p for p in mesh["patches"] if p not in ("inlet", "hoodIn", "floorIn", "exhaust")]
     W = "|".join(allwalls)
     IN = "inlet|hoodIn|floorIn" if q_win else "inlet|hoodIn"
@@ -737,7 +777,7 @@ functions
            writeControl timeStep; writeInterval 10; log false; }}
     probes {{ type probes; libs (sampling); writeControl timeStep; writeInterval 10; fields (T U);
              probeLocations ((-0.300 -0.040 0.070) (-0.215 -0.190 0.300) (0.020 -0.100 0.330) (0.050 0.120 0.320) (-0.380 0.0 0.330)); }}
-}}
+{avg}}}
 """,
         "system/fvSchemes": hdr("dictionary", "fvSchemes") + """ddtSchemes { default steadyState; }
 gradSchemes { default Gauss linear; }
@@ -772,7 +812,7 @@ SIMPLE
 relaxationFactors
 {
     fields { rho 1.0; p_rgh 0.7; }
-    equations { U 0.3; h 0.3; "(k|epsilon)" 0.5; }
+    equations { U 0.3; h %H_RELAX%; "(k|epsilon)" 0.5; }
 }
 """,
         "system/decomposeParDict": hdr("dictionary", "decomposeParDict") + "numberOfSubdomains 2;\nmethod scotch;\n",
@@ -792,10 +832,13 @@ relaxationFactors
 }
 """,
     }
+    files["system/fvSolution"] = files["system/fvSolution"].replace("%H_RELAX%", f"{args.h_relax:g}")
     for name, txt in files.items():
         (out / name).parent.mkdir(parents=True, exist_ok=True)
         (out / name).write_text(txt)
     (out / "case.foam").write_text("")
+    if args.init_from:                                          # start from a solved case on the same grid, T shifted by init_dT
+        init_from(pathlib.Path(args.init_from), out, args.init_dT)
     meta = dict(h_mm=args.h, load=args.load, supply_c=T_s, hood_pickup_k=args.hood_pickup, q_exhaust_m3h=q_ex, q_hood_m3h=q_hood,
                 q_inlet_m3h=q_in, inlet_angle_deg=args.inlet_angle, U_inlet=U_in, v_hood=v_hood, heat_W=heated, legs_to_floor_W=legs,
                 floor_flux_W_m2=q_floor, wellmixed_guard_c=Tg_wm, mesh={k: v for k, v in mesh.items()}, n=[nx, ny, nz],
@@ -824,6 +867,10 @@ if __name__ == "__main__":
     a.add_argument("--q-hood", type=float, default=None)
     a.add_argument("--inlet-angle", type=float, default=PHI_TRAP, help="downward angle of the inlet air, deg (trap's last leg)")
     a.add_argument("--iters", type=int, default=1500)
+    a.add_argument("--average-from", type=int, default=None, help="average T and U over the iterations from this one (fieldAverage)")
+    a.add_argument("--h-relax", type=float, default=0.6, help="under-relaxation of the energy equation")
+    a.add_argument("--init-from", default=None, help="solved case on the same grid to start from")
+    a.add_argument("--init-dT", type=float, default=0.0, help="shift of T when starting from --init-from, K")
     a.add_argument("--variant", default="as drawn")
     a.add_argument("--floor-open", action="store_true", help="the base plate's Z-stage window and slot open (FLOOR_WINDOW); flows from network()")
     a = sub.add_parser("post")
