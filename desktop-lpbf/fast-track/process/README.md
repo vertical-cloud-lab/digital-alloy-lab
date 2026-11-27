@@ -36,11 +36,13 @@ python desktop-lpbf/fast-track/process/rtc5_list.py       # 6 s
 
   The full CAD list is in [the CAD section](#5-changes-for-the-cad).
 - **Thermal lens:** with the clean optics (20 ppm/cm bulk plus a pessimistic 0.1 % coating loss), a parked beam
-  moves the focus 4.4–4.7 mm (1.2 z_R). During a coupon build the layer-averaged lens is only 0.03–0.5 mm.
+  moves the focus 4.4–4.7 mm (1.2 z_R). While a coupon build scans, the beam sees at most 0.12–0.16 mm in the box
+  and 0.47–0.82 mm in the cube (transient 2D solve along the real scan path).
   - **A sooted cover slide (1–2 %) is the real risk:**
     - with a parked beam, 34–63 mm of focus shift (the slide would crack first);
-    - while scanning, 0.3–1.0 mm in the box and 1.3–5.8 mm in the cube (up to 1.5 z_R).
-  - Change the slide every build in the cube.
+    - while scanning, up to 1.2–2.3 mm in the box (0.3–0.6 z_R) and 4.7–9.4 mm in the cube (1.2–2.4 z_R).
+  - The cube is worse because its slide hangs under the top plate, 221 mm up. **In FT-1V, hang the slide ~130 mm
+    above the bed, as in the box,** or change it every build.
 - **AlSi10Mg starting set for the cubes:** **255 W, 1.25 m/s, 0.10 mm hatch, 30 µm layers**, 67° rotation, one
   contour at 150 W and 0.8 m/s.
   - At 200 °C the model gives a pool 176 µm wide and 83 µm deep.
@@ -61,7 +63,7 @@ python desktop-lpbf/fast-track/process/rtc5_list.py       # 6 s
 
   - Per layer: the scan list takes 3.40 s and the recoat 3.07 s.
   - The study's 1.2–1.8 h for 10 mm assumed 8–15 s of spreading a layer.
-  - The X-LSQ075B (280 mm/s) saves only 4 % (0.58 h), because the spreading speed sets the recoat time, not the
+  - The X-LSQ075B (280 mm/s) saves only 3 % (0.58 h), because the spreading speed sets the recoat time, not the
     stage.
 - **Heat input for the FEA:** 746 J of laser energy a layer, 115 W averaged over the 6.46 s layer period. That is
   35–69 W absorbed at A = 0.3–0.6.
@@ -136,26 +138,36 @@ a 2D steady conduction solve with the rim held at the mount temperature.*
 The static case uses an r-z finite-volume solve of the disc with the rim held at the mount temperature, after PR 266's
 `analysis/optics/thermal_lens.py`. The focus shift is Δz = h²D/(1 + hD), against z_R = 3.88 mm.
 
-| Case (400 W, 5 mm beam) | Absorbed | Parked beam: Δz (× z_R) | Scanning the first build, layer-averaged: Δz (× z_R) |
-|---|---|---|---|
-| Box, clean slide (20 ppm/cm + 0.1 %) | 0.40 W | 4.45 mm (1.15) | 0.03–0.05 mm (≤ 0.01) |
-| Box, clean window | 0.41 W | 4.64 mm (1.20) | 0.05–0.09 mm (≤ 0.02) |
-| Box, slide 1 % soot | 4.0 W | 33.9 mm (8.7), ΔT ~1200 K | 0.30–0.48 mm (≤ 0.12) |
-| Box, slide 2 % soot | 8.0 W | 53.7 mm (13.8), ΔT ~2400 K | 0.59–0.95 mm (≤ 0.25) |
-| Cube, clean slide | 0.40 W | 4.36 mm (1.12) | 0.13–0.30 mm (≤ 0.08) |
-| Cube, clean window | 0.41 W | 4.67 mm (1.20) | 0.32–0.53 mm (≤ 0.14) |
-| Cube, slide 1 % soot | 4.0 W | 36.9 mm (9.5) | 1.3–2.9 mm (≤ 0.75) |
-| Cube, slide 2 % soot | 8.0 W | 63.3 mm (16.3) | 2.6–5.8 mm (≤ 1.49) |
+The scanning columns use a 2D thin-plate solve of the element with the first build's layer 1 as the source:
+- *steady:* the layer-averaged irradiance, at the five parts' images;
+- *transient:* explicit time steps along the real, time-stamped scan path for two layer periods (scan, then
+  recoat), starting from the steady field. Δz is sampled every 10 ms where the beam is. The model is linear in the
+  absorbed power, so one run per element gives every absorption case.
+
+| Case (400 W, 5 mm beam) | Absorbed while on | Parked beam: Δz (× z_R) | Scanning, steady: Δz | Scanning, transient: mean / max Δz (max × z_R) |
+|---|---|---|---|---|
+| Box, clean slide (20 ppm/cm + 0.1 %) | 0.40 W | 4.45 mm (1.15) | 0.01–0.05 mm | 0.06 / 0.12 mm (0.03) |
+| Box, clean window | 0.41 W | 4.64 mm (1.20) | 0.02–0.08 mm | 0.09 / 0.16 mm (0.04) |
+| Box, slide 1 % soot | 4.0 W | 33.9 mm (8.7), ΔT ~1200 K | 0.08–0.47 mm | 0.58 / 1.17 mm (0.30) |
+| Box, slide 2 % soot | 8.0 W | 53.7 mm (13.8), ΔT ~2400 K | 0.15–0.94 mm | 1.16 / 2.34 mm (0.60) |
+| Cube, clean slide | 0.40 W | 4.36 mm (1.12) | 0.07–0.27 mm | 0.28 / 0.47 mm (0.12) |
+| Cube, clean window | 0.41 W | 4.67 mm (1.20) | 0.21–0.57 mm | 0.56 / 0.82 mm (0.21) |
+| Cube, slide 1 % soot | 4.0 W | 36.9 mm (9.5) | 0.74–2.66 mm | 2.81 / 4.70 mm (1.21) |
+| Cube, slide 2 % soot | 8.0 W | 63.3 mm (16.3) | 1.49–5.33 mm | 5.62 / 9.40 mm (2.42) |
 
 - **The parked-beam rows are bounds.** They need a beam held in one place for longer than the local time constant
   (~0.5 s), as in a slow focus ladder or a stuck scanner. The linear model also stops meaning anything once ΔT
   passes a few hundred kelvin: the slide would crack first.
 - **0.1 % coating loss is pessimistic.** A good V-coat absorbs < 50 ppm a face, which cuts the clean rows about
   15-fold.
+- **The transient lens is 1.2–2.5 times the steady one.** Heat builds up over one part's image while that part is
+  hatched (~0.8 s), faster than it spreads.
 - **The cube is worse than the box.** Its slide is higher (h² in Δz), and the scan pattern's image on it is smaller,
-  which concentrates the heat.
+  which concentrates the heat. Hanging the cube's slide ~130 mm above the bed, as in the box, gives it the box's
+  numbers.
+- **The window is thick (9.53 mm) for a thin-plate model,** so its scanning rows are rougher than the slide's.
 - **Rules that follow:**
-  - change the slide every build in the cube, and when it looks grey in the box;
+  - change the slide when it looks grey, and every build until the soot rate is known;
   - never park the beam at full power;
   - log a focus check (one short ladder on the plate margin) at the start of each build.
 
@@ -223,7 +235,9 @@ The static case uses an r-z finite-volume solve of the disc with the rim held at
   - Plateau-Rayleigh (L/W > π) never triggers here: the model's L/W is 1.0–2.2 over all the maps.
   - So low-power balling in Al is a too-shallow pool, not a long one.
 - **Keyhole:** [King et al. 2014](https://doi.org/10.1016/j.jmatprotec.2014.06.005) Eq. 2.6,
-  ΔH/h_s = A·P/(h_s·√(π·D·v·σ³)), with σ = w0/2 and h_s = ρcT_m. Threshold 30 ± 4 (316L).
+  ΔH/h_s = A·P/(h_s·√(π·D·v·σ³)), with h_s = ρcT_m. Threshold 30 ± 4 (316L).
+  - σ is the Gaussian standard deviation (I ∝ exp(−r²/2σ²)), so σ = w0/2 here. The paper doesn't say which
+    beam size went into Eq. 2.6; σ = D4σ/4 is the reading that fits its own Table 3.
   - With A = 0.20, Bosio's and Kempen's tracks fall at 8–23, and Kempen's "deep penetration" at 200 W and 0.2 m/s at
     ~29. Consistent.
   - For the 76 µm spot this puts the keyhole onset at P ≈ 310 W·√(v / 1 m/s).
@@ -366,7 +380,10 @@ Sent to the lead as `/tmp/ft-process/cad_changes.md`:
    at 348.1 mm. In the beam envelope, chief rays pivot f/k = 296–424 mm above the focus.
 4. **Head:** 206.9 × 140 × 180 mm on datum A, so its top is ~528 mm above the bed in the box. Possibly a 3–5 mm
    spacer under the head (lens ghost, §1.5).
-5. **Optional:** a 3° head tilt about X, only if the back-reflection alarm trips.
+5. **Cube slide height (recommended):** hang the FT-1V cover slide ~130 mm above the bed on a drop tube from the top
+   plate, as in the box, instead of under the top plate at 221 mm. A 2 % sooted slide then defocuses by ≤ 0.6 z_R
+   instead of 2.4 z_R.
+6. **Optional:** a 3° head tilt about X, only if the back-reflection alarm trips.
 
 ## 6. Checks on arrival this work adds
 
@@ -400,5 +417,8 @@ Sent to the lead as `/tmp/ft-process/cad_changes.md`:
 - **Timing and heat input:** the recoat accelerations, spreading speeds and host overhead are estimates; the
   spreading speed decides the build time. The heat input assumes every layer is scanned as programmed; no
   inter-layer dwell is added.
-- **Thermal lens:** the scanned case is layer-averaged and steady. The transient lens within a layer (time constant
-  ~0.5 s, beam moving 0.6 m/s on the slide) was not modelled.
+- **Thermal lens:**
+  - the scanning cases are thin-plate 2D solves of layer 1 only;
+  - the window's 9.53 mm thickness is beyond the thin-plate model;
+  - the soot is taken as uniform over the slide;
+  - no CalculiX cross-check was run here (PR 266 checked its r-z solver against CalculiX for its slide).

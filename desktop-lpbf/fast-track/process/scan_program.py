@@ -439,6 +439,41 @@ def layer_time(segs, kinds, pidx, parts, psets, tm: Timing, start=(0.0, 0.0), en
                 mark_mm=mark_len, jump_mm=jump_len)
 
 
+def layer_path(segs, kinds, pidx, parts, psets, tm: Timing, dt=1e-4, start=(0.0, 0.0)):
+    """Time-stamped beam positions while the laser is on, with the same rules as layer_time (jumps, variable jump
+    delay, mark and polygon delays; laser on from the first mark to the last of each polyline). Returns arrays
+    t (s), x, y (mm), P (W), one sample per dt of marking."""
+    t = 0.0
+    pos = np.array(start, float)
+    in_poly = False
+    T, X, Y, PW = [], [], [], []
+    for s, kd, ii in zip(segs, kinds, pidx):
+        p0, p1 = s[:2], s[2:]
+        ps = psets[parts[ii].pset]
+        P, v = (ps.P_hatch, ps.v_hatch) if kd == 0 else (ps.P_contour, ps.v_contour)
+        gap = float(np.hypot(*(p0 - pos)))
+        if gap > 1e-3 or not in_poly:
+            if in_poly:
+                t += tm.mark_delay
+            if gap > 1e-3:
+                jd = tm.jump_delay if gap >= tm.jump_limit else tm.jump_delay_min + (tm.jump_delay - tm.jump_delay_min) * gap / tm.jump_limit
+                t += ticks(gap / tm.v_jump, tm.tick) + ticks(jd, tm.tick)
+            in_poly = True
+        else:
+            t += tm.polygon_delay
+        L = float(np.hypot(*(p1 - p0)))
+        dur = ticks(L / v, tm.tick)
+        n = max(int(round(dur / dt)), 1)
+        f = (np.arange(n) + 0.5) / n
+        T.append(t + f * dur)
+        X.append(p0[0] + (p1[0] - p0[0]) * f)
+        Y.append(p0[1] + (p1[1] - p0[1]) * f)
+        PW.append(np.full(n, P))
+        t += dur
+        pos = p1
+    return np.concatenate(T), np.concatenate(X), np.concatenate(Y), np.concatenate(PW)
+
+
 def build_schedule(parts, psets, tm, rc, stage, segs, kinds, pidx, ptr, layer_mm):
     rec = recoat_time(rc, stage, layer_mm)
     rows = []
