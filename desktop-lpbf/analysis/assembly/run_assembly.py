@@ -362,6 +362,55 @@ def contacts_at_seat(run, body, exclude=()):
     return names
 
 
+def seat_containment(run, body, exclude=()):
+    """Round 10: the bodies present that the part (placed at its seat) lies wholly inside of, or wholly contains, deeper than the
+    1.5 mm seat allowance: the CAD's own overlaps at the designed pose (an insert in an uncut hole). Names."""
+    if not C.CONTAIN:
+        return set()
+    w = run.cl.world("A", exclude, other=False)
+    out = set()
+    for x, y in C.group_contained(Group([body]), w, kinds=(body.kind,)):
+        if C.depth(x, y, upto=C.DEPTH_MM) > C.DEPTH_MM:
+            out.add(y.name)
+    return out
+
+
+TOOL_BODY = ("wand", "ringpad", "pinrod", "vacuum", "nozzle")
+
+
+def tool_clear_grasp(run, n, tool, G, body, T_body, limit=1.5, back=25.0, step=0.5):
+    """Round 10: the tool body (not the 2F-85: fit_close does its fingers) against the part it carries, at the grasp G (world)
+    with the part at T_body. Returns (G, info): G backed off along the tool axis until the tool is at most `limit` mm into the
+    part (info: depth before, the back-off), or the original G and info with fail=True if `back` mm does not free it; info is
+    None for the gripper and the drivers."""
+    if tool not in TOOL_BODY:
+        return G, None
+    a = run.arm(n)
+    run.set_tool(n, tool)
+    tb = list(a.grip.values())
+    body.place(T_body)
+
+    def deepest(Gq, upto=limit):
+        Wt = Gq @ inv(a.tool_tcp)
+        d = 0.0
+        for b in tb:
+            b.place(Wt)
+            d = max(d, C.depth(b, body, upto=upto))
+        return d
+    d0 = deepest(G, None)
+    if d0 <= limit:
+        return G, None
+    s = step
+    while s <= back + 1e-9:
+        Gs = G @ Tm(p=(0.0, 0.0, -s))
+        if deepest(Gs) <= limit:
+            log(f"   round 10: the {tool} was {d0:.1f} mm into the part at its grasp; backed off {s:.1f} mm along its axis")
+            return Gs, dict(depth=round(d0, 1), back_mm=round(s, 1))
+        s += step
+    log(f"   round 10: the {tool} lies {d0:.1f} mm inside the part at its grasp; {back:.0f} mm back along its axis does not free it")
+    return G, dict(depth=round(d0, 1), tried=back, fail=True)
+
+
 # ================================================================================================ steps
 def path_list(run, st, idx):
     if st["path"] == "explode":
@@ -424,6 +473,17 @@ def arm_place(run, st, idx, path, state, actor, tool, holdname, grasp=None, extr
     body.place(T_obj)
     dest = contacts_at_seat(run, body, exclude=idx)
     allow = frozenset([("held", n) for n in dest] + [("tool", n) for n in dest])
+    # round 10: what the part lies wholly inside of (or around) at its designed pose, beyond the seat allowance, is the CAD's own
+    # overlap there (a hole or groove the model does not cut): not held against the part along its path. Everything else it
+    # would lie inside of along the path or the approach is a collision now (cell.Checker.collisions' containment test)
+    seat_in = seat_containment(run, body, exclude=idx)
+    if seat_in:
+        allow = allow | frozenset(("inside", n) for n in seat_in)
+    # round 10: the tool against the part it works on. The part rides on the tool, so the planner's check (robot against world)
+    # never compared the two; round 9's frame audit drew the liner wand 20 mm inside the back liners and the ring pad 22 mm inside
+    # the camera window. Only the intended contact (the cups or the lip on the part's face, at most 1.5 mm) is allowed: where the
+    # grasp puts the tool deeper, the TCP is backed off along the tool axis until it is not, else the step fails here
+    G, tool_in = tool_clear_grasp(run, actor, tool, G, body, T_obj)
     off = inv(G) @ T_obj                      # TCP -> held body's (machine) frame
     best = None
     x_target = float(G[0, 3])
@@ -469,7 +529,7 @@ def arm_place(run, st, idx, path, state, actor, tool, holdname, grasp=None, extr
             # the nozzle lets go above the seat and the part drops the rest of the way onto its guide pin
             fr = dict(ok=True, qs=fr["qs"], hit=None, at=None, min_d=fr["min_d"], with_=fr["with_"],
                       drop_mm=round((len(offs) - fr["at"]) * DS, 0))
-        res = dict(dock=dk, follow=fr)
+        res = dict(dock=dk, follow=fr, close=float(close))
         if fr["ok"]:
             # plan from where the arm is to the start of the path, carrying the part
             a.place(run.q[actor], close)
@@ -516,13 +576,21 @@ def arm_place(run, st, idx, path, state, actor, tool, holdname, grasp=None, extr
     why = "" if ok else (fr["hit"] if not fr["ok"] else f"approach: {best.get('plan', {}).get('reason', '?')}")
     if not fr["ok"] and fr["at"] is not None:
         why += f" at {fr['at'] * DS:.0f} mm along the insertion"
+    if tool_in is not None and tool_in.get("fail"):
+        ok = False
+        why = (f"the {tool} at its grasp lies {tool_in['depth']:.1f} mm inside the part it carries (backing off "
+               f"{tool_in['tried']:.0f} mm along its axis did not free it)" + (f"; {why}" if why else ""))
     acc = {}
     if CM.on():
-        CM.place(run, st, idx, actor, tool, best, body, off, G, T_obj, close_for(run, actor, width, internal), state, acc)
+        # round 10: the closure the planner checked (fit_close may have opened it): round 9 recorded close_for()'s, so where the two
+        # differ the drawn fingertips stood in the part and the part rode on a TCP shifted by the fingers' travel
+        CM.place(run, st, idx, actor, tool, best, body, off, G, T_obj, best.get("close", close_for(run, actor, width, internal)),
+                 state, acc)
     return dict(ok=ok, why=why, dock=best["dock"], fetch=acc.get("fetch"), fetch_why=acc.get("fetch_why"), hoist_hook=acc.get("hoist_hook"),
                 min_d=fr["min_d"], min_with=fr["with_"], dest=sorted(dest)[:4],
                 planned=best.get("plan", {}).get("planned"), waypoints=best.get("plan", {}).get("waypoints"),
-                grasp_width=round(width, 1), push_mm=fr.get("push_mm"), drop_mm=fr.get("drop_mm"))
+                grasp_width=round(width, 1), push_mm=fr.get("push_mm"), drop_mm=fr.get("drop_mm"), tool_in=tool_in,
+                seat_in=sorted(seat_in)[:4] if seat_in else None, close=best.get("close"))
 
 
 _TIP = {}
@@ -543,9 +611,12 @@ def fingertip_reach(a):
     return _TIP["z"]
 
 
-def retreat(run, n, dist=60.0, near=(), names=()):
+def retreat(run, n, dist=60.0, near=(), names=(), seat=None):
     """Release and back the tool off along its axis; the arm then counts as at that pose. `near`: objects the tool may
-    still touch at the start (the part it just let go of), up to the 1.5 mm audit depth."""
+    still touch at the start (the part it just let go of), up to the 1.5 mm audit depth. Round 10, `seat` = (objects, phase,
+    state): the part let go of is recorded on its designed pose as it is released (it drops the last mm or two, or is pushed
+    home), not where the drawn TCP left it for the length of the retreat (round 9: the Macor rings 3.7 mm into the heater
+    block while the arm backed off, chapter 40)."""
     a = run.arm(n)
     a.release()
     a.place(run.q[n])
@@ -553,7 +624,11 @@ def retreat(run, n, dist=60.0, near=(), names=()):
     Ts = [T @ Tm(p=(0, 0, -s)) for s in np.linspace(0, dist, 7)]
     allow = frozenset([("tool", run.sc.label(i)) for i in near] + [("tool", nm) for nm in names])
     fr = run.follow(n, Ts, a.close, allow, dist_every=99)
-    CM.release(run, n, fr["qs"])
+    put = None
+    if seat is not None:
+        u, phase, state = seat
+        put = ([i for i in u if run.sc.objs[i]["V"] is not None], run.cl.T_phase(phase), state)
+    CM.release(run, n, fr["qs"], seat=put)
     if fr["qs"]:
         run.q[n] = fr["qs"][-1]
     return fr["ok"]
@@ -659,7 +734,7 @@ def do_place(run, st, row):
             row.setdefault("holds", []).append(hres)
             retreat(run, actor, near=u)
         else:
-            retreat(run, actor)
+            retreat(run, actor, seat=(u, st["phase"], state))
             run.add(u, st["grp"], st["phase"], state)
         go_park(run, actor)
     gmin = min(gaps) if gaps else (None, None)

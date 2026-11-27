@@ -325,8 +325,9 @@ def hook_moves(run, R, n, body, off, n0, res=None):
     return ok_all, why_all
 
 
-def release(run, n, qs_back, opened=True):
-    """retreat(): let go (the gripper opens a little), then back off along the tool axis."""
+def release(run, n, qs_back, opened=True, seat=None):
+    """retreat(): let go (the gripper opens a little), then back off along the tool axis. Round 10, seat = (objects, T, state):
+    the objects let go of are put on their designed pose at once (see run_assembly.retreat)."""
     if not on():
         return
     R = RECM.REC
@@ -335,6 +336,8 @@ def release(run, n, qs_back, opened=True):
         if run.arm(n).tool_name == "gripper" and opened:
             R.grip(n, max(0.0, st["close"] - 0.12))
         R.detach(n)
+        if seat is not None and seat[0]:
+            R.put(seat[0], seat[1], seat[2], why="seated")
     if qs_back:
         R.move(n, qs_back, "cart")
 
