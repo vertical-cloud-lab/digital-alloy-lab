@@ -593,8 +593,8 @@ The table above (the end cap at 78 °C, 3–9 dB) was for the waveguide leaving 
   the plate by an ACL25416U-B, Ø36 and 61 mm long from the asphere's vertex to the heat sink's back, ending 36 mm short of the
   guard's back panel. It replaces the Ø40 × 60 envelope, and the BOM's SOLIS-850C (which doesn't fit here) is gone. The heat
   sink, the clamp and the bracket are envelopes, not checked for stiffness (the light weighs ~0.1 kg). The bracket needs two M4
-  holes in the back wall above the clamp frame (x −141 and −129.5, z 69.25, 8 deep); they are cut in the model but not yet in
-  setup C's A180 program (`cam_monitoring.json`).
+  holes in the back wall above the clamp frame (x −141 and −129.5, z 69.25). They now come from `frame_features.BW_BRACKET`, the
+  one source for the model and the CAM, and setup C's A180 program drills them (fabrication.md §2; `cam_monitoring.json`).
 - **The LP's view of the whole L75 plate** is trimmed at its rim (§2.2). The planned camera's field isn't.
 - **The LP bore's machining:** a Ø24 bore on the line of sight needs the lid tilted (sine plate or angle plate), as the layer
   camera's Ø30 bore does. `hours_monitoring.py` and fabrication.md §3 still describe a Ø37 bore normal to the lid and a Ø64

@@ -67,7 +67,7 @@ check was also run on them. None has been run on a machine.
 | Program | Part and setup | What it cuts | Cutting time |
 |---|---|---|---:|
 | [`frame_C90_with_LW.ngc`](../analysis/out/monitoring/fab/gcode/frame_C90_with_LW.ngc) | frame, setup C at A90 (the existing C90 program with the LW port added) | Ø31 bore, Ø40.2 × 5.5 seat, 4 × M4 on Ø49.5, the SAE-4 purge port | +2.44 min |
-| [`mon_C180_BW.ngc`](../analysis/out/monitoring/fab/gcode/mon_C180_BW.ngc) | frame, setup C at A180 | the BW seat and obround slot, the clamp frame's 3 × M4 | 5.05 min |
+| [`mon_C180_BW.ngc`](../analysis/out/monitoring/fab/gcode/mon_C180_BW.ngc) | frame, setup C at A180 | the BW seat and obround slot, the clamp frame's 3 × M4, the BW light bracket's 2 × M4 | 5.11 min |
 | [`mon_lid_LP_top.ngc`](../analysis/out/monitoring/fab/gcode/mon_lid_LP_top.ngc) | lid flat, in its top setup | the 2-025 face groove and the adapter's 4 × M4 | 5.84 min |
 | [`mon_lid_LP_sine.ngc`](../analysis/out/monitoring/fab/gcode/mon_lid_LP_sine.ngc) | lid on a 27.93° sine plate | the Ø24 bore, one helix | 1.05 min |
 

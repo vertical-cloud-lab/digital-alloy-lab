@@ -280,7 +280,7 @@ SEL = [
     ("M7-05d", "7", "custom (outsourced)", "BW light bracket and clamp: 1/4 in. 6061 L (flange on the back wall, 2 x M4 into new tapped holes; "
      "arm over the light) and an 8 mm split clamp on the heat sink's collar",
      ("custom", 27.12, "analogue: SendCutSend laser, the Z lift arm, $27.12 (the clamp's bore is bored in house)"), 1, "outsource",
-     "drawn (cad/monitoring_parts.py)", "two more M4 holes in the back wall's CAM (setup C at A180)", []),
+     "drawn (cad/monitoring_parts.py)", "two more M4 holes in the back wall, drilled in setup C's A180 program (frame_features.BW_BRACKET)", []),
     ("M7-05e", "7", "side light", "SM1 retaining ring (the second one, behind the asphere)", ("p3", "BWL4"), 1, "add",
      "drawn (cad/monitoring_parts.py)", "", []),
     ("M7-05f", "7", "side light", "Thermally conductive double-sided tape (the LED board on the heat sink)", ("p3", "BWL8"), 1, "add", "not drawn",

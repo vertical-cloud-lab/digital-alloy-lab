@@ -91,25 +91,29 @@ Scripts (all in [`analysis/monitoring/fab/`](../analysis/monitoring/fab/)):
 - Recommended: **about 12.8 h in house and about $516 outside**, plus three parts bought instead of made.
 
 **Bought parts** ([`monitoring-bom.csv`](../monitoring-bom.csv), list prices read on the vendors' pages on 2026-11-25; the three
-laser-cut parts re-quoted on 2026-11-27):
+laser-cut parts re-quoted, and the other round 3 workers' lines read, on 2026-11-27; rebuilt after the merge):
 
 | Step | New | With used listings | Notes |
 |---|---:|---:|---|
-| 0. the ports' parts | $978–1,115 | $978 | windows, slides, gaskets, purge, the three laser-cut parts ($26.97 quoted), a beam trap cube 1 needs now |
+| 0. the ports' parts, and the guard's vents | $1,505–2,063 | $1,505 | windows, slides, gaskets, purge, the three laser-cut parts ($26.97 quoted), a beam trap cube 1 needs now; the guard's light traps, fans and filter, $530–950 ([`cooling.md`](cooling.md) §8) |
 | 1. clock and recorder | $2,257–2,457 | $2,001 | PicoScope 4444 $1,645 (used $1,389) |
 | 2. spectral check | $0 | $0 | borrow a lamp and spectrometers (list prices in the BOM) |
 | 3. layer camera tuned | $1,302–1,327 | $1,302 | 12 mm f/1.8 lens, raking LED bar |
-| 4. acoustic emission | $1,111–3,211 | $1,095 | sensor and preamp are quote-only: estimated within Edison's $1–3k |
+| 4. acoustic emission | $1,788–4,328 | $1,638 | the sprung cold end inside the rod end: PICO sensor, cartridge, spring, Microdot weld-in and leads ([`mechanics.md`](mechanics.md) §4). Sensor and preamp are quote-only, estimated |
 | 5. two-colour coaxial | $2,179 | $2,179 | the optics worker's parts ([`optics-parts.csv`](optics-parts.csv)) |
 | 6. coaxial camera | $987 | $987 | the same |
-| 7. side high-speed camera | $12,117 | $10,317 | Chronos 2.1-HD $6,800 (used $5,000) and $3,971 of pulsed 850 nm light; the steep lid camera is a ~$2.2k option |
+| 7. side high-speed camera | $11,376–11,636 | $9,576 | Chronos 2.1-HD $6,800 (used $5,000); the M850D3 light at BW with its DC2200, $3,059–3,159 ([`optics.md`](optics.md) §4.1); the hood and duct, $170–330 ([`cooling.md`](cooling.md)); the steep lid camera is a ~$2.2k option |
 | 8. cooling: InGaAs behind the DMSP1000 (route A) | $2,160 | $2,160 | the coaxial SWIR camera instead (route B, optics.md §0 item 6): $8,059 new; an off-axis SWIR camera at LW (route C): $9,502 new, $2,819 with a used camera |
-| **0–8** | **$23,092–25,554** | **$21,020** | before shipping and tax |
+| **0–8** | **$23,555–27,138** | **$21,349** | before shipping and tax |
 
-Against monitoring.md's ranges: steps 0–6 $8,814–11,276 (it said $5–9k for steps 1–6; step 0 and the top of the
-AE estimate make the difference); with step 7 $20,931–23,393 ($12–18k: the pulsed 850 nm LED and its driver, $3,971,
-are the main overrun; monitoring.md had $0.3–1k for light); with step 8's InGaAs route $23,092–25,554 ($14–20k). Other
-workers' BOM lines of 2026-11-27 are not in these sums.
+Against monitoring.md's ranges:
+- **Steps 0–6:** $10,019–13,342. It said $5–9k for steps 1–6; step 0 (now with the guard's vents) and the top of the AE estimate
+  make the difference.
+- **With step 7:** $21,394–24,978, against $12–18k. The 850 nm light and its driver, $3,059–3,159, are the main overrun;
+  monitoring.md had $0.3–1k for light.
+- **With step 8's InGaAs route:** $23,555–27,138, against $14–20k.
+
+Before the round 3 workers' lines were merged, steps 0–8 came to $23,092–25,554 ($21,020 with used listings).
 
 **Lead times.** The Chronos 2.1-HD ships in 1–3 business days and the windows are in stock. The long poles are small parts:
 
@@ -412,21 +416,22 @@ mechanics.md Checks §5 (f1 128 Hz, −0.1 %).
 the UTC time it was read, stock or lead time, the cheapest used listing for the expensive items, and the step. The raw lookups,
 with page notes, are [`price_lookups_optics.csv`](../analysis/out/monitoring/fab/price_lookups_optics.csv) (172 rows) and
 [`price_lookups_cameras.csv`](../analysis/out/monitoring/fab/price_lookups_cameras.csv). Prices were read through the lab tunnel
-on 2026-11-25, 06:45–08:00 UTC. They are list prices for one unit, before shipping and tax. No account was made and nothing was
+on 2026-11-25, 06:45–08:00 UTC; round 3's lines (the guard's vents, the AE cold end, the BW light, the hood) on 2026-11-27, each
+worker's in its own `price_lookups_round3_*.csv`. They are list prices for one unit, before shipping and tax. No account was made and nothing was
 put in a cart.
 
 | Step | What it buys | New | With used listings | Options, not counted | Lines estimated or quote-only |
 |---|---|---:|---:|---|---|
-| 0. before machining: the ports' parts | LW window (Ø40 × 4, NIR AR) and 6 slides, BW window (custom), FKM sheet, LP face O-ring, purge valve and fittings, the three laser-cut parts (quoted 2026-11-27), slide holders, a beam trap for cube 1 (needed now) | $978–1,115 | $978 | - | M0-03, M0-06, M0-12, M0-16 |
+| 0. before machining: the ports' parts | LW window (Ø40 × 4, NIR AR) and 6 slides, BW window (custom), FKM sheet, LP face O-ring, purge valve and fittings, the three laser-cut parts (quoted 2026-11-27), slide holders, a beam trap for cube 1 (needed now); the guard's two light traps, two 120 mm fans with guards, black foil, filter pad, exhaust plenum, PB2's fan and its Pi's Active Cooler (M0-C1 to C8) | $1,505–2,063 | $1,505 | $785 (M0-C9 fan coil, M0-C10 Peltier cooler) | M0-03, M0-06, M0-07, M0-12, M0-16, M0-C3, M0-C6 |
 | 1. clock and recorder | PicoScope 4444 + 4 TA271, 6 BNC cables, tees, RTC6 D-sub breakout, isolators, sync box, 4 TB SSD | $2,257–2,457 | $2,001 | $9,170 new / $1,800 used (M1-09) | M1-07, M1-08 |
 | 2. spectral check of the scan head | borrowed lamp and spectrometers (not counted) | $0 | $0 | - | - |
 | 3. layer camera tuned | 12 mm f/1.8 lens, 300 mm LED bar for raking light, a second light, switching, a second 1070 nm blocker | $1,302–1,327 | $1,302 | - | M3-05 |
-| 4. acoustic emission | D9215-class sensor and 2/4/6-class preamp (quote: estimated), Molykote 41, pencil leads, SMA-BNC cable, sensor clamp | $1,111–3,211 | $1,095 | $23 new / $23 used (M4-06, M4-07) | M4-01, M4-02, M4-03 |
+| 4. acoustic emission | MISTRAS PICO sensor in the rod end's cartridge and 2/4/6-class preamp (quote: estimated), decoupler, Krytox PFPE couplant, pencil leads, the 316 waveguide rod, Lee spring, turned 316L cartridge, Microdot weld-in, plug and gas-side lead, SMA-BNC cable | $1,788–4,328 | $1,638 | $27 (M4-09, S25's rod-end clamp) | M4-01, M4-02, M4-03, M4-10, M4-13 |
 | 5. two-colour coaxial | the optics worker's branch: FESH1000, DMLP805, FBH700-40, FBH900-40, PDA36A2, achromat, 2 pinholes, cube 3, cage parts | $2,179 | $2,179 | - | - |
 | 6. coaxial camera | DMSP950, mono IMX296 board, 75 mm achromat, FESH1000, cube 2, C-mount adapter, Pi cable, adapter plate | $987 | $987 | $216 new / $216 used (M6-08) | M6-09 |
-| 7. side high-speed camera (and the steep lid camera) | Chronos 2.1-HD 8 GB, Kowa 50 mm lens, 850 nm filter, FESH1000, 850 nm LED (SOLIS) + pulsed driver, trigger cable, bracket | $12,117 | $10,317 | $13,444 new / $13,303 used (M7-09, M7-10, M7-11, M7-12, M7-13, M7-14, M7-15, M7-16, M7-17, M7-18) | - |
+| 7. side high-speed camera (and the steep lid camera) | Chronos 2.1-HD 8 GB, Kowa 50 mm lens, 850 nm filter, FESH1000, trigger cable, bracket; the M850D3 LED with its asphere, lens tube, heat sink, clamp and bracket, and a DC2200 driver; the hood, duct and fan, G-10 breaks and the LP camera Pi's case (M7-C1 to C4) | $11,376–11,636 | $9,576 | $13,637 new / $13,497 used (M7-05i, M7-09 to M7-18) | M7-05c, M7-C1 |
 | 8. cooling through solidification | route A, InGaAs behind the DMSP1000: PDA20CS2, 2 × FELH1250, 100 mm lens + pinhole, a ~1180 nm dichroic cube (estimated), 2 × FESH1000 | $2,160 | $2,160 | $18,335 new / $11,652 used (M8-06 to M8-12: route B $8,059, route C $9,502, and the notch dichroic, not recommended) | M8-04 |
-| **0–8** | | **$23,092–25,554** | **$21,020** | | |
+| **0–8** | | **$23,555–27,138** | **$21,349** | | |
 
 ### 4.1 Choices worth knowing
 - **Coaxial branch, cameras, lenses, filters and lights follow the optics worker** ([`optics-parts.csv`](optics-parts.csv), its
@@ -482,10 +487,10 @@ put in a cart.
 | Features on the frame, lid, bridge, heater block | 5.7 h (3.6 h of it LP: the sine-plate setup 2.9 h, the groove and holes 0.7 h) | - | - | none extra but LP's sine-plate setup on the lid |
 | 14 small custom parts, all made here | 48.3 h ($3,136 at $65/h) | - | - | ~2.5 weeks at 20 h/week |
 | The same, as recommended | 7.1 h | $516 | 3 parts bought instead | Dec 1 for the laser parts; 6–15 days for the CNC boss |
-| Bought parts, steps 0–8 (route A) | - | - | $23,092–25,554 ($21,020 with used listings) | days, except §0's lead-time items |
+| Bought parts, steps 0–8 (route A) | - | - | $23,555–27,138 ($21,349 with used listings) | days, except §0's lead-time items |
 
 - **Total, as recommended:** about 12.8 h of shop time (~$831 at $65/h), about $516 of outsourced parts, and
-  $23,092–25,554 of bought parts. The 3.0 h more than on 2026-11-25 is mostly LP's bore on the line of sight: a setup of its
+  $23,555–27,138 of bought parts. The 3.0 h more than on 2026-11-25 is mostly LP's bore on the line of sight: a setup of its
   own on a sine plate (1.25 h for a large part as hours.py has it, 0.5 h to set the plate, 0.85 h of CAM), where the old Ø37
   bore normal to the lid rode on the lid's top setup. The BW light bracket's two holes add 0.05 h.
 - **Two new tools** (not in tooling-bom.csv): a 2.0 mm 2-flute carbide end mill for the LP groove and a 1/2 in. × 1-1/2 in.
