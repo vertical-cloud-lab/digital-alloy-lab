@@ -414,6 +414,7 @@ class Replay:
             for b in list(a.links.values()) + list(a.grip.values()):
                 w = b.v @ b.M[:3, :3].T + b.M[:3, 3]
                 out.append((w[:, 0].min(), w[:, 1].min(), w[:, 0].max(), w[:, 1].max()))
+            self.set_arm(n)                  # the arm as drawn again (place() above moved its bodies)
         for i, o in self.objs.items():
             k = f"o{i}"
             if self.sc.alpha.get(k, 0.0) <= 0.0 or i in self.T and np.allclose(self.sc.gmat.get(k, np.eye(4)), self.T[i]):
@@ -642,9 +643,11 @@ CLOSE_STEPS = ("seal",)
 DRIVE_SHOW = int(os.environ.get("ASM_DRIVE_SHOW", "4"))
 # the chapter's first PICK_SHOW visits to the parts table show the pick (the later ones, like the later drives, are an ellipsis:
 # checked and timed, not drawn; the next frames say so)
-PICK_SHOW = int(os.environ.get("ASM_PICK_SHOW", "8"))
+PICK_SHOW = int(os.environ.get("ASM_PICK_SHOW", "2"))     # round 9: 2, the visits whose drives are drawn (round 8: 8, so
+                                                           # visits 3-8 cut to the table and back: two forced cuts each)
 DRIVE_LAPSE = 6.0
 TABLE_X = 2200.0
+JUMP_DEG = float(os.environ.get("ASM_JUMP_DEG", "5.0"))
 
 
 def kind_key(e, rep):
@@ -718,7 +721,8 @@ def plan_frames(events, scale=1.0):
             r = reps.get(e.get("arm"), 0) if e["kind"] == "screw" else 0
             if e["kind"] == "screw":
                 reps[e.get("arm")] = r + 1
-            if e["kind"] in ("move", "grip") and xs.get(e.get("arm"), 0.0) > TABLE_X:
+            if e["kind"] in ("move", "grip", "tool") and xs.get(e.get("arm"), 0.0) > TABLE_X:   # round 9: a tool change at
+                # the table belongs to the visit (round 8 drew it alone: a 0.5 s shot at the table between two cuts)
                 at_table[id(e)] = visits[0]
             kk = kind_key(e, r)
             if kk in ("plan", "cart") and reps.get(e.get("arm"), 0) >= 1 and cur == "screws":
@@ -906,12 +910,20 @@ def _choose_segment(plan, scores, i0, i1, prev):
             if v and float(np.mean(v)) > 0.45:
                 return False
         return True
+    if shots and prev0 is not None and shots[0][2] != prev0 and shots[0][1] - shots[0][0] < MIN_SHOT and \
+            not plan[shots[0][0]].get("force") and ok_from(prev0, shots[0]):
+        shots[0][2] = prev0                      # round 9: a short shot after a slice boundary carries on the camera before it
+        if len(shots) > 1 and shots[1][2] == prev0 and not plan[shots[1][0]].get("force"):
+            shots[0] = [shots[0][0], shots[1][1], prev0, shots[0][3] + shots[1][3]]
+            del shots[1]
     changed = True
     while changed:
         changed = False
         for k, sh in enumerate(shots):
             if sh[1] - sh[0] >= MIN_SHOT or len(shots) == 1:
                 continue
+            if k == 0 and prev0 is not None and sh[2] == prev0 and not plan[sh[0]].get("force"):
+                continue                         # it continues the shot before the boundary: not short on screen
             forced = bool(plan[sh[0]].get("force"))
             before = shots[k - 1][2] if k > 0 else prev0
             for j in (k - 1, k + 1):
@@ -1103,9 +1115,9 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
             note["left"] -= 1
         if loc is None:
             loc = last["loc"]
-        if away:                           # a frame drawn while a MiR is away on a fetch not shown: it is gone from its
-            force = True                   # dock, so this frame is a cut (round 9: only then)
-            for a_ in away.values():
+        if any(not a_["drawn"] for a_ in away.values()):
+            force = True                   # the first frame drawn while a MiR is away on a drive not shown: it is gone from its
+            for a_ in away.values():       # dock (or now at the table), so this frame is a cut (round 9: only then)
                 a_["drawn"] = True
         force = force or last["force"]
         bound = cur["id"] in CUTS and not cur.get("emitted")
@@ -1318,8 +1330,22 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
             carry["robot"] += float(e["dur"])
             continue
         if k == "jump":
-            # the recording's next motion does not start where the arm is: never drawn as a jump inside a shot
-            rp.set_arm(n, q=np.asarray(e["to"], float))
+            # the recording's next motion does not start where the arm is: never drawn as a jump inside a shot. Round 9: a
+            # small one (up to JUMP_DEG on every joint: the module chapter's are 2.2-3.5 deg) is drawn as a short, labelled
+            # move (not planned; the frame audit checks it like everything drawn); a larger one is a cut, as before
+            q0 = np.array(rp.st[n]["q"], copy=True)
+            q1 = np.asarray(e["to"], float)
+            dq = float(np.degrees(np.max(np.abs(q1 - q0)))) if q0.shape == q1.shape else 1e9
+            if dq <= JUMP_DEG:
+                nj = max(4, int(math.ceil(dq / 0.75)))
+                for f in range(nj):
+                    rp.set_arm(n, q=q0 + (q1 - q0) * smooth((f + 1) / nj))
+                    stop = emit(cur["label"], f"arm {n} repositions by {dq:.1f} deg (between two checked paths; not planned)",
+                                [f"robot {n}"], proc=0.4 / nj, add={"robot_h": 0.4 / nj / 3600.0}, loc=here(n))
+                    if stop:
+                        break
+                continue
+            rp.set_arm(n, q=q1)
             last["force"] = True
             continue
         if k == "put":
@@ -1378,13 +1404,17 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                     sub = f"MiR {n} drives {abs(e['x1'] - e['x0']) / 1000:.1f} m ({e['dur']:.0f} s{lapse_txt(per)})"
                 if chk and not chk.get("ok", True):
                     sub += f"; NOT CLEAR: {chk.get('why', '')[:60]}"
-                stop = emit(cur["label"], sub, who, proc=per, add={"robot_h": per / 3600.0}, loc=loc,
+                mp = rp.sc.gmat.get(f"mir{n}")
+                wk = (np.asarray(mp, float)[:3, 3] + np.array([0.0, rp.yc0(n), 400.0]) if mp is not None and
+                      rp.st[n].get("pose") is not None else np.array([float(rp.st[n]["x"]) + 350.0, rp.yc0(n), 400.0]))
+                stop = emit(cur["label"], sub, who, proc=per, add={"robot_h": per / 3600.0}, loc=loc, work=wk,
                             status="fail" if (chk and not chk.get("ok", True)) else None)
                 if stop:
                     break
             rp.st[n]["pose"] = None
             rp.set_arm(n, x=e["x1"])
-            last["force"] = True                  # cut after a drive, back to the work
+            # round 9: no forced cut after a drawn drive (nothing jumped; round 8 cut back to the work after every one, so a
+            # short hop between docks was two cuts and a 1-2 s shot)
         elif k in ("move", "screw"):
             Q = e.get("q")
             if Q is None or len(Q) == 0:
