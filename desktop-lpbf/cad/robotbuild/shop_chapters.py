@@ -917,7 +917,7 @@ def cut_program(w, scn, vf4, stock, names, part_obj, Q_of, cam, cap, seconds, st
 
 # ================================================================================================ clip playback
 def play(w, scn, name, cam, sub=None, caption=None, hide=(), tool_override=None, obj_color=None, rev=False,
-         cut=None):
+         cut=None, specs=None):
     """Play a recorded clip: arms, MiRs, objects per frame; the clip's own meta unless overridden."""
     clip = load(name)
     if clip is None:
@@ -947,7 +947,7 @@ def play(w, scn, name, cam, sub=None, caption=None, hide=(), tool_override=None,
         for o, M in fr["objs"].items():
             if o in hide:
                 continue
-            scn.set_obj(o, M, clip["objects"].get(o), color=(obj_color or {}).get(o))
+            scn.set_obj(o, M, (specs or {}).get(o, clip["objects"].get(o)), color=(obj_color or {}).get(o))
         meta = dict(fr["meta"])
         c = caption or meta.pop("caption", "")
         meta.pop("caption", None)
@@ -1454,7 +1454,17 @@ def chapter_31():
     vf4 = VF4(scn)
     vf4.set(table_x=-E.TABLE_LAYOUT["vise"], vise=True)
     scn.drop_context("lathe")
-    scn.add_parts("lathe", E.st10(door=1.0, jaw_open=6.0)[0], Mst("lathe"))
+    lp = E.st10(door=1.0, jaw_open=6.0)[0]
+    shut_dx = E.ST10["panel_w"] - 20.0                 # the door slides right by this to shut (equipment.st10)
+    for n_ in ("door", "door window"):                 # round 9: the door its own group, so it can shut and open
+        q_ = lp[n_]
+        lp[n_] = E.Part(q_.mesh, q_.color, q_.opacity, q_.collide, q_.M, "door")
+    scn.add_parts("lathe", lp, Mst("lathe"))
+
+    def lathe_door(u):
+        """0 open .. 1 shut"""
+        for n_ in ("door", "door window"):
+            scn.sc.gmat[f"lathe/{n_}"] = Mst("lathe") @ E.T((shut_dx * u, 0.0, 0.0)) @ lp[n_].M
     scn.drop_context("saw")
     scn.add_parts("saw", E.s20a(head=1.0)[0], Mst("saw"))
     cam_v = cam_at("vf4", (-1300, -2300, 2200), (0, 450, 1050))
@@ -1483,7 +1493,28 @@ def chapter_31():
     vf4.set(z=0.0, table_y=0.0)                  # the doors stay shut: the bracket is being cut
     play(w, scn, "saw_bar", cam_at("saw", (-2400, -2500, 2200), (-1300, 450, 900)))
     scn.show_arm("B", False)
-    play(w, scn, "lathe_slug", cam_at("lathe", (-1600, -2300, 2000), (100, 300, 1000)))
+    cam_l = cam_at("lathe", (-1600, -2300, 2000), (100, 300, 1000))
+    play(w, scn, "lathe_slug", cam_l)
+    # round 9 (P1): the lathe runs with its door shut (no posted program for the turned parts: only the clock), then
+    # arm A takes the part out along the loading path run back (so checked as it was planned); the part drawn turned
+    n_t = int(5 * FPS)
+    for i in range(n_t + 36):
+        if i < 18:
+            lathe_door(ease((i + 1) / 18))
+        elif i >= n_t + 18:
+            lathe_door(1.0 - ease((i - n_t - 17) / 18))
+        mid = 18 <= i < n_t + 18
+        w.frame(scn, cam_l, "The slug turned, door shut" if i < n_t + 18 else "Door open: the part is done",
+                sub="the lathe class's ~5 min a setup (shop_summary.json); no program is posted for the turned parts, "
+                    "so no tool path is drawn" if mid or i < 18 else "the ST-10's auto door (option)",
+                who=["machine"], step="lathe class", status="pass",
+                proc_s=(5 * 60.0 - 3.0) / n_t if mid else 1.5 / 18)
+    turned = dict(kind="steps", steps=[(0.0, 46.0, 27.0), (46.0, 66.0, 25.4), (66.0, 92.0, 19.0), (92.0, 100.0, 12.0)],
+                  color="#cfd4d9")
+    play(w, scn, "lathe_slug", cam_l, rev=True, specs={"bar slug": turned},
+         caption="Arm A takes the turned part out: the loading path run back",
+         sub="the planned, FCL-checked load reversed (the part is smaller than the slug it was cut from); the profile "
+             "drawn is illustrative")
     lb = load("lathe_big")
     if lb is not None and (lb.get("result") or {}).get("ok", False):
         scn.add_parts("lathe", E.st10(door=1.0, jaw_open=33.0, jaw_deg=30.0)[0], Mst("lathe"))   # jaws opened, oriented
