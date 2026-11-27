@@ -20,11 +20,35 @@ import numpy as np
 HERE = pathlib.Path(__file__).resolve().parent
 FT = HERE.parent
 REPO = FT.parents[1]
-sys.path.insert(0, str(FT / "cad"))
-sys.path.insert(0, str(FT))
-sys.path.insert(0, str(FT.parent / "cad"))
 SCRATCH = pathlib.Path(os.environ.get("FT_VIDEO", "/tmp/ft-video"))
 CACHE = SCRATCH / "cache"
+# The video shows the round-1 model: ft_model.py, ft_progression.py, ft_checks.py, fast_track.py, parts.csv and
+# lpbf_model.py are read
+# from git revision MODEL_REV (d117ba8: ft_model.py as of 91c1931, X-LSQ075B recoater, lens on the plate axis), written
+# once under SCRATCH/pin-<rev>/ in the repo's layout, so the CAD v2 model and round 2's schedule and prices on the branch
+# change nothing drawn. FT_MODEL_REV="" uses the working tree instead.
+MODEL_REV = os.environ.get("FT_MODEL_REV", "d117ba8")
+PIN_FILES = ("desktop-lpbf/fast-track/cad/ft_model.py", "desktop-lpbf/fast-track/cad/ft_progression.py",
+             "desktop-lpbf/fast-track/cad/ft_checks.py", "desktop-lpbf/fast-track/fast_track.py",
+             "desktop-lpbf/fast-track/parts.csv", "desktop-lpbf/cad/lpbf_model.py")
+
+
+def _pin(rev):
+    import subprocess
+    root = SCRATCH / f"pin-{rev}"
+    for rel in PIN_FILES:
+        p = root / rel
+        if not p.exists():
+            p.parent.mkdir(parents=True, exist_ok=True)
+            out = subprocess.run(["git", "-C", str(REPO), "show", f"{rev}:{rel}"], check=True, capture_output=True).stdout
+            p.write_bytes(out)
+    return root
+
+
+MROOT = _pin(MODEL_REV) if MODEL_REV else REPO
+FTM = MROOT / "desktop-lpbf" / "fast-track"          # where ft_model, ft_progression, fast_track and parts.csv come from
+for d in (FT / "cad", FT, FT.parent / "cad", FTM / "cad", FTM, FTM.parent / "cad"):
+    sys.path.insert(0, str(d))                        # the pinned files first; the working tree for anything else
 TOL, ANG = 0.25, 0.3                      # tessellation: chord tolerance (mm), angular tolerance (rad)
 
 
@@ -36,7 +60,7 @@ def model():
 def model_sig():
     """A hash of the model's source, so the cache follows the CAD worker's changes."""
     h = hashlib.blake2b(digest_size=6)
-    for p in (FT / "cad" / "ft_model.py", FT.parent / "cad" / "lpbf_model.py"):
+    for p in (FTM / "cad" / "ft_model.py", FTM.parent / "cad" / "lpbf_model.py"):
         if p.exists():
             h.update(p.read_bytes())
     return h.hexdigest()

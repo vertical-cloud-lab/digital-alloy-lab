@@ -171,7 +171,8 @@ def panel(ov, ms, total_hi):
         for ln in wrap(d, "scan vectors: " + ov["scan"], font(11), bw)[:2]:
             d.text((x0, yb), ln, font=font(11), fill=MUTED)
             yb += 15
-    d.text((x0, H - 24), "Model: ft_model.py; bought parts are envelopes (estimates)", font=font(11), fill=MUTED)
+    d.text((x0, H - 42), "Round-1 schedule and prices (see PR 294 for round 2's)", font=font(11), fill=MUTED)
+    d.text((x0, H - 24), "Model: ft_model.py round 1; bought parts are envelopes (estimates)", font=font(11), fill=MUTED)
     return im
 
 
@@ -250,7 +251,8 @@ def card(ov):
         rows = [(m.replace(" (< 100 ppm)", ", < 100 ppm"), lo / 5, hi / 5, f"weeks {wk(lo)}-{wk(hi)}  (days {lo}-{hi})")
                 for m, lo, hi in sm["milestones"]]
         y = range_chart(d, x, y, w - 2 * x, rows, 8.0, range(0, 9), lambda t: f"{t}", "Milestones: weeks from the order",
-                        f"working days / 5; earliest to latest, scenario {sm.get('scenario', '')}", label_w=380, row_h=34,
+                        f"working days / 5; earliest to latest, round-1 scenario {sm.get('scenario', '')} (PR 294 has "
+                        "round 2's)", label_w=380, row_h=34,
                         val_w=230)
         d.text((x + 380, y - 4), "weeks", font=font(12), fill=MUTED)
         y += 34
@@ -260,7 +262,8 @@ def card(ov):
                 for st in order]
         y = range_chart(d, x, y, w - 2 * x, rows, 50.0, range(0, 51, 10), lambda t: f"${t}k",
                         "Running spend when each state is built (US$)",
-                        "parts.csv low and high list prices, counted as ft_progression.spend() counts them", label_w=380,
+                        "round-1 parts.csv low and high list prices, counted as ft_progression.spend() counts them "
+                        "(PR 294 has round 2's)", label_w=380,
                         row_h=34, val_w=230)
         return im, ((E.W3 - w) // 2, 150)
     orders = ov["orders"]
@@ -271,7 +274,7 @@ def card(ov):
     rows = [(o, lo / 5, hi / 5, f"weeks {wk(lo)}-{wk(hi)}") for o, lo, hi in orders]
     xmax = max(4.0, float(np.ceil(max(r[2] for r in rows))))
     range_chart(d, 28, 22, w - 56, rows, xmax, range(0, int(xmax) + 1), lambda t: f"{t}",
-                "When each order is in hand", "weeks from day 0 (working days / 5), earliest to latest, scenario A",
+                "When each order is in hand", "weeks from day 0 (working days / 5), earliest to latest, round-1 scenario A",
                 label_w=300, row_h=27, val_w=130)
     return im, (40, 118)
 
