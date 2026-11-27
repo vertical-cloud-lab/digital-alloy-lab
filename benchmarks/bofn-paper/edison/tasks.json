@@ -1,0 +1,90 @@
+{
+  "code-review": {
+    "task_id": "a4f534fa-4810-42d9-bd47-50530b55a18b",
+    "job": "ANALYSIS",
+    "uploads": [
+      {
+        "file": "/tmp/edison-upload/settings.md",
+        "entry_id": "4b9d5002-f16e-4324-a983-50d9bbb03da8"
+      },
+      {
+        "file": "/tmp/edison-upload/bofn_alloy.py",
+        "entry_id": "9a6547d4-efbb-4152-b087-4816ff6e7b58"
+      },
+      {
+        "file": "/tmp/edison-upload/policies.py",
+        "entry_id": "bda5e3e7-a98d-43c0-bc91-1c3c7e35d023"
+      },
+      {
+        "file": "/tmp/edison-upload/run_sweep.py",
+        "entry_id": "d8101b83-a414-4417-b018-dd9c6733b965"
+      },
+      {
+        "file": "/tmp/edison-upload/analyze.py",
+        "entry_id": "19eb9088-a957-4476-b17d-1b2c44347a5d"
+      },
+      {
+        "file": "/tmp/edison-upload/plot.py",
+        "entry_id": "8c7d54eb-17ba-420c-8e6d-fc7753fa7463"
+      },
+      {
+        "file": "/tmp/edison-upload/README.md",
+        "entry_id": "a8f14f75-fad1-4d39-9148-fa25a9ecd3d2"
+      },
+      {
+        "file": "/tmp/edison-upload/results.zip",
+        "entry_id": "6116480a-dfc3-48e6-b38e-4ad058b4af7c"
+      },
+      {
+        "file": "/tmp/edison-upload/bofn_best_vs_spend_k1_partial_vs_full.png",
+        "entry_id": "7ed91146-eb94-411c-a930-c184405aae8b"
+      }
+    ],
+    "submitted": "2026-10-05T10:28:22Z",
+    "brief": "presentations/2026-10-mst26/bofn-prelim/edison/brief-code.md"
+  },
+  "analysis-review": {
+    "task_id": "972ea3bf-1d45-4a7f-a695-a1e6e8504ed8",
+    "job": "ANALYSIS",
+    "uploads": [
+      {
+        "file": "/tmp/edison-upload/settings.md",
+        "entry_id": "8dd7da7d-1b1a-4d31-90fc-72d9ab38ba3e"
+      },
+      {
+        "file": "/tmp/edison-upload/bofn_alloy.py",
+        "entry_id": "0f7a01ba-96be-44b0-9e45-085df6671248"
+      },
+      {
+        "file": "/tmp/edison-upload/policies.py",
+        "entry_id": "2e37931b-519c-4677-82b6-122504ac215a"
+      },
+      {
+        "file": "/tmp/edison-upload/run_sweep.py",
+        "entry_id": "c2c5c2fb-13a6-43fa-8acc-053a0b3d812e"
+      },
+      {
+        "file": "/tmp/edison-upload/analyze.py",
+        "entry_id": "7161c3c2-90ca-4514-bc17-049a7e7375a0"
+      },
+      {
+        "file": "/tmp/edison-upload/plot.py",
+        "entry_id": "f4428803-4516-4d54-beea-e036bdcb093f"
+      },
+      {
+        "file": "/tmp/edison-upload/README.md",
+        "entry_id": "9b229259-50db-4f5d-9876-6ffd01559967"
+      },
+      {
+        "file": "/tmp/edison-upload/results.zip",
+        "entry_id": "40436705-c6e4-416d-9267-917884d65e32"
+      },
+      {
+        "file": "/tmp/edison-upload/bofn_best_vs_spend_k1_partial_vs_full.png",
+        "entry_id": "7c5d4d40-1b68-42c0-8c18-ddb40b1a6b97"
+      }
+    ],
+    "submitted": "2026-10-05T10:28:45Z",
+    "brief": "presentations/2026-10-mst26/bofn-prelim/edison/brief-analysis.md"
+  }
+}
