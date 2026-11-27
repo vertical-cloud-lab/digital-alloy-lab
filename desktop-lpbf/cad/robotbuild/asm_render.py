@@ -359,6 +359,18 @@ class Replay:
             if f"o{i}" in self.sc.actors:
                 self.sc.gmat[f"o{i}"] = np.asarray(T, float)
                 self.sc.alpha[f"o{i}"] = 1.0
+        # round 9: a put of parts an arm still holds (seated, then held while the other arm drives the first screws; a flip;
+        # a carry) re-anchors the hold at the put, so they stay where the planner seated them. Round 8 kept riding them on the
+        # drawn TCP until the release and left them there: M19's heater stack sat 2.4 mm off its bore's axis for 500 frames
+        # (the frame audit read the piston head 53 mm deep), until the next put of the module
+        for n in ("A", "B"):
+            h = self.st[n]["held"]
+            if h is not None and set(h["objs"]) & set(objs):
+                a = self.arm[n]
+                T_tcp = a.tcp(self.st[n]["q"], self.st[n]["close"])
+                if h.get("spin_deg"):
+                    T_tcp = T_tcp @ rot_axis((0, 0, 1), h["spin_deg"])
+                h["off"] = np.linalg.inv(T_tcp) @ np.asarray(T, float)
 
     def tcp(self, n):
         a = self.arm[n]
@@ -471,7 +483,7 @@ class Replay:
                     return True
         return False
 
-    def person_spot(self, work, side, cams=()):
+    def person_spot(self, work, side, cams=(), relaxed=False):
         """(spot (x, y), aisle point (x, +-AISLE)) for a person working at `work` (x, y) from side A (y < 0) or B: the nearest
         spot whose floor is clear by PERSON_R and whose straight walk in from the aisle is clear too, out of the lines of sight
         from the place's tripods `cams` (x, y) to the work (round 9: a person in front of the bench's tripod hid the work). None
@@ -488,9 +500,9 @@ class Replay:
                     x, y = wx + r * math.sin(a), wy + s * r * math.cos(a)
                     if s * y < 250.0 or s * y > self.AISLE - 300.0:
                         continue
-                    if not self._clear((x, y), boxes, self.PERSON_R):
+                    if not self._clear((x, y), boxes, self.PERSON_R - (60.0 if relaxed else 0.0)):
                         continue
-                    if not self._clear_path([(x, s * self.AISLE), (x, y)], boxes, self.PERSON_R - 60.0):
+                    if not relaxed and not self._clear_path([(x, s * self.AISLE), (x, y)], boxes, self.PERSON_R - 60.0):
                         continue
                     walk = [(x, y + (s * self.AISLE - y) * u) for u in (0.0, 0.25, 0.5, 0.75)]
                     if cams and self._blocks_view(walk, (wx, wy), cams):
@@ -1216,6 +1228,23 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
         there), and they walk back out. True if the slice ended."""
         P = rp.person
         sp = rp.person_spot(work[:2], side, place_cands(loc)) if P is not None else None
+        if sp is None and P is not None:
+            # no clear walk in from the aisle out of the tripods' sight lines (both MiRs docked round the station): the
+            # person is put on the nearest spot clear of everything, across a cut each way (round 9: F18's screw had no
+            # person at all)
+            sp2 = rp.person_spot(work[:2], side, (), relaxed=True)
+            if sp2 is not None:
+                (xs, ys), _ = sp2
+                look = (float(work[0]), float(work[1]), float(work[2]) if len(work) > 2 else 950.0)
+                P.show(1.0)
+                P.place(x=xs, y=ys, hd=math.degrees(math.atan2(look[1] - ys, look[0] - xs)), look=look, frame=tot["n"])
+                pstate.update(on=True, n=tot["n"])
+                last["force"] = "person put in place"
+                r_ = job_frames()
+                P.show(0.0)
+                pstate["on"] = False
+                last["force"] = "person gone"
+                return r_
         if sp is None:
             return job_frames()
         (xs, ys), (xa, ya) = sp
@@ -1313,6 +1342,19 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                         P.set(hands=hands, look=tuple(np.mean([np.asarray(v, float) for v in hands.values() if v is not None],
                                                               axis=0)), frame=tot["n"])
                         pstate["n"] = tot["n"]
+                        if kind == "screw" and pstate["on"]:
+                            # the driver in the right hand, pointing at the screw: its bit on the head when the hand is
+                            # close enough, else the handle in the hand and the bit towards the screw (never left floating)
+                            hp = np.asarray(P.hand_point("r"), float)
+                            dv = hp - h
+                            L_ = float(np.linalg.norm(dv))
+                            zz = dv / L_ if L_ > 1e-6 else u
+                            tip = h if L_ <= 260.0 else hp - 160.0 * zz
+                            xx = np.cross(zz, [0.0, 0.0, 1.0]) if abs(zz[2]) < 0.9 else np.cross(zz, [1.0, 0.0, 0.0])
+                            xx /= np.linalg.norm(xx)
+                            Rt = np.eye(4)
+                            Rt[:3, 0], Rt[:3, 1], Rt[:3, 2], Rt[:3, 3] = xx, np.cross(zz, xx), zz, tip
+                            rp.sc.gmat["op/tool"] = Rt
                     if f == 3:                       # the hands have reached it: the part is in its seat, the screw in
                         for i in objs:               # its hole
                             if kind == "part":
