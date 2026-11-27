@@ -386,6 +386,8 @@ def clip_deburr():
     return simple_clip("deburr", "wash", "32-finishing", job, "A", "2F-85", "Arm A deburrs a bracket: brush, then the "
                        "compliant spindle", "part to tool: a brush wheel and an ATI compliant deburring spindle on the bench; "
                        "edges in deep pockets stay a person's job", "deburr class", mach=dict(lid_open=True),
+                       objs={"bracket": (np.eye(4), dict(kind="box", b=(-L / 2, L / 2, -W / 2, W / 2, -H, 0),
+                                                         color="#d6dade"))},
                        follow={"bracket": "bracket"}, extra=dict(part_kg=0.8))
 
 
@@ -695,6 +697,21 @@ def clip_drive(name, chapter, akey, from_clip, to_clip, world_parts, caption, su
     for bb in arm.bodies():
         robot.add(bb)
     mb = [bb for bb in robot.bodies.values() if bb.name.startswith("mir/")]
+    # what the arm still holds at the end of the first clip (its pose fixed to tool0 over the last frames)
+    arm.base = np.asarray(fa["arms"][akey]["base"], float)
+    arm.place(q0, c0)
+    W0 = arm.base @ arm.fk()["tool0"]
+    held = {}
+    for o, Mo in fa["objs"].items():
+        spec = a["objects"].get(o)
+        if spec is None or spec.get("kind") != "box":
+            continue
+        rel = np.linalg.inv(W0) @ np.asarray(Mo, float)
+        if np.linalg.norm(rel[:3, 3]) < 300.0:
+            b_ = spec["b"]
+            hb_ = Body(f"held/{o}", *C.merge([S.box(*b_)]), kind="held")
+            robot.add(hb_)
+            held[o] = (rel, hb_)
 
     def place(M, q, close):
         for bb in mb:
@@ -702,6 +719,9 @@ def clip_drive(name, chapter, akey, from_clip, to_clip, world_parts, caption, su
         p, y = arm_base_of(M, arm_dx)
         arm.base = Tm(C.rot((0, 0, 1), y), p)
         arm.place(q, close)
+        W = arm.base @ arm.fk()["tool0"]
+        for o, (rel, hb_) in held.items():
+            hb_.place(W @ rel)
 
     def first_hit(M, q, close):
         place(M, q, close)
@@ -754,6 +774,8 @@ def clip_drive(name, chapter, akey, from_clip, to_clip, world_parts, caption, su
         for k in range(nf):
             u = ease((k + 1) / nf)
             place(M, qa + (qb - qa) * u, ca + (cb - ca) * u)
+            for o, (rel, hb_) in held.items():
+                clip.obj(o, hb_.M)
             clip.set_arm(akey, arm, tool1 if (label == "in" and u > 0.5) else tool0, mir=dict(M=M.copy(), arm_dx=arm_dx))
             clip.frame(1, sub=f"{sub} | " + ("the arm to its transport pose" if label == "out" else
                                                "the arm to its working pose"))
@@ -766,6 +788,8 @@ def clip_drive(name, chapter, akey, from_clip, to_clip, world_parts, caption, su
             for k in range(nf):
                 M = f((k + 1) / nf)
                 place(M, qt, c0)
+                for o, (rel, hb_) in held.items():
+                    clip.obj(o, hb_.M)
                 if k % 6 == 0:
                     d, _, _ = group_distance(robot, world, margin=300.0)
                     clear = min(clear, d)
@@ -807,6 +831,15 @@ def clip_drive_vf4f_lathe():
                       "pivot, drive forward, pivot; every pose swept with FCL", "P-S1")
 
 
+def clip_drive_deburr_measure():
+    """Chapter 32: MiR A from the deburr spindle to the measuring station, along the north row."""
+    return clip_drive("drive_deburr_measure", "32-finishing", "A", "deburr", "measure",
+                      [("wash", E.wash_deburr()[0]), ("measure", E.granite_station()[0])],
+                      "Arm A's MiR drives on to the measuring station",
+                      "pivot, drive forward, pivot (a differential-drive base: no sliding sideways); 1.0 m/s, 0.3 m/s2; "
+                      "every pose swept with FCL", "measure class")
+
+
 def clip_drive_vf4_lathe():
     """Chapter 31: MiR A from the VF-4 (after the vise part) to the lathe (before the slug), along the north row."""
     vf4p, _ = E.vf4(door=1.0, table_x=-E.TABLE_LAYOUT["vise"], with_vise=True, vise_open=120.0, with_hrt=True)
@@ -821,7 +854,7 @@ CLIPS = dict(vf4_clamps=clip_vf4_clamps, vf4_floor_load=clip_floor_load, vf4_vis
              lathe_slug=clip_lathe_slug, lathe_big=clip_lathe_big, saw_bar=clip_saw, deburr=clip_deburr, wash=clip_wash,
              measure=clip_measure, kit=clip_kit, recv_tape=clip_recv_tape, recv_unbox=clip_recv_unbox,
              drive_vf4_lathe=clip_drive_vf4_lathe, drive_vf4c_lathe=clip_drive_vf4c_lathe,
-             drive_vf4f_lathe=clip_drive_vf4f_lathe)
+             drive_vf4f_lathe=clip_drive_vf4f_lathe, drive_deburr_measure=clip_drive_deburr_measure)
 
 
 def main(argv):

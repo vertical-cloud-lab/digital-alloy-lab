@@ -416,6 +416,14 @@ def reach_of(org, hd, lean, hands):
     return worst
 
 
+def lean_for(org, hands):
+    """The lean (deg) people.py's person needs to put its palms this far from its body (the horizontal distance to the
+    farther hand, at 0.95-1.15 m up): measured on the posed model (round 9: palms 400, 500, 600, 700, 800 mm ahead and
+    120 mm to each side land within 15 mm at leans of about 10, 20, 30, 40, 50 deg)."""
+    d = max(float(np.hypot(*(np.asarray(h, float)[:2] - org))) for h in hands.values())
+    return float(np.interp(d, [420.0, 515.0, 612.0, 710.0, 809.0, 860.0], [10.0, 20.0, 30.0, 40.0, 50.0, 56.0]))
+
+
 def pair_lift(w, scn, crew, name, spec, keys, kg, caption, sub, step, cam, hand_pts=None, check_items=None,
               fronts=None, M_st=None, walk_in=True, step_back=True, frames_per_m=60.0):
     """Two people side by side, facing the station's +y (into the VF-4), each holding one end of a load with both hands
@@ -476,25 +484,14 @@ def pair_lift(w, scn, crew, name, spec, keys, kg, caption, sub, step, cam, hand_
         y_near = float(cw[:, 1].min())
         zl, zh = float(cw[:, 2].min()), float(cw[:, 2].max())
         org = (M @ np.r_[o_st, 1.0])[:2]
-        best = None
-        for lean in np.arange(0.0, 58.0, 2.0):
-            r = reach_of(org, hds[i], lean, hands)
-            if best is None or r < best[1] - 1.0:
-                best = (lean, r)
-            if r <= 0.0:
-                best = (lean, r)
-                break
-        lean, r = best
+        lean = lean_for(org, hands)
         fr = SS.people.body_front(zl - 40.0, zh + 40.0, lean)
         y_body_max = y_near - 30.0 - fr                 # the body (arms out of it) off the load's near face
         if o_st[1] > y_body_max and abs(float(Pc[0] - o_st[0])) < 300.0:
             o_st[1] = y_body_max
             org = (M @ np.r_[o_st, 1.0])[:2]
-            for lean2 in np.arange(lean, 58.0, 2.0):
-                r = reach_of(org, hds[i], lean2, hands)
-                lean = lean2
-                if r <= 0.0:
-                    break
+            lean = lean_for(org, hands)
+        r = reach_of(org, hds[i], lean, hands)
         return org, hds[i], float(lean), hands, float(r)
 
     crew.show(1.0)
@@ -1385,28 +1382,26 @@ def chapter_30():
     axis = np.array(vf4.axis, float)
     Q_at = lambda a: E.about(E.Rx(a), axis) @ P3    # noqa: E731
     P_to3 = E.T((40.0, 0, 0)) @ Q_at(90.0)
-    for i in range(2):
-        pw = (st @ np.r_[-2700.0 + 500.0 * i, -1500.0 - 150.0 * i, 0.0, 1.0])[:3]
-        crew.place(i, pw[0], pw[1], 40.0)
-    crew.show(1.0)
     capC = "Two people set the frame and its plate on the 4th axis"
-    for i in range(18):
-        vf4.set(door=ease((i + 1) / 18))
-        w.frame(scn, cam_out, capC, sub="the HRT210 indexed to A 90 for loading (left wall up)", who=["machine"],
-                step="F-S3", status="pass", proc_s=1.5 / 18)
-    m2_ = scn.obj_mesh(spec2)[0]
-    P_a3 = M_tab3 @ P2
-    hp_rot = {0: end_hands(m2_, P_a3, -1, fz=0.5, fy=(0.4, 0.6)), 1: end_hands(m2_, P_a3, 1, fz=0.5, fy=(0.4, 0.6))}
-    P_up3 = E.T((0, 0, 50.0)) @ P_a3
-    c3 = P_up3[:3, :3] @ ((np.asarray(m2_.points).min(0) + np.asarray(m2_.points).max(0)) / 2) + P_up3[:3, 3]
-    c3t = P_to3[:3, :3] @ ((np.asarray(m2_.points).min(0) + np.asarray(m2_.points).max(0)) / 2) + P_to3[:3, 3]
-    P_mid3 = P_to3.copy()
-    P_mid3[:3, 3] += np.array([0.0, 0.0, max(c3[2] - c3t[2], 0.0) + 40.0])
-    keys3 = [(P_a3, None), (P_up3, 0.9), (P_mid3, 4.5), (P_to3, 1.0)]
-    pair_lift(w, scn, crew, "load", spec2, keys3, kg_frame + kg_plate, capC,
-              f"frame {kg_frame:.1f} kg + MIC-6 plate {kg_plate:.1f} kg, turned 90 deg onto the platter; 4 bolts "
-              f"through the opening (not shown); {rule}", "F-S3", cam_out, check_items=check, fronts=fronts,
-              hand_pts=hp_rot)
+    vf4.set(door=1.0)
+    # round 9: the turn from flat onto the platter is 90 deg about the machine's Y (the frame's floor to the platter);
+    # the faces two people at the door hold (the frame's ends, along X) don't stay level through it, so the lift is
+    # cut: they are seen stepping back from the door with the frame on the platter
+    PERSON_RESULTS[f"F-S3: {capC}"] = dict(kg=round(kg_frame + kg_plate, 2), team_guideline_kg=round(TEAM_KG, 1),
+                                           under_guideline=bool(kg_frame + kg_plate <= TEAM_KG), shown=False,
+                                           caption=capC, why="a 90 deg turn about Y: not drawn (a cut)")
+    for i in range(2):                               # at the cut from the inside view: at the open door, done
+        pw = (st @ np.r_[(-330.0 if i == 0 else 330.0) + 0.0, -200.0, 0.0, 1.0])[:3]
+        crew.place(i, pw[0], pw[1], HD[i])
+    crew.show(1.0)
+    scn.set_obj("load", st @ P_to3, spec2)
+    for i in range(int(1.5 * FPS)):
+        w.frame(scn, cam_out, capC, sub="the HRT210 indexed to A 90 for loading (left wall up); the frame on its plate "
+                "turned 90 deg onto the platter and bolted through the opening (not shown)", who=["person"],
+                step="F-S3", status="person")
+    crew.step_back(w, cam_out, capC, f"frame {kg_frame:.1f} kg + MIC-6 plate {kg_plate:.1f} kg, turned 90 deg onto "
+                   f"the platter and bolted through the opening (the lift and the bolting not shown); {rule}", "F-S3",
+                   dist=600.0, n=24)
     scn.hide_obj("load")
     for n in vf4.sc.members("vf4/rotfix"):
         vf4.sc.alpha[n] = 1.0
@@ -1562,7 +1557,11 @@ def chapter_32():
                 sub="outsourced: a hone shop, about 10 working days (estimate) for one tube", who=["outsourced"],
                 step="hone", status="pass", proc_s=1.0 / FPS, add=dict(outsourced_d=10.0 / (4 * FPS)))
     play(w, scn, "deburr", cam_at("wash", (1600, -1800, 2000), (450, 340, 1050)))
-    scn.show_arm("A", False)
+    # round 9: arm A's MiR drives on to the measuring station in the same shot (pivot, drive, pivot; FCL-swept)
+    if (load("drive_deburr_measure") or {}).get("result", {}).get("ok", False):
+        play(w, scn, "drive_deburr_measure", cam_at("wash", (1600, -1800, 2000), (450, 340, 1050)))
+    else:
+        scn.show_arm("A", False)
     play(w, scn, "wash", cam_at("wash", (-200, -2000, 2200), (-500, 340, 950)), hide=())
     scn.show_arm("B", False)
     mc = load("measure")
