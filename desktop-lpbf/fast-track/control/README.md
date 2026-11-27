@@ -74,6 +74,12 @@ cubes, 500 layers of 30 µm, ~514 vectors a layer, 250 W hatch at 1200 mm/s). Wi
   typical and 14.4 A at most (sum of rated inputs) on one 120 V 20 A circuit; a third circuit only if the laser turns
   out to be water-cooled (§3).
 
+![Simulated 2 mm build](img/sim-build-2mm.png)
+
+*A simulated 2 mm build of the first-coupon program (`python -m ftctl plot`). Top: box O₂ from the percent sensor and
+the trace cell, which samples only below 1.5 %. Middle: plate, block and box air. Bottom: where each layer's time
+goes; the dwell is the plate shedding the laser's heat (§7).*
+
 ## 1. The supervisor (`ftctl`)
 
 | Module | What it does |
@@ -159,6 +165,8 @@ Not run against real hardware or real DLLs: the RTC DLLs are Windows-only and no
 bought.
 
 ### 1.4 One time base
+
+![Signal flow](diagrams/signal-flow.png)
 
 - **The supervisor** stamps every record with the PC's monotonic clock (t = 0 at start).
 - **The scan card** raises DIGITAL OUT1 (LASER pin 12) for the length of each layer's list and records LASERON, X, Y
@@ -378,7 +386,30 @@ run simulates 67 layers and takes the second half as steady.
 | the McMaster 8077K237 valve's coil power (behind McMaster's login) | its label (ASCO's equivalent: 10.6 W) |
 | inrush of the laser and the supplies together | a peak-hold clamp meter at first power-up |
 
-## 10. Not done
+## 10. Parts this adds or changes (for `parts.csv`)
+
+Prices as read on 2026-11-27 (by the lead or by the research for this folder); "estimate" where none was read.
+
+| Change | Part | Price | Why |
+|---|---|---:|---|
+| add (or replaces L5) | SCANLAB RTC4 PCIe, used (eBay 366737163447) | $400.00 | drives the XY2-100 head; the RTC5 would need a converter (quote) |
+| add | Omron D4NS-2CF lid switch (Digi-Key Z4035-ND) + D4DS-K operation key | $79.27 + ~$15 (estimate) | documented G9SE input; one switch in the chain |
+| add | beam-tube switch, D4NS class | ~$80 (estimate) | 2 NC, direct opening |
+| add | 4 bimetal NC temperature switches, ~75 °C | ~$60 (estimate) | stray-beam backstop, one per channel per location |
+| add | percent O₂ transmitter on the exhaust (second Macurco OX-6, 4-20 mA on) | $553.50-663.00 | the trace analyzer stops at 10,000 ppm |
+| add | 3 × 24 VDC NC solenoid valves (argon low flow, vent, trace-cell isolation; ASCO 8262 class) + a needle valve | 3 × $159 + ~$50 (estimate) | hold flow in dwells, slow vent, keep the trace cell out of air |
+| maybe | Alpha Omega PMP-24 sample pump | $791 | the analyzer wants 0.1-1.5 psig; the box gives 0.07-0.15 |
+| choose (H2) | 2 × AutomationDirect SOLO SL4848-VR-D (24 VDC, voltage-pulse output, RS-485 Modbus) | 2 × $143.00 | the "PID (not chosen)" of H2; one zone each for plate and block |
+| add | 2 × Crydom D1D20 (one SSR a zone) + heat sinks | $93.36 each | H2 lists one |
+| add | K3, K4: 24 VDC signal relays | ~$40 (estimate) | RTC5 /STOP from the chain; argon cut by the room monitor |
+| add | MCC 134 + MCC 128 HATs, ULN2803A relay interface, 8 DIN relays, 16-ch opto input board, USB-RS485 | ~$700 (estimate) | the Pi I/O node |
+| add | Zaber PS14S-48V37 (48 V 3.75 A) | $112 | one supply for the chain |
+| add | 24 V 10 A control supply (Mean Well SDR-240-24 class) | ~$100 (estimate) | G9SE, PIDs, CN708, coils, valves, analyzers |
+| add | water flow switch for the scan head | ~$60 (estimate) | COOLING_FAULT |
+| monitoring | PicoScope 4824A | £2,189 ex VAT (RS UK; US price not read) | 8 channels on one clock: photodiode, AE, LASERON, marker, power monitor |
+| monitoring | MISTRAS R15I-AST + Vallen DCPL2 | not read | AE sensor with its 28 V phantom-power decoupler |
+
+## 11. Not done
 
 - Nothing ran against real hardware or the SCANLAB DLLs. The backends are tested against stand-ins: a fake DLL, a fake
   serial port, a fake Zaber axis, gpiozero's mock pins and fake HAT readers.
