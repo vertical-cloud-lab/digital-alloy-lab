@@ -36,6 +36,8 @@ ALLOWED = [
      "the hose's clamp end is drawn over its KF-25 port's flange (the model's hose ends in the flange)"),
     (r"^KF-25 pump hose", r"^Rotary-vane pump", 15.0,
      "the hose's other end is drawn down into the pump's inlet on its top face"),
+    (r"^Process fibre", r"^IPG YLR-400", 3.5,
+     "the fibre's laser end starts 3 mm inside the laser envelope's top face, where the fibre leaves the laser (the model)"),
 ]
 
 
@@ -55,24 +57,33 @@ def stream(path):
                 return
 
 
-def placed(meshes, name, st, cache):
-    """(Geom, translation) of an actor as drawn: its mesh (or blended mesh), scaled about its own z0, translated."""
+def placed(meshes, name, st, cache, latest):
+    """(Geom, translation, geometry key) of an actor as drawn: its mesh (or blended mesh), scaled about its own z0,
+    translated. A blended (fibre) or scaled (lift column) mesh changes from frame to frame, so only the newest one per actor
+    is kept (keeping them all ran a 2 GB cap out on chapter 2); the key, not id(), identifies the geometry in the depth
+    cache."""
     m = meshes[name]
-    key = (name, st.get("morph"))
+    sc = st.get("scale")
+    scaled = sc is not None and not np.allclose(sc[:3], 1.0)
+    key = (name, st.get("morph"), tuple(sc) if scaled else None)
     g = cache.get(key)
     if g is None:
-        V = st["V"] if st.get("V") is not None else m["V"]
-        g = cache[key] = C.Geom(V, m["F"])
+        old = latest.get(name)
+        if old is not None and old != key and (old[1] is not None or old[2] is not None):
+            cache.pop(old, None)
+        base = (name, st.get("morph"), None)
+        g0 = cache.get(base)
+        if g0 is None:
+            V = st["V"] if st.get("V") is not None else m["V"]
+            g0 = C.Geom(V, m["F"])
+            if not scaled:
+                cache[base] = g0
+        g = cache[key] = g0.scaled(tuple(sc[:3])) if scaled else g0
+        latest[name] = key
     off = np.asarray(st["off"], float)
-    sc = st.get("scale")
-    if sc is not None and not np.allclose(sc[:3], 1.0):
-        sx, sy, sz, z0 = sc
-        k2 = (name, st.get("morph"), tuple(sc))
-        if k2 not in cache:                      # kept, so that id() keys of the depth cache stay unique
-            cache[k2] = g.scaled((sx, sy, sz))
-        g = cache[k2]
-        off = off + np.array([0.0, 0.0, z0 * (1.0 - sz)])
-    return g, off
+    if scaled:
+        off = off + np.array([0.0, 0.0, sc[3] * (1.0 - sc[2])])
+    return g, off, key
 
 
 def run(ch):
@@ -89,7 +100,7 @@ def run(ch):
     solid = {n for n, m in meshes.items() if m["solid"] and m["opacity"] >= OPAQUE}
     cur = {}
     fx = {}
-    cache, gcache = {}, {}
+    cache, gcache, latest = {}, {}, {}
     viol, rigid_rel, allow_hits = {}, {}, {}
     frames = 0
     for rec in stream(d / "audit.pkl"):
@@ -105,10 +116,10 @@ def run(ch):
         live = {}
         for name, st in cur.items():
             if st["vis"] and name in solid:
-                live[name] = placed(meshes, name, st, gcache)
+                live[name] = placed(meshes, name, st, gcache, latest)
         for fname in rec["fx"]:
             if fname in fx:
-                live["fx:" + fname] = (fx[fname][1], np.zeros(3))
+                live["fx:" + fname] = (fx[fname][1], np.zeros(3), ("fx", fname, fx[fname][0]))
         names = list(live)
         lo = np.array([live[k][0].lo + live[k][1] for k in names])
         hi = np.array([live[k][0].hi + live[k][1] for k in names])
@@ -123,10 +134,10 @@ def run(ch):
                 if pair in done:
                     continue
                 done.add(pair)
-                ga, ta = live[a]
-                gb, tb = live[b]
+                ga, ta, ka = live[a]
+                gb, tb, kb = live[b]
                 rel = tuple(np.round(tb - ta, 2))
-                sig = (id(ga), id(gb), rel)
+                sig = (ka, kb, rel)
                 dep = cache.get(sig)
                 if dep is None:
                     dep = cache[sig] = C.depth(ga, ta, gb, tb)
