@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-11-27T09:23Z",
+ "generated_utc": "2026-11-27T10:15Z",
  "what": "Cost, lead-time and time numbers for the robot-built desktop LPBF video (issue #260, PR #266, round 7)",
  "how_to_show": "Tour the categories in the order of 'categories'. For each, show hud.new (at spec, all new) against hud.used (the used picks where a sensible listing exists, new elsewhere) and the running totals hud.run_new / hud.run_used; hud.range_new / hud.range_used are the BOM's full low-high ranges. Call out the category's 'items' in order with their hud.new, hud.used, hud.lead_new and hud.lead_used. 'offtable' and 'services' are not on the table: show them as text rows at the end of the tour.",
  "definitions": {
@@ -10097,15 +10097,15 @@
     {
      "step": "F54",
      "chapter": "41-assembly-chamber",
-     "label": "Optics bridge (13.3 kg, lens and ring under it) onto the four posts: the hoist lifts, both arms guide",
-     "do": "dual",
-     "actor": "",
-     "status": "fail",
-     "robot_s": 20.9,
-     "person_min": 3.0,
-     "checker_compute_s": 0.7,
+     "label": "Optics bridge (13.3 kg, lens and ring under it) onto the four posts: the hoist takes its weight, arm A guides it onto the dowels",
+     "do": "place",
+     "actor": "A",
+     "status": "pass",
+     "robot_s": 45.1,
+     "person_min": 2.0,
+     "checker_compute_s": 10.3,
      "force": "14.32 kg, 7.2 kg per arm | 14.32 kg; no collision-free pair of arm poses at the start of the carry",
-     "note": "no collision-free pair of arm poses at the start of the carry",
+     "note": "",
      "recorded": true
     },
     {
@@ -10115,9 +10115,9 @@
      "do": "screws",
      "actor": "A",
      "status": "pass",
-     "robot_s": 256.3,
+     "robot_s": 259.2,
      "person_min": 0.0,
-     "checker_compute_s": 163.0,
+     "checker_compute_s": 326.2,
      "force": "7.4 N m | 8/8 screws;",
      "note": "",
      "recorded": true
@@ -10131,7 +10131,7 @@
      "status": "pass",
      "robot_s": 91.1,
      "person_min": 0.0,
-     "checker_compute_s": 3.3,
+     "checker_compute_s": 5.5,
      "force": "",
      "note": "",
      "recorded": true
@@ -10145,7 +10145,7 @@
      "status": "pass",
      "robot_s": 89.4,
      "person_min": 0.0,
-     "checker_compute_s": 17.1,
+     "checker_compute_s": 29.0,
      "force": "arm A: no IK at the start pose at 0 mm along the insertion",
      "note": "",
      "recorded": true
@@ -10159,7 +10159,7 @@
      "status": "fail",
      "robot_s": 239.3,
      "person_min": 5.0,
-     "checker_compute_s": 120.9,
+     "checker_compute_s": 203.2,
      "force": "arm A: part 107 mm across at the grasp: wider than the 2F-85's 85 mm stroke; arm A: no IK at the start pose at 0 mm along the insertion; arm A: no IK at the start pose at 0 mm along the insertion; arm A: no IK at the start pose at 0 mm along the insertion; arm",
      "note": "released 9 mm short and pushed home with the closed fingers; arm A: held:F57:Enclosed beam tubes #1 hits Coaxial-monitoring dichroic (Thorlabs DMSP1000, 45 deg:",
      "recorded": true
@@ -10303,9 +10303,9 @@
     },
     "41-assembly-chamber": {
      "steps": 114,
-     "robot_s": 10111.2,
-     "person_min": 242.4,
-     "fail": 8,
+     "robot_s": 10138.3,
+     "person_min": 241.4,
+     "fail": 7,
      "person_steps": 11,
      "fetch_trips": 0,
      "fetch_s": 0.0
@@ -10322,10 +10322,10 @@
    },
    "totals": {
     "steps": 151,
-    "robot_h": 3.39,
+    "robot_h": 3.4,
     "fetch_h": 0.0,
-    "person_h": 8.9,
-    "fail_steps": 8,
+    "person_h": 8.88,
+    "fail_steps": 7,
     "person_steps": 19
    },
    "assumptions": {
@@ -10342,7 +10342,7 @@
     "parts_per_trip": 4,
     "trip_s": 140.0
    },
-   "recorded": "143 steps' robot and person time from the recorded run (assembly_run13.json: motions at cobot speeds incl. the MiR drives to the table; tool changes, docking and persons' minutes are estimates)",
+   "recorded": "143 steps' robot and person time from the recorded run (assembly_run14_full.json: motions at cobot speeds incl. the MiR drives to the table; tool changes, docking and persons' minutes are estimates)",
    "method": "ESTIMATES, not measurements: results.json's 'seconds' is the checker's compute time. Robot time = 30 s per placement + the insertion path from sequence.json at 10 mm/s, 20 s + 15 s a screw, 90 s an O-ring or cord, 30 s a flip, 60 s a two-arm carry, 15 s a tool change; MiR trips to the long table are counted per chapter (4 parts a trip, 140 s a round trip). Person minutes per step are listed in build_hud.py (PERSON_MIN), 1 min per screw the arm couldn't drive and 5 min per failed placement."
   }
  },
@@ -11265,12 +11265,12 @@
   },
   "assembly": {
    "steps": 151,
-   "robot_h": 3.39,
+   "robot_h": 3.4,
    "mir_fetch_h": 0.0,
-   "person_h": 8.9,
-   "failed_or_partial": 8,
+   "person_h": 8.88,
+   "failed_or_partial": 7,
    "person_or_shop_steps": 19,
-   "basis": "the recorded run's real time (assembly_run13.json): motions at cobot speeds, tool changes, docking and persons' minutes estimated"
+   "basis": "the recorded run's real time (assembly_run14_full.json): motions at cobot speeds, tool changes, docking and persons' minutes estimated"
   },
   "po_rule": "BYU: purchases of $3,500 or more from one vendor need a purchase order: 'Allow ten days to two weeks PLUS shipping time' (capstone.byu.edu/purchase-orders, read 2026-11-25); under $3,500 a PCard"
  }

@@ -1,0 +1,89 @@
+{
+ "before": {
+  "file": "results_run12.json",
+  "checked": 108,
+  "passed": 99,
+  "screws_ok": 124,
+  "screws": 129
+ },
+ "after": {
+  "file": "results_run14.json",
+  "checked": 110,
+  "passed": 105,
+  "screws_ok": 125,
+  "screws": 129
+ },
+ "fetch": {
+  "steps": 77,
+  "passed": 62,
+  "person": 1,
+  "failed": [
+   {
+    "id": "M04",
+    "why": "pick at the table (M04): lift: left_finger_tip hits M04 riser"
+   },
+   {
+    "id": "F02b",
+    "why": "pick at the table (F02b): lift: left_finger_tip hits F02b rim 3"
+   },
+   {
+    "id": "F18",
+    "why": "pick at the table (F18): in to the grasp: left_finger_tip hits Recoater guide rail (15 mm, 260 mm)"
+   },
+   {
+    "id": "F39",
+    "why": "pick at the table (F39): in to the grasp: left_finger_tip hits Drawer latches: 2 x quarter-turn latch studs (enve"
+   },
+   {
+    "id": "F45d",
+    "why": "pick at the table (F45d#1): lift: left_finger_tip hits F45d#1 rim 1"
+   }
+  ]
+ },
+ "presenter": {
+  "planned": 114,
+  "driven": 119
+ },
+ "still_failing": [
+  {
+   "id": "F15",
+   "label": "Nine M4 x 16 inlet-plenum screws into the back wall (100 mm bit extension: runs 9-10 met t",
+   "why": "316 #7: screwdriver: B/tool/screwdriver hits Inlet plenum port (KF-25); also no way with nutrunner"
+  },
+  {
+   "id": "F18",
+   "label": "Recoater rail with its carriage, carriage block, ball nut and arm (bought and pre-assemble",
+   "why": "released 24 mm short and pushed home with the closed fingers; held-part screws: d thro: screwdriver: A/tool/screwdriver hits Process chamber body (6061-T6 through-frame from 5.5 "
+  },
+  {
+   "id": "F26",
+   "label": "Blade holder and blade, in through the door opening and up under the recoater arm",
+   "why": "arm A: A/gr/right_finger_tip hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 117 mm along the insertion"
+  },
+  {
+   "id": "F27",
+   "label": "Two M3 x 8 blade screws by arm B from the back (100 mm bit extension: run 7's driver met t",
+   "why": "316 #1: screwdriver: B/tool/screwdriver hits Overflow funnel block (316L, bolted, FKM face O-ring); 316 #2: screwdriver: B/tool/screwdriver hits Overflow funnel block (316L, bolted, FKM face O-ring)"
+  },
+  {
+   "id": "F57",
+   "label": "Beam tubes, dichroic and fold-mirror cubes, shutter, photodiode chain and collimator",
+   "why": "released 9 mm short and pushed home with the closed fingers; arm A: held:F57:Enclosed beam tubes #1 hits Coaxial-monitoring dichroic (Thorlabs DMSP1000, 45 deg: reflects 1070 nm into the galvo, passes"
+  }
+ ],
+ "fixed": [
+  "C00d",
+  "F45d",
+  "F48b",
+  "F54"
+ ],
+ "time": {
+  "robot_h": 3.28,
+  "person_h": 6.35,
+  "elapsed_h": 10.12,
+  "by_chapter": {
+   "module": 0.62,
+   "chamber": 9.5
+  }
+ }
+}

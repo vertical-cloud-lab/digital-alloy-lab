@@ -43,9 +43,13 @@ shape (MiR B at F45, F45b), the trunnion's shafts ended flush on their stands, a
 each is fixed and checked. Two hands: the holds on M19, C04 and F30 stay; F33b and F37b can't have one (the vacuum gripper's
 100 x 100 mm body covers the screws), F43 can't either way round (tried swapped); the door is held by its draw latches, closed
 first (F51b). [`rec_check.py`](analysis/assembly/rec_check.py) replays a recording as the video draws it and checks it.
-Details: [`analysis/out/assembly/round9_run13.md`](analysis/out/assembly/round9_run13.md),
-[`results_run13.json`](analysis/out/assembly/results_run13.json), [`two_hands.json`](analysis/out/assembly/two_hands.json),
-[`mir_drives.json`](analysis/out/assembly/mir_drives.json).
+**Run 14** then re-planned F54 to the end only, continuing run 13's recording with the arms and MiRs put back where it left
+them (no jump at the join): F54, the 13.3 kg optics bridge, now passes with the hoist taking its weight and arm A alone guiding
+it onto the posts' dowels (runs 9-13 found no pair of poses for a two-arm carry), so **105 of 110** steps pass; F57 by its tubes'
+axes was tried alone and still fails. Details: [`analysis/out/assembly/round9_run13.md`](analysis/out/assembly/round9_run13.md)
+(runs 13 and 14), [`results_run13.json`](analysis/out/assembly/results_run13.json),
+[`results_run14.json`](analysis/out/assembly/results_run14.json) (run 13 to F53, run 14 from F54),
+[`two_hands.json`](analysis/out/assembly/two_hands.json), [`mir_drives.json`](analysis/out/assembly/mir_drives.json).
 
 ## Round 8 (2026-11-26): run 12, two hands, MiRs that drive like MiRs, fixed cameras
 
@@ -324,9 +328,13 @@ these, noted on each; run 13 (round 9) fixed C00d, F45d and F48b, noted on each;
   counterbore was used up by the meshes' facets and a grasp centre taken from the tilted part, and in a tilted bore no world-axis
   step frees a touching tool, so the depth check read a touch as deep.
 - **F57** (beam line): the tubes' ends sit in the cubes' ports, so the tubes have to slide in along their own axes: each
-  tube into the cube placed before it, then the next cube onto the tube's free end.
+  tube into the cube placed before it, then the next cube onto the tube's free end. Round 9 tried it alone (each tube slid along its axis into the part placed before it, the next
+  cube down onto its free end): five of eight placements failed. Next: the two tubes at the back (#2, #3) by arm B; the cubes
+  slid along the tube's axis onto its end (their ports take the tube ends, so not from above); tube #1 at a grasp roll that
+  keeps the wrist camera off the bridge.
 - **F54** optics bridge: still no pair of arm poses at the start of the carry 80 mm above the posts. With the hoist taking the
-  14.3 kg, one arm (or a person) can guide it onto the posts' dowels; check one-arm guidance.
+  14.3 kg, one arm (or a person) can guide it onto the posts' dowels; check one-arm guidance. **Fixed in run 14**: the hoist takes the 13.3 kg, arm A
+  comes to the hanging bridge empty with the gripper open and guides it down onto the dowels.
 - **C00d** 17 of 18: one screw has no approach even at 2,000 planner iterations; drive it after C01, with the chamber in the
   trunnion. **Fixed in run 13**: the arm that can't reach a screw now parks before the other arm tries it (round 8
   left it in the way); arm B drives #7 and #16, 18 of 18. C01c (new) drives any floor-plate screw left, from above with the chamber
