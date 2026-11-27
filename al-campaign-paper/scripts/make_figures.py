@@ -237,12 +237,12 @@ def fig1(p, bench, tensile, alloys, burdens, lit, lit_b) -> str:
                 b.scatter(x, rows["ys_mpa"], s=22 if mk == "D" else 26, marker=mk, facecolors="white",
                           edgecolors=GREY, linewidths=0.9, zorder=2)
             # label the low-burden Sc-free alloys that already beat in-house AlSi10Mg
-            for aid, lab, dy in (("aheadd-cp1", "Al-Fe-Zr", -16), ("al-fe-mg-zr", "Al-Fe-Mg-Zr", 10),
-                                 ("eos-al5x1", "Al-Mg-Zr-Mn", 12), ("croteau-al-mg-zr", "Al-Mg-Zr", -16),
-                                 ("chalmers-alloy-f", "Al-Mn-Cr-Zr-Mg", -14)):
+            for aid, lab, dx, dy in (("aheadd-cp1", "Al-Fe-Zr", 0.12, -16), ("al-fe-mg-zr", "Al-Fe-Mg-Zr", 0.12, 10),
+                                     ("eos-al5x1", "Al-Mg-Zr-Mn", 0.12, 12), ("croteau-al-mg-zr", "Al-Mg-Zr", 0.12, -16),
+                                     ("chalmers-alloy-f", "Al-Mn-Cr-Zr-Mg", 0.45, 18)):
                 if aid in lit_b.index and not math.isnan(lit_b.loc[aid, "B_nir"]):
                     y = lit.loc[lit["alloy_id"] == aid, "ys_mpa"].max()
-                    b.text(lit_b.loc[aid, "B_nir"] + 0.12, y + dy, lab, fontsize=6.0, color=INK2, va="center")
+                    b.text(lit_b.loc[aid, "B_nir"] + dx, y + dy, lab, fontsize=6.0, color=INK2, va="center")
         for name, (x, lo, hi), rows, col in (("AlSi10Mg", (bal, bal_lo, bal_hi), al, C_ALSI),
                                              ("Scalmalloy", (bsc, bsc_lo, bsc_hi), sc, C_SCAL)):
             ys = rows["yield_MPa"]
