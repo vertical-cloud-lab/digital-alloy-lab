@@ -605,11 +605,36 @@ here with the block at setpoint.
 ## 6b. The CAD model and the progression
 
 [`cad/`](cad/README.md) models FT-0, FT-1 and FT-1V in CadQuery as one machine that grows through five states as the
-parts arrive. S1 is the optics bench with the guide laser, S2 the box closed round the beam with full power into a
-dump, then FT-0, FT-1 and FT-1V. Every state checks clean for interference and the beam path. With FT-0 built first,
-FT-1 reaches coupons at 3.2–6.6 weeks, against 3.2–6.4 standing alone. FT-1V reaches them at 3.8–7.8 weeks if the
-cube is ordered on day 0, or 5.2–8.8 if it waits for FT-0's O₂ log. The model changed four things here: the X-LSQ075B
-recoater, the 28 mm heater plate with its leads down the rod, M2 substrate screws, and KF-25 feedthroughs for FT-1V.
+parts arrive: S1 the optics bench with the guide laser, S2 the box closed round the beam with full power into a dump,
+then FT-0, FT-1 and FT-1V. Round 2 (CAD v2) redrew the bought parts that decide fit from the makers' STEP files and
+drawings, and took the other workers' findings:
+
+- **Vendor geometry** (`cad/ft_vendor.py`, checked against the makers' files): the X-LSM100B recoater (the X-LSQ075B is
+  285.85 mm long and fits neither the deck nor the cube), so a **245 mm deck**; the X-VSR20A at 88 × 101 × 73 mm; the
+  Thorlabs MTS50/M-Z8 as the PCard variant (`build(..., piston="thorlabs")`); the Saginaw box; the hurrySCAN 20/30
+  housing (206.9 × 140 × 180 mm, 5.8 kg) hung by its entrance face; the LINOS lens from its datasheet.
+- **Other workers' findings:** the lens axis 30 mm in front of the plate (back reflection) with the window stack and
+  beam tube moved to suit; the cover slide 130 mm above the bed in both enclosures; Ø6 × 20 mm heaters and a 24 mm
+  heater plate; a beam tube whose centre section is two half-shells, so the lid can open (round 1's tube trapped it); a
+  48 mm spreader bar for FT-0 (the 70 mm applicator didn't fit between the nozzle and the collector); the structural
+  FEA's **four-post braced gantry** (79 Hz against 13 Hz); one D4NS-2CF switch per guard; the rod-gland screws moved
+  inside the gland's face seal (the fabrication worker found four leak paths outside it); a potted plug and a rod-end
+  block for the heater leads.
+- **Monitoring MON1–MON9** is drawn: a Pi HQ layer camera through its own lid port (17.8 µm per pixel across the plate),
+  two raking LED lights through wall ports, a coaxial photodiode behind the head's input mirror, an acoustic-emission
+  sensor on the rod-end block, thermocouples and the digitizer.
+- **Checks:** 0 clashes and 0 parts in the scanned-beam envelope in every state and in the Thorlabs variant; the hopper
+  over its full 101.6 mm and the plate over its 20 mm stroke without contact (exact booleans and a python-fcl mesh
+  sweep). The box door now opens, but only 24° before the layer camera meets the lens collar: tight for hand-spreading
+  and plate changes. Gas: FT-0 24.2 L, FT-1 24.0 L, FT-1V 22.6 L.
+- **Still open:** the cube's face opening (the cassette needs ≥ 247 mm; Ideal Vacuum's brochure gives only the 289.6 mm
+  inside); the purge diffuser and vent the CFD recommends are not drawn yet; the fabrication set (`fab/`) is still the
+  round-1 geometry (v2's changes are listed in `fab/out/v2/delta.md`).
+
+**The progression's schedule** (`cad/out/progression.md`, on `fast_track.py`'s tasks and the shop hours): FT-0's first
+tracks at 1.9–5.2 weeks, FT-1's first coupons at 3.1–8.1 weeks with the stages on PCards, FT-1V's at 3.7–9.3 weeks if
+the cube is ordered on day 0 (5.1–10.9 if it waits for FT-0's O₂ log). Building FT-0 first does not delay FT-1: its
+commissioning happens while the shop makes FT-1's parts.
 
 ![The five states](img/cad-progression.png)
 
