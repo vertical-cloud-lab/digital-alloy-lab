@@ -21,6 +21,10 @@
 \usetikzlibrary{arrows.meta,positioning,fit,calc,shapes.geometric}
 \usepackage[style=chem-angew,autocite=superscript,maxbibnames=99,sorting=none,doi=true,url=false,eprint=true]{biblatex}
 \addbibresource{references.bib}
+% Let long URLs (vendor data sheets) break anywhere instead of running into the margin.
+\setcounter{biburlnumpenalty}{9000}
+\setcounter{biburllcpenalty}{7000}
+\setcounter{biburlucpenalty}{8000}
 \usepackage[hidelinks]{hyperref}
 \usepackage[capitalise,noabbrev]{cleveref}
 

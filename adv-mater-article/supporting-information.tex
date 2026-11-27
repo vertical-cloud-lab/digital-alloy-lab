@@ -110,22 +110,23 @@ values were checked against the suppliers' documents on 27 November 2026.
 \ifdraft\textit{Draft: in-house columns wait on the baselines' first builds.}\fi}
 \label{tab:Sparity}
 \footnotesize
+\setlength{\tabcolsep}{3.5pt}
 \begin{tabular}{@{}llccccc@{}}
 \toprule
-Alloy & Condition, orientation & \multicolumn{2}{c}{Data sheet} & \multicolumn{2}{c}{In house} & Within band?\\
+Alloy & Condition, orientation & \multicolumn{2}{c}{Data sheet} & \multicolumn{2}{c}{In house} & YS $\ge$90\%?\\
 \cmidrule(lr){3-4}\cmidrule(lr){5-6}
  & & YS / UTS (MPa) & EL (\%) & YS / UTS (MPa) & EL (\%) & \\
 \midrule
-Al5X1\cite{ds_al5x1} & as built, horizontal & 260 / 310 & 23 & \tbd{} & \tbd{} & \tbd{}\\
- & aged \SI{400}{\celsius} \SI{6}{\hour}, horizontal & 385 / 415 & 14.5 & \tbd{} & \tbd{} & \tbd{}\\
+Al5X1\cite{ds_al5x1} & as built, H & 260 / 310 & 23 & \tbd{} & \tbd{} & \tbd{}\\
+ & aged \SI{400}{\celsius}, \SI{6}{\hour}, H & 385 / 415 & 14.5 & \tbd{} & \tbd{} & \tbd{}\\
 Al-HS1\cite{ds_hoganas} & as printed, X/Y & 220 / 285 & 25 & \tbd{} & \tbd{} & \tbd{}\\
- & aged \SI{375}{\celsius} \SI{4}{\hour}, X/Y & 370 / 440 & 12 & \tbd{} & \tbd{} & \tbd{}\\
-AlSi10Mg\cite{ds_eos} & as built, horizontal & 270 / 461 & 10.2 & $228\pm13$ / $376\pm10$\textsuperscript{a} & $4.5\pm0.5$ & no (0.84 / 0.82)\\
+ & aged \SI{375}{\celsius}, \SI{4}{\hour}, X/Y & 370 / 440 & 12 & \tbd{} & \tbd{} & \tbd{}\\
+AlSi10Mg\cite{ds_eos} & as built, H & 270 / 461 & 10.2 & $228\pm13$ / $376\pm10$\textsuperscript{a} & $4.5\pm0.5$ & no (0.84)\\
 \bottomrule
 \end{tabular}
 
 \smallskip
-\raggedright\footnotesize\textsuperscript{a}April 2026 Utah build: as-printed surfaces,
+\raggedright\footnotesize H: horizontal. \textsuperscript{a}April 2026 Utah build: as-printed surfaces,
 flat specimens, laser parameters not recorded, strain channel suspect on four of
 five bars; to be replaced by bars from the same builds as the candidates.
 \end{table}

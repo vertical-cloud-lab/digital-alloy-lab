@@ -121,12 +121,18 @@ Two of the commercial alloys are the counterparts of the seed families:
 | Data sheet, horizontal: as built → directly aged | 260 → 385 MPa YS, 23 → 14.5 % EL (400 °C, 6 h; EOS M 290, 40 µm) | 220 → 370 MPa YS, 25 → 12 % EL (375 °C, 4 h; bars machined from printed cylinders) |
 | B_NIR (MCS 2026, nominal composition) | 3.1–4.2 wt % | 5.4–5.6 wt % |
 
-- **Same machine, same build, same test.** Both are bought as gas-atomized powder and printed with the candidates.
-  They use the same laser parameters (or the same short sweep, if they aren't dense with them), the same specimens and
-  test, ICP-OES on each lot, and the same aging rule. If a candidate lies beyond them, the improvement can't come from a
-  different machine or test.
-- **Parity.** Their in-house values against their data sheets (pre-set band, ±10 % on yield strength and UTS) show
-  whether the lab measures on a par with industry. That is the check AlSi10Mg failed in April (issue 1 in §9).
+- **Same machine, same build, same test** (the campaign paper's protocol, `al-campaign-paper/baselines.md` on
+  `claude/issue-277-20261127-2117`). Both are bought as gas-atomized powder and printed on the same machine as the
+  candidates. Layer thickness, plate temperature, scan strategy and powder handling are the same for every alloy.
+  Laser power and speed follow the same rule rather than the same numbers: every alloy gets the same power–speed grid
+  of density cubes, and its bars come from its densest point. Specimens are flat as-printed sub-size ASTM E8 bars,
+  tested with an extensometer, and every lot gets ICP-OES. Each baseline is aged on its supplier's schedule. If a
+  candidate lies beyond them, the improvement can't come from a different machine or test.
+- **Parity.** Their in-house values against their data sheets show whether the lab measures on a par with industry.
+  The campaign paper's rule: in-house yield at least 90 % of the data sheet's in the same condition and orientation,
+  which allows for as-printed sub-size bars against machined ones. That is the check AlSi10Mg failed in April
+  (228/270 = 0.84; issue 1 in §9). Because the baselines get most of their strength from the direct age, they also
+  show whether that shortfall is AlSi10Mg's or the process's.
 - **The target T is expanding their front.** Against each in-house baseline, a candidate has to have lower B or be
   stronger, and it has to be stronger than in-house AlSi10Mg. The pre-registration gives the statistical rule.
 - **What the data sheets already say.** Under B_NIR, Al5X1 is both stronger and lower in burden than Al-HS1. So
@@ -134,8 +140,12 @@ Two of the commercial alloys are the counterparts of the seed families:
   another axis (its data sheet advertises strength at temperature). "At least one" means Al5X1 if the claim is about
   the front, and Al-HS1 if campaign 2 stays in the Mn–Cr–Zr family (README D0a; sourcing is in #277's run).
 - **New, not only better than what was measured here.** A low-burden alloy can lie beyond the in-house front and
-  still be a published one: Aheadd CP1's data-sheet point does. The pre-registration therefore also reports whether
-  the finalist beats the published values of Sc-free alloys, which decides whether it can be called new.
+  still be a published one: Aheadd CP1's data-sheet point does, and so does Al–1.87Fe–1.02Mg–1.03Zr (376 MPa aged at
+  B_NIR ≈ 1.0, which is seed S2). The pre-registration therefore also reports whether the finalist beats the
+  published values of Sc-free alloys, which decides whether it can be called new. That is the higher bar.
+- **Timing.** The campaign paper buys and prints the baselines first: Al5X1 first, quotes in the week of Nov 30, a
+  PO by Dec 11, and aged Al5X1 tensile results by about late January (U.S. stock) or mid-February 2027 (from Europe).
+  This article uses those as campaign 2's prior and reprints the baselines in campaign 2's builds.
 - **AlSi10Mg stays**, as the route control and the floor, reprinted in the same builds with recorded parameters,
   machined parity bars and an extensometer. Scalmalloy stays as data-sheet context, unless the campaign paper prints
   it.

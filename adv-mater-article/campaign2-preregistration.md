@@ -35,30 +35,38 @@ measures on a par with industry.
 | **EOS Aluminium Al5X1**, Al–Mg–Zr–Mn (Mg 2.5–4.2, Zr 0.6–1.8, Mn 0.1–1.0 wt %; Aluminum Association 5A05.50); gas-atomized, 20–63 µm | Commercial counterpart of the Al–Mg–Zr seeds (O1; Croteau et al. 2018). On their data sheets it is the stronger of the two and has the lower burden | direct aged 400 °C, 6 h; horizontal; EOS M 290, 40 µm, ASTM E8 | 385 / 415, 14.5 (as built: 260 / 310, 23) | 3.1–4.2 |
 | **Höganäs forAM Al-HS1**, Al–4.8Mn–0.8Cr–0.8Zr (typical); gas-atomized, 20–63 µm | Commercial counterpart of the Al–Mn–Cr–Zr focus family (seeds S1, O3) | direct aged 375 °C, 4 h, in air; X/Y; bars machined from printed cylinders | 370 / 440, 12 (as built: 220 / 285, 25) | 5.4–5.6 |
 | AlSi10Mg: commercial lot, plus the in-house atomized lot as route control | Lower anchor; the campaign paper's comparator | as built, horizontal (EOS M 290, 30 µm) | 270 / 461, 10.2 | 5.2–10.3 |
-| Scalmalloy | Context only (data sheets), unless the campaign paper prints it [check #277's branch] | direct aged 325 °C, 4 h | 465–500 / 505–530, 11.5–15.8 | 4.7–6.0 |
+| Scalmalloy | Context (Sc-containing, outside the design space). The campaign paper plans to print it in-house (bought, or atomized as D2), and those values replace the data sheets in Fig. 5c | direct aged 325 °C, 4 h | 465–500 / 505–530, 11.5–15.8 | 4.7–6.0 |
 
 \* B_NIR = Σ wᵢ·NIRᵢ/100 from the nominal composition (Al5X1 at the midpoints of its ranges), with the campaign
 paper's inputs (USGS *Mineral Commodity Summaries 2026*; `tools/mineral_burden_check.py`). A range, because USGS gives
-some import reliances only as bounds. Campaign values use each lot's ICP-OES composition. Sources: EOS process and
+some import reliances only as bounds. Campaign values use each lot's ICP-OES composition; Al5X1's composition ranges
+alone span B_NIR 2.0–5.7 wt %, so its lot decides where it sits. Sources: EOS process and
 material data sheets for Al5X1, Höganäs data sheet 3312HOG-3, PR #285's AlSi10Mg and Scalmalloy set; all values
 checked against the vendors' documents on 2026-11-27.
 
-- **At least one of Al5X1 and Al-HS1; both if sourcing allows** (**decide with #277**, whose run is pricing them).
-  On their data sheets, Al5X1 has the higher aged yield strength *and* the lower B_NIR, so under B_NIR it alone
-  sets the scandium-free front, and Al-HS1 sits behind it. Al-HS1 still earns its place as the same-family
-  comparator for Al–Mn–Cr–Zr candidates, and it would join the front on another axis (its data sheet advertises
-  strength at temperature) or under a burden metric that weighs Mn less. If only one is bought: Al5X1 for the
-  front; Al-HS1 if campaign 2 stays in the Al–Mn–Cr–Zr family.
-- **Measured the same way as the candidates:**
-  - same machine, and the same builds: every tensile build of campaign 2 carries at least one baseline;
-  - the same laser parameters; a baseline that isn't ≥ 99 % dense with them gets the same short power–speed sweep a
-    candidate would get, and the sweep is reported;
-  - the same specimen geometry, surface and test, and ICP-OES on every lot, like every candidate powder;
-  - the same aging rule: each baseline joins its family's aging curve, and is also aged on its supplier's schedule
-    for the parity check.
-- **Who measures them first.** The campaign paper buys the powders and prints them first, in campaign 1; its
-  sourcing and schedule are on #277's branch. Campaign 2 reprints them in its own builds, and on the desktop LPBF
-  for density and hardness.
+- **Al5X1 first; Al-HS1 if the budget allows** (the campaign paper's recommendation, `al-campaign-paper/baselines.md`
+  on `claude/issue-277-20261127-2117`; decision D0a). On their data sheets, Al5X1 has the higher aged yield strength
+  *and* the lower B_NIR (below Scalmalloy's at every allowed import reliance), so under B_NIR it alone sets the
+  scandium-free front, and Al-HS1 sits behind it. Al-HS1 still earns its place as the same-family comparator for
+  Al–Mn–Cr–Zr candidates, and on another axis: its data sheet advertises strength at temperature. A third purchase,
+  Aheadd CP1 (Al–Fe–Zr), would anchor the low-burden end, where the only Sc-free points are a data sheet and a paper.
+- **Measured the same way as the candidates** (the campaign paper's protocol, so both papers measure them alike):
+  - the same machine: the Utah Aconity MIDI for tensile bars, and in campaign 2 also the desktop LPBF for density
+    and hardness; every tensile build of campaign 2 carries at least one baseline;
+  - the same layer thickness, plate temperature, scan strategy, gas flow and powder handling (sieve, dry, humidity
+    log);
+  - laser power and speed by the same rule, not the same numbers: every alloy, candidate or baseline, gets the same
+    power–speed grid of density cubes, and its bars are printed at its densest grid point. One parameter set would
+    favour whichever alloy it was tuned for;
+  - the same specimens and test: flat sub-size ASTM E8 bars (6 × 6 mm section), built horizontal, as printed;
+    clip-on extensometer; ASTM E8 strain rates;
+  - ICP-OES on every lot, like every candidate powder;
+  - heat treatment as each supplier specifies (Al5X1 400 °C 6 h with gas quench; Al-HS1 375 °C 4 h in air); the
+    baselines also join their family's hardness aging curve, so the candidates' aging rule is tested on them.
+- **Who measures them first.** The campaign paper buys the powders (quotes requested in the week of Nov 30, a PO
+  by Dec 11) and prints them in Utah sessions P2–P4. If the PO goes out by Dec 4 and the drum ships from U.S.
+  stock, aged Al5X1 tensile results exist by about Jan 22–29, 2027; from Europe, by about Feb 8–12. Campaign 2
+  reprints the baselines in its own builds, and on the desktop LPBF.
 
 ## Fixed before the first decision
 
@@ -66,12 +74,12 @@ checked against the vendors' documents on 2026-11-27.
 |---|---|
 | Design space | **3–5 elements** (more spreads ~20–35 runs too thin for the surrogates), [bounds frozen at D10; Si in or out]; Sc excluded |
 | Objectives | **Aged yield strength (maximize) and mineral burden B (minimize)**. A print counts only if ≥ 99 % dense and crack-free, and a candidate only if its elongation is at least [floor: e.g. 5 %, FLAIME's Al–Mn–Cr–Zr gate, or no lower than the baseline it is compared with]. **Decide:** elongation as a floor or as a third objective |
-| Burden metric | B as frozen for the campaign paper before its screen ranks anything (**with #277**, decision D9; currently proposed: B_NIR = Σ wᵢ·NIRᵢ/100, MCS 2026, Fe counted as zero, bounds carried as intervals), from each lot's ICP-OES composition, reported by element. **Known issue to fix:** B_NIR counts Mg like Sc, so Scalmalloy's B is mostly its 4.7 wt % Mg, and any alloy with less Mg beats it without any design effort. Al5X1 does. So the claim is not "lower B than Scalmalloy": it is expanding the scandium-free front, with Sc excluded outright. Sc content and the cost of the critical additions are reported alongside, and the SI redraws the front under each |
+| Burden metric | B as frozen for the campaign paper before its screen ranks anything (**with #277**, decision D9). That paper's run recommends **B_NIR = Σ wᵢ·NIRᵢ/100** with USGS MCS 2026 inputs and Fe counted as zero. Alloys are compared under the same import reliances (paired), on measured compositions; the front is drawn at the midpoint reliances and the claim tested at the bounds; B_mass and the cost of the critical additions are reported in the SI. B is reported by element. **Known issue to fix:** B_NIR counts Mg like Sc, so Scalmalloy's B is mostly its 4.7 wt % Mg, and any alloy with less Mg beats it without any design effort. Al5X1 does. So the claim is not "lower B than Scalmalloy": it is expanding the scandium-free front, with Sc excluded outright. Within that front the Mg-against-Mn weighting still decides where Al-HS1 sits, so the SI redraws the front under each alternative |
 | Baselines | As above: Al5X1 and/or Al-HS1, printed, aged and tested here the same way as the candidates; AlSi10Mg in the same builds |
-| Parity check | Each in-house baseline, in its data sheet's condition and orientation, on machined bars (as the suppliers test), n ≥ 3. **On a par** if its mean yield strength and UTS each lie within ±10 % of the data-sheet value (**decide the band, with #277**). Elongation is reported, not tested: it depends on specimen geometry and surface. A baseline outside the band is investigated before campaign 2's first decision (parameters, surface, extensometry, powder O). If the gap stays, the paper reports the offset and drops "on a par with industry". The same-build comparison stands either way |
-| Target T | A Sc-free candidate **expands the in-house baseline front**. Against every in-house baseline it either has lower B, or is stronger; and it is stronger than in-house AlSi10Mg (the campaign paper's bar, kept as a floor). Equivalently, its yield-strength margin over the front at its own burden is positive. So a candidate as strong as Al5X1 counts if its B is lower, and one with more B counts only if it is stronger. It must also be crack-free, ≥ 99 % dense and above the elongation floor, with n ≥ 3 valid specimens (5 recommended). "Stronger" uses the rule below. "Lower B" uses the campaign paper's interval rule (**with #277**). That rule is either unpaired, with the whole interval below the other's lower bound, or paired, lower for every import reliance within the USGS bounds. Paired is fairer, because both alloys share the same inputs |
-| "Stronger" | **With #277.** Its draft rule needs the means to differ by more than both 95 % CI half-widths. At the April AlSi10Mg bars' scatter (CV 5.7 %), applied at Al5X1's ~385 MPa, beating Al5X1 under that rule takes ≈ 110 MPa with n = 3 each and ≈ 55 MPa with n = 5. A Welch test (the 95 % CI of the difference excludes zero) takes ≈ 50 MPa with n = 3 and ≈ 32 MPa with n = 5. **Decide:** the rule and n. Recommended: Welch, n = 5 for baselines and finalists |
-| Beyond published alloys | Reported, not part of T: whether the candidate is also non-dominated by the published values of Sc-free alloys (the campaign paper's comparator set, `literature-alloys.csv` at its freeze commit). Those were measured on other machines and specimens, so the test is stated as against reported values. It decides whether the alloy can be called new, rather than better than what was measured here |
+| Parity check | The campaign paper's rule: each in-house baseline's mean yield strength, in its supplier's condition and the matching orientation, is at least **90 %** of the data-sheet typical value (**decide the threshold, with #277**). The 10 % allows for as-printed sub-size bars against the suppliers' machined round bars. UTS is reported against the same row, and elongation against as-printed data-sheet rows where they exist. A baseline below 90 % is investigated before campaign 2's first decision: a set of machined bars separates surface from process, and parameters, extensometry and powder O are checked. If the gap stays, the paper reports the offset and drops "on a par with industry". The same-build comparison stands either way. The baselines also show whether AlSi10Mg's April shortfall is AlSi10Mg's or the process's: their strength comes mostly from the direct age, which depends less on how they were printed |
+| Target T | A Sc-free candidate **expands the in-house baseline front**. Against every in-house baseline it either has lower B, or is stronger; and it is stronger than in-house AlSi10Mg (the campaign paper's bar, kept as a floor). Equivalently, its yield-strength margin over the front at its own burden is positive. So a candidate as strong as Al5X1 counts if its B is lower, and one with more B counts only if it is stronger. It must also be crack-free, ≥ 99 % dense and above the elongation floor, with n ≥ 3 valid specimens (5 recommended). "Stronger" uses the rule below. "Lower B" is the paired comparison the campaign paper now recommends: lower for every import reliance within the USGS bounds, since both alloys share the same unknowns (`paired_lower` in `tools/mineral_burden_check.py`; `paired_difference` in the campaign paper's `mineral_burden.py`), on measured compositions |
+| "Stronger" | **With #277.** Its draft rule needs the means to differ by more than both 95 % CI half-widths, and it plans 3 bars per condition (8 per baseline with 2 spares). At the April AlSi10Mg bars' scatter (CV 5.7 %), applied at Al5X1's ~385 MPa, beating Al5X1 under that rule takes ≈ 110 MPa with n = 3 each and ≈ 55 MPa with n = 5. A Welch test (the 95 % CI of the difference excludes zero) takes ≈ 50 MPa with n = 3 and ≈ 32 MPa with n = 5. **Decide:** the rule and n. Recommended: Welch, n = 5 for baselines and finalists |
+| Beyond published alloys | Reported, not part of T: whether the candidate is also non-dominated by the published values of Sc-free alloys (the campaign paper's comparator set, `literature-alloys.csv` at its freeze commit). Those were measured on other machines and specimens, so the test is stated as against reported values. It decides whether the alloy can be called new, rather than better than what was measured here. It is the higher bar: on reported values the Sc-free front already runs through Al–1.87Fe–1.02Mg–1.03Zr (376 MPa aged, B_NIR ≈ 1.0) and EOS Al2139 T4 (460 MPa, B_NIR ≈ 3.9), on either side of Al5X1 (the campaign paper's `baselines.md`) |
 | Heat treatment | An aging curve per alloy family (Zr-only alloys peak at higher aging temperatures), not one pre-chosen treatment for all; the baselines also at their suppliers' schedules |
 | Nodes | CALPHAD → charge → atomize → powder characterization → print (desktop) → density/section/hardness → tensile (finalists) |
 | Node costs | median cost per result from campaign 1's step log (Table 1), frozen at [date] |

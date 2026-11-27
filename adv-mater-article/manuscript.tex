@@ -502,34 +502,36 @@ with industry's; they are context, not the comparison. \tbd{Fill from B4--B8,
 V1--V2.}}
 \label{tab:alloys}
 \footnotesize
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{@{}llccccc@{}}
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.55cm}>{\raggedright\arraybackslash}Xccccc@{}}
 \toprule
-Alloy & Where measured; condition & $\rho_\text{rel}$ (\%) & YS / UTS (MPa) & EL (\%) & In house $\div$ data sheet & $B$ (wt\%)\textsuperscript{a}\\
+Alloy & Where measured; condition & $\rho_\text{rel}$ (\%) & YS / UTS (MPa) & EL (\%) & Ratio\textsuperscript{b} & $B$ (wt\%)\textsuperscript{a}\\
 \midrule
 \tbd{best alloy} (\tbd{composition}) & in house; \tbd{condition} & \tbd{} & \tbd{} & \tbd{} & --- & \tbd{}\\
 \addlinespace
 Al5X1 (Al--Mg--Zr--Mn) & in house; aged \SI{400}{\celsius}, \SI{6}{\hour} & \tbd{} & \tbd{} & \tbd{} & \tbd{} & \tbd{ICP}\\
- & data sheet;\cite{ds_al5x1} same\textsuperscript{b} & --- & 385 / 415 & 14.5 & & 3.1--4.2\\
+ & data sheet;\cite{ds_al5x1} same\textsuperscript{c} & --- & 385 / 415 & 14.5 & & 3.1--4.2\\
 Al-HS1 (Al--Mn--Cr--Zr) & in house; aged \SI{375}{\celsius}, \SI{4}{\hour} & \tbd{} & \tbd{} & \tbd{} & \tbd{} & \tbd{ICP}\\
- & data sheet;\cite{ds_hoganas} same\textsuperscript{b} & --- & 370 / 440 & 12 & & 5.4--5.6\\
+ & data sheet;\cite{ds_hoganas} same\textsuperscript{c} & --- & 370 / 440 & 12 & & 5.4--5.6\\
 AlSi10Mg & in house; same builds, as built & \tbd{} & \tbd{} & \tbd{} & \tbd{} & \tbd{ICP}\\
- & Aconity MIDI, April 2026; as built\textsuperscript{c} & --- & $228\pm13$ / $376\pm10$ & $4.5\pm0.5$ & 0.84 / 0.82\textsuperscript{d} & \\
+ & Aconity MIDI, April 2026; as built\textsuperscript{d} & --- & $228\pm13$ / $376\pm10$ & $4.5\pm0.5$ & 0.84 / 0.82 & \\
  & data sheets;\cite{ds_eos,ds_nikon} as built\textsuperscript{e} & & 233--300 / 450--470 & 5--10 & & 5.2--10.3\\
 \addlinespace
 Scalmalloy (Al--Mg--Sc--Zr) & data sheets;\cite{ds_colibrium,ds_3dsystems} aged & & 465--500 / 505--530 & 11.5--15.8 & & 4.7--6.0\\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 
 \smallskip
 \raggedright\footnotesize \textsuperscript{a}Mineral burden $B$, the weight percent
 of the alloy that the United States imports, net (Experimental Section). Data-sheet
 rows use the nominal composition (Al5X1: the middle of its ranges) and are ranges
 because USGS gives some import reliances only as bounds; in-house rows use each
-lot's ICP-OES composition. \textsuperscript{b}Horizontal (X/Y), machined, the
-suppliers' aging treatment. \textsuperscript{c}Horizontal, as-printed surfaces,
-flat $6\times6$~mm section, $n$ = 4; commercial powder, laser parameters
-not recorded. \textsuperscript{d}Against the EOS horizontal as-built row (270 / 461~MPa).
+lot's ICP-OES composition. \textsuperscript{b}In-house YS / UTS divided by the
+data sheet's, in the same condition and orientation (the parity check; the April
+AlSi10Mg build against EOS's horizontal as-built row, 270 / 461~MPa).
+\textsuperscript{c}Horizontal (X/Y), machined, the suppliers' aging treatment.
+\textsuperscript{d}Horizontal, as-printed surfaces, flat $6\times6$~mm section,
+$n$ = 4; commercial powder, laser parameters not recorded.
 \textsuperscript{e}Machined, both orientations, from two vendors.
 \end{table}
 
@@ -594,16 +596,19 @@ Gas-atomized EOS Aluminium Al5X1 (\SIrange{20}{63}{\micro\metre}; Mg 2.5--4.2,
 Zr 0.6--1.8, Mn 0.1--1.0 wt\% per the supplier)\cite{ds_al5x1} and H\"{o}gan\"{a}s
 forAM Al-HS1 (\SIrange{20}{63}{\micro\metre}; typically Mn 4.8, Cr 0.8, Zr
 0.8 wt\%),\cite{ds_hoganas} lots \tbd{lot numbers}, and commercial AlSi10Mg
-(\tbd{supplier, lot}) were printed in the same builds as the candidates, with the
-same laser parameters,\tbd{or the same short power--speed sweep, if a baseline was
-not $\ge$99\% dense with them} the same specimens and the same tests. Each
-baseline was aged on its supplier's schedule (Al5X1: \SI{400}{\celsius},
-\SI{6}{\hour}, gas-quenched; Al-HS1: \SI{375}{\celsius}, \SI{4}{\hour} in air)
-and along its family's aging curve, like the candidates. Each lot's composition
-was measured by ICP-OES. A baseline was counted as on a par with its data sheet if
-its mean yield strength and tensile strength, in the data sheet's condition and
-orientation and on machined bars, were within \tbd{$\pm$10}\% of the data-sheet
-values. \src{campaign paper (\#277) for sourcing and the first builds; SI S17}
+(\tbd{supplier, lot}) were printed in the same builds as the candidates and
+treated identically: the same layer thickness, plate temperature, scan strategy
+and powder handling, and the same rule for laser power and speed. Every alloy,
+candidate or baseline, was printed as a grid of density cubes over the same
+power--speed window, and its bars at its densest grid point. Each baseline was
+aged on its supplier's schedule (Al5X1: \SI{400}{\celsius}, \SI{6}{\hour},
+gas-quenched; Al-HS1: \SI{375}{\celsius}, \SI{4}{\hour} in air) and included in
+its family's hardness aging curve. Each lot's composition was measured by
+ICP-OES. A baseline was counted as on a par with its data sheet if its mean yield
+strength, in the data sheet's condition and orientation, was at least
+\tbd{90}\% of the data-sheet value, which allows for as-printed sub-size bars
+against the suppliers' machined ones. \src{campaign paper (\#277) for sourcing,
+protocol and the first builds; SI S17}
 
 \paragraph{Ultrasonic atomization.}
 Powders were made in an AMAZEMET rePOWDER ultrasonic atomizer with an induction
@@ -658,8 +663,9 @@ specimens \tbd{geometry: e.g.\ the flat \SI{6}{\milli\metre} $\times$ \SI{6}{\mi
 with \SI{32}{\milli\metre} parallel length used for the AlSi10Mg baseline;
 orientation; surface} were tested at room temperature with a clip-on extensometer at \tbd{strain rate,
 within ASTM E8/E8M while yield is measured}, $n\ge\tbd{3 (5)}$ per alloy and
-condition, beside the baselines printed in the same build. The baselines' parity
-bars were machined, as the suppliers' are.
+condition, beside the baselines printed in the same build. All bars were tested
+with as-printed surfaces; machined bars were added only to diagnose a baseline that
+missed its data sheet.
 
 \paragraph{Corrosion.}
 \tbd{If kept (decision D6).} Polished coupons were tested in an O-ring well
