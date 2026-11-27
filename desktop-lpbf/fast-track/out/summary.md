@@ -30,36 +30,39 @@ Optics (f = 254 mm, M2 1.1):
 
 Cost by alternative (parts.csv):
 
-- **FT0**: $13,230-23,685; vendors at or over $3,500 (PO): none
-  - Laser and optics (used): $4,791-7,940
-  - Scan control and computing: $1,670-2,850
+- **FT0**: $18,536-31,578 (without the monitoring group: $14,076-25,356); vendors at or over $3,500 (PO): none
+  - Laser and optics (used): $4,757-7,946
+  - Scan control and computing: $1,183-2,473
   - Motion: $150-600
-  - Enclosure and chamber: $750-1,350
-  - Heated plate: $630-1,010
-  - Gas and O2: $1,571-2,099
-  - Safety: $2,668-3,530
+  - Enclosure and chamber: $944-1,210
+  - Heated plate: $610-1,010
+  - Gas and O2: $2,651-4,130
+  - Safety: $2,780-3,682
   - Stock and fabrication: $1,000-1,575
   - Powder handling: $0-2,730
-- **FT1**: $20,144-30,918; vendors at or over $3,500 (PO): Zaber ($5,948)
-  - Laser and optics (used): $4,791-7,940
-  - Scan control and computing: $1,670-2,850
-  - Motion: $6,028-6,148
-  - Enclosure and chamber: $750-1,350
-  - Heated plate: $691-1,071
-  - Gas and O2: $1,571-2,099
-  - Safety: $2,668-3,530
+  - Monitoring: $4,460-6,222
+- **FT1**: $26,665-41,328 (without the monitoring group: $21,405-33,106); vendors at or over $3,500 (PO): Zaber ($5,896)
+  - Laser and optics (used): $4,757-7,946
+  - Scan control and computing: $1,375-2,705
+  - Motion: $5,976-6,096
+  - Enclosure and chamber: $944-1,210
+  - Heated plate: $946-1,406
+  - Gas and O2: $2,651-4,130
+  - Safety: $2,780-3,682
   - Stock and fabrication: $1,975-3,200
   - Powder handling: $0-2,730
-- **FT1V**: $31,079-43,188; vendors at or over $3,500 (PO): Zaber ($5,948), Ideal Vacuum ($9,450)
-  - Laser and optics (used): $4,791-7,940
-  - Scan control and computing: $1,670-2,850
-  - Motion: $6,028-6,148
+  - Monitoring: $5,260-8,222
+- **FT1V**: $37,406-53,738 (without the monitoring group: $32,146-45,516); vendors at or over $3,500 (PO): Zaber ($5,896), Ideal Vacuum ($9,450)
+  - Laser and optics (used): $4,757-7,946
+  - Scan control and computing: $1,375-2,705
+  - Motion: $5,976-6,096
   - Enclosure and chamber: $11,360-13,100
-  - Heated plate: $691-1,071
-  - Gas and O2: $1,571-2,099
-  - Safety: $2,668-3,530
+  - Heated plate: $946-1,406
+  - Gas and O2: $2,651-4,130
+  - Safety: $2,780-3,682
   - Stock and fabrication: $2,300-3,720
   - Powder handling: $0-2,730
+  - Monitoring: $5,260-8,222
 
 Milestones (working days -> weeks):
 

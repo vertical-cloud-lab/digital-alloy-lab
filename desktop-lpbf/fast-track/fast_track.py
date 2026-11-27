@@ -454,7 +454,9 @@ def main():
     rows, c = costs()
     lines += ["Cost by alternative (parts.csv):", ""]
     for opt, v in c.items():
-        lines.append(f"- **{opt}**: ${v['low']:,}-{v['high']:,}; vendors at or over ${PO_LIMIT:,.0f} (PO): "
+        m = v["groups"].get("Monitoring", (0, 0))
+        lines.append(f"- **{opt}**: ${v['low']:,}-{v['high']:,} (without the monitoring group: ${v['low'] - m[0]:,}-{v['high'] - m[1]:,}); "
+                     f"vendors at or over ${PO_LIMIT:,.0f} (PO): "
                      + (", ".join(f"{k} (${t:,})" for k, t in v["po_vendors"].items()) or "none"))
         for g, (a, bb) in v["groups"].items():
             lines.append(f"  - {g}: ${a:,}-{bb:,}")
