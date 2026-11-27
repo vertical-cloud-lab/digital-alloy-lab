@@ -5,7 +5,7 @@ Printable Aluminum Alloys* ("supply-secure" depends on D9)
 
 **Status on 2026-11-27:**
 - **What exists:** a planning draft. The manuscript has a drafted introduction, a claim for each Results subsection, an
-  Experimental Section skeleton filled from the run records, an SI skeleton, 66 references checked against Crossref or arXiv,
+  Experimental Section skeleton filled from the run records, an SI skeleton, 75 references (68 checked against Crossref or arXiv, 7 vendor data sheets checked by hand),
   and four draft panels drawn from data that already exist (Fig. 1a, Fig. 5c's frame, Fig. 6b's layout, Figure S1).
 - **What doesn't:** none of the article's own results exist yet.
 - **Target:** an *Advanced Materials* collection due early 2028, as a Research Article (typically 3,000–8,000 words in all,

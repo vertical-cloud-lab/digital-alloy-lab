@@ -227,6 +227,33 @@ def fig5c_benchmarks() -> None:
     si = [r for r in bench if r["alloy"] == "AlSi10Mg"]
     sc = [r for r in bench if r["alloy"].startswith("Scalmalloy")]
 
+    # The Sc-free front on reported values (the campaign paper's comparator set: data sheets and papers,
+    # other machines and specimens), best yield per alloy at the middle of its B range. Rows the campaign
+    # paper could not check against their source are left out, as in its pre-registration.
+    cols = {"si": "Si", "mg": "Mg", "mn": "Mn", "cr": "Cr", "zr": "Zr", "sc": "Sc", "fe": "Fe", "cu": "Cu",
+            "ni": "Ni", "ce": "Ce", "er": "Er", "ti": "Ti", "ag": "Ag", "b": "B", "zn": "Zn"}
+    best: dict[str, tuple[float, float]] = {}
+    for r in csv.DictReader(open(DATA / "literature-alloys-campaign-paper.csv")):
+        if "not accessible for verification" in r["read_by"] or float(r["sc"] or 0) > 0:
+            continue
+        comp = {cols[c]: float(r[c]) for c in cols if r[c]}
+        lo, hi = burden(comp)
+        ys = float(r["ys_mpa"])
+        if ys > best.get(r["alloy_id"], (0, 0))[0]:
+            best[r["alloy_id"]] = (ys, (lo + hi) / 2)
+    pts = sorted((b, y) for y, b in best.values())
+    sx, sy, top = [], [], 0.0
+    for b, y in pts:
+        if y > top:
+            sx += [b, b]; sy += [top if sx[:-2] else y, y]; top = y
+    sx.append(10.8); sy.append(top)
+    ax.plot(sx, sy, color=GRAY, lw=1.1, ls=(0, (1, 1.5)), zorder=1)
+    for alloy_id, (y, b) in best.items():
+        if alloy_id not in ("eos-al5x1", "hoganas-al-hs1", "aheadd-cp1"):
+            ax.scatter([b], [y], marker="x", s=18, color=GRAY, linewidth=1.0, zorder=2)
+    ax.text(7.2, 556, "Sc-free front on reported values\n(data sheets and papers, other machines)", fontsize=6.6,
+            color=INK2, va="center")
+
     # Draft front: Al5X1 and Al-HS1 at their best aged data-sheet values, this lab's AlSi10Mg (as built)
     # as the floor, stepped at the middle of Al5X1's B range. The pre-registration's test is per baseline
     # (stronger, or lower B by the interval rule); this line is only its picture.
@@ -235,16 +262,17 @@ def fig5c_benchmarks() -> None:
     a5_best = max(float(r["yield_MPa"]) for r in a5)
     x_max = 10.8
     xs, ys = [0, a5_mid, a5_mid, x_max], [floor, floor, a5_best, a5_best]
-    ax.fill_between(xs, ys, [560] * 4, color=BLUE, alpha=0.06, linewidth=0, zorder=0)
+    ax.fill_between(xs, ys, [640] * 4, color=BLUE, alpha=0.06, linewidth=0, zorder=0)
     ax.plot(xs, ys, color=BLUE, lw=1.6, ls=(0, (5, 2)), zorder=2)
-    ax.text(0.15, 522, "Campaign 2 has to land in the shaded region:\nbeyond the front of the Sc-free baselines\n"
-            "printed and tested in this lab", fontsize=7, color=INK, va="top")
+    ax.text(0.15, 612, "Campaign 2 has to land in the shaded region:\nbeyond the front of the Sc-free baselines\n"
+            "printed and tested in this lab. To count as new,\nit also has to clear the dotted front", fontsize=7,
+            color=INK, va="top")
 
-    series(a5, "Al5X1 (EOS, nominal)", BLUE, "EOS Al5X1 (Al-Mg-Zr-Mn)", (a5_mid, 412), ha="center")
+    series(a5, "Al5X1 (EOS, nominal)", BLUE, "EOS Al5X1\n(Al-Mg-Zr-Mn)", (a5_mid - 0.8, 428), ha="center")
     series(hs, "Al-HS1 (Hoganas, typical)", BLUE, "Höganäs Al-HS1\n(Al-Mn-Cr-Zr)", (mid("Al-HS1 (Hoganas, typical)") + 0.25, 318))
     series(cp, "Aheadd CP1 (nominal)", GRAY, "Aheadd CP1\n(context)", (0.45, 300))
     series(si, "AlSi10Mg (nominal)", ORANGE, "AlSi10Mg\n(data sheets)", (8.25, 300))
-    series(sc, "Scalmalloy (nominal)", GRAY, "Scalmalloy\n(contains Sc;\ncontext)", (5.85, 470))
+    series(sc, "Scalmalloy (nominal)", GRAY, "Scalmalloy\n(Sc; context)", (4.95, 486), ha="right")
 
     xm = mid("AlSi10Mg (nominal)")
     ax.errorbar([xm], [floor], yerr=[13], fmt="D", color=INK2, ms=6.5, mfc=AQUA, mec=INK, mew=0.8,
@@ -252,7 +280,7 @@ def fig5c_benchmarks() -> None:
     ax.annotate("this lab: AlSi10Mg,\nAconity MIDI, as built,\nn = 4 (the floor)", (xm, floor), (8.3, 196),
                 fontsize=7, color=INK, va="center", arrowprops=dict(arrowstyle="-", color=INK2, lw=0.6))
     ax.set_ylabel("Yield strength (MPa)")
-    ax.set_ylim(120, 540)
+    ax.set_ylim(120, 625)
     ax.grid(axis="y", color=GRID_C, lw=0.6, zorder=0)
     handles = [
         plt.Line2D([], [], marker="s", ls="", mfc=BLUE, mec=BLUE, ms=6, label="Sc-free baselines (data sheets)"),
@@ -262,6 +290,7 @@ def fig5c_benchmarks() -> None:
         plt.Line2D([], [], marker="o", ls="", mfc=INK2, mec=INK2, ms=6, label="as built"),
         plt.Line2D([], [], marker="s", ls="", mfc="white", mec=INK2, mew=1.4, ms=6, label="aged or heat-treated"),
         plt.Line2D([], [], color=BLUE, lw=1.6, ls=(0, (5, 2)), label="draft in-house front"),
+        plt.Line2D([], [], marker="x", ls=(0, (1, 1.5)), color=GRAY, lw=1.1, ms=5, label="reported Sc-free front"),
     ]
     fig.legend(handles=handles, fontsize=6.8, loc="lower center", ncol=4, bbox_to_anchor=(0.5, 0.905))
 
@@ -291,8 +320,10 @@ def fig5c_benchmarks() -> None:
              "strength yet", transform=ax2.transAxes, fontsize=6.8, color=INK2, va="bottom")
     fig.text(0.0, 0.035, "DRAFT for Fig. 5c. Campaign 2 replaces the data-sheet baselines with Al5X1 and Al-HS1 "
              "printed and tested here, beside AlSi10Mg; data sheets stay\nas context. Points sit at the middle of "
-             "each alloy's B range. CP1 already lies in the region, so a candidate also has to clear published "
-             "alloys to count as new.\nBurden metric not yet frozen (D9).", fontsize=6.2, color=INK2, va="top")
+             "each alloy's B range. CP1 and Al-1.87Fe-1.02Mg-1.03Zr (seed S2) already lie in the region, so a "
+             "candidate also has to\nclear the reported front to count as new. Reported front: the campaign paper's "
+             "comparator set @ baca180, unverifiable rows left out. Burden metric not yet frozen (D9).",
+             fontsize=6.2, color=INK2, va="top")
     save(fig, "fig5c-draft-benchmarks")
 
 
