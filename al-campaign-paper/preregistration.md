@@ -95,12 +95,26 @@ log at the bottom, with its reason, so a reviewer can see what was fixed in adva
   - stopping rule (fixed rounds R1-R4, cut order as in [`risks.md`](risks.md)).
 - **No acceleration claim** is made in this paper (the split with #120 in [`outline.md`](outline.md)).
 
-## 8. What gets reported whatever happens
+## 8. Hypotheses, stated before the data
+
+Each one is reported whether it holds or not.
+
+- **H1, printability.** Compositions with a primary Al₃M phase (M = Zr, Sc, Ti) print crack-free even where Kou's
+  index is high (above about 500 K). Without one, a high index predicts cracking (preliminary Fig. 2a).
+- **H2, composition fidelity.** Mn, Zn and Mg are lost preferentially in ultrasonic atomization and in PBF-LB/M
+  (Żrodowski et al. 2021; Croteau et al. 2018). Measured Mn and Mg fall below target by more than the tolerance in §5
+  unless over-charged.
+- **H3, powder route.** In-house AlSi10Mg-type powder (D1) and commercial AlSi10Mg, printed in the same build, give
+  yield strengths within each other's 95 % confidence intervals. If they don't, the comparison uses D1.
+- **H4, the claim.** At least one candidate meets §2 and §3. Whether it also meets §4 is the paper's headline
+  (version A); if not, version B.
+
+## 9. What gets reported whatever happens
 
 - Every atomizer run, including failed ones, and every specimen, including invalid ones, with the reason.
 - The version of the paper (A or B) chosen at G4 by the rule in [`outline.md`](outline.md), and why.
 
-## 9. Sign-off and change log
+## 10. Sign-off and change log
 
 | Date | Commit | Who | Change and reason |
 |---|---|---|---|
