@@ -1,0 +1,155 @@
+{
+ "name": "assembly_steps",
+ "fps": 15,
+ "n_frames": 1322,
+ "size": [
+  1280,
+  720
+ ],
+ "substeps": [
+  {
+   "label": "0",
+   "caption": "Three Raspberry Pi 5 camera units for the rePowder's three windows: the front view port, the door's sight glass and the furnace lid's window. Each has a small display beside its window as well as the livestream. The machine is atomizer-training/viz3d's CadQuery model; the units are the Onshape design.",
+   "start_frame": 0,
+   "end_frame": 81
+  },
+  {
+   "label": "F.1",
+   "caption": "Front port. AMAZEMET's 12-sided LED cover pushes onto the port's threaded nut, with its cable pod at 6 o'clock. The unit clips onto the cover, so the LED ring still lights the chamber and the glass nut is never loaded.",
+   "start_frame": 82,
+   "end_frame": 134
+  },
+  {
+   "label": "F.2",
+   "caption": "The printed socket and tray (PETG), put together off the machine: a 12-sided socket that slides 15 mm over the cover's rim, notched for the pod so it goes on one way only.",
+   "start_frame": 135,
+   "end_frame": 179
+  },
+  {
+   "label": "F.3",
+   "caption": "HQ Camera (M12 mount) with a 16 mm M12 lens, 15 mm left of the axis: about 65 × 49 mm of the plate. Four bosses, M2.5 screws from inside the tray, ribbon up through the slot beside them.",
+   "start_frame": 180,
+   "end_frame": 232
+  },
+  {
+   "label": "F.4",
+   "caption": "Camera Module 3 Wide, 18.5 mm right of the axis, for the nozzle, plate and chamber; M2 screws.",
+   "start_frame": 233,
+   "end_frame": 277
+  },
+  {
+   "label": "F.5",
+   "caption": "Raspberry Pi 5 with its Active Cooler, on M2.5 heat-set inserts. Both cameras take its two MIPI ports.",
+   "start_frame": 278,
+   "end_frame": 322
+  },
+  {
+   "label": "F.6",
+   "caption": "5 in HDMI display (800 × 480), facing out along the port axis, about 20° up towards a standing operator. HDMI, because both MIPI ports carry cameras.",
+   "start_frame": 323,
+   "end_frame": 367
+  },
+  {
+   "label": "F.7",
+   "caption": "Face plate (orange here): a push fit with a skirt over the display's edges.",
+   "start_frame": 368,
+   "end_frame": 409
+  },
+  {
+   "label": "F.8",
+   "caption": "Screw the M6 ball plunger in until the socket goes onto the cover with a firm push. The facets stop it turning and the cover is concentric with the port, so the cameras point the same way every time.",
+   "start_frame": 410,
+   "end_frame": 476
+  },
+  {
+   "label": "L.1",
+   "caption": "Door sight glass: a ring about 65 across, 30 mm proud of the door. This unit rides on the door, above the ultrasonic stack.",
+   "start_frame": 477,
+   "end_frame": 529
+  },
+  {
+   "label": "L.2",
+   "caption": "Split clamp collar and tray (PETG).",
+   "start_frame": 530,
+   "end_frame": 568
+  },
+  {
+   "label": "L.3",
+   "caption": "Camera Module 3 Wide on the ring's axis: the side view of nozzle and plate, which shows whether the stream lands on the plate or on the upper sonotrode (the 6 October failure).",
+   "start_frame": 569,
+   "end_frame": 616
+  },
+  {
+   "label": "L.4",
+   "caption": "Pi 5 behind the camera, then the 5 in Touch Display 2 (DSI) facing the operator, and the face plate.",
+   "start_frame": 617,
+   "end_frame": 673
+  },
+  {
+   "label": "L.5",
+   "caption": "Slide the collar over the ring and clamp it with one M4 screw. It clears the stack by about 60 mm and the door's hinge and knobs, so it can stay on when the door opens.",
+   "start_frame": 674,
+   "end_frame": 737
+  },
+  {
+   "label": "T.1",
+   "caption": "Lid window. The camera has to look down the line from the melt through the window, about 66° below horizontal, so it hangs from a swing arm. First a switchable magnetic base on the blue frame's top (painted steel).",
+   "start_frame": 738,
+   "end_frame": 790
+  },
+  {
+   "label": "T.2",
+   "caption": "A 5/8 in steel post, tapped M8 at one end, screwed into the base.",
+   "start_frame": 791,
+   "end_frame": 832
+  },
+  {
+   "label": "T.3",
+   "caption": "Detent collar (orange) clamped to the post with an M4 screw, its 'working' dimple under the camera's position; the hub drops on above it, with an M6 ball plunger, then a shaft collar.",
+   "start_frame": 833,
+   "end_frame": 889
+  },
+  {
+   "label": "T.4",
+   "caption": "A 2020 extrusion (about 470 mm, cut from 500) slides into the hub's socket; an M5 screw into a drop-in T-nut holds it.",
+   "start_frame": 890,
+   "end_frame": 937
+  },
+  {
+   "label": "T.5",
+   "caption": "Camera pod: HQ Camera (C/CS) with a 16 mm lens, hot mirror and variable ND, on its saddle on the extrusion. ASA or PA6-CF, since it is above the furnace.",
+   "start_frame": 938,
+   "end_frame": 985
+  },
+  {
+   "label": "T.6",
+   "caption": "Display box on the arm's tip: Pi 5 and a 2.8 in DSI display, tilted 30° down at the operator.",
+   "start_frame": 986,
+   "end_frame": 1030
+  },
+  {
+   "label": "T.7",
+   "caption": "The camera sits on the line from the melt through the lid window (red), about 250 mm from the glass and in front of the lid's edge, out of most of the heat rising off it.",
+   "start_frame": 1031,
+   "end_frame": 1082
+  },
+  {
+   "label": "T.8",
+   "caption": "To load the crucible, swing the arm 90° to its 'parked' dimple, clear of the lid, and open the lid.",
+   "start_frame": 1083,
+   "end_frame": 1160
+  },
+  {
+   "label": "T.9",
+   "caption": "Close the lid and swing the arm back: the plunger clicks into the 'working' dimple, and the camera is back on the same line.",
+   "start_frame": 1161,
+   "end_frame": 1238
+  },
+  {
+   "label": "",
+   "caption": "All three on the machine: about 750 g of PETG and ASA, and $1,217.61 of parts at 7 October prices. Nothing is printed yet; every machine dimension is a frame estimate until it is measured.",
+   "start_frame": 1239,
+   "end_frame": 1321
+  }
+ ]
+}
