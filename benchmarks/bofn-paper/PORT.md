@@ -204,6 +204,70 @@ slide figures do not include KGFN and are unchanged; the figure above is
 the one with KGFN. The p-values are per-comparison, with no correction for
 testing several pairs and spend levels.
 
+## Step 6: κ = 0 and 0.5 at 16 seeds, and statistics for the write-ups (Nov 27)
+
+All eight policies (pKGFN, KGFN, BOFN with powder reuse, BOFN, standard BO,
+tiered screening with and without powder reuse, random) ran on seeds 0–15 at
+κ = 0 and κ = 0.5. They used a clean worktree at `211b89d`, the pinned
+environment (Python 3.12.16, which differs from October's 3.12.3) and
+`BOFN_NO_REC=1`, the recipe of the stored κ = 0 and 0.5 runs. KGFN went into
+[`results-kgfn/k0`](results-kgfn/k0) and [`results-kgfn/k0.5`](results-kgfn/k0.5),
+and the other seven into [`results-rerun/k0`](results-rerun/k0) and
+[`results-rerun/k0.5`](results-rerun/k0.5). The runner was a 4-vCPU AMD EPYC 7763
+(2 cores × 2 threads), running four runs at a time.
+
+**Rerun check.** Every stored run at κ = 0 and 0.5 reproduced action for action:
+
+| κ | policies | seeds | match action for action | largest score difference |
+|---|---|---|---|---|
+| 0 | pKGFN, BOFN, standard BO, tiered | 0–11 | 48/48 | 1.1e-16 |
+| 0 | BOFN + powder reuse | 0–7 | 8/8 | 5.6e-17 |
+| 0.5 | pKGFN, BOFN, standard BO, tiered | 0–11 | 48/48 | 1.1e-16 |
+| 0.5 | BOFN + powder reuse | 0–7 | 8/8 | 5.6e-17 |
+
+Full output is in [`results-rerun/compare_k0.txt`](results-rerun/compare_k0.txt)
+and [`results-rerun/compare_k0.5.txt`](results-rerun/compare_k0.5.txt). Together
+with step 2, all 252 stored runs of these policies now rerun bit for bit on three
+CPU models (EPYC 9V45, 9V74, 7763).
+
+**Statistics.** [`paper_stats.py`](paper_stats.py) reads the "paper set": every
+run with provenance (`results-rerun/` and `results-kgfn/`; 20 seeds at κ = 1, 16
+at κ = 0 and 0.5, the same seeds for every policy). For every pair of the eight
+policies and every κ it gives the matched-seed bootstrap interval (95 %,
+10,000 draws) of the difference at $25k, $50k and $100k and over the whole budget
+(the anytime score). It also gives the 2 × 2 contrasts, speed-ups over tiered
+screening and over standard BO (with 90 % intervals for continuity with MS&T26),
+purchases per stage, GP-fit counts and a comparison with independent resampling.
+Outputs are in [`paper-stats/`](paper-stats/): CSVs,
+[`SUMMARY.md`](paper-stats/SUMMARY.md), the LaTeX tables, and `numbers.tex`, which
+both write-ups read. [`paper_figures.py`](paper_figures.py) draws the figures into
+`../../bofn-methods-article/figures/`.
+
+**What the 16-seed runs show** (best alloy demonstrated at $100k, % of the optimum, mean
+[95 % CI]; full tables in [`paper-stats/SUMMARY.md`](paper-stats/SUMMARY.md)):
+
+| Policy | κ = 0 | κ = 0.5 | κ = 1 |
+|---|---|---|---|
+| pKGFN | 59 [48, 70] | 67 [57, 75] | 84 [80, 87] |
+| KGFN | 59 [43, 76] | 76 [63, 87] | 86 [79, 93] |
+| BOFN + powder reuse | 77 [63, 89] | 86 [81, 91] | 90 [85, 94] |
+| BOFN, full pipeline | 74 [60, 87] | 84 [72, 93] | 86 [77, 93] |
+| Standard BO | 71 [62, 79] | 80 [74, 86] | 84 [78, 89] |
+| Tiered screening | 85 [83, 88] | 78 [73, 81] | 63 [58, 67] |
+| Tiered, no powder reuse | 79 [74, 83] | 70 [65, 76] | 57 [51, 64] |
+| Random | 35 [24, 47] | 52 [40, 62] | 68 [64, 73] |
+
+- With the screen right (κ = 0), tiered screening is the most reliable policy, and no other policy's
+  mean reaches its $100k level within the budget. With 12 seeds the README had it level with BOFN
+  (85 % vs 79 %); with 16, BOFN with reuse finishes ahead of it on 11 seeds but far behind on the rest.
+- The partial-evaluation lead is early only. At $100k and over the whole budget, no partial-minus-full
+  contrast excludes zero at any κ.
+- pKGFN collapses whenever the screen is at least half right. At $100k it trails BOFN with reuse by
+  17.5 points at κ = 0 and 19.4 at κ = 0.5. KGFN trails BOFN by 15.0 and 8.6 points.
+- BOFN with powder reuse is the most robust policy across κ.
+- The README's MS&T26 claims (κ = 1, 20 seeds) are unchanged. Its κ = 0 and 0.5 tables use the
+  stored 8–12 seeds; the 16-seed numbers above supersede them for the write-ups.
+
 ## Rerun one cell by hand
 
 ```bash

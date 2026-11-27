@@ -422,10 +422,8 @@ seed-to-seed spread, but not its early result: at \$25k the four reruns with fou
 times the samples averaged 46\% of the optimum against 69\% for the same seeds'
 stored runs. pKGFN's early lead is therefore a property of the 20 seeds together,
 not of any single run.
-\item \textbf{Gaussian processes.} \stat{k1-pkgfn-fitfail} of
-\stat{k1-pkgfn-fits} GP fits failed in pKGFN's \stat{k1-n} runs at $\kappa=1$,
-and none failed in any policy at any $\kappa$ \tbd{confirm from
-paper-stats/allocation.csv after the sweep}. In the 63 fits of one pKGFN run
+\item \textbf{Gaussian processes.} None of the 62,350 GP fits in the 416 runs
+compared here failed (\code{paper-stats/allocation.csv}). In the 63 fits of one pKGFN run
 whose hyperparameters were recorded (\code{quality/mc_noise_k1_s0.json}), the
 lengthscales ranged from 0.10 to 132 and none sat at the lower bound.
 \item \textbf{Independent review.} Before the port, two independent analysis
@@ -446,8 +444,8 @@ action for action (\cref{tab:rerun}). At $\kappa=1$ the 140 runs of seven
 policies (seeds 0--19) were rerun in October 2026 on AMD EPYC 9V45 and 9V74
 runners; at $\kappa=0$ and $0.5$ the stored seeds of five policies were rerun in
 November 2026 on an AMD EPYC 7763. The largest difference in any recorded
-score is in the last bit of a double. \tbd{Fill from compare\_k0.txt and
-compare\_k0.5.txt.} The runs with no stored counterpart (KGFN; random and
+score is $1.1\times10^{-16}$, the last bit of a double, and no difference ever
+changed a decision (\code{results-rerun/compare_k*.txt}). The runs with no stored counterpart (KGFN; random and
 screen-then-test without reuse at $\kappa=0$ and 0.5; seeds 12--15 or 8--15)
 were run from the same clean commit and environment.
 
@@ -463,10 +461,10 @@ scores equal to within $10^{-9}$ after every purchase.}
 $\kappa$ & policies & seeds & match action for action \\
 \midrule
 1 & pKGFN, BOFN, BOFN + reuse, standard BO, screen-then-test (both), random & 0--19 & 140 of 140 \\
-0.5 & pKGFN, BOFN, standard BO, screen-then-test & 0--11 & \tbd{48} of 48 \\
-0.5 & BOFN + reuse & 0--7 & \tbd{8} of 8 \\
-0 & pKGFN, BOFN, standard BO, screen-then-test & 0--11 & \tbd{48} of 48 \\
-0 & BOFN + reuse & 0--7 & \tbd{8} of 8 \\
+0.5 & pKGFN, BOFN, standard BO, screen-then-test & 0--11 & 48 of 48 \\
+0.5 & BOFN + reuse & 0--7 & 8 of 8 \\
+0 & pKGFN, BOFN, standard BO, screen-then-test & 0--11 & 48 of 48 \\
+0 & BOFN + reuse & 0--7 & 8 of 8 \\
 \bottomrule
 \end{tabular}
 \end{table}

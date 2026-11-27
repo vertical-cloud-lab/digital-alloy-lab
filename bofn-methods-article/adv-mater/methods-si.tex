@@ -61,7 +61,7 @@ knowledge gradient per dollar~\cite{buathong2024}, network expected improvement
 per dollar with and without powder reuse~\cite{astudillo2021}, standard Bayesian
 optimization, screen-then-test with and without powder reuse, and random
 sampling. For a given seed every policy started from the same data, and each
-then had \$100k of new budget. Runs were seeded and logged, and reran action for action.
+then had \$100k of new budget. Runs were seeded and logged, and reruns reproduced them action for action.
 \tbd{Cite the MethodsX article here if it is published first.}
 
 \paragraph{For the closing ``Statistical Analysis'' sub-section.} Synthetic
@@ -89,9 +89,10 @@ the screen was right; screen-then-test was then the most reliable policy
 (\stat{k0-tiered-v100-mean}\% of the optimum, against
 \stat{k0-eifn_reuse-v100-mean}\%). With a wrong screen, choosing the step
 bought an early lead over running every candidate through the whole chain rather
-than a better final alloy: after \$25k it was \stat{k1-c-0-v25} percentage points
+than a better final alloy: after \$25k it was \stat{k1-c-0-v25-abs} percentage points
 of the optimum ahead under the knowledge gradient (\stat{k1-c-0-v25-ci}) and
-\stat{k1-c-1-v25} under expected improvement per dollar (\stat{k1-c-1-v25-ci}),
+\stat{k1-c-1-v25-abs} under expected improvement per dollar
+(\stat{k1-c-1-v25-ci}),
 and after \$100k neither lead remained.
 \note{\textbf{Consistency flag for \S2.6's claim.} Issue \#120's outline has
 ``[k]$\times$ with a wrong screen, $\sim$1$\times$ with a right one''. Here, with a
@@ -238,10 +239,10 @@ difference \stat{k05-eifn_reuse-tiered-v100-ci} points), and pKGFN trailed
 
 \paragraph{Validation.} Reruns of the stored runs with the pinned environment
 matched them action for action (the same step at the same spend at every
-decision, and the same scores to within $10^{-9}$): \tbd{140 of 140} at
-$\kappa=1$, \tbd{56 of 56} at $\kappa=0.5$ and \tbd{56 of 56} at $\kappa=0$,
-on three CPU models. The full-chain knowledge gradient agrees with a brute-force
-recomputation to within $10^{-13}$, and no Gaussian-process fit failed. The
+decision, and the same scores to within $10^{-9}$): 140 of 140 at $\kappa=1$,
+56 of 56 at $\kappa=0.5$ and 56 of 56 at $\kappa=0$, on three CPU models. The full-chain knowledge gradient agrees with a brute-force
+recomputation to within $10^{-13}$, and none of the 62,350 Gaussian-process fits
+failed. The
 code, every run record and the statistics are openly available
 (\code{benchmarks/bofn-paper} in the article's repository).
 
