@@ -62,6 +62,35 @@ output, and why it stopped.}
 \tbd{Node definitions, kernels and priors, cost model, acquisition settings,
 batching, handling of failed and abandoned runs, seeding.}
 
+\section{Twin specification and calibration}
+\tbd{Twin description (steps simulated, output models, cost, time and failure
+models) and the fit to lab records.} \Cref{tab:Stwin} lists the twin's
+round-2 assumptions against the lab's records as of November 2026; each row is
+a parameter that the refit (results-needed T1) has to move.
+
+\begin{table}[h]
+\centering
+\caption{\textbf{Twin assumptions against lab records (November 2026).} From the
+audit of the twin's round-2 runs (DAL PR \#293; twin code in byu-vcl PRs 393--394).
+\ifdraft\textit{Draft: replace the right-hand column with values fitted to
+both campaigns' records.}\fi}
+\label{tab:Stwin}
+\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+Parameter & Twin, round 2 & Lab records \\
+\midrule
+Atomizer runs that fail & 6\,\% & 8 of 10 runs (Oct 2--Nov 13, 2026) \\
+Atomizer runs per week & 5--8 & 1.7 \\
+Usable powder fraction & 91\,\% & 52.4\,\% (only weighed mass balance, bronze) \\
+Tensile yield-strength scatter & 1--2\,\% & 5.7\,\% (AlSi10Mg, $n$ = 4) \\
+AlSi10Mg yield strength, as built & 305 MPa & $228\pm13$ MPa (Aconity MIDI, horizontal) \\
+Booking lead time, outside LPBF & 7 days & 7 days \\
+Desktop LPBF & not modelled & not built \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \section{Pre-registration and benchmarks}
 \tbd{Pre-registered baselines, targets and stopping rule (dated before the
 campaign); the twin's calibration; per-seed results.}
