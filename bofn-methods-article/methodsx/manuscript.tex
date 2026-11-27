@@ -44,8 +44,8 @@ $\kappa$, for how badly a cheap crack screen misjudges the best alloys, with eig
 reference policies and a matched-seed protocol. In 16--20 seeds per policy,
 choosing the step bought an early lead but no better final alloy; screen-then-test
 was best only when the screen was right; expected improvement per dollar with
-powder reuse was the most robust policy, and the knowledge gradient was
-competitive only with a wrong screen.
+powder reuse was the most robust policy, and the knowledge gradient never beat
+it.
 \begin{itemize}[nosep,leftmargin=*]
 \item Knowledge gradient and expected improvement per dollar, each with partial
 and full-chain evaluation, on one network model.
@@ -531,9 +531,11 @@ once it is printed and tested.
 \$100k level (\stat{k1-su-ei-target}\% of the optimum) reliably sooner: the
 speed-ups over it were between \stat{k1-su-pkgfn-ei} and
 \stat{k1-su-eifn-ei}$\times$, and every interval reached down to ``not reached''
-(Figure~S2). The gain over screening at $\kappa=1$ is therefore a gain of
-modelling the whole chain over trusting the screen; partial evaluation adds an
-early lead on top.
+(Figure~S2). The gain over screening at $\kappa=1$ therefore comes from
+searching the whole design space instead of trusting the screen, which standard
+BO does too. Modelling the chain and choosing the step help earlier in the budget,
+not at the end: full-chain BOFN was \stat{k1-eifn-ei-v50-abs} points ahead of
+standard BO at \$50k (difference \stat{k1-eifn-ei-v50-ci}) and level at \$100k.
 
 \paragraph{When the screen is right ($\kappa=0$).} Screen-then-test was the most
 reliable policy: \stat{k0-tiered-v100-mean}\% of the optimum at \$100k (95\% CI
@@ -582,17 +584,22 @@ contrast at \$100k or over the whole budget excluded zero. Its early lead was
 clear only under the knowledge gradient with a wrong screen, and positive but
 unresolved under expected improvement at every $\kappa$ (\stat{k0-c-1-v25},
 \stat{k05-c-1-v25} and \stat{k1-c-1-v25}\pp{} at \$25k for $\kappa=0$, 0.5
-and 1). Second, the knowledge gradient as implemented here was competitive only
-when the screen was wrong. Third, BOFN with powder reuse was the most robust
+and 1). Second, the knowledge gradient as implemented here never beat expected
+improvement per dollar at \$100k: with partial evaluation it trailed at every
+$\kappa$, by \stat{k1-c-2-v100-abs}, \stat{k05-c-2-v100-abs} and
+\stat{k0-c-2-v100-abs} points for $\kappa=1$, 0.5 and 0 (intervals
+\stat{k1-c-2-v100-ci}, \stat{k05-c-2-v100-ci} and \stat{k0-c-2-v100-ci}), most
+when the screen was at least half right. Third, BOFN with powder reuse was the most robust
 policy: \stat{k0-eifn_reuse-v100-mean}\%, \stat{k05-eifn_reuse-v100-mean}\%
 and \stat{k1-eifn_reuse-v100-mean}\% of the optimum at \$100k for $\kappa=0$,
 0.5 and 1. Screen-then-test, by contrast, went from the most reliable policy
 ($\kappa=0$) to one that plateaued below random designs ($\kappa=1$). These are
 the regularities a user of the benchmark should expect to reproduce. With 16--20
-seeds the benchmark resolves differences of roughly ten points of the optimum at
-\$100k: the median half-width of a pairwise 95\% interval at \$100k is
-\stat{k1-halfwidth-v100} points at $\kappa=1$, \stat{k05-halfwidth-v100} at
-$\kappa=0.5$ and \stat{k0-halfwidth-v100} at $\kappa=0$.
+seeds, the benchmark resolves differences at \$100k of about
+\stat{k1-halfwidth-v100} points of the optimum at $\kappa=1$, and of
+\stat{k05-halfwidth-v100} and \stat{k0-halfwidth-v100} points at $\kappa=0.5$
+and 0, where runs vary more (the median half-width of a pairwise 95\% interval at
+\$100k).
 
 \begin{figure}[t]
 \centering

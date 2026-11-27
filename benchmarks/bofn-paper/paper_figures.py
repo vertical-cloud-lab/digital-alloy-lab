@@ -168,7 +168,7 @@ def fig_speedup(name="fig-speedup", over="tiered", labels=LABEL, base=None):
     ax.tick_params(axis="y", length=0)
     ax.grid(axis="x", color=GRIDC, lw=0.6)
     ax.set_axisbelow(True)
-    base = base or ("tiered screening" if over == "tiered" else "standard BO")
+    base = base or ("screen-then-test" if over == "tiered" else "standard BO")
     ax.set_xlabel(f"Speed-up over {base} (spend ratio to reach {base}'s $100k level)")
     handles = [plt.Line2D([], [], color=KSTYLE[k]["color"], marker=KSTYLE[k]["marker"], ms=4.2, mec="white", mew=0.7, lw=1.2, label=f"κ = {k:g}") for k in KAPPAS]
     handles.append(plt.Line2D([], [], color=TEXT2, marker="<", ms=4.2, lw=0, label="mean never reached it"))
@@ -218,9 +218,9 @@ def graphical_abstract(name="graphical-abstract"):
     ax0 = fig.add_axes([0.0, 0.02, 0.56, 0.86])
     ax0.imshow(mpimg.imread(FIG / "fig-network.png"))
     ax0.axis("off")
-    fig.text(0.01, 0.95, "A synthetic alloy powder-to-part workflow with a known optimum", fontsize=15, color=TEXT, weight="bold")
+    fig.text(0.01, 0.95, "A synthetic alloy workflow with a known optimum", fontsize=15, color=TEXT, weight="bold")
     fig.text(0.01, 0.895, "κ sets how badly the cheap crack screen misjudges the best alloys (Zr/Sc nucleants)", fontsize=12, color=TEXT2)
-    ax = fig.add_axes([0.73, 0.16, 0.255, 0.66])
+    ax = fig.add_axes([0.73, 0.16, 0.255, 0.63])
     lo_edge = 0.2
     for i, p in enumerate(kinds):
         for j, k in enumerate(KAPPAS):
@@ -247,11 +247,12 @@ def graphical_abstract(name="graphical-abstract"):
     ax.grid(axis="x", color=GRIDC, lw=0.8)
     ax.set_axisbelow(True)
     ax.set_xlabel("Speed-up over screen-then-test\n(95% matched-seed interval)", fontsize=12)
-    fig.text(0.60, 0.88, "Does choosing the step pay?", fontsize=15, color=TEXT, weight="bold")
+    fig.text(0.60, 0.935, "Does choosing the step pay?", fontsize=15, color=TEXT, weight="bold")
     handles = [plt.Line2D([], [], color=KSTYLE[k]["color"], marker=KSTYLE[k]["marker"], ms=8, mec="white", mew=1.2, lw=2.2,
                           label={0.0: "κ = 0: screen right", 0.5: "κ = 0.5", 1.0: "κ = 1: screen wrong"}[k]) for k in KAPPAS]
-    fig.legend(handles=handles, loc="lower left", bbox_to_anchor=(0.60, 0.80), ncol=3, frameon=False, fontsize=11, numpoints=1,
-               handlelength=1.6, columnspacing=1.0)
+    handles.append(plt.Line2D([], [], color=TEXT2, marker="<", ms=8, lw=0, label="never reached"))
+    fig.legend(handles=handles, loc="lower left", bbox_to_anchor=(0.595, 0.815), ncol=2, frameon=False, fontsize=10.5, numpoints=1,
+               handlelength=1.4, columnspacing=1.2)
     FIG.mkdir(parents=True, exist_ok=True)
     fig.savefig(FIG / f"{name}.png", dpi=200, facecolor="white")
     fig.savefig(FIG / f"{name}.pdf", facecolor="white")
