@@ -26,9 +26,10 @@ The bracket (programmed here)
     flute, 66 mm out of an ER32 collet chuck), freecad_cam.TOOLS, so the VF-4 in the video carries the same tools.
 
 The slug (not programmed)
-    FreeCAD 1.0.2's CAM workbench has no turning operations (its ops are milling, drilling, engraving and probing; the
-    lathe addons are not part of the AppImage), so there is no posted program for the lathe. The turned profile drawn in
-    chapter 31 stays illustrative.
+    FreeCAD 1.0.2's CAM workbench has no turning operations (Mod/CAM/Path/Op in the AppImage: Adaptive, Custom, Deburr,
+    Drilling, Engrave, Helix, MillFace, Pocket, PocketShape, Probe, Profile, Slot, Surface, ThreadMilling, Vcarve,
+    Waterline; the lathe addons are not part of it), so there is no posted program for the lathe. The turned profile
+    drawn in chapter 31 stays illustrative.
 
 Run (FreeCAD 1.0.2, the official conda AppImage, sha256 checked against the release's SHA256 file, extracted with
 --appimage-extract under /tmp, as freecad_cam.py):
