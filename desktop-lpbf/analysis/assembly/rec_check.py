@@ -213,6 +213,8 @@ def main(argv):
             return ws
 
         def check(n, where=""):
+            if only_steps and step not in only_steps:
+                return                       # --steps: replay the state, check only the chosen steps
             place("A")
             place("B")
             # arm against arm (with what they hold)
@@ -264,6 +266,8 @@ def main(argv):
 
         def check_put(objs_put, where):
             """A put into the long table or a fixture (not into parts: those are their designed poses)."""
+            if only_steps and step not in only_steps:
+                return
             bs = []
             for i in objs_put:
                 if i in objs and i not in hidden:
@@ -271,6 +275,25 @@ def main(argv):
                     bs.append(objs[i])
             if bs:
                 test(Group(bs), Group(list(statics.values()) + table), lambda x, y: ("put", LIMIT), where)
+                # round 10: and against the parts already present in another frame (another sub-assembly, or one put
+                # elsewhere): an overlap a put leaves stays drawn until the next put (round 9: the metering base 7 mm into the
+                # reservoir rails for 500 frames). Parts held by an arm are checked as they move, not here.
+                ids = set(objs_put)
+                held_all = set()
+                for m in ("A", "B"):
+                    if st[m]["held"] is not None:
+                        held_all |= set(st[m]["held"]["objs"])
+                others = []
+                for i in present:
+                    if i in ids or i in held_all or i in hidden or i not in objs:
+                        continue
+                    objs[i].place(pose[i])
+                    others.append(objs[i])
+                if others:
+                    def fn_put(x, y):
+                        xi, yi = int(x.name.split()[0][1:]), int(y.name.split()[0][1:])
+                        return None if same_frame(xi, yi) else ("put", LIMIT)
+                    test(Group(bs), Group(others), fn_put, where)
 
         unplanned = set()
         last = {}
