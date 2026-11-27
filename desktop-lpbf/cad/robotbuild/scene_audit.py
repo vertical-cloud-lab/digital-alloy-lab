@@ -20,7 +20,9 @@ Method
   against every other visible actor with opacity >= OPAQUE, moving or static. Pairs of two static actors are not checked.
 * Broad phase: world-space bounding boxes (numpy). Narrow phase: python-fcl BVH meshes (OBBRSS) of the recorded triangles,
   built once per mesh version (identical re-skins share one model), no decimation unless a mesh has more than
-  MAX_TRIS triangles (then vtkQuadricDecimation, and the pair is re-checked on the full mesh before it is reported).
+  MAX_TRIS triangles (then vtkQuadricClustering, and the pair is re-checked on the full mesh before it is reported). Of a
+  pair, the mesh with fewer triangles is the one shrunk by TOUCH_MM (round 9), so a big mesh (chapter 30's stock, ~0.6 M
+  triangles re-meshed every 3 frames) gets one BVH per version, not two.
 * Depth: the translational penetration depth, the same measure as the planner's audit (analysis/robot/cell.py depth(),
   byu-vcl PR 318's collide.depth()): the shortest translation of one mesh, over 26 directions (the faces, edges and corners
   of a cube), on the ladder 1.5, 3, 6, 12, 25, 50, 100 mm, that frees it; a pair freed at 1.5 mm is within the limit. A
@@ -33,6 +35,14 @@ Method
   does).
 * Allowed contacts: ALLOWED below, each a pair of name patterns, a depth it may reach (None: any) and its reason. Everything
   else deeper than 1.5 mm is a violation.
+
+Memory (round 9): chapter 30's round-8 audit ran out of its 3 GB cap 200 frames in. The cause was the decimation of
+its stock (vtkQuadricDecimation on ~0.6 M triangles: over 4 GB and minutes per version, measured on a synthetic
+recording), not the people. Decimation is now vtkQuadricClustering (linear, bounded) and only over MAX_TRIS = 2.5 M; a
+full BVH of 0.6 M triangles is ~350 MB and 1.8 s. The audit streams: mesh versions and their BVHs are dropped as soon as
+no actor draws them (as before); every AUDIT_CHUNK recorded frames, and whenever the process passes AUDIT_SOFT_MB, every
+BVH still cached is dropped too (they are rebuilt on demand) and the heap is trimmed (malloc_trim); the worst frame of each
+violating pair (for --stills) is kept on disk, not in memory. `peak_rss_mb` in the output says what it took.
 
 Output: analysis/out/videoqa/scene_audit_<chapter>.json (frames checked, pairs, worst depth and frame numbers per pair) and,
 with --stills, scene_audit_<chapter>_<k>.png (the frame as drawn beside a close-up of the pair from the recorded meshes).
@@ -67,7 +77,9 @@ TOUCH_MM = 0.3                       # one mesh of a pair is shrunk this much fi
 OPAQUE = 0.3                         # actors fainter than this are not obstacles (glass at 0.38 is)
 LADDER = (1.5, 3.0, 6.0, 12.0, 25.0, 50.0, 100.0)
 DEEP = 999.0
-MAX_TRIS = int(os.environ.get("AUDIT_MAX_TRIS", "250000"))
+MAX_TRIS = int(os.environ.get("AUDIT_MAX_TRIS", "2500000"))
+CHUNK = int(os.environ.get("AUDIT_CHUNK", "200"))          # recorded frames between drops of every cached BVH
+SOFT_MB = int(os.environ.get("AUDIT_SOFT_MB", "1800"))     # resident size past which every cached BVH is dropped at once
 REFINE = int(os.environ.get("AUDIT_REFINE", "6"))   # a violating pair's depth is re-measured at most every REFINE frames
 _DIRS = np.array([d for d in product((-1, 0, 1), repeat=3) if any(d)], float)
 _DIRS /= np.linalg.norm(_DIRS, axis=1)[:, None]
@@ -286,6 +298,13 @@ class Replay:
         self.geoms, self.refs = {}, {}
         self.truncated = False
 
+    def drop_models(self, actors):
+        """Drop every cached BVH (geoms and the actors' FCL objects); they are rebuilt on demand."""
+        for g in self.geoms.values():
+            g._model = g.full = g._ero = None
+        for a in actors.values():
+            a.obj = a.eobj = None
+
     def _ref(self, g, d):
         c = self.refs.get(g.gid, 0) + d
         if c <= 0:
@@ -462,10 +481,37 @@ def _bvh(fcl, V, F):
 
 
 def _decimate(V, F, n):
+    """About n triangles by vertex clustering (vtkQuadricClustering: one pass, memory linear in the mesh). Round 8 used
+    vtkQuadricDecimation here, which took over 4 GB and minutes on chapter 30's 0.6 M-triangle stock."""
     import pyvista as pv
+    import vtk
     m = pv.PolyData(np.asarray(V, float), np.c_[np.full(len(F), 3), F].ravel())
-    m = m.decimate(1.0 - n / len(F)).triangulate().clean()
-    return np.asarray(m.points, np.float32), np.asarray(m.faces).reshape(-1, 4)[:, 1:].astype(np.int32)
+    lo, hi = np.asarray(V).min(0), np.asarray(V).max(0)
+    ext = np.maximum(hi - lo, 1e-6)
+    cell = (float(np.prod(ext)) / max(n / 2.0, 1.0)) ** (1.0 / 3.0)       # ~2 triangles a cell on a surface
+    div = [int(min(max(e / cell, 2), 1024)) for e in ext]
+    q = vtk.vtkQuadricClustering()
+    q.SetInputData(m)
+    q.SetNumberOfDivisions(*div)
+    q.Update()
+    out = pv.wrap(q.GetOutput()).triangulate()
+    return np.asarray(out.points, np.float32), np.asarray(out.faces).reshape(-1, 4)[:, 1:].astype(np.int32)
+
+
+def _trim():
+    """Give freed heap pages back to the system (glibc keeps them after numpy and FCL free large blocks)."""
+    try:
+        import ctypes
+        ctypes.CDLL("libc.so.6").malloc_trim(0)
+    except Exception:                                              # noqa: BLE001
+        pass
+
+
+def _rss_now():
+    try:
+        return int(open("/proc/self/statm").read().split()[1]) * os.sysconf("SC_PAGE_SIZE") // 2 ** 20
+    except Exception:                                              # noqa: BLE001
+        return 0
 
 
 def _wind_impl():
@@ -677,7 +723,10 @@ def run(chapter, every=1, stills=0, quiet=False, max_frames=None, only=None):
                     break
             rule_of[k] = r
         return r
-    viol = {}                           # (a, b) -> dict(worst, frame, frames=set(), snap)
+    viol = {}                           # (a, b) -> dict(worst, frame, frames=set(), snap: a file under snapdir)
+    import tempfile
+    snapdir = Path(tempfile.mkdtemp(prefix="audit_snaps_"))
+    peak = [0]
     allowed_hits = {}                   # rule index -> dict(pairs=set(), frames=0, worst)
     cache = {}                          # (a, b) -> (signature, depth)
     checked = 0
@@ -698,6 +747,16 @@ def run(chapter, every=1, stills=0, quiet=False, max_frames=None, only=None):
         if every > 1 and n % every:
             continue
         checked += 1
+        rss = _rss_now()
+        peak[0] = max(peak[0], rss)
+        if (CHUNK and checked % CHUNK == 0) or rss > SOFT_MB:
+            rp.drop_models(actors)      # stream: nothing cached outlives a chunk, nor the soft limit
+            import gc
+            gc.collect()
+            _trim()
+            if rss > SOFT_MB and not quiet:
+                print(f"  {tag}: frame {n}: {rss} MB resident, over {SOFT_MB} MB: every cached BVH dropped "
+                      f"({_rss_now()} MB now)", flush=True)
         if not pend:                    # nothing moved, appeared or faded: the last frame's verdicts stand
             for k in active:
                 viol[k]["frames"].add(n)
@@ -731,9 +790,10 @@ def run(chapter, every=1, stills=0, quiet=False, max_frames=None, only=None):
                         ah["frames"] += 1
                         continue
                     lim = rules[ri][2]
-                x, y = (a, b) if a.name == k[0] else (b, a)
+                # the mesh with fewer triangles is the one shrunk (its BVH is built twice at most), names break ties
+                x, y = (a, b) if (a.geom.ntri, a.name) < (b.geom.ntri, b.name) else (b, a)
                 rel = np.linalg.inv(x.M.astype(float)) @ y.M.astype(float)
-                sig = (x.geom.gid, y.geom.gid, np.round(rel[:3, :3], 5).tobytes(), np.round(rel[:3, 3], 2).tobytes())
+                sig = (x.name, x.geom.gid, y.geom.gid, np.round(rel[:3, :3], 5).tobytes(), np.round(rel[:3, 3], 2).tobytes())
                 c = cache.get(k)
                 if c is not None and c[0] == sig:
                     dep = c[1]
@@ -778,10 +838,14 @@ def run(chapter, every=1, stills=0, quiet=False, max_frames=None, only=None):
                     active[k] = dep
                     if dep > v["worst"]:
                         v["worst"], v["frame"] = dep, n
-                        v["snap"] = ((x.geom.V, x.geom.F), x.M.copy(), (y.geom.V, y.geom.F), y.M.copy())   # arrays only, no BVHs
+                        if stills:              # the worst frame's two meshes, on disk (a stock version is ~15 MB)
+                            sp = snapdir / f"{len(viol) if 'snap' not in v else v['snap'].stem}.pkl"
+                            sp.write_bytes(pickle.dumps(((x.geom.V, x.geom.F), x.M.copy(), (y.geom.V, y.geom.F),
+                                                         y.M.copy()), protocol=4))
+                            v["snap"] = sp
         if not quiet and checked % 50 == 0:
             print(f"  {tag}: frame {n}, {checked} checked, {len(viol)} violating pairs, {n_fcl} narrow checks, "
-                  f"{len(rp.geoms)} meshes, {time.time() - t0:.0f} s, peak {_rss_mb()} MB", flush=True)
+                  f"{len(rp.geoms)} meshes, {time.time() - t0:.0f} s, {_rss_now()} MB now, peak {_rss_mb()} MB", flush=True)
     # rigid pairs: relative pose and meshes constant over every recorded change of either actor
     rigid = {}
     for k in list(viol):
@@ -815,6 +879,7 @@ def run(chapter, every=1, stills=0, quiet=False, max_frames=None, only=None):
                       examples=sorted(h["pairs"])[:12], worst_mm=_r(h.get("worst", 0.0)) if rules[i][2] else None)
                  for i, h in sorted(allowed_hits.items())],
         seconds=round(time.time() - t0, 1),
+        peak_rss_mb=int(_rss_mb()), memory=f"streamed: BVHs dropped every {CHUNK} recorded frames and past {SOFT_MB} MB",
     )
     OUT.mkdir(parents=True, exist_ok=True)
     path = OUT / f"scene_audit_{chapter}.json"
@@ -822,6 +887,8 @@ def run(chapter, every=1, stills=0, quiet=False, max_frames=None, only=None):
     if stills:
         out["stills"] = make_stills(chapter, viol, stills)
         path.write_text(json.dumps(out, indent=1, default=_js) + "\n")
+    import shutil
+    shutil.rmtree(snapdir, ignore_errors=True)
     print(f"{chapter}: {checked} frames checked, {len(rows)} violating pairs (worst {out['worst_mm']} mm), "
           f"{len(rigid)} rigid, {n_fcl} narrow checks, {out['seconds']} s -> {path}", flush=True)
     for r in rows[:25]:
@@ -915,9 +982,9 @@ def make_stills(chapter, viol, k):
     tmp = Path(tempfile.mkdtemp(prefix="audit_stills_"))
     for idx, ((a, b), v) in enumerate(worst):
         snap = v.get("snap")
-        if snap is None:
+        if snap is None or not Path(snap).exists():
             continue
-        ga, Ma, gb, Mb = snap
+        ga, Ma, gb, Mb = pickle.loads(Path(snap).read_bytes())
         right = None
         try:
             pk, png_r = tmp / f"{idx}.pkl", tmp / f"{idx}.png"
@@ -946,7 +1013,7 @@ def make_stills(chapter, viol, k):
         d.text((10, 40), f"{b}", fill="#2a7fff")
         p = OUT / f"scene_audit_{chapter}_{idx + 1}.png"
         canvas.save(p, optimize=True)
-        paths.append(str(p.relative_to(REPO)))
+        paths.append(str(p.relative_to(REPO)) if p.is_relative_to(REPO) else str(p))
     return paths
 
 
