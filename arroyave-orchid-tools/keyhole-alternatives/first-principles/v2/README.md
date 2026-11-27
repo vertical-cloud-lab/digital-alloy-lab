@@ -123,8 +123,8 @@ state against power at one speed.
   - The AM module's 0.307 at its 250 W render is next to the 0.32 state, which appears at 260 W.
 - **The blend at the AM module's 0.4 m/s.**
   - The surface first boils at 155 W, and there is only the dimple (absorbing 0.20) up to 200 W.
-  - From 205 to 280 W the dimple coexists with states absorbing 0.35, 0.47 and 0.58–0.82. The first keyhole (Wk/Dk ≤ 0.7) appears at 220–225 W, and above 280 W only the deep keyhole is left.
-  - The AM module's boundary there is 179 W, below anything the model calls a keyhole (hence 1.16–1.25× below).
+  - From 205 to 280 W the dimple coexists with states absorbing 0.35, 0.47 and 0.58–0.82. The first keyhole (Wk/Dk ≤ 0.7) appears at about 225 W, and above 280 W only the deep keyhole is left.
+  - The AM module's boundary there is 179 W, below anything the model calls a keyhole. That gap is the 1.16–1.25× in the table below.
   - At its 375 W render the AM module has 0.384, where the model's only state is a 399 µm keyhole absorbing 0.87.
 - **Al 5182 at NIST's 0.7 m/s.**
   - At 473 W the model has four stable states, absorbing 0.17, 0.30, 0.42 and 0.53.
@@ -132,7 +132,7 @@ state against power at one speed.
 - **Deep aluminium keyholes absorb about twice what everything else says.**
   - Once only the deep state is left, the smooth cone traps 0.82–0.87 of the beam in Al keyholes.
   - The AM module's 0.384 at the blend render points to about 0.4, as do NIST's measured 0.43 and the 0.4–0.5 that Gan et al.'s Al6061 depths would need.
-  - For Ti-6Al-4V the cone's 0.7–0.9 is within Simonds et al. 2021's measured 0.66–0.84.
+  - For Ti-6Al-4V the cone's median, 0.78 on Gan et al.'s rows, is within Simonds et al. 2021's measured 0.66–0.84.
   - So it is something about aluminium keyholes, which the cone with Fresnel walls misses. It is also the likeliest reason Al6061 keyholes come out 2.3× too deep.
 
 Three lines on each map, as ratios to the AM module's keyhole boundary power over its speed range:
@@ -172,7 +172,7 @@ The points version 1 called no defect sat on a deeper root, like the 40 µm one 
 - **Melt flow doesn't fix it either** (`mapflow` command; `v2-map-classes-meltflow.csv`). Every non-keyhole grid point was re-solved with the melt-flow solver (section 6), with version 2's own absorbed fraction as a surface flux.
   - The pools come out 11–18 % wider and 2–11 % deeper (medians) than the analytic ones.
   - All-class agreement goes to 20 (AlSi10Mg) and 7 (blend). Still none of the AM module's no-defect points comes out as no defect; 30 of 31 AlSi10Mg ones are lack of fusion at the hatch.
-  - With the 0.24 optics as well, agreement is 25 and 7 (`v2-map-classes-optics-0.24-meltflow.csv`), and still no no-defect point comes out right. Overlapping at the 130 µm hatch with 30 µm to spare needs a pool about 180 µm wide and 75 µm deep at 250 W, which is what the AM module's 0.31 gives.
+  - With the 0.24 optics as well, agreement is 25 and 7 (`v2-map-classes-optics-0.24-meltflow.csv`), and still no no-defect point comes out right. Reaching 30 µm deep at the 65 µm half-hatch needs a pool about 180 µm wide and 75 µm deep at 250 W. That is what the AM module's 0.31 gives in the solver.
 - **Is the AM module's 0.31 itself too high?**
   - Edison's round 5 collected measured absorptance of bare Al before a keyhole forms. Every value is 0.06–0.24:
     - Trapp et al. 2017, Al 1100 at 1.5 m/s: 0.10–0.15. Not read; the paper is behind a CAPTCHA.
