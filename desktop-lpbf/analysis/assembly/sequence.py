@@ -502,12 +502,13 @@ def steps(module="M50"):
     a(N("F53", "f-theta lens threaded into its adapter ring over its 3 mm shim stack, under the bridge (on the bench, bridge upside down)", "person",
         "The Ø90 lens is wider than the 2F-85's 85 mm stroke and threads M85 x 1; a strap wrench by hand (operations.md: lens and ring "
         "fitted to the bridge on the bench)."))
-    a(dict(do="dual", id="F54", label="Optics bridge (13.3 kg, lens and ring under it) onto the four posts: the hoist lifts, both arms guide",
-           lift_aid="hoist: a person runs a small chain hoist on a jib with a lifting bar; the two arms only guide the part along the checked path (Edison r7 review: no standard or precedent for two arms on separate MiR250s sharing a load over ~10 kg)",
-           keys=["Optics bridge (", "f-theta lens", "f-theta focus shims", "f-theta adapter ring"], grp="machine", phase="upright", path=[(0, 0, 0), (0, 0, 80)],
-           grip_gap=25.5,
-           grasps={"A": dict(point=(-330.0, -190.0, 220.2), z=(0.0, 1.0, 0.0), x=(0.0, 0.0, 1.0)),
-                   "B": dict(point=(215.0, 180.0, 220.2), z=(0.0, -1.0, 0.0), x=(0.0, 0.0, 1.0))}))
+    # round 9 (run 14): runs 9-13 found no pair of poses for the two arms at the start of the two-arm carry. The hoist takes the
+    # bridge's weight (as the lift_aid says: a person runs it), so one arm is enough to guide it down onto the posts' dowels, at
+    # arm A's grasp of the two-arm carry; the hook hangs over the bridge on its lifting bar (commit.place records it)
+    a(P("F54", "Optics bridge (13.3 kg, lens and ring under it) onto the four posts: the hoist takes its weight, arm A guides it onto the dowels",
+        ["Optics bridge (", "f-theta lens", "f-theta focus shims", "f-theta adapter ring"], "machine", "upright", [(0, 0, 0), (0, 0, 80)],
+        lift_aid="hoist: a person runs a small chain hoist on a jib with a lifting bar and takes the 13.3 kg; arm A only guides the part along the checked path (Edison r7 review: no standard or precedent for two arms on separate MiR250s sharing a load over ~10 kg)",
+        grasp=dict(point=(-330.0, -190.0, 220.2), z=(0.0, 1.0, 0.0), x=(0.0, 0.0, 1.0), width=25.5)))
     a(S("F55", "Eight M6 x 35 bridge screws down into the posts", "bridge", "machine", "upright", torque_Nm=7.4))
     a(P("F56", "Galvo riser plate (155 x 130: the vacuum gripper)", ["Galvo riser plate"], "machine", "upright", "explode", tool="vacuum",
         grasp=dict(point=(20.35, -6.8, 241.11), z=DN, x=(1.0, 0.0, 0.0))))

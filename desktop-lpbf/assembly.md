@@ -43,9 +43,14 @@ shape (MiR B at F45, F45b), the trunnion's shafts ended flush on their stands, a
 each is fixed and checked. Two hands: the holds on M19, C04 and F30 stay; F33b and F37b can't have one (the vacuum gripper's
 100 x 100 mm body covers the screws), F43 can't either way round (tried swapped); the door is held by its draw latches, closed
 first (F51b). [`rec_check.py`](analysis/assembly/rec_check.py) replays a recording as the video draws it and checks it.
-Details: [`analysis/out/assembly/round9_run13.md`](analysis/out/assembly/round9_run13.md),
-[`results_run13.json`](analysis/out/assembly/results_run13.json), [`two_hands.json`](analysis/out/assembly/two_hands.json),
-[`mir_drives.json`](analysis/out/assembly/mir_drives.json).
+**Run 14** then re-planned F54 to the end only, continuing run 13's recording with the arms and MiRs put back where it left
+them (no jump at the join): F54, the 13.3 kg optics bridge, now passes with the hoist taking its weight and arm A alone guiding
+it onto the posts' dowels (runs 9-13 found no pair of poses for a two-arm carry), so **105 of 110** steps pass; F57 by its tubes'
+axes was tried alone and still fails. Details: [`analysis/out/assembly/round9_run13.md`](analysis/out/assembly/round9_run13.md)
+(runs 13 and 14; the recording of the whole run checked as drawn: 0 arm-arm or arm-part pairs over 1.5 mm in 24,649 samples,
+[`rec_check_run14.json`](analysis/out/assembly/rec_check_run14.json)), [`results_run13.json`](analysis/out/assembly/results_run13.json),
+[`results_run14.json`](analysis/out/assembly/results_run14.json) (run 13 to F53, run 14 from F54),
+[`two_hands.json`](analysis/out/assembly/two_hands.json), [`mir_drives.json`](analysis/out/assembly/mir_drives.json).
 
 ## Round 8 (2026-11-26): run 12, two hands, MiRs that drive like MiRs, fixed cameras
 
@@ -324,13 +329,34 @@ these, noted on each; run 13 (round 9) fixed C00d, F45d and F48b, noted on each;
   counterbore was used up by the meshes' facets and a grasp centre taken from the tilted part, and in a tilted bore no world-axis
   step frees a touching tool, so the depth check read a touch as deep.
 - **F57** (beam line): the tubes' ends sit in the cubes' ports, so the tubes have to slide in along their own axes: each
-  tube into the cube placed before it, then the next cube onto the tube's free end.
+  tube into the cube placed before it, then the next cube onto the tube's free end. Round 9 tried it alone (each tube slid along its axis into the part placed before it, the next
+  cube down onto its free end): five of eight placements failed. Next: the two tubes at the back (#2, #3) by arm B; the cubes
+  slid along the tube's axis onto its end (their ports take the tube ends, so not from above); tube #1 at a grasp roll that
+  keeps the wrist camera off the bridge.
 - **F54** optics bridge: still no pair of arm poses at the start of the carry 80 mm above the posts. With the hoist taking the
-  14.3 kg, one arm (or a person) can guide it onto the posts' dowels; check one-arm guidance.
+  14.3 kg, one arm (or a person) can guide it onto the posts' dowels; check one-arm guidance. **Fixed in run 14**: the hoist takes the 13.3 kg, arm A
+  comes to the hanging bridge empty with the gripper open and guides it down onto the dowels.
 - **C00d** 17 of 18: one screw has no approach even at 2,000 planner iterations; drive it after C01, with the chamber in the
   trunnion. **Fixed in run 13**: the arm that can't reach a screw now parks before the other arm tries it (round 8
   left it in the way); arm B drives #7 and #16, 18 of 18. C01c (new) drives any floor-plate screw left, from above with the chamber
   upside down in the trunnion; in run 13 it had none.
+
+**The next change for each step still failing after run 13** (round 9; each is shown failing in the video, done by a person):
+- **F15** (inlet-plenum screw #7): the screwdriver's body meets the plenum's welded KF-25 stub, and the angle-head nutrunner and
+  the other arm meet it too (runs 11-13). Next: move that hole 5 mm along the flange away from the stub (the plenum's hole
+  pattern in `cad/joints.py`, plenum_in), then re-run F15 alone.
+- **F18** (held rail screw #1 of 4): arm A's screwdriver meets the chamber body (round 9; with other bits its wrist or forearm
+  met the base plate). Next: once three of the four screws are in, the rail no longer needs holding: arm B, the holder, lets go
+  and drives #1 itself from above the open top (`run_assembly.hold_and_drive`: a screw the driver can't reach goes to the holder
+  after the others are in).
+- **F26** (blade holder): the 2F-85's fingertip meets the chamber body however high it enters. Next: put the whole cartridge
+  (holder, blade, grip fin, screws) in by its fin with the plate fingers, as the tending robot's blade-cartridge job does
+  (`analysis/robot/ops.py` job_blade, which passes on the finished machine), with the recoater run 106 mm to the middle first
+  (parked, the fin is 4 mm inside the door opening's side). The recorder must first carry a part's state pose (record.py's put
+  and attach give the machine frame only, so asm_render.py would draw the moved recoater parked).
+- **F27** (two blade screws): arm B's driver meets the overflow funnel block from the back. Next: drive them on the bench before
+  F26, with the cartridge on a two-pin bench nest (to be modelled like the stack nest) and the driver straight down; F26 then
+  carries the cartridge with its screws in.
 
 **Other open points**
 - **Picks at the table that were not planned:** run 9 had 25, mostly parts gripped sideways at their seat whose kitted pose put
