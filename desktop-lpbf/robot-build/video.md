@@ -98,8 +98,8 @@ minute, median run 7.2 s; chapter 40: 3.6, 6.2 s.
 - **The screw presenter's nest** (71 pairs above): in the model now (`cell2.mir_bodies`), not in these frames; the next render shows it.
 - **F35, F39 and F18's last screw by the robots.** Each needs a design or grasp change and a re-plan spliced into run 15:
   F35 another grasp for the O-ring; F39 another grasp and release for the drawer (and the drawer latches modelled as studs,
-  not one envelope); F18 #1 the rail's first hole 10 mm further from its end (x -100), so the angle head clears the wall, or
-  the descent left to the RRT after a 60 mm back-off along the screw's axis.
+  not one envelope); F18 #1 the descent left to the RRT after a 60 mm back-off along the screw's axis, or another dock for arm
+  A. Moving the rail's holes 10 mm, tried after the cut, makes all four screws fail ([`assembly.md`](../assembly.md) round 10).
 - **MiR A's 1.8 m reverse** in chapter 41 (above).
 - **The YouTube description** says every drawn frame (28,902) was checked; 1,646 of those are the two chart chapters, which
   draw no 3-D scene. The upload token can't edit it.

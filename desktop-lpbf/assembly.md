@@ -66,9 +66,12 @@ alone, then F18-F31 in one recorded process with the carriage in the middle):
 4.5 mm hole, so the sideways sweep is a real clip, which round 10's check of the last 12 deg rejects (round 9's planner had no
 such check, so W2's first scratch runs passed it). The axial pre-approach (60 mm back along the screw, then up) clears only for
 rolls that tilt the angle head (44 x 40 x 46 mm), and then a corner of the head clips the left wall's top by 3.0 mm, on every
-dock and roll tried, and also going straight up. Next: leave the descent to the RRT after the 60 mm back-off (more iterations),
-or move the rail's first hole 10 mm further from its end (x -100), where the head clears the wall. The rail is McMaster 6709K33
-with its own hole pattern, so that is a hole drilled in the rail.
+dock and roll tried, and also going straight up. **Tried after the video (scratch runs on W2's F18 code, F18 alone on run 15's
+recording to the end of F17):** with the rail's holes 10 mm further from its left end (`RAIL_HOLES["first"]` 30 mm, was 20:
+holes at x -100, -40, 20 and 80, a different cut of the same 60 mm-pitch rail and the back wall's holes moved with it), **none of
+the four screws plans**: on every approach arm A's upper arm meets its own MiR's cabinet or mounting plate, for every tool. The
+same run with the catalogue holes (the control) drives #2-#4 and not #1, as the splice did. So moving the holes alone makes F18
+worse. Next: leave the descent to the RRT after the 60 mm back-off (more iterations), or another dock for arm A for #1 alone.
 
 **Two steps round 9 drew as passes now fail**, because the planner checks what is drawn:
 - **F35, the window's lower O-ring into the flange's groove** (the ring caps' internal grip): the ring stops 27 mm short, arm
