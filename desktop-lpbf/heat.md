@@ -109,6 +109,8 @@ draws ends up as heat inside the Shuttle unless chilled water or a duct carries 
   the closed guard another 100–190 W is released: the galvo, two servos, PB2, the Chronos and the photodiodes. The air there
   runs 26–44 K over the Shuttle's. The galvo is rated 25 ± 10 °C and the cameras 40–55 °C. The guard needs either ~118 m³/h of
   room air through a ventilated dock, which also takes 250–360 W out of the Shuttle, or ~0.3 kW more chiller for a fan coil.
+  Dock air only counts once the base plate's Z-stage window and slot, which open the guard's floor to the Shuttle, are covered: as
+  built, most of the guard's air would come in through them (the guard CFD, [`monitoring/cooling.md`](monitoring/cooling.md) §4.2).
 - **Electrically it fits one dock.** The worst coincident case puts 13.6 A on a leg against 24 A continuous on the dock's
   30 A breaker. The laser takes 208 V across L1–L2 (IPG: 200–240 V). The pump runs only while purging.
 - **UPS:** the backed branch (PC, scan head, servo drives, O₂ and dew-point, safety and controls) is about 0.7 kW
