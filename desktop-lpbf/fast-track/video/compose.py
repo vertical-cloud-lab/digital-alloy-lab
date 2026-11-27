@@ -35,7 +35,6 @@ PW = W - E.W3
 FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 BOLD = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 INK, MUTED, PANEL, ACCENT = "#f2f5f8", "#a9b6c3", "#1f2a36", "#f0a63a"
-STATE_COL = {"S1": "#5b7fb5", "S2": "#8e6bbf", "FT-0": "#e08a3c", "FT-1": "#3a9a5b", "FT-1V": "#2a9fb0"}
 MILESTONES = [("S1", "S1 guide-laser and scanner checks"), ("S2", "S2 FULL POWER INTO THE DUMP"), ("FT-0", "FT-0 FIRST TRACKS"),
               ("FT-1", "FT-1 FIRST COUPONS"), ("FT-1V", "FT-1V FIRST COUPONS (< 100 ppm)")]
 F = {}
@@ -112,7 +111,7 @@ def panel(ov, ms, total_hi):
         for i, (stn, m) in enumerate(MILESTONES):
             a, b = SCHED[m]
             yy = y + 4 + i * 12
-            d.rectangle((X(a / 5), yy, X(b / 5), yy + 8), fill=STATE_COL[stn])
+            d.rectangle((X(a / 5), yy, X(b / 5), yy + 8), fill=BAR)     # one series, rows named: one hue (see BAR)
             d.text((X(b / 5) + 4, yy - 3), stn, font=font(10), fill=MUTED)
         if hi > 0:
             d.rectangle((X(lo / 5), y, X(hi / 5), y + 64), outline=ACCENT, width=2)
@@ -302,6 +301,7 @@ def main():
         rows = [json.loads(x) for x in open(d / "meta.jsonl")]
         metas.append((n, d, rows))
     total = sum(len(r) for _, _, r in metas)
+    ticks = list(np.cumsum([0] + [len(r) for _, _, r in metas])[1:-1])      # where each chapter after the first starts
     OUT.mkdir(parents=True, exist_ok=True)
     mp4 = OUT / "fast-track-progression.mp4"
     ff = ["ffmpeg", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(E.FPS), "-i", "-",
@@ -349,6 +349,8 @@ def main():
                 frame.paste(cim, cpos, cim)
             dd = ImageDraw.Draw(frame)
             dd.rectangle((0, H - 6, int(W * (k + 1) / total), H), fill="#f0a63a")
+            for tk in ticks:
+                dd.rectangle((int(W * tk / total) - 1, H - 12, int(W * tk / total) + 1, H), fill=MUTED)
             p.stdin.write(frame.tobytes())
             if r["shot"] != prev_shot:
                 shots.append(dict(chapter=n, shot=r["shot"], start_s=round(k / E.FPS, 2)))
