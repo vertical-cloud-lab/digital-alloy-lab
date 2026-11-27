@@ -147,14 +147,17 @@ how argon settles under air.
 | B | nozzle 5, low diffuser 15 | collector port | 12.2 / 17.6 | 10.6 / 16.0 | 0.1 / 8.8 | 0.43 | 28 % |
 | C | nozzle 5, high diffuser 15 | collector port | 8.0 / 11.5 | 7.6 / 11.1 | 2.7 / 6.1 | 0.66 | 10 % |
 | D | nozzle 5, low diffuser 15 | high vent | 6.1 / 8.8 | 6.2 / 8.8 | 1.5 / 4.1 | 0.87 | 12 % |
+| A on the 237k-cell mesh (20 min run) | nozzle 20 | collector port | (≈ 50) / (≈ 71) | (≈ 30) / (≈ 52) | 5.8 / (≈ 27) | 0.11 | 23 % |
 | well mixed, same flow and volume | 20 | | 6.2 / 8.9 | | | 0.86 | |
 
 ![Passive purge](purge_passive.png)
 
 - **As drawn (A), purging through the nozzle alone is slow: 33 min to 1000 ppm and 47 min to 100 ppm** (box average),
-  5× the ideal and at or past the top of the study's range. The jet goes straight into the collector; the rest of the
-  box is renewed only by the 7–12 L/min that the jet entrains and spills over the collector (§1), which empties it at
-  0.16 per minute, as if 3.7 of the 20 L/min went through the box.
+  5× the ideal and at or past the top of the study's range. On the 237k-cell cross-flow mesh, which resolves the jet,
+  it is slower still: the box empties at 0.107 instead of 0.161 per minute, ≈ 50 / 71 min (extrapolated from a 20 min
+  run). The coarse purge mesh is optimistic for A; B–D, whose box flow comes from the diffuser, were run on it only. The jet goes straight into the collector; the rest of the
+  box is renewed only by what the jet entrains and spills over the collector (7–12 L/min at the build's 27 L/min,
+  §1), which empties it at 0.16 per minute, as if 3.7 of the 20 L/min went through the box.
 - **In A the analyzer on the collector's exhaust reads low.** It sees mostly the nozzle's fresh argon, about 4× under
   the box average, and reaches 1000 ppm 10 min before the box does.
 - **A separate diffuser does most of the work.** With 15 L/min through a diffuser and 5 through the nozzle, the box
