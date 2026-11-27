@@ -425,16 +425,16 @@ functions
     files["constant/transportProperties"] = hdr("dictionary", "transportProperties") + f"DT {D_O2_AR:g};\n"
     files["system/fvSchemes"] = hdr("dictionary", "fvSchemes") + """ddtSchemes { default Euler; }
 gradSchemes { default Gauss linear; }
-divSchemes { default none; div(phi,T) Gauss limitedLinear01 1; }
+divSchemes { default none; div(phi,T) Gauss deferredCorrection limitedLinear01 1; }   // upwind matrix + explicit TVD correction
 laplacianSchemes { default Gauss linear limited corrected 0.5; }
 interpolationSchemes { default linear; }
 snGradSchemes { default limited corrected 0.5; }
 """
     files["system/fvSolution"] = hdr("dictionary", "fvSolution") + """solvers
 {
-    T { solver PBiCGStab; preconditioner DILU; tolerance 1e-11; relTol 0; }
+    T { solver PBiCGStab; preconditioner DILU; tolerance 1e-9; relTol 0; maxIter 200; }
 }
-SIMPLE { nNonOrthogonalCorrectors 1; }
+SIMPLE { nNonOrthogonalCorrectors 0; }
 """
     return files, dict(inlets=ins, outlet=out, closed=closed)
 
