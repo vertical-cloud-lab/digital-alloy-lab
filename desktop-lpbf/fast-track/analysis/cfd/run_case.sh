@@ -10,10 +10,13 @@
 #   run_case.sh <case> recon                      # reconstruct the time directories left in <case>/processor*
 #
 # Wrap it in the memory ledger:  /tmp/tools/capmem 4 bash run_case.sh ...  (capmem drops the docker group, so the
-# client runs under sudo -n). Logs go to <case>/log.*. Keep cases under /tmp, not in the repo.
+# client runs under sudo -n). MEM sets the container's memory cap (default 4g); reserve the same in the ledger, e.g.
+# MEM=1g /tmp/tools/capmem 1 bash run_case.sh ... for the 33k-cell purge mesh (~0.25 GB in use).
+# Logs go to <case>/log.*. Keep cases under /tmp, not in the repo.
 set -euo pipefail
 CASE=$(realpath "$1"); shift
 NP=${NP:-2}
+MEM=${MEM:-4g}
 IMG=opencfd/openfoam-run:2406
 MOUNTS=(-v "$CASE":/case)
 CMD='set -e; cd /case; '
@@ -55,7 +58,7 @@ while [ $# -gt 0 ]; do
     *) echo "unknown step $1"; exit 2 ;;
   esac
 done
-sudo -n docker run --rm --memory=4g --cpus=2 --shm-size=256m --user "$(id -u):$(id -g)" -e HOME=/tmp -e OMP_NUM_THREADS=1 \
+sudo -n docker run --rm --memory="$MEM" --cpus=2 --shm-size=256m --user "$(id -u):$(id -g)" -e HOME=/tmp -e OMP_NUM_THREADS=1 \
   -e OMPI_MCA_btl_vader_single_copy_mechanism=none -e OMPI_MCA_rmaps_base_oversubscribe=1 \
   "${MOUNTS[@]}" -w /case "$IMG" bash -c "$CMD"
 ls "$CASE"
