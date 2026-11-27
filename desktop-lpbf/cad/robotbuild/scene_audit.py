@@ -883,7 +883,7 @@ def run(chapter, every=1, stills=0, quiet=False, max_frames=None, only=None):
                         if stills:              # the worst frame's two meshes, on disk (a stock version is ~15 MB)
                             sp = snapdir / f"{len(viol) if 'snap' not in v else v['snap'].stem}.pkl"
                             sp.write_bytes(pickle.dumps(((x.geom.V, x.geom.F), x.M.copy(), (y.geom.V, y.geom.F),
-                                                         y.M.copy()), protocol=4))
+                                                         y.M.copy(), (x.name, y.name)), protocol=4))
                             v["snap"] = sp
         if not quiet and checked % 50 == 0:
             print(f"  {tag}: frame {n}, {checked} checked, {len(viol)} violating pairs, {n_fcl} narrow checks, "
@@ -1031,7 +1031,9 @@ def make_stills(chapter, viol, k):
         snap = v.get("snap")
         if snap is None or not Path(snap).exists():
             continue
-        ga, Ma, gb, Mb = pickle.loads(Path(snap).read_bytes())
+        sn = pickle.loads(Path(snap).read_bytes())
+        ga, Ma, gb, Mb = sn[:4]
+        na, nb = sn[4] if len(sn) > 4 else (a, b)        # the red one (shrunk by TOUCH_MM) and the blue one
         right = None
         try:
             pk, png_r = tmp / f"{idx}.pkl", tmp / f"{idx}.png"
@@ -1056,8 +1058,8 @@ def make_stills(chapter, viol, k):
         d = ImageDraw.Draw(canvas)
         dep = f"{v['worst']:.1f} mm" if v["worst"] < DEEP else "over 100 mm"
         d.text((10, 6), f"{chapter}, frame {v['frame']}: {dep} deep (limit {v['lim']} mm)", fill="black")
-        d.text((10, 24), f"{a}", fill="#d1495b")
-        d.text((10, 40), f"{b}", fill="#2a7fff")
+        d.text((10, 24), f"{na}", fill="#d1495b")
+        d.text((10, 40), f"{nb}", fill="#2a7fff")
         p = OUT / f"scene_audit_{chapter}_{idx + 1}.png"
         canvas.save(p, optimize=True)
         paths.append(str(p.relative_to(REPO)) if p.is_relative_to(REPO) else str(p))
