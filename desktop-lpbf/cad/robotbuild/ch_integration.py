@@ -271,8 +271,8 @@ class Mover:
             head0 = math.degrees(math.atan2(-t0[0], t0[1])) if face is None else face
             if abs(wrap(head0 - self.hd)) > 4.0:
                 yield from self.turn_to(head0, **kw)
-            n = max(6, int(math.ceil(L / v)) + 6)
-            w = np.array([min(1.0, (k + 1) / 6.0, (n - k) / 6.0) for k in range(n)])
+            n = max(8, int(math.ceil(L / v)) + 10)              # eased over 10 frames each end (0.8 s): the feet keep up
+            w = np.array([min(1.0, (k + 1) / 10.0, (n - k) / 10.0) for k in range(n)])
             s_k = np.cumsum(w / w.sum() * L)
             for s in s_k:
                 x = float(np.interp(s, s_c, C[:, 0]))

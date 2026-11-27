@@ -1399,6 +1399,12 @@ class Gait:
                 if n_now < sw["n"]:
                     sw["n"] = max(sw["k"] + 2, n_now)
                 sw["p1"], sw["psi1"] = self._target(i, sw["n"] - sw["k"])
+            elif sw["k"] <= sw["n"] - 2:                 # later, it follows a body that slows down (a shorter last
+                p1, psi1 = self._target(i, sw["n"] - sw["k"])   # step instead of one past the stop), 45 mm a frame at most
+                dp = p1 - np.asarray(sw["p1"], float)
+                dl = float(np.linalg.norm(dp))
+                sw["p1"] = np.asarray(sw["p1"], float) + (dp * (45.0 / dl) if dl > 45.0 else dp)
+                sw["psi1"] = psi1
             if sw["k"] >= sw["n"]:
                 f["p"], f["psi"], f["sw"] = np.asarray(sw["p1"], float).copy(), float(sw["psi1"]), None
                 self.since, self.last = 0, i
