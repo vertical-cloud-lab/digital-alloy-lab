@@ -119,7 +119,7 @@ comparables run 3.6–6.6k words of main text, median ~4.5k.
 | 2.2 | Making powder for any composition | 250 g charges give LPBF-grade powder; the spread at fixed settings meets the pre-set bar; failures were engineered out | 800 | Blocks A, B; all runs (A1–A6) |
 | 2.3 | Composition fidelity | Dosed charges land within [x] wt%; Si in powder follows the charge; Mg loss [y]; EDS vs ICP [z] | 450 | dosing logs, Block B, ICP (C1–C4) |
 | 2.4 | Printing in-house | Desktop LPBF ranks candidates like an industrial machine, with offset [d] | 550 | desktop + Utah builds on shared powders (P1–P5) |
-| 2.5 | The optimizer chooses the step | Campaign 2: [p]% stopped before printing; finds [alloy]; outside checks agree | 900 | campaign 2 (B1–B6) |
+| 2.5 | The optimizer chooses the step | Campaign 2: [p]% stopped before printing; finds [alloy]; outside checks agree | 900 | campaign 2 (B1–B5, V1–V2) |
 | 2.6 | When it pays off | Twin reproduces campaign spend within [x]%; [k]× with a wrong screen, ~1× with a right one | 550 | twin, clocked benchmark (T1–T4) |
 | 2.7 | Limits | Gain depends on cost ratios and screen error; desktop coupons rank, don't qualify | 250 | T3, P4 |
 | 3 | Conclusion | | 150 | |
