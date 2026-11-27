@@ -23,7 +23,7 @@ It is written so that the campaign fills it in as it runs: every figure, table a
 | Figures and tables | Fig. 1 (benchmark map) and Fig. 5c are drawn from data; Figs. 2-4, 6 are placeholders that say what they need and when ([`figure-status.md`](figure-status.md)) |
 | SI | Skeleton, with the burden inputs (S3) and the Sc-free comparators drawn from data |
 | References | 63 entries, all cited. All 47 with a DOI match Crossref or DataCite on title, year and first author ([`manuscript/refs-check.csv`](manuscript/refs-check.csv)). The 16 without a DOI (vendor datasheets, the USGS scandium chapter, the critical minerals list, NASA-STD-6030, two ISO standards, Eagar-Tsai) are listed there for a hand check |
-| Target journal | Shortlist in [`journals.md`](journals.md) |
+| Target journal | [`journals.md`](journals.md): *Additive Manufacturing Letters* for version A (about 5,000 words, decision within about 4 weeks), *Additive Manufacturing* for version B (5,000-13,000 words, no preprint before submission). Next choices: *MRL* or *Scripta* for A, *Materials & Design* for B |
 | Cover letter | Stub in [`cover-letter.md`](cover-letter.md); not worth drafting until G4 |
 
 **What stands in the way** is in [`risks.md`](risks.md). The two decisions that shape the paper are what counts as
