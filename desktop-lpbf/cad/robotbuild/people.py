@@ -1285,6 +1285,8 @@ class Gait:
         self.overreach_frames = 0
         self.overreach_mm = 0.0
         self.explicit = False           # set(frame=k) was used: the render hook leaves the clock to the caller
+        self.lead_cap = None            # round 10: mm a footprint may lead the body (None: the stride's own);
+                                        # a caller sets it for a slow last approach to a wall, then clears it
 
     # ---------------------------------------------------------------------------------------- state
     @staticmethod
@@ -1431,6 +1433,10 @@ class Gait:
         hdp = hd + self.w * (t + half)
         walk = float(np.clip(sp / 40.0, 0.0, 1.0))
         ahead = 0.5 * (v + vl) * t + vl * half
+        if self.lead_cap is not None:                # round 10: a short, slow approach (chapter 30's people at
+            la = float(np.linalg.norm(ahead))        # the VF-4) stepped a full stride past where the body
+            if la > self.lead_cap:                   # stopped, a toe into the machine's front
+                ahead = ahead * (self.lead_cap / la)
         p, psi = self.home(x + ahead[0], y + ahead[1], hdp, i, walk)
         o, f = self.feet[1 - i], self.feet[i]
         a = math.radians(hdp)

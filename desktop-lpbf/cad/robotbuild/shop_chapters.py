@@ -225,7 +225,7 @@ class VF4:
     def fixtures(self, fc, part=None, k=None, rots=None, a_deg=0.0):
         """Show freecad_cam.FIXTURES[fc] (and the part's cut state k) on the table at the reference table position."""
         import shop_clips as SCL
-        for g in ("vf4/fixture", "vf4/rotfix"):
+        for g in ("vf4/fixture", "vf4/rotfix", "vf4/clamps-", "vf4/clamps+"):
             for n in self.sc.members(g):
                 self.sc.remove(n)
         if fc is None:
@@ -239,15 +239,34 @@ class VF4:
         g = "vf4/rotfix" if rot else "vf4/fixture"
         Mt = np.linalg.inv(E.T((0, 0, 0)))
         by = {}
-        for n, p in fx.items():
-            by.setdefault(p.color, []).append(p.mesh.transform(p.M, inplace=False))
+        clamps = {"vf4/clamps-": {}, "vf4/clamps+": {}}   # round 10: F-S1's edge clamps (with their screws) on each end
+        for n, p in fx.items():                           # as their own groups, so they can be backed off for loading
+            mw = p.mesh.transform(p.M, inplace=False)
+            if fc == "frame_B" and n.startswith("edge clamp"):
+                side = "vf4/clamps-" if float(np.mean(mw.points[:, 0])) < float(M_setup[0, 3]) else "vf4/clamps+"
+                clamps[side].setdefault(p.color, []).append(mw)
+                continue
+            by.setdefault(p.color, []).append(mw)
         for i, (c, ms) in enumerate(by.items()):
             self.sc.add(f"{g}/{i}", E.merge(ms), c, group=g)
+        for gc, d in clamps.items():
+            for i, (c, ms) in enumerate(d.items()):
+                self.sc.add(f"{gc}/{i}", E.merge(ms), c, group=gc)
+            self.sc.parent[gc] = "vf4/table"
+            self.sc.gmat[gc] = np.eye(4)
         # the fixture group's meshes are in the station frame at table X 0: the table group adds M; the platter's group
         # turns about the axis (also in the station frame), so both parents are expressed in the station frame
         self.sc.gmat[g] = np.eye(4)
         del Minv, Mt
         return P          # the part's pose in the station frame (table X 0), for the part group
+
+    def clamps_back(self, dx):
+        """Round 10: F-S1's edge clamps slid dx mm out along their T-slots, away from the part's end faces (dx 0: on them).
+        People load and unload with them backed off: their hands on the end faces hang 70 mm down (the thumb) and the
+        clamps cover 59 mm of the 127 mm faces."""
+        for gc, sx in (("vf4/clamps-", -1.0), ("vf4/clamps+", 1.0)):
+            if gc in self.sc.gmat:
+                self.sc.gmat[gc] = E.T((sx * dx, 0.0, 0.0))
 
     def part(self, name, mesh_spec, P, rot=False, color="#cfd4d9"):
         g = f"obj/{name}"
@@ -321,12 +340,13 @@ class Crew:
         self.p[i].place(x=x, y=y, hd=hd, hands={"l": None, "r": None}, lean=0.0, look=None, palm={"l": None, "r": None},
                         grip={"l": 0.3, "r": 0.3})
 
-    def step(self, i, x, y, hd, hands=None, look=None, lean=0.0, palm=None, grip=None, bend=None):
+    def step(self, i, x, y, hd, hands=None, look=None, lean=0.0, palm=None, grip=None, bend=None, elbow=None):
         s = self.st[i]
         s.update(x=x, y=y, hd=hd, lean=lean)
         kw = dict(x=x, y=y, hd=hd, hands=hands or {"l": None, "r": None}, look=look, lean=lean)
         kw["palm"] = palm or {"l": None, "r": None}
         kw["bend"] = bend or {"l": False, "r": False}     # people.py: the wrist turned so the palm lies flat on a face
+        kw["elbow"] = elbow or {"l": None, "r": None}     # round 10: a world direction for the elbow (None: people.py's)
         if grip is not None:
             kw["grip"] = grip
         self.p[i].set(**kw)
@@ -428,7 +448,7 @@ def lean_for(org, hands):
 
 REACH_ARM = 470.0            # people.carry()'s reach: 470 mm of the 520 mm arm from the shoulder
 SHOULDER_X = 174.7           # the shoulders' half-width (people.py's upperarm01 heads)
-ONE_HAND_OFF = 120.0         # round 10: the inner shoulder this far outside the hand on the load's end face
+ONE_HAND_OFF = 80.0          # round 10: the inner shoulder this far outside the hand on the load's end face
 FOOT_AHEAD = 75.0            # a planted foot may stand this far ahead of its home (Gait.SETTLE_MM is 70)
 D_PREF = 330.0               # the body's origin this far behind its hand when nothing stops it (round 9's 330)
 
@@ -478,12 +498,12 @@ def front_extent(z0, z1, rel_deg, lean=0.0):
     return float((-x[sel] * math.sin(r) + y2[sel] * math.cos(r)).max())
 
 
-def end_hand(m, P, side, fz=0.95, fy=0.30):
+def end_hand(m, P, side, fz=0.92, fy=0.42):
     """Round 10: one hand point (load frame) on the load's end face towards station -x (side -1) or +x (+1), fz of the
     way up its height and fy of its depth from the face nearest the people (station -y), at pose P. The default puts the
-    palm just under the top edge: an inner hand with its palm turned out to the end face has its thumb pointing down,
-    65-90 mm below the palm (measured on the posed model), and F-S1's edge clamps rise 59 mm up the end faces, their
-    screw heads to 69 mm."""
+    palm high and between F-S1's two edge clamps on that face (at 18-33 % and 68-83 % of its depth; they rise 59 mm up
+    the 140 mm end face, their screw heads to 69 mm): an inner hand with its palm turned out to the end face has its thumb
+    pointing down, 65-90 mm below the palm (measured on the posed model)."""
     return end_hands(m, P, side, fz=fz, fy=(fy,))[0]
 
 
@@ -495,8 +515,8 @@ def pair_lift(w, scn, crew, name, spec, keys, kg, caption, sub, step, cam, hand_
     Round 10 (round 9's audit of chapter 30: their coats and shoes touching, the bodies' centres 474 mm apart at a
     317.5 mm load; fingers 31-42 mm into the cart's top and 34 mm into the edge clamps, the palms low on the end faces;
     a stance foot 25 mm under the sill): each person holds its end with the inner hand alone, the palm high on the end
-    face (95 % of its height, 30 % of its depth from the near face: the thumb, hanging below the palm, clear of the edge
-    clamps), the inner shoulder ONE_HAND_OFF outside the hand, so the bodies stand ~0.9 m apart; the outer hand
+    face (92 % of its height, 42 % of its depth from the near face: the thumb, hanging below the palm, between the edge
+    clamps), the inner shoulder ONE_HAND_OFF outside the hand, so the bodies stand ~0.83 m apart; the outer hand
     hangs. The bodies' path is planned first for the whole lift: each frame's stance (as far forward as D_PREF behind the
     hand, never past the fronts: fronts [(station y, z from, z to, x from, x to)], the VF-4's face below its sill and the
     cart's near edge, measured along the station's y for a body turned to its heading, plus FOOT_AHEAD for a planted
@@ -594,7 +614,11 @@ def pair_lift(w, scn, crew, name, spec, keys, kg, caption, sub, step, cam, hand_
         f2 = M[:2, 1] / max(float(np.linalg.norm(M[:2, 1])), 1e-9)
         tgt = [np.asarray(path[i][0], float) for i in range(2)]
         crew.walk_to(w, [tuple(t - f2 * 200.0) for t in tgt], cam, caption, sub, step, face=hds, settle=2)
+        for p_ in crew.p:                          # the last 200 mm: no footprint more than 40 mm ahead of the body
+            p_.gait.lead_cap = 40.0                # (the Gait's stride lead put a toe 35 mm into the VF-4's front)
         crew.walk_to(w, [tuple(t) for t in tgt], cam, caption, sub, step, speed=350.0, face=hds, settle=12)
+        for p_ in crew.p:
+            p_.gait.lead_cap = None
     else:
         for i in range(2):
             crew.place(i, *path[i][0], hds[i])
@@ -602,16 +626,17 @@ def pair_lift(w, scn, crew, name, spec, keys, kg, caption, sub, step, cam, hand_
 
     def via(p, s_, h, away, u):
         """A hand from where it hangs (u 0) to h (u 1) by way of a point 120 mm out from the end face (along `away`)
-        and 40 mm above h: it comes in from outside the face, never through the load or what it stands on."""
+        and 40 mm above h: it comes in from outside the face, never through the load or what it stands on. Round 10: no
+        straight-up first leg (raised beside the body, the inner elbows swung 255 mm out and met between the people)."""
         pre = np.asarray(h, float) + 120.0 * np.asarray(away, float) + np.array([0.0, 0.0, 40.0])
         r = p.rest_hand(s_)
-        up = r.copy()
-        up[2] = max(r[2], float(h[2]) + 40.0)
-        if u < 0.3:
-            return tuple(r + (up - r) * ease(u / 0.3))
-        if u < 0.65:
-            return tuple(up + (pre - up) * ease((u - 0.3) / 0.35))
+        if u < 0.65:                              # rising early, forward later: the fingers over the VF-4's sill
+            v_ = u / 0.65
+            k_ = np.array([ease(v_), ease(v_), math.sin(0.5 * math.pi * v_)])
+            return tuple(r + (pre - r) * k_)
         return tuple(pre + (np.asarray(h, float) - pre) * ease((u - 0.65) / 0.35))
+
+    ELB = (0.0, -0.3, -1.0)                       # round 10: the holding arm's elbow down and a little back
 
     for k, (kind, P, u) in enumerate(seq):
         if kind == "carry":
@@ -639,7 +664,8 @@ def pair_lift(w, scn, crew, name, spec, keys, kg, caption, sub, step, cam, hand_
                       [(round(f_[0] - M[0, 3]), round(f_[1] - M[1, 3])) for f_ in crew.p[i].gait.pose()], flush=True)
             o_ = "l" if s_ == "r" else "r"                # the outer hand hangs
             crew.step(i, x_, y_, hds[i], hands={s_: tuple(tg), o_: None}, look=tuple(hw), lean=ln,
-                      palm={s_: tuple(-aw), o_: None}, grip={s_: 0.1, o_: 0.3}, bend={s_: True, o_: False})
+                      palm={s_: tuple(-aw), o_: None}, grip={s_: 0.1, o_: 0.3}, bend={s_: True, o_: False},
+                      elbow={s_: ELB, o_: None})
             if kind == "carry" or (kind == "reach" and u >= 1.0):
                 _, left, err = seat_hands(p, {s_: hw}, [(Mbox, half)], away={s_: tuple(aw)}, iters=12, margin=3.5)
                 deep.append(left)
@@ -647,13 +673,17 @@ def pair_lift(w, scn, crew, name, spec, keys, kg, caption, sub, step, cam, hand_
                 reaches.append(r)
                 cc = SS.people.carry_check(p, lo, hi, M @ P)
                 clears.append(cc["body_clear_mm"])
+            elif (u >= 0.5 if kind == "reach" else u <= 0.5):
+                # round 10: near the face (the reach's last half, the release's first) the palm is held on its path
+                # too: the IK's 10-40 mm error had left the glove 4.9 mm in the load for a frame
+                seat_hands(p, {s_: np.asarray(tg, float)}, [(Mbox, half)], away={s_: tuple(aw)}, iters=8)
         w.frame(scn, cam, caption, sub=sub, who=["person"], step=step, status="person")
     for i in range(2):
         crew.step(i, crew.st[i]["x"], crew.st[i]["y"], crew.st[i]["hd"], lean=0.0)
     if step_back:
         crew.step_back(w, cam, caption, "they step back", step)
     res = dict(kg=round(kg, 2), team_guideline_kg=round(TEAM_KG, 1), under_guideline=bool(kg <= TEAM_KG),
-               frames=len(seq), how="round 10: one hand each on its end face, the bodies ~0.9 m apart",
+               frames=len(seq), how="round 10: one hand each on its end face, the bodies ~0.83 m apart",
                glove_in_load_mm_max=round(max(deep), 2) if deep else None,
                palm_error_mm_max=round(max(gaps), 1) if gaps else None,
                reach_over_mm_max=round(max(reaches), 1) if reaches else None,
@@ -1388,6 +1418,7 @@ def chapter_30():
 
     # ---- F-S1: the programs' stock on the cart, the risers and edge clamps on the table
     vf4.fixtures("frame_B", "frameT", 0, rots=[["x", 180]])
+    vf4.clamps_back(60.0)                            # round 10: backed off for the loading (slid in at the cut below)
     R_B = GS.rot_of("frame_B")
     P1 = vf4.M_setup @ E.T((0, 0, 0), R_B)
     vf4.set(table_x=-100.0, door=1.0)
@@ -1415,6 +1446,7 @@ def chapter_30():
     scn.hide_obj("load")
     vf4.part("frame part", spec0, P1)
     crew.show(0.0)                                   # at the cut: they have gone (arm A docks where they stood)
+    vf4.clamps_back(0.0)                             # ... and the clamps are slid in on the part's ends
     # ---- arm A tightens the four edge clamps (the planned clip), then the doors shut, same camera
     play(w, scn, "vf4_clamps", cam_arm, hide=("frame part",))
     # round 9: arm A's MiR drives off (to the lathe) before the doors shut: they shut through its arm in round 8
@@ -1439,10 +1471,11 @@ def chapter_30():
     scn.hide_obj("frame part")
     scn.set_obj("load", st @ M_tab @ P1, spec1)
     capO = "Doors open: the clamps off, two people take the part out"
+    vf4.clamps_back(60.0)                            # round 10: loosened and backed off by arm A (not shown)
     P_cart2 = rest_on(spec1, scn, cart_c, CARTH, R_B)
     for i in range(18):
         vf4.set(door=ease((i + 1) / 18))
-        w.frame(scn, cam_out, capO, sub="arm A loosened the clamps first (its planned path run back; not shown)",
+        w.frame(scn, cam_out, capO, sub="arm A loosened the clamps and slid them back first (its planned path run back; not shown)",
                 who=["machine"], step="F-S1", status="pass", proc_s=1.5 / 18)
     for i in range(2):                               # they come back, in the same camera (round 10: from in front,
         pw = (st @ np.r_[-1100.0 + 1300.0 * i, -2300.0, 0.0, 1.0])[:3]   # 1.3 m apart (round 9: 0.49 m), their paths

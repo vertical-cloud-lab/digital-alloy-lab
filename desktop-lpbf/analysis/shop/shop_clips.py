@@ -756,10 +756,25 @@ def clip_drive(name, chapter, akey, from_clip, to_clip, world_parts, caption, su
 
     legs = drive_legs(M0, M1)
 
-    def sweep(qt):
-        """None if the drive with the arm at qt and both arm moves are clear, else the first hit."""
+    def lift_q(M, q, close, dz):
+        """Round 10: q with the TCP raised dz mm, its orientation kept (the IK branch nearest q); None if out of reach or
+        on another branch."""
+        if dz <= 0.0:
+            return q
+        place(M, q, close)
+        T = arm.tcp(q, close)
+        T2 = T.copy()
+        T2[2, 3] += dz
+        sols = arm.ik_all(T2, q)
+        if not sols or float(np.abs(sols[0] - q).max()) > math.radians(60.0):
+            return None
+        return np.asarray(sols[0], float)
+
+    def sweep(segs_out, qt, segs_in):
+        """None if the drive with the arm at qt and the arm moves (segments at the start and end docks) are clear, else
+        the first hit."""
         n = 0
-        for qa, qb, M in ((q0, qt, M0), (qt, q1, M1)):
+        for qa, qb, M in [(a_, b_, M0) for a_, b_ in segs_out] + [(a_, b_, M1) for a_, b_ in segs_in]:
             k_n = max(2, int(math.degrees(float(np.abs(qb - qa).max())) / 0.5) + 1)
             for k in range(k_n):
                 u = k / (k_n - 1)
@@ -776,15 +791,27 @@ def clip_drive(name, chapter, akey, from_clip, to_clip, world_parts, caption, su
                     return (kind, round(k / (k_n - 1), 3)) + h, n
         return None, n
 
-    tried, qt, checked = [], None, 0
-    for turn in (0.0, 30.0, -30.0, 60.0, -60.0, 90.0, -90.0, 120.0, -120.0, 150.0, -150.0, 180.0):
-        cand = q0.copy()
-        cand[0] = q0[0] + math.radians(turn)
-        h, n = sweep(cand)
-        checked += n
-        tried.append(dict(turn_deg=turn, hit=h))
-        if h is None:
-            qt = cand
+    # round 10: with a long tool in the gripper (the nut runner's extension reaches ~260 mm under the TCP, down to the
+    # sill trim's and the finger stand's height at the park pose) the tool is first lifted straight up, then turned
+    tried, qt, checked, plan = [], None, 0, None
+    lifts = (0.0, 150.0, 250.0) if "__tool" in held else (0.0,)
+    for dz in lifts:
+        q0L, q1L = lift_q(M0, q0, c0, dz), lift_q(M1, q1, c0, dz)
+        if q0L is None or q1L is None:
+            tried.append(dict(lift_mm=dz, hit="no IK for the lift"))
+            continue
+        for turn in (0.0, 30.0, -30.0, 60.0, -60.0, 90.0, -90.0, 120.0, -120.0, 150.0, -150.0, 180.0):
+            cand = q0L.copy()
+            cand[0] = q0L[0] + math.radians(turn)
+            segs_out = [(q0, q0L), (q0L, cand)] if dz else [(q0, cand)]
+            segs_in = [(cand, q1L), (q1L, q1)] if dz else [(cand, q1)]
+            h, n = sweep(segs_out, cand, segs_in)
+            checked += n
+            tried.append(dict(lift_mm=dz, turn_deg=turn, hit=h))
+            if h is None:
+                qt, plan = cand, (segs_out, segs_in)
+                break
+        if qt is not None:
             break
     clip = Clip(name, "aisle", chapter)
     clip.meta.update(caption=caption, sub=sub, who=[f"robot {akey}"], step=step, status="pass")
@@ -811,7 +838,7 @@ def clip_drive(name, chapter, akey, from_clip, to_clip, world_parts, caption, su
         return T
 
     if ok:
-        t_out = arm_move(M0, q0, qt, c0, c0, "out")
+        t_out = sum(arm_move(M0, a_, b_, c0, c0, "out") for a_, b_ in plan[0])
         for kind, f, T, amount in legs:
             nf = max(1, int(round(T * FPS)))
             for k in range(nf):
@@ -828,9 +855,13 @@ def clip_drive(name, chapter, akey, from_clip, to_clip, world_parts, caption, su
                 clip.set_arm(akey, arm, tool0, mir=dict(M=M.copy(), arm_dx=arm_dx))
                 clip.frame(1, sub=f"{sub} | {kind} " + (f"{amount:.1f} deg" if kind == "pivot" else f"{amount / 1000:.2f} m"))
             t_drive += T
-        t_in = arm_move(M1, qt, q1, c0, c1, "in")
+        t_in = 0.0
+        for j_, (a_, b_) in enumerate(plan[1]):           # the gripper closes to the next clip's on the last segment
+            last = j_ == len(plan[1]) - 1
+            t_in += arm_move(M1, a_, b_, c0, c1 if last else c0, "in" if last else "in-lift")
     res = dict(ok=ok, fail=None if ok else f"no transport pose clears: {tried[-1]}", poses_checked=checked,
-               transport_turn_deg=tried[-1]["turn_deg"] if ok else None, tried=tried,
+               transport_turn_deg=tried[-1]["turn_deg"] if ok else None, transport_lift_mm=tried[-1].get("lift_mm") if ok
+               else None, tried=tried,
                legs=[dict(kind=k_, seconds=round(T_, 2), amount=round(a_, 1)) for k_, _, T_, a_ in legs],
                drive_s=round(t_drive, 2), clear_mm=round(clear, 1) if clear < math.inf else None,
                reverse_mm=0.0, sideways_mm=0.0, time_s=round(t_drive + (t_out + t_in if ok else 0.0), 2))
