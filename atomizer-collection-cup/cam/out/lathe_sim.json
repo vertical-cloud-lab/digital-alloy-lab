@@ -1,0 +1,114 @@
+[
+  {
+    "part": "B_bottom_disc",
+    "material": "316L",
+    "gouge_area_mm2": 0.0,
+    "gouge_max_mm": 0.05,
+    "leftover_area_mm2": 0.0,
+    "leftover_max_mm": 0.05,
+    "rapids_through_stock": 0,
+    "crashes": [],
+    "cut_time_min": 5.6,
+    "programs": [
+      "setup 1",
+      "setup 2 (flipped)"
+    ],
+    "note": "3-1/4 in. 316L bar. The 1 x 45 deg chamfered face goes against the tube's square end; with the tube that makes the groove the TIG root fills (argon back-purge inside)."
+  },
+  {
+    "part": "B_puck",
+    "material": "304",
+    "gouge_area_mm2": 0.0,
+    "gouge_max_mm": 0.05,
+    "leftover_area_mm2": 0.0,
+    "leftover_max_mm": 0.05,
+    "rapids_through_stock": 0,
+    "crashes": [],
+    "cut_time_min": 5.5,
+    "programs": [
+      "setup 1",
+      "setup 2 (flipped)"
+    ],
+    "note": "3 in. 304 bar. Sits loose on the floor; the liner stands on it."
+  },
+  {
+    "part": "A_puck",
+    "material": "304",
+    "gouge_area_mm2": 0.0,
+    "gouge_max_mm": 0.05,
+    "leftover_area_mm2": 0.0,
+    "leftover_max_mm": 0.05,
+    "rapids_through_stock": 0,
+    "crashes": [],
+    "cut_time_min": 3.4,
+    "programs": [
+      "setup 1",
+      "setup 2 (flipped)"
+    ],
+    "note": "2 in. 304 bar. Sits loose on the floor; the liner stands on it."
+  },
+  {
+    "part": "B_liner",
+    "material": "304",
+    "gouge_area_mm2": 0.0,
+    "gouge_max_mm": 0.05,
+    "leftover_area_mm2": 0.0,
+    "leftover_max_mm": 0.0,
+    "rapids_through_stock": 0,
+    "crashes": [],
+    "cut_time_min": 1.8,
+    "programs": [
+      "setup 1",
+      "setup 2 (flipped)"
+    ],
+    "note": "2-3/4 in. x 0.049 in. 304 tube, sawn to 136 mm and faced to 132.8 mm; held on its OD in a collet or soft jaws with 12 mm out. Deburr the bore by hand."
+  },
+  {
+    "part": "B_body_tube",
+    "material": "316L",
+    "gouge_area_mm2": 0.0,
+    "gouge_max_mm": 0.0,
+    "leftover_area_mm2": 0.0,
+    "leftover_max_mm": 0.0,
+    "rapids_through_stock": 0,
+    "crashes": [],
+    "cut_time_min": 1.9,
+    "programs": [
+      "setup 1",
+      "setup 2 (flipped)"
+    ],
+    "note": "3 in. x 0.065 in. 316L tube, sawn to 156 mm and faced square to 153.0 mm (weld ends square and burr-free, no gap). Spider or plug in the bore against chatter."
+  },
+  {
+    "part": "C_sleeve",
+    "material": "304",
+    "gouge_area_mm2": 0.04,
+    "gouge_max_mm": 0.1,
+    "leftover_area_mm2": 0.008,
+    "leftover_max_mm": 0.1,
+    "rapids_through_stock": 0,
+    "crashes": [],
+    "cut_time_min": 36.3,
+    "programs": [
+      "setup 1",
+      "setup 2 (flipped)"
+    ],
+    "note": "2-3/4 in. 304 bar, turned lip-end first (the lip sits toward the chuck). Hangs lip up."
+  },
+  {
+    "part": "C_spacer",
+    "material": "316L",
+    "gouge_area_mm2": 0.0,
+    "gouge_max_mm": 0.05,
+    "leftover_area_mm2": 0.073,
+    "leftover_max_mm": 0.15,
+    "rapids_through_stock": 0,
+    "crashes": [],
+    "cut_time_min": 39.4,
+    "programs": [
+      "setup 1",
+      "setup 2 (flipped)"
+    ],
+    "note": "Valve-delete spacer: the stock valve body's height, OD and tie-rod pattern (measure first). Bottom-face groove for the glass and its gasket. Tie-rod holes on the mill."
+  }
+]
