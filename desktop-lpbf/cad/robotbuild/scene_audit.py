@@ -257,7 +257,9 @@ def audit_dirs(chapter):
     for d in sorted((FRAMES / chapter).glob("audit.part*")):
         found[f"{chapter}.part{d.name.rsplit('part', 1)[1]}"] = d
     for d in sorted(FRAMES.glob(f"{chapter}.part*")):
-        if (d / "audit" / "frames.pkl").exists():
+        # round 9: a merged chapter's own audit.part<k> wins over a leftover unmerged slice of the same number (an earlier
+        # render's slices left beside the merged folder were read instead of the final ones)
+        if (d / "audit" / "frames.pkl").exists() and d.name not in found:
             found[d.name] = d / "audit"
     for d in sorted(KEEP.glob(f"{chapter}.part*")) + ([KEEP / chapter] if (KEEP / chapter).exists() else []):
         if d.name not in found and (d / "audit" / "frames.pkl").exists():
