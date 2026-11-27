@@ -812,10 +812,13 @@ def write_md(res):
         lf = res["late_fixes"]
         md += ["## 8. Late fixes, re-checked separately", "",
                "Two parts changed while this run was going: the vibration motor moved onto the arm's top face (it sat "
-               "5 mm into it), and the pump hose's end made vertical, 10 mm onto the inlet. Their pairs were recomputed "
+               "5 mm into it), and the pump hose's end made vertical, onto the pump's inlet. Their pairs were recomputed "
                "in FT-1, FT-1V and the Thorlabs variant and are in the tables above; the beam check of FT-1 and FT-1V was "
                "repeated, and the motor was swept over the recoater's travel (21 positions, exact booleans):", "",
-               md_table([dict(state=k, **{kk: (len(vv) if isinstance(vv, list) else vv) for kk, vv in v.items()})
+               md_table([dict(state=k, motor_in_arm_mm3=v["motor_in_arm_mm3"], motor_sweep_contacts=len(v["motor_sweep_hits"]),
+                              motor_nearest_fixed_part=(f"{v['motor_nearest_static'][0]} mm, {v['motor_nearest_static'][1].split(' (')[0]}"
+                                                        if v["motor_nearest_static"] else "-"),
+                              clashes=v["clashes"], beam_hits=v["beam_hits"])
                          for k, v in lf.items() if isinstance(v, dict)]),
                f"Hose into the pump inlet: {lf.get('hose_into_pump_inlet_mm')} mm.", ""]
     md += [f"Run time {res['runtime_s']} s."]

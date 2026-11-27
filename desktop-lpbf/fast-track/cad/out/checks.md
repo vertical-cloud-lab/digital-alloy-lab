@@ -9,7 +9,7 @@ envelopes (sizes marked in `ft_model.P`). A clash with an envelope means 'check 
 | State | Parts | Clashes | Designed contacts | Beam envelope hits | Nearest parts to the beam (mm) |
 |---|---:|---:|---:|---:|---|
 | S1 | 21 | 0 | 1 | 0 | - |
-| S2 | 45 | 0 | 3 | 0 | Water-cooled beam dump, 500 W 2.7, Cover-slide holder, Ø44 opening 5.6, Window retaining flange 7.04, Window ring 7.53 |
+| S2 | 45 | 0 | 3 | 0 | Water-cooled beam dump, 1 kW 2.7, Cover-slide holder, Ø44 opening 5.6, Window retaining flange 7.04, Window ring 7.53 |
 | FT-0 | 80 | 0 | 5 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cover-slide holder, Ø44 opening 5.6, FT-0 spreader bar, 48 mm, ground edge, parked 5.9 |
 | FT-1 | 98 | 0 | 5 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cord clamp 3.52, Silicone-cord blade, 3 mm 3.96 |
 | FT-1V | 100 | 0 | 6 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cord clamp 3.52, Silicone-cord blade, 3 mm 3.96 |
@@ -279,12 +279,12 @@ Pump speed (1 L/s effective) and base pressures are estimates; the floor is set 
 
 ## 8. Late fixes, re-checked separately
 
-Two parts changed while this run was going: the vibration motor moved onto the arm's top face (it sat 5 mm into it), and the pump hose's end made vertical, 10 mm onto the inlet. Their pairs were recomputed in FT-1, FT-1V and the Thorlabs variant and are in the tables above; the beam check of FT-1 and FT-1V was repeated, and the motor was swept over the recoater's travel (21 positions, exact booleans):
+Two parts changed while this run was going: the vibration motor moved onto the arm's top face (it sat 5 mm into it), and the pump hose's end made vertical, onto the pump's inlet. Their pairs were recomputed in FT-1, FT-1V and the Thorlabs variant and are in the tables above; the beam check of FT-1 and FT-1V was repeated, and the motor was swept over the recoater's travel (21 positions, exact booleans):
 
-| state | motor_in_arm_mm3 | motor_sweep_hits | motor_nearest_static | clashes | beam_hits |
+| state | motor_in_arm_mm3 | motor_sweep_contacts | motor_nearest_fixed_part | clashes | beam_hits |
 |---|---|---|---|---|---|
-| FT-1 | 0.0 | 0 | (97.7, 'Saginaw SCE-16EL1208SSLP 304 box, 16 x 12 x 8 in. (body)', -45.8) | 0 | 0 |
-| FT-1V | 0.0 | 0 | (55.33, 'Well-block heater and TC leads', -45.8) | 0 | 0 |
+| FT-1 | 0.0 | 0 | 97.7 mm, Saginaw SCE-16EL1208SSLP 304 box, 16 x 12 x 8 in. | 0 | 0 |
+| FT-1V | 0.0 | 0 | 55.33 mm, Well-block heater and TC leads | 0 | 0 |
 
 Hose into the pump inlet: 4.0 mm.
 

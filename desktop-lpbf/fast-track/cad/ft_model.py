@@ -444,7 +444,7 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
         add("Anodised target, 80 x 80 x 3 mm", box(-40, 40, -40, 40, -3.0, 0.0), C["target"], "MK-18", "cassette")
     if state == "S2":
         d = cyl(40, (0, 0, L["deck_top"]), "z", 50).cut(cyl(12, (0, 0, L["deck_top"] + 30), "z", 21))
-        add("Water-cooled beam dump, 500 W (Thorlabs LB2L/M class, envelope)", d, C["black"], "L9", "cassette")
+        add("Water-cooled beam dump, 1 kW (EKSMA 990-0820 class, envelope)", d, C["black"], "L9", "cassette")
         w = polyline_pipe([(30, 25, L["deck_top"] + 25), (90, 60, L["deck_top"] + 20),
                            (xc + P["box_in"][0] / 2 - 5, 60, L["deck_top"] + 20)], 3.0, smooth=True)
         add("Dump water lines", w, C["water"], "L9", "cassette")

@@ -25,7 +25,7 @@
      "why": "fibre in its bend restrictor"
     },
     {
-     "a": "Water-cooled beam dump, 500 W (Thorlabs LB2L/M class, envelope)",
+     "a": "Water-cooled beam dump, 1 kW (EKSMA 990-0820 class, envelope)",
      "b": "Dump water lines",
      "volume_mm3": 26.3,
      "why": "hose on the dump"
@@ -40,7 +40,7 @@
    "beam_hits": [],
    "beam_nearest": [
     {
-     "part": "Water-cooled beam dump, 500 W (Thorlabs LB2L/M class, envelope)",
+     "part": "Water-cooled beam dump, 1 kW (EKSMA 990-0820 class, envelope)",
      "clearance_mm": 2.7
     },
     {
