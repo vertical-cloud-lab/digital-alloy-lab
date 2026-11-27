@@ -379,17 +379,21 @@ $PY $D/post.py figures --name cross --cases "laminar, steady=/tmp/ft-cfd/cross-l
 # purge: steady flows on the coarse purge mesh, then O2 as a passive scalar on each (configs A-D)
 $PY $D/make_case.py --geom /tmp/ft-cfd/geom/ft1 --res coarse --profile purge --kind purge --iters 800 \
     --nozzle-lpm 5 --purge-lpm 15 --inlet purge_low --outlet vent_high --out /tmp/ft-cfd/pc-D      # A-D: see the table in §2
-/tmp/tools/capmem 4 bash $D/run_case.sh /tmp/ft-cfd/pmesh mesh                       # the purge mesh (pmesh = pc-A's case)
-/tmp/tools/capmem 4 bash $D/run_case.sh /tmp/ft-cfd/pc-D copymesh /tmp/ft-cfd/pmesh solve
+MEM=1g /tmp/tools/capmem 1 bash $D/run_case.sh /tmp/ft-cfd/pmesh mesh   # pmesh: any case written with --res coarse --profile purge
+MEM=1g /tmp/tools/capmem 1 bash $D/run_case.sh /tmp/ft-cfd/pc-D copymesh /tmp/ft-cfd/pmesh solve
 $PY $D/make_case.py --geom /tmp/ft-cfd/geom/ft1 --res coarse --profile purge --kind scalar --t-end 3600 --t-write 300 \
     --dt 2 --nozzle-lpm 5 --purge-lpm 15 --inlet purge_low --outlet vent_high --out /tmp/ft-cfd/sc-D
-/tmp/tools/capmem 4 bash $D/run_case.sh /tmp/ft-cfd/sc-D scalar /tmp/ft-cfd/pc-D
+MEM=1g /tmp/tools/capmem 1 bash $D/run_case.sh /tmp/ft-cfd/sc-D scalar /tmp/ft-cfd/pc-D
 $PY $D/post.py purge /tmp/ft-cfd/sc-D --name scalar-D
-# purge with buoyancy (argon displacing air), nozzle off, 20 L/min through one diffuser
+# 237k-cell mesh check of config A: the same with --res medium on purge-A (copymesh /tmp/ft-cfd/cross-lam), --t-end 1200
+# purge with buoyancy (argon displacing air), nozzle off, 20 L/min through one diffuser; HH and HL: --inlet purge_high,
+# --outlet vent_high / vent_low, --t-end 180
 $PY $D/make_case.py --geom /tmp/ft-cfd/geom/ft1 --res coarse --profile purge --kind buoyant --nozzle-lpm 0 --purge-lpm 20 \
-    --inlet purge_low --outlet vent_high --t-end 300 --t-write 60 --max-co 15 --out /tmp/ft-cfd/buoy-D
-/tmp/tools/capmem 4 bash $D/run_case.sh /tmp/ft-cfd/buoy-D copymesh /tmp/ft-cfd/pmesh buoyant   # ~1 h on 2 shared cores
-$PY $D/post.py purge /tmp/ft-cfd/buoy-D --name buoyant-low-in-high-out
+    --inlet purge_low --outlet vent_high --t-end 300 --t-write 60 --max-co 30 --out /tmp/ft-cfd/buoy-LH
+MEM=1g /tmp/tools/capmem 1 bash $D/run_case.sh /tmp/ft-cfd/buoy-LH copymesh /tmp/ft-cfd/pmesh buoyant   # 10-30 min, 2 cores
+$PY $D/post.py purge /tmp/ft-cfd/buoy-LH --name buoyant-LH
+$PY $D/post.py purgefigs --name purge_buoyant.png --tmax 5 --cases "buoyant-LH=..." "buoyant-HH=..." "buoyant-HL=..."
+$PY $D/post.py snaps --name purge_sections.png --times 60 120 180 --cases "label=/tmp/ft-cfd/buoy-LH=O2" ...
 $PY $D/post.py tables
 ```
 
