@@ -109,7 +109,14 @@ class PersonTrack:
 
     def step(self, n, V, F, M):
         if self.lab is None or self.labF is not F:
-            self.lab, self.labF = _feet(V, F), F
+            # round 9: the replay hands over a new face array with every re-skinned mesh, and _feet decides left from right
+            # by each piece's x in the body frame, which flips when a foot swings across the body's centre line (a long
+            # step behind it, a turn): round 9's first chapter-50 audit read the swinging foot as the planted one (a false
+            # 56.6 mm slip). The pieces are fixed by the topology, so label once per topology and keep the labels.
+            key = (len(V), len(F), hash(np.asarray(F)[: min(len(F), 2000)].tobytes()))
+            if getattr(self, "lab_key", None) != key:
+                self.lab, self.lab_key = _feet(V, F), key
+            self.labF = F
         M = M.astype(float)
         W = V.astype(float) @ M[:3, :3].T + M[:3, 3]
         zmin = [W[self.lab == f, 2].min() if np.any(self.lab == f) else 1e9 for f in (0, 1)]
