@@ -208,6 +208,11 @@ def fastener_rules(kinds):
         ("screw in its insert", screw_in_insert, 40.0,
          "a screw threaded into its threaded insert (round 9: chapter 41's 19 insert x screw pairs, up to 10.5 mm in round 8; "
          "the inserts are drawn as solid sleeves), up to 40 mm"),
+        ("hands on the part they set", _pat(r"^op/(skin|glove|forearm)$", r"^o\d+$"), 25.0,
+         "round 9: the person's hands on a part they set in its seat or a screw they drive after a step the arms failed "
+         "(people.py's fingers curl a little into what they hold), up to 25 mm"),
+        ("hand driver in the hand", _pat(r"^op/(skin|glove|forearm)$", r"^op/tool/"), None,
+         "the person's hand driver is held in their right hand"),
         ("driver on its screw", driver_on_screw, 30.0,
          "the nutrunner's or screwdriver's bit or socket on the screw it turns, up to 30 mm (the socket's depth)"),
     ]
