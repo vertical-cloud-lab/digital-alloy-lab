@@ -11,9 +11,9 @@ folder designs one the lab can make in days to weeks.
   reducer and a 3 in ferrule (B, fully documented here), or **turned in one piece from 4 in bar (B', better)**.
 - **B' moves the tri-clamp joint 100 mm up, away from the pile.** With 816 g of shot its gasket peaks at 62 °C
   instead of 263 °C, which is just over PTFE's 260 °C. Shot fused under the KF joint also heats that O-ring
-  less: 157 °C instead of 195 °C for 25 g. B' is modelled, collision-checked and drawn (sheet 5), but it has
-  no lathe program yet. Build B' if the lathe takes 4 in bar. Its pot is B's with a longer tube, and the tests
-  and run procedure are the same apart from the upper part's two welds.
+  less: 157 °C instead of 195 °C for 25 g. B' is modelled, collision-checked, drawn as a concept (sheet 5) and
+  has lathe programs (49 min, two setups). Build B' if the lathe takes 4 in bar. Its pot is B's with a longer
+  tube, and the tests and run procedure are the same apart from the upper part's two welds.
 - **The pot** is a 3 in ferrule, a 3 in tube and a turned end cap with an 8 mm floor and an R6 inside corner. It
   holds a loose 304 catch puck and a liner with a 1.5 mm gap to the wall, and comes off after every run with its
   full 72.9 mm opening.
@@ -50,7 +50,7 @@ The design changed four times during the analyses, and each change is recorded i
 4. **Adapter (B'):** the split's gasket sat 30 mm above an 816 g pile and reached 263 °C. Turning the upper part
    in one piece puts the joint 33.5 mm under the KF face, 130 mm above the pile, where the gasket reaches 62 °C.
    It also does away with the reducer and two welds, and its thicker wall soaks up a hang-up better. Its numbers
-   come from the same FEA (the `*_adapter` cases). It hasn't been CAM'd.
+   come from the same FEA (the `*_adapter` cases), and its lathe programs from the same CAM.
 
 ## What the analyses show
 
@@ -64,7 +64,7 @@ The design changed four times during the analyses, and each change is recorded i
 | Glass (C) | with the pan and sleeve, the glass itself is fine (quartz 0.8–1.3 MPa, borosilicate 5.6 MPa); its bottom seal is what fails | `analysis/structural.py` |
 | KF under pressure | standard rings are rated to ~1.5 bar abs (Pfeiffer, Edwards); the relief opens at ~1.8 bar abs, so an over-pressure ring (50 psig) is part of the design | `bom/README.md` |
 | Collisions at the KF joint | the upper part goes on and off clear of the cone with the clamp off; a hinged clamp left hanging open hits its flange (38 positions) | `cad/build_gif.py`, `cad/out/build_collisions.json` |
-| Lathe CAM | end cap (a blind pocket), puck, liner and tube cut in a 2D stock-removal simulation: no gouges, at most 0.1 mm left, no rapids through stock | `cam/lathe_cam.py`, `cam/out/lathe_*.png` |
+| Lathe CAM | end cap (a blind pocket), puck, liner and tube cut in a 2D stock-removal simulation: no gouges, at most 0.1 mm left, no rapids through stock. So is the adapter for B': its flange backs and neck are plunged, then traced with the 3 mm grooving blade, in a 49 min cycle | `cam/lathe_cam.py`, `cam/out/lathe_*.png` |
 | Mill CAM | the 120 mm weld fixture (each part's ferrule overhangs an end) cut in CAMotics 1.2.0 matches the CAD within the 0.5 mm grid, with an 18 min cycle. The first run found a real bug: nested comments skipped a tool change | `cam/mill_cam.py`, `cam/out/mill_fixture_sections.png` |
 | CAD against vendor STEP models | McMaster's KF-50 stubs and 139.7 mm nipple are within 1 % by volume. The A&N stub and Duniway nipple in the BOM had no STEP model to check | `cad/vendor_check.py`, [`vendor_check.md`](cad/out/vendor_check.md) |
 | Edison final design check | agrees with the ledge-free design and the alarms. Asked for: no sharp welded floor corner (done); a hydro proof instead of a 1.5× pneumatic one (in the procedure); rate-of-rise targets of about 0.04 / 0.004 mbar/min; low heat input with chills; a safety lanyard; logging the thermocouples, ideally with rate-of-rise logic and a latched trip; and the vendor's written rating for the KF joint with the over-pressure ring | `edison/literature_high_final_design_check.md` |
@@ -88,7 +88,8 @@ the upper part stays.
   [`bom/README.md`](bom/README.md).
 - [`cad/drawings/collection_cup_drawings.pdf`](cad/drawings/collection_cup_drawings.pdf): B's two parts on
   the tri-clamp, the turned parts, the fixture, A, and B's turned adapter (sheet 5, a concept).
-- `cam/gcode/`: lathe programs for the end cap, puck, liner and tube; mill programs for the fixture.
+- `cam/gcode/`: lathe programs for the end cap, puck, liner, tube and B's adapter; mill programs for the
+  fixture.
 - `cad/out/option_b.step`, `option_b_adapter.step`, `option_a.step`, `machine_cone_section.step`,
   `cam/out/fixture_b.step`.
 - **To build B' instead of B:** turn the adapter (sheet 5) in place of the KF stub, the reducer and the upper
@@ -118,10 +119,11 @@ runs and small copper charges only, always with the shields.
   `B["body_len"]` in `params.py` and re-run `cad/build.py`.
 - **B (welded upper part): the gasket margin for a full charge of shot.** PTFE (260 °C) meets the 263 °C worst
   case only just. B' fixes that.
-- **B' has no lathe program yet.** Its 15° and 20° flange backs need a grooving or back-turning tool, which
-  `cam/lathe_cam.py` doesn't model. Its tri-clamp face groove has to be copied from a bought 3 in ferrule, since
-  the groove isn't drawn here. Its top thermocouple sits on a thicker wall, so it reads a 25 g hang-up later than
-  B's does (120 °C at 13 s, against 4 s), although the O-ring peaks lower.
+- **B' is a concept until a machinist checks it.** Its lathe programs trace the flange backs and the neck with a
+  3 mm parting blade used as a grooving tool, which the simulation treats as a square-cornered rectangle; a
+  grooving-and-turning insert would suit better. Its tri-clamp face groove has to be copied from a bought 3 in
+  ferrule, since the groove isn't drawn or programmed here. Its top thermocouple sits on a thicker wall, so it
+  reads a 25 g hang-up later than B's does (120 °C at 13 s, against 4 s), although the O-ring peaks lower.
 - The sanitary parts (ferrules, clamp, gaskets, caps) aren't priced yet. Their sizes are the ASME BPE / 3-A
   standard ones drawn here.
 - The centring-ring recess depth. McMaster's approximate STEP says 2.6 mm, but that would leave too thin a face

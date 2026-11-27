@@ -346,7 +346,7 @@ def sheet_b_adapter(pdf):
         return f"{v:.0f} C" if v is not None else "(not run)"
     fig, ax = sheet("B': turned KF-50 to 3 in adapter (concept)", 5,
                     "316/316L round bar, 4 in (101.6) x 40",
-                    ["Replaces B's welded upper part (stub + reducer + ferrule, welds W1, W2a). Not CAM'd yet.",
+                    ["Replaces B's welded upper part (stub + reducer + ferrule, welds W1, W2a). Lathe: cam/gcode/B_adapter_op*.nc.",
                      "TC face: copy the gasket groove from a bought 3 in 14WMP ferrule *. KF face flat, Ra 0.8.",
                      "TC end first (bore, cone, face), then the KF end on soft jaws. Flange backs: grooving tool.",
                      f"FEA, 816 g of shot: gasket {peak('B_816_adapter', 'gasket')} (split B "

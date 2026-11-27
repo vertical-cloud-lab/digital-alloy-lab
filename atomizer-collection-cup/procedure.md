@@ -48,10 +48,11 @@ The parts list is `BOM.md`, and alternatives are in `bom/README.md`.
 | Part | Machine | Program | Check |
 |---|---|---|---|
 | End cap Ø76.2 × 20, 316/316L: 8 mm floor, 12 mm rim at the tube's wall, R6 inside corner | lathe (blind pocket) | `cam/gcode/B_bottom_cap_op1.nc`, `_op2.nc` | `cam/out/lathe_B_bottom_cap.png` |
-| Pot tube, 3 in × 0.065, faced square to 82.35 | lathe (spider in the bore) | `B_body_tube_op1/2.nc` | `lathe_B_body_tube.png` |
+| Pot tube, 3 in × 0.065, faced square to 82.35 (B': 183.0, faced the same way) | lathe (spider in the bore) | `B_body_tube_op1/2.nc` | `lathe_B_body_tube.png` |
 | Liner, 2-3/4 in × 0.065 304, faced to length | lathe (collet or soft jaws) | `B_liner_op1/2.nc` | `lathe_B_liner.png` |
 | Catch puck Ø70 × 25, 304; 6×45° underneath (clears the R6), 2×45° on top | lathe | `B_puck_op1/2.nc` | `lathe_B_puck.png` |
 | Weld-alignment V-block, 6061 | mill, 2 setups | `fixture_op1.nc`, `fixture_op2.nc` | CAMotics, `cam/out/mill_fixture_sections.png` |
+| B' only: the adapter, Ø90.9 × 32.7, from 4 in 316/316L bar (sheet 5) | lathe, 2 setups: the TC end, bore, cone and flange backs first, then the KF face and its recess on soft jaws. Cut the TC face's gasket groove to match a bought ferrule | `B_adapter_op1/2.nc` (49 min) | `lathe_B_adapter.png` |
 
 The programs are Haas/LinuxCNC-style metric G-code. Prove them out in the shop's own CAM or simulator, at the
 shop's own speeds and feeds, before the first cut. Deburr everything. The liner must drop into the pot freely: the

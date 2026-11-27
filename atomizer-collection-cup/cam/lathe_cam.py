@@ -38,6 +38,7 @@ from shapely.geometry import LineString, Polygon
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
+sys.path.insert(0, str(HERE.parent / "cad"))
 import params as P  # noqa: E402
 
 OUT = HERE / "out"
@@ -137,6 +138,18 @@ def parts():
                     ops=["face", "op2_face"],
                     note=f"3 in. x 0.065 in. 316/316L tube, sawn to {Lb + 3:.0f} mm and faced square to {Lb:.1f} mm "
                          "(weld ends square and burr-free, no gap). Spider or plug in the bore against chatter."))
+    # B' (next step): the turned KF-50 to 3 in adapter. Part frame: KF face at z = 0 (chuck side in setup 1), tri-clamp
+    # face at the free end, so the 72.9 bore, the 45 deg cone and the 47.5 bore are all bored from the TC end.
+    import parts as PT
+    up, _, _, za = PT.b_adapter_profiles(recess=True)
+    top = za["top"]
+    sec_a = [(round(r, 4), round(top - zz, 4)) for r, zz in up][::-1]
+    Ha = max(zz for _, zz in sec_a)
+    out.append(Part("B_adapter", "316L", (0, 4.0 * INCH / 2, -10.0, Ha + 1.0), sec_a,
+                    ops=["face", "drill", "bore", "rough_od", "finish_od", "groove_od", "part", "op2_face",
+                         "op2_bore_chamfer"],
+                    note="4 in. 316/316L bar. B' upper part (concept, sheet 5): TC end first, then the KF face and its "
+                         "centring-ring recess on soft jaws. Copy the TC face's gasket groove from a bought ferrule."))
     lip_t, so, sl, sw, sL = 3.0, c["sleeve_od"] / 2, c["sleeve_lip_od"] / 2, c["sleeve_wall"], c["sleeve_len"]
     si = so - sw
     # machined lip-end down (in the chuck side), so the OD steps down toward the free end
@@ -370,6 +383,34 @@ def gen(part):
             p.g1(r_, z_)
         p.g1(path[-1][0] + 0.5, path[-1][1], 0.2)
         p.g0(clear, path[-1][1])
+    if "groove_od" in part.ops:
+        # Between two flanges (edges facing each other): plunge-rough with the 3 mm blade, then trace the profile.
+        # At each blade position the tip goes to the highest point of the section (plus the nose radius) under the
+        # blade's whole width, so the blade never enters the part, and on a wall that leans away from the groove
+        # one of its corners follows the wall.
+        tp = TOOLS["part"]
+        p.use("part")
+        # the section's outer edge as r(z), sampled finely and at every vertex (a steep flange back changes r by
+        # ~4 mm per mm of z, so coarse samples would miss its corners)
+        zs_env = np.unique(np.r_[np.arange(zmin, zmax, 0.005), [z for _, z in sec], zmax])
+        rs_env = np.array([envelope(poly, z, outer=True) or 0.0 for z in zs_env])
+
+        def tip_r(zc, allow=0.0):
+            m = (zs_env >= zc - tp.width / 2 - 1e-9) & (zs_env <= zc + tp.width / 2 + 1e-9)
+            return (float(rs_env[m].max()) if m.any() else r_hole) + tp.nose_r + allow
+        zc_hi, zc_lo = zmax - tp.width / 2, zmin + tp.width / 2
+        p.lines.append(f"(groove between the flanges, z {zmin:.1f} to {zmax:.1f}: plunges every "
+                       f"{0.8 * tp.width:.1f} mm leaving 0.3, then the profile at 0.05 mm steps)")
+        for zc in list(np.arange(zc_hi, zc_lo, -0.8 * tp.width)) + [zc_lo]:
+            p.g0(clear, zc)
+            p.g1(tip_r(zc, 0.3), zc, tp.f)
+            p.g0(clear, zc)
+        prof = [(tip_r(zc), zc) for zc in np.arange(zc_hi, zc_lo - 1e-9, -0.05)]
+        p.g0(clear, zc_hi)
+        p.g1(prof[0][0], zc_hi, tp.f)
+        for r_, z_ in prof:
+            p.g1(r_, z_, 0.04)
+        p.g0(clear, prof[-1][1])
     if "part" in part.ops:
         p.use("part")
         tp = TOOLS["part"]
@@ -413,7 +454,7 @@ def gen(part):
     if "op2_bore_chamfer" in part.ops:
         tb = TOOLS["bore"]
         q.use("bore")
-        path = nose_path(sec, tb.nose_r, zmin - tb.nose_r, zmin + 2.0, outer=False)
+        path = nose_path(sec, tb.nose_r, zmin - tb.nose_r, zmin + 2.0, outer=False, step=0.02)
         r_lo, keep = path[0][0], []
         for r_, z_ in path:
             if r_ > r_lo + 0.02 and z_ > zmin + 0.8:
@@ -422,7 +463,8 @@ def gen(part):
             keep.append((r_, z_))
         path = keep
         q.g0(path[0][0] - 1.0, zmin - 2.0)
-        q.g0(path[0][0], path[0][1])
+        q.g0(path[0][0], zmin - 2.0)
+        q.g1(path[0][0], path[0][1], 0.2)            # feed the last 1.6 mm: the face is only 0.4 mm away
         for r_, z_ in path:
             q.g1(r_, z_, 0.06)
         q.g1(path[-1][0] - 1.0, path[-1][1] - 0.4, 0.2)
