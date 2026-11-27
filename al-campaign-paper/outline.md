@@ -61,6 +61,15 @@ is expensive" (09:48), which points to an amount-weighted metric. Proposed:
   scandium content on its own. The paper reports all three and states the claim on the primary.
 - [`scripts/mineral_burden.py`](scripts/mineral_burden.py) computes them from [`data/element-criticality.csv`](data/element-criticality.csv).
   Sterling picks the primary and the threshold [X] % (FLAIME's O4 uses ≥ 40 %, G3 uses 25 % on SRI).
+- **What the inputs show (2026-11-27).**
+  - Every element in play except Fe is on the final 2025 list, Al and Si included.
+  - On B_NIR, AlSi10Mg (5.2-10.3 wt %) scores *above* Scalmalloy (4.7-6.0), and so do the Mn-rich seeds (S1 at
+    6.6-7.3).
+  - On B_cost, every Sc-free alloy except silver-bearing A20X is at least 97 % below Scalmalloy.
+  - So B_NIR is the only one of the three that tells Sc-free alloys apart. It is still the proposed primary, with the
+    claim region "stronger than in-house AlSi10Mg, and B_NIR below Scalmalloy's lower bound (4.7 wt %)". That region
+    already holds five or six Sc-free alloys (Fig. 1b), so a new alloy has to beat those, not only AlSi10Mg.
+  - Details are in [`risks.md`](risks.md) (R1, R2).
 
 ## Sections and the claim each makes
 

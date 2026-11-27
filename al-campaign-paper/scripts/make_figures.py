@@ -19,6 +19,7 @@ from __future__ import annotations
 import datetime as dt
 import math
 import sys
+import textwrap
 from pathlib import Path
 
 import matplotlib
@@ -120,12 +121,15 @@ def placeholder(ax, pid: str, p: pd.DataFrame, panel: str = "") -> None:
     ax.set_xticks([])
     ax.set_yticks([])
     final = dt.date.fromisoformat(row["final_due"])
-    txt = (f"PLACEHOLDER{(' · ' + panel) if panel else ''}\n\n"
-           f"Needs: {row['data_needed']}\n\n"
-           f"Data file: {row['data_files']}\n"
-           f"Gate: {row['gate']} · data due {final:%b %d, %Y} · owner: {row['owner']}")
-    ax.text(0.5, 0.5, txt, ha="center", va="center", fontsize=6.3, color=INK2, wrap=True,
-            transform=ax.transAxes)
+    fig = ax.figure
+    width_in = ax.get_position().width * fig.get_size_inches()[0]
+    ncol = max(18, int(width_in * 72 / (6.3 * 0.58)))
+    parts = [f"PLACEHOLDER{(' · ' + panel) if panel else ''}", "",
+             f"Needs: {row['data_needed']}", "",
+             f"Data file: {row['data_files']}",
+             f"Gate: {row['gate']} · data due {final:%b %d, %Y} · owner: {row['owner']}"]
+    txt = "\n".join(textwrap.fill(t, ncol) if t else "" for t in parts)
+    ax.text(0.5, 0.5, txt, ha="center", va="center", fontsize=6.3, color=INK2, transform=ax.transAxes)
 
 
 def save(fig, name: str) -> None:
@@ -356,9 +360,10 @@ def fig5(p, tensile, hardness) -> str:
             ax.errorbar(i, m, yerr=hw, color=INK, capsize=2, linewidth=0.8)
         ax.text(i, 8, f"n = {n}", ha="center", fontsize=6.3, color="white")
     ax.set_xticks(range(len(groups)), [g[0] for g in groups], fontsize=6.5)
-    ax.set_ylabel("Yield strength (MPa), mean ± 95 % CI")
+    ax.set_ylabel("Yield strength (MPa)")
+    ax.set_ylim(0, 340)
     if camp.empty:
-        ax.text(0.98, 0.95, "finalists: tensile\ndue Feb 12", transform=ax.transAxes, ha="right", va="top",
+        ax.text(0.5, 0.97, "finalists' tensile due Feb 12", transform=ax.transAxes, ha="center", va="top",
                 fontsize=6.3, color=INK2)
     ax.set_title("(c) Yield strength", loc="left")
     status.append("(c) in-house AlSi10Mg drawn" + ("" if camp.empty else " with campaign alloys"))
