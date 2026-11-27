@@ -49,13 +49,13 @@ Updated in round 2 (2026-11-27); §0 lists what the detailed design work changed
   - **Custom parts:** 31 kinds of piece to FT-1, every one programmed in FreeCAD CAM and checked in a voxel
     simulation: **59–123 shop hours** with PR 266's allowances, not the 25–40 that round 1 guessed
     ([`fab/`](fab/)). No honing, no vacuum seals, no 4th axis.
-  - **Cost:** **$28.9k–46.8k** with the monitoring set (camera, raking lights, coaxial photodiode, acoustic emission,
-    digitizer), **$23.7k–38.6k without it**, against $70.5k–154.1k for PR 266's BOM.
+  - **Cost:** **$29.2k–47.3k** with the monitoring set (camera, raking lights, coaxial photodiode, acoustic emission,
+    digitizer), **$23.9k–39.1k without it**, against $70.5k–154.1k for PR 266's BOM.
   - **Time:** first tracks at 2.7–7.3 weeks and **first coupons at 3.7–9.3 weeks** with the two stages on separate
     vendors' PCard orders and the shop giving 5–8 hours a working day. **With two people in the shop (12 h a day) the
     coupons come at 3.2–6.4 weeks.** On one purchase order for both stages: 4.2–9.3 weeks.
 - **FT-0 is FT-1's first half:** the same optics, box and heated plate without the stages, spread by hand with a film
-  applicator. It lays single tracks and single-layer pads at **1.9–5.2 weeks for $20.8k–36.7k** ($16.4k–30.5k
+  applicator. It lays single tracks and single-layer pads at **1.9–5.2 weeks for $20.9k–36.6k** ($16.5k–30.4k
   without monitoring), and it is worth doing even if FT-1 follows, because it checks the used laser chain inside its
   return windows.
 - **What FT-1 gives up**, all of which can come back later:
@@ -110,7 +110,7 @@ in headed Chrome with real mouse clicks. Each finding below links the folder wit
 | **The trace O₂ analyzer reads only to 10,000 ppm**, so it can't show the box is safe to open | [`control/`](control/README.md) §1 | a percent-range O₂ transmitter on the exhaust, a valve that keeps the trace cell out of air, possibly a sample pump |
 | **The plate's heat sets the build time.** The thermal FEA (CalculiX, CAD v2) gives 0.67 W/K from the substrate top to the block (0.83 W/K across the 0.1 mm argon gap); without a dwell the substrate runs 41–106 K over 200 °C | [`analysis/out/fea/`](analysis/out/fea/), [`control/`](control/README.md) §7 | a dwell takes most of each layer: at the FE conductance a 10 mm build takes 2.1–4.2 h with the block at setpoint, **0.8–1.8 h with the block 20 K below the plate** (round 1 assumed 1.2–1.8 h with no dwell) |
 | **Process window** from a melt-pool model calibrated on 15 published AlSi10Mg tracks | [`process/`](process/README.md) | starting set **255 W, 1.25 m/s, 0.10 mm hatch, 30 µm layers**; first build three 10 mm and two 5 mm cubes; 0.60 h for 10 mm before any dwell; RTC lists for commissioning rungs 1–3 |
-| **Structure** (CalculiX) | [`analysis/out/fea/struct.md`](analysis/out/fea/struct.md) | a **sponge silicone gasket**, not a solid cord (the cord needs 4.0 kN to close); the gantry as drawn has a **13 Hz** first mode, so **four 45 mm posts with braces** (79 Hz); the cube plate and window pass (SF 34 and 74); the X-VSR20A must pull the rod down past its O-ring drag (7–45 N); the Thorlabs stage needs one O-ring |
+| **Structure** (CalculiX) | [`analysis/out/fea/struct.md`](analysis/out/fea/struct.md) | a **sponge silicone gasket**, not a solid cord (the cord needs 4.0 kN to close); the gantry as drawn in round 1 has a **13 Hz** first mode, so **four 45 mm posts with braces** (79 Hz in an equivalent model; **43 / 60 / 67 Hz as CAD v2 draws it**, below the 60 Hz minimum: the front frame needs a brace like the back, and the head's flange plate gussets); the cube plate and window pass (SF 34 and 74); the X-VSR20A must pull the rod down past its O-ring drag (7–45 N); the Thorlabs stage needs one O-ring |
 | **Cross-flow** (OpenFOAM, laminar and k-ω SST, 237k cells) | [`analysis/out/cfd/`](analysis/out/cfd/) | the slot jet holds 2.6–2.7 m/s over the build area; bed shear 0.03–0.05 Pa, below the 0.053–0.118 Pa that starts to lift 63 µm powder; 96–99 % of tracers released 0.5–3 mm up reach the collector |
 | **Purge** (OpenFOAM, passive and buoyant two-gas runs) | [`analysis/out/cfd/`](analysis/out/cfd/results.md) | through the nozzle alone, as drawn, the box takes 33–50 min to 1000 ppm; **a low diffuser and a high vent reach 1000 ppm in 2.6 min and 100 ppm in about 5 min** (argon displaces the air from the floor up), faster than perfect mixing (6.2 / 8.9 min). Two bulkheads, a diffuser and a ball valve; the analyzer samples the vent |
 | **Fabrication** (FreeCAD CAM, 66 setups, every program checked in a voxel simulation; 35 drawings) | [`fab/`](fab/) | with PR 266's per-part allowances, FT-1's parts need **about 59–123 shop hours, not 25–40**. The schedule below is redone on them |
@@ -125,7 +125,7 @@ it:
 |---|---|---|
 | CAD checks, progression, renders, STEP | v2 | [`cad/`](cad/README.md) |
 | Thermal FEA | v2 | [`analysis/out/fea/`](analysis/out/fea/) |
-| Structural FEA | v1, with the head and lens at their datasheet masses and the 30 mm offset | the gantry case should be re-run on v2's head bracket |
+| Structural FEA | v1 for the lid, cube plate, window and rod; the gantry also on v2's drawn frame | v2's frame: 43 / 60 / 67 Hz ([`struct.md`](analysis/out/fea/struct.md) 4c addendum) |
 | CFD | v1 (same box, cassette and nozzle) | [`analysis/out/cfd/`](analysis/out/cfd/) |
 | Process and optics | v1 geometry, own optics model | its changes (lens offset, window position) are in v2 |
 | Fabrication (pieces, CAM, drawings, hours) | v1 | v2's changes listed and costed in [`fab/out/v2/delta.md`](fab/out/v2/delta.md); `fab/parts.py` stops with a message on v2 until ported |
@@ -158,9 +158,9 @@ The parts that make the machine slow come from requirements a first machine does
 | | Alternative | Parts + shop time | First tracks | First coupons | O₂ | Heated plate | Main risk | Verdict |
 |---|---|---|---|---|---|---|---|---|
 | A | PR 266's design, fast-tracked (used majors, swapped switches, outsourcing split) | $70k–76k at spec with used majors (`lead-times.md`) | ~11.3–13.5 wk | ~12–15 wk | 1–10 ppm | Ø25/50/75 modules | honing, 134+ BYU hours | the long-term machine, not a 6-week one |
-| **FT-0** | **Single-track bench**: used laser chain over a heated plate in a stainless box, hand-spread layers | **$20.8k–36.7k** ($16.4k–30.5k without monitoring) | **1.9–5.2 wk** | single layers and pads only | 100–1000 ppm (flow) | Ø40, 200 °C | the used laser's condition | **do first** |
-| **FT-1** | **Purge-box LPBF**: FT-0 plus a heated well, a piston stage and a hopper-blade stage | **$28.9k–46.8k** ($23.7k–38.6k without monitoring) | **2.7–7.3 wk** (PCard stages) / 3.2–7.3 wk (one PO) | **3.7–9.3 wk** / 4.2–9.3 wk; 3.2–6.4 wk with two people in the shop | 100–1000 ppm (flow) | Ø40 well, 200 °C | shop hours; approvals; hopper flow with fine Al | **recommended** |
-| FT-1V | FT-1 in a stock vacuum cube with a pump-purge kit | $39.9k–59.7k | 3.4–8.4 wk | 4.4–10.4 wk | < 100 ppm in 2–3 cycles | Ø40 well, 200 °C | stages and grease under vacuum; two POs | if O₂ below 100 ppm is required from day 1 |
+| **FT-0** | **Single-track bench**: used laser chain over a heated plate in a stainless box, hand-spread layers | **$20.9k–36.6k** ($16.5k–30.4k without monitoring) | **1.9–5.2 wk** | single layers and pads only | 100–1000 ppm (flow) | Ø40, 200 °C | the used laser's condition | **do first** |
+| **FT-1** | **Purge-box LPBF**: FT-0 plus a heated well, a piston stage and a hopper-blade stage | **$29.2k–47.3k** ($23.9k–39.1k without monitoring) | **2.7–7.3 wk** (PCard stages) / 3.2–7.3 wk (one PO) | **3.7–9.3 wk** / 4.2–9.3 wk; 3.2–6.4 wk with two people in the shop | 100–1000 ppm (flow) | Ø40 well, 200 °C | shop hours; approvals; hopper flow with fine Al | **recommended** |
+| FT-1V | FT-1 in a stock vacuum cube with a pump-purge kit | $40.1k–60.2k | 3.4–8.4 wk | 4.4–10.4 wk | < 100 ppm in 2–3 cycles | Ø40 well, 200 °C | stages and grease under vacuum; two POs | if O₂ below 100 ppm is required from day 1 |
 | E | Laser engraver as the base (PR 266 §1b) | $7.5k–9.5k for a 200 W MOPA engraver | – | – | – | add-on | pulsed only: Monport's GT 200W has no CW or quasi-CW mode, and its board is closed (Sterling's 2026-11-19 update) | no: with a CW laser swapped in it becomes FT-0 with marking-grade optics |
 | F | Buy a commercial desktop unit (AO Metal A30, Xact XM200C, ...) | $59k–130k (PR 266 §2.2) | vendor lead time + PO and any bid steps | – | ≤ 1000–3000 ppm typical | none listed on the desktop units | lead times not published; no heated plate | the go/no-go fallback, not a 6-week route |
 | G | Reduced-build-volume insert in BYU's Concept Laser M2 | an insert, ~$1k–5k (estimate) | 2–6 wk (estimate; depends on that lab) | same | the M2's | check whether the M2 has one | the lab's willingness, warranty and schedule | ask this week |
@@ -439,21 +439,23 @@ From [`parts.csv`](parts.csv) (`python fast_track.py`):
 |---|---:|---:|---:|
 | Laser and optics (used) | $4.8k–7.9k | $4.8k–7.9k | $4.8k–7.9k |
 | Scan control and computing | $1.2k–2.5k | $1.4k–2.7k | $1.4k–2.7k |
-| Motion | $0.1k–0.6k | $6.0k–6.1k | $6.0k–6.1k |
-| Enclosure or chamber | $0.9k–1.2k | $0.9k–1.2k | $11.4k–13.1k |
+| Motion | $0.0k–0.1k | $6.0k–6.1k | $6.0k–6.1k |
+| Enclosure or chamber | $1.2k–1.7k | $1.2k–1.7k | $11.6k–13.6k |
 | Heated plate | $0.6k–1.0k | $0.9k–1.4k | $0.9k–1.4k |
 | Gas and O₂ | $2.7k–4.3k | $2.7k–4.3k | $2.7k–4.1k |
 | Safety | $2.8k–3.7k | $2.8k–3.7k | $2.8k–3.7k |
 | Stock and shop time ($65/h) | $3.2k–6.5k | $4.2k–8.5k | $4.7k–9.7k |
 | Glovebox (if the lab has none free) | $0–2.7k | $0–2.7k | $0–2.7k |
 | Monitoring (camera, lights, photodiode, AE, digitizer) | $4.5k–6.2k | $5.3k–8.2k | $5.3k–8.2k |
-| **Total** | **$20.8k–36.7k** | **$28.9k–46.8k** | **$39.9k–59.7k** |
-| Total without monitoring | $16.4k–30.5k | $23.7k–38.6k | $34.6k–51.5k |
+| **Total** | **$20.9k–36.6k** | **$29.2k–47.3k** | **$40.1k–60.2k** |
+| Total without monitoring | $16.5k–30.4k | $23.9k–39.1k | $34.8k–51.9k |
 
 - **Purchase orders.** FT-1 needs one only if both Zaber stages go on one order ($5,896). Buying the piston stage from
-  Thorlabs instead (MTS50/M-Z8 + KDC101, $2,179.18, both "Available: Today") keeps every order under $3,500. Its 44 N
-  vertical rating carries the rod only with one O-ring at about 10 % squeeze (structural FEA). FT-1V adds a PO to Ideal
-  Vacuum (~$9.5k).
+  Thorlabs instead (MTS50/M-Z8 + KDC101, $2,179.18, both "Available: Today") keeps the stage orders under $3,500. Its
+  44 N vertical rating carries the rod only with one O-ring at about 10 % squeeze (structural FEA). FT-1V adds a PO to
+  Ideal Vacuum (~$9.5k). **At the high end McMaster's lines now come to about $3.7k–4.0k** (stock, the four-post frame,
+  fittings, HEPA, extinguisher), over the $3,500 PCard limit: they fall naturally into orders days apart (S1's frame and
+  stock on day 0, FT-0's gas and safety parts later), or go on BYU's McMaster account if it has one (not checked).
 - **Prices** are in [`live-reads-2026-11-26.csv`](live-reads-2026-11-26.csv) and round 2's
   [`live-reads-2026-11-27.csv`](live-reads-2026-11-27.csv) (all 14 eBay listings read; the Edwards RV3 pump had sold).
 
@@ -551,6 +553,7 @@ spot works.
 | The RTC4 or its 64-bit DLL won't run with this head | ask SCANLAB before paying; guide-laser test in week 1; correXion grid | the RTC5 with SCANLAB's XY2-100 converter (quote), or a Teensy XY2-100 controller (OPAL / DTU) |
 | Back reflection damages the used laser | the 30 mm lens offset; 50 W test on a bead-blasted plate watching the status bit; ask IPG about protection | tilt the head 3° (defocuses the edges ±1 mm) |
 | The shop can't give 8–12 hours a working day | book it on day 0 | send the plates and sheet parts out (fab/'s outsourced split) |
+| The scan-head frame rings (43 Hz as drawn; 60 Hz is the minimum) | add the front-frame brace and head gussets before first light; tap-test the built frame | a stiffer frame or the head on the deck's own posts |
 | LSO or EHS approval takes longer than 3 weeks | ask on day 0 with the Class 1 layout | FT-0's bench work waits; mechanics go on |
 | The flow purge stalls above ~500 ppm | O₂ log on the first purge | better gasket; FT-1V's vacuum cube |
 | Fine Al powder won't feed from the moving hopper | test the hopper on the bench with the real powder in week 1–2 | a second vertical stage as a supply piston (one more Zaber X-VSR20A) |
@@ -618,7 +621,9 @@ drawings, and took the other workers' findings:
   beam tube moved to suit; the cover slide 130 mm above the bed in both enclosures; Ø6 × 20 mm heaters and a 24 mm
   heater plate; a beam tube whose centre section is two half-shells, so the lid can open (round 1's tube trapped it); a
   48 mm spreader bar for FT-0 (the 70 mm applicator didn't fit between the nozzle and the collector); the structural
-  FEA's **four-post braced gantry** (79 Hz against 13 Hz); one D4NS-2CF switch per guard; the rod-gland screws moved
+  FEA's **four-post braced gantry** (79 Hz in the FEA's equivalent model against 13 Hz; re-run on the frame as drawn
+  it gives 43 / 60 / 67 Hz, so it still needs a front-frame brace and gussets under the head's flange plate); one
+  D4NS-2CF switch per guard; the rod-gland screws moved
   inside the gland's face seal (the fabrication worker found four leak paths outside it); a potted plug and a rod-end
   block for the heater leads.
 - **Monitoring MON1–MON9** is drawn: a Pi HQ layer camera through its own lid port (17.8 µm per pixel across the plate),
