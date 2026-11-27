@@ -93,6 +93,13 @@ than a better final alloy: after \$25k it was \stat{k1-c-0-v25} percentage point
 of the optimum ahead under the knowledge gradient (\stat{k1-c-0-v25-ci}) and
 \stat{k1-c-1-v25} under expected improvement per dollar (\stat{k1-c-1-v25-ci}),
 and after \$100k neither lead remained.
+\note{\textbf{Consistency flag for \S2.6's claim.} Issue \#120's outline has
+``[k]$\times$ with a wrong screen, $\sim$1$\times$ with a right one''. Here, with a
+right screen, screen-then-test is \emph{better} than every network policy at
+\$100k (no policy's mean reaches its level), and the clocked benchmark agrees
+(screening reached T1 4 $\pm$ 1 days sooner than BOFN at $\kappa=0$, PR 297). The
+claim should read ``[k]$\times$ with a wrong screen; screen-then-test wins when the
+screen is right'', unless the calibrated twin says otherwise.}
 \note{Uses BOFN with powder reuse (EI per dollar, partial) as the
 step-choosing policy because it is the robust one across $\kappa$; pKGFN's
 3.8-fold at $\kappa=1$ (\stat{k1-su-pkgfn-tiered-ci95}) is in SI

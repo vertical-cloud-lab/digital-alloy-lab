@@ -112,10 +112,12 @@ would be a standalone paper, which is the option ruled out on Nov 27.
    computational validation, and puts the results under "Method validation", which is what this is: BOFN
    and p-KGFN adapted to an alloy chain with powder reuse, a screen-error knob, a full-chain KG
    counterpart, and a matched-seed protocol.
-3. **It keeps the *Advanced Materials* article on its own story.** The benchmark's nuanced findings (choosing
-   the step buys an early lead, not a better finish; the knowledge gradient is no better than expected
-   improvement per dollar; pKGFN restricted to simulated alloys fails when the screen is right) need room
-   to be stated with their caveats. Folded into the SI they either take that room or get cut to one line.
+3. **It keeps the *Advanced Materials* article on its own story.** The benchmark's findings are nuanced:
+   choosing the step buys an early lead but not a better final alloy; screen-then-test is the best policy
+   when the screen is right; expected improvement per dollar with powder reuse is the most robust policy;
+   and the knowledge gradient as implemented is competitive only when the screen is wrong. They need room to
+   be stated with their caveats. Folded into the SI they either take that room or get cut to one line, and
+   two of them bear on choices the *Advanced Materials* article still has to make (decisions M7, M8).
 4. **It does not cost the *Advanced Materials* article its novelty.** That article's claim is the physical
    demonstration; a synthetic benchmark published first is prior validation, not a precedent.
 5. **It gives the campaign paper (#277, Feb 2027) and proposals something citable** for the optimizer.
@@ -142,3 +144,4 @@ until accepted. STAR Protocols suits a step-by-step rewrite and costs more. JOSS
 | M5 | Whether to wait for PR 297 to merge so the clocked benchmark can be cited at a fixed commit | cite when merged |
 | M6 | The AI-use declaration Elsevier asks for | drafted as a bracket |
 | M7 | **The live campaign's acquisition function** (issue #120's Experimental Section says partial-evaluation KG per cost). On this benchmark pKGFN as implemented fails when the screen is right; BOFN with powder reuse (EI per $) is robust across κ. Decide before the campaign's pre-registration (SI S13) | flagged in `adv-mater/methods-si.tex` |
+| M8 | **§2.6's wording** in issue #120's outline, "~1× with a right one": here, and in bofn-clocked, screen-then-test *wins* when the screen is right | flagged in `adv-mater/methods-si.tex` §B |
