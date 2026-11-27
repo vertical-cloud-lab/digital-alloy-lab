@@ -7,7 +7,8 @@ monitoring_spec.py says where each port, window and instrument goes; this file d
     (with the liner's hole), the argon purge (SAE-4 bored-through fitting, 1/8 in. 316 tube through the wall, flattened tip over
     the slide, needle valve outside), and the Chronos 2.1-HD with lens and filters on a tilt block and a T-slot post;
   * BW, back-wall light window: the obround slot, rectangular seat and clamp holes (frame_features again), the window, its
-    gaskets and clamp frame, the lower back liner's left piece shortened, and the 850 nm LED light outside on the sight line;
+    gaskets and clamp frame, the lower back liner's left piece shortened, and the 850 nm LED light outside on the sight line (an
+    M850D3 imaged onto the plate by an ACL25416U-B in an SM1L05, on a finned heat sink, clamp and L bracket: _bw_light());
   * LP, steep lid port: a bore normal to the lid sized to pass the clear aperture across the lid, an adapter boss whose window
     sits square to the line of sight (optics.md §0 item 10), the cover slide in the boss under the window, the face O-ring, the
     IMX296 camera with its 50 mm lens and filters, and the cut-out in the optics bridge the camera passes through;

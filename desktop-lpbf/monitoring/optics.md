@@ -536,8 +536,9 @@ estimated; the guard's air at 40 °C):
   10 nm redder. Keep long recordings to 10 µs or 10 kfps, or add a fan. CW: keep to ≤ 1 A.
 - **The LED's ambient rating is 0–40 °C, and the guard's air is 38–43 °C** (mechanics.md Checks §7), the same problem as the
   cameras'.
-- **Overdriving past 2 A** would probably work for µs pulses, but nothing published supports it. Leave the board's EEPROM pins
-  unconnected, or the DC2200 caps the current at 1.5 A.
+- **Overdriving past 2 A** would probably work for µs pulses, but nothing published supports it, and it needs the DC2200's LED1
+  terminal (0–4 A, up to 23 kHz, so below 24 kfps). Either way, leave the board's EEPROM pins unconnected, or the DC2200 caps the
+  current at 1.5 A.
 
 **Eye safety** (IEC 62471 exposure limits, as in Directive 2006/25/EC Annex I: IR-A retinal thermal, weak visual stimulus,
 6,000/α W m⁻² sr⁻¹ past 10 s, α clamped to 0.011–0.1 rad; cornea and lens 100 / 570 / 3,200 W/m² at 1,000 / 100 / 10 s):
@@ -555,7 +556,7 @@ estimated; the guard's air at 40 °C):
 - **No direct path leaves the guard.** All of the light ends on the bed, the tube, the clamp frame, or (the window's 3.4 %
   reflection) on the recoater sensor post (46 %) and the guard's opaque back panel (54 %, ~250 W/m² at 2 A).
 - **The viewing panel passes 850 nm, but only scattered light can reach it.** Every chamber opening is covered by a camera or
-  this light, and the lit bed's 81 W m⁻² sr⁻¹ is far under every limit. Exempt.
+  this light (the laser window is under the scan head), and the lit bed's 81 W m⁻² sr⁻¹ is far under every limit. Exempt.
 - **With the chamber door open over a bare, polished plate,** 44 % of the light on the bed reflects out of the door. It lands on
   the guard's fixed front panel (94 %) and right side (6 %), not on the viewing window. Someone at the open door, in that
   reflection, would see the lens aperture above the retinal limit for staring past 10 s. Below 0.85 A CW it is under the limit.
