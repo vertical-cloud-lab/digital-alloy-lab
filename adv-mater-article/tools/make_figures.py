@@ -270,8 +270,8 @@ def fig5c_benchmarks() -> None:
     ax.axvline(sc_mid, color=INK2, lw=0.8, ls=(0, (4, 3)), zorder=1)
     ax.text(sc_mid + 0.08, 128, "Scalmalloy's B\n(T needs less)", fontsize=6.4, color=INK2, va="bottom")
     ax.text(0.15, 612, "Campaign 2 has to land in the shaded region:\nbeyond the front of the Sc-free baselines\n"
-            "printed and tested in this lab, at less burden\nthan Scalmalloy. To count as new, it also has\n"
-            "to clear the dotted front", fontsize=7, color=INK, va="top")
+            "printed and tested in this lab, at less burden\nthan Scalmalloy, and (a secondary check on\n"
+            "reported values) above the dotted front", fontsize=7, color=INK, va="top")
 
     series(a5, "Al5X1 (EOS, nominal)", BLUE, "EOS Al5X1\n(Al-Mg-Zr-Mn)", (a5_mid - 0.8, 428), ha="center")
     series(hs, "Al-HS1 (Hoganas, typical)", BLUE, "Höganäs Al-HS1\n(Al-Mn-Cr-Zr)", (mid("Al-HS1 (Hoganas, typical)") + 0.25, 318))
@@ -320,13 +320,13 @@ def fig5c_benchmarks() -> None:
     ax2.set_yticks([]); ax2.spines["left"].set_visible(False)
     ax2.set_ylim(-0.7, n - 0.3)
     ax2.set_xlim(0, x_max)
-    ax2.set_xlabel("Mineral burden B_NIR (wt % of the alloy imported, net; USGS MCS 2026)")
+    ax2.set_xlabel("Mineral burden B_NIR (import-weighted alloying additions, wt % of the alloy; USGS MCS 2026)")
     ax2.text(0.0, 1.0, "B ranges (USGS gives Mg, Si and Zr import reliance as bounds); seeds (#275) have no "
              "strength yet", transform=ax2.transAxes, fontsize=6.8, color=INK2, va="bottom")
     fig.text(0.0, 0.035, "DRAFT for Fig. 5c. Campaign 2 replaces the data-sheet baselines with Al5X1 and Al-HS1 "
              "printed and tested here, beside AlSi10Mg; data sheets stay\nas context. Points sit at the middle of "
-             "each alloy's B range. CP1 and Al-1.87Fe-1.02Mg-1.03Zr (seed S2) already lie in the region, so a "
-             "candidate also has to\nclear the reported front to count as new. Reported front: the campaign paper's "
+             "each alloy's B range. CP1 and Al-1.87Fe-1.02Mg-1.03Zr (seed S2) already lie in the region, which is why "
+             "T also\nchecks the reported front. Reported front: the campaign paper's "
              "comparator set @ baca180, unverifiable rows left out. Burden metric not yet frozen (D9).",
              fontsize=6.2, color=INK2, va="top")
     save(fig, "fig5c-draft-benchmarks")

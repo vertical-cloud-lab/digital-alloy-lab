@@ -12,10 +12,11 @@ We submit our Research Article, "[title]", for consideration in the collection "
 
 **What we found.** [One or two sentences, version A: "A laboratory that makes powder for every candidate
 composition, prints it in-house and lets a cost-aware optimizer choose which step to run next found [alloy], a
-scandium-free printable aluminum alloy ([YS] MPa aged yield strength, [EL] % elongation, [B] wt % imported
-elements) that lies beyond two commercial scandium-free alloys, EOS Al5X1 and Höganäs Al-HS1, printed and tested
-in our laboratory the same way, after stopping [p] of [n] candidates before printing. Those two alloys came within
-[x] % of their data sheets, so the comparison is one to one and our measurements are on a par with industry's."
+scandium-free printable aluminum alloy ([YS] MPa aged yield strength, [EL] % elongation, [B] wt % import-weighted
+alloying additions) that lies beyond commercial scandium-free alloys (EOS Al5X1[, Höganäs Al-HS1]) printed and
+tested in our laboratory the same way, after stopping [p] of [n] candidates before printing. Those alloys reached
+[x] times their data-sheet yield strength here, so the comparison is one to one and our measurements are on a par
+with industry's."
 Version B goes to another journal (outline.md §5).]
 
 **Why it matters to the journal's readers.** New printable aluminum alloys are scarce because powder for an untested

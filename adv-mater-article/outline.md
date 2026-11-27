@@ -80,12 +80,13 @@ Several drafts now draw on the same lab work (this one; the campaign paper, #277
 two powder-doser papers),
 and a journal will check whether this article's results were already published. The #277 session (campaign paper, due Feb 28, 2027) proposed the split below on
 2026-11-27 (`al-campaign-paper/outline.md` on `claude/issue-277-20261127-1859`); this outline adopts it
-unchanged, and adds the last two rows.
+unchanged, and adds five more: the baselines' first measurement, campaign 2, the burden metric, dosing and the
+synthetic benchmarks.
 
 | Result | Campaign paper (Feb 2027) | This article (early 2028) |
 |---|---|---|
 | Campaign 1 alloys: compositions, powders, prints, properties, corrosion, benchmark map, mineral burden | **Owns** | Cites it; uses its data as prior data for the optimizer |
-| The industry Sc-free baselines (EOS Al5X1, Höganäs Al-HS1): sourcing, first in-house prints and tests, parity with their data sheets | **Owns** the first measurement (#277 run of 2026-11-27, with sourcing and schedule) | Cites it; reprints the baselines in campaign 2's builds and on the desktop LPBF, and reports those |
+| The industry Sc-free baselines (EOS Al5X1, Höganäs Al-HS1): sourcing, first in-house prints and tests, parity with their data sheets (*proposed here; not yet in the campaign paper's split table*) | **Owns** the first measurement (#277 run of 2026-11-27, with sourcing and schedule) | Cites it; reprints the baselines in campaign 2's sessions and on the desktop LPBF, and reports those |
 | Atomization as a method (process window, Block A repeatability, Block B composition spread, failure modes, dosing fidelity) | Reports settings and yields in its SI; no claim | **Owns** |
 | The optimizer: per-step costs, partial evaluation, replay/acceleration factor | One paragraph; no acceleration claim | **Owns** |
 | CALIBER measurement settings | Uses and cites | **Owns** (unless CALIBER gets its own paper; decision D5) |
@@ -134,25 +135,26 @@ Two of the commercial alloys are the counterparts of the seed families:
   (228/270 = 0.84; issue 1 in §9). Because the baselines get most of their strength from the direct age, they also
   show whether that shortfall is AlSi10Mg's or the process's.
 - **The target T is expanding their front, defined as in the campaign paper** (its pre-registration §2–§4 at
-  `479f983`). A candidate must be stronger than in-house AlSi10Mg; it must carry less B than Scalmalloy at every
-  allowed import reliance; and no in-house baseline may dominate it. That means every baseline whose B isn't robustly
-  above the candidate's must be weaker. The step is sized by the hypervolume it adds. The burden condition is kept
+  `479f983`). A candidate must be stronger than in-house AlSi10Mg, and it must carry less B than Scalmalloy at every
+  allowed import reliance. No in-house baseline may dominate it, so every baseline whose B isn't robustly above the
+  candidate's must be weaker. Nor, on reported values, may any published Sc-free alloy dominate it. The step is sized by the hypervolume it adds. The burden condition is kept
   so that both papers make the same claim, though under B_NIR it says more about Mg and Mn than about Sc (issue 2
   in §9). The pre-registration gives the statistical rule.
 - **What the data sheets already say.** Under B_NIR, Al5X1 is both stronger and lower in burden than Al-HS1. So
   Al5X1 alone sets the front, and Al-HS1 matters as the same-family comparator for Al–Mn–Cr–Zr candidates, or on
-  another axis (its data sheet advertises strength at temperature). "At least one" means Al5X1 if the claim is about
-  the front, and Al-HS1 if campaign 2 stays in the Mn–Cr–Zr family (README D0a; sourcing is in #277's run).
+  another axis (its data sheet advertises strength at temperature). If only one is bought, it is Al5X1; Al-HS1 alone
+  only if EOS won't sell to a lab without an EOS machine (README D0a, as the campaign paper recommends).
 - **New, not only better than what was measured here.** A low-burden alloy can lie beyond the in-house front and
   still be a published one: Aheadd CP1's data-sheet point does, and so does Al–1.87Fe–1.02Mg–1.03Zr (376 MPa aged at
-  B_NIR ≈ 1.0, which is seed S2). The pre-registration therefore also reports whether the finalist beats the
-  published values of Sc-free alloys, which decides whether it can be called new. That is the higher bar.
-- **Timing.** The campaign paper buys and prints the baselines first: Al5X1 first, quotes in the week of Nov 30, a
-  PO by Dec 11, and aged Al5X1 tensile results by about late January (U.S. stock) or mid-February 2027 (from Europe).
-  This article uses those as campaign 2's prior and reprints the baselines in campaign 2's builds.
-- **AlSi10Mg stays**, as the route control and the floor, reprinted in the same sessions with recorded parameters,
-  machined parity bars and an extensometer. Scalmalloy stays as data-sheet context, unless the campaign paper prints
-  it.
+  B_NIR ≈ 1.0, which is seed S2). So T, like the campaign paper's claim, also needs the finalist not to be dominated
+  by the published values of Sc-free alloys. That secondary check is the higher bar.
+- **Timing.** The campaign paper buys and prints the baselines first, Al5X1 first, with quotes in the week of Nov 30.
+  A PO by Dec 4 from U.S. stock gives aged Al5X1 tensile results by about Jan 22–29, 2027; a PO by Dec 11 from Europe,
+  by about Feb 8–12. This article uses those as campaign 2's prior and reprints the baselines in campaign 2's
+  sessions.
+- **AlSi10Mg stays**, as the route control and the floor, reprinted in the same sessions with recorded parameters and
+  an extensometer, as built and stress-relieved. Scalmalloy is printed here too (bought, or atomized as D2), as the
+  burden reference. It belongs to the in-house front, but under T's burden condition it never decides it.
 
 ## 6. Sections, the claim each makes, and length
 
@@ -208,8 +210,8 @@ not as a verdict on the paper. Two of them come from the lab's own data.
 
 | Issue | Change made (or still needed) |
 |---|---|
-| **AlSi10Mg printed here is below its data sheets.** The April Utah bars gave 228 ± 13 MPa yield (as built, horizontal, as-printed surface, n = 4), below every as-built data-sheet row (233–300 MPa, machined). A target of "above as-built AlSi10Mg" is therefore low, and it says nothing about whether the lab's numbers compare with industry's | Campaign 2 is measured against **industry Sc-free alloys printed and tested here** (Al5X1, Al-HS1; §5), with a **pre-set parity check** against their data sheets. AlSi10Mg stays as the route control and floor: reprinted in the same sessions, with recorded laser parameters, machined parity bars and an extensometer. The likely causes of the gap get tested, not assumed: unrecorded laser parameters, as-printed surfaces, small flat coupons against round machined bars, and a strain channel that read elastic slopes of 29–49 GPa on four of the five bars, with crosshead speeds faster than ASTM E8 allows while measuring yield (PR #288). Data sheets are context in Fig. 5c, not the comparison |
-| **The burden measure lets any low-Mg alloy win.** B = Σ wᵢ·NIRᵢ counts Mg like Sc. Scalmalloy's B is mostly its 4.7 wt % Mg, so an alloy with less Mg beats it without any design effort; Al5X1 does (3.1–4.2 against 4.7–6.0 wt %) | "Lower B than Scalmalloy" is no longer the headline. It stays as one condition of T (paired, on measured compositions), as in the campaign paper. The headline is expanding the Sc-free front, where Al5X1 and Al-HS1, measured here, have to be beaten. B is still frozen with the campaign paper before its screen ranks anything (D9). It is reported by element, and the SI redraws the front under the alternatives (cost of the critical additions, Sc content). Still open: whether a metric that weighs Sc's small, export-controlled market more heavily should replace B_NIR in both papers |
+| **AlSi10Mg printed here is below its data sheets.** The April Utah bars gave 228 ± 13 MPa yield (as built, horizontal, as-printed surface, n = 4), below every as-built data-sheet row (233–300 MPa, machined). A target of "above as-built AlSi10Mg" is therefore low, and it says nothing about whether the lab's numbers compare with industry's | Campaign 2 is measured against **industry Sc-free alloys printed and tested here** (Al5X1, Al-HS1; §5), with a **pre-set parity check** against their data sheets. AlSi10Mg stays as the route control and floor: reprinted in the same sessions, with recorded laser parameters and an extensometer, as built and stress-relieved. The likely causes of the gap get tested, not assumed: unrecorded laser parameters, as-printed surfaces, small flat coupons against round machined bars, and a strain channel that read elastic slopes of 29–49 GPa on four of the five bars, with crosshead speeds faster than ASTM E8 allows while measuring yield (PR #288). Data sheets are context in Fig. 5c, not the comparison |
+| **The burden measure lets any low-Mg alloy win.** B = Σ wᵢ·NIRᵢ counts Mg like Sc. Scalmalloy's B is mostly its 4.7 wt % Mg, so a low-Mg alloy beats it without any design effort unless it carries a lot of Mn, Cr or Si instead; Al5X1 does (3.1–4.2 against 4.7–6.0 wt %) | "Lower B than Scalmalloy" is no longer the headline. It stays as one condition of T (paired, on measured compositions), as in the campaign paper. The headline is expanding the Sc-free front, where Al5X1 and Al-HS1, measured here, have to be beaten. B is still frozen with the campaign paper before its screen ranks anything (D9). It is reported by element, and the SI redraws the front under the alternatives (cost of the critical additions, Sc content). Still open: whether a metric that weighs Sc's small, export-controlled market more heavily should replace B_NIR in both papers |
 | **The figures describe instruments, and the alloy gets half a figure** | Fig. 5c now carries the comparison (the finalist against the in-house front, with parity lines to the data sheets) and Fig. 5d the finalist. Still to decide for version A: whether the finalist needs a figure of its own (aging curves, EBSD) |
 | **The evidence that choosing the step helps is simulated** | Campaign 2's decision log, labelled stops and stop audit (Fig. 5a–b); the twin fitted on campaign 1 must predict campaign 2 (next two rows) |
 | The twin comparison is built in: κ = 1 is a screen ignoring a feature the CALPHAD node computes; the twin is validated in sample | Baseline is now the **best-form screen** (all CALPHAD outputs, trained on campaign 1, tuned cut-off); the **headline comparison is pKGFN vs full-chain network BO**; the twin is **fitted on campaign 1 and must predict campaign 2 out of sample**; truths drawn from the fitted posterior; measured κ primary; ±50 % cost robustness (pre-registration) |

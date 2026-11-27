@@ -30,8 +30,8 @@ powder meets a repeatability bar set in advance, and its composition follows
 the charge to within \tbd{y} wt\%. Step costs span \tbd{four} orders of
 magnitude. In a \tbd{k}-week campaign, the optimizer stops \tbd{p} of \tbd{n}
 candidates before printing and finds \tbd{alloy}, a scandium-free alloy that is
-stronger, or carries fewer imported elements, than two commercial
-scandium-free alloys printed and tested alongside it. A digital twin fitted to the first campaign predicts
+stronger, or carries a smaller import-weighted burden of alloying elements, than
+commercial scandium-free alloys printed and tested alongside it. A digital twin fitted to the first campaign predicts
 the second and estimates that choosing the step saves \tbd{k}-fold over the
 best stage-gated screen when the screen misjudges grain refinement, and nothing
 when it does not.
@@ -133,7 +133,7 @@ compositions (\cref{sec:atomize,sec:fidelity}); (ii) a desktop LPBF system
 prints these powders densely enough to rank candidates, with a measured offset
 from an industrial machine (\cref{sec:print}); (iii) in a \tbd{k}-week campaign
 the optimizer chose which step to run for each candidate, stopped \tbd{p}\% of
-them before printing, and found \tbd{alloy}, which lies beyond two commercial
+them before printing, and found \tbd{alloy}, which lies beyond commercial
 scandium-free alloys printed and tested alongside it (\cref{sec:campaign}); and (iv) a
 digital twin calibrated on the campaign shows when this beats screening and
 when it does not (\cref{sec:twin}).
@@ -359,15 +359,16 @@ pre-registered audit pushed a random quarter of the acquisition stops one step
 further: \tbd{a} of \tbd{b} audited candidates would have been worth continuing
 (\cref{fig:campaign}b).\src{B2, B7}
 
-The candidates were judged against two scandium-free alloys sold for LPBF,
-Al5X1 (Al--Mg--Zr--Mn) and Al-HS1 (Al--Mn--Cr--Zr),\cite{ds_al5x1,ds_hoganas}
+The candidates were judged against scandium-free alloys sold for LPBF, Al5X1
+(Al--Mg--Zr--Mn)\tbd{ and Al-HS1 (Al--Mn--Cr--Zr), if both were bought},\cite{ds_al5x1,ds_hoganas}
 bought as gas-atomized powder and printed, aged and tested in the same sessions
-as the candidates, with AlSi10Mg. Printed here, they reached \tbd{YS$_\text{5X1}$} and
+as the candidates, beside AlSi10Mg and Scalmalloy.\tbd{cite the campaign paper,
+which measured them first} Printed here, they reached \tbd{YS$_\text{5X1}$} and
 \tbd{YS$_\text{HS1}$}~MPa yield strength after their suppliers' aging
-treatments, within \tbd{x} and \tbd{y}\% of the data sheets (\cref{tab:alloys}),
+treatments, \tbd{x} and \tbd{y} times their data-sheet values (\cref{tab:alloys}),
 so the laboratory measures on a par with industry; AlSi10Mg from the same sessions
-gave \tbd{YS$_\text{AlSi}$}~MPa.\src{B6, B8} Together they define the front the
-campaign had to expand (\cref{fig:campaign}c). The best alloy,
+gave \tbd{YS$_\text{AlSi}$}~MPa as built.\src{B6, B8} Together they define the
+front the campaign had to expand (\cref{fig:campaign}c). The best alloy,
 \tbd{composition}, reached \tbd{YS}~MPa yield strength, \tbd{UTS}~MPa tensile
 strength and \tbd{EL}\% elongation \tbd{after heat treatment} ($n$ =
 \tbd{n}), at a mineral burden of \tbd{B}~wt\% (by element in the SI). That
@@ -387,7 +388,8 @@ twin's replay of screen-then-test, full-chain BO and random on the same budget.
 (c) Yield strength against mineral burden: the front of the commercial
 scandium-free baselines printed and tested here (Al5X1, Al-HS1; filled), each
 joined to its data-sheet value (open); AlSi10Mg from the same sessions; every
-candidate tensile-tested; Scalmalloy and other data sheets as context.
+candidate tensile-tested; Scalmalloy printed here; the scandium-free front on
+reported values; data sheets as context.
 (d) The finalist: stress--strain curves, micrograph, outside checks.}
 \caption{\textbf{A campaign in which the optimizer chooses the step.}
 \tbd{Caption once the data exist.}}
@@ -466,8 +468,9 @@ magnitude and from a cheap step that is wrong about the alloys that matter; with
 an accurate screen, screening is as good or better (\cref{fig:twin}b). The
 desktop system ranks candidates but does not qualify them: its coupons are small,
 and its offset from an industrial machine (\cref{fig:print}c) must be measured
-for each new alloy family. The commercial baselines were printed with the
-campaign's parameters, not their suppliers' qualified parameter sets, so their
+for each new alloy family. The commercial baselines were printed by the
+campaign's parameter rule on this machine, not with their suppliers' qualified
+parameter sets, so their
 in-house values describe this laboratory's route rather than the best those
 alloys can do; the parity check bounds that gap. The design space was
 \tbd{elements and bounds}, and the mineral-burden score depends on import
@@ -516,16 +519,19 @@ Al5X1 (Al--Mg--Zr--Mn) & in house; aged \SI{400}{\celsius}, \SI{6}{\hour} & \tbd
 Al-HS1 (Al--Mn--Cr--Zr) & in house; aged \SI{375}{\celsius}, \SI{4}{\hour} & \tbd{} & \tbd{} & \tbd{} & \tbd{} & \tbd{ICP}\\
  & data sheet;\cite{ds_hoganas} same\textsuperscript{c} & --- & 370 / 440 & 12 & & 5.4--5.6\\
 AlSi10Mg & in house; same sessions, as built & \tbd{} & \tbd{} & \tbd{} & \tbd{} & \tbd{ICP}\\
+ & in house; same sessions, stress-relieved & \tbd{} & \tbd{} & \tbd{} & --- & \\
  & Aconity MIDI, April 2026; as built\textsuperscript{d} & --- & $228\pm13$ / $376\pm10$ & $4.5\pm0.5$ & 0.84 / 0.82 & \\
  & data sheets;\cite{ds_eos,ds_nikon} as built\textsuperscript{e} & & 233--300 / 450--470 & 5--10 & & 5.2--10.3\\
 \addlinespace
-Scalmalloy (Al--Mg--Sc--Zr) & data sheets;\cite{ds_colibrium,ds_3dsystems} aged & & 465--500 / 505--530 & 11.5--15.8 & & 4.7--6.0\\
+Scalmalloy (Al--Mg--Sc--Zr) & in house; aged \SI{325}{\celsius}, \SI{4}{\hour}\textsuperscript{f} & \tbd{} & \tbd{} & \tbd{} & \tbd{} & \tbd{ICP}\\
+ & data sheets;\cite{ds_colibrium,ds_3dsystems} aged & & 465--500 / 505--530 & 11.5--15.8 & & 4.7--6.0\\
 \bottomrule
 \end{tabularx}
 
 \smallskip
-\raggedright\footnotesize \textsuperscript{a}Mineral burden $B$, the weight percent
-of the alloy that the United States imports, net (Experimental Section). Data-sheet
+\raggedright\footnotesize \textsuperscript{a}Mineral burden $B$: the alloying
+additions, weighted by U.S.\ net import reliance, in weight percent of the alloy;
+aluminum itself is left out (Experimental Section). Data-sheet
 rows use the nominal composition (Al5X1: the middle of its ranges) and are ranges
 because USGS gives some import reliances only as bounds; in-house rows use each
 lot's ICP-OES composition. \textsuperscript{b}In-house YS / UTS divided by the
@@ -535,6 +541,9 @@ AlSi10Mg build against EOS's horizontal as-built row, 270 / 461~MPa).
 \textsuperscript{d}Horizontal, as-printed surfaces, flat $6\times6$~mm section,
 $n$ = 4; commercial powder, laser parameters not recorded.
 \textsuperscript{e}Machined, both orientations, from two vendors.
+\textsuperscript{f}Bought, or atomized here if none can be bought; first measured by
+the campaign paper. It belongs to the in-house front but, because a candidate must
+also carry less $B$ than Scalmalloy, it never decides the comparison.
 \end{table}
 
 \section{Conclusion}
@@ -572,8 +581,10 @@ nucleant. Liquidus plus superheat was kept below the induction module's
 Supply risk was scored as the mass-weighted U.S.\ net import reliance of the
 additions, $B=\sum_{i\neq\text{Al}} w_i\,\mathrm{NIR}_i/100$, with $w_i$ in wt\%
 and NIR$_i$ in \% from the USGS \textit{Mineral Commodity
-Summaries 2026};\cite{usgs2026} $B$ is the weight percent of the alloy that the
-United States imports, net. Where USGS gives only a bound, $B$ is an interval.
+Summaries 2026};\cite{usgs2026} $B$ is the import-weighted amount of the alloying
+additions, in weight percent of the alloy; aluminum itself, 60\% imported, is
+left out because every alloy compared is mostly aluminum. Where USGS gives only a
+bound, $B$ is an interval.
 This is the definition used for the first campaign.\tbd{cite the campaign paper;
 metric frozen there (D9)} Because $B$ weights every imported addition alike,
 Scalmalloy's $B$ comes mostly from its \SI{4.7}{wt\percent} Mg rather than its Sc,
@@ -597,17 +608,20 @@ as \tbd{4047 powder or coarse Si}.
 
 \paragraph{Commercial baselines.}
 Gas-atomized EOS Aluminium Al5X1 (\SIrange{20}{63}{\micro\metre}; Mg 2.5--4.2,
-Zr 0.6--1.8, Mn 0.1--1.0 wt\% per the supplier)\cite{ds_al5x1} and H\"{o}gan\"{a}s
-forAM Al-HS1 (\SIrange{20}{63}{\micro\metre}; typically Mn 4.8, Cr 0.8, Zr
-0.8 wt\%),\cite{ds_hoganas} lots \tbd{lot numbers}, and commercial AlSi10Mg
-(\tbd{supplier, lot}) were printed on the same machine and in the same sessions as
+Zr 0.6--1.8, Mn 0.1--1.0 wt\% per the supplier's material data sheet)\cite{ds_al5x1}
+and\tbd{, if bought,} H\"{o}gan\"{a}s forAM Al-HS1 (\SIrange{20}{63}{\micro\metre};
+typically Mn 4.8, Cr 0.8, Zr 0.8 wt\%),\cite{ds_hoganas} lots \tbd{lot numbers},
+commercial AlSi10Mg (\tbd{supplier, lot}) and Scalmalloy (\tbd{bought, or atomized
+here}) were printed on the same machine and in the same sessions as
 the candidates (one powder per build) and treated identically: the same layer thickness, plate temperature, scan strategy
 and powder handling, and the same rule for laser power and speed. Every alloy,
-candidate or baseline, was printed as a grid of density cubes over the same
-power--speed window, and its bars at its densest grid point. Each baseline was
-aged on its supplier's schedule (Al5X1: \SI{400}{\celsius}, \SI{6}{\hour},
-gas-quenched; Al-HS1: \SI{375}{\celsius}, \SI{4}{\hour} in air) and included in
-its family's hardness aging curve. Each lot's composition was measured by
+candidate or baseline, was first printed as a \tbd{4 $\times$ 4} power--speed grid
+of density cubes, and its bars at its densest grid point, with ties going to the
+lower energy density. Each baseline was aged on its supplier's schedule (Al5X1:
+\SI{400}{\celsius}, \SI{6}{\hour}, gas-quenched; Al-HS1: \SI{375}{\celsius},
+\SI{4}{\hour} in air; Scalmalloy: \SI{325}{\celsius}, \SI{4}{\hour}), AlSi10Mg was
+tested as built and stress-relieved, and the baselines were included in their
+family's hardness aging curves. Each lot's composition was measured by
 ICP-OES. A baseline was counted as on a par with its data sheet if its mean yield
 strength, in the data sheet's condition and orientation, was at least
 \tbd{90}\% of the data-sheet value, which allows for as-printed sub-size bars
@@ -665,11 +679,12 @@ Sections were ground and polished \tbd{SOP} and examined by optical microscopy
 and SEM/EDS\tbd{/EBSD}. Vickers hardness \tbd{load, dwell, n}. Tensile
 specimens \tbd{geometry: e.g.\ the flat \SI{6}{\milli\metre} $\times$ \SI{6}{\milli\metre} reduced section
 with \SI{32}{\milli\metre} parallel length used for the AlSi10Mg baseline;
-orientation; surface} were tested at room temperature with a clip-on extensometer at \tbd{strain rate,
+orientation; surface} were tested at room temperature with a clip-on extensometer
+or DIC over a \SI{25}{\milli\metre} gauge at \tbd{strain rate,
 within ASTM E8/E8M while yield is measured}, $n\ge\tbd{3 (5)}$ per alloy and
-condition, beside the baselines printed in the same session. All bars were tested
-with as-printed surfaces; machined bars were added only to diagnose a baseline that
-missed its data sheet.
+condition, beside the baselines printed in the same session. All bars had the same
+surface (\tbd{as printed}); machined bars were added only to diagnose a baseline
+that missed its data sheet.
 
 \paragraph{Corrosion.}
 \tbd{If kept (decision D6).} Polished coupons were tested in an O-ring well
@@ -719,9 +734,11 @@ variance components from a one-way random-effects model with two splits per run
 spend to the target with matched-seed bootstrap 90\% intervals, counting seeds
 that never reach the target as censored; software and versions.} As in the first
 campaign, a candidate expanded the baselines' front if it was stronger than in-house
-AlSi10Mg at no lower elongation, carried less $B$ than Scalmalloy, and was stronger
-than every in-house baseline (Al5X1, Al-HS1, Scalmalloy) whose $B$ was not robustly
-above its own; the size of the step is the hypervolume it adds to the front.
+AlSi10Mg (as built and stress-relieved) at no lower elongation, carried less $B$ than
+Scalmalloy, was stronger than every in-house baseline (Al5X1, Al-HS1, Scalmalloy)
+whose $B$ was not robustly above its own, and, on reported values, was not dominated
+by any published scandium-free alloy; the size of the step is the hypervolume it
+adds to the front.
 Yield strengths differ if \tbd{the 95\% confidence interval of the difference
 (Welch) excludes zero, or the two 95\% intervals do not overlap: decision D0b,
 shared with the campaign paper}; burdens differ if \tbd{the candidate's $B$ is
