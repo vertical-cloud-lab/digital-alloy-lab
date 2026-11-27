@@ -25,8 +25,8 @@
       "interferences": []
     },
     "option_b": {
-      "parts": 14,
-      "mass_kg": 2.64,
+      "parts": 18,
+      "mass_kg": 3.42,
       "lowest_point_z_mm": -252.0,
       "length_below_joint_mm": 252.0,
       "max_radius_mm": 99.3,

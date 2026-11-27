@@ -1,29 +1,29 @@
 {
  "B": {
   "B_pressure": {
-   "vm_max": 4.4,
-   "u_max_mm": 0.0016
+   "vm_max": 9.5,
+   "u_max_mm": 0.0021
   },
   "B_vacuum": {
-   "vm_max": 3.67,
-   "u_max_mm": 0.0014
+   "vm_max": 8.97,
+   "u_max_mm": 0.0019
   },
   "B_hot_10s": {
    "t_s": 10.0,
    "vm_max": 14.0,
    "at_rz": [
     37.9,
-    -207.7
+    -207.8
    ],
    "T_there": 64.0,
    "Sy_there": 157.0,
    "vm_over_Sy": 0.09,
    "T_max": 72.0,
-   "u_max_mm": 0.046
+   "u_max_mm": 0.038
   },
   "B_hot_60s": {
    "t_s": 60.0,
-   "vm_max": 60.6,
+   "vm_max": 60.8,
    "at_rz": [
     31.8,
     -244.0
@@ -32,7 +32,7 @@
    "Sy_there": 161.0,
    "vm_over_Sy": 0.38,
    "T_max": 270.0,
-   "u_max_mm": 0.293
+   "u_max_mm": 0.253
   },
   "B_hot_300s": {
    "t_s": 300.0,
@@ -44,47 +44,47 @@
    "T_there": 268.0,
    "Sy_there": 112.0,
    "vm_over_Sy": 0.48,
-   "T_max": 370.0,
-   "u_max_mm": 0.793
+   "T_max": 371.0,
+   "u_max_mm": 0.59
   },
   "B_hot_900s": {
    "t_s": 900.0,
-   "vm_max": 55.8,
+   "vm_max": 56.5,
    "at_rz": [
     36.3,
     -239.8
    ],
-   "T_there": 310.0,
+   "T_there": 312.0,
    "Sy_there": 107.0,
-   "vm_over_Sy": 0.52,
-   "T_max": 337.0,
-   "u_max_mm": 0.695
+   "vm_over_Sy": 0.53,
+   "T_max": 339.0,
+   "u_max_mm": 0.502
   },
   "B_hot_1800s": {
    "t_s": 1800.0,
-   "vm_max": 45.4,
+   "vm_max": 46.0,
    "at_rz": [
     36.3,
     -239.8
    ],
-   "T_there": 245.0,
+   "T_there": 247.0,
    "Sy_there": 115.0,
-   "vm_over_Sy": 0.39,
-   "T_max": 266.0,
-   "u_max_mm": 0.48
+   "vm_over_Sy": 0.4,
+   "T_max": 268.0,
+   "u_max_mm": 0.361
   },
   "B_hot_3600s": {
    "t_s": 3600.0,
-   "vm_max": 27.4,
+   "vm_max": 28.2,
    "at_rz": [
     36.3,
     -239.8
    ],
-   "T_there": 154.0,
-   "Sy_there": 132.0,
+   "T_there": 157.0,
+   "Sy_there": 131.0,
    "vm_over_Sy": 0.21,
-   "T_max": 167.0,
-   "u_max_mm": 0.262
+   "T_max": 170.0,
+   "u_max_mm": 0.204
   }
  },
  "glass": {

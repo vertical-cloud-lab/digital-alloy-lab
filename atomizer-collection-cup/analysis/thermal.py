@@ -155,33 +155,47 @@ def pile_height(mass_g, radius):
     return mass_g * 1e-3 / (P.SHOT["rho"] * PILE_FRAC * math.pi * (radius * 1e-3) ** 2) * 1e3
 
 
-def design_B(mass_g, liner=True, puck=True, puck_mat="S304", pile_mat="PILE", pile_T=None, hangup=False):
+def design_B(mass_g, liner=None, puck=True, puck_mat="S304", pile_mat="PILE", pile_T=None, hangup=False, puck_h=None):
     """hangup=True: the mass is a lump of shot fused to the stub's bore just under the joint (the Nov 13 failure
     mode: hot metal held near the seal), and nothing at the bottom. pile_mat="POWDER", pile_T: a good run."""
     import parts as PT
     b = P.B
+    if liner is None:
+        liner = b.get("liner", True)
     prof, z = PT.option_b_vessel_profile(recess=False)
     regs = joint_regions()
-    regs.append(F.Region("vessel", "S316L", prof, 1.2))
+    if b.get("split"):
+        up, pot, gk, z = PT.b_split_profiles(recess=False)
+        regs.append(F.Region("vessel_upper", "S316L", up, 1.2))
+        regs.append(F.Region("gasket", "FKM", gk, 0.5))
+        regs.append(F.Region("vessel", "S316L", pot, 1.2))
+        prof = pot
+    else:
+        regs.append(F.Region("vessel", "S316L", prof, 1.2))
     floor = z["floor"]
     R_i = z["R_i"]
     zz = floor
+    if puck_h is not None:
+        b = dict(b, puck_h=puck_h)
+        if puck_h <= 0:
+            puck = False
     if puck:
         from shapely.geometry import box as _box
         R, cb = b["puck_d"] / 2, b.get("puck_chamfer_bottom", 0.0)
         contact = rect(0, R - cb, floor, floor + 0.5)
-        pk = [(x, y + floor + 0.5) for x, y in PT.puck_profile_b()][:4] + [(R, floor + 0.5 + b["puck_h"]),
-                                                                         (0, floor + 0.5 + b["puck_h"])]
+        pk = [(0, floor + 0.5), (R - cb, floor + 0.5), (R, floor + 0.5 + cb), (R, floor + 0.5 + b["puck_h"]),
+              (0, floor + 0.5 + b["puck_h"])]
         regs.append(F.Region("puck_contact", "CONTACT_PUCK", contact, 0.5))
         regs.append(F.Region("puck", puck_mat, pk, 2.5))
-        # the argon between the puck (chamfer, side) and the cap's R6 corner and wall, up to the puck's top
-        gap = (_box(0, floor - 0.01, R_i, floor + 0.5 + b["puck_h"]).difference(Polygon(prof))
-               .difference(Polygon(pk)).difference(Polygon(contact)))
-        gap = max(getattr(gap, "geoms", [gap]), key=lambda q: q.area)
-        regs.append(F.Region("puck_gap", "GAP15", [tuple(c) for c in list(gap.exterior.coords)[:-1]], 0.6))
+        if liner:
+            # the argon between the puck (chamfer, side) and the cap's R6 corner and wall, up to the puck's top
+            gap = (_box(0, floor - 0.01, R_i, floor + 0.5 + b["puck_h"]).difference(Polygon(prof))
+                   .difference(Polygon(pk)).difference(Polygon(contact)))
+            gap = max(getattr(gap, "geoms", [gap]), key=lambda q: q.area)
+            regs.append(F.Region("puck_gap", "GAP15", [tuple(c) for c in list(gap.exterior.coords)[:-1]], 0.6))
         zz = floor + 0.5 + b["puck_h"]
     r_pile = R_i
-    top_liner = z["z_red"] + 8.0 - 3.0
+    top_liner = (z["z_fB"] - 3.0) if b.get("split") else z["z_red"] + 8.0 - 3.0
     if liner:
         lo, li = b["liner_od"] / 2, b["liner_od"] / 2 - b["liner_wall"]
         regs.append(F.Region("liner_contact", "CONTACT_PUCK", rect(li, lo, zz, zz + 0.5), 0.4))
@@ -189,7 +203,23 @@ def design_B(mass_g, liner=True, puck=True, puck_mat="S304", pile_mat="PILE", pi
         regs.append(F.Region("liner_gap", "GAP15", rect(lo, R_i, zz, top_liner), 0.7))
         r_pile = li
     T0 = pile_T if pile_T is not None else T_SHOT
-    if hangup:
+    if not hangup and puck and not liner:
+        # no liner: the shot fills the floor round the small puck and piles on above it. Find the pile's top so
+        # that its volume (Pappus) holds mass_g at the packed density.
+        from shapely.geometry import box as _box2
+        solid = Polygon(prof).union(Polygon(pk)).union(Polygon(contact))
+        target = mass_g * 1e-3 / (P.SHOT["rho"] * PILE_FRAC) * 1e9          # mm3
+        lo_, hi_ = floor, floor + 400.0
+        for _ in range(60):
+            mid = (lo_ + hi_) / 2
+            g_ = _box2(0, floor - 0.01, R_i, mid).difference(solid)
+            vol = sum(2 * math.pi * q.centroid.x * q.area for q in getattr(g_, "geoms", [g_]))
+            lo_, hi_ = (mid, hi_) if vol < target else (lo_, mid)
+        g_ = _box2(0, floor - 0.01, R_i, hi_).difference(solid)
+        g_ = max(getattr(g_, "geoms", [g_]), key=lambda q: q.area)
+        regs.append(F.Region("pile", pile_mat, [tuple(c) for c in list(g_.exterior.coords)[:-1]], 2.0, init_T=T0))
+        info = dict(pile_top=hi_, pile_r=R_i, pile_h=hi_ - floor)
+    elif hangup:
         rb_, r_in = P.JOINT.bore / 2, 14.0
         h = mass_g * 1e-3 / (P.SHOT["rho"] * PILE_FRAC * math.pi * ((rb_ * 1e-3) ** 2 - (r_in * 1e-3) ** 2)) * 1e3
         z0 = z["top"] - 2.0
@@ -199,11 +229,13 @@ def design_B(mass_g, liner=True, puck=True, puck_mat="S304", pile_mat="PILE", pi
         h = pile_height(mass_g, r_pile)
         regs.append(F.Region("pile", pile_mat, rect(0, r_pile, zz, zz + h), 2.0, init_T=T0))
         info = dict(pile_top=zz + h, pile_r=r_pile, pile_h=h)
+    if hangup and puck and not liner:
+        pass
     cavity = Polygon([(0, z["z_bot"]), (R_i + 0.01, z["z_bot"]), (R_i + 0.01, z["z_red"] + 8.0),
                       (P.JOINT.bore / 2 + 0.01, z["z_stub"] - 8.0),
                       (P.JOINT.bore / 2 + 0.01, P.JOINT.ring_thk / 2 + P.CONE_OUTLET_LEN), (0, P.JOINT.ring_thk / 2 + P.CONE_OUTLET_LEN)])
-    probes = {"TC_top": (P.JOINT.tube_od / 2, z["top"] - P.JOINT.lip - 9.0),
-              "TC_bottom": (z["R_o"], floor + 6.0),
+    probes = {"TC_top": (P.JOINT.tube_od / 2, (z["top"] - P.JOINT.lip - 1.5 + z["z_stub"]) / 2),
+              "TC_bottom": (z["R_o"], z["z_bot"] + 13.5),
               "flange_rim": (P.JOINT.flange_od / 2, -P.JOINT.ring_thk / 2 - 1.0),
               "bottom_centre": (0.0, z["z_bot"])}
     return regs, cavity, probes, info
@@ -401,17 +433,18 @@ DESIGNS = {"A": design_A, "B": design_B, "C": design_C, "S": design_S}
 CASES = {
     "B_100": ("B", 100, {}), "B_400": ("B", 400, {}), "B_816": ("B", 816, {}),
     "B_816_k2": ("B", 816, {}, {"pile_k": 2.0}), "B_816_k20": ("B", 816, {}, {"pile_k": 20.0}),
-    "B_816_noliner": ("B", 816, {"liner": False}), "B_816_cupuck": ("B", 816, {"puck_mat": "CU"}),
+
     "A_100": ("A", 100, {}), "A_250": ("A", 250, {}), "A_400": ("A", 400, {}),
     "C_400": ("C", 400, {}), "C_816": ("C", 816, {}),
     "B_hangup_25": ("B", 25, {"hangup": True}), "B_hangup_100": ("B", 100, {"hangup": True}),
     "B_816_powder400": ("B", 816, {"pile_mat": "POWDER", "pile_T": 400.0}),
     "S_seat_120": ("S", 120, {}), "S_glass_300": ("S", 300, {"where": "glass"}),
     "A_250_puck60": ("A", 250, {"puck_h": 60.0}), "A_400_puck60": ("A", 400, {"puck_h": 60.0}),
-    "B_816_fine": ("B", 816, {}, {"mesh_scale": 0.55}), "B_hangup_25_fine": ("B", 25, {"hangup": True}, {"mesh_scale": 0.55}),
+    "B_816_puck12": ("B", 816, {"puck_h": 12.0}),
+
     "C_400_boro": ("C", 400, {"glass": "BORO"}),
 }
-SEAL_SETS = {"A": ["oring", "boring"], "B": ["oring"], "C": ["oring", "seal_top", "seal_bot"],
+SEAL_SETS = {"A": ["oring", "boring"], "B": ["oring", "gasket"], "C": ["oring", "seal_top", "seal_bot"],
              "S": ["oring", "seat", "seal_top", "seal_bot"]}
 GLASS_SETS = {"C": ["glass"], "S": ["glass"]}
 

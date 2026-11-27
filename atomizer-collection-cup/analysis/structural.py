@@ -150,7 +150,12 @@ def run_static(name, m, mat_cards, sections, bc_lines, load_lines, temps=None, e
 
 
 def b_vessel_mesh():
+    """B's pressure boundary that sees the hot pile: the whole weldment, or (split) the lower pot."""
     import parts as PT
+    if P.B.get("split"):
+        up, pot, gk, z = PT.b_split_profiles()
+        m = F.build_mesh([F.Region("vessel", "S316L", pot, 0.8)], order=2)
+        return m, z
     prof, z = PT.option_b_vessel_profile()
     m = F.build_mesh([F.Region("vessel", "S316L", prof, 0.8)], order=2)
     return m, z
@@ -167,21 +172,34 @@ def steel_cards():
 def b_cases():
     kf = P.JOINT
     m, z = b_vessel_mesh()
-    # clamp bearing: the flange's back taper (between the rim corner and the hub), outer boundary edges
-    rf, rh = kf.flange_od / 2, kf.hub_od / 2
+    split = P.B.get("split")
+    # clamp bearing: the flange's back taper (between the rim corner and the hub), outer boundary edges.
+    # Split: the pot hangs from the 3 in tri-clamp on its ferrule's back taper.
+    jf = P.TC3 if split else kf
+    rf, rh = jf.flange_od / 2, jf.hub_od / 2
+    face = z["z_fB"] if split else -kf.ring_thk / 2
+    t_edge = jf.lip - (rf - rh) * math.tan(math.radians(jf.taper_deg))
+    z_lo, z_hi = face - jf.lip, face - t_edge
     g = kf.ring_thk / 2
-    t_edge = kf.lip - (rf - rh) * math.tan(math.radians(kf.taper_deg))
-    z_lo, z_hi = -g - kf.lip, -g - t_edge
     taper_nodes = sorted({n for e in m.edges for n in e["n"]
                           if rh - 0.01 <= e["mid"][0] <= rf - 0.5 and z_lo - 0.01 <= e["mid"][1] <= z_hi + 0.01
                           and e["normal"][1] < -0.1})
+    # hold it axially on one ring at the middle of the taper (statically determinate): fixing the whole taper band
+    # would stop the hot ferrule growing axially and invent a thermal stress there
+    zm, rm = (z_lo + z_hi) / 2, (rf + rh) / 2
+    taper_nodes = [min(taper_nodes, key=lambda n: (m.nodes[n][0] - rm) ** 2 + (m.nodes[n][1] - zm) ** 2)]
     # inside (cavity) faces: boundary edges whose outward normal points into the bore or up from the floor
-    cav = TH.Polygon([(0, z["z_bot"] + 0.01), (z["R_i"] + 0.3, z["z_bot"] + 0.01), (z["R_i"] + 0.3, z["z_red"] + 8),
-                      (kf.bore / 2 + 0.3, z["z_stub"] - 8), (kf.bore / 2 + 0.3, 5), (0, 5)])
+    if split:
+        cav = TH.Polygon([(0, z["z_bot"] + 0.01), (z["R_i"] + 0.3, z["z_bot"] + 0.01), (z["R_i"] + 0.3, z["z_fB"] + 5),
+                          (0, z["z_fB"] + 5)])
+    else:
+        cav = TH.Polygon([(0, z["z_bot"] + 0.01), (z["R_i"] + 0.3, z["z_bot"] + 0.01), (z["R_i"] + 0.3, z["z_red"] + 8),
+                          (kf.bore / 2 + 0.3, z["z_stub"] - 8), (kf.bore / 2 + 0.3, 5), (0, 5)])
     inside = [e for e in m.edges if e["mid"][0] > 1e-6 and cav.contains(TH.Point(*(e["mid"] - 0.2 * e["normal"])))
               and not cav.contains(TH.Point(*(e["mid"] + 0.2 * e["normal"]))) is False]
     inside = [e for e in m.edges if e["mid"][0] > 1e-6 and cav.contains(TH.Point(*(e["mid"] + 0.3 * e["normal"])))]
-    outside = [e for e in m.edges if e["mid"][0] > 1e-6 and e not in inside and abs(e["mid"][1] - (-g)) > 1e-6]
+    face_z = z["z_fB"] if split else -g
+    outside = [e for e in m.edges if e["mid"][0] > 1e-6 and e not in inside and abs(e["mid"][1] - face_z) > 1e-6]
     sets = ""
     import io
     buf = io.StringIO()

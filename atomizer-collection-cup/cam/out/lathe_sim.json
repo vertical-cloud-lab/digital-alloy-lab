@@ -13,7 +13,7 @@
       "setup 1",
       "setup 2 (flipped)"
     ],
-    "note": "3-1/4 in. 316L bar. An end cap: 8 mm floor, 12 mm rim the tube's wall (W3 is a square butt weld 20 mm up), R6 inside corner (no sharp welded corner where the floor's thermal stress peaks)."
+    "note": "3-1/4 in. 316/316L bar. An end cap: 8 mm floor, 12 mm rim the tube's wall (W3 is a square butt weld 20 mm up), R6 inside corner (no sharp welded corner where the floor's thermal stress peaks)."
   },
   {
     "part": "B_puck",
@@ -61,7 +61,7 @@
       "setup 1",
       "setup 2 (flipped)"
     ],
-    "note": "2-3/4 in. x 0.065 in. 304 tube (McMaster 11116N864), sawn to 104 mm and faced to 101.2 mm; held on its OD in a collet or soft jaws with 12 mm out. Deburr the bore by hand."
+    "note": "2-3/4 in. x 0.065 in. 304 tube (McMaster 11116N864), sawn to 82 mm and faced to 78.9 mm; held on its OD in a collet or soft jaws with 12 mm out. Deburr the bore by hand."
   },
   {
     "part": "B_body_tube",
@@ -77,7 +77,7 @@
       "setup 1",
       "setup 2 (flipped)"
     ],
-    "note": "3 in. x 0.065 in. 316L tube, sawn to 112 mm and faced square to 109.3 mm (weld ends square and burr-free, no gap). Spider or plug in the bore against chatter."
+    "note": "3 in. x 0.065 in. 316/316L tube, sawn to 85 mm and faced square to 82.3 mm (weld ends square and burr-free, no gap). Spider or plug in the bore against chatter."
   },
   {
     "part": "C_sleeve",

@@ -100,51 +100,63 @@
  "clearances": [
   {
    "t_s": 10.0,
-   "T_liner": 463,
-   "T_puck": 127,
-   "T_vessel": 32,
-   "liner_gap_mm": 1.24,
-   "puck_gap_mm": 1.391
+   "T_puck": 125,
+   "T_vessel": 33,
+   "puck_gap_mm": 1.392,
+   "T_liner": 585,
+   "liner_gap_mm": 1.152,
+   "puck_clear_of_opening_mm": 2.9,
+   "liner_clear_of_opening_mm": 3.05
   },
   {
    "t_s": 60.0,
-   "T_liner": 555,
-   "T_puck": 272,
-   "T_vessel": 86,
-   "liner_gap_mm": 1.206,
-   "puck_gap_mm": 1.329
+   "T_puck": 271,
+   "T_vessel": 101,
+   "puck_gap_mm": 1.338,
+   "T_liner": 684,
+   "liner_gap_mm": 1.118,
+   "puck_clear_of_opening_mm": 2.9,
+   "liner_clear_of_opening_mm": 3.05
   },
   {
    "t_s": 300.0,
-   "T_liner": 517,
    "T_puck": 391,
-   "T_vessel": 243,
-   "liner_gap_mm": 1.331,
-   "puck_gap_mm": 1.345
+   "T_vessel": 295,
+   "puck_gap_mm": 1.378,
+   "T_liner": 556,
+   "liner_gap_mm": 1.336,
+   "puck_clear_of_opening_mm": 2.9,
+   "liner_clear_of_opening_mm": 3.05
   },
   {
    "t_s": 900.0,
-   "T_liner": 348,
-   "T_puck": 363,
-   "T_vessel": 246,
-   "liner_gap_mm": 1.452,
-   "puck_gap_mm": 1.366
+   "T_puck": 366,
+   "T_vessel": 300,
+   "puck_gap_mm": 1.399,
+   "T_liner": 363,
+   "liner_gap_mm": 1.477,
+   "puck_clear_of_opening_mm": 2.9,
+   "liner_clear_of_opening_mm": 3.05
   },
   {
    "t_s": 1800.0,
-   "T_liner": 253,
-   "T_puck": 281,
-   "T_vessel": 189,
-   "liner_gap_mm": 1.479,
-   "puck_gap_mm": 1.385
+   "T_puck": 284,
+   "T_vessel": 232,
+   "puck_gap_mm": 1.411,
+   "T_liner": 269,
+   "liner_gap_mm": 1.496,
+   "puck_clear_of_opening_mm": 2.9,
+   "liner_clear_of_opening_mm": 3.05
   },
   {
    "t_s": 3600.0,
-   "T_liner": 158,
-   "T_puck": 175,
-   "T_vessel": 119,
-   "liner_gap_mm": 1.498,
-   "puck_gap_mm": 1.412
+   "T_puck": 179,
+   "T_vessel": 146,
+   "puck_gap_mm": 1.427,
+   "T_liner": 171,
+   "liner_gap_mm": 1.507,
+   "puck_clear_of_opening_mm": 2.9,
+   "liner_clear_of_opening_mm": 3.05
   }
  ]
 }

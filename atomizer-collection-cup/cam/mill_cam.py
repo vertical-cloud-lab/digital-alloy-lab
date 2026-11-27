@@ -4,16 +4,16 @@
                                       # (needs Docker and the camotics:1.2.0 image, see CAMOTICS below)
 
 The part: a 6061-T6 V-block, 240 x 114.3 x 60 mm, that holds option B's weldment coaxial while it is tacked and
-welded. A 90 deg V carries the 3 in body tube (76.2 OD) and, on a folded 0.025 in (0.64 mm) shim, the KF-50 flange
+welded. A 90 deg V carries the 3 in body tube (76.2 OD), the reducer's 3 in end and, on a folded 0.025 in (0.64 mm) shim, the KF-50 flange
 rim (74.93 OD): in a 90 deg V the axis sits r*sqrt(2) above the apex, so a cylinder 0.635 mm smaller in radius
-needs a 0.635 mm shim on each flank to share the axis. The 2 in stub and the reducer clear the V. A 20 mm slot
-across the V at the reducer-to-body seam gives the torch and the back-purge room; a 6 mm relief along the apex
-keeps the tube off the sharp corner. Four M6 tapped holes take two strap clamps over the tube.
+needs a 0.635 mm shim on each flank to share the axis. The 2 in stub and the reducer's cone clear the V. There is
+no slot under the seams: the V supports everything continuously and the welds are made on top as the part rolls.
+A 6 mm relief along the apex keeps the tube off the sharp corner. Four M6 tapped holes take two strap clamps.
 
 Stock: 6061-T6 flat bar 2-1/2 x 4-1/2 in (63.5 x 114.3), sawn to 240 (ends and sides as sawn/as rolled).
 Setup 1: bottom up, face 0.5 mm. Setup 2: top up, face 3.0 mm to 60.0; rough the V in 2 mm z-levels with a 12 mm
 end mill, leaving 0.3 mm on the flanks; finish both flanks with a 12.7 mm 90 deg chamfer mill in passes down the
-flank; cut the apex relief with a 6 mm end mill; the seam slot with the 12 mm end mill; spot, drill and tap 4 x M6.
+flank; cut the apex relief with a 6 mm end mill; spot, drill and tap 4 x M6.
 Programs: LinuxCNC/Haas-style metric G-code, no canned cycles (CAMotics 1.2.0 does not run G83/G84), the drill
 pecks and the tap written out as G1 moves.
 
@@ -46,13 +46,16 @@ IMAGE = "camotics:1.2.0"
 SHIFT = 1000.0
 
 # ----------------------------------------------------------------------------------------------- part
-L, W, H = 240.0, 114.3, 60.0
+L = round(P.B["body_len"] - 10.0)        # the end cap overhangs the block's far end
+W, H = 114.3, 60.0
 STOCK_H = 63.5
 V_HALF = 36.0                  # half-width of the V at the top face; apex depth = V_HALF (90 deg)
 APEX_W, APEX_Z = 6.0, -38.0    # relief slot along the apex
 SEAM_X = P.B["stub_len"] + P.B["reducer_len"]     # reducer-to-body seam, from the flange's sealing face (x = 0)
+SLOT = False      # no cross slot: the V carries the reducer's 3 in end and the tube continuously (W2 is welded on
+                  # top as the part rolls; the back-purge looks after the root)
 SLOT_W, SLOT_HALF_Y, SLOT_Z = 20.0, 40.0, -40.0
-HOLES = [(150.0, 46.0), (150.0, -46.0), (225.0, 46.0), (225.0, -46.0)]
+HOLES = [(x, y) for x in (round(SEAM_X + 30.0), L - 15.0) for y in (46.0, -46.0)]
 TAP_DRILL, DRILL_Z, TAP_Z = 5.0, -16.0, -12.0
 R_TUBE = P.B["body_od"] / 2
 R_FLANGE = P.JOINT.flange_od / 2
@@ -71,9 +74,10 @@ def fixture_solid():
     blk = blk.cut(v)
     blk = blk.cut(cq.Workplane("XY").box(L + 20, APEX_W, 10, centered=(False, True, False))
                   .translate((-10, 0, APEX_Z)))
-    slot = (cq.Workplane("XY").box(SLOT_W, 2 * SLOT_HALF_Y, 50, centered=(True, True, False))
-            .edges("|Z").fillet(TOOLS[2]["d"] / 2 - 0.01))          # the 12 mm end mill leaves r = 6 corners
-    blk = blk.cut(slot.translate((SEAM_X, 0, SLOT_Z)))
+    if SLOT:
+        slot = (cq.Workplane("XY").box(SLOT_W, 2 * SLOT_HALF_Y, 50, centered=(True, True, False))
+                .edges("|Z").fillet(TOOLS[2]["d"] / 2 - 0.01))          # the 12 mm end mill leaves r = 6 corners
+        blk = blk.cut(slot.translate((SEAM_X, 0, SLOT_Z)))
     for x, y in HOLES:
         blk = blk.cut(cq.Workplane("XY").circle(TAP_DRILL / 2).extrude(-DRILL_Z + 1).translate((x, y, DRILL_Z)))
     return blk.val()
@@ -236,7 +240,16 @@ def op2():
         pr.g1(x=xa, y=0.0, z=z, f=300)
         pr.g1(x=xb)
     pr.g0(z=10)
-    # --- seam slot: 12 mm EM, two x positions, zig-zag in y, 2 mm levels to z = -40
+    # --- seam slot (only if SLOT): 12 mm EM, two x positions, zig-zag in y, 2 mm levels to z = -40
+    if SLOT:
+        _slot(pr)
+    _holes(pr)
+    pr.end()
+    return pr
+
+
+def _slot(pr):
+    r = TOOLS[2]["d"] / 2
     pr.use(2)
     xs = [SEAM_X - SLOT_W / 2 + r, SEAM_X + SLOT_W / 2 - r]
     ymax = SLOT_HALF_Y - r
@@ -257,6 +270,9 @@ def op2():
         if abs(z - SLOT_Z) < 1e-9 and pr.pos[2] <= SLOT_Z + 1e-9:
             break
     pr.g0(z=10)
+
+
+def _holes(pr):
     # --- holes: spot, peck drill, tap (written out; CAMotics does not run canned cycles)
     pr.use(5)
     for x, y in HOLES:
@@ -283,8 +299,6 @@ def op2():
         pr.g0(z=5)
         pr.g1(z=TAP_Z, f=500)
         pr.g1(z=5, f=500)          # on the machine: G84 rigid tap, or reverse the spindle out (M04)
-    pr.end()
-    return pr
 
 
 # ---------------------------------------------------------------------------------------------- CAMotics
@@ -341,9 +355,9 @@ def sections_compare(sim, cad_mesh):
 
     out = {}
     planes = [("x=60", [60, 0, 0], [1, 0, 0], lambda p: (p[1], p[2])),
-              ("x=%.2f (seam slot)" % SEAM_X, [SEAM_X, 0, 0], [1, 0, 0], lambda p: (p[1], p[2])),
-              ("x=150 (holes)", [150, 0, 0], [1, 0, 0], lambda p: (p[1], p[2])),
-              ("x=225 (holes)", [225, 0, 0], [1, 0, 0], lambda p: (p[1], p[2])),
+              ("x=%.2f (seam W2)" % SEAM_X, [SEAM_X, 0, 0], [1, 0, 0], lambda p: (p[1], p[2])),
+              ("x=%.0f (holes)" % HOLES[0][0], [HOLES[0][0], 0, 0], [1, 0, 0], lambda p: (p[1], p[2])),
+              ("x=%.0f (holes)" % HOLES[2][0], [HOLES[2][0], 0, 0], [1, 0, 0], lambda p: (p[1], p[2])),
               ("z=-5", [0, 0, -5], [0, 0, 1], lambda p: (p[0], p[1]))]
     figs = []
     for name, o, n, f in planes:

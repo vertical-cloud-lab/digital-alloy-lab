@@ -158,13 +158,22 @@ def clearance_from_fea():
         def mean_T(reg):
             ns = m.region_nodes(reg)
             return float(np.mean([vals[n][0] for n in ns]))
-        T_l, T_p, T_v = mean_T("liner"), mean_T("puck"), mean_T("vessel")
+        has_liner = bool(m.elset("liner"))
+        T_l = mean_T("liner") if has_liner else None
+        T_p, T_v = mean_T("puck"), mean_T("vessel")
         # vessel bore at the puck: use the vessel's mean temperature (conservative: it is hotter at the floor)
         grow_v = R_i * a316(T_v) * (T_v - 20)
-        gap_liner = (R_i - b["liner_od"] / 2) + grow_v - b["liner_od"] / 2 * a304(T_l) * (T_l - 20)
         gap_puck = (R_i - b["puck_d"] / 2) + grow_v - b["puck_d"] / 2 * a304(T_p) * (T_p - 20)
-        out.append(dict(t_s=t, T_liner=round(T_l), T_puck=round(T_p), T_vessel=round(T_v),
-                        liner_gap_mm=round(gap_liner, 3), puck_gap_mm=round(gap_puck, 3)))
+        rec = dict(t_s=t, T_puck=round(T_p), T_vessel=round(T_v), puck_gap_mm=round(gap_puck, 3))
+        if has_liner:
+            rec.update(T_liner=round(T_l), liner_gap_mm=round(
+                (R_i - b["liner_od"] / 2) + grow_v - b["liner_od"] / 2 * a304(T_l) * (T_l - 20), 3))
+        # the puck must still pass the KF bore (47.5) when it is taken out cold; hot it only has to sit loose
+        # the puck and liner must pass the opening they go in through: the pot's ferrule bore (split) or the KF neck
+        opening = (b["body_od"] - 2 * b["body_wall"]) if b.get("split") else P.JOINT.bore
+        rec["puck_clear_of_opening_mm"] = round(opening - b["puck_d"], 2)
+        rec["liner_clear_of_opening_mm"] = round(opening - b["liner_od"], 2)
+        out.append(rec)
     return out
 
 

@@ -46,7 +46,7 @@ def first_cross(ser, lim):
 
 def hottest_seal(r):
     best = None
-    for s in ("N_ORING", "N_BORING", "N_SEAT", "N_SEAL_TOP", "N_SEAL_BOT"):
+    for s in ("N_ORING", "N_BORING", "N_GASKET", "N_SEAT", "N_SEAL_TOP", "N_SEAL_BOT"):
         if s in r["peaks"]:
             v = r["peaks"][s]["T_max"]
             if best is None or v > best[1]:
@@ -86,7 +86,7 @@ def main():
     what = {
         "B_100": "100 g shot on the puck", "B_400": "400 g shot on the puck", "B_816": "816 g shot on the puck (Nov 13 charge)",
         "B_816_k2": "816 g, pile k 2 W/m K", "B_816_k20": "816 g, pile k 20 W/m K (fused)",
-        "B_816_noliner": "816 g, no liner", "B_816_cupuck": "816 g, copper puck",
+        "B_816_puck12": "816 g, 12 mm puck (pile 13 mm lower)",
         "B_816_powder400": "816 g of powder at 400 C (a good run)", "B_hangup_25": "25 g of shot fused in the bore just under the joint",
         "B_hangup_100": "100 g of shot fused in the bore just under the joint",
         "A_100": "100 g shot on the puck", "A_250": "250 g shot on the puck", "A_400": "400 g shot on the puck",
@@ -95,8 +95,8 @@ def main():
         "S_glass_300": "stock cup: 300 g of shot fallen into the glass, against its wall (Nov 13)",
         "B_816_fine": "B_816 on a 0.55x finer mesh (convergence)",
         "A_250_puck60": "250 g shot, 60 mm puck", "A_400_puck60": "400 g shot, 60 mm puck", "B_hangup_25_fine": "B_hangup_25 on a 0.55x finer mesh"}
-    order = ["B_100", "B_400", "B_816", "B_816_k2", "B_816_k20", "B_816_noliner", "B_816_cupuck", "B_816_powder400",
-             "B_hangup_25", "B_hangup_100", "B_816_fine", "B_hangup_25_fine", "A_100", "A_250", "A_400",
+    order = ["B_100", "B_400", "B_816", "B_816_k2", "B_816_k20", "B_816_puck12", "B_816_powder400",
+             "B_hangup_25", "B_hangup_100", "A_100", "A_250", "A_400",
              "A_250_puck60", "A_400_puck60", "C_400", "C_816", "C_400_boro", "S_seat_120", "S_glass_300"]
     for name in order:
         if name not in res:
@@ -105,15 +105,17 @@ def main():
         pk = r["peaks"]
         o = pk.get("N_ORING", {})
         others = []
-        for s in ("N_BORING", "N_SEAT", "N_SEAL_TOP", "N_SEAL_BOT"):
+        for s in ("N_BORING", "N_GASKET", "N_SEAT", "N_SEAL_TOP", "N_SEAL_BOT"):
             if s in pk:
-                others.append(f"{s[2:].lower().replace('boring', 'bottom O-ring')} {pk[s]['T_max']:.0f} [{pk[s]['t_at_max_s']:.0f}]")
+                lab = s[2:].lower().replace('boring', 'bottom O-ring').replace('gasket', 'tri-clamp gasket')
+                others.append(f"{lab} {pk[s]['T_max']:.0f} [{pk[s]['t_at_max_s']:.0f}]")
         floor = pk.get("BOTTOM_CENTRE", pk.get("PLATE_RIM", {})).get("T_max", float("nan"))
         md.append(f"| {name} | {what.get(name, '')} | {o.get('T_max', float('nan')):.0f} [{o.get('t_at_max_s', 0):.0f}] | "
                   f"{'; '.join(others)} | {pk.get('TC_TOP', {}).get('T_max', float('nan')):.0f} | "
                   f"{pk.get('TC_BOTTOM', {}).get('T_max', float('nan')):.0f} | {floor:.0f} | "
                   f"{pk.get('glass_dT', {}).get('dT_max', '')} |")
-    limits = {"B (joint O-ring)": safe_mass(res, "B", "N_ORING"), "A (bottom O-ring)": safe_mass(res, "A", "N_BORING"),
+    limits = {"B (tri-clamp gasket)": safe_mass(res, "B", "N_GASKET"), "B (KF O-ring)": safe_mass(res, "B", "N_ORING"),
+              "A (bottom O-ring)": safe_mass(res, "A", "N_BORING"),
               "C (bottom glass seal)": safe_mass(res, "C", "N_SEAL_BOT")}
     md += ["\n## Largest shot mass before the hottest seal reaches 150 C / 200 C\n",
            "Linear interpolation between the mass cases (base cases only).\n", "| Design | Seal | to 150 C (g) | to 200 C (g) | "
@@ -149,8 +151,9 @@ def main():
     md += ["\n## Checks on the model\n",
            "- `analysis/verify_axifea.py`: steady film, radiation and surface-flux cases match closed-form answers to "
            "0.001 K; a lumped transient is within 0.8 %.",
-           "- Sensitivity of B_816 to the pile's conductivity (2, 5, 20 W/m K), the liner and a copper puck: see the table "
-           "(the joint O-ring moves by about 2 K).",
+           "- Sensitivity of B_816 to the pile's conductivity (2, 5, 20 W/m K) and to a shorter puck: see the table.",
+           "- Mesh convergence (checked on the previous iteration of B, welded shut with no liner): a 0.55x finer mesh "
+           "moved the 816 g O-ring peak from 38.9 to 38.4 C and the 25 g hang-up from 195 to 188 C.",
            "- Not modelled: wall-to-wall radiation and argon convection inside (the pile's radiation is put on the "
            "first wall it reaches, all absorbed: conservative for the walls near the pile); the clamp (it would carry "
            "heat from the cup's flange to the cooled cone: conservative); the shot arriving over 30-90 s instead of at "
@@ -160,6 +163,8 @@ def main():
                                                                     for k, v in res.items()},
                                                           "safe_mass": limits, "alarms": alarms}, indent=1) + "\n")
     plots(res, limits)
+    for p_ in IMG.glob("thermal_field_*.png"):
+        p_.unlink()
     for name in ("B_816", "A_250", "C_400", "B_hangup_100", "S_seat_120", "S_glass_300", "B_816_powder400"):
         src = OUT / "thermal" / name / "field.png"
         if src.exists():
@@ -180,7 +185,7 @@ def plots(res, limits):
             if n not in res:
                 continue
             r = res[n]
-            for s, ls in (("N_ORING", "-"), ("N_BORING", "--"), ("N_SEAT", "-."), ("N_SEAL_BOT", ":")):
+            for s, ls in (("N_ORING", "-"), ("N_GASKET", "--"), ("N_BORING", "--"), ("N_SEAT", "-."), ("N_SEAL_BOT", ":")):
                 if s in r["series"]:
                     ser = r["series"][s]
                     ax.plot(ser["t"], ser["T"], ls, color=cmap(k % 10), lw=1.4,

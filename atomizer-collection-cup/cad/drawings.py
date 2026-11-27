@@ -106,23 +106,35 @@ def weld_symbol(ax, xy, xytext, text):
 def sheet_b_weldment(pdf):
     kf, b = P.JOINT, P.B
     prof, z = PT.option_b_vessel_profile()
-    fig, ax = sheet("B: welded 316L cup (weldment)", 1, "KF-50 stub 304/316L; reducer, tube, end cap 316L; filler ER316L",
-                    ["TIG (pulsed, <=0.5 kJ/mm), argon back-purge inside, full penetration; copper chill on the flange for W1.",
-                     "Leak-test before use: soap at +0.15 bar and rate-of-rise (procedure.md).",
+    split = b.get("split")
+    if split:
+        up, pot, gk, z = PT.b_split_profiles()
+    fig, ax = sheet("B: upper part + pot (3 in tri-clamp)" if split else "B: welded 316L cup (weldment)", 1, "KF-50 stub 304/304L; reducer 316L; tube and end cap 316/316L; filler ER316L",
+                    ["TIG (pulsed, <=0.5 kJ/mm), argon back-purge inside, full penetration; chill the KF flange (W1) and ferrule faces.",
+                     "Hydro proof 1.2 bar (body only, ported blank), then soap +0.3 bar; rate-of-rise on the machine.",
                      "Pickle/passivate welds (citric or nitric) or brush with a stainless-only brush.",
                      "Weld in the V-block fixture (sheet 3); check the bore runs true to 0.3 TIR."])
-    section_fill(ax, prof)
+    if split:
+        section_fill(ax, up)
+        section_fill(ax, pot, color="0.92")
+        section_fill(ax, gk, color="0.3")
+        ax.text(P.TC3.flange_od / 2 + 3, z["z_joint"], "3 in tri-clamp, PTFE gasket", fontsize=7, va="center")
+    else:
+        section_fill(ax, prof)
     centreline(ax, z["z_bot"] - 15, 15)
     top, zb = z["top"], z["z_bot"]
     R_o = z["R_o"]
     # dimensions on the right
     x = R_o + 22
-    for y in (top, z["z_stub"], z["z_red"], z["z_cap"], z["floor"], zb):
+    for y in (top, z["z_stub"], z["z_red"], z["z_cap"], z["floor"], zb) + ((z["z_fA"], z["z_tt"]) if split else ()):
         ext(ax, (R_o + 1, y), (x + 3, y))
     dim_v(ax, x, zb, top, f"{b['body_len']:.0f} overall (sealing face to bottom) *")
     dim_v(ax, x - 9, z["z_stub"], top, f"{b['stub_len']:.2f} stub", fs=6.5)
     dim_v(ax, x - 9, z["z_red"], z["z_stub"], f"{b['reducer_len']:.1f} reducer", fs=6.5)
-    dim_v(ax, x - 9, z["z_cap"], z["z_red"], f"{z['z_red'] - z['z_cap']:.2f} tube", fs=6.5)
+    t_top = z["z_tt"] if split else z["z_red"]
+    if split:
+        dim_v(ax, x - 9, z["z_tt"], z["z_red"], f"ferrules 2 x {b['ferrule_len']:.1f} + gasket {b['gasket_t']:.1f}", fs=5.5)
+    dim_v(ax, x - 9, z["z_cap"], t_top, f"{t_top - z['z_cap']:.2f} tube", fs=6.5)
     dim_v(ax, x - 9, zb, z["z_cap"], f"{z['z_cap'] - zb:.0f} cap", fs=6.5)
     dim_v(ax, x - 18, zb, z["floor"], f"{b['bottom_t']:.0f}", fs=6.0)
     leader(ax, (z["R_i"] - 2.5, z["floor"] + 1.2), (z["R_i"] + 30, z["floor"] + 25), f"R{b['bottom_fillet']:.0f} inside")
@@ -135,14 +147,21 @@ def sheet_b_weldment(pdf):
     # welds
     weld_symbol(ax, (-kf.tube_od / 2, z["z_stub"]), (-120, z["z_stub"] + 4),
                 "W1: square butt, TIG, full pen.\nstub to reducer (0.065 wall)")
-    weld_symbol(ax, (-R_o, z["z_red"]), (-125, z["z_red"] - 4), "W2: square butt, TIG, full pen.\nreducer to tube")
+    if split:
+        weld_symbol(ax, (-R_o, z["z_red"]), (-130, z["z_red"] + 6), "W2a: square butt, TIG, full pen.\nreducer to 3 in ferrule (upper part)")
+        weld_symbol(ax, (-R_o, z["z_tt"]), (-130, z["z_tt"] - 10), "W2b: square butt, TIG, full pen.\n3 in ferrule to tube (pot)")
+    else:
+        weld_symbol(ax, (-R_o, z["z_red"]), (-125, z["z_red"] - 4), "W2: square butt, TIG, full pen.\nreducer to tube")
     weld_symbol(ax, (-R_o, z["z_cap"]), (-125, z["z_cap"] + 10), "W3: square butt, TIG, full pen.\ntube to the end cap's rim")
     # catalogue part list
-    rows = [("1", "KF-50 x 2 in butt-weld stub, 19.05 long", "McMaster 4518K38 (304) / Lesker QF50-200-SST", "1"),
+    rows = [("1", "KF-50 x 2 in butt-weld stub, 19.05 long", "A&N 4000126 (304L) / McMaster 4518K38 (304)", "1"),
             ("2", "3 x 2 in concentric butt-weld reducer, 316L", "McMaster 5237K471", "1"),
-            ("3", f"3 in OD x 0.065 316 tube, cut and faced to {z['z_red'] - z['z_cap']:.2f}", "OnlineMetals 4256", "1"),
-            ("4", "end cap Ø76.2 x 20, R6 inside, 316L (sheet 2)", "turned from 3-1/4 in bar (Speedy p-2646)", "1")]
-    y0 = top + 40
+            ("3", f"3 in OD x 0.065 316 tube, cut and faced to {(z['z_tt'] if split else z['z_red']) - z['z_cap']:.2f}",
+             "OnlineMetals 4256", "1"),
+            ("4", "end cap Ø76.2 x 20, R6 inside, 316/316L (sheet 2)", "turned from 3-1/4 in bar (Speedy p-2646)", "1"),
+            ("5", "3 in short weld ferrules (14WMP), 316L, one on each part", "sanitary catalogue (not priced)", "2"),
+            ("6", "3 in tri-clamp, pressure-rated; PTFE gaskets (spares)", "sanitary catalogue (not priced)", "1 + 3")]
+    y0 = top + 58
     ax.text(-160, y0 + 8, "Parts", fontsize=9, weight="bold")
     for i, r in enumerate(rows):
         ax.text(-160, y0 - 7 * i, "  ".join(r[:2]), fontsize=7.5)
@@ -155,7 +174,7 @@ def sheet_b_weldment(pdf):
                            "  (joint face to mat, cone latched) first"]):
         ax.text(90, y0 - 7 * i, t, fontsize=7.5)
     ax.set_xlim(-170, 190)
-    ax.set_ylim(zb - 25, top + 55)
+    ax.set_ylim(zb - 25, top + 70)
     pdf.savefig(fig)
     fig.savefig(OUT / "sheet1_B_weldment.png", dpi=110)
     plt.close(fig)
@@ -165,16 +184,18 @@ def sheet_b_weldment(pdf):
 def sheet_b_parts(pdf):
     import lathe_cam as LC
     parts = {p.name: p for p in LC.parts()}
-    fig, ax = sheet("B: turned and cut parts", 2, "Disc 316L; puck 304 (or OFHC Cu for copper alloys); liner 304; tube 316",
+    fig, ax = sheet("B: turned and cut parts", 2, "End cap 316/316L; puck and liner 304; tube 316",
                     ["Lathe programs and their stock-removal checks: cam/gcode/*.nc, cam/out/lathe_*.png.",
-                     "Puck and liner are sacrificial: replace when pitted, welded-on or out of round.",
-                     "Liner: deburr the bore by hand; it must drop in freely (1.5 mm radial gap).",
+                     "Puck and liner go in and out of the pot through its 72.9 mm ferrule (pot off the cup).",
+                     "End cap: rim bore 72.90 = the tube's bore (square butt W3); floor 8; R6 inside corner.",
                      "Tube: square ends, no burr, no gap at W2/W3 (fit-up for autogenous root)."])
     x0 = 0
-    for name, label, extra in (("B_bottom_cap", "End cap (W3 at the rim)", "8 floor, 12 rim, R6 inside"),
-                               ("B_puck", "Catch puck", "loose; sits on the floor"),
-                               ("B_liner", "Liner", "2-3/4 in x 0.065 304 tube"),
+    for name, label, extra in (("B_bottom_cap", "End cap (W3 at the rim)", "floor 8, rim 12 (bore 72.90), R6 inside"),
+                               ("B_puck", "Catch puck", "6 x 45 deg under (clears R6), 2 x 45 on top"),
+                               ("B_liner", "Liner", "2-3/4 x 0.065 304, stands on the puck"),
                                ("B_body_tube", "Body tube", "3 in x 0.065, faced square")):
+        if name not in parts:
+            continue
         p = parts[name]
         sec = [(r, zz) for r, zz in p.section]
         rmax = max(r for r, _ in sec)
@@ -189,6 +210,12 @@ def sheet_b_parts(pdf):
         rin = min(r for r, _ in sec)
         if rin > 1:
             dim_h(ax, x0 - rin, x0 + rin, zmax + 4, f"Ø{2 * rin:.2f} bore")
+        if name == "B_bottom_cap":
+            b_ = P.B
+            ri_ = b_["body_od"] / 2 - b_["body_wall"]
+            dim_h(ax, x0 - ri_, x0 + ri_, zmax + 4, f"Ø{2 * ri_:.2f} rim bore")
+            dim_v(ax, x0 - rmax - 6, 0, b_["bottom_t"], f"{b_['bottom_t']:.0f}", side=-1, fs=6.5)
+            leader(ax, (x0 + ri_ - 2.0, b_["bottom_t"] + 1.5), (x0 + rmax + 14, b_["bottom_t"] + 16), f"R{b_['bottom_fillet']:.0f}")
         ax.text(x0, zmax + 16, label, ha="center", fontsize=10, weight="bold")
         ax.text(x0, -16, extra, ha="center", fontsize=7.5)
         ax.text(x0, -22, p.note[:70] + ("..." if len(p.note) > 70 else ""), ha="center", fontsize=6)
@@ -207,7 +234,7 @@ def sheet_fixture(pdf):
                     ["CAM: cam/gcode/fixture_op1.nc (face bottom), fixture_op2.nc (top); checked in CAMotics.",
                      f"Flange rim rests on a folded 0.025 in ({MC.SHIM:.2f} mm) shim so the flange and tube share an axis.",
                      f"Part axis {MC.axis_height():.2f} above the top face; strap clamps on the 4 x M6.",
-                     "The 20 mm slot sits under weld W2 for the torch and the purge gas."])
+                     "No slot: the V carries the reducer's 3 in end and the tube; weld on top as the part rolls."])
     L, W, H = MC.L, MC.W, MC.H
     # top view (x along, y across), origin at (0, 80)
     oy = 110
@@ -216,18 +243,20 @@ def sheet_fixture(pdf):
         ax.plot([0, L], [oy + yy, oy + yy], color="k", lw=LW)
     for yy in (MC.APEX_W / 2, -MC.APEX_W / 2):
         ax.plot([0, L], [oy + yy, oy + yy], color="k", lw=0.5, ls="--")
-    ax.add_patch(Rectangle((MC.SEAM_X - MC.SLOT_W / 2, oy - MC.SLOT_HALF_Y), MC.SLOT_W, 2 * MC.SLOT_HALF_Y,
-                           facecolor="0.9", edgecolor="k", lw=LW))
+    if MC.SLOT:
+        ax.add_patch(Rectangle((MC.SEAM_X - MC.SLOT_W / 2, oy - MC.SLOT_HALF_Y), MC.SLOT_W, 2 * MC.SLOT_HALF_Y,
+                               facecolor="0.9", edgecolor="k", lw=LW))
+    ax.plot([MC.SEAM_X, MC.SEAM_X], [oy - MC.V_HALF, oy + MC.V_HALF], color="k", lw=0.5, ls=":")
     for x, y in MC.HOLES:
         ax.add_patch(plt.Circle((x, oy + y), MC.TAP_DRILL / 2, fill=False, lw=LW))
         ax.add_patch(plt.Circle((x, oy + y), 3.0, fill=False, lw=0.5, ls="--"))
     dim_h(ax, 0, L, oy + W / 2 + 8, f"{L:.0f}")
     dim_v(ax, -10, oy - W / 2, oy + W / 2, f"{W:.1f}", side=-1)
-    dim_h(ax, 0, MC.SEAM_X, oy - W / 2 - 8, f"{MC.SEAM_X:.2f} (to slot centre = weld W2)", above=False)
-    dim_h(ax, MC.SEAM_X - MC.SLOT_W / 2, MC.SEAM_X + MC.SLOT_W / 2, oy + MC.SLOT_HALF_Y + 3, f"{MC.SLOT_W:.0f}", fs=6.5)
-    dim_h(ax, 0, 150, oy + 46 + 12, "150", fs=6.5)
-    dim_h(ax, 150, 225, oy + 46 + 12, "75", fs=6.5)
-    leader(ax, (225, oy - 46), (255, oy - 70), "4 x M6x1.0, 12 deep (drill Ø5.0 x 16)\nat y = ±46")
+    dim_h(ax, 0, MC.SEAM_X, oy - W / 2 - 8, f"{MC.SEAM_X:.2f} (weld W2 over here)", above=False)
+    hx = sorted({x for x, _ in MC.HOLES})
+    dim_h(ax, 0, hx[0], oy + 46 + 12, f"{hx[0]:.0f}", fs=6.5)
+    dim_h(ax, hx[0], hx[1], oy + 46 + 12, f"{hx[1] - hx[0]:.0f}", fs=6.5)
+    leader(ax, (hx[1], oy - 46), (hx[1] + 30, oy - 70), "4 x M6x1.0, 12 deep (drill Ø5.0 x 16)\nat y = ±46")
     ax.text(L / 2, oy + W / 2 + 20, "TOP VIEW", ha="center", fontsize=9, weight="bold")
     ax.text(-4, oy, "flange\nend\n(x = 0)", ha="right", va="center", fontsize=7)
     # end section (y across, z up) to the right
@@ -257,7 +286,7 @@ def sheet_a(pdf):
     kf, a = P.JOINT, P.A
     fig, ax = sheet("A: catalogue cup (interim, small charges only)", 4,
                     "KF-50 nipple, blank, ring, clamp: 304; liner 304 tube; puck 304 (2 in bar)",
-                    ["Only ~150 cm3 above the puck: Al runs and Cu-alloy charges up to ~250 g (thermal FEA).",
+                    ["~159 cm3 above the puck. FEA: ~120 g of Cu-alloy shot before the bottom O-ring passes 150 C.",
                      "Both joints get an over-pressure ring (A&N 4000076); the bottom O-ring sees the pile.",
                      "Liner: 1-3/4 in x 0.049 tube cut to length, deburred; stands on the puck.",
                      "Puck stands on the blank's recess floor, inside the centring ring."])

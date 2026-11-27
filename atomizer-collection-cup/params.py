@@ -105,9 +105,20 @@ B = dict(
     bottom_t=8.0,              # floor of the turned 316L end cap (heat sink)
     bottom_rim=12.0,           # the cap's rim above the floor: W3 is a wall-to-wall butt weld 20 mm up, away from
     bottom_fillet=6.0,         # the inside corner, which is turned to R6 (Edison final check: no sharp welded corner)
-    liner_od=69.85, liner_wall=1.65,   # 2-3/4 in x 0.065 in 304 tube (McMaster 11116N864; 0.049 not stocked)
+    # The cup splits at a 3 in sanitary tri-clamp where the reducer meets the tube (cool: see the FEA). The upper
+    # part (stub + reducer + ferrule) stays clamped on the cone; the lower pot (ferrule + tube + end cap) comes off
+    # each run with a full 72.9 mm opening, so the puck and the liner (with its 1.5 mm gap to the wall) go in and
+    # out, a fused lump can be got out, and the powder is carried away in the pot under a tri-clamp cap.
+    # (A cup welded shut below the 47.5 mm KF neck can't take a 70 mm puck or liner: found in review.)
+    split=True, ferrule_len=12.7, ferrule_od=90.9, gasket_t=1.6,    # 3 in short weld ferrules (14WMP), ASME BPE sizes
+    liner=True, liner_od=69.85, liner_wall=1.65,   # 2-3/4 in x 0.065 in 304 tube, stands on the puck
     puck_d=70.0, puck_h=25.0, puck_chamfer=2.0, puck_chamfer_bottom=6.0,   # 6 x 45 deg clears the R6 corner
 )
+
+# 3 in tri-clamp (ASME BPE / 3-A): ferrule flange OD 90.9 (3.579 in), bore = the 3 in x 0.065 tube's 72.9.
+# Modelled with the KF helpers: a 20 deg clamp taper, a flat gasket 1.6 mm thick (the bead is not drawn).
+TC3 = KF("TC-3", flange_od=90.9, tube_od=76.2, tube_wall=1.65, lip=6.0, hub_od=80.0, taper_deg=20.0,
+         ring_id=72.9, ring_od=90.9, ring_thk=1.6, oring_cs=1.6, clamp_od=110.0, clamp_w=24.0)
 
 # Option C: glass rebuild. Stock plates, tie rods and valve body; fused-quartz tube; FKM seals; a
 # 304 liner sleeve hung in the top bore that covers the valve seat and the glass rim.

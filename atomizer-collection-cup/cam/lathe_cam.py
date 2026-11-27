@@ -83,14 +83,23 @@ class Part:
 
 
 def liner_length_b():
-    from_floor = P.B["bottom_t"] + P.B["puck_h"]
-    z_red_top_tangent = P.B["stub_len"] + P.B["reducer_len"] - 8.0
-    return round(P.B["body_len"] - from_floor - z_red_top_tangent - 3.0 - 0.2, 1)
+    """From the puck's top to 3 mm below the reducer's tangent (or, split, below the pot's ferrule face)."""
+    b = P.B
+    from_floor = b["bottom_t"] + b["puck_h"]
+    if b.get("split"):
+        to_face = b["stub_len"] + b["reducer_len"] + b["ferrule_len"] + b["gasket_t"]
+        return round(b["body_len"] - from_floor - to_face - 3.0 - 0.2, 1)
+    z_red_top_tangent = b["stub_len"] + b["reducer_len"] - 8.0
+    return round(b["body_len"] - from_floor - z_red_top_tangent - 3.0 - 0.2, 1)
 
 
 def body_tube_length_b():
-    """From the reducer's 3 in end to the end cap's rim (W2 to W3)."""
-    return round(P.B["body_len"] - P.B["stub_len"] - P.B["reducer_len"] - P.B["bottom_t"] - P.B.get("bottom_rim", 0.0), 2)
+    """From the reducer's 3 in end (or, split, from the pot's ferrule) to the end cap's rim."""
+    b = P.B
+    L = b["body_len"] - b["stub_len"] - b["reducer_len"] - b["bottom_t"] - b.get("bottom_rim", 0.0)
+    if b.get("split"):
+        L -= 2 * b["ferrule_len"] + b["gasket_t"]
+    return round(L, 2)
 
 
 def parts():
@@ -104,7 +113,7 @@ def parts():
                     [(0, 0), (R - 0.5, 0), (R, 0.5), (R, H), (Ri, H)] + arc + [(0, t)],
                     ops=["face", "drill", "bore", "rough_od", "finish_od", "part", "op2_face", "op2_chamfer"],
                     blind_z=t + 1.5, drill_r=12.5,
-                    note="3-1/4 in. 316L bar. An end cap: 8 mm floor, 12 mm rim the tube's wall (W3 is a square butt "
+                    note="3-1/4 in. 316/316L bar. An end cap: 8 mm floor, 12 mm rim the tube's wall (W3 is a square butt "
                          "weld 20 mm up), R6 inside corner (no sharp welded corner where the floor's thermal stress peaks)."))
     for tag, d in (("B", b), ("A", a)):
         R, h, cf = d["puck_d"] / 2, d["puck_h"], d["puck_chamfer"]
@@ -114,18 +123,19 @@ def parts():
                         [(0, 0), (R - cb, 0), (R, cb), (R, h - cf), (R - cf, h), (0, h)],
                         ops=["face", "rough_od", "finish_od", "part", "op2_face", "op2_chamfer"],
                         note=f"{bar * 2 / INCH:.0f} in. 304 bar. Sits loose on the floor; the liner stands on it."))
-    ro, ri = b["liner_od"] / 2, b["liner_od"] / 2 - b["liner_wall"]
-    L = liner_length_b()
-    out.append(Part("B_liner", "304", (ri, ro, -12.0, L + 1.5),
-                    [(ri, 0), (ro - 0.3, 0), (ro, 0.3), (ro, L - 0.3), (ro - 0.3, L), (ri, L)],
-                    ops=["face", "finish_od_top", "op2_face", "op2_chamfer"],
-                    note=f"2-3/4 in. x 0.065 in. 304 tube (McMaster 11116N864), sawn to {L + 3:.0f} mm and faced to {L:.1f} mm; "
-                         "held on its OD in a collet or soft jaws with 12 mm out. Deburr the bore by hand."))
+    if b.get("liner", True):
+        ro, ri = b["liner_od"] / 2, b["liner_od"] / 2 - b["liner_wall"]
+        L = liner_length_b()
+        out.append(Part("B_liner", "304", (ri, ro, -12.0, L + 1.5),
+                        [(ri, 0), (ro - 0.3, 0), (ro, 0.3), (ro, L - 0.3), (ro - 0.3, L), (ri, L)],
+                        ops=["face", "finish_od_top", "op2_face", "op2_chamfer"],
+                        note=f"2-3/4 in. x 0.065 in. 304 tube (McMaster 11116N864), sawn to {L + 3:.0f} mm and faced to {L:.1f} mm; "
+                             "held on its OD in a collet or soft jaws with 12 mm out. Deburr the bore by hand."))
     ro, ri = b["body_od"] / 2, b["body_od"] / 2 - b["body_wall"]
     Lb = body_tube_length_b()
     out.append(Part("B_body_tube", "316L", (ri, ro, -12.0, Lb + 1.5), [(ri, 0), (ro, 0), (ro, Lb), (ri, Lb)],
                     ops=["face", "op2_face"],
-                    note=f"3 in. x 0.065 in. 316L tube, sawn to {Lb + 3:.0f} mm and faced square to {Lb:.1f} mm "
+                    note=f"3 in. x 0.065 in. 316/316L tube, sawn to {Lb + 3:.0f} mm and faced square to {Lb:.1f} mm "
                          "(weld ends square and burr-free, no gap). Spider or plug in the bore against chatter."))
     lip_t, so, sl, sw, sL = 3.0, c["sleeve_od"] / 2, c["sleeve_lip_od"] / 2, c["sleeve_wall"], c["sleeve_len"]
     si = so - sw
