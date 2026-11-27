@@ -1,0 +1,22 @@
+{
+  "01_per_element_Al": "cd97bf21-0430-4c8b-975a-b1cdd7294e3e",
+  "01_per_element_Mn": "0ae4892f-563e-46cb-9c55-a4721dac86b0",
+  "01_per_element_Cr": "ff7dbd72-632d-4ec9-9cf6-f760d214c51e",
+  "01_per_element_Zr": "6f403085-5c64-4837-b305-93ee368b3afb",
+  "01_per_element_Mg": "f2312e42-605c-468d-8028-f21c3b3b5d15",
+  "01_per_element_Si": "792b16bb-4708-4933-a5ac-674d40a10e1c",
+  "01_per_element_Cu": "edaa4a5d-10b9-45c0-996b-2c071314ffde",
+  "01_per_element_Ti": "da117924-dac8-448e-bb45-6331e37b41cf",
+  "01_per_element_Fe": "4bc97047-8a4f-4cc4-8798-f81e8ce49990",
+  "01_per_element_Ni": "da66e079-d3ef-4c71-8a63-60c46e296bf9",
+  "01_per_element_Ce": "73d9e126-4f4e-4db7-8411-e9ad7134e9ac",
+  "01_per_element_Sc": "2fc74fd6-087f-476c-9f0c-708b561e29f3",
+  "01_per_element_Li": "33d44d1f-07b8-466d-b8ff-232de5a85e7c",
+  "01_per_element_Er": "ab2f5e02-d7fb-4676-8618-f65c6a5ce13e",
+  "01_per_element_Zn": "b42d3e02-4b02-4ac0-871a-dba383d4e49f",
+  "01_per_element_Sn": "a99be181-350a-4992-863d-2a80ce674a9e",
+  "01_lower_bound": "d1e23d47-6ded-4f8e-a61d-50a158894d53",
+  "01_simultaneous_all_bounds": "1d872481-5007-4e13-b937-ea9a7d130dcf",
+  "02_finalized_bounds_table": "caec5419-4ced-44f3-b902-68a3e84fadf6",
+  "03_multi_element_constraints": "15a4edab-7189-4438-bf42-01d554487dbb"
+}
