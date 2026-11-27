@@ -416,6 +416,14 @@ def reach_of(org, hd, lean, hands):
     return worst
 
 
+def lean_for(org, hands):
+    """The lean (deg) people.py's person needs to put its palms this far from its body (the horizontal distance to the
+    farther hand, at 0.95-1.15 m up): measured on the posed model (round 9: palms 400, 500, 600, 700, 800 mm ahead and
+    120 mm to each side land within 15 mm at leans of about 10, 20, 30, 40, 50 deg)."""
+    d = max(float(np.hypot(*(np.asarray(h, float)[:2] - org))) for h in hands.values())
+    return float(np.interp(d, [420.0, 515.0, 612.0, 710.0, 809.0, 860.0], [10.0, 20.0, 30.0, 40.0, 50.0, 56.0]))
+
+
 def pair_lift(w, scn, crew, name, spec, keys, kg, caption, sub, step, cam, hand_pts=None, check_items=None,
               fronts=None, M_st=None, walk_in=True, step_back=True, frames_per_m=60.0):
     """Two people side by side, facing the station's +y (into the VF-4), each holding one end of a load with both hands
@@ -476,25 +484,14 @@ def pair_lift(w, scn, crew, name, spec, keys, kg, caption, sub, step, cam, hand_
         y_near = float(cw[:, 1].min())
         zl, zh = float(cw[:, 2].min()), float(cw[:, 2].max())
         org = (M @ np.r_[o_st, 1.0])[:2]
-        best = None
-        for lean in np.arange(0.0, 58.0, 2.0):
-            r = reach_of(org, hds[i], lean, hands)
-            if best is None or r < best[1] - 1.0:
-                best = (lean, r)
-            if r <= 0.0:
-                best = (lean, r)
-                break
-        lean, r = best
+        lean = lean_for(org, hands)
         fr = SS.people.body_front(zl - 40.0, zh + 40.0, lean)
         y_body_max = y_near - 30.0 - fr                 # the body (arms out of it) off the load's near face
         if o_st[1] > y_body_max and abs(float(Pc[0] - o_st[0])) < 300.0:
             o_st[1] = y_body_max
             org = (M @ np.r_[o_st, 1.0])[:2]
-            for lean2 in np.arange(lean, 58.0, 2.0):
-                r = reach_of(org, hds[i], lean2, hands)
-                lean = lean2
-                if r <= 0.0:
-                    break
+            lean = lean_for(org, hands)
+        r = reach_of(org, hds[i], lean, hands)
         return org, hds[i], float(lean), hands, float(r)
 
     crew.show(1.0)
@@ -920,7 +917,7 @@ def cut_program(w, scn, vf4, stock, names, part_obj, Q_of, cam, cap, seconds, st
 
 # ================================================================================================ clip playback
 def play(w, scn, name, cam, sub=None, caption=None, hide=(), tool_override=None, obj_color=None, rev=False,
-         cut=None):
+         cut=None, specs=None):
     """Play a recorded clip: arms, MiRs, objects per frame; the clip's own meta unless overridden."""
     clip = load(name)
     if clip is None:
@@ -950,7 +947,7 @@ def play(w, scn, name, cam, sub=None, caption=None, hide=(), tool_override=None,
         for o, M in fr["objs"].items():
             if o in hide:
                 continue
-            scn.set_obj(o, M, clip["objects"].get(o), color=(obj_color or {}).get(o))
+            scn.set_obj(o, M, (specs or {}).get(o, clip["objects"].get(o)), color=(obj_color or {}).get(o))
         meta = dict(fr["meta"])
         c = caption or meta.pop("caption", "")
         meta.pop("caption", None)
@@ -1385,28 +1382,26 @@ def chapter_30():
     axis = np.array(vf4.axis, float)
     Q_at = lambda a: E.about(E.Rx(a), axis) @ P3    # noqa: E731
     P_to3 = E.T((40.0, 0, 0)) @ Q_at(90.0)
-    for i in range(2):
-        pw = (st @ np.r_[-2700.0 + 500.0 * i, -1500.0 - 150.0 * i, 0.0, 1.0])[:3]
-        crew.place(i, pw[0], pw[1], 40.0)
-    crew.show(1.0)
     capC = "Two people set the frame and its plate on the 4th axis"
-    for i in range(18):
-        vf4.set(door=ease((i + 1) / 18))
-        w.frame(scn, cam_out, capC, sub="the HRT210 indexed to A 90 for loading (left wall up)", who=["machine"],
-                step="F-S3", status="pass", proc_s=1.5 / 18)
-    m2_ = scn.obj_mesh(spec2)[0]
-    P_a3 = M_tab3 @ P2
-    hp_rot = {0: end_hands(m2_, P_a3, -1, fz=0.5, fy=(0.4, 0.6)), 1: end_hands(m2_, P_a3, 1, fz=0.5, fy=(0.4, 0.6))}
-    P_up3 = E.T((0, 0, 50.0)) @ P_a3
-    c3 = P_up3[:3, :3] @ ((np.asarray(m2_.points).min(0) + np.asarray(m2_.points).max(0)) / 2) + P_up3[:3, 3]
-    c3t = P_to3[:3, :3] @ ((np.asarray(m2_.points).min(0) + np.asarray(m2_.points).max(0)) / 2) + P_to3[:3, 3]
-    P_mid3 = P_to3.copy()
-    P_mid3[:3, 3] += np.array([0.0, 0.0, max(c3[2] - c3t[2], 0.0) + 40.0])
-    keys3 = [(P_a3, None), (P_up3, 0.9), (P_mid3, 4.5), (P_to3, 1.0)]
-    pair_lift(w, scn, crew, "load", spec2, keys3, kg_frame + kg_plate, capC,
-              f"frame {kg_frame:.1f} kg + MIC-6 plate {kg_plate:.1f} kg, turned 90 deg onto the platter; 4 bolts "
-              f"through the opening (not shown); {rule}", "F-S3", cam_out, check_items=check, fronts=fronts,
-              hand_pts=hp_rot)
+    vf4.set(door=1.0)
+    # round 9: the turn from flat onto the platter is 90 deg about the machine's Y (the frame's floor to the platter);
+    # the faces two people at the door hold (the frame's ends, along X) don't stay level through it, so the lift is
+    # cut: they are seen stepping back from the door with the frame on the platter
+    PERSON_RESULTS[f"F-S3: {capC}"] = dict(kg=round(kg_frame + kg_plate, 2), team_guideline_kg=round(TEAM_KG, 1),
+                                           under_guideline=bool(kg_frame + kg_plate <= TEAM_KG), shown=False,
+                                           caption=capC, why="a 90 deg turn about Y: not drawn (a cut)")
+    for i in range(2):                               # at the cut from the inside view: at the open door, done
+        pw = (st @ np.r_[(-330.0 if i == 0 else 330.0) + 0.0, -200.0, 0.0, 1.0])[:3]
+        crew.place(i, pw[0], pw[1], HD[i])
+    crew.show(1.0)
+    scn.set_obj("load", st @ P_to3, spec2)
+    for i in range(int(1.5 * FPS)):
+        w.frame(scn, cam_out, capC, sub="the HRT210 indexed to A 90 for loading (left wall up); the frame on its plate "
+                "turned 90 deg onto the platter and bolted through the opening (not shown)", who=["person"],
+                step="F-S3", status="person")
+    crew.step_back(w, cam_out, capC, f"frame {kg_frame:.1f} kg + MIC-6 plate {kg_plate:.1f} kg, turned 90 deg onto "
+                   f"the platter and bolted through the opening (the lift and the bolting not shown); {rule}", "F-S3",
+                   dist=600.0, n=24)
     scn.hide_obj("load")
     for n in vf4.sc.members("vf4/rotfix"):
         vf4.sc.alpha[n] = 1.0
@@ -1459,7 +1454,17 @@ def chapter_31():
     vf4 = VF4(scn)
     vf4.set(table_x=-E.TABLE_LAYOUT["vise"], vise=True)
     scn.drop_context("lathe")
-    scn.add_parts("lathe", E.st10(door=1.0, jaw_open=6.0)[0], Mst("lathe"))
+    lp = E.st10(door=1.0, jaw_open=6.0)[0]
+    shut_dx = E.ST10["panel_w"] - 20.0                 # the door slides right by this to shut (equipment.st10)
+    for n_ in ("door", "door window"):                 # round 9: the door its own group, so it can shut and open
+        q_ = lp[n_]
+        lp[n_] = E.Part(q_.mesh, q_.color, q_.opacity, q_.collide, q_.M, "door")
+    scn.add_parts("lathe", lp, Mst("lathe"))
+
+    def lathe_door(u):
+        """0 open .. 1 shut"""
+        for n_ in ("door", "door window"):
+            scn.sc.gmat[f"lathe/{n_}"] = Mst("lathe") @ E.T((shut_dx * u, 0.0, 0.0)) @ lp[n_].M
     scn.drop_context("saw")
     scn.add_parts("saw", E.s20a(head=1.0)[0], Mst("saw"))
     cam_v = cam_at("vf4", (-1300, -2300, 2200), (0, 450, 1050))
@@ -1488,7 +1493,28 @@ def chapter_31():
     vf4.set(z=0.0, table_y=0.0)                  # the doors stay shut: the bracket is being cut
     play(w, scn, "saw_bar", cam_at("saw", (-2400, -2500, 2200), (-1300, 450, 900)))
     scn.show_arm("B", False)
-    play(w, scn, "lathe_slug", cam_at("lathe", (-1600, -2300, 2000), (100, 300, 1000)))
+    cam_l = cam_at("lathe", (-1600, -2300, 2000), (100, 300, 1000))
+    play(w, scn, "lathe_slug", cam_l)
+    # round 9 (P1): the lathe runs with its door shut (no posted program for the turned parts: only the clock), then
+    # arm A takes the part out along the loading path run back (so checked as it was planned); the part drawn turned
+    n_t = int(5 * FPS)
+    for i in range(n_t + 36):
+        if i < 18:
+            lathe_door(ease((i + 1) / 18))
+        elif i >= n_t + 18:
+            lathe_door(1.0 - ease((i - n_t - 17) / 18))
+        mid = 18 <= i < n_t + 18
+        w.frame(scn, cam_l, "The slug turned, door shut" if i < n_t + 18 else "Door open: the part is done",
+                sub="the lathe class's ~5 min a setup (shop_summary.json); no program is posted for the turned parts, "
+                    "so no tool path is drawn" if mid or i < 18 else "the ST-10's auto door (option)",
+                who=["machine"], step="lathe class", status="pass",
+                proc_s=(5 * 60.0 - 3.0) / n_t if mid else 1.5 / 18)
+    turned = dict(kind="steps", steps=[(0.0, 46.0, 27.0), (46.0, 66.0, 25.4), (66.0, 92.0, 19.0), (92.0, 100.0, 12.0)],
+                  color="#cfd4d9")
+    play(w, scn, "lathe_slug", cam_l, rev=True, specs={"bar slug": turned},
+         caption="Arm A takes the turned part out: the loading path run back",
+         sub="the planned, FCL-checked load reversed (the part is smaller than the slug it was cut from); the profile "
+             "drawn is illustrative")
     lb = load("lathe_big")
     if lb is not None and (lb.get("result") or {}).get("ok", False):
         scn.add_parts("lathe", E.st10(door=1.0, jaw_open=33.0, jaw_deg=30.0)[0], Mst("lathe"))   # jaws opened, oriented
@@ -1562,7 +1588,11 @@ def chapter_32():
                 sub="outsourced: a hone shop, about 10 working days (estimate) for one tube", who=["outsourced"],
                 step="hone", status="pass", proc_s=1.0 / FPS, add=dict(outsourced_d=10.0 / (4 * FPS)))
     play(w, scn, "deburr", cam_at("wash", (1600, -1800, 2000), (450, 340, 1050)))
-    scn.show_arm("A", False)
+    # round 9: arm A's MiR drives on to the measuring station in the same shot (pivot, drive, pivot; FCL-swept)
+    if (load("drive_deburr_measure") or {}).get("result", {}).get("ok", False):
+        play(w, scn, "drive_deburr_measure", cam_at("wash", (1600, -1800, 2000), (450, 340, 1050)))
+    else:
+        scn.show_arm("A", False)
     play(w, scn, "wash", cam_at("wash", (-200, -2000, 2200), (-500, 340, 950)), hide=())
     scn.show_arm("B", False)
     mc = load("measure")

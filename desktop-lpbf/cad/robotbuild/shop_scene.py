@@ -239,6 +239,9 @@ class ShopScene:
             return E.merge([E.box(*b) for b in spec["boxes"]]), spec.get("color", "#cfd4d9")
         if k == "cyl":
             return E.cyl((0, 0, 0), (spec["L"], 0, 0), spec["r"], res=40), spec.get("color", "#cfd4d9")
+        if k == "steps":                  # a turned part: [(x from, x to, radius)] along its x axis
+            return E.merge([E.cyl((a, 0, 0), (b, 0, 0), r, res=40) for a, b, r in spec["steps"]]), \
+                spec.get("color", "#cfd4d9")
         if k == "vf":
             return vf_mesh(spec["v"], spec["f"]), spec.get("color", "#cfd4d9")
         if k == "tray":
