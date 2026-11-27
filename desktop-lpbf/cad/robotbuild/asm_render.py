@@ -29,6 +29,19 @@ Round 8 (Sterling, 2026-11-26: "moonwalk, motion sickness, collisions and interf
     the planner is still writing its chunks (record.py). ASM_UPTO=<step> stops before that step (41 stops before T01: the
     integration chapter draws T01-T06). ASM_PLAN_ONLY=1: pass 1 only, the frame and shot plan to <data>/<chapter>-plan.json.
     ASM_PICK=n,m,...: draw only those frames (a look at stills before a full render).
+
+Round 9 (2026-11-27; round 8's frame audit and camera check; Sterling: "showing where a human is absolutely necessary"):
+  * The seal steps' hand tools go back to their stand when their step ends (the recording has no "take" for them, so round 8
+    left one inside the module from frame 2792 to the end). Objects are drawn at the scene file's 12,000 triangles (2,500
+    closed bores and counterbores). A put of parts an arm still holds re-anchors the hold, so they stay where the planner
+    seated them (M19's heater stack sat 2.4 mm off its bore for 500 frames). The hoist hook is drawn at the planner's points.
+  * The person walks in from the aisle beside the cell to a spot that is clear on the floor plan (MiRs with their tool stands
+    and presenters, arms, bench, fixtures, table, parts in the cell) and out of the place's tripods' lines of sight, and out
+    again, their feet locked by people.py's Gait (W1, round 9) at 450 mm/s; after a failed step they set each part the arms
+    could not (it appears in its seat as their hands reach it) and drive each screw no arm could, with a hand driver (5 min a
+    part, 1 min a screw, time-lapsed), status "person".
+  * Camera: a cut is forced only where something jumped; a fetch not shown holds the shot when the MiR and arm come back to
+    where they were; small arm jumps (<= 5 deg) are drawn as a labelled reposition; slice boundaries are soft (README).
 """
 from __future__ import annotations
 
@@ -519,9 +532,11 @@ class Replay:
         return None if best is None else (best[1], best[2])
 
     @staticmethod
-    def walk_seq(pts, hd0, hd_end, v=850.0, turn=10.0):
+    def walk_seq(pts, hd0, hd_end, v=450.0, turn=10.0):
         """Per frame (x, y, heading): turn on the spot (at most `turn` deg a frame) to each leg's heading, walk the leg eased in
-        and out (mean v mm/s, so at most 1.5 v), and at the end turn to hd_end."""
+        and out (mean v mm/s, so at most 1.5 v), and at the end turn to hd_end. Round 9: v = 450 mm/s (at most 675): on this
+        eased profile people.py's Gait keeps every planted foot still (0.0 mm stance slip, 0 overreach frames; at 850 mm/s,
+        peak 1.3 m/s, the steps could not keep up and the planted foot slid up to 0.5 m a stance, measured with walk.py)."""
         out = []
         hd = float(hd0)
 

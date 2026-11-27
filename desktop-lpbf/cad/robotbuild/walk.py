@@ -132,7 +132,12 @@ class PersonTrack:
             pn, pW, pV, pM, pdown, pcon = self.prev
             move = float(np.linalg.norm(M[:2, 3] - pM[:2, 3]))
             turn = abs((_yaw(M) - _yaw(pM) + 180.0) % 360.0 - 180.0)
-            if move > JUMP_MM:
+            # round 9: people re-skinned in world coordinates keep an identity matrix, so a placement (a cut) moved only
+            # the vertices; the shoes' centre moving more than JUMP_MM in a frame is a jump too
+            shift = float(np.linalg.norm(W[:, :2].mean(0) - pW[:, :2].mean(0))) if len(W) == len(pW) else 0.0
+            move_j = max(move, shift)
+            if move_j > JUMP_MM:
+                move = move_j
                 self.jumps.append((n, round(move)))
                 for f in (0, 1):
                     self.close_stance(f, pn)
@@ -272,6 +277,10 @@ def run(chapter):
         for s, tr in people.items():
             a = actors.get(s)
             if a is None or not a.vis or a.geom is None:
+                if tr.prev is not None:            # round 9: hidden (between a person's jobs): the next time they are
+                    for f in (0, 1):               # drawn starts new stances, nothing is measured across the gap
+                        tr.close_stance(f, tr.prev[0])
+                    tr.prev = None
                 continue
             tr.step(n, a.geom.V, a.geom.F, a.M)
         for tg, tr in bases.items():
