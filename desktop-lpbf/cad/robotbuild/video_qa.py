@@ -95,6 +95,21 @@ def read_chapters(path, total_s):
     return [(s, (ch[i + 1][0] if i + 1 < len(ch) else total_s), title) for i, (s, title) in enumerate(ch)]
 
 
+def exact_chapters(compose_json, total_s):
+    """Round 9: chapter windows from compose.json's exact frame counts. chapters.txt rounds each start to the nearest whole
+    second, so a window could begin up to 0.5 s early and count the previous chapter's last fraction of a second as a short run
+    (chapter 30's 0.5 s run in round 9's first check was 318.5 s rounded to 5:18)."""
+    d = json.loads(Path(compose_json).read_text())
+    fps = d.get("fps", 12)
+    yt = [(sum(int(v) * 60 ** i for i, v in enumerate(reversed(c["at"].split(":")))), c["title"]) for c in d["youtube_chapters"]]
+    starts, t, k = [], 0.0, 0
+    for c in d["chapters"]:
+        if k < len(yt) and abs(t - yt[k][0]) <= 1.0:
+            starts.append((t, yt[k][1])); k += 1
+        t += c["frames"] / fps
+    return [(s0, (starts[i + 1][0] if i + 1 < len(starts) else total_s), title) for i, (s0, title) in enumerate(starts)]
+
+
 def measure(path):
     import cv2
     fps = probe_fps(path)
@@ -177,11 +192,13 @@ def main(argv=None):
     ap.add_argument("--chapters", default="")
     ap.add_argument("--out", default="")
     ap.add_argument("--tag", default="")
+    ap.add_argument("--compose-json", default="", help="exact chapter starts from compose.json's frame counts (round 9)")
     a = ap.parse_args(argv)
     m = measure(a.video)
     total = m["n"] / m["fps"]
     rows = []
-    for s, e, title in read_chapters(a.chapters, total):
+    windows = exact_chapters(a.compose_json, total) if a.compose_json else read_chapters(a.chapters, total)
+    for s, e, title in windows:
         st = stats(m, s, e)
         if st:
             rows.append(dict(chapter=title, start_s=s, **st))

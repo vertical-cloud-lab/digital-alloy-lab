@@ -40,27 +40,30 @@ renderer and audit, and the bracket's programs), every heavy job queued on one m
 | Integration: the process fiber through the laser's box and the rack; the DIN drawer's ears in the rack posts | The fiber leaves the laser's rear panel and bends at 75-77 mm (IPG's minimum is 70 mm) up the slot beside the rack units, through grommeted holes, to the collimator; the rack frame is 580 mm tall (was 560), so the drawer clears its rails; the person walks on screen | [`lpbf_low.py`](../cad/lpbf_low.py) |
 | The machining workflow (round 7's open points: MiR drives between stations, unloading the lathe, the 4th-axis bolt-up; the vise bracket had no program) | MiR A drives VF-4 to lathe and deburr to measuring (pivot, drive, pivot; every pose swept with FCL); the lathe shuts, runs and opens, and arm A takes the turned part out along its checked loading path run back; arm A bolts the frame to the HRT210's platter with the nut runner (four M8, planned, 25 s). **New chapter 31b:** the recoater motor bracket cut by its own FreeCAD 1.0.2 programs (op 1 face and outline, op 2 turned over; 3.06 min), the cutter only on program lines (600 of 600 frames, worst 0.00005 mm off), the voxel simulation removing 152.2 cm³ against 152.2 for blank minus part. There is no lathe program: FreeCAD 1.0.2's CAM has no turning, so the slug's profile in 31 stays illustrative | [`gcode/parts/README.md`](../analysis/out/machining/gcode/parts/README.md), [`ch_programs.py`](../cad/robotbuild/ch_programs.py) |
 
-**The camera check on the finished file** ([round 9](../analysis/out/videoqa/camera-round9-video.json), same limits as round 8):
+**The camera check on the finished file** ([round 9](../analysis/out/videoqa/camera-round9-video-exact.json), same limits as round 8, with each chapter's window from compose.json's exact frame counts, `video_qa.py --compose-json`):
 
 | Chapter | Round 8: jumps a minute, median run, result | Round 9: jumps a minute, median run, runs under 2 s, p95 speed (fw/s), result |
 |---|---|---|
-| The hall: two mobile manipulators, one long table | 8.6, 5.9 s, pass | 8.6, 5.9 s, 11 %, 0.06, pass |
-| The parts: cost and lead time | 9.8, 5.7 s, pass | 9.4, 5.9 s, 4 %, 0.05, pass |
-| Time estimates: machining, routes, assembly | 0.0, 30.0 s, pass | 0.0, 30.0 s, 0 %, 0.00, pass |
-| Receiving and unpacking | 6.5, 6.1 s, pass | 7.9, 6.0 s, 33 %, 0.02, pass |
-| The stock: two people carry the 5.5 in. plate | 7.5, 7.9 s, pass | 0.0, 22.0 s, 0 %, 0.09, pass |
-| Machining the chamber: the VF-4 and its 4th axis | 4.4, 10.2 s, pass | 2.8, 17.2 s, 17 %, 0.03, FAIL (short_run_share) |
-| Machining the other parts: vise, lathe, saw | 6.8, 9.9 s, FAIL | 2.0, 21.6 s, 17 %, 0.01, pass |
-| Finishing: welding, honing, deburring, washing, measuring, kitting | 5.5, 9.8 s, pass | 5.7, 7.9 s, 22 %, 0.01, FAIL (short_run_share) |
-| The arms' custom tools and fixtures | 5.7, 4.6 s, pass | 6.4, 4.7 s, 0 %, 0.07, pass |
-| Assembly 1: the build module, by two UR12e on MiR250s | 6.5, 5.0 s, pass | 3.9, 8.4 s, 6 %, 0.01, pass |
-| Assembly 2: the chamber and the process module, by two UR12e on MiR250s | 10.3, 3.9 s, FAIL | 4.6, 8.7 s, 7 %, 0.01, pass |
-| Onto the VLM tray: rack, gas module, hoses, leak check | 8.7, 4.9 s, pass | 8.1, 4.9 s, 8 %, 0.01, pass |
-| Time and cost: in-house, outsourced, robot shop | 2.3, 11.2 s, pass | 2.8, 10.6 s, 17 %, 0.00, pass |
+| The hall: two mobile manipulators, one long table | 8.6, 5.9 s, pass | 7.5, 6.4 s, 0 %, 0.06, pass |
+| The parts: cost and lead time | 9.8, 5.7 s, pass | 9.4, 5.9 s, 0 %, 0.05, pass |
+| Time estimates: machining, routes, assembly | 0.0, 30.0 s, pass | 2.0, 30.4 s, 0 %, 0.00, pass |
+| Receiving and unpacking | 6.5, 6.1 s, pass | 6.4, 8.6 s, 0 %, 0.02, pass |
+| The stock: two people carry the 5.5 in. plate | 7.5, 7.9 s, pass | 2.6, 22.8 s, 0 %, 0.09, pass |
+| Machining the chamber: the VF-4 and its 4th axis | 4.4, 10.2 s, pass | 2.8, 20.8 s, 9 %, 0.03, pass |
+| Machining the other parts: vise, lathe, saw | 6.8, 9.9 s, FAIL | 2.0, 30.6 s, 0 %, 0.01, pass |
+| Finishing: welding, honing, deburring, washing, measuring, kitting | 5.5, 9.8 s, pass | 5.0, 9.9 s, 0 %, 0.01, pass |
+| The arms' custom tools and fixtures | 5.7, 4.6 s, pass | 7.1, 4.6 s, 0 %, 0.08, pass |
+| Assembly 1: the build module, by two UR12e on MiR250s | 6.5, 5.0 s, pass | 3.6, 8.6 s, 0 %, 0.01, pass |
+| Assembly 2: the chamber and the process module, by two UR12e on MiR250s | 10.3, 3.9 s, FAIL | 4.7, 8.7 s, 7 %, 0.01, pass |
+| Onto the VLM tray: rack, gas module, hoses, leak check | 8.7, 4.9 s, pass | 8.1, 5.4 s, 0 %, 0.01, pass |
+| Time and cost: in-house, outsourced, robot shop | 2.3, 11.2 s, pass | 2.8, 11.2 s, 0 %, 0.00, pass |
 | **Whole video** | 8.1, 5.7 s, pass | 4.7, 8.0 s, 4 %, 0.02, pass |
 
-Chapters 30 and 32 fail narrowly on short runs: 2 of 12 runs under 2 s in 30 (a 0.5 s one) and 2 of 9 in 32 (one 0.17 s).
-Chapters 31 and 41, which failed in round 8, pass.
+Every chapter passes. Chapters 31 and 41 failed in round 8. With the windows taken from `chapters.txt`, as round 8 measured them
+([`camera-round9-video.json`](../analysis/out/videoqa/camera-round9-video.json)), 30 and 32 failed narrowly on short runs, and
+the shortest run in each was not in the chapter at all. `chapters.txt` gives each start to the nearest whole second, so
+chapter 30's window, for example, began at 5:18 while the chapter begins at 318.5 s, and the last 0.5 s of chapter 29 counted
+as a short run of chapter 30. Round 8's per-chapter numbers carry the same error.
 
 <!-- audit -->
 **The audit of every drawn frame** (as in round 8: `scene_audit.py` on every recorded frame, penetration deeper than 1.5 mm,
