@@ -401,15 +401,21 @@ def tube_removal(state="FT-1", travel=60.0, step=2.0):
     a half-shell."""
     parts = M.build(state)
     sec = [p for p in parts if p.name.startswith("Beam tube centre section")][0]
-    tx, _ = M.tube_centre(state)
+    tx, ty = M.tube_centre(state)
+    ax = P["tube_split"]["cube" if state == "FT-1V" else "box"]
     bb = sec.shape.BoundingBox()
     statics = [p for p in parts if p is not sec and not p.name.startswith(("Surface thermocouples", "Bench top"))]
-    out = {}
-    for sgn, lab in ((-1, "-x half-shell"), (1, "+x half-shell")):
-        x0, x1 = (tx, bb.xmax + 1) if sgn > 0 else (bb.xmin - 1, tx)
-        half = sec.shape.intersect(M.box(x0, x1, bb.ymin - 1, bb.ymax + 1, bb.zmin + 0.2, bb.zmax - 0.2))
+    out = {"slide_axis": ax}
+    for sgn, lab in ((-1, f"-{ax} half-shell"), (1, f"+{ax} half-shell")):
+        lo, hi = (bb.xmin - 1, bb.xmax + 1) if ax == "x" else (bb.ymin - 1, bb.ymax + 1)
+        c = tx if ax == "x" else ty
+        a0, a1 = (c, hi) if sgn > 0 else (lo, c)
+        cut = (M.box(a0, a1, bb.ymin - 1, bb.ymax + 1, bb.zmin + 0.2, bb.zmax - 0.2) if ax == "x" else
+               M.box(bb.xmin - 1, bb.xmax + 1, a0, a1, bb.zmin + 0.2, bb.zmax - 0.2))
+        half = sec.shape.intersect(cut)
         mover = M.Part(f"Tube section {lab}", half, sec.color)
-        poses = [(d, np.eye(3), np.array([sgn * d, 0.0, 0.0])) for d in np.arange(0.0, travel + 1e-6, step)]
+        vec = np.array([1.0, 0.0, 0.0]) if ax == "x" else np.array([0.0, 1.0, 0.0])
+        poses = [(d, np.eye(3), sgn * d * vec) for d in np.arange(0.0, travel + 1e-6, step)]
         rows, hits = fcl_sweep(statics, [mover], poses, "tube")
         out[lab] = dict(poses=len(poses), travel_mm=travel, n_contacts=len(hits), contacts=hits[:6],
                         nearest=[{k: v for k, v in r.items() if k != "sweep"} for r in rows[:4]])
@@ -705,7 +711,7 @@ def main():
     res["states"]["FT-0"]["sight"] = sight_lines("FT-0")
     res["tube_removal"] = {st: tube_removal(st) for st in ("FT-1", "FT-1V")}
     res["removal"] = removal_numbers()
-    print("tube removal", {k: v["+x half-shell"]["n_contacts"] + v["-x half-shell"]["n_contacts"]
+    print("tube removal", {k: sum(h["n_contacts"] for n, h in v.items() if n.endswith("half-shell"))
                            for k, v in res["tube_removal"].items()}, flush=True)
     res["door"] = door_swing("FT-1")
     res["door_no_camera"] = door_swing("FT-1", camera=False)
@@ -783,7 +789,7 @@ def write_md(res):
            "the bore, and the window-stack screws are countersunk flush):", "",
            md_table([dict(state=st, half_shell=h, contacts=v[h]["n_contacts"], section_length_mm=v["section_length_mm"],
                           nearest=", ".join(f"{n['part'].split(' (')[0]} {n['min_dist_mm']}" for n in v[h]["nearest"][:3]))
-                     for st, v in tr.items() for h in ("-x half-shell", "+x half-shell")])]
+                     for st, v in tr.items() for h in v if h.endswith("half-shell")])]
     md += ["**Taking the box off the frame (FT-1 -> FT-1V)**, numbers from the model (plate at the top of its stroke):", "",
            md_table([dict(check=k, value=v) for k, v in res["removal"].items()])]
     md += ["## 4. Sight lines and the layer camera", "",
