@@ -62,10 +62,27 @@ name says "envelope".
 | Coaxial cage | cube 2 (DMSP950) and cube 3 (DMLP805) on posts, SM1 tubes, ER rods; camera arm to −y (FESH1000, AC254-075-B, cage plate, IMX296 board on a post); PD-A to −y and PD-B to −x (filter, AC254-050-B, pinhole, PDA36A2, each on a post); beam trap on cube 1's −y port. The old SM1 photodiode chain behind cube 1 is removed | above the bridge, y −25.25, z 271.1 | optics.md §2, `monitoring_spec.COAX` | M5-xx, M6-xx, M0-17, T2 |
 | AE | Ø3 mm 316 waveguide, free in its holes, with a Ø4 head domed R50 on the plate's spigot (it hangs in a Ø4.4 counterbore in the socket floor when nothing holds it up), down the heater block, both shields, the piston head's Ø10 wire hole and the hollow rod to its foot on a MISTRAS PICO (Ø5 × 4, face up) in a 316L cartridge (Ø6.3 × 25.8) standing on the rod end's bore floor, a Lee LC 029BB 09S316 spring under the sensor and a stop cap over it; SST FA40102 Microdot weld-in in the rod end's cap with its plug (envelope); S25: the sensor in a strap on its rod end's back face; preamp on the process base plate | waveguide r 3.2 mm at 120°, cartridge r 2.8 at 126°, feedthrough at x +4.5, zc + 15; all move with the piston and leave with the module | §4 | M4-01, M4-02, M4-04, M4-06, M4-07, M4-09 (S25), M4-10 to M4-13 |
 | Recorder | PicoScope 4444 and the sync breakout box on the 4U drawer's floor | rack | sync-and-data.md §2.1 | M1-01, M1-07 |
+| Guard bulkhead (MN-28), round 3 | 6061 plate, 0.080 in. (2.03 mm), 180 × 126 mm, over a 152 × 98 mm cut-out in the back panel, 8 × M4 into rivet nuts. In a row at z 318: three isolated BNC feedthroughs (Neutrik NBB75DFIB), an RJ45 feedthrough (Neutrik NE8FDX-P6-B) and an M12 8-pole feed-through (Murrelektronik 7000-48111-0000000). Below them a split cable entry (icotek KEL 10\|6, six KT grommets) for the Chronos's and the LDS12Bs' leads, with a black labyrinth shroud over it inside. The mating plugs and the first bends of the cables, both sides | guard's back panel, upper left, outside: plate x −400…−220, z 220…346 | [`monitoring_bulkhead.py`](../cad/monitoring_bulkhead.py); Neutrik's D-size cut-out, AutomationDirect's drawing of the M12, icotek's KEL datasheet. Bodies behind the plate, plugs and cables are envelopes | M0-B1 to M0-B8 |
 
-**Not drawn:** the trigger generator (a Pico 2 inside PB2, which is drawn as a closed box), cables, the argon line to the purge
-valve, the InGaAs and SWIR options (step 8), the monitoring bulkhead plate on the guard (MN-28), and anything that would preload
-the waveguide (§4).
+**The bulkhead (MN-28)** goes on the back panel because the left panel, the one nearest the rack, stands 6.5 mm from the rack's
+vented side panel, with no room for a connector, its plug or a bend. The back panel's upper left is the nearest place with room.
+- **Clearances.** The plate sits 12 mm above the inlet's filter frame. Its cut-out and rivet nuts stay clear of the back-left
+  post and the top rail. The door, its rail and the AprilTags are all on the front. Outside, the cables run straight back, then
+  bend 40 mm toward the rack's open back (y 300). Inside, the connectors stand above the optics bridge and behind the collimator,
+  and their cables run straight forward over it at z 318.
+- **Light.** Each connector's body is closed, and the plate laps the panel's cut-out by 14 mm. The leads enter through the KEL's
+  grommets into a 1.5 mm black-anodised shroud 34 mm deep, turn toward +x and leave through a 24 mm channel. Its side wall reaches
+  30 mm past the front wall's end, so no straight path from the guard reaches the grommets: the shallowest ray lands 2.8 mm
+  outside the cut-out (`light_check()`). The grommets seal each lead and blind grommets close the spares, so the shroud is the
+  second barrier.
+- **Bond.** The plate's bare face sits on the bare panel under the eight M4s, with a strap to the frame. The BNCs are isolated
+  from the plate, so the cable shields stay off the guard. The RJ45's and the M12's metal shells bond their shields to the plate,
+  so MN-02's outside cordset must not carry its shield on its coupling nut.
+- **Off every straight path of the beam:** the nearest is the collimator's beam at y 95, z 271. The inside cables pass 43 mm
+  over it, and 31 mm over the collimator's housing.
+
+**Not drawn:** the trigger generator (a Pico 2 inside PB2, which is drawn as a closed box), cables (except at the guard's bulkhead),
+the argon line to the purge valve, the InGaAs and SWIR options (step 8), and anything that would preload the waveguide (§4).
 
 ## 2. Checks on the model
 
@@ -81,6 +98,12 @@ the waveguide (§4).
 - **S25 and L75 too** (re-run on the merged branch, 2026-11-25 22:52–23:02 UTC): no interference in the same six states and
   eight sweeps, with 28 and 33 designed joints ([`S25`](../analysis/out/monitoring/mech/interference-monitoring-S25-S.md),
   [`L75`](../analysis/out/monitoring/mech/interference-monitoring-L75-L.md)).
+- **With the guard's bulkhead (MN-28, round 3, 2026-11-27):** 345 parts on M50, eight of them the bulkhead's. No interference in
+  the six states or the eight sweeps on M50 (11:02–11:08 UTC), S25 and L75 (BULKHEAD_S25_L75_TIMES). The bulkhead's parts touch
+  only the panel and each other, face to face, so they add no designed joint (eight contacts are declared anyway), and the
+  sweeps' tightest gaps are unchanged. Tightest static gaps to the rest (exact OpenCascade distances, closed state, M50): the
+  outside cables 9.5 mm from the rack's side panel and frame, the shroud 9.9 mm over the optics bridge, the plate 12 mm above
+  the inlet filter's frame and 16 mm from the inlet trap, the inside cables 31 mm over the collimator.
 
 Static clearances, nearest non-monitoring part (FCL distance on 0.2 mm meshes):
 

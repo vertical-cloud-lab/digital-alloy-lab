@@ -2,12 +2,12 @@
  "variant": "M50 module, M reservoir",
  "vol_tol_mm3": 0.5,
  "chord_mm": 0.05,
- "n_parts": 337,
+ "n_parts": 345,
  "states": [
   {
    "state": "closed, parked, piston up",
    "pose": {},
-   "pairs_checked": 2292,
+   "pairs_checked": 2319,
    "interferences": []
   },
   {
@@ -16,7 +16,7 @@
     "recoater": 206.0,
     "piston": -42.0
    },
-   "pairs_checked": 2229,
+   "pairs_checked": 2256,
    "interferences": []
   },
   {
@@ -26,7 +26,7 @@
     "gdoor": 515.0,
     "piston": 8.0
    },
-   "pairs_checked": 2302,
+   "pairs_checked": 2329,
    "interferences": []
   },
   {
@@ -37,7 +37,7 @@
     "cartridge": -125.0,
     "drawer": -120.0
    },
-   "pairs_checked": 2260,
+   "pairs_checked": 2287,
    "interferences": []
   },
   {
@@ -47,7 +47,7 @@
     "module": 40.0,
     "gdoor": 515.0
    },
-   "pairs_checked": 2198,
+   "pairs_checked": 2225,
    "interferences": []
   },
   {
@@ -56,7 +56,7 @@
     "_calibration": 1.0,
     "door": 95.0
    },
-   "pairs_checked": 2304,
+   "pairs_checked": 2331,
    "interferences": []
   }
  ],
@@ -12137,5 +12137,5 @@
    "why": "tube in the valve's push-in port"
   }
  ],
- "runtime_s": 234.0
+ "runtime_s": 343.1
 }
