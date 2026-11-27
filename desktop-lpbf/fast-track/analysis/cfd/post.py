@@ -576,7 +576,7 @@ def do_purge(a):
     if kind == "scalar":
         box = fo_series(case, "boxAvg", "volFieldValue.dat")
         exh = fo_series(case, "exhaust", "surfaceFieldValue.dat")
-        prb = fo_series(case, "probes", "c")
+        prb = fo_series(case, "probes", "T")
         ppm = lambda c: c * X_O2_AIR * 1e6
         S = dict(t=box[:, 0], box=ppm(box[:, 1]), exhaust=None, plate=None)
         S["exhaust_t"], S["exhaust"] = exh[:, 0], ppm(exh[:, 1])
@@ -786,8 +786,8 @@ def fig_purge_snap(items, t_snap, fname):
         X, Z = np.meshgrid(xs, zs, indexing="ij")
         pts = pv.PolyData(np.stack([X.ravel(), np.full(X.size, ym), Z.ravel()], axis=1) / 1000.0)
         s = pts.sample(m)
-        if field == "c":
-            v = np.asarray(s.point_data["c"]) * X_O2_AIR * 1e6
+        if field in ("c", "T"):
+            v = np.asarray(s.point_data["T"]) * X_O2_AIR * 1e6
         else:
             v = x_o2(np.asarray(s.point_data["O2"]), np.asarray(s.point_data["Ar"])) * 1e6
         ok = np.asarray(s.point_data["vtkValidPointMask"]).astype(bool)
