@@ -9,7 +9,7 @@
    "person": "op",
    "frames": 275,
    "walked_mm": 4470,
-   "stances": 30,
+   "stances": 28,
    "slip_per_stance_mm": {
     "max": 0.0,
     "p95": 0.0,
@@ -83,16 +83,16 @@
     {
      "foot": "R",
      "start": 55,
-     "end": 61,
-     "frames": 7,
+     "end": 64,
+     "frames": 10,
      "slip_mm": 0.0,
      "max_frame_mm": 0.0
     },
     {
      "foot": "L",
-     "start": 62,
-     "end": 64,
-     "frames": 3,
+     "start": 63,
+     "end": 71,
+     "frames": 9,
      "slip_mm": 0.0,
      "max_frame_mm": 0.0
     }
@@ -215,5 +215,5 @@
   "jump_mm": 250.0,
   "mir_jump_mm": 150.0
  },
- "seconds": 0.4
+ "seconds": 0.7
 }

@@ -9,6 +9,79 @@ This note covers receiving, stock prep, machining, deburring, washing, measuring
 study in this PR (`analysis/assembly/`). Nothing here was built or run on real machines. The shop is a layout made up for
 the check, not a BYU room.
 
+## Round 10 (2026-11-27): chapter 30's 42 pairs, and the other shop chapters re-rendered
+
+Sterling, 2026-11-27: "Round 10: fix what round 9's audit found. The aim is no real clipping in any chapter". Chapter 30's
+audit (all 2,854 frames, round 9) found 42 pairs deeper than 1.5 mm. Each cause was found and fixed below, chapter 30 was
+re-planned and rendered again with `ROBOTBUILD_AUDIT=1`, and the frames audited with
+[`scene_audit.py`](cad/robotbuild/scene_audit.py) and [`walk.py`](cad/robotbuild/walk.py). Round 9's frames of the other
+shop chapters were lost with its runner, so 20, 29, 31, 31b and 32 were rendered again as they were (round 9's code, the
+clips re-planned with the same seeds) and audited.
+
+**The checks on the round-10 frames** (every frame of every shop chapter audited; [`analysis/out/videoqa/`](analysis/out/videoqa/)):
+
+| Chapter | Frames | Pairs over 1.5 mm (round 9) | Stance-foot slip, max | Gliding frames | MiR A: driven, reversing, sideways |
+|---|---:|---|---|---:|---|
+| 20 receiving | 448 | 0 (0) | 0.0 mm | 0 | parked |
+| 29 the stock | 275 | 0 (0) | 0.0 mm | 0 | - |
+| 30 the chamber | 3,037 | **0** (42, worst 84.4 mm) | 0.0 mm | 0 | 12.76 m, 0, 0.1 mm in all |
+| 31 the other parts | 1,088 | 0 (0) | - | - | 4.25 m, 0, 0 |
+| 31b the bracket's programs | 736 | 0 (0) | - | - | - |
+| 32 finishing | 1,001 | 0 (0) | 0.0 mm | 0 | 1.39 m, 0, 0 |
+
+Chapter 30's audit pair by pair, in round 9's classes: real clipping 0, artifacts of the drawn meshes 0. Reported apart
+as rigid (the same meshes and pose in all 3,037 frames, as in round 9; not motion): 4 overlaps of decorative pieces
+in the VF-4's model: the HRT210's badge drawn inside its motor box (84.4 mm), the air-gun nozzle (AAG option) through
+the spindle nose (24.2 mm) and into the head (12.8 mm), the head's red stripe 2 mm into its face (1.8 mm). They are
+hidden or invisible in the frames; equipment.py could move them, but chapter 30 would have to be drawn again.
+
+Chapter 30's lifts ([`shop_person.json`](analysis/out/shop/shop_person.json)): the palm within 0.1 mm of its point on
+the end face (round 9: 42-70 mm), the glove at most 0.8 mm in the load, every hand within reach, leans up to 45 deg, the
+bodies 827 mm apart (round 9: 474). The cutter is on its program line in all 564 cutting frames (worst 0.0007 mm off), none
+out of the VF-4's travel (the table at X -347 to +386), the programs' minutes as round 9's
+([`gcode_frames.json`](analysis/out/videoqa/gcode_frames.json), `gcode_sim.py --verify-frames`).
+
+How it got there: the round-10 work was tested on chapter 30 drawn without its pixels (the frames recorded for the audit,
+the programs cut in one step, `scene_audit.py --only` on the people). A first full render with the people one hand each
+but the edge clamps fixed and the shoulders 120 mm outside the hands audited at 3 pairs (the gloves 5.2 mm on the clamp
+screws as the hands came onto the faces, a sleeve 2.7 mm into the front panel beside the door; 11 frames); the clamps
+backed off for loading, the people 40 mm closer, the hand rising before it moves forward and the holding arm's elbow down
+gave the final render.
+
+![Chapter 30: one hand each on the end faces, the bodies 0.83 m apart](cad/img/robotbuild/round10/r10-30-one-hand-each-carry.png)
+![Chapter 30: setting the stock on the risers, F-S1's edge clamps backed off](cad/img/robotbuild/round10/r10-30-set-down-clamps-backed-off.png)
+![Chapter 30: the turn over on the narrow part cart, the hands on the line it turns about](cad/img/robotbuild/round10/r10-30-turn-over-on-the-narrow-cart.png)
+![Chapter 30: arm A's MiR drive with the nut runner lifted before the arm turns](cad/img/robotbuild/round10/r10-30-nut-runner-lifted-before-the-turn.png)
+![Chapter 30: T2 in the floor plate's 96 mm port trepan, the drawn cut 0.75 mm clear of it](cad/img/robotbuild/round10/r10-30-trepan-with-drawn-clearance.png)
+
+**What round 9's audit found in chapter 30, and why** (the fixes are in
+[`shop_chapters.py`](cad/robotbuild/shop_chapters.py), [`equipment.py`](cad/robotbuild/equipment.py),
+[`shop_clips.py`](analysis/shop/shop_clips.py) and [`people.py`](cad/robotbuild/people.py)):
+
+| Round 9 (pairs, worst) | Cause found | Round 10 |
+|---|---|---|
+| The two people at the lifts: coats and shoes touching side by side (84 and 47 mm), trousers and gloves | Two people side by side at a 317.5 mm load: their bodies' centres 474 mm apart, about 560 mm of shoulders and coats between them | Each holds its end with the inner hand alone, the inner shoulder 80 mm outside the hand (`pair_lift`, round 9's untried idea), so the bodies stand 827 mm apart; the outer hand hangs. The reach in: the people stand square to the machine (5 deg in, was 10) |
+| Fingers 31-42 mm into the cart's top, 34 mm into the edge clamps, gloves up to 15 mm in the load | An inner hand with its palm turned out onto an end face has its thumb pointing down, 65-90 mm under the palm (measured on the posed model); the palms were at 45 % of the face's height; F-S1's edge clamps cover 59 mm of the 127 mm end faces, their screw heads to 69 mm; and on the reach and release frames the IK left the palm 10-40 mm off its path | The palm high on the face (92 % of its height, 42 % of its depth); a narrow part cart (260 mm along x, was 600), so the load's ends overhang it and the thumbs hang beside it; the edge clamps backed off 60 mm along their T-slots while people load and unload (arm A slides them in at the cut, then tightens them; round 9 drew them fixed); the palm held on its path on the reach's last half and the release's first (`seat_hands`), and the hand comes straight from where it hangs (raised beside the body first, the inner elbows had swung 255 mm out and met between the people) |
+| A stance foot 25 mm under the sill, a shirt's hem 14 mm into the sill trim | `pair_lift` kept the body's front (`people.body_front`, measured along the body's own forward) behind the machine's face, but the people stood turned 10-20 deg: the outer shoe's toe then reaches 36-65 mm further towards the machine (208 mm ahead of the origin square-on, 244 at 10 deg, 273 at 20 deg). Also the Gait's last step at the end of a walk lands up to 236 mm past the stop (its footprint leads the body by the stride), and the feet were re-stepped only during the reach | The fronts measured for the turned body (`front_extent`), plus 75 mm for a planted foot; the bodies' path planned for the whole lift, smoothed (0.33 s) and clamped again; the walk in stops 200 mm short and covers the last 200 mm at 0.35 m/s with the Gait's footprint lead capped at 40 mm (`Gait.lead_cap`, new, off by default), then 1 s for the feet to settle. The people waiting at the door after F-S3's lift stand where the turned body's toes clear the sill |
+| The left person's head 75 mm into the HRT210 (round 9's scratch try of the one-hand stance) | The rotary 261 mm left of the part's end on the table | The HRT210 180 mm further left on the table (platter face at table x -420, its riser 27 mm inside the table's end); the WIPS tool setter moved to the table's right end; the table at X 220 (was 40) for loading and bolting the rotary, so it stands where it did in the station |
+| Arm A's forearm 18.5 mm through the work light (7 frames) | The light was drawn but `collide=False` for the planner | The light is an LED strip on the left wall, in the collision set; every chapter-30 clip re-planned |
+| The nut runner's extension 8.6 mm into the MiR's finger stand as the arm turned for a drive (14 frames) | 83b93c6 added the tool to the drive's sweep, but `group_hits(robot, world)` had the tool and the MiR in the same group, so the tool was never tested against its own MiR. With the test added, no base turn cleared: at the park pose the extension hangs to 870 mm, the sill trim's and the finger stand's height | `clip_drive` tests the arm beyond its shoulder, the gripper, the tool and what it holds against the MiR's own bodies; with a long tool it lifts the TCP straight up first (150 mm, by IK) and lowers it at the next dock. The two nut-runner drives: lift 150 mm, turn -120 deg, 64 mm closest, 16.6 s |
+| MiR A's base 25 mm through the deck blocks it left behind (11 frames) | The blocks (a "boxes" object) were recorded once at their world pose; only "box" objects near the gripper rode along | What rests on the MiR's deck rides with it, recorded every frame, and is swept with it; hidden when the MiR leaves the shot |
+| The cutter inside the stock for 1-6 frames per tool (T2 23 mm, T9 15 mm on the floor plate, the frame's drills 2-13 mm) | Not a lag: replaying `cut_program`'s frame times, no voxel centre of the stock is inside the tool in any of floor_A's 120 frames. The stock is drawn from voxels whose centres lie outside the cutter, so a slot's drawn walls stand up to half a voxel inside the tool that cut it; the tool, at zero clearance on both sides of its own slot, reads to the audit's translational depth as deep as the slot (scene_audit's own measure on floor_A: 22.6 mm for T2 in the 96 mm port's trepan, 14.4 for T9 in the slots). And the drills were drawn with their point upside down (pyvista's Cone points its apex along `direction`): a flat, full-diameter face at the tip | The drawn cut is the program's with the cutter 0.75 mm larger in radius and 0.5 mm lower (`drawn_program`; the stock carried on, its mass and the next setup, is cut exactly); the drill's 118 deg point down. Measured: 0.0 mm for T2 and T9 on floor_A, and for frame_B's drills (was up to 5.8 mm) |
+| The HRT210's platter ribs 1.6 mm into the dummy-floor plate (743 frames) | The ribs drawn 1.5 mm proud of the platter's face | 0.2 mm proud |
+
+**Not done in round 10, and what to know:**
+- Chapter 31 was rendered as it was (round 9's code, as asked), so its VF-4 still has round 9's table layout: the HRT210
+  180 mm further right on the table, the WIPS at the left end, the work light under the roof at the front. Chapter 30 now
+  has the rotary 180 mm further left, the WIPS at the right end and the light on the left wall. To match, re-plan
+  `vf4_vise_part` and `drive_vf4_lathe` and render 31 again (about 10 min; the ledger had no room for it this round).
+- The edge clamps' slide out and in is a cut each way (arm A's clamp clip only drives the screws); not planned for the arm.
+- The narrow part cart (260 x 340 mm top, 900 mm high) is our estimate, as round 9's wider cart was.
+- The people lean up to 45 deg to set the stock on the risers (the part's near face is 367 mm inside the machine and their
+  toes stay behind the front): deep, but within round 9's.
+- The frame's turn onto the 4th axis is still a cut (round 9).
+- `Gait.lead_cap` is new in people.py and off by default: no other chapter changes.
+
 ## Round 9 (2026-11-27): what round 8's frame audit found, fixed; MiRs that drive; the lathe unload and the 4th-axis bolt-up
 
 Sterling on round 7 ("moonwalk, motion sickness, collisions and interference, dummy tool paths instead of real ones"),

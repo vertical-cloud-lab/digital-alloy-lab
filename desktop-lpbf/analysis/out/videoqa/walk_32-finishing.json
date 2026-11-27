@@ -54,12 +54,7 @@
    "gliding_frames": 0,
    "gliding_ranges": [],
    "gliding_worst": [],
-   "jumps": [
-    [
-     784,
-     4273
-    ]
-   ]
+   "jumps": []
   }
  ],
  "mirs": [
@@ -121,5 +116,5 @@
   "jump_mm": 250.0,
   "mir_jump_mm": 150.0
  },
- "seconds": 0.3
+ "seconds": 0.5
 }

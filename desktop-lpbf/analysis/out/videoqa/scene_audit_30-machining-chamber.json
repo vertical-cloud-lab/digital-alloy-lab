@@ -5,12 +5,12 @@
  "recordings": [
   "/tmp/robotbuild/frames/30-machining-chamber/audit"
  ],
- "frames_recorded": 2854,
- "frames_checked": 2854,
+ "frames_recorded": 3037,
+ "frames_checked": 3037,
  "subsample": "every recorded frame",
  "recorded_every": 1,
- "actors": 197,
- "movers": 122,
+ "actors": 201,
+ "movers": 127,
  "mover_names": [
   "armA/base/0",
   "armA/base/1",
@@ -70,6 +70,7 @@
   "mirA/-190/2",
   "mirA/-190/3",
   "mirA/-190/4",
+  "obj/deck blocks",
   "obj/floor part",
   "obj/floor part trail",
   "obj/frame part",
@@ -102,6 +103,10 @@
   "op2/shoes",
   "op2/skin",
   "op2/trousers",
+  "vf4/clamps+/0",
+  "vf4/clamps+/1",
+  "vf4/clamps-/0",
+  "vf4/clamps-/1",
   "vf4/door L/0",
   "vf4/door L/1",
   "vf4/door L/2",
@@ -136,953 +141,38 @@
   "vf4/tool/T9"
  ],
  "method": "translational penetration depth (26 directions, ladder 1.5-100 mm, bisection-refined), python-fcl BVH meshes of the recorded triangles, containment by winding numbers; a pair is re-checked when a mesh or the relative pose changes; a pair deeper than its limit is re-checked every frame at the limit, its depth re-measured at most every 6 frames",
- "narrow_checks": 75792,
- "pairs_tested": 75792,
- "violations": 42,
- "worst_mm": 84.4,
- "worst": {
-  "a": "op/coat",
-  "b": "op2/coat",
-  "worst_mm": 84.4,
-  "worst_frame": 924,
-  "frames": 21,
-  "frame_ranges": [
-   [
-    101,
-    104
-   ],
-   [
-    265,
-    267
-   ],
-   [
-    924,
-    924
-   ],
-   [
-    1007,
-    1009
-   ],
-   [
-    1170,
-    1172
-   ],
-   [
-    1217,
-    1220
-   ],
-   [
-    1419,
-    1421
-   ]
-  ],
-  "limit_mm": 1.5,
-  "rule": null
- },
- "pairs": [
-  {
-   "a": "op/coat",
-   "b": "op2/coat",
-   "worst_mm": 84.4,
-   "worst_frame": 924,
-   "frames": 21,
-   "frame_ranges": [
-    [
-     101,
-     104
-    ],
-    [
-     265,
-     267
-    ],
-    [
-     924,
-     924
-    ],
-    [
-     1007,
-     1009
-    ],
-    [
-     1170,
-     1172
-    ],
-    [
-     1217,
-     1220
-    ],
-    [
-     1419,
-     1421
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "op/shoes",
-   "b": "op2/shoes",
-   "worst_mm": 46.9,
-   "worst_frame": 1330,
-   "frames": 31,
-   "frame_ranges": [
-    [
-     145,
-     147
-    ],
-    [
-     160,
-     163
-    ],
-    [
-     176,
-     179
-    ],
-    [
-     1103,
-     1107
-    ],
-    [
-     1118,
-     1122
-    ],
-    [
-     1299,
-     1300
-    ],
-    [
-     1313,
-     1316
-    ],
-    [
-     1330,
-     1333
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "cart/static 0",
-   "b": "op2/glove",
-   "worst_mm": 42.2,
-   "worst_frame": 105,
-   "frames": 31,
-   "frame_ranges": [
-    [
-     105,
-     116
-    ],
-    [
-     1157,
-     1169
-    ],
-    [
-     1221,
-     1229
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "op/trousers",
-   "b": "op2/shoes",
-   "worst_mm": 35.9,
-   "worst_frame": 1315,
-   "frames": 9,
-   "frame_ranges": [
-    [
-     146,
-     146
-    ],
-    [
-     161,
-     163
-    ],
-    [
-     178,
-     178
-    ],
-    [
-     1315,
-     1316
-    ],
-    [
-     1331,
-     1332
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "op/glove",
-   "b": "vf4/fixture/2",
-   "worst_mm": 34.4,
-   "worst_frame": 1014,
-   "frames": 17,
-   "frame_ranges": [
-    [
-     239,
-     242
-    ],
-    [
-     257,
-     260
-    ],
-    [
-     1014,
-     1017
-    ],
-    [
-     1031,
-     1035
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "op2/glove",
-   "b": "vf4/fixture/2",
-   "worst_mm": 34.4,
-   "worst_frame": 1014,
-   "frames": 16,
-   "frame_ranges": [
-    [
-     239,
-     242
-    ],
-    [
-     257,
-     260
-    ],
-    [
-     1014,
-     1017
-    ],
-    [
-     1032,
-     1035
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "op/trousers",
-   "b": "op2/trousers",
-   "worst_mm": 32.8,
-   "worst_frame": 160,
-   "frames": 19,
-   "frame_ranges": [
-    [
-     145,
-     146
-    ],
-    [
-     160,
-     162
-    ],
-    [
-     176,
-     179
-    ],
-    [
-     958,
-     958
-    ],
-    [
-     1103,
-     1106
-    ],
-    [
-     1314,
-     1315
-    ],
-    [
-     1330,
-     1332
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "op/trousers",
-   "b": "vf4/front/0",
-   "worst_mm": 32.8,
-   "worst_frame": 1651,
-   "frames": 2,
-   "frame_ranges": [
-    [
-     1651,
-     1652
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "cart/static 0",
-   "b": "op/glove",
-   "worst_mm": 31.2,
-   "worst_frame": 1169,
-   "frames": 34,
-   "frame_ranges": [
-    [
-     105,
-     116
-    ],
-    [
-     971,
-     972
-    ],
-    [
-     1157,
-     1169
-    ],
-    [
-     1221,
-     1229
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "op/glove",
-   "b": "op2/glove",
-   "worst_mm": 26.6,
-   "worst_frame": 924,
-   "frames": 1,
-   "frame_ranges": [
-    [
-     924,
-     924
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "op2/shoes",
-   "b": "vf4/front/0",
-   "worst_mm": 25.0,
-   "worst_frame": 1632,
-   "frames": 47,
-   "frame_ranges": [
-    [
-     224,
-     234
-    ],
-    [
-     998,
-     1008
-    ],
-    [
-     1632,
-     1656
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "op/shoes",
-   "b": "vf4/front/0",
-   "worst_mm": 25.0,
-   "worst_frame": 1632,
-   "frames": 20,
-   "frame_ranges": [
-    [
-     1632,
-     1651
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "armA/base/1",
-   "b": "obj/deck blocks",
-   "worst_mm": 25.0,
-   "worst_frame": 2588,
-   "frames": 11,
-   "frame_ranges": [
-    [
-     2582,
-     2588
-    ],
-    [
-     2591,
-     2594
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "op/shoes",
-   "b": "op2/trousers",
-   "worst_mm": 24.2,
-   "worst_frame": 1106,
-   "frames": 7,
-   "frame_ranges": [
-    [
-     160,
-     161
-    ],
-    [
-     176,
-     177
-    ],
-    [
-     1106,
-     1106
-    ],
-    [
-     1122,
-     1122
-    ],
-    [
-     1330,
-     1330
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "obj/floor part",
-   "b": "vf4/tool/T2",
-   "worst_mm": 23.4,
-   "worst_frame": 2835,
-   "frames": 2,
-   "frame_ranges": [
-    [
-     2833,
-     2835
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "armA/forearm/2",
-   "b": "vf4/static/8",
-   "worst_mm": 18.5,
-   "worst_frame": 296,
-   "frames": 7,
-   "frame_ranges": [
-    [
-     296,
-     302
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "armA/forearm/1",
-   "b": "vf4/static/8",
-   "worst_mm": 16.9,
-   "worst_frame": 296,
-   "frames": 7,
-   "frame_ranges": [
-    [
-     296,
-     302
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "armA/wrist1/2",
-   "b": "vf4/static/8",
-   "worst_mm": 16.1,
-   "worst_frame": 296,
-   "frames": 7,
-   "frame_ranges": [
-    [
-     296,
-     302
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "obj/load",
-   "b": "op/glove",
-   "worst_mm": 15.2,
-   "worst_frame": 1014,
-   "frames": 4,
-   "frame_ranges": [
-    [
-     109,
-     109
-    ],
-    [
-     260,
-     260
-    ],
-    [
-     1014,
-     1014
-    ],
-    [
-     1165,
-     1165
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "obj/floor part",
-   "b": "vf4/tool/T9",
-   "worst_mm": 15.2,
-   "worst_frame": 2838,
-   "frames": 5,
-   "frame_ranges": [
-    [
-     2836,
-     2842
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "obj/load",
-   "b": "op2/glove",
-   "worst_mm": 14.4,
-   "worst_frame": 260,
-   "frames": 4,
-   "frame_ranges": [
-    [
-     109,
-     109
-    ],
-    [
-     260,
-     260
-    ],
-    [
-     1014,
-     1014
-    ],
-    [
-     1165,
-     1165
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "op/glove",
-   "b": "vf4/fixture/1",
-   "worst_mm": 14.4,
-   "worst_frame": 260,
-   "frames": 4,
-   "frame_ranges": [
-    [
-     240,
-     240
-    ],
-    [
-     260,
-     260
-    ],
-    [
-     1014,
-     1014
-    ],
-    [
-     1034,
-     1034
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "op2/glove",
-   "b": "vf4/fixture/1",
-   "worst_mm": 14.4,
-   "worst_frame": 260,
-   "frames": 4,
-   "frame_ranges": [
-    [
-     240,
-     240
-    ],
-    [
-     260,
-     260
-    ],
-    [
-     1014,
-     1014
-    ],
-    [
-     1034,
-     1034
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "op/coat skirt",
-   "b": "vf4/front/1",
-   "worst_mm": 13.6,
-   "worst_frame": 1632,
-   "frames": 20,
-   "frame_ranges": [
-    [
-     1632,
-     1651
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "obj/frame part",
-   "b": "vf4/tool/T6",
-   "worst_mm": 12.8,
-   "worst_frame": 2350,
-   "frames": 6,
-   "frame_ranges": [
-    [
-     882,
-     883
-    ],
-    [
-     886,
-     887
-    ],
-    [
-     2350,
-     2350
-    ],
-    [
-     2353,
-     2353
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "op2/coat skirt",
-   "b": "vf4/front/1",
-   "worst_mm": 12.8,
-   "worst_frame": 1632,
-   "frames": 20,
-   "frame_ranges": [
-    [
-     1632,
-     1651
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "op/glove",
-   "b": "vf4/table/2",
-   "worst_mm": 9.0,
-   "worst_frame": 1418,
-   "frames": 1,
-   "frame_ranges": [
-    [
-     1418,
-     1418
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "op/coat skirt",
-   "b": "vf4/front/0",
-   "worst_mm": 9.0,
-   "worst_frame": 1632,
-   "frames": 20,
-   "frame_ranges": [
-    [
-     1632,
-     1651
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "armA/gr/xrunner/1",
-   "b": "mirA/-190/4",
-   "worst_mm": 8.6,
-   "worst_frame": 743,
-   "frames": 14,
-   "frame_ranges": [
-    [
-     612,
-     614
-    ],
-    [
-     743,
-     746
-    ],
-    [
-     1997,
-     1999
-    ],
-    [
-     2128,
-     2131
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "op2/coat skirt",
-   "b": "vf4/front/0",
-   "worst_mm": 8.6,
-   "worst_frame": 1632,
-   "frames": 19,
-   "frame_ranges": [
-    [
-     1632,
-     1650
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "obj/frame part",
-   "b": "vf4/tool/T12",
-   "worst_mm": 7.1,
-   "worst_frame": 2403,
-   "frames": 5,
-   "frame_ranges": [
-    [
-     1621,
-     1622
-    ],
-    [
-     2403,
-     2405
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "obj/frame part",
-   "b": "vf4/tool/T10",
-   "worst_mm": 7.1,
-   "worst_frame": 2308,
-   "frames": 3,
-   "frame_ranges": [
-    [
-     2308,
-     2309
-    ],
-    [
-     2399,
-     2399
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "armA/forearm/0",
-   "b": "vf4/static/8",
-   "worst_mm": 6.8,
-   "worst_frame": 296,
-   "frames": 6,
-   "frame_ranges": [
-    [
-     296,
-     301
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "armA/wrist1/1",
-   "b": "vf4/static/8",
-   "worst_mm": 6.4,
-   "worst_frame": 296,
-   "frames": 6,
-   "frame_ranges": [
-    [
-     296,
-     301
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "obj/frame part",
-   "b": "vf4/tool/T7",
-   "worst_mm": 5.4,
-   "worst_frame": 2354,
-   "frames": 4,
-   "frame_ranges": [
-    [
-     2354,
-     2357
-    ],
-    [
-     2398,
-     2398
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "op/glove",
-   "b": "op2/coat",
-   "worst_mm": 5.2,
-   "worst_frame": 924,
-   "frames": 1,
-   "frame_ranges": [
-    [
-     924,
-     924
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "mirA/-190/2",
-   "b": "obj/deck blocks",
-   "worst_mm": 4.7,
-   "worst_frame": 2578,
-   "frames": 19,
-   "frame_ranges": [
-    [
-     2578,
-     2596
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "obj/frame part",
-   "b": "vf4/tool/T9",
-   "worst_mm": 4.1,
-   "worst_frame": 2327,
-   "frames": 1,
-   "frame_ranges": [
-    [
-     2327,
-     2327
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "cart/static 1",
-   "b": "op/glove",
-   "worst_mm": 2.5,
-   "worst_frame": 971,
-   "frames": 1,
-   "frame_ranges": [
-    [
-     971,
-     971
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "obj/frame part",
-   "b": "vf4/tool/T11",
-   "worst_mm": 2.4,
-   "worst_frame": 2401,
-   "frames": 1,
-   "frame_ranges": [
-    [
-     2401,
-     2401
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "cart/static 0",
-   "b": "op/coat skirt",
-   "worst_mm": 2.2,
-   "worst_frame": 973,
-   "frames": 1,
-   "frame_ranges": [
-    [
-     973,
-     973
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "vf4/platter/0",
-   "b": "vf4/rotfix/0",
-   "worst_mm": 1.6,
-   "worst_frame": 1680,
-   "frames": 743,
-   "frame_ranges": [
-    [
-     1680,
-     2422
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  }
- ],
+ "narrow_checks": 76393,
+ "pairs_tested": 76393,
+ "violations": 0,
+ "worst_mm": 0.0,
+ "worst": null,
+ "pairs": [],
+ "cad_overlaps": [],
+ "cad_overlap_note": "two parts drawn at their designed relative pose (one machine frame) and overlapping there: the CAD's own overlap (a groove or hole the model does not cut), listed apart and not counted",
  "rigid_pairs": [
   {
    "a": "vf4/table/2",
    "b": "vf4/table/3",
    "worst_mm": 84.4,
-   "frames": 2854
+   "frames": 3037
   },
   {
    "a": "vf4/head/2",
    "b": "vf4/head/4",
    "worst_mm": 24.2,
-   "frames": 2854
+   "frames": 3037
   },
   {
    "a": "vf4/head/0",
    "b": "vf4/head/4",
    "worst_mm": 12.8,
-   "frames": 2854
+   "frames": 3037
   },
   {
    "a": "vf4/head/0",
    "b": "vf4/head/1",
    "worst_mm": 1.8,
-   "frames": 2854
+   "frames": 3037
   }
  ],
  "allowed": [
@@ -1090,8 +180,8 @@
    "rule": "person's own layers",
    "depth_allowed_mm": null,
    "reason": "one person's skin, clothes, shoes and glasses are layers of one skinned body (people.py offsets the clothes from it)",
-   "pairs_in_contact": 48,
-   "pair_frames": 31213,
+   "pairs_in_contact": 46,
+   "pair_frames": 34459,
    "examples": [
     [
      "op/brow",
@@ -1148,8 +238,8 @@
    "rule": "adjacent UR links",
    "depth_allowed_mm": null,
    "reason": "neighbouring UR12e links meet at their joint (the pieces of one link, and the planner's ADJACENT pairs in cell.py)",
-   "pairs_in_contact": 70,
-   "pair_frames": 50850,
+   "pairs_in_contact": 71,
+   "pair_frames": 53080,
    "examples": [
     [
      "armA/base/0",
@@ -1206,8 +296,8 @@
    "rule": "flange stack",
    "depth_allowed_mm": null,
    "reason": "the tool changer, the 2F-85 and its fingers, caps and the wrist camera are bolted to the flange and to each other",
-   "pairs_in_contact": 257,
-   "pair_frames": 101926,
+   "pairs_in_contact": 260,
+   "pair_frames": 108303,
    "examples": [
     [
      "armA/cam/0",
@@ -1261,7 +351,7 @@
    "worst_mm": null
   }
  ],
- "seconds": 1634.0,
- "peak_rss_mb": 1033,
+ "seconds": 1869.1,
+ "peak_rss_mb": 1043,
  "memory": "streamed: BVHs dropped every 200 recorded frames and past 1800 MB"
 }

@@ -710,20 +710,38 @@ def clip_drive(name, chapter, akey, from_clip, to_clip, world_parts, caption, su
                                                                   kind="held")
         robot.add(tb)                              # extension went through the MiR's finger stand as the arm turned)
         held["__tool"] = (arm.tcp_off(c0), tb)
+    # round 10 (scene_audit, chapter 30: MiR A's base 25 mm through the deck blocks it left behind): what rests on the
+    # MiR's deck rides with it (recorded every frame at the MiR's pose) and is swept as part of the robot
+    Minv0 = np.linalg.inv(M0)
+    deck = {}
     for o, Mo in fa["objs"].items():
         spec = a["objects"].get(o)
-        if spec is None or spec.get("kind") != "box":
+        if spec is None or spec.get("kind") not in ("box", "boxes"):
             continue
         rel = np.linalg.inv(W0) @ np.asarray(Mo, float)
-        if np.linalg.norm(rel[:3, 3]) < 300.0:
-            b_ = spec["b"]
-            hb_ = Body(f"held/{o}", *C.merge([S.box(*b_)]), kind="held")
+        bxs = [spec["b"]] if spec["kind"] == "box" else list(spec["boxes"])
+        if spec["kind"] == "box" and np.linalg.norm(rel[:3, 3]) < 300.0:
+            hb_ = Body(f"held/{o}", *C.merge([S.box(*b_) for b_ in bxs]), kind="held")
             robot.add(hb_)
             held[o] = (rel, hb_)
+            continue
+        relm = Minv0 @ np.asarray(Mo, float)              # on the deck: inside the MiR's footprint, above its body
+        if abs(relm[0, 3]) <= S.MIR["L"] / 2 and abs(relm[1, 3]) <= S.MIR["W"] / 2 and relm[2, 3] >= S.MIR["H"]:
+            db_ = Body(f"deck/{o}", *C.merge([S.box(*b_) for b_ in bxs]), kind="robot")
+            robot.add(db_)
+            deck[o] = (relm, db_)
+    # round 10 (chapter 30: the nut runner's extension 8.6 mm into the MiR's own finger stand as the arm turned): the
+    # arm beyond its shoulder, the gripper, the tool and what it holds against the MiR's own bodies (robot against
+    # world never tested those: both are in `robot`)
+    own = Group([bb for k_, bb in arm.links.items() if k_ not in ("base", "shoulder")] + list(arm.grip.values())
+                + list(arm.caps.values()) + [hb_ for _, hb_ in held.values()])
+    mirg = Group(mb + [db_ for _, db_ in deck.values()])
 
     def place(M, q, close):
         for bb in mb:
             bb.place(M)
+        for o, (relm, db_) in deck.items():
+            db_.place(M @ relm)
         p, y = arm_base_of(M, arm_dx)
         arm.base = Tm(C.rot((0, 0, 1), y), p)
         arm.place(q, close)
@@ -733,15 +751,30 @@ def clip_drive(name, chapter, akey, from_clip, to_clip, world_parts, caption, su
 
     def first_hit(M, q, close):
         place(M, q, close)
-        h = group_hits(robot, world, first=True)
+        h = group_hits(robot, world, first=True) or group_hits(own, mirg, first=True)
         return None if not h else (h[0][0].name, h[0][1].name)
 
     legs = drive_legs(M0, M1)
 
-    def sweep(qt):
-        """None if the drive with the arm at qt and both arm moves are clear, else the first hit."""
+    def lift_q(M, q, close, dz):
+        """Round 10: q with the TCP raised dz mm, its orientation kept (the IK branch nearest q); None if out of reach or
+        on another branch."""
+        if dz <= 0.0:
+            return q
+        place(M, q, close)
+        T = arm.tcp(q, close)
+        T2 = T.copy()
+        T2[2, 3] += dz
+        sols = arm.ik_all(T2, q)
+        if not sols or float(np.abs(sols[0] - q).max()) > math.radians(60.0):
+            return None
+        return np.asarray(sols[0], float)
+
+    def sweep(segs_out, qt, segs_in):
+        """None if the drive with the arm at qt and the arm moves (segments at the start and end docks) are clear, else
+        the first hit."""
         n = 0
-        for qa, qb, M in ((q0, qt, M0), (qt, q1, M1)):
+        for qa, qb, M in [(a_, b_, M0) for a_, b_ in segs_out] + [(a_, b_, M1) for a_, b_ in segs_in]:
             k_n = max(2, int(math.degrees(float(np.abs(qb - qa).max())) / 0.5) + 1)
             for k in range(k_n):
                 u = k / (k_n - 1)
@@ -758,15 +791,27 @@ def clip_drive(name, chapter, akey, from_clip, to_clip, world_parts, caption, su
                     return (kind, round(k / (k_n - 1), 3)) + h, n
         return None, n
 
-    tried, qt, checked = [], None, 0
-    for turn in (0.0, 30.0, -30.0, 60.0, -60.0, 90.0, -90.0, 120.0, -120.0, 150.0, -150.0, 180.0):
-        cand = q0.copy()
-        cand[0] = q0[0] + math.radians(turn)
-        h, n = sweep(cand)
-        checked += n
-        tried.append(dict(turn_deg=turn, hit=h))
-        if h is None:
-            qt = cand
+    # round 10: with a long tool in the gripper (the nut runner's extension reaches ~260 mm under the TCP, down to the
+    # sill trim's and the finger stand's height at the park pose) the tool is first lifted straight up, then turned
+    tried, qt, checked, plan = [], None, 0, None
+    lifts = (0.0, 150.0, 250.0) if "__tool" in held else (0.0,)
+    for dz in lifts:
+        q0L, q1L = lift_q(M0, q0, c0, dz), lift_q(M1, q1, c0, dz)
+        if q0L is None or q1L is None:
+            tried.append(dict(lift_mm=dz, hit="no IK for the lift"))
+            continue
+        for turn in (0.0, 30.0, -30.0, 60.0, -60.0, 90.0, -90.0, 120.0, -120.0, 150.0, -150.0, 180.0):
+            cand = q0L.copy()
+            cand[0] = q0L[0] + math.radians(turn)
+            segs_out = [(q0, q0L), (q0L, cand)] if dz else [(q0, cand)]
+            segs_in = [(cand, q1L), (q1L, q1)] if dz else [(cand, q1)]
+            h, n = sweep(segs_out, cand, segs_in)
+            checked += n
+            tried.append(dict(lift_mm=dz, turn_deg=turn, hit=h))
+            if h is None:
+                qt, plan = cand, (segs_out, segs_in)
+                break
+        if qt is not None:
             break
     clip = Clip(name, "aisle", chapter)
     clip.meta.update(caption=caption, sub=sub, who=[f"robot {akey}"], step=step, status="pass")
@@ -785,13 +830,15 @@ def clip_drive(name, chapter, akey, from_clip, to_clip, world_parts, caption, su
             for o, (rel, hb_) in held.items():
                 if o != "__tool":
                     clip.obj(o, hb_.M)
+            for o, (relm, db_) in deck.items():
+                clip.obj(o, db_.M)
             clip.set_arm(akey, arm, tool1 if (label == "in" and u > 0.5) else tool0, mir=dict(M=M.copy(), arm_dx=arm_dx))
             clip.frame(1, sub=f"{sub} | " + ("the arm to its transport pose" if label == "out" else
                                                "the arm to its working pose"))
         return T
 
     if ok:
-        t_out = arm_move(M0, q0, qt, c0, c0, "out")
+        t_out = sum(arm_move(M0, a_, b_, c0, c0, "out") for a_, b_ in plan[0])
         for kind, f, T, amount in legs:
             nf = max(1, int(round(T * FPS)))
             for k in range(nf):
@@ -800,15 +847,21 @@ def clip_drive(name, chapter, akey, from_clip, to_clip, world_parts, caption, su
                 for o, (rel, hb_) in held.items():
                     if o != "__tool":
                         clip.obj(o, hb_.M)
+                for o, (relm, db_) in deck.items():
+                    clip.obj(o, db_.M)
                 if k % 6 == 0:
                     d, _, _ = group_distance(robot, world, margin=300.0)
                     clear = min(clear, d)
                 clip.set_arm(akey, arm, tool0, mir=dict(M=M.copy(), arm_dx=arm_dx))
                 clip.frame(1, sub=f"{sub} | {kind} " + (f"{amount:.1f} deg" if kind == "pivot" else f"{amount / 1000:.2f} m"))
             t_drive += T
-        t_in = arm_move(M1, qt, q1, c0, c1, "in")
+        t_in = 0.0
+        for j_, (a_, b_) in enumerate(plan[1]):           # the gripper closes to the next clip's on the last segment
+            last = j_ == len(plan[1]) - 1
+            t_in += arm_move(M1, a_, b_, c0, c1 if last else c0, "in" if last else "in-lift")
     res = dict(ok=ok, fail=None if ok else f"no transport pose clears: {tried[-1]}", poses_checked=checked,
-               transport_turn_deg=tried[-1]["turn_deg"] if ok else None, tried=tried,
+               transport_turn_deg=tried[-1]["turn_deg"] if ok else None, transport_lift_mm=tried[-1].get("lift_mm") if ok
+               else None, tried=tried,
                legs=[dict(kind=k_, seconds=round(T_, 2), amount=round(a_, 1)) for k_, _, T_, a_ in legs],
                drive_s=round(t_drive, 2), clear_mm=round(clear, 1) if clear < math.inf else None,
                reverse_mm=0.0, sideways_mm=0.0, time_s=round(t_drive + (t_out + t_in if ok else 0.0), 2))
@@ -936,10 +989,11 @@ def clip_drive_vf4_lathe():
 def clip_hrt_bolts():
     """F-S3 (round 9, P1): arm A drives the four M8 screws that hold the dummy-floor plate (with the frame on it) to the
     HRT210's platter, through the frame's opening, with the nut runner held by its fin; round 8 left them to a person,
-    not shown. The rotary at A 90 (the loading index), the table at X 40 as chapter 30 has it."""
+    not shown. The rotary at A 90 (the loading index), the table at TABLE_LAYOUT's hrt_load_x as chapter 30 has it
+    (round 10: 220, with the rotary 180 mm further left on the table; round 9's 40)."""
     a_deg = 90.0
     row = next(r for r in states()["rows"] if r.get("setup") == "F-S3" and r.get("part") == "frameT")
-    parts, meta, P, M_setup, m = vf4_setup("frame_C0", table_x=40.0, k_state=row["k"], part="frameT", rots=row["rots"],
+    parts, meta, P, M_setup, m = vf4_setup("frame_C0", table_x=E.TABLE_LAYOUT["hrt_load_x"], k_state=row["k"], part="frameT", rots=row["rots"],
                                            a_deg=a_deg)
     heads = []
     for k, (yy, zz) in enumerate(((55.0, 55.0), (-55.0, 55.0), (-55.0, -55.0), (55.0, -55.0))):
@@ -966,7 +1020,7 @@ def clip_hrt_bolts():
                 dwell=[("tighten to 25 N m", 2.5)] * 4)
     clip = Clip("hrt_bolts", "vf4", "30-machining-chamber")
     r = done("hrt_bolts", job, clip, dict(screws=len(heads)))
-    clip.state["mach"] = dict(station="vf4", door=1.0, table_x=40.0, table_y=0.0, spindle_z=None, fc="frame_C0",
+    clip.state["mach"] = dict(station="vf4", door=1.0, table_x=E.TABLE_LAYOUT["hrt_load_x"], table_y=0.0, spindle_z=None, fc="frame_C0",
                               a_deg=a_deg)
     clip.set_arm("A", job.arm, "nut runner", mir=mir_state(job))
     record_job(clip, job, "A", tool="nut runner", meta_by_seg={"*": dict(
@@ -980,7 +1034,7 @@ def clip_hrt_bolts():
 def clip_drive_bolts_lathe():
     """Chapter 30: MiR A from the VF-4 after the platter screws to the lathe."""
     row = next(r for r in states()["rows"] if r.get("setup") == "F-S3" and r.get("part") == "frameT")
-    parts, meta, P, M_setup, m = vf4_setup("frame_C0", table_x=40.0, k_state=row["k"], part="frameT", rots=row["rots"],
+    parts, meta, P, M_setup, m = vf4_setup("frame_C0", table_x=E.TABLE_LAYOUT["hrt_load_x"], k_state=row["k"], part="frameT", rots=row["rots"],
                                            a_deg=90.0)
     return clip_drive("drive_bolts_lathe", "30-machining-chamber", "A", "hrt_bolts", "lathe_slug",
                       [("vf4", parts), ("lathe", E.st10(door=1.0, jaw_open=6.0)[0])],

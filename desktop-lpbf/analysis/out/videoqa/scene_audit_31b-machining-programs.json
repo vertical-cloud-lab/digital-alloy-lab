@@ -86,7 +86,7 @@
   }
  ],
  "allowed": [],
- "seconds": 606.9,
- "peak_rss_mb": 376,
+ "seconds": 631.0,
+ "peak_rss_mb": 399,
  "memory": "streamed: BVHs dropped every 200 recorded frames and past 1800 MB"
 }

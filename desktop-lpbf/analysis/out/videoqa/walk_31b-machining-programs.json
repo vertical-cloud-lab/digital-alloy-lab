@@ -1,0 +1,20 @@
+{
+ "chapter": "31b-machining-programs",
+ "frames_recorded": 736,
+ "recordings": [
+  "/tmp/robotbuild/frames/31b-machining-programs/audit"
+ ],
+ "people": [],
+ "mirs": [],
+ "limits": {
+  "foot_down_mm": 4.0,
+  "contact_mm": 2.0,
+  "slip_frame_mm": 5.0,
+  "glide_mm": 1.0,
+  "glide_deg": 0.3,
+  "legs_still_mm": 0.5,
+  "jump_mm": 250.0,
+  "mir_jump_mm": 150.0
+ },
+ "seconds": 0.1
+}
