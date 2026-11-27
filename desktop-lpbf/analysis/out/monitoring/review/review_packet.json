@@ -1,9 +1,9 @@
 {
  "module": "M50",
- "built_s": 27.3,
- "run_s": 47.9,
+ "built_s": 26.3,
+ "run_s": 53.8,
  "parts_default": 276,
- "parts_monitoring": 337,
+ "parts_monitoring": 345,
  "made": [
   {
    "slug": "lw-window-clamp-ring",
@@ -644,6 +644,70 @@
    "mass_g": 2.4,
    "step": "step/g-10-thermal-break-ring-under-the-lp-camera-s-filter-holder.step",
    "png": "png/g-10-thermal-break-ring-under-the-lp-camera-s-filter-holder.png"
+  },
+  {
+   "slug": "guard-bulkhead-plate",
+   "kind": "made",
+   "name": "Guard bulkhead plate (MN-28: 6061 0.080 in. = 2.03 mm, 180 x 126 mm, laser-cut: four D-size cut-outs, an M12 hole and the KEL's cut-out; on the guard's back panel over a 152 x 98 mm cut-out, 8 x M4 into rivet nuts, bare faces together for the bond)",
+   "bom": "M0-B1",
+   "bom_group": "custom (guard bulkhead)",
+   "bom_action": "outsource",
+   "mat": "al6061",
+   "module": "process",
+   "motion_group": "",
+   "bbox": {
+    "min": [
+     -400.0,
+     216.5,
+     220.0
+    ],
+    "max": [
+     -220.0,
+     218.5,
+     346.0
+    ],
+    "size": [
+     180.0,
+     2.0,
+     126.0
+    ]
+   },
+   "volume_cm3": 36.54,
+   "mass_g": 98.7,
+   "step": "step/guard-bulkhead-plate.step",
+   "png": "png/guard-bulkhead-plate.png"
+  },
+  {
+   "slug": "guard-bulkhead-cable-entry-light-shroud",
+   "kind": "made",
+   "name": "Guard bulkhead cable-entry light shroud (a labyrinth over the KEL's inside: 1.5 mm aluminium, black anodised, 34 mm deep; the leads turn toward +x and leave through a 24 mm channel whose side wall reaches 30 mm past the front wall, so no straight path reaches the grommets)",
+   "bom": "M0-B6",
+   "bom_group": "custom (guard bulkhead)",
+   "bom_action": "make or outsource",
+   "mat": "al6061",
+   "module": "process",
+   "motion_group": "",
+   "bbox": {
+    "min": [
+     -383.5,
+     152.5,
+     238.0
+    ],
+    "max": [
+     -240.0,
+     216.5,
+     303.0
+    ],
+    "size": [
+     143.5,
+     64.0,
+     65.0
+    ]
+   },
+   "volume_cm3": 33.69,
+   "mass_g": 91.0,
+   "step": "step/guard-bulkhead-cable-entry-light-shroud.step",
+   "png": "png/guard-bulkhead-cable-entry-light-shroud.png"
   }
  ],
  "changed": [
@@ -1159,31 +1223,31 @@
     ]
    },
    "volume_default_cm3": 2044.61,
-   "volume_cm3": 1881.72,
-   "removed_cm3": 162.888,
+   "volume_cm3": 1859.03,
+   "removed_cm3": 185.571,
    "added_cm3": 0.0,
-   "mass_change_g": -439.8,
+   "mass_change_g": -501.0,
    "places": [
     {
      "bbox": {
       "min": [
-       -392.0,
+       -396.0,
        215.0,
        -116.0
       ],
       "max": [
        -220.0,
        216.5,
-       200.0
+       342.0
       ],
       "size": [
-       172.0,
+       176.0,
        1.5,
-       316.0
+       458.0
       ]
      },
-     "removed_cm3": 81.528,
-     "solids": 1,
+     "removed_cm3": 104.211,
+     "solids": 10,
      "png": "png/laser-guard-panels-1.png"
     },
     {

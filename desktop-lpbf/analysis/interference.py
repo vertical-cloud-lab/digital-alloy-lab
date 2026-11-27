@@ -235,6 +235,15 @@ JOINTS = [
     ("G-10 thermal break ring", "LP window retaining ring", "ring on the boss's thread"),
     ("G-10 thermal break ring", "LP camera filters", "filter holder screwed on the ring"),
     ("PB2 vent fan", "PB2 process-module box", "fan screwed to PB2's end wall"),
+    # the guard's monitoring bulkhead, MN-28 (cad/monitoring_bulkhead.py, monitoring/mechanics.md §1; LPBF_MONITORING=1 only)
+    ("Guard bulkhead plate", "Laser guard panels", "plate screwed over the back panel's cut-out (8 x M4 into rivet nuts), bare faces bonded"),
+    ("Guard bulkhead isolated BNC", "Guard bulkhead plate", "feedthroughs in the plate's D-size cut-outs (2 x M3 each)"),
+    ("Guard bulkhead RJ45", "Guard bulkhead plate", "feedthrough in its D-size cut-out (2 x M3)"),
+    ("Guard bulkhead M12", "Guard bulkhead plate", "feed-through in its Ø16.1 hole, collar outside and nut inside"),
+    ("Guard bulkhead split cable entry", "Guard bulkhead plate", "frame screwed over its cut-out (4 x M5, its gasket)"),
+    ("Guard bulkhead cable-entry light shroud", "Guard bulkhead plate", "shroud's flanges on the plate's inside (the KEL's left M5 screws, rivets)"),
+    ("Guard bulkhead mating plugs and cables outside", "Guard bulkhead", "plugs mated with the connectors; leads in the KEL's grommets"),
+    ("Guard bulkhead mating plugs and cables inside", "Guard bulkhead", "plugs mated with the connectors' inner jacks"),
 ]
 
 ALLOW_HOSE_THROUGH = ("Laser guard panels", "Guard frame")   # hoses pass the guard through bulkheads

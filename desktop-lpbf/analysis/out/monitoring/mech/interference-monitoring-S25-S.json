@@ -2,12 +2,12 @@
  "variant": "S25 module, S reservoir",
  "vol_tol_mm3": 0.5,
  "chord_mm": 0.05,
- "n_parts": 333,
+ "n_parts": 341,
  "states": [
   {
    "state": "closed, parked, piston up",
    "pose": {},
-   "pairs_checked": 2208,
+   "pairs_checked": 2235,
    "interferences": []
   },
   {
@@ -16,7 +16,7 @@
     "recoater": 206.0,
     "piston": -42.0
    },
-   "pairs_checked": 2159,
+   "pairs_checked": 2186,
    "interferences": []
   },
   {
@@ -26,7 +26,7 @@
     "gdoor": 515.0,
     "piston": 8.0
    },
-   "pairs_checked": 2221,
+   "pairs_checked": 2248,
    "interferences": []
   },
   {
@@ -37,7 +37,7 @@
     "cartridge": -125.0,
     "drawer": -120.0
    },
-   "pairs_checked": 2176,
+   "pairs_checked": 2203,
    "interferences": []
   },
   {
@@ -47,7 +47,7 @@
     "module": 40.0,
     "gdoor": 515.0
    },
-   "pairs_checked": 2126,
+   "pairs_checked": 2153,
    "interferences": []
   },
   {
@@ -56,7 +56,7 @@
     "_calibration": 1.0,
     "door": 95.0
    },
-   "pairs_checked": 2220,
+   "pairs_checked": 2247,
    "interferences": []
   }
  ],
@@ -10994,5 +10994,5 @@
    "why": "tube in the valve's push-in port"
   }
  ],
- "runtime_s": 158.2
+ "runtime_s": 279.5
 }
