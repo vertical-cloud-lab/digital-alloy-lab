@@ -7,6 +7,7 @@
 #   run_case.sh <case> scalar <src>               # scalarTransportFoam on <src>'s mesh and its last U and phi
 #   run_case.sh <case> copymesh <src> buoyant     # rhoReactingBuoyantFoam on <src>'s mesh
 #   run_case.sh <case> map <src> pimple           # pimpleFoam (time-averaged) from <src>'s steady solution
+#   run_case.sh <case> recon                      # reconstruct the time directories left in <case>/processor*
 #
 # Wrap it in the memory ledger:  /tmp/tools/capmem 4 bash run_case.sh ...  (capmem drops the docker group, so the
 # client runs under sudo -n). Logs go to <case>/log.*. Keep cases under /tmp, not in the repo.
@@ -20,7 +21,7 @@ par() {  # $1 = solver
   CMD+="foamDictionary -entry numberOfSubdomains -set $NP system/decomposeParDict > /dev/null; "
   CMD+='rm -rf processor*; decomposePar -force > log.decomposePar 2>&1; '
   CMD+="mpirun -np $NP $1 -parallel > log.$1 2>&1 || true; "
-  CMD+='reconstructPar -latestTime > log.reconstructPar 2>&1; rm -rf processor*; '
+  CMD+='reconstructPar > log.reconstructPar 2>&1; rm -rf processor*; '      # every written time (snapshots)
 }
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -49,6 +50,8 @@ while [ $# -gt 0 ]; do
       par scalarTransportFoam; shift 2 ;;
     buoyant)
       par rhoReactingBuoyantFoam; shift ;;
+    recon)
+      CMD+='reconstructPar > log.reconstructPar.recon 2>&1; rm -rf processor*; '; shift ;;
     *) echo "unknown step $1"; exit 2 ;;
   esac
 done

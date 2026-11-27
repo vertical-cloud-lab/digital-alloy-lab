@@ -550,7 +550,7 @@ endTime {a.t_end};
 deltaT 0.002;
 writeControl adjustableRunTime;
 writeInterval {a.t_write};
-purgeWrite 3;
+purgeWrite 0;
 writeFormat binary;
 writePrecision 8;
 writeCompression off;
