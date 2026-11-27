@@ -58,10 +58,15 @@ TOOLS = [
      "A silicone lip on a 100 mm stem: the camera window's 1 mm FKM rings, too narrow for a cup, too deep for fingers (F48b)",
      "printed lip, steel stem: about $60 (est.)", "redesign"),
     (("pin_pusher",), "Pin pusher (new in round 7)",
-     "A magnet in a Ø4.5 rod's tip slides each hinge pin along its axis, the wrist outside the door (F52; fingers met the door)",
+     "A magnet in a Ø4.5 rod's tip slides each hinge pin along its axis, the wrist outside the door (F52; fingers met the door); "
+     "round 10: it also pushes the recoater's carriage 106 mm along its rail, so the last rail screw can be reached (F18)",
      "bar, rod, magnet: about $40 (est.); pins 17-4 PH", "redesign"),
+    (("nest_blade",), "Blade-cartridge bench nest (new in round 10)",
+     "Two Ø3 pins hold the blade holder on its side, blade face up: the two M3 blade screws go in straight down (F27), then "
+     "the whole cartridge goes into the chamber by its fin (F26; in the chamber the fingers met the body and the driver the funnel)",
+     "machined acetal riser and wall, two dowel pins: about $40 (est.)", "redesign"),
     (("screwdriver", 100.0), "OnRobot Screwdriver, 100 mm bit extension",
-     "M3-M5 screws; 60, 100 and 160 mm extensions keep its body clear of the part (C05, C15, F15, F19, F27)",
+     "M3-M5 screws; 60, 100 and 160 mm extensions keep its body clear of the part (C05, C15, F15, F19; F27 on the bench nest)",
      "bought; extensions about $20 each", ""),
     (("nutrunner_angle",), "Angle-head nutrunner",
      "Every screw driven upward: the floor plate's 18 M4, the posts' and legs' screws from under the base plate",
