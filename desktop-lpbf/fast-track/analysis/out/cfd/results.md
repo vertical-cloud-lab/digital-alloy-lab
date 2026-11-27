@@ -3,7 +3,7 @@
 For [issue #260](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/260), PR 294 round 2, 2026-11-27.
 OpenFOAM v2406 (Docker image `opencfd/openfoam-run:2406`) on the gas inside the CadQuery model of FT-1
 ([`../../../cad/ft_model.py`](../../../cad/ft_model.py), `build("FT-1")`: the 16 × 12 × 8 in. box, the deck cassette, the
-plate at the start of a build, the hopper at its right park). Scripts: [`../../cfd/`](../../cfd/). Numbers:
+plate at the start of a build, the hopper at its right park; and `build("FT-1V")`, §3). Scripts: [`../../cfd/`](../../cfd/). Numbers:
 [`cfd.json`](cfd.json). Nothing here has been checked against a measurement.
 
 ## Short answer
@@ -20,7 +20,8 @@ plate at the start of a build, the hopper at its right park). Scripts: [`../../c
   expected 13–31 / 18–45 min, and the analyzer on the collector's exhaust reads about 4× under the box. With 20 L/min
   of argon in through a diffuser near the floor and out a vent under the lid, the argon fills the box from the bottom
   and pushes the air out: 2.6 / ≈ 5.0 min to 1000 / 100 ppm (box average, with buoyancy), against 6.2 / 8.9 min
-  for perfect mixing. A high diffuser with the same vent mixes instead (≈ 4.7 / 6.8 min); a high diffuser with a low vent leaves the air on top (≈ 8.8 / 12.6 min, with the vent reading a third under the box).
+  for perfect mixing. A high diffuser with the same vent mixes instead (≈ 4.7 / 6.8 min); a high diffuser with a
+  low vent leaves the air on top (≈ 8.8 / 12.6 min, with the vent reading a third under the box).
 - **What to change:** add a diffuser low on one wall and a vent at the top of the opposite wall (two bulkheads, a ball
   valve on the vent), sample the analyzer from the vent line, purge with the nozzle off, then close the vent and start
   the cross-flow. Purge before heating the plate. Every run here is isothermal and leak-free, with no air or water in
@@ -154,11 +155,12 @@ how argon settles under air.
 ![Passive purge](purge_passive.png)
 
 - **As drawn (A), purging through the nozzle alone is slow: 33 min to 1000 ppm and 47 min to 100 ppm** (box average),
-  5× the ideal and at or past the top of the study's range. On the 237k-cell cross-flow mesh, which resolves the jet,
-  it is slower still: the box empties at 0.107 instead of 0.161 per minute, ≈ 50 / 71 min (extrapolated from a 20 min
-  run). The coarse purge mesh is optimistic for A; B–D, whose box flow comes from the diffuser, were run on it only. The jet goes straight into the collector; the rest of the
+  5× the ideal and at or past the top of the study's range. The jet goes straight into the collector; the rest of the
   box is renewed only by what the jet entrains and spills over the collector (7–12 L/min at the build's 27 L/min,
-  §1), which empties it at 0.16 per minute, as if 3.7 of the 20 L/min went through the box.
+  §1), which empties it at 0.16 per minute, as if 3.7 of the 20 L/min went through the box. On the 237k-cell
+  cross-flow mesh, which resolves the jet, it is slower still: 0.107 per minute, ≈ 50 / 71 min (extrapolated from a
+  20 min run). The coarse purge mesh is optimistic for A; B–D, whose box flow comes from the diffuser, were run on it
+  only.
 - **In A the analyzer on the collector's exhaust reads low.** It sees mostly the nozzle's fresh argon, about 4× under
   the box average, and reaches 1000 ppm 10 min before the box does.
 - **A separate diffuser does most of the work.** With 15 L/min through a diffuser and 5 through the nozzle, the box
@@ -194,7 +196,8 @@ reached and not decaying.
 ![Sections](purge_sections.png)
 
 *O₂ on a vertical section through the diffusers (y = 45 mm, mid-depth), log scale: white is argon under 10 ppm, dark
-blue is air; grey is solid (the deck cassette, the stage, the window stack). The diffusers are on the left wall in this plane; the vents are on the right wall, 90–130 mm behind it.*
+blue is air; grey is solid (the deck cassette, the stage, the window stack). The diffusers are on the left wall in this
+plane; the vents are on the right wall, 90–130 mm behind it.*
 
 - **Low diffuser, high vent: the argon displaces the air.** It spreads over the floor and rises as a layer: at 2 min
   the bottom 40 mm of the box holds about 120 ppm and the top 40 mm about 1.2 % O₂ (figure). The box average reaches
@@ -205,11 +208,11 @@ blue is air; grey is solid (the deck cassette, the stage, the window stack). The
   sits under the lid at the far end from the vent, above the diffuser. A vent in the middle of the lid, or one at each
   end, would shorten that tail (not run).
 - **High diffuser, high vent: the argon falls and mixes.** The plume from the diffuser stirs the box on its way to the
-  floor, so the box is only mildly layered (the top 40 mm holds about twice the average). Because the vent still takes
+  floor, so the box is only mildly layered (the top 40 mm holds about 1.5× the average, 2–2.5× the bottom 40 mm). Because the vent still takes
   the worst gas it purges about a quarter faster than well mixed: 6,900 ppm at 3 min, ≈ 4.7 / 6.8 min to 1000 /
   100 ppm.
-- **High diffuser, low vent:** **the air stays on top.** The plume falls through the air to the floor and the low vent drains the
-  argon that pools there; the air above leaves only as fast as the plume entrains it. At 3 min the box is twice as bad
+- **High diffuser, low vent: the air stays on top.** The plume falls through the air to the floor and the low vent
+  drains the argon that pools there; the air above leaves only as fast as the plume entrains it. At 3 min the box is twice as bad
   as well mixed (32,400 against 15,800 ppm), ≈ 8.8 / 12.6 min to 1000 / 100 ppm. Under the slide it is still
   57,000 ppm (27 % air), while the vent reads a third under the box average (21,900 ppm): an analyzer on a low exhaust
   reads better than the box.
@@ -231,7 +234,7 @@ blue is air; grey is solid (the deck cassette, the stage, the window stack). The
 3. **Purge with the nozzle off, then switch.** 20 L/min through the diffuser with the vent open until the analyzer
    reads the target; then close the vent and run the cross-flow, which leaves through the collector and holds the box
    above the room behind the check valve. Through the nozzle alone (as drawn) the purge takes 33–50 min to 1000 ppm
-   (§2.1, two meshes).
+   (no buoyancy, two meshes, §2.1).
 4. **Purge before heating the plate,** or expect times nearer the well-mixed ones: a 200 °C plate drives a plume of a
    few cm/s that stirs the layers (not modelled).
 
@@ -287,7 +290,7 @@ own envelopes unless stated:
 - the recoater stage, its carriage and the 1 mm sheet shield are one block, the shield's outer envelope;
 - the hopper is solid (full of powder); the silicone cord and its clamp are one 4 × 46 × 12 mm block on the bed;
 - the window stack under the lid (clamp ring, cover-slide holder, slide) is one solid, with the holder's Ø40 bore open
-  below the slide. The ~22 cm³ pocket above the slide is not meshed (see §2);
+  below the slide. The ~23.5 cm³ pocket above the slide is not meshed (see §2.1);
 - **the nozzle and the collector have no internals in the model (MK-11).** Here the nozzle gets a straight 45 × 4 mm
   channel, 11 mm long, with a uniform inflow at its back face; the collector gets a plenum behind its 50 × 6 mm opening
   and a 10 × 6 mm port (60 mm², about a 3/8 in. hose bore) whose end is the outlet. Both are assumptions;
@@ -344,8 +347,8 @@ The 4 mm slot has 8 cells across its height; the bed's first cell is ~0.13 mm th
 | Run | Solver | Includes | Leaves out |
 |---|---|---|---|
 | purge flow | simpleFoam, laminar, steady, 800 iterations, purge mesh | the steady velocity field at the purge's flows, in argon | gravity and the air/argon density difference; unsteadiness |
-| passive O₂ | scalarTransportFoam on that frozen flow, Δt = 2 s (implicit Euler, limitedLinear01), 60 min | O₂ (as a fraction of air's, T = x_O₂/0.2095) carried by the flow and diffusing at D = 2.0 × 10⁻⁵ m²/s (O₂ in Ar, 25 °C, 1 atm) | buoyancy: argon is treated as having air's density, so a low and a high inlet differ only by where the gas goes |
-| buoyant | rhoReactingBuoyantFoam: O₂, N₂, Ar, no reactions, isothermal 25 °C, laminar; PIMPLE (2 outer, 2 pressure correctors), Δt ≤ 0.25 s at Courant ≤ 15 (low in, high out: Δt settled at 0.044 s, set by 0.1 m/s gravity currents in the fine cells round the collector) or ≤ 30 (the two top-inlet runs); 5 min (low in) or 3 min (top in) of purge, from air at rest | gravity and the real mixture density (ideal gas: air 1.19, argon 1.65 kg/m³), so argon can pool under air and displace it | the nozzle (off: all 20 L/min goes through the diffuser) and the collector's port as the exhaust (its 60 mm² at 20 L/min is 5.6 m/s, which would force Δt ≈ 6 ms), so the buoyant runs exhaust through 40 × 20 mm vents; heat; species diffuse with Sc = 1 (D = ν ≈ 1.4 × 10⁻⁵ m²/s, 30 % under the real value) |
+| passive O₂ | scalarTransportFoam on that frozen flow, Δt = 2 s (implicit Euler; upwind matrix with an explicit limitedLinear01 correction), 60 min (20 min on the 237k-cell mesh) | O₂ (as a fraction of air's, T = x_O₂/0.2095) carried by the flow and diffusing at D = 2.0 × 10⁻⁵ m²/s (O₂ in Ar, 25 °C, 1 atm) | buoyancy: argon is treated as having air's density, so a low and a high inlet differ only by where the gas goes |
+| buoyant | rhoReactingBuoyantFoam: O₂, N₂, Ar, no reactions, isothermal 25 °C, laminar; PIMPLE (2 outer, 2 pressure correctors), Δt ≤ 0.25 s at Courant ≤ 15 (the first low-inlet run: Δt settled at 0.044 s, set by 0.1 m/s gravity currents in the fine cells round the collector) or ≤ 30 (the other three: Δt 0.10–0.14 s); 5 min (low in), 3 min (top in) or 4.1 min (first run) of purge, from air at rest | gravity and the real mixture density (ideal gas: air 1.19, argon 1.65 kg/m³), so argon can pool under air and displace it | the nozzle (off: all 20 L/min goes through the diffuser) and the collector's port as the exhaust (its 60 mm² at 20 L/min is 5.6 m/s, which would force Δt ≈ 6 ms), so the buoyant runs exhaust through 40 × 20 mm vents; heat; species diffuse with Sc = 1 (D = ν ≈ 1.4 × 10⁻⁵ m²/s, 30 % under the real value) |
 
 In every run the walls are tight: no leaks, no permeation through the gasket, no outgassing, no water, no O₂ in the
 argon, and no air held in the powder or in the stage's body. The O₂ these runs reach is the purge's own limit, below
@@ -370,8 +373,9 @@ own gas moves at mm/s to cm/s, so a 1–2 K temperature difference in the room w
 - **The as-drawn exhaust in a buoyant run.** No buoyant run exhausts through the collector's port: at 20 L/min its
   10 × 6 mm bore runs at 5.6 m/s, which would hold the time step to ~6 ms. The buoyant runs use the 40 × 20 mm vents,
   with the nozzle off.
-- **Long buoyant runs.** They cover 3–4 min of purge (a 3 min run took 20–40 min on two shared cores); levels reached
-  later are extrapolated from each run's own exponential tail and marked "≈".
+- **Long buoyant runs.** They cover 3–5 min of purge (5–27 min each on two shared cores); levels reached later are
+  extrapolated from each run's own exponential tail and marked "≈". No buoyant run has the nozzle on, or a vent in
+  the middle of the lid.
 - **The first low-inlet buoyant run** let air flow back in at the top of its vent (velocity `pressureInletOutletVelocity`
   with a uniform static pressure: the 0.3 Pa hydrostatic head across a 20 mm vent beat the ~0.15 Pa that drives the
   outflow). Its exhaust reading after 2.5 min is that artifact and is not used; the later runs' exhaust is outflow-only,
