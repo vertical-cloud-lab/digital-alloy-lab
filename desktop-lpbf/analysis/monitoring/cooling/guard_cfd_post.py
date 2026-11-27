@@ -347,7 +347,8 @@ def write_md(res):
     for name, r in res["cases"].items():
         m, h, c, fl = r["meta"], r["heat"], r["convergence"], r["flow"]
         L.append(f"## {name}: {m['variant']}, {m['load']} load, supply {m['supply_c']} °C, {m['h_mm']:.0f} mm cells ({r['cells']} cells)\n")
-        L.append(f"Flow {m['q_exhaust_m3h']} m³/h out ({m['q_inlet_m3h']:.1f} through the inlet, {m['q_hood_m3h']} through the hood). "
+        win = f", {m['q_window_m3h']:.1f} through the base plate's open window" if m.get("q_window_m3h") else ""
+        L.append(f"Flow {m['q_exhaust_m3h']} m³/h out ({m['q_inlet_m3h']:.1f} through the inlet, {m['q_hood_m3h']} through the hood{win}). "
                  f"Heat in: sources {h['sources_W']} W, chamber at 60 °C {h['chamber_W']} W, legs to the base plate {h['floor_legs_W']} W; "
                  f"panels {h['panels_W']} W; exhaust {h['exhaust_W']} W at {h['T_exhaust_c']} °C (imbalance {h['imbalance_pct']} %). "
                  f"Iterations {c['iterations']}, final residuals {c['final_initial_residuals']}.\n")
