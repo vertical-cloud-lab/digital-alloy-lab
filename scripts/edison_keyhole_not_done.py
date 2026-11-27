@@ -1,5 +1,8 @@
 """Edison LITERATURE_HIGH queries for the first-principles keyhole model's open items (PR #249, issue #235).
 
+Round 5 (`--round 5`): two more questions that version 2 left open, the absorptance of an Al melt before its
+keyhole forms, and how long LPBF Al-Si melt pools really are in keyhole mode.
+
 Sterling asked (PR #249) for the first-principles model's "not done" items: Mg evaporation, a powder layer, a
 tilted keyhole, melt flow, the blend's liquid resistivity above 12 wt% Si, sourced liquid resistivities for Gan
 et al.'s alloys, and a sourced solid conductivity. These three queries ask Edison for leads to the numbers those
@@ -15,6 +18,7 @@ Usage (run from the repo root; needs EDISON_PLATFORM_API_KEY):
     python scripts/edison_keyhole_not_done.py submit   # writes _task_ids.json
     python scripts/edison_keyhole_not_done.py wait     # blocks until all finish, then fetches
     python scripts/edison_keyhole_not_done.py fetch    # fetch whatever has finished
+    python scripts/edison_keyhole_not_done.py submit --round 5   # round 5 (and wait/fetch --round 5)
 """
 
 from __future__ import annotations
@@ -29,7 +33,8 @@ import edison_keyhole_alternatives as base  # noqa: E402
 from edison_client import JobNames, TaskRequest  # noqa: E402
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
-OUT_DIR = REPO_ROOT / "edison-trajectories" / "keyhole-not-done"
+ROUND5 = "--round" in sys.argv and sys.argv[sys.argv.index("--round") + 1] == "5"
+OUT_DIR = REPO_ROOT / "edison-trajectories" / ("keyhole-not-done-round5" if ROUND5 else "keyhole-not-done")
 
 CONTEXT = (
     "Context: we have written our own physics-based keyhole and melt-pool model for laser powder bed fusion "
@@ -89,6 +94,39 @@ QUERIES = {
     },
 }
 
+QUERIES_ROUND5 = {
+    "dimple_absorptance": {
+        "title": "Measured absorptance of Al alloys under a moving laser before the keyhole forms",
+        "outfile": "dimple_absorptance.md",
+        "query": CONTEXT + (
+            "Our model's melt absorbs only 0.18-0.20 (Fresnel, clean liquid Al-Si) in the regime where the surface "
+            "boils but no keyhole has formed, while the Thermo-Calc AM Module uses about 0.31 there. Question: what "
+            "laser absorptance has been MEASURED (integrating sphere or calorimetry) at 1.03-1.08 um for aluminium "
+            "alloys (AlSi10Mg, Al-Si, Al 6061, Al 5182, Al 1100, pure Al) under a moving or stationary laser in "
+            "conduction mode and in the transition just before a keyhole forms, on bare plates and on powder layers? "
+            "Include Simonds et al. 2024 (AM-Bench 2022, Al 5182), Trapp et al. 2017, Matthews et al. 2018 (J. Laser "
+            "Appl. 30, 032302), and any AlSi10Mg single-track absorptance. Give the power, speed, spot size, the "
+            "measured absorptance against time or power, and the DOI with the figure or table number. Is the higher "
+            "value attributed to surface oxide, ripples, a shallow depression, or vapour?"
+        ),
+    },
+    "pool_length": {
+        "title": "Measured melt-pool length of LPBF AlSi10Mg and hypereutectic Al-Si in keyhole mode",
+        "outfile": "pool_length.md",
+        "query": CONTEXT + (
+            "The Thermo-Calc AM Module predicts a 1.47 mm long, 462 um wide, 349 um deep pool for our Al-24Si blend "
+            "at 375 W, 0.4 m/s, 90 um beam (absorptivity 0.38), while our models give pools 0.35-0.6 mm long. "
+            "Question: what melt-pool LENGTHS (and widths, depths) have been MEASURED in laser powder bed fusion or "
+            "laser melting of AlSi10Mg, AlSi12 or hypereutectic Al-Si (in-situ high-speed or thermal imaging, "
+            "synchrotron X-ray, or post-mortem), at 200-400 W and 0.3-1.5 m/s, especially in keyhole mode? What do "
+            "high-fidelity CFD studies of AlSi10Mg (e.g. with free surface and recoil) predict for the pool length and "
+            "the rearward surface flow speed? Give the numbers, process parameters and DOIs with figure numbers."
+        ),
+    },
+}
+if ROUND5:
+    QUERIES = QUERIES_ROUND5
+
 base.OUT_DIR = OUT_DIR
 base.RAW_DIR = OUT_DIR / "raw"
 base.TASK_FILE = OUT_DIR / "_task_ids.json"
@@ -117,6 +155,7 @@ if __name__ == "__main__":
     elif cmd == "fetch":
         base.fetch()
     elif cmd == "wait":
-        base.wait(max_s=int(sys.argv[2]) if len(sys.argv) > 2 else 3300)
+        nums = [x for x in sys.argv[2:] if x.isdigit() and x != "5"]
+        base.wait(max_s=int(nums[0]) if nums else 3300)
     else:
         sys.exit(__doc__)
