@@ -42,15 +42,15 @@ Node 3: Characterization       (part density → mechanical properties)  Cost: ~
 
 The cost-aware variant demonstrates the economic advantage of partial evaluation:
 
-| Metric | Value |
-|:---|:---|
-| Candidates screened (CALPHAD only) | 50 |
-| Promoted to full pipeline | 6 |
-| CALPHAD screening cost | $50 |
-| Downstream cost (promoted only) | $7,800 |
-| **Total cost with screening** | **$7,850** |
-| Naive cost (all through full pipeline) | $65,050 |
-| **Savings** | **$57,200 (88%)** |
+| Metric                                 | Value             |
+| :------------------------------------- | :---------------- |
+| Candidates screened (CALPHAD only)     | 50                |
+| Promoted to full pipeline              | 6                 |
+| CALPHAD screening cost                 | $50               |
+| Downstream cost (promoted only)        | $7,800            |
+| **Total cost with screening**          | **$7,850**        |
+| Naive cost (all through full pipeline) | $65,050           |
+| **Savings**                            | **$57,200 (88%)** |
 
 The key insight: running 44 extra CALPHAD screens costs $44 (vs. $57,200 if those had been full pipeline evaluations). The downstream cost for promoted candidates excludes the already-paid CALPHAD cost to avoid double-counting. CALPHAD's 1000× lower cost per evaluation makes aggressive upstream screening highly cost-effective.
 
@@ -98,11 +98,11 @@ Node 3:  Characterization       (part_density d=1 → YS + elongation d=2)      
 
 ### Parameter Tiering (from Edison review)
 
-| Tier | Count | Scope | Examples |
-|:---|:---|:---|:---|
-| **A (actively optimized)** | 6-8 | Per candidate | Power, speed, hatch, layer thickness, spot size, rotation |
-| **B (fixed per alloy family)** | 8-10 | Per alloy | Gas type, recoater type, baseplate temp |
-| **C (fixed per machine)** | 15-18 | Per facility | Wavelength, beam profile, chamber pressure |
+| Tier                           | Count | Scope         | Examples                                                  |
+| :----------------------------- | :---- | :------------ | :-------------------------------------------------------- |
+| **A (actively optimized)**     | 6-8   | Per candidate | Power, speed, hatch, layer thickness, spot size, rotation |
+| **B (fixed per alloy family)** | 8-10  | Per alloy     | Gas type, recoater type, baseplate temp                   |
+| **C (fixed per machine)**      | 15-18 | Per facility  | Wavelength, beam profile, chamber pressure                |
 
 ### Key Design Decisions (Edison-informed)
 
@@ -124,12 +124,12 @@ Node 3:  Characterization       (part_density d=1 → YS + elongation d=2)      
 
 ### High-D BO Method Comparison (for LPBF Tier-A parameters)
 
-| Method | Best For | BoTorch Support | Recommendation |
-|:---|:---|:---|:---|
-| **SAASBO** | Sparse variable selection, d=6-10 | Native (`SaasFullyBayesianSingleTaskGP`) | **Default choice** for per-node GPs |
-| **TuRBO** | Local process window search | Native | Alternative when process windows are narrow |
-| **MORBO** | Multi-objective (density + roughness + strength) | Research code | Use if Pareto optimization needed |
-| REMBO/HeSBO | Very high-d (d>20) | Custom implementation | Not needed: sub-node decomposition keeps d≤5 |
+| Method      | Best For                                         | BoTorch Support                          | Recommendation                               |
+| :---------- | :----------------------------------------------- | :--------------------------------------- | :------------------------------------------- |
+| **SAASBO**  | Sparse variable selection, d=6-10                | Native (`SaasFullyBayesianSingleTaskGP`) | **Default choice** for per-node GPs          |
+| **TuRBO**   | Local process window search                      | Native                                   | Alternative when process windows are narrow  |
+| **MORBO**   | Multi-objective (density + roughness + strength) | Research code                            | Use if Pareto optimization needed            |
+| REMBO/HeSBO | Very high-d (d>20)                               | Custom implementation                    | Not needed: sub-node decomposition keeps d≤5 |
 
 ### Verified Implementation
 
@@ -146,12 +146,12 @@ See `benchmarks/bofn_expanded_demo.py` (v2):
 
 The expanded DAG maps directly to the 8-stage AM validation progression from PR #30:
 
-| AM Validation Stage | BOFN Node | Fidelity |
-|:---|:---|:---|
-| Single tracks | Node 2a (energy) | Low ($10) |
-| Thin walls / crack screening | Node 2b (scan) | Medium ($50) |
-| Density cubes | Node 2d (integration) | High ($200) |
-| Tensile bars | Node 3 (characterization) | Full ($300) |
+| AM Validation Stage          | BOFN Node                 | Fidelity     |
+| :--------------------------- | :------------------------ | :----------- |
+| Single tracks                | Node 2a (energy)          | Low ($10)    |
+| Thin walls / crack screening | Node 2b (scan)            | Medium ($50) |
+| Density cubes                | Node 2d (integration)     | High ($200)  |
+| Tensile bars                 | Node 3 (characterization) | Full ($300)  |
 
 This enables multi-fidelity BO within the BOFN framework: the acquisition function can select whether to run a cheap single-track experiment on a new composition or advance a promising candidate to density-cube evaluation, using constituent-evaluation KG (Toscano-Palmerin & Frazier).
 
@@ -167,13 +167,13 @@ The Meta Adaptive Experimentation team's key contribution is **LILO** (Language-
 
 ### Other Key Methods
 
-| Method | Key Mechanism | Relevance to VCL |
-|:---|:---|:---|
+| Method                                             | Key Mechanism                                            | Relevance to VCL                                                |
+| :------------------------------------------------- | :------------------------------------------------------- | :-------------------------------------------------------------- |
 | **LLAMBO** (Liu et al. 2024, ICLR, ~166 citations) | LLM warmstarting + zero-shot surrogate + guided sampling | Initialize composition search with LLM-suggested alloy families |
-| **BORA** (Cissé et al. 2025) | Trust-weighted LLM intervention; calibrated reliability | Stage selection for partial evaluations; graceful fallback |
-| **Reasoning BO** (Yang et al. 2025) | Multi-agent LLM + knowledge graphs | Structured encoding of process-structure-property relationships |
-| **LMABO** (Ngo et al. 2025) | LLM-based adaptive acquisition function selection | Per-node acquisition function tuning |
-| **AlloyGPT** (CMU 2025) | Domain-specific materials LLM | Alloy-specific warmstarting and prior specification |
+| **BORA** (Cissé et al. 2025)                       | Trust-weighted LLM intervention; calibrated reliability  | Stage selection for partial evaluations; graceful fallback      |
+| **Reasoning BO** (Yang et al. 2025)                | Multi-agent LLM + knowledge graphs                       | Structured encoding of process-structure-property relationships |
+| **LMABO** (Ngo et al. 2025)                        | LLM-based adaptive acquisition function selection        | Per-node acquisition function tuning                            |
+| **AlloyGPT** (CMU 2025)                            | Domain-specific materials LLM                            | Alloy-specific warmstarting and prior specification             |
 
 ### Critical Gap
 
@@ -208,20 +208,20 @@ Queried Edison Scientific (1-credit LITERATURE, task `16953cd8`) for 15 Al-Si-Mg
 
 A/B/C comparison (20 seeds × 10 BO iterations, harder Tier 1 benchmark, per-node GPs, Thompson sampling):
 
-| Metric | LLM-initialized | Random-initialized | LHS-initialized |
-|:---|:---|:---|:---|
-| Cold-start advantage (Cohen's d) | **+0.356 vs Random** (d=1.34, p<0.00001) | — | — |
-| Final best advantage | +0.028 vs Random (d=0.07, p=0.756, n.s.) | — | — |
-| AUC (sample efficiency) | **21.04** (+16.2% vs Random, d=0.89, p=0.0008) | 18.11 | 17.88 |
-| Iterations to Y≥2.0 | **2.6** (~4 iters sooner) | 6.5 | 6.2 |
-| Win rate (final best) | — | 55% (11/20, p=0.412, n.s.) | 55% (11/20) |
-| Initial phase quality >0.5 | **75.6%** | 10.0% | 13.8% |
+| Metric                           | LLM-initialized                                | Random-initialized         | LHS-initialized |
+| :------------------------------- | :--------------------------------------------- | :------------------------- | :-------------- |
+| Cold-start advantage (Cohen's d) | **+0.356 vs Random** (d=1.49, p<0.0001)        | —                          | —               |
+| Final best advantage             | +0.028 vs Random (d=0.07, p=0.756, n.s.)       | —                          | —               |
+| AUC (sample efficiency)          | **23.06** (+15.7% vs Random, d=1.28, p=0.0002) | 19.94                      | 19.70           |
+| Iterations to Y≥2.0              | **3.4** (~3.6 iters sooner)                    | 7.0                        | 7.2             |
+| Win rate (final best)            | —                                              | 55% (11/20, p=0.412, n.s.) | 55% (11/20)     |
+| Initial phase quality >0.5       | **75.6%**                                      | 10.0%                      | 13.8%           |
 
-**Key finding (v3, per Edison review `11e2d390`, rated 7/10)**: LLM warmstarting provides a **large, statistically significant sample efficiency gain** (d=0.89 on AUC, d=1.34 on cold-start) that fully dissipates by iteration 10. This matches LLAMBO's theoretical prediction: LLM initialization improves the cold-start regime but does not change the convergence point. The contribution should be framed as **sample efficiency** (reaching good solutions ~4 iterations sooner, +16% AUC) rather than convergence advantage.
+**Key finding (v3, per Edison review `11e2d390`, rated 7/10)**: LLM warmstarting provides a **large, statistically significant sample efficiency gain** (d=1.28 on AUC, d=1.49 on cold-start) that fully dissipates by iteration 10. This matches LLAMBO's theoretical prediction: LLM initialization improves the cold-start regime but does not change the convergence point. The contribution should be framed as **sample efficiency** (reaching good solutions ~3.6 iterations sooner, +15.7% AUC) rather than convergence advantage.
 
 **Edison-identified remaining issues for publication readiness**:
 1. **Benchmark circularity** (HIGH): Optimum [0.7, 0.2, 0.1] is aligned with known Al-Si-Mg alloys — need non-circular benchmarks where optimum ≠ domain knowledge
-2. **No true BOFN acquisition function** (~~MEDIUM-HIGH~~ **RESOLVED**): Thompson sampling over random candidates was a simplified approximation. We have now ported the Frazier lab's [`partial_kgfn`](https://github.com/frazier-lab/partial_kgfn) to modern BoTorch (>=0.12), including the p-KGFN acquisition function (Buathong et al. 2024, ICML), GaussianProcessNetwork model, Thompson sampling baseline, and the manufacturing test problem. Demo results on the 4-node manufacturing network (`benchmarks/bofn_pkgfn_demo.py`): **p-KGFN achieves +1.3850 at $740 total cost vs TSFN's +1.6852 at $1680** — comparable quality at 44% of the budget. Key API changes from the original (botorch 0.8.4): `FixedNoiseGP`→`SingleTaskGP`, `fit_gpytorch_model`→`fit_gpytorch_mll`, `covar_module.base_kernel`→`covar_module` (modern GPyTorch). Remaining work: gradient-based acquisition optimization (currently uses discrete candidate evaluation) and full batch p-KGFN support.
+2. **No true BOFN acquisition function** (~~MEDIUM-HIGH~~ **RESOLVED**): Thompson sampling over random candidates was a simplified approximation. We have now ported the Frazier lab's [`partial_kgfn`](https://github.com/frazier-lab/partial_kgfn) to modern BoTorch (>=0.12), including the p-KGFN acquisition function (Buathong et al. 2024, ICML), GaussianProcessNetwork model, Thompson sampling baseline, and the manufacturing test problem. Multi-seed benchmark results (5 seeds, $1,190 equal budget): **Random 0.70±0.30, TSFN 0.71±0.32, pKGFN 0.67±0.28** — all within each other's error bands. p-KGFN gets ~69 cheap partial evaluations vs 8 full-network evaluations within the same budget. Root-only partial evaluations don't propagate enough information through the DAG to outperform full evaluations at this budget scale; the original paper shows advantages at larger budgets and higher cost ratios. Key API changes from the original (botorch 0.8.4): `FixedNoiseGP`→`SingleTaskGP`, `fit_gpytorch_model`→`fit_gpytorch_mll`, `covar_module.base_kernel`→`covar_module` (modern GPyTorch). Remaining work: gradient-based acquisition optimization (currently uses discrete candidate evaluation), larger budget experiments, and full batch p-KGFN support.
 3. **Results framing** (MEDIUM): Report AUC and iterations-to-threshold as primary metrics, not convergence advantage
 
 #### Integration 2: LLM-Informed GP Priors per Pipeline Node
@@ -279,14 +279,14 @@ Density drops sharply below 40 J/mm³ (lack of fusion) and above 120 J/mm³
 
 ### Implementation Roadmap
 
-| Phase | Duration | Deliverable | Dependencies |
-|:---|:---|:---|:---|
-| **Phase 1: BOFN baseline** | Complete | Working 4-node function network with per-node GPs | BoTorch 0.17.2 ✅ |
-| **Phase 2: LLAMBO warmstart** | Complete | LLM-initialized composition search; A/B comparison vs random init | Edison Scientific ✅ |
-| **Phase 2b: P3 diversity + validation** | Complete | Per-seed perturbation, min-distance filtering, harder benchmark, 3 Edison review rounds (4/10 → 6/10 → 7/10) | Phase 2 ✅ |
-| **Phase 3: Non-circular benchmarks + p-KGFN** | In progress | Add benchmarks with non-domain-aligned optima; ~~port p-KGFN~~ **p-KGFN ported** (`benchmarks/partial_kgfn/`, `benchmarks/bofn_pkgfn_demo.py`) — p-KGFN beats Random at 44% cost. Remaining: non-circular benchmarks, gradient-based acqf optimization | Phase 2b complete, p-KGFN port ✅ |
-| **Phase 4: LLM priors** | 3 weeks | Per-node GP priors from LLM; ablation study on each node | Phase 3 complete |
-| **Phase 5: Full LLM-BOFN** | 4 weeks | BORA-style stage selection + LILO-style NL feedback + RAG | Phases 3–4 complete |
+| Phase                                         | Duration    | Deliverable                                                                                                                                                                                                                                                                                                                                                            | Dependencies                     |
+| :-------------------------------------------- | :---------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------- |
+| **Phase 1: BOFN baseline**                    | Complete    | Working 4-node function network with per-node GPs                                                                                                                                                                                                                                                                                                                      | BoTorch 0.17.2 ✅                 |
+| **Phase 2: LLAMBO warmstart**                 | Complete    | LLM-initialized composition search; A/B comparison vs random init                                                                                                                                                                                                                                                                                                      | Edison Scientific ✅              |
+| **Phase 2b: P3 diversity + validation**       | Complete    | Per-seed perturbation, min-distance filtering, harder benchmark, 3 Edison review rounds (4/10 → 6/10 → 7/10)                                                                                                                                                                                                                                                           | Phase 2 ✅                        |
+| **Phase 3: Non-circular benchmarks + p-KGFN** | In progress | Add benchmarks with non-domain-aligned optima; ~~port p-KGFN~~ **p-KGFN ported** (`benchmarks/partial_kgfn/`, `benchmarks/bofn_pkgfn_demo.py`) — multi-seed results show algorithms within error bands at $1,190 budget; p-KGFN advantages expected at larger budgets. Remaining: non-circular benchmarks, gradient-based acqf optimization, larger-budget experiments | Phase 2b complete, p-KGFN port ✅ |
+| **Phase 4: LLM priors**                       | 3 weeks     | Per-node GP priors from LLM; ablation study on each node                                                                                                                                                                                                                                                                                                               | Phase 3 complete                 |
+| **Phase 5: Full LLM-BOFN**                    | 4 weeks     | BORA-style stage selection + LILO-style NL feedback + RAG                                                                                                                                                                                                                                                                                                              | Phases 3–4 complete              |
 
 ---
 
@@ -382,14 +382,14 @@ Tier 4 (month 2+) → pilot on VCL pipeline
 
 ### Key Metrics Across All Tiers
 
-| Metric | What It Measures | Target |
-|:---|:---|:---|
-| **Simple regret** | Optimization performance | < flat BO by 2× at same iteration count |
-| **Cost-weighted regret** | Economic efficiency | < flat BO by 5× (leveraging cheap CALPHAD) |
-| **LLM overhead** | Computational cost of LLM integration | < 10% of total wall-clock time |
-| **Warmstart gain** | Improvement from LLM initialization | > 50% regret reduction in first 5 iterations |
-| **Trust calibration** | BORA trust weight accuracy | Correlation > 0.7 between trust and actual LLM accuracy |
-| **Robustness** | Handling of LLM hallucinations | No worse than baseline BOFN when LLM gives bad advice |
+| Metric                   | What It Measures                      | Target                                                  |
+| :----------------------- | :------------------------------------ | :------------------------------------------------------ |
+| **Simple regret**        | Optimization performance              | < flat BO by 2× at same iteration count                 |
+| **Cost-weighted regret** | Economic efficiency                   | < flat BO by 5× (leveraging cheap CALPHAD)              |
+| **LLM overhead**         | Computational cost of LLM integration | < 10% of total wall-clock time                          |
+| **Warmstart gain**       | Improvement from LLM initialization   | > 50% regret reduction in first 5 iterations            |
+| **Trust calibration**    | BORA trust weight accuracy            | Correlation > 0.7 between trust and actual LLM accuracy |
+| **Robustness**           | Handling of LLM hallucinations        | No worse than baseline BOFN when LLM gives bad advice   |
 
 ### What Would Build Confidence for Deployment
 
@@ -402,23 +402,23 @@ Tier 4 (month 2+) → pilot on VCL pipeline
 
 ## Summary
 
-| Deliverable | Status | Location |
-|:---|:---|:---|
-| BOFN in BoTorch (4-node) | ✅ Verified working | `benchmarks/bofn_demo.py` |
-| **BOFN expanded DAG (9-node)** | **✅ Verified working** | **`benchmarks/bofn_expanded_demo.py`** |
-| Fully Bayesian BOFN (SAASBO) | ✅ Verified compatible | `benchmarks/bofn_fully_bayesian_test.py` |
-| Function networks literature | ✅ Complete | `edison-trajectories/function_networks_bo.md` |
-| LLM+BO literature | ✅ Complete | `edison-trajectories/llm_bayesian_optimization.md` |
-| **LPBF dimensionality review** | **✅ Complete** | **`edison-trajectories/bofn-lpbf-dimensionality-review.md`** |
-| **LPBF implementation review** | **✅ Complete** | **`edison-trajectories/bofn-lpbf-implementation-review.md`** |
-| LLM-BOFN synthesis | ✅ Proposed | This document (§3) |
-| Benchmark task design | ✅ Designed | This document (§4) |
-| Tier 1 benchmark | ✅ Implemented | `benchmarks/bofn_demo.py`, `benchmarks/bofn_expanded_demo.py` |
-| Tier 2–4 benchmarks | ⏳ Future work | — |
+| Deliverable                    | Status                 | Location                                                      |
+| :----------------------------- | :--------------------- | :------------------------------------------------------------ |
+| BOFN in BoTorch (4-node)       | ✅ Verified working     | `benchmarks/bofn_demo.py`                                     |
+| **BOFN expanded DAG (9-node)** | **✅ Verified working** | **`benchmarks/bofn_expanded_demo.py`**                        |
+| Fully Bayesian BOFN (SAASBO)   | ✅ Verified compatible  | `benchmarks/bofn_fully_bayesian_test.py`                      |
+| Function networks literature   | ✅ Complete             | `edison-trajectories/function_networks_bo.md`                 |
+| LLM+BO literature              | ✅ Complete             | `edison-trajectories/llm_bayesian_optimization.md`            |
+| **LPBF dimensionality review** | **✅ Complete**         | **`edison-trajectories/bofn-lpbf-dimensionality-review.md`**  |
+| **LPBF implementation review** | **✅ Complete**         | **`edison-trajectories/bofn-lpbf-implementation-review.md`**  |
+| LLM-BOFN synthesis             | ✅ Proposed             | This document (§3)                                            |
+| Benchmark task design          | ✅ Designed             | This document (§4)                                            |
+| Tier 1 benchmark               | ✅ Implemented          | `benchmarks/bofn_demo.py`, `benchmarks/bofn_expanded_demo.py` |
+| Tier 2–4 benchmarks            | ⏳ Future work          | —                                                             |
 
 ### Edison Scientific Task IDs
 
-| Task ID | Type | Query |
-|:---|:---|:---|
-| `d0ad1eea-6b3b-42af-93cf-0b293b001986` | LITERATURE_HIGH | BOFN LPBF parameter dimensionality — sub-node decomposition, SAASBO vs TuRBO, RGPE transfer, powder properties, LPBF BO literature |
+| Task ID                                | Type            | Query                                                                                                                                                   |
+| :------------------------------------- | :-------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `d0ad1eea-6b3b-42af-93cf-0b293b001986` | LITERATURE_HIGH | BOFN LPBF parameter dimensionality — sub-node decomposition, SAASBO vs TuRBO, RGPE transfer, powder properties, LPBF BO literature                      |
 | `6025bdcf-6c58-46d0-b891-6a1bc68e610e` | LITERATURE_HIGH | Follow-up — composition-process coupling (Option A), multi-fidelity within BOFN nodes, constraint handling, batch evaluation, BoTorch/Ax implementation |

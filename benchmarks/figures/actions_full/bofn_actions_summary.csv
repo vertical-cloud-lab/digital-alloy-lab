@@ -1,0 +1,8 @@
+algo,n_seeds,final_mean,final_std,iters_mean
+HighFidOnly,20,1.1498,0.1138,11.0
+LowFidOnly,20,0.8941,0.1617,264.0
+Node2Only,20,0.8938,0.1612,132.0
+Random,20,1.0003,0.1299,11.0
+Sobol,20,1.0041,0.1026,11.0
+TSFN,20,1.1771,0.0615,11.0
+pKGFN,20,1.0434,0.1295,44.0
