@@ -672,8 +672,20 @@ and costs in \code{bofn_alloy.py}, and the per-step candidate construction in
 (\code{pkgfn_free}) lets pKGFN atomize compositions it has never simulated
 (CALPHAD runs first, its outputs entering KG at their posterior means) and
 values a new powder by atomizing and printing it as one \$4,000 move.
-\tbd{Result of pkgfn\_free at $\kappa=0$, 0.5 and 1 from the stored runs (8, 8
-and 20 seeds) or from 16-seed reruns if they finish.}
+Run on the same 16 seeds at $\kappa=0$ and 0.5 (with lighter Monte Carlo
+settings, 32 base samples and 10 candidates per step, as in its stored runs), it
+recovers what pKGFN loses when the screen is right: \stat{k0-pkgfn_free-v100-mean}\%
+of the optimum at \$100k at $\kappa=0$, \stat{k0-pkgfn_free-pkgfn-v100-abs}
+points above pKGFN (difference \stat{k0-pkgfn_free-pkgfn-v100-ci}) and level with
+screen-then-test (\stat{k0-pkgfn_free-tiered-v100-ci}) and with BOFN with powder
+reuse (\stat{k0-pkgfn_free-eifn_reuse-v100-ci}); at $\kappa=0.5$ it reaches
+\stat{k05-pkgfn_free-v100-mean}\%, \stat{k05-pkgfn_free-pkgfn-v100-abs} points
+above pKGFN (\stat{k05-pkgfn_free-pkgfn-v100-ci}). Its stored runs (seeds 0--7)
+rerun action for action except one: they predate a fix that charges a
+never-simulated alloy's \$10 CALPHAD call in pKGFN's cost per dollar, and on seed
+2 at $\kappa=0$ that \$10 changes the third decision
+(\code{results-rerun/compare_k0_pkgfn_free.txt}). A change of candidate rule,
+not of acquisition function, is what fixes pKGFN here.
 \end{itemize}
 
 A clocked version reuses this truth and adds durations, station capacity,

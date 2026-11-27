@@ -57,6 +57,13 @@ Target levels (baseline's own $100k mean): tiered 85%, standard BO 71%. 0.0 mean
 
 Matched vs independent resampling: the median matched-seed interval is 0.94× as wide at $25k, 0.98× as wide at $50k, 1.00× as wide at $100k, 0.98× as wide at anytime ($0-100k) as the interval from resampling each policy's seeds independently (over all 28 pairs).
 
+### Variants on the same seeds (not in the tables above)
+
+- `pkgfn_free` (settings S_ACQ=32, N_CAND=10): $25k 42% [29, 55]; $50k 63% [52, 74]; $100k 81% [70, 90]; anytime ($0-100k) 54% [45, 63]
+  - minus pKGFN: $25k +21.3 [+8.5, +34.0] (10 wins); $50k +29.1 [+11.7, +44.5] (14 wins); $100k +21.8 [+8.1, +35.9] (12 wins); anytime ($0-100k) +19.2 [+7.6, +30.6] (12 wins)
+  - minus BOFN+reuse: $25k +2.8 [-15.2, +20.0] (6 wins); $50k +8.2 [-7.1, +24.2] (8 wins); $100k +4.3 [-7.1, +16.2] (9 wins); anytime ($0-100k) +4.5 [-7.3, +16.6] (9 wins)
+  - minus Screen: $25k -2.0 [-15.8, +12.6] (7 wins); $50k -0.6 [-16.4, +14.6] (10 wins); $100k -4.6 [-16.2, +5.3] (8 wins); anytime ($0-100k) -4.8 [-16.7, +6.6] (8 wins)
+
 ### Every pair (A − B, pp [95% matched CI]; wins of A / ties out of n)
 
 | A | B | $25k | $50k | $100k | anytime |
@@ -144,6 +151,13 @@ Target levels (baseline's own $100k mean): tiered 78%, standard BO 80%. 0.0 mean
 | Random | 23.0 | 23.0 | 23.0 | 23.0 | — | 0 of 2304 | 12 s |
 
 Matched vs independent resampling: the median matched-seed interval is 0.77× as wide at $25k, 0.89× as wide at $50k, 1.01× as wide at $100k, 0.81× as wide at anytime ($0-100k) as the interval from resampling each policy's seeds independently (over all 28 pairs).
+
+### Variants on the same seeds (not in the tables above)
+
+- `pkgfn_free` (settings S_ACQ=32, N_CAND=10): $25k 39% [28, 52]; $50k 56% [45, 68]; $100k 79% [67, 88]; anytime ($0-100k) 55% [45, 64]
+  - minus pKGFN: $25k +6.7 [-3.3, +17.9] (9 wins); $50k +6.0 [-7.2, +20.0] (8 wins); $100k +12.1 [+0.1, +22.0] (14 wins); anytime ($0-100k) +9.8 [-1.0, +20.0] (12 wins)
+  - minus BOFN+reuse: $25k -3.2 [-12.0, +4.2] (8 wins); $50k -3.4 [-8.9, +2.7] (5 wins); $100k -7.3 [-16.6, +0.9] (5 wins); anytime ($0-100k) -2.9 [-8.3, +2.7] (7 wins)
+  - minus Screen: $25k -7.2 [-20.8, +5.7] (7 wins); $50k -5.6 [-18.5, +6.9] (7 wins); $100k +1.0 [-12.3, +13.1] (10 wins); anytime ($0-100k) -1.8 [-12.1, +7.7] (8 wins)
 
 ### Every pair (A − B, pp [95% matched CI]; wins of A / ties out of n)
 

@@ -1,0 +1,10 @@
+# pkgfn_free (any-alloy pKGFN with lookahead; BOFN_SACQ=32 BOFN_NCAND=10 BOFN_NO_REC=1), stored seeds 0-7 vs the Nov 27 reruns at k0.5.
+# The stored runs predate the Oct 5 fix that charges a never-simulated alloy's $10 CALPHAD call in pKGFN's cost per dollar, so a rerun diverges wherever that $10 tips a choice.
+   pkgfn_free s0   MATCH                        rows 54/54  max|d| best_validated 0.0e+00  rec_printed 1.1e-16  rec 0.0e+00  x_rec 0.0e+00  final 0.5073/0.5073
+   pkgfn_free s1   MATCH                        rows 50/50  max|d| best_validated 0.0e+00  rec_printed 1.4e-17  rec 0.0e+00  x_rec 0.0e+00  final 0.1715/0.1715
+   pkgfn_free s2   MATCH                        rows 59/59  max|d| best_validated 2.8e-17  rec_printed 2.8e-17  rec 0.0e+00  x_rec 0.0e+00  final 0.4354/0.4354
+   pkgfn_free s3   MATCH                        rows 56/56  max|d| best_validated 1.4e-17  rec_printed 1.4e-17  rec 0.0e+00  x_rec 0.0e+00  final 0.3963/0.3963
+   pkgfn_free s4   MATCH                        rows 55/55  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.4248/0.4248
+   pkgfn_free s5   MATCH                        rows 57/57  max|d| best_validated 1.1e-16  rec_printed 1.1e-16  rec 0.0e+00  x_rec 0.0e+00  final 0.5168/0.5168
+   pkgfn_free s6   MATCH                        rows 55/55  max|d| best_validated 1.1e-16  rec_printed 1.1e-16  rec 0.0e+00  x_rec 0.0e+00  final 0.5148/0.5148
+   pkgfn_free s7   MATCH                        rows 59/59  max|d| best_validated 0.0e+00  rec_printed 8.3e-17  rec 0.0e+00  x_rec 0.0e+00  final 0.4590/0.4590
