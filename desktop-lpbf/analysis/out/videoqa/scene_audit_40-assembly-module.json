@@ -4,217 +4,44 @@
  "opaque_min": 0.3,
  "recordings": [
   "/tmp/robotbuild/frames/40-assembly-module/audit.part0",
-  "/tmp/robotbuild/frames/40-assembly-module/audit.part1"
+  "/tmp/robotbuild/frames/40-assembly-module/audit.part1",
+  "/tmp/robotbuild/frames/40-assembly-module/audit.part2",
+  "/tmp/robotbuild/frames/40-assembly-module/audit.part3"
  ],
- "frames_recorded": 3448,
- "frames_checked": 3448,
+ "frames_recorded": 2974,
+ "frames_checked": 2974,
+ "narrow_checks": 41117,
+ "pairs_tested": 41117,
+ "seconds": 132.2,
+ "peak_rss_mb": 404,
+ "merged_from": [
+  "/tmp/r9w4/audF/40-assembly-module/p0/shifted_40-assembly-module.json",
+  "/tmp/r9w4/audF/40-assembly-module/p1/shifted_40-assembly-module.json",
+  "/tmp/r9w4/audF/40-assembly-module/p2/shifted_40-assembly-module.json",
+  "/tmp/r9w4/audF/40-assembly-module/p3/shifted_40-assembly-module.json"
+ ],
  "subsample": "every recorded frame",
  "recorded_every": 1,
- "actors": 496,
- "movers": 177,
- "mover_names": [
-  "A/base/0",
-  "A/base/1",
-  "A/changer",
-  "A/forearm/0",
-  "A/forearm/1",
-  "A/forearm/2",
-  "A/forearm/3",
-  "A/gr/adapter/0",
-  "A/gr/adapter/1",
-  "A/gr/base/0",
-  "A/gr/base/1",
-  "A/gr/camera/0",
-  "A/gr/camera/1",
-  "A/gr/camera/2",
-  "A/gr/camera/3",
-  "A/gr/camera/4",
-  "A/gr/left_finger/0",
-  "A/gr/left_finger/1",
-  "A/gr/left_finger_tip/0",
-  "A/gr/left_finger_tip/1",
-  "A/gr/left_inner_knuckle/0",
-  "A/gr/left_inner_knuckle/1",
-  "A/gr/left_knuckle/0",
-  "A/gr/right_finger/0",
-  "A/gr/right_finger/1",
-  "A/gr/right_finger_tip/0",
-  "A/gr/right_finger_tip/1",
-  "A/gr/right_inner_knuckle/0",
-  "A/gr/right_inner_knuckle/1",
-  "A/gr/right_knuckle/0",
-  "A/shoulder/0",
-  "A/shoulder/1",
-  "A/shoulder/2",
-  "A/tool/nozzle/0/None",
-  "A/tool/screwdriver/0/2.5",
-  "A/tool/screwdriver/0/3.1",
-  "A/tool/screwdriver/0/3.6",
-  "A/upper_arm/0",
-  "A/upper_arm/1",
-  "A/upper_arm/2",
-  "A/upper_arm/3",
-  "A/wrist1/0",
-  "A/wrist1/1",
-  "A/wrist1/2",
-  "A/wrist2/0",
-  "A/wrist2/1",
-  "A/wrist2/2",
-  "A/wrist3/0",
-  "B/base/0",
-  "B/base/1",
-  "B/changer",
-  "B/forearm/0",
-  "B/forearm/1",
-  "B/forearm/2",
-  "B/forearm/3",
-  "B/gr/adapter/0",
-  "B/gr/adapter/1",
-  "B/gr/base/0",
-  "B/gr/base/1",
-  "B/gr/camera/0",
-  "B/gr/camera/1",
-  "B/gr/camera/2",
-  "B/gr/camera/3",
-  "B/gr/camera/4",
-  "B/gr/left_finger/0",
-  "B/gr/left_finger/1",
-  "B/gr/left_finger_tip/0",
-  "B/gr/left_finger_tip/1",
-  "B/gr/left_inner_knuckle/0",
-  "B/gr/left_inner_knuckle/1",
-  "B/gr/left_knuckle/0",
-  "B/gr/right_finger/0",
-  "B/gr/right_finger/1",
-  "B/gr/right_finger_tip/0",
-  "B/gr/right_finger_tip/1",
-  "B/gr/right_inner_knuckle/0",
-  "B/gr/right_inner_knuckle/1",
-  "B/gr/right_knuckle/0",
-  "B/shoulder/0",
-  "B/shoulder/1",
-  "B/shoulder/2",
-  "B/tool/nutrunner_angle/0/3.6",
-  "B/upper_arm/0",
-  "B/upper_arm/1",
-  "B/upper_arm/2",
-  "B/upper_arm/3",
-  "B/wrist1/0",
-  "B/wrist1/1",
-  "B/wrist1/2",
-  "B/wrist2/0",
-  "B/wrist2/1",
-  "B/wrist2/2",
-  "B/wrist3/0",
-  "mirA/A MiR250",
-  "mirA/A cabinet",
-  "mirA/A mounting plate",
-  "mirA/A screw presenter",
-  "mirA/A tool stand",
-  "mirA/light strip",
-  "mirA/top",
-  "mirB/B MiR250",
-  "mirB/B cabinet",
-  "mirB/B mounting plate",
-  "mirB/B screw presenter",
-  "mirB/B tool stand",
-  "mirB/light strip",
-  "mirB/top",
-  "o19",
-  "o20",
-  "o21",
-  "o22",
-  "o23",
-  "o24",
-  "o259",
-  "o260",
-  "o261",
-  "o262",
-  "o263",
-  "o264",
-  "o265",
-  "o266",
-  "o267",
-  "o268",
-  "o269",
-  "o27",
-  "o270",
-  "o271",
-  "o272",
-  "o273",
-  "o274",
-  "o275",
-  "o276",
-  "o277",
-  "o278",
-  "o279",
-  "o28",
-  "o280",
-  "o29",
-  "o30",
-  "o31",
-  "o34",
-  "o35",
-  "o36",
-  "o37",
-  "o38",
-  "o39",
-  "o470",
-  "o471",
-  "o472",
-  "o473",
-  "o474",
-  "o475",
-  "o476",
-  "o477",
-  "o478",
-  "o479",
-  "o480",
-  "o489",
-  "o490",
-  "o491",
-  "o492",
-  "o502",
-  "o503",
-  "o504",
-  "op/brow",
-  "op/coat",
-  "op/coat skirt",
-  "op/glasses frame",
-  "op/glasses lens",
-  "op/glove",
-  "op/hair",
-  "op/iris",
-  "op/sclera",
-  "op/shirt",
-  "op/shoes",
-  "op/skin",
-  "op/trousers"
- ],
  "method": "translational penetration depth (26 directions, ladder 1.5-100 mm, bisection-refined), python-fcl BVH meshes of the recorded triangles, containment by winding numbers; a pair is re-checked when a mesh or the relative pose changes; a pair deeper than its limit is re-checked every frame at the limit, its depth re-measured at most every 6 frames",
- "narrow_checks": 55651,
- "pairs_tested": 55651,
- "violations": 221,
- "worst_mm": 78.1,
+ "memory": "streamed: BVHs dropped every 200 recorded frames and past 1800 MB",
+ "cad_overlap_note": "two parts drawn at their designed relative pose (one machine frame) and overlapping there: the CAD's own overlap (a groove or hole the model does not cut), listed apart and not counted",
+ "violations": 29,
+ "worst_mm": 10.5,
  "worst": {
-  "a": "o19",
-  "b": "o503",
-  "a_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
-  "worst_mm": 78.1,
-  "worst_frame": 3182,
-  "frames": 181,
+  "a": "A/gr/left_finger_tip/0",
+  "b": "o24",
+  "b_is": "part: Module M50 handle (6061, screwed under the gland plate; riser, arm and",
+  "worst_mm": 10.5,
+  "worst_frame": 2644,
+  "frames": 4,
   "frame_ranges": [
    [
-    2124,
-    2132
+    2644,
+    2645
    ],
    [
-    3011,
-    3019
-   ],
-   [
-    3022,
-    3185
+    2804,
+    2805
    ]
   ],
   "limit_mm": 1.5,
@@ -222,326 +49,20 @@
  },
  "pairs": [
   {
-   "a": "o19",
-   "b": "o503",
-   "a_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
-   "worst_mm": 78.1,
-   "worst_frame": 3182,
-   "frames": 181,
-   "frame_ranges": [
-    [
-     2124,
-     2132
-    ],
-    [
-     3011,
-     3019
-    ],
-    [
-     3022,
-     3185
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/base/0",
+   "a": "A/gr/left_finger_tip/0",
    "b": "o24",
    "b_is": "part: Module M50 handle (6061, screwed under the gland plate; riser, arm and",
-   "worst_mm": 78.1,
-   "worst_frame": 2982,
-   "frames": 140,
+   "worst_mm": 10.5,
+   "worst_frame": 2644,
+   "frames": 4,
    "frame_ranges": [
     [
-     2958,
-     3024
+     2644,
+     2645
     ],
     [
-     3169,
-     3241
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o19",
-   "b": "o35",
-   "a_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
-   "b_is": "part: Bore seal M50 (aramid felt + carbon-filled PTFE scraper)",
-   "worst_mm": 48.4,
-   "worst_frame": 3214,
-   "frames": 743,
-   "frame_ranges": [
-    [
-     2242,
-     2962
-    ],
-    [
-     2980,
-     2982
-    ],
-    [
-     2986,
-     2988
-    ],
-    [
-     2992,
-     2994
-    ],
-    [
-     3000,
-     3000
-    ],
-    [
-     3193,
-     3196
-    ],
-    [
-     3200,
-     3203
-    ],
-    [
-     3208,
-     3209
-    ],
-    [
-     3214,
-     3215
-    ],
-    [
-     3219,
-     3219
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o21",
-   "b": "o502",
-   "a_is": "part: Module M50 bottom flange: gland plate (316L, bolted to the welded coll",
-   "worst_mm": 48.4,
-   "worst_frame": 2968,
-   "frames": 224,
-   "frame_ranges": [
-    [
-     2964,
-     2971
-    ],
-    [
-     3228,
-     3236
-    ],
-    [
-     3239,
-     3447
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o27",
-   "b": "o503",
-   "a_is": "part: Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
-   "worst_mm": 45.3,
-   "worst_frame": 3113,
-   "frames": 76,
-   "frame_ranges": [
-    [
-     3107,
-     3182
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o19",
-   "b": "o504",
-   "a_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
-   "worst_mm": 43.8,
-   "worst_frame": 2131,
-   "frames": 24,
-   "frame_ranges": [
-    [
-     2125,
-     2132
-    ],
-    [
-     3011,
-     3018
-    ],
-    [
-     3178,
-     3185
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/left_inner_knuckle/0",
-   "b": "o19",
-   "b_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
-   "worst_mm": 42.2,
-   "worst_frame": 2118,
-   "frames": 1,
-   "frame_ranges": [
-    [
-     2118,
-     2118
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o29",
-   "b": "o502",
-   "a_is": "part: Heater block M50 (6061-T6, bayonet socket)",
-   "worst_mm": 40.6,
-   "worst_frame": 2239,
-   "frames": 11,
-   "frame_ranges": [
-    [
-     2239,
-     2240
-    ],
-    [
-     2971,
-     2974
-    ],
-    [
-     3225,
-     3229
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "kt/long table stretchers",
-   "b": "mirA/A MiR250",
-   "worst_mm": 34.4,
-   "worst_frame": 342,
-   "frames": 6,
-   "frame_ranges": [
-    [
-     342,
-     347
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/left_finger/0",
-   "b": "o19",
-   "b_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
-   "worst_mm": 34.4,
-   "worst_frame": 2118,
-   "frames": 1,
-   "frame_ranges": [
-    [
-     2118,
-     2118
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/left_finger_tip/0",
-   "b": "o19",
-   "b_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
-   "worst_mm": 32.8,
-   "worst_frame": 2118,
-   "frames": 5,
-   "frame_ranges": [
-    [
-     2118,
-     2120
-    ],
-    [
-     2960,
-     2961
-    ],
-    [
-     3169,
-     3169
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/left_finger/0",
-   "b": "o504",
-   "worst_mm": 32.8,
-   "worst_frame": 2957,
-   "frames": 1,
-   "frame_ranges": [
-    [
-     2957,
-     2957
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o39",
-   "b": "o503",
-   "a_is": "part: Striker disc M50 (416 stainless, on the pot magnet)",
-   "worst_mm": 31.2,
-   "worst_frame": 3009,
-   "frames": 5,
-   "frame_ranges": [
-    [
-     3009,
-     3010
-    ],
-    [
-     3186,
-     3188
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/left_finger_tip/0",
-   "b": "o504",
-   "worst_mm": 28.1,
-   "worst_frame": 3113,
-   "frames": 30,
-   "frame_ranges": [
-    [
-     2128,
-     2131
-    ],
-    [
-     2957,
-     2957
-    ],
-    [
-     3012,
-     3015
-    ],
-    [
-     3107,
-     3121
-    ],
-    [
-     3168,
-     3169
-    ],
-    [
-     3181,
-     3184
+     2804,
+     2805
     ]
    ],
    "limit_mm": 1.5,
@@ -549,518 +70,19 @@
   },
   {
    "a": "A/gr/right_finger_tip/0",
-   "b": "o504",
-   "worst_mm": 28.1,
-   "worst_frame": 3113,
-   "frames": 36,
-   "frame_ranges": [
-    [
-     2128,
-     2131
-    ],
-    [
-     3012,
-     3015
-    ],
-    [
-     3107,
-     3121
-    ],
-    [
-     3169,
-     3169
-    ],
-    [
-     3181,
-     3184
-    ],
-    [
-     3418,
-     3418
-    ],
-    [
-     3425,
-     3431
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o34",
-   "b": "o502",
-   "a_is": "part: Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a ",
-   "worst_mm": 28.1,
-   "worst_frame": 2970,
-   "frames": 12,
-   "frame_ranges": [
-    [
-     2239,
-     2241
-    ],
-    [
-     2970,
-     2973
-    ],
-    [
-     3226,
-     3230
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o21",
-   "b": "o504",
-   "a_is": "part: Module M50 bottom flange: gland plate (316L, bolted to the welded coll",
-   "worst_mm": 28.1,
-   "worst_frame": 3009,
-   "frames": 4,
-   "frame_ranges": [
-    [
-     3009,
-     3010
-    ],
-    [
-     3186,
-     3187
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/adapter/0",
    "b": "o24",
    "b_is": "part: Module M50 handle (6061, screwed under the gland plate; riser, arm and",
-   "worst_mm": 26.6,
-   "worst_frame": 2958,
-   "frames": 140,
-   "frame_ranges": [
-    [
-     2958,
-     3024
-    ],
-    [
-     3169,
-     3241
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o37",
-   "b": "o503",
-   "a_is": "part: Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 ",
-   "worst_mm": 26.6,
-   "worst_frame": 3009,
-   "frames": 6,
-   "frame_ranges": [
-    [
-     3009,
-     3011
-    ],
-    [
-     3185,
-     3187
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o34",
-   "b": "o504",
-   "a_is": "part: Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a ",
-   "worst_mm": 26.6,
-   "worst_frame": 3011,
-   "frames": 6,
-   "frame_ranges": [
-    [
-     3011,
-     3013
-    ],
-    [
-     3183,
-     3185
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/left_finger_tip/1",
-   "b": "o503",
-   "worst_mm": 25.0,
-   "worst_frame": 2957,
-   "frames": 19,
-   "frame_ranges": [
-    [
-     2129,
-     2131
-    ],
-    [
-     2957,
-     2957
-    ],
-    [
-     3012,
-     3014
-    ],
-    [
-     3111,
-     3119
-    ],
-    [
-     3181,
-     3184
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o480",
-   "b": "o502",
-   "a_is": "part: Radiation shields M50 #2",
-   "worst_mm": 25.0,
-   "worst_frame": 3226,
-   "frames": 10,
-   "frame_ranges": [
-    [
-     2239,
-     2240
-    ],
-    [
-     2970,
-     2973
-    ],
-    [
-     3226,
-     3229
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o39",
-   "b": "o502",
-   "a_is": "part: Striker disc M50 (416 stainless, on the pot magnet)",
-   "worst_mm": 25.0,
-   "worst_frame": 2798,
-   "frames": 395,
-   "frame_ranges": [
-    [
-     2792,
-     2969
-    ],
-    [
-     3231,
-     3447
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/left_finger/0",
-   "b": "o503",
-   "worst_mm": 25.0,
-   "worst_frame": 2957,
-   "frames": 1,
-   "frame_ranges": [
-    [
-     2957,
-     2957
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o21",
-   "b": "o503",
-   "a_is": "part: Module M50 bottom flange: gland plate (316L, bolted to the welded coll",
-   "worst_mm": 25.0,
-   "worst_frame": 3010,
-   "frames": 7,
-   "frame_ranges": [
-    [
-     3010,
-     3012
-    ],
-    [
-     3183,
-     3186
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o37",
-   "b": "o502",
-   "a_is": "part: Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 ",
-   "worst_mm": 24.2,
-   "worst_frame": 2969,
-   "frames": 1001,
-   "frame_ranges": [
-    [
-     1581,
-     1606
-    ],
-    [
-     2203,
-     2229
-    ],
-    [
-     2241,
-     2970
-    ],
-    [
-     3230,
-     3447
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o502",
-   "b": "o503",
-   "worst_mm": 24.2,
-   "worst_frame": 1982,
-   "frames": 1,
-   "frame_ranges": [
-    [
-     1982,
-     1982
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/tool/screwdriver/0/3.6",
-   "b": "o504",
-   "worst_mm": 24.2,
-   "worst_frame": 2479,
+   "worst_mm": 10.5,
+   "worst_frame": 2644,
    "frames": 4,
    "frame_ranges": [
     [
-     2479,
-     2479
+     2644,
+     2645
     ],
     [
-     2491,
-     2491
-    ],
-    [
-     2513,
-     2513
-    ],
-    [
-     2525,
-     2525
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/base/1",
-   "b": "o24",
-   "b_is": "part: Module M50 handle (6061, screwed under the gland plate; riser, arm and",
-   "worst_mm": 24.2,
-   "worst_frame": 2989,
-   "frames": 138,
-   "frame_ranges": [
-    [
-     2959,
-     3024
-    ],
-    [
-     3170,
-     3241
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o36",
-   "b": "o503",
-   "a_is": "part: Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <",
-   "worst_mm": 24.2,
-   "worst_frame": 3186,
-   "frames": 15,
-   "frame_ranges": [
-    [
-     3009,
-     3015
-    ],
-    [
-     3180,
-     3187
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o479",
-   "b": "o504",
-   "a_is": "part: Radiation shields M50 #1",
-   "worst_mm": 24.2,
-   "worst_frame": 3183,
-   "frames": 5,
-   "frame_ranges": [
-    [
-     3011,
-     3013
-    ],
-    [
-     3183,
-     3184
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o36",
-   "b": "o502",
-   "a_is": "part: Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <",
-   "worst_mm": 23.4,
-   "worst_frame": 1580,
-   "frames": 1017,
-   "frame_ranges": [
-    [
-     1574,
-     1606
-    ],
-    [
-     2203,
-     2229
-    ],
-    [
-     2239,
-     2973
-    ],
-    [
-     3226,
-     3447
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o23",
-   "b": "o502",
-   "a_is": "part: Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod g",
-   "worst_mm": 23.4,
-   "worst_frame": 3229,
-   "frames": 217,
-   "frame_ranges": [
-    [
-     2965,
-     2971
-    ],
-    [
-     3229,
-     3231
-    ],
-    [
-     3234,
-     3235
-    ],
-    [
-     3239,
-     3447
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o37",
-   "b": "o504",
-   "a_is": "part: Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 ",
-   "worst_mm": 23.4,
-   "worst_frame": 3008,
-   "frames": 4,
-   "frame_ranges": [
-    [
-     3008,
-     3009
-    ],
-    [
-     3187,
-     3188
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o480",
-   "b": "o504",
-   "a_is": "part: Radiation shields M50 #2",
-   "worst_mm": 23.4,
-   "worst_frame": 3183,
-   "frames": 5,
-   "frame_ranges": [
-    [
-     3011,
-     3013
-    ],
-    [
-     3183,
-     3184
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o29",
-   "b": "o503",
-   "a_is": "part: Heater block M50 (6061-T6, bayonet socket)",
-   "worst_mm": 23.4,
-   "worst_frame": 3182,
-   "frames": 16,
-   "frame_ranges": [
-    [
-     3013,
-     3020
-    ],
-    [
-     3176,
-     3183
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o30",
-   "b": "o503",
-   "a_is": "part: Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
-   "worst_mm": 23.4,
-   "worst_frame": 3182,
-   "frames": 15,
-   "frame_ranges": [
-    [
-     3013,
-     3019
-    ],
-    [
-     3176,
-     3183
+     2804,
+     2805
     ]
    ],
    "limit_mm": 1.5,
@@ -1068,240 +90,15 @@
   },
   {
    "a": "A/gr/left_finger_tip/0",
-   "b": "o503",
-   "worst_mm": 22.6,
-   "worst_frame": 2957,
-   "frames": 26,
-   "frame_ranges": [
-    [
-     2128,
-     2131
-    ],
-    [
-     2957,
-     2957
-    ],
-    [
-     3012,
-     3015
-    ],
-    [
-     3109,
-     3120
-    ],
-    [
-     3168,
-     3168
-    ],
-    [
-     3181,
-     3184
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/right_finger_tip/0",
-   "b": "o503",
-   "worst_mm": 22.6,
-   "worst_frame": 3115,
-   "frames": 29,
-   "frame_ranges": [
-    [
-     2128,
-     2131
-    ],
-    [
-     3012,
-     3015
-    ],
-    [
-     3109,
-     3120
-    ],
-    [
-     3169,
-     3169
-    ],
-    [
-     3181,
-     3184
-    ],
-    [
-     3428,
-     3431
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/tool/screwdriver/0/2.5",
-   "b": "o502",
-   "worst_mm": 22.6,
-   "worst_frame": 2888,
-   "frames": 38,
-   "frame_ranges": [
-    [
-     2849,
-     2864
-    ],
-    [
-     2888,
-     2898
-    ],
-    [
-     2922,
-     2932
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/right_finger/0",
-   "b": "o24",
-   "b_is": "part: Module M50 handle (6061, screwed under the gland plate; riser, arm and",
-   "worst_mm": 22.6,
-   "worst_frame": 2957,
-   "frames": 1,
-   "frame_ranges": [
-    [
-     2957,
-     2957
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o29",
-   "b": "o504",
-   "a_is": "part: Heater block M50 (6061-T6, bayonet socket)",
-   "worst_mm": 22.6,
-   "worst_frame": 3012,
-   "frames": 6,
-   "frame_ranges": [
-    [
-     3012,
-     3014
-    ],
-    [
-     3182,
-     3184
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o27",
-   "b": "o502",
-   "a_is": "part: Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
-   "worst_mm": 22.6,
-   "worst_frame": 3225,
-   "frames": 4,
-   "frame_ranges": [
-    [
-     3225,
-     3228
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o479",
-   "b": "o502",
-   "a_is": "part: Radiation shields M50 #1",
-   "worst_mm": 21.8,
-   "worst_frame": 3226,
-   "frames": 10,
-   "frame_ranges": [
-    [
-     2239,
-     2240
-    ],
-    [
-     2970,
-     2973
-    ],
-    [
-     3226,
-     3229
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o23",
-   "b": "o504",
-   "a_is": "part: Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod g",
-   "worst_mm": 21.8,
-   "worst_frame": 3009,
+   "b": "o39",
+   "b_is": "part: Striker disc M50 (416 stainless, on the pot magnet)",
+   "worst_mm": 7.5,
+   "worst_frame": 2495,
    "frames": 2,
    "frame_ranges": [
     [
-     3009,
-     3009
-    ],
-    [
-     3187,
-     3187
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o23",
-   "b": "o503",
-   "a_is": "part: Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod g",
-   "worst_mm": 21.8,
-   "worst_frame": 3010,
-   "frames": 6,
-   "frame_ranges": [
-    [
-     3010,
-     3012
-    ],
-    [
-     3184,
-     3186
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o28",
-   "b": "o503",
-   "a_is": "part: Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out o",
-   "worst_mm": 21.8,
-   "worst_frame": 3116,
-   "frames": 71,
-   "frame_ranges": [
-    [
-     3110,
-     3180
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/right_finger/0",
-   "b": "o21",
-   "b_is": "part: Module M50 bottom flange: gland plate (316L, bolted to the welded coll",
-   "worst_mm": 20.9,
-   "worst_frame": 2957,
-   "frames": 1,
-   "frame_ranges": [
-    [
-     2957,
-     2957
+     2495,
+     2496
     ]
    ],
    "limit_mm": 1.5,
@@ -1309,725 +106,15 @@
   },
   {
    "a": "A/gr/right_finger_tip/0",
-   "b": "o21",
-   "b_is": "part: Module M50 bottom flange: gland plate (316L, bolted to the welded coll",
-   "worst_mm": 20.1,
-   "worst_frame": 2957,
-   "frames": 1,
-   "frame_ranges": [
-    [
-     2957,
-     2957
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o31",
-   "b": "o504",
-   "a_is": "part: Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 3",
-   "worst_mm": 20.1,
-   "worst_frame": 3182,
-   "frames": 7,
-   "frame_ranges": [
-    [
-     3011,
-     3014
-    ],
-    [
-     3182,
-     3185
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o31",
-   "b": "o503",
-   "a_is": "part: Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 3",
-   "worst_mm": 20.1,
-   "worst_frame": 3014,
-   "frames": 14,
-   "frame_ranges": [
-    [
-     3014,
-     3019
-    ],
-    [
-     3176,
-     3183
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/left_finger_tip/1",
-   "b": "o504",
-   "worst_mm": 18.5,
-   "worst_frame": 3116,
-   "frames": 24,
-   "frame_ranges": [
-    [
-     2128,
-     2131
-    ],
-    [
-     2957,
-     2957
-    ],
-    [
-     3011,
-     3015
-    ],
-    [
-     3110,
-     3119
-    ],
-    [
-     3181,
-     3184
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/right_finger_tip/1",
-   "b": "o504",
-   "worst_mm": 18.5,
-   "worst_frame": 3116,
-   "frames": 22,
-   "frame_ranges": [
-    [
-     2128,
-     2131
-    ],
-    [
-     3012,
-     3015
-    ],
-    [
-     3110,
-     3119
-    ],
-    [
-     3181,
-     3184
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o470",
-   "b": "o503",
-   "a_is": "part: Macor standoff rings M50 #1",
-   "worst_mm": 18.5,
-   "worst_frame": 3014,
-   "frames": 7,
-   "frame_ranges": [
-    [
-     3014,
-     3016
-    ],
-    [
-     3179,
-     3182
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o476",
-   "b": "o503",
-   "a_is": "part: Macor standoff rings M50 #7",
-   "worst_mm": 18.5,
-   "worst_frame": 3014,
-   "frames": 7,
-   "frame_ranges": [
-    [
-     3014,
-     3016
-    ],
-    [
-     3179,
-     3182
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/base/1",
-   "b": "o502",
-   "worst_mm": 17.7,
-   "worst_frame": 1591,
-   "frames": 125,
-   "frame_ranges": [
-    [
-     1584,
-     1592
-    ],
-    [
-     2243,
-     2358
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o19",
-   "b": "o20",
-   "a_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
-   "b_is": "part: Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove ro",
-   "worst_mm": 17.7,
-   "worst_frame": 2146,
-   "frames": 1249,
-   "frame_ranges": [
-    [
-     2107,
-     2129
-    ],
-    [
-     2133,
-     2136
-    ],
-    [
-     2139,
-     2141
-    ],
-    [
-     2144,
-     2147
-    ],
-    [
-     2151,
-     2154
-    ],
-    [
-     2157,
-     2157
-    ],
-    [
-     2163,
-     2165
-    ],
-    [
-     2168,
-     2168
-    ],
-    [
-     2171,
-     2176
-    ],
-    [
-     2180,
-     2962
-    ],
-    [
-     2968,
-     2970
-    ],
-    [
-     2976,
-     2980
-    ],
-    [
-     2989,
-     2991
-    ],
-    [
-     2998,
-     3005
-    ],
-    [
-     3009,
-     3010
-    ],
-    [
-     3013,
-     3014
-    ],
-    [
-     3017,
-     3191
-    ],
-    [
-     3194,
-     3204
-    ],
-    [
-     3207,
-     3210
-    ],
-    [
-     3213,
-     3226
-    ],
-    [
-     3231,
-     3233
-    ],
-    [
-     3237,
-     3237
-    ],
-    [
-     3240,
-     3447
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o38",
-   "b": "o503",
-   "a_is": "part: Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel",
-   "worst_mm": 17.7,
-   "worst_frame": 3009,
-   "frames": 6,
-   "frame_ranges": [
-    [
-     3009,
-     3011
-    ],
-    [
-     3185,
-     3187
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o268",
-   "b": "o503",
-   "a_is": "shcs: Gland-plate screws M50, M4 x 20 316, into the welded collar #1",
-   "worst_mm": 17.7,
-   "worst_frame": 3184,
-   "frames": 6,
-   "frame_ranges": [
-    [
-     3010,
-     3012
-    ],
-    [
-     3184,
-     3186
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o273",
-   "b": "o503",
-   "a_is": "shcs: Gland-plate screws M50, M4 x 20 316, into the welded collar #6",
-   "worst_mm": 17.7,
-   "worst_frame": 3184,
-   "frames": 6,
-   "frame_ranges": [
-    [
-     3010,
-     3012
-    ],
-    [
-     3184,
-     3186
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o34",
-   "b": "o503",
-   "a_is": "part: Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a ",
-   "worst_mm": 17.7,
-   "worst_frame": 3012,
-   "frames": 11,
-   "frame_ranges": [
-    [
-     3012,
-     3016
-    ],
-    [
-     3179,
-     3184
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o479",
-   "b": "o503",
-   "a_is": "part: Radiation shields M50 #1",
-   "worst_mm": 17.7,
-   "worst_frame": 3013,
-   "frames": 10,
-   "frame_ranges": [
-    [
-     3013,
-     3017
-    ],
-    [
-     3179,
-     3183
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/right_finger_tip/1",
-   "b": "o21",
-   "b_is": "part: Module M50 bottom flange: gland plate (316L, bolted to the welded coll",
-   "worst_mm": 16.9,
-   "worst_frame": 2957,
-   "frames": 1,
-   "frame_ranges": [
-    [
-     2957,
-     2957
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o270",
-   "b": "o503",
-   "a_is": "shcs: Gland-plate screws M50, M4 x 20 316, into the welded collar #3",
-   "worst_mm": 16.9,
-   "worst_frame": 3184,
-   "frames": 6,
-   "frame_ranges": [
-    [
-     3010,
-     3012
-    ],
-    [
-     3184,
-     3186
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o271",
-   "b": "o503",
-   "a_is": "shcs: Gland-plate screws M50, M4 x 20 316, into the welded collar #4",
-   "worst_mm": 16.9,
-   "worst_frame": 3184,
-   "frames": 6,
-   "frame_ranges": [
-    [
-     3010,
-     3012
-    ],
-    [
-     3184,
-     3186
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o269",
-   "b": "o503",
-   "a_is": "shcs: Gland-plate screws M50, M4 x 20 316, into the welded collar #2",
-   "worst_mm": 16.9,
-   "worst_frame": 3184,
-   "frames": 6,
-   "frame_ranges": [
-    [
-     3010,
-     3012
-    ],
-    [
-     3184,
-     3186
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o272",
-   "b": "o503",
-   "a_is": "shcs: Gland-plate screws M50, M4 x 20 316, into the welded collar #5",
-   "worst_mm": 16.9,
-   "worst_frame": 3184,
-   "frames": 6,
-   "frame_ranges": [
-    [
-     3010,
-     3012
-    ],
-    [
-     3184,
-     3186
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/base/0",
-   "b": "o502",
-   "worst_mm": 16.1,
-   "worst_frame": 1591,
-   "frames": 124,
-   "frame_ranges": [
-    [
-     1585,
-     1592
-    ],
-    [
-     2243,
-     2358
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/tool/screwdriver/0/3.6",
-   "b": "o503",
-   "worst_mm": 16.1,
-   "worst_frame": 2479,
+   "b": "o39",
+   "b_is": "part: Striker disc M50 (416 stainless, on the pot magnet)",
+   "worst_mm": 7.5,
+   "worst_frame": 2495,
    "frames": 2,
    "frame_ranges": [
     [
-     2479,
-     2479
-    ],
-    [
-     2491,
-     2491
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/base/1",
-   "b": "o504",
-   "worst_mm": 15.2,
-   "worst_frame": 3119,
-   "frames": 23,
-   "frame_ranges": [
-    [
-     2128,
-     2131
-    ],
-    [
-     3012,
-     3015
-    ],
-    [
-     3110,
-     3120
-    ],
-    [
-     3181,
-     3184
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o31",
-   "b": "o502",
-   "a_is": "part: Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 3",
-   "worst_mm": 15.2,
-   "worst_frame": 2239,
-   "frames": 5,
-   "frame_ranges": [
-    [
-     2239,
-     2239
-    ],
-    [
-     2973,
-     2974
-    ],
-    [
-     3225,
-     3226
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o36",
-   "b": "o504",
-   "a_is": "part: Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <",
-   "worst_mm": 15.2,
-   "worst_frame": 3185,
-   "frames": 8,
-   "frame_ranges": [
-    [
-     3008,
-     3011
-    ],
-    [
-     3185,
-     3188
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o30",
-   "b": "o504",
-   "a_is": "part: Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
-   "worst_mm": 15.2,
-   "worst_frame": 3182,
-   "frames": 8,
-   "frame_ranges": [
-    [
-     3011,
-     3014
-    ],
-    [
-     3182,
-     3185
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o480",
-   "b": "o503",
-   "a_is": "part: Radiation shields M50 #2",
-   "worst_mm": 15.2,
-   "worst_frame": 3013,
-   "frames": 10,
-   "frame_ranges": [
-    [
-     3013,
-     3017
-    ],
-    [
-     3179,
-     3183
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/left_finger_tip/0",
-   "b": "o37",
-   "b_is": "part: Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 ",
-   "worst_mm": 14.4,
-   "worst_frame": 1535,
-   "frames": 4,
-   "frame_ranges": [
-    [
-     1535,
-     1538
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/right_finger_tip/0",
-   "b": "o37",
-   "b_is": "part: Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 ",
-   "worst_mm": 14.4,
-   "worst_frame": 1535,
-   "frames": 4,
-   "frame_ranges": [
-    [
-     1535,
-     1538
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/left_inner_knuckle/0",
-   "b": "o503",
-   "worst_mm": 14.4,
-   "worst_frame": 2957,
-   "frames": 15,
-   "frame_ranges": [
-    [
-     2118,
-     2118
-    ],
-    [
-     2128,
-     2131
-    ],
-    [
-     2957,
-     2957
-    ],
-    [
-     3012,
-     3015
-    ],
-    [
-     3180,
-     3184
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/right_inner_knuckle/0",
-   "b": "o24",
-   "b_is": "part: Module M50 handle (6061, screwed under the gland plate; riser, arm and",
-   "worst_mm": 14.4,
-   "worst_frame": 2981,
-   "frames": 140,
-   "frame_ranges": [
-    [
-     2957,
-     3024
-    ],
-    [
-     3170,
-     3241
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/left_inner_knuckle/0",
-   "b": "o24",
-   "b_is": "part: Module M50 handle (6061, screwed under the gland plate; riser, arm and",
-   "worst_mm": 13.6,
-   "worst_frame": 2989,
-   "frames": 138,
-   "frame_ranges": [
-    [
-     2959,
-     3024
-    ],
-    [
-     3170,
-     3241
+     2495,
+     2496
     ]
    ],
    "limit_mm": 1.5,
@@ -2038,60 +125,30 @@
    "b": "o30",
    "a_is": "part: Heater block M50 (6061-T6, bayonet socket)",
    "b_is": "part: Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
-   "worst_mm": 13.6,
-   "worst_frame": 2985,
-   "frames": 8,
+   "worst_mm": 6.4,
+   "worst_frame": 423,
+   "frames": 1,
    "frame_ranges": [
     [
-     2985,
-     2987
-    ],
-    [
-     3199,
-     3200
-    ],
-    [
-     3212,
-     3214
+     423,
+     423
     ]
    ],
    "limit_mm": 1.5,
    "rule": null
   },
   {
-   "a": "A/gr/left_inner_knuckle/0",
-   "b": "o504",
-   "worst_mm": 12.8,
-   "worst_frame": 2128,
-   "frames": 22,
+   "a": "o19",
+   "b": "o28",
+   "a_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
+   "b_is": "part: Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out o",
+   "worst_mm": 6.4,
+   "worst_frame": 2751,
+   "frames": 1,
    "frame_ranges": [
     [
-     2118,
-     2118
-    ],
-    [
-     2128,
-     2132
-    ],
-    [
-     2956,
-     2957
-    ],
-    [
-     3011,
-     3015
-    ],
-    [
-     3111,
-     3112
-    ],
-    [
-     3115,
-     3116
-    ],
-    [
-     3180,
-     3184
+     2751,
+     2751
     ]
    ],
    "limit_mm": 1.5,
@@ -2099,422 +156,15 @@
   },
   {
    "a": "A/gr/right_finger_tip/0",
-   "b": "o19",
-   "b_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
-   "worst_mm": 12.8,
-   "worst_frame": 3169,
-   "frames": 5,
+   "b": "o30",
+   "b_is": "part: Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
+   "worst_mm": 5.4,
+   "worst_frame": 421,
+   "frames": 1,
    "frame_ranges": [
     [
-     2120,
-     2120
-    ],
-    [
-     2958,
-     2961
-    ],
-    [
-     3169,
-     3169
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/right_inner_knuckle/0",
-   "b": "o504",
-   "worst_mm": 12.8,
-   "worst_frame": 2128,
-   "frames": 18,
-   "frame_ranges": [
-    [
-     2128,
-     2132
-    ],
-    [
-     3011,
-     3015
-    ],
-    [
-     3111,
-     3112
-    ],
-    [
-     3115,
-     3115
-    ],
-    [
-     3180,
-     3184
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/changer",
-   "b": "o24",
-   "b_is": "part: Module M50 handle (6061, screwed under the gland plate; riser, arm and",
-   "worst_mm": 12.8,
-   "worst_frame": 2958,
-   "frames": 139,
-   "frame_ranges": [
-    [
-     2958,
-     3024
-    ],
-    [
-     3170,
-     3241
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o38",
-   "b": "o504",
-   "a_is": "part: Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel",
-   "worst_mm": 12.8,
-   "worst_frame": 3008,
-   "frames": 8,
-   "frame_ranges": [
-    [
-     3008,
-     3011
-    ],
-    [
-     3185,
-     3188
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o22",
-   "b": "o503",
-   "a_is": "part: Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube en",
-   "worst_mm": 12.8,
-   "worst_frame": 3011,
-   "frames": 4,
-   "frame_ranges": [
-    [
-     3011,
-     3012
-    ],
-    [
-     3184,
-     3185
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o473",
-   "b": "o503",
-   "a_is": "part: Macor standoff rings M50 #4",
-   "worst_mm": 12.8,
-   "worst_frame": 3014,
-   "frames": 7,
-   "frame_ranges": [
-    [
-     3014,
-     3016
-    ],
-    [
-     3179,
-     3182
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o29",
-   "b": "o31",
-   "a_is": "part: Heater block M50 (6061-T6, bayonet socket)",
-   "b_is": "part: Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 3",
-   "worst_mm": 12.0,
-   "worst_frame": 2993,
-   "frames": 30,
-   "frame_ranges": [
-    [
-     2982,
-     2988
-    ],
-    [
-     2993,
-     3001
-    ],
-    [
-     3196,
-     3204
-    ],
-    [
-     3208,
-     3217
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o24",
-   "b": "o504",
-   "a_is": "part: Module M50 handle (6061, screwed under the gland plate; riser, arm and",
-   "worst_mm": 12.0,
-   "worst_frame": 3010,
-   "frames": 6,
-   "frame_ranges": [
-    [
-     3010,
-     3012
-    ],
-    [
-     3184,
-     3186
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o270",
-   "b": "o504",
-   "a_is": "shcs: Gland-plate screws M50, M4 x 20 316, into the welded collar #3",
-   "worst_mm": 12.0,
-   "worst_frame": 3010,
-   "frames": 2,
-   "frame_ranges": [
-    [
-     3010,
-     3010
-    ],
-    [
-     3186,
-     3186
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o271",
-   "b": "o504",
-   "a_is": "shcs: Gland-plate screws M50, M4 x 20 316, into the welded collar #4",
-   "worst_mm": 12.0,
-   "worst_frame": 3010,
-   "frames": 2,
-   "frame_ranges": [
-    [
-     3010,
-     3010
-    ],
-    [
-     3186,
-     3186
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o268",
-   "b": "o504",
-   "a_is": "shcs: Gland-plate screws M50, M4 x 20 316, into the welded collar #1",
-   "worst_mm": 12.0,
-   "worst_frame": 3010,
-   "frames": 2,
-   "frame_ranges": [
-    [
-     3010,
-     3010
-    ],
-    [
-     3186,
-     3186
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o269",
-   "b": "o504",
-   "a_is": "shcs: Gland-plate screws M50, M4 x 20 316, into the welded collar #2",
-   "worst_mm": 12.0,
-   "worst_frame": 3010,
-   "frames": 2,
-   "frame_ranges": [
-    [
-     3010,
-     3010
-    ],
-    [
-     3186,
-     3186
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o272",
-   "b": "o504",
-   "a_is": "shcs: Gland-plate screws M50, M4 x 20 316, into the welded collar #5",
-   "worst_mm": 12.0,
-   "worst_frame": 3010,
-   "frames": 2,
-   "frame_ranges": [
-    [
-     3010,
-     3010
-    ],
-    [
-     3186,
-     3186
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o273",
-   "b": "o504",
-   "a_is": "shcs: Gland-plate screws M50, M4 x 20 316, into the welded collar #6",
-   "worst_mm": 12.0,
-   "worst_frame": 3010,
-   "frames": 2,
-   "frame_ranges": [
-    [
-     3010,
-     3010
-    ],
-    [
-     3186,
-     3186
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/left_finger_tip/0",
-   "b": "o38",
-   "b_is": "part: Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel",
-   "worst_mm": 11.6,
-   "worst_frame": 1535,
-   "frames": 3,
-   "frame_ranges": [
-    [
-     1535,
-     1537
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/right_finger_tip/0",
-   "b": "o38",
-   "b_is": "part: Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel",
-   "worst_mm": 11.6,
-   "worst_frame": 1535,
-   "frames": 3,
-   "frame_ranges": [
-    [
-     1535,
-     1537
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/left_finger_tip/0",
-   "b": "o502",
-   "worst_mm": 11.6,
-   "worst_frame": 1597,
-   "frames": 11,
-   "frame_ranges": [
-    [
-     1597,
-     1597
-    ],
-    [
-     2191,
-     2191
-    ],
-    [
-     2792,
-     2800
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o21",
-   "b": "o23",
-   "a_is": "part: Module M50 bottom flange: gland plate (316L, bolted to the welded coll",
-   "b_is": "part: Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod g",
-   "worst_mm": 11.6,
-   "worst_frame": 2978,
-   "frames": 1133,
-   "frame_ranges": [
-    [
-     1636,
-     1684
-    ],
-    [
-     2232,
-     2244
-    ],
-    [
-     2356,
-     3011
-    ],
-    [
-     3015,
-     3199
-    ],
-    [
-     3203,
-     3206
-    ],
-    [
-     3209,
-     3447
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/right_finger_tip/1",
-   "b": "o503",
-   "worst_mm": 11.6,
-   "worst_frame": 3111,
-   "frames": 20,
-   "frame_ranges": [
-    [
-     2128,
-     2131
-    ],
-    [
-     3012,
-     3015
-    ],
-    [
-     3111,
-     3119
-    ],
-    [
-     3181,
-     3184
+     421,
+     421
     ]
    ],
    "limit_mm": 1.5,
@@ -2522,874 +172,35 @@
   },
   {
    "a": "o30",
-   "b": "o502",
+   "b": "st/Stack nest",
    "a_is": "part: Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
-   "worst_mm": 11.6,
-   "worst_frame": 3225,
-   "frames": 5,
-   "frame_ranges": [
-    [
-     2239,
-     2239
-    ],
-    [
-     2973,
-     2974
-    ],
-    [
-     3225,
-     3226
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/base/0",
-   "b": "o504",
-   "worst_mm": 11.2,
-   "worst_frame": 3119,
-   "frames": 10,
-   "frame_ranges": [
-    [
-     3110,
-     3119
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/tool/screwdriver/0/3.6",
-   "b": "o502",
-   "worst_mm": 10.9,
-   "worst_frame": 2486,
-   "frames": 77,
-   "frame_ranges": [
-    [
-     2406,
-     2422
-    ],
-    [
-     2446,
-     2456
-    ],
-    [
-     2480,
-     2490
-    ],
-    [
-     2514,
-     2524
-    ],
-    [
-     2659,
-     2674
-    ],
-    [
-     2702,
-     2712
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o35",
-   "b": "o503",
-   "a_is": "part: Bore seal M50 (aramid felt + carbon-filled PTFE scraper)",
-   "worst_mm": 10.9,
-   "worst_frame": 3180,
-   "frames": 7,
-   "frame_ranges": [
-    [
-     3013,
-     3016
-    ],
-    [
-     3180,
-     3182
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o471",
-   "b": "o503",
-   "a_is": "part: Macor standoff rings M50 #2",
-   "worst_mm": 10.9,
-   "worst_frame": 3179,
-   "frames": 8,
-   "frame_ranges": [
-    [
-     3014,
-     3017
-    ],
-    [
-     3179,
-     3182
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o474",
-   "b": "o503",
-   "a_is": "part: Macor standoff rings M50 #5",
-   "worst_mm": 10.9,
-   "worst_frame": 3179,
-   "frames": 8,
-   "frame_ranges": [
-    [
-     3014,
-     3017
-    ],
-    [
-     3179,
-     3182
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o477",
-   "b": "o503",
-   "a_is": "part: Macor standoff rings M50 #8",
-   "worst_mm": 10.9,
-   "worst_frame": 3179,
-   "frames": 8,
-   "frame_ranges": [
-    [
-     3014,
-     3017
-    ],
-    [
-     3179,
-     3182
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o276",
-   "b": "o504",
-   "a_is": "set: Rod set screws M50, M4 cup point 316 #1",
-   "worst_mm": 10.5,
-   "worst_frame": 3184,
-   "frames": 4,
-   "frame_ranges": [
-    [
-     3011,
-     3012
-    ],
-    [
-     3184,
-     3185
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o27",
-   "b": "o504",
-   "a_is": "part: Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
-   "worst_mm": 10.5,
-   "worst_frame": 3181,
-   "frames": 8,
-   "frame_ranges": [
-    [
-     3106,
-     3109
-    ],
-    [
-     3181,
-     3184
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/right_inner_knuckle/0",
-   "b": "o503",
-   "worst_mm": 10.1,
-   "worst_frame": 2128,
-   "frames": 13,
-   "frame_ranges": [
-    [
-     2128,
-     2131
-    ],
-    [
-     3012,
-     3015
-    ],
-    [
-     3180,
-     3184
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o279",
-   "b": "o502",
-   "a_is": "fhcs: Striker screws M50, M3 x 10 316 flat head #2",
-   "worst_mm": 10.1,
-   "worst_frame": 2969,
-   "frames": 289,
-   "frame_ranges": [
-    [
-     2899,
-     2969
-    ],
-    [
-     3230,
-     3447
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o280",
-   "b": "o502",
-   "a_is": "fhcs: Striker screws M50, M3 x 10 316 flat head #3",
-   "worst_mm": 10.1,
-   "worst_frame": 2969,
-   "frames": 47,
-   "frame_ranges": [
-    [
-     2933,
-     2969
-    ],
-    [
-     3230,
-     3239
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o24",
-   "b": "o503",
-   "a_is": "part: Module M50 handle (6061, screwed under the gland plate; riser, arm and",
-   "worst_mm": 10.1,
-   "worst_frame": 3184,
-   "frames": 6,
-   "frame_ranges": [
-    [
-     3010,
-     3012
-    ],
-    [
-     3184,
-     3186
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o277",
-   "b": "o504",
-   "a_is": "set: Rod set screws M50, M4 cup point 316 #2",
-   "worst_mm": 10.1,
-   "worst_frame": 3184,
-   "frames": 4,
-   "frame_ranges": [
-    [
-     3011,
-     3012
-    ],
-    [
-     3184,
-     3185
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o259",
-   "b": "o503",
-   "a_is": "shcs: Heater-stack screws M50, M3 x 25 316, up through slotted counterbores ",
-   "worst_mm": 10.1,
-   "worst_frame": 3013,
-   "frames": 12,
-   "frame_ranges": [
-    [
-     3013,
-     3018
-    ],
-    [
-     3178,
-     3183
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o260",
-   "b": "o503",
-   "a_is": "shcs: Heater-stack screws M50, M3 x 25 316, up through slotted counterbores ",
-   "worst_mm": 10.1,
-   "worst_frame": 3013,
-   "frames": 12,
-   "frame_ranges": [
-    [
-     3013,
-     3018
-    ],
-    [
-     3178,
-     3183
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o261",
-   "b": "o503",
-   "a_is": "shcs: Heater-stack screws M50, M3 x 25 316, up through slotted counterbores ",
-   "worst_mm": 10.1,
-   "worst_frame": 3013,
-   "frames": 12,
-   "frame_ranges": [
-    [
-     3013,
-     3018
-    ],
-    [
-     3178,
-     3183
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "B/tool/nutrunner_angle/0/3.6",
-   "b": "o502",
-   "worst_mm": 9.8,
-   "worst_frame": 2298,
-   "frames": 17,
-   "frame_ranges": [
-    [
-     2298,
-     2314
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o279",
-   "b": "o503",
-   "a_is": "fhcs: Striker screws M50, M3 x 10 316 flat head #2",
-   "worst_mm": 9.8,
-   "worst_frame": 3009,
-   "frames": 7,
-   "frame_ranges": [
-    [
-     3009,
-     3011
-    ],
-    [
-     3185,
-     3188
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o280",
-   "b": "o503",
-   "a_is": "fhcs: Striker screws M50, M3 x 10 316 flat head #3",
-   "worst_mm": 9.8,
-   "worst_frame": 3009,
-   "frames": 7,
-   "frame_ranges": [
-    [
-     3009,
-     3011
-    ],
-    [
-     3185,
-     3188
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o265",
-   "b": "o503",
-   "a_is": "disc: Disc springs under the stack screws M50 #1",
-   "worst_mm": 9.8,
-   "worst_frame": 3013,
-   "frames": 6,
-   "frame_ranges": [
-    [
-     3013,
-     3015
-    ],
-    [
-     3180,
-     3182
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o267",
-   "b": "o503",
-   "a_is": "disc: Disc springs under the stack screws M50 #3",
-   "worst_mm": 9.8,
-   "worst_frame": 3013,
-   "frames": 6,
-   "frame_ranges": [
-    [
-     3013,
-     3015
-    ],
-    [
-     3180,
-     3182
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/left_knuckle/0",
-   "b": "o19",
-   "b_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
-   "worst_mm": 9.4,
-   "worst_frame": 2118,
+   "worst_mm": 5.4,
+   "worst_frame": 423,
    "frames": 1,
    "frame_ranges": [
     [
-     2118,
-     2118
+     423,
+     423
     ]
    ],
    "limit_mm": 1.5,
    "rule": null
   },
   {
-   "a": "o278",
-   "b": "o502",
-   "a_is": "fhcs: Striker screws M50, M3 x 10 316 flat head #1",
-   "worst_mm": 9.4,
-   "worst_frame": 2969,
-   "frames": 323,
-   "frame_ranges": [
-    [
-     2865,
-     2969
-    ],
-    [
-     3230,
-     3447
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o278",
-   "b": "o504",
-   "a_is": "fhcs: Striker screws M50, M3 x 10 316 flat head #1",
-   "worst_mm": 9.4,
-   "worst_frame": 3188,
-   "frames": 2,
-   "frame_ranges": [
-    [
-     3008,
-     3008
-    ],
-    [
-     3188,
-     3188
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o279",
-   "b": "o504",
-   "a_is": "fhcs: Striker screws M50, M3 x 10 316 flat head #2",
-   "worst_mm": 9.4,
-   "worst_frame": 3188,
-   "frames": 2,
-   "frame_ranges": [
-    [
-     3008,
-     3008
-    ],
-    [
-     3188,
-     3188
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o280",
-   "b": "o504",
-   "a_is": "fhcs: Striker screws M50, M3 x 10 316 flat head #3",
-   "worst_mm": 9.4,
-   "worst_frame": 3188,
-   "frames": 2,
-   "frame_ranges": [
-    [
-     3008,
-     3008
-    ],
-    [
-     3188,
-     3188
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o278",
-   "b": "o503",
-   "a_is": "fhcs: Striker screws M50, M3 x 10 316 flat head #1",
-   "worst_mm": 9.0,
-   "worst_frame": 3009,
-   "frames": 7,
-   "frame_ranges": [
-    [
-     3009,
-     3011
-    ],
-    [
-     3185,
-     3188
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o262",
-   "b": "o504",
-   "a_is": "insert: Heater-block helical inserts M50, M3 18-8 #1",
-   "worst_mm": 9.0,
-   "worst_frame": 3182,
-   "frames": 3,
-   "frame_ranges": [
-    [
-     3013,
-     3013
-    ],
-    [
-     3182,
-     3183
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o264",
-   "b": "o504",
-   "a_is": "insert: Heater-block helical inserts M50, M3 18-8 #3",
-   "worst_mm": 9.0,
-   "worst_frame": 3182,
-   "frames": 3,
-   "frame_ranges": [
-    [
-     3013,
-     3013
-    ],
-    [
-     3182,
-     3183
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/right_finger_tip/0",
-   "b": "o20",
-   "b_is": "part: Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove ro",
-   "worst_mm": 9.0,
-   "worst_frame": 3169,
-   "frames": 1,
-   "frame_ranges": [
-    [
-     3169,
-     3169
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o34",
-   "b": "o36",
-   "a_is": "part: Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a ",
-   "b_is": "part: Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <",
-   "worst_mm": 8.6,
-   "worst_frame": 2981,
-   "frames": 1806,
-   "frame_ranges": [
-    [
-     1607,
-     1634
-    ],
-    [
-     1670,
-     3447
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o262",
-   "b": "o503",
-   "a_is": "insert: Heater-block helical inserts M50, M3 18-8 #1",
-   "worst_mm": 8.6,
-   "worst_frame": 3178,
-   "frames": 9,
-   "frame_ranges": [
-    [
-     3014,
-     3018
-    ],
-    [
-     3178,
-     3181
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o263",
-   "b": "o503",
-   "a_is": "insert: Heater-block helical inserts M50, M3 18-8 #2",
-   "worst_mm": 8.6,
-   "worst_frame": 3178,
-   "frames": 9,
-   "frame_ranges": [
-    [
-     3014,
-     3018
-    ],
-    [
-     3178,
-     3181
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o264",
-   "b": "o503",
-   "a_is": "insert: Heater-block helical inserts M50, M3 18-8 #3",
-   "worst_mm": 8.6,
-   "worst_frame": 3178,
-   "frames": 9,
-   "frame_ranges": [
-    [
-     3014,
-     3018
-    ],
-    [
-     3178,
-     3181
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o267",
-   "b": "o34",
-   "a_is": "disc: Disc springs under the stack screws M50 #3",
-   "b_is": "part: Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a ",
-   "worst_mm": 8.2,
-   "worst_frame": 3214,
-   "frames": 12,
-   "frame_ranges": [
-    [
-     1070,
-     1076
-    ],
-    [
-     2998,
-     2999
-    ],
-    [
-     3207,
-     3208
-    ],
-    [
-     3214,
-     3214
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o274",
-   "b": "o504",
-   "a_is": "shcs: Handle screws M50, M4 x 10 316 #1",
-   "worst_mm": 8.2,
-   "worst_frame": 3186,
-   "frames": 2,
-   "frame_ranges": [
-    [
-     3010,
-     3010
-    ],
-    [
-     3186,
-     3186
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o275",
-   "b": "o504",
-   "a_is": "shcs: Handle screws M50, M4 x 10 316 #2",
-   "worst_mm": 8.2,
-   "worst_frame": 3186,
-   "frames": 2,
-   "frame_ranges": [
-    [
-     3010,
-     3010
-    ],
-    [
-     3186,
-     3186
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o265",
-   "b": "o34",
-   "a_is": "disc: Disc springs under the stack screws M50 #1",
-   "b_is": "part: Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a ",
-   "worst_mm": 7.9,
-   "worst_frame": 3208,
-   "frames": 8,
-   "frame_ranges": [
-    [
-     1070,
-     1076
-    ],
-    [
-     3208,
-     3208
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o276",
-   "b": "o502",
-   "a_is": "set: Rod set screws M50, M4 cup point 316 #1",
-   "worst_mm": 7.9,
-   "worst_frame": 2973,
-   "frames": 3,
-   "frame_ranges": [
-    [
-     2239,
-     2239
-    ],
-    [
-     2973,
-     2973
-    ],
-    [
-     3226,
-     3226
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o277",
-   "b": "o502",
-   "a_is": "set: Rod set screws M50, M4 cup point 316 #2",
-   "worst_mm": 7.9,
-   "worst_frame": 2973,
-   "frames": 3,
-   "frame_ranges": [
-    [
-     2239,
-     2239
-    ],
-    [
-     2973,
-     2973
-    ],
-    [
-     3226,
-     3226
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/right_knuckle/0",
+   "a": "A/gr/left_finger_tip/1",
    "b": "o24",
    "b_is": "part: Module M50 handle (6061, screwed under the gland plate; riser, arm and",
-   "worst_mm": 7.9,
-   "worst_frame": 2957,
-   "frames": 1,
-   "frame_ranges": [
-    [
-     2957,
-     2957
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/left_finger_tip/1",
-   "b": "o37",
-   "b_is": "part: Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 ",
-   "worst_mm": 7.5,
-   "worst_frame": 1535,
+   "worst_mm": 4.9,
+   "worst_frame": 2644,
    "frames": 2,
    "frame_ranges": [
     [
-     1535,
-     1536
+     2644,
+     2644
+    ],
+    [
+     2804,
+     2804
     ]
    ],
    "limit_mm": 1.5,
@@ -3397,1057 +208,19 @@
   },
   {
    "a": "A/gr/right_finger_tip/1",
-   "b": "o37",
-   "b_is": "part: Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 ",
-   "worst_mm": 7.5,
-   "worst_frame": 1535,
-   "frames": 2,
-   "frame_ranges": [
-    [
-     1535,
-     1536
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o38",
-   "b": "o502",
-   "a_is": "part: Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel",
-   "worst_mm": 7.5,
-   "worst_frame": 3230,
-   "frames": 7,
-   "frame_ranges": [
-    [
-     1581,
-     1582
-    ],
-    [
-     2241,
-     2241
-    ],
-    [
-     2968,
-     2969
-    ],
-    [
-     3230,
-     3231
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o274",
-   "b": "o503",
-   "a_is": "shcs: Handle screws M50, M4 x 10 316 #1",
-   "worst_mm": 7.5,
-   "worst_frame": 3010,
-   "frames": 5,
-   "frame_ranges": [
-    [
-     3010,
-     3011
-    ],
-    [
-     3184,
-     3186
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o275",
-   "b": "o503",
-   "a_is": "shcs: Handle screws M50, M4 x 10 316 #2",
-   "worst_mm": 7.5,
-   "worst_frame": 3010,
-   "frames": 5,
-   "frame_ranges": [
-    [
-     3010,
-     3011
-    ],
-    [
-     3184,
-     3186
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o472",
-   "b": "o503",
-   "a_is": "part: Macor standoff rings M50 #3",
-   "worst_mm": 7.5,
-   "worst_frame": 3014,
-   "frames": 8,
-   "frame_ranges": [
-    [
-     3014,
-     3017
-    ],
-    [
-     3178,
-     3181
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o475",
-   "b": "o503",
-   "a_is": "part: Macor standoff rings M50 #6",
-   "worst_mm": 7.5,
-   "worst_frame": 3014,
-   "frames": 8,
-   "frame_ranges": [
-    [
-     3014,
-     3017
-    ],
-    [
-     3178,
-     3181
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o478",
-   "b": "o503",
-   "a_is": "part: Macor standoff rings M50 #9",
-   "worst_mm": 7.5,
-   "worst_frame": 3014,
-   "frames": 8,
-   "frame_ranges": [
-    [
-     3014,
-     3017
-    ],
-    [
-     3178,
-     3181
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o492",
-   "b": "o504",
-   "a_is": "part: Zero-point clamping pins M50 #2",
-   "worst_mm": 7.5,
-   "worst_frame": 3437,
-   "frames": 23,
-   "frame_ranges": [
-    [
-     3425,
-     3447
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o266",
-   "b": "o503",
-   "a_is": "disc: Disc springs under the stack screws M50 #2",
-   "worst_mm": 7.1,
-   "worst_frame": 3013,
-   "frames": 6,
-   "frame_ranges": [
-    [
-     3013,
-     3015
-    ],
-    [
-     3180,
-     3182
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o473",
-   "b": "o504",
-   "a_is": "part: Macor standoff rings M50 #4",
-   "worst_mm": 6.4,
-   "worst_frame": 3183,
-   "frames": 3,
-   "frame_ranges": [
-    [
-     3012,
-     3013
-    ],
-    [
-     3183,
-     3183
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o474",
-   "b": "o504",
-   "a_is": "part: Macor standoff rings M50 #5",
-   "worst_mm": 6.4,
-   "worst_frame": 3183,
-   "frames": 3,
-   "frame_ranges": [
-    [
-     3012,
-     3013
-    ],
-    [
-     3183,
-     3183
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o475",
-   "b": "o504",
-   "a_is": "part: Macor standoff rings M50 #6",
-   "worst_mm": 6.4,
-   "worst_frame": 3013,
-   "frames": 3,
-   "frame_ranges": [
-    [
-     3013,
-     3013
-    ],
-    [
-     3182,
-     3183
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/left_inner_knuckle/1",
-   "b": "o503",
-   "worst_mm": 6.0,
-   "worst_frame": 3182,
-   "frames": 9,
-   "frame_ranges": [
-    [
-     2129,
-     2131
-    ],
-    [
-     3012,
-     3014
-    ],
-    [
-     3182,
-     3184
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o476",
-   "b": "o504",
-   "a_is": "part: Macor standoff rings M50 #7",
-   "worst_mm": 6.0,
-   "worst_frame": 3183,
-   "frames": 3,
-   "frame_ranges": [
-    [
-     3012,
-     3013
-    ],
-    [
-     3183,
-     3183
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o477",
-   "b": "o504",
-   "a_is": "part: Macor standoff rings M50 #8",
-   "worst_mm": 6.0,
-   "worst_frame": 3183,
-   "frames": 3,
-   "frame_ranges": [
-    [
-     3012,
-     3013
-    ],
-    [
-     3183,
-     3183
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o478",
-   "b": "o504",
-   "a_is": "part: Macor standoff rings M50 #9",
-   "worst_mm": 6.0,
-   "worst_frame": 3013,
-   "frames": 3,
-   "frame_ranges": [
-    [
-     3013,
-     3013
-    ],
-    [
-     3182,
-     3183
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "B/gr/right_finger_tip/0",
-   "b": "o502",
-   "worst_mm": 5.8,
-   "worst_frame": 2018,
-   "frames": 2,
-   "frame_ranges": [
-    [
-     1982,
-     1982
-    ],
-    [
-     2018,
-     2018
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/base/0",
-   "b": "o19",
-   "b_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
-   "worst_mm": 5.8,
-   "worst_frame": 2118,
-   "frames": 1,
-   "frame_ranges": [
-    [
-     2118,
-     2118
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/right_inner_knuckle/1",
-   "b": "o503",
-   "worst_mm": 5.8,
-   "worst_frame": 3182,
-   "frames": 8,
-   "frame_ranges": [
-    [
-     2129,
-     2131
-    ],
-    [
-     3012,
-     3014
-    ],
-    [
-     3182,
-     3183
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o259",
-   "b": "o504",
-   "a_is": "shcs: Heater-stack screws M50, M3 x 25 316, up through slotted counterbores ",
-   "worst_mm": 5.8,
-   "worst_frame": 3182,
-   "frames": 5,
-   "frame_ranges": [
-    [
-     3012,
-     3013
-    ],
-    [
-     3182,
-     3184
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o470",
-   "b": "o504",
-   "a_is": "part: Macor standoff rings M50 #1",
-   "worst_mm": 5.8,
-   "worst_frame": 3183,
-   "frames": 3,
-   "frame_ranges": [
-    [
-     3012,
-     3013
-    ],
-    [
-     3183,
-     3183
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o471",
-   "b": "o504",
-   "a_is": "part: Macor standoff rings M50 #2",
-   "worst_mm": 5.8,
-   "worst_frame": 3183,
-   "frames": 3,
-   "frame_ranges": [
-    [
-     3012,
-     3013
-    ],
-    [
-     3183,
-     3183
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "kt/trays and bins",
-   "b": "o470",
-   "b_is": "part: Macor standoff rings M50 #1",
-   "worst_mm": 5.6,
-   "worst_frame": 0,
-   "frames": 825,
-   "frame_ranges": [
-    [
-     0,
-     824
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "kt/trays and bins",
-   "b": "o472",
-   "b_is": "part: Macor standoff rings M50 #3",
-   "worst_mm": 5.6,
-   "worst_frame": 0,
-   "frames": 612,
-   "frame_ranges": [
-    [
-     0,
-     611
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "kt/trays and bins",
-   "b": "o473",
-   "b_is": "part: Macor standoff rings M50 #4",
-   "worst_mm": 5.6,
-   "worst_frame": 0,
-   "frames": 849,
-   "frame_ranges": [
-    [
-     0,
-     848
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o261",
-   "b": "o504",
-   "a_is": "shcs: Heater-stack screws M50, M3 x 25 316, up through slotted counterbores ",
-   "worst_mm": 5.6,
-   "worst_frame": 3182,
-   "frames": 5,
-   "frame_ranges": [
-    [
-     3012,
-     3013
-    ],
-    [
-     3182,
-     3184
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o266",
-   "b": "o504",
-   "a_is": "disc: Disc springs under the stack screws M50 #2",
-   "worst_mm": 5.6,
-   "worst_frame": 3012,
-   "frames": 2,
-   "frame_ranges": [
-    [
-     3012,
-     3012
-    ],
-    [
-     3184,
-     3184
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o472",
-   "b": "o504",
-   "a_is": "part: Macor standoff rings M50 #3",
-   "worst_mm": 5.6,
-   "worst_frame": 3013,
-   "frames": 3,
-   "frame_ranges": [
-    [
-     3013,
-     3013
-    ],
-    [
-     3182,
-     3183
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o263",
-   "b": "o504",
-   "a_is": "insert: Heater-block helical inserts M50, M3 18-8 #2",
-   "worst_mm": 5.6,
-   "worst_frame": 3182,
-   "frames": 3,
-   "frame_ranges": [
-    [
-     3013,
-     3013
-    ],
-    [
-     3182,
-     3183
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "kt/trays and bins",
-   "b": "o471",
-   "b_is": "part: Macor standoff rings M50 #2",
-   "worst_mm": 5.4,
-   "worst_frame": 0,
-   "frames": 729,
-   "frame_ranges": [
-    [
-     0,
-     728
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/right_inner_knuckle/0",
-   "b": "o21",
-   "b_is": "part: Module M50 bottom flange: gland plate (316L, bolted to the welded coll",
-   "worst_mm": 5.4,
-   "worst_frame": 2957,
-   "frames": 1,
-   "frame_ranges": [
-    [
-     2957,
-     2957
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o20",
-   "b": "o504",
-   "a_is": "part: Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove ro",
-   "worst_mm": 5.2,
-   "worst_frame": 2129,
-   "frames": 2,
-   "frame_ranges": [
-    [
-     2129,
-     2129
-    ],
-    [
-     3014,
-     3014
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o267",
-   "b": "o504",
-   "a_is": "disc: Disc springs under the stack screws M50 #3",
-   "worst_mm": 5.2,
-   "worst_frame": 3012,
-   "frames": 2,
-   "frame_ranges": [
-    [
-     3012,
-     3012
-    ],
-    [
-     3184,
-     3184
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o260",
-   "b": "o504",
-   "a_is": "shcs: Heater-stack screws M50, M3 x 25 316, up through slotted counterbores ",
-   "worst_mm": 5.1,
-   "worst_frame": 3012,
-   "frames": 5,
-   "frame_ranges": [
-    [
-     3012,
-     3013
-    ],
-    [
-     3182,
-     3184
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/left_inner_knuckle/0",
-   "b": "o502",
+   "b": "o24",
+   "b_is": "part: Module M50 handle (6061, screwed under the gland plate; riser, arm and",
    "worst_mm": 4.9,
-   "worst_frame": 2244,
-   "frames": 124,
-   "frame_ranges": [
-    [
-     1586,
-     1591
-    ],
-    [
-     2244,
-     2358
-    ],
-    [
-     2796,
-     2796
-    ],
-    [
-     2799,
-     2800
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/right_inner_knuckle/0",
-   "b": "o502",
-   "worst_mm": 4.9,
-   "worst_frame": 2244,
-   "frames": 124,
-   "frame_ranges": [
-    [
-     1586,
-     1591
-    ],
-    [
-     2244,
-     2358
-    ],
-    [
-     2796,
-     2796
-    ],
-    [
-     2799,
-     2800
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o265",
-   "b": "o504",
-   "a_is": "disc: Disc springs under the stack screws M50 #1",
-   "worst_mm": 4.9,
-   "worst_frame": 3012,
+   "worst_frame": 2644,
    "frames": 2,
    "frame_ranges": [
     [
-     3012,
-     3012
+     2644,
+     2644
     ],
     [
-     3184,
-     3184
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o35",
-   "b": "o504",
-   "a_is": "part: Bore seal M50 (aramid felt + carbon-filled PTFE scraper)",
-   "worst_mm": 4.9,
-   "worst_frame": 3183,
-   "frames": 1,
-   "frame_ranges": [
-    [
-     3183,
-     3183
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/left_finger_tip/1",
-   "b": "o38",
-   "b_is": "part: Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel",
-   "worst_mm": 4.7,
-   "worst_frame": 1535,
-   "frames": 2,
-   "frame_ranges": [
-    [
-     1535,
-     1536
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/right_finger_tip/1",
-   "b": "o38",
-   "b_is": "part: Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel",
-   "worst_mm": 4.7,
-   "worst_frame": 1535,
-   "frames": 2,
-   "frame_ranges": [
-    [
-     1535,
-     1536
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o476",
-   "b": "o502",
-   "a_is": "part: Macor standoff rings M50 #7",
-   "worst_mm": 4.7,
-   "worst_frame": 2973,
-   "frames": 3,
-   "frame_ranges": [
-    [
-     2239,
-     2239
-    ],
-    [
-     2973,
-     2973
-    ],
-    [
-     3226,
-     3226
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o477",
-   "b": "o502",
-   "a_is": "part: Macor standoff rings M50 #8",
-   "worst_mm": 4.7,
-   "worst_frame": 2239,
-   "frames": 3,
-   "frame_ranges": [
-    [
-     2239,
-     2239
-    ],
-    [
-     2973,
-     2973
-    ],
-    [
-     3226,
-     3226
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o478",
-   "b": "o502",
-   "a_is": "part: Macor standoff rings M50 #9",
-   "worst_mm": 4.7,
-   "worst_frame": 3226,
-   "frames": 3,
-   "frame_ranges": [
-    [
-     2239,
-     2239
-    ],
-    [
-     2973,
-     2973
-    ],
-    [
-     3226,
-     3226
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o39",
-   "b": "o504",
-   "a_is": "part: Striker disc M50 (416 stainless, on the pot magnet)",
-   "worst_mm": 4.7,
-   "worst_frame": 3008,
-   "frames": 1,
-   "frame_ranges": [
-    [
-     3008,
-     3008
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o28",
-   "b": "o504",
-   "a_is": "part: Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out o",
-   "worst_mm": 4.7,
-   "worst_frame": 3109,
-   "frames": 2,
-   "frame_ranges": [
-    [
-     3106,
-     3106
-    ],
-    [
-     3109,
-     3109
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o470",
-   "b": "o502",
-   "a_is": "part: Macor standoff rings M50 #1",
-   "worst_mm": 4.5,
-   "worst_frame": 2239,
-   "frames": 3,
-   "frame_ranges": [
-    [
-     2239,
-     2239
-    ],
-    [
-     2973,
-     2973
-    ],
-    [
-     3226,
-     3226
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o471",
-   "b": "o502",
-   "a_is": "part: Macor standoff rings M50 #2",
-   "worst_mm": 4.5,
-   "worst_frame": 2239,
-   "frames": 3,
-   "frame_ranges": [
-    [
-     2239,
-     2239
-    ],
-    [
-     2973,
-     2973
-    ],
-    [
-     3226,
-     3226
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o472",
-   "b": "o502",
-   "a_is": "part: Macor standoff rings M50 #3",
-   "worst_mm": 4.5,
-   "worst_frame": 2239,
-   "frames": 3,
-   "frame_ranges": [
-    [
-     2239,
-     2239
-    ],
-    [
-     2973,
-     2973
-    ],
-    [
-     3226,
-     3226
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o277",
-   "b": "o503",
-   "a_is": "set: Rod set screws M50, M4 cup point 316 #2",
-   "worst_mm": 4.3,
-   "worst_frame": 3012,
-   "frames": 9,
-   "frame_ranges": [
-    [
-     3012,
-     3015
-    ],
-    [
-     3180,
-     3184
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "B/gr/left_finger_tip/0",
-   "b": "o503",
-   "worst_mm": 4.1,
-   "worst_frame": 1967,
-   "frames": 41,
-   "frame_ranges": [
-    [
-     1967,
-     2007
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "B/gr/right_finger_tip/0",
-   "b": "o503",
-   "worst_mm": 4.1,
-   "worst_frame": 1967,
-   "frames": 41,
-   "frame_ranges": [
-    [
-     1967,
-     2007
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o37",
-   "b": "o39",
-   "a_is": "part: Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 ",
-   "b_is": "part: Striker disc M50 (416 stainless, on the pot magnet)",
-   "worst_mm": 4.1,
-   "worst_frame": 2978,
-   "frames": 199,
-   "frame_ranges": [
-    [
-     2810,
-     2962
-    ],
-    [
-     2978,
-     3001
-    ],
-    [
-     3192,
-     3217
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o276",
-   "b": "o503",
-   "a_is": "set: Rod set screws M50, M4 cup point 316 #1",
-   "worst_mm": 4.1,
-   "worst_frame": 3180,
-   "frames": 9,
-   "frame_ranges": [
-    [
-     3012,
-     3015
-    ],
-    [
-     3180,
-     3184
+     2804,
+     2804
     ]
    ],
    "limit_mm": 1.5,
@@ -4458,13 +231,75 @@
    "b": "o29",
    "a_is": "part: Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
    "b_is": "part: Heater block M50 (6061-T6, bayonet socket)",
-   "worst_mm": 4.1,
-   "worst_frame": 3125,
-   "frames": 323,
+   "worst_mm": 4.7,
+   "worst_frame": 2751,
+   "frames": 1,
    "frame_ranges": [
     [
-     3125,
-     3447
+     2751,
+     2751
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/left_finger_tip/0",
+   "b": "o30",
+   "b_is": "part: Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
+   "worst_mm": 4.5,
+   "worst_frame": 421,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     421,
+     421
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/right_finger_tip/1",
+   "b": "o30",
+   "b_is": "part: Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
+   "worst_mm": 4.3,
+   "worst_frame": 422,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     422,
+     422
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "B/gr/left_finger_tip/0",
+   "b": "o503",
+   "worst_mm": 3.9,
+   "worst_frame": 1885,
+   "frames": 40,
+   "frame_ranges": [
+    [
+     1885,
+     1924
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "B/gr/right_finger_tip/0",
+   "b": "o503",
+   "worst_mm": 3.9,
+   "worst_frame": 1885,
+   "frames": 40,
+   "frame_ranges": [
+    [
+     1885,
+     1924
     ]
    ],
    "limit_mm": 1.5,
@@ -4476,12 +311,12 @@
    "a_is": "part: Heater block M50 (6061-T6, bayonet socket)",
    "b_is": "part: Macor standoff rings M50 #3",
    "worst_mm": 3.8,
-   "worst_frame": 644,
-   "frames": 7,
+   "worst_frame": 676,
+   "frames": 6,
    "frame_ranges": [
     [
-     644,
-     650
+     676,
+     681
     ]
    ],
    "limit_mm": 1.5,
@@ -4493,12 +328,12 @@
    "a_is": "part: Heater block M50 (6061-T6, bayonet socket)",
    "b_is": "part: Macor standoff rings M50 #6",
    "worst_mm": 3.8,
-   "worst_frame": 668,
-   "frames": 7,
+   "worst_frame": 696,
+   "frames": 6,
    "frame_ranges": [
     [
-     668,
-     674
+     696,
+     701
     ]
    ],
    "limit_mm": 1.5,
@@ -4510,12 +345,29 @@
    "a_is": "part: Heater block M50 (6061-T6, bayonet socket)",
    "b_is": "part: Macor standoff rings M50 #9",
    "worst_mm": 3.8,
-   "worst_frame": 692,
-   "frames": 7,
+   "worst_frame": 716,
+   "frames": 6,
    "frame_ranges": [
     [
-     692,
-     698
+     716,
+     721
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "o265",
+   "b": "o34",
+   "a_is": "disc: Disc springs under the stack screws M50 #1",
+   "b_is": "part: Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a ",
+   "worst_mm": 3.8,
+   "worst_frame": 939,
+   "frames": 6,
+   "frame_ranges": [
+    [
+     939,
+     944
     ]
    ],
    "limit_mm": 1.5,
@@ -4527,187 +379,12 @@
    "a_is": "disc: Disc springs under the stack screws M50 #2",
    "b_is": "part: Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a ",
    "worst_mm": 3.8,
-   "worst_frame": 1070,
-   "frames": 7,
+   "worst_frame": 939,
+   "frames": 6,
    "frame_ranges": [
     [
-     1070,
-     1076
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/right_inner_knuckle/0",
-   "b": "o19",
-   "b_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
-   "worst_mm": 3.4,
-   "worst_frame": 2957,
-   "frames": 2,
-   "frame_ranges": [
-    [
-     2957,
-     2958
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o19",
-   "b": "o28",
-   "a_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
-   "b_is": "part: Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out o",
-   "worst_mm": 3.2,
-   "worst_frame": 3202,
-   "frames": 287,
-   "frame_ranges": [
-    [
-     3125,
-     3175
-    ],
-    [
-     3185,
-     3186
-    ],
-    [
-     3189,
-     3196
-    ],
-    [
-     3202,
-     3203
-    ],
-    [
-     3213,
-     3215
-    ],
-    [
-     3218,
-     3220
-    ],
-    [
-     3226,
-     3229
-    ],
-    [
-     3233,
-     3447
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "B/gr/right_finger_tip/1",
-   "b": "o502",
-   "worst_mm": 2.9,
-   "worst_frame": 2018,
-   "frames": 1,
-   "frame_ranges": [
-    [
-     2018,
-     2018
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o19",
-   "b": "o27",
-   "a_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
-   "b_is": "part: Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
-   "worst_mm": 2.9,
-   "worst_frame": 3125,
-   "frames": 50,
-   "frame_ranges": [
-    [
-     3125,
-     3174
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o19",
-   "b": "o34",
-   "a_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
-   "b_is": "part: Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a ",
-   "worst_mm": 2.7,
-   "worst_frame": 2203,
-   "frames": 748,
-   "frame_ranges": [
-    [
-     2203,
-     2229
-    ],
-    [
-     2242,
-     2962
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/right_finger_tip/0",
-   "b": "o34",
-   "b_is": "part: Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a ",
-   "worst_mm": 2.7,
-   "worst_frame": 2960,
-   "frames": 1,
-   "frame_ranges": [
-    [
-     2960,
-     2960
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o19",
-   "b": "o29",
-   "a_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
-   "b_is": "part: Heater block M50 (6061-T6, bayonet socket)",
-   "worst_mm": 2.6,
-   "worst_frame": 2203,
-   "frames": 749,
-   "frame_ranges": [
-    [
-     2203,
-     2229
-    ],
-    [
-     2241,
-     2962
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o265",
-   "b": "o502",
-   "a_is": "disc: Disc springs under the stack screws M50 #1",
-   "worst_mm": 2.6,
-   "worst_frame": 2239,
-   "frames": 3,
-   "frame_ranges": [
-    [
-     2239,
-     2239
-    ],
-    [
-     2973,
-     2973
-    ],
-    [
-     3226,
-     3226
+     939,
+     944
     ]
    ],
    "limit_mm": 1.5,
@@ -4715,210 +392,50 @@
   },
   {
    "a": "o267",
-   "b": "o502",
+   "b": "o34",
    "a_is": "disc: Disc springs under the stack screws M50 #3",
-   "worst_mm": 2.6,
-   "worst_frame": 2973,
-   "frames": 3,
+   "b_is": "part: Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a ",
+   "worst_mm": 3.8,
+   "worst_frame": 939,
+   "frames": 6,
    "frame_ranges": [
     [
-     2239,
-     2239
-    ],
-    [
-     2973,
-     2973
-    ],
-    [
-     3226,
-     3226
+     939,
+     944
     ]
    ],
    "limit_mm": 1.5,
    "rule": null
   },
   {
-   "a": "A/gr/right_finger/0",
-   "b": "o22",
-   "b_is": "part: Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube en",
-   "worst_mm": 2.5,
-   "worst_frame": 2957,
+   "a": "o27",
+   "b": "o30",
+   "a_is": "part: Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "b_is": "part: Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
+   "worst_mm": 3.6,
+   "worst_frame": 2751,
    "frames": 1,
    "frame_ranges": [
     [
-     2957,
-     2957
+     2751,
+     2751
     ]
    ],
    "limit_mm": 1.5,
    "rule": null
   },
   {
-   "a": "o21",
-   "b": "o24",
-   "a_is": "part: Module M50 bottom flange: gland plate (316L, bolted to the welded coll",
-   "b_is": "part: Module M50 handle (6061, screwed under the gland plate; riser, arm and",
-   "worst_mm": 2.3,
-   "worst_frame": 2607,
-   "frames": 347,
-   "frame_ranges": [
-    [
-     2607,
-     2608
-    ],
-    [
-     2618,
-     2962
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/right_finger_tip/0",
-   "b": "o502",
-   "worst_mm": 2.3,
-   "worst_frame": 2792,
-   "frames": 9,
-   "frame_ranges": [
-    [
-     2792,
-     2800
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o20",
-   "b": "o503",
-   "a_is": "part: Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove ro",
-   "worst_mm": 2.2,
-   "worst_frame": 2124,
-   "frames": 12,
-   "frame_ranges": [
-    [
-     2124,
-     2127
-    ],
-    [
-     3016,
-     3019
-    ],
-    [
-     3176,
-     3179
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/left_finger/0",
-   "b": "o20",
-   "b_is": "part: Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove ro",
-   "worst_mm": 2.2,
-   "worst_frame": 2118,
+   "a": "o27",
+   "b": "o31",
+   "a_is": "part: Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "b_is": "part: Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 3",
+   "worst_mm": 3.6,
+   "worst_frame": 2751,
    "frames": 1,
    "frame_ranges": [
     [
-     2118,
-     2118
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/base/0",
-   "b": "o20",
-   "b_is": "part: Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove ro",
-   "worst_mm": 2.1,
-   "worst_frame": 2118,
-   "frames": 1,
-   "frame_ranges": [
-    [
-     2118,
-     2118
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o259",
-   "b": "o502",
-   "a_is": "shcs: Heater-stack screws M50, M3 x 25 316, up through slotted counterbores ",
-   "worst_mm": 2.1,
-   "worst_frame": 2239,
-   "frames": 3,
-   "frame_ranges": [
-    [
-     2239,
-     2239
-    ],
-    [
-     2973,
-     2973
-    ],
-    [
-     3226,
-     3226
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o261",
-   "b": "o502",
-   "a_is": "shcs: Heater-stack screws M50, M3 x 25 316, up through slotted counterbores ",
-   "worst_mm": 2.1,
-   "worst_frame": 2239,
-   "frames": 3,
-   "frame_ranges": [
-    [
-     2239,
-     2239
-    ],
-    [
-     2973,
-     2973
-    ],
-    [
-     3226,
-     3226
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "A/gr/right_inner_knuckle/0",
-   "b": "o22",
-   "b_is": "part: Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube en",
-   "worst_mm": 1.8,
-   "worst_frame": 2957,
-   "frames": 1,
-   "frame_ranges": [
-    [
-     2957,
-     2957
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "o503",
-   "b": "o504",
-   "worst_mm": 1.7,
-   "worst_frame": 2073,
-   "frames": 1,
-   "frame_ranges": [
-    [
-     2073,
-     2073
+     2751,
+     2751
     ]
    ],
    "limit_mm": 1.5,
@@ -4926,19 +443,200 @@
   },
   {
    "a": "A/gr/left_finger_tip/0",
-   "b": "o34",
-   "b_is": "part: Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a ",
-   "worst_mm": 1.7,
-   "worst_frame": 2960,
+   "b": "o28",
+   "b_is": "part: Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out o",
+   "worst_mm": 2.6,
+   "worst_frame": 2748,
    "frames": 1,
    "frame_ranges": [
     [
-     2960,
-     2960
+     2748,
+     2748
     ]
    ],
    "limit_mm": 1.5,
    "rule": null
+  },
+  {
+   "a": "A/gr/left_finger_tip/0",
+   "b": "o27",
+   "b_is": "part: Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "worst_mm": 2.5,
+   "worst_frame": 2748,
+   "frames": 3,
+   "frame_ranges": [
+    [
+     2748,
+     2750
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/right_finger_tip/0",
+   "b": "o27",
+   "b_is": "part: Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "worst_mm": 2.4,
+   "worst_frame": 2748,
+   "frames": 3,
+   "frame_ranges": [
+    [
+     2748,
+     2750
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/right_finger_tip/0",
+   "b": "o28",
+   "b_is": "part: Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out o",
+   "worst_mm": 2.4,
+   "worst_frame": 2748,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     2748,
+     2748
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/left_finger_tip/0",
+   "b": "o19",
+   "b_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
+   "worst_mm": 2.2,
+   "worst_frame": 2037,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     2037,
+     2037
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/right_finger_tip/0",
+   "b": "o19",
+   "b_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
+   "worst_mm": 2.2,
+   "worst_frame": 2037,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     2037,
+     2037
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  }
+ ],
+ "cad_overlaps": [
+  {
+   "a": "o19",
+   "b": "o35",
+   "a_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
+   "b_is": "part: Bore seal M50 (aramid felt + carbon-filled PTFE scraper)",
+   "worst_mm": 46.9,
+   "worst_frame": 2666,
+   "pair_frames": 15
+  },
+  {
+   "a": "o19",
+   "b": "o20",
+   "a_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
+   "b_is": "part: Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove ro",
+   "worst_mm": 17.7,
+   "worst_frame": 2075,
+   "pair_frames": 1045
+  },
+  {
+   "a": "o29",
+   "b": "o30",
+   "a_is": "part: Heater block M50 (6061-T6, bayonet socket)",
+   "b_is": "part: Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
+   "worst_mm": 13.6,
+   "worst_frame": 2672,
+   "pair_frames": 12
+  },
+  {
+   "a": "o21",
+   "b": "o23",
+   "a_is": "part: Module M50 bottom flange: gland plate (316L, bolted to the welded coll",
+   "b_is": "part: Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod g",
+   "worst_mm": 12.0,
+   "worst_frame": 2685,
+   "pair_frames": 153
+  },
+  {
+   "a": "o29",
+   "b": "o31",
+   "a_is": "part: Heater block M50 (6061-T6, bayonet socket)",
+   "b_is": "part: Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 3",
+   "worst_mm": 12.0,
+   "worst_frame": 2685,
+   "pair_frames": 26
+  },
+  {
+   "a": "o489",
+   "b": "o491",
+   "a_is": "part: Zero-point arms M50 #1",
+   "b_is": "part: Zero-point clamping pins M50 #1",
+   "worst_mm": 8.2,
+   "worst_frame": 2896,
+   "pair_frames": 758
+  },
+  {
+   "a": "o490",
+   "b": "o492",
+   "a_is": "part: Zero-point arms M50 #2",
+   "b_is": "part: Zero-point clamping pins M50 #2",
+   "worst_mm": 8.2,
+   "worst_frame": 2936,
+   "pair_frames": 756
+  },
+  {
+   "a": "o265",
+   "b": "o34",
+   "a_is": "disc: Disc springs under the stack screws M50 #1",
+   "b_is": "part: Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a ",
+   "worst_mm": 8.2,
+   "worst_frame": 2674,
+   "pair_frames": 20
+  },
+  {
+   "a": "o267",
+   "b": "o34",
+   "a_is": "disc: Disc springs under the stack screws M50 #3",
+   "b_is": "part: Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a ",
+   "worst_mm": 8.2,
+   "worst_frame": 2685,
+   "pair_frames": 4
+  },
+  {
+   "a": "o27",
+   "b": "o29",
+   "a_is": "part: Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "b_is": "part: Heater block M50 (6061-T6, bayonet socket)",
+   "worst_mm": 4.1,
+   "worst_frame": 2768,
+   "pair_frames": 354
+  },
+  {
+   "a": "o19",
+   "b": "o28",
+   "a_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
+   "b_is": "part: Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out o",
+   "worst_mm": 2.8,
+   "worst_frame": 2826,
+   "pair_frames": 72
   }
  ],
  "rigid_pairs": [
@@ -4946,73 +644,37 @@
    "a": "mirA/A MiR250",
    "b": "mirA/light strip",
    "worst_mm": ">100",
-   "frames": 3448
+   "frames": 956
   },
   {
    "a": "mirB/B MiR250",
    "b": "mirB/light strip",
    "worst_mm": ">100",
-   "frames": 3448
-  },
-  {
-   "a": "o37",
-   "b": "o38",
-   "worst_mm": 17.7,
-   "frames": 3448
-  },
-  {
-   "a": "o489",
-   "b": "o491",
-   "worst_mm": 8.2,
-   "frames": 3437
-  },
-  {
-   "a": "o490",
-   "b": "o492",
-   "worst_mm": 8.2,
-   "frames": 3431
-  },
-  {
-   "a": "o259",
-   "b": "o262",
-   "worst_mm": 5.1,
-   "frames": 18
-  },
-  {
-   "a": "o261",
-   "b": "o264",
-   "worst_mm": 5.1,
-   "frames": 14
-  },
-  {
-   "a": "o260",
-   "b": "o263",
-   "worst_mm": 5.1,
-   "frames": 9
+   "frames": 706
   },
   {
    "a": "mirA/A MiR250",
    "b": "mirA/top",
    "worst_mm": 4.1,
-   "frames": 3448
+   "frames": 956
   },
   {
    "a": "mirB/B MiR250",
    "b": "mirB/top",
    "worst_mm": 4.1,
-   "frames": 3448
+   "frames": 706
   },
   {
    "a": "mirA/A cabinet",
    "b": "mirA/top",
    "worst_mm": 2.1,
-   "frames": 3448
+   "frames": 956
   },
   {
    "a": "mirB/B cabinet",
    "b": "mirB/top",
    "worst_mm": 2.1,
-   "frames": 3448
+   "frames": 706
   }
  ],
  "allowed": [
@@ -5021,7 +683,7 @@
    "depth_allowed_mm": null,
    "reason": "one person's skin, clothes, shoes and glasses are layers of one skinned body (people.py offsets the clothes from it)",
    "pairs_in_contact": 16,
-   "pair_frames": 48,
+   "pair_frames": 9344,
    "examples": [
     [
      "op/brow",
@@ -5079,7 +741,7 @@
    "depth_allowed_mm": null,
    "reason": "neighbouring UR12e links meet at their joint (the pieces of one link, and the planner's ADJACENT pairs in cell.py)",
    "pairs_in_contact": 141,
-   "pair_frames": 238129,
+   "pair_frames": 174674,
    "examples": [
     [
      "A/base/0",
@@ -5136,24 +798,12 @@
    "rule": "flange stack",
    "depth_allowed_mm": null,
    "reason": "the tool changer, the 2F-85 and its fingers, caps and the wrist camera are bolted to the flange and to each other",
-   "pairs_in_contact": 249,
-   "pair_frames": 270185,
+   "pairs_in_contact": 227,
+   "pair_frames": 217240,
    "examples": [
     [
      "A/changer",
      "A/gr/adapter/0"
-    ],
-    [
-     "A/changer",
-     "A/gr/adapter/1"
-    ],
-    [
-     "A/changer",
-     "A/gr/base/0"
-    ],
-    [
-     "A/changer",
-     "A/gr/base/1"
     ],
     [
      "A/changer",
@@ -5176,16 +826,28 @@
      "A/gr/camera/4"
     ],
     [
-     "A/changer",
-     "A/gr/right_inner_knuckle/0"
+     "A/gr/adapter/0",
+     "A/gr/adapter/1"
     ],
     [
-     "A/changer",
-     "A/gr/right_inner_knuckle/1"
+     "A/gr/adapter/0",
+     "A/gr/base/0"
     ],
     [
-     "A/changer",
-     "A/gr/right_knuckle/0"
+     "A/gr/adapter/1",
+     "A/gr/base/0"
+    ],
+    [
+     "A/gr/base/0",
+     "A/gr/left_finger/0"
+    ],
+    [
+     "A/gr/base/0",
+     "A/gr/left_finger/1"
+    ],
+    [
+     "A/gr/base/0",
+     "A/gr/left_inner_knuckle/0"
     ]
    ],
    "worst_mm": null
@@ -5194,82 +856,56 @@
    "rule": "screw in its hole",
    "depth_allowed_mm": 40.0,
    "reason": "a socket-head, flat-head or set screw, insert, dowel or plunger drawn in its hole: its thread or shank is drawn inside the part it fastens (the CAD's holes are not threaded), up to 40 mm",
-   "pairs_in_contact": 29,
-   "pair_frames": 18442,
+   "pairs_in_contact": 9,
+   "pair_frames": 5187,
    "examples": [
     [
-     "o19",
-     "o268"
+     "o276",
+     "o34"
     ],
     [
-     "o19",
-     "o269"
-    ],
-    [
-     "o19",
-     "o270"
-    ],
-    [
-     "o19",
-     "o271"
-    ],
-    [
-     "o19",
-     "o272"
-    ],
-    [
-     "o19",
-     "o273"
-    ],
-    [
-     "o19",
-     "o276"
-    ],
-    [
-     "o21",
-     "o268"
-    ],
-    [
-     "o21",
-     "o269"
-    ],
-    [
-     "o21",
-     "o270"
-    ],
-    [
-     "o21",
-     "o271"
-    ],
-    [
-     "o21",
-     "o272"
+     "o277",
+     "o34"
     ]
    ],
-   "worst_mm": 12.0
+   "worst_mm": 6.0
   },
   {
    "rule": "driver on its screw",
    "depth_allowed_mm": 30.0,
    "reason": "the nutrunner's or screwdriver's bit or socket on the screw it turns, up to 30 mm (the socket's depth)",
    "pairs_in_contact": 2,
-   "pair_frames": 46,
+   "pair_frames": 41,
+   "examples": [],
+   "worst_mm": 25.0
+  },
+  {
+   "rule": "screw in its insert",
+   "depth_allowed_mm": 40.0,
+   "reason": "a screw threaded into its threaded insert (round 9: chapter 41's 19 insert x screw pairs, up to 10.5 mm in round 8; the inserts are drawn as solid sleeves), up to 40 mm",
+   "pairs_in_contact": 3,
+   "pair_frames": 2861,
    "examples": [
     [
-     "B/tool/nutrunner_angle/0/3.6",
-     "o270"
+     "o259",
+     "o262"
     ],
     [
-     "B/tool/nutrunner_angle/0/3.6",
-     "o271"
+     "o260",
+     "o263"
+    ],
+    [
+     "o261",
+     "o264"
     ]
    ],
-   "worst_mm": 25.0
+   "worst_mm": 6.0
   }
  ],
- "seconds": 56.9,
  "stills": [
   "desktop-lpbf/analysis/out/videoqa/scene_audit_40-assembly-module_1.png",
-  "desktop-lpbf/analysis/out/videoqa/scene_audit_40-assembly-module_2.png"
+  "desktop-lpbf/analysis/out/videoqa/scene_audit_40-assembly-module_2.png",
+  "desktop-lpbf/analysis/out/videoqa/scene_audit_40-assembly-module_3.png",
+  "desktop-lpbf/analysis/out/videoqa/scene_audit_40-assembly-module_4.png"
  ]
 }
