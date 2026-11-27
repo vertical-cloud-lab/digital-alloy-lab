@@ -37,15 +37,15 @@ the MethodsX office how to cite a Wiley manuscript under review.}
 printing and tensile testing, step costs differ by orders of magnitude.
 Partial-evaluation Bayesian optimization of function networks chooses which
 step to run next, and for which candidate, by expected gain per dollar. Whether
-that pays depends on the workflow, so it should be tested in simulation first.
+that pays depends on the workflow, so it should be simulated first.
 This method is a benchmark for that test: a synthetic alloy powder-to-part network
 with a known optimum, physical precedence rules, reusable powder lots and a knob,
 $\kappa$, for how badly a cheap crack screen misjudges the best alloys, with eight
 reference policies and a matched-seed protocol. In 16--20 seeds per policy,
-choosing the step bought an early lead but no better final alloy; screen-then-test
-was best only when the screen was right; expected improvement per dollar with
-powder reuse was the most robust policy, and the knowledge gradient never beat
-it.
+choosing the step never bought a better final alloy, and a clear early lead only
+with the knowledge gradient and a wrong screen; screen-then-test had the best mean
+only when the screen was right; the expected-improvement network policies had the
+best worst case, and the knowledge gradient never beat them.
 \begin{itemize}[nosep,leftmargin=*]
 \item Knowledge gradient and expected improvement per dollar, each with partial
 and full-chain evaluation, on one network model.
@@ -375,23 +375,44 @@ of the designs is inferred from the scores.
 \subsection*{Procedure}
 
 \begin{enumerate}[leftmargin=*]
-\item Install the pinned environment:\\
-\code{python -m venv venv && venv/bin/pip install -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cpu}
+\item Install the pinned environment (from \code{benchmarks/bofn-paper}):
+\begin{small}
+\begin{verbatim}
+python -m venv venv
+venv/bin/pip install -r requirements.txt \
+    --extra-index-url https://download.pytorch.org/whl/cpu
+\end{verbatim}
+\end{small}
 \item Run a cell, e.g.\ pKGFN at $\kappa=1$, seed 3 (about 3--6 minutes on one
-core; the EI policies take 10--30 s and KGFN 10--16 minutes):\\
-\code{python run_sweep.py --policies pkgfn --kappa 1 --seeds 3 --workers 1 --out runs}
-\item Check it against the stored run:
-\code{python compare_runs.py results-rerun/k1/pkgfn_s3.json runs/k1/pkgfn_s3.json}
-(exit status 0 on a match).
-\item Run a sweep, e.g.\ all eight policies at $\kappa=0.5$, seeds 0--15:\\
-\code{BOFN_NO_REC=1 python run_sweep.py --kappa 0.5 --seeds 0-15 --policies pkgfn kgfn eifn_reuse eifn ei tiered tiered_naive random --out runs}\\
-(the recommender metric is skipped at $\kappa=0$ and 0.5, as in the stored runs;
-it does not affect any decision).
-\item Compute every interval and the tables for your runs:
-\code{python paper_stats.py --sources runs --kappas 0.5 --out runs-stats}
-(it needs all eight policies, and uses the seeds that all of them have); with no
-arguments it reproduces this article's statistics, and
-\code{python paper_figures.py} its figures.
+core; the EI policies take 10--30 s and KGFN 10--16 minutes), and check it
+against the stored run (exit status 0 on a match):
+\begin{small}
+\begin{verbatim}
+python run_sweep.py --policies pkgfn --kappa 1 --seeds 3 \
+    --workers 1 --out runs
+python compare_runs.py results-rerun/k1/pkgfn_s3.json \
+    runs/k1/pkgfn_s3.json
+\end{verbatim}
+\end{small}
+\item Run a sweep, e.g.\ all eight policies at $\kappa=0.5$, seeds 0--15 (the
+recommender metric is skipped at $\kappa=0$ and 0.5, as in the stored runs; it
+does not affect any decision):
+\begin{small}
+\begin{verbatim}
+BOFN_NO_REC=1 python run_sweep.py --kappa 0.5 --seeds 0-15 \
+    --policies pkgfn kgfn eifn_reuse eifn ei tiered tiered_naive random \
+    --out runs
+\end{verbatim}
+\end{small}
+\item Compute every interval and the tables for your runs (all eight policies are
+needed; the seeds that all of them have are used), and draw the figures; with no
+arguments, \code{paper_stats.py} reproduces this article's statistics:
+\begin{small}
+\begin{verbatim}
+python paper_stats.py --sources runs --kappas 0.5 --out runs-stats
+python paper_figures.py
+\end{verbatim}
+\end{small}
 \end{enumerate}
 
 % ---------------------------------------------------------------------------
@@ -420,8 +441,8 @@ times the base samples (four seeds) or with twice the candidates and twice the
 samples (two seeds) left its \$100k result and its mix of purchases within the
 seed-to-seed spread, but not its early result: at \$25k the four reruns with four
 times the samples averaged 46\% of the optimum against 69\% for the same seeds'
-stored runs. pKGFN's early lead is therefore a property of the 20 seeds together,
-not of any single run.
+stored runs. pKGFN's early lead, the only resolved partial-versus-full difference
+below, may therefore depend on its Monte Carlo settings.
 \item \textbf{Gaussian processes.} None of the 62,350 GP fits in the 416 runs
 compared here failed (\code{paper-stats/allocation.csv}). In the 63 fits of one pKGFN run
 whose hyperparameters were recorded (\code{quality/mc_noise_k1_s0.json}), the
@@ -444,8 +465,8 @@ action for action (\cref{tab:rerun}). At $\kappa=1$ the 140 runs of seven
 policies (seeds 0--19) were rerun in October 2026 on AMD EPYC 9V45 and 9V74
 runners; at $\kappa=0$ and $0.5$ the stored seeds of five policies were rerun in
 November 2026 on an AMD EPYC 7763. The largest difference in any recorded
-score is $1.1\times10^{-16}$, the last bit of a double, and no difference ever
-changed a decision (\code{results-rerun/compare_k*.txt}). The runs with no stored counterpart (KGFN; random and
+score is at most $2.2\times10^{-16}$, the last bits of a double, and no difference
+ever changed a decision (\code{results-rerun/compare_k*.txt}). The runs with no stored counterpart (KGFN; random and
 screen-then-test without reuse at $\kappa=0$ and 0.5; seeds 12--15 or 8--15)
 were run from the same clean commit and environment.
 
@@ -456,17 +477,17 @@ were run from the same clean commit and environment.
 the same cumulative spend at every decision, the same per-stage counts, and
 scores equal to within $10^{-9}$ after every purchase.}
 \label{tab:rerun}
-\begin{tabular}{@{}llll@{}}
+\begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}Xll@{}}
 \toprule
 $\kappa$ & policies & seeds & match action for action \\
 \midrule
-1 & pKGFN, BOFN, BOFN + reuse, standard BO, screen-then-test (both), random & 0--19 & 140 of 140 \\
+1 & pKGFN, BOFN, BOFN + reuse, standard BO, screen-then-test (with and without reuse), random & 0--19 & 140 of 140 \\
 0.5 & pKGFN, BOFN, standard BO, screen-then-test & 0--11 & 48 of 48 \\
 0.5 & BOFN + reuse & 0--7 & 8 of 8 \\
 0 & pKGFN, BOFN, standard BO, screen-then-test & 0--11 & 48 of 48 \\
 0 & BOFN + reuse & 0--7 & 8 of 8 \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table}
 
 \subsection*{The benchmark separates the policies and responds to $\kappa$ as designed}
@@ -490,7 +511,8 @@ Figure~S1.}
 plateaued at \stat{k1-tiered-v100-mean}\% of the optimum by \$100k (95\% CI
 \stat{k1-tiered-v100-lo}--\stat{k1-tiered-v100-hi}), below random designs
 (\stat{k1-random-v100-mean}\%), because its shortlist excludes the optimum.
-Every model-based policy finished above it at \$100k, by between
+Every policy that searched the whole design space with a model finished above it
+at \$100k, by between
 \stat{k1-pkgfn-tiered-v100-abs} (pKGFN and standard BO) and
 \stat{k1-eifn_reuse-tiered-v100-abs} percentage points (BOFN with powder reuse,
 95\% CI \stat{k1-eifn_reuse-tiered-v100-ci}). Measured as
@@ -544,14 +566,16 @@ any policy, and no other policy's mean curve reached that level within the budge
 \stat{k0-eifn-v100-mean}\%; BOFN with powder reuse finished ahead of
 screen-then-test on \stat{k0-eifn_reuse-tiered-v100-wins} of \stat{k0-n} seeds
 but far behind on the rest, so its mean was \stat{k0-eifn_reuse-tiered-v100-abs}\pp{}
-lower (difference \stat{k0-eifn_reuse-tiered-v100-ci}). The knowledge-gradient policies fell
-furthest. pKGFN and KGFN both reached \stat{k0-pkgfn-v100-mean}\%,
+lower (difference \stat{k0-eifn_reuse-tiered-v100-ci}). The knowledge-gradient policies had the
+lowest means of the model-based policies. pKGFN and KGFN both reached
+\stat{k0-pkgfn-v100-mean}\%,
 \stat{k0-pkgfn-eifn_reuse-v100-abs}\pp{} and \stat{k0-kgfn-eifn-v100-abs}\pp{}
 behind their expected-improvement counterparts at \$100k (differences
 \stat{k0-pkgfn-eifn_reuse-v100-ci} and \stat{k0-kgfn-eifn-v100-ci}; they finished
 ahead on \stat{k0-pkgfn-eifn_reuse-v100-wins} and \stat{k0-kgfn-eifn-v100-wins}
-of \stat{k0-n} seeds), and \stat{k0-pkgfn-tiered-v100-abs}\pp{} behind
-screen-then-test (\stat{k0-pkgfn-tiered-v100-ci}). The optimum at $\kappa=0$ is a
+of \stat{k0-n} seeds), and both were \stat{k0-pkgfn-tiered-v100-abs}\pp{} below
+screen-then-test (differences \stat{k0-pkgfn-tiered-v100-ci} and
+\stat{k0-kgfn-tiered-v100-ci}). The optimum at $\kappa=0$ is a
 lean alloy without nucleant, in a corner of composition space that the 32 seed
 compositions do not reach. pKGFN atomizes only simulated alloys and bought
 \stat{k0-pkgfn-nC} new CALPHAD calls per run, so it kept printing the powders it
@@ -564,33 +588,38 @@ at $\kappa=0$ under either acquisition function (at \$25k, \stat{k0-c-1-v25}\pp{
 under expected improvement, \stat{k0-c-1-v25-ci}; \stat{k0-c-0-v25}\pp{} under
 the knowledge gradient, \stat{k0-c-0-v25-ci}).
 
-\paragraph{Half right ($\kappa=0.5$).} Screen-then-test led early (at \$25k,
-full-chain BOFN was \stat{k05-eifn-tiered-v25-abs}\pp{} behind it, difference
-\stat{k05-eifn-tiered-v25-ci}), but the expected-improvement network policies
-finished ahead: BOFN with powder reuse reached \stat{k05-eifn_reuse-v100-mean}\%
-of the optimum at \$100k against \stat{k05-tiered-v100-mean}\% (difference
+\paragraph{Half right ($\kappa=0.5$).} Screen-then-test had the highest mean at
+\$25k, though no difference with it was resolved there (full-chain BOFN was
+\stat{k05-eifn-tiered-v25-abs}\pp{} lower, \stat{k05-eifn-tiered-v25-ci}). At
+\$100k BOFN with powder reuse finished ahead of it, \stat{k05-eifn_reuse-v100-mean}\%
+of the optimum against \stat{k05-tiered-v100-mean}\% (difference
 \stat{k05-eifn_reuse-tiered-v100}\pp, \stat{k05-eifn_reuse-tiered-v100-ci};
-ahead on \stat{k05-eifn_reuse-tiered-v100-wins} of \stat{k05-n} seeds). The
-knowledge-gradient policies again trailed their expected-improvement
-counterparts at \$100k: pKGFN by \stat{k05-c-2-v100-abs}\pp{}
-(\stat{k05-c-2-v100-ci}) and KGFN by \stat{k05-c-3-v100-abs}\pp{}
-(\stat{k05-c-3-v100-ci}).
+ahead on \stat{k05-eifn_reuse-tiered-v100-wins} of \stat{k05-n} seeds), and
+full-chain BOFN was level (\stat{k05-eifn-tiered-v100}\pp,
+\stat{k05-eifn-tiered-v100-ci}). pKGFN trailed BOFN with powder reuse by
+\stat{k05-c-2-v100-abs}\pp{} (\stat{k05-c-2-v100-ci}); KGFN's mean was
+\stat{k05-c-3-v100-abs}\pp{} below full-chain BOFN's (\stat{k05-c-3-v100-ci},
+not resolved).
 
 \paragraph{Across $\kappa$.} Three regularities held at every $\kappa$.
 First, choosing the step never bought a better final alloy: no partial-minus-full
 contrast at \$100k or over the whole budget excluded zero. Its early lead was
-clear only under the knowledge gradient with a wrong screen, and positive but
-unresolved under expected improvement at every $\kappa$ (\stat{k0-c-1-v25},
+clear only under the knowledge gradient with a wrong screen; under expected
+improvement it was positive but unresolved at every $\kappa$ (\stat{k0-c-1-v25},
 \stat{k05-c-1-v25} and \stat{k1-c-1-v25}\pp{} at \$25k for $\kappa=0$, 0.5
-and 1). Second, the knowledge gradient as implemented here never beat expected
-improvement per dollar at \$100k: with partial evaluation it trailed at every
-$\kappa$, by \stat{k1-c-2-v100-abs}, \stat{k05-c-2-v100-abs} and
-\stat{k0-c-2-v100-abs} points for $\kappa=1$, 0.5 and 0 (intervals
-\stat{k1-c-2-v100-ci}, \stat{k05-c-2-v100-ci} and \stat{k0-c-2-v100-ci}), most
-when the screen was at least half right. Third, BOFN with powder reuse was the most robust
-policy: \stat{k0-eifn_reuse-v100-mean}\%, \stat{k05-eifn_reuse-v100-mean}\%
-and \stat{k1-eifn_reuse-v100-mean}\% of the optimum at \$100k for $\kappa=0$,
-0.5 and 1. Screen-then-test, by contrast, went from the most reliable policy
+and 1), and under the knowledge gradient it was negative, though unresolved, when
+the screen was at least half right. Second, the knowledge gradient as implemented here never beat expected
+improvement per dollar at \$100k: with partial evaluation it trailed by
+\stat{k1-c-2-v100-abs} points at $\kappa=1$ (\stat{k1-c-2-v100-ci}) and
+\stat{k05-c-2-v100-abs} at $\kappa=0.5$ (\stat{k05-c-2-v100-ci}), and was
+\stat{k0-c-2-v100-abs} points lower at $\kappa=0$ (\stat{k0-c-2-v100-ci}, not
+resolved); no knowledge-gradient-minus-expected-improvement difference was
+positive and resolved at any budget or $\kappa$. Third, the expected-improvement network policies were the most robust: their
+worst \$100k results across $\kappa$ (\stat{k0-eifn_reuse-v100-mean}\% for BOFN
+with powder reuse and \stat{k0-eifn-v100-mean}\% for BOFN, both at $\kappa=0$)
+were the best of any policy; BOFN with powder reuse reached
+\stat{k0-eifn_reuse-v100-mean}\%, \stat{k05-eifn_reuse-v100-mean}\% and
+\stat{k1-eifn_reuse-v100-mean}\% at $\kappa=0$, 0.5 and 1. Screen-then-test, by contrast, went from the most reliable policy
 ($\kappa=0$) to one that plateaued below random designs ($\kappa=1$). These are
 the regularities a user of the benchmark should expect to reproduce. With 16--20
 seeds, the benchmark resolves differences at \$100k of about
@@ -684,8 +713,10 @@ above pKGFN (\stat{k05-pkgfn_free-pkgfn-v100-ci}). Its stored runs (seeds 0--7)
 rerun action for action except one: they predate a fix that charges a
 never-simulated alloy's \$10 CALPHAD call in pKGFN's cost per dollar, and on seed
 2 at $\kappa=0$ that \$10 changes the third decision
-(\code{results-rerun/compare_k0_pkgfn_free.txt}). A change of candidate rule,
-not of acquisition function, is what fixes pKGFN here.
+(\code{results-rerun/compare_k0_pkgfn_free.txt}). The variant changes the candidate
+rule, adds the \$4,000 atomize-and-print move and uses lighter Monte Carlo
+settings, so which of the three repairs pKGFN is not isolated; the acquisition
+function is unchanged.
 \end{itemize}
 
 A clocked version reuses this truth and adds durations, station capacity,
@@ -695,8 +726,8 @@ and copper truths, adds people, robots and calendars. \tbd{Cite once public at a
 fixed commit (DAL PR 297; byu-vcl twin rounds 3--5).} In both, a pKGFN with fixes
 tied full-chain BOFN, and in the clocked version the EI fallback made most of
 pKGFN's decisions. That is consistent with what this benchmark shows: on this
-network, choosing the step helps early, and the knowledge gradient adds little
-over expected improvement per dollar.
+network, choosing the step helps early at best, and the knowledge gradient is no
+better than expected improvement per dollar, and worse with partial evaluation.
 
 % ---------------------------------------------------------------------------
 \section*{Limitations}
