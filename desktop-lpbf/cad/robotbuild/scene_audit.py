@@ -266,7 +266,8 @@ def audit_dirs(chapter):
             found[d.name] = d / "audit"
 
     def order(k):
-        return int(k.rsplit("part", 1)[1]) if ".part" in k else -1
+        s = k.rsplit("part", 1)[1] if ".part" in k else ""
+        return (int(s), "") if s.isdigit() else ((-1, "") if ".part" not in k else (10 ** 6, s))   # round 10: .partpick
     return [(k, found[k]) for k in sorted(found, key=order)]
 
 

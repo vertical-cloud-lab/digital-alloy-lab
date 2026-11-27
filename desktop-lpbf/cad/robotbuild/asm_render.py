@@ -42,6 +42,20 @@ Round 9 (2026-11-27; round 8's frame audit and camera check; Sterling: "showing 
     part, 1 min a screw, time-lapsed), status "person".
   * Camera: a cut is forced only where something jumped; a fetch not shown holds the shot when the MiR and arm come back to
     where they were; small arm jumps (<= 5 deg) are drawn as a labelled reposition; slice boundaries are soft (README).
+
+Round 10 (2026-11-27; round 9's frame audit and walk check):
+  * The person's heading follows people.py's convention (0 = facing +y): round 9 passed atan2(dy, dx), so they walked in and
+    out sideways (the Gait side-stepped at up to 675 mm/s and dragged the planted foot: 34 mm a stance in 40 and 41) and
+    stood side-on to the work. Back-to-back person jobs: they turn round where they stand instead of being put back at the
+    aisle turned 180 deg in one frame (205-383 mm of "slip" in 41).
+  * The person's spot and poses are checked in 3-D against everything drawn, with the frame audit's own measure
+    (Replay.person_hits: scene_audit.py's translational depth, 1.5 mm): spots in tiers (walked to within reach, put in
+    place within reach, then anywhere clear), the hands on the part's outside 25 mm or more off its surface (palms down
+    over its top, on its front or sides, one hand), the hand driver 120-200 mm up the screw's axis, leaning in to reach.
+    A spot may stand in some of the place's tripods' sight lines; the person's frames are then shot from another. Round 9
+    aimed the hands at the part's centre (a hand 28 mm in the chamber body) and found no spot at all round Fixture B.
+  * A failed placement: every part the arm left more than 1.5 mm off its seat (or never drew) is set by the person (round 9:
+    only those more than 50 mm off, so F57's beam tube, 9 mm short, was put in its seat with no one drawn doing it).
 """
 from __future__ import annotations
 
@@ -1282,6 +1296,15 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=(), fail_
         fj = [i for i, p in enumerate(plan) if p["step"] == b_] if b_ else []
         hi = fj[0] if fj else (10 ** 9 if not b_ else tot_frames)
         part, k_ = "steps", os.environ.get("ASM_RANGE_IDX", "steps")
+    if os.environ.get("ASM_PICK_PERSON") == "1":
+        # round 10 (a test of the person's frames): draw only the frames the person is in, and the frame before each run of
+        # them (so walk.py starts a new track there)
+        global PICK
+        PICK = set()
+        for i, p in enumerate(plan):
+            if p.get("person"):
+                PICK.update((max(0, i - 1), i))
+        print(f"{name}: drawing the {len(PICK)} frames with the person (ASM_PICK_PERSON)", flush=True)
     if PICK is not None:
         part, k_ = "pick", "pick"
     if os.environ.get("ASM_PLAN_ONLY") == "1":
@@ -1465,10 +1488,11 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                 c["relaxed"] = bool(tier.get("relaxed"))
                 xs, ys = c["spot"]
                 P.place(x=xs, y=ys, hd=face_hd(look[0] - xs, look[1] - ys), look=look, frame=tot["n"])
-                hits = rp.person_hits(P, limit=2)
                 data = None
-                if not hits and fit is not None:
-                    hits, data = fit(P)
+                if fit is not None:
+                    hits, data = fit(P)               # the whole body in the job's poses (reach first: cheap)
+                else:
+                    hits = rp.person_hits(P, limit=2)  # standing there
                 if not hits:
                     choice = (c, data)
                     break
@@ -1670,9 +1694,13 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                         tgt = [np.asarray(v, float) for v in hands.values() if v is not None]
                         reach = max(float(np.linalg.norm(np.asarray(P.hand_point(s), float) - np.asarray(hands[s], float)))
                                     for s in ("l", "r") if hands.get(s) is not None)
-                        if reach > 80.0 and lean < 28.0:
+                        if reach > 80.0:
                             rp.sc.alpha["op/tool/screwdriver"] = 0.0
-                            continue                    # out of reach: lean further before checking
+                            if best is None or (1, True, 0.0, reach, lean) < best[0]:
+                                best = ((1, True, 0.0, reach, lean),
+                                        dict(name=nm + (f", leaning {lean:.0f} deg" if lean else ""), hands=hands, palm=palm,
+                                             look=tuple(np.mean(tgt, axis=0)), reach=reach, lean=lean), [])
+                            continue                    # out of reach: lean further, or the next pose (no check needed)
                         hits = rp.person_hits(P, own=own, extra=extra, limit=3)
                         rp.sc.alpha["op/tool/screwdriver"] = 0.0
                         score = (len(hits), reach > 80.0, max([h_[2] for h_ in hits], default=0.0), reach, lean)
