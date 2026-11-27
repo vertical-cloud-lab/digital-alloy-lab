@@ -444,7 +444,7 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
         add("Anodised target, 80 x 80 x 3 mm", box(-40, 40, -40, 40, -3.0, 0.0), C["target"], "MK-18", "cassette")
     if state == "S2":
         d = cyl(40, (0, 0, L["deck_top"]), "z", 50).cut(cyl(12, (0, 0, L["deck_top"] + 30), "z", 21))
-        add("Water-cooled beam dump, 500 W (Thorlabs LB2L/M class, envelope)", d, C["black"], "L9", "cassette")
+        add("Water-cooled beam dump, 1 kW (EKSMA 990-0820 class, envelope)", d, C["black"], "L9", "cassette")
         w = polyline_pipe([(30, 25, L["deck_top"] + 25), (90, 60, L["deck_top"] + 20),
                            (xc + P["box_in"][0] / 2 - 5, 60, L["deck_top"] + 20)], 3.0, smooth=True)
         add("Dump water lines", w, C["water"], "L9", "cassette")
@@ -553,7 +553,7 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
         pump = box(-820, -440, -345, -185, zb, zb + 230)
         add("Rotary-vane pump (McMaster 4396K21 class, envelope est.)", pump, C["blue"], "E3", "gas")
         hose = polyline_pipe([(sx - 30, kf_left[0][0], kf_left[0][1]), (sx - 120, kf_left[0][0] - 40, cz - 90),
-                              (-470, -250, zb + 250), (-560, -250, zb + 230)], 13.0)
+                              (-470, -250, zb + 290), (-560, -250, zb + 290), (-560, -250, zb + 233)], 13.0)  # 10 mm onto the inlet
         add("KF-25 pump hose and valve", hose, C["hose"], "E3", "gas")
         # deck screws into the bottom plate (blind tapped)
         dsc = [cyl(5.0, (xc + a * 112.0, yc + b_ * 92.1, L["deck_top"]), "z", 6.0) for a in (-1, 1) for b_ in (-1, 1)]
@@ -768,7 +768,7 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
         add("Silicone-cord blade, 3 mm", cord, C["silicone"], "M3", "recoater", "recoater")
         clamp = box(hx - hl / 2 - 4, hx - hl / 2, -hw_ / 2, hw_ / 2, zbed + P["cord_d"], zbed + 12)
         add("Cord clamp (MK-08)", clamp, C["ss_dark"], "MK-08", "recoater", "recoater")
-        vib = cyl(5, (hx, hw_ / 2 + 4, arm_z0 + 8), "y", 22)
+        vib = cyl(5, (hx, hw_ / 2 + 4, arm_z0 + 13), "y", 22)                       # on the arm's top face (was 5 mm in it)
         add("Vibration motor", vib, C["black"], "M3", "recoater", "recoater")
         # the stage's M8 cable from its side connector: to a gland in the back wall (box) or a KF feedthrough (cube)
         cx_ = P["rc_x0"] + VEN.LSM["conn_side"][0][0]

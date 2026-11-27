@@ -808,6 +808,19 @@ def write_md(res):
            "Pump speed (1 L/s effective) and base pressures are estimates; the floor is set by leaks, outgassing and the "
            "argon's own O2, which the analyzer measures.", ""]
     md += ["## 7. Enclosure air temperature (same load as `fast_track.py`)", "", md_table(res["heat"])]
+    if "late_fixes" in res:
+        lf = res["late_fixes"]
+        md += ["## 8. Late fixes, re-checked separately", "",
+               "Two parts changed while this run was going: the vibration motor moved onto the arm's top face (it sat "
+               "5 mm into it), and the pump hose's end made vertical, onto the pump's inlet. Their pairs were recomputed "
+               "in FT-1, FT-1V and the Thorlabs variant and are in the tables above; the beam check of FT-1 and FT-1V was "
+               "repeated, and the motor was swept over the recoater's travel (21 positions, exact booleans):", "",
+               md_table([dict(state=k, motor_in_arm_mm3=v["motor_in_arm_mm3"], motor_sweep_contacts=len(v["motor_sweep_hits"]),
+                              motor_nearest_fixed_part=(f"{v['motor_nearest_static'][0]} mm, {v['motor_nearest_static'][1].split(' (')[0]}"
+                                                        if v["motor_nearest_static"] else "-"),
+                              clashes=v["clashes"], beam_hits=v["beam_hits"])
+                         for k, v in lf.items() if isinstance(v, dict)]),
+               f"Hose into the pump inlet: {lf.get('hose_into_pump_inlet_mm')} mm.", ""]
     md += [f"Run time {res['runtime_s']} s."]
     (OUT / "checks.md").write_text("\n".join(md) + "\n")
 
