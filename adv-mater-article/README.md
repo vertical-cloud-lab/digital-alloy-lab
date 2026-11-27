@@ -44,8 +44,9 @@ with biblatex-chem, biber and latexmk, plus Python with requests and matplotlib.
    - The desktop LPBF is a design with fast-track options; nothing is ordered (#260, PRs #266, #294).
    - The optimizer exists only in synthetic benchmarks. The twin exists, but isn't fitted to any lab measurement
      (audit, PR #293).
-2. **There are two papers.**
+2. **There are three papers.**
    - The campaign paper (#277, due Feb 28, 2027) takes campaign 1's alloys.
+   - The BOFN methods paper (#121, drafting started today) takes the synthetic benchmarks.
    - This article takes atomization as a method, the cost-aware optimizer and step costs, the desktop LPBF, the twin,
      and a second campaign in 2027.
    - The #277 session proposed this split independently; [`outline.md`](outline.md) §4 adopts it.

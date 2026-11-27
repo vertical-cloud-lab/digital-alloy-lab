@@ -68,8 +68,8 @@ Re-check this before submission; it is the claim most likely to be overtaken.
 
 ## 4. Two papers from one campaign: what goes where
 
-Two drafts now draw on the same lab work, and a journal will check whether this article's results were
-already published. The #277 session (campaign paper, due Feb 28, 2027) proposed the split below on
+Three drafts now draw on the same lab work (this one; the campaign paper, #277; the BOFN methods paper, #121),
+and a journal will check whether this article's results were already published. The #277 session (campaign paper, due Feb 28, 2027) proposed the split below on
 2026-11-27 (`al-campaign-paper/outline.md` on `claude/issue-277-20261127-1859`); this outline adopts it
 unchanged, and adds the last two rows.
 
@@ -82,6 +82,7 @@ unchanged, and adds the last two rows.
 | Desktop LPBF, the digital twin | Only if a desktop print is in it | **Owns** |
 | Campaign 2 (2027), optimizer-driven, desktop LPBF in the loop | — | **Owns**: the headline alloy for version A |
 | Mineral-burden metric | Defines it (B = Σ wᵢ·NIRᵢ, USGS MCS 2026) | Uses the same definition and cites it |
+| Synthetic benchmarks of the optimizer (`bofn-prelim`/`bofn-paper`: pKGFN, KGFN, screening on the hand-built network) | — | Cites the **BOFN methods paper** (#121, a third draft started on 2026-11-27 on `claude/issue-121-20261127-1900`), which owns them. This article's Fig. 6 comes from the twin fitted to lab records, not from the synthetic network |
 
 Consequence: **this article needs its own materials result**, from a second campaign in 2027. Without it,
 the article is a methods-and-platform paper (version B), which is a harder sell in *Advanced Materials*
