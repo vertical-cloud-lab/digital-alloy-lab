@@ -75,6 +75,12 @@ ABBREV = {
     "Corrosion Science": "Corros. Sci.",
     "Materials Characterization": "Mater. Charact.",
     "Integrating Materials and Manufacturing Innovation": "Integr. Mater. Manuf. Innov.",
+    "Scientific Reports": "Sci. Rep.",
+    "Journal of Research of the National Institute of Standards and Technology": "J. Res. Natl. Inst. Stand. Technol.",
+    "Progress in Additive Manufacturing": "Prog. Addit. Manuf.",
+    "The Journal of the Acoustical Society of America": "J. Acoust. Soc. Am.",
+    "Metals": "Metals",
+    "Ultrasonics": "Ultrasonics",
 }
 
 

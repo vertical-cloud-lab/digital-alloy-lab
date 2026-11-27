@@ -139,9 +139,28 @@ composition-to-property route is new in this journal.\cite{taherimousavi2026}}
 \subsection{The loop and what each step costs}
 \label{sec:loop}
 \note{Claim: per-result costs span about \tbd{four} orders of magnitude, and in-house
-powder and printing bring a candidate from composition to a printed, measured
-cube in \tbd{d} days, at \tbd{n} candidates per week. Data: logged step times
-and consumables for every run in both campaigns (results-needed.md, L1--L3).}
+powder and printing bring a candidate from composition to a measured cube in
+\tbd{d} days, at \tbd{n} candidates per week. Supplied by: step logs in both
+campaigns (results-needed.md, L1--L3).}
+
+\Cref{fig:loop}a shows the workflow as the optimizer sees it. Composition enters
+twice: at design, where CALPHAD calculations give the freezing range, a crack
+susceptibility index, the fraction of strengthening phases and the fraction of
+primary Al$_3$(Zr,Sc) available to nucleate grains; and at dosing, where the
+charge is weighed out. Laser settings enter at printing. Each step returns
+measured outputs that become inputs to the next, and each has its own surrogate
+model and its own cost (\cref{tab:costs}). Across \tbd{N} results logged in the
+two campaigns, the cost of a single result ranged from \tbd{minutes of computing
+and no consumables} for a CALPHAD calculation to \tbd{x person-hours and \$y}
+for a set of three tensile specimens, about \tbd{four} orders of magnitude
+(\cref{fig:loop}b).\src{L1, L2} A powder run cost \tbd{x} person-hours and
+\tbd{\$y}, most of it in \tbd{cleaning and powder handling} rather than in the
+pour itself. With the desktop system in the loop, a candidate went from
+composition to a measured cube in \tbd{d} days (median; range \tbd{a--b}),
+against \tbd{d$'$} days when the cube was printed at an outside facility
+(\cref{fig:loop}c), so the lab could take \tbd{n} candidates a week to the
+cube stage.\src{L3} These costs are what the optimizer divides by, and their
+spread is what makes stopping a candidate early worth anything.
 
 \begin{figure}[t]
 \centering
@@ -157,73 +176,278 @@ station (issue \#284) and measured costs.}\fi}
 
 \subsection{Making powder for any composition}
 \label{sec:atomize}
-\note{Claim: ultrasonic atomization of a dosed \SI{250}{\gram} charge gives
-LPBF-grade powder (\SIrange{15}{45}{\micro\metre} cut) with \tbd{in-range yield}
-and run-to-run spread inside the pre-set bar (D$_{50}$ CV $\le$ 10\%, in-range
-yield SD $\le$ 5 points), once the melt's landing point is checked before each
-run. This is where the held-back atomization data goes: every counted run from
-October 2026 to the data freeze. Data: Blocks A and B of the runs plan, all
-campaign runs, failure log (results-needed.md, A1--A6).}
-Placeholder text. \tbd{Process window (amplitude, pour pressure, plate
-material, superheat) and the failure modes engineered out: melt overshooting the
-plate, landing on the sonotrode, dripping onto a frozen lump, collection-cup
-failure.}
+\note{Claim: a dosed \SI{250}{\gram} charge gives LPBF-grade powder, and the
+spread at fixed settings meets a bar set before the first counted run, once the
+melt's landing point is checked before each run. This is where the held-back
+atomization data goes. Supplied by: Blocks A and B, every campaign run
+(results-needed.md, A1--A6).}
+
+\Cref{fig:atomize}a follows one charge from cup to powder. The first ten runs on
+the instrument (Figure~S1)
+failed mostly where the melt meets the plate: the stream overshot the plate,
+landed on the upper sonotrode, dripped onto a lump frozen on the plate's tip, or
+met a plate set in the wrong place, and in one run a hot shot reached and
+destroyed the collection cup. Two of the ten produced a usable lot. A run
+therefore counted only if the landing point had been checked cold before
+heating, the ultrasound was on before the pour, and O$_2$ was at most
+\SI{30}{ppm} when the melt was released.
+
+Before the first counted run we fixed what repeatable would mean: at least five
+valid runs, with D$_{50}$ varying by at most \SI{10}{\percent} (coefficient of
+variation), D$_{10}$ and D$_{90}$ by at most \SI{15}{\percent}, the
+\SIrange{15}{45}{\micro\metre} yield by at most 5 percentage points (standard
+deviation), and mean circularity by at most 0.02. Under these rules
+\tbd{n$_\text{valid}$} of \tbd{n$_\text{attempted}$} runs of the same
+\SI{250}{\gram} 6063 charge were valid. Their D$_{50}$ was \tbd{x}~\si{\micro\metre}
+(CV \tbd{y}\%), the in-range yield \tbd{z}\% (SD \tbd{s} points) and the mean
+circularity \tbd{c} (SD \tbd{s$'$}) (\cref{fig:atomize}b,c);\src{A1, A2}
+\tbd{all / k of} the metrics met the bar. Measuring each run's powder in two
+splits showed that measurement accounted for \tbd{q}\% of the variance, so the
+run-to-run spread belongs to the process. The only replicate study we found, three
+runs of a refractory alloy, reported a d$_{90}$ CV of about
+\SI{11}{\percent}.\cite{hinrichs2021} Across all \tbd{N} runs, failed ones
+included, in-range yield depended mostly on \tbd{plate material and superheat}
+and D$_{50}$ on \tbd{amplitude} (\cref{fig:atomize}d),\src{A3, A4} consistent
+with capillary-wave breakup on the plate.\cite{lierke1967,lang1962,priyadarshi2024}
+Powder oxygen was \tbd{x}~wt ppm and varied by \tbd{y}\% between runs.\src{A5}
+
+\begin{figure}[t]
+\centering
+\placeholder{\textwidth}{4.2cm}{\textbf{Figure 2 (planned).} (a) Cup, plug and
+dosed core (CAD); the machine in section with the melt's landing point; a pour
+seen through the viewport; SEM of the \SIrange{15}{45}{\micro\metre} cut.
+(b) Cumulative size distributions of every valid Block~A run, both splits;
+D$_{10}$/D$_{50}$/D$_{90}$ against run order with plate changes marked;
+six-part mass balance per run. (c) Each metric's spread against the
+pre-set bar and published spreads. (d) Process window over every run,
+failed runs included.}
+\caption{\textbf{Making powder for any composition.} \tbd{Caption once the
+data exist.}}
+\label{fig:atomize}
+\end{figure}
 
 \subsection{Composition fidelity from charge to powder to print}
 \label{sec:fidelity}
 \note{Claim: dosed charges land within \tbd{x} wt\% of target; Si in the powder
-follows the charge across the 0--30 wt\% 4047 spread (slope \tbd{s}, R$^2$
-\tbd{r}); evaporative loss of Mg in atomization and printing is \tbd{y} wt\%;
-EDS agrees with ICP-OES to \tbd{z} wt\% for Si-free alloys and \tbd{z'} for
-Si-bearing ones. The remaining error becomes measurement noise on the
-composition node. Data: dosing logs, Block B, ICP-OES on finalists, EDS
-calibration (results-needed.md, C1--C4).}
+follows the charge; Mg loss is \tbd{y} wt\%; EDS agrees with ICP-OES to
+\tbd{z} wt\%. The remaining error becomes the composition node's noise.
+Supplied by: dosing logs, Block B, ICP-OES, CALIBER (results-needed.md, C1--C4).}
 
-\subsection{Printing in-house: a desktop LPBF system in the loop}
+An optimizer that chooses compositions needs the composition it chose to be the
+one it gets. Weighed charges differed from their targets by \tbd{x} wt\% at most
+(\cref{fig:fidelity}a).\src{C1} To test whether the melt carries a dosed
+addition into the powder, we varied the amount of 4047 powder packed into 6063
+cups from 0 to \SI{30}{wt\percent}, which spans about \SIrange{1.3}{3.9}{wt\percent}
+Si. Measured Si followed the charge with a slope of \tbd{s} (R$^2$ = \tbd{r};
+\cref{fig:fidelity}b), and particles from the top, middle and bottom of the
+collection jar differed by \tbd{d} wt\% (\cref{fig:fidelity}c), so the powder is
+mixed at the scale of a batch and of a particle.\src{C2} Magnesium, the most
+volatile addition, was retained at \tbd{x}\% through atomization and \tbd{y}\%
+through printing (\cref{fig:fidelity}d).\src{C3} Against ICP-OES, EDS on
+particles read Si with a bias of \tbd{b} wt\% and a precision of \tbd{p} wt\%
+(\cref{fig:fidelity}e),\src{C4} which sets the noise on the composition node; for
+Si-bearing alloys this was \tbd{adequate / the limiting error}.
+
+\begin{figure}[t]
+\centering
+\placeholder{\textwidth}{3.6cm}{\textbf{Figure 3 (planned).} (a) Dosing error
+per element. (b) Si in powder against Si in charge across the
+4047-in-6063 spread, EDS and ICP-OES, 1:1 line. (c) Per-particle Si at the
+top, middle and bottom of the jar; EDS map of a sectioned particle.
+(d) Mg recovery through atomization and printing. (e) EDS against ICP-OES.}
+\caption{\textbf{Composition fidelity from charge to powder to print.}
+\tbd{Caption once the data exist.}}
+\label{fig:fidelity}
+\end{figure}
+
+\subsection{Printing in-house}
 \label{sec:print}
-\note{Claim: in-house powders print to $\ge$\tbd{99}\% relative density on the
-desktop system; single tracks and cubes rank candidates for cracking and
-porosity in the same order as an industrial machine (Spearman $\rho$ =
-\tbd{r}), with an offset of \tbd{d} in density and \tbd{h} in hardness measured
-on shared powders. Data: desktop LPBF (issue \#260), Utah Aconity MIDI builds
-on the same powders (issue \#138) (results-needed.md, P1--P5).}
+\note{Claim: in-house powders print to $\ge$\tbd{99}\% density on the desktop
+system, which ranks candidates as an industrial machine does, with a measured
+offset. Supplied by: desktop LPBF (\#260), Utah builds on the same powders
+(results-needed.md, P1--P5).}
+
+A loop that makes powder in a day gains little if every print waits for a
+booking at an outside facility. We built a desktop LPBF system for single tracks
+and small cubes (\cref{fig:print}a; \tbd{specifications}).\src{P1} On it,
+\tbd{n} in-house powders printed to $\ge$\tbd{99}\% relative density within
+\tbd{power and speed window} (\cref{fig:print}b).\src{P2} Because the desktop
+system cannot make standard tensile specimens and differs from industrial
+machines in spot size, plate heating and atmosphere, we printed the same powders
+on an Aconity MIDI. Densities and hardnesses from the two machines ranked the
+alloys alike (Spearman $\rho$ = \tbd{r}), with offsets of \tbd{d} in density and
+\tbd{h} in hardness (\cref{fig:print}c).\src{P3, P4} Cracking did not follow the
+CALPHAD crack index for alloys with Zr\tbd{/Sc}: \tbd{n} of them printed
+crack-free despite an index above \tbd{threshold} (\cref{fig:print}d),\src{P5} the
+grain refinement by primary Al$_3$Zr that equilibrium and Scheil calculations do
+not capture.\cite{martin2017,croteau2018} This is the screen error that decides
+whether letting the optimizer skip ahead to a print pays off (\cref{sec:twin}).
+
+\begin{figure}[t]
+\centering
+\placeholder{\textwidth}{3.6cm}{\textbf{Figure 4 (planned).} (a) The desktop
+LPBF system, its build plate and sensors. (b) Power--speed map of single tracks
+and cubes from in-house powders: density, cracking, monitoring signals.
+(c) Desktop against Aconity MIDI on the same powders: density and hardness.
+(d) Cracking against the CALPHAD crack index.}
+\caption{\textbf{Printing in-house.} \tbd{Caption once the data exist.}}
+\label{fig:print}
+\end{figure}
 
 \subsection{A campaign in which the optimizer chooses the step}
 \label{sec:campaign}
-\note{Claim: over \tbd{k} weeks and \tbd{N} candidates the cost-aware network
-optimizer ran CALPHAD on \tbd{a}, made powder for \tbd{b}, printed \tbd{c} and
-tensile-tested \tbd{d}; \tbd{p}\% stopped before printing. It found
-\tbd{alloy} with \tbd{YS}/\tbd{UTS}/\tbd{EL} (as built and \tbd{heat treated}),
-better than AlSi10Mg printed and tested the same way, at a supply-risk score
-\tbd{z}\% below Scalmalloy's. Independent composition and tensile checks agree
-within \tbd{e}. Data: 2027 campaign (results-needed.md, B1--B6), with the
-Nov 2026--Feb 2027 campaign as prior data.}
+\note{Claim: the optimizer ran CALPHAD on \tbd{a} compositions, made powder for
+\tbd{b}, printed \tbd{c} and tensile-tested \tbd{d}; \tbd{p}\% stopped before
+printing; it found \tbd{alloy}. Outside checks agree. Supplied by: campaign 2,
+with campaign 1 as prior data (results-needed.md, B1--B5, V1--V2).}
 
-\subsection{What the twin says about when this pays off}
+The campaign started from \tbd{six} seed compositions and the data of the
+first campaign,\tbd{cite the campaign paper} with baselines, target and
+stopping rule committed beforehand.\tbd{commit} Over \tbd{k} weeks the optimizer
+made \tbd{N} decisions (\cref{fig:campaign}a): \tbd{a} CALPHAD calculations,
+\tbd{b} powder runs, \tbd{c} prints and \tbd{d} tensile sets.\src{B2} \tbd{p}\%
+of the candidates that reached the powder stage stopped before printing, and
+\tbd{q}\% of printed candidates stopped before tensile testing, each because the
+expected gain of the next step was lower per unit cost than that of another
+candidate's step. Best-so-far performance rose with spend as in
+\cref{fig:campaign}b.\src{B3} The best alloy, \tbd{composition}, reached
+\tbd{YS}~MPa yield strength, \tbd{UTS}~MPa tensile strength and \tbd{EL}\%
+elongation \tbd{as built / after heat treatment} ($n$ = \tbd{n}), against
+\tbd{YS$_0$}~MPa for AlSi10Mg printed and tested the same way, at a mineral
+burden \tbd{z}\% below Scalmalloy's (\cref{fig:campaign}c,d;
+\cref{tab:alloys}).\src{B4, B5} An outside laboratory measured its composition
+within \tbd{e} wt\% of ours.\src{V1}
+
+\begin{figure}[t]
+\centering
+\placeholder{\textwidth}{4.0cm}{\textbf{Figure 5 (planned).} (a) Every candidate
+as a row: the steps it reached and where and why it stopped (acquisition value
+per cost at each decision). (b) Best-so-far against cumulative spend, with the
+twin's replay of screen-then-test, full-chain BO and random on the same budget.
+(c) Yield strength against mineral burden for every tested alloy; AlSi10Mg
+printed on the same machine; datasheet AlSi10Mg and Scalmalloy as context.
+(d) The finalist: stress--strain curves, micrograph, outside checks.}
+\caption{\textbf{A campaign in which the optimizer chooses the step.}
+\tbd{Caption once the data exist.}}
+\label{fig:campaign}
+\end{figure}
+
+\subsection{When it pays off}
 \label{sec:twin}
-\note{Claim: a digital twin of the loop, with step costs, noise and failure
-rates fitted to the campaigns, reproduces the real campaign's spend to reach
-\tbd{target} within \tbd{x}\%; over $\ge$\tbd{20} seeds per condition,
-cost-aware network optimization reaches the target at \tbd{k}-fold (CI
-\tbd{lo--hi}) lower cost than screen-then-test when the screen misses
-nucleant-driven grain refinement, and ties when the screen is right. Data: twin
-(issue \#276), clocked benchmark (PR \#297), seeds and baselines pre-registered
+\note{Claim: a twin fitted to both campaigns reproduces campaign 2's spend
+within \tbd{x}\%; cost-aware network optimization reaches the target at
+\tbd{k}-fold lower cost than screen-then-test when the screen is wrong, and ties
+when it is right. Supplied by: the twin (\#276), refit on lab records
 (results-needed.md, T1--T4).}
+
+A physical campaign cannot be repeated often enough to compare strategies, so we
+fitted a digital twin of the lab to the records of both campaigns: each step's
+outputs, duration, cost, failure rate and noise (\cref{fig:twin}a).\src{T1}
+Given campaign 2's decisions, the twin reproduced its spend to the target within
+\tbd{x}\%.\src{T4} We then ran each strategy \tbd{20} times per condition. When
+the CALPHAD screen missed grain refinement by Zr and Sc nucleants, cost-aware
+network optimization reached the target with \tbd{k}-fold less spend than
+screening then testing (90\% CI \tbd{lo--hi}); when the screen was right, the
+two were within \tbd{x}\% and screening was \tbd{faster/slower}
+(\cref{fig:twin}b).\src{T2} The gain grew with the cost ratio between making
+powder and running a calculation and vanished below \tbd{r}
+(\cref{fig:twin}c).\src{T3} \ifdraft\textit{(The synthetic benchmark in
+\cref{fig:twin-draft}, which this panel will replace, gave 3.75-fold, 90\% CI
+2.0--5.7, at $\kappa$ = 1 and favoured screening at $\kappa$ = 0; it is
+noise-free and uncalibrated.)}\fi
+
+\begin{figure}[t]
+\centering
+\placeholder{\textwidth}{3.4cm}{\textbf{Figure 6 (planned).} (a) Twin against
+lab: step times, costs, failure rates, usable powder, tensile scatter.
+(b) Spend to the target for each strategy, screen wrong ($\kappa$ = 1) and
+right ($\kappa$ = 0), $\ge$20 seeds, matched-seed bootstrap intervals.
+(c) Acceleration against screen error and step-cost ratio.}
+\caption{\textbf{When it pays off.} \tbd{Caption once the data exist.}}
+\label{fig:twin}
+\end{figure}
+
+\ifdraft
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/fig6-draft-synthetic.pdf}
+\caption{\textbf{Draft only: layout for \cref{fig:twin}b from the synthetic
+benchmark} (bofn-prelim, noise-free, not calibrated to the lab). Not a result of
+this article; omitted from the clean build.}
+\label{fig:twin-draft}
+\end{figure}
+\fi
 
 \subsection{Limits}
 \label{sec:limits}
-\note{Claim: the gain depends on the ratio of step costs and on how wrong the
-cheap steps are; desktop-printed coupons rank candidates but do not qualify
-them; the composition space was \tbd{elements, bounds}. Data: twin
-sensitivity analysis (T3), desktop vs industrial offset (P4).}
+\note{Claim: the gain depends on cost ratios and on how wrong the cheap steps
+are; desktop coupons rank candidates but do not qualify them. Supplied by: T3,
+P4.}
+The advantage is conditional. It comes from steps whose cost differs by orders of
+magnitude and from a cheap step that is wrong about the alloys that matter; with
+an accurate screen, screening is as good or better (\cref{fig:twin}b). The
+desktop system ranks candidates but does not qualify them: its coupons are small,
+and its offset from an industrial machine (\cref{fig:print}c) must be measured
+for each new alloy family. The design space was \tbd{elements and bounds}, and the
+mineral-burden score depends on import reliance, which changes from year to year.
+\tbd{Room-temperature properties only; no fatigue; one powder route.}
 
-% ---------------------------------------------------------------------------
+\begin{table}[t]
+\centering
+\caption{\textbf{What each step costs.} Median (interquartile range) per result
+over \tbd{n} results in both campaigns. \tbd{Fill from L1--L2.}}
+\label{tab:costs}
+\small
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+Step & Person-h & Machine-h & Consumables (\$) & Calendar time & $n$\\
+\midrule
+CALPHAD calculation & \tbd{} & \tbd{} & 0 & \tbd{} & \tbd{}\\
+Charge (dose, pack) & \tbd{} & --- & \tbd{} & \tbd{} & \tbd{}\\
+Atomization run & \tbd{} & \tbd{} & \tbd{} & \tbd{} & \tbd{}\\
+Powder characterization & \tbd{} & \tbd{} & \tbd{} & \tbd{} & \tbd{}\\
+Print (tracks, cubes; desktop) & \tbd{} & \tbd{} & \tbd{} & \tbd{} & \tbd{}\\
+Density, section, hardness & \tbd{} & \tbd{} & \tbd{} & \tbd{} & \tbd{}\\
+Tensile set ($n$ = 3) & \tbd{} & \tbd{} & \tbd{} & \tbd{} & \tbd{}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{\textbf{Alloys against the benchmarks.} \tbd{Fill from B4--B5, V1--V2.}
+Datasheet values are context, not the comparison: the comparison is AlSi10Mg
+printed and tested the same way.}
+\label{tab:alloys}
+\small
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+Alloy & Composition (wt\%) & $\rho_\text{rel}$ (\%) & HV & YS / UTS (MPa) & EL (\%) & $B$\\
+\midrule
+\tbd{best alloy} & \tbd{target / measured} & \tbd{} & \tbd{} & \tbd{} & \tbd{} & \tbd{}\\
+AlSi10Mg, same machine & \tbd{} & \tbd{} & \tbd{} & \tbd{} & \tbd{} & \tbd{}\\
+AlSi10Mg, Aconity MIDI, as built\textsuperscript{a} & commercial & --- & --- & $228\pm13$ / $376\pm10$ & $4.5\pm0.5$ & \tbd{}\\
+AlSi10Mg, datasheets\textsuperscript{b} & & & & 233--300 / 450--470 & 5--10 & \tbd{}\\
+Scalmalloy, aged, datasheets\textsuperscript{b} & & & & 465--500 / 505--530 & 11.5--15.8 & \tbd{}\\
+\bottomrule
+\end{tabular}
+
+\smallskip
+\footnotesize \textsuperscript{a}Horizontal, unmachined, $n$ = 4 (lab data,
+April 2026). \textsuperscript{b}As built (AlSi10Mg) and aged (Scalmalloy),
+machined specimens, from four vendor datasheets.\tbd{cite the datasheet set}
+\end{table}
+
 \section{Conclusion}
 \label{sec:conclusion}
-\tbd{Write last. Two to three sentences on what was found, one on the general
-point: an optimizer that can stop a candidate at any step needs every step to
-be cheap enough to run on demand, which here meant making powder and printing
-in-house.}
+\tbd{Write last.} A laboratory that makes its own powder in \SI{250}{\gram} lots
+and prints in-house can let an optimizer decide, candidate by candidate, which
+result is worth its cost. Here that found \tbd{alloy} after \tbd{N} decisions
+and \tbd{\$}, and a twin fitted to the lab shows the approach pays off when the
+cheap screen is wrong about the alloys that matter, and not otherwise. The
+condition generalizes: an optimizer that can stop a candidate at any step needs
+every step to be cheap and fast enough to call on demand, which here meant
+bringing powder making and printing into the lab.
 
 % ---------------------------------------------------------------------------
 \section{Experimental Section}
