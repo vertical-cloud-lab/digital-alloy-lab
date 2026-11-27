@@ -58,8 +58,8 @@ AL_200 = dict(E=62_000.0, nu=0.33, sy_hot=103.0,
 MACOR_ALPHA = 9.3e-6           # Corning Macor datasheet: 9.3 ppm/K (25-300 C)
 SENSOR_ALPHA = 8.0e-6          # assumed: PZT element (2-6 ppm/K) in a stainless case (17); only its 4 mm height counts
 S302 = dict(G=69_000.0, alpha=17.3e-6, tau_allow_frac=0.45,
-            src="302 stainless spring wire: G 69 GPa (10.0 Mpsi); allowable static shear 45 % of tensile for set-removed "
-                "compression springs (Shigley Table 10-6 / Associated Spring practice)")
+            src="302/316 stainless spring wire: G 69 GPa (10.0 Mpsi); allowable static shear 45 % of the wire's minimum tensile "
+                "(AE_CART spring_su_MPa) for set-removed compression springs (Shigley Table 10-6 / Associated Spring practice)")
 GREASE = dict(K=1.0e9, h_min_um=1.0, h_flat_um=(2.0, 10.0),
               src="couplant film: bulk modulus ~1 GPa for a PFPE or silicone grease (assumed); minimum film 1 um (the surfaces' "
                   "roughness); a flat greased joint at 10-20 N squeezes to 2-10 um (assumed)")

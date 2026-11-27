@@ -55,7 +55,7 @@ name says "envelope".
 | LP port | Ø24 bore on the line of sight and a face O-ring groove (2-025) in the lid; Ø40.8 adapter boss (4 × M4, none on the window flange's side) carrying the Ø25 × 1 slide and the Ø25.4 × 3 window square to the line of sight; retaining ring | lid, (−40, 60, 136) | §3 | M0-07, M7-16 to M7-18 |
 | LP camera | IMX296 board in a 40 × 40 × 30 housing, turned so a face (not a corner) faces PB2; Kowa 50 mm; filters; cut-out in the optics bridge | window top 34 mm and lens front 49 mm up the line from the port centre | monitoring_spec `LID_CAMERA`, `LP_GEOM` | M7-12 to M7-14 |
 | Coaxial cage | cube 2 (DMSP950) and cube 3 (DMLP805) on posts, SM1 tubes, ER rods; camera arm to −y (FESH1000, AC254-075-B, cage plate, IMX296 board on a post); PD-A to −y and PD-B to −x (filter, AC254-050-B, pinhole, PDA36A2, each on a post); beam trap on cube 1's −y port. The old SM1 photodiode chain behind cube 1 is removed | above the bridge, y −25.25, z 271.1 | optics.md §2, `monitoring_spec.COAX` | M5-xx, M6-xx, M0-17, T2 |
-| AE | Ø3 mm 316 waveguide through the heater block, both radiation shields, the piston head's Ø10 wire hole and the hollow rod, 3 mm into an M3 thread in the rod end's bore floor; Ø19 × 16 sensor in a strap on the rod end's back face; preamp on the process base plate | waveguide at r 3.2 mm, 120°; moves with the piston and the module | §4 | M4-01, M4-02, M4-06, M4-09 |
+| AE | Ø3 mm 316 waveguide, free in its holes, with a Ø4 head domed R50 on the plate's spigot (it hangs in a Ø4.4 counterbore in the socket floor when nothing holds it up), down the heater block, both shields, the piston head's Ø10 wire hole and the hollow rod to its foot on a MISTRAS PICO (Ø5 × 4, face up) in a 316L cartridge (Ø6.3 × 25.8) standing on the rod end's bore floor, a Lee LC 029BB 09S316 spring under the sensor and a stop cap over it; SST FA40102 Microdot weld-in in the rod end's cap with its plug (envelope); S25: the sensor in a strap on its rod end's back face; preamp on the process base plate | waveguide r 3.2 mm at 120°, cartridge r 2.8 at 126°, feedthrough at x +4.5, zc + 15; all move with the piston and leave with the module | §4 | M4-01, M4-02, M4-04, M4-06, M4-07, M4-09 (S25), M4-10 to M4-13 |
 | Recorder | PicoScope 4444 and the sync breakout box on the 4U drawer's floor | rack | sync-and-data.md §2.1 | M1-01, M1-07 |
 
 **Not drawn:** the trigger generator (a Pico 2 inside PB2, which is drawn as a closed box), cables, the argon line to the purge
@@ -155,32 +155,157 @@ camera, its bracket and photodiode B all stand inside it.
 
 ![LP: the adapter boss, the camera and the cut-out in the bridge](../analysis/out/monitoring/mech/lp.png)
 
-## 4. The AE path as drawn
+## 4. The AE path: a sprung waveguide on a sensor inside the rod
 
-- **Route:** a Ø3 mm 316 rod from the plate's bayonet spigot (z −14 with the plate at z 0) straight down, through a Ø3.4 hole
-  in the heater block, both 0.3 mm radiation shields, the piston head's Ø10 wire hole and the hollow rod (ID 12.7, which it
-  shares with the heater and thermocouple leads), to the rod end. The checks' Ø3 rod and its 155 mm path are the basis.
-- **Where it sits:** r 3.2 mm at 120°, so it passes the piston head's wire hole (r 5) with 0.3 mm to spare. It stays clear of
-  M50's heaters (r 12.7) and of the rod end's channel to the feedthroughs (y ≤ 0). It leaves only 0.9 mm of aluminium between
-  its hole and the control thermocouple's (on the block's axis). S25's rod (ID 7.7) has no room for it, so S25 keeps the
-  sensor on the rod end alone.
-- **Why it stops in the rod end:** the checks have the waveguide leave through the end cap into air. Every face of the rod end
-  is taken. The striker disc and the pot magnet that couple the Z arm sit under the rod's axis. The seven weld-in
-  feedthroughs fill the front face. The rod's bore (Ø12.7) is narrower than the 316L block, so a straight rod can't reach its
-  back or sides, and a 3 mm rod can't bend through 90° inside the bore. So it is screwed 3 mm into the bore floor, and the
-  sensor sits on the rod end's back face, outside the gas boundary. The path gains a 316-in-316 thread, whose loss depends on
-  how well it seats (not estimated), but skips the graphite foil and the Macor stacks (26–52 dB on the rod end alone, Checks §6).
-- **What isn't solved: the preload.** The checks want a domed tip of R ≥ 25 mm held at 10–20 N; a 0.05 mm dome at Ø3 is not
-  drawn. A rod fixed at both ends can't hold a steady force across a 200 °C plate and a swapped plate. That needs a spring:
-  - a sprung tip in the heater block puts the spring into the path;
-  - a rod end redesigned with a side exit (a cavity wide enough for an R ≥ 15 mm bend, an O-ring gland on the back face, the
-    spring and the sensor outside) keeps it out.
-  The second changes a part the hot-swap and electrical notes own; it is a decision for them. Until then the drawn waveguide
-  has no defined contact force, and the sensor on the rod end hears the plate only through the stack, at 26–52 dB.
-- **Temperatures:** the rod end runs at 61 °C, or 74 °C with powder in the gaps (Checks §6), against ~75 °C for a sensor there.
-  The preamp sits on the base plate.
+**Short answer.**
+- **The spring sets the force, not the stack.** The Ø3 mm 316 waveguide slides free in its holes. Its Ø4 head, domed R50,
+  presses on the plate's spigot. Its foot sits on a Ø5 mm sensor (MISTRAS PICO) inside a 316L cartridge that stands on the rod
+  end's bore floor. A Lee Spring LC 029BB 09S316 under the sensor pushes sensor and waveguide up. The plate gets 11.2–19.3 N at
+  every corner of the tolerances and thermal cases, or 13.3–16.9 N if the stop force is set with a shim at assembly
+  ([`ae_preload.md`](../analysis/out/monitoring/mech/ae_preload.md) §2).
+- **Heat hardly moves it.** The waveguide and the stack it runs through grow within 0.09 mm of each other, between assembly and a
+  500 °C plate, which is 0.4 N on this spring.
+- **The path loses 1–8 dB, against 26–52 dB through the stack to the rod end**, with a PFPE grease at both ends. At 500 °C (tier
+  B) no grease lasts, and a dry tip loses 12–31 dB.
+- **The sensor's lead leaves through a Solid Sealing FA40102 Microdot weld-in** in the rod end's cap, above the cross-drilling. The
+  cap gets one spot face, a counterbore and a Ø5.18 hole (§4.7). The weld is laser or e-beam, not TIG.
+- **It needs the bayonet's disc spring first.** Today's bare bayonet would be lifted 0.31 mm by the AE force, opening the foil.
+  With the 97125K111 spring that hot-swap.md recommends, the foil keeps 197–205 N on M50, against the 173 N it needs.
+- **S25 keeps the rod-end route.** Its rod's Ø7.7 bore has no room for a waveguide, a cartridge and the leads together.
 
-![AE path: a section through the module at the waveguide](../analysis/out/monitoring/mech/ae.png)
+**The previous run's design, checked.** It put the sensor in the rod end's bore with the spring on the bore floor, and an SMA or
+Microdot weld-in on the back face. Three things break it:
+- the bore floor under the waveguide is cut by the cross-drilling (a 4 mm trench that the left type K leads run along) and by the
+  channel to the power sleeve, so a spring can't seat there;
+- a weld-in on the back face can only sit at the type K row (the block is 16 mm tall), and every coaxial weld-in found has a gas-side
+  body (FA40102: Ø4.83 × 6.0 and a 3.8 mm pin) that would then block the cross-drilling;
+- nothing inside the rod end can be reached once the rod is welded on, so a sensor or a connector there could never be changed.
+
+So the spring stands on a cartridge whose legs straddle the cross-drilling. The cartridge drops in, and comes out, through the
+rod's top with the piston head off, and its sensor's lead joins the feedthrough's pigtail near the head. The feedthrough sits in
+the cap, above the cross-drilling and the channel. The sensor inside the gas boundary sees argon and the rough-vacuum purge.
+
+### 4.1 What is drawn (M50 and L75, `AE_CART` in `monitoring_parts.py`)
+
+| Part | Size and place | Notes |
+|---|---|---|
+| Waveguide | Ø3 × 92.8 mm shaft (1/8 in. rod, M4-06) and a Ø4 × 1 head domed R50; axis r 3.2 at 120°, as before | slides in the Ø3.4 holes in the heater block and shields, the head in a new Ø4.4 × 1.3 counterbore in the socket floor; with nothing under it the head hangs there |
+| Cartridge | turned 316L, Ø6.3 × 0.35 wall, 25.8 mm tall, axis r 2.8 at 126°, on the rod end's bore floor (zc + 9) | two legs either side of the cross-drilling; floor (spring seat) at zc + 13.9; a cap with the waveguide's Ø3.3 guide hole stops the sensor; a 2.8 mm slot for the sensor's lead faces the rod's axis |
+| Spring | Lee LC 029BB 09S316: 316, OD 4.78, free 19.05, 3.94 N/mm; 15.88 mm at the stop, 15.28 mm with the plate on | drawn as a helix |
+| Sensor | MISTRAS PICO, Ø5 × 4, face up; its side cable's boot through the slot | its face is 0.6 mm under the cap with the plate on |
+| Feedthrough | SST FA40102 in the cap's back at x +4.5, zc + 15, on a 7.4 mm spot face 7.3 mm behind the axis; its mating 10-32 plug and cable as an envelope | gas side: a Ø4.83 × 6.0 body and the pin, in the bore's back-right quarter, 0.58 mm from the cartridge |
+
+The waveguide is 93.8 mm long, against the 121 mm screwed into the bore floor before. The gas-side lead (a Kapton coax pigtail
+pushed onto the pin, up the rod to an in-line 10-32 joint with the sensor's lead) is not drawn, like every other cable.
+
+### 4.2 The spring and the stroke
+
+The plate pushes the head down a pre-travel of 0.6 mm, set at assembly. With the plate off, the spring holds the sensor against
+the cap and the head stands 0.6 mm above where the plate's spigot will be. With the plate on, the force is the spring's force at
+the stop plus 0.6 mm of its rate. The spring has to take up:
+
+| What moves the head | Range | Basis |
+|---|---|---|
+| pre-travel, as set | 0.6 ± 0.1 mm | lap the waveguide to length against a depth gauge from the socket floor |
+| plate to plate | ± 0.1 mm | spigot length ± 0.05 mm, graphite foil ± 0.05 mm (assumed) |
+| thermal: stack against waveguide, assembly to running | −0.092 to +0.023 mm | thermal.json's M50 cases (200 °C, powder in the gaps, 500 °C tier B) with the waveguide's own fin profile |
+| the spring's free length and rate | ± 2 %, ± 10 % | catalogue tolerances (assumed) |
+| module travel | 0 | the waveguide, cartridge and sensor all move with the piston and leave with the module |
+
+Over the 48 corners the plate gets **11.2–19.3 N**, inside the 10–20 N wanted. Setting the stop force with a push gauge to 12.5 ±
+0.5 N (a shim under the spring) narrows it to 13.3–16.9 N. The spring's shear stress is 626 MPa at the highest force, against 760
+MPa allowed (45 % of the wire's ~1,690 MPa tensile, assumed). Its shortest length in use leaves 6.1 mm to solid. Pressing the
+head down with the plate off bottoms it in its counterbore at 20.4 N, before the spring can reach solid. The waveguide as a column
+buckles at 879 N, 46× the force.
+
+### 4.3 The sensor
+
+The cartridge has to sit beside the heater and type K leads in the rod's Ø12.7 bore, so the sensor must be about Ø5. Read on the
+makers' pages (2026-11-27, ae_preload.md's parts table):
+
+| Sensor | Size (mm) | Band (resonance) | Peak sensitivity | Rating | Fits? |
+|---|---|---|---|---|---|
+| **MISTRAS PICO** | Ø5 × 4, side cable | 200–750 kHz (250) | 54 dB ref V/(m/s) | −65 to 177 °C | **yes: chosen** |
+| QingCheng WM500/1 | Ø4.7 × 4.0, side cable | 100–1000 kHz (500) | > 58 dB | −20 to 120 °C | yes, but rated 120 °C, which the foot reaches |
+| MISTRAS Nano30 | Ø8 × 8 (12.8 across its boot) | 125–750 kHz (140) | 62 dB | −65 to 177 °C | no: a Ø9 cartridge leaves the leads ~1.3 mm |
+| Vallen VS600-Z2, Fuji M31 | Ø4.75 × 5.3; Ø3 × 3 | 400–800 kHz; 350 kHz resonant | – | to 110 °C; to 80 °C | size yes; band or rating no |
+
+All are quote-only. **The cost of fitting is the band's low end.** Crack AE in LPBF peaks near 100 kHz (Seleznev 2022), where the
+PICO is below its band; the Nano30 would gain ~8 dB of sensitivity and the 100–200 kHz band but has no room. The WM500/1 covers
+100 kHz in the same envelope, but from its maker's sheet only, and the foot's worst case (120.8 °C, below) is at its rating.
+**Compare the PICO and the WM500/1 with pencil-lead breaks on the bench before buying two.** The PICO's integral cable ends in a
+BNC 1 m away: ask MISTRAS for a ~0.3 m cable with a 10-32 plug, or fit one.
+
+**Temperature.** The foot, taken as adiabatic (an upper bound), reaches 66–100 °C in the clean cases, 92–121 °C with powder in
+the gaps and 83–98 °C at 500 °C, against the PICO's 177 °C (ae_preload.md §5). It is warmer than the old end cap (78 °C) because
+the foot now sits 27 mm higher, in the rod, nearer the piston head.
+
+### 4.4 Couplant
+
+- **Tip, tier A (200 °C): Krytox LVP**, a PFPE vacuum grease rated −15 to 300 °C with a published 1e-5 Torr at 200 °C (Chemours
+  TDS, via McMaster 10195K41, $178.91 per 2 oz). Put a dab on each plate's spigot underside when the plate is prepared. It is
+  not silicone: Molykote 41 (the old M4-04) is a silicone oil with no vacuum data, and silicone vapour fouls windows.
+- **Cold end: the same grease** on the sensor's stainless face, under 11–19 N. Grease, not a bond, so the sensor can be changed
+  and no adhesive adds AE noise (US5000045A).
+- **Tier B (500 °C): no grease lasts.** Use a dry, annealed aluminium foil (25–100 µm) under the head; the published dry-couplant
+  rigs used silver, gold or copper foil at 25 MPa or more, far above this head's ~0.1–0.2 GPa Hertz peak over a 0.4–0.5 mm spot.
+  An aluminium foil avoids a new metal pair on the 6061 plate (an inference, not checked). The dry tip costs 11–26 dB more.
+- **The dome is R50, not the R25 the checks suggested.** At 200 °C 6061 keeps only ~103 MPa; R25 at 11–20 N peaks at 211–256 MPa
+  and would dent the spigot under the bayonet's 60° twist. R50 peaks at 133–161 MPa, under 1.6 × 103.
+
+### 4.5 The feedthrough
+
+**Solid Sealing FA40102** (Microdot 10-32, grounded shield, Inconel pin, −269 to 450 °C, He leak < 1e-10 atm·cc/s, $34.50).
+Its Ø6.35 flange sits in a Ø6.43 × 0.51 counterbore on a spot face in the cap's back, over a Ø5.18 hole into the bore; SST's
+weld sheet NS40102 calls for 304L or 316L and a laser or e-beam weld (TIG not recommended), unlike the rod end's other
+feedthroughs. Weld it, and push the pigtail onto its pin, before the rod is TIG-welded on, and heat-sink the pigtail through
+that weld. Outside, only 3.3 mm of thread stands proud; the plug and its cable stand behind the cap, clear in every state and
+sweep (§4.9). SST's own plug and cable (FA21382, $86.50) is rated to 75 °C, 1.5 K above the rod end's worst
+case: take a PTFE 10-32 cable rated to 125 °C (CeramTec 14544-01-A, not priced). Lesker's SMA weld-in (IFTCG012011) and SST's
+double-ended Microdot (FA49614) are too long for the 12.7 mm bore.
+
+### 4.6 The plate, the swaps and the module
+
+- **The plate.** The AE force pushes the plate up by 11–19 N. Today's bare bayonet holds it down only by its weight (0.53 N on
+  M50), so the plate would rise until its lugs meet the ledge (0.31 mm) and the foil would open. With the 97125K111 disc spring
+  (216 N on M50, 530 N on L75; hot-swap.md §3.1) the foil keeps 197–205 N and 511–519 N, above the 173 and 424 N it needs. **Fit
+  that spring before the AE preload.**
+- **A plate swap.** The robot (or a person) pushes up to 19 N more over the last 0.6 mm and twists 9 N·mm more (0.61 N·m for the
+  bayonet). The head slides 3.4 mm across the greased spigot in the 60° twist. Check the coupling with pencil-lead breaks after
+  every swap (monitoring.md §5.4).
+- **A module swap.** Nothing moves inside the module. The 10-32 plug comes off with the type K and power plugs. The waveguide
+  can't fall out while the module is upright: with the plate off it rests on the sensor, and with the cartridge out it hangs by its
+  head. Turned over with its plate off, it would slide out of the socket.
+- **Service.** Lift the piston head off the rod (two set screws), as for the leads: the waveguide comes with it, then the cartridge
+  comes up the rod by its lead.
+- **The robot cell's drawbar** (hot-swap.md) would take the rod's axis and the block's centre. It and this waveguide can't both
+  pass the head's Ø10 wire hole; there, the drawbar itself would have to be the guide (Checks §6). Not resolved.
+
+### 4.7 Added machining, and what the rod end's owners need
+
+| Part | Feature | Size |
+|---|---|---|
+| Rod end (cap's back) | spot face, end mill | 7.4 × 7.4 mm flat, 7.3 mm behind the axis, centred x +4.5, zc + 15 (≤ 3.7 mm deep on the cap's curve) |
+| Rod end | weld counterbore | Ø6.43 × 0.51 mm |
+| Rod end | through-hole into the bore | Ø5.18, ~3 mm to the bore |
+| Rod end | laser or e-beam weld of the FA40102 | outsourced (M4-13), before the rod is welded on |
+| Heater block (socket floor) | counterbore for the waveguide's head | Ø4.4 × 1.3 mm, at r 3.2, 120° (the Ø3.4 hole through block and shields was already cut) |
+| Waveguide | Ø4 head domed R50 on a 1/8 in. rod, lapped to length | turned, or a button laser-welded on (M4-10) |
+| Cartridge | turned 316L part with a pressed-in cap | M4-10 |
+
+For **modules_low.py, hot-swap.md and electrical.md** (the model cuts these with `_cut` for now):
+1. the cap's spot face, counterbore and hole, and the heater block's counterbore, in the default model;
+2. electrical.md FT1: an eighth weld-in, FA40102, laser-welded, unplugged at a swap like the others;
+3. the leads' routes past the cartridge (in front of it, and under its floor between its legs) and past the feedthrough's gas-side
+   body and pin, which sit just above the channel's top edge: check with the real leads;
+4. hot-swap.md: the bayonet's disc spring is now needed for AE as well, and the drawbar would displace the waveguide (§4.6).
+
+### 4.8 S25
+
+S25's 3/8 in. rod (ID 7.7) holds the heater and type K leads and nothing else. It keeps the sensor clamped on its rod end's back
+face, as drawn before (26–52 dB, M4-09 as an option), or goes without AE.
+
+![AE path: a section through the M50 module at the waveguide, and the cartridge in the rod end](../analysis/out/monitoring/mech/ae.png)
 
 ## Checks
 
@@ -311,6 +436,30 @@ Bar velocity 4915 m/s.
 - **Where the loss is:** in the contacts, not the impedance mismatches. Al/Macor is 0.04 dB as a bonded interface (Edison's answer gives 1–2 dB for a 0.13–0.20 reflection coefficient, which is 0.07–0.18 dB); Al/316 is 1 dB. A dry point contact at the tip costs 10–34 dB at 100–500 kHz; a greased flat tip under 1 dB. Rod attenuation hardly matters: even 5 dB/m, ten times the value assumed here, is 1 dB over the guide.
 - **Drawbar as the guide** (the robot cell's, hot-swap.md): at Ø8 mm its phase velocity drops 4 % at 300 kHz and 12 % at 500 kHz (Rayleigh-Love, rough past d/λ 0.3): fine to ~200 kHz, smeared above. It also adds the pull stud and ball-lock contacts to the path.
 
+#### 6b. The waveguide's preload and cold end (2026-11-27)
+
+Run by [`ae_preload.py`](../analysis/monitoring/mech/ae_preload.py) on the drawn design (`AE_CART`); every number is in
+[`ae_preload.json`](../analysis/out/monitoring/mech/ae_preload.json) and [`ae_preload.md`](../analysis/out/monitoring/mech/ae_preload.md).
+The table above (the end cap at 78 °C, 3–9 dB) was for the waveguide leaving the rod end into air, which can't be built (§4).
+
+| Check | Result | In one line |
+|---|---|---|
+| Stroke | −0.092 to +0.023 mm | the stack (6061 block and head, Macor, 316 rod and rod end) and the waveguide's fin profile grow alike; the most is tier B, where the hot waveguide outgrows the water-cooled head |
+| Force on the plate | 11.2–19.3 N (pass) | Lee LC 029BB 09S316 at 15.88 mm, 0.6 ± 0.1 mm pre-travel, plates ± 0.1 mm, spring ± 2 % length and ± 10 % rate, 48 corners; 13.3–16.9 N with the stop force shimmed to 12.5 ± 0.5 N |
+| Spring | pass | 626 MPa at 19.3 N against 760 MPa; 6.1 mm to solid; the head bottoms in its counterbore at 20.4 N, before solid (1,297 MPa) |
+| Tip | R50 (pass); R25 fails | on 6061 at 200 °C (E 62 GPa, ~103 MPa yield): R50 peaks at 133–161 MPa over a Ø401–486 µm spot; R25 at 211–256 MPa |
+| Loss, plate to sensor | 1.0–8.0 dB (tier A); 12.2–31.4 dB (tier B, dry) | greased dome 0.03–0.7 dB by the film model, taken up to 3 dB; Al/316 1.0; rod 0.01–0.05; rubbing 0–1; greased cold end 0–1.4, up to 3; against 26.3–52.3 dB to the rod end |
+| Sensor temperature | ≤ 121 °C (pass for the PICO) | the foot as an adiabatic fin end: 66–100 °C clean, 92–121 °C with powder in the gaps, 83–98 °C at 500 °C; PICO 177 °C; the WM500/1's 120 °C is not enough |
+| Plate | needs the disc spring | bare bayonet: lifted 0.31 mm (0.53 N of plate); with 97125K111 the foil keeps 197–205 N (M50, needs 173) and 511–519 N (L75, needs 424); twist +9 N·mm on 0.61 N·m |
+| Column | pass | 92.8 mm pinned: P_cr 879 N, 46× the force |
+
+- **Contact model:** the head as a Hertz contact plus a grease film round it (dk = K dA / h, h = h0 + r²/2R out to the head's
+  edge, K ~1 GPa, h0 1 µm); the flat cold end as K A / h with 2–10 µm of grease; both as springs between two rods of the
+  waveguide's impedance, as check 6 did. The film model makes a greased dome as good as a greased flat (both under 1.4 dB at
+  500 kHz), and a dry dome 11–26 dB worse. The 3 dB upper bound per greased contact is check 6's (Edison: couplants < 5 dB).
+- **Not in the budget:** the sensor itself. The PICO is 8 dB less sensitive than the Nano30 at their peaks and is below its band
+  at 100 kHz. Pencil-lead breaks through the real path, PICO against WM500/1, settle it.
+
 ### 7. Temperatures at the ports
 
 | Item | Temperature (°C) | Basis | Limit |
@@ -349,6 +498,7 @@ Bar velocity 4915 m/s.
 - Graff, K.F. (1975). Wave Motion in Elastic Solids: bar velocity, Rayleigh-Love correction for a rod's longitudinal mode.
 - Incropera, F.P. et al. Fundamentals of Heat and Mass Transfer: fin equation; conduction across an annular gas gap; radiation between concentric cylinders.
 - Edison r8-ae-waveguide (desktop-lpbf/edison/r8-ae-waveguide/answer.md): waveguide sizes and preload (9-22 N), interface losses, ~13 dB for a 1.59 x 306 mm guide vs direct mounting (Zelenyak 2015), 145 mm guide 200 -> ~50 C (Kazys 2021), couplant < 5 dB (Xu 2024).
+- The AE cold end's parts, read on the makers' pages through the lab's tunnel on 2026-11-27 (URLs and times in [`price_lookups_round3_ae.csv`](../analysis/out/monitoring/fab/price_lookups_round3_ae.csv) and ae_preload.md): MISTRAS PICO and Nano30 datasheets, QingCheng WM500/1, Vallen VS600-Z2, Fuji Ceramics' microminiature AE sensors; Solid Sealing FA40102 (drawing FA40102SL, weld sheet NS40102) and FA21382, Lesker IFTCG012011; Lee Spring LC 029BB 09S316, Century 60895SCS; Krytox LVP (Chemours TDS, McMaster 10195K41), Apiezon PFPE 501. Dry couplants: US4392380A, US6349599B1, US5000045A (patents.google.com).
 - This repo: analysis/out/thermal/thermal.json (module thermal FEA), analysis/out/fea/fea.json (case 6b bridge modes), heat.md §2 (Shuttle air), analysis/out/monitoring/fab/frame_features.json (port seats and clamps), monitoring-bom.csv (windows and slides), monitoring/optics-parts.csv and analysis/monitoring/optics/parts.py (camera, lens, tube lens).
 
 ### Not done / limits
@@ -358,8 +508,8 @@ Bar velocity 4915 m/s.
 - **The bracket model is a plate cantilever.** The bolted root, the camera's own tripod thread and any adapter all add compliance and lower f1: take the next plate size up, or add a gusset, if the root isn't a stiff bolted face.
 - **Vibration levels are assumed** (1 mm/s RMS at 60 Hz); the blower isn't chosen. Measure on the built frame with the blower and recoater running before trusting high-zoom side video.
 - **The bridge modal runs use hmax 12** (fea.py's case 6b uses 10; the uncut bridge agrees within 0.5 % for modes 1-4) and the assumed camera envelope + 3 mm. A different camera or boss height moves the cut.
-- **The AE numbers are 1-D estimates.** The tip as a contact spring, impedance mismatches at normal incidence, attenuation extrapolated to 100-500 kHz, interface ranges from Edison. Only pencil-lead breaks on the real stack (monitoring.md §5.4) settle the choice.
-- **The waveguide's route is not drawn.** It shares the hollow rod (ID 12.7) with the heater and thermocouple leads, and with the drawbar in the robot cell; it needs its own seal through the end cap (an O-ring round a Ø3 rod damps it little; not checked).
+- **The AE numbers are 1-D estimates.** The tip and the cold end as contact springs (with a grease film round the dome), impedance mismatches at normal incidence, attenuation extrapolated to 100-500 kHz, interface ranges from Edison; the stroke from lumped temperatures and the waveguide's fin profile. Only pencil-lead breaks on the real stack (monitoring.md §5.4), PICO against WM500/1, settle the sensor and the coupling.
+- **The waveguide's route is drawn (§4), its leads are not.** The cartridge shares the rod's Ø12.7 bore with the heater and type K leads; the leads' path in front of it and under its floor, and past the feedthrough's gas-side body, needs checking with the real leads. The spring's tolerances (± 2 % length, ± 10 % rate) and the foil's ± 0.05 mm are assumed.
 - **Temperatures at the ports are lumped.** No CFD of the guard's air; Kron's operating range for the Chronos wasn't found.
 - **Not checked:** the slide clips, the purge port's flow forces, the LP boss's stresses (its loads are grams), the cage's post clamps.
 
