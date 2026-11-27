@@ -1,0 +1,21 @@
+{
+ "seconds": 247.8,
+ "jumps": 15,
+ "jumps_per_min": 3.6,
+ "jump_frame_share": 0.005,
+ "median_run_s": 8.6,
+ "min_run_s": 3.08,
+ "short_run_share": 0.0,
+ "moving_share": 0.002,
+ "mean_speed_fw_s": 0.0021,
+ "p95_speed_fw_s": 0.009,
+ "fails": [],
+ "pass": true,
+ "metadata": {
+  "frames": 2974,
+  "shots": 16,
+  "cuts_per_min": 3.63,
+  "median_shot_s": 8.9,
+  "shots_under_2s": 0
+ }
+}
