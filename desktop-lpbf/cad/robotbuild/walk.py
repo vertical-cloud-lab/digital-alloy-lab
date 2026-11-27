@@ -528,7 +528,10 @@ if __name__ == "__main__":
     ap.add_argument("chapter", nargs="?", help="a chapter whose frames were recorded with ROBOTBUILD_AUDIT=1")
     ap.add_argument("--selftest", action="store_true", help="round 9: the foot lock on a walk, turns, side-steps, a carry")
     ap.add_argument("--gif", help="with --selftest: also draw the carry into this GIF (under xvfb-run)")
+    ap.add_argument("--out", default=None, help="round 10: directory for walk_<chapter>.json (default analysis/out/videoqa)")
     a = ap.parse_args()
+    if a.out:
+        SA.OUT = Path(a.out)
     if a.selftest:
         selftest(a.gif)
     else:

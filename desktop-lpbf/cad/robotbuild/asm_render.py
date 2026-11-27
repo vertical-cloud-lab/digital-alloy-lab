@@ -42,6 +42,20 @@ Round 9 (2026-11-27; round 8's frame audit and camera check; Sterling: "showing 
     part, 1 min a screw, time-lapsed), status "person".
   * Camera: a cut is forced only where something jumped; a fetch not shown holds the shot when the MiR and arm come back to
     where they were; small arm jumps (<= 5 deg) are drawn as a labelled reposition; slice boundaries are soft (README).
+
+Round 10 (2026-11-27; round 9's frame audit and walk check):
+  * The person's heading follows people.py's convention (0 = facing +y): round 9 passed atan2(dy, dx), so they walked in and
+    out sideways (the Gait side-stepped at up to 675 mm/s and dragged the planted foot: 34 mm a stance in 40 and 41) and
+    stood side-on to the work. Back-to-back person jobs: they turn round where they stand instead of being put back at the
+    aisle turned 180 deg in one frame (205-383 mm of "slip" in 41).
+  * The person's spot and poses are checked in 3-D against everything drawn, with the frame audit's own measure
+    (Replay.person_hits: scene_audit.py's translational depth, 1.5 mm): spots in tiers (walked to within reach, put in
+    place within reach, then anywhere clear), the hands on the part's outside 25 mm or more off its surface (palms down
+    over its top, on its front or sides, one hand), the hand driver 120-200 mm up the screw's axis, leaning in to reach.
+    A spot may stand in some of the place's tripods' sight lines; the person's frames are then shot from another. Round 9
+    aimed the hands at the part's centre (a hand 28 mm in the chamber body) and found no spot at all round Fixture B.
+  * A failed placement: every part the arm left more than 1.5 mm off its seat (or never drew) is set by the person (round 9:
+    only those more than 50 mm off, so F57's beam tube, 9 mm short, was put in its seat with no one drawn doing it).
 """
 from __future__ import annotations
 
@@ -129,6 +143,14 @@ def smooth(s):
     return s * s * (3 - 2 * s)
 
 
+def face_hd(dx, dy):
+    """people.py's heading (deg about z, 0 = facing +y, forward (-sin hd, cos hd)) of a person facing along (dx, dy).
+    Round 10: round 9 used atan2(dy, dx), 90 deg off: the person walked in and out sideways (people.py's Gait side-stepped
+    at up to 675 mm/s, outran its steps and dragged the planted foot: walk.py's 34 mm a stance in 40 and 41) and stood
+    side-on to the work, reaching across their body."""
+    return math.degrees(math.atan2(-float(dx), float(dy)))
+
+
 class Replay:
     def __init__(self, chapter, lapse=None, people_ok=True):
         import cell2 as K
@@ -139,7 +161,10 @@ class Replay:
         scn = pickle.load(open(TRAJ / "asm_scene.pkl", "rb"))
         self.objs = scn["objs"]
         self.ev = load_events(chapter)
-        self.pl = common.plotter()
+        # round 10: pvscene.plotter() waits for the X display and retries a window that came up without it (common.plotter()
+        # does not: two slices' xvfb-run -a starting together left one on a dead display, and it failed at its first frame,
+        # after its whole first pass)
+        self.pl = pvscene.plotter() if hasattr(pvscene, "plotter") else common.plotter()
         self.sc = pvscene.PVScene(self.pl)
         sc = self.sc
         # ---- static: floor, bench and fixtures (cell2's static bodies), the long table, pallets and bins
@@ -230,6 +255,11 @@ class Replay:
         drv = pv.Cylinder(center=(0, 0, 55), direction=(0, 0, 1), radius=2.5, height=110).triangulate().merge(
             pv.Cylinder(center=(0, 0, 160), direction=(0, 0, 1), radius=14, height=100, resolution=16).triangulate())
         sc.add("op/tool/screwdriver", drv, "#c0392b", group="op/tool", specular=0.3, shown=False)
+        # round 10: a long-shank driver (an extension: 300 mm bit, handle 300-400 mm up) for a screw the short one can't reach
+        # (F18's rail screw inside the chamber at Fixture B), tip at the origin, along +z
+        drl = pv.Cylinder(center=(0, 0, 150), direction=(0, 0, 1), radius=3.0, height=300).triangulate().merge(
+            pv.Cylinder(center=(0, 0, 350), direction=(0, 0, 1), radius=14, height=100, resolution=16).triangulate())
+        sc.add("op/tool/driver_long", drl, "#c0392b", group="op/tool", specular=0.3, shown=False)
         # ---- a person for the person steps
         self.person = None
         if people_ok:
@@ -315,7 +345,7 @@ class Replay:
         # held objects ride on the TCP
         h = s["held"]
         if h is not None:
-            T_tcp = a.tcp(s["q"], h.get("close0", s["close"]))
+            T_tcp = self.tcp_T(n, h.get("close0", s["close"]))
             Tsp = T_tcp @ rot_axis((0, 0, 1), h["spin_deg"]) if h.get("spin_deg") else T_tcp     # a screw turning with the bit
             for i in h["objs"]:
                 if f"o{i}" in sc.actors:
@@ -382,14 +412,58 @@ class Replay:
             h = self.st[n]["held"]
             if h is not None and set(h["objs"]) & set(objs):
                 a = self.arm[n]
-                T_tcp = a.tcp(self.st[n]["q"], h.get("close0", self.st[n]["close"]))
+                T_tcp = self.tcp_T(n, h.get("close0", self.st[n]["close"]))
                 if h.get("spin_deg"):
                     T_tcp = T_tcp @ rot_axis((0, 0, 1), h["spin_deg"])
                 h["off"] = np.linalg.inv(T_tcp) @ np.asarray(T, float)
 
-    def tcp(self, n):
+    def tcp_T(self, n, close=None):
+        """Round 10 (W1): the TCP of arm n's current tool (world 4x4). The 2F-85's moves with its opening; any other tool's is the
+        fixed T cell2.tool_mesh gives (the planner's ArmT.set_tool), on the changer's face. Until round 10 every held part was
+        drawn on the 2F-85's TCP whatever the tool (the wand's TCP is 359 mm from the flange, the gripper's 200-213)."""
         a = self.arm[n]
-        return a.tcp(self.st[n]["q"], self.st[n]["close"])[:3, 3]
+        s = self.st[n]
+        c = s["close"] if close is None else close
+        t = s.get("tool") or "gripper"
+        if t in ("gripper+plate", "gripper+caps"):
+            # fingertip caps: the TCP is the caps' grasp point (cell.Arm.tcp_mm with the cap spec), as the planner's
+            F = a.fk(s["q"])
+            return a.base @ F["tool0"] @ Tm((0.0, 0.0, self.K.TC_H + self._caps_tcp_mm(t, c)))
+        if t.startswith("gripper") or t in ("hand", ""):
+            return a.tcp(s["q"], c)
+        key = (t, float((s.get("spec") or {}).get("extra_bit", 0.0) or 0.0), (s.get("spec") or {}).get("tip_d"))
+        cache = self.__dict__.setdefault("_tool_T", {})
+        if key not in cache:
+            try:
+                if t in ("screwdriver", "nutrunner", "nutrunner_angle"):
+                    cache[key] = np.asarray(self.K.tool_mesh(t, key[1], key[2])[1], float)
+                else:
+                    cache[key] = np.asarray(self.K.tool_mesh(t)[1], float)
+            except Exception as e:  # noqa: BLE001
+                print("no tool TCP", t, e)
+                cache[key] = None
+        T = cache[key]
+        if T is None:
+            return a.tcp(s["q"], c)
+        F = a.fk(s["q"])
+        return a.base @ F["tool0"] @ Tm((0.0, 0.0, self.K.TC_H)) @ T
+
+    def tcp(self, n):
+        return self.tcp_T(n)[:3, 3]
+
+    def _caps_tcp_mm(self, t, c):
+        """cell.Arm.tcp_mm with fingertip caps: the midpoint of the caps' inner faces at grasp_z in the fingertip frames."""
+        import ur_arm
+        if t == "gripper+plate":
+            import eoat
+            sp = eoat.plate_finger_spec()
+            zg, xi = float(sp["grasp_z"]), float(sp["inner_x"])
+        else:
+            zg, xi = 31.9, 23.0                      # run_assembly.set_tool's ring caps
+        G = ur_arm.gripper_fk(c)
+        pl = (G["left_finger_tip"] @ np.array([-xi, 0.0, zg, 1.0]))[:3]
+        pr = (G["right_finger_tip"] @ np.array([xi, 0.0, zg, 1.0]))[:3]
+        return float((pl[2] + pr[2]) / 2.0)
 
     def retire_tools(self, idx=None):
         """Round 9: the seal steps' hand tools (ring loader, spigot mandrel and pusher) go back to the stand when the step that
@@ -416,7 +490,92 @@ class Replay:
     # fixtures, table and pallets, the parts in the cell), and they walk in from the aisle beside the cell and out again,
     # their feet locked (people.py's Gait, round 9), never through a MiR.
     PERSON_R = 330.0              # clearance of a standing person's centre from anything (shoulders, elbows, a step), mm
+    PERSON_R_SPOT = 240.0         # round 10: of the spot they work from (their body is then checked in 3-D), mm
     AISLE = 2700.0                # |y| of the aisle the person comes from: under the side tripods, out of their pictures
+    # round 10: the person's posed body checked against everything drawn, with the frame audit's own measure (scene_audit.py:
+    # python-fcl, translational penetration depth over 1.5 mm). Round 9 aimed the hands at the part's centre and checked only
+    # the floor plan, so a hand stood 28 mm in the chamber body where the person set a part (chapter 41, frames 6078-6092)
+    SKIP_PERSON = ("iris", "sclera", "brow", "hair")
+    OWN_MM = 10.0                 # how far the hands may reach into the part they set or the screw they drive (the fingers
+                                  # curl past the palm's target; scene_audit allows 25 mm), mm
+
+    def _geom(self, name):
+        """scene_audit.Geom of an actor's mesh as drawn (its own coordinates), cached by the mesh object and its version."""
+        import audit_rec
+        import scene_audit as SA
+        from vtk.util.numpy_support import vtk_to_numpy
+        cache = self.__dict__.setdefault("_geoms", {})
+        actor = self.sc.actors[name]
+        poly = actor.GetMapper().GetInput() if actor.GetMapper() is not None else None
+        if poly is None or poly.GetNumberOfPoints() == 0:
+            return None
+        key = (id(poly), int(poly.GetMTime()))
+        g = cache.get(name)
+        if g is None or g[0] != key:
+            V = vtk_to_numpy(poly.GetPoints().GetData()).astype(float)
+            F = audit_rec._faces(poly)
+            if not len(F):
+                return None
+            g = cache[name] = (key, SA.Geom(V, F, name))
+        return g[1]
+
+    def person_hits(self, P, own=(), own_mm=None, extra=(), limit=None):
+        """Round 10: [(the person's part or extra actor, what it is in, depth mm)] for every pair deeper than the audit's 1.5 mm
+        between the person as posed now (and `extra` actors, e.g. their hand driver) and anything drawn (opacity >= 0.3; not
+        the floor). `own`: actor names (the part they set, the screw they drive) the hands, forearms and driver may reach
+        into up to own_mm. Stops at `limit` hits."""
+        import scene_audit as SA
+        fcl = SA._fcl()
+        own_mm = self.OWN_MM if own_mm is None else float(own_mm)
+        sc = self.sc
+        mine = []
+        for part, (V, F) in P.posed().items():
+            if part in self.SKIP_PERSON or not len(F):
+                continue
+            g = SA.Geom(np.asarray(V, float), np.asarray(F, np.int32), f"{P.n}/{part}")
+            mine.append((f"{P.n}/{part}", g, np.eye(4)))
+        for nm in extra:
+            g = self._geom(nm)
+            if g is not None and sc.alpha.get(nm, 0.0) > 0.0:
+                mine.append((nm, g, sc.world(sc.group_of[nm])))
+        if not mine:
+            return []
+        boxes = [SA.world_box(g.corners, M) for _, g, M in mine]
+        lo = np.min([b[0] for b in boxes], axis=0) - 5.0
+        hi = np.max([b[1] for b in boxes], axis=0) + 5.0
+        skip = set(extra) | {"floor"}
+        groups = set(getattr(P, "groups", ()))
+        out = []
+        for name in list(sc.actors):
+            if name in skip or sc.group_of.get(name) in groups or name.startswith(f"{P.n}/"):
+                continue
+            if sc.alpha.get(name, 1.0) * sc.base_alpha.get(name, 1.0) < SA.OPAQUE or sc.alpha.get(name, 1.0) <= 0.02:
+                continue
+            g = self._geom(name)
+            if g is None:
+                continue
+            Mo = sc.world(sc.group_of[name])
+            olo, ohi = SA.world_box(g.corners, Mo)
+            if np.any(olo > hi) or np.any(ohi < lo):
+                continue
+            ob = None
+            for (pn, pg, Mp), (plo, phi) in zip(mine, boxes):
+                if np.any(olo > phi) or np.any(ohi < plo):
+                    continue
+                if ob is None:
+                    ob = fcl.CollisionObject(g.model(), fcl.Transform(Mo[:3, :3].astype(float), Mo[:3, 3].astype(float)))
+                oa = fcl.CollisionObject(pg.ero(), fcl.Transform(Mp[:3, :3].astype(float), Mp[:3, 3].astype(float)))
+                ca, cb = 0.5 * (plo + phi), 0.5 * (olo + ohi)
+                d = SA.tdepth(fcl, oa, Mp, ob, ca, cb, need=SA.DEPTH_MM, ga=pg, gb=g, Mb=Mo, swallow=True, refine=True)
+                if d <= SA.DEPTH_MM:
+                    continue
+                hand = pn.endswith(("/glove", "/forearm", "/skin")) or pn in extra
+                if name in own and hand and d <= own_mm:
+                    continue
+                out.append((pn, name, round(float(d), 1)))
+                if limit and len(out) >= limit:
+                    return out
+        return out
 
     def _static_boxes(self):
         if getattr(self, "_sboxes", None) is None:
@@ -463,23 +622,92 @@ class Replay:
         return out
 
     @staticmethod
-    def _clear(p, boxes, r):
-        x, y = p
-        for x0, y0, x1, y1 in boxes:
-            dx = max(x0 - x, 0.0, x - x1)
-            dy = max(y0 - y, 0.0, y - y1)
-            if dx * dx + dy * dy < r * r:
-                return False
-        return True
+    def _clear_pts(P, boxes, r):
+        """Round 10 (vectorised): is every point of P (m x 2) at least r from every box (x0, y0, x1, y1)?"""
+        if not len(boxes):
+            return True
+        B = np.asarray(boxes, float)
+        P = np.atleast_2d(np.asarray(P, float))
+        dx = np.maximum(np.maximum(B[None, :, 0] - P[:, None, 0], 0.0), P[:, None, 0] - B[None, :, 2])
+        dy = np.maximum(np.maximum(B[None, :, 1] - P[:, None, 1], 0.0), P[:, None, 1] - B[None, :, 3])
+        return bool(np.all(dx * dx + dy * dy >= r * r))
+
+    @classmethod
+    def _clear(cls, p, boxes, r):
+        return cls._clear_pts([p], boxes, r)
 
     def _clear_path(self, pts, boxes, r, step=60.0):
+        P = []
         for a, b in zip(pts[:-1], pts[1:]):
             a, b = np.asarray(a, float), np.asarray(b, float)
             n = max(1, int(np.linalg.norm(b - a) / step))
-            for k in range(n + 1):
-                if not self._clear(tuple(a + (b - a) * k / n), boxes, r):
-                    return False
-        return True
+            P += [a + (b - a) * k / n for k in range(n + 1)]
+        return self._clear_pts(P, boxes, r) if P else True
+
+    @staticmethod
+    def gait_fresh(P):
+        """Round 10: a placement forgets the last walk's acceleration too (people.Gait.reset keeps `a`, which then bends the
+        first steps of the next walk), so a walk is the same as feet_clear replayed it."""
+        P.gait.a = np.zeros(2)
+        P.gait.last = 1
+
+    def feet_clear(self, P, legs_in, h0, h_job, legs_out, h_out, boxes, settle=24, margin=20.0):
+        """Round 10: the person's whole visit replayed on a copy of their Gait (as person_job draws it: placed at the start of
+        legs_in turned to h0, walked in and turned to h_job, standing `settle` frames, walked out along legs_out and turned
+        to h_out): is every foot (a 150 mm circle round the forefoot, its centre 70 mm ahead of the ankle), planted or
+        swinging, at least `margin` mm clear of the floor plan's boxes? Round 10's first chapter-40 test had a shoe 50 mm in
+        MiR A as the person turned at the bench to walk out (the body's path was clear, the steps round it were not)."""
+        import copy
+        g = copy.deepcopy(P.gait)
+        g.explicit = True
+        g.reset(float(legs_in[0][0]), float(legs_in[0][1]), float(h0), clock=0)
+        g.a, g.last = np.zeros(2), 1
+        k = 0
+        pts = []
+        seq = list(self.walk_seq(legs_in, h0, h_job))
+        xs, ys = float(legs_in[-1][0]), float(legs_in[-1][1])
+        seq += [(xs, ys, h_job)] * settle + list(self.walk_seq(legs_out, h_job, h_out))
+        xe, ye = float(legs_out[-1][0]), float(legs_out[-1][1])
+        seq += [(xe, ye, h_out)] * 8
+        for x, y, h in seq:
+            k += 1
+            g.update(x, y, h, clock=k)
+            for fx, fy, psi, lift, pitch in g.pose():
+                a = math.radians(psi)
+                pts.append((fx - 70.0 * math.sin(a), fy + 70.0 * math.cos(a)))
+        return self._clear_pts(pts, boxes, 150.0 + margin) if pts else True
+
+    def mir_room_moves(self, work, reach=1500.0):
+        """Round 10: [(arm, x along its lane)] a MiR could back off to, to make room for a person working at `work`: MiRs within
+        `reach` of the work along x whose arm is parked (park pose, nothing held), moved 900-1300 mm away along their own lane
+        (x in -1400..2150), the lane between clear of the cell's static bodies on the floor plan."""
+        out = []
+        wx = float(work[0])
+        static = self._static_boxes()
+        for n in ("A", "B"):
+            s = self.st[n]
+            if s.get("pose") is not None or s["held"] is not None or abs(float(s["x"]) - wx) > reach:
+                continue
+            if float(np.max(np.abs(np.asarray(s["q"], float) - np.asarray(self.arm[n].park_q(), float)))) > 0.05:
+                continue
+            x0 = float(s["x"])
+            for dx in (-900.0, 900.0, -1300.0, 1300.0):
+                x1 = x0 + dx
+                if not -1400.0 <= x1 <= 2150.0:
+                    continue
+                ok = True
+                for u in np.linspace(0.0, 1.0, 7):
+                    for _, (v, f), _ in self.K.mir_bodies(n, x0 + (x1 - x0) * u, "front" if n == "A" else "back"):
+                        v = np.asarray(v, float)
+                        b = (v[:, 0].min(), v[:, 1].min(), v[:, 0].max(), v[:, 1].max())
+                        if any(not (b[2] < x0_ or x1_ < b[0] or b[3] < y0_ or y1_ < b[1]) for x0_, y0_, x1_, y1_ in static):
+                            ok = False
+                            break
+                    if not ok:
+                        break
+                if ok:
+                    out.append((n, x1))
+        return out
 
     @staticmethod
     def _seg_d(p, a, b):
@@ -503,35 +731,58 @@ class Replay:
         spot whose floor is clear by PERSON_R and whose straight walk in from the aisle is clear too, out of the lines of sight
         from the place's tripods `cams` (x, y) to the work (round 9: a person in front of the bench's tripod hid the work). None
         if there is none."""
+        c = self.person_spots(work, side, cams, relaxed)
+        return None if not c else (c[0]["spot"], c[0]["aisle"])
+
+    def person_spots(self, work, side, cams=(), relaxed=False, blocked_ok=False, n=40, rmax=None):
+        """Round 10: the candidate spots, best first: dicts with spot, aisle (the aisle point the walk starts from), cost and
+        `blocked` (the place's tripods whose line of sight to the work the person stands in). blocked_ok: a spot may block some
+        of the place's tripods (not all); the person's frames are then shot from one it does not block (round 9 had no spot
+        at all for F18's screw at Fixture B, where both MiRs dock: every clear spot stood in some tripod's view)."""
         boxes = self.floor_boxes()
         wx, wy = float(work[0]), float(work[1])
         names = list(cams)
-        cams = [tuple(map(float, cam_def(c)[0][:2])) for c in names]
-        best = None
+        cxy = [tuple(map(float, cam_def(c)[0][:2])) for c in names]
+        out = []
+        why = {}
         for s in ((-1.0, 1.0) if side == "A" else (1.0, -1.0)):
-            for r in (600.0, 750.0, 900.0, 1100.0, 1350.0, 1650.0, 2000.0):
-                for ang in range(-80, 81, 10):
+            for r in (450.0, 500.0, 550.0, 600.0, 650.0, 700.0, 750.0, 825.0, 900.0, 1000.0, 1100.0, 1350.0, 1650.0, 2000.0):
+                if rmax is not None and r > rmax:
+                    continue
+                for ang in range(-85, 86, 5):
                     a = math.radians(ang)
                     x, y = wx + r * math.sin(a), wy + s * r * math.cos(a)
-                    if s * y < 250.0 or s * y > self.AISLE - 300.0:
+                    # round 10: a spot may be up to 150 mm across the bench's centre line (round 9: at least 250 mm on the
+                    # person's side), so past a station's end, between Fixture B and the table, counts (the floor check keeps
+                    # them out of the bench and fixtures)
+                    if s * y < -150.0 or s * y > self.AISLE - 300.0:
+                        why["y"] = why.get("y", 0) + 1
                         continue
-                    if not self._clear((x, y), boxes, self.PERSON_R - (60.0 if relaxed else 0.0)):
+                    # round 10: the spot itself needs less floor clearance (PERSON_R_SPOT): person_job checks the standing
+                    # body against everything drawn (person_hits) before it is used
+                    if not self._clear((x, y), boxes, self.PERSON_R_SPOT - (40.0 if relaxed else 0.0)):
+                        why["floor"] = why.get("floor", 0) + 1
                         continue
-                    if not relaxed and not self._clear_path([(x, s * self.AISLE), (x, y)], boxes, self.PERSON_R - 60.0):
+                    if not relaxed and not self._clear_path([(x, s * self.AISLE), (x, y + s * min(250.0, s * (s * self.AISLE - y)))],
+                                                            boxes, self.PERSON_R - 60.0):
+                        why["walk"] = why.get("walk", 0) + 1
                         continue
                     walk = [(x, y + (s * self.AISLE - y) * u) for u in (0.0, 0.25, 0.5, 0.75)]
-                    if cams and self._blocks_view(walk, (wx, wy), cams):
+                    blocked = [nm for nm, c in zip(names, cxy) if self._blocks_view(walk, (wx, wy), [c])]
+                    if blocked and (not blocked_ok or len(blocked) == len(names)):
+                        why["view"] = why.get("view", 0) + 1
                         continue
-                    if CAM_MIN and any(math.hypot(x - c[0], y - c[1]) < CAM_MIN for c in cams):
+                    if CAM_MIN and any(math.hypot(x - c[0], y - c[1]) < CAM_MIN for c in cxy):
+                        why["cam_min"] = why.get("cam_min", 0) + 1
                         continue                 # ASM_PERSON_CAM_MIN: not right under a tripod (filling the picture)
-                    cost = r + 3.0 * abs(ang) + (0.0 if s == (-1.0 if side == "A" else 1.0) else 1500.0)
-                    if names and not any(in_view(c, (x, y, 1000.0), margin=0.8) for c in names):
+                    cost = r + 3.0 * abs(ang) + (0.0 if s == (-1.0 if side == "A" else 1.0) else 1500.0) + 700.0 * len(blocked)
+                    free = [c for c in names if c not in blocked]
+                    if free and not any(in_view(c, (x, y, 1000.0), margin=0.8) for c in free):
                         cost += 900.0            # seen from none of the place's tripods: only if nothing else is clear
-                    if best is None or cost < best[0]:
-                        best = (cost, (x, y), (x, s * self.AISLE))
-            if best is not None:
-                break
-        return None if best is None else (best[1], best[2])
+                    out.append(dict(cost=cost, spot=(x, y), aisle=(x, s * self.AISLE), blocked=blocked, r=r, ang=ang))
+        out.sort(key=lambda d: d["cost"])
+        self.last_spot_why = why
+        return out[:n]
 
     @staticmethod
     def walk_seq(pts, hd0, hd_end, v=450.0, turn=10.0):
@@ -554,7 +805,7 @@ class Replay:
             L = math.hypot(x1 - x0, y1 - y0)
             if L < 1.0:
                 continue
-            turn_to(math.degrees(math.atan2(y1 - y0, x1 - x0)))
+            turn_to(face_hd(x1 - x0, y1 - y0))
             n = max(2, int(math.ceil(L / v * FPS)))
             for k in range(1, n + 1):
                 u = smooth(k / n)
@@ -715,6 +966,58 @@ DRIVE_HOLD = os.environ.get("ASM_DRIVE_HOLD", "0") == "1"
 # ASM_PERSON_CAM_MIN=<mm> (chapter 40's re-render, round 9): the person's spot at least this far (on the floor) from each of the
 # place's tripods, so they don't fill the picture (chapter 41 was drawn without it: 0)
 CAM_MIN = float(os.environ.get("ASM_PERSON_CAM_MIN", "0") or 0.0)
+# round 10: how many of the best spots person_job tries (each: the standing body and the job's poses checked)
+NSPOT = int(os.environ.get("ASM_PERSON_SPOTS", "14"))
+# round 10: the person's spots and poses, once searched, are kept: pass 2 reuses pass 1's, and with ASM_PERSON_CACHE=<file.json>
+# every slice of a chapter shares them (keyed by step, the job's number in the chapter, side and work point; delete the file
+# when the recording changes)
+_PCACHE = None
+
+
+def person_badness(hits):
+    """(collisions, mm the hands fall short) of what a person check found: fewer collisions first, then the shortest reach."""
+    return (sum(1 for h in hits if h[0] != "hand"), sum(float(h[2]) for h in hits if h[0] == "hand"))
+
+
+def person_cache():
+    global _PCACHE
+    if _PCACHE is None:
+        _PCACHE = {}
+        f = os.environ.get("ASM_PERSON_CACHE")
+        if f and os.path.exists(f):
+            try:
+                _PCACHE.update(json.loads(pathlib.Path(f).read_text()))
+            except Exception as e:      # noqa: BLE001
+                print("person cache unreadable:", e, flush=True)
+    return _PCACHE
+
+
+def _jsonable(x):
+    if isinstance(x, dict):
+        return {k: _jsonable(v) for k, v in x.items()}
+    if isinstance(x, (list, tuple)):
+        return [_jsonable(v) for v in x]
+    if isinstance(x, np.ndarray):
+        return [_jsonable(v) for v in x.tolist()]
+    if isinstance(x, (np.floating, np.integer)):
+        return x.item()
+    return x
+
+
+def person_cache_put(key, val):
+    val = _jsonable(val)
+    person_cache()[key] = val
+    f = os.environ.get("ASM_PERSON_CACHE")
+    if not f:
+        return
+    try:
+        cur_ = json.loads(pathlib.Path(f).read_text()) if os.path.exists(f) else {}
+        cur_[key] = val
+        tmp = f"{f}.{os.getpid()}.tmp"
+        pathlib.Path(tmp).write_text(json.dumps(cur_))
+        os.replace(tmp, f)
+    except Exception as e:              # noqa: BLE001
+        print("person cache not written:", e, flush=True)
 
 
 def kind_key(e, rep):
@@ -1064,6 +1367,15 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=(), fail_
     fail_notes = dict(fail_notes or {})
     fail_steps = tuple(fail_steps) + tuple(k for k in fail_notes if k not in fail_steps)
     rp = Replay(chapter)
+    if os.environ.get("ASM_PLAN_ONLY") != "1":
+        # round 10: one frame drawn first, so a render window without a working display fails now (asm_slices.py starts the
+        # slice again), not after the whole first pass
+        try:
+            rp.sc.camera([(-3900.0, -4700.0, 4600.0), (900.0, 0.0, 500.0), (0.0, 0.0, 1.0)], view_angle=46.0)
+            rp.sc.render()
+        except Exception as e:                 # noqa: BLE001
+            print(f"no working render window ({type(e).__name__}: {e}); exit 3 to be started again", flush=True)
+            sys.exit(3)
     name, title = CHAP[chapter]
     ev = rp.ev
     if fail_pkl and fail_steps:
@@ -1117,12 +1429,29 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=(), fail_
         fj = [i for i, p in enumerate(plan) if p["step"] == b_] if b_ else []
         hi = fj[0] if fj else (10 ** 9 if not b_ else tot_frames)
         part, k_ = "steps", os.environ.get("ASM_RANGE_IDX", "steps")
+    if os.environ.get("ASM_PICK_PERSON") == "1":
+        # round 10 (a test of the person's frames): draw only the frames the person is in, and the frame before each run of
+        # them (so walk.py starts a new track there)
+        global PICK
+        PICK = set()
+        for i, p in enumerate(plan):
+            if p.get("person"):
+                PICK.update((max(0, i - 1), i))
+        print(f"{name}: drawing the {len(PICK)} frames with the person (ASM_PICK_PERSON)", flush=True)
     if PICK is not None:
         part, k_ = "pick", "pick"
     if os.environ.get("ASM_PLAN_ONLY") == "1":
         import json as _j
+        pf = [i for i, p in enumerate(plan) if p.get("person")]
+        runs_ = []
+        for i in pf:
+            if runs_ and i == runs_[-1][1] + 1:
+                runs_[-1][1] = i
+            else:
+                runs_.append([i, i])
         out = dict(chapter=name, frames=tot_frames, shots=st,
-                   steps={p["step"]: i for i, p in reversed(list(enumerate(plan)))})
+                   steps={p["step"]: i for i, p in reversed(list(enumerate(plan)))},
+                   person=runs_)                  # round 10: the frames the person is drawn in (first, last)
         (common.DATA / f"{name}-plan.json").parent.mkdir(parents=True, exist_ok=True)
         (common.DATA / f"{name}-plan.json").write_text(_j.dumps(out, indent=1))
         print(f"{name}: plan only, {tot_frames} frames", flush=True)
@@ -1154,7 +1483,9 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
     scored = {}
     away = {}                            # arm -> where its MiR and arm were when a fetch not shown began (round 9)
     pend = dict(screws=[], parts=[], failed=set())   # round 9: what the person does at the end of a failed step
-    pstate = dict(on=False, n=-1)        # the person: shown, and the last frame their feet were brought to
+    pstate = dict(on=False, n=-1, out_n=None, out_at=None, fit=None, blocked=None)   # the person: shown, the last frame their
+    # feet were brought to; round 10: the frame after they last walked out and where (out_n, out_at: a job right after starts
+    # from there), the job's checked poses (fit) and the tripods their spot blocks (blocked)
 
     def score(key, loc, work):
         """Occlusion of each of the place's tripods for the work point, at most 3 samples per step and place."""
@@ -1207,9 +1538,16 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
         if rp.person is not None and pstate["on"] and pstate["n"] != tot["n"]:
             rp.person.set(frame=tot["n"])  # the feet settle while the person stands (explicit clock: no render hook)
             pstate["n"] = tot["n"]
+        key = (cur["id"], loc)
+        if pstate["on"] and pstate.get("blocked"):
+            # round 10: the person stands in some of the place's tripods' lines of sight (no spot clear of all): their frames
+            # are a group of their own, shot from a tripod they don't block
+            key = (cur["id"], loc, "person")
+            if scores is not None and key not in scores:
+                scores[key] = {c: [1.0 if c in pstate["blocked"] else 0.0] for c in place_cands(loc)}
         if plan is not None:
-            plan.append(dict(loc=loc, key=(cur["id"], loc), work=None if work is None else np.asarray(work, float).copy(),
-                             force=force, bound=bound, step=cur["id"]))
+            plan.append(dict(loc=loc, key=key, work=None if work is None else np.asarray(work, float).copy(),
+                             force=force, bound=bound, step=cur["id"], person=bool(pstate["on"])))
         if drawing and lo <= tot["n"] < hi and (PICK is None or tot["n"] in PICK):
             pos, foc, va = cam_def(cams[tot["n"]])
             rp.sc.camera([pos, foc, (0.0, 0.0, 1.0)], view_angle=va)
@@ -1240,52 +1578,204 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
         x = real_per_frame * FPS
         return "" if x < 1.3 else f"; shown x{x:.0f}"
 
-    def person_job(work, side, job_frames, loc):
+    def person_job(work, side, job_frames, loc, fit=None):
         """Round 9: the person walks in from the aisle to a clear spot by `work`, job_frames() draws the job (the person standing
-        there), and they walk back out. True if the slice ended."""
+        there), and they walk back out. True if the slice ended.
+
+        Round 10: the spot is the best candidate (Replay.person_spots) where the person, standing and in the job's poses (`fit`:
+        the hands on the part they set, the driver on the screw), is clear of everything drawn by the frame audit's own measure
+        (Replay.person_hits); if no spot is clear of every tripod's line of sight, one that blocks some of them (not all) is
+        used and the person's frames are shot from a tripod it doesn't block. Back to back with the last person job (no frame
+        between them), the person turns round where they stand and walks to the new spot: round 9 put them back at the aisle,
+        turned 180 deg in one frame (walk.py read it as 205-383 mm of stance-foot slip, chapter 41 frames 3204, 13283, 13457)."""
         P = rp.person
-        sp = rp.person_spot(work[:2], side, place_cands(loc)) if P is not None else None
-        if sp is None and P is not None:
-            # no clear walk in from the aisle out of the tripods' sight lines (both MiRs docked round the station): the
-            # person is put on the nearest spot clear of everything, across a cut each way (round 9: F18's screw had no
-            # person at all)
-            sp2 = rp.person_spot(work[:2], side, (), relaxed=True)
-            if sp2 is not None:
-                (xs, ys), _ = sp2
-                look = (float(work[0]), float(work[1]), float(work[2]) if len(work) > 2 else 950.0)
+        if P is None:
+            return job_frames()
+        look = (float(work[0]), float(work[1]), float(work[2]) if len(work) > 2 else 950.0)
+        cams_ = place_cands(loc)
+        back = pstate.get("out_n") == tot["n"] and pstate.get("out_at") is not None
+        # the spots, in tiers: walked to from the aisle, within reach of the work (a job with the hands: 780 mm), out of the
+        # place's tripods' sight lines or blocking some of them (costlier); put in place across a cut, within reach; then,
+        # if nothing within reach is clear, anywhere clear (the job drawn from there)
+        rmax = 780.0 if fit is not None else None     # people.py's right hand reaches 525-575 mm forward at 1.1-1.25 m
+        # upright, 750-800 mm leaning 28 deg (/tmp/r10/w3/reach_test.py)
+        tiers = [dict(cams=cams_, blocked_ok=True, rmax=rmax)]
+        if rmax is not None:
+            tiers.append(dict(cams=cams_, blocked_ok=True, rmax=rmax, relaxed=True))
+            tiers.append(dict(cams=cams_, blocked_ok=True))
+        tiers.append(dict(cams=cams_, blocked_ok=True, relaxed=True))
+        choice, worst, tried, why_all = None, None, 0, {}
+        # the search is deterministic: pass 2, and every other slice of the chapter, reuse pass 1's choice (person_cache)
+        pstate["jobs"] = pstate.get("jobs", 0) + 1
+        ckey = (f"{cur['id']}|{pstate['jobs']}|{side}|{int(fit is not None)}|" +
+                ",".join(f"{v:.0f}" for v in look))
+        hit = person_cache().get(ckey)
+        if hit is not None:
+            choice = (dict(hit["c"]), hit["data"])
+            tiers = []
+        def search(tiers_, mir=None, quick=False):
+            """The first spot of the tiers where the person is clear (quick: standing by with the hands at their sides, out
+            of reach of the work: clear of everything is enough)."""
+            nonlocal tried, worst
+            fboxes = rp.floor_boxes()
+            for tier in tiers_:
+                cands = rp.person_spots(work[:2], side, **tier)
+                for k_, v_ in getattr(rp, "last_spot_why", {}).items():
+                    why_all[k_] = why_all.get(k_, 0) + v_
+                for c in cands[:(NSPOT if not quick else 6)]:
+                    tried += 1
+                    c["relaxed"] = bool(tier.get("relaxed"))
+                    c["mir"] = mir
+                    xs, ys = c["spot"]
+                    if not c["relaxed"]:
+                        # the steps of the walk in and out, and the turns at each end, clear of the floor plan (feet_clear)
+                        xa_, ya_ = c["aisle"]
+                        hi_, hj_ = face_hd(xs - xa_, ys - ya_), face_hd(look[0] - xs, look[1] - ys)
+                        if back and pstate["out_at"][1] * ya_ > 0.0 and abs(pstate["out_at"][0] - xa_) < 4000.0:
+                            x0_, y0_, h0_ = pstate["out_at"]
+                            lin_ = [(x0_, y0_), (xa_, ya_), (xs, ys)]
+                        else:
+                            lin_, h0_ = [(xa_, ya_), (xs, ys)], hi_
+                        if not rp.feet_clear(P, lin_, h0_, hj_, [(xs, ys), (xa_, ya_)], hi_ + 180.0, fboxes):
+                            why_all["feet"] = why_all.get("feet", 0) + 1
+                            continue
+                    P.place(x=xs, y=ys, hd=face_hd(look[0] - xs, look[1] - ys), look=look, frame=tot["n"])
+                    data = None
+                    if fit is not None:
+                        hits, data = fit(P, quick=quick)  # the whole body in the job's poses (reach first: cheap)
+                    else:
+                        hits = rp.person_hits(P, limit=2)  # standing there
+                    if not hits or (quick and person_badness(hits)[0] == 0):
+                        if quick and mir is None and (worst is None or person_badness(hits) < person_badness(worst[1])):
+                            worst = ((c, data), hits)
+                        if not quick:
+                            return (c, data)
+                        return None                       # quick: taken as the least bad below
+                    if mir is None and (worst is None or person_badness(hits) < person_badness(worst[1])):
+                        worst = ((c, data), hits)
+            return None
+        if tiers:
+            choice = search(tiers[:2] if rmax is not None else tiers)
+            if choice is None and rmax is not None:
+                # round 10: nothing within reach with the MiRs where they are (both docked round Fixture B: the F18 screw
+                # round 9 could not draw anyone at): a MiR whose arm is parked backs off along its lane to make room, then
+                # comes back after the person has gone (drawn, labelled; its lane checked clear on the floor plan)
+                for n_, x1_ in rp.mir_room_moves(work)[:2]:
+                    x0_ = rp.st[n_]["x"]
+                    rp.set_arm(n_, x=x1_)
+                    choice = search(tiers[:2], mir=(n_, float(x0_), float(x1_)))
+                    rp.set_arm(n_, x=x0_)
+                    if choice is not None:
+                        break
+            if choice is None and rmax is not None and (worst is None or person_badness(worst[1])[0] > 0):
+                choice = search(tiers[2:], quick=True)    # out of reach anyway: standing by, the hands at their sides
+        if choice is None and worst is None:
+            print(f"   {cur['id']}: no spot for the person by {np.round(np.asarray(work, float), 0).tolist()} "
+                  f"({why_all}): the job is drawn without them", flush=True)
+            return job_frames()
+        if choice is None:
+            choice = worst[0]
+            if fit is not None and choice[1] is None:
+                xs, ys = choice[0]["spot"]
+                P.place(x=xs, y=ys, hd=face_hd(look[0] - xs, look[1] - ys), look=look, frame=tot["n"])
+                choice = (choice[0], fit(P, force=True)[1])   # the poses there, short of reach if need be (checked)
+            print(f"   {cur['id']}: no spot of {tried} keeps the person clear and in reach; the least bad: {worst[1][:3]} "
+                  f"(spots ruled out: {why_all})", flush=True)
+            if os.environ.get("ASM_PERSON_DEBUG") == "1":
+                wx_, wy_ = float(work[0]), float(work[1])
+                near_ = [tuple(round(v) for v in b) for b in rp.floor_boxes()
+                         if b[0] - 1300 < wx_ < b[2] + 1300 and b[1] - 1300 < wy_ < b[3] + 1300]
+                print(f"   floor boxes within 1.3 m of the work: {near_}", flush=True)
+        c, data = choice
+        if hit is None:
+            person_cache_put(ckey, dict(c=c, data=data))
+        relaxed = c["relaxed"]
+        pstate["fit"] = data
+        pstate["blocked"] = list(c["blocked"]) or None
+        if plan is not None and hit is None:    # where the person was put, and how (the log)
+            print(f"   {cur['id']}: person at ({c['spot'][0]:.0f}, {c['spot'][1]:.0f}) for the work at "
+                  f"({look[0]:.0f}, {look[1]:.0f}, {look[2]:.0f}), r {c['r']:.0f} mm, {'relaxed, ' if relaxed else ''}"
+                  f"blocks {c['blocked'] or 'no tripod'}; back to back: {back}; poses: "
+                  f"{[(d_['name'], round(d_['reach'])) for d_ in (data or [])]}"
+                  f"{'; MiR %s makes room: x %.0f -> %.0f' % tuple(c['mir']) if c.get('mir') else ''}", flush=True)
+        (xs, ys), (xa, ya) = c["spot"], c["aisle"]
+        hd_job = face_hd(look[0] - xs, look[1] - ys)
+        mir = c.get("mir")
+
+        def mir_drive(n_, x0_, x1_, out_):
+            """A MiR makes room for the person along its lane (or comes back to its dock): drawn at about 0.35 m/s, eased."""
+            d_ = abs(x1_ - x0_)
+            nf_ = max(24, int(round(d_ / 350.0 * FPS)))
+            txt_ = (f"MiR {n_} backs off {d_ / 1000:.1f} m along its lane to make room for the person (its arm parked; not in "
+                    "the planner's recording, the lane clear on the floor plan)" if out_ else
+                    f"MiR {n_} drives back {d_ / 1000:.1f} m to its dock")
+            for f_ in range(nf_):
+                rp.set_arm(n_, x=x0_ + (x1_ - x0_) * smooth((f_ + 1) / nf_))
+                if emit(cur["label"], txt_ + " (real time)", [f"robot {n_}"], add={"robot_h": 1.0 / FPS / 3600.0}, loc=loc):
+                    return True
+            rp.set_arm(n_, x=x1_)
+            return False
+
+        def the_job():
+            if relaxed:
+                # no clear walk in from the aisle (both MiRs docked round the station): the person is put on the spot,
+                # across a cut each way (round 9: F18's screw had no person at all)
                 P.show(1.0)
-                P.place(x=xs, y=ys, hd=math.degrees(math.atan2(look[1] - ys, look[0] - xs)), look=look, frame=tot["n"])
+                P.place(x=xs, y=ys, hd=hd_job, look=look, frame=tot["n"])
+                rp.gait_fresh(P)
                 pstate.update(on=True, n=tot["n"])
                 last["force"] = "person put in place"
                 r_ = job_frames()
                 P.show(0.0)
-                pstate["on"] = False
+                pstate.update(on=False, out_n=None, out_at=None, fit=None, blocked=None)
                 last["force"] = "person gone"
                 return r_
-        if sp is None:
-            return job_frames()
-        (xs, ys), (xa, ya) = sp
-        look = (float(work[0]), float(work[1]), float(work[2]) if len(work) > 2 else 950.0)
-        hd_in = math.degrees(math.atan2(ys - ya, xs - xa))
-        hd_job = math.degrees(math.atan2(look[1] - ys, look[0] - xs))
-        P.show(1.0)
-        P.place(x=xa, y=ya, hd=hd_in, look=look, frame=tot["n"])
-        pstate.update(on=True, n=tot["n"])
-        for legs, h0, h1, txt in (([(xa, ya), (xs, ys)], hd_in, hd_job, "a person walks over from the aisle"),
-                                  (None, 0.0, 0.0, ""),
-                                  ([(xs, ys), (xa, ya)], hd_job, hd_in + 180.0, "the person walks back to the aisle")):
-            if legs is None:
-                if job_frames():
-                    return True
-                continue
-            for x, y, h in rp.walk_seq(legs, h0, h1):
-                P.set(x=x, y=y, hd=h, look=look, frame=tot["n"])
-                pstate["n"] = tot["n"]
-                if emit(cur["label"], txt + " (real time)", ["person"], add={"person_h": 1.0 / FPS / 3600.0}, status="person",
-                        loc=loc):
-                    return True
-        P.show(0.0)
-        pstate["on"] = False
+            hd_in = face_hd(xs - xa, ys - ya)
+            legs_in = [(xa, ya), (xs, ys)]
+            h0 = hd_in
+            P.show(1.0)
+            if back and pstate["out_at"][1] * ya > 0.0 and abs(pstate["out_at"][0] - xa) < 4000.0:
+                # still standing at the aisle where the last job left them: turn round and walk along the aisle and in
+                x0, y0, h0 = pstate["out_at"]
+                P.set(x=x0, y=y0, hd=h0, look=look, frame=tot["n"])          # where they stand: the feet stay where they are
+                legs_in = [(x0, y0), (xa, ya), (xs, ys)]
+            else:
+                if back:
+                    # back to back but on the other side of the cell: out of the picture for a frame, then from that aisle
+                    P.show(0.0)
+                    pstate["on"] = False
+                    if emit(cur["label"], "a person walks over from the aisle (real time)", ["person"], status="person",
+                            loc=loc):
+                        return True
+                    P.show(1.0)
+                P.place(x=xa, y=ya, hd=hd_in, look=look, frame=tot["n"])
+                rp.gait_fresh(P)
+            pstate.update(on=True, n=tot["n"])
+            for legs, hs, h1, txt in ((legs_in, h0, hd_job, "a person walks over from the aisle"),
+                                      (None, 0.0, 0.0, ""),
+                                      ([(xs, ys), (xa, ya)], hd_job, hd_in + 180.0, "the person walks back to the aisle")):
+                if legs is None:
+                    if job_frames():
+                        return True
+                    continue
+                for x, y, h in rp.walk_seq(legs, hs, h1):
+                    P.set(x=x, y=y, hd=h, look=look, frame=tot["n"])
+                    pstate["n"] = tot["n"]
+                    if emit(cur["label"], txt + " (real time)", ["person"], add={"person_h": 1.0 / FPS / 3600.0},
+                            status="person", loc=loc):
+                        return True
+            P.show(0.0)
+            pstate.update(on=False, out_n=tot["n"], out_at=(float(P.st["x"]), float(P.st["y"]), float(P.st["hd"])), fit=None,
+                          blocked=None)
+            return False
+        if mir is not None and mir_drive(mir[0], float(mir[1]), float(mir[2]), True):
+            return True
+        if the_job():
+            return True
+        if mir is not None:
+            if mir_drive(mir[0], float(mir[2]), float(mir[1]), False):
+                return True
+            pstate["out_n"] = None                 # frames since the walk-out: the next job is not back to back
         return False
 
     def obj_world(i, M=None):
@@ -1293,6 +1783,18 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
         V = np.asarray(o.get("V"), float) if o.get("V") is not None else np.zeros((1, 3))
         M = np.asarray(rp.sc.gmat.get(f"o{i}", np.eye(4)) if M is None else M, float)
         return V @ M[:3, :3].T + M[:3, 3]
+
+    def seat_off(i, M0, T1):
+        """How far (mm) object i drawn at M0 is from its seat T1: the largest move of its bounding box's corners."""
+        if M0 is None:
+            return 1e9
+        V = np.asarray((rp.objs.get(i) or {}).get("V"), float) if (rp.objs.get(i) or {}).get("V") is not None else None
+        if V is None or not len(V):
+            return float(np.linalg.norm(np.asarray(M0, float)[:3, 3] - np.asarray(T1, float)[:3, 3]))
+        lo_, hi_ = V.min(0), V.max(0)
+        C = np.array([[x, y, z] for x in (lo_[0], hi_[0]) for y in (lo_[1], hi_[1]) for z in (lo_[2], hi_[2])])
+        M0, T1 = np.asarray(M0, float), np.asarray(T1, float)
+        return float(np.max(np.linalg.norm((C @ M0[:3, :3].T + M0[:3, 3]) - (C @ T1[:3, :3].T + T1[:3, 3]), axis=1)))
 
     def screw_axis(i):
         """(head point, unit axis out of the hole) of a screw as it sits: its long axis by PCA, the head the fatter end."""
@@ -1308,20 +1810,190 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
             u = -u
         return c + u * float(np.abs(t).max()), u
 
+    def place_driver(P, h, u, long=False):
+        """The hand driver in the person's right hand, pointing at the screw: its bit on the head when the hand is close
+        enough, else the handle in the hand and the bit towards the screw (never left floating). long: the 300 mm one
+        (round 10), shown instead of the short one."""
+        rp.sc.alpha["op/tool/screwdriver"] = 0.0 if long else 1.0
+        rp.sc.alpha["op/tool/driver_long"] = 1.0 if long else 0.0
+        hp = np.asarray(P.hand_point("r"), float)
+        dv = hp - h
+        L_ = float(np.linalg.norm(dv))
+        zz = dv / L_ if L_ > 1e-6 else u
+        tip = h if L_ <= (450.0 if long else 260.0) else hp - (350.0 if long else 160.0) * zz
+        xx = np.cross(zz, [0.0, 0.0, 1.0]) if abs(zz[2]) < 0.9 else np.cross(zz, [1.0, 0.0, 0.0])
+        xx /= np.linalg.norm(xx)
+        Rt = np.eye(4)
+        Rt[:3, 0], Rt[:3, 1], Rt[:3, 2], Rt[:3, 3] = xx, np.cross(zz, xx), zz, tip
+        rp.sc.gmat["op/tool"] = Rt
+
+    def part_hand_cands(P, W):
+        """Round 10: hand targets for setting a part whose points (world, at its seat) are W, from where the person stands:
+        on its outside, 25 mm or more off its surface (people.py's fingers curl past the palm's target), best first: both
+        palms down over its top, nearer its front edge, higher; both on its front face; on its two sides; one hand over its
+        top or front. Round 9 aimed both palms at the part's centre (a hand 28 mm in the chamber body round it)."""
+        p = np.array([P.st["x"], P.st["y"], 0.0])
+        c = 0.5 * (W.min(0) + W.max(0))
+        f = np.array([c[0] - p[0], c[1] - p[1], 0.0])
+        f /= max(float(np.linalg.norm(f)), 1e-6)
+        r = np.array([f[1], -f[0], 0.0])                       # the person's right
+        u, v, z = (W - p) @ f, (W - p) @ r, W[:, 2]
+        near, far, vmin, vmax, zlo, ztop = float(u.min()), float(u.max()), float(v.min()), float(v.max()), float(z.min()), \
+            float(z.max())
+        cu, cv = 0.5 * (near + far), 0.5 * (vmin + vmax)
+        hw = min(90.0, 0.35 * (vmax - vmin) + 20.0)
+        zm = max(zlo + 0.5 * (ztop - zlo), ztop - 60.0)
+
+        def at(a, b, zz):
+            q = p + f * a + r * b
+            return (float(q[0]), float(q[1]), float(zz))
+        out = []
+        for a, dz in ((cu, 25.0), (near + min(45.0, 0.3 * (far - near)), 25.0), (cu, 60.0), (near + 20.0, 110.0)):
+            out.append(("top", {"l": at(a, cv - hw, ztop + dz), "r": at(a, cv + hw, ztop + dz)}, {"l": "down", "r": "down"}))
+        fwd = tuple(map(float, f))
+        out.append(("front", {"l": at(near - 30.0, cv - hw, zm), "r": at(near - 30.0, cv + hw, zm)}, {"l": fwd, "r": fwd}))
+        if vmax - vmin < 420.0:
+            out.append(("sides", {"l": at(cu, vmin - 30.0, zm), "r": at(cu, vmax + 30.0, zm)},
+                        {"l": tuple(map(float, r)), "r": tuple(map(float, -r))}))
+        out.append(("one hand, top", {"l": None, "r": at(near + min(45.0, 0.3 * (far - near)), cv, ztop + 30.0)},
+                    {"l": None, "r": "down"}))
+        out.append(("one hand, front", {"l": None, "r": at(near - 30.0, cv, zm)}, {"l": None, "r": fwd}))
+        out.append(("one hand, high", {"l": None, "r": at(near, cv, ztop + 120.0)}, {"l": None, "r": "down"}))
+        return out
+
+    def fit_jobs(jobs):
+        """Round 10: fit(P) for person_job: for each of the person's jobs, a hand pose (part_hand_cands; for a screw the driver
+        held 150, 200 or 120 mm up its axis; each upright or leaning 15 or 28 deg) whose posed body, hands and driver are clear
+        of everything drawn (the part set, at its seat, and the screw driven may be touched by the hands up to
+        Replay.OWN_MM): the first that reaches (palm within 80 mm of its target; a screw: the hand on the driver's handle) and
+        is clear; else the clear one that comes closest; else the hands at the person's sides. Every pose drawn is checked.
+        Returns (what is wrong with the worst job: [(part, what, mm)], "hand"/"out of reach" for a reach short by mm;
+        [pose per job])."""
+        def fit(P, quick=False, force=False):
+            poses, worst = [], []
+            ps = np.array([float(P.st["x"]), float(P.st["y"])])
+            if not quick and not force:
+                # the reach first, from the floor plan alone (no posing): every job's target within 820 mm of where they
+                # stand (people.py's right hand reaches 750-800 mm forward leaning 28 deg)
+                far = 0.0
+                for kind, objs, T in jobs:
+                    if kind == "part":
+                        tg = np.vstack([obj_world(i, T) for i in objs]).mean(0)
+                    else:
+                        h_, u_ = screw_axis(objs[0])
+                        tg = h_ + 150.0 * u_
+                    far = max(far, float(np.linalg.norm(tg[:2] - ps)) - 820.0)
+                if far > 0.0:
+                    return [("hand", "out of reach", round(far + 80.0, 1))], None
+            if quick:
+                # standing by with the hands at their sides (a spot out of reach of the work: nothing to fit)
+                P.set(hands={"l": None, "r": None}, palm={"l": None, "r": None}, lean=0.0, frame=tot["n"])
+                hs = rp.person_hits(P, limit=2)
+                return hs + [("hand", "out of reach", 999.0)], [dict(name="hands at their sides", hands={"l": None, "r": None},
+                                                                     palm={"l": None, "r": None}, look=None, reach=999.0,
+                                                                     lean=0.0) for _ in jobs]
+            for kind, objs, T in jobs:
+                keep = {i: (rp.sc.gmat.get(f"o{i}"), rp.sc.alpha.get(f"o{i}", 0.0)) for i in objs}
+                for i in objs:                     # checked where it will be: in its seat
+                    if kind == "part":
+                        rp.sc.gmat[f"o{i}"] = np.asarray(T, float)
+                    rp.sc.alpha[f"o{i}"] = 1.0
+                own = {f"o{i}" for i in objs}
+                if kind == "part":
+                    W = np.vstack([obj_world(i, T) for i in objs])
+                    cands = [(nm, hands, palm, None) for nm, hands, palm in part_hand_cands(P, W)]
+                else:
+                    h, u = screw_axis(objs[0])
+                    cands = [(f"driver {d:.0f} mm", {"r": tuple(map(float, h + d * u)), "l": None}, {"l": None, "r": None},
+                              (h, u)) for d in (150.0, 200.0, 120.0)]
+                    # round 10: the long-shank driver (300 mm bit) where the short one's handle can't be reached clear
+                    cands += [(f"long driver {d:.0f} mm", {"r": tuple(map(float, h + d * u)), "l": None},
+                               {"l": None, "r": None}, (h, u)) for d in (350.0, 390.0)]
+
+                def pose_it(c_, lean):
+                    nm, hands, palm, hu = c_
+                    P.set(hands=hands, palm=palm, lean=lean, frame=tot["n"])
+                    if hu is not None:
+                        lg = nm.startswith("long")
+                        place_driver(P, *hu, long=lg)
+                        # a screw: the right hand on the driver's handle (110-230 mm up from its bit; the long one's
+                        # 300-420 mm), the bit on the head
+                        L_ = float(np.linalg.norm(np.asarray(P.hand_point("r"), float) - hu[0]))
+                        return max(0.0, 300.0 - L_, L_ - 420.0) if lg else max(0.0, 110.0 - L_, L_ - 230.0)
+                    return max(float(np.linalg.norm(np.asarray(P.hand_point(s), float) - np.asarray(hands[s], float)))
+                               for s in ("l", "r") if hands.get(s) is not None)
+
+                def hits_now(c_):
+                    ex = () if c_[3] is None else (("op/tool/driver_long",) if c_[0].startswith("long") else
+                                                     ("op/tool/screwdriver",))
+                    hs = rp.person_hits(P, own=own, extra=ex, limit=3)
+                    rp.sc.alpha["op/tool/screwdriver"] = 0.0
+                    rp.sc.alpha["op/tool/driver_long"] = 0.0
+                    return hs
+                reach_ok, short = [], []
+                for c_ in cands:
+                    for lean in (0.0, 15.0, 28.0):
+                        r_ = pose_it(c_, lean)
+                        rp.sc.alpha["op/tool/screwdriver"] = 0.0
+                        rp.sc.alpha["op/tool/driver_long"] = 0.0
+                        if r_ <= 80.0:
+                            reach_ok.append((c_, lean, r_))
+                            break
+                        if lean == 28.0:
+                            short.append((c_, lean, r_))
+                chosen = None
+                for c_, lean, r_ in reach_ok:
+                    pose_it(c_, lean)
+                    if not hits_now(c_):
+                        chosen = (c_, lean, r_, [])
+                        break
+                if chosen is None:
+                    for c_, lean, r_ in sorted(short, key=lambda t: t[2])[:3]:
+                        pose_it(c_, lean)
+                        if not hits_now(c_):
+                            chosen = (c_, lean, r_, [("hand", "out of reach", round(r_, 1))])
+                            break
+                if chosen is None:
+                    # nothing clear: the hands at their sides (the person stands by; checked as they stand)
+                    P.set(hands={"l": None, "r": None}, palm={"l": None, "r": None}, lean=0.0, frame=tot["n"])
+                    hs = rp.person_hits(P, limit=3)
+                    c_ = ("hands at their sides", {"l": None, "r": None}, {"l": None, "r": None}, None)
+                    chosen = (c_, 0.0, 999.0, hs + [("hand", "out of reach", 999.0)])
+                (nm, hands, palm, hu), lean, r_, bad = chosen
+                tgt = [np.asarray(v, float) for v in hands.values() if v is not None]
+                look_ = tuple(np.mean(tgt, axis=0)) if tgt else tuple(np.mean(W, axis=0)) if kind == "part" else \
+                    tuple(map(float, screw_axis(objs[0])[0]))
+                poses.append(dict(name=nm + (f", leaning {lean:.0f} deg" if lean else ""), hands=hands, palm=palm, look=look_,
+                                  reach=r_, lean=lean))
+                for i, (M0, a0) in keep.items():
+                    if M0 is not None:
+                        rp.sc.gmat[f"o{i}"] = M0
+                    rp.sc.alpha[f"o{i}"] = a0
+                if person_badness(bad) > person_badness(worst):
+                    worst = bad
+            P.set(hands={"l": None, "r": None}, palm={"l": None, "r": None}, lean=0.0, frame=tot["n"])
+            return worst, poses
+        return fit
+
     def person_fix():
         """Round 9 (the coordinator: "showing where a human is absolutely necessary"): after a failed step, the person walks
         in, sets each part the arms could not (it appears in its seat as their hands reach it) and drives each screw they
         could not (a screwdriver in the right hand; the screw appears as the bit reaches its hole), time-lapsed to the
-        estimates the clocks count (5 min a step, 1 min a screw), and walks out."""
+        estimates the clocks count (5 min a step, 1 min a screw), and walks out. Round 10: the hands on the part's outside,
+        the spot and the poses checked against everything drawn (fit_jobs, person_job)."""
         jobs = [("part", objs, T) for objs, T in pend["parts"]] + [("screw", [i], None) for i in pend["screws"]]
         pts = []
+        yside = 0.0
         for kind, objs, T in jobs:
             if kind == "part":
                 pts.append(np.vstack([obj_world(i, T) for i in objs]).mean(0))
+                yside += float(pts[-1][1])
             else:
                 h, u = screw_axis(objs[0])
                 pts.append(h + 120.0 * u)
+                yside += float(h[1]) + 400.0 * float(u[1])     # round 10: from the side the screw's head faces
         work = np.mean(pts, axis=0)
+        side_p = "B" if yside > 0.0 else "A"                   # round 9 always came from side A
         loc = loc_of_x(float(work[0])) if float(work[0]) <= TABLE_X else ("table", round(float(work[0]) / 100.0) * 100.0, "A")
         P = rp.person
         n_s = sum(1 for j in jobs if j[0] == "screw")
@@ -1330,48 +2002,29 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                                      (f"drives {n_s} screw{'s' if n_s > 1 else ''}" if n_s else "")) if x)
 
         def job():
-            for kind, objs, T in jobs:
+            poses = pstate.get("fit") or [None] * len(jobs)
+            for (kind, objs, T), pose in zip(jobs, poses):
                 secs = 300.0 if kind == "part" else 60.0
                 nfj = 36 if kind == "part" else 24
-                if kind == "part":
-                    W = np.vstack([obj_world(i, T) for i in objs])
-                    lo_, hi_ = W.min(0), W.max(0)
-                    c = 0.5 * (lo_ + hi_)
-                    hands = {"l": (c[0], c[1], hi_[2]), "r": (c[0], c[1], hi_[2])}
-                    if P is not None:
-                        ps = np.array([P.st["x"], P.st["y"]])
-                        side = np.array([-(c[1] - ps[1]), c[0] - ps[0]])
-                        side = side / max(np.linalg.norm(side), 1e-6) * min(90.0, 0.4 * float(np.max(hi_[:2] - lo_[:2])) + 30.0)
-                        hands = {"l": (c[0] + side[0], c[1] + side[1], c[2]), "r": (c[0] - side[0], c[1] - side[1], c[2])}
-                else:
-                    h, u = screw_axis(objs[0])
-                    grip = h + 150.0 * u
-                    hands = {"r": tuple(grip), "l": None}
-                    R = np.eye(4)
-                    z = u / np.linalg.norm(u)
-                    x_ = np.cross(z, [0.0, 0.0, 1.0]) if abs(z[2]) < 0.9 else np.cross(z, [1.0, 0.0, 0.0])
-                    x_ /= np.linalg.norm(x_)
-                    R[:3, 0], R[:3, 1], R[:3, 2], R[:3, 3] = x_, np.cross(z, x_), z, h
-                    rp.sc.gmat["op/tool"] = R
-                    rp.sc.alpha["op/tool/screwdriver"] = 1.0
+                hu = screw_axis(objs[0]) if kind == "screw" else None
+                if pose is None:                   # no person drawn (no spot)
+                    pose = dict(hands={"l": None, "r": None}, palm={"l": None, "r": None}, look=tuple(work))
+                if (pose.get("hands") or {}).get("r") is None:
+                    hu = None                      # the hands at their sides (nothing clear within reach): no driver drawn
+                lg = str(pose.get("name", "")).startswith("long")
+                if hu is not None:
+                    rp.sc.alpha["op/tool/driver_long" if lg else "op/tool/screwdriver"] = 1.0
                 for f in range(nfj):
-                    if P is not None:
-                        P.set(hands=hands, look=tuple(np.mean([np.asarray(v, float) for v in hands.values() if v is not None],
-                                                              axis=0)), frame=tot["n"])
+                    if P is not None and pstate["on"]:
+                        P.set(hands=pose["hands"], palm=pose["palm"], look=pose.get("look") or tuple(map(float, work)),
+                              lean=float(pose.get("lean", 0.0)),
+                              frame=tot["n"])
                         pstate["n"] = tot["n"]
-                        if kind == "screw" and pstate["on"]:
-                            # the driver in the right hand, pointing at the screw: its bit on the head when the hand is
-                            # close enough, else the handle in the hand and the bit towards the screw (never left floating)
-                            hp = np.asarray(P.hand_point("r"), float)
-                            dv = hp - h
-                            L_ = float(np.linalg.norm(dv))
-                            zz = dv / L_ if L_ > 1e-6 else u
-                            tip = h if L_ <= 260.0 else hp - 160.0 * zz
-                            xx = np.cross(zz, [0.0, 0.0, 1.0]) if abs(zz[2]) < 0.9 else np.cross(zz, [1.0, 0.0, 0.0])
-                            xx /= np.linalg.norm(xx)
-                            Rt = np.eye(4)
-                            Rt[:3, 0], Rt[:3, 1], Rt[:3, 2], Rt[:3, 3] = xx, np.cross(zz, xx), zz, tip
-                            rp.sc.gmat["op/tool"] = Rt
+                        if hu is not None:
+                            place_driver(P, *hu, long=lg)
+                    elif hu is not None:
+                        rp.sc.alpha["op/tool/screwdriver"] = 0.0
+                        rp.sc.alpha["op/tool/driver_long"] = 0.0
                     if f == 3:                       # the hands have reached it: the part is in its seat, the screw in
                         for i in objs:               # its hole
                             if kind == "part":
@@ -1384,13 +2037,14 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                             status="person", loc=loc):
                         return True
                 rp.sc.alpha["op/tool/screwdriver"] = 0.0
+                rp.sc.alpha["op/tool/driver_long"] = 0.0
                 if P is not None:
-                    P.set(hands={"l": None, "r": None}, frame=tot["n"])
+                    P.set(hands={"l": None, "r": None}, palm={"l": None, "r": None}, lean=0.0, frame=tot["n"])
             return False
         for _ in range(int(FPS * 2.0)):
             if emit(cur["label"], f"a person is needed: {what}", ["person"], status="person", loc=loc):
                 return True
-        return person_job(tuple(work), "A", job, loc)
+        return person_job(tuple(work), side_p, job, loc, fit=fit_jobs(jobs))
 
     def here(n):
         """Where arm n works now: at the table where its MiR stopped (the tripods are set up there), else the place in the
@@ -1525,6 +2179,17 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
             elif k in ("move", "screw") and e.get("q") is not None and len(e["q"]):
                 rp.set_arm(n, q=np.asarray(e["q"][-1], float), close=e.get("close"))
                 if e.get("unplanned"):
+                    # round 10: an approach the planner could not plan (cut, not drawn) ends where its gripper closes on a
+                    # part: the fingers are drawn at that grip's closure from the cut on. Round 9 drew them open there for
+                    # the card's 1.5 s, which is the pose the planner had found in collision (F05b: a fingertip 7.9 mm in
+                    # the outlet plenum port, 19 frames)
+                    for g_ in ev[i_ev + 1:i_ev + 8]:
+                        if g_.get("arm") == n and g_["kind"] in ("move", "move2", "drive", "screw"):
+                            break
+                        if g_.get("arm") == n and g_["kind"] == "grip" and float(g_["c1"]) > float(rp.st[n]["close"]):
+                            rp.set_arm(n, close=float(g_["c1"]))
+                            g_["c0"] = float(g_["c1"])
+                            break
                     # round 9: the badge says FAIL only if the step failed (M26 passed; only its move back to park had no
                     # checked path, and round 8's card showed a FAIL badge on it)
                     nt = str(e.get("unplanned_note") or "").replace(" not planned", "")
@@ -1571,21 +2236,30 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
             rest = [i for i in e["objs"] if i not in pend["failed"]]
             if rest and step_status(cur["id"], cur.get("failed")) == "fail" and e.get("why") != "staged" and \
                     rows.get(cur["id"], {}).get("row", {}).get("arm") not in ("PART", None):
-                # a failed placement: what the arm left more than 50 mm from its seat is set by the person
+                # a failed placement: what the arm did not seat is set by the person. Round 10: everything it left more than
+                # 1.5 mm off its seat (its box's corners), or never drew; round 9 counted only what was more than 50 mm off,
+                # and put the rest in its seat as if the arm had (F57's beam tube, 9 mm short: no person was drawn). A part an
+                # arm still holds stays in its hold (re-anchored at the put, as in round 9)
                 T1 = np.asarray(e["T"], float)
                 late = []
+                held_now = {j for n_ in ("A", "B") if rp.st[n_]["held"] is not None for j in rp.st[n_]["held"]["objs"]}
+                pending = {j for objs_, _ in pend["parts"] for j in objs_}
+                # round 10 (W1's record.py puts a released part on its seat at once, why "seated", and the step's own put
+                # follows): a part already left for the person stays where the arm left it until the person sets it
+                rest = [i for i in rest if i not in pending]
                 for i in rest:
                     k_ = f"o{i}"
-                    if k_ not in rp.sc.actors or rp.objs.get(i, {}).get("kind") in FASTENERS:
+                    if k_ not in rp.sc.actors or rp.objs.get(i, {}).get("kind") in FASTENERS or i in held_now:
                         continue
                     M0 = rp.sc.gmat.get(k_)
-                    if rp.sc.alpha.get(k_, 0.0) > 0.0 and M0 is not None and \
-                            float(np.linalg.norm(np.asarray(M0)[:3, 3] - T1[:3, 3])) < 50.0:
+                    if rp.sc.alpha.get(k_, 0.0) > 0.0 and M0 is not None and seat_off(i, M0, T1) <= 1.5:
                         continue
                     late.append(i)
                 if late:
                     pend["parts"].append((late, T1))
                     rest = [i for i in rest if i not in late]
+                    print(f"   {cur['id']}: the person sets {len(late)} part(s) the arm left off their seats (mm): "
+                          f"{[(i, round(seat_off(i, rp.sc.gmat.get(f'o{i}'), T1), 1)) for i in late][:6]}", flush=True)
                     for i in late:
                         k_ = f"o{i}"
                         M0 = rp.sc.gmat.get(k_)
@@ -1773,13 +2447,21 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
             loc = here(n0)
 
             def job(e=e, wh=wh, nf=nf, per=per, loc=loc):
+                pose = (pstate.get("fit") or [None])[0] if wh == "person" else None
                 for f in range(nf):
+                    if pose is not None and rp.person is not None and pstate["on"]:
+                        # round 10: the person's hands on the work (fit_jobs: checked), not at their sides
+                        rp.person.set(hands=pose["hands"], palm=pose["palm"], look=pose.get("look"),
+                                      lean=float(pose.get("lean", 0.0)), frame=tot["n"])
+                        pstate["n"] = tot["n"]
                     sub = (f"{e.get('what', '')[:80]} ({e['dur'] / 60:.0f} min, estimate{lapse_txt(per)})" if wh == "person" else
                            f"{e.get('what', '')[:80]} ({e['dur']:.0f} s)")
                     if emit(cur["label"], sub, [wh] if wh in ("person", "machine") else ["robot A"], proc=per,
                             add={"person_h": per / 3600.0} if wh == "person" else ({"robot_h": per / 3600.0} if wh == "robot" else None),
                             status="person" if wh == "person" else None, loc=loc):
                         return True
+                if pose is not None and rp.person is not None:
+                    rp.person.set(hands={"l": None, "r": None}, palm={"l": None, "r": None}, lean=0.0, frame=tot["n"])
                 return False
             if wh == "person" and rp.person is not None:
                 # where the job is: the station of the place (the arm's tool over Fixture P or the trunnion), or the MiR's
@@ -1787,7 +2469,33 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                 t0 = rp.tcp(n0)
                 xp = {"bench": -1250.0, "B": 1350.0}.get(loc[0], float(t0[0]) if loc[0] == "PT" else float(rp.st[n0]["x"]))
                 yp = 0.0 if loc[0] != "table" else (-300.0 if n0 == "A" else 300.0)
-                stop = person_job((xp, yp, 950.0), "A", job, loc)
+                # round 10: what they work on: the part in the cell nearest the station (not on the long table, within
+                # 300 mm of it on the floor plan, its top 0.8-1.6 m up), their hands on its outside (checked like a part
+                # they set); none: they stand by it with their hands at their sides, as in round 9
+                best_w, fitw = None, None
+                if loc[0] != "table":
+                    for i_, o_ in rp.objs.items():
+                        k_ = f"o{i_}"
+                        if rp.sc.alpha.get(k_, 0.0) <= 0.0 or o_.get("V") is None or i_ in rp.temp_tools:
+                            continue
+                        if i_ in rp.T and np.allclose(rp.sc.gmat.get(k_, np.eye(4)), rp.T[i_]):
+                            continue                         # still on the long table
+                        Wo = obj_world(i_)
+                        c_ = 0.5 * (Wo.min(0) + Wo.max(0))
+                        d_ = math.hypot(float(c_[0]) - xp, float(c_[1]) - yp)
+                        if d_ > 300.0 or not 800.0 <= float(Wo[:, 2].max()) <= 1600.0:
+                            continue
+                        sz = float(np.max(Wo.max(0) - Wo.min(0)))
+                        if best_w is None or (sz, -d_) > (best_w[0], -best_w[1]):
+                            best_w = (sz, d_, i_)            # the biggest part there: the sub-assembly being worked on
+                if best_w is not None:
+                    i_ = best_w[2]
+                    fitw = fit_jobs([("part", [i_], np.asarray(rp.sc.gmat.get(f"o{i_}", np.eye(4)), float))])
+                    Wc = obj_world(i_)
+                    zt = float(Wc[:, 2].max())
+                else:
+                    zt = 950.0
+                stop = person_job((xp, yp, zt), "A", job, loc, fit=fitw)
             else:
                 stop = job()
     return tot
