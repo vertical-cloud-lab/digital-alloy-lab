@@ -98,15 +98,16 @@ SEL = [
      "Thorlabs' graph; 305 mm x 15.2 m)", ("p3", "CL61"), 1, "add", "drawn (as the blades' finish)",
      "~1.5 m2 for both traps' blades, both faces. With it the traps reach OD ~10 (cooling.json). Thorlabs: not intended for laser "
      "safety use, so the guard's leakage test before first light still decides", []),
-    ("M0-C5", "0", "cooling (guard)", "Inlet filter: 10 mm G3/G4 pad, 176 x 320 mm, in a 1.5 mm aluminium frame on the back panel",
-     ("p3", "CL92", ("est", 25.0, 60.0, "estimate (filter media + a bent frame)", "filter pad + frame", "McMaster-Carr / shop")), 1,
-     "add", "drawn (monitoring_cooling.py)", "a duct from a ventilated dock can bolt on in its place (the supply that keeps the "
-     "busy case in rating)", []),
-    ("M0-C6", "0", "cooling (guard)", "Exhaust plenum outside the back panel (1.5 mm aluminium box, gasket) carrying the two fans",
-     ("est", 40.0, 90.0, "estimate (bent and riveted sheet)", "custom (monitoring_cooling.py)", "shop"), 1, "make",
+    ("M0-C5", "0", "cooling (guard)", "Inlet filter media: 30 ppi polyurethane foam pad, 1/4 in., 16 x 20 in (two 176 x 320 mm pieces: "
+     "one fitted, one spare), in the frame of M0-C6", ("p3", "CL92-a"), 1, "add", "drawn (monitoring_cooling.py)",
+     "no pressure drop is published for it: cooling.py takes 20 Pa at 1 m/s (estimate); measure the guard's flow when built. A duct "
+     "from a ventilated dock can bolt on in its place (the supply that keeps the busy case in rating)", []),
+    ("M0-C6", "0", "cooling (guard)", "Exhaust plenum outside the back panel (1.5 mm aluminium box, gasket) carrying the two fans, "
+     "and the inlet filter's frame", ("est", 60.0, 130.0, "estimate (bent and riveted sheet, two parts)", "custom (monitoring_cooling.py)",
+                                      "shop"), 1, "make",
      "drawn (monitoring_cooling.py)", "", []),
-    ("M0-C7", "0", "cooling (PB2)", "PB2 vent fan, 40 mm 24 V, over a Ø38 hole in PB2's +x end, and a filtered vent at the other end",
-     ("p3", "CL94", ("est", 10.0, 25.0, "estimate (40 mm 24 V fan + a 40 mm filter)", "40 mm 24 V fan", "distributor")), 1, "add",
+    ("M0-C7", "0", "cooling (PB2)", "PB2 vent fan, 40 x 40 x 10 mm 24 V (Noctua NF-A4x10 24V PWM: 8.9 m3/h, 19 Pa, 19.6 dB(A)), over a "
+     "Ø38 hole in PB2's +x end; a filtered vent at the other end", ("p3", "CL91"), 1, "add",
      "drawn (monitoring_cooling.py)", "sealed, PB2's air runs ~25 K over the guard's and the Pi throttles (SoC 81-87 C in the vented "
      "guard, cooling.json); vented, 3 K. PB2 drops from IP66 to IP2x, inside the guard", []),
     ("M0-C8", "0", "cooling (PB2)", "Raspberry Pi 5 Active Cooler for PB2's Pi", ("p3", "CL32"), 1, "add", "not drawn (inside PB2)",
@@ -257,9 +258,9 @@ SEL = [
      "its body (1 mm aluminium, riveted)", ("est", 120.0, 280.0, "estimate (bent and riveted sheet, ~0.7 kg; not quoted)",
                                            "custom (monitoring_cooling.py)", "shop"), 1, "make", "drawn (monitoring_cooling.py)",
      "keeps the Chronos in supply air: 38.5 C in the busy Shuttle against 42.6 C guard air (cooling.json)", []),
-    ("M7-C2", "7", "side camera cooling", "Hood fan, 60 mm 24 V, in the duct", ("p3", "CL90", ("est", 8.0, 25.0,
-                                                                                         "estimate (60 mm 24 V fan)", "60 mm 24 V fan", "distributor")), 1,
-     "add", "drawn (monitoring_cooling.py)", "", []),
+    ("M7-C2", "7", "side camera cooling", "Hood fan, 60 x 60 x 25 mm 24 V (Delta AFB0624H-A: 40 m3/h free air, 52 Pa, 34 dB(A)), in the "
+     "duct", ("p3", "CL90"), 1, "add", "drawn (monitoring_cooling.py)", "~20 m3/h through the trap's right part, the duct and the hood "
+     "(cooling.json). Marketplace price, authenticity not checked", []),
     ("M7-C3", "7", "camera thermal breaks", "G-10/FR-4 sheet, 1/4 in., 6 x 6 in (McMaster 85345K741): the side camera bracket's root "
      "pad and the LP camera's Ø32 ring", ("p3", "CL51"), 1, "add", "drawn (monitoring_cooling.py)",
      "the ring is turned and SM1-threaded both ends (in house). G-10 shoulder washers for the root's screws not priced", []),

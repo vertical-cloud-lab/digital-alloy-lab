@@ -318,7 +318,7 @@ def run():
     room, cases, typ, worst = shuttle_cases()
     q_ex, op = operating_point("AFB1224SH", 2)
     q_hood, hood = hood_flow()
-    fan_W = op["fan_power_W"] + 1.0 + 0.5                                   # 2 x AFB1224SH + 60 mm + 40 mm (estimates for the small ones)
+    fan_W = op["fan_power_W"] + 2.16 + 1.08                                 # 2 x AFB1224SH + AFB0624H-A (2.16 W) + NF-A4x10 24V (1.08 W max)
     configs = {
         "as_drawn": dict(what="as drawn before this round: closed guard, no fans, no breaks", q=0.0, T_in=None, brk=False, hood=False),
         "vent_shuttle": dict(what="drawn cooling, supply from the Shuttle's air", q=q_ex, T_in="T_s", brk=True, hood=True),
