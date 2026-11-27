@@ -12,7 +12,7 @@ Nothing has been bought, wired, powered, or reviewed by an electrician, BYU's La
 | [`make_tables.py`](make_tables.py) | writes both CSVs from one source and checks the totals |
 | [`diagrams/`](diagrams/) | `interlock-ladder`, `power-single-line`, `signal-flow` (PNG and SVG), drawn by [`draw.py`](diagrams/draw.py) with schemdraw |
 | [`ftctl/`](ftctl/) | the supervisor package (below) |
-| [`tests/`](tests/) | 51 pytest cases, all in simulation or against stand-ins for the hardware |
+| [`tests/`](tests/) | 54 pytest cases, all in simulation or against stand-ins for the hardware |
 | [`out/dwell-study.csv`](out/dwell-study.csv) | layer period and argon use against the dwell band, plate-block conductance, absorptivity and block offset |
 | [`img/sim-build-2mm.png`](img/sim-build-2mm.png) | one simulated 2 mm build from start-up to safe-to-open |
 
@@ -26,7 +26,7 @@ python -m ftctl info                          # layers and planned RTC5 list tim
 python -m ftctl interlock                     # contact-level check of the hard-wired chain
 python -m ftctl study-dwell                   # out/dwell-study.csv
 python -m ftctl plot --height 2               # img/sim-build-2mm.png
-python -m pytest tests                        # 51 tests, 15-75 s depending on load
+python -m pytest tests                        # 54 tests, 15-75 s depending on load
 python make_tables.py && python diagrams/draw.py
 ```
 
@@ -133,9 +133,9 @@ goes; the dwell is the plate shedding the laser's heat (§7).*
 | SCANNER_FAULT | head PowerOK or TempOK lost (`get_head_status`) | RTC5: `set_laser_control` bits 16, 17, 19, 20, 28 suppress LASERON and stop the list |
 | COOLING_FAULT | scan head water flow switch open | - |
 | RTC_ERROR | `get_last_error` ≠ 0, or a list running > 1 s past its plan | - |
-| O2_HIGH | O₂ > 1500 ppm during a scan | - |
+| O2_HIGH | O₂ > 1500 ppm during a scan, or a box O₂ signal lost (4-20 mA < 3.6 mA) | - |
 | O2_TIMEOUT | the purge, or a hold, does not get under 1000 ppm in time | - |
-| ROOM_O2_LOW | the room monitor's relay or its 4-20 mA below 19.5 % | the OX-6 relay drops K4, which closes both argon valves |
+| ROOM_O2_LOW | the room monitor's relay, its 4-20 mA below 19.5 %, or that signal lost | the OX-6 relay drops K4, which closes both argon valves |
 | STAGE_FAULT | Zaber flags F* (FS stalled, FD, FE, FT, FQ, FM, FV, FF ...), a move overrunning its plan, or a position error > 0.05 mm | - |
 | TC_OPEN | any thermocouple open (SOLO 0x8002-0x8007, MCC 134 -9999) | the SOLO's sensor-break action turns its SSR off |
 | PLATE_OVERTEMP | plate or block > 225 °C | the CN708 opens K2 at 240 °C (latching) |

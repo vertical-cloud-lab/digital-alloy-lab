@@ -119,6 +119,13 @@ class Supervisor:
             raise Fault(Code.OPERATOR_STOP, "abort requested", t)
         if not s["ROOM_O2_OK"] or s["room_o2_pct"] < g.room_alarm_pct:
             raise Fault(Code.ROOM_O2_LOW, f"room O2 {s['room_o2_pct']:.1f} %", t)
+        # a broken 4-20 mA loop reads NaN (below 3.6 mA): never treat a lost O2 signal as a good one
+        lost = [(k, c) for k, c in (("room_o2_pct", Code.ROOM_O2_LOW), ("o2_pct", Code.O2_HIGH))
+                if s[k] is None or math.isnan(s[k])]
+        if self.outputs.get("TRACE_SAMPLE") and (s["o2_ppm"] is None or math.isnan(s["o2_ppm"])):
+            lost.append(("o2_ppm", Code.O2_HIGH))
+        if lost:
+            raise Fault(lost[0][1], f"{lost[0][0]} signal lost (4-20 mA loop below 3.6 mA)", t)
         for k in ("plate_C", "block_C", "window", "beam_tube", "box_air", "stage"):
             if s[k] is None or math.isnan(s[k]):
                 raise Fault(Code.TC_OPEN, f"thermocouple '{k}' open", t)

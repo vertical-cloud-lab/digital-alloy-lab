@@ -212,3 +212,10 @@ def test_driver_exception_is_a_safe_stop(rig):
     r.run(6, finish=False)
     r.assert_safe()
     assert r.summary["fault"]["code"] == "INTERNAL_ERROR"
+
+
+@pytest.mark.parametrize("loop,code", [("room_o2_pct", "ROOM_O2_LOW"), ("o2_pct", "O2_HIGH"), ("o2_ppm", "O2_HIGH")])
+def test_lost_oxygen_signal(rig, loop, code):
+    r = run_with(rig, 2, lambda w: w.loops_broken.add(loop))
+    r.assert_safe()
+    assert r.summary["fault"]["code"] == code and "signal lost" in r.summary["fault"]["message"]

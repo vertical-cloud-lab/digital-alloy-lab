@@ -54,6 +54,7 @@ class SimWorld:
         self.stray_W = 0.0                 # stray beam power into the beam tube (fault injection)
         self.heater_stuck_on = set()       # SSR failed short (fault injection): 'plate' / 'block'
         self.box_fan_failed = False        # fault injection: the fan on the box stops
+        self.loops_broken = set()          # fault injection: 4-20 mA loops reading below 3.6 mA
         self.box_extra_K = 0.0             # fault injection: extra box-air rise (e.g. a stage motor overheating)
         # safety chain
         self.estop_ok = True
@@ -489,8 +490,10 @@ class SimIo(IoNode):
     def analog(self):
         self._check()
         w = self.w
-        return {"o2_ppm": min(w.o2_reading, w.cfg.gas.analyzer_range_ppm), "o2_pct": w.o2_pct_reading,
-                "room_o2_pct": w.room_o2_pct}
+        nan = float("nan")
+        return {"o2_ppm": nan if "o2_ppm" in w.loops_broken else min(w.o2_reading, w.cfg.gas.analyzer_range_ppm),
+                "o2_pct": nan if "o2_pct" in w.loops_broken else w.o2_pct_reading,
+                "room_o2_pct": nan if "room_o2_pct" in w.loops_broken else w.room_o2_pct}
 
 class SimCamera(Camera):
     def __init__(self, world):
