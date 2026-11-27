@@ -12,11 +12,11 @@ Dates are proposals; nothing has been booked or ordered.*
 | G-A1 | Wed Mar 31, 2027 | ≥ 5 valid Block A runs checked against the bar (A1–A2); campaign 1 step costs compiled (L1–L2); mineral burden computed (B4); twin refit to campaign 1 records (T1, first pass) | Block A is the one thing version B can't do without: if it isn't done, run it in April before anything else |
 | G-A2 | Mon May 31, 2027 | Desktop LPBF prints dense Al cubes (P1); Block B and its ICP back (C2); campaign 2 optimizer, baselines, targets and stopping rule pre-registered and committed (B1), with the twin's out-of-sample prediction of campaign 2; positive-control alloy (B6) atomized and printed, tested by July | If P1 is late, campaign 2 starts with the Utah MIDI and the desktop joins when ready; Fig. 1c and Fig. 4 shrink |
 | — | Jul 6 – Oct 15, 2027 | **Campaign 2**: ~14 weeks including flex; ~25–35 atomizer runs; hardness and density on every print; tensile on finalists | |
-| G-A3 | Thu Sep 30, 2027 | The decision log shows candidates stopped at different steps by the acquisition (Fig. 5a); version A or B chosen | Version B: write it from Blocks A/B, campaign 1 data and the twin |
+| G-A3 | Thu Sep 30, 2027 | The decision log shows acquisition stops at different steps, with the audit running (Fig. 5a–b); at least one candidate on track to match the Sc-free positive control; version A or B chosen | Version B: write it from Blocks A/B, campaign 1 data and the twin, for another journal |
 | G-A4 | Mon Nov 15, 2027 | Data freeze; finalists' samples at the outside lab (V1–V2) | Report outside results as pending, or drop V2 |
 | G-A5 | Mon Dec 20, 2027 | Outside results back; twin validated against campaign 2 (T4) and counterfactuals run (T2–T3); full draft to co-authors | |
 | — | Jan 2028 | Co-author edits; internal read by someone outside the lab; precedent scan re-run (A6); figures final; SI and data deposit ready (DOIs reserved, not published) | |
-| **Submit** | **Tue Feb 15, 2028** | Version A if G-A3 passed, otherwise version B | ~2 weeks of buffer before a late-February deadline |
+| **Submit** | **Tue Feb 15, 2028** | Version A to the collection if G-A3 passed; otherwise version B to another journal (it can go as early as Jul 2027) | ~2 weeks of buffer before a late-February deadline |
 
 ## What campaign 1 (Nov 2026–Feb 2027) has to log for this article
 
