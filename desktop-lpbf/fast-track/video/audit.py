@@ -67,7 +67,10 @@ def placed(meshes, name, st, cache):
     sc = st.get("scale")
     if sc is not None and not np.allclose(sc[:3], 1.0):
         sx, sy, sz, z0 = sc
-        g = g.scaled((sx, sy, sz))
+        k2 = (name, st.get("morph"), tuple(sc))
+        if k2 not in cache:                      # kept, so that id() keys of the depth cache stay unique
+            cache[k2] = g.scaled((sx, sy, sz))
+        g = cache[k2]
         off = off + np.array([0.0, 0.0, z0 * (1.0 - sz)])
     return g, off
 

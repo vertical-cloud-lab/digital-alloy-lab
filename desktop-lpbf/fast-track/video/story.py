@@ -1077,6 +1077,7 @@ def ch6():
     tl.shot(CAMS["under"])
     tl.caption("Gland under the cube floor", "the same O-ring gland, re-bolted")
     tl.insert([s.Bm["Rod gland plate, 2 O-rings (MK-07)"]], prefs=["left", "front-up", "right"])
+    tl.wait(2.2)                                  # hold: no shot under 2 s (the insertion alone was 1.8 s)
     tl.shot(CAMS["cube"])
     tl.caption("The cassette goes in", "250 mm deck through the face opening (266 mm, est.)")
     cas = [s.Bm[n] for n in s.Bm if s.Bm[n].startswith("B|") and any(x in n for x in (
@@ -1151,7 +1152,7 @@ def ch7():
     ms = ["S1 guide-laser and scanner checks", "S2 FULL POWER INTO THE DUMP", "FT-0 FIRST TRACKS", "FT-1 FIRST COUPONS",
           "FT-1V FIRST COUPONS (< 100 ppm)"]
     tl.overlay("summary", dict(milestones=[(m, *sched(m)) for m in ms], spend=cumulative(), scenario=_SCHED["_scenario"]))
-    tl.wait(20.0)
+    tl.wait(15.0)                                 # 15 s keeps the whole video under 6 min (358 s)
     tl.end()
     return s
 
