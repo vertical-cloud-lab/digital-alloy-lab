@@ -650,8 +650,8 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
         ctr = tube(30, 27, (tx, ty, t0), "z", cs_len)
         add("Beam tube centre section, split, long (MK-10)" if not cube else "Beam tube centre section, split, short (MK-10)",
             ctr, C["alu_dark"], "MK-10", "enclosure", opacity=0.7)
-        add("Beam-tube interlock switch (on the collar; actuator on the centre section)",
-            box(lax + 68, lax + 92, lay - 10, lay + 10, lb - 2, lb + 16), C["yellow"], "S1", "safety")
+        add("Beam-tube interlock switch: Omron D4NS-2CF tongue switch on the collar (S5, envelope est.)",
+            box(lax + 68, lax + 92, lay - 10, lay + 10, lb - 2, lb + 16), C["yellow"], "S5", "safety")
         if monitoring and mon("MON6"):
             tcs = [box(tx + 30.0, tx + 32.0, ty - 6, ty + 6, t0 + 5, t0 + 15), box(wx - 6, wx + 6, wy - 52.0, wy - 50.0, z + 2, z + 8)]
             add("Surface thermocouples: beam tube, window ring (MON6)", comp(tcs), C["mon"], "MON6", "monitoring")
@@ -910,17 +910,15 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
         add("Emission lamp", cyl(14, (ux[1], ry[1], z_up_top), "z", 40), C["red"], "S1", "safety")
     if has_box:
         z_lid = L["roof_out"]
-        sw_ = []
-        for xx in (xc - 160, xc + 160):
-            sw_.append(box(xx - 18, xx + 18, y0 - t - 16, y0 - t, z_lid - 50, z_lid - 24))
-        add("Coded lid switches (2)", comp(sw_), C["yellow"], "S1", "safety")
+        xx = xc + 160                                 # one direct-opening switch per guard; its key is on the door
+        add("Lid interlock: Omron D4NS-2CF tongue switch (S5, envelope est.)",
+            box(xx - 18, xx + 18, y0 - t - 16, y0 - t, z_lid - 50, z_lid - 24), C["yellow"], "S5", "safety")
     if cube:
         F = P["cube_frame"]
-        sw_ = []
-        for xx in (xc - 110, xc + 110):
-            fz_ = yc - F / 2 - (P["cube_plate_t"] - P["cube_boss"])
-            sw_.append(box(xx - 18, xx + 18, fz_ - 16, fz_, L["cube_c"] + 60, L["cube_c"] + 86))
-        add("Coded lid switches (2)", comp(sw_), C["yellow"], "S1", "safety")
+        xx = xc + 110
+        fz_ = yc - F / 2 - (P["cube_plate_t"] - P["cube_boss"])
+        add("Door interlock: Omron D4NS-2CF tongue switch (S5, envelope est.)",
+            box(xx - 18, xx + 18, fz_ - 16, fz_, L["cube_c"] + 60, L["cube_c"] + 86), C["yellow"], "S5", "safety")
     if has_cassette:
         add("Argon regulator and solenoid valve panel", box(-330, -230, -330, -250, zb, zb + 160), C["alu_dark"], "G1",
             "gas")

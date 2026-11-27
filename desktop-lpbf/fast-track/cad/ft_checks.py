@@ -458,7 +458,7 @@ def door_swing(state="FT-1", max_deg=90, step=1.0, camera=True):
     y_h, z_h = M.door_hinge(state)
     door = [p for p in parts if p.name.startswith(DOOR_GROUP) and (camera or not p.name.startswith("Layer camera"))]
     skip_names = ("Beam tube centre section", "Surface thermocouples", "Concealed hinges", "Poured-in-place", "Saginaw",
-                  "Coded lid switches", "Bench top", "Layer camera")
+                  "Lid interlock", "Bench top", "Layer camera")
     statics = [p for p in parts if p not in door and not p.name.startswith(skip_names)]
     pivot = np.array([0.0, y_h, z_h])
     poses = []

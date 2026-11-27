@@ -143,7 +143,7 @@ def shot(pl):
 
 SUBS = {
     "S1": "deck on the support rails, target at the powder plane; hurrySCAN hung by its entrance face, lens axis at y -30",
-    "S2": "Saginaw 16 x 12 x 8 in. box on the rails; window, split beam tube, coded switches: Class 1; 1 kW dump at the plate",
+    "S2": "Saginaw 16 x 12 x 8 in. box on the rails; window, split beam tube, D4NS-2CF tongue switches: Class 1; 1 kW dump at the plate",
     "FT-0": "well block, plate on a collar-held rod, argon nozzle; 48 mm spreader bar; layer camera, raking lights, TCs",
     "FT-1": "rod clamped in the rod-end block on the X-VSR20A; X-LSM100B, shield, arm and hopper-blade on the deck; AE sensor",
     "FT-1V": "deck cassette, gland, window stack and stages moved onto a 12 in. cube; cover slide on a drop tube; pump-purge",
