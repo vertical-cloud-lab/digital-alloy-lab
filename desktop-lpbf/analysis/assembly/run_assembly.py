@@ -322,6 +322,36 @@ def close_for(run, n, width, internal=False):
     return a.close_for_gap(max(1.0, min(84.0, width)))
 
 
+def fit_close(run, n, close, G, body, T_body, limit=1.5):
+    """Round 9 (for run 15): open the 2F-85 from `close` until its fingers and fingertips are at most `limit` mm into the part it
+    grasps (the grasp G, world, on `body` at T_body). The closure came from the part's width in a thin slice at the approach
+    side, so where the part is wider further along the pads (a flange, a boss) the drawn fingertips stood up to 10 mm inside it
+    (round 9's frame audit, 45 pairs in chapter 41)."""
+    a = run.arm(n)
+    if a.tool_name != "gripper" or a.caps:
+        return close
+    import ur_arm
+    body.place(T_body)
+    tips = [b for k, b in a.grip.items() if "finger" in k or "knuckle" in k]
+
+    def deepest(c):
+        W0 = G @ inv(a.tcp_local(c))
+        Wt = W0 @ Tm(p=(0.0, 0.0, K.TC_H))
+        Gf = ur_arm.gripper_fk(c)
+        d = 0.0
+        for b in tips:
+            k = b.name.split("/")[-1].rsplit("/", 1)[0]
+            key = next((kk for kk in a.grip if a.grip[kk] is b), None)
+            b.place(Wt @ Gf[key])
+            if C.hit(b.obj, body.obj):
+                d = max(d, C.depth(b, body, upto=limit + 0.5))
+        return d
+    c = float(close)
+    while c > 0.0 and deepest(c) > limit:
+        c = max(0.0, c - 0.02)
+    return c
+
+
 def contacts_at_seat(run, body, exclude=()):
     w = run.cl.world("A", exclude, other=False)
     g = Group([body])
@@ -403,6 +433,9 @@ def arm_place(run, st, idx, path, state, actor, tool, holdname, grasp=None, extr
         run.set_tool(actor, tool)
         a.hold(body, off)
         close = close_for(run, actor, width, internal)
+        if tool.startswith("gripper") and not internal:
+            close = fit_close(run, actor, close, G, body, T_obj)       # round 9 (run 15): no fingertip inside the part
+            a.hold(body, off)
         a.close = close
         offs = dense(path[::-1])
         Ts = [T_obj @ Tm(p=o) @ inv(T_obj) @ G for o in offs]
@@ -1031,6 +1064,8 @@ def do_flip(run, st, row):
         a = run.arm(actor)
         a.hold(body, inv(G_m))
         close = close_for(run, actor, width)
+        close = fit_close(run, actor, close, T0 @ G_m, body, T0)           # round 9 (run 15): no fingertip inside the module
+        a.hold(body, inv(G_m))
         a.close = close
         Ts = [F @ G_m for F in frames]
         nest = {"body_up": "Module nest, upright", "body_inv": "Module nest, upside down", "stack_inv": "Stack nest"}

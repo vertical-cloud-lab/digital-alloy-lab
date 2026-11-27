@@ -181,8 +181,16 @@ def place(run, st, idx, actor, tool, best, body, off, G, T_obj, close, state, ro
         # none of the extras fitted at the station. In run 10 M13's held body carried its PEEK rod bullet (a tool fitted at the
         # station) 20 mm into the table top, and C00a's the overflow funnel that a person fits on the bench in C00 (62 mm)
         on_slot = [i for i in idx if tbl.on.get(i) is slot]
+        bench = [i for i in idx if tbl.on.get(i) is not None and tbl.on.get(i) is not slot
+                 and tbl.on[i].get("step") in tbl.KT.NOTE_KEYS]          # fitted in a person's bench step (kit_table.NOTE_KEYS)
+        if bench:
+            # round 9 (for run 15): the part carries pieces a person fitted on the bench in an earlier step (C00a's floor plate
+            # with the overflow funnel, C00). Picking it from the table drew those pieces, which lie in their own slot, under it
+            # and through the table top (round 9's frame audit, chapter 41 frames 277-280): it comes from the bench, staged
+            fetch_res = "person"
         body_t = run.held_body(on_slot, f"held:{st['id']}:table", state, None) if on_slot and hasattr(run, "held_body") else body
-        pk = FE.pick_plan(run, actor, on_slot or idx, body_t, off, G_rel, close, tool, slot)
+        pk = FE.pick_plan(run, actor, on_slot or idx, body_t, off, G_rel, close, tool, slot) if not bench else \
+            dict(ok=False, why="from the bench, staged by a person")
         cl.move_mir(actor, x_pl)
         a.release()
         if held_pl is not None:
@@ -204,6 +212,9 @@ def place(run, st, idx, actor, tool, best, body, off, G, T_obj, close, state, ro
                 run._tray_step = st["id"]
             if not (ok1 and ok2):
                 row["fetch_why"] = (why1 or why2)[:200]
+        elif bench:
+            fetch_res = "person"
+            row["fetch_why"] = "from the bench with the pieces fitted there (staged by a person), not from the table"
         else:
             fetch_res = "FAIL"
             row["fetch_why"] = f"pick at the table ({slot['key']}): {pk['why']}"[:200]
