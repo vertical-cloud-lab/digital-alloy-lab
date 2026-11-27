@@ -126,11 +126,13 @@ SEL = [
     ("M3-05", "3", "layer light", "Two-channel 24 V switching for the lights (MOSFET or relay module on PLC outputs)",
      ("est", 15.0, 40.0, "estimate (not fetched)", "2-ch 24 V module", "various"), 1, "add", "not drawn", "", []),
     # ---------------- step 4: acoustic emission ---------------------------------------------------------------------------
-    ("M4-01", "4", "AE", "AE sensor, high-temperature broadband (MISTRAS D9215 class; Seleznev 2022's sensor)",
-     ("p2", "A1", ("est", 700.0, 1800.0, "quote-only; estimate, inside Edison's $1-3k for sensor + preamp (monitoring.md §4)",
-                   "D9215 (or WSa / R15a)", "MISTRAS (quote)")), 1,
-     "add", "not drawn", "quote-only; Edison r8-ae-waveguide: D9215 under the plate with Molykote 41 is the proven set-up at 200 C",
-     ["A1-u2", "A1-u3"]),
+    ("M4-01", "4", "AE", "AE sensor in each AE module's cartridge (M50, L75), on the waveguide's foot: MISTRAS PICO, Ø5 x 4 mm, "
+     "200-750 kHz, -65 to 177 C; its integral coax shortened to ~0.3 m with a 10-32 plug (ask MISTRAS)",
+     ("p3", "AE-S1", ("est", 400.0, 900.0, "quote-only; estimate for a MISTRAS miniature sensor (no public price found)", "PICO",
+                      "MISTRAS (quote)")), 2,
+     "add", "drawn (M50, L75)", "monitoring/mechanics.md §4: the only fit in the Ø12.7 rod beside the leads is a Ø5 sensor. "
+     "QingCheng WM500/1 (AE-S2, Ø4.7 x 4, 100-1000 kHz) reaches 100 kHz but is rated 120 C, 2 K over the foot's worst case; Nano30 (AE-S3) "
+     "does not fit. S25 keeps a sensor clamped on its rod end (M4-09)", []),
     ("M4-02", "4", "AE", "AE preamplifier 20/40/60 dB (MISTRAS 2/4/6 class)",
      ("p2", "A2", ("est", 300.0, 900.0, "quote-only; estimate, inside Edison's $1-3k for sensor + preamp", "2/4/6 (or 0/2/4)",
                    "MISTRAS (quote)")), 1, "add", "not drawn",
@@ -139,15 +141,39 @@ SEL = [
     ("M4-03", "4", "AE", "Preamp power / decoupling box (28 V phantom to a plain BNC input)",
      ("p2", "A5", ("est", 0.0, 400.0, "estimate: $0 with a 5 V USB-powered preamp (MISTRAS PreAmp One), up to ~$400 for a decoupler",
                    "decoupler or none", "MISTRAS / Vallen (quote)")), 1, "add", "not drawn", "", []),
-    ("M4-04", "4", "AE", "High-temperature couplant, Molykote 41 (to 288 C)", ("p1", "A3"), 1, "add", "not drawn", "", []),
+    ("M4-04", "4", "AE", "Couplant at both ends of the waveguide: Krytox LVP PFPE vacuum grease, 2 oz (-15 to 300 C, 1e-5 Torr at 200 C)",
+     ("p3", "AE-C1"), 1, "add", "not drawn",
+     "replaces Molykote 41 (silicone oil, no vacuum data; silicone vapour fouls windows). A dab on each plate's spigot underside and on the "
+     "sensor's face. Tier B (500 C): no grease lasts; a dry annealed Al foil under the domed head (monitoring/mechanics.md §4)", []),
     ("M4-05", "4", "AE", "Pencil leads 0.5 mm 2H for Hsu-Nielsen breaks (plus any 0.5 mm pencil)", ("p1", "A4"), 2, "add", "not drawn",
      "a Nielsen shoe is quote-only from AE suppliers; a PTFE guide ring made here does the same", []),
-    ("M4-06", "4", "AE", "Waveguide option: 316 rod Ø2 mm x 1 ft (Edison: 1.5-2 mm, 150-250 mm, 10-20 N preload)", ("p1", "A1-a"), 1,
-     "option", "not drawn", "", []),
-    ("M4-07", "4", "AE", "Waveguide option: compression spring 302 SS for the preload", ("p1", "A2"), 2, "option", "not drawn", "", []),
-    ("M4-08", "4", "AE", "SMA-to-BNC cable 48 in. (sensor or preamp to the digitizer)", ("p1", "O3-d"), 1, "add", "not drawn", "", []),
-    ("M4-09", "4", "custom (outsourced)", "AE sensor clamp on the rod end, 6061 plate + spring",
-     ("custom", 27.12, "analogue: SendCutSend laser, the 1/2 in. Z lift arm, $27.12"), 1, "outsource", "not drawn", "", []),
+    ("M4-06", "4", "AE", "Waveguides: 316 rod Ø1/8 in. (3.18 mm) x 1 ft, makes three 94 mm guides (M50, L75, a spare); the Ø4 head "
+     "domed R50 is M4-10's shop work", ("p1", "A1"), 1, "add", "drawn (M50, L75; Ø3.0 in the model)",
+     "slides free in the Ø3.4 holes; lapped to length so the head stands 0.6 mm proud with the plate off (monitoring/mechanics.md §4)", []),
+    ("M4-07", "4", "AE", "Cartridge spring: Lee Spring LC 029BB 09S316 (316, OD 4.78, free 19.05 mm, 3.94 N/mm), 2 + 2 spares",
+     ("p3", "AE-SP1"), 4, "add", "drawn (M50, L75)",
+     "13.3-16.8 N on the plate over every tolerance corner with the stop force set by a shim at assembly; 10.2-20.4 N as bought "
+     "(ae_preload.md §2); Century 60895SCS is the same spring (AE-SP2)", []),
+    ("M4-08", "4", "AE", "SMA-to-BNC cable 48 in. (preamp to the digitizer)", ("p1", "O3-d"), 1, "add", "not drawn", "", []),
+    ("M4-09", "4", "custom (outsourced)", "S25 only: AE sensor clamp on the rod end, 6061 plate + spring (S25's Ø7.7 rod has no room "
+     "for the waveguide and cartridge)",
+     ("custom", 27.12, "analogue: SendCutSend laser, the 1/2 in. Z lift arm, $27.12"), 1, "option (S25)", "drawn (S25)",
+     "the rod-end route: 26-52 dB from the plate (checks.md §6); a third PICO in it if S25 needs AE", []),
+    ("M4-10", "4", "custom (outsourced)", "AE cartridge (turned 316L: Ø6.3 x 0.35 tube, 25.8 mm, floor, stop cap with the guide hole, "
+     "legs over the cross-drilling, lead slot) and the waveguide's Ø4 head domed R50, one set per AE module",
+     ("est", 40.0, 120.0, "estimate: a small turned 316L part and a domed head, ~1 h outsourced each (no quote)", "custom", "machine shop"),
+     2, "outsource", "drawn (M50, L75)", "", []),
+    ("M4-11", "4", "AE", "Microdot (10-32) weld-in feedthrough for the sensor's lead, in the rod end's cap: Solid Sealing FA40102",
+     ("p3", "AE-FT1"), 2, "add", "drawn (M50, L75)",
+     "laser or e-beam weld (SST NS40102), not TIG: send the rod end to SST or a laser welder with the part (M4-13). Lesker IFTCG012011 "
+     "(SMA, AE-FT3) is too long for the cap", []),
+    ("M4-12", "4", "AE", "Air-side Microdot plug and cable to the preamp, 120 in.: Solid Sealing FA21382", ("p3", "AE-FT2"), 2, "add",
+     "drawn as an envelope (plug)", "rated 75 C with the feedthrough, about 1 K over the rod end's worst case: a PTFE 10-32 cable to "
+     "125 C (CeramTec 14544-01-A, not priced) leaves margin. Unplugged at a module swap, like the type K and power plugs", []),
+    ("M4-13", "4", "AE", "Gas-side lead: Kapton coax pigtail on the feedthrough's pin (push-on socket) up the rod to an in-line 10-32 "
+     "joint with the sensor's lead; and the feedthrough's laser weld",
+     ("est", 60.0, 250.0, "estimate: UHV Kapton coax and push-on contact, plus an outsourced laser weld (not priced)", "custom",
+      "Allectra / Lesker class; weld shop"), 2, "add", "not drawn", "fitted before the rod is welded to the rod end", []),
     # ---------------- step 5: two-colour coaxial (the optics worker's parts: monitoring/optics-parts.csv) -------------------
     ("M5-01", "5", "coaxial", "Shared 1070 nm blocker after cube 1: short-pass 1000 nm (replaces the NF1064-44, which would cut 700 nm)",
      ("mo", "MO3"), 1, "add", "not drawn", "", []),

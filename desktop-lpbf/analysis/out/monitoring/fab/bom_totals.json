@@ -66,23 +66,24 @@
   },
   "4": {
    "what": "acoustic emission",
-   "new_low": 1110.54,
-   "new_high": 3210.54,
-   "with_used": 1094.54,
+   "new_low": 1788.12,
+   "new_high": 4328.12,
+   "with_used": 1638.07,
    "unpriced": [],
    "estimated": [
     "M4-01",
     "M4-02",
-    "M4-03"
+    "M4-03",
+    "M4-10",
+    "M4-13"
    ],
    "options": [
-    "M4-06",
-    "M4-07"
+    "M4-09"
    ],
-   "options_usd": 23.09,
-   "options_used_usd": 23.09,
-   "cumulative_new_low": 5648.16,
-   "cumulative_with_used": 5376.16
+   "options_usd": 27.12,
+   "options_used_usd": 27.12,
+   "cumulative_new_low": 6325.74,
+   "cumulative_with_used": 5919.69
   },
   "5": {
    "what": "two-colour coaxial",
@@ -94,8 +95,8 @@
    "options": [],
    "options_usd": 0,
    "options_used_usd": 0,
-   "cumulative_new_low": 7827.28,
-   "cumulative_with_used": 7555.28
+   "cumulative_new_low": 8504.86,
+   "cumulative_with_used": 8098.81
   },
   "6": {
    "what": "coaxial camera",
@@ -111,8 +112,8 @@
    ],
    "options_usd": 215.57,
    "options_used_usd": 215.57,
-   "cumulative_new_low": 8814.33,
-   "cumulative_with_used": 8542.33
+   "cumulative_new_low": 9491.91,
+   "cumulative_with_used": 9085.86
   },
   "7": {
    "what": "side high-speed camera (and the steep lid camera)",
@@ -138,8 +139,8 @@
    ],
    "options_usd": 13637.33,
    "options_used_usd": 13497.28,
-   "cumulative_new_low": 20019.66,
-   "cumulative_with_used": 17947.66
+   "cumulative_new_low": 20697.24,
+   "cumulative_with_used": 18491.19
   },
   "8": {
    "what": "cooling through solidification",
@@ -161,8 +162,8 @@
    ],
    "options_usd": 18334.93,
    "options_used_usd": 11651.93,
-   "cumulative_new_low": 22179.98,
-   "cumulative_with_used": 20107.98
+   "cumulative_new_low": 22857.56,
+   "cumulative_with_used": 20651.51
   }
  },
  "missing": [

@@ -5,8 +5,8 @@ Builds lpbf_low with monitoring=True and writes five PNGs to analysis/out/monito
   lw.png         the left-wall port, its purge and the Chronos 2.1-HD on its post
   lp.png         the steep lid port (LP), its boss and camera, and the cut-out in the optics bridge
   cage.png       the coaxial branch above the bridge: cubes 1-3, the camera arm, photodiodes A and B, the beam trap
-  ae.png         a section through the build module at the waveguide: plate, heater block, break, piston head, rod, rod end,
-                 the AE sensor on the rod end's back face
+  ae.png         two panels: a section through the M50 module at the waveguide (plate, heater block, break, piston head, rod, rod end),
+                 and the rod end close up: the cartridge, spring, sensor and the Microdot weld-in in the cap
 
 Run:  xvfb-run -a -s "-screen 0 1920x1080x24" /tmp/venv/bin/python desktop-lpbf/analysis/monitoring/mech/render_parts.py [name ...]
 """
@@ -118,15 +118,35 @@ def main(which):
              "cage.png")
     if "ae" in which:
         import monitoring_parts as MPT
-        y_cut = MPT.REPORT.get("AE", {}).get("waveguide_xy", (0.0, 3.03))[1]
+        y_cut = MPT.REPORT.get("AE", {}).get("cartridge_xy", (0.0, 2.27))[1]        # through the cartridge's axis
+        import dataclasses
+        ae_parts = [dataclasses.replace(p, opacity=0.5) if "AE cartridge" in p.name else p for p in state_parts]
+
         def ae_col(p):
-            return (0.95, 0.35, 0.05) if "waveguide" in p.name else ((0.15, 0.4, 0.95) if "sensor" in p.name.lower() else None)
-        save(scene(state_parts, [(-150, -260, -40), (-5, 10, -75), (0, 0, 1)], box=(-90, 90, -40, 70, -150, 2),
-                   clip=((0, 1, 0), (0, y_cut, 0)), grey_op=0.55, recolour=ae_col,
-                   keep=lambda p: "M50" in p.name or (mon(p) and ("AE " in p.name)) or "Z lift arm" in p.name or "Pot magnet" in p.name,
-                   hide=HIDE + ("Gland-plate screws", "handle", "Zero-point"),
-                   title="AE path, section at the waveguide: plate, heater block, break, piston head, rod, rod end; sensor on the rod end"),
-             "ae.png")
+            n = p.name
+            if "waveguide" in n:
+                return (0.95, 0.35, 0.05)
+            if "sensor" in n.lower():
+                return (0.15, 0.4, 0.95)
+            if "AE spring" in n:
+                return (0.75, 0.1, 0.45)
+            if "AE cartridge" in n:
+                return (0.2, 0.65, 0.35)
+            if "feedthrough" in n:
+                return (0.55, 0.3, 0.85)
+            return None
+        keep = lambda p: "M50" in p.name or (mon(p) and ("AE " in p.name)) or "Z lift arm" in p.name or "Pot magnet" in p.name  # noqa: E731
+        hide = HIDE + ("Gland-plate screws", "handle", "Zero-point")
+        a = scene(ae_parts, [(-150, -260, -40), (-5, 10, -75), (0, 0, 1)], box=(-90, 90, -40, 70, -150, 2),
+                  clip=((0, 1, 0), (0, y_cut, 0)), grey_op=0.55, recolour=ae_col, keep=keep, hide=hide,
+                  title="AE path, section at the waveguide (M50): domed head on the plate's spigot, down the stack and the rod")
+        b = scene(ae_parts, [(38, -80, -96), (0, 6, -118), (0, 0, 1)], box=(-45, 45, -30, 45, -150, -95),
+                  clip=((0, 1, 0), (0, y_cut, 0)), grey_op=0.45, recolour=ae_col, keep=keep, hide=hide,
+                  title="Rod end: cartridge (green, see-through), spring, PICO sensor (blue), Microdot weld-in and its plug (violet)")
+        both = np.hstack([a, b])
+        im = Image.fromarray(both).convert("RGB")
+        im = im.resize((im.width * 3 // 4, im.height * 3 // 4), Image.LANCZOS)
+        save(np.asarray(im), "ae.png")
 
 
 if __name__ == "__main__":
