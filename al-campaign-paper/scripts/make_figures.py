@@ -719,7 +719,8 @@ def fig_s_burden(alloys, burdens, lit, lit_b) -> str:
 def tex_escape(s: str) -> str:
     return (str(s).replace("\\", "\\textbackslash{}").replace("&", "\\&").replace("%", "\\%")
             .replace("_", "\\_").replace("#", "\\#").replace("µ", "\\textmu{}").replace("°", "\\textdegree{}")
-            .replace("$", "\\$").replace(">=", "$\\geq$").replace("<", "$<$").replace(">", "$>$"))
+            .replace("$", "\\$").replace(">=", "$\\geq$").replace("<", "$<$").replace(">", "$>$")
+            .replace("Hoganas", 'H\\"ogan\\"as'))
 
 
 def fmt(v, nd=0):

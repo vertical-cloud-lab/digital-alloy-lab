@@ -11,19 +11,23 @@ Dear Editor,
 We submit "[title]" for consideration as a [article type] in [journal].
 
 **What we found.** [One sentence, version A: Alloy X, a scandium-free Al-[...] alloy printed by laser powder bed fusion
-from powder we atomized in-house, reaches [YS] MPa yield strength at [EL] % elongation, [Δ] MPa above AlSi10Mg printed
-and tested the same way, with a critical-mineral burden [X] % below Scalmalloy's.]
+from powder we atomized in-house, reaches [YS] MPa yield strength at [EL] % elongation, [Δ] MPa above commercial Al5X1
+(Al-Mg-Zr-Mn) printed in the same session and tested the same way, at [equal / lower] critical-mineral burden, and
+below Scalmalloy's at every allowed import reliance.]
 
 **Why it matters for [journal]'s readers.** [Two sentences: AlSi10Mg is the default printed Al alloy and is weak;
 Scalmalloy is strong because of scandium, a critical mineral with one dominant supplier and export controls since
-April 2025; a scandium-free alloy that beats AlSi10Mg on the same machine, at a stated burden, is what part designers
-can use.]
+April 2025; scandium-free powders stronger than AlSi10Mg are already sold, so the useful result is one that beats them,
+measured on the same machine, at a stated burden.]
 
-**What is new against the closest work.** [Name the Sc-free alloys this beats on strength against burden: Al-Mg-Zr-Mn,
-Al-Mn-Cr-Zr and Al-Fe-Zr (risks.md, R1). Without this paragraph the paper reads as a replication.]
+**What is new against the closest work.** [Name the Sc-free alloys this beats on strength against burden. Measured
+here: Al5X1 (Al-Mg-Zr-Mn), Al-HS1 (Al-Mn-Cr-Zr). On reported values: the Sc-free front of Fig. 1b, Al-Fe-Zr and
+Al-Fe-Mg-Zr included ([`baselines.md`](baselines.md), pre-registration §4). Without this paragraph the paper reads as
+a replication.]
 
 **How it was done.** [One sentence: CALPHAD screen with a burden metric fixed in advance; [N] compositions atomized
-from dosed charges in [W] weeks; LPBF; tensile, corrosion; composition confirmed by an outside laboratory.]
+from dosed charges in [W] weeks; LPBF, with four commercial powders printed by the same procedure; tensile, corrosion;
+compositions confirmed by an outside laboratory.]
 
 **Data and code.** All data and the scripts behind every figure are openly available [DOI, minted at submission].
 

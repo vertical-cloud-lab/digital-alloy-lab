@@ -132,7 +132,7 @@ def paired_difference(comp_a: dict[str, float], comp_b: dict[str, float],
     Each reliance can sit anywhere in its USGS bounds, but at the same value for both alloys.
     NaN if either alloy has an element without reliance inputs."""
     lo = hi = 0.0
-    for el in set(comp_a) | set(comp_b):
+    for el in sorted(set(comp_a) | set(comp_b)):  # fixed order, so rounding is the same on every run
         d = comp_a.get(el, 0.0) - comp_b.get(el, 0.0)
         if d == 0:
             continue
