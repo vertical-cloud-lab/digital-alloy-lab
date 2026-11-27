@@ -80,7 +80,8 @@ log at the bottom, with its reason, so a reviewer can see what was fixed in adva
     Fe-, Mn- and Cr-rich compositions (O3: 2 K on pure Al, 569 K on 6063).
 - **Screen.** Report Scheil and equilibrium calculations with the database and version named.
   - Criteria: freezing range to f_s = 0.99, Kou's crack index near f_s^½ = 1, strengthening-phase fraction at the
-    aging temperature, a primary L1₂ phase ahead of α-Al, and B_NIR.
+    aging temperature, the amount of Zr-, Sc- or Ti-bearing primary phase ahead of α-Al (the databases give
+    equilibrium Al₃Zr as D0₂₃, so it isn't called L1₂ here), and B_NIR.
   - If no Thermo-Calc licence: pycalphad with MatCalc `mc_al`, which can't place the Al₃Zr liquidus, and COST 507,
     which supplies it. The finalists are re-checked in Thermo-Calc if it becomes available.
 - **Seeds.** S1-S4, plus O1-O3 if there are slots. All are published alloys (#275), and the paper says so: they
