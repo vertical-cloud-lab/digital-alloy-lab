@@ -95,6 +95,7 @@ RE_LINK = re.compile(r"^(?P<arm>.+?)/(?P<link>base|shoulder|upper_arm|forearm|wr
 # a person's eyes, brows, hair and glasses ride on the head, inside or just over its skin: the skin is checked for them
 # (and their own meshes are left out as movers, which saves rebuilding five more BVH models per person and frame)
 RE_RIDERS = re.compile(r"^[^/]+/(iris|sclera|brow|hair|glasses \w+)$")
+RE_OBJ = re.compile(r"^o\d+$")
 RE_FLANGE = re.compile(r"^(?P<arm>.+?)/(changer|gr/.*|cam/.*|cap/.*|qc|3fg/.*|vgp/.*)$")
 
 
@@ -208,6 +209,11 @@ def fastener_rules(kinds):
         ("screw in its insert", screw_in_insert, 40.0,
          "a screw threaded into its threaded insert (round 9: chapter 41's 19 insert x screw pairs, up to 10.5 mm in round 8; "
          "the inserts are drawn as solid sleeves), up to 40 mm"),
+        ("hands on the part they set", _pat(r"^op/(skin|glove|forearm)$", r"^o\d+$"), 25.0,
+         "round 9: the person's hands on a part they set in its seat or a screw they drive after a step the arms failed "
+         "(people.py's fingers curl a little into what they hold), up to 25 mm"),
+        ("hand driver in the hand", _pat(r"^op/(skin|glove|forearm)$", r"^op/tool/"), None,
+         "the person's hand driver is held in their right hand"),
         ("driver on its screw", driver_on_screw, 30.0,
          "the nutrunner's or screwdriver's bit or socket on the screw it turns, up to 30 mm (the socket's depth)"),
     ]
@@ -564,9 +570,12 @@ def winding(P, V, F):
                     np.ascontiguousarray(F, np.int64))
 
 
-def reps(V, F, k=8):
-    """Up to k vertices, one in each of the k largest connected pieces of a mesh: if two meshes' surfaces don't cross,
-    each piece of one is wholly inside or wholly outside the other, so one vertex a piece decides it."""
+def reps(V, F, k=8, m=5):
+    """Up to m vertices (spread over its vertex list) in each of the k largest connected pieces of a mesh, as (k*m) x 3 with
+    NaN rows where a piece has fewer: if two meshes' surfaces don't cross, each piece of one is wholly inside or wholly
+    outside the other. Round 9: several vertices a piece and their median decide it, because one vertex lying ON the other
+    mesh's surface (a seal's outside on its bore, an O-ring on its groove) has a winding number of ~0.5 and read as inside
+    (round 8: a bore seal 45 mm "deep" in its module, an O-ring 11 mm in its gland plate, at their CAD positions)."""
     from scipy.sparse import coo_matrix
     from scipy.sparse.csgraph import connected_components
     if not len(F):
@@ -581,22 +590,37 @@ def reps(V, F, k=8):
     for c in np.argsort(-cnt)[:k]:
         if cnt[c] == 0:
             break
-        out.append(V[np.nonzero((lab == c) & used)[0][0]])
-    return np.asarray(out, float)
+        ids = np.nonzero((lab == c) & used)[0]
+        pick = ids[np.unique(np.linspace(0, len(ids) - 1, min(m, len(ids))).round().astype(int))]
+        rows = np.full((m, 3), np.nan)
+        rows[:len(pick)] = V[pick]
+        out.append(rows)
+    return np.vstack(out).astype(float) if out else V[:1].astype(float)
 
 
 def contained(x, Mx, y, My):
     """Is a piece of mesh x wholly inside mesh y, or a piece of y inside x (their surfaces apart)? Geoms x, y at Mx, My."""
     for a, Ma, b, Mb in ((x, Mx, y, My), (y, My, x, Mx)):
-        P = a.rep_pts() @ Ma[:3, :3].T.astype(float) + Ma[:3, 3].astype(float)      # world
+        R = a.rep_pts()
+        m = 5 if len(R) % 5 == 0 and len(R) > 1 else 1
+        P = R @ Ma[:3, :3].T.astype(float) + Ma[:3, 3].astype(float)      # world (NaN rows stay NaN)
         lo, hi = world_box(b.corners, Mb)
-        P = P[np.all((P >= lo) & (P <= hi), axis=1)]
-        if not len(P):
+        ok = np.isfinite(P).all(axis=1)
+        inb = ok.copy()
+        inb[ok] = np.all((P[ok] >= lo) & (P[ok] <= hi), axis=1)
+        if not inb.any():
             continue
         Mi = np.linalg.inv(Mb.astype(float))
-        Pl = P @ Mi[:3, :3].T + Mi[:3, 3]
-        if np.any(winding(Pl, b.V, b.F) > 0.5):
-            return True
+        w = np.full(len(P), np.nan)
+        Pl = P[inb] @ Mi[:3, :3].T + Mi[:3, 3]
+        w[inb] = winding(Pl, b.V, b.F)
+        w[ok & ~inb] = 0.0                                  # outside the other's box: outside it
+        for piece in w.reshape(-1, m):
+            piece = piece[np.isfinite(piece)]
+            # a point ON the other surface winds ~0.5: it says neither inside nor outside (touching); a piece is inside if
+            # more of its points are clearly inside (> 0.75) than clearly outside (< 0.25)
+            if len(piece) and int((piece > 0.75).sum()) > int((piece < 0.25).sum()):
+                return True
     return False
 
 
@@ -705,10 +729,17 @@ def _ranges(ns, gap):
     return out
 
 
-def run(chapter, every=1, stills=0, quiet=False, max_frames=None, only=None):
+def run(chapter, every=1, stills=0, quiet=False, max_frames=None, only=None, parts=None, out_dir=None):
+    """parts: only these slices' recordings (round 9: a long chapter is audited slice by slice as each one is drawn, in
+    parallel, then `merge`d); out_dir: where the JSON and stills go (default analysis/out/videoqa)."""
+    global OUT
+    if out_dir is not None:
+        OUT = Path(out_dir)
     fcl = _fcl()
     t0 = time.time()
     dirs = audit_dirs(chapter)
+    if parts is not None:
+        dirs = [(k, d) for k, d in dirs if ".part" in k and int(k.rsplit("part", 1)[1]) in parts]
     if not dirs:
         raise SystemExit(f"{chapter}: no recordings (run the renderer with ROBOTBUILD_AUDIT=1)")
     hist, ns_all = histories(dirs)
@@ -731,6 +762,7 @@ def run(chapter, every=1, stills=0, quiet=False, max_frames=None, only=None):
             rule_of[k] = r
         return r
     viol = {}                           # (a, b) -> dict(worst, frame, frames=set(), snap: a file under snapdir)
+    cad = {}                            # (a, b) -> the CAD's own overlaps at the parts' designed relative pose (round 9)
     import tempfile
     snapdir = Path(tempfile.mkdtemp(prefix="audit_snaps_"))
     peak = [0]
@@ -837,6 +869,16 @@ def run(chapter, every=1, stills=0, quiet=False, max_frames=None, only=None):
                         ah["pairs"].add(k)
                         ah["frames"] += 1
                         ah["worst"] = max(ah.get("worst", 0.0), min(dep, lim))
+                if dep > lim and RE_OBJ.match(x.name) and RE_OBJ.match(y.name) and \
+                        np.allclose(rel[:3, :3], np.eye(3), atol=1e-4) and np.allclose(rel[:3, 3], 0.0, atol=0.05):
+                    # round 9: two parts drawn at their designed positions relative to each other (one machine frame): the
+                    # CAD's own overlap (an O-ring in a groove the CAD did not cut, a block's undrilled holes), whatever moved
+                    # them there; listed apart like the rigid pairs, not counted
+                    c_ = cad.setdefault(k, dict(worst=0.0, frames=0, frame=n))
+                    c_["frames"] += 1
+                    if dep > c_["worst"]:
+                        c_["worst"], c_["frame"] = dep, n
+                    dep = 0.0
                 if dep > lim:
                     v = viol.get(k)
                     if v is None:
@@ -848,7 +890,7 @@ def run(chapter, every=1, stills=0, quiet=False, max_frames=None, only=None):
                         if stills:              # the worst frame's two meshes, on disk (a stock version is ~15 MB)
                             sp = snapdir / f"{len(viol) if 'snap' not in v else v['snap'].stem}.pkl"
                             sp.write_bytes(pickle.dumps(((x.geom.V, x.geom.F), x.M.copy(), (y.geom.V, y.geom.F),
-                                                         y.M.copy()), protocol=4))
+                                                         y.M.copy(), (x.name, y.name)), protocol=4))
                             v["snap"] = sp
         if not quiet and checked % 50 == 0:
             print(f"  {tag}: frame {n}, {checked} checked, {len(viol)} violating pairs, {n_fcl} narrow checks, "
@@ -879,6 +921,11 @@ def run(chapter, every=1, stills=0, quiet=False, max_frames=None, only=None):
         narrow_checks=n_fcl, pairs_tested=n_pairs_tested,
         violations=len(rows), worst_mm=rows[0]["worst_mm"] if rows else 0.0,
         worst=rows[0] if rows else None, pairs=rows[:300],
+        cad_overlaps=[dict(a=a, b=b, **({"a_is": lab[a]} if a in lab else {}), **({"b_is": lab[b]} if b in lab else {}),
+                           worst_mm=_r(v["worst"]), worst_frame=v["frame"], pair_frames=v["frames"])
+                      for (a, b), v in sorted(cad.items(), key=lambda kv: -kv[1]["worst"])][:100],
+        cad_overlap_note="two parts drawn at their designed relative pose (one machine frame) and overlapping there: the CAD's "
+                         "own overlap (a groove or hole the model does not cut), listed apart and not counted",
         rigid_pairs=[dict(a=a, b=b, worst_mm=_r(v["worst"]), frames=len(v["frames"])) for (a, b), v in
                      sorted(rigid.items(), key=lambda kv: -kv[1]["worst"])][:100],
         allowed=[dict(rule=rules[i][0], depth_allowed_mm=rules[i][2], reason=rules[i][3],
@@ -991,7 +1038,9 @@ def make_stills(chapter, viol, k):
         snap = v.get("snap")
         if snap is None or not Path(snap).exists():
             continue
-        ga, Ma, gb, Mb = pickle.loads(Path(snap).read_bytes())
+        sn = pickle.loads(Path(snap).read_bytes())
+        ga, Ma, gb, Mb = sn[:4]
+        na, nb = sn[4] if len(sn) > 4 else (a, b)        # the red one (shrunk by TOUCH_MM) and the blue one
         right = None
         try:
             pk, png_r = tmp / f"{idx}.pkl", tmp / f"{idx}.png"
@@ -1016,8 +1065,8 @@ def make_stills(chapter, viol, k):
         d = ImageDraw.Draw(canvas)
         dep = f"{v['worst']:.1f} mm" if v["worst"] < DEEP else "over 100 mm"
         d.text((10, 6), f"{chapter}, frame {v['frame']}: {dep} deep (limit {v['lim']} mm)", fill="black")
-        d.text((10, 24), f"{a}", fill="#d1495b")
-        d.text((10, 40), f"{b}", fill="#2a7fff")
+        d.text((10, 24), f"{na}", fill="#d1495b")
+        d.text((10, 40), f"{nb}", fill="#2a7fff")
         p = OUT / f"scene_audit_{chapter}_{idx + 1}.png"
         canvas.save(p, optimize=True)
         paths.append(str(p.relative_to(REPO)) if p.is_relative_to(REPO) else str(p))
@@ -1045,6 +1094,87 @@ def render_still(pk, out):
     pl.close()
     from PIL import Image
     Image.fromarray(np.asarray(img)[:, :, :3]).save(out)
+
+
+# ================================================================================================ merging slice audits
+def merge(chapter, paths, k_stills=4):
+    """Round 9: join per-slice audits (run --parts k --out DIR) into analysis/out/videoqa/scene_audit_<chapter>.json: pairs
+    by name (worst depth and its frame, frame counts summed, ranges joined), allowed and CAD-overlap lists likewise; the
+    stills of the worst pairs copied in."""
+    import shutil
+    parts = [json.loads(Path(p).read_text()) for p in paths]
+    pairs, allowed, cad, rigid = {}, {}, {}, {}
+    out = dict(chapter=chapter, threshold_mm=DEPTH_MM, opaque_min=OPAQUE, recordings=[], frames_recorded=0, frames_checked=0,
+               narrow_checks=0, pairs_tested=0, seconds=0.0, peak_rss_mb=0, merged_from=[str(p) for p in paths])
+
+    def dv(x):
+        return DEEP if x == ">100" else float(x or 0.0)
+    for j in parts:
+        for k in ("frames_recorded", "frames_checked", "narrow_checks", "pairs_tested"):
+            out[k] += int(j.get(k, 0))
+        out["seconds"] = round(out["seconds"] + float(j.get("seconds", 0.0)), 1)
+        out["peak_rss_mb"] = max(out["peak_rss_mb"], int(j.get("peak_rss_mb", 0)))
+        out["recordings"] += j.get("recordings", [])
+        for key in ("subsample", "recorded_every", "method", "memory", "cad_overlap_note"):
+            if key in j:
+                out[key] = j[key]
+        stills = {}
+        for st in j.get("stills", []) or []:
+            stills[len(stills)] = st
+        for idx, r in enumerate(j.get("pairs", [])):
+            k = (r["a"], r["b"])
+            q = pairs.get(k)
+            if q is None:
+                q = pairs[k] = dict(r, frame_ranges=list(r.get("frame_ranges", [])))
+                q["_still"] = stills.get(idx)
+                continue
+            q["frames"] += r["frames"]
+            q["frame_ranges"] = (q["frame_ranges"] + list(r.get("frame_ranges", [])))[:40]
+            if dv(r["worst_mm"]) > dv(q["worst_mm"]):
+                q["worst_mm"], q["worst_frame"], q["_still"] = r["worst_mm"], r["worst_frame"], stills.get(idx)
+        for r in j.get("allowed", []):
+            q = allowed.setdefault(r["rule"], dict(r, examples=list(r.get("examples", []))))
+            if q is not r:
+                q["pairs_in_contact"] = max(q["pairs_in_contact"], r["pairs_in_contact"])
+                q["pair_frames"] += r["pair_frames"]
+                if r.get("worst_mm") is not None and dv(r["worst_mm"]) > dv(q.get("worst_mm")):
+                    q["worst_mm"] = r["worst_mm"]
+        for r in j.get("cad_overlaps", []):
+            k = (r["a"], r["b"])
+            q = cad.setdefault(k, dict(r))
+            if q is not r:
+                q["pair_frames"] += r["pair_frames"]
+                if dv(r["worst_mm"]) > dv(q["worst_mm"]):
+                    q["worst_mm"], q["worst_frame"] = r["worst_mm"], r["worst_frame"]
+        for r in j.get("rigid_pairs", []):
+            k = (r["a"], r["b"])
+            q = rigid.setdefault(k, dict(r))
+            if q is not r and dv(r["worst_mm"]) > dv(q["worst_mm"]):
+                q["worst_mm"] = r["worst_mm"]
+    rows = sorted(pairs.values(), key=lambda r: -dv(r["worst_mm"]))
+    out_stills = []
+    OUT.mkdir(parents=True, exist_ok=True)
+    for old in OUT.glob(f"scene_audit_{chapter}_*.png"):
+        old.unlink()
+    for r in rows:
+        st = r.pop("_still", None)
+        if st and len(out_stills) < k_stills and Path(st).exists():
+            dst = OUT / f"scene_audit_{chapter}_{len(out_stills) + 1}.png"
+            shutil.copy(st, dst)
+            out_stills.append(str(dst.relative_to(REPO)) if dst.is_relative_to(REPO) else str(dst))
+    for r in rows[k_stills:]:
+        r.pop("_still", None)
+    out.update(violations=len(rows), worst_mm=rows[0]["worst_mm"] if rows else 0.0, worst=rows[0] if rows else None,
+               pairs=rows[:300], cad_overlaps=sorted(cad.values(), key=lambda r: -dv(r["worst_mm"]))[:100],
+               rigid_pairs=sorted(rigid.values(), key=lambda r: -dv(r["worst_mm"]))[:100],
+               allowed=list(allowed.values()), stills=out_stills)
+    path = OUT / f"scene_audit_{chapter}.json"
+    path.write_text(json.dumps(out, indent=1, default=_js) + "\n")
+    print(f"{chapter}: merged {len(parts)} slice audits: {out['frames_checked']} frames checked, {len(rows)} violating pairs "
+          f"(worst {out['worst_mm']} mm) -> {path}", flush=True)
+    for r in rows[:25]:
+        print(f"   {r['worst_mm']!s:>7} mm  {r['a']}  x  {r['b']}  frames {r['frames']} (worst {r['worst_frame']})", flush=True)
+    return out
 
 
 # ================================================================================================ names, watch
@@ -1083,8 +1213,13 @@ if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "still":
         render_still(sys.argv[2], sys.argv[3])
         sys.exit(0)
+    if len(sys.argv) > 1 and sys.argv[1] == "merge":
+        merge(sys.argv[2], sys.argv[3:])
+        sys.exit(0)
     ap.add_argument("cmd", choices=["run", "names", "keep"])
     ap.add_argument("chapter")
+    ap.add_argument("--parts", default="", help="only these slices (k,k,...), round 9")
+    ap.add_argument("--out", default=None, help="directory for the JSON and stills")
     ap.add_argument("--every", type=int, default=1, help="check every k-th recorded frame (all are replayed)")
     ap.add_argument("--stills", type=int, default=0)
     ap.add_argument("--max_frames", type=int, default=0)
@@ -1095,4 +1230,5 @@ if __name__ == "__main__":
     elif a.cmd == "keep":
         print(keep(FRAMES / a.chapter))
     else:
-        run(a.chapter, every=a.every, stills=a.stills, max_frames=a.max_frames or None, only=a.only)
+        run(a.chapter, every=a.every, stills=a.stills, max_frames=a.max_frames or None, only=a.only,
+            parts=[int(x) for x in a.parts.split(",") if x] or None, out_dir=a.out)

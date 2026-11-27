@@ -41,19 +41,30 @@ the plotter and the frame writer; read its docstring first.
 
 `asm_render.py` plays a chapter twice: pass 1 without drawing (where the work is in every frame, the tripods' occlusion once
 per step, then the shot plan), pass 2 draws. A slice draws only its frames, into `<chapter>.part<k>/`: `ASM_PART=k/n` (by the
-planned frame count), `ASM_RANGE=lo:hi` with `ASM_RANGE_IDX=k`, or, round 8, `ASM_STEPS=<first step>:<step after the last>`
-with `ASM_RANGE_IDX=k` and the same `ASM_CUTS` in every slice (a forced cut at each slice boundary, so nothing in the shot plan
-reaches across it). With `ASM_STEPS` a slice can be drawn as soon as the planner has finished its last step: record.py writes
-each step's events to `asm_<chapter>.chunk<k>.pkl` as it goes, and the renderer reads the chunks while the full file is
-absent. `merge_parts.py <chapter>` joins the slices and keeps each slice's `audit/` folder (`ROBOTBUILD_AUDIT=1`) as
-`<chapter>/audit.part<k>/`, listed with its frames in `<chapter>/audit_parts.json`. Round 8 has no per-motion camera search, so
-a frame costs about 0.5 s (SSAA) on the shared 4-core runner; `ROBOTBUILD_AA=fxaa` roughly halves it.
+planned frame count), `ASM_RANGE=lo:hi` with `ASM_RANGE_IDX=k`, or `ASM_STEPS=<first step>:<step after the last>` with
+`ASM_RANGE_IDX=k` and the same `ASM_CUTS` in every slice. With `ASM_STEPS` a slice can be drawn as soon as the planner has
+finished its last step: record.py writes each step's events to `asm_<chapter>.chunk<k>.pkl` as it goes, and the renderer reads
+the chunks while the full file is absent. `merge_parts.py <chapter>` joins the slices and keeps each slice's `audit/` folder
+(`ROBOTBUILD_AUDIT=1`) as `<chapter>/audit.part<k>/`, listed with its frames in `<chapter>/audit_parts.json`. A frame costs
+about 0.65 s (SSAA) on the shared 4-core runner; `ROBOTBUILD_AA=fxaa` roughly halves it.
+
+Round 9: a slice boundary is a *soft* one. Round 8 forced a cut at each (a different tripod), so that nothing in the shot plan
+reached across it; now the shot plan is chosen segment by segment (each from its own frames and the camera before it), so a
+slice's frames are still the chapter's own, but the camera carries on across a boundary unless the next step needs another view.
+Other round-9 camera rules: a cut is forced only where something jumped (the first frame drawn while a MiR is away on a drive not
+shown; its return, if the MiR or arm is not where it was; an arm jump over `ASM_JUMP_DEG` = 5 deg, smaller ones are drawn as a
+short labelled reposition); a fetch not shown holds the shot; picks at the table are drawn on the visits whose drives are drawn
+(`ASM_PICK_SHOW` = 2). `asm_slices.py` takes both chapters in one queue and starts each slice under `/tmp/memslot` (the
+runner's shared memory budget), at most three at a time, module slices first.
 
 ```
-# chapter 41, run 12, one of twelve slices (asm_slices.py starts each when the planner has passed its last step)
-ROBOTBUILD_AUDIT=1 ASM_TRAJ=/tmp/robotbuild/traj/run12 ASM_STEPS=F10a:F16 ASM_RANGE_IDX=4 ASM_UPTO=T01 \
+# chapters 40 and 41 from run 13 (each slice starts when the planner has passed its last step)
+python asm_slices.py module:M08,M17,M24 chamber:C09f,C14,F05b,F10a,F16,F25,F31,F39,F45,F51,F55 \
+  --results=<planner's results_run13.json> --traj=/tmp/robotbuild/traj/run13 --upto=T01 --max-running=3 --mem=2.5
+# one slice by hand
+ROBOTBUILD_AUDIT=1 ASM_TRAJ=/tmp/robotbuild/traj/run13 ASM_STEPS=F10a:F16 ASM_RANGE_IDX=4 ASM_UPTO=T01 \
   ASM_CUTS=C09f,C14,F05b,F10a,F16,F25,F31,F39,F45,F51,F55 \
-  xvfb-run -a -s "-screen 0 1920x1080x24" /tmp/capmem 3G /tmp/venv/bin/python asm_render.py chamber \
+  xvfb-run -a -s "-screen 0 1920x1080x24" /tmp/memslot 2.5 /tmp/venv/bin/python asm_render.py chamber \
   --fail_notes=desktop-lpbf/analysis/out/assembly/run10_fail_notes.json
-/tmp/venv/bin/python merge_parts.py 41-assembly-chamber
+python merge_parts.py 41-assembly-chamber
 ```
