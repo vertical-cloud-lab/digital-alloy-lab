@@ -1,7 +1,7 @@
 {
  "module": "M50",
- "built_s": 25.9,
- "run_s": 46.9,
+ "built_s": 27.3,
+ "run_s": 47.9,
  "parts_default": 276,
  "parts_monitoring": 337,
  "made": [
@@ -847,10 +847,10 @@
     ]
    },
    "volume_default_cm3": 1582.51,
-   "volume_cm3": 1547.42,
-   "removed_cm3": 35.089,
+   "volume_cm3": 1547.31,
+   "removed_cm3": 35.204,
    "added_cm3": 0.0,
-   "mass_change_g": -94.7,
+   "mass_change_g": -95.1,
    "places": [
     {
      "bbox": {
@@ -884,15 +884,15 @@
       "max": [
        -84.0,
        111.0,
-       70.9
+       71.3
       ],
       "size": [
        61.5,
        16.5,
-       63.8
+       64.2
       ]
      },
-     "removed_cm3": 18.483,
+     "removed_cm3": 18.598,
      "solids": 6,
      "png": "png/process-chamber-body-2.png"
     }
