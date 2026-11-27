@@ -10,6 +10,7 @@ unchanged pieces keep their posted programs' minutes.
 
     /tmp/venv/bin/python desktop-lpbf/fast-track/fab/v2_delta.py   -> out/v2/hours.json, out/v2/delta.md
     /tmp/venv/bin/python desktop-lpbf/fast-track/fab/plan.py out/v2/hours.json out/v2   -> out/v2/plan.md
+    /tmp/venv/bin/python desktop-lpbf/fast-track/fab/plan.py out/v2/monitoring-later/hours.json out/v2/monitoring-later
 """
 from __future__ import annotations
 
@@ -126,6 +127,9 @@ NEW = [
 ]
 
 
+MONITORING = {"MK-19", "MK-20", "MK-21", "MK-22a"}
+
+
 def synth(p1, cam1, ov):
     """A v2 piece dict and cam setups from a v1 piece and count overrides."""
     p = copy.deepcopy(p1)
@@ -223,6 +227,13 @@ def main():
                by_state={s: {k: round(v, 2) for k, v in st[s].items()} for s in H.STATES},
                cumulative={s: {k: round(v, 2) for k, v in cum[s].items()} for s in H.STATES}, study=H.STUDY)
     (V2 / "hours.json").write_text(json.dumps(out, indent=1))
+    # variant for the calendar: the monitoring pieces (no track needs them) made after FT-0's others, before FT-1's
+    later = copy.deepcopy(out)
+    for r in later["pieces"]:
+        if r["pid"] in MONITORING:
+            r["state"] = "FT-1"
+    (V2 / "monitoring-later").mkdir(exist_ok=True)
+    (V2 / "monitoring-later" / "hours.json").write_text(json.dumps(later, indent=1))
     L = ["| v1 piece | v2 piece | First in (v2) | Status | What v2 changes | v1 expected h | v2 low / expected / high h |",
          "|---|---|---|---|---|---:|---|"]
     for a, b, status, what, r1, r in delta:

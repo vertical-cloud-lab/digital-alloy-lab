@@ -347,16 +347,16 @@
    "tapped": 0,
    "cam_h": 1.15,
    "setup_h": 0.75,
-   "program_min": 3.6,
-   "freecad_min": 5.5,
-   "machine_min": 3.8,
+   "program_min": 4.4,
+   "freecad_min": 7.5,
+   "machine_min": 4.6,
    "lathe_min": 0,
    "manual_min": 0,
-   "run_h": 0.06,
+   "run_h": 0.08,
    "deburr_h": 0.25,
-   "total_h": 2.21,
-   "low_h": 1.35,
-   "high_h": 2.99,
+   "total_h": 2.22,
+   "low_h": 1.36,
+   "high_h": 3.02,
    "split": "SendCutSend (plate: profile and holes; 6061 up to 1/2 in.); BYU: slide pocket 1.2 deep (one mill setup)",
    "byu_h_split": 1.5,
    "seal": false,
@@ -1466,11 +1466,11 @@
    "n": 7
   },
   "S2": {
-   "h": 27.56,
-   "low": 14.82,
-   "high": 42.67,
+   "h": 27.57,
+   "low": 14.83,
+   "high": 42.7,
    "split": 24.82,
-   "prog": 86.2,
+   "prog": 87.0,
    "cam": 13.02,
    "n": 8
   },
@@ -1511,30 +1511,30 @@
    "cam": 11.58
   },
   "S2": {
-   "h": 53.05,
-   "low": 26.45,
-   "high": 77.62,
+   "h": 53.06,
+   "low": 26.46,
+   "high": 77.65,
    "split": 43.71,
    "cam": 24.6
   },
   "FT-0": {
-   "h": 122.21,
-   "low": 60.26,
-   "high": 189.37,
+   "h": 122.22,
+   "low": 60.27,
+   "high": 189.4,
    "split": 112.87,
    "cam": 54.87
   },
   "FT-1": {
-   "h": 154.75,
-   "low": 75.26,
-   "high": 235.24,
+   "h": 154.76,
+   "low": 75.27,
+   "high": 235.27,
    "split": 140.19,
    "cam": 70.02
   },
   "FT-1V": {
-   "h": 188.16,
-   "low": 90.44,
-   "high": 280.53,
+   "h": 188.17,
+   "low": 90.45,
+   "high": 280.56,
    "split": 173.6,
    "cam": 83.36
   }
