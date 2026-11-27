@@ -28,7 +28,8 @@ screen-then-test, and the reason is that the cheap screen is wrong about the all
    testing is robust but spends most of the budget on candidates a cheap step could have dropped.
 4. **The tool that fits.** Bayesian optimization of function networks with partial evaluations models
    the workflow as linked surrogates and picks the candidate and step with the most expected gain per
-   unit cost. So far it has been tested only on synthetic and retrospective problems.
+   unit cost. So far it has been tested only on synthetic and retrospective problems, and cost-aware BO
+   has run live only within a single instrument (nanoindentation, Chawla et al. 2026).
 5. **What we did.** Built the whole loop in one lab: dosed charges, ultrasonic atomization, powder
    characterization, a desktop LPBF system, microstructure and mechanical tests, and an optimizer over
    all of them with measured step costs. Then ran a campaign in which the optimizer chose the step.
