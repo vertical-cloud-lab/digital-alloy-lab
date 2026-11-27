@@ -71,7 +71,8 @@ recording to the end of F17):** with the rail's holes 10 mm further from its lef
 holes at x -100, -40, 20 and 80, a different cut of the same 60 mm-pitch rail and the back wall's holes moved with it), **none of
 the four screws plans**: on every approach arm A's upper arm meets its own MiR's cabinet or mounting plate, for every tool. The
 same run with the catalogue holes (the control) drives #2-#4 and not #1, as the splice did. So moving the holes alone makes F18
-worse. Next: leave the descent to the RRT after the 60 mm back-off (more iterations), or another dock for arm A for #1 alone.
+worse. Two more MiR docks at x 1240 and 1460 (the planner tries the three nearest a screw): #2 and #3 drive, #4 and #1 have no
+approach (arm A's upper arm meets Fixture B). Next: leave the descent to the RRT after the 60 mm back-off (more iterations).
 
 **Two steps round 9 drew as passes now fail**, because the planner checks what is drawn:
 - **F35, the window's lower O-ring into the flange's groove** (the ring caps' internal grip): the ring stops 27 mm short, arm
