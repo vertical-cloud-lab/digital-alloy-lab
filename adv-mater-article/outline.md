@@ -58,7 +58,7 @@ PR 90's branch, `edison-trajectories/recent-developments-2026-10/05-precedent-no
 demonstrated application of cost-aware Bayesian optimization of a partially evaluable function network to
 an integrated alloy composition–powder production–LPBF–microstructure–mechanical property workflow, in
 which the optimizer chose among feasible intermediate and downstream evaluations under measured step
-costs." It is only true if Fig. 5b shows candidates stopped at different steps because of the
+costs." It is only true if Fig. 5a shows candidates stopped at different steps because of the
 acquisition, not because of a fixed rule. If the live campaign doesn't get there, say "we propose" and
 name only the steps that ran (version B).
 
