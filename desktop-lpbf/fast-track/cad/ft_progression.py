@@ -26,28 +26,55 @@ def T(state, dur, deps, basis):
     return (dur, deps, basis, state)
 
 
+def _common(*names):
+    """fast_track.COMMON's entry under the first of these names that exists (the lead renames tasks as facts land)."""
+    for n in names:
+        if n in F.COMMON:
+            return n, F.COMMON[n]
+    raise KeyError(names)
+
+
+def _shop(state, fallback):
+    """Shop days for a state's made parts: fab/out/hours.json through fast_track.shop_days() when there, else ours."""
+    if hasattr(F, "shop_days"):
+        d, (lo, hi) = F.shop_days(state)
+        return d, f"fab/out/hours.json: {lo:.1f}-{hi:.1f} shop h (fast_track.shop_days, estimate)"
+    return fallback
+
+
+RTC, RTC_T = _common("RTC4 card + PC and software", "PC + RTC5 software")
+O2, O2_T = _common("O2 analyzers arrive", "O2 analyzer (used)")
+MAINS = "208/240 V circuit for the laser"
+
 ORDERS = {
     "used optics chain arrives": T("orders", *F.COMMON["used optics chain arrives"]),
     "McMaster stock and hardware": T("orders", *F.COMMON["McMaster stock and hardware"]),
     "safety parts and eyewear": T("orders", *F.COMMON["safety parts and eyewear"]),
     "window, cover slides, beam dump (Edmund, Thorlabs)": T("orders", (2, 5), [], "Edmund 38-990 '5 In Stock'; Thorlabs in-stock items"),
-    "O2 analyzer (used)": T("orders", *F.COMMON["O2 analyzer (used)"]),
+    O2: T("orders", *O2_T),
     "argon cylinder and regulator": T("orders", *F.COMMON["argon cylinder and regulator"]),
-    "PC + RTC5 software": T("orders", *F.COMMON["PC + RTC5 software"]),
-    "enclosure arrives": T("orders", (3, 8), [], "estimate: distributor stock, ground (fast_track.py)"),
+    RTC: T("orders", *RTC_T),
+    "enclosure arrives": T("orders", (3, 8), [], "estimate: distributor stock (Saginaw SCE-16EL1208SSLP), ground"),
     "LSO registration and SOP": T("approvals", *F.COMMON["LSO registration and SOP"]),
     "EHS review (Al powder)": T("approvals", *F.COMMON["EHS review (Al powder)"]),
 }
+if MAINS in F.COMMON:
+    ORDERS[MAINS] = T("orders", *F.COMMON[MAINS])
+S1_NEEDS = ["S1 optics bench assembled", "LSO registration and SOP", "safety parts and eyewear"] + (
+    [MAINS] if MAINS in F.COMMON else [])
 
 PATH = {
     # S1: optics on the frame, guide laser onto a target on the deck plate
-    "deck plate and target stand made": T("S1", (1, 2), ["McMaster stock and hardware"], "estimate: two plates, ~3 shop hours"),
-    "S1 optics bench assembled": T("S1", (1, 1), ["used optics chain arrives", "PC + RTC5 software",
-                                                  "deck plate and target stand made"], "estimate"),
-    "S1 guide-laser and scanner checks": T("S1", (2, 4), ["S1 optics bench assembled", "LSO registration and SOP",
-                                                          "safety parts and eyewear"], "fast_track.py's bench check"),
+    "deck plate and target stand made": T("S1", _shop("S1", ((1, 2), "estimate: two plates, ~3 shop hours"))[0],
+                                          ["McMaster stock and hardware"],
+                                          _shop("S1", ((1, 2), "estimate: two plates, ~3 shop hours"))[1]),
+    "S1 optics bench assembled": T("S1", (1, 1), ["used optics chain arrives", RTC, "deck plate and target stand made"],
+                                   "estimate"),
+    "S1 guide-laser and scanner checks": T("S1", (2, 4), S1_NEEDS, "fast_track.py's bench check"),
     # S2: the box round the beam, full power into the dump
-    "window stack and beam tube made": T("S2", (2, 3), ["McMaster stock and hardware"], "estimate: MK-02, MK-10, ~8 shop hours"),
+    "window stack and beam tube made": T("S2", _shop("S2", ((2, 3), "estimate: MK-02, MK-10, ~8 shop hours"))[0],
+                                         ["deck plate and target stand made"],
+                                         _shop("S2", ((2, 3), "estimate: MK-02, MK-10, ~8 shop hours"))[1]),
     "box cut and fitted": T("S2", (1, 2), ["enclosure arrives", "window stack and beam tube made",
                                           "window, cover slides, beam dump (Edmund, Thorlabs)"],
                             "estimate: window bore, bulkheads, glands, rod hole"),
@@ -55,27 +82,31 @@ PATH = {
     "S2 FULL POWER INTO THE DUMP": T("S2", (1, 2), ["S1 guide-laser and scanner checks", "S2 interlocks wired and proven"],
                                      "milestone: calorimetry, focus ladder; inside the laser's return window"),
     # FT-0
-    "FT-0 parts made": T("FT-0", (3, 5), ["window stack and beam tube made"],
-                         "estimate: MK-03..07, 11, 16, 17, ~12 shop hours after the window parts"),
+    "FT-0 parts made": T("FT-0", _shop("FT-0", ((3, 5), "estimate: ~12 shop hours after the window parts"))[0],
+                         ["window stack and beam tube made"],
+                         _shop("FT-0", ((3, 5), "estimate: ~12 shop hours after the window parts"))[1]),
     "FT-0 assembled in the box": T("FT-0", (1, 2), ["FT-0 parts made", "box cut and fitted"], "estimate"),
-    "FT-0 purge and heat (O2 log)": T("FT-0", (1, 2), ["FT-0 assembled in the box", "O2 analyzer (used)",
+    "FT-0 purge and heat (O2 log)": T("FT-0", (1, 2), ["FT-0 assembled in the box", O2,
                                                      "argon cylinder and regulator"], "estimate"),
     "FT-0 FIRST TRACKS": T("FT-0", (1, 2), ["S2 FULL POWER INTO THE DUMP", "FT-0 purge and heat (O2 log)",
                                            "EHS review (Al powder)"], "milestone"),
     "FT-0 hand-spread layers and pads": T("FT-0", (2, 4), ["FT-0 FIRST TRACKS"], "estimate"),
     # FT-1
-    "FT-1 parts made": T("FT-1", (3, 5), ["FT-0 parts made"], "estimate: MK-08, 12, 15, ~12 shop hours"),
+    "FT-1 parts made": T("FT-1", _shop("FT-1", ((3, 5), "estimate: MK-08, 12, 15, ~12 shop hours"))[0],
+                         ["FT-0 parts made"], _shop("FT-1", ((3, 5), "estimate: MK-08, 12, 15, ~12 shop hours"))[1]),
     "FT-0 -> FT-1 upgrade": T("FT-1", (1, 2), ["FT-1 parts made", "stages arrive", "FT-0 purge and heat (O2 log)"],
-                              "estimate: collar off, rod to the stage, recoater on the deck, block heaters in"),
+                              "estimate: tube half-shells off and door open, collar off, rod clamped in the rod-end block "
+                              "on the stage, recoater on the deck, four block heaters in"),
     "FT-1 re-commission": T("FT-1", (1, 2), ["FT-0 -> FT-1 upgrade"], "estimate: purge, heat both, home stages, interlocks"),
     "FT-1 powder layers: dose, spread, pads": T("FT-1", (3, 5), ["FT-1 re-commission", "FT-0 FIRST TRACKS"], "estimate"),
     "FT-1 FIRST COUPONS": T("FT-1", (2, 5), ["FT-1 powder layers: dose, spread, pads"], "milestone"),
     # FT-1V
     "pump, KF parts, Pirani, feedthroughs": T("FT-1V", (2, 7), [], "fast_track.py (McMaster next day, or used IDP-3)"),
-    "cube plates machined": T("FT-1V", (2, 3), ["cube frame and plates arrive (PO)"], "estimate: MK-13, MK-14"),
+    "cube plates machined": T("FT-1V", _shop("FT-1V", ((2, 3), "estimate: MK-13, MK-14"))[0],
+                              ["cube frame and plates arrive (PO)"], _shop("FT-1V", ((2, 3), "estimate: MK-13, MK-14"))[1]),
     "FT-1 -> FT-1V transfer": T("FT-1V", (1, 2), ["cube plates machined", "pump, KF parts, Pirani, feedthroughs",
                                                 "FT-1 powder layers: dose, spread, pads"],
-                                "estimate: cassette, gland, window stack, stages across; optics up 21 mm"),
+                                "estimate: see the sequence below; cassette, gland, window stack across; optics up 21 mm"),
     "FT-1V leak check and pump-purge": T("FT-1V", (2, 4), ["FT-1 -> FT-1V transfer"], "fast_track.py"),
     "FT-1V FIRST COUPONS (< 100 ppm)": T("FT-1V", (2, 5), ["FT-1V leak check and pump-purge"], "milestone"),
 }
@@ -123,11 +154,11 @@ def run():
 
 # Parts.csv lines by the first state that needs them (S1 = the optics bench)
 FIRST_STATE = {
-    "S1": ["L1", "L2", "L3", "L4", "L5", "L5b", "L6", "L7", "L10", "C1", "E4", "S2", "MON4"],
-    "S2": ["L8", "L9", "E1", "S1", "MON6"],
-    "FT-0": ["H1", "H2", "H3", "H4", "G1", "G2", "G3", "G4", "G5", "M4", "C2", "S3", "S4", "F1", "F2a", "P1", "MON1",
-             "MON2", "MON3", "MON7", "MON8"],
-    "FT-1": ["M1b", "M1c", "M2", "M3", "F2b", "MON5"],
+    "S1": ["L1", "L2", "L3", "L4", "L5", "L5b", "L6", "L7", "L10", "L11", "C1", "E4", "S2", "MON4"],
+    "S2": ["L8", "L9", "E1", "S1", "S5", "S6", "C2", "C3", "C4", "MON6"],
+    "FT-0": ["H1", "H2", "H3", "H4", "G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8", "M4", "S3", "S4", "F1", "F2a", "P1",
+             "MON1", "MON2", "MON3", "MON7", "MON8"],
+    "FT-1": ["M1c", "M2", "M3", "H5", "C5", "F2b", "MON5"],
     "FT-1V": ["E2", "E3", "E5", "F2c"],
 }
 

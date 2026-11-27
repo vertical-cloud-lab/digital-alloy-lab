@@ -435,8 +435,7 @@ def removal_numbers():
                 block_top_below_gland_at_pz_bot_mm=round(gl.zmin - blk.zmax + (P["pz_top"] - P["pz_bot"]), 1))
 
 
-DOOR_GROUP = ("Box door", "Window ring", "Window, ", "Window retaining flange", "Window-stack screws", "Inner clamp ring",
-              "Cover-slide holder", "Cover slide", "Camera port", "Layer camera", "Camera post", "Quarter-turn latch")
+DOOR_GROUP = M.DOOR_GROUP
 
 
 def door_swing(state="FT-1", max_deg=90, step=1.0, camera=True):
@@ -444,10 +443,7 @@ def door_swing(state="FT-1", max_deg=90, step=1.0, camera=True):
     edge), with the beam tube's centre section removed; the first angle at which anything on the door touches a fixed
     part, and what. camera=False: the layer camera unclipped from its post first."""
     parts = M.build(state)
-    L = M.levels(state)
-    yc = P["deck_c"][1]
-    y_h = yc + VEN.SAG["door"][1] / 2
-    z_h = L["roof_out"]
+    y_h, z_h = M.door_hinge(state)
     door = [p for p in parts if p.name.startswith(DOOR_GROUP) and (camera or not p.name.startswith("Layer camera"))]
     skip_names = ("Beam tube centre section", "Surface thermocouples", "Concealed hinges", "Poured-in-place", "Saginaw",
                   "Coded lid switches", "Bench top", "Layer camera")

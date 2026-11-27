@@ -23,7 +23,8 @@ here is copied from a vendor CAD file. Every part carries its parts.csv line (L1
 we make (``MADE``), or a MON number for the monitoring parts (``MON``).
 
 build(state, pz, hx, lid_open=False, piston="zaber", monitoring=True): ``piston="thorlabs"`` draws the PCard route's
-MTS50/M-Z8 standing on end in place of the X-VSR20A; ``monitoring=False`` leaves out the MON parts.
+MTS50/M-Z8 standing on end in place of the X-VSR20A; ``monitoring=False`` leaves out the MON parts; ``lid_open=True``
+(box states) takes the beam tube's centre section off and opens the door by P['door_open_deg'].
 """
 from __future__ import annotations
 
@@ -106,6 +107,7 @@ P = dict(
     cam_xy=(-70.0, -55.0),        # layer camera port, front-left of the window stack (upstream of the plume)
     cam_f=(16.0, 25.0),           # C-mount lens focal length in the box, in the cube
     light_el=(15.0, 30.0),        # raking lights: from -x at 15 deg, from -y at 30 deg (over the nozzle)
+    door_open_deg=24.0,           # box door opened this far for build(lid_open=True): free angle with the camera on it
 )
 P["bed_floor"] = P["deck_t"] + P["so_l"] + P["well"][2]        # 62.7: powder plane above the enclosure floor
 P["box_in"] = (P["box_out"][0] - 2 * P["box_t"], P["box_out"][1] - 2 * P["box_t"], VEN.SAG["usable"])
@@ -877,7 +879,35 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
         cz_ = L["cube_c"]
         add("120 mm fan blowing on the enclosure", box(xc - 60, xc + 60, fy_ + 5, fy_ + 30, cz_ - 5, cz_ + 115), C["black"],
             "E4", "enclosure")
+    if lid_open and has_box:
+        parts = open_door(parts, state)
     return parts
+
+
+# The box door (lid) and everything that rides on it; it turns about the concealed hinges (axis est.: the door's back
+# top edge). Before it opens, the beam tube's centre section comes off (two half-shells, sideways).
+DOOR_GROUP = ("Box door", "Window ring", "Window, ", "Window retaining flange", "Window-stack screws", "Inner clamp ring",
+              "Cover-slide holder", "Cover slide", "Camera port", "Layer camera", "Camera post", "Quarter-turn latch")
+
+
+def door_hinge(state="FT-1"):
+    """(y, z) of the box door's hinge axis (along x)."""
+    return P["deck_c"][1] + VEN.SAG["door"][1] / 2, levels(state)["roof_out"]
+
+
+def open_door(parts, state="FT-1", deg=None):
+    """The parts with the box door opened by deg (default P['door_open_deg'], the free angle from ft_checks) and the
+    beam tube's centre section (and its surface thermocouple) taken off."""
+    deg = P["door_open_deg"] if deg is None else deg
+    yh, zh = door_hinge(state)
+    out = []
+    for p in parts:
+        if p.name.startswith(("Beam tube centre section", "Surface thermocouples")):
+            continue
+        if p.name.startswith(DOOR_GROUP):
+            p = Part(p.name, p.shape.rotate(V(0, yh, zh), V(1, yh, zh), -deg), p.color, p.pid, p.sub, p.group, p.opacity)
+        out.append(p)
+    return out
 
 
 def light_geometry(state):

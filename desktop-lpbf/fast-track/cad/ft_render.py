@@ -1,7 +1,7 @@
 """Render the fast-track states (ft_model.py) and the steps between them.
 
 Run (headless):  xvfb-run -a -s "-screen 0 1920x1080x24" python desktop-lpbf/fast-track/cad/ft_render.py [what ...]
-  what: states, sections, steps, strip, gif (default: all)
+  what: states, sections, steps, strip, monitoring, camera_view, thorlabs, door, gif (default: all, in that order)
 Writes desktop-lpbf/fast-track/img/cad-*.png and cad-progression.gif.
 """
 from __future__ import annotations
@@ -321,6 +321,19 @@ def camera_view():
         print("wrote", f"cad-camera-view-{st.lower()}.png")
 
 
+def door():
+    """FT-1 with the beam tube's centre section off and the box door open (the fix for round 1's captive tube)."""
+    parts = M.build("FT-1", lid_open=True)
+    pl = plotter()
+    add_parts(pl, parts, hide=CONTEXT + ("120 mm fan",))
+    cam(pl, MON_VIEW)
+    img = caption(shot(pl), f"FT-1 with the box door open {M.P['door_open_deg']:g} deg: the beam tube's two half-shells "
+                  "come off sideways first", "the collar stays clamped on the lens; Ø50 spigots inside the section's ends "
+                  "locate it on the window flange and under the collar; the camera rides on the door")
+    Image.fromarray(img).save(IMG / "cad-door-open-ft-1.png")
+    print("wrote cad-door-open-ft-1.png")
+
+
 def thorlabs():
     parts = M.build("FT-1", piston="thorlabs")
     pl = plotter()
@@ -335,6 +348,6 @@ def thorlabs():
 
 if __name__ == "__main__":
     IMG.mkdir(exist_ok=True)
-    what = sys.argv[1:] or ["states", "sections", "steps", "strip", "monitoring", "camera_view", "thorlabs", "gif"]
+    what = sys.argv[1:] or ["states", "sections", "steps", "strip", "monitoring", "camera_view", "thorlabs", "door", "gif"]
     for w in what:
         globals()[w]()
