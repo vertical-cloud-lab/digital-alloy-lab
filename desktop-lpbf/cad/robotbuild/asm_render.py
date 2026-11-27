@@ -262,6 +262,8 @@ class Replay:
         out.append(("Stack nest", tx(TL.mesh("nest_stack")[0], Tm((K.STATIONS["stack"], 0.0, b["top"] + 146.0))), "#c9a227"))
         out.append(("Module nest inv", tx(TL.mesh("nest_body_inv")[0], Tm((K.STATIONS["body_inv"], 0.0, b["top"] + 140.0))), "#c9a227"))
         out.append(("Module nest up", tx(TL.mesh("nest_body_up")[0], Tm((K.STATIONS["body_up"], 0.0, b["top"] + 200.0))), "#c9a227"))
+        if hasattr(K, "T_blade_nest"):      # round 10 (W2, F26a-F27): the blade cartridge's two-pin bench nest
+            out.append(("Blade nest", tx(TL.mesh("nest_blade")[0], K.T_blade_nest()), "#c9a227"))
         return out
 
     # ------------------------------------------------------------------------------------------- state -> scene
