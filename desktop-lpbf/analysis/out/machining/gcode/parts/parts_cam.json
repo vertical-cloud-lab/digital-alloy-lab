@@ -1,0 +1,252 @@
+{
+ "what": "chapter 31's vise part, the recoater motor bracket, programmed in FreeCAD's CAM workbench (analysis/machining/parts_cam.py); the lathe slug is not programmed (FreeCAD 1.0.2 has no turning ops)",
+ "tool": "FreeCAD 1.0.2 (39319 (Git)), CAM workbench, run headless with freecadcmd",
+ "post": "linuxcnc (--precision 3), mm; programs in analysis/out/machining/gcode/parts/",
+ "machine": "Haas VF-4, Kurt XL6A air vise (1.75 in. jaws), the blank on a 1 in. parallel",
+ "material": "6061-T6",
+ "part": {
+  "name": "Recoater motor bracket",
+  "model": "cad/lpbf_low.py: box 90 x 60 x 170.4 (no holes drawn)",
+  "frame": "bracket frame: 90 along X, 170.4 along Y, 60 along Z, origin at the bottom face's centre",
+  "box_mm": [
+   -45.0,
+   45.0,
+   -85.2,
+   85.2,
+   0.0,
+   60.0
+  ],
+  "volume_cm3": 920.2
+ },
+ "blank": {
+  "spec": "2.5 in. 6061 plate, 96 x 176 mm (setup_plan.json, dfm.json)",
+  "box_mm": [
+   -48.0,
+   48.0,
+   -88.0,
+   88.0,
+   -1.75,
+   61.75
+  ],
+  "volume_cm3": 1072.9
+ },
+ "tools": {
+  "T1": {
+   "name": "2.5 in. (63.5 mm) indexable face mill, 4 inserts",
+   "shape": "endmill",
+   "d": 63.5,
+   "flutes": 4,
+   "rpm": 3000,
+   "ipt": 0.004,
+   "length": 60.0,
+   "edge": 8.0,
+   "feed_mm_min": 1219.2
+  },
+  "T2": {
+   "name": "3/4 in. (19.05 mm) 3-flute carbide end mill, 66 mm stick-out, ER32 collet chuck",
+   "shape": "endmill",
+   "d": 19.05,
+   "flutes": 3,
+   "rpm": 5100,
+   "ipt": 0.005,
+   "length": 66.0,
+   "edge": 38.1,
+   "holder": "04-0010",
+   "feed_mm_min": 1943.1
+  }
+ },
+ "assumptions": [
+  "Feeds as freecad_cam.py: mm/min = rpm x flutes x chip load x 25.4; plunge at half the horizontal feed.",
+  "Face: BoundaryShape Boundbox with ClearEdges (the face's box plus the tool radius), 70 % step-over, zig-zag along x.",
+  "Outline: Profile on the top face's outer wire, the tool outside; rough with 0.3 mm left, then finish, each in two 19.5 mm steps (op 1) or one 21.5 mm step (op 2), inside T2's 38.1 mm of flute.",
+  "No lead-in or lead-out dressups (the profile plunges at its start point, outside the part, in the 3 mm of stock round it); no chamfers or deburring; the model's screw holes are not drawn, so none are cut.",
+  "Times: the G-code recount (feeds as programmed, rapids at 25.4 m/min); tool changes counted, not timed."
+ ],
+ "setups": [
+  {
+   "setup": "bracket_op1",
+   "flip": false,
+   "rotation_model_to_setup": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "grip_mm": 96.0,
+   "gcode": "analysis/out/machining/gcode/parts/bracket_op1.ngc",
+   "freecad_job_cycle_time": "00:02:19",
+   "ops": [
+    {
+     "op": "Face",
+     "label": "Face the top to z 60",
+     "kind": "face",
+     "tool": 1,
+     "tool_name": "2.5 in. (63.5 mm) indexable face mill, 4 inserts",
+     "rpm": 3000,
+     "feed_mm_min": 1219.2,
+     "start_depth": 61.75,
+     "final_depth": 60.0,
+     "step_down": 1.75,
+     "offset_extra": null,
+     "freecad_cycle_time": "00:00:43",
+     "commands": 17,
+     "path_feed_mm": 663.6,
+     "path_rapid_mm": 141.4,
+     "cut_time_min": 0.55,
+     "rapid_time_min": 0.01
+    },
+    {
+     "op": "Profile",
+     "label": "Outline 90 x 170.4 rough 0.3 mm radial, z 60 to 21",
+     "kind": "profile",
+     "tool": 2,
+     "tool_name": "3/4 in. (19.05 mm) 3-flute carbide end mill, 66 mm stick-out, ER32 collet chuck",
+     "rpm": 5100,
+     "feed_mm_min": 1943.1,
+     "start_depth": 60.0,
+     "final_depth": 21.0,
+     "step_down": 19.5,
+     "offset_extra": 0.3,
+     "freecad_cycle_time": "00:00:48",
+     "commands": 27,
+     "path_feed_mm": 1208.8,
+     "path_rapid_mm": 250.0,
+     "cut_time_min": 0.64,
+     "rapid_time_min": 0.01
+    },
+    {
+     "op": "Profile001",
+     "label": "Outline 90 x 170.4 finish, z 60 to 21",
+     "kind": "profile",
+     "tool": 2,
+     "tool_name": "3/4 in. (19.05 mm) 3-flute carbide end mill, 66 mm stick-out, ER32 collet chuck",
+     "rpm": 5100,
+     "feed_mm_min": 1943.1,
+     "start_depth": 60.0,
+     "final_depth": 21.0,
+     "step_down": 19.5,
+     "offset_extra": 0.0,
+     "freecad_cycle_time": "00:00:48",
+     "commands": 27,
+     "path_feed_mm": 1205.0,
+     "path_rapid_mm": 48.0,
+     "cut_time_min": 0.64,
+     "rapid_time_min": 0.0
+    }
+   ],
+   "totals": {
+    "path_feed_mm": 3077.5,
+    "path_rapid_mm": 439.5,
+    "cut_time_min": 1.84,
+    "rapid_time_min": 0.02,
+    "total_min": 1.85,
+    "tool_changes": 2,
+    "freecad_sum_of_op_cycle_times_min": 2.32
+   }
+  },
+  {
+   "setup": "bracket_op2",
+   "flip": true,
+   "rotation_model_to_setup": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "grip_mm": 90.0,
+   "gcode": "analysis/out/machining/gcode/parts/bracket_op2.ngc",
+   "freecad_job_cycle_time": "00:01:25",
+   "ops": [
+    {
+     "op": "Face001",
+     "label": "Face the bottom to 60 thick",
+     "kind": "face",
+     "tool": 1,
+     "tool_name": "2.5 in. (63.5 mm) indexable face mill, 4 inserts",
+     "rpm": 3000,
+     "feed_mm_min": 1219.2,
+     "start_depth": 1.75,
+     "final_depth": 0.0,
+     "step_down": 1.75,
+     "offset_extra": null,
+     "freecad_cycle_time": "00:00:37",
+     "commands": 17,
+     "path_feed_mm": 663.6,
+     "path_rapid_mm": 81.4,
+     "cut_time_min": 0.55,
+     "rapid_time_min": 0.0
+    },
+    {
+     "op": "Profile002",
+     "label": "Outline rough 0.3 mm radial, the last 21.5 mm",
+     "kind": "profile",
+     "tool": 2,
+     "tool_name": "3/4 in. (19.05 mm) 3-flute carbide end mill, 66 mm stick-out, ER32 collet chuck",
+     "rpm": 5100,
+     "feed_mm_min": 1943.1,
+     "start_depth": 0.0,
+     "final_depth": -21.5,
+     "step_down": 21.5,
+     "offset_extra": 0.3,
+     "freecad_cycle_time": "00:00:24",
+     "commands": 17,
+     "path_feed_mm": 608.8,
+     "path_rapid_mm": 232.5,
+     "cut_time_min": 0.33,
+     "rapid_time_min": 0.01
+    },
+    {
+     "op": "Profile003",
+     "label": "Outline finish, the last 21.5 mm",
+     "kind": "profile",
+     "tool": 2,
+     "tool_name": "3/4 in. (19.05 mm) 3-flute carbide end mill, 66 mm stick-out, ER32 collet chuck",
+     "rpm": 5100,
+     "feed_mm_min": 1943.1,
+     "start_depth": 0.0,
+     "final_depth": -21.5,
+     "step_down": 21.5,
+     "offset_extra": 0.0,
+     "freecad_cycle_time": "00:00:24",
+     "commands": 17,
+     "path_feed_mm": 606.9,
+     "path_rapid_mm": 30.5,
+     "cut_time_min": 0.33,
+     "rapid_time_min": 0.0
+    }
+   ],
+   "totals": {
+    "path_feed_mm": 1879.3,
+    "path_rapid_mm": 344.5,
+    "cut_time_min": 1.2,
+    "rapid_time_min": 0.01,
+    "total_min": 1.21,
+    "tool_changes": 2,
+    "freecad_sum_of_op_cycle_times_min": 1.42
+   }
+  }
+ ],
+ "total_min": 3.06
+}
