@@ -1,0 +1,39 @@
+{
+  "rows_total": 8828,
+  "rows_counted": 5937,
+  "fields": 9,
+  "bootstrap_replicates": 20000,
+  "seed": 20261027,
+  "Al_scale_central": 1.2564115023286342,
+  "Al_scale_property_range": [
+    1.2152840862513392,
+    1.298123525462776
+  ],
+  "fit_details": {
+    "lognormal": {
+      "parameters": [
+        3.896615313832729,
+        0.33093352207473964
+      ],
+      "mean_weighted_negative_log_likelihood": 4.20862764306477,
+      "conditional_KS_descriptive": 0.11650345253393324,
+      "expected_weight_10_15": 1.021321214370247,
+      "observed_weight_10_15": 43.287099999999995
+    },
+    "weibull": {
+      "parameters": [
+        2.034991686070954,
+        55.860730346445365
+      ],
+      "mean_weighted_negative_log_likelihood": 4.442817653927399,
+      "conditional_KS_descriptive": 0.18629883562247254,
+      "expected_weight_10_15": 246.17625824548972,
+      "observed_weight_10_15": 43.287099999999995
+    }
+  },
+  "files_sha256": {
+    "nab_k7m2q9_particles.csv": "d9d0951515cbe67d8f99ac1509071bc8015428b0a95b581a541fddd222f2dcdf",
+    "fields.csv": "807dbdb25ffe262c5154f714187e8dd401cb68018842dae2da80868548f9cb51",
+    "context.md": "3e23a65d221cc7e365cd5083f1fc49935345963b512f687f8683e3557b9216da"
+  }
+}
