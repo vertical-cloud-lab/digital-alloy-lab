@@ -340,7 +340,7 @@ class Replay:
         # held objects ride on the TCP
         h = s["held"]
         if h is not None:
-            T_tcp = a.tcp(s["q"], h.get("close0", s["close"]))
+            T_tcp = self.tcp_T(n, h.get("close0", s["close"]))
             Tsp = T_tcp @ rot_axis((0, 0, 1), h["spin_deg"]) if h.get("spin_deg") else T_tcp     # a screw turning with the bit
             for i in h["objs"]:
                 if f"o{i}" in sc.actors:
@@ -407,14 +407,40 @@ class Replay:
             h = self.st[n]["held"]
             if h is not None and set(h["objs"]) & set(objs):
                 a = self.arm[n]
-                T_tcp = a.tcp(self.st[n]["q"], h.get("close0", self.st[n]["close"]))
+                T_tcp = self.tcp_T(n, h.get("close0", self.st[n]["close"]))
                 if h.get("spin_deg"):
                     T_tcp = T_tcp @ rot_axis((0, 0, 1), h["spin_deg"])
                 h["off"] = np.linalg.inv(T_tcp) @ np.asarray(T, float)
 
-    def tcp(self, n):
+    def tcp_T(self, n, close=None):
+        """Round 10 (W1): the TCP of arm n's current tool (world 4x4). The 2F-85's moves with its opening; any other tool's is the
+        fixed T cell2.tool_mesh gives (the planner's ArmT.set_tool), on the changer's face. Until round 10 every held part was
+        drawn on the 2F-85's TCP whatever the tool (the wand's TCP is 359 mm from the flange, the gripper's 200-213)."""
         a = self.arm[n]
-        return a.tcp(self.st[n]["q"], self.st[n]["close"])[:3, 3]
+        s = self.st[n]
+        c = s["close"] if close is None else close
+        t = s.get("tool") or "gripper"
+        if t.startswith("gripper") or t in ("hand", ""):
+            return a.tcp(s["q"], c)
+        key = (t, float((s.get("spec") or {}).get("extra_bit", 0.0) or 0.0), (s.get("spec") or {}).get("tip_d"))
+        cache = self.__dict__.setdefault("_tool_T", {})
+        if key not in cache:
+            try:
+                if t in ("screwdriver", "nutrunner", "nutrunner_angle"):
+                    cache[key] = np.asarray(self.K.tool_mesh(t, key[1], key[2])[1], float)
+                else:
+                    cache[key] = np.asarray(self.K.tool_mesh(t)[1], float)
+            except Exception as e:  # noqa: BLE001
+                print("no tool TCP", t, e)
+                cache[key] = None
+        T = cache[key]
+        if T is None:
+            return a.tcp(s["q"], c)
+        F = a.fk(s["q"])
+        return a.base @ F["tool0"] @ Tm((0.0, 0.0, self.K.TC_H)) @ T
+
+    def tcp(self, n):
+        return self.tcp_T(n)[:3, 3]
 
     def retire_tools(self, idx=None):
         """Round 9: the seal steps' hand tools (ring loader, spigot mandrel and pusher) go back to the stand when the step that
@@ -2373,13 +2399,21 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
             loc = here(n0)
 
             def job(e=e, wh=wh, nf=nf, per=per, loc=loc):
+                pose = (pstate.get("fit") or [None])[0] if wh == "person" else None
                 for f in range(nf):
+                    if pose is not None and rp.person is not None and pstate["on"]:
+                        # round 10: the person's hands on the work (fit_jobs: checked), not at their sides
+                        rp.person.set(hands=pose["hands"], palm=pose["palm"], look=pose.get("look"),
+                                      lean=float(pose.get("lean", 0.0)), frame=tot["n"])
+                        pstate["n"] = tot["n"]
                     sub = (f"{e.get('what', '')[:80]} ({e['dur'] / 60:.0f} min, estimate{lapse_txt(per)})" if wh == "person" else
                            f"{e.get('what', '')[:80]} ({e['dur']:.0f} s)")
                     if emit(cur["label"], sub, [wh] if wh in ("person", "machine") else ["robot A"], proc=per,
                             add={"person_h": per / 3600.0} if wh == "person" else ({"robot_h": per / 3600.0} if wh == "robot" else None),
                             status="person" if wh == "person" else None, loc=loc):
                         return True
+                if pose is not None and rp.person is not None:
+                    rp.person.set(hands={"l": None, "r": None}, palm={"l": None, "r": None}, lean=0.0, frame=tot["n"])
                 return False
             if wh == "person" and rp.person is not None:
                 # where the job is: the station of the place (the arm's tool over Fixture P or the trunnion), or the MiR's
@@ -2387,7 +2421,33 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                 t0 = rp.tcp(n0)
                 xp = {"bench": -1250.0, "B": 1350.0}.get(loc[0], float(t0[0]) if loc[0] == "PT" else float(rp.st[n0]["x"]))
                 yp = 0.0 if loc[0] != "table" else (-300.0 if n0 == "A" else 300.0)
-                stop = person_job((xp, yp, 950.0), "A", job, loc)
+                # round 10: what they work on: the part in the cell nearest the station (not on the long table, within
+                # 300 mm of it on the floor plan, its top 0.8-1.6 m up), their hands on its outside (checked like a part
+                # they set); none: they stand by it with their hands at their sides, as in round 9
+                best_w, fitw = None, None
+                if loc[0] != "table":
+                    for i_, o_ in rp.objs.items():
+                        k_ = f"o{i_}"
+                        if rp.sc.alpha.get(k_, 0.0) <= 0.0 or o_.get("V") is None or i_ in rp.temp_tools:
+                            continue
+                        if i_ in rp.T and np.allclose(rp.sc.gmat.get(k_, np.eye(4)), rp.T[i_]):
+                            continue                         # still on the long table
+                        Wo = obj_world(i_)
+                        c_ = 0.5 * (Wo.min(0) + Wo.max(0))
+                        d_ = math.hypot(float(c_[0]) - xp, float(c_[1]) - yp)
+                        if d_ > 300.0 or not 800.0 <= float(Wo[:, 2].max()) <= 1600.0:
+                            continue
+                        sz = float(np.max(Wo.max(0) - Wo.min(0)))
+                        if best_w is None or (sz, -d_) > (best_w[0], -best_w[1]):
+                            best_w = (sz, d_, i_)            # the biggest part there: the sub-assembly being worked on
+                if best_w is not None:
+                    i_ = best_w[2]
+                    fitw = fit_jobs([("part", [i_], np.asarray(rp.sc.gmat.get(f"o{i_}", np.eye(4)), float))])
+                    Wc = obj_world(i_)
+                    zt = float(Wc[:, 2].max())
+                else:
+                    zt = 950.0
+                stop = person_job((xp, yp, zt), "A", job, loc, fit=fitw)
             else:
                 stop = job()
     return tot
