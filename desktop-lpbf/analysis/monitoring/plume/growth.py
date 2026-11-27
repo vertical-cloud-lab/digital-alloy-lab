@@ -42,7 +42,10 @@ Metallic Al (nominal 'damped'): Rakic 1995 (n, k) plus the Drude damping of elec
 13:1131); 'rakic' keeps bulk room-temperature Al. Oxide (Al2O3, MgO, ZnO): n 1.665, k 0 (Boidin et al.
 2016), or Wahl et al. 2026's k = 0.019. 7075's Mg/Zn condensate takes aluminium's optics (pessimistic, plume.md §4.2).
 The beam's loss is the extinction integrated up the beam axis through the jet; the coaxial emission is the absorption
-coefficient times the Planck function at each particle's temperature, integrated the same way.
+coefficient times the Planck function at each particle's temperature, integrated the same way. Above the height where the
+centreline leaves the beam, the condensate that crosses the beam is heated there too: by default it evaporates during its
+transit 2w / v at the Hertz-Knudsen rate (Kelvin included), but only until the gas around it holds the vapour in
+equilibrium with the hot particles; 'vacuum' drops that cap, False keeps it all.
 
 Run:  /tmp/capmem 2 env OMP_NUM_THREADS=1 /tmp/venv/bin/python desktop-lpbf/analysis/monitoring/plume/growth.py
 Writes analysis/out/monitoring/plume/growth.json, growth_sizes.png and growth_loss.png.
@@ -98,7 +101,7 @@ CS_AXIS = (22.0, 270.0)                              # s/m3 along the beam axis,
 
 NOMINAL = dict(alpha_s=0.08, alpha_n=0.6, Df=1.8, kf=1.3, stick=1.0, sinter=1.0, sigma_f=1.0, mdot_f=1.0, o2_ppm=100.0,
                gamma_ox=1.0, acc=0.3, optics="damped", ox_k=0.0, Ta=300.0, scan="perpendicular", heating=True,
-               jet_mass="best", t_end=1.0, K=44, w0=W0, h_coag=2.0, h_jet=0.05, melt_agg=False)
+               jet_mass="best", t_end=1.0, K=44, w0=W0, h_coag=2.0, h_jet=0.05, melt_agg=False, cross_evap=True)
 
 
 def p_sat(sp, T):
@@ -565,7 +568,7 @@ def run(case, flow="200+40 L/min", P_override=None, **over):
                 phase = "bed"
                 rho, conc_f, Tg = rho_a, 1.0, Ta
         while ir < len(t_rec) and t >= t_rec[ir]:
-            rec.append(record(S, opt, N, rho, conc_f, dp, prm, t, s, x, z, b, u, Tg, Tp_prim, f_ox, f_cond, in_beam, phase,
+            rec.append(record(S, opt, N, rho, conc_f, dp, prm, t, s, x, z, b, u, th, Tg, Tp_prim, f_ox, f_cond, in_beam, phase,
                               Ysc, st, P, w, compact))
             ir += 1
         while isnap < len(t_snap) and t >= t_snap[isnap]:
@@ -580,7 +583,7 @@ def run(case, flow="200+40 L/min", P_override=None, **over):
     return res
 
 
-def record(S, opt, N, rho, conc_f, dp, prm, t, s, x, z, b, u, Tg, Tp, f_ox, f_cond, in_beam, phase, Ysc, st, P, w, compact):
+def record(S, opt, N, rho, conc_f, dp, prm, t, s, x, z, b, u, th, Tg, Tp, f_ox, f_cond, in_beam, phase, Ysc, st, P, w, compact):
     """State of the parcel, with optics per kg of condensate and per m at the centreline (clusters under 1 nm left out)."""
     e, es = SPECIES[st["prim"]], SPECIES[st["sec"]]
     n = N * rho * conc_f
@@ -616,6 +619,21 @@ def record(S, opt, N, rho, conc_f, dp, prm, t, s, x, z, b, u, Tg, Tp, f_ox, f_co
             Tax = particle_temperature(Iax, Tg, P_AMB, ca1070, area, d_ev, st["prim"], prm["sigma_f"], prm["acc"])
             molten = Tax > Tm_sec
     r["molten_mass_frac"] = float(np.sum(n * S.v * ok * molten) / max(np.sum(n * S.v * ok), 1e-300))
+    # optional: condensate that crosses the beam once the centreline has left it evaporates on the way through. Mass kept,
+    # averaged over the transit 2w / v (v: the jet's speed across the beam), for a radius shrinking at the Hertz-Knudsen rate
+    # at the particle's temperature (Kelvin included): f = (tau_ev / 4 tau) [1 - (1 - min(tau / tau_ev, 1))^4]
+    fsurv = np.ones(S.K)
+    if prm["cross_evap"] and phase == "jet" and not in_beam and Iax > 0:
+        sig = np.maximum(e["s0"] + e["ds"] * (Tax - e["Tm"]), 0.2) * prm["sigma_f"]
+        kel = np.exp(np.clip(4 * sig * S.v1 / (KB * Tax * d_ev), 0, 60))
+        rdot = p_sat(st["prim"], Tax) * kel * np.sqrt(e["M"] / (2 * math.pi * R * Tax)) / e["rho"]
+        tau_ev = (d_ev / 2) / np.maximum(rdot, 1e-30)
+        tau_tr = 2 * w / max(abs(u * math.cos(th)), 0.5)
+        x_ = np.minimum(tau_tr / tau_ev, 1.0)
+        fsurv = np.clip(tau_ev / (4 * tau_tr) * (1 - (1 - x_) ** 4), 0.0, 1.0)
+    r["cross_survival_mass_mean"] = float(np.sum(n * S.v * ok * fsurv) / max(np.sum(n * S.v * ok), 1e-300))
+    Tm_ax = max(float(np.sum(n * S.v * ok * Tax) / max(np.sum(n * S.v * ok), 1e-300)), Tg)
+    r["rho_vap_eq_axis"] = float(p_sat(st["prim"], Tm_ax)) * math.sqrt(Tg / Tm_ax) * e["M"] / (R * Tg)   # vapour that stops it
     for band in BANDS:
         ca, cs = section_optics(opt, band, S.v, dp, f_ox, prm["Df"], prm["kf"], compact, molten, ma)
         aabs, asca = float(np.sum(n * ca * ok)), float(np.sum(n * cs * ok))
@@ -648,6 +666,17 @@ def beam_integrals(res, opt, S):
     zP = zs + xs / np.tan(th)
     rr = xs / np.sin(th)
     wprof = np.exp(-(rr / (bs / math.sqrt(2))) ** 2)
+    mode = res["params"]["cross_evap"]
+    if mode:
+        # condensate crossing the beam after the centreline has left it: mass kept on the axis. 'vacuum': evaporating at the
+        # Hertz-Knudsen rate into vapour-free gas; True: capped by the vapour the gas at the axis can hold against the hot
+        # particles (rho_eq), so the dense core keeps most of its condensate and the dilute edge loses it
+        sv = np.array([r.get("cross_survival_mass_mean", 1.0) for r in jr])
+        ceq = np.array([r.get("rho_vap_eq_axis", 0.0) for r in jr])
+        cax = np.array([r["C_cond_kg_m3"] for r in jr]) * wprof
+        keep = sv if mode == "vacuum" else np.maximum(sv, 1 - ceq / np.maximum(cax, 1e-30))
+        keep = np.where([r["in_beam"] for r in jr], 1.0, np.clip(keep, 0.0, 1.0))
+        wprof = wprof * keep
     zP = np.maximum.accumulate(zP)
     out = dict(z_axis_mm=list(zP * 1e3))
     for key in ["a_abs_1070", "a_sca_1070", "a_abs_700", "a_abs_900", "a_abs_975", "j_700", "j_900", "j_975"]:
@@ -667,7 +696,7 @@ def beam_integrals(res, opt, S):
         out[f"emission_{band}"] = float(np.sum(0.5 * (f[1:] + f[:-1]) * np.diff(zP)))
         f2 = jh * wprof
         out[f"radiance_axis_{band}"] = float(np.sum(0.5 * (f2[1:] + f2[:-1]) * np.diff(zP)))
-    cm = np.array([r["C_cond_kg_m3"] for r in jr]) * wprof
+    cm = np.array([r["C_cond_kg_m3"] for r in jr]) * np.exp(-(rr / (bs / math.sqrt(2))) ** 2)
     out["column_kg_m2"] = float(np.sum(0.5 * (cm[1:] + cm[:-1]) * np.diff(zP)))
     out["tau_ext_1070"] = out["a_abs_1070"] + out["a_sca_1070"]
     for lim in (1.0, 3.0, 5.0, 10.0):
@@ -804,10 +833,15 @@ def main():
             "jet carries the wall reading's vapour (momentum x2.3)": dict(jet_mass="wall"),
             "bulk Al optics (Rakic, no size or temperature damping)": dict(optics="rakic"),
             "no laser heating of particles": dict(heating=False),
-            "agglomerates crossing the beam melt into spheres (no evaporation)": dict(melt_agg=True),
+            "condensate crossing the beam doesn't evaporate": dict(cross_evap=False),
+            "crossing agglomerates melt into spheres, don't evaporate": dict(melt_agg=True, cross_evap=False),
+            "crossing agglomerates melt into spheres and evaporate": dict(melt_agg=True),
+            "crossing condensate evaporates into vapour-free gas": dict(cross_evap="vacuum"),
             "thermal accommodation 0.1": dict(acc=0.1), "thermal accommodation 1.0": dict(acc=1.0),
             "gas at 473 K (200 C plate)": dict(Ta=473.0),
-            "upper bound: slow jet mixing + vapour x2 + scan with the flow": dict(alpha_s=0.04, alpha_n=0.3, mdot_f=2.0, scan="with flow"),
+            "upper bound: slow mixing + vapour x2 + scan with the flow + no evaporation on crossing":
+                dict(alpha_s=0.04, alpha_n=0.3, mdot_f=2.0, scan="with flow", cross_evap=False),
+            "lower bound: vapour x0.5 + crossing condensate evaporates into vapour-free gas": dict(mdot_f=0.5, cross_evap="vacuum"),
         }
         for lab, over in sens.items():
             r = go(cases[nominal["AlSi10Mg"]], "200+40 L/min", **over)
@@ -955,7 +989,7 @@ def figures(full, res):
     fig.savefig(OUT / "growth_sizes.png", dpi=110)
     plt.close(fig)
     # --- figure 2: beam loss ---
-    fig, axs = plt.subplots(1, 3, figsize=(14, 4.3), constrained_layout=True)
+    fig, axs = plt.subplots(1, 3, figsize=(15, 4.6), constrained_layout=True, gridspec_kw=dict(width_ratios=[1, 1, 1.3]))
     ax = axs[0]
     for alloy, c in cols.items():
         if (alloy, "200+40 L/min") not in full:
@@ -965,8 +999,8 @@ def figures(full, res):
         cum = 100 * (np.array(b["cum_a_abs_1070"]) + np.array(b["cum_a_sca_1070"]))
         ok = z > 1e-3
         ax.semilogx(z[ok], cum[ok], color=c, lw=2, label=alloy)
-        dy = {"AlSi10Mg": 0.015, "7075": 0.012, "6061": -0.035}[alloy]
-        ax.text(12, cum[ok][-1] + dy, f"{alloy}: {cum[ok][-1]:.2f} %", fontsize=7.5, color=ink)
+        dy = {"AlSi10Mg": 0.008, "7075": -0.022, "6061": 0.008}[alloy]
+        ax.text(2.0, cum[ok][-1] + dy, f"{alloy}: {cum[ok][-1]:.2f} %", fontsize=7.5, color=ink)
     ax.set_xlim(0.003, 50)
     ax.set_ylim(0, None)
     ax.set_xlabel("height up the beam axis (mm)")
@@ -992,14 +1026,14 @@ def figures(full, res):
     ax = axs[2]
     base = 100 * full[("AlSi10Mg", "200+40 L/min")]["beam"]["tau_ext_1070"]
     items = sorted(res["sensitivity"].items(), key=lambda kv: kv[1]["beam"].get("tau_ext_1070", 0))
-    labels = [k for k, _ in items]
+    labels = [k if len(k) <= 46 else k[:44] + "…" for k, _ in items]
     vals = [100 * v["beam"].get("tau_ext_1070", 0) for _, v in items]
     ax.barh(np.arange(len(vals)), np.array(vals) - base, left=base, color=[cols["7075"] if v > base else cols["AlSi10Mg"] for v in vals],
             height=0.7)
     ax.axvline(base, color=ink, lw=0.8)
     ax.set_yticks(np.arange(len(vals)), labels, fontsize=6.2)
     ax.set_xlim(0, max(vals) * 1.05)
-    ax.set_xlabel("fresh-plume loss (%); line: AlSi10Mg nominal")
+    ax.set_xlabel("fresh-plume loss (%); line: nominal")
     ax.set_title("Sensitivity, one input at a time", fontsize=9)
     for ax in axs:
         ax.grid(color=grid, lw=0.6)
