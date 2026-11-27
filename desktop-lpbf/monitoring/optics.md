@@ -563,8 +563,18 @@ estimated; the guard's air at 40 °C):
 - **So:** enable the light only with the chamber door shut (its door switch in the driver's enable, or the Pico 2 holding the
   strobe low), or keep to ≤ 0.75 A CW for alignment with the door open. Show the LSO.
 
-**Mechanics:** the light and its bracket add 6 parts and 0 interferences (mechanics.md §2.1). The bracket needs two more M4
-holes in the back wall, above the clamp frame (x −141 and −129.5, z 69.25), in setup C's A180 program.
+**Mechanics:** the light and its bracket are six parts in place of the old envelope (323 parts, 48 monitoring; the machine is
+still 579.6 mm tall). With them, `interference.py` finds 0 interferences in all six states and eight sweeps on M50, L75 and S25
+([`M50`](../analysis/out/monitoring/mech/interference-monitoring-M50-M.md),
+[`L75`](../analysis/out/monitoring/mech/interference-monitoring-L75-L.md),
+[`S25`](../analysis/out/monitoring/mech/interference-monitoring-S25-S.md); 2026-11-27 09:13–09:29 UTC). Those runs now peak at
+3.4–3.5 GiB, so they ran under `/tmp/heavy 3.5`. Exact distances to the neighbours: the bracket sits 2.0 mm over the BW clamp frame
+and 3.0 mm from the recoater sensor clamp; the asphere is 6.6 mm and the tube 7.2 mm from the clamp frame. The bracket needs two
+more M4 holes in the back wall above the clamp frame (x −141 and −129.5, z 69.25, 8 deep), in setup C's A180 program.
+
+![The BW light in the model: from the front-left across its axis, and from behind and above (clamp and bracket see-through)](../analysis/out/monitoring/optics/bw_light_view.png)
+
+*From [`bw_light_view.py`](../analysis/monitoring/optics/bw_light_view.py). The red line is the BW sight line.*
 
 ## 5. Laser safety at the viewports
 
@@ -640,7 +650,8 @@ a curved pool's glints spread over ±40° as a bound for the steep ports):
    dynamic range decides how far below 1,000 K one frame reaches (§2).
 4. **Bench-test the BW light (§4.1):** the M850D3 on the DC2200's LED2 terminal at 2 A, 12–22 µs TTL pulses at 24 kHz. Measure
    the light pulse with a fast photodiode, the image's size and focus on a card at the plate, and the board's temperature after
-   a 15 s burst and after a minute. If more light is wanted, try 3 A at ≤ 10 % duty: it isn't rated. Then pick the camera's
+   a 15 s burst and after a minute. If more light is wanted, try 3 A at ≤ 10 % duty on the LED1 terminal (0–4 A, up to 23 kHz):
+   it isn't rated. Then pick the camera's
    filter (FBH850-40, or FBH870-10 for a narrow band) on real frames.
 5. **Check the Chronos's lens fit at LW:** 155 mm of body plus ~50 mm of Kowa lens against the 180 mm of room (fits.json),
    or worker C's Nikon 50 mm on the F mount.
