@@ -123,7 +123,7 @@ NEW = [
                                                                   "holes and 4 bolts: as MK-02b"),
     dict(pid="MK-23", mk="MK-23", name="Deck clamps on the box's panel studs (4)", state="S2", qty=4,
          route="saw + CNC mill", ms=1, ls=0, holes=1, taps=0, prog=1.0, fc=1.5, lathe=0.0, manual=0.0, seal=False,
-         dims=(40, 20, 4.8), stock="3/16 x 3/4 in. 6061 flat bar", basis="37 x 18 x 4 bars with a 5.2 hole, a batch"),
+         dims=(40, 20, 4.8), stock="3/16 x 3/4 in. 6061 flat bar", basis="40 x 18 x 4 bars with a 5.2 hole for the #10 panel stud, a batch"),
 ]
 
 

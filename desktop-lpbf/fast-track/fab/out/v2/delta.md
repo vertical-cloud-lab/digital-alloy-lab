@@ -43,7 +43,7 @@
 | – | MK-21 | FT-0 | new | Light-port window rings (2, box walls): 44 x 6 rings with a 30 bore: as MK-19, a batch of 2 | – | 3.2 / 5.5 / 7.4 |
 | – | MK-21c | FT-1V | new | Light-port bores in the cube's left plate and door (E2 plates): a 24 bore at 15 and 30 deg on two bought plates, one tilted setup each: as MK-13 | – | 2.5 / 5.5 / 7.0 |
 | – | MK-22a | S1 | new | Coaxial branch cage-cube plate on the head flange: not drawn in v2; a 60 x 60 plate with 4 cage-rod holes and 4 bolts: as MK-02b | – | 1.7 / 3.6 / 5.2 |
-| – | MK-23 | S2 | new | Deck clamps on the box's panel studs (4): 37 x 18 x 4 bars with a 5.2 hole, a batch | – | 1.5 / 2.4 / 3.1 |
+| – | MK-23 | S2 | new | Deck clamps on the box's panel studs (4): 40 x 18 x 4 bars with a 5.2 hole for the #10 panel stud, a batch | – | 1.5 / 2.4 / 3.1 |
 
 | State | v1 cumulative low / expected / high h | v2 cumulative low / expected / high h | v2 pieces |
 |---|---|---|---:|

@@ -365,7 +365,7 @@ simpler:
 - **The one gouge left** is on MK-11b, the exhaust collector: a strip 1 mm wide and 14 mm tall on the side of the
   outlet tab, 0.2-0.33 mm deep (0.003 cm³). That is two voxels, at the limit of the check, but it looks like the
   outside pass nicking the tab. Check it in CAMotics, or leave 0.5 mm on the tab and file it.
-- **Run:** 27 programmed pieces, 63 setups, 10.5 min on the shared runner, 1.35 GB peak. The first full runs died
+- **Run:** 27 programmed pieces, 63 setups, about 11 min on the shared runner, 1.35 GB peak. The first full runs died
   without a message after about 20 pieces: `sim.py` kept every piece's 3D arrays for the contact sheet and passed
   its 2 GB cap. It now keeps only the top views.
 - **Pieces whose features are left to hand work** (the rod clamp's slit) are checked against the piece without them.
@@ -586,7 +586,7 @@ own allowances. The program minutes of the changed and new pieces are estimates;
 | – | MK-21 | FT-0 | new | Light-port window rings (2, box walls): 44 x 6 rings with a 30 bore: as MK-19, a batch of 2 | – | 3.2 / 5.5 / 7.4 |
 | – | MK-21c | FT-1V | new | Light-port bores in the cube's left plate and door (E2 plates): a 24 bore at 15 and 30 deg on two bought plates, one tilted setup each: as MK-13 | – | 2.5 / 5.5 / 7.0 |
 | – | MK-22a | S1 | new | Coaxial branch cage-cube plate on the head flange: not drawn in v2; a 60 x 60 plate with 4 cage-rod holes and 4 bolts: as MK-02b | – | 1.7 / 3.6 / 5.2 |
-| – | MK-23 | S2 | new | Deck clamps on the box's panel studs (4): 37 x 18 x 4 bars with a 5.2 hole, a batch | – | 1.5 / 2.4 / 3.1 |
+| – | MK-23 | S2 | new | Deck clamps on the box's panel studs (4): 40 x 18 x 4 bars with a 5.2 hole for the #10 panel stud, a batch | – | 1.5 / 2.4 / 3.1 |
 <!-- /DELTA_TABLE -->
 
 ## Changes for the assembly model
