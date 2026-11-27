@@ -23,7 +23,8 @@ monitoring_spec.py says where each port, window and instrument goes; this file d
     weld-in (SST FA40102) in the rod end's cap for the sensor's lead; on S25 the sensor in a strap clamp on the rod end's back
     face, as before; the preamp on the process base plate;
   * the PicoScope 4444 and the sync breakout box on a bracket on the rack's outer side (sync-and-data.md §2.1 puts them in the
-    4U drawer if its layout has room; the drawer is an envelope in the model, so they are drawn beside it).
+    4U drawer if its layout has room; the drawer is an envelope in the model, so they are drawn beside it);
+  * the cooling (monitoring_cooling.py) and the guard's monitoring bulkhead MN-28 on its back panel (monitoring_bulkhead.py).
 
 Hook: lpbf_low.build(monitoring=True), or LPBF_MONITORING=1 in the environment for scripts that call build() unchanged
 (interference.py, render_low.py, ...). By default (monitoring=None and no environment variable) nothing changes.

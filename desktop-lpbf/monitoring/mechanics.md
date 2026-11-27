@@ -65,7 +65,8 @@ name says "envelope".
 | Guard bulkhead (MN-28), round 3 | 6061 plate, 0.080 in. (2.03 mm), 180 × 126 mm, over a 152 × 98 mm cut-out in the back panel, 8 × M4 into rivet nuts. In a row at z 318: three isolated BNC feedthroughs (Neutrik NBB75DFIB), an RJ45 feedthrough (Neutrik NE8FDX-P6-B) and an M12 8-pole feed-through (Murrelektronik 7000-48111-0000000). Below them a split cable entry (icotek KEL 10\|6, six KT grommets) for the Chronos's and the LDS12Bs' leads, with a black labyrinth shroud over it inside. The mating plugs and the first bends of the cables, both sides | guard's back panel, upper left, outside: plate x −400…−220, z 220…346 | [`monitoring_bulkhead.py`](../cad/monitoring_bulkhead.py); Neutrik's D-size cut-out, AutomationDirect's drawing of the M12, icotek's KEL datasheet. Bodies behind the plate, plugs and cables are envelopes | M0-B1 to M0-B8 |
 
 **The bulkhead (MN-28)** goes on the back panel because the left panel, the one nearest the rack, stands 6.5 mm from the rack's
-vented side panel, with no room for a connector, its plug or a bend. The back panel's upper left is the nearest place with room.
+vented side panel (8.5 mm from its frame), with no room for a connector, its plug or a bend. The back panel's upper left is the
+nearest place with room.
 - **Clearances.** The plate sits 12 mm above the inlet's filter frame. Its cut-out and rivet nuts stay clear of the back-left
   post and the top rail. The door, its rail and the AprilTags are all on the front. Outside, the cables run straight back, then
   bend 40 mm toward the rack's open back (y 300). Inside, the connectors stand above the optics bridge and behind the collimator,
