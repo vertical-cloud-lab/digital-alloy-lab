@@ -69,7 +69,7 @@
   {
    "case": "low",
    "people": 1,
-   "plates_out": false,
+   "variant": "base",
    "done_day": {
     "S1": 1.89,
     "S2": 3.31,
@@ -96,7 +96,7 @@
   {
    "case": "low",
    "people": 2,
-   "plates_out": false,
+   "variant": "base",
    "done_day": {
     "S1": 1.5,
     "S2": 2.06,
@@ -123,7 +123,7 @@
   {
    "case": "low",
    "people": 3,
-   "plates_out": false,
+   "variant": "base",
    "done_day": {
     "S1": 1.37,
     "S2": 1.75,
@@ -150,7 +150,7 @@
   {
    "case": "exp",
    "people": 1,
-   "plates_out": false,
+   "variant": "base",
    "done_day": {
     "S1": 3.19,
     "S2": 6.63,
@@ -177,7 +177,7 @@
   {
    "case": "exp",
    "people": 2,
-   "plates_out": false,
+   "variant": "base",
    "done_day": {
     "S1": 2.0,
     "S2": 3.35,
@@ -893,7 +893,7 @@
   {
    "case": "exp",
    "people": 3,
-   "plates_out": false,
+   "variant": "base",
    "done_day": {
     "S1": 1.85,
     "S2": 2.47,
@@ -920,7 +920,7 @@
   {
    "case": "high",
    "people": 1,
-   "plates_out": false,
+   "variant": "base",
    "done_day": {
     "S1": 4.37,
     "S2": 9.71,
@@ -947,7 +947,7 @@
   {
    "case": "high",
    "people": 2,
-   "plates_out": false,
+   "variant": "base",
    "done_day": {
     "S1": 2.68,
     "S2": 4.89,
@@ -974,7 +974,7 @@
   {
    "case": "high",
    "people": 3,
-   "plates_out": false,
+   "variant": "base",
    "done_day": {
     "S1": 2.29,
     "S2": 3.45,
@@ -1001,7 +1001,7 @@
   {
    "case": "exp",
    "people": 1,
-   "plates_out": true,
+   "variant": "FT-1 plates out",
    "done_day": {
     "S1": 3.19,
     "S2": 6.63,
@@ -1028,7 +1028,7 @@
   {
    "case": "exp",
    "people": 2,
-   "plates_out": true,
+   "variant": "FT-1 plates out",
    "done_day": {
     "S1": 2.0,
     "S2": 3.35,
@@ -1049,6 +1049,60 @@
     "FT-0 FIRST TRACKS": 2.16,
     "FT-1 FIRST COUPONS": 3.36,
     "FT-1V FIRST COUPONS (< 100 ppm)": 3.96
+   },
+   "log": null
+  },
+  {
+   "case": "exp",
+   "people": 2,
+   "variant": "stock day 2",
+   "done_day": {
+    "S1": 3.1,
+    "S2": 3.89,
+    "FT-0": 7.9,
+    "FT-1": 10.01,
+    "FT-1V": 12.01
+   },
+   "late_days": {
+    "S1": 0.0,
+    "S2": 0.0,
+    "FT-0": 1.9,
+    "FT-1": 1.01,
+    "FT-1V": 0.0
+   },
+   "milestones_weeks": {
+    "S1 guide-laser and scanner checks": 1.4,
+    "S2 FULL POWER INTO THE DUMP": 1.6,
+    "FT-0 FIRST TRACKS": 2.18,
+    "FT-1 FIRST COUPONS": 3.4,
+    "FT-1V FIRST COUPONS (< 100 ppm)": 4.0
+   },
+   "log": null
+  },
+  {
+   "case": "exp",
+   "people": 3,
+   "variant": "stock day 2",
+   "done_day": {
+    "S1": 2.79,
+    "S2": 3.44,
+    "FT-0": 5.24,
+    "FT-1": 6.73,
+    "FT-1V": 11.62
+   },
+   "late_days": {
+    "S1": 0.0,
+    "S2": 0.0,
+    "FT-0": 0.0,
+    "FT-1": 0.0,
+    "FT-1V": 0.0
+   },
+   "milestones_weeks": {
+    "S1 guide-laser and scanner checks": 1.4,
+    "S2 FULL POWER INTO THE DUMP": 1.6,
+    "FT-0 FIRST TRACKS": 1.8,
+    "FT-1 FIRST COUPONS": 2.85,
+    "FT-1V FIRST COUPONS (< 100 ppm)": 3.45
    },
    "log": null
   }
