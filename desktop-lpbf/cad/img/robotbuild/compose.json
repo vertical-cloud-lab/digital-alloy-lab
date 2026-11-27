@@ -1,11 +1,11 @@
 {
  "mp4": "desktop-lpbf/cad/img/robotbuild/robot-build.mp4",
- "mb": 41.5,
- "seconds": 2456.1,
- "frames": 29473,
+ "mb": 41.1,
+ "seconds": 2408.5,
+ "frames": 28902,
  "fps": 12,
  "crf": 28,
- "maxrate_kbps": 284,
+ "maxrate_kbps": 290,
  "chapters": [
   {
    "folder": "00-intro",
@@ -54,8 +54,8 @@
   },
   {
    "folder": "30-machining-chamber",
-   "frames": 2854,
-   "seconds": 237.8,
+   "frames": 3037,
+   "seconds": 253.1,
    "finished": true,
    "card": false,
    "state": "rendered",
@@ -90,8 +90,8 @@
   },
   {
    "folder": "38-tools",
-   "frames": 1008,
-   "seconds": 84.0,
+   "frames": 1064,
+   "seconds": 88.7,
    "finished": true,
    "card": false,
    "state": "rendered",
@@ -99,8 +99,8 @@
   },
   {
    "folder": "40-assembly-module",
-   "frames": 2974,
-   "seconds": 247.8,
+   "frames": 2983,
+   "seconds": 248.6,
    "finished": true,
    "card": false,
    "state": "rendered",
@@ -108,8 +108,8 @@
   },
   {
    "folder": "41-assembly-chamber",
-   "frames": 13640,
-   "seconds": 1136.7,
+   "frames": 12821,
+   "seconds": 1068.4,
    "finished": true,
    "card": false,
    "state": "rendered",
@@ -160,41 +160,41 @@
    "title": "Machining the chamber: the VF-4 and its 4th axis"
   },
   {
-   "at": "9:16",
+   "at": "9:32",
    "title": "Machining the other parts: vise, lathe, saw"
   },
   {
-   "at": "11:48",
+   "at": "12:04",
    "title": "Finishing: welding, honing, deburring, washing, measuring, kitting"
   },
   {
-   "at": "13:12",
+   "at": "13:27",
    "title": "The arms' custom tools and fixtures"
   },
   {
-   "at": "14:36",
+   "at": "14:56",
    "title": "Assembly 1: the build module, by two UR12e on MiR250s"
   },
   {
-   "at": "18:44",
+   "at": "19:04",
    "title": "Assembly 2: the chamber and the process module, by two UR12e on MiR250s"
   },
   {
-   "at": "37:40",
+   "at": "36:53",
    "title": "Onto the VLM tray: rack, gas module, hoses, leak check"
   },
   {
-   "at": "39:09",
+   "at": "38:22",
    "title": "Time and cost: in-house, outsourced, robot shop"
   }
  ],
  "counters": {
-  "t_s": 147595.94,
+  "t_s": 148270.72,
   "machine_h": 29.45,
-  "robot_h": 8.02,
-  "person_h": 27.92,
+  "robot_h": 8.17,
+  "person_h": 27.96,
   "cam_h": 123.6,
   "outsourced_d": 10.0
  },
- "composed_utc": "2026-11-27T12:11Z"
+ "composed_utc": "2026-11-27T21:44Z"
 }

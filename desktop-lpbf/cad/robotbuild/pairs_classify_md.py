@@ -71,8 +71,10 @@ def classify(r):
     if any("screw presenter" in nm for nm in (r["a"], r["b"])) and ks & {"shcs", "fhcs", "set"}:
         # round 10: a screw standing in the MiR's screw presenter at its pick: the presenter is drawn (and checked by the
         # planner) as a solid block, without the slots the screws stand in
-        r["cls"], r["cause"] = "b", ("drawn model: a screw standing in the MiR's screw presenter where the bit picks it (1-2 "
-                                     "frames); the presenter is drawn as a solid block, without the slots that hold the screws")
+        r["cls"], r["cause"] = "b", ("model: a screw standing in the MiR's screw presenter where the bit picks it (1-4 "
+                                     "frames); the presenter (vendor not chosen) is drawn, and checked by the planner, as a solid "
+                                     "250 x 130 x 150 mm envelope without the nest the screw stands in, so the same pair reads "
+                                     "the same depth on the planner's meshes")
         return r
     if pmv is not None and pmv <= 1.5:
         r["cls"], r["cause"] = "b", "drawn mesh: the planner's 0.1 mm mesh is clear (decimation or tessellation of the drawn mesh)"
@@ -145,7 +147,11 @@ for ch in CHAPTERS:
              f"| (a) real clipping | {cnt['a']} | by cause (pairs; distinct frames): " +
              ("; ".join(f"{CAUSE[k][0]} {v} ({len(fr_c[k])} fr)" for k, v in sorted(by_cause.items(), key=lambda kv: -kv[1]))
               or "none") + " |",
-             f"| (b) drawn-mesh artifact | {cnt['b']} | clear on the planner's 0.1 mm meshes, or a screw in the solid-block screw presenter at its pick |",
+             f"| (b) drawn-mesh artifact or model | {cnt['b']} | " +
+             (f"{sum(1 for r in res if r['cls'] == 'b' and 'screw presenter' in r['a'] + r['b'])} a screw at its pick in the "
+              f"screw presenter, which is modelled as a solid envelope without its nest; "
+              f"{sum(1 for r in res if r['cls'] == 'b' and 'screw presenter' not in r['a'] + r['b'])} clear on the planner's "
+              f"0.1 mm meshes |"),
              f"| (c) intended contact | {cnt['c']} | fingertips on the part they hold, within 5 mm |"]
     if nn:
         body.append(f"| not re-measured | {nn} | an actor missing at the recorded worst frame |")

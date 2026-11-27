@@ -4,10 +4,10 @@
 4:18 Receiving and unpacking
 4:56 The stock: two people carry the 5.5 in. plate
 5:18 Machining the chamber: the VF-4 and its 4th axis
-9:16 Machining the other parts: vise, lathe, saw
-11:48 Finishing: welding, honing, deburring, washing, measuring, kitting
-13:12 The arms' custom tools and fixtures
-14:36 Assembly 1: the build module, by two UR12e on MiR250s
-18:44 Assembly 2: the chamber and the process module, by two UR12e on MiR250s
-37:40 Onto the VLM tray: rack, gas module, hoses, leak check
-39:09 Time and cost: in-house, outsourced, robot shop
+9:32 Machining the other parts: vise, lathe, saw
+12:04 Finishing: welding, honing, deburring, washing, measuring, kitting
+13:27 The arms' custom tools and fixtures
+14:56 Assembly 1: the build module, by two UR12e on MiR250s
+19:04 Assembly 2: the chamber and the process module, by two UR12e on MiR250s
+36:53 Onto the VLM tray: rack, gas module, hoses, leak check
+38:22 Time and cost: in-house, outsourced, robot shop
