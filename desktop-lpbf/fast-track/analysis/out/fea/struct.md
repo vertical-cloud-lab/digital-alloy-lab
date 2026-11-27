@@ -90,6 +90,7 @@ mass on the flange face under the head's footprint, and the base rails are rigid
 | Four posts, braced, 45 mm posts, head on a horizontal plate (upper bound above) | 78.9 / 84.7 / 137.6 Hz | 16, −20, −2 µrad | 1, 0, −14 µm | 7, 5 µm |
 | **As drawn: head hung from the flange plate** | **43.1 / 59.7 / 67.2 Hz** | 112, 253, −5 µrad | −35, 12, −46 µm | −111, 45 µm |
 | **With the fixes, `P['gantry'] = 'four_post_braced_front'`** (37e2698; front knee braces, top flange on both beams, three gussets) | **50.0 / 66.9 / 93.5 Hz** | 36, 143, −7 µrad | −24, 2, −25 µm | −66, 13 µm |
+| **Gussets moved under the head, `'four_post_braced_front_g2'`** (d3df7ca; three 8 mm gussets at y −100.6, −15, 15 down to the flange's bottom edge) | **49.8 / 66.8 / 92.7 Hz** | 38, 147, −7 µrad | −24, 2, −26 µm | −68, 13 µm |
 
 - **The frame as drawn is below the 60 Hz minimum** (and the 100 Hz target), at about half the upper bound.
   - Mode 1 (43 Hz) is the front portal racking sideways along the beams, with the head yawing. The largest motion is
@@ -112,6 +113,14 @@ mass on the flange face under the head's footprint, and the base rails are rigid
     two-thirds has none.
   - Next step, not run: gussets under the head's footprint (e.g. at y ≈ −120, −55 and 15), run down to the
     flange's bottom edge, or a stiffener along that edge.
+- **Moving the gussets under the head (d3df7ca, `four_post_braced_front_g2`; 194k nodes, ccx 29 + 58 s) changes
+  nothing: 49.8 / 66.8 / 92.7 Hz, pitch 147 µrad.**
+  - The largest motion is still at the flange plate's bottom edge, and the head still yaws about z.
+  - So the gussets are not the limit. The head's centre of mass sits ~95 mm out from a plate that is held only
+    near its top: by the top flange, and by the brackets at the beams' height.
+  - What should help, not run: support the head's far side as well, with a second bracket or strap from the beams
+    to the head's opposite face. That turns the cantilever into a body held on two sides. A tie from the flange
+    plate's bottom edge to the posts would also help.
 - The joints are bonded and the base is rigid, so the real frame (bolted T-slot joints) will be softer than these
   numbers.
 
