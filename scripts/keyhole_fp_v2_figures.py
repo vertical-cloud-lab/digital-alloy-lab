@@ -3,8 +3,6 @@
 
 from __future__ import annotations
 
-import json
-import math
 import pathlib
 
 import matplotlib
@@ -202,8 +200,54 @@ def fig_meltflow(out: pathlib.Path):
     plt.close(fig)
 
 
+def fig_states(out: pathlib.Path):
+    """Every stable state (depth and absorbed fraction) against power, with the AM module and NIST marked."""
+    t = pd.read_csv(out / "v2-stable-states-vs-power.csv")
+    fig, axes = plt.subplots(2, 2, figsize=(12.0, 7.6), layout="constrained", sharex="col")
+    titles = {"alsi10mg": "AlSi10Mg, 0.9 m/s, 80 µm beam (the AM module's render speed)",
+              "al5182": "Al 5182, 0.7 m/s, 122.5 µm beam (NIST AM-Bench 2022)"}
+    for col, key in enumerate(("alsi10mg", "al5182")):
+        g = t[t["alloy"] == key]
+        for row, (ycol, ylab) in enumerate((("A", "absorbed fraction"), ("d_um", "keyhole depth (µm)"))):
+            ax = axes[row, col]
+            for mode, mk, c, lab in (("conduction", "s", GREY, "flat surface below boiling"),
+                                     ("keyhole", "o", BLUE, "stable keyhole states")):
+                sel = g[g["mode"] == mode]
+                if mode == "keyhole":
+                    kh = sel[sel["Wk_over_Dk"] <= fp.WK_DK_AM]
+                    dimple = sel[sel["Wk_over_Dk"] > fp.WK_DK_AM]
+                    ax.scatter(dimple["P_W"], dimple[ycol], s=16, marker=mk, color=GREEN, lw=0, zorder=3,
+                               label="stable, Wk/Dk > 0.7 (dimple)")
+                    ax.scatter(kh["P_W"], kh[ycol], s=16, marker=mk, color=BLUE, lw=0, zorder=3,
+                               label="stable, Wk/Dk ≤ 0.7 (keyhole)")
+                else:
+                    ax.scatter(sel["P_W"], sel[ycol], s=12, marker=mk, color=GREY, lw=0, zorder=3, label=lab)
+            if key == "alsi10mg":
+                b = pd.read_csv(fp.AM_DIR / "alsi10mg-am-module-boundaries.csv").dropna(subset=["P_keyhole_W"])
+                P_am = float(np.interp(900.0, b["speed_mm_s"], b["P_keyhole_W"]))
+                ax.axvline(P_am, color=INK, lw=1.6, label=f"AM module keyhole boundary ({P_am:.0f} W)")
+                if ycol == "A":
+                    ax.scatter([250.0], [0.307], marker="*", s=140, color=ORANGE, zorder=5,
+                               label="AM module's absorptivity at its 250 W render")
+            else:
+                if ycol == "A":
+                    ax.scatter([473.0, 473.0], [0.24, 0.43], marker="*", s=140, color=ORANGE, zorder=5,
+                               label="measured: before and during the keyhole")
+                else:
+                    ax.axvline(473.0, color=ORANGE, lw=1.2, ls="--", label="NIST's track, 473 W")
+            ax.set_ylabel(ylab, color=INK)
+            if row == 1:
+                ax.set_xlabel("laser power (W)", color=INK)
+            else:
+                ax.set_title(titles[key], fontsize=9.5, color=INK)
+            _style(ax)
+            ax.legend(frameon=False, fontsize=7.5, loc="upper left")
+    fig.savefig(out / "v2-stable-states-vs-power.png", dpi=140)
+    plt.close(fig)
+
+
 def main(out: pathlib.Path):
-    for f in (fig_maps, fig_gan, fig_sections, fig_mg, fig_meltflow):
+    for f in (fig_maps, fig_gan, fig_sections, fig_mg, fig_meltflow, fig_states):
         try:
             f(out)
             print("wrote", f.__name__)

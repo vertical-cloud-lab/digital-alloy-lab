@@ -70,6 +70,7 @@ E_MU_DEFAULT = 12.3e3
 VISCOSITY = {"alsi10mg": (0.281e-3, 12.3e3), "blend": (0.228e-3, 14.2e3), "al5182": (0.281e-3, 12.3e3)}
 DSIGMA_DT_DEFAULT = -1.27e-4  # N/m/K, Leitner et al. 2017
 C_DARCY_DEFAULT = 1e9  # kg m^-3 s^-1
+C_WALL = 1e10  # kg m^-3 s^-1, penalty driving the liquid next to the keyhole in the recoil-driven experiment
 EPS_DARCY = 1e-3
 
 
@@ -543,7 +544,7 @@ def cell_gradient(i0, i1, j1, k1, xc, yc, zc, xf, yf, zf, p, kh, Gx, Gy, Gz):
 
 @nb.njit(cache=True)
 def build_component(comp, i0, i1, j1, k1, xc, yc, zc, xf, yf, zf, mu, aE, aW, aN, aS, aB, aT, aP, darcy, kh, phi,
-                    target, G, tau, alpha, ape_out, b_out, dRC, dC):
+                    target, G, tau, alpha, ape_out, b_out, dRC, dC, walldrive, wvel):
     """Diagonal and source for component comp (0 = u, 1 = v, 2 = w), with Darcy sink, pressure gradient, Marangoni
     shear (top cells), symmetry and top-wall conditions, and under-relaxation. Also d = V/aP for Rhie-Chow and the
     SIMPLEC d = V/(aP - sum a_nb)."""
@@ -564,6 +565,33 @@ def build_component(comp, i0, i1, j1, k1, xc, yc, zc, xf, yf, zf, mu, aE, aW, aN
                 snb = aP[i, j, k]
                 ap = snb + darcy[i, j, k] * V
                 bb = darcy[i, j, k] * V * target - V * G[i, j, k]
+                if walldrive:
+                    # The recoil-driven melt-flow experiment: the liquid cells touching the keyhole are driven towards
+                    # the wall's prescribed velocity by a penalty C_WALL (u_wall - u), the same device the mushy zone
+                    # uses. A no-slip shear alone barely couples at r0/8 cells (cell Reynolds number ~ 70).
+                    cnt = 0
+                    ws = 0.0
+                    if kh[i + 1, j, k]:
+                        cnt += 1
+                        ws += wvel[i + 1, j, k]
+                    if kh[i - 1, j, k]:
+                        cnt += 1
+                        ws += wvel[i - 1, j, k]
+                    if kh[i, j + 1, k]:
+                        cnt += 1
+                        ws += wvel[i, j + 1, k]
+                    if j > 0 and kh[i, j - 1, k]:
+                        cnt += 1
+                        ws += wvel[i, j - 1, k]
+                    if kh[i, j, k + 1]:
+                        cnt += 1
+                        ws += wvel[i, j, k + 1]
+                    if k > 0 and kh[i, j, k - 1]:
+                        cnt += 1
+                        ws += wvel[i, j, k - 1]
+                    if cnt > 0:
+                        ap += C_WALL * V
+                        bb += C_WALL * V * ws / cnt
                 if k == 0:
                     if comp == 2:
                         ap += mu[i, j, k] * dxi * dyj / (zc[0] - zf[0])  # w = 0 at the surface
@@ -889,6 +917,29 @@ class Case:
     grid: Grid | None = None
     Tbc: object = None  # far-field temperature function; default: moving point source in the solid
     Q_far: float | None = None  # power for the default far field
+    wall_drive: bool = False  # recoil-driven melt-flow experiment: the keyhole wall moves (see wall_velocity)
+    wall_sigma: float = 0.63  # surface tension used for the wall speed, N/m
+
+
+def wall_velocity(g: Grid, case: "Case", kh):
+    """The recoil-driven melt-flow experiment. The keyhole wall is given a tangential velocity running from the
+    front stagnation line round both sides to the rear, V(z) sin(phi) along e_phi, as in potential flow round a
+    cylinder. V(z) = sqrt(2 sigma / (rho r)) is Bernoulli's speed for the Laplace overpressure sigma / r that the
+    recoil pressure must at least supply to hold a cross-section of radius r open (r floored at a quarter of the
+    opening). A closure, not a solved free surface: it asks what a melt pushed round the keyhole at that speed
+    does to the pool."""
+    kk = case.keyhole
+    zk = np.asarray(kk["z"], dtype=float)
+    X, Y, Z = np.meshgrid(g.xc, g.yc, g.zc, indexing="ij")
+    xc = np.interp(Z, zk, np.asarray(kk["xc"], dtype=float))
+    r = np.interp(Z, zk, np.asarray(kk["r"], dtype=float))
+    a0 = float(kk["a0"])
+    phi = np.arctan2(Y, X - xc)  # 0 at the front wall, pi at the rear (y >= 0)
+    V = np.sqrt(2 * case.wall_sigma / (case.props.rho * np.maximum(r, 0.25 * a0)))
+    sp = V * np.sin(phi)
+    Uw = np.where(kh, -sp * np.sin(phi), 0.0)
+    Vw = np.where(kh, sp * np.cos(phi), 0.0)
+    return Uw, Vw, np.zeros(g.shape)
 
 
 def far_field_point_source(pr: Props, T0, T_s, v):
@@ -946,6 +997,11 @@ def solve_case(case: Case, flow=True, n_outer=60, n_inner=25, alpha_u=0.5, alpha
         if dT < tolT and it >= 2:
             break
     out = {"flow": bool(flow)}
+    walldrive = bool(case.wall_drive) and case.keyhole is not None
+    Uw, Vw, Ww = wall_velocity(g, case, kh) if walldrive else (np.zeros(g.shape),) * 3
+    out["wall_drive"] = walldrive
+    if walldrive:
+        out["wall_speed_max_m_s"] = float(np.sqrt(Uw ** 2 + Vw ** 2).max())
     if flow:
         aE, aW, aN, aS, aB, aT, aP = (np.zeros(g.shape) for _ in range(7))
         ape, bb, dRC_u, dC_u, dRC_v, dC_v, dRC_w, dC_w = (np.zeros(g.shape) for _ in range(8))
@@ -966,11 +1022,11 @@ def solve_case(case: Case, flow=True, n_outer=60, n_inner=25, alpha_u=0.5, alpha
             for inner in range(n_inner):
                 mom_coeffs(i0, i1, j1, k1, *args_geo, mu, st.Fx, st.Fy, st.Fz, kh, aE, aW, aN, aS, aB, aT, aP)
                 cell_gradient(i0, i1, j1, k1, *args_geo, st.p, kh, Gx, Gy, Gz)
-                for comp, phi, target, G, tau, dRC, dC in (
-                        (0, st.u, -case.v, Gx, taux, dRC_u, dC_u), (1, st.v, 0.0, Gy, tauy, dRC_v, dC_v),
-                        (2, st.w, 0.0, Gz, taux, dRC_w, dC_w)):
+                for comp, phi, target, G, tau, dRC, dC, wv in (
+                        (0, st.u, -case.v, Gx, taux, dRC_u, dC_u, Uw), (1, st.v, 0.0, Gy, tauy, dRC_v, dC_v, Vw),
+                        (2, st.w, 0.0, Gz, taux, dRC_w, dC_w, Ww)):
                     build_component(comp, i0, i1, j1, k1, *args_geo, mu, aE, aW, aN, aS, aB, aT, aP, darcy, kh, phi,
-                                    target, G, tau, alpha_u, ape, bb, dRC, dC)
+                                    target, G, tau, alpha_u, ape, bb, dRC, dC, walldrive, wv)
                     for _ in range(2):
                         tdma_x(i0, i1, j1, k1, ape, aE, aW, aN, aS, aB, aT, bb, phi)
                         tdma_z(i0, i1, j1, k1, ape, aE, aW, aN, aS, aB, aT, bb, phi)

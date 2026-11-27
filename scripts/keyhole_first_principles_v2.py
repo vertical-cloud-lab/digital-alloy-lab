@@ -396,6 +396,8 @@ def solve_point_v2(al: Alloy, P, v, r0, T0, A_override=None, hatch=None, want_po
         res.bistable = True
         res.d_deep_um = roots["deep"] * 1e6
         res.A_deep = roots["A_deep"]
+        if BRANCH == "deepest":
+            d = roots["deep"]  # sensitivity: the track sits on its deepest stable state wherever there are several
     # The tilt: Kaplan's front-wall balance, for a keyhole deeper than its opening is wide
     wing = lambda a0_, Qs: fp.surface_wing_sources(a0_, r0, Qs)  # noqa: E731
     evap = lambda a0_: Q_e  # noqa: E731
@@ -453,6 +455,7 @@ def solve_point_v2(al: Alloy, P, v, r0, T0, A_override=None, hatch=None, want_po
 
 TILT = True
 A_COND = None  # see run_conduction_sensitivity
+BRANCH = "shallowest"  # or "deepest": which stable state sets the pool (see run_branch_sensitivity)
 _RT: dict = {}
 
 
@@ -494,7 +497,7 @@ def cone_roots(f, a0, r0, n=60):
         ok = False
     deep = stable[-1] if len(stable) > 1 else None
     return {"shallow": stable[0], "deep": deep, "A_deep": f(deep)[1] if deep is not None else float("nan"),
-            "n_stable": len(stable), "ok": ok}
+            "n_stable": len(stable), "ok": ok, "stable": stable}
 
 
 def classify(res: ResultV2, layer: float) -> str:
@@ -584,8 +587,9 @@ def _alloy_cached(spec):
 
 def _work(job):
     """One point in a worker process. job: dict with spec or a ready Alloy, P, v, r0, T0, and options."""
-    global A_COND
+    global A_COND, BRANCH
     A_COND = job.get("A_cond")
+    BRANCH = job.get("branch", "shallowest")
     al = job["alloy"] if "alloy" in job else _alloy_cached(job["spec"])
     powder = job.get("powder")
     try:
@@ -680,7 +684,7 @@ def _powder(on=True, A=None):
     return pw.Powder(A_powder=pw.RUBENCHIK_AL_POWDER if A is None else A)
 
 
-def run_maps_v2(out: pathlib.Path, log=print, powder=True, tag="", A_cond=None) -> dict:
+def run_maps_v2(out: pathlib.Path, log=print, powder=True, tag="", A_cond=None, branch="shallowest") -> dict:
     jobs = []
     for key, a in fp.ALLOYS.items():
         g = pd.read_csv(AM_DIR / f"{a['slug']}-am-module-grid-points.csv")
@@ -688,7 +692,8 @@ def run_maps_v2(out: pathlib.Path, log=print, powder=True, tag="", A_cond=None) 
         for _, r in g.iterrows():
             jobs.append({"spec": ("alloy", key, True, 1.0, "drude-dc"), "P": float(r["power_W"]),
                          "v": float(r["speed_mm_s"]) / 1000.0, "r0": a["r0"], "T0": a["T0"], "hatch": a["hatch"],
-                         "powder": _powder(powder), "key": key, "am_class": r["am_class"], "A_cond": A_cond})
+                         "powder": _powder(powder), "key": key, "am_class": r["am_class"], "A_cond": A_cond,
+                         "branch": branch})
     res = pmap(jobs)
     rows = []
     for j, rr in zip(jobs, res):
@@ -863,6 +868,48 @@ def run_conduction_sensitivity(out: pathlib.Path, log=print) -> dict:
     return {f"A_cond={a}": run_maps_v2(out, log, tag=f"-A_cond-{a}", A_cond=a) for a in (0.24, 0.307)}
 
 
+def run_bifurcation(out: pathlib.Path, log=print) -> dict:
+    """Every stable keyhole depth, and its absorptance, against power at one speed: AlSi10Mg at the AM module's
+    render speed (0.9 m/s) and Al 5182 at NIST's AM-Bench speed (0.7 m/s, 122.5 um beam)."""
+    rows = []
+    cases = [("alsi10mg", 0.9, fp.ALLOYS["alsi10mg"]["r0"], fp.ALLOYS["alsi10mg"]["T0"]),
+             ("al5182", fp.AMB2022["v"], fp.AMB2022["r0"], fp.AMB2022["T0"])]
+    for key, v, r0, T0 in cases:
+        al = make_alloy(key)
+        m = al.m
+        a0 = r0
+        Ps = np.arange(100.0, 601.0, 10.0) if key == "al5182" else np.arange(100.0, 401.0, 5.0)
+        for P in Ps:
+            T_on, _ = al.vap.onset(r0, v)
+            th_b = fp.thermal_state(m, T0, T_on)
+            A_liq = float(fp.fresnel_absorptance(al.N(T_on), 1.0))
+            xs = np.linspace(-3 * r0, 1.0 * r0, 41)
+            peak = float(fp.gaussian_field(xs, 0.0, 0.0, A_liq * P, r0, th_b.k, th_b.kappa, v).max())
+            if peak < th_b.theta_w:
+                rows.append({"alloy": key, "v_m_s": v, "P_W": P, "state": 0, "mode": "conduction", "d_um": 0.0,
+                             "A": A_liq, "Wk_over_Dk": float("inf")})
+                continue
+            ws = al.vap.wall(a0, 0.5 * a0, math.pi * a0 * math.sqrt(a0 ** 2 + (2 * a0) ** 2), v,
+                             lambda T, Mv: vapour_outflow(a0, m.sigma, T, Mv))
+            th = fp.thermal_state(m, T0, ws["T_w"])
+            tab = ray_table_N(al.N(ws["T_w"]))
+            f = cone_balance(P, v, r0, a0, th, evaporation_power_v2(ws), tab, None)
+            roots = cone_roots(f, a0, r0, n=120)
+            for i, d in enumerate(roots["stable"]):
+                rows.append({"alloy": key, "v_m_s": v, "P_W": P, "state": i, "mode": "keyhole", "d_um": d * 1e6,
+                             "A": f(d)[1], "Wk_over_Dk": 2 * a0 / d})
+        log(key, "states:", sum(1 for r in rows if r["alloy"] == key))
+    t = pd.DataFrame(rows)
+    t.to_csv(out / "v2-stable-states-vs-power.csv", index=False, float_format="%.5g")
+    return {"rows": len(t)}
+
+
+def run_branch_sensitivity(out: pathlib.Path, log=print) -> dict:
+    """The maps with every point on its deepest stable state (where there are several), for the pool as well as the
+    class."""
+    return run_maps_v2(out, log, tag="-deepest-state", branch="deepest")
+
+
 def run_powder_check(out: pathlib.Path, log=print) -> dict:
     """The homogenised powder-layer model against Boley et al. 2015 and Rubenchik et al. 2015."""
     import keyhole_fp_powder as pw
@@ -918,8 +965,10 @@ def run_mg_table(out: pathlib.Path, log=print) -> dict:
 def main() -> None:
     global NPROC
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("cmd", choices=["all", "point", "powder", "mg", "explore", "figures", "meltflow", "conduction"])
+    ap.add_argument("cmd", choices=["all", "point", "powder", "mg", "explore", "figures", "meltflow", "conduction",
+                                    "states"])
     ap.add_argument("--only", default=None)
+    ap.add_argument("--drive", action="store_true", help="meltflow: the recoil-driven moving-wall experiment")
     ap.add_argument("--out", type=pathlib.Path, default=V2_DIR)
     ap.add_argument("--cache", type=pathlib.Path, default=pathlib.Path("/tmp/keyhole-open-models-cache"))
     ap.add_argument("--alloy", choices=list(fp.ALLOYS) + ["al5182"], default="blend")
@@ -955,12 +1004,16 @@ def main() -> None:
     if a.cmd == "mg":
         run_mg_table(a.out, log)
         return
+    if a.cmd == "states":
+        run_bifurcation(a.out, log)
+        return
     if a.cmd == "conduction":
         s_ = run_conduction_sensitivity(a.out, log)
+        s_["deepest_state"] = run_branch_sensitivity(a.out, log)
         (a.out / "v2-conduction-sensitivity-summary.json").write_text(json.dumps(s_, indent=1, default=str) + "\n")
         return
     if a.cmd == "meltflow":
-        run_meltflow_v2(a.out, log, only=a.only)
+        run_meltflow_v2(a.out, log, only=a.only, drive=a.drive)
         log("done in", round(time.time() - t0), "s")
         return
     if a.cmd == "explore":
@@ -998,7 +1051,7 @@ MELTFLOW_CASES = [
 ]
 
 
-def run_meltflow_v2(out: pathlib.Path, log=print, only=None) -> dict:
+def run_meltflow_v2(out: pathlib.Path, log=print, only=None, drive=False) -> dict:
     """Each case's keyhole (shape, T_w, power outside the opening) from solve_point_v2, then the melt-flow solver
     with Marangoni off and on. The materials are version 2's (sourced k(T)); viscosities as in keyhole_meltflow."""
     import keyhole_meltflow as mf
@@ -1024,25 +1077,31 @@ def run_meltflow_v2(out: pathlib.Path, log=print, only=None) -> dict:
                         pool_W=max(1.5 * res.pool_width_solidus_um, 250.0) * 1e-6,
                         pool_L_rear=max(1.2 * res.pool_length_solidus_um, 500.0) * 1e-6,
                         keyhole_d=(res.d_um * 1e-6 if sol else 0.0), h_fine=r0 / 8)
-        case = mf.Case(label=label, props=pr, P=P, v=v, r0=r0, T0=T0, A=res.A, keyhole=kh, grid=g)
+        if drive and kh is None:
+            continue
+        if drive and res.d_um < 2 * res.a0_um:
+            continue  # the recoil-driven experiment only for keyholes deeper than their opening is wide
+        case = mf.Case(label=label, props=pr, P=P, v=v, r0=r0, T0=T0, A=res.A, keyhole=kh, grid=g,
+                       wall_drive=drive, wall_sigma=al.m.sigma)
         log(f"{label}: v2 keyhole d {res.d_um:.0f} um, A {res.A:.3f}; grid {g.shape} = {g.n} cells")
-        for flow in (False, True):
+        for flow in ((True,) if drive else (False, True)):
             o, T, st, khm = mf.solve_case(case, flow=flow, log=log)
             r = {"case": label, "alloy": key, "P_W": P, "v_m_s": v, "A": res.A, "A_fixed": Aov is not None,
                  "keyhole_depth_um": res.d_um if sol else 0.0, "front_wall_deg": res.front_wall_deg,
                  "analytic_pool_depth_um": res.pool_depth_um, "analytic_pool_width_um": res.pool_width_um,
                  "analytic_pool_length_um": res.pool_length_um,
                  "analytic_pool_length_solidus_um": res.pool_length_solidus_um, "analytic_Q_cond_W": res.Q_cond_W,
-                 **mf._row(case, o)}
+                 "wall_drive": drive, "wall_speed_max_m_s": o.get("wall_speed_max_m_s", 0.0), **mf._row(case, o)}
             rows.append(r)
             log(json.dumps({k: (round(x, 2) if isinstance(x, float) else x) for k, x in r.items()}))
             if flow:
                 fields[label] = (case, T, st, khm)
     t = pd.DataFrame(rows)
-    t.to_csv(out / f"v2-meltflow-runs{'-' + only if only else ''}.csv", index=False, float_format="%.5g")
+    tag = ("-recoil-driven" if drive else "") + ("-" + only if only else "")
+    t.to_csv(out / f"v2-meltflow-runs{tag}.csv", index=False, float_format="%.5g")
     for label, (case, T, st, khm) in fields.items():
         if label in ("blend-375W-0.4-own", "al5182-473W-0.7-A_measured"):
-            mf.figure(case, T, st, khm, out / f"v2-meltflow-{label}.png")
+            mf.figure(case, T, st, khm, out / f"v2-meltflow-{label}{'-recoil-driven' if drive else ''}.png")
     return {"rows": len(rows)}
 
 

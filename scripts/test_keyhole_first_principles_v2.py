@@ -44,7 +44,7 @@ def test_mg_depletion_limits():
     """With no Mg in the vapour the wall is Al-controlled; Mg can only lower the wall temperature, and the wall
     keeps less Mg than the bulk."""
     for key in ("alsi10mg", "al5182"):
-        r0, a0, v = 40e-6, 40e-6, 0.8
+        a0, v = 40e-6, 0.8
         out = {}
         for use_mg in (False, True):
             al = v2.make_alloy(key, use_mg=use_mg)

@@ -499,20 +499,22 @@ Sterling asked for version 1's "not done" items. They are in
 - **Melt flow, with our own 3D beam-frame solver** (Marangoni flow on a flat surface, keyhole as a cavity at T_w; 5 validation checks pass).
   - Flow widens pools by 7–12 % and barely changes depth or length.
   - Resolving the temperature-dependent properties, which the analytic model averages, lengthens them by 21–65 %.
-  - Neither reaches the AM module's 1.47 mm blend pool.
+  - An imposed recoil-driven flow round the keyhole, at 3–7 m/s, changes pools by 10 % or less.
+  - Nothing reaches the AM module's 1.47 mm blend pool.
 - **Sourced properties:**
   - Sun et al. 2019 confirms the blend's resistivity formula to 20 wt % Si;
   - Boivineau et al. 2006 and Pichler et al. 2020 supply Ti-6Al-4V and 316L;
   - Yang et al. 2018 supplies LPBF AlSi10Mg's k(T).
 - **New: more than one stable keyhole.**
   - Above the power where the surface first boils, both a shallow dimple and deeper keyholes are stable.
-  - The power where a stable keyhole with Wk/Dk ≤ 0.7 first exists is **0.96–1.01× the AM module's boundary for AlSi10Mg** (1.16–1.25× for the blend).
+  - The power where a stable keyhole with Wk/Dk ≤ 0.7 first exists is **0.96–1.01× the AM module's boundary for AlSi10Mg** (1.16–1.25× for the blend). At the AM module's own 0.9 m/s render speed it appears at 285–290 W, against the AM module's 295 W.
+  - The AM module's 0.307 absorptivity at its 250 W render sits next to the model's second stable state (0.32).
   - Calling a keyhole wherever one is stable agrees with the AM module at 58 of 58 and 25 of 27 points.
-  - NIST's Al 5182 track shows the same jump: measured 0.24 → 0.43, against the model's 0.17 and 0.53.
+  - NIST's Al 5182 track shows the same jump. It measured 0.24 before the keyhole and 0.43 in it. At that power the model has stable states absorbing 0.17, 0.30, 0.42 and 0.53.
 - **Still wrong:**
   - lack of fusion at every AM "no defect" point, because the dimple absorbs 0.18 where the AM module has 0.31;
   - Al6061 keyholes are 2.3× too deep;
-  - the AM module's long blend pool, which probably needs recoil-driven flow.
+  - the AM module's long blend pool, which neither melt flow nor the recoil-driven experiment explains. The AM module's own inputs (properties, absorptivity, which pool edge) are the next thing to check.
 
 ## An ORCHID-style benchmark for keyhole models
 

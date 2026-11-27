@@ -242,5 +242,139 @@
    "median_beam_on_powder_conduction": 0.212,
    "median_A_conduction": 0.307
   }
+ },
+ "deepest_state": {
+  "alsi10mg": {
+   "grid_points": 58,
+   "v2_class": {
+    "agree_all_classes": 19,
+    "agree_keyhole_or_not": 57,
+    "missed_am_keyholes": 0,
+    "extra_keyholes": 1,
+    "confusion": {
+     "keyhole": {
+      "keyhole": 15,
+      "lof": 0,
+      "lof_hatch": 0,
+      "none": 1
+     },
+     "lof": {
+      "keyhole": 0,
+      "lof": 3,
+      "lof_hatch": 9,
+      "none": 5
+     },
+     "lof_hatch": {
+      "keyhole": 0,
+      "lof": 0,
+      "lof_hatch": 0,
+      "none": 24
+     },
+     "none": {
+      "keyhole": 0,
+      "lof": 0,
+      "lof_hatch": 0,
+      "none": 1
+     }
+    }
+   },
+   "v2_class_deep_branch": {
+    "agree_all_classes": 19,
+    "agree_keyhole_or_not": 57,
+    "missed_am_keyholes": 0,
+    "extra_keyholes": 1,
+    "confusion": {
+     "keyhole": {
+      "keyhole": 15,
+      "lof": 0,
+      "lof_hatch": 0,
+      "none": 1
+     },
+     "lof": {
+      "keyhole": 0,
+      "lof": 3,
+      "lof_hatch": 9,
+      "none": 5
+     },
+     "lof_hatch": {
+      "keyhole": 0,
+      "lof": 0,
+      "lof_hatch": 0,
+      "none": 24
+     },
+     "none": {
+      "keyhole": 0,
+      "lof": 0,
+      "lof_hatch": 0,
+      "none": 1
+     }
+    }
+   },
+   "bistable_points": 7,
+   "keyhole_mode_points": 40,
+   "unconverged": 2,
+   "median_beam_on_powder_conduction": 0.074,
+   "median_A_conduction": 0.206
+  },
+  "blend": {
+   "grid_points": 27,
+   "v2_class": {
+    "agree_all_classes": 7,
+    "agree_keyhole_or_not": 25,
+    "missed_am_keyholes": 2,
+    "extra_keyholes": 0,
+    "confusion": {
+     "keyhole": {
+      "keyhole": 3,
+      "lof": 0,
+      "lof_hatch": 0,
+      "none": 0
+     },
+     "lof": {
+      "keyhole": 0,
+      "lof": 4,
+      "lof_hatch": 5,
+      "none": 7
+     },
+     "lof_hatch": {
+      "keyhole": 2,
+      "lof": 0,
+      "lof_hatch": 0,
+      "none": 6
+     }
+    }
+   },
+   "v2_class_deep_branch": {
+    "agree_all_classes": 7,
+    "agree_keyhole_or_not": 25,
+    "missed_am_keyholes": 2,
+    "extra_keyholes": 0,
+    "confusion": {
+     "keyhole": {
+      "keyhole": 3,
+      "lof": 0,
+      "lof_hatch": 0,
+      "none": 0
+     },
+     "lof": {
+      "keyhole": 0,
+      "lof": 4,
+      "lof_hatch": 5,
+      "none": 7
+     },
+     "lof_hatch": {
+      "keyhole": 2,
+      "lof": 0,
+      "lof_hatch": 0,
+      "none": 6
+     }
+    }
+   },
+   "bistable_points": 2,
+   "keyhole_mode_points": 15,
+   "unconverged": 0,
+   "median_beam_on_powder_conduction": 0.159,
+   "median_A_conduction": 0.254
+  }
  }
 }

@@ -26,7 +26,7 @@ melt-pool data**. The sources were read through the lab Pi's browser route; Edis
 | **Powder layer** | Radiative transfer in the layer was checked against published values. It over-traps light, so the measured powder absorptance (0.53) is used for the part of the beam ahead of the melt | **Little.** The melt front runs ahead of the beam centre, so only 3–24 % of the beam lands on powder. The conduction-mode absorptance moves from 0.18–0.20 to 0.19–0.28. No map class changes |
 | **Tilted keyhole** | The front wall leans back at Kaplan's (1994) angle, where the direct beam it catches balances its conduction loss. A new ray tracer handles the tilted shape | Front walls 7–26° from vertical in AlSi10Mg keyholes. Absorptance and depth barely move: X-ray depths 0.87× against version 1's 0.88× for Ti-6Al-4V |
 | **The keyhole's shape from the physics** | A free-form point-by-point wall balance (Kaplan's, with the reflections ray-traced) | **Not adopted.** It drives the keyhole to a funnel with a 20–34 µm shaft, which traps more light and makes the X-ray depths worse (Ti-6Al-4V 1.33×, Al6061 3.4×). Section 4 |
-| **Melt flow** | Our own 3D steady Navier–Stokes and energy solver in the beam frame. It has Marangoni shear on a flat surface, a mushy zone, and the keyhole as a fixed cavity at T_w | **Modest.** Marangoni flow widens pools by 7–12 % and moves depth and length by 6 % or less. Solving the conduction with the real temperature-dependent properties, which version 1 averaged, matters more: it lengthens the pools by 21–65 %. Neither reaches the AM module's 1.47 mm blend pool. Section 6 |
+| **Melt flow** | Our own 3D steady Navier–Stokes and energy solver in the beam frame. It has Marangoni shear on a flat surface, a mushy zone, and the keyhole as a fixed cavity at T_w | **Modest.** Marangoni flow widens pools by 7–12 % and moves depth and length by 6 % or less. Solving the conduction with the real temperature-dependent properties, which version 1 averaged, matters more: it lengthens the pools by 21–65 %. A recoil-driven experiment that pushes the melt round the keyhole at 3–7 m/s changes the pools by 10 % or less. Nothing reaches the AM module's 1.47 mm blend pool. Section 6 |
 | **Blend resistivity above 12 wt % Si** | Sun et al. 2019 measured liquid Al–Si to 20 wt % Si | Version 1's formula holds to 20 wt %: 40.4 against the measured 39 µΩ cm at 750 °C. The blend's 24.3 % is now a short extrapolation |
 | **Gan et al.'s resistivities** | Ti-6Al-4V: Boivineau et al. 2006. 316L: Pichler et al. 2020. Al6061: no data, so built like our alloys | Flat absorptance 0.35 → 0.37 (Ti-6Al-4V), 0.30 → 0.34 (316L), 0.16 → 0.18 (Al6061). X-ray depths: 316L 0.66× → 0.73×, the others unchanged |
 | **Solid conductivity** | As-built LPBF AlSi10Mg k(T), Yang et al. 2018 | Mean conductivity +7–10 %. Pools slightly smaller |
@@ -35,7 +35,7 @@ melt-pool data**. The sources were read through the lab Pi's browser route; Edis
 - **Two stable keyholes.** Above the power where the surface first boils, the energy balance has more than one stable depth. There is a shallow dimple that absorbs like the flat liquid, and one or more keyholes deep enough to trap light.
 - **The AM module's keyhole boundary is where a stable keyhole first appears.** For AlSi10Mg, that is the power where a stable keyhole with Wk/Dk ≤ 0.7 first exists. It is 0.96–1.01× the AM module's boundary at every speed, with nothing fitted. For the blend it is 1.16–1.25×.
   - Counting a point as a keyhole wherever one is stable gives keyhole-or-not agreement at **58 of 58** AlSi10Mg points and **25 of 27** blend points.
-- **NIST's measured Al 5182 track shows the same jump.** It absorbed about 0.24 before its keyhole formed and 0.43 in it. Version 2's two stable states at that point absorb 0.17 and 0.53.
+- **NIST's measured Al 5182 track shows the same jump.** It absorbed about 0.24 before its keyhole formed and 0.43 in it. At that point version 2 has four stable states, absorbing 0.17 (the dimple), 0.30, 0.42 and 0.53. The measured 0.43 matches the third, a keyhole about 115 µm deep.
 
 **What is still wrong:**
 - **Lack of fusion is over-predicted, now at every AM "no defect" point.** The liquid's own absorptance (0.18–0.20) is too low. Neither the powder nor melt flow fixes it. Fixing the conduction-mode absorptance at 0.24 or the AM module's 0.307 moves at most one point. Most of the AM module's no-defect points are where our surface already boils, so our dimple there absorbs like the flat liquid, 0.18, where the AM module has 0.31.
@@ -53,7 +53,7 @@ melt-pool data**. The sources were read through the lab Pi's browser route; Edis
 | Solid conductivity, AlSi10Mg and blend | 110 W/m/K | 94 at −50 °C, 120 at 150 °C, 154–162 at 350–500 °C | [Yang et al. 2018](https://doi.org/10.1557/jmr.2018.405), Fig. 5: as-built LPBF AlSi10Mg, first heating, mean of the X and Z directions, read off the figure. The dip at 175–350 °C is skipped; the authors attribute it to the heat capacity of exothermic events. **No hypereutectic LPBF Al–Si was found, so the blend uses the same table** |
 | Liquid viscosity (melt flow) | – | η = η∞ exp(E_A/RT). Al: 0.281 mPa s, 12.3 kJ/mol. The blend is interpolated towards Al50Si50 (0.169 mPa s, 16.3 kJ/mol) | [Kobatake et al. 2014](https://doi.org/10.1007/s10853-014-8072-z), J. Mater. Sci. 49, 3541 |
 | Vapour pressure of Al, Mg, Si | Al only, Clausius–Clapeyron | each element, Kirchhoff-integrated from its JANAF 1-bar boiling point: Al 2,790.8 K, 294.0 kJ/mol; Mg 1,366.1 K, 127.9 kJ/mol; Si 3,504.6 K, 384.5 kJ/mol | NIST-JANAF tables Al-001, Mg-001, Si-001 |
-| Activities in the liquid | Raoult, Al only | γ from mc_al: γ_Al ≈ 1, γ_Si ≈ 0.6–0.7 and γ_Mg ≈ 1.4 at 2,800 K. γ_Mg is 0.5–0.7 near the liquidus; above about 2,000 K these values are an extrapolation | pycalphad 0.11.2 + MatCalc mc_al ([`mc_al-liquid-activity-coefficients.csv`](mc_al-liquid-activity-coefficients.csv)) |
+| Activities in the liquid | Raoult, Al only | γ from mc_al: γ_Al ≈ 1, γ_Si ≈ 0.6–0.7 and γ_Mg ≈ 1.4 at 2,800 K. γ_Mg is 0.25–0.7 near the liquidus; above about 2,000 K these values are an extrapolation | pycalphad 0.11.2 + MatCalc mc_al ([`mc_al-liquid-activity-coefficients.csv`](mc_al-liquid-activity-coefficients.csv)) |
 | Mg diffusivity in liquid Al | – | **proxy**: Cu in liquid Al80Cu20, D0 = 1.3×10⁻⁷ m²/s, Q = 0.34 eV | [Zhang, Griesche & Meyer 2009](https://doi.org/10.62721/diffusion-fundamentals.11.552) (X-ray radiography, open access). No open measurement for Mg was found; Du et al. 2003 is closed |
 | Powder absorptance | – | 0.53 | [Rubenchik et al. 2015](https://doi.org/10.1364/AO.54.007230), Fig. 5c (OSTI accepted manuscript): Al powder by calorimetry at 970 nm, 0.51–0.55 from 40 to 450 °C, read off the figure |
 
@@ -103,6 +103,21 @@ global balance: power absorbed in the keyhole equals the power conducted (3D mov
 - **This corrects version 1.** Its 0.315 there, which matched the AM module's 0.307, was the second of these (40 µm), not a unique answer.
 - **The steps are an idealisation.** Beam divergence and a rough, moving wall would smooth them, but the band where a dimple and a keyhole are both stable would remain.
 
+![every stable keyhole state against power](v2-stable-states-vs-power.png)
+
+The figure (`states` command, [`v2-stable-states-vs-power.csv`](v2-stable-states-vs-power.csv)) traces every stable
+state against power at one speed.
+- **AlSi10Mg at the AM module's 0.9 m/s.**
+  - Below 170 W the surface doesn't boil.
+  - From 170 to 250 W there is only the dimple, 9–15 µm deep, absorbing 0.18.
+  - From 255 to 325 W, the dimple coexists with states absorbing 0.32, 0.43 and 0.54–0.72.
+  - Above 325 W only the deep keyhole is left.
+  - The first state deep enough to count as a keyhole (Wk/Dk ≤ 0.7) appears at 285–290 W, at the AM module's 295 W boundary.
+  - The AM module's 0.307 at its 250 W render is next to the 0.32 state, which appears at 260 W.
+- **Al 5182 at NIST's 0.7 m/s.**
+  - At 473 W the model has four stable states, absorbing 0.17, 0.30, 0.42 and 0.53.
+  - NIST measured about 0.24 before the keyhole formed and 0.43 in it. The 0.43 matches the third state (0.42, a keyhole about 115 µm deep).
+
 Three lines on each map, as ratios to the AM module's keyhole boundary power over its speed range:
 
 | | AlSi10Mg | Blend |
@@ -124,12 +139,13 @@ All-class agreement is lower than version 1's because every AM "no defect" point
 - AlSi10Mg: 26 at the hatch and 5 outright, of 31.
 - Blend: 6 at the hatch and 7 outright, of 13.
 
-Version 1's no-defect points were the ones that sat on the 40 µm root. The stable dimple below it absorbs 0.18, so the pool there is too small.
+The points version 1 called no defect sat on a deeper root, like the 40 µm one at 250 W, absorbing about 0.3. The stable dimple below it absorbs 0.18, so the pool there is too small.
 
 **What the lack-of-fusion side needs is a dimple that absorbs more** (`conduction` command, `v2-conduction-sensitivity-summary.json`).
 - Fixing the conduction-mode absorptance at 0.24 (NIST's bare Al 5182 before its keyhole formed) or at 0.307 (the AM module's render) gives all-class agreement of 18–19 and 7. That is one point more at most.
 - Most of the AM module's no-defect points are above the power where our surface boils. There version 2 has a dimple, not a flat surface, so the fixed value doesn't apply.
 - Given the AM module's 0.307, the dimple at its 250 W render is 35 µm deep, and the pool (72 µm deep, 145 µm wide) is no defect, which agrees.
+- Putting the 9 bistable points on their deepest stable state instead, for the pool as well as the class, changes one point. All-class agreement goes to 19 and 7 (`v2-map-classes-deepest-state.csv`). Most no-defect points have only the dimple.
 - So the gap is the dimple's absorptance: about 0.31 in the AM module against 0.18 here. A specular, clean liquid surface can't absorb that much in a dish this shallow. An oxidised or rippled surface might.
 
 **At the render points** (pool at the liquidus, solidus length in brackets; µm):
@@ -171,7 +187,7 @@ Kaplan's local balance.
   - 31 of 87 rows didn't settle within 40 iterations and were averaged over their last 20.
   - A version that moved the walls' positions rather than their slopes diverged.
   - A three-parameter version (depth, tilt, and a profile exponent from the depth centroid of the balance) ran to its bounds.
-- **The probable missing piece is the melt.** The real keyhole's wall is pushed open by recoil and swept by the melt, which local conduction alone doesn't capture. Section 6 tests the conduction side of that; the recoil-driven flow it leaves out is the next step.
+- **The probable missing piece is the melt.** The real keyhole's wall is pushed open by recoil and swept by the melt, which local conduction alone doesn't capture. Section 6 tests both with the melt-flow solver. Marangoni flow changes the wall's heat loss by 1–5 %, and the recoil-driven experiment by 1–10 %, so neither explains it.
 
 ## 5. The powder layer
 
@@ -213,7 +229,7 @@ energy equations in the beam's frame.
   - the material's full H(T) and k(T).
 - **The keyhole** is version 2's tilted cone, held at T_w. It is blocked to the flow, so the liquid goes round it, and
   the beam's power outside the opening enters as a surface flux.
-- **Checks** ([`scripts/test_keyhole_meltflow.py`](../../../../scripts/test_keyhole_meltflow.py), all 5 pass in about 1.5 min):
+- **Checks** ([`scripts/test_keyhole_meltflow.py`](../../../../scripts/test_keyhole_meltflow.py), all 5 pass in 1.5–2.5 min):
   - with flow off and constant properties, pool size matches the exact moving-Gaussian solution to 0.14 %;
   - a cone at T_w delivers 0.945× the collocation's heat, and its pool depth is 1.005×;
   - the energy balance closes;
@@ -247,7 +263,7 @@ At version 2's states, liquidus pool depth / width / length (solidus length in b
 - **Against the AM module's blend pool, nothing here gets close.**
   - At its own absorptance the pool is deeper (408 µm against 349) but narrower (316 against 462) and much shorter (581 against 1,470; 980 at the solidus).
   - At the AM module's absorptance it is half the depth.
-  - The AM module's pool looks like one stretched by a strong rearward flow. That would be the recoil-driven flow along the rear wall, which this solver, with its flat surface and fixed keyhole, doesn't have.
+  - The AM module's pool looks like one stretched by a strong rearward flow. The recoil-driven experiment below tests that.
 - **Against NIST's measured Al 5182 pool:**
   - flow brings the width to 302 µm, within 7 % of the measured 326 ± 16;
   - the depth stays at 160 µm against the measured 88.8, because the keyhole itself is 123 µm deep at the measured absorptance;
@@ -255,6 +271,29 @@ At version 2's states, liquidus pool depth / width / length (solidus length in b
 
 Melt-flow figures for two cases are in [`v2-meltflow-blend-375W-0.4-own.png`](v2-meltflow-blend-375W-0.4-own.png)
 and [`v2-meltflow-al5182-473W-0.7-A_measured.png`](v2-meltflow-al5182-473W-0.7-A_measured.png).
+
+**A recoil-driven experiment** (`meltflow --drive`). The recoil pressure that holds the keyhole open pushes the melt
+round it from the front to the rear. The solver can't compute that (its surface is flat and its keyhole fixed), so
+this experiment imposes it.
+- **The imposed flow.** The liquid next to the keyhole is driven round it at V(z) sin φ.
+  - V(z) = √(2σ / ρ r(z)) is Bernoulli's speed for the Laplace overpressure σ/r. The recoil must supply at least that overpressure to hold a cross-section of radius r open; r is floored at a quarter of the opening.
+  - That comes to 3.4 m/s at the opening and up to 5.6–6.9 m/s deeper down.
+  - It is applied as a penalty on the liquid cells touching the keyhole. A no-slip shear alone barely coupled at this grid, where the cell Reynolds number is about 70.
+- This is a closure, not a solution. It asks what a melt pushed round the keyhole at that speed does to the pool.
+
+| Case | Marangoni only: depth / width / length (solidus) | With the driven keyhole wall | Peak melt speed | Keyhole wall heat |
+|---|---|---|---|---|
+| AlSi10Mg 350 W, 0.9 m/s, own A | 247 / 285 / 894 (1,081) | 248 / 287 / 974 (1,169) | 3.5 → 5.2 m/s | 238 → 254 W |
+| Blend 375 W, 0.4 m/s, own A | 408 / 316 / 581 (980) | 408 / 300 / 569 (1,078) | 3.3 → 5.5 m/s | 300 → 329 W |
+| Blend 375 W, 0.4 m/s, A fixed at 0.384 | 164 / 247 / 341 (469) | 165 / 233 / 347 (501) | 3.2 → 5.5 m/s | 129 → 138 W |
+| Al 5182 473 W, 0.7 m/s, A fixed at 0.43 | 160 / 302 / 585 (661) | 163 / 293 / 620 (702) | 2.6 → 4.3 m/s | 172 → 180 W |
+
+**Driving the melt round the keyhole changes the pool by 10 % or less.**
+- The liquidus length moves by −2 to +9 %, the solidus length grows by 6–10 %, and the width shrinks by 3–6 %.
+- It doesn't reach the AM module's 1.47 mm blend pool either.
+- (The blend run at the AM module's absorptance hadn't settled after 60 outer iterations. Its pool sizes were steady to about 1 %.)
+- So a melt flow of the size these closures give doesn't explain the AM module's long pool.
+- That leaves the AM module's own inputs to check, which aren't public: the properties it uses for the blend, its absorptivity at every point, and which pool edge it draws. The AM module's CSV export would show all three.
 
 ## 7. Measured tracks
 
@@ -275,18 +314,18 @@ and [`v2-meltflow-al5182-473W-0.7-A_measured.png`](v2-meltflow-al5182-473W-0.7-A
 |---|---|---|---|
 | Measured | ≈0.24 before the keyhole, ≈0.43 in it | – | **88.8 / 326** |
 | v2, the dimple | 0.17 | 26 | 71 / 178 |
-| v2, the stable keyhole at the same point | 0.53 | 159 | – |
+| v2, the other stable states at the same point (`states`, 470–480 W) | 0.30, 0.42, 0.53 | about 65, 115, 160 | – |
 | v2, absorbed fraction fixed at the measured 0.43 | 0.43 | 123 (front wall 35°) | 150 / 259 |
 | the same, without Mg in the vapour | 0.43 | 121 | 149 / 259 |
 | version 1, cone, own absorptance | 0.30 | 64 | 109 / 218 |
 
-- **The model has the same two states the measurement shows, about as far apart.** The measured absorptance jumped from 0.24 to 0.43 when the keyhole formed; the model's dimple and keyhole absorb 0.17 and 0.53.
+- **The model has the jump the measurement shows.** The measured absorptance went from 0.24 to 0.43 when the keyhole formed. The model's states run from 0.17 to 0.53, and one of them is 0.42.
 - **Given the measured 0.43, the pool is too deep and too narrow**: 150 µm against 88.8 µm, and 259 µm against 326. Melt flow widens it (section 6) but doesn't make it shallower.
 
 ## What is still not done
 
-- **Recoil-driven melt flow and a free surface.** The solver here has Marangoni flow on a flat surface. Recoil pressure pushing the melt down the front wall and back along the rear is not modelled, and it is the likeliest reason no model here reaches the AM module's long blend pool.
-- **Lack of fusion.** The conduction-mode absorptance needs to be about the AM module's 0.3, not the clean liquid's 0.2. A measured value for the AlSi10Mg melt surface would settle it, as would our own single tracks.
+- **A free surface.** The solver has Marangoni flow on a flat surface and a fixed keyhole. Imposing a recoil-driven flow round the keyhole changes the pools by 10 % or less (section 6). A deforming surface, with the melt ejected up the rear wall, is still untested. So is whether the AM module's long blend pool comes from its own inputs instead (properties, absorptivity, which edge it draws).
+- **Lack of fusion.** The dimple, where the surface boils but no keyhole has formed, needs to absorb about the AM module's 0.3, not the clean liquid's 0.18. A measured absorptance for AlSi10Mg tracks in that regime would settle it, as would our own single tracks.
 - **Al6061 keyholes are still 2.3× too deep.** Neither the sourced optics, the tilt nor the Mg changes that.
 - **The free-form keyhole shape** (section 4) doesn't converge reliably, and the shape it reaches doesn't help.
 - **Inputs not found in a source:**
@@ -322,7 +361,9 @@ submitted at 03:42 UTC and fetched at 04:10. The reports, raw trajectories and D
 | `v2-mg-vapour.csv`, `mc_al-liquid-activity-coefficients.csv` | Mg in the vapour, and the activities |
 | `v2-powder-check.csv` | the powder model against Boley and Rubenchik |
 | `v2-meltflow-runs.csv`, `v2-meltflow-*.png`, `../meltflow/` | the melt-flow runs at version 2's states, and the solver's own validation runs |
-| `v2-conduction-sensitivity-summary.json`, `v2-map-classes-A_cond-*.csv` | the maps with the conduction-mode absorptance fixed |
+| `v2-conduction-sensitivity-summary.json`, `v2-map-classes-A_cond-*.csv`, `v2-map-classes-deepest-state.csv` | the maps with the conduction-mode absorptance fixed, and with bistable points on their deepest state |
+| `v2-stable-states-vs-power.csv`, `v2-stable-states-vs-power.png` | every stable state against power (AlSi10Mg at 0.9 m/s, Al 5182 at 0.7 m/s) |
+| `v2-meltflow-runs-recoil-driven.csv` | the recoil-driven melt-flow experiment (section 6) |
 
 ```bash
 pip install numpy scipy pandas matplotlib openpyxl numba pyamg
@@ -330,7 +371,9 @@ python scripts/test_keyhole_first_principles_v2.py          # 6 checks, about 1 
 python scripts/test_keyhole_meltflow.py                     # 5 checks, about 2.5 min
 python scripts/keyhole_first_principles_v2.py all           # everything in sections 1-5 and 7, about 13 min on 2 cores
 python scripts/keyhole_first_principles_v2.py explore       # section 4, about 3 min
-python scripts/keyhole_first_principles_v2.py conduction    # the conduction-absorptance sensitivity
+python scripts/keyhole_first_principles_v2.py conduction    # the conduction-absorptance and deepest-state sensitivities
+python scripts/keyhole_first_principles_v2.py states        # every stable state against power, about 3 min
+python scripts/keyhole_first_principles_v2.py meltflow --drive   # the recoil-driven experiment, about 15 min
 python scripts/keyhole_first_principles_v2.py meltflow      # section 6, about 11 min on 3 threads
 python scripts/keyhole_first_principles_v2.py figures
 # only to regenerate the activity table (pycalphad 0.11.2 and the orchid-project.org databases):
