@@ -56,6 +56,7 @@ class ParamSet:
     hatch_offset: float     # mm, hatch region edge inside the contour centre line
     layer: float            # mm
     rot_deg: float = 67.0
+    exclude_deg: float = 30.0   # skip hatch lines within this angle of the Y axis (gas flow and beam tilt): see README
     note: str = ""
 
 
@@ -291,6 +292,24 @@ def contour_rect(x0, x1, y0, y1):
     return np.array([(*pts[i], *pts[i + 1]) for i in range(4)], float)
 
 
+_ANG = {}
+
+
+def hatch_angle(k, rot=67.0, exclude=30.0):
+    """Hatch-line angle of layer k (degrees from +X, mod 180): steps of `rot`, skipping any angle within `exclude`
+    of the Y axis (90 deg). Lines along Y would run with or against the cross-flow and in the plane of the beam's tilt
+    from the lens-axis offset (lead or lag); lines nearer X are sideways to both."""
+    key = (rot, exclude)
+    seq = _ANG.setdefault(key, [])
+    n = len(seq) and seq[-1][1] + 1
+    while len(seq) <= k:
+        a = (rot * n) % 180.0
+        if abs(a - 90.0) >= exclude:
+            seq.append((a, n))
+        n += 1
+    return seq[k][0]
+
+
 def layer_vectors(parts, psets, k):
     """Segments of layer k (0-based) in scan order: parts from +Y to -Y; per part hatch then contour.
     Returns segs (n, 4) mm, kind (n,) 0 hatch / 1 contour, part index (n,)."""
@@ -302,7 +321,7 @@ def layer_vectors(parts, psets, k):
         ps = psets[p.pset]
         if z_top * ps.layer > p.height + 1e-9:
             continue
-        theta = (ps.rot_deg * k) % 180.0
+        theta = hatch_angle(k, ps.rot_deg, ps.exclude_deg)
         co = ps.contour_offset
         x0, x1, y0, y1 = p.cx - p.sx / 2, p.cx + p.sx / 2, p.cy - p.sy / 2, p.cy + p.sy / 2
         hx = co + ps.hatch_offset
@@ -555,7 +574,7 @@ def figures(parts, psets, segs, kinds, pidx, ptr, times):
         ax.set_xlim(-22, 22); ax.set_ylim(-24.5, 23)
         ax.set_xlabel("x (mm)"); ax.set_ylabel("y (mm)")
         ax.grid(color=GRID, lw=0.5)
-        th = (CUBE_SET.rot_deg * k) % 180
+        th = hatch_angle(k, CUBE_SET.rot_deg, CUBE_SET.exclude_deg)
         ax.set_title(f"Layer {k + 1}: hatch at {th:.0f}°, {b - a} vectors\n(blue hatch, orange contour, dotted jumps)",
                      fontsize=9, color=INK, loc="left")
     fig.tight_layout()
