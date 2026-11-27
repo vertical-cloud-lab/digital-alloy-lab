@@ -366,11 +366,14 @@ run simulates 67 layers and takes the second half as steady.
 | Test | How | Pass (estimate unless noted) |
 |---|---|---|
 | First light | focus ladder: 50 W, 500 mm/s, 5 mm lines at x = 8 mm, plate at -1 … +1 mm | lines on anodised Al; no back-reflection bit; the narrowest line gives the focus |
-| Hot piston | 10 full strokes at 200 °C, then the stroke repeated at falling motor current until it stalls (Zaber FS) | in simulation, a 23 N drag (estimate) moves at 25 % current: a 4× margin on the X-VSR20A's 100 N |
+| Hot piston | 10 full strokes at 200 °C, then the stroke repeated at falling motor current until it stalls (Zaber FS); both directions, because the stage must pull the rod down against the O-rings each layer | in simulation, a 23 N drag (estimate) moves at 25 % current: a 4× margin on the X-VSR20A's 100 N. The FEA worker estimates 8-25 N running and up to 42 N at breakout for the two greased O-rings |
 | Dose and spread | 20 cycles with the real powder, each dose weighed | coefficient of variation < 15 % (Edison) |
 | Window ring | thermocouple on the ring, logged with every build | warning 55 °C, stop 65 °C |
 | Trace O₂ | sample from the exhaust, isolation valve, percent sensor beside it | the purge reaches < 1000 ppm; the cell never sees air (the simulated build logs 0 s in air) |
 | Interlock proof test | each device alone opens the chain | daily |
+
+The hopper's vibrator runs only during the spread stroke, never while a list runs. That matters because the FEA
+worker puts the scan-head plate's first modes at 13-30 Hz as drawn.
 
 ## 9. What is unknown, and what resolves it
 
