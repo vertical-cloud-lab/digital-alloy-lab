@@ -442,6 +442,8 @@ Reports, raw trajectories and the DOI check are in
 | `v2-single-track-plan.csv` | the grid points where single tracks would discriminate |
 | `v2-meltflow-runs-recoil-driven.csv` | the recoil-driven melt-flow experiment (section 6) |
 
+The Monte Carlo seeds are fixed. Rerunning `all` into an empty folder reproduced every number in `v2-summary.json`.
+
 ```bash
 pip install numpy scipy pandas matplotlib openpyxl numba pyamg
 python scripts/test_keyhole_first_principles_v2.py          # 6 checks, about 1 min
