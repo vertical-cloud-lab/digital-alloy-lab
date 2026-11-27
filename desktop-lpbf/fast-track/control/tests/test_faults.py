@@ -167,3 +167,48 @@ def test_scan_head_water_lost(rig):
     r = run_with(rig, 2, lambda w: setattr(w, "water_ok", False))
     r.assert_safe()
     assert r.summary["fault"]["code"] == "COOLING_FAULT"
+
+
+def test_cn708_limit_trip_seen_by_the_supervisor(rig):
+    r = run_with(rig, 2, lambda w: setattr(w, "cn708_tripped", True))
+    r.assert_safe()
+    assert r.summary["fault"]["code"] == "LIMIT_TRIPPED"
+
+
+def test_dwell_timeout(rig):
+    cfg = Config()
+    cfg.thermal.dwell_max_s = 5.0                 # every dwell here lasts ~20 s
+    r = rig(cfg)
+    s = r.run(8, finish=False)
+    r.assert_safe()
+    assert s["fault"]["code"] == "DWELL_TIMEOUT"
+
+
+def test_box_air_too_hot_for_the_stages(rig):
+    def fan_fails(w):
+        w.box_fan_failed = True
+        w.box_extra_K = 15.0                     # still air plus a hot stage motor (estimate)
+    r = run_with(rig, 2, fan_fails, n=60)
+    r.assert_safe()
+    assert r.summary["fault"]["code"] == "BOX_AIR_HOT"
+
+
+def test_rtc_error(rig):
+    r = run_with(rig, 2, lambda w: setattr(w, "rtc_error", 0x10))
+    r.assert_safe()
+    assert r.summary["fault"]["code"] == "RTC_ERROR"
+
+
+def test_driver_exception_is_a_safe_stop(rig):
+    r = rig()
+    cam = r.m.camera
+    orig = cam.capture
+
+    def capture(tag, layer):
+        if layer == 2:
+            raise RuntimeError("camera driver crashed")
+        return orig(tag, layer)
+    cam.capture = capture
+    r.run(6, finish=False)
+    r.assert_safe()
+    assert r.summary["fault"]["code"] == "INTERNAL_ERROR"

@@ -1,0 +1,12 @@
+# ftctl: PC side and simulation
+numpy
+h5py
+matplotlib
+pyserial          # IPG laser RS-232
+zaber-motion      # Zaber stages (tested with 10.3.1)
+schemdraw         # diagrams/draw.py (tested with 0.23)
+pytest
+# Raspberry Pi 5 I/O node (ftctl.hw.pinode)
+gpiozero          # with the lgpio pin factory on a Pi 5 (tested here with gpiozero's MockFactory)
+minimalmodbus     # SOLO PID controllers over RS-485
+# daqhats         # MCC 134 / MCC 128 HATs: install on the Pi from github.com/mccdaq/daqhats

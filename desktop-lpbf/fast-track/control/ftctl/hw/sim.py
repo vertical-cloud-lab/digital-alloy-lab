@@ -53,6 +53,8 @@ class SimWorld:
         self.cover_slide_fouling = 0.0     # fraction of the beam absorbed at the window (fault injection)
         self.stray_W = 0.0                 # stray beam power into the beam tube (fault injection)
         self.heater_stuck_on = set()       # SSR failed short (fault injection): 'plate' / 'block'
+        self.box_fan_failed = False        # fault injection: the fan on the box stops
+        self.box_extra_K = 0.0             # fault injection: extra box-air rise (e.g. a stage motor overheating)
         # safety chain
         self.estop_ok = True
         self.water_ok = True               # scan head cooling water flow switch
@@ -202,7 +204,8 @@ class SimWorld:
             self.energy_in_plate_J += q_l * h
             # box air: 0.08 K/W released into it (study 3.5, fan case), 300 s time constant (estimate)
             into_air = loss_p + loss_b + (1.0 - th.absorptivity) * P_las
-            box_ss = self.room_C + 0.08 * into_air
+            # still air (fan failed): 32-46 K for the study's 102-147 W, ~0.31 K/W
+            box_ss = self.room_C + (0.31 if self.box_fan_failed else 0.08) * into_air + self.box_extra_K
             self.box_C += (box_ss - self.box_C) * (1.0 - math.exp(-h / 300.0))
             # window ring: box air + 5 K + absorbed share of the beam (50 J/K, 0.5 W/K; estimate)
             win_ss = self.box_C + 5.0 + 2.0 * self.cover_slide_fouling * P_las
