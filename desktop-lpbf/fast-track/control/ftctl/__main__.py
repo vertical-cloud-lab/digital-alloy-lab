@@ -101,6 +101,14 @@ def cmd_study_dwell(a):
         print(" | ".join(str(r.get(k, "")) for k in keys))
 
 
+def cmd_plot(a):
+    from .plots import figure
+    prog = load_program(a.program)
+    n = int(round(a.height / prog.layer_mm))
+    s = figure(prog, n, a.out)
+    print(f"wrote {a.out}: {s['layers_done']} layers, {s['times_s']['total_s'] / 3600:.2f} h")
+
+
 def cmd_interlock(a):
     from .interlock import report
     print(report())
@@ -131,6 +139,11 @@ def main(argv=None):
     d.add_argument("--layers", type=int, default=67)
     d.add_argument("--out", default=str(pathlib.Path(__file__).resolve().parents[1] / "out" / "dwell-study.csv"))
     d.set_defaults(fn=cmd_study_dwell)
+    pl = sub.add_parser("plot", help="figure of one simulated build")
+    pl.add_argument("--program", default=None)
+    pl.add_argument("--height", type=float, default=2.0)
+    pl.add_argument("--out", default=str(pathlib.Path(__file__).resolve().parents[1] / "img" / "sim-build-2mm.png"))
+    pl.set_defaults(fn=cmd_plot)
     il = sub.add_parser("interlock")
     il.set_defaults(fn=cmd_interlock)
     a = p.parse_args(argv)
