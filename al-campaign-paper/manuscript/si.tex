@@ -46,6 +46,13 @@ Table~\ref{tab:elements} lists the per-element inputs of the burden metrics in t
 
 \placeholder{Sensitivity: the ranking of the benchmarks, the seeds and the campaign alloys under $B_\mathrm{NIR}$ (low, midpoint, high), $B_\mathrm{cost}$ (scandium priced as metal and as Al--2Sc master alloy), and scandium content.} Counting aluminum itself at its 60\% import reliance (left out of the main metric because it is the base of every alloy) adds a large, nearly equal term to every alloy (aluminum is 89--98~wt\% of them) and squeezes the differences: \AlSi{} then scores \BAlSinirallo--\BAlSiniralhi~wt\%, \Scal{} \BScalnirallo--\BScalniralhi~wt\% and seed S1 \BSonenirallo--\BSoneniralhi~wt\%, so S1 falls inside \Scal's interval. On the current inputs without aluminum, \AlSi{} scores \BAlSinirlo--\BAlSinirhi~wt\% and Scalmalloy \BScalnirlo--\BScalnirhi~wt\% on $B_\mathrm{NIR}$, and \BAlSicost{} and \BScalcost~USD\,kg\textsuperscript{-1} on $B_\mathrm{cost}$.
 
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{figures/figS1-burden-sensitivity.pdf}
+  \caption{Critical-mineral burden of every alloy in this work, two ways. (a) Import-weighted burden $B_\mathrm{NIR}$: the bar is the interval allowed by the import reliances USGS gives only as bounds, the dot its midpoint; dashed, the lower end of \Scal's interval. (b) Cost of the critical alloying additions per kilogram of alloy, scandium priced as metal (log scale); dashed, \Scal. The two metrics rank the alloys differently: \Scal is mid-table on (a) and far above every other alloy on (b). The A20X cost leaves out boron, which has no element price.}
+  \label{fig:burden}
+\end{figure}
+
 \subsection*{Scandium-free comparators}
 Table~\ref{tab:literature} lists the scandium-free alloys drawn in Fig.~1 of the main text, with their burden on the same inputs.
 \begin{table}[htbp]
@@ -71,7 +78,7 @@ Table~\ref{tab:literature} lists the scandium-free alloys drawn in Fig.~1 of the
 \placeholder{One page per finalist lot: charge, atomizer settings and video, sieving, storage humidity, print, and every measurement, each with the file that backs it. Due 15 Feb 2027 (owner: Gage).}
 
 \section{Pre-registration}
-\placeholder{The rule for ``stronger than \AlSi'', the burden metric and its threshold, and the optimizer settings, with the commit that froze them before the first optimizer round. Due 4 Dec 2026 (G1), before the screen ranks any composition (owner: Sterling).}
+\placeholder{The rule for ``stronger than \AlSi'', the burden metric and its threshold, and the optimizer settings, with the commit that froze them before the first optimizer round. Due 4 Dec 2026 (G1), before the screen ranks any composition (owner: Sterling).} A draft is in ../preregistration.md.
 The optimizer settings to freeze include the model (Bayesian optimization over function networks~\cite{astudillo2021,buathong2024}, or a single Gaussian-process surrogate), the acquisition function, the batch size, the inputs and the stopping rule.
 
 \bibliographystyle{unsrtnat}

@@ -16,10 +16,10 @@
 | Tab3 | Independent verification | Placeholder; no outside lab engaged yet | Feb 12 | Feb 19, 2027 | 84 | Outside (Feb 19) | Sterling |
 | S1 | Atomizer runs used in the paper | Run table exists up to Nov 13 (no Al campaign runs yet) | Jan 04 | Feb 12, 2027 | 77 | Freeze (Feb 12) | Gage |
 | S2 | CALPHAD settings and the full ranked list | Placeholder | Dec 11 | Jan 29, 2027 | 63 | G1 (Dec 4) | Xavier |
-| S3 | Mineral-burden inputs and sensitivity | Inputs sourced from USGS MCS 2026 and the 2025 list; metric and threshold not frozen | Dec 04 | Feb 12, 2027 | 77 | G1 (Dec 4) | Sterling |
+| S3 | Mineral-burden inputs and sensitivity | Inputs sourced; Fig. S1 drawn for 20 alloys | Dec 04 | Feb 12, 2027 | 77 | G1 (Dec 4) | Sterling |
 | S4 | Powder details | Placeholder | Jan 29 | Feb 12, 2027 | 77 | Freeze (Feb 12) | Ronnie |
 | S5 | Print parameters and build layouts | Utah Apr 2026 parameters not recorded in #138 (to ask) | Jan 22 | Feb 12, 2027 | 77 | Freeze (Feb 12) | Carl |
 | S6 | Specimen drawings and every stress-strain curve | Utah Apr 2026 drawing and 5 curves exist (PR #288) | Feb 12 | Feb 15, 2027 | 80 | Freeze (Feb 12) | Carl |
 | S7 | Corrosion set-up validation | Placeholder | Jan 15 | Feb 12, 2027 | 77 | G2 (Jan 15) | Ben and Jarrett |
 | S8 | Provenance records for the finalists | Template exists (PR #286) | Feb 05 | Feb 15, 2027 | 80 | Freeze (Feb 12) | Gage |
-| S9 | Pre-registration | Proposed in outline.md; to freeze before the screen ranks anything (G1) | Dec 01 | Dec 04, 2026 | 7 | G1 (Dec 4) | Sterling |
+| S9 | Pre-registration | Draft in preregistration.md; to freeze before the screen ranks anything (G1) | Dec 01 | Dec 04, 2026 | 7 | G1 (Dec 4) | Sterling |

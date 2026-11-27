@@ -56,6 +56,7 @@ make refs       # check every reference against Crossref / DataCite
 | [`outline.md`](outline.md) | The argument, versions A/B, the two definitions to freeze, section claims and word budgets, the split with #120, authors to confirm |
 | [`risks.md`](risks.md) | What makes the main claim hard by Feb 28: two decisions and twelve data risks, with evidence, owners and dates; versions A, B and C |
 | [`journals.md`](journals.md) | Target journals with their formats, limits and timelines |
+| [`preregistration.md`](preregistration.md) | Draft of what to freeze before the screen ranks anything (G1, Dec 4): the comparator and the "stronger" rule, the burden metric and threshold, "beyond the Sc-free alloys", composition tolerance, screen, seeds, optimizer. Open choices are marked **Decide** |
 | [`figure-plan.csv`](figure-plan.csv), [`figure-status.md`](figure-status.md) | Every figure, table and SI item: data needed, file, gate, draft and final dates, owner, and what is drawn now |
 | [`manuscript/main.tex`](manuscript/main.tex) | The paper (Elsevier `elsarticle`, numbered references) |
 | [`manuscript/si.tex`](manuscript/si.tex) | Supporting information |

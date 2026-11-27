@@ -383,6 +383,60 @@ def fig5(p, tensile, hardness) -> str:
     return "; ".join(status)
 
 
+# ------------------------------------------------------------------ SI Fig. S1
+def fig_s_burden(alloys, burdens, lit, lit_b) -> str:
+    """Every alloy's import-weighted burden interval and the cost of its critical additions, side by side,
+    so the reader can see that the two metrics rank the alloys differently."""
+    rows = []
+    for aid, r in burdens.iterrows():
+        role = alloys.set_index("alloy_id").loc[aid, "role"] if aid in set(alloys["alloy_id"]) else ""
+        name = alloys.set_index("alloy_id").loc[aid, "name"] if aid in set(alloys["alloy_id"]) else aid
+        kind = "benchmark" if role == "benchmark" else ("seed" if "seed" in str(role) else "campaign")
+        rows.append((str(name), kind, r))
+    if not lit_b.empty:
+        names = lit.drop_duplicates("alloy_id").set_index("alloy_id")["name"]
+        for aid, r in lit_b.iterrows():
+            rows.append((str(names.get(aid, aid)), "comparator", r))
+    rows = [x for x in rows if not math.isnan(float(x[2]["B_nir"]))]
+    if not rows:
+        return "no burden data"
+    rows.sort(key=lambda x: x[2]["B_nir"])
+    col = {"benchmark": None, "seed": C_NEW, "comparator": GREY, "campaign": C_NEW}
+    fig, (a, b) = plt.subplots(1, 2, figsize=(7.2, 0.22 * len(rows) + 1.0), sharey=True,
+                               gridspec_kw={"wspace": 0.08, "width_ratios": [1.3, 1]})
+    for i, (name, kind, r) in enumerate(rows):
+        c = col[kind] or (C_ALSI if name.startswith("AlSi") else C_SCAL)
+        a.hlines(i, r["B_nir_low"], r["B_nir_high"], color=c, linewidth=3.0)
+        a.plot(r["B_nir"], i, "o", ms=3.5, color="white", mec=c, mew=1.0)
+        cost = r["B_cost"] if not math.isnan(float(r["B_cost"])) else r.get("B_cost_priced", float("nan"))
+        if not math.isnan(float(cost)):
+            b.plot(cost, i, "o", ms=4.5, color=c, mec="white", mew=0.6)
+    sc = burdens.loc["Scalmalloy"] if "Scalmalloy" in burdens.index else None
+    if sc is not None:
+        a.axvline(sc["B_nir_low"], color=C_SCAL, linewidth=0.8, linestyle=(0, (3, 2)))
+        b.axvline(sc["B_cost"], color=C_SCAL, linewidth=0.8, linestyle=(0, (3, 2)))
+    for ax in (a, b):
+        style(ax)
+    a.set_yticks(range(len(rows)), [x[0] for x in rows], fontsize=6.3)
+    a.set_xlabel("$B_\\mathrm{NIR}$ (wt %, interval from USGS bounds)")
+    b.set_xscale("log")
+    b.set_xlabel("$B_\\mathrm{cost}$ (USD per kg of alloy, log scale)")
+    a.set_title("(a) Import-weighted burden", loc="left")
+    b.set_title("(b) Cost of critical additions", loc="left")
+    a.text(0.99, 0.02, "dashed: Scalmalloy's lower bound", transform=a.transAxes, ha="right", fontsize=6.0,
+           color=INK2)
+    b.text(0.97, 0.02, "dashed: Scalmalloy", transform=b.transAxes, ha="right", fontsize=6.0, color=INK2)
+    from matplotlib.lines import Line2D
+    handles = [Line2D([], [], color=C_ALSI, linewidth=3, label="AlSi10Mg"),
+               Line2D([], [], color=C_SCAL, linewidth=3, label="Scalmalloy"),
+               Line2D([], [], color=C_NEW, linewidth=3, label="planned seed"),
+               Line2D([], [], color=GREY, linewidth=3, label="Sc-free comparator")]
+    a.legend(handles=handles, loc="lower left", bbox_to_anchor=(0.0, 1.06), ncol=4, fontsize=6.3,
+             handlelength=1.5, columnspacing=0.8)
+    save(fig, "figS1-burden-sensitivity")
+    return f"drawn for {len(rows)} alloys"
+
+
 # ------------------------------------------------------------------------ tables
 def tex_escape(s: str) -> str:
     return (str(s).replace("\\", "\\textbackslash{}").replace("&", "\\&").replace("%", "\\%")
@@ -600,6 +654,7 @@ def main() -> None:
         table_compositions(alloys, burdens)
     table_literature(lit, lit_b)
     table_elements()
+    status["S3"] = "Inputs sourced; Fig. S1 " + fig_s_burden(alloys, burdens, lit, lit_b)
     numbers(tensile, runs, alloys, burdens, lit, lit_b)
     status_md(p, status)
     for k, v in status.items():
