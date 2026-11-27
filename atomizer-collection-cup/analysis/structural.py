@@ -57,7 +57,8 @@ def temp_interpolator(case, region_names):
     for r in regs:
         r.size *= TH.MESH_SCALE
     m = F.build_mesh(regs, order=1)
-    frd = F.read_frd(TH.OUT / case / "pass2.frd")
+    frd = [(t, v) for t, v in F.read_frd(TH.OUT / case / "pass2.frd")
+           if t is not None and min(abs(t - ft) for ft in TH.FIELD_TIMES) < 1e-3]
     els = [e for e in m.elems if m.elem_region[e] in region_names]
     used = sorted({n for e in els for n in m.elems[e]})
     idx = {n: i for i, n in enumerate(used)}
@@ -112,8 +113,10 @@ def run_static(name, m, mat_cards, sections, bc_lines, load_lines, temps=None, e
         f.write("*STEP\n*STATIC\n")
         f.write(bc_lines["bc"])
         f.write(load_lines)
-        if temps is not None:
-            f.write("*TEMPERATURE\n")
+        f.write("*TEMPERATURE\n")
+        if temps is None:
+            f.write("NALL, 25.\n")
+        else:
             for n, T in temps.items():
                 f.write(f"{n}, {T:.2f}\n")
         f.write(f"*EL PRINT, ELSET={elset_out}\nS\n*NODE PRINT, NSET=NALL\nU\n*NODE FILE\nU\n*EL FILE\nS\n*END STEP\n")
@@ -224,7 +227,8 @@ def b_cases():
     return res
 
 
-def plot_vm(m, dat, name, r):
+def read_stresses(dat):
+    """Integration-point stresses from a .dat file: rows [elem, ip, s11, s22, s33, s12, s13, s23]."""
     rows = []
     on = False
     for ln in Path(dat).read_text().splitlines():
@@ -233,9 +237,20 @@ def plot_vm(m, dat, name, r):
             continue
         if on:
             p = ln.split()
-            if len(p) == 8:
-                rows.append([float(x) for x in p])
-    rows = np.array(rows)
+            if not p:
+                continue
+            try:
+                vals = [float(x) for x in p]
+            except ValueError:
+                on = False
+                continue
+            if len(vals) == 8:
+                rows.append(vals)
+    return np.array(rows)
+
+
+def plot_vm(m, dat, name, r):
+    rows = read_stresses(dat)
     vm, _ = mises_principal(rows[:, 2:8])
     per_el = {}
     for (e, ip), v in zip(rows[:, :2].astype(int), vm):
@@ -305,9 +320,15 @@ def F_rect(r0, r1, z0, z1):
     return [(r0, z0), (r1, z0), (r1, z1), (r0, z1)]
 
 
-def main():
-    res = {"B": b_cases(), "glass": glass_cases()}
-    (HERE / "out" / "structural_summary.json").write_text(json.dumps(res, indent=1) + "\n")
+def main(argv):
+    path = HERE / "out" / "structural_summary.json"
+    res = json.loads(path.read_text()) if path.exists() else {"B": {}, "glass": {}}
+    what = argv or ["B", "glass"]
+    if "B" in what:
+        res["B"] = b_cases()
+    if "glass" in what:
+        res["glass"] = glass_cases()
+    path.write_text(json.dumps(res, indent=1) + "\n")
     L = ["# Structural FEA summary (CalculiX, axisymmetric CAX6)\n",
          "## Option B vessel (316L weldment)\n", "| Case | max von Mises (MPa) | where (r, z mm) | T there (C) | "
          "316L yield there (MPa) | ratio | max displacement (mm) |", "|---|---:|---|---:|---:|---:|---:|"]
@@ -325,4 +346,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1:])

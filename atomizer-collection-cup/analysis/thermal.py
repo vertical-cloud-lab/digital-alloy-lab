@@ -60,9 +60,8 @@ H_NAT = 8.0               # W/m2K outside
 MESH_SCALE = 1.0          # linear triangles (CAX3): no overshoot at the hot/cold step, so finer
 T_END = 3600.0
 T_STEP1 = 20.0
-TIME_POINTS = sorted(set([round(x, 3) for x in np.geomspace(0.5, T_END, 70)] + [5, 10, 30, 60, 120, 300, 600,
-                                                                                  900, 1200, 1800, 2400, 3600]))
 FIELD_TIMES = [10.0, 60.0, 300.0, 900.0, 1800.0, 3600.0]
+TIME_POINTS = sorted(set([round(x, 2) for x in np.geomspace(0.5, T_END, 60)] + list(range(30, 3601, 30)) + FIELD_TIMES))
 
 
 # ------------------------------------------------------------------------------------------ materials
@@ -463,7 +462,6 @@ def write_deck(path, m, regs, cavity, probes, pile_info, extra, rad=None, design
         for n in hot:
             f.write(f"{n}, {T_SHOT}\n")
         f.write("*TIME POINTS, NAME=TP, TIME=TOTAL TIME\n" + "\n".join(f"{t}," for t in TIME_POINTS) + "\n")
-        f.write("*TIME POINTS, NAME=TF, TIME=TOTAL TIME\n" + "\n".join(f"{t}," for t in FIELD_TIMES) + "\n")
         if rad is not None:
             f.write("*AMPLITUDE, NAME=PRAD, TIME=TOTAL TIME\n")
             for t, a in zip(rad["t"], rad["a"]):
@@ -490,9 +488,10 @@ def write_deck(path, m, regs, cavity, probes, pile_info, extra, rad=None, design
                     for (el, fc), q in rad["faces"].items():
                         if q > 0:
                             f.write(f"{el}, S{fc}, {q:.6e}\n")
+            # one time-point set for every output request (CalculiX applies a single set per step)
             for s_ in prints:
                 f.write(f"*NODE PRINT, NSET={s_}, TIME POINTS=TP\nNT\n")
-            f.write("*NODE FILE, TIME POINTS=TF\nNT\n*END STEP\n")
+            f.write("*NODE FILE, TIME POINTS=TP\nNT\n*END STEP\n")
     return dict(ext=len(ext), cav=len(cav), pile_top=pile_top, fixed=len(fixed_nodes))
 
 
@@ -586,7 +585,7 @@ def run_case(name, spec):
 
 
 def plot_field(m, d, regs, name, res):
-    frd = F.read_frd(d / "pass2.frd")
+    frd = [(t, v) for t, v in F.read_frd(d / "pass2.frd") if t is not None and min(abs(t - ft) for ft in FIELD_TIMES) < 1e-3]
     if not frd:
         return
     corner = sorted({n for ns in m.elems.values() for n in ns[:3]})

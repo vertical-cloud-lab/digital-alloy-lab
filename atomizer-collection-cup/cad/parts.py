@@ -391,8 +391,10 @@ def option_b(with_liner=True, with_puck=True, explode=0.0, tcs=True):
                      top - explode * 0.8)
         parts.append(("B: sacrificial liner (304)", liner, (0.70, 0.72, 0.76), "304"))
     if tcs:
-        for zz, rr, nm in ((z["top"] - kf.lip - 9.0, kf.tube_od / 2, "top"), (z["floor"] + 6.0, z["R_o"], "bottom")):
-            band = tube(rr + 1.6, rr + 0.05, zz - 6 - explode, zz + 6 - explode)
+        # top: on the stub's 12.6 mm of straight tube, clear of weld W1 at the stub's end (z_stub); 10 mm band
+        z_tc = (z["top"] - kf.lip - 1.5 + z["z_stub"]) / 2
+        for zz, rr, nm, hw in ((z_tc, kf.tube_od / 2, "top", 5.0), (z["floor"] + 6.0, z["R_o"], "bottom", 6.0)):
+            band = tube(rr + 1.6, rr + 0.05, zz - hw - explode, zz + hw - explode)
             parts.append((f"B: thermocouple band clamp ({nm})", band, STEEL_DK, "304"))
             tc = (cq.Workplane("YZ").circle(1.6).extrude(60).val().translate((rr + 1.2, 0, zz - explode)))
             parts.append((f"B: type K thermocouple ({nm})", tc, BRASS_TC, "TC"))

@@ -111,7 +111,7 @@ def parts():
     out.append(Part("B_liner", "304", (ri, ro, -12.0, L + 1.5),
                     [(ri, 0), (ro - 0.3, 0), (ro, 0.3), (ro, L - 0.3), (ro - 0.3, L), (ri, L)],
                     ops=["face", "finish_od_top", "op2_face", "op2_chamfer"],
-                    note=f"2-3/4 in. x 0.049 in. 304 tube, sawn to {L + 3:.0f} mm and faced to {L:.1f} mm; "
+                    note=f"2-3/4 in. x 0.065 in. 304 tube (McMaster 11116N864), sawn to {L + 3:.0f} mm and faced to {L:.1f} mm; "
                          "held on its OD in a collet or soft jaws with 12 mm out. Deburr the bore by hand."))
     ro, ri = b["body_od"] / 2, b["body_od"] / 2 - b["body_wall"]
     Lb = body_tube_length_b()

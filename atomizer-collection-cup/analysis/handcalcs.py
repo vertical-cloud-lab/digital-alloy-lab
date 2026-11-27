@@ -148,7 +148,7 @@ def clearance_from_fea():
     for r in regs:
         r.size *= TH.MESH_SCALE
     m = F.build_mesh(regs, order=1)
-    frd = F.read_frd(d)
+    frd = [(t, v) for t, v in F.read_frd(d) if t is not None and min(abs(t - ft) for ft in TH.FIELD_TIMES) < 1e-3]
     b = P.B
     a304 = lambda T: (17.3 + 0.0035 * (T - 20)) * 1e-6          # mean CTE from 20 C
     a316 = lambda T: (16.0 + 0.0035 * (T - 20)) * 1e-6

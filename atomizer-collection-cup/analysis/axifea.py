@@ -206,7 +206,7 @@ def write_mesh(f, m):
 
 
 def write_set(f, kind, name, ids, per_line=12):
-    f.write(f"*{kind}, {kind[0]}SET={name}\n" if kind in ("NSET", "ELSET") else "")
+    f.write(f"*{kind}, {kind}={name}\n" if kind in ("NSET", "ELSET") else "")
     ids = list(ids)
     for k in range(0, len(ids), per_line):
         f.write(", ".join(str(i) for i in ids[k:k + per_line]) + ",\n")
