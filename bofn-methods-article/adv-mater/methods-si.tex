@@ -81,14 +81,19 @@ is the dollar-only, noise-free special case. Use them if \S2.6 needs a sentence
 before the twin is calibrated.}
 
 On a synthetic version of the workflow with a known optimum (SI Section~S12),
-choosing the step reached screen-then-test's \$100k result with
-\stat{k1-su-pkgfn-tiered}-fold (95\% confidence interval
-\stat{k1-su-pkgfn-tiered-ci95}) less spend when the screen missed nucleant-driven
-crack suppression, \tbd{and with \stat{k0-su-pkgfn-tiered}-fold
-(\stat{k0-su-pkgfn-tiered-ci95}) when the screen was right}. Its advantage over
-sending every candidate through the whole chain was early: \stat{k1-c-0-v25}
-percentage points of the optimum after \$25k (\stat{k1-c-0-v25-ci}), and none
-after \$100k (\stat{k1-c-0-v100}, \stat{k1-c-0-v100-ci}).
+network optimization that chooses the step reached screen-then-test's \$100k
+result with \stat{k1-su-eifn_reuse-tiered}-fold (95\% confidence interval
+\stat{k1-su-eifn_reuse-tiered-ci95}) less spend when the screen missed
+nucleant-driven crack suppression, and with \stat{k0-su-eifn_reuse-tiered}-fold
+(\stat{k0-su-eifn_reuse-tiered-ci95}) when the screen was right. Choosing the
+step mattered most early, \stat{k1-c-1-v25} and \stat{k0-c-1-v25} percentage
+points of the optimum ahead of full-chain evaluation after \$25k, and the
+acquisition function mattered too: the knowledge gradient as implemented never
+reached screen-then-test's result when the screen was right.
+\note{Uses BOFN with powder reuse (EI per dollar, partial) as the
+step-choosing policy because it is the robust one across $\kappa$; pKGFN's
+3.8-fold at $\kappa=1$ (\stat{k1-su-pkgfn-tiered-ci95}) is in SI
+\cref{figS:speedup}. Check the wording against the final numbers.}
 
 % ===========================================================================
 \clearpage
