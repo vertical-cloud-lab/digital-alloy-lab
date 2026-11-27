@@ -1098,7 +1098,7 @@ def gantry_model_case(gantry=None):
     bodies += [("flange plate", fl), ("angle brackets", part(parts, "Flange-to-beam angle brackets (MK-09)").shape)]
     mats += [al, al]
     extras_drawn = []
-    for nm in ("Head-plate top flange", "Head-plate gussets"):
+    for nm in ("Head-plate top flange", "Head-plate gussets", "Head far-side support plate", "Far-side support angle brackets"):
         if any(p_.name.startswith(nm) for p_ in parts):
             bodies.append((nm, part(parts, nm).shape))
             mats.append(al)
@@ -1115,6 +1115,10 @@ def gantry_model_case(gantry=None):
     mass_t = (m_head + m_lens) * 1e-3
     face = surfaces(m, planar("x", fbb.xmax))
     foot = nodes_on(m, face, lambda q: (q[:, 1] >= hbb.ymin) & (q[:, 1] <= hbb.ymax) & (q[:, 2] >= max(hbb.zmin, fbb.zmin)))
+    if any(p_.name.startswith("Head far-side support plate") for p_ in parts):     # g3: the head's far face on its own plate
+        xb_ = part(parts, "Head far-side support plate").shape.BoundingBox()
+        foot = np.union1d(foot, nodes_on(m, surfaces(m, planar("x", xb_.xmin)),
+                                         lambda q: (q[:, 1] >= hbb.ymin) & (q[:, 1] <= hbb.ymax) & (q[:, 2] >= max(hbb.zmin, xb_.zmin))))
     feet = np.array([], dtype=int)
     for zb in sorted({round(g_["bb"][4], 3) for g_ in posts}):
         feet = np.union1d(feet, nodes_on(m, surfaces(m, planar("z", zb))))
