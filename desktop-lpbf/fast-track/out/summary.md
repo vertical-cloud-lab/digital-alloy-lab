@@ -19,7 +19,7 @@ Heat budget at 200 °C (well block + plate on Macor standoffs):
 
 | surface_W | standoffs_W | heater_load_W | heaters_W | margin | laser_avg_W | box_area_m2 | box_rise_still_K | box_rise_fan_K | box_air_C_still_vs_stage_max | box_air_C_fan |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 51.6 | 4.5 | 56.0 | 200.0 | 3.57 | 46-91 | 0.537 | 32-46 | 9-14 | 71 vs 50 | 39 |
+| 51.6 | 4.5 | 56.0 | 300.0 | 5.36 | 46-91 | 0.537 | 32-46 | 9-14 | 71 vs 50 | 39 |
 
 Optics (f = 254 mm, M2 1.1):
 
