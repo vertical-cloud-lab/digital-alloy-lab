@@ -93,6 +93,7 @@ fibre's laser end starts 3 mm inside the laser envelope's top face (2.9-3.0 mm w
 1-4 and 6), and the pump hose's clamp end sits over its KF-25 port's flange (5.1 mm, 96 frames of chapter 6). The hose's
 other end sits 17.7 mm down in the pump's inlet, past its 15 mm allowance, so it is listed with the overlaps of parts
 that move together.
+
 **Finding for the CAD:** the vibration motor overlaps the carriage bracket and arm (MK-08) by 4.9 mm in `ft_model.py`
 (round 1); the two move as one group, so it is the model's overlap, not a motion clash.
 
