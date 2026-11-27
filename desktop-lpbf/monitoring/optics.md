@@ -688,8 +688,8 @@ a curved pool's glints spread over ±40° as a bound for the steep ports):
     re-run `radiometry.py` after the merge. A may add 7075 cases.
   - The depression is A's `above_boil` footprint at the wall temperature. Its cavity emissivity (0.35) is an assumption.
   - The fallback Eagar–Tsai fields have no latent heat or keyhole and are clipped at boiling.
-- **Plume:** column size, temperature and optical depth are parameters until the plume worker's numbers arrive. A's
-  `plume_source.json` gives evaporation rates, not optical depths.
+- **Plume:** column size, temperature and optical depth are parameters here. A's `plume_source.json` gives evaporation rates,
+  not optical depths. Round 3's growth model now gives them ([`plume.md`](plume.md) §3.6): a ~1.5 % glow, and §3 records it.
 - **SWIR camera:** read noise (30 e⁻) and full well (30,000 e⁻) are assumptions. Allied Vision's datasheet gives only the QE
   curve, and dark current at room temperature is neglected at ≤ 1 ms.
 - **Vendor data:**

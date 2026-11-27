@@ -503,8 +503,9 @@ put in a cart.
 ## 6. Not done, and limits
 - **`lp_cam.py` was not re-run after the model's holes moved** (2026-11-27, at the merge). Its "drawn" holes are the old ones in
   its JSON; the programmed ones were already where the model now draws them, so the programs don't change.
-- **The LW ring's holes moved 0.25 mm inward after the interference run** (Ø50 → Ø49.5). Only holes moved, so no new contact,
-  but the model was not re-checked with them: two re-runs were killed at the 3 GB cap the shared runner allows.
+- **The LW ring's holes moved 0.25 mm inward after this worker's interference run** (Ø50 → Ø49.5). Two re-runs were killed at the
+  3 GB cap the shared runner allowed then. The merged model, with these holes and every other round 3 part, was re-checked on
+  2026-11-27 (09:55–10:29 UTC, under a 5.5 GB cap): 0 interferences on M50, S25 and L75 ([`monitoring.md`](../monitoring.md) §9.1).
 - **The sine-plate setup is drawn, not designed.** A 312 × 222 mm lid turned −33.69° on a 6 × 12 in. sine plate overhangs it on
   every side; a larger tilting table or an angle plate set to 27.93° may suit the shop better. The fixtures in the holder check
   are a 400 × 400 × 25 mm plate on 1 in. parallels and four toe clamps at the lid's ends; work zero (the LP centre on the top
