@@ -11,7 +11,9 @@ with the M50 module and reservoir M) into [`cad/img/sequence/`](cad/img/sequence
 - [`build.mp4`](cad/img/sequence/build.mp4): the whole run in one video (880 × 540, 3 min 24 s since 2026-11-25). Download it to play it: GitHub
   plays videos inline only when they are uploaded as comment attachments. **This version (a979f31) is on the lab's YouTube
   channel, with 11 chapters: [youtu.be/54KqThbeVOg](https://youtu.be/54KqThbeVOg)** (version 3, uploaded 2026-11-25, public,
-  subscribers not notified). Earlier versions: 2f9ae4a at [youtu.be/13vLrdFv0to](https://youtu.be/13vLrdFv0to) (version 2,
+  subscribers not notified). **The current file (b621d4f: version 3 with the MakeHuman person in the kit and tray chapters,
+  every other frame the same) is [youtu.be/lZLwp2oRw0w](https://youtu.be/lZLwp2oRw0w)** (version 3.1, uploaded 2026-11-27,
+  unlisted because the change is small, subscribers not notified). Earlier versions: 2f9ae4a at [youtu.be/13vLrdFv0to](https://youtu.be/13vLrdFv0to) (version 2,
   2026-11-22), and 59df6d6, re-rendered with the real fasteners, at [youtu.be/ZGwjNoBWEmw](https://youtu.be/ZGwjNoBWEmw)
   (2026-11-19);
 - [`build-sheet.png`](cad/img/sequence/build-sheet.png): three key frames from each chapter.
