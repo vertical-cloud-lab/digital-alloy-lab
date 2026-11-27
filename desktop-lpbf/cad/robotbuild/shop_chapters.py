@@ -1397,18 +1397,34 @@ def chapter_30():
     scn.set_obj("load", st @ P_to3, spec2)
     for i in range(int(1.5 * FPS)):
         w.frame(scn, cam_out, capC, sub="the HRT210 indexed to A 90 for loading (left wall up); the frame on its plate "
-                "turned 90 deg onto the platter and bolted through the opening (not shown)", who=["person"],
+                "turned 90 deg onto the platter (not shown)", who=["person"],
                 step="F-S3", status="person")
     crew.step_back(w, cam_out, capC, f"frame {kg_frame:.1f} kg + MIC-6 plate {kg_plate:.1f} kg, turned 90 deg onto "
-                   f"the platter and bolted through the opening (the lift and the bolting not shown); {rule}", "F-S3",
+                   f"the platter (the lift not shown; arm A drives its screws next); {rule}", "F-S3",
                    dist=600.0, n=24)
     scn.hide_obj("load")
     for n in vf4.sc.members("vf4/rotfix"):
         vf4.sc.alpha[n] = 1.0
     vf4.part("frame part", fr.spec(), P3, rot=True)
+    # round 9 (P1): arm A drives the four platter screws through the frame's opening (shop_clips.clip_hrt_bolts:
+    # planned at A 90 with the nut runner), then its MiR drives off and the doors shut; round 8 left them to a person
+    hb = load("hrt_bolts")
+    cam_door = cam_out
+    if hb is not None and (hb.get("result") or {}).get("ok", False):
+        heads = E.merge([E.cyl((-3.9, yy, zz), (4.1, yy, zz), 6.5, res=20)
+                         for yy, zz in ((55.0, 55.0), (-55.0, 55.0), (-55.0, -55.0), (55.0, -55.0))])
+        vf4.part("platter screws", dict(kind="vf", v=np.asarray(heads.points, float),
+                                        f=heads.faces.reshape(-1, 4)[:, 1:], color="#2b2f33"), vf4.M_setup, rot=True,
+                 color="#2b2f33")
+        crew.show(0.0)                               # at the cut: they have gone, arm A has docked
+        play(w, scn, "hrt_bolts", cam_arm, hide=("frame part",))
+        if (load("drive_bolts_lathe") or {}).get("result", {}).get("ok", False):
+            play(w, scn, "drive_bolts_lathe", cam_arm, hide=("frame part",))
+        scn.show_arm("A", False)
+        cam_door = cam_arm
     for i in range(18):
         vf4.set(door=1.0 - ease((i + 1) / 18))
-        w.frame(scn, cam_out, "Doors shut; cycle start", sub="the auto door (option), ~1.5 s", who=["machine"],
+        w.frame(scn, cam_door, "Doors shut; cycle start", sub="the auto door (option), ~1.5 s", who=["machine"],
                 step="F-S3", status="pass", proc_s=1.5 / 18)
     crew.show(0.0)                                   # at the cut to the inside view
     vf4.set(front_alpha=0.0)

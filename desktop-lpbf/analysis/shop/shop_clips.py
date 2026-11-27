@@ -850,11 +850,67 @@ def clip_drive_vf4_lathe():
                       "every pose swept with FCL", "lathe class")
 
 
+def clip_hrt_bolts():
+    """F-S3 (round 9, P1): arm A drives the four M8 screws that hold the dummy-floor plate (with the frame on it) to the
+    HRT210's platter, through the frame's opening, with the nut runner held by its fin; round 8 left them to a person,
+    not shown. The rotary at A 90 (the loading index), the table at X 40 as chapter 30 has it."""
+    a_deg = 90.0
+    row = next(r for r in states()["rows"] if r.get("setup") == "F-S3" and r.get("part") == "frameT")
+    parts, meta, P, M_setup, m = vf4_setup("frame_C0", table_x=40.0, k_state=row["k"], part="frameT", rots=row["rots"],
+                                           a_deg=a_deg)
+    heads = []
+    for k, (yy, zz) in enumerate(((55.0, 55.0), (-55.0, 55.0), (-55.0, -55.0), (55.0, -55.0))):
+        nm = f"platter screw {k + 1}"
+        parts[nm] = E.Part(E.cyl((-3.9, yy, zz), (4.1, yy, zz), 6.5, res=20), "#2b2f33", M=M_setup)
+        heads.append((nm, (M_setup @ np.r_[4.1, yy, zz, 1.0])[:3]))
+    st = station("vf4")
+    job = Job("VF-4 F-S3: arm A drives the platter screws through the frame's opening (nut runner)", "vf4", parts,
+              x_mir=0.0 - S.ARM_DX)
+    frame = part_body("frame on the rotary", m)
+    frame.place(st.M @ P)
+    job.sc.world.add(frame)
+    runner = nut_runner_body()
+    ax = st.R() @ np.array([1.0, 0.0, 0.0])            # the A axis (station +x) in the world
+    up = np.array([0.0, 0.0, 1.0])
+    wps = []
+    for n, h in heads:
+        hw = st.to_world(h)
+        Tw = K.T_at(hw + ax * (NUT_RUNNER["ext"][1] + 1.0), -ax, up)
+        Ta = K.lift(Tw, dz=0.0, dx=float(ax[0] * 90.0), dy=float(ax[1] * 90.0))
+        wps.append((n, Ta, Tw))
+    close = job.arm.close_for_gap(20.0)
+    tool_passes(job, runner, wps, close, allow=[f"vf4/{n}" for n, _ in heads] + ["frame on the rotary"],
+                dwell=[("tighten to 25 N m", 2.5)] * 4)
+    clip = Clip("hrt_bolts", "vf4", "30-machining-chamber")
+    r = done("hrt_bolts", job, clip, dict(screws=len(heads)))
+    clip.state["mach"] = dict(station="vf4", door=1.0, table_x=40.0, table_y=0.0, spindle_z=None, fc="frame_C0",
+                              a_deg=a_deg)
+    clip.set_arm("A", job.arm, "nut runner", mir=mir_state(job))
+    record_job(clip, job, "A", tool="nut runner", meta_by_seg={"*": dict(
+        caption="Arm A drives the four screws that hold the plate to the 4th axis",
+        sub="M8 screws through the frame's opening into the HRT210's platter; nut runner held by its fin; FCL on meshes, "
+            "0.5 deg planning, 0.2 deg audit", who=["robot A"], step="F-S3", status="pass" if r["ok"] else "fail")})
+    clip.save()
+    return clip
+
+
+def clip_drive_bolts_lathe():
+    """Chapter 30: MiR A from the VF-4 after the platter screws to the lathe."""
+    row = next(r for r in states()["rows"] if r.get("setup") == "F-S3" and r.get("part") == "frameT")
+    parts, meta, P, M_setup, m = vf4_setup("frame_C0", table_x=40.0, k_state=row["k"], part="frameT", rots=row["rots"],
+                                           a_deg=90.0)
+    return clip_drive("drive_bolts_lathe", "30-machining-chamber", "A", "hrt_bolts", "lathe_slug",
+                      [("vf4", parts), ("lathe", E.st10(door=1.0, jaw_open=6.0)[0])],
+                      "Arm A's MiR drives on to the lathe; the doors shut behind it",
+                      "pivot, drive forward, pivot; every pose swept with FCL", "F-S3")
+
+
 CLIPS = dict(vf4_clamps=clip_vf4_clamps, vf4_floor_load=clip_floor_load, vf4_vise_part=clip_vise_part,
              lathe_slug=clip_lathe_slug, lathe_big=clip_lathe_big, saw_bar=clip_saw, deburr=clip_deburr, wash=clip_wash,
              measure=clip_measure, kit=clip_kit, recv_tape=clip_recv_tape, recv_unbox=clip_recv_unbox,
              drive_vf4_lathe=clip_drive_vf4_lathe, drive_vf4c_lathe=clip_drive_vf4c_lathe,
-             drive_vf4f_lathe=clip_drive_vf4f_lathe, drive_deburr_measure=clip_drive_deburr_measure)
+             drive_vf4f_lathe=clip_drive_vf4f_lathe, drive_deburr_measure=clip_drive_deburr_measure,
+             hrt_bolts=clip_hrt_bolts, drive_bolts_lathe=clip_drive_bolts_lathe)
 
 
 def main(argv):
