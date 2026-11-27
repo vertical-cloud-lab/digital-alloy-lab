@@ -1,0 +1,8 @@
+# CalculiX scratch and big meshes live in /tmp; keep only small inputs and results here
+*.frd
+*.dat
+*.sta
+*.cvg
+*.12d
+spooles.out
+__pycache__/
