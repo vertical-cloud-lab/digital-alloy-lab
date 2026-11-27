@@ -311,6 +311,57 @@ def polyline_pipe(points, r, n=10):
     return comp(solids)
 
 
+# The process fiber (round 9 of the robot-build video, 2026-11-27): IPG's spec sheet gives the delivery cable a 70 mm minimum
+# bend radius (quotes/ipg-ylr-500-u3-sm-ac.md); the old route was a smoothed polyline that ran through the laser's chassis and
+# the rack's right post. It now leaves the laser's rear panel (the U3 drawing gives the cabinet, not the fiber's exit), turns
+# back behind it (R 75), runs forward and up in the 45 mm slot between the units and the rack's right side panel, and makes
+# its last bend (R 77) through grommeted holes in that panel and the guard's left wall into the collimator's strain relief.
+# All bends 75-77 mm. The 5 m fiber's excess would be coiled in the rack (not drawn).
+FIBER = dict(y_rear=236.0, z=-30.0, R=75.0, R_last=77.0, boot=40.0, r=5.0, hole_r=8.0)
+
+
+def fiber_path(xe, yC, bz):
+    """The fiber's centre line, laser to collimator: [(kind, points)] with "line" (a, b) and "arc" (a, mid, b) pieces."""
+    R, Re, zf, yr = FIBER["R"], FIBER["R_last"], FIBER["z"], FIBER["y_rear"]
+    xs = xe - Re                                           # the vertical run in the rack's right slot
+    x0 = xs - 2 * R                                        # the exit on the laser's rear panel
+    y1 = yr + FIBER["boot"]
+    yb = yC + R
+    s = math.sqrt(0.5)
+    return [("line", (x0, yr, zf), (x0, y1, zf)),
+            ("arc", (x0, y1, zf), (x0 + R, y1 + R, zf), (xs, y1, zf)),
+            ("line", (xs, y1, zf), (xs, yb, zf)),
+            ("arc", (xs, yb, zf), (xs, yb - R * s, zf + R - R * s), (xs, yC, zf + R)),
+            ("line", (xs, yC, zf + R), (xs, yC, bz - Re)),
+            ("arc", (xs, yC, bz - Re), (xs + Re - Re * s, yC, bz - Re + Re * s), (xe, yC, bz))]
+
+
+def fiber_end():
+    """The collimator's back end (its strain relief), where the fiber goes in: (x, y, z), as section 9 places it (the dichroic
+    at x -155, its 41.9 mm cage cube, the collimator 5 mm off it and 206 mm long with its relief, on the line 120 mm behind the
+    galvo's input axis)."""
+    return -155.0 - 41.9 / 2 - 5.0 - 206.0, P["beam_y"] + 120.0, P["beam_z"]
+
+
+def fiber_z_at(x, xe, bz):
+    """Where the fiber's last bend (centre (xe, bz - R_last)) crosses the plane at x: its z (for the pass-through holes)."""
+    Re = FIBER["R_last"]
+    return bz - Re + math.sqrt(max(Re * Re - (x - xe) ** 2, 0.0))
+
+
+def fiber_pipe(xe, yC, bz):
+    """The armoured cable (Ø10 as drawn) swept along fiber_path, with a Ø20 x 40 strain-relief boot at the laser."""
+    edges = []
+    for kind, *p in fiber_path(xe, yC, bz):
+        edges.append(cq.Edge.makeLine(V(*p[0]), V(*p[1])) if kind == "line" else cq.Edge.makeThreePointArc(V(*p[0]), V(*p[1]), V(*p[2])))
+    path = cq.Wire.assembleEdges(edges)
+    a, b = fiber_path(xe, yC, bz)[0][1:]
+    prof = cq.Wire.makeCircle(FIBER["r"], V(*a), (V(*b) - V(*a)).normalized())
+    cable = cq.Solid.sweep(prof, [], path, makeSolid=True, isFrenet=False, transitionMode="right")
+    boot = cyl(10.0, a, "y", FIBER["boot"])
+    return comp([cable, boot])
+
+
 RAIL_HOLES = dict(first=20.0, pitch=60.0, d=4.5, cb_d=7.5, cb_h=5.3)   # McMaster 6709K33: M4, 60 mm c-c, 20 mm from the end
 
 
@@ -534,7 +585,10 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
 
     # ===================== 2. Rack module =====================
     rx0, rx1, ry0, ry1 = bases["rack"]
-    rz0, rz1 = Z_TRAY, Z_TRAY + 25.0 + 12 * 44.45 + 1.6       # 12U, 560 mm (was 11U, 515): a 4U control drawer (electrical.md §12, cad/electrical.py)
+    # 12U (was 11U, 515): a 4U control drawer (electrical.md §12, cad/electrical.py). 580 mm (was 560, round 9 of the robot-build
+    # video, 2026-11-27): the top rails stand over the 12th U, not in it; at 560 the 4U drawer's top 17 mm ran through the front
+    # top rail as it slid in (the frame audit's "DIN drawer in the rack posts")
+    rz0, rz1 = Z_TRAY, Z_TRAY + 25.0 + 12 * 44.45 + 1.6 + 20.0
     posts = []
     for x in (rx0, rx1 - 25):
         for y in (ry0, ry1 - 25):
@@ -542,7 +596,7 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     for z in (rz0 + 0, rz1 - 20):
         posts += [box(rx0, rx1, ry0, ry0 + 25, z, z + 20), box(rx0, rx1, ry1 - 25, ry1, z, z + 20),
                   box(rx0, rx0 + 25, ry0 + 25, ry1 - 25, z, z + 20), box(rx1 - 25, rx1, ry0 + 25, ry1 - 25, z, z + 20)]
-    add("19 in. rack frame (12U, 560 mm tall)", comp(posts), C["rack"], 2, (0, 0, 0), mat="steel", mass_kg=22.0, module="rack", bom="S9")
+    add("19 in. rack frame (12U, 580 mm tall)", comp(posts), C["rack"], 2, (0, 0, 0), mat="steel", mass_kg=22.0, module="rack", bom="S9")
     ux0, ux1 = (rx0 + rx1) / 2 - 241.3, (rx0 + rx1) / 2 + 241.3      # 19 in. front panel width
     u = 44.45
     zr = rz0 + 25.0
@@ -558,7 +612,9 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
             shp = VP.eaton_5px1500rtg2().translate(V((rx0 + rx1) / 2, ry0 + 30, zr + 1))
         add(nm, shp, col, 2, (0, -400, 0), mat="misc", mass_kg=m, module="rack", bom=b)
         zr += nu * u
-    add("Rack side panels (vented)", comp([box(rx0 - 2, rx0, ry0, ry1, rz0 + 20, rz1), box(rx1, rx1 + 2, ry0, ry1, rz0 + 20, rz1)]), C["panel"], 2, (0, 0, 0), mat="al6061", module="rack", opacity=0.35, bom="S9")
+    xf_, yf_, zf_ = fiber_end()                            # the process fiber passes the right panel through a grommeted hole
+    hole_ = cyl(FIBER["hole_r"], (rx1 - 1.0, yf_, fiber_z_at(rx1 + 1.0, xf_, zf_)), "x", 4.0)
+    add("Rack side panels (vented)", comp([box(rx0 - 2, rx0, ry0, ry1, rz0 + 20, rz1), box(rx1, rx1 + 2, ry0, ry1, rz0 + 20, rz1).cut(hole_)]), C["panel"], 2, (0, 0, 0), mat="al6061", module="rack", opacity=0.35, bom="S9")
 
     # ===================== 3. Chamber legs and Z stage =====================
     zf = -fl
@@ -1229,11 +1285,10 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     coll = fuse([VP.ipg_collimator_d25().translate(V(xc_, yC, bz_)), box(xc_ - 90, xc_ - 20, yC - 20, yC + 20, zb1_, bz_ - 15)])
     add("Collimator (IPG affixed, 2.5 mm beam: 96 µm at f = 160; housing drawn as the 5 mm unit, 128 mm + 78 mm strain relief) on V-mount", coll, C["ss"], 9, (0, 0, 340), mat="misc", mass_kg=0.5, bom="L3")
     xe_ = xc_ - 206.0
-    # from the collimator line along the guard's left wall to the old route: its last six points are unchanged, so the cable below z 230 (past the
-    # guard bulkhead and into the rack) is the same curve as before (Catmull-Rom segments depend on their two neighbours)
-    fiber = polyline_pipe([(xe_, yC, bz_), (xe_ - 14, yC - 8, bz_ - 14), (-414, 40, 266), (-421, -32, 262), (-422, -40, 230), (-430, -150, 150), (-460, -220, 60),
-                           (-560, -260, 0), (-600, -280, -20)], 5)
-    add("Process fiber (armoured, ≥ 100 mm bend radius)", fiber, C["fiber"], 9, (0, 0, 300), mat="misc", mass_kg=0.6, bom="L1", module="rack")
+    # round 9 (2026-11-27): from the laser's rear panel to here, every bend 75-77 mm (IPG: 70 mm at least): fiber_path above
+    assert max(abs(a - b) for a, b in zip(fiber_end(), (xe_, yC, bz_))) < 1e-6
+    add("Process fiber (armoured, ≥ 70 mm bend radius, drawn at 75-77 mm)", fiber_pipe(xe_, yC, bz_), C["fiber"], 9, (0, 0, 300), mat="misc",
+        mass_kg=0.6, bom="L1", module="rack")
     # calibration fixture (optics.md §4.1 and §8.4): a thin water-cooled 500 W head on a stand on the plate, aperture 95 mm above
     # it (31 mm under the slide), for the power through the f-theta, window and slide. The fan-cooled 600 W head (UP55G-600F,
     # 120 x 120 x 135) is taller than the chamber (120). Tagged 'calibration' (+ 'context': not part of the machine's mass,
@@ -1336,7 +1391,9 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
             fr.append(tslot20((x, gy0 + 20, z), "y", gy1 - gy0 - 40))
     add("Guard frame (20 mm T-slot)", comp(fr), C["tslot"], 12, (0, 0, 0), mat="al6061", module="process", bom="S9", mcm="TSLOT")
     pt = 1.5
-    pn = [box(gx0 - pt, gx0, gy0, gy1, gz0, gz1), box(gx1, gx1 + pt, gy0, gy1, gz0, gz1), box(gx0, gx1, gy1, gy1 + pt, gz0, gz1),
+    xf_, yf_, zf_ = fiber_end()                            # the process fiber's grommeted hole in the left wall (round 9)
+    hole_ = cyl(FIBER["hole_r"], (gx0 - pt - 1.0, yf_, fiber_z_at(gx0 - pt / 2, xf_, zf_)), "x", pt + 2.0)
+    pn = [box(gx0 - pt, gx0, gy0, gy1, gz0, gz1).cut(hole_), box(gx1, gx1 + pt, gy0, gy1, gz0, gz1), box(gx0, gx1, gy1, gy1 + pt, gz0, gz1),
           box(gx0 - pt, gx1 + pt, gy0, gy1 + pt, gz1, gz1 + pt), box(gx0, -320.0, gy0 - pt, gy0, gz0, gz1), box(180.0, gx1, gy0 - pt, gy0, gz0, gz1)]
     add("Laser guard panels (1.5 mm aluminium)", comp(pn), C["panel"], 12, (0, 0, 0), mat="al6061", opacity=0.22, bom="S9", mcm="SHEET", section=True)
     gd = box(-330.0, 190.0, gy0 - pt - 6, gy0 - pt - 2, gz0 + 10, gz1 - 10)
