@@ -9,16 +9,17 @@ folder designs one the lab can make in days to weeks.
 - **The upper part** stays on the cone's KF-50 outlet, the only seal at the chamber. Below that seal the bore
   only widens, and nothing inside can catch hot metal. It can be welded from a KF-50 stub, a catalogue 3×2 in
   reducer and a 3 in ferrule (B, fully documented here), or **turned in one piece from 4 in bar (B', better)**.
-- **B' moves the tri-clamp joint 100 mm up, away from the pile.** With 816 g of shot its gasket peaks at 62 °C
+- **B' moves the tri-clamp joint 94 mm up, away from the pile.** With 816 g of shot its gasket peaks at 67 °C
   instead of 263 °C, which is just over PTFE's 260 °C. Shot fused under the KF joint also heats that O-ring
-  less: 157 °C instead of 195 °C for 25 g. B' is modelled, collision-checked, drawn as a concept (sheet 5) and
-  has lathe programs (49 min, two setups). Build B' if the lathe takes 4 in bar. Its pot is B's with a longer
-  tube, and the tests and run procedure are the same apart from the upper part's two welds.
+  less: 158 °C instead of 195 °C for 25 g. B' is modelled, checked for interferences against the modelled clamps
+  (none), drawn as a concept (sheet 5), and has lathe programs for all but its tri-clamp face groove (58 min, two
+  setups). Build B' if the lathe takes 4 in bar. Its pot is B's with a longer tube; the tests and run procedure
+  are B's, with the differences listed at the top of `procedure.md` (two fewer welds, a 70 °C top alarm).
 - **The pot** is a 3 in ferrule, a 3 in tube and a turned end cap with an 8 mm floor and an R6 inside corner. It
   holds a loose 304 catch puck and a liner with a 1.5 mm gap to the wall, and comes off after every run with its
   full 72.9 mm opening.
 - **Monitoring:** two clamp-on thermocouples feed a 2-channel alarm.
-- **Cost:** about $449 in priced catalogue parts (B' about $484), plus standard sanitary fittings, four lathe parts and a milled
+- **Cost:** about $449 in priced catalogue parts (B' about $508), plus standard sanitary fittings, four lathe parts and a milled
   welding fixture.
 
 **Before buying, measure the room under the cone**: the distance from the KF face to the mat with the cone
@@ -29,10 +30,10 @@ latched. No photo or video showed it at a known scale. B is drawn 250 mm long fo
 | | Stock (Nov 13) | **B: upper part + pot** | A: catalogue KF nipple | C: quartz rebuild |
 |---|---|---|---|---|
 | What it is | KF flange, reducer, DN65 butterfly valve (EPDM seat), borosilicate tube between plates | KF-50 stub + 3×2 in reducer + 3 in ferrule; tri-clamp; pot = ferrule + 3 in tube + end cap (R6 inside), puck and liner | KF-50 nipple 160 mm, blank on the bottom; puck and liner | stock plates, fused-quartz tube, a spacer in place of the valve, a sleeve over the top seal, a pan over the bottom seal |
-| Seals near the hot metal | valve seat right under the inlet, glass seals top and bottom | the KF O-ring at the cooled cone (40 °C at 816 g of shot); the tri-clamp gasket, 30 mm above an 816 g pile (B': 130 mm above it) | bottom O-ring next to the puck | glass seals at both ends |
-| Shot it takes before its hottest seal reaches 150 / 200 °C | the seat burns at once; the glass cracks if shot reaches it (S cases) | about 495 / 640 g (the gasket); PTFE gasket (260 °C) to about 800 g; the KF O-ring stays under 40 °C. **B': over 816 g** (gasket 62 °C, KF O-ring 42 °C at 816 g) | about 120 / 220 g | under 400 g: bottom glass seal 264 °C at 400 g |
+| Seals near the hot metal | valve seat right under the inlet, glass seals top and bottom | the KF O-ring at the cooled cone (40 °C at 816 g of shot); the tri-clamp gasket, 30 mm above an 816 g pile (B': 125 mm above it) | bottom O-ring next to the puck | glass seals at both ends |
+| Shot it takes before its hottest seal reaches 150 / 200 °C | the seat burns at once; the glass cracks if shot reaches it (S cases) | about 495 / 640 g (the gasket); PTFE gasket (260 °C) to about 800 g; the KF O-ring stays under 40 °C. **B': over 816 g** (gasket 67 °C, KF O-ring 42 °C at 816 g) | about 120 / 220 g | under 400 g: bottom glass seal 264 °C at 400 g |
 | Usable volume above the puck | — | 522 cm³ | 159 cm³ | about 600 cm³ (estimate) |
-| Catalogue cost (priced lines) | — | **$449** + sanitary fittings (B' $484) | $198 | about $520 |
+| Catalogue cost (priced lines) | — | **$449** + sanitary fittings (B' $508) | $198 | about $520 |
 | Build | — | 4 lathe parts, 4 TIG welds, 1 milled fixture, hydro and leak tests | order and assemble | turn a spacer and sleeve, cut the quartz; valve removal not checked |
 | Edison's ranking | — | best long-term (welded metal) | fastest interim | not recommended |
 
@@ -48,24 +49,27 @@ The design changed four times during the analyses, and each change is recorded i
 3. **Split:** the cup now splits at a 3 in tri-clamp. The pot opens at 72.9 mm, the liner and its gap come back,
    a fused lump can be got out, the KF joint stays made up between runs, and the pot is carried away capped.
 4. **Adapter (B'):** the split's gasket sat 30 mm above an 816 g pile and reached 263 °C. Turning the upper part
-   in one piece puts the joint 33.5 mm under the KF face, 130 mm above the pile, where the gasket reaches 62 °C.
-   It also does away with the reducer and two welds, and its thicker wall soaks up a hang-up better. Its numbers
-   come from the same FEA (the `*_adapter` cases), and its lathe programs from the same CAM.
+   in one piece puts the joint 40.5 mm under the KF face, 125 mm above the pile, where the gasket reaches 67 °C.
+   It also does away with the reducer and two welds. In a hang-up its thicker wall keeps the O-ring cooler and
+   the KF face flatter, but its gasket then gets hot (165 °C for 100 g), and its outside warms more slowly, so its
+   top alarm is set lower. Its numbers come from the same FEA (the `*_adapter` cases), and its lathe programs
+   from the same CAM. An independent check of the B' documents found that the top thermocouple's band didn't fit
+   between the KF clamp and the shoulder; the neck is now 7 mm longer.
 
 ## What the analyses show
 
 | Check | Result | Where |
 |---|---|---|
-| Thermal FEA, CalculiX, 22 cases | B keeps the KF O-ring at 26 / 30 / 40 °C for 100 / 400 / 816 g of shot landing at 1050 °C. The tri-clamp gasket reaches 47 / 116 / 263 °C (pile conductivity 2–20 W/m K: 233–268 °C). **What B can't take is shot held near the KF seal:** 25 g fused in the bore under the joint takes the O-ring to 195 °C, and 100 g to 389 °C. That is why nothing goes inside its top and the shields must be in. **B'** (turned adapter): gasket 62 °C with 816 g of shot; 25 / 100 g fused under the KF joint take the O-ring to 157 / 306 °C and the gasket to 68 / 187 °C. A good run (816 g of powder at 400 °C) leaves B's bottom thermocouple at 87 °C, against 107–319 °C for shot. A's bottom O-ring passes 200 °C at about 220 g; C's bottom glass seal reaches 264 °C at 400 g | `analysis/thermal.py`, [`thermal_summary.md`](analysis/out/thermal_summary.md) |
+| Thermal FEA, CalculiX, 22 cases | B keeps the KF O-ring at 26 / 30 / 40 °C for 100 / 400 / 816 g of shot landing at 1050 °C. The tri-clamp gasket reaches 47 / 116 / 263 °C (pile conductivity 2–20 W/m K: 233–268 °C). **What B can't take is shot held near the KF seal:** 25 g fused in the bore under the joint takes the O-ring to 195 °C, and 100 g to 389 °C. That is why nothing goes inside its top and the shields must be in. **B'** (turned adapter): gasket 67 °C with 816 g of shot; 25 / 100 g fused under the KF joint take the O-ring to 158 / 309 °C and the gasket to 61 / 165 °C. A good run (816 g of powder at 400 °C) leaves B's bottom thermocouple at 87 °C, against 107–319 °C for shot. A's bottom O-ring passes 200 °C at about 220 g; C's bottom glass seal reaches 264 °C at 400 g | `analysis/thermal.py`, [`thermal_summary.md`](analysis/out/thermal_summary.md) |
 | The Nov 13 failure, reconstructed | 120 g of shot against the stock cup's EPDM seat puts it at 1013 °C, but the glass stays at 50 °C. 300 g that falls into the glass puts it at 931 °C, the bottom EPDM seal at 412 °C, and at least 55 MPa of tension in the borosilicate (short-term strength ~40 MPa): it cracks, as it did | `S_seat_120`, `S_glass_300` |
 | Model checks | energy is conserved (558 kJ to within 0.06 kJ at 0.5 s; what leaves only grows), and the pile in the mesh weighs 816.0 g, for B and for B' (`analysis/energy_check.py`). Steady film, radiation and surface-flux cases match closed-form answers to 0.001 K (`analysis/verify_axifea.py`). Mesh convergence, checked on the previous iteration of B: a 0.55× finer mesh moved the O-ring peak 0.5 K and the hang-up peak 7 K, on the safe side | `analysis/` |
 | Structural FEA, the pot | 9.5 MPa at +1.2 bar (1.5 × relief) and 9.0 MPa under full vacuum. Worst thermal stress with 816 g of shot: 61 MPa, at most 0.53 of yield, at the end cap's R6 corner | `analysis/structural.py`, [`structural_summary.md`](analysis/out/structural_summary.md) |
-| Structural FEA, the upper part in a hang-up | Shot fused under the KF joint takes both upper parts past yield locally, 10 s in (elastic estimates for 25 / 100 g: B 3.1 / 4.3 × yield at the stub's bore; B' 2.3 / 5.5 ×, the 100 g peak at its neck, after an R2 fillet there brought it down from 6.3 ×). That is a self-limiting thermal stress: it leaves a small permanent set, not a crack. While hot, the KF face of B' tilts 16–28 µm across the O-ring land, against 41–234 µm for B | `structural.py` (upper), [`structural_summary.md`](analysis/out/structural_summary.md) |
-| Hand calculations | buckling under vacuum 180×+ (B' pot's longer tube: 127× at 400 °C); UG-34 flat head needs 1.4 mm (8 used); the KF clamp gives ~1.8 kN finger-tight against 0.84 kN of separating force at +1.2 bar; the liner keeps ≥1.1 mm of gap when hot; the puck and liner clear the pot's opening by 2.9 / 3.05 mm | `analysis/handcalcs.py`, [`handcalcs.md`](analysis/out/handcalcs.md) |
+| Structural FEA, the upper part in a hang-up | Shot fused under the KF joint takes both upper parts past yield locally, 10 s in (elastic estimates for 25 / 100 g: B 3.1 / 4.3 × yield at the stub's bore; B' 2.3 / 5.0 ×, also at the bore). That is a self-limiting thermal stress: it leaves a small permanent set, not a crack. While hot, the KF face of B' tilts 27–29 µm across the O-ring land, against 41–234 µm for B | `structural.py` (upper), [`structural_summary.md`](analysis/out/structural_summary.md) |
+| Hand calculations | buckling under vacuum 180×+ (B' pot's longer tube: 133× at 400 °C); UG-34 flat head needs 1.4 mm (8 used); the KF clamp gives ~1.8 kN finger-tight against 0.84 kN of separating force at +1.2 bar; the liner keeps ≥1.1 mm of gap when hot; the puck and liner clear the pot's opening by 2.9 / 3.05 mm | `analysis/handcalcs.py`, [`handcalcs.md`](analysis/out/handcalcs.md) |
 | Glass (C) | with the pan and sleeve, the glass itself is fine (quartz 0.8–1.3 MPa, borosilicate 5.6 MPa); its bottom seal is what fails | `analysis/structural.py` |
 | KF under pressure | standard rings are rated to ~1.5 bar abs (Pfeiffer, Edwards); the relief opens at ~1.8 bar abs, so an over-pressure ring (50 psig) is part of the design | `bom/README.md` |
 | Collisions at the KF joint | the upper part goes on and off clear of the cone with the clamp off; a hinged clamp left hanging open hits its flange (38 positions) | `cad/build_gif.py`, `cad/out/build_collisions.json` |
-| Lathe CAM | end cap (a blind pocket), puck, liner and tube cut in a 2D stock-removal simulation: no gouges, at most 0.1 mm left, no rapids through stock. So is the adapter for B': its flange backs and neck are plunged, then traced with the 3 mm grooving blade, in a 49 min cycle | `cam/lathe_cam.py`, `cam/out/lathe_*.png` |
+| Lathe CAM | end cap (a blind pocket), puck, liner and tube cut in a 2D stock-removal simulation: no gouges, at most 0.1 mm left, no rapids through stock. So is the adapter for B': its flange backs and neck are plunged, then traced with a 3 mm grooving-and-turning insert, in a 58 min cycle | `cam/lathe_cam.py`, `cam/out/lathe_*.png` |
 | Mill CAM | the 120 mm weld fixture (each part's ferrule overhangs an end) cut in CAMotics 1.2.0 matches the CAD within the 0.5 mm grid, with an 18 min cycle. The first run found a real bug: nested comments skipped a tool change | `cam/mill_cam.py`, `cam/out/mill_fixture_sections.png` |
 | CAD against vendor STEP models | McMaster's KF-50 stubs and 139.7 mm nipple are within 1 % by volume. The A&N stub and Duniway nipple in the BOM had no STEP model to check | `cad/vendor_check.py`, [`vendor_check.md`](cad/out/vendor_check.md) |
 | Edison final design check | agrees with the ledge-free design and the alarms. Asked for: no sharp welded floor corner (done); a hydro proof instead of a 1.5× pneumatic one (in the procedure); rate-of-rise targets of about 0.04 / 0.004 mbar/min; low heat input with chills; a safety lanyard; logging the thermocouples, ideally with rate-of-rise logic and a latched trip; and the vendor's written rating for the KF joint with the over-pressure ring | `edison/literature_high_final_design_check.md` |
@@ -82,7 +86,7 @@ the upper part stays.
 - [`procedure.md`](procedure.md):
   - measure, order, machine, and weld both parts in the fixture with a back-purge;
   - hydro proof, bench soap test, and rate-of-rise on the machine;
-  - thermocouple alarms (top 120 °C, bottom 150 °C) and a safety lanyard;
+  - thermocouple alarms (top 120 °C, B' 70 °C; bottom 150 °C) and a safety lanyard;
   - install, run limits, and pot removal.
 - [`checklist.md`](checklist.md): one printable page for the person at the atomizer.
 - [`BOM.md`](BOM.md): every line linked to its catalogue page (prices 2026-11-27); alternatives in
@@ -94,7 +98,7 @@ the upper part stays.
 - `cad/out/option_b.step`, `option_b_adapter.step`, `option_a.step`, `machine_cone_section.step`,
   `cam/out/fixture_b.step`.
 - **To build B' instead of B:** turn the adapter (sheet 5) in place of the KF stub, the reducer and the upper
-  ferrule (sheet 1, parts 1, 2 and one of 5), and cut the pot's tube to 183.0 mm instead of 82.35 (the 12 in
+  ferrule (sheet 1, parts 1, 2 and one of 5), and cut the pot's tube to 176.0 mm instead of 82.35 (the 12 in
   tube in the BOM covers it). Skip welds W1 and W2a and the upper part's hydro test. The top thermocouple goes
   on the adapter's neck.
 
@@ -112,7 +116,8 @@ runs and small copper charges only, always with the shields.
    because it was held right under it.
 3. The O₂ hard stop and the plate stop rule from the Nov 13 analysis still apply. B survives a bad run; it
    doesn't prevent one.
-4. Replace the KF O-ring after a top alarm, and the tri-clamp gasket after a bottom alarm.
+4. Replace the KF O-ring after a top alarm (on B', the tri-clamp gasket too), and the tri-clamp gasket after a
+   bottom alarm.
 
 ## Still open
 
@@ -120,11 +125,18 @@ runs and small copper charges only, always with the shields.
   `B["body_len"]` in `params.py` and re-run `cad/build.py`.
 - **B (welded upper part): the gasket margin for a full charge of shot.** PTFE (260 °C) meets the 263 °C worst
   case only just. B' fixes that.
-- **B' is a concept until a machinist checks it.** Its lathe programs trace the flange backs and the neck with a
-  3 mm parting blade used as a grooving tool, which the simulation treats as a square-cornered rectangle; a
-  grooving-and-turning insert would suit better. Its tri-clamp face groove has to be copied from a bought 3 in
-  ferrule, since the groove isn't drawn or programmed here. Its top thermocouple sits on a thicker wall, so it
-  reads a 25 g hang-up later than B's does (120 °C at 14 s, against 4 s), although the O-ring peaks lower.
+- **B' is a concept until a machinist checks it.**
+  - Its tri-clamp flange (6.0 mm land, 20° back, Ø80 start) uses unsourced standard sizes, and its gasket
+    groove isn't drawn or programmed. Copy the whole flange from a bought 3 in ferrule.
+  - Its lathe programs groove the flange backs and neck with a 3 mm grooving-and-turning insert, which the
+    simulation treats as a square-cornered rectangle and doesn't load-check. The centring-ring recess is cut in
+    one 2.4 mm-wide pass; take two if it chatters.
+  - Its top thermocouple sits on a thicker wall, so a 25 g hang-up takes it only to 98 °C (B: 177 °C). Hence the
+    70 °C top alarm (reached at 11 s; with 816 g of shot on the puck it reads 45 °C). The O-ring still passes 150 °C at 3 s, as
+    in B.
+  - Its liner, kept at B's length, sits about 100 mm down the pot. It comes out when the pot is tipped; a longer
+    one (up to 180 mm from the same 12 in tube) would be easier to grip but hasn't been modelled.
+  - The install-path collision sweep (`cad/build_gif.py`) covers B's upper part only.
 - The sanitary parts (ferrules, clamp, gaskets, caps) aren't priced yet. Their sizes are the ASME BPE / 3-A
   standard ones drawn here.
 - The centring-ring recess depth. McMaster's approximate STEP says 2.6 mm, but that would leave too thin a face

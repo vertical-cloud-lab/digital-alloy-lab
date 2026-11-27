@@ -157,7 +157,7 @@ def main():
              if n in res and n + "_adapter" in res]
     if pairs:
         md += ["\n## Next step: B' (the turned KF-50 to 3 in adapter) against the split B\n",
-               "Same pot, puck, liner and gasket; the tri-clamp joint moves from 134 mm to 33.5 mm under the KF face "
+               "Same pot, puck, liner and gasket; the tri-clamp joint moves from 134 mm to 40.5 mm under the KF face "
                "(`cad/parts.py` b_adapter_profiles, drawing sheet 5). Peak temperatures (C):\n",
                "| What lands | KF O-ring: B / B' | tri-clamp gasket: B / B' | TC top: B / B' | TC bottom: B / B' |",
                "|---|---|---|---|---|"]
@@ -166,6 +166,17 @@ def main():
             cell = lambda k: f"{pa[k]['T_max']:.0f} / **{pb[k]['T_max']:.0f}**"  # noqa: E731
             md.append(f"| {what.get(a_, a_)} | {cell('N_ORING')} | {cell('N_GASKET')} | {cell('TC_TOP')} | "
                       f"{cell('TC_BOTTOM')} |")
+        # B''s top thermocouple sits on a thicker wall, so it gets its own, lower alarm
+        lim = 70.0
+        notes = []
+        for n in ("B_hangup_25_adapter", "B_hangup_100_adapter"):
+            if n in res:
+                t_ = first_cross(res[n]["series"]["TC_TOP"], lim)
+                notes.append(f"{res[n]['mass_g']:.0f} g hung up: {'never' if t_ is None else f'{t_:.0f} s'}")
+        if "B_816_adapter" in res:
+            notes.append(f"816 g of shot on the puck: peak {res['B_816_adapter']['peaks']['TC_TOP']['T_max']:.0f} C, "
+                         "no alarm")
+        md.append(f"\nB' top alarm at {lim:.0f} C (its 120 C is never reached by a 25 g hang-up): " + "; ".join(notes) + ".")
     md += ["\n## Checks on the model\n",
            "- `analysis/verify_axifea.py`: steady film, radiation and surface-flux cases match closed-form answers to "
            "0.001 K; a lumped transient is within 0.8 %.",

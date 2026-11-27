@@ -28,7 +28,7 @@ def price(vendor, pn):
 B = [
     ("B1", "KF-50 x 2 in butt-weld stub, 304L, 19.05 mm (316L QF50-200-SSL not stocked)", "A&N", "4000126", 1, 1),
     ("B2", "3 x 2 in concentric butt-weld reducer, 316L, 0.065 wall, 101.6 long", "McMaster", "5237K471", 1, 1),
-    ("B3", "3 in OD x 0.065 316 tube, 12 in (the pot's tube: 82.35 mm + facing; B': 183.0 mm)", "OnlineMetals", "4256", 1, 1),
+    ("B3", "3 in OD x 0.065 316 tube, 12 in (the pot's tube: 82.35 mm + facing; B': 176.0 mm)", "OnlineMetals", "4256", 1, 1),
     ("B4", "3-1/4 in 316 round bar, 1.5 in (end cap blank: 20 mm part + chuck + parting)", "Speedy", "p-2646", 1, 1.5),
     ("B5", "2-3/4 in OD x 0.065 304 tube, 12 in (liner, in the pot)", "McMaster", "11116N864", 1, 1),
     ("B6", "3 in 304 round bar, 1.5 in (catch puck Ø70 x 25, in the pot)", "Speedy", "p-1872", 1, 1.5),
@@ -64,7 +64,7 @@ B_NOT_PRICED = [
 ]
 # B': the turned KF-50 to 3 in adapter in place of B1, B2 and the upper B24 ferrule (welds W1 and W2a go too)
 BP = [
-    ("B'1", "4 in 316 round bar, 2 in (B' adapter blank: 32.7 mm part + chuck + parting)", "Speedy", "p-2649", 1, 2),
+    ("B'1", "4 in 316 round bar, 2-1/2 in (B' adapter blank: 39.7 mm part + chuck + parting)", "Speedy", "p-2649", 1, 2.5),
 ]
 A = [
     ("A1", "KF-50 full nipple, 160 mm, 304", "Duniway", "KF50-NP", 1, 1),
@@ -115,7 +115,7 @@ def main():
     drop = sum(float(r["ext_usd"]) for r in tb if r["line"] in ("B1", "B2"))
     md += [f"## B': B with the turned adapter in place of its welded upper part, ${totb - drop + totbp:.2f} priced\n",
            "Everything in B except B1 and B2 (and one of the two B24 ferrules, unpriced), plus the adapter's blank. "
-           "The pot's tube (B3) is cut to 183.0 mm instead of 82.35.\n",
+           "The pot's tube (B3) is cut to 176.0 mm instead of 82.35.\n",
            "| Line | Item | Vendor | Part no. | Qty | Unit (USD) | Ext. (USD) | Stock / lead |",
            "|---|---|---|---|---:|---:|---:|---|"]
     for r in tbp:
@@ -134,7 +134,8 @@ def main():
            "| For | Equipment / tools |", "|---|---|",
            "| Turning (end cap, puck, liner, tube ends; B': the adapter) | CNC or manual lathe, 3-jaw chuck with soft jaws "
            "(B': one that holds 4 in bar), a tube spider; CNMG 432 and VNMG 331 inserts, a 16 mm boring bar (CCMT), a 3 mm "
-           "parting blade (B': also used to groove between the adapter's flanges), a 25 mm drill |",
+           "parting blade, a 25 mm drill; B': a 3 mm grooving-and-turning insert with 20 mm reach for the groove between "
+           "the adapter's flanges |",
            "| Milling (fixture) | 3-axis mill or router that takes a 245 x 114 x 64 mm block; 50 mm face mill, 12 mm "
            "3-flute carbide end mill (36 mm flute), 1/2 in 90 deg chamfer mill, 6 mm end mill, 10 mm spot drill, "
            "5.0 mm drill, M6 x 1.0 tap |",

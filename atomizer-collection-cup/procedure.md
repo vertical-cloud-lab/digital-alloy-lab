@@ -14,13 +14,16 @@ The puck (Ø70) and liner (Ø69.85) go in and out through the pot's 72.9 mm ferr
 47.5 mm KF neck, which is why the cup splits.
 
 **B' (better, if the lathe takes 4 in bar):** the upper part is one adapter turned from 316L bar (drawing sheet 5)
-instead of the stub, reducer and ferrule. The pot's tube is 183.0 mm instead of 82.35. Then skip welds W1 and
-W2a in §3 and the upper part's hydro proof in §4, and clamp the top thermocouple on the adapter's neck. Everything
-else here applies as written, with three differences (`analysis/out/thermal_summary.md`):
-- Its gasket stays at 62 °C with 816 g of shot, so §7's gasket limit doesn't apply to it.
-- Its gasket is closer to the KF joint, so a hang-up heats it (187 °C for 100 g). After a top alarm, replace the
+instead of the stub, reducer and ferrule. The pot's tube is 176.0 mm instead of 82.35. Then skip welds W1 and
+W2a in §3 and the upper part's hydro proof in §4, and clamp the top thermocouple on the adapter's neck, 12.5 to
+21.5 mm under the KF face (just under the KF clamp). Everything else here applies as written, with these
+differences (`analysis/out/thermal_summary.md`):
+- **Top alarm 70 °C, not 120 °C.** Its top thermocouple sits on a thicker wall: a 25 g hang-up takes it only to
+  98 °C, crossing 70 °C at 11 s. With 816 g of shot on the puck it reads 45 °C.
+- Its gasket stays at 67 °C with 816 g of shot, so §7's gasket limit doesn't apply to it.
+- Its gasket is closer to the KF joint, so a hang-up heats it (165 °C for 100 g). After a top alarm, replace the
   gasket as well as the O-ring.
-- Its top thermocouple sits on a thicker wall: in a 25 g hang-up it reaches 120 °C at 14 s, not 4 s.
+- Weld the longer pot in two placements on the fixture (§3, step 6), and face its tube with tailstock support.
 
 ## 0. Before ordering: three checks
 
@@ -48,11 +51,11 @@ The parts list is `BOM.md`, and alternatives are in `bom/README.md`.
 | Part | Machine | Program | Check |
 |---|---|---|---|
 | End cap Ø76.2 × 20, 316/316L: 8 mm floor, 12 mm rim at the tube's wall, R6 inside corner | lathe (blind pocket) | `cam/gcode/B_bottom_cap_op1.nc`, `_op2.nc` | `cam/out/lathe_B_bottom_cap.png` |
-| Pot tube, 3 in × 0.065, faced square to 82.35 (B': 183.0, faced the same way) | lathe (spider in the bore) | `B_body_tube_op1/2.nc` | `lathe_B_body_tube.png` |
+| Pot tube, 3 in × 0.065, faced square to 82.35 (B': 176.0, with the tailstock or a steady) | lathe (spider in the bore) | `B_body_tube_op1/2.nc` | `lathe_B_body_tube.png` |
 | Liner, 2-3/4 in × 0.065 304, faced to length | lathe (collet or soft jaws) | `B_liner_op1/2.nc` | `lathe_B_liner.png` |
 | Catch puck Ø70 × 25, 304; 6×45° underneath (clears the R6), 2×45° on top | lathe | `B_puck_op1/2.nc` | `lathe_B_puck.png` |
 | Weld-alignment V-block, 6061 | mill, 2 setups | `fixture_op1.nc`, `fixture_op2.nc` | CAMotics, `cam/out/mill_fixture_sections.png` |
-| B' only: the adapter, Ø90.9 × 32.7, from 4 in 316/316L bar (sheet 5) | lathe, 2 setups: the TC end, bore, cone and flange backs first, then the KF face and its recess on soft jaws. Cut the TC face's gasket groove to match a bought ferrule | `B_adapter_op1/2.nc` (49 min) | `lathe_B_adapter.png` |
+| B' only: the adapter, Ø90.9 × 39.7, from 4 in 316/316L bar (sheet 5) | lathe, 2 setups: the TC end, bore, cone and flange backs first (3 mm grooving-and-turning insert), then the KF face and its recess on soft jaws. Copy the tri-clamp flange and its gasket groove from a bought ferrule | `B_adapter_op1/2.nc` (58 min, without the groove) | `lathe_B_adapter.png` |
 
 The programs are Haas/LinuxCNC-style metric G-code. Prove them out in the shop's own CAM or simulator, at the
 shop's own speeds and feeds, before the first cut. Deburr everything. The liner must drop into the pot freely: the
@@ -84,6 +87,8 @@ gap is 1.5 mm a side when cold, and the FEA leaves at least 1.1 mm when hot.
    - W2b: the ferrule to the tube's top, chill on the ferrule face.
    - W3: the tube's bottom to the end cap's rim, wall to wall, 20 mm above the bottom. The cap's turned R6 inside
      corner takes the floor's thermal stress, so don't add a fillet bead inside.
+   - B': the pot is about 209 mm long, so it doesn't fit the 120 mm block in one placement. Weld W2b with the
+     ferrule overhanging one end, then slide the pot along so the cap overhangs the other end for W3.
 7. Check the inside of every weld with a borescope: full penetration, no sugaring, no drop-through. Then pickle or
    passivate the welds.
 8. **Faces and alignment:**
@@ -129,7 +134,7 @@ The FEA's stresses at these pressures are small: 9.5 MPa at +1.2 bar and 9.0 MPa
 
 | Channel | Alarm | What the FEA says it means |
 |---|---|---|
-| Top | **120 °C** | With the pile in the pot, the top stays at 26–46 °C even for 816 g of shot. 120 °C means hot metal is held near the KF joint, the Nov 13 failure mode. **It can't save the O-ring:** with 25 g of shot fused in the bore just under the joint, the O-ring passes 150 °C at 3 s and this alarm sounds at 4 s. Stop the pour, and replace the O-ring afterwards. |
+| Top | **120 °C** (B': **70 °C**) | With the pile in the pot, the top stays at 26–46 °C even for 816 g of shot. 120 °C means hot metal is held near the KF joint, the Nov 13 failure mode. **It can't save the O-ring:** with 25 g of shot fused in the bore just under the joint, the O-ring passes 150 °C at 3 s and this alarm sounds at 4 s. Stop the pour, and replace the O-ring afterwards. |
 | Bottom | **150 °C** | Shot is in the pot. It sounds 144 s after 816 g lands and 165 s after 400 g. A good run's powder (816 g arriving at 400 °C) peaks at 87 °C. 100 g of shot peaks at 107 °C, so no alarm doesn't prove there was no shot. **The stop rule during the pour stays visual:** if the plate isn't making powder within 20–30 s, close the sealing rod. |
 
 ## 6. Install

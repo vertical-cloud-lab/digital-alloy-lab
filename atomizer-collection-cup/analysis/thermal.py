@@ -243,7 +243,7 @@ def design_B(mass_g, liner=None, puck=True, puck_mat="S304", pile_mat="PILE", pi
         cavity = Polygon([(0, z["z_bot"]), (R_i + 0.01, z["z_bot"]), (R_i + 0.01, z["z_red"] + 8.0),
                           (P.JOINT.bore / 2 + 0.01, z["z_stub"] - 8.0),
                           (P.JOINT.bore / 2 + 0.01, P.JOINT.ring_thk / 2 + P.CONE_OUTLET_LEN), (0, P.JOINT.ring_thk / 2 + P.CONE_OUTLET_LEN)])
-    tc_top = ((P.JOINT.hub_od / 2, z["top"] - (P.JOINT.lip + 16.0) / 2) if adapter       # on the adapter's neck
+    tc_top = ((P.JOINT.hub_od / 2, z["z_tc"]) if adapter                                  # on the adapter's neck
               else (P.JOINT.tube_od / 2, (z["top"] - P.JOINT.lip - 1.5 + z["z_stub"]) / 2))
     probes = {"TC_top": tc_top,
               "TC_bottom": (z["R_o"], z["z_bot"] + 13.5),
@@ -454,7 +454,7 @@ CASES = {
     "B_816_puck12": ("B", 816, {"puck_h": 12.0}),
 
     "C_400_boro": ("C", 400, {"glass": "BORO"}),
-    # next step: the turned KF-50 to 3 in adapter, which puts the tri-clamp joint 33 mm under the KF face
+    # next step: the turned KF-50 to 3 in adapter, which puts the tri-clamp joint 40.5 mm under the KF face
     "B_816_adapter": ("B", 816, {"adapter": True}), "B_hangup_100_adapter": ("B", 100, {"hangup": True, "adapter": True}),
     "B_hangup_25_adapter": ("B", 25, {"hangup": True, "adapter": True}),
 }

@@ -48,7 +48,7 @@
     },
     "option_b_adapter": {
       "parts": 16,
-      "mass_kg": 3.61,
+      "mass_kg": 3.64,
       "lowest_point_z_mm": -252.0,
       "length_below_joint_mm": 252.0,
       "max_radius_mm": 99.3,

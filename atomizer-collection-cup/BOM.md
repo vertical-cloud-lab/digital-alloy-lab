@@ -10,7 +10,7 @@ overpressure ratings are in `bom/README.md`.
 |---|---|---|---|---:|---:|---:|---|
 | B1 | KF-50 x 2 in butt-weld stub, 304L, 19.05 mm (316L QF50-200-SSL not stocked) | A&N | [4000126](https://ancorp.com/product/4000126/) | 1 | 25.00 | 25.00 | 8 in stock |
 | B2 | 3 x 2 in concentric butt-weld reducer, 316L, 0.065 wall, 101.6 long | McMaster | [5237K471](https://www.mcmaster.com/5237K471/) | 1 | 32.13 | 32.13 | Delivers Monday (2026-11-30) |
-| B3 | 3 in OD x 0.065 316 tube, 12 in (the pot's tube: 82.35 mm + facing; B': 183.0 mm) | OnlineMetals | [4256](https://www.onlinemetals.com/en/buy/stainless-steel/3-od-x-0-065-wall-x-2-87-id-stainless-round-tube-316-welded/pid/4256) | 1 | 48.43 | 48.43 | not shown |
+| B3 | 3 in OD x 0.065 316 tube, 12 in (the pot's tube: 82.35 mm + facing; B': 176.0 mm) | OnlineMetals | [4256](https://www.onlinemetals.com/en/buy/stainless-steel/3-od-x-0-065-wall-x-2-87-id-stainless-round-tube-316-welded/pid/4256) | 1 | 48.43 | 48.43 | not shown |
 | B4 | 3-1/4 in 316 round bar, 1.5 in (end cap blank: 20 mm part + chuck + parting) | Speedy | [p-2646](https://www.speedymetals.com/p-2646-3-14-rd-316-stainless-steel-cold-finished-annealed.aspx) | 1 | 47.41 | 47.41 | not shown; UPS up to 90 in, longer by fr |
 | B5 | 2-3/4 in OD x 0.065 304 tube, 12 in (liner, in the pot) | McMaster | [11116N864](https://www.mcmaster.com/products/stainless-steel-round-tubes/multipurpose-304-stainless-steel-round-tubes~~/wall-thickness~0-065/) | 1 | 52.88 | 52.88 | not shown |
 | B6 | 3 in 304 round bar, 1.5 in (catch puck Ø70 x 25, in the pot) | Speedy | [p-1872](https://www.speedymetals.com/p-1872-3-rd-304-stainless-steel-cold-finished-annealed.aspx) | 1 | 28.16 | 28.16 | not shown |
@@ -38,14 +38,14 @@ overpressure ratings are in `bom/README.md`.
 | B23 | Copper chill block for the KF flange during W1; two strap clamps for the fixture | shop stock | | | | | |
 | | **Total priced** | | | | | **448.70** | |
 
-## B': B with the turned adapter in place of its welded upper part, $484.37 priced
+## B': B with the turned adapter in place of its welded upper part, $507.57 priced
 
-Everything in B except B1 and B2 (and one of the two B24 ferrules, unpriced), plus the adapter's blank. The pot's tube (B3) is cut to 183.0 mm instead of 82.35.
+Everything in B except B1 and B2 (and one of the two B24 ferrules, unpriced), plus the adapter's blank. The pot's tube (B3) is cut to 176.0 mm instead of 82.35.
 
 | Line | Item | Vendor | Part no. | Qty | Unit (USD) | Ext. (USD) | Stock / lead |
 |---|---|---|---|---:|---:|---:|---|
-| B'1 | 4 in 316 round bar, 2 in (B' adapter blank: 32.7 mm part + chuck + parting) | Speedy | [p-2649](https://www.speedymetals.com/p-2649-4-rd-316-stainless-steel-cold-finished-annealed.aspx) | 1 | 92.80 | 92.80 | not shown; UPS up to 90 in, longer by fr |
-| | **Total priced** (B 448.70, less B1 and B2 57.13, plus 92.80) | | | | | **484.37** | |
+| B'1 | 4 in 316 round bar, 2-1/2 in (B' adapter blank: 39.7 mm part + chuck + parting) | Speedy | [p-2649](https://www.speedymetals.com/p-2649-4-rd-316-stainless-steel-cold-finished-annealed.aspx) | 1 | 116.00 | 116.00 | not shown; UPS up to 90 in, longer by fr |
+| | **Total priced** (B 448.70, less B1 and B2 57.13, plus 116.00) | | | | | **507.57** | |
 
 ## A: catalogue cup (interim, small charges only), $197.84
 
@@ -65,7 +65,7 @@ Everything in B except B1 and B2 (and one of the two B24 ferrules, unpriced), pl
 
 | For | Equipment / tools |
 |---|---|
-| Turning (end cap, puck, liner, tube ends; B': the adapter) | CNC or manual lathe, 3-jaw chuck with soft jaws (B': one that holds 4 in bar), a tube spider; CNMG 432 and VNMG 331 inserts, a 16 mm boring bar (CCMT), a 3 mm parting blade (B': also used to groove between the adapter's flanges), a 25 mm drill |
+| Turning (end cap, puck, liner, tube ends; B': the adapter) | CNC or manual lathe, 3-jaw chuck with soft jaws (B': one that holds 4 in bar), a tube spider; CNMG 432 and VNMG 331 inserts, a 16 mm boring bar (CCMT), a 3 mm parting blade, a 25 mm drill; B': a 3 mm grooving-and-turning insert with 20 mm reach for the groove between the adapter's flanges |
 | Milling (fixture) | 3-axis mill or router that takes a 245 x 114 x 64 mm block; 50 mm face mill, 12 mm 3-flute carbide end mill (36 mm flute), 1/2 in 90 deg chamfer mill, 6 mm end mill, 10 mm spot drill, 5.0 mm drill, M6 x 1.0 tap |
 | Welding | TIG (pulsed DCEN, 5-60 A) with argon, a second argon line and tape or plugs for the back-purge, stainless-only brushes, pickling gel, a borescope to look at the inside of W2 and W3 |
 | Testing | water and the B13/B14b rig for the 1.2 bar hydro test of each welded part; an argon regulator to +0.3 bar for the soap test; the atomizer's own pump and gauge for the rate-of-rise test |

@@ -404,9 +404,9 @@ def b_split_profiles(recess=True):
 
 def b_adapter_profiles(recess=True):
     """Next-step variant of B's upper part (concept, not drawn or CAM'd): one turned 316L adapter from 4 in bar,
-    KF-50 flange on top, a neck for the KF clamp, an internal 45 deg cone from the 47.5 bore to the 72.9 bore, and
-    a 3 in tri-clamp ferrule face at the bottom, 32.7 mm below the KF face. The pot is the same as in
-    b_split_profiles but its tube is longer, so the joint sits about 100 mm higher above the pile."""
+    KF-50 flange on top, a neck for the KF clamp and the top thermocouple, an internal 45 deg cone from the 47.5 bore
+    to the 72.9 bore, and a 3 in tri-clamp flange at the bottom, 39.7 mm below the KF face. The pot is the same as in
+    b_split_profiles but its tube is longer, so the joint sits about 94 mm higher above the pile."""
     kf, tc, b = P.JOINT, P.TC3, P.B
     full, z = option_b_vessel_profile(recess)
     top = z["top"]
@@ -415,10 +415,12 @@ def b_adapter_profiles(recess=True):
     R_o, R_i = z["R_o"], z["R_i"]
     trf, trh = tc.flange_od / 2, tc.hub_od / 2
     t_edge3 = tc.lip - (trf - trh) * math.tan(math.radians(tc.taper_deg))
-    z_neck = top - 16.0                                  # below the KF clamp's lower lip
+    # the neck is long enough for the top thermocouple's 9 mm band under the widest KF clamp: KF clamps' lower faces
+    # sit 8-11.2 mm under the face (20, 22 and 26.4 mm wide), so the band goes 12.5-21.5 mm under it
+    z_neck = top - 23.0
     z_hub3 = z_neck - (trh - rh)                         # 45 deg out to the ferrule's hub
     z_fA = z_hub3 - tc.lip                               # ferrule face
-    z_cone0 = top - 18.0
+    z_cone0 = z_neck - 2.0                               # the bore stays 47.5 under the neck (5.55 mm wall)
     z_cone1 = z_cone0 - (R_i - rb)                       # 45 deg inside, 47.5 -> 72.9
     # R2 where the neck meets the 45 deg shoulder: a sharp inside corner there took the elastic thermal stress of a
     # 100 g hang-up to 6.3x yield (analysis/structural.py, upper part)
@@ -438,7 +440,7 @@ def b_adapter_profiles(recess=True):
            (0, z["z_bot"]), (0, flr)] + arc + [(R_i, z_fB)]
     gasket = [(R_i, z_fB), (trf, z_fB), (trf, z_fA), (R_i, z_fA)]
     z = dict(z, z_fA=z_fA, z_fB=z_fB, z_tt=z_fB - b["ferrule_len"], z_joint=(z_fA + z_fB) / 2,
-             z_cone0=z_cone0, z_cone1=z_cone1)
+             z_cone0=z_cone0, z_cone1=z_cone1, z_neck=z_neck, z_tc=top - 17.0)
     return up, pot, gasket, z
 
 
@@ -501,8 +503,8 @@ def option_b(with_liner=None, with_puck=True, explode=0.0, tcs=True, adapter=Fal
         # stub's end. Bottom: on the end cap's rim, 13.5 mm up from the bottom face, clear of W3 at 20 mm.
         z_tc = (z["top"] - kf.lip - 1.5 + z["z_stub"]) / 2
         r_tc = kf.tube_od / 2
-        if adapter:                       # on the adapter's neck, between the KF flange's hub and the 45 deg shoulder
-            z_tc, r_tc = z["top"] - (kf.lip + 16.0) / 2, kf.hub_od / 2
+        if adapter:                       # on the adapter's neck, under the KF clamp and above the 45 deg shoulder
+            z_tc, r_tc = z["z_tc"], kf.hub_od / 2
         for zz, rr, nm, hw in ((z_tc, r_tc, "top", 4.5), (z["z_bot"] + 13.5, z["R_o"], "bottom", 4.5)):
             band = tube(rr + 1.6, rr + 0.05, zz - hw - explode, zz + hw - explode)
             parts.append((f"B: thermocouple band clamp ({nm})", band, STEEL_DK, "304"))

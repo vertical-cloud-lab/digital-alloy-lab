@@ -704,8 +704,8 @@
     "adapter": true
    },
    "extra": {},
-   "nodes": 4015,
-   "elements": 7433,
+   "nodes": 4040,
+   "elements": 7484,
    "pile_h_mm": 51.4,
    "pile_top_mm_below_joint": 167.1,
    "view_factor_to_walls": 0.987,
@@ -724,11 +724,11 @@
      "t_first_200C_s": 0.5
     },
     "TC_TOP": {
-     "T_max": 43.2,
+     "T_max": 44.7,
      "t_at_max_s": 1320.0,
-     "T_at_60s": 27.9,
-     "T_at_300s": 34.3,
-     "T_at_3600s": 34.3,
+     "T_at_60s": 28.2,
+     "T_at_300s": 34.9,
+     "T_at_3600s": 35.3,
      "t_first_100C_s": null,
      "t_first_150C_s": null,
      "t_first_200C_s": null
@@ -744,11 +744,11 @@
      "t_first_200C_s": 206.1
     },
     "FLANGE_RIM": {
-     "T_max": 41.8,
-     "t_at_max_s": 1350.0,
-     "T_at_60s": 26.5,
-     "T_at_300s": 32.9,
-     "T_at_3600s": 33.8,
+     "T_max": 42.2,
+     "t_at_max_s": 1410.0,
+     "T_at_60s": 26.1,
+     "T_at_300s": 32.4,
+     "T_at_3600s": 34.3,
      "t_first_100C_s": null,
      "t_first_150C_s": null,
      "t_first_200C_s": null
@@ -764,27 +764,27 @@
      "t_first_200C_s": 177.3
     },
     "N_ORING": {
-     "T_max": 41.9,
-     "t_at_max_s": 1350.0,
-     "T_at_60s": 26.8,
-     "T_at_300s": 33.1,
-     "T_at_3600s": 33.8,
+     "T_max": 42.3,
+     "t_at_max_s": 1380.0,
+     "T_at_60s": 26.4,
+     "T_at_300s": 32.6,
+     "T_at_3600s": 34.4,
      "t_first_100C_s": null,
      "t_first_150C_s": null,
      "t_first_200C_s": null
     },
     "N_GASKET": {
-     "T_max": 61.9,
-     "t_at_max_s": 810.0,
-     "T_at_60s": 31.6,
-     "T_at_300s": 48.2,
-     "T_at_3600s": 39.0,
+     "T_max": 66.8,
+     "t_at_max_s": 799.0,
+     "T_at_60s": 32.4,
+     "T_at_300s": 52.0,
+     "T_at_3600s": 40.7,
      "t_first_100C_s": null,
      "t_first_150C_s": null,
      "t_first_200C_s": null
     }
    },
-   "runtime_s": 331.5
+   "runtime_s": 340.5
   },
   "B_816_k2": {
    "design": "B",
@@ -1240,38 +1240,38 @@
     "adapter": true
    },
    "extra": {},
-   "nodes": 4098,
-   "elements": 7521,
+   "nodes": 4101,
+   "elements": 7535,
    "pile_h_mm": 19.0,
    "pile_top_mm_below_joint": 4.0,
-   "view_factor_to_walls": 0.711,
-   "escaped_through_outlet": 0.113,
-   "returned_to_pile": 0.176,
-   "pile_radiated_peak_W": 483.3,
+   "view_factor_to_walls": 0.678,
+   "escaped_through_outlet": 0.126,
+   "returned_to_pile": 0.196,
+   "pile_radiated_peak_W": 428.2,
    "peaks": {
     "N_PILE": {
-     "T_max": 995.3,
+     "T_max": 985.0,
      "t_at_max_s": 0.5,
-     "T_at_60s": 316.4,
-     "T_at_300s": 178.7,
-     "T_at_3600s": 30.4,
+     "T_at_60s": 312.7,
+     "T_at_300s": 175.9,
+     "T_at_3600s": 30.9,
      "t_first_100C_s": 0.5,
      "t_first_150C_s": 0.5,
      "t_first_200C_s": 0.5
     },
     "TC_TOP": {
-     "T_max": 348.9,
+     "T_max": 335.6,
      "t_at_max_s": 18.5,
-     "T_at_60s": 291.3,
-     "T_at_300s": 177.9,
-     "T_at_3600s": 30.4,
+     "T_at_60s": 278.6,
+     "T_at_300s": 174.1,
+     "T_at_3600s": 30.9,
      "t_first_100C_s": 1.2,
      "t_first_150C_s": 1.7,
-     "t_first_200C_s": 2.2
+     "t_first_200C_s": 2.6
     },
     "TC_BOTTOM": {
      "T_max": 25.9,
-     "t_at_max_s": 2520.0,
+     "t_at_max_s": 2580.0,
      "T_at_60s": 25.0,
      "T_at_300s": 25.1,
      "T_at_3600s": 25.8,
@@ -1280,47 +1280,47 @@
      "t_first_200C_s": null
     },
     "FLANGE_RIM": {
-     "T_max": 298.9,
+     "T_max": 301.7,
      "t_at_max_s": 45.7,
-     "T_at_60s": 294.4,
-     "T_at_300s": 176.1,
-     "T_at_3600s": 30.3,
+     "T_at_60s": 297.5,
+     "T_at_300s": 174.0,
+     "T_at_3600s": 30.7,
      "t_first_100C_s": 8.7,
      "t_first_150C_s": 13.7,
      "t_first_200C_s": 18.5
     },
     "BOTTOM_CENTRE": {
      "T_max": 25.9,
-     "t_at_max_s": 2850.0,
+     "t_at_max_s": 2910.0,
      "T_at_60s": 25.0,
      "T_at_300s": 25.1,
-     "T_at_3600s": 25.8,
+     "T_at_3600s": 25.9,
      "t_first_100C_s": null,
      "t_first_150C_s": null,
      "t_first_200C_s": null
     },
     "N_ORING": {
-     "T_max": 305.9,
+     "T_max": 308.7,
      "t_at_max_s": 39.4,
-     "T_at_60s": 294.8,
-     "T_at_300s": 176.4,
-     "T_at_3600s": 30.3,
+     "T_at_60s": 298.0,
+     "T_at_300s": 174.3,
+     "T_at_3600s": 30.7,
      "t_first_100C_s": 0.9,
      "t_first_150C_s": 2.2,
      "t_first_200C_s": 5.6
     },
     "N_GASKET": {
-     "T_max": 186.6,
-     "t_at_max_s": 131.2,
-     "T_at_60s": 155.4,
-     "T_at_300s": 166.3,
-     "T_at_3600s": 30.4,
-     "t_first_100C_s": 33.9,
-     "t_first_150C_s": 60.0,
+     "T_max": 164.5,
+     "t_at_max_s": 180.0,
+     "T_at_60s": 118.1,
+     "T_at_300s": 155.7,
+     "T_at_3600s": 30.8,
+     "t_first_100C_s": 53.2,
+     "t_first_150C_s": 112.9,
      "t_first_200C_s": null
     }
    },
-   "runtime_s": 285.6
+   "runtime_s": 271.4
   },
   "B_hangup_25": {
    "design": "B",
@@ -1419,38 +1419,38 @@
     "adapter": true
    },
    "extra": {},
-   "nodes": 3907,
-   "elements": 7147,
+   "nodes": 3927,
+   "elements": 7188,
    "pile_h_mm": 4.7,
    "pile_top_mm_below_joint": 4.0,
    "view_factor_to_walls": 0.811,
    "escaped_through_outlet": 0.166,
    "returned_to_pile": 0.024,
-   "pile_radiated_peak_W": 282.3,
+   "pile_radiated_peak_W": 282.5,
    "peaks": {
     "N_PILE": {
-     "T_max": 970.4,
+     "T_max": 971.3,
      "t_at_max_s": 0.5,
-     "T_at_60s": 142.0,
-     "T_at_300s": 69.7,
-     "T_at_3600s": 26.2,
+     "T_at_60s": 144.4,
+     "T_at_300s": 69.3,
+     "T_at_3600s": 26.3,
      "t_first_100C_s": 0.5,
      "t_first_150C_s": 0.5,
      "t_first_200C_s": 0.5
     },
     "TC_TOP": {
-     "T_max": 123.8,
-     "t_at_max_s": 21.6,
-     "T_at_60s": 110.1,
-     "T_at_300s": 69.2,
-     "T_at_3600s": 26.2,
-     "t_first_100C_s": 6.5,
+     "T_max": 98.4,
+     "t_at_max_s": 45.7,
+     "T_at_60s": 96.9,
+     "T_at_300s": 67.4,
+     "T_at_3600s": 26.3,
+     "t_first_100C_s": null,
      "t_first_150C_s": null,
      "t_first_200C_s": null
     },
     "TC_BOTTOM": {
      "T_max": 25.2,
-     "t_at_max_s": 2490.0,
+     "t_at_max_s": 2520.0,
      "T_at_60s": 25.0,
      "T_at_300s": 25.1,
      "T_at_3600s": 25.2,
@@ -1459,10 +1459,10 @@
      "t_first_200C_s": null
     },
     "FLANGE_RIM": {
-     "T_max": 142.2,
+     "T_max": 143.9,
      "t_at_max_s": 33.9,
-     "T_at_60s": 128.8,
-     "T_at_300s": 69.6,
+     "T_at_60s": 131.1,
+     "T_at_300s": 69.2,
      "T_at_3600s": 26.2,
      "t_first_100C_s": 13.7,
      "t_first_150C_s": null,
@@ -1470,7 +1470,7 @@
     },
     "BOTTOM_CENTRE": {
      "T_max": 25.2,
-     "t_at_max_s": 2820.0,
+     "t_at_max_s": 2880.0,
      "T_at_60s": 25.0,
      "T_at_300s": 25.1,
      "T_at_3600s": 25.2,
@@ -1479,27 +1479,27 @@
      "t_first_200C_s": null
     },
     "N_ORING": {
-     "T_max": 157.0,
+     "T_max": 158.4,
      "t_at_max_s": 11.8,
-     "T_at_60s": 127.3,
-     "T_at_300s": 69.6,
-     "T_at_3600s": 26.2,
-     "t_first_100C_s": 1.1,
-     "t_first_150C_s": 4.1,
+     "T_at_60s": 129.7,
+     "T_at_300s": 69.2,
+     "T_at_3600s": 26.3,
+     "t_first_100C_s": 0.9,
+     "t_first_150C_s": 3.5,
      "t_first_200C_s": null
     },
     "N_GASKET": {
-     "T_max": 67.8,
-     "t_at_max_s": 180.0,
-     "T_at_60s": 50.8,
-     "T_at_300s": 64.4,
-     "T_at_3600s": 26.2,
+     "T_max": 60.9,
+     "t_at_max_s": 240.0,
+     "T_at_60s": 40.0,
+     "T_at_300s": 60.1,
+     "T_at_3600s": 26.3,
      "t_first_100C_s": null,
      "t_first_150C_s": null,
      "t_first_200C_s": null
     }
    },
-   "runtime_s": 240.2
+   "runtime_s": 234.7
   },
   "C_400": {
    "design": "C",
@@ -2202,9 +2202,9 @@
    "tc_bottom_at_3600s": 155.0
   },
   "B_hangup_25_adapter": {
-   "tc_top_120C_s": 14.0,
+   "tc_top_120C_s": null,
    "tc_bottom_150C_s": null,
-   "oring_150C_s": 4.0,
+   "oring_150C_s": 3.0,
    "oring_200C_s": null,
    "tc_bottom_at_60s": 25.0,
    "tc_bottom_at_3600s": 25.0

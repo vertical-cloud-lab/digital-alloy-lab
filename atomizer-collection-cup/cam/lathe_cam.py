@@ -68,6 +68,9 @@ TOOLS = {
     "part": Tool(4, "parting blade 3 mm (GTN-3)", 0.2, width=3.0, vc=60, f=0.05, side="part"),
     "drill": Tool(5, "25 mm drill (spot first), centre", 0.0, vc=20, f=0.10, side="drill"),
     "fgroove": Tool(6, "face-grooving tool 3 mm, dia range 40-110", 0.2, width=3.0, vc=50, f=0.03, side="fgroove"),
+    # a multi-directional grooving insert: plunges and side-turns (a self-grip parting insert isn't made to side-turn)
+    "groove": Tool(7, "grooving-and-turning insert 3 mm, 0.2 mm corners, 20 mm reach", 0.2, width=3.0, vc=60, f=0.05,
+                   side="part"),
 }
 
 
@@ -388,8 +391,8 @@ def gen(part):
         # At each blade position the tip goes to the highest point of the section (plus the nose radius) under the
         # blade's whole width, so the blade never enters the part, and on a wall that leans away from the groove
         # one of its corners follows the wall.
-        tp = TOOLS["part"]
-        p.use("part")
+        tp = TOOLS["groove"]
+        p.use("groove")
         # the section's outer edge as r(z), sampled finely and at every vertex (a steep flange back changes r by
         # ~4 mm per mm of z, so coarse samples would miss its corners)
         zs_env = np.unique(np.r_[np.arange(zmin, zmax, 0.005), [z for _, z in sec], zmax])

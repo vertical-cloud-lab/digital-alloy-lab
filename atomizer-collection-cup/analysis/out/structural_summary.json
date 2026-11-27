@@ -354,31 +354,31 @@
    "design": "B'",
    "case": "B_hangup_25_adapter",
    "t_s": 10.0,
-   "vm_max": 274.7,
+   "vm_max": 276.7,
    "at_rz": [
     23.9,
     -6.7
    ],
-   "T_there": 214.0,
+   "T_there": 216.0,
    "Sy_there": 119.0,
-   "vm_over_Sy": 2.3,
-   "T_max": 220.0,
-   "face_dish_um": 28.0
+   "vm_over_Sy": 2.33,
+   "T_max": 221.0,
+   "face_dish_um": 27.2
   },
   "B_hangup_100_adapter": {
    "design": "B'",
    "case": "B_hangup_100_adapter",
    "t_s": 10.0,
-   "vm_max": 599.6,
+   "vm_max": 492.2,
    "at_rz": [
-    29.3,
-    -17.6
+    23.9,
+    -15.5
    ],
-   "T_there": 291.0,
-   "Sy_there": 109.0,
-   "vm_over_Sy": 5.49,
-   "T_max": 399.0,
-   "face_dish_um": 15.9
+   "T_there": 397.0,
+   "Sy_there": 99.0,
+   "vm_over_Sy": 4.96,
+   "T_max": 403.0,
+   "face_dish_um": 28.8
   }
  }
 }

@@ -5,7 +5,7 @@ on the cone; the pot comes off every run.
 
 ## Before the pot goes on
 - [ ] Upper part on the cone: KF clamp closed finger-tight, centring ring and **over-pressure ring** in, top
-      thermocouple clamped on the stub.
+      thermocouple clamped on the stub (B': on the adapter's neck, just under the KF clamp).
 - [ ] **Shields in the cone's mouth:** at least one for aluminium; for copper alloys as many as AMAZEMET advises.
 - [ ] Nothing inside the upper part: no splash plate, no valve, no insert.
 - [ ] Pot clean and dry. Puck in, chamfer down; liner standing on it. Bottom thermocouple clamped on the cap's rim.
@@ -14,7 +14,7 @@ on the cone; the pot comes off every run.
 ## Putting the pot on
 - [ ] Lift the pot under the upper part, fit the gasket, close the 3 in tri-clamp, plug in the bottom thermocouple.
 - [ ] Safety lanyard from the pot to the frame, slack.
-- [ ] Meter on. Alarms: **top 120 °C, bottom 150 °C**. Logger running if you have one.
+- [ ] Meter on. Alarms: **top 120 °C (B': 70 °C), bottom 150 °C**. Logger running if you have one.
 
 ## Before melting
 - [ ] Rate of rise at full vacuum, pump valved off, 5 min. It should match the baseline: Edison's targets are about

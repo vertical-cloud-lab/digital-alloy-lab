@@ -345,10 +345,10 @@ def sheet_b_adapter(pdf):
         v = res.get(case, {}).get(key)
         return f"{v:.0f} C" if v is not None else "(not run)"
     fig, ax = sheet("B': turned KF-50 to 3 in adapter (concept)", 5,
-                    "316/316L round bar, 4 in (101.6) x 2 in (BOM line B'1)",
+                    "316/316L round bar, 4 in (101.6) x 2-1/2 in (BOM line B'1)",
                     ["Replaces B's welded upper part (stub + reducer + ferrule, welds W1, W2a). Lathe: cam/gcode/B_adapter_op*.nc.",
-                     "TC face: copy the gasket groove from a bought 3 in 14WMP ferrule *. KF face flat, Ra 0.8.",
-                     "TC end first (bore, cone, face), then the KF end on soft jaws. Flange backs: grooving tool.",
+                     "TC flange: copy its OD, land, 20 deg back and gasket groove from a bought 3 in 14WMP ferrule *.",
+                     "TC end first (bore, cone, face, flange backs), then the KF face on soft jaws. KF face flat, Ra 0.8.",
                      f"FEA, 816 g of shot: gasket {peak('B_816_adapter', 'N_GASKET')} (split B "
                      f"{peak('B_816', 'N_GASKET')}), KF O-ring {peak('B_816_adapter', 'N_ORING')}."])
     ax.set_position([0.03, 0.17, 0.58, 0.78])
@@ -359,7 +359,7 @@ def sheet_b_adapter(pdf):
     centreline(ax, -10, H + 10)
     rf, rh, rb, rr = kf.flange_od / 2, kf.hub_od / 2, kf.bore / 2, kf.recess_d / 2
     trf, trh, Ri = tc.flange_od / 2, tc.hub_od / 2, z["R_i"]
-    z_neck, z_c0, z_c1 = z["top"] - 16.0 - z0, z["z_cone0"] - z0, z["z_cone1"] - z0
+    z_neck, z_c0, z_c1 = z["z_neck"] - z0, z["z_cone0"] - z0, z["z_cone1"] - z0
     z_hub3 = z_neck - (trh - rh)
     # diameters
     dim_h(ax, -rf, rf, H + 12, f"KF-50 flange Ø{kf.flange_od:.2f}")
@@ -372,7 +372,7 @@ def sheet_b_adapter(pdf):
     leader(ax, (-rh - 0.35, z_neck - 0.2), (-rf - 40, z_neck - 12), "R2")
     leader(ax, (-(rb + Ri) / 2 + 0.6, (z_c0 + z_c1) / 2), (-rf - 40, (z_c0 + z_c1) / 2 + 8), "45 deg inside")
     leader(ax, (rf - 2.5, H - kf.lip + 0.8), (rf + 22, H + 1), f"{kf.taper_deg:.0f} deg back (ISO-KF)")
-    leader(ax, (trf - 2.0, tc.lip - 1.0), (trf + 12, tc.lip - 9), f"{tc.taper_deg:.0f} deg back from Ø{tc.hub_od:.1f} (tri-clamp)")
+    leader(ax, (trf - 2.0, tc.lip - 1.0), (trf + 12, tc.lip - 9), f"{tc.taper_deg:.0f} deg back from Ø{tc.hub_od:.1f} (tri-clamp) *")
     # heights, right
     x = trf + 55
     for y in (0, H, H - kf.lip, z_neck, tc.lip):
@@ -380,7 +380,7 @@ def sheet_b_adapter(pdf):
     dim_v(ax, x, 0, H, f"{H:.1f} overall")
     dim_v(ax, x - 9, H - kf.lip, H, f"{kf.lip:.2f}", fs=6.5)
     dim_v(ax, x - 18, z_neck, H, f"{H - z_neck:.1f}", fs=6.5)
-    dim_v(ax, x - 9, 0, tc.lip, f"{tc.lip:.1f}", fs=6.5)
+    dim_v(ax, x - 9, 0, tc.lip, f"{tc.lip:.1f} *", fs=6.5)
     # depths, left
     xl = -trf - 25
     for y in (z_c0, z_c1):
