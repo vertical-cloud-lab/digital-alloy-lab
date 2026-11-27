@@ -465,7 +465,33 @@ Reports, raw trajectories and the DOI check are in
 | `v2-single-track-plan.csv` | the grid points where single tracks would discriminate |
 | `v2-meltflow-runs-recoil-driven.csv` | the recoil-driven melt-flow experiment (section 6) |
 
-The Monte Carlo seeds are fixed. Rerunning `all` into an empty folder reproduced every number in `v2-summary.json`.
+The Monte Carlo seeds are fixed.
+
+**Reproducibility, checked in the final review (2026-11-27).** Every command below was rerun from a fresh
+checkout, in a fresh virtual environment, into empty folders with an empty download cache. The environment was
+Python 3.14.4 with numpy 2.5.5, scipy 1.18.1, pandas 3.1.1, numba 0.68.1 and pyamg 5.4.1, on a 4-vCPU runner.
+pycalphad 0.11.2 ran under Python 3.13, because symengine has no 3.14 wheel. Every CSV and JSON was then compared
+with the committed one:
+
+| Command | Result |
+|---|---|
+| both test scripts | 6 and 5 checks pass |
+| `all`, `explore`, `conduction`, `states` | identical (19 files) |
+| `optics` | identical, except the energy-balance residual in 4 rows of `v2-map-classes-optics-0.24.csv`, which is 2×10⁻⁵ either way |
+| `meltflow` | pool sizes within 6×10⁻⁵ relative, e.g. 163.31 against 163.32 µm. The committed CSV was refreshed from the rerun, because it predated two columns the code now writes |
+| `meltflow --drive` | within 8×10⁻⁵, except the blend run at the AM module's absorptance. It stops at the 60-iteration cap, and its liquidus length moved 0.1 %, from 346.56 to 346.93 µm |
+| `mapflow`, `mapflow --src-tag=-optics-0.24`, `plan` | both summaries identical; every pool within 1.3×10⁻⁴ relative, e.g. a depth at the hatch of 4.8065 against 4.8059 µm |
+| `keyhole_fp_liquid_activities_mc_al.py` | identical, except γ_Mg in 17 dilute-Mg rows, within 2×10⁻⁵ relative |
+
+Two things make reruns differ in their last digits. Neither shows in any number quoted on this page:
+- **The melt-flow solver's line sweeps race.** They run in parallel over lines that read their neighbours while
+  other threads update them, so the solver's results depend slightly on thread timing and on the thread count.
+  - When it is run from `keyhole_first_principles_v2.py`, numba has already started (through `keyhole_fp_shaped`)
+    before `keyhole_meltflow` sets its 2-thread default, so it uses every core.
+  - Red-black ordering of the sweeps, with the thread count pinned, would make it deterministic.
+- **The ray-table cache.** Each worker process caches ray tables by the refractive index rounded to 10⁻⁴, and
+  builds each from the first index it meets. So which point a worker solves first can move a converged state
+  within its tolerance.
 
 ```bash
 pip install numpy scipy pandas matplotlib openpyxl numba pyamg
@@ -474,14 +500,14 @@ python scripts/test_keyhole_meltflow.py                     # 5 checks, about 2.
 python scripts/keyhole_first_principles_v2.py all           # everything in sections 1-5 and 7, about 13 min on 2 cores
 python scripts/keyhole_first_principles_v2.py explore       # section 4, about 3 min
 python scripts/keyhole_first_principles_v2.py conduction    # the conduction-absorptance and deepest-state sensitivities
-python scripts/keyhole_first_principles_v2.py states        # every stable state against power, about 5 min
+python scripts/keyhole_first_principles_v2.py states        # every stable state against power, about 2 min
 python scripts/keyhole_first_principles_v2.py optics        # the maps and keyhole lines with a flat absorptance of 0.24, about 12 min
 python scripts/keyhole_first_principles_v2.py mapflow       # the maps' non-keyhole points with the melt-flow solver, about 16 min
 python scripts/keyhole_first_principles_v2.py mapflow --src-tag=-optics-0.24   # the same at the 0.24 absorptance
 python scripts/keyhole_first_principles_v2.py plan          # the single-track plan, from the CSVs above
 python scripts/keyhole_first_principles_v2.py meltflow --drive   # the recoil-driven experiment, about 15 min
-python scripts/keyhole_first_principles_v2.py meltflow      # section 6, about 11 min on 3 threads
+python scripts/keyhole_first_principles_v2.py meltflow      # section 6, about 11 min on 4 cores
 python scripts/keyhole_first_principles_v2.py figures
-# only to regenerate the activity table (pycalphad 0.11.2 and the orchid-project.org databases):
+# only to regenerate the activity table (pycalphad 0.11.2, which needs Python 3.13 or older, and the orchid-project.org databases):
 OPEN_TDB_ROOT=/tmp/orchid/data/databases python scripts/keyhole_fp_liquid_activities_mc_al.py
 ```
