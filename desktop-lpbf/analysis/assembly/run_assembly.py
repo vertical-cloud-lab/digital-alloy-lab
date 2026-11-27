@@ -415,13 +415,17 @@ def arm_place(run, st, idx, path, state, actor, tool, holdname, grasp=None, extr
             Gb = G @ Tm(p=(0.0, 0.0, -inset))                     # the part's back face, on the tool axis
             close_p = 1.0
             Tp = [T_obj @ Tm(p=o) @ inv(T_obj) @ Gb @ Tm(p=(0.0, 0.0, -(K.TC_H + z_tip))) @ a.tcp_local(close_p) for o in offs[k:]]
-            a.hold(body, inv(Gb @ Tm(p=(0.0, 0.0, -(K.TC_H + z_tip))) @ a.tcp_local(close_p)) @ T_obj)
+            off_push = inv(Gb @ Tm(p=(0.0, 0.0, -(K.TC_H + z_tip))) @ a.tcp_local(close_p)) @ T_obj
+            a.hold(body, off_push)
             fr2 = run.follow(actor, Tp, close_p, allow, exclude=idx)
             a.hold(body, off)
             if fr2["ok"]:
+                # round 9: where the push starts (push_at) and the part's offset from the closed fingers' TCP (push_off), so the
+                # recording draws the push with the fingers closed, as it was checked (round 8 drew the whole path with the
+                # fingers at the grasp's opening, so the push's open fingertips stood in the parts beside the seat)
                 fr = dict(ok=True, qs=fr["qs"] + fr2["qs"], hit=None, at=None, min_d=fr2["min_d"] if fr["min_d"] is None else
                           min(x for x in (fr["min_d"], fr2["min_d"]) if x is not None), with_=fr2["with_"] or fr["with_"],
-                          push_mm=round((len(offs) - k) * DS, 0))
+                          push_mm=round((len(offs) - k) * DS, 0), push_at=len(fr["qs"]), push_off=off_push, push_close=close_p)
             elif st.get("drop_ok") and (len(offs) - fr["at"]) * DS <= float(st.get("drop_mm", 12.0)):
                 fr = dict(ok=True, qs=fr["qs"], hit=None, at=None, min_d=fr["min_d"], with_=fr["with_"],
                           drop_mm=round((len(offs) - fr["at"]) * DS, 0))
@@ -651,9 +655,35 @@ def driver_for(run, i, phase, torque):
     return "screwdriver", ""
 
 
+def arm_state(run, n):
+    """Round 9: the planner's state of arm n (its MiR's dock, joints, gripper, tool and caps), to put back after an attempt
+    that is not recorded."""
+    a = run.arm(n)
+    return dict(x=run.cl.dock[n], q=np.asarray(run.q[n], float).copy(), close=float(a.close), grip=dict(a.grip), caps=dict(a.caps),
+                cap_spec=a.cap_spec, tool_name=a.tool_name, tool_tcp=np.asarray(a.tool_tcp, float).copy(), held=a.held)
+
+
+def arm_restore(run, n, s):
+    """Round 9: put arm n back as arm_state() found it. A failed screw attempt is recorded as a failed screw with no motion, so
+    the arm must stay where the recording has it. In round 8 it was left at the failed attempt's last pose, MiR dock and tool,
+    and the other arm was then planned against that pose while the recording drew it elsewhere: the two angle-head nutrunners
+    31 mm into each other (chapter 41, frames 3635-3641, F06's screws #3-#4 handed to arm B)."""
+    a = run.arm(n)
+    a.release()
+    if run.cl.dock[n] != s["x"]:
+        run.cl.move_mir(n, s["x"])
+    a.grip, a.caps, a.cap_spec, a.tool_name, a.tool_tcp = dict(s["grip"]), dict(s["caps"]), s["cap_spec"], s["tool_name"], s["tool_tcp"]
+    a._rebuild()
+    if s["held"] is not None:
+        a.hold(*s["held"])
+    run.q[n] = np.asarray(s["q"], float).copy()
+    a.place(run.q[n], s["close"])
+
+
 def drive_screw(run, i, phase, actor, long_bit=None, state=None, torque=None, force_driver=None):
     """Screwdriver with the screw on its bit, from the hole's mouth to the seat. Returns a result dict."""
     sc, cl = run.sc, run.cl
+    s_entry = arm_state(run, actor)
     st_ = state or {}
     T = cl.T_phase(phase)
     F0, c = CK.screw_frame(sc, i, st_)
@@ -680,7 +710,7 @@ def drive_screw(run, i, phase, actor, long_bit=None, state=None, torque=None, fo
         best = None
         n_plans = 0
         drive_ok = False
-        for dk in run.docks_for(x_target)[:2]:
+        for dk in run.docks_for(x_target)[:3 if getattr(run, "_hold_trial", False) else 2]:
             n_plans = 0
             run.dock(actor, dk)
             run.set_tool(actor, tool, long_bit, tip_d=round(1.15 * s_hex + 0.2, 1))
@@ -741,9 +771,11 @@ def drive_screw(run, i, phase, actor, long_bit=None, state=None, torque=None, fo
         tool_why = (tool_why + "; " if tool_why else "") + f"{first_fail[0]} blocked ({first_fail[1][:60]})"
     elif first_fail and len(drivers) > 1:
         best["why"] = f"{first_fail[0]}: {first_fail[1][:90]}; also no way with {', '.join(drivers[1:])}"
-    if best["qs"]:
+    if best["ok"] and best["qs"]:
         run.q[actor] = best["qs"][-1]
         a.place(run.q[actor])
+    elif not best["ok"]:
+        arm_restore(run, actor, s_entry)        # round 9: nothing of a failed attempt is recorded, so the arm has not moved
     run.last_roll = getattr(run, "last_roll", {})
     run.last_roll[actor] = best["roll"]
     # clearance of the screwdriver body to everything at the seat
@@ -773,8 +805,13 @@ def do_screws(run, st, row, near=None, actor=None):
     for i in idx:
         r = drive_screw(run, i, st["phase"], actor, st.get("long_bit"), torque=st.get("torque_Nm"), force_driver=st.get("driver"))
         r["arm"] = actor
-        if not r["ok"] and not st.get("holder_busy"):
+        if r["ok"]:
+            retreat(run, actor, 30.0, names=r.get("dest", ()))
+        elif not st.get("holder_busy"):
             other = run.other(actor)
+            # round 9: the arm that could not drive it parks first (a planned, recorded move), so the other arm is planned
+            # against where it really is and has the room it leaves
+            go_park(run, actor)
             r2 = drive_screw(run, i, st["phase"], other, st.get("long_bit"), torque=st.get("torque_Nm"), force_driver=st.get("driver"))
             if r2["ok"]:
                 r2["arm"] = other
@@ -783,9 +820,11 @@ def do_screws(run, st, row, near=None, actor=None):
                 r = r2
             run.arm(other).release()               # never leave a screw hanging on the other arm's bit
             go_park(run, other)
+        run.arm(actor).release()
         per.append((i, r))
         log(f"   {run.sc.short(i)[-12:]}: {'ok' if r['ok'] else ('drive clear, approach not planned' if r['drive_ok'] else r['why'][:80])}")
-        retreat(run, actor, 30.0, names=r.get("dest", ()))
+        if not r["ok"] and st.get("later_ok"):
+            continue            # round 9: left for a later step of the same joint (C00d's last screw: C01c, from above)
         run.add([i], st["grp"], st["phase"])
         run.done_screws.add(i)
     go_park(run, actor)
@@ -870,6 +909,21 @@ def hold_first(run, st, u, holder):
     lb = next((x.get("long_bit") for x in SQ.steps() if x.get("joint") == joint and x.get("do") == "screws"), None)
     run._hold_trial = True
     per = []
+    # round 9: a screw under the holding tool's body can't be driven while it holds (the VGC10 is 100 x 100 mm: on the Ø100 window
+    # flange and retaining ring, F33b and F37b, it covers both bolt circles, r 40 and r 32)
+    Th = a.tcp(run.q[holder])
+    tb = {"vacuum": (50.0, 50.0), "ringpad": (50.0, 50.0), "nozzle": (50.0, 50.0)}.get(a.tool_name)
+    covered = []
+    if tb is not None:
+        for i in list(order):
+            pl = inv(Th) @ np.r_[Pw[i], 1.0]
+            if abs(pl[0]) < tb[0] and abs(pl[1]) < tb[1]:
+                covered.append(i)
+        if covered:
+            res["covered"] = len(covered)
+            res["fails"].append(f"{len(covered)} of {len(order)} screws under the holding arm's {a.tool_name} gripper "
+                                f"({2 * tb[0]:.0f} x {2 * tb[1]:.0f} mm body)")
+            order = [i for i in order if i not in covered]
     try:
         for i in order[:k + 1]:
             if len(res["driven"]) >= k:
@@ -884,9 +938,7 @@ def hold_first(run, st, u, holder):
                 per.append((i, r))
             else:
                 res["fails"].append(f"{sc.short(i)[-8:]}: {r['why'][:100]}")
-                run.arm(driver).release()
-                run.q[driver] = run.arm(driver).park_q()     # nothing was recorded for the attempt: the arm is still parked
-                run.arm(driver).place(run.q[driver])
+                run.arm(driver).release()          # nothing was recorded for the attempt; drive_screw put the arm back (round 9)
     finally:
         run._hold_trial = False
     if res["driven"]:
@@ -916,6 +968,16 @@ def do_flip(run, st, row):
     zg = -60.0 if grp == "body" else -41.0          # tube between flange and collar / the piston head
     G_m = frame_zx((0.0, 1.0, 0.0), (-1.0, 0.0, 0.0), (0.0, 0.0, zg))     # from the front, fingers across x, TCP on the axis
     width = 56.8 if grp == "body" else 50.2
+    if grp == "body" and any("handle (6061" in sc.label(i) for i in idx):
+        # round 9: once the handle is on (M21), the module is turned over by the handle's I-section grip block, which is there
+        # for the 2F-85 (module_params.MODULE_GRIP: the pads close on the 40 mm web, from the front, as ops.py's module job takes
+        # it). Round 8 kept gripping the tube at z -60 from the front, so the gripper's body sat 78 mm inside the handle's arm and
+        # grip block, which run 8's planner did not check against the part it held (chapter 40, frames 2958-3024 and 3169-3241)
+        import module_params as MP
+        g = MP.MODULE_GRIP
+        G_m = frame_zx((0.0, 1.0, 0.0), (-1.0, 0.0, 0.0), (0.0, 0.5 * (g["y0"] + g["y1"]), 0.5 * (g["z_web"][0] + g["z_web"][1])))
+        width = float(g["web_w"])
+        row["grasp"] = "the handle's grip block (web 40 mm)"
     body = run.held_body(idx, f"held:{st['id']}", {})
     cl.take(idx)
     lift = 320.0
@@ -1131,6 +1193,8 @@ def do_dual(run, st, row):
         cg = A.close_for_gap(float(st.get("grip_gap", 16.0 if "Base plate" in st["label"] or "bridge" in st["label"].lower() else 30.0)))
         dres = CM.dual(run, st, best, frames, body, idx, gA, gB, cg, cg)
         row["approach"] = (dres or {}).get("approach")
+        if (dres or {}).get("hook"):
+            row["hoist_hook"] = dres["hook"]          # round 9: the hook's path over the part, checked (commit.hoist_hook)
     if best.get("qsA"):
         run.q["A"], run.q["B"] = best["qsA"][-1], best["qsB"][-1]
         A.place(run.q["A"], A.close)

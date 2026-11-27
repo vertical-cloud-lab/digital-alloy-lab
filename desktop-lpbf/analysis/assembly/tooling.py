@@ -282,7 +282,12 @@ def fixture_B(z_top, x0=-420.0, x1=310.0, y0=-265.0, y1=215.0):
     return _fuse(*cols, foot)
 
 
-TRUNNION = dict(h_axis=1000.0, half_span=330.0, stand=(90.0, 260.0), shaft_d=50.0, jaw=(12.0, 90.0, 70.0), jaw_y=-20.0, jaw_z=60.0)
+TRUNNION = dict(h_axis=1000.0, half_span=330.0, stand=(90.0, 260.0), shaft_d=50.0, jaw=(12.0, 90.0, 70.0), jaw_y=-20.0, jaw_z=60.0,
+                bore_d=53.0, bore_depth=60.0, shaft_in=50.0)
+# round 9: each stand has its bearing bore (Ø53 x 60 deep, for the Ø50 shaft) and the shaft runs 50 mm into it. Round 8's shaft
+# ended flush on the stands' solid faces, which the frame audit counted as the jaws 88 mm into their stands in every frame of
+# chapter 41 (a zero-clearance face contact read as containment); now the parts are clear of each other by 1.5 mm radially and
+# 10 mm at the bore's bottom, as a shaft in its bearing is.
 
 
 def trunnion_stands():
@@ -296,7 +301,10 @@ def trunnion_stands():
         xa = s_ * hs
         parts.append(_box(min(xa, xa + s_ * sx), max(xa, xa + s_ * sx), -sy / 2, sy / 2, -h, 60.0))
         parts.append(_box(min(xa, xa + s_ * sx), max(xa, xa + s_ * sx), -sy, sy, -h, -h + 20.0))
-    return _fuse(*parts)
+    out = _fuse(*parts)
+    for s_ in (-1, 1):
+        out = out.cut(cq.Solid.makeCylinder(t["bore_d"] / 2, t["bore_depth"], V(s_ * hs, 0, 0), V(s_, 0, 0)))
+    return out.clean()
 
 
 def trunnion_jaws():
@@ -310,7 +318,7 @@ def trunnion_jaws():
         parts.append(_box(min(x_face, x_face + s_ * jt), max(x_face, x_face + s_ * jt), t["jaw_y"] - jy / 2, t["jaw_y"] + jy / 2,
                           t["jaw_z"] - 50.0 - jz / 2, t["jaw_z"] - 50.0 + jz / 2))
         x0 = x_face + s_ * jt
-        parts.append(cq.Solid.makeCylinder(t["shaft_d"] / 2, abs(t["half_span"] - abs(x0)), V(x0, 0, 0), V(s_, 0, 0)))
+        parts.append(cq.Solid.makeCylinder(t["shaft_d"] / 2, abs(t["half_span"] - abs(x0)) + t["shaft_in"], V(x0, 0, 0), V(s_, 0, 0)))
     return _fuse(*parts)
 
 
