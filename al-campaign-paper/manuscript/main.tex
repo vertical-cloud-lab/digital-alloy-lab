@@ -86,7 +86,7 @@ In Al--Mg--Zr alloys, primary L1\textsubscript{2} Al\textsubscript{3}Zr particle
 Inoculant particles added to the powder suppress cracking in 7075 and 6061~\cite{martin2017,opprecht2020}.
 Al--Mn--Cr--Zr-based alloys designed for LPBF~\cite{almncr2022,alloyF2024} reach about \SI{390}{MPa} yield strength as built~\cite{almncrzr2024}, Al--Mg--Mn--Er--Zr alloys about \SI{440}{MPa} after aging~\cite{almgmnerzr2022}, and Al--Ce--Mn alloys keep their strength to high temperature~\cite{plotkowski2020}.
 Several scandium-free powders are now sold for LPBF: Al--Mn--Cr--Zr and Al--Mg--Zr--Mn grades with datasheet yield strengths well above \AlSi's after a direct age, and an Al--Fe--Zr grade that matches it~\cite{ds_hoganas,ds_al5x1,ds_cp1}.
-Computational design has produced printable alloys too, by CALPHAD-based integrated computational materials engineering~\cite{thapliyal2020} and by CALPHAD coupled with Bayesian optimization~\cite{taherimousavi2025}, although with scandium or rare-earth additions.
+Computational design has produced printable alloys too: by CALPHAD-based integrated computational materials engineering~\cite{thapliyal2020} and by CALPHAD coupled with Bayesian optimization~\cite{taherimousavi2025}, although with scandium or rare-earth additions, and by CALPHAD-aided design of a crack-free Al--Mg--Si--Ti alloy refined by Al$_3$Ti, with neither~\cite{wen2024}.
 Two problems remain.
 First, few of these alloys have been compared with \AlSi printed and tested in the same way~\cite{alsimg2020}, so whether an alloy is ``better'' depends on which datasheet it is compared with (Fig.~\ref{fig:map}a, Section~\ref{sec:benchmark}).
 Second, removing scandium does not by itself reduce the critical-mineral burden. The final 2025 U.S.\ list includes aluminum and silicon themselves, as well as Mg, Mn, Cr, Zr, Ti, Cu, Ni and the rare earths; of the elements used in these alloys, only iron is absent~\cite{fr2025}. A claim of ``less critical minerals'' therefore needs a burden metric that weights each element, stated in advance~\cite{graedel2012,mulukutla2025}.
@@ -192,7 +192,7 @@ To separate the effect of the alloy from that of the powder route, the finalists
 \subsection{Heat treatment}
 
 \AlSi specimens were tested as built and after a stress relief at \placeholder{\SI{300}{\celsius} for \SI{2}{h}}.
-Each candidate was tested as built and after one direct-aging treatment chosen before printing from the CALPHAD precipitation calculations and the literature for its family \placeholder{(e.g.\ \SI{400}{\celsius}, \dots~h for Zr-bearing alloys~\cite{croteau2018})}.
+Each candidate was tested as built and after one direct-aging treatment chosen before printing from the CALPHAD precipitation calculations and the literature for its family; direct aging, without a solution treatment, can work because PBF-LB/M leaves a supersaturated matrix, as shown for a Mg$_2$Si-rich Al alloy~\cite{solanki2026} \placeholder{(e.g.\ \SI{400}{\celsius}, \dots~h for Zr-bearing alloys~\cite{croteau2018})}.
 
 \subsection{Density, microstructure and hardness}
 
