@@ -71,7 +71,9 @@ the video, each tested on its steps alone (scratch recordings, run 13's table la
   Test: C00a passes, its fetch is "person" and no table pick is recorded (of the planned picks only C00a carries such pieces;
   F54's bridge, with the lens fitted in F53, was already staged), so the planned table picks would fall from 62 to 61.
 - **Not done:** checking tools and parts against the part being placed along insertion paths (W4's 73 part-in-part pairs) is
-  the next one; it was not attempted in the time.
+  the next one; it was not attempted in the time. Example: F10f's right liner, 37.5 mm in the chamber body on a move the
+  planner checked. The planner's FCL check (and `rec_check.py`) sees surfaces crossing, not a thin part lying wholly inside
+  another, which the frame audit finds by winding numbers: a containment test on the held part's path is where to start.
 
 ## Round 8 (2026-11-26): run 12, two hands, MiRs that drive like MiRs, fixed cameras
 
