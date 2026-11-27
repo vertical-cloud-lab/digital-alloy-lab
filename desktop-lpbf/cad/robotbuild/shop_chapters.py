@@ -301,115 +301,78 @@ def _wrap(a):
 
 
 class Crew:
-    """Two people (shop_scene's person and a second people.Person). Nobody translates without walking: the gait phase
-    advances 2 pi per people.Person.STRIDE mm walked (backwards when the body moves against its heading), amp > 0
-    while moving; a turn on the spot is small steps (the feet travel ~0.25 m per radian); otherwise they stand."""
+    """Two people (shop_scene's person and a second people.Person). Round 9: people.py's Gait locks the feet, so a body
+    is moved by setting x, y and hd every frame along a path a person can walk (eased, under 1.3 m/s, under 12 deg a
+    frame on the spot) and the feet step after it; place() puts someone somewhere new across a cut."""
 
     def __init__(self, scn):
         self.scn = scn
         self.p = [scn.person, scn.person2]
-        self.st = [dict(x=0.0, y=0.0, hd=0.0, phase=0.0, amp=0.0, lean=0.0, placed=False) for _ in self.p]
-        self.log = []                                         # (who, moved_mm, phase_step, amp)
+        self.st = [dict(x=0.0, y=0.0, hd=0.0, lean=0.0, placed=False) for _ in self.p]
 
     def show(self, a):
         for p in self.p:
             p.show(a)
 
     def place(self, i, x, y, hd=0.0):
-        """Between shots only: where person i stands when the next shot opens."""
-        self.st[i].update(x=x, y=y, hd=hd, amp=0.0, lean=0.0, placed=True)
-        self.p[i].set(x=x, y=y, hd=hd, amp=0.0, phase=self.st[i]["phase"], hands={"l": None, "r": None}, lean=0.0,
-                      look=None)
+        """Between shots only: where person i stands when the next shot opens (both feet planted, no steps)."""
+        self.st[i].update(x=x, y=y, hd=hd, lean=0.0, placed=True)
+        self.p[i].place(x=x, y=y, hd=hd, hands={"l": None, "r": None}, lean=0.0, look=None, palm={"l": None, "r": None},
+                        grip={"l": 0.3, "r": 0.3})
 
-    def step(self, i, x, y, hd, hands=None, look=None, lean=0.0):
+    def step(self, i, x, y, hd, hands=None, look=None, lean=0.0, palm=None, grip=None):
         s = self.st[i]
-        dx, dy = x - s["x"], y - s["y"]
-        d = math.hypot(dx, dy)
-        dh = abs(_wrap(hd - s["hd"]))
-        fwd = (-math.sin(math.radians(s["hd"])), math.cos(math.radians(s["hd"])))
-        sign = 1.0 if dx * fwd[0] + dy * fwd[1] >= -1e-9 else -1.0
-        moved = d + 250.0 * math.radians(dh)
-        dph = sign * 2 * math.pi * moved / SS.people.Person.STRIDE
-        s["phase"] += dph
-        amp = 1.0 if d > 3.0 else (0.45 if dh > 0.3 else (0.25 if d > 0.3 else 0.0))
-        s.update(x=x, y=y, hd=hd, amp=amp, lean=lean)
-        p = self.p[i]
-        p.set(x=x, y=y, hd=hd, amp=amp, phase=s["phase"], hands=hands or {"l": None, "r": None}, look=look, lean=lean)
-        if hands:
-            # people.py grounds the shoes after the arm IK, so a walking body's bob (30-45 mm) moves the hands off
-            # their targets: aim again, less the error of the first pose (the bob doesn't depend on the arms)
-            fix = {}
-            for sd, tgt in hands.items():
-                if tgt is not None:
-                    e = p.hand_point(sd) - np.asarray(tgt, float)
-                    fix[sd] = tuple(np.asarray(tgt, float) - e) if np.linalg.norm(e) > 3.0 else tgt
-            if any(fix[sd] is not hands[sd] for sd in fix):
-                p.set(hands=fix)
-        self.log.append((i, round(d, 2), round(dph, 4), amp))
+        s.update(x=x, y=y, hd=hd, lean=lean)
+        kw = dict(x=x, y=y, hd=hd, hands=hands or {"l": None, "r": None}, look=look, lean=lean)
+        kw["palm"] = palm or {"l": None, "r": None}
+        if grip is not None:
+            kw["grip"] = grip
+        self.p[i].set(**kw)
 
-    def step_back(self, w, cam, caption, sub, step, dist=380.0, n=18):
-        """Both take a few steps back (a backwards gait: the phase runs back with the distance), arms down."""
-        st0 = [(s_["x"], s_["y"], s_["hd"]) for s_ in self.st]
-        for k in range(n):
-            u = ease((k + 1) / n)
-            for i, (x0, y0, hd) in enumerate(st0):
-                a = math.radians(hd)
-                self.step(i, x0 + math.sin(a) * dist * u, y0 - math.cos(a) * dist * u, hd)
-            w.frame(self.scn, cam, caption, sub=sub, who=["person"], step=step, status="person")
-        for i, (x0, y0, hd) in enumerate(st0):
-            self.step(i, self.st[i]["x"], self.st[i]["y"], hd)
-
-    def walk_to(self, w, targets, cam, caption, sub, step, speed=900.0, face=HD):
-        """Both turn towards their targets [(x, y)] (small steps), walk there (heading along the way), then turn on
-        the spot to `face` (deg)."""
+    def walk_to(self, w, targets, cam, caption, sub, step, speed=900.0, face=HD, settle=6):
+        """Both turn towards their targets [(x, y)], walk there (heading along the way, eased in and out), turn to
+        `face` (deg) and stand while their last steps settle."""
         starts = [(s["x"], s["y"]) for s in self.st]
         dist = [math.hypot(tx - sx, ty - sy) for (tx, ty), (sx, sy) in zip(targets, starts)]
-        n = max(int(math.ceil(max(dist) / (speed / FPS))), 1)
-        heads = [math.degrees(math.atan2(-(tx - sx), ty - sy)) if d_ > 1 else s["hd"]
+        n = max(int(math.ceil(max(dist) / (speed / FPS) * 1.4)), 1)        # eased: the peak is ~1.4x the mean
+        heads = [math.degrees(math.atan2(-(tx - sx), ty - sy)) if d_ > 30 else s["hd"]
                  for (tx, ty), (sx, sy), d_, s in zip(targets, starts, dist, self.st)]
 
         def turn(goal):
             h0 = [s["hd"] for s in self.st]
-            nt = max(max(int(abs(_wrap(g_ - h_)) / 12.0) for g_, h_ in zip(goal, h0)), 0)
+            nt = max(max(int(math.ceil(abs(_wrap(g_ - h_)) / 9.0)) for g_, h_ in zip(goal, h0)), 0)
             for k in range(nt):
-                u = (k + 1) / nt
+                u = ease((k + 1) / nt)
                 for i in range(2):
                     self.step(i, self.st[i]["x"], self.st[i]["y"], h0[i] + _wrap(goal[i] - h0[i]) * u)
                 w.frame(self.scn, cam, caption, sub=sub, who=["person"], step=step, status="person")
 
         turn(heads)
         for k in range(n):
-            u = (k + 1) / n
+            u = ease((k + 1) / n)
             for i in range(2):
                 sx, sy = starts[i]
                 tx, ty = targets[i]
                 self.step(i, sx + (tx - sx) * u, sy + (ty - sy) * u, heads[i])
             w.frame(self.scn, cam, caption, sub=sub, who=["person"], step=step, status="person")
         turn(list(face))
-        for i in range(2):
-            self.step(i, self.st[i]["x"], self.st[i]["y"], face[i])
+        for k in range(settle):
+            for i in range(2):
+                self.step(i, self.st[i]["x"], self.st[i]["y"], self.st[i]["hd"])
+            w.frame(self.scn, cam, caption, sub=sub, who=["person"], step=step, status="person")
+
+    def step_back(self, w, cam, caption, sub, step, dist=420.0, n=20):
+        """Both take a few steps back (the Gait backs them up), arms down."""
+        st0 = [(s_["x"], s_["y"], s_["hd"]) for s_ in self.st]
+        for k in range(n + 6):
+            u = ease(min(1.0, (k + 1) / n))
+            for i, (x0, y0, hd) in enumerate(st0):
+                a = math.radians(hd)
+                self.step(i, x0 + math.sin(a) * dist * u, y0 - math.cos(a) * dist * u, hd)
+            w.frame(self.scn, cam, caption, sub=sub, who=["person"], step=step, status="person")
 
 
 PERSON_RESULTS = {}
-
-
-def stance_xy(i, mid, y_max=Y_BODY_MAX):
-    """Person i's body origin (station x, y) and lean for hands around `mid` (station): turned HD[i] in towards its
-    end of the load, the hands 60 mm to its inner side and 380 mm ahead; never past Y_BODY_MAX (outside the machine),
-    leaning to reach."""
-    a = math.radians(HD[i])
-    fwd = np.array([-math.sin(a), math.cos(a)])
-    right = np.array([math.cos(a), math.sin(a)])
-    inner = right if i == 0 else -right
-    b = np.asarray(mid, float)[:2] - 60.0 * inner - 380.0 * fwd
-    if y_max is not None and b[1] > y_max:
-        b = b - fwd * (b[1] - y_max) / fwd[1]
-    reach = float((np.asarray(mid, float)[:2] - b) @ fwd)
-    # people.Person's arms are 520 mm shoulder to palm: probed, a lean of 40 deg reaches 600 mm ahead at 0.95-1.1 m,
-    # 55 deg 760 mm (gaps under 15 mm); so the lean grows with the reach and with how low the hands are
-    z = float(np.asarray(mid, float)[2]) if len(mid) > 2 else 1000.0
-    lean = float(np.clip(36.0 + 0.09 * (reach - 380.0) + 0.08 * (1000.0 - z), 32.0, 56.0))
-    return b[0], b[1], lean
 
 
 def end_hands(m, P, side, fz=0.45, fy=(0.15, 0.42)):
@@ -428,103 +391,187 @@ def end_hands(m, P, side, fz=0.45, fy=(0.15, 0.42)):
     for f in fy:
         q = (lo + hi) / 2
         q = q.copy()
-        q[ax] = (hi[ax] + 4.0) if sx[ax] > 0 else (lo[ax] - 4.0)
+        q[ax] = hi[ax] if sx[ax] > 0 else lo[ax]
         q[ay] = (hi[ay] - f * (hi[ay] - lo[ay])) if sy[ay] > 0 else (lo[ay] + f * (hi[ay] - lo[ay]))
         q[az] = (lo[az] + fz * (hi[az] - lo[az])) if sz[az] > 0 else (hi[az] - fz * (hi[az] - lo[az]))
         pts.append(q)
     return pts
 
 
-def team_lift(w, scn, crew, name, spec, P_from, P_to, kg, caption, sub, step, cam=None, hand_pts=None, lift_mm=70.0,
-              check_items=None, n_move=None, walk_from=None, hide_after=True, M_st=None, y_max=Y_BODY_MAX):
-    """Two people lift a load from P_from to P_to (station-frame poses of the load's own frame) together: they walk
-    to their ends of it, put both hands on it, lift, carry it (walking forward, leaning to reach), set it down and let
-    go. The load turns from P_from's to P_to's orientation during the carry (slerp). hand_pts: {person: (left hand,
-    right hand)} in the load's frame (default: the end faces at P_from, see end_hands)."""
+def reach_of(org, hd, lean, hands):
+    """people.carry()'s reach rule: how far (mm) the harder of the two hands is beyond 470 mm of its shoulder (< 0:
+    within reach) for a body at org (world x, y) facing hd (deg) and leaning `lean` (deg)."""
+    a = math.radians(hd)
+    right = np.array([math.cos(a), math.sin(a)])
+    fwd = np.array([-math.sin(a), math.cos(a)])
+    yp, zp = SS.people.HIP_PIVOT
+    lr = math.radians(lean)
+    sy = yp + (15.2 - yp) * math.cos(lr) + (1407.0 - zp) * math.sin(lr)
+    sz = zp + (1407.0 - zp) * math.cos(lr) - 25.0
+    worst = -1e9
+    for s, sx in (("l", -1.0), ("r", 1.0)):
+        h = np.asarray(hands[s], float)
+        loc = np.array([(h[:2] - org) @ right, (h[:2] - org) @ fwd, h[2]])
+        worst = max(worst, float(np.linalg.norm(loc - np.array([sx * 174.7, sy, sz]))) - 470.0)
+    return worst
+
+
+def pair_lift(w, scn, crew, name, spec, keys, kg, caption, sub, step, cam, hand_pts=None, check_items=None,
+              fronts=None, M_st=None, walk_in=True, step_back=True, frames_per_m=60.0):
+    """Two people side by side, facing the station's +y (into the VF-4), each holding one end of a load with both hands
+    (round 8's team lift, round 9: the feet locked, the bodies kept off the load and the machine, the hands on the faces
+    and not in them). keys: [(load pose in the station frame, seconds or None)] along which the load goes (eased per leg,
+    the people following it: side-steps along x, a step or two along y, a lean as deep as the reach needs).
+    fronts: [(station y, z from, z to, x from, x to)] the bodies' fronts stay behind between those heights where they
+    stand within those x (the VF-4's face below its sill, the cart's near edge). hand_pts: {person: (hand l, hand r)} in the load's frame (default end_hands at the first pose)."""
     from scipy.spatial.transform import Rotation, Slerp
     M = Mst("vf4") if M_st is None else M_st
-    yaw0 = math.degrees(math.atan2(M[1, 0], M[0, 0]))     # the frame's yaw: HD is relative to its +y
+    yaw0 = math.degrees(math.atan2(M[1, 0], M[0, 0]))
     hds = [HD[0] + yaw0, HD[1] + yaw0]
-    cam = cam or cam_at("vf4", *CAM_OUT)
     m, _ = scn.obj_mesh(spec)
-    if hand_pts is None:
-        hand_pts = {0: end_hands(m, P_from, -1), 1: end_hands(m, P_from, +1)}
     v = np.asarray(m.points, float)
-    c_loc = (v.min(0) + v.max(0)) / 2
-    R0, R1 = P_from[:3, :3], P_to[:3, :3]
-    sl = Slerp([0.0, 1.0], Rotation.from_matrix([R0, R1]))
-    c0 = P_from[:3, :3] @ c_loc + P_from[:3, 3]
-    c1 = P_to[:3, :3] @ c_loc + P_to[:3, 3]
-    carry_z = max(c0[2], c1[2]) + lift_mm
-    n_move = n_move or int(max(4.5, np.linalg.norm(c1[:2] - c0[:2]) / 240.0) * FPS)
-    keys = [(0.0, c0), (0.14, np.r_[c0[:2], carry_z]), (0.84, np.r_[c1[:2], carry_z]), (1.0, c1)]
+    lo, hi = v.min(0), v.max(0)
+    c_loc = (lo + hi) / 2
+    half = (hi - lo) / 2
+    P0 = keys[0][0]
+    if hand_pts is None:
+        hand_pts = {0: end_hands(m, P0, -1), 1: end_hands(m, P0, +1)}
+    # person 0 stands on the -x side, its left hand on the near point; person 1 mirrored
+    order = {0: ("l", "r"), 1: ("r", "l")}
+    legs_ = list(zip(keys[:-1], keys[1:]))
 
-    def centre(s):
-        for (s0, p0), (s1, p1) in zip(keys[:-1], keys[1:]):
-            if s0 <= s <= s1:
-                return p0 + (p1 - p0) * ease((s - s0) / max(s1 - s0, 1e-9))
-        return keys[-1][1]
-
-    def pose(s):
-        R = sl(ease((s - 0.14) / 0.70)).as_matrix() if s > 0.14 else R0
-        c = centre(s)
-        return E.T(tuple(c - R @ c_loc), R)
-
-    def hands_world(P):
-        return [tuple(P[:3, :3] @ q + P[:3, 3] for q in hand_pts[i]) for i in range(2)]
-
-    def stance(i, hw):
-        return stance_xy(i, (np.asarray(hw[0]) + np.asarray(hw[1])) / 2, y_max)
+    def leg_frames(a, b, secs):
+        if secs is not None:
+            return max(int(round(secs * FPS)), 2)
+        d = float(np.linalg.norm(b[:3, 3] - a[:3, 3]))
+        ang = float(np.degrees(np.arccos(np.clip((np.trace(a[:3, :3].T @ b[:3, :3]) - 1) / 2, -1, 1))))
+        return max(int(round((d / 1000.0 * frames_per_m) + ang / 6.0)), 8)
 
     def world(p):
         return (M @ np.r_[p, 1.0])[:3]
 
+    def stance(i, P, lean_prev=None):
+        """Body origin (world), heading, lean and the hand targets (world) for load pose P (station)."""
+        hw = [world(P[:3, :3] @ q + P[:3, 3]) for q in hand_pts[i]]
+        hands = dict(zip(order[i], hw))
+        mid = (hw[0] + hw[1]) / 2
+        a = math.radians(hds[i])
+        fwd = np.array([-math.sin(a), math.cos(a)])
+        right = np.array([math.cos(a), math.sin(a)])
+        inner = right if i == 0 else -right
+        org = mid[:2] - 60.0 * inner - 330.0 * fwd
+        # in the station frame: the body's front stays behind each front (y, z from, z to, x from, x to) it stands at:
+        # the VF-4's face below the sill, the cart's near edge (below the hips, so the lean doesn't move it)
+        Minv = np.linalg.inv(M)
+        o_st = (Minv @ np.r_[org, 0.0, 1.0])[:3]
+        for yl, z0_, z1_, x0_, x1_ in (fronts or ()):
+            if x0_ - 260.0 <= o_st[0] <= x1_ + 260.0:
+                lim = yl - 15.0 - SS.people.body_front(z0_, z1_, 0.0)
+                if o_st[1] > lim:
+                    o_st[1] = lim
+        # off the load: the front of the body (at the load's heights) 30 mm behind its near face
+        Pc = P[:3, :3] @ c_loc + P[:3, 3]
+        corners = np.array([[x, y, z] for x in (lo[0], hi[0]) for y in (lo[1], hi[1]) for z in (lo[2], hi[2])])
+        cw = corners @ P[:3, :3].T + P[:3, 3]
+        y_near = float(cw[:, 1].min())
+        zl, zh = float(cw[:, 2].min()), float(cw[:, 2].max())
+        org = (M @ np.r_[o_st, 1.0])[:2]
+        best = None
+        for lean in np.arange(0.0, 58.0, 2.0):
+            r = reach_of(org, hds[i], lean, hands)
+            if best is None or r < best[1] - 1.0:
+                best = (lean, r)
+            if r <= 0.0:
+                best = (lean, r)
+                break
+        lean, r = best
+        fr = SS.people.body_front(zl - 40.0, zh + 40.0, lean)
+        y_body_max = y_near - 30.0 - fr                 # the body (arms out of it) off the load's near face
+        if o_st[1] > y_body_max and abs(float(Pc[0] - o_st[0])) < 300.0:
+            o_st[1] = y_body_max
+            org = (M @ np.r_[o_st, 1.0])[:2]
+            for lean2 in np.arange(lean, 58.0, 2.0):
+                r = reach_of(org, hds[i], lean2, hands)
+                lean = lean2
+                if r <= 0.0:
+                    break
+        return org, hds[i], float(lean), hands, float(r)
+
     crew.show(1.0)
-    scn.set_obj(name, M @ P_from, spec)
-    hw0 = hands_world(P_from)
-    st0 = [stance(i, hw0[i]) for i in range(2)]
-    if walk_from is not None:
+    scn.set_obj(name, M @ P0, spec)
+    st0 = [stance(i, P0) for i in range(2)]
+    if walk_in:
+        crew.walk_to(w, [tuple(s_[0]) for s_ in st0], cam, caption, sub, step, face=hds)
+    else:
         for i in range(2):
-            if not crew.st[i]["placed"]:
-                pw = world(np.array([walk_from[i][0], walk_from[i][1], 0.0]))
-                crew.place(i, pw[0], pw[1], 0.0)
-    crew.walk_to(w, [tuple(world(np.array([s_[0], s_[1], 0.0]))[:2]) for s_ in st0], cam, caption, sub, step, face=hds)
+            crew.place(i, *st0[i][0], st0[i][1])
+    n_reach, n_rel = 10, 10
+    seq = [(0.0, 0, 0.0)] * 0
+    gaps, clears, reaches, deep = [], [], [], []
     poses = []
-    n_reach, n_rel = 8, 8
-    total = n_reach + n_move + n_rel
-    gaps, gap_at = [], []
-    for k in range(total):
-        if k < n_reach:
-            s, u = 0.0, ease((k + 1) / n_reach)
-        elif k < n_reach + n_move:
-            s, u = (k - n_reach + 1) / n_move, 1.0
-        else:
-            s, u = 1.0, 1.0 - ease((k - n_reach - n_move + 1) / n_rel)
-        P = pose(s)
-        if 0.0 < s < 1.0:
-            poses.append(M @ P)
-        scn.set_obj(name, M @ P, spec)
-        hw = hands_world(P)
+    # reach in: the hands from where they hang to the load, the lean easing in
+    for k in range(n_reach):
+        u = ease((k + 1) / n_reach)
         for i in range(2):
-            x, y, lean = stance(i, hw[i])
-            pw = world(np.array([x, y, 0.0]))
+            org, hd, lean, hands, r = stance(i, P0)
             p = crew.p[i]
-            tgt = {}
-            for side, q in zip(("l", "r"), hw[i]):
-                qw = world(q)
-                rest = p.rest_hand(side)
-                tgt[side] = tuple(qw) if u >= 1.0 else tuple(rest + (qw - rest) * u)
-            crew.step(i, pw[0], pw[1], hds[i], hands=tgt, look=tuple(world((hw[i][0] + hw[i][1]) / 2)),
-                      lean=lean * (u if (k < n_reach or k >= n_reach + n_move) else 1.0))
-            if u >= 1.0:
-                for side, q in zip(("l", "r"), hw[i]):
-                    gaps.append(float(np.linalg.norm(p.hand_point(side) - world(q))))
-                    gap_at.append((round(gaps[-1], 1), k, round(s, 3), i, side, round(lean, 1)))
+            tg = {s: tuple(p.rest_hand(s) + (np.asarray(hands[s]) - p.rest_hand(s)) * u) for s in hands}
+            nrm = np.array([-1.0, 0.0, 0.0]) if i == 0 else np.array([1.0, 0.0, 0.0])
+            nrm = M[:3, :3] @ nrm
+            crew.step(i, org[0], org[1], hd, hands=tg, look=tuple((np.asarray(hands["l"]) + hands["r"]) / 2),
+                      lean=lean * u, palm={"l": tuple(-nrm), "r": tuple(-nrm)}, grip={"l": 0.1, "r": 0.1})
         w.frame(scn, cam, caption, sub=sub, who=["person"], step=step, status="person")
+    # the carry along the keys
+    Pprev = P0
+    for (Pa, _), (Pb, secs) in legs_:
+        n = leg_frames(Pa, Pb, secs)
+        sl = Slerp([0.0, 1.0], Rotation.from_matrix([Pa[:3, :3], Pb[:3, :3]]))
+        for k in range(n):
+            u = ease((k + 1) / n)
+            P = np.eye(4)
+            P[:3, :3] = sl(u).as_matrix()
+            ca = Pa[:3, :3] @ c_loc + Pa[:3, 3]
+            cb = Pb[:3, :3] @ c_loc + Pb[:3, 3]
+            P[:3, 3] = ca + (cb - ca) * u - P[:3, :3] @ c_loc
+            poses.append(M @ P)
+            scn.set_obj(name, M @ P, spec)
+            Mbox = M @ P @ E.T(tuple(c_loc))
+            for i in range(2):
+                org, hd, lean, hands, r = stance(i, P)
+                nrm = M[:3, :3] @ P[:3, :3] @ np.array([1.0, 0.0, 0.0])
+                nrm = nrm * (1.0 if float(nrm @ (M[:3, :3] @ np.array([1.0, 0, 0]))) >= 0 else -1.0)
+                away = -nrm if i == 0 else nrm                  # the end face's outward normal (world)
+                p = crew.p[i]
+                crew.step(i, org[0], org[1], hd, hands={s: tuple(v_) for s, v_ in hands.items()},
+                          look=tuple((np.asarray(hands["l"]) + hands["r"]) / 2), lean=lean,
+                          palm={"l": tuple(-away), "r": tuple(-away)}, grip={"l": 0.1, "r": 0.1})
+                _, left, err = seat_hands(p, hands, [(Mbox, half)], away={"l": tuple(away), "r": tuple(away)})
+                deep.append(left)
+                gaps.append(err)
+                reaches.append(r)
+                cc = SS.people.carry_check(p, lo, hi, M @ P)
+                clears.append(cc["body_clear_mm"])
+            w.frame(scn, cam, caption, sub=sub, who=["person"], step=step, status="person")
+        Pprev = Pb
+    # let go: the hands back down, the lean out
+    Pend = keys[-1][0]
+    for k in range(n_rel):
+        u = ease((k + 1) / n_rel)
+        for i in range(2):
+            org, hd, lean, hands, r = stance(i, Pend)
+            p = crew.p[i]
+            tg = {s: tuple(np.asarray(hands[s]) + (p.rest_hand(s) - np.asarray(hands[s])) * u) for s in hands}
+            crew.step(i, org[0], org[1], hd, hands=tg, look=None, lean=lean * (1.0 - u))
+        w.frame(scn, cam, caption, sub=sub, who=["person"], step=step, status="person")
+    for i in range(2):
+        crew.step(i, crew.st[i]["x"], crew.st[i]["y"], crew.st[i]["hd"], lean=0.0)
+    if step_back:
+        crew.step_back(w, cam, caption, "they step back", step)
     res = dict(kg=round(kg, 2), team_guideline_kg=round(TEAM_KG, 1), under_guideline=bool(kg <= TEAM_KG),
-               frames=total, hand_gap_mm_max=round(max(gaps), 1) if gaps else None,
-               hand_gap_mm_p95=round(float(np.percentile(gaps, 95)), 1) if gaps else None,
-               worst=sorted(gap_at, reverse=True)[:4])
+               frames=len(poses) + n_reach + n_rel, glove_in_load_mm_max=round(max(deep), 2) if deep else None,
+               palm_error_mm_max=round(max(gaps), 1) if gaps else None,
+               reach_over_mm_max=round(max(reaches), 1) if reaches else None,
+               body_clear_mm_min=round(min(clears), 1) if clears else None)
     if check_items is not None and poses:
         vf = (np.asarray(m.points, float), m.faces.reshape(-1, 4)[:, 1:].astype(np.int32))
         res.update(load_path_check(check_items, vf, poses[::2]))
@@ -534,7 +581,97 @@ def team_lift(w, scn, crew, name, spec, P_from, P_to, kg, caption, sub, step, ca
     res["caption"] = caption
     res["sub"] = sub
     PERSON_RESULTS[key] = res
-    print("team lift", key, res, flush=True)
+    print("pair lift", key, res, flush=True)
+    return res
+
+
+def carry_lift(w, scn, crew, name, spec, keys, kg, caption, sub, step, cam, ends=("-x", "+x"), grip=None, M_st=None,
+               frames_per_m=55.0, walk_in=True):
+    """Two people carrying a load by its two ends (people.carry: each stands outside one end, facing the load, its
+    hands on the faces beside the end or under it): they walk to their stances, take hold, carry it along the keys
+    [(load pose in M_st's frame, seconds or None)] (their stances rigid in the load's frame, so the Gait walks them
+    with it: sideways, forwards or backwards), set it down, let go and step back."""
+    from scipy.spatial.transform import Rotation, Slerp
+    M = np.eye(4) if M_st is None else M_st
+    m, _ = scn.obj_mesh(spec)
+    v = np.asarray(m.points, float)
+    lo, hi = v.min(0), v.max(0)
+    c_loc = (lo + hi) / 2
+    P0 = keys[0][0]
+    keep = ("x", "y", "hd", "lean", "hands", "palm", "elbow", "bend", "grip", "look")
+
+    def st_at(P):
+        return SS.people.carry(lo, hi, M @ P, ends=ends, grip=grip)
+
+    crew.show(1.0)
+    scn.set_obj(name, M @ P0, spec)
+    s0 = st_at(P0)
+    if walk_in:
+        crew.walk_to(w, [(s_["x"], s_["y"]) for s_ in s0], cam, caption, sub, step, face=[s_["hd"] for s_ in s0])
+    n_reach, n_rel = 10, 10
+    clears, deep, reaches = [], [], []
+    for k in range(n_reach):
+        u = ease((k + 1) / n_reach)
+        for i in range(2):
+            d = {kk: s0[i][kk] for kk in keep if kk in s0[i]}
+            p = crew.p[i]
+            d["hands"] = {s: tuple(p.rest_hand(s) + (np.asarray(h) - p.rest_hand(s)) * u) for s, h in s0[i]["hands"].items()}
+            d["lean"] = s0[i]["lean"] * u
+            crew.st[i].update(x=d["x"], y=d["y"], hd=d["hd"])
+            p.set(**d)
+        w.frame(scn, cam, caption, sub=sub, who=["person"], step=step, status="person")
+    poses = []
+    for (Pa, _), (Pb, secs) in zip(keys[:-1], keys[1:]):
+        dist = float(np.linalg.norm(Pb[:3, 3] - Pa[:3, 3]))
+        ang = float(np.degrees(np.arccos(np.clip((np.trace(Pa[:3, :3].T @ Pb[:3, :3]) - 1) / 2, -1, 1))))
+        n = max(int(round(secs * FPS)), 2) if secs is not None else max(int(round(dist / 1000.0 * frames_per_m
+                                                                                     + ang / 6.0)), 8)
+        sl = Slerp([0.0, 1.0], Rotation.from_matrix([Pa[:3, :3], Pb[:3, :3]]))
+        for k in range(n):
+            u = ease((k + 1) / n)
+            P = np.eye(4)
+            P[:3, :3] = sl(u).as_matrix()
+            ca = Pa[:3, :3] @ c_loc + Pa[:3, 3]
+            cb = Pb[:3, :3] @ c_loc + Pb[:3, 3]
+            P[:3, 3] = ca + (cb - ca) * u - P[:3, :3] @ c_loc
+            poses.append(M @ P)
+            scn.set_obj(name, M @ P, spec)
+            ss = st_at(P)
+            for i in range(2):
+                d = {kk: ss[i][kk] for kk in keep if kk in ss[i]}
+                crew.st[i].update(x=d["x"], y=d["y"], hd=d["hd"])
+                crew.p[i].set(**d)
+                cc = SS.people.carry_check(crew.p[i], lo, hi, M @ P)
+                clears.append(cc["body_clear_mm"])
+                deep.append(cc["hands_in_mm"])
+                reaches.append(ss[i]["reach_mm"])
+            w.frame(scn, cam, caption, sub=sub, who=["person"], step=step, status="person")
+    Pend = keys[-1][0]
+    se = st_at(Pend)
+    for k in range(n_rel):
+        u = ease((k + 1) / n_rel)
+        for i in range(2):
+            d = {kk: se[i][kk] for kk in keep if kk in se[i]}
+            p = crew.p[i]
+            d["hands"] = {s: tuple(np.asarray(h) + (p.rest_hand(s) - np.asarray(h)) * u) for s, h in se[i]["hands"].items()}
+            d["lean"] = se[i]["lean"] * (1.0 - u)
+            p.set(**d)
+        w.frame(scn, cam, caption, sub=sub, who=["person"], step=step, status="person")
+    for i in range(2):
+        crew.p[i].set(hands={"l": None, "r": None}, palm={"l": None, "r": None}, elbow={"l": None, "r": None},
+                      bend={"l": False, "r": False}, lean=0.0)
+    crew.step_back(w, cam, caption, "they step back", step)
+    res = dict(kg=round(kg, 2), team_guideline_kg=round(TEAM_KG, 1), under_guideline=bool(kg <= TEAM_KG),
+               frames=len(poses) + n_reach + n_rel, body_clear_mm_min=round(min(clears), 1) if clears else None,
+               hands_in_load_mm_max=round(max(deep), 1) if deep else None,
+               reach_over_mm_max=round(max(reaches), 1) if reaches else None, how="people.carry (round 9)")
+    key = f"{step}: {caption}"
+    while key in PERSON_RESULTS:
+        key += " (again)"
+    res["caption"] = caption
+    res["sub"] = sub
+    PERSON_RESULTS[key] = res
+    print("carry lift", key, res, flush=True)
     return res
 
 
@@ -985,21 +1122,14 @@ def chapter_20():
 
 
 class PersonWalk:
-    """One person's walk, frame by frame: to(x, y, hd, ...) moves the body there (round 8's gait: its phase follows the
-    distance walked, 2 pi per stride; amp 1 while it moves). Round 9: replaced by people.py's foot-locked walker once
-    it is merged (W1); this is the one place the shop chapters set a walking body."""
+    """One person's walk, frame by frame: to(x, y, hd, ...) moves the body there; people.py's Gait (round 9) plants the
+    feet and steps them after the body (no phase, no amp)."""
 
     def __init__(self, p):
         self.p = p
-        self.prev = None
-        self.walked = 0.0
 
     def to(self, x, y, hd, **kw):
-        moved = 0.0 if self.prev is None else math.hypot(x - self.prev[0], y - self.prev[1])
-        self.walked += moved
-        self.prev = (x, y)
-        self.p.set(x=x, y=y, hd=hd, amp=1.0 if moved > 0.3 else 0.0,
-                   phase=2 * math.pi * self.walked / people_stride(), **kw)
+        self.p.set(x=x, y=y, hd=hd, **kw)
 
 
 def people_stride():
@@ -1030,7 +1160,14 @@ def plate_mesh():
 
 def chapter_30():
     """The chamber frame's three setups on the VF-4 from the posted programs (gcode_sim.py), the floor plate's first;
-    the loads between them are two-person lifts (no lifter); no camera moves within a shot."""
+    the loads between them are two-person lifts (no lifter); no camera moves within a shot.
+
+    Round 9 (round 8's audit: a person's shoes, trousers and coat through the VF-4's front and table, the coats and
+    gloves in the loads, the legs in the cart; the feet slid 0.9-1.2 m per stance): the cart stands against the VF-4's
+    front left of the door, its long side along x, so the two people, side by side and facing the machine, take a load
+    off it, side-step to the door and reach in, never with a leg under the cart or past the sill (pair_lift: the bodies
+    behind the machine's face and the cart's edge, 30 mm off the load, the hands on its end faces and not in them, the
+    lean as deep as the reach needs); people.py's Gait locks their feet."""
     w = Writer("30-machining-chamber", "Machining the chamber: the VF-4 and its 4th axis")
     scn = Shop()
     scn.add_person2()
@@ -1040,57 +1177,80 @@ def chapter_30():
     import shop_plan as SP
     check = SP.shop_world("vf4", E.vf4(door=1.0, table_x=-100.0)[0])
     cam_arm = cam_at("vf4", *CAM_VF4_ARM)
-    cam_out = cam_at("vf4", *CAM_OUT)
+    cam_out = cam_at("vf4", (-1250.0, -2350.0, 2700.0), (-450.0, 250.0, 950.0))   # the door and the cart (fixed)
     cam_wide = cam_at("vf4", *CAM_WIDE)
-    cam_flip = cam_at("vf4", (1750.0, -1550.0, 2750.0), (0.0, 280.0, 1000.0))   # from the right: the turn over
     cam_in = cam_at("vf4", *CAM_IN_FLAT)
-    cart_parts = E.bench(CART["w"], CART["d"], CART["h"])
-    scn.add_parts("cart", cart_parts, st @ E.T((CART["x"], CART["y"] - CART["d"] / 2, 0.0)))
-    cart_names = [n for n in scn.sc.actors if n.startswith("cart/")]
-
-    def show_cart(a):
-        for n in cart_names:
-            scn.sc.alpha[n] = a
-
+    CARTX, CARTY0, CARTY1, CARTH = (-1400.0, -800.0), -380.0, -40.0, 900.0     # station frame: x span, y span, top
+    cart_parts = E.bench(CARTX[1] - CARTX[0], CARTY1 - CARTY0, CARTH)
+    scn.add_parts("cart", cart_parts, st @ E.T(((CARTX[0] + CARTX[1]) / 2, CARTY0, 0.0)))
+    cart_c = E.T(((CARTX[0] + CARTX[1]) / 2, (CARTY0 + CARTY1) / 2, 0.0))
+    fronts = [(-4.0, 0.0, 880.0, -1564.0, 1564.0), (CARTY0, 0.0, 905.0, CARTX[0], CARTX[1])]
     fr = Stock("frame")
     kg_blank = fr.kg()
     M_tab = E.T((-100.0, 0, 0))
     rule = LIFT_RULE
+
+    def lift_keys(P_a, P_b, up_a=60.0, up_b=40.0, flip=None):
+        """The load's path from P_a to P_b (station frame): up, side-step to P_b's x outside the machine, in, down;
+        flip: a rotation (3x3) applied up in the air at P_a's place first."""
+        ca, cb = P_a[:3, 3], P_b[:3, 3]
+        k = [(P_a, None), (E.T((0, 0, up_a)) @ P_a, 0.9)]
+        Pa_up = E.T((0, 0, up_a)) @ P_a
+        if flip is not None:
+            c = Pa_up[:3, :3] @ fr_c + Pa_up[:3, 3]
+            Pf = E.T(tuple(c)) @ E.T((0, 0, 0), flip) @ E.T(tuple(-c)) @ Pa_up
+            k.append((Pf, 3.2))
+            Pa_up = Pf
+        z_up = max(ca[2] + up_a, cb[2] + up_b)
+        y_out = min(ca[1], -260.0)
+        Pd = Pa_up.copy()
+        Pd[:3, 3] += np.array([cb[0] - ca[0], y_out - ca[1], z_up - ca[2] - up_a])
+        k.append((Pd, None))
+        Pi = P_b.copy()
+        Pi[:3, 3] += np.array([0.0, 0.0, up_b])
+        k.append((Pi, None))
+        k.append((P_b, 0.9))
+        return k
+
+    def lift_keys_out(P_a, P_b, up_a=40.0, up_b=60.0):
+        """The reverse: out of the machine, side-step to the cart, down."""
+        ca, cb = P_a[:3, 3], P_b[:3, 3]
+        Pa_up = E.T((0, 0, up_a)) @ P_a
+        Po = Pa_up.copy()
+        Po[:3, 3] += np.array([0.0, min(cb[1], -260.0) - ca[1], 0.0])
+        Pc = P_b.copy()
+        Pc[:3, 3] += np.array([0.0, 0.0, up_b])
+        return [(P_a, None), (Pa_up, 0.9), (Po, None), (Pc, None), (P_b, 0.9)]
+
     # ---- F-S1: the programs' stock on the cart, the risers and edge clamps on the table
     vf4.fixtures("frame_B", "frameT", 0, rots=[["x", 180]])
     R_B = GS.rot_of("frame_B")
     P1 = vf4.M_setup @ E.T((0, 0, 0), R_B)
     vf4.set(table_x=-100.0, door=1.0)
     spec0 = fr.spec()
-    cart_top = E.T((CART["x"], CART["y"] + CART["d"] / 2 - 160.0, 0.0))
-    P_cart1 = rest_on(spec0, scn, cart_top, CART["h"], R_B)
+    m0 = scn.obj_mesh(spec0)[0]
+    v0 = np.asarray(m0.points, float)
+    fr_c = (v0.min(0) + v0.max(0)) / 2
+    P_cart1 = rest_on(spec0, scn, cart_c, CARTH, R_B)
     scn.set_obj("load", st @ P_cart1, spec0)
     # overview first: the station, the cart with the stock; the two people walk in from the aisle (lesson 5)
-    hw = [end_hands(scn.obj_mesh(spec0)[0], P_cart1, -1), end_hands(scn.obj_mesh(spec0)[0], P_cart1, 1)]
-    for i, sx in enumerate((-1.0, 1.0)):
-        pw = (st @ np.r_[-3600.0 + 520.0 * i, -700.0 - 260.0 * i, 0.0, 1.0])[:3]
+    for i in range(2):
+        pw = (st @ np.r_[-3600.0 + 520.0 * i, -1300.0 - 260.0 * i, 0.0, 1.0])[:3]
         crew.place(i, pw[0], pw[1], -90.0)
     crew.show(1.0)
     cap0 = "The chamber frame on the VF-4: three setups from the posted programs"
     sub0 = ("F-S0 (not shown): the 5.5 in. plate sawn and its core cut out by waterjet, the stock the programs start "
             f"from; {kg_blank:.1f} kg here")
-    targets = []
-    for i in range(2):
-        mid = (P_cart1[:3, :3] @ ((hw[i][0] + hw[i][1]) / 2) + P_cart1[:3, 3])
-        x, y, _ = stance_xy(i, mid)
-        targets.append(tuple((st @ np.r_[x, y, 0.0, 1.0])[:2]))
-    crew.walk_to(w, targets, cam_wide, cap0, sub0, "F-S1", speed=850.0)
-    for i in range(int(1.0 * FPS)):
-        w.frame(scn, cam_wide, cap0, sub=sub0, who=["person"], step="F-S1", status="person")
-    # ---- lift 1: cart -> risers
-    team_lift(w, scn, crew, "load", spec0, P_cart1, M_tab @ P1, kg_blank,
+    for i in range(int(2.0 * FPS)):
+        w.frame(scn, cam_wide, cap0, sub=sub0, who=[], step="F-S1", status="")
+    # ---- lift 1: cart -> risers (they walk in, in the overview's camera, then the door's)
+    pair_lift(w, scn, crew, "load", spec0, lift_keys(P_cart1, M_tab @ P1), kg_blank,
               f"Two people set the {kg_blank:.1f} kg stock on the risers",
-              f"{kg_blank:.1f} kg, a reach of ~0.6 m into the machine; {rule}", "F-S1", cam=cam_out,
-              check_items=check)
+              f"{kg_blank:.1f} kg, a reach of ~0.6 m into the machine; {rule}", "F-S1", cam_out, check_items=check,
+              fronts=fronts)
     scn.hide_obj("load")
     vf4.part("frame part", spec0, P1)
-    crew.show(0.0)
-    show_cart(0.0)
+    crew.show(0.0)                                   # at the cut: they have gone (arm A docks where they stood)
     # ---- arm A tightens the four edge clamps (the planned clip), then the doors shut, same camera
     play(w, scn, "vf4_clamps", cam_arm, hide=("frame part",))
     for i in range(18):
@@ -1107,43 +1267,38 @@ def chapter_30():
     kg1 = fr.kg()
     spec1 = fr.spec()
     # ---- doors open; lift 2a: off the risers onto the cart (the clamps loosened by arm A, the same path run back)
-    show_cart(1.0)
-    for i in range(2):
-        mid = ((M_tab @ P1)[:3, :3] @ ((end_hands(scn.obj_mesh(spec1)[0], M_tab @ P1, -1 if i == 0 else 1)[0])) +
-               (M_tab @ P1)[:3, 3])
-        pw = (st @ np.r_[mid[0] + (-240.0 if i == 0 else 240.0) * 1.6, -1500.0, 0.0, 1.0])[:3]
-        crew.place(i, pw[0], pw[1], 0.0)
-    crew.show(1.0)
     scn.hide_obj("frame part")
     scn.set_obj("load", st @ M_tab @ P1, spec1)
     capO = "Doors open: the clamps off, two people take the part out"
+    P_cart2 = rest_on(spec1, scn, cart_c, CARTH, R_B)
     for i in range(18):
         vf4.set(door=ease((i + 1) / 18))
         w.frame(scn, cam_out, capO, sub="arm A loosened the clamps first (its planned path run back; not shown)",
                 who=["machine"], step="F-S1", status="pass", proc_s=1.5 / 18)
-    P_cart2 = rest_on(spec1, scn, cart_top, CART["h"], R_B)
-    team_lift(w, scn, crew, "load", spec1, M_tab @ P1, P_cart2, kg1, capO, f"{kg1:.1f} kg after F-S1; {rule}", "F-S1",
-              cam=cam_out, check_items=check)
+    for i in range(2):                               # they come back from the aisle, in the same camera
+        pw = (st @ np.r_[-2900.0 + 450.0 * i, -1500.0 - 200.0 * i, 0.0, 1.0])[:3]
+        crew.place(i, pw[0], pw[1], 60.0)
+    pair_lift(w, scn, crew, "load", spec1, lift_keys_out(M_tab @ P1, P_cart2), kg1, capO,
+              f"{kg1:.1f} kg after F-S1; {rule}", "F-S1", cam_out, check_items=check, fronts=fronts)
     # ---- cut: the risers out, the dummy-floor plate in; lift 2b turns the part over onto it
     vf4.fixtures("frame_A", "frameT", 0, rots=[])
     R_A = GS.rot_of("frame_A")
     P2 = vf4.M_setup @ E.T((0, 0, 0), R_A)
     capF = "Two people turn it over onto the dummy-floor plate for F-S2"
     m1_ = scn.obj_mesh(spec1)[0]
-    hp_flip = {0: end_hands(m1_, P_cart2, -1, fz=0.5, fy=(0.33, 0.67)),
-               1: end_hands(m1_, P_cart2, 1, fz=0.5, fy=(0.33, 0.67))}
-    team_lift(w, scn, crew, "load", spec1, P_cart2, M_tab @ P2, kg1, capF,
+    hp_flip = {0: end_hands(m1_, P_cart2, -1, fz=0.5, fy=(0.4, 0.6)), 1: end_hands(m1_, P_cart2, 1, fz=0.5, fy=(0.4, 0.6))}
+    # the turn over: 180 deg about the line between their hands (the load's x), up over the cart
+    keys2 = lift_keys(P_cart2, M_tab @ P2, up_a=160.0, flip=E.Rx(180.0))
+    pair_lift(w, scn, crew, "load", spec1, keys2, kg1, capF,
               f"{kg1:.1f} kg, turned 180 deg about the line between their hands; the 18 M4 screws from below (not "
-              f"shown); {rule}", "F-S2", cam=cam_flip, check_items=check, n_move=int(5.5 * FPS), hand_pts=hp_flip)
+              f"shown); {rule}", "F-S2", cam_out, check_items=check, fronts=fronts, hand_pts=hp_flip)
     scn.hide_obj("load")
     vf4.part("frame part", spec1, P2)
-    crew.step_back(w, cam_flip, capF, "they step back from the doors", "F-S2")
     for i in range(18):
         vf4.set(door=1.0 - ease((i + 1) / 18))
-        w.frame(scn, cam_flip, "Doors shut; cycle start", sub="the auto door (option), ~1.5 s", who=["machine"],
+        w.frame(scn, cam_out, "Doors shut; cycle start", sub="the auto door (option), ~1.5 s", who=["machine"],
                 step="F-S2", status="pass", proc_s=1.5 / 18)
     crew.show(0.0)                                   # at the cut to the inside view
-    show_cart(0.0)
     vf4.set(front_alpha=0.0)
     capA = "F-S2: the top down, cut by frame_A.ngc as posted"
     m2 = cut_program(w, scn, vf4, fr, ["frame_A"], "frame part", lambda a: P2, cam_in, capA, [13.0], "F-S2")
@@ -1167,25 +1322,31 @@ def chapter_30():
     Q_at = lambda a: E.about(E.Rx(a), axis) @ P3    # noqa: E731
     P_to3 = E.T((40.0, 0, 0)) @ Q_at(90.0)
     for i in range(2):
-        crew.place(i, *(st @ np.r_[(-700.0 if i == 0 else 500.0), -1500.0, 0.0, 1.0])[:2], 0.0)
+        pw = (st @ np.r_[-2700.0 + 500.0 * i, -1500.0 - 150.0 * i, 0.0, 1.0])[:3]
+        crew.place(i, pw[0], pw[1], 40.0)
     crew.show(1.0)
-    show_cart(0.0)
     capC = "Two people set the frame and its plate on the 4th axis"
     for i in range(18):
         vf4.set(door=ease((i + 1) / 18))
         w.frame(scn, cam_out, capC, sub="the HRT210 indexed to A 90 for loading (left wall up)", who=["machine"],
                 step="F-S3", status="pass", proc_s=1.5 / 18)
     m2_ = scn.obj_mesh(spec2)[0]
-    hp_rot = {0: end_hands(m2_, M_tab3 @ P2, -1, fz=0.25), 1: end_hands(m2_, M_tab3 @ P2, 1, fz=0.8)}
-    team_lift(w, scn, crew, "load", spec2, M_tab3 @ P2, P_to3, kg_frame + kg_plate, capC,
+    P_a3 = M_tab3 @ P2
+    hp_rot = {0: end_hands(m2_, P_a3, -1, fz=0.5, fy=(0.4, 0.6)), 1: end_hands(m2_, P_a3, 1, fz=0.5, fy=(0.4, 0.6))}
+    P_up3 = E.T((0, 0, 50.0)) @ P_a3
+    c3 = P_up3[:3, :3] @ ((np.asarray(m2_.points).min(0) + np.asarray(m2_.points).max(0)) / 2) + P_up3[:3, 3]
+    c3t = P_to3[:3, :3] @ ((np.asarray(m2_.points).min(0) + np.asarray(m2_.points).max(0)) / 2) + P_to3[:3, 3]
+    P_mid3 = P_to3.copy()
+    P_mid3[:3, 3] += np.array([0.0, 0.0, max(c3[2] - c3t[2], 0.0) + 40.0])
+    keys3 = [(P_a3, None), (P_up3, 0.9), (P_mid3, 4.5), (P_to3, 1.0)]
+    pair_lift(w, scn, crew, "load", spec2, keys3, kg_frame + kg_plate, capC,
               f"frame {kg_frame:.1f} kg + MIC-6 plate {kg_plate:.1f} kg, turned 90 deg onto the platter; 4 bolts "
-              f"through the opening (not shown); {rule}", "F-S3", cam=cam_out, check_items=check,
-              n_move=int(5.5 * FPS), hand_pts=hp_rot)
+              f"through the opening (not shown); {rule}", "F-S3", cam_out, check_items=check, fronts=fronts,
+              hand_pts=hp_rot)
     scn.hide_obj("load")
     for n in vf4.sc.members("vf4/rotfix"):
         vf4.sc.alpha[n] = 1.0
     vf4.part("frame part", fr.spec(), P3, rot=True)
-    crew.step_back(w, cam_out, capC, "they step back from the doors", "F-S3")
     for i in range(18):
         vf4.set(door=1.0 - ease((i + 1) / 18))
         w.frame(scn, cam_out, "Doors shut; cycle start", sub="the auto door (option), ~1.5 s", who=["machine"],
@@ -1205,6 +1366,9 @@ def chapter_30():
         vf4.set(table_x=-100.0, table_y=0.0, a=0.0, door=1.0)
         vf4.fixtures("floor_A", "floor", 0, rots=[])
         PF = vf4.M_setup @ E.T((0, 0, 0), GS.rot_of("floor_A"))
+        show_cart = [n for n in scn.sc.actors if n.startswith("cart/")]
+        for n in show_cart:
+            scn.sc.alpha[n] = 0.0                    # the cart was wheeled away with the frame
         play(w, scn, "vf4_floor_load", cam_arm, hide=("floor part",),
              sub="the finished frame is off the rotary (not shown); arm A sets the floor plate's 5.0 kg blank on the "
                  "parallels")
@@ -1360,42 +1524,55 @@ def chapter_32():
     return w.close()
 
 
+def plate_stand(top=900.0):
+    """A narrow receiving stand for heavy stock (our estimate, not a catalogue item): two 50 mm square rails 220 mm apart
+    on a welded frame, top at `top`, 600 mm long, so two people can stand at a block's ends and hold it by its sides."""
+    rails = [E.box(x - 25, x + 25, -300, 300, top - 50, top) for x in (-110.0, 110.0)]
+    legs = [E.box(x - 20, x + 20, y - 20, y + 20, 0, top - 50) for x in (-110.0, 110.0) for y in (-270.0, 270.0)]
+    feet = [E.box(-135, 135, y - 25, y + 25, 0, 30) for y in (-270.0, 270.0)]
+    return {"plate stand": E.Part(E.merge(rails + legs + feet), E.C["stand"])}
+
+
 def chapter_29():
     """The stock (round 8, the lead's ask after Sterling's "Probably just a two person job for that part"): two people
-    lift the chamber frame's plate as delivered, 13 x 9.5 x 5.5 in. 6061-T651, from the receiving lift table onto a
-    narrow cart, which takes it to the waterjet for its core. Facing the table, they back away with it (a backwards
-    gait), the cart passing between them. One fixed camera."""
+    carry the chamber frame's plate as delivered, 13 x 9.5 x 5.5 in. 6061-T651, from a receiving stand onto a narrow
+    cart, which takes it to the waterjet for its core. One fixed camera.
+
+    Round 9 (round 8's audit: their gloves and coats inside the plate, over 100 mm; their legs in the cart): they hold it
+    by its two ends as people.carry() stands them (each outside one end, facing it, the hands on the sides beside the
+    end; the body 30 mm off the plate), so the stand and the cart, both narrower than the gap between them, pass between
+    their feet; they side-step it to the cart, their feet locked (people.py's Gait)."""
     w = Writer("29-stock", "The stock: two people carry the 5.5 in. plate")
     scn = Shop()
     scn.add_person2()
     context_vf4(scn)
     crew = Crew(scn)
-    # the scene frame: the receiving lift table at its spot (station y 520), +y towards the table and the wall;
-    # the aisle (and the cart) at -y
+    # the scene frame: the receiving area (station y 520, as round 8's lift table), +y towards the wall; the aisle (and
+    # the cart) at -y
     M29 = Mst("receiving") @ E.T((0.0, 520.0, 0.0))
-    top = 900.0                                                      # the lift table raised to the cart's height
-    scn.add_parts("lift29", E.lift_table(top), M29)
+    top = 900.0
+    scn.add_parts("stand29", plate_stand(top), M29)
     cart_y = -1450.0
     scn.add_parts("cart29", E.bench(CART["w"], CART["d"], CART["h"]), M29 @ E.T((0.0, cart_y - CART["d"] / 2, 0.0)))
     L, W_, H = 13 * E.INCH, 9.5 * E.INCH, 5.5 * E.INCH
     kg = L * W_ * H * 2.70e-6                                        # 6061: 2.70 g/cm3
     kg15 = 15 * E.INCH * W_ * H * 2.70e-6
     spec = dict(kind="box", b=(-L / 2, L / 2, -W_ / 2, W_ / 2, 0.0, H), color="#c9ced3")
-    P_from = E.T((0.0, -254.0 + W_ / 2 + 30.0, top))                 # on the table, 30 mm in from its near edge
+    P_from = E.T((0.0, 0.0, top))
     P_to = E.T((0.0, cart_y, CART["h"]))
     within = "within it, just" if kg <= TEAM_KG else "over it"
     cap = f"Two people carry the frame's plate: {kg:.1f} kg"
     sub = (f"13 x 9.5 x 5.5 in. 6061-T651 as delivered; 2/3 x (23 + 23) = {TEAM_KG:.1f} kg two-person guideline "
            f"(NIOSH, HSE L23): {within} (a 15 in. plate, {kg15:.1f} kg, would be over)")
     cam = [tuple((M29 @ np.r_[3900.0, -900.0, 3500.0, 1.0])[:3]), tuple((M29 @ np.r_[0.0, -700.0, 800.0, 1.0])[:3]),
-           (0, 0, 1)]                                            # from the side, high: the table, the carry, the cart
+           (0, 0, 1)]                                            # from the side, high: the stand, the carry, the cart
     for i in range(2):
         pw = (M29 @ np.r_[-1500.0 + 3000.0 * i, -2600.0, 0.0, 1.0])[:3]
         crew.place(i, pw[0], pw[1], 0.0)
     crew.show(1.0)
-    res = team_lift(w, scn, crew, "plate", spec, P_from, P_to, kg, cap, sub, "stock", cam=cam, M_st=M29, y_max=None,
-                    n_move=int(5.5 * FPS))
-    crew.step_back(w, cam, cap, "they step back", "stock")
+    keys = [(P_from, None), (E.T((0.0, 0.0, top + 70.0)), 1.0), (E.T((0.0, cart_y, CART["h"] + 70.0)), None),
+            (P_to, 1.0)]
+    res = carry_lift(w, scn, crew, "plate", spec, keys, kg, cap, sub, "stock", cam, ends=("-x", "+x"), M_st=M29)
     cap2 = "Next: its core cut out by waterjet, off site"
     sub2 = ("setup_plan.json F-S0: BYU's ME prototyping lab (the robot shop has no waterjet); the 274 x 184 mm core "
             "out as one slug, then F-S1 on the VF-4")
