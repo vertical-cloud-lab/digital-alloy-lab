@@ -12,6 +12,10 @@ turns them into what a shop makes:
 
 Nothing has been made, quoted or checked by a machinist. Vendor part numbers not read today are marked so.
 
+The pieces here follow the v1 model (`ft_model.py` at d117ba8). The CAD v2 model (commit e6efa1c) came during this
+round: what it changes in each piece, and an estimate of its hours, are in
+[CAD v2](#cad-v2-commit-e6efa1c-what-changes-in-the-fab-pieces).
+
 ![The 35 drawing sheets](img/drawings-contact.png)
 
 ## Short answer
@@ -308,8 +312,34 @@ simpler:
 <!-- SIM_TABLE -->
 | Piece | Setups | Voxel mm | Removed of blank - piece, cm³ | Gouge cm³ (deepest mm) | Left cm³ (thickest mm) | Slugs dropped cm³ | Rapids through the piece | Minutes: recount / from moves / FreeCAD |
 |---|---:|---:|---|---|---|---:|---:|---|
+| MK-01 | 2 | 0.45 | 264.6 of 263.6 (100.4 %) | 0.000 (0.45) | 0.000 (0.90) | 11.8 | 0 | 16.9 / 16.5 / 23.3 |
+| MK-02a | 2 | 0.28 | 148.2 of 148.2 (100.0 %) | 0.000 (0.28) | 0.000 (0.56) | 0.0 | 0 | 24.1 / 24.1 / 29.7 |
+| MK-02b | 2 | 0.21 | 38.5 of 38.5 (99.9 %) | 0.000 (0.21) | 0.000 (0.42) | 0.0 | 0 | 6.7 / 6.7 / 10.1 |
+| MK-02c | 1 | 0.21 | 33.1 of 33.1 (99.9 %) | 0.000 (0.21) | 0.000 (0.42) | 0.0 | 0 | 3.8 / 3.8 / 6.0 |
+| MK-02d | 1 | 0.17 | 23.0 of 23.5 (98.1 %) | 0.000 (0.17) | 0.286 (1.36) | 0.0 | 0 | 3.6 / 3.6 / 5.5 |
+| MK-02e | 1 | 0.16 | 16.3 of 16.3 (100.0 %) | 0.000 (0.16) | 0.000 (0.32) | 0.0 | 0 | 2.0 / 2.0 / 3.1 |
+| MK-03 | 4 | 0.32 | 138.9 of 139.5 (99.5 %) | 0.000 (0.32) | 0.000 (0.63) | 0.0 | 0 | 10.4 / 10.3 / 15.2 |
+| MK-04 | 3 | 0.17 | 1.9 of 1.9 (100.1 %) | 0.000 (0.17) | 0.000 (0.34) | 0.0 | 0 | 0.3 / 0.3 / 0.6 |
+| MK-05 | 1 | 0.12 | 0.1 of 0.1 (90.8 %) | 0.000 (0.12) | 0.000 (0.24) | 0.0 | 0 | 0.1 / 0.1 / 0.5 |
+| MK-06a | 2 | 0.12 | 0.1 of 0.1 (97.9 %) | 0.000 (0.12) | 0.000 (0.54) | 0.0 | 0 | 0.3 / 0.3 / 0.8 |
+| MK-06b | 2 | 0.13 | 0.1 of 0.1 (92.8 %) | 0.000 (0.00) | 0.000 (0.73) | 0.0 | 0 | 0.3 / 0.3 / 0.9 |
+| MK-07 | 2 | 0.18 | 11.5 of 11.6 (99.5 %) | 0.000 (0.18) | 0.000 (0.72) | 0.0 | 0 | 12.2 / 12.0 / 13.2 |
+| MK-08c | 3 | 0.12 | 2.6 of 2.7 (96.6 %) | 0.000 (0.00) | 0.000 (0.48) | 0.0 | 0 | 3.7 / 3.7 / 5.0 |
+| MK-08d | 3 | 0.12 | 4.1 of 4.1 (99.9 %) | 0.000 (0.12) | 0.000 (0.24) | 0.0 | 0 | 0.9 / 0.9 / 1.7 |
+| MK-08e | 3 | 0.22 | 92.6 of 92.8 (99.9 %) | 0.000 (0.22) | 0.015 (1.26) | 0.0 | 0 | 5.8 / 5.8 / 10.6 |
+| MK-09a | 2 | 0.43 | 208.6 of 208.7 (100.0 %) | 0.000 (0.43) | 0.000 (0.85) | 0.0 | 0 | 23.8 / 23.8 / 39.0 |
+| MK-09b | 3 | 0.27 | 60.9 of 61.8 (98.6 %) | 0.000 (0.00) | 0.346 (2.69) | 0.0 | 0 | 8.1 / 8.0 / 10.9 |
+| MK-10c | 3 | 0.37 | 425.7 of 425.9 (100.0 %) | 0.000 (0.37) | 0.000 (0.74) | 0.0 | 0 | 21.5 / 21.5 / 31.6 |
+| MK-11a | 4 | 0.16 | 29.5 of 29.7 (99.1 %) | 0.000 (0.16) | 0.177 (2.79) | 0.0 | 0 | 11.7 / 11.7 / 18.3 |
+| MK-11b | 4 | 0.17 | 33.5 of 33.9 (99.1 %) | 0.003 (0.33) | 0.210 (2.36) | 0.5 | 0 | 11.4 / 11.3 / 18.9 |
 | MK-13 | 2 | 0.58 | 55.6 of 55.7 (99.9 %) | 0.000 (0.00) | 0.000 (1.17) | 0.0 | 0 | 5.9 / 5.8 / 6.8 |
-| **All** | 63 | | | | | | | **5.9 / 5.8 / 6.8** |
+| MK-14 | 2 | 0.58 | 11.2 of 11.2 (99.7 %) | 0.000 (0.00) | 0.000 (1.17) | 0.0 | 0 | 3.7 / 3.7 / 5.0 |
+| MK-15a | 2 | 0.41 | 194.0 of 194.0 (100.0 %) | 0.000 (0.41) | 0.000 (0.82) | 0.0 | 0 | 11.5 / 11.3 / 11.7 |
+| MK-15b | 2 | 0.26 | 25.6 of 25.9 (98.8 %) | 0.000 (0.26) | 0.000 (0.52) | 0.0 | 0 | 4.0 / 4.0 / 4.8 |
+| MK-15c | 3 | 0.15 | 11.3 of 11.4 (99.5 %) | 0.000 (0.15) | 0.006 (0.88) | 0.0 | 0 | 6.1 / 6.0 / 9.3 |
+| MK-16 | 2 | 0.12 | 11.7 of 11.9 (98.0 %) | 0.000 (0.13) | 0.000 (0.35) | 0.0 | 0 | 1.1 / 1.1 / 1.4 |
+| MK-18a | 2 | 0.28 | 49.2 of 50.5 (97.5 %) | 0.000 (0.28) | 0.000 (0.55) | 0.0 | 0 | 3.2 / 3.2 / 5.1 |
+| **All** | 63 | | | | | | | **203.2 / 201.8 / 289.1** |
 <!-- /SIM_TABLE -->
 
 - **Reading the table:**
@@ -321,7 +351,14 @@ simpler:
   - inside corners a round cutter cannot make sharp (the L bracket's corner is now drawn R6.5);
   - thin slivers at a blank's far edge that FreeCAD's Adaptive leaves (up to 2.8 mm, on the nozzle and the
     collector);
-  - the open slide pocket's two corners.
+  - the open slide pocket's two corners;
+  - the collimator saddle's slot ends (MK-09b, 0.35 cm³ up to 2.7 mm).
+- **The one gouge left** is on MK-11b, the exhaust collector: a strip 1 mm wide and 14 mm tall on the side of the
+  outlet tab, 0.2-0.33 mm deep (0.003 cm³). That is two voxels, at the limit of the check, but it looks like the
+  outside pass nicking the tab. Check it in CAMotics, or leave 0.5 mm on the tab and file it.
+- **Run:** 27 programmed pieces, 63 setups, 10.5 min on the shared runner, 1.35 GB peak. The first full runs died
+  without a message after about 20 pieces: `sim.py` kept every piece's 3D arrays for the contact sheet and passed
+  its 2 GB cap. It now keeps only the top views.
 - **Pieces whose features are left to hand work** (the rod clamp's slit) are checked against the piece without them.
 - **The threads are not modelled:** tapped holes are drawn at the tap drill.
 
