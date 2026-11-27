@@ -323,6 +323,23 @@ stroke and the +8 mm overtravel the nearest other parts are the rod glands, thro
 sweep, including the gland plate's screws at the overtravel, the Z arm dropping away and the module's way out. The runs peak at
 3.5–3.6 GB, so they ran under a 4 GB cap; at 3 GB they are killed.
 
+### 4.10 Not done / limits
+
+- **Nothing is bought or built.** No pencil-lead break has been made on any of this: the loss budget is a 1-D estimate (Checks
+  §6b), and the PICO's response below 200 kHz is not quantified.
+- **Quote-only parts:** the PICO (and the WM500/1) have no public price; M4-01 carries an estimate. Whether MISTRAS will fit a
+  ~0.3 m cable with a 10-32 plug is not asked.
+- **Not confirmed with Solid Sealing:** the FA40102's laser weld on a spot face milled into the cap's curve, 4 mm from where the rod
+  is TIG-welded on afterwards. The gas-side pigtail (Kapton coax, a push-on socket for the Ø1.07 pin, an in-line 10-32 joint) is
+  not a chosen part; M4-13 is an estimate.
+- **Assumed:** the spring's ± 2 % length and ± 10 % rate, its wire's 1,690 MPa and its relaxation at ≤ 118 °C; the grease film's
+  1 GPa and 1–10 µm; the plates' ± 0.1 mm; the foil couplant for tier B (untested).
+- **The leads are not drawn.** Their way past the cartridge (in front of it and under its floor) and past the feedthrough's
+  gas-side pin, at the channel's top edge, is checked only as free space.
+- **Not drawn:** the bayonet's 97125K111 disc spring this needs (hot-swap.md's), the pigtail and the cables, and anything that
+  keeps the waveguide in if a module is turned over with its plate off.
+- **Unresolved:** the robot cell's drawbar and this waveguide both want the rod's middle (§4.6).
+
 ![AE path: a section through the M50 module at the waveguide, and the cartridge in the rod end](../analysis/out/monitoring/mech/ae.png)
 
 ## Checks

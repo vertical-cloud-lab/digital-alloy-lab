@@ -133,7 +133,7 @@ def main(which):
             if "AE cartridge" in n:
                 return (0.2, 0.65, 0.35)
             if "feedthrough" in n:
-                return (0.85, 0.65, 0.1)
+                return (0.55, 0.3, 0.85)
             return None
         keep = lambda p: "M50" in p.name or (mon(p) and ("AE " in p.name)) or "Z lift arm" in p.name or "Pot magnet" in p.name  # noqa: E731
         hide = HIDE + ("Gland-plate screws", "handle", "Zero-point")
@@ -142,7 +142,7 @@ def main(which):
                   title="AE path, section at the waveguide (M50): domed head on the plate's spigot, down the stack and the rod")
         b = scene(ae_parts, [(38, -80, -96), (0, 6, -118), (0, 0, 1)], box=(-45, 45, -30, 45, -150, -95),
                   clip=((0, 1, 0), (0, y_cut, 0)), grey_op=0.45, recolour=ae_col, keep=keep, hide=hide,
-                  title="Rod end: cartridge (green), spring, PICO sensor (blue), Microdot weld-in in the cap (gold)")
+                  title="Rod end: cartridge (green, see-through), spring, PICO sensor (blue), Microdot weld-in and its plug (violet)")
         both = np.hstack([a, b])
         im = Image.fromarray(both).convert("RGB")
         im = im.resize((im.width * 3 // 4, im.height * 3 // 4), Image.LANCZOS)
