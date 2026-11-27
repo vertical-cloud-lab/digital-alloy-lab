@@ -234,7 +234,14 @@ def main(argv):
             # arm against arm (with what they hold)
             gA = Group(arm_bodies("A") + held_bodies("A"))
             gB = Group(arm_bodies("B") + held_bodies("B"))
-            test(gA, gB, lambda x, y: ("arm-arm", LIMIT), where)
+            def fn_aa(x, y):
+                # a two-arm carry: the part rides on arm A, arm B's fingers hold it too (a grip, 5 mm), and vice versa
+                if y.name.startswith("o") and (_is_finger(x.name) or x.kind == "gripper"):
+                    return ("grip", GRIP_LIMIT)
+                if x.name.startswith("o") and (_is_finger(y.name) or y.kind == "gripper"):
+                    return ("grip", GRIP_LIMIT)
+                return ("arm-arm", LIMIT)
+            test(gA, gB, fn_aa, where)
             mine = arm_bodies(n)
             held = held_bodies(n)
             held_ids = set(st[n]["held"]["objs"]) if st[n]["held"] else set()
