@@ -84,6 +84,47 @@ SEL = [
      "for a BTC30-class trap", []),
     ("M0-16", "0", "fasteners", "M4 x 12 socket-head screws, A4 stainless, for the clamp ring and frame (7)",
      ("est", 5.0, 12.0, "estimate (not fetched)", "M4 x 12 A4 SHCS", "McMaster-Carr"), 1, "add", "not drawn", "", []),
+    # cooling for the cameras and Pis in the guard (monitoring/cooling.md, cad/monitoring_cooling.py; round 3, 2026-11-27): shared
+    # by every camera in the guard, so step 0. The guard's own air runs 28-44 K over the Shuttle's without it (cooling.json)
+    ("M0-C1", "0", "cooling (guard)", "Guard exhaust fans, 120 x 120 x 25 mm, 24 V, 3400 rpm (Delta AFB1224SH: 192 m3/h free air, "
+     "107 Pa, 46.5 dB(A), 6.7 W), two on a plenum outside the back panel", ("p3", "CL5"), 2, "add", "drawn (monitoring_cooling.py)",
+     "two in parallel give ~118 m3/h through the drawn traps and filter (cooling.json). Marketplace price, authenticity not checked: "
+     "buy from a distributor (Digi-Key, Mouser blocked the tunnel). Noctua NF-F12 iPPC-24V-3000 (CL7-a, $34.95, 187 m3/h, 75 Pa, "
+     "43.5 dB(A)) is the quieter option; its curve isn't published", []),
+    ("M0-C2", "0", "cooling (guard)", "Finger guards for the 120 mm exhaust fans (Qualtek 08130)", ("p3", "CL25"), 2, "add",
+     "drawn (monitoring_cooling.py)", "", []),
+    ("M0-C3", "0", "cooling (guard)", "Light traps for the guard's inlet (176 x 320 mm) and exhaust (244 x 230 mm): 1 mm aluminium "
+     "blades bent to six legs (32 mm deep, 10 mm pitch, 10 mm amplitude), black anodised, in 2 mm frames; 55 blades",
+     ("est", 300.0, 650.0, "estimate (custom sheet metal: ~275 press-brake bends, frames, a black-anodise lot; not quoted)",
+      "custom (monitoring_cooling.py LOUVRE)", "sheet-metal shop + anodiser"), 1, "make or outsource", "drawn (monitoring_cooling.py)",
+     "OD >= 5.4 at 1070 nm needs a blade reflectance <= ~0.4, OD 7 needs <= ~0.25 (cooling.json); no maker publishes black "
+     "anodise's at 1 um, so measure a blade, or line them with BKF12 (M0-C4)", []),
+    ("M0-C4", "0", "cooling (guard)", "Black aluminium foil to line the trap blades (Thorlabs BKF12, 5.5 % reflectance at 1064 nm on "
+     "Thorlabs' graph; 305 mm x 15.2 m)", ("p3", "CL61"), 1, "add", "drawn (as the blades' finish)",
+     "~1.5 m2 for both traps' blades, both faces. With it the traps reach OD ~10 (cooling.json). Thorlabs: not intended for laser "
+     "safety use, so the guard's leakage test before first light still decides", []),
+    ("M0-C5", "0", "cooling (guard)", "Inlet filter media: 30 ppi polyurethane foam pad, 1/4 in., 16 x 20 in (two 176 x 320 mm pieces: "
+     "one fitted, one spare), in the frame of M0-C6", ("p3", "CL92-a"), 1, "add", "drawn (monitoring_cooling.py)",
+     "no pressure drop is published for it: cooling.py takes 20 Pa at 1 m/s (estimate); measure the guard's flow when built. A duct "
+     "from a ventilated dock can bolt on in its place (the supply that keeps the busy case in rating)", []),
+    ("M0-C6", "0", "cooling (guard)", "Exhaust plenum outside the back panel (1.5 mm aluminium box, gasket) carrying the two fans, "
+     "and the inlet filter's frame", ("est", 60.0, 130.0, "estimate (bent and riveted sheet, two parts)", "custom (monitoring_cooling.py)",
+                                      "shop"), 1, "make",
+     "drawn (monitoring_cooling.py)", "", []),
+    ("M0-C7", "0", "cooling (PB2)", "PB2 vent fan, 40 x 40 x 10 mm 24 V (Noctua NF-A4x10 24V PWM: 8.9 m3/h, 19 Pa, 19.6 dB(A)), over a "
+     "Ø38 hole in PB2's +x end; a filtered vent at the other end", ("p3", "CL91"), 1, "add",
+     "drawn (monitoring_cooling.py)", "sealed, PB2's air runs ~25 K over the guard's and the Pi throttles (SoC 81-87 C in the vented "
+     "guard, cooling.json); vented, 3 K. PB2 drops from IP66 to IP2x, inside the guard", []),
+    ("M0-C8", "0", "cooling (PB2)", "Raspberry Pi 5 Active Cooler for PB2's Pi", ("p3", "CL32"), 1, "add", "not drawn (inside PB2)",
+     "PiShop $12.95 (CL32-a)", []),
+    ("M0-C9", "0", "cooling (guard)", "Option, not drawn: chilled-water fan coil in a closed guard (120 mm radiator, 24 V fan, quick "
+     "couplings on the dock's chilled water), in place of the vents", ("est", 150.0, 400.0, "estimate (radiator, fan, fittings, hose; "
+                                                                        "not fetched)", "fan coil", "various"), 1,
+     "option (if the chilled water is chosen for the laser)", "not drawn",
+     "holds the guard at 34 C in the busy case with 20 C water and UA 15 W/K (cooling.json); ~0.2 kW on the chiller", []),
+    ("M0-C10", "0", "cooling (guard)", "Option, not recommended: thermoelectric air-to-air enclosure cooler, 24 V (TE Technology AC-094)",
+     ("p3", "CL80"), 1, "option (not recommended)", "not drawn",
+     "94 W at dT 0 is half the guard's load, and its ~240 W input goes into the Shuttle", []),
     # ---------------- step 1: clock and recorder -----------------------------------------------------------------------
     ("M1-01", "1", "recorder", "Digitizer: PicoScope 4444, 4 differential inputs, 12/14-bit, 20 MHz, 400 MS/s, 256 MS memory",
      ("p2", "D1"), 1, "add", "not drawn",
@@ -274,6 +315,20 @@ SEL = [
     ("M7-18", "7", "steep lid camera", "Option: LP cover slides, fused silica Ø24.4 x 2 mm (laser-head protective glass), 6 to start",
      ("p1", "W5-c"), 6, "option (consumable)", "not drawn",
      "6+ price $37.19 each; Edmund 19-837 Ø25 x 1 mm is $86. With a Ø37 bore in the lid the slide must sit in the boss or grow to Ø40-42", []),
+    # cooling for the side and lid cameras (monitoring/cooling.md; round 3)
+    ("M7-C1", "7", "side camera cooling", "Side camera hood and its duct: plenum behind the inlet trap, duct over the camera, hood round "
+     "its body (1 mm aluminium, riveted)", ("est", 120.0, 280.0, "estimate (bent and riveted sheet, ~0.7 kg; not quoted)",
+                                           "custom (monitoring_cooling.py)", "shop"), 1, "make", "drawn (monitoring_cooling.py)",
+     "keeps the Chronos in supply air: 38.5 C in the busy Shuttle against 42.6 C guard air (cooling.json)", []),
+    ("M7-C2", "7", "side camera cooling", "Hood fan, 60 x 60 x 25 mm 24 V (Delta AFB0624H-A: 40 m3/h free air, 52 Pa, 34 dB(A)), in the "
+     "duct", ("p3", "CL90"), 1, "add", "drawn (monitoring_cooling.py)", "~20 m3/h through the trap's right part, the duct and the hood "
+     "(cooling.json). Marketplace price, authenticity not checked", []),
+    ("M7-C3", "7", "camera thermal breaks", "G-10/FR-4 sheet, 1/4 in., 6 x 6 in (McMaster 85345K741): the side camera bracket's root "
+     "pad and the LP camera's Ø32 ring", ("p3", "CL51"), 1, "add", "drawn (monitoring_cooling.py)",
+     "the ring is turned and SM1-threaded both ends (in house). G-10 shoulder washers for the root's screws not priced", []),
+    ("M7-C4", "7", "steep lid camera", "Fanless aluminium heat-sink case for the LP camera's Pi 5 (Geekworm P573)", ("p3", "CL33"), 1,
+     "add with M7-15", "drawn (monitoring_cooling.py, envelope)",
+     "Geekworm's test: +35 K over the air at full load for 20 min (not steady). Flirc (CL30, $16.95) publishes no figure", []),
     # ---------------- step 8: cooling through solidification -------------------------------------------------------------------
     ("M8-01", "8", "InGaAs coaxial", "Route A: InGaAs photodiode behind the DMSP1000 (1625-1725 nm leaks through it at 3-30 %)",
      ("mo", "MO16"), 1, "add (route A)", "not drawn", "", []),

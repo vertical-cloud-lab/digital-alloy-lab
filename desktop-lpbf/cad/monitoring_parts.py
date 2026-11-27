@@ -749,8 +749,12 @@ def _daq(parts, add, h):
 
 # ======================================================================================================== camera cooling
 def _cooling(parts, add, h, module="M50"):
-    """Cooling for the cameras and Pis in the guard's air (mechanics.md Checks §7). Nothing drawn yet."""
-    return
+    """Cooling for the cameras and Pis in the guard's air (mechanics.md Checks §7; monitoring/cooling.md): light-trapped inlet and
+    exhaust in the guard's back panel with two 120 mm exhaust fans, a duct and hood with its own fan for the side camera, G-10
+    breaks under the side camera bracket's root and in the LP camera's filter holder, a fan on PB2, and the LP camera's Pi in a
+    heat-sink case. The geometry is in monitoring_cooling.py, which the thermal analysis reads too."""
+    import monitoring_cooling as MCOOL
+    REPORT["cooling"] = MCOOL.draw(parts, add, h, module)
 
 
 def apply(parts, add, h, module="M50"):
