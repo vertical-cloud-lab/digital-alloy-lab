@@ -25,7 +25,7 @@ clips re-planned with the same seeds) and audited.
 | 20 receiving | 448 | 0 (0) | 0.0 mm | 0 | parked |
 | 29 the stock | 275 | 0 (0) | 0.0 mm | 0 | - |
 | 30 the chamber | 3,037 | **0** (42, worst 84.4 mm) | 0.0 mm | 0 | 12.76 m, 0, 0.1 mm in all |
-| 31 the other parts | 1,088 | 0 (0) | - | - | 4.25 m, 0, 0 |
+| 31 the other parts | 1,088 | 0 (0) | - | - | 4.25 m, 0, 0 (chapter 30's VF-4 layout: below) |
 | 31b the bracket's programs | 736 | 0 (0) | - | - | - |
 | 32 finishing | 1,001 | 0 (0) | 0.0 mm | 0 | 1.39 m, 0, 0 |
 
@@ -70,11 +70,14 @@ gave the final render.
 | The cutter inside the stock for 1-6 frames per tool (T2 23 mm, T9 15 mm on the floor plate, the frame's drills 2-13 mm) | Not a lag: replaying `cut_program`'s frame times, no voxel centre of the stock is inside the tool in any of floor_A's 120 frames. The stock is drawn from voxels whose centres lie outside the cutter, so a slot's drawn walls stand up to half a voxel inside the tool that cut it; the tool, at zero clearance on both sides of its own slot, reads to the audit's translational depth as deep as the slot (scene_audit's own measure on floor_A: 22.6 mm for T2 in the 96 mm port's trepan, 14.4 for T9 in the slots). And the drills were drawn with their point upside down (pyvista's Cone points its apex along `direction`): a flat, full-diameter face at the tip | The drawn cut is the program's with the cutter 0.75 mm larger in radius and 0.5 mm lower (`drawn_program`; the stock carried on, its mass and the next setup, is cut exactly); the drill's 118 deg point down. Measured: 0.0 mm for T2 and T9 on floor_A, and for frame_B's drills (was up to 5.8 mm) |
 | The HRT210's platter ribs 1.6 mm into the dummy-floor plate (743 frames) | The ribs drawn 1.5 mm proud of the platter's face | 0.2 mm proud |
 
+**Chapter 31 with chapter 30's VF-4** (after the first round-10 render of 31, which kept round 9's table layout): the
+HRT210 180 mm further left, the WIPS at the table's right end, the work light on the left wall and in the planner's
+collision set, as chapter 30 has them. `vf4_vise_part`, `drive_vf4_lathe` and `lathe_park` re-planned (all ok: the
+vise load 27.9 mm closest; the drive turns the arm -120 deg, 64.2 mm closest, 14.6 s, as before), chapter 31 drawn
+again (1,088 frames) and audited: 0 pairs over 1.5 mm, the one rigid pair as before (the lathe door's window set into
+the door, 15.2 mm, the same in every frame); MiR A 4.25 m with no reversing or sideways slip; no people in it.
+
 **Not done in round 10, and what to know:**
-- Chapter 31 was rendered as it was (round 9's code, as asked), so its VF-4 still has round 9's table layout: the HRT210
-  180 mm further right on the table, the WIPS at the left end, the work light under the roof at the front. Chapter 30 now
-  has the rotary 180 mm further left, the WIPS at the right end and the light on the left wall. To match, re-plan
-  `vf4_vise_part` and `drive_vf4_lathe` and render 31 again (about 10 min; the ledger had no room for it this round).
 - The edge clamps' slide out and in is a cut each way (arm A's clamp clip only drives the screws); not planned for the arm.
 - The narrow part cart (260 x 340 mm top, 900 mm high) is our estimate, as round 9's wider cart was.
 - The people lean up to 45 deg to set the stock on the risers (the part's near face is 367 mm inside the machine and their

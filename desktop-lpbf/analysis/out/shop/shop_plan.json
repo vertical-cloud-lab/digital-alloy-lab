@@ -301,7 +301,7 @@
      "t_s": 2.3,
      "info": {
       "planned": false,
-      "plan_s": 0.6
+      "plan_s": 0.8
      }
     },
     {
@@ -1087,8 +1087,10 @@
    "fail": null,
    "poses_checked": 3178,
    "transport_turn_deg": -120.0,
+   "transport_lift_mm": 0.0,
    "tried": [
     {
+     "lift_mm": 0.0,
      "turn_deg": 0.0,
      "hit": [
       "drive",
@@ -1098,6 +1100,7 @@
      ]
     },
     {
+     "lift_mm": 0.0,
      "turn_deg": 30.0,
      "hit": [
       "drive",
@@ -1107,6 +1110,7 @@
      ]
     },
     {
+     "lift_mm": 0.0,
      "turn_deg": -30.0,
      "hit": [
       "drive",
@@ -1116,6 +1120,7 @@
      ]
     },
     {
+     "lift_mm": 0.0,
      "turn_deg": 60.0,
      "hit": [
       "drive",
@@ -1125,6 +1130,7 @@
      ]
     },
     {
+     "lift_mm": 0.0,
      "turn_deg": -60.0,
      "hit": [
       "drive",
@@ -1134,6 +1140,7 @@
      ]
     },
     {
+     "lift_mm": 0.0,
      "turn_deg": 90.0,
      "hit": [
       "drive",
@@ -1143,6 +1150,7 @@
      ]
     },
     {
+     "lift_mm": 0.0,
      "turn_deg": -90.0,
      "hit": [
       "drive",
@@ -1152,6 +1160,7 @@
      ]
     },
     {
+     "lift_mm": 0.0,
      "turn_deg": 120.0,
      "hit": [
       "drive",
@@ -1161,6 +1170,7 @@
      ]
     },
     {
+     "lift_mm": 0.0,
      "turn_deg": -120.0,
      "hit": null
     }
@@ -1970,5 +1980,5 @@
    "transport_turn_deg": 30.0
   }
  },
- "run_utc": "2026-11-27T19:01Z"
+ "run_utc": "2026-11-27T20:45Z"
 }
