@@ -32,7 +32,7 @@ class SimWorld:
         clock.on_advance(self.advance)
         self.timing = timing
         self.rng = random.Random(seed)
-        g, th = cfg.gas, cfg.thermal
+        g = cfg.gas
         # gas
         self.o2 = g.air_o2_ppm
         self.o2_reading = g.analyzer_range_ppm     # trace cell, isolated in argon until its sample valve opens
