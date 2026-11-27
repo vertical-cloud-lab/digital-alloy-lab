@@ -1022,15 +1022,23 @@ def case4c(R):
                    variants=out)
 
 
-def gantry_model_case():
+def gantry_model_case(gantry=None):
     """4c on the frame as the CAD model draws it (P['gantry'] = 'four_post'): four 45 mm posts, 30 mm front and back
     cross-beams, a diagonal per side (front post's top to the back post's foot) and two knee braces at the back, and the
     head hung by its entrance face from the flange plate MK-09 between the beams, with its angle brackets. Posts and
     beams are equivalent tubes at the drawn positions; braces are round 30 mm tubes on the drawn axes (centre of mass +
     principal axis of each brace solid), run 20 mm into the members they meet so that they bond; the diagonals' lower
     ends run on to the back posts' front face at the foot and are held there (bolted to the base rail). The head (5.8 kg)
-    and lens (1.34 kg) are one rigid mass on the flange's face under the head's footprint."""
-    parts = M.build("FT-1")
+    and lens (1.34 kg) are one rigid mass on the flange's face under the head's footprint. gantry: ft_model's
+    P['gantry'] option to draw (None = the model's default); 'four_post_braced_front' adds the front knee braces, the
+    head plate's top flange on both cross-beams and its three gussets, which are taken as drawn."""
+    g_old = M.P.get("gantry")
+    if gantry:
+        M.P["gantry"] = gantry
+    try:
+        parts = M.build("FT-1")
+    finally:
+        M.P["gantry"] = g_old
     L = M.levels("FT-1")
     sec = tslot_section()
     eq = equivalent_tube(sec["Ixx"], sec["A"])
@@ -1061,7 +1069,10 @@ def gantry_model_case():
     r_in = (30.0 ** 4 - 64 * I_TSLOT / math.pi) ** 0.25 / 2
     braces, held = [], []
     back_front_face = min(g_["bb"][2] for g_ in posts if g_["c"][1] > 0)       # y of the back posts' front face
-    for k, s_ in enumerate(part(parts, "Gantry braces").shape.Solids()):
+    brace_solids = list(part(parts, "Gantry braces").shape.Solids())
+    if any(p_.name.startswith("Gantry knee braces, front") for p_ in parts):
+        brace_solids += list(part(parts, "Gantry knee braces, front").shape.Solids())
+    for k, s_ in enumerate(brace_solids):
         V = np.array([v.toTuple() for v in s_.Vertices()])
         C = np.array(s_.Center().toTuple())
         d = np.linalg.svd(V - V.mean(0))[2][0]
@@ -1086,8 +1097,14 @@ def gantry_model_case():
     fl = part(parts, "Scan-head flange plate (MK-09)").shape
     bodies += [("flange plate", fl), ("angle brackets", part(parts, "Flange-to-beam angle brackets (MK-09)").shape)]
     mats += [al, al]
+    extras_drawn = []
+    for nm in ("Head-plate top flange", "Head-plate gussets"):
+        if any(p_.name.startswith(nm) for p_ in parts):
+            bodies.append((nm, part(parts, nm).shape))
+            mats.append(al)
+            extras_drawn.append(nm)
     hmax = float(os.environ.get("FT_GANTRY_HMAX", "8"))
-    m = mesh_bodies(bodies, "c4c_model", hmax=hmax, hmin=1.5, curv=8)
+    m = mesh_bodies(bodies, f"c4c_model_{gantry or 'default'}", hmax=hmax, hmin=1.5, curv=8)
     hbb = part(parts, "SCANLAB hurrySCAN").shape.BoundingBox()
     fbb = fl.BoundingBox()
     ax_xy = P["axis_off"]
@@ -1111,7 +1128,7 @@ def gantry_model_case():
     eid = len(m["tets"]) + 1
     extra = (f"*NODE, NSET=REFS\n{ref},{cm[0]},{cm[1]},{cm[2]}\n{rot},{cm[0]},{cm[1]},{cm[2]}\n" + nset("FOOT", foot) + nset("FEET", feet)
              + f"*RIGID BODY, NSET=FOOT, REF NODE={ref}, ROT NODE={rot}\n*ELEMENT, TYPE=MASS, ELSET=MHEAD\n{eid},{ref}\n*MASS, ELSET=MHEAD\n{mass_t}\n")
-    job = "c4c_model_gravity"
+    job = f"c4c_model_{gantry or 'default'}_gravity"
     write_model(job, m, mats, extra)
     append(job, f"*STEP\n*STATIC, SOLVER=SPOOLES\n*BOUNDARY\nFEET,1,3\n*DLOAD\nEALL,GRAV,9810.,0.,0.,-1.\n*CLOAD\n{ref},3,{-mass_t * G:.6g}\n"
            "*NODE FILE\nU\n*EL FILE\nS\n*END STEP\n")
@@ -1132,7 +1149,7 @@ def gantry_model_case():
                 lens_u_um=(u_lens * 1000).round(2).tolist(), beam_error_at_bed_um=(u_bed[:2] * 1000).round(1).tolist(),
                 focus_shift_um=float(u_bed[2] * 1000), vm_max=float(vm.max()), u_max_um=float(np.linalg.norm(U, axis=1).max() * 1000))
     print(f"  4c model gravity: tilt {grav['tilt_urad']} urad, lens {grav['lens_u_um']} um, beam error at bed {grav['beam_error_at_bed_um']} um", flush=True)
-    job = "c4c_model_modal"
+    job = f"c4c_model_{gantry or 'default'}_modal"
     write_model(job, m, mats, extra)
     append(job, "*BOUNDARY\nFEET,1,3\n*STEP\n*FREQUENCY, SOLVER=SPOOLES\n6\n*NODE FILE\nU\n*END STEP\n")
     t_m = run_ccx(job)
@@ -1149,7 +1166,8 @@ def gantry_model_case():
                           bed_motion_dir=(ub[:2] / (np.linalg.norm(ub[:2]) + 1e-30)).round(2).tolist(),
                           max_at=m["xyz"][int(np.argmax(mag))].round(0).tolist(), dominant_head_axis=names[int(np.argmax(np.abs(ur)))]))
     print(f"  4c model modes: {[round(x, 1) for x in f]} Hz", flush=True)
-    r = dict(variant="model (as drawn: four 45 mm posts, braces, head hung from the flange plate)", gravity=grav, modes=modes,
+    r = dict(variant=f"model (as drawn, P['gantry'] = {gantry or g_old!r}: four 45 mm posts, braces, head hung from the flange plate)",
+             gantry_option=gantry or g_old, extra_parts_as_drawn=extras_drawn, n_braces=len(braces), gravity=grav, modes=modes,
              ccx_s=dict(gravity=round(t_s), modal=round(t_m)), masses_kg=dict(head=m_head, lens=m_lens, cm_mm=[round(c_, 1) for c_ in cm]),
              posts=[dict(bb=[round(v, 1) for v in g_["bb"]]) for g_ in posts], braces=braces, foot_nodes=int(len(foot)), feet_nodes=int(len(feet)),
              note="angle brackets and flange plate as drawn; posts/beams equivalent tubes (I from the T-slot section); base rails rigid")
@@ -1160,7 +1178,8 @@ def gantry_model_case():
 
 
 def case4c_model(R):
-    R.setdefault("4c", {}).setdefault("variants", {})["model_four_post"] = gantry_model_case()
+    g = os.environ.get("FT_GANTRY_MODEL") or None          # e.g. four_post_braced_front; default: the model's own
+    R.setdefault("4c", {}).setdefault("variants", {})["model_" + (g or "four_post")] = gantry_model_case(g)
 
 
 # --------------------------------------------------------------------------------------------
