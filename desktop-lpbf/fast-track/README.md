@@ -111,7 +111,7 @@ in headed Chrome with real mouse clicks. Each finding below links the folder wit
 | **The trace O₂ analyzer reads only to 10,000 ppm**, so it can't show the box is safe to open | [`control/`](control/README.md) §1 | a percent-range O₂ transmitter on the exhaust, a valve that keeps the trace cell out of air, possibly a sample pump |
 | **The plate's heat sets the build time.** The thermal FEA (CalculiX, CAD v2) gives 0.67 W/K from the substrate top to the block (0.83 W/K across the 0.1 mm argon gap); without a dwell the substrate runs 41–106 K over 200 °C | [`analysis/out/fea/`](analysis/out/fea/), [`control/`](control/README.md) §7 | a dwell takes most of each layer: at the FE conductance a 10 mm build takes 2.1–4.2 h with the block at setpoint, **0.8–1.8 h with the block 20 K below the plate** (round 1 assumed 1.2–1.8 h with no dwell) |
 | **Process window** from a melt-pool model calibrated on 15 published AlSi10Mg tracks | [`process/`](process/README.md) | starting set **255 W, 1.25 m/s, 0.10 mm hatch, 30 µm layers**; first build three 10 mm and two 5 mm cubes; 0.60 h for 10 mm before any dwell; RTC lists for commissioning rungs 1–3 |
-| **Structure** (CalculiX) | [`analysis/out/fea/struct.md`](analysis/out/fea/struct.md) | a **sponge silicone gasket**, not a solid cord (the cord needs 4.0 kN to close); the gantry as drawn in round 1 has a **13 Hz** first mode, so **four 45 mm posts with braces** (79 Hz in an equivalent model; **43 / 60 / 67 Hz as CAD v2 draws it**, below the 60 Hz minimum: the front frame needs a brace like the back, and the head's flange plate gussets); the cube plate and window pass (SF 34 and 74); the X-VSR20A must pull the rod down past its O-ring drag (7–45 N); the Thorlabs stage needs one O-ring |
+| **Structure** (CalculiX) | [`analysis/out/fea/struct.md`](analysis/out/fea/struct.md) | a **sponge silicone gasket**, not a solid cord (the cord needs 4.0 kN to close); the gantry as drawn in round 1 has a **13 Hz** first mode, so **four 45 mm posts with braces** (79 Hz in an equivalent model). Drawn in CAD v2 and re-run as drawn: 43 / 60 / 67 Hz; with front knee braces, a top flange and gussets on the head plate (now drawn) **50 / 67 / 94 Hz**, the frame no longer racks, but mode 1 is still under the 60 Hz minimum: the head swings on the flange plate below the beams; moving the gussets under the head changes nothing (49.8 Hz), because the head's centre of mass sits 95 mm out from a plate held only near its top: it needs a second support on its far side or a tie from the plate's bottom edge to the posts, not yet drawn); the cube plate and window pass (SF 34 and 74); the X-VSR20A must pull the rod down past its O-ring drag (7–45 N); the Thorlabs stage needs one O-ring |
 | **Cross-flow** (OpenFOAM, laminar and k-ω SST, 237k cells) | [`analysis/out/cfd/`](analysis/out/cfd/) | the slot jet holds 2.6–2.7 m/s over the build area; bed shear 0.03–0.05 Pa, below the 0.053–0.118 Pa that starts to lift 63 µm powder; 96–99 % of tracers released 0.5–3 mm up reach the collector |
 | **Purge** (OpenFOAM, passive and buoyant two-gas runs) | [`analysis/out/cfd/`](analysis/out/cfd/results.md) | through the nozzle alone, as drawn, the box takes 33–50 min to 1000 ppm; **a low diffuser and a high vent reach 1000 ppm in 2.6 min and 100 ppm in about 5 min** (argon displaces the air from the floor up), faster than perfect mixing (6.2 / 8.9 min). Two bulkheads, a diffuser and a ball valve; the analyzer samples the vent |
 | **Fabrication** (FreeCAD CAM, 66 setups, every program checked in a voxel simulation; 35 drawings) | [`fab/`](fab/) | with PR 266's per-part allowances, FT-1's parts need **about 59–123 shop hours, not 25–40**. The schedule below is redone on them |
@@ -126,7 +126,7 @@ it:
 |---|---|---|
 | CAD checks, progression, renders, STEP | v2 | [`cad/`](cad/README.md) |
 | Thermal FEA | v2 | [`analysis/out/fea/`](analysis/out/fea/) |
-| Structural FEA | v1 for the lid, cube plate, window and rod; the gantry also on v2's drawn frame | v2's frame: 43 / 60 / 67 Hz ([`struct.md`](analysis/out/fea/struct.md) 4c addendum) |
+| Structural FEA | v1 for the lid, cube plate, window and rod; the gantry also on v2's drawn frame | v2's frame: 43 / 60 / 67 Hz as first drawn, 50 / 67 / 94 Hz braced ([`struct.md`](analysis/out/fea/struct.md) 4c addendum) |
 | CFD | v1 (same box, cassette and nozzle) | [`analysis/out/cfd/`](analysis/out/cfd/) |
 | Process and optics | v1 geometry, own optics model | its changes (lens offset, window position) are in v2 |
 | Fabrication (pieces, CAM, drawings, hours) | v1 | v2's changes listed and costed in [`fab/out/v2/delta.md`](fab/out/v2/delta.md); `fab/parts.py` stops with a message on v2 until ported |
@@ -554,7 +554,7 @@ spot works.
 | The RTC4 or its 64-bit DLL won't run with this head | ask SCANLAB before paying; guide-laser test in week 1; correXion grid | the RTC5 with SCANLAB's XY2-100 converter (quote), or a Teensy XY2-100 controller (OPAL / DTU) |
 | Back reflection damages the used laser | the 30 mm lens offset; 50 W test on a bead-blasted plate watching the status bit; ask IPG about protection | tilt the head 3° (defocuses the edges ±1 mm) |
 | The shop can't give 8–12 hours a working day | book it on day 0 | send the plates and sheet parts out (fab/'s outsourced split) |
-| The scan-head frame rings (43 Hz as drawn; 60 Hz is the minimum) | add the front-frame brace and head gussets before first light; tap-test the built frame | a stiffer frame or the head on the deck's own posts |
+| The scan-head frame rings (50 Hz braced as drawn; 60 Hz is the minimum) | a second support on the head's far side (or a tie from the flange plate's bottom edge to the posts) before first light; tap-test the built frame | a stiffer frame or the head on the deck's own posts |
 | LSO or EHS approval takes longer than 3 weeks | ask on day 0 with the Class 1 layout | FT-0's bench work waits; mechanics go on |
 | The flow purge stalls above ~500 ppm | O₂ log on the first purge | better gasket; FT-1V's vacuum cube |
 | Fine Al powder won't feed from the moving hopper | test the hopper on the bench with the real powder in week 1–2 | a second vertical stage as a supply piston (one more Zaber X-VSR20A) |
@@ -622,9 +622,9 @@ drawings, and took the other workers' findings:
   beam tube moved to suit; the cover slide 130 mm above the bed in both enclosures; Ø6 × 20 mm heaters and a 24 mm
   heater plate; a beam tube whose centre section is two half-shells, so the lid can open (round 1's tube trapped it); a
   48 mm spreader bar for FT-0 (the 70 mm applicator didn't fit between the nozzle and the collector); the structural
-  FEA's **four-post braced gantry** (79 Hz in the FEA's equivalent model against 13 Hz; re-run on the frame as drawn
-  it gives 43 / 60 / 67 Hz, so it still needs a front-frame brace and gussets under the head's flange plate); one
-  D4NS-2CF switch per guard; the rod-gland screws moved
+  FEA's **four-post gantry**, then braced in front and with the head's flange plate stiffened after the FEA re-ran it as
+  drawn (13 Hz in round 1; 43 / 60 / 67 Hz as first drawn; **50 / 67 / 94 Hz braced**, still under the 60 Hz minimum in
+  mode 1; gussets moved under the head give 49.8 Hz: the head needs a second support on its far side, not yet drawn); one D4NS-2CF switch per guard; the rod-gland screws moved
   inside the gland's face seal (the fabrication worker found four leak paths outside it); a potted plug and a rod-end
   block for the heater leads.
 - **Monitoring MON1–MON9** is drawn: a Pi HQ layer camera through its own lid port (17.8 µm per pixel across the plate),
