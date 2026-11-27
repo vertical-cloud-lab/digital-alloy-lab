@@ -195,8 +195,9 @@ def layout():
     y_out = FF.OUTER["y"]
     clamp_t = 4.76                      # clamp frame, 3/16 in. plate (monitoring_parts._bw)
     r_tube = 15.24                      # SM1 lens tube OD 1.20 in.
-    tube_ahead = 8.9                    # the asphere's vertex stands this far ahead of the tube's front (sag at the rim 11.4 mm,
-    #                                     less a 2.5 mm SM1RR in front of the rim)
+    A = VENDOR["ACL25416U_B"]
+    tube_ahead = float(sag(np.array(A["ca_mm"] / 2), A)) - 2.0    # the SM1RR (2.0 mm, flush with the tube's face) bears on S1 at r 11.45,
+    #                                     so S1's vertex stands sag(11.45) - 2.0 = 7.1 mm ahead of the tube's front
     rim_y = math.sqrt(1 - a[1] ** 2)
     t_front = (clamp_t + 3.0 + r_tube * rim_y) / a[1]                          # tube rim 3 mm off the clamp frame
     t_s1 = t_front - tube_ahead

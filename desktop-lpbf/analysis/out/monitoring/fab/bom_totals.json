@@ -116,12 +116,15 @@
   },
   "7": {
    "what": "side high-speed camera (and the steep lid camera)",
-   "new_low": 12117.07,
-   "new_high": 12117.07,
-   "with_used": 10317.07,
+   "new_low": 11205.33,
+   "new_high": 11305.33,
+   "with_used": 9405.33,
    "unpriced": [],
-   "estimated": [],
+   "estimated": [
+    "M7-05c"
+   ],
    "options": [
+    "M7-05i",
     "M7-09",
     "M7-10",
     "M7-11",
@@ -133,10 +136,10 @@
     "M7-17",
     "M7-18"
    ],
-   "options_usd": 13443.51,
-   "options_used_usd": 13303.46,
-   "cumulative_new_low": 20935.57,
-   "cumulative_with_used": 18863.57
+   "options_usd": 13637.33,
+   "options_used_usd": 13497.28,
+   "cumulative_new_low": 20023.83,
+   "cumulative_with_used": 17951.83
   },
   "8": {
    "what": "cooling through solidification",
@@ -158,8 +161,8 @@
    ],
    "options_usd": 18334.93,
    "options_used_usd": 11651.93,
-   "cumulative_new_low": 23095.89,
-   "cumulative_with_used": 21023.89
+   "cumulative_new_low": 22184.15,
+   "cumulative_with_used": 20112.15
   }
  },
  "missing": [

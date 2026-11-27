@@ -264,20 +264,109 @@ def _bw(parts, add, h):
 
 
 # ======================================================================================================== BW light
+# The side camera's light (monitoring/optics.md §4.1; analysis/monitoring/optics/bw_light.py traces it and does the light budget,
+# heat and eye safety): a Thorlabs M850D3 (850 nm LED, 1 x 1 mm die on a Ø22 metal-core board) on a custom finned 6061 heat sink,
+# imaged onto the plate by an ACL25416U-B aspheric condenser in an SM1L05 lens tube, on the BW sight line; a split clamp on the heat
+# sink's collar hangs from an L bracket screwed to the back wall above the BW clamp frame. Positions are along the outward sight line,
+# t = 0 at the port centre on the wall's outer face. Dimensions read off Thorlabs' drawings on 2026-11-27: M850D3 spec sheet
+# MTN005519-S01 (board Ø22.0 x 1.6, 2.8 over the LED, 2 x Ø2.0 holes on Ø19); ACL25416U-B drawing and Zemax file (Ø25.4, CT 14.0,
+# S1 R 8.818 k -0.99917 + A4..A10, S2 R -70); SM1L05 drawing (Ø30.5 x 16.5, 12.7 internal thread, 3.0 external); SM1RR (2.0 thick,
+# CA 22.9). The LED package, the tube's bore past its internal thread, the heat sink and the bracket are envelopes (named so).
+BWL = dict(
+    clear=3.0,                                                     # the tube's front rim off the BW clamp frame (4.76 mm plate)
+    tube=dict(od=30.48, l=16.5, thread_in=12.7, thread_ext=3.0, od_ext=26.29, id_in=25.4, id_ext=23.5),   # SM1L05 (id_ext estimate)
+    ring=dict(t=2.0, ca=22.9),                                     # SM1RR, flush with the tube's face; it bears on S1 at its clear aperture
+    lens=dict(d=25.4, ct=14.0, R1=8.818197, k1=-0.9991715, A=(8.6821674e-05, 6.3760123e-08, 2.4073084e-09, -1.7189021e-11), R2=-69.99948),
+    gap=8.2,                    # die to S2 (mm): the best focus for the side camera's field in bw_light.py (paraxial 8.9); set on the bench
+    led=dict(board_d=22.0, board_t=1.6, pkg=3.5, h=2.8, emit=2.6),  # emit: the die's face above the board's back (estimate)
+    hs=dict(d=36.0, L=40.0, collar=10.0, root_d=24.0, fins=5, fin_t=2.0, fin_pitch=6.0, bore_d=26.29, bore_past_tube=0.38, pedestal_d=22.5),
+    clamp=dict(t0=1.0, w=8.0, half=23.0, up=25.0, top_z=60.5),     # split block on the heat sink's collar, its top flat under the arm
+    bracket=dict(t=6.35, x=(-147.5, -123.0), z=(60.5, 78.0), holes_x=(-141.0, -129.5), hole_z=69.25,
+                 arm=[(-147.5, 111.0), (-123.0, 111.0), (-123.0, 118.0), (-141.0, 162.0), (-150.0, 164.0), (-178.0, 130.0),
+                      (-170.0, 118.0), (-156.0, 111.0)]),
+)
+
+
+def _asphere(Ld):
+    """ACL25416U-B as a solid of revolution about local z: S1's vertex at z = 0, S2 toward +z (the LED side)."""
+    c, k, A = 1 / Ld["R1"], Ld["k1"], Ld["A"]
+    r_e = Ld["d"] / 2
+
+    def s1(r):
+        r2 = r * r
+        return c * r2 / (1 + math.sqrt(1 - (1 + k) * c * c * r2)) + sum(ai * r2 ** (i + 2) for i, ai in enumerate(A))
+
+    cz = Ld["ct"] + Ld["R2"]
+    rs = np.linspace(0.0, r_e, 31)
+    pts = [(float(r), float(s1(r))) for r in rs] + [(float(r), float(cz + math.sqrt(Ld["R2"] ** 2 - r * r))) for r in rs[::-1]]
+    solid = cq.Workplane("XZ").polyline(pts).close().revolve(360, (0, 0, 0), (0, 1, 0)).val()
+    return solid, (lambda r: s1(r)), (lambda r: cz + math.sqrt(Ld["R2"] ** 2 - r * r))
+
+
 def _bw_light(parts, add, h):
-    """The light behind the BW window (monitoring.md §9: pulsed 850 nm LEDs for the side camera)."""
-    C = h.C
+    """The light behind the BW window: M850D3 + ACL25416U-B in an SM1L05 on a finned heat sink, clamp and bracket (see BWL)."""
+    C, box, fuse = h.C, h.box, h.fuse
+    L = BWL
     y_out = FF.OUTER["y"]
-    # 850 nm LED on the sight line, 3 mm off the clamp frame (4.76 mm plate)
     s = MS.VIEWPORTS["BW"]
     c, d = np.array(s["centre"], float), np.array(MS.axis_to_target(s["centre"]))
-    a, up, side = _frame(-d)
-    L_led, r_led = 60.0, 20.0
-    t1 = (y_out + 4.76 + 3.0 + r_led * math.sqrt(1.0 - a[1] ** 2) - c[1]) / a[1]
-    led = _cyl_ax(r_led, c + t1 * a, a, L_led)
-    add("BW 850 nm LED light (mounted LED + collimator, envelope Ø40 x 60; a SOLIS-850C-sized head does not fit here) on the BW sight line",
-        led, C["black"], 5, (0, 260, 0), mat="misc", mass_kg=0.4, bom="M7-05", tags=TAG)
-    REPORT.setdefault("BW", {})["led_front"] = (c + t1 * a).round(1).tolist()
+    a, up, side = _frame(-d)                                         # a: outward along the sight line
+    T, Rg, Ld, Le, Hs = L["tube"], L["ring"], L["lens"], L["led"], L["hs"]
+    P = lambda t: c + t * a                                         # noqa: E731
+    lens, s1, s2 = _asphere(Ld)
+    r_ca = Rg["ca"] / 2
+    t_tube = (4.76 + L["clear"] + T["od"] / 2 * math.sqrt(1.0 - a[1] ** 2)) / a[1]   # tube front: its rim L["clear"] off the clamp frame
+    t_s1 = t_tube + Rg["t"] - s1(r_ca)                              # the front ring bears on S1 at the ring's clear aperture
+    t_die = t_s1 + Ld["ct"] + L["gap"]
+    t_board = t_die + Le["emit"]                                    # the board's back face
+    t_hs = t_tube + T["l"] - T["thread_ext"]                        # heat sink front face: the tube's shoulder bears on it
+    t_floor = max(t_tube + T["l"] + Hs["bore_past_tube"], t_board)  # bore floor: the board on it, or on a pedestal rising from it
+    assert t_floor - t_board < 3.0 and t_floor - t_hs < 8.0, (t_floor, t_board, t_hs)
+    # lens tube with its two retaining rings
+    tub = fuse([_cyl_ax(T["od"] / 2, P(t_tube), a, T["l"] - T["thread_ext"]), _cyl_ax(T["od_ext"] / 2, P(t_hs), a, T["thread_ext"])])
+    tub = tub.cut(_cyl_ax(T["id_in"] / 2, P(t_tube - 0.01), a, T["thread_in"] + 0.01))
+    tub = tub.cut(_cyl_ax(T["id_ext"] / 2, P(t_tube + T["thread_in"] - 0.01), a, T["l"] - T["thread_in"] + 0.02))
+    t_r1 = t_tube
+    t_r2 = t_s1 + s2(r_ca)                                          # the back ring bears on S2 at the same radius
+    rings = [_tube_ax(T["id_in"] / 2, Rg["ca"] / 2, P(t), a, Rg["t"]) for t in (t_r1, t_r2)]
+    add("BW LED lens tube (Thorlabs SM1L05, Ø30.5 x 16.5, with two SM1RR rings holding the asphere; bore past the thread an envelope)",
+        fuse([tub] + rings), C["black"], 5, (0, 260, 0), mat="al6061", mass_kg=0.012, bom="M7-05b", tags=TAG)
+    add("BW LED asphere (Thorlabs ACL25416U-B, Ø25.4 f 16 mm, B270, AR 650-1050 nm; from its Zemax prescription)",
+        _local(lens, P(t_s1), a, up), C["glass"], 5, (0, 270, 0), mat="misc", mass_kg=0.0104, bom="M7-05a", opacity=0.45, tags=TAG)
+    # the LED: Ø22 x 1.6 board, its package (envelope 3.5 x 3.5 x 1.2) facing the lens
+    board = _cyl_ax(Le["board_d"] / 2, P(t_board - Le["board_t"]), a, Le["board_t"])
+    pk = Le["pkg"] / 2
+    pkg = _local(box(-pk, pk, -pk, pk, 0.0, Le["h"] - Le["board_t"]), P(t_board - Le["h"]), a, up)
+    add("BW LED (Thorlabs M850D3, 850 nm, 1.4 W min at 1.5 A CW, 2 A pulsed; 1 x 1 mm die on a Ø22 x 1.6 MCPCB; package an envelope)",
+        fuse([board, pkg]), C["pcb"], 5, (0, 280, 0), mat="misc", mass_kg=0.002, bom="M7-05", tags=TAG)
+    # heat sink (custom, 6061, black anodised): Ø36 collar with the SM1 internal thread, then five Ø36 x 2 fins on a Ø24 root
+    body = [_cyl_ax(Hs["d"] / 2, P(t_hs), a, Hs["collar"]), _cyl_ax(Hs["root_d"] / 2, P(t_hs + Hs["collar"]), a, Hs["L"] - Hs["collar"])]
+    body += [_cyl_ax(Hs["d"] / 2, P(t_hs + Hs["collar"] + 2.0 + k * Hs["fin_pitch"]), a, Hs["fin_t"]) for k in range(Hs["fins"])]
+    hs = fuse(body).cut(_cyl_ax(Hs["bore_d"] / 2, P(t_hs - 0.01), a, t_floor - t_hs + 0.01))
+    if t_floor - t_board > 0.05:
+        hs = hs.fuse(_cyl_ax(Hs["pedestal_d"] / 2, P(t_board), a, t_floor - t_board + 0.01))
+    hs = hs.cut(_cyl_ax(1.0, P(t_board) + 12.2 * side, a, t_hs + Hs["L"] - t_board + 1.0))   # Ø2 hole past the board's edge for its leads
+    add("BW LED heat sink (custom 6061, black anodised, Ø36 x 40, SM1 internal thread, five fins; envelope of a lathe part)", hs,
+        C["anod"], 5, (0, 300, 0), mat="al6061", mass_kg=0.07, bom="M7-05c", tags=TAG)
+    # split clamp on the collar, its top flat under the bracket's arm (2 x M4 up into the arm; clamp screw across the split)
+    Cl, Bk = L["clamp"], L["bracket"]
+    blk = _local(box(-Cl["half"], Cl["up"], -Cl["half"], Cl["half"], t_hs + Cl["t0"], t_hs + Cl["t0"] + Cl["w"]), c, a, up)
+    blk = blk.intersect(box(-1e4, 1e4, -1e4, 1e4, -1e4, Cl["top_z"])).cut(_cyl_ax(Hs["d"] / 2, P(t_hs - 1.0), a, Hs["collar"] + 2.0))
+    blk = blk.cut(_local(box(-Cl["half"] - 1, -Hs["d"] / 2 + 1.0, -0.5, 0.5, t_hs, t_hs + Hs["collar"]), c, a, up))   # the split, below
+    add("BW LED clamp (custom 6061 split block on the heat sink's collar, 8 mm wide; envelope)", blk, C["alu_dark"], 5, (0, 300, 0),
+        mat="al6061", mass_kg=0.03, bom="M7-05d", tags=TAG)
+    # L bracket: a 1/4 in. 6061 flange on the back wall's outer face above the clamp frame (2 x M4 into new tapped holes), and an arm
+    z0, z1 = Bk["z"]
+    flange = box(Bk["x"][0], Bk["x"][1], y_out, y_out + Bk["t"], z0, z1)
+    arm = cq.Solid.extrudeLinear(cq.Face.makeFromWires(cq.Wire.makePolygon([V(x, y, z0) for x, y in Bk["arm"]], close=True)), V(0, 0, Bk["t"]))
+    holes = [h.cyl(2.25, (x, y_out - 1.0, Bk["hole_z"]), "y", Bk["t"] + 2.0) for x in Bk["holes_x"]]
+    add("BW LED bracket (custom 6061 1/4 in. L: flange on the back wall above the BW clamp frame, 2 x M4; arm over the light; envelope)",
+        fuse([flange, arm]).cut(h.comp(holes)), C["alu_dark"], 5, (0, 320, 0), mat="al6061", mass_kg=0.06, bom="M7-05d", tags=TAG)
+    _cut(parts, "Process chamber body", [h.cyl(1.65, (x, y_out + 0.01, Bk["hole_z"]), "-y", 8.0) for x in Bk["holes_x"]])   # M4 tap drill, 8 deep
+    REPORT["BW_light"] = dict(t_asphere_vertex=round(t_s1, 2), t_tube_front=round(t_tube, 2), t_die=round(t_die, 2), t_board_back=round(t_board, 2),
+                              t_heat_sink=(round(t_hs, 2), round(t_hs + Hs["L"], 2)), die=P(t_die).round(1).tolist(),
+                              heat_sink_back=P(t_hs + Hs["L"]).round(1).tolist(), asphere_vertex=P(t_s1).round(1).tolist())
+    REPORT.setdefault("BW", {})["led_front"] = P(t_s1).round(1).tolist()
 
 
 # ======================================================================================================== LP: steep lid port

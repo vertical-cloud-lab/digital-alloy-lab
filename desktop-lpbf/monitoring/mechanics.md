@@ -51,7 +51,7 @@ name says "envelope".
 | Side camera | Chronos 2.1-HD (155 × 96 × 67.3), Kowa LM50JC10M (envelope Ø32 × 50), FBH850-10 + FESH1000 in a holder | on the LW sight line, lens front 15 mm off the clamp ring | monitoring_spec `SIDE_CAMERA` | M7-01 to M7-04 |
 | Side camera bracket | 5/8 in. (15.9 mm) × 80 mm 6061 plate reaching 184 mm from the wall, on an angle root bolted to the floor plate's left edge, notched round the through-beam's fibre head; a fixed 13° wedge under the camera's middle | plate at z −15.9…0, y −78…2 | Checks §3 | M7-08 |
 | BW port | obround slot 51.2 × 20.5, seat 58 × 27 × 4.5, 3 × M4 (cut in the frame); 57.7 × 26.7 × 3 fused-silica window, gaskets, clamp frame trimmed clear of the inlet plenum and the recoater sensor clamp; the lower back liner's left piece starts at x −90.8 | back wall, (−125, 111, 29.5) | `frame_features.bw_features()` | M0-03, M0-06, M0-14 |
-| BW light | 850 nm mounted LED + collimator, envelope Ø40 × 60, on the BW sight line, 3 mm off the clamp frame | outside the back wall | §2.1 | M7-05 (§6) |
+| BW light | Thorlabs M850D3 LED (Ø22 board) on a custom finned 6061 heat sink (Ø36 × 40, envelope); ACL25416U-B asphere in an SM1L05 tube imaging the die onto the plate; a split clamp on the heat sink's collar, hung from a 1/4 in. 6061 L bracket screwed to the back wall above the clamp frame (2 × M4 in two new holes) | on the BW sight line, 22–83 mm out from the port centre; the tube's rim 3 mm off the clamp frame | `_bw_light()`, [optics.md](optics.md) §4.1 | M7-05 to M7-05h, M7-06 |
 | LP port | Ø24 bore on the line of sight and a face O-ring groove (2-025) in the lid; Ø40.8 adapter boss (4 × M4, none on the window flange's side) carrying the Ø25 × 1 slide and the Ø25.4 × 3 window square to the line of sight; retaining ring | lid, (−40, 60, 136) | §3 | M0-07, M7-16 to M7-18 |
 | LP camera | IMX296 board in a 40 × 40 × 30 housing, turned so a face (not a corner) faces PB2; Kowa 50 mm; filters; cut-out in the optics bridge | window top 34 mm and lens front 49 mm up the line from the port centre | monitoring_spec `LID_CAMERA`, `LP_GEOM` | M7-12 to M7-14 |
 | Coaxial cage | cube 2 (DMSP950) and cube 3 (DMLP805) on posts, SM1 tubes, ER rods; camera arm to −y (FESH1000, AC254-075-B, cage plate, IMX296 board on a post); PD-A to −y and PD-B to −x (filter, AC254-050-B, pinhole, PDA36A2, each on a post); beam trap on cube 1's −y port. The old SM1 photodiode chain behind cube 1 is removed | above the bridge, y −25.25, z 271.1 | optics.md §2, `monitoring_spec.COAX` | M5-xx, M6-xx, M0-17, T2 |
@@ -389,9 +389,12 @@ Bar velocity 4915 m/s.
 - **The BW clamp frame** is trimmed 1 mm clear of the inlet plenum's flange, which leaves 1.2 mm of metal outside its third
   screw's hole. Move that screw ~3 mm toward −x along the slot when the CAM is re-posted. The quoted DXF outline is the
   untrimmed one.
-- **The BW light** is a compact mounted LED (Ø40 × 60 envelope). A source over about Ø37 × 100 doesn't fit between the
-  wall, the recoater sensor post and the guard's back panel on this line. The BOM's M7-05 is a SOLIS-850C: at BW it would
-  need a smaller head, or another place, which wasn't checked.
+- **The BW light** is drawn from Thorlabs' drawings and custom envelopes ([optics.md](optics.md) §4.1): an M850D3 LED imaged onto
+  the plate by an ACL25416U-B, Ø36 and 61 mm long from the asphere's vertex to the heat sink's back, ending 36 mm short of the
+  guard's back panel. It replaces the Ø40 × 60 envelope, and the BOM's SOLIS-850C (which doesn't fit here) is gone. The heat
+  sink, the clamp and the bracket are envelopes, not checked for stiffness (the light weighs ~0.1 kg). The bracket needs two M4
+  holes in the back wall above the clamp frame (x −141 and −129.5, z 69.25, 8 deep); they are cut in the model but not yet in
+  setup C's A180 program (`cam_monitoring.json`).
 - **The LP's view of the whole L75 plate** is trimmed at its rim (§2.2). The planned camera's field isn't.
 - **The LP bore's machining:** a Ø24 bore on the line of sight needs the lid tilted (sine plate or angle plate), as the layer
   camera's Ø30 bore does. `hours_monitoring.py` and fabrication.md §3 still describe a Ø37 bore normal to the lid and a Ø64
