@@ -1,0 +1,16 @@
+{
+  "job": "job-futurehouse-paperqa3-high",
+  "submitted_utc": "2026-11-27T05:18:06Z",
+  "tasks": {
+    "dimple_absorptance": {
+      "task_id": "816cba74-36cc-48d0-bd33-4e0754d0de57",
+      "title": "Measured absorptance of Al alloys under a moving laser before the keyhole forms",
+      "outfile": "dimple_absorptance.md"
+    },
+    "pool_length": {
+      "task_id": "d08928de-28c0-436e-8d26-cfb439201419",
+      "title": "Measured melt-pool length of LPBF AlSi10Mg and hypereutectic Al-Si in keyhole mode",
+      "outfile": "pool_length.md"
+    }
+  }
+}

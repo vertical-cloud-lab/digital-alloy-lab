@@ -1,0 +1,741 @@
+{
+ "params": {
+  "viscosity_mu_inf_Pa_s_E_J_mol": {
+   "alsi10mg": [
+    0.000281,
+    12300.0
+   ],
+   "blend": [
+    0.000228,
+    14200.0
+   ],
+   "al5182": [
+    0.000281,
+    12300.0
+   ]
+  },
+  "viscosity_source": "Kobatake, Schmitz & Brillo 2014, J. Mater. Sci. 49, 3541 (doi:10.1007/s10853-014-8072-z)",
+  "mu0_override_Pa_s": null,
+  "E_mu_override_J_mol": null,
+  "dsigma_dT_N_m_K": -0.000127,
+  "C_darcy": 1000000000.0,
+  "eps_darcy": 0.001
+ },
+ "runs": {
+  "alsi10mg-250W-0.9-conduction-A_am|flow=False": {
+   "case": "alsi10mg-250W-0.9-conduction-A_am",
+   "P_W": 250.0,
+   "v_m_s": 0.9,
+   "r0_um": 40.0,
+   "A": 0.3074,
+   "flow": false,
+   "pool_depth_liquidus_um": 75.14054019796198,
+   "pool_width_liquidus_um": 165.28436081537987,
+   "pool_length_liquidus_um": 339.56718222657065,
+   "pool_depth_solidus_um": 78.11981423506663,
+   "pool_width_solidus_um": 170.8378877866687,
+   "pool_length_solidus_um": 409.8285317574834,
+   "pool_depth_max_liquidus_um": 75.14054019796198,
+   "u_surface_max_rel_m_s": 0.0,
+   "u_max_rel_m_s": 0.0,
+   "T_peak_K": 4041.699625311812,
+   "Q_in_surface_W": 76.85,
+   "Q_keyhole_W": 0.0,
+   "Q_out_W": 77.1370697246692,
+   "energy_balance_rel_err": 0.0037354551030476107,
+   "grid_cells": 278124,
+   "outer_iterations": 0,
+   "runtime_s": 20.6,
+   "history": [],
+   "analytic": null
+  },
+  "alsi10mg-250W-0.9-conduction-A_am|flow=True": {
+   "case": "alsi10mg-250W-0.9-conduction-A_am",
+   "P_W": 250.0,
+   "v_m_s": 0.9,
+   "r0_um": 40.0,
+   "A": 0.3074,
+   "flow": true,
+   "pool_depth_liquidus_um": 70.85483118627413,
+   "pool_width_liquidus_um": 190.32102914063512,
+   "pool_length_liquidus_um": 342.03572815781996,
+   "pool_depth_solidus_um": 73.66062044089506,
+   "pool_width_solidus_um": 194.3880370366591,
+   "pool_length_solidus_um": 410.9617358823245,
+   "pool_depth_max_liquidus_um": 70.85483118627413,
+   "u_surface_max_rel_m_s": 4.009574241222191,
+   "u_max_rel_m_s": 4.089649511483166,
+   "T_peak_K": 3957.156359792135,
+   "Q_in_surface_W": 76.85,
+   "Q_keyhole_W": 0.0,
+   "Q_out_W": 76.8500635010735,
+   "energy_balance_rel_err": 8.262989396536658e-07,
+   "grid_cells": 278124,
+   "outer_iterations": 10,
+   "runtime_s": 51.7,
+   "history": [
+    {
+     "outer": 0,
+     "dT_max_K": 421.1232281154762,
+     "mass_residual_rel": 0.0626630380311791,
+     "u_surface_max_rel_m_s": 4.373165710806794,
+     "box": [
+      72,
+      129,
+      20,
+      19
+     ],
+     "pool_liquidus_DWL_um": [
+      73.0,
+      178.26,
+      319.93
+     ]
+    },
+    {
+     "outer": 1,
+     "dT_max_K": 206.4902592315857,
+     "mass_residual_rel": 0.015378394949755764,
+     "u_surface_max_rel_m_s": 4.198938920792859,
+     "box": [
+      72,
+      130,
+      21,
+      19
+     ],
+     "pool_liquidus_DWL_um": [
+      71.73,
+      183.47,
+      330.39
+     ]
+    },
+    {
+     "outer": 2,
+     "dT_max_K": 113.28390839339954,
+     "mass_residual_rel": 0.009456633568025632,
+     "u_surface_max_rel_m_s": 4.0507890911656865,
+     "box": [
+      72,
+      130,
+      22,
+      19
+     ],
+     "pool_liquidus_DWL_um": [
+      71.19,
+      187.74,
+      339.03
+     ]
+    },
+    {
+     "outer": 3,
+     "dT_max_K": 66.43184665267631,
+     "mass_residual_rel": 0.0046395983842157686,
+     "u_surface_max_rel_m_s": 4.031050524040817,
+     "box": [
+      72,
+      130,
+      22,
+      19
+     ],
+     "pool_liquidus_DWL_um": [
+      70.99,
+      189.53,
+      340.4
+     ]
+    },
+    {
+     "outer": 4,
+     "dT_max_K": 33.050376045962366,
+     "mass_residual_rel": 0.0036918255066631838,
+     "u_surface_max_rel_m_s": 4.028430039205394,
+     "box": [
+      72,
+      130,
+      22,
+      19
+     ],
+     "pool_liquidus_DWL_um": [
+      70.92,
+      190.13,
+      339.87
+     ]
+    },
+    {
+     "outer": 5,
+     "dT_max_K": 21.28635484268409,
+     "mass_residual_rel": 0.0017923214015941739,
+     "u_surface_max_rel_m_s": 4.026654494487218,
+     "box": [
+      72,
+      130,
+      22,
+      19
+     ],
+     "pool_liquidus_DWL_um": [
+      70.89,
+      190.32,
+      340.58
+     ]
+    },
+    {
+     "outer": 6,
+     "dT_max_K": 18.026882707489108,
+     "mass_residual_rel": 0.000558192575990495,
+     "u_surface_max_rel_m_s": 4.020734392048661,
+     "box": [
+      72,
+      130,
+      22,
+      19
+     ],
+     "pool_liquidus_DWL_um": [
+      70.86,
+      190.35,
+      341.43
+     ]
+    },
+    {
+     "outer": 7,
+     "dT_max_K": 10.817127384865898,
+     "mass_residual_rel": 0.00030787584721714663,
+     "u_surface_max_rel_m_s": 4.016357762353332,
+     "box": [
+      72,
+      130,
+      22,
+      19
+     ],
+     "pool_liquidus_DWL_um": [
+      70.85,
+      190.34,
+      341.9
+     ]
+    },
+    {
+     "outer": 8,
+     "dT_max_K": 13.929729821981937,
+     "mass_residual_rel": 0.00019045024941294442,
+     "u_surface_max_rel_m_s": 4.012506623223855,
+     "box": [
+      72,
+      130,
+      22,
+      19
+     ],
+     "pool_liquidus_DWL_um": [
+      70.85,
+      190.33,
+      342.0
+     ]
+    },
+    {
+     "outer": 9,
+     "dT_max_K": 11.133213703848696,
+     "mass_residual_rel": 0.00011808531443941505,
+     "u_surface_max_rel_m_s": 4.009574241222191,
+     "box": [
+      72,
+      130,
+      22,
+      19
+     ],
+     "pool_liquidus_DWL_um": [
+      70.85,
+      190.32,
+      342.04
+     ]
+    }
+   ],
+   "analytic": null
+  },
+  "blend-375W-0.4-keyhole-cone-A_am|flow=False": {
+   "case": "blend-375W-0.4-keyhole-cone-A_am",
+   "P_W": 375.0,
+   "v_m_s": 0.4,
+   "r0_um": 45.0,
+   "A": 0.3841,
+   "keyhole_a0_um": 44.99999999999999,
+   "keyhole_depth_um": 156.79519554887895,
+   "T_w_K": 2881.8803232736836,
+   "P_wings_W": 5.938321672939488,
+   "flow": false,
+   "pool_depth_liquidus_um": 176.68677566104753,
+   "pool_width_liquidus_um": 240.49716800501295,
+   "pool_length_liquidus_um": 397.1381754242472,
+   "pool_depth_solidus_um": 192.2598909906191,
+   "pool_width_solidus_um": 294.4418965088403,
+   "pool_length_solidus_um": 645.1699897701567,
+   "pool_depth_max_liquidus_um": 176.68677566104753,
+   "u_surface_max_rel_m_s": 0.0,
+   "u_max_rel_m_s": 0.0,
+   "T_peak_K": 2824.71137430876,
+   "Q_in_surface_W": 5.289710627543606,
+   "Q_keyhole_W": 131.73058150729267,
+   "Q_out_W": 136.9583120360892,
+   "energy_balance_rel_err": -0.0004523424799449758,
+   "grid_cells": 892892,
+   "outer_iterations": 0,
+   "runtime_s": 54.6,
+   "history": [],
+   "analytic": {
+    "mode": "keyhole",
+    "A": 0.38410000000000005,
+    "A_keyhole": 0.3682644755388281,
+    "a0_um": 45.0,
+    "d_um": 156.79519554887895,
+    "Wk_over_Dk": 0.5739971794731659,
+    "T_w": 2881.8803232736836,
+    "T_peak_conduction": 13352.789752578437,
+    "Q_cond_W": 133.89632787705395,
+    "Q_evap_W": 4.202850612976497,
+    "residual": 4.345864847247564e-10,
+    "hits_per_ray": 5.192973259084241,
+    "pool_depth_um": 166.54399297107133,
+    "pool_width_um": 212.7511868024296,
+    "pool_length_um": 290.19801286645617,
+    "pool_Dh_um": 136.00485342864505,
+    "pool_depth_solidus_um": 213.34059430339403,
+    "pool_width_solidus_um": 361.80435553408796,
+    "pool_length_solidus_um": 588.1843431746921,
+    "zc_abs": 0.6709455824145635,
+    "zc_loss": 0.361389716344747,
+    "converged": true
+   }
+  },
+  "blend-375W-0.4-keyhole-cone-A_am|flow=True": {
+   "case": "blend-375W-0.4-keyhole-cone-A_am",
+   "P_W": 375.0,
+   "v_m_s": 0.4,
+   "r0_um": 45.0,
+   "A": 0.3841,
+   "keyhole_a0_um": 44.99999999999999,
+   "keyhole_depth_um": 156.79519554887895,
+   "T_w_K": 2881.8803232736836,
+   "P_wings_W": 5.938321672939488,
+   "flow": true,
+   "pool_depth_liquidus_um": 176.06163651277836,
+   "pool_width_liquidus_um": 270.35899696161414,
+   "pool_length_liquidus_um": 410.055569200806,
+   "pool_depth_solidus_um": 190.71808041282935,
+   "pool_width_solidus_um": 311.78192225788547,
+   "pool_length_solidus_um": 638.5781936308757,
+   "pool_depth_max_liquidus_um": 176.06163651277836,
+   "u_surface_max_rel_m_s": 3.197823091481415,
+   "u_max_rel_m_s": 3.234519823025796,
+   "T_peak_K": 2806.3083198615036,
+   "Q_in_surface_W": 5.289710627543606,
+   "Q_keyhole_W": 129.86646500803602,
+   "Q_out_W": 135.16010916490302,
+   "energy_balance_rel_err": 2.910358557355579e-05,
+   "grid_cells": 892892,
+   "outer_iterations": 8,
+   "runtime_s": 105.2,
+   "history": [
+    {
+     "outer": 0,
+     "dT_max_K": 349.97104577684036,
+     "mass_residual_rel": 0.06833744996609384,
+     "u_surface_max_rel_m_s": 3.3746392762840887,
+     "box": [
+      138,
+      209,
+      26,
+      38
+     ],
+     "pool_liquidus_DWL_um": [
+      176.48,
+      255.82,
+      403.15
+     ]
+    },
+    {
+     "outer": 1,
+     "dT_max_K": 184.952295640717,
+     "mass_residual_rel": 0.029582008976674186,
+     "u_surface_max_rel_m_s": 3.329362572712537,
+     "box": [
+      138,
+      210,
+      26,
+      38
+     ],
+     "pool_liquidus_DWL_um": [
+      176.23,
+      264.4,
+      413.84
+     ]
+    },
+    {
+     "outer": 2,
+     "dT_max_K": 103.89075957686055,
+     "mass_residual_rel": 0.017593790935239932,
+     "u_surface_max_rel_m_s": 3.2796262702806693,
+     "box": [
+      138,
+      210,
+      26,
+      38
+     ],
+     "pool_liquidus_DWL_um": [
+      176.18,
+      268.98,
+      409.9
+     ]
+    },
+    {
+     "outer": 3,
+     "dT_max_K": 59.10512894188764,
+     "mass_residual_rel": 0.014341653807468229,
+     "u_surface_max_rel_m_s": 3.254768170900746,
+     "box": [
+      138,
+      210,
+      26,
+      38
+     ],
+     "pool_liquidus_DWL_um": [
+      176.17,
+      270.53,
+      408.68
+     ]
+    },
+    {
+     "outer": 4,
+     "dT_max_K": 28.642982984027185,
+     "mass_residual_rel": 0.0035667084439107346,
+     "u_surface_max_rel_m_s": 3.224899283068092,
+     "box": [
+      138,
+      210,
+      26,
+      38
+     ],
+     "pool_liquidus_DWL_um": [
+      176.12,
+      270.82,
+      410.25
+     ]
+    },
+    {
+     "outer": 5,
+     "dT_max_K": 12.495628627887527,
+     "mass_residual_rel": 0.0028978106955698615,
+     "u_surface_max_rel_m_s": 3.207739652220813,
+     "box": [
+      138,
+      210,
+      26,
+      38
+     ],
+     "pool_liquidus_DWL_um": [
+      176.08,
+      270.7,
+      410.82
+     ]
+    },
+    {
+     "outer": 6,
+     "dT_max_K": 5.711685773230556,
+     "mass_residual_rel": 0.000774769762558769,
+     "u_surface_max_rel_m_s": 3.200858930991223,
+     "box": [
+      138,
+      210,
+      26,
+      38
+     ],
+     "pool_liquidus_DWL_um": [
+      176.06,
+      270.52,
+      410.27
+     ]
+    },
+    {
+     "outer": 7,
+     "dT_max_K": 2.782720558094752,
+     "mass_residual_rel": 0.000654970175402444,
+     "u_surface_max_rel_m_s": 3.197823091481415,
+     "box": [
+      138,
+      210,
+      26,
+      38
+     ],
+     "pool_liquidus_DWL_um": [
+      176.06,
+      270.36,
+      410.06
+     ]
+    }
+   ],
+   "analytic": {
+    "mode": "keyhole",
+    "A": 0.38410000000000005,
+    "A_keyhole": 0.3682644755388281,
+    "a0_um": 45.0,
+    "d_um": 156.79519554887895,
+    "Wk_over_Dk": 0.5739971794731659,
+    "T_w": 2881.8803232736836,
+    "T_peak_conduction": 13352.789752578437,
+    "Q_cond_W": 133.89632787705395,
+    "Q_evap_W": 4.202850612976497,
+    "residual": 4.345864847247564e-10,
+    "hits_per_ray": 5.192973259084241,
+    "pool_depth_um": 166.54399297107133,
+    "pool_width_um": 212.7511868024296,
+    "pool_length_um": 290.19801286645617,
+    "pool_Dh_um": 136.00485342864505,
+    "pool_depth_solidus_um": 213.34059430339403,
+    "pool_width_solidus_um": 361.80435553408796,
+    "pool_length_solidus_um": 588.1843431746921,
+    "zc_abs": 0.6709455824145635,
+    "zc_loss": 0.361389716344747,
+    "converged": true
+   }
+  },
+  "al5182-473W-0.7-keyhole-cone-A_measured|flow=False": {
+   "case": "al5182-473W-0.7-keyhole-cone-A_measured",
+   "P_W": 473.0,
+   "v_m_s": 0.7,
+   "r0_um": 61.25,
+   "A": 0.43,
+   "keyhole_a0_um": 61.25,
+   "keyhole_depth_um": 117.43380159429908,
+   "T_w_K": 2823.9577793487524,
+   "P_wings_W": 11.255617812641468,
+   "flow": false,
+   "pool_depth_liquidus_um": 157.02841187192647,
+   "pool_width_liquidus_um": 275.8851445149512,
+   "pool_length_liquidus_um": 582.8274401829767,
+   "pool_depth_solidus_um": 164.1027616701111,
+   "pool_width_solidus_um": 293.8151111152523,
+   "pool_length_solidus_um": 663.5851262291276,
+   "pool_depth_max_liquidus_um": 157.02841187192647,
+   "u_surface_max_rel_m_s": 0.0,
+   "u_max_rel_m_s": 0.0,
+   "T_peak_K": 2764.180074097284,
+   "Q_in_surface_W": 10.312663391855713,
+   "Q_keyhole_W": 173.08256058220547,
+   "Q_out_W": 183.38740807454656,
+   "energy_balance_rel_err": -4.261779203009683e-05,
+   "grid_cells": 234000,
+   "outer_iterations": 0,
+   "runtime_s": 9.6,
+   "history": [],
+   "analytic": {
+    "mode": "keyhole",
+    "A": 0.43,
+    "A_keyhole": 0.4062037678379673,
+    "a0_um": 61.25,
+    "d_um": 117.4338015942991,
+    "Wk_over_Dk": 1.043140887350332,
+    "T_w": 2823.9577793487524,
+    "T_peak_conduction": 10575.346645230831,
+    "Q_cond_W": 185.5135321006624,
+    "Q_evap_W": 6.620846132930042,
+    "residual": 8.358913550057254e-09,
+    "hits_per_ray": 2.970463130032404,
+    "pool_depth_um": 146.82885825562968,
+    "pool_width_um": 260.4989872005637,
+    "pool_length_um": 437.40755794575114,
+    "pool_Dh_um": 0.0,
+    "pool_depth_solidus_um": 190.82380221402414,
+    "pool_width_solidus_um": 359.02763359171337,
+    "pool_length_solidus_um": 689.3974111791415,
+    "zc_abs": 0.5893059238556821,
+    "zc_loss": 0.25265425631854443,
+    "converged": true
+   }
+  },
+  "al5182-473W-0.7-keyhole-cone-A_measured|flow=True": {
+   "case": "al5182-473W-0.7-keyhole-cone-A_measured",
+   "P_W": 473.0,
+   "v_m_s": 0.7,
+   "r0_um": 61.25,
+   "A": 0.43,
+   "keyhole_a0_um": 61.25,
+   "keyhole_depth_um": 117.43380159429908,
+   "T_w_K": 2823.9577793487524,
+   "P_wings_W": 11.255617812641468,
+   "flow": true,
+   "pool_depth_liquidus_um": 154.21289793016797,
+   "pool_width_liquidus_um": 301.1852713636099,
+   "pool_length_liquidus_um": 569.2572932701347,
+   "pool_depth_solidus_um": 160.0108258804204,
+   "pool_width_solidus_um": 316.14181685651283,
+   "pool_length_solidus_um": 643.7469143319038,
+   "pool_depth_max_liquidus_um": 154.21289793016797,
+   "u_surface_max_rel_m_s": 2.5940827173847056,
+   "u_max_rel_m_s": 2.6269504399082004,
+   "T_peak_K": 2730.8474071684,
+   "Q_in_surface_W": 10.312663391855713,
+   "Q_keyhole_W": 168.2222448878023,
+   "Q_out_W": 178.5395162583055,
+   "energy_balance_rel_err": 2.580995891432438e-05,
+   "grid_cells": 234000,
+   "outer_iterations": 8,
+   "runtime_s": 22.0,
+   "history": [
+    {
+     "outer": 0,
+     "dT_max_K": 256.1399199008788,
+     "mass_residual_rel": 0.048787004463030234,
+     "u_surface_max_rel_m_s": 2.6727439444563594,
+     "box": [
+      56,
+      115,
+      22,
+      24
+     ],
+     "pool_liquidus_DWL_um": [
+      155.75,
+      287.1,
+      578.8
+     ]
+    },
+    {
+     "outer": 1,
+     "dT_max_K": 146.6959068611976,
+     "mass_residual_rel": 0.01916894523301709,
+     "u_surface_max_rel_m_s": 2.6567508669935114,
+     "box": [
+      56,
+      116,
+      22,
+      24
+     ],
+     "pool_liquidus_DWL_um": [
+      154.62,
+      295.43,
+      586.75
+     ]
+    },
+    {
+     "outer": 2,
+     "dT_max_K": 89.1235892241117,
+     "mass_residual_rel": 0.009082262446174305,
+     "u_surface_max_rel_m_s": 2.6244883717077245,
+     "box": [
+      56,
+      116,
+      22,
+      24
+     ],
+     "pool_liquidus_DWL_um": [
+      154.38,
+      298.38,
+      575.73
+     ]
+    },
+    {
+     "outer": 3,
+     "dT_max_K": 41.752613466168896,
+     "mass_residual_rel": 0.00658972823473177,
+     "u_surface_max_rel_m_s": 2.5965039802003544,
+     "box": [
+      56,
+      116,
+      22,
+      24
+     ],
+     "pool_liquidus_DWL_um": [
+      154.32,
+      299.88,
+      568.13
+     ]
+    },
+    {
+     "outer": 4,
+     "dT_max_K": 25.826036249486947,
+     "mass_residual_rel": 0.0014508292040905904,
+     "u_surface_max_rel_m_s": 2.5956607721176206,
+     "box": [
+      56,
+      116,
+      22,
+      24
+     ],
+     "pool_liquidus_DWL_um": [
+      154.23,
+      300.66,
+      569.78
+     ]
+    },
+    {
+     "outer": 5,
+     "dT_max_K": 19.83921916519489,
+     "mass_residual_rel": 0.000843612246274998,
+     "u_surface_max_rel_m_s": 2.59468564151669,
+     "box": [
+      56,
+      116,
+      22,
+      24
+     ],
+     "pool_liquidus_DWL_um": [
+      154.21,
+      301.01,
+      570.04
+     ]
+    },
+    {
+     "outer": 6,
+     "dT_max_K": 9.57177230724119,
+     "mass_residual_rel": 0.0007168046578573332,
+     "u_surface_max_rel_m_s": 2.5942011586242244,
+     "box": [
+      56,
+      116,
+      22,
+      24
+     ],
+     "pool_liquidus_DWL_um": [
+      154.21,
+      301.15,
+      569.24
+     ]
+    },
+    {
+     "outer": 7,
+     "dT_max_K": 6.33397305544986,
+     "mass_residual_rel": 0.0002619422941595207,
+     "u_surface_max_rel_m_s": 2.5940827173847056,
+     "box": [
+      56,
+      116,
+      22,
+      24
+     ],
+     "pool_liquidus_DWL_um": [
+      154.21,
+      301.19,
+      569.26
+     ]
+    }
+   ],
+   "analytic": {
+    "mode": "keyhole",
+    "A": 0.43,
+    "A_keyhole": 0.4062037678379673,
+    "a0_um": 61.25,
+    "d_um": 117.4338015942991,
+    "Wk_over_Dk": 1.043140887350332,
+    "T_w": 2823.9577793487524,
+    "T_peak_conduction": 10575.346645230831,
+    "Q_cond_W": 185.5135321006624,
+    "Q_evap_W": 6.620846132930042,
+    "residual": 8.358913550057254e-09,
+    "hits_per_ray": 2.970463130032404,
+    "pool_depth_um": 146.82885825562968,
+    "pool_width_um": 260.4989872005637,
+    "pool_length_um": 437.40755794575114,
+    "pool_Dh_um": 0.0,
+    "pool_depth_solidus_um": 190.82380221402414,
+    "pool_width_solidus_um": 359.02763359171337,
+    "pool_length_solidus_um": 689.3974111791415,
+    "zc_abs": 0.5893059238556821,
+    "zc_loss": 0.25265425631854443,
+    "converged": true
+   }
+  }
+ }
+}

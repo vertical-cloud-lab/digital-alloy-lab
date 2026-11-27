@@ -1,0 +1,502 @@
+{
+ "properties": {
+  "blend_rho_el": "version 1's Leitner et al. 2017 + Brandt & Neuer 2007 formula (checked against Sun et al. 2019 at 20 wt% Si: 40.4 vs 39 uOhm cm)",
+  "k_s_table": "as-built LPBF AlSi10Mg, Yang et al. 2018 Fig. 5 (first heating, mean of X and Z): -50 C 93.5, 0 C 101.0, 50 C 109.0, 100 C 114.0, 150 C 119.5, 175 C 121.5, 350 C 153.5, 400 C 160.0, 450 C 161.5, 500 C 162.0 W/m/K; blend uses the same",
+  "gan_rho_el": "Ti64 1.92 uOhm m (Boivineau et al. 2006, corrected, liquidus); SS316 1.154 + 1.893e-4 T uOhm m (Pichler et al. 2020, Table 3, corrected); Al6061 Leitner et al. 2017 Al + Brandt & Neuer 2007 increments for 0.6 wt% Si and 1.0 wt% Mg (no measurement found)"
+ },
+ "mg_diffusion": "proxy: Cu in liquid Al80Cu20, Zhang, Griesche & Meyer 2009",
+ "powder_check": {
+  "Al textbook index (Boley et al. 2015's n = 1.244 + 10i)": {
+   "A_total_range": [
+    0.371,
+    0.464
+   ],
+   "published": 0.22,
+   "published_what": "ray-traced close-packed bilayer on Al"
+  },
+  "measured flat Al absorptance 0.20 (Rubenchik et al. 2015)": {
+   "A_total_range": [
+    0.665,
+    0.715
+   ],
+   "published": 0.53,
+   "published_what": "measured Al powder, 970 nm"
+  }
+ },
+ "mg_vapour": {
+  "rows": 9
+ },
+ "gan2021_xray_depths": {
+  "Ti64": {
+   "n": 71,
+   "own_A_depth_um": {
+    "MAE_um": 23.6,
+    "median_ratio": 0.87,
+    "median_abs_rel_err_pct": 17.8,
+    "R2": 0.93
+   },
+   "gan_eta_depth_um": {
+    "MAE_um": 62.8,
+    "median_ratio": 0.57,
+    "median_abs_rel_err_pct": 42.9,
+    "R2": 0.514
+   },
+   "v1_own_A_depth_um": {
+    "MAE_um": 22.5,
+    "median_ratio": 0.88,
+    "median_abs_rel_err_pct": 17.8,
+    "R2": 0.931
+   },
+   "gan_law_um": {
+    "MAE_um": 15.0,
+    "median_ratio": 0.93,
+    "median_abs_rel_err_pct": 11.1,
+    "R2": 0.972
+   },
+   "own_A_deep_branch_depth_um": {
+    "MAE_um": 21.6,
+    "median_ratio": 0.91,
+    "median_abs_rel_err_pct": 16.5,
+    "R2": 0.939
+   },
+   "own_A_median": 0.784,
+   "bistable_rows": 7,
+   "front_wall_deg_median": 28.8,
+   "shaft_width_um_median": 47.5,
+   "unconverged_rows": 0
+  },
+  "Al6061": {
+   "n": 9,
+   "own_A_depth_um": {
+    "MAE_um": 255.9,
+    "median_ratio": 2.28,
+    "median_abs_rel_err_pct": 127.9,
+    "R2": -2.66
+   },
+   "gan_eta_depth_um": {
+    "MAE_um": 134.5,
+    "median_ratio": 0.34,
+    "median_abs_rel_err_pct": 65.6,
+    "R2": -0.287
+   },
+   "v1_own_A_depth_um": {
+    "MAE_um": 246.8,
+    "median_ratio": 2.24,
+    "median_abs_rel_err_pct": 124.5,
+    "R2": -2.411
+   },
+   "gan_law_um": {
+    "MAE_um": 20.6,
+    "median_ratio": 1.12,
+    "median_abs_rel_err_pct": 12.6,
+    "R2": 0.97
+   },
+   "own_A_deep_branch_depth_um": {
+    "MAE_um": 255.9,
+    "median_ratio": 2.28,
+    "median_abs_rel_err_pct": 127.9,
+    "R2": -2.66
+   },
+   "own_A_median": 0.872,
+   "bistable_rows": 0,
+   "front_wall_deg_median": 10.4,
+   "shaft_width_um_median": 44.0,
+   "unconverged_rows": 3
+  },
+  "SS316": {
+   "n": 7,
+   "own_A_depth_um": {
+    "MAE_um": 61.1,
+    "median_ratio": 0.73,
+    "median_abs_rel_err_pct": 27.0,
+    "R2": 0.695
+   },
+   "gan_eta_depth_um": {
+    "MAE_um": 136.0,
+    "median_ratio": 0.44,
+    "median_abs_rel_err_pct": 55.6,
+    "R2": -0.344
+   },
+   "v1_own_A_depth_um": {
+    "MAE_um": 75.7,
+    "median_ratio": 0.66,
+    "median_abs_rel_err_pct": 34.3,
+    "R2": 0.568
+   },
+   "gan_law_um": {
+    "MAE_um": 23.9,
+    "median_ratio": 0.94,
+    "median_abs_rel_err_pct": 5.6,
+    "R2": 0.958
+   },
+   "own_A_deep_branch_depth_um": {
+    "MAE_um": 61.1,
+    "median_ratio": 0.73,
+    "median_abs_rel_err_pct": 27.0,
+    "R2": 0.695
+   },
+   "own_A_median": 0.835,
+   "bistable_rows": 0,
+   "front_wall_deg_median": 21.7,
+   "shaft_width_um_median": 55.0,
+   "unconverged_rows": 0
+  },
+  "all": {
+   "n": 87,
+   "own_A_depth_um": {
+    "MAE_um": 50.6,
+    "median_ratio": 0.88,
+    "median_abs_rel_err_pct": 18.9,
+    "R2": 0.447
+   },
+   "gan_eta_depth_um": {
+    "MAE_um": 76.1,
+    "median_ratio": 0.55,
+    "median_abs_rel_err_pct": 44.9,
+    "R2": 0.386
+   },
+   "v1_own_A_depth_um": {
+    "MAE_um": 50.0,
+    "median_ratio": 0.88,
+    "median_abs_rel_err_pct": 19.3,
+    "R2": 0.47
+   },
+   "gan_law_um": {
+    "MAE_um": 16.3,
+    "median_ratio": 0.94,
+    "median_abs_rel_err_pct": 11.9,
+    "R2": 0.974
+   },
+   "own_A_deep_branch_depth_um": {
+    "MAE_um": 49.0,
+    "median_ratio": 0.93,
+    "median_abs_rel_err_pct": 18.1,
+    "R2": 0.454
+   },
+   "own_A_median": 0.816,
+   "bistable_rows": 7,
+   "front_wall_deg_median": 24.7,
+   "shaft_width_um_median": 47.5,
+   "unconverged_rows": 3
+  }
+ },
+ "am_maps": {
+  "alsi10mg": {
+   "grid_points": 58,
+   "v2_class": {
+    "agree_all_classes": 13,
+    "agree_keyhole_or_not": 53,
+    "missed_am_keyholes": 5,
+    "extra_keyholes": 0,
+    "confusion": {
+     "keyhole": {
+      "keyhole": 10,
+      "lof": 0,
+      "lof_hatch": 0,
+      "none": 0
+     },
+     "lof": {
+      "keyhole": 0,
+      "lof": 3,
+      "lof_hatch": 9,
+      "none": 5
+     },
+     "lof_hatch": {
+      "keyhole": 5,
+      "lof": 0,
+      "lof_hatch": 0,
+      "none": 26
+     }
+    }
+   },
+   "v2_class_deep_branch": {
+    "agree_all_classes": 18,
+    "agree_keyhole_or_not": 58,
+    "missed_am_keyholes": 0,
+    "extra_keyholes": 0,
+    "confusion": {
+     "keyhole": {
+      "keyhole": 15,
+      "lof": 0,
+      "lof_hatch": 0,
+      "none": 0
+     },
+     "lof": {
+      "keyhole": 0,
+      "lof": 3,
+      "lof_hatch": 9,
+      "none": 5
+     },
+     "lof_hatch": {
+      "keyhole": 0,
+      "lof": 0,
+      "lof_hatch": 0,
+      "none": 26
+     }
+    }
+   },
+   "bistable_points": 7,
+   "keyhole_mode_points": 40,
+   "unconverged": 2,
+   "median_beam_on_powder_conduction": 0.074,
+   "median_A_conduction": 0.206
+  },
+  "blend": {
+   "grid_points": 27,
+   "v2_class": {
+    "agree_all_classes": 5,
+    "agree_keyhole_or_not": 23,
+    "missed_am_keyholes": 4,
+    "extra_keyholes": 0,
+    "confusion": {
+     "keyhole": {
+      "keyhole": 1,
+      "lof": 0,
+      "lof_hatch": 0,
+      "none": 0
+     },
+     "lof": {
+      "keyhole": 0,
+      "lof": 4,
+      "lof_hatch": 5,
+      "none": 7
+     },
+     "lof_hatch": {
+      "keyhole": 4,
+      "lof": 0,
+      "lof_hatch": 0,
+      "none": 6
+     }
+    }
+   },
+   "v2_class_deep_branch": {
+    "agree_all_classes": 7,
+    "agree_keyhole_or_not": 25,
+    "missed_am_keyholes": 2,
+    "extra_keyholes": 0,
+    "confusion": {
+     "keyhole": {
+      "keyhole": 3,
+      "lof": 0,
+      "lof_hatch": 0,
+      "none": 0
+     },
+     "lof": {
+      "keyhole": 0,
+      "lof": 4,
+      "lof_hatch": 5,
+      "none": 7
+     },
+     "lof_hatch": {
+      "keyhole": 2,
+      "lof": 0,
+      "lof_hatch": 0,
+      "none": 6
+     }
+    }
+   },
+   "bistable_points": 2,
+   "keyhole_mode_points": 15,
+   "unconverged": 0,
+   "median_beam_on_powder_conduction": 0.159,
+   "median_A_conduction": 0.254
+  }
+ },
+ "am_maps_no_powder": {
+  "alsi10mg": {
+   "grid_points": 58,
+   "v2_class": {
+    "agree_all_classes": 13,
+    "agree_keyhole_or_not": 53,
+    "missed_am_keyholes": 5,
+    "extra_keyholes": 0,
+    "confusion": {
+     "keyhole": {
+      "keyhole": 10,
+      "lof": 0,
+      "lof_hatch": 0,
+      "none": 0
+     },
+     "lof": {
+      "keyhole": 0,
+      "lof": 3,
+      "lof_hatch": 9,
+      "none": 6
+     },
+     "lof_hatch": {
+      "keyhole": 5,
+      "lof": 0,
+      "lof_hatch": 0,
+      "none": 25
+     }
+    }
+   },
+   "v2_class_deep_branch": {
+    "agree_all_classes": 18,
+    "agree_keyhole_or_not": 58,
+    "missed_am_keyholes": 0,
+    "extra_keyholes": 0,
+    "confusion": {
+     "keyhole": {
+      "keyhole": 15,
+      "lof": 0,
+      "lof_hatch": 0,
+      "none": 0
+     },
+     "lof": {
+      "keyhole": 0,
+      "lof": 3,
+      "lof_hatch": 9,
+      "none": 6
+     },
+     "lof_hatch": {
+      "keyhole": 0,
+      "lof": 0,
+      "lof_hatch": 0,
+      "none": 25
+     }
+    }
+   },
+   "bistable_points": 7,
+   "keyhole_mode_points": 39,
+   "unconverged": 2,
+   "median_beam_on_powder_conduction": 0.0,
+   "median_A_conduction": 0.18
+  },
+  "blend": {
+   "grid_points": 27,
+   "v2_class": {
+    "agree_all_classes": 5,
+    "agree_keyhole_or_not": 23,
+    "missed_am_keyholes": 4,
+    "extra_keyholes": 0,
+    "confusion": {
+     "keyhole": {
+      "keyhole": 1,
+      "lof": 0,
+      "lof_hatch": 0,
+      "none": 0
+     },
+     "lof": {
+      "keyhole": 0,
+      "lof": 4,
+      "lof_hatch": 5,
+      "none": 7
+     },
+     "lof_hatch": {
+      "keyhole": 4,
+      "lof": 0,
+      "lof_hatch": 0,
+      "none": 6
+     }
+    }
+   },
+   "v2_class_deep_branch": {
+    "agree_all_classes": 7,
+    "agree_keyhole_or_not": 25,
+    "missed_am_keyholes": 2,
+    "extra_keyholes": 0,
+    "confusion": {
+     "keyhole": {
+      "keyhole": 3,
+      "lof": 0,
+      "lof_hatch": 0,
+      "none": 0
+     },
+     "lof": {
+      "keyhole": 0,
+      "lof": 4,
+      "lof_hatch": 5,
+      "none": 7
+     },
+     "lof_hatch": {
+      "keyhole": 2,
+      "lof": 0,
+      "lof_hatch": 0,
+      "none": 6
+     }
+    }
+   },
+   "bistable_points": 2,
+   "keyhole_mode_points": 13,
+   "unconverged": 0,
+   "median_beam_on_powder_conduction": 0.0,
+   "median_A_conduction": 0.202
+  }
+ },
+ "am_keyhole_boundary": {
+  "alsi10mg": {
+   "P_surface_boils_W": [
+    0.474,
+    0.761
+   ],
+   "P_keyhole_branch_appears_W": [
+    0.964,
+    1.014
+   ],
+   "P_dimple_runs_away_W": [
+    1.052,
+    1.388
+   ]
+  },
+  "blend": {
+   "P_surface_boils_W": [
+    0.469,
+    0.785
+   ],
+   "P_keyhole_branch_appears_W": [
+    1.156,
+    1.253
+   ],
+   "P_dimple_runs_away_W": [
+    1.156,
+    1.548
+   ]
+  }
+ },
+ "render_points": {
+  "rows": 6
+ },
+ "solyaev2025_alsi10mg": {
+  "scored_points": 231,
+  "measured_keyhole": 80,
+  "pool D/W > 0.75 (the study's own test)": {
+   "predicted_keyhole": 3,
+   "agree": 154,
+   "missed": 77,
+   "extra": 0
+  },
+  "keyhole Wk/Dk <= 0.7, dimple branch": {
+   "predicted_keyhole": 3,
+   "agree": 154,
+   "missed": 77,
+   "extra": 0
+  },
+  "keyhole Wk/Dk <= 0.7 on either branch": {
+   "predicted_keyhole": 27,
+   "agree": 178,
+   "missed": 53,
+   "extra": 0
+  },
+  "keyhole mode (the surface boils)": {
+   "predicted_keyhole": 109,
+   "agree": 200,
+   "missed": 1,
+   "extra": 30
+  }
+ },
+ "ambench2022_al5182": {
+  "measured": {
+   "P": 473.0,
+   "v": 0.7,
+   "r0": 6.125e-05,
+   "T0": 293.0,
+   "A_before_keyhole": 0.24,
+   "A_keyhole": 0.43,
+   "pool_depth_um": 88.8,
+   "pool_width_um": 326.0
+  },
+  "rows": 4
+ },
+ "runtime_s": 786.3
+}

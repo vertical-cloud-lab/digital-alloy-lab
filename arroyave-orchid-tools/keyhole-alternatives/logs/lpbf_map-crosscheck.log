@@ -1,0 +1,9 @@
+lpbf_map thermal_diffusivity: 3.991291727140784e-05 ours: 3.991291727140784e-05
+P=375.0 v=0.4: lpbf_map GS depth 88.78 um, ours 88.78 um
+P=250.0 v=0.8: lpbf_map GS depth 37.79 um, ours 37.79 um
+P=200.0 v=1.2: lpbf_map GS depth 22.42 um, ours 22.42 um
+300 W, v=0.4 m/s: our Ke=15.41 -> lpbf_map Gan flag True (Ke>6: True); lpbf_map King flag True
+300 W, v=0.8 m/s: our Ke=10.89 -> lpbf_map Gan flag True (Ke>6: True); lpbf_map King flag True
+300 W, v=1.6 m/s: our Ke=7.70 -> lpbf_map Gan flag True (Ke>6: True); lpbf_map King flag True
+300 W, v=3.2 m/s: our Ke=5.45 -> lpbf_map Gan flag False (Ke>6: False); lpbf_map King flag True
+lpbf_map King threshold power (speed-independent): 78.0 W

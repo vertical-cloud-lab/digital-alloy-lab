@@ -1,0 +1,50 @@
+{
+ "alsi10mg": {
+  "agree_all_classes_meltflow": 25,
+  "agree_all_classes_analytic": 22,
+  "confusion_meltflow": {
+   "keyhole": {
+    "keyhole": 15,
+    "lof": 0,
+    "lof_hatch": 0,
+    "none": 5
+   },
+   "lof": {
+    "keyhole": 0,
+    "lof": 3,
+    "lof_hatch": 2,
+    "none": 0
+   },
+   "lof_hatch": {
+    "keyhole": 0,
+    "lof": 0,
+    "lof_hatch": 7,
+    "none": 26
+   }
+  }
+ },
+ "blend": {
+  "agree_all_classes_meltflow": 7,
+  "agree_all_classes_analytic": 7,
+  "confusion_meltflow": {
+   "keyhole": {
+    "keyhole": 3,
+    "lof": 0,
+    "lof_hatch": 0,
+    "none": 0
+   },
+   "lof": {
+    "keyhole": 0,
+    "lof": 4,
+    "lof_hatch": 5,
+    "none": 6
+   },
+   "lof_hatch": {
+    "keyhole": 2,
+    "lof": 0,
+    "lof_hatch": 0,
+    "none": 7
+   }
+  }
+ }
+}

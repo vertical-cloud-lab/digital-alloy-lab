@@ -1,0 +1,703 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2506                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _d6aa836d-20260127 OPENFOAM=2506 patch=260127 version=2506
+Arch   : "LSB;label=32;scalar=64"
+Exec   : laserbeamFoam -parallel
+Date   : Nov 24 2026
+Time   : 00:04:46
+Host   : <runner>
+PID    : <pid>
+I/O    : uncollated
+Case   : /tmp/cfd/blend-matchedA-25um
+nProcs : 2
+Hosts  :
+(
+    (<runner> 2)
+)
+Pstream initialized with:
+    node communication : off [type=host] (2 ranks, 1 nodes)
+    topology controls  : none
+    consensus exchange : 0 (tuning: 0)
+    exchange algorithm : 0
+    commsType          : nonBlocking
+    polling iterations : 0
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 0
+
+
+PIMPLE: Operating solver in PISO mode
+
+Reading field p_rgh
+
+Reading field U
+
+Reading field Temperature
+
+Reading/calculating face flux field phi
+
+Reading transportProperties
+
+Selecting incompressible transport model Newtonian
+Selecting incompressible transport model Newtonian
+Selecting turbulence model type laminar
+Selecting laminar stress model Stokes
+
+Reading g
+
+Reading hRef
+Calculating field g.h
+
+radialPolarHeatSource = true
+Scaled global mesh bounding box: (-1.613227e-05 -1.613227e-05 -0.0003411323) (0.001316132 0.0007161323 0.0003411323)
+No MRF models present
+
+No finite volume options present
+--> FOAM Warning : Entry 'reconstructionScheme' not found in dictionary "/tmp/cfd/blend-matchedA-25um/system/fvSolution/solvers/alpha.metal.*"
+using default
+Selecting reconstructionScheme: isoAlpha
+DICPCG:  Solving for pcorr, Initial residual = 0, Final residual = 0, No Iterations 0
+time step continuity errors : sum local = 0, global = 0, cumulative = 0
+Courant Number mean: 0 max: 0
+
+Starting time loop
+
+Courant Number mean: 0 max: 0
+Interface Courant Number mean: 0 max: 0
+deltaT = 1.200005e-09
+Time = 1.2000048e-09
+
+PIMPLE: iteration 1
+smoothSolver:  Solving for alpha.metal, Initial residual = 0, Final residual = 0, No Iterations 0
+Phase-1 volume fraction = 0.8571429  Min(alpha.metal) = 0  Max(alpha.metal) = 1
+MULES: Correcting alpha.metal
+MULES: Correcting alpha.metal
+Phase-1 volume fraction = 0.8571429  Min(alpha.metal) = 0  Max(alpha.metal) = 1
+Updating deposition
+Laser: laser0
+    mean position = (0.0001500005 5e-05 0)
+    power = 144.037
+    position including any oscillation = (0.0001500005 5e-05 0)
+    Perturbation vector for ray seed points = (0 7.905694e-13 -7.905694e-13)
+nRadial: 20
+nAngular: 72
+    Total rays: 1440, local particles: 0
+    Total Q deposited: 142.3161
+    Ray-tracing safety diagnostics:
+        maxRayBounces = 1
+        maxRayBounceAction = deposit
+        max observed bounces = 1
+        rays handled by maxRayBounces = 1440
+        residual power handled by maxRayBounces = 122.295
+        residual fraction of current laser power = 0.8490525
+        minimum Fresnel absorptivity encountered = 0.1406806
+        near-zero absorptivity interactions = 0
+        near-zero absorptivity tolerance = 1e-15
+smoothSolver:  Solving for T, Initial residual = 0.9999991, Final residual = 9.814204e-10, No Iterations 3
+Correcting epsilon1, mean residual = 0, max residual = 0
+DICPCG:  Solving for p_rgh, Initial residual = 1, Final residual = 0.02776611, No Iterations 3
+time step continuity errors : sum local = 5.929044e-12, global = 5.115625e-12, cumulative = 5.115625e-12
+DICPCG:  Solving for p_rgh, Initial residual = 0.01165603, Final residual = 0.0004817155, No Iterations 4
+time step continuity errors : sum local = 2.450569e-13, global = 3.439669e-14, cumulative = 5.150022e-12
+DICPCG:  Solving for p_rgh, Initial residual = 0.0004256743, Final residual = 5.595635e-08, No Iterations 27
+time step continuity errors : sum local = 3.221504e-17, global = 3.417768e-18, cumulative = 5.150025e-12
+ExecutionTime = 0.41 s  ClockTime = 0 s
+
+Courant Number mean: 4.878011e-17 max: 1.552598e-15
+Interface Courant Number mean: 0 max: 0
+deltaT = 1.440013e-09
+Time = 2.6400175e-09
+
+PIMPLE: iteration 1
+smoothSolver:  Solving for alpha.metal, Initial residual = 4.850561e-18, Final residual = 4.850561e-18, No Iterations 0
+Phase-1 volume fraction = 0.8571429  Min(alpha.metal) = 0  Max(alpha.metal) = 1
+MULES: Correcting alpha.metal
+MULES: Correcting alpha.metal
+Phase-1 volume fraction = 0.8571429  Min(alpha.metal) = 0  Max(alpha.metal) = 1
+Updating deposition
+Laser: laser0
+    mean position = (0.0001500011 5e-05 0)
+    power = 144.037
+    position including any oscillation = (0.0001500011 5e-05 0)
+    Perturbation vector for ray seed points = (0 7.905694e-13 -7.905694e-13)
+nRadial: 20
+nAngular: 72
+    Total rays: 1440, local particles: 0
+    Total Q deposited: 142.3161
+    Ray-tracing safety diagnostics:
+        maxRayBounces = 1
+        maxRayBounceAction = deposit
+        max observed bounces = 1
+        rays handled by maxRayBounces = 1440
+        residual power handled by maxRayBounces = 122.295
+        residual fraction of current laser power = 0.8490525
+        minimum Fresnel absorptivity encountered = 0.1406806
+        near-zero absorptivity interactions = 0
+        near-zero absorptivity tolerance = 1e-15
+smoothSolver:  Solving for T, Initial residual = 0.2307852, Final residual = 2.433244e-10, No Iterations 2
+Correcting epsilon1, mean residual = 0, max residual = 0
+DICPCG:  Solving for p_rgh, Initial residual = 5.335238e-08, Final residual = 5.335238e-08, No Iterations 0
+time step continuity errors : sum local = 8.909565e-17, global = 4.405573e-18, cumulative = 5.15003e-12
+DICPCG:  Solving for p_rgh, Initial residual = 5.335565e-08, Final residual = 5.335565e-08, No Iterations 0
+time step continuity errors : sum local = 8.910111e-17, global = 4.405227e-18, cumulative = 5.150034e-12
+DICPCG:  Solving for p_rgh, Initial residual = 5.335565e-08, Final residual = 5.335565e-08, No Iterations 0
+time step continuity errors : sum local = 8.910111e-17, global = 4.405227e-18, cumulative = 5.150039e-12
+ExecutionTime = 0.52 s  ClockTime = 0 s
+
+Courant Number mean: 1.808018e-16 max: 4.911661e-15
+Interface Courant Number mean: 0 max: 0
+deltaT = 1.728025e-09
+Time = 4.3680426e-09
+
+PIMPLE: iteration 1
+smoothSolver:  Solving for alpha.metal, Initial residual = 1.218574e-17, Final residual = 1.218574e-17, No Iterations 0
+Phase-1 volume fraction = 0.8571429  Min(alpha.metal) = 0  Max(alpha.metal) = 1
+MULES: Correcting alpha.metal
+MULES: Correcting alpha.metal
+Phase-1 volume fraction = 0.8571429  Min(alpha.metal) = 0  Max(alpha.metal) = 1
+Updating deposition
+Laser: laser0
+    mean position = (0.0001500017 5e-05 0)
+    power = 144.037
+    position including any oscillation = (0.0001500017 5e-05 0)
+    Perturbation vector for ray seed points = (0 7.905694e-13 -7.905694e-13)
+nRadial: 20
+nAngular: 72
+    Total rays: 1440, local particles: 0
+    Total Q deposited: 142.3161
+    Ray-tracing safety diagnostics:
+        maxRayBounces = 1
+        maxRayBounceAction = deposit
+        max observed bounces = 1
+        rays handled by maxRayBounces = 1440
+        residual power handled by maxRayBounces = 122.295
+        residual fraction of current laser power = 0.8490525
+        minimum Fresnel absorptivity encountered = 0.1406806
+        near-zero absorptivity interactions = 0
+        near-zero absorptivity tolerance = 1e-15
+smoothSolver:  Solving for T, Initial residual = 0.1361944, Final residual = 5.141361e-11, No Iterations 2
+Correcting epsilon1, mean residual = 0, max residual = 0
+DICPCG:  Solving for p_rgh, Initial residual = 7.739895e-08, Final residual = 7.739895e-08, No Iterations 0
+time step continuity errors : sum local = 1.860961e-16, global = 5.725169e-18, cumulative = 5.150044e-12
+DICPCG:  Solving for p_rgh, Initial residual = 7.740327e-08, Final residual = 7.740327e-08, No Iterations 0
+time step continuity errors : sum local = 1.861065e-16, global = 5.72418e-18, cumulative = 5.15005e-12
+DICPCG:  Solving for p_rgh, Initial residual = 7.740327e-08, Final residual = 7.740327e-08, No Iterations 0
+time step continuity errors : sum local = 1.861065e-16, global = 5.724179e-18, cumulative = 5.150056e-12
+ExecutionTime = 0.63 s  ClockTime = 0 s
+
+Courant Number mean: 4.164734e-16 max: 1.123868e-14
+Interface Courant Number mean: 0 max: 0
+deltaT = 2.073609e-09
+Time = 6.4416513e-09
+
+PIMPLE: iteration 1
+smoothSolver:  Solving for alpha.metal, Initial residual = 2.745927e-17, Final residual = 2.745927e-17, No Iterations 0
+Phase-1 volume fraction = 0.8571429  Min(alpha.metal) = 0  Max(alpha.metal) = 1
+MULES: Correcting alpha.metal
+MULES: Correcting alpha.metal
+Phase-1 volume fraction = 0.8571429  Min(alpha.metal) = 0  Max(alpha.metal) = 1
+Updating deposition
+Laser: laser0
+    mean position = (0.0001500026 5e-05 0)
+    power = 144.037
+    position including any oscillation = (0.0001500026 5e-05 0)
+    Perturbation vector for ray seed points = (0 7.905694e-13 -7.905694e-13)
+nRadial: 20
+nAngular: 72
+    Total rays: 1440, local particles: 0
+    Total Q deposited: 142.3161
+    Ray-tracing safety diagnostics:
+        maxRayBounces = 1
+        maxRayBounceAction = deposit
+        max observed bounces = 1
+        rays handled by maxRayBounces = 1440
+        residual power handled by maxRayBounces = 122.295
+        residual fraction of current laser power = 0.8490525
+        minimum Fresnel absorptivity encountered = 0.1406806
+        near-zero absorptivity interactions = 0
+        near-zero absorptivity tolerance = 1e-15
+smoothSolver:  Solving for T, Initial residual = 0.09934755, Final residual = 5.298355e-11, No Iterations 2
+Correcting epsilon1, mean residual = 0, max residual = 0
+DICPCG:  Solving for p_rgh, Initial residual = 9.781149e-08, Final residual = 9.781149e-08, No Iterations 0
+time step continuity errors : sum local = 3.385835e-16, global = 7.501227e-18, cumulative = 5.150063e-12
+DICPCG:  Solving for p_rgh, Initial residual = 9.781689e-08, Final residual = 9.781689e-08, No Iterations 0
+time step continuity errors : sum local = 3.386022e-16, global = 7.499475e-18, cumulative = 5.150071e-12
+DICPCG:  Solving for p_rgh, Initial residual = 9.781689e-08, Final residual = 9.781689e-08, No Iterations 0
+time step continuity errors : sum local = 3.386022e-16, global = 7.499475e-18, cumulative = 5.150078e-12
+ExecutionTime = 0.75 s  ClockTime = 1 s
+
+Courant Number mean: 7.89181e-16 max: 2.119491e-14
+Interface Courant Number mean: 0 max: 0
+deltaT = 2.48833e-09
+Time = 8.9299818e-09
+
+PIMPLE: iteration 1
+smoothSolver:  Solving for alpha.metal, Initial residual = 5.234693e-17, Final residual = 5.234693e-17, No Iterations 0
+Phase-1 volume fraction = 0.8571429  Min(alpha.metal) = 0  Max(alpha.metal) = 1
+MULES: Correcting alpha.metal
+MULES: Correcting alpha.metal
+Phase-1 volume fraction = 0.8571429  Min(alpha.metal) = 0  Max(alpha.metal) = 1
+Updating deposition
+Laser: laser0
+    mean position = (0.0001500036 5e-05 0)
+    power = 144.037
+    position including any oscillation = (0.0001500036 5e-05 0)
+    Perturbation vector for ray seed points = (0 7.905694e-13 -7.905694e-13)
+nRadial: 20
+nAngular: 72
+    Total rays: 1440, local particles: 0
+    Total Q deposited: 142.3161
+    Ray-tracing safety diagnostics:
+        maxRayBounces = 1
+        maxRayBounceAction = deposit
+        max observed bounces = 1
+        rays handled by maxRayBounces = 1440
+        residual power handled by maxRayBounces = 122.295
+        residual fraction of current laser power = 0.8490525
+        minimum Fresnel absorptivity encountered = 0.1406806
+        near-zero absorptivity interactions = 0
+        near-zero absorptivity tolerance = 1e-15
+smoothSolver:  Solving for T, Initial residual = 0.07983387, Final residual = 6.263876e-11, No Iterations 2
+Correcting epsilon1, mean residual = 0, max residual = 0
+DICPCG:  Solving for p_rgh, Initial residual = 1.149278e-07, Final residual = 9.908037e-08, No Iterations 1
+time step continuity errors : sum local = 4.937765e-16, global = -2.537852e-17, cumulative = 5.150053e-12
+DICPCG:  Solving for p_rgh, Initial residual = 9.908394e-08, Final residual = 9.908394e-08, No Iterations 0
+time step continuity errors : sum local = 4.93799e-16, global = -2.538798e-17, cumulative = 5.150027e-12
+DICPCG:  Solving for p_rgh, Initial residual = 9.908394e-08, Final residual = 9.908394e-08, No Iterations 0
+time step continuity errors : sum local = 4.93799e-16, global = -2.538798e-17, cumulative = 5.150002e-12
+ExecutionTime = 0.87 s  ClockTime = 1 s
+
+Courant Number mean: 8.749123e-16 max: 3.642525e-14
+Interface Courant Number mean: 0 max: 0
+deltaT = 2.985967e-09
+Time = 1.1915949e-08
+
+PIMPLE: iteration 1
+smoothSolver:  Solving for alpha.metal, Initial residual = 1.387439e-16, Final residual = 1.387439e-16, No Iterations 0
+Phase-1 volume fraction = 0.8571429  Min(alpha.metal) = 0  Max(alpha.metal) = 1
+MULES: Correcting alpha.metal
+MULES: Correcting alpha.metal
+Phase-1 volume fraction = 0.8571429  Min(alpha.metal) = 0  Max(alpha.metal) = 1
+Updating deposition
+Laser: laser0
+    mean position = (0.0001500048 5e-05 0)
+    power = 144.037
+    position including any oscillation = (0.0001500048 5e-05 0)
+    Perturbation vector for ray seed points = (0 7.905694e-13 -7.905694e-13)
+nRadial: 20
+nAngular: 72
+    Total rays: 1440, local particles: 0
+    Total Q deposited: 142.3161
+    Ray-tracing safety diagnostics:
+        maxRayBounces = 1
+        maxRayBounceAction = deposit
+        max observed bounces = 1
+        rays handled by maxRayBounces = 1440
+        residual power handled by maxRayBounces = 122.295
+        residual fraction of current laser power = 0.8490525
+        minimum Fresnel absorptivity encountered = 0.1406806
+        near-zero absorptivity interactions = 0
+        near-zero absorptivity tolerance = 1e-15
+smoothSolver:  Solving for T, Initial residual = 0.06785262, Final residual = 8.619295e-11, No Iterations 2
+Correcting epsilon1, mean residual = 0, max residual = 0
+DICPCG:  Solving for p_rgh, Initial residual = 2.136112e-07, Final residual = 4.734381e-08, No Iterations 1
+time step continuity errors : sum local = 3.39659e-16, global = -6.943259e-17, cumulative = 5.149933e-12
+DICPCG:  Solving for p_rgh, Initial residual = 4.734466e-08, Final residual = 4.734466e-08, No Iterations 0
+time step continuity errors : sum local = 3.396662e-16, global = -6.943837e-17, cumulative = 5.149863e-12
+DICPCG:  Solving for p_rgh, Initial residual = 4.734466e-08, Final residual = 4.734466e-08, No Iterations 0
+time step continuity errors : sum local = 3.396662e-16, global = -6.943837e-17, cumulative = 5.149794e-12
+ExecutionTime = 0.97 s  ClockTime = 1 s
+
+Courant Number mean: 8.324599e-16 max: 2.921236e-14
+Interface Courant Number mean: 0 max: 0
+deltaT = 3.58316e-09
+Time = 1.5499109e-08
+
+PIMPLE: iteration 1
+smoothSolver:  Solving for alpha.metal, Initial residual = 4.848806e-17, Final residual = 4.848806e-17, No Iterations 0
+Phase-1 volume fraction = 0.8571429  Min(alpha.metal) = 0  Max(alpha.metal) = 1
+MULES: Correcting alpha.metal
+MULES: Correcting alpha.metal
+Phase-1 volume fraction = 0.8571429  Min(alpha.metal) = 0  Max(alpha.metal) = 1
+Updating deposition
+Laser: laser0
+    mean position = (0.0001500062 5e-05 0)
+    power = 144.037
+    position including any oscillation = (0.0001500062 5e-05 0)
+    Perturbation vector for ray seed points = (0 7.905694e-13 -7.905694e-13)
+nRadial: 20
+nAngular: 72
+    Total rays: 1440, local particles: 0
+    Total Q deposited: 142.3161
+    Ray-tracing safety diagnostics:
+        maxRayBounces = 1
+        maxRayBounceAction = deposit
+        max observed bounces = 1
+        rays handled by maxRayBounces = 1440
+        residual power handled by maxRayBounces = 122.295
+        residual fraction of current laser power = 0.8490525
+        minimum Fresnel absorptivity encountered = 0.1406806
+        near-zero absorptivity interactions = 0
+        near-zero absorptivity tolerance = 1e-15
+smoothSolver:  Solving for T, Initial residual = 0.05984647, Final residual = 1.277975e-10, No Iterations 2
+Correcting epsilon1, mean residual = 0, max residual = 0
+DICPCG:  Solving for p_rgh, Initial residual = 8.98995e-08, Final residual = 8.98995e-08, No Iterations 0
+time step continuity errors : sum local = 9.2845e-16, global = -1.13965e-16, cumulative = 5.14968e-12
+DICPCG:  Solving for p_rgh, Initial residual = 8.990339e-08, Final residual = 8.990339e-08, No Iterations 0
+time step continuity errors : sum local = 9.284902e-16, global = -1.139761e-16, cumulative = 5.149566e-12
+DICPCG:  Solving for p_rgh, Initial residual = 8.990339e-08, Final residual = 8.990339e-08, No Iterations 0
+time step continuity errors : sum local = 9.284902e-16, global = -1.139761e-16, cumulative = 5.149452e-12
+ExecutionTime = 1.09 s  ClockTime = 1 s
+
+Courant Number mean: 1.27543e-15 max: 8.181582e-14
+Interface Courant Number mean: 0 max: 0
+deltaT = 4.299854e-09
+Time = 1.9798963e-08
+
+PIMPLE: iteration 1
+smoothSolver:  Solving for alpha.metal, Initial residual = 7.357255e-17, Final residual = 7.357255e-17, No Iterations 0
+Phase-1 volume fraction = 0.8571429  Min(alpha.metal) = 0  Max(alpha.metal) = 1
+MULES: Correcting alpha.metal
+MULES: Correcting alpha.metal
+Phase-1 volume fraction = 0.8571429  Min(alpha.metal) = 0  Max(alpha.metal) = 1
+Updating deposition
+Laser: laser0
+    mean position = (0.0001500079 5e-05 0)
+    power = 144.037
+    position including any oscillation = (0.0001500079 5e-05 0)
+    Perturbation vector for ray seed points = (0 7.905694e-13 -7.905694e-13)
+nRadial: 20
+nAngular: 72
+    Total rays: 1440, local particles: 0
+    Total Q deposited: 142.3161
+    Ray-tracing safety diagnostics:
+        maxRayBounces = 1
+        maxRayBounceAction = deposit
+        max observed bounces = 1
+        rays handled by maxRayBounces = 1440
+        residual power handled by maxRayBounces = 122.295
+        residual fraction of current laser power = 0.8490525
+        minimum Fresnel absorptivity encountered = 0.1406806
+        near-zero absorptivity interactions = 0
+        near-zero absorptivity tolerance = 1e-15
+smoothSolver:  Solving for T, Initial residual = 0.05420619, Final residual = 1.971741e-10, No Iterations 2
+Correcting epsilon1, mean residual = 0, max residual = 0
+DICPCG:  Solving for p_rgh, Initial residual = 1.406254e-07, Final residual = 3.522988e-08, No Iterations 1
+time step continuity errors : sum local = 5.237445e-16, global = -1.161138e-16, cumulative = 5.149336e-12
+DICPCG:  Solving for p_rgh, Initial residual = 3.523078e-08, Final residual = 3.523078e-08, No Iterations 0
+time step continuity errors : sum local = 5.237593e-16, global = -1.16117e-16, cumulative = 5.14922e-12
+DICPCG:  Solving for p_rgh, Initial residual = 3.523078e-08, Final residual = 3.523078e-08, No Iterations 0
+time step continuity errors : sum local = 5.237593e-16, global = -1.16117e-16, cumulative = 5.149103e-12
+
+[... 2451 time steps in all (a restarted run counts its overlap twice); middle cut ...]
+
+Correcting epsilon1, mean residual = 8.094399e-19, max residual = 6.661338e-16
+DICPCG:  Solving for p_rgh, Initial residual = 0.0005294508, Final residual = 2.059217e-05, No Iterations 3
+time step continuity errors : sum local = 8.071175e-07, global = 1.900065e-08, cumulative = 6.816156e-05
+DICPCG:  Solving for p_rgh, Initial residual = 3.462694e-05, Final residual = 1.416281e-06, No Iterations 7
+time step continuity errors : sum local = 5.588351e-08, global = -9.170068e-09, cumulative = 6.815239e-05
+DICPCG:  Solving for p_rgh, Initial residual = 2.608242e-06, Final residual = 8.532776e-08, No Iterations 7
+time step continuity errors : sum local = 3.432782e-09, global = 2.658265e-10, cumulative = 6.815266e-05
+ExecutionTime = 408.88 s  ClockTime = 431 s
+
+Courant Number mean: 0.001067051 max: 0.1800285
+Interface Courant Number mean: 0.00033233 max: 0.1443636
+deltaT = 5.020139e-07
+Time = 0.0011974899
+
+PIMPLE: iteration 1
+smoothSolver:  Solving for alpha.metal, Initial residual = 0.0001163898, Final residual = 5.696675e-11, No Iterations 2
+Phase-1 volume fraction = 0.8571375  Min(alpha.metal) = -2.935887e-11  Max(alpha.metal) = 1
+MULES: Correcting alpha.metal
+MULES: Correcting alpha.metal
+Phase-1 volume fraction = 0.8571375  Min(alpha.metal) = -7.894124e-10  Max(alpha.metal) = 1
+Updating deposition
+Laser: laser0
+    mean position = (0.000628996 5e-05 0)
+    power = 144.037
+    position including any oscillation = (0.000628996 5e-05 0)
+    Perturbation vector for ray seed points = (0 7.905694e-13 -7.905694e-13)
+nRadial: 20
+nAngular: 72
+    Total rays: 1440, local particles: 314
+    Total Q deposited: 142.3161
+    Ray-tracing safety diagnostics:
+        maxRayBounces = 1
+        maxRayBounceAction = deposit
+        max observed bounces = 1
+        rays handled by maxRayBounces = 1440
+        residual power handled by maxRayBounces = 119.7117
+        residual fraction of current laser power = 0.8311177
+        minimum Fresnel absorptivity encountered = 0.1407201
+        near-zero absorptivity interactions = 0
+        near-zero absorptivity tolerance = 1e-15
+smoothSolver:  Solving for T, Initial residual = 0.0004202525, Final residual = 1.641551e-10, No Iterations 4
+Correcting epsilon1, mean residual = 5.083455e-05, max residual = 0.1327383
+smoothSolver:  Solving for T, Initial residual = 3.059821e-06, Final residual = 5.770211e-10, No Iterations 2
+Correcting epsilon1, mean residual = 3.784707e-07, max residual = 0.002053724
+smoothSolver:  Solving for T, Initial residual = 2.368509e-08, Final residual = 4.214924e-10, No Iterations 1
+Correcting epsilon1, mean residual = 5.682181e-09, max residual = 5.550178e-05
+smoothSolver:  Solving for T, Initial residual = 1.205149e-09, Final residual = 1.90406e-11, No Iterations 1
+Correcting epsilon1, mean residual = 1.438578e-10, max residual = 1.545375e-06
+smoothSolver:  Solving for T, Initial residual = 5.488959e-11, Final residual = 5.488959e-11, No Iterations 0
+Correcting epsilon1, mean residual = 6.510712e-19, max residual = 6.661338e-16
+DICPCG:  Solving for p_rgh, Initial residual = 0.0005375436, Final residual = 2.323288e-05, No Iterations 6
+time step continuity errors : sum local = 9.50247e-07, global = -7.799628e-08, cumulative = 6.807466e-05
+DICPCG:  Solving for p_rgh, Initial residual = 3.578592e-05, Final residual = 1.55817e-06, No Iterations 5
+time step continuity errors : sum local = 6.282033e-08, global = -2.850786e-08, cumulative = 6.804615e-05
+DICPCG:  Solving for p_rgh, Initial residual = 2.482816e-06, Final residual = 4.740129e-08, No Iterations 8
+time step continuity errors : sum local = 1.893675e-09, global = 3.995775e-10, cumulative = 6.804655e-05
+ExecutionTime = 409.03 s  ClockTime = 432 s
+
+Courant Number mean: 0.001069726 max: 0.1817063
+Interface Courant Number mean: 0.0003333335 max: 0.1440679
+deltaT = 5.020139e-07
+Time = 0.0011979919
+
+PIMPLE: iteration 1
+smoothSolver:  Solving for alpha.metal, Initial residual = 0.0001175013, Final residual = 5.538609e-11, No Iterations 2
+Phase-1 volume fraction = 0.8571375  Min(alpha.metal) = -2.876958e-11  Max(alpha.metal) = 1
+MULES: Correcting alpha.metal
+MULES: Correcting alpha.metal
+Phase-1 volume fraction = 0.8571375  Min(alpha.metal) = -1.04576e-09  Max(alpha.metal) = 1
+Updating deposition
+Laser: laser0
+    mean position = (0.0006291968 5e-05 0)
+    power = 144.037
+    position including any oscillation = (0.0006291968 5e-05 0)
+    Perturbation vector for ray seed points = (0 7.905694e-13 -7.905694e-13)
+nRadial: 20
+nAngular: 72
+    Total rays: 1440, local particles: 314
+    Total Q deposited: 142.3161
+    Ray-tracing safety diagnostics:
+        maxRayBounces = 1
+        maxRayBounceAction = deposit
+        max observed bounces = 1
+        rays handled by maxRayBounces = 1440
+        residual power handled by maxRayBounces = 119.6281
+        residual fraction of current laser power = 0.8305375
+        minimum Fresnel absorptivity encountered = 0.1407137
+        near-zero absorptivity interactions = 0
+        near-zero absorptivity tolerance = 1e-15
+smoothSolver:  Solving for T, Initial residual = 0.000714909, Final residual = 2.110921e-10, No Iterations 4
+Correcting epsilon1, mean residual = 9.670785e-05, max residual = 1
+smoothSolver:  Solving for T, Initial residual = 3.567639e-06, Final residual = 4.488011e-11, No Iterations 3
+Correcting epsilon1, mean residual = 2.172231e-07, max residual = 0.0004096756
+smoothSolver:  Solving for T, Initial residual = 2.056124e-08, Final residual = 4.656014e-10, No Iterations 1
+Correcting epsilon1, mean residual = 2.358481e-09, max residual = 1.124885e-05
+smoothSolver:  Solving for T, Initial residual = 1.163423e-09, Final residual = 2.137112e-11, No Iterations 1
+Correcting epsilon1, mean residual = 5.199598e-11, max residual = 3.147013e-07
+DICPCG:  Solving for p_rgh, Initial residual = 0.0005398257, Final residual = 2.368286e-05, No Iterations 6
+time step continuity errors : sum local = 9.355452e-07, global = -1.19585e-07, cumulative = 6.792697e-05
+DICPCG:  Solving for p_rgh, Initial residual = 4.122271e-05, Final residual = 1.732964e-06, No Iterations 7
+time step continuity errors : sum local = 6.411277e-08, global = 1.459418e-08, cumulative = 6.794156e-05
+DICPCG:  Solving for p_rgh, Initial residual = 3.017883e-06, Final residual = 9.91527e-08, No Iterations 7
+time step continuity errors : sum local = 3.41188e-09, global = 2.109113e-10, cumulative = 6.794177e-05
+ExecutionTime = 409.17 s  ClockTime = 432 s
+
+Courant Number mean: 0.001072826 max: 0.1772642
+Interface Courant Number mean: 0.0003405301 max: 0.1552683
+deltaT = 5.020139e-07
+Time = 0.001198494
+
+PIMPLE: iteration 1
+smoothSolver:  Solving for alpha.metal, Initial residual = 0.0001189897, Final residual = 7.176696e-11, No Iterations 2
+Phase-1 volume fraction = 0.8571375  Min(alpha.metal) = -2.823443e-11  Max(alpha.metal) = 1
+MULES: Correcting alpha.metal
+MULES: Correcting alpha.metal
+Phase-1 volume fraction = 0.8571375  Min(alpha.metal) = -1.906253e-09  Max(alpha.metal) = 1
+Updating deposition
+Laser: laser0
+    mean position = (0.0006293976 5e-05 0)
+    power = 144.037
+    position including any oscillation = (0.0006293976 5e-05 0)
+    Perturbation vector for ray seed points = (0 7.905694e-13 -7.905694e-13)
+nRadial: 20
+nAngular: 72
+    Total rays: 1440, local particles: 322
+    Total Q deposited: 142.3161
+    Ray-tracing safety diagnostics:
+        maxRayBounces = 1
+        maxRayBounceAction = deposit
+        max observed bounces = 1
+        rays handled by maxRayBounces = 1440
+        residual power handled by maxRayBounces = 119.801
+        residual fraction of current laser power = 0.8317374
+        minimum Fresnel absorptivity encountered = 0.1407081
+        near-zero absorptivity interactions = 0
+        near-zero absorptivity tolerance = 1e-15
+smoothSolver:  Solving for T, Initial residual = 0.0005522425, Final residual = 1.968105e-10, No Iterations 4
+Correcting epsilon1, mean residual = 7.210387e-05, max residual = 1
+smoothSolver:  Solving for T, Initial residual = 2.934354e-06, Final residual = 5.953973e-11, No Iterations 3
+Correcting epsilon1, mean residual = 3.191662e-07, max residual = 0.002942809
+smoothSolver:  Solving for T, Initial residual = 1.539617e-08, Final residual = 3.627499e-10, No Iterations 1
+Correcting epsilon1, mean residual = 3.770338e-09, max residual = 5.46382e-05
+smoothSolver:  Solving for T, Initial residual = 7.885807e-10, Final residual = 7.885807e-10, No Iterations 0
+Correcting epsilon1, mean residual = 7.566503e-19, max residual = 6.661338e-16
+DICPCG:  Solving for p_rgh, Initial residual = 0.0006923938, Final residual = 2.864432e-05, No Iterations 5
+time step continuity errors : sum local = 9.418169e-07, global = -6.783474e-08, cumulative = 6.787394e-05
+DICPCG:  Solving for p_rgh, Initial residual = 5.024791e-05, Final residual = 2.21171e-06, No Iterations 6
+time step continuity errors : sum local = 6.863671e-08, global = -3.02532e-08, cumulative = 6.784368e-05
+DICPCG:  Solving for p_rgh, Initial residual = 3.781453e-06, Final residual = 9.330427e-08, No Iterations 8
+time step continuity errors : sum local = 2.606356e-09, global = 1.689421e-09, cumulative = 6.784537e-05
+ExecutionTime = 409.34 s  ClockTime = 432 s
+
+Courant Number mean: 0.001077899 max: 0.171696
+Interface Courant Number mean: 0.0003452439 max: 0.1496765
+deltaT = 5.020139e-07
+Time = 0.001198996
+
+PIMPLE: iteration 1
+smoothSolver:  Solving for alpha.metal, Initial residual = 0.0001214399, Final residual = 1.069357e-10, No Iterations 2
+Phase-1 volume fraction = 0.8571375  Min(alpha.metal) = -2.772405e-11  Max(alpha.metal) = 1
+MULES: Correcting alpha.metal
+MULES: Correcting alpha.metal
+Phase-1 volume fraction = 0.8571375  Min(alpha.metal) = -2.93964e-09  Max(alpha.metal) = 1
+Updating deposition
+Laser: laser0
+    mean position = (0.0006295984 5e-05 0)
+    power = 144.037
+    position including any oscillation = (0.0006295984 5e-05 0)
+    Perturbation vector for ray seed points = (0 7.905694e-13 -7.905694e-13)
+nRadial: 20
+nAngular: 72
+    Total rays: 1440, local particles: 322
+    Total Q deposited: 142.3161
+    Ray-tracing safety diagnostics:
+        maxRayBounces = 1
+        maxRayBounceAction = deposit
+        max observed bounces = 1
+        rays handled by maxRayBounces = 1440
+        residual power handled by maxRayBounces = 120.0236
+        residual fraction of current laser power = 0.8332835
+        minimum Fresnel absorptivity encountered = 0.1407031
+        near-zero absorptivity interactions = 0
+        near-zero absorptivity tolerance = 1e-15
+smoothSolver:  Solving for T, Initial residual = 0.0004198902, Final residual = 1.844358e-10, No Iterations 4
+Correcting epsilon1, mean residual = 4.104155e-05, max residual = 0.0656597
+smoothSolver:  Solving for T, Initial residual = 1.860158e-06, Final residual = 4.674721e-10, No Iterations 2
+Correcting epsilon1, mean residual = 2.930312e-07, max residual = 0.002483883
+smoothSolver:  Solving for T, Initial residual = 1.345797e-08, Final residual = 3.842222e-10, No Iterations 1
+Correcting epsilon1, mean residual = 2.802234e-09, max residual = 1.152182e-05
+smoothSolver:  Solving for T, Initial residual = 6.669675e-10, Final residual = 6.669675e-10, No Iterations 0
+Correcting epsilon1, mean residual = 8.094399e-19, max residual = 6.661338e-16
+DICPCG:  Solving for p_rgh, Initial residual = 0.0008387069, Final residual = 2.376282e-05, No Iterations 4
+time step continuity errors : sum local = 6.001362e-07, global = 1.22755e-08, cumulative = 6.785765e-05
+DICPCG:  Solving for p_rgh, Initial residual = 5.623204e-05, Final residual = 2.360079e-06, No Iterations 7
+time step continuity errors : sum local = 5.720136e-08, global = -1.767331e-08, cumulative = 6.783998e-05
+DICPCG:  Solving for p_rgh, Initial residual = 4.884021e-06, Final residual = 8.454352e-08, No Iterations 9
+time step continuity errors : sum local = 1.758641e-09, global = 4.36487e-10, cumulative = 6.784041e-05
+ExecutionTime = 409.5 s  ClockTime = 432 s
+
+Courant Number mean: 0.001082393 max: 0.1657989
+Interface Courant Number mean: 0.0003516301 max: 0.1509655
+deltaT = 5.020139e-07
+Time = 0.001199498
+
+PIMPLE: iteration 1
+smoothSolver:  Solving for alpha.metal, Initial residual = 0.0001238186, Final residual = 1.759194e-10, No Iterations 2
+Phase-1 volume fraction = 0.8571375  Min(alpha.metal) = -2.723506e-11  Max(alpha.metal) = 1
+MULES: Correcting alpha.metal
+MULES: Correcting alpha.metal
+Phase-1 volume fraction = 0.8571375  Min(alpha.metal) = -4.08429e-09  Max(alpha.metal) = 1
+Updating deposition
+Laser: laser0
+    mean position = (0.0006297992 5e-05 0)
+    power = 144.037
+    position including any oscillation = (0.0006297992 5e-05 0)
+    Perturbation vector for ray seed points = (0 7.905694e-13 -7.905694e-13)
+nRadial: 20
+nAngular: 72
+    Total rays: 1440, local particles: 328
+    Total Q deposited: 142.3161
+    Ray-tracing safety diagnostics:
+        maxRayBounces = 1
+        maxRayBounceAction = deposit
+        max observed bounces = 1
+        rays handled by maxRayBounces = 1440
+        residual power handled by maxRayBounces = 119.9689
+        residual fraction of current laser power = 0.8329032
+        minimum Fresnel absorptivity encountered = 0.1406988
+        near-zero absorptivity interactions = 0
+        near-zero absorptivity tolerance = 1e-15
+smoothSolver:  Solving for T, Initial residual = 0.0005939331, Final residual = 1.80948e-10, No Iterations 4
+Correcting epsilon1, mean residual = 9.081525e-05, max residual = 1
+smoothSolver:  Solving for T, Initial residual = 2.342294e-06, Final residual = 3.100362e-11, No Iterations 3
+Correcting epsilon1, mean residual = 2.031256e-07, max residual = 0.0005276142
+smoothSolver:  Solving for T, Initial residual = 2.698408e-08, Final residual = 7.79412e-10, No Iterations 1
+Correcting epsilon1, mean residual = 2.295262e-09, max residual = 1.007851e-05
+smoothSolver:  Solving for T, Initial residual = 1.250267e-09, Final residual = 3.1041e-11, No Iterations 1
+Correcting epsilon1, mean residual = 5.432596e-11, max residual = 2.640125e-07
+DICPCG:  Solving for p_rgh, Initial residual = 0.001242944, Final residual = 4.604899e-05, No Iterations 3
+time step continuity errors : sum local = 8.093993e-07, global = 3.388025e-08, cumulative = 6.787429e-05
+DICPCG:  Solving for p_rgh, Initial residual = 8.539384e-05, Final residual = 3.27177e-06, No Iterations 6
+time step continuity errors : sum local = 5.562142e-08, global = -9.958671e-09, cumulative = 6.786433e-05
+DICPCG:  Solving for p_rgh, Initial residual = 6.968792e-06, Final residual = 6.134628e-08, No Iterations 10
+time step continuity errors : sum local = 9.122977e-10, global = -3.445262e-10, cumulative = 6.786399e-05
+ExecutionTime = 409.65 s  ClockTime = 432 s
+
+Courant Number mean: 0.001087062 max: 0.1796932
+Interface Courant Number mean: 0.0003520116 max: 0.1796932
+deltaT = 5.020139e-07
+Time = 0.0012
+
+PIMPLE: iteration 1
+smoothSolver:  Solving for alpha.metal, Initial residual = 0.0001258149, Final residual = 2.717684e-10, No Iterations 2
+Phase-1 volume fraction = 0.8571375  Min(alpha.metal) = -2.675349e-11  Max(alpha.metal) = 1
+MULES: Correcting alpha.metal
+MULES: Correcting alpha.metal
+Phase-1 volume fraction = 0.8571375  Min(alpha.metal) = -5.592358e-09  Max(alpha.metal) = 1
+Updating deposition
+Laser: laser0
+    mean position = (0.00063 5e-05 0)
+    power = 144.037
+    position including any oscillation = (0.00063 5e-05 0)
+    Perturbation vector for ray seed points = (0 7.905694e-13 -7.905694e-13)
+nRadial: 20
+nAngular: 72
+    Total rays: 1440, local particles: 328
+    Total Q deposited: 142.3161
+    Ray-tracing safety diagnostics:
+        maxRayBounces = 1
+        maxRayBounceAction = deposit
+        max observed bounces = 1
+        rays handled by maxRayBounces = 1440
+        residual power handled by maxRayBounces = 120.2382
+        residual fraction of current laser power = 0.8347733
+        minimum Fresnel absorptivity encountered = 0.140695
+        near-zero absorptivity interactions = 0
+        near-zero absorptivity tolerance = 1e-15
+smoothSolver:  Solving for T, Initial residual = 0.0004910377, Final residual = 2.545144e-10, No Iterations 4
+Correcting epsilon1, mean residual = 4.82426e-05, max residual = 0.2385294
+smoothSolver:  Solving for T, Initial residual = 1.357159e-06, Final residual = 8.688697e-10, No Iterations 2
+Correcting epsilon1, mean residual = 4.026642e-07, max residual = 0.005447429
+smoothSolver:  Solving for T, Initial residual = 1.837258e-08, Final residual = 7.867106e-10, No Iterations 1
+Correcting epsilon1, mean residual = 6.613551e-09, max residual = 9.988366e-05
+smoothSolver:  Solving for T, Initial residual = 1.250625e-09, Final residual = 4.235921e-11, No Iterations 1
+Correcting epsilon1, mean residual = 1.502991e-10, max residual = 1.968062e-06
+smoothSolver:  Solving for T, Initial residual = 6.357674e-11, Final residual = 6.357674e-11, No Iterations 0
+Correcting epsilon1, mean residual = 6.510712e-19, max residual = 6.661338e-16
+DICPCG:  Solving for p_rgh, Initial residual = 0.002065872, Final residual = 8.343965e-05, No Iterations 5
+time step continuity errors : sum local = 9.574242e-07, global = 4.648872e-08, cumulative = 6.791048e-05
+DICPCG:  Solving for p_rgh, Initial residual = 0.0001295928, Final residual = 5.776492e-06, No Iterations 7
+time step continuity errors : sum local = 6.67851e-08, global = 2.079972e-08, cumulative = 6.793128e-05
+DICPCG:  Solving for p_rgh, Initial residual = 9.299129e-06, Final residual = 5.61973e-08, No Iterations 11
+time step continuity errors : sum local = 6.742967e-10, global = -2.623817e-10, cumulative = 6.793101e-05
+Writing 1440 ray paths to "/tmp/cfd/blend-matchedA-25um/processor0/../VTKs/rays_laser0_0.0012.vtk"
+Writing ray path series file: "/tmp/cfd/blend-matchedA-25um/processor0/../VTKs/rays_laser0.vtk.series"
+ExecutionTime = 410.05 s  ClockTime = 433 s
+
+End
+
+Finalising parallel run

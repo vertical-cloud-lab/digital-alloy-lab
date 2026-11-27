@@ -1,0 +1,27 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  Written by scripts/keyhole_cfd_laserbeamfoam.py (digital-alloy-lab, issue #235)
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+convertToMeters 1;
+vertices
+(
+    (0 0 -3.250000e-04) (1.300000e-03 0 -3.250000e-04) (1.300000e-03 7.000000e-04 -3.250000e-04) (0 7.000000e-04 -3.250000e-04)
+    (0 0 3.250000e-04) (1.300000e-03 0 3.250000e-04) (1.300000e-03 7.000000e-04 3.250000e-04) (0 7.000000e-04 3.250000e-04)
+);
+blocks ( hex (0 1 2 3 4 5 6 7) (52 28 26) simpleGrading (1 1 1) );
+edges ();
+boundary
+(
+    lowerWall    { type wall;  faces ((3 7 6 2)); }
+    atmosphere   { type patch; faces ((1 5 4 0)); }
+    rightWall    { type patch; faces ((1 2 6 5)); }
+    leftWall     { type patch; faces ((0 4 7 3)); }
+    frontAndBack { type patch; faces ((0 3 2 1) (5 6 7 4)); }
+);
+mergePatchPairs ();

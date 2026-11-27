@@ -1,0 +1,149 @@
+{
+  "run": "blend-matchedA-25um",
+  "case": "blend",
+  "label": "BYU blend (Al-24Si), 375 W, 0.4 m/s, 45 um beam, 30 C plate",
+  "meta": {
+    "case": "blend",
+    "label": "BYU blend (Al-24Si), 375 W, 0.4 m/s, 45 um beam, 30 C plate",
+    "P": 375.0,
+    "v": 0.4,
+    "r0": 4.5e-05,
+    "T0": 303.15,
+    "T_l": 1019.3,
+    "T_s": 846.7,
+    "Si": 0.243,
+    "Lx": 0.0013,
+    "Lz": 0.00064,
+    "metal_depth": 0.0006,
+    "x_start": 0.00015,
+    "am_module": {
+      "A": 0.3841,
+      "peak_T_K": 3119.0,
+      "pool_depth_um": 349.0,
+      "pool_length_um": 1470.0,
+      "pool_halfwidth_um": 231.0
+    },
+    "props": {
+      "k": 110.0,
+      "rho": 2650.0,
+      "cp": 1040.0,
+      "nu": 4.9e-07,
+      "beta": 0.0001,
+      "sigma": 0.86,
+      "dsigma_dT": -0.00035,
+      "T_vap": 2743.0,
+      "L_vap": 10900000.0,
+      "M": 0.02698,
+      "e_num_density": 1.81e+29,
+      "elec_resistivity": 4e-07,
+      "wavelength": 1.07e-06,
+      "emissivity": 0.1
+    },
+    "latent_heat": 735499.0,
+    "geometry": {
+      "dx": 2.5e-05,
+      "nx": 52,
+      "ny": 28,
+      "nz": 26,
+      "y_surface": 0.0001,
+      "Lx": 0.0013000000000000002,
+      "Ly": 0.0007,
+      "Lz": 0.0006500000000000001,
+      "y_laser": 5e-05
+    },
+    "end_time": 0.0012,
+    "write_interval": 0.0001,
+    "x_end": 0.0006299999999999999,
+    "n_proc": 2,
+    "maxCo": 0.3,
+    "absorbed_fraction": 0.3841,
+    "laser_power_set": 144.0375,
+    "note": "endTime lowered to 1.2 ms while running, to compare with blend-matchedA's last write and fit the job's time"
+  },
+  "n_steps": 2451,
+  "t_end_reached_ms": 1.2,
+  "wall_s": 410.05,
+  "A_eff_mean_second_half": 0.37950959999999995,
+  "A_eff_std_second_half": 5.553404714942308e-17,
+  "A_eff_first_step": 0.3795096,
+  "dt_median_s": 5e-07,
+  "dt_min_s": 1.200005e-09,
+  "last_write": {
+    "t_ms": 1.2,
+    "x_beam_mm": 0.6299999999999999,
+    "T_max_K": 3316.58,
+    "keyhole_depth_um": 119.18325957463504,
+    "keyhole_width_surface_um": 225.00000000000003,
+    "keyhole_width_q1_um": 150.0,
+    "keyhole_width_mid_um": 100.0,
+    "keyhole_x_um_rel_beam": -17.499999999999936,
+    "pool_depth_um": 210.19334270053577,
+    "pool_width_um": 246.69314804870402,
+    "pool_length_um": 281.2996033874079,
+    "pool_front_um_rel_beam": 69.37356470545954,
+    "pool_back_um_rel_beam": -211.92603868194834,
+    "pool_back_touches_domain_start": false,
+    "pool_volume_mm3": 0.004140625000000001,
+    "n_liquid_regions": 1,
+    "pool_depth_solidus_um": 220.599907050915,
+    "pool_width_solidus_um": 326.9101226908023,
+    "pool_length_solidus_um": 458.98993736562966
+  },
+  "second_half_of_writes": {
+    "T_max_K": {
+      "mean": 3090.3688571428575,
+      "min": 2944.084,
+      "max": 3316.58
+    },
+    "keyhole_depth_um": {
+      "mean": 130.9340889967093,
+      "min": 96.37468060268472,
+      "max": 166.780581484562
+    },
+    "keyhole_width_surface_um": {
+      "mean": 182.14285714285714,
+      "min": 150.0,
+      "max": 225.00000000000003
+    },
+    "keyhole_width_q1_um": {
+      "mean": 107.14285714285714,
+      "min": 100.0,
+      "max": 150.0
+    },
+    "keyhole_width_mid_um": {
+      "mean": 60.714285714285715,
+      "min": 50.0,
+      "max": 100.0
+    },
+    "pool_depth_um": {
+      "mean": 198.93783956054202,
+      "min": 178.28593168495436,
+      "max": 212.14342814917717
+    },
+    "pool_width_um": {
+      "mean": 235.0253497270806,
+      "min": 225.43409566537903,
+      "max": 246.69314804870402
+    },
+    "pool_length_um": {
+      "mean": 268.5155376017743,
+      "min": 246.18012342463004,
+      "max": 285.2295234783334
+    },
+    "pool_depth_solidus_um": {
+      "mean": 217.1537701498198,
+      "min": 208.0228379985998,
+      "max": 225.36322475063434
+    },
+    "pool_width_solidus_um": {
+      "mean": 320.21177616384165,
+      "min": 300.0,
+      "max": 350.0
+    },
+    "pool_length_solidus_um": {
+      "mean": 415.207403080082,
+      "min": 366.251083881994,
+      "max": 458.98993736562966
+    }
+  }
+}

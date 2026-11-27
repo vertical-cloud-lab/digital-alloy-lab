@@ -1,0 +1,21 @@
+{
+  "job": "job-futurehouse-paperqa3-high",
+  "submitted_utc": "2026-11-27T03:35:50Z",
+  "tasks": {
+    "resistivity": {
+      "task_id": "bb7e1cf7-4ae5-4e5a-af19-b7871336540c",
+      "title": "Liquid electrical resistivity of hypereutectic Al-Si, Ti-6Al-4V, 316L and Al6061",
+      "outfile": "resistivity.md"
+    },
+    "conductivity_viscosity": {
+      "task_id": "5907da94-da0a-4492-8247-36ee7778fb53",
+      "title": "Solid conductivity of LPBF AlSi10Mg and hypereutectic Al-Si; liquid Al-Si viscosity",
+      "outfile": "conductivity_viscosity.md"
+    },
+    "mg_powder": {
+      "task_id": "224156e1-0ff3-41bd-ab4d-eb84e96679a8",
+      "title": "Mg evaporation from Al alloys under a laser, and powder-bed absorptance of Al alloys",
+      "outfile": "mg_powder.md"
+    }
+  }
+}

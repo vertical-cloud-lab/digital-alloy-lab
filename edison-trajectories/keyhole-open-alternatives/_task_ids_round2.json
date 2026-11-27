@@ -1,0 +1,26 @@
+{
+  "job": "job-futurehouse-paperqa3-high",
+  "submitted_utc": "2026-11-10T05:45:50Z",
+  "tasks": {
+    "models": {
+      "task_id": "2faf62e2-6b2d-414f-9224-062f7ca8b1a7",
+      "title": "Open-source models for keyhole onset and keyhole-mode melt-pool size in LPBF",
+      "outfile": "models-keyhole-onset-and-depth-round2.md"
+    },
+    "thermocalc": {
+      "task_id": "a4f2c94a-b4e0-45ac-9907-9756f46f5c04",
+      "title": "How the Thermo-Calc AM Module models the keyhole, and what it was validated against",
+      "outfile": "thermocalc-am-module-keyhole-model-round2.md"
+    },
+    "data": {
+      "task_id": "5c9b77a1-4c9f-45bf-ac38-833a48765f78",
+      "title": "Open measured keyhole thresholds and depths that could seed an ORCHID-style benchmark",
+      "outfile": "data-open-keyhole-measurements-round2.md"
+    },
+    "aluminium": {
+      "task_id": "2691029e-9958-4207-ae16-9e3a9460e5bc",
+      "title": "Keyhole thresholds, absorptivity and keyhole-mode pools in AlSi10Mg and Al-Si alloys",
+      "outfile": "aluminium-keyhole-thresholds-round2.md"
+    }
+  }
+}
