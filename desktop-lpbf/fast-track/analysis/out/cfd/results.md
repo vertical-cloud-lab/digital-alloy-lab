@@ -3,7 +3,7 @@
 For [issue #260](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/260), PR 294 round 2, 2026-11-27.
 OpenFOAM v2406 (Docker image `opencfd/openfoam-run:2406`) on the gas inside the CadQuery model of FT-1
 ([`../../../cad/ft_model.py`](../../../cad/ft_model.py), `build("FT-1")`: the 16 × 12 × 8 in. box, the deck cassette, the
-plate at the start of a build, the hopper at its right park). Scripts: [`../../cfd/`](../../cfd/). Numbers:
+plate at the start of a build, the hopper at its right park; and `build("FT-1V")`, §3). Scripts: [`../../cfd/`](../../cfd/). Numbers:
 [`cfd.json`](cfd.json). Nothing here has been checked against a measurement.
 
 ## Short answer
@@ -13,13 +13,15 @@ plate at the start of a build, the hopper at its right park). Scripts: [`../../c
   the build area, 0.03–0.05 Pa on average, is at or under the lowest pick-up threshold for 63 µm AlSi10Mg (0.053 Pa)
   and half the 20 µm one; the coarsest grains may roll along the plate's sides (0.10 Pa). Fume that rises above the jet
   (4–15 mm) is only half caught and drifts round the box, passing the cover slide 80–90 mm away. 88 Pa from the nozzle
-  to the collector's port. No change needed.
+  to the collector's port. No change needed. In FT-1V's cube the jet over the plate is the same (k-ω SST: 2.49 m/s,
+  0.055 Pa, 95 % captured, 87 Pa) and escaped fume passes the slide further away (154 mm against 89 mm).
 - **Purge: through the nozzle alone, as drawn, it is slow; a low diffuser and a high vent make it fast.** Through the
   nozzle the box takes 33–50 min to 1000 ppm and 47–71 min to 100 ppm (no buoyancy; two meshes), past the study's
   expected 13–31 / 18–45 min, and the analyzer on the collector's exhaust reads about 4× under the box. With 20 L/min
   of argon in through a diffuser near the floor and out a vent under the lid, the argon fills the box from the bottom
   and pushes the air out: 2.6 / ≈ 5.0 min to 1000 / 100 ppm (box average, with buoyancy), against 6.2 / 8.9 min
-  for perfect mixing. A high diffuser with the same vent mixes instead (≈ 4.7 / 6.8 min); a high diffuser with a low vent leaves the air on top (≈ 8.8 / 12.6 min, with the vent reading a third under the box).
+  for perfect mixing. A high diffuser with the same vent mixes instead (≈ 4.7 / 6.8 min); a high diffuser with a
+  low vent leaves the air on top (≈ 8.8 / 12.6 min, with the vent reading a third under the box).
 - **What to change:** add a diffuser low on one wall and a vent at the top of the opposite wall (two bulkheads, a ball
   valve on the vent), sample the analyzer from the vent line, purge with the nozzle off, then close the vent and start
   the cross-flow. Purge before heating the plate. Every run here is isothermal and leak-free, with no air or water in
@@ -37,38 +39,38 @@ the 54 mm, so neither model is exact: the steady laminar run and the k-ω SST ru
 
 *|U| and streamlines in the x = 0 plane. The nozzle (left) and the collector (right) in grey; orange, the Ø40 plate.*
 
-| | laminar, steady | k-ω SST, steady |
-|---|---|---|
-| speed 1 mm over the Ø30 build area: mean (min-max), m/s | 1.30 (0.79-1.60) | 1.62 (1.34-1.77) |
-| speed 3 mm over the Ø30 build area: mean (min-max), m/s | 2.73 (2.64-2.80) | 2.57 (2.38-2.68) |
-| speed 5 mm over the Ø30 build area: mean (min-max), m/s | 1.60 (1.19-2.00) | 1.62 (1.45-1.79) |
-| spread 1 mm (std/mean) | 12 % | 5 % |
-| spread 3 mm (std/mean) | 2 % | 4 % |
-| spread 5 mm (std/mean) | 11 % | 6 % |
-| bed shear, Ø30 build area: mean / max, Pa | 0.032 / 0.047 | 0.053 / 0.067 |
-| Ø30 build area: area over 0.053 Pa (63 µm, low cohesion) | 0 % | 54 % |
-| bed shear, Ø40 plate: mean / max, Pa | 0.033 / 0.100 | 0.049 / 0.100 |
-| Ø40 plate: area over 0.053 Pa (63 µm, low cohesion) | 8 % | 43 % |
-| bed shear, spread strip beside the plate: mean / max, Pa | 0.019 / 0.097 | 0.025 / 0.108 |
-| spread strip beside the plate: area over 0.053 Pa (63 µm, low cohesion) | 10 % | 17 % |
-| bed shear, whole block top: mean / max, Pa | 0.020 / 0.148 | 0.026 / 0.129 |
-| whole block top: area over 0.053 Pa (63 µm, low cohesion) | 9 % | 21 % |
-| tracers 0.5-3 mm: into the collector | 96 % | 99 % |
-| tracers 0.5-3 mm: held under the collector's lower lip | 4 % | 1 % |
-| tracers 0.5-3 mm: escaped to the box | 0 % | 0 % |
-| tracers 0.5 mm: into the collector | 76 % | 95 % |
-| tracers 4-15 mm (above the jet): into the collector | 65 % | 49 % |
-| tracers 4-15 mm: escaped to the box | 23 % | 31 % |
-| escaped tracers: median closest approach to the slide, mm | 80 | 89 |
-| tracers within 30 mm of the slide | 0 % | 1 % |
-| gas speed 2 mm under the slide: mean, mm/s | 3.3 | 0.9 |
-| jet flow at y = 25 mm, forward / back, L/min | 34.3 / 7.7 | 41.6 / 2.3 |
-| outlet flow, L/min | 27.0 | 27.0 |
-| pressure drop, nozzle channel inlet to collector port, Pa | 88 | 88 |
-| box (under the slide) above the collector port, Pa | 86 | 87 |
-| y+ on the plate, mean / max | - | 0.82 / 1.19 |
-| cells | 237,541 | 237,541 |
-| iterations or time steps; final initial residual Ux / Uz / p | 2000; 2e-02 / 5e-02 / 9e-03 | 904; 5e-04 / 6e-04 / 3e-04 |
+| | laminar, steady | k-ω SST, steady | FT-1V cube, k-ω SST (§3) |
+|---|---|---|---|
+| speed 1 mm over the Ø30 build area: mean (min-max), m/s | 1.30 (0.79-1.60) | 1.62 (1.34-1.77) | 1.67 (1.49-1.79) |
+| speed 3 mm over the Ø30 build area: mean (min-max), m/s | 2.73 (2.64-2.80) | 2.57 (2.38-2.68) | 2.49 (2.26-2.65) |
+| speed 5 mm over the Ø30 build area: mean (min-max), m/s | 1.60 (1.19-2.00) | 1.62 (1.45-1.79) | 1.57 (1.41-1.74) |
+| spread 1 mm (std/mean) | 12 % | 5 % | 4 % |
+| spread 3 mm (std/mean) | 2 % | 4 % | 5 % |
+| spread 5 mm (std/mean) | 11 % | 6 % | 6 % |
+| bed shear, Ø30 build area: mean / max, Pa | 0.032 / 0.047 | 0.053 / 0.067 | 0.055 / 0.070 |
+| Ø30 build area: area over 0.053 Pa (63 µm, low cohesion) | 0 % | 54 % | 60 % |
+| bed shear, Ø40 plate: mean / max, Pa | 0.033 / 0.100 | 0.049 / 0.100 | 0.051 / 0.082 |
+| Ø40 plate: area over 0.053 Pa (63 µm, low cohesion) | 8 % | 43 % | 50 % |
+| bed shear, spread strip beside the plate: mean / max, Pa | 0.019 / 0.097 | 0.025 / 0.108 | 0.021 / 0.093 |
+| spread strip beside the plate: area over 0.053 Pa (63 µm, low cohesion) | 10 % | 17 % | 13 % |
+| bed shear, whole block top: mean / max, Pa | 0.020 / 0.148 | 0.026 / 0.129 | 0.026 / 0.137 |
+| whole block top: area over 0.053 Pa (63 µm, low cohesion) | 9 % | 21 % | 21 % |
+| tracers 0.5-3 mm: into the collector | 96 % | 99 % | 95 % |
+| tracers 0.5-3 mm: held under the collector's lower lip | 4 % | 1 % | 5 % |
+| tracers 0.5-3 mm: escaped to the box | 0 % | 0 % | 0 % |
+| tracers 0.5 mm: into the collector | 76 % | 95 % | 71 % |
+| tracers 4-15 mm (above the jet): into the collector | 65 % | 49 % | 49 % |
+| tracers 4-15 mm: escaped to the box | 23 % | 31 % | 30 % |
+| escaped tracers: median closest approach to the slide, mm | 80 | 89 | 154 |
+| tracers within 30 mm of the slide | 0 % | 1 % | 1 % |
+| gas speed 2 mm under the slide: mean, mm/s | 3.3 | 0.9 | 0.2 |
+| jet flow at y = 25 mm, forward / back, L/min | 34.3 / 7.7 | 41.6 / 2.3 | 42.2 / 1.5 |
+| outlet flow, L/min | 27.0 | 27.0 | 27.0 |
+| pressure drop, nozzle channel inlet to collector port, Pa | 88 | 88 | 87 |
+| box (under the slide) above the collector port, Pa | 86 | 87 | 85 |
+| y+ on the plate, mean / max | - | 0.82 / 1.19 | 0.85 / 1.09 |
+| cells | 237,541 | 237,541 | 233,287 |
+| iterations or time steps; final initial residual Ux / Uz / p | 2000; 2e-02 / 5e-02 / 9e-03 | 904; 5e-04 / 6e-04 / 3e-04 | 800; 1e-03 / 2e-03 / 9e-04 |
 
 - **Speed over the build area.** The jet core, 3 mm up, crosses the Ø30 build area at 2.6–2.7 m/s with a 2–4 % spread
   (std/mean). 1 mm up it runs at 1.3–1.6 m/s, and 5 mm up at 1.6 m/s. Nothing over the build area flows backwards.
@@ -153,11 +155,12 @@ how argon settles under air.
 ![Passive purge](purge_passive.png)
 
 - **As drawn (A), purging through the nozzle alone is slow: 33 min to 1000 ppm and 47 min to 100 ppm** (box average),
-  5× the ideal and at or past the top of the study's range. On the 237k-cell cross-flow mesh, which resolves the jet,
-  it is slower still: the box empties at 0.107 instead of 0.161 per minute, ≈ 50 / 71 min (extrapolated from a 20 min
-  run). The coarse purge mesh is optimistic for A; B–D, whose box flow comes from the diffuser, were run on it only. The jet goes straight into the collector; the rest of the
+  5× the ideal and at or past the top of the study's range. The jet goes straight into the collector; the rest of the
   box is renewed only by what the jet entrains and spills over the collector (7–12 L/min at the build's 27 L/min,
-  §1), which empties it at 0.16 per minute, as if 3.7 of the 20 L/min went through the box.
+  §1), which empties it at 0.16 per minute, as if 3.7 of the 20 L/min went through the box. On the 237k-cell
+  cross-flow mesh, which resolves the jet, it is slower still: 0.107 per minute, ≈ 50 / 71 min (extrapolated from a
+  20 min run). The coarse purge mesh is optimistic for A; B–D, whose box flow comes from the diffuser, were run on it
+  only.
 - **In A the analyzer on the collector's exhaust reads low.** It sees mostly the nozzle's fresh argon, about 4× under
   the box average, and reaches 1000 ppm 10 min before the box does.
 - **A separate diffuser does most of the work.** With 15 L/min through a diffuser and 5 through the nozzle, the box
@@ -193,7 +196,8 @@ reached and not decaying.
 ![Sections](purge_sections.png)
 
 *O₂ on a vertical section through the diffusers (y = 45 mm, mid-depth), log scale: white is argon under 10 ppm, dark
-blue is air; grey is solid (the deck cassette, the stage, the window stack). The diffusers are on the left wall in this plane; the vents are on the right wall, 90–130 mm behind it.*
+blue is air; grey is solid (the deck cassette, the stage, the window stack). The diffusers are on the left wall in this
+plane; the vents are on the right wall, 90–130 mm behind it.*
 
 - **Low diffuser, high vent: the argon displaces the air.** It spreads over the floor and rises as a layer: at 2 min
   the bottom 40 mm of the box holds about 120 ppm and the top 40 mm about 1.2 % O₂ (figure). The box average reaches
@@ -204,11 +208,11 @@ blue is air; grey is solid (the deck cassette, the stage, the window stack). The
   sits under the lid at the far end from the vent, above the diffuser. A vent in the middle of the lid, or one at each
   end, would shorten that tail (not run).
 - **High diffuser, high vent: the argon falls and mixes.** The plume from the diffuser stirs the box on its way to the
-  floor, so the box is only mildly layered (the top 40 mm holds about twice the average). Because the vent still takes
+  floor, so the box is only mildly layered (the top 40 mm holds about 1.5× the average, 2–2.5× the bottom 40 mm). Because the vent still takes
   the worst gas it purges about a quarter faster than well mixed: 6,900 ppm at 3 min, ≈ 4.7 / 6.8 min to 1000 /
   100 ppm.
-- **High diffuser, low vent:** **the air stays on top.** The plume falls through the air to the floor and the low vent drains the
-  argon that pools there; the air above leaves only as fast as the plume entrains it. At 3 min the box is twice as bad
+- **High diffuser, low vent: the air stays on top.** The plume falls through the air to the floor and the low vent
+  drains the argon that pools there; the air above leaves only as fast as the plume entrains it. At 3 min the box is twice as bad
   as well mixed (32,400 against 15,800 ppm), ≈ 8.8 / 12.6 min to 1000 / 100 ppm. Under the slide it is still
   57,000 ppm (27 % air), while the vent reads a third under the box average (21,900 ppm): an analyzer on a low exhaust
   reads better than the box.
@@ -230,7 +234,7 @@ blue is air; grey is solid (the deck cassette, the stage, the window stack). The
 3. **Purge with the nozzle off, then switch.** 20 L/min through the diffuser with the vent open until the analyzer
    reads the target; then close the vent and run the cross-flow, which leaves through the collector and holds the box
    above the room behind the check valve. Through the nozzle alone (as drawn) the purge takes 33–50 min to 1000 ppm
-   (§2.1, two meshes).
+   (no buoyancy, two meshes, §2.1).
 4. **Purge before heating the plate,** or expect times nearer the well-mixed ones: a 200 °C plate drives a plume of a
    few cm/s that stirs the layers (not modelled).
 
@@ -240,18 +244,33 @@ run, with the analyzer on that line reading low. (A buoyant run through the port
 
 ## 3. FT-1V
 
-Not run. `geom.py --state FT-1V` exports the cube's gas (21.9 L; the cube frame's edge bars included; the bed 21 mm
-higher than in the box, the cover slide 221 mm above the bed against FT-1's 129 mm) and `make_case.py` writes its
-k-ω SST case, but the CPU went to the purge (the runner's load average was 11–15 on 4 cores). The slot, the collector
-and the bed round them are the same parts at the same spacing, so the jet over the plate should be FT-1's; what would
-differ is the slow circulation of the jet's surplus in a taller cube and how much escaped fume reaches a slide that is
-further away (expectation, not computed). To run it:
+The same deck cassette in the Ideal Vacuum cube (289.6 mm inside; `geom.py --state FT-1V`: 21.9 L of gas, the cube
+frame's edge bars included, the bed 21 mm higher than in the box, the cover slide 221 mm above the bed against FT-1's
+129 mm), k-ω SST only, the third column of the table in §1. Mesh as FT-1's: 233,287 cells (217,673 hex), max
+non-orthogonality 65.0°, max skewness 6.4 (32 faces, "Failed 1 mesh checks"), max aspect ratio 22.4. 800 iterations
+(10 min on 2 cores); the probe speeds are steady to 3 digits from iteration ~100, final initial residuals 1–2 × 10⁻³.
+
+- **The jet over the plate is FT-1's.** 2.49 m/s 3 mm over the build area (2.57 in the box), bed shear over the build
+  area 0.055 / 0.070 Pa mean / max (0.053 / 0.067), 95 % of the tracers from 0.5–3 mm into the collector (99 %; the
+  rest held under the collector's lower lip), 87 Pa (88). The slot, the collector and the bed round them are the same
+  parts at the same spacing; the enclosure and the routing of the feed and exhaust pipes changed.
+- **Escaped fume stays further from the window.** The same 30 % of the tracers from 4–15 mm escape into the cube, but
+  they pass the cover slide no closer than 154 mm (median), against 89 mm in the box, and the gas 2 mm under the slide
+  moves at 0.2 mm/s.
+- Not run for FT-1V: the laminar bracket and a purge (FT-1V pump-purges).
+
+![FT-1 and FT-1V](ft1v_box_section.png)
+
+*The x = 0 section through the plate and the window in FT-1's box (left) and FT-1V's cube (right), k-ω SST, log speed
+scale. In both, the jet's surplus leaves over the collector and circulates slowly through the whole enclosure.*
 
 ```bash
 $PY $D/geom.py --state FT-1V --out /tmp/ft-cfd/geom/ft1v
-$PY $D/make_case.py --geom /tmp/ft-cfd/geom/ft1v --kind cross --model sst --iters 700 --out /tmp/ft-cfd/ft1v-sst
-/tmp/tools/capmem 4 bash $D/run_case.sh /tmp/ft-cfd/ft1v-sst mesh solve
-$PY $D/post.py cross /tmp/ft-cfd/ft1v-sst --name ft1v-sst
+$PY $D/make_case.py --geom /tmp/ft-cfd/geom/ft1v --kind cross --model sst --iters 800 --out /tmp/ft-cfd/ft1v-sst
+# residualControl as cross-sst: p 2e-5, U and (k|omega) 2e-6 (set in system/fvSolution)
+MEM=3g /tmp/tools/capmem 3 bash $D/run_case.sh /tmp/ft-cfd/ft1v-sst mesh solve
+/tmp/tools/capmem 3 $PY $D/post.py cross /tmp/ft-cfd/ft1v-sst --name ft1v-sst
+$PY $D/post.py figures --name ft1v --cases "FT-1 box, k-omega SST=/tmp/ft-cfd/cross-sst" "FT-1V cube, k-omega SST=/tmp/ft-cfd/ft1v-sst"
 ```
 
 ## 4. Method
@@ -271,7 +290,7 @@ own envelopes unless stated:
 - the recoater stage, its carriage and the 1 mm sheet shield are one block, the shield's outer envelope;
 - the hopper is solid (full of powder); the silicone cord and its clamp are one 4 × 46 × 12 mm block on the bed;
 - the window stack under the lid (clamp ring, cover-slide holder, slide) is one solid, with the holder's Ø40 bore open
-  below the slide. The ~22 cm³ pocket above the slide is not meshed (see §2);
+  below the slide. The ~23.5 cm³ pocket above the slide is not meshed (see §2.1);
 - **the nozzle and the collector have no internals in the model (MK-11).** Here the nozzle gets a straight 45 × 4 mm
   channel, 11 mm long, with a uniform inflow at its back face; the collector gets a plenum behind its 50 × 6 mm opening
   and a 10 × 6 mm port (60 mm², about a 3/8 in. hose bore) whose end is the outlet. Both are assumptions;
@@ -328,8 +347,8 @@ The 4 mm slot has 8 cells across its height; the bed's first cell is ~0.13 mm th
 | Run | Solver | Includes | Leaves out |
 |---|---|---|---|
 | purge flow | simpleFoam, laminar, steady, 800 iterations, purge mesh | the steady velocity field at the purge's flows, in argon | gravity and the air/argon density difference; unsteadiness |
-| passive O₂ | scalarTransportFoam on that frozen flow, Δt = 2 s (implicit Euler, limitedLinear01), 60 min | O₂ (as a fraction of air's, T = x_O₂/0.2095) carried by the flow and diffusing at D = 2.0 × 10⁻⁵ m²/s (O₂ in Ar, 25 °C, 1 atm) | buoyancy: argon is treated as having air's density, so a low and a high inlet differ only by where the gas goes |
-| buoyant | rhoReactingBuoyantFoam: O₂, N₂, Ar, no reactions, isothermal 25 °C, laminar; PIMPLE (2 outer, 2 pressure correctors), Δt ≤ 0.25 s at Courant ≤ 15 (low in, high out: Δt settled at 0.044 s, set by 0.1 m/s gravity currents in the fine cells round the collector) or ≤ 30 (the two top-inlet runs); 5 min (low in) or 3 min (top in) of purge, from air at rest | gravity and the real mixture density (ideal gas: air 1.19, argon 1.65 kg/m³), so argon can pool under air and displace it | the nozzle (off: all 20 L/min goes through the diffuser) and the collector's port as the exhaust (its 60 mm² at 20 L/min is 5.6 m/s, which would force Δt ≈ 6 ms), so the buoyant runs exhaust through 40 × 20 mm vents; heat; species diffuse with Sc = 1 (D = ν ≈ 1.4 × 10⁻⁵ m²/s, 30 % under the real value) |
+| passive O₂ | scalarTransportFoam on that frozen flow, Δt = 2 s (implicit Euler; upwind matrix with an explicit limitedLinear01 correction), 60 min (20 min on the 237k-cell mesh) | O₂ (as a fraction of air's, T = x_O₂/0.2095) carried by the flow and diffusing at D = 2.0 × 10⁻⁵ m²/s (O₂ in Ar, 25 °C, 1 atm) | buoyancy: argon is treated as having air's density, so a low and a high inlet differ only by where the gas goes |
+| buoyant | rhoReactingBuoyantFoam: O₂, N₂, Ar, no reactions, isothermal 25 °C, laminar; PIMPLE (2 outer, 2 pressure correctors), Δt ≤ 0.25 s at Courant ≤ 15 (the first low-inlet run: Δt settled at 0.044 s, set by 0.1 m/s gravity currents in the fine cells round the collector) or ≤ 30 (the other three: Δt 0.10–0.14 s); 5 min (low in), 3 min (top in) or 4.1 min (first run) of purge, from air at rest | gravity and the real mixture density (ideal gas: air 1.19, argon 1.65 kg/m³), so argon can pool under air and displace it | the nozzle (off: all 20 L/min goes through the diffuser) and the collector's port as the exhaust (its 60 mm² at 20 L/min is 5.6 m/s, which would force Δt ≈ 6 ms), so the buoyant runs exhaust through 40 × 20 mm vents; heat; species diffuse with Sc = 1 (D = ν ≈ 1.4 × 10⁻⁵ m²/s, 30 % under the real value) |
 
 In every run the walls are tight: no leaks, no permeation through the gasket, no outgassing, no water, no O₂ in the
 argon, and no air held in the powder or in the stage's body. The O₂ these runs reach is the purge's own limit, below
@@ -343,7 +362,7 @@ own gas moves at mm/s to cm/s, so a 1–2 K temperature difference in the room w
 - **A time-averaged laminar run** of the cross-flow (pimpleFoam with `fieldAverage`, set up as
   `make_case.py --transient` and `run_case.sh <case> map <steady case> pimple`): not run, for lack of CPU time on a
   runner shared by seven jobs (load average 7–12 on 4 cores during these runs).
-- **FT-1V's cube** (case 3): set up, not run (§3).
+- **FT-1V's cube** (case 3): k-ω SST only, no laminar bracket and no purge (§3).
 - **Heat:** the 200 °C plate and block, the laser plume's buoyancy and the box's own convection are not in any run.
   A hot plate drives a rising plume of its own (a few cm/s), the same order as the box circulation; it would lift fume
   above the jet and carry the purge's last O₂ round the box.
@@ -354,8 +373,9 @@ own gas moves at mm/s to cm/s, so a 1–2 K temperature difference in the room w
 - **The as-drawn exhaust in a buoyant run.** No buoyant run exhausts through the collector's port: at 20 L/min its
   10 × 6 mm bore runs at 5.6 m/s, which would hold the time step to ~6 ms. The buoyant runs use the 40 × 20 mm vents,
   with the nozzle off.
-- **Long buoyant runs.** They cover 3–4 min of purge (a 3 min run took 20–40 min on two shared cores); levels reached
-  later are extrapolated from each run's own exponential tail and marked "≈".
+- **Long buoyant runs.** They cover 3–5 min of purge (5–27 min each on two shared cores); levels reached later are
+  extrapolated from each run's own exponential tail and marked "≈". No buoyant run has the nozzle on, or a vent in
+  the middle of the lid.
 - **The first low-inlet buoyant run** let air flow back in at the top of its vent (velocity `pressureInletOutletVelocity`
   with a uniform static pressure: the 0.3 Pa hydrostatic head across a 20 mm vent beat the ~0.15 Pa that drives the
   outflow). Its exhaust reading after 2.5 min is that artifact and is not used; the later runs' exhaust is outflow-only,
