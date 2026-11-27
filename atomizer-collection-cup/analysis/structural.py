@@ -246,6 +246,56 @@ def b_cases():
     return res
 
 
+def upper_hangup_cases():
+    """Thermal stress in the upper part from shot fused in the bore just under the KF joint: B's welded upper part
+    against B''s turned adapter. Held axially on one ring at the middle of the KF flange's back taper (where the
+    clamp bears), so nothing but the temperature field loads it. Also reports how far the KF face dishes across
+    the O-ring land while hot (the seal sees that)."""
+    import io
+    import parts as PT
+    kf = P.JOINT
+    cards = steel_cards()
+    sec = "*SOLID SECTION, ELSET=E_upper, MATERIAL=S316L\n"
+    res = {}
+    for tag, fn, cases in (("B", PT.b_split_profiles, ("B_hangup_25", "B_hangup_100")),
+                           ("B'", PT.b_adapter_profiles, ("B_hangup_25_adapter", "B_hangup_100_adapter"))):
+        up, _, _, z = fn(recess=True)
+        m = F.build_mesh([F.Region("upper", "S316L", up, 0.6)], order=2)
+        top = z["top"]
+        rf, rh = kf.flange_od / 2, kf.hub_od / 2
+        t_edge = kf.lip - (rf - rh) * math.tan(math.radians(kf.taper_deg))
+        rm, zm = (rf + rh) / 2, top - (t_edge + kf.lip) / 2
+        ring = min(m.nodes, key=lambda n: (m.nodes[n][0] - rm) ** 2 + (m.nodes[n][1] - zm) ** 2)
+        buf = io.StringIO()
+        F.write_set(buf, "NSET", "TAPER", [ring])
+        bcs = {"sets": buf.getvalue(), "bc": "*BOUNDARY\nTAPER, 2, 2, 0.\n"}
+        land = sorted(n for n, (r, zz) in m.nodes.items() if abs(zz - top) < 1e-6 and r >= kf.recess_d / 2 - 1e-6)
+        pts = np.array([m.nodes[n] for n in sorted(m.nodes)])
+        for case in cases:
+            worst = None
+            for t, interp in temp_interpolator(case, ["vessel_upper"]):
+                T = nearest_fill(interp, pts)
+                temps = {n: float(T[k]) for k, n in enumerate(sorted(m.nodes))}
+                name = f"upper_{case}_{int(t)}s"
+                rows, u = run_static(name, m, cards, sec, bcs, "", temps)
+                vm, _ = mises_principal(rows[:, 2:8])
+                k = int(np.argmax(vm))
+                e_max = int(rows[k, 0])
+                Te = float(np.mean([temps[n] for n in m.elems[e_max][:3]]))
+                sy = float(np.interp(Te, T_TAB, SY_316L))
+                cen = np.mean([m.nodes[n] for n in m.elems[e_max][:3]], axis=0)
+                uz = [u[n][1] for n in land if n in u]
+                row = dict(design=tag, case=case, t_s=t, vm_max=round(float(vm.max()), 1),
+                           at_rz=[round(float(cen[0]), 1), round(float(cen[1]), 1)], T_there=round(Te, 0),
+                           Sy_there=round(sy, 0), vm_over_Sy=round(float(vm.max()) / sy, 2),
+                           T_max=round(float(T.max()), 0),
+                           face_dish_um=round((max(uz) - min(uz)) * 1000, 1) if uz else None)
+                if worst is None or row["vm_over_Sy"] > worst["vm_over_Sy"]:
+                    worst = row
+            res[case] = worst
+    return res
+
+
 def read_stresses(dat):
     """Integration-point stresses from a .dat file: rows [elem, ip, s11, s22, s33, s12, s13, s23]."""
     rows = []
@@ -344,11 +394,13 @@ def F_rect(r0, r1, z0, z1):
 def main(argv):
     path = HERE / "out" / "structural_summary.json"
     res = json.loads(path.read_text()) if path.exists() else {"B": {}, "glass": {}}
-    what = argv or ["B", "glass"]
+    what = argv or ["B", "glass", "upper"]
     if "B" in what:
         res["B"] = b_cases()
     if "glass" in what:
         res["glass"] = glass_cases()
+    if "upper" in what:
+        res["upper"] = upper_hangup_cases()
     path.write_text(json.dumps(res, indent=1) + "\n")
     L = ["# Structural FEA summary (CalculiX, axisymmetric CAX6)\n",
          "## Option B vessel (316L weldment)\n", "| Case | max von Mises (MPa) | where (r, z mm) | T there (C) | "
@@ -362,6 +414,15 @@ def main(argv):
           "short-term fracture (MPa) |", "|---|---|---:|---:|---:|---:|"]
     for k, v in res["glass"].items():
         L.append(f"| {k} | {v['glass']} | {v['p1_max']} | {v['t_worst_s']:.0f} | {v['design_tensile']} | {v['short_term']} |")
+    if res.get("upper"):
+        L += ["\n## Upper part, shot fused in the bore just under the KF joint (B welded, B' turned adapter)\n",
+              "Elastic thermal stress at the worst of the saved times (10, 60, 300, 900, 1800, 3600 s), held on one ring "
+              "at the KF flange's back taper. Face dish: how far the KF face's O-ring land tilts while hot.\n",
+              "| Case | design | worst at t (s) | max von Mises (MPa) | where (r, z mm) | T there (C) | yield there (MPa) | "
+              "ratio | part's max T (C) | face dish (um) |", "|---|---|---:|---:|---|---:|---:|---:|---:|---:|"]
+        for k, v in res["upper"].items():
+            L.append(f"| {k} | {v['design']} | {v['t_s']:.0f} | {v['vm_max']} | {v['at_rz']} | {v['T_there']:.0f} | "
+                     f"{v['Sy_there']:.0f} | {v['vm_over_Sy']} | {v['T_max']:.0f} | {v['face_dish_um']} |")
     (HERE / "out" / "structural_summary.md").write_text("\n".join(L) + "\n")
     print("\n".join(L))
 

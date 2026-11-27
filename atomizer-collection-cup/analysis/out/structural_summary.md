@@ -22,3 +22,14 @@
 | C_816 | QUARTZ | 1.25 | 60 | 7.0 | 50.0 |
 | S_seat_120 | BORO | 0.65 | 10 | 6.0 | 40.0 |
 | S_glass_300 | BORO | 55.47 | 10 | 6.0 | 40.0 |
+
+## Upper part, shot fused in the bore just under the KF joint (B welded, B' turned adapter)
+
+Elastic thermal stress at the worst of the saved times (10, 60, 300, 900, 1800, 3600 s), held on one ring at the KF flange's back taper. Face dish: how far the KF face's O-ring land tilts while hot.
+
+| Case | design | worst at t (s) | max von Mises (MPa) | where (r, z mm) | T there (C) | yield there (MPa) | ratio | part's max T (C) | face dish (um) |
+|---|---|---:|---:|---|---:|---:|---:|---:|---:|
+| B_hangup_25 | B | 10 | 359.3 | [25.2, -8.9] | 236 | 116 | 3.09 | 265 | 40.9 |
+| B_hangup_100 | B | 10 | 466.3 | [26.5, -2.1] | 290 | 109 | 4.27 | 699 | 233.7 |
+| B_hangup_25_adapter | B' | 10 | 274.7 | [23.9, -6.7] | 214 | 119 | 2.3 | 220 | 28.0 |
+| B_hangup_100_adapter | B' | 10 | 599.6 | [29.3, -17.6] | 291 | 109 | 5.49 | 399 | 15.9 |

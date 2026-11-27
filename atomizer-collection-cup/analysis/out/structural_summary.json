@@ -318,5 +318,67 @@
    "short_term": 40.0,
    "ratio_design": 9.24
   }
+ },
+ "upper": {
+  "B_hangup_25": {
+   "design": "B",
+   "case": "B_hangup_25",
+   "t_s": 10.0,
+   "vm_max": 359.3,
+   "at_rz": [
+    25.2,
+    -8.9
+   ],
+   "T_there": 236.0,
+   "Sy_there": 116.0,
+   "vm_over_Sy": 3.09,
+   "T_max": 265.0,
+   "face_dish_um": 40.9
+  },
+  "B_hangup_100": {
+   "design": "B",
+   "case": "B_hangup_100",
+   "t_s": 10.0,
+   "vm_max": 466.3,
+   "at_rz": [
+    26.5,
+    -2.1
+   ],
+   "T_there": 290.0,
+   "Sy_there": 109.0,
+   "vm_over_Sy": 4.27,
+   "T_max": 699.0,
+   "face_dish_um": 233.7
+  },
+  "B_hangup_25_adapter": {
+   "design": "B'",
+   "case": "B_hangup_25_adapter",
+   "t_s": 10.0,
+   "vm_max": 274.7,
+   "at_rz": [
+    23.9,
+    -6.7
+   ],
+   "T_there": 214.0,
+   "Sy_there": 119.0,
+   "vm_over_Sy": 2.3,
+   "T_max": 220.0,
+   "face_dish_um": 28.0
+  },
+  "B_hangup_100_adapter": {
+   "design": "B'",
+   "case": "B_hangup_100_adapter",
+   "t_s": 10.0,
+   "vm_max": 599.6,
+   "at_rz": [
+    29.3,
+    -17.6
+   ],
+   "T_there": 291.0,
+   "Sy_there": 109.0,
+   "vm_over_Sy": 5.49,
+   "T_max": 399.0,
+   "face_dish_um": 15.9
+  }
  }
 }

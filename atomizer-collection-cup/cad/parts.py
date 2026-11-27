@@ -420,7 +420,12 @@ def b_adapter_profiles(recess=True):
     z_fA = z_hub3 - tc.lip                               # ferrule face
     z_cone0 = top - 18.0
     z_cone1 = z_cone0 - (R_i - rb)                       # 45 deg inside, 47.5 -> 72.9
-    up = [(rf, top), (rf, top - t_edge), (rh, top - kf.lip), (rh, z_neck), (trh, z_hub3), (trf, z_fA + t_edge3),
+    # R2 where the neck meets the 45 deg shoulder: a sharp inside corner there took the elastic thermal stress of a
+    # 100 g hang-up to 6.3x yield (analysis/structural.py, upper part)
+    fr_n = 2.0
+    cx, cz = rh + fr_n, z_neck + fr_n * math.tan(math.radians(22.5))
+    fil = [(cx + fr_n * math.cos(math.radians(a)), cz + fr_n * math.sin(math.radians(a))) for a in np.linspace(180, 225, 7)]
+    up = [(rf, top), (rf, top - t_edge), (rh, top - kf.lip)] + fil + [(trh, z_hub3), (trf, z_fA + t_edge3),
           (trf, z_fA), (R_i, z_fA), (R_i, z_cone1), (rb, z_cone0), (rb, top)]
     if recess and kf.recess_depth:
         rr, rd = kf.recess_d / 2, kf.recess_depth

@@ -38,6 +38,15 @@ overpressure ratings are in `bom/README.md`.
 | B23 | Copper chill block for the KF flange during W1; two strap clamps for the fixture | shop stock | | | | | |
 | | **Total priced** | | | | | **448.70** | |
 
+## B': B with the turned adapter in place of its welded upper part, $484.37 priced
+
+Everything in B except B1 and B2 (and one of the two B24 ferrules, unpriced), plus the adapter's blank. The pot's tube (B3) is cut to 183.0 mm instead of 82.35.
+
+| Line | Item | Vendor | Part no. | Qty | Unit (USD) | Ext. (USD) | Stock / lead |
+|---|---|---|---|---:|---:|---:|---|
+| B'1 | 4 in 316 round bar, 2 in (B' adapter blank: 32.7 mm part + chuck + parting) | Speedy | [p-2649](https://www.speedymetals.com/p-2649-4-rd-316-stainless-steel-cold-finished-annealed.aspx) | 1 | 92.80 | 92.80 | not shown; UPS up to 90 in, longer by fr |
+| | **Total priced** (B 448.70, less B1 and B2 57.13, plus 92.80) | | | | | **484.37** | |
+
 ## A: catalogue cup (interim, small charges only), $197.84
 
 | Line | Item | Vendor | Part no. | Qty | Unit (USD) | Ext. (USD) | Stock / lead |
@@ -56,7 +65,7 @@ overpressure ratings are in `bom/README.md`.
 
 | For | Equipment / tools |
 |---|---|
-| Turning (end cap, puck, liner, tube ends) | CNC or manual lathe, 3-jaw chuck with soft jaws, a tube spider; CNMG 432 and VNMG 331 inserts, a 16 mm boring bar (CCMT), a 3 mm parting blade, a 25 mm drill |
+| Turning (end cap, puck, liner, tube ends; B': the adapter) | CNC or manual lathe, 3-jaw chuck with soft jaws (B': one that holds 4 in bar), a tube spider; CNMG 432 and VNMG 331 inserts, a 16 mm boring bar (CCMT), a 3 mm parting blade (B': also used to groove between the adapter's flanges), a 25 mm drill |
 | Milling (fixture) | 3-axis mill or router that takes a 245 x 114 x 64 mm block; 50 mm face mill, 12 mm 3-flute carbide end mill (36 mm flute), 1/2 in 90 deg chamfer mill, 6 mm end mill, 10 mm spot drill, 5.0 mm drill, M6 x 1.0 tap |
 | Welding | TIG (pulsed DCEN, 5-60 A) with argon, a second argon line and tape or plugs for the back-purge, stainless-only brushes, pickling gel, a borescope to look at the inside of W2 and W3 |
 | Testing | water and the B13/B14b rig for the 1.2 bar hydro test of each welded part; an argon regulator to +0.3 bar for the soap test; the atomizer's own pump and gauge for the rate-of-rise test |

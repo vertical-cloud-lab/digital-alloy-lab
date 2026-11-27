@@ -62,6 +62,10 @@ B_NOT_PRICED = [
             "(Edison: secondary restraint)", "shop stock"),
     ("B23", "Copper chill block for the KF flange during W1; two strap clamps for the fixture", "shop stock"),
 ]
+# B': the turned KF-50 to 3 in adapter in place of B1, B2 and the upper B24 ferrule (welds W1 and W2a go too)
+BP = [
+    ("B'1", "4 in 316 round bar, 2 in (B' adapter blank: 32.7 mm part + chuck + parting)", "Speedy", "p-2649", 1, 2),
+]
 A = [
     ("A1", "KF-50 full nipple, 160 mm, 304", "Duniway", "KF50-NP", 1, 1),
     ("A2", "KF-50 blank", "Duniway", "KF50-FB", 1, 1),
@@ -106,7 +110,19 @@ def main():
                   f"{r['unit_usd']} | {r['ext_usd']} | {r['stock'][:40]} |")
     for line, what, note in B_NOT_PRICED:
         md.append(f"| {line} | {what} | {note} | | | | | |")
-    md += [f"| | **Total priced** | | | | | **{totb:.2f}** | |\n",
+    md += [f"| | **Total priced** | | | | | **{totb:.2f}** | |\n"]
+    tbp, totbp = table(BP)
+    drop = sum(float(r["ext_usd"]) for r in tb if r["line"] in ("B1", "B2"))
+    md += [f"## B': B with the turned adapter in place of its welded upper part, ${totb - drop + totbp:.2f} priced\n",
+           "Everything in B except B1 and B2 (and one of the two B24 ferrules, unpriced), plus the adapter's blank. "
+           "The pot's tube (B3) is cut to 183.0 mm instead of 82.35.\n",
+           "| Line | Item | Vendor | Part no. | Qty | Unit (USD) | Ext. (USD) | Stock / lead |",
+           "|---|---|---|---|---:|---:|---:|---|"]
+    for r in tbp:
+        md.append(f"| {r['line']} | {r['item']} | {r['vendor']} | [{r['part_number']}]({r['url']}) | {r['qty']} | "
+                  f"{r['unit_usd']} | {r['ext_usd']} | {r['stock'][:40]} |")
+    md += [f"| | **Total priced** (B {totb:.2f}, less B1 and B2 {drop:.2f}, plus {totbp:.2f}) | | | | | "
+           f"**{totb - drop + totbp:.2f}** | |\n",
            f"## A: catalogue cup (interim, small charges only), ${tota:.2f}\n",
            "| Line | Item | Vendor | Part no. | Qty | Unit (USD) | Ext. (USD) | Stock / lead |",
            "|---|---|---|---|---:|---:|---:|---|"]
@@ -116,8 +132,9 @@ def main():
     md += [f"| | **Total** | | | | | **{tota:.2f}** | |\n",
            "## Shop equipment and tooling assumed (optional, usually in the shop)\n",
            "| For | Equipment / tools |", "|---|---|",
-           "| Turning (end cap, puck, liner, tube ends) | CNC or manual lathe, 3-jaw chuck with soft jaws, a tube spider; "
-           "CNMG 432 and VNMG 331 inserts, a 16 mm boring bar (CCMT), a 3 mm parting blade, a 25 mm drill |",
+           "| Turning (end cap, puck, liner, tube ends; B': the adapter) | CNC or manual lathe, 3-jaw chuck with soft jaws "
+           "(B': one that holds 4 in bar), a tube spider; CNMG 432 and VNMG 331 inserts, a 16 mm boring bar (CCMT), a 3 mm "
+           "parting blade (B': also used to groove between the adapter's flanges), a 25 mm drill |",
            "| Milling (fixture) | 3-axis mill or router that takes a 245 x 114 x 64 mm block; 50 mm face mill, 12 mm "
            "3-flute carbide end mill (36 mm flute), 1/2 in 90 deg chamfer mill, 6 mm end mill, 10 mm spot drill, "
            "5.0 mm drill, M6 x 1.0 tap |",

@@ -18,7 +18,7 @@ folder designs one the lab can make in days to weeks.
   holds a loose 304 catch puck and a liner with a 1.5 mm gap to the wall, and comes off after every run with its
   full 72.9 mm opening.
 - **Monitoring:** two clamp-on thermocouples feed a 2-channel alarm.
-- **Cost:** about $449 in priced catalogue parts, plus standard sanitary fittings, four lathe parts and a milled
+- **Cost:** about $449 in priced catalogue parts (B' about $484), plus standard sanitary fittings, four lathe parts and a milled
   welding fixture.
 
 **Before buying, measure the room under the cone**: the distance from the KF face to the mat with the cone
@@ -32,7 +32,7 @@ latched. No photo or video showed it at a known scale. B is drawn 250 mm long fo
 | Seals near the hot metal | valve seat right under the inlet, glass seals top and bottom | the KF O-ring at the cooled cone (40 °C at 816 g of shot); the tri-clamp gasket, 30 mm above an 816 g pile (B': 130 mm above it) | bottom O-ring next to the puck | glass seals at both ends |
 | Shot it takes before its hottest seal reaches 150 / 200 °C | the seat burns at once; the glass cracks if shot reaches it (S cases) | about 495 / 640 g (the gasket); PTFE gasket (260 °C) to about 800 g; the KF O-ring stays under 40 °C. **B': over 816 g** (gasket 62 °C, KF O-ring 42 °C at 816 g) | about 120 / 220 g | under 400 g: bottom glass seal 264 °C at 400 g |
 | Usable volume above the puck | — | 522 cm³ | 159 cm³ | about 600 cm³ (estimate) |
-| Catalogue cost (priced lines) | — | **$449** + sanitary fittings | $198 | about $520 |
+| Catalogue cost (priced lines) | — | **$449** + sanitary fittings (B' $484) | $198 | about $520 |
 | Build | — | 4 lathe parts, 4 TIG welds, 1 milled fixture, hydro and leak tests | order and assemble | turn a spacer and sleeve, cut the quartz; valve removal not checked |
 | Edison's ranking | — | best long-term (welded metal) | fastest interim | not recommended |
 
@@ -56,10 +56,11 @@ The design changed four times during the analyses, and each change is recorded i
 
 | Check | Result | Where |
 |---|---|---|
-| Thermal FEA, CalculiX, 22 cases | B keeps the KF O-ring at 26 / 30 / 40 °C for 100 / 400 / 816 g of shot landing at 1050 °C. The tri-clamp gasket reaches 47 / 116 / 263 °C (pile conductivity 2–20 W/m K: 233–268 °C). **What B can't take is shot held near the KF seal:** 25 g fused in the bore under the joint takes the O-ring to 195 °C, and 100 g to 389 °C. That is why nothing goes inside its top and the shields must be in. **B'** (turned adapter): gasket 62 °C with 816 g of shot; 25 / 100 g fused under the KF joint take the O-ring to 157 / 307 °C and the gasket to 68 / 187 °C. A good run (816 g of powder at 400 °C) leaves B's bottom thermocouple at 87 °C, against 107–319 °C for shot. A's bottom O-ring passes 200 °C at about 220 g; C's bottom glass seal reaches 264 °C at 400 g | `analysis/thermal.py`, [`thermal_summary.md`](analysis/out/thermal_summary.md) |
+| Thermal FEA, CalculiX, 22 cases | B keeps the KF O-ring at 26 / 30 / 40 °C for 100 / 400 / 816 g of shot landing at 1050 °C. The tri-clamp gasket reaches 47 / 116 / 263 °C (pile conductivity 2–20 W/m K: 233–268 °C). **What B can't take is shot held near the KF seal:** 25 g fused in the bore under the joint takes the O-ring to 195 °C, and 100 g to 389 °C. That is why nothing goes inside its top and the shields must be in. **B'** (turned adapter): gasket 62 °C with 816 g of shot; 25 / 100 g fused under the KF joint take the O-ring to 157 / 306 °C and the gasket to 68 / 187 °C. A good run (816 g of powder at 400 °C) leaves B's bottom thermocouple at 87 °C, against 107–319 °C for shot. A's bottom O-ring passes 200 °C at about 220 g; C's bottom glass seal reaches 264 °C at 400 g | `analysis/thermal.py`, [`thermal_summary.md`](analysis/out/thermal_summary.md) |
 | The Nov 13 failure, reconstructed | 120 g of shot against the stock cup's EPDM seat puts it at 1013 °C, but the glass stays at 50 °C. 300 g that falls into the glass puts it at 931 °C, the bottom EPDM seal at 412 °C, and at least 55 MPa of tension in the borosilicate (short-term strength ~40 MPa): it cracks, as it did | `S_seat_120`, `S_glass_300` |
 | Model checks | energy is conserved (558 kJ to within 0.06 kJ at 0.5 s; what leaves only grows), and the pile in the mesh weighs 816.0 g, for B and for B' (`analysis/energy_check.py`). Steady film, radiation and surface-flux cases match closed-form answers to 0.001 K (`analysis/verify_axifea.py`). Mesh convergence, checked on the previous iteration of B: a 0.55× finer mesh moved the O-ring peak 0.5 K and the hang-up peak 7 K, on the safe side | `analysis/` |
 | Structural FEA, the pot | 9.5 MPa at +1.2 bar (1.5 × relief) and 9.0 MPa under full vacuum. Worst thermal stress with 816 g of shot: 61 MPa, at most 0.53 of yield, at the end cap's R6 corner | `analysis/structural.py`, [`structural_summary.md`](analysis/out/structural_summary.md) |
+| Structural FEA, the upper part in a hang-up | Shot fused under the KF joint takes both upper parts past yield locally, 10 s in (elastic estimates for 25 / 100 g: B 3.1 / 4.3 × yield at the stub's bore; B' 2.3 / 5.5 ×, the 100 g peak at its neck, after an R2 fillet there brought it down from 6.3 ×). That is a self-limiting thermal stress: it leaves a small permanent set, not a crack. While hot, the KF face of B' tilts 16–28 µm across the O-ring land, against 41–234 µm for B | `structural.py` (upper), [`structural_summary.md`](analysis/out/structural_summary.md) |
 | Hand calculations | buckling under vacuum 180×+ (B' pot's longer tube: 127× at 400 °C); UG-34 flat head needs 1.4 mm (8 used); the KF clamp gives ~1.8 kN finger-tight against 0.84 kN of separating force at +1.2 bar; the liner keeps ≥1.1 mm of gap when hot; the puck and liner clear the pot's opening by 2.9 / 3.05 mm | `analysis/handcalcs.py`, [`handcalcs.md`](analysis/out/handcalcs.md) |
 | Glass (C) | with the pan and sleeve, the glass itself is fine (quartz 0.8–1.3 MPa, borosilicate 5.6 MPa); its bottom seal is what fails | `analysis/structural.py` |
 | KF under pressure | standard rings are rated to ~1.5 bar abs (Pfeiffer, Edwards); the relief opens at ~1.8 bar abs, so an over-pressure ring (50 psig) is part of the design | `bom/README.md` |
@@ -123,7 +124,7 @@ runs and small copper charges only, always with the shields.
   3 mm parting blade used as a grooving tool, which the simulation treats as a square-cornered rectangle; a
   grooving-and-turning insert would suit better. Its tri-clamp face groove has to be copied from a bought 3 in
   ferrule, since the groove isn't drawn or programmed here. Its top thermocouple sits on a thicker wall, so it
-  reads a 25 g hang-up later than B's does (120 °C at 13 s, against 4 s), although the O-ring peaks lower.
+  reads a 25 g hang-up later than B's does (120 °C at 14 s, against 4 s), although the O-ring peaks lower.
 - The sanitary parts (ferrules, clamp, gaskets, caps) aren't priced yet. Their sizes are the ASME BPE / 3-A
   standard ones drawn here.
 - The centring-ring recess depth. McMaster's approximate STEP says 2.6 mm, but that would leave too thin a face

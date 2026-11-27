@@ -20,7 +20,7 @@ else here applies as written, with three differences (`analysis/out/thermal_summ
 - Its gasket stays at 62 °C with 816 g of shot, so §7's gasket limit doesn't apply to it.
 - Its gasket is closer to the KF joint, so a hang-up heats it (187 °C for 100 g). After a top alarm, replace the
   gasket as well as the O-ring.
-- Its top thermocouple sits on a thicker wall: in a 25 g hang-up it reaches 120 °C at 13 s, not 4 s.
+- Its top thermocouple sits on a thicker wall: in a 25 g hang-up it reaches 120 °C at 14 s, not 4 s.
 
 ## 0. Before ordering: three checks
 
@@ -181,6 +181,9 @@ The FEA's stresses at these pressures are small: 9.5 MPa at +1.2 bar and 9.0 MPa
      anti-seize: it would end up in the powder.
 4. **Replace parts after alarms:**
    - **Top alarm sounded:** replace the KF O-ring. In a hang-up the O-ring runs hotter than that thermocouple.
+     Then take the upper part off and check it before it goes back on: the KF face flat across the O-ring land
+     (a straightedge and a 0.05 mm feeler) and the bore not bulged. The FEA puts a hang-up's thermal stress
+     past yield at the bore in both designs (`analysis/out/structural_summary.md`).
    - **Bottom alarm sounded:** replace the tri-clamp gasket. Look at the liner and the end cap.
 
 ## 9. What each check is based on

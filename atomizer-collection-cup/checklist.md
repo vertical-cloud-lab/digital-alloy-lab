@@ -31,5 +31,6 @@ on the cone; the pot comes off every run.
 - [ ] Wait until the bottom thermocouple reads **below 60 °C**.
 - [ ] Unplug the bottom thermocouple, unclip the lanyard, open the tri-clamp, lower the pot, fit the 3 in cap.
 - [ ] Empty over a sieve or tray. The puck and liner come out with the powder; replace them if metal is welded on.
-- [ ] **Top alarm went off:** replace the KF O-ring. **Bottom alarm went off:** replace the tri-clamp gasket.
+- [ ] **Top alarm went off:** replace the KF O-ring (on B', the tri-clamp gasket too) and check the KF face is
+      flat before the upper part goes back on. **Bottom alarm went off:** replace the tri-clamp gasket.
       Note both peaks in the run record.
