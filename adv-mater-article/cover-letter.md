@@ -31,6 +31,11 @@ twin calibrated on our own campaigns shows when that beats screening and when it
 each step, the optimizer-driven second campaign and the twin, and cites the companion paper for campaign 1's data,
 which here serve only as prior data. [Attach or link the companion manuscript for the editor.]
 
+**Disclosures the journal requires.** *Advanced Materials* asks authors to disclose manuscripts "submitted, soon to
+be submitted, or in press at other journals that have a bearing": the campaign paper (#277), the BOFN methods
+paper (#121) and the powder-doser papers. It also requires the composition of every material central to the work
+(including commercial powders), and the machine-learning checklist for ML studies.
+
 **Data and code.** All run records, measurements, decision logs and code are deposited at [repository, DOI], as
 stated in the Data Availability Statement.
 

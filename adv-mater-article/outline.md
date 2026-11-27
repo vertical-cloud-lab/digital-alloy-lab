@@ -106,23 +106,24 @@ than in *Digital Discovery* or *npj Computational Materials*.
 
 ## 6. Sections, the claim each makes, and length
 
-*Advanced Materials* research articles have no hard word limit (see [`journal-format.md`](journal-format.md));
-the budget below aims at ~6,500 words of main text with 6 figures and 2 tables, the middle of the range for
-the journal's recent closed-loop and AM-alloy papers.
+*Advanced Materials* research articles are "typically 3000–8000 words (in their entirety) including 3–8 display
+items", with no hard limit ([`journal-format.md`](journal-format.md)). The budget below aims at ~5,000 words of main
+text plus ~1,800 in the Experimental Section, with 6 figures and 2 tables (8 display items, the upper end). Recent
+comparables run 3.6–6.6k words of main text, median ~4.5k.
 
 | § | Title | Claim | Words | Main data |
 |---|---|---|---|---|
 | Abstract | | The loop, the alloy, the cost ratio, the condition | ≤ 200 | all |
-| 1 | Introduction | Two bottlenecks (powder; fixed-order spending); BOFN fits but is untested on physical workflows | 900 | literature (drafted) |
-| 2.1 | The loop and what each step costs | Step costs span ~4 orders of magnitude; composition to measured cube in [d] days at [n] candidates/week | 500 | step-time logs (L1–L3) |
-| 2.2 | Making powder for any composition | 250 g charges give LPBF-grade powder; the spread at fixed settings meets the pre-set bar; failures were engineered out | 1000 | Blocks A, B; all runs (A1–A6) |
-| 2.3 | Composition fidelity | Dosed charges land within [x] wt%; Si in powder follows the charge; Mg loss [y]; EDS vs ICP [z] | 600 | dosing logs, Block B, ICP (C1–C4) |
-| 2.4 | Printing in-house | Desktop LPBF ranks candidates like an industrial machine, with offset [d] | 700 | desktop + Utah builds on shared powders (P1–P5) |
-| 2.5 | The optimizer chooses the step | Campaign 2: [p]% stopped before printing; finds [alloy]; outside checks agree | 1100 | campaign 2 (B1–B6) |
-| 2.6 | When it pays off | Twin reproduces campaign spend within [x]%; [k]× with a wrong screen, ~1× with a right one | 700 | twin, clocked benchmark (T1–T4) |
-| 2.7 | Limits | Gain depends on cost ratios and screen error; desktop coupons rank, don't qualify | 300 | T3, P4 |
-| 3 | Conclusion | | 200 | |
-| 4 | Experimental Section | Methods for every step, each citing its SOP and script | 1500 | SOPs |
+| 1 | Introduction | Two bottlenecks (powder; fixed-order spending); BOFN fits but is untested on physical workflows | 750 | literature (drafted) |
+| 2.1 | The loop and what each step costs | Step costs span ~4 orders of magnitude; composition to measured cube in [d] days at [n] candidates/week | 400 | step-time logs (L1–L3) |
+| 2.2 | Making powder for any composition | 250 g charges give LPBF-grade powder; the spread at fixed settings meets the pre-set bar; failures were engineered out | 800 | Blocks A, B; all runs (A1–A6) |
+| 2.3 | Composition fidelity | Dosed charges land within [x] wt%; Si in powder follows the charge; Mg loss [y]; EDS vs ICP [z] | 450 | dosing logs, Block B, ICP (C1–C4) |
+| 2.4 | Printing in-house | Desktop LPBF ranks candidates like an industrial machine, with offset [d] | 550 | desktop + Utah builds on shared powders (P1–P5) |
+| 2.5 | The optimizer chooses the step | Campaign 2: [p]% stopped before printing; finds [alloy]; outside checks agree | 900 | campaign 2 (B1–B6) |
+| 2.6 | When it pays off | Twin reproduces campaign spend within [x]%; [k]× with a wrong screen, ~1× with a right one | 550 | twin, clocked benchmark (T1–T4) |
+| 2.7 | Limits | Gain depends on cost ratios and screen error; desktop coupons rank, don't qualify | 250 | T3, P4 |
+| 3 | Conclusion | | 150 | |
+| 4 | Experimental Section | Methods for every step, each citing its SOP and script | 1800 | SOPs |
 
 ## 7. Title options
 

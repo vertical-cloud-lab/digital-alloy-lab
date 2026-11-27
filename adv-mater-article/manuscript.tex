@@ -4,8 +4,8 @@
 \ifdraft\linenumbers\fi
 \onehalfspacing
 
-\title{\textbf{Closing the loop from custom powder to printed part:\\
-cost-aware discovery of supply-secure printable aluminum alloys}}
+\title{\textbf{Closing the Loop from Custom Powder to Printed Part:\\
+Cost-Aware Discovery of Supply-Secure Printable Aluminum Alloys}}
 % Author list and order are not settled (README, decision D4). Placeholders by role.
 \author{{[Lab members who ran atomization, dosing, characterization, printing and testing]}\\
 {[Academic collaborators, if any]}\\
@@ -17,31 +17,29 @@ Sterling G.\ Baird\thanks{Corresponding author. Department of Mechanical Enginee
 
 % ---------------------------------------------------------------------------
 \begin{abstract}
-% Target <= 200 words (see journal-format.md). Numbers in brackets wait on data.
-Laser powder bed fusion can print few aluminum alloys, and the strongest of
-them depend on scandium and other elements with insecure supply. Finding new
-ones is slow for two reasons: powder for an untested composition is hard to
-obtain, and campaigns spend their budget in a fixed order, screening by
-calculation and then testing the survivors. Here, a single laboratory makes
-powder for each candidate by ultrasonic atomization of a dosed
-\SI{250}{\gram} charge, characterizes it, prints it on an in-house desktop
-system and tests it, while a cost-aware optimizer treats the whole workflow as
-a network of models and decides, for each candidate, which step to run next.
-Across \tbd{N} atomization runs on \tbd{M} compositions, the powder met a
-pre-set repeatability bar (median size within \tbd{x}\%) and its composition
-followed the charge to within \tbd{y} wt\%. Step costs spanned
-\tbd{four} orders of magnitude. In a \tbd{k}-week campaign the optimizer
-stopped \tbd{p}\% of candidates before printing and found \tbd{alloy}, with
-\tbd{YS} yield strength and \tbd{EL} elongation and a \tbd{z}\% lower
-supply-risk score than Scalmalloy. A digital twin calibrated on the campaign
-shows the approach reaches that result at \tbd{k}-fold lower cost than
-screen-then-test when the screen misses grain refinement, and matches it when
-the screen is right.
+% Advanced Materials: <= 200 words, present tense, impersonal (no "we"), no references.
+Laser powder bed fusion prints few aluminum alloys, and the strongest of them
+depend on scandium and other elements with insecure supply. Finding new ones is
+slow for two reasons: powder for an untested composition is hard to obtain, and
+campaigns spend their budget in a fixed order, screening by calculation and then
+testing the survivors. Here, a single laboratory makes powder for each candidate
+by ultrasonic atomization of a dosed \SI{250}{\gram} charge, characterizes it,
+prints it on an in-house desktop system and tests it, while a cost-aware
+optimizer treats the whole workflow as a network of models and decides, for each
+candidate, which step to run next. Across \tbd{N} atomization runs on \tbd{M}
+compositions, the powder meets a repeatability bar set in advance (median size
+within \tbd{x}\%), and its composition follows the charge to within \tbd{y} wt\%.
+Step costs span \tbd{four} orders of magnitude. In a \tbd{k}-week campaign, the
+optimizer stops \tbd{p}\% of candidates before printing and finds \tbd{alloy},
+with \tbd{YS} yield strength, \tbd{EL} elongation and a \tbd{z}\% lower mineral
+burden than Scalmalloy. A digital twin fitted to the laboratory's records shows
+that the approach reaches this result at \tbd{k}-fold lower cost than
+screen-then-test when the screen misses grain refinement, and matches it when the
+screen is right.
 \end{abstract}
 
-\noindent\textbf{Keywords:} aluminum alloys; laser powder bed fusion;
-ultrasonic atomization; self-driving laboratories; Bayesian optimization;
-critical minerals
+\noindent\textbf{Keywords:} aluminum alloys, Bayesian optimization, critical
+minerals, laser powder bed fusion, self-driving laboratories, ultrasonic atomization
 
 % ---------------------------------------------------------------------------
 \section{Introduction}
@@ -618,6 +616,15 @@ confidence intervals. \src{twin, issue \#276; SI S14}
 \tbd{Blind-labelled samples of the finalists went to \tbd{laboratory} for
 ICP-OES and O/N/H, and \tbd{if funded} tensile tests.}
 
+\paragraph{Statistical analysis.}
+\tbd{For every reported quantity: the number of runs, specimens or seeds;
+mean $\pm$ standard deviation unless stated; coefficients of variation with 95\%
+confidence intervals on the standard deviation from the $\chi^2$ distribution;
+variance components from a one-way random-effects model with two splits per run
+(\texttt{tools/atomizer\_analysis.py}); acceleration factors as ratios of median
+spend to the target with matched-seed bootstrap 90\% intervals, counting seeds
+that never reach the target as censored; software and versions.}
+
 \section*{Supporting Information}
 Supporting Information is available from the Wiley Online Library or from the author.
 
@@ -632,21 +639,24 @@ The authors declare no conflict of interest. \tbd{confirm}
 \tbd{CRediT roles once the author list is settled.}
 
 \section*{Data Availability Statement}
-The data that support the findings of this study (atomization run records,
-powder and print measurements, campaign logs and step costs) are openly
-available in \tbd{repository} at \tbd{DOI}, and the code for the function-network
-optimizer, the digital twin and every figure is openly available at
-\tbd{repository/DOI}. \tbd{Reserve the DOIs only when the paper is ready; do not publish them before submission.}
+The data that support the findings of this study are openly available in
+\tbd{repository} at \tbd{http://doi.org/[doi]}: atomization run records, powder
+and print measurements, campaign decision logs and step-cost logs. The code for
+the function-network optimizer, the digital twin and every figure is archived at
+\tbd{repository, DOI}. \tbd{Cite each dataset in the references as
+``[dataset] Authors; Year; Title; Repository; Version; Identifier''. Reserve the
+DOIs at submission; publish them at acceptance or with the preprint.}
 
 \printbibliography
 
 \clearpage
 \section*{Table of Contents}
-\note{Advanced Materials asks for a short TOC text and a TOC graphic; see
-journal-format.md for the current limits.}
-A laboratory that makes its own powder for every candidate, prints it in-house,
-and lets a cost-aware optimizer decide which step to run next finds
-\tbd{alloy}, a printable aluminum alloy with \tbd{lower} supply risk than
-Scalmalloy, at \tbd{k}-fold lower cost than screening then testing.
+\note{50--60 words, third person, present tense, different from the abstract;
+image 55 $\times$ 50 mm or 110 $\times$ 20 mm, not AI-generated (journal-format.md).}
+Printable aluminum alloys are scarce because powder for a new composition is hard
+to get and campaigns test in a fixed order. This laboratory atomizes a
+\SI{250}{\gram} charge for every candidate, prints it in-house and lets an
+optimizer choose each candidate's next step by expected gain per unit cost. The
+loop finds \tbd{alloy} at \tbd{k}-fold lower cost than screening.
 
 \end{document}

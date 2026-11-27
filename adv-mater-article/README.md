@@ -8,7 +8,9 @@ printable aluminum alloys*
   Experimental Section skeleton filled from the run records, an SI skeleton, 63 references checked against Crossref or arXiv,
   and two draft panels drawn from data that already exist.
 - **What doesn't:** none of the article's own results exist yet.
-- **Target:** an *Advanced Materials* collection due early 2028. The collection itself is still unidentified; see D1.
+- **Target:** an *Advanced Materials* collection due early 2028, as a Research Article (typically 3,000–8,000 words in all,
+  3–8 display items). The collection itself is still unidentified: no public call matches, so it is presumably by
+  invitation (D1). Format and limits are in [`journal-format.md`](journal-format.md).
 
 This folder replaces the October 10 draft, which lives in `digital-alloy-lab-private` and isn't readable from the
 public repo. The October plan's ideas (versions A/B, run classes, the qualified novelty sentence) are carried over and
@@ -67,7 +69,7 @@ with biblatex-chem, biber and latexmk, plus Python with requests and matplotlib.
 
 | # | Decision | Why it matters now |
 |---|---|---|
-| **D1** | **Which collection, its exact deadline, and the article type.** #256's schedule took Feb 28, 2027 to be this article; the Oct 23 note on #160 says "late February" with no year; this thread says early 2028. | If the collection actually closes in Feb 2027, this plan folds into the campaign paper |
+| **D1** | **Which collection, its exact deadline, and the article type.** #256's schedule took Feb 28, 2027 to be this article; the Oct 23 note on #160 says "late February" with no year; this thread says early 2028. No public *Advanced Materials* call matches: its collections are invited (Rising Stars, topical issues such as 2024's "Advanced Materials for Additive Manufacturing", institution issues), so the invitation letter is the source ([`journal-format.md`](journal-format.md)) | If the collection actually closes in Feb 2027, this plan folds into the campaign paper. If it's Rising Stars, the article must be "conceptualized and supervised" by the early-career PI |
 | D2 | Adopt the split with the campaign paper ([`outline.md`](outline.md) §4)? | Duplicate-publication risk; who owns Blocks A/B |
 | D3 | Commit to a second, optimizer-driven campaign in Jul–Oct 2027, with version A/B decided at G-A3 (Sep 30, 2027)? | Version A needs it; nobody has planned it yet |
 | D4 | Authors, order, CRediT roles | Placeholders by role in the manuscript |
@@ -99,6 +101,7 @@ with biblatex-chem, biber and latexmk, plus Python with requests and matplotlib.
 | Outside composition and tensile on finalists | **Sterling** (vendor), **Carl** (specimens) | Dec 2027 | |
 | Cups and bar for the charges | **Paul** | ongoing | |
 | Corrosion panel, if D6 keeps it | **Ben, Jarrett** | Oct 2027 | |
+| Submission package: the ML checklist (required for ML studies), cover-letter disclosure of the related manuscripts (#277, #121, the doser papers), every composition disclosed (incl. commercial powders), TOC image (55 × 50 mm, not AI-made), suggested reviewers, COI, OA decision (APC USD 6,250) | **Sterling** (Claude runs can draft) | Jan 2028 | Requirements in [`journal-format.md`](journal-format.md) |
 | Drafting, figure scripts, reference and precedent checks | Claude runs, on request | as data lands | Re-run the precedent scan in Oct 2027 and Jan 2028 |
 
 ## Realistic submission date
