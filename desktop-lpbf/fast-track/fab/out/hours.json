@@ -67,25 +67,25 @@
    "state": "S2",
    "qty": 1,
    "route": "CNC mill",
-   "stock": "1/4 in. 6061 plate would be 6.35: use 3/8 in. plate faced to 6.0, 106 x 106",
-   "stock_pn": "3/8 in. 6061-T651 plate (PN not read)",
+   "stock": "1/4 in. 6061 plate (6.35) faced to 6.0 both sides, 106 x 106",
+   "stock_pn": "1/4 in. 6061-T651 plate (PN not read)",
    "mill_setups": 2,
    "lathe_setups": 0,
    "holes": 12,
    "tapped": 4,
    "cam_h": 1.88,
    "setup_h": 1.5,
-   "program_min": 6.8,
-   "freecad_min": 10.3,
-   "machine_min": 8.2,
+   "program_min": 6.7,
+   "freecad_min": 10.1,
+   "machine_min": 8.1,
    "lathe_min": 0,
    "manual_min": 0,
-   "run_h": 0.14,
+   "run_h": 0.13,
    "deburr_h": 0.25,
-   "total_h": 3.77,
+   "total_h": 3.76,
    "low_h": 1.75,
    "split": "in house",
-   "byu_h_split": 3.77,
+   "byu_h_split": 3.76,
    "seal": false,
    "large": false
   },
@@ -96,23 +96,23 @@
    "state": "S2",
    "qty": 1,
    "route": "CNC mill",
-   "stock": "3/8 in. 6061 plate faced to 6.0, 106 x 106",
-   "stock_pn": "3/8 in. 6061 plate (PN not read)",
-   "mill_setups": 2,
+   "stock": "1/4 in. 6061 plate (6.35) faced to 6.0 on top, 106 x 106",
+   "stock_pn": "1/4 in. 6061 plate (PN not read)",
+   "mill_setups": 1,
    "lathe_setups": 0,
    "holes": 11,
    "tapped": 11,
-   "cam_h": 1.86,
-   "setup_h": 1.5,
-   "program_min": 4.6,
-   "freecad_min": 6.9,
-   "machine_min": 7.1,
+   "cam_h": 1.27,
+   "setup_h": 0.75,
+   "program_min": 3.8,
+   "freecad_min": 6.0,
+   "machine_min": 6.2,
    "lathe_min": 0,
    "manual_min": 0,
-   "run_h": 0.12,
+   "run_h": 0.1,
    "deburr_h": 0.25,
-   "total_h": 3.73,
-   "low_h": 1.74,
+   "total_h": 2.37,
+   "low_h": 1.39,
    "split": "SendCutSend (plate: profile and holes; 6061 up to 1/2 in.); BYU: 11 taps by hand",
    "byu_h_split": 1.77,
    "seal": false,
@@ -1027,10 +1027,10 @@
    "n": 5
   },
   "S2": {
-   "h": 23.45,
-   "low": 12.94,
-   "split": 19.35,
-   "prog": 62.6,
+   "h": 22.08,
+   "low": 12.59,
+   "split": 19.34,
+   "prog": 61.7,
    "n": 7
   },
   "FT-0": {
@@ -1062,24 +1062,24 @@
    "split": 13.01
   },
   "S2": {
-   "h": 43.12,
-   "low": 21.57,
-   "split": 32.36
+   "h": 41.75,
+   "low": 21.22,
+   "split": 32.35
   },
   "FT-0": {
-   "h": 92.09,
-   "low": 44.16,
-   "split": 81.33
+   "h": 90.72,
+   "low": 43.81,
+   "split": 81.32
   },
   "FT-1": {
-   "h": 123.3,
-   "low": 58.88,
-   "split": 107.3
+   "h": 121.93,
+   "low": 58.53,
+   "split": 107.29
   },
   "FT-1V": {
-   "h": 141.39,
-   "low": 67.95,
-   "split": 125.39
+   "h": 140.02,
+   "low": 67.6,
+   "split": 125.38
   }
  },
  "study": {

@@ -99,7 +99,45 @@ Run times on the shared runner: `parts.py` 10-30 s; `cam.py` 80 s for all 64 set
 Shop h uses PR 266's allowances; Low uses robot-shop.md's. Program min is the posted G-code's recount (feeds as
 programmed, rapids at 25.4 m/min), times the quantity. Full columns are in [`out/hours.md`](out/hours.md).
 
-PIECE_TABLE
+<!-- PIECE_TABLE -->
+| Piece | What | First in | Route | Stock | Setups (mill / lathe) | Program min | Shop h | Low h |
+|---|---|---|---|---|---:|---:|---:|---:|
+| MK-01 | Deck plate | S1 | CNC mill | 1/2 in. 6061-T651 plate (12.7 +0/+0.69), 260 x 260 cut from a 12 x 24 in. sheet | 2 / 0 | 16.9 | 5.1 | 1.9 |
+| MK-02a | Window ring | S2 | CNC mill | 3/4 in. 6061-T651 plate, 106 x 106 square (faced to 12.0) | 2 / 0 | 24.1 | 4.7 | 2.8 |
+| MK-02b | Window retaining flange (beam-tube socket on top) | S2 | CNC mill | 1/4 in. 6061 plate (6.35) faced to 6.0 both sides, 106 x 106 | 2 / 0 | 6.7 | 3.8 | 1.8 |
+| MK-02c | Inner clamp ring (box lid only) | S2 | CNC mill | 1/4 in. 6061 plate (6.35) faced to 6.0 on top, 106 x 106 | 1 / 0 | 3.8 | 2.4 | 1.4 |
+| MK-02d | Cover-slide holder, base (slide pocket) | S2 | CNC mill | 1/4 in. 6061 plate faced to 5.6, 76 x 76 | 1 / 0 | 3.6 | 2.2 | 1.4 |
+| MK-02e | Cover-slide holder, cover | S2 | CNC mill | 3/16 in. 6061 plate faced to 4.4, 76 x 76 | 1 / 0 | 2.0 | 2.2 | 1.3 |
+| MK-03 | Well block, 40.00 H7 bore | FT-0 | CNC mill | 6061 bar 1-3/4 x 3-1/2 in. (44.45 x 88.9) sawn 84 long | 4 / 0 | 10.4 | 6.7 | 2.7 |
+| MK-03s | Macor standoffs (4) | FT-0 | lathe (carbide, slow) or diamond saw + drill | McMaster 8489K75 Macor rod, 5/16 in. x 6 in. (parts.csv H4) | 0 / 2 | 0.0 | 2.2 | 2.3 |
+| MK-04 | Heater plate | FT-0 | lathe + CNC mill | 6061 round bar 1-3/4 in. (44.45) sawn 34 long | 3 / 2 | 0.3 | 7.0 | 2.7 |
+| MK-05 | Substrate discs (10) | FT-0 | lathe + CNC mill | 6061 round bar 1-3/4 in., one 100 mm length makes ten discs | 1 / 2 | 1.2 | 5.1 | 2.9 |
+| MK-06a | Piston rod, box (81.6 long) | FT-0 | cut-off saw + lathe + CNC mill | seamless 304 tube, 1/2 in. OD x 0.035 in. wall (12.70 x 0.89), cut 86 long | 2 / 2 | 0.3 | 5.6 | 2.4 |
+| MK-06b | Piston rod, cube, 21 mm longer (102.6 long) | FT-1V | cut-off saw + lathe + CNC mill | seamless 304 tube, 1/2 in. OD x 0.035 in. wall (12.70 x 0.89), cut 107 long | 2 / 2 | 0.3 | 5.6 | 2.4 |
+| MK-07 | Rod gland plate, 2 x AS568-112 rod seals | FT-0 | CNC mill + lathe (4-jaw) | 1/2 in. 6061 plate, 64 x 64 (faced to 12.0) | 2 / 1 | 12.2 | 6.0 | 3.0 |
+| MK-08a | Hopper wall A (with both end walls) | FT-1 | sheet: laser-cut and bent (SendCutSend) | SendCutSend 304 stainless (0.030-0.031 in. gauge as listed by them) | 0 / 0 | 0.0 | 1.1 | 1.1 |
+| MK-08b | Hopper wall B (with rivet flanges) | FT-1 | sheet: laser-cut and bent (SendCutSend) | SendCutSend 304 stainless (0.030-0.031 in. gauge as listed by them) | 0 / 0 | 0.0 | 1.1 | 1.1 |
+| MK-08c | Cord clamp | FT-1 | CNC mill | 6061 bar 1/4 x 1/2 in. sawn 50 long | 3 / 0 | 3.7 | 4.9 | 2.0 |
+| MK-08d | Hopper arm | FT-1 | CNC mill | 6061 bar 3/8 x 3/4 in. sawn 60 long | 3 / 0 | 0.9 | 4.9 | 2.0 |
+| MK-08e | Carriage bracket (L: 3 mm foot under the shield, 8 mm web) | FT-1 | CNC mill | 6061 bar 2 x 2 in. (50.8) sawn 43 long | 3 / 0 | 5.8 | 5.0 | 2.1 |
+| MK-09a | Scan-head plate | S1 | CNC mill | 1/2 in. 6061-T651 plate, 210 x 275 from a 12 x 24 in. sheet | 2 / 0 | 23.8 | 5.0 | 2.0 |
+| MK-09b | Collimator saddle | S1 | CNC mill | 6061 bar 1-3/4 x 2 in. (44.45 x 50.8) sawn 88 long | 3 / 0 | 8.1 | 5.0 | 2.1 |
+| MK-10a | Beam tube, long (123.6 long) | S2 | saw + lathe | 6061 round tube 60.3 x 3.18 wall (2-3/8 x 0.125 in.) | 0 / 2 | 0.0 | 1.6 | 1.7 |
+| MK-10b | Beam tube, short (17.2 long) | FT-1V | saw + lathe | 6061 round tube 60.3 x 3.18 wall (2-3/8 x 0.125 in.) | 0 / 2 | 0.0 | 1.6 | 1.7 |
+| MK-10c | Lens collar | S2 | CNC mill | 1-1/4 in. 6061 plate (31.75), 130 x 130 | 3 / 0 | 21.5 | 5.3 | 2.3 |
+| MK-11a | Slot nozzle 45 x 4 | FT-0 | CNC mill | 6061 bar 3/4 x 1-1/4 in. (19.05 x 31.75) sawn 65 long | 4 / 0 | 11.7 | 6.4 | 2.5 |
+| MK-11b | Exhaust collector | FT-0 | CNC mill | 6061 bar 3/4 x 1-1/4 in. sawn 70 long | 4 / 0 | 11.4 | 6.4 | 2.5 |
+| MK-12 | Stage shield | FT-1 | sheet: laser-cut and bent (SendCutSend) | SendCutSend 304 stainless, 0.036 in. class (their gauge list not read) | 0 / 0 | 0.0 | 0.8 | 0.8 |
+| MK-13 | Cube top plate (Ideal Vacuum P108171 blank, bored for the window ring) | FT-1V | CNC mill | Ideal Vacuum P108171 blank plate (E2) | 2 / 0 | 5.9 | 5.5 | 2.5 |
+| MK-14 | Cube bottom plate (P108171 blank, bored for the rod gland) | FT-1V | CNC mill | Ideal Vacuum P108171 blank plate (E2) | 2 / 0 | 3.7 | 5.4 | 2.5 |
+| MK-15a | Piston-stage bracket plate | FT-1 | CNC mill | 1/2 in. 6061-T651 plate, 190 x 270, faced to 10.0 | 2 / 0 | 11.5 | 4.8 | 1.8 |
+| MK-15b | Piston-stage riser | FT-1 | CNC mill | 5/8 in. 6061 plate (15.88), 126 x 86, faced to 15.0 | 2 / 0 | 4.0 | 3.7 | 1.7 |
+| MK-15c | Rod clamp (split) | FT-1 | CNC mill + saw slit | 6061 bar 1-1/4 in. square (31.75) sawn 28 long | 3 / 0 | 6.1 | 5.1 | 2.2 |
+| MK-16 | Overflow cup | FT-0 | CNC mill | 6061 bar 1/2 x 2 in. (12.7 x 50.8) sawn 25 long | 2 / 0 | 1.1 | 3.5 | 1.6 |
+| MK-17 | FT-0 rod collar (buy) | FT-0 | buy | Ruland MCL-8-A class one-piece clamp collar, 1/2 in. bore (1-1/8 in. OD x 13/32 in.) | 0 / 0 | 0.0 | 0.1 | 0.0 |
+| MK-18a | Guide-laser target stand | S1 | CNC mill | 6061 square bar 2-1/2 in. (63.5) sawn 55 long | 2 / 0 | 3.2 | 3.7 | 1.7 |
+| MK-18b | Target plate 80 x 80 x 1/8 in., black anodised (x2) | S1 | sheet: laser-cut (SendCutSend) or bandsaw + mill; anodise outside | 1/8 in. 6061 sheet (SendCutSend stock) | 0 / 0 | 0.0 | 0.8 | 0.8 |
+<!-- /PIECE_TABLE -->
 
 **Stock.** Part numbers that were read in PR 266's files are given with the date they were read:
 
@@ -274,7 +312,15 @@ SIM_TABLE
 - **Machine time:** the recount, plus 4.2 s a tool change and 12 s a tapped hole, plus the lathe and hand steps.
 - **Deburr and inspection:** 0.25 h a piece (+0.05 h for each extra in a batch), 1 h for a piece with a sealing face.
 
-STATE_ROWS
+<!-- STATE_ROWS -->
+| State | Pieces | Shop h | Low h | Machine | Cumulative shop h | Cumulative low h | At $65/h | Study | BYU h if sheet and plates go out (cumulative) |
+|---|---:|---:|---:|---|---:|---:|---:|---|---:|
+| S1 | 5 | 19.7 | 8.6 | S1 | **19.7** | 8.6 | $560-1,280 | - | 13.0 |
+| S2 | 7 | 22.1 | 12.6 | S1 + S2 | **41.8** | 21.2 | $1,380-2,710 | - | 32.4 |
+| FT-0 | 10 | 49.0 | 22.6 | FT-0 | **90.7** | 43.8 | $2,850-5,900 | 10-15 h | 81.3 |
+| FT-1 | 9 | 31.2 | 14.7 | FT-1 | **121.9** | 58.5 | $3,800-7,930 | 25-40 h | 107.3 |
+| FT-1V | 4 | 18.1 | 9.1 | FT-1V | **140.0** | 67.6 | $4,390-9,100 | 30-48 h | 125.4 |
+<!-- /STATE_ROWS -->
 
 - **What the study's numbers left out.** `fast_track.py`'s 25-40 h for FT-1 was "about 12 simple parts". The model
   needs 35, so the per-piece floor of CAM, setups and inspection (about 3-4 h each with PR 266's allowances) sets

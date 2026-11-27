@@ -1,5 +1,5 @@
 {
- "made": "2026-11-27 09:40 UTC",
+ "made": "2026-11-27 10:27 UTC",
  "pieces": [
   {
    "pid": "MK-01",
@@ -704,10 +704,10 @@
    "lathe": [],
    "manual": [],
    "tol": [
-    "window seat floor (z 4): flatness 0.01, Ra 0.8 um (O-ring land under fused silica)",
-    "base face (z 0): flatness 0.02, Ra 0.8 um, lay circular",
+    "window seat floor (z 4): flatness 0.01, Ra 0.4 um (Parker Chart 4-3: 16 RMS for gas and vacuum face seals)",
+    "base face (z 0): flatness 0.02, Ra 0.4 um (16 RMS), lay circular",
     "seat bore 51.30 +0.10/0",
-    "O-ring grooves: Ra 1.6 um sides, 0.8 um floor; radius 0.13-0.38 at the floor corners (cutter)"
+    "O-ring grooves: floor Ra 0.8 um (32 RMS), sides Ra 1.6; floor corner radius 0.13-0.38 (.005-.015 in.)"
    ],
    "notes": [],
    "changes": [
@@ -730,8 +730,8 @@
    "qty": 1,
    "route": "CNC mill",
    "state": "S2",
-   "stock": "1/4 in. 6061 plate would be 6.35: use 3/8 in. plate faced to 6.0, 106 x 106",
-   "stock_pn": "3/8 in. 6061-T651 plate (PN not read)",
+   "stock": "1/4 in. 6061 plate (6.35) faced to 6.0 both sides, 106 x 106",
+   "stock_pn": "1/4 in. 6061-T651 plate (PN not read)",
    "blank": {
     "type": "box",
     "box": [
@@ -739,8 +739,8 @@
      53,
      -53,
      53,
-     -1.75,
-     7.78
+     -0.175,
+     6.175
     ]
    },
    "seal": false,
@@ -1058,7 +1058,7 @@
    "sheet": null,
    "buy": null,
    "n_holes": 12,
-   "start_volume_cm3": 107.08
+   "start_volume_cm3": 71.35
   },
   {
    "pid": "MK-02c",
@@ -1068,8 +1068,8 @@
    "qty": 1,
    "route": "CNC mill",
    "state": "S2",
-   "stock": "3/8 in. 6061 plate faced to 6.0, 106 x 106",
-   "stock_pn": "3/8 in. 6061 plate (PN not read)",
+   "stock": "1/4 in. 6061 plate (6.35) faced to 6.0 on top, 106 x 106",
+   "stock_pn": "1/4 in. 6061 plate (PN not read)",
    "blank": {
     "type": "box",
     "box": [
@@ -1077,8 +1077,8 @@
      53,
      -53,
      53,
-     -1.75,
-     7.78
+     0.0,
+     6.35
     ]
    },
    "seal": false,
@@ -1163,24 +1163,24 @@
     {
      "kind": "drill",
      "hid": "B",
-     "axis": "+z",
+     "axis": "-z",
      "d": 3.3,
      "tool": 26,
      "pts": [
       [
        1.83697019872103e-15,
        30.0,
-       0.0
+       6.0
       ],
       [
        -30.0,
        3.67394039744206e-15,
-       0.0
+       6.0
       ],
       [
        -5.510910596163089e-15,
        -30.0,
-       0.0
+       6.0
       ]
      ],
      "depth": 0.0,
@@ -1246,22 +1246,22 @@
      "kind": "tap",
      "size": "M4",
      "callout": "M4 x through deep thread, tap drill 3.30 x through - cover-slide holder",
-     "axis": "+z",
+     "axis": "-z",
      "pts": [
       [
        0.0,
        30.0,
-       0.0
+       6.0
       ],
       [
        -30.0,
        0.0,
-       0.0
+       6.0
       ],
       [
        -0.0,
        -30.0,
-       0.0
+       6.0
       ]
      ]
     }
@@ -1269,18 +1269,6 @@
    "setups": [
     {
      "name": "MK-02c_A",
-     "up": "-Z",
-     "face": [
-      2,
-      1.75
-     ],
-     "outline": null,
-     "label": "bottom up: face",
-     "hold": "",
-     "stock_note": ""
-    },
-    {
-     "name": "MK-02c_B",
      "up": "+Z",
      "face": [
       2,
@@ -1306,7 +1294,7 @@
    "sheet": null,
    "buy": null,
    "n_holes": 11,
-   "start_volume_cm3": 107.08
+   "start_volume_cm3": 71.35
   },
   {
    "pid": "MK-02d",
@@ -4630,7 +4618,7 @@
    ],
    "manual": [],
    "tol": [
-    "OD 12.70 +-0.13 as bought (ASTM A269); gland zone polished Ra 0.2-0.4 um (Parker: dynamic rod surface 8-16 uin)",
+    "OD 12.62-12.73 (0.497-0.501 in.), measured: ASTM A269 allows +-0.13, which takes the rod seal outside Parker's 10-17 % squeeze; gland zone polished to 16 RMS (Ra ~0.4 um; Parker 10-20 uin)",
     "length 81.6 +-0.1; ends square within 0.05",
     "no weld seam: seamless tube only (a welded seam leaks past the rod seal)"
    ],
@@ -4760,7 +4748,7 @@
    ],
    "manual": [],
    "tol": [
-    "OD 12.70 +-0.13 as bought (ASTM A269); gland zone polished Ra 0.2-0.4 um (Parker: dynamic rod surface 8-16 uin)",
+    "OD 12.62-12.73 (0.497-0.501 in.), measured: ASTM A269 allows +-0.13, which takes the rod seal outside Parker's 10-17 % squeeze; gland zone polished to 16 RMS (Ra ~0.4 um; Parker 10-20 uin)",
     "length 102.6 +-0.1; ends square within 0.05",
     "no weld seam: seamless tube only (a welded seam leaks past the rod seal)"
    ],
@@ -4969,8 +4957,8 @@
    "tol": [
     "throat 12.95 +0.05/0 (rod 12.70 +-0.13 as bought)",
     "rod grooves 17.17 +0.05/0 dia x 3.62 +0.13/0 wide (Parker gland depth 2.24-2.29 mm)",
-    "groove sides and floor Ra 1.6 um, corner radius 0.13-0.38",
-    "top face flatness 0.02, Ra 0.8 um",
+    "rod grooves: bottom 32 RMS (Ra 0.8), sides 32 RMS; corner radius 0.13-0.38 (Parker p. 5-31)",
+    "top face flatness 0.02, Ra 0.4 um (16 RMS, face seal)",
     "grooves concentric with the throat within 0.03"
    ],
    "notes": [],
@@ -7383,7 +7371,7 @@
    "lathe": [],
    "manual": [],
    "tol": [
-    "spot face 104 x 0.3: flatness 0.02, Ra 0.8 um (window ring's AS568-140 seal)",
+    "spot face 104 x 0.3: flatness 0.02, Ra 0.4 um (window ring's AS568-140 seal)",
     "bore 53 +0.2/0, true position 0.2 to the plate centre; the plate's own O-ring face untouched"
    ],
    "notes": [],
@@ -7608,7 +7596,7 @@
    "lathe": [],
    "manual": [],
    "tol": [
-    "spot face 56 x 0.3: flatness 0.02, Ra 0.8 um",
+    "spot face 56 x 0.3: flatness 0.02, Ra 0.4 um",
     "holes A +-0.1 to the rod hole"
    ],
    "notes": [],
