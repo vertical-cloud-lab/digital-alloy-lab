@@ -1,0 +1,1177 @@
+{
+ "note": "Round 10 (2026-11-27), W2: the five steps that failed in run 14, each re-run alone on round 10's code (run_assembly.py with ASM_FF_UNTIL / ASM_STOP_AT, recorded, KIT_HASH=22d87b24345e05c1), and rec_check.py on each scratch recording (every joint sample, the planner's meshes, pairs over 1.5 mm). Scratch runs, not run 15.",
+ "tests": [
+  {
+   "steps": "F15",
+   "run": "ASM_FF_UNTIL=F15 ASM_STOP_AT=F16",
+   "rows": [
+    {
+     "id": "F15",
+     "do": "screws",
+     "actor": "B",
+     "sweep": "PASS",
+     "arm": "PASS",
+     "n": 7,
+     "n_ok": 7,
+     "arm_clear": 0.8,
+     "arm_clear_with": "screwdriver to Cross-flow inlet plenum + nozzle (316L, bolted fla",
+     "docks": [
+      1350.0
+     ],
+     "driver": [
+      "screwdriver"
+     ],
+     "screws": [
+      {
+       "screw": "1",
+       "ok": true,
+       "arm": "B",
+       "driver": "screwdriver",
+       "clear": [
+        2.2,
+        "screwdriver to Cross-flow inlet plenum + nozzle (316L, bolted fla"
+       ],
+       "why": null
+      },
+      {
+       "screw": "2",
+       "ok": true,
+       "arm": "B",
+       "driver": "screwdriver",
+       "clear": [
+        2.2,
+        "screwdriver to Cross-flow inlet plenum + nozzle (316L, bolted fla"
+       ],
+       "why": null
+      },
+      {
+       "screw": "3",
+       "ok": true,
+       "arm": "B",
+       "driver": "screwdriver",
+       "clear": [
+        2.2,
+        "screwdriver to Cross-flow inlet plenum + nozzle (316L, bolted fla"
+       ],
+       "why": null
+      },
+      {
+       "screw": "4",
+       "ok": true,
+       "arm": "B",
+       "driver": "screwdriver",
+       "clear": [
+        2.2,
+        "screwdriver to Cross-flow inlet plenum + nozzle (316L, bolted fla"
+       ],
+       "why": null
+      },
+      {
+       "screw": "5",
+       "ok": true,
+       "arm": "B",
+       "driver": "screwdriver",
+       "clear": [
+        0.8,
+        "screwdriver to Cross-flow inlet plenum + nozzle (316L, bolted fla"
+       ],
+       "why": null
+      },
+      {
+       "screw": "6",
+       "ok": true,
+       "arm": "B",
+       "driver": "screwdriver",
+       "clear": [
+        0.8,
+        "screwdriver to Cross-flow inlet plenum + nozzle (316L, bolted fla"
+       ],
+       "why": null
+      },
+      {
+       "screw": "7",
+       "ok": true,
+       "arm": "B",
+       "driver": "screwdriver",
+       "clear": [
+        0.8,
+        "screwdriver to Cross-flow inlet plenum + nozzle (316L, bolted fla"
+       ],
+       "why": null
+      }
+     ]
+    }
+   ],
+   "time_s": {
+    "F15": {
+     "seconds": 209.7,
+     "robot_A_s": 0.0,
+     "robot_B_s": 209.7,
+     "status": "pass"
+    }
+   },
+   "rec_check": {
+    "samples": 1522,
+    "pairs_over_1p5mm": 0,
+    "worst": []
+   }
+  },
+  {
+   "steps": "F18",
+   "run": "ASM_FF_UNTIL=F18 ASM_STOP_AT=F19",
+   "rows": [
+    {
+     "id": "F18",
+     "do": "place",
+     "actor": "B",
+     "sweep": "PASS",
+     "arm": "PASS",
+     "gap": 2.4,
+     "gap_with": "Lift-out wall liner, back upper left (0.5 mm 316L, behind the ball screw, spring clips)",
+     "docks": [
+      1350.0
+     ],
+     "fetch": "PASS",
+     "why": "released 24 mm short and pushed home with the closed fingers"
+    },
+    {
+     "id": "F18h",
+     "do": "screws",
+     "actor": "A",
+     "sweep": "PASS",
+     "arm": "PASS",
+     "n": 3,
+     "n_ok": 3,
+     "arm_clear": 1.9,
+     "arm_clear_with": "nutrunner_angle to Recoater guide rail (15 mm, 260 mm)",
+     "docks": [
+      1350.0
+     ],
+     "driver": [
+      "nutrunner_angle"
+     ],
+     "screws": [
+      {
+       "screw": "2",
+       "ok": true,
+       "arm": "A",
+       "driver": "nutrunner_angle",
+       "clear": [
+        1.9,
+        "nutrunner_angle to Recoater guide rail (15 mm, 260 mm)"
+       ],
+       "why": null
+      },
+      {
+       "screw": "3",
+       "ok": true,
+       "arm": "A",
+       "driver": "nutrunner_angle",
+       "clear": [
+        1.9,
+        "nutrunner_angle to Recoater guide rail (15 mm, 260 mm)"
+       ],
+       "why": null
+      },
+      {
+       "screw": "4",
+       "ok": true,
+       "arm": "A",
+       "driver": "nutrunner_angle",
+       "clear": [
+        1.9,
+        "nutrunner_angle to Recoater guide rail (15 mm, 260 mm)"
+       ],
+       "why": null
+      }
+     ]
+    },
+    {
+     "id": "F18s",
+     "do": "screws",
+     "actor": "A",
+     "sweep": "PASS",
+     "arm": "PASS",
+     "n": 1,
+     "n_ok": 1,
+     "arm_clear": 0.6,
+     "arm_clear_with": "nutrunner_angle to Lift-out wall liner, left (0.5 mm 316L, screw hole",
+     "docks": [
+      1350.0
+     ],
+     "driver": [
+      "nutrunner_angle"
+     ],
+     "screws": [
+      {
+       "screw": "1",
+       "ok": true,
+       "arm": "A",
+       "driver": "nutrunner_angle",
+       "clear": [
+        0.6,
+        "nutrunner_angle to Lift-out wall liner, left (0.5 mm 316L, screw hole"
+       ],
+       "why": null
+      }
+     ]
+    }
+   ],
+   "time_s": {
+    "F18": {
+     "seconds": 243.1,
+     "robot_A_s": 119.5,
+     "robot_B_s": 123.6,
+     "status": "pass"
+    }
+   },
+   "rec_check": {
+    "samples": 1364,
+    "pairs_over_1p5mm": 0,
+    "worst": []
+   }
+  },
+  {
+   "steps": "F26a, F27, F26",
+   "run": "ASM_FF_UNTIL=F26a ASM_STOP_AT=F28",
+   "rows": [
+    {
+     "id": "F26a",
+     "do": "bench_place",
+     "actor": "A",
+     "sweep": "PASS",
+     "arm": "PASS",
+     "docks": [
+      -1100.0
+     ],
+     "fetch": "PASS"
+    },
+    {
+     "id": "F27",
+     "do": "screws",
+     "actor": "A",
+     "sweep": "PASS",
+     "arm": "PASS",
+     "n": 2,
+     "n_ok": 2,
+     "arm_clear": 1.5,
+     "arm_clear_with": "screwdriver to HSS recoater blade (1.5 mm, wide nose)",
+     "docks": [
+      -1100.0
+     ],
+     "driver": [
+      "screwdriver"
+     ],
+     "screws": [
+      {
+       "screw": "1",
+       "ok": true,
+       "arm": "A",
+       "driver": "screwdriver",
+       "clear": [
+        1.5,
+        "screwdriver to HSS recoater blade (1.5 mm, wide nose)"
+       ],
+       "why": null
+      },
+      {
+       "screw": "2",
+       "ok": true,
+       "arm": "A",
+       "driver": "screwdriver",
+       "clear": [
+        1.5,
+        "screwdriver to HSS recoater blade (1.5 mm, wide nose)"
+       ],
+       "why": null
+      }
+     ]
+    },
+    {
+     "id": "F26",
+     "do": "place",
+     "actor": "A",
+     "sweep": "PASS",
+     "arm": "PASS",
+     "gap": 0.05,
+     "gap_with": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
+     "arm_clear": 4.0,
+     "arm_clear_with": "held:F26:Blade holder to Process chamber body (6061-T6 through-frame from 5",
+     "docks": [
+      1130.0
+     ],
+     "fetch": "-"
+    }
+   ],
+   "time_s": {
+    "F26a": {
+     "seconds": 82.6,
+     "robot_A_s": 82.6,
+     "robot_B_s": 0.0,
+     "status": "pass"
+    },
+    "F27": {
+     "seconds": 52.5,
+     "robot_A_s": 52.5,
+     "robot_B_s": 0.0,
+     "status": "pass"
+    },
+    "F26": {
+     "seconds": 38.9,
+     "robot_A_s": 38.9,
+     "robot_B_s": 0.0,
+     "status": "pass"
+    }
+   },
+   "rec_check": {
+    "samples": 994,
+    "pairs_over_1p5mm": 0,
+    "worst": []
+   }
+  },
+  {
+   "steps": "F57",
+   "run": "ASM_FF_UNTIL=F57 ASM_STOP_AT=F57b",
+   "rows": [
+    {
+     "id": "F57",
+     "do": "place",
+     "actor": "A",
+     "sweep": "PASS",
+     "arm": "PASS",
+     "gap": 0.3,
+     "gap_with": "Safety shutter + beam dump",
+     "arm_clear": 1.0,
+     "arm_clear_with": "held:F57:Enclosed beam tubes #1 to 2-axis galvo scan head (SCANLAB basiCube 20)",
+     "docks": [
+      1130.0,
+      1350.0
+     ],
+     "fetch": "PASS",
+     "why": "Enclosed beam tubes #1: released 15 mm short and pushed home with the closed fingers",
+     "units": [
+      {
+       "part": "Enclosed beam tubes #1",
+       "actor": "A",
+       "tool": "gripper",
+       "sweep": "PASS",
+       "arm": "PASS",
+       "why": "released 15 mm short and pushed home with the closed fingers",
+       "fetch": "PASS"
+      },
+      {
+       "part": "Coaxial-monitoring dichroic",
+       "actor": "A",
+       "tool": "gripper",
+       "sweep": "PASS",
+       "arm": "PASS",
+       "why": "",
+       "fetch": "PASS"
+      },
+      {
+       "part": "Enclosed beam tubes #2",
+       "actor": "B",
+       "tool": "nozzle",
+       "sweep": "PASS",
+       "arm": "PASS",
+       "why": "",
+       "fetch": "PASS"
+      },
+      {
+       "part": "Safety shutter",
+       "actor": "B",
+       "tool": "gripper",
+       "sweep": "PASS",
+       "arm": "PASS",
+       "why": "",
+       "fetch": "PASS"
+      },
+      {
+       "part": "Enclosed beam tubes #3",
+       "actor": "B",
+       "tool": "nozzle",
+       "sweep": "PASS",
+       "arm": "PASS",
+       "why": "",
+       "fetch": "PASS"
+      },
+      {
+       "part": "Fold mirror",
+       "actor": "B",
+       "tool": "gripper",
+       "sweep": "PASS",
+       "arm": "PASS",
+       "why": "",
+       "fetch": "PASS"
+      },
+      {
+       "part": "Coaxial photodiode chain",
+       "actor": "A",
+       "tool": "gripper",
+       "sweep": "PASS",
+       "arm": "PASS",
+       "why": "",
+       "fetch": "PASS"
+      },
+      {
+       "part": "Collimator",
+       "actor": "B",
+       "tool": "gripper",
+       "sweep": "PASS",
+       "arm": "PASS",
+       "why": "",
+       "fetch": "PASS"
+      }
+     ]
+    }
+   ],
+   "time_s": {
+    "F57": {
+     "seconds": 764.3,
+     "robot_A_s": 259.6,
+     "robot_B_s": 504.7,
+     "status": "pass"
+    }
+   },
+   "rec_check": {
+    "samples": 3413,
+    "pairs_over_1p5mm": 0,
+    "worst": []
+   }
+  },
+  {
+   "steps": "F18 to F28 in one process",
+   "run": "ASM_FF_UNTIL=F18 ASM_STOP_AT=F29",
+   "rows": [
+    {
+     "id": "F18",
+     "do": "place",
+     "actor": "B",
+     "sweep": "PASS",
+     "arm": "PASS",
+     "gap": 2.4,
+     "gap_with": "Lift-out wall liner, back upper left (0.5 mm 316L, behind the ball screw, spring clips)",
+     "docks": [
+      1350.0
+     ],
+     "fetch": "PASS",
+     "why": "released 24 mm short and pushed home with the closed fingers"
+    },
+    {
+     "id": "F18h",
+     "do": "screws",
+     "actor": "A",
+     "sweep": "PASS",
+     "arm": "PASS",
+     "n": 3,
+     "n_ok": 3,
+     "arm_clear": 1.9,
+     "arm_clear_with": "nutrunner_angle to Recoater guide rail (15 mm, 260 mm)",
+     "docks": [
+      1350.0
+     ],
+     "driver": [
+      "nutrunner_angle"
+     ],
+     "screws": [
+      {
+       "screw": "2",
+       "ok": true,
+       "arm": "A",
+       "driver": "nutrunner_angle",
+       "clear": [
+        1.9,
+        "nutrunner_angle to Recoater guide rail (15 mm, 260 mm)"
+       ],
+       "why": null
+      },
+      {
+       "screw": "3",
+       "ok": true,
+       "arm": "A",
+       "driver": "nutrunner_angle",
+       "clear": [
+        1.9,
+        "nutrunner_angle to Recoater guide rail (15 mm, 260 mm)"
+       ],
+       "why": null
+      },
+      {
+       "screw": "4",
+       "ok": true,
+       "arm": "A",
+       "driver": "nutrunner_angle",
+       "clear": [
+        1.9,
+        "nutrunner_angle to Recoater guide rail (15 mm, 260 mm)"
+       ],
+       "why": null
+      }
+     ]
+    },
+    {
+     "id": "F18s",
+     "do": "screws",
+     "actor": "A",
+     "sweep": "PASS",
+     "arm": "PASS",
+     "n": 1,
+     "n_ok": 1,
+     "arm_clear": 0.6,
+     "arm_clear_with": "nutrunner_angle to Lift-out wall liner, left (0.5 mm 316L, screw hole",
+     "docks": [
+      1350.0
+     ],
+     "driver": [
+      "nutrunner_angle"
+     ],
+     "screws": [
+      {
+       "screw": "1",
+       "ok": true,
+       "arm": "A",
+       "driver": "nutrunner_angle",
+       "clear": [
+        0.6,
+        "nutrunner_angle to Lift-out wall liner, left (0.5 mm 316L, screw hole"
+       ],
+       "why": null
+      }
+     ]
+    },
+    {
+     "id": "F19",
+     "do": "screws",
+     "actor": "A",
+     "sweep": "-",
+     "arm": "-",
+     "why": "all screws of this joint were already driven (with the part held)"
+    },
+    {
+     "id": "F21",
+     "do": "place",
+     "actor": "A",
+     "sweep": "PASS",
+     "arm": "PASS",
+     "gap": 1.0,
+     "gap_with": "Recoater ball nut (flange on the +x face)",
+     "arm_clear": 3.0,
+     "arm_clear_with": "held:F21:Recoater ball screw to Process chamber body (6061-T6 through-frame from 5",
+     "docks": [
+      1570.0
+     ],
+     "fetch": "PASS",
+     "why": "released 33 mm short and pushed home with the closed fingers"
+    },
+    {
+     "id": "F22",
+     "do": "place",
+     "actor": "A",
+     "sweep": "PASS",
+     "arm": "PASS",
+     "gap": 0.3,
+     "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+     "docks": [
+      1130.0
+     ],
+     "fetch": "PASS"
+    },
+    {
+     "id": "F23",
+     "do": "place",
+     "actor": "A",
+     "sweep": "PASS",
+     "arm": "PASS",
+     "gap": 0.3,
+     "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+     "arm_clear": 22.1,
+     "arm_clear_with": "right_finger_tip to Vacuum-port adapter screws, M5 x 20 316 #3",
+     "docks": [
+      1570.0
+     ],
+     "fetch": "PASS",
+     "why": "released 15 mm short and pushed home with the closed fingers"
+    },
+    {
+     "id": "F24",
+     "do": "screws",
+     "actor": "A",
+     "sweep": "PASS",
+     "arm": "PASS",
+     "n": 4,
+     "n_ok": 4,
+     "arm_clear": 2.2,
+     "arm_clear_with": "screwdriver to Recoater floating bearing housing (blind cap, FKM ",
+     "docks": [
+      1570.0
+     ],
+     "driver": [
+      "screwdriver"
+     ],
+     "screws": [
+      {
+       "screw": "1",
+       "ok": true,
+       "arm": "A",
+       "driver": "screwdriver",
+       "clear": [
+        2.2,
+        "screwdriver to Recoater floating bearing housing (blind cap, FKM "
+       ],
+       "why": null
+      },
+      {
+       "screw": "2",
+       "ok": true,
+       "arm": "A",
+       "driver": "screwdriver",
+       "clear": [
+        2.2,
+        "screwdriver to Recoater floating bearing housing (blind cap, FKM "
+       ],
+       "why": null
+      },
+      {
+       "screw": "3",
+       "ok": true,
+       "arm": "A",
+       "driver": "screwdriver",
+       "clear": [
+        2.2,
+        "screwdriver to Recoater floating bearing housing (blind cap, FKM "
+       ],
+       "why": null
+      },
+      {
+       "screw": "4",
+       "ok": true,
+       "arm": "A",
+       "driver": "screwdriver",
+       "clear": [
+        2.2,
+        "screwdriver to Recoater floating bearing housing (blind cap, FKM "
+       ],
+       "why": null
+      }
+     ]
+    },
+    {
+     "id": "F25",
+     "do": "place",
+     "actor": "A",
+     "sweep": "PASS",
+     "arm": "PASS",
+     "gap": 19.42,
+     "gap_with": "Recoater fixed bearing: magnetic-fluid rotary feedthrough Ferrotec SFL-006-NN on the left wall (Ferrotec SFL-006-NN; FKM face O-ring)",
+     "arm_clear": 18.0,
+     "arm_clear_with": "left_finger_tip to Recoater fixed bearing: magnetic-fluid rotary feed",
+     "docks": [
+      1130.0
+     ],
+     "fetch": "PASS"
+    },
+    {
+     "id": "F25b",
+     "do": "place",
+     "actor": "A",
+     "sweep": "PASS",
+     "arm": "PASS",
+     "docks": [
+      1130.0
+     ],
+     "fetch": "PASS"
+    },
+    {
+     "id": "F25c",
+     "do": "place",
+     "actor": "A",
+     "sweep": "PASS",
+     "arm": "PASS",
+     "gap": 0.05,
+     "gap_with": "Recoater motor bracket",
+     "arm_clear": 0.0,
+     "arm_clear_with": "held:F25c:Recoater servo to Recoater motor bracket",
+     "docks": [
+      1130.0
+     ],
+     "fetch": "PASS"
+    },
+    {
+     "id": "F26a",
+     "do": "bench_place",
+     "actor": "A",
+     "sweep": "PASS",
+     "arm": "PASS",
+     "docks": [
+      -1100.0
+     ],
+     "fetch": "PASS"
+    },
+    {
+     "id": "F27",
+     "do": "screws",
+     "actor": "A",
+     "sweep": "PASS",
+     "arm": "PASS",
+     "n": 2,
+     "n_ok": 2,
+     "arm_clear": 1.5,
+     "arm_clear_with": "screwdriver to HSS recoater blade (1.5 mm, wide nose)",
+     "docks": [
+      -1100.0
+     ],
+     "driver": [
+      "screwdriver"
+     ],
+     "screws": [
+      {
+       "screw": "1",
+       "ok": true,
+       "arm": "A",
+       "driver": "screwdriver",
+       "clear": [
+        1.5,
+        "screwdriver to HSS recoater blade (1.5 mm, wide nose)"
+       ],
+       "why": null
+      },
+      {
+       "screw": "2",
+       "ok": true,
+       "arm": "A",
+       "driver": "screwdriver",
+       "clear": [
+        1.5,
+        "screwdriver to HSS recoater blade (1.5 mm, wide nose)"
+       ],
+       "why": null
+      }
+     ]
+    },
+    {
+     "id": "F26",
+     "do": "place",
+     "actor": "A",
+     "sweep": "PASS",
+     "arm": "PASS",
+     "gap": 0.05,
+     "gap_with": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
+     "arm_clear": 4.0,
+     "arm_clear_with": "held:F26:Blade holder to Process chamber body (6061-T6 through-frame from 5",
+     "docks": [
+      1130.0
+     ],
+     "fetch": "-"
+    },
+    {
+     "id": "F28",
+     "do": "place",
+     "actor": "A",
+     "sweep": "PASS",
+     "arm": "PASS",
+     "gap": 3.0,
+     "gap_with": "Recoater carriage block (6061)",
+     "arm_clear": 8.0,
+     "arm_clear_with": "held:F28:Dose chute to Liner pull tab, left (316L, 2 mm hanger: a web fro",
+     "docks": [
+      1350.0
+     ],
+     "fetch": "PASS"
+    }
+   ],
+   "time_s": {
+    "F18": {
+     "seconds": 243.1,
+     "robot_A_s": 119.5,
+     "robot_B_s": 123.6,
+     "status": "pass"
+    },
+    "F19": {
+     "seconds": 0.0,
+     "robot_A_s": 0.0,
+     "robot_B_s": 0.0,
+     "status": "pass"
+    },
+    "F21": {
+     "seconds": 133.7,
+     "robot_A_s": 103.7,
+     "robot_B_s": 0.0,
+     "status": "pass"
+    },
+    "F22": {
+     "seconds": 79.1,
+     "robot_A_s": 79.1,
+     "robot_B_s": 0.0,
+     "status": "pass"
+    },
+    "F23": {
+     "seconds": 86.6,
+     "robot_A_s": 86.6,
+     "robot_B_s": 0.0,
+     "status": "pass"
+    },
+    "F24": {
+     "seconds": 109.5,
+     "robot_A_s": 109.5,
+     "robot_B_s": 0.0,
+     "status": "pass"
+    },
+    "F25": {
+     "seconds": 90.3,
+     "robot_A_s": 90.3,
+     "robot_B_s": 0.0,
+     "status": "pass"
+    },
+    "F25b": {
+     "seconds": 81.5,
+     "robot_A_s": 81.5,
+     "robot_B_s": 0.0,
+     "status": "pass"
+    },
+    "F25c": {
+     "seconds": 86.7,
+     "robot_A_s": 86.7,
+     "robot_B_s": 0.0,
+     "status": "pass"
+    },
+    "F26a": {
+     "seconds": 81.8,
+     "robot_A_s": 81.8,
+     "robot_B_s": 0.0,
+     "status": "pass"
+    },
+    "F27": {
+     "seconds": 76.0,
+     "robot_A_s": 76.0,
+     "robot_B_s": 0.0,
+     "status": "pass"
+    },
+    "F26": {
+     "seconds": 38.9,
+     "robot_A_s": 38.9,
+     "robot_B_s": 0.0,
+     "status": "pass"
+    },
+    "F28": {
+     "seconds": 117.7,
+     "robot_A_s": 117.7,
+     "robot_B_s": 0.0,
+     "status": "pass"
+    }
+   },
+   "rec_check": {
+    "samples": 6562,
+    "pairs_over_1p5mm": 0,
+    "worst": []
+   }
+  },
+  {
+   "steps": "F29 to F31 (recoater in the middle)",
+   "run": "ASM_FF_UNTIL=F29 ASM_STOP_AT=F32",
+   "rows": [
+    {
+     "id": "F29",
+     "do": "seal",
+     "actor": "A",
+     "sweep": "-",
+     "arm": "PASS",
+     "arm_clear": 0.9,
+     "arm_clear_with": "roller to Process chamber body (6061-T6 through-frame from 5",
+     "docks": [
+      1570.0,
+      1350.0,
+      1350.0
+     ]
+    },
+    {
+     "id": "F30",
+     "do": "place",
+     "actor": "A",
+     "sweep": "PASS",
+     "arm": "PASS",
+     "gap": 0.3,
+     "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+     "docks": [
+      1350.0
+     ],
+     "fetch": "PASS"
+    },
+    {
+     "id": "F30h",
+     "do": "screws",
+     "actor": "B",
+     "sweep": "PASS",
+     "arm": "PASS",
+     "n": 2,
+     "n_ok": 2,
+     "why": "1 of 20 screws under the holding arm's vacuum gripper (100 x 100 mm body)",
+     "driver": [
+      "screwdriver"
+     ],
+     "screws": [
+      {
+       "screw": "2",
+       "ok": true,
+       "arm": "B",
+       "driver": "screwdriver",
+       "clear": null,
+       "why": null
+      },
+      {
+       "screw": "10",
+       "ok": true,
+       "arm": "B",
+       "driver": "screwdriver",
+       "clear": null,
+       "why": null
+      }
+     ]
+    },
+    {
+     "id": "F31",
+     "do": "screws",
+     "actor": "A",
+     "sweep": "PASS",
+     "arm": "PASS",
+     "n": 18,
+     "n_ok": 18,
+     "arm_clear": 2.6,
+     "arm_clear_with": "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl",
+     "docks": [
+      1130.0,
+      1350.0,
+      1570.0
+     ],
+     "driver": [
+      "screwdriver"
+     ],
+     "screws": [
+      {
+       "screw": "1",
+       "ok": true,
+       "arm": "A",
+       "driver": "screwdriver",
+       "clear": [
+        2.6,
+        "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+       ],
+       "why": null
+      },
+      {
+       "screw": "3",
+       "ok": true,
+       "arm": "A",
+       "driver": "screwdriver",
+       "clear": [
+        2.6,
+        "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+       ],
+       "why": null
+      },
+      {
+       "screw": "4",
+       "ok": true,
+       "arm": "A",
+       "driver": "screwdriver",
+       "clear": [
+        2.6,
+        "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+       ],
+       "why": null
+      },
+      {
+       "screw": "5",
+       "ok": true,
+       "arm": "A",
+       "driver": "screwdriver",
+       "clear": [
+        2.6,
+        "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+       ],
+       "why": null
+      },
+      {
+       "screw": "6",
+       "ok": true,
+       "arm": "A",
+       "driver": "screwdriver",
+       "clear": [
+        2.6,
+        "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+       ],
+       "why": null
+      },
+      {
+       "screw": "7",
+       "ok": true,
+       "arm": "A",
+       "driver": "screwdriver",
+       "clear": [
+        2.6,
+        "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+       ],
+       "why": null
+      },
+      {
+       "screw": "8",
+       "ok": true,
+       "arm": "A",
+       "driver": "screwdriver",
+       "clear": [
+        2.6,
+        "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+       ],
+       "why": null
+      },
+      {
+       "screw": "9",
+       "ok": true,
+       "arm": "A",
+       "driver": "screwdriver",
+       "clear": [
+        2.6,
+        "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+       ],
+       "why": null
+      },
+      {
+       "screw": "11",
+       "ok": true,
+       "arm": "A",
+       "driver": "screwdriver",
+       "clear": [
+        2.6,
+        "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+       ],
+       "why": null
+      },
+      {
+       "screw": "12",
+       "ok": true,
+       "arm": "A",
+       "driver": "screwdriver",
+       "clear": [
+        2.6,
+        "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+       ],
+       "why": null
+      },
+      {
+       "screw": "13",
+       "ok": true,
+       "arm": "A",
+       "driver": "screwdriver",
+       "clear": [
+        2.6,
+        "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+       ],
+       "why": null
+      },
+      {
+       "screw": "14",
+       "ok": true,
+       "arm": "A",
+       "driver": "screwdriver",
+       "clear": [
+        2.6,
+        "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+       ],
+       "why": null
+      },
+      {
+       "screw": "15",
+       "ok": true,
+       "arm": "A",
+       "driver": "screwdriver",
+       "clear": [
+        2.6,
+        "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+       ],
+       "why": null
+      },
+      {
+       "screw": "16",
+       "ok": true,
+       "arm": "A",
+       "driver": "screwdriver",
+       "clear": [
+        2.6,
+        "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+       ],
+       "why": null
+      },
+      {
+       "screw": "17",
+       "ok": true,
+       "arm": "A",
+       "driver": "screwdriver",
+       "clear": [
+        2.6,
+        "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+       ],
+       "why": null
+      },
+      {
+       "screw": "18",
+       "ok": true,
+       "arm": "A",
+       "driver": "screwdriver",
+       "clear": [
+        2.6,
+        "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+       ],
+       "why": null
+      },
+      {
+       "screw": "19",
+       "ok": true,
+       "arm": "A",
+       "driver": "screwdriver",
+       "clear": [
+        2.6,
+        "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+       ],
+       "why": null
+      },
+      {
+       "screw": "20",
+       "ok": true,
+       "arm": "A",
+       "driver": "screwdriver",
+       "clear": [
+        2.6,
+        "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+       ],
+       "why": null
+      }
+     ]
+    }
+   ],
+   "time_s": {
+    "F29": {
+     "seconds": 108.9,
+     "robot_A_s": 66.1,
+     "robot_B_s": 42.8,
+     "status": "pass"
+    },
+    "F30": {
+     "seconds": 176.4,
+     "robot_A_s": 93.1,
+     "robot_B_s": 83.2,
+     "status": "pass"
+    },
+    "F31": {
+     "seconds": 564.7,
+     "robot_A_s": 564.7,
+     "robot_B_s": 0.0,
+     "status": "pass"
+    }
+   },
+   "rec_check": {
+    "samples": 5659,
+    "pairs_over_1p5mm": 0,
+    "worst": []
+   }
+  }
+ ]
+}
