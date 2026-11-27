@@ -197,10 +197,17 @@ def fastener_rules(kinds):
 
     def driver_on_screw(a, b):
         return (is_f(a) and RE_DRIVER.match(b) is not None) or (is_f(b) and RE_DRIVER.match(a) is not None)
+
+    def screw_in_insert(a, b):
+        sc = ("shcs", "fhcs", "set")
+        return (kinds.get(a) in sc and kinds.get(b) == "insert") or (kinds.get(b) in sc and kinds.get(a) == "insert")
     return [
         ("screw in its hole", screw_in_part, 40.0,
          "a socket-head, flat-head or set screw, insert, dowel or plunger drawn in its hole: its thread or shank is drawn "
          "inside the part it fastens (the CAD's holes are not threaded), up to 40 mm"),
+        ("screw in its insert", screw_in_insert, 40.0,
+         "a screw threaded into its threaded insert (round 9: chapter 41's 19 insert x screw pairs, up to 10.5 mm in round 8; "
+         "the inserts are drawn as solid sleeves), up to 40 mm"),
         ("driver on its screw", driver_on_screw, 30.0,
          "the nutrunner's or screwdriver's bit or socket on the screw it turns, up to 30 mm (the socket's depth)"),
     ]

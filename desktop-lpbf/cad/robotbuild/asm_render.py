@@ -66,7 +66,9 @@ CHAP = {"module": ("40-assembly-module", "Assembly 1: the build module, by two U
 # time-lapse factors per event kind (real seconds per real second shown); the renderer may raise them to fit the budget
 LAPSE = dict(drive=8.0, plan=1.5, cart=1.0, grip=1.0, screw=1.0, screw_rep=6.0, wait=40.0, turn=1.5, move2=1.5, tool=8.0)
 SHOT = dict(wide=3600.0, mid=1500.0, close=650.0)
-MAX_TRI = int(os.environ.get("ASM_MAX_TRI", "2500"))     # per object, for drawing only
+MAX_TRI = int(os.environ.get("ASM_MAX_TRI", "12000"))    # per object, for drawing only (round 9: the scene file's own 12,000;
+                                                         # round 8's 2,500 closed bores and counterbores, so tools and screws
+                                                         # in them read as tens of mm deep in the frame audit)
 
 
 def load_events(chapter):
@@ -810,6 +812,8 @@ def place_cands(loc):
         return [b, b + "_hi", b + "_end"]
     if k == "lane":
         return [f"lane_{loc[1]}"]
+    if k == "cell" and len(loc) > 1:      # a MiR driving between the cell's docks: the wide view, or down its lane
+        return ["cell", f"lane_{loc[1]}"]
     return ["cell"]
 
 
@@ -877,7 +881,9 @@ def _choose_segment(plan, scores, i0, i1, prev):
             if best is None or s < best[0]:
                 best = (s, c)
         if best is None:
-            best = (0.0, "cell" if prev != "cell" else ("bench" if g[3][0] != "bench" else "PT"))
+            alt = [c for c in ("cell", f"lane_{g[3][1]}" if g[3][0] in ("cell", "lane") and len(g[3]) > 1 else "PT", "B", "bench")
+                   if c != prev]
+            best = (0.0, alt[0])
         g[4] = best[1]
         prev = g[4]
     # shots: groups with one camera merged
@@ -1348,7 +1354,7 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
             away.pop(n, None)                     # drawn: the MiR is seen leaving or coming back
             rt = e.get("route")
             chk = e.get("check") or {}
-            loc = ("lane", n) if max(e["x0"], e["x1"]) > TABLE_X else ("cell",)
+            loc = ("lane", n) if max(e["x0"], e["x1"]) > TABLE_X else ("cell", n)
             T_all = float(e["dur"])
             for f in range(nf):
                 t = T_all * (f + 1) / nf
