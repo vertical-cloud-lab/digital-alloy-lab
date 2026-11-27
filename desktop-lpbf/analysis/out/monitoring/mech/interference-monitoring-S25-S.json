@@ -2,12 +2,12 @@
  "variant": "S25 module, S reservoir",
  "vol_tol_mm3": 0.5,
  "chord_mm": 0.05,
- "n_parts": 316,
+ "n_parts": 328,
  "states": [
   {
    "state": "closed, parked, piston up",
    "pose": {},
-   "pairs_checked": 2113,
+   "pairs_checked": 2171,
    "interferences": []
   },
   {
@@ -16,7 +16,7 @@
     "recoater": 206.0,
     "piston": -42.0
    },
-   "pairs_checked": 2064,
+   "pairs_checked": 2122,
    "interferences": []
   },
   {
@@ -26,7 +26,7 @@
     "gdoor": 515.0,
     "piston": 8.0
    },
-   "pairs_checked": 2126,
+   "pairs_checked": 2184,
    "interferences": []
   },
   {
@@ -37,7 +37,7 @@
     "cartridge": -125.0,
     "drawer": -120.0
    },
-   "pairs_checked": 2082,
+   "pairs_checked": 2140,
    "interferences": []
   },
   {
@@ -47,7 +47,7 @@
     "module": 40.0,
     "gdoor": 515.0
    },
-   "pairs_checked": 2031,
+   "pairs_checked": 2089,
    "interferences": []
   },
   {
@@ -56,7 +56,7 @@
     "_calibration": 1.0,
     "door": 95.0
    },
-   "pairs_checked": 2125,
+   "pairs_checked": 2183,
    "interferences": []
   }
  ],
@@ -4100,7 +4100,7 @@
   },
   {
    "group": "piston",
-   "at": -39.92,
+   "at": -21.17,
    "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
    "other": "Laser guard panels (1.5 mm aluminium)",
    "gap_mm": 193.0
@@ -4233,6 +4233,13 @@
   },
   {
    "group": "piston",
+   "at": -21.17,
+   "moving": "Striker disc S25 (416 stainless, on the pot magnet)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 202.304
+  },
+  {
+   "group": "piston",
    "at": -42.0,
    "moving": "Plate rim wiper S25 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
    "other": "Laser guard panels (1.5 mm aluminium)",
@@ -4247,13 +4254,6 @@
   },
   {
    "group": "piston",
-   "at": -23.25,
-   "moving": "Striker disc S25 (416 stainless, on the pot magnet)",
-   "other": "Laser guard panels (1.5 mm aluminium)",
-   "gap_mm": 202.304
-  },
-  {
-   "group": "piston",
    "at": -42.0,
    "moving": "Build plate S25 (\u00d825.2 x 10, 6061-T6; bayonet spigot, gripper groove)",
    "other": "Laser guard panels (1.5 mm aluminium)",
@@ -4261,7 +4261,7 @@
   },
   {
    "group": "piston",
-   "at": -17.0,
+   "at": 8.0,
    "moving": "Pot magnet (NdFeB in a steel cup, \u00d825 x 7, 44 lbf, holds the rod's striker)",
    "other": "Laser guard panels (1.5 mm aluminium)",
    "gap_mm": 202.504
@@ -5614,7 +5614,7 @@
    "group": "cartridge",
    "at": 0.0,
    "moving": "Reservoir S (38 cm3, 304 SS wedge hopper, 45 mm outlet for the S25 module; same 30 x 112 mm dock plate for every size)",
-   "other": "LP camera filters (FBH850-10 + FESH1000 in an SM1 holder; envelope)",
+   "other": "LP camera filters (FBH850-10 + FESH1000 in an SM1 holder on a 5 mm G-10 ring; envelope)",
    "gap_mm": 15.85
   },
   {
@@ -5635,6 +5635,13 @@
    "group": "cartridge",
    "at": 0.0,
    "moving": "Reservoir S (38 cm3, 304 SS wedge hopper, 45 mm outlet for the S25 module; same 30 x 112 mm dock plate for every size)",
+   "other": "G-10 thermal break ring under the LP camera's filter holder (\u00d832 x \u00d825.4 x 5 mm, SM1-threaded both ends)",
+   "gap_mm": 16.473
+  },
+  {
+   "group": "cartridge",
+   "at": 0.0,
+   "moving": "Reservoir S (38 cm3, 304 SS wedge hopper, 45 mm outlet for the S25 module; same 30 x 112 mm dock plate for every size)",
    "other": "LP window retaining ring (SM1-class threaded ring, bottoms on the boss)",
    "gap_mm": 18.473
   },
@@ -5642,7 +5649,7 @@
    "group": "cartridge",
    "at": 0.0,
    "moving": "Reservoir S shutter (shown open, as docked; in a slot closed at both ends, springs shut when the reservoir slides out)",
-   "other": "LP camera filters (FBH850-10 + FESH1000 in an SM1 holder; envelope)",
+   "other": "LP camera filters (FBH850-10 + FESH1000 in an SM1 holder on a 5 mm G-10 ring; envelope)",
    "gap_mm": 19.982
   },
   {
@@ -5651,6 +5658,13 @@
    "moving": "Reservoir S shutter (shown open, as docked; in a slot closed at both ends, springs shut when the reservoir slides out)",
    "other": "LP camera lens (Kowa LM50JC10M, 50 mm C-mount; envelope \u00d832 x 45)",
    "gap_mm": 20.118
+  },
+  {
+   "group": "cartridge",
+   "at": 0.0,
+   "moving": "Reservoir S shutter (shown open, as docked; in a slot closed at both ends, springs shut when the reservoir slides out)",
+   "other": "G-10 thermal break ring under the LP camera's filter holder (\u00d832 x \u00d825.4 x 5 mm, SM1-threaded both ends)",
+   "gap_mm": 20.52
   },
   {
    "group": "cartridge",
@@ -10975,5 +10989,5 @@
    "why": "tube in the valve's push-in port"
   }
  ],
- "runtime_s": 235.4
+ "runtime_s": 199.0
 }

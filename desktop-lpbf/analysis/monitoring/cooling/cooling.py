@@ -90,6 +90,9 @@ def h_rad(eps, T):
     return eps * 4 * SIG * (T + 273.15) ** 3
 
 
+EPS_PANEL = [0.07]                                     # bare 5052; a sensitivity sets it to 0.9 (painted)
+
+
 def guard_passive_UA(T_g, T_s):
     """panels (bare 5052, eps 0.07 both faces; the PC viewing window eps 0.9) and the base plate's underside, from the guard's air
     to the Shuttle's air: inside convection, sheet, outside convection + radiation in series"""
@@ -102,7 +105,7 @@ def guard_passive_UA(T_g, T_s):
     A_al = 2 * A_side + 2 * A_fb - A_win
     dT = max(abs(T_g - T_s), 0.5)                         # the guard may be cooler than the Shuttle (dock air, fan coil)
     Tm = 0.5 * (T_g + T_s)
-    eps_al, eps_pc = 0.07, 0.9
+    eps_al, eps_pc = EPS_PANEL[0], 0.9
     hi = h_vert(dT / 2, H) + h_rad(eps_al, Tm) * 0.5          # inside: convection, little radiation between bare sheets
     ho = h_vert(dT / 2, H) + h_rad(eps_al, Tm)
     U_al = 1 / (1 / hi + 1 / ho)
@@ -289,7 +292,7 @@ def device_T(dev, T_air, T_wall, T_mount, load, v=0.0, brk=False, eps_wall=0.1):
 
 
 # ================================================================================================ configurations
-def guard_air(T_s, load, config, q_ex=0.0, T_in=None, T_w=60.0, eps_w=0.1, T_water=20.0, fan_W=0.0):
+def guard_air(T_s, load, config, q_ex=0.0, T_in=None, T_w=60.0, eps_w=0.1, T_water=20.0, fan_W=0.0, leak_m3h=0.0):
     """steady guard air (°C) for a configuration; returns T_g, the chamber's release, and the heat balance"""
     Qd = device_sum(load) + fan_W
 
@@ -303,7 +306,8 @@ def guard_air(T_s, load, config, q_ex=0.0, T_in=None, T_w=60.0, eps_w=0.1, T_wat
         Q_coil = 0.0
         if config == "fan_coil":
             Q_coil = 15.0 * (T_g - T_water)                               # 120 mm radiator + fan, UA ~15 W/K (estimate)
-        return Qd + Qc - UA * (T_g - T_s) - Q_vent - Q_coil
+        Q_leak = RHO_AIR * CP_AIR * leak_m3h / 3600 * (T_g - T_s)
+        return Qd + Qc - UA * (T_g - T_s) - Q_vent - Q_coil - Q_leak
     T_g = brentq(resid, -20.0, 200.0)
     UA, ua = guard_passive_UA(T_g, T_s)
     v = 0.25 if config in ("vent_shuttle", "vent_dock") else 0.0
@@ -363,6 +367,16 @@ def run():
             pb2["pb2_sealed_soc_c"] = pb2_and_pis(T_g, c["load"], vented=False)["pb2_soc_c"]
             res[f"{ck}/{gk}"] = dict(shuttle=c, config=g["what"], T_in=round(T_in, 1) if T_in is not None else None, guard=bal,
                                      bridge_c=round(Tbr, 1), devices=rows, pis=pb2)
+    # sensitivities of the closed guard (typical case): painted panels (eps 0.9 both faces), and seams leaking 5 or 15 m3/h
+    sens = {}
+    T_s0 = cases["typical"]["T_s"]
+    EPS_PANEL[0] = 0.9
+    sens["painted panels (eps 0.9)"] = round(guard_air(T_s0, "typical", "as_drawn")[0], 1)
+    EPS_PANEL[0] = 0.07
+    for lk in (5.0, 15.0):
+        sens[f"seams leaking {lk:.0f} m3/h"] = round(guard_air(T_s0, "typical", "as_drawn", leak_m3h=lk)[0], 1)
+    sens["chamber wall anodised outside (eps 0.8), vented, Shuttle air"] = round(guard_air(T_s0, "typical", "vent_shuttle", q_ex, T_s0, eps_w=0.8,
+                                                                                         fan_W=fan_W)[0], 1)
     traps = trap_results()
     alt = {}
     for nm in ("AFB1224M",):
@@ -385,7 +399,7 @@ def run():
                 b[gk] = dict(added_W=6.0, removed_W=round(g["Q_coil_W"], 1), shuttle_change_K=round((6.0 - g["Q_coil_W"]) * shuttle_k_per_W, 2),
                              chiller_load_W=round(g["Q_coil_W"], 1))
         budget[ck] = b
-    return dict(cases=cases, room_c=room, operating_point=op, alternative_fans=alt, hood=hood, trap=traps, results=res, shuttle_budget=budget,
+    return dict(cases=cases, room_c=room, operating_point=op, alternative_fans=alt, sensitivity_typical_guard_air_c=sens, hood=hood, trap=traps, results=res, shuttle_budget=budget,
                 sources={k: dict(W_typical=v[0][0], W_worst=v[0][1], basis=v[1]) for k, v in SOURCES.items()},
                 chamber=dict(A_out_m2=round(A_CH, 3), G_legs_W_per_K=round(G_LEGS, 2), T_wall_c=60.0,
                              note="the 60 C wall is thermal.json's hot-chamber bound, not a result: a typical build puts ~300 W into the "

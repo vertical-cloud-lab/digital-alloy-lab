@@ -45,6 +45,12 @@
    "fan_power_W": 5.76
   }
  },
+ "sensitivity_typical_guard_air_c": {
+  "painted panels (eps 0.9)": 50.5,
+  "seams leaking 5 m3/h": 53.4,
+  "seams leaking 15 m3/h": 47.8,
+  "chamber wall anodised outside (eps 0.8), vented, Shuttle air": 36.4
+ },
  "hood": {
   "q_m3h": 20.4,
   "dp_Pa": 16.0,
@@ -60,7 +66,7 @@
    "n": 6,
    "p": 10.0,
    "t": 1.0,
-   "finish": "black anodised 5052 or 6061 (MIL-A-8625 Type II, class 2 black)"
+   "finish": "black hard anodise (integral colour), or dyed black anodise lined with Thorlabs BKF12 foil"
   },
   "flow": {
    "phi_deg": 61.9,

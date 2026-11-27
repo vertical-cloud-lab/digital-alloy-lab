@@ -51,7 +51,7 @@ PB2 sealed (as drawn) / with its 40 mm fan, box air and SoC (°C): typical/vent_
 
 ## Light traps (1070 nm)
 
-Chevron: {'D': 32.0, 'A': 10.0, 'n': 6, 'p': 10.0, 't': 1.0, 'finish': 'black anodised 5052 or 6061 (MIL-A-8625 Type II, class 2 black)'}; flow {'phi_deg': 61.9, 'gap_mm': 3.71, 'porosity': 0.371, 'K_turns': 10.7, 'K_total': 18.11, 'Re_at_1p5': 654}. Required OD 5.4 (safety.md §4.2: guard window or filter OD for Class 1 behind it, direct 500 W; OD 7 passes 50 uW).
+Chevron: {'D': 32.0, 'A': 10.0, 'n': 6, 'p': 10.0, 't': 1.0, 'finish': 'black hard anodise (integral colour), or dyed black anodise lined with Thorlabs BKF12 foil'}; flow {'phi_deg': 61.9, 'gap_mm': 3.71, 'porosity': 0.371, 'K_turns': 10.7, 'K_total': 18.11, 'Re_at_1p5': 654}. Required OD 5.4 (safety.md §4.2: guard window or filter OD for Class 1 behind it, direct 500 W; OD 7 passes 50 uW).
 
 | Surface | rho | specular share | OD, diffuse light | OD, worst collimated beam (angle) | fewest bounces through |
 |---|---:|---:|---:|---:|---:|

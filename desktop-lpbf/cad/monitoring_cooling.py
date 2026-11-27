@@ -7,8 +7,8 @@ What is drawn (all tagged "monitoring"; every part's name says "envelope" where 
   * an INLET in the guard's back panel, low on the left (x -394..-218, z -118..202): a filter pad in a frame outside, a
     chevron light trap (six-leg blades, black anodised) inside, and behind the trap's right-hand part a plenum and a duct
     with a 60 mm fan that carry part of the inlet air over the side camera and down into a hood round its body;
-  * the HOOD round the Chronos 2.1-HD: top, sides and back of 1 mm aluminium, open at the lens end, so the duct's air runs
-    along the camera body and leaves past the lens toward the LW port;
+  * the HOOD round the Chronos 2.1-HD: sides, back and floor of 1 mm aluminium, the duct's floor as its top, open at the lens
+    end, so the duct's air runs along the camera body and leaves past the lens toward the LW port;
   * an EXHAUST in the back panel on the right (x 40..284, z 108..338): the same chevron trap inside, and two 120 mm
     24 V fans on a short plenum outside, blowing out of the guard toward the tray's back edge (or into a dock duct);
   * G-10 thermal breaks: a 6 mm pad between the side camera bracket's root and the chamber floor plate (the bracket's root
@@ -31,14 +31,15 @@ GUARD = dict(x0=-420.0, x1=310.0, y0=-265.0, y1=215.0, z0=-160.0, z1=366.11, pan
 
 # ------------------------------------------------------------------------------------------------- chevron light trap
 # blades: 1 mm aluminium sheet bent to six legs (three V's) across the trap's 32 mm depth, 10 mm pitch, 10 mm amplitude: no
-# straight line through it (amplitude >= pitch). Black anodised (Type II, black dye). trap_mc.py traces it.
-LOUVRE = dict(D=32.0, A=10.0, n=6, p=10.0, t=1.0, finish="black anodised 5052 or 6061 (MIL-A-8625 Type II, class 2 black)")
+# straight line through it (amplitude >= pitch). trap_mc.py traces it (monitoring/cooling.md §5: OD 7.0-8.1 with hard black anodise).
+LOUVRE = dict(D=32.0, A=10.0, n=6, p=10.0, t=1.0,
+              finish="black hard anodise (integral colour), or dyed black anodise lined with Thorlabs BKF12 foil")
 
 # the back panel's inner face is y = 215; the traps' blades sit at y 181.5..213.5 and their frame's flange touches the panel
 Y_TRAP = (215.0 - 1.5 - LOUVRE["D"], 215.0 - 1.5)
 INLET = dict(x=(-394.0, -218.0), z=(-118.0, 202.0), what="inlet: filter outside, trap inside; back panel, low left")
 EXHAUST = dict(x=(40.0, 284.0), z=(108.0, 338.0), what="exhaust: trap inside, two 120 mm fans outside at its top; back panel, right")
-FILTER = dict(t=10.0, frame_t=1.5, media="polyester or polyurethane filter pad, 10 mm (G3/G4 class)")
+FILTER = dict(t=10.0, frame_t=1.5, media="30 ppi polyurethane foam pad, 1/4 in.")
 
 # plenum behind the inlet trap's right-hand part, duct over the side camera, hood round its body
 PLENUM = dict(x=(-283.0, -218.0), y=(150.0, Y_TRAP[0]), z=(-118.0, 202.0))
@@ -116,7 +117,7 @@ def draw(parts, add, h, module="M50"):
         frame = [box(x0 - fr, x0, y_in, y_out + 1.5, z0 - fr, z1 + fr), box(x1, x1 + fr, y_in, y_out + 1.5, z0 - fr, z1 + fr),
                  box(x0, x1, y_in, y_out + 1.5, z0 - fr, z0), box(x0, x1, y_in, y_out + 1.5, z1, z1 + fr)]
         add(f"{name} light trap: {nb} chevron blades (1 mm aluminium, six legs, 10 mm pitch, 32 mm deep), black anodised, in a 2 mm frame "
-            f"on the back panel's inside", comp(blades + frame), C["black"], 12, (0, 180, 0), mat="al6061", mass_kg=0.0027 * nb * (x1 - x0) / 10.0,
+            f"on the back panel's inside", comp(blades + frame), C["black"], 12, (0, 180, 0), mat="al6061", mass_kg=round(1.84e-4 * nb * (x1 - x0) + 0.15, 2),
             bom=bom, tags=TAG)
         return nb
 

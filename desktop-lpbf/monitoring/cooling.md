@@ -19,7 +19,7 @@ part's name says "envelope".
 1. **The cameras don't sit in the Shuttle's air. They sit in the guard's air, which is much warmer.** The guard is a closed box of bare
    1.6 mm aluminium (1.62 m² of panels; UA ≈ 3.9 W/K to the Shuttle by natural convection and the little a bare sheet radiates). Inside
    it, 100–190 W is released besides the chamber's own heat: the galvo (30–69 W), two servos, PB2, the Chronos (20–40 W), the
-   photodiodes and the beam path's absorbers. **As drawn, the guard's air runs 28–44 K above the Shuttle's: 58 °C in the typical case,
+   photodiodes and the beam path's absorbers. **As drawn, the guard's air runs 26–44 K above the Shuttle's: 58 °C in the typical case,
    64 °C in the busy one, 86 °C in the worst one.** That is a lower bound: once the air passes the chamber's 60 °C wall the model
    counts nothing from the chamber, whose input in a typical build is ~300 W. Every camera, both photodiodes, the LED, the lenses,
    PB2's Pi and the galvo are over their ratings in every case (§3).
@@ -32,7 +32,8 @@ part's name says "envelope".
    inlet air is ducted by a 60 mm fan over the side camera and down into a hood round its body. G-10 breaks go under the side camera
    bracket's root, which bolts to the chamber's floor plate, and into the LP camera's filter holder, which screws onto the boss on the
    60 °C lid. PB2 gets a 40 mm fan and the Pi its Active Cooler. The LP camera's Pi, which had no place in the model, is drawn in a
-   fanless heat-sink case on the bridge. **The guard's air then sits 4.6–6.2 K above the air it is fed.**
+   fanless heat-sink case on the bridge. **The guard's air then sits 5–10 K above the air it is fed:** 5–6 K on the Shuttle's air,
+   7–10 K on cooler air from the dock, which also takes in the warm Shuttle's heat through the panels.
 4. **Fed from the Shuttle, that is enough in the typical case and not in the busy one.** At 30.2 °C the guard is at 35.6 °C: everything
    is in rating, with the galvo at its limit (35.6 against 35). At 38.0 °C the guard is at 42.7 °C: the photodiodes, the LED, the
    galvo and the coaxial camera's board are over, and the Chronos, in its hood, is at 38.5 against 40. **So the cameras need the
@@ -41,7 +42,8 @@ part's name says "envelope".
    as well (33.6–34.5 °C), with the galvo close to its limit. Whichever is chosen for the laser should be sized for the guard too.
 5. **The worst case (500 W continuous) still has one over, even with room air:** the coaxial camera's board, at 51.8 against 50 °C. The
    galvo heats the optics bridge 20 K above the guard's air, and the cage stands on posts on the bridge.
-6. **The light traps meet the Class 1 requirement with ordinary black anodise.** Each trap is a stack of 1 mm blades bent to six legs,
+6. **The light traps meet the Class 1 requirement (OD 5.4) with black anodise; OD 7, the margin, needs hard black anodise or a foil
+   lining.** Each trap is a stack of 1 mm blades bent to six legs,
    32 mm deep at a 10 mm pitch, with no straight line through it. For black hard anodise (11–20 % at 1 µm, NASA TP-3595) the trace
    gives OD 7.0–8.1 for the worst collimated beam and 7.9–9.2 for diffuse light, against **OD 5.4 needed** (safety.md §4.2, a direct
    500 W beam). Dyed black anodise (~29 % above 700 nm, Anoplate's chart) gives 6.1. Any finish under ~0.38 meets 5.4. Lining the
@@ -83,17 +85,19 @@ Read 2026-11-27 08:25–08:35 UTC through the lab tunnel; the URLs and the exact
   checks the board's own temperature against the range.
 - **The InnoMaker board has no rating,** so the Pi Global Shutter Camera's 0–50 °C, the same sensor on a similar board, stands in for it.
   Ask InnoMaker, or measure the board's temperature on the bench at 45 °C.
+- **PB1 holds no Pi.** It is the power box beside the rack, outside the guard, and electrical.md already gives it a 27 CFM filter fan.
+  The Pis are PB2's, on the bridge, and the LP camera's second Pi, which this round places beside it (§4).
 
 ## 2. The guard's air
 
 `cooling.py` balances the guard as one well-mixed volume of air:
 
 - **In:** the devices (galvo 30 / 69 W typical / worst, Z and recoater servos 20 W, dosing stepper 5–10 W, PB2 8–12 W, the LP camera's
-  Pi 5–8 W, the Chronos 20–40 W, two PDA36A2 4–10 W, the LED 1–5 W, the AE preamp 1–2 W, the layer camera 1 W, and 5–12 W in the beam
+  Pi 5–8 W, the Chronos 20–40 W, the two IMX296 boards 1.5–2 W, two PDA36A2 4–10 W, the LED 1–5 W, the AE preamp 1–2 W, the layer camera 1 W, and 5–12 W in the beam
   path). Most of these are the tray budget's or electrical's estimates; the camera numbers are the vendors' ratings, or half of them
   where only a rating is published. Then there is **the chamber's outside**, taken at **60 °C**, thermal.json's hot-chamber bound. It
   gives up its heat by natural or mixed convection over 0.27 m², radiates from bare 6061 (ε 0.1), and conducts down the four legs
-  into the base plate. That comes to 70–130 W with the guard ventilated.
+  into the base plate. That comes to 40–130 W with the guard ventilated.
 - **Out:** the panels, by natural convection on both faces and the little bare 5052 radiates (ε 0.07). The polycarbonate viewing
   window radiates more (ε 0.9). Heat also leaves down through the base plate. In total UA ≈ 3.9 W/K. With the cooling, add the exhaust
   flow, or the fan coil's 15 W/K to 20 °C water (an estimate for a 120 mm radiator and fan).
@@ -114,9 +118,11 @@ Read 2026-11-27 08:25–08:35 UTC through the lab tunnel; the URLs and the exact
 | out with the exhaust air, or into the coil (W) | – | 202 | 251 | 203 |
 
 - **The closed guard is the problem, more than the Shuttle's temperature.** With ~100 W inside and 3.9 W/K out, it runs 26 K over its
-  surroundings before the chamber adds anything.
+  surroundings before the chamber adds anything. It stays well over them if the guess is wrong (typical case, `cooling.json`
+  `sensitivity_typical_guard_air_c`): with painted panels (ε 0.9) it is at 50.5 °C, and with seams leaking 5 or 15 m³/h of air it is
+  at 53.4 or 47.8 °C. An anodised chamber outside (ε 0.8) adds 0.8 K to the vented case.
 - **The 60 °C chamber wall is a bound, not a result.** In a typical build the heaters put ~97 W into the module and the beam 210 W into
-  the chamber. A 60 °C outside passes 70–130 W of that to the guard and its legs. The rest has to leave by the gas loop, or the
+  the chamber. A 60 °C outside passes 40–130 W of that to the guard and its legs. The rest has to leave by the gas loop, or the
   chamber runs hotter than thermal.json assumes. Nobody has closed the chamber's own balance (§10).
 
 ## 3. Device temperatures, before and after
@@ -172,7 +178,8 @@ air, the guard is at 48.8 °C, and the Chronos's hood air at 43.1 °C. All the c
 SoCs (90, 84) are over. With dock air, only the coaxial camera's board (51.8 against 50, on a 53.0 °C bridge) is over. With the fan
 coil, the coaxial camera (59.9), the Alvium (61.3), the galvo (39.2) and PB2's SoC (80.6) are over.
 
-- **What each part of the cooling does.** Ventilation does most of it, by taking the guard from +28–44 K to +4.6–6.2 K over its supply.
+- **What each part of the cooling does.** Ventilation does most of it, by taking the guard from 26–44 K over the Shuttle to 5–10 K over
+  its supply.
   The hood puts the Chronos in supply air instead of guard air, 4–6 K cooler, which keeps it in rating in the busy case on Shuttle air
   (38.5 against 42.7). The G-10 pad cuts the bracket's 1.3 W/K from the 60 °C floor plate to 0.1 W/K. The G-10 ring cuts the LP camera's
   link to its 60 °C boss from 0.4 to 0.017 W/K: in the typical vented case that board would be 54 °C without the ring, over its 50,
@@ -214,7 +221,18 @@ coil, the coaxial camera (59.9), the Alvium (61.3), the galvo (39.2) and PB2's S
 
 ### 4.1 Interference
 
-PENDING
+[`interference.py`](../analysis/interference.py) with `LPBF_MONITORING=1`, 330 parts, on M50, S25 and L75. The cooling parts touch the
+panel, the floor plate, PB2 and the LP ring face to face, so they add no volume to any pair; nine designed contacts declare them anyway.
+
+| Module | Run (UTC) | Static states | Motion sweeps | Peak memory |
+|---|---|---|---|---|
+| M50 | 09:27–09:31 | 0 interferences in all six | 0 in all eight | 3.57 GB |
+| S25 | 09:31–09:34 | 0 interferences in all six | 0 in all eight | 3.65 GB |
+| L75 | L75_PENDING | | | |
+
+The reports are [`interference-monitoring-M50-M.md`](../analysis/out/monitoring/mech/interference-monitoring-M50-M.md) and its S25
+and L75 siblings. Tightest static gaps between the cooling parts and the rest (exact OpenCascade distances, closed state):
+GAPS_PENDING
 
 ## 5. The light traps: OD at 1070 nm
 
@@ -242,7 +260,7 @@ from −85° to +85° in 5° steps, keeping the worst.
 - **Black anodise is enough if it is black at 1 µm.** Dyes that look black can be bright in the near infrared: Thorlabs' flocked paper
   is 66 % and its hardboard ~80 %. Order integral-colour (hard) black, measure a blade's 1064 nm reflectance before fitting, or line the
   blades with BKF12. Thorlabs says BKF12 is "not intended for use in laser safety applications", so the guard's leakage test with a
-  power meter before first light (safety.md §12) stays the deciding check.
+  power meter before first light (safety.md §14) stays the deciding check.
 - **A stationary direct beam is a different fault.** A black blade absorbs ~90 % of a beam where the bare panel absorbs ~8 %, so a
   500 W beam held on a blade would melt it where the panel might survive. The traps are off every straight path of the beam (§4), and
   safety.md's burn test of the panels should include a trap.
@@ -261,8 +279,8 @@ from −85° to +85° in 5° steps, keeping the worst.
 | PB2 fan | Noctua NF-A4x10 24V: 8.9 m³/h free air, 19 Pa, 19.6 dB(A); ~5 m³/h through PB2 | CL91; flow estimated |
 | Filter | 30 ppi polyurethane foam, ~20 Pa at 1 m/s taken | no maker publishes a pressure drop for these: estimate |
 
-Seam leakage is ignored. The exhaust fans hold the guard a few pascals under the Shuttle, so the seams draw air in rather than letting
-it out. The fans take ~17 W from the 24 V CTRL rail (2 × 6.7 + 2.2 + 1.1 W).
+Seam leakage is ignored. The exhaust fans hold the guard ~37 Pa under the Shuttle (the inlet filter's and trap's drop), so the seams
+draw air in rather than letting it out. The fans take ~17 W from the 24 V CTRL rail (2 × 6.7 + 2.2 + 1.1 W).
 
 ## 7. What it does to heat.md's budget
 
@@ -301,9 +319,9 @@ From [`monitoring-bom.csv`](../monitoring-bom.csv) (rebuilt by `build_bom.py`), 
 
 ## 9. What this changes in files it doesn't own (not made here)
 
-- **[`mechanics.md`](mechanics.md) Checks §7:** the flag should read: *"The guard's air is not the Shuttle's. Closed, it runs 28–44 K
+- **[`mechanics.md`](mechanics.md) Checks §7:** the flag should read: *"The guard's air is not the Shuttle's. Closed, it runs 26–44 K
   over it (cooling.md §2), and every camera, the photodiodes, PB2's Pi and the galvo are over their ratings. With the drawn vents it
-  sits 4.6–6.2 K over its supply. That is in rating on 30 °C Shuttle air, but not on the busy case's 38–43 °C. The supply has to be
+  sits 5–10 K over its supply. That is in rating on 30 °C Shuttle air, but not on the busy case's 38–43 °C. The supply has to be
   room air from a ventilated dock, or a chilled-water fan coil, decided with the laser."* Its Chronos row becomes −20 to +40 °C (Kron),
   and the IMX296 row 0–50 °C (the Pi GS camera; InnoMaker publishes none). The bracket row gains the G-10 pad.
 - **[`monitoring.md`](../monitoring.md):** add the cooling to §4 step 0 (M0-C1 to C8) and step 7 (M7-C1 to C4), and to §9's model list.
@@ -315,9 +333,9 @@ From [`monitoring-bom.csv`](../monitoring-bom.csv) (rebuilt by `build_bom.py`), 
   inside the guard. The 24 V CTRL rail gains ~17 W of fans. The LP camera's Pi now has a place: on the bridge, x −190…−96, y 117…179.
 - **[`safety.md`](../safety.md):** two new light-trapped openings in the guard's back panel. Show them to the LSO, and include a trap in
   the panel burn test and the leakage check before first light.
-- **README / bom.csv:** no change to bom.csv. The cooling is in monitoring-bom.csv (steps 0 and 7).
-- **`analysis/interference.py`:** it now needs ~3.5 GB. The S25 run peaks at 3.46 GB with or without the cooling parts, so the 3 GB cap
-  in the round's rules kills it right after meshing. It was run here with a 4 GB cap.
+- **README:** list this note with the other monitoring notes. **bom.csv:** no change; the cooling is in monitoring-bom.csv (steps 0 and 7).
+- **`analysis/interference.py`:** it now needs ~3.6 GB. M50 peaked at 3.57 GB, and S25 at 3.46 GB in its first state with or without
+  the cooling parts, so the round's 3 GB cap kills it right after meshing. It was run here with a 4 GB cap.
 
 ## 10. Not done / limits
 
@@ -335,14 +353,15 @@ From [`monitoring-bom.csv`](../monitoring-bom.csv) (rebuilt by `build_bom.py`), 
 - **The traps' OD is a 2-D trace with Lambertian-plus-specular surfaces.** Black anodise's reflectance at 1 µm comes from one NASA
   sample (hard anodise) and one anodiser's chart (dyed); no maker of black anodise publishes it. Measure a blade. The traps' end walls,
   frames and rivets are not traced, and neither is a stationary beam's burn-through.
-- **The Chronos's fan** is taken as 25 W/m²K over its body; Kron publishes no flow. Its sensor runs 40–55 °C in a room (Kron's manual),
-  so check its on-screen temperature in the built guard.
+- **The Chronos's fan** is taken as 25 W/m²K over its body; Kron publishes no flow. If it draws more than the duct's ~20 m³/h, it
+  also pulls guard air in at the hood's open end. Its sensor runs 40–55 °C in a room (Kron's manual), so check its on-screen
+  temperature in the built guard.
 - **Not drawn:** the fan coil, PB2's filtered vent and Active Cooler (inside PB2, a closed envelope in the model), the G-10 shoulder
   washers, cables, the trap blades' rivets, and G-10 pads under the cage's posts (§3).
 - **Not checked:** noise in the Shuttle (2 × 46.5 dB(A)); the filter's loading and when to change it; condensation on a fan coil (20 °C
-  water against the Shuttle's dew point); whether the robot's reach or its camera's view of the AprilTags is affected (the traps are on
-  the back panel, away from the door).
-- **No LSO review** of the openings.
+  water against the Shuttle's dew point); the robot's reach against the hood, whose −y side stands 9 mm further toward the door than
+  the Chronos did (the traps are on the back panel, away from the door and the AprilTags).
+- **No LSO review** of the openings, and no shop review of the bent blades (55 blades, ~275 bends).
 
 ## Sources
 
