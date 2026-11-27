@@ -430,8 +430,14 @@ model's checks cover the half-shell version only.
   back. The FEA's addendum ran that frame as drawn here (43.1 / 59.7 / 67.2 Hz: the front portal racking in x, and the
   head nodding on its 12 mm flange plate), so this model adds 80 mm knee braces in the front portal (above the lid's
   swing; the lid hinges at the back, so its front edge never comes forward of the box) and a top flange with three
-  gussets on MK-09. That braced version has not been run in the FEA yet. `P["gantry"]` selects
-  `"four_post_braced_front"` (default), `"four_post"` (the FEA addendum's model) or `"two_post"` (round 1).
+  gussets on MK-09. The FEA ran that braced version (50.0 / 66.9 / 93.5 Hz, up from 43.1 / 59.7 / 67.2; the frame no
+  longer racks, and the first modes are the head swinging on the flange plate's lower part, below the beams).
+  `"four_post_braced_front_g2"` answers that: its three gussets (8 mm) sit under the head's footprint, at y = -100.6
+  (between the front bracket and the mirror block), -15 and 15 (-55 is taken by the input turret), and run down to the
+  plate's bottom edge. It is checked for clashes only (S1, FT-1, FT-1V, the Thorlabs variant: none) and is not the
+  default; the renders, STEP files and `out/checks.md` are on `"four_post_braced_front"`. `P["gantry"]` selects
+  `"four_post_braced_front"` (default), `"four_post_braced_front_g2"`, `"four_post"` (the FEA addendum's model) or
+  `"two_post"` (round 1).
 - **Not drawn:** the Lesker BX1212S (no STEP without a login); the gas plumbing outside the enclosure; O-ring grooves;
   the face seal under the gland; the half-shells' toggle clamps and their seam; wiring outside the enclosure.
 - **Not run here:** FEA, CFD and thermal FE are in [`../analysis/`](../analysis/) (round 2 workers). The heat numbers in
