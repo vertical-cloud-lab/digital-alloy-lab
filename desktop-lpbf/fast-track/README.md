@@ -112,6 +112,7 @@ in headed Chrome with real mouse clicks. Each finding below links the folder wit
 | **Process window** from a melt-pool model calibrated on 15 published AlSi10Mg tracks | [`process/`](process/README.md) | starting set **255 W, 1.25 m/s, 0.10 mm hatch, 30 µm layers**; first build three 10 mm and two 5 mm cubes; 0.60 h for 10 mm before any dwell; RTC lists for commissioning rungs 1–3 |
 | **Structure** (CalculiX) | [`analysis/out/fea/struct.md`](analysis/out/fea/struct.md) | a **sponge silicone gasket**, not a solid cord (the cord needs 4.0 kN to close); the gantry as drawn has a **13 Hz** first mode, so **four 45 mm posts with braces** (79 Hz); the cube plate and window pass (SF 34 and 74); the X-VSR20A must pull the rod down past its O-ring drag (7–45 N); the Thorlabs stage needs one O-ring |
 | **Cross-flow** (OpenFOAM, laminar and k-ω SST, 237k cells) | [`analysis/out/cfd/`](analysis/out/cfd/) | the slot jet holds 2.6–2.7 m/s over the build area; bed shear 0.03–0.05 Pa, below the 0.053–0.118 Pa that starts to lift 63 µm powder; 96–99 % of tracers released 0.5–3 mm up reach the collector |
+| **Purge** (OpenFOAM, passive and buoyant two-gas runs) | [`analysis/out/cfd/`](analysis/out/cfd/results.md) | through the nozzle alone, as drawn, the box takes 33–50 min to 1000 ppm; **a low diffuser and a high vent reach 1000 ppm in 2.6 min and 100 ppm in about 5 min** (argon displaces the air from the floor up), faster than perfect mixing (6.2 / 8.9 min). Two bulkheads, a diffuser and a ball valve; the analyzer samples the vent |
 | **Fabrication** (FreeCAD CAM, 66 setups, every program checked in a voxel simulation; 35 drawings) | [`fab/`](fab/) | with PR 266's per-part allowances, FT-1's parts need **about 59–123 shop hours, not 25–40**. The schedule below is redone on them |
 | **Progression video** (5:51; every frame audited for collisions; PR 266's camera check passes; scan vectors from the process program) | [`video/`](video/README.md), [YouTube](https://youtu.be/kdaj7jzdJyI) | shows round 1's model and numbers, labelled as such |
 | **Monitoring** after PR 266's `monitoring.md`: layer camera, two raking lights, a coaxial photodiode, acoustic emission, thermocouples, one digitizer on the laser's time base | [`cad/`](cad/README.md) (MON1–MON8), [`control/`](control/README.md) | $4.5k–6.2k at FT-0 and $5.3k–8.2k at FT-1 (`parts.csv` group "Monitoring") |
@@ -310,6 +311,21 @@ well block 20 K below the plate, or 2.1–4.2 h with the block at setpoint ([`co
 | 500 ppm | 6.0 | 7.1 min | 14–35 min | 0.28–0.71 m³ |
 | 100 ppm | 7.6 | 9.0 min | 18–45 min | 0.36–0.90 m³ |
 
+- **Round 2's CFD of the purge** ([`analysis/out/cfd/results.md`](analysis/out/cfd/results.md), OpenFOAM, 23.2 L of
+  gas meshed, 20 L/min, isothermal and leak-free):
+  - **as drawn, purging through the slot nozzle alone is slow:** 33–50 min to 1000 ppm and 47–71 min to 100 ppm (no
+    buoyancy, two meshes), past the 13–31 / 18–45 min above, because the jet runs straight into the collector. An
+    analyzer on the collector's exhaust then reads about 4× under the box;
+  - **a diffuser low on one wall and a vent under the lid on the opposite wall** let the denser argon fill the box from
+    the floor and push the air out: **2.6 min to 1000 ppm and about 5.0 min to 100 ppm** (box average, with buoyancy),
+    against 6.2 / 8.9 min for perfect mixing. A high diffuser mixes instead (about 4.7 / 6.8 min); a high diffuser with
+    a low vent leaves the air on top (about 8.8 / 12.6 min);
+  - **so:** add the diffuser (a sintered or mesh diffuser on a bulkhead) and the vent (a bulkhead with a ball valve),
+    sample the analyzer from the vent line, purge with the nozzle off and the plate cold, then close the vent and start
+    the cross-flow. The O₂ the real box reaches is then set by its leaks, not by the purge time;
+  - **the cross-flow works as drawn:** the jet crosses the build area at 2.6–2.7 m/s and carries 96–99 % of the fume
+    released 0.5–3 mm up into the collector; its shear on the bed (0.03–0.05 Pa) is at or under the lowest pick-up
+    threshold for 63 µm AlSi10Mg (0.053 Pa). Fume that rises above the jet is only half caught.
 - **Box gas volume:** ~23.5 L (25.2 L less 1.7 L of internals, measured in the CAD model; FT-1V's cube: ~22 L, which it
   pump-purges below 100 ppm in about 7 minutes with ~44 L of argon, [`cad/out/checks.md`](cad/out/checks.md)).
 - **The nearest precedent got there by purging alone.** Heriot-Watt's 350 × 230 × 220 mm Perspex box reached < 0.5 % O₂;
