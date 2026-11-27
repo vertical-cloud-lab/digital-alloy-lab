@@ -1022,6 +1022,147 @@ def case4c(R):
                    variants=out)
 
 
+def gantry_model_case():
+    """4c on the frame as the CAD model draws it (P['gantry'] = 'four_post'): four 45 mm posts, 30 mm front and back
+    cross-beams, a diagonal per side (front post's top to the back post's foot) and two knee braces at the back, and the
+    head hung by its entrance face from the flange plate MK-09 between the beams, with its angle brackets. Posts and
+    beams are equivalent tubes at the drawn positions; braces are round 30 mm tubes on the drawn axes (centre of mass +
+    principal axis of each brace solid), run 20 mm into the members they meet so that they bond; the diagonals' lower
+    ends run on to the back posts' front face at the foot and are held there (bolted to the base rail). The head (5.8 kg)
+    and lens (1.34 kg) are one rigid mass on the flange's face under the head's footprint."""
+    parts = M.build("FT-1")
+    L = M.levels("FT-1")
+    sec = tslot_section()
+    eq = equivalent_tube(sec["Ixx"], sec["A"])
+    eq45 = equivalent_tube(I_TSLOT45, A_TSLOT45, s=45.0)
+    al = MAT["al6061"]
+    frame30 = dict(al, rho=al["rho"] * eq["rho_scale"])
+    frame45 = dict(al, rho=al["rho"] * eq45["rho_scale"])
+    posts = []
+    for s_ in part(parts, "Gantry uprights").shape.Solids():
+        bb = s_.BoundingBox()
+        c = ((bb.xmin + bb.xmax) / 2, (bb.ymin + bb.ymax) / 2)
+        for g_ in posts:
+            if abs(g_["c"][0] - c[0]) < 40 and abs(g_["c"][1] - c[1]) < 40:
+                b_ = g_["bb"]
+                g_["bb"] = [min(b_[0], bb.xmin), max(b_[1], bb.xmax), min(b_[2], bb.ymin), max(b_[3], bb.ymax), min(b_[4], bb.zmin), max(b_[5], bb.zmax)]
+                break
+        else:
+            posts.append(dict(c=c, bb=[bb.xmin, bb.xmax, bb.ymin, bb.ymax, bb.zmin, bb.zmax]))
+    assert len(posts) == 4, len(posts)
+    bodies, mats = [], []
+    for k, g_ in enumerate(posts):
+        bodies.append((f"post {k}", tube_box(*g_["bb"], eq45["t"], "z")))
+        mats.append(frame45)
+    for nm, tag in (("Gantry cross-beam (clamped", "back beam"), ("Gantry cross-beam, front", "front beam")):
+        bb = part(parts, nm).shape.BoundingBox()
+        bodies.append((tag, tube_box(bb.xmin, bb.xmax, bb.ymin, bb.ymax, bb.zmin, bb.zmax, eq["t"], "x")))
+        mats.append(frame30)
+    r_in = (30.0 ** 4 - 64 * I_TSLOT / math.pi) ** 0.25 / 2
+    braces, held = [], []
+    back_front_face = min(g_["bb"][2] for g_ in posts if g_["c"][1] > 0)       # y of the back posts' front face
+    for k, s_ in enumerate(part(parts, "Gantry braces").shape.Solids()):
+        V = np.array([v.toTuple() for v in s_.Vertices()])
+        C = np.array(s_.Center().toTuple())
+        d = np.linalg.svd(V - V.mean(0))[2][0]
+        pr = (V - C) @ d
+        e0, e1 = C + pr.min() * d, C + pr.max() * d
+        if e0[2] > e1[2]:
+            e0, e1 = e1, e0
+        d = (e1 - e0) / np.linalg.norm(e1 - e0)
+        if np.linalg.norm(e1 - e0) > 400:                                  # diagonal: foot at the back post's front face
+            t_ = (back_front_face - e0[1]) / d[1] if abs(d[1]) > 1e-6 else 0.0
+            p0 = e0 + min(t_, 0.0) * d if t_ < 0 else e0 - 20.0 * d
+            held.append((p0.copy(), d.copy()))
+        else:
+            p0 = e0 - 20.0 * d
+        p1 = e1 + 20.0 * d
+        A_, B_ = cq.Vector(*p0), cq.Vector(*p1)
+        dd = B_ - A_
+        tube = cq.Solid.makeCylinder(15.0, dd.Length, A_, dd.normalized()).cut(cq.Solid.makeCylinder(r_in, dd.Length, A_, dd.normalized()))
+        bodies.append((f"brace {k}", tube))
+        mats.append(frame30)
+        braces.append(dict(p0=p0.round(1).tolist(), p1=p1.round(1).tolist(), drawn=[e0.round(1).tolist(), e1.round(1).tolist()]))
+    fl = part(parts, "Scan-head flange plate (MK-09)").shape
+    bodies += [("flange plate", fl), ("angle brackets", part(parts, "Flange-to-beam angle brackets (MK-09)").shape)]
+    mats += [al, al]
+    hmax = float(os.environ.get("FT_GANTRY_HMAX", "8"))
+    m = mesh_bodies(bodies, "c4c_model", hmax=hmax, hmin=1.5, curv=8)
+    hbb = part(parts, "SCANLAB hurrySCAN").shape.BoundingBox()
+    fbb = fl.BoundingBox()
+    ax_xy = P["axis_off"]
+    m_head, m_lens = HEAD["mass"], LENS["mass"]
+    c_head = np.array([(hbb.xmin + hbb.xmax) / 2, (hbb.ymin + hbb.ymax) / 2, (hbb.zmin + hbb.zmax) / 2])
+    c_lens = np.array([ax_xy[0], ax_xy[1], (LENS["flange_z"] + L["lens_bot"]) / 2])
+    cm = tuple(((m_head * c_head + m_lens * c_lens) / (m_head + m_lens)).tolist())
+    mass_t = (m_head + m_lens) * 1e-3
+    face = surfaces(m, planar("x", fbb.xmax))
+    foot = nodes_on(m, face, lambda q: (q[:, 1] >= hbb.ymin) & (q[:, 1] <= hbb.ymax) & (q[:, 2] >= max(hbb.zmin, fbb.zmin)))
+    feet = np.array([], dtype=int)
+    for zb in sorted({round(g_["bb"][4], 3) for g_ in posts}):
+        feet = np.union1d(feet, nodes_on(m, surfaces(m, planar("z", zb))))
+    for bp, bd in held:
+        rel = m["xyz"] - bp
+        s_ax = rel @ bd
+        rad = np.linalg.norm(rel - np.outer(s_ax, bd), axis=1)
+        feet = np.union1d(feet, m["ntags"][(np.abs(s_ax) < 0.3) & (rad < 15.2)])
+    nmax = int(m["ntags"].max())
+    ref, rot = nmax + 1, nmax + 2
+    eid = len(m["tets"]) + 1
+    extra = (f"*NODE, NSET=REFS\n{ref},{cm[0]},{cm[1]},{cm[2]}\n{rot},{cm[0]},{cm[1]},{cm[2]}\n" + nset("FOOT", foot) + nset("FEET", feet)
+             + f"*RIGID BODY, NSET=FOOT, REF NODE={ref}, ROT NODE={rot}\n*ELEMENT, TYPE=MASS, ELSET=MHEAD\n{eid},{ref}\n*MASS, ELSET=MHEAD\n{mass_t}\n")
+    job = "c4c_model_gravity"
+    write_model(job, m, mats, extra)
+    append(job, f"*STEP\n*STATIC, SOLVER=SPOOLES\n*BOUNDARY\nFEET,1,3\n*DLOAD\nEALL,GRAV,9810.,0.,0.,-1.\n*CLOAD\n{ref},3,{-mass_t * G:.6g}\n"
+           "*NODE FILE\nU\n*EL FILE\nS\n*END STEP\n")
+    t_s = run_ccx(job)
+    b = read_frd(job)
+    D = [x for x in b if x["name"] == "DISP"][-1]
+    Ss = [x for x in b if x["name"] == "STRESS"][-1]
+    vm = von_mises(field(m, Ss, 6))
+    U = field(m, D, 3)
+    u_ref, th = rigid_fit(m, U, foot, cm)
+    bed = np.array([ax_xy[0], ax_xy[1], 0.0])
+
+    def rigid_point(pt):
+        return np.asarray(u_ref) + np.cross(th, np.asarray(pt) - np.asarray(cm))
+    u_lens = rigid_point((ax_xy[0], ax_xy[1], L["lens_bot"]))
+    u_bed = rigid_point(bed)
+    grav = dict(head_ref_u_um=(np.asarray(u_ref) * 1000).round(2).tolist(), tilt_urad=(np.asarray(th) * 1e6).round(1).tolist(),
+                lens_u_um=(u_lens * 1000).round(2).tolist(), beam_error_at_bed_um=(u_bed[:2] * 1000).round(1).tolist(),
+                focus_shift_um=float(u_bed[2] * 1000), vm_max=float(vm.max()), u_max_um=float(np.linalg.norm(U, axis=1).max() * 1000))
+    print(f"  4c model gravity: tilt {grav['tilt_urad']} urad, lens {grav['lens_u_um']} um, beam error at bed {grav['beam_error_at_bed_um']} um", flush=True)
+    job = "c4c_model_modal"
+    write_model(job, m, mats, extra)
+    append(job, "*BOUNDARY\nFEET,1,3\n*STEP\n*FREQUENCY, SOLVER=SPOOLES\n6\n*NODE FILE\nU\n*END STEP\n")
+    t_m = run_ccx(job)
+    f = read_freqs(job)
+    modes = []
+    names = ("x (along the cross-beams)", "y (fore-aft)", "z (vertical)")
+    for k, blk in enumerate([x for x in read_frd(job) if x["name"] == "DISP"][:6]):
+        Um = field(m, blk, 3)
+        ur, tr = rigid_fit(m, Um, foot, cm)
+        mag = np.linalg.norm(Um, axis=1)
+        ub = np.asarray(ur) + np.cross(tr, bed - np.asarray(cm))
+        modes.append(dict(f_hz=f[k] if k < len(f) else None, head_translation_dir=(np.asarray(ur) / (np.linalg.norm(ur) + 1e-30)).round(2).tolist(),
+                          head_rotation_dir=(np.asarray(tr) / (np.linalg.norm(tr) + 1e-30)).round(2).tolist(),
+                          bed_motion_dir=(ub[:2] / (np.linalg.norm(ub[:2]) + 1e-30)).round(2).tolist(),
+                          max_at=m["xyz"][int(np.argmax(mag))].round(0).tolist(), dominant_head_axis=names[int(np.argmax(np.abs(ur)))]))
+    print(f"  4c model modes: {[round(x, 1) for x in f]} Hz", flush=True)
+    r = dict(variant="model (as drawn: four 45 mm posts, braces, head hung from the flange plate)", gravity=grav, modes=modes,
+             ccx_s=dict(gravity=round(t_s), modal=round(t_m)), masses_kg=dict(head=m_head, lens=m_lens, cm_mm=[round(c_, 1) for c_ in cm]),
+             posts=[dict(bb=[round(v, 1) for v in g_["bb"]]) for g_ in posts], braces=braces, foot_nodes=int(len(foot)), feet_nodes=int(len(feet)),
+             note="angle brackets and flange plate as drawn; posts/beams equivalent tubes (I from the T-slot section); base rails rigid")
+    r["pass"] = bool(f and f[0] > 60)
+    r["pass100"] = bool(f and f[0] > 100)
+    stamp(r, m, "SPOOLES", hmax=hmax)
+    return r
+
+
+def case4c_model(R):
+    R.setdefault("4c", {}).setdefault("variants", {})["model_four_post"] = gantry_model_case()
+
+
 # --------------------------------------------------------------------------------------------
 # 4d  the piston rod (analytic)
 # --------------------------------------------------------------------------------------------
@@ -1457,7 +1598,7 @@ def main():
     jf = OUT / "struct.json"
     R = json.loads(jf.read_text()) if jf.exists() else {}
     todo = sys.argv[1:] or ["4a_check", "4a", "4b", "4c", "4d"]
-    fn = {"4a": case4a, "4a_check": case4a_check, "4b": case4b, "4c": case4c, "4d": case4d}
+    fn = {"4a": case4a, "4a_check": case4a_check, "4b": case4b, "4c": case4c, "4d": case4d, "4c_model": case4c_model}
     for c in todo:
         if c == "md":
             continue
@@ -1466,6 +1607,8 @@ def main():
         fn[c](R)
         print(f"  case {c} done in {time.time() - t0:.0f} s")
         jf.write_text(json.dumps(R, indent=1, default=float))
+    if todo == ["4c_model"]:
+        return          # the frame as drawn: struct.json only; its addendum in struct.md is written by hand
     if "4a" in R:
         plot_gasket(R)
     write_md(R)

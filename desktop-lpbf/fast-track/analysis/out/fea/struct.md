@@ -75,6 +75,35 @@ Load: 1 atm on the outer face, and the window ring's 224 N spread round the bore
 - Frame members: square tubes 30 x 30 x 1.80 mm with the second moment of a 30 mm 8-slot profile (27,000 mm⁴, catalogue-typical, estimate) and the density raised to the drawn profile's mass per length (387 mm², x1.91). The closed tube's torsion constant (40,336 mm⁴) is above a slotted profile's, and the joints are bonded, so these are upper bounds on stiffness: real corner brackets will give lower frequencies. The model's T-slot drawing itself is five unconnected pieces, so it can't be meshed as a load path.
 - The static tilt is calibrated out by the scan head's correction grid; it matters only if it changes (heating, a knock). The modes matter because the floor, the recoater's moves and the hopper's vibration motor can drive them while the beam is on.
 
+#### 4c addendum: the frame as CAD v2 now draws it (2026-11-27, model 1974dc5)
+
+The model now draws the gantry as four 45 mm posts with 30 mm front and back cross-beams, a diagonal per side
+(front post's top to the back post's foot) and two knee braces at the back. The head hangs by its entrance face from a
+12 mm flange plate (MK-09) that spans between the two beams, with two angle brackets at each end. The same method was
+run on that geometry (`ft_struct.py 4c_model`, 175k nodes, ccx 25 + 49 s; struct.json `4c.variants.model_four_post`):
+posts and beams are equivalent tubes at the drawn positions, braces are round tubes on the drawn axes run into the
+members they meet, and the flange plate and brackets are as drawn. The head (5.8 kg) and lens (1.34 kg) are one rigid
+mass on the flange face under the head's footprint, and the base rails are rigid.
+
+| | First three modes | Gravity tilt of the head (x, y, z) | Lens displacement | Beam offset at the bed |
+|---|---|---:|---:|---:|
+| Four posts, braced, 45 mm posts, head on a horizontal plate (upper bound above) | 78.9 / 84.7 / 137.6 Hz | 16, −20, −2 µrad | 1, 0, −14 µm | 7, 5 µm |
+| **As drawn: head hung from the flange plate** | **43.1 / 59.7 / 67.2 Hz** | 112, 253, −5 µrad | −35, 12, −46 µm | −111, 45 µm |
+
+- **The frame as drawn is below the 60 Hz minimum** (and the 100 Hz target), at about half the upper bound.
+  - Mode 1 (43 Hz) is the front portal racking sideways along the beams, with the head yawing. The largest motion is
+    at the front-right post's top, and the front portal has no brace in x.
+  - Mode 2 (60 Hz) is fore-aft, with the largest motion at the back-left post's top.
+  - Mode 3 (67 Hz) is the head nodding on the flange plate (vertical motion with pitch about y).
+- **Gravity pitches the head 253 µrad about y**, 13 times the plate-mounted variant, because the head's centre of mass
+  sits ~95 mm out from the 12 mm flange. As a static offset (111 µm at the bed) it is calibrated out with the scan
+  field. The same compliance sets mode 3.
+- **To bring it to the upper bound:** knee braces or a diagonal in the front portal, as at the back, for mode 1; and a
+  stiffer head mount in pitch, for mode 3 and the tilt. That means gussets from the flange to the beams, a deeper
+  flange, or a second support under the head's far end. Not run.
+- The joints are bonded and the base is rigid, so the real frame (bolted T-slot joints) will be softer than these
+  numbers.
+
 ### 4d Piston rod MK-06 (analytic)
 
 Rod: 1/2 in. x 0.035 in. 304 tube, A = 33.0 mm², I = 579 mm⁴. Free length = the visible rod less the 23 mm in the clamp; the heater plate is a rigid lever from the socket to the substrate top.
