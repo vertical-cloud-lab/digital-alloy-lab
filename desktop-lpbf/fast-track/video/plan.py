@@ -117,7 +117,12 @@ def candidates(prefs=None):
 
 
 def plan(world, group, prefs=None, ignore=(), extra=()):
-    """The first clear path for a group: hand-given ones (`extra`, tried first), then candidates(prefs)."""
+    """The first clear path for a group: hand-given ones (`extra`, tried first), then candidates(prefs). Every path ends
+    at the place itself (offset 0), so when the place is already taken it fails at once rather than after sampling all
+    ~1300 candidates to their last point (which took minutes per part)."""
+    at = world.hits(group, (0.0, 0.0, 0.0), ignore)
+    if at:
+        raise RuntimeError(f"no clear path for {group[:3]}...: the place itself is taken: {at[0]}")
     tried = []
     for name, way in list(extra) + candidates(prefs):
         bad = check(world, group, way, ignore)

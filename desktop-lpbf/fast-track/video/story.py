@@ -379,10 +379,10 @@ def access(s, tube_keys, lid_keys, body_keys, under=0.0):
     return dict(lift_lid=lift_lid, rise=rise, free_rise=round(fr, 1), lift_optics=lift_o)
 
 
-def optics_move(s, state, dz_from, dz_to, verb, v=None):
-    """Slide the gantry cross-beam with the head, lens and collimator; the fibre follows."""
+def optics_move(s, state, dz_from, dz_to, verb, v=None, extra=()):
+    """Slide the gantry cross-beam with the head, lens and collimator (and `extra` parts); the fibre follows."""
     tl = s.tl
-    keys = [k for k in tl.actors if k.startswith("A|") and any(x in k for x in OPTICS)]
+    keys = [k for k in tl.actors if k.startswith("A|") and any(x in k for x in OPTICS + tuple(extra))]
     fib = [k for k in tl.actors if k.startswith("A|") and "Process fibre" in k]
     t0 = tl.t
     Pm = tl.move(keys, [(0, 0, 0), (0, 0, dz_to - dz_from)], v=v or OPTICS_V, a=20, verb=verb,
@@ -425,11 +425,33 @@ def close_box(s, lid, tube, acc, state):
         optics_move(s, state, acc["lift_optics"], 0.0, "sliding down")
 
 
+def in_place(s, k):
+    """The start-state actor (same label) that a move has already put where the target model draws part `k` (bounding
+    box within 0.6 mm, as verify_end checks), e.g. the head and lens after optics_move; None if there is none."""
+    tl = s.tl
+    st = tl.state(tl.t + 1e-3)
+    b = tl.actors[k]
+    lo, hi = b.V.min(0), b.V.max(0)
+    for k2, a in tl.actors.items():
+        if k2 == k or a.kind != "part" or a.label != b.label or not st[k2]["vis"]:
+            continue
+        o = st[k2]["off"] + st[k2]["stage"]
+        V = st[k2]["morph"][1] if "morph" in st[k2] else a.V
+        if np.all(np.abs(V.min(0) + o - lo) <= 0.6) and np.all(np.abs(V.max(0) + o - hi) <= 0.6):
+            return k2
+    return None
+
+
 def place_rest(s, prefs=None):
-    """Any part of the target state the script has not placed (a v2 addition, say) comes in on a planned path."""
+    """Any part of the target state the script has not placed (a v2 addition, say) comes in on a planned path; a part
+    that a move has already brought to its target place is only recorded."""
     tl = s.tl
     rest = sorted(s.unplaced())
     for k in rest:
+        k2 = in_place(s, k)
+        if k2:
+            tl.notes.append(dict(t=round(tl.t, 2), names=[k], already_in_place_as=k2))
+            continue
         try:
             tl.insert([k], prefs=prefs)
         except RuntimeError as e:
@@ -1007,7 +1029,7 @@ def ch6():
     s.speed("by hand: 0.8 m/s, set down at 90 mm/s (estimates)")
     tl.move(stack, [(0, 0, 0), (0, 0, STACK_UP)], v=15, verb="lifting", label=[("The plate on its rod", "MK-04, MK-05, MK-06")])
     tl.caption("Optics up 21 mm for the cube", "its floor plate is 21 mm thicker than the box's sheet")
-    optics_move(s, "FT-1", 0.0, 21.0, "sliding up")
+    optics_move(s, "FT-1", 0.0, 21.0, "sliding up", extra=("+-15 V supply",))   # the model draws it 21 mm up too
     tube = tube_group(s, "A", long=True)
     lid = lid_group(s, "A")
     zt = max(float(tl.actors[k].V[:, 2].max()) for k in lid)
