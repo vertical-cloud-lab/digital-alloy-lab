@@ -414,6 +414,7 @@ class Replay:
             for b in list(a.links.values()) + list(a.grip.values()):
                 w = b.v @ b.M[:3, :3].T + b.M[:3, 3]
                 out.append((w[:, 0].min(), w[:, 1].min(), w[:, 0].max(), w[:, 1].max()))
+            self.set_arm(n)                  # the arm as drawn again (place() above moved its bodies)
         for i, o in self.objs.items():
             k = f"o{i}"
             if self.sc.alpha.get(k, 0.0) <= 0.0 or i in self.T and np.allclose(self.sc.gmat.get(k, np.eye(4)), self.T[i]):
