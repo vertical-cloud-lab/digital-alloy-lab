@@ -28,6 +28,66 @@ Nothing here has been built or tried on hardware. The numbers come from the mode
 - the chamber change of [chamber-construction.md](chamber-construction.md): a through-frame and a bolted floor plate with a second 3.53 mm cord;
 - for run 2, two items from this note's patch list: the lid gland's R13 corners and the floor port's lead-in.
 
+## Round 10 (2026-11-27): run 15, the five failing steps, and the planner checking what the video draws
+
+**Run 15** plans and records chapters 40 and 41 in one process (5,723 s), with round 9's two run-15 changes (grips drawn from
+the opening the arm was drawn at; a part carrying bench-fitted pieces staged from the bench) and these, each tested on its steps
+alone first:
+- **Containment:** the planner's check finds a body wholly inside another (ray parity), which surface checks miss: round 9's
+  73 part-in-part pairs were of that kind. The tool is checked against the part it carries and works on (the liner wand, the
+  ring pad), the closure it checked is recorded, and a released part is put on its seat at once (fe62295).
+- **Grips and pushes:** the push re-grip backs the fingers off and closes them clear of the part (round 9 closed them through
+  it and re-attached the part on a shifted offset); a direct screw approach's last 12 deg is checked every 0.25 deg; releases
+  are checked at the opening drawn; retreats back off along the tool's own axis on the arm's own IK branch (a branch change had
+  drawn a 141 deg cut) (2da5b24, ac024a0, 25701ac).
+- **The recorder:** its MiR route check puts the planner's gripper opening back (f23db6d); the presenter trip's screw may lie
+  in the presenter's envelope where it is picked (09aa0f6; the presenter is modelled as a solid box, see below).
+
+**Result** ([`round10_run15.json`](analysis/out/assembly/round10_run15.json), [`results_run15.json`](analysis/out/assembly/results_run15.json),
+[`run15_times.json`](analysis/out/assembly/run15_times.json)): **108 of 112 checked steps** (run 14: 105 of 110), **128 of 129
+screws** (125), 62 of 78 table picks planned, **196 of 196 MiR drives clear**. F18 is spliced in from a re-plan on run 15's own
+recording (chunks 0000-0047, `ASM_CONTINUE`), with both arms, their tools and the MiRs ending exactly where run 15's F18 left
+them, so F19 onwards is unchanged. [`rec_check.py`](analysis/assembly/rec_check.py) replays the recording as drawn: chapter 40,
+11,845 samples, 0 pairs over 1.5 mm; chapter 41, 31,106 samples, 14 pairs over a limit (F39's carry and F35's caps, below, and five
+single samples of at most 6 mm). The frame audit of the video drawn from it finds no real clipping in 40 or 41
+([`round10_4x_pairs.md`](analysis/out/videoqa/round10_4x_pairs.md); [`robot-build/video.md`](robot-build/video.md) round 10).
+
+**The five steps that failed in round 9** ([`round10_steps_w2.json`](analysis/out/assembly/round10_steps_w2.json): each tested
+alone, then F18-F31 in one recorded process with the carriage in the middle):
+
+| Step | Why it failed | Round 10 |
+|---|---|---|
+| F15, the inlet plenum's 7 screws | Screw #7: the screwdriver met the plenum's KF-25 port, and the nutrunner had no way either | **Robots, 7 of 7:** #7 moved 8 mm along the flange (`cad/joints.py`) |
+| F18, the recoater rail's 4 screws | The screws while the rail is held: the screwdriver met the chamber body; #1 lies under the carriage | **Robots, 3 of 4:** arm A's angle head drives #2-#4 while arm B holds the rail; B pushes the carriage group 106 mm along the rail with the pin pusher. **#1 is driven by the person** with a 300 mm hand driver (drawn) |
+| F26, F27, the blade holder and its 2 screws | Arm A's fingertip met the chamber body 117 mm along the holder's insertion; the screwdriver met the overflow funnel block | **Robots:** F26a takes the holder and blade together off their kit slot onto a two-pin bench nest (`tooling.nest_blade`); F27 drives the blade's two screws straight down on the nest; F26 puts the cartridge in by its fin with the plate fingers, the recoater at +106 mm |
+| F57, the beam line | Beam tube #1 met the coaxial dichroic's cage cube on its way in (released 9 mm short) | **Robots, 8 of 8 placements and 8 of 8 table picks:** each piece slides in along the beam's own axis (A: tube #1, dichroic, photodiode; B: tubes #2 and #3 by the nozzle, shutter, fold mirror, collimator) |
+
+**Why F18 #1 still needs the person:** its direct approach starts the rundown with the M4's tip already 3 mm into the rail's
+4.5 mm hole, so the sideways sweep is a real clip, which round 10's check of the last 12 deg rejects (round 9's planner had no
+such check, so W2's first scratch runs passed it). The axial pre-approach (60 mm back along the screw, then up) clears only for
+rolls that tilt the angle head (44 x 40 x 46 mm), and then a corner of the head clips the left wall's top by 3.0 mm, on every
+dock and roll tried, and also going straight up. Next: leave the descent to the RRT after the 60 mm back-off (more iterations),
+or move the rail's first hole 10 mm further from its end (x -100), where the head clears the wall. The rail is McMaster 6709K33
+with its own hole pattern, so that is a hole drilled in the rail.
+
+**Two steps round 9 drew as passes now fail**, because the planner checks what is drawn:
+- **F35, the window's lower O-ring into the flange's groove** (the ring caps' internal grip): the ring stops 27 mm short, arm
+  B's cap 3 mm into the window flange 33 mm along. Run 14's "pushed home with the closed fingers" was drawn with the closed caps
+  inside the ring's bore, pushing nothing; round 10's push check no longer allows that. A person sets the ring (drawn). Next:
+  another grasp (an external pad pressing the ring's top into the groove, as the ring pad does for F48b).
+- **F39, the cover-slide drawer into the lid's front edge:** released short of its seat (a fingertip meets lid screw #9), and
+  backing the fingers off clear of the drawer for the push drags a fingertip 3 mm into it; run 14 drew the fingers closing
+  through the drawer. Its pick was never planned either ("in to the grasp: left_finger_tip hits Drawer latches"; a person puts
+  the drawer in the gripper), so no grip was recorded and the carry was drawn with the open fingertips 12 mm in the drawer; the
+  renderer now cuts that carry with a card (`ASM_CUT_HELD=F39`). A person sets the drawer (drawn). Next: the latches modelled as
+  their two studs rather than one envelope across the drawer's front, a grasp on the pull tab from above, and a release that ends
+  on the seat.
+
+**The screw presenter.** The frame audit's 71 remaining pairs over 1.5 mm in 40 and 41 are screws at their pick, standing in the
+MiR's screw presenter for 1-4 frames. `fetch.PRESENTER` is an envelope (250 x 130 x 150 mm, a vibratory rail presenter, vendor
+not chosen), drawn and checked as a solid box, so the screw's shank is inside it at the nest (`fetch.presenter_pick`). The fix is
+a nest bore in that box in `cell2.mir_bodies`, which then has to be drawn again in every frame that shows a MiR.
+
 ## Round 9 (2026-11-27): run 13, the whole assembly in one process, and round 8's audit findings fixed in the planner
 
 Run 13 plans and records chapters 40 and 41 in **one sequential process** (45 min of planner time, 08:36-09:21 UTC; run 12 was

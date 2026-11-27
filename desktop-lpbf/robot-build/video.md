@@ -1,4 +1,4 @@
-# The desktop LPBF built by two mobile manipulators: the video (round 9, 2026-11-27)
+# The desktop LPBF built by two mobile manipulators: the video (round 10, 2026-11-27)
 
 For [issue #260](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/260) and PR 266. Sterling asked on
 2026-11-25 to see the build carried out **by** two UR12e arms, each on a MiR250, using the full set of parts spread
@@ -6,18 +6,102 @@ along a long table; every machining step and the assembly (screws, seals, tighte
 really needed; and, on screen, the running cost by category (new against used, with the expensive items one by one),
 the lead times (the long ones, and how short they get bought used), and time estimates for machining and assembly.
 
-**Video:** [`cad/img/robotbuild/robot-build.mp4`](../cad/img/robotbuild/robot-build.mp4) (40 min 56 s, 29,473 frames at 12 fps, 1280 x 720, 41.5 MB; composed 2026-11-27 (12:11 UTC) from the frames rendered in round 9; round 8's cut is in the history at 670dcf8). **On YouTube, public: [youtu.be/B9k2RO6CxCM](https://youtu.be/B9k2RO6CxCM)** (uploaded 2026-11-27, subscribers not notified; the robot-build video's first upload).
+**Video:** [`cad/img/robotbuild/robot-build.mp4`](../cad/img/robotbuild/robot-build.mp4) (40 min 8 s, 28,902 frames at 12 fps, 1280 x 720, 41.1 MB; composed 2026-11-27 (21:44 UTC) from the frames rendered in round 10; round 9's cut is in the history at cabbe0f). **On YouTube, public: [youtu.be/s2SrsYvCxkE](https://youtu.be/s2SrsYvCxkE)** (uploaded 2026-11-27, subscribers not notified). Round 9's cut stays up at [youtu.be/B9k2RO6CxCM](https://youtu.be/B9k2RO6CxCM).
 YouTube chapter list: [`chapters.txt`](../cad/img/robotbuild/chapters.txt); four frames of every chapter:
 [`contact-sheet.jpg`](../cad/img/robotbuild/contact-sheet.jpg); what went in: [`compose.json`](../cad/img/robotbuild/compose.json).
 
-![Chapter 29: two people carry the 30.0 kg plate as delivered (the two-person guideline is 30.7 kg)](../cad/img/robotbuild/round8/r8-29-two-person-plate-30kg.png)
+![Chapter 41, the person at the steps the arms can't do: F18's last rail screw with a 300 mm hand driver, F35's window O-ring, F39's drawer; and F39's failed carry cut to the arm backed off](../cad/img/robotbuild/round10/r10-41-person-F18-F35-F39-and-F39-cut.png)
+![Chapter 30: one hand each on the end faces, the bodies 0.83 m apart](../cad/img/robotbuild/round10/r10-30-one-hand-each-carry.png)
 ![Chapter 30: setup F-S2 cut by frame_A.ngc as posted; the program line is on screen](../cad/img/robotbuild/still-30-machining-chamber-55.png)
-![Chapter 30: the four walls on the HRT210, frame_C_haas.nc's door-opening pass](../cad/img/robotbuild/round8/r8-30-fs3-frame_C_haas-door-opening.png)
-![Two hands: arm A holds the heater stack on its gland seal while arm B drives a gland-plate screw (M19)](../analysis/out/assembly/r8_two_hands_M19.png)
+![Chapter 41](../cad/img/robotbuild/still-41-assembly-chamber-48.png)
 ![Two hands: arm A's vacuum cup holds the lid on its cord while arm B drives the first screws (F30)](../analysis/out/assembly/r8_two_hands_F30_lid.png)
-![A MiR turning round beside the table: pivot, drive, pivot](../analysis/out/assembly/r8_mir_turn_round.png)
-![Chapter 41 on a fixed tripod: the vacuum-port screws (F17)](../cad/img/robotbuild/still-41-assembly-chamber-48.png)
 ![The summary](../cad/img/robotbuild/still-60-summary-55.png)
+
+## Round 10 (2026-11-27): no real clipping in any chapter
+
+Sterling, 2026-11-27: "Round 10: fix what round 9's audit found. The aim is no real clipping in any chapter, and every step
+done by the robots where the hardware allows it", with round 9's list for chapters 41, 30 and 40 and the five failing steps
+(F15, F18, F26, F27, F57); "then re-audit every chapter at the same 1.5 mm threshold, classify what's left pair by pair as
+before, and re-render. Upload the new cut as a new video, public without notifying subscribers". Four workers ran in parallel
+(the planner and run 15, the five steps, the assembly renderer, the shop); a retry on the same runner finished the round
+after the first attempt ran out of credits at 21:12 UTC (the chapter-41 slices still rendering, F39 drawn again, the join, the
+audit, the cut and the upload). Nothing here has been built.
+
+**The audit of every drawn frame** (`scene_audit.py`, every recorded frame, translational depth over 1.5 mm, round 9's pairs in
+brackets; `walk.py`; [`audit_table.py`](../cad/robotbuild/audit_table.py) against round 9's 40c71a0). All 27,256 frames that
+draw the 3-D scene are audited; the other 1,646 are chapters 15 and 60, which are charts.
+
+| Chapter | Frames audited | Pairs over 1.5 mm (round 9) | Real clipping | Stance-foot slip, max per stance (round 9) | Gliding frames | MiR reversing: total, longest leg |
+|---|---:|---|---:|---|---:|---|
+| 00-intro | 669 | 0 (0) | 0 | 0 (0) | 0 | none |
+| 10-parts | 2,064 | 0 (0) | 0 | 0 (0) | 0 | none |
+| 20-receiving | 448 | 0 (0) | 0 | 0 (0) | 0 | none |
+| 29-stock | 275 | 0 (0) | 0 | 0 (0) | 0 | - |
+| 30-machining-chamber | 3,037 | **0** (42, worst 84.4 mm) | 0 | 0 (0) | 0 | none |
+| 31-machining-parts | 1,088 | 0 (0) | 0 | - | 0 | none |
+| 31b-machining-programs | 736 | 0 (0) | 0 | - | - | - |
+| 32-finishing | 1,001 | 0 (0) | 0 | 0 (0) | 0 | none |
+| 38-tools | 1,064 | 0 (0) | 0 | - | - | - |
+| 40-assembly-module | 2,983 | 9 (29) | **0** (17) | 0 (34) | 0 | A 0.8 m, 300 mm; B 0.3 m, 300 mm |
+| 41-assembly-chamber | 12,821 | 74 (238) | **0** (175) | 0 (383) | 0 | A 5.8 m, **1,800 mm**; B 1.4 m, 440 mm |
+| 50-integration | 1,070 | 0 (0) | 0 | 0 (0) | 0 | none |
+
+**What is left, pair by pair** ([`round10_4x_pairs.md`](../analysis/out/videoqa/round10_4x_pairs.md); `pairs_classify.py`
+re-measures every pair with the planner's own 0.1 mm meshes, as in round 9):
+- **0 real clipping** in 40 and 41 (round 9: 17 and 175).
+- **71 pairs (9 in 40, 62 in 41): a screw at its pick, standing in the MiR's screw presenter**, 1-4 frames each, 2.0-34.4 mm.
+  The presenter (a vibratory rail presenter, vendor not chosen) is modelled, drawn and checked by the planner, as a solid
+  250 x 130 x 150 mm envelope, without the nest the screw stands in; so the screw's shank is inside the box for the frames
+  between the presenter putting it out and the bit lifting it. The head is drawn on the box's top, as a screw in a nest
+  looks. The fix is a model change (a nest bore at `fetch.presenter_pick` in `cell2.mir_bodies`, drawn and checked), and
+  every frame showing a MiR would have to be drawn again.
+- **12 pairs in 41: fingertips on the part they hold, at most 4.7 mm** (the ring caps in F35's O-ring, 22 frames; the window,
+  the recoater's carriage block as arm B pushes it, the bearing housing, the Z flange).
+- **MiR A reverses 1.8 m once** (chapter 41, frames 3174-3235, 5 s). These are two of the renderer's make-room moves back to
+  back: MiR A drives 0.9 m back to its dock after C15b's person, then backs 0.9 m past the dock for F01's person. Every other
+  reverse leg in the video is a docking leg of 0.5 m or less, as in round 9. Not fixed in this cut.
+
+**Round 9's list, item by item:**
+
+| Round 9 left | Round 10 | Where |
+|---|---|---|
+| 41: 73 parts in parts away from their seats; the worst, the right liner 37.5 mm into the chamber body as it goes in | **A drawing error, not the plan.** The liners ride on the plate-finger caps, whose grasp point is 120 mm beyond the stock 2F-85's TCP; the renderer drew every held part on the 2F-85's TCP. It now draws each held part on its own tool's TCP (the wand, vacuum gripper, nozzle, ring pad, pin pusher and drivers were 4-160 mm off) and on the caps' grasp point. The planner now also tests containment (a body wholly inside another, by ray parity) along every path, which surface checks miss | `asm_render.py` (56a4039, 1f56307), `run_assembly.py` (fe62295) |
+| 41: 45 fingers closed more than 5 mm past the part | Grips are drawn from the opening the arm was drawn at; the planner records the closure it checked; the push re-grip backs the fingers off and closes them clear (round 9 closed them through the part); releases are checked at the opening drawn. The largest fingertip pair left is 4.7 mm | `run_assembly.py`, `record.py` (0b1bb47, 2da5b24, ac024a0) |
+| 41: the staged put sinking the floor plate's dowels and inserts into the table top (30 pairs, 40.6 mm) | The floor plate, with the funnel fitted on the bench, is staged from the bench, not picked from the table | 0b1bb47 |
+| 41: 7 tools through the part they work on (liner wand, ring pad) | The planner checks each tool against the part it carries and works on; retreats back off along the tool's own axis on the arm's own IK branch (a branch change had drawn a 141 deg cut) | fe62295, 25701ac |
+| 41: the person's hand 28 mm into the chamber body; an arm link through a screw | The person sets a part with one hand on its outside, leaning in (round 9 aimed both hands at its centre); every pose drawn is checked against everything drawn, and the walk in and out is replayed step by step clear of the floor plan. Run 15's frames have no arm-link pairs | `asm_render.py` (bde860b, 6b8c373, 4dc40bb, 00615a9) |
+| 30: 42 pairs (the two people at the lifts, the work light, the nut runner in the finger stand, the cutter in the stock) | **0 pairs.** One hand each with the bodies 0.83 m apart, the edge clamps backed off for loading, the feet behind the sill; the light on the left wall and in the collision set; the drive check tests the tool against its own MiR and lifts a long tool first; the cut drawn 0.75 mm clear of the cutter, the drill's point down. Chapter 31 now has chapter 30's VF-4 layout | [`robot-shop.md`](../robot-shop.md) round 10 |
+| 40: 29 pairs (parts in parts, parts 3.7 mm off their seats, fingertips in the handle during the turn-overs) | **0 real clipping**; its 9 pairs are screws in the presenter. `rec_check.py` on run 15's module chapter as drawn: 11,845 samples, 0 pairs over 1.5 mm | run 15 |
+| F15: the inlet plenum's seventh screw | **Robots, 7 of 7:** the screw moved 8 mm along the flange, clear of the KF-25 stub | `cad/joints.py` (1f83a2d) |
+| F18: the recoater rail's held screws | **Robots, 3 of 4:** arm A's angle head drives #2-#4 while arm B holds the rail; arm B pushes the carriage 106 mm with the pin pusher. **#1, which the carriage covered until it was pushed, is driven by the person** with a 300 mm hand driver (drawn). Why the arms can't: its direct approach starts with the M4's tip 3 mm in the rail's 4.5 mm hole, so the sideways sweep is a real clip (round 10's last-degrees check rejects it), and on every dock and roll tried the angle head's corner (44 x 40 x 46 mm) clips the left wall's top by 3.0 mm on the way down | W2's splice into run 15 (65d039b), [`assembly.md`](../assembly.md) round 10 |
+| F26, F27: the blade holder and its screws | **Robots:** the holder and blade come off their kit slot together onto a two-pin bench nest, arm A drives the two blade screws straight down there, and the cartridge goes in by its fin with the plate fingers | `tooling.nest_blade`, `cell2` (a1fc206, aa7a09b, 3fdbbb8) |
+| F57: the beam line | **Robots, 8 of 8 placements and 8 of 8 table picks:** each piece slides in along the beam's axis | 9673e64 |
+| (new) F35, F39 | **Run 15 fails two steps round 9 drew as passes**, now that the planner checks what it draws: F35's window O-ring stops 27 mm short (round 9's "pushed home" had the closed caps inside the ring's bore, pushing nothing), and F39's cover-slide drawer is released short of its seat (a fingertip meets lid screw #9) with no clear way to back the fingers off (round 9 drew them closing through the drawer). F39's pick was never planned either (a person puts the drawer in the gripper), so no grip was recorded: the frames drew the carry with the open fingertips 12 mm in the drawer. **That carry is now cut with a card** (`ASM_CUT_HELD=F39`), as other moves without a checked path are. A person sets both parts (drawn) | `asm_render.py` (this round) |
+
+**Run 15** ([`round10_run15.json`](../analysis/out/assembly/round10_run15.json)): the whole assembly planned and recorded in one
+process (5,723 s), F18 spliced in from a re-plan on the same recording with both arms ending where run 15's F18 left them.
+**108 of 112 checked steps pass** (run 14: 105 of 110), **128 of 129 screws** (125), 62 of 78 table picks planned, **196 of 196
+MiR drives clear** (175). `rec_check.py` replays the recording as drawn with the planner's meshes (chapter 41 every second
+sample, 31,106 samples): besides the F39 carry and F35's caps (6.0 mm) above, five pairs over a limit in a single sample each:
+B's fingertips 6.0 mm in the carriage block at F18's push and A's 6.0 mm on the window at F36 (in the drawn frames 2.9 and
+3.4 mm, the fingertip pairs above), a bridge screw 6.0 mm in the reservoir's pull tab at F55, the wrist 3.0 mm in the module
+nest at C00d and the fingertips 3.0 mm on the galvo at F57 (none of these three over 1.5 mm in a drawn frame).
+
+**The camera check on the finished file** ([`camera-round10-video-exact.json`](../analysis/out/videoqa/camera-round10-video-exact.json),
+`video_qa.py --compose-json`, round 8's limits): every chapter passes. Whole video: 5.0 jumps a minute (round 9: 4.7), median
+steady run 6.5 s (8.0), 4 % of runs under 2 s, 95th-percentile camera speed 0.019 frame widths a second. Chapter 41: 5.3 jumps a
+minute, median run 7.2 s; chapter 40: 3.6, 6.2 s.
+
+**Not done in round 10:**
+- **The screw presenter's nest** (71 pairs above): a model change, then every frame showing a MiR drawn again.
+- **F35, F39 and F18's last screw by the robots.** Each needs a design or grasp change and a re-plan spliced into run 15:
+  F35 another grasp for the O-ring; F39 another grasp and release for the drawer (and the drawer latches modelled as studs,
+  not one envelope); F18 #1 the rail's first hole 10 mm further from its end (x -100), so the angle head clears the wall, or
+  the descent left to the RRT after a 60 mm back-off along the screw's axis.
+- **MiR A's 1.8 m reverse** in chapter 41 (above).
+- **The YouTube description** says every drawn frame (28,902) was checked; 1,646 of those are the two chart chapters, which
+  draw no 3-D scene. The upload token can't edit it.
+- **Table picks:** 16 of 78 aren't planned; the frames show a card, or the person bringing the part.
 
 ## Round 9 (2026-11-27): what round 8's audit still found
 
@@ -293,6 +377,8 @@ python desktop-lpbf/cad/robotbuild/ch_integration.py    # 50-integration
 python desktop-lpbf/cad/robotbuild/ch_summary.py        # 60-summary
 python desktop-lpbf/cad/robotbuild/shop_chapters.py 20 29 30 31 32   # the shop (after shop_chamber_cache.py and analysis/shop/shop_clips.py; robot-shop.md)
 python desktop-lpbf/cad/robotbuild/asm_render.py module|chamber      # 40, 41 (after run_assembly.py with ASM_RECORD; slices: asm_slices.py, merge_parts.py)
+ASM_CUT_HELD=F39 ASM_STEPS=F39:F40 ASM_RANGE_IDX=41 ... asm_render.py chamber   # round 10: F39 drawn again with its failed carry cut
+python desktop-lpbf/cad/robotbuild/split_part.py <part dir> <first frame> <new part dir>   # round 10: a slice's later steps kept
 python desktop-lpbf/cad/robotbuild/ch_programs.py      # 31b-machining-programs (after analysis/machining/parts_cam.py: gcode/parts/README.md)
 python desktop-lpbf/cad/robotbuild/ch_tools.py         # 38-tools
 python desktop-lpbf/cad/robotbuild/compose.py           # the MP4, chapters.txt, contact sheet, compose.json

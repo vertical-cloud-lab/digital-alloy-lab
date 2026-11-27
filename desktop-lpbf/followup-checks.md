@@ -9,6 +9,22 @@ seal, use Shigley, heat transfer and CalculiX, and say what the machine costs us
 Nothing here has been built, quoted by a shop, or reviewed by BYU's Laser Safety Officer or EHS. Each note below has
 its own sources, assumptions and re-run instructions.
 
+## 0. Round 10 (2026-11-27): no real clipping in any chapter; four of the five failing steps done by the robots
+
+The robot-build video re-made ([`robot-build/video.md`](robot-build/video.md) round 10; 40 min 8 s, public at
+[youtu.be/s2SrsYvCxkE](https://youtu.be/s2SrsYvCxkE), subscribers not notified; round 9's B9k2RO6CxCM and the CAD animation's
+lZLwp2oRw0w left as they were). Every frame that draws the 3-D scene is audited at 1.5 mm: 0 pairs in chapters 00, 10, 20,
+29, 30 (round 9: 42), 31, 31b, 32, 38 and 50; 9 in 40 (29) and 74 in 41 (238). Classified pair by pair
+([`round10_4x_pairs.md`](analysis/out/videoqa/round10_4x_pairs.md)), none is real clipping: 71 are a screw at its pick standing
+in the MiR's screw presenter, which is modelled as a solid envelope without its nest, and 12 are fingertips at most 4.7 mm on the
+part they hold. People's feet: 0.0 mm stance slip everywhere (round 9: up to 383 mm). The assembly is run 15, planned in one
+process: 108 of 112 checked steps, 128 of 129 screws, 196 of 196 MiR drives clear ([`assembly.md`](assembly.md) round 10). The
+round-9 worst pair, the right liner 37.5 mm in the chamber body, was the renderer drawing parts on the plate-finger caps 120 mm
+off their grasp point. F15, F26, F27 and F57 are done by the robots now, and F18 is 3 of 4 screws; a person drives F18's last
+screw and sets F35's window O-ring and F39's drawer, two steps round 9 drew as passes that fail now the planner checks what is
+drawn. Chapter 30 is clean ([`robot-shop.md`](robot-shop.md) round 10). Left: the presenter's nest, F35, F39 and F18 #1, and
+one 1.8 m MiR reverse in chapter 41 (two of the renderer's make-room moves back to back).
+
 ## 0. Round 9 (2026-11-27): what round 8's frame audit still found, fixed; the robot-build video on YouTube
 
 Every chapter planned and rendered again ([`robot-build/video.md`](robot-build/video.md) round 9; 40 min 56 s, public at
