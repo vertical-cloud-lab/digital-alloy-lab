@@ -39,7 +39,7 @@
 
 \begin{frontmatter}
 
-\title{\placeholder{Version A:} A scandium-free aluminum alloy for laser powder bed fusion (PBF-LB/M) that is stronger than \AlSi without losing ductility}
+\title{\placeholder{Version A:} Beyond the scandium-free front: an aluminum alloy for laser powder bed fusion (PBF-LB/M) stronger than commercial Al--Mg--Zr--Mn printed on the same machine, with less critical-mineral burden than \Scal}
 
 \author[byu]{\placeholder{Co-authors to confirm}}
 \author[byu]{Sterling G. Baird\corref{cor}}
@@ -50,9 +50,9 @@
 \begin{abstract}
 \placeholder{Write at G4 (29 Jan); length per ../journals.md.}
 \AlSi, the most widely printed aluminum alloy for laser powder bed fusion (PBF-LB/M), is easy to print but modest in strength, while \Scal, after aging, reaches about 1.5 to 2.1 times its yield strength by adding scandium, a critical mineral that the United States imports entirely.
-We ran a 12-week campaign to find a printable alloy that is stronger than \AlSi without scandium.
+Scandium-free powders that are stronger than \AlSi after a direct age are already sold, so we set the bar at the scandium-free front of yield strength against critical-mineral burden, anchored by two of them, Al5X1 (Al--Mg--Zr--Mn) and Al-HS1 (Al--Mn--Cr--Zr), bought and printed and tested on the same machine and in the same way as our candidates, \AlSi and \Scal.
 CALPHAD screening ranked \placeholder{N\textsubscript{screen}} scandium-free compositions on solidification range, crack susceptibility, strengthening phases and a critical-mineral burden fixed before the screen; \NCompositions{} were atomized in-house from dosed \SI{250}{g} charges, printed by PBF-LB/M, and tested for density, hardness, tensile properties and corrosion in \SI{3.5}{wt\%} NaCl.
-\placeholder{Version A: Alloy X (Al--\dots) printed crack-free to \dots\% density and reached \dots~MPa yield strength and \dots\% elongation, \dots~MPa above \AlSi printed and tested the same way, with a critical-mineral burden \dots\% below \Scal's. An outside laboratory confirmed its composition.}
+\placeholder{Version A: Alloy X (Al--\dots) printed crack-free to \dots\% density and reached \dots~MPa yield strength and \dots\% elongation, \dots~MPa above commercial Al5X1 printed in the same session and tested the same way, at \dots{} critical-mineral burden, below \Scal's at every allowed import reliance. An outside laboratory confirmed both compositions. Printed here, the commercial powders reached \dots{} of their datasheet yield strengths.}
 \placeholder{Version B: \dots}
 \end{abstract}
 
@@ -63,7 +63,7 @@ laser powder bed fusion (PBF-LB/M) \sep aluminum alloys \sep scandium-free \sep 
 \end{frontmatter}
 
 
-\note{Highlights (Elsevier: 3--5 bullets, at most 85 characters each, separate file). Drafts, to be fixed at G4: (1) Scandium-free Al alloy [X] printed crack-free from in-house powder. (2) [YS] MPa yield, above AlSi10Mg printed and tested the same way. (3) Critical-mineral burden [X]\% below Scalmalloy on a metric fixed in advance. (4) [N] compositions atomized and tested in 12 weeks.}
+\note{Highlights (Elsevier: 3--5 bullets, at most 85 characters each, separate file). Drafts, to be fixed at G4: (1) Scandium-free Al alloy [X] printed crack-free from in-house powder. (2) Beyond the Sc-free front: stronger than commercial Al5X1 printed alongside. (3) Less critical-mineral burden than Scalmalloy, on a metric fixed in advance. (4) Four commercial powders and [N] new ones printed and tested on one machine.}
 
 % =============================================================================
 \section{Introduction}
@@ -88,13 +88,13 @@ Al--Mn--Cr--Zr-based alloys designed for LPBF~\cite{almncr2022,alloyF2024} reach
 Several scandium-free powders are now sold for LPBF: Al--Mn--Cr--Zr and Al--Mg--Zr--Mn grades with datasheet yield strengths well above \AlSi's after a direct age, and an Al--Fe--Zr grade that matches it~\cite{ds_hoganas,ds_al5x1,ds_cp1}.
 Computational design has produced printable alloys too: by CALPHAD-based integrated computational materials engineering~\cite{thapliyal2020} and by CALPHAD coupled with Bayesian optimization~\cite{taherimousavi2025}, although with scandium or rare-earth additions, and by CALPHAD-aided design of a crack-free Al--Mg--Si--Ti alloy with neither, in which Ti promotes nucleation and an Al/Mg$_2$Si eutectic back-fills the last liquid~\cite{wen2024}.
 Two problems remain.
-First, few of these alloys have been compared with \AlSi printed and tested in the same way, so whether an alloy is ``better'' depends on which datasheet it is compared with (Fig.~\ref{fig:map}a, Section~\ref{sec:benchmark}).
+First, these alloys are compared through datasheets and papers, each from its own machine, parameters and specimens, so whether a new alloy is ``better'' depends on which datasheet it is compared with (Fig.~\ref{fig:map}a, Section~\ref{sec:benchmark}); our own \AlSi, printed and tested the way our candidates are, reached only \InhouseRatioLo--\InhouseRatioHi{} of the as-built yield strength on the datasheets.
 Second, removing scandium does not by itself reduce the critical-mineral burden. The final 2025 U.S.\ list includes aluminum and silicon themselves, as well as Mg, Mn, Cr, Zr, Ti, Cu, Ni and the rare earths; of the elements used in these alloys, only iron is absent~\cite{fr2025}. A claim of ``less critical minerals'' therefore needs a burden metric that weights each element, stated in advance~\cite{graedel2012,mulukutla2025}.
 
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=\textwidth]{figures/fig1-benchmark-map.pdf}
-  \caption{Where the campaign's alloys sit against the benchmarks. (a) Yield strength against elongation. Open blue and orange markers, \AlSi and \Scal vendor datasheets~\cite{ds_eos,ds_nikon,ds_colibrium,ds_3dsystems}; filled blue, \AlSi printed for this work at the University of Utah (as built, as-printed surfaces, horizontal; mean $\pm$ s.d., $n=\InhouseN$); grey diamonds, scandium-free alloys on vendor datasheets~\cite{ds_hoganas,ds_al5x1,ds_cp1,ds_a20x,ds_7a77,ds_al2139}; grey triangles, scandium-free alloys in papers~\cite{almncrzr2024,croteau2018,almgmnerzr2022,alfezr2025,alsimg2020}; dashed grey boxes, scandium-free alloys whose datasheets give only a range; grey shading, where a candidate's mean must lie to be stronger than our \AlSi at no lower elongation (the rule of Section~\ref{sec:stats} also adds the candidate's own confidence half-width). (b) Yield strength against the import-weighted burden $B_\mathrm{NIR}$ (Eq.~\ref{eq:burden}), plotted at the midpoint of its interval; the horizontal bars on the benchmarks show the interval. Green ticks mark the burden of the planned seed compositions, whose strength is not yet measured. Shading: stronger than our \AlSi and below the lower end of \Scal's burden; the scandium-free values are as reported, mostly on machined specimens, so they are not like-for-like with ours. \placeholder{Campaign alloys (green dots) are added as their tensile data arrive.}}
+  \caption{Where the campaign's alloys sit against the benchmarks. (a) Yield strength against elongation. Open blue and orange markers, \AlSi and \Scal vendor datasheets~\cite{ds_eos,ds_nikon,ds_colibrium,ds_3dsystems}; filled blue, \AlSi printed for this work at the University of Utah (as built, as-printed surfaces, horizontal; mean $\pm$ s.d., $n=\InhouseN$); black squares, the scandium-free baselines Al5X1 and Al-HS1 (open: their datasheets~\cite{ds_al5x1,ds_hoganas}; filled: printed and tested here); grey diamonds, other scandium-free alloys on vendor datasheets~\cite{ds_cp1,ds_a20x,ds_7a77,ds_al2139}; grey triangles, scandium-free alloys in papers~\cite{almncrzr2024,croteau2018,almgmnerzr2022,alfezr2025,alsimg2020}; dashed grey boxes, scandium-free alloys whose datasheets give only a range; grey shading, where a candidate's mean must lie to be stronger than our \AlSi at no lower elongation (the rule of Section~\ref{sec:stats} also adds the candidate's own confidence half-width). (b) Yield strength against the import-weighted burden $B_\mathrm{NIR}$ (Eq.~\ref{eq:burden}) at the midpoint import reliances; horizontal bars show the interval the bounded reliances allow. The shaded box is the region of interest: stronger than our \AlSi, less burden than \Scal. The dashed staircase is the scandium-free front on reported values (each alloy's strongest listed condition), and the darker grey is the part of the region it already covers; a new alloy expands the front only in the light part. A solid black staircase marks the front of the baselines printed here, once measured. Green ticks mark the burden of the planned seed compositions, whose strength is not yet measured. The scandium-free values are as reported, mostly on machined specimens, so they are not like-for-like with ours. \placeholder{In-house baselines (filled squares) and campaign alloys (green dots) are added as their tensile data arrive.}}
   \label{fig:map}
 \end{figure}
 
@@ -105,7 +105,7 @@ Ultrasonic atomization melts a charge of a few hundred grams or less and breaks 
 
 Here we report a 12-week campaign that puts these pieces together.
 We screened \placeholder{N\textsubscript{screen}} scandium-free compositions with CALPHAD for freezing range, crack susceptibility, strengthening phases and a critical-mineral burden that was fixed before the screen ranked anything; atomized \NCompositions{} of them in-house from dosed charges; printed them by LPBF; and measured density, hardness, tensile properties and corrosion.
-Each result is compared with \AlSi printed on the same machine and tested the same way, with vendor datasheets as context, and with \Scal on critical-mineral burden.
+Each result is compared with commercial powders printed on the same machine and tested the same way: \AlSi, \Scal, and two scandium-free alloys sold for LPBF, Al5X1 (Al--Mg--Zr--Mn)~\cite{mds_al5x1,ds_al5x1} and Al-HS1 (Al--Mn--Cr--Zr)~\cite{ds_hoganas}. With the published alloys, they define the scandium-free front of strength against critical-mineral burden (Fig.~\ref{fig:map}b) that the campaign set out to expand. Measuring the commercial powders here also shows how far our machine's results sit from the vendors' datasheets.
 \placeholder{Version A: We find that \dots}
 \placeholder{Version B: We find that \dots}
 
@@ -130,7 +130,7 @@ Four quantities ranked the compositions:
 Printable laser settings for each candidate were estimated from Eagar--Tsai melt-pool calculations and printability maps that bound lack of fusion, balling and keyholing~\cite{eagar1983,johnson2019}.
 
 Four seed compositions spanning distinct strengthening routes (S1--S4 in Table~\ref{tab:compositions}, with three optional ones) were atomized first.
-\note{The \#275 plan proposes S1 Al--4.8Mn--0.9Cr--1.1Zr--1.2Mg, S2 Al--1.9Fe--1.0Mg--1.0Zr, S3 Al--3.5Si--2.5Mg and S4 Al--6Mg--2.5Si--0.7Ti, chosen from the literature, not from the screen. If they stay, say so plainly here: they are literature anchors, and the screen ranks what follows.}
+\note{The \#275 plan proposes S1 Al--4.8Mn--0.9Cr--1.1Zr--1.2Mg, S2 Al--1.9Fe--1.0Mg--1.0Zr, S3 Al--3.5Si--2.5Mg and S4 Al--6Mg--2.5Si--0.7Ti, chosen from the literature, not from the screen. If they stay, say so plainly here: they are literature anchors, and the screen ranks what follows. With the bought baselines, ../preregistration.md proposes dropping S1 (its burden is above \Scal's at every allowed reliance, \PSonelo{} to \PSonehi~wt\%, and Al-HS1 now anchors that family) and making O1 the Al5X1 twin, Al--3.35Mg--0.55Mn--1.2Zr from dosed charges.}
 Later compositions were proposed in batches of three by Bayesian optimization~\cite{balandat2020} on the measured hardness and relative density, with the CALPHAD quantities as inputs; the settings were fixed before the first round (Supplementary Section~S9). The software that schedules the steps of the loop, in the manner of a self-driving laboratory~\cite{tom2024}, is described elsewhere~\placeholder{ref.\ to the \textit{Adv.\ Mater.} article, if out first}; here it serves only to pick compositions.
 \note{Keep the optimizer to this paragraph. The cost-aware network optimizer and any acceleration claim belong to the \textit{Adv.\ Mater.} article (\#120); see ../outline.md.}
 
@@ -153,16 +153,25 @@ where $w_i$ is the mass fraction of alloying element $i$ in wt\% and $\mathrm{NI
 $B_\mathrm{NIR}$ is a mass fraction of the alloying additions, in wt\% of the alloy, with each element weighted by the share of U.S.\ supply that is imported on balance; it is a measure of import exposure, not of where a given batch was sourced.
 Aluminum is left out because it is the base of every alloy compared (Supplementary Section~S3 shows what counting it does), and iron, which is not on the 2025 list and of which the U.S.\ is a net exporter, counts as zero.
 USGS reports some reliances only as bounds (silicon above 50\%, magnesium above 75\%, zirconium below 25\%), so $B_\mathrm{NIR}$ is reported as the interval those bounds allow, and plotted at its midpoint.
-As sensitivity checks we report the raw-material cost of the critical alloying additions per kilogram of alloy, $B_\mathrm{cost} = \sum (w_i/100)\,p_i$ over the elements on the 2025 list other than aluminum, with 2025 prices $p_i$ (2023 for manganese metal, which USGS no longer prices; scandium as metal)~\cite{usgs2026}, and the scandium content alone.
+A bound is the same unknown for every alloy, so two alloys were compared under the same reliances rather than interval against interval: because $B_\mathrm{NIR}(a)-B_\mathrm{NIR}(b)$ is linear in each reliance, its range over all allowed values follows from the bounds, and alloy $a$ was counted as below $b$ only if the upper end of that range is negative (Supplementary Table~S3).
+Burdens of the printed alloys, the bought powders included, use the compositions measured by the outside laboratory (Section~\ref{sec:verification}); until those arrive, nominal compositions are used and labelled as such.
+As sensitivity checks we report the mass of the alloying elements on the 2025 list, $B_\mathrm{mass}$, the raw-material cost of the critical alloying additions per kilogram of alloy, $B_\mathrm{cost} = \sum (w_i/100)\,p_i$ over the elements on the 2025 list other than aluminum, with 2025 prices $p_i$ (2023 for manganese metal, which USGS no longer prices; scandium as metal)~\cite{usgs2026}, and the scandium content alone.
 The inputs and their sources are in Supplementary Section~S3.
 The metric, its inputs and the threshold for ``less than \Scal'' were committed to the project repository before the CALPHAD screen ranked any campaign composition (Supplementary Section~S9). The burdens of the benchmarks, the planned seeds and the published alloys (Fig.~\ref{fig:map}b, Supplementary Fig.~S1) had already been computed by then, so the metric was chosen knowing how it ranks them; the freeze binds the campaign's own compositions.
-\note{Sterling to choose the primary metric and the threshold. FLAIME's O4 uses $\geq$40\% below \Scal. Check how the seeds score before freezing: an Al--Mn--Cr--Zr alloy carries several wt\% of fully imported Mn (risks.md, R7).}
+\note{Recommended (../baselines.md): $B_\mathrm{NIR}$ as primary, compared at the same reliances. It is the only one of the three metrics that both counts how much critical material an alloy carries and separates scandium-free alloys, which a front needs; $B_\mathrm{cost}$ puts every silver-free scandium-free alloy within a dollar per kilogram of the others and some 40 below \Scal. It is also FLAIME's import-reliance node. Sterling to confirm, and to choose the threshold (the robust form, or FLAIME's O4 at $\geq$40\% below \Scal).}
 
 \subsection{Feedstock and charges}
 
 Each \SI{250}{g} charge was made from \placeholder{6063 aluminum bar from a single lot (\dots)}, with Si from 4047 rod, Zr from an Al--10Zr master alloy and the other additions as elemental metal \placeholder{(purities and suppliers)}.
 Masses were weighed to \placeholder{$\pm$0.01~g} and the target composition was computed from the masses and the certified composition of each feedstock, including the 6063 base (about \SI{0.5}{wt\%} Mg, \SI{0.35}{wt\%} Si and \SI{0.2}{wt\%} Fe).
 Mg was over-charged by \placeholder{5--10\%} to offset evaporation until the first outside analysis gave a measured loss.
+
+\subsection{Commercial powders}
+\label{sec:commercial}
+
+Four gas-atomized powders were bought and printed alongside the campaign's alloys: \AlSi \placeholder{(vendor, lot)}; EOS Aluminium Al5X1 (EOS GmbH, article 9030-0017, 20--63~\textmu m, \placeholder{lot}), whose nominal composition is Al with \SIrange{2.5}{4.2}{wt\%} Mg, \SIrange{0.6}{1.8}{wt\%} Zr and \SIrange{0.1}{1.0}{wt\%} Mn~\cite{mds_al5x1}; H\"ogan\"as forAM Al-HS1 GA (20--63~\textmu m, \placeholder{lot}), typically Al--4.8Mn--0.8Cr--0.8Zr~\cite{ds_hoganas}; and \Scal \placeholder{(APWORKS or a licensed producer, lot; or in-house powder D2)}.
+Each came with the vendor's lot certificate \placeholder{(chemistry, oxygen, particle size)}; each was sieved, dried, stored and logged like the in-house powders, and its composition was measured by the outside laboratory (Section~\ref{sec:verification}).
+\note{Nothing is ordered yet. Sourcing, the questions for each vendor and a draft quote request are in ../baselines.md; neither vendor publishes a price or lead time. Al-HS1 and Scalmalloy are optional; Al5X1 is the one the front needs.}
 
 \subsection{Ultrasonic atomization}
 \label{sec:atomization}
@@ -184,14 +193,14 @@ A sealed \SI{5}{g} sample of each lot was kept for oxygen analysis.
 \label{sec:lpbf}
 
 Specimens were printed on an Aconity MIDI at the University of Utah \placeholder{(build plate material, preheat \textdegree C, argon, O\textsubscript{2} below \dots~ppm, reduced build platform if used)}.
-Each composition was printed first as single tracks, then as 5\,$\times$\,5\,$\times$\,5~mm cubes over a matrix of \placeholder{2} powers $\times$ \placeholder{4} speeds $\times$ \placeholder{2} hatch spacings at \placeholder{50}~\textmu m layers with a \SI{67}{\degree} rotation between layers, and finally as tensile specimens at the setting that gave the highest density.
+Each composition, bought or made, was printed first as single tracks, then as 5\,$\times$\,5\,$\times$\,5~mm cubes over the same matrix of \placeholder{2} powers $\times$ \placeholder{4} speeds $\times$ \placeholder{2} hatch spacings at \placeholder{50}~\textmu m layers with a \SI{67}{\degree} rotation between layers, and finally as tensile specimens at its own setting that gave the highest density. The vendors' parameter sets were not used: they are written for other machines, and one parameter set for every alloy would favour whichever alloy it was tuned for.
 Tensile specimens were flat ASTM E8/E8M sub-size specimens (\SI{100}{mm} long, \SI{6}{mm} wide and \SI{6}{mm} thick in the reduced section, \SI{32}{mm} reduced length)~\cite{astm_e8}, built flat (horizontal), the same geometry and orientation as the \AlSi reference build of April 2026.
 \note{The April coupons' dimensions (PR \#288) match the E8/E8M sub-size outline, but the project records don't call them E8 sub-size; confirm against the drawing in \#138 before saying so.}
-To separate the effect of the alloy from that of the powder route, the finalists' build also contained \AlSi-type powder atomized in-house (run D1) and commercial gas-atomized \AlSi powder, printed with \placeholder{the same / their own optimized} parameters.
+Each build held one powder, so the comparators were printed in consecutive builds of the same session as the finalists: commercial Al5X1 and \AlSi and, to separate the effect of the alloy from that of the powder route, \AlSi-type powder atomized in-house (run D1) \placeholder{and the in-house Al5X1 twin, if made}.
 
 \subsection{Heat treatment}
 
-\AlSi specimens were tested as built and after a stress relief at \placeholder{\SI{300}{\celsius} for \SI{2}{h}}.
+\AlSi specimens were tested as built and after a stress relief at \placeholder{\SI{300}{\celsius} for \SI{2}{h}}. The bought scandium-free powders and \Scal were tested as built and after their vendors' direct ages: Al5X1 at \SI{400}{\celsius} for \SI{6}{h} with a gas quench \placeholder{(in argon)}~\cite{mds_al5x1}, Al-HS1 at \SI{375}{\celsius} for \SI{4}{h} in air~\cite{ds_hoganas}, and \Scal at \SI{325}{\celsius} for \SI{4}{h}~\cite{ds_colibrium}.
 Each candidate was tested as built and after one direct-aging treatment chosen before printing from the CALPHAD precipitation calculations and the literature for its family; direct aging, without a solution treatment, can work because PBF-LB/M leaves a supersaturated matrix, as shown for a Mg$_2$Si-rich Al alloy~\cite{solanki2026} \placeholder{(e.g.\ \SI{400}{\celsius}, \dots~h for Zr-bearing alloys~\cite{croteau2018})}.
 
 \subsection{Density, microstructure and hardness}
@@ -218,16 +227,18 @@ Printed \AlSi corrodes selectively along melt-pool boundaries, and heat treatmen
 \subsection{Independent verification}
 \label{sec:verification}
 
-The compositions of the benchmark powders and of the finalists' powders and printed parts were measured by \placeholder{an accredited outside laboratory} using ICP-OES~\cite{astm_e3061} and \placeholder{spark-OES on printed coupons~\cite{astm_e1251}}, and their oxygen content by inert-gas fusion.
+The compositions of the bought powders' lots, of the finalists' powders, and of one printed coupon of each were measured by \placeholder{an accredited outside laboratory} using ICP-OES~\cite{astm_e3061} and \placeholder{spark-OES on printed coupons~\cite{astm_e1251}}, and their oxygen content by inert-gas fusion.
 Samples were sent under coded IDs, and the laboratory's results and uncertainties are reported as received.
 \placeholder{If funded: tensile specimens from the finalists' build were also tested at an outside laboratory.}
 
-\subsection{Statistics and the comparison with \AlSi}
+\subsection{Statistics and the comparisons}
 \label{sec:stats}
 
 Values are given as mean $\pm$ standard deviation with the number of valid specimens $n$; 95\% confidence intervals use Student's $t$.
 A candidate was counted as stronger than \AlSi only if, printed on the same machine with the same specimen geometry and surface and tested the same way, its mean yield strength exceeded that of \AlSi by more than the half-widths of the two 95\% confidence intervals combined, with a mean elongation no lower than that of \AlSi and $n \geq 3$ for both, against \AlSi in both its as-built and stress-relieved conditions.
-This rule, and the choice of comparator, were fixed at the same time as the burden metric, before the screen ranked any composition (Supplementary Section~S9).
+This is the floor. A candidate condition was counted as expanding the scandium-free front if, in addition, its $B_\mathrm{NIR}$ was below \Scal's at every allowed reliance (Section~\ref{sec:burden}) and no baseline printed and tested here dominated it: every baseline (Al5X1, Al-HS1, \Scal, each in its vendor condition) whose burden was not robustly above the candidate's had to be weaker by more than the two confidence half-widths combined. As a secondary check, no reported scandium-free alloy (Supplementary Table~S2) could have both a higher reported yield strength and a burden robustly below the candidate's. The size of the step is reported as the area it adds to the front of the baselines inside the region of interest (hypervolume improvement).
+A bought powder was counted as on par with its datasheet if its in-house mean yield strength, in the vendor's condition and the horizontal orientation, was at least 0.90 of the vendor's typical value (Fig.~\ref{fig:mech}d).
+These rules, and the choice of comparators, were fixed at the same time as the burden metric, before the screen ranked any composition (Supplementary Section~S9).
 
 \subsection{Provenance}
 
@@ -275,14 +286,21 @@ Which compositions printed crack-free and dense, and whether the CALPHAD crack i
   \label{fig:print}
 \end{figure}
 
+\subsection{The commercial powders on our machine}
+\label{sec:baselines}
+\placeholder{Data due 29 Jan 2027 at best, 12 Feb 2027 at the latest, depending on when the powders are ordered (../baselines.md).}
+How each bought powder printed (its densest grid point, cracks), its yield strength, tensile strength and elongation as built and after its vendor's age (Fig.~\ref{fig:mech}c, Table~\ref{tab:benchmarks}), and its ratio to its datasheet (Fig.~\ref{fig:mech}d).
+The \AlSi built in April 2026 reached \InhouseRatioLo--\InhouseRatioHi{} of the horizontal as-built datasheet values, below the 0.90 on-par threshold; whether aged Al5X1 is closer to its datasheet tells whether that gap is \AlSi's, whose as-built strength rests on a fine silicon network that depends on cooling rate and plate temperature, or the process's.
+\placeholder{The front of the baselines as printed here (Fig.~\ref{fig:map}b, solid staircase), and whether Al5X1 dominates Al-HS1 as the datasheets suggest.}
+
 \subsection{Strength and ductility}
 \placeholder{Data due 12 Feb 2027 (Fig.~\ref{fig:mech}).}
 The \AlSi reference printed at the University of Utah in April 2026 gave \InhouseYS~$\pm$~\InhouseYSsd~MPa yield strength, \InhouseUTS~$\pm$~\InhouseUTSsd~MPa tensile strength and \InhouseEL~$\pm$~\InhouseELsd\% elongation as built ($n = \InhouseN$; Fig.~\ref{fig:mech}c, Table~\ref{tab:benchmarks}). These tests used the load frame's own strain channel rather than an extensometer, so their yield strengths are uncertain by up to about 30~MPa (Section~\ref{sec:benchmark}).
-\placeholder{Hardness of every printed composition; tensile results of the finalists and of in-house \AlSi-type powder from the same build.}
+\placeholder{Hardness of every printed composition; tensile results of the finalists and of in-house \AlSi-type powder from the same session; where the finalists sit against the front of the baselines.}
 
 \begin{table}[tbp]
   \centering\footnotesize
-  \caption{Room-temperature tensile properties of the two benchmarks. Datasheet values are vendor typical or mean values on machined bars, except the Nikon row marked as-printed surface, at \SIrange{30}{60}{\micro m} layers; the 3D Systems rows are at 30 and 60~\textmu m and give plastic elongation. The last row was measured for this work. \placeholder{Campaign rows are added by make\_figures.py as data arrive.}}
+  \caption{Room-temperature tensile properties of the benchmarks and the scandium-free baselines. Datasheet values are vendor typical or mean values on machined bars, except the Nikon row marked as-printed surface, at \SIrange{30}{60}{\micro m} layers (Al5X1: 40~\textmu m); the 3D Systems rows are at 30 and 60~\textmu m and give plastic elongation; Al5X1 is given vertical (V) and horizontal (H), Al-HS1 in the build direction (Z) and perpendicular to it (XY). The rows marked ``This lab'' were measured for this work. \placeholder{In-house rows of the bought powders and the campaign's alloys are added by make\_figures.py as data arrive.}}
   \label{tab:benchmarks}
   \resizebox{\textwidth}{!}{\input{generated/tab-benchmarks.tex}}
 \end{table}
@@ -290,7 +308,7 @@ The \AlSi reference printed at the University of Utah in April 2026 gave \Inhous
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=\textwidth]{figures/fig5-mechanical.pdf}
-  \caption{Strength and ductility. (a) Hardness \placeholder{of every printed composition}. (b) Stress--strain curves \placeholder{of the finalists and \AlSi from the same build}. (c) Yield strength, mean and 95\% confidence interval; the \AlSi bar is the April 2026 Utah build (as built, as-printed surfaces, horizontal, $n=\InhouseN$).}
+  \caption{Strength and ductility. (a) Hardness \placeholder{of every printed composition}. (b) Stress--strain curves \placeholder{of the finalists and the comparators from the same session}. (c) Yield strength of everything printed and tested here, mean and 95\% confidence interval; the \AlSi bar is the April 2026 Utah build (as built, as-printed surfaces, horizontal, $n=\InhouseN$); open squares are the baselines' datasheet values until they are measured. (d) In-house mean yield strength divided by the vendor's typical value for the same condition (horizontal bars), with the 95\% confidence interval; AB, as built; SR, stress-relieved; one point per datasheet where there are two (\AlSi: EOS and Nikon~\cite{ds_eos,ds_nikon}). Dashed: the 0.90 on-par threshold.}
   \label{fig:mech}
 \end{figure}
 
@@ -342,7 +360,7 @@ That is about \InhouseYSpctEOS\% of the EOS horizontal yield strength, \InhouseU
 These April tests also predate the campaign's test method: strain came from the frame's own channel rather than an extensometer, three of the four valid tests gave elastic slopes of 29--49~GPa instead of about 70~GPa, elongation came from the same channel, and the crosshead rates were faster than ASTM E8/E8M allows while yield is measured. Their yield strengths are uncertain by up to about 30~MPa, and the comparator, including the \InhouseEL\% elongation threshold, is provisional until \AlSi is re-tested in the finalists' build.
 The closest datasheet row is Nikon's unmachined (near-net-shape) bar, the only one with as-printed surfaces~\cite{ds_nikon}.
 A candidate printed and tested in the same way as our specimens therefore has to be compared with our \AlSi, not with the datasheets.
-Under the rule of Section~\ref{sec:stats}, with $n = \InhouseN$ for \AlSi (95\% confidence half-width \InhouseYShw~MPa), a candidate's mean yield strength must exceed \YSbar~MPa plus its own confidence half-width, about 270--280~MPa for three or four specimens with a similar spread, at an elongation of at least \InhouseEL\%. Such an alloy would still sit below the strongest machined as-built datasheet row (\SI{300}{MPa}), so a claim against our \AlSi is not a claim against the datasheets.
+Under the rule of Section~\ref{sec:stats}, with $n = \InhouseN$ for \AlSi (95\% confidence half-width \InhouseYShw~MPa), a candidate's mean yield strength must exceed \YSbar~MPa plus its own confidence half-width, about 270--280~MPa for three or four specimens with a similar spread, at an elongation of at least \InhouseEL\%. Such an alloy would still sit below the strongest machined as-built datasheet row (\SI{300}{MPa}), so a claim against our \AlSi is not a claim against the datasheets. This comparator is therefore only the floor: the bar is the scandium-free front, measured on the same machine (Section~\ref{sec:frontsec}).
 \note{This comparator is provisional: the April strain channel was unreliable for three of the four valid tests, and the powder was commercial. The finalists' build will contain both commercial and in-house \AlSi-type powder, with an extensometer, and those values replace these.}
 
 \subsection{Scandium-free alloys that are already stronger than \AlSi}
@@ -355,6 +373,16 @@ Being stronger than \AlSi without scandium is therefore not new in itself.
 What the literature does not settle is how these alloys compare on critical-mineral burden, since each replaces scandium with several weight percent of Mn, Cr, Zr, Mg or rare earths, and how they compare with \AlSi printed and tested the same way.
 A new alloy from this campaign is a contribution only if it sits beyond these alloys on strength against burden (Fig.~\ref{fig:map}b), not merely beyond \AlSi.
 
+\subsection{The scandium-free front, and the baselines printed here}
+\label{sec:frontsec}
+
+On reported values, \NFront{} of the scandium-free alloys are on the front of yield strength against $B_\mathrm{NIR}$ (\FrontList), and \NFrontRegion{} of them lie in the region of interest (\FrontRegionList; Fig.~\ref{fig:map}b).
+Al5X1 is \AlfiveOnFront{} the front and below \Scal's burden at every allowed reliance (difference \PAlfivelo{} to \PAlfivehi~wt\%); apart from an Al--Cu--Mg--Ag alloy that needs a solution treatment and a water quench~\cite{ds_al2139}, it is the strongest commercial scandium-free alloy in that region.
+Al-HS1 is \AlhsOnFront{} it: it is weaker than Al5X1 on its datasheet, its burden differs from Al5X1's by \PHSvsfivelo{} to \PHSvsfivehi~wt\% at the same reliances, and against \Scal its burden is lower or higher depending on magnesium's import reliance (\PAlhslo{} to \PAlhshi~wt\%).
+We bought both and printed and tested them as we did our candidates (Section~\ref{sec:baselines}), so that the front's middle rests on our own measurements rather than on datasheets from other machines, while Al-HS1 anchors the Mn-rich family that two of the planned seeds come from.
+The front's low-burden end, below about \SI{3}{wt\%}, rests on reported values only: an Al--Fe--Zr powder at \SI{300}{MPa} after aging and an Al--Fe--Mg--Zr alloy at \SI{376}{MPa}~\cite{ds_cp1,alfezr2025}.
+\note{A third purchase (Aheadd CP1, EOS article 9030-0034) would anchor the low-burden end in-house; decide after the screen (../baselines.md).}
+
 \subsection{Critical-mineral burden of the benchmarks}
 
 Every element in the two benchmarks is on the final 2025 list~\cite{fr2025}, so the question is how much of each they carry, weighted by how exposed its supply is (Table~\ref{tab:compositions}).
@@ -365,10 +393,11 @@ The premise that \AlSi carries fewer critical minerals than \Scal therefore hold
 
 The same split runs through the scandium-free alloys (Fig.~\ref{fig:map}b; Supplementary Fig.~S1).
 On cost, with scandium priced as metal, all of them except the two silver-bearing Al--Cu--Mg alloys are at least \CostRedMinNonAg\% below \Scal and the silver-bearing ones are \CostRedAgLo--\CostRedAgHi\% below, so ``less than \Scal'' hardly tells them apart. With scandium priced through the master alloy, the floor for the silver-free alloys falls to \CostRedMinMaster\%, and the silver-bearing ones are only \CostRedAgMasterLo--\CostRedAgMasterHi\% below.
-On import-weighted mass, the Mn-rich alloy that seed S1 reproduces sits above \Scal's interval (S1 at \BSonenirlo--\BSonenirhi~wt\%), the commercial Al--Mn--Cr--Zr grade sits inside it, and Al--Fe--Zr, Al--Fe--Mg--Zr and Al--Mg--Zr alloys sit well below it and, after aging, report higher yield strengths than our as-built \AlSi~\cite{ds_cp1,alfezr2025,ds_al5x1,croteau2018}.
-Of the \NLit{} scandium-free comparators in Fig.~\ref{fig:map}b, \NLitRegionMid{} already sit in the shaded region at the midpoint of their burden, and \NLitRegionRobust{} even at the top of their burden interval. These are their reported values, mostly on machined specimens from tuned processes, so they are not like-for-like with our \AlSi; against the strongest machined \AlSi datasheet row instead (\SI{300}{MPa}), \NLitRegionMidDS{} and \NLitRegionRobustDS{} remain.
+On import-weighted mass, the Mn-rich alloy that seed S1 reproduces sits above \Scal's interval (S1 at \BSonenirlo--\BSonenirhi~wt\%), the commercial Al--Mn--Cr--Zr grade Al-HS1 sits inside it (\BAlhsnirlo--\BAlhsnirhi~wt\%), and Al--Fe--Zr, Al--Fe--Mg--Zr, Al--Mg--Zr and Al--Mg--Zr--Mn alloys sit well below it (Al5X1 at \BAlfivenirlo--\BAlfivenirhi~wt\%) and, after aging, report higher yield strengths than our as-built \AlSi~\cite{ds_cp1,alfezr2025,ds_al5x1,croteau2018}.
+Compared at the same reliances, of the planned seeds \SeedsBelow{} are below \Scal, \SeedsDepends{} depends on the reliances, and \SeedsAbove{} are above, so the last cannot meet the claim whatever their strength (Supplementary Table~S3).
+Of the \NLit{} scandium-free comparators in Fig.~\ref{fig:map}b, \NLitRegionMid{} already sit in the region of interest at the midpoint reliances, and \NLitRegionRobust{} remain below \Scal at every allowed reliance. These are their reported values, mostly on machined specimens from tuned processes, so they are not like-for-like with our \AlSi; against the strongest machined \AlSi datasheet row instead (\SI{300}{MPa}), \NLitRegionMidDS{} and \NLitRegionRobustDS{} remain.
 A campaign alloy therefore counts as a discovery only if it lies beyond these alloys' reported values on strength against burden, under the metric fixed in advance.
-\note{This is the main risk to the paper's claim (risks.md, R1--R2). Sterling: pick the primary metric now. Under $B_\mathrm{NIR}$, steer the screen toward Fe-, Zr- and Mg-lean families (S2, O1) and away from Mn-rich ones (S1, O3); under $B_\mathrm{cost}$, any Sc-free alloy passes and the claim rests on strength alone.}
+\note{This was the main risk to the paper's claim (risks.md, R1--R2). It is now handled by design: the claim is against the front, measured here for Al5X1 and Al-HS1, on $B_\mathrm{NIR}$ compared at the same reliances. Under $B_\mathrm{NIR}$, steer the screen toward Fe-, Zr- and Mg-lean families (S2, O1), where the front has room, and away from Mn-rich ones (S1, O3). Sterling to confirm the metric and threshold before the screen ranks anything.}
 
 
 
@@ -376,7 +405,7 @@ A campaign alloy therefore counts as a discovery only if it lies beyond these al
 \section{Limitations}
 \label{sec:limits}
 
-\placeholder{Write at the data freeze.} All properties are at room temperature; elevated-temperature and cryogenic tests, fatigue and fracture toughness were outside the campaign. Specimens are sub-size, from one machine and, for most alloys, one build. Powder from ultrasonic atomization differs from commercial gas-atomized powder in size distribution and oxygen content, which is why the comparison with \AlSi uses both powder routes. The burden metric depends on 2025 import data and prices, and Supplementary Section~S3 shows how the ranking changes with the metric. None of this is qualification: the comparison is not a test against the \AlSi part specification~\cite{astm_f3318}, and a flight part would also need a qualified material process and a property suite under a standard such as NASA-STD-6030~\cite{nasa6030}.
+\placeholder{Write at the data freeze.} All properties are at room temperature; elevated-temperature and cryogenic tests, fatigue and fracture toughness were outside the campaign. Specimens are sub-size, from one machine and, for most alloys, one build. Each commercial powder is one lot, printed with this campaign's procedure rather than its vendor's parameters, so a baseline that falls short of its datasheet may reflect our process rather than the alloy; the on-par ratios (Fig.~\ref{fig:mech}d) say how far. Powder from ultrasonic atomization differs from commercial gas-atomized powder in size distribution and oxygen content, which is why the comparison with \AlSi uses both powder routes. The burden metric depends on 2025 import data and prices, and Supplementary Section~S3 shows how the ranking changes with the metric. None of this is qualification: the comparison is not a test against the \AlSi part specification~\cite{astm_f3318}, and a flight part would also need a qualified material process and a property suite under a standard such as NASA-STD-6030~\cite{nasa6030}.
 
 \section{Conclusions}
 \placeholder{Write at G4.}

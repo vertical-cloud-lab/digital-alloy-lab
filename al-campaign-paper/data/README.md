@@ -18,6 +18,10 @@ cd al-campaign-paper/manuscript && make    # main.pdf; make si for si.pdf
 - **Failed and invalid results stay in,** with `valid` = `no` (tensile, corrosion) or a note. The paper reports them.
 - **Use the same IDs everywhere:** `alloy_id` from `alloys.csv`, `run_id` from the run table, and `build_id` and
   `specimen_id` as the build sheet names them.
+- **Bought powders** take the `alloy_id` of their composition in `alloys.csv` plus `-commercial` in the measurement
+  files: `AlSi10Mg-commercial`, `Al5X1-commercial`, `Al-HS1-commercial`, `Scalmalloy-commercial`. The figure script
+  treats these as comparators, not campaign alloys. Put the lot number in `powder` and the condition as tested in
+  `condition` (e.g. `as-built`, `direct aged 400 C 6 h`).
 - **This repo is public.** Put no partner prices or quotes, staff names or private links in any column.
 
 ## Files
@@ -43,8 +47,10 @@ cd al-campaign-paper/manuscript && make    # main.pdf; make si for si.pdf
   2026, copied from [PR #288](https://github.com/vertical-cloud-lab/digital-alloy-lab/blob/9ae2c34/preliminary-data/tensile-alsi10mg-utah/results.csv)
   (test 4 broke in the grip, so `valid` = `no`). These are the current in-house comparator. Their caveats are in
   the `note` column.
-- **`alloys.csv`:** AlSi10Mg and Scalmalloy at the midpoints of their datasheet composition ranges, and the seven Sc-free #275
-  seeds (S1-S4, O1-O3) at their planned melt compositions (role `planned seed`). The seeds aren't approved or made yet.
+- **`alloys.csv`:** AlSi10Mg and Scalmalloy at the midpoints of their datasheet composition ranges; the Sc-free baselines
+  Al5X1 (midpoints of EOS's ranges) and Al-HS1 (Höganäs's typical values), role `baseline`, to be replaced by their lots'
+  measured compositions; and the seven Sc-free #275 seeds (S1-S4, O1-O3) at their planned melt compositions (role
+  `planned seed`). The seeds aren't approved or made yet.
 - **`element-criticality.csv`:** inputs from USGS *Mineral Commodity Summaries 2026* and the final 2025 U.S. List of
   Critical Minerals, collected 2026-11-27. Where USGS gives only a bound, both ends are entered.
 - **`literature-alloys.csv`:** Sc-free comparators read by the

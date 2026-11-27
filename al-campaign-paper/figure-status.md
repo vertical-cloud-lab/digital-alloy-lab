@@ -4,15 +4,15 @@
 
 | Item | Title | Drawn now | Draft due | Final data due | Days left | Gate | Owner |
 |---|---|---|---|---|---|---|---|
-| Fig1 | Benchmark map: where the campaign's alloys sit against AlSi10Mg and Scalmalloy | (a) campaign points pending; (b) campaign points pending; seeds shown as burden ticks | Nov 27 | Feb 12, 2027 | 77 | Freeze (Feb 12) | Sterling |
+| Fig1 | Benchmark map: the Sc-free front the campaign tries to expand | (a) campaign points pending; (b) campaign points pending; seeds shown as burden ticks | Nov 27 | Feb 12, 2027 | 77 | Freeze (Feb 12) | Sterling |
 | Fig2 | CALPHAD screen and the compositions picked | drawn from 48 rows (preliminary) | Dec 04 | Jan 29, 2027 | 63 | G1 (Dec 4) | Xavier |
 | Fig3 | Powders made in-house | placeholder (no rows yet) | Jan 29 | Feb 12, 2027 | 77 | G3 (Jan 22) | Ronnie |
 | Fig4 | Printability | placeholder (no rows yet) | Jan 22 | Feb 05, 2027 | 70 | G2 (Jan 15) | Carl |
 | Fig5 | Strength and ductility | (a) placeholder; (b) placeholder; (c) in-house AlSi10Mg drawn; (d) 1 of 8 powder-condition pairs drawn | Jan 29 | Feb 12, 2027 | 77 | Freeze (Feb 12) | Carl |
 | Fig6 | Corrosion in 3.5 wt% NaCl | placeholder (no rows yet) | Jan 29 | Feb 12, 2027 | 77 | Freeze (Feb 12) | Ben and Jarrett |
 | GA | Graphical abstract | Placeholder | Feb 05 | Feb 19, 2027 | 84 | G4 (Jan 29) | Sterling |
-| Tab1 | Compositions: target and measured; mineral burden | Benchmarks and the seven planned Sc-free #275 seeds filled, with burden; measured compositions pending | Jan 29 | Feb 19, 2027 | 84 | Outside (Feb 19) | Ronnie |
-| Tab2 | Tensile properties against the benchmarks | Benchmark rows filled; campaign rows placeholders | Feb 05 | Feb 12, 2027 | 77 | Freeze (Feb 12) | Sterling |
+| Tab1 | Compositions: target and measured; mineral burden | Benchmarks, the two baselines and the seven planned Sc-free #275 seeds filled, with burden and the paired verdict; measured compositions pending | Jan 29 | Feb 19, 2027 | 84 | Outside (Feb 19) | Ronnie |
+| Tab2 | Tensile properties: benchmarks, Sc-free baselines and campaign alloys | Benchmark and baseline datasheet rows and in-house AlSi10Mg filled; in-house baselines and campaign rows placeholders | Feb 05 | Feb 12, 2027 | 77 | Freeze (Feb 12) | Sterling |
 | Tab3 | Independent verification | Placeholder; no outside lab engaged yet | Feb 12 | Feb 19, 2027 | 84 | Outside (Feb 19) | Sterling |
 | S1 | Atomizer runs used in the paper | Run table exists up to Nov 13 (no Al campaign runs yet) | Jan 04 | Feb 12, 2027 | 77 | Freeze (Feb 12) | Gage |
 | S2 | CALPHAD settings and the full ranked list | Placeholder | Dec 11 | Jan 29, 2027 | 63 | G1 (Dec 4) | Xavier |
@@ -23,3 +23,4 @@
 | S7 | Corrosion set-up validation | Placeholder | Jan 15 | Feb 12, 2027 | 77 | G2 (Jan 15) | Ben and Jarrett |
 | S8 | Provenance records for the finalists | Template exists (PR #286) | Feb 05 | Feb 15, 2027 | 80 | Freeze (Feb 12) | Gage |
 | S9 | Pre-registration | Draft in preregistration.md; to freeze before the screen ranks anything (G1) | Nov 30 | Dec 01, 2026 | 4 | Before G1 (Dec 1) | Sterling |
+| S10 | Commercial powders printed in-house | Sourcing done from public pages (baselines.md); no prices or lead times published; nothing ordered | Jan 22 | Feb 12, 2027 | 77 | Freeze (Feb 12) | Gage (orders), Carl (prints and tests) |
