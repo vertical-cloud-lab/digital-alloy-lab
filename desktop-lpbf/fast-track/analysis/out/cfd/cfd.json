@@ -779,6 +779,107 @@
      "t_100ppm_min_extrapolated": 5.390550149959173
     }
    }
+  },
+  "buoyant-LH": {
+   "case": "/tmp/ft-cfd/buoy-LH",
+   "kind": "buoyant",
+   "inlets": {
+    "purge_low": 20.0
+   },
+   "outlet": "vent_high",
+   "q_total_L_min": 20.0,
+   "gas_L": 23.188,
+   "t_end_s": 299.645,
+   "t_10000ppm_min": {
+    "box": 1.4957200041086423,
+    "exhaust": 1.8410103457471694,
+    "plate": 0.6993587360021787,
+    "well_mixed_ideal": 3.527055546599229
+   },
+   "t_1000ppm_min": {
+    "box": 2.5755850195554504,
+    "exhaust": 2.8318846293909563,
+    "plate": 1.4028476896101447,
+    "well_mixed_ideal": 6.196672703416525
+   },
+   "t_100ppm_min": {
+    "box": null,
+    "exhaust": 4.717130753818574,
+    "plate": 3.474399264386304,
+    "well_mixed_ideal": 8.866289860233822
+   },
+   "ppm_at_end": {
+    "box": 102.20301706280158,
+    "exhaust": 81.58756406624646,
+    "plate": 48.558537228374924,
+    "slide": 121.07613435301835
+   },
+   "tail": {
+    "box": {
+     "decay_per_min_last20pct": 0.7374132803670532,
+     "t_100ppm_min_extrapolated": 5.023633943674073
+    },
+    "exhaust": {
+     "decay_per_min_last20pct": 0.8180500804862697
+    },
+    "plate": {
+     "decay_per_min_last20pct": 0.5720231999341961
+    }
+   },
+   "tail_decay_per_min": 1.052631600244186,
+   "ideal_decay_per_min": 0.8625150940141453
+  },
+  "buoyant-HL": {
+   "case": "/tmp/ft-cfd/buoy-HL",
+   "kind": "buoyant",
+   "inlets": {
+    "purge_high": 20.0
+   },
+   "outlet": "vent_low",
+   "q_total_L_min": 20.0,
+   "gas_L": 23.188,
+   "t_end_s": 179.837,
+   "t_10000ppm_min": {
+    "box": null,
+    "exhaust": null,
+    "plate": null,
+    "well_mixed_ideal": 3.527055546599229
+   },
+   "t_1000ppm_min": {
+    "box": null,
+    "exhaust": null,
+    "plate": null,
+    "well_mixed_ideal": 6.196672703416525
+   },
+   "t_100ppm_min": {
+    "box": null,
+    "exhaust": null,
+    "plate": null,
+    "well_mixed_ideal": 8.866289860233822
+   },
+   "ppm_at_end": {
+    "box": 32434.08401561671,
+    "exhaust": 21927.020484244134,
+    "plate": 24188.54922100071,
+    "slide": 57048.26504354471
+   },
+   "tail": {
+    "box": {
+     "decay_per_min_last20pct": 0.6028458849194175,
+     "t_1000ppm_min_extrapolated": 8.768592274282991,
+     "t_100ppm_min_extrapolated": 12.588117546984874
+    },
+    "exhaust": {
+     "decay_per_min_last20pct": 0.6339822655351269,
+     "t_1000ppm_min_extrapolated": 7.867639897268962,
+     "t_100ppm_min_extrapolated": 11.499579177227364
+    },
+    "plate": {
+     "decay_per_min_last20pct": 0.49338013024497307,
+     "t_1000ppm_min_extrapolated": 9.454541185092046,
+     "t_100ppm_min_extrapolated": 14.121500699352918
+    }
+   }
   }
  }
 }
