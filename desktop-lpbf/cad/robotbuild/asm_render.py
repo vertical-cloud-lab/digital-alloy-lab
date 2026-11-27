@@ -313,7 +313,7 @@ class Replay:
         # held objects ride on the TCP
         h = s["held"]
         if h is not None:
-            T_tcp = a.tcp(s["q"], s["close"])
+            T_tcp = a.tcp(s["q"], h.get("close0", s["close"]))
             Tsp = T_tcp @ rot_axis((0, 0, 1), h["spin_deg"]) if h.get("spin_deg") else T_tcp     # a screw turning with the bit
             for i in h["objs"]:
                 if f"o{i}" in sc.actors:
@@ -380,7 +380,7 @@ class Replay:
             h = self.st[n]["held"]
             if h is not None and set(h["objs"]) & set(objs):
                 a = self.arm[n]
-                T_tcp = a.tcp(self.st[n]["q"], self.st[n]["close"])
+                T_tcp = a.tcp(self.st[n]["q"], h.get("close0", self.st[n]["close"]))
                 if h.get("spin_deg"):
                     T_tcp = T_tcp @ rot_axis((0, 0, 1), h["spin_deg"])
                 h["off"] = np.linalg.inv(T_tcp) @ np.asarray(T, float)
@@ -1599,7 +1599,9 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                 if rp.objs.get(i, {}).get("kind") == "tool" and f"o{i}" in rp.sc.actors:
                     rp.sc.alpha[f"o{i}"] = 0.0         # a hand tool goes back to the stand
         elif k == "attach":
-            rp.st[n]["held"] = dict(objs=e["objs"], off=np.asarray(e["off"], float))
+            # round 9: the hold keeps the fingers' closure it was taken at: the 2F-85's TCP moves as its fingers open, and
+            # round 8 let a held part ride that (M19's stack ended 2.4 mm off its bore when arm A opened to let go)
+            rp.st[n]["held"] = dict(objs=e["objs"], off=np.asarray(e["off"], float), close0=float(rp.st[n]["close"]))
             rp.set_arm(n)
         elif k == "detach":
             rp.st[n]["held"] = None
