@@ -495,6 +495,8 @@ class Replay:
                     walk = [(x, y + (s * self.AISLE - y) * u) for u in (0.0, 0.25, 0.5, 0.75)]
                     if cams and self._blocks_view(walk, (wx, wy), cams):
                         continue
+                    if CAM_MIN and any(math.hypot(x - c[0], y - c[1]) < CAM_MIN for c in cams):
+                        continue                 # ASM_PERSON_CAM_MIN: not right under a tripod (filling the picture)
                     cost = r + 3.0 * abs(ang) + (0.0 if s == (-1.0 if side == "A" else 1.0) else 1500.0)
                     if names and not any(in_view(c, (x, y, 1000.0), margin=0.8) for c in names):
                         cost += 900.0            # seen from none of the place's tripods: only if nothing else is clear
@@ -681,6 +683,9 @@ JUMP_DEG = float(os.environ.get("ASM_JUMP_DEG", "5.0"))
 # ASM_DRIVE_HOLD=1 (chapter 41, round 9): a short MiR hop between the cell's docks (drawn, continuous) joins the shot before or
 # after it instead of a 1-2 s wide shot between two cuts; the caption says where the MiR drives
 DRIVE_HOLD = os.environ.get("ASM_DRIVE_HOLD", "0") == "1"
+# ASM_PERSON_CAM_MIN=<mm> (chapter 40's re-render, round 9): the person's spot at least this far (on the floor) from each of the
+# place's tripods, so they don't fill the picture (chapter 41 was drawn without it: 0)
+CAM_MIN = float(os.environ.get("ASM_PERSON_CAM_MIN", "0") or 0.0)
 
 
 def kind_key(e, rep):
