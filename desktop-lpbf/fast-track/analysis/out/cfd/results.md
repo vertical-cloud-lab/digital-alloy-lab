@@ -154,11 +154,47 @@ how argon settles under air.
 
 ### 2.2 With buoyancy
 
-__BUOYANT__
+Argon (39.95 g/mol) is 1.38× as dense as air (28.96 g/mol). Fed slowly (20 L/min through a 40 × 40 mm diffuser is
+0.21 m/s) it runs along the floor and fills the box from the bottom up, pushing the air ahead of it, as long as the
+air has a way out above it. Each run below has the nozzle off and all 20 L/min through one diffuser, from air at rest,
+on the same mesh with the same settings; only the diffuser and the vent move.
+
+| Run, with buoyancy | in (L/min) | out | box average: 1000 / 100 ppm (min) | exhaust (analyzer) | plate | O₂ at the end: box / exhaust / plate / under the slide (ppm) |
+|---|---|---|---|---|---|---|
+__BROWS__
+| well mixed, same flow and volume | 20 | | 6.2 / 8.9 | | | |
+
+"(≈ x)": not reached in the run; extrapolated from the run's own exponential decay over its last 20 %. "> x": not
+reached and not decaying.
+
+![Buoyant purge](purge_buoyant.png)
+
+![Sections](purge_sections.png)
+
+*O₂ on a vertical section through the diffusers (y = 45 mm, mid-depth), log scale: white is argon under 10 ppm, dark
+blue is air; grey is solid (the deck cassette, the stage, the window stack). The diffusers are on the left wall in this plane; the vents are on the right wall, 90–130 mm behind it.*
+
+__BBULLETS__
 
 ### 2.3 Where the purge inlet and the exhaust go
 
-__RECOMMEND__
+1. **The exhaust at the top.** Air is the lighter gas: the last of it collects under the lid and leaves only through an
+   opening above it. Put a vent at the highest point of the box, on the wall away from the diffuser (or through the
+   lid), with its bore as close under the lid as the fitting allows: a 3/8–1/2 in. bulkhead and a ball valve, teed into
+   the exhaust line ahead of the HEPA housing and the check valve. Sample the analyzer from this line during the purge;
+   it then reads the last air to leave, not fresh argon.
+2. **The purge inlet low, through a diffuser.** About 40 × 40 mm of sintered metal or mesh (0.2 m/s at 20 L/min), just
+   above the floor on the far wall, so the argon spreads along the floor instead of jetting. Low in and high out took
+   {LH1000} / {LH100} min to 1000 / 100 ppm (box average), against ≈ 4.7 / 6.8 min with the same vent and a high inlet,
+   and 6.2 / 8.9 min well mixed.
+3. **Purge with the nozzle off, then switch.** 20 L/min through the diffuser with the vent open until the analyzer
+   reads the target; then close the vent and run the cross-flow, which leaves through the collector and holds the box
+   above the room behind the check valve. Through the nozzle alone (as drawn) the purge takes 33–50 min to 1000 ppm
+   (§2.1, two meshes).
+4. **Purge before heating the plate,** or expect times nearer the well-mixed ones: a 200 °C plate drives a plume of a
+   few cm/s that stirs the layers (not modelled).
+
+{HLREC}
 
 ## 3. FT-1V
 

@@ -826,6 +826,7 @@ def fig_purge_snap(items, t_snaps, fname):
             v = x_o2(np.asarray(s.point_data["O2"]), np.asarray(s.point_data["Ar"])) * 1e6
         ok = np.asarray(s.point_data["vtkValidPointMask"]).astype(bool)
         v = np.where(ok, v, np.nan).reshape(X.shape)
+        ax.set_facecolor("#bdbdbd")                      # solids (outside the gas mesh) in grey
         pc = ax.pcolormesh(X, Z, np.clip(v, 10, 2.1e5), cmap="Blues", norm=matplotlib.colors.LogNorm(10, 2.1e5),
                            shading="auto", rasterized=True)
         ax.set_aspect("equal")
