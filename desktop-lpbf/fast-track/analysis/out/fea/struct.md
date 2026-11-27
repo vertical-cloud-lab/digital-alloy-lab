@@ -1,5 +1,8 @@
 ## Structure (case 4): box lid, cube top plate and window, scan-head plate and gantry, piston rod
 
+The thermal cases (1-3: the heated cassette at 200 °C, warm-up, the laser's heat during a build) are in
+[`thermal.md`](thermal.md).
+
 ### Short answer
 
 - **Box lid (4a): it seals at +10 mbar and at a +50 mbar fault with either gasket, and the 14 ga lid does not yield, but the solid FKM cord is the wrong gasket.** Squeezing a Ø3 mm 75A FKM cord by 22 % round the 1,406 mm gasket line takes 4.0 kN: about 616 N on each front clamp, 547 N on each side clamp and 1,455 N on the hinge, and the lid's middle then sits 224 µm higher than its clamped edges before any pressure. A closed-cell silicone sponge strip (ASTM D1056 2A2, like the box's own foam) needs 536 N in all and stays at ≥ 0.67 mm of its 0.75 mm squeeze at +50 mbar. **Change: keep a soft sponge or hollow-bulb silicone gasket, not a solid cord**, and add a relief valve set below +50 mbar if the purge line has none.
