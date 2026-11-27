@@ -140,7 +140,9 @@ def slide_assembly(u, hud):
     if not a:
         return S.note_slide("The assembly estimate (hud.json) was not ready for this cut")
     tiles = [("Steps", f"{a.get('steps', 0)}", "in the build sequence"),
-             ("Robots", f"{a.get('robot_h', 0):.1f}", f"hours, + {a.get('mir_fetch_h', 0):.1f} h of MiR fetching"),
+             ("Robots", f"{a.get('robot_h', 0):.1f}", (f"hours, + {a['mir_fetch_h']:.1f} h of MiR fetching"
+                                                       if float(a.get("mir_fetch_h") or 0) >= 0.05 else
+                                                       "hours, the MiRs' drives included")),
              ("People", f"{a.get('person_h', 0):.1f}", "hours (estimates per step)"),
              ("Failed or partial", f"{a.get('failed_or_partial', 0)}", "steps for the arms"),
              ("Person or shop", f"{a.get('person_or_shop_steps', 0)}", "steps")]
@@ -156,8 +158,10 @@ def slide_assembly(u, hud):
         ax.text(0.06, 0.78, name.upper(), transform=ax.transAxes, fontsize=13, color=S.INK2, alpha=al, weight="bold")
         ax.text(0.06, 0.30, val, transform=ax.transAxes, fontsize=38, color=S.INK, alpha=al, weight="bold")
         ax.text(0.06, 0.10, unit, transform=ax.transAxes, fontsize=12, color=S.INK2, alpha=al)
-    fig.text(0.06, 0.12, "Robot time: the arms' recorded, collision-checked motions plus tool changes and docking; "
-             + str(a.get("basis", "")), fontsize=11, color=S.INK2)
+    import textwrap
+    note = ("Robot time: the arms' recorded, collision-checked motions plus tool changes and docking; "
+            + str(a.get("basis", "")))
+    fig.text(0.06, 0.15, "\n".join(textwrap.wrap(note, 150)[:2]), fontsize=11, color=S.INK2, va="top")   # round 9: wrapped
     return S.to_img(fig)
 
 

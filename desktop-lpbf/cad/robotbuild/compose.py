@@ -78,6 +78,17 @@ REUSE_ADD = {
 }
 REUSE_DIR = common.ROOT / "reuse"
 CARD_S = 3.0
+
+
+def ffmpeg():
+    """ffmpeg on PATH, $FFMPEG, or imageio-ffmpeg's own binary (round 9: the runner has no system ffmpeg), as video_qa.py."""
+    import os
+    import shutil
+    f = os.environ.get("FFMPEG") or shutil.which("ffmpeg")
+    if not f:
+        import imageio_ffmpeg
+        f = imageio_ffmpeg.get_ffmpeg_exe()
+    return f
 TITLE_S = 2.6
 
 
@@ -85,9 +96,11 @@ TITLE_S = 2.6
 def scan(partial=False, only=None):
     names = {n for n, _ in EXPECTED}
     expected = set(names)
-    if common.FRAMES.exists():                               # other numbered folders: only when finished, never tests
-        names |= {p.name for p in common.FRAMES.iterdir() if p.is_dir() and p.name[:2].isdigit()
-                  and "test" not in p.name.lower() and (p / "done").exists()}
+    if common.FRAMES.exists():                               # other numbered folders: only when finished, never tests,
+        import re                                            # debug runs or a slice's part folder (round 9: "-dbg",
+        names |= {p.name for p in common.FRAMES.iterdir()     # "41-assembly-chamber.part3" lay beside the chapters)
+                  if p.is_dir() and re.fullmatch(r"\d\d[a-z]?-[a-z0-9-]+", p.name)
+                  and not re.search(r"test|dbg|debug|tmp", p.name.lower()) and (p / "done").exists()}
     if only:
         names = {n for n in names if n in only}
     titles = dict(EXPECTED)
@@ -146,7 +159,7 @@ def reuse(chapters, old_mp4, old_json, tag):
         d = REUSE_DIR / ch["name"]
         if not (d / f"{n - 1:05d}.jpg").exists():
             d.mkdir(parents=True, exist_ok=True)
-            subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(old_mp4), "-vf",
+            subprocess.run([ffmpeg(), "-y", "-loglevel", "error", "-i", str(old_mp4), "-vf",
                             f"trim=start_frame={f0}:end_frame={f0 + n},setpts=PTS-STARTPTS", "-q:v", "2", "-start_number", "0",
                             str(d / "%05d.jpg")], check=True)
         n = len(list(d.glob("*.jpg")))
@@ -323,7 +336,7 @@ def render_frame(task):
 def encoder(path, crf, maxrate_k, preset="medium", threads=2):
     path.parent.mkdir(parents=True, exist_ok=True)
     return subprocess.Popen(
-        ["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS),
+        [ffmpeg(), "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS),
          "-i", "-", "-an", "-c:v", "libx264", "-preset", preset, "-crf", str(crf),
          "-maxrate", f"{maxrate_k}k", "-bufsize", f"{2 * maxrate_k}k", "-pix_fmt", "yuv420p", "-threads", str(threads),
          "-movflags", "+faststart", str(path)], stdin=subprocess.PIPE)

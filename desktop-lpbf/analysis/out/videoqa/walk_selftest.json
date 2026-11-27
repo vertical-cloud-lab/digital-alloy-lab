@@ -38,8 +38,8 @@
   "side-step": {
    "frames": 112,
    "walked_mm": 1300,
-   "stances": 12,
-   "steps": 10,
+   "stances": 13,
+   "steps": 11,
    "slip_per_stance_mm": {
     "max": 0.0,
     "p95": 0.0,
@@ -79,7 +79,7 @@
   },
   "carry": {
    "load": "330 x 241 x 140 mm block, carried by its ends (side grip)",
-   "body_clear_mm_min": 33.4,
+   "body_clear_mm_min": 36.7,
    "hands_in_load_mm_max": 0.7,
    "reach_mm_worst": -6.8,
    "stance": {
@@ -88,5 +88,5 @@
    }
   }
  },
- "seconds": 16.4
+ "seconds": 15.8
 }

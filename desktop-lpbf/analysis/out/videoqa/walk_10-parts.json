@@ -9,21 +9,13 @@
    "person": "op",
    "frames": 2064,
    "walked_mm": 0,
-   "stances": 2,
+   "stances": 1,
    "slip_per_stance_mm": {
     "max": 0.0,
     "p95": 0.0,
     "mean": 0.0
    },
    "worst_stances": [
-    {
-     "foot": "L",
-     "start": 0,
-     "end": 2063,
-     "frames": 2064,
-     "slip_mm": 0.0,
-     "max_frame_mm": 0.0
-    },
     {
      "foot": "R",
      "start": 0,
@@ -93,5 +85,5 @@
   "jump_mm": 250.0,
   "mir_jump_mm": 150.0
  },
- "seconds": 0.8
+ "seconds": 0.5
 }

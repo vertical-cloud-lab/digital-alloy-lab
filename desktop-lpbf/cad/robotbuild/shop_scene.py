@@ -150,6 +150,17 @@ class ShopScene:
         sc.add(f"arm{key}/vgp/cups", E.merge([E.cyl((x, y, 116), (x, y, 136), 18.0, res=20)
                                              for x, y in ((-50, -60), (-50, 60), (50, -60), (50, 60))]), "#1f2326",
                group=f"arm{key}/vgp")
+        # round 9 (lesson 7, "a held part must be held by something drawn"): the tools the 2F-85 holds by a 20 mm fin,
+        # drawn in the TCP frame (z along the approach) as shop_clips plans them: the nut runner (NUT_RUNNER: body r 22
+        # from 20 to 160 mm, a 1/4 in. hex extension r 8 to 262 mm) and the safety knife's holder (20 x 16 x 80 mm, its
+        # blade retracted into the holder's tip). Named under gr/ (they ride on the flange with the gripper).
+        fin = E.box(-10.0, 10.0, -20.0, 20.0, -24.0, 22.0)
+        sc.add(f"arm{key}/gr/xrunner/0", E.merge([fin, E.cyl((0, 0, 20), (0, 0, 160), 22.0, res=24)]), "#e0a526",
+               group=f"arm{key}/gr/xrunner")
+        sc.add(f"arm{key}/gr/xrunner/1", E.cyl((0, 0, 160), (0, 0, 262), 8.0, res=12), "#8a9199",
+               group=f"arm{key}/gr/xrunner")
+        sc.add(f"arm{key}/gr/xknife/0", E.box(-10, 10, -8, 8, -38, 42), "#e63946", group=f"arm{key}/gr/xknife")
+        sc.add(f"arm{key}/gr/xknife/1", E.box(-0.6, 0.6, -6, 6, 42, 47), "#c9ced3", group=f"arm{key}/gr/xknife")
         # its MiR250 + cabinet + deck (shop_cell.mir_items, PR 318's sizes)
         self.arms[key] = dict(tool=tool, mir_dx=None)
         self.set_tool(key, tool)
@@ -171,7 +182,11 @@ class ShopScene:
         sc = self.sc
         show = dict(gr=tool in ("2F-85", "nut runner", "cutter"), fg=tool in ("3FG15", "3FG15L"), vgp=tool == "VGP20")
         for n in sc.actors:
-            if n.startswith(f"arm{key}/gr/"):
+            if n.startswith(f"arm{key}/gr/xrunner"):
+                sc.alpha[n] = 1.0 if tool == "nut runner" else 0.0
+            elif n.startswith(f"arm{key}/gr/xknife"):
+                sc.alpha[n] = 1.0 if tool == "cutter" else 0.0
+            elif n.startswith(f"arm{key}/gr/"):
                 sc.alpha[n] = 1.0 if show["gr"] else 0.0
             elif n.startswith(f"arm{key}/3fg"):
                 sc.alpha[n] = 1.0 if show["fg"] and (tool == "3FG15L" or not n.endswith("x")) else 0.0
@@ -195,6 +210,9 @@ class ShopScene:
             g = f"arm{key}/gr/{part}"
             if g in sc.gmat or any(n.startswith(g + "/") for n in sc.actors):
                 sc.gmat[g] = W0 @ G[part]
+        Wt = W0 @ E.T((0.0, 0.0, ur_arm.tcp_mm(min(max(close, 0.0), 1.0))))
+        sc.gmat[f"arm{key}/gr/xrunner"] = Wt
+        sc.gmat[f"arm{key}/gr/xknife"] = Wt
         sc.gmat[f"arm{key}/cam"] = W0
         sc.gmat[f"arm{key}/qc"] = W0
         sc.gmat[f"arm{key}/3fg"] = W0

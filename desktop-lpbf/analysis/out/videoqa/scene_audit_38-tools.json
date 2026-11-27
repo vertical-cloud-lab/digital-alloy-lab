@@ -1,0 +1,29 @@
+{
+ "chapter": "38-tools",
+ "threshold_mm": 1.5,
+ "opaque_min": 0.3,
+ "recordings": [
+  "/tmp/robotbuild/frames/38-tools/audit"
+ ],
+ "frames_recorded": 1008,
+ "frames_checked": 1008,
+ "subsample": "every recorded frame",
+ "recorded_every": 1,
+ "actors": 20,
+ "movers": 1,
+ "mover_names": [
+  "scale bar"
+ ],
+ "method": "translational penetration depth (26 directions, ladder 1.5-100 mm, bisection-refined), python-fcl BVH meshes of the recorded triangles, containment by winding numbers; a pair is re-checked when a mesh or the relative pose changes; a pair deeper than its limit is re-checked every frame at the limit, its depth re-measured at most every 6 frames",
+ "narrow_checks": 0,
+ "pairs_tested": 0,
+ "violations": 0,
+ "worst_mm": 0.0,
+ "worst": null,
+ "pairs": [],
+ "rigid_pairs": [],
+ "allowed": [],
+ "seconds": 0.0,
+ "peak_rss_mb": 44,
+ "memory": "streamed: BVHs dropped every 200 recorded frames and past 1800 MB"
+}

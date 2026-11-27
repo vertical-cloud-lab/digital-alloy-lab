@@ -4,12 +4,16 @@ Sterling, 2026-11-26: "moonwalk". His byu-vcl lessons (notes/2026-11-26-byu-vcl-
 differential drive: it can't slide sideways, it drives along its heading (pivot, drive, pivot) and reverses only for a short
 docking leg; lesson 8, a person's gait phase follows the distance walked (one cycle per people.Person.STRIDE = 1016 mm), the
 lowest shoe on the floor every frame, and nobody glides. This reads audit_rec.py's recordings (ROBOTBUILD_AUDIT=1), as
-scene_audit.py does, so it measures what was drawn.
+scene_audit.py does, so it measures what was drawn. Round 9 (2026-11-27): people.py's Gait locks the stance foot, and
+``--selftest`` runs it through a straight walk, turns, side-steps and backing up, and a two-person carry (people.carry),
+measured with this file's own PersonTrack.
 
     /tmp/venv/bin/python desktop-lpbf/cad/robotbuild/walk.py 50-integration
+    /tmp/venv/bin/python desktop-lpbf/cad/robotbuild/walk.py --selftest [--gif out.gif]   # -> walk_selftest.json
 
 People (actors "<who>/shoes", people.py): the shoe mesh is split into its two feet (connected pieces; the left foot has x < 0
-in the body frame). Per frame each foot's lowest point; a foot is DOWN when it is within FOOT_DOWN mm of the lower foot (the
+in the body frame when first seen, and each piece keeps its label after that: round 9). Per frame each foot's lowest point;
+a foot is DOWN when it is within FOOT_DOWN mm of the lower foot (the
 lower one is grounded every frame). A stance is a run of frames with that foot down.
   slip        per frame, the mean horizontal travel of the foot's contact vertices (those within CONTACT mm of its lowest point
               at the earlier frame, the same vertices at the later one): a planted sole's material points don't move, so this
@@ -109,7 +113,14 @@ class PersonTrack:
 
     def step(self, n, V, F, M):
         if self.lab is None or self.labF is not F:
-            self.lab, self.labF = _feet(V, F), F
+            # round 9: the replay hands over a new face array with every re-skinned mesh, and _feet decides left from right
+            # by each piece's x in the body frame, which flips when a foot swings across the body's centre line (a long
+            # step behind it, a turn): round 9's first chapter-50 audit read the swinging foot as the planted one (a false
+            # 56.6 mm slip). The pieces are fixed by the topology, so label once per topology and keep the labels.
+            key = (len(V), len(F), hash(np.asarray(F)[: min(len(F), 2000)].tobytes()))
+            if getattr(self, "lab_key", None) != key:
+                self.lab, self.lab_key = _feet(V, F), key
+            self.labF = F
         M = M.astype(float)
         W = V.astype(float) @ M[:3, :3].T + M[:3, 3]
         zmin = [W[self.lab == f, 2].min() if np.any(self.lab == f) else 1e9 for f in (0, 1)]

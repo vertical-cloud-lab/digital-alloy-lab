@@ -53,6 +53,13 @@ def ease(u):
 
 def load(name):
     p = common.DATA / name
+    if not p.exists() and name == "assembly.json":    # round 9: the planner writes its run's summary as assembly_run<N>.json
+        runs = sorted(common.DATA.glob("assembly_run*.json"),       # run 14 has a partial file and a _full one
+                      key=lambda q: (int("".join(c for c in q.stem if c.isdigit()) or 0), "_full" in q.stem,
+                                     q.stat().st_mtime))
+        p = runs[-1] if runs else p
+    if not p.exists() and name == "asm_fail_notes.json":   # the notes the assembly chapters draw (asm_render --fail_notes)
+        p = common.LPBF / "analysis" / "out" / "assembly" / "run10_fail_notes.json"
     if not p.exists():
         return None
     try:
@@ -97,6 +104,19 @@ def slide_clocks(u):
     """Stat tiles: what the video's clocks added up to over the chapters rendered."""
     import compose as CP
     chs = [c for c in CP.scan(partial=True) if c["card"] is None and c["name"] != NAME]
+    # round 9: a chapter still in its slices (<name>.part<k>/, before merge_parts.py) counts from its finished slices
+    have = {c["name"] for c in chs}
+    for name, _ in CP.EXPECTED:
+        if name in have or name == NAME:
+            continue
+        parts = sorted(common.FRAMES.glob(f"{name}.part*"), key=lambda p: int("".join(c for c in p.name.split(".part")[-1]
+                                                                                        if c.isdigit()) or 0))
+        meta = []
+        for p in parts:
+            if (p / "done").exists() and (p / "meta.jsonl").exists():
+                meta += [json.loads(x) for x in (p / "meta.jsonl").read_text().splitlines() if x.strip()]
+        if meta:
+            chs.append(dict(name=name, meta=meta, card=None))
     end = CP.counters(chs) if chs else {}
     R_ = ((load("route.json") or {}).get("routes") or {})
     wk = (R_.get("c_cn") or {}).get("weeks_to_leak_test")
@@ -442,6 +462,10 @@ def _steps(kind):
     if kind == "redesign":                                     # the assembly's failed steps and their round-7 fixes
         notes = load("asm_fail_notes.json") or {}
         have = {o[0] for o in out}
+        asm = load("assembly.json") or {}
+        failing = {s.get("id") for s in asm.get("steps") or [] if (s.get("status") or "").lower() in ("fail", "partial")}
+        if asm.get("steps"):                                   # round 9: only the notes of steps that fail in this run
+            notes = {k: v for k, v in notes.items() if k in failing}
         for sid, note in notes.items():
             if sid in have:
                 out = [o for o in out if o[0] != sid]
