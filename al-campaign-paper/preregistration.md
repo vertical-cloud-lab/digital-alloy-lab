@@ -32,7 +32,8 @@ AlSi10Mg are already sold, so beating AlSi10Mg alone is a replication, not a dis
   - **Decide:** layer thickness and plate temperature. Ask Utah for the April build's values first.
 - **Laser power and speed: the same rule, not the same numbers.** Every alloy gets the same power-speed grid of
   density cubes, and its tensile bars are printed at its densest grid point. Ties go to the lower energy density.
-- **One powder per build.** "Same session" means consecutive builds on the same machine within one Utah visit.
+- **One powder per build.** "Same session" means consecutive builds on the same machine within one Utah visit. If
+  Utah can't fit the comparators into the finalists' session, they go in the nearest one, and the paper says so.
 - **Specimens.** Flat ASTM E8/E8M sub-size bars, 6 × 6 mm reduced section, built horizontal, with the same surface
   for all alloys.
   - **Decide:** as-printed or machined.
@@ -40,7 +41,7 @@ AlSi10Mg are already sold, so beating AlSi10Mg alone is a replication, not a dis
   ASTM E8/E8M limits while yield is measured. Bars that break outside the gauge are excluded and reported.
 - **Conditions:**
   - AlSi10Mg: as built and stress-relieved (**Decide:** 300 °C for 2 h or the vendor's 285 °C).
-  - Al5X1: as built and 400 °C for 6 h with gas quench, inert atmosphere if available.
+  - Al5X1: as built and 400 °C for 6 h, then forced-air cooling; inert atmosphere during the hold if available.
   - Al-HS1: as built and 375 °C for 4 h in air.
   - Scalmalloy: as built and 325 °C for 4 h.
   - Each candidate: as built and one direct age chosen before printing.
@@ -76,7 +77,7 @@ AlSi10Mg are already sold, so beating AlSi10Mg alone is a replication, not a dis
   - B_NIR with Al counted.
 - **Composition used.** The measured composition from the outside laboratory (§5), for candidates *and* for the
   bought powders. A vendor's typical values or range midpoints are only placeholders: Al5X1's range alone spans
-  B_NIR 2.0-5.7 wt %.
+  B_NIR 2.0-5.7 wt % with Si and Ti at zero, and up to 7.65 with them at their allowed 1.0 wt %.
 
 ## 4. "Expands the Sc-free front"
 
@@ -132,9 +133,10 @@ AlSi10Mg are already sold, so beating AlSi10Mg alone is a replication, not a dis
   anchor the model and are not claimed as discoveries.
   - **Proposed: drop S1.** Its B_NIR is above Scalmalloy's at every allowed reliance (+0.97 to +2.21 wt %), so it
     can't satisfy §3 whatever its strength, and Al-HS1 now anchors the Mn-rich family in-house.
-  - **Proposed: repurpose O1 as the Al5X1 twin** (Al-3.35Mg-0.55Mn-1.2Zr). Its burden equals Al5X1's (paired
-    difference −0.19 to +0.04 wt %). Printed in the same session as commercial Al5X1, it measures the powder route on
-    a front alloy (H5).
+  - **Proposed: if an optional slot is used, make O1 the Al5X1 twin** (Al-3.35Mg-0.55Mn-1.2Zr). On the 6063 base its
+    silicon puts its burden slightly above Al5X1's (+0.17 to +0.34 wt %), and below Scalmalloy's at every reliance.
+    Printed in the same session as commercial Al5X1, it measures the powder route on a front alloy (H5). Check first
+    whether Al5X1's composition is patented.
 
 ## 7. The optimizer (choosing compositions only)
 

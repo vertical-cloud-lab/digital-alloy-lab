@@ -17,8 +17,8 @@ candidates, AlSi10Mg and Scalmalloy.
 | Datasheet yield / UTS / elongation, as built | V 240 / 310 / 23; H 260 / 310 / 23 [1] | Z 220 / 280 / 25; XY 220 / 285 / 25 [2] |
 | After the vendor's direct age | 400 °C 6 h, gas quench: V 380 / 415 / 14.5; H 385 / 415 / 14.5 [1] | 375 °C 4 h in air: Z 355 / 420 / 16; XY 370 / 440 / 12 (6 h: 350-365 / 430-445 / 11-13) [2] |
 | Datasheet basis | EOS M 290, 40 µm, ASTM E8; EOS "Core" product (TRL 3-5) [1] | Machined bars from printed cylinders; machine not stated [2] |
-| B_NIR, import-weighted (wt %) | 3.06-4.20 at the range midpoints; 1.98-5.65 across the whole range | 5.43-5.63 |
-| Compared with Scalmalloy (4.74-5.98), same import reliances for both | **Below at every allowed reliance** (difference −2.01 to −1.45), and below at every corner of its composition range | **Not clearly below** (difference −0.48 to +0.82: below only if Mg's reliance is above about 90 %) |
+| B_NIR, import-weighted (wt %) | 3.06-4.20 at the range midpoints; 1.98-5.65 across the Mg-Zr-Mn range with Fe, Si and Ti at zero (up to 7.65 with Si and Ti at their 1.0 maximum) | 5.43-5.63 |
+| Compared with Scalmalloy (4.74-5.98), same import reliances for both | **Below at every allowed reliance** (difference −2.01 to −1.45), and at every corner of its Mg-Zr-Mn range with Si and Ti at zero. Not if a lot carried Si and Ti near their 1.0 maximum, so the lot's measured composition decides | **Not clearly below** (difference −0.48 to +0.82: below only if Mg's reliance is above about 90 %) |
 | B_mass (wt % of listed elements) / B_cost (USD per kg of alloy) | 5.10 / 0.52 | 6.40 / 0.45 (Scalmalloy: 6.21 / 39.9) |
 | On the Sc-free front (best datasheet yield vs B_NIR)? | **Yes**, between Al-Fe-Mg-Zr (376 MPa, 1.02 wt %) and EOS Al2139 T4 (460 MPa, 3.89 wt %) | **No**: Al5X1 is stronger at lower burden, and Al-Fe-Mg-Zr at much lower burden |
 
@@ -34,13 +34,13 @@ Burdens are from [`scripts/mineral_burden.py`](scripts/mineral_burden.py) on the
   reliance. A candidate that doesn't beat in-house Al5X1 at equal or lower burden hasn't expanded the
   front.
 - **Al-HS1 is behind the front, but still useful.**
-  - It is the commercial member of the Al-Mn-Cr-Zr family that seeds S1 and O3 come from.
-  - Its datasheet claims about 200 MPa at 250 °C [3], which matters if the paper later claims hot strength (FLAIME O4).
+  - It is the commercial member of the Al-Mn-Cr-Zr family that seeds S1 (proposed for dropping) and O3 come from.
+  - Höganäs Japan's listing claims about 200 MPa at 250 °C [3], which matters if the paper later claims hot
+    strength (FLAIME O4).
   - Its burden is about Scalmalloy's, so measuring it shows what 4.8 wt % Mn costs.
   - If only one powder can be bought, it should be Al5X1.
-- **There is a gap at the low-burden end.** Below Al5X1's burden (about 3 wt %), the only Sc-free points are a
-  datasheet (Aheadd CP1, Al-Fe-Zr, 300 MPa aged, B_NIR 0.14) and a paper (Al-1.87Fe-1.02Mg-1.03Zr, 376 MPa aged,
-  B_NIR 1.02).
+- **There is a gap at the low-burden end.** Below about 3 wt %, the only front points are a datasheet (Aheadd CP1,
+  Al-Fe-Zr, 300 MPa aged, B_NIR 0.14) and a paper (Al-1.87Fe-1.02Mg-1.03Zr, 376 MPa aged, B_NIR 1.02).
   - B_NIR steers the screen toward Fe- and Zr-lean compositions. An in-house front of only Al5X1, Al-HS1 and
     Scalmalloy would let a low-burden replication of those alloys "expand the front".
   - So the claim also has to be checked against those reported values (pre-registration §4).
@@ -57,7 +57,7 @@ Neither vendor publishes a price, a lead time or a minimum order. Both route eve
 | Pack size | Not stated for Al5X1 (EOS lists several of its powders, AlSi10Mg among them, in 10 kg units) | **10 kg** in a 10 L PE drum under argon; other sizes "available under certain conditions" [2] |
 | Price | Not public | Not public |
 | Lead time | Not public | Not public ("short delivery time" in Höganäs Japan's general text) |
-| Other channels | None found. EOS also sells Al2139 AM and Aheadd CP1 the same way | KBM Advanced Materials (Fairfield, Ohio) signed in 2021 to distribute Höganäs AM powders in the U.S. and Canada [6]. Its website didn't load on 2026-11-27 (the certificate is for another domain), so it isn't confirmed as a current channel |
+| Other channels | None found. EOS also sells Al2139 AM and Aheadd CP1 the same way | KBM Advanced Materials (Fairfield, Ohio) signed a supply agreement with Höganäs in 2021 to sell its AM powders in the U.S. and Canada [6]. Its website (kbmadvanced.com, the address in the 2024 trade article) didn't load on 2026-11-27: its certificate is for another name. So it isn't confirmed as a current channel |
 | Who to ask for a quote | **EOS of North America sales**, through the store page's "Contact sales" button [4], or EOS of North America's main line on the data sheet (+1 877 388 7916) [1] | **Höganäs AM sales** through the contact form at [hoganas.com/am](https://www.hoganas.com/am) (technical area "Additive manufacturing", type "Sales", country "United States") [5]. North American Höganäs in Pennsylvania is the regional sales arm (an older public listing; confirm) |
 | Things to ask | Will EOS sell to a lab without an EOS machine (Utah prints on an Aconity MIDI; EOS's parameter set is for the EOS M 290 at 40 µm)? Is a 5 kg or smaller R&D lot possible? Stock location and ship date. Lot certificate contents (chemistry with O, PSD). SDS section 14 (transport class). A starting energy density for non-EOS machines | Smallest lot (is a 5 kg or R&D lot possible?). Stock location (Sweden or U.S.) and ship date. Lot certificate (chemistry with O, PSD). SDS section 14. Which machine and parameters the datasheet used |
 
@@ -78,7 +78,9 @@ Neither vendor publishes a price, a lead time or a minimum order. Both route eve
   flat, as in April. One vertical 100 mm build on the full 170 mm MIDI cylinder needs about 9.5-12 kg, since Utah
   fills the supply to three times the build height ([#138](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/138#issuecomment-6353370602)).
   The 55 mm reduction kit would need about 1-1.25 kg for the same height.
-- **Who:** Gage requests both quotes in the week of Nov 30 (the draft below), and Sterling approves the PO **by
+- **AlSi10Mg too.** The lab's stock was about 0.8 kg before April's build used part of it, less than one build, so
+  the re-test needs a 10 kg drum from any vendor with U.S. stock (Höganäs and EOS both sell it).
+- **Who:** Gage requests the quotes in the week of Nov 30 (the draft below), and Sterling approves the POs **by
   Fri Dec 11**. A PO after Dec 11 probably means delivery after the break.
 
 <details><summary>Quote request (draft for Gage; not sent)</summary>
@@ -109,36 +111,39 @@ EOS M 290. The fair version, proposed for the pre-registration:
 
 - **The same for every alloy:** machine (Utah's Aconity MIDI), layer thickness, plate temperature, scan strategy,
   gas flow, powder handling (sieve, dry, humidity log), specimen geometry and surface (flat sub-size ASTM E8 bars,
-  6 × 6 mm section, built horizontal, as printed), test (extensometer, ASTM E8 strain rates) and statistics.
+  6 × 6 mm section, built horizontal; as printed or machined, a choice the pre-registration still has open), test
+  (extensometer, ASTM E8 strain rates) and statistics.
 - **The same rule, not the same numbers, for laser power and speed:** every alloy, candidate or baseline, gets the
   same power-speed grid of density cubes, and its bars are printed at the grid point with the highest density.
-- **Heat treatment as each vendor specifies:** Al5X1 400 °C 6 h with gas quench (inert atmosphere preferred) [1];
+- **Heat treatment as each vendor specifies:** Al5X1 400 °C 6 h, then forced-air cooling, with an inert
+  atmosphere preferred during the hold [1];
   Al-HS1 375 °C 4 h in air [2]; Scalmalloy 325 °C 4 h; AlSi10Mg as built and stress-relieved. Candidates get the one
   heat treatment chosen before printing.
 
 **Per baseline powder:**
 
+April's build took about 11 days from print to parts in hand, so a window build's densities come back after the
+next session. **So each baseline gets one combined build by default:**
+
 | Build | What | Powder | Tests |
 |---|---|---|---|
-| W (window) | 16 cubes, 10 mm, on a 4 × 4 power-speed grid centred on the alloy's published energy density, at the campaign's layer thickness and plate temperature | 1.0-1.2 kg | 16 Archimedes densities, 2-4 sections for cracks and pores |
-| T (tensile) | 8 flat bars (3 as built, 3 after the vendor age, 2 spare), 4 cubes for hardness, 3 corrosion coupons, at the densest grid point | 0.6-1.2 kg | ≥ 6 valid tensile, 8 hardness (4 cubes × 2 conditions), 3 corrosion (if R11 is fixed), outside chemistry on the powder lot and one part |
+| Combined | The Methods' 16-point grid (2 powers × 4 speeds × 2 hatch spacings) as 5 mm cubes, at the campaign's layer thickness and plate temperature; 8 flat bars (3 as built, 3 after the vendor age, 2 spare) at the grid point expected to be densest from the vendor's energy density and Eagar-Tsai; 3 corrosion coupons | 0.95-1.2 kg (10 mm tall) | 16 Archimedes densities, 2-4 sections, ≥ 6 valid tensile, 8 hardness, 3 corrosion (if R11 is fixed), outside chemistry on the lot and one part |
+| Repeat T (only if needed) | 8 bars at the densest grid point, if the cubes show it isn't the one the bars used | 0.6-1.2 kg | ≥ 6 valid tensile |
 
-So each baseline adds **2 builds, about 8 tensile tests, 20 densities, 8 hardness and 2 outside chemistry
-samples**, plus one furnace run. April's build took about 11 days from print to parts in hand, so W's densities
-come back after the next session. **If a drum arrives late, combine W and T in one build:** the 16 cubes plus 8 bars
-at each of the two grid points expected to be densest (from the vendor's energy density and Eagar-Tsai). Then test
-the bars of whichever point proves densest. One 10 kg drum leaves about 7.5-8.5 kg for a repeat in the finalists' session and
+A 170 mm plate holds about 10-11 flat 100 mm bars, so one build can't carry bars at two grid points; check the
+layout with Utah. Each baseline is **1-2 builds, about 8-16 tensile tests, 16-20 densities, 8 hardness and 2 outside
+chemistry samples**, plus one furnace run. One 10 kg drum leaves about 7.5-8.5 kg for a repeat in the finalists' session and
 for spares.
 
 **For the full one-to-one comparison:**
 
 | Alloy | Powder | Builds | Tensile bars | Note |
 |---|---|---|---|---|
-| Al5X1 | buy, 10 kg | 2 | 8 | the front-defining baseline |
-| Al-HS1 | buy, 10 kg (optional) | 2 | 8 | |
-| AlSi10Mg | buy, 10 kg; the lab's stock was about 0.8 kg before April's build used part of it ([#138](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/138#issuecomment-6353370602)) | 1-2 | 8 (3 as built, 3 stress-relieved, 2 spare) | re-test with an extensometer (R9); keeps the April bars as provisional |
-| Scalmalloy | buy (from APWORKS or a licensed producer) or atomize D2 | 2 | 8 | the burden reference |
-| **Total** | | **7-8 builds** | **32 bars** | about 16 h of frame time at 30 min a test |
+| Al5X1 | buy, 10 kg | 1-2, plus 1 in the finalists' session if Utah can fit it | 8-16 (+3) | the front-defining baseline; new work |
+| Al-HS1 | buy, 10 kg (optional) | 1-2 | 8-16 | new work |
+| AlSi10Mg | buy, 10 kg ([#138](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/138#issuecomment-6353370602): about 0.8 kg in stock before April's build) | 1, plus 1 in the finalists' session if Utah can fit it | 8 (3 as built, 3 stress-relieved, 2 spare) (+3) | already in #256 (P1); re-test with an extensometer (R9); the April bars stay provisional |
+| Scalmalloy | buy (from APWORKS or a licensed producer) or atomize D2 | 1-2 | 8 | already in #256 (D2); the burden reference |
+| **Total** | | **4-9 builds, of which 2-6 are new** | **about 32-54 bars, of which 16-38 are new** | about 16-27 h of frame time at 30 min a test |
 
 ## Fitting it into the #256 schedule
 
@@ -146,36 +151,39 @@ for spares.
 planned five Utah sessions (P1 Dec 2-3, P2 Dec 16-17, P3 Jan 12-13, P4 Jan 20-21, P5 Feb 2-3) and 36 Al atomizer
 runs. None of the sessions is booked, and the atomizer has made no Al powder (R3, R4).
 
-**Atomizer runs: the baselines take none, and they free two or three.**
+**Atomizer runs: the baselines take none, and they free one or two.**
 
 | Run | Was | With the baselines |
 |---|---|---|
 | S1 (Al-Mn-Cr-Zr-Mg, Chalmers alloy F) | a published anchor for the Mn-rich family | **Drop.** Al-HS1 anchors that family in-house, and S1's B_NIR is above Scalmalloy's under every allowed reliance (+0.97 to +2.21), so it can't meet the claim. Frees a run and some of the Zr |
 | D2 (Scalmalloy-type, in-house) | the burden reference, made in-house | **Drop if commercial Scalmalloy is bought.** It saves the Sc master alloy, and the campaign is Sc-free, so it needs no Sc route control |
-| O1 (Al-3.6Mg-1.2Zr) | a published anchor | **Repurpose as the Al5X1 twin** (Al-3.35Mg-0.55Mn-1.2Zr from dosed charges). Its burden equals Al5X1's (paired difference −0.19 to +0.04). Printed next to commercial Al5X1, it measures what the in-house powder route does to a front alloy, as D1 does for AlSi10Mg (H3). Needs Zr (R6) |
+| O1 (Al-3.6Mg-1.2Zr) | an optional #275 seed, not one of #256's 36 runs | **If an optional slot is used, make it the Al5X1 twin** (Al-3.35Mg-0.55Mn-1.2Zr from dosed charges). On the 6063 base its silicon puts its burden slightly above Al5X1's (+0.17 to +0.34 wt %), still below Scalmalloy's at every reliance (−1.84 to −1.11). Printed next to commercial Al5X1, it measures what the in-house powder route does to a front alloy, as D1 does for AlSi10Mg (H3). Needs Zr (R6). Check first whether Al5X1's composition is patented |
 
-The freed slots go to optimizer rounds, which is where new compositions come from.
+The freed runs go to optimizer rounds, which is where new compositions come from.
 
-**Utah builds are the cost.** The baselines add 7-8 builds to a plan that had about one composition per build. They
-fit because the atomizer delay empties the early sessions:
+**Utah builds are the cost.** The baselines add 2-6 new builds (Al5X1, Al-HS1, and same-session repeats), and the
+AlSi10Mg and Scalmalloy builds the plan already had now need bought powder. The drums can't arrive before about
+Dec 18, so the first baseline build is at P3:
 
 | Session (#256 date) | Was | Proposed |
 |---|---|---|
-| P1 (Dec 2-3) | commercial AlSi10Mg: tracks, cubes, bars | Unchanged. Book it for mid-December if early December is gone. Re-test with an extensometer |
-| P2 (Dec 16-17) | in-house 6063, D1, seed tracks | In-house powder only if the atomizer is back. Otherwise **Al5X1 W**, if the drum has arrived |
-| P3 (Jan 12-13) | seed cubes, D2, R1 tracks | **Al5X1 T** (or W), **Al-HS1 W**, plus seed cubes |
-| P4 (Jan 20-21) | R2/R3 tracks and cubes | **Al-HS1 T**, **Scalmalloy W/T**, plus R2/R3 |
-| P5 (Feb 2-3) | finalists' bars, AlSi10Mg if needed | Finalists. Add Al5X1 and AlSi10Mg builds in the same session if Utah can fit them; otherwise the P3-P4 baseline bars are the comparators |
+| P1 (Dec 2-3) | commercial AlSi10Mg: tracks, cubes, bars | Can't run as planned: the stock can't fill a build. Print in-house powder if the atomizer makes some, or skip |
+| P2 (Dec 16-17) | in-house 6063, D1, seed tracks | Unchanged: in-house powders only |
+| P3 (Jan 12-13) | seed cubes, D2, R1 tracks | **Al5X1** and **AlSi10Mg** (combined builds, if the drums are in), **Scalmalloy** in place of D2 if bought, plus seed cubes |
+| P4 (Jan 20-21) | R2/R3 tracks and cubes | **Al-HS1** (combined), any repeat tensile builds, plus R2/R3 |
+| P5 (Feb 2-3) | finalists' bars, AlSi10Mg if needed | Finalists, plus Al5X1 and AlSi10Mg in the same session if Utah can fit them; otherwise the P3-P4 bars are the comparators, and the paper says so |
 
-If Utah can do only one build per session day, ask for a third January day, or drop Al-HS1.
+The #256 plan already assumed several builds per session day (P3 alone had five compositions' cubes). Ask Utah how
+many builds a day the MIDI can do, and for a third January day. If capacity is still short, drop Al-HS1 before
+Al5X1.
 
 **When the baseline results could exist:**
 
 | PO placed | Powder arrives | Al5X1 window | Al5X1 tensile, aged | Usable at |
 |---|---|---|---|---|
-| Fri Dec 4, from U.S. stock | about Dec 14-18 | P2 (Dec 16-17), if Utah takes it; W and T combined if the drum is in by Dec 15 | combined: tested about Jan 6-15. Separate (T at P3): about Jan 26-Feb 2 | **G4 (Jan 29)**: the version A/B decision can use it |
-| Fri Dec 11, from Europe | about Jan 8-15 | W and T combined at P3 (Jan 12-13) or P4 (Jan 20-21) | tested about Feb 3-12 | **Freeze (Feb 12)**, just |
-| After the break, or made to order | February or later | February | March | Version B in April, or later |
+| Fri Dec 4 or Dec 11, from U.S. stock (2-4 weeks) | Dec 18 to Jan 8 | combined build at P3 (Jan 12-13) | about Jan 25-29 | **G4 (Jan 29)**, just |
+| Fri Dec 11, from Europe (4-8 weeks) | Jan 8 to Feb 5 | combined build at P4 (Jan 20-21) if the drum is in by about Jan 18; otherwise P5 (Feb 2-3) | about Feb 3-12, or Feb 15-17 | **the freeze (Feb 12)**, or just after it |
+| After the break, or made to order | February or later | February | March | version B in April, or later |
 
 Tensile here assumes an extensometer is in place (R9), about 11 days from a Utah build to parts in hand as in
 April, and a day for the age.
@@ -209,12 +217,12 @@ Against the as-built datasheets (PR #285):
 3. **Re-measure AlSi10Mg** with the baselines: same session, extensometer, as built and stress-relieved. Ask Utah
    for the April build's parameters and plate temperature (R4).
 4. **Keep the April bars as a provisional point** in the SI and in Fig. 1, labelled as such. They're still worth
-   having: an in-house AlSi10Mg point 16-24 % below the sheets is exactly what a reader comparing our numbers with
+   having: an in-house AlSi10Mg point 15-24 % below the sheets is exactly what a reader comparing our numbers with
    datasheets needs to see.
 5. **"On par with the datasheets" needs a rule fixed in advance.** Proposed: the in-house mean yield, in the
    vendor's condition and the matching orientation, is at least 90 % of the datasheet's typical value. That allows
    for as-printed sub-size bars against machined ones. Elongation is reported against the as-printed datasheet
-   rows where they exist. On April's numbers, AlSi10Mg is not on par: 228/270 = 0.85, and 228/300 = 0.76.
+   rows where they exist. On April's numbers, AlSi10Mg is not on par: 228.3/270 = 0.85, and 228.3/300 = 0.76.
 
 ## The burden metric to freeze before the screen ranks anything
 
@@ -234,7 +242,8 @@ This expands R2 in [`risks.md`](risks.md) with the baselines in place.
    interval below Scalmalloy's lowest value, compared an alloy at one reliance with Scalmalloy at another. It was
    stricter than it needed to be, but it doesn't change any verdict above.
 2. **Use measured compositions**: the outside lab's for every printed alloy, the baselines included. Al5X1's
-   composition range alone spans B_NIR 2-5.7 wt %, so the lot decides where it sits.
+   composition range alone spans B_NIR 2.0-5.7 wt % (up to 7.65 with its allowed Si and Ti), so the lot decides
+   where it sits.
 3. **Plot the midpoint, test at the bounds.** The front is drawn at the midpoint reliances, and the claim has to
    hold at the bounds too.
 4. **Report B_mass and B_cost in the SI** as sensitivity. B_cost backs the plain statement that every Sc-free alloy
@@ -258,8 +267,9 @@ This expands R2 in [`risks.md`](risks.md) with the baselines in place.
    https://store.eos.info/products/eos-aluminium-al5x1
 5. Höganäs, Aluminium-based metal powder for 3D printing (product list and sales contact).
    https://www.hoganas.com/en/powder-technologies/additive-manufacturing-metal-powders/3d-printing-metal-powders/aluminium-alloy-am-powders/
-6. Metal AM, "Höganäs finalises agreement to supply KBM's AM and MIM powder sales platform" (2021), and "KBM adds
-   IMR's aluminium powders to its online marketplace" (May 29, 2024). https://www.metal-am.com/?p=82565 ;
+6. Höganäs, "Höganäs settles supply agreement with US-based KBM Advanced Materials that launches new sales platform
+   for additive manufacturing powder" (2021); Metal AM, "KBM adds IMR's aluminium powders to its online marketplace"
+   (May 29, 2024), which gives kbmadvanced.com. https://www.hoganas.com/en/news-and-events/news/2021/hoganas-settles-supply-agreement/ ;
    https://www.metal-am.com/kbm-adds-imrs-aluminium-powders-to-its-online-marketplace/
 7. Met3DP, "Metal powder for 3D printing AlSi10Mg: complete buyer's guide for 2025" (vendor page, read 2026-11-27):
    USD 70-80/kg and 3 weeks for 10-50 kg; USD 50-80/kg wholesale. https://blog.met3dp.com/blog/metal-powder-for-3d-printing-alsi10mg-complete-buyers-guide-for-2025/

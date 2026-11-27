@@ -20,7 +20,7 @@ AlSi10Mg and Scalmalloy: **EOS Al5X1** (Al-Mg-Zr-Mn), and **Höganäs Al-HS1** (
 | | Version A: a new alloy beyond the front | Version B: a benchmarked screen on one machine |
 |---|---|---|
 | Headline | A scandium-free Al alloy, printed by PBF-LB/M from powder atomized in-house, that lies beyond the Sc-free front: stronger than in-house Al5X1 at equal or lower burden, or less burden at equal strength, and below Scalmalloy's burden at every allowed import reliance | [N] Sc-free compositions from dosed charges, printed and tested on the same machine as four commercial powders (AlSi10Mg, Al5X1, Al-HS1, Scalmalloy), placed on one strength vs. burden map, with what CALPHAD got right and wrong and how far the machine's results sit from the vendors' datasheets |
-| Needs | ≥ 1 finalist with ≥ 3 valid tensile bars, in-house Al5X1 (and AlSi10Mg) from the same session, an outside composition check of finalist and baselines | In-house tensile on the commercial powders; hardness and density on most compositions; tensile on the best 1-2 |
+| Needs | ≥ 1 finalist with ≥ 3 valid tensile bars, in-house Al5X1 (and AlSi10Mg) printed by the same procedure, in the same session if Utah can fit them, and an outside composition check of finalist and baselines | In-house tensile on the commercial powders; hardness and density on most compositions; tensile on the best 1-2 |
 | Best journals | Letter: *Scripta Materialia*, *Materials Research Letters*, *Additive Manufacturing Letters* | Full article: *Additive Manufacturing*, *Materials & Design* |
 | Decide at | G4 (Fri Jan 29 in the schedule), or when in-house Al5X1 data exist if that is later | |
 
@@ -59,7 +59,7 @@ Fri Dec 4), together with the optimizer settings (SI S9).
 - **Each alloy is its own build** (one powder per build), so "the same session" means consecutive builds, not one
   build. The earlier draft's "same build" can't happen on a single-powder machine.
 - **Heat treatments are each vendor's**:
-  - Al5X1: 400 °C for 6 h, gas quench.
+  - Al5X1: 400 °C for 6 h, then forced-air cooling.
   - Al-HS1: 375 °C for 4 h.
   - Scalmalloy: 325 °C for 4 h.
   - AlSi10Mg: as built and stress-relieved.
@@ -91,7 +91,8 @@ April's data AlSi10Mg is at 0.76-0.85, so not on par ([`baselines.md`](baselines
 - **Comparing two alloys:** under the same import reliances (Si, Mg and Zr have only bounds), so "below Scalmalloy"
   means below at every allowed reliance.
 - **Plotting:** at the midpoint reliances.
-- **Compositions:** measured by the outside lab, for the baselines too. Al5X1's composition range alone spans B_NIR 2.0-5.7.
+- **Compositions:** measured by the outside lab, for the baselines too. Al5X1's Mg-Zr-Mn range alone spans B_NIR
+  2.0-5.7 (up to 7.65 with its allowed Si and Ti).
 - **Reported as sensitivity, not used for the claim:** B_mass (wt % of listed elements) and B_cost (cost of the
   critical additions).
 - **Why B_NIR:**
