@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import datetime as dt
 import math
+import os
 import sys
 import textwrap
 from pathlib import Path
@@ -35,9 +36,11 @@ import mineral_burden as mb  # noqa: E402
 
 PAPER = Path(__file__).resolve().parents[1]
 ROOT = PAPER.parent
-DATA = PAPER / "data"
-FIG = PAPER / "manuscript" / "figures"
-GEN = PAPER / "manuscript" / "generated"
+# Overridable so the tests can run on synthetic data without touching the real outputs.
+DATA = Path(os.environ.get("CAMPAIGN_DATA", PAPER / "data"))
+FIG = Path(os.environ.get("CAMPAIGN_FIG", PAPER / "manuscript" / "figures"))
+GEN = Path(os.environ.get("CAMPAIGN_GEN", PAPER / "manuscript" / "generated"))
+STATUS = Path(os.environ.get("CAMPAIGN_STATUS", PAPER / "figure-status.md"))
 BENCH = ROOT / "literature" / "al-lpbf-benchmark-alloys" / "property-window.csv"
 TODAY = dt.date.today()
 
@@ -539,7 +542,7 @@ def status_md(p: pd.DataFrame, status: dict[str, str]) -> None:
         draft = dt.date.fromisoformat(r["draft_due"])
         rows.append(f"| {pid} | {r['title']} | {status.get(pid, r['status_2026_11_27'])} | {draft:%b %d} | {final:%b %d, %Y} | "
                     f"{(final - TODAY).days} | {r['gate']} | {r['owner']} |")
-    (PAPER / "figure-status.md").write_text("\n".join(rows) + "\n")
+    STATUS.write_text("\n".join(rows) + "\n")
 
 
 def main() -> None:

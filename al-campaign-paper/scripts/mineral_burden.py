@@ -24,12 +24,13 @@ Usage:
 from __future__ import annotations
 
 import math
+import os
 from pathlib import Path
 
 import pandas as pd
 
 PAPER = Path(__file__).resolve().parents[1]
-DATA = PAPER / "data"
+DATA = Path(os.environ.get("CAMPAIGN_DATA", PAPER / "data"))
 
 ELEMENTS = ["si", "mg", "mn", "cr", "zr", "sc", "fe", "cu", "ni", "ce", "er", "ti", "v", "zn", "ag", "b"]
 

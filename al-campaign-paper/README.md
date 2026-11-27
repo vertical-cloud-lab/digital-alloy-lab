@@ -64,6 +64,7 @@ make refs       # check every reference against Crossref / DataCite
 | [`scripts/make_figures.py`](scripts/make_figures.py) | Figures, tables and in-text numbers from `data/` |
 | [`scripts/mineral_burden.py`](scripts/mineral_burden.py) | Critical-mineral burden: import-weighted (as an interval) and cost-weighted |
 | [`scripts/check_refs.py`](scripts/check_refs.py) | Reference check against Crossref and DataCite |
+| [`scripts/test_make_figures.py`](scripts/test_make_figures.py) | Runs the figure script on synthetic data in a temporary folder, so the code that draws real campaign data is tested before that data exists |
 | [`cover-letter.md`](cover-letter.md) | Cover letter stub |
 
 ## Not done here
