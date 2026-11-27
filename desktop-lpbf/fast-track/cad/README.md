@@ -315,15 +315,16 @@ Spend by the state that first needs each `parts.csv` line (the lead's round-2 fi
 
 | State | Adds | Cumulative |
 |---|---:|---:|
-| S1 | $6.3k-10.7k | $6.3k-10.7k |
-| S2 | $3.1k-4.0k | $9.4k-14.7k |
-| FT-0 | $11.3k-21.8k | $20.7k-36.5k |
-| FT-1 | $8.3k-10.8k | $29.0k-47.3k |
-| FT-1V | $11.7k-13.8k | $40.7k-61.1k |
+| S1 | $6.5k-11.2k | $6.5k-11.2k |
+| S2 | $3.1k-4.0k | $9.7k-15.2k |
+| FT-0 | $11.2k-21.3k | $20.9k-36.4k |
+| FT-1 | $8.3k-10.8k | $29.1k-47.2k |
+| FT-1V | $11.7k-13.8k | $40.8k-61.0k |
 
 The FT-1 and FT-1V sums are the study's stand-alone totals (`fast_track.py`, from the same `parts.csv`) plus what
-growing costs: FT-0's spreader M4 ($150-600) and, at FT-1V, the box E1 ($694-760), which then becomes the
-spreadability rig.
+growing costs: FT-0's spreader bar M4 ($30-80) and, at FT-1V, the box E1 ($694-760), which then becomes the
+spreadability rig. (Re-run by the lead after the last `parts.csv` changes: the four-post frame E4, the spreader bar M4
+and the purge diffuser and vent G9.)
 
 ![Schedule of the progression](../img/progression-gantt.png)
 
