@@ -94,9 +94,11 @@ output, and why it stopped.}
 \tbd{The live campaign's model: node definitions, kernels and priors, cost model
 (Table~1 of the main text), acquisition settings, batching, handling of failed
 and abandoned runs (\#274), seeding (\#275). Its acquisition function is decision
-M7, fixed in the pre-registration (\cref{sec:Sprereg}).} The rest of this section
-describes the optimizer and its baselines as they were tested on the synthetic
-workflow of \cref{sec:Stwin}.\bofncite
+M7, fixed in the pre-registration (\cref{sec:Sprereg}).} \ifbofnfull The rest of this
+section describes the optimizer and its baselines as they were tested on the
+synthetic workflow of \cref{sec:Stwin}.\else The optimizer and its baselines, as
+tested on the synthetic workflow of \cref{sec:Stwin}, are described in the
+companion article.\bofncite\fi
 \ifbofnfull
 
 \paragraph{The model.} Every node is an exact Gaussian process on its own inputs

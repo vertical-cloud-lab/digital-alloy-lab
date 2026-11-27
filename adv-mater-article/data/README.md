@@ -16,7 +16,7 @@ built from those instead.
 **The synthetic benchmark is not this article's result.** It is the BOFN methods paper's (#121). This article
 reports it in the SI (S12, and the synthetic part of S14), quotes two sentences of it in §2.6 until the twin is
 calibrated, and uses it to lay out Fig. 6b. If the MethodsX companion is published first, the SI section shrinks to
-a summary and a citation (one macro, `\bofncompanion`, in `manuscript.tex` and `supporting-information.tex`).
+a summary and a citation (one macro, `\bofncompanion`, in `preamble.tex`, which both the manuscript and the SI read).
 
 **Never edit the copied files here.** Rerun `paper_stats.py` and `paper_figures.py` on the BOFN branch, then run
 `make bofn-sync` in this folder (set `BOFN_REF=origin/main` once that branch has merged). The earlier stand-in,
