@@ -127,6 +127,9 @@ the journal's recent closed-loop and AM-alloy papers.
 - *Spending experiments where they count: an optimizer that chooses the step, from powder to printed aluminum alloy*
 - Version A, alloy-first: *[Alloy]: a scandium-free printable aluminum alloy found by a laboratory that makes its own powder and chooses its own experiments*
 
+"Supply-secure" in the title has to survive decision D9. Under mass-weighted import reliance (MCS 2025), Mn-rich
+alloys score worse than Scalmalloy, so if the finalist is Al–Mn–Cr–Zr, say "scandium-free" instead.
+
 ## 8. What could break the argument
 
 | Risk | Effect | Mitigation |

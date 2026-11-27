@@ -12,3 +12,4 @@ tools/cache/
 *.synctex.gz
 *-SAVE-ERROR
 __pycache__/
+*-clean.pdf
