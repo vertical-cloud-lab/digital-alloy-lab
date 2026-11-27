@@ -30,7 +30,7 @@ Optics (f = 254 mm, M2 1.1):
 
 Cost by alternative (parts.csv):
 
-- **FT0**: $18,536-31,578 (without the monitoring group: $14,076-25,356); vendors at or over $3,500 (PO): none
+- **FT0**: $20,756-36,589 (without the monitoring group: $16,296-30,367); vendors at or over $3,500 (PO): none
   - Laser and optics (used): $4,757-7,946
   - Scan control and computing: $1,183-2,473
   - Motion: $150-600
@@ -38,10 +38,10 @@ Cost by alternative (parts.csv):
   - Heated plate: $610-1,010
   - Gas and O2: $2,651-4,130
   - Safety: $2,780-3,682
-  - Stock and fabrication: $1,000-1,575
+  - Stock and fabrication: $3,220-6,586
   - Powder handling: $0-2,730
   - Monitoring: $4,460-6,222
-- **FT1**: $26,665-41,328 (without the monitoring group: $21,405-33,106); vendors at or over $3,500 (PO): Zaber ($5,896)
+- **FT1**: $28,867-46,742 (without the monitoring group: $23,607-38,520); vendors at or over $3,500 (PO): Zaber ($5,896)
   - Laser and optics (used): $4,757-7,946
   - Scan control and computing: $1,375-2,705
   - Motion: $5,976-6,096
@@ -49,10 +49,10 @@ Cost by alternative (parts.csv):
   - Heated plate: $946-1,406
   - Gas and O2: $2,651-4,130
   - Safety: $2,780-3,682
-  - Stock and fabrication: $1,975-3,200
+  - Stock and fabrication: $4,177-8,614
   - Powder handling: $0-2,730
   - Monitoring: $5,260-8,222
-- **FT1V**: $37,406-53,738 (without the monitoring group: $32,146-45,516); vendors at or over $3,500 (PO): Zaber ($5,896), Ideal Vacuum ($9,450)
+- **FT1V**: $39,873-59,808 (without the monitoring group: $34,613-51,586); vendors at or over $3,500 (PO): Zaber ($5,896), Ideal Vacuum ($9,450)
   - Laser and optics (used): $4,757-7,946
   - Scan control and computing: $1,375-2,705
   - Motion: $5,976-6,096
@@ -60,7 +60,7 @@ Cost by alternative (parts.csv):
   - Heated plate: $946-1,406
   - Gas and O2: $2,651-4,130
   - Safety: $2,780-3,682
-  - Stock and fabrication: $2,300-3,720
+  - Stock and fabrication: $4,767-9,790
   - Powder handling: $0-2,730
   - Monitoring: $5,260-8,222
 

@@ -182,7 +182,8 @@ def costs():
             g = groups.setdefault(r["group"], [0.0, 0.0])
             g[0] += q * ul
             g[1] += q * uh
-            by_vendor[r["vendor"]] = by_vendor.get(r["vendor"], 0.0) + q * uh
+            if r["part_number"] != "(labour)":          # internal shop time is not a purchase
+                by_vendor[r["vendor"]] = by_vendor.get(r["vendor"], 0.0) + q * uh
         po = {v: round(t) for v, t in by_vendor.items() if t >= PO_LIMIT}
         res[opt] = dict(low=round(lo), high=round(hi), groups={k: (round(a), round(b)) for k, (a, b) in groups.items()},
                         po_vendors=po)
