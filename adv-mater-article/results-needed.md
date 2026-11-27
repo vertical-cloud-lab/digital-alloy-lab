@@ -33,17 +33,17 @@ Suppliers:
 | A2 | Their PSDs (two splits each; sieve fractions at 250/63/45 µm; SEM sizing ≥ 1,000 particles), circularity (≥ 400), six-part mass balance | Block A | **none** for Al. One SEM PSD exists, for the bronze lot k7m2q9 (PR #226), and the bronze runs' pooled mass balance (52.4 % usable) | Ronnie | Mar 2027 |
 | A3 | Every run's settings and outcome, failed runs included, for the process window | campaigns 1 and 2 | **partial**: 10 runs Oct 2–Nov 13 (PR #286); no Al powder weighed; HMI export never set up (settings read from video) | Gage | ongoing |
 | A4 | Runs varying superheat and amplitude, only if Block A shows they matter (#111) | campaign 1 flex slots or 2027 | **none** | Sterling decides; Gage runs | Jun 2027 |
-| A5 | Powder O/N on sealed 5 g samples by inert-gas fusion | outside lab | **none**; samples not yet kept | Sterling (vendor, funding); Gage keeps samples | Jun 2027 |
+| A5 | Powder O/N on sealed 5 g samples by inert-gas fusion | outside lab (BYU has no O/N/H analyser) | **none**: only chamber O₂ is logged (11–26 ppm typical; excursions to 140 and ~1000 ppm); samples not yet kept | Sterling (vendor, funding); Gage keeps samples | Jun 2027 |
 | A6 | Re-check that no fixed-setting repeatability study of ultrasonic atomization of Al has appeared (Oct 2026 check found one replicate study for any alloy: Hinrichs 2021) | literature | done Oct 7, 2026. Re-checked one candidate on Nov 27: Yankin 2025 (*Sci. Rep.* 15, 20524; AlSi12, arc-melting atomizer) is a parameter study; its D50 of 52.3–54.7 µm spans different settings, not replicate runs, so the runs plan's "Yankin D50 ±2 %" is not a repeatability figure | a Claude run | Oct 2027 and Jan 2028 |
 
 ## §2.3 Composition fidelity (Fig. 3)
 
 | ID | Result | Supplied by | Status (Nov 27) | Owner | Due |
 |---|---|---|---|---|---|
-| C1 | Charge composition as weighed vs. target, every charge | campaigns 1 and 2 (dosing logs) | **none** for charges | Gage, Paul (cups and bar) | Mar 2027 |
+| C1 | Charge composition as weighed vs. target, every charge, including the cup alloy's own composition (certificate or ICP of the 6063 lot) | campaigns 1 and 2 (dosing logs) + doser papers | **partial**: dose accuracy exists in the powder-doser work (e.g. 7.9928 g of 8.000 g AlSi10Mg; misses of 0.2–7 mg on 3–8 g cups). The 6063 cup is ~80 % of a charge and its spec range (~0.35 Si, ~0.6 Mg wt%) dominates the error; no charge has been checked by ICP or EDS; fine Si (−325 mesh) won't feed | Gage, Paul (cups and bar) | Mar 2027 |
 | C2 | Block B spread (B1–B7: 22.5, 7.5, 30, 0, 15, 30, 7.5 wt% 4047 → ~1.3–3.9 wt% Si): EDS per particle at top/middle/bottom of the jar, plus ICP-OES | Block B + outside lab | **none**; Oct 2 (u23y78) is a pilot point | Gage (runs), Ronnie (EDS), Sterling (ICP) | Jun 2027 |
 | C3 | Mg recovery through atomization and through printing (ICP on charge, powder, print) | campaigns 1–2 + outside lab | **none** | Ronnie, Sterling | Sep 2027 |
-| C4 | EDS against ICP for Si-free and Si-bearing alloys: bias and precision, for the composition node's noise model | CALIBER + outside lab | **partial**: standards-based EDS on the Utah AlSi10Mg coupon (PR #288), only 1 of 17 EDS runs valid; the kickoff raised 0.2–0.5 wt% EDS error for Si | Ronnie (CALIBER) | Jun 2027 |
+| C4 | EDS against ICP for Si-free and Si-bearing alloys: bias and precision, for the composition node's noise model | CALIBER + ICP-OES | **partial**: one valid standards-based EDS run (Utah AlSi10Mg coupon: Mg 0.35 ± 0.01, Si 11.12 ± 0.13 wt%, counting error only; 1 of 17 runs valid); standardless Mg reads ~4× high; simulated particle-geometry error for Si ±0.3 wt% at 5 kV vs ±1.3 at 15 kV. **ICP route open:** acid-only digests leave Si behind (an ICP-MS/MS attempt failed); HF digestion is a safety decision; ICP-OES exists at BYU but hasn't been used | Ronnie (CALIBER); Sterling (HF or outside lab) | Jun 2027 |
 
 ## §2.4 Printing in-house (Fig. 4)
 

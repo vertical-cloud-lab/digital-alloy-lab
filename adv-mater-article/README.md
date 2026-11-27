@@ -71,7 +71,7 @@ with biblatex-chem, biber and latexmk, plus Python with requests and matplotlib.
 | D2 | Adopt the split with the campaign paper ([`outline.md`](outline.md) §4)? | Duplicate-publication risk; who owns Blocks A/B |
 | D3 | Commit to a second, optimizer-driven campaign in Jul–Oct 2027, with version A/B decided at G-A3 (Sep 30, 2027)? | Version A needs it; nobody has planned it yet |
 | D4 | Authors, order, CRediT roles | Placeholders by role in the manuscript |
-| D5 | Does CALIBER get its own paper first? | Who owns the EDS calibration (Fig. 3e) |
+| D5 | Does CALIBER get its own paper first? (The powder-doser repo already has two papers in draft; this article cites them for dosing.) | Who owns the EDS calibration (Fig. 3e) |
 | D6 | Corrosion in this article, the campaign paper, or separately? (also asked in `alloy-corrosion/README.md`) | SI S16 and a methods paragraph |
 | D7 | Desktop LPBF: build (FT-1, FT-1V or the full design) or buy, and who orders when | The critical path for version A: first coupons ~1–2.5 months after the order, plus laser-safety and EHS approval |
 | D8 | Funding and a lab for outside ICP-OES, O/N/H and tensile | Fig. 3, Fig. 5d, independent verification |
@@ -88,7 +88,8 @@ with biblatex-chem, biber and latexmk, plus Python with requests and matplotlib.
 | Fix or replace the collection cup (#269); then Block A, ≥ 5 valid runs with full run records, two splits each | **Gage, Ronnie** | Mar 31, 2027 | The most important single dataset; it needs Mo plates, the 45 µm sieve and one lot of 6063 |
 | Bench logs of time and consumables for every step, from now on (L1–L2) | **everyone at a station**, compiled by Gage | ongoing | This is Fig. 1 and Table 1, and it costs nothing if logged at the bench |
 | Block B composition spread, with EDS per particle and ICP | **Gage** (runs), **Ronnie** (EDS), **Sterling** (ICP) | Jun 2027 | |
-| EDS against ICP calibration for Si-free and Si-bearing alloys (CALIBER) | **Ronnie** | Jun 2027 | |
+| EDS against ICP calibration for Si-free and Si-bearing alloys (CALIBER) | **Ronnie** | Jun 2027 | Only 1 of 17 standards-based EDS runs is valid so far |
+| An ICP route that dissolves Si (HF digest, or an outside lab), and an outside lab for O/N/H (BYU has no analyser) | **Sterling** (safety, vendor, funding), **Ronnie** | Mar 2027 | Without it, Si-bearing alloys can't be shown composition-faithful; the fallback is a Si-free design space (D10) |
 | Desktop LPBF built, commissioned and printing dense Al cubes | **Carl**, after Sterling's D7 | May 2027 for version A | |
 | Utah MIDI sessions on shared powders (reference builds) | **Carl** | Sep 2027 | Find out whether Utah has the Ø55 mm kit (~30 g a build, against ~440 g) |
 | Live optimizer: costs, failure handling, seeding, a non-flat acquisition, pre-registration | **Xavier, Sterling** (with Claude runs) | Jun 2027 | |

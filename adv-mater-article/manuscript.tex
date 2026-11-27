@@ -243,19 +243,29 @@ follows the charge; Mg loss is \tbd{y} wt\%; EDS agrees with ICP-OES to
 Supplied by: dosing logs, Block B, ICP-OES, CALIBER (results-needed.md, C1--C4).}
 
 An optimizer that chooses compositions needs the composition it chose to be the
-one it gets. Weighed charges differed from their targets by \tbd{x} wt\% at most
-(\cref{fig:fidelity}a).\src{C1} To test whether the melt carries a dosed
+one it gets. Powder doses into the charge cups missed their targets by
+\tbd{0.2--7}~mg on \SIrange{3}{8}{\gram}, below \SI{0.01}{wt\percent} of a
+charge,\tbd{cite the doser paper} so dosing was not the limit when the powder
+flowed; the wrought alloy of the cup was. A 6063 cup is about \SI{80}{\percent} of
+a charge, and the spread allowed by its specification alone, about
+\SI{0.35}{wt\percent} Si and \SI{0.6}{wt\percent} Mg, is larger than any dosing
+error (\cref{fig:fidelity}a).\src{C1} To test whether the melt carries a dosed
 addition into the powder, we varied the amount of 4047 powder packed into 6063
-cups from 0 to \SI{30}{wt\percent}, which spans about \SIrange{1.3}{3.9}{wt\percent}
-Si. Measured Si followed the charge with a slope of \tbd{s} (R$^2$ = \tbd{r};
+cups from 0 to \SI{30}{wt\percent}, which takes Si from the
+\SIrange{0.2}{0.6}{wt\percent} of the cup alone to about
+\SIrange{3.4}{4.3}{wt\percent}. Measured Si followed the charge with a slope of \tbd{s} (R$^2$ = \tbd{r};
 \cref{fig:fidelity}b), and particles from the top, middle and bottom of the
 collection jar differed by \tbd{d} wt\% (\cref{fig:fidelity}c), so the powder is
 mixed at the scale of a batch and of a particle.\src{C2} Magnesium, the most
 volatile addition, was retained at \tbd{x}\% through atomization and \tbd{y}\%
-through printing (\cref{fig:fidelity}d).\src{C3} Against ICP-OES, EDS on
-particles read Si with a bias of \tbd{b} wt\% and a precision of \tbd{p} wt\%
-(\cref{fig:fidelity}e),\src{C4} which sets the noise on the composition node; for
-Si-bearing alloys this was \tbd{adequate / the limiting error}.
+through printing (\cref{fig:fidelity}d).\src{C3} Against ICP-OES, standards-based EDS at \SI{5}{\kilo\volt} read Si with a bias
+of \tbd{b} wt\% and a precision of \tbd{p} wt\% (\cref{fig:fidelity}e),\src{C4}
+which sets the noise on the composition node. Low beam energy matters for Si: its
+K$\alpha$ X-rays are strongly absorbed in Al, and on a spherical particle the
+reading depends on where the beam lands, by \tbd{$\pm$0.3} wt\% at
+\SI{5}{\kilo\volt} against \tbd{$\pm$1.3} wt\% at \SI{15}{\kilo\volt} in
+simulations of an Al--6Si particle.\tbd{CALIBER; cite} For Si-bearing alloys this
+was \tbd{adequate / the limiting error}.
 
 \begin{figure}[t]
 \centering
@@ -489,11 +499,15 @@ Raw-material cost of the additions and Sc content alone are reported as
 sensitivity checks.\cite{nassar2020,graedel2012}
 
 \paragraph{Charge preparation and dosing.}
-Each \SI{250 \pm 2}{\gram} charge was a 6063 rod (\diameter\SI{20}{\milli\metre})
-bored to hold a core of dosed elemental or master-alloy powder and closed with a
-press-fit plug, or bar stock plus master-alloy pieces.\tbd{which, per campaign}
-Every part was weighed, and the core powders were dosed with \tbd{doser model}
-to \tbd{accuracy}. Charges were stored below \tbd{RH}\% until use.
+Each \SI{250 \pm 2}{\gram} charge was made of 6063-T52 cups
+(\diameter\SI{20}{\milli\metre} rod, bored and closed with a press-fit plug;
+cup and plug \SI{38.7 \pm 0.7}{\gram}), each holding \SI{8.8 \pm 0.4}{\gram} of
+powder (\SI{15.9}{\gram} in a thin-walled cup), \tbd{or bar stock plus
+master-alloy pieces}. Every part was weighed. Core powders were dosed by an
+open-hardware auger doser on a \SI{0.1}{\milli\gram} balance under closed-loop
+control,\tbd{cite the doser paper} and charges were stored below \tbd{RH}\% until
+use. Fine Si powder ($-$325 mesh) does not feed from the doser, so Si was added
+as \tbd{4047 powder or coarse Si}.
 \src{dosing SOP; charge drawing, byu-vcl PR 232}
 
 \paragraph{Ultrasonic atomization.}
@@ -516,11 +530,15 @@ Each run's powder was split in two by \tbd{riffler or cone-and-quarter} and
 sieved at 250, 63 and \SI{45}{\micro\metre} on sieves used only for Al alloys.
 Particle size ($\ge$1,000 particles) and shape ($\ge$400 particles, at
 500$\times$) were measured on SEM images following ISO~13322-1 and ISO~9276.
-Composition was measured by EDS at \tbd{kV} on particles from the top, middle
-and bottom of the collection jar (at \SI{5}{\kilo\volt}, W M$\alpha$ overlaps
-Si K$\alpha$ and Fe K is not excited, so W and Fe pick-up were checked in
-backscattered images), and by ICP-OES at \tbd{outside laboratory}; oxygen and
-nitrogen by inert-gas fusion on sealed \SI{5}{\gram} samples. Flowability was
+Composition was measured by standards-based EDS (Thermo Fisher Apreo C SEM,
+EDAX Octane Plus detector, quantified in DTSA-II against Al, Si and MgO
+standards) at \SI{5}{\kilo\volt} on particles from the top, middle and bottom of
+the collection jar. At \SI{5}{\kilo\volt}, W M$\alpha$ overlaps Si K$\alpha$ and
+Fe K is not excited, so W and Fe pick-up were checked in backscattered images.
+Bulk composition was measured by ICP-OES after \tbd{an HF-containing digest, since
+acid-only digests leave Si undissolved} at \tbd{laboratory}, and oxygen and
+nitrogen by inert-gas fusion on sealed \SI{5}{\gram} samples at \tbd{outside
+laboratory}. Flowability was
 measured on the doser.\cite{spierings2016flow,slotwinski2014}
 \src{powder SEM preparation SOP, byu-vcl PR 284; \texttt{sem\_psd.py}, PR \#226}
 
@@ -548,9 +566,14 @@ within ASTM E8/E8M}, $n\ge3$ per alloy and condition, beside AlSi10Mg printed
 and tested the same way.
 
 \paragraph{Corrosion.}
-\tbd{If kept (decision D6): open-circuit potential, linear polarization and a
-potentiodynamic scan in \SI{3.5}{wt\percent} NaCl on the CubXL with an EZstat-Pro
-potentiostat.}
+\tbd{If kept (decision D6).} Polished coupons were tested in an O-ring well
+(\SIrange{0.071}{0.126}{\centi\metre\squared}, \SI{150}{\micro\litre} of
+\SI{0.6}{\mole\per\litre} NaCl) placed by the CubXL gantry, with a leak-free Ag/AgCl
+reference and a Pt counter electrode on an EZstat-Pro potentiostat: open-circuit
+potential for \SI{30}{\minute}, linear polarization resistance at
+$\pm$\SI{10}{\milli\volt} and \SI{0.167}{\milli\volt\per\second} (after ASTM
+G59), then cyclic polarization reversed at \SI{1}{\milli\ampere\per\centi\metre\squared}
+(G61-style), $\ge$\tbd{6} spots per material.
 
 \paragraph{Function-network model and acquisition.}
 Each step (CALPHAD, atomization, powder characterization, printing,
