@@ -1,0 +1,13 @@
+circuit,load,supply,V,typical_W,max_W,max_A_at_supply,basis,source,notes
+"A: 208/240 V 1-phase, 15 A 2-pole",IPG YLR-400-SM-EOS,direct,208,1400,2080,10.0,label 200-240 V 10 A; typical: 400 W out at ~30 % wall-plug + fans (estimate),"LABEL, EST",idle ~150 W (PR 266 estimate); IPG wants a breaker <= 20 A and a disconnect within reach
+"B: 120 V, 20 A",PC with the RTC5 (or RTC4) + monitor,direct,120,200,400,3.3,estimate,EST,-
+"B: 120 V, 20 A",Scan head +/-15 V (2 x 15 V 7 A supplies),2 x Mean Well LRS-100-15 class,120,60,200,1.7,max 6 A a rail (brochure); typical while marking (estimate),"HS, EST",a galvo draws its peaks in accelerations
+"B: 120 V, 20 A",Heaters 4 x 50 W via SSRs,Mean Well LRS-350-24 (88 %),120,70,230,6.8,typical: ~56 W held at 200 C (study 3.5) + losses; max: all four on + PSU loss; 6.8 A is the PSU's rated input at 115 V,"MW, study",60 A cold-start inrush; no PFC
+"B: 120 V, 20 A","24 V CTRL: G9SE 3 W, 2 x SOLO 10 VA, CN708 4 VA, K1 + K2 11.6 W, K3 + K4 ~2 W, AO3000 ~10 W, 2 x OX-6 6 W, 4 valves ~40 W (ARGON + one more at a time: ~20 W), lamps 3 W, fan 5 W, LEDs 18 W, vibrator 6 W, opto/relay boards ~4 W",Mean Well SDR-240-24 class (24 V 10 A),120,70,140,1.4,"sum of the items (datasheets where read, else estimate)","G9SE, SOLO, CN708, MW, AO3000, OX6, EST",-
+"B: 120 V, 20 A",Zaber stages (both),Zaber PS14S-48V37 (48 V 3.75 A),120,20,70,0.7,max 0.95 + 0.35 A at 48 V (Zaber) + supply loss,ZAB,-
+"B: 120 V, 20 A",Raspberry Pi 5 + HATs + camera,27 W USB-C supply,120,10,27,0.3,Pi docs: ~25 W ceiling,PI,-
+"B: 120 V, 20 A","Photodiode (LDS12B), AE decoupler (28 V), PicoScope (USB)",own adapters,120,10,15,0.2,LDS12B ~6 W; DCPL2 70 mA at 28 V,"THOR, AE",-
+"C: 120 V, 15-20 A (only if the laser is water-cooled)",Recirculating chiller ~1.4 kW cooling (TEYU CW-5200 class),direct,110,570,790,6.7,"CW-5200: 0.57-0.79 kW, 0.5-6.7 A at 110 V (vendor page)",EST,ThermoFlex 900 asks for its own 15 A circuit
+A: TOTAL,,,208,1400,2080,10.0,sum of the rows above,,
+B: TOTAL,,,120,440,1082,14.4,sum of the rows above,,
+C: TOTAL,,,110,570,790,6.7,sum of the rows above,,

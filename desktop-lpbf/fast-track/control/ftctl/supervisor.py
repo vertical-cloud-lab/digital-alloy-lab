@@ -141,6 +141,8 @@ class Supervisor:
                                                  "switch)", t)
             if not s["LASER_PS_ACTIVE"]:
                 raise Fault(Code.LASER_FAULT, "laser power supply dropped with the interlock closed", t)
+            if not s["WATER_OK"]:
+                raise Fault(Code.COOLING_FAULT, "scan head cooling water flow lost", t)
             period = 0.2 if self.scanning else 1.0
             if not s["LASER_READY"] or t - self._t_sta >= period:
                 self._t_sta = t

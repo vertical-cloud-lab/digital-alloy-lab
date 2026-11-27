@@ -14,6 +14,7 @@ from .interfaces import Axis
 
 DEVICES = {"piston": "X-VSR20A", "recoater": "X-LSM100B"}
 SPEC = {"piston": (48.0, 200.0), "recoater": (104.0, 1000.0)}     # max speed mm/s (zaber.com), accel mm/s2 (estimate)
+THRUST_N = {"piston": 100.0, "recoater": 25.0}                    # continuous thrust (zaber.com, read 2026-11-27)
 
 
 class ZaberAxis(Axis):
@@ -23,6 +24,7 @@ class ZaberAxis(Axis):
         self.name = name
         self.vmax = vmax
         self.amax = amax
+        self.thrust_N = THRUST_N.get(name, float("nan"))
         self.U = Units
 
     def home(self, wait: bool = True) -> None:

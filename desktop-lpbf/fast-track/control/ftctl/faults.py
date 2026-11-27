@@ -15,6 +15,7 @@ class Code(str, Enum):
     LASER_FAULT = "LASER_FAULT"
     BACK_REFLECTION = "BACK_REFLECTION"
     SCANNER_FAULT = "SCANNER_FAULT"
+    COOLING_FAULT = "COOLING_FAULT"
     RTC_ERROR = "RTC_ERROR"
     O2_HIGH = "O2_HIGH"
     O2_TIMEOUT = "O2_TIMEOUT"
@@ -54,6 +55,8 @@ TABLE = {
                          "stop_execution, EMOFF, stop stages",
                          "set_laser_control bits 16, 17, 19, 20 + 28: the RTC5 suppresses the laser signals and stops "
                          "the list on its own"),
+    Code.COOLING_FAULT: ("scan head water flow switch open (Pi input WATER_OK) while the laser is armed",
+                         "stop_execution, EMOFF, SAFE_STOP: the entrance aperture is water-cooled", "-"),
     Code.RTC_ERROR: ("get_last_error != 0, or a list that runs past its planned time by > 1 s", "stop_execution, EMOFF",
                      "-"),
     Code.O2_HIGH: ("box O2 > o2_trip_ppm while a layer is being scanned", "stop_execution (the layer is aborted and "
