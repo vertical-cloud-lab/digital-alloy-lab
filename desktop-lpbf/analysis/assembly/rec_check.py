@@ -67,6 +67,11 @@ def _is_finger(name):
 def main(argv):
     traj = argv[0]
     chapters = [a for a in argv[1:2] if not a.startswith("--")] or ["module", "chamber"]
+    # round 10: several recordings in one process (one scene build): DIR1:chapter,DIR2:chapter
+    jobs = None
+    if "," in traj or ":" in traj:
+        jobs = [(x.split(":")[0], x.split(":")[1] if ":" in x else None) for x in traj.split(",")]
+        traj = jobs[0][0]
     opt = {a.split("=")[0][2:]: (a.split("=", 1)[1] if "=" in a else "1") for a in argv[1:] if a.startswith("--")}
     every = int(opt.get("every", 3))
     only_steps = set(x for x in opt.get("steps", "").split(",") if x)
@@ -103,8 +108,9 @@ def main(argv):
         m = (tbox[:, 1] >= x - reach) & (tbox[:, 0] <= x + reach)
         return [table[k] for k in np.nonzero(m)[0]]
     out = dict(traj=str(traj), every=every, limit_mm=LIMIT, grip_limit_mm=GRIP_LIMIT, chapters={})
-    for chapter in chapters:
-        ev = load(traj, chapter)
+    todo = [(d, c) for d, c0 in jobs for c in ([c0] if c0 else chapters)] if jobs else [(traj, c) for c in chapters]
+    for traj_c, chapter in todo:
+        ev = load(traj_c, chapter)
         if not ev:
             continue
         arms = {"A": K.ArmT("A", K.DOCKS["T"], "front"), "B": K.ArmT("B", K.DOCKS["T"], "back")}
@@ -472,7 +478,7 @@ def main(argv):
         for s in seat_off:
             d = by_step.setdefault(s["step"], dict(pairs=0, worst=0.0, kinds={}))
             d["kinds"]["seat"] = d["kinds"].get("seat", 0) + 1
-        out["chapters"][chapter] = dict(samples=n_samples, pairs=len(res), by_kind=by_kind,
+        out["chapters"][chapter if not jobs else f"{traj_c}:{chapter}"] = dict(samples=n_samples, pairs=len(res), by_kind=by_kind,
                                         arm_arm=by_kind.get("arm-arm", 0), arm_part=by_kind.get("arm-part", 0),
                                         part_part=by_kind.get("part-part", 0), tool_own=by_kind.get("tool-own", 0),
                                         grip=by_kind.get("grip", 0), put=by_kind.get("put", 0),
