@@ -8,18 +8,20 @@ envelopes (sizes marked in `ft_model.P`). A clash with an envelope means 'check 
 
 | State | Parts | Clashes | Designed contacts | Beam envelope hits | Nearest parts to the beam (mm) |
 |---|---:|---:|---:|---:|---|
-| S1 | 21 | 0 | 1 | 0 | - |
-| S2 | 45 | 0 | 3 | 0 | Water-cooled beam dump, 1 kW 2.7, Cover-slide holder, Ø44 opening 5.6, Window retaining flange 7.04, Window ring 7.53 |
-| FT-0 | 80 | 0 | 5 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cover-slide holder, Ø44 opening 5.6, FT-0 spreader bar, 48 mm, ground edge, parked 5.9 |
-| FT-1 | 98 | 0 | 5 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cord clamp 3.52, Silicone-cord blade, 3 mm 3.96 |
-| FT-1V | 100 | 0 | 6 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cord clamp 3.52, Silicone-cord blade, 3 mm 3.96 |
-| FT-1 (Thorlabs piston) | 97 | 0 | 5 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cord clamp 3.52, Silicone-cord blade, 3 mm 3.96 |
+| S1 | 24 | 0 | 3 | 0 | - |
+| S2 | 48 | 0 | 5 | 0 | Water-cooled beam dump, 1 kW 2.7, Cover-slide holder, Ø44 opening 5.6, Window retaining flange 7.04, Window ring 7.53 |
+| FT-0 | 83 | 0 | 7 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cover-slide holder, Ø44 opening 5.6, FT-0 spreader bar, 48 mm, ground edge, parked 5.9 |
+| FT-1 | 101 | 0 | 7 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cord clamp 3.52, Silicone-cord blade, 3 mm 3.96 |
+| FT-1V | 103 | 0 | 8 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cord clamp 3.52, Silicone-cord blade, 3 mm 3.96 |
+| FT-1 (Thorlabs piston) | 100 | 0 | 7 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cord clamp 3.52, Silicone-cord blade, 3 mm 3.96 |
 
 Designed contacts (FT-1):
 
 | a | b | volume_mm3 | why |
 |---|---|---|---|
-| Fibre bend restrictor | Process fibre | 557.8 | fibre in its bend restrictor |
+| Gantry uprights | Gantry braces: a diagonal per side, two knee braces at the back | 5294.3 | brace bolted to the post |
+| Gantry cross-beam (clamped at the head height) | Gantry braces: a diagonal per side, two knee braces at the back | 1891.4 | knee brace bolted under the cross-beam |
+| Fibre bend restrictor | Process fibre | 563.1 | fibre in its bend restrictor |
 | Window retaining flange (MK-02) | Window-stack screws, M4 x 12 flat head, flush | 443.2 | screws |
 | Rod gland plate, 2 O-rings (MK-07) | Gland screws M5 x 25 with bonded seals (4) | 1134.9 | screws |
 | IP68 cable glands M16 (2, back wall) | Recoater M8 data and power cable | 245.3 | cable through the gland |
@@ -51,7 +53,7 @@ Hopper parks and the travel it needs (cassette frame, mm):
 
 | beam_r_at_hopper_top_mm | left_park | right_park | travel_needed_mm | stage_travel_mm | travel_range | spare_left_mm | spare_right_mm |
 |---|---|---|---|---|---|---|---|
-| 18.13 | -31.1 | 35.5 | 66.6 | 101.6 | [-45.8, 55.8] | 14.7 | 20.3 |
+| 18.13 | -31.1 | 35.5 | 66.6 | 101.6 | (-45.8, 55.8) | 14.7 | 20.3 |
 
 **FT-1**: recoater swept over its 101.6 mm (exact booleans, 13 positions), 0 clashes. Smallest gaps:
 
@@ -207,7 +209,7 @@ Camera (IMX477, 1.55 um pixels; f/2.8; circle of confusion two pixels):
 
 | check | value |
 |---|---|
-| deck_mm | [245.0, 245.0] |
+| deck_mm | (245.0, 245.0) |
 | box_inside_mm | [402.6, 301.0, 210.8] |
 | box_door_opening_mm_est | [358.6, 257.0] |
 | deck_in_box_margins_mm | [78.8, 28.0] |
@@ -234,7 +236,7 @@ Camera (IMX477, 1.55 um pixels; f/2.8; circle of confusion two pixels):
 | beam_at_window_cube_mm | 4.95 |
 | window_irradiance_cube_kW_cm2_at_400W | 2.1 |
 | cover_slide_above_bed_cube_mm | 130.0 |
-| cassette_height_above_floor_mm | 102.7 |
+| cassette_height_above_floor_mm | 107.7 |
 | cube_inside_height_mm | 289.6 |
 | box_inside_height_mm | 210.8 |
 | head_top_above_bed_box_mm | 528.1 |
@@ -277,15 +279,4 @@ Pump speed (1 L/s effective) and base pressures are estimates; the floor is set 
 | cube (FT-1V) | 0.675 | still air | 25-36 | 61 | 50.0 |
 | cube (FT-1V) | 0.675 | fan | 8-11 | 36 | 50.0 |
 
-## 8. Late fixes, re-checked separately
-
-Two parts changed while this run was going: the vibration motor moved onto the arm's top face (it sat 5 mm into it), and the pump hose's end made vertical, onto the pump's inlet. Their pairs were recomputed in FT-1, FT-1V and the Thorlabs variant and are in the tables above; the beam check of FT-1 and FT-1V was repeated, and the motor was swept over the recoater's travel (21 positions, exact booleans):
-
-| state | motor_in_arm_mm3 | motor_sweep_contacts | motor_nearest_fixed_part | clashes | beam_hits |
-|---|---|---|---|---|---|
-| FT-1 | 0.0 | 0 | 97.7 mm, Saginaw SCE-16EL1208SSLP 304 box, 16 x 12 x 8 in. | 0 | 0 |
-| FT-1V | 0.0 | 0 | 55.33 mm, Well-block heater and TC leads | 0 | 0 |
-
-Hose into the pump inlet: 4.0 mm.
-
-Run time 1118 s.
+Run time 1051 s.
