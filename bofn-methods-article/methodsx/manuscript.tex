@@ -100,7 +100,9 @@ test problems it beat evaluating the whole network each
 time~\cite{buathong2024,buathong2025}. Related multi-stage and cost-aware
 schemes target self-driving laboratories and alloy
 design~\cite{torresi2026,alvi2026}. All were tested on synthetic or
-retrospective problems without the constraints of alloy powder: powder must
+retrospective problems, while physical alloy campaigns choose compositions and
+send each through a fixed chain~\cite{taherimousavi2026}; none of these tests has
+the constraints of alloy powder: powder must
 exist before it is printed and a build before it is tested, and one powder lot
 can be printed many times. Benchmarks of experiment planners in chemistry and
 materials~\cite{hase2021,felton2021,liang2021} score single-step objectives, so
@@ -183,7 +185,8 @@ objective $y$ & $U-0.3B$, \quad $B=0.15c_1+0.1c_2+0.2c_3+1.0c_4$ \\
 \end{tabularx}
 \end{table}
 
-\paragraph{The screen-error knob $\kappa$.} Nucleants cut the effective freezing
+\paragraph{The screen-error knob $\kappa$.} Nucleants, as in Zr- and Sc-modified
+printed alloys~\cite{croteau2018,schmidtke2011}, cut the effective freezing
 range that drives cracking by up to 85\% at $\kappa=1$ and not at all at
 $\kappa=0$. A screen that keeps compositions with $f\le0.25$ (the
 tiered-screening rule below) is therefore conservative but right at $\kappa=0$,
@@ -254,7 +257,7 @@ the largest posterior mean, and four space-filling compositions; for
 atomization, the 16 simulated compositions whose best atomizer-and-laser
 setting has the largest network EI; for printing, the 16 (lot, laser-setting)
 pairs with the largest network EI over 32 settings per existing lot; for
-testing, every untested build. The knowledge gradient of one more result at a
+testing, every untested build. The knowledge gradient~\cite{frazier2009,frazier2018} of one more result at a
 candidate is the expected increase in the maximum network posterior mean over
 an inner set of designs. The inner set is shared by all candidates and anchored
 on the incumbent: the 32 designs with the largest posterior mean, the 16 with
@@ -284,7 +287,8 @@ fallback.
 best, and runs the whole chain at the design with the largest network EI.
 BOFN with powder reuse scores the same new designs at the full-chain cost and
 64 laser settings per existing lot at the reprint-and-test cost (\$2,700), and
-buys the largest EI per dollar. Standard BO scores 2,048 Sobol designs plus
+buys the largest EI per dollar, as cost-aware EI divides by the cost of an
+evaluation~\cite{snoek2012}. Standard BO scores 2,048 Sobol designs plus
 local perturbations around the five best.
 
 \subsection*{Scoring}

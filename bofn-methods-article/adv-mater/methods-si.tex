@@ -31,8 +31,10 @@ section C shrinks to its first paragraph, \cref{tab:contrasts} and a citation.}
 % ===========================================================================
 \section*{A. Experimental Section paragraph}
 \label{sec:A}
-\note{Goes after ``Function-network model and acquisition'' and before ``Digital
-twin and benchmarks'' in \code{manuscript.tex}; about 190 words.}
+\note{The first paragraph goes after ``Function-network model and acquisition''
+and before ``Digital twin and benchmarks'' in \code{manuscript.tex} (about 160
+words); the second goes into the closing ``Statistical Analysis'' sub-section
+that \emph{Advanced Materials} asks for (issue \#120's \code{journal-format.md}).}
 
 \paragraph{Synthetic benchmark of the optimizer.} Before the campaign, the
 optimizer was tested on a synthetic version of the workflow with a known
@@ -48,11 +50,17 @@ knowledge gradient per dollar~\cite{buathong2024}, network expected improvement
 per dollar with and without powder reuse~\cite{astudillo2021}, standard Bayesian
 optimization, screen-then-test with and without powder reuse, and random
 sampling. Each policy started from the same seed data for a given seed and spent
-\$100k of new budget, on \stat{k1-n} seeds at $\kappa=1$ and \stat{k0-n} at
-$\kappa=0$ and 0.5. Policies were compared on matched seeds, with 95\%
-percentile bootstrap intervals that resample seeds jointly. Runs were seeded and
-logged and reproduced stored runs action for action. \tbd{Cite the MethodsX
-article here if it is published first.}
+\$100k of new budget. Runs were seeded and logged, and reran action for action.
+\tbd{Cite the MethodsX article here if it is published first.}
+
+\paragraph{For the closing ``Statistical Analysis'' sub-section.} Synthetic
+benchmark: \stat{k1-n} seeds per policy at $\kappa=1$ and \stat{k0-n} at
+$\kappa=0$ and 0.5, the same seeds for every policy. Scores are the true
+objective of the best printed and tested alloy as a percentage of the optimum,
+reported as means over seeds; differences between policies are means over
+matched seeds with 95\% percentile bootstrap confidence intervals (10,000 draws,
+seeds resampled jointly for both policies). No correction was made for multiple
+comparisons. Analysis in Python (NumPy, SciPy; \code{paper_stats.py}).
 
 % ===========================================================================
 \section*{B. Two optional sentences for \S2.6 (``When it pays off'')}
@@ -195,7 +203,7 @@ code, every run record and the statistics are openly available
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\linewidth]{fig-curves}
+\includegraphics[width=\linewidth]{fig-curves-am}
 \caption{\textbf{Best alloy demonstrated against new spend on the synthetic
 workflow.} Means over matched seeds; bands are 95\% bootstrap intervals of the
 mean for pKGFN, BOFN with powder reuse and screen-then-test. Solid lines choose
@@ -206,7 +214,7 @@ gradient per dollar; orange: expected improvement (per dollar).}
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.72\linewidth]{fig-speedup}
+\includegraphics[width=0.72\linewidth]{fig-speedup-am}
 \caption{\textbf{Spend ratio to reach screen-then-test's \$100k result}, with
 95\% matched-seed bootstrap intervals. Arrows: the policy's mean never reached it
 within \$100k.}

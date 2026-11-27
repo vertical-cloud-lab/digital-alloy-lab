@@ -72,7 +72,7 @@ def matched_curves(kappa):
     return {p: np.stack([curve(runs[p][s]["rows"], "best_validated") / ys for s in seeds]) for p in POLICIES}, seeds
 
 
-def fig_curves(kinds, name, bands=("pkgfn", "eifn_reuse", "tiered")):
+def fig_curves(kinds, name, bands=("pkgfn", "eifn_reuse", "tiered"), labels=LABEL, xlab="New spend ($k)", ylab="Best alloy demonstrated\n(% of optimum)"):
     """Best alloy demonstrated vs new spend, one panel per kappa (mean over matched seeds).
     Bands: 95% bootstrap interval of the mean (seeds resampled), for the policies in `bands`."""
     fig, axes = plt.subplots(1, 3, figsize=(7.0, 2.55), sharey=True)
@@ -88,17 +88,17 @@ def fig_curves(kinds, name, bands=("pkgfn", "eifn_reuse", "tiered")):
                 bs = 100 * C[p][idx].mean(1)
                 lo, hi = np.percentile(bs, [2.5, 97.5], axis=0)
                 ax.fill_between(x, lo, hi, color=st["color"], alpha=0.10, lw=0, zorder=1)
-            ax.plot(x, m, color=st["color"], ls=st["ls"], lw=1.4, zorder=3, label=LABEL[p])
+            ax.plot(x, m, color=st["color"], ls=st["ls"], lw=1.4, zorder=3, label=labels[p])
             ax.plot(x[-1], m[-1], marker=st["marker"], ms=4.5, color=st["color"], mec="white", mew=0.8, zorder=4, ls="none")
         sub = {0.0: "screen right", 0.5: "screen half wrong", 1.0: "screen misses the effect"}[k]
         ax.set_title(f"κ = {k:g}: {sub}\n{len(seeds)} matched seeds", color=TEXT, loc="left", fontsize=8)
         ax.set_xlim(0, 101)
         ax.set_xticks([0, 25, 50, 75, 100])
-        ax.set_xlabel("New spend ($k)")
+        ax.set_xlabel(xlab)
         ax.grid(axis="y", color=GRIDC, lw=0.6)
         ax.set_axisbelow(True)
-    axes[0].set_ylabel("Best alloy demonstrated\n(% of optimum)")
-    handles = [plt.Line2D([], [], color=STYLE[p]["color"], ls=STYLE[p]["ls"], lw=1.4, marker=STYLE[p]["marker"], ms=4.5, mec="white", mew=0.8, label=LABEL[p]) for p in kinds]
+    axes[0].set_ylabel(ylab)
+    handles = [plt.Line2D([], [], color=STYLE[p]["color"], ls=STYLE[p]["ls"], lw=1.4, marker=STYLE[p]["marker"], ms=4.5, mec="white", mew=0.8, label=labels[p]) for p in kinds]
     fig.legend(handles=handles, loc="upper center", bbox_to_anchor=(0.5, -0.07), ncol=min(4, len(kinds)), frameon=False, handlelength=2.8, columnspacing=1.4, numpoints=1)
     save(fig, name)
 
@@ -137,7 +137,7 @@ def fig_contrasts(name="fig-contrasts"):
     save(fig, name)
 
 
-def fig_speedup(name="fig-speedup", over="tiered"):
+def fig_speedup(name="fig-speedup", over="tiered", labels=LABEL, base=None):
     """Spend the baseline needs to reach its own $100k mean, over the policy's spend; 95% matched CI."""
     rows = [r for r in read_csv("speedup") if r["over"] == over]
     kinds = [p for p in POLICIES if p != over]
@@ -161,13 +161,13 @@ def fig_speedup(name="fig-speedup", over="tiered"):
     ax.set_xticklabels(["0.25×", "0.5×", "1×", "2×", "4×", "8×"])
     ax.axvline(1, color="#8c8c8c", lw=0.7, zorder=1)
     ax.set_yticks(range(len(kinds)))
-    ax.set_yticklabels([LABEL[p] for p in kinds], fontsize=7)
+    ax.set_yticklabels([labels[p] for p in kinds], fontsize=7)
     ax.invert_yaxis()
     ax.spines["left"].set_visible(False)
     ax.tick_params(axis="y", length=0)
     ax.grid(axis="x", color=GRIDC, lw=0.6)
     ax.set_axisbelow(True)
-    base = "tiered screening" if over == "tiered" else "standard BO"
+    base = base or ("tiered screening" if over == "tiered" else "standard BO")
     ax.set_xlabel(f"Speed-up over {base} (spend ratio to reach {base}'s $100k level)")
     handles = [plt.Line2D([], [], color=KSTYLE[k]["color"], marker=KSTYLE[k]["marker"], ms=4.2, mec="white", mew=0.7, lw=1.2, label=f"κ = {k:g}") for k in KAPPAS]
     handles.append(plt.Line2D([], [], color=TEXT2, marker="<", ms=4.2, lw=0, label="mean never reached it"))
@@ -267,3 +267,7 @@ if __name__ == "__main__":
     fig_speedup(name="fig-speedup-over-bo", over="ei")
     fig_allocation()
     graphical_abstract()
+    # Advanced Materials versions: the article's wording (screen-then-test) and axis labels as "Quantity [unit]"
+    am = dict(LABEL, tiered="Screen-then-test", tiered_naive="Screen-then-test, no powder reuse")
+    fig_curves(main6, "fig-curves-am", labels=am, xlab="New spend [k$]", ylab="Best alloy demonstrated\n[% of optimum]")
+    fig_speedup(name="fig-speedup-am", labels=am, base="screen-then-test")
