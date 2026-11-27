@@ -133,6 +133,36 @@ expects more novelty than MethodsX and cannot list the companion or arXiv-only w
 until accepted. STAR Protocols suits a step-by-step rewrite and costs more. JOSS is an option later
 (after April 2027) for a packaged version of the benchmark.
 
+## Where it stands (Nov 27, 2026) and what blocks submission
+
+**Done.**
+- All eight policies run on the same seeds at every κ: 20 at κ = 1 and 16 at κ = 0 and 0.5.
+- 252 of 252 stored runs rerun action for action on three CPU models.
+- Every comparison has a matched-seed interval (`../benchmarks/bofn-paper/paper-stats/`).
+- Both versions are drafted, with every number generated. The method text was fact-checked against the
+  code by an independent agent, and its 21 findings are fixed.
+- All 25 references are checked against Crossref and arXiv.
+- PDFs: [`methodsx/manuscript.pdf`](methodsx/manuscript.pdf) (draft, with notes) and
+  [`methodsx/manuscript-clean.pdf`](methodsx/manuscript-clean.pdf);
+  [`adv-mater/methods-si.pdf`](adv-mater/methods-si.pdf) and
+  [`adv-mater/methods-si-clean.pdf`](adv-mater/methods-si-clean.pdf).
+
+**What still blocks submission of the MethodsX companion, and who does it.** No new experiments are needed.
+
+| Item | Who |
+|---|---|
+| Decide M2 (companion or fold in), M7 and M8 (both affect issue #120's article) | Sterling |
+| Author list and order, affiliations, CRediT, funding, competing interests, the AI-use statement | Sterling, with the co-authors |
+| Ask the MethodsX office how to cite the companion while it is under review at a Wiley journal | Sterling |
+| Read the method details against the code and rerun one cell by hand (`../benchmarks/bofn-paper/PORT.md`, last section) | a co-author who did not write it (Xavier Zaitzeff, if they are an author) |
+| Cite bofn-clocked (PR 297) and the byu-vcl twin at fixed commits once they are merged or public | a Claude run, after PR 297 merges |
+| Move the text into MethodsX's Word template, which is a .docx (pandoc from the LaTeX, then fix tables by hand); upload the graphical abstract as its own file | a Claude run, then a person checks it |
+| Archive the code and runs with a DOI (Zenodo) at submission, not before | Sterling (the account owner) |
+
+**Realistic date.** Late January 2027. That allows two to three weeks for the author decisions and one
+internal read over the holidays, then about a week for the template, the DOI and the cover letter. The
+short version needs nothing more until issue #120's article is ready to submit.
+
 ## Decisions for Sterling
 
 | # | Decision | Default in the drafts |

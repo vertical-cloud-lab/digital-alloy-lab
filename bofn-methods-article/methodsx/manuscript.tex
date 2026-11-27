@@ -724,9 +724,12 @@ contrast of these implementations, not of the two acquisition functions alone.
 can under-cover; the speed-up statistic is the first \$250 step a mean curve
 crosses, so its bootstrap distribution is lumpy and its interval endpoints move
 by about 0.1 between bootstrap seeds. Intervals are not corrected for the
-number of comparisons.
+number of comparisons. Fewer seeds can mislead: on the first 9 seeds at
+$\kappa=0$, BOFN with powder reuse averaged 88\% of the optimum at \$100k and
+looked level with screen-then-test (87\%); on all 16 it averaged
+\stat{k0-eifn_reuse-v100-mean}\%.
 \item \textbf{Bit-level reproducibility} has been checked on Linux x86\_64
-only, on three AMD EPYC models. Other CPUs and BLAS builds may diverge in
+only, on three AMD EPYC models and two Python 3.12 patch releases. Other CPUs and BLAS builds may diverge in
 the last digits and, through a different decision, beyond.
 \end{itemize}
 
