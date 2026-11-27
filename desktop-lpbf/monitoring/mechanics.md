@@ -160,8 +160,9 @@ camera, its bracket and photodiode B all stand inside it.
 **Short answer.**
 - **The spring sets the force, not the stack.** The Ø3 mm 316 waveguide slides free in its holes. Its Ø4 head, domed R50,
   presses on the plate's spigot. Its foot sits on a Ø5 mm sensor (MISTRAS PICO) inside a 316L cartridge that stands on the rod
-  end's bore floor. A Lee Spring LC 029BB 09S316 under the sensor pushes sensor and waveguide up. The plate gets 11.2–19.2 N at
-  every corner of the tolerances and thermal cases, or 13.3–16.8 N if the stop force is set with a shim at assembly
+  end's bore floor. A Lee Spring LC 029BB 09S316 under the sensor pushes sensor and waveguide up. With the stop force set at
+  assembly (a push gauge on the head, a shim under the spring), the plate gets 13.3–16.8 N at every corner of the tolerances and
+  thermal cases. As bought, the spring's ± 0.66 mm free length alone would spread it to 10.2–20.4 N
   ([`ae_preload.md`](../analysis/out/monitoring/mech/ae_preload.md) §2).
 - **Heat hardly moves it.** The waveguide and the stack it runs through grow within 0.07 mm of each other, between assembly and a
   500 °C plate, which is 0.3 N on this spring.
@@ -170,7 +171,7 @@ camera, its bracket and photodiode B all stand inside it.
 - **The sensor's lead leaves through a Solid Sealing FA40102 Microdot weld-in** in the rod end's cap, above the cross-drilling. The
   cap gets one spot face, a counterbore and a Ø5.18 hole (§4.7). The weld is laser or e-beam, not TIG.
 - **It needs the bayonet's disc spring first.** Today's bare bayonet would be lifted 0.31 mm by the AE force, opening the foil.
-  With the 97125K111 spring that hot-swap.md recommends, the foil keeps 197–205 N on M50, against the 173 N it needs.
+  With the 97125K111 spring that hot-swap.md recommends, the foil keeps 196–206 N on M50, against the 173 N it needs.
 - **S25 keeps the rod-end route.** Its rod's Ø7.7 bore has no room for a waveguide, a cartridge and the leads together.
 
 **The previous run's design, checked.** It put the sensor in the rod end's bore with the spring on the bore floor, and an SMA or
@@ -209,16 +210,19 @@ the stop plus 0.6 mm of its rate. The spring has to take up:
 | pre-travel, as set | 0.6 ± 0.1 mm | lap the waveguide to length against a depth gauge from the socket floor |
 | plate to plate | ± 0.1 mm | spigot length ± 0.05 mm, graphite foil ± 0.05 mm (assumed) |
 | thermal: stack against waveguide, assembly to running | −0.070 to +0.029 mm | thermal.json's M50 cases (200 °C, powder in the gaps, 500 °C tier B) with the waveguide's own fin profile |
-| the spring's free length and rate | ± 2 %, ± 10 % | catalogue tolerances (assumed) |
+| the spring's free length and rate | ± 0.66 mm, ± 0.39 N/mm (10 %) | Lee Spring's page for the part |
 | module travel | 0 | the waveguide, cartridge and sensor all move with the piston and leave with the module |
 
-Over the 48 corners the plate gets **11.2–19.2 N**, inside the 10–20 N wanted. Setting the stop force with a push gauge to 12.5 ±
-0.5 N (a shim under the spring) narrows it to 13.3–16.8 N. The spring's shear stress is 623 MPa at the highest force, against 760
-MPa allowed (45 % of the wire's ~1,690 MPa tensile, assumed). It runs at the cartridge's temperature, between the rod end's 37–74
-°C and the foot's ≤ 118 °C (§4.3), where 316 spring wire loses little load (stainless springs are commonly used to ~250 °C; not
-checked against Lee's data). Its shortest length in use leaves 6.1 mm to solid. Pressing the
-head down with the plate off bottoms it in its counterbore at 20.4 N, before the spring can reach solid. The waveguide as a column
-buckles at 879 N, 46× the force.
+As bought, the 48 corners give 10.2–20.4 N: the spring's ± 0.66 mm free length is ± 2.6 N by itself, which leaves the 10–20 N
+window no room. **So the stop force is set at assembly:** with the plate off, push the head down with a gauge until it lifts the
+sensor off its cap, and shim under the spring until that takes 12.5 ± 0.5 N. Then the plate gets **13.3–16.8 N** at every corner.
+
+- **Stress:** 662 MPa at the highest as-bought force (20.4 N), against 760 MPa allowed (45 % of the wire's ~1,690 MPa tensile,
+  assumed). Its shortest length in use leaves 6.1 mm to solid. Pressing the head down with the plate off bottoms it in its
+  counterbore at 21.6 N, before the spring can reach solid.
+- **Temperature:** it runs at the cartridge's, between the rod end's 37–74 °C and the foot's ≤ 118 °C (§4.3). 316 spring wire
+  loses little load there (stainless springs are commonly used to ~250 °C; not checked against Lee's data).
+- **The waveguide as a column** buckles at 879 N, 43× the force.
 
 ### 4.3 The sensor
 
@@ -250,13 +254,13 @@ the foot now sits 27 mm higher, in the rod, nearer the piston head.
 - **Tip, tier A (200 °C): Krytox LVP**, a PFPE vacuum grease rated −15 to 300 °C with a published 1e-5 Torr at 200 °C (Chemours
   TDS, via McMaster 10195K41, $178.91 per 2 oz). Put a dab on each plate's spigot underside when the plate is prepared. It is
   not silicone: Molykote 41 (the old M4-04) is a silicone oil with no vacuum data, and silicone vapour fouls windows.
-- **Cold end: the same grease** on the sensor's stainless face, under 11–19 N. Grease, not a bond, so the sensor can be changed
+- **Cold end: the same grease** on the sensor's stainless face, under 13–17 N. Grease, not a bond, so the sensor can be changed
   and no adhesive adds AE noise (US5000045A).
 - **Tier B (500 °C): no grease lasts.** Use a dry, annealed aluminium foil (25–100 µm) under the head; the published dry-couplant
   rigs used silver, gold or copper foil at 25 MPa or more, far above this head's ~0.1–0.2 GPa Hertz peak over a 0.4–0.5 mm spot.
   An aluminium foil avoids a new metal pair on the 6061 plate (an inference, not checked). The dry tip costs 11–26 dB more.
-- **The dome is R50, not the R25 the checks suggested.** At 200 °C 6061 keeps only ~103 MPa; R25 at 11–20 N peaks at 211–256 MPa
-  and would dent the spigot under the bayonet's 60° twist. R50 peaks at 133–161 MPa, under 1.6 × 103.
+- **The dome is R50, not the R25 the checks suggested.** At 200 °C 6061 keeps only ~103 MPa; R25 at 10–20 N peaks at 205–258 MPa
+  and would dent the spigot under the bayonet's 60° twist. R50 peaks at 129–162 MPa, under 1.6 × 103.
 
 ### 4.5 The feedthrough
 
@@ -271,11 +275,11 @@ double-ended Microdot (FA49614) are too long for the 12.7 mm bore.
 
 ### 4.6 The plate, the swaps and the module
 
-- **The plate.** The AE force pushes the plate up by 11–19 N. Today's bare bayonet holds it down only by its weight (0.53 N on
+- **The plate.** The AE force pushes the plate up by 13–17 N (10–20 N as bought). Today's bare bayonet holds it down only by its weight (0.53 N on
   M50), so the plate would rise until its lugs meet the ledge (0.31 mm) and the foil would open. With the 97125K111 disc spring
-  (216 N on M50, 530 N on L75; hot-swap.md §3.1) the foil keeps 197–205 N and 511–519 N, above the 173 and 424 N it needs. **Fit
+  (216 N on M50, 530 N on L75; hot-swap.md §3.1) the foil keeps 196–206 N and 510–520 N, above the 173 and 424 N it needs. **Fit
   that spring before the AE preload.**
-- **A plate swap.** The robot (or a person) pushes up to 19 N more over the last 0.6 mm and twists 9 N·mm more (0.61 N·m for the
+- **A plate swap.** The robot (or a person) pushes up to 17 N more over the last 0.6 mm (20 N as bought) and twists ≤ 10 N·mm more (0.61 N·m for the
   bayonet). The head slides 3.4 mm across the greased spigot in the 60° twist. Check the coupling with pencil-lead breaks after
   every swap (monitoring.md §5.4).
 - **A module swap.** Nothing moves inside the module. The 10-32 plug comes off with the type K and power plugs. The waveguide
@@ -332,7 +336,7 @@ sweep, including the gland plate's screws at the overtravel, the Z arm dropping 
 - **Not confirmed with Solid Sealing:** the FA40102's laser weld on a spot face milled into the cap's curve, 4 mm from where the rod
   is TIG-welded on afterwards. The gas-side pigtail (Kapton coax, a push-on socket for the Ø1.07 pin, an in-line 10-32 joint) is
   not a chosen part; M4-13 is an estimate.
-- **Assumed:** the spring's ± 2 % length and ± 10 % rate, its wire's 1,690 MPa and its relaxation at ≤ 118 °C; the grease film's
+- **Assumed:** the spring wire's 1,690 MPa and its relaxation at ≤ 118 °C; the grease film's
   1 GPa and 1–10 µm; the plates' ± 0.1 mm; the foil couplant for tier B (untested).
 - **The leads are not drawn.** Their way past the cartridge (in front of it and under its floor) and past the feedthrough's
   gas-side pin, at the channel's top edge, is checked only as free space.
@@ -480,13 +484,13 @@ The table above (the end cap at 78 °C, 3–9 dB) was for the waveguide leaving 
 | Check | Result | In one line |
 |---|---|---|
 | Stroke | −0.070 to +0.029 mm | the stack (6061 block and head, Macor, 316 rod and rod end) and the waveguide's fin profile grow alike; the most is tier B, where the hot waveguide outgrows the water-cooled head |
-| Force on the plate | 11.2–19.2 N (pass) | Lee LC 029BB 09S316 at 15.88 mm, 0.6 ± 0.1 mm pre-travel, plates ± 0.1 mm, spring ± 2 % length and ± 10 % rate, 48 corners; 13.3–16.8 N with the stop force shimmed to 12.5 ± 0.5 N |
-| Spring | pass | 623 MPa at 19.2 N against 760 MPa; 6.1 mm to solid; the head bottoms in its counterbore at 20.4 N, before solid (1,297 MPa) |
-| Tip | R50 (pass); R25 fails | on 6061 at 200 °C (E 62 GPa, ~103 MPa yield): R50 peaks at 133–161 MPa over a Ø401–486 µm spot; R25 at 211–256 MPa |
+| Force on the plate | 13.3–16.8 N (pass, shimmed) | Lee LC 029BB 09S316 at 15.88 mm, 0.6 ± 0.1 mm pre-travel, plates ± 0.1 mm, the spring's ± 0.39 N/mm rate (Lee), 48 corners, with the stop force shimmed to 12.5 ± 0.5 N; as bought (± 0.66 mm free length) 10.2–20.4 N, so the shim is part of the design |
+| Spring | pass | 662 MPa at 20.4 N against 760 MPa; 6.1 mm to solid; the head bottoms in its counterbore at 21.6 N, before solid (1,297 MPa) |
+| Tip | R50 (pass); R25 fails | on 6061 at 200 °C (E 62 GPa, ~103 MPa yield): R50 peaks at 129–162 MPa over a Ø389–489 µm spot; R25 at 205–258 MPa |
 | Loss, plate to sensor | 1.0–8.0 dB (tier A); 12.2–31.4 dB (tier B, dry) | greased dome 0.03–0.7 dB by the film model, taken up to 3 dB; Al/316 1.0; rod 0.01–0.05; rubbing 0–1; greased cold end 0–1.4, up to 3; against 26.3–52.3 dB to the rod end |
 | Sensor temperature | ≤ 118 °C (pass for the PICO) | the foot as an adiabatic fin end: 64–98 °C clean, 90–118 °C with powder in the gaps, 79–95 °C at 500 °C; PICO 177 °C; the WM500/1's 120 °C leaves 2 K |
-| Plate | needs the disc spring | bare bayonet: lifted 0.31 mm (0.53 N of plate); with 97125K111 the foil keeps 197–205 N (M50, needs 173) and 511–519 N (L75, needs 424); twist +9 N·mm on 0.61 N·m |
-| Column | pass | 92.8 mm pinned: P_cr 879 N, 46× the force |
+| Plate | needs the disc spring | bare bayonet: lifted 0.31 mm (0.53 N of plate); with 97125K111 the foil keeps 196–206 N (M50, needs 173) and 510–520 N (L75, needs 424); twist +9 N·mm on 0.61 N·m |
+| Column | pass | 92.8 mm pinned: P_cr 879 N, 43× the force |
 
 - **Contact model:** the head as a Hertz contact plus a grease film round it (dk = K dA / h, h = h0 + r²/2R out to the head's
   edge, K ~1 GPa, h0 1 µm); the flat cold end as K A / h with 2–10 µm of grease; both as springs between two rods of the

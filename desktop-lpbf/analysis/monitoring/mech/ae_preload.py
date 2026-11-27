@@ -64,10 +64,10 @@ GREASE = dict(K=1.0e9, h_min_um=1.0, h_flat_um=(2.0, 10.0),
               src="couplant film: bulk modulus ~1 GPa for a PFPE or silicone grease (assumed); minimum film 1 um (the surfaces' "
                   "roughness); a flat greased joint at 10-20 N squeezes to 2-10 um (assumed)")
 RUB_DB = (0.0, 1.0)            # the guide touching its holes and the leads in the rod: not estimated, taken as 0-1 dB (assumed)
-TOL = dict(delta0=0.10, plate=0.10, L0_frac=0.02, k_frac=0.10,
+TOL = dict(delta0=0.10, plate=0.10, L0_mm=0.66, k_frac=0.10,
            src="pre-travel set at assembly to +/-0.10 mm (lap the waveguide to length against a depth gauge from the socket floor); "
-               "plate to plate +/-0.10 mm (spigot length +/-0.05 machined, graphite foil +/-0.05); spring free length +/-2 % and rate "
-               "+/-10 % (typical catalogue tolerances, assumed)")
+               "plate to plate +/-0.10 mm (spigot length +/-0.05 machined, graphite foil +/-0.05; assumed); the spring's free length "
+               "+/-0.66 mm and rate +/-0.39 N/mm (10 %), from Lee Spring's page for LC 029BB 09S316 (read 2026-11-27T08:48Z)")
 
 
 def zlev():
@@ -163,14 +163,14 @@ def spring_check(rows):
     thermal = [r["spring_length_change_mm"] for r in rows]
     corners = []
     for dd0, dpl, dth, fL0, fk in itertools.product((-TOL["delta0"], TOL["delta0"]), (-TOL["plate"], TOL["plate"]),
-                                                    (min(thermal), max(thermal), 0.0), (-TOL["L0_frac"], TOL["L0_frac"]),
+                                                    (min(thermal), max(thermal), 0.0), (-TOL["L0_mm"], TOL["L0_mm"]),
                                                     (-TOL["k_frac"], TOL["k_frac"])):
-        L0_ = L0 * (1 + fL0)
+        L0_ = L0 + fL0
         k_ = k * (1 + fk)
         comp = (L0_ - Ls) + (d0 + dd0 + dpl) - dth          # compression with the plate on
         corners.append(dict(F=k_ * comp, comp=comp, L=L0_ - comp, d0=d0 + dd0, plate=dpl, thermal=dth, L0=L0_, k=k_))
     F = [c["F"] for c in corners]
-    Fstop = [k * (1 + fk) * (L0 * (1 + fL0) - Ls) for fL0 in (-TOL["L0_frac"], TOL["L0_frac"]) for fk in (-TOL["k_frac"], TOL["k_frac"])]
+    Fstop = [k * (1 + fk) * (L0 + fL0 - Ls) for fL0 in (-TOL["L0_mm"], TOL["L0_mm"]) for fk in (-TOL["k_frac"], TOL["k_frac"])]
     L_min = min(c["L"] for c in corners)
     C = Dm / d
     Kw = (4 * C - 1) / (4 * C - 4) + 0.615 / C
@@ -319,10 +319,11 @@ def write_md(R):
           f"| free / at the stop / solid | {s['L0_mm']:.2f} / {s['L_stop_mm']:.2f} / {s['L_solid_mm']:.2f} mm |",
           f"| force at the stop, plate off | {s['F_stop_N'][0]:.1f}-{s['F_stop_N'][1]:.1f} N |",
           f"| force on the plate, nominal | {s['F_nominal_N']:.1f} N |",
-          f"| force on the plate over {s['corners']} tolerance corners | **{s['F_range_N'][0]:.1f}-{s['F_range_N'][1]:.1f} N** "
-          f"({'inside' if s['pass_window'] else 'OUTSIDE'} 10-20 N) |",
-          f"| the same, with the stop force set at assembly (shim, push gauge: 12.5 ± 0.5 N) | {s['F_range_shimmed_N'][0]:.1f}-"
-          f"{s['F_range_shimmed_N'][1]:.1f} N |",
+          f"| force on the plate as bought (no shim), over {s['corners']} tolerance corners | {s['F_range_N'][0]:.1f}-"
+          f"{s['F_range_N'][1]:.1f} N ({'inside' if s['pass_window'] else 'outside'} 10-20 N) |",
+          f"| **with the stop force set at assembly** (shim under the spring, push gauge on the head: 12.5 ± 0.5 N) | "
+          f"**{s['F_range_shimmed_N'][0]:.1f}-{s['F_range_shimmed_N'][1]:.1f} N** "
+          f"({'inside' if s['pass_window_shimmed'] else 'OUTSIDE'} 10-20 N) |",
           f"| pressing the head down until it bottoms in its counterbore (plate off) | {s['F_head_bottomed_N']:.1f} N at "
           f"{s['L_head_bottomed_mm']:.2f} mm |",
           f"| thermal change in the spring's length | {s['thermal_range_mm'][0]:+.3f} to {s['thermal_range_mm'][1]:+.3f} mm |",
@@ -380,7 +381,7 @@ def main():
     s = spring_check(rows)
     # the head bottoms on its counterbore floor before the spring gets near solid: the most anyone can press it (plate off)
     L_bottom = A["spring_L_stop"] - A["delta0"] - g["head_clear_on"]
-    s["F_head_bottomed_N"] = A["spring_k"] * (1 + TOL["k_frac"]) * (A["spring_L0"] * (1 + TOL["L0_frac"]) - L_bottom)
+    s["F_head_bottomed_N"] = A["spring_k"] * (1 + TOL["k_frac"]) * (A["spring_L0"] + TOL["L0_mm"] - L_bottom)
     s["L_head_bottomed_mm"] = L_bottom
     # set at assembly instead: shim under the spring so the head lifts off its stop at 12.5 +/- 0.5 N (push gauge, plate off)
     lo = min(r["spring_length_change_mm"] for r in rows)
@@ -388,11 +389,12 @@ def main():
     k = A["spring_k"]
     s["F_range_shimmed_N"] = (12.0 + k * (1 - TOL["k_frac"]) * (A["delta0"] - TOL["delta0"] - TOL["plate"] - hi),
                               13.0 + k * (1 + TOL["k_frac"]) * (A["delta0"] + TOL["delta0"] + TOL["plate"] - lo))
+    s["pass_window_shimmed"] = s["F_range_shimmed_N"][0] >= 10.0 and s["F_range_shimmed_N"][1] <= 20.0
     R = dict(run_utc=time.strftime("%Y-%m-%d %H:%M", time.gmtime()), design=A,
              geometry={k: v for k, v in g.items() if k != "z"}, stroke=rows, spring=s, tip=tip_check(s["F_range_N"]),
              loss=loss_budget(s["F_range_N"]), temperatures=temperatures(rows), plate=plate_check(s["F_range_N"]),
              column=column_check(s["F_range_N"]), parts=PARTS)
-    R["pass_"] = bool(s["pass_window"] and s["pass_stress"] and s["margin_to_solid_mm"] >= 0.5 and g["head_clear_on"] > 0.2
+    R["pass_"] = bool(s["pass_window_shimmed"] and s["pass_stress"] and s["margin_to_solid_mm"] >= 0.5 and g["head_clear_on"] > 0.2
                       and all(t["margin_C"] > 20 for t in R["temperatures"])
                       and not any(h["yields_hot_6061"] for h in R["tip"] if h["R_mm"] == A["dome_R"] and h["F_N"] <= s["F_range_N"][1] + 1e-9))
     (OUT / "ae_preload.json").write_text(json.dumps(R, indent=1, default=float))

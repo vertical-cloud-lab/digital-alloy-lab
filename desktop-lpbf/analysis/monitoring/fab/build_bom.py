@@ -147,7 +147,7 @@ SEL = [
      "slides free in the Ø3.4 holes; lapped to length so the head stands 0.6 mm proud with the plate off (monitoring/mechanics.md §4)", []),
     ("M4-07", "4", "AE", "Cartridge spring: Lee Spring LC 029BB 09S316 (316, OD 4.78, free 19.05 mm, 3.94 N/mm), 2 + 2 spares",
      ("p3", "AE-SP1"), 4, "add", "drawn (M50, L75)",
-     "11.2-19.2 N on the plate over every tolerance corner, 13.3-16.8 N with the stop force set by a shim at assembly "
+     "13.3-16.8 N on the plate over every tolerance corner with the stop force set by a shim at assembly; 10.2-20.4 N as bought "
      "(ae_preload.md §2); Century 60895SCS is the same spring (AE-SP2)", []),
     ("M4-08", "4", "AE", "SMA-to-BNC cable 48 in. (preamp to the digitizer)", ("p1", "O3-d"), 1, "add", "not drawn", "", []),
     ("M4-09", "4", "custom (outsourced)", "S25 only: AE sensor clamp on the rod end, 6061 plate + spring (S25's Ø7.7 rod has no room "
