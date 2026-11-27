@@ -246,9 +246,11 @@ rules, on top of electrical.md §7:
 
 ### 2.4 New connectors and feedthroughs
 
-- **Chamber: no new electrical feedthroughs.** The viewports are optical (other work). An AE waveguide leaving the rod end needs a
-  gas seal around the rod and no pins: a bored-through compression fitting or an O-ring gland (MN-27). The rod end is hermetic
-  since round 5 (electrical.md §13.3), and the hollow rod is open to the chamber gas.
+- **Chamber: one new electrical feedthrough, for AE.** The viewports are optical (other work). The rod end is hermetic since
+  round 5 (electrical.md §13.3), and the hollow rod is open to the chamber gas. An AE waveguide can't leave the rod end straight,
+  so round 3 (2026-11-27, [`mechanics.md`](mechanics.md) §4) put the sensor inside it, sprung up under the waveguide (MN-27). Its
+  lead leaves through a Solid Sealing FA40102 Microdot weld-in in the rod end's cap (MN-16), an eighth weld-in, unplugged at a
+  swap like the others.
 - **Guard: one bulkhead plate (MN-28)** on the panel nearest the rack: three isolated BNC (two photodiodes, AE), one RJ45 (Chronos),
   one M12 8-pin (RTC6 bits), and a split cable entry for pre-terminated leads (the Chronos's and the LDS12Bs' power). No opening
   gives a line of sight, so the guard stays light-tight. Show it to the LSO.
@@ -474,8 +476,9 @@ permissive, reset the safety controller, or open the guard.
   - `where` is the 4U drawer;
   - the "RTC6 layer-start / sync" signal is the laser-gate tap (MN-01);
   - add the AE decoupler and the trigger generator.
-- The model: the guard bulkhead plate (MN-28), the AE preamp's bracket, the waveguide's seal at the rod end (MN-27), and the
-  contents of the drawer and PB2.
+- The model: the guard bulkhead plate (MN-28), the AE preamp's bracket, and the contents of the drawer and PB2. (The AE sensor
+  inside the rod end and its weld-in, MN-16 and MN-27, were drawn in round 3. So were the guard's fans, MN-29, which add ~17 W
+  to the 24 V CTRL rail.)
 
 ## 6. Sources
 
