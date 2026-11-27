@@ -32,7 +32,7 @@ latched. No photo or video showed it at a known scale. B is drawn 250 mm long fo
 |---|---|---|
 | Thermal FEA, CalculiX, 20 cases | B keeps the joint O-ring at 26 / 32 / 44 °C for 100 / 400 / 816 g of shot landing at 1050 °C. The pile conductivity (2–20 W/m K), the liner or a copper puck move it by about 2 K. **What B can't take is shot held near the seal:** 25 g fused in the bore under the joint takes the O-ring to 195 °C, 100 g to 389 °C. That is why nothing goes inside its top and the shields must be in. A's bottom O-ring passes 200 °C at about 220 g. C's bottom glass seal reaches 264 °C at 400 g. A good run (816 g of powder at 400 °C) leaves B's bottom at 86 °C | `analysis/thermal.py`, [`thermal_summary.md`](analysis/out/thermal_summary.md) |
 | The Nov 13 failure, reconstructed | 120 g of shot against the stock cup's EPDM seat puts the seat at 1013 °C, but the glass stays at 50 °C. 300 g that falls into the glass puts it at 931 °C, the bottom EPDM seal at 412 °C, and at least 55 MPa of tension in the borosilicate (short-term strength ~40 MPa): it cracks, as it did | `S_seat_120`, `S_glass_300` |
-| Model checks | steady film, radiation and surface-flux cases match closed-form answers to 0.001 K. A 0.55× finer mesh moves the hang-up O-ring peak from 195 to 188 °C, so the standard mesh errs on the safe side; for B_816 the O-ring moves from 43.8 to 43.6 °C and the floor from 345 to 338 °C | `analysis/verify_axifea.py`, `B_*_fine` |
+| Model checks | energy is conserved: B_816 holds 557.95 kJ at t = 0 and 557.97 kJ at 0.5 s, and the heat that leaves only grows (3.4 kJ by 60 s, 390 kJ by an hour); the pile's mass in the mesh is 816.0 g and its heat matches the hand value within 1.3 % (`analysis/energy_check.py`). Steady film, radiation and surface-flux cases match closed-form answers to 0.001 K. A 0.55× finer mesh moves the hang-up O-ring peak from 195 to 188 °C, so the standard mesh errs on the safe side; for B_816 the O-ring moves from 43.8 to 43.6 °C and the floor from 345 to 338 °C | `analysis/verify_axifea.py`, `B_*_fine` |
 | Structural FEA, B | 4.4 MPa at +1.2 bar (1.5 × relief), 3.7 MPa under full vacuum. Worst thermal stress with 816 g of shot: 61 MPa, at most 0.52 of yield (56 MPa at 310 °C). The first design's sharp welded floor corner reached 87 MPa (0.82 of yield), so the floor became a turned end cap with an R6 corner and W3 moved 20 mm up, as Edison's final check advised | `analysis/structural.py`, [`structural_summary.md`](analysis/out/structural_summary.md) |
 | Hand calculations | buckling under vacuum ×180+; UG-34 flat head needs 1.4 mm (8 used); the KF clamp gives ~1.8 kN finger-tight against 0.84 kN of separating force at +1.2 bar; the liner and puck keep ≥1.2 mm of gap when hot | `analysis/handcalcs.py`, [`handcalcs.md`](analysis/out/handcalcs.md) |
 | Glass (C) | with the pan and sleeve, the glass itself is fine (quartz 0.8–1.3 MPa, borosilicate 5.6 MPa); its bottom seal is what fails. By hand: borosilicate cracks at a ~150 K step, quartz at ~1000 K | `analysis/structural.py`, `handcalcs.md` |
@@ -59,6 +59,14 @@ latched. No photo or video showed it at a known scale. B is drawn 250 mm long fo
 - `cad/out/option_b.step`, `option_a.step`, `machine_cone_section.step`, `cam/out/fixture_b.step`.
 
 ![B exploded](cad/img/option_b_exploded.png)
+
+## Until B is built
+
+A is all catalogue parts and arrives first, but it is small and its bottom joint sits next to the pile. With its
+30 mm puck it takes about 120 g of copper-alloy shot before the bottom O-ring passes 150 °C. A 60 mm puck raises
+that to about 250 g (bottom O-ring 148 °C, top 92 °C). At 400 g the top O-ring reaches 166 °C, and the puck leaves
+only about 127 cm³ above it. So use A for aluminium runs and small copper charges only, always with the shields,
+and go to B for full copper charges.
 
 ## Rules this design depends on
 

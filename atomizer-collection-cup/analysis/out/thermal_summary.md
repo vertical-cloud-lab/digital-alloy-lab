@@ -19,6 +19,8 @@ Every case: the shot (or powder) lands all at once at t = 0 and the run is follo
 | A_100 | 100 g shot on the puck | 37 [1230] | bottom O-ring 138 [480] | 41 | 107 | 154 |  |
 | A_250 | 250 g shot on the puck | 66 [870] | bottom O-ring 215 [630] | 80 | 182 | 234 |  |
 | A_400 | 400 g shot on the puck | 110 [720] | bottom O-ring 248 [750] | 141 | 221 | 269 |  |
+| A_250_puck60 | 250 g shot, 60 mm puck | 92 [600] | bottom O-ring 148 [990] | 118 | 126 | 160 |  |
+| A_400_puck60 | 400 g shot, 60 mm puck | 166 [509] | bottom O-ring 175 [1140] | 221 | 151 | 188 |  |
 | C_400 | 400 g shot in the pan, fused quartz | 28 [206] | seal_top 73 [25]; seal_bot 264 [150] | nan | nan | 160 | 132.5 |
 | C_816 | 816 g shot in the pan, fused quartz | 32 [360] | seal_top 99 [180]; seal_bot 333 [240] | nan | nan | 221 | 286.3 |
 | C_400_boro | 400 g shot in the pan, borosilicate | 28 [206] | seal_top 56 [22]; seal_bot 263 [150] | nan | nan | 160 | 116.7 |

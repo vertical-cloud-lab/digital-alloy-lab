@@ -93,9 +93,11 @@ def main():
         "C_400": "400 g shot in the pan, fused quartz", "C_816": "816 g shot in the pan, fused quartz",
         "C_400_boro": "400 g shot in the pan, borosilicate", "S_seat_120": "stock cup: 120 g of shot against the EPDM seat (Nov 13)",
         "S_glass_300": "stock cup: 300 g of shot fallen into the glass, against its wall (Nov 13)",
-        "B_816_fine": "B_816 on a 0.55x finer mesh (convergence)", "B_hangup_25_fine": "B_hangup_25 on a 0.55x finer mesh"}
+        "B_816_fine": "B_816 on a 0.55x finer mesh (convergence)",
+        "A_250_puck60": "250 g shot, 60 mm puck", "A_400_puck60": "400 g shot, 60 mm puck", "B_hangup_25_fine": "B_hangup_25 on a 0.55x finer mesh"}
     order = ["B_100", "B_400", "B_816", "B_816_k2", "B_816_k20", "B_816_noliner", "B_816_cupuck", "B_816_powder400",
-             "B_hangup_25", "B_hangup_100", "B_816_fine", "B_hangup_25_fine", "A_100", "A_250", "A_400", "C_400", "C_816", "C_400_boro", "S_seat_120", "S_glass_300"]
+             "B_hangup_25", "B_hangup_100", "B_816_fine", "B_hangup_25_fine", "A_100", "A_250", "A_400",
+             "A_250_puck60", "A_400_puck60", "C_400", "C_816", "C_400_boro", "S_seat_120", "S_glass_300"]
     for name in order:
         if name not in res:
             continue

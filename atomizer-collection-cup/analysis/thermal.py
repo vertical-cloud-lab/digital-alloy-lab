@@ -209,7 +209,7 @@ def design_B(mass_g, liner=True, puck=True, puck_mat="S304", pile_mat="PILE", pi
     return regs, cavity, probes, info
 
 
-def design_A(mass_g, liner=True, puck=True):
+def design_A(mass_g, liner=True, puck=True, puck_h=None):
     import parts as PT
     kf = P.JOINT
     a = P.A
@@ -246,11 +246,12 @@ def design_A(mass_g, liner=True, puck=True):
     r_in = kf.ring_id / 2          # the puck stands inside the bottom centring ring
     if puck:
         pr = a["puck_d"] / 2
+        ph = puck_h or a["puck_h"]
         regs.append(F.Region("puck_contact", "CONTACT_PUCK", rect(0, pr, zb, zb + 0.5), 0.5))
-        regs.append(F.Region("puck", "S304", rect(0, pr, zb + 0.5, zb + 0.5 + a["puck_h"]), 2.0))
+        regs.append(F.Region("puck", "S304", rect(0, pr, zb + 0.5, zb + 0.5 + ph), 2.0))
         regs.append(F.Region("puck_gap", "GAP15", [(pr, zb), (r_in, zb), (r_in, bot_face), (rb, bot_face),
-                                                  (rb, zb + 0.5 + a["puck_h"]), (pr, zb + 0.5 + a["puck_h"])], 0.6))
-        zz = zb + 0.5 + a["puck_h"]
+                                                  (rb, zb + 0.5 + ph), (pr, zb + 0.5 + ph)], 0.6))
+        zz = zb + 0.5 + ph
     r_pile = rb
     if liner:
         lo_, li_ = a["liner_od"] / 2, a["liner_od"] / 2 - a["liner_wall"]
@@ -406,6 +407,7 @@ CASES = {
     "B_hangup_25": ("B", 25, {"hangup": True}), "B_hangup_100": ("B", 100, {"hangup": True}),
     "B_816_powder400": ("B", 816, {"pile_mat": "POWDER", "pile_T": 400.0}),
     "S_seat_120": ("S", 120, {}), "S_glass_300": ("S", 300, {"where": "glass"}),
+    "A_250_puck60": ("A", 250, {"puck_h": 60.0}), "A_400_puck60": ("A", 400, {"puck_h": 60.0}),
     "B_816_fine": ("B", 816, {}, {"mesh_scale": 0.55}), "B_hangup_25_fine": ("B", 25, {"hangup": True}, {"mesh_scale": 0.55}),
     "C_400_boro": ("C", 400, {"glass": "BORO"}),
 }
