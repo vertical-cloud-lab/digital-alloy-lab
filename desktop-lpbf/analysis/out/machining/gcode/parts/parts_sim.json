@@ -1,0 +1,66 @@
+{
+ "what": "the bracket's two posted programs parsed, timed and cut (parts_cam.py --sim, gcode_sim.py's Cutter: flat-ended cylinders swept along every move, the tool axis the setup's z)",
+ "resolution_mm": 0.5,
+ "setups": {
+  "bracket_op1": {
+   "program": "analysis/out/machining/gcode/parts/bracket_op1.ngc",
+   "recount_min": 1.85,
+   "path_feed_mm": 3077.5,
+   "path_rapid_mm": 439.5,
+   "timeline_min": 1.86,
+   "timeline_feed_mm": 3076.8,
+   "timeline_rapid_mm": 606.0,
+   "chords": 137,
+   "program_lines": 61,
+   "parts_cam_json_min": 1.85,
+   "freecad_estimate_min": 2.32,
+   "timeline_vs_recount_min": 0.01,
+   "removed_cm3": 94.3,
+   "gouge_cm3": 0.019,
+   "tools": [
+    1,
+    2
+   ],
+   "pieces_dropped_cm3": []
+  },
+  "bracket_op2": {
+   "program": "analysis/out/machining/gcode/parts/bracket_op2.ngc",
+   "recount_min": 1.21,
+   "path_feed_mm": 1879.3,
+   "path_rapid_mm": 344.5,
+   "timeline_min": 1.23,
+   "timeline_feed_mm": 1878.9,
+   "timeline_rapid_mm": 631.0,
+   "chords": 79,
+   "program_lines": 41,
+   "parts_cam_json_min": 1.21,
+   "freecad_estimate_min": 1.42,
+   "timeline_vs_recount_min": 0.02,
+   "removed_cm3": 57.93,
+   "gouge_cm3": 0.011,
+   "tools": [
+    1,
+    2
+   ],
+   "pieces_dropped_cm3": []
+  }
+ },
+ "blank_cm3_exact": 1072.9,
+ "part_cm3_exact": 920.16,
+ "removed_exact_cm3": 152.74,
+ "initial_voxels_cm3": 1072.9,
+ "final_voxels_cm3": 920.67,
+ "removed_sim_cm3": 152.23,
+ "removed_cad_voxels_cm3": 152.2,
+ "removed_sim_vs_cad_pct": 0.02,
+ "leftover_cm3": 0.0,
+ "gouge_cm3": 0.03,
+ "leftover_beyond_1mm_cm3": 0.0,
+ "gouge_beyond_1mm_cm3": 0.0,
+ "minutes": {
+  "timeline": 3.09,
+  "recount": 3.06,
+  "freecad_estimate": 3.74
+ },
+ "seconds": 1.6
+}
