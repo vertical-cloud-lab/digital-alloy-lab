@@ -1,0 +1,2 @@
+date,candidate_or_lot,step,started,ended,people,person_hours,machine,machine_hours,consumables,consumables_usd,outside_fee_usd,outcome,notes
+2026-12-01,EXAMPLE-A1,atomize,09:10,15:40,2,9.5,rePOWDER,3.2,"Mo plate (run 2 of plate P3); nozzle; BN; Ar 140 psi",0,0,valid,"delete this example row"

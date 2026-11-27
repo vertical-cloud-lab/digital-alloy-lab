@@ -26,6 +26,8 @@ updated with what has happened since.
 | [`manuscript.tex`](manuscript.tex) → [`manuscript.pdf`](manuscript.pdf) | The manuscript (red brackets wait on data; blue tags name the supplier) |
 | [`supporting-information.tex`](supporting-information.tex) → [`.pdf`](supporting-information.pdf) | The SI skeleton |
 | [`cover-letter.md`](cover-letter.md) | Cover letter skeleton (not to be sent; nothing has been submitted) |
+| [`campaign2-preregistration.md`](campaign2-preregistration.md) | Draft pre-registration for the 2027 campaign: target, baselines, stopping rule, twin analysis; to be committed before its first decision |
+| [`templates/`](templates/) | `step-log.csv`: the bench log of time and consumables per step that Table 1 and Fig. 1b are built from |
 | [`references.bib`](references.bib), [`reference-check.md`](reference-check.md) | Bibliography built from Crossref/arXiv records, and the check of every entry |
 | `figures/` | `fig1-loop.tikz` (draft schematic), `figS-atomizer-runs` (every run so far), `fig6-draft-synthetic` (layout draft from the synthetic benchmark) |
 | `data/` | Inputs of the draft figures, pinned to their source commits |
