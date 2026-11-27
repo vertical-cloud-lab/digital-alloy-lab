@@ -3,30 +3,30 @@
   "z_joint_face_mm": 300.0,
   "assemblies": {
     "stock": {
-      "parts": 28,
+      "parts": 38,
       "mass_kg": 8.05,
-      "lowest_point_z_mm": -243.0,
-      "length_below_joint_mm": 243.0,
-      "max_radius_mm": 191.8,
-      "gap_to_mat_mm": 57.0,
+      "lowest_point_z_mm": -234.0,
+      "length_below_joint_mm": 234.0,
+      "max_radius_mm": 183.3,
+      "gap_to_mat_mm": 66.0,
       "drop_needed_to_remove_mm": 7.0,
       "fits": true,
       "interferences": []
     },
     "option_a": {
-      "parts": 10,
-      "mass_kg": 2.8,
-      "lowest_point_z_mm": -216.0,
-      "length_below_joint_mm": 216.0,
-      "max_radius_mm": 69.0,
-      "gap_to_mat_mm": 84.0,
+      "parts": 11,
+      "mass_kg": 2.04,
+      "lowest_point_z_mm": -175.0,
+      "length_below_joint_mm": 175.0,
+      "max_radius_mm": 66.0,
+      "gap_to_mat_mm": 125.0,
       "drop_needed_to_remove_mm": 7.0,
       "fits": true,
       "interferences": []
     },
     "option_b": {
-      "parts": 13,
-      "mass_kg": 2.88,
+      "parts": 14,
+      "mass_kg": 2.65,
       "lowest_point_z_mm": -253.6,
       "length_below_joint_mm": 253.6,
       "max_radius_mm": 99.3,
@@ -36,21 +36,21 @@
       "interferences": []
     },
     "option_c": {
-      "parts": 26,
-      "mass_kg": 8.17,
-      "lowest_point_z_mm": -243.0,
-      "length_below_joint_mm": 243.0,
-      "max_radius_mm": 75.0,
-      "gap_to_mat_mm": 57.0,
+      "parts": 27,
+      "mass_kg": 8.06,
+      "lowest_point_z_mm": -234.0,
+      "length_below_joint_mm": 234.0,
+      "max_radius_mm": 85.0,
+      "gap_to_mat_mm": 66.0,
       "drop_needed_to_remove_mm": 7.0,
       "fits": true,
       "interferences": []
     }
   },
   "capacity_cm3": {
-    "A (liner + puck)": 203,
-    "A (no liner, no puck)": 328,
-    "B (no liner, no puck)": 770,
-    "B (liner + puck)": 587
+    "A (liner + puck)": 159,
+    "A (no liner, no puck)": 257,
+    "B (no liner, no puck)": 694,
+    "B (liner + puck)": 522
   }
 }

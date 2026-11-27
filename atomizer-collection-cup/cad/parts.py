@@ -40,40 +40,59 @@ def tube(r_out, r_in, z0, z1):
     return revolve([(r_in, z0), (r_out, z0), (r_out, z1), (r_in, z1)])
 
 
-def kf_flange_profile(kf, face_z, down=True, tube_len=20.0):
+def kf_flange_profile(kf, face_z, down=True, tube_len=20.0, recess=True):
     """(r, z) profile of an ISO-KF flange with its weld tube. Sealing face at face_z.
 
     down=True: the flange faces up and its tube runs down (the cup side). down=False: mirror (cone side).
+    recess: cut the centring ring's recess into the sealing face (left out of the thermal models).
     """
     s = -1.0 if down else 1.0
     rb, rf, rh, rt = kf.bore / 2, kf.flange_od / 2, kf.hub_od / 2, kf.tube_od / 2
     t_edge = kf.lip - (rf - rh) * math.tan(math.radians(kf.taper_deg))
-    pts = [(rb, face_z), (rf, face_z), (rf, face_z + s * t_edge), (rh, face_z + s * kf.lip),
-           (rt, face_z + s * (kf.lip + 1.5)), (rt, face_z + s * tube_len), (rb, face_z + s * tube_len)]
+    face = [(rb, face_z)]
+    if recess and kf.recess_depth:
+        rr, rd = kf.recess_d / 2, kf.recess_depth
+        face = [(rb, face_z + s * rd), (rr, face_z + s * rd), (rr, face_z)]
+    pts = face + [(rf, face_z), (rf, face_z + s * t_edge), (rh, face_z + s * kf.lip),
+                  (rt, face_z + s * (kf.lip + 1.5)), (rt, face_z + s * tube_len), (rb, face_z + s * tube_len)]
     return pts
 
 
-def kf_flange(kf, face_z, down=True, tube_len=20.0):
-    return revolve(kf_flange_profile(kf, face_z, down, tube_len))
+def kf_flange(kf, face_z, down=True, tube_len=20.0, recess=True):
+    return revolve(kf_flange_profile(kf, face_z, down, tube_len, recess))
 
 
 def kf_blank(kf, face_z):
     """KF blank: a flange with no bore, sealing face up at face_z."""
     rf, rh = kf.flange_od / 2, kf.hub_od / 2
     t_edge = kf.lip - (rf - rh) * math.tan(math.radians(kf.taper_deg))
-    pts = [(0, face_z), (rf, face_z), (rf, face_z - t_edge), (rh, face_z - kf.lip), (0, face_z - kf.lip)]
+    rr, rd = kf.recess_d / 2, kf.recess_depth
+    pts = [(0, face_z - rd), (rr, face_z - rd), (rr, face_z), (rf, face_z), (rf, face_z - t_edge),
+           (rh, face_z - kf.lip), (0, face_z - kf.lip)]
     return revolve(pts)
 
 
 def kf_centring_ring(kf, z_mid):
-    """Metal centring ring plus its O-ring (as a squashed torus), centred on z_mid."""
+    """Metal centring ring plus its O-ring (as a squashed torus), centred on z_mid.
+
+    Vendor geometry (Lesker QF50-200-SRV, McMaster 4518K65): the ring's body (ring_id .. ring_body_od) is
+    ring_thk + 2 recess_depth thick and sits in the recesses of both faces; a rib out to ring_od (= the
+    O-ring's ID) carries the O-ring, which the faces squash to ring_thk.
+    """
     h = kf.ring_thk
-    ring = tube(kf.ring_od / 2, kf.ring_id / 2, z_mid - h / 2, z_mid + h / 2)
-    # small outer lip that holds the O-ring
-    r_c = kf.ring_od / 2 + kf.oring_cs * 0.56 + 0.05
-    oring = (cq.Workplane("XZ").center(r_c, z_mid).ellipse(kf.oring_cs / 2 * 1.12, h / 2 * 0.98)
+    hb = h / 2 + kf.recess_depth
+    ring = tube(kf.ring_body_od / 2, kf.ring_id / 2, z_mid - hb, z_mid + hb)
+    ring = ring.fuse(tube(kf.ring_od / 2, kf.ring_body_od / 2 - 0.01, z_mid - 0.9, z_mid + 0.9))
+    a = kf.oring_cs / 2 * 1.12
+    r_c = kf.ring_od / 2 + a + 0.05
+    oring = (cq.Workplane("XZ").center(r_c, z_mid).ellipse(a, h / 2 * 0.98)
              .revolve(360, (-r_c, 0, 0), (-r_c, 1, 0)).val())
     return ring, oring
+
+
+def kf_overpressure_ring(z_mid):
+    """A&N 4000076 / Lesker QF50-200-OPR: 69.85 OD x 66.55 ID x 3.81 wide, around the O-ring."""
+    return tube(69.85 / 2, 66.55 / 2, z_mid - 3.81 / 2, z_mid + 3.81 / 2)
 
 
 def kf_clamp(kf, z_mid, hinge_angle=180.0, open_deg=0.0):
@@ -164,109 +183,122 @@ def cone_section():
 
 
 # ------------------------------------------------------------------------------------------- stock cup
-def stock_cup(glass="borosilicate"):
-    """The AMAZEMET glass cup as seen in the videos (rough sizes in params.STOCK until measured)."""
-    kf = P.JOINT
+def _stock_z():
+    """Heights (z) of the stock cup's interfaces, top to bottom (see stock_cup)."""
+    kf, s = P.JOINT, P.STOCK
+    z = {"face": -kf.ring_thk / 2}
+    z["neck"] = z["face"] - s["neck_len"]
+    z["valve_top"] = z["neck"] - s["reducer_len"]
+    z["valve_bot"] = z["valve_top"] - s["valve_body_h"]
+    z["plate_bot"] = z["valve_bot"] - s["top_plate_t"]          # underside of the top plate
+    gk = 2.0                                                     # gasket under each glass end
+    z["glass_top"] = z["plate_bot"] + s["seal_groove_d"] - gk
+    z["glass_bot"] = z["glass_top"] - s["glass_len"]
+    z["bplate_top"] = z["glass_bot"] - gk + s["seal_groove_d"]
+    z["bottom"] = z["bplate_top"] - s["bottom_plate_t"]
+    return z
+
+
+def _plate(od, t, z_top, groove_face, bore=0.0):
+    """Plate with the glass groove in one face and the four tie-rod holes; groove_face 'top' or 'bottom'."""
     s = P.STOCK
-    g = kf.ring_thk / 2
-    parts = []
-    z = -g
-    parts.append(("stock: KF flange and neck", kf_flange(kf, z, down=True, tube_len=s["neck_len"]), STEEL, "316L"))
-    z -= s["neck_len"]
-    r1, r2 = kf.tube_od / 2, s["reducer_d2"] / 2
-    red = [(kf.bore / 2, z), (r1, z), (r2, z - s["reducer_len"]), (r2 - 1.6, z - s["reducer_len"]),
-           (kf.bore / 2 - 0.5, z - 1.5)]
-    red = [(kf.bore / 2, z), (r1, z), (r2, z - s["reducer_len"]), (r2 - 1.6, z - s["reducer_len"]),
-           (kf.bore / 2 + 0.2, z - 2.0)]
-    parts.append(("stock: conical reducer", revolve(red), STEEL, "316L"))
-    z -= s["reducer_len"]
-    # valve body = thick top block with a flap valve and a side lever
-    vb = (cq.Workplane("XY").circle(s["valve_body_od"] / 2).circle(s["valve_bore"] / 2)
-          .extrude(s["valve_body_h"]).val().translate((0, 0, z - s["valve_body_h"])))
-    for i in range(s["n_tie"]):
-        a = math.radians(45 + 90 * i)
-        hole = (cq.Workplane("XY").cylinder(400, s["tie_rod_d"] / 2 + 0.5).val()
-                .translate((s["tie_rod_bc"] / 2 * math.cos(a), s["tie_rod_bc"] / 2 * math.sin(a), z - 100)))
-        vb = vb.cut(hole)
-    parts.append(("stock: valve body / top block", vb, STEEL, "316L"))
-    zc = z - s["valve_body_h"] / 2
-    seat = tube(s["valve_bore"] / 2 + 2.0, s["valve_bore"] / 2 - 3.0, zc - 10, zc + 10)
-    vb = vb.cut(tube(s["valve_bore"] / 2 + 2.05, s["valve_bore"] / 2 - 1, zc - 10.05, zc + 10.05))
-    parts[-1] = ("stock: valve body / top block", vb, STEEL, "316L")
-    parts.append(("stock: valve seat ring (EPDM)", seat, EPDM, "EPDM"))
-    disc = (cq.Workplane("YZ").circle(s["valve_bore"] / 2 - 3.2).extrude(4).val()
-            .translate((-2, 0, zc)))
-    parts.append(("stock: valve flap (open, edge-on)", disc, STEEL_DK, "316L"))
-    boss = (cq.Workplane("YZ").circle(13).extrude(36).val().translate((s["valve_body_od"] / 2 - 4, 0, zc)))
-    lever = (cq.Workplane("YZ").circle(5).extrude(95).val().rotate((0, 0, 0), (0, 0, 1), -35)
-             .translate((s["valve_body_od"] / 2 + 35, 0, zc)))
-    knob = cq.Workplane("XY").sphere(14).val()
-    lx = s["valve_body_od"] / 2 + 35 + 95 * math.cos(math.radians(-35))
-    ly = 95 * math.sin(math.radians(-35))
-    knob = knob.translate((lx, ly, zc))
-    vb = vb.fuse(boss.cut(tube(s["valve_bore"] / 2 + 2.05, 0.0, zc - 30, zc + 30)))
-    parts[[q[0] for q in parts].index("stock: valve body / top block")] = (
-        "stock: valve body / top block", vb, STEEL, "316L")
-    lever = lever.cut(knob)
-    parts.append(("stock: valve lever", lever, STEEL, "316L"))
-    parts.append(("stock: lever knob", knob, BLACK, "plastic"))
-    z -= s["valve_body_h"]
-    # glass, seals, bottom plate: each glass end sits on a 2 mm gasket at the bottom of a groove
     ro, ri = s["glass_od"] / 2, s["glass_od"] / 2 - s["glass_wall"]
-    gd, gk = s["seal_groove_d"], 2.0
     g_out, g_in = ro + 1.5, ri - 1.5
-    vb_groove = tube(g_out, g_in, z - 0.01, z + gd)
-    i_vb = [q[0] for q in parts].index("stock: valve body / top block")
-    parts[i_vb] = ("stock: valve body / top block", parts[i_vb][1].cut(vb_groove), STEEL, "316L")
-    zt = z + gd - gk                      # top end of the glass
-    zg = zt - s["glass_len"]              # bottom end of the glass
-    gl = tube(ro, ri, zg, zt)
+    pl = cq.Workplane("XY").circle(od / 2).extrude(t).val().translate((0, 0, z_top - t))
+    if bore:
+        pl = pl.cut(tube(bore / 2, 0, z_top - t - 1, z_top + 1))
+    zg = z_top - s["seal_groove_d"] if groove_face == "top" else z_top - t
+    pl = pl.cut(tube(g_out, g_in, zg - 0.01 if groove_face == "bottom" else zg, zg + s["seal_groove_d"] + 0.01))
+    for i in range(s["n_tie"]):
+        a_ = math.radians(45 + 90 * i)
+        pl = pl.cut(cq.Workplane("XY").cylinder(400, s["tie_rod_d"] / 2 + 0.5).val()
+                    .translate((s["tie_rod_bc"] / 2 * math.cos(a_), s["tie_rod_bc"] / 2 * math.sin(a_), z_top - 100)))
+    return pl
+
+
+def stock_cup(glass="borosilicate", valve=True):
+    """The AMAZEMET glass cup in the layout measured in dims/README.md: KF-50 flange and neck, conical reducer,
+    DN65 butterfly valve (EPDM seat, lever), top plate, glass in a perforated guard, bottom plate, 4 x M12 tie
+    rods with hex nuts below and acorn nuts above, and the curved splash plate below the valve seat.
+    Sizes in params.STOCK; many are +/- 10 % (dims/). valve=False leaves the valve parts out (option C)."""
+    kf, s = P.JOINT, P.STOCK
+    z = _stock_z()
+    parts = []
+    parts.append(("stock: KF flange and neck", kf_flange(kf, z["face"], down=True, tube_len=s["neck_len"]), STEEL, "316L"))
+    r1, r2 = kf.tube_od / 2, s["reducer_d2"] / 2
+    zr, L = z["neck"], s["reducer_len"]
+    red = [(kf.bore / 2, zr), (r1, zr), (r2, zr - L), (r2 - 1.6, zr - L), (kf.bore / 2 + 0.2, zr - 2.0)]
+    parts.append(("stock: conical reducer", revolve(red), STEEL, "316L"))
+    zt, zb = z["valve_top"], z["valve_bot"]
+    zc = (zt + zb) / 2
+    if valve:
+        vb = tube(s["valve_body_od"] / 2, s["valve_bore"] / 2, zb, zt)
+        vb = vb.cut(tube(s["valve_bore"] / 2 + 2.05, s["valve_bore"] / 2 - 1, zc - 10.05, zc + 10.05))
+        boss = cq.Workplane("YZ").circle(13).extrude(36).val().translate((s["valve_body_od"] / 2 - 4, 0, zc))
+        vb = vb.fuse(boss.cut(tube(s["valve_bore"] / 2 + 2.05, 0.0, zc - 30, zc + 30)))
+        for i in range(4):   # body bolts with acorn nuts on top (the bolts clamp the two body halves)
+            a_ = math.radians(90 * i)
+            vb = vb.cut(cq.Workplane("XY").cylinder(400, 4.5).val()
+                        .translate((47.5 * math.cos(a_), 47.5 * math.sin(a_), zc)))
+        parts.append(("stock: butterfly valve body (DN65)", vb, STEEL, "316L"))
+        parts.append(("stock: valve seat ring (EPDM)", tube(s["valve_bore"] / 2 + 2.0, s["valve_bore"] / 2 - 3.0,
+                                                          zc - 10, zc + 10), EPDM, "EPDM"))
+        disc = cq.Workplane("YZ").circle(s["valve_bore"] / 2 - 3.2).extrude(4).val().translate((-2, 0, zc))
+        parts.append(("stock: valve disc (open, edge-on)", disc, STEEL_DK, "316L"))
+        lever = (cq.Workplane("YZ").circle(5).extrude(95).val().rotate((0, 0, 0), (0, 0, 1), -35)
+                 .translate((s["valve_body_od"] / 2 + 36.0, 0, zc)))
+        lx = s["valve_body_od"] / 2 + 36.0 + 95 * math.cos(math.radians(-35))
+        ly = 95 * math.sin(math.radians(-35))
+        knob = cq.Workplane("XY").sphere(14).val().translate((lx, ly, zc))
+        parts.append(("stock: valve lever", lever.cut(knob), STEEL, "316L"))
+        parts.append(("stock: lever knob", knob, BLACK, "plastic"))
+        for i in range(4):
+            a_ = math.radians(90 * i)
+            x, y = 47.5 * math.cos(a_), 47.5 * math.sin(a_)
+            bolt = cq.Workplane("XY").cylinder(s["valve_body_h"] + 6, 4.0).val().translate((x, y, zc + 3))
+            nut = (cq.Workplane("XY").polygon(6, 13 / math.cos(math.pi / 6)).extrude(6).val().translate((x, y, zt))
+                   .fuse(cq.Workplane("XY").sphere(6.0).val().translate((x, y, zt + 6))))
+            parts.append((f"stock: valve bolt {i}", bolt, STEEL, "A2"))
+            parts.append((f"stock: valve acorn nut {i}", nut.cut(cq.Workplane("XY").cylinder(400, 4.05).val()
+                                                              .translate((x, y, zt))), STEEL, "A2"))
+        # splash plate: a curved strip just below the seat, across about half the bore
+        rs = s["valve_bore"] / 2 - 1.0
+        sp = (cq.Workplane("XY").circle(rs).circle(rs - 2.0).extrude(22).val()
+              .cut(cq.Workplane("XY").box(200, 200, 60).val().translate((0, -100 + 4, 0))))
+        parts.append(("stock: splash plate", sp.translate((0, 0, zb - 12.0)), STEEL, "304"))
+    parts.append(("stock: top plate", _plate(s["top_plate_od"], s["top_plate_t"], zb, "bottom",
+                                             bore=s["valve_bore"]), STEEL, "316L"))
+    ro, ri = s["glass_od"] / 2, s["glass_od"] / 2 - s["glass_wall"]
+    g_out, g_in = ro + 1.5, ri - 1.5
+    gl = tube(ro, ri, z["glass_bot"], z["glass_top"])
     gname = "stock: glass tube (borosilicate)" if glass == "borosilicate" else "glass tube (fused quartz)"
     parts.append((gname, gl, GLASS if glass == "borosilicate" else QUARTZ, glass))
-    parts.append(("stock: top glass seal", tube(g_out, g_in, zt, zt + gk), EPDM, "EPDM"))
-    parts.append(("stock: bottom glass seal", tube(g_out, g_in, zg - gk, zg), EPDM, "EPDM"))
-    zb = zg - gk + gd                     # top face of the bottom plate
-    bp = cq.Workplane("XY").circle(s["bottom_plate_od"] / 2).extrude(s["bottom_plate_t"]).val()
-    bp = bp.translate((0, 0, zb - s["bottom_plate_t"]))
-    bp = bp.cut(tube(g_out, g_in, zb - gd, zb + 0.01))
+    parts.append(("stock: top glass seal", tube(g_out, g_in, z["glass_top"], z["glass_top"] + 2.0), EPDM, "EPDM"))
+    parts.append(("stock: bottom glass seal", tube(g_out, g_in, z["glass_bot"] - 2.0, z["glass_bot"]), EPDM, "EPDM"))
+    parts.append(("stock: bottom plate", _plate(s["bottom_plate_od"], s["bottom_plate_t"], z["bplate_top"], "top"),
+                  STEEL, "316L"))
+    zt_rod, zb_rod = zb + 14.0, z["bottom"] - 12.0
     for i in range(s["n_tie"]):
-        a = math.radians(45 + 90 * i)
-        hole = (cq.Workplane("XY").cylinder(400, s["tie_rod_d"] / 2 + 0.5).val()
-                .translate((s["tie_rod_bc"] / 2 * math.cos(a), s["tie_rod_bc"] / 2 * math.sin(a), zb - 100)))
-        bp = bp.cut(hole)
-    parts.append(("stock: bottom plate", bp, STEEL, "316L"))
-    z_bot = zb - s["bottom_plate_t"]
-    z_top = z + s["valve_body_h"]
-    for i in range(s["n_tie"]):
-        a = math.radians(45 + 90 * i)
-        x, y = s["tie_rod_bc"] / 2 * math.cos(a), s["tie_rod_bc"] / 2 * math.sin(a)
-        rod = cq.Workplane("XY").cylinder(z_top - z_bot + 22, s["tie_rod_d"] / 2).val()
-        rod = rod.translate((x, y, (z_top + z_bot) / 2 + 2))
+        a_ = math.radians(45 + 90 * i)
+        x, y = s["tie_rod_bc"] / 2 * math.cos(a_), s["tie_rod_bc"] / 2 * math.sin(a_)
+        rod = cq.Workplane("XY").cylinder(zt_rod - zb_rod, s["tie_rod_d"] / 2).val().translate((x, y, (zt_rod + zb_rod) / 2))
         parts.append((f"stock: tie rod {i}", rod, STEEL, "A2"))
-        for zn, name in ((z_bot - 5.0, "nut"), (z_top + 6.0, "acorn nut")):
-            nut = cq.Workplane("XY").polygon(6, s["tie_rod_d"] * 1.5 / math.cos(math.pi / 6)).extrude(10).val()
-            nut = nut.translate((x, y, zn - 5))
+        for zn, name in ((z["bottom"] - 10.0, "nut"), (zb, "acorn nut")):
+            nut = cq.Workplane("XY").polygon(6, 18 / math.cos(math.pi / 6)).extrude(10).val().translate((x, y, zn))
             if name == "acorn nut":
-                nut = nut.fuse(cq.Workplane("XY").sphere(s["tie_rod_d"] * 0.75).val().translate((x, y, zn + 5)))
+                nut = nut.fuse(cq.Workplane("XY").sphere(9.0).val().translate((x, y, zn + 10)))
             nut = nut.cut(cq.Workplane("XY").cylinder(400, s["tie_rod_d"] / 2 + 0.05).val().translate((x, y, zn)))
             parts.append((f"stock: {name} {i}", nut, STEEL, "A2"))
-    # perforated guard around the glass (square windows), standing on the bottom plate
-    guard = tube(s["guard_od"] / 2, s["guard_od"] / 2 - s["guard_t"], zb + 0.01, z - 0.01)
+    guard = tube(s["guard_od"] / 2, s["guard_od"] / 2 - s["guard_t"], z["bplate_top"] + 0.01, z["plate_bot"] - 0.01)
     n_around, n_up = 14, 4
-    h_win = (z - zb - 14) / n_up - 5
+    h_win = (z["plate_bot"] - z["bplate_top"] - 14) / n_up - 5
     for j in range(n_up):
-        zz = zb + 8 + j * (h_win + 5) + h_win / 2
+        zz = z["bplate_top"] + 8 + j * (h_win + 5) + h_win / 2
         for i in range(n_around):
-            a = 360.0 * i / n_around
+            a_ = 360.0 * i / n_around
             win = cq.Workplane("XY").box(30, 2 * math.pi * s["guard_od"] / 2 / n_around - 6, h_win).val()
-            win = win.translate((s["guard_od"] / 2, 0, zz)).rotate((0, 0, 0), (0, 0, 1), a)
-            guard = guard.cut(win)
+            guard = guard.cut(win.translate((s["guard_od"] / 2, 0, zz)).rotate((0, 0, 0), (0, 0, 1), a_))
     parts.append(("stock: perforated guard", guard, STEEL_DK, "304"))
-    # splash plate: a curved strip hooked in the reducer's bore
-    rs = kf.bore / 2 - 1.0
-    sp = (cq.Workplane("XY").circle(rs).circle(rs - 2.0).extrude(22).val()
-          .cut(cq.Workplane("XY").box(200, 200, 60).val().translate((0, -100 + 4, 0))))
-    parts.append(("stock: splash plate", sp.translate((0, 0, -g - 30)), STEEL, "304"))
     return parts
 
 
@@ -294,10 +326,11 @@ def option_a(with_liner=True, with_puck=True, explode=0.0):
     parts.append(("A: bottom clamp", kf_clamp(kf, (bot_face + blank_face) / 2), STEEL, "304"))
     floor = bot_face
     if with_puck:
+        z0 = blank_face - kf.recess_depth + 0.2          # on the floor of the blank's recess, inside the ring
         puck = (cq.Workplane("XY").circle(a["puck_d"] / 2).extrude(a["puck_h"])
-                .edges().chamfer(a["puck_chamfer"]).val().translate((0, 0, blank_face + 0.2 + explode * 0.6)))
+                .edges().chamfer(a["puck_chamfer"]).val().translate((0, 0, z0 + explode * 0.6)))
         parts.append(("A: catch puck (304)", puck, STEEL_HOT, "304"))
-        floor = blank_face + 0.2 + a["puck_h"]
+        floor = z0 + a["puck_h"]
     else:
         floor = blank_face
     if with_liner:
@@ -309,7 +342,7 @@ def option_a(with_liner=True, with_puck=True, explode=0.0):
 
 
 # ------------------------------------------------------------------------------------------- option B
-def option_b_vessel_profile():
+def option_b_vessel_profile(recess=True):
     """(r, z) outline of the welded vessel, sealing face at z = -gap/2."""
     kf = P.JOINT
     b = P.B
@@ -327,6 +360,9 @@ def option_b_vessel_profile():
              (R_o, z_red + tan_len), (R_o, z_bot)]
     inner = [(0, z_bot), (0, z_bot + b["bottom_t"]), (R_i, z_bot + b["bottom_t"]), (R_i, z_red + tan_len),
              (rb, z_stub - tan_len), (rb, top)]
+    if recess and kf.recess_depth:
+        rr, rd = kf.recess_d / 2, kf.recess_depth
+        inner = inner[:-1] + [(rb, top - rd), (rr, top - rd), (rr, top)]
     return outer + inner, dict(top=top, z_stub=z_stub, z_red=z_red, z_bot=z_bot, R_o=R_o, R_i=R_i,
                                floor=z_bot + b["bottom_t"])
 
@@ -370,50 +406,39 @@ def joint_hardware(open_deg=0.0, drop=0.0):
     ring, oring = kf_centring_ring(kf, 0.0)
     return [("joint: centring ring", ring.translate((0, 0, -drop)), STEEL_DK, "304"),
             ("joint: O-ring (FKM)", oring.translate((0, 0, -drop)), FKM, "FKM"),
+            ("joint: over-pressure ring", kf_overpressure_ring(0.0).translate((0, 0, -drop)), STEEL_DK, "304"),
             ("joint: KF clamp", kf_clamp(kf, 0.0, open_deg=open_deg), STEEL, "304")]
 
 
 # ------------------------------------------------------------------------------------------- option C
 def option_c():
-    """Glass rebuild: the stock cup with a fused-quartz tube and FKM seals, the valve replaced by a
-    machined 316L spacer of the same height and tie-rod pattern, a 304 sleeve hung in the spacer that
-    reaches past the top glass seal, and a 304 pan on the bottom plate that covers the bottom seal."""
-    s = P.STOCK
-    c = P.C
-    kf = P.JOINT
+    """Glass rebuild (schematic: it assumes the valve can be unbolted from the reducer and the top plate,
+    which has not been checked): the stock cup with a fused-quartz tube and FKM seals, the valve replaced
+    by a machined 316L spacer of the same OD and height, a 304 sleeve hung in the spacer that reaches 20 mm
+    past the top glass seal, and a 304 pan on the bottom plate that keeps the pile off the bottom seal."""
+    s, c, kf = P.STOCK, P.C, P.JOINT
+    z = _stock_z()
     out = []
-    for name, solid, col, mat in stock_cup(glass="fused_quartz"):
-        if any(k in name for k in ("valve seat", "valve flap", "valve lever", "lever knob")):
-            continue
-        if "valve body" in name:
-            continue
+    for name, solid, col, mat in stock_cup(glass="fused_quartz", valve=False):
         if "seal" in name and "glass" in name:
             out.append((name.replace("stock: ", "C: ") + " (FKM)", solid, FKM, "FKM"))
         else:
             out.append((name, solid, col, mat))
-    g = kf.ring_thk / 2
-    z_top = -g - s["neck_len"] - s["reducer_len"]       # top face of the old valve body
-    z_bot = z_top - s["valve_body_h"]
+    zt, zb = z["valve_top"], z["valve_bot"]
     lip_t = 3.0
-    sp = (cq.Workplane("XY").circle(s["valve_body_od"] / 2).circle(c["sleeve_od"] / 2 + 0.4)
-          .extrude(s["valve_body_h"]).val().translate((0, 0, z_bot)))
-    sp = sp.cut(tube(c["sleeve_lip_od"] / 2 + 0.4, 0, z_top - lip_t, z_top + 1))     # counterbore for the lip
-    ro, ri = s["glass_od"] / 2, s["glass_od"] / 2 - s["glass_wall"]
-    sp = sp.cut(tube(ro + 1.5, ri - 1.5, z_bot - 0.01, z_bot + s["seal_groove_d"]))  # glass groove
-    for i in range(s["n_tie"]):
-        a = math.radians(45 + 90 * i)
-        sp = sp.cut(cq.Workplane("XY").cylinder(400, s["tie_rod_d"] / 2 + 0.5).val()
-                    .translate((s["tie_rod_bc"] / 2 * math.cos(a), s["tie_rod_bc"] / 2 * math.sin(a), z_bot)))
+    sp = tube(s["valve_body_od"] / 2, c["sleeve_od"] / 2 + 0.4, zb, zt)
+    sp = sp.cut(tube(c["sleeve_lip_od"] / 2 + 0.4, 0, zt - lip_t, zt + 1))      # counterbore for the lip
+    for i in range(4):
+        a_ = math.radians(90 * i)
+        sp = sp.cut(cq.Workplane("XY").cylinder(400, 4.5).val().translate((47.5 * math.cos(a_), 47.5 * math.sin(a_), zb)))
     out.append(("C: valve-delete spacer (316L, machined)", sp, STEEL, "316L"))
-    z_glass_top = z_bot + s["seal_groove_d"] - 2.0
-    sl_bot = z_glass_top - 20.0
-    sleeve = tube(c["sleeve_od"] / 2, c["sleeve_od"] / 2 - c["sleeve_wall"], sl_bot, z_top - lip_t)
-    sleeve = sleeve.fuse(tube(c["sleeve_lip_od"] / 2, c["sleeve_od"] / 2 - c["sleeve_wall"], z_top - lip_t, z_top))
+    sl_bot = z["glass_top"] - 20.0
+    sleeve = tube(c["sleeve_od"] / 2, c["sleeve_od"] / 2 - c["sleeve_wall"], sl_bot, zt - lip_t)
+    sleeve = sleeve.fuse(tube(c["sleeve_lip_od"] / 2, c["sleeve_od"] / 2 - c["sleeve_wall"], zt - lip_t, zt))
     out.append(("C: 304 entrance sleeve", sleeve, (0.70, 0.72, 0.76), "304"))
-    z_glass_bot = z_glass_top - s["glass_len"]
-    z_plate_top = z_glass_bot - 2.0 + s["seal_groove_d"]
-    pan_od = 2 * ri - 3.0
+    ri = s["glass_od"] / 2 - c["quartz_wall"]
+    pan_od = 2 * (s["glass_od"] / 2 - s["glass_wall"]) - 3.0
     pan = (cq.Workplane("XY").circle(pan_od / 2).extrude(28.0).faces(">Z").shell(-1.5).val()
-           .translate((0, 0, z_plate_top + 0.05)))
+           .translate((0, 0, z["bplate_top"] + 0.05)))
     out.append(("C: 304 bottom pan", pan, STEEL_HOT, "304"))
     return out

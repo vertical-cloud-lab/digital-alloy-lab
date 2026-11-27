@@ -8,9 +8,10 @@ file, so a measured number changes everywhere at once. Each interface number say
 from dataclasses import dataclass, field
 
 # ----------------------------------------------------------------------------------------- interface
-# The cone's outlet joint. Believed ISO-KF (a hinged clamp, a centring ring and an O-ring: Nov 13
-# cleaning video boWsO0rxHvU, Nov 17 teardown LpvrzaWELpE). Size not yet confirmed: KF-50 is the
-# working assumption, KF-40 the alternative. See dims/ for the photo measurements.
+# The cone's outlet joint: ISO-KF, size KF-50 (dims/README.md: a metal centring ring inside a brown O-ring on a
+# flat face, a hinged wing-nut clamp; O-ring OD / flange OD = 0.827 in photo 04, which rules out KF-40).
+# Flange, ring, O-ring and clamp sizes are the vendors' (bom/vendor_dims.json: Lesker QF50 drawings, MDC PG092,
+# McMaster 4518K38/K61/K65/K74 STEP files measured with CadQuery).
 
 
 @dataclass(frozen=True)
@@ -25,24 +26,33 @@ class KF:
     taper_deg: float      # back taper the clamp bears on
     ring_id: float        # centring ring bore (metal)
     ring_od: float        # centring ring OD at the O-ring groove root
-    ring_thk: float       # axial; sets the gap between the two sealing faces
+    ring_thk: float       # face-to-face gap when clamped = the O-ring's squeezed height (see recess_depth)
     oring_cs: float       # O-ring cross-section
     clamp_od: float       # outside of the clamp ring (without wing nut)
     clamp_w: float        # axial width of the clamp
+    recess_d: float = 0.0       # centring-ring recess in each sealing face (diameter)
+    recess_depth: float = 0.0   # its depth; ring body thickness = ring_thk + 2 * recess_depth
+    ring_body_od: float = 0.0   # the ring's body (in the recesses); ring_od is its rib, = the O-ring's ID
 
     @property
     def bore(self):
         return self.tube_od - 2 * self.tube_wall
 
 
-KF50 = KF("KF-50", flange_od=75.0, tube_od=50.8, tube_wall=1.65, lip=7.0, hub_od=57.0, taper_deg=15.0,
-          ring_id=48.0, ring_od=55.0, ring_thk=4.0, oring_cs=5.0, clamp_od=96.0, clamp_w=24.0)
+# KF-50: flange OD 74.93, 5.08 thick at the hub, 2.9 at the rim, 15 deg back taper (all vendors); face recess
+# 52.32 dia (McMaster STEP). Ring bore 49.4-50.0, body OD 51.9, 7.98 thick; O-ring AS568-330, 53.34 x 5.33
+# (Lesker QF50-200-SRV). McMaster's STEP gives a 2.6 mm recess, which with the 7.98 ring would squeeze the
+# O-ring by half; 2.0 mm (a 4.0 mm face gap, 25 % squeeze) is used until a flange is measured. Clamp: Lesker
+# QF50-200-SSC body OD 82 x 20 wide, McMaster 4518K74 94 x 26.4; 90 x 22 is drawn.
+KF50 = KF("KF-50", flange_od=74.93, tube_od=50.8, tube_wall=1.65, lip=5.08, hub_od=58.6, taper_deg=15.0,
+          ring_id=49.7, ring_od=53.34, ring_thk=4.0, oring_cs=5.33, clamp_od=90.0, clamp_w=22.0,
+          recess_d=52.32, recess_depth=2.0, ring_body_od=51.9)
 KF40 = KF("KF-40", flange_od=55.0, tube_od=38.1, tube_wall=1.65, lip=7.0, hub_od=44.0, taper_deg=15.0,
           ring_id=36.0, ring_od=42.0, ring_thk=4.0, oring_cs=5.0, clamp_od=76.0, clamp_w=24.0)
 JOINT = KF50
 
-# Room under the cone. Nominal from the rough earlier model (viz3d: clamp at z = 288-300 mm, container
-# down to z = 60 mm), to be replaced by the photo measurements and then by a tape measure.
+# Room under the cone: NOT measured (dims/README.md: no photo or frame shows it at a known scale). 300 +/- 50 mm
+# is the rough October model's value (viz3d: clamp at z = 288-300 mm). Measure with the cone latched.
 Z_JOINT_FACE = 300.0          # cone's outlet sealing face above the mat (mm)
 FLOOR_CLEARANCE_MIN = 25.0    # keep the cup's bottom at least this far above the mat
 CONE_OUTLET_SPIGOT_OD = 50.8  # the cone's own outlet tube, above its KF flange
@@ -54,44 +64,48 @@ CONE_H = 120.0
 # --------------------------------------------------------------------------------- the stock cup
 # As seen in the training videos and the Nov 13/17 photos; used for the "before" model and the
 # comparison runs. Rough until dims/ has the measured values.
+# Photo and video measurements in dims/README.md (each with its +/- and source); the rest are estimates.
+# Layout, top to bottom: KF-50 flange and neck, conical reducer to ~65 mm, a DN65 sanitary butterfly valve
+# (bolted halves holding the EPDM seat; 4-bolt flange ~111 OD), the top plate, the glass in its guard, the bottom
+# plate, 4 x M12 tie rods between the plates.
 STOCK = dict(
-    neck_len=25.0, reducer_len=40.0, reducer_d2=100.0,
-    valve_body_od=130.0, valve_body_h=45.0, valve_bore=60.0,
-    top_plate_od=150.0, top_plate_t=15.0,
-    glass_od=100.0, glass_wall=5.0, glass_len=110.0,
-    bottom_plate_od=150.0, bottom_plate_t=15.0,
-    tie_rod_d=12.0, tie_rod_bc=125.0, n_tie=4,
-    guard_od=112.0, guard_t=1.0,
-    seal_groove_w=8.0, seal_groove_d=4.0,
+    neck_len=12.0, reducer_len=30.0, reducer_d2=65.0,           # KF face to the valve flange ~53 (dims)
+    valve_body_od=111.0, valve_body_h=50.0, valve_bore=60.0,     # 111 +/- 15, bore ~60 inferred (dims)
+    top_plate_od=170.0, top_plate_t=10.0,                        # OD as the bottom plate (by eye); t estimated
+    glass_od=100.0, glass_wall=5.0, glass_len=110.0,             # 96 +/- 6, 5.7 +/- 1, ~110 (dims); run record 100
+    bottom_plate_od=170.0, bottom_plate_t=10.0,                  # 170.5 +/- 9 (dims); rim ~6 +/- 1.5, t estimated
+    tie_rod_d=12.0, tie_rod_bc=145.0, n_tie=4,                   # M12 (dims), bolt circle 145 +/- 10
+    guard_od=116.0, guard_t=1.0,                                 # 116 +/- 15 (dims)
+    seal_groove_w=8.0, seal_groove_d=3.0,                        # band 107 / 92 (dims); depth not seen
 )
 
 # ---------------------------------------------------------------------------- the lab-built cups
 # Option A: catalogue parts only (no machining, no welding). KF full nipple, KF blank at the bottom,
 # a drop-in liner and a loose catch puck.
 A = dict(
-    nipple_len=200.0,          # face to face; standard lengths come from bom/
-    blank_t=12.0,              # KF blank, sealing face to back
-    liner_od=44.45, liner_wall=1.24, liner_gap_top=6.0,   # 1-3/4 in x 0.049 in 304 tube
-    puck_d=44.0, puck_h=38.0, puck_chamfer=2.0,           # 304 bar, sits on the blank
+    nipple_len=160.0,          # face to face: Duniway KF50-NP 160 mm (stock lengths 140/160/163/320; bom/)
+    blank_t=5.08,              # KF blank, sealing face to back (Lesker QF50-200-SB, McMaster 4518K61)
+    liner_od=44.45, liner_wall=1.24, liner_gap_top=6.0,   # 1-3/4 in x 0.049 in 304 tube (McMaster 11116N835)
+    puck_d=44.0, puck_h=30.0, puck_chamfer=2.0,           # 304 bar (2 in), sits on the blank inside the ring
 )
 
 # Option B: one 316L vessel, TIG welded: KF-50 weld stub (2 in tube) + 2 x 3 in concentric reducer + 3 in
 # tube + flat 8 mm bottom disc. Only one seal, at the water-cooled cone. A 304 liner and a 304 catch puck
 # drop in. The 3 in body gives the capacity a 2 in nipple can't (see option_capacity_cm3()).
 B = dict(
-    stub_len=25.0,             # KF weld stub's own tube below the flange face (vendor drawing in bom/)
-    reducer_len=64.0,          # 2 x 3 in sanitary butt-weld concentric reducer (vendor)
-    body_od=76.2, body_wall=1.65,  # 3 in x 0.065 in 316L tube
-    body_len=250.0,            # KF face to the outside of the bottom; set from the measured room
+    stub_len=19.05,            # KF-50 x 2 in butt-weld stub, face to tube end (McMaster 4518K38, Lesker QF50-200-SST)
+    reducer_len=101.6,         # 3 x 2 in butt-weld concentric reducer, 316L, 0.065 wall (McMaster 5237K471)
+    body_od=76.2, body_wall=1.65,  # 3 in x 0.065 in 316 tube (OnlineMetals 4256)
+    body_len=250.0,            # KF face to the outside of the bottom; check against the measured room
     bottom_t=8.0,              # welded 316L disc (a flat floor and some heat sink)
-    liner_od=69.85, liner_wall=1.24,   # 2-3/4 in x 0.049 in 304 tube, stands on the puck
+    liner_od=69.85, liner_wall=1.65,   # 2-3/4 in x 0.065 in 304 tube (McMaster 11116N864; 0.049 not stocked)
     puck_d=70.0, puck_h=25.0, puck_chamfer=2.0,
 )
 
 # Option C: glass rebuild. Stock plates, tie rods and valve body; fused-quartz tube; FKM seals; a
 # 304 liner sleeve hung in the top bore that covers the valve seat and the glass rim.
 C = dict(
-    quartz_od=100.0, quartz_wall=5.0, quartz_len=110.0,
+    quartz_od=100.0, quartz_wall=4.0, quartz_len=110.0,       # MTI HQT100: 100 x 92 mm (5 mm wall is custom)
     sleeve_od=56.0, sleeve_wall=1.0, sleeve_len=75.0, sleeve_lip_od=64.0,
 )
 
