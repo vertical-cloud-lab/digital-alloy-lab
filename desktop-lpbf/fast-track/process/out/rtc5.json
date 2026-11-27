@@ -1,0 +1,23 @@
+{
+ "K_bits_per_mm": 6678.828025477707,
+ "axis": [
+  0.0,
+  -30.0
+ ],
+ "commands_min": 799,
+ "commands_max": 1101,
+ "list_capacity": 4000,
+ "mark_speed_bits_per_ms": 8348.535031847134,
+ "jump_speed_bits_per_ms": 46751.79617834395,
+ "laser_delays_bits": [
+  500,
+  1000
+ ],
+ "scanner_delays_bits": [
+  70,
+  55,
+  25
+ ],
+ "da_255W": 2611,
+ "da_150W": 1536
+}

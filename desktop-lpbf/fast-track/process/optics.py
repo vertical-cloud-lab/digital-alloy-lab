@@ -37,7 +37,16 @@ IMG = HERE / "img"
 LAM = 1.070e-3            # mm
 M2_MAX, M2_TYP = 1.1, 1.05
 P_LASER = 400.0
-F = 254.0                 # mm
+F = 254.4                 # mm, LINOS 4401-288-000-20 EFL (datasheet 2021.12-V4)
+LINOS = dict(EFL=254.4, BFL=299.1, WD=296.2, FFL=344.8, beam_design=20.0, m1=25.6, m2=23.0, m2_mech=18.5,
+             scan_angle_deg=17.7, field=157.0, spot_um_20mm=25.0, T=0.96, LIDT_J_cm2_9ns=10.0,
+             body=(119.8, 69.2), above_flange=20.5, ghosts_from_first_surface=(14.2, 19.6, 52.6, 71.3, 72.4, 142.8, 457.8))
+# heights above the focus (air, no plates): flange A at FFL; entrance face 20.5 above A; first surface m2 - m2_mech
+# = 4.5 mm inside the entrance face; M2 23.0 and M1 48.6 mm before the first surface; entrance pupil midway
+Z_FIRST = LINOS["FFL"] + LINOS["above_flange"] - (LINOS["m2"] - LINOS["m2_mech"])        # 360.8
+Z_EP = Z_FIRST + LINOS["m2"] + LINOS["m1"] / 2                                            # 396.6
+HEAD = dict(angle_galvo1=0.26, angle_galvo2=0.40, tracking_ms=0.50, aperture=25.0, housing=(206.9, 140.0, 180.0),
+            power_W=1500.0)
 N_FS = 1.4496             # fused silica at 1070 nm (Malitson 1965)
 BEAMS = (5.0, 7.5)        # mm, IPG standard collimated beams (1/e2)
 FIELD_R = 20.0            # Ø40 plate
@@ -51,6 +60,13 @@ SRC = {
     "window": "Edmund Optics 38-990: Ø50.80 x 9.53 mm fused silica, 1064 nm V-coat, clear aperture Ø45.72 (PR 266 "
               "analysis/optics/beam_path.py, read 2026-11-25)",
     "slide": "cover slide Ø50 x 1 mm (cad/ft_model.py); clear aperture assumed Ø45 (est.)",
+    "linos": "LINOS F-Theta-Ronar 4401-288-000-20 datasheet O-LM_DS-4401-288-000-20_2021.12-V4 (Excelitas, via "
+             "Digi-Key): EFL 254.4, BFL 299.1, WD 296.2, FFL 344.8, design beam 20 mm, mirrors m1 25.6 / m2 23.0 "
+             "(m2 mech 18.5), +-17.7 deg, field 157 x 157, T > 96 %, LIDT 10 J/cm2 at 9 ns, back-reflex foci 14.2, "
+             "19.6, 52.6, 71.3, 72.4, 142.8, 457.8 mm from the first surface; no telecentricity or CW rating given",
+    "head": "SCANLAB hurrySCAN 25 (scanlab.de/en/print-product/609): 25 mm aperture, +-0.26 rad (galvo 1) and +-0.40 "
+            "rad (galvo 2) optical, tracking error 0.50 ms, 1500 W at 1064 nm, housing 206.9 x 140 x 180 mm, 5.8 kg; "
+            "this unit's SCANcheck sticker is dated 2003 (lead, from the listing photos)",
     "silica": "Corning 7980: k 1.38 W/mK, dn/dT 9.6e-6 /K, alpha 0.52e-6 /K, nu 0.16, rho 2201, c 740 (as in PR 266 "
               "analysis/optics/thermal_lens.py)",
 }
@@ -147,8 +163,10 @@ def air_height(st, h):
 # Chief-ray angle on the bed u = k * theta, theta = r / f the optical scan angle. A thin lens with the stop (the scan
 # mirrors) d in front of it gives k = 1 - d / f; the exit pupil then sits f / k above the focus. The LINOS lens's
 # pupil distance sets k (README); the CAD's envelope pivots at the lens top, 366 mm, i.e. k = 0.69. Range used:
-K_RANGE = (0.69, 0.92)        # CAD pivot (366 mm) ... thin lens with the mirrors 20 mm in front of it
-K_MID = 0.85                  # thin lens, mirrors 38 mm in front (est.)
+# LINOS: entrance pupil 396.6 mm above the focus; the front principal plane lies somewhere between the first surface
+# (360.8) and the lens bottom (296.2), not given: k = 1 - (Z_EP - z_H) / f = 0.86 ... 0.60.
+K_RANGE = (0.60, 0.86)
+K_MID = 0.73                  # principal plane mid-lens (est.)
 
 
 def field_row(r, k, D=5.0):
@@ -226,7 +244,7 @@ def layer_irradiance_map(st, D, k, axis, npz, layer=0, h=None, pix=0.1, half=26.
     tm = SPG.Timing(**meta["timing"])
     a, b = ptr[layer], ptr[layer + 1]
     lt = SPG.layer_time(segs[a:b], kinds[a:b], pidx[a:b], parts, psets, tm)
-    period = lt["t_list"] + SPG.recoat_time(SPG.Recoat(), SPG.X_LSM100B, psets["cube"].layer)["t_recoat"]
+    period = lt["t_list"] + SPG.recoat_time(SPG.Recoat(), SPG.X_LSM100B, next(iter(psets.values())).layer)["t_recoat"]
     h = st["slide"][0] if h is None else h
     ha = air_height(st, h)
     w = w_at(D, ha)
@@ -359,14 +377,14 @@ def scanned_lens(st, element, a_tot, D=5.0, k=K_MID, axis=(0.0, 0.0), npz=None, 
     from scipy.ndimage import map_coordinates  # noqa: F401
     a, b = st["slide"] if element == "slide" else st["window"]
     t = (b - a) * 1e-3
-    Rrim = (20.0 if element == "slide" else 22.0)
+    Rrim = (HOLDER_R if element == "slide" else 22.0)
     m = layer_irradiance_map(st, D, k, axis, npz, h=a)
     I = m["I"] * 1e4 * a_tot                                     # absorbed W/m2, layer-averaged
     edges = m["edges"]
     pix = (edges[1] - edges[0]) * 1e-3
     xc = (edges[:-1] + edges[1:]) / 2
     X, Y = np.meshgrid(xc, xc, indexing="ij")
-    cen = chief_xy(0.0, 0.0, air_height(st, a), k, axis)        # the holder is centred on the footprint
+    cen = (0.0, STACK_Y[st["state"]]) if axis != (0.0, 0.0) else (0.0, 0.0)   # the recommended stack centre
     inside = np.hypot(X - cen[0], Y - cen[1]) < Rrim
     n = inside.sum()
     idx = -np.ones(X.shape, int)
@@ -481,6 +499,31 @@ def main():
                        for D in BEAMS for k in K_RANGE + (K_MID,) for r in (0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 7.0, 10.0)]
     res["offset"] = {f"k {k}": {f"delta {dm} mm": offset_for(dm, k) for dm in (7.0, 10.0, 15.0)} for k in K_RANGE + (K_MID,)}
     res["melt_curvature"] = [dict(Rc_mm=Rc, eta=melt_curvature_coupling(Rc, 5.0)) for Rc in (0.1, 0.3, 1.0, 3.0, 10.0, 100.0)]
+    # the lens's own ghosts: where each back-reflex focus sits against the mirrors (M2 23.0, M1 48.6 mm before the
+    # first surface); spot on the mirror for a 5 mm beam, geometric, and its irradiance per watt of ghost power
+    gh = []
+    for g in LINOS["ghosts_from_first_surface"]:
+        for mname, x in (("M2", LINOS["m2"]), ("M1", LINOS["m2"] + LINOS["m1"])):
+            dmm = max(5.0 * abs(g - x) / g, 2 * LAM * g / (math.pi * 2.5) * 2)
+            gh.append(dict(ghost_mm=g, mirror=mname, mirror_mm=x, gap_mm=g - x, spot_d_mm=dmm,
+                           W_cm2_per_W=1.0 / (math.pi * (dmm / 20) ** 2)))
+    res["lens_ghosts"] = gh
+    res["lens_ghost_power_W"] = P_LASER * R_AR
+    # the offset field and the optional head tilt
+    s_off = abs(AXIS[1])
+    off = dict(s_mm=s_off, r_min=s_off - FIELD_R, r_max=s_off + FIELD_R, theta_max_rad=(s_off + FIELD_R) / F,
+               head_limit_rad=HEAD["angle_galvo1"], lens_limit_rad=math.radians(LINOS["scan_angle_deg"]))
+    for k in K_RANGE:
+        off[f"u_deg_k{k}"] = [math.degrees(k * r / F) for r in (s_off - FIELD_R, s_off, s_off + FIELD_R)]
+        off[f"delta_mm_k{k}"] = [2 * k * r for r in (s_off - FIELD_R, s_off, s_off + FIELD_R)]
+    for tilt in (3.0, 5.0, 10.0):
+        dz = FIELD_R * math.tan(math.radians(tilt))
+        off[f"tilt_{tilt:g}"] = dict(edge_defocus_mm=dz, spot_growth_pct=100 * (math.sqrt(1 + (dz / z_rayleigh(5.0)) ** 2) - 1),
+                                     u_min_deg=[math.degrees(k * (s_off - FIELD_R) / F) + tilt for k in K_RANGE])
+    res["offset"] = off
+    res["lens_mount"] = dict(flange_above_bed_mm=LINOS["FFL"] + plates_focus_shift(), lens_bottom_above_bed_mm=LINOS["WD"] + plates_focus_shift(),
+                             entrance_face_mm=LINOS["FFL"] + LINOS["above_flange"] + plates_focus_shift(),
+                             first_surface_mm=Z_FIRST + plates_focus_shift(), EP_mm=Z_EP + plates_focus_shift())
     npz = OUT / "build_first_coupons_15mm.npz"
     res["thermal_scanned"] = []
     keep = {}
@@ -496,6 +539,8 @@ def main():
 
 
 AXIS = (0.0, -30.0)       # recommended lens axis on the bed: 30 mm in front of the plate centre (README, G)
+STACK_Y = {"box": -11.0, "cube": -21.0}   # recommended window-stack centre (y, mm) with the axis offset
+HOLDER_R = 22.0           # recommended cover-slide holder opening: Ø44 (drawn Ø40)
 
 
 def figures(res, keep):
@@ -521,11 +566,11 @@ def figures(res, keep):
     a1.text(0, 0 - offset_for(10.0, K_RANGE[0])[1] - 1.8, "specular return\nreaches the collimator", ha="center", va="top",
             fontsize=7.5, color=INK)
     a1.text(0, 21.5, "Ø40 plate, Ø30 build area, M2 screw heads", ha="center", fontsize=8, color=INK)
-    a1.text(0, -30 - offset_for(10.0, K_RANGE[0])[1] - 1.5, f"r < {offset_for(10.0, K_RANGE[0])[1]:.1f} mm", ha="center",
-            va="top", fontsize=7.5, color=INK)
+    a1.text(offset_for(10.0, K_RANGE[0])[1] + 1.0, -30, f"r < {offset_for(10.0, K_RANGE[0])[1]:.1f} mm", ha="left",
+            va="center", fontsize=7.5, color=INK)
     a1.set_xlim(-27, 27); a1.set_ylim(-42, 25)
     a1.set_xlabel("x on the bed (mm)  (+X recoat)"); a1.set_ylabel("y on the bed (mm)  (gas flows +Y)")
-    a1.legend(loc="lower left", fontsize=7.5, frameon=False)
+    a1.legend(loc="upper left", bbox_to_anchor=(0.0, -0.12), fontsize=7.5, frameon=False, ncol=1)
     a1.grid(color=GRID, lw=0.6)
     a1.set_title("Where the lens axis meets the bed", fontsize=10, color=INK, loc="left")
     r = np.linspace(0.0, 52.0, 400)
@@ -534,16 +579,16 @@ def figures(res, keep):
         a2.semilogy(r, W, color=col, lw=2, ls=ls, label=f"telecentricity k = {k} (u = k·r/f)")
     a2.axhline(1.0, color=INK2, lw=0.8, ls=":")
     a2.text(51, 1.25, "1 W", ha="right", fontsize=7.5, color=INK2)
-    for (lo, hi, y, lab) in ((0, 20, 3e2 * 2.2, "plate, axis centred: r 0-20 mm"), (10, 50, 3e2 * 5, "plate, axis offset 30 mm: r 10-50 mm")):
+    for (lo, hi, y, lab) in ((0, 20, 1e3, "plate, axis centred: r 0-20 mm"), (10, 50, 1e-4, "plate, axis offset 30 mm: r 10-50 mm")):
         a2.plot([lo, hi], [y, y], color=INK, lw=3, solid_capstyle="butt")
-        a2.text((lo + hi) / 2, y * 1.6, lab, ha="center", fontsize=7.5, color=INK)
+        a2.text(hi + 0.8, y, lab, ha="left" if hi < 40 else "right", va="center" if hi < 40 else "bottom", fontsize=7.5, color=INK)
     a2.set_ylim(1e-6, 1e4)
     a2.set_xlabel("distance r of the scanned point from the lens axis (mm)")
     a2.set_ylabel("W into the fibre core (flat Al at focus, R 0.9, 400 W)")
     a2.grid(color=GRID, lw=0.6, which="major")
     a2.legend(loc="lower left", fontsize=7.5, frameon=False)
     a2.set_title("Specular return into the fibre core (5 mm beam)", fontsize=10, color=INK, loc="left")
-    fig.tight_layout()
+    fig.tight_layout(rect=(0, 0.06, 1, 1))
     fig.savefig(IMG / "scan-field.png", dpi=150)
     plt.close(fig)
     # ---- irradiance on the cover slide during one layer (box, offset axis) ----
@@ -553,29 +598,30 @@ def figures(res, keep):
     ext = (e[0], e[-1], e[0], e[-1])
     im = b1.imshow(rr["I"].T, origin="lower", extent=ext, cmap=matplotlib.colors.LinearSegmentedColormap.from_list(
         "b", ["#ffffff", "#cce3fd", "#84b9f3", "#338ced", "#1b64be", "#0e3d7e"]))
-    cen = chief_xy(0.0, 0.0, air_height(STACKS["box"], STACKS["box"]["slide"][0]), K_MID, AXIS)
-    b1.add_patch(Circle(cen, 20.0, fc="none", ec=INK, lw=1.0, ls="--"))
-    b1.text(cen[0], cen[1] + 20.8, "holder opening Ø40, centred on the footprint", ha="center", fontsize=7.5, color=INK)
+    cen = (0.0, STACK_Y["box"])
+    b1.add_patch(Circle(cen, HOLDER_R, fc="none", ec=INK, lw=1.0, ls="--"))
+    b1.text(cen[0], cen[1] + HOLDER_R + 0.8, "holder opening Ø44 at y = -11 (recommended)", ha="center", fontsize=7.5, color=INK)
     b1.plot(*AXIS, marker="+", ms=10, mew=2, color=C1)
     b1.text(AXIS[0] + 1.5, AXIS[1] - 1.5, "lens axis", fontsize=7.5, color=INK)
-    b1.set_xlim(-26, 26); b1.set_ylim(-36, 21)
+    b1.set_xlim(-26, 26); b1.set_ylim(-36, 14)
     cb = fig.colorbar(im, ax=b1, shrink=0.85)
     cb.set_label("W/cm², averaged over the layer period", color=INK)
     b1.set_xlabel("x (mm)"); b1.set_ylabel("y (mm)")
-    b1.set_title(f"Cover slide (box, {STACKS['box']['slide'][0]:.0f} mm up), layer 1; instantaneous peak "
-                 f"{rr['I'].max() and 2 * P_LASER / (math.pi * (rr['w'] / 10) ** 2) / 1e3:.1f} kW/cm²", fontsize=9, color=INK, loc="left")
+    b1.set_title(f"Cover slide in the box ({STACKS['box']['slide'][0]:.0f} mm up), layer 1, axis offset 30 mm.\n"
+                 f"Instantaneous peak at 400 W: {2 * P_LASER / (math.pi * (rr['w'] / 10) ** 2) / 1e3:.1f} kW/cm²",
+                 fontsize=9, color=INK, loc="left")
     T = rr["T"]
     im2 = b2.imshow(T.T, origin="lower", extent=ext, cmap=matplotlib.colors.LinearSegmentedColormap.from_list(
         "o", ["#ffffff", "#fde3d3", "#f8b58e", "#f47230", "#c4541c", "#7d3410"]))
-    b2.add_patch(Circle(cen, 20.0, fc="none", ec=INK, lw=1.0, ls="--"))
-    b2.set_xlim(-26, 26); b2.set_ylim(-36, 21)
+    b2.add_patch(Circle(cen, HOLDER_R, fc="none", ec=INK, lw=1.0, ls="--"))
+    b2.set_xlim(-26, 26); b2.set_ylim(-36, 14)
     cb2 = fig.colorbar(im2, ax=b2, shrink=0.85)
     cb2.set_label("temperature rise (K)", color=INK)
     b2.set_xlabel("x (mm)")
     wz = [p for p in rr["parts"]]
     worst = max(wz, key=lambda p: abs(p["focus_shift_mm"]))
-    b2.set_title(f"Its temperature with a 1 % sooted slide: focus moves {worst['focus_shift_mm']:.1f} mm "
-                 f"({worst['x_zR']:.1f} z_R) at part {worst['part']}", fontsize=9, color=INK, loc="left")
+    b2.set_title(f"Its temperature rise with 1 % soot (layer-averaged):\nfocus moves {worst['focus_shift_mm']:.2f} mm "
+                 f"({worst['x_zR']:.2f} z_R) at part {worst['part']}", fontsize=9, color=INK, loc="left")
     fig.tight_layout()
     fig.savefig(IMG / "window-irradiance.png", dpi=150)
     plt.close(fig)

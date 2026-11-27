@@ -68,6 +68,7 @@
    "hatch_offset": 0.06,
    "layer": 0.03,
    "rot_deg": 67.0,
+   "exclude_deg": 30.0,
    "note": "recommended starting set"
   },
   "wide": {
@@ -81,6 +82,7 @@
    "hatch_offset": 0.06,
    "layer": 0.03,
    "rot_deg": 67.0,
+   "exclude_deg": 30.0,
    "note": "hatch at Tang 0.60 (200 C)"
   },
   "slow": {
@@ -94,6 +96,7 @@
    "hatch_offset": 0.06,
    "layer": 0.03,
    "rot_deg": 67.0,
+   "exclude_deg": 30.0,
    "note": "20 % slower, King 24.7"
   }
  },
@@ -194,16 +197,16 @@
   }
  },
  "tracking_error_sensitivity": {
-  "list_s_mean_0p5ms": 3.3856728200000163,
-  "list_s_mean_0p7ms": 3.5547971600000055
+  "list_s_mean_0p5ms": 3.3961821600000204,
+  "list_s_mean_0p7ms": 3.568928160000009
  },
  "npz": {
   "path": "build_first_coupons_15mm.npz",
-  "kB": 670.779,
-  "vectors": 246612,
+  "kB": 750.089,
+  "vectors": 252486,
   "layers": 500
  },
- "energy_J_mean": 745.6169175000001,
- "mean_W_mean": 115.55420373761761,
- "period_s_mean": 6.452629255889385
+ "energy_J_mean": 746.3666022000001,
+ "mean_W_mean": 115.48216963811659,
+ "period_s_mean": 6.463138595889392
 }
