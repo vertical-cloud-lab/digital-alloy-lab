@@ -1,10 +1,10 @@
 %
-O3832 (B_bottom_disc, setup 2 (flipped))
-(316L; blank r 0.00-41.27 mm; Z0 = the bottom face (part flipped))
+O3832 (B_bottom_disc, setup 2 [flipped])
+(316L; blank r 0.00-41.27 mm; Z0 = the bottom face [part flipped])
 G21 G18 G40 G80 G99
 G50 S2000
 G28 U0. W0.
-T0202 (VNMG 331 (0.4 mm nose), 93 deg, finish OD/face/chamfers)
+T0202 (VNMG 331 [0.4 mm nose], 93 deg, finish OD/face/chamfers)
 G96 S120 M03
 M08
 G00 X88.550 Z1.000

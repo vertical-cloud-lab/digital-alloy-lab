@@ -1,0 +1,76 @@
+{
+ "part": "B weld-alignment fixture (6061-T6)",
+ "stock": "2-1/2 x 4-1/2 in 6061-T6 flat bar, sawn to 240",
+ "axis_height_above_top_mm": 17.882,
+ "shim_mm": 0.635,
+ "cad_volume_cm3": 1292.2,
+ "mass_kg": 3.49,
+ "setup2": {
+  "camotics": {
+   "seconds": 22.2,
+   "log_tail": [
+    "Time: 10.95 secs Triangles: 948980 Triangles/sec: 86685.50",
+    "Reducing mesh",
+    "Time: 7.74 secs Triangles: 22705 Reduction: 97.61%"
+   ],
+   "not_implemented": []
+  },
+  "sections": {
+   "x=60": {
+    "sim_area": 5540.8,
+    "cad_area": 5541.0,
+    "gouge_mm2": 0.48,
+    "leftover_mm2": 0.28,
+    "gouge_depth": 0.002,
+    "leftover_depth": 0.002
+   },
+   "x=120.65 (seam slot)": {
+    "sim_area": 3657.9,
+    "cad_area": 3658.0,
+    "gouge_mm2": 0.55,
+    "leftover_mm2": 0.42,
+    "gouge_depth": 0.151,
+    "leftover_depth": 0.002
+   },
+   "x=150 (holes)": {
+    "sim_area": 5380.0,
+    "cad_area": 5381.1,
+    "gouge_mm2": 1.29,
+    "leftover_mm2": 0.27,
+    "gouge_depth": 0.251,
+    "leftover_depth": 0.002
+   },
+   "x=225 (holes)": {
+    "sim_area": 5380.1,
+    "cad_area": 5381.1,
+    "gouge_mm2": 1.23,
+    "leftover_mm2": 0.33,
+    "gouge_depth": 0.251,
+    "leftover_depth": 0.002
+   },
+   "z=-5": {
+    "sim_area": 12144.0,
+    "cad_area": 12144.3,
+    "gouge_mm2": 1.28,
+    "leftover_mm2": 0.95,
+    "gouge_depth": 0.003,
+    "leftover_depth": 0.004
+   }
+  },
+  "sim_volume_cm3": 1294.7,
+  "rapids_into_part": 0
+ },
+ "cycle_time_min": {
+  "fixture_op1": 1.0,
+  "fixture_op2": 33.9
+ },
+ "tools": {
+  "1": "50 mm face mill, 3 inserts (APKT 1604)",
+  "2": "12 mm 3-flute carbide end mill for Al, 36 mm flute",
+  "3": "12.7 mm (1/2 in) 90 deg carbide chamfer mill, 4 flutes",
+  "4": "6 mm 2-flute carbide end mill, 19 mm flute",
+  "5": "10 mm 90 deg spot drill",
+  "6": "5.0 mm carbide jobber drill (M6 tap drill)",
+  "7": "M6 x 1.0 spiral-point tap (simulated at its 5.0 minor dia)"
+ }
+}

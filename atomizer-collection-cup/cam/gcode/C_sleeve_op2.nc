@@ -1,10 +1,10 @@
 %
-O3302 (C_sleeve, setup 2 (flipped))
-(304; blank r 0.00-34.92 mm; Z0 = the bottom face (part flipped))
+O3302 (C_sleeve, setup 2 [flipped])
+(304; blank r 0.00-34.92 mm; Z0 = the bottom face [part flipped])
 G21 G18 G40 G80 G99
 G50 S2000
 G28 U0. W0.
-T0202 (VNMG 331 (0.4 mm nose), 93 deg, finish OD/face/chamfers)
+T0202 (VNMG 331 [0.4 mm nose], 93 deg, finish OD/face/chamfers)
 G96 S120 M03
 M08
 G00 X75.850 Z1.000

@@ -4,7 +4,7 @@ O2978 (B_bottom_disc, setup 1)
 G21 G18 G40 G80 G99
 G50 S2000
 G28 U0. W0.
-T0101 (CNMG 432 (0.8 mm nose), 95 deg, rough OD/face)
+T0101 (CNMG 432 [0.8 mm nose], 95 deg, rough OD/face)
 G96 S90 M03
 M08
 G00 X88.550 Z1.050
@@ -15,7 +15,7 @@ G00 X88.550 Z2.050
 G00 X88.550 Z5.000
 G00 X88.550 Z5.000
 G28 U0. W0.
-T0202 (VNMG 331 (0.4 mm nose), 93 deg, finish OD/face/chamfers)
+T0202 (VNMG 331 [0.4 mm nose], 93 deg, finish OD/face/chamfers)
 G96 S120 M03
 M08
 G00 X88.550 Z0.400
@@ -25,7 +25,7 @@ G00 X88.550 Z2.000
 G00 X88.550 Z5.000
 G00 X88.550 Z5.000
 G28 U0. W0.
-T0101 (CNMG 432 (0.8 mm nose), 95 deg, rough OD/face)
+T0101 (CNMG 432 [0.8 mm nose], 95 deg, rough OD/face)
 G96 S90 M03
 M08
 G00 X88.550 Z2.000
@@ -42,7 +42,7 @@ G00 X88.550 Z0.200
 G00 X88.550 Z5.000
 G00 X88.550 Z5.000
 G28 U0. W0.
-T0202 (VNMG 331 (0.4 mm nose), 93 deg, finish OD/face/chamfers)
+T0202 (VNMG 331 [0.4 mm nose], 93 deg, finish OD/face/chamfers)
 G96 S120 M03
 M08
 G00 X74.200 Z2.000
@@ -133,7 +133,7 @@ G00 X88.550 Z-7.600
 G00 X88.550 Z5.000
 G00 X88.550 Z5.000
 G28 U0. W0.
-T0404 (parting blade 3 mm (GTN-3))
+T0404 (parting blade 3 mm [GTN-3])
 G96 S60 M03
 M08
 G00 X88.550 Z-9.800

@@ -4,7 +4,7 @@ O2448 (C_sleeve, setup 1)
 G21 G18 G40 G80 G99
 G50 S2000
 G28 U0. W0.
-T0101 (CNMG 432 (0.8 mm nose), 95 deg, rough OD/face)
+T0101 (CNMG 432 [0.8 mm nose], 95 deg, rough OD/face)
 G96 S90 M03
 M08
 G00 X75.850 Z1.050
@@ -15,7 +15,7 @@ G00 X75.850 Z2.050
 G00 X75.850 Z5.000
 G00 X75.850 Z5.000
 G28 U0. W0.
-T0202 (VNMG 331 (0.4 mm nose), 93 deg, finish OD/face/chamfers)
+T0202 (VNMG 331 [0.4 mm nose], 93 deg, finish OD/face/chamfers)
 G96 S120 M03
 M08
 G00 X75.850 Z0.400
@@ -25,7 +25,7 @@ G00 X75.850 Z2.000
 G00 X75.850 Z5.000
 G00 X75.850 Z5.000
 G28 U0. W0.
-T0505 (25 mm drill (spot first), centre)
+T0505 (25 mm drill [spot first], centre)
 G97 S300 M03
 M08
 (drill Ø25.0 through, 5 mm pecks; spot drill first)
@@ -66,7 +66,7 @@ G00 X75.850 Z3.000
 G00 X75.850 Z5.000
 G00 X75.850 Z5.000
 G28 U0. W0.
-T0303 (boring bar 16 mm, CCMT 21.51 (0.4 mm nose))
+T0303 (boring bar 16 mm, CCMT 21.51 [0.4 mm nose])
 G96 S80 M03
 M08
 G00 X25.000 Z2.000
@@ -903,7 +903,7 @@ G00 X2.000 Z2.000
 G00 X2.000 Z5.000
 G00 X75.850 Z5.000
 G28 U0. W0.
-T0101 (CNMG 432 (0.8 mm nose), 95 deg, rough OD/face)
+T0101 (CNMG 432 [0.8 mm nose], 95 deg, rough OD/face)
 G96 S90 M03
 M08
 G00 X75.850 Z2.000
@@ -930,7 +930,7 @@ G00 X75.850 Z-70.300
 G00 X75.850 Z5.000
 G00 X75.850 Z5.000
 G28 U0. W0.
-T0202 (VNMG 331 (0.4 mm nose), 93 deg, finish OD/face/chamfers)
+T0202 (VNMG 331 [0.4 mm nose], 93 deg, finish OD/face/chamfers)
 G96 S120 M03
 M08
 G00 X55.400 Z2.000
@@ -1693,7 +1693,7 @@ G00 X75.850 Z-74.800
 G00 X75.850 Z5.000
 G00 X75.850 Z5.000
 G28 U0. W0.
-T0404 (parting blade 3 mm (GTN-3))
+T0404 (parting blade 3 mm [GTN-3])
 G96 S60 M03
 M08
 G00 X75.850 Z-76.800

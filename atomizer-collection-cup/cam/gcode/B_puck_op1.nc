@@ -4,7 +4,7 @@ O2238 (B_puck, setup 1)
 G21 G18 G40 G80 G99
 G50 S2000
 G28 U0. W0.
-T0101 (CNMG 432 (0.8 mm nose), 95 deg, rough OD/face)
+T0101 (CNMG 432 [0.8 mm nose], 95 deg, rough OD/face)
 G96 S90 M03
 M08
 G00 X82.200 Z1.050
@@ -15,7 +15,7 @@ G00 X82.200 Z2.050
 G00 X82.200 Z5.000
 G00 X82.200 Z5.000
 G28 U0. W0.
-T0202 (VNMG 331 (0.4 mm nose), 93 deg, finish OD/face/chamfers)
+T0202 (VNMG 331 [0.4 mm nose], 93 deg, finish OD/face/chamfers)
 G96 S120 M03
 M08
 G00 X82.200 Z0.400
@@ -25,7 +25,7 @@ G00 X82.200 Z2.000
 G00 X82.200 Z5.000
 G00 X82.200 Z5.000
 G28 U0. W0.
-T0101 (CNMG 432 (0.8 mm nose), 95 deg, rough OD/face)
+T0101 (CNMG 432 [0.8 mm nose], 95 deg, rough OD/face)
 G96 S90 M03
 M08
 G00 X82.200 Z2.000
@@ -47,7 +47,7 @@ G00 X82.200 Z0.800
 G00 X82.200 Z5.000
 G00 X82.200 Z5.000
 G28 U0. W0.
-T0202 (VNMG 331 (0.4 mm nose), 93 deg, finish OD/face/chamfers)
+T0202 (VNMG 331 [0.4 mm nose], 93 deg, finish OD/face/chamfers)
 G96 S120 M03
 M08
 G00 X66.000 Z2.000
@@ -293,7 +293,7 @@ G00 X82.200 Z-23.100
 G00 X82.200 Z5.000
 G00 X82.200 Z5.000
 G28 U0. W0.
-T0404 (parting blade 3 mm (GTN-3))
+T0404 (parting blade 3 mm [GTN-3])
 G96 S60 M03
 M08
 G00 X82.200 Z-26.800

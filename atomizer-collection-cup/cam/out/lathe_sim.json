@@ -40,7 +40,7 @@
     "leftover_max_mm": 0.05,
     "rapids_through_stock": 0,
     "crashes": [],
-    "cut_time_min": 3.4,
+    "cut_time_min": 3.2,
     "programs": [
       "setup 1",
       "setup 2 (flipped)"
@@ -56,12 +56,12 @@
     "leftover_max_mm": 0.0,
     "rapids_through_stock": 0,
     "crashes": [],
-    "cut_time_min": 1.8,
+    "cut_time_min": 1.9,
     "programs": [
       "setup 1",
       "setup 2 (flipped)"
     ],
-    "note": "2-3/4 in. x 0.049 in. 304 tube, sawn to 136 mm and faced to 132.8 mm; held on its OD in a collet or soft jaws with 12 mm out. Deburr the bore by hand."
+    "note": "2-3/4 in. x 0.049 in. 304 tube, sawn to 104 mm and faced to 101.2 mm; held on its OD in a collet or soft jaws with 12 mm out. Deburr the bore by hand."
   },
   {
     "part": "B_body_tube",
@@ -77,7 +77,7 @@
       "setup 1",
       "setup 2 (flipped)"
     ],
-    "note": "3 in. x 0.065 in. 316L tube, sawn to 156 mm and faced square to 153.0 mm (weld ends square and burr-free, no gap). Spider or plug in the bore against chatter."
+    "note": "3 in. x 0.065 in. 316L tube, sawn to 124 mm and faced square to 121.3 mm (weld ends square and burr-free, no gap). Spider or plug in the bore against chatter."
   },
   {
     "part": "C_sleeve",
@@ -104,7 +104,7 @@
     "leftover_max_mm": 0.15,
     "rapids_through_stock": 0,
     "crashes": [],
-    "cut_time_min": 39.4,
+    "cut_time_min": 37.0,
     "programs": [
       "setup 1",
       "setup 2 (flipped)"

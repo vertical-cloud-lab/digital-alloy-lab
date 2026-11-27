@@ -169,6 +169,18 @@ def nose_path(section, rn, z_from, z_to, outer=True, step=0.1):
 
 
 # ---------------------------------------------------------------------------------------- programs
+def flat_comments(line):
+    """G-code comments do not nest: a "(" inside a comment ends it at the first ")" and the rest of the text is
+    read as words. Keep the outer parentheses and turn any inner ones into brackets (found by the milling
+    check in mill_cam.py, where a nested comment made CAMotics skip a tool change)."""
+    i = line.find("(")
+    j = line.rfind(")")
+    if i < 0 or j <= i:
+        return line
+    inner = line[i + 1:j].replace("(", "[").replace(")", "]")
+    return line[:i + 1] + inner + line[j:]
+
+
 class Prog:
     def __init__(self, part, setup, flip=False):
         self.part, self.setup, self.flip = part, setup, flip
@@ -549,7 +561,7 @@ def main():
         progs = gen(part)
         for prog in progs:
             tag = "op1" if not prog.flip else "op2"
-            (GC / f"{part.name}_{tag}.nc").write_text("\n".join(prog.lines) + "\n")
+            (GC / f"{part.name}_{tag}.nc").write_text("\n".join(flat_comments(ln) for ln in prog.lines) + "\n")
         res, data = simulate(part, progs)
         res["note"] = part.note
         results.append(res)

@@ -4,7 +4,7 @@ O2760 (B_body_tube, setup 1)
 G21 G18 G40 G80 G99
 G50 S2000
 G28 U0. W0.
-T0101 (CNMG 432 (0.8 mm nose), 95 deg, rough OD/face)
+T0101 (CNMG 432 [0.8 mm nose], 95 deg, rough OD/face)
 G96 S90 M03
 M08
 G00 X82.200 Z1.300
@@ -19,7 +19,7 @@ G00 X82.200 Z2.050
 G00 X82.200 Z5.000
 G00 X82.200 Z5.000
 G28 U0. W0.
-T0202 (VNMG 331 (0.4 mm nose), 93 deg, finish OD/face/chamfers)
+T0202 (VNMG 331 [0.4 mm nose], 93 deg, finish OD/face/chamfers)
 G96 S120 M03
 M08
 G00 X82.200 Z0.400
