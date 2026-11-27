@@ -99,6 +99,48 @@ def load_cooling():
     return json.load(open(OUT / "cooling.json"))
 
 
+# the process base plate's cut-outs under the chamber (lpbf_low.build, base plates: the Z stage's window, the slot to the front edge
+# for the module's rod end, the folded Z servo's window), rounded corners ignored. The guard's panels stand on this plate, so these
+# are openings in the guard's floor to the 37 mm gap between the plate and the tray, which is open to the Shuttle all round
+FLOOR_WINDOW = [(-45.0, 100.0, -32.0, 114.0), (-56.0, 56.0, -265.0, 0.0), (-57.0, 34.0, 96.0, 166.0)]
+K_WINDOW = 2.5                                                  # entry from the gap under the plate + discharge into the guard (estimate)
+
+
+def network(A_window=0.0):
+    """the guard's flow as a network with cooling.py's resistances and fan curves: the exhaust fans against the exhaust trap and
+    plenum and the guard's suction s; in parallel from the Shuttle into the guard, the inlet trap's main part (filter + trap), the
+    hood path (filter + trap + duct, with the 60 mm fan helping) and, if A_window > 0, the base plate's open window. cooling.py's
+    hood_flow() takes the hood fan against filter, trap and duct only, with the guard at the Shuttle's pressure"""
+    from scipy.optimize import brentq
+    sys.path.insert(0, str(HERE))
+    import cooling as C
+    A_in, A_ex = MC.opening_area_m2("inlet"), MC.opening_area_m2("exhaust")
+    A_part = (MC.PLENUM["x"][1] - MC.PLENUM["x"][0]) * (MC.INLET["z"][1] - MC.INLET["z"][0]) * 1e-6
+    A_main = A_in - A_part
+    A_d1 = (MC.DUCT1["x"][1] - MC.DUCT1["x"][0] - 2) * (MC.DUCT1["z"][1] - MC.DUCT1["z"][0] - 2) * 1e-6
+    K_duct = 1.2 + 1.2 + 1.5 + 1.0 + 1.0
+    hf = np.array([(0, 52.0), (12, 33.0), (20, 16.0), (29, 15.0), (34, 8.0), (40, 0.0)])
+
+    def q_main(s):
+        return brentq(lambda q: C.dp_filter(q, A_main) + C.dp_trap(q, A_main) - s, 0.0, 2000.0) if s > 0 else 0.0
+
+    def q_hood(s):
+        f = lambda q: C.dp_filter(q, A_part) + C.dp_trap(q, A_part) + K_duct * 0.5 * C.RHO_AIR * (q / 3600 / A_d1) ** 2 \
+            - float(np.interp(q, hf[:, 0], hf[:, 1], right=-10 * (q - 40))) - s
+        return brentq(f, 0.0, 500.0)
+
+    def q_win(s):
+        return 3600 * A_window * math.sqrt(2 * max(s, 0) / (K_WINDOW * C.RHO_AIR)) if A_window > 0 else 0.0
+
+    def resid(s):
+        q = q_main(s) + q_hood(s) + q_win(s)
+        return C.fan_dp("AFB1224SH", q, 2) - (s + C.dp_trap(q, A_ex) + C.dp_exhaust_extra(q, 2))
+    s = brentq(resid, 1e-4, 100.0)
+    qm, qh, qw = q_main(s), q_hood(s), q_win(s)
+    return dict(guard_suction_Pa=round(s, 2), q_exhaust_m3h=round(qm + qh + qw, 1), q_inlet_main_m3h=round(qm, 1), q_hood_m3h=round(qh, 1),
+                q_window_m3h=round(qw, 1), A_window_m2=round(A_window, 4), K_window=K_WINDOW)
+
+
 def heat_inputs(load, T_s, cj):
     """W per patch, from cooling.py's SOURCES (cooling.json 'sources'), and the legs' share to the base plate"""
     i = "W_typical" if load == "typical" else "W_worst"
@@ -465,7 +507,7 @@ def write_polymesh(case, X, Y, Z, lab, names, baffles, special):
     with open(pm / "boundary", "w") as f:
         f.write(hdr("polyBoundaryMesh", "boundary") + f"{len(patches)}\n(\n")
         for p, o, q in patches:
-            typ = "patch" if p in ("inlet", "hoodIn", "exhaust") else "wall"
+            typ = "patch" if p in ("inlet", "hoodIn", "floorIn", "exhaust") else "wall"
             f.write(f"    {p}\n    {{\n        type {typ};\n        nFaces {len(o)};\n        startFace {start};\n    }}\n")
             start += len(o)
         f.write(")\n")
@@ -521,6 +563,9 @@ def write_case(args):
             p[inr(x, *fo) & inr(y, H["y"][0] + 1, H["y"][1] - 1) & (np.abs(z - H["z"][1]) < 1e-6)] = "hoodIn"
         if nm == "panelF":
             p[inr(x, win[0], win[1]) & inr(z, win[2], win[3])] = "window"
+        if nm == "floor" and args.floor_open:
+            for (wx0, wx1, wy0, wy1) in FLOOR_WINDOW:
+                p[inr(x, wx0, wx1) & inr(y, wy0, wy1)] = "floorIn"
         if nm in ("trapIn", "trapEx", "duct", "frame", "cage"):
             p[p == nm] = "walls" if nm != "cage" else "cage"
         return p
@@ -533,7 +578,11 @@ def write_case(args):
     Q, legs, Tg_wm = heat_inputs(args.load, T_s, cj)
     q_ex = args.q_exhaust if args.q_exhaust else cj["operating_point"]["q_m3h"]
     q_hood = args.q_hood if args.q_hood is not None else cj["hood"]["q_m3h"]
-    q_in = q_ex - q_hood
+    q_win, net = 0.0, None
+    if args.floor_open:                                         # flows from the network with the window's free area on this grid
+        net = network(mesh["area_m2"]["floorIn"])
+        q_ex, q_hood, q_win = net["q_exhaust_m3h"], net["q_hood_m3h"], net["q_window_m3h"]
+    q_in = q_ex - q_hood - q_win
     A_in, A_hood = mesh["area_m2"]["inlet"], mesh["area_m2"]["hoodIn"]
     vn = q_in / 3600 / A_in
     ang = math.radians(args.inlet_angle)
@@ -547,7 +596,7 @@ def write_case(args):
     heated = {p: Q[p] for p in Q if p in mesh["patches"]}
     missing = [p for p in Q if p not in mesh["patches"]]
     assert not missing, f"heated parts the grid lost: {missing}"
-    walls_adiabatic = [p for p in mesh["patches"] if p not in heated and p not in ("inlet", "hoodIn", "exhaust", "chamber", "floor", "window")
+    walls_adiabatic = [p for p in mesh["patches"] if p not in heated and p not in ("inlet", "hoodIn", "floorIn", "exhaust", "chamber", "floor", "window")
                        and not p.startswith("panel")]
     h_out = dict(panelL=2.6, panelR=2.6, panelF=2.6, panelB=2.6, panelTop=3.3, window=6.5)
 
@@ -555,6 +604,8 @@ def write_case(args):
         s = []
         s.append(f"    inlet {{ type fixedValue; value uniform {Tk(T_s):.3f}; }}")
         s.append(f"    hoodIn {{ type fixedValue; value uniform {Tk(T_s + args.hood_pickup):.3f}; }}")
+        if q_win:
+            s.append(f"    floorIn {{ type fixedValue; value uniform {Tk(T_s):.3f}; }}")
         s.append(f"    exhaust {{ type inletOutlet; inletValue uniform {Tk(T_s):.3f}; value uniform {Tk(T_s):.3f}; }}")
         s.append(f"    chamber {{ type fixedValue; value uniform {Tk(60.0):.3f}; }}")
         s.append(f"    floor {{ type externalWallHeatFluxTemperature; mode flux; q uniform {q_floor:.4f}; kappaMethod fluidThermo; "
@@ -569,8 +620,11 @@ def write_case(args):
         s.append(f"    \"({'|'.join(walls_adiabatic)})\" {{ type zeroGradient; }}")
         return "\n".join(s)
 
-    allwalls = [p for p in mesh["patches"] if p not in ("inlet", "hoodIn", "exhaust")]
+    allwalls = [p for p in mesh["patches"] if p not in ("inlet", "hoodIn", "floorIn", "exhaust")]
     W = "|".join(allwalls)
+    IN = "inlet|hoodIn|floorIn" if q_win else "inlet|hoodIn"
+    v_win = q_win / 3600 / mesh["area_m2"]["floorIn"] if q_win else 0.0
+    U_win = f"    floorIn {{ type fixedValue; value uniform (0 0 {v_win:.5f}); }}\n" if q_win else ""
     files = {
         "0/U": hdr("volVectorField", "U") + f"""dimensions [0 1 -1 0 0 0 0];
 internalField uniform (0 0 0);
@@ -578,7 +632,7 @@ boundaryField
 {{
     inlet {{ type fixedValue; value uniform ({U_in[0]:.5f} {U_in[1]:.5f} {U_in[2]:.5f}); }}
     hoodIn {{ type fixedValue; value uniform (0 0 {-v_hood:.5f}); }}
-    exhaust {{ type pressureInletOutletVelocity; value uniform (0 0 0); }}
+{U_win}    exhaust {{ type pressureInletOutletVelocity; value uniform (0 0 0); }}
     "({W})" {{ type noSlip; }}
 }}
 """,
@@ -601,14 +655,14 @@ internalField uniform 1e5;
 boundaryField
 {{
     exhaust {{ type prghPressure; p uniform 1e5; value uniform 1e5; }}
-    "(inlet|hoodIn|{W})" {{ type fixedFluxPressure; value uniform 1e5; }}
+    "({IN}|{W})" {{ type fixedFluxPressure; value uniform 1e5; }}
 }}
 """,
         "0/k": hdr("volScalarField", "k") + f"""dimensions [0 2 -2 0 0 0 0];
 internalField uniform 1e-3;
 boundaryField
 {{
-    "(inlet|hoodIn)" {{ type fixedValue; value uniform {k_in:.4g}; }}
+    "({IN})" {{ type fixedValue; value uniform {k_in:.4g}; }}
     exhaust {{ type inletOutlet; inletValue uniform 1e-3; value uniform 1e-3; }}
     "({W})" {{ type kqRWallFunction; value uniform 1e-3; }}
 }}
@@ -617,7 +671,7 @@ boundaryField
 internalField uniform 1e-4;
 boundaryField
 {{
-    "(inlet|hoodIn)" {{ type fixedValue; value uniform {eps_in:.4g}; }}
+    "({IN})" {{ type fixedValue; value uniform {eps_in:.4g}; }}
     exhaust {{ type inletOutlet; inletValue uniform 1e-4; value uniform 1e-4; }}
     "({W})" {{ type epsilonWallFunction; value uniform 1e-4; }}
 }}
@@ -626,7 +680,7 @@ boundaryField
 internalField uniform 0;
 boundaryField
 {{
-    "(inlet|hoodIn|exhaust)" {{ type calculated; value uniform 0; }}
+    "({IN}|exhaust)" {{ type calculated; value uniform 0; }}
     "({W})" {{ type nutkWallFunction; value uniform 0; }}
 }}
 """,
@@ -634,7 +688,7 @@ boundaryField
 internalField uniform 0;
 boundaryField
 {{
-    "(inlet|hoodIn|exhaust)" {{ type calculated; value uniform 0; }}
+    "({IN}|exhaust)" {{ type calculated; value uniform 0; }}
     "({W})" {{ type compressible::alphatJayatillekeWallFunction; Prt 0.85; value uniform 0; }}
 }}
 """,
@@ -745,7 +799,8 @@ relaxationFactors
     meta = dict(h_mm=args.h, load=args.load, supply_c=T_s, hood_pickup_k=args.hood_pickup, q_exhaust_m3h=q_ex, q_hood_m3h=q_hood,
                 q_inlet_m3h=q_in, inlet_angle_deg=args.inlet_angle, U_inlet=U_in, v_hood=v_hood, heat_W=heated, legs_to_floor_W=legs,
                 floor_flux_W_m2=q_floor, wellmixed_guard_c=Tg_wm, mesh={k: v for k, v in mesh.items()}, n=[nx, ny, nz],
-                names=names, parts_used=used, parts_skipped=skipped, h_out=h_out, variant=args.variant)
+                names=names, parts_used=used, parts_skipped=skipped, h_out=h_out, variant=args.variant, q_window_m3h=q_win,
+                network=net, network_sealed=network(0.0))
     (out / "case_meta.json").write_text(json.dumps(meta, indent=1, default=float))
     print(f"{out}: {nx} x {ny} x {nz} grid, {mesh['cells']} fluid cells, {mesh['faces']} faces; inlet {q_in:.1f} m3/h over "
           f"{A_in:.4f} m2 (v_n {vn:.3f} m/s), hood {q_hood:.1f} m3/h over {A_hood:.4f} m2; heat {sum(heated.values()):.1f} W + legs "
@@ -770,6 +825,7 @@ if __name__ == "__main__":
     a.add_argument("--inlet-angle", type=float, default=PHI_TRAP, help="downward angle of the inlet air, deg (trap's last leg)")
     a.add_argument("--iters", type=int, default=1500)
     a.add_argument("--variant", default="as drawn")
+    a.add_argument("--floor-open", action="store_true", help="the base plate's Z-stage window and slot open (FLOOR_WINDOW); flows from network()")
     a = sub.add_parser("post")
     a.add_argument("cases", nargs="+")
     args = ap.parse_args()

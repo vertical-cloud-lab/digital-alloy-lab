@@ -49,17 +49,31 @@ def last_rows(path):
     return rows
 
 
+def fo_file(case, fo, fname):
+    """a function object's output file in its latest start-time folder (a continuation writes a new one)"""
+    d = case / "postProcessing" / fo
+    t = max((p for p in d.iterdir() if p.is_dir()), key=lambda p: float(p.name))
+    return t / fname
+
+
+N_AVG = 500                                                     # iterations averaged for the heat balance and the exhaust
+
+
 def heat_balance(case, meta):
-    wh = case / "postProcessing" / "wallHeatFlux" / "0" / "wallHeatFlux.dat"
-    rows = last_rows(wh)
-    t_last = rows[-1][0]
-    Q = {r[1]: float(r[4]) for r in rows if r[0] == t_last}
-    fl = last_rows(case / "postProcessing" / "exhaustFlow" / "0" / "surfaceFieldValue.dat")
-    et = last_rows(case / "postProcessing" / "exhaustT" / "0" / "surfaceFieldValue.dat")
-    mdot = abs(float(fl[-1][1]))
-    T_ex = float(et[-1][1]) - 273.15
-    q_in, q_h = meta["q_inlet_m3h"], meta["q_hood_m3h"]
-    T_mix = meta["supply_c"] + meta["hood_pickup_k"] * q_h / (q_in + q_h)
+    rows = last_rows(fo_file(case, "wallHeatFlux", "wallHeatFlux.dat"))
+    t_last = float(rows[-1][0])
+    Q = {}
+    for r in rows:
+        if float(r[0]) > t_last - N_AVG:
+            Q.setdefault(r[1], []).append(float(r[4]))
+    Q = {k: float(np.mean(v)) for k, v in Q.items()}
+    fl = last_rows(fo_file(case, "exhaustFlow", "surfaceFieldValue.dat"))
+    et = last_rows(fo_file(case, "exhaustT", "surfaceFieldValue.dat"))
+    sel = lambda rr: [float(r[1]) for r in rr if float(r[0]) > float(rr[-1][0]) - N_AVG]
+    mdot = abs(float(np.mean(sel(fl))))
+    T_ex = float(np.mean(sel(et))) - 273.15
+    q_h = meta["q_hood_m3h"]
+    T_mix = meta["supply_c"] + meta["hood_pickup_k"] * q_h / meta["q_exhaust_m3h"]
     Q_ex = mdot * CP * (T_ex - T_mix)
     panels = sum(v for k, v in Q.items() if k.startswith("panel") or k == "window")
     src = sum(v for k, v in Q.items() if k in meta["heat_W"])
@@ -70,7 +84,15 @@ def heat_balance(case, meta):
                 in_W=round(tot_in, 1), exhaust_W=round(Q_ex, 1), mdot_kg_s=round(mdot, 5), q_exhaust_m3h=round(mdot / RHO * 3600, 1),
                 T_exhaust_c=round(T_ex, 2), T_supply_mix_c=round(T_mix, 2),
                 imbalance_W=round(tot_in + panels - Q_ex, 1), imbalance_pct=round(100 * (tot_in + panels - Q_ex) / tot_in, 1),
-                exhaust_T_last500_range_k=round(float(np.ptp(hist_T[-50:])), 3) if len(hist_T) >= 50 else None)
+                exhaust_T_range_last500_k=round(float(np.ptp(np.array(sel(et)))), 3),
+                vol_T_drift_last500_k=vol_drift(case))
+
+
+def vol_drift(case):
+    v = last_rows(fo_file(case, "volT", "volFieldValue.dat"))
+    t1 = float(v[-1][0])
+    a = [float(r[1]) for r in v if float(r[0]) > t1 - N_AVG]
+    return round(a[-1] - a[0], 3)
 
 
 def residuals(case):
@@ -95,8 +117,9 @@ def analyse(case):
     names = list(g["names"])
     n = len(ijk)
     t = latest(case)
-    T = read_field(t / "T", n) - 273.15
-    U = read_field(t / "U", n)
+    avg = (t / "TMean").exists()
+    T = read_field(t / ("TMean" if avg else "T"), n) - 273.15
+    U = read_field(t / ("UMean" if avg else "U"), n)
     age = read_field(t / "age", n) if (t / "age").exists() else np.full(n, np.nan)
     sh = lab.shape
     F = lab == 0
@@ -116,7 +139,8 @@ def analyse(case):
 
     def stats(mask):
         w = vol[mask]
-        return dict(mean_rise_k=round(float((T3[mask] * w).sum() / w.sum() - Ts), 2), max_rise_k=round(float(np.nanmax(T3[mask]) - Ts), 2),
+        return dict(mean_rise_k=round(float((T3[mask] * w).sum() / w.sum() - Ts), 2),
+                    p95_rise_k=round(float(np.nanpercentile(T3[mask], 95) - Ts), 2),
                     mean_age_s=round(float((A3[mask] * w).sum() / w.sum()), 1), cells=int(mask.sum()))
 
     st = ndimage.generate_binary_structure(3, 1)
@@ -168,9 +192,10 @@ def analyse(case):
                 air_change_effectiveness=round(tau_n / (2 * zones["all"]["mean_age_s"]), 3),
                 exhaust_flow_younger_than_quarter_tau=round(short, 3), exhaust_flow_from_above_bridge=round(ex_above, 3),
                 dead_zones_age_gt_3tau=dz_list[:8], dead_volume_fraction=round(float(vol[old].sum() / V), 3))
-    return dict(case=str(case), meta={k: meta[k] for k in ("h_mm", "load", "supply_c", "q_exhaust_m3h", "q_hood_m3h", "q_inlet_m3h",
+    return dict(case=str(case), averaged_fields=bool(avg), time=t.name, meta={k: meta[k] for k in ("h_mm", "load", "supply_c", "q_exhaust_m3h", "q_hood_m3h", "q_inlet_m3h",
                                                              "inlet_angle_deg", "heat_W", "legs_to_floor_W", "wellmixed_guard_c",
-                                                             "variant", "n")},
+                                                             "variant", "n", "q_window_m3h", "network", "network_sealed")
+                                    if k in meta},
                 cells=int(F.sum()), devices=dev, zones=zones, flow=flow, heat=heat_balance(case, meta), convergence=residuals(case),
                 _fields=dict(T3=T3, A3=A3, U3=U3, lab=lab, names=names, X=X, Y=Y, Z=Z, Ts=Ts, tau=tau_n))
 
@@ -186,11 +211,11 @@ def compare_wellmixed(r, cj):
     out = []
     for key, d in r["devices"].items():
         air = Ts + d["mean_rise_k"]
-        air_max = Ts + d["max_rise_k"]
+        air_p95 = Ts + d["p95_rise_k"]
         if key == "chronos":
             wm_air = rows["Chronos 2.1-HD (side camera)"]["air_c"]
             hood = d["hood_all"]
-            air, air_max = Ts + hood["mean_rise_k"], Ts + hood["max_rise_k"]
+            air, air_p95 = Ts + hood["mean_rise_k"], Ts + hood["p95_rise_k"]
             checked, wm_checked = air, wm_air
             back = Ts + d["hood_back_half"]["mean_rise_k"]
         else:
@@ -212,7 +237,7 @@ def compare_wellmixed(r, cj):
             back = None
         rating = d["rating_c"]
         out.append(dict(key=key, device=d["label"], checked_on=d["checked_on"], rating_c=rating,
-                        cfd_air_c=round(air, 1), cfd_air_rise_k=round(air - Ts, 1), cfd_air_max_c=round(air_max, 1),
+                        cfd_air_c=round(air, 1), cfd_air_rise_k=round(air - Ts, 1), cfd_air_p95_c=round(air_p95, 1),
                         wellmixed_air_c=round(wm_air, 1), wellmixed_rise_k=round(wm_air - Ts, 1),
                         wellmixed_checked_c=round(wm_checked, 1), cfd_checked_c=round(checked, 1),
                         margin_k=None if rating is None else round(rating - checked, 1),
@@ -248,10 +273,11 @@ def figures(r, tag="typ"):
             arr = (T3 - Ts) if what == "T" else A3 / tau
             P, ext, lbl, idx = plane(arr, ax_, v)
             S, _, _, _ = plane((lab > 0).astype(float), ax_, v)
-            ax.imshow(np.where(S > 0, 1.0, np.nan), origin="lower", extent=ext, cmap=grey, vmin=0, vmax=1, aspect="equal",
-                      interpolation="nearest")
+            ax.pcolormesh(X, (Y if ax_ == "z" else Z), np.ma.masked_invalid(np.where(S > 0, 1.0, np.nan)), cmap=grey, vmin=0, vmax=1,
+                          shading="flat")
+            ax.set_aspect("equal")
             if what == "T":
-                im = ax.pcolormesh(X if True else None, (Y if ax_ == "z" else Z), np.ma.masked_invalid(P), cmap="inferno",
+                im = ax.pcolormesh(X, (Y if ax_ == "z" else Z), np.ma.masked_invalid(P), cmap="inferno",
                                    vmin=0, vmax=12, shading="flat")
             else:
                 im = ax.pcolormesh(X, (Y if ax_ == "z" else Z), np.ma.masked_invalid(P), cmap="viridis_r", vmin=0, vmax=4,
@@ -282,13 +308,13 @@ def figures(r, tag="typ"):
         cb = fig.colorbar(im, ax=axs, shrink=0.6, location="right")
         if what == "T":
             cb.set_label("air temperature above the supply (K)")
-            fig.suptitle(f"Guard air, typical load, drawn vents and hood ({r['meta']['h_mm']:.0f} mm cells): rise over the "
+            fig.suptitle(f"Guard air ({r['meta']['variant']}), {r['meta']['load']} load, {r['meta']['h_mm']:.0f} mm cells: rise over the "
                          f"{Ts:.1f} °C supply; grey = parts", fontsize=12)
             fn = OUT / "guard_cfd_T.png"
         else:
             cb.set_label("local mean age of the air / nominal time constant V/Q")
-            fig.suptitle(f"Guard air, flow path: age of the air (dark = fresh; 1 = V/Q = {tau:.1f} s) and the in-plane velocity "
-                         f"(arrows); grey = parts", fontsize=12)
+            fig.suptitle(f"Guard air, flow path ({r['meta']['variant']}): age of the air (yellow = fresh, dark = stale; 1 = V/Q = "
+                         f"{tau:.1f} s) and the in-plane velocity (arrows); grey = parts", fontsize=12)
             fn = OUT / "guard_cfd_flow.png"
         fig.savefig(fn, dpi=110)
         plt.close(fig)
@@ -307,11 +333,11 @@ def write_md(res):
         L.append(f"Well-mixed (cooling.py): guard air {cw['wellmixed_guard_c']} °C, {cw['wellmixed_rise_k']} K over the supply. CFD "
                  f"exhaust {h['T_exhaust_c'] - m['supply_c']:.1f} K, volume mean {r['zones']['all']['mean_rise_k']} K, above the "
                  f"bridge {r['zones']['above_bridge']['mean_rise_k']} K, below it {r['zones']['below_bridge']['mean_rise_k']} K.\n")
-        L.append("| Device | Checked on | Rating (°C) | CFD air round it (°C), mean / max | rise (K) | well-mixed air (°C) | well-mixed checked (°C) | CFD checked (°C) | margin (K) |")
+        L.append("| Device | Checked on | Rating (°C) | CFD air round it (°C), mean / 95th percentile | rise (K) | well-mixed air (°C) | well-mixed checked (°C) | CFD checked (°C) | margin (K) |")
         L.append("|---|---|---:|---:|---:|---:|---:|---:|---:|")
         for d in cw["rows"]:
             L.append(f"| {d['device']} | {d['checked_on']} | {d['rating_c'] if d['rating_c'] is not None else '-'} | {d['cfd_air_c']} / "
-                     f"{d['cfd_air_max_c']} | {d['cfd_air_rise_k']} | {d['wellmixed_air_c']} | {d['wellmixed_checked_c']} | {d['cfd_checked_c']} | "
+                     f"{d['cfd_air_p95_c']} | {d['cfd_air_rise_k']} | {d['wellmixed_air_c']} | {d['wellmixed_checked_c']} | {d['cfd_checked_c']} | "
                      f"{d['margin_k'] if d['margin_k'] is not None else '-'} |")
         L.append(f"\nAge of the air: V/Q {fl['nominal_time_constant_s']} s; air-change effectiveness {fl['air_change_effectiveness']} "
                  f"(0.5 = fully mixed); mean age above the bridge {r['zones']['above_bridge']['mean_age_s']} s, below "
