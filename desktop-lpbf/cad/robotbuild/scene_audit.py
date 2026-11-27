@@ -729,10 +729,17 @@ def _ranges(ns, gap):
     return out
 
 
-def run(chapter, every=1, stills=0, quiet=False, max_frames=None, only=None):
+def run(chapter, every=1, stills=0, quiet=False, max_frames=None, only=None, parts=None, out_dir=None):
+    """parts: only these slices' recordings (round 9: a long chapter is audited slice by slice as each one is drawn, in
+    parallel, then `merge`d); out_dir: where the JSON and stills go (default analysis/out/videoqa)."""
+    global OUT
+    if out_dir is not None:
+        OUT = Path(out_dir)
     fcl = _fcl()
     t0 = time.time()
     dirs = audit_dirs(chapter)
+    if parts is not None:
+        dirs = [(k, d) for k, d in dirs if ".part" in k and int(k.rsplit("part", 1)[1]) in parts]
     if not dirs:
         raise SystemExit(f"{chapter}: no recordings (run the renderer with ROBOTBUILD_AUDIT=1)")
     hist, ns_all = histories(dirs)
@@ -1089,6 +1096,87 @@ def render_still(pk, out):
     Image.fromarray(np.asarray(img)[:, :, :3]).save(out)
 
 
+# ================================================================================================ merging slice audits
+def merge(chapter, paths, k_stills=4):
+    """Round 9: join per-slice audits (run --parts k --out DIR) into analysis/out/videoqa/scene_audit_<chapter>.json: pairs
+    by name (worst depth and its frame, frame counts summed, ranges joined), allowed and CAD-overlap lists likewise; the
+    stills of the worst pairs copied in."""
+    import shutil
+    parts = [json.loads(Path(p).read_text()) for p in paths]
+    pairs, allowed, cad, rigid = {}, {}, {}, {}
+    out = dict(chapter=chapter, threshold_mm=DEPTH_MM, opaque_min=OPAQUE, recordings=[], frames_recorded=0, frames_checked=0,
+               narrow_checks=0, pairs_tested=0, seconds=0.0, peak_rss_mb=0, merged_from=[str(p) for p in paths])
+
+    def dv(x):
+        return DEEP if x == ">100" else float(x or 0.0)
+    for j in parts:
+        for k in ("frames_recorded", "frames_checked", "narrow_checks", "pairs_tested"):
+            out[k] += int(j.get(k, 0))
+        out["seconds"] = round(out["seconds"] + float(j.get("seconds", 0.0)), 1)
+        out["peak_rss_mb"] = max(out["peak_rss_mb"], int(j.get("peak_rss_mb", 0)))
+        out["recordings"] += j.get("recordings", [])
+        for key in ("subsample", "recorded_every", "method", "memory", "cad_overlap_note"):
+            if key in j:
+                out[key] = j[key]
+        stills = {}
+        for st in j.get("stills", []) or []:
+            stills[len(stills)] = st
+        for idx, r in enumerate(j.get("pairs", [])):
+            k = (r["a"], r["b"])
+            q = pairs.get(k)
+            if q is None:
+                q = pairs[k] = dict(r, frame_ranges=list(r.get("frame_ranges", [])))
+                q["_still"] = stills.get(idx)
+                continue
+            q["frames"] += r["frames"]
+            q["frame_ranges"] = (q["frame_ranges"] + list(r.get("frame_ranges", [])))[:40]
+            if dv(r["worst_mm"]) > dv(q["worst_mm"]):
+                q["worst_mm"], q["worst_frame"], q["_still"] = r["worst_mm"], r["worst_frame"], stills.get(idx)
+        for r in j.get("allowed", []):
+            q = allowed.setdefault(r["rule"], dict(r, examples=list(r.get("examples", []))))
+            if q is not r:
+                q["pairs_in_contact"] = max(q["pairs_in_contact"], r["pairs_in_contact"])
+                q["pair_frames"] += r["pair_frames"]
+                if r.get("worst_mm") is not None and dv(r["worst_mm"]) > dv(q.get("worst_mm")):
+                    q["worst_mm"] = r["worst_mm"]
+        for r in j.get("cad_overlaps", []):
+            k = (r["a"], r["b"])
+            q = cad.setdefault(k, dict(r))
+            if q is not r:
+                q["pair_frames"] += r["pair_frames"]
+                if dv(r["worst_mm"]) > dv(q["worst_mm"]):
+                    q["worst_mm"], q["worst_frame"] = r["worst_mm"], r["worst_frame"]
+        for r in j.get("rigid_pairs", []):
+            k = (r["a"], r["b"])
+            q = rigid.setdefault(k, dict(r))
+            if q is not r and dv(r["worst_mm"]) > dv(q["worst_mm"]):
+                q["worst_mm"] = r["worst_mm"]
+    rows = sorted(pairs.values(), key=lambda r: -dv(r["worst_mm"]))
+    out_stills = []
+    OUT.mkdir(parents=True, exist_ok=True)
+    for old in OUT.glob(f"scene_audit_{chapter}_*.png"):
+        old.unlink()
+    for r in rows:
+        st = r.pop("_still", None)
+        if st and len(out_stills) < k_stills and Path(st).exists():
+            dst = OUT / f"scene_audit_{chapter}_{len(out_stills) + 1}.png"
+            shutil.copy(st, dst)
+            out_stills.append(str(dst.relative_to(REPO)) if dst.is_relative_to(REPO) else str(dst))
+    for r in rows[k_stills:]:
+        r.pop("_still", None)
+    out.update(violations=len(rows), worst_mm=rows[0]["worst_mm"] if rows else 0.0, worst=rows[0] if rows else None,
+               pairs=rows[:300], cad_overlaps=sorted(cad.values(), key=lambda r: -dv(r["worst_mm"]))[:100],
+               rigid_pairs=sorted(rigid.values(), key=lambda r: -dv(r["worst_mm"]))[:100],
+               allowed=list(allowed.values()), stills=out_stills)
+    path = OUT / f"scene_audit_{chapter}.json"
+    path.write_text(json.dumps(out, indent=1, default=_js) + "\n")
+    print(f"{chapter}: merged {len(parts)} slice audits: {out['frames_checked']} frames checked, {len(rows)} violating pairs "
+          f"(worst {out['worst_mm']} mm) -> {path}", flush=True)
+    for r in rows[:25]:
+        print(f"   {r['worst_mm']!s:>7} mm  {r['a']}  x  {r['b']}  frames {r['frames']} (worst {r['worst_frame']})", flush=True)
+    return out
+
+
 # ================================================================================================ names, watch
 def names(chapter):
     dirs = audit_dirs(chapter)
@@ -1125,8 +1213,13 @@ if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "still":
         render_still(sys.argv[2], sys.argv[3])
         sys.exit(0)
+    if len(sys.argv) > 1 and sys.argv[1] == "merge":
+        merge(sys.argv[2], sys.argv[3:])
+        sys.exit(0)
     ap.add_argument("cmd", choices=["run", "names", "keep"])
     ap.add_argument("chapter")
+    ap.add_argument("--parts", default="", help="only these slices (k,k,...), round 9")
+    ap.add_argument("--out", default=None, help="directory for the JSON and stills")
     ap.add_argument("--every", type=int, default=1, help="check every k-th recorded frame (all are replayed)")
     ap.add_argument("--stills", type=int, default=0)
     ap.add_argument("--max_frames", type=int, default=0)
@@ -1137,4 +1230,5 @@ if __name__ == "__main__":
     elif a.cmd == "keep":
         print(keep(FRAMES / a.chapter))
     else:
-        run(a.chapter, every=a.every, stills=a.stills, max_frames=a.max_frames or None, only=a.only)
+        run(a.chapter, every=a.every, stills=a.stills, max_frames=a.max_frames or None, only=a.only,
+            parts=[int(x) for x in a.parts.split(",") if x] or None, out_dir=a.out)
