@@ -213,6 +213,10 @@ class Replay:
         hook = pv.Box(bounds=(-30, 30, -12, 12, 0, 50)).triangulate().merge(pv.Cylinder(center=(0, 0, 1000), direction=(0, 0, 1), radius=4,
                                                                                           height=1900).triangulate())
         sc.add("hoist", hook, "#e2b007", group="hoist", specular=0.3, shown=False)
+        # ---- the person's screwdriver (round 9: a person drives the screws no arm could): tip at the origin, along +z
+        drv = pv.Cylinder(center=(0, 0, 55), direction=(0, 0, 1), radius=2.5, height=110).triangulate().merge(
+            pv.Cylinder(center=(0, 0, 160), direction=(0, 0, 1), radius=14, height=100, resolution=16).triangulate())
+        sc.add("op/tool/screwdriver", drv, "#c0392b", group="op/tool", specular=0.3, shown=False)
         # ---- a person for the person steps
         self.person = None
         if people_ok:
@@ -1038,6 +1042,7 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=(), fail_
             last_move[e.get("arm")] = e
         elif e["kind"] == "mark" and e.get("what") == "unplanned" and e.get("arm") in last_move:
             last_move[e["arm"]]["unplanned"] = True
+            last_move[e["arm"]]["unplanned_note"] = e.get("note") or ""
     # ASM_UPTO=<step id>: stop before this step (the chunks of a run still going may end inside a step's fetch)
     upto = os.environ.get("ASM_UPTO")
     if upto:
@@ -1114,6 +1119,7 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
     last = dict(loc=("cell",), force=False)
     scored = {}
     away = {}                            # arm -> where its MiR and arm were when a fetch not shown began (round 9)
+    pend = dict(screws=[], parts=[], failed=set())   # round 9: what the person does at the end of a failed step
     pstate = dict(on=False, n=-1)        # the person: shown, and the last frame their feet were brought to
 
     def score(key, loc, work):
@@ -1231,6 +1237,97 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
         pstate["on"] = False
         return False
 
+    def obj_world(i, M=None):
+        o = rp.objs.get(i) or {}
+        V = np.asarray(o.get("V"), float) if o.get("V") is not None else np.zeros((1, 3))
+        M = np.asarray(rp.sc.gmat.get(f"o{i}", np.eye(4)) if M is None else M, float)
+        return V @ M[:3, :3].T + M[:3, 3]
+
+    def screw_axis(i):
+        """(head point, unit axis out of the hole) of a screw as it sits: its long axis by PCA, the head the fatter end."""
+        W = obj_world(i)
+        c = W.mean(0)
+        if len(W) < 3:
+            return c, np.array([0.0, 0.0, 1.0])
+        u = np.linalg.svd(W - c, full_matrices=False)[2][0]
+        t = (W - c) @ u
+        r = np.linalg.norm((W - c) - np.outer(t, u), axis=1)
+        hi, lo = t > 0.6 * t.max(), t < 0.6 * t.min()
+        if lo.any() and hi.any() and r[lo].mean() > r[hi].mean():
+            u = -u
+        return c + u * float(np.abs(t).max()), u
+
+    def person_fix():
+        """Round 9 (the coordinator: "showing where a human is absolutely necessary"): after a failed step, the person walks
+        in, sets each part the arms could not (it appears in its seat as their hands reach it) and drives each screw they
+        could not (a screwdriver in the right hand; the screw appears as the bit reaches its hole), time-lapsed to the
+        estimates the clocks count (5 min a step, 1 min a screw), and walks out."""
+        jobs = [("part", objs, T) for objs, T in pend["parts"]] + [("screw", [i], None) for i in pend["screws"]]
+        pts = []
+        for kind, objs, T in jobs:
+            if kind == "part":
+                pts.append(np.vstack([obj_world(i, T) for i in objs]).mean(0))
+            else:
+                h, u = screw_axis(objs[0])
+                pts.append(h + 120.0 * u)
+        work = np.mean(pts, axis=0)
+        loc = loc_of_x(float(work[0])) if float(work[0]) <= TABLE_X else ("table", round(float(work[0]) / 100.0) * 100.0, "A")
+        P = rp.person
+        n_s = sum(1 for j in jobs if j[0] == "screw")
+        n_p = sum(1 for j in jobs if j[0] == "part")
+        what = ", ".join(x for x in ((f"sets {n_p} part{'s' if n_p > 1 else ''}" if n_p else ""),
+                                     (f"drives {n_s} screw{'s' if n_s > 1 else ''}" if n_s else "")) if x)
+
+        def job():
+            for kind, objs, T in jobs:
+                secs = 300.0 if kind == "part" else 60.0
+                nfj = 36 if kind == "part" else 24
+                if kind == "part":
+                    W = np.vstack([obj_world(i, T) for i in objs])
+                    lo_, hi_ = W.min(0), W.max(0)
+                    c = 0.5 * (lo_ + hi_)
+                    hands = {"l": (c[0], c[1], hi_[2]), "r": (c[0], c[1], hi_[2])}
+                    if P is not None:
+                        ps = np.array([P.st["x"], P.st["y"]])
+                        side = np.array([-(c[1] - ps[1]), c[0] - ps[0]])
+                        side = side / max(np.linalg.norm(side), 1e-6) * min(90.0, 0.4 * float(np.max(hi_[:2] - lo_[:2])) + 30.0)
+                        hands = {"l": (c[0] + side[0], c[1] + side[1], c[2]), "r": (c[0] - side[0], c[1] - side[1], c[2])}
+                else:
+                    h, u = screw_axis(objs[0])
+                    grip = h + 150.0 * u
+                    hands = {"r": tuple(grip), "l": None}
+                    R = np.eye(4)
+                    z = u / np.linalg.norm(u)
+                    x_ = np.cross(z, [0.0, 0.0, 1.0]) if abs(z[2]) < 0.9 else np.cross(z, [1.0, 0.0, 0.0])
+                    x_ /= np.linalg.norm(x_)
+                    R[:3, 0], R[:3, 1], R[:3, 2], R[:3, 3] = x_, np.cross(z, x_), z, h
+                    rp.sc.gmat["op/tool"] = R
+                    rp.sc.alpha["op/tool/screwdriver"] = 1.0
+                for f in range(nfj):
+                    if P is not None:
+                        P.set(hands=hands, look=tuple(np.mean([np.asarray(v, float) for v in hands.values() if v is not None],
+                                                              axis=0)), frame=tot["n"])
+                        pstate["n"] = tot["n"]
+                    if f == 3:                       # the hands have reached it: the part is in its seat, the screw in
+                        for i in objs:               # its hole
+                            if kind == "part":
+                                rp.put([i], T)
+                            rp.sc.alpha[f"o{i}"] = 1.0
+                    sub = (f"a person {'sets it in its seat' if kind == 'part' else 'drives the screw with a hand driver'}: "
+                           f"the arms could not ({'5 min a part' if kind == 'part' else '1 min a screw'}, estimate; shown "
+                           f"x{secs / (nfj / FPS):.0f})")
+                    if emit(cur["label"], sub, ["person"], proc=secs / nfj, add={"person_h": secs / nfj / 3600.0},
+                            status="person", loc=loc):
+                        return True
+                rp.sc.alpha["op/tool/screwdriver"] = 0.0
+                if P is not None:
+                    P.set(hands={"l": None, "r": None}, frame=tot["n"])
+            return False
+        for _ in range(int(FPS * 2.0)):
+            if emit(cur["label"], f"a person is needed: {what}", ["person"], status="person", loc=loc):
+                return True
+        return person_job(tuple(work), "A", job, loc)
+
     def here(n):
         """Where arm n works now: at the table where its MiR stopped (the tripods are set up there), else the place in the
         cell under its tool."""
@@ -1316,6 +1413,9 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                     stop = emit(cur["label"], f"FAILED: {why[:110]}", [], status="fail")
                     if stop:
                         break
+            if not stop and (pend["screws"] or pend["parts"]):
+                stop = person_fix()
+            pend["screws"], pend["parts"], pend["failed"] = [], [], set()
             continue
         n = e.get("arm")
         if n == "A+B":
@@ -1361,9 +1461,14 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
             elif k in ("move", "screw") and e.get("q") is not None and len(e["q"]):
                 rp.set_arm(n, q=np.asarray(e["q"][-1], float), close=e.get("close"))
                 if e.get("unplanned"):
+                    # round 9: the badge says FAIL only if the step failed (M26 passed; only its move back to park had no
+                    # checked path, and round 8's card showed a FAIL badge on it)
+                    nt = str(e.get("unplanned_note") or "").replace(" not planned", "")
+                    txt = (f"arm {n}'s {nt}: no checked path, so not shown (the arm is cut to where it ends)" if nt else
+                           f"NOT PLANNED: no checked path for arm {n}'s move here; not shown")
+                    st_u = "fail" if step_status(cur["id"], cur.get("failed")) == "fail" else ""
                     for _ in range(int(FPS * 1.5)):
-                        stop = emit(cur["label"], f"NOT PLANNED: no checked path for arm {n}'s move here; not shown", who,
-                                    status="fail", loc=here(n))
+                        stop = emit(cur["label"], txt, who, status=st_u, loc=here(n))
                         if stop:
                             break
                     last["force"] = "unplanned"
@@ -1393,7 +1498,39 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
             last["force"] = f"jump {dq:.1f} deg"
             continue
         if k == "put":
-            rp.put(e["objs"], e["T"])
+            fs = [i for i in e["objs"] if i in pend["failed"]]
+            if fs:                                        # a screw no arm could drive: in its hole, hidden until the person
+                rp.put(fs, e["T"])                         # drives it
+                for i in fs:
+                    rp.sc.alpha[f"o{i}"] = 0.0
+                    pend["screws"].append(i)
+            rest = [i for i in e["objs"] if i not in pend["failed"]]
+            if rest and step_status(cur["id"], cur.get("failed")) == "fail" and e.get("why") != "staged" and \
+                    rows.get(cur["id"], {}).get("row", {}).get("arm") not in ("PART", None):
+                # a failed placement: what the arm left more than 50 mm from its seat is set by the person
+                T1 = np.asarray(e["T"], float)
+                late = []
+                for i in rest:
+                    k_ = f"o{i}"
+                    if k_ not in rp.sc.actors or rp.objs.get(i, {}).get("kind") in FASTENERS:
+                        continue
+                    M0 = rp.sc.gmat.get(k_)
+                    if rp.sc.alpha.get(k_, 0.0) > 0.0 and M0 is not None and \
+                            float(np.linalg.norm(np.asarray(M0)[:3, 3] - T1[:3, 3])) < 50.0:
+                        continue
+                    late.append(i)
+                if late:
+                    pend["parts"].append((late, T1))
+                    rest = [i for i in rest if i not in late]
+                    for i in late:
+                        k_ = f"o{i}"
+                        M0 = rp.sc.gmat.get(k_)
+                        if not (rp.sc.alpha.get(k_, 0.0) > 0.0 and M0 is not None and
+                                float(np.linalg.norm(np.asarray(M0)[:3, 3] - T1[:3, 3])) < 600.0):
+                            rp.put([i], T1)
+                            rp.sc.alpha[k_] = 0.0              # far from its seat or not drawn: appears as the person sets it
+            if rest:
+                rp.put(rest, e["T"])
         elif k == "take":
             rp.retire_tools([i for i in e["objs"] if i in rp.temp_tools])
             for i in e["objs"]:
@@ -1475,6 +1612,8 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                     else:
                         for _ in range(int(FPS * 1.5)):
                             stop = emit(cur["label"], f"screw not driven: {e.get('why', '')[:90]}", who, status="fail", loc=here(n))
+                        if e.get("obj") is not None:
+                            pend["failed"].add(int(e["obj"]))       # a person drives it after the step (round 9)
                 continue
             Q = np.asarray(Q, float)
             d = np.r_[0.0, np.cumsum(np.abs(np.diff(Q, axis=0)).max(axis=1))] if len(Q) > 1 else np.array([0.0])
@@ -1589,6 +1728,7 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
 
 
 CHAP_TITLE = {k: v[1] for k, v in CHAP.items()}
+FASTENERS = ("shcs", "fhcs", "set", "insert", "dowel", "plunger")
 # ASM_PICK=12,340,...: draw only these frames (a look at stills before a full render), into <chapter>.partpick/ with the
 # frame numbers as file names (not for merging)
 PICK = {int(x) for x in os.environ["ASM_PICK"].split(",")} if os.environ.get("ASM_PICK") else None
