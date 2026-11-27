@@ -12,12 +12,14 @@ nothing fitted to keyhole or melt-pool data:
    mass balance: Mg carried out in the vapour = Mg brought to the wall by the melt flowing past it (potential
    flow around a cylinder, Boussinesq's Sh = 1.128 Pe^1/2) at the keyhole wall, or under the beam (penetration
    theory against the Hertz-Knudsen flux) on the flat surface at keyhole onset.
-2. **A tilted keyhole whose shape comes from the physics** (scripts/keyhole_fp_shaped.py): circular
-   cross-sections with their centre and radius free at every depth; each wall's slope from Kaplan's (1994)
-   point-by-point balance with the ray-traced direct and reflected light; the depth from the global balance.
-   The model has two stable keyholes over a band of powers: a shallow dimple and a deep keyhole. The track is
-   taken to stay on the dimple branch while it exists (the keyhole forms when the dimple runs away), and the band
-   where both exist is reported as bistable.
+2. **A tilted keyhole** (scripts/keyhole_fp_shaped.py): a cone whose opening is the beam's 1/e^2 radius, as in
+   version 1, with its front wall leaning back at Kaplan's (1994) angle, where the direct beam it catches at
+   mid-depth balances its conduction loss (solve_parametric, tilt="kaplan"); the depth from the global balance.
+   Every stable depth of that balance is found (cone_roots): above the power where the surface first boils there
+   can be a shallow dimple and one or more deeper keyholes. The pool is the shallowest state's (the deepest's in a
+   sensitivity run), and a map point is called a keyhole wherever a stable state with Wk/Dk <= 0.7 exists
+   (run_maps_v2, v2_class_deep_branch). A free-form shape from Kaplan's point-by-point balance (solve_shaped, the
+   `explore` command) was tried and not adopted: it drives the keyhole to a funnel and worsens the X-ray depths.
 3. **A powder layer** (scripts/keyhole_fp_powder.py), for the part of the beam that falls ahead of the melt.
 4. **Sourced properties** that version 1 took from handbooks: the liquid resistivity of the hypereutectic blend
    and of Gan et al.'s alloys, and the solid conductivity against temperature.
@@ -315,7 +317,7 @@ class ResultV2:
 
 def wall_angles(sol):
     """Mean front- and rear-wall angles from the vertical over the upper 80 % of the depth, the tip's offset
-    behind the beam axis, and the shaft width (mean cross-section diameter over the lower half)."""
+    behind the beam axis, and the shaft width (mean cross-section diameter between 25 and 75 % of the depth)."""
     zn, xcn, rn = sol["zn"], sol["xcn"], sol["rn"]
     xf, xr = xcn + rn, xcn - rn
     d = zn[-1]
@@ -391,7 +393,8 @@ def solve_point_v2(al: Alloy, P, v, r0, T0, A_override=None, hatch=None, want_po
         return res, {}
 
     a0 = r0
-    # Wall state (temperature, Mg) for a first-guess keyhole two openings deep; it moves the wall by < 1 K.
+    # Wall state (temperature, Mg) for a first-guess keyhole two openings deep. It isn't iterated with the depth:
+    # the final depth would move the wall by under 3 K for our alloys and up to 10 K for Al 5182 (0.4 % of its rise).
     if al.vap is not None:
         ws = al.vap.wall(a0, 0.5 * a0, math.pi * a0 * math.sqrt(a0 ** 2 + (2 * a0) ** 2), v,
                          lambda T, Mv: vapour_outflow(a0, m.sigma, T, Mv))
@@ -495,8 +498,11 @@ def cone_balance(P, v, r0, a0, th, Q_e, tab, A_override):
 
 def cone_roots(f, a0, r0, n=60):
     """All roots of the cone's balance from a dimple 2 % of the opening deep to 60 beam radii. A root where the
-    balance goes from + to - with depth is stable. Returns the shallowest stable root (the dimple branch, where
-    the track sits until the dimple runs away) and the deepest (the keyhole branch)."""
+    balance goes from + to - with depth is stable. Returns the shallowest stable root (the dimple branch, which
+    sets the pool) and the deepest (the keyhole branch; run_maps_v2 calls a point a keyhole if that one has
+    Wk/Dk <= 0.7). For dimples much shallower than their opening is wide, the axis-source conduction undercounts
+    the heat a cavity at T_w loses (it falls below an isothermal disc's 4 k a theta), so their depths are overstated;
+    their absorptance, about the flat liquid's, is not."""
     ds = np.geomspace(0.02 * a0, 60 * r0, n)
     fs = np.array([f(d)[0] for d in ds])
     stable = []

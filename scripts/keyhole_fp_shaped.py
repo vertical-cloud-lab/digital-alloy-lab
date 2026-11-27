@@ -1,5 +1,9 @@
 """Keyhole shape from the physics: a tilted keyhole from a point-by-point wall energy balance (PR #249).
 
+What version 2 uses: trace_shaped (the ray tracer) and solve_parametric with tilt="kaplan" (a cone whose front wall
+leans back at Kaplan's angle at mid-depth). The free-form solver described below, solve_shaped, is the `explore`
+command's exploration and was not adopted: it drives the keyhole to a funnel that worsens the X-ray depths.
+
 Part of the first-principles keyhole model's second version (scripts/keyhole_first_principles_v2.py). The first
 version fixed the keyhole's shape (a straight cone, or a paraboloid) and found only its depth. Here the shape
 comes out of the physics, following Kaplan's (1994) point-by-point balance, with the multiple reflections

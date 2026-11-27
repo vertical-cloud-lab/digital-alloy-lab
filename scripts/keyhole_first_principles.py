@@ -967,7 +967,14 @@ def run_ambench(out: pathlib.Path, log=print) -> dict:
                 "A", "d_um", "Wk_over_Dk", "pool_depth_um", "pool_width_um", "pool_depth_solidus_um",
                 "pool_width_solidus_um")})
     pd.DataFrame(rows).to_csv(out / "fp-ambench2022-al5182.csv", index=False, float_format="%.5g")
-    return {"measured": a, "rows": len(rows)}
+    # The summary carries the rows as written to the CSV (5 significant figures), rounded to 3 decimals, which is
+    # what the committed fp-summary.json holds.
+    keys = ("A", "d_um", "Wk_over_Dk", "pool_depth_um", "pool_width_um", "pool_depth_solidus_um",
+            "pool_width_solidus_um")
+    t = pd.read_csv(out / "fp-ambench2022-al5182.csv")
+    model = [{"shape": r["shape"], "variant": r["variant"], **{k: round(float(r[k]), 3) for k in keys}}
+             for _, r in t.iterrows()]
+    return {"measured": a, "model": model}
 
 
 # --- figures ----------------------------------------------------------------------------------------------

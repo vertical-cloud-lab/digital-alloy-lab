@@ -219,7 +219,7 @@ def fig_states(out: pathlib.Path):
                     kh = sel[sel["Wk_over_Dk"] <= fp.WK_DK_AM]
                     dimple = sel[sel["Wk_over_Dk"] > fp.WK_DK_AM]
                     ax.scatter(dimple["P_W"], dimple[ycol], s=16, marker=mk, color=GREEN, lw=0, zorder=3,
-                               label="stable, Wk/Dk > 0.7 (dimple)")
+                               label="stable, Wk/Dk > 0.7 (dimple or shallow keyhole)")
                     ax.scatter(kh["P_W"], kh[ycol], s=16, marker=mk, color=BLUE, lw=0, zorder=3,
                                label="stable, Wk/Dk ≤ 0.7 (keyhole)")
                 else:

@@ -19,9 +19,9 @@ Particle optics, two ways:
   (over 0.20 at 1 um; Rubenchik et al. 2015, Appl. Opt. 54, 7230).
 
 How it compares (`python scripts/keyhole_first_principles_v2.py powder`): the homogenised layer over-traps light.
-With Al's textbook index it gives 0.40-0.47 for a layer two particles thick, against the 0.22 Boley et al. 2015
-ray-traced for a close-packed bilayer of real spheres; with the measured flat absorptance it gives 0.70, against
-the 0.51-0.55 Rubenchik et al. 2015 measured for Al powder by calorimetry. So version 2 uses the measured powder
+With Al's textbook index it gives 0.37-0.46 for a layer 1.5-2 particles thick, against the 0.22 Boley et al. 2015
+ray-traced for a close-packed bilayer of real spheres; with the measured flat absorptance it gives 0.67-0.72 for
+2-20 particles, against the 0.51-0.55 Rubenchik et al. 2015 measured for Al powder by calorimetry. So version 2 uses the measured powder
 value (Powder(A_powder=...)), and these two numbers bracket it.
 
 Boley, Khairallah & Rubenchik 2015, Appl. Opt. 54, 2477 (OSTI accepted manuscript), Table 1: Al, n = 1.244 + 10i,
