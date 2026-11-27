@@ -99,7 +99,7 @@ def scan(partial=False, only=None):
     if common.FRAMES.exists():                               # other numbered folders: only when finished, never tests,
         import re                                            # debug runs or a slice's part folder (round 9: "-dbg",
         names |= {p.name for p in common.FRAMES.iterdir()     # "41-assembly-chamber.part3" lay beside the chapters)
-                  if p.is_dir() and re.fullmatch(r"\d\d-[a-z0-9-]+", p.name)
+                  if p.is_dir() and re.fullmatch(r"\d\d[a-z]?-[a-z0-9-]+", p.name)
                   and not re.search(r"test|dbg|debug|tmp", p.name.lower()) and (p / "done").exists()}
     if only:
         names = {n for n in names if n in only}
