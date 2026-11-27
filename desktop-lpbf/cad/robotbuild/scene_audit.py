@@ -95,6 +95,7 @@ RE_LINK = re.compile(r"^(?P<arm>.+?)/(?P<link>base|shoulder|upper_arm|forearm|wr
 # a person's eyes, brows, hair and glasses ride on the head, inside or just over its skin: the skin is checked for them
 # (and their own meshes are left out as movers, which saves rebuilding five more BVH models per person and frame)
 RE_RIDERS = re.compile(r"^[^/]+/(iris|sclera|brow|hair|glasses \w+)$")
+RE_OBJ = re.compile(r"^o\d+$")
 RE_FLANGE = re.compile(r"^(?P<arm>.+?)/(changer|gr/.*|cam/.*|cap/.*|qc|3fg/.*|vgp/.*)$")
 
 
@@ -569,9 +570,12 @@ def winding(P, V, F):
                     np.ascontiguousarray(F, np.int64))
 
 
-def reps(V, F, k=8):
-    """Up to k vertices, one in each of the k largest connected pieces of a mesh: if two meshes' surfaces don't cross,
-    each piece of one is wholly inside or wholly outside the other, so one vertex a piece decides it."""
+def reps(V, F, k=8, m=5):
+    """Up to m vertices (spread over its vertex list) in each of the k largest connected pieces of a mesh, as (k*m) x 3 with
+    NaN rows where a piece has fewer: if two meshes' surfaces don't cross, each piece of one is wholly inside or wholly
+    outside the other. Round 9: several vertices a piece and their median decide it, because one vertex lying ON the other
+    mesh's surface (a seal's outside on its bore, an O-ring on its groove) has a winding number of ~0.5 and read as inside
+    (round 8: a bore seal 45 mm "deep" in its module, an O-ring 11 mm in its gland plate, at their CAD positions)."""
     from scipy.sparse import coo_matrix
     from scipy.sparse.csgraph import connected_components
     if not len(F):
@@ -586,22 +590,37 @@ def reps(V, F, k=8):
     for c in np.argsort(-cnt)[:k]:
         if cnt[c] == 0:
             break
-        out.append(V[np.nonzero((lab == c) & used)[0][0]])
-    return np.asarray(out, float)
+        ids = np.nonzero((lab == c) & used)[0]
+        pick = ids[np.unique(np.linspace(0, len(ids) - 1, min(m, len(ids))).round().astype(int))]
+        rows = np.full((m, 3), np.nan)
+        rows[:len(pick)] = V[pick]
+        out.append(rows)
+    return np.vstack(out).astype(float) if out else V[:1].astype(float)
 
 
 def contained(x, Mx, y, My):
     """Is a piece of mesh x wholly inside mesh y, or a piece of y inside x (their surfaces apart)? Geoms x, y at Mx, My."""
     for a, Ma, b, Mb in ((x, Mx, y, My), (y, My, x, Mx)):
-        P = a.rep_pts() @ Ma[:3, :3].T.astype(float) + Ma[:3, 3].astype(float)      # world
+        R = a.rep_pts()
+        m = 5 if len(R) % 5 == 0 and len(R) > 1 else 1
+        P = R @ Ma[:3, :3].T.astype(float) + Ma[:3, 3].astype(float)      # world (NaN rows stay NaN)
         lo, hi = world_box(b.corners, Mb)
-        P = P[np.all((P >= lo) & (P <= hi), axis=1)]
-        if not len(P):
+        ok = np.isfinite(P).all(axis=1)
+        inb = ok.copy()
+        inb[ok] = np.all((P[ok] >= lo) & (P[ok] <= hi), axis=1)
+        if not inb.any():
             continue
         Mi = np.linalg.inv(Mb.astype(float))
-        Pl = P @ Mi[:3, :3].T + Mi[:3, 3]
-        if np.any(winding(Pl, b.V, b.F) > 0.5):
-            return True
+        w = np.full(len(P), np.nan)
+        Pl = P[inb] @ Mi[:3, :3].T + Mi[:3, 3]
+        w[inb] = winding(Pl, b.V, b.F)
+        w[ok & ~inb] = 0.0                                  # outside the other's box: outside it
+        for piece in w.reshape(-1, m):
+            piece = piece[np.isfinite(piece)]
+            # a point ON the other surface winds ~0.5: it says neither inside nor outside (touching); a piece is inside if
+            # more of its points are clearly inside (> 0.75) than clearly outside (< 0.25)
+            if len(piece) and int((piece > 0.75).sum()) > int((piece < 0.25).sum()):
+                return True
     return False
 
 
@@ -736,6 +755,7 @@ def run(chapter, every=1, stills=0, quiet=False, max_frames=None, only=None):
             rule_of[k] = r
         return r
     viol = {}                           # (a, b) -> dict(worst, frame, frames=set(), snap: a file under snapdir)
+    cad = {}                            # (a, b) -> the CAD's own overlaps at the parts' designed relative pose (round 9)
     import tempfile
     snapdir = Path(tempfile.mkdtemp(prefix="audit_snaps_"))
     peak = [0]
@@ -842,6 +862,16 @@ def run(chapter, every=1, stills=0, quiet=False, max_frames=None, only=None):
                         ah["pairs"].add(k)
                         ah["frames"] += 1
                         ah["worst"] = max(ah.get("worst", 0.0), min(dep, lim))
+                if dep > lim and RE_OBJ.match(x.name) and RE_OBJ.match(y.name) and \
+                        np.allclose(rel[:3, :3], np.eye(3), atol=1e-4) and np.allclose(rel[:3, 3], 0.0, atol=0.05):
+                    # round 9: two parts drawn at their designed positions relative to each other (one machine frame): the
+                    # CAD's own overlap (an O-ring in a groove the CAD did not cut, a block's undrilled holes), whatever moved
+                    # them there; listed apart like the rigid pairs, not counted
+                    c_ = cad.setdefault(k, dict(worst=0.0, frames=0, frame=n))
+                    c_["frames"] += 1
+                    if dep > c_["worst"]:
+                        c_["worst"], c_["frame"] = dep, n
+                    dep = 0.0
                 if dep > lim:
                     v = viol.get(k)
                     if v is None:
@@ -884,6 +914,11 @@ def run(chapter, every=1, stills=0, quiet=False, max_frames=None, only=None):
         narrow_checks=n_fcl, pairs_tested=n_pairs_tested,
         violations=len(rows), worst_mm=rows[0]["worst_mm"] if rows else 0.0,
         worst=rows[0] if rows else None, pairs=rows[:300],
+        cad_overlaps=[dict(a=a, b=b, **({"a_is": lab[a]} if a in lab else {}), **({"b_is": lab[b]} if b in lab else {}),
+                           worst_mm=_r(v["worst"]), worst_frame=v["frame"], pair_frames=v["frames"])
+                      for (a, b), v in sorted(cad.items(), key=lambda kv: -kv[1]["worst"])][:100],
+        cad_overlap_note="two parts drawn at their designed relative pose (one machine frame) and overlapping there: the CAD's "
+                         "own overlap (a groove or hole the model does not cut), listed apart and not counted",
         rigid_pairs=[dict(a=a, b=b, worst_mm=_r(v["worst"]), frames=len(v["frames"])) for (a, b), v in
                      sorted(rigid.items(), key=lambda kv: -kv[1]["worst"])][:100],
         allowed=[dict(rule=rules[i][0], depth_allowed_mm=rules[i][2], reason=rules[i][3],
