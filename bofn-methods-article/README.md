@@ -4,8 +4,8 @@ Two versions of the same methods work, written so that either can be used:
 
 | Version | File | What it is | Size |
 |---|---|---|---|
-| **MethodsX method article** | [`methodsx/manuscript.tex`](methodsx/manuscript.tex) | A companion to the *Advanced Materials* article (issue #120), in MethodsX's Method Article template (v7, Sep 2024): specifications table, background, method details, method validation, limitations, data availability | abstract ≤ 200 words incl. 3 bullets; background ≤ 500; method details and validation ≈ 3,500; 6 figures, 4 tables |
-| **Short version for the *Advanced Materials* article** | [`adv-mater/methods-si.tex`](adv-mater/methods-si.tex) | (A) one Experimental Section paragraph, (B) two optional sentences for §2.6, (C) one SI section | A ≈ 190 words; C ≈ 1,300 words, 2 figures, 2 tables |
+| **MethodsX method article** | [`methodsx/manuscript.tex`](methodsx/manuscript.tex) | A companion to the *Advanced Materials* article (issue #120), in MethodsX's Method Article template (v7, Sep 2024): specifications table, background, method details, method validation, limitations, data availability | abstract 192 words incl. 3 bullets (limit 200); background ≈ 440 (limit 500); ≈ 4,200 words of prose; 5 figures + 2 SI figures, 4 tables, graphical abstract |
+| **Short version for the *Advanced Materials* article** | [`adv-mater/methods-si.tex`](adv-mater/methods-si.tex) | (A) one Experimental Section paragraph, (B) two optional sentences for §2.6, (C) one SI section | A ≈ 160 words plus one Statistical Analysis paragraph; C ≈ 1,300 words, 2 figures, 2 tables |
 
 Both read their numbers from one generated file,
 [`../benchmarks/bofn-paper/paper-stats/numbers.tex`](../benchmarks/bofn-paper/paper-stats/numbers.tex),
