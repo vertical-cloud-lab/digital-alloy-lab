@@ -178,8 +178,10 @@ and 33.9 s a layer. The FE's substrate peak at pz −15 allows 13.3 W and 12.6 W
 at pz 0 allows 14.0 W. The lumped model's no-dwell plateau, (P − 0.03 W/K x 165 K) / (0.67 + 0.03) W/K, is +42 K at
 A = 0.3, against the FE's +40 K (pz 0) and +42 K (pz −15). At A = 0.6 the lumped model gives +92 K with the block
 held at 200 °C; the FE gives +106 K, because the plate pushes ~56 W into the block, more than the block's own 46 W of
-losses, so the block heater switches off and the block rises 16 K. So the dwell study's numbers at 0.67 W/K stand,
-with two corrections:
+losses, so the block heater switches off and the block rises 16 K. The climb's time constant (fitted to layer means
+of the FE substrate top) is 94-104 s at pz 0 and 130-150 s with 15 mm of coupons and powder. The lumped model has
+150 s (105 J/K / 0.70 W/K); the FE plate stack is 85 J/K with CAD v2's 24 mm plate. So the dwell study's numbers at
+0.67 W/K stand, with two corrections:
 1. On the bare substrate the top swings 5 times more per layer than a 105 J/K lump (11-22 K against 2-4 K).
 2. With the block at its set point, a no-dwell build at A above ~0.53 (more than ~61 W absorbed) also switches the
    block heater off and drives the block over its set point.
