@@ -576,7 +576,7 @@ def do_purge(a):
     if kind == "scalar":
         box = fo_series(case, "boxAvg", "volFieldValue.dat")
         exh = fo_series(case, "exhaust", "surfaceFieldValue.dat")
-        prb = fo_series(case, "probes", "c")
+        prb = fo_series(case, "probes", "T")
         ppm = lambda c: c * X_O2_AIR * 1e6
         S = dict(t=box[:, 0], box=ppm(box[:, 1]), exhaust=None, plate=None)
         S["exhaust_t"], S["exhaust"] = exh[:, 0], ppm(exh[:, 1])
@@ -602,6 +602,21 @@ def do_purge(a):
                                   for k in ("box", "exhaust", "plate")}
         res[f"t_{lvl}ppm_min"]["well_mixed_ideal"] = math.log(209500 / lvl) * V / q_total
     res["ppm_at_end"] = dict(box=float(S["box"][-1]), exhaust=float(S["exhaust"][-1]), plate=float(S["plate"][-1]), slide=float(S["slide"][-1]))
+    # levels not reached by the end of the run: extrapolate the last 20 % of the run's own exponential decay
+    # (an estimate, labelled as such in results.md)
+    ext = {}
+    for k in ("box", "exhaust", "plate"):
+        t = S[k + "_t"] if k + "_t" in S else S["t"]
+        y = S[k]
+        m = t >= 0.8 * t[-1]
+        if m.sum() < 5 or np.any(y[m] <= 0):
+            continue
+        rate = -np.polyfit(t[m] / 60.0, np.log(y[m]), 1)[0]          # 1/min
+        ext[k] = dict(decay_per_min_last20pct=float(rate))
+        for lvl in (1000, 100):
+            if res[f"t_{lvl}ppm_min"][k] is None and rate > 0:
+                ext[k][f"t_{lvl}ppm_min_extrapolated"] = float(t[-1] / 60.0 + math.log(y[-1] / lvl) / rate)
+    res["tail"] = ext
     # tail decay rate of the box average: effective volume changes per minute vs the ideal q/V
     t, b = S["t"], S["box"]
     m = (b < 3000) & (b > 5) & (t > 0.3 * t[-1])
@@ -730,11 +745,12 @@ def do_figures(a):
         fig_box_multi(rows_b, f"{pre}_box_section.png")
 
 
-def fig_purge_curves(names, labels, fname):
-    """O2 against time, one panel per purge configuration: box average, exhaust (flow-weighted) and the plate (1 mm
-    above it), with the well-mixed ideal for the same flow and volume."""
+def fig_purge_curves(names, labels, fname, tmax=None):
+    """O2 against time, one panel per purge configuration: box average, exhaust (flow-weighted), the plate (1 mm
+    above it) and 2 mm under the cover slide, with the well-mixed ideal for the same flow and volume."""
     d = load_json()["purge"]
     n = len(names)
+    tmax = tmax or max(d[nm]["t_end_s"] for nm in names) / 60
     ncol = 2 if n > 1 else 1
     nrow = math.ceil(n / ncol)
     fig, axs = plt.subplots(nrow, ncol, figsize=(4.3 * ncol, 2.9 * nrow), squeeze=False, sharex=True, sharey=True,
@@ -742,17 +758,19 @@ def fig_purge_curves(names, labels, fname):
     for ax, nm, lab in zip(axs.ravel(), names, labels):
         r = d[nm]
         S = np.load(SCR / f"purge_{nm}.npz")
-        tm = np.linspace(0, r["t_end_s"] / 60, 200)
+        tm = np.linspace(0, tmax, 200)
         ideal = 209500 * np.exp(-r["q_total_L_min"] * tm / r["gas_L"])
         ax.plot(tm, ideal, color="#9a9a9a", lw=1.2, ls=(0, (4, 2)), label="well mixed, same flow")
         ax.plot(S["t"] / 60, S["box"], color=C1, lw=2, label="box average")
         ax.plot(S["exhaust_t"] / 60, S["exhaust"], color=C2, lw=2, label="exhaust (analyzer)")
         ax.plot(S["plate_t"] / 60, S["plate"], color=C3, lw=2, label="1 mm over the plate")
+        if "slide" in S.files:
+            ax.plot(S["plate_t"][:len(S["slide"])] / 60, S["slide"], color=C7, lw=1.2, label="2 mm under the cover slide")
         for lvl in (1000, 100):
             ax.axhline(lvl, color=INK2, lw=0.6)
         ax.set_yscale("log")
         ax.set_ylim(10, 3e5)
-        ax.set_xlim(0, r["t_end_s"] / 60)
+        ax.set_xlim(0, tmax)
         t1 = r["t_1000ppm_min"]["exhaust"]
         t2 = r["t_100ppm_min"]["exhaust"]
         f = lambda v: "-" if v is None else f"{v:.1f}"
@@ -767,11 +785,13 @@ def fig_purge_curves(names, labels, fname):
     plt.close(fig)
 
 
-def fig_purge_snap(items, t_snap, fname):
-    """O2 (ppm, log) on the y = mid-depth section (through the purge ports) at t_snap s, one panel per case."""
-    n = len(items)
-    fig, axs = plt.subplots(n, 1, figsize=(6.6, 2.55 * n), squeeze=False, constrained_layout=True)
-    for ax, (lab, path, field) in zip(axs[:, 0], items):
+def fig_purge_snap(items, t_snaps, fname):
+    """O2 (ppm, log) on the y = mid-depth section (through the purge ports): one row per case, one column per time
+    in t_snaps (s; the nearest written time is shown)."""
+    n, m = len(items), len(t_snaps)
+    fig, axs = plt.subplots(n, m, figsize=(3.6 * m + 0.8, 2.0 * n + 0.3), squeeze=False, constrained_layout=True)
+    for (i, (lab, path, field)), (j, t_snap) in ((a, b) for a in enumerate(items) for b in enumerate(t_snaps)):
+        ax = axs[i, j]
         r = pv.OpenFOAMReader(str(pathlib.Path(path) / "case.foam"))
         tv = r.time_values
         tt = min(tv, key=lambda v: abs(v - t_snap))
@@ -786,8 +806,8 @@ def fig_purge_snap(items, t_snap, fname):
         X, Z = np.meshgrid(xs, zs, indexing="ij")
         pts = pv.PolyData(np.stack([X.ravel(), np.full(X.size, ym), Z.ravel()], axis=1) / 1000.0)
         s = pts.sample(m)
-        if field == "c":
-            v = np.asarray(s.point_data["c"]) * X_O2_AIR * 1e6
+        if field in ("c", "T"):
+            v = np.asarray(s.point_data["T"]) * X_O2_AIR * 1e6
         else:
             v = x_o2(np.asarray(s.point_data["O2"]), np.asarray(s.point_data["Ar"])) * 1e6
         ok = np.asarray(s.point_data["vtkValidPointMask"]).astype(bool)
@@ -795,10 +815,16 @@ def fig_purge_snap(items, t_snap, fname):
         pc = ax.pcolormesh(X, Z, np.clip(v, 10, 2.1e5), cmap="Blues", norm=matplotlib.colors.LogNorm(10, 2.1e5),
                            shading="auto", rasterized=True)
         ax.set_aspect("equal")
-        ax.set_title(f"{lab}, t = {tt / 60:.0f} min", loc="left")
-        ax.set_ylabel("z (mm)")
-    axs[-1, 0].set_xlabel(f"x (mm), section y = {ym:.0f} mm (mid-depth, through the purge ports on the left wall)")
-    fig.colorbar(pc, ax=axs[:, 0], label="O2 (ppm), log scale", shrink=0.8)
+        ax.set_title(f"{lab}, t = {tt / 60:.0f} min" if j == 0 else f"t = {tt / 60:.0f} min", loc="left", fontsize=8)
+        if j == 0:
+            ax.set_ylabel("z (mm)")
+        if i < n - 1:
+            ax.set_xticklabels([])
+    for ax in axs[-1]:
+        ax.set_xlabel("x (mm)")
+    fig.suptitle(f"O2 on the section y = {ym:.0f} mm (mid-depth, through the purge ports on the left wall)", x=0.01,
+                 ha="left", fontsize=9)
+    fig.colorbar(pc, ax=axs, label="O2 (ppm), log scale", shrink=0.8)
     fig.savefig(OUT / fname, dpi=120)
     plt.close(fig)
 
@@ -806,7 +832,7 @@ def fig_purge_snap(items, t_snap, fname):
 def do_purgefigs(a):
     names = [c.split("=", 1)[0] for c in a.cases]
     labels = [c.split("=", 1)[1] for c in a.cases]
-    fig_purge_curves(names, labels, a.name)
+    fig_purge_curves(names, labels, a.name, a.tmax)
 
 
 def do_snaps(a):
@@ -814,14 +840,14 @@ def do_snaps(a):
     for c in a.cases:
         lab, path, field = c.split("=", 2)
         items.append((lab, path, field))
-    fig_purge_snap(items, a.t_snap, a.name)
+    fig_purge_snap(items, a.times or [a.t_snap], a.name)
 
 
 def do_tables(a):
     """Markdown tables of the cross-flow and purge results in cfd.json (printed; results.md quotes them)."""
     d = load_json()
     cr = d.get("cross", {})
-    names = [n for n in (a.cases or list(cr))]
+    names = [n for n in a.cases if n in cr] or list(cr)
     f2 = lambda v, n=2: "-" if v is None else f"{v:.{n}f}"
     pc = lambda v: "-" if v is None else f"{100 * v:.0f} %"
     L = ["| | " + " | ".join(names) + " |", "|---|" + "---|" * len(names)]
@@ -872,16 +898,26 @@ def do_tables(a):
     pu = d.get("purge", {})
     if pu:
         print()
-        P = ["| config | in (L/min) | out | exhaust to 1000 / 100 ppm, min | plate | box average | well mixed | "
-             "O2 at the end (exhaust / box / under the slide), ppm |", "|---|---|---|---|---|---|---|---|"]
-        for n, r in pu.items():
-            t1, t2 = r["t_1000ppm_min"], r["t_100ppm_min"]
-            g = lambda k: f"{f2(t1[k], 1)} / {f2(t2[k], 1)}"
-            e = r["ppm_at_end"]
+        ex = lambda r, k, lvl: r.get("tail", {}).get(k, {}).get(f"t_{lvl}ppm_min_extrapolated")
+
+        def tt(r, k, lvl):
+            v = r[f"t_{lvl}ppm_min"][k]
+            if v is not None:
+                return f"{v:.1f}"
+            e = ex(r, k, lvl)
+            return f"(≈ {e:.0f})" if e is not None else f"> {r['t_end_s'] / 60:.0f}"
+        P = ["| run | in (L/min) | out | box average: 1000 / 100 ppm (min) | exhaust (analyzer) | 1 mm over the plate | "
+             "O₂ at the end: box / exhaust / plate / under the slide (ppm) |", "|---|---|---|---|---|---|---|"]
+        for n in [n for n in a.cases if n in pu] or list(pu):
+            r = pu[n]
             ins = ", ".join(f"{k} {v:g}" for k, v in r["inlets"].items())
-            P.append(f"| {n} | {ins} | {r['outlet']} | {g('exhaust')} | {g('plate')} | {g('box')} | "
-                     f"{t1['well_mixed_ideal']:.1f} / {t2['well_mixed_ideal']:.1f} | "
-                     f"{e['exhaust']:.0f} / {e['box']:.0f} / {e['slide']:.0f} (at {r['t_end_s'] / 60:.0f} min) |")
+            e = r["ppm_at_end"]
+            P.append(f"| {n} | {ins} | {r['outlet']} | " + " | ".join(f"{tt(r, k, 1000)} / {tt(r, k, 100)}" for k in
+                     ("box", "exhaust", "plate")) + f" | {e['box']:.0f} / {e['exhaust']:.0f} / {e['plate']:.0f} / "
+                     f"{e['slide']:.0f} (at {r['t_end_s'] / 60:.1f} min) |")
+        r0 = next(iter(pu.values()))
+        P.append(f"| well mixed, same flow and volume | {r0['q_total_L_min']:g} | | "
+                 f"{r0['t_1000ppm_min']['well_mixed_ideal']:.1f} / {r0['t_100ppm_min']['well_mixed_ideal']:.1f} | | | |")
         print("\n".join(P))
 
 
@@ -889,6 +925,8 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("what", choices=("cross", "purge", "figures", "purgefigs", "snaps", "tables"))
     ap.add_argument("--t-snap", type=float, default=600.0)
+    ap.add_argument("--times", type=float, nargs="*", default=[], help="snaps: snapshot times, s (one column each)")
+    ap.add_argument("--tmax", type=float, default=None, help="purgefigs: x-axis limit, min")
     ap.add_argument("case", nargs="?")
     ap.add_argument("--name", default="", help="case name in cfd.json (figures: the PNG's file name)")
     ap.add_argument("--figs", action="store_true")

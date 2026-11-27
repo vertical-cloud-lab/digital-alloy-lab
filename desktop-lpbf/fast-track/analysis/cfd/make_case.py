@@ -10,7 +10,7 @@ Kinds of case (--kind):
            --nozzle-lpm (27 L/min = 2.5 m/s in the 45 x 4 slot) is the only inlet, the collector's port the only outlet
   purge    steady flow at the purge's flow (simpleFoam, laminar): --purge-lpm through one purge port (--inlet), the
            nozzle at --nozzle-lpm, out through --outlet (collector or a vent)
-  scalar   O2 (as c = x_O2 / 0.2095, air = 1) carried by a purge case's frozen flow (scalarTransportFoam, D = 2e-5 m2/s)
+  scalar   O2 (as T = x_O2 / 0.2095, air = 1; scalarTransportFoam's field is always T) carried by a purge case's frozen flow (scalarTransportFoam, D = 2e-5 m2/s)
   buoyant  argon displacing air with gravity (rhoReactingBuoyantFoam, species O2 N2 Ar, no reactions, isothermal 25 C)
 
 Gas: argon at 25 C and ~+7 mbar: rho 1.65 kg/m3, mu 22.6 uPa s (as PR 266's cases).
@@ -398,7 +398,7 @@ def scalar_files(a, g):
     cb = [f'    "({"|".join(ins)})" {{ type fixedValue; value uniform 0; }}',
           f"    {out} {{ type inletOutlet; inletValue uniform 0; value uniform 1; }}",
           f'    "({WALLS[2:-2]}{"|" + "|".join(closed) if closed else ""})" {{ type zeroGradient; }}']
-    files = {"0/c": hdr("volScalarField", "c") + "dimensions [0 0 0 0 0 0 0];\ninternalField uniform 1;\nboundaryField\n{\n" + "\n".join(cb) + "\n}\n"}
+    files = {"0/T": hdr("volScalarField", "T") + "dimensions [0 0 0 0 0 0 0];\ninternalField uniform 1;\nboundaryField\n{\n" + "\n".join(cb) + "\n}\n"}
     zb = g["zb"]
     pts = f"(0 0 {(zb + 1) * 1e-3:.6g}) (0 0 {(zb + 5) * 1e-3:.6g}) (0 0 {(g['z_slide'] - 2) * 1e-3:.6g})"
     files["system/controlDict"] = hdr("dictionary", "controlDict") + f"""application scalarTransportFoam;
@@ -417,22 +417,22 @@ timeFormat general;
 runTimeModifiable true;
 functions
 {{
-    boxAvg {{ type volFieldValue; libs (fieldFunctionObjects); fields (c); operation volAverage; regionType all; writeFields false; writeControl timeStep; writeInterval 2; log false; }}
-    exhaust {{ type surfaceFieldValue; libs (fieldFunctionObjects); regionType patch; name {out}; operation weightedAverage; weightField phi; fields (c); writeFields false; writeControl timeStep; writeInterval 2; log false; }}
-    probes {{ type probes; libs (sampling); writeControl timeStep; writeInterval 2; fields (c); probeLocations ({pts}); }}
+    boxAvg {{ type volFieldValue; libs (fieldFunctionObjects); fields (T); operation volAverage; regionType all; writeFields false; writeControl timeStep; writeInterval 2; log false; }}
+    exhaust {{ type surfaceFieldValue; libs (fieldFunctionObjects); regionType patch; name {out}; operation weightedAverage; weightField phi; fields (T); writeFields false; writeControl timeStep; writeInterval 2; log false; }}
+    probes {{ type probes; libs (sampling); writeControl timeStep; writeInterval 2; fields (T); probeLocations ({pts}); }}
 }}
 """
     files["constant/transportProperties"] = hdr("dictionary", "transportProperties") + f"DT {D_O2_AR:g};\n"
     files["system/fvSchemes"] = hdr("dictionary", "fvSchemes") + """ddtSchemes { default Euler; }
 gradSchemes { default Gauss linear; }
-divSchemes { default none; div(phi,c) Gauss limitedLinear01 1; }
+divSchemes { default none; div(phi,T) Gauss limitedLinear01 1; }
 laplacianSchemes { default Gauss linear limited corrected 0.5; }
 interpolationSchemes { default linear; }
 snGradSchemes { default limited corrected 0.5; }
 """
     files["system/fvSolution"] = hdr("dictionary", "fvSolution") + """solvers
 {
-    c { solver PBiCGStab; preconditioner DILU; tolerance 1e-11; relTol 0; }
+    T { solver PBiCGStab; preconditioner DILU; tolerance 1e-11; relTol 0; }
 }
 SIMPLE { nNonOrthogonalCorrectors 1; }
 """
@@ -550,7 +550,7 @@ endTime {a.t_end};
 deltaT 0.002;
 writeControl adjustableRunTime;
 writeInterval {a.t_write};
-purgeWrite 3;
+purgeWrite 0;
 writeFormat binary;
 writePrecision 8;
 writeCompression off;
