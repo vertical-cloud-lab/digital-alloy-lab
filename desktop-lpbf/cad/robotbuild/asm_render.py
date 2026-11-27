@@ -908,7 +908,7 @@ DRIVE_HOLD = os.environ.get("ASM_DRIVE_HOLD", "0") == "1"
 # place's tripods, so they don't fill the picture (chapter 41 was drawn without it: 0)
 CAM_MIN = float(os.environ.get("ASM_PERSON_CAM_MIN", "0") or 0.0)
 # round 10: how many of the best spots person_job tries (each: the standing body and the job's poses checked)
-NSPOT = int(os.environ.get("ASM_PERSON_SPOTS", "24"))
+NSPOT = int(os.environ.get("ASM_PERSON_SPOTS", "14"))
 # round 10: the person's spots and poses, once searched, are kept: pass 2 reuses pass 1's, and with ASM_PERSON_CACHE=<file.json>
 # every slice of a chapter shares them (keyed by step, the job's number in the chapter, side and work point; delete the file
 # when the recording changes)
@@ -1545,14 +1545,16 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
         if hit is not None:
             choice = (dict(hit["c"]), hit["data"])
             tiers = []
-        def search(tiers_, mir=None):
+        def search(tiers_, mir=None, quick=False):
+            """The first spot of the tiers where the person is clear (quick: standing by with the hands at their sides, out
+            of reach of the work: clear of everything is enough)."""
             nonlocal tried, worst
             fboxes = rp.floor_boxes()
             for tier in tiers_:
                 cands = rp.person_spots(work[:2], side, **tier)
                 for k_, v_ in getattr(rp, "last_spot_why", {}).items():
                     why_all[k_] = why_all.get(k_, 0) + v_
-                for c in cands[:NSPOT]:
+                for c in cands[:(NSPOT if not quick else 6)]:
                     tried += 1
                     c["relaxed"] = bool(tier.get("relaxed"))
                     c["mir"] = mir
@@ -1568,11 +1570,15 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                     P.place(x=xs, y=ys, hd=face_hd(look[0] - xs, look[1] - ys), look=look, frame=tot["n"])
                     data = None
                     if fit is not None:
-                        hits, data = fit(P)               # the whole body in the job's poses (reach first: cheap)
+                        hits, data = fit(P, quick=quick)  # the whole body in the job's poses (reach first: cheap)
                     else:
                         hits = rp.person_hits(P, limit=2)  # standing there
-                    if not hits:
-                        return (c, data)
+                    if not hits or (quick and person_badness(hits)[0] == 0):
+                        if quick and mir is None and (worst is None or person_badness(hits) < person_badness(worst[1])):
+                            worst = ((c, data), hits)
+                        if not quick:
+                            return (c, data)
+                        return None                       # quick: taken as the least bad below
                     if mir is None and (worst is None or person_badness(hits) < person_badness(worst[1])):
                         worst = ((c, data), hits)
             return None
@@ -1582,15 +1588,15 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                 # round 10: nothing within reach with the MiRs where they are (both docked round Fixture B: the F18 screw
                 # round 9 could not draw anyone at): a MiR whose arm is parked backs off along its lane to make room, then
                 # comes back after the person has gone (drawn, labelled; its lane checked clear on the floor plan)
-                for n_, x1_ in rp.mir_room_moves(work):
+                for n_, x1_ in rp.mir_room_moves(work)[:2]:
                     x0_ = rp.st[n_]["x"]
                     rp.set_arm(n_, x=x1_)
                     choice = search(tiers[:2], mir=(n_, float(x0_), float(x1_)))
                     rp.set_arm(n_, x=x0_)
                     if choice is not None:
                         break
-            if choice is None and rmax is not None:
-                choice = search(tiers[2:])
+            if choice is None and rmax is not None and (worst is None or person_badness(worst[1])[0] > 0):
+                choice = search(tiers[2:], quick=True)    # out of reach anyway: standing by, the hands at their sides
         if choice is None and worst is None:
             print(f"   {cur['id']}: no spot for the person by {np.round(np.asarray(work, float), 0).tolist()} "
                   f"({why_all}): the job is drawn without them", flush=True)
@@ -1786,8 +1792,29 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
         is clear; else the clear one that comes closest; else the hands at the person's sides. Every pose drawn is checked.
         Returns (what is wrong with the worst job: [(part, what, mm)], "hand"/"out of reach" for a reach short by mm;
         [pose per job])."""
-        def fit(P):
+        def fit(P, quick=False):
             poses, worst = [], []
+            ps = np.array([float(P.st["x"]), float(P.st["y"])])
+            if not quick:
+                # the reach first, from the floor plan alone (no posing): every job's target within 820 mm of where they
+                # stand (people.py's right hand reaches 750-800 mm forward leaning 28 deg)
+                far = 0.0
+                for kind, objs, T in jobs:
+                    if kind == "part":
+                        tg = np.vstack([obj_world(i, T) for i in objs]).mean(0)
+                    else:
+                        h_, u_ = screw_axis(objs[0])
+                        tg = h_ + 150.0 * u_
+                    far = max(far, float(np.linalg.norm(tg[:2] - ps)) - 820.0)
+                if far > 0.0:
+                    return [("hand", "out of reach", round(far + 80.0, 1))], None
+            if quick:
+                # standing by with the hands at their sides (a spot out of reach of the work: nothing to fit)
+                P.set(hands={"l": None, "r": None}, palm={"l": None, "r": None}, lean=0.0, frame=tot["n"])
+                hs = rp.person_hits(P, limit=2)
+                return hs + [("hand", "out of reach", 999.0)], [dict(name="hands at their sides", hands={"l": None, "r": None},
+                                                                     palm={"l": None, "r": None}, look=None, reach=999.0,
+                                                                     lean=0.0) for _ in jobs]
             for kind, objs, T in jobs:
                 keep = {i: (rp.sc.gmat.get(f"o{i}"), rp.sc.alpha.get(f"o{i}", 0.0)) for i in objs}
                 for i in objs:                     # checked where it will be: in its seat
@@ -1897,11 +1924,14 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                 hu = screw_axis(objs[0]) if kind == "screw" else None
                 if pose is None:                   # no person drawn (no spot)
                     pose = dict(hands={"l": None, "r": None}, palm={"l": None, "r": None}, look=tuple(work))
+                if (pose.get("hands") or {}).get("r") is None:
+                    hu = None                      # the hands at their sides (nothing clear within reach): no driver drawn
                 if hu is not None:
                     rp.sc.alpha["op/tool/screwdriver"] = 1.0
                 for f in range(nfj):
                     if P is not None and pstate["on"]:
-                        P.set(hands=pose["hands"], palm=pose["palm"], look=pose["look"], lean=float(pose.get("lean", 0.0)),
+                        P.set(hands=pose["hands"], palm=pose["palm"], look=pose.get("look") or tuple(map(float, work)),
+                              lean=float(pose.get("lean", 0.0)),
                               frame=tot["n"])
                         pstate["n"] = tot["n"]
                         if hu is not None:
