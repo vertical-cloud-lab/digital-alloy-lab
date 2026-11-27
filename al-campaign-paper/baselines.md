@@ -62,12 +62,15 @@ Neither vendor publishes a price, a lead time or a minimum order. Both route eve
 
 **Planning numbers (assumptions, not quotes):**
 
-- **Price.** Budget roughly **$0.5k-4.5k per 10 kg drum**, plus hazmat freight.
-  - The low end is public small-lot AlSi10Mg list prices, about $42-150/kg [7].
-  - The high end is about three times AlSi10Mg, which is how trade press prices Scalmalloy [8].
+- **Price.** Budget roughly **$1k-4k per 10 kg drum**, plus hazmat freight.
+  - The low end is about what 10 kg of AlSi10Mg costs at public list prices: $70-80/kg for 10-50 kg lots, with
+    a 3-week lead time, in one vendor's 2025 buyer's guide [7].
+  - The high end is an assumption of about five times that. Neither vendor gives a ratio, and neither does trade
+    press, which calls Scalmalloy powder "much more expensive than AlSi10Mg powder" [8].
   - Both vendors market these alloys as cheaper than alloys of similar strength [3, 9], so they should fall inside
     that range. Replace this with the quotes.
-- **Lead time.** Plan on **2-4 weeks if a drum is in U.S. stock and 4-8 weeks if it ships from Europe**. Fine
+- **Lead time.** Plan on **2-4 weeks if a drum is in U.S. stock and 4-8 weeks if it ships from Europe**. For
+  comparison, the same AlSi10Mg buyer's guide quotes 3 weeks for 10-50 kg [7]. Fine
   aluminum alloy powder is shipped as dangerous goods (the class is in each SDS, section 14), and the winter break
   falls inside that window. A made-to-order lot would miss the paper.
 - **Quantity: one 10 kg drum of each covers the in-house plan** (below). That holds only if every bar is printed
@@ -254,9 +257,10 @@ This expands R2 in [`risks.md`](risks.md) with the baselines in place.
 6. Metal AM, "Höganäs finalises agreement to supply KBM's AM and MIM powder sales platform" (2021), and "KBM adds
    IMR's aluminium powders to its online marketplace" (May 29, 2024). https://www.metal-am.com/?p=82565 ;
    https://www.metal-am.com/kbm-adds-imrs-aluminium-powders-to-its-online-marketplace/
-7. Met3DP, AlSi10Mg price list (vendor page; $70/kg for 1 kg, $42/kg for 10 kg, 15-45 µm), and its buyer's guide
-   ($100-150/kg). https://met3dp.com/?p=2967 ; https://blog.met3dp.com/?p=215
+7. Met3DP, "Metal powder for 3D printing AlSi10Mg: complete buyer's guide for 2025" (vendor page, read 2026-11-27):
+   USD 70-80/kg and 3 weeks for 10-50 kg; USD 50-80/kg wholesale. https://blog.met3dp.com/blog/metal-powder-for-3d-printing-alsi10mg-complete-buyers-guide-for-2025/
 8. Metal AM, "Scalmalloy is too expensive and design optimisation only makes sense in aerospace. True or false?"
-   (Scalmalloy powder about three times the price of AlSi10Mg). https://www.metal-am.com/articles/scalmalloy-is-too-expensive-and-design-optimisation-only-makes-sense-in-aerospace/
+   ("Scalmalloy powder is still much more expensive than AlSi10Mg powder"; powder is typically under 15 % of part
+   cost). https://www.metal-am.com/articles/scalmalloy-is-too-expensive-and-design-optimisation-only-makes-sense-in-aerospace/
 9. EOS press release, "EOS Expands Portfolio with Aluminum Al5X1 Alloy" (2023): "a more competitive cost than other
    aluminum alloys with similar strength and elongation properties". https://www.eos.info/press-media/press-center/press-releases/2023/eos-aluminum-alloy-al5x1
