@@ -256,8 +256,24 @@ def mir_bodies(tag, x, side):
     # an estimate), hung on the cabinet's far face beside the tool stand with its top 20 mm under the deck. Run 8
     # first had it on the cabinet top, where it took the elbow's room and 4 of the first 5 floor screws (C00d) lost their approach.
     y0p, y1p = (y_face, y_face + s * 130.0)
-    out.append((f"{tag} screw presenter", box_mesh(x + 190.0, x + 440.0, min(y0p, y1p), max(y0p, y1p), H + Cb - 170.0, H + Cb - 20.0), "#4a6b8a"))
+    # round 10 (after the round-10 video): the pick-up nest, an 8 x 8 mm pocket 40 mm deep at fetch.presenter_pick (30 mm in
+    # from the rail's end nearest the arm base, mid-width), where the screw stands head up for the bit. Until round 10 the
+    # presenter was one solid box, so every screw at its pick stood with its shank inside it (71 frame-audit pairs in chapters 40
+    # and 41, 1-4 frames each). Five boxes tile the envelope round the pocket (no overlaps, so ray-parity containment holds);
+    # the envelope's extent is unchanged. 8 mm takes the M3-M6 shanks; a real presenter has a nest sized to each screw.
+    px0, px1, py0, py1 = x + 190.0, x + 440.0, min(y0p, y1p), max(y0p, y1p)
+    pz0, pz1 = H + Cb - 170.0, H + Cb - 20.0
+    cx, cy, hw, dz = px0 + 30.0, 0.5 * (py0 + py1), PRESENTER_NEST["half_w"], PRESENTER_NEST["depth"]
+    out.append((f"{tag} screw presenter", C.merge([
+        box_mesh(px0, px1, py0, py1, pz0, pz1 - dz),                  # under the pocket
+        box_mesh(px0, cx - hw, py0, py1, pz1 - dz, pz1),              # beside it, the rail's end
+        box_mesh(cx + hw, px1, py0, py1, pz1 - dz, pz1),              # beside it, the rest of the rail
+        box_mesh(cx - hw, cx + hw, py0, cy - hw, pz1 - dz, pz1),
+        box_mesh(cx - hw, cx + hw, cy + hw, py1, pz1 - dz, pz1)]), "#4a6b8a"))
     return out
+
+
+PRESENTER_NEST = dict(half_w=4.0, depth=40.0)   # the pick-up nest's pocket (mm), see mir_bodies
 
 
 class Cell:

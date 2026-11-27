@@ -85,8 +85,11 @@ with its own hole pattern, so that is a hole drilled in the rail.
 
 **The screw presenter.** The frame audit's 71 remaining pairs over 1.5 mm in 40 and 41 are screws at their pick, standing in the
 MiR's screw presenter for 1-4 frames. `fetch.PRESENTER` is an envelope (250 x 130 x 150 mm, a vibratory rail presenter, vendor
-not chosen), drawn and checked as a solid box, so the screw's shank is inside it at the nest (`fetch.presenter_pick`). The fix is
-a nest bore in that box in `cell2.mir_bodies`, which then has to be drawn again in every frame that shows a MiR.
+not chosen), drawn and checked as a solid box, so the screw's shank is inside it at the nest (`fetch.presenter_pick`). After the
+video, `cell2.mir_bodies` builds the presenter with its nest: an 8 x 8 mm pocket 40 mm deep at the pick point, five boxes tiling
+the same envelope (FCL: M3-M6 shanks in the nest clear; a 6 mm shank 1.5 mm off centre, or one 20 mm along the rail, hits). The
+next run and render pick it up; the planner's allowance for the screw in the presenter's envelope at its pick (09aa0f6) is then
+no longer needed.
 
 ## Round 9 (2026-11-27): run 13, the whole assembly in one process, and round 8's audit findings fixed in the planner
 

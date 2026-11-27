@@ -53,8 +53,10 @@ re-measures every pair with the planner's own 0.1 mm meshes, as in round 9):
   The presenter (a vibratory rail presenter, vendor not chosen) is modelled, drawn and checked by the planner, as a solid
   250 x 130 x 150 mm envelope, without the nest the screw stands in; so the screw's shank is inside the box for the frames
   between the presenter putting it out and the bit lifting it. The head is drawn on the box's top, as a screw in a nest
-  looks. The fix is a model change (a nest bore at `fetch.presenter_pick` in `cell2.mir_bodies`, drawn and checked), and
-  every frame showing a MiR would have to be drawn again.
+  looks. The fix, made after this cut and not in it: `cell2.mir_bodies` now builds the presenter with its pick-up nest, an
+  8 x 8 mm pocket 40 mm deep at `fetch.presenter_pick`, from five boxes that tile the same envelope (checked with FCL: M3-M6
+  shanks standing in the nest are clear, a shank 1.5 mm off its centre or 20 mm along the rail is not). Every frame that shows a
+  MiR has to be drawn again for the audit to see it.
 - **12 pairs in 41: fingertips on the part they hold, at most 4.7 mm** (the ring caps in F35's O-ring, 22 frames; the window,
   the recoater's carriage block as arm B pushes it, the bearing housing, the Z flange).
 - **MiR A reverses 1.8 m once** (chapter 41, frames 3174-3235, 5 s). These are two of the renderer's make-room moves back to
@@ -93,7 +95,7 @@ steady run 6.5 s (8.0), 4 % of runs under 2 s, 95th-percentile camera speed 0.01
 minute, median run 7.2 s; chapter 40: 3.6, 6.2 s.
 
 **Not done in round 10:**
-- **The screw presenter's nest** (71 pairs above): a model change, then every frame showing a MiR drawn again.
+- **The screw presenter's nest** (71 pairs above): in the model now (`cell2.mir_bodies`), not in these frames; the next render shows it.
 - **F35, F39 and F18's last screw by the robots.** Each needs a design or grasp change and a re-plan spliced into run 15:
   F35 another grasp for the O-ring; F39 another grasp and release for the drawer (and the drawer latches modelled as studs,
   not one envelope); F18 #1 the rail's first hole 10 mm further from its end (x -100), so the angle head clears the wall, or
