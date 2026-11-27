@@ -490,40 +490,152 @@ def _cage(parts, add, h):
 # ======================================================================================================== AE path
 AE_XY = {"M50": (3.2, 120.0), "L75": (3.2, 120.0)}        # waveguide (r, deg): through the piston head's Ø10 wire hole, clear of the TCs and heaters
 AE_WG_D = 3.0                                              # Ø3 mm 316 (analysis/out/monitoring/mech/checks.md §6)
+# The sprung cold end (mechanics.md §4; analysis/monitoring/mech/ae_preload.py checks these numbers). z values are from the rod end's
+# coupling face zc (modules_low.zlevels()). The waveguide slides free in its holes; its Ø4 head, domed R50 on top, presses on the plate's
+# spigot and hangs in a counterbore in the socket floor when nothing holds it up. Its foot sits on a miniature sensor, face up, in a
+# 316L cartridge that stands on the rod end's bore floor (two legs either side of the cross-drilling, which the type K leads still
+# use). A spring under the sensor sets the force; the cartridge's cap stops the sensor with the plate off, so the head then stands
+# delta0 above the seated spigot and the plate pushes it down that far. The sensor's lead runs up the rod to an in-line plug near the
+# piston head, and a pigtail runs back down to a weld-in Microdot feedthrough in the cap's back, right of the cartridge, above the
+# cross-drilling and the channel (nothing on the back face at the type K row: a gas-side body there would block the cross-drilling).
+AE_CART = dict(
+    wg_r=3.2, wg_deg=120.0, wg_d=3.0, hole_d=3.4,              # waveguide: axis (r, deg), shaft, its holes (as before)
+    head_d=4.0, head_t=1.0, dome_R=50.0,                        # head on top, domed R50 (R25 would dent 6061 at 200 C; ae_preload.py §3)
+    cb_d=4.4, cb_depth=1.3,                                     # counterbore in the heater block's socket floor
+    delta0=0.6,                                                 # pre-travel: head above the seated spigot with the plate off
+    cart_r=2.8, cart_deg=126.0, cart_od=6.3, cart_id=5.6,       # cartridge axis (r, deg), tube (turned 316L)
+    floor_z=9.0, leg_top=12.9, seat_z=13.9, slot_y=(-0.3, 4.3), # stands on the bore floor; slot over the cross-drilling; spring seat
+    cap_t=1.0, cap_hole=3.3, cable_slot_w=2.8,                  # stop cap with the waveguide's guide hole; slot for the sensor's lead
+    # Lee Spring LC 029BB 09S316 (316, squared and ground): OD 4.78, ID 3.30, wire 0.74, free 19.05, solid 8.93, 3.94 N/mm
+    spring_od=4.78, spring_wire=0.74, spring_L0=19.05, spring_L_stop=15.88, spring_L_solid=8.93, spring_n=12, spring_k=3.94,
+    spring_su_MPa=1690.0,                                       # 316 spring wire (ASTM A313), ~0.74 mm: ~1690 MPa minimum tensile (assumed)
+    sensor_d=5.0, sensor_h=4.0, boot_d=2.4, boot_L=4.1,         # MISTRAS PICO: Ø5 x 4, side cable (9.1 mm across with its boot)
+    # SST FA40102 Microdot weld-in (laser or e-beam, SST's NS40102): Ø6.35 flange in a Ø6.43 x 0.51 counterbore, Ø5.18 through-bore;
+    # gas side a Ø4.83 x 6.0 body and a Ø1.07 x 3.8 pin; air side 3.3 mm of 10-32 thread. In the cap's back, on a spot face
+    ft_x=4.5, ft_z=15.0, ft_face_y=7.3, ft_flange_d=6.35, ft_cb_d=6.43, ft_cb=0.51, ft_bore_d=5.18, ft_body_d=4.83, ft_body_L=6.0,
+    ft_pin_d=1.07, ft_pin_L=3.8, ft_thread_L=3.3, spot=7.4,
+    plug_d=6.5, plug_L=14.0, cable_d=3.0, cable_L=16.0,         # mating 10-32 plug, then its cable to -x (envelope)
+)
+AE_CART["dome_h"] = AE_CART["dome_R"] - math.sqrt(AE_CART["dome_R"] ** 2 - (AE_CART["head_d"] / 2) ** 2)
+AE_PARTS = {     # bought parts of the cold end, read on the makers' pages through the lab's tunnel (2026-11-27)
+    "sensor": dict(vendor="MISTRAS", pn="PICO",
+                   desc="miniature AE sensor Ø5 x 4 mm, stainless case and face, 200-750 kHz (resonance 250 kHz), 54 dB ref V/(m/s), "
+                        "integral coax from the side to a BNC; quote only",
+                   url="https://www.mistrasgroup.com/media/x13nu1vw/model_pico.pdf", read_utc="2026-11-27T08:27Z",
+                   t_min_C=-65.0, t_max_C=177.0),
+    "sensor_alt": dict(vendor="QingCheng (Qawrums)", pn="WM500/1",
+                       desc="Ø4.7 x 4.0 mm, 100-1000 kHz (resonance 500 kHz), > 58 dB, -20 to 120 C, integral side cable; maker's sheet "
+                            "only; quote only", url="https://aendt.com/sds/WM500-1.pdf", read_utc="2026-11-27T08:33Z",
+                       t_min_C=-20.0, t_max_C=120.0),
+    "spring": dict(vendor="Lee Spring", pn="LC 029BB 09S316",
+                   desc="316 compression spring, squared and ground: OD 4.78, ID 3.30, wire 0.74, free 19.05, solid 8.93 mm, 3.94 N/mm, "
+                        "39.4 N at solid; $8.87 each (1-19)", url="https://www.leespring.com/node/329221", read_utc="2026-11-27T08:48Z"),
+    "feedthrough": dict(vendor="Solid Sealing Technology", pn="FA40102",
+                        desc="Microdot (10-32) coaxial feedthrough, grounded shield, weld-in (laser or e-beam), Inconel pin, -269 to "
+                             "450 C, He leak < 1e-10 atm cc/s; $34.50",
+                        url="https://www.solidsealing.com/products/2052/Microdot-Feedthrough-1KV-2-Amp-0-042-inch-Inconel-Conductor-Weld-In-Without-Plug/",
+                        read_utc="2026-11-27T08:29Z"),
+    "couplant": dict(vendor="Chemours (McMaster 10195K41)", pn="Krytox LVP",
+                     desc="PFPE vacuum grease, -15 to 300 C, 1e-13 Torr at 20 C, 1e-5 Torr at 200 C; $178.91 per 2 oz",
+                     url="https://www.mcmaster.com/products/krytox-grease/?s=krytox-grease", read_utc="2026-11-27T08:34Z"),
+}
+
+
+def _helix(od, wire, length, n, p0):
+    """a round-wire helical spring, `length` tall from p0 (the wire's ends are not ground in the model)"""
+    rm, hh = (od - wire) / 2, length - wire
+    path = cq.Wire.makeHelix(hh / n, hh, rm)
+    prof = cq.Wire.makeCircle(wire / 2, V(rm, 0, 0), V(0, 1, 0))
+    return cq.Solid.sweep(prof, [], path, isFrenet=True).translate(V(p0[0], p0[1], p0[2] + wire / 2))
 
 
 def _ae(parts, add, h, module):
-    C, box, cyl, tube, comp, fuse = h.C, h.box, h.cyl, h.tube, h.comp, h.fuse
+    C, box, cyl, tube, fuse = h.C, h.box, h.cyl, h.tube, h.fuse
     import modules_low as ML
     z = ML.zlevels()
     zc = z["zc"]
     pg = dict(group="piston", tags=("in_module",) + TAG)
     RF = ML.ROD_FT
-    wg = None
+    A = AE_CART
     if module in AE_XY:
         r, deg = AE_XY[module]
-        x, y = r * math.cos(math.radians(deg)), r * math.sin(math.radians(deg))
-        z_top = z["zb1"] - 4.0                                            # the plate spigot's underside
-        z_bot = zc + 9.0 - 3.0                                            # 3 mm into an M2 thread in the rod end's bore floor (striker below)
-        wg = cyl(AE_WG_D / 2, (x, y, z_bot), "z", z_top - z_bot)
-        add(f"AE waveguide {module} (Ø3 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed "
-            f"into the rod end)", wg, C["ss"], 4, (0, 0, 260), mat="ss316l", bom="M4-06", section=True, **pg)
-        hole = cyl(AE_WG_D / 2 + 0.2, (x, y, z["zk0"] - 30.0), "z", (z["zb1"] - 4.3) - (z["zk0"] - 30.0) + 0.01)
-        _cut(parts, f"Heater block {module}", [hole])
+        ca, sa = math.cos(math.radians(deg)), math.sin(math.radians(deg))
+        x, y = r * ca, r * sa
+        cc, sc = math.cos(math.radians(A["cart_deg"])), math.sin(math.radians(A["cart_deg"]))
+        xc, yc = A["cart_r"] * cc, A["cart_r"] * sc
+        z_tip = z["zb1"] - 4.0                                            # the plate spigot's underside (plate seated)
+        z_sock = z["zb1"] - 4.3                                           # the socket's floor
+        seat = zc + A["seat_z"]
+        L_on = A["spring_L_stop"] - A["delta0"]                           # spring length with the plate on (no thermal growth)
+        z_face = seat + L_on + A["sensor_h"]                              # the sensor's face = the waveguide's foot, plate on
+        z_cap = seat + A["spring_L_stop"] + A["sensor_h"]                 # the stop cap's underside
+        z_head0 = z_tip - A["dome_h"] - A["head_t"]
+        # waveguide: shaft, head and dome (the dome's apex touches the spigot)
+        dome = cq.Solid.makeSphere(A["dome_R"], V(x, y, z_tip - A["dome_R"]), angleDegrees1=-90, angleDegrees2=90).intersect(
+            cyl(A["head_d"] / 2, (x, y, z_tip - A["dome_h"]), "z", A["dome_h"] + 0.01))
+        wg = fuse([cyl(A["wg_d"] / 2, (x, y, z_face), "z", z_head0 - z_face + 0.01),
+                   cyl(A["head_d"] / 2, (x, y, z_head0), "z", A["head_t"] + 0.001), dome])
+        add(f"AE waveguide {module} (Ø3 mm 316, slides free; Ø4 head domed R{A['dome_R']:.0f} on the plate's spigot; foot on the sensor)",
+            wg, C["ss"], 4, (0, 0, 260), mat="ss316l", bom="M4-06", section=True, **pg)
+        hole = cyl(A["hole_d"] / 2, (x, y, z["zk0"] - 30.0), "z", z_sock - (z["zk0"] - 30.0) + 0.01)
+        cb = cyl(A["cb_d"] / 2, (x, y, z_sock - A["cb_depth"]), "z", A["cb_depth"] + 0.02)
+        _cut(parts, f"Heater block {module}", [hole, cb])
         _cut(parts, f"Radiation shields {module}", [hole])
-        _cut(parts, f"Rod end {module}: 316L", [cyl(AE_WG_D / 2, (x, y, z_bot - 0.01), "z", 6.0)])
-        REPORT["AE"] = dict(waveguide_xy=(round(x, 2), round(y, 2)), z_top=z_top, z_bottom=z_bot, length=round(z_top - z_bot, 1))
-    # sensor on the rod end's back face (+y), at x -26: outside the gas boundary; spring strap screwed to the same face
-    yb = RF["back_y"]
-    zs = zc + RF["face_z0"] + 11.0                                    # Ø19 sensor, 1.5 mm above the block's bottom face (Z arm below)
-    xs = -26.0
-    sens = fuse([cyl(9.5, (xs, yb, zs), "y", 16.0), cyl(3.0, (xs + 9.0, yb + 8.0, zs), "x", 8.0)])
-    add("AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope Ø19 x 16 with a side connector) on the rod end's back face",
-        sens, C["blue"], 4, (0, 160, 0), mat="misc", mass_kg=0.03, bom="M4-01", section=True, **pg)
-    strap = fuse([box(xs - 14.5, xs + 14.5, yb + 16.0, yb + 19.0, zs - 4.0, zs + 4.0),
-                  box(xs - 14.5, xs - 11.5, yb, yb + 16.0, zs - 4.0, zs + 4.0), box(xs + 11.5, xs + 14.5, yb, yb + 16.0, zs - 4.0, zs + 4.0)])
-    add("AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)", strap, C["alu_dark"], 4, (0, 170, 0),
-        mat="al6061", bom="M4-09", section=True, **pg)
+        # cartridge: tube on the bore floor, legs either side of the cross-drilling, floor (spring seat), stop cap with the guide hole
+        top = z_cap + A["cap_t"]
+        cart = tube(A["cart_od"] / 2, A["cart_id"] / 2, (xc, yc, zc + A["floor_z"]), "z", top - (zc + A["floor_z"]))
+        cart = fuse([cart, cyl(A["cart_id"] / 2 + 0.01, (xc, yc, zc + A["leg_top"]), "z", A["seat_z"] - A["leg_top"]),
+                     cyl(A["cart_id"] / 2 + 0.01, (xc, yc, z_cap), "z", A["cap_t"])])
+        cart = cart.cut(box(xc - 5, xc + 5, A["slot_y"][0], A["slot_y"][1], zc + A["floor_z"] - 0.1, zc + A["leg_top"]))
+        cart = cart.cut(cyl(A["cap_hole"] / 2, (x, y, z_cap - 0.1), "z", A["cap_t"] + 0.2))
+        cart = cart.cut(cq.Solid.makeCone(A["cap_hole"] / 2, A["cap_hole"] / 2 + 0.85, 0.85, V(x, y, top - 0.85), V(0, 0, 1)))
+        # slot for the sensor's lead on the side facing the rod's axis, from the seat to under the cap
+        u = (-cc, -sc)
+        sl = box(-A["cable_slot_w"] / 2, A["cable_slot_w"] / 2, 0.0, A["cart_od"], seat + 0.5, z_cap - 0.6)
+        sl = sl.rotate(V(0, 0, 0), V(0, 0, 1), math.degrees(math.atan2(u[1], u[0])) - 90.0).translate(V(xc, yc, 0))
+        cart = cart.cut(sl)
+        add(f"AE cartridge {module} (316L, Ø{A['cart_od']:.1f} tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
+            cart, C["ss"], 4, (0, 0, 140), mat="ss316l", bom="M4-10", section=True, **pg)
+        spr = _helix(A["spring_od"], A["spring_wire"], L_on, A["spring_n"], (xc, yc, seat))
+        add(f"AE spring {module} (Lee LC 029BB 09S316: 316, Ø{A['spring_od']:.2f} x {A['spring_L0']:.2f} free, {A['spring_k']:.2f} N/mm; "
+            f"{L_on:.2f} long with the plate on)", spr, C["steel"], 4, (0, 0, 140), mat="steel", bom="M4-07", section=True, **pg)
+        zs0 = seat + L_on
+        boot = _cyl_ax(A["boot_d"] / 2, (xc + 2.0 * u[0], yc + 2.0 * u[1], zs0 + A["sensor_h"] / 2), (u[0], u[1], 0.0),
+                       A["boot_L"] + 0.5)
+        sens = fuse([cyl(A["sensor_d"] / 2, (xc, yc, zs0), "z", A["sensor_h"]), boot])
+        add(f"AE sensor in the cartridge {module} (MISTRAS PICO, Ø{A['sensor_d']:.0f} x {A['sensor_h']:.0f}, face up; its side cable's boot "
+            f"through the slot)", sens, C["blue"], 4, (0, 0, 140), mat="misc", mass_kg=0.001, bom="M4-01", section=True, **pg)
+        # weld-in Microdot feedthrough in the cap's back (+y), right of the cartridge, above the cross-drilling and the channel
+        fx, fz, fy = A["ft_x"], zc + A["ft_z"], A["ft_face_y"]
+        sp = A["spot"] / 2
+        _cut(parts, f"Rod end {module}: 316L", [box(fx - sp, fx + sp, fy, fy + 6.0, fz - sp, fz + sp),               # spot face
+                                               cyl(A["ft_cb_d"] / 2, (fx, fy - A["ft_cb"], fz), "y", A["ft_cb"] + 0.01),  # weld counterbore
+                                               cyl(A["ft_bore_d"] / 2, (fx, 0.0, fz), "y", fy + 0.01)])          # through-bore
+        yf = fy - A["ft_cb"]
+        ft = fuse([cyl(A["ft_flange_d"] / 2, (fx, yf, fz), "y", A["ft_cb"]),
+                   cyl(A["ft_body_d"] / 2, (fx, yf - A["ft_body_L"], fz), "y", A["ft_body_L"] + 0.01),
+                   cyl(A["ft_pin_d"] / 2, (fx, yf - A["ft_body_L"] - A["ft_pin_L"], fz), "y", A["ft_pin_L"] + 0.01),
+                   cyl(A["ft_body_d"] / 2, (fx, fy, fz), "y", A["ft_thread_L"])])
+        y2 = fy + A["ft_thread_L"]
+        plug = fuse([cyl(A["plug_d"] / 2, (fx, y2, fz), "y", A["plug_L"]),
+                     cyl(A["cable_d"] / 2, (fx - A["cable_L"], y2 + A["plug_L"] - A["plug_d"] / 2, fz), "x", A["cable_L"])])
+        add(f"AE coaxial feedthrough {module} (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable "
+            f"(envelope)", fuse([ft, plug]), C["ss"], 4, (0, 60, 120), mat="ss316l", mass_kg=0.02, bom="M4-11", section=True, **pg)
+        REPORT["AE"] = dict(waveguide_xy=(round(x, 2), round(y, 2)), cartridge_xy=(round(xc, 2), round(yc, 2)), z_tip=z_tip,
+                            z_foot=round(z_face, 2), z_cap=round(z_cap, 2), shaft_length=round(z_head0 - z_face, 1),
+                            spring_on_mm=round(L_on, 2), feedthrough=(fx, fy, round(fz, 2)))
+    else:
+        # S25 (rod ID 7.7: no room for the waveguide and the cartridge): the sensor on the rod end's back face, outside the gas, as before
+        yb = RF["back_y"]
+        zs = zc + RF["face_z0"] + 11.0                                # Ø19 sensor, 1.5 mm above the block's bottom face (Z arm below)
+        xs = -26.0
+        sens = fuse([cyl(9.5, (xs, yb, zs), "y", 16.0), cyl(3.0, (xs + 9.0, yb + 8.0, zs), "x", 8.0)])
+        add("AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope Ø19 x 16 with a side connector) on the rod end's back face",
+            sens, C["blue"], 4, (0, 160, 0), mat="misc", mass_kg=0.03, bom="M4-01", section=True, **pg)
+        strap = fuse([box(xs - 14.5, xs + 14.5, yb + 16.0, yb + 19.0, zs - 4.0, zs + 4.0),
+                      box(xs - 14.5, xs - 11.5, yb, yb + 16.0, zs - 4.0, zs + 4.0), box(xs + 11.5, xs + 14.5, yb, yb + 16.0, zs - 4.0, zs + 4.0)])
+        add("AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)", strap, C["alu_dark"], 4,
+            (0, 170, 0), mat="al6061", bom="M4-09", section=True, **pg)
     # preamp on the process base plate, behind-left of the Z stage (<= 1 m of cable; the sensor's lead unplugs at a module swap)
     zbp = h.P["z_base1"]
     pre = box(-265.0, -155.0, -240.0, -180.0, zbp, zbp + 30.0)      # front-left: 5 mm off the guard's bottom rail, clear of the bridge posts and legs
