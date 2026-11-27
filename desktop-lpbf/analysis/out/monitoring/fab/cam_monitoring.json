@@ -4,7 +4,7 @@
   "frame_C90_before_min": 0.35,
   "frame_C90_with_LW_min": 2.79,
   "LW_added_min": 2.44,
-  "mon_C180_BW_min": 5.05,
+  "mon_C180_BW_min": 5.11,
   "tool_changes_C90_before": 3,
   "tool_changes_C90_with_LW": 4,
   "tool_changes_mon_C180": 2
@@ -111,6 +111,19 @@
    "start_depth": 111.0,
    "final_depth": 101.0,
    "cut_time_min": 0.08,
+   "rapid_time_min": 0.01,
+   "error": null
+  },
+  {
+   "setup": "mon_C180",
+   "label": "BW light-bracket holes: drill 2 x 3.3 mm, M4 tapped after, 10 deep",
+   "kind": "drill",
+   "tool": 6,
+   "tool_name": "3.3 mm carbide drill (M4 tap drill)",
+   "feed_mm_min": 500.0,
+   "start_depth": 111.0,
+   "final_depth": 101.0,
+   "cut_time_min": 0.05,
    "rapid_time_min": 0.01,
    "error": null
   }
@@ -316,6 +329,30 @@
     ],
     "note": "webs: metal between each \u00d84.5 clearance hole and the clamp frame's outline as monitoring_parts._bw trims it (BW_FRAME); walls: between each M4 thread (major \u00d84) and the seat pocket"
    },
+   "light_bracket": {
+    "holes_xz": [
+     [
+      -141.0,
+      69.25
+     ],
+     [
+      -129.5,
+      69.25
+     ]
+    ],
+    "screws": "2 x M4 x 0.7, tapped 8 deep",
+    "part": "BW LED bracket (cad/monitoring_parts.BWL, _bw_light): its 1/4 in. flange on the wall above the clamp frame",
+    "thread_to_clamp_frame_mm": [
+     8.78,
+     11.15
+    ],
+    "thread_wall_to_seat_mm": [
+     21.39,
+     22.15
+    ],
+    "thread_to_flat_face_end_mm": 5.0,
+    "note": "each M4 thread (major \u00d84) to the clamp frame's trimmed outline, to the seat pocket, and to the end of the back face's flat (x -148, where the outer R8 corner starts)"
+   },
    "liner": {
     "liner": "Lift-out wall liner, back lower left (z 16..32, x -130.5..-0.5)",
     "x_range": [
@@ -374,8 +411,8 @@
   "checks": {
    "frame_volume_cm3": {
     "before": 1582.512,
-    "after": 1547.559,
-    "removed": 34.953
+    "after": 1547.308,
+    "removed": 35.204
    },
    "clear_aperture_blocked_mm3": {
     "LW": 0.0,
@@ -457,6 +494,24 @@
       107.0,
       0.8
      ]
+    },
+    "BW light-bracket hole 1 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": {
+     "min_gap_mm": 5.0,
+     "to": "CYLINDER",
+     "at": [
+      -152.0,
+      107.0,
+      58.0
+     ]
+    },
+    "BW light-bracket hole 2 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": {
+     "min_gap_mm": 6.0,
+     "to": "CYLINDER",
+     "at": [
+      -135.0,
+      90.0,
+      60.0
+     ]
     }
    },
    "bw_shift_search": [
@@ -470,11 +525,11 @@
  },
  "camotics": {
   "part": {
-   "target_cm3": 1549.12,
-   "simulated_cm3": 1555.66,
+   "target_cm3": 1548.88,
+   "simulated_cm3": 1555.49,
    "stock_cm3": 2821.81,
    "gouge_all_cm3": 0.177,
-   "leftover_all_cm3": 6.715,
+   "leftover_all_cm3": 6.784,
    "gouge_deeper_than_min_cm3": 0.0,
    "leftover_deeper_than_min_cm3": 0.025,
    "min_depth_mm": 1.0,
@@ -1229,21 +1284,29 @@
     "pieces_free_after_setup_cm3": []
    },
    "mon_C180": {
-    "removed_cm3": 18.25,
+    "removed_cm3": 18.42,
     "n_rapids_through_stock": 0,
     "rapids": [],
     "time": {
-     "camotics_min": 5.2,
-     "camotics_feed_min": 4.95,
-     "camotics_rapid_min": 0.26,
-     "with_vf4_rapids_min": 5.05,
-     "freecad_job_cycle_time": "00:08:37",
-     "freecad_sum_of_ops_min": 8.62,
-     "recount_min": 5.05
+     "camotics_min": 5.28,
+     "camotics_feed_min": 5.0,
+     "camotics_rapid_min": 0.28,
+     "with_vf4_rapids_min": 5.11,
+     "freecad_job_cycle_time": "00:09:15",
+     "freecad_sum_of_ops_min": 9.25,
+     "recount_min": 5.11
     },
     "drills": [
      {
       "label": "BW clamp-frame holes: drill 3 x 3.3 mm, M4 tapped after, 10 deep",
+      "drill_mm": 3.3,
+      "model_floor_z": 101.0,
+      "tip_z": 101.0,
+      "full_diameter_to_z": 101.991,
+      "full_diameter_short_by_mm": 0.99
+     },
+     {
+      "label": "BW light-bracket holes: drill 2 x 3.3 mm, M4 tapped after, 10 deep",
       "drill_mm": 3.3,
       "model_floor_z": 101.0,
       "tip_z": 101.0,
@@ -1494,16 +1557,16 @@
      "T6": {
       "stock": {
        "c": 0.5,
-       "line": 7939,
-       "op": "BW clamp-frame holes: drill 3 x 3.3 mm, M4 tapped after, 10 deep",
+       "line": 7957,
+       "op": "BW light-bracket holes: drill 2 x 3.3 mm, M4 tapped after, 10 deep",
        "part": "flutes",
        "at": [
-        48.8,
-        -134.2
+        67.8,
+        -141.2
        ],
        "tip": [
-        49.95,
-        -133.27,
+        69.25,
+        -141.0,
         108.05
        ]
       },
@@ -1548,7 +1611,7 @@
     },
     "travel": {
      "table_z_setup": -215.9,
-     "x_span_mm": 49.9,
+     "x_span_mm": 69.2,
      "y_span_mm": 142.3,
      "x_ok": true,
      "y_ok": true,
@@ -1702,8 +1765,8 @@
   "stock_vs_camotics": {
    "frame": {
     "camotics_final": "$CAMOTICS_WORK/frame_voxels.npz",
-    "this_cm3": 1556.36,
-    "camotics_cm3": 1555.66,
+    "this_cm3": 1556.19,
+    "camotics_cm3": 1555.49,
     "only_here_cm3": 0.74,
     "only_in_camotics_cm3": 0.04
    }
