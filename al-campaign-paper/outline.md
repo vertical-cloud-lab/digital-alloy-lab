@@ -28,10 +28,11 @@ Version A's sentence, with the brackets the campaign fills:
 
 The family in the brackets is only an example. It is whatever the screen picks.
 
-## Two definitions to freeze before the first optimizer round (G1)
+## Two definitions to freeze before the screen ranks anything (by Dec 1, before G1)
 
 The claim can only be checked if these are fixed in advance. Both should be committed to the repo before the CALPHAD
-screen ranks anything (G1, Fri Dec 4), together with the optimizer settings (SI S9).
+screen ranks anything (by Tue Dec 1, so the seeds can still be picked at G1 on Fri Dec 4), together with the
+optimizer settings (SI S9). A draft is in [`preregistration.md`](preregistration.md).
 
 **1. "Stronger than AlSi10Mg".** PR #285 showed that the datasheets can't be the bar: AlSi10Mg's datasheet rows already
 pass both FLAIME G3 windows, and a desktop or sub-size result won't reproduce datasheet values anyway. Proposed rule:
@@ -45,8 +46,8 @@ pass both FLAIME G3 windows, and a desktop or sub-size result won't reproduce da
      This one separates the alloy from the powder route.
 - A candidate is "stronger" if its mean yield strength exceeds the comparator's by more than the half-widths of both
   95 % confidence intervals combined, at mean elongation no lower than the comparator's, with n ≥ 3 valid specimens
-  each. Each alloy is compared in its intended condition: AlSi10Mg as built and stress-relieved; the candidate as
-  built and after the one heat treatment chosen before printing.
+  each. AlSi10Mg is tested as built and stress-relieved, and the candidate as built and after the one heat treatment
+  chosen before printing. A candidate condition counts only if it passes against AlSi10Mg in both of its conditions.
 - Datasheet values (PR #285) are context in the paper, not the bar.
 
 **2. "Less critical minerals than Scalmalloy".** A plain count or mass fraction of critical elements doesn't work for
@@ -66,8 +67,8 @@ is expensive" (09:48), which points to an amount-weighted metric. Proposed:
   - On B_NIR, AlSi10Mg (5.2-10.3 wt %) scores above Scalmalloy (4.7-6.0) at the midpoints; the intervals overlap.
     The Mn-rich seed S1 (6.6-7.3) sits above Scalmalloy's whole interval.
   - On B_cost, with Sc priced as metal, every Sc-free alloy except the two silver-bearing Al-Cu-Mg grades is at least
-    97 % below Scalmalloy (92 % if Sc is priced through an Al-2Sc master alloy); the silver-bearing ones are 74-87 %
-    below.
+    97 % below Scalmalloy, and the silver-bearing ones are 74-87 % below. With Sc priced through an Al-2Sc master
+    alloy, the floor is 92 % for the silver-free alloys and 14-56 % for the silver-bearing ones.
   - So B_NIR is the only one of the three that tells Sc-free alloys apart. It is still the proposed primary, with the
     claim region "stronger than in-house AlSi10Mg, and B_NIR below Scalmalloy's lower bound (4.7 wt %)". That region
     already holds five or six Sc-free alloys on their reported (mostly machined) values, or four or five against the

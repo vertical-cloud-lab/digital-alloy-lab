@@ -59,10 +59,10 @@ date its impact factors.
   (Fig. 1b with the chosen alloy).
 - ***Additive Manufacturing Letters*:**
   - Write "PBF-LB/M" in the title and abstract.
-  - Recent references: 19 of the 65 entries (29 %) are from 2024-2026, against the 25 % the guide asks for, but only
-    12 of 65 (18 %) if the seven vendor datasheets don't count. As results come in, cite recent work rather than
-    older general references.
-  - Self-citations: 1 of 65.
+  - Recent references: 19 of the 66 entries are dated 2024-2026, but only 8 are peer-reviewed papers (12 %). Seven
+    are vendor datasheets dated by when they were read, and four are USGS, Federal Register or ASTM documents. If AML
+    counts papers, the draft is well short of its 25 %; cite recent peer-reviewed work as results come in.
+  - Self-citations: 1 of 66.
   - The current draft has about 3,200 words of body text, notes excluded, against about 5,000 allowed, so there is
     room for results.
 - ***Additive Manufacturing*:** 5,000-13,000 words in all. Version B will land near the bottom of that range. Post no

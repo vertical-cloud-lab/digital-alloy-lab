@@ -57,7 +57,7 @@ Table~\ref{tab:elements} lists the per-element inputs of the burden metrics in t
 Table~\ref{tab:literature} lists the scandium-free alloys drawn in Fig.~1 of the main text, with their burden on the same inputs.
 \begin{table}[htbp]
   \centering\scriptsize
-  \caption{Scandium-free LPBF aluminum alloys from vendor datasheets and papers, at the condition with the highest yield strength listed, with their burden. Values were read from each source by an earlier survey of this project (26 Nov 2026) and are to be re-checked against the sources before submission. Nominal compositions use the midpoints of published ranges.}
+  \caption{Scandium-free LPBF aluminum alloys from vendor datasheets and papers, at the condition with the highest yield strength listed, with their burden. Values were transcribed by an earlier survey of this project (26 Nov 2026) and checked against each source on 27 Nov 2026; two rows could not be verified because the full texts were not accessible (data/literature-alloys.csv, read\_by column). Nominal compositions use the midpoints of published ranges.}
   \label{tab:literature}
   \resizebox{\textwidth}{!}{\input{generated/tab-literature.tex}}
 \end{table}
@@ -78,7 +78,7 @@ Table~\ref{tab:literature} lists the scandium-free alloys drawn in Fig.~1 of the
 \placeholder{One page per finalist lot: charge, atomizer settings and video, sieving, storage humidity, print, and every measurement, each with the file that backs it. Due 15 Feb 2027 (owner: Gage).}
 
 \section{Pre-registration}
-\placeholder{The rule for ``stronger than \AlSi'', the burden metric and its threshold, and the optimizer settings, with the commit that froze them before the first optimizer round. Due 4 Dec 2026 (G1), before the screen ranks any composition (owner: Sterling).} A draft is in ../preregistration.md.
+\placeholder{The rule for ``stronger than \AlSi'', the burden metric and its threshold, and the optimizer settings, with the commit that froze them before the first optimizer round. Due Tue 1 Dec 2026, before the screen ranks any campaign composition and before the seeds are picked at G1 on 4 Dec (owner: Sterling).} A draft is in ../preregistration.md.
 The optimizer settings to freeze include the model (Bayesian optimization over function networks~\cite{astudillo2021,buathong2024}, or a single Gaussian-process surrogate), the acquisition function, the batch size, the inputs and the stopping rule.
 
 \bibliographystyle{unsrtnat}

@@ -1,7 +1,7 @@
 # Pre-registration (DRAFT, not frozen)
 
-*A draft for Sterling to edit and commit **before the CALPHAD screen ranks any composition** (G1, Fri Dec 4,
-2026). The commit hash that freezes it goes in SI Section S9 and the Methods (§2.2, §2.12). Every choice below
+*A draft for Sterling to edit and commit **before the CALPHAD screen ranks any campaign composition**: by Tue Dec 1,
+2026, so the screen can rank on Dec 2-3 and the seeds can be picked at G1 (Fri Dec 4). The commit hash that freezes it goes in SI Section S9 and the Methods (§2.2, §2.12). Every choice below
 is a proposal; the open ones are marked **Decide**. After the freeze, any change gets a dated entry in the change
 log at the bottom, with its reason, so a reviewer can see what was fixed in advance and what wasn't.*
 
@@ -25,7 +25,8 @@ log at the bottom, with its reason, so a reviewer can see what was fixed in adva
   ASTM E8/E8M limits while yield is measured. Bars that break outside the gauge are excluded and reported.
 - **Conditions.** AlSi10Mg as built and stress-relieved (**Decide:** 300 °C for 2 h or the vendor's 285 °C).
   Each candidate as built and after one direct age chosen before printing. A candidate is compared in each of its
-  conditions with AlSi10Mg in the better of its two.
+  conditions with AlSi10Mg in *both* of its conditions, and the claim holds only if it passes against both (as-built
+  AlSi10Mg is the stronger, stress-relieved the more ductile).
 - **Rule.** The candidate is stronger if all of these hold:
   - mean yield(candidate) − mean yield(AlSi10Mg) > hw(candidate) + hw(AlSi10Mg), where hw is the half-width of the
     95 % Student-t confidence interval;
@@ -52,8 +53,8 @@ log at the bottom, with its reason, so a reviewer can see what was fixed in adva
 
 ## 4. "Beyond the scandium-free alloys already reported"
 
-- **Comparator set.** [`data/literature-alloys.csv`](data/literature-alloys.csv) at the freeze commit, after every
-  row has been checked against its source.
+- **Comparator set.** [`data/literature-alloys.csv`](data/literature-alloys.csv) at the freeze commit. Every row is
+  checked against its source or marked unverifiable. Unverifiable rows are shown but left out of the test below.
 - **Test.** No alloy in that set has both a higher reported yield strength and a lower B_NIR midpoint than the
   candidate (Pareto non-dominated).
 - **Caveat.** The literature values are mostly on machined specimens from tuned processes, so the paper states the
@@ -75,11 +76,13 @@ log at the bottom, with its reason, so a reviewer can see what was fixed in adva
 - **Design space.** The lab's palette without Sc, Al ≥ 85 wt %, and the bounds of PR #72 as amended by #275.
   - **Decide:** Si allowed or not. The kickoff, 11:29, suggested keeping it out unless it can be measured.
     Spark-OES makes it measurable.
+  - **Base.** Run the screen on the base the charges use (6063). The pure-Al base understates the crack index of
+    Fe-, Mn- and Cr-rich compositions (O3: 2 K on pure Al, 569 K on 6063).
 - **Screen.** Report Scheil and equilibrium calculations with the database and version named.
   - Criteria: freezing range to f_s = 0.99, Kou's crack index near f_s^½ = 1, strengthening-phase fraction at the
     aging temperature, a primary L1₂ phase ahead of α-Al, and B_NIR.
-  - If no Thermo-Calc licence: pycalphad with MatCalc `mc_al` and COST 507, stating that they can't place the Al₃Zr
-    liquidus. The finalists are re-checked in Thermo-Calc if it becomes available.
+  - If no Thermo-Calc licence: pycalphad with MatCalc `mc_al`, which can't place the Al₃Zr liquidus, and COST 507,
+    which supplies it. The finalists are re-checked in Thermo-Calc if it becomes available.
 - **Seeds.** S1-S4, plus O1-O3 if there are slots. All are published alloys (#275), and the paper says so: they
   anchor the model and are not claimed as discoveries.
   - **Decide:** keep S1. Its B_NIR (6.6-7.3 wt %) is above Scalmalloy's, so it can't satisfy §3 whatever its
@@ -99,13 +102,16 @@ log at the bottom, with its reason, so a reviewer can see what was fixed in adva
 
 Each one is reported whether it holds or not.
 
-- **H1, printability.** Compositions with a primary Al₃M phase (M = Zr, Sc, Ti) print crack-free even where Kou's
-  index is high (above about 500 K). Without one, a high index predicts cracking (preliminary Fig. 2a).
-- **H2, composition fidelity.** Mn, Zn and Mg are lost preferentially in ultrasonic atomization and in PBF-LB/M
-  (Żrodowski et al. 2021; Croteau et al. 2018). Measured Mn and Mg fall below target by more than the tolerance in §5
-  unless over-charged.
-- **H3, powder route.** In-house AlSi10Mg-type powder (D1) and commercial AlSi10Mg, printed in the same build, give
-  yield strengths within each other's 95 % confidence intervals. If they don't, the comparison uses D1.
+- **H1, printability.** Among compositions with a high Kou index (above about 500 K on the charges' 6063 base),
+  those whose Scheil path forms at least a threshold fraction of a Zr-, Sc- or Ti-bearing primary phase print
+  crack-free, and the others crack. **Decide** the threshold before the freeze, by fitting it to the published
+  alloys of preliminary Fig. 2a. That figure shows a primary phase alone isn't enough: two known crackers have one.
+- **H2, composition fidelity.** Mn and Zn are lost preferentially in ultrasonic atomization (Żrodowski et al. 2021), and
+  Mg in PBF-LB/M (Croteau et al. 2018). Measured Mn in powder and parts falls below target by more than the
+  tolerance in §5. Mg is over-charged by design, so its loss is reported against the nominal charge, not tested.
+- **H3, powder route.** In-house AlSi10Mg-type powder (D1) and commercial AlSi10Mg, printed in the same build, differ
+  in mean yield strength by less than 20 MPa (two one-sided tests at the 5 % level). Whatever the result, the primary
+  comparator is D1, which shares the candidates' powder route; the commercial powder is reported alongside.
 - **H4, the claim.** At least one candidate meets §2 and §3. Whether it also meets §4 is the paper's headline
   (version A); if not, version B.
 

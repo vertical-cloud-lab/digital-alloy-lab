@@ -7,7 +7,7 @@ The claim: **a scandium-free alloy, printed by LPBF from powder made in-house, s
 critical minerals than Scalmalloy.** Fourteen things stand in the way. The first two are about what the claim means and
 cost nothing to fix but a decision. The rest are about getting the data in time.
 
-## The two decisions that shape the paper (decide by G1, Fri Dec 4)
+## The two decisions that shape the paper (decide by Tue Dec 1, before the screen ranks anything)
 
 ### R1. "Stronger than AlSi10Mg without scandium" is already published, and already for sale
 
@@ -53,8 +53,9 @@ Some import reliances come only as bounds (Si > 50 %, Mg > 75 %, Zr < 25 %), so 
   interval. The premise from the kickoff (08:47), that only Scalmalloy uses critical minerals, doesn't clearly hold
   on this measure.
 - **Cost:** with Sc priced as metal, every Sc-free alloy is at least 97 % below Scalmalloy, apart from the two
-  silver-bearing Al-Cu-Mg grades (74-87 % below). Priced through an Al-2Sc master alloy, the floor is 92 %. So the
-  condition is met almost automatically and the claim rests on strength.
+  silver-bearing Al-Cu-Mg grades (74-87 % below). Priced through an Al-2Sc master alloy, the floor is 92 % for the
+  silver-free alloys but only 14-56 % for the silver-bearing ones, so A20X would fail FLAIME's 40 % threshold. For
+  silver-free alloys the condition is met almost automatically and the claim rests on strength.
 - **Decision (Sterling):** pick the primary metric and the threshold before the screen ranks anything, and commit it
   (S9 in the SI). Under B_NIR, steer toward Fe-, Zr- and Mg-lean families (S2, O1) and away from Mn-rich ones (S1, O3).
   Under B_cost, say plainly that any Sc-free alloy passes.

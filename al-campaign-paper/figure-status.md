@@ -5,7 +5,7 @@
 | Item | Title | Drawn now | Draft due | Final data due | Days left | Gate | Owner |
 |---|---|---|---|---|---|---|---|
 | Fig1 | Benchmark map: where the campaign's alloys sit against AlSi10Mg and Scalmalloy | (a) campaign points pending; (b) campaign points pending; seeds shown as burden ticks | Nov 27 | Feb 12, 2027 | 77 | Freeze (Feb 12) | Sterling |
-| Fig2 | CALPHAD screen and the compositions picked | drawn from 48 rows (preliminary open-database calculations) | Dec 04 | Jan 29, 2027 | 63 | G1 (Dec 4) | Xavier |
+| Fig2 | CALPHAD screen and the compositions picked | drawn from 48 rows (preliminary) | Dec 04 | Jan 29, 2027 | 63 | G1 (Dec 4) | Xavier |
 | Fig3 | Powders made in-house | placeholder (no rows yet) | Jan 29 | Feb 12, 2027 | 77 | G3 (Jan 22) | Ronnie |
 | Fig4 | Printability | placeholder (no rows yet) | Jan 22 | Feb 05, 2027 | 70 | G2 (Jan 15) | Carl |
 | Fig5 | Strength and ductility | (a) placeholder; (b) placeholder; (c) in-house AlSi10Mg drawn | Jan 29 | Feb 12, 2027 | 77 | Freeze (Feb 12) | Carl |
@@ -22,4 +22,4 @@
 | S6 | Specimen drawings and every stress-strain curve | Utah Apr 2026 drawing and 5 curves exist (PR #288) | Feb 12 | Feb 15, 2027 | 80 | Freeze (Feb 12) | Carl |
 | S7 | Corrosion set-up validation | Placeholder | Jan 15 | Feb 12, 2027 | 77 | G2 (Jan 15) | Ben and Jarrett |
 | S8 | Provenance records for the finalists | Template exists (PR #286) | Feb 05 | Feb 15, 2027 | 80 | Freeze (Feb 12) | Gage |
-| S9 | Pre-registration | Draft in preregistration.md; to freeze before the screen ranks anything (G1) | Dec 01 | Dec 04, 2026 | 7 | G1 (Dec 4) | Sterling |
+| S9 | Pre-registration | Draft in preregistration.md; to freeze before the screen ranks anything (G1) | Nov 30 | Dec 01, 2026 | 4 | Before G1 (Dec 1) | Sterling |

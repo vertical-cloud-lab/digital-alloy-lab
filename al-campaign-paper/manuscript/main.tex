@@ -39,7 +39,7 @@
 
 \begin{frontmatter}
 
-\title{\placeholder{Version A:} A scandium-free aluminum alloy for laser powder bed fusion (PBF-LB/M) that is stronger than \AlSi at equal ductility}
+\title{\placeholder{Version A:} A scandium-free aluminum alloy for laser powder bed fusion (PBF-LB/M) that is stronger than \AlSi without losing ductility}
 
 \author[byu]{\placeholder{Co-authors to confirm}}
 \author[byu]{Sterling G. Baird\corref{cor}}
@@ -49,7 +49,7 @@
 
 \begin{abstract}
 \placeholder{Write at G4 (29 Jan); length per ../journals.md.}
-\AlSi, the most widely printed aluminum alloy for laser powder bed fusion (PBF-LB/M), is easy to print but modest in strength, while \Scal reaches about 1.5 to 2.1 times its yield strength by adding scandium, a critical mineral that the United States imports entirely.
+\AlSi, the most widely printed aluminum alloy for laser powder bed fusion (PBF-LB/M), is easy to print but modest in strength, while \Scal, after aging, reaches about 1.5 to 2.1 times its yield strength by adding scandium, a critical mineral that the United States imports entirely.
 We ran a 12-week campaign to find a printable alloy that is stronger than \AlSi without scandium.
 CALPHAD screening ranked \placeholder{N\textsubscript{screen}} scandium-free compositions on solidification range, crack susceptibility, strengthening phases and a critical-mineral burden fixed before the screen; \NCompositions{} were atomized in-house from dosed \SI{250}{g} charges, printed by PBF-LB/M, and tested for density, hardness, tensile properties and corrosion in \SI{3.5}{wt\%} NaCl.
 \placeholder{Version A: Alloy X (Al--\dots) printed crack-free to \dots\% density and reached \dots~MPa yield strength and \dots\% elongation, \dots~MPa above \AlSi printed and tested the same way, with a critical-mineral burden \dots\% below \Scal's. An outside laboratory confirmed its composition.}
@@ -86,9 +86,9 @@ In Al--Mg--Zr alloys, primary L1\textsubscript{2} Al\textsubscript{3}Zr particle
 Inoculant particles added to the powder suppress cracking in 7075 and 6061~\cite{martin2017,opprecht2020}.
 Al--Mn--Cr--Zr-based alloys designed for LPBF~\cite{almncr2022,alloyF2024} reach about \SI{390}{MPa} yield strength as built~\cite{almncrzr2024}, Al--Mg--Mn--Er--Zr alloys about \SI{440}{MPa} after aging~\cite{almgmnerzr2022}, and Al--Ce--Mn alloys keep their strength to high temperature~\cite{plotkowski2020}.
 Several scandium-free powders are now sold for LPBF: Al--Mn--Cr--Zr and Al--Mg--Zr--Mn grades with datasheet yield strengths well above \AlSi's after a direct age, and an Al--Fe--Zr grade that matches it~\cite{ds_hoganas,ds_al5x1,ds_cp1}.
-Computational design has produced printable alloys too: by CALPHAD-based integrated computational materials engineering~\cite{thapliyal2020} and by CALPHAD coupled with Bayesian optimization~\cite{taherimousavi2025}, although with scandium or rare-earth additions, and by CALPHAD-aided design of a crack-free Al--Mg--Si--Ti alloy refined by Al$_3$Ti, with neither~\cite{wen2024}.
+Computational design has produced printable alloys too: by CALPHAD-based integrated computational materials engineering~\cite{thapliyal2020} and by CALPHAD coupled with Bayesian optimization~\cite{taherimousavi2025}, although with scandium or rare-earth additions, and by CALPHAD-aided design of a crack-free Al--Mg--Si--Ti alloy with neither, in which Ti promotes nucleation and an Al/Mg$_2$Si eutectic back-fills the last liquid~\cite{wen2024}.
 Two problems remain.
-First, few of these alloys have been compared with \AlSi printed and tested in the same way~\cite{alsimg2020}, so whether an alloy is ``better'' depends on which datasheet it is compared with (Fig.~\ref{fig:map}a, Section~\ref{sec:benchmark}).
+First, few of these alloys have been compared with \AlSi printed and tested in the same way, so whether an alloy is ``better'' depends on which datasheet it is compared with (Fig.~\ref{fig:map}a, Section~\ref{sec:benchmark}).
 Second, removing scandium does not by itself reduce the critical-mineral burden. The final 2025 U.S.\ list includes aluminum and silicon themselves, as well as Mg, Mn, Cr, Zr, Ti, Cu, Ni and the rare earths; of the elements used in these alloys, only iron is absent~\cite{fr2025}. A claim of ``less critical minerals'' therefore needs a burden metric that weights each element, stated in advance~\cite{graedel2012,mulukutla2025}.
 
 \begin{figure}[tbp]
@@ -123,9 +123,9 @@ Compositions were drawn from the lab's elemental palette (Al with Mn, Cr, Zr, Mg
 Equilibrium and Scheil--Gulliver solidification were computed for each composition with \placeholder{Thermo-Calc 202x with TCAL\,\dots, through TC-Python~\cite{andersson2002} / pycalphad~\cite{otis2017} with the MatCalc \texttt{mc\_al} and COST~507 databases}.
 \note{No Thermo-Calc licence yet (\#141). The open-database screen cannot predict the Al\textsubscript{3}Zr liquidus (MatCalc mc\_al has none, per \#275), which matters for every Zr-bearing candidate. If Thermo-Calc arrives late, re-check the finalists in it and report both.}
 Four quantities ranked the compositions:
-(i) the freezing range, taken between the liquidus and a solid fraction of \placeholder{0.99} in the Scheil calculation;
+(i) the freezing range of the aluminum matrix, from the start of $\alpha$-Al solidification to the end of the Scheil path (for Zr-bearing alloys the liquidus, set by primary Al$_3$Zr, lies far above this);
 (ii) Kou's index of crack susceptibility, $\lvert \mathrm{d}T / \mathrm{d}(f_\mathrm{s}^{1/2}) \rvert$ near $f_\mathrm{s}^{1/2} = 1$~\cite{kou2015};
-(iii) the predicted mole fraction of strengthening phases (L1\textsubscript{2} Al\textsubscript{3}M and other precipitates) at the aging temperature, and whether a primary L1\textsubscript{2} phase forms ahead of the aluminum matrix during solidification, where it can act as a grain refiner~\cite{croteau2018,spierings2017}; and
+(iii) the predicted mole fraction of strengthening phases (L1\textsubscript{2} Al\textsubscript{3}M and other precipitates) at the aging temperature, and the amount of any Zr-, Sc- or Ti-bearing phase (Al$_3$M) that forms ahead of the aluminum matrix during solidification, where it can act as a grain refiner~\cite{croteau2018,spierings2017}; and
 (iv) the critical-mineral burden $B$ (Section~\ref{sec:burden}).
 Printable laser settings for each candidate were estimated from Eagar--Tsai melt-pool calculations and printability maps that bound lack of fusion, balling and keyholing~\cite{eagar1983,johnson2019}.
 
@@ -155,7 +155,7 @@ Aluminum is left out because it is the base of every alloy compared (Supplementa
 USGS reports some reliances only as bounds (silicon above 50\%, magnesium above 75\%, zirconium below 25\%), so $B_\mathrm{NIR}$ is reported as the interval those bounds allow, and plotted at its midpoint.
 As sensitivity checks we report the raw-material cost of the critical alloying additions per kilogram of alloy, $B_\mathrm{cost} = \sum (w_i/100)\,p_i$ over the elements on the 2025 list other than aluminum, with 2025 prices $p_i$ (2023 for manganese metal, which USGS no longer prices; scandium as metal)~\cite{usgs2026}, and the scandium content alone.
 The inputs and their sources are in Supplementary Section~S3.
-The metric, its inputs and the threshold for ``less than \Scal'' were committed to the project repository before the CALPHAD screen ranked any composition (Supplementary Section~S9).
+The metric, its inputs and the threshold for ``less than \Scal'' were committed to the project repository before the CALPHAD screen ranked any campaign composition (Supplementary Section~S9). The burdens of the benchmarks, the planned seeds and the published alloys (Fig.~\ref{fig:map}b, Supplementary Fig.~S1) had already been computed by then, so the metric was chosen knowing how it ranks them; the freeze binds the campaign's own compositions.
 \note{Sterling to choose the primary metric and the threshold. FLAIME's O4 uses $\geq$40\% below \Scal. Check how the seeds score before freezing: an Al--Mn--Cr--Zr alloy carries several wt\% of fully imported Mn (risks.md, R7).}
 
 \subsection{Feedstock and charges}
@@ -226,7 +226,7 @@ Samples were sent under coded IDs, and the laboratory's results and uncertaintie
 \label{sec:stats}
 
 Values are given as mean $\pm$ standard deviation with the number of valid specimens $n$; 95\% confidence intervals use Student's $t$.
-A candidate was counted as stronger than \AlSi only if, printed on the same machine with the same specimen geometry and surface and tested the same way, its mean yield strength exceeded that of \AlSi by more than the half-widths of the two 95\% confidence intervals combined, with a mean elongation no lower than that of \AlSi and $n \geq 3$ for both.
+A candidate was counted as stronger than \AlSi only if, printed on the same machine with the same specimen geometry and surface and tested the same way, its mean yield strength exceeded that of \AlSi by more than the half-widths of the two 95\% confidence intervals combined, with a mean elongation no lower than that of \AlSi and $n \geq 3$ for both, against \AlSi in both its as-built and stress-relieved conditions.
 This rule, and the choice of comparator, were fixed at the same time as the burden metric, before the screen ranked any composition (Supplementary Section~S9).
 
 \subsection{Provenance}
@@ -243,13 +243,13 @@ The records, raw data and analysis code are listed in the Data and Code Availabi
 \subsection{Screen and selected compositions}
 \placeholder{Data due 29 Jan 2027 (Fig.~\ref{fig:calphad}, Table~\ref{tab:compositions}).}
 What the screen ranked highest; which compositions were made and why; where the optimizer's picks departed from the CALPHAD ranking.
-A preliminary calculation with open databases for 48 compositions (Fig.~\ref{fig:calphad}): the nine planned seeds, 34 published alloys including seven known to crack, the 6063 base and four exploratory variants, already shows the pattern the screen has to handle. Alloys known to crack in LPBF, such as 2024, 6061 and 7075, sit at high crack index and wide freezing range; but so do the Scalmalloy-type and Al--Mg--Zr alloys, which print without cracks because a primary Al$_3$M phase refines their grains~\cite{spierings2017,croteau2018}. The crack index alone therefore cannot rank the Zr- and Sc-bearing candidates, and the screen weighs it together with the primary phase.
+A preliminary calculation with open databases for 48 compositions (Fig.~\ref{fig:calphad}) shows what the screen has to handle. They are the two benchmark-type and seven scandium-free compositions planned as seeds (one without its Er, which the database lacks), 34 published, patented or variant compositions including seven known to crack in LPBF, the 6063 base, and four exploratory variants. The alloys known to crack sit at a high crack index and a wide freezing range of the aluminum matrix; but so do the Scalmalloy-type and Al--Mg--Zr alloys, which print without cracks because a primary Al$_3$M phase refines their grains~\cite{spierings2017,croteau2018}. A Zr-bearing primary phase is not enough by itself either: two of the known crackers have one, while a Zr-modified 6061 with one prints without cracks~\cite{mehta2021}. The crack index cannot rank the Zr- and Sc-bearing candidates on its own, and the screen has to weigh it with the amount of primary Al$_3$M phase, calibrated on the published alloys.
 \note{Fig.~2 is drawn from the \#275 open-database calculations (MatCalc mc\_al, COST 507), not from the campaign screen, and the counts are of those rows; replace both when the screen runs. Kou's index is from the Scheil path, and COST 507 supplies the Al$_3$Zr liquidus that mc\_al lacks.}
 
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=\textwidth]{figures/fig2-calphad-screen.pdf}
-  \caption{CALPHAD screen. (a) Kou's crack-susceptibility index near the end of solidification against the freezing range, from Scheil calculations with open databases (MatCalc mc\_al, with COST 507 for the Al$_3$Zr liquidus) on a pure-Al base, for the planned seeds (labelled), published scandium-free and Sc-bearing alloys, and alloys known to crack in LPBF (crosses). Filled markers have a primary Al$_3$M phase (M = Zr, Sc or Ti) that can refine the grains; colour is the import-weighted burden $B_\mathrm{NIR}$. \placeholder{Preliminary: to be replaced by the campaign's screen, with (b) the seeds and the optimizer's picks.}}
+  \caption{CALPHAD screen. (a) Freezing range of the aluminum matrix against Kou's crack-susceptibility index near the end of solidification, from Scheil calculations with open databases (MatCalc mc\_al, with COST 507 for the Al$_3$Zr liquidus) on a pure-Al base. Circles: the planned seed compositions (labelled) and published, patented or variant alloys; squares: alloys known to crack in LPBF. Filled markers have a Zr-, Sc- or Ti-bearing primary phase. Colour: import-weighted burden $B_\mathrm{NIR}$. On a pure-Al base, Fe-, Mn- and Cr-rich compositions end their Scheil path near a eutectic and come out near zero on both axes; on the 6063 base the charges use, they are much higher (O3: index 2~K on pure Al, 569~K on 6063). \placeholder{Preliminary: to be replaced by the campaign's screen on the charges' base, with (b) the seeds and the optimizer's picks.}}
   \label{fig:calphad}
 \end{figure}
 
@@ -348,7 +348,7 @@ Under the rule of Section~\ref{sec:stats}, with $n = \InhouseN$ for \AlSi (95\% 
 \subsection{Scandium-free alloys that are already stronger than \AlSi}
 
 Scandium-free alloys already sit between \AlSi and \Scal (Fig.~\ref{fig:map}a, grey markers).
-On their vendors' datasheets, a directly aged Al--Mn--Cr--Zr powder reaches \SIrange{355}{370}{MPa} yield strength with \SIrange{12}{16}{\%} elongation~\cite{ds_hoganas}, a directly aged Al--Mg--Zr--Mn powder \SIrange{380}{385}{MPa} with 13--14.5\%~\cite{ds_al5x1}, and a heat-treated Al--Fe--Zr powder about \SI{300}{MPa} with 10--12\%~\cite{ds_cp1}; silver-bearing Al--Cu--Mg alloys reach \SIrange{350}{385}{MPa} as built and \SIrange{390}{460}{MPa} after a T7 or T4 treatment~\cite{ds_al2139,ds_a20x}, and a Zr-modified 7xxx alloy \SIrange{490}{585}{MPa} after hot isostatic pressing and heat treatment~\cite{ds_7a77}.
+On their vendors' datasheets, a directly aged Al--Mn--Cr--Zr powder reaches \SIrange{355}{370}{MPa} yield strength with \SIrange{12}{16}{\%} elongation~\cite{ds_hoganas}, a directly aged Al--Mg--Zr--Mn powder \SIrange{380}{385}{MPa} with 14.5\% (ASTM E8; 13--13.5\% on ISO 6892-1)~\cite{ds_al5x1}, and a heat-treated Al--Fe--Zr powder about \SI{300}{MPa} with 10--12\%~\cite{ds_cp1}; silver-bearing Al--Cu--Mg alloys reach \SIrange{350}{385}{MPa} as built and \SIrange{390}{460}{MPa} after a T7 or T4 treatment~\cite{ds_al2139,ds_a20x}, and a Zr-modified 7xxx alloy \SIrange{490}{585}{MPa} after hot isostatic pressing and heat treatment~\cite{ds_7a77}.
 In the peer-reviewed literature, Al--Mn--Cr--Zr--Mg reached \SI{390}{MPa} as built with 17\% elongation~\cite{almncrzr2024}, Al--Mg--Zr \SIrange{350}{353}{MPa} after peak aging with 17--19\%~\cite{croteau2018}, Al--Mg--Mn--Er--Zr \SI{440}{MPa} after aging with 15.5\%~\cite{almgmnerzr2022}, Al--Fe--Mg--Zr \SI{376}{MPa} after aging with 11\%~\cite{alfezr2025}, and a tailored Al--Si--Mg alloy \SIrange{270}{417}{MPa} as built, depending on plate temperature and machine~\cite{alsimg2020}.
 \note{Checked against the sources on 27 Nov 2026 (data/literature-alloys.csv, read\_by column). Still unverified: the as-built Al--Mg--Mn--Er--Zr row and its exact Zr content, and the as-built elongation of Al--Fe--Mg--Zr (full texts blocked).}
 Being stronger than \AlSi without scandium is therefore not new in itself.
@@ -364,10 +364,10 @@ On raw-material cost the order reverses: the critical additions in \Scal cost ab
 The premise that \AlSi carries fewer critical minerals than \Scal therefore holds for cost and for scandium, but not clearly for import-weighted mass.
 
 The same split runs through the scandium-free alloys (Fig.~\ref{fig:map}b; Supplementary Fig.~S1).
-On cost, with scandium priced as metal, all of them except the two silver-bearing Al--Cu--Mg alloys are at least \CostRedMinNonAg\% below \Scal (at least \CostRedMinMaster\% with scandium priced through the master alloy), and the silver-bearing ones are \CostRedAgLo--\CostRedAgHi\% below, so ``less than \Scal'' hardly tells them apart.
+On cost, with scandium priced as metal, all of them except the two silver-bearing Al--Cu--Mg alloys are at least \CostRedMinNonAg\% below \Scal and the silver-bearing ones are \CostRedAgLo--\CostRedAgHi\% below, so ``less than \Scal'' hardly tells them apart. With scandium priced through the master alloy, the floor for the silver-free alloys falls to \CostRedMinMaster\%, and the silver-bearing ones are only \CostRedAgMasterLo--\CostRedAgMasterHi\% below.
 On import-weighted mass, the Mn-rich alloy that seed S1 reproduces sits above \Scal's interval (S1 at \BSonenirlo--\BSonenirhi~wt\%), the commercial Al--Mn--Cr--Zr grade sits inside it, and Al--Fe--Zr, Al--Fe--Mg--Zr and Al--Mg--Zr alloys sit well below it and, after aging, report higher yield strengths than our as-built \AlSi~\cite{ds_cp1,alfezr2025,ds_al5x1,croteau2018}.
 Of the \NLit{} scandium-free comparators in Fig.~\ref{fig:map}b, \NLitRegionMid{} already sit in the shaded region at the midpoint of their burden, and \NLitRegionRobust{} even at the top of their burden interval. These are their reported values, mostly on machined specimens from tuned processes, so they are not like-for-like with our \AlSi; against the strongest machined \AlSi datasheet row instead (\SI{300}{MPa}), \NLitRegionMidDS{} and \NLitRegionRobustDS{} remain.
-A campaign alloy therefore counts as a discovery only if it lies beyond these alloys on strength against burden, measured the same way and under the metric fixed in advance.
+A campaign alloy therefore counts as a discovery only if it lies beyond these alloys' reported values on strength against burden, under the metric fixed in advance.
 \note{This is the main risk to the paper's claim (risks.md, R1--R2). Sterling: pick the primary metric now. Under $B_\mathrm{NIR}$, steer the screen toward Fe-, Zr- and Mg-lean families (S2, O1) and away from Mn-rich ones (S1, O3); under $B_\mathrm{cost}$, any Sc-free alloy passes and the claim rests on strength alone.}
 
 

@@ -8,7 +8,7 @@ laser powder bed fusion (LPBF) that is stronger than AlSi10Mg and uses less crit
 It is written so that the campaign fills it in as it runs: every figure, table and campaign number is drawn from
 [`data/`](data/) by one script, and anything still missing shows as a red placeholder with its due date.
 
-**Current draft:** [`manuscript/main.pdf`](manuscript/main.pdf) (25 pages, with line numbers and notes) and
+**Current draft:** [`manuscript/main.pdf`](manuscript/main.pdf) (27 pages, with line numbers and notes) and
 [`manuscript/si.pdf`](manuscript/si.pdf).
 
 ## Where it stands (2026-11-27)
@@ -20,9 +20,9 @@ It is written so that the campaign fills it in as it runs: every figure, table a
 | Methods | Drafted for every step: CALPHAD screen, burden metric, charges, ultrasonic atomization, powder, LPBF, heat treatment, density and hardness, tensile, corrosion, independent verification, statistics, provenance. The brackets are values to read off the SOP, the run records and the instruments |
 | Benchmark comparison (§4) | Drafted with real data: vendor datasheets (PR #285), AlSi10Mg printed at Utah in April 2026 (PR #288), Sc-free commercial and published alloys, and the critical-mineral burden of all of them |
 | Results (§3), abstract, conclusions | Placeholders tied to the figure plan; no Al campaign run has happened yet |
-| Figures and tables | Fig. 1 (benchmark map), a preliminary Fig. 2a (open-database printability screen of 48 compositions: the nine planned seeds, 34 published alloys, 6063 and four variants), Fig. 5c and SI Fig. S1 (burden sensitivity) are drawn from data. Figs. 3, 4 and 6 are placeholders that say what they need and when ([`figure-status.md`](figure-status.md)) |
+| Figures and tables | Fig. 1 (benchmark map), a preliminary Fig. 2a (open-database printability screen of 48 compositions: the nine planned seed compositions, 34 published, patented or variant ones including seven known crackers, 6063 and four variants), Fig. 5c and SI Fig. S1 (burden sensitivity) are drawn from data. Figs. 3, 4 and 6 are placeholders that say what they need and when ([`figure-status.md`](figure-status.md)) |
 | SI | Skeleton, with the burden inputs (S3) and the Sc-free comparators drawn from data |
-| References | 65 entries, all cited. 48 of the 49 with a DOI match Crossref or DataCite on title, year and first author; the one flagged is BoTorch, cited by its NeurIPS 2020 year against its 2019 arXiv DOI ([`manuscript/refs-check.csv`](manuscript/refs-check.csv)). The 16 without a DOI (vendor datasheets, the USGS scandium chapter, the critical minerals list, NASA-STD-6030, two ISO standards, Eagar-Tsai) are listed there for a hand check |
+| References | 66 entries, all cited. 49 of the 50 with a DOI match Crossref or DataCite on title, year and first author; the one flagged is BoTorch, cited by its NeurIPS 2020 year against its 2019 arXiv DOI ([`manuscript/refs-check.csv`](manuscript/refs-check.csv)). The 16 without a DOI (vendor datasheets, the USGS scandium chapter, the critical minerals list, NASA-STD-6030, two ISO standards, Eagar-Tsai) are listed there for a hand check |
 | Target journal | [`journals.md`](journals.md): *Additive Manufacturing Letters* for version A (about 5,000 words, decision within about 4 weeks), *Additive Manufacturing* for version B (5,000-13,000 words, no preprint before submission). Next choices: *MRL* or *Scripta* for A, *Materials & Design* for B |
 | Cover letter | Stub in [`cover-letter.md`](cover-letter.md); not worth drafting until G4 |
 

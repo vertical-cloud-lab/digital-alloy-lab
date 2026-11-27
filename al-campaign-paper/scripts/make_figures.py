@@ -305,8 +305,9 @@ def generic(pid: str, p: pd.DataFrame, data: pd.DataFrame, name: str, draw) -> s
 
 
 def fig2(p, d, crit) -> str:
-    """Printability screen: Kou's crack index against the freezing range, coloured by import-weighted
-    burden; filled markers have a primary L1_2 phase (a grain refiner), crosses are known crackers."""
+    """Printability screen: Kou's crack index against the freezing range of the aluminum matrix, coloured by
+    import-weighted burden. Filled markers have a Zr-, Sc- or Ti-bearing primary phase (a possible grain refiner);
+    known crackers are drawn as squares with the same fill rule, so a cracker with such a phase stays visible."""
     fig, ax = plt.subplots(figsize=(7.2, 3.0))
     if d.empty:
         placeholder(ax, "Fig2", p)
@@ -317,40 +318,46 @@ def fig2(p, d, crit) -> str:
     b = mb.table(d.rename(columns={"composition_id": "alloy_id"}), crit)["B_nir"].values
     x = pd.to_numeric(d["csc_index"], errors="coerce").clip(lower=1).values
     y = pd.to_numeric(d["freezing_range_c"], errors="coerce").values
-    l12 = d["primary_phase"].astype(str).str.contains("AL3").values
+    prim = d["primary_phase"].astype(str).str.upper()
+    refiner = (prim.str.contains("AL3") | prim.str.contains("ZR") | prim.str.contains("SC")).values
     crack = d["family"].astype(str).eq("known-cracker").values
+    picked = d["picked_as"].fillna("").astype(str).replace("nan", "").values
     norm = matplotlib.colors.Normalize(vmin=0, vmax=np.nanmax(b) if np.isfinite(np.nanmax(b)) else 1)
     cmap = matplotlib.colormaps["Blues"]
-    for i in range(len(d)):
+    # Draw published alloys first, crackers next, the lab's planned compositions last (on top).
+    order = sorted(range(len(d)), key=lambda i: (bool(picked[i]), crack[i]))
+    for i in order:
         c = cmap(0.25 + 0.75 * norm(b[i])) if np.isfinite(b[i]) else GREY
-        if crack[i]:
-            ax.scatter(x[i], y[i], marker="X", s=34, color=INK2, zorder=3)
-        elif l12[i]:
-            ax.scatter(x[i], y[i], marker="o", s=30, color=c, edgecolors=INK2, linewidths=0.5, zorder=3)
+        mk = "s" if crack[i] else "o"
+        z = 4 if picked[i] else (3 if crack[i] else 2)
+        size = 34 if picked[i] else 26
+        if refiner[i]:
+            ax.scatter(x[i], y[i], marker=mk, s=size, color=c, edgecolors=INK if crack[i] else INK2,
+                       linewidths=1.1 if crack[i] else 0.5, zorder=z)
         else:
-            ax.scatter(x[i], y[i], marker="o", s=30, facecolors="white", edgecolors=c, linewidths=1.2, zorder=3)
-        lab = str(d["picked_as"].iloc[i]) if pd.notna(d["picked_as"].iloc[i]) else ""
-        if lab and lab != "nan":
-            off = {"S1": (-2, -11), "S2": (-14, 5), "O1": (4, 3), "D2": (4, 4), "O2-noEr": (-44, -10),
-                   "S3": (4, -9), "O3": (4, 3), "S4": (4, 3), "D1": (4, 3)}.get(lab, (4, 3))
-            ax.annotate(lab.replace("-noEr", " (no Er)"), (x[i], y[i]), xytext=off, textcoords="offset points",
-                        fontsize=6.3, color=INK)
+            ax.scatter(x[i], y[i], marker=mk, s=size, facecolors="white", edgecolors=INK if crack[i] else c,
+                       linewidths=1.2, zorder=z)
+        if picked[i]:
+            off = {"O1": (-16, -11), "D2": (5, 4), "O2-noEr": (-52, -10), "S1": (4, -10), "S2": (-16, -10)}.get(
+                picked[i], (5, 3))
+            ax.annotate(picked[i].replace("-noEr", " (no Er)"), (x[i], y[i]), xytext=off,
+                        textcoords="offset points", fontsize=6.3, color=INK, zorder=5)
     sm = matplotlib.cm.ScalarMappable(norm=norm, cmap=matplotlib.colors.LinearSegmentedColormap.from_list(
         "b", [cmap(0.25), cmap(1.0)]))
     cb = fig.colorbar(sm, ax=ax, pad=0.01)
     cb.set_label("$B_\\mathrm{NIR}$ midpoint (wt %)", fontsize=7)
     ax.set_xscale("log")
     ax.set_xlabel("Kou crack-susceptibility index near the end of solidification (K)")
-    ax.set_ylabel("Freezing range (K)")
+    ax.set_ylabel("Freezing range of the Al matrix (K)")
     from matplotlib.lines import Line2D
-    ax.legend(handles=[Line2D([], [], marker="o", ls="", color=GREY, mec=INK2, label="primary Al$_3$M phase (M = Zr, Sc, Ti): grain refiner"),
-                       Line2D([], [], marker="o", ls="", mfc="white", mec=GREY, label="no primary Al$_3$M phase"),
-                       Line2D([], [], marker="X", ls="", color=INK2, label="known to crack in LPBF")],
+    ax.legend(handles=[Line2D([], [], marker="o", ls="", color=GREY, mec=INK2, label="Zr-, Sc- or Ti-bearing primary phase"),
+                       Line2D([], [], marker="o", ls="", mfc="white", mec=GREY, label="no such primary phase"),
+                       Line2D([], [], marker="s", ls="", mfc="white", mec=INK, label="known to crack in LPBF (same fill rule)")],
               loc="upper left", fontsize=6.3)
-    ax.set_title("(a) Printability screen with open databases: preliminary, seeds and published alloys only",
-                 loc="left")
+    prelim = d["note"].astype(str).str.contains("preliminary").any() if "note" in d else False
+    ax.set_title("(a) Printability screen" + (" with open databases (preliminary)" if prelim else ""), loc="left")
     save(fig, "fig2-calphad-screen")
-    return f"drawn from {len(d)} rows (preliminary open-database calculations)"
+    return f"drawn from {len(d)} rows" + (" (preliminary)" if prelim else "")
 
 
 def draw_powder(ax, d):
@@ -638,7 +645,9 @@ def numbers(tensile, runs, alloys, burdens, lit=None, lit_b=None) -> None:
         lines += [num("CostRedMinNonAg", math.floor(100 * (1 - nonag.max() / sc_cost))),
                   num("CostRedMinMaster", math.floor(100 * (1 - nonag.max() / sc_cost_master))),
                   num("CostRedAgLo", math.floor(100 * (1 - agc.max() / sc_cost))),
-                  num("CostRedAgHi", math.floor(100 * (1 - agc.min() / sc_cost)))]
+                  num("CostRedAgHi", math.floor(100 * (1 - agc.min() / sc_cost))),
+                  num("CostRedAgMasterLo", math.floor(100 * (1 - agc.max() / sc_cost_master))),
+                  num("CostRedAgMasterHi", math.floor(100 * (1 - agc.min() / sc_cost_master)))]
     # Sc-free comparators already in the region of interest: stronger than in-house AlSi10Mg by more than
     # its 95 % CI half-width, and below Scalmalloy's lowest B_NIR (midpoint, and robustly at the high end).
     if lit is not None and not lit.empty and lit_b is not None and not lit_b.empty and ys[3]:

@@ -53,6 +53,7 @@ cd al-campaign-paper/manuscript && make    # main.pdf; make si for si.pdf
   were corrected to Table 1 of the paper. Not yet verifiable (full texts blocked): the as-built Al-Mg-Mn-Er-Zr row
   and its Zr content, and the as-built elongation of Al-Fe-Mg-Zr.
 - **`calphad_screen.csv`:** a preliminary stand-in, not the campaign's screen. It holds the open-database (MatCalc
-  `mc_al` + COST 507) calculations of the #275 branch at `845356a` for 48 compositions (the nine planned seeds, 34
-  published alloys, 6063 and four exploratory variants) on a pure-Al base. Replace it with the screen's output.
+  `mc_al` + COST 507) calculations of the #275 branch at `845356a` for 48 compositions on a pure-Al base: the two benchmark-type
+  and seven Sc-free seed compositions, 34 published, patented or variant compositions (seven of them known to crack),
+  the 6063 base and four exploratory variants. Replace it with the screen's output.
 - **Everything else:** headers only. No Al campaign run has happened yet.
