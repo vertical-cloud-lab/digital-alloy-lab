@@ -69,7 +69,7 @@ def main() -> int:
         "Fig4 drawn": "Fig4: drawn from" in r.stdout,
         "Fig5 hardness drawn": "(a) drawn" in r.stdout,
         "Fig6 drawn": "Fig6: drawn from" in r.stdout,
-        "all figure files written": len(list(fig.glob("*.pdf"))) == 6,
+        "all figure files written (6 main + SI S1)": len(list(fig.glob("*.pdf"))) == 7,
         "composition count filled": r"\newcommand{\NCompositions}{3}" in (gen / "numbers.tex").read_text(),
         "run count filled": r"\newcommand{\NAlRuns}{3}" in (gen / "numbers.tex").read_text(),
     }

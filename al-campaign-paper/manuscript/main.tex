@@ -243,11 +243,13 @@ The records, raw data and analysis code are listed in the Data and Code Availabi
 \subsection{Screen and selected compositions}
 \placeholder{Data due 29 Jan 2027 (Fig.~\ref{fig:calphad}, Table~\ref{tab:compositions}).}
 What the screen ranked highest; which compositions were made and why; where the optimizer's picks departed from the CALPHAD ranking.
+A preliminary calculation with open databases for the seeds and \placeholder{48} published compositions (Fig.~\ref{fig:calphad}) already shows the pattern the screen has to handle. Alloys known to crack in LPBF, such as 2024, 6061 and 7075, sit at high crack index and wide freezing range; but so do the Scalmalloy-type and Al--Mg--Zr alloys, which print without cracks because a primary Al$_3$M phase refines their grains~\cite{spierings2017,croteau2018}. The crack index alone therefore cannot rank the Zr- and Sc-bearing candidates, and the screen weighs it together with the primary phase.
+\note{Fig.~2 is drawn from the \#275 open-database calculations (MatCalc mc\_al, COST 507), not from the campaign screen, and the 48 is a count of those rows; replace both when the screen runs. Kou's index is from the Scheil path, and COST 507 supplies the Al$_3$Zr liquidus that mc\_al lacks.}
 
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=\textwidth]{figures/fig2-calphad-screen.pdf}
-  \caption{CALPHAD screen. \placeholder{(a) Freezing range against strengthening-phase fraction for every screened composition, colored by critical-mineral burden. (b) The seeds and the optimizer's picks.}}
+  \caption{CALPHAD screen. (a) Kou's crack-susceptibility index near the end of solidification against the freezing range, from Scheil calculations with open databases (MatCalc mc\_al, with COST 507 for the Al$_3$Zr liquidus) on a pure-Al base, for the planned seeds (labelled), published scandium-free and Sc-bearing alloys, and alloys known to crack in LPBF (crosses). Filled markers have a primary Al$_3$M phase (M = Zr, Sc or Ti) that can refine the grains; colour is the import-weighted burden $B_\mathrm{NIR}$. \placeholder{Preliminary: to be replaced by the campaign's screen, with (b) the seeds and the optimizer's picks.}}
   \label{fig:calphad}
 \end{figure}
 
@@ -264,7 +266,7 @@ Size and shape of each powder; how close the measured composition came to the ta
 
 \subsection{Printability}
 \placeholder{Data due 5 Feb 2027 (Fig.~\ref{fig:print}).}
-Which compositions printed crack-free and dense, and whether the CALPHAD crack index predicted it.
+Which compositions printed crack-free and dense, and whether the CALPHAD crack index, together with the primary Al$_3$M phase (Section~3.1), predicted it.
 
 \begin{figure}[tbp]
   \centering

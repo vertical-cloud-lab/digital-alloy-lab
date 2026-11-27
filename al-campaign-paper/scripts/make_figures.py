@@ -24,6 +24,8 @@ import textwrap
 from pathlib import Path
 
 import matplotlib
+import matplotlib.cm
+import matplotlib.colors
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
@@ -302,16 +304,53 @@ def generic(pid: str, p: pd.DataFrame, data: pd.DataFrame, name: str, draw) -> s
     return out
 
 
-def draw_calphad(ax, d):
-    sc = ax.scatter(d["freezing_range_c"], d["strengthening_phase_frac"], c=d["burden_B"], cmap="Blues",
-                    s=12, edgecolors="none")
-    picked = d[d["picked_as"].notna() & (d["picked_as"].astype(str) != "")]
-    ax.scatter(picked["freezing_range_c"], picked["strengthening_phase_frac"], s=40, facecolors="none",
-               edgecolors=C_NEW, linewidths=1.2, label="picked")
-    plt.colorbar(sc, ax=ax, label="burden B")
-    ax.set_xlabel("Freezing range (°C)")
-    ax.set_ylabel("Strengthening-phase fraction")
-    ax.legend(loc="upper right")
+def fig2(p, d, crit) -> str:
+    """Printability screen: Kou's crack index against the freezing range, coloured by import-weighted
+    burden; filled markers have a primary L1_2 phase (a grain refiner), crosses are known crackers."""
+    fig, ax = plt.subplots(figsize=(7.2, 3.0))
+    if d.empty:
+        placeholder(ax, "Fig2", p)
+        ax.set_title(f"Fig2. {p.loc['Fig2', 'title']}", loc="left")
+        save(fig, "fig2-calphad-screen")
+        return "placeholder (no rows yet)"
+    style(ax)
+    b = mb.table(d.rename(columns={"composition_id": "alloy_id"}), crit)["B_nir"].values
+    x = pd.to_numeric(d["csc_index"], errors="coerce").clip(lower=1).values
+    y = pd.to_numeric(d["freezing_range_c"], errors="coerce").values
+    l12 = d["primary_phase"].astype(str).str.contains("AL3").values
+    crack = d["family"].astype(str).eq("known-cracker").values
+    norm = matplotlib.colors.Normalize(vmin=0, vmax=np.nanmax(b) if np.isfinite(np.nanmax(b)) else 1)
+    cmap = matplotlib.colormaps["Blues"]
+    for i in range(len(d)):
+        c = cmap(0.25 + 0.75 * norm(b[i])) if np.isfinite(b[i]) else GREY
+        if crack[i]:
+            ax.scatter(x[i], y[i], marker="X", s=34, color=INK2, zorder=3)
+        elif l12[i]:
+            ax.scatter(x[i], y[i], marker="o", s=30, color=c, edgecolors=INK2, linewidths=0.5, zorder=3)
+        else:
+            ax.scatter(x[i], y[i], marker="o", s=30, facecolors="white", edgecolors=c, linewidths=1.2, zorder=3)
+        lab = str(d["picked_as"].iloc[i]) if pd.notna(d["picked_as"].iloc[i]) else ""
+        if lab and lab != "nan":
+            off = {"S1": (-2, -11), "S2": (-14, 5), "O1": (4, 3), "D2": (4, 4), "O2-noEr": (-44, -10),
+                   "S3": (4, -9), "O3": (4, 3), "S4": (4, 3), "D1": (4, 3)}.get(lab, (4, 3))
+            ax.annotate(lab.replace("-noEr", " (no Er)"), (x[i], y[i]), xytext=off, textcoords="offset points",
+                        fontsize=6.3, color=INK)
+    sm = matplotlib.cm.ScalarMappable(norm=norm, cmap=matplotlib.colors.LinearSegmentedColormap.from_list(
+        "b", [cmap(0.25), cmap(1.0)]))
+    cb = fig.colorbar(sm, ax=ax, pad=0.01)
+    cb.set_label("$B_\\mathrm{NIR}$ midpoint (wt %)", fontsize=7)
+    ax.set_xscale("log")
+    ax.set_xlabel("Kou crack-susceptibility index near the end of solidification (K)")
+    ax.set_ylabel("Freezing range (K)")
+    from matplotlib.lines import Line2D
+    ax.legend(handles=[Line2D([], [], marker="o", ls="", color=GREY, mec=INK2, label="primary Al$_3$M phase (M = Zr, Sc, Ti): grain refiner"),
+                       Line2D([], [], marker="o", ls="", mfc="white", mec=GREY, label="no primary Al$_3$M phase"),
+                       Line2D([], [], marker="X", ls="", color=INK2, label="known to crack in LPBF")],
+              loc="upper left", fontsize=6.3)
+    ax.set_title("(a) Printability screen with open databases: preliminary, seeds and published alloys only",
+                 loc="left")
+    save(fig, "fig2-calphad-screen")
+    return f"drawn from {len(d)} rows (preliminary open-database calculations)"
 
 
 def draw_powder(ax, d):
@@ -643,7 +682,7 @@ def main() -> None:
     lit_b = mb.table(lit.drop_duplicates("alloy_id"), crit) if not lit.empty else pd.DataFrame()
     status = {
         "Fig1": fig1(p, bench, tensile, alloys, burdens, lit, lit_b),
-        "Fig2": generic("Fig2", p, read("calphad_screen.csv"), "fig2-calphad-screen", draw_calphad),
+        "Fig2": fig2(p, read("calphad_screen.csv"), crit),
         "Fig3": generic("Fig3", p, read("powder.csv"), "fig3-powders", draw_powder),
         "Fig4": generic("Fig4", p, read("density.csv"), "fig4-printability", draw_density),
         "Fig5": fig5(p, tensile, read("hardness.csv")),
