@@ -543,8 +543,9 @@ estimated; the guard's air at 40 °C):
   junction settles 14–24 K over the heat sink within about a second (estimate).
 - **Strobing without a break at 24 kfps and 20 µs runs the junction near 95 °C** (estimated), its output 12 % down and its peak
   10 nm redder. Keep long recordings to 10 µs or 10 kfps, or add a fan. CW: keep to ≤ 1 A.
-- **The LED's ambient rating is 0–40 °C, and the guard's air is 38–43 °C** (mechanics.md Checks §7), the same problem as the
-  cameras'.
+- **The LED's ambient rating is 0–40 °C.** The guard's air runs 26–44 K over the Shuttle's with the guard closed, and 5–10 K over
+  its supply with the vents [`cooling.md`](cooling.md) draws. That is the same problem as the cameras', with the same answer: room
+  air or a fan coil for the guard.
 - **Overdriving past 2 A** would probably work for µs pulses, but nothing published supports it, and it needs the DC2200's LED1
   terminal (0–4 A, up to 23 kHz, so below 24 kfps). Either way, leave the board's EEPROM pins unconnected, or the DC2200 caps the
   current at 1.5 A.
