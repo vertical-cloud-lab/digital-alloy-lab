@@ -512,9 +512,12 @@ Sterling asked for version 1's "not done" items. They are in
   - Calling a keyhole wherever one is stable agrees with the AM module at 58 of 58 and 25 of 27 points.
   - NIST's Al 5182 track shows the same jump. It measured 0.24 before the keyhole and 0.43 in it. At that power the model has stable states absorbing 0.17, 0.30, 0.42 and 0.53.
 - **Still wrong:**
-  - lack of fusion at every AM "no defect" point, because the dimple absorbs 0.18 where the AM module has 0.31;
-  - Al6061 keyholes are 2.3× too deep;
-  - the AM module's long blend pool, which neither melt flow nor the recoil-driven experiment explains. The AM module's own inputs (properties, absorptivity, which pool edge) are the next thing to check.
+  - **Lack of fusion at every AM "no defect" point.** That holds with the powder, with melt flow, and with the melt's absorptance raised to NIST's 0.24.
+    - The dimple there absorbs 0.18 where the AM module has 0.31.
+    - Every measured pre-keyhole absorptance of bare Al that Edison found is 0.06–0.24, so the AM module may be the one that is off.
+  - Deep aluminium keyholes absorb 0.82–0.87 in the model, about twice the 0.4 that the AM module's blend render, NIST's Al 5182 and Gan et al.'s Al6061 depths point to. That is why Al6061 keyholes come out 2.3× too deep; Ti-6Al-4V's absorptance is right.
+  - The AM module's long blend pool isn't explained by melt flow or the recoil-driven experiment. An unread synchrotron study, Guo et al. 2020, suggests AlSi10Mg pools that long are real, which would make our models short.
+- **What would settle it:** a short single-track matrix on our machine at the AM module's render speeds, in [`first-principles/v2/README.md`](first-principles/v2/README.md#what-would-settle-it-single-tracks-on-our-own-machine).
 
 ## An ORCHID-style benchmark for keyhole models
 

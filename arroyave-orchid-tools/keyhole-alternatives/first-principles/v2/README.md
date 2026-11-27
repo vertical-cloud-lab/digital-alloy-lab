@@ -43,7 +43,10 @@ melt-pool data**. The sources were read through the lab Pi's browser route; Edis
   - Most of those points are where our surface already boils, and the dimple there absorbs like the flat liquid, 0.18, where the AM module has 0.31.
   - But every measured pre-keyhole absorptance of bare Al that Edison found is 0.06–0.24, so the AM module may be the one that is off.
   - Our own single tracks would decide it.
-- **Al6061 keyholes are 2.3× too deep**, as in version 1.
+- **Deep aluminium keyholes absorb about twice too much.**
+  - The model's 0.82–0.87 compares with about 0.4 from the AM module (blend render), NIST's Al 5182 (0.43) and Gan et al.'s Al6061 depths.
+  - It is the likeliest reason Al6061 keyholes come out 2.3× too deep, as in version 1.
+  - Ti-6Al-4V's absorptance is right.
 - **The AM module's 1.47 mm blend pool** is out of reach of every model here, with or without melt flow. An unread synchrotron measurement (Guo et al. 2020) suggests AlSi10Mg pools that long are real, so the models here are probably short.
 
 ## 1. Properties
@@ -118,9 +121,19 @@ state against power at one speed.
   - Above 325 W only the deep keyhole is left.
   - The first state deep enough to count as a keyhole (Wk/Dk ≤ 0.7) appears at 285–290 W, at the AM module's 295 W boundary.
   - The AM module's 0.307 at its 250 W render is next to the 0.32 state, which appears at 260 W.
+- **The blend at the AM module's 0.4 m/s.**
+  - The surface first boils at 155 W, and there is only the dimple (absorbing 0.20) up to 200 W.
+  - From 205 to 280 W the dimple coexists with states absorbing 0.35, 0.47 and 0.58–0.82. The first keyhole (Wk/Dk ≤ 0.7) appears at 220–225 W, and above 280 W only the deep keyhole is left.
+  - The AM module's boundary there is 179 W, below anything the model calls a keyhole (hence 1.16–1.25× below).
+  - At its 375 W render the AM module has 0.384, where the model's only state is a 399 µm keyhole absorbing 0.87.
 - **Al 5182 at NIST's 0.7 m/s.**
   - At 473 W the model has four stable states, absorbing 0.17, 0.30, 0.42 and 0.53.
   - NIST measured about 0.24 before the keyhole formed and 0.43 in it. The 0.43 matches the third state (0.42, a keyhole about 115 µm deep).
+- **Deep aluminium keyholes absorb about twice what everything else says.**
+  - Once only the deep state is left, the smooth cone traps 0.82–0.87 of the beam in Al keyholes.
+  - The AM module's 0.384 at the blend render points to about 0.4, as do NIST's measured 0.43 and the 0.4–0.5 that Gan et al.'s Al6061 depths would need.
+  - For Ti-6Al-4V the cone's 0.7–0.9 is within Simonds et al. 2021's measured 0.66–0.84.
+  - So it is something about aluminium keyholes, which the cone with Fresnel walls misses. It is also the likeliest reason Al6061 keyholes come out 2.3× too deep.
 
 Three lines on each map, as ratios to the AM module's keyhole boundary power over its speed range:
 
@@ -371,7 +384,9 @@ or in-situ thermal imaging, gives the length.
 
 - **A free surface.** The solver has Marangoni flow on a flat surface and a fixed keyhole. Imposing a recoil-driven flow round the keyhole changes the pools by 10 % or less (section 6). A deforming surface, with the melt ejected up the rear wall, is still untested. So is whether the AM module's long blend pool comes from its own inputs instead (properties, absorptivity, which edge it draws).
 - **Lack of fusion.** The AM module calls no defect where every version here calls lack of fusion, mostly at the hatch. That holds with melt flow, with the powder, and with a flat absorptance of 0.24. The AM module absorbs about 0.31 there; measured pre-keyhole values for bare Al are 0.06–0.24. Our own single tracks, sectioned, would say which is right.
-- **Al6061 keyholes are still 2.3× too deep.** Neither the sourced optics, the tilt nor the Mg changes that.
+- **Deep aluminium keyholes absorb about twice too much**, so Al6061 keyholes are still 2.3× too deep. Neither the sourced optics, the tilt, the Mg nor melt flow changes that.
+  - What makes an aluminium keyhole trap less light than a smooth Fresnel cone (Ti-6Al-4V's is right) is the open question.
+  - One thing to check: whether it is held open less steadily (collapse, fluctuation), which the X-ray studies could show.
 - **The free-form keyhole shape** (section 4) doesn't converge reliably, and the shape it reaches doesn't help.
 - **Inputs not found in a source:**
   - Mg's diffusivity in liquid Al (an Al–Cu proxy is used);
@@ -421,7 +436,7 @@ Reports, raw trajectories and the DOI check are in
 | `v2-powder-check.csv` | the powder model against Boley and Rubenchik |
 | `v2-meltflow-runs.csv`, `v2-meltflow-*.png`, `../meltflow/` | the melt-flow runs at version 2's states, and the solver's own validation runs |
 | `v2-conduction-sensitivity-summary.json`, `v2-map-classes-A_cond-*.csv`, `v2-map-classes-deepest-state.csv` | the maps with the conduction-mode absorptance fixed, and with bistable points on their deepest state |
-| `v2-stable-states-vs-power.csv`, `v2-stable-states-vs-power.png` | every stable state against power (AlSi10Mg at 0.9 m/s, Al 5182 at 0.7 m/s) |
+| `v2-stable-states-vs-power.csv`, `v2-stable-states-vs-power.png` | every stable state against power (AlSi10Mg at 0.9 m/s, the blend at 0.4 m/s, Al 5182 at 0.7 m/s) |
 | `v2-optics-sensitivity-summary.json`, `v2-map-classes-optics-0.24.csv`, `v2-keyhole-boundary-vs-am-optics-0.24.csv` | the maps and keyhole lines with the liquid's flat absorptance raised to 0.24 |
 | `v2-map-classes-meltflow.csv`, `v2-map-classes-optics-0.24-meltflow.csv` (and `-summary.json`) | every non-keyhole grid point re-solved with the melt-flow solver, at version 2's absorptance and at the 0.24 one |
 | `v2-single-track-plan.csv` | the grid points where single tracks would discriminate |
@@ -434,7 +449,7 @@ python scripts/test_keyhole_meltflow.py                     # 5 checks, about 2.
 python scripts/keyhole_first_principles_v2.py all           # everything in sections 1-5 and 7, about 13 min on 2 cores
 python scripts/keyhole_first_principles_v2.py explore       # section 4, about 3 min
 python scripts/keyhole_first_principles_v2.py conduction    # the conduction-absorptance and deepest-state sensitivities
-python scripts/keyhole_first_principles_v2.py states        # every stable state against power, about 3 min
+python scripts/keyhole_first_principles_v2.py states        # every stable state against power, about 5 min
 python scripts/keyhole_first_principles_v2.py optics        # the maps and keyhole lines with a flat absorptance of 0.24, about 12 min
 python scripts/keyhole_first_principles_v2.py mapflow       # the maps' non-keyhole points with the melt-flow solver, about 16 min
 python scripts/keyhole_first_principles_v2.py mapflow --src-tag=-optics-0.24   # the same at the 0.24 absorptance

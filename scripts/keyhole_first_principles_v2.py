@@ -264,7 +264,6 @@ def anchored_index(m, T, A_target):
     """Sensitivity only: the liquid's Drude index with its damping scaled so that a flat surface absorbs A_target at
     normal incidence (e.g. 0.24, what NIST measured on bare Al 5182 before its keyhole formed). A stand-in for
     whatever (oxide, ripples) makes a real melt absorb more than the clean liquid's Fresnel value."""
-    w = 2 * math.pi * fp.C_LIGHT / fp.LAMBDA
     n_e = float(m.electron_density(T))
     wp2 = n_e * fp.E_CH ** 2 / (fp.EPS0 * fp.M_E)
     g0 = fp.EPS0 * wp2 * float(m.rho_el_liq(T))
@@ -553,6 +552,17 @@ PROPS = {
         # 0.6 wt% Si and 1.0 wt% Mg, the same construction as for our alloys
         "Al6061": lambda T: (0.097 + 1.681e-4 * T) * 1e-6 + 0.675e-8 * 0.6 + 0.92e-8 * 1.0,
     },
+}
+
+
+PROPS_DESCRIPTION = {
+    "blend_rho_el": "version 1's Leitner et al. 2017 + Brandt & Neuer 2007 formula (checked against Sun et al. 2019 at "
+                    "20 wt% Si: 40.4 vs 39 uOhm cm)",
+    "k_s_table": "as-built LPBF AlSi10Mg, Yang et al. 2018 Fig. 5 (first heating, mean of X and Z): "
+                 + ", ".join(f"{t - 273.15:.0f} C {k:.1f}" for t, k in zip(*YANG2018_KS)) + " W/m/K; blend uses the same",
+    "gan_rho_el": "Ti64 1.92 uOhm m (Boivineau et al. 2006, corrected, liquidus); SS316 1.154 + 1.893e-4 T uOhm m "
+                  "(Pichler et al. 2020, Table 3, corrected); Al6061 Leitner et al. 2017 Al + Brandt & Neuer 2007 "
+                  "increments for 0.6 wt% Si and 1.0 wt% Mg (no measurement found)",
 }
 
 
@@ -885,10 +895,11 @@ def run_conduction_sensitivity(out: pathlib.Path, log=print) -> dict:
 
 
 def run_bifurcation(out: pathlib.Path, log=print) -> dict:
-    """Every stable keyhole depth, and its absorptance, against power at one speed: AlSi10Mg at the AM module's
-    render speed (0.9 m/s) and Al 5182 at NIST's AM-Bench speed (0.7 m/s, 122.5 um beam)."""
+    """Every stable keyhole depth, and its absorptance, against power at one speed: AlSi10Mg and the blend at the AM
+    module's render speeds (0.9 and 0.4 m/s) and Al 5182 at NIST's AM-Bench speed (0.7 m/s, 122.5 um beam)."""
     rows = []
     cases = [("alsi10mg", 0.9, fp.ALLOYS["alsi10mg"]["r0"], fp.ALLOYS["alsi10mg"]["T0"]),
+             ("blend", 0.4, fp.ALLOYS["blend"]["r0"], fp.ALLOYS["blend"]["T0"]),
              ("al5182", fp.AMB2022["v"], fp.AMB2022["r0"], fp.AMB2022["T0"])]
     for key, v, r0, T0 in cases:
         al = make_alloy(key)
@@ -1064,7 +1075,7 @@ def main() -> None:
         (a.out / "v2-explore-free-shape-summary.json").write_text(json.dumps(s, indent=1) + "\n")
         log("done in", round(time.time() - t0), "s")
         return
-    summary = {"properties": {k: str(v) for k, v in PROPS.items()}, "mg_diffusion": MG_DIFFUSION_SOURCE}
+    summary = {"properties": PROPS_DESCRIPTION, "mg_diffusion": MG_DIFFUSION_SOURCE}
     summary["powder_check"] = run_powder_check(a.out, log)
     summary["mg_vapour"] = run_mg_table(a.out, log)
     summary["gan2021_xray_depths"] = run_gan_v2(a.out, a.cache, log)

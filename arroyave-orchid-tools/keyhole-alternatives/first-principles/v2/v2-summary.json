@@ -1,8 +1,8 @@
 {
  "properties": {
-  "blend_rho_el": "None",
-  "k_s_table": "{'alsi10mg': (array([223.15, 273.15, 323.15, 373.15, 423.15, 448.15, 623.15, 673.15,\n       723.15, 773.15]), array([ 93.5, 101. , 109. , 114. , 119.5, 121.5, 153.5, 160. , 161.5,\n       162. ])), 'blend': (array([223.15, 273.15, 323.15, 373.15, 423.15, 448.15, 623.15, 673.15,\n       723.15, 773.15]), array([ 93.5, 101. , 109. , 114. , 119.5, 121.5, 153.5, 160. , 161.5,\n       162. ]))}",
-  "gan_rho_el": "{'Ti64': <function <lambda> at 0x753f52012fc0>, 'SS316': <function <lambda> at 0x753f52013060>, 'Al6061': <function <lambda> at 0x753f52013100>}"
+  "blend_rho_el": "version 1's Leitner et al. 2017 + Brandt & Neuer 2007 formula (checked against Sun et al. 2019 at 20 wt% Si: 40.4 vs 39 uOhm cm)",
+  "k_s_table": "as-built LPBF AlSi10Mg, Yang et al. 2018 Fig. 5 (first heating, mean of X and Z): -50 C 93.5, 0 C 101.0, 50 C 109.0, 100 C 114.0, 150 C 119.5, 175 C 121.5, 350 C 153.5, 400 C 160.0, 450 C 161.5, 500 C 162.0 W/m/K; blend uses the same",
+  "gan_rho_el": "Ti64 1.92 uOhm m (Boivineau et al. 2006, corrected, liquidus); SS316 1.154 + 1.893e-4 T uOhm m (Pichler et al. 2020, Table 3, corrected); Al6061 Leitner et al. 2017 Al + Brandt & Neuer 2007 increments for 0.6 wt% Si and 1.0 wt% Mg (no measurement found)"
  },
  "mg_diffusion": "proxy: Cu in liquid Al80Cu20, Zhang, Griesche & Meyer 2009",
  "powder_check": {

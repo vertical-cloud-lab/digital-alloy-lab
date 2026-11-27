@@ -203,10 +203,12 @@ def fig_meltflow(out: pathlib.Path):
 def fig_states(out: pathlib.Path):
     """Every stable state (depth and absorbed fraction) against power, with the AM module and NIST marked."""
     t = pd.read_csv(out / "v2-stable-states-vs-power.csv")
-    fig, axes = plt.subplots(2, 2, figsize=(12.0, 7.6), layout="constrained", sharex="col")
+    keys = [k for k in ("alsi10mg", "blend", "al5182") if (t["alloy"] == k).any()]
+    fig, axes = plt.subplots(2, len(keys), figsize=(6.0 * len(keys), 7.6), layout="constrained", sharex="col")
     titles = {"alsi10mg": "AlSi10Mg, 0.9 m/s, 80 µm beam (the AM module's render speed)",
+              "blend": "Blend, 0.4 m/s, 90 µm beam (the AM module's render speed)",
               "al5182": "Al 5182, 0.7 m/s, 122.5 µm beam (NIST AM-Bench 2022)"}
-    for col, key in enumerate(("alsi10mg", "al5182")):
+    for col, key in enumerate(keys):
         g = t[t["alloy"] == key]
         for row, (ycol, ylab) in enumerate((("A", "absorbed fraction"), ("d_um", "keyhole depth (µm)"))):
             ax = axes[row, col]
@@ -222,13 +224,15 @@ def fig_states(out: pathlib.Path):
                                label="stable, Wk/Dk ≤ 0.7 (keyhole)")
                 else:
                     ax.scatter(sel["P_W"], sel[ycol], s=12, marker=mk, color=GREY, lw=0, zorder=3, label=lab)
-            if key == "alsi10mg":
-                b = pd.read_csv(fp.AM_DIR / "alsi10mg-am-module-boundaries.csv").dropna(subset=["P_keyhole_W"])
-                P_am = float(np.interp(900.0, b["speed_mm_s"], b["P_keyhole_W"]))
+            if key in ("alsi10mg", "blend"):
+                slug, v_mm, P_r, A_r = (("alsi10mg", 900.0, 250.0, 0.307) if key == "alsi10mg"
+                                        else ("byu-blend", 400.0, 375.0, 0.384))
+                b = pd.read_csv(fp.AM_DIR / f"{slug}-am-module-boundaries.csv").dropna(subset=["P_keyhole_W"])
+                P_am = float(np.interp(v_mm, b["speed_mm_s"], b["P_keyhole_W"]))
                 ax.axvline(P_am, color=INK, lw=1.6, label=f"AM module keyhole boundary ({P_am:.0f} W)")
                 if ycol == "A":
-                    ax.scatter([250.0], [0.307], marker="*", s=140, color=ORANGE, zorder=5,
-                               label="AM module's absorptivity at its 250 W render")
+                    ax.scatter([P_r], [A_r], marker="*", s=140, color=ORANGE, zorder=5,
+                               label=f"AM module's absorptivity at its {P_r:.0f} W render")
             else:
                 if ycol == "A":
                     ax.scatter([473.0, 473.0], [0.24, 0.43], marker="*", s=140, color=ORANGE, zorder=5,
