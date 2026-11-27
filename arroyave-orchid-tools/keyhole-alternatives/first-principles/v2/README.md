@@ -107,6 +107,7 @@ global balance: power absorbed in the keyhole equals the power conducted (3D mov
 **More than one stable keyhole.**
 - **Above the power where the surface first boils, the balance (absorbed − lost) crosses zero more than once.** A root where it falls through zero is stable.
   - The first stable root is a dimple, shallower than its opening is wide. It absorbs about the flat liquid's 0.18–0.20.
+  - Its depth is overstated, because the analytic conduction undercounts a shallow cavity's heat loss (section 6). Its absorptance and pool barely depend on that depth.
   - Deeper stable roots are keyholes that trap light.
 - **Why there are several.** A cone's absorptance rises in steps as it deepens, one step per extra reflection. At AlSi10Mg 250 W, 0.9 m/s, version 1's own balance has stable roots at 16, 40, 69 and 98 µm.
 - **This corrects version 1.** Its 0.315 there, which matched the AM module's 0.307, was the second of these (40 µm), not a unique answer.
@@ -166,7 +167,7 @@ The points version 1 called no defect sat on a deeper root, like the 40 µm one 
 - Most of the AM module's no-defect points are above the power where our surface boils. There version 2 has a dimple, not a flat surface, so the fixed value doesn't apply.
 - Given the AM module's 0.307, the dimple at its 250 W render is 35 µm deep, and the pool (72 µm deep, 145 µm wide) is no defect, which agrees.
 - Putting the 9 bistable points on their deepest stable state instead, for the pool as well as the class, changes one point. All-class agreement goes to 19 and 7 (`v2-map-classes-deepest-state.csv`). Most no-defect points have only the dimple.
-- So the gap is the dimple's absorptance: about 0.31 in the AM module against 0.18 here. A specular, clean liquid surface can't absorb that much in a dish this shallow. An oxidised or rippled surface might.
+- So the gap is the dimple's absorptance: about 0.31 in the AM module against 0.18 here. A specular, clean liquid surface can't absorb that much in a dish this shallow. An oxidised or rippled surface might, and so might the powder around it (see the measurements below).
 - **Raising the liquid's own absorptance to NIST's measured 0.24 doesn't fix it either** (`optics` command; `v2-map-classes-optics-0.24.csv`, `v2-keyhole-boundary-vs-am-optics-0.24.csv`).
   - The Drude damping was scaled so that a flat melt absorbs 0.24, against the clean liquid's 0.18–0.20. That makes the dimple and every keyhole state absorb more.
   - All-class agreement rises to 22 for AlSi10Mg and stays at 7 for the blend. Still none of the AM module's 31 no-defect points come out as no defect: most are lack of fusion at the hatch, where the pool is too narrow.
@@ -178,7 +179,7 @@ The points version 1 called no defect sat on a deeper root, like the 40 µm one 
   - With the 0.24 optics as well, agreement is 25 and 7 (`v2-map-classes-optics-0.24-meltflow.csv`), and still no no-defect point comes out right. Reaching 30 µm deep at the 65 µm half-hatch needs a pool about 180 µm wide and 75 µm deep at 250 W. That is what the AM module's 0.31 gives in the solver.
 - **Is the AM module's 0.31 too high, or ours too low? It depends on the surface.** Edison's round 5 collected measured absorptance of Al alloys before a keyhole forms:
   - **Bare plates: 0.06–0.24.**
-    - Machined AlSi10Mg: 0.06 ± 0.02 (Allen 2023, below).
+    - Machined AlSi10Mg: 0.06 ± 0.02 in Allen 2023's summary, 0.02–0.09 across its data sets (below).
     - Al 1100 at 1.5 m/s: 0.10–0.15 (Trapp et al. 2017). Not read; the paper is behind a CAPTCHA.
     - Polished Al 5182: 0.24 ([Simonds et al. 2024](https://doi.org/10.1007/s40192-023-00336-0)), which I read.
   - **In a commercial LPBF machine, it depends on the surface** ([Allen 2023](https://hdl.handle.net/1974/32579), Queen's University PhD thesis, CC BY 4.0, Ch. 5, read in the source for this review).
@@ -268,16 +269,16 @@ energy equations in the beam's frame.
   - Marangoni shear on a flat top surface (dσ/dT = −1.27×10⁻⁴ N/m/K, Leitner et al. 2017);
   - a Carman–Kozeny mushy zone, where C from 10⁸ to 10¹⁰ changes pool sizes by under 0.6 %;
   - the sourced viscosities;
-  - Hertz–Knudsen evaporative cooling on the free surface;
-  - the material's full H(T) and k(T).
+  - Hertz–Knudsen evaporative cooling on the free surface, evaluated at the top cell's centre temperature, half a cell below the surface. That understates the loss where the surface is above boiling, so conduction-mode pools come out a few per cent too large;
+  - the material's k(T), and its H(T) box-averaged over ±15 K so that the Newton iteration converges across the eutectic step. The averaging lengthens liquidus pools by a few per cent.
 - **The keyhole** is version 2's tilted cone, held at T_w. It is blocked to the flow, so the liquid goes round it, and
-  the beam's power outside the opening enters as a surface flux.
+  the beam's power outside the opening enters as a surface flux. Only 82–94 % of that flux arrives in the five deeper-keyhole runs, because the faces under the keyhole's cells are zeroed after it is normalised. That is about 0.5 % of the total heat.
 - **Checks** ([`scripts/test_keyhole_meltflow.py`](../../../../scripts/test_keyhole_meltflow.py), all 5 pass in 1.5–2.5 min):
   - with flow off and constant properties, pool size matches the exact moving-Gaussian solution to 0.14 %;
   - a cone at T_w delivers 0.945× the collocation's heat, and its pool depth is 1.005×;
-  - the energy balance closes;
+  - the energy balance closes. It is summed from the solver's own fluxes, so it checks convergence, not the physics;
   - 100 % of the surface liquid flows outward, at 4.4 m/s against the scaling estimate's 9.3;
-  - refining the grid from r0/6 to r0/8 changes pool sizes by 1.7 %.
+  - refining the grid from r0/6 to r0/8 changes pool sizes by 1.7 %. That is for one conduction-mode case at the liquidus; no keyhole case was grid-checked.
 
 At version 2's states, liquidus pool depth / width / length (solidus length in brackets), µm:
 
@@ -291,17 +292,23 @@ At version 2's states, liquidus pool depth / width / length (solidus length in b
 | *AlSi10Mg 250 W, own A 0.18 (dimple)* | *15 µm* | *48 / 117 / 124 (237)* | *65 / 148 / 253 (275)* | *63 / 159 / 254 (275)* | *3.1 m/s* | *AM: no defect* |
 | *Al 5182, own A 0.17 (dimple)* | *26 µm* | *71 / 178 / 187 (322)* | *90 / 211 / 340 (375)* | *87 / 227 / 345 (377)* | *2.4 m/s* | *measured 88.8 / 326* |
 
-**The two dimple rows (italics) overstate their pools.** A dimple 15–26 µm deep spans only 3–5 cells, so its T_w cells deliver 35–42 % more heat than the absorbed power allows. In the other rows the cavity delivers 0.91–1.02× the analytic balance's heat.
+**The two dimple rows (italics) overstate their pools.** Their T_w cavities deliver 35–42 % more heat than the absorbed power allows. In the other rows the cavity delivers 0.91–1.02× the analytic balance's heat.
+- **The error is the analytic model's, not the grid's** (found in the final review; an earlier version of this page blamed the 3–5 cells across a dimple).
+- **The analytic model undercounts what a shallow, wide cavity at T_w conducts.** It holds the wall with point sources on the axis.
+  - In the static limit it gives 29 W for the 15 µm AlSi10Mg dimple (40 µm opening).
+  - Any cavity that contains the opening must conduct at least as much as an isothermal disc of the same radius, 4kaθ = 40 W.
+  - For cavities about as deep as their opening is wide, or deeper, it is above that bound, and within about 5 % of the solver.
+- **So the analytic dimples are deeper than their absorbed power allows.** Two things the comparisons use don't depend on that depth: their absorptance, about the flat liquid's, and their analytic pools, which are set by the absorbed power. The keyhole states are unaffected.
 
 ![pool sizes: analytic, solver without and with melt flow, and the AM module or measurement](v2-meltflow-pools.png)
 
-- **Marangoni flow on a flat surface does little to these aluminium pools.**
-  - It widens them by 7–12 % and makes them 0–4 % shallower. Length changes by −6 to +2 %.
+- **Melt flow does little to these aluminium pools.** Two effects are lumped together here: the Marangoni flow, and the melt going round the keyhole instead of through it, as the plate does with flow off.
+  - Together they widen the pools by 7–12 % and make them 0–4 % shallower. Length changes by −6 to +2 %.
   - The keyhole wall delivers 1–5 % less heat with flow, so flow wouldn't move the keyhole depth much either.
   - The liquid's high thermal diffusivity keeps the Péclet number of a 3 m/s surface flow modest.
 - **The analytic model's averaged properties matter more than flow.** Version 1 and version 2 use one
   Kirchhoff-mean conductivity and one secant heat capacity for the whole range, and the solver resolves k(T) and H(T)
-  instead. With flow off, that alone lengthens the liquidus pool by 21–65 % and widens it by 2–17 %. The pool tail
+  instead. With flow off, that lengthens the liquidus pool by 21–65 % and widens it by 2–17 %, a few per cent of the length coming from the smoothing of H. The pool tail
   forms near the liquidus, where the averages are furthest from the local values.
 - **Against the AM module's blend pool, nothing here gets close.**
   - At its own absorptance the pool is deeper (408 µm against 349) but narrower (316 against 462) and much shorter (581 against 1,470; 980 at the solidus).
@@ -320,8 +327,8 @@ round it from the front to the rear. The solver can't compute that (its surface 
 this experiment imposes it.
 - **The imposed flow.** The liquid next to the keyhole is driven round it at V(z) sin φ.
   - V(z) = √(2σ / ρ r(z)) is Bernoulli's speed for the Laplace overpressure σ/r. The recoil must supply at least that overpressure to hold a cross-section of radius r open; r is floored at a quarter of the opening.
-  - That comes to 3.4 m/s at the opening and up to 5.6–6.9 m/s deeper down.
-  - It is applied as a penalty on the liquid cells touching the keyhole. A no-slip shear alone barely coupled at this grid, where the cell Reynolds number is about 70.
+  - That comes to 2.8–3.4 m/s at the opening (Al 5182 to AlSi10Mg) and up to 5.6–6.9 m/s deeper down. The solver uses one density throughout, the solid's, which makes V 5 % lower than the liquid's density would at the liquidus and 17 % lower at the wall's 2,850 K.
+  - It is applied as a penalty on the cells touching the keyhole. A no-slip shear alone barely coupled at this grid, where the cell Reynolds number is about 70.
 - This is a closure, not a solution. It asks what a melt pushed round the keyhole at that speed does to the pool.
 
 | Case | Marangoni only: depth / width / length (solidus) | With the driven keyhole wall | Peak melt speed | Keyhole wall heat |
@@ -334,7 +341,7 @@ this experiment imposes it.
 **Driving the melt round the keyhole changes the pool by 10 % or less.**
 - The liquidus length moves by −2 to +9 %, and the solidus length grows by 6–10 %. The width shrinks by 3–5 %, except at AlSi10Mg 350 W, where it is unchanged.
 - It doesn't reach the AM module's 1.47 mm blend pool either.
-- (The blend run at the AM module's absorptance hadn't settled after 60 outer iterations. Its pool sizes were steady to about 1 %.)
+- (The blend run at the AM module's absorptance stopped at the 60-iteration limit without meeting the convergence test. The run saves no iteration history, so how close to settled its pool was isn't recorded.)
 - So a melt flow of the size these closures give doesn't explain the AM module's long pool.
 - That leaves the AM module's own inputs to check, which aren't public: the properties it uses for the blend, its absorptivity at every point, and which pool edge it draws. The AM module's CSV export would show all three.
 - **A measurement may side with the AM module here (unread lead).**

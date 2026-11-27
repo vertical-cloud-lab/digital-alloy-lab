@@ -5,7 +5,7 @@ equations in the beam frame. It has:
 - Marangoni shear on a flat surface;
 - a Carman–Kozeny mushy zone;
 - the keyhole as a fixed cavity at its wall temperature;
-- the material's full H(T) and k(T).
+- the material's k(T), and its H(T) box-averaged over ±15 K so the iteration converges across the eutectic step.
 
 The physics, the checks and the results at version 2's keyhole states are in
 [`../v2/README.md`, section 6](../v2/README.md#6-melt-flow-our-own-3d-solver).
