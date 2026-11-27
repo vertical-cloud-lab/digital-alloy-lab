@@ -83,6 +83,12 @@ def main() -> int:
         "composition count filled": r"\newcommand{\NCompositions}{3}" in (gen / "numbers.tex").read_text(),
         "run count filled": r"\newcommand{\NAlRuns}{3}" in (gen / "numbers.tex").read_text(),
     }
+    sys.path.insert(0, str(HERE))
+    import mineral_burden as mb
+    checks["hypervolume: one point fills its box"] = abs(mb.hypervolume([("a", 1, 300)], 5, 100) - 800) < 1e-9
+    checks["hypervolume: staircase of two points"] = abs(mb.hypervolume([("a", 1, 200), ("b", 3, 300)], 5, 100) - 600) < 1e-9
+    checks["hypervolume: dominated point adds nothing"] = abs(mb.hypervolume([("a", 1, 300), ("b", 3, 200)], 5, 100) - 800) < 1e-9
+    checks["pareto_front drops a dominated point"] = mb.pareto_front([("a", 1, 300), ("b", 3, 200), ("c", 4, 400)]) == ["a", "c"]
     for k, ok in checks.items():
         print(("ok   " if ok else "FAIL ") + k)
     shutil.rmtree(tmp)

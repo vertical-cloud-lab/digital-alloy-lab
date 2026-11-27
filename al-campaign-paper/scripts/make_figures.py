@@ -987,7 +987,8 @@ def numbers(tensile, runs, alloys, burdens, lit=None, lit_b=None, crit=None, ben
                  "eos-al2139": "Al2139 (T4)", "hoganas-al-hs1": "Al-HS1", "croteau-al-mg-zr": "Al--Mg--Zr",
                  "chalmers-alloy-f": "Al--Mn--Cr--Zr--Mg", "hrl-7a77": "7A77", "alsimg-tailored": "tailored Al--Si--Mg",
                  "al-mg-mn-er-zr": "Al--Mg--Mn--Er--Zr", "eckart-a20x": "A20X"}
-        lines += [num("NFront", len(front)), num("NFrontRegion", len(inreg)),
+        hv = mb.hypervolume([(i, r["b"], r["ys"]) for i, r in front.iterrows()], sc_mid, thr)
+        lines += [num("HVreported", hv), num("NFront", len(front)), num("NFrontRegion", len(inreg)),
                   rf"\newcommand{{\FrontRegionList}}{{{', '.join(short.get(a, a) for a in inreg.index)}}}",
                   rf"\newcommand{{\FrontList}}{{{', '.join(short.get(a, a) for a in front.index)}}}"]
         on_front = {k: (lid in front.index) for k, lid in BASELINES.items()}

@@ -144,6 +144,7 @@ Proposed:
 | Result | This paper (Feb 2027) | *Adv. Mater.* (2028) |
 |---|---|---|
 | The alloys: compositions, powders, prints, properties, corrosion, benchmark map, mineral burden | **Owns** | Cites this paper |
+| The commercial powders printed here (AlSi10Mg, Al5X1, Al-HS1, Scalmalloy), their on-par ratios and the in-house front | **Owns** | Cites this paper |
 | Atomization as a method (settings, yields per alloy, in the SI) | Reports, makes no claim about it | Owns the process window and repeatability (Block A), dosing fidelity, and the atomization model |
 | The optimizer | One paragraph: which rounds it picked; no acceleration claim | Owns the cost-aware network optimizer, per-step costs and the replay/acceleration factor |
 | CALIBER measurement settings | Uses the settings, cites CALIBER | Owns |

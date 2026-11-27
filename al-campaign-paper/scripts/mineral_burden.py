@@ -166,6 +166,22 @@ def pareto_front(points: list[tuple[str, float, float]]) -> list[str]:
     return front
 
 
+def hypervolume(points: list[tuple[str, float, float]], b_ref: float, s_ref: float) -> float:
+    """Area (strength x burden, MPa x wt %) that a set of points dominates inside the region of interest:
+    burden below b_ref and strength above s_ref. A point dominates the box from its own burden to b_ref and from
+    s_ref to its own strength. The improvement a candidate brings is hypervolume(front + [candidate]) minus
+    hypervolume(front)."""
+    pts = [(b, s) for _, b, s in points if not (math.isnan(b) or math.isnan(s)) and b < b_ref and s > s_ref]
+    area, best = 0.0, s_ref
+    # sweep from low to high burden; each step adds the strip between this burden and the next at the best
+    # strength reached so far
+    for i, (b, s) in enumerate(sorted(pts)):
+        best = max(best, s)
+        nxt = sorted(pts)[i + 1][0] if i + 1 < len(pts) else b_ref
+        area += (nxt - b) * (best - s_ref)
+    return area
+
+
 def table(alloys: pd.DataFrame | None = None, crit: pd.DataFrame | None = None) -> pd.DataFrame:
     if alloys is None:
         alloys = pd.read_csv(DATA / "alloys.csv")
