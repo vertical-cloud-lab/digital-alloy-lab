@@ -985,7 +985,7 @@ def main() -> None:
         print(json.dumps({"class": classify(res, p.get("layer", 30e-6)), **dataclasses.asdict(res)}, indent=1,
                          default=float))
         return
-    logf = open(a.out / f"v2-{a.cmd}.log", "w")
+    logf = open(a.out / f"v2-{a.cmd}{'-drive' if getattr(a, 'drive', False) else ''}.log", "w")
 
     def log(*x):
         line = " ".join(str(y) for y in x)
