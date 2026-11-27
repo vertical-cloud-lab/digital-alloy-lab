@@ -23,7 +23,7 @@ W, H = 1200, 860
 FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 MAT = dict(smooth_shading=True, specular=0.3, specular_power=18, ambient=0.22, diffuse=0.85)
 CONTEXT = ("Bench top", "Gantry", "PC with", "IPG YLR", "Process fibre", "Safety relay", "E-stop", "Key switch", "Argon regulator",
-           "Exhaust HEPA", "Trace O2", "Rotary-vane", "KF-25 pump hose")
+           "Exhaust HEPA", "Trace O2", "Rotary-vane", "KF-25 pump hose", "Digitizer", "Fibre bend restrictor", "Emission lamp")
 ADDED, MOVED, REMOVED, KEPT = "#2bb24c", "#2b6cd2", "#d22b2b", "#c9ced4"
 
 
@@ -121,9 +121,11 @@ def beam(pl, state, opacity=0.35):
     pl.add_mesh(m, color=(1.0, 0.12, 0.12), opacity=opacity, smooth_shading=True)
 
 
-ISO = dict(pos=(-1250, -1550, 980), focal=(-60, 40, 40), view_angle=30)
-ISO_WIDE = dict(pos=(-1500, -2100, 1250), focal=(-160, 40, 20), view_angle=30)
-SEC = dict(pos=(-30, -1150, 60), focal=(-30, 40, 20), view_angle=30)
+ISO = dict(pos=(-1350, -1700, 1250), focal=(-60, 20, 120), view_angle=30)
+ISO_WIDE = dict(pos=(-1650, -2300, 1500), focal=(-160, 20, 100), view_angle=30)
+SEC = dict(pos=(-30, -1500, 170), focal=(-30, 40, 140), view_angle=30)
+MON_VIEW = dict(pos=(-900, -1150, 700), focal=(-60, -10, 120), view_angle=30)
+LOW = dict(pos=(-700, -900, -260), focal=(0, 30, -120), view_angle=30)
 
 
 def cam(pl, v):
@@ -140,11 +142,11 @@ def shot(pl):
 
 
 SUBS = {
-    "S1": "deck on the support rails, target at the powder plane; guide laser only until the LSO registers the laser",
-    "S2": "box on the rails round the deck; window, beam tube and coded switches make it Class 1; 500 W dump at the plate",
-    "FT-0": "well block as the spreading template, plate held by a collar on the rod; argon through the nozzle; film applicator",
-    "FT-1": "collar off, rod clamped to the X-VSR20A under the box; X-LSQ075B, shield, arm and hopper-blade on the deck",
-    "FT-1V": "deck cassette, rod gland, window stack and stages moved onto a 12 in. cube; KF-25 pump, gauge and feedthroughs",
+    "S1": "deck on the support rails, target at the powder plane; hurrySCAN hung by its entrance face, lens axis at y -30",
+    "S2": "Saginaw 16 x 12 x 8 in. box on the rails; window, split beam tube, coded switches: Class 1; 500 W dump at the plate",
+    "FT-0": "well block, plate on a collar-held rod, argon nozzle; 48 mm spreader bar; layer camera, raking lights, TCs",
+    "FT-1": "rod clamped in the rod-end block on the X-VSR20A; X-LSM100B, shield, arm and hopper-blade on the deck; AE sensor",
+    "FT-1V": "deck cassette, gland, window stack and stages moved onto a 12 in. cube; cover slide on a drop tube; pump-purge",
 }
 
 
@@ -274,8 +276,65 @@ def gif():
     print("wrote cad-progression.gif", len(frames), "frames")
 
 
+def monitoring():
+    """Close-ups of FT-1: the monitoring parts (purple) above the box, and the drive and lead routing under it."""
+    parts = M.build("FT-1")
+    mon = "#8a4fbf"
+    colors = {key(p): (mon if p.sub == "monitoring" else KEPT) for p in parts}
+    opac = {key(p): (1.0 if p.sub == "monitoring" else (0.18 if p.opacity < 1 else 0.45)) for p in parts}
+    pl = plotter()
+    add_parts(pl, parts, colors, opac, hide=("Bench top", "PC with", "IPG YLR", "Safety relay", "E-stop", "Key switch",
+                                             "Argon regulator", "Exhaust HEPA", "Trace O2", "Gantry uprights"))
+    beam(pl, "FT-1", 0.25)
+    cam(pl, MON_VIEW)
+    img = caption(shot(pl), "FT-1 monitoring (purple): layer camera, two raking lights, coaxial photodiode, AE, thermocouples",
+                  "MON1 camera through its own door port; MON2/MON3 lights through wall ports; MON4 photodiode behind "
+                  "the head's input-mirror block; MON5 AE on the rod-end block (below)")
+    Image.fromarray(img).save(IMG / "cad-monitoring-ft-1.png")
+    pl = plotter()
+    add_parts(pl, parts, hide=("Bench top", "PC with", "IPG YLR", "Safety relay", "E-stop", "Key switch", "Argon regulator",
+                               "Exhaust HEPA", "Trace O2", "Gantry", "SCANLAB", "LINOS", "Scan-head", "Flange-to-beam",
+                               "hurrySCAN", "Collimator", "Photodiode", "Process fibre", "Fibre bend", "Head cables"))
+    cam(pl, LOW)
+    img = caption(shot(pl), "FT-1 under the box: rod-end block with the potted plug's pigtail and terminal block, AE sensor, "
+                  "X-VSR20A (Zaber STEP)", "the rod's lower end is potted flush, so the rod lifts out through the gland")
+    Image.fromarray(img).save(IMG / "cad-under-ft-1.png")
+    print("wrote cad-monitoring-ft-1.png, cad-under-ft-1.png")
+
+
+def camera_view():
+    """What the layer camera sees (hopper parked at the right), rendered from its lens front with its field."""
+    for st in ("FT-1", "FT-1V"):
+        parts = M.build(st)
+        c = M.camera_geometry(st)
+        pos = tuple(c["W"][i] + 30.0 * c["u"][i] for i in range(3))
+        pl = plotter((900, 680))
+        add_parts(pl, parts, hide=("Layer camera", "Camera post", "Camera port", "Box door", "Cube top plate",
+                                   "Window, ", "Cover slide,"), edges=False)
+        pl.camera.position = pos
+        pl.camera.focal_point = (0.0, 0.0, M.levels(st)["dz"])
+        pl.camera.up = (0, 0, 1)
+        pl.camera.view_angle = float(2 * np.degrees(np.arctan(c["field_mm"][1] / 2 / c["dist_mm"])))
+        img = caption(shot(pl), f"{st}: the layer camera's view ({c['f_mm']:.0f} mm lens, {c['tilt_deg']:.1f} deg off "
+                      f"vertical, {c['um_px_across']:.1f} um/px)", "hopper parked at the right; the IMX477's short-side field")
+        Image.fromarray(img).save(IMG / f"cad-camera-view-{st.lower()}.png")
+        print("wrote", f"cad-camera-view-{st.lower()}.png")
+
+
+def thorlabs():
+    parts = M.build("FT-1", piston="thorlabs")
+    pl = plotter()
+    add_parts(pl, parts, hide=("Bench top", "PC with", "IPG YLR", "Gantry", "SCANLAB", "LINOS", "Scan-head", "hurrySCAN",
+                               "Collimator", "Photodiode", "Process fibre", "Fibre bend", "Head cables", "Flange-to-beam"))
+    cam(pl, LOW)
+    img = caption(shot(pl), "FT-1 with the PCard route's piston stage: Thorlabs MTS50/M-Z8 on end (Thorlabs STEP)",
+                  "tower plate on the bracket plate, the stage's lower end through a cut-out; L-arm to the same rod-end block")
+    Image.fromarray(img).save(IMG / "cad-ft-1-thorlabs.png")
+    print("wrote cad-ft-1-thorlabs.png")
+
+
 if __name__ == "__main__":
     IMG.mkdir(exist_ok=True)
-    what = sys.argv[1:] or ["states", "sections", "steps", "strip", "gif"]
+    what = sys.argv[1:] or ["states", "sections", "steps", "strip", "monitoring", "camera_view", "thorlabs", "gif"]
     for w in what:
         globals()[w]()

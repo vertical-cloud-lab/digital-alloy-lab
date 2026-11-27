@@ -603,7 +603,7 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
         hd_, hdep = P["heater_hole"]
         for sy_ in P["blk_heaters"]:
             blk = blk.cut(cyl(hd_ / 2, (-bw_ / 2 - 1, sy_, zb0 + bh_ / 2), "x", hdep + 1))
-        blk = blk.cut(cyl(0.8, (-30, bd_ / 2 + 1, zbed - 8.0), "-y", 31))               # TC hole above the heaters
+        blk = blk.cut(cyl(0.8, (-bw_ / 2 - 1, 0.0, zbed - 8.0), "x", 16))              # TC hole from -x, with the heaters
         add("Well block, Ø40.00 bore (MK-03)", blk, C["hot"], "MK-03", "cassette")
         if has_stages:
             hs = [cyl(P["heater_d"] / 2, (-bw_ / 2 - 0.5, sy_, zb0 + bh_ / 2), "x", P["heater_l"]) for sy_ in P["blk_heaters"]]
@@ -630,7 +630,7 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
             # lead groove from the hole to the socket along the radius, in the underside
             g = box(0, P["heater_r"], -gw_ / 2, gw_ / 2, hp_z0 - 1, hp_z0 + gd_).rotate(V(0, 0, 0), V(0, 0, 1), 30 + 120 * k)
             hpl = hpl.cut(g)
-        add("Heater plate Ø39.8 x 28 (MK-04)", hpl, C["hot"], "MK-04", "cassette", "piston")
+        add(f"Heater plate Ø39.8 x {P['hp_t']:g} (MK-04)", hpl, C["hot"], "MK-04", "cassette", "piston")
         rope = tube(P["plate_d"] / 2 + 0.08, P["plate_d"] / 2 - P["rope"], (0, 0, zt - P["sub_t"] - 7), "z", P["rope"])
         add("Fibreglass rope wiper", rope, C["white"], "H4", "cassette", "piston")
         ph = []
@@ -643,7 +643,7 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
             a = math.radians(270.0)
             tc = cyl(0.79, (P["heater_r"] * math.cos(a), P["heater_r"] * math.sin(a), hp_z0 + 0.5), "z", P["heater_l"])
             add("Plate thermocouple, 1/16 in. type K (MON6)", tc, C["mon"], "MON6", "monitoring", "piston")
-            tcb = cyl(0.79, (-30, bd_ / 2 + 25, zbed - 8.0), "-y", 55)
+            tcb = cyl(0.79, (-bw_ / 2 - 6, 0.0, zbed - 8.0), "x", 21)                     # from the -x face, 15 deep
             add("Well-block thermocouple, 1/16 in. type K (MON6)", tcb, C["mon"], "MON6", "monitoring")
         # rod: thin-wall tube from the socket down through the deck, floor and gland; leads run inside it to a potted plug
         rod_vis = L["rod_vis"]
@@ -660,7 +660,7 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
         gl = box(-30, 30, -30, 30, L["gland_bot"], L["under"]).cut(cyl(P["rod_od"] / 2 + 0.1, (0, 0, L["gland_bot"] - 1),
                                                                          "z", P["gland_t"] + 2))
         add("Rod gland plate, 2 O-rings (MK-07)", gl, C["ss_dark"], "MK-07", "drive")
-        gsc = [cyl(4.25, (gx, gy, L["gland_bot"] - 5), "z", 5) for gx in (-21.0, 21.0) for gy in (-21.0, 21.0)]
+        gsc = [cyl(4.25, (gx, gy, L["gland_bot"]), "z", 5) for gx in (-21.0, 21.0) for gy in (-21.0, 21.0)]   # counterbored
         add("Gland screws M5 x 25 with bonded seals (4)", comp(gsc), C["ss_dark"], "MK-07", "drive")
         if state == "FT-0":
             coll = tube(15, P["rod_od"] / 2, (0, 0, z0), "z", 10).cut(box(-0.75, 0.75, 4, 16, z0 - 1, z0 + 11))
