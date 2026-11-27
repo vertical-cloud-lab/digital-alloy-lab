@@ -255,7 +255,7 @@ A preliminary calculation with open databases for 48 compositions (Fig.~\ref{fig
 
 \subsection{Powders}
 \placeholder{Data due 12 Feb 2027 (Fig.~\ref{fig:powders}).}
-Size and shape of each powder; how close the measured composition came to the target, and which elements were lost. Mn and Zn evaporated preferentially from the finest particles in an earlier ultrasonic-atomization study~\cite{zrodowski2021}, and Mg can be lost during LPBF at high energy input~\cite{croteau2018}. \note{Croteau's Mg loss (3.6 to 2.7 wt\%) is from the \#275 survey's reading of the full text; re-check.}
+Size and shape of each powder; how close the measured composition came to the target, and which elements were lost. Mn and Zn evaporated preferentially from the finest particles in an earlier ultrasonic-atomization study~\cite{zrodowski2021}, and Mg can be lost during LPBF at high energy input~\cite{croteau2018}. 
 
 \begin{figure}[tbp]
   \centering
@@ -349,8 +349,8 @@ Under the rule of Section~\ref{sec:stats}, with $n = \InhouseN$ for \AlSi (95\% 
 
 Scandium-free alloys already sit between \AlSi and \Scal (Fig.~\ref{fig:map}a, grey markers).
 On their vendors' datasheets, a directly aged Al--Mn--Cr--Zr powder reaches \SIrange{355}{370}{MPa} yield strength with \SIrange{12}{16}{\%} elongation~\cite{ds_hoganas}, a directly aged Al--Mg--Zr--Mn powder \SIrange{380}{385}{MPa} with 13--14.5\%~\cite{ds_al5x1}, and a heat-treated Al--Fe--Zr powder about \SI{300}{MPa} with 10--12\%~\cite{ds_cp1}; silver-bearing Al--Cu--Mg alloys reach \SIrange{350}{385}{MPa} as built and \SIrange{390}{460}{MPa} after a T7 or T4 treatment~\cite{ds_al2139,ds_a20x}, and a Zr-modified 7xxx alloy \SIrange{490}{585}{MPa} after hot isostatic pressing and heat treatment~\cite{ds_7a77}.
-In the peer-reviewed literature, Al--Mn--Cr--Zr--Mg reached \SI{390}{MPa} as built with 17\% elongation~\cite{almncrzr2024}, Al--Mg--Zr about \SI{354}{MPa} after aging with about 20\%~\cite{croteau2018}, Al--Mg--Mn--Er--Zr \SI{440}{MPa} after aging with 15.5\%~\cite{almgmnerzr2022}, Al--Fe--Mg--Zr \SI{376}{MPa} after aging with 11\%~\cite{alfezr2025}, and a tailored Al--Si--Mg alloy \SIrange{270}{417}{MPa} as built, depending on plate temperature and machine~\cite{alsimg2020}.
-\note{These values were read from the sources by the \#275 survey (research/datasheets.md, 26 Nov 2026) and must be re-checked against each source before submission.}
+In the peer-reviewed literature, Al--Mn--Cr--Zr--Mg reached \SI{390}{MPa} as built with 17\% elongation~\cite{almncrzr2024}, Al--Mg--Zr \SIrange{350}{353}{MPa} after peak aging with 17--19\%~\cite{croteau2018}, Al--Mg--Mn--Er--Zr \SI{440}{MPa} after aging with 15.5\%~\cite{almgmnerzr2022}, Al--Fe--Mg--Zr \SI{376}{MPa} after aging with 11\%~\cite{alfezr2025}, and a tailored Al--Si--Mg alloy \SIrange{270}{417}{MPa} as built, depending on plate temperature and machine~\cite{alsimg2020}.
+\note{Checked against the sources on 27 Nov 2026 (data/literature-alloys.csv, read\_by column). Still unverified: the as-built Al--Mg--Mn--Er--Zr row and its exact Zr content, and the as-built elongation of Al--Fe--Mg--Zr (full texts blocked).}
 Being stronger than \AlSi without scandium is therefore not new in itself.
 What the literature does not settle is how these alloys compare on critical-mineral burden, since each replaces scandium with several weight percent of Mn, Cr, Zr, Mg or rare earths, and how they compare with \AlSi printed and tested the same way.
 A new alloy from this campaign is a contribution only if it sits beyond these alloys on strength against burden (Fig.~\ref{fig:map}b), not merely beyond \AlSi.

@@ -49,8 +49,9 @@ cd al-campaign-paper/manuscript && make    # main.pdf; make si for si.pdf
   Critical Minerals, collected 2026-11-27. Where USGS gives only a bound, both ends are entered.
 - **`literature-alloys.csv`:** Sc-free comparators read by the
   [#275 survey](https://github.com/vertical-cloud-lab/digital-alloy-lab/blob/claude/issue-275-20261126-0632/bofn-seeding/first-six/research/datasheets.md)
-  on 2026-11-26. Several values were cross-checked against vendor sheets on 2026-11-27 (A20X, Aheadd CP1, Al5X1,
-  7A77, Scalmalloy's composition). All still need a person to re-check before submission.
+  on 2026-11-26, then checked against each source on 2026-11-27 (the `read_by` column says how). Croteau's rows
+  were corrected to Table 1 of the paper. Not yet verifiable (full texts blocked): the as-built Al-Mg-Mn-Er-Zr row
+  and its Zr content, and the as-built elongation of Al-Fe-Mg-Zr.
 - **`calphad_screen.csv`:** a preliminary stand-in, not the campaign's screen. It holds the open-database (MatCalc
   `mc_al` + COST 507) calculations of the #275 branch at `845356a` for 48 compositions (the nine planned seeds, 34
   published alloys, 6063 and four exploratory variants) on a pure-Al base. Replace it with the screen's output.

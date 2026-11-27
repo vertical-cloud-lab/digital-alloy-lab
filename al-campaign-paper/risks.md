@@ -13,7 +13,7 @@ cost nothing to fix but a decision. The rest are about getting the data in time.
 
 On vendor datasheets, directly aged Al-Mn-Cr-Zr (Höganäs Al-HS1, 355-370 MPa yield) and Al-Mg-Zr-Mn (EOS/Constellium
 Al5X1, 380-385 MPa) are well above as-built AlSi10Mg (233-300 MPa). Aged Al-Fe-Zr (Aheadd CP1, about 300 MPa) matches its
-top end. Peer-reviewed Al-Mn-Cr-Zr-Mg (390 MPa as built), Al-Mg-Zr (about 354 MPa aged) and Al-Mg-Mn-Er-Zr (440 MPa aged)
+top end. Peer-reviewed Al-Mn-Cr-Zr-Mg (390 MPa as built), Al-Mg-Zr (350-353 MPa aged) and Al-Mg-Mn-Er-Zr (440 MPa aged)
 are in the same range or above (Fig. 1a; [`data/literature-alloys.csv`](data/literature-alloys.csv); sources in the
 [#275 survey](https://github.com/vertical-cloud-lab/digital-alloy-lab/blob/claude/issue-275-20261126-0632/bofn-seeding/first-six/research/datasheets.md)).
 All four Sc-free #275 seeds and all three optional ones are published alloys (S4 from an abstract only), and S1, S2,
