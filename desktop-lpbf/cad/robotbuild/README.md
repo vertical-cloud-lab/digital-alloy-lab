@@ -32,8 +32,7 @@ the plotter and the frame writer; read its docstring first.
   audit). Where a step fails, show the failure honestly (`status: "fail"`) and then the redesign or the person.
 - `proc_s` is real-world time: real time for robot motions (1/12 s a frame), time-lapse for machining (say how much in
   `sub`). The compositor adds the counters up across chapters.
-- Memory: run every renderer and planner under `/tmp/capmem <limit> ...`; limits are in the worker briefs. The runner
-  has 4 cores and 15 GB, and three earlier sessions on this branch were lost to running out of memory.
+- Memory: run every heavy job under `/tmp/memslot <GB> ...` (round 9): a first-come-first-served ledger that keeps the GB reserved by running jobs under 14 of the runner's 15 GB. Set it up, with the Python 3.12 venv, by `bash desktop-lpbf/cad/robotbuild/runner/setup.sh` ([`runner/`](runner/)). `/tmp/capmem` no longer caps: in round 9, processes inside a `systemd-run --user --scope` lost their X display after about 4.5 h of uptime. Three earlier sessions on this branch were lost to running out of memory.
 - Never commit frames (`/tmp/robotbuild/frames`) or trajectory pickles (`/tmp/robotbuild/traj`); commit scripts,
   summaries (JSON/MD/CSV) and a few stills.
 
