@@ -588,7 +588,32 @@ def vf4_for(Q, rot_s, g, T):
     return tx, ty, z
 
 
-def cut_program(w, scn, vf4, stock, names, part_obj, Q_of, cam, cap, seconds, step, a_end=None, remesh=3):
+def trail_clear(tr, pos, r, lift=1.2, step=1.0):
+    """Round 9 (for the frame audit): the path just run, drawn as a 0.9 mm tube, lifted `lift` mm along the tool axis
+    (setup +z) so it lies on the cut floor rather than in it, and cut back to r + 1.5 mm from the tool's axis so it
+    doesn't run inside the tool. tr, pos: setup coordinates. None if nothing is left."""
+    tr = np.asarray(tr, float)
+    seg = np.linalg.norm(np.diff(tr, axis=0), axis=1)
+    if not len(seg) or seg.sum() < 1e-6:
+        return None
+    s = np.r_[0.0, np.cumsum(seg)]
+    u = np.arange(0.0, s[-1] + 1e-9, step)
+    pts = np.c_[[np.interp(u, s, tr[:, k]) for k in range(3)]].T
+    keep = np.hypot(pts[:, 0] - pos[0], pts[:, 1] - pos[1]) > r + 1.5
+    if keep.sum() < 2:
+        return None
+    # the part outside the tool, up to where the path last enters it
+    last = int(np.flatnonzero(keep)[-1])
+    first = last
+    while first > 0 and keep[first - 1]:
+        first -= 1
+    pts = pts[first:last + 1]
+    if len(pts) < 2:
+        return None
+    return pts + np.array([0.0, 0.0, lift])
+
+
+def cut_program(w, scn, vf4, stock, names, part_obj, Q_of, cam, cap, seconds, step, a_end=None, remesh=1):
     """Run the posted programs `names` (one setup, or the four A indexes of F-S3) on the VF-4: the cutter at the
     program's position every frame (time-lapse at the real minutes), the table and head moving as a VMC's do, the
     stock cut by the program (gcode_sim, re-meshed every `remesh` frames), and the last ~0.2 m of path drawn.
@@ -650,6 +675,8 @@ def cut_program(w, scn, vf4, stock, names, part_obj, Q_of, cam, cap, seconds, st
             if k % remesh == 0 or k == n - 1:
                 sc.set_mesh(g_obj, stock.mesh(cut.occupancy()))
             tr = prog.trail(t)
+            if tr is not None:
+                tr = trail_clear(tr, pos, GS.tools()[T]["d"] / 2)
             if tr is not None:
                 pts = tr @ prog.rot          # setup -> part frame (the rows of rot are the setup axes)
                 tube = SS.pv.lines_from_points(pts).tube(radius=0.9, n_sides=8)
@@ -821,7 +848,7 @@ def box_depth(P, M, half):
     return d, nrm @ M[:3, :3].T
 
 
-def seat_hands(p, hands, boxes, away, limit=0.8, iters=8):
+def seat_hands(p, hands, boxes, away, limit=0.8, iters=8, margin=2.5):
     """Round 9 (scene_audit: gloves 40-100 mm inside the jack's handle and the loads): put person p's palms where
     `hands` says ({side: world point or None}), then move a palm back along `away` ({side: world unit vector}, the
     side the hand comes from) while its glove reaches more than `limit` mm into any of the boxes [(M, half extents)]:
@@ -843,8 +870,8 @@ def seat_hands(p, hands, boxes, away, limit=0.8, iters=8):
             e = want[sd] - p.hand_point(sd)
             err = max(err, float(np.linalg.norm(e)))
             deep = 0.0
-            for M, half in boxes:
-                d, _ = box_depth(P[side == sd], M, half)
+            for M, half in boxes:                        # the box grown by `margin`: the glove's vertices stay that
+                d, _ = box_depth(P[side == sd], M, np.asarray(half, float) + margin)   # far out (its edges cross less)
                 if len(d):
                     deep = max(deep, float(d.max()))
             worst = max(worst, deep)
@@ -1205,19 +1232,28 @@ def chapter_31():
     scn.add_parts("saw", E.s20a(head=1.0)[0], Mst("saw"))
     cam_v = cam_at("vf4", (-1300, -2300, 2200), (0, 450, 1050))
     play(w, scn, "vf4_vise_part", cam_v)
+    # round 9: arm A's MiR drives on to the lathe in the same shot (pivot, drive, pivot; shop_clips.clip_drive, swept
+    # with FCL), so the doors can shut behind it without a cut
+    dc = load("drive_vf4_lathe")
+    drove = dc is not None and (dc.get("result") or {}).get("ok", False)
+    if drove:
+        play(w, scn, "drive_vf4_lathe", cam_v)
+        cam_v2 = cam_v
+    else:
+        scn.show_arm("A", False)                 # at the cut: arm A has driven off (its arm was in the door's path)
+        cam_v2 = cam_at("vf4", *CAM_VF4_ARM)
     # the bracket cut in the vise: it has no posted program, so (round 8) no tool path is drawn: the doors shut and
     # the machine clock runs through the vise class's ~20 min, seen from outside in the same camera
     n_v = int(5 * FPS)
-    scn.show_arm("A", False)                     # at the cut: arm A has driven off (its arm was in the door's path)
-    cam_v2 = cam_at("vf4", *CAM_VF4_ARM)
     for i in range(n_v):
         vf4.set(door=1.0 - ease(min(1.0, (i + 1) / 18)))
         w.frame(scn, cam_v2, "The bracket cut in the vise, doors shut",
                 sub="time-lapse of about 20 min (setup_plan.json's vise class); no program is posted for it, so no tool "
                     "path is drawn", who=["machine"], step="vise class", status="pass",
                 proc_s=(1.5 / 18) if i < 18 else (20 * 60.0 - 1.5) / (n_v - 18))
-    scn.show_arm("A", False)
-    vf4.set(door=1.0, z=0.0, table_y=0.0)
+    if not drove:
+        scn.show_arm("A", False)
+    vf4.set(z=0.0, table_y=0.0)                  # the doors stay shut: the bracket is being cut
     play(w, scn, "saw_bar", cam_at("saw", (-2400, -2500, 2200), (-1300, 450, 900)))
     scn.show_arm("B", False)
     play(w, scn, "lathe_slug", cam_at("lathe", (-1600, -2300, 2000), (100, 300, 1000)))

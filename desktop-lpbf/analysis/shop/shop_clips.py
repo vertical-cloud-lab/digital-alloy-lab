@@ -18,6 +18,7 @@ sys.path.insert(0, str(HERE))
 import shop_plan as SP  # noqa: E402
 from shop_plan import (C, E, FPS, K, OUT, RHO_AL, S, Body, Clip, Job, Tm, inv, pick_place, record_job, station,  # noqa: E402
                        summarize, tool_passes)
+from cell import Group, group_distance, group_hits  # noqa: E402
 
 INCH = 25.4
 RESULTS = {}
@@ -582,9 +583,221 @@ def clip_recv_unbox():
                        end_objs={"tray": T_to} if res else None, mach=dict(flaps=1.0), extra=dict(part_kg=kg))
 
 
+# ----------------------------------------------------------------------------------------------- MiR drives (round 9)
+# Sterling on round 7: "moonwalk". Round 9 (P1): a MiR drives between the shop's stations as a differential-drive base
+# does (as analysis/assembly/mir_route.py does for the assembly): pivot on the spot to the heading of the straight line
+# to the next dock, drive forward along it (trapezoid, 0.3 m/s^2, 1.0 m/s: the MiR250 datasheet's, shop_cell.MIR_DRIVE),
+# pivot to the dock's heading. Every pose is swept with FCL: the MiR's body, cabinet, plate and deck and the parked arm
+# with its gripper, against the stations near the path as the chapter draws them; pivots every 2 deg, the line every
+# 20 mm. Then the arm goes from the transport pose it drove in to the next clip's first pose (a joint-space line checked
+# every 0.5 deg).
+PIV_RATE, PIV_RAMP = 30.0, 0.5            # deg/s, s: an ESTIMATE (MiR publishes no pivot rate; mir_route.py's)
+DRV_V, DRV_A = 1000.0, 300.0              # mm/s, mm/s^2 (MiR250 datasheet, shop_cell.MIR_DRIVE)
+
+
+def _wrap180(a):
+    return (a + 180.0) % 360.0 - 180.0
+
+
+def _yaw(M):
+    return math.degrees(math.atan2(M[1, 0], M[0, 0]))
+
+
+def _trap(d, v=DRV_V, a=DRV_A):
+    """Time (s) and the distance at time t of a trapezoid move of length d."""
+    d = abs(float(d))
+    if d < 1e-6:
+        return 0.0, (lambda t: 0.0)
+    if d >= v * v / a:
+        T = d / v + v / a
+        ta = v / a
+
+        def s(t):
+            t = min(max(t, 0.0), T)
+            if t < ta:
+                return 0.5 * a * t * t
+            if t > T - ta:
+                return d - 0.5 * a * (T - t) ** 2
+            return 0.5 * a * ta * ta + v * (t - ta)
+        return T, s
+    T = 2.0 * math.sqrt(d / a)
+
+    def s2(t):
+        t = min(max(t, 0.0), T)
+        return 0.5 * a * t * t if t < T / 2 else d - 0.5 * a * (T - t) ** 2
+    return T, s2
+
+
+def drive_legs(M0, M1):
+    """[(kind, M at s in [0, 1] as a function, seconds)] for pivot, drive, pivot from dock pose M0 to dock pose M1."""
+    p0, p1 = M0[:3, 3].copy(), M1[:3, 3].copy()
+    h0, h1 = _yaw(M0), _yaw(M1)
+    d = p1 - p0
+    dist = float(np.hypot(d[0], d[1]))
+    hd = math.degrees(math.atan2(d[1], d[0])) if dist > 1.0 else h0
+    legs = []
+
+    def pose(x, y, h):
+        return Tm(C.rot((0, 0, 1), h), (x, y, 0.0))
+
+    for a0, a1, at in ((h0, hd, p0), (None, None, None), (hd, h1, p1)):
+        if a0 is None:
+            T, s = _trap(dist)
+            if T > 0:
+                legs.append(("drive", (lambda u, s=s, T=T: pose(*(p0[:2] + (d[:2] / dist) * s(u * T)), hd)), T,
+                             dist))
+            continue
+        dth = _wrap180(a1 - a0)
+        if abs(dth) < 0.05:
+            continue
+        T = abs(dth) / PIV_RATE + PIV_RAMP
+        legs.append(("pivot", (lambda u, a0=a0, dth=dth, at=at: pose(at[0], at[1], a0 + dth * ease(u))), T, abs(dth)))
+    return legs
+
+
+def ease(u):
+    return 0.5 - 0.5 * math.cos(math.pi * min(max(u, 0.0), 1.0))
+
+
+def mir_bodies(arm_dx):
+    return [Body(f"mir/{name}", *vf, kind="robot", color=col) for name, vf, col in S.mir_items(arm_dx)]
+
+
+def arm_base_of(M, arm_dx):
+    p = (M @ np.r_[arm_dx, S.ARM_DY, S.ARM_Z, 1.0])[:3]
+    return p, _yaw(M)
+
+
+def clip_drive(name, chapter, akey, from_clip, to_clip, world_parts, caption, sub, step):
+    """Record MiR `akey` driving from the last frame of clip `from_clip` to the first of `to_clip` (both recorded),
+    checked with FCL against world_parts [(station key, parts)]. The arm first turns to a transport pose (the clip's
+    last pose turned about the base joint, the smallest turn whose whole drive is clear), the MiR pivots, drives and
+    pivots, then the arm turns to the next clip's first pose; every arm move is a joint-space line checked every 0.5 deg.
+    The clip fails (and the chapter keeps its cut) if no transport pose clears."""
+    import pickle
+    a = pickle.load(open(SP.TRAJ / f"shop_{from_clip}.pkl", "rb"))
+    b = pickle.load(open(SP.TRAJ / f"shop_{to_clip}.pkl", "rb"))
+    fa, fb = a["frames"][-1], b["frames"][0]
+    M0, M1 = np.asarray(fa["mirs"][akey]["M"], float), np.asarray(fb["mirs"][akey]["M"], float)
+    arm_dx = fa["mirs"][akey]["arm_dx"]
+    q0, q1 = np.asarray(fa["arms"][akey]["q"], float), np.asarray(fb["arms"][akey]["q"], float)
+    c0, c1 = float(fa["arms"][akey]["close"]), float(fb["arms"][akey]["close"])
+    tool0, tool1 = fa["arms"][akey]["tool"], fb["arms"][akey]["tool"]
+    items = []
+    for key, parts in world_parts:
+        items += SP.shop_world(key, parts)
+    world = Group([Body(n, *vf, kind="cell", color=col) for n, vf, col in items])
+    base, yaw = arm_base_of(M0, arm_dx)
+    arm = SP.make_arm(akey, base, yaw, "2F-85")
+    robot = Group(mir_bodies(arm_dx))
+    for bb in arm.bodies():
+        robot.add(bb)
+    mb = [bb for bb in robot.bodies.values() if bb.name.startswith("mir/")]
+
+    def place(M, q, close):
+        for bb in mb:
+            bb.place(M)
+        p, y = arm_base_of(M, arm_dx)
+        arm.base = Tm(C.rot((0, 0, 1), y), p)
+        arm.place(q, close)
+
+    def first_hit(M, q, close):
+        place(M, q, close)
+        h = group_hits(robot, world, first=True)
+        return None if not h else (h[0][0].name, h[0][1].name)
+
+    legs = drive_legs(M0, M1)
+
+    def sweep(qt):
+        """None if the drive with the arm at qt and both arm moves are clear, else the first hit."""
+        n = 0
+        for qa, qb, M in ((q0, qt, M0), (qt, q1, M1)):
+            k_n = max(2, int(math.degrees(float(np.abs(qb - qa).max())) / 0.5) + 1)
+            for k in range(k_n):
+                u = k / (k_n - 1)
+                h = first_hit(M, qa + (qb - qa) * u, c0)
+                n += 1
+                if h:
+                    return ("arm", round(u, 3)) + h, n
+        for kind, f, T, amount in legs:
+            k_n = max(2, int(amount / (2.0 if kind == "pivot" else 20.0)) + 1)
+            for k in range(k_n):
+                h = first_hit(f(k / (k_n - 1)), qt, c0)
+                n += 1
+                if h:
+                    return (kind, round(k / (k_n - 1), 3)) + h, n
+        return None, n
+
+    tried, qt, checked = [], None, 0
+    for turn in (0.0, 30.0, -30.0, 60.0, -60.0, 90.0, -90.0, 120.0, -120.0, 150.0, -150.0, 180.0):
+        cand = q0.copy()
+        cand[0] = q0[0] + math.radians(turn)
+        h, n = sweep(cand)
+        checked += n
+        tried.append(dict(turn_deg=turn, hit=h))
+        if h is None:
+            qt = cand
+            break
+    clip = Clip(name, "aisle", chapter)
+    clip.meta.update(caption=caption, sub=sub, who=[f"robot {akey}"], step=step, status="pass")
+    for o, Mo in fa["objs"].items():
+        clip.obj(o, Mo, a["objects"].get(o))
+    ok = qt is not None
+    clear = math.inf
+    t_drive = 0.0
+
+    def arm_move(M, qa, qb, ca, cb, label):
+        T = max(1.0, math.degrees(float(np.abs(qb - qa).max())) / 45.0)
+        nf = max(1, int(round(T * FPS)))
+        for k in range(nf):
+            u = ease((k + 1) / nf)
+            place(M, qa + (qb - qa) * u, ca + (cb - ca) * u)
+            clip.set_arm(akey, arm, tool1 if (label == "in" and u > 0.5) else tool0, mir=dict(M=M.copy(), arm_dx=arm_dx))
+            clip.frame(1, sub=f"{sub} | " + ("the arm to its transport pose" if label == "out" else
+                                               "the arm to its working pose"))
+        return T
+
+    if ok:
+        t_out = arm_move(M0, q0, qt, c0, c0, "out")
+        for kind, f, T, amount in legs:
+            nf = max(1, int(round(T * FPS)))
+            for k in range(nf):
+                M = f((k + 1) / nf)
+                place(M, qt, c0)
+                if k % 6 == 0:
+                    d, _, _ = group_distance(robot, world, margin=300.0)
+                    clear = min(clear, d)
+                clip.set_arm(akey, arm, tool0, mir=dict(M=M.copy(), arm_dx=arm_dx))
+                clip.frame(1, sub=f"{sub} | {kind} " + (f"{amount:.1f} deg" if kind == "pivot" else f"{amount / 1000:.2f} m"))
+            t_drive += T
+        t_in = arm_move(M1, qt, q1, c0, c1, "in")
+    res = dict(ok=ok, fail=None if ok else f"no transport pose clears: {tried[-1]}", poses_checked=checked,
+               transport_turn_deg=tried[-1]["turn_deg"] if ok else None, tried=tried,
+               legs=[dict(kind=k_, seconds=round(T_, 2), amount=round(a_, 1)) for k_, _, T_, a_ in legs],
+               drive_s=round(t_drive, 2), clear_mm=round(clear, 1) if clear < math.inf else None,
+               reverse_mm=0.0, sideways_mm=0.0, time_s=round(t_drive + (t_out + t_in if ok else 0.0), 2))
+    RESULTS[name] = res
+    clip.result = res
+    clip.save()
+    print(name, "ok" if ok else "FAIL", res["fail"], "poses", checked, "clear", res["clear_mm"], "turn",
+          res["transport_turn_deg"], "s", res["time_s"], flush=True)
+    return clip
+
+
+def clip_drive_vf4_lathe():
+    """Chapter 31: MiR A from the VF-4 (after the vise part) to the lathe (before the slug), along the north row."""
+    vf4p, _ = E.vf4(door=1.0, table_x=-E.TABLE_LAYOUT["vise"], with_vise=True, vise_open=120.0, with_hrt=True)
+    return clip_drive("drive_vf4_lathe", "31-machining-parts", "A", "vf4_vise_part", "lathe_slug",
+                      [("vf4", vf4p), ("lathe", E.st10(door=1.0, jaw_open=6.0)[0])],
+                      "Arm A's MiR drives on to the lathe",
+                      "pivot, drive forward, pivot (a differential-drive base: no sliding sideways); 1.0 m/s, 0.3 m/s2; "
+                      "every pose swept with FCL", "lathe class")
+
+
 CLIPS = dict(vf4_clamps=clip_vf4_clamps, vf4_floor_load=clip_floor_load, vf4_vise_part=clip_vise_part,
              lathe_slug=clip_lathe_slug, lathe_big=clip_lathe_big, saw_bar=clip_saw, deburr=clip_deburr, wash=clip_wash,
-             measure=clip_measure, kit=clip_kit, recv_tape=clip_recv_tape, recv_unbox=clip_recv_unbox)
+             measure=clip_measure, kit=clip_kit, recv_tape=clip_recv_tape, recv_unbox=clip_recv_unbox,
+             drive_vf4_lathe=clip_drive_vf4_lathe)
 
 
 def main(argv):
