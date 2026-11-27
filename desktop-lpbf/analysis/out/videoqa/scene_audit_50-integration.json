@@ -277,13 +277,9 @@
  "worst_mm": 0.0,
  "worst": null,
  "pairs": [],
+ "cad_overlaps": [],
+ "cad_overlap_note": "two parts drawn at their designed relative pose (one machine frame) and overlapping there: the CAD's own overlap (a groove or hole the model does not cut), listed apart and not counted",
  "rigid_pairs": [
-  {
-   "a": "m/19 Build module M50: spigot, flange, honed 316L cyl",
-   "b": "m/35 Bore seal M50",
-   "worst_mm": 45.3,
-   "frames": 1070
-  },
   {
    "a": "m/266 Recoater sensor posts",
    "b": "m/52 Zero-point release-air line",
@@ -309,27 +305,15 @@
    "frames": 1070
   },
   {
-   "a": "m/201 Helical inserts for the module screws, M6 x 12 1",
-   "b": "m/54 Chamber floor plate",
-   "worst_mm": 12.8,
-   "frames": 1070
-  },
-  {
-   "a": "m/25 Zero-point arms M50",
-   "b": "m/26 Zero-point clamping pins M50",
-   "worst_mm": 11.6,
-   "frames": 1070
-  },
-  {
-   "a": "m/105 Drawer latch receptacles in the lid",
-   "b": "m/93 Chamber lid",
-   "worst_mm": 11.6,
-   "frames": 1070
-  },
-  {
    "a": "m/21 Module M50 bottom flange: gland plate",
    "b": "m/23 Rod O-rings M50 in the bottom flange",
    "worst_mm": 11.2,
+   "frames": 1070
+  },
+  {
+   "a": "m/84 Recoater feedthrough spacer ring",
+   "b": "m/86 Recoater feedthrough O-rings",
+   "worst_mm": 7.9,
    "frames": 1070
   },
   {
@@ -351,33 +335,15 @@
    "frames": 1070
   },
   {
-   "a": "m/214 Blade-cartridge dowels, \u00d83 x 10 316",
-   "b": "m/81 Recoater arm",
-   "worst_mm": 5.1,
-   "frames": 1070
-  },
-  {
-   "a": "m/127 Camera viewport adapter + boss",
-   "b": "m/130 Camera window gasket, under the window",
-   "worst_mm": 5.1,
-   "frames": 1070
-  },
-  {
    "a": "m/207 Handle screws M50, M4 x 10 316",
    "b": "m/21 Module M50 bottom flange: gland plate",
    "worst_mm": 4.7,
    "frames": 1070
   },
   {
-   "a": "m/204 Heater-block helical inserts M50, M3 18-8",
-   "b": "m/29 Heater block M50",
-   "worst_mm": 4.5,
-   "frames": 1070
-  },
-  {
-   "a": "m/224 Outlet-plenum screws, M4 x 12 316, counterbored",
-   "b": "m/225 Outlet-plenum helical inserts, M4 x 6 18-8, in t",
-   "worst_mm": 4.3,
+   "a": "m/127 Camera viewport adapter + boss",
+   "b": "m/130 Camera window gasket, under the window",
+   "worst_mm": 4.7,
    "frames": 1070
   },
   {
@@ -399,9 +365,9 @@
    "frames": 1070
   },
   {
-   "a": "m/19 Build module M50: spigot, flange, honed 316L cyl",
-   "b": "m/28 Plate rim wiper M50",
-   "worst_mm": 2.9,
+   "a": "m/197 Lid screws, M5 x 25 316 socket head",
+   "b": "m/198 Lid screw helical inserts, M5 x 7.5 18-8, in the",
+   "worst_mm": 2.8,
    "frames": 1070
   },
   {
@@ -409,6 +375,24 @@
    "b": "m/62 Outlet plenum port",
    "worst_mm": 2.1,
    "frames": 293
+  },
+  {
+   "a": "m/25 Zero-point arms M50",
+   "b": "m/26 Zero-point clamping pins M50",
+   "worst_mm": 1.7,
+   "frames": 1070
+  },
+  {
+   "a": "m/19 Build module M50: spigot, flange, honed 316L cyl",
+   "b": "m/28 Plate rim wiper M50",
+   "worst_mm": 1.6,
+   "frames": 1070
+  },
+  {
+   "a": "m/265 Recoater position magnet",
+   "b": "m/78 Recoater carriage block",
+   "worst_mm": 1.6,
+   "frames": 1070
   }
  ],
  "allowed": [
@@ -566,7 +550,7 @@
    "worst_mm": 0.0
   }
  ],
- "seconds": 76.4,
- "peak_rss_mb": 680,
+ "seconds": 141.8,
+ "peak_rss_mb": 683,
  "memory": "streamed: BVHs dropped every 200 recorded frames and past 1800 MB"
 }

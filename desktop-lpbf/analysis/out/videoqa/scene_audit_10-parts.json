@@ -19,9 +19,11 @@
  "worst_mm": 0.0,
  "worst": null,
  "pairs": [],
+ "cad_overlaps": [],
+ "cad_overlap_note": "two parts drawn at their designed relative pose (one machine frame) and overlapping there: the CAD's own overlap (a groove or hole the model does not cut), listed apart and not counted",
  "rigid_pairs": [],
  "allowed": [],
- "seconds": 0.2,
- "peak_rss_mb": 58,
+ "seconds": 0.3,
+ "peak_rss_mb": 63,
  "memory": "streamed: BVHs dropped every 200 recorded frames and past 1800 MB"
 }
