@@ -632,6 +632,21 @@ def _frame(b, wall, h, z0):
     return pv.merge(ws)
 
 
+def leg_xs():
+    """x of each leg pair of the long table (one every 1.5 m, and one at the far end)."""
+    t = TAB
+    return np.arange(t["x0"] + 60.0, t["x1"], 1500.0).tolist() + [t["x1"] - 60.0]
+
+
+def stretcher_boxes():
+    """(x0, x1, y0, y1, z0, z1) of the table's stretchers. Round 9: one cross rail between the two legs of each pair (an
+    H-frame), 30 x 40 mm at z 180-220. Round 8's two lengthwise rails ran the whole 12 m at |y| 390, where a MiR250 pivoting
+    beside the table swings its corners (round 8's frame audit: MiR A 34 mm into them while it turned, chapter 40 frames
+    342-347); the planner's table model (analysis/assembly/fetch.py Table) has the same boxes, so the MiR routes avoid them."""
+    t = TAB
+    return [(x - 15.0, x + 15.0, t["y0"] + 60.0, t["y1"] - 60.0, 180.0, 220.0) for x in leg_xs()]
+
+
 def table_meshes():
     """[(name, mesh, color)] of the table, its legs, the nests, trays, bins and the pallets."""
     import pyvista as pv
@@ -642,7 +657,7 @@ def table_meshes():
         for y in (t["y0"] + 60.0, t["y1"] - 60.0):
             legs.append(_box(x - 25, x + 25, y - 25, y + 25, 0.0, t["top"] - t["t"]))
     out.append(("long table legs", pv.merge(legs), common.COL["table_leg"]))
-    rails = [_box(t["x0"] + 40, t["x1"] - 40, y - 15, y + 15, 180.0, 220.0) for y in (t["y0"] + 60.0, t["y1"] - 60.0)]
+    rails = [_box(*b) for b in stretcher_boxes()]
     out.append(("long table stretchers", pv.merge(rails), common.COL["table_leg"]))
     nests, trays = [], []
     for s in slots():

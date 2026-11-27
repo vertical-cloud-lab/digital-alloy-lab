@@ -17,7 +17,8 @@ Rules used by commit.goto() for every recorded base move:
     far face, are on the bench side: on the dock lane they would reach under the bench top and into the table legs.
   * Every pose of every leg is checked with FCL (cell.py) for the MiR body, cabinet, mounting plate, tool stand, screw
     presenter and the parked arm with its tool and anything it holds, against the cell (bench, fixtures, the machine parts
-    present), the other MiR and its arm, and the long table (top, legs, nests, trays, the items still on it): pivots every
+    present), the other MiR and its arm, and the long table (top, legs, stretchers (round 9), nests, trays, the items still on
+    it, a hose or line as its coil): pivots every
     PIV_STEP deg (about 20 mm of arc at the presenter's 588 mm radius), straight legs every 20 mm (fetch.DRIVE_STEP).
   * A clear spot is searched for along the lane in SPOT_STEP steps, nearest first; spots blocked by the MiR or its arm (not
     by a held part) are remembered per MiR, turn and lane, since the cell's furniture does not move.
@@ -171,7 +172,7 @@ class Base:
         # remember only blocks by furniture that never moves: the bench, fixtures, the long table's top and legs
         w = c[1]
         return any(w.startswith(p) for p in ("bench", "Trunnion stands", "Fixture", "Stack nest", "Module nest",
-                                             "long table top", "long table leg"))
+                                             "long table top", "long table leg", "long table stretcher"))
 
 
 def plan(run, n, x0, x1, q, close, world):

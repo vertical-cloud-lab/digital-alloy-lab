@@ -66,7 +66,9 @@ CHAP = {"module": ("40-assembly-module", "Assembly 1: the build module, by two U
 # time-lapse factors per event kind (real seconds per real second shown); the renderer may raise them to fit the budget
 LAPSE = dict(drive=8.0, plan=1.5, cart=1.0, grip=1.0, screw=1.0, screw_rep=6.0, wait=40.0, turn=1.5, move2=1.5, tool=8.0)
 SHOT = dict(wide=3600.0, mid=1500.0, close=650.0)
-MAX_TRI = int(os.environ.get("ASM_MAX_TRI", "2500"))     # per object, for drawing only
+MAX_TRI = int(os.environ.get("ASM_MAX_TRI", "12000"))    # per object, for drawing only (round 9: the scene file's own 12,000;
+                                                         # round 8's 2,500 closed bores and counterbores, so tools and screws
+                                                         # in them read as tens of mm deep in the frame audit)
 
 
 def load_events(chapter):
@@ -163,6 +165,7 @@ class Replay:
                     if i not in scn["objs"] and i not in [u[0] for u in unknown]:
                         unknown.append((i, e["step"]))
         seen_m17 = 0
+        self.temp_tools, self.retired = set(), set()     # round 9: the seal steps' hand tools, and those back in their stand
         for i, sid in unknown:
             name, M = None, np.eye(4)
             if sid == "M12":
@@ -177,6 +180,7 @@ class Replay:
             v = np.asarray(v, float) @ M[:3, :3].T + M[:3, 3]
             sc.add(f"o{i}", poly(v, f), common.COL["tool"], group=f"o{i}", specular=0.4, shown=False)
             self.objs[i] = dict(name=name, part=-1, kind="tool", V=v, F=f, color=common.COL["tool"])
+            self.temp_tools.add(i)
         coil_parts = {i for x in KT.slots() if x.get("coil") for i in x["part_indices"]}
         for i, T in scn["table_T"].items():
             self.T[i] = np.asarray(T, float)
@@ -346,6 +350,8 @@ class Replay:
 
     def put(self, objs, T):
         for i in objs:
+            if i in self.retired:          # a hand tool back in its stand stays there
+                continue
             if f"o{i}" in self.sc.actors:
                 self.sc.gmat[f"o{i}"] = np.asarray(T, float)
                 self.sc.alpha[f"o{i}"] = 1.0
@@ -353,6 +359,147 @@ class Replay:
     def tcp(self, n):
         a = self.arm[n]
         return a.tcp(self.st[n]["q"], self.st[n]["close"])[:3, 3]
+
+    def retire_tools(self, idx=None):
+        """Round 9: the seal steps' hand tools (ring loader, spigot mandrel and pusher) go back to the stand when the step that
+        used them ends, or at a "take" event: hidden for good. Round 8 drew them where they were last put until the chapter's
+        end, so after the module's flips (M26, M28) they stood up to 78 mm inside it (the recording has no "take" for them)."""
+        for i in (self.temp_tools if idx is None else idx):
+            if i not in self.temp_tools:
+                continue
+            k = f"o{i}"
+            if self.sc.alpha.get(k, 0.0) > 0.0 or idx is not None:
+                self.sc.alpha[k] = 0.0
+                self.retired.add(i)
+            for n in ("A", "B"):
+                h = self.st[n]["held"]
+                if h is not None and i in h["objs"]:
+                    h["objs"] = [j for j in h["objs"] if j != i]
+                    if not h["objs"]:
+                        self.st[n]["held"] = None
+
+    # ------------------------------------------------------------------------------------------- the person (round 9)
+    # Round 8 put the person on the spot for a person's job or a pick no arm could plan, wherever that was: their legs stood in
+    # MiR A's tool stand (chapter 41, frames 429-452, 3881-3904, 4384-4419), and they appeared and vanished inside a shot. Now
+    # the person's spot is checked clear on the floor plan (MiRs with their tool stands and presenters, both arms, the bench,
+    # fixtures, table and pallets, the parts in the cell), and they walk in from the aisle beside the cell and out again,
+    # their feet locked (people.py's Gait, round 9), never through a MiR.
+    PERSON_R = 330.0              # clearance of a standing person's centre from anything (shoulders, elbows, a step), mm
+    AISLE = 2700.0                # |y| of the aisle the person comes from: under the side tripods, out of their pictures
+
+    def _static_boxes(self):
+        if getattr(self, "_sboxes", None) is None:
+            out = []
+            for name, actor in self.sc.actors.items():
+                if self.sc.group_of.get(name) != "static" or name == "floor":
+                    continue
+                b = actor.GetMapper().GetInput().GetBounds() if actor.GetMapper() is not None else None
+                if b is None or b[4] > 1900.0 or b[5] < 40.0:
+                    continue
+                out.append((b[0], b[2], b[1], b[3]))
+            self._sboxes = out
+        return self._sboxes
+
+    def floor_boxes(self):
+        """2-D boxes (x0, y0, x1, y1) of what a person on the floor could walk into now."""
+        out = list(self._static_boxes())
+        for n in ("A", "B"):
+            s = self.st[n]
+            for _, (v, f), _ in self.K.mir_bodies(n, s["x"], "front" if n == "A" else "back"):
+                v = np.asarray(v, float)
+                out.append((v[:, 0].min(), v[:, 1].min(), v[:, 0].max(), v[:, 1].max()))
+            a = self.arm[n]
+            a.move_base(s["x"])
+            a.place(s["q"], s["close"])
+            for b in list(a.links.values()) + list(a.grip.values()):
+                w = b.v @ b.M[:3, :3].T + b.M[:3, 3]
+                out.append((w[:, 0].min(), w[:, 1].min(), w[:, 0].max(), w[:, 1].max()))
+        for i, o in self.objs.items():
+            k = f"o{i}"
+            if self.sc.alpha.get(k, 0.0) <= 0.0 or i in self.T and np.allclose(self.sc.gmat.get(k, np.eye(4)), self.T[i]):
+                continue                     # hidden, or still in its slot on the long table (the table's box covers it)
+            V = o.get("V")
+            if V is None or not len(V):
+                continue
+            lo, hi = np.asarray(V, float).min(0), np.asarray(V, float).max(0)
+            C = np.array([[x, y, z] for x in (lo[0], hi[0]) for y in (lo[1], hi[1]) for z in (lo[2], hi[2])])
+            M = self.sc.gmat.get(k, np.eye(4))
+            w = C @ M[:3, :3].T + M[:3, 3]
+            if w[:, 2].min() > 1900.0:
+                continue
+            out.append((w[:, 0].min(), w[:, 1].min(), w[:, 0].max(), w[:, 1].max()))
+        return out
+
+    @staticmethod
+    def _clear(p, boxes, r):
+        x, y = p
+        for x0, y0, x1, y1 in boxes:
+            dx = max(x0 - x, 0.0, x - x1)
+            dy = max(y0 - y, 0.0, y - y1)
+            if dx * dx + dy * dy < r * r:
+                return False
+        return True
+
+    def _clear_path(self, pts, boxes, r, step=60.0):
+        for a, b in zip(pts[:-1], pts[1:]):
+            a, b = np.asarray(a, float), np.asarray(b, float)
+            n = max(1, int(np.linalg.norm(b - a) / step))
+            for k in range(n + 1):
+                if not self._clear(tuple(a + (b - a) * k / n), boxes, r):
+                    return False
+        return True
+
+    def person_spot(self, work, side):
+        """(spot (x, y), aisle point (x, +-AISLE)) for a person working at `work` (x, y) from side A (y < 0) or B: the nearest
+        spot whose floor is clear by PERSON_R and whose straight walk in from the aisle is clear too. None if there is none."""
+        boxes = self.floor_boxes()
+        wx, wy = float(work[0]), float(work[1])
+        best = None
+        for s in ((-1.0, 1.0) if side == "A" else (1.0, -1.0)):
+            for r in (600.0, 750.0, 900.0, 1100.0, 1350.0, 1650.0, 2000.0):
+                for ang in range(-80, 81, 10):
+                    a = math.radians(ang)
+                    x, y = wx + r * math.sin(a), wy + s * r * math.cos(a)
+                    if s * y < 250.0 or s * y > self.AISLE - 300.0:
+                        continue
+                    if not self._clear((x, y), boxes, self.PERSON_R):
+                        continue
+                    if not self._clear_path([(x, s * self.AISLE), (x, y)], boxes, self.PERSON_R - 60.0):
+                        continue
+                    cost = r + 3.0 * abs(ang) + (0.0 if s == (-1.0 if side == "A" else 1.0) else 1500.0)
+                    if best is None or cost < best[0]:
+                        best = (cost, (x, y), (x, s * self.AISLE))
+            if best is not None:
+                break
+        return None if best is None else (best[1], best[2])
+
+    @staticmethod
+    def walk_seq(pts, hd0, hd_end, v=850.0, turn=10.0):
+        """Per frame (x, y, heading): turn on the spot (at most `turn` deg a frame) to each leg's heading, walk the leg eased in
+        and out (mean v mm/s, so at most 1.5 v), and at the end turn to hd_end."""
+        out = []
+        hd = float(hd0)
+
+        def turn_to(h1):
+            nonlocal hd
+            d = ((h1 - hd + 180.0) % 360.0) - 180.0
+            n = int(math.ceil(abs(d) / turn))
+            for k in range(1, n + 1):
+                out.append((x, y, hd + d * k / n))
+            hd = hd + d
+        x, y = pts[0]
+        for (x0, y0), (x1, y1) in zip(pts[:-1], pts[1:]):
+            L = math.hypot(x1 - x0, y1 - y0)
+            if L < 1.0:
+                continue
+            turn_to(math.degrees(math.atan2(y1 - y0, x1 - x0)))
+            n = max(2, int(math.ceil(L / v * FPS)))
+            for k in range(1, n + 1):
+                u = smooth(k / n)
+                x, y = x0 + (x1 - x0) * u, y0 + (y1 - y0) * u
+                out.append((x, y, hd))
+        turn_to(hd_end)
+        return out
 
     # ------------------------------------------------------------------------------------------- camera
     def aim(self, focus, shot="mid", side="A", az=None, el=None, snap=False):
@@ -665,6 +812,8 @@ def place_cands(loc):
         return [b, b + "_hi", b + "_end"]
     if k == "lane":
         return [f"lane_{loc[1]}"]
+    if k == "cell" and len(loc) > 1:      # a MiR driving between the cell's docks: the wide view, or down its lane
+        return ["cell", f"lane_{loc[1]}"]
     return ["cell"]
 
 
@@ -693,15 +842,32 @@ def in_view(cam, P, margin=0.88, far=9500.0):
 
 
 def choose_shots(plan, scores):
-    """plan: per frame dict(loc, key, work, force); scores: {key: {cam: [blocked fractions]}} -> per frame camera name."""
+    """plan: per frame dict(loc, key, work, force, bound); scores: {key: {cam: [blocked fractions]}} -> per frame camera name.
+
+    Round 9: the plan is cut into segments at the slice boundaries (ASM_CUTS, `bound`) and each segment's shots are chosen
+    from what lies in it and the camera before it only, so a slice drawn before the planner has finished gets the frames the
+    whole chapter would; unlike round 8's forced cut there, the camera may stay the same across a boundary."""
     n = len(plan)
+    cams = [None] * n
+    starts = [0] + [i for i in range(1, n) if plan[i].get("bound")] + [n]
+    prev = None
+    for a, b in zip(starts[:-1], starts[1:]):
+        if b > a:
+            seg = _choose_segment(plan, scores, a, b, prev)
+            cams[a:b] = seg
+            prev = seg[-1]
+    return cams
+
+
+def _choose_segment(plan, scores, i0, i1, prev):
     groups = []                                  # [start, end, key, loc, cam]
-    for i, p in enumerate(plan):
+    for i in range(i0, i1):
+        p = plan[i]
         if groups and groups[-1][2] == p["key"] and not p.get("force"):
             groups[-1][1] = i + 1
         else:
             groups.append([i, i + 1, p["key"], p["loc"], None])
-    prev = None
+    prev0 = prev
     for g in groups:
         cands = place_cands(g[3])
         sc = scores.get(g[2], {})
@@ -715,7 +881,9 @@ def choose_shots(plan, scores):
             if best is None or s < best[0]:
                 best = (s, c)
         if best is None:
-            best = (0.0, "cell" if prev != "cell" else ("bench" if g[3][0] != "bench" else "PT"))
+            alt = [c for c in ("cell", f"lane_{g[3][1]}" if g[3][0] in ("cell", "lane") and len(g[3]) > 1 else "PT", "B", "bench")
+                   if c != prev]
+            best = (0.0, alt[0])
         g[4] = best[1]
         prev = g[4]
     # shots: groups with one camera merged
@@ -744,10 +912,14 @@ def choose_shots(plan, scores):
         for k, sh in enumerate(shots):
             if sh[1] - sh[0] >= MIN_SHOT or len(shots) == 1:
                 continue
-            if plan[sh[0]].get("force"):
-                continue
+            forced = bool(plan[sh[0]].get("force"))
+            before = shots[k - 1][2] if k > 0 else prev0
             for j in (k - 1, k + 1):
-                if 0 <= j < len(shots) and not (j == k + 1 and plan[shots[j][0]].get("force")) and ok_from(shots[j][2], sh):
+                if not (0 <= j < len(shots)) or (j == k + 1 and plan[shots[j][0]].get("force")):
+                    continue
+                if forced and (j == k - 1 or shots[j][2] == before):
+                    continue                     # round 9: a forced cut may join the next shot if that still changes the camera
+                if ok_from(shots[j][2], sh):
                     o = shots[j]
                     lo, hi = min(o[0], sh[0]), max(o[1], sh[1])
                     shots[j] = [lo, hi, o[2], (o[3] + sh[3]) if j < k else (sh[3] + o[3])]
@@ -763,10 +935,10 @@ def choose_shots(plan, scores):
             out[-1][1] = sh[1]
         else:
             out.append(list(sh[:3]))
-    cams = [None] * n
+    cams = [None] * (i1 - i0)
     for a, b, c in out:
         for i in range(a, b):
-            cams[i] = c
+            cams[i - i0] = c
     return cams
 
 
@@ -890,6 +1062,8 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
     fetch_t = {}                         # arm -> seconds of a fetch not shown so far (drive out and the pick)
     last = dict(loc=("cell",), force=False)
     scored = {}
+    away = {}                            # arm -> where its MiR and arm were when a fetch not shown began (round 9)
+    pstate = dict(on=False, n=-1)        # the person: shown, and the last frame their feet were brought to
 
     def score(key, loc, work):
         """Occlusion of each of the place's tripods for the work point, at most 3 samples per step and place."""
@@ -929,14 +1103,22 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
             note["left"] -= 1
         if loc is None:
             loc = last["loc"]
+        if away:                           # a frame drawn while a MiR is away on a fetch not shown: it is gone from its
+            force = True                   # dock, so this frame is a cut (round 9: only then)
+            for a_ in away.values():
+                a_["drawn"] = True
         force = force or last["force"]
-        if cur["id"] in CUTS and not cur.get("emitted"):
-            force = True                   # a slice boundary (ASM_CUTS): the same cut in every slice's plan
+        bound = cur["id"] in CUTS and not cur.get("emitted")
+        # round 9: a slice boundary (ASM_CUTS) is a soft boundary: no shot-plan decision reaches across it (so every slice's
+        # frames are the chapter's own), but the camera may stay as it is across it (round 8 forced a cut at each)
         cur["emitted"] = True
         last["loc"], last["force"] = loc, False
+        if rp.person is not None and pstate["on"] and pstate["n"] != tot["n"]:
+            rp.person.set(frame=tot["n"])  # the feet settle while the person stands (explicit clock: no render hook)
+            pstate["n"] = tot["n"]
         if plan is not None:
             plan.append(dict(loc=loc, key=(cur["id"], loc), work=None if work is None else np.asarray(work, float).copy(),
-                             force=force, step=cur["id"]))
+                             force=force, bound=bound, step=cur["id"]))
         if drawing and lo <= tot["n"] < hi and (PICK is None or tot["n"] in PICK):
             pos, foc, va = cam_def(cams[tot["n"]])
             rp.sc.camera([pos, foc, (0.0, 0.0, 1.0)], view_angle=va)
@@ -966,6 +1148,37 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
     def lapse_txt(real_per_frame):
         x = real_per_frame * FPS
         return "" if x < 1.3 else f"; shown x{x:.0f}"
+
+    def person_job(work, side, job_frames, loc):
+        """Round 9: the person walks in from the aisle to a clear spot by `work`, job_frames() draws the job (the person standing
+        there), and they walk back out. True if the slice ended."""
+        P = rp.person
+        sp = rp.person_spot(work[:2], side) if P is not None else None
+        if sp is None:
+            return job_frames()
+        (xs, ys), (xa, ya) = sp
+        look = (float(work[0]), float(work[1]), float(work[2]) if len(work) > 2 else 950.0)
+        hd_in = math.degrees(math.atan2(ys - ya, xs - xa))
+        hd_job = math.degrees(math.atan2(look[1] - ys, look[0] - xs))
+        P.show(1.0)
+        P.place(x=xa, y=ya, hd=hd_in, look=look, frame=tot["n"])
+        pstate.update(on=True, n=tot["n"])
+        for legs, h0, h1, txt in (([(xa, ya), (xs, ys)], hd_in, hd_job, "a person walks over from the aisle"),
+                                  (None, 0.0, 0.0, ""),
+                                  ([(xs, ys), (xa, ya)], hd_job, hd_in + 180.0, "the person walks back to the aisle")):
+            if legs is None:
+                if job_frames():
+                    return True
+                continue
+            for x, y, h in rp.walk_seq(legs, h0, h1):
+                P.set(x=x, y=y, hd=h, look=look, frame=tot["n"])
+                pstate["n"] = tot["n"]
+                if emit(cur["label"], txt + " (real time)", ["person"], add={"person_h": 1.0 / FPS / 3600.0}, status="person",
+                        loc=loc):
+                    return True
+        P.show(0.0)
+        pstate["on"] = False
+        return False
 
     def here(n):
         """Where arm n works now: at the table where its MiR stopped (the tripods are set up there), else the place in the
@@ -1012,6 +1225,7 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                     rp.set_arm(n)
             continue
         if k == "step":
+            rp.retire_tools()              # the hand tools of the step before are back in their stand
             failed = bool(e.get("failed_run"))
             label = e["label"]
             if failed:
@@ -1033,19 +1247,16 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                 # the pick at the table was not planned (or a person stages the part): not animated as if it worked. A person
                 # brings the part to the station and puts it in the gripper (a card; the person is drawn there)
                 why_f = (row.get("fetch_why") or "")[:70]
-                if rp.person is not None:
-                    xm = rp.st[n0]["x"]
-                    yp = (-1.0 if n0 == "A" else 1.0) * 1450.0
-                    rp.person.show(1.0)
-                    rp.person.set(x=xm - 650.0, y=yp, hd=(40.0 if n0 == "A" else -40.0), amp=0.0, look=(xm, yp * 0.5, 1000.0))
                 txt = ("pick at the parts table NOT planned" + (f" ({why_f})" if why_f else "") if row.get("fetch") == "FAIL"
                        else "a person stages the part at the station") + ": a person brings it and puts it in the gripper (estimate 2 min)"
-                for _ in range(int(FPS * 4.0)):
-                    stop = emit(cur["label"], txt, ["person"], status="person", loc=here(n0))
-                    if stop:
-                        break
-                if rp.person is not None:
-                    rp.person.show(0.0)
+                loc0 = here(n0)
+
+                def card(txt=txt, loc0=loc0):
+                    for _ in range(int(FPS * 4.0)):
+                        if emit(cur["label"], txt, ["person"], status="person", loc=loc0):
+                            return True
+                    return False
+                stop = person_job(rp.tcp(n0), n0, card, loc0)
             continue
         if k == "step_end":
             if cur["status"] in ("fail",) or e.get("status") == "fail":
@@ -1069,6 +1280,8 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                 rp.set_arm(n, close=e["c1"])
             elif k == "drive":
                 rp.st[n]["pose"] = None
+                if e["x1"] > TABLE_X and e["x0"] <= TABLE_X:
+                    away[n] = dict(x=float(e["x0"]), q=np.array(rp.st[n]["q"], copy=True), tool=rp.st[n]["tool"], drawn=False)
                 rp.set_arm(n, x=e["x1"])
                 rt = e.get("route") or {}
                 if e["x1"] > TABLE_X:
@@ -1080,7 +1293,15 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                     note["txt"] = (f"arm {n} fetched it from the parts table: drive, pick and drive back {tt:.0f} s, "
                                    + ("each leg pivot-drive-pivot, " if rt else "") + "checked, not shown")
                 note["left"] = 36
-                last["force"] = True
+                # round 9: a fetch not shown is cut out only if something changed in the picture: round 8 cut at every one
+                # (chapter 41: 10.3 jumps a minute). If nothing was drawn while the MiR was away and it is back at the same dock
+                # with the arm in the same pose (only the part now in the gripper), the shot holds through the ellipsis.
+                if e["x1"] <= TABLE_X:
+                    a0 = away.pop(n, None)
+                    same = (a0 is not None and not a0["drawn"] and abs(float(e["x1"]) - a0["x"]) < 1.0
+                            and a0["tool"] == rp.st[n]["tool"] and float(np.max(np.abs(rp.st[n]["q"] - a0["q"]))) < 1e-3)
+                    if not same:
+                        last["force"] = True
             elif k in ("move", "screw") and e.get("q") is not None and len(e["q"]):
                 rp.set_arm(n, q=np.asarray(e["q"][-1], float), close=e.get("close"))
                 if e.get("unplanned"):
@@ -1104,6 +1325,7 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
         if k == "put":
             rp.put(e["objs"], e["T"])
         elif k == "take":
+            rp.retire_tools([i for i in e["objs"] if i in rp.temp_tools])
             for i in e["objs"]:
                 if rp.objs.get(i, {}).get("kind") == "tool" and f"o{i}" in rp.sc.actors:
                     rp.sc.alpha[f"o{i}"] = 0.0         # a hand tool goes back to the stand
@@ -1129,9 +1351,10 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                 if stop:
                     break
         elif k == "drive":
+            away.pop(n, None)                     # drawn: the MiR is seen leaving or coming back
             rt = e.get("route")
             chk = e.get("check") or {}
-            loc = ("lane", n) if max(e["x0"], e["x1"]) > TABLE_X else ("cell",)
+            loc = ("lane", n) if max(e["x0"], e["x1"]) > TABLE_X else ("cell", n)
             T_all = float(e["dur"])
             for f in range(nf):
                 t = T_all * (f + 1) / nf
@@ -1232,8 +1455,15 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                 rp.set_arm("B", q=QB[j], close=e["closeB"])
                 mid = 0.5 * (rp.tcp("A") + rp.tcp("B"))
                 if e.get("lift_aid"):
-                    rp.sc.alpha["hoist"] = 1.0
-                    rp.sc.gmat["hoist"] = Tm((float(mid[0]), float(mid[1]), float(mid[2]) + 60.0))
+                    # round 9: the hook where the planner put and checked it (commit.hoist_hook: its bottom 300 mm over the
+                    # carried part's top, over its footprint); round 8 drew it at the arms' midpoint + 60 mm, 50 mm into the
+                    # build module. Without the planner's points it is not drawn.
+                    hk = e.get("hook")
+                    if hk is not None and len(hk) == len(QA):
+                        rp.sc.alpha["hoist"] = 1.0
+                        rp.sc.gmat["hoist"] = Tm(tuple(float(c) for c in np.asarray(hk)[j]))
+                    else:
+                        rp.sc.alpha["hoist"] = 0.0
                     stop = emit(cur["label"], f"a small hoist takes the load (person at its pendant); both arms guide it along the checked path"
                                 f"{lapse_txt(per)}", ["robot A", "robot B", "person"], proc=per,
                                 add={"robot_h": 2 * per / 3600.0, "person_h": per / 3600.0}, loc=loc, work=mid)
@@ -1260,20 +1490,25 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
             wh = e.get("who", "person")
             n0 = cur["actor"] if cur["actor"] in ("A", "B") else "A"
             loc = here(n0)
-            if wh == "person" and rp.person is not None:
-                rp.person.show(1.0)
-                xp = {"bench": -1250.0, "PT": 0.0, "B": 1350.0}.get(loc[0], float(rp.st[n0]["x"]))
-                rp.person.set(x=xp - 500.0, y=-1300.0, hd=70.0, amp=0.0, look=(xp, -200.0, 950.0))
-            for f in range(nf):
-                sub = (f"{e.get('what', '')[:80]} ({e['dur'] / 60:.0f} min, estimate{lapse_txt(per)})" if wh == "person" else
-                       f"{e.get('what', '')[:80]} ({e['dur']:.0f} s)")
-                stop = emit(cur["label"], sub, [wh] if wh in ("person", "machine") else ["robot A"], proc=per,
+
+            def job(e=e, wh=wh, nf=nf, per=per, loc=loc):
+                for f in range(nf):
+                    sub = (f"{e.get('what', '')[:80]} ({e['dur'] / 60:.0f} min, estimate{lapse_txt(per)})" if wh == "person" else
+                           f"{e.get('what', '')[:80]} ({e['dur']:.0f} s)")
+                    if emit(cur["label"], sub, [wh] if wh in ("person", "machine") else ["robot A"], proc=per,
                             add={"person_h": per / 3600.0} if wh == "person" else ({"robot_h": per / 3600.0} if wh == "robot" else None),
-                            status="person" if wh == "person" else None, loc=loc)
-                if stop:
-                    break
-            if rp.person is not None:
-                rp.person.show(0.0)
+                            status="person" if wh == "person" else None, loc=loc):
+                        return True
+                return False
+            if wh == "person" and rp.person is not None:
+                # where the job is: the station of the place (the arm's tool over Fixture P or the trunnion), or the MiR's
+                # stop at the table
+                t0 = rp.tcp(n0)
+                xp = {"bench": -1250.0, "B": 1350.0}.get(loc[0], float(t0[0]) if loc[0] == "PT" else float(rp.st[n0]["x"]))
+                yp = 0.0 if loc[0] != "table" else (-300.0 if n0 == "A" else 300.0)
+                stop = person_job((xp, yp, 950.0), "A", job, loc)
+            else:
+                stop = job()
     return tot
 
 
