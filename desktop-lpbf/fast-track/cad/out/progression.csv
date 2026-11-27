@@ -1,103 +1,106 @@
 scenario,task,state,start_low_d,start_high_d,finish_low_d,finish_high_d,basis
-"A: stages on PCards, cube ordered on day 0",used optics chain arrives,orders,0,0,3,8,eBay windows to 84602 read 2026-11-26 (Nov 28-Dec 5) and LTL freight for the laser (estimate)
+"A: stages on PCards, cube ordered on day 0",used optics chain arrives,orders,0,0,3,8,eBay windows to 84602 read 2026-11-27 (Nov 30-Dec 3) and LTL freight for the laser (estimate)
 "A: stages on PCards, cube ordered on day 0",McMaster stock and hardware,orders,0,0,1,2,McMaster: most orders arrive same or next day
-"A: stages on PCards, cube ordered on day 0",safety parts and eyewear,orders,0,0,2,5,Digi-Key / Thorlabs in-stock items (Thorlabs LG1 'Available: Today')
+"A: stages on PCards, cube ordered on day 0",safety parts and eyewear,orders,0,0,2,5,"Digi-Key in stock (D4NS-2CF 360 in stock, 2026-11-27) / Thorlabs LG1 'Available: Today'"
 "A: stages on PCards, cube ordered on day 0","window, cover slides, beam dump (Edmund, Thorlabs)",orders,0,0,2,5,Edmund 38-990 '5 In Stock'; Thorlabs in-stock items
-"A: stages on PCards, cube ordered on day 0",O2 analyzer (used),orders,0,0,4,6,"eBay window Nov 30-Dec 5 (Alpha Omega Series 3000, read 2026-11-26)"
+"A: stages on PCards, cube ordered on day 0",O2 analyzers arrive,orders,0,0,4,10,"eBay window Dec 1-7 (Alpha Omega Series 3000, read 2026-11-27); Kele OX-6 lead time not read (estimate)"
 "A: stages on PCards, cube ordered on day 0",argon cylinder and regulator,orders,0,0,2,5,estimate (gas supplier delivery; McMaster regulator next day)
-"A: stages on PCards, cube ordered on day 0",PC + RTC5 software,orders,0,0,1,3,estimate (lab PC with a PCIe slot; RTC5 package from SCANLAB's portal)
-"A: stages on PCards, cube ordered on day 0",enclosure arrives,orders,0,0,3,8,"estimate: distributor stock, ground (fast_track.py)"
+"A: stages on PCards, cube ordered on day 0",RTC4 card + PC and software,orders,0,0,3,7,"eBay 366737163447 'Estimated between Wed, Dec 2 and Tue, Dec 8' (read 2026-11-27); lab PC with a PCIe slot"
+"A: stages on PCards, cube ordered on day 0",enclosure arrives,orders,0,0,3,8,"estimate: distributor stock (Saginaw SCE-16EL1208SSLP), ground"
 "A: stages on PCards, cube ordered on day 0",LSO registration and SOP,approvals,0,0,5,15,estimate: BYU's laser-safety pages need a login; start on day 0
 "A: stages on PCards, cube ordered on day 0",EHS review (Al powder),approvals,0,0,5,15,"estimate: dust hazard analysis scope, start on day 0"
-"A: stages on PCards, cube ordered on day 0",deck plate and target stand made,S1,1,2,2,4,"estimate: two plates, ~3 shop hours"
+"A: stages on PCards, cube ordered on day 0",208/240 V circuit for the laser,orders,0,0,3,15,"estimate: a Physical Facilities work order, unless the room already has a 208/240 V outlet (check on day 0)"
+"A: stages on PCards, cube ordered on day 0",deck plate and target stand made,S1,1,2,2.1,5.9,"fab/out/hours.json: 8.6-19.7 shop h (fast_track.shop_days, estimate)"
 "A: stages on PCards, cube ordered on day 0",S1 optics bench assembled,S1,3,8,4,9,estimate
 "A: stages on PCards, cube ordered on day 0",S1 guide-laser and scanner checks,S1,5,15,7,19,fast_track.py's bench check
-"A: stages on PCards, cube ordered on day 0",window stack and beam tube made,S2,1,2,3,5,"estimate: MK-02, MK-10, ~8 shop hours"
-"A: stages on PCards, cube ordered on day 0",box cut and fitted,S2,3,8,4,10,"estimate: window bore, bulkheads, glands, rod hole"
-"A: stages on PCards, cube ordered on day 0",S2 interlocks wired and proven,S2,4,10,5,12,estimate
+"A: stages on PCards, cube ordered on day 0",window stack and beam tube made,S2,2.1,5.9,3.7,10.3,"fab/out/hours.json: 12.6-22.1 shop h (fast_track.shop_days, estimate)"
+"A: stages on PCards, cube ordered on day 0",box cut and fitted,S2,3.7,10.3,4.7,12.3,"estimate: window bore, bulkheads, glands, rod hole"
+"A: stages on PCards, cube ordered on day 0",S2 interlocks wired and proven,S2,4.7,12.3,5.7,14.3,estimate
 "A: stages on PCards, cube ordered on day 0",S2 FULL POWER INTO THE DUMP,S2,7,19,8,21,"milestone: calorimetry, focus ladder; inside the laser's return window"
-"A: stages on PCards, cube ordered on day 0",FT-0 parts made,FT-0,3,5,6,10,"estimate: MK-03..07, 11, 16, 17, ~12 shop hours after the window parts"
-"A: stages on PCards, cube ordered on day 0",FT-0 assembled in the box,FT-0,6,10,7,12,estimate
-"A: stages on PCards, cube ordered on day 0",FT-0 purge and heat (O2 log),FT-0,7,12,8,14,estimate
-"A: stages on PCards, cube ordered on day 0",FT-0 FIRST TRACKS,FT-0,8,21,9,23,milestone
-"A: stages on PCards, cube ordered on day 0",FT-0 hand-spread layers and pads,FT-0,9,23,11,27,estimate
-"A: stages on PCards, cube ordered on day 0",FT-1 parts made,FT-1,6,10,9,15,"estimate: MK-08, 12, 15, ~12 shop hours"
-"A: stages on PCards, cube ordered on day 0",stages arrive,orders,0,0,3,10,"Zaber X-LSQ075B 'Lead Time: 1-5 Days' (read 2026-11-26) + Thorlabs piston stage 'Available: Today'; each vendor under $3,500"
-"A: stages on PCards, cube ordered on day 0",FT-0 -> FT-1 upgrade,FT-1,9,15,10,17,"estimate: collar off, rod to the stage, recoater on the deck, block heaters in"
-"A: stages on PCards, cube ordered on day 0",FT-1 re-commission,FT-1,10,17,11,19,"estimate: purge, heat both, home stages, interlocks"
-"A: stages on PCards, cube ordered on day 0","FT-1 powder layers: dose, spread, pads",FT-1,11,23,14,28,estimate
-"A: stages on PCards, cube ordered on day 0",FT-1 FIRST COUPONS,FT-1,14,28,16,33,milestone
+"A: stages on PCards, cube ordered on day 0",FT-0 parts made,FT-0,3.7,10.3,6.5,20.1,"fab/out/hours.json: 22.6-49.0 shop h (fast_track.shop_days, estimate)"
+"A: stages on PCards, cube ordered on day 0",FT-0 assembled in the box,FT-0,6.5,20.1,7.5,22.1,estimate
+"A: stages on PCards, cube ordered on day 0",FT-0 purge and heat (O2 log),FT-0,7.5,22.1,8.5,24.1,estimate
+"A: stages on PCards, cube ordered on day 0",FT-0 FIRST TRACKS,FT-0,8.5,24.1,9.5,26.1,milestone
+"A: stages on PCards, cube ordered on day 0",FT-0 hand-spread layers and pads,FT-0,9.5,26.1,11.5,30.1,estimate
+"A: stages on PCards, cube ordered on day 0",FT-1 parts made,FT-1,6.5,20.1,8.3,26.3,"fab/out/hours.json: 14.7-31.2 shop h (fast_track.shop_days, estimate)"
+"A: stages on PCards, cube ordered on day 0",stages arrive,orders,0,0,3,10,"Zaber X-LSM100B 'Lead Time 1-5 Days' (read 2026-11-27) + Thorlabs MTS50/M-Z8 'Available Today'; each vendor under $3,500"
+"A: stages on PCards, cube ordered on day 0",FT-0 -> FT-1 upgrade,FT-1,8.5,26.3,9.5,28.3,"estimate: tube half-shells off and door open, collar off, rod clamped in the rod-end block on the stage, recoater on the deck, four block heaters in"
+"A: stages on PCards, cube ordered on day 0",FT-1 re-commission,FT-1,9.5,28.3,10.5,30.3,"estimate: purge, heat both, home stages, interlocks"
+"A: stages on PCards, cube ordered on day 0","FT-1 powder layers: dose, spread, pads",FT-1,10.5,30.3,13.5,35.3,estimate
+"A: stages on PCards, cube ordered on day 0",FT-1 FIRST COUPONS,FT-1,13.5,35.3,15.5,40.3,milestone
 "A: stages on PCards, cube ordered on day 0","pump, KF parts, Pirani, feedthroughs",FT-1V,0,0,2,7,"fast_track.py (McMaster next day, or used IDP-3)"
 "A: stages on PCards, cube ordered on day 0",cube frame and plates arrive (PO),orders,0,0,11,16,Ideal Vacuum 'Available now' (2026-11-25) + BYU PO + LTL (fast_track.py)
-"A: stages on PCards, cube ordered on day 0",cube plates machined,FT-1V,11,16,13,19,"estimate: MK-13, MK-14"
-"A: stages on PCards, cube ordered on day 0",FT-1 -> FT-1V transfer,FT-1V,14,28,15,30,"estimate: cassette, gland, window stack, stages across; optics up 21 mm"
-"A: stages on PCards, cube ordered on day 0",FT-1V leak check and pump-purge,FT-1V,15,30,17,34,fast_track.py
-"A: stages on PCards, cube ordered on day 0",FT-1V FIRST COUPONS (< 100 ppm),FT-1V,17,34,19,39,milestone
-"B: stages on PCards, cube ordered after FT-0's O2 log",used optics chain arrives,orders,0,0,3,8,eBay windows to 84602 read 2026-11-26 (Nov 28-Dec 5) and LTL freight for the laser (estimate)
+"A: stages on PCards, cube ordered on day 0",cube plates machined,FT-1V,11,16,12.1,19.6,"fab/out/hours.json: 9.1-18.1 shop h (fast_track.shop_days, estimate)"
+"A: stages on PCards, cube ordered on day 0",FT-1 -> FT-1V transfer,FT-1V,13.5,35.3,14.5,37.3,"estimate: see the sequence below; cassette, gland, window stack across; optics up 21 mm"
+"A: stages on PCards, cube ordered on day 0",FT-1V leak check and pump-purge,FT-1V,14.5,37.3,16.5,41.3,fast_track.py
+"A: stages on PCards, cube ordered on day 0",FT-1V FIRST COUPONS (< 100 ppm),FT-1V,16.5,41.3,18.5,46.3,milestone
+"B: stages on PCards, cube ordered after FT-0's O2 log",used optics chain arrives,orders,0,0,3,8,eBay windows to 84602 read 2026-11-27 (Nov 30-Dec 3) and LTL freight for the laser (estimate)
 "B: stages on PCards, cube ordered after FT-0's O2 log",McMaster stock and hardware,orders,0,0,1,2,McMaster: most orders arrive same or next day
-"B: stages on PCards, cube ordered after FT-0's O2 log",safety parts and eyewear,orders,0,0,2,5,Digi-Key / Thorlabs in-stock items (Thorlabs LG1 'Available: Today')
+"B: stages on PCards, cube ordered after FT-0's O2 log",safety parts and eyewear,orders,0,0,2,5,"Digi-Key in stock (D4NS-2CF 360 in stock, 2026-11-27) / Thorlabs LG1 'Available: Today'"
 "B: stages on PCards, cube ordered after FT-0's O2 log","window, cover slides, beam dump (Edmund, Thorlabs)",orders,0,0,2,5,Edmund 38-990 '5 In Stock'; Thorlabs in-stock items
-"B: stages on PCards, cube ordered after FT-0's O2 log",O2 analyzer (used),orders,0,0,4,6,"eBay window Nov 30-Dec 5 (Alpha Omega Series 3000, read 2026-11-26)"
+"B: stages on PCards, cube ordered after FT-0's O2 log",O2 analyzers arrive,orders,0,0,4,10,"eBay window Dec 1-7 (Alpha Omega Series 3000, read 2026-11-27); Kele OX-6 lead time not read (estimate)"
 "B: stages on PCards, cube ordered after FT-0's O2 log",argon cylinder and regulator,orders,0,0,2,5,estimate (gas supplier delivery; McMaster regulator next day)
-"B: stages on PCards, cube ordered after FT-0's O2 log",PC + RTC5 software,orders,0,0,1,3,estimate (lab PC with a PCIe slot; RTC5 package from SCANLAB's portal)
-"B: stages on PCards, cube ordered after FT-0's O2 log",enclosure arrives,orders,0,0,3,8,"estimate: distributor stock, ground (fast_track.py)"
+"B: stages on PCards, cube ordered after FT-0's O2 log",RTC4 card + PC and software,orders,0,0,3,7,"eBay 366737163447 'Estimated between Wed, Dec 2 and Tue, Dec 8' (read 2026-11-27); lab PC with a PCIe slot"
+"B: stages on PCards, cube ordered after FT-0's O2 log",enclosure arrives,orders,0,0,3,8,"estimate: distributor stock (Saginaw SCE-16EL1208SSLP), ground"
 "B: stages on PCards, cube ordered after FT-0's O2 log",LSO registration and SOP,approvals,0,0,5,15,estimate: BYU's laser-safety pages need a login; start on day 0
 "B: stages on PCards, cube ordered after FT-0's O2 log",EHS review (Al powder),approvals,0,0,5,15,"estimate: dust hazard analysis scope, start on day 0"
-"B: stages on PCards, cube ordered after FT-0's O2 log",deck plate and target stand made,S1,1,2,2,4,"estimate: two plates, ~3 shop hours"
+"B: stages on PCards, cube ordered after FT-0's O2 log",208/240 V circuit for the laser,orders,0,0,3,15,"estimate: a Physical Facilities work order, unless the room already has a 208/240 V outlet (check on day 0)"
+"B: stages on PCards, cube ordered after FT-0's O2 log",deck plate and target stand made,S1,1,2,2.1,5.9,"fab/out/hours.json: 8.6-19.7 shop h (fast_track.shop_days, estimate)"
 "B: stages on PCards, cube ordered after FT-0's O2 log",S1 optics bench assembled,S1,3,8,4,9,estimate
 "B: stages on PCards, cube ordered after FT-0's O2 log",S1 guide-laser and scanner checks,S1,5,15,7,19,fast_track.py's bench check
-"B: stages on PCards, cube ordered after FT-0's O2 log",window stack and beam tube made,S2,1,2,3,5,"estimate: MK-02, MK-10, ~8 shop hours"
-"B: stages on PCards, cube ordered after FT-0's O2 log",box cut and fitted,S2,3,8,4,10,"estimate: window bore, bulkheads, glands, rod hole"
-"B: stages on PCards, cube ordered after FT-0's O2 log",S2 interlocks wired and proven,S2,4,10,5,12,estimate
+"B: stages on PCards, cube ordered after FT-0's O2 log",window stack and beam tube made,S2,2.1,5.9,3.7,10.3,"fab/out/hours.json: 12.6-22.1 shop h (fast_track.shop_days, estimate)"
+"B: stages on PCards, cube ordered after FT-0's O2 log",box cut and fitted,S2,3.7,10.3,4.7,12.3,"estimate: window bore, bulkheads, glands, rod hole"
+"B: stages on PCards, cube ordered after FT-0's O2 log",S2 interlocks wired and proven,S2,4.7,12.3,5.7,14.3,estimate
 "B: stages on PCards, cube ordered after FT-0's O2 log",S2 FULL POWER INTO THE DUMP,S2,7,19,8,21,"milestone: calorimetry, focus ladder; inside the laser's return window"
-"B: stages on PCards, cube ordered after FT-0's O2 log",FT-0 parts made,FT-0,3,5,6,10,"estimate: MK-03..07, 11, 16, 17, ~12 shop hours after the window parts"
-"B: stages on PCards, cube ordered after FT-0's O2 log",FT-0 assembled in the box,FT-0,6,10,7,12,estimate
-"B: stages on PCards, cube ordered after FT-0's O2 log",FT-0 purge and heat (O2 log),FT-0,7,12,8,14,estimate
-"B: stages on PCards, cube ordered after FT-0's O2 log",FT-0 FIRST TRACKS,FT-0,8,21,9,23,milestone
-"B: stages on PCards, cube ordered after FT-0's O2 log",FT-0 hand-spread layers and pads,FT-0,9,23,11,27,estimate
-"B: stages on PCards, cube ordered after FT-0's O2 log",FT-1 parts made,FT-1,6,10,9,15,"estimate: MK-08, 12, 15, ~12 shop hours"
-"B: stages on PCards, cube ordered after FT-0's O2 log",stages arrive,orders,0,0,3,10,"Zaber X-LSQ075B 'Lead Time: 1-5 Days' (read 2026-11-26) + Thorlabs piston stage 'Available: Today'; each vendor under $3,500"
-"B: stages on PCards, cube ordered after FT-0's O2 log",FT-0 -> FT-1 upgrade,FT-1,9,15,10,17,"estimate: collar off, rod to the stage, recoater on the deck, block heaters in"
-"B: stages on PCards, cube ordered after FT-0's O2 log",FT-1 re-commission,FT-1,10,17,11,19,"estimate: purge, heat both, home stages, interlocks"
-"B: stages on PCards, cube ordered after FT-0's O2 log","FT-1 powder layers: dose, spread, pads",FT-1,11,23,14,28,estimate
-"B: stages on PCards, cube ordered after FT-0's O2 log",FT-1 FIRST COUPONS,FT-1,14,28,16,33,milestone
+"B: stages on PCards, cube ordered after FT-0's O2 log",FT-0 parts made,FT-0,3.7,10.3,6.5,20.1,"fab/out/hours.json: 22.6-49.0 shop h (fast_track.shop_days, estimate)"
+"B: stages on PCards, cube ordered after FT-0's O2 log",FT-0 assembled in the box,FT-0,6.5,20.1,7.5,22.1,estimate
+"B: stages on PCards, cube ordered after FT-0's O2 log",FT-0 purge and heat (O2 log),FT-0,7.5,22.1,8.5,24.1,estimate
+"B: stages on PCards, cube ordered after FT-0's O2 log",FT-0 FIRST TRACKS,FT-0,8.5,24.1,9.5,26.1,milestone
+"B: stages on PCards, cube ordered after FT-0's O2 log",FT-0 hand-spread layers and pads,FT-0,9.5,26.1,11.5,30.1,estimate
+"B: stages on PCards, cube ordered after FT-0's O2 log",FT-1 parts made,FT-1,6.5,20.1,8.3,26.3,"fab/out/hours.json: 14.7-31.2 shop h (fast_track.shop_days, estimate)"
+"B: stages on PCards, cube ordered after FT-0's O2 log",stages arrive,orders,0,0,3,10,"Zaber X-LSM100B 'Lead Time 1-5 Days' (read 2026-11-27) + Thorlabs MTS50/M-Z8 'Available Today'; each vendor under $3,500"
+"B: stages on PCards, cube ordered after FT-0's O2 log",FT-0 -> FT-1 upgrade,FT-1,8.5,26.3,9.5,28.3,"estimate: tube half-shells off and door open, collar off, rod clamped in the rod-end block on the stage, recoater on the deck, four block heaters in"
+"B: stages on PCards, cube ordered after FT-0's O2 log",FT-1 re-commission,FT-1,9.5,28.3,10.5,30.3,"estimate: purge, heat both, home stages, interlocks"
+"B: stages on PCards, cube ordered after FT-0's O2 log","FT-1 powder layers: dose, spread, pads",FT-1,10.5,30.3,13.5,35.3,estimate
+"B: stages on PCards, cube ordered after FT-0's O2 log",FT-1 FIRST COUPONS,FT-1,13.5,35.3,15.5,40.3,milestone
 "B: stages on PCards, cube ordered after FT-0's O2 log","pump, KF parts, Pirani, feedthroughs",FT-1V,0,0,2,7,"fast_track.py (McMaster next day, or used IDP-3)"
-"B: stages on PCards, cube ordered after FT-0's O2 log",cube frame and plates arrive (PO),orders,8,14,19,30,ordered only if FT-0's first purge stalls above the target
-"B: stages on PCards, cube ordered after FT-0's O2 log",cube plates machined,FT-1V,19,30,21,33,"estimate: MK-13, MK-14"
-"B: stages on PCards, cube ordered after FT-0's O2 log",FT-1 -> FT-1V transfer,FT-1V,21,33,22,35,"estimate: cassette, gland, window stack, stages across; optics up 21 mm"
-"B: stages on PCards, cube ordered after FT-0's O2 log",FT-1V leak check and pump-purge,FT-1V,22,35,24,39,fast_track.py
-"B: stages on PCards, cube ordered after FT-0's O2 log",FT-1V FIRST COUPONS (< 100 ppm),FT-1V,24,39,26,44,milestone
-"C: both stages on one Zaber PO, cube after the O2 log",used optics chain arrives,orders,0,0,3,8,eBay windows to 84602 read 2026-11-26 (Nov 28-Dec 5) and LTL freight for the laser (estimate)
+"B: stages on PCards, cube ordered after FT-0's O2 log",cube frame and plates arrive (PO),orders,8.5,24.1,19.5,40.1,ordered only if FT-0's first purge stalls above the target
+"B: stages on PCards, cube ordered after FT-0's O2 log",cube plates machined,FT-1V,19.5,40.1,20.6,43.7,"fab/out/hours.json: 9.1-18.1 shop h (fast_track.shop_days, estimate)"
+"B: stages on PCards, cube ordered after FT-0's O2 log",FT-1 -> FT-1V transfer,FT-1V,20.6,43.7,21.6,45.7,"estimate: see the sequence below; cassette, gland, window stack across; optics up 21 mm"
+"B: stages on PCards, cube ordered after FT-0's O2 log",FT-1V leak check and pump-purge,FT-1V,21.6,45.7,23.6,49.7,fast_track.py
+"B: stages on PCards, cube ordered after FT-0's O2 log",FT-1V FIRST COUPONS (< 100 ppm),FT-1V,23.6,49.7,25.6,54.7,milestone
+"C: both stages on one Zaber PO, cube after the O2 log",used optics chain arrives,orders,0,0,3,8,eBay windows to 84602 read 2026-11-27 (Nov 30-Dec 3) and LTL freight for the laser (estimate)
 "C: both stages on one Zaber PO, cube after the O2 log",McMaster stock and hardware,orders,0,0,1,2,McMaster: most orders arrive same or next day
-"C: both stages on one Zaber PO, cube after the O2 log",safety parts and eyewear,orders,0,0,2,5,Digi-Key / Thorlabs in-stock items (Thorlabs LG1 'Available: Today')
+"C: both stages on one Zaber PO, cube after the O2 log",safety parts and eyewear,orders,0,0,2,5,"Digi-Key in stock (D4NS-2CF 360 in stock, 2026-11-27) / Thorlabs LG1 'Available: Today'"
 "C: both stages on one Zaber PO, cube after the O2 log","window, cover slides, beam dump (Edmund, Thorlabs)",orders,0,0,2,5,Edmund 38-990 '5 In Stock'; Thorlabs in-stock items
-"C: both stages on one Zaber PO, cube after the O2 log",O2 analyzer (used),orders,0,0,4,6,"eBay window Nov 30-Dec 5 (Alpha Omega Series 3000, read 2026-11-26)"
+"C: both stages on one Zaber PO, cube after the O2 log",O2 analyzers arrive,orders,0,0,4,10,"eBay window Dec 1-7 (Alpha Omega Series 3000, read 2026-11-27); Kele OX-6 lead time not read (estimate)"
 "C: both stages on one Zaber PO, cube after the O2 log",argon cylinder and regulator,orders,0,0,2,5,estimate (gas supplier delivery; McMaster regulator next day)
-"C: both stages on one Zaber PO, cube after the O2 log",PC + RTC5 software,orders,0,0,1,3,estimate (lab PC with a PCIe slot; RTC5 package from SCANLAB's portal)
-"C: both stages on one Zaber PO, cube after the O2 log",enclosure arrives,orders,0,0,3,8,"estimate: distributor stock, ground (fast_track.py)"
+"C: both stages on one Zaber PO, cube after the O2 log",RTC4 card + PC and software,orders,0,0,3,7,"eBay 366737163447 'Estimated between Wed, Dec 2 and Tue, Dec 8' (read 2026-11-27); lab PC with a PCIe slot"
+"C: both stages on one Zaber PO, cube after the O2 log",enclosure arrives,orders,0,0,3,8,"estimate: distributor stock (Saginaw SCE-16EL1208SSLP), ground"
 "C: both stages on one Zaber PO, cube after the O2 log",LSO registration and SOP,approvals,0,0,5,15,estimate: BYU's laser-safety pages need a login; start on day 0
 "C: both stages on one Zaber PO, cube after the O2 log",EHS review (Al powder),approvals,0,0,5,15,"estimate: dust hazard analysis scope, start on day 0"
-"C: both stages on one Zaber PO, cube after the O2 log",deck plate and target stand made,S1,1,2,2,4,"estimate: two plates, ~3 shop hours"
+"C: both stages on one Zaber PO, cube after the O2 log",208/240 V circuit for the laser,orders,0,0,3,15,"estimate: a Physical Facilities work order, unless the room already has a 208/240 V outlet (check on day 0)"
+"C: both stages on one Zaber PO, cube after the O2 log",deck plate and target stand made,S1,1,2,2.1,5.9,"fab/out/hours.json: 8.6-19.7 shop h (fast_track.shop_days, estimate)"
 "C: both stages on one Zaber PO, cube after the O2 log",S1 optics bench assembled,S1,3,8,4,9,estimate
 "C: both stages on one Zaber PO, cube after the O2 log",S1 guide-laser and scanner checks,S1,5,15,7,19,fast_track.py's bench check
-"C: both stages on one Zaber PO, cube after the O2 log",window stack and beam tube made,S2,1,2,3,5,"estimate: MK-02, MK-10, ~8 shop hours"
-"C: both stages on one Zaber PO, cube after the O2 log",box cut and fitted,S2,3,8,4,10,"estimate: window bore, bulkheads, glands, rod hole"
-"C: both stages on one Zaber PO, cube after the O2 log",S2 interlocks wired and proven,S2,4,10,5,12,estimate
+"C: both stages on one Zaber PO, cube after the O2 log",window stack and beam tube made,S2,2.1,5.9,3.7,10.3,"fab/out/hours.json: 12.6-22.1 shop h (fast_track.shop_days, estimate)"
+"C: both stages on one Zaber PO, cube after the O2 log",box cut and fitted,S2,3.7,10.3,4.7,12.3,"estimate: window bore, bulkheads, glands, rod hole"
+"C: both stages on one Zaber PO, cube after the O2 log",S2 interlocks wired and proven,S2,4.7,12.3,5.7,14.3,estimate
 "C: both stages on one Zaber PO, cube after the O2 log",S2 FULL POWER INTO THE DUMP,S2,7,19,8,21,"milestone: calorimetry, focus ladder; inside the laser's return window"
-"C: both stages on one Zaber PO, cube after the O2 log",FT-0 parts made,FT-0,3,5,6,10,"estimate: MK-03..07, 11, 16, 17, ~12 shop hours after the window parts"
-"C: both stages on one Zaber PO, cube after the O2 log",FT-0 assembled in the box,FT-0,6,10,7,12,estimate
-"C: both stages on one Zaber PO, cube after the O2 log",FT-0 purge and heat (O2 log),FT-0,7,12,8,14,estimate
-"C: both stages on one Zaber PO, cube after the O2 log",FT-0 FIRST TRACKS,FT-0,8,21,9,23,milestone
-"C: both stages on one Zaber PO, cube after the O2 log",FT-0 hand-spread layers and pads,FT-0,9,23,11,27,estimate
-"C: both stages on one Zaber PO, cube after the O2 log",FT-1 parts made,FT-1,6,10,9,15,"estimate: MK-08, 12, 15, ~12 shop hours"
-"C: both stages on one Zaber PO, cube after the O2 log",stages arrive,orders,0,0,11,20,"both Zaber stages on one order ($5,948): BYU PO 10-14 days + 1-5 days + transit"
-"C: both stages on one Zaber PO, cube after the O2 log",FT-0 -> FT-1 upgrade,FT-1,11,20,12,22,"estimate: collar off, rod to the stage, recoater on the deck, block heaters in"
-"C: both stages on one Zaber PO, cube after the O2 log",FT-1 re-commission,FT-1,12,22,13,24,"estimate: purge, heat both, home stages, interlocks"
-"C: both stages on one Zaber PO, cube after the O2 log","FT-1 powder layers: dose, spread, pads",FT-1,13,24,16,29,estimate
-"C: both stages on one Zaber PO, cube after the O2 log",FT-1 FIRST COUPONS,FT-1,16,29,18,34,milestone
+"C: both stages on one Zaber PO, cube after the O2 log",FT-0 parts made,FT-0,3.7,10.3,6.5,20.1,"fab/out/hours.json: 22.6-49.0 shop h (fast_track.shop_days, estimate)"
+"C: both stages on one Zaber PO, cube after the O2 log",FT-0 assembled in the box,FT-0,6.5,20.1,7.5,22.1,estimate
+"C: both stages on one Zaber PO, cube after the O2 log",FT-0 purge and heat (O2 log),FT-0,7.5,22.1,8.5,24.1,estimate
+"C: both stages on one Zaber PO, cube after the O2 log",FT-0 FIRST TRACKS,FT-0,8.5,24.1,9.5,26.1,milestone
+"C: both stages on one Zaber PO, cube after the O2 log",FT-0 hand-spread layers and pads,FT-0,9.5,26.1,11.5,30.1,estimate
+"C: both stages on one Zaber PO, cube after the O2 log",FT-1 parts made,FT-1,6.5,20.1,8.3,26.3,"fab/out/hours.json: 14.7-31.2 shop h (fast_track.shop_days, estimate)"
+"C: both stages on one Zaber PO, cube after the O2 log",stages arrive,orders,0,0,11,20,"both Zaber stages (X-VSR20A, X-LSM100B) on one PO: BYU PO 10-14 days + 1-5 days + transit"
+"C: both stages on one Zaber PO, cube after the O2 log",FT-0 -> FT-1 upgrade,FT-1,11,26.3,12,28.3,"estimate: tube half-shells off and door open, collar off, rod clamped in the rod-end block on the stage, recoater on the deck, four block heaters in"
+"C: both stages on one Zaber PO, cube after the O2 log",FT-1 re-commission,FT-1,12,28.3,13,30.3,"estimate: purge, heat both, home stages, interlocks"
+"C: both stages on one Zaber PO, cube after the O2 log","FT-1 powder layers: dose, spread, pads",FT-1,13,30.3,16,35.3,estimate
+"C: both stages on one Zaber PO, cube after the O2 log",FT-1 FIRST COUPONS,FT-1,16,35.3,18,40.3,milestone
 "C: both stages on one Zaber PO, cube after the O2 log","pump, KF parts, Pirani, feedthroughs",FT-1V,0,0,2,7,"fast_track.py (McMaster next day, or used IDP-3)"
-"C: both stages on one Zaber PO, cube after the O2 log",cube frame and plates arrive (PO),orders,8,14,19,30,ordered only if FT-0's first purge stalls above the target
-"C: both stages on one Zaber PO, cube after the O2 log",cube plates machined,FT-1V,19,30,21,33,"estimate: MK-13, MK-14"
-"C: both stages on one Zaber PO, cube after the O2 log",FT-1 -> FT-1V transfer,FT-1V,21,33,22,35,"estimate: cassette, gland, window stack, stages across; optics up 21 mm"
-"C: both stages on one Zaber PO, cube after the O2 log",FT-1V leak check and pump-purge,FT-1V,22,35,24,39,fast_track.py
-"C: both stages on one Zaber PO, cube after the O2 log",FT-1V FIRST COUPONS (< 100 ppm),FT-1V,24,39,26,44,milestone
+"C: both stages on one Zaber PO, cube after the O2 log",cube frame and plates arrive (PO),orders,8.5,24.1,19.5,40.1,ordered only if FT-0's first purge stalls above the target
+"C: both stages on one Zaber PO, cube after the O2 log",cube plates machined,FT-1V,19.5,40.1,20.6,43.7,"fab/out/hours.json: 9.1-18.1 shop h (fast_track.shop_days, estimate)"
+"C: both stages on one Zaber PO, cube after the O2 log",FT-1 -> FT-1V transfer,FT-1V,20.6,43.7,21.6,45.7,"estimate: see the sequence below; cassette, gland, window stack across; optics up 21 mm"
+"C: both stages on one Zaber PO, cube after the O2 log",FT-1V leak check and pump-purge,FT-1V,21.6,45.7,23.6,49.7,fast_track.py
+"C: both stages on one Zaber PO, cube after the O2 log",FT-1V FIRST COUPONS (< 100 ppm),FT-1V,23.6,49.7,25.6,54.7,milestone
