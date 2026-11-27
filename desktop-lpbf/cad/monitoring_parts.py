@@ -129,7 +129,7 @@ def _lw(parts, add, h):
         ang = math.degrees(math.atan2(uz, uy))
         cutter = box(x_out - 10, x_out + 1, fl["dist_mm"], fl["dist_mm"] + 40, -40, 40).rotate(V(0, 0, 0), V(1, 0, 0), ang)
         ring = ring.cut(cutter.translate(V(0, yc, zc)))
-    add(f"LW window clamp ring (6061, 1/4 in. plate, Ø{cr['od']:.0f} x Ø{cr['id']:.0f}, 4 x M4 on Ø{cr['bolt_circle_d']:.0f}, a flat clear of the "
+    add(f"LW window clamp ring (6061, 1/4 in. plate, Ø{cr['od']:.0f} x Ø{cr['id']:.0f}, 4 x M4 on Ø{cr['bolt_circle_d']:g}, a flat clear of the "
         f"through-beam's fibre head; bottoms on the wall face)",
         ring, C["anod"], 5, (-240, 0, 0), mat="al6061", bom="M0-13", tags=TAG)
     # cover slide on the liner's inner face, centred on the sight line, and its sheet clip
