@@ -215,8 +215,9 @@ def aperture_check(state):
             ("window (ring ledge / flange Ø44)", z_w0, (wx, wy), 22.0),
             ("window top", z_w0 + P["window_t"], (wx, wy), 22.0),
             ("cover slide holder (Ø44)", P["cs_z"], P["cs_c"], P["cs_id"] / 2),
-            ("beam tube bottom (Ø54)", L["roof_out"] + 16 - dz, M.tube_centre(state), 27.0),
-            ("beam tube top (Ø54)", L["lens_bot"] - 10 - dz, M.tube_centre(state), 27.0)):
+            ("beam tube lower spigot (Ø50)", L["roof_out"] + 16 - dz, M.tube_centre(state), P["tube_spigot"][0] - 1.5),
+            ("beam tube upper spigot (Ø50)", L["lens_bot"] - 10 - P["tube_spigot"][1] - dz, M.tube_centre(state),
+             P["tube_spigot"][0] - 1.5)):
         bc = M.beam_centre(z)
         need = math.hypot(bc[0] - cx, bc[1] - cy) + M.beam_radius(z)
         out[name] = dict(height_above_bed_mm=round(z, 1), envelope_r_mm=round(M.beam_radius(z), 2),
@@ -391,6 +392,47 @@ def mesh_sweeps(state):
     rows, hits = fcl_sweep(statics, movers, poses, "piston")
     out["piston"] = dict(poses=len(poses), contacts=hits[:20], n_contacts=len(hits), nearest=rows[:10])
     return out
+
+
+def tube_removal(state="FT-1", travel=60.0, step=2.0):
+    """The beam tube's centre section split in the y-z plane through its axis; each half-shell slid straight out
+    sideways (-x, +x) with no lift against every fixed part (python-fcl), 0.2 mm off its end faces so that sliding on
+    the flange is not counted: contacts and the nearest parts. The spigots sit inside the bore, so they must not hold
+    a half-shell."""
+    parts = M.build(state)
+    sec = [p for p in parts if p.name.startswith("Beam tube centre section")][0]
+    tx, _ = M.tube_centre(state)
+    bb = sec.shape.BoundingBox()
+    statics = [p for p in parts if p is not sec and not p.name.startswith(("Surface thermocouples", "Bench top"))]
+    out = {}
+    for sgn, lab in ((-1, "-x half-shell"), (1, "+x half-shell")):
+        x0, x1 = (tx, bb.xmax + 1) if sgn > 0 else (bb.xmin - 1, tx)
+        half = sec.shape.intersect(M.box(x0, x1, bb.ymin - 1, bb.ymax + 1, bb.zmin + 0.2, bb.zmax - 0.2))
+        mover = M.Part(f"Tube section {lab}", half, sec.color)
+        poses = [(d, np.eye(3), np.array([sgn * d, 0.0, 0.0])) for d in np.arange(0.0, travel + 1e-6, step)]
+        rows, hits = fcl_sweep(statics, [mover], poses, "tube")
+        out[lab] = dict(poses=len(poses), travel_mm=travel, n_contacts=len(hits), contacts=hits[:6],
+                        nearest=[{k: v for k, v in r.items() if k != "sweep"} for r in rows[:4]])
+    out["section_length_mm"] = round(bb.zlen, 1)
+    return out
+
+
+def removal_numbers():
+    """What has to move before the box comes off the frame (FT-1 -> FT-1V), from the model's levels."""
+    L = M.levels("FT-1")
+    parts = M.build("FT-1", pz=P["pz_top"])
+    rod = [p for p in parts if p.name.startswith("Piston rod")][0].shape.BoundingBox()
+    blk = [p for p in parts if p.name.startswith("Rod-end block")][0].shape.BoundingBox()
+    gl = [p for p in parts if p.name.startswith("Rod gland plate")][0].shape.BoundingBox()
+    rail_top = L["under"]
+    Lc = M.levels("FT-1V")
+    return dict(gland_bottom_below_rail_tops_mm=round(rail_top - gl.zmin, 1),
+                rod_in_rod_end_block_mm=round(blk.zmax - rod.zmin, 1),
+                rod_length_box_mm=round(rod.zlen, 1), rod_length_cube_mm=round(rod.zlen + Lc["dz"], 1),
+                rod_bottom_below_block_top_at_pz_top_mm=round(0.0 - rod.zmin, 1),
+                lift_to_free_rod_from_bore_mm=round(0.0 - rod.zmin + 2.0, 1),
+                block_top_below_gland_at_pz_top_mm=round(gl.zmin - blk.zmax, 1),
+                block_top_below_gland_at_pz_bot_mm=round(gl.zmin - blk.zmax + (P["pz_top"] - P["pz_bot"]), 1))
 
 
 DOOR_GROUP = ("Box door", "Window ring", "Window, ", "Window retaining flange", "Window-stack screws", "Inner clamp ring",
@@ -665,6 +707,10 @@ def main():
               f"{res['states'][st]['mesh']['piston']['n_contacts']} contacts ({time.time() - t0:.0f} s)", flush=True)
     res["states"]["FT-1 (Thorlabs piston)"]["piston"] = piston_checks("FT-1", "thorlabs")
     res["states"]["FT-0"]["sight"] = sight_lines("FT-0")
+    res["tube_removal"] = {st: tube_removal(st) for st in ("FT-1", "FT-1V")}
+    res["removal"] = removal_numbers()
+    print("tube removal", {k: v["+x half-shell"]["n_contacts"] + v["-x half-shell"]["n_contacts"]
+                           for k, v in res["tube_removal"].items()}, flush=True)
     res["door"] = door_swing("FT-1")
     res["door_no_camera"] = door_swing("FT-1", camera=False)
     print("door swing", res["door"]["last_free_deg"], flush=True)
@@ -735,6 +781,15 @@ def write_md(res):
         if d["first_contact"]:
             md += [f"First contact at {d['first_contact']['angle_deg']} deg:", "",
                    md_table([{k: v for k, v in c.items()} for c in d["first_contact"]["contacts"]])]
+    tr = res["tube_removal"]
+    md += ["**Beam tube's centre section, the two half-shells slid straight out sideways with no lift** (python-fcl, "
+           "2 mm steps over 60 mm (a half-shell is 30 mm wide) against every fixed part; both locating spigots are inside "
+           "the bore, and the window-stack screws are countersunk flush):", "",
+           md_table([dict(state=st, half_shell=h, contacts=v[h]["n_contacts"], section_length_mm=v["section_length_mm"],
+                          nearest=", ".join(f"{n['part'].split(' (')[0]} {n['min_dist_mm']}" for n in v[h]["nearest"][:3]))
+                     for st, v in tr.items() for h in ("-x half-shell", "+x half-shell")])]
+    md += ["**Taking the box off the frame (FT-1 -> FT-1V)**, numbers from the model (plate at the top of its stroke):", "",
+           md_table([dict(check=k, value=v) for k, v in res["removal"].items()])]
     md += ["## 4. Sight lines and the layer camera", "",
            "Rays from 133 points on the plate (Ø38) to the camera's lens front and to each light's port; a ray is blocked if"
            " it meets any part (windows, the camera and the lights themselves excluded).", ""]

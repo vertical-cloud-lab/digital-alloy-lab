@@ -81,9 +81,10 @@ PATH = {
 }
 
 STAGES = {
-    "PCard": T("orders", (3, 10), [], "Zaber X-LSQ075B 'Lead Time: 1-5 Days' (read 2026-11-26) + Thorlabs piston stage "
-                                     "'Available: Today'; each vendor under $3,500"),
-    "PO": T("orders", (11, 20), [], "both Zaber stages on one order ($5,948): BYU PO 10-14 days + 1-5 days + transit"),
+    "PCard": T("orders", (3, 10), [], "Zaber X-LSM100B 'Lead Time 1-5 Days' (read 2026-11-27) + Thorlabs MTS50/M-Z8 "
+                                     "'Available Today'; each vendor under $3,500"),
+    "PO": T("orders", (11, 20), [], "both Zaber stages (X-VSR20A, X-LSM100B) on one PO: BYU PO 10-14 days + 1-5 days "
+                                  "+ transit"),
 }
 CUBE = {
     "day 0": T("orders", (11, 16), [], "Ideal Vacuum 'Available now' (2026-11-25) + BYU PO + LTL (fast_track.py)"),
@@ -122,10 +123,11 @@ def run():
 
 # Parts.csv lines by the first state that needs them (S1 = the optics bench)
 FIRST_STATE = {
-    "S1": ["L1", "L2", "L3", "L4", "L5", "L6", "L7", "L10", "C1", "E4", "S2"],
-    "S2": ["L8", "L9", "E1", "S1"],
-    "FT-0": ["H1", "H2", "H3", "H4", "G1", "G2", "G3", "G4", "G5", "M4", "C2", "S3", "S4", "F1", "F2a", "P1"],
-    "FT-1": ["M1b", "M2", "M3", "F2b"],
+    "S1": ["L1", "L2", "L3", "L4", "L5", "L5b", "L6", "L7", "L10", "C1", "E4", "S2", "MON4"],
+    "S2": ["L8", "L9", "E1", "S1", "MON6"],
+    "FT-0": ["H1", "H2", "H3", "H4", "G1", "G2", "G3", "G4", "G5", "M4", "C2", "S3", "S4", "F1", "F2a", "P1", "MON1",
+             "MON2", "MON3", "MON7", "MON8"],
+    "FT-1": ["M1b", "M1c", "M2", "M3", "F2b", "MON5"],
     "FT-1V": ["E2", "E3", "E5", "F2c"],
 }
 
@@ -141,7 +143,7 @@ def spend():
                 continue
             q = float(r["FT1V"] if st == "FT-1V" else r["FT1"] if st == "FT-1" else r["FT0"] or 0) or float(r["FT1"] or 0)
             if i == "H1":
-                q = 2.0          # two plate heaters in FT-0; the block's two come with FT-1
+                q = 2.0          # two plate heaters in FT-0; the block's four come with FT-1
             if i in ("F2b",):    # FT-1's shop time less FT-0's, already counted
                 lo += float(r["unit_low"]) - float(rows["F2a"]["unit_low"])
                 hi += float(r["unit_high"]) - float(rows["F2a"]["unit_high"])
@@ -152,9 +154,9 @@ def spend():
                 continue
             lo += q * float(r["unit_low"])
             hi += q * float(r["unit_high"])
-        if st == "FT-1":
-            lo += 2 * float(rows["H1"]["unit_low"])
-            hi += 2 * float(rows["H1"]["unit_high"])
+        if st == "FT-1":                                  # the well block's 4 cartridges (H1: FT-0 2, FT-1 6)
+            lo += 4 * float(rows["H1"]["unit_low"])
+            hi += 4 * float(rows["H1"]["unit_high"])
         lo_c += lo
         hi_c += hi
         out.append(dict(state=st, adds=", ".join(ids), added_low=round(lo), added_high=round(hi),

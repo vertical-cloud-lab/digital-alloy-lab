@@ -2,7 +2,7 @@
 
 One model, five states, in the order the parts arrive (``STATES``):
 
-  S1     optics bench: laser, scan head, lens and RTC5 on the T-slot frame, guide laser onto a target on the deck
+  S1     optics bench: laser, scan head, lens and RTC4 (or RTC5) on the T-slot frame, guide laser onto a target
   S2     the stainless box closed round the beam: window, beam tube, interlocks; full power into a water-cooled dump
   FT-0   single-track bench: heated plate on a fixed rod in the well block, gas, O2 analyzer; layers spread by hand
   FT-1   purge-box LPBF: the rod goes to a Zaber X-VSR20A under the box, a Zaber X-LSM100B moves a hopper-blade
@@ -94,6 +94,7 @@ P = dict(
                                  # (process worker, 2026-11-27); the head, lens, input stack and collar follow it
     win_c={"box": (0.0, -11.0), "cube": (0.0, -21.0)},   # window stack centres: where the scanned cone crosses them
     tube_c={"box": (0.0, -17.0), "cube": (0.0, -24.0)},  # beam-tube centre section (Ø54 bore) centres
+    tube_spigot=(26.5, 3.0),     # outer radius and height of the locating spigots inside the section's ends (this model)
     cs_id=44.0,                  # cover-slide holder opening (was 40): needs Ø41.6 (box), Ø43.4 (cube)
     cs_z=130.0, cs_c=(0.0, -11.0),  # cover slide's lower face above the bed, and its centre, in the box and the cube
     cs_drop_c=(0.0, -16.0),      # FT-1V drop tube axis: between the window (y -21) and the slide holder (y -11)
@@ -137,15 +138,17 @@ class Part:
 # Parts we make (MK numbers): what each is, from what, and in which states it exists.
 MADE = {
     "MK-01": "deck plate, 245 x 245 x 10 mm 6061: carries the whole cassette from box to cube",
-    "MK-02": "window ring, retaining flange and (box only) inner clamp ring, 6061; cover-slide holder",
-    "MK-03": "well block, 80 x 80 x 40 mm 6061, Ø40.00 bore, two heater holes, TC hole, overflow slot",
-    "MK-04": "heater plate, Ø39.8 x 28 mm 6061, two axial heater holes, TC hole, lead grooves, rod socket, rope groove",
+    "MK-02": "window ring, retaining flange with the beam tube's lower spigot, (box only) inner clamp ring, 6061; "
+             "cover-slide holder (Ø44) and, in the cube, its drop tube",
+    "MK-03": "well block, 80 x 80 x 40 mm 6061, Ø40.00 bore, four Ø6.1 x 21 heater holes and a TC hole from -x, overflow slot",
+    "MK-04": "heater plate, Ø39.8 x 24 mm 6061, two Ø6.1 x 21 axial heater holes, TC hole, lead grooves, rod socket, rope groove",
     "MK-05": "substrate discs, Ø39.8 x 6 mm 6061, three M2 countersunk screws at r = 17.1 mm",
     "MK-06": "piston rods, 1/2 in. thin-wall 304 tube with a potted lead plug: one for the box, one 21 mm longer for the cube",
     "MK-07": "rod gland plate, two O-rings (rated for rough vacuum so it moves to the cube unchanged), 4 x M5",
     "MK-08": "hopper (bent 304), cord clamp, arm and carriage bracket",
     "MK-09": "scan-head flange plate, 12 mm 6061: bolts to the head's entrance face, hangs from the gantry cross-beam",
-    "MK-10": "beam tubes with flange and lens collar: long (box), short (cube)",
+    "MK-10": "beam tube: lens collar (floor ring, Ø50 spigot) and a centre section split in two half-shells with 2 toggle "
+             "clamps: long (box), short (cube)",
     "MK-11": "slot nozzle and exhaust collector, 304",
     "MK-12": "stage shield, bent 304 sheet with a slot for the carriage bracket",
     "MK-13": "cube top plate: Ideal Vacuum blank P108171 bored for the window ring and the camera port",
@@ -179,8 +182,8 @@ MON = {
     "MON6": dict(first="S2", what="thermocouples: beam tube and window ring (S2, self-adhesive type K patches); plate, "
                  "well block (1/16 in. sheathed type K in their holes) and box air (1/16 in. probe through a "
                  "compression fitting) from FT-0"),
-    "MON7": dict(first="FT-0", what="RTC5 sync (no geometry): laser gate and a job-list layer/trigger bit from the "
-                 "RTC5's I/O to the digitizer and the Pi through an isolator"),
+    "MON7": dict(first="FT-0", what="RTC4 (or RTC5) sync (no geometry): laser gate and a job-list layer/trigger bit "
+                 "from the card's I/O to the digitizer and the Pi through an isolator"),
     "MON8": dict(first="FT-0", what="digitizer: PicoScope 4444 class, 4 differential channels (photodiode, AE, laser "
                  "gate, layer sync)"),
     "MON9": dict(first="S2", what="thermocouple logger: MCC 134 class 4-channel HAT on the Pi (C2); no geometry"),
@@ -400,7 +403,7 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
     fib = polyline_pipe([(-241, 120, zb + 120), (-300, 120, zb + 140), (-300, 120, 300.0 + dz), (-300, -100, z_in - 30),
                          (-240, -230, z_in), (xbm, -230, z_in), (xbm, yb0 - 110, z_in)], 3.0)
     add("Process fibre", fib, C["fiber"], "L1", "optics")
-    add("PC with the RTC5 (tower, est.)", box(420, 590, -20, 400, zb, zb + 380), C["black"], "C1", "bench")
+    add("PC with the RTC4 (or RTC5) (tower, est.)", box(420, 590, -20, 400, zb, zb + 380), C["black"], "C1", "bench")
     add("+-15 V supply for the head (DIN, est.)", box(ux[1] - 15 - 60, ux[1] - 15, ry[1] - 15 - 30, ry[1] - 15,
                                                      hb + 10, hb + 100), C["alu_dark"], "L6", "optics")
     ys_ = lay - P["head_side"][0]
@@ -551,11 +554,15 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
         add("Window, Ø50.8 x 9.53 fused silica, 1064 V-coat", cyl(P["window_d"] / 2, (wx, wy, z + 2), "z", P["window_t"]),
             C["glass"], "L8", "enclosure", opacity=0.5)
         fl_ = tube(50, 22, (wx, wy, z + 10), "z", 6).cut(cyl(P["window_d"] / 2 + 0.25, (wx, wy, z + 10 - 0.1), "z", 1.8))
+        tx, ty = tube_centre(state)                                              # beam tube's centre section (Ø54 bore)
+        sp_r, sp_h = P["tube_spigot"]
+        fl_ = fl_.fuse(tube(sp_r, sp_r - 1.5, (tx, ty, z + 16), "z", sp_h))         # spigot inside the tube's lower end
         add("Window retaining flange (MK-02)", fl_, C["alu"], "MK-02", "enclosure")
-        scr = [cyl(3.5, (wx + 40 * math.cos(math.radians(60 * k)), wy + 40 * math.sin(math.radians(60 * k)), z + 16),
-                   "z", 4)
+        # M4 flat-head screws countersunk flush in the flange, so the beam tube's half-shells slide off over them
+        scr = [cq.Solid.makeCone(2.2, 4.1, 2.3, V(wx + 40 * math.cos(math.radians(60 * k)),
+                                                  wy + 40 * math.sin(math.radians(60 * k)), z + 16 - 2.3), V(0, 0, 1))
                for k in range(6)]
-        add("Window-stack screws, M4 x 6", comp(scr), C["ss_dark"], "MK-02", "enclosure")
+        add("Window-stack screws, M4 x 12 flat head, flush", comp(scr), C["ss_dark"], "MK-02", "enclosure")
         # cover slide ~130 mm above the bed in both enclosures (process worker: a sooted slide defocuses ~4x less there
         # than under the cube's top plate), held in a Ø44 ring centred on the beam footprint at that height
         csx, csy = P["cs_c"]
@@ -571,16 +578,18 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
         holder = holder.cut(box(csx, csx + 40, csy - 25.3, csy + 25.3, zs - 0.1, zs + 1.1))   # slide goes in from +x
         add("Cover-slide holder, Ø44 opening (MK-02)", holder, C["alu"], "MK-02", "enclosure")
         add("Cover slide, Ø50 x 1 mm", cyl(25, (csx, csy, zs), "z", 1.0), C["glass"], "L8", "enclosure", opacity=0.5)
-        # beam tube in two parts (fixes round 1's captive tube): a collar clamped on the lens body with a floor ring
-        # and socket, and a centre section split lengthwise in two half-shells (2 toggle clamps) that sits on the
-        # window flange and in the collar's socket; it comes off sideways before the door is opened
+        # beam tube in two parts (fixes round 1's captive tube): a collar clamped on the lens body with a floor ring,
+        # and a centre section split lengthwise (in the y-z plane) in two half-shells held by 2 toggle clamps. The
+        # section butts on the window flange below and the collar's floor ring above, and both ends overlap a 3 mm
+        # spigot INSIDE its bore (light-tight, and nothing outside it), so each half-shell comes off sideways (+-x)
+        # with no lift; then the door opens (ft_checks: tube_removal, door_swing)
         t0 = z + 16
         lb = L["lens_bot"]
-        tx, ty = tube_centre(state)                                              # centre section (Ø54 bore)
         col = tube(68, P["lens_d"] / 2 + 0.7, (lax, lay, lb - 4), "z", 34).fuse(
-            cyl(68, (lax, lay, lb - 10), "z", 6).cut(cyl(31, (tx, ty, lb - 11), "z", 8)))
+            cyl(68, (lax, lay, lb - 10), "z", 6).cut(cyl(27.0, (tx, ty, lb - 11), "z", 8)))
+        col = col.fuse(tube(sp_r, sp_r - 1.5, (tx, ty, lb - 10 - sp_h), "z", sp_h))   # spigot inside the upper end
         add("Beam-tube lens collar, clamped on the lens (MK-10)", col, C["alu_dark"], "MK-10", "enclosure", opacity=0.7)
-        cs_len = (lb - 4) - t0
+        cs_len = (lb - 10) - t0
         ctr = tube(30, 27, (tx, ty, t0), "z", cs_len)
         add("Beam tube centre section, split, long (MK-10)" if not cube else "Beam tube centre section, split, short (MK-10)",
             ctr, C["alu_dark"], "MK-10", "enclosure", opacity=0.7)
@@ -717,8 +726,8 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
         yr = P["rc_y"]
         fixed, car = VEN.zaber_x_lsm100(hx - P["rc_x0"], parts=True)
         Tr = V(P["rc_x0"], yr, z0)
-        add("Zaber X-LSM100B-E03 recoater stage", fixed.translate(Tr), C["zaber"], "M1b", "recoater")
-        add("X-LSM carriage", car.translate(Tr), C["zaber_top"], "M1b", "recoater", "recoater")
+        add("Zaber X-LSM100B-E03 recoater stage", fixed.translate(Tr), C["zaber"], "M1c", "recoater")
+        add("X-LSM carriage", car.translate(Tr), C["zaber_top"], "M1c", "recoater", "recoater")
         car_top = z0 + P["rc_h"]
         hl, hw_, hh_ = P["hopper"]
         arm_z0 = zbed + hh_ - 8
@@ -755,7 +764,7 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
         else:
             m8 = polyline_pipe([(cx_, cy_, z0 + 12.2), (cx_, cy_ + 20, z0 + 12.2), (-88.0, yc + P["cube_in"] / 2 - 20,
                                 L["cube_c"] - 60), (-88.0, yc + P["cube_in"] / 2 - 4, L["cube_c"] - 60)], 2.5)
-        add("Recoater M8 data and power cable", m8, C["cable"], "M1b", "recoater")
+        add("Recoater M8 data and power cable", m8, C["cable"], "M1c", "recoater")
 
     # ---------------- piston drive (FT-1, FT-1V) ----------------
     if has_stages:
