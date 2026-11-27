@@ -143,7 +143,7 @@ class Run:
             self.module_set = [i for i in self.sc.group("module") if self.sc.objs[i]["V"] is not None and self.sc.objs[i].get("kind") != "tool"]
         return self.module_set
 
-    def add(self, idx, grp, phase, state=None):
+    def add(self, idx, grp, phase, state=None, T=None):
         for i in idx:
             old = self.grp_of.get(i)
             if old is not None and old != grp:
@@ -151,7 +151,7 @@ class Run:
             self.asm.setdefault(grp, set()).add(i)
             self.grp_of[i] = grp
         self.phase_of[grp] = phase
-        self.cl.put(idx, self.cl.T_phase(phase), state)
+        self.cl.put(idx, self.cl.T_phase(phase) if T is None else T, state)
 
     def merge(self, src, dst):
         if src not in self.asm:
@@ -411,6 +411,8 @@ def arm_place(run, st, idx, path, state, actor, tool, holdname, grasp=None, extr
         T_obj = T @ Tm(rot((0, 0, 1), rot_deg))
     else:
         T_obj = T
+    if st.get("shift"):
+        T_obj = T_obj @ Tm(p=st["shift"])       # round 10 (F26): the part goes onto a group that has moved (the recoater, F18)
     d_w = T[:3, :3] @ unit(np.asarray(path[1], float) - np.asarray(path[0], float)) if len(path) > 1 else np.array([0, 0, 1.0])
     if grasp:
         G = given_grasp(grasp, T_obj)
@@ -573,11 +575,14 @@ def go_park(run, n):
 
 
 def do_place(run, st, row):
+    if st.get("units"):
+        return do_units(run, st, row)          # round 10 (F57): each piece its own way in
     sc = run.sc
     idx = run.resolve(st["keys"], st.get("exclude", ()), st.get("moved", False))
     if not idx:
         row.update(sweep="?", arm="?", why="no object matched")
         return
+    idx += carried(run, st, idx)
     state = dict(st.get("state", {}))
     units = [[i] for i in idx] if (st.get("per_solid") or st.get("per_part")) else [idx]
     if st.get("order") == "zdesc":          # build outward from the heater block (machine z decreasing)
@@ -592,7 +597,7 @@ def do_place(run, st, row):
     sw_all, arm_all, gaps, dmins, why, docks = [], [], [], [], [], set()
     for u in units:
         path = path_list(run, st, u)
-        sw = sweep(run, st, u, path, state, st.get("rot"))
+        sw = sweep(run, st, u, path, dict(state, **st.get("sweep_state", {})), st.get("rot"))
         sw_all.append(sw["ok"])
         if sw.get("min_gap") is not None:
             gaps.append((sw["min_gap"], sw.get("gap_with")))
@@ -646,7 +651,8 @@ def do_place(run, st, row):
             arm_all.append(sub["ok"])
             if not sub["ok"]:
                 why.append(sub["why"])
-            retreat(run, actor, near=u)
+            if not sub.get("released"):         # round 10 (F18): the holder already let go after its slide and parked
+                retreat(run, actor, near=u)
         elif st.get("hold_first") and r["ok"]:
             # round 8 (two hands): keep it pressed on its seal while the other arm drives its first screws
             run.add(u, st["grp"], st["phase"], state)
@@ -660,7 +666,7 @@ def do_place(run, st, row):
             retreat(run, actor, near=u)
         else:
             retreat(run, actor)
-            run.add(u, st["grp"], st["phase"], state)
+            run.add(u, st["grp"], st["phase"], state, T=shifted(run, st))
         go_park(run, actor)
     gmin = min(gaps) if gaps else (None, None)
     dmin = min(dmins) if dmins else (None, None)
@@ -671,6 +677,35 @@ def do_place(run, st, row):
         fs = row.pop("fetches")
         row["fetch"] = "FAIL" if "FAIL" in fs else ("person" if "person" in fs else ("PASS" if "PASS" in fs else "-"))
         row["fetch_why"] = "; ".join(row.pop("fetch_whys", []))[:300]
+
+
+def do_units(run, st, row):
+    """Round 10 (F57): a step whose pieces each go in their own way (keys, path, arm, tool, grasp in st["units"]), placed one after
+    the other as steps of their own (do_place), the rows joined. The beam line: each tube slides along its own axis into the part
+    placed before it and the next cube slides onto its free end along the same axis (a tube's ends sit in the cubes' ports)."""
+    subs = []
+    for u in st["units"]:
+        sub = dict(st, **u)
+        sub.pop("units", None)
+        sub["per_solid"] = False
+        r = {}
+        do_place(run, sub, r)
+        subs.append((u, r))
+        log(f"   {st['id']} {u['keys'][0][:30]}: {r.get('sweep')} {r.get('arm')} {(r.get('why') or '')[:120]}")
+    gaps = [(r["gap"], r.get("gap_with")) for _, r in subs if r.get("gap") is not None]
+    clears = [(r["arm_clear"], r.get("arm_clear_with")) for _, r in subs if r.get("arm_clear") is not None]
+    fetches = [r.get("fetch") for _, r in subs if r.get("fetch")]
+    row.update(sweep="PASS" if all(r.get("sweep") in ("PASS", "-") for _, r in subs) else "FAIL",
+               arm="PASS" if all(r.get("arm") == "PASS" for _, r in subs) else "FAIL",
+               gap=min(gaps)[0] if gaps else None, gap_with=min(gaps)[1] if gaps else None,
+               arm_clear=min(clears)[0] if clears else None, arm_clear_with=min(clears)[1] if clears else None,
+               why="; ".join(f"{u['keys'][0][:28]}: {r['why']}" for u, r in subs if r.get("why"))[:400],
+               docks=sorted({d for _, r in subs for d in (r.get("docks") or [])}), n_units=len(subs),
+               units=[dict(part=u["keys"][0], actor=u.get("actor", st.get("actor")), tool=u.get("tool", st.get("tool")), sweep=r.get("sweep"),
+                           arm=r.get("arm"), why=r.get("why"), fetch=r.get("fetch")) for u, r in subs])
+    if fetches:
+        row["fetch"] = "FAIL" if "FAIL" in fetches else ("person" if "person" in fetches else ("PASS" if "PASS" in fetches else "-"))
+        row["fetch_why"] = "; ".join(r.get("fetch_why") or "" for _, r in subs if r.get("fetch_why"))[:300]
 
 
 def force_check(run, st, actor, path):
@@ -923,14 +958,166 @@ def hold_and_drive(run, st, u, holder):
     lb = next((x.get("long_bit") for x in SQ.steps() if x.get("joint") == st["hold_for"]), None)   # run 10: the joint's bit extension
     sub = dict(id=st["id"] + "h", joint=st["hold_for"], phase=st["phase"], grp=st["grp"], actor=run.other(holder), torque_Nm=tq,
                holder_busy=True, long_bit=lb)
+    sl = st.get("slide")
+    cov = slide_covered(run, st, sl, (lo, hi)) if sl else []
+    run.done_screws.update(cov)             # round 10 (F18): the screws under the part that slides are driven after the slide
     row = {}
     per = do_screws(run, sub, row, near=(lo, hi), actor=run.other(holder))
+    run.done_screws.difference_update(cov)
     run.sub_rows = getattr(run, "sub_rows", [])
     row.update(id=sub["id"], label=f"{st['label'][:60]}: screws of {st['hold_for']} driven while arm {holder} holds it", do="screws",
                joint=st["hold_for"], actor=run.other(holder), holder=holder)
     run.sub_rows.append(row)
     ok = all(r["ok"] for _, r in per) if per else True
-    return dict(ok=ok, why="" if ok else f"held-part screws: {row.get('why', '')[:150]}")
+    res = dict(ok=ok, why="" if ok else f"held-part screws: {row.get('why', '')[:150]}")
+    if cov:
+        r2 = slide_and_drive(run, st, holder, sl, sub, (lo, hi), ok)
+        res = dict(ok=ok and r2["ok"], why="; ".join(w for w in (res["why"], r2["why"]) if w), released=True)
+    return res
+
+
+def carried(run, st, idx):
+    """Round 10 (F26): objects a step carries along with its keys' parts (the blade cartridge's fin and screws, fitted on the
+    bench nest), named apart so that kit_table.py's slot for the step keeps its old members."""
+    return [i for i in run.resolve(st.get("carry", ()), moved=True) if i not in idx and i in run.cl.where]
+
+
+def shifted(run, st):
+    """Round 10 (F26): the machine frame of a step whose part goes onto a group that has moved (st["shift"], machine frame),
+    or None for the phase's own frame."""
+    return run.cl.T_phase(st["phase"]) @ Tm(p=st["shift"]) if st.get("shift") else None
+
+
+def slide_objs(run, sl):
+    """Round 10 (F18): the objects of a slide spec present in the cell (the recoater's carriage group)."""
+    return [i for i in run.resolve(sl["keys"], moved=True) if i in run.cl.where]
+
+
+def slide_covered(run, st, sl, box):
+    """Round 10 (F18): the joint's screws whose heads lie inside the box of the part that slides away: the recoater carriage
+    (x -134 to -72 at its park) stands over rail screw #1 (x -110), so no bit reaches it until the carriage has moved."""
+    idx = run.resolve(sl["keys"], moved=True)
+    if not idx:
+        return []
+
+    def mbox(i):
+        M = run.sc.pose(i, {})
+        v = run.sc.objs[i]["V"] @ M[:3, :3].T + M[:3, 3]
+        return v.min(0), v.max(0)
+    bs = [mbox(i) for i in idx]
+    lo, hi = np.min([b[0] for b in bs], axis=0), np.max([b[1] for b in bs], axis=0)
+    return [i for i in screw_targets(run, st["hold_for"], None, near=box) if np.all(mbox(i)[1] > lo) and np.all(mbox(i)[0] < hi)]
+
+
+def slide_and_drive(run, st, holder, sl, sub, box, held_ok):
+    """Round 10 (F18): once the screws the driver could reach hold the rail, the holder lets go and parks; the carriage group runs
+    free on the rail until the ball screw is in (F21), so an arm with the pin pusher (tooling.pin_pusher: a Ø4.5 x 60 rod) comes
+    down into the 11 mm between the carriage block's -x face and the left liner and pushes the group sl["d"] (machine frame) along
+    the rail (no gripper fits there: open round the 44 mm block, the 2F-85's fingertips meet the left wall, which is why F18's
+    placement ends in a push); then the screws the carriage covered are driven by the driver, or by the other arm."""
+    cl = run.cl
+    objs = slide_objs(run, sl)
+    T = cl.T_phase(st["phase"])
+    d = np.asarray(sl["d"], float)
+    retreat(run, holder, near=run.resolve(st["keys"], moved=True))
+    go_park(run, holder)
+    out = dict(ok=False, why="", slide_mm=round(float(np.linalg.norm(d)), 0))
+    tried = []
+    for n in (holder, run.other(holder)):
+        r = push_slide(run, st, n, objs, T, d, sl)
+        if r["ok"]:
+            out.update(ok=True, by=n)
+            break
+        tried.append(f"arm {n}: {r['why'][:90]}")
+    if not out["ok"]:
+        out["why"] = "slide: " + "; ".join(tried)
+        log(f"   {out['why']}")
+        return out
+    row2 = {}
+    sub2 = dict(sub, id=st["id"] + "s", holder_busy=False)
+    per = do_screws(run, sub2, row2, near=box, actor=sub["actor"])
+    row2.update(id=sub2["id"], label=f"{st['label'][:50]}: screws of {st['hold_for']} the carriage covered, driven after arm {out['by']} "
+                                     f"pushed it {out['slide_mm']:.0f} mm along the rail", do="screws", joint=st["hold_for"], actor=sub["actor"])
+    run.sub_rows.append(row2)
+    ok = all(r["ok"] for _, r in per) if per else True
+    out.update(ok=ok, why="" if ok else f"screws after the slide: {row2.get('why', '')[:150]}")
+    return out
+
+
+def push_slide(run, st, n, objs, T, d, sl, above=80.0):
+    """Round 10 (F18): arm n with the pin pusher: planned from park to `above` mm over the push point, straight down, the push
+    (the carriage group riding on the rod: a checked straight move), straight up, park. Recorded only if every part is clear."""
+    cl = run.cl
+    a = run.arm(n)
+    s_in = arm_state(run, n)
+    P0 = (T @ np.r_[np.asarray(sl["push_at"], float), 1.0])[:3]
+    Tw = frame_zx((0.0, 0.0, -1.0), T[:3, 0], P0)              # rod down, the tool's x along the push
+    dw = T[:3, :3] @ d
+    L = float(np.linalg.norm(dw))
+    names = [run.sc.label(i) for i in objs]
+    touch = frozenset(("tool", nm) for nm in names)
+    body = run.held_body(objs, f"held:{st['id']}:push", {})
+    body.place(T)
+    dest = contacts_at_seat(run, body, exclude=objs)
+    allow_p = frozenset([("held", nm) for nm in dest] + [("tool", nm) for nm in dest]) | touch
+    why = "no dock"
+    for dk in run.docks_for(float(P0[0]))[:2]:
+        run.dock(n, dk)
+        run.set_tool(n, "pinrod")
+        run.q[n] = a.park_q()
+        a.place(run.q[n])
+        down = [Tm(p=(0.0, 0.0, above * (1.0 - s))) @ Tw for s in np.linspace(0.0, 1.0, max(2, int(above / DS) + 1))]
+        fd = run.follow(n, down, 0.0, touch, dist_every=99)
+        if not fd["ok"]:
+            why = f"down to the push: {fd['hit']}"
+            continue
+        run.q[n] = a.park_q()
+        a.place(run.q[n])
+        path, info = run.plan_to(n, fd["qs"][0], 0.0)
+        if path is None:
+            why = f"approach: {info.get('reason')}"
+            continue
+        q_dn = fd["qs"][-1]
+        run.q[n] = q_dn
+        a.place(q_dn)
+        Tc = a.tcp(q_dn)
+        off = inv(Tc) @ T
+        a.hold(body, off)
+        nfr = max(2, int(math.ceil(L / DS)) + 1)
+        fp = run.follow(n, [Tm(p=dw * s) @ Tc for s in np.linspace(0.0, 1.0, nfr)], 0.0, allow_p, exclude=objs, dist_every=99)
+        a.release()
+        if not fp["ok"]:
+            why = f"push: {fp['hit']} at {(fp['at'] or 0) * L / (nfr - 1):.0f} mm"
+            continue
+        q_end = fp["qs"][-1]
+        K.Cell.put(cl, objs, T @ Tm(p=d))       # recorded below, in order
+        run.q[n] = q_end
+        a.place(q_end)
+        Te = a.tcp(q_end)
+        fu = run.follow(n, [Tm(p=(0.0, 0.0, above * s)) @ Te for s in np.linspace(0.0, 1.0, max(2, int(above / DS) + 1))], 0.0, touch,
+                        dist_every=99)
+        if not fu["ok"]:
+            K.Cell.put(cl, objs, T)
+            why = f"up from the push: {fu['hit']}"
+            continue
+        if CM.on():
+            R = RECM.REC
+            CM.goto(run, n, dk)
+            R.tool(n, "pinrod", CM.tool_spec(run, n))
+            R.move(n, path, "plan", close=0.0)
+            R.move(n, fd["qs"], "cart", close=0.0)
+            R.attach(n, objs, off, {}, name=st["id"] + ":push")
+            R.move(n, fp["qs"], "cart", close=0.0)
+            R.detach(n, T @ Tm(p=d))
+            R.put(objs, T @ Tm(p=d), {}, why="pushed along the rail")
+            R.move(n, fu["qs"], "cart", close=0.0)
+        run.q[n] = fu["qs"][-1]
+        a.place(run.q[n])
+        go_park(run, n)
+        log(f"   arm {n} pushed {len(objs)} objects {L:.0f} mm along the rail (dock {dk})")
+        return dict(ok=True, why="")
+    arm_restore(run, n, s_in)
+    return dict(ok=False, why=why)
 
 
 def hold_first(run, st, u, holder):
@@ -1677,7 +1864,7 @@ def main(argv):
         CUR_STEP[0] = st["id"]
         CM.begin(run, st)
         try:
-            {"place": do_place, "screws": do_screws, "seal": do_seal, "flip": do_flip, "dual": do_dual, "note": do_note,
+            {"place": do_place, "bench_place": do_place, "screws": do_screws, "seal": do_seal, "flip": do_flip, "dual": do_dual, "note": do_note,
              "rotate": do_rotate}[st["do"]](run, st, row)
         except Exception as e:  # noqa: BLE001
             row.update(arm="ERROR", why=f"{type(e).__name__}: {e}"[:300])
@@ -1706,13 +1893,14 @@ def ff_step(run, st):
     do_rotate leave behind (run.add / merge / take, the jaws), whatever the arms did."""
     sc, cl = run.sc, run.cl
     do = st["do"]
-    if do == "place":
+    if do in ("place", "bench_place"):
         idx = run.resolve(st["keys"], st.get("exclude", ()), st.get("moved", False))
         if not idx:
             return
+        idx += carried(run, st, idx)
         if st.get("merge"):
             run.merge(st["merge"], st["grp"])
-        run.add(idx, st["grp"], st["phase"], dict(st.get("state", {})))
+        run.add(idx, st["grp"], st["phase"], dict(st.get("state", {})), T=shifted(run, st))
         if st.get("hold_for"):
             units = [[i] for i in idx] if (st.get("per_solid") or st.get("per_part")) else [idx]
             for u in units:
@@ -1723,6 +1911,8 @@ def ff_step(run, st):
                 for i in screw_targets(run, st["hold_for"], None, near=(np.minimum(lo, hi), np.maximum(lo, hi))):
                     run.add([i], st["grp"], st["phase"])
                     run.done_screws.add(i)
+        if st.get("slide"):                 # round 10 (F18): the carriage group where the holder slid it
+            K.Cell.put(run.cl, slide_objs(run, st["slide"]), run.cl.T_phase(st["phase"]) @ Tm(p=st["slide"]["d"]))
     elif do == "screws":
         for i in screw_targets(run, st["joint"], st.get("pn"), None):
             run.add([i], st["grp"], st["phase"])
