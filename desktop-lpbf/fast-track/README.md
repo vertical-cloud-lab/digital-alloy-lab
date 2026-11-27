@@ -325,7 +325,8 @@ well block 20 K below the plate, or 2.1–4.2 h with the block at setpoint ([`co
     the cross-flow. The O₂ the real box reaches is then set by its leaks, not by the purge time;
   - **the cross-flow works as drawn:** the jet crosses the build area at 2.6–2.7 m/s and carries 96–99 % of the fume
     released 0.5–3 mm up into the collector; its shear on the bed (0.03–0.05 Pa) is at or under the lowest pick-up
-    threshold for 63 µm AlSi10Mg (0.053 Pa). Fume that rises above the jet is only half caught.
+    threshold for 63 µm AlSi10Mg (0.053 Pa). Fume that rises above the jet is only half caught. In FT-1V's cube the
+    same jet gives 2.49 m/s over the build area and 95 % capture (k-ω SST, 233k cells).
 - **Box gas volume:** ~23.5 L (25.2 L less 1.7 L of internals, measured in the CAD model; FT-1V's cube: ~22 L, which it
   pump-purges below 100 ppm in about 7 minutes with ~44 L of argon, [`cad/out/checks.md`](cad/out/checks.md)).
 - **The nearest precedent got there by purging alone.** Heriot-Watt's 350 × 230 × 220 mm Perspex box reached < 0.5 % O₂;
