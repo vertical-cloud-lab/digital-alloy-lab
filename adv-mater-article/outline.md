@@ -63,8 +63,10 @@ acquisition, not because of a fixed rule. If the live campaign doesn't get there
 name only the steps that ran (version B).
 
 **Second novelty, smaller:** the first fixed-setting repeatability study of ultrasonic atomization for an
-Al alloy (byu-vcl's October literature check found one replicate study for any alloy and none for Al).
-Re-check this before submission; it is the claim most likely to be overtaken.
+Al alloy (byu-vcl's October literature check found one replicate study for any alloy, Hinrichs 2021, and none
+for Al). Yankin 2025 (AlSi12) looks like a counterexample but varies the settings between runs; its D50 spread
+is across settings (checked 2026-11-27). Re-check before submission; this is the claim most likely to be
+overtaken.
 
 ## 4. Two papers from one campaign: what goes where
 

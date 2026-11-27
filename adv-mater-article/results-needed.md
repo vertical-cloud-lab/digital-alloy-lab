@@ -34,7 +34,7 @@ Suppliers:
 | A3 | Every run's settings and outcome, failed runs included, for the process window | campaigns 1 and 2 | **partial**: 10 runs Oct 2–Nov 13 (PR #286); no Al powder weighed; HMI export never set up (settings read from video) | Gage | ongoing |
 | A4 | Runs varying superheat and amplitude, only if Block A shows they matter (#111) | campaign 1 flex slots or 2027 | **none** | Sterling decides; Gage runs | Jun 2027 |
 | A5 | Powder O/N on sealed 5 g samples by inert-gas fusion | outside lab | **none**; samples not yet kept | Sterling (vendor, funding); Gage keeps samples | Jun 2027 |
-| A6 | Re-check that no fixed-setting repeatability study of ultrasonic atomization of Al has appeared (Oct 2026 check found one replicate study for any alloy: Hinrichs 2021) | literature | done Oct 7, 2026 | a Claude run | Oct 2027 and Jan 2028 |
+| A6 | Re-check that no fixed-setting repeatability study of ultrasonic atomization of Al has appeared (Oct 2026 check found one replicate study for any alloy: Hinrichs 2021) | literature | done Oct 7, 2026. Re-checked one candidate on Nov 27: Yankin 2025 (*Sci. Rep.* 15, 20524; AlSi12, arc-melting atomizer) is a parameter study; its D50 of 52.3–54.7 µm spans different settings, not replicate runs, so the runs plan's "Yankin D50 ±2 %" is not a repeatability figure | a Claude run | Oct 2027 and Jan 2028 |
 
 ## §2.3 Composition fidelity (Fig. 3)
 
