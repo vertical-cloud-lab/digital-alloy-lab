@@ -60,11 +60,12 @@ The design changed three times during the analyses, and each change is recorded 
 | CAD against vendor STEP models | McMaster's KF-50 stubs and 139.7 mm nipple are within 1 % by volume. The A&N stub and Duniway nipple in the BOM had no STEP model to check | `cad/vendor_check.py`, [`vendor_check.md`](cad/out/vendor_check.md) |
 | Edison final design check | agrees with the ledge-free design and the alarms. Asked for: no sharp welded floor corner (done); a hydro proof instead of a 1.5× pneumatic one (in the procedure); rate-of-rise targets of about 0.04 / 0.004 mbar/min; low heat input with chills; a safety lanyard; logging the thermocouples, ideally with rate-of-rise logic and a latched trip; and the vendor's written rating for the KF joint with the over-pressure ring | `edison/literature_high_final_design_check.md` |
 
-![build, install, a bad run and removal (shows the earlier welded-shut version; see note below)](cad/img/build_b.gif)
+![order, machine, weld both parts, test, fit out the pot, install, a bad run, remove the pot](cad/img/build_b.gif)
 
-The animation was rendered before the split. It shows B welded shut in one piece, so its install and removal
-chapters move the whole cup. With the split, the upper part goes on once that way, and only the pot comes off
-each run (`procedure.md` §6, §8).
+The animation runs from the catalogue parts (with running cost) through machining, welding both parts in the
+fixture, the hydro test and fitting out the pot. The upper part goes on the cone once with the KF clamp off; the
+pot then goes on with its tri-clamp. It ends with a bad run coloured from the FEA, and the pot coming off while
+the upper part stays.
 
 ## Build it
 
@@ -110,7 +111,6 @@ runs and small copper charges only, always with the shields.
 - The centring-ring recess depth. McMaster's approximate STEP says 2.6 mm, but that would leave too thin a face
   gap for the 3.81 mm over-pressure ring. 2.0 mm (at most 2.09 mm by the ring) is used.
 - Option C assumes the stock valve can be unbolted from its reducer and top plate. Nobody has checked.
-- The build animation predates the split (see above).
 
 ## Files
 
