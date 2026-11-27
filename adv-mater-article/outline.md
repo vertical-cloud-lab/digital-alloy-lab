@@ -38,7 +38,8 @@ screen-then-test, and the reason is that the cheap screen is wrong about the all
    (iii) The live campaign stopped most candidates early and found [alloy], which lies beyond the
    strength–burden front of commercial scandium-free alloys (EOS Al5X1, Höganäs Al-HS1) printed and tested
    here the same way, while those alloys came within [x] % of their data sheets. (iv) A twin calibrated on the
-   campaigns shows when this beats screening (wrong screen) and when it ties (right screen).
+   campaigns shows when this beats screening (wrong screen) and that screening wins when the screen is right, as
+   both synthetic benchmarks already found (§6, decision M8).
 7. **Why it matters beyond Al.** Any multi-step materials workflow with steps of very different cost
    can be run this way, but only if every step is cheap and fast enough to call on demand. Here, that
    meant making powder and printing in-house.
@@ -66,7 +67,10 @@ an integrated alloy composition–powder production–LPBF–microstructure–me
 which the optimizer chose among feasible intermediate and downstream evaluations under measured step
 costs." It is only true if Fig. 5a shows candidates stopped at different steps because of the
 acquisition, not because of a fixed rule. If the live campaign doesn't get there, say "we propose" and
-name only the steps that ran (version B).
+name only the steps that ran (version B). **It also depends on decision M7.** With pKGFN (option A) the optimizer
+can stop a candidate after any step, as the sentence says. With BOFN with powder reuse (option B) it never stops a
+candidate after CALPHAD or atomization; its choice is between new powder and a reprint of an existing lot, and the
+sentence would have to say that (`campaign2-preregistration.md`, M7).
 
 **Second novelty, smaller:** the first fixed-setting repeatability study of ultrasonic atomization for an
 Al alloy (byu-vcl's October literature check found one replicate study for any alloy, Hinrichs 2021, and none
@@ -94,7 +98,7 @@ synthetic benchmarks.
 | Campaign 2 (2027), optimizer-driven, desktop LPBF in the loop | — | **Owns**: the headline alloy for version A |
 | Mineral-burden metric | Defines it (B = Σ wᵢ·NIRᵢ, USGS MCS 2026) | Uses the same definition and cites it |
 | Dosing accuracy and the doser itself | — | Cites the **powder-doser papers** (drafts for *Digital Discovery* and *Additive Manufacturing* in vertical-cloud-lab/powder-doser); this article reports only what dosing does to charge composition |
-| Synthetic benchmarks of the optimizer (`bofn-prelim`/`bofn-paper`: pKGFN, KGFN, screening on the hand-built network) | — | Cites the **BOFN methods paper** (#121, a third draft started on 2026-11-27 on `claude/issue-121-20261127-1900`), which owns them. This article's Fig. 6 comes from the twin fitted to lab records, not from the synthetic network |
+| Synthetic benchmarks of the optimizer (`bofn-paper`: the 2 × 2 of pKGFN, KGFN, BOFN with and without powder reuse, plus screening, standard BO and random on the hand-built network) | — | **Reports the short version** (Sterling, 2026-11-27: BOFN becomes a MethodsX companion, or is folded in here; the short version is needed either way). It is in the Experimental Section ("Synthetic benchmark of the optimizer" and Statistical Analysis), two sentences in §2.6, and SI S12 and the synthetic part of S14. Every number is a `\stat` macro from `benchmarks/bofn-paper/paper-stats/numbers.tex`, the file the MethodsX draft reads (issue #121, `claude/issue-121-20261127-1913`). If the companion is published first, one switch in `preamble.tex` (`\bofncompanion`) cites it and shrinks the SI part; nothing else moves. Fig. 6 itself still comes from the twin fitted to lab records |
 
 Consequence: **this article needs its own materials result**, from a second campaign in 2027. Without it,
 the article is a methods-and-platform paper (version B), which is a harder sell in *Advanced Materials*
@@ -172,7 +176,7 @@ comparables run 3.6–6.6k words of main text, median ~4.5k.
 | 2.3 | Composition fidelity | Dosed charges land within [x] wt%; Si in powder follows the charge; Mg loss [y]; EDS vs ICP [z] | 450 | dosing logs, Block B, ICP (C1–C4) |
 | 2.4 | Printing in-house | Desktop LPBF ranks candidates like an industrial machine, with offset [d] | 550 | desktop + Utah builds on shared powders (P1–P5) |
 | 2.5 | The optimizer chooses the step | Campaign 2: [p]% stopped before printing; finds [alloy] beyond the in-house front of Al5X1 and Al-HS1, which match their data sheets to [x] %; outside checks agree | 900 | campaign 2 (B1–B7, V1–V2) |
-| 2.6 | When it pays off | Twin reproduces campaign spend within [x]%; [k]× with a wrong screen, ~1× with a right one | 550 | twin, clocked benchmark (T1–T4) |
+| 2.6 | When it pays off | Twin predicts campaign 2's spend within [x]%; [k]× with a wrong screen, and **screen-then-test wins with a right one** (M8: the synthetic benchmark found 3.8× with a wrong screen, 95 % CI 2.4–5.9 for BOFN with powder reuse and 1.9–6.3 for pKGFN, while with a right screen neither reached screen-then-test's $100k result; bofn-clocked agrees) | 550 | synthetic benchmark (SI S14, now); twin, clocked benchmark (T1–T4) |
 | 2.7 | Limits | Gain depends on cost ratios and screen error; desktop coupons rank, don't qualify | 250 | T3, P4 |
 | 3 | Conclusion | | 150 | |
 | 4 | Experimental Section | Methods for every step, each citing its SOP and script | 1800 | SOPs |
@@ -192,6 +196,7 @@ alloys score worse than Scalmalloy, so if the finalist is Al–Mn–Cr–Zr, say
 |---|---|---|
 | Desktop LPBF not printing Al by mid-2027 | Loop cycle time is set by Utah trips; claim (ii) and the cost story weaken | Campaign 2 uses Utah's MIDI with reduced-build coupons; claim (ii) becomes "desktop for tracks only" |
 | Optimizer never stops candidates early (screen happens to be right) | The novelty sentence fails | Pre-register the condition; report it as the "right screen" arm of Fig. 6, and fall back to version B |
+| The live acquisition (M7) fails as it did on the synthetic benchmark: pKGFN had the lowest mean of the model-based policies when the screen was right (59 % of the optimum at $100k, tied with KGFN, against 85 % for screen-then-test); BOFN with powder reuse is robust across κ but makes no stops before printing | Option A risks a weak campaign; option B narrows the novelty sentence to new-or-reprint choices | Both options and their evidence are in the pre-registration; test the any-alloy pKGFN and both options on the twin fitted to campaign 1 before June 2027 |
 | Atomizer repeatability fails the bar | Claim (i) becomes "here is the spread", weaker | The bar was set in advance; report the spread and what drives it (plate wear, landing point) |
 | EDS can't resolve Si to better than 0.2–0.5 wt% | Composition fidelity can't be shown for Si alloys | ICP-OES on sealed samples; design space without Si (as raised at the Nov 12 kickoff) |
 | Campaign paper scoops the alloy | Version A needs a different/better alloy | Campaign 2 starts from campaign 1's data and aims past its best |
@@ -214,7 +219,7 @@ not as a verdict on the paper. Two of them come from the lab's own data.
 | **The burden measure lets any low-Mg alloy win.** B = Σ wᵢ·NIRᵢ counts Mg like Sc. Scalmalloy's B is mostly its 4.7 wt % Mg, so a low-Mg alloy beats it without any design effort unless it carries a lot of Mn, Cr or Si instead; Al5X1 does (3.1–4.2 against 4.7–6.0 wt %) | "Lower B than Scalmalloy" is no longer the headline. It stays as one condition of T (paired, on measured compositions), as in the campaign paper. The headline is expanding the Sc-free front, where Al5X1 and Al-HS1, measured here, have to be beaten. B is still frozen with the campaign paper before its screen ranks anything (D9). It is reported by element, and the SI redraws the front under the alternatives (cost of the critical additions, Sc content). Still open: whether a metric that weighs Sc's small, export-controlled market more heavily should replace B_NIR in both papers |
 | **The figures describe instruments, and the alloy gets half a figure** | Fig. 5c now carries the comparison (the finalist against the in-house front, with parity lines to the data sheets) and Fig. 5d the finalist. Still to decide for version A: whether the finalist needs a figure of its own (aging curves, EBSD) |
 | **The evidence that choosing the step helps is simulated** | Campaign 2's decision log, labelled stops and stop audit (Fig. 5a–b); the twin fitted on campaign 1 must predict campaign 2 (next two rows) |
-| The twin comparison is built in: κ = 1 is a screen ignoring a feature the CALPHAD node computes; the twin is validated in sample | Baseline is now the **best-form screen** (all CALPHAD outputs, trained on campaign 1, tuned cut-off); the **headline comparison is pKGFN vs full-chain network BO**; the twin is **fitted on campaign 1 and must predict campaign 2 out of sample**; truths drawn from the fitted posterior; measured κ primary; ±50 % cost robustness (pre-registration) |
+| The twin comparison is built in: κ = 1 is a screen ignoring a feature the CALPHAD node computes; the twin is validated in sample | Baseline is now the **best-form screen** (all CALPHAD outputs, trained on campaign 1, tuned cut-off); the **headline comparison is the step-choosing policy against its own full-chain counterpart** (pKGFN against KGFN, or BOFN with powder reuse against BOFN; which one is decision M7); the twin is **fitted on campaign 1 and must predict campaign 2 out of sample**; truths drawn from the fitted posterior; measured κ primary; ±50 % cost robustness (pre-registration) |
 | "Stopped p % before printing" doesn't show the stops were right; failures will masquerade as decisions | Stops labelled failure / constraint / acquisition; a **random 25 % of acquisition stops pushed one step further** (false-stop rate); hardware failures modelled as a per-step process; design space cut to 3–5 elements (Fig. 5a, B7) |
 | Composition fidelity is tested on Si, with a method (5 kV EDS) that can't see Mn, Cr, Fe, Ni, Cu, Zn, Ce or Er | **ICP-OES on every campaign powder by sieve fraction**, a fidelity check on Zr, Sc/Er and Mn, sectioned-particle maps before any "within a particle" claim (§2.3, C5) |
 | Overclaims in the introduction and abstract | Fixed: "no other process can make", "a fixed order" (now fixed stage-gates), the universal negative about tested methods (now narrowed, with multi-information-source, freeze-thaw and Hyperband cited), the twin claim in the abstract, "any composition", Scheil wording, the best-so-far tautology |

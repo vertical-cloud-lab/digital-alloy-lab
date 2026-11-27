@@ -5,8 +5,12 @@ Printable Aluminum Alloys* ("supply-secure" depends on D9)
 
 **Status on 2026-11-27:**
 - **What exists:** a planning draft. The manuscript has a drafted introduction, a claim for each Results subsection, an
-  Experimental Section skeleton filled from the run records, an SI skeleton, 75 references (68 checked against Crossref or arXiv, 7 vendor data sheets checked by hand),
+  Experimental Section skeleton filled from the run records, an SI skeleton numbered as in the figure plan, 76 references (69 checked against Crossref or arXiv, 7 vendor data sheets checked by hand),
   and four draft panels drawn from data that already exist (Fig. 1a, Fig. 5c's frame, Fig. 6b's layout, Figure S1).
+- **The optimizer's synthetic benchmark is in** (the short version of the BOFN methods work, issue #121): a paragraph
+  and the statistics in the Experimental Section, two sentences in §2.6, and SI S12 and the synthetic part of S14,
+  with two figures and the 2 × 2 table. Every number is a `\stat` macro read from
+  `../benchmarks/bofn-paper/paper-stats/numbers.tex`, the file the MethodsX draft reads too.
 - **What doesn't:** none of the article's own results exist yet.
 - **Target:** an *Advanced Materials* collection due early 2028, as a Research Article (typically 3,000–8,000 words in all,
   3–8 display items). The collection itself is still unidentified: no public call matches, so it is presumably by
@@ -33,11 +37,14 @@ updated with what has happened since.
 | [`references.bib`](references.bib), [`reference-check.md`](reference-check.md) | Bibliography built from Crossref/arXiv records, and the check of every entry |
 | `figures/` | `fig1a-draft-network-photos` (the loop with lab photographs, from #284), `fig1-loop.tikz` (schematic alternative), `fig5c-draft-benchmarks` (yield strength against mineral burden), `fig6-draft-synthetic` (layout from the synthetic benchmark), `figS-atomizer-runs` (every run so far) |
 | `data/` | Inputs of the draft figures, pinned to their source commits |
+| `../benchmarks/bofn-paper/paper-stats/`, `../bofn-methods-article/figures/fig-*-am.*` | The optimizer benchmark's numbers (`numbers.tex`), curves, 2 × 2 table and two SI figures, copied byte for byte from issue #121's branch at `18f5265` (`make bofn-check`) |
 | `tools/` | `build_bib.py`, `check_refs.py`, `make_figures.py`, `refs.tsv`; `atomizer_analysis.py` (Fig. 2, Fig. 3b and the repeatability check from the per-run YAML records: `make atomizer RUNS='<glob>'`, or `--selftest`); `mineral_burden_check.py` (burden ranges for D9) |
 
 **Build:** `make draft` builds the manuscript and SI. `make clean-pdf` builds the same text with the markers hidden.
-`make refs` rebuilds and re-checks the bibliography, and `make figs` redraws the draft panels. You need TeX Live
-with biblatex-chem, biber and latexmk, plus Python with requests and matplotlib.
+`make refs` rebuilds and re-checks the bibliography, and `make figs` redraws the draft panels. `make bofn-sync`
+refreshes the optimizer benchmark's numbers, curves and two SI figures from issue #121's branch, and `make bofn-check`
+confirms they still match it. Never edit those files here. You need TeX Live with biblatex-chem, biber and latexmk,
+plus Python with requests and matplotlib.
 
 ## Where it stands
 
@@ -50,7 +57,9 @@ with biblatex-chem, biber and latexmk, plus Python with requests and matplotlib.
      (audit, PR #293).
 2. **There are several papers.**
    - The campaign paper (#277, due Feb 28, 2027) takes campaign 1's alloys.
-   - The BOFN methods paper (#121, drafting started today) takes the synthetic benchmarks.
+   - The BOFN methods work (#121) is finished. Its short version is now part of this article. It may also go to
+     MethodsX as a companion (M2); then one switch in `preamble.tex` (`\bofncompanion`) cites it and shrinks the SI
+     part, and nothing else moves.
    - The powder-doser papers (in vertical-cloud-lab/powder-doser) take dosing accuracy.
    - This article takes atomization as a method, the cost-aware optimizer and step costs, the desktop LPBF, the twin,
      and a second campaign in 2027.
@@ -58,10 +67,15 @@ with biblatex-chem, biber and latexmk, plus Python with requests and matplotlib.
 3. **The novelty claim has a clear test.** The optimizer must be seen choosing among costed steps on a physical alloy
    workflow (Fig. 5a). Ultrasonic atomization of a custom Al alloy, and the composition-to-property route, are
    already in *Advanced Materials* (Taheri-Mousavi et al., 2026).
-4. **The synthetic evidence supports a narrower claim than "10×".**
-   - In `bofn-prelim`, cost-aware network BO beats screen-then-test only when the screen is wrong: 3.75× less spend
-     (90 % CI 2.0–5.7) at κ = 1. When the screen is right (κ = 0), it loses to screening.
-   - It doesn't beat full-chain network BO or standard BO at $100k.
+4. **The synthetic evidence supports a narrower claim than "10×"** (the BOFN paper set: 20 matched seeds at κ = 1,
+   16 at κ = 0.5 and 0; 95 % matched-seed bootstrap intervals; SI S14).
+   - Choosing the step beats screen-then-test only when the screen is wrong. At κ = 1, BOFN with powder reuse reached
+     screen-then-test's $100k result with 3.8× less spend (95 % CI 2.4–5.9), and pKGFN did too (1.9–6.3).
+   - When the screen is right (κ = 0), screen-then-test wins: no network policy reached its $100k result, and its mean
+     was 85 % of the optimum against 77 % for BOFN with powder reuse and 59 % for pKGFN. §2.6 and the outline now
+     say so (decision M8); they used to expect a tie.
+   - Against running every candidate through the whole chain, choosing the step bought an early lead at most (16.5
+     points at $25k for pKGFN over KGFN, 95 % CI 6.1–28.3), not a better final alloy.
    - The clocked benchmark (PR #297) found the automated lab 2.5–2.9× faster at 2.2–2.5× the money.
    - The article's claim is therefore conditional: the gain appears when the screen is wrong, and the twin maps
      where that happens.
@@ -99,6 +113,9 @@ with biblatex-chem, biber and latexmk, plus Python with requests and matplotlib.
 | D9 | The mineral-burden metric, frozen together with the campaign paper before its screen ranks anything: its proposed B_NIR = Σ wᵢ·NIRᵢ with MCS 2026 inputs, or an alternative | **Issue to fix: B_NIR counts Mg like Sc.** Scalmalloy's B (4.7–6.0 wt %) is mostly its 4.7 wt % Mg, so a lower-Mg alloy beats it unless it carries a lot of Mn, Cr or Si instead; Al5X1 does (3.1–4.2). Seed S1 (Al–4.8Mn–0.9Cr–1.1Zr–1.2Mg, the FLAIME focus family) scores *higher* than Scalmalloy (6.6–7.3), because Mn is 100 % imported and used at ~5 wt %, and Al-HS1 overlaps it (5.4–5.6). Zr is <25 % imported, so Zr-refined Al–Mg and Al–Fe alloys score lower (`tools/mineral_burden_check.py`, now on the campaign paper's inputs). Making the Sc-free front the headline moves the claim off Scalmalloy, but "below Scalmalloy" stays as a condition in both papers, and the Mg-against-Mn weighting still ranks the baselines. Also, the FLAIME abstract's "100 % of zirconium mineral concentrates" doesn't match MCS 2025 or 2026 (<25 %) |
 | D10 | Freeze the design space: Si in or out (EDS limit raised at the kickoff), and order Zr feedstock (5 of the 9 proposed seeds need it; not on the order) | The seeds and the screen depend on it |
 | D11 | Where data and code are deposited (e.g. Zenodo, with DOIs reserved only at submission) | The Data Availability Statement |
+| **M7** | **The live campaign's acquisition function** (from issue #121): pKGFN (the partial-evaluation knowledge gradient per cost) or BOFN with powder reuse (network EI per cost, new design or reprint) | Both are written out with their evidence in [`campaign2-preregistration.md`](campaign2-preregistration.md); this folder doesn't pick. pKGFN trailed when the screen was right; BOFN with powder reuse is robust across κ but never stops a candidate before printing, which narrows the novelty sentence and Fig. 5a. Decide before the pre-registration is frozen (June 2027) |
+| M2 | MethodsX companion for the BOFN work, or folded in here only (issue #121) | Both work now: the short version is in, and `\bofncompanion` in `preamble.tex` cites a companion in one place and shrinks the SI part. Disclose the companion in the cover letter if it goes ahead |
+| M8 | **Decided (Sterling, Nov 27):** with a right screen, screen-then-test wins; 95 % intervals throughout | §2.6, abstract, limits, conclusion, outline §2 and §6, the pre-registration (H2 and its expectation) |
 | D12 | CLAUDE.md bars naming staff of partner companies "or at national labs". This folder withholds the author lists of cited papers by AMAZEMET and Thermo-Calc staff, but lists national-lab authors of published papers as ordinary citations. OK? | The bibliography is in a public repo |
 
 ## What blocks submission, and who has to do it
@@ -114,7 +131,7 @@ with biblatex-chem, biber and latexmk, plus Python with requests and matplotlib.
 | Desktop LPBF built, commissioned and printing dense Al cubes | **Carl**, after Sterling's D7 | May 2027 for version A | |
 | Utah MIDI sessions on shared powders (reference builds) | **Carl** | Sep 2027 | Find out whether Utah has the Ø55 mm kit (~30 g a build, against ~440 g) |
 | Industry baselines (B6, B8): buy Al5X1 (and Al-HS1 if the budget allows); print, age and tensile-test them with the candidates; ICP of each lot; parity check against the data sheets | **Gage** (quote requests, week of Nov 30), **Sterling** (PO by Dec 11, D0a), **Carl** (Utah builds, tensile), as planned in the campaign paper's run (#277) | first results late Jan to mid-Feb 2027 (campaign paper); reprinted in every campaign 2 session (Jul–Oct 2027) | A baseline below the parity threshold is explained before campaign 2's first decision; machined bars separate surface from process |
-| Live optimizer: costs, failure handling, seeding, a non-flat acquisition, pre-registration | **Xavier, Sterling** (with Claude runs) | Jun 2027 | |
+| Live optimizer: costs, failure handling, seeding, the acquisition (**M7**, Sterling), pre-registration | **Xavier, Sterling** (with Claude runs) | Jun 2027 | Before M7: the any-alloy pKGFN at κ = 1, and both options on the twin fitted to campaign 1 (pre-registration, "What would narrow the choice") |
 | Mineral burden for every alloy (B4) | **Xavier** or a Claude run | Mar 2027 | |
 | Campaign 2 (~25–35 atomizer runs; prints; hardness, density; tensile on finalists) | **whole team** (new experiments) | Jul–Oct 2027 | |
 | Twin refit to lab records; counterfactual benchmarks; validation against campaign 2 | **Sterling** (with Claude runs) | Apr 2027, then Dec 2027 | |

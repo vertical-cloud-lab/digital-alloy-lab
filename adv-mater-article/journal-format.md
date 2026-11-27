@@ -60,7 +60,7 @@ length and deadline. Please add them to the README when you have them.
 | CRediT | Not required by [A] or [B]; only 2 of the 8 comparables give author contributions, as free text | [A], [C] | Optional; kept as a placeholder |
 | Senior author | "the senior scientist… should hold at minimum a permanent staff position" | [A] | PI is faculty |
 | Language and units | American English, SI units | [A] | Yes |
-| Cover letter | Disclose manuscripts "submitted, soon to be submitted, or in press at other journals that have a bearing" | [A] | **The campaign paper (#277), the BOFN methods paper (#121) and the powder-doser papers must be disclosed**; the skeleton covers this |
+| Cover letter | Disclose manuscripts "submitted, soon to be submitted, or in press at other journals that have a bearing" | [A] | **The campaign paper (#277), the BOFN methods companion (#121, if it goes to MethodsX; decision M2) and the powder-doser papers must be disclosed**; the skeleton covers this |
 | Reviewers | Single-anonymous, at least two reviewers, partly chosen from the authors' suggestions; in-house professional editors | [A] | Suggest 3–5 with no conflicts |
 | Preprint | Allowed on a non-profit server (arXiv, ChemRxiv); only the original submitted version may be posted | [A], [C] | Don't post until submission (this run posted nothing) |
 | Open access | Hybrid. APC USD 6,250 / GBP 4,720 / EUR 5,450 for OA (CC BY, CC BY-NC or CC BY-NC-ND) | [C] | Decide with funding (Manusights says $6,470, which conflicts) |

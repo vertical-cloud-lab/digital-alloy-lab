@@ -2,7 +2,7 @@
 
 *Draft of 2026-11-27. One row per result. "Status" is what exists today, from the run table (PR #286), the
 campaign threads (#256, #277), the printing and twin threads (#260, #276) and the optimizer benchmarks
-(`bofn-prelim`, PR #297). "Owner" is the person or project that has to produce it. People are named by
+(the BOFN paper set of issue #121, `bofn-prelim`, PR #297). "Owner" is the person or project that has to produce it. People are named by
 first name as in the threads; the author list itself is decision D4 in the [README](README.md).*
 
 Suppliers:
@@ -62,7 +62,7 @@ Suppliers:
 
 | ID | Result | Supplied by | Status (Nov 27) | Owner | Due |
 |---|---|---|---|---|---|
-| B1 | The optimizer running live on the real nodes, with measured costs, failure handling (#274), seeding (#275), and the pre-registered baselines, targets and stopping rule | optimizer code | **partial**: synthetic benchmarks only. Open problems: pKGFN's knowledge gradient is zero for most candidates on 64–71 % of decisions (PR #297) and for 73 % of tensile tests at κ = 0; the GP-network port fails on BoTorch 0.18.1 (#274); multi-output nodes (#91, #104) | Xavier, Sterling (with Claude runs) | pre-register by **Jun 2027** |
+| B1 | The optimizer running live on the real nodes, with measured costs, failure handling (#274), seeding (#275), and the pre-registered baselines, targets and stopping rule | optimizer code | **partial**: synthetic benchmarks only. **The acquisition is decision M7** (pKGFN, or BOFN with powder reuse; both written out with their evidence in [`campaign2-preregistration.md`](campaign2-preregistration.md)). On the paper set pKGFN had the lowest $100k mean of the model-based policies when the screen was right (59 %, against 77 % for BOFN with powder reuse), and BOFN with powder reuse never stops a candidate before printing. Other open problems: pKGFN's knowledge gradient is zero for most candidates on 64–71 % of decisions (PR #297) and for 73 % of tensile tests at κ = 0; the GP-network port fails on BoTorch 0.18.1 (#274); multi-output nodes (#91, #104) | Xavier, Sterling (with Claude runs) | pre-register by **Jun 2027** |
 | B2 | The decision log: every acquisition, with its value, cost and the step chosen | campaign 2 | **none** | Xavier | Oct 2027 |
 | B3 | Campaign 2 itself: ~12 weeks, ~25–35 atomizer runs, desktop printing, hardness and density on all, tensile on finalists | campaign 2 | **not planned yet** | whole team | Jul–Oct 2027 |
 | B4 | Mineral burden B for every alloy, including each baseline lot's ICP composition, with the campaign paper's definition (proposed: B_NIR = Σ wᵢ·NIRᵢ, USGS MCS 2026) and the alternatives for the SI | script in the campaign paper's folder | **nominal values computed** for the baselines and seeds (`tools/mineral_burden_check.py`, on the campaign paper's inputs); the metric isn't frozen (D9) | Xavier or a Claude run | Mar 2027 |
@@ -76,8 +76,8 @@ Suppliers:
 | ID | Result | Supplied by | Status (Nov 27) | Owner | Due |
 |---|---|---|---|---|---|
 | T1 | The twin refit to lab records (failure rate, runs per week, usable powder, tensile scatter, AlSi10Mg yield) and extended with the desktop LPBF | twin | **partial and off**: no simulator fitted to a lab measurement; round-2 audit (PR #293) lists the gaps in figure-plan.md | Sterling (with Claude runs) | Apr 2027 (campaign 1 data); Nov 2027 (campaign 2) |
-| T2 | Counterfactual campaigns: ≥ 20 seeds per policy and condition, matched-seed bootstrap CIs, baselines fixed in advance | twin | **partial (synthetic)**: bofn-prelim and bofn-clocked | Sterling (with Claude runs) | Dec 2027 |
-| T3 | Sensitivity of the gain to screen error κ and to the step-cost ratios | twin | **partial (synthetic)** | same | Dec 2027 |
+| T2 | Counterfactual campaigns: ≥ 20 seeds per policy and condition, 95 % matched-seed bootstrap CIs, baselines fixed in advance | twin | **partial (synthetic)**: the BOFN paper set (in SI S14 and §2.6 now: 3.8× with a wrong screen, screen-then-test ahead with a right one) and bofn-clocked; neither calibrated | Sterling (with Claude runs) | Dec 2027 |
+| T3 | Sensitivity of the gain to screen error κ and to the step-cost ratios | twin | **partial (synthetic)**: κ = 1, 0.5 and 0 in the paper set; no cost-ratio sweep | same | Dec 2027 |
 | T4 | Validation: the twin, given campaign 2's decisions, reproduces its spend and timeline within a stated tolerance | twin + campaign 2 | **none** | same | Dec 2027 |
 
 ## Verification (§2.5, Experimental Section)
