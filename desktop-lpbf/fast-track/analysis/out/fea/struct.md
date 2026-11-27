@@ -89,6 +89,7 @@ mass on the flange face under the head's footprint, and the base rails are rigid
 |---|---|---:|---:|---:|
 | Four posts, braced, 45 mm posts, head on a horizontal plate (upper bound above) | 78.9 / 84.7 / 137.6 Hz | 16, −20, −2 µrad | 1, 0, −14 µm | 7, 5 µm |
 | **As drawn: head hung from the flange plate** | **43.1 / 59.7 / 67.2 Hz** | 112, 253, −5 µrad | −35, 12, −46 µm | −111, 45 µm |
+| **With the fixes, `P['gantry'] = 'four_post_braced_front'`** (37e2698; front knee braces, top flange on both beams, three gussets) | **50.0 / 66.9 / 93.5 Hz** | 36, 143, −7 µrad | −24, 2, −25 µm | −66, 13 µm |
 
 - **The frame as drawn is below the 60 Hz minimum** (and the 100 Hz target), at about half the upper bound.
   - Mode 1 (43 Hz) is the front portal racking sideways along the beams, with the head yawing. The largest motion is
@@ -101,6 +102,16 @@ mass on the flange face under the head's footprint, and the base rails are rigid
 - **To bring it to the upper bound:** knee braces or a diagonal in the front portal, as at the back, for mode 1; and a
   stiffer head mount in pitch, for mode 3 and the tilt. That means gussets from the flange to the beams, a deeper
   flange, or a second support under the head's far end. Not run.
+- **With the fixes drawn (37e2698, `four_post_braced_front`; 193k nodes, ccx 38 + 65 s): 50.0 / 66.9 / 93.5 Hz,
+  still under 60 Hz.**
+  - Gravity pitch drops to 143 µrad (the lens sags 25 µm), and the frame no longer racks.
+  - Modes 1 and 2 are now the head swinging on the flange plate's free lower part (below the beams, z 353-423),
+    with the largest motion at its bottom edge, at the front corner (y −136) in mode 1. Mode 3 is the head nodding
+    (pitch about y).
+  - Two of the three gussets (y 35-45 and 85-95) sit behind the head's footprint (y −131 to 25). The head's front
+    two-thirds has none.
+  - Next step, not run: gussets under the head's footprint (e.g. at y ≈ −120, −55 and 15), run down to the
+    flange's bottom edge, or a stiffener along that edge.
 - The joints are bonded and the base is rigid, so the real frame (bolted T-slot joints) will be softer than these
   numbers.
 
