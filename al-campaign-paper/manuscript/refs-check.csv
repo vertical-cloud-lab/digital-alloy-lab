@@ -1,0 +1,64 @@
+key,cited,doi,registry,status,title_similarity,year_bib,year_registry,first_author_bib,first_author_registry,registered_title,url
+martin2017,True,10.1038/nature23894,Crossref,ok,1.00,2017,2017,martin,martin,3D printing of high-strength aluminium alloys,
+aboulkhair2019,True,10.1016/j.pmatsci.2019.100578,Crossref,ok,1.00,2019,2019,aboulkhair,aboulkhair,3D printing of Aluminium alloys: Additive Manufacturing of Aluminium alloys using selective laser melting,
+kotadia2021,True,10.1016/j.addma.2021.102155,Crossref,ok,1.00,2021,2021,kotadia,kotadia,A review of Laser Powder Bed Fusion Additive Manufacturing of aluminium alloys: Microstructure and properties,
+debroy2018,False,10.1016/j.pmatsci.2017.10.001,Crossref,ok,1.00,2018,2018,debroy,debroy,"Additive manufacturing of metallic components – Process, structure and properties",
+spierings2017,True,10.1016/j.matdes.2016.11.040,Crossref,ok,1.00,2017,2017,spierings,spierings,Microstructural features of Sc- and Zr-modified Al-Mg alloys processed by selective laser melting,
+croteau2018,True,10.1016/j.actamat.2018.04.053,Crossref,ok,1.00,2018,2018,croteau,croteau,Microstructure and mechanical properties of Al-Mg-Zr alloys processed by selective laser melting,
+plotkowski2020,True,10.1016/j.actamat.2020.07.014,Crossref,ok,0.99,2020,2020,plotkowski,plotkowski,Microstructure and properties of a high temperature Al–Ce–Mn alloy produced by additive manufacturing,
+opprecht2020,True,10.1016/j.actamat.2020.07.015,Crossref,ok,1.00,2020,2020,opprecht,opprecht,A solution to the hot cracking problem for aluminium alloys manufactured by laser beam melting,
+thapliyal2020,True,10.1016/j.mtla.2019.100574,Crossref,ok,1.00,2020,2020,thapliyal,thapliyal,An integrated computational materials engineering-anchored closed-loop method for design of aluminum alloys for additive manufacturing,
+taherimousavi2025,True,10.1002/adma.202509507,Crossref,ok,0.99,2025,2025,taheri mousavi,taherimousavi,Additively Manufacturable High‐Strength Aluminum Alloys with Coarsening‐Resistant Microstructures Achieved via Rapid Solidification,
+anderson2018,True,10.1016/j.cossms.2018.01.002,Crossref,ok,1.00,2018,2018,anderson,anderson,Feedstock powder processing research needs for additive manufacturing development,
+mosallanejad2021,True,10.1016/j.jallcom.2021.159567,Crossref,ok,1.00,2021,2021,mosallanejad,mosallanejad,In-situ alloying in laser-based additive manufacturing processes: A critical review,
+zrodowski2021,True,10.3390/ma14102541,Crossref,ok,1.00,2021,2021,zrodowski,zrodowski,Novel Cold Crucible Ultrasonic Atomization Powder Production Method for 3D Printing,
+priyadarshi2024,True,10.1016/j.addma.2024.104033,Crossref,ok,1.00,2024,2024,priyadarshi,priyadarshi,New insights into the mechanism of ultrasonic atomization for the production of metal powders in additive manufacturing,
+tom2024,False,10.1021/acs.chemrev.4c00055,Crossref,ok,1.00,2024,2024,tom,tom,Self-Driving Laboratories for Chemistry and Materials Science,
+lo2024,False,10.1039/d3dd00223c,Crossref,ok,1.00,2024,2024,lo,lo,Review of low-cost self-driving laboratories in chemistry and materials science: the “frugal twin” concept,
+mulukutla2025,True,10.1016/j.mtla.2024.102332,Crossref,ok,1.00,2025,2025,mulukutla,mulukutla,Supply risk-aware alloy discovery and design: A case study on the MoNbTiVW system,
+graedel2012,True,10.1021/es203534z,Crossref,ok,1.00,2012,2012,graedel,graedel,Methodology of Metal Criticality Determination,
+andersson2002,True,10.1016/s0364-5916(02)00037-8,Crossref,ok,0.97,2002,2002,andersson,andersson,"Thermo-Calc &amp; DICTRA, computational tools for materials science",
+otis2017,True,10.5334/jors.140,Crossref,ok,1.00,2017,2017,otis,otis,pycalphad: CALPHAD-based Computational Thermodynamics in Python,
+kou2015,True,10.1016/j.actamat.2015.01.034,Crossref,ok,1.00,2015,2015,kou,kou,A criterion for cracking during solidification,
+johnson2019,True,10.1016/j.actamat.2019.07.005,Crossref,ok,1.00,2019,2019,johnson,johnson,Assessing printability maps in additive manufacturing of metal alloys,
+tiryakioglu2015,True,10.1016/j.msea.2015.02.049,Crossref,ok,0.99,2015,2015,tiryakio glu,tiryakioglu,Hardness–strength relationships in the aluminum alloy 7010,
+cabrini2016,False,10.1016/j.electacta.2016.04.157,Crossref,ok,1.00,2016,2016,cabrini,cabrini,Effect of heat treatment on corrosion resistance of DMLS AlSi10Mg alloy,
+revilla2017,False,10.1149/2.0461702jes,Crossref,ok,1.00,2016,2016,revilla,revilla,Local Corrosion Behavior of Additive Manufactured AlSiMg Alloy Assessed by SEM and SKPFM,
+rubben2019,False,10.1016/j.corsci.2018.11.038,Crossref,ok,1.00,2019,2019,rubben,rubben,Influence of heat treatments on the corrosion mechanism of additive manufactured AlSi10Mg,
+astudillo2021,False,10.48550/arXiv.2112.15311,DataCite,ok,1.00,2021,2021,astudillo,astudillo,Bayesian Optimization of Function Networks,
+buathong2024,False,10.48550/arXiv.2311.02146,DataCite,ok,1.00,2023,2023,buathong,buathong,Bayesian Optimization of Function Networks with Partial Evaluations,
+balandat2020,True,10.48550/arXiv.1910.06403,DataCite,ok,1.00,2019,2019,balandat,balandat,BoTorch: A Framework for Efficient Monte-Carlo Bayesian Optimization,
+alloyF2024,True,10.1016/j.jallcom.2023.171685,Crossref,ok,1.00,2023,2023,mehta,mehta,Advancing novel Al-Mn-Cr-Zr based family of alloys tailored for powder bed fusion-laser beam process,
+almncrzr2024,True,10.1016/j.matdes.2024.113160,Crossref,ok,1.00,2024,2024,mehta,mehta,Mechanical properties and microstructural characterisation including high-temperature performance of Al-Mn-Cr-Zr-based alloys tailored for additive manufacturing,
+alfezr2025,False,10.1080/17452759.2025.2516663,Crossref,ok,1.00,2025,2025,li,li,"Precipitation evolution, aging strengthening and thermal stability in Al–Fe-Mg-Zr eutectic alloy via laser powder bed fusion",
+alsimg2020,False,10.3390/met10040514,Crossref,ok,1.00,2020,2020,knoop,knoop,A Tailored AlSiMg Alloy for Laser Powder Bed Fusion,
+almgmnerzr2022,True,10.1016/j.matdes.2022.111064,Crossref,ok,1.00,2022,2022,guo,guo,Microstructure and mechanical properties of Al-Mg-Mn-Er-Zr alloys fabricated by laser powder bed fusion,
+almncr2022,False,10.1016/j.jallcom.2022.165870,Crossref,ok,1.00,2022,2022,mehta,mehta,Effect of precipitation kinetics on microstructure and properties of novel Al-Mn-Cr-Zr based alloys developed for powder bed fusion – laser beam process,
+ds_eos,True,,,no DOI: check the URL by hand,,2026,,eos gmbh,,,https://www.eos.info/metal-solutions/data-sheets/aluminium/pds-eos-aluminium-alsi10mg-eos-m-290-30um
+ds_nikon,True,,,no DOI: check the URL by hand,,2025,,nikon slm solutions,,,https://nikon-slm-solutions.com/wp-content/uploads/2025/11/mds5123.pdf
+ds_colibrium,True,,,no DOI: check the URL by hand,,2025,,colibrium additive,,,https://www.colibriumadditive.com/sites/default/files/M2SERIES5_Al-Mg-Sc_400W_CMDS_20250821_RevB%20%281%29.pdf
+ds_3dsystems,True,,,no DOI: check the URL by hand,,2022,,3d systems,,,https://3dsystems.com/sites/default/files/2022-02/3d-systems-certified-scalmalloy(a)-datasheet-usen-2022-02-23-a-print.pdf
+ds_hoganas,True,,,no DOI: check the URL by hand,,,,h ogan as ab,,,https://www.hoganas.com/globalassets/downloads/libary/additive-manufacturing_foram-al-hs1-20-63-ga_3312hog.pdf
+ds_al5x1,True,,,no DOI: check the URL by hand,,,,eos gmbh,,,https://www.eos.info/metal-solutions/metal-materials/data-sheets/mds-eos-aluminium-al5x1
+ds_cp1,True,,,no DOI: check the URL by hand,,,,eos gmbh,,,https://www.eos.info/metal-solutions/data-sheets/aluminium/pds-eos-aluminium-constellium-cp1-eos-m-290-60um
+ds_a20x,True,,,no DOI: check the URL by hand,,2020,,eckart gmbh,,,https://www.eckart.net/download/document/view/id/216/
+ds_7a77,True,,,no DOI: check the URL by hand,,2019,,hrl laboratories,,,https://www.hrl.com/products-services/materials/_assets/7A77-data-sheet.pdf
+usgs2026sc,True,,,no DOI: check the URL by hand,,2026,,u s geological survey,,,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-scandium.pdf
+fr2025,True,,,no DOI: check the URL by hand,,2025,,u s department of the interior,,,https://www.govinfo.gov/content/pkg/FR-2025-11-07/html/2025-19813.htm
+nasa6030,False,,,no DOI: check the URL by hand,,2021,,national aeronautics,,,https://standards.nasa.gov/standard/nasa/nasa-std-6030
+eagar1983,True,,,no DOI: check the URL by hand,,1983,,eagar,,,
+iso13322,True,,,no DOI: check the URL by hand,,2014,,international organization for standardization,,,
+iso9276,True,,,no DOI: check the URL by hand,,2008,,international organization for standardization,,,
+astm_e8,True,10.1520/E0008_E0008M-24,Crossref,ok,1.00,2024,,astm international,,Test Methods for Tension Testing of Metallic Materials,
+astm_b962,True,10.1520/B0962-17,Crossref,ok,1.00,2017,,astm international,,Test Methods for Density of Compacted or Sintered Powder Metallurgy (PM) Products Using Archimedes Principle,
+astm_e384,True,10.1520/E0384-22,Crossref,ok,1.00,2022,,astm international,,Test Method for Microindentation Hardness of Materials,
+astm_g59,True,10.1520/G0059-97R20,Crossref,ok,1.00,2020,,astm international,,Test Method for Conducting Potentiodynamic Polarization Resistance Measurements,
+astm_g5,True,10.1520/G0005-14R21,Crossref,ok,1.00,2021,,astm international,,Reference Test Method for Making Potentiodynamic Anodic Polarization Measurements,
+astm_g61,True,10.1520/G0061-86R18,Crossref,ok,1.00,2018,,astm international,,"Test Method for Conducting Cyclic Potentiodynamic Polarization Measurements for Localized Corrosion Susceptibility of Iron-, Nickel-, or Cobalt-Based Alloys",
+astm_g102,True,10.1520/G0102-23,Crossref,ok,1.00,2023,,astm international,,Practice for Calculation of Corrosion Rates and Related Information from Electrochemical Measurements,
+astm_b214,True,10.1520/B0214-22,Crossref,ok,1.00,2022,,astm international,,Test Method for Sieve Analysis of Metal Powders,
+astm_e3061,True,10.1520/E3061-17,Crossref,ok,1.00,2017,,astm international,,Standard Test Method for Analysis of Aluminum and Aluminum Alloys by Inductively Coupled  Plasma Atomic Emission Spectrometry (Performance Based Method),
+astm_e1251,True,10.1520/E1251-17A,Crossref,ok,1.00,2017,,astm international,,Test Method for Analysis of Aluminum and Aluminum Alloys by Spark Atomic Emission Spectrometry,
+astm_f3318,False,10.1520/F3318-18,Crossref,ok,1.00,2018,,astm international,,for Additive Manufacturing	Finished Part Properties  Specification for AlSi10Mg with Powder Bed Fusion  Laser Beam,
+usgs2026,True,10.3133/mcs2026,Crossref,ok,1.00,2026,2026,u s geological survey,,Mineral commodity summaries 2026,
+doe2023,False,10.2172/1998242,Crossref,ok,1.00,2023,2023,bauer,,2023 Critical Materials Strategy,

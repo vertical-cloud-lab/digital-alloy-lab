@@ -4,7 +4,7 @@
 
 | Item | Title | Drawn now | Final data due | Days left | Gate | Owner |
 |---|---|---|---|---|---|---|
-| Fig1 | Benchmark map: where the campaign's alloys sit against AlSi10Mg and Scalmalloy | (a) campaign points pending; (b) burden inputs missing | Feb 12, 2027 | 77 | Freeze (Feb 12) | Sterling |
+| Fig1 | Benchmark map: where the campaign's alloys sit against AlSi10Mg and Scalmalloy | (a) campaign points pending; (b) campaign points pending; seeds shown as burden ticks | Feb 12, 2027 | 77 | Freeze (Feb 12) | Sterling |
 | Fig2 | CALPHAD screen and the compositions picked | placeholder (no rows yet) | Jan 29, 2027 | 63 | G1 (Dec 4) | Xavier |
 | Fig3 | Powders made in-house | placeholder (no rows yet) | Feb 12, 2027 | 77 | G3 (Jan 22) | Ronnie |
 | Fig4 | Printability | placeholder (no rows yet) | Feb 05, 2027 | 70 | G2 (Jan 15) | Carl |

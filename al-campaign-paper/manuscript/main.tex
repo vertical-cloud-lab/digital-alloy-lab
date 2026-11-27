@@ -69,7 +69,7 @@ laser powder bed fusion \sep aluminum alloys \sep scandium-free \sep critical mi
 \section{Introduction}
 \label{sec:intro}
 
-Laser powder bed fusion (LPBF) can build thin-walled, topology-optimized aluminum parts that are hard to cast or machine, and aluminum's low density makes those parts attractive for aircraft, launch vehicles and satellites~\cite{aboulkhair2019,kotadia2021}.
+Laser powder bed fusion (LPBF) can build thin-walled, topology-optimized aluminum parts that are hard to cast or machine, and aluminum's low density makes those parts attractive for aircraft, launch vehicles and satellites~\cite{debroy2018,aboulkhair2019,kotadia2021}.
 Most aluminum alloys used in LPBF were not designed for it.
 The workhorse, \AlSi, is a near-eutectic casting alloy: its short freezing range makes it easy to print without cracks, but its strength is modest, and the heat treatments that restore ductility cost strength (Section~\ref{sec:benchmark})~\cite{aboulkhair2019,ds_eos,ds_nikon}.
 The high-strength wrought alloys of the 2xxx and 7xxx series, by contrast, crack as they solidify in LPBF unless their grain structure is refined~\cite{martin2017,kou2015}.
@@ -78,19 +78,18 @@ The high-strength wrought alloys of the 2xxx and 7xxx series, by contrast, crack
 Al\textsubscript{3}(Sc,Zr) particles that form in the melt nucleate fine equiaxed grains at the melt-pool boundaries, which suppresses hot cracking, and the same elements precipitate as nanoscale L1\textsubscript{2} particles on aging~\cite{spierings2017}.
 After a direct age at \SI{325}{\celsius} it reaches \SIrange{465}{500}{MPa} yield strength with \SIrange{11.5}{15.8}{\%} elongation on vendor datasheets~\cite{ds_colibrium,ds_3dsystems}, 1.5 to 2 times the \SIrange{233}{300}{MPa} of as-built \AlSi~\cite{ds_eos,ds_nikon}.
 Its weakness is scandium.
-\placeholder{Check every number in this paragraph against USGS MCS 2026 before submission:} scandium is recovered only as a byproduct, world production in 2025 was about \placeholder{80}~t, the United States relied on imports for all of its supply, and China, the leading producer, placed scandium metal, alloys and compounds under export control in April 2025~\cite{usgs2026sc}; scandium is on the final 2025 U.S.\ List of Critical Minerals~\cite{fr2025}.
+\placeholder{Check every number in this paragraph against USGS MCS 2026 before submission:} scandium is recovered only as a byproduct, world production in 2025 was about \placeholder{80}~t, the United States relied on imports for all of its supply, and China, the leading producer, placed scandium metal, alloys and compounds under export control in April 2025~\cite{usgs2026sc}; scandium is on the final 2025 U.S.\ List of Critical Minerals~\cite{fr2025}, and U.S.\ strategy treats lowering demand for such materials as a goal in its own right~\cite{doe2023}.
 An alloy that is stronger than \AlSi without scandium, or as strong as \Scal with less of it, would remove a supply risk from a growing class of printed flight hardware.
 
 Scandium-free routes to printable, high-strength aluminum already exist.
 In Al--Mg--Zr alloys, primary L1\textsubscript{2} Al\textsubscript{3}Zr particles refine the grains, and nanoscale Al\textsubscript{3}Zr precipitates formed on aging raise the strength by more than 40\%~\cite{croteau2018}.
 Inoculant particles added to the powder suppress cracking in 7075 and 6061~\cite{martin2017,opprecht2020}.
-Al--Mn--Cr--Zr alloys designed for LPBF reach about \SI{390}{MPa} yield strength as built~\cite{alloyF2024,almncrzr2024}, Al--Mg--Mn--Er--Zr alloys about \SI{440}{MPa} after aging~\cite{almgmnerzr2022}, and Al--Ce--Mn alloys keep their strength to high temperature~\cite{plotkowski2020}.
+Al--Mn--Cr--Zr alloys designed for LPBF reach about \SI{390}{MPa} yield strength as built~\cite{almncr2022,alloyF2024,almncrzr2024}, Al--Mg--Mn--Er--Zr alloys about \SI{440}{MPa} after aging~\cite{almgmnerzr2022}, and Al--Ce--Mn alloys keep their strength to high temperature~\cite{plotkowski2020}.
 Several scandium-free powders are now sold for LPBF: Al--Mn--Cr--Zr and Al--Mg--Zr--Mn grades with datasheet yield strengths well above \AlSi's after a direct age, and an Al--Fe--Zr grade that matches it~\cite{ds_hoganas,ds_al5x1,ds_cp1}.
 Computational design that couples CALPHAD with Bayesian optimization has produced printable alloys too, although often with scandium or rare-earth additions~\cite{thapliyal2020,taherimousavi2025}.
 Two problems remain.
 First, almost none of these alloys has been compared with \AlSi printed and tested in the same way, so whether an alloy is ``better'' depends on which datasheet it is compared with (Section~\ref{sec:benchmark}).
-Second, removing scandium does not by itself reduce the critical-mineral burden: Mn, Cr, Zr, Mg and the rare earths are also on the U.S.\ critical minerals list~\cite{fr2025}, so a claim of ``less critical minerals'' needs a burden metric stated in advance~\cite{graedel2012,mulukutla2025}.
-\note{Element-by-element list status is being checked (risks.md, R7). If Al and Si are on the 2025 list too, say so here.}
+Second, removing scandium does not by itself reduce the critical-mineral burden. The final 2025 U.S.\ list includes aluminum and silicon themselves, as well as Mg, Mn, Cr, Zr, Ti, Cu, Ni and the rare earths; of the elements used in these alloys, only iron is absent~\cite{fr2025}. A claim of ``less critical minerals'' therefore needs a burden metric that weights each element, stated in advance~\cite{graedel2012,mulukutla2025}.
 
 The slower problem is powder.
 Every new composition needs its own powder, and gas atomization, the usual route, runs at a scale and lead time suited to production rather than exploration~\cite{anderson2018}.
@@ -125,7 +124,7 @@ Printable laser settings for each candidate were estimated from Eagar--Tsai melt
 
 Four seed compositions, spanning distinct strengthening routes, were atomized first (Table~\ref{tab:compositions}).
 \note{The \#275 plan proposes S1 Al--4.8Mn--0.9Cr--1.1Zr--1.2Mg, S2 Al--1.9Fe--1.0Mg--1.0Zr, S3 Al--3.5Si--2.5Mg and S4 Al--6Mg--2.5Si--0.7Ti, chosen from the literature, not from the screen. If they stay, say so plainly here: they are literature anchors, and the screen ranks what follows.}
-Later compositions were proposed in batches of three by Bayesian optimization~\cite{balandat2020} on the measured hardness and relative density, with the CALPHAD quantities as inputs; the settings were fixed before the first round (Supplementary Section~S9).
+Later compositions were proposed in batches of three by Bayesian optimization~\cite{balandat2020} on the measured hardness and relative density, with the CALPHAD quantities as inputs; the settings were fixed before the first round (Supplementary Section~S9). The software that schedules the steps of the loop, in the manner of a self-driving laboratory~\cite{tom2024}, is described elsewhere; here it serves only to pick compositions.
 \note{Keep the optimizer to this paragraph. The cost-aware network optimizer and any acceleration claim belong to the \textit{Adv.\ Mater.} article (\#120); see ../outline.md.}
 
 \subsection{Critical-mineral burden}
@@ -138,8 +137,10 @@ The burden of an alloy was computed from its composition as
 \end{equation}
 where $w_i$ is the mass fraction of alloying element $i$ in wt\% and $\mathrm{NIR}_i$ is the U.S.\ net import reliance for that element in 2025, as a percentage of apparent consumption~\cite{usgs2026}.
 $B_\mathrm{NIR}$ is the share of the alloy, in wt\%, that is imported on balance.
-Aluminum is left out because it is the base of every alloy compared.
-As sensitivity checks we report the raw-material cost of the alloying additions per kilogram of alloy, $B_\mathrm{cost} = \sum_{i \neq \mathrm{Al}} (w_i/100)\,p_i$ with 2025 prices $p_i$~\cite{usgs2026}, and the scandium content alone.
+Aluminum is left out because it is the base of every alloy compared, and iron, which is not on the 2025 list and of which the U.S.\ is a net exporter, counts as zero.
+USGS reports some reliances only as bounds (silicon above 50\%, magnesium above 75\%, zirconium below 25\%), so $B_\mathrm{NIR}$ is reported as the interval those bounds allow, and plotted at its midpoint.
+As sensitivity checks we report the raw-material cost of the critical alloying additions per kilogram of alloy, $B_\mathrm{cost} = \sum (w_i/100)\,p_i$ over the elements on the 2025 list other than aluminum, with 2025 prices $p_i$ (scandium as metal)~\cite{usgs2026}, and the scandium content alone.
+The inputs and their sources are in Supplementary Section~S3.
 The metric, its inputs and the threshold for ``less than \Scal'' were committed to the project repository before the first optimizer round (Supplementary Section~S9).
 \note{Sterling to choose the primary metric and the threshold. FLAIME's O4 uses $\geq$40\% below \Scal. Check how the seeds score before freezing: an Al--Mn--Cr--Zr alloy carries several wt\% of fully imported Mn (risks.md, R7).}
 
@@ -196,7 +197,7 @@ Specimens that broke outside the gauge length were excluded and reported.
 
 Corrosion was measured in aerated \SI{3.5}{wt\%} (\SI{0.6}{M}) NaCl at room temperature in a three-electrode cell \placeholder{(EZstat-Pro potentiostat, NuVant Systems; CubXL cell)} with an Ag/AgCl reference electrode and a \placeholder{graphite / platinum} counter electrode, on polished sections of printed cubes with an exposed area of \placeholder{X}~cm\textsuperscript{2}.
 After \SI{30}{min} at open circuit, linear polarization resistance was measured over $\pm$\SI{10}{mV} at \SI{0.167}{mV\per s}~\cite{astm_g59}, followed by a cyclic potentiodynamic scan~\cite{astm_g61}; the corrosion current density was obtained by Tafel extrapolation and converted to a rate~\cite{astm_g102}, and the pitting potential was read from the anodic branch.
-Three specimens were tested per alloy and condition, alongside printed \AlSi and wrought 6063, and the set-up was first checked against \placeholder{a reference measurement~\cite{astm_g5}}.
+Printed \AlSi corrodes selectively along melt-pool boundaries, and heat treatment changes how it corrodes~\cite{cabrini2016,revilla2017,rubben2019}, so it was tested in the same condition as each candidate. Three specimens were tested per alloy and condition, alongside printed \AlSi and wrought 6063, and the set-up was first checked against \placeholder{a reference measurement~\cite{astm_g5}}.
 \note{The instrument has so far passed dummy-cell checks only (PR \#239), EZware caps the open-circuit step at 20~min, and only one reference electrode is on order (PR \#264).}
 
 \subsection{Independent verification}
@@ -317,7 +318,7 @@ A co-author asked at the campaign's kickoff whether there are already alloys clo
 There are (Fig.~\ref{fig:map}a, grey markers).
 \placeholder{Add the grey series to Fig.~1 from data/literature-alloys.csv.}
 On their vendors' datasheets, a directly aged Al--Mn--Cr--Zr powder reaches \SIrange{355}{370}{MPa} yield strength with \SIrange{12}{16}{\%} elongation~\cite{ds_hoganas}, a directly aged Al--Mg--Zr--Mn powder \SIrange{380}{385}{MPa} with 13--14.5\%~\cite{ds_al5x1}, and a heat-treated Al--Fe--Zr powder about \SI{300}{MPa} with 10--12\%~\cite{ds_cp1}; Al--Cu--Ag--Mg alloys with TiB\textsubscript{2} reach \SIrange{390}{440}{MPa} after a T7 treatment~\cite{ds_a20x}, and a Zr-modified 7xxx alloy \SIrange{490}{585}{MPa} after hot isostatic pressing and heat treatment~\cite{ds_7a77}.
-In the peer-reviewed literature, Al--Mn--Cr--Zr--Mg reached \SI{390}{MPa} as built with 17\% elongation~\cite{alloyF2024}, Al--Mg--Zr \SI{350}{MPa} after aging with 17--19\%~\cite{croteau2018}, and Al--Mg--Mn--Er--Zr \SI{440}{MPa} after aging with 15.5\%~\cite{almgmnerzr2022}.
+In the peer-reviewed literature, Al--Mn--Cr--Zr--Mg reached \SI{390}{MPa} as built with 17\% elongation~\cite{alloyF2024}, Al--Mg--Zr \SI{350}{MPa} after aging with 17--19\%~\cite{croteau2018}, Al--Mg--Mn--Er--Zr \SI{440}{MPa} after aging with 15.5\%~\cite{almgmnerzr2022}, Al--Fe--Mg--Zr \SI{376}{MPa} after aging with 11\%~\cite{alfezr2025}, and a tailored Al--Si--Mg alloy \SIrange{270}{417}{MPa} as built, depending on plate temperature and machine~\cite{alsimg2020}.
 \note{These values were read from the sources by the \#275 survey (research/datasheets.md, 26 Nov 2026) and must be re-checked against each source before submission.}
 Being stronger than \AlSi without scandium is therefore not new in itself.
 What the literature does not settle is how these alloys compare on critical-mineral burden, since each replaces scandium with several weight percent of Mn, Cr, Zr, Mg or rare earths, and how they compare with \AlSi printed and tested the same way.
@@ -325,13 +326,22 @@ A new alloy from this campaign is a contribution only if it sits beyond these al
 
 \subsection{Critical-mineral burden of the benchmarks}
 
-\placeholder{Fill from Table~\ref{tab:compositions} once data/element-criticality.csv is complete:} \AlSi carries $B_\mathrm{NIR} = \BAlSinir$~wt\% and \Scal $B_\mathrm{NIR} = \BScalnir$~wt\%; on raw-material cost, \AlSi's additions cost \BAlSicost~USD\,kg\textsuperscript{-1} of alloy and \Scal's \BScalcost.
-\note{Because \AlSi carries 10~wt\% Si, an import-weighted metric may rank it close to, or above, \Scal; a cost-weighted one will not. Report all three metrics and say which one the claim uses.}
+Every element in the two benchmarks is on the final 2025 list~\cite{fr2025}, so the question is how much of each they carry, weighted by how exposed its supply is (Table~\ref{tab:compositions}).
+On the import-weighted burden of Eq.~\ref{eq:burden}, \AlSi carries \BAlSinirlo--\BAlSinirhi~wt\% and \Scal \BScalnirlo--\BScalnirhi~wt\%; the ranges come from the reliances that USGS gives only as bounds~\cite{usgs2026}.
+\AlSi's 10~wt\% silicon outweighs \Scal's 0.76~wt\% scandium on this measure.
+On raw-material cost the order reverses: the critical additions in \Scal cost about \BScalcost~USD per kilogram of alloy, almost all of it scandium, against \BAlSicost~USD for \AlSi~\cite{usgs2026}. Priced through an Al--2Sc master alloy (30~USD per kilogram of master alloy) instead of the metal, the master alloy needed for 0.76~wt\% scandium still costs about 11~USD per kilogram of \Scal~\cite{usgs2026sc}.
+The premise that \AlSi carries fewer critical minerals than \Scal therefore holds for cost and for scandium, but not for import-weighted mass.
+
+The same split runs through the scandium-free alloys (Fig.~\ref{fig:map}b, Table~S\placeholder{3}).
+On cost, all of them except the silver-bearing Al--Cu--Ag--Mg alloy are at least 97\% below \Scal, so ``less than \Scal'' does not tell them apart.
+On import-weighted mass, the Mn-rich Al--Mn--Cr--Zr alloys sit above \Scal (the planned seed S1, at \BSonenirlo--\BSonenirhi~wt\%), while Al--Fe--Zr, Al--Fe--Mg--Zr and Al--Mg--Zr alloys sit well below it and, after aging, are already stronger than our as-built \AlSi~\cite{ds_cp1,alfezr2025,ds_al5x1,croteau2018}.
+A campaign alloy therefore counts as a discovery only if it lies beyond these alloys on strength against burden, under the metric fixed in advance.
+\note{This is the main risk to the paper's claim (risks.md, R1--R2). Sterling: pick the primary metric now. Under $B_\mathrm{NIR}$, steer the screen toward Fe-, Zr- and Mg-lean families (S2, O1) and away from Mn-rich ones (S1, O3); under $B_\mathrm{cost}$, any Sc-free alloy passes and the claim rests on strength alone.}
 
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=\textwidth]{figures/fig1-benchmark-map.pdf}
-  \caption{Where the campaign's alloys sit against the benchmarks. (a) Yield strength against elongation: open markers, vendor datasheets~\cite{ds_eos,ds_nikon,ds_colibrium,ds_3dsystems}; filled blue, \AlSi printed by the authors at the University of Utah (as built, as-printed surfaces, horizontal; mean $\pm$ s.d., $n=\InhouseN$); grey shading, where a candidate must land to be stronger than that \AlSi under the rule of Section~\ref{sec:stats} at no lower elongation. (b) Yield strength against critical-mineral burden $B_\mathrm{NIR}$ (Eq.~\ref{eq:burden}); grey shading, the region of interest. \placeholder{Campaign alloys (green) are added as their tensile data arrive.}}
+  \caption{Where the campaign's alloys sit against the benchmarks. (a) Yield strength against elongation. Open blue and orange markers, \AlSi and \Scal vendor datasheets~\cite{ds_eos,ds_nikon,ds_colibrium,ds_3dsystems}; filled blue, \AlSi printed by the authors at the University of Utah (as built, as-printed surfaces, horizontal; mean $\pm$ s.d., $n=\InhouseN$); grey diamonds, scandium-free alloys on vendor datasheets~\cite{ds_hoganas,ds_al5x1,ds_cp1,ds_a20x,ds_7a77}; grey triangles, scandium-free alloys in papers~\cite{alloyF2024,croteau2018,almgmnerzr2022,alfezr2025,alsimg2020}; grey shading, where a candidate must land to be stronger than the authors' \AlSi under the rule of Section~\ref{sec:stats} at no lower elongation. (b) Yield strength against the import-weighted burden $B_\mathrm{NIR}$ (Eq.~\ref{eq:burden}), plotted at the midpoint of its interval; the horizontal bars on the benchmarks show the interval. Green ticks mark the burden of the planned seed compositions, whose strength is not yet measured. Shading: stronger than the authors' \AlSi and below the lower end of \Scal's burden. \placeholder{Campaign alloys (green dots) are added as their tensile data arrive.}}
   \label{fig:map}
 \end{figure}
 
@@ -346,7 +356,7 @@ A new alloy from this campaign is a contribution only if it sits beyond these al
 \section{Limitations}
 \label{sec:limits}
 
-\placeholder{Write at the data freeze.} All properties are at room temperature; elevated-temperature and cryogenic tests, fatigue and fracture toughness were outside the campaign. Specimens are sub-size, from one machine and, for most alloys, one build. Powder from ultrasonic atomization differs from commercial gas-atomized powder in size distribution and oxygen content, which is why the comparison with \AlSi uses both powder routes. The burden metric depends on 2025 import data and prices, and Supplementary Section~S3 shows how the ranking changes with the metric.
+\placeholder{Write at the data freeze.} All properties are at room temperature; elevated-temperature and cryogenic tests, fatigue and fracture toughness were outside the campaign. Specimens are sub-size, from one machine and, for most alloys, one build. Powder from ultrasonic atomization differs from commercial gas-atomized powder in size distribution and oxygen content, which is why the comparison with \AlSi uses both powder routes. The burden metric depends on 2025 import data and prices, and Supplementary Section~S3 shows how the ranking changes with the metric. None of this is qualification: the comparison is not a test against the \AlSi part specification~\cite{astm_f3318}, and a flight part would also need a qualified material process and a property suite under a standard such as NASA-STD-6030~\cite{nasa6030}.
 
 \section{Conclusions}
 \placeholder{Write at G4.}

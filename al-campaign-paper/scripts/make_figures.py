@@ -143,8 +143,11 @@ def style(ax) -> None:
 
 
 # ------------------------------------------------------------------------- Fig. 1
-def fig1(p, bench, tensile, alloys, burdens) -> str:
-    fig, (a, b) = plt.subplots(1, 2, figsize=(7.2, 3.1), gridspec_kw={"wspace": 0.32})
+GREY = "#8c8c8c"
+
+
+def fig1(p, bench, tensile, alloys, burdens, lit, lit_b) -> str:
+    fig, (a, b) = plt.subplots(1, 2, figsize=(7.2, 3.3), gridspec_kw={"wspace": 0.30})
     status = []
 
     al = bench[bench["series"].str.startswith("AlSi10Mg")]
@@ -153,6 +156,8 @@ def fig1(p, bench, tensile, alloys, burdens) -> str:
     ys_m, ys_sd, ys_hw, n = mean_ci(ih["ys_mpa"]) if not ih.empty else (np.nan,) * 3 + (0,)
     el_m, el_sd, _, _ = mean_ci(ih["el_pct"]) if not ih.empty else (np.nan,) * 3 + (0,)
     camp = campaign_tensile(tensile)
+    com = lit[lit["kind"].str.startswith("commercial")] if not lit.empty else lit
+    pap = lit[lit["kind"].str.startswith("peer")] if not lit.empty else lit
 
     # (a) yield strength vs elongation
     style(a)
@@ -160,8 +165,13 @@ def fig1(p, bench, tensile, alloys, burdens) -> str:
         # Proposed rule (outline.md): higher yield than the in-house comparator by more than the
         # CIs, at no lower elongation. Shade where a candidate would have to land.
         a.add_patch(Rectangle((el_m, ys_m + ys_hw), 40, 400, facecolor=REGION, edgecolor="none", zorder=0))
-        a.text(el_m + 0.5, 553, "stronger than in-house AlSi10Mg, as ductile", ha="left",
+        a.text(29.6, 598, "stronger than in-house AlSi10Mg,\nas ductile", ha="right",
                va="top", fontsize=6.3, color=INK2)
+    if not lit.empty:
+        a.scatter(com["el_pct"], com["ys_mpa"], s=22, marker="D", facecolors="white", edgecolors=GREY,
+                  linewidths=0.9, zorder=2, label="Sc-free, datasheets")
+        a.scatter(pap["el_pct"], pap["ys_mpa"], s=26, marker="^", facecolors="white", edgecolors=GREY,
+                  linewidths=0.9, zorder=2, label="Sc-free, papers")
     a.scatter(al["elongation_pct"], al["yield_MPa"], s=26, facecolors="white", edgecolors=C_ALSI,
               linewidths=1.0, zorder=3, label="AlSi10Mg, datasheets")
     a.scatter(sc["elongation_pct"], sc["yield_MPa"], s=26, facecolors="white", edgecolors=C_SCAL,
@@ -173,54 +183,83 @@ def fig1(p, bench, tensile, alloys, burdens) -> str:
     if not camp.empty:
         g = camp.groupby("alloy_id")
         a.scatter(g["el_pct"].mean(), g["ys_mpa"].mean(), s=34, color=C_NEW, edgecolors="white",
-                  linewidths=0.8, zorder=5, label="campaign alloys")
+                  linewidths=0.8, zorder=5, label="this work")
         status.append("(a) campaign tensile drawn")
     else:
-        a.scatter([], [], s=34, color=C_NEW, label="campaign alloys (tensile due Feb 12)")
+        a.scatter([], [], s=34, color=C_NEW, label="this work (tensile due Feb 12)")
         status.append("(a) campaign points pending")
-    # direct labels (relief for the low-contrast hues; the legend is kept as well)
-    a.text(21.0, 318, "Scalmalloy\nas built", color=INK, fontsize=6.3, ha="center", va="center")
-    a.text(16.6, 476, "Scalmalloy\naged", color=INK, fontsize=6.3, ha="left", va="center")
+    a.text(21.0, 322, "Scalmalloy\nas built", color=INK, fontsize=6.3, ha="center", va="center")
+    a.text(16.6, 480, "Scalmalloy\naged", color=INK, fontsize=6.3, ha="left", va="center")
     a.text(12.0, 140, "AlSi10Mg\nstress-relieved", color=INK, fontsize=6.3, ha="center", va="center")
-    a.text(1.2, 315, "AlSi10Mg\nas built", color=INK, fontsize=6.3, ha="left", va="center")
-    a.set_xlim(0, 26)
-    a.set_ylim(100, 560)
+    a.text(1.0, 332, "AlSi10Mg\nas built", color=INK, fontsize=6.3, ha="left", va="center")
+    a.set_xlim(0, 30)
+    a.set_ylim(100, 600)
     a.set_xlabel("Elongation (%)")
     a.set_ylabel("Yield strength (MPa)")
     a.set_title("(a) Strength and ductility", loc="left")
-    a.legend(loc="upper left", bbox_to_anchor=(0.0, -0.17), ncol=2, handletextpad=0.3, columnspacing=1.0)
+    a.legend(loc="upper left", bbox_to_anchor=(0.0, -0.17), ncol=2, handletextpad=0.3, columnspacing=0.8)
 
-    # (b) yield strength vs critical-mineral burden
+    # (b) yield strength vs critical-mineral burden B_NIR (interval: USGS gives some reliances as bounds)
     style(b)
-    have_b = not burdens.empty and burdens["B_nir"].notna().any()
-    if have_b and n:
-        b_al = burdens.loc["AlSi10Mg", "B_nir"] if "AlSi10Mg" in burdens.index else np.nan
-        b_sc = burdens.loc["Scalmalloy", "B_nir"] if "Scalmalloy" in burdens.index else np.nan
-        xmax = np.nanmax([b_al, b_sc]) * 1.35
-        if not math.isnan(b_sc):
-            b.add_patch(Rectangle((0, ys_m + ys_hw), b_sc, 400, facecolor=REGION, edgecolor="none", zorder=0))
-            b.text(b_sc * 0.03, 545, "region of interest: stronger than in-house AlSi10Mg,\nless burden than Scalmalloy",
-                   fontsize=6.3, color=INK2, va="top")
-        for name, x, rows, col in (("AlSi10Mg", b_al, al, C_ALSI), ("Scalmalloy", b_sc, sc, C_SCAL)):
-            if math.isnan(x):
-                continue
+    have_b = (not burdens.empty and "B_nir" in burdens and burdens["B_nir"].notna().any()) and n
+    if have_b:
+        def bvals(aid):
+            r = burdens.loc[aid]
+            return r["B_nir"], r["B_nir_low"], r["B_nir_high"]
+        bsc, bsc_lo, bsc_hi = bvals("Scalmalloy")
+        bal, bal_lo, bal_hi = bvals("AlSi10Mg")
+        b.add_patch(Rectangle((0, ys_m + ys_hw), bsc_lo, 400, facecolor=REGION, edgecolor="none", zorder=0))
+        b.text(0.15, 598, "stronger than in-house AlSi10Mg,\nbelow Scalmalloy's lowest burden",
+               fontsize=6.3, color=INK2, va="top")
+        if not lit.empty and not lit_b.empty:
+            for kind, mk in (("commercial", "D"), ("peer", "^")):
+                rows = lit[lit["kind"].str.startswith(kind)]
+                rows = rows[rows["alloy_id"].isin(lit_b.index[lit_b["B_nir"].notna()])]
+                if rows.empty:
+                    continue
+                x = lit_b.loc[rows["alloy_id"], "B_nir"].values
+                b.scatter(x, rows["ys_mpa"], s=22 if mk == "D" else 26, marker=mk, facecolors="white",
+                          edgecolors=GREY, linewidths=0.9, zorder=2)
+            # label the low-burden Sc-free alloys that already beat in-house AlSi10Mg
+            for aid, lab, dy in (("aheadd-cp1", "Al-Fe-Zr", -16), ("al-fe-mg-zr", "Al-Fe-Mg-Zr", 10),
+                                 ("eos-al5x1", "Al-Mg-Zr-Mn", 12), ("croteau-al-mg-zr", "Al-Mg-Zr", -16),
+                                 ("chalmers-alloy-f", "Al-Mn-Cr-Zr-Mg", -14)):
+                if aid in lit_b.index and not math.isnan(lit_b.loc[aid, "B_nir"]):
+                    y = lit.loc[lit["alloy_id"] == aid, "ys_mpa"].max()
+                    b.text(lit_b.loc[aid, "B_nir"] + 0.12, y + dy, lab, fontsize=6.0, color=INK2, va="center")
+        for name, (x, lo, hi), rows, col in (("AlSi10Mg", (bal, bal_lo, bal_hi), al, C_ALSI),
+                                             ("Scalmalloy", (bsc, bsc_lo, bsc_hi), sc, C_SCAL)):
             ys = rows["yield_MPa"]
-            b.vlines(x, ys.min(), ys.max(), color=col, linewidth=2.0, zorder=3)
+            b.vlines(x, ys.min(), ys.max(), color=col, linewidth=1.6, zorder=3)
+            b.hlines(ys.max(), lo, hi, color=col, linewidth=1.0, zorder=3)
             b.scatter([x] * len(ys), ys, s=22, facecolors="white", edgecolors=col, linewidths=1.0, zorder=4)
-            b.text(x + xmax * 0.02, ys.max(), f"{name}\n(datasheets)", fontsize=6.3, va="top", color=INK)
-        b.errorbar(b_al, ys_m, yerr=ys_sd, fmt="o", ms=5.5, color=C_ALSI, mec="white", mew=0.8,
+            b.text(hi + 0.15, ys.max() + (45 if name == "Scalmalloy" else 0), f"{name}\n(datasheets)",
+                   fontsize=6.3, va="center", color=INK)
+        b.errorbar(bal, ys_m, yerr=ys_sd, fmt="o", ms=5.5, color=C_ALSI, mec="white", mew=0.8,
                    elinewidth=0.9, capsize=2, zorder=5)
-        cand = burdens.drop(index=[i for i in ("AlSi10Mg", "Scalmalloy") if i in burdens.index])
+        # planned seeds: burden known from the target composition, strength not yet measured
+        seeds = alloys[alloys["role"].astype(str).str.contains("seed")] if not alloys.empty else alloys
+        pts = sorted((burdens.loc[r["alloy_id"], "B_nir"], r["alloy_id"]) for _, r in seeds.iterrows()
+                     if r["alloy_id"] in burdens.index and not math.isnan(burdens.loc[r["alloy_id"], "B_nir"]))
+        prev, level = -9.0, 0
+        for x, aid in pts:
+            level = level + 1 if x - prev < 0.45 else 0
+            prev = x
+            b.plot([x, x], [100, 118], color=C_NEW, linewidth=1.4, zorder=5)
+            b.text(x, 122 + 13 * level, aid, fontsize=5.8, ha="center", va="bottom", color=INK)
+        b.text(8.3, 190, "ticks at the bottom:\nplanned seeds (#275),\nburden only", fontsize=6.0,
+               color=INK2, ha="left", va="center")
+        cand = burdens.drop(index=[i for i in burdens.index if i in ("AlSi10Mg", "Scalmalloy")])
         if not camp.empty and not cand.empty:
             g = camp.groupby("alloy_id")["ys_mpa"].mean()
             ids = [i for i in g.index if i in cand.index]
             b.scatter(cand.loc[ids, "B_nir"], g[ids], s=34, color=C_NEW, edgecolors="white", zorder=6)
             status.append("(b) campaign points drawn")
         else:
-            status.append("(b) campaign points pending")
-        b.set_xlim(0, xmax)
-        b.set_ylim(100, 560)
-        b.set_xlabel("Critical-mineral burden B (wt %, import-weighted; see SI)")
+            status.append("(b) campaign points pending; seeds shown as burden ticks")
+        b.set_xlim(0, 11.5)
+        b.set_ylim(100, 600)
+        b.set_xlabel("Critical-mineral burden $B_\\mathrm{NIR}$ (wt %, import-weighted)")
         b.set_ylabel("Yield strength (MPa)")
         b.set_title("(b) Strength and critical-mineral burden", loc="left")
     else:
@@ -330,7 +369,8 @@ def fig5(p, tensile, hardness) -> str:
 # ------------------------------------------------------------------------ tables
 def tex_escape(s: str) -> str:
     return (str(s).replace("\\", "\\textbackslash{}").replace("&", "\\&").replace("%", "\\%")
-            .replace("_", "\\_").replace("#", "\\#").replace("µ", "\\textmu{}").replace("°", "\\textdegree{}"))
+            .replace("_", "\\_").replace("#", "\\#").replace("µ", "\\textmu{}").replace("°", "\\textdegree{}")
+            .replace("$", "\\$").replace(">=", "$\\geq$").replace("<", "$<$").replace(">", "$>$"))
 
 
 def fmt(v, nd=0):
@@ -370,22 +410,64 @@ def table_benchmarks(bench, tensile) -> None:
     (GEN / "tab-benchmarks.tex").write_text("\n".join(lines) + "\n")
 
 
+def interval(bb) -> str:
+    lo, hi = bb.get("B_nir_low", float("nan")), bb.get("B_nir_high", float("nan"))
+    if any(math.isnan(float(v)) for v in (lo, hi)):
+        return "--"
+    return f"{lo:.1f}" if abs(hi - lo) < 0.05 else f"{lo:.1f}--{hi:.1f}"
+
+
+def table_elements() -> None:
+    """SI table S3: per-element inputs of the burden metric, straight from data/element-criticality.csv."""
+    path = DATA / "element-criticality.csv"
+    if not path.exists():
+        return
+    d = pd.read_csv(path)
+    lines = [r"\begin{tabular}{@{}lllrl@{}}", r"\toprule",
+             r"Element & On 2025 list & U.S.\ net import reliance, 2025 (\%) & Price (USD\,kg$^{-1}$) & Price basis \\",
+             r"\midrule"]
+    for _, r in d.iterrows():
+        price = fmt(r["price_usd_per_kg"], 2) if pd.notna(r["price_usd_per_kg"]) else "--"
+        lines.append(" & ".join([str(r["element"]).capitalize(), tex_escape(r["on_2025_list"]),
+                                 tex_escape(r["nir_reported"]), price, tex_escape(r["price_basis"])]) + r" \\")
+    lines += [r"\bottomrule", r"\end{tabular}"]
+    (GEN / "tab-elements.tex").write_text("\n".join(lines) + "\n")
+
+
+def table_literature(lit, lit_b) -> None:
+    """SI table: scandium-free comparators with their burden (one row per alloy, best strength)."""
+    if lit.empty:
+        return
+    lines = [r"\begin{tabular}{@{}llrrrrl@{}}", r"\toprule",
+             r"Alloy & Condition (highest yield listed) & YS (MPa) & EL (\%) & $B_\mathrm{NIR}$ (wt\%) & "
+             r"$B_\mathrm{cost}$ (USD\,kg$^{-1}$) & Source \\", r"\midrule"]
+    for aid, d in lit.groupby("alloy_id", sort=False):
+        r = d.loc[d["ys_mpa"].idxmax()]
+        bb = lit_b.loc[aid] if aid in lit_b.index else None
+        lines.append(" & ".join([tex_escape(r["name"]), tex_escape(r["condition"]), fmt(r["ys_mpa"]),
+                                 fmt(r["el_pct"], 1), interval(bb) if bb is not None else "--",
+                                 fmt(bb["B_cost"], 2) if bb is not None else "--",
+                                 rf"\cite{{{r['cite_key']}}}"]) + r" \\")
+    lines += [r"\bottomrule", r"\end{tabular}"]
+    (GEN / "tab-literature.tex").write_text("\n".join(lines) + "\n")
+
+
 def table_compositions(alloys, burdens) -> None:
     els = ["si", "mg", "mn", "cr", "zr", "sc", "fe", "ni", "ti", "cu", "ce", "er", "zn"]
     num = lambda v: pd.to_numeric(pd.Series([v]), errors="coerce").fillna(0).iloc[0]
     present = [e for e in els if e in alloys.columns and pd.to_numeric(alloys[e], errors="coerce").fillna(0).gt(0).any()]
-    ncol = 1 + len(present) + 3
-    lines = [rf"\begin{{tabular}}{{@{{}}l{'r' * len(present)}rrr@{{}}}}", r"\toprule"]
-    head = ["Alloy"] + [e.capitalize() for e in present] + [r"$B_\mathrm{NIR}$", r"$B_\mathrm{cost}$", "Sc"]
+    ncol = 1 + len(present) + 2
+    lines = [rf"\begin{{tabular}}{{@{{}}l{'r' * len(present)}rr@{{}}}}", r"\toprule"]
+    head = ["Alloy"] + [e.capitalize() for e in present] + [r"$B_\mathrm{NIR}$", r"$B_\mathrm{cost}$"]
     lines.append(" & ".join(head) + r" \\")
     unit = [""] + ([rf"\multicolumn{{{len(present)}}}{{c}}{{wt\%, nominal}}"] if present else []) + \
-           [r"wt\%", r"USD\,kg$^{-1}$", r"wt\%"]
+           [r"wt\%", r"USD\,kg$^{-1}$"]
     lines.append(" & ".join(unit) + r" \\")
     lines.append(r"\midrule")
     for _, r in alloys.iterrows():
         vals = [fmt(r.get(e), 2) if num(r.get(e)) > 0 else "--" for e in present]
         bb = burdens.loc[r["alloy_id"]] if (not burdens.empty and r["alloy_id"] in burdens.index) else None
-        tail = [fmt(bb["B_nir"], 2), fmt(bb["B_cost"], 2), fmt(bb["Sc"], 2)] if bb is not None else ["--"] * 3
+        tail = ([interval(bb), fmt(bb["B_cost"], 2)] if bb is not None else ["--"] * 2)
         name = tex_escape(r["name"]) if pd.notna(r.get("name")) else tex_escape(r["alloy_id"])
         if str(r.get("role", "")) not in ("benchmark", ""):
             name += rf" ({tex_escape(r['role'])})"
@@ -417,11 +499,14 @@ def numbers(tensile, runs, alloys, burdens) -> None:
              num("InhouseEL", el[0], 1), num("InhouseELsd", el[1], 1), num("InhouseN", ys[3]),
              num("NAlRuns", len(al_runs) if len(al_runs) else float("nan"), 0, "N runs"),
              num("NCompositions", len(cand) if len(cand) else float("nan"), 0, "N compositions")]
-    for aid, macro in (("AlSi10Mg", "BAlSi"), ("Scalmalloy", "BScal")):
-        v = burdens.loc[aid, "B_nir"] if (not burdens.empty and aid in burdens.index) else float("nan")
-        c = burdens.loc[aid, "B_cost"] if (not burdens.empty and aid in burdens.index) else float("nan")
-        lines.append(num(macro + "nir", v, 2, "B"))
-        lines.append(num(macro + "cost", c, 2, "B"))
+    def g(aid, col):
+        return burdens.loc[aid, col] if (not burdens.empty and aid in burdens.index) else float("nan")
+    for aid, macro in (("AlSi10Mg", "BAlSi"), ("Scalmalloy", "BScal"), ("S1", "BSone"), ("S2", "BStwo"),
+                       ("S3", "BSthree"), ("S4", "BSfour"), ("O1", "BOone")):
+        lines.append(num(macro + "nir", g(aid, "B_nir"), 1, "B"))
+        lines.append(num(macro + "nirlo", g(aid, "B_nir_low"), 1, "B"))
+        lines.append(num(macro + "nirhi", g(aid, "B_nir_high"), 1, "B"))
+        lines.append(num(macro + "cost", g(aid, "B_cost"), 2, "B"))
     (GEN / "numbers.tex").write_text("\n".join(lines) + "\n")
 
 
@@ -444,9 +529,12 @@ def main() -> None:
     bench = pd.read_csv(BENCH) if BENCH.exists() else pd.DataFrame(
         columns=["series", "alloy", "condition", "orientation", "yield_MPa", "uts_MPa", "elongation_pct", "source"])
     tensile, runs, alloys = read("tensile.csv"), read("runs.csv"), read("alloys.csv")
-    burdens = mb.table(alloys, mb.load_criticality()) if not alloys.empty else pd.DataFrame()
+    crit = mb.load_criticality()
+    burdens = mb.table(alloys, crit) if not alloys.empty else pd.DataFrame()
+    lit = read("literature-alloys.csv")
+    lit_b = mb.table(lit.drop_duplicates("alloy_id"), crit) if not lit.empty else pd.DataFrame()
     status = {
-        "Fig1": fig1(p, bench, tensile, alloys, burdens),
+        "Fig1": fig1(p, bench, tensile, alloys, burdens, lit, lit_b),
         "Fig2": generic("Fig2", p, read("calphad_screen.csv"), "fig2-calphad-screen", draw_calphad),
         "Fig3": generic("Fig3", p, read("powder.csv"), "fig3-powders", draw_powder),
         "Fig4": generic("Fig4", p, read("density.csv"), "fig4-printability", draw_density),
@@ -456,6 +544,8 @@ def main() -> None:
     table_benchmarks(bench, tensile)
     if not alloys.empty:
         table_compositions(alloys, burdens)
+    table_literature(lit, lit_b)
+    table_elements()
     numbers(tensile, runs, alloys, burdens)
     status_md(p, status)
     for k, v in status.items():

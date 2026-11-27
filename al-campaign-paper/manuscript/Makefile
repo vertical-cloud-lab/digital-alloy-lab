@@ -24,6 +24,8 @@ clean-pdf:
 
 si:
 	$(LATEX) si.tex >/dev/null
+	bibtex si >/dev/null
+	$(LATEX) si.tex >/dev/null
 	$(LATEX) si.tex >/dev/null
 
 figures:

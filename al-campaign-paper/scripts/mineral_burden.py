@@ -7,9 +7,11 @@ depends on the metric. This module computes three, from per-element inputs in
 
 ``B_nir``   mass-weighted U.S. net import reliance of the alloying additions,
             sum over elements other than Al of w_i * NIR_i / 100 (w in wt %, NIR in %).
-            Units: wt % of the alloy that the U.S. imports, net.
-``B_cost``  raw-material cost of the alloying additions, USD per kg of alloy,
-            sum over elements other than Al of (w_i / 100) * price_i.
+            Units: wt % of the alloy that the U.S. imports, net. USGS reports some reliances
+            only as bounds (Si ">50", Mg ">75", Zr "<25"), so B_nir comes as an interval
+            (B_nir_low, B_nir_high) and its midpoint.
+``B_cost``  raw-material cost of the critical alloying additions, USD per kg of alloy,
+            sum over elements on the 2025 list, other than Al, of (w_i / 100) * price_i.
 ``Sc``      scandium content, wt %.
 
 Aluminum is left out of all three: it is the base of every alloy compared, so it cancels.
@@ -34,7 +36,8 @@ ELEMENTS = ["si", "mg", "mn", "cr", "zr", "sc", "fe", "cu", "ni", "ce", "er", "t
 
 def load_criticality(path: Path = DATA / "element-criticality.csv") -> pd.DataFrame:
     if not path.exists():
-        return pd.DataFrame(columns=["element", "on_2025_list", "nir_pct", "price_usd_per_kg"]).set_index("element")
+        return pd.DataFrame(columns=["element", "on_2025_list", "nir_low_pct", "nir_high_pct",
+                                     "price_usd_per_kg"]).set_index("element")
     df = pd.read_csv(path, comment="#")
     df["element"] = df["element"].str.strip().str.lower()
     return df.set_index("element")
@@ -53,28 +56,49 @@ def composition(row: pd.Series) -> dict[str, float]:
     return comp
 
 
+def _num(x) -> float:
+    try:
+        return float(x)
+    except (TypeError, ValueError):
+        return float("nan")
+
+
 def burden(comp: dict[str, float], crit: pd.DataFrame) -> dict[str, object]:
+    """B_nir as an interval (USGS gives some reliances only as bounds, e.g. ">50"), its midpoint,
+    B_cost over the elements on the 2025 list, and Sc. Elements off the list (Fe) count zero."""
     if not any(w > 0 for w in comp.values()):
         # No composition entered yet: say so rather than report a burden of zero.
-        return {"Sc": float("nan"), "B_nir": float("nan"), "B_nir_missing": "composition",
-                "B_cost": float("nan"), "B_cost_missing": "composition"}
+        return {"Sc": float("nan"), "B_nir": float("nan"), "B_nir_low": float("nan"), "B_nir_high": float("nan"),
+                "B_nir_missing": "composition", "B_cost": float("nan"), "B_cost_missing": "composition"}
     out: dict[str, object] = {"Sc": comp.get("sc", 0.0)}
-    for metric, col in (("B_nir", "nir_pct"), ("B_cost", "price_usd_per_kg")):
-        total, missing = 0.0, []
-        for el, w in comp.items():
-            if w <= 0:
-                continue
-            val = crit[col].get(el, float("nan")) if col in crit.columns else float("nan")
-            try:
-                val = float(val)
-            except (TypeError, ValueError):
-                val = float("nan")
-            if math.isnan(val):
-                missing.append(el)
-                continue
-            total += w * val / 100.0
-        out[metric] = float("nan") if missing else total
-        out[metric + "_missing"] = ",".join(missing)
+    lo = hi = cost = 0.0
+    miss_n, miss_c = [], []
+    for el, w in comp.items():
+        if w <= 0:
+            continue
+        if el not in crit.index:
+            miss_n.append(el); miss_c.append(el)
+            continue
+        r = crit.loc[el]
+        on_list = str(r.get("on_2025_list", "")).strip().lower() == "yes"
+        l, h = _num(r.get("nir_low_pct")), _num(r.get("nir_high_pct"))
+        if math.isnan(l) or math.isnan(h):
+            miss_n.append(el)
+        else:
+            lo += w * l / 100.0
+            hi += w * h / 100.0
+        if on_list:
+            p = _num(r.get("price_usd_per_kg"))
+            if math.isnan(p):
+                miss_c.append(el)
+            else:
+                cost += (w / 100.0) * p
+    out["B_nir_low"] = float("nan") if miss_n else lo
+    out["B_nir_high"] = float("nan") if miss_n else hi
+    out["B_nir"] = float("nan") if miss_n else (lo + hi) / 2.0
+    out["B_nir_missing"] = ",".join(miss_n)
+    out["B_cost"] = float("nan") if miss_c else cost
+    out["B_cost_missing"] = ",".join(miss_c)
     return out
 
 
