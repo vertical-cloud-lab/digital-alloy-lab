@@ -138,3 +138,4 @@ the journal's recent closed-loop and AM-alloy papers.
 | Campaign paper scoops the alloy | Version A needs a different/better alloy | Campaign 2 starts from campaign 1's data and aims past its best |
 | A competitor publishes a demonstrated cost-aware network campaign on metals AM first | Novelty sentence | Re-run the precedent scan in Oct 2027 and Jan 2028 |
 | Collection deadline is actually Feb 2027 | This plan collapses into the campaign paper | Decision D1 |
+| The burden metric ranks the focus family badly: with B = Σ wᵢ·NIRᵢ (MCS 2025), Al–Mn–Cr–Zr seeds score above Scalmalloy, because Mn is 100 % imported | "Supply-secure" in the title can't rest on Al–Mn–Cr–Zr | Decide D9 before the screen ranks anything; Zr-refined Al–Mg/Al–Fe alloys score well under any import-weighted metric |
