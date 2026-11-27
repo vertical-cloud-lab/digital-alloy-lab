@@ -531,7 +531,14 @@ recoater, the 28 mm heater plate with its leads down the rod, M2 substrate screw
 
 1. FT-0 then FT-1, or straight to FT-1V if below 100 ppm O₂ is required from the start?
 2. Is a purge-only O₂ of 100–1000 ppm acceptable for the first coupons? EOS M 290 work on Al uses a 1000 ppm threshold.
-3. Buy the used laser chain now? Three of its four parts are returnable, it is about $5.2k–6.6k, and every route uses
-   it, including PR 266's.
-4. Who asks BYU's metal-AM lab about a reduced-build-volume insert for its Concept Laser M2?
-5. Ø40 mm plate and 15 mm builds: enough for the first coupons?
+3. Buy the used laser chain now? The laser, the hurrySCAN 25, the LINOS lens and the **RTC4** (not the RTC5) come to
+   about $4.1k–5.5k with freight and a collimator if needed; three of the four are returnable, and every route uses
+   them, including PR 266's. Before paying for the RTC4, confirm with SCANLAB or the seller that a 64-bit DLL exists.
+4. **Staff the shop.** FT-1's parts are 59–123 shop hours ([`fab/`](fab/)). Two people for the first 2–3 weeks (12 shop
+   hours a working day) keep FT-1's coupons at 3.2–6.4 weeks; one person part-time (5 h a day) gives 4.5–9.3 weeks.
+   Sending the plates and sheet parts out is the alternative.
+5. **Ask Physical Facilities for the laser's 208/240 V, 15 A two-pole circuit on day 0** if the room has none.
+6. **Monitoring from FT-0** (camera, raking lights, coaxial photodiode, digitizer, $4.5k–6.2k) or later? The
+   photodiode's dichroic sits in the beam path, so it is cheapest to fit at S1 when the head is first aligned.
+7. Who asks BYU's metal-AM lab about a reduced-build-volume insert for its Concept Laser M2?
+8. Ø40 mm plate and 15 mm builds: enough for the first coupons?
