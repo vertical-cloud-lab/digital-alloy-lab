@@ -542,10 +542,34 @@ def steps(module="M50"):
         grasp=dict(point=(20.35, -6.8, 241.11), z=DN, x=(1.0, 0.0, 0.0))))
     a(P("F56b", "basiCube 20 scan head on the riser (3.75 kg: the vacuum gripper on its top)", ["2-axis galvo"], "machine", "upright", [(0, 0, 0), (0, 0, 60)],
         tool="vacuum", grasp=dict(point=(20.35, -6.8, 363.11), z=DN, x=(1.0, 0.0, 0.0)), note="its screws are not drawn"))
-    a(P("F57", "Beam tubes, dichroic and fold-mirror cubes, shutter, photodiode chain and collimator",
+    # round 10: the beam line by its axes. Each tube's ends sit in the cubes' ports (tube #1 spans the dichroic cube's +x face to the
+    # galvo's input, x -134 to -57; #2 and #3 the 9 mm gaps from the dichroic to the shutter and from the shutter to the fold-mirror
+    # cube along y), so nothing drops in from above once its neighbours are there (run 7-14: tube #1 met the dichroic). Order:
+    # tube #1 along +x up to the galvo, the dichroic cube along +x onto its free end; tube #2 along -y onto the dichroic's +y port,
+    # the shutter along -y onto its end, tube #3, the fold-mirror cube; then the photodiode chain and the collimator along +x onto
+    # the cubes' -x faces. Arm A works the front (y < 0), arm B the back; the short tubes by the small-part nozzle on their tops.
+    # The step's own keys, path and per_solid stay as they were, for kit_table.py (the long table's layout does not change).
+    a(P("F57", "Beam tubes, dichroic and fold-mirror cubes, shutter, photodiode chain and collimator, each slid along the beam's axis",
         ["Coaxial-monitoring dichroic", "Fold mirror", "Safety shutter", "Enclosed beam tube", "Coaxial photodiode chain", "Collimator"], "machine", "upright",
-        [(0, 0, 0), (0, 0, 60)], per_solid=True, note="round 7: from 60 mm above, the three beam tubes one at a time (run 7: 340 mm up, no IK; the tubes as one part "
-                                                     "107 mm across)"))
+        [(0, 0, 0), (0, 0, 60)], per_solid=True,
+        units=[dict(keys=["Enclosed beam tubes #1"], path=[(0, 0, 0), (-30, 0, 0), (-30, 0, 70)], actor="A",
+                    grasp=dict(point=(-95.6, -25.25, 271.1), z=DN, x=(0.0, 1.0, 0.0), width=18.0)),
+               dict(keys=["Coaxial-monitoring dichroic"], path=[(0, 0, 0), (-40, 0, 0), (-40, 0, 80)], actor="A",
+                    grasp=dict(point=(-155.0, -25.25, 284.0), z=DN, x=(0.0, 1.0, 0.0), width=41.9)),
+               dict(keys=["Enclosed beam tubes #2"], path=[(0, 0, 0), (0, 30, 0), (0, 30, 70)], actor="B", tool="nozzle",
+                    grasp=dict(point=(-155.0, 0.25, 280.1), z=DN, x=(1.0, 0.0, 0.0))),
+               dict(keys=["Safety shutter"], path=[(0, 0, 0), (0, 40, 0), (0, 40, 80)], actor="B",
+                    grasp=dict(point=(-155.0, 34.8, 288.0), z=DN, x=(1.0, 0.0, 0.0), width=64.0)),
+               dict(keys=["Enclosed beam tubes #3"], path=[(0, 0, 0), (0, 30, 0), (0, 30, 70)], actor="B", tool="nozzle",
+                    grasp=dict(point=(-155.0, 69.3, 280.1), z=DN, x=(1.0, 0.0, 0.0))),
+               dict(keys=["Fold mirror"], path=[(0, 0, 0), (0, 40, 0), (0, 40, 80)], actor="B",
+                    grasp=dict(point=(-155.0, 94.75, 284.0), z=DN, x=(1.0, 0.0, 0.0), width=41.9)),
+               dict(keys=["Coaxial photodiode chain"], path=[(0, 0, 0), (-40, 0, 0), (-40, 0, 80)], actor="A",
+                    grasp=dict(point=(-203.0, -25.25, 271.1), z=DN, x=(0.0, 1.0, 0.0), width=30.5)),
+               dict(keys=["Collimator"], path=[(0, 0, 0), (-40, 0, 0), (-40, 0, 80)], actor="B",
+                    grasp=dict(point=(-240.0, 94.75, 271.1), z=DN, x=(0.0, 1.0, 0.0), width=30.0))],
+        note="round 7: from 60 mm above, the three beam tubes one at a time (run 7: 340 mm up, no IK; the tubes as one part 107 mm "
+             "across); round 10: each piece along the beam's axis"))
     a(N("F57b", "Beam alignment and scan-field calibration (alignment laser, power head, test marks)", "person",
         "Optics alignment and calibration need judgment and instruments (Edison r7 review); the robot only placed the parts."))
     a(N("F58", "Process fiber routed to the collimator", "person", "Armoured fiber, >= 100 mm bend radius: cable routing stays manual."))
