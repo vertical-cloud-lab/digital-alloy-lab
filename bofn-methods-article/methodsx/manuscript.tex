@@ -491,8 +491,10 @@ Figure~S1.}
 plateaued at \stat{k1-tiered-v100-mean}\% of the optimum by \$100k (95\% CI
 \stat{k1-tiered-v100-lo}--\stat{k1-tiered-v100-hi}), below random designs
 (\stat{k1-random-v100-mean}\%), because its shortlist excludes the optimum.
-Every model-based policy finished \stat{k1-pkgfn-tiered-v100} to
-\stat{k1-eifn_reuse-tiered-v100} percentage points above it. Measured as
+Every model-based policy finished above it at \$100k, by between
+\stat{k1-pkgfn-tiered-v100-abs} (pKGFN and standard BO) and
+\stat{k1-eifn_reuse-tiered-v100-abs} percentage points (BOFN with powder reuse,
+95\% CI \stat{k1-eifn_reuse-tiered-v100-ci}). Measured as
 spend to reach screening's own \$100k level, pKGFN and BOFN with powder reuse
 were \stat{k1-su-pkgfn-tiered}$\times$ (\stat{k1-su-pkgfn-tiered-ci95}) and
 \stat{k1-su-eifn_reuse-tiered}$\times$ (\stat{k1-su-eifn_reuse-tiered-ci95})
@@ -503,18 +505,20 @@ faster, full-chain BOFN and KGFN \stat{k1-su-eifn-tiered}$\times$
 \cref{fig:speedup}). The ratio depends on the target: screening's mean creeps
 up in its last \$5k, which sets its own crossing at the end of the budget.
 
-\paragraph{The $2\times2$: choosing the stage buys an early lead, not a better
-finish.} Under the knowledge gradient, partial evaluation was
-\stat{k1-c-0-v25}\pp{} ahead of full-chain evaluation at \$25k (95\% CI
-\stat{k1-c-0-v25-ci}), and level by \$100k (\stat{k1-c-0-v100}\pp,
-\stat{k1-c-0-v100-ci}). Under expected improvement per dollar the early lead was
-\stat{k1-c-1-v25}\pp{} (\stat{k1-c-1-v25-ci}) and the \$100k difference
-\stat{k1-c-1-v100}\pp{} (\stat{k1-c-1-v100-ci}). Over the whole budget neither
-contrast was distinguishable from zero (anytime \stat{k1-c-0-auc}\pp{} and
+\paragraph{The $2\times2$ at $\kappa=1$: choosing the step buys an early lead,
+not a better finish.} Under the knowledge gradient, partial evaluation was
+\stat{k1-c-0-v25-abs}\pp{} ahead of full-chain evaluation at \$25k (95\% CI of
+the difference \stat{k1-c-0-v25-ci}), and level by \$100k (difference
+\stat{k1-c-0-v100}\pp, \stat{k1-c-0-v100-ci}). Under expected improvement per
+dollar the early lead was smaller and not resolved (\stat{k1-c-1-v25}\pp,
+\stat{k1-c-1-v25-ci}), and the \$100k difference was \stat{k1-c-1-v100}\pp{}
+(\stat{k1-c-1-v100-ci}). Over the whole budget neither contrast was
+distinguishable from zero (anytime \stat{k1-c-0-auc}\pp{} and
 \stat{k1-c-1-auc}\pp). The knowledge gradient did not beat expected improvement
-per dollar: with partial evaluation it finished \stat{k1-c-2-v100}\pp{} behind
-(\stat{k1-c-2-v100-ci}), and with full chains it was \stat{k1-c-3-v50}\pp{}
-behind at \$50k (\stat{k1-c-3-v50-ci}) and level at \$100k (\cref{fig:contrasts}).
+per dollar: with partial evaluation it finished \stat{k1-c-2-v100-abs}\pp{} behind
+(difference \stat{k1-c-2-v100-ci}), and with full chains it was
+\stat{k1-c-3-v50-abs}\pp{} behind at \$50k (\stat{k1-c-3-v50-ci}) and level at
+\$100k (\cref{fig:contrasts}).
 pKGFN spent its budget on prints of a few powders: per run it bought
 \stat{k1-pkgfn-nA} powders, \stat{k1-pkgfn-nL} prints and \stat{k1-pkgfn-nT}
 tensile tests, against \stat{k1-eifn_reuse-nA}, \stat{k1-eifn_reuse-nL} and
@@ -530,27 +534,34 @@ speed-ups over it were between \stat{k1-su-pkgfn-ei} and
 modelling the whole chain over trusting the screen; partial evaluation adds an
 early lead on top.
 
-\paragraph{When the screen is right ($\kappa=0$).} Screen-then-test kept pace
-with the network policies: at \$100k it reached \stat{k0-tiered-v100-mean}\% of
-the optimum, against \stat{k0-eifn-v100-mean}\% for BOFN and
-\stat{k0-eifn_reuse-v100-mean}\% for BOFN with powder reuse (differences
-\stat{k0-eifn-tiered-v100}\pp, 95\% CI \stat{k0-eifn-tiered-v100-ci}, and
-\stat{k0-eifn_reuse-tiered-v100}\pp, \stat{k0-eifn_reuse-tiered-v100-ci}), so no
-policy was much faster than it (\cref{fig:speedup}). Both knowledge-gradient
-policies fell far behind: pKGFN reached \stat{k0-pkgfn-v100-mean}\% and KGFN
-\stat{k0-kgfn-v100-mean}\%, \stat{k0-pkgfn-eifn_reuse-v100}\pp{} and
-\stat{k0-kgfn-eifn-v100}\pp{} behind their expected-improvement counterparts
-(\stat{k0-pkgfn-eifn_reuse-v100-ci}; \stat{k0-kgfn-eifn-v100-ci}). The optimum
-at $\kappa=0$ is a lean alloy without nucleant, in a corner of composition space
-that the 32 seed compositions do not reach. pKGFN atomizes only simulated alloys
-and bought \stat{k0-pkgfn-nC} new CALPHAD calls per run, so it kept printing the
-powders it had (\stat{k0-pkgfn-nL} prints per run); KGFN ran \stat{k0-kgfn-nC}
-of its \stat{k0-kgfn-nA} chains per run on new alloys and the rest on alloys it
-had already simulated. A diagnosis of the same pKGFN code in the clocked
-extension found the knowledge gradient of a tensile test exactly zero for most
-candidates at $\kappa=0$~\tbd{ref once public}. Partial evaluation under
-expected improvement still bought an early lead: \stat{k0-c-1-v25}\pp{} over
-full-chain BOFN at \$25k (\stat{k0-c-1-v25-ci}).
+\paragraph{When the screen is right ($\kappa=0$).} Screen-then-test was the most
+reliable policy: \stat{k0-tiered-v100-mean}\% of the optimum at \$100k (95\% CI
+\stat{k0-tiered-v100-lo}--\stat{k0-tiered-v100-hi}), the narrowest interval of
+any policy, and no other policy's mean curve reached that level within the budget
+(\cref{fig:speedup}). The two BOFN policies averaged
+\stat{k0-eifn_reuse-v100-mean}\% (with powder reuse) and
+\stat{k0-eifn-v100-mean}\%; BOFN with powder reuse finished ahead of
+screen-then-test on \stat{k0-eifn_reuse-tiered-v100-wins} of \stat{k0-n} seeds
+but far behind on the rest, so its mean was \stat{k0-eifn_reuse-tiered-v100-abs}\pp{}
+lower (difference \stat{k0-eifn_reuse-tiered-v100-ci}). The knowledge-gradient policies fell
+furthest. pKGFN and KGFN both reached \stat{k0-pkgfn-v100-mean}\%,
+\stat{k0-pkgfn-eifn_reuse-v100-abs}\pp{} and \stat{k0-kgfn-eifn-v100-abs}\pp{}
+behind their expected-improvement counterparts at \$100k (differences
+\stat{k0-pkgfn-eifn_reuse-v100-ci} and \stat{k0-kgfn-eifn-v100-ci}; they finished
+ahead on \stat{k0-pkgfn-eifn_reuse-v100-wins} and \stat{k0-kgfn-eifn-v100-wins}
+of \stat{k0-n} seeds), and \stat{k0-pkgfn-tiered-v100-abs}\pp{} behind
+screen-then-test (\stat{k0-pkgfn-tiered-v100-ci}). The optimum at $\kappa=0$ is a
+lean alloy without nucleant, in a corner of composition space that the 32 seed
+compositions do not reach. pKGFN atomizes only simulated alloys and bought
+\stat{k0-pkgfn-nC} new CALPHAD calls per run, so it kept printing the powders it
+had (\stat{k0-pkgfn-nL} prints per run); KGFN ran \stat{k0-kgfn-nC} of its
+\stat{k0-kgfn-nA} chains per run on new alloys and the rest on alloys it had
+already simulated. A diagnosis of the same pKGFN code in the clocked extension
+found the knowledge gradient of a tensile test exactly zero for most candidates at
+$\kappa=0$~\tbd{ref once public}. Choosing the step made no resolvable difference
+at $\kappa=0$ under either acquisition function (at \$25k, \stat{k0-c-1-v25}\pp{}
+under expected improvement, \stat{k0-c-1-v25-ci}; \stat{k0-c-0-v25}\pp{} under
+the knowledge gradient, \stat{k0-c-0-v25-ci}).
 
 \paragraph{Half right ($\kappa=0.5$).} \tbd{Two or three sentences once the
 16-seed runs are in.}

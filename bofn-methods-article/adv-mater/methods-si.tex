@@ -84,12 +84,15 @@ On a synthetic version of the workflow with a known optimum (SI Section~S12),
 network optimization that chooses the step reached screen-then-test's \$100k
 result with \stat{k1-su-eifn_reuse-tiered}-fold (95\% confidence interval
 \stat{k1-su-eifn_reuse-tiered-ci95}) less spend when the screen missed
-nucleant-driven crack suppression, and with \stat{k0-su-eifn_reuse-tiered}-fold
-(\stat{k0-su-eifn_reuse-tiered-ci95}) when the screen was right. Choosing the
-step mattered most early, \stat{k1-c-1-v25} and \stat{k0-c-1-v25} percentage
-points of the optimum ahead of full-chain evaluation after \$25k, and the
-acquisition function mattered too: the knowledge gradient as implemented never
-reached screen-then-test's result when the screen was right.
+nucleant-driven crack suppression, and did not reach it within the budget when
+the screen was right; screen-then-test was then the most reliable policy
+(\stat{k0-tiered-v100-mean}\% of the optimum, against
+\stat{k0-eifn_reuse-v100-mean}\%). With a wrong screen, choosing the step
+bought an early lead over running every candidate through the whole chain rather
+than a better final alloy: after \$25k it was \stat{k1-c-0-v25} percentage points
+of the optimum ahead under the knowledge gradient (\stat{k1-c-0-v25-ci}) and
+\stat{k1-c-1-v25} under expected improvement per dollar (\stat{k1-c-1-v25-ci}),
+and after \$100k neither lead remained.
 \note{Uses BOFN with powder reuse (EI per dollar, partial) as the
 step-choosing policy because it is the robust one across $\kappa$; pKGFN's
 3.8-fold at $\kappa=1$ (\stat{k1-su-pkgfn-tiered-ci95}) is in SI
@@ -195,22 +198,32 @@ reaches it.
 runs. When the screen missed the nucleant effect ($\kappa=1$), screen-then-test
 plateaued at \stat{k1-tiered-v100-mean}\% of the optimum, below random designs
 (\stat{k1-random-v100-mean}\%), and every model-based policy finished
-\stat{k1-pkgfn-tiered-v100} to \stat{k1-eifn_reuse-tiered-v100} points
+\stat{k1-pkgfn-tiered-v100-abs} to \stat{k1-eifn_reuse-tiered-v100-abs} points
 above it. pKGFN reached screening's \$100k result at
 \stat{k1-su-pkgfn-tiered}$\times$ less spend (95\% CI
 \stat{k1-su-pkgfn-tiered-ci95}), BOFN with powder reuse at
 \stat{k1-su-eifn_reuse-tiered}$\times$ (\stat{k1-su-eifn_reuse-tiered-ci95}),
 and the full-chain policies at \stat{k1-su-eifn-tiered}$\times$ (BOFN) and
 \stat{k1-su-kgfn-tiered}$\times$ (KGFN) (\cref{figS:speedup}). Choosing the
-step bought an early lead, \stat{k1-c-0-v25} points over full-chain evaluation at
-\$25k under the knowledge gradient (\stat{k1-c-0-v25-ci}), which was gone by
-\$100k (\stat{k1-c-0-v100}, \stat{k1-c-0-v100-ci}). The knowledge gradient was
-not better than expected improvement per dollar: with partial evaluation it
-finished \stat{k1-c-2-v100} points behind (\stat{k1-c-2-v100-ci}), mostly
+step bought an early lead, \stat{k1-c-0-v25-abs} points over full-chain evaluation
+at \$25k under the knowledge gradient (difference \stat{k1-c-0-v25-ci}), which was
+gone by \$100k (\stat{k1-c-0-v100}, \stat{k1-c-0-v100-ci}). The knowledge
+gradient was not better than expected improvement per dollar: with partial
+evaluation it finished \stat{k1-c-2-v100-abs} points behind (difference
+\stat{k1-c-2-v100-ci}), mostly
 because it bought prints of a few powders (\stat{k1-pkgfn-nA} powders and
 \stat{k1-pkgfn-nL} prints per run, against \stat{k1-eifn_reuse-nA} and
-\stat{k1-eifn_reuse-nL} for BOFN with reuse). \tbd{$\kappa=0$ and 0.5: two
-sentences once the 16-seed runs are in.}
+\stat{k1-eifn_reuse-nL} for BOFN with reuse). When the screen was right
+($\kappa=0$), screen-then-test was the most reliable policy
+(\stat{k0-tiered-v100-mean}\% of the optimum at \$100k, 95\% CI
+\stat{k0-tiered-v100-lo}--\stat{k0-tiered-v100-hi}) and no other policy's mean
+reached that level within the budget. The network policies with expected
+improvement averaged \stat{k0-eifn_reuse-v100-mean}\% (with powder reuse) and
+\stat{k0-eifn-v100-mean}\%, and the knowledge-gradient policies fell furthest
+behind (pKGFN \stat{k0-pkgfn-v100-mean}\%, KGFN \stat{k0-kgfn-v100-mean}\%):
+pKGFN atomizes only alloys it has simulated, and the optimum at $\kappa=0$ is a
+lean, nucleant-free alloy that the seed compositions do not reach.
+\tbd{$\kappa=0.5$: one sentence once the runs are in.}
 
 \paragraph{Validation.} Reruns of the stored runs with the pinned environment
 matched them action for action (the same step at the same spend at every

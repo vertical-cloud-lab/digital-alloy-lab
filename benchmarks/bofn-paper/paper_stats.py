@@ -352,12 +352,14 @@ def numbers_tex(all_res):
                 put(tex_key(k, r["a"], r["b"], m), f"{100 * r[f'{m}_diff']:+.1f}".replace("+", "$+$").replace("-", "$-$"))
                 put(tex_key(k, r["a"], r["b"], m, "ci"), f"{100 * r[f'{m}_lo']:.1f} to {100 * r[f'{m}_hi']:.1f}".replace("-", "$-$"))
                 put(tex_key(k, r["a"], r["b"], m, "wins"), r[f"{m}_wins"])
+                put(tex_key(k, r["a"], r["b"], m, "abs"), f"{abs(100 * r[f'{m}_diff']):.1f}")
         for m in METRICS:
             put(tex_key(k, "widthratio", m), f"{np.nanmedian([r[f'{m}_width_ratio'] for r in res['pairwise']]):.2f}")
         for i, r in enumerate(res["contrasts"]):
             for m in METRICS:
                 put(tex_key(k, "c", i, m), f"{100 * r[f'{m}_diff']:+.1f}".replace("+", "$+$").replace("-", "$-$"))
                 put(tex_key(k, "c", i, m, "ci"), f"{100 * r[f'{m}_lo']:.1f} to {100 * r[f'{m}_hi']:.1f}".replace("-", "$-$"))
+                put(tex_key(k, "c", i, m, "abs"), f"{abs(100 * r[f'{m}_diff']):.1f}")
         for r in res["speedup"]:
             put(tex_key(k, "su", r["policy"], r["over"]), "n.r." if r["est"] == 0 else f"{r['est']:.1f}")
             put(tex_key(k, "su", r["policy"], r["over"], "ci95"), f"{r['lo95']:.1f}--{r['hi95']:.1f}")
