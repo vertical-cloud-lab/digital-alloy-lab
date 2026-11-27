@@ -81,4 +81,6 @@ S10 desktop LPBF design, commissioning, O₂ log and laser calibration; S11 ever
 |---|---|---|
 | `figures/fig1-loop.tikz` | Schematic of the loop (draft for Fig. 1a) | none needed |
 | `figures/figS-atomizer-runs.pdf` | Every atomizer run to date and how it ended (draft for SI S1/S3) | PR #286 `atomizer-runs/runs.csv` @ `8320f13` |
+| `figures/fig5c-draft-benchmarks.pdf` | Yield strength against mineral burden for the benchmarks, with the seeds' burden ranges (frame for Fig. 5c) | `data/benchmark-property-window.csv` (PR #285 @ `a25d763`), Utah AlSi10Mg n = 4 (PR #288), MCS 2025 via `tools/mineral_burden_check.py` |
+| `figures/fig1a-draft-network-photos.pdf` | The loop with lab photographs (draft for Fig. 1a) | #284 @ `a68b67d` |
 | `figures/fig6-draft-synthetic.pdf` | Spend to target, screen right vs wrong, from the synthetic benchmark (draft layout for Fig. 6b) | `bofn-prelim` results @ `3e2e167` (PR 90's branch, read only) |

@@ -184,6 +184,61 @@ def fig6_synthetic() -> None:
     save(fig, "fig6-draft-synthetic")
 
 
+# --------------------------------------------------------------------------- benchmarks vs burden
+def fig5c_benchmarks() -> None:
+    """Yield strength against mineral burden for the benchmarks: the frame Fig. 5c will fill.
+
+    Datasheet rows: data/benchmark-property-window.csv (PR #285 @ a25d763). Lab row: Utah Aconity
+    MIDI AlSi10Mg, as built, horizontal, n = 4 (PR #288 @ 9ae2c34). Burden: B = sum w_i NIR_i/100
+    with MCS 2025 bounds, as a range (tools/mineral_burden_check.py)."""
+    sys.path.insert(0, str(ROOT / "tools"))
+    from mineral_burden_check import ALLOYS, burden
+
+    rows = list(csv.DictReader(open(DATA / "benchmark-property-window.csv")))
+    fig, (ax, ax2) = plt.subplots(2, 1, figsize=(4.6, 4.6), sharex=True,
+                                   gridspec_kw={"height_ratios": [4, 1.35], "hspace": 0.22})
+    spec = {"AlSi10Mg": ("AlSi10Mg (nominal)", BLUE), "Scalmalloy (Al-Mg-Sc-Zr)": ("Scalmalloy (D2)", ORANGE)}
+    for alloy, (key, color) in spec.items():
+        lo, hi = burden(ALLOYS[key])
+        mid = (lo + hi) / 2
+        sel = [r for r in rows if r["alloy"] == alloy]
+        ax.axvspan(lo, hi, color=color, alpha=0.08, linewidth=0)
+        for i, r in enumerate(sel):
+            heat = "as-built" not in r["condition"]
+            x = mid + (i - len(sel) / 2) * 0.06
+            ax.scatter([x], [float(r["yield_MPa"])], marker="s" if heat else "o", s=26,
+                       facecolor="white" if heat else color, edgecolor=color, linewidth=1.3, zorder=3)
+        ax.text(mid + 0.45, 485 if "Sc" in alloy else 318, alloy.split(" (")[0], color=INK, fontsize=7.5, va="center")
+        ax.text(lo + 0.05, 128, f"B range, {alloy.split(' (')[0]}", color=color, fontsize=6, va="bottom")
+    lo, hi = burden(ALLOYS["AlSi10Mg (nominal)"])
+    ax.errorbar([(lo + hi) / 2], [228], yerr=[13], fmt="D", color=BLUE, ms=6, mfc=AQUA, mec=BLUE, capsize=2, zorder=4)
+    ax.annotate("this lab: Aconity MIDI,\nas built, n = 4", ((lo + hi) / 2, 228), (0.3, 150), fontsize=7, color=INK,
+                arrowprops=dict(arrowstyle="-", color=INK2, lw=0.6))
+    for y, lab in ((250, "FLAIME gate, Al-Mn-Cr-Zr"), (200, "FLAIME gate, Al-Zr")):
+        ax.axhline(y, color=GRAY, lw=0.8, ls="--")
+        ax.text(7.9, y + 6, lab, fontsize=6.5, color=INK2, ha="right")
+    ax.set_ylabel("Yield strength (MPa)")
+    ax.set_ylim(120, 540)
+    ax.grid(axis="y", color=GRID_C, lw=0.6)
+    handles = [plt.Line2D([], [], marker="o", ls="", mfc=GRAY, mec=GRAY, label="as built (datasheet)"),
+               plt.Line2D([], [], marker="s", ls="", mfc="white", mec=GRAY, label="heat-treated (datasheet)")]
+    ax.legend(handles=handles, fontsize=7, loc="upper left")
+    seeds = ["S1 Al-4.8Mn-0.9Cr-1.1Zr-1.2Mg", "S2 Al-1.9Fe-1.0Mg-1.0Zr", "O1 Al-3.6Mg-1.2Zr", "S3 Al-3.5Si-2.5Mg"]
+    for j, name in enumerate(seeds):
+        lo, hi = burden(ALLOYS[name])
+        ax2.plot([lo, max(hi, lo + 0.04)], [j, j], color=INK2, lw=4, solid_capstyle="butt")
+        ax2.text(max(hi, lo + 0.04) + 0.1, j, name.split(" ")[1], fontsize=6.5, color=INK, va="center")
+    ax2.set_yticks([]); ax2.spines["left"].set_visible(False)
+    ax2.set_ylim(-0.7, len(seeds) - 0.3)
+    ax2.set_xlim(0, 8.2)
+    ax2.set_xlabel("Mineral burden B (wt% of alloy imported, net; MCS 2025)")
+    ax2.text(0.0, 1.02, "Proposed seeds (#275): burden only, no strength yet", transform=ax2.transAxes,
+             fontsize=7, color=INK2, va="bottom")
+    fig.text(0.0, -0.06, "DRAFT for Fig. 5c. Shaded bands: B range, because MCS gives Si, Mg and Zr as bounds. "
+             "Campaign alloys will be added; datasheets are context, not the comparison.", fontsize=6.3, color=INK2, wrap=True)
+    save(fig, "fig5c-draft-benchmarks")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--bofn-dir", type=Path, help="path to benchmarks/bofn-prelim to re-summarize")
@@ -192,6 +247,7 @@ def main() -> None:
         summarize_bofn(args.bofn_dir.resolve())
     fig_atomizer_runs()
     fig6_synthetic()
+    fig5c_benchmarks()
 
 
 if __name__ == "__main__":
