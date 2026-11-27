@@ -35,7 +35,8 @@ interval is corrected for multiplicity; with 28 pairs x 4 metrics x 3
 kappas, read single intervals that only just exclude 0 with care.
 
 Outputs (paper-stats/): policies.csv, pairwise.csv, contrasts.csv, speedup.csv,
-allocation.csv, SUMMARY.md (the tables the drafts quote), numbers.tex (one LaTeX
+allocation.csv, curves.csv (mean and SE on a $1k grid, in the format of
+adv-mater-article/data/bofn-prelim-summary.csv, for that article's Fig. 6b), SUMMARY.md (the tables the drafts quote), numbers.tex (one LaTeX
 macro per quoted number, so both drafts print the same values) and the LaTeX
 tables table-results.tex and table-contrasts.tex.
 """
@@ -155,7 +156,12 @@ def analyse(kappa, check=False):
         vals = [per_run(runs[p][s], ystar) for s in seeds]
         M[p] = {m: np.array([v[0][m] for v in vals]) for m in vals[0][0]}
         C[p] = np.stack([v[1] for v in vals])
-    res = {"kappa": kappa, "ystar": ystar, "seeds": seeds, "n": len(seeds), "policies": [], "pairwise": [], "contrasts": [], "speedup": [], "allocation": []}
+    res = {"kappa": kappa, "ystar": ystar, "seeds": seeds, "n": len(seeds), "policies": [], "pairwise": [], "contrasts": [], "speedup": [], "allocation": [], "curves": []}
+    for p in POLICIES:  # mean and SE on a $1k grid, the format of adv-mater-article/data/bofn-prelim-summary.csv
+        for j in range(0, len(GRID), 4):
+            col = 100 * C[p][:, j]
+            res["curves"].append({"kappa": kappa, "policy": p, "spent_usd": int(GRID[j]), "mean_pct": float(col.mean()),
+                                  "se_pct": float(col.std(ddof=1) / math.sqrt(len(col))), "n_seeds": len(seeds)})
     for p in POLICIES:
         row = {"kappa": kappa, "policy": p, "n": len(seeds)}
         for m in METRICS:
@@ -416,7 +422,7 @@ def main():
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
     all_res = [r for r in (analyse(k, a.check) for k in KAPPAS) if r]
-    for name in ("policies", "pairwise", "contrasts", "speedup", "allocation"):
+    for name in ("policies", "pairwise", "contrasts", "speedup", "allocation", "curves"):
         write_csv(out / f"{name}.csv", [row for r in all_res for row in r[name]])
     (out / "SUMMARY.md").write_text(summary_md(all_res))
     (out / "numbers.tex").write_text(numbers_tex(all_res))

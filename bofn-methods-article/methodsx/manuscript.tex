@@ -73,8 +73,8 @@ with partial evaluations (p-KGFN)~\cite{buathong2024,buathong2025}; knowledge
 gradient~\cite{frazier2009}; expected improvement~\cite{jones1998} \\
 Resource availability & Code, every run record and the analysis:
 \url{https://github.com/vertical-cloud-lab/digital-alloy-lab}, folder
-\code{benchmarks/bofn-paper} \tbd{licence; archived release and DOI at
-submission}. Python 3.12 with PyTorch 2.14.1, BoTorch 0.18.1, GPyTorch 1.15.2,
+\code{benchmarks/bofn-paper}, MIT licence; archived release and DOI
+\tbd{at submission}. Python 3.12 with PyTorch 2.14.1, BoTorch 0.18.1, GPyTorch 1.15.2,
 NumPy 2.5.3 and SciPy 1.18.1 (exact pins in \code{requirements.txt}); a laptop or
 a 2-core cloud machine is enough. \\
 \bottomrule
@@ -120,9 +120,9 @@ cracking in printed high-strength aluminum~\cite{martin2017}, which a
 freezing-range crack criterion~\cite{kou2015} misses. (iii) Runs are seeded and
 logged, reruns are checked action for action, and every comparison is a
 matched-seed bootstrap interval. The benchmark is the dollar-budget, sequential
-base of a clocked simulation and a digital twin of the same
-laboratory~\tbd{refs once public}, and supports the companion article's
-optimizer~\tbd{ref}.
+base on which a clocked simulation of the same laboratory is
+built~\tbd{ref once public}, and it tests the optimizer of the companion
+article~\tbd{ref}.
 
 % ---------------------------------------------------------------------------
 \section*{Method details}
@@ -209,11 +209,11 @@ Observations are noise-free by default.
 
 Every node is an exact Gaussian process (GP) on its own inputs (the design
 variables it uses plus its parents' outputs), with an RBF kernel whose
-hyperparameters are fitted by maximum marginal likelihood under BoTorch's
-default priors~\cite{balandat2020,gardner2018,paszke2019}, and a fixed noise
-of $10^{-6}$ as a numerical nugget. Only the nodes whose data changed are
-refitted after a purchase, and fit failures are counted and logged with every
-run. The network posterior at a design is carried as Monte Carlo samples: 64
+hyperparameters are fitted by maximizing the marginal likelihood with BoTorch's
+default priors (a maximum a posteriori estimate)~\cite{balandat2020,gardner2018,paszke2019},
+and a fixed noise of $10^{-6}$ as a numerical nugget. pKGFN and KGFN refit only
+the nodes whose data changed after a purchase; the expected-improvement policies
+refit every node. Fit failures are counted and logged with every run. The network posterior at a design is carried as Monte Carlo samples: 64
 standard-normal base samples per node, held fixed across the candidates of one
 decision (common random numbers), are pushed through the nodes in topological
 order, each node drawing its value from its GP at the sampled values of its
@@ -313,7 +313,8 @@ always computed on the same seeds. Differences are in percentage points of the
 optimum. The speed-up of a policy over a baseline is the spend at which the
 baseline's mean curve first reaches its own \$100k mean, divided by the spend at
 which the policy's mean curve first reaches it; it is 0 if the policy's mean
-never gets there within \$100k~\cite{tom2024}. Wilcoxon signed-rank
+never gets there within \$100k. It is an acceleration factor in the sense used
+for self-driving laboratories~\cite{tom2024}, measured in dollars. Wilcoxon signed-rank
 $p$-values~\cite{wilcoxon1945} and win counts are reported alongside, without
 correction for the number of comparisons.
 
@@ -372,14 +373,14 @@ its \$100k result and its mix of purchases within the seed-to-seed spread.
 \item \textbf{Gaussian processes.} \stat{k1-pkgfn-fitfail} of
 \stat{k1-pkgfn-fits} GP fits failed in pKGFN's \stat{k1-n} runs at $\kappa=1$,
 and none failed in any policy at any $\kappa$ \tbd{confirm from
-paper-stats/allocation.csv after the sweep}. Fitted lengthscales ranged from
-0.10 to 132; none sat at the lower bound.
+paper-stats/allocation.csv after the sweep}. In a check of about 900 fits, fitted lengthscales ranged from 0.10 to 132 and
+none sat at the lower bound.
 \item \textbf{Independent review.} Before the port, an independent analysis
 agent reviewed the code and recomputed every table from the run files without
 \code{analyze.py}; the GP posterior matched NumPy and BoTorch to $10^{-15}$
 and every table reproduced at its published precision. Its two findings that
-changed code (budget-edge checks) are fixed, and the fixes do not change any
-stored run. \tbd{Cite the review reports in the repository.}
+changed code (two budget-edge checks) are fixed, and the fixes change no run of
+the eight policies compared here, as the reruns below confirm. \tbd{Cite the review reports in the repository.}
 \end{itemize}
 
 \subsection*{Runs reproduce action for action}
@@ -544,14 +545,15 @@ values a new powder by atomizing and printing it as one \$4,000 move.
 and 20 seeds) or from 16-seed reruns if they finish.}
 \end{itemize}
 
-Two extensions reuse this truth. A clocked version adds durations, station
-capacity, asynchronous decisions, noise, failed powders, builds and bars, and
-reports days as well as dollars; a digital twin of the laboratory adds people,
-robots and calendars. \tbd{Cite once public (DAL PR 297; byu-vcl twin rounds
-3--5).} In both, a fixed pKGFN tied full-chain BOFN, and in the clocked version
-the EI fallback made most of pKGFN's decisions, which is consistent with what
-this benchmark shows: on this network, choosing the stage helps early, and the
-knowledge gradient adds little over expected improvement per dollar.
+A clocked version reuses this truth and adds durations, station capacity,
+asynchronous decisions, noise, and failed powders, builds and bars, and reports
+days as well as dollars; a digital twin of the laboratory, with its own aluminum
+and copper truths, adds people, robots and calendars. \tbd{Cite once public at a
+fixed commit (DAL PR 297; byu-vcl twin rounds 3--5).} In both, a pKGFN with fixes
+tied full-chain BOFN, and in the clocked version the EI fallback made most of
+pKGFN's decisions. That is consistent with what this benchmark shows: on this
+network, choosing the step helps early, and the knowledge gradient adds little
+over expected improvement per dollar.
 
 % ---------------------------------------------------------------------------
 \section*{Limitations}
