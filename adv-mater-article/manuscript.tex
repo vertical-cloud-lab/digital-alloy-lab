@@ -352,7 +352,9 @@ made \tbd{N} decisions (\cref{fig:campaign}a): \tbd{a} CALPHAD calculations,
 \tbd{b} powder runs, \tbd{c} prints and \tbd{d} tensile sets.\src{B2} Of
 the candidates that reached the powder stage, \tbd{p} stopped before printing and
 \tbd{q} printed candidates stopped before tensile testing.\note{This paragraph
-assumes the knowledge-gradient option of decision M7 (pKGFN). Under the other
+assumes the knowledge-gradient option of decision M7 (pKGFN), and so do the
+abstract's ``stops \tbd{p} of \tbd{n} candidates before printing'' and claim (iii)
+of the introduction. Under the other
 option, network expected improvement per dollar with powder reuse, the optimizer
 never stops a candidate after CALPHAD or after atomization: each decision is a new
 design through the whole chain or a reprint and test of an existing lot (the
@@ -485,7 +487,7 @@ right ($\kappa$ = 0), $\ge$20 seeds, 95\% matched-seed bootstrap intervals.
 \caption{\textbf{Draft only: layout for \cref{fig:twin}b from the synthetic
 benchmark} (SI Section~S14; noise-free, costs assumed, not calibrated to the
 lab). Best alloy printed and tested against new spend for the eight policies at
-$\kappa$ = 1, 0.5 and 0: means over \stat{k1-n}, \stat{k05-n} and \stat{k0-n}
+$\kappa$ = 0, 0.5 and 1: means over \stat{k0-n}, \stat{k05-n} and \stat{k1-n}
 matched seeds, 95\% t-intervals of the mean for pKGFN, BOFN with powder reuse
 and screen-then-test, and the spend ratio to screen-then-test's \$100k mean
 (dotted) with its 95\% matched-seed bootstrap interval. Drawn from the BOFN

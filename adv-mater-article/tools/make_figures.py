@@ -7,7 +7,7 @@ Outputs (figures/):
   figS-atomizer-runs.{pdf,png}     every atomizer run Oct 2 - Nov 13, 2026, and how it ended
                                    (draft for SI S1/S3), from data/atomizer-runs-2026-11-13.csv
                                    (PR #286, atomizer-runs/runs.csv @ 8320f13)
-  fig6-draft-synthetic.{pdf,png}   best alloy demonstrated vs new spend at kappa = 1, 0.5 and 0, from
+  fig6-draft-synthetic.{pdf,png}   best alloy demonstrated vs new spend at kappa = 0, 0.5 and 1, from
                                    ../benchmarks/bofn-paper/paper-stats/curves.csv (the BOFN methods
                                    paper set, issue #121), with the speed-ups printed from the same
                                    folder's numbers.tex, the file the manuscript's \\stat macros read.
@@ -154,7 +154,7 @@ def fig6_synthetic() -> None:
     sub = {1.0: "κ = 1: the screen misses\nZr/Sc crack suppression", 0.5: "κ = 0.5: the screen is\nhalf right",
            0.0: "κ = 0: the screen is right"}
     tag = {1.0: "k1", 0.5: "k05", 0.0: "k0"}
-    for ax, kap in zip(axes, (1.0, 0.5, 0.0)):
+    for ax, kap in zip(axes, (0.0, 0.5, 1.0)):  # screen error grows left to right, as in SI Fig. S2 and Fig. 6c
         n = None
         for key, label, color, ls, marker, band in POLICIES:
             sel = [r for r in rows if float(r["kappa"]) == kap and r["policy"] == key]
