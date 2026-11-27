@@ -5577,6 +5577,395 @@
      "solver": "SPOOLES",
      "hmax": 8.0
     }
+   },
+   "model_four_post_braced_front_g3": {
+    "variant": "model (as drawn, P['gantry'] = 'four_post_braced_front_g3': four 45 mm posts, braces, head hung from the flange plate)",
+    "gantry_option": "four_post_braced_front_g3",
+    "extra_parts_as_drawn": [
+     "Head-plate top flange",
+     "Head-plate gussets",
+     "Head far-side support plate",
+     "Far-side support angle brackets"
+    ],
+    "n_braces": 6,
+    "gravity": {
+     "head_ref_u_um": [
+      1.36,
+      -1.8,
+      -4.83
+     ],
+     "tilt_urad": [
+      5.6,
+      -14.0,
+      -0.5
+     ],
+     "lens_u_um": [
+      3.01,
+      -1.13,
+      -5.25
+     ],
+     "beam_error_at_bed_um": [
+      7.2,
+      0.5
+     ],
+     "focus_shift_um": -5.250437603263384,
+     "vm_max": 1.6187702291855908,
+     "u_max_um": 7.694680228456541
+    },
+    "modes": [
+     {
+      "f_hz": 61.95983,
+      "head_translation_dir": [
+       1.0,
+       -0.09,
+       -0.02
+      ],
+      "head_rotation_dir": [
+       0.09,
+       -0.57,
+       0.82
+      ],
+      "bed_motion_dir": [
+       1.0,
+       -0.07
+      ],
+      "max_at": [
+       -266.0,
+       -128.0,
+       484.0
+      ],
+      "dominant_head_axis": "x (along the cross-beams)"
+     },
+     {
+      "f_hz": 100.6296,
+      "head_translation_dir": [
+       0.1,
+       0.99,
+       0.08
+      ],
+      "head_rotation_dir": [
+       -0.17,
+       -0.13,
+       -0.98
+      ],
+      "bed_motion_dir": [
+       0.21,
+       0.98
+      ],
+      "max_at": [
+       -266.0,
+       156.0,
+       484.0
+      ],
+      "dominant_head_axis": "y (fore-aft)"
+     },
+     {
+      "f_hz": 179.421,
+      "head_translation_dir": [
+       0.05,
+       0.69,
+       0.72
+      ],
+      "head_rotation_dir": [
+       -0.14,
+       0.09,
+       0.99
+      ],
+      "bed_motion_dir": [
+       -0.67,
+       -0.74
+      ],
+      "max_at": [
+       -310.0,
+       201.0,
+       484.0
+      ],
+      "dominant_head_axis": "z (vertical)"
+     },
+     {
+      "f_hz": 214.3248,
+      "head_translation_dir": [
+       -0.04,
+       -0.12,
+       0.99
+      ],
+      "head_rotation_dir": [
+       -0.32,
+       0.9,
+       -0.28
+      ],
+      "bed_motion_dir": [
+       -0.93,
+       -0.37
+      ],
+      "max_at": [
+       -129.0,
+       -86.0,
+       465.0
+      ],
+      "dominant_head_axis": "z (vertical)"
+     },
+     {
+      "f_hz": 255.3671,
+      "head_translation_dir": [
+       -0.06,
+       0.49,
+       0.87
+      ],
+      "head_rotation_dir": [
+       -0.2,
+       0.13,
+       -0.97
+      ],
+      "bed_motion_dir": [
+       -0.96,
+       0.27
+      ],
+      "max_at": [
+       -302.0,
+       -7.0,
+       256.0
+      ],
+      "dominant_head_axis": "z (vertical)"
+     },
+     {
+      "f_hz": 288.8452,
+      "head_translation_dir": [
+       0.29,
+       -0.94,
+       -0.19
+      ],
+      "head_rotation_dir": [
+       0.47,
+       -0.54,
+       -0.69
+      ],
+      "bed_motion_dir": [
+       0.99,
+       0.1
+      ],
+      "max_at": [
+       244.0,
+       11.0,
+       232.0
+      ],
+      "dominant_head_axis": "y (fore-aft)"
+     }
+    ],
+    "ccx_s": {
+     "gravity": 20,
+     "modal": 41
+    },
+    "masses_kg": {
+     "head": 5.8,
+     "lens": 1.34,
+     "cm_mm": [
+      37.5,
+      -48.6,
+      416.6
+     ]
+    },
+    "posts": [
+     {
+      "bb": [
+       -310.5,
+       -265.5,
+       155.8,
+       200.8,
+       -64.6,
+       484.1
+      ]
+     },
+     {
+      "bb": [
+       209.5,
+       254.5,
+       155.8,
+       200.8,
+       -64.6,
+       484.1
+      ]
+     },
+     {
+      "bb": [
+       -310.5,
+       -265.5,
+       -173.3,
+       -128.3,
+       -266.6,
+       484.1
+      ]
+     },
+     {
+      "bb": [
+       209.5,
+       254.5,
+       -173.3,
+       -128.3,
+       -266.6,
+       484.1
+      ]
+     }
+    ],
+    "braces": [
+     {
+      "p0": [
+       -288.0,
+       165.9,
+       -51.9
+      ],
+      "p1": [
+       -288.0,
+       -138.4,
+       471.4
+      ],
+      "drawn": [
+       [
+        -288.0,
+        155.9,
+        -34.6
+       ],
+       [
+        -288.0,
+        -128.4,
+        454.1
+       ]
+      ]
+     },
+     {
+      "p0": [
+       232.0,
+       165.9,
+       -51.9
+      ],
+      "p1": [
+       232.0,
+       -138.4,
+       471.4
+      ],
+      "drawn": [
+       [
+        232.0,
+        155.9,
+        -34.6
+       ],
+       [
+        232.0,
+        -128.4,
+        454.1
+       ]
+      ]
+     },
+     {
+      "p0": [
+       -279.6,
+       178.3,
+       289.0
+      ],
+      "p1": [
+       -131.4,
+       178.3,
+       437.2
+      ],
+      "drawn": [
+       [
+        -265.5,
+        178.3,
+        303.1
+       ],
+       [
+        -145.5,
+        178.3,
+        423.1
+       ]
+      ]
+     },
+     {
+      "p0": [
+       223.6,
+       178.4,
+       289.0
+      ],
+      "p1": [
+       75.4,
+       178.4,
+       437.2
+      ],
+      "drawn": [
+       [
+        209.5,
+        178.4,
+        303.1
+       ],
+       [
+        89.5,
+        178.4,
+        423.1
+       ]
+      ]
+     },
+     {
+      "p0": [
+       -279.6,
+       -150.9,
+       329.0
+      ],
+      "p1": [
+       -171.4,
+       -150.9,
+       437.2
+      ],
+      "drawn": [
+       [
+        -265.5,
+        -150.9,
+        343.1
+       ],
+       [
+        -185.5,
+        -150.9,
+        423.1
+       ]
+      ]
+     },
+     {
+      "p0": [
+       223.6,
+       -150.8,
+       329.0
+      ],
+      "p1": [
+       115.4,
+       -150.9,
+       437.2
+      ],
+      "drawn": [
+       [
+        209.5,
+        -150.8,
+        343.1
+       ],
+       [
+        129.5,
+        -150.9,
+        423.1
+       ]
+      ]
+     }
+    ],
+    "foot_nodes": 1880,
+    "feet_nodes": 604,
+    "note": "angle brackets and flange plate as drawn; posts/beams equivalent tubes (I from the T-slot section); base rails rigid",
+    "pass": true,
+    "pass100": false,
+    "run": {
+     "utc": "2026-11-27 13:10",
+     "commit": "047099f",
+     "nodes": 144587,
+     "elements": 73726,
+     "solver": "SPOOLES",
+     "hmax": 10.0
+    }
    }
   }
  }

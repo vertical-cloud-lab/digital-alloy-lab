@@ -91,6 +91,7 @@ mass on the flange face under the head's footprint, and the base rails are rigid
 | **As drawn: head hung from the flange plate** | **43.1 / 59.7 / 67.2 Hz** | 112, 253, −5 µrad | −35, 12, −46 µm | −111, 45 µm |
 | **With the fixes, `P['gantry'] = 'four_post_braced_front'`** (37e2698; front knee braces, top flange on both beams, three gussets) | **50.0 / 66.9 / 93.5 Hz** | 36, 143, −7 µrad | −24, 2, −25 µm | −66, 13 µm |
 | **Gussets moved under the head, `'four_post_braced_front_g2'`** (d3df7ca; three 8 mm gussets at y −100.6, −15, 15 down to the flange's bottom edge) | **49.8 / 66.8 / 92.7 Hz** | 38, 147, −7 µrad | −24, 2, −26 µm | −68, 13 µm |
+| **Head's far side supported too, `'four_post_braced_front_g3'`** (2964961; 10 mm plate on the head's +x face between both beams, with angle brackets; 10 mm mesh) | **62.0 / 100.6 / 179.4 Hz** | 6, −14, −1 µrad | 3, −1, −5 µm | 7, 0.5 µm |
 
 - **The frame as drawn is below the 60 Hz minimum** (and the 100 Hz target), at about half the upper bound.
   - Mode 1 (43 Hz) is the front portal racking sideways along the beams, with the head yawing. The largest motion is
@@ -121,6 +122,13 @@ mass on the flange face under the head's footprint, and the base rails are rigid
   - What should help, not run: support the head's far side as well, with a second bracket or strap from the beams
     to the head's opposite face. That turns the cantilever into a body held on two sides. A tie from the flange
     plate's bottom edge to the posts would also help.
+- **With the head's far side on its own plate (2964961, `four_post_braced_front_g3`): 62.0 / 100.6 / 179.4 Hz,
+  just over the 60 Hz minimum (100 Hz target), and pitch down to 14 µrad.**
+  - The head is now held on both faces: one rigid body on both plates.
+  - Mode 1 is the frame again, with the largest motion at the front-left post's top. The head mount is no longer
+    the limit.
+  - Run on a 10 mm mesh (145k nodes, ccx 20 + 41 s): at 8 mm the modal step needed more than the 4 GB cap.
+    Gravity agrees between the two meshes (pitch 14.2 against 14.0 µrad).
 - The joints are bonded and the base is rigid, so the real frame (bolted T-slot joints) will be softer than these
   numbers.
 
