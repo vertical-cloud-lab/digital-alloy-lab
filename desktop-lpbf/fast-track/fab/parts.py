@@ -28,6 +28,9 @@ import ft_model as M  # noqa: E402
 import tools as T  # noqa: E402
 
 P = M.P
+if "clamp_h" not in P or P["deck"][0] != 250.0:
+    sys.exit("parts.py builds the v1 fab set from ft_model at d117ba8; the CAD v2 model (e6efa1c) changes or removes "
+             "parameters it reads. Port it first: README.md, 'CAD v2', and v2_delta.py list what changes.")
 V = cq.Vector
 IN = 25.4
 OUT = HERE / "out"

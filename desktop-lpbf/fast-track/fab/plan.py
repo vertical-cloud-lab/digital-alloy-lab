@@ -18,7 +18,7 @@ a working day, for one or two people who both program and cut, pieces taken in t
 The sheet pieces (hopper walls, shield) go to SendCutSend in every case. The target plates MK-18b are cut in house
 (bandsaw and mill from 1/8 in. plate; the anodising is outside and its lead time was not read).
 
-    /tmp/venv/bin/python desktop-lpbf/fast-track/fab/plan.py   -> out/plan.json, out/plan.md
+    /tmp/venv/bin/python desktop-lpbf/fast-track/fab/plan.py [hours.json] [outdir]   -> out/plan.json, out/plan.md
 """
 from __future__ import annotations
 
@@ -105,7 +105,7 @@ def piece_tasks(rows, case, plates_out, cube_day):
             ready = SCS_DAY * DAY
         if plates_out and pid in PLATES:
             cam, tot, ready = 0.5, r["byu_h_split"], SCS_DAY * DAY
-        if pid in ("MK-13", "MK-14"):
+        if pid in ("MK-13", "MK-14", "MK-21c"):             # machined in the cube's own plates
             ready = cube_day * DAY
         L.append((pid, r["state"], cam, max(tot - cam, 0.0), ready))
     return L
@@ -150,7 +150,11 @@ def simulate(tasks, people):
 
 
 def main():
-    rows = json.loads((OUT / "hours.json").read_text())["pieces"]
+    hp = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else OUT / "hours.json"
+    od = pathlib.Path(sys.argv[2]) if len(sys.argv) > 2 else OUT
+    if not hp.is_absolute():
+        hp, od = HERE / hp, (HERE / od if not od.is_absolute() else od)
+    rows = json.loads(hp.read_text())["pieces"]
     need = need_dates()
     cube_day = int(need["_cube_arrives"][0])
     base_ms = milestones({s: need[s]["network_finish_early"] for s in STATES})
@@ -161,8 +165,9 @@ def main():
         fin = {s: round(bys[s] / DAY, 2) for s in STATES}
         late = {s: round(max(0.0, fin[s] - need[s]["early"]), 2) for s in STATES}
         res.append(dict(case=case, people=people, plates_out=plates_out, done_day=fin, late_days=late,
-                        milestones_weeks=milestones(fin), log=log))
-    (OUT / "plan.json").write_text(json.dumps(dict(method=__doc__.split("\n\n")[1], need=need,
+                        milestones_weeks=milestones(fin),
+                        log=log if (case, people, plates_out) == ("exp", 2, False) else None))
+    (od / "plan.json").write_text(json.dumps(dict(method=__doc__.split("\n\n")[1], need=need,
                                                    network_milestones_weeks=base_ms, runs=res), indent=1))
     names = {"low": "low", "exp": "expected", "high": "high"}
     short = ["S1", "S2", "FT-0", "FT-1", "FT-1V"]
@@ -182,7 +187,7 @@ def main():
     L.append("| *network as drawn* | | | %s | %s |" % (
         " | ".join("%g" % need[s]["network_finish_early"] for s in STATES),
         " / ".join("%.1f" % base_ms[m] for m in FP.MILESTONES)))
-    (OUT / "plan.md").write_text("\n".join(L) + "\n")
+    (od / "plan.md").write_text("\n".join(L) + "\n")
     print("need (early, late):", {s: (need[s]["early"], need[s]["late"]) for s in short}, "cube", need["_cube_arrives"])
     print("\n".join(L))
 
