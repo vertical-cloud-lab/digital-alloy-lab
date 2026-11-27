@@ -26,6 +26,10 @@ import time
 HERE = pathlib.Path(__file__).resolve().parent
 OUT = HERE.parents[1] / "analysis" / "out" / "assembly"
 LAST = {"module": "M30", "chamber": None}      # the chapter's last step (None: the chamber ends where --upto says)
+# round 10: each chapter's own settings, as round 9's final renders had them (asm_render.py's docstring): the module's person
+# at least 1.8 m from the place's tripods, the chamber's short hops between the cell's docks held in the work's shot. Set in
+# the environment to override
+CHAPTER_ENV = {"module": {"ASM_PERSON_CAM_MIN": "1800"}, "chamber": {"ASM_DRIVE_HOLD": "1"}}
 
 
 def log(*a):
@@ -39,7 +43,7 @@ def main(argv):
     traj = pathlib.Path(opt.get("traj", "/tmp/robotbuild/traj/run13"))
     upto = opt.get("upto", "T01")
     mem = opt.get("mem", "3")
-    notes = OUT / "run10_fail_notes.json"
+    notes = pathlib.Path(opt["notes"]) if opt.get("notes") else OUT / "run10_fail_notes.json"     # round 10: --notes=
     only = {}
     for x in opt.get("slices", "").split(","):
         if ":" in x:
@@ -81,11 +85,13 @@ def main(argv):
                 if not (chapter_done(chapter) or (b and b in done_steps())):
                     continue
                 queue.pop(qi)
-                env = dict(os.environ, ROBOTBUILD_AUDIT="1", ASM_TRAJ=str(traj), ASM_STEPS=f"{a}:{b}", ASM_RANGE_IDX=str(k),
+                env = dict(CHAPTER_ENV.get(chapter, {}))
+                env.update(os.environ)
+                env.update(ROBOTBUILD_AUDIT="1", ASM_TRAJ=str(traj), ASM_STEPS=f"{a}:{b}", ASM_RANGE_IDX=str(k),
                            ASM_CUTS=",".join(cut_of[chapter]), ASM_UPTO=upto, OMP_NUM_THREADS="1", LP_NUM_THREADS="1")
                 env.pop("ASM_PART", None)
                 env.pop("ASM_RANGE", None)
-                lf = open(f"/tmp/asm_slice_{chapter}_{k}.log", "w")
+                lf = open(os.path.join(opt.get("logdir", "/tmp"), f"asm_slice_{chapter}_{k}.log"), "w")
                 cmd = ["xvfb-run", "-a", "-s", "-screen 0 1920x1080x24", "/tmp/memslot", mem, sys.executable, "asm_render.py",
                        chapter]
                 if chapter == "chamber" and notes.exists():
