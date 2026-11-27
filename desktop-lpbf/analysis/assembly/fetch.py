@@ -342,9 +342,11 @@ def pick_plan(run, n, idx, body, off, G_rel, close, tool, slot):
     return out
 
 
-def presenter_trip(run, n, q_from, q_to, close=0.0):
+def presenter_trip(run, n, q_from, q_to, close=0.0, held=None, allow=frozenset()):
     """Screwdriver from q_from (after the last screw) to the presenter's pick-up nest and on to q_to (the next hole's
-    approach). Straight joint lines if clear, else RRT-Connect (200 iterations). -> dict(ok, pieces or why)."""
+    approach). Straight joint lines if clear, else RRT-Connect (200 iterations). -> dict(ok, pieces or why).
+    Round 10, held = (screw body, TCP offset): the way up out of the nest and on to q_to carry the screw, so they are checked
+    with it (allow: the screw's seat contacts), and the last 12 deg into the hole's mouth every 0.25 deg."""
     cl = run.cl
     a = run.arm(n)
     xb = float(a.base[0, 3])
@@ -364,7 +366,22 @@ def presenter_trip(run, n, q_from, q_to, close=0.0):
         if p1 is None:
             best = dict(ok=False, why=f"to the presenter: {i1.get('reason')}")
             continue
-        p2, i2 = chk.plan(qs_dn[0], q_to, close, iters=200)
+        if held is not None:
+            a.hold(*held)
+            try:
+                chk2 = K.checker(cl, n)
+                allow2 = frozenset(allow) | frozenset([("held", f"{n} screw presenter"), ("tool", f"{n} screw presenter")])
+                bad = next((q for q in qs_dn if chk2.collisions(q, close, allow2, first=True)), None)
+                if bad is not None:
+                    best = dict(ok=False, why="up out of the presenter with the screw: blocked")
+                    continue
+                p2, i2 = chk2.plan(qs_dn[0], q_to, close, allow=allow2, iters=200)
+                if p2 is not None and not chk2.tail_free(p2, close, allow2):
+                    p2, i2 = None, dict(reason="the screw cuts the hole's edge on the way in")
+            finally:
+                a.release()
+        else:
+            p2, i2 = chk.plan(qs_dn[0], q_to, close, iters=200)
         if p2 is None:
             best = dict(ok=False, why=f"presenter to the hole: {i2.get('reason')}")
             continue

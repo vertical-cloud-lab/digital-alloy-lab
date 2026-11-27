@@ -898,6 +898,29 @@ class Checker:
     def free(self, q, close=None, allow=frozenset()):
         return not self.collisions(q, close, allow, first=True)
 
+    def tail_free(self, path, close, allow=frozenset(), last_deg=12.0, step_deg=0.25):
+        """Round 10: the last `last_deg` degrees (largest joint) of a joint path checked every `step_deg`. Edges are checked
+        every 1.5 deg, where the TCP moves up to ~25 mm: enough for a screw on the bit to cut a hole's edge on the way in."""
+        if path is None or len(path) < 2:
+            return True
+        qs = [np.asarray(q, float) for q in path]
+        left = math.radians(last_deg)
+        st = math.radians(step_deg)
+        for qa, qb in zip(qs[::-1][1:], qs[::-1][:-1]):        # segments from the goal backwards: qa -> qb
+            span = float(np.abs(qb - qa).max())
+            if span < 1e-9:
+                continue
+            n = max(1, int(math.ceil(span / st)))
+            for i in range(n, -1, -1):
+                if (1.0 - i / n) * span > left:
+                    break
+                if not self.free(qa + (qb - qa) * (i / n), close, allow):
+                    return False
+            left -= span
+            if left <= 0:
+                break
+        return True
+
     def top(self, q):
         F = self.arm.fk(q)
         return max(float((self.arm.base @ F[k])[2, 3]) for k in ("forearm", "wrist1", "wrist2", "wrist3"))

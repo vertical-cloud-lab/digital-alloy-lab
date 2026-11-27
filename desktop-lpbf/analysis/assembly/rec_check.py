@@ -94,6 +94,14 @@ def main(argv):
             b.name = "kt/" + b.name
     except Exception as e:  # noqa: BLE001
         print("no long table model:", e)
+    tbox = np.array([[b.box()[0][0], b.box()[1][0]] for b in table]) if table else np.zeros((0, 2))
+
+    def table_near(x, reach=1600.0):
+        """The long table's bodies within an arm's reach of a MiR at x (the table has ~1,000 bodies: nests, trays, rims)."""
+        if not table:
+            return []
+        m = (tbox[:, 1] >= x - reach) & (tbox[:, 0] <= x + reach)
+        return [table[k] for k in np.nonzero(m)[0]]
     out = dict(traj=str(traj), every=every, limit_mm=LIMIT, grip_limit_mm=GRIP_LIMIT, chapters={})
     for chapter in chapters:
         ev = load(traj, chapter)
@@ -226,7 +234,7 @@ def main(argv):
             held_ids = set(st[n]["held"]["objs"]) if st[n]["held"] else set()
             tool_name = st[n]["tool"]
             # the arm against the parts present (not its own step's parts), the cell and the table
-            w = Group(world_bodies(n) + list(statics.values()) + table)
+            w = Group(world_bodies(n) + list(statics.values()) + table_near(float(st[n]["x"])))
             test(Group(mine), w, lambda x, y: ("arm-part", LIMIT), where)
             # the links and camera against the step's own parts too (round 10)
             own_ids = [i for i in step_objs if i in present and i not in held_ids and i in objs and i not in hidden]
