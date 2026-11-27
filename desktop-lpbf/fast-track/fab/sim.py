@@ -199,7 +199,9 @@ def run_piece(pc, setups, gdir):
                rapid_hits=rapid_hits, slugs_dropped_cm3=round(slug_cm3, 2))
     (SCR / "simmask").mkdir(exist_ok=True)
     np.savez_compressed(SCR / "simmask" / (pid + ".npz"), target=target, left=real_l, gouge=real_g, lo=g.lo, h=g.h)
-    out["_arrays"] = (g, target, occ, real_g, real_l)
+    # keep only the top views for the contact sheet: holding every piece's 3D arrays until the end took the full run
+    # past its 2 GB cap after about 20 pieces (the cgroup was killed without a message)
+    out["_arrays"] = (g, target.any(2), real_g.any(2), real_l.any(2))
     return out
 
 
@@ -214,12 +216,12 @@ def render(results, path):
     for ax in axs.ravel():
         ax.axis("off")
     for ax, r in zip(axs.ravel(), results):
-        g, target, occ, gg, ll = r["_arrays"]
-        img = np.zeros(target.shape[:2] + (3,))
+        g, t2, gg2, ll2 = r["_arrays"]
+        img = np.zeros(t2.shape + (3,))
         img[:] = (1, 1, 1)
-        img[target.any(2)] = (0.78, 0.80, 0.83)
-        img[ll.any(2)] = (0.85, 0.33, 0.10)
-        img[gg.any(2)] = (0.13, 0.35, 0.80)
+        img[t2] = (0.78, 0.80, 0.83)
+        img[ll2] = (0.85, 0.33, 0.10)
+        img[gg2] = (0.13, 0.35, 0.80)
         ax.imshow(np.transpose(img, (1, 0, 2)), origin="lower", extent=(g.lo[0], g.hi[0], g.lo[1], g.hi[1]))
         ax.set_title("%s  %.0f%% of blank-part\ngouge %.2f / left %.2f cm3" % (
             r["pid"], r["removed_pct_of_expected"], r["gouge_deep_cm3"], r["left_thick_cm3"]), fontsize=7)

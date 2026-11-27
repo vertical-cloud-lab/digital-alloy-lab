@@ -1,0 +1,1373 @@
+{
+ "method": "The same idea as PR 266's gcode_sim.py, in a simpler form: each setup's tool axis is one of the piece's axes, so a\nsetup's cut is a height field over the setup's XY (the lowest point the tool reaches over each column, for a flat end\nmill swept exactly along each linear move, drills and the spot drill with their cone). Everything above that field is\nremoved (tool and holder come from above). Setups run in order on one voxel grid in the part frame.",
+ "pieces": [
+  {
+   "pid": "MK-01",
+   "res_mm": 0.449,
+   "grid": [
+    586,
+    586,
+    35
+   ],
+   "setups": [
+    {
+     "setup": "MK-01_A",
+     "up": "-Z",
+     "segments": 935,
+     "removed_cm3": 91.76,
+     "minutes_from_moves": 3.71,
+     "minutes_recount": 3.8,
+     "minutes_freecad": 5.1,
+     "stamp_s": 4.2,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-01_B",
+     "up": "+Z",
+     "segments": 3761,
+     "removed_cm3": 161.1,
+     "minutes_from_moves": 12.83,
+     "minutes_recount": 13.05,
+     "minutes_freecad": 18.22,
+     "stamp_s": 8.4,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 879.8,
+   "target_cm3": 616.19,
+   "expected_removal_cm3": 263.61,
+   "removed_cm3": 264.63,
+   "removed_pct_of_expected": 100.4,
+   "gouge_cm3": 1.078,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.45,
+   "left_cm3": 0.063,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 0.9,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 11.77,
+   "seconds": 23.5
+  },
+  {
+   "pid": "MK-02a",
+   "res_mm": 0.279,
+   "grid": [
+    390,
+    390,
+    79
+   ],
+   "setups": [
+    {
+     "setup": "MK-02a_A",
+     "up": "-Z",
+     "segments": 2127,
+     "removed_cm3": 62.26,
+     "minutes_from_moves": 10.68,
+     "minutes_recount": 10.7,
+     "minutes_freecad": 11.93,
+     "stamp_s": 22.3,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-02a_B",
+     "up": "+Z",
+     "segments": 5844,
+     "removed_cm3": 85.93,
+     "minutes_from_moves": 13.38,
+     "minutes_recount": 13.42,
+     "minutes_freecad": 17.78,
+     "stamp_s": 26.8,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 217.52,
+   "target_cm3": 69.3,
+   "expected_removal_cm3": 148.21,
+   "removed_cm3": 148.19,
+   "removed_pct_of_expected": 100.0,
+   "gouge_cm3": 0.035,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.28,
+   "left_cm3": 0.057,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 0.56,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 56.5
+  },
+  {
+   "pid": "MK-02b",
+   "res_mm": 0.21,
+   "grid": [
+    519,
+    519,
+    45
+   ],
+   "setups": [
+    {
+     "setup": "MK-02b_A",
+     "up": "-Z",
+     "segments": 329,
+     "removed_cm3": 6.69,
+     "minutes_from_moves": 1.61,
+     "minutes_recount": 1.61,
+     "minutes_freecad": 1.83,
+     "stamp_s": 1.3,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-02b_B",
+     "up": "+Z",
+     "segments": 3140,
+     "removed_cm3": 31.79,
+     "minutes_from_moves": 5.09,
+     "minutes_recount": 5.11,
+     "minutes_freecad": 8.23,
+     "stamp_s": 17.6,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 70.83,
+   "target_cm3": 32.32,
+   "expected_removal_cm3": 38.5,
+   "removed_cm3": 38.48,
+   "removed_pct_of_expected": 99.9,
+   "gouge_cm3": 0.009,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.21,
+   "left_cm3": 0.033,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 0.42,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 27.4
+  },
+  {
+   "pid": "MK-02c",
+   "res_mm": 0.21,
+   "grid": [
+    519,
+    519,
+    45
+   ],
+   "setups": [
+    {
+     "setup": "MK-02c_A",
+     "up": "+Z",
+     "segments": 2764,
+     "removed_cm3": 33.09,
+     "minutes_from_moves": 3.82,
+     "minutes_recount": 3.83,
+     "minutes_freecad": 6.03,
+     "stamp_s": 16.4,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 70.83,
+   "target_cm3": 37.72,
+   "expected_removal_cm3": 33.11,
+   "removed_cm3": 33.09,
+   "removed_pct_of_expected": 99.9,
+   "gouge_cm3": 0.008,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.21,
+   "left_cm3": 0.027,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 0.42,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 24.6
+  },
+  {
+   "pid": "MK-02d",
+   "res_mm": 0.169,
+   "grid": [
+    466,
+    466,
+    55
+   ],
+   "setups": [
+    {
+     "setup": "MK-02d_A",
+     "up": "+Z",
+     "segments": 7147,
+     "removed_cm3": 23.48,
+     "minutes_from_moves": 4.39,
+     "minutes_recount": 4.4,
+     "minutes_freecad": 7.53,
+     "stamp_s": 12.5,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 36.11,
+   "target_cm3": 12.62,
+   "expected_removal_cm3": 23.49,
+   "removed_cm3": 23.48,
+   "removed_pct_of_expected": 100.0,
+   "gouge_cm3": 0.007,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.17,
+   "left_cm3": 0.014,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 0.34,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 19.8
+  },
+  {
+   "pid": "MK-02e",
+   "res_mm": 0.159,
+   "grid": [
+    496,
+    496,
+    49
+   ],
+   "setups": [
+    {
+     "setup": "MK-02e_A",
+     "up": "+Z",
+     "segments": 1689,
+     "removed_cm3": 16.32,
+     "minutes_from_moves": 2.03,
+     "minutes_recount": 2.04,
+     "minutes_freecad": 3.12,
+     "stamp_s": 8.4,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 27.66,
+   "target_cm3": 11.34,
+   "expected_removal_cm3": 16.33,
+   "removed_cm3": 16.32,
+   "removed_pct_of_expected": 100.0,
+   "gouge_cm3": 0.006,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.16,
+   "left_cm3": 0.014,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 0.32,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 16.3
+  },
+  {
+   "pid": "MK-03",
+   "res_mm": 0.316,
+   "grid": [
+    275,
+    291,
+    150
+   ],
+   "setups": [
+    {
+     "setup": "MK-03_A",
+     "up": "+Z",
+     "segments": 4467,
+     "removed_cm3": 95.08,
+     "minutes_from_moves": 7.32,
+     "minutes_recount": 7.35,
+     "minutes_freecad": 11.03,
+     "stamp_s": 4.6,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-03_B",
+     "up": "-Z",
+     "segments": 435,
+     "removed_cm3": 41.08,
+     "minutes_from_moves": 2.78,
+     "minutes_recount": 2.78,
+     "minutes_freecad": 3.73,
+     "stamp_s": 7.3,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-03_C",
+     "up": "-X",
+     "segments": 20,
+     "removed_cm3": 2.62,
+     "minutes_from_moves": 0.12,
+     "minutes_recount": 0.12,
+     "minutes_freecad": 0.15,
+     "stamp_s": 1.9,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-03_D",
+     "up": "+Y",
+     "segments": 23,
+     "removed_cm3": 0.1,
+     "minutes_from_moves": 0.13,
+     "minutes_recount": 0.13,
+     "minutes_freecad": 0.3,
+     "stamp_s": 1.6,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 329.59,
+   "target_cm3": 190.05,
+   "expected_removal_cm3": 139.53,
+   "removed_cm3": 138.88,
+   "removed_pct_of_expected": 99.5,
+   "gouge_cm3": 0.008,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.32,
+   "left_cm3": 0.66,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 0.63,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 23.4
+  },
+  {
+   "pid": "MK-04",
+   "res_mm": 0.168,
+   "grid": [
+    255,
+    255,
+    185
+   ],
+   "setups": [
+    {
+     "setup": "MK-04_A",
+     "up": "-Z",
+     "segments": 33,
+     "removed_cm3": 1.79,
+     "minutes_from_moves": 0.18,
+     "minutes_recount": 0.18,
+     "minutes_freecad": 0.17,
+     "stamp_s": 2.6,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-04_B",
+     "up": "+Z",
+     "segments": 15,
+     "removed_cm3": 0.02,
+     "minutes_from_moves": 0.07,
+     "minutes_recount": 0.07,
+     "minutes_freecad": 0.35,
+     "stamp_s": 0.7,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-04_C",
+     "up": "+X",
+     "segments": 9,
+     "removed_cm3": 0.07,
+     "minutes_from_moves": 0.04,
+     "minutes_recount": 0.04,
+     "minutes_freecad": 0.08,
+     "stamp_s": 0.8,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 32.59,
+   "target_cm3": 30.72,
+   "expected_removal_cm3": 1.87,
+   "removed_cm3": 1.88,
+   "removed_pct_of_expected": 100.1,
+   "gouge_cm3": 0.002,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.17,
+   "left_cm3": 0.0,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 0.34,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 11.1
+  },
+  {
+   "pid": "MK-05",
+   "res_mm": 0.12,
+   "grid": [
+    357,
+    357,
+    75
+   ],
+   "setups": [
+    {
+     "setup": "MK-05_A",
+     "up": "+Z",
+     "segments": 21,
+     "removed_cm3": 0.09,
+     "minutes_from_moves": 0.12,
+     "minutes_recount": 0.12,
+     "minutes_freecad": 0.48,
+     "stamp_s": 0.9,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 7.47,
+   "target_cm3": 7.38,
+   "expected_removal_cm3": 0.1,
+   "removed_cm3": 0.09,
+   "removed_pct_of_expected": 90.8,
+   "gouge_cm3": 0.0,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.12,
+   "left_cm3": 0.01,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 0.24,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 7.4
+  },
+  {
+   "pid": "MK-06a",
+   "res_mm": 0.12,
+   "grid": [
+    131,
+    131,
+    704
+   ],
+   "setups": [
+    {
+     "setup": "MK-06a_A",
+     "up": "-Y",
+     "segments": 25,
+     "removed_cm3": 0.04,
+     "minutes_from_moves": 0.3,
+     "minutes_recount": 0.29,
+     "minutes_freecad": 0.58,
+     "stamp_s": 0.1,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-06a_B",
+     "up": "+X",
+     "segments": 3,
+     "removed_cm3": 0.0,
+     "minutes_from_moves": 0.01,
+     "minutes_recount": 0.01,
+     "minutes_freecad": 0.18,
+     "stamp_s": 0.3,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 2.69,
+   "target_cm3": 2.64,
+   "expected_removal_cm3": 0.05,
+   "removed_cm3": 0.05,
+   "removed_pct_of_expected": 97.9,
+   "gouge_cm3": 0.001,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.12,
+   "left_cm3": 0.002,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 0.54,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 7.2
+  },
+  {
+   "pid": "MK-06b",
+   "res_mm": 0.129,
+   "grid": [
+    121,
+    121,
+    816
+   ],
+   "setups": [
+    {
+     "setup": "MK-06b_A",
+     "up": "-Y",
+     "segments": 25,
+     "removed_cm3": 0.04,
+     "minutes_from_moves": 0.3,
+     "minutes_recount": 0.29,
+     "minutes_freecad": 0.65,
+     "stamp_s": 0.1,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-06b_B",
+     "up": "+X",
+     "segments": 3,
+     "removed_cm3": 0.0,
+     "minutes_from_moves": 0.01,
+     "minutes_recount": 0.01,
+     "minutes_freecad": 0.22,
+     "stamp_s": 0.3,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 3.39,
+   "target_cm3": 3.33,
+   "expected_removal_cm3": 0.05,
+   "removed_cm3": 0.05,
+   "removed_pct_of_expected": 92.8,
+   "gouge_cm3": 0.0,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.0,
+   "left_cm3": 0.004,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 0.73,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 3.9
+  },
+  {
+   "pid": "MK-07",
+   "res_mm": 0.18,
+   "grid": [
+    371,
+    371,
+    87
+   ],
+   "setups": [
+    {
+     "setup": "MK-07_A",
+     "up": "+Z",
+     "segments": 377,
+     "removed_cm3": 6.33,
+     "minutes_from_moves": 4.87,
+     "minutes_recount": 4.88,
+     "minutes_freecad": 5.28,
+     "stamp_s": 0.7,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-07_B",
+     "up": "-Z",
+     "segments": 2445,
+     "removed_cm3": 5.21,
+     "minutes_from_moves": 7.16,
+     "minutes_recount": 7.35,
+     "minutes_freecad": 7.95,
+     "stamp_s": 4.9,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 50.14,
+   "target_cm3": 40.86,
+   "expected_removal_cm3": 11.59,
+   "removed_cm3": 11.53,
+   "removed_pct_of_expected": 99.5,
+   "gouge_cm3": 0.005,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.18,
+   "left_cm3": 0.068,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 0.72,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 14.8
+  },
+  {
+   "pid": "MK-08c",
+   "res_mm": 0.12,
+   "grid": [
+    78,
+    442,
+    131
+   ],
+   "setups": [
+    {
+     "setup": "MK-08c_A",
+     "up": "+Z",
+     "segments": 271,
+     "removed_cm3": 1.42,
+     "minutes_from_moves": 0.61,
+     "minutes_recount": 0.61,
+     "minutes_freecad": 0.93,
+     "stamp_s": 0.6,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-08c_B",
+     "up": "-Z",
+     "segments": 60,
+     "removed_cm3": 1.15,
+     "minutes_from_moves": 3.06,
+     "minutes_recount": 3.06,
+     "minutes_freecad": 3.88,
+     "stamp_s": 0.4,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-08c_C",
+     "up": "-X",
+     "segments": 10,
+     "removed_cm3": 0.02,
+     "minutes_from_moves": 0.05,
+     "minutes_recount": 0.05,
+     "minutes_freecad": 0.18,
+     "stamp_s": 0.4,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 4.05,
+   "target_cm3": 1.37,
+   "expected_removal_cm3": 2.67,
+   "removed_cm3": 2.58,
+   "removed_pct_of_expected": 96.6,
+   "gouge_cm3": 0.0,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.0,
+   "left_cm3": 0.092,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 0.48,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 2.7
+  },
+  {
+   "pid": "MK-08d",
+   "res_mm": 0.12,
+   "grid": [
+    184,
+    529,
+    104
+   ],
+   "setups": [
+    {
+     "setup": "MK-08d_A",
+     "up": "+Z",
+     "segments": 301,
+     "removed_cm3": 3.17,
+     "minutes_from_moves": 0.74,
+     "minutes_recount": 0.77,
+     "minutes_freecad": 1.52,
+     "stamp_s": 0.7,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-08d_B",
+     "up": "-Z",
+     "segments": 17,
+     "removed_cm3": 0.88,
+     "minutes_from_moves": 0.11,
+     "minutes_recount": 0.12,
+     "minutes_freecad": 0.13,
+     "stamp_s": 0.1,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-08d_C",
+     "up": "-Y",
+     "segments": 12,
+     "removed_cm3": 0.08,
+     "minutes_from_moves": 0.05,
+     "minutes_recount": 0.05,
+     "minutes_freecad": 0.08,
+     "stamp_s": 0.5,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 11.1,
+   "target_cm3": 6.96,
+   "expected_removal_cm3": 4.14,
+   "removed_cm3": 4.13,
+   "removed_pct_of_expected": 99.9,
+   "gouge_cm3": 0.0,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.12,
+   "left_cm3": 0.006,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 0.24,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 7.0
+  },
+  {
+   "pid": "MK-08e",
+   "res_mm": 0.223,
+   "grid": [
+    206,
+    241,
+    241
+   ],
+   "setups": [
+    {
+     "setup": "MK-08e_A",
+     "up": "+X",
+     "segments": 5539,
+     "removed_cm3": 85.76,
+     "minutes_from_moves": 4.36,
+     "minutes_recount": 4.36,
+     "minutes_freecad": 7.05,
+     "stamp_s": 49.2,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-08e_B",
+     "up": "-X",
+     "segments": 1378,
+     "removed_cm3": 5.77,
+     "minutes_from_moves": 1.21,
+     "minutes_recount": 1.21,
+     "minutes_freecad": 1.98,
+     "stamp_s": 14.0,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-08e_C",
+     "up": "+Z",
+     "segments": 29,
+     "removed_cm3": 1.11,
+     "minutes_from_moves": 0.21,
+     "minutes_recount": 0.21,
+     "minutes_freecad": 1.62,
+     "stamp_s": 0.8,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 110.34,
+   "target_cm3": 17.59,
+   "expected_removal_cm3": 92.75,
+   "removed_cm3": 92.64,
+   "removed_pct_of_expected": 99.9,
+   "gouge_cm3": 0.007,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.22,
+   "left_cm3": 0.117,
+   "left_thick_cm3": 0.015,
+   "left_max_thickness_mm": 1.26,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 71.0
+  },
+  {
+   "pid": "MK-09a",
+   "res_mm": 0.426,
+   "grid": [
+    500,
+    652,
+    37
+   ],
+   "setups": [
+    {
+     "setup": "MK-09a_A",
+     "up": "-Z",
+     "segments": 15,
+     "removed_cm3": 0.0,
+     "minutes_from_moves": 1.41,
+     "minutes_recount": 1.41,
+     "minutes_freecad": 1.52,
+     "stamp_s": 0.2,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-09a_B",
+     "up": "+Z",
+     "segments": 9149,
+     "removed_cm3": 208.59,
+     "minutes_from_moves": 22.39,
+     "minutes_recount": 22.43,
+     "minutes_freecad": 37.43,
+     "stamp_s": 4.5,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 712.96,
+   "target_cm3": 504.29,
+   "expected_removal_cm3": 208.67,
+   "removed_cm3": 208.59,
+   "removed_pct_of_expected": 100.0,
+   "gouge_cm3": 0.013,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.43,
+   "left_cm3": 0.091,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 0.85,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 12.7
+  },
+  {
+   "pid": "MK-09b",
+   "res_mm": 0.269,
+   "grid": [
+    339,
+    177,
+    200
+   ],
+   "setups": [
+    {
+     "setup": "MK-09b_A",
+     "up": "+Y",
+     "segments": 1815,
+     "removed_cm3": 27.88,
+     "minutes_from_moves": 2.15,
+     "minutes_recount": 2.15,
+     "minutes_freecad": 3.22,
+     "stamp_s": 9.7,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-09b_B",
+     "up": "-Y",
+     "segments": 1105,
+     "removed_cm3": 14.6,
+     "minutes_from_moves": 1.63,
+     "minutes_recount": 1.64,
+     "minutes_freecad": 2.62,
+     "stamp_s": 11.8,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-09b_C",
+     "up": "+Z",
+     "segments": 3213,
+     "removed_cm3": 18.42,
+     "minutes_from_moves": 4.19,
+     "minutes_recount": 4.29,
+     "minutes_freecad": 5.05,
+     "stamp_s": 5.7,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 197.41,
+   "target_cm3": 135.66,
+   "expected_removal_cm3": 61.75,
+   "removed_cm3": 60.9,
+   "removed_pct_of_expected": 98.6,
+   "gouge_cm3": 0.0,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.0,
+   "left_cm3": 0.859,
+   "left_thick_cm3": 0.346,
+   "left_max_thickness_mm": 2.69,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 30.9
+  },
+  {
+   "pid": "MK-10c",
+   "res_mm": 0.371,
+   "grid": [
+    358,
+    358,
+    94
+   ],
+   "setups": [
+    {
+     "setup": "MK-10c_A",
+     "up": "+Z",
+     "segments": 8698,
+     "removed_cm3": 404.95,
+     "minutes_from_moves": 12.15,
+     "minutes_recount": 12.17,
+     "minutes_freecad": 17.05,
+     "stamp_s": 45.5,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-10c_B",
+     "up": "-Z",
+     "segments": 8011,
+     "removed_cm3": 20.72,
+     "minutes_from_moves": 9.31,
+     "minutes_recount": 9.32,
+     "minutes_freecad": 14.38,
+     "stamp_s": 78.4,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-10c_C",
+     "up": "+X",
+     "segments": 10,
+     "removed_cm3": 0.05,
+     "minutes_from_moves": 0.04,
+     "minutes_recount": 0.04,
+     "minutes_freecad": 0.2,
+     "stamp_s": 0.6,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 539.65,
+   "target_cm3": 113.74,
+   "expected_removal_cm3": 425.9,
+   "removed_cm3": 425.71,
+   "removed_pct_of_expected": 100.0,
+   "gouge_cm3": 0.089,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.37,
+   "left_cm3": 0.278,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 0.74,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 131.2
+  },
+  {
+   "pid": "MK-11a",
+   "res_mm": 0.163,
+   "grid": [
+    417,
+    213,
+    135
+   ],
+   "setups": [
+    {
+     "setup": "MK-11a_A",
+     "up": "-Z",
+     "segments": 466,
+     "removed_cm3": 10.94,
+     "minutes_from_moves": 8.41,
+     "minutes_recount": 8.41,
+     "minutes_freecad": 13.08,
+     "stamp_s": 3.4,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-11a_B",
+     "up": "+Z",
+     "segments": 1504,
+     "removed_cm3": 17.7,
+     "minutes_from_moves": 2.4,
+     "minutes_recount": 2.45,
+     "minutes_freecad": 4.03,
+     "stamp_s": 6.4,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-11a_C",
+     "up": "+Y",
+     "segments": 15,
+     "removed_cm3": 0.34,
+     "minutes_from_moves": 0.84,
+     "minutes_recount": 0.84,
+     "minutes_freecad": 1.08,
+     "stamp_s": 0.1,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-11a_D",
+     "up": "-Y",
+     "segments": 4,
+     "removed_cm3": 0.49,
+     "minutes_from_moves": 0.02,
+     "minutes_recount": 0.02,
+     "minutes_freecad": 0.07,
+     "stamp_s": 0.3,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 39.53,
+   "target_cm3": 9.79,
+   "expected_removal_cm3": 29.73,
+   "removed_cm3": 29.47,
+   "removed_pct_of_expected": 99.1,
+   "gouge_cm3": 0.03,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.16,
+   "left_cm3": 0.29,
+   "left_thick_cm3": 0.177,
+   "left_max_thickness_mm": 2.79,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 17.4
+  },
+  {
+   "pid": "MK-11b",
+   "res_mm": 0.167,
+   "grid": [
+    437,
+    208,
+    132
+   ],
+   "setups": [
+    {
+     "setup": "MK-11b_A",
+     "up": "-Z",
+     "segments": 398,
+     "removed_cm3": 8.34,
+     "minutes_from_moves": 7.72,
+     "minutes_recount": 7.72,
+     "minutes_freecad": 13.12,
+     "stamp_s": 3.8,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-11b_B",
+     "up": "+Z",
+     "segments": 2110,
+     "removed_cm3": 23.13,
+     "minutes_from_moves": 2.66,
+     "minutes_recount": 2.71,
+     "minutes_freecad": 4.47,
+     "stamp_s": 10.3,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-11b_C",
+     "up": "-Y",
+     "segments": 15,
+     "removed_cm3": 0.6,
+     "minutes_from_moves": 0.95,
+     "minutes_recount": 0.95,
+     "minutes_freecad": 1.2,
+     "stamp_s": 0.2,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-11b_D",
+     "up": "+Y",
+     "segments": 3,
+     "removed_cm3": 0.96,
+     "minutes_from_moves": 0.02,
+     "minutes_recount": 0.03,
+     "minutes_freecad": 0.1,
+     "stamp_s": 0.3,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 42.3,
+   "target_cm3": 8.44,
+   "expected_removal_cm3": 33.86,
+   "removed_cm3": 33.54,
+   "removed_pct_of_expected": 99.1,
+   "gouge_cm3": 0.023,
+   "gouge_deep_cm3": 0.003,
+   "gouge_max_depth_mm": 0.33,
+   "left_cm3": 0.342,
+   "left_thick_cm3": 0.21,
+   "left_max_thickness_mm": 2.36,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.51,
+   "seconds": 22.4
+  },
+  {
+   "pid": "MK-13",
+   "res_mm": 0.585,
+   "grid": [
+    521,
+    521,
+    44
+   ],
+   "setups": [
+    {
+     "setup": "MK-13_A",
+     "up": "+Z",
+     "segments": 4112,
+     "removed_cm3": 55.32,
+     "minutes_from_moves": 5.75,
+     "minutes_recount": 5.78,
+     "minutes_freecad": 6.62,
+     "stamp_s": 3.6,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-13_B",
+     "up": "-Z",
+     "segments": 18,
+     "removed_cm3": 0.26,
+     "minutes_from_moves": 0.08,
+     "minutes_recount": 0.08,
+     "minutes_freecad": 0.2,
+     "stamp_s": 1.6,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 1912.93,
+   "target_cm3": 1857.27,
+   "expected_removal_cm3": 55.66,
+   "removed_cm3": 55.58,
+   "removed_pct_of_expected": 99.9,
+   "gouge_cm3": 0.0,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.0,
+   "left_cm3": 0.081,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 1.17,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 12.7
+  },
+  {
+   "pid": "MK-14",
+   "res_mm": 0.585,
+   "grid": [
+    521,
+    521,
+    44
+   ],
+   "setups": [
+    {
+     "setup": "MK-14_A",
+     "up": "+Z",
+     "segments": 371,
+     "removed_cm3": 3.57,
+     "minutes_from_moves": 1.03,
+     "minutes_recount": 1.04,
+     "minutes_freecad": 0.97,
+     "stamp_s": 2.3,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-14_B",
+     "up": "-Z",
+     "segments": 1720,
+     "removed_cm3": 7.6,
+     "minutes_from_moves": 2.63,
+     "minutes_recount": 2.68,
+     "minutes_freecad": 4.03,
+     "stamp_s": 3.0,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 1912.93,
+   "target_cm3": 1901.73,
+   "expected_removal_cm3": 11.2,
+   "removed_cm3": 11.17,
+   "removed_pct_of_expected": 99.7,
+   "gouge_cm3": 0.0,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.0,
+   "left_cm3": 0.033,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 1.17,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 13.5
+  },
+  {
+   "pid": "MK-15a",
+   "res_mm": 0.41,
+   "grid": [
+    471,
+    666,
+    38
+   ],
+   "setups": [
+    {
+     "setup": "MK-15a_A",
+     "up": "-Z",
+     "segments": 2335,
+     "removed_cm3": 65.03,
+     "minutes_from_moves": 7.73,
+     "minutes_recount": 7.92,
+     "minutes_freecad": 7.52,
+     "stamp_s": 4.0,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-15a_B",
+     "up": "+Z",
+     "segments": 504,
+     "removed_cm3": 129.0,
+     "minutes_from_moves": 3.54,
+     "minutes_recount": 3.54,
+     "minutes_freecad": 4.22,
+     "stamp_s": 1.5,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 651.04,
+   "target_cm3": 456.99,
+   "expected_removal_cm3": 194.04,
+   "removed_cm3": 194.03,
+   "removed_pct_of_expected": 100.0,
+   "gouge_cm3": 0.01,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.41,
+   "left_cm3": 0.026,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 0.82,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 15.0
+  },
+  {
+   "pid": "MK-15b",
+   "res_mm": 0.262,
+   "grid": [
+    492,
+    339,
+    72
+   ],
+   "setups": [
+    {
+     "setup": "MK-15b_A",
+     "up": "+Z",
+     "segments": 219,
+     "removed_cm3": 20.9,
+     "minutes_from_moves": 1.99,
+     "minutes_recount": 1.99,
+     "minutes_freecad": 2.37,
+     "stamp_s": 3.1,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-15b_B",
+     "up": "-Z",
+     "segments": 213,
+     "removed_cm3": 4.65,
+     "minutes_from_moves": 1.98,
+     "minutes_recount": 1.98,
+     "minutes_freecad": 2.45,
+     "stamp_s": 5.1,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 170.11,
+   "target_cm3": 144.25,
+   "expected_removal_cm3": 25.86,
+   "removed_cm3": 25.55,
+   "removed_pct_of_expected": 98.8,
+   "gouge_cm3": 0.001,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.26,
+   "left_cm3": 0.32,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 0.52,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 15.9
+  },
+  {
+   "pid": "MK-15c",
+   "res_mm": 0.146,
+   "grid": [
+    238,
+    238,
+    212
+   ],
+   "setups": [
+    {
+     "setup": "MK-15c_A",
+     "up": "+Z",
+     "segments": 1857,
+     "removed_cm3": 8.69,
+     "minutes_from_moves": 3.07,
+     "minutes_recount": 3.15,
+     "minutes_freecad": 4.95,
+     "stamp_s": 3.4,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-15c_B",
+     "up": "-Z",
+     "segments": 2126,
+     "removed_cm3": 1.92,
+     "minutes_from_moves": 1.84,
+     "minutes_recount": 1.84,
+     "minutes_freecad": 2.6,
+     "stamp_s": 12.9,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-15c_C",
+     "up": "-X",
+     "segments": 476,
+     "removed_cm3": 0.71,
+     "minutes_from_moves": 1.1,
+     "minutes_recount": 1.14,
+     "minutes_freecad": 1.75,
+     "stamp_s": 2.2,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 28.55,
+   "target_cm3": 17.17,
+   "expected_removal_cm3": 11.37,
+   "removed_cm3": 11.32,
+   "removed_pct_of_expected": 99.5,
+   "gouge_cm3": 0.0,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.15,
+   "left_cm3": 0.054,
+   "left_thick_cm3": 0.006,
+   "left_max_thickness_mm": 0.88,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 25.4
+  },
+  {
+   "pid": "MK-16",
+   "res_mm": 0.125,
+   "grid": [
+    125,
+    429,
+    223
+   ],
+   "setups": [
+    {
+     "setup": "MK-16_A",
+     "up": "+Z",
+     "segments": 289,
+     "removed_cm3": 10.74,
+     "minutes_from_moves": 0.99,
+     "minutes_recount": 0.99,
+     "minutes_freecad": 1.32,
+     "stamp_s": 1.8,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-16_B",
+     "up": "-Z",
+     "segments": 15,
+     "removed_cm3": 0.94,
+     "minutes_from_moves": 0.08,
+     "minutes_recount": 0.08,
+     "minutes_freecad": 0.12,
+     "stamp_s": 0.2,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 16.04,
+   "target_cm3": 4.12,
+   "expected_removal_cm3": 11.92,
+   "removed_cm3": 11.68,
+   "removed_pct_of_expected": 98.0,
+   "gouge_cm3": 0.0,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.13,
+   "left_cm3": 0.242,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 0.35,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 8.7
+  },
+  {
+   "pid": "MK-18a",
+   "res_mm": 0.277,
+   "grid": [
+    240,
+    240,
+    209
+   ],
+   "setups": [
+    {
+     "setup": "MK-18a_A",
+     "up": "+Z",
+     "segments": 365,
+     "removed_cm3": 38.72,
+     "minutes_from_moves": 1.71,
+     "minutes_recount": 1.72,
+     "minutes_freecad": 2.92,
+     "stamp_s": 6.7,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-18a_B",
+     "up": "-Z",
+     "segments": 337,
+     "removed_cm3": 10.51,
+     "minutes_from_moves": 1.45,
+     "minutes_recount": 1.45,
+     "minutes_freecad": 2.18,
+     "stamp_s": 10.3,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 221.27,
+   "target_cm3": 170.76,
+   "expected_removal_cm3": 50.51,
+   "removed_cm3": 49.24,
+   "removed_pct_of_expected": 97.5,
+   "gouge_cm3": 0.003,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.28,
+   "left_cm3": 1.275,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 0.55,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 23.2
+  }
+ ]
+}

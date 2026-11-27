@@ -100,6 +100,10 @@ def main():
     rd = put(rd, "SHORT_TABLE", short_table(h), indent="  ")
     if (OUT / "plan.md").exists():
         rd = put(rd, "PLAN_TABLE", (OUT / "plan.md").read_text().strip())
+    if (OUT / "v2" / "delta.md").exists():
+        d1, d2 = (OUT / "v2" / "delta.md").read_text().strip().split("\n\n")
+        rd = put(rd, "DELTA_TABLE", d1)
+        rd = put(rd, "V2_STATES", d2)
     if (OUT / "sim.json").exists():
         rd = put(rd, "SIM_TABLE", sim_table(json.loads((OUT / "sim.json").read_text()), cam))
     (HERE / "README.md").write_text(rd)
