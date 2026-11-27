@@ -25,9 +25,9 @@
   },
   "recv_unbox": {
    "ok": true,
-   "planned_s": 10.4,
-   "frames": 132,
-   "video_s": 11.0,
+   "planned_s": 10.5,
+   "frames": 134,
+   "video_s": 11.2,
    "gripper": "2F-85",
    "part_kg": 4.0,
    "tightest_transit": {
@@ -38,17 +38,17 @@
    },
    "fine_audit_0p2deg": [],
    "fail": null,
-   "worst_torque_frac": 0.504,
+   "worst_torque_frac": 0.517,
    "tipover_at_worst_torque": {
-    "restoring_Nm": 612.6,
-    "extra_kg_to_tip": null,
+    "restoring_Nm": 574.0,
+    "extra_kg_to_tip": 135.4,
     "edge": "+y",
     "mass_kg": 303.9
    }
   },
   "vf4_clamps": {
    "ok": true,
-   "planned_s": 24.7,
+   "planned_s": 24.8,
    "frames": 296,
    "video_s": 24.7,
    "gripper": "2F-85",
@@ -63,31 +63,31 @@
    "fail": null,
    "worst_torque_frac": 0.37,
    "tipover_at_worst_torque": {
-    "restoring_Nm": 550.0,
-    "extra_kg_to_tip": 83.2,
+    "restoring_Nm": 564.5,
+    "extra_kg_to_tip": 101.0,
     "edge": "+y",
     "mass_kg": 300.8
    }
   },
   "vf4_floor_load": {
    "ok": true,
-   "planned_s": 9.1,
-   "frames": 114,
-   "video_s": 9.5,
+   "planned_s": 8.8,
+   "frames": 111,
+   "video_s": 9.2,
    "gripper": "VGP20",
    "part_kg": 4.98,
    "tightest_transit": {
-    "clear_mm": 26.4,
+    "clear_mm": 27.9,
     "robot_body": "A/upper_arm",
     "world_body": "vf4/front sill trim",
     "segment": "out to home"
    },
    "fine_audit_0p2deg": [],
    "fail": null,
-   "worst_torque_frac": 0.512,
+   "worst_torque_frac": 0.514,
    "tipover_at_worst_torque": {
-    "restoring_Nm": 508.2,
-    "extra_kg_to_tip": 70.8,
+    "restoring_Nm": 565.9,
+    "extra_kg_to_tip": 146.6,
     "edge": "+y",
     "mass_kg": 304.8
    }
@@ -100,7 +100,7 @@
    "gripper": "2F-85",
    "part_kg": 1.85166,
    "tightest_transit": {
-    "clear_mm": 26.2,
+    "clear_mm": 27.9,
     "robot_body": "A/upper_arm",
     "world_body": "vf4/front sill trim",
     "segment": "out to home"
@@ -1308,7 +1308,7 @@
   },
   "arm_motion_s": {
    "vise": 10.4,
-   "plate": 33.8,
+   "plate": 33.6,
    "lathe": 13.0,
    "lathe_big": 5.4
   },
@@ -1577,7 +1577,7 @@
    "stock": "2.5 in. plate, 91 x 134 mm",
    "ok": true,
    "contacts": [],
-   "clear_mm": 38.1,
+   "clear_mm": 43.4,
    "gripper_ok": true,
    "note": ""
   },
@@ -1587,7 +1587,7 @@
    "stock": "3.5 in. plate, 93 x 100 mm",
    "ok": true,
    "contacts": [],
-   "clear_mm": 38.1,
+   "clear_mm": 43.4,
    "gripper_ok": true,
    "note": ""
   },
@@ -1597,7 +1597,7 @@
    "stock": "1 in. plate, 228 x 318 mm",
    "ok": true,
    "contacts": [],
-   "clear_mm": 38.1,
+   "clear_mm": 43.4,
    "gripper_ok": true,
    "note": ""
   },
@@ -1607,7 +1607,7 @@
    "stock": "2.5 in. plate, 96 x 176 mm",
    "ok": true,
    "contacts": [],
-   "clear_mm": 38.1,
+   "clear_mm": 43.4,
    "gripper_ok": true,
    "note": ""
   },
@@ -1617,7 +1617,7 @@
    "stock": "0.75 in. plate, 228 x 318 mm",
    "ok": true,
    "contacts": [],
-   "clear_mm": 38.1,
+   "clear_mm": 43.4,
    "gripper_ok": true,
    "note": ""
   },
@@ -1627,7 +1627,7 @@
    "stock": "1 in. plate, 134 x 170 mm",
    "ok": true,
    "contacts": [],
-   "clear_mm": 38.1,
+   "clear_mm": 43.4,
    "gripper_ok": true,
    "note": ""
   },
@@ -1637,7 +1637,7 @@
    "stock": "0.75 in. plate, 126 x 298 mm",
    "ok": true,
    "contacts": [],
-   "clear_mm": 38.1,
+   "clear_mm": 43.4,
    "gripper_ok": true,
    "note": ""
   },
@@ -1647,7 +1647,7 @@
    "stock": "0.625 in. plate, 116 x 116 mm",
    "ok": true,
    "contacts": [],
-   "clear_mm": 38.1,
+   "clear_mm": 43.4,
    "gripper_ok": true,
    "note": ""
   },
@@ -1657,7 +1657,7 @@
    "stock": "0.375 in. plate, 136 x 161 mm",
    "ok": true,
    "contacts": [],
-   "clear_mm": 38.1,
+   "clear_mm": 43.4,
    "gripper_ok": true,
    "note": ""
   },
@@ -1667,13 +1667,13 @@
    "stock": "2.5 in. plate, 92 x 106 mm",
    "ok": true,
    "contacts": [],
-   "clear_mm": 38.1,
+   "clear_mm": 43.4,
    "gripper_ok": true,
    "note": ""
   }
  ],
  "person_lifts": {
-  "what": "chapters 29 and 30's two-person lifts (shop_chapters.team_lift): the load's mass against a two-person guideline, the hands' largest gap to their grip points on the load (mm), and, at the VF-4, the load's path against the machine (FCL; clear_mm, contact)",
+  "what": "chapters 29 and 30's two-person lifts (shop_chapters.team_lift): the load's mass against a two-person guideline, the hands' largest gap to their grip points on the load (mm), and, at the VF-4, the load's path against the machine (FCL; clear_mm, contact); round 10: chapter 30's lifts one hand each on the end faces (pair_lift), the turn-over on the cart its own lift, and lean_max_deg and bodies_apart_mm_min recorded",
   "guideline": {
    "single_person_kg": 23.0,
    "team_factor": 0.667,
@@ -1688,47 +1688,18 @@
     "kg": 7.7,
     "team_guideline_kg": 30.7,
     "under_guideline": true,
-    "frames": 70,
-    "hand_gap_mm_max": 4.5,
-    "hand_gap_mm_p95": 3.8,
-    "worst": [
-     [
-      4.5,
-      43,
-      0.667,
-      0,
-      "l",
-      46.4
-     ],
-     [
-      4.3,
-      44,
-      0.685,
-      0,
-      "l",
-      49.3
-     ],
-     [
-      4.3,
-      43,
-      0.667,
-      0,
-      "r",
-      46.4
-     ],
-     [
-      4.2,
-      45,
-      0.704,
-      0,
-      "l",
-      51.9
-     ]
-    ],
-    "clear_mm": 40.3,
+    "frames": 171,
+    "how": "round 10: one hand each on its end face, the bodies ~0.83 m apart",
+    "glove_in_load_mm_max": 0.7,
+    "palm_error_mm_max": 0.1,
+    "reach_over_mm_max": -0.1,
+    "body_clear_mm_min": 145.7,
+    "lean_max_deg": 44.0,
+    "bodies_apart_mm_min": 827.4,
+    "clear_mm": 38.0,
     "nearest": "vf4/table",
     "contact": null,
-    "samples": 27,
+    "samples": 75,
     "caption": "Two people set the 7.7 kg stock on the risers",
     "sub": "7.7 kg, a reach of ~0.6 m into the machine; two-person guideline 2/3 x (23 + 23) = 30.7 kg (NIOSH load constant, HSE L23 team rule)"
    },
@@ -1736,288 +1707,173 @@
     "kg": 6.49,
     "team_guideline_kg": 30.7,
     "under_guideline": true,
-    "frames": 70,
-    "hand_gap_mm_max": 3.8,
-    "hand_gap_mm_p95": 2.9,
-    "worst": [
-     [
-      3.8,
-      36,
-      0.537,
-      1,
-      "r",
-      32.0
-     ],
-     [
-      3.7,
-      36,
-      0.537,
-      1,
-      "l",
-      32.0
-     ],
-     [
-      3.6,
-      29,
-      0.407,
-      0,
-      "r",
-      32.0
-     ],
-     [
-      3.5,
-      41,
-      0.63,
-      0,
-      "l",
-      32.0
-     ]
-    ],
-    "clear_mm": 41.0,
+    "frames": 171,
+    "how": "round 10: one hand each on its end face, the bodies ~0.83 m apart",
+    "glove_in_load_mm_max": 0.8,
+    "palm_error_mm_max": 0.1,
+    "reach_over_mm_max": -0.0,
+    "body_clear_mm_min": 145.7,
+    "lean_max_deg": 44.0,
+    "bodies_apart_mm_min": 827.4,
+    "clear_mm": 38.8,
     "nearest": "vf4/table",
     "contact": null,
-    "samples": 27,
+    "samples": 75,
     "caption": "Doors open: the clamps off, two people take the part out",
     "sub": "6.5 kg after F-S1; two-person guideline 2/3 x (23 + 23) = 30.7 kg (NIOSH load constant, HSE L23 team rule)"
-   },
-   "F-S2: Two people turn it over onto the dummy-floor plate for F-S2": {
-    "kg": 6.49,
-    "team_guideline_kg": 30.7,
-    "under_guideline": true,
-    "frames": 82,
-    "hand_gap_mm_max": 23.0,
-    "hand_gap_mm_p95": 3.8,
-    "worst": [
-     [
-      23.0,
-      73,
-      1.0,
-      0,
-      "l",
-      56.0
-     ],
-     [
-      22.5,
-      72,
-      0.985,
-      0,
-      "l",
-      56.0
-     ],
-     [
-      20.8,
-      71,
-      0.97,
-      0,
-      "l",
-      56.0
-     ],
-     [
-      18.2,
-      70,
-      0.955,
-      0,
-      "l",
-      56.0
-     ]
-    ],
-    "clear_mm": 26.5,
-    "nearest": "vf4/table",
-    "contact": null,
-    "samples": 33,
-    "caption": "Two people turn it over onto the dummy-floor plate for F-S2",
-    "sub": "6.5 kg, turned 180 deg about the line between their hands; the 18 M4 screws from below (not shown); two-person guideline 2/3 x (23 + 23) = 30.7 kg (NIOSH load constant, HSE L23 team rule)"
    },
    "F-S3: Two people set the frame and its plate on the 4th axis": {
     "kg": 10.02,
     "team_guideline_kg": 30.7,
     "under_guideline": true,
-    "frames": 82,
-    "hand_gap_mm_max": 3.9,
-    "hand_gap_mm_p95": 3.7,
-    "worst": [
-     [
-      3.9,
-      43,
-      0.545,
-      1,
-      "l",
-      56.0
-     ],
-     [
-      3.9,
-      42,
-      0.53,
-      1,
-      "l",
-      56.0
-     ],
-     [
-      3.9,
-      41,
-      0.515,
-      1,
-      "l",
-      56.0
-     ],
-     [
-      3.9,
-      40,
-      0.5,
-      1,
-      "l",
-      56.0
-     ]
-    ],
-    "clear_mm": 6.0,
-    "nearest": "vf4/table",
-    "contact": null,
-    "samples": 33,
+    "shown": false,
     "caption": "Two people set the frame and its plate on the 4th axis",
-    "sub": "frame 5.3 kg + MIC-6 plate 4.8 kg, turned 90 deg onto the platter; 4 bolts through the opening (not shown); two-person guideline 2/3 x (23 + 23) = 30.7 kg (NIOSH load constant, HSE L23 team rule)"
+    "why": "a 90 deg turn about Y: not drawn (a cut)"
    },
    "stock: Two people carry the frame's plate: 30.1 kg": {
     "kg": 30.05,
     "team_guideline_kg": 30.7,
     "under_guideline": true,
-    "frames": 82,
-    "hand_gap_mm_max": 3.1,
-    "hand_gap_mm_p95": 2.4,
-    "worst": [
-     [
-      3.1,
-      44,
-      0.561,
-      1,
-      "r",
-      33.4
-     ],
-     [
-      3.1,
-      44,
-      0.561,
-      1,
-      "l",
-      33.4
-     ],
-     [
-      3.1,
-      44,
-      0.561,
-      0,
-      "r",
-      33.4
-     ],
-     [
-      3.1,
-      44,
-      0.561,
-      0,
-      "l",
-      33.4
-     ]
-    ],
+    "frames": 124,
+    "body_clear_mm_min": 46.0,
+    "hands_in_load_mm_max": 0.0,
+    "reach_over_mm_max": -14.5,
+    "how": "people.carry (round 9)",
     "caption": "Two people carry the frame's plate: 30.1 kg",
     "sub": "13 x 9.5 x 5.5 in. 6061-T651 as delivered; 2/3 x (23 + 23) = 30.7 kg two-person guideline (NIOSH, HSE L23): within it, just (a 15 in. plate, 34.7 kg, would be over)"
+   },
+   "F-S2: Two people turn it over on the cart": {
+    "kg": 6.49,
+    "team_guideline_kg": 30.7,
+    "under_guideline": true,
+    "frames": 82,
+    "how": "round 10: one hand each on its end face, the bodies ~0.83 m apart",
+    "glove_in_load_mm_max": 0.79,
+    "palm_error_mm_max": 0.1,
+    "reach_over_mm_max": -0.1,
+    "body_clear_mm_min": 198.3,
+    "lean_max_deg": 25.0,
+    "bodies_apart_mm_min": 827.4,
+    "caption": "Two people turn it over on the cart",
+    "sub": "6.5 kg, turned 180 deg about the line between their hands; two-person guideline 2/3 x (23 + 23) = 30.7 kg (NIOSH load constant, HSE L23 team rule)"
+   },
+   "F-S2: Two people set it, turned over, on the dummy-floor plate for F-S2": {
+    "kg": 6.49,
+    "team_guideline_kg": 30.7,
+    "under_guideline": true,
+    "frames": 171,
+    "how": "round 10: one hand each on its end face, the bodies ~0.83 m apart",
+    "glove_in_load_mm_max": 0.78,
+    "palm_error_mm_max": 0.1,
+    "reach_over_mm_max": -0.2,
+    "body_clear_mm_min": 145.6,
+    "lean_max_deg": 45.0,
+    "bodies_apart_mm_min": 827.4,
+    "clear_mm": 24.9,
+    "nearest": "vf4/table",
+    "contact": null,
+    "samples": 75,
+    "caption": "Two people set it, turned over, on the dummy-floor plate for F-S2",
+    "sub": "6.5 kg; the 18 M4 screws from below (not shown); two-person guideline 2/3 x (23 + 23) = 30.7 kg (NIOSH load constant, HSE L23 team rule)"
    }
   }
  },
  "chapters": {
   "20-receiving": {
-   "frames": 446,
-   "video_s": 37.2,
+   "frames": 448,
+   "video_s": 37.3,
    "real_h": 0.01,
    "add": {
     "person_h": 0.004,
-    "robot_h": 0.004
+    "robot_h": 0.005
    },
    "video_s_by_status": {
     "-": 7.0,
     "person": 14.0,
-    "pass": 16.2
+    "pass": 16.3
    },
    "video_s_by_who": {
     "-": 7.0,
     "person": 14.0,
     "robot A": 5.7,
-    "robot B": 10.5
+    "robot B": 10.7
    }
   },
   "29-stock": {
-   "frames": 186,
-   "video_s": 15.5,
-   "real_h": 0.0,
+   "frames": 275,
+   "video_s": 22.9,
+   "real_h": 0.01,
    "add": {
-    "person_h": 0.004
+    "person_h": 0.006
    },
    "video_s_by_status": {
-    "person": 15.5
+    "person": 22.9
    },
    "video_s_by_who": {
-    "person": 15.5
+    "person": 22.9
    }
   },
   "30-machining-chamber": {
-   "frames": 1626,
-   "video_s": 135.5,
-   "real_h": 1.93,
+   "frames": 3037,
+   "video_s": 253.1,
+   "real_h": 1.96,
    "add": {
-    "person_h": 0.011,
-    "robot_h": 0.009,
+    "person_h": 0.023,
+    "robot_h": 0.029,
     "machine_h": 1.91
    },
    "video_s_by_status": {
-    "person": 38.0,
-    "pass": 97.0,
-    "-": 0.5
+    "-": 2.5,
+    "person": 82.6,
+    "pass": 168.0
    },
    "video_s_by_who": {
-    "person": 38.0,
-    "robot A": 33.7,
-    "machine": 63.3,
-    "-": 0.5
+    "-": 2.5,
+    "person": 82.6,
+    "robot A": 106.2,
+    "machine": 61.8
    }
   },
   "31-machining-parts": {
-   "frames": 629,
-   "video_s": 52.4,
-   "real_h": 26.16,
+   "frames": 1088,
+   "video_s": 90.7,
+   "real_h": 26.26,
    "add": {
-    "robot_h": 4.64,
-    "machine_h": 26.153,
+    "robot_h": 4.648,
+    "machine_h": 26.237,
     "person_h": 19.74,
     "cam_h": 123.6
    },
    "video_s_by_status": {
-    "pass": 50.9,
-    "-": 1.5
+    "pass": 88.7,
+    "-": 2.0
    },
    "video_s_by_who": {
-    "robot A": 33.7,
-    "-": 1.5,
-    "machine": 15.0,
+    "robot A": 63.5,
+    "-": 2.0,
+    "machine": 23.0,
     "robot B": 22.2
    }
   },
   "32-finishing": {
-   "frames": 925,
-   "video_s": 77.1,
+   "frames": 1001,
+   "video_s": 83.4,
    "real_h": 1.58,
    "add": {
     "person_h": 1.567,
     "outsourced_d": 10.0,
-    "robot_h": 0.015
+    "robot_h": 0.017
    },
    "video_s_by_status": {
     "person": 18.0,
-    "pass": 50.3,
+    "pass": 56.7,
     "-": 2.0,
     "fail": 6.7
    },
    "video_s_by_who": {
     "person": 18.0,
     "outsourced": 4.0,
-    "robot A": 38.1,
+    "robot A": 44.4,
     "-": 2.0,
     "robot B": 15.0
    }

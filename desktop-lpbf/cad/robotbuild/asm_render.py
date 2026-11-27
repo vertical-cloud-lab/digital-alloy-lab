@@ -1389,6 +1389,33 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=(), fail_
         elif e["kind"] == "mark" and e.get("what") == "unplanned" and e.get("arm") in last_move:
             last_move[e["arm"]]["unplanned"] = True
             last_move[e["arm"]]["unplanned_note"] = e.get("note") or ""
+    # round 10 (retry): ASM_CUT_HELD=<step>[,<step>...]: a failed step whose carry is drawn with the fingers inside the part
+    # it holds (F39: the pick at the bench was not planned, so no grip was recorded and the open 2F-85's fingertips stand
+    # 12 mm in the drawer and 6 mm in its latches' envelope all through the carry; rec_check_run15_chamber.json): its held
+    # moves, and the move that backs the fingers out after the release, are cut like an unplanned move, with one card
+    cut_held = {x for x in os.environ.get("ASM_CUT_HELD", "").split(",") if x}
+    if cut_held:
+        by_arm = {}
+        for e in ev:
+            st_ = e.get("step")
+            if st_ not in cut_held or e["kind"] not in ("attach", "detach", "move"):
+                continue
+            n_ = e.get("arm")
+            b = by_arm.setdefault((st_, n_), dict(held=False, after=False, moves=[]))
+            if e["kind"] == "attach":
+                b["held"] = True
+            elif e["kind"] == "detach" and b["held"]:
+                b["held"], b["after"] = False, True
+            elif e["kind"] == "move" and (b["held"] or b["after"]):
+                b["moves"].append(e)
+                if b["after"]:
+                    b["after"] = None                  # only the first move after the release
+        for (st_, n_), b in by_arm.items():
+            for j, e in enumerate(b["moves"]):
+                e["unplanned"] = True
+                e["unplanned_quiet"] = j < len(b["moves"]) - 1
+                e["unplanned_txt"] = (f"arm {n_}'s carry is not shown: the pick was not planned, so no grip was recorded, and "
+                                      f"the open fingers would be drawn inside the part (cut to the arm backed off)")
     # ASM_UPTO=<step id>: stop before this step (the chunks of a run still going may end inside a step's fetch)
     upto = os.environ.get("ASM_UPTO")
     if upto:
@@ -2195,8 +2222,9 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                     nt = str(e.get("unplanned_note") or "").replace(" not planned", "")
                     txt = (f"arm {n}'s {nt}: no checked path, so not shown (the arm is cut to where it ends)" if nt else
                            f"NOT PLANNED: no checked path for arm {n}'s move here; not shown")
+                    txt = e.get("unplanned_txt") or txt
                     st_u = "fail" if step_status(cur["id"], cur.get("failed")) == "fail" else ""
-                    for _ in range(int(FPS * 1.5)):
+                    for _ in range(0 if e.get("unplanned_quiet") else int(FPS * 1.5)):
                         stop = emit(cur["label"], txt, who, status=st_u, loc=here(n))
                         if stop:
                             break
