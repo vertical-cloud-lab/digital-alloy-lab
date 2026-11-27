@@ -1,0 +1,30 @@
+{
+ "name": "m2w_4_section",
+ "fps": 15,
+ "n_frames": 354,
+ "size": [
+  1280,
+  720
+ ],
+ "substeps": [
+  {
+   "label": "C2 · lengthwise, 1.5 mm off the centreline",
+   "caption": "Part 1.1 in the precision saw, its length in the blade's plane: one cut through the base and all seven walls, 1.5 mm off the centreline, on the side away from the wall-1 mark. Keep the offcut and label it: it holds a second plane through every wall.",
+   "start_frame": 0,
+   "end_frame": 143,
+   "watch_out": "clamp the part by its base and feed slowly: the 1.27 mm walls can bend or chatter in the cut."
+  },
+  {
+   "label": "C2 · between walls 4 and 5",
+   "caption": "Turn the half a quarter turn and cut between walls 4 and 5, in the 5.9 mm gap: one piece with four walls (about 25 mm long) and one with three (about 19 mm). Each fits a 1.25 in mount.",
+   "start_frame": 144,
+   "end_frame": 257
+  },
+  {
+   "label": "C2 · the section plane",
+   "caption": "Red: the plane to grind to, the part's centreline. It crosses every wall at mid-length, through its 1.27 mm thickness and 7.6 mm height, and the base below. Grinding removes the last 1.5 mm.",
+   "start_frame": 258,
+   "end_frame": 353
+  }
+ ]
+}

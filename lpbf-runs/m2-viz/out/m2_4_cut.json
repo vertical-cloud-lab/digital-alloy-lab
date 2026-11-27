@@ -1,0 +1,35 @@
+{
+ "name": "m2_4_cut",
+ "fps": 15,
+ "n_frames": 478,
+ "size": [
+  1280,
+  720
+ ],
+ "substeps": [
+  {
+   "label": "C2 · bandsaw: across the panel",
+   "caption": "Bandsaw (bi-metal blade, coolant for stainless). The panel lies flat against the fence, tracks up. The first cut goes across it 3 mm past the target plane (red), the line where every track is at mid-length. A bandsaw face is rough, so no bandsaw cut comes closer.",
+   "start_frame": 0,
+   "end_frame": 121
+  },
+  {
+   "label": "C2 · bandsaw: a strip holding every section",
+   "caption": "The second cut goes 7 mm on the other side of the plane. That frees a strip about 10 mm wide that holds every track's mid-length, which is all we section. The rest of the panel is scrap.",
+   "start_frame": 122,
+   "end_frame": 223
+  },
+  {
+   "label": "C2 · bandsaw: two pieces of nine",
+   "caption": "Then the strip is cut into two pieces of nine tracks, about 22 mm long, one per mount, and its blank ends come off. (If the panels are thicker than about 12 mm, the strip is first cut down to about 10 mm.)",
+   "start_frame": 224,
+   "end_frame": 347
+  },
+  {
+   "label": "C2 · fine wet saw: through the piece",
+   "caption": "Fine wet saw (abrasive cut-off or low-speed precision saw, with coolant). It cuts all the way through the piece, 0.5 mm from the target plane, and a sliver 1.5–2 mm thick drops off. The new face is flat and barely deformed, so grinding removes only the last 0.5 mm.",
+   "start_frame": 348,
+   "end_frame": 477
+  }
+ ]
+}

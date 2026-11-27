@@ -1,0 +1,26 @@
+{
+  "job": "job-futurehouse-paperqa3-high",
+  "submitted_utc": "2026-11-10T05:07:53Z",
+  "tasks": {
+    "transients": {
+      "task_id": "d651d18d-431d-4f67-b7fc-71a2cd615cc0",
+      "title": "Start and end transients of single LPBF tracks: track length and where to section",
+      "outfile": "track-transients-and-length.md"
+    },
+    "interaction": {
+      "task_id": "b5dbc4f1-430d-483a-8177-d4e0d5823fd5",
+      "title": "Interactions between neighbouring single tracks on one powder layer: spacing and exposure order",
+      "outfile": "track-spacing-and-order.md"
+    },
+    "doe": {
+      "task_id": "ba27f33a-56ac-40fc-a71e-e04527fc9ec2",
+      "title": "Sobol vs batch Bayesian optimization for a single-track campaign that calibrates a melt-pool model",
+      "outfile": "sampling-sobol-vs-batch-bo.md"
+    },
+    "ss316l": {
+      "task_id": "5d67c1a0-ccf3-41a6-a938-9918ef9fec29",
+      "title": "316L inputs for an Eagar-Tsai model and published single-track data to check it against",
+      "outfile": "ss316l-eagar-tsai-inputs-and-single-track-data.md"
+    }
+  }
+}

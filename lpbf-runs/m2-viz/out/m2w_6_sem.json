@@ -1,0 +1,44 @@
+{
+ "name": "m2w_6_sem",
+ "fps": 15,
+ "n_frames": 450,
+ "size": [
+  1280,
+  720
+ ],
+ "substeps": [
+  {
+   "label": "C5 · SEM, unetched: porosity first",
+   "caption": "Into the SEM unetched: porosity is imaged before any etch, because etch pits look like pores. Backscattered electrons, about 100x, roughly six fields up each wall: about 250 fields for all 42 walls, so use the stage's automated tiling if the Apreo has it.",
+   "start_frame": 0,
+   "end_frame": 113,
+   "watch_out": "image porosity before any etch: etch pits look like pores."
+  },
+  {
+   "label": "C5 · each wall's section",
+   "caption": "Each wall's section, 1.27 mm wide, with its core band dashed: pores are counted only there, clear of the contours. (The pores here are drawn, not data.)",
+   "start_frame": 114,
+   "end_frame": 206
+  },
+  {
+   "label": "C4 · etch",
+   "caption": "Then etch to bring out the melt-pool boundaries, straight after the final polish (316 passivates fast): for example 10 % oxalic acid electrolytically, or a short dip in a mixed-acid etch in the fume hood.",
+   "start_frame": 207,
+   "end_frame": 289,
+   "watch_out": "etch straight after the final polish, and lightly: over-etching pits the surface."
+  },
+  {
+   "label": "C5 · back in: the last layer's pools",
+   "caption": "Back into the SEM (or under the optical microscope) to image the top of each wall, where the last layer's pools were never remelted.",
+   "start_frame": 290,
+   "end_frame": 353
+  },
+  {
+   "label": "C6 · pool depth at the top",
+   "caption": "The AM Module's steady-state pool is one of these arcs, if the hatch runs along the wall. If it runs across, the section shows only a flat fusion line, which gives the depth but not the width.",
+   "start_frame": 354,
+   "end_frame": 449,
+   "watch_out": "if the hatch runs across the wall, the section gives depth but no width."
+  }
+ ]
+}

@@ -1,0 +1,37 @@
+{
+ "name": "m2w_1_setup",
+ "fps": 15,
+ "n_frames": 369,
+ "size": [
+  1280,
+  720
+ ],
+ "substeps": [
+  {
+   "label": "B2 · panels into the plate",
+   "caption": "The 316L panels (about 88 mm square) go into Nathan C.'s plate and are screwed down. This build uses two of them, squares 1 and 2 (panels A and B here), with three parts each: 6 parts, 42 walls. The other two panels went to another group and are drawn blank.",
+   "start_frame": 0,
+   "end_frame": 101,
+   "watch_out": "a panel that sits proud of the plate meets the blade on the first layer. Dial-indicate every panel flush before closing the door."
+  },
+  {
+   "label": "A1 · job file: 6 parts, 42 walls",
+   "caption": "Each wall is its own part with its own set: the hatch and upskin power, speed, spot and trace spacing change, the contours stay. 33 sets: 32 Sobol settings and the 316L hatch (370 W, 1350 mm/s, 130 µm, 0.09 mm) as a control. 8 settings are printed on both squares. The bases get the unchanged 316L set.",
+   "start_frame": 102,
+   "end_frame": 216,
+   "watch_out": "in Carl's photos the Part parameter window greys out power and speed; make the sets under Parameter instead. 9 sets ask for a spot above 130 µm, more than his photos show: if WRX won't take one, ask rather than round it."
+  },
+  {
+   "label": "A1 · part 1.1",
+   "caption": "Part 1.1. Its seven walls run along the blade's travel, like every wall in this build, each with its own power, speed, spot and trace spacing. Mark the wall-1 end of every base, so the wall-to-set map survives removal.",
+   "start_frame": 217,
+   "end_frame": 304
+  },
+  {
+   "label": "B3 · powder",
+   "caption": "Load sieved 316L powder into the dose chamber, and record the lot, its certificate and the particle size distribution: the AM Module needs them.",
+   "start_frame": 305,
+   "end_frame": 368
+  }
+ ]
+}

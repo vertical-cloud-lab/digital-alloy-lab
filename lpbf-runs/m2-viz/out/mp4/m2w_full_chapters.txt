@@ -1,0 +1,7 @@
+0:00 Set up: panels, job file (42 walls, 33 sets), powder (B2, A1, B3)
+0:24 Print: inert, bases then walls, one layer slowed down, what to watch (B4, B5)
+0:58 Unload: depowder, photograph, number the parts, bandsaw them off (B6, B7, C1)
+1:25 Section: lengthwise off the centreline, then between walls 4 and 5 (C2)
+1:49 Mount and polish: 12 mounts, grind to the centreline, polish (C3, C4)
+2:14 SEM: porosity unetched, etch, last-layer melt pools (C5, C4, C6)
+2:44 Analyse: pores, the map vs the AM Module, the next build (C6, C7)

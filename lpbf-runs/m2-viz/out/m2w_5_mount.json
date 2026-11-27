@@ -1,0 +1,38 @@
+{
+ "name": "m2w_5_mount",
+ "fps": 15,
+ "n_frames": 378,
+ "size": [
+  1280,
+  720
+ ],
+ "substeps": [
+  {
+   "label": "C3 · hot-mount, cut face down",
+   "caption": "Hot-mount each piece with its cut face down, in conductive compound so the SEM doesn't charge. The walls stand up in the mould. Use a compound with good edge retention: the last layer's pools are at the very top edge of each wall.",
+   "start_frame": 0,
+   "end_frame": 125,
+   "watch_out": "a rounded edge erases the last layer's pools, which sit at the very top of each wall."
+  },
+  {
+   "label": "C3 · 12 mounts",
+   "caption": "Two mounts a part, 12 in all. Engrave square.part.piece on the back of each mount. The parts holding the repeated settings and the controls give the first look at scatter.",
+   "start_frame": 126,
+   "end_frame": 188
+  },
+  {
+   "label": "C4 · grind 1.5 mm to the centreline",
+   "caption": "Grind away the 1.5 mm to the centreline on coarse paper. Measure the mount's height before and during, so you know when you're there; ±0.3 mm still cuts every wall near mid-length.",
+   "start_frame": 189,
+   "end_frame": 278,
+   "watch_out": "overshoot and the plane moves off mid-length. Measure the mount's height as you go."
+  },
+  {
+   "label": "C4 · polish",
+   "caption": "Then 320 and 800 grit, 3 µm diamond, and a 0.05 µm final polish. 316L is soft and can smear pores shut: on a few walls, re-polish and re-image to check the porosity doesn't change.",
+   "start_frame": 279,
+   "end_frame": 377,
+   "watch_out": "316L smears and can close pores over. Re-grind 2-3 mounts 0.3 mm deeper and image them again: that measures how much one section scatters."
+  }
+ ]
+}
