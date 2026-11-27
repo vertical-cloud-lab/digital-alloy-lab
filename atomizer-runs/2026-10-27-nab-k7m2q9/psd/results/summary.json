@@ -1,0 +1,1268 @@
+{
+  "tool": "sem_psd.py 1.0",
+  "image_dir": "/tmp/stage225/sem",
+  "settings": {
+    "image_dir": "/tmp/stage225/sem",
+    "out_dir": "/tmp/run225/final3",
+    "include": [
+      "not annotated.tif",
+      "spherical*.tif",
+      "3.2nA_00[124].tif"
+    ],
+    "exclude": [],
+    "max_px_um": 2.0,
+    "min_hfw_um": 1000.0,
+    "k_sigma": 5.0,
+    "h_rel": 0.15,
+    "min_px": 10.0,
+    "shape_min_px": 20.0,
+    "band": [
+      50.0,
+      200.0
+    ],
+    "fines": 20.0,
+    "ar_flag": 0.85,
+    "solidity_flag": 0.96,
+    "agglomerate_solidity": 0.9,
+    "agglomerate_ar": 0.7,
+    "no_edge_correction": false,
+    "no_dedupe": false,
+    "mask_annotations": false,
+    "n_boot": 2000,
+    "overlay_field": "not annotated",
+    "save_labels": false
+  },
+  "n_regions": 8828,
+  "n_counted": 5937,
+  "n_edge_excluded": 928,
+  "n_duplicate_excluded": 1682,
+  "n_below_cut": 281,
+  "area_analysed_mm2": 27.756431424783344,
+  "size": {
+    "number": {
+      "D10": {
+        "value": 34.82160973440656,
+        "ci_particles": [
+          34.478596037953665,
+          35.280881776486694
+        ],
+        "ci_fields": [
+          34.422386548262125,
+          35.388620036674524
+        ]
+      },
+      "D50": {
+        "value": 46.895920790441316,
+        "ci_particles": [
+          46.60606013959569,
+          47.183536595791985
+        ],
+        "ci_fields": [
+          46.06565127423404,
+          48.34607065047956
+        ]
+      },
+      "D90": {
+        "value": 71.46492861194666,
+        "ci_particles": [
+          69.5366590047697,
+          73.66507141823263
+        ],
+        "ci_fields": [
+          64.57085474316611,
+          102.54226839737828
+        ]
+      },
+      "span": 0.7813754002460919
+    },
+    "volume": {
+      "D10": {
+        "value": 45.78026761255623,
+        "ci_particles": [
+          45.09478774094331,
+          46.581138737293074
+        ],
+        "ci_fields": [
+          42.08310532196915,
+          54.16126130574501
+        ]
+      },
+      "D50": {
+        "value": 103.67269010654394,
+        "ci_particles": [
+          91.80510767726834,
+          116.25896924823428
+        ],
+        "ci_fields": [
+          60.272073874751726,
+          156.82047075334938
+        ]
+      },
+      "D90": {
+        "value": 208.51391271734738,
+        "ci_particles": [
+          188.62847598272944,
+          289.81097663258316
+        ],
+        "ci_fields": [
+          132.39016278228084,
+          275.0903209536569
+        ]
+      },
+      "span": 1.5696867221015538
+    }
+  },
+  "shares": {
+    "band": {
+      "range_um": [
+        50.0,
+        200.0
+      ],
+      "number": {
+        "share": 0.3760729797691414,
+        "ci_particles": [
+          0.3636268196544748,
+          0.3884672936493274
+        ],
+        "ci_fields": [
+          0.3351201798568982,
+          0.43614378116507396
+        ],
+        "n_particles": 2197
+      },
+      "volume": {
+        "share": 0.6978570718811961,
+        "ci_particles": [
+          0.6336620154456213,
+          0.7578954714202806
+        ],
+        "ci_fields": [
+          0.6610072487150536,
+          0.7345676033303566
+        ],
+        "n_particles": 2197
+      }
+    },
+    "fines": {
+      "range_um": [
+        0.0,
+        20.0
+      ],
+      "number": {
+        "share": 0.020638791094669384,
+        "ci_particles": [
+          0.016805721499531977,
+          0.024561279648552835
+        ],
+        "ci_fields": [
+          0.014044264007896315,
+          0.029144510105584467
+        ],
+        "n_particles": 106
+      },
+      "volume": {
+        "share": 0.00016467923755723133,
+        "ci_particles": [
+          0.00012666781190143143,
+          0.00021005042688826772
+        ],
+        "ci_fields": [
+          0.00011054954569562702,
+          0.00026725332529955244
+        ],
+        "n_particles": 106
+      }
+    },
+    "above_band": {
+      "range_um": [
+        200.0,
+        null
+      ],
+      "number": {
+        "share": 0.002551426037986384,
+        "ci_particles": [
+          0.0012663640098273918,
+          0.004166834395564401
+        ],
+        "ci_fields": [
+          0.0,
+          0.007972570936769462
+        ],
+        "n_particles": 12
+      },
+      "volume": {
+        "share": 0.1353168576267966,
+        "ci_particles": [
+          0.06468877717545636,
+          0.21369035593897567
+        ],
+        "ci_fields": [
+          0.0,
+          0.23149853394717948
+        ],
+        "n_particles": 12
+      }
+    }
+  },
+  "shape": {
+    "circularity": {
+      "n": 5858,
+      "mean": 0.9813123054650268,
+      "p10": 0.9653901250506218,
+      "q1": 0.9847613028028817,
+      "median": 0.9934063968567792,
+      "q3": 0.9977424761173449,
+      "p90": 1.0,
+      "iqr": 0.012981173314463246
+    },
+    "form_factor": {
+      "n": 5858,
+      "mean": 0.9651829098430064,
+      "p10": 0.9319780941192906,
+      "q1": 0.9697548236931719,
+      "median": 0.9868562693161376,
+      "q3": 0.995490048648789,
+      "p90": 1.0,
+      "iqr": 0.025735224955617086
+    },
+    "aspect_ratio": {
+      "n": 5858,
+      "mean": 0.923381998231361,
+      "p10": 0.8523082310463201,
+      "q1": 0.9206751859087475,
+      "median": 0.9464353927437257,
+      "q3": 0.9603667950674989,
+      "p90": 0.9691786021311866,
+      "iqr": 0.03969160915875136
+    },
+    "ellipse_ratio": {
+      "n": 5858,
+      "mean": 0.9437319623118916,
+      "p10": 0.8789499415974794,
+      "q1": 0.9458076687417003,
+      "median": 0.9681296124408886,
+      "q3": 0.980978066830303,
+      "p90": 0.9885268319654399,
+      "iqr": 0.03517039808860267
+    },
+    "solidity": {
+      "n": 5858,
+      "mean": 0.9750533211852823,
+      "p10": 0.9651378698310747,
+      "q1": 0.9763686358834534,
+      "median": 0.9815871580127271,
+      "q3": 0.9845451188109428,
+      "p90": 0.9865974274558337,
+      "iqr": 0.008176482927489404
+    },
+    "convexity": {
+      "n": 5858,
+      "mean": 0.9926336236445811,
+      "p10": 0.9870376066557967,
+      "q1": 0.9940819035582322,
+      "median": 0.9977407119774557,
+      "q3": 1.0,
+      "p90": 1.0,
+      "iqr": 0.005918096441767773
+    },
+    "aspect_ratio_norm": {
+      "n": 5858,
+      "mean": 0.9414932986741972,
+      "p10": 0.8711830341078255,
+      "q1": 0.9399574335121276,
+      "median": 0.9650952417235885,
+      "q3": 0.9781986647313826,
+      "p90": 0.9866958349716358,
+      "iqr": 0.038241231219255045
+    },
+    "solidity_norm": {
+      "n": 5858,
+      "mean": 0.9901982558090822,
+      "p10": 0.9809775193364523,
+      "q1": 0.9924503544385003,
+      "median": 0.9970816541798427,
+      "q3": 0.9993120174705544,
+      "p90": 1.0007262338336602,
+      "iqr": 0.006861663032054155
+    },
+    "n": 5858
+  },
+  "shape_3000px": {
+    "circularity": {
+      "n": 3667,
+      "mean": 0.9824303279814887,
+      "p10": 0.9630678519014687,
+      "q1": 0.9853672335375907,
+      "median": 0.9936566923026464,
+      "q3": 0.997592175727409,
+      "p90": 1.0,
+      "iqr": 0.012224942189818289
+    },
+    "form_factor": {
+      "n": 3667,
+      "mean": 0.9667441741501972,
+      "p10": 0.9274996875695224,
+      "q1": 0.9709485850722138,
+      "median": 0.987353622173378,
+      "q3": 0.9951901490989584,
+      "p90": 1.0,
+      "iqr": 0.0242415640267446
+    },
+    "aspect_ratio": {
+      "n": 3667,
+      "mean": 0.9300920083078312,
+      "p10": 0.8615754316296362,
+      "q1": 0.931016676097874,
+      "median": 0.9518340592796922,
+      "q3": 0.9635533866300229,
+      "p90": 0.9714634473782132,
+      "iqr": 0.032536710532148905
+    },
+    "ellipse_ratio": {
+      "n": 3667,
+      "mean": 0.9492735195177128,
+      "p10": 0.8905134095517265,
+      "q1": 0.9525775057491648,
+      "median": 0.9714809429902962,
+      "q3": 0.9828212529450436,
+      "p90": 0.9895488120263202,
+      "iqr": 0.030243747195878856
+    },
+    "solidity": {
+      "n": 3667,
+      "mean": 0.9782498045717524,
+      "p10": 0.9676258966085287,
+      "q1": 0.9793731119154009,
+      "median": 0.9834157379609627,
+      "q3": 0.9856861814131312,
+      "p90": 0.987374131541699,
+      "iqr": 0.006313069497730361
+    },
+    "convexity": {
+      "n": 3667,
+      "mean": 0.992115078738166,
+      "p10": 0.9851912250866386,
+      "q1": 0.9931410488837537,
+      "median": 0.9975057326347727,
+      "q3": 1.0,
+      "p90": 1.0,
+      "iqr": 0.006858951116246348
+    },
+    "n": 3667
+  },
+  "flags": {
+    "none": 5442,
+    "irregular": 305,
+    "agglomerate_or_elongated": 178,
+    "oversize": 9,
+    "agglomerate_or_elongated+oversize": 2,
+    "irregular+oversize": 1
+  },
+  "flagged_number_share": 0.08302202732745734,
+  "size_excluding_flagged": {
+    "number": {
+      "D10": 35.09169535694769,
+      "D50": 46.7751981466565,
+      "D90": 67.83931650901776
+    },
+    "volume": {
+      "D10": 44.94437480977273,
+      "D50": 88.87533412220463,
+      "D90": 256.7166328564575
+    }
+  },
+  "size_sphere_fit": {
+    "number": {
+      "D10": 34.80193767906098,
+      "D50": 46.82131881810516,
+      "D90": 71.2068112421915
+    },
+    "volume": {
+      "D10": 45.67005743836154,
+      "D50": 102.4008364135456,
+      "D90": 209.7470620539896
+    }
+  },
+  "n_sphere_fit_replaced": 185,
+  "size_no_edge_offset_correction": {
+    "number": {
+      "D10": 35.73517600689634,
+      "D50": 47.83552473457881,
+      "D90": 72.38231328686952
+    },
+    "volume": {
+      "D10": 46.518631014077606,
+      "D50": 104.03544872771793,
+      "D90": 209.9014527525711
+    }
+  },
+  "largest_particles": [
+    {
+      "field": "3.2nA_004",
+      "label": 182,
+      "ecd_um": 299.732,
+      "circle_fit_um": NaN,
+      "circularity": 0.892,
+      "aspect_ratio": 0.834,
+      "solidity": 0.96,
+      "flag": "oversize",
+      "cx_px": 2164.813,
+      "cy_px": 1238.262
+    },
+    {
+      "field": "3.2nA_004",
+      "label": 105,
+      "ecd_um": 295.198,
+      "circle_fit_um": 295.526,
+      "circularity": 0.996,
+      "aspect_ratio": 0.986,
+      "solidity": 0.995,
+      "flag": "oversize",
+      "cx_px": 1457.04,
+      "cy_px": 615.307
+    },
+    {
+      "field": "3.2nA_004",
+      "label": 84,
+      "ecd_um": 275.09,
+      "circle_fit_um": 275.224,
+      "circularity": 0.997,
+      "aspect_ratio": 0.985,
+      "solidity": 0.995,
+      "flag": "oversize",
+      "cx_px": 1698.303,
+      "cy_px": 442.805
+    },
+    {
+      "field": "3.2nA_004",
+      "label": 152,
+      "ecd_um": 259.569,
+      "circle_fit_um": 259.639,
+      "circularity": 0.998,
+      "aspect_ratio": 0.983,
+      "solidity": 0.994,
+      "flag": "oversize",
+      "cx_px": 1622.64,
+      "cy_px": 988.634
+    },
+    {
+      "field": "3.2nA_004",
+      "label": 329,
+      "ecd_um": 257.415,
+      "circle_fit_um": 256.852,
+      "circularity": 0.971,
+      "aspect_ratio": 0.947,
+      "solidity": 0.983,
+      "flag": "oversize",
+      "cx_px": 1224.365,
+      "cy_px": 1782.05
+    },
+    {
+      "field": "3.2nA_002",
+      "label": 1099,
+      "ecd_um": 220.236,
+      "circle_fit_um": 209.399,
+      "circularity": 0.972,
+      "aspect_ratio": 0.836,
+      "solidity": 0.988,
+      "flag": "oversize",
+      "cx_px": 2156.985,
+      "cy_px": 1720.027
+    },
+    {
+      "field": "3.2nA_004",
+      "label": 134,
+      "ecd_um": 208.605,
+      "circle_fit_um": 206.846,
+      "circularity": 1.0,
+      "aspect_ratio": 0.962,
+      "solidity": 0.994,
+      "flag": "oversize",
+      "cx_px": 2832.568,
+      "cy_px": 806.314
+    },
+    {
+      "field": "3.2nA_004",
+      "label": 136,
+      "ecd_um": 207.459,
+      "circle_fit_um": 180.433,
+      "circularity": 0.875,
+      "aspect_ratio": 0.672,
+      "solidity": 0.933,
+      "flag": "agglomerate_or_elongated+oversize",
+      "cx_px": 2406.961,
+      "cy_px": 847.245
+    }
+  ],
+  "cross_field_matches": {
+    "n": 1398,
+    "mean_rel_diff": -0.0037662534176356923,
+    "sd_rel_diff": 0.01605943914938074,
+    "median_sep_um": 5.163660182430489,
+    "pairs": [
+      {
+        "field_a": "3.2nA_001",
+        "field_b": "spherical_001",
+        "n": 163
+      },
+      {
+        "field_a": "3.2nA_001",
+        "field_b": "spherical_004",
+        "n": 271
+      },
+      {
+        "field_a": "3.2nA_002",
+        "field_b": "not annotated",
+        "n": 609
+      },
+      {
+        "field_a": "spherical_001",
+        "field_b": "spherical_004",
+        "n": 321
+      },
+      {
+        "field_a": "spherical_002",
+        "field_b": "spherical_003",
+        "n": 34
+      }
+    ]
+  },
+  "registration": [
+    {
+      "a": "spherical_002",
+      "b": "spherical_003",
+      "dx_um": 24.110000610351562,
+      "dy_um": 9.609999656677246,
+      "ncc": 0.642
+    },
+    {
+      "a": "spherical_001",
+      "b": "spherical_004",
+      "dx_um": -14.329999923706055,
+      "dy_um": 1.5199999809265137,
+      "ncc": 0.562
+    },
+    {
+      "a": "spherical_001",
+      "b": "3.2nA_001",
+      "dx_um": -30.350000381469727,
+      "dy_um": -2.9200000762939453,
+      "ncc": 0.425
+    },
+    {
+      "a": "spherical_004",
+      "b": "3.2nA_001",
+      "dx_um": -29.68000030517578,
+      "dy_um": -5.619999885559082,
+      "ncc": 0.509
+    },
+    {
+      "a": "not annotated",
+      "b": "3.2nA_002",
+      "dx_um": 1.1200000047683716,
+      "dy_um": 6.070000171661377,
+      "ncc": 0.646
+    }
+  ],
+  "per_field": [
+    {
+      "field": "3.2nA_001",
+      "px_um": 0.8993059999999999,
+      "n_regions": 1514,
+      "n_counted": 806,
+      "edge_offset_px": 0.504,
+      "D50_number_um": 47.1372409830569,
+      "D50_number_lo": 46.52762826639178,
+      "D50_number_hi": 48.34195168822151,
+      "D50_volume_um": 66.95847293510386,
+      "D50_volume_lo": 61.7026328248568,
+      "D50_volume_hi": 76.8026925187038,
+      "band_number_share": 0.40351186726476035
+    },
+    {
+      "field": "3.2nA_002",
+      "px_um": 0.8993059999999999,
+      "n_regions": 1324,
+      "n_counted": 525,
+      "edge_offset_px": 0.653,
+      "D50_number_um": 48.517941409377826,
+      "D50_number_lo": 47.400175729139626,
+      "D50_number_hi": 49.13157686991591,
+      "D50_volume_um": 82.99758685677719,
+      "D50_volume_lo": 64.33195177416397,
+      "D50_volume_hi": 123.43838861457021,
+      "band_number_share": 0.4217970573864748
+    },
+    {
+      "field": "3.2nA_004",
+      "px_um": 1.0128300000000001,
+      "n_regions": 408,
+      "n_counted": 311,
+      "edge_offset_px": 0.856,
+      "D50_number_um": 92.52878691039122,
+      "D50_number_lo": 83.80959985350637,
+      "D50_number_hi": 101.55850291573415,
+      "D50_volume_um": 177.28026192969241,
+      "D50_volume_lo": 160.67275009628023,
+      "D50_volume_hi": 194.8959563290738,
+      "band_number_share": 0.7127479828532544
+    },
+    {
+      "field": "not annotated",
+      "px_um": 0.674479,
+      "n_regions": 889,
+      "n_counted": 727,
+      "edge_offset_px": 0.659,
+      "D50_number_um": 46.88582781595574,
+      "D50_number_lo": 46.23426706776631,
+      "D50_number_hi": 47.586523904855866,
+      "D50_volume_um": 66.63489772005104,
+      "D50_volume_lo": 59.561398337201126,
+      "D50_volume_hi": 81.49690753591328,
+      "band_number_share": 0.3605106182716633
+    },
+    {
+      "field": "spherical",
+      "px_um": 0.674479,
+      "n_regions": 877,
+      "n_counted": 725,
+      "edge_offset_px": 0.645,
+      "D50_number_um": 47.29450209666088,
+      "D50_number_lo": 46.53962809554613,
+      "D50_number_hi": 47.911016376627984,
+      "D50_volume_um": 65.28935050175012,
+      "D50_volume_lo": 60.31347839987234,
+      "D50_volume_hi": 72.8212153635115,
+      "band_number_share": 0.37795195380011826
+    },
+    {
+      "field": "spherical_001",
+      "px_um": 0.674479,
+      "n_regions": 889,
+      "n_counted": 782,
+      "edge_offset_px": 0.702,
+      "D50_number_um": 46.47765904465993,
+      "D50_number_lo": 45.69994406046558,
+      "D50_number_hi": 47.358613948730444,
+      "D50_volume_um": 60.06898145097909,
+      "D50_volume_lo": 55.25031125224966,
+      "D50_volume_hi": 68.47749227530565,
+      "band_number_share": 0.3463328403688861
+    },
+    {
+      "field": "spherical_002",
+      "px_um": 0.674479,
+      "n_regions": 1007,
+      "n_counted": 882,
+      "edge_offset_px": 0.678,
+      "D50_number_um": 44.666466331519906,
+      "D50_number_lo": 43.94064026690692,
+      "D50_number_hi": 45.57444982888364,
+      "D50_volume_um": 55.18315034833302,
+      "D50_volume_lo": 51.909005309426064,
+      "D50_volume_hi": 63.58268039221622,
+      "band_number_share": 0.28682882367873697
+    },
+    {
+      "field": "spherical_003",
+      "px_um": 0.674479,
+      "n_regions": 986,
+      "n_counted": 791,
+      "edge_offset_px": 0.581,
+      "D50_number_um": 46.218266749300156,
+      "D50_number_lo": 45.2500536257089,
+      "D50_number_hi": 46.833463643319355,
+      "D50_volume_um": 57.0281122957925,
+      "D50_volume_lo": 53.649540155821875,
+      "D50_volume_hi": 63.28948662336482,
+      "band_number_share": 0.3408707457888933
+    },
+    {
+      "field": "spherical_004",
+      "px_um": 0.674479,
+      "n_regions": 934,
+      "n_counted": 388,
+      "edge_offset_px": 0.704,
+      "D50_number_um": 45.73582682583796,
+      "D50_number_lo": 44.574476228640776,
+      "D50_number_hi": 46.92603436482793,
+      "D50_volume_um": 60.45908186187834,
+      "D50_volume_lo": 53.95737550304649,
+      "D50_volume_hi": 70.34119179049017,
+      "band_number_share": 0.3315715689015624
+    }
+  ],
+  "fields": [
+    {
+      "field": "3.2nA_001",
+      "file": "3.2nA_001.tif",
+      "nx": 3072,
+      "ny": 2048,
+      "px_um": 0.8993059999999999,
+      "hfw_um": 2762.67,
+      "stage_x_um": -2531.58,
+      "stage_y_um": -1546.4199999999998,
+      "stage_r": 3.36315e-05,
+      "stage_t": 0.0,
+      "scan_rotation": 0.0,
+      "hv_kV": 5.0,
+      "current_nA": 3.2,
+      "detector": "ETD SE",
+      "dwell_us": 0.5,
+      "acquired": "10/27/2026 06:05:35 PM",
+      "acq_order": 6,
+      "bg_mode": 73,
+      "bg_valley": 81,
+      "bg_coef": [
+        74.369,
+        1.571,
+        1.55,
+        -4.719,
+        -3.439,
+        0.511
+      ],
+      "sigma_bg": 2.163,
+      "threshold_above_bg": 10.81,
+      "foreground_fraction": 0.6237,
+      "edge_offset_px": 0.504,
+      "edge_offset_n": 34,
+      "gx0": -3942.928466796875,
+      "gy0": 621.2589111328125,
+      "reg_shift_um": [
+        -30.01,
+        -4.27
+      ],
+      "stage_sign": [
+        1,
+        -1
+      ],
+      "priority": 6,
+      "grid_um": 2.697916,
+      "own_area_um2": 3212316.5079314187
+    },
+    {
+      "field": "3.2nA_002",
+      "file": "3.2nA_002.tif",
+      "nx": 3072,
+      "ny": 2048,
+      "px_um": 0.8993059999999999,
+      "hfw_um": 2762.67,
+      "stage_x_um": -688.917,
+      "stage_y_um": 525.417,
+      "stage_r": 3.36315e-05,
+      "stage_t": 0.0,
+      "scan_rotation": 0.0,
+      "hv_kV": 5.0,
+      "current_nA": 3.2,
+      "detector": "ETD SE",
+      "dwell_us": 0.5,
+      "acquired": "10/27/2026 06:06:00 PM",
+      "acq_order": 7,
+      "bg_mode": 73,
+      "bg_valley": 81,
+      "bg_coef": [
+        74.103,
+        4.436,
+        2.39,
+        -7.498,
+        -4.57,
+        -0.623
+      ],
+      "sigma_bg": 1.882,
+      "threshold_above_bg": 9.41,
+      "foreground_fraction": 0.6332,
+      "edge_offset_px": 0.653,
+      "edge_offset_n": 45,
+      "gx0": -2069.126953125,
+      "gy0": -1440.236083984375,
+      "reg_shift_um": [
+        1.12,
+        6.07
+      ],
+      "stage_sign": [
+        1,
+        -1
+      ],
+      "priority": 7,
+      "grid_um": 2.697916,
+      "own_area_um2": 2563364.927932775
+    },
+    {
+      "field": "3.2nA_004",
+      "file": "3.2nA_004.tif",
+      "nx": 3072,
+      "ny": 2048,
+      "px_um": 1.0128300000000001,
+      "hfw_um": 3111.42,
+      "stage_x_um": 3366.5,
+      "stage_y_um": 558.75,
+      "stage_r": 3.36315e-05,
+      "stage_t": 0.0,
+      "scan_rotation": 0.0,
+      "hv_kV": 5.0,
+      "current_nA": 3.2,
+      "detector": "ETD SE",
+      "dwell_us": 0.5,
+      "acquired": "10/27/2026 06:07:09 PM",
+      "acq_order": 8,
+      "bg_mode": 73,
+      "bg_valley": 82,
+      "bg_coef": [
+        71.008,
+        18.765,
+        6.122,
+        -21.909,
+        -8.723,
+        -0.536
+      ],
+      "sigma_bg": 2.037,
+      "threshold_above_bg": 10.18,
+      "foreground_fraction": 0.4796,
+      "edge_offset_px": 0.856,
+      "edge_offset_n": 36,
+      "gx0": 1810.7931199999998,
+      "gy0": -1595.8879200000001,
+      "stage_sign": [
+        1,
+        -1
+      ],
+      "priority": 8,
+      "grid_um": 2.697916,
+      "own_area_um2": 6459352.656907215
+    },
+    {
+      "field": "not annotated",
+      "file": "not annotated.tif",
+      "nx": 3072,
+      "ny": 2048,
+      "px_um": 0.674479,
+      "hfw_um": 2072.0,
+      "stage_x_um": -685.25,
+      "stage_y_um": 907.583,
+      "stage_r": 3.36315e-05,
+      "stage_t": 0.0,
+      "scan_rotation": 0.0,
+      "hv_kV": 5.0,
+      "current_nA": 0.1,
+      "detector": "ETD SE",
+      "dwell_us": 0.5,
+      "acquired": "10/27/2026 05:54:46 PM",
+      "acq_order": 0,
+      "bg_mode": 74,
+      "bg_valley": 83,
+      "bg_coef": [
+        74.982,
+        -2.946,
+        0.219,
+        2.842,
+        -1.77,
+        3.093
+      ],
+      "sigma_bg": 2.149,
+      "threshold_above_bg": 10.75,
+      "foreground_fraction": 0.6354,
+      "edge_offset_px": 0.659,
+      "edge_offset_n": 44,
+      "gx0": -1721.2497440000002,
+      "gy0": -1598.249496,
+      "stage_sign": [
+        1,
+        -1
+      ],
+      "priority": 0,
+      "grid_um": 2.697916,
+      "own_area_um2": 2865847.972561953
+    },
+    {
+      "field": "spherical",
+      "file": "spherical.tif",
+      "nx": 3072,
+      "ny": 2048,
+      "px_um": 0.674479,
+      "hfw_um": 2072.0,
+      "stage_x_um": 937.0,
+      "stage_y_um": -1925.0,
+      "stage_r": 3.36315e-05,
+      "stage_t": 0.0,
+      "scan_rotation": 0.0,
+      "hv_kV": 5.0,
+      "current_nA": 0.1,
+      "detector": "ETD SE",
+      "dwell_us": 0.5,
+      "acquired": "10/27/2026 06:01:50 PM",
+      "acq_order": 1,
+      "bg_mode": 74,
+      "bg_valley": 82,
+      "bg_coef": [
+        73.641,
+        4.172,
+        3.356,
+        -4.863,
+        -5.524,
+        2.015
+      ],
+      "sigma_bg": 2.205,
+      "threshold_above_bg": 11.02,
+      "foreground_fraction": 0.638,
+      "edge_offset_px": 0.645,
+      "edge_offset_n": 24,
+      "gx0": -98.99974400000019,
+      "gy0": 1234.333504,
+      "stage_sign": [
+        1,
+        -1
+      ],
+      "priority": 1,
+      "grid_um": 2.697916,
+      "own_area_um2": 2865847.972561953
+    },
+    {
+      "field": "spherical_001",
+      "file": "spherical_001.tif",
+      "nx": 3072,
+      "ny": 2048,
+      "px_um": 0.674479,
+      "hfw_um": 2072.0,
+      "stage_x_um": -1121.0,
+      "stage_y_um": -1942.67,
+      "stage_r": 3.36315e-05,
+      "stage_t": 0.0,
+      "scan_rotation": 0.0,
+      "hv_kV": 5.0,
+      "current_nA": 0.1,
+      "detector": "ETD SE",
+      "dwell_us": 0.5,
+      "acquired": "10/27/2026 06:02:08 PM",
+      "acq_order": 2,
+      "bg_mode": 74,
+      "bg_valley": 82,
+      "bg_coef": [
+        74.927,
+        -0.377,
+        -1.185,
+        -0.414,
+        -1.437,
+        3.351
+      ],
+      "sigma_bg": 2.098,
+      "threshold_above_bg": 10.49,
+      "foreground_fraction": 0.6238,
+      "edge_offset_px": 0.702,
+      "edge_offset_n": 32,
+      "gx0": -2156.999744,
+      "gy0": 1252.003504,
+      "stage_sign": [
+        1,
+        -1
+      ],
+      "priority": 2,
+      "grid_um": 2.697916,
+      "own_area_um2": 2843793.3578104936
+    },
+    {
+      "field": "spherical_002",
+      "file": "spherical_002.tif",
+      "nx": 3072,
+      "ny": 2048,
+      "px_um": 0.674479,
+      "hfw_um": 2072.0,
+      "stage_x_um": -2635.33,
+      "stage_y_um": -3580.33,
+      "stage_r": 3.36315e-05,
+      "stage_t": 0.0,
+      "scan_rotation": 0.0,
+      "hv_kV": 5.0,
+      "current_nA": 0.1,
+      "detector": "ETD SE",
+      "dwell_us": 0.5,
+      "acquired": "10/27/2026 06:02:23 PM",
+      "acq_order": 3,
+      "bg_mode": 73,
+      "bg_valley": 82,
+      "bg_coef": [
+        73.882,
+        1.81,
+        -2.25,
+        -0.457,
+        0.79,
+        0.712
+      ],
+      "sigma_bg": 2.179,
+      "threshold_above_bg": 10.89,
+      "foreground_fraction": 0.6379,
+      "edge_offset_px": 0.678,
+      "edge_offset_n": 44,
+      "gx0": -3671.329744,
+      "gy0": 2889.663504,
+      "stage_sign": [
+        1,
+        -1
+      ],
+      "priority": 3,
+      "grid_um": 2.697916,
+      "own_area_um2": 2865847.972561953
+    },
+    {
+      "field": "spherical_003",
+      "file": "spherical_003.tif",
+      "nx": 3072,
+      "ny": 2048,
+      "px_um": 0.674479,
+      "hfw_um": 2072.0,
+      "stage_x_um": -1370.25,
+      "stage_y_um": -4721.0,
+      "stage_r": 3.36315e-05,
+      "stage_t": 0.0,
+      "scan_rotation": 0.0,
+      "hv_kV": 5.0,
+      "current_nA": 0.1,
+      "detector": "ETD SE",
+      "dwell_us": 0.5,
+      "acquired": "10/27/2026 06:02:43 PM",
+      "acq_order": 4,
+      "bg_mode": 73,
+      "bg_valley": 82,
+      "bg_coef": [
+        74.067,
+        -0.568,
+        1.323,
+        1.442,
+        -3.275,
+        0.616
+      ],
+      "sigma_bg": 2.283,
+      "threshold_above_bg": 11.41,
+      "foreground_fraction": 0.6351,
+      "edge_offset_px": 0.581,
+      "edge_offset_n": 49,
+      "gx0": -2382.13720703125,
+      "gy0": 4039.94482421875,
+      "reg_shift_um": [
+        24.11,
+        9.61
+      ],
+      "stage_sign": [
+        1,
+        -1
+      ],
+      "priority": 4,
+      "grid_um": 2.697916,
+      "own_area_um2": 2684315.9290301367
+    },
+    {
+      "field": "spherical_004",
+      "file": "spherical_004.tif",
+      "nx": 3072,
+      "ny": 2048,
+      "px_um": 0.674479,
+      "hfw_um": 2072.0,
+      "stage_x_um": -1876.5800000000002,
+      "stage_y_um": -2247.08,
+      "stage_r": 3.36315e-05,
+      "stage_t": 0.0,
+      "scan_rotation": 0.0,
+      "hv_kV": 5.0,
+      "current_nA": 0.1,
+      "detector": "ETD SE",
+      "dwell_us": 0.5,
+      "acquired": "10/27/2026 06:03:03 PM",
+      "acq_order": 5,
+      "bg_mode": 74,
+      "bg_valley": 82,
+      "bg_coef": [
+        74.477,
+        2.065,
+        -1.285,
+        -1.762,
+        -0.479,
+        0.88
+      ],
+      "sigma_bg": 2.136,
+      "threshold_above_bg": 10.68,
+      "foreground_fraction": 0.6269,
+      "edge_offset_px": 0.704,
+      "edge_offset_n": 41,
+      "gx0": -2926.91259765625,
+      "gy0": 1557.9310302734375,
+      "reg_shift_um": [
+        -14.33,
+        1.52
+      ],
+      "stage_sign": [
+        1,
+        -1
+      ],
+      "priority": 5,
+      "grid_um": 2.697916,
+      "own_area_um2": 1395744.1274854466
+    }
+  ],
+  "pixelation_bias": [
+    {
+      "diameter_px": 4,
+      "ecd_rel_err": -0.0228,
+      "circularity_unclipped": 1.0171,
+      "circularity": 1.0,
+      "form_factor": 1.0,
+      "ellipse_ratio": 0.8713,
+      "aspect_ratio": 0.8,
+      "solidity": 1.0,
+      "convexity": 1.0
+    },
+    {
+      "diameter_px": 5,
+      "ecd_rel_err": -0.0163,
+      "circularity_unclipped": 1.0132,
+      "circularity": 1.0,
+      "form_factor": 1.0,
+      "ellipse_ratio": 0.919,
+      "aspect_ratio": 0.8575,
+      "solidity": 0.9524,
+      "convexity": 1.0
+    },
+    {
+      "diameter_px": 6,
+      "ecd_rel_err": -0.0049,
+      "circularity_unclipped": 1.0119,
+      "circularity": 1.0,
+      "form_factor": 1.0,
+      "ellipse_ratio": 0.9267,
+      "aspect_ratio": 0.8321,
+      "solidity": 0.9667,
+      "convexity": 1.0
+    },
+    {
+      "diameter_px": 8,
+      "ecd_rel_err": -0.0026,
+      "circularity_unclipped": 0.9991,
+      "circularity": 0.9991,
+      "form_factor": 0.9981,
+      "ellipse_ratio": 0.9464,
+      "aspect_ratio": 0.8677,
+      "solidity": 0.9444,
+      "convexity": 1.0
+    },
+    {
+      "diameter_px": 10,
+      "ecd_rel_err": 0.0029,
+      "circularity_unclipped": 1.0016,
+      "circularity": 1.0,
+      "form_factor": 1.0,
+      "ellipse_ratio": 0.9857,
+      "aspect_ratio": 0.8945,
+      "solidity": 0.9571,
+      "convexity": 1.0
+    },
+    {
+      "diameter_px": 12,
+      "ecd_rel_err": -0.0049,
+      "circularity_unclipped": 0.9987,
+      "circularity": 0.9987,
+      "form_factor": 0.9974,
+      "ellipse_ratio": 0.9792,
+      "aspect_ratio": 0.9204,
+      "solidity": 0.9538,
+      "convexity": 1.0
+    },
+    {
+      "diameter_px": 15,
+      "ecd_rel_err": 0.0008,
+      "circularity_unclipped": 1.0044,
+      "circularity": 1.0,
+      "form_factor": 1.0,
+      "ellipse_ratio": 0.9881,
+      "aspect_ratio": 0.9285,
+      "solidity": 0.9672,
+      "convexity": 1.0
+    },
+    {
+      "diameter_px": 20,
+      "ecd_rel_err": -0.0011,
+      "circularity_unclipped": 1.0003,
+      "circularity": 1.0,
+      "form_factor": 1.0,
+      "ellipse_ratio": 0.9909,
+      "aspect_ratio": 0.9423,
+      "solidity": 0.9662,
+      "convexity": 1.0
+    },
+    {
+      "diameter_px": 25,
+      "ecd_rel_err": -0.0009,
+      "circularity_unclipped": 1.0026,
+      "circularity": 1.0,
+      "form_factor": 1.0,
+      "ellipse_ratio": 0.9926,
+      "aspect_ratio": 0.9587,
+      "solidity": 0.9722,
+      "convexity": 1.0
+    },
+    {
+      "diameter_px": 30,
+      "ecd_rel_err": 0.0005,
+      "circularity_unclipped": 1.0006,
+      "circularity": 1.0,
+      "form_factor": 1.0,
+      "ellipse_ratio": 0.9941,
+      "aspect_ratio": 0.9603,
+      "solidity": 0.9751,
+      "convexity": 1.0
+    },
+    {
+      "diameter_px": 40,
+      "ecd_rel_err": -0.0003,
+      "circularity_unclipped": 1.0002,
+      "circularity": 1.0,
+      "form_factor": 1.0,
+      "ellipse_ratio": 0.9971,
+      "aspect_ratio": 0.9701,
+      "solidity": 0.9782,
+      "convexity": 1.0
+    },
+    {
+      "diameter_px": 60,
+      "ecd_rel_err": 0.0,
+      "circularity_unclipped": 0.9997,
+      "circularity": 0.9997,
+      "form_factor": 0.9994,
+      "ellipse_ratio": 0.9981,
+      "aspect_ratio": 0.9789,
+      "solidity": 0.9833,
+      "convexity": 1.0
+    },
+    {
+      "diameter_px": 80,
+      "ecd_rel_err": 0.0001,
+      "circularity_unclipped": 1.0004,
+      "circularity": 1.0,
+      "form_factor": 1.0,
+      "ellipse_ratio": 0.9991,
+      "aspect_ratio": 0.9844,
+      "solidity": 0.987,
+      "convexity": 1.0
+    },
+    {
+      "diameter_px": 120,
+      "ecd_rel_err": 0.0001,
+      "circularity_unclipped": 0.9999,
+      "circularity": 0.9997,
+      "form_factor": 0.9995,
+      "ellipse_ratio": 0.9992,
+      "aspect_ratio": 0.9896,
+      "solidity": 0.9904,
+      "convexity": 1.0
+    },
+    {
+      "diameter_px": 200,
+      "ecd_rel_err": -0.0,
+      "circularity_unclipped": 0.9997,
+      "circularity": 0.9997,
+      "form_factor": 0.9994,
+      "ellipse_ratio": 0.9997,
+      "aspect_ratio": 0.9935,
+      "solidity": 0.9937,
+      "convexity": 1.0
+    }
+  ],
+  "runtime_s": 141.1
+}
