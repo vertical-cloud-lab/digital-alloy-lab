@@ -57,6 +57,16 @@ def Rz(deg):
     return Tm(rot((0, 0, 1), deg))
 
 
+BLADE_NEST_X = -900.0                     # round 10: the blade cartridge's bench nest (tooling.nest_blade), clear of the module nests
+
+
+def T_blade_nest():
+    """Round 10 (F26a-F27): the blade cartridge's machine frame on its bench nest, turned -90 deg about y (machine +x up: the holder
+    on its -x side, the blade's face and screws up); the nest's base plate (machine x -187) on the bench top, the holder centred at
+    x = BLADE_NEST_X."""
+    return Tm(p=(BLADE_NEST_X + 18.5, 0.0, BENCH["top"] + 187.0)) @ Ry(-90.0)
+
+
 class MBody(Body):
     """A Body that reuses an FCL BVH built elsewhere (the ops scene's 0.1 mm meshes), to save memory."""
 
@@ -298,6 +308,7 @@ class Cell:
         self._add("Module nest, upside down", self._tx(TL.mesh("nest_body_inv")[0], T), "#c9a227", "fixture")
         T = Tm(p=(STATIONS["body_up"], 0.0, b["top"] + 200.0))
         self._add("Module nest, upright", self._tx(TL.mesh("nest_body_up")[0], T), "#c9a227", "fixture")
+        self._add("Blade nest", self._tx(TL.mesh("nest_blade")[0], T_blade_nest()), "#c9a227", "fixture")
 
     @staticmethod
     def _tx(vf, T):
@@ -323,6 +334,8 @@ class Cell:
             return self.T_fix["T"] @ Rx(180.0) @ Tm(p=(0.0, 0.0, -50.0))
         if phase == "upright":             # process module on Fixture B
             return self.T_fix["B"]
+        if phase == "blade_nest":          # round 10: the blade cartridge on its side on the bench nest
+            return T_blade_nest()
         raise KeyError(phase)
 
     def move_mir(self, arm, x):
