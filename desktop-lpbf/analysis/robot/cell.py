@@ -644,9 +644,18 @@ class Checker:
         a.place(q, close)
         out = []
         robot = a.robot
-        own = {b.name for b in a.links.values()} | {b.name for b in a.grip.values()} | {b.name for b in a.caps.values()}
+        # round 9 (digital-alloy-lab #260): the bodies an arm subclass keeps on the flange outside `grip` (cell2.ArmT's wrist camera
+        # and tool changer, in `fixed`) are its own too. Until round 9 they were dropped from the group here on the first check,
+        # so the assembly planner never checked the D405 or the changer against the world (round 9's recording check found arm
+        # A's camera 50 mm into the chamber floor plate on a planned move to park, C00d)
+        fixed = getattr(a, "fixed", None) or {}
+        own = ({b.name for b in a.links.values()} | {b.name for b in a.grip.values()} | {b.name for b in a.caps.values()} |
+               {b.name for b in fixed.values()})
         for nm in [n for n in robot.bodies if n not in own and (a.held is None or n != a.held[0].name)]:
             robot.remove(nm)          # a part held earlier and since let go must not ride along at its old pose
+        for b in fixed.values():
+            if b.name not in robot.bodies:
+                robot.add(b)
         if a.held is not None and a.held[0].name not in robot.bodies:
             robot.add(a.held[0])
         for x, y in group_hits(robot, self.sc.world):

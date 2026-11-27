@@ -77,6 +77,10 @@ class Table:
             for y in (t["y0"] + 60.0, t["y1"] - 60.0):
                 self.static.append(Body(f"long table leg {x:.0f} {y:.0f}", *box_mesh(x - 25, x + 25, y - 25, y + 25, 0.0, t["top"] - t["t"]),
                                         kind="cell"))
+        # round 9: the stretchers (kit_table.stretcher_boxes: a cross rail at each leg pair). Round 8's model had only the top and
+        # the legs, so a MiR turning beside the table was drawn 34 mm into the lengthwise rails it then had
+        for k, bx in enumerate(KT.stretcher_boxes()):
+            self.static.append(Body(f"long table stretcher {k}", *box_mesh(*bx), kind="cell"))
         self.furn = {}                        # slot key -> [Body] (nest or tray: base and four walls)
         for s in self.slots + [b for b in KT.slots() if b["support"] == "bin"]:
             bs = []
@@ -106,6 +110,7 @@ class Table:
         for b in self.static:
             b.place(np.eye(4))
         self.on = {}                          # object index -> its slot
+        self._coil = {}                       # slot key -> the coil's box (round 9)
         sc = run.sc
         split_of = {}
         for key, lst in run.split.items():
@@ -151,6 +156,16 @@ class Table:
         ex = set(exclude)
         for i, s in self.on.items():
             if i in ex or s["bbox"][1] < x_lo or s["bbox"][0] > x_hi:
+                continue
+            if s.get("coil"):
+                # round 9: a hose or line lies on the table coiled (kit_table draws the coil, asm_render hides the fitted shape), so
+                # its body here is the coil's slot box. Round 8 checked the fitted shape at the slot instead: the release-air line's
+                # routed tube reached past the table's edge into lane B, and MiR B's drives at F45 and F45b were not clear
+                if s["key"] not in self._coil:
+                    bb = s["bbox"]
+                    self._coil[s["key"]] = Body(f"{s['key']} coil", *box_mesh(bb[0], bb[1], bb[2], bb[3], bb[4], bb[5]), kind="fixture")
+                    self._coil[s["key"]].place(np.eye(4))
+                g.add(self._coil[s["key"]])
                 continue
             b = self.run.cl.body(i)
             b.place(self.T_item(i))
