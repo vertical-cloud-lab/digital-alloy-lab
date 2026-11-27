@@ -63,3 +63,22 @@ def test_cli_simulate(tmp_path, capsys):
     out = capsys.readouterr().out
     assert rc == 0
     assert '"layers_done": 20' in out
+
+
+def test_argon_low_flow_in_dwells_and_block_offset(rig):
+    from ftctl.config import Config
+    cfg = Config()
+    cfg.thermal.block_offset_K = -20.0
+    r = rig(cfg)
+    s = r.run(12, finish=False)
+    assert s["result"] == "complete", s["fault"]
+    dwell = [x for x in r.log.samples if x["state"] == "DWELL"]
+    scan = [x for x in r.log.samples if x["state"] == "SCAN"]
+    # main flow off in dwells (low flow on), except the 2 s flow-settle window before a scan
+    assert dwell and sum(x["argon"] == 0.0 for x in dwell) / len(dwell) > 0.7
+    assert scan and all(x["argon"] == 1.0 for x in scan)            # full cross-flow whenever the beam is on
+    assert abs(r.m.block.sv - 180.0) < 1e-9
+    # the plate sheds more heat into a cooler block: shorter dwells than the default build
+    r0 = rig()
+    s0 = r0.run(12, finish=False)
+    assert s["dwell_s"]["mean"] < 0.7 * s0["dwell_s"]["mean"]

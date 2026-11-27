@@ -94,8 +94,8 @@ def cmd_study_dwell(a):
     from .studies import dwell_study
     prog = load_program(a.program)
     rows = dwell_study(prog, a.out, a.layers)
-    keys = ["band_K", "plate_block_WK", "absorptivity", "result", "period_s", "period_without_dwell_s", "dwell_share",
-            "plate_max_C", "mean_absorbed_W", "build_10mm_h", "build_15mm_h"]
+    keys = ["band_K", "plate_block_WK", "absorptivity", "block_offset_K", "argon_low_in_dwell", "result", "period_s",
+            "dwell_share", "plate_max_C", "mean_absorbed_W", "build_10mm_h", "build_15mm_h", "argon_15mm_m3"]
     print(" | ".join(keys))
     for r in rows:
         print(" | ".join(str(r.get(k, "")) for k in keys))

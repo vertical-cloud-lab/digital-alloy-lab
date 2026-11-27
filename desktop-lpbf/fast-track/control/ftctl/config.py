@@ -54,6 +54,8 @@ class Thermal:
     heat_timeout_s: float = 2700.0      # 45 min (estimate; the model reaches 200 C in ~15-20 min)
     dwell_band_K: float = 5.0           # next layer starts only when the plate is <= setpoint + this (PR 266 used +3 K)
     dwell_max_s: float = 600.0          # a dwell longer than this is a fault (heater stuck on, or a TC drifted)
+    block_offset_K: float = 0.0         # block set point = plate set point + this during the build (study option:
+                                        # -20 K moves the plate-block gap by 23.6e-6/K x 20 K x 40 mm / 2 = 9 um radial)
     soft_limit_C: float = 225.0         # supervisor's plate/block over-temperature fault (estimate)
     limit_C: float = 240.0              # CN708 latching limit on its own thermocouple, opens K2 (estimate)
     box_air_hold_C: float = 45.0        # hold between layers above this: Zaber stages are rated 0-50 C
@@ -156,6 +158,8 @@ class Config:
     poll_s: float = 0.05                # supervisor's poll period while waiting (real time)
     sample_s: float = 1.0               # log period of the slow channels
     overlap_heat_with_purge: bool = True
+    argon_low_in_dwell: bool = True     # cross-flow only while recoating and scanning; the low flow holds the box in dwells
+    flow_settle_s: float = 2.0          # main flow back on this long before a scan that follows a dwell (estimate)
     camera: bool = True
     vent_after_build: bool = True
 

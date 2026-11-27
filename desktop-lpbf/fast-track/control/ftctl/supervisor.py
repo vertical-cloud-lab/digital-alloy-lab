@@ -314,6 +314,10 @@ class Supervisor:
         mo, th = self.cfg.motion, self.cfg.thermal
         lm = self.prog.layer_mm
         first = True
+        if th.block_offset_K:
+            self.m.block.set_sv(th.setpoint_C + th.block_offset_K)
+            self.m.block.run(True)
+            self.log.event("heaters", "BLOCK_OFFSET", f"block at {th.setpoint_C + th.block_offset_K:.0f} C during the build")
         for k in layers:
             if self.stop_request == "graceful":
                 raise Fault(Code.OPERATOR_STOP, "graceful stop between layers", self.clock.now())
@@ -381,9 +385,20 @@ class Supervisor:
         if self.snap["plate_C"] <= band:
             return 0.0
         self.sm.go(S.DWELL, f"plate {self.snap['plate_C']:.1f} C, {why}")
-        if not self.wait_until(lambda: self.snap["plate_C"] <= band, th.dwell_max_s, poll=0.5):
-            raise Fault(Code.DWELL_TIMEOUT, f"plate {self.snap['plate_C']:.1f} C after {th.dwell_max_s:.0f} s",
-                        self.clock.now())
+        save = self.cfg.argon_low_in_dwell and self.outputs.get("ARGON")
+        if save:
+            self.set_out("ARGON_LOW", True)
+            self.set_out("ARGON", False)
+        try:
+            if not self.wait_until(lambda: self.snap["plate_C"] <= band, th.dwell_max_s, poll=0.5):
+                raise Fault(Code.DWELL_TIMEOUT, f"plate {self.snap['plate_C']:.1f} C after {th.dwell_max_s:.0f} s",
+                            self.clock.now())
+        finally:
+            if save:
+                self.set_out("ARGON", True)
+                self.set_out("ARGON_LOW", False)
+        if save and why == "before the scan":
+            self.wait_until(lambda: False, self.cfg.flow_settle_s, poll=0.5)
         return self.clock.now() - t0
 
     def _photo(self, tag, k):
