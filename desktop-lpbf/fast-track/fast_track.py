@@ -15,6 +15,7 @@ Every input is a named constant with its source or the word "estimate". Nothing 
 from __future__ import annotations
 
 import csv
+import json
 import math
 from pathlib import Path
 
@@ -192,67 +193,93 @@ def costs():
 # 3. Schedule: working days from the decision (day 0), low and high. Each task lists what it waits for.
 #    Durations are vendor statements read on 2026-11-25/26 converted to working days, or estimates (marked).
 # --------------------------------------------------------------------------------------------------
+# Shop time per state from fab/ (FreeCAD CAM + PR 266's allowances; fab/out/hours.json, round 2). The early estimate
+# uses the low hours (robot-shop.md's smaller allowances) at SHOP_H_PER_DAY[0]; the late one the full hours at
+# SHOP_H_PER_DAY[1]. Shop hours a working day are an estimate: one machinist full time plus a student (8 h/day) or one
+# person at most of a day (5 h/day). Parts are made in state order, so S1's parts are ready first.
+SHOP_H_PER_DAY = (8.0, 5.0)
+
+
+def shop_days(state):
+    try:
+        h = json.load(open(HERE / "fab" / "out" / "hours.json"))["by_state"][state]
+        lo, hi = float(h["low"]), float(h["h"])
+    except Exception:                       # fab/ not run: round 1's estimates
+        lo, hi = dict(S1=3, S2=3, **{"FT-0": 6, "FT-1": 12, "FT-1V": 6}).get(state, 5), 15
+    return (round(lo / SHOP_H_PER_DAY[0], 1), round(hi / SHOP_H_PER_DAY[1], 1)), (lo, hi)
+
+
+def shop_tasks(upto):
+    order = ["S1", "S2", "FT-0", "FT-1", "FT-1V"]
+    out, prev = {}, ["McMaster stock and hardware"]
+    for st in order[: order.index(upto) + 1]:
+        d, (lo, hi) = shop_days(st)
+        name = f"{st} parts made"
+        out[name] = (d, list(prev), f"fab/out/hours.json: {lo:.1f}-{hi:.1f} shop h at {SHOP_H_PER_DAY[0]:g}-{SHOP_H_PER_DAY[1]:g} h a working day (estimate)")
+        prev = [name]
+    return out
+
+
 COMMON = {
     # procurement (PCard orders go out on day 0)
-    "used optics chain arrives": ((3, 8), [], "eBay windows to 84602 read 2026-11-26 (Nov 28-Dec 5) and LTL freight for the laser (estimate)"),
+    "used optics chain arrives": ((3, 8), [], "eBay windows to 84602 read 2026-11-27 (Nov 30-Dec 3) and LTL freight for the laser (estimate)"),
     "McMaster stock and hardware": ((1, 2), [], "McMaster: most orders arrive same or next day"),
-    "safety parts and eyewear": ((2, 5), [], "Digi-Key / Thorlabs in-stock items (Thorlabs LG1 'Available: Today')"),
-    "O2 analyzer (used)": ((4, 6), [], "eBay window Nov 30-Dec 5 (Alpha Omega Series 3000, read 2026-11-26)"),
+    "safety parts and eyewear": ((2, 5), [], "Digi-Key in stock (D4NS-2CF 360 in stock, 2026-11-27) / Thorlabs LG1 'Available: Today'"),
+    "O2 analyzers arrive": ((4, 10), [], "eBay window Dec 1-7 (Alpha Omega Series 3000, read 2026-11-27); Kele OX-6 lead time not read (estimate)"),
     "argon cylinder and regulator": ((2, 5), [], "estimate (gas supplier delivery; McMaster regulator next day)"),
-    "PC + RTC5 software": ((1, 3), [], "estimate (lab PC with a PCIe slot; RTC5 package from SCANLAB's portal)"),
+    "RTC4 card + PC and software": ((3, 7), [], "eBay 366737163447 'Estimated between Wed, Dec 2 and Tue, Dec 8' (read 2026-11-27); lab PC with a PCIe slot"),
+    "208/240 V circuit for the laser": ((3, 15), [], "estimate: a Physical Facilities work order, unless the room already has a 208/240 V outlet (check on day 0)"),
     # approvals, started on day 0 (unknown durations: estimates)
     "LSO registration and SOP": ((5, 15), [], "estimate: BYU's laser-safety pages need a login; start on day 0"),
     "EHS review (Al powder)": ((5, 15), [], "estimate: dust hazard analysis scope, start on day 0"),
 }
+BENCH = ((2, 4), ["used optics chain arrives", "RTC4 card + PC and software", "LSO registration and SOP", "safety parts and eyewear",
+                  "S1 parts made", "208/240 V circuit for the laser"], "estimate")
 
 ALTERNATIVES = {
     "FT-0 single-track bench": {
-        **COMMON,
-        "box, plate and stand made": ((3, 6), ["McMaster stock and hardware"], "estimate: 4 simple parts, ~10-15 shop hours"),
-        "enclosure arrives": ((3, 8), [], "estimate: distributor stock, ground"),
-        "bench check of laser + scan head": ((2, 4), ["used optics chain arrives", "PC + RTC5 software", "LSO registration and SOP", "safety parts and eyewear"], "estimate"),
-        "assemble box, heater, gas": ((1, 2), ["box, plate and stand made", "enclosure arrives"], "estimate"),
-        "purge and heat commissioning": ((1, 2), ["assemble box, heater, gas", "O2 analyzer (used)", "argon cylinder and regulator"], "estimate"),
+        **COMMON, **shop_tasks("FT-0"),
+        "enclosure arrives": ((3, 8), [], "estimate: distributor stock (Saginaw SCE-16EL1208SSLP, $694.24, stock not stated), ground"),
+        "bench check of laser + scan head": BENCH,
+        "assemble box, heater, gas": ((1, 2), ["FT-0 parts made", "enclosure arrives"], "estimate"),
+        "purge and heat commissioning": ((1, 2), ["assemble box, heater, gas", "O2 analyzers arrive", "argon cylinder and regulator"], "estimate"),
         "FIRST TRACKS": ((1, 2), ["bench check of laser + scan head", "purge and heat commissioning", "EHS review (Al powder)"], "milestone"),
         "hand-spread single layers and pads": ((2, 4), ["FIRST TRACKS"], "estimate"),
     },
     "FT-1 purge-box LPBF (stages on one PO)": {
-        **COMMON,
+        **COMMON, **shop_tasks("FT-1"),
         "Zaber stages arrive (PO)": ((11, 20), [], "BYU PO 10-14 days (capstone.byu.edu) + Zaber 'Lead Time: 1-5 Days' + transit"),
         "enclosure arrives": ((3, 8), [], "estimate: distributor stock, ground"),
-        "12 simple parts made": ((5, 10), ["McMaster stock and hardware"], "estimate: ~25-40 shop hours, one person at least half time"),
-        "bench check of laser + scan head": ((2, 4), ["used optics chain arrives", "PC + RTC5 software", "LSO registration and SOP", "safety parts and eyewear"], "estimate"),
-        "assemble mechanism in the box": ((3, 5), ["12 simple parts made", "Zaber stages arrive (PO)", "enclosure arrives"], "estimate"),
-        "purge and heat commissioning": ((1, 3), ["assemble mechanism in the box", "O2 analyzer (used)", "argon cylinder and regulator"], "estimate"),
+        "bench check of laser + scan head": BENCH,
+        "assemble mechanism in the box": ((3, 5), ["FT-1 parts made", "Zaber stages arrive (PO)", "enclosure arrives"], "estimate"),
+        "purge and heat commissioning": ((1, 3), ["assemble mechanism in the box", "O2 analyzers arrive", "argon cylinder and regulator"], "estimate"),
         "interlock commissioning": ((1, 2), ["assemble mechanism in the box", "safety parts and eyewear"], "estimate"),
         "FIRST TRACKS": ((1, 2), ["bench check of laser + scan head", "purge and heat commissioning", "interlock commissioning", "EHS review (Al powder)"], "milestone"),
         "powder layers: dose, spread, pads": ((3, 5), ["FIRST TRACKS"], "estimate"),
         "FIRST COUPONS": ((2, 5), ["powder layers: dose, spread, pads"], "milestone"),
     },
     "FT-1 purge-box LPBF (stages on PCards)": {
-        **COMMON,
-        "stages arrive (PCard)": ((3, 10), [], "Zaber X-LSQ075B 'Lead Time: 1-5 Days' + transit; Thorlabs MTS50/M-Z8 + KDC101 'Available: Today'"),
+        **COMMON, **shop_tasks("FT-1"),
+        "stages arrive (PCard)": ((3, 10), [], "Zaber X-LSM100B 'Lead Time: 1-5 Days' + transit; Thorlabs MTS50/M-Z8 + KDC101 'Available: Today'"),
         "enclosure arrives": ((3, 8), [], "estimate: distributor stock, ground"),
-        "12 simple parts made": ((5, 10), ["McMaster stock and hardware"], "estimate: ~25-40 shop hours, one person at least half time"),
-        "bench check of laser + scan head": ((2, 4), ["used optics chain arrives", "PC + RTC5 software", "LSO registration and SOP", "safety parts and eyewear"], "estimate"),
-        "assemble mechanism in the box": ((3, 5), ["12 simple parts made", "stages arrive (PCard)", "enclosure arrives"], "estimate"),
-        "purge and heat commissioning": ((1, 3), ["assemble mechanism in the box", "O2 analyzer (used)", "argon cylinder and regulator"], "estimate"),
+        "bench check of laser + scan head": BENCH,
+        "assemble mechanism in the box": ((3, 5), ["FT-1 parts made", "stages arrive (PCard)", "enclosure arrives"], "estimate"),
+        "purge and heat commissioning": ((1, 3), ["assemble mechanism in the box", "O2 analyzers arrive", "argon cylinder and regulator"], "estimate"),
         "interlock commissioning": ((1, 2), ["assemble mechanism in the box", "safety parts and eyewear"], "estimate"),
         "FIRST TRACKS": ((1, 2), ["bench check of laser + scan head", "purge and heat commissioning", "interlock commissioning", "EHS review (Al powder)"], "milestone"),
         "powder layers: dose, spread, pads": ((3, 5), ["FIRST TRACKS"], "estimate"),
         "FIRST COUPONS": ((2, 5), ["powder layers: dose, spread, pads"], "milestone"),
     },
     "FT-1V same, in a stock vacuum chamber": {
-        **COMMON,
+        **COMMON, **shop_tasks("FT-1V"),
         "Zaber stages arrive (PO)": ((11, 20), [], "BYU PO + Zaber 1-5 days + transit"),
         "chamber frame and plates arrive (PO)": ((11, 16), [], "Ideal Vacuum P107540 frame and P108171 plates 'Available now' (2026-11-25) + BYU PO + LTL"),
-        "pump, KF parts, Pirani": ((2, 7), [], "McMaster 4396K21 next day, or used IDP-3 (eBay window Dec 1-7, read 2026-11-26)"),
-        "12 simple parts + window plate made": ((6, 12), ["McMaster stock and hardware"], "estimate: FT-1's parts plus the top plate"),
-        "bench check of laser + scan head": ((2, 4), ["used optics chain arrives", "PC + RTC5 software", "LSO registration and SOP", "safety parts and eyewear"], "estimate"),
-        "assemble mechanism in the chamber": ((3, 6), ["12 simple parts + window plate made", "Zaber stages arrive (PO)", "chamber frame and plates arrive (PO)"], "estimate"),
-        "leak check, pump-purge and heat commissioning": ((2, 4), ["assemble mechanism in the chamber", "pump, KF parts, Pirani", "O2 analyzer (used)", "argon cylinder and regulator"], "estimate"),
+        "pump, KF parts, Pirani": ((2, 7), [], "McMaster 4396K21 next day, or used IDP-3 (eBay window Dec 2-8, read 2026-11-27)"),
+        "bench check of laser + scan head": BENCH,
+        "assemble mechanism in the chamber": ((3, 6), ["FT-1V parts made", "Zaber stages arrive (PO)", "chamber frame and plates arrive (PO)"], "estimate"),
+        "leak check, pump-purge, heat": ((2, 4), ["assemble mechanism in the chamber", "pump, KF parts, Pirani", "O2 analyzers arrive", "argon cylinder and regulator"], "estimate"),
         "interlock commissioning": ((1, 2), ["assemble mechanism in the chamber", "safety parts and eyewear"], "estimate"),
-        "FIRST TRACKS": ((1, 2), ["bench check of laser + scan head", "leak check, pump-purge and heat commissioning", "interlock commissioning", "EHS review (Al powder)"], "milestone"),
+        "FIRST TRACKS": ((1, 2), ["bench check of laser + scan head", "leak check, pump-purge, heat", "interlock commissioning", "EHS review (Al powder)"], "milestone"),
         "powder layers: dose, spread, pads": ((3, 5), ["FIRST TRACKS"], "estimate"),
         "FIRST COUPONS": ((2, 5), ["powder layers: dose, spread, pads"], "milestone"),
     },
@@ -306,9 +333,9 @@ def gantt(sched):
         ax.set_yticks(range(len(names)))
         ax.set_yticklabels(names, fontsize=7.5)
         ax.invert_yaxis()
-        ax.set_xlim(0, 48)
-        ax.set_xticks(range(0, 46, 5))
-        ax.set_xticklabels([f"{d // 5}" for d in range(0, 46, 5)], fontsize=8)
+        ax.set_xlim(0, 60)
+        ax.set_xticks(range(0, 61, 5))
+        ax.set_xticklabels([f"{d // 5}" for d in range(0, 61, 5)], fontsize=8)
         ax.axvspan(15, 30, color="#4daf4a", alpha=0.06)
         ax.set_title(alt, fontsize=9.5, loc="left")
         ax.grid(axis="x", color="#dddddd", lw=0.6)
@@ -468,7 +495,18 @@ def main():
             sched_rows.append(dict(alternative=alt, task=n, start_low_d=sl, start_high_d=sh, finish_low_d=fl, finish_high_d=fh,
                                    basis=ALTERNATIVES[alt][n][2]))
             if n.isupper():
-                lines.append(f"- {alt}: {n} at {fl}-{fh} working days = {fl / 5:.1f}-{fh / 5:.1f} weeks")
+                lines.append(f"- {alt}: {n} at {fl:.0f}-{fh:.0f} working days = {fl / 5:.1f}-{fh / 5:.1f} weeks")
+    # sensitivity: shop hours a working day against FT-1's first coupons (stages on PCards)
+    global SHOP_H_PER_DAY
+    keep, alt = SHOP_H_PER_DAY, "FT-1 purge-box LPBF (stages on PCards)"
+    lines += ["", f"Shop throughput against {alt}: FIRST COUPONS (early with the low hours, late with the full hours):", ""]
+    for hpd in (5.0, 8.0, 12.0):
+        SHOP_H_PER_DAY = (hpd, hpd)
+        tasks = dict(ALTERNATIVES[alt])
+        tasks.update(shop_tasks("FT-1"))
+        fl, fh = forward(tasks)["FIRST COUPONS"][2:]
+        lines.append(f"- {hpd:g} shop h a working day: {fl / 5:.1f}-{fh / 5:.1f} weeks")
+    SHOP_H_PER_DAY = keep
     with open(OUT / "schedule.csv", "w", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=list(sched_rows[0]))
         w.writeheader()

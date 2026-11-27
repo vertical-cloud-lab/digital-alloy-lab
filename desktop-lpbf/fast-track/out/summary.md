@@ -66,12 +66,18 @@ Cost by alternative (parts.csv):
 
 Milestones (working days -> weeks):
 
-- FT-0 single-track bench: FIRST TRACKS at 8-21 working days = 1.6-4.2 weeks
-- FT-1 purge-box LPBF (stages on one PO): FIRST TRACKS at 16-30 working days = 3.2-6.0 weeks
-- FT-1 purge-box LPBF (stages on one PO): FIRST COUPONS at 21-40 working days = 4.2-8.0 weeks
-- FT-1 purge-box LPBF (stages on PCards): FIRST TRACKS at 11-22 working days = 2.2-4.4 weeks
-- FT-1 purge-box LPBF (stages on PCards): FIRST COUPONS at 16-32 working days = 3.2-6.4 weeks
-- FT-1V same, in a stock vacuum chamber: FIRST TRACKS at 17-32 working days = 3.4-6.4 weeks
-- FT-1V same, in a stock vacuum chamber: FIRST COUPONS at 22-42 working days = 4.4-8.4 weeks
+- FT-0 single-track bench: FIRST TRACKS at 10-26 working days = 1.9-5.3 weeks
+- FT-1 purge-box LPBF (stages on one PO): FIRST TRACKS at 16-37 working days = 3.2-7.3 weeks
+- FT-1 purge-box LPBF (stages on one PO): FIRST COUPONS at 21-47 working days = 4.2-9.3 weeks
+- FT-1 purge-box LPBF (stages on PCards): FIRST TRACKS at 13-37 working days = 2.7-7.3 weeks
+- FT-1 purge-box LPBF (stages on PCards): FIRST COUPONS at 18-47 working days = 3.7-9.3 weeks
+- FT-1V same, in a stock vacuum chamber: FIRST TRACKS at 17-42 working days = 3.4-8.4 weeks
+- FT-1V same, in a stock vacuum chamber: FIRST COUPONS at 22-52 working days = 4.4-10.4 weeks
+
+Shop throughput against FT-1 purge-box LPBF (stages on PCards): FIRST COUPONS (early with the low hours, late with the full hours):
+
+- 5 shop h a working day: 4.5-9.3 weeks
+- 8 shop h a working day: 3.7-7.5 weeks
+- 12 shop h a working day: 3.2-6.5 weeks
 
 Layout sketch: bed 63 mm above the box floor, 140 mm below the window; lens 363 mm above the floor; overall ~768 mm with the stage below.
