@@ -1,0 +1,64 @@
+           ei s0   MATCH                        rows 24/24  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.4807/0.4807
+           ei s1   MATCH                        rows 24/24  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.4799/0.4799
+           ei s10  MATCH                        rows 24/24  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.3021/0.3021
+           ei s11  MATCH                        rows 24/24  max|d| best_validated 5.6e-17  rec_printed 5.6e-17  rec 0.0e+00  x_rec 0.0e+00  final 0.3288/0.3288
+           ei s2   MATCH                        rows 24/24  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.3830/0.3830
+           ei s3   MATCH                        rows 24/24  max|d| best_validated 1.1e-16  rec_printed 1.1e-16  rec 0.0e+00  x_rec 0.0e+00  final 0.4218/0.4218
+           ei s4   MATCH                        rows 24/24  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.3212/0.3212
+           ei s5   MATCH                        rows 24/24  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.5264/0.5264
+           ei s6   MATCH                        rows 24/24  max|d| best_validated 1.1e-16  rec_printed 1.1e-16  rec 0.0e+00  x_rec 0.0e+00  final 0.4604/0.4604
+           ei s7   MATCH                        rows 24/24  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.4254/0.4254
+           ei s8   MATCH                        rows 24/24  max|d| best_validated 1.1e-16  rec_printed 1.1e-16  rec 0.0e+00  x_rec 0.0e+00  final 0.4371/0.4371
+           ei s9   MATCH                        rows 24/24  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.4219/0.4219
+   eifn_reuse s0   MATCH                        rows 31/31  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.4645/0.4645
+   eifn_reuse s1   MATCH                        rows 31/31  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.3986/0.3986
+   eifn_reuse s2   MATCH                        rows 30/30  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.4912/0.4912
+   eifn_reuse s3   MATCH                        rows 33/33  max|d| best_validated 1.4e-17  rec_printed 1.4e-17  rec 0.0e+00  x_rec 0.0e+00  final 0.3501/0.3501
+   eifn_reuse s4   MATCH                        rows 31/31  max|d| best_validated 5.6e-17  rec_printed 5.6e-17  rec 0.0e+00  x_rec 0.0e+00  final 0.4879/0.4879
+   eifn_reuse s5   MATCH                        rows 31/31  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.5215/0.5215
+   eifn_reuse s6   MATCH                        rows 31/31  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.5168/0.5168
+   eifn_reuse s7   MATCH                        rows 31/31  max|d| best_validated 5.6e-17  rec_printed 5.6e-17  rec 0.0e+00  x_rec 0.0e+00  final 0.4548/0.4548
+         eifn s0   MATCH                        rows 24/24  max|d| best_validated 1.1e-16  rec_printed 1.1e-16  rec 0.0e+00  x_rec 0.0e+00  final 0.5171/0.5171
+         eifn s1   MATCH                        rows 24/24  max|d| best_validated 5.6e-17  rec_printed 5.6e-17  rec 0.0e+00  x_rec 0.0e+00  final 0.5170/0.5170
+         eifn s10  MATCH                        rows 24/24  max|d| best_validated 1.1e-16  rec_printed 1.1e-16  rec 0.0e+00  x_rec 0.0e+00  final 0.4797/0.4797
+         eifn s11  MATCH                        rows 24/24  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.1505/0.1505
+         eifn s2   MATCH                        rows 24/24  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.4896/0.4896
+         eifn s3   MATCH                        rows 24/24  max|d| best_validated 1.4e-17  rec_printed 1.4e-17  rec 0.0e+00  x_rec 0.0e+00  final 0.4634/0.4634
+         eifn s4   MATCH                        rows 24/24  max|d| best_validated 3.5e-18  rec_printed 3.5e-18  rec 0.0e+00  x_rec 0.0e+00  final 0.4557/0.4557
+         eifn s5   MATCH                        rows 24/24  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.5145/0.5145
+         eifn s6   MATCH                        rows 24/24  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.5224/0.5224
+         eifn s7   MATCH                        rows 24/24  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.4738/0.4738
+         eifn s8   MATCH                        rows 24/24  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.4713/0.4713
+         eifn s9   MATCH                        rows 24/24  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.5137/0.5137
+        pkgfn s0   MATCH                        rows 50/50  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.4455/0.4455
+        pkgfn s1   MATCH                        rows 49/49  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.1554/0.1554
+        pkgfn s10  MATCH                        rows 54/54  max|d| best_validated 0.0e+00  rec_printed 1.1e-16  rec 0.0e+00  x_rec 0.0e+00  final 0.3418/0.3418
+        pkgfn s11  MATCH                        rows 50/50  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.4334/0.4334
+        pkgfn s2   MATCH                        rows 50/50  max|d| best_validated 0.0e+00  rec_printed 2.8e-17  rec 0.0e+00  x_rec 0.0e+00  final 0.3539/0.3539
+        pkgfn s3   MATCH                        rows 54/54  max|d| best_validated 1.4e-17  rec_printed 1.4e-17  rec 0.0e+00  x_rec 0.0e+00  final 0.3678/0.3678
+        pkgfn s4   MATCH                        rows 54/54  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.1875/0.1875
+        pkgfn s5   MATCH                        rows 50/50  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.3362/0.3362
+        pkgfn s6   MATCH                        rows 49/49  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.4628/0.4628
+        pkgfn s7   MATCH                        rows 51/51  max|d| best_validated 0.0e+00  rec_printed 2.8e-17  rec 0.0e+00  x_rec 0.0e+00  final 0.3423/0.3423
+        pkgfn s8   MATCH                        rows 49/49  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.4567/0.4567
+        pkgfn s9   MATCH                        rows 50/50  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.2894/0.2894
+       tiered s0   MATCH                        rows 31/31  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.4423/0.4423
+       tiered s1   MATCH                        rows 32/32  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.4453/0.4453
+       tiered s10  MATCH                        rows 31/31  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.3782/0.3782
+       tiered s11  MATCH                        rows 32/32  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.4316/0.4316
+       tiered s2   MATCH                        rows 31/31  max|d| best_validated 5.6e-17  rec_printed 5.6e-17  rec 0.0e+00  x_rec 0.0e+00  final 0.4419/0.4419
+       tiered s3   MATCH                        rows 32/32  max|d| best_validated 1.1e-16  rec_printed 1.4e-17  rec 0.0e+00  x_rec 0.0e+00  final 0.4559/0.4559
+       tiered s4   MATCH                        rows 30/30  max|d| best_validated 2.8e-17  rec_printed 1.1e-16  rec 0.0e+00  x_rec 0.0e+00  final 0.4178/0.4178
+       tiered s5   MATCH                        rows 31/31  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.3013/0.3013
+       tiered s6   MATCH                        rows 30/30  max|d| best_validated 1.1e-16  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.4156/0.4156
+       tiered s7   MATCH                        rows 30/30  max|d| best_validated 0.0e+00  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.4206/0.4206
+       tiered s8   MATCH                        rows 29/29  max|d| best_validated 5.6e-17  rec_printed 0.0e+00  rec 0.0e+00  x_rec 0.0e+00  final 0.4503/0.4503
+       tiered s9   MATCH                        rows 30/30  max|d| best_validated 1.1e-16  rec_printed 1.1e-16  rec 0.0e+00  x_rec 0.0e+00  final 0.3909/0.3909
+
+| policy | seeds | match action for action | first divergence (row) | max abs diff, best validated | max abs diff, rec_printed | max abs diff, rec |
+|---|---|---|---|---|---|---|
+| ei | 0,1,2,3,4,5,6,7,8,9,10,11 | 12/12 | none | 1.1e-16 | 1.1e-16 | 0.0e+00 |
+| eifn_reuse | 0,1,2,3,4,5,6,7 | 8/8 | none | 5.6e-17 | 5.6e-17 | 0.0e+00 |
+| eifn | 0,1,2,3,4,5,6,7,8,9,10,11 | 12/12 | none | 1.1e-16 | 1.1e-16 | 0.0e+00 |
+| pkgfn | 0,1,2,3,4,5,6,7,8,9,10,11 | 12/12 | none | 1.4e-17 | 1.1e-16 | 0.0e+00 |
+| tiered | 0,1,2,3,4,5,6,7,8,9,10,11 | 12/12 | none | 1.1e-16 | 1.1e-16 | 0.0e+00 |
