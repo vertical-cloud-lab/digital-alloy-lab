@@ -54,8 +54,9 @@ def ease(u):
 def load(name):
     p = common.DATA / name
     if not p.exists() and name == "assembly.json":    # round 9: the planner writes its run's summary as assembly_run<N>.json
-        runs = sorted(common.DATA.glob("assembly_run*.json"),
-                      key=lambda q: int("".join(c for c in q.stem if c.isdigit()) or 0))
+        runs = sorted(common.DATA.glob("assembly_run*.json"),       # run 14 has a partial file and a _full one
+                      key=lambda q: (int("".join(c for c in q.stem if c.isdigit()) or 0), "_full" in q.stem,
+                                     q.stat().st_mtime))
         p = runs[-1] if runs else p
     if not p.exists() and name == "asm_fail_notes.json":   # the notes the assembly chapters draw (asm_render --fail_notes)
         p = common.LPBF / "analysis" / "out" / "assembly" / "run10_fail_notes.json"
