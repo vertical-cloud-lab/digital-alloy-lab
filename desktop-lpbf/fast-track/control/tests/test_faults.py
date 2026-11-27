@@ -161,3 +161,9 @@ def test_no_fault_leaves_nan_in_the_log(rig):
     s = r.run(4, finish=False)
     assert s["result"] == "complete"
     assert all(not math.isnan(x["plate_C"]) for x in r.log.samples)
+
+
+def test_scan_head_water_lost(rig):
+    r = run_with(rig, 2, lambda w: setattr(w, "water_ok", False))
+    r.assert_safe()
+    assert r.summary["fault"]["code"] == "COOLING_FAULT"

@@ -261,3 +261,32 @@ def test_solo_modbus_registers():
     assert ins.writes == [(0x1001, 2000, 6), (0x1001, 0, 6)]
     ins.regs[0x1000] = 0x8002                                   # SOLO: input sensor error
     assert z.pv() != z.pv()
+
+
+# ---------------------------------------------------------------------------------------------------- RTC4
+def test_rtc4_layer_list_units(program):
+    from ftctl.hw.rtc4 import FIELD_MAX4, PROTOTYPES4, FakeRtc4Dll, Rtc4Scan
+    cfg = Config()
+    d = FakeRtc4Dll()
+    card = Rtc4Scan(cfg, program.timing(), dll=d)
+    card.open()
+    n = d.names()
+    assert n.index("load_correction_file") < n.index("load_program_file")     # correction file first (RTC4 p. 63)
+    assert "init_rtc5_dll" not in n and "set_laser_control" not in n
+    assert abs(card.K - cfg.scan.K() / 16) < 1e-9
+    d.calls.clear()
+    lay = program.layer(0)
+    lt = card.load_layer(lay, cfg.laser)
+    calls = d.calls
+    args = dict(calls)
+    tm = program.timing()
+    assert args["set_laser_delays"] == (round(tm["laser_on_delay"] * 1e6), round(tm["laser_off_delay"] * 1e6))  # 1 us
+    assert args["set_delay_mode"][2] == 65500                                       # edge level off on the RTC4
+    for name, a in calls:
+        if name in ("jump_abs", "mark_abs"):
+            assert all(abs(v) <= FIELD_MAX4 for v in a)
+    assert card.da(250.0) == 639 and card.da(150.0) == 384                         # 10-bit: 6.25 V, 3.75 V
+    assert calls[1] == ("write_io_port_list", (1,)) and ("write_io_port_list", (0,)) in calls[-3:]
+    assert lt["n_commands"] < 4000 and set(c[0] for c in calls) <= set(PROTOTYPES4)
+    card.start()
+    assert card.busy() and card.busy() and not card.busy()

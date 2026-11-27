@@ -107,7 +107,8 @@ class Rtc5Scan(ScanCard):
         self.list_no = 1
 
     # ------------------------------------------------------------------ conversions
-    def bits(self, xy) -> tuple:
+    def _xy(self, xy) -> tuple:
+        """Machine frame (mm) -> scan field frame (mm): lens-axis offset, then the head's axis swap and signs."""
         sc = self.cfg.scan
         x, y = float(xy[0]) - sc.x_offset_mm, float(xy[1]) - sc.y_offset_mm
         if sc.swap_xy:
@@ -116,6 +117,10 @@ class Rtc5Scan(ScanCard):
             x = -x
         if sc.flip_y:
             y = -y
+        return x, y
+
+    def bits(self, xy) -> tuple:
+        x, y = self._xy(xy)
         bx, by = int(round(x * self.K)), int(round(y * self.K))
         if abs(bx) > FIELD_MAX or abs(by) > FIELD_MAX:
             raise Rtc5Error(f"point {xy} mm is outside the RTC5 field (K = {self.K:.1f} bits/mm)")

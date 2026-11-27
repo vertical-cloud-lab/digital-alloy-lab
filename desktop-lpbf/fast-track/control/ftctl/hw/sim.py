@@ -55,6 +55,7 @@ class SimWorld:
         self.heater_stuck_on = set()       # SSR failed short (fault injection): 'plate' / 'block'
         # safety chain
         self.estop_ok = True
+        self.water_ok = True               # scan head cooling water flow switch
         self.lid_closed = True
         self.tube_closed = True
         self.key_on = True
@@ -463,7 +464,7 @@ class SimIo(IoNode):
         w = self.w
         return {
             "SAFETY_OK": w.g9se,
-            "ESTOP_OK": w.estop_ok,
+            "WATER_OK": w.water_ok,
             "LID_CLOSED": w.lid_closed,
             "LASER_PS_ACTIVE": w.laser_ps,
             "LASER_EMISSION": w.emission,

@@ -31,7 +31,7 @@ from .interfaces import ANALOG, INPUTS, OUTPUTS, TEMPS, HeaterZone, IoNode
 OUT_PINS = {"ARGON": 17, "ARGON_LOW": 27, "VENT": 22, "TRACE_SAMPLE": 23, "VIBRATOR": 24, "HEAT_EN": 25, "LEDS": 4,
             "BEACON": 18}
 IN_PINS = {"SAFETY_OK": 14, "LASER_PS_ACTIVE": 15, "LASER_EMISSION": 16, "LASER_READY": 19, "LIMIT_OK": 20,
-           "ROOM_O2_OK": 21, "ESTOP_OK": 2, "LID_CLOSED": 3, "K1_ON": 7}   # GPIO 7 needs dtoverlay=spi0-1cs
+           "ROOM_O2_OK": 21, "WATER_OK": 2, "LID_CLOSED": 3, "K1_ON": 7}   # GPIO 7 needs dtoverlay=spi0-1cs
 TC_CHANNELS = {"window": 0, "beam_tube": 1, "box_air": 2, "stage": 3}      # MCC 134, type K
 MA_CHANNELS = {"o2_ppm": (0, 0.0, 10_000.0), "o2_pct": (1, 0.0, 25.0), "room_o2_pct": (2, 0.0, 25.0)}  # MCC 128
 OPEN_TC = -9999.0
