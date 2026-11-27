@@ -1,0 +1,674 @@
+{
+ "cross": {
+  "laminar": {
+   "case": "/tmp/ft-cfd/cross-lam",
+   "model": "laminar",
+   "nozzle_lpm": 27.0,
+   "geom": {
+    "slot": {
+     "w": 45.0,
+     "h": 4.0,
+     "z0": 2.0,
+     "chan": 11.0,
+     "y_exit": -27.0,
+     "y_inlet": -38.0
+    },
+    "collector": {
+     "w": 50.0,
+     "z0": 2.0,
+     "z1": 8.0,
+     "y_face": 27.0,
+     "port": [
+      -5.0,
+      5.0,
+      2.0,
+      8.0
+     ],
+     "y_outlet": 39.5,
+     "lip": 0.0
+    }
+   },
+   "cells": 237541,
+   "time": 2000.0,
+   "convergence": {
+    "iterations": 2000.0,
+    "steps": 2000,
+    "final_initial_residuals": {
+     "Ux": 0.02120164,
+     "Uy": 0.0079469642,
+     "Uz": 0.047067741,
+     "p": 0.009433811
+    },
+    "probe_speed_last20pct": {
+     "mean": [
+      1.8111,
+      2.7669,
+      1.1155,
+      2.7751,
+      2.7149,
+      0.0162
+     ],
+     "std": [
+      0.03182,
+      0.03773,
+      0.19886,
+      0.01176,
+      0.04307,
+      0.01184
+     ],
+     "labels": [
+      "z1",
+      "z3",
+      "z5",
+      "y-15 z3",
+      "y+15 z3",
+      "under slide"
+     ]
+    }
+   },
+   "speed_over_build_area": {
+    "z1": {
+     "mean": 1.298499584197998,
+     "min": 0.791506826877594,
+     "max": 1.5957705974578857,
+     "cov": 0.1231914535164833,
+     "uy_mean": 1.2968734502792358,
+     "uz_mean": -0.009163818322122097,
+     "frac_reversed": 0.0,
+     "n": 5030
+    },
+    "z3": {
+     "mean": 2.730449676513672,
+     "min": 2.642442226409912,
+     "max": 2.804689884185791,
+     "cov": 0.01546736340969801,
+     "uy_mean": 2.728935718536377,
+     "uz_mean": -0.010598398745059967,
+     "frac_reversed": 0.0,
+     "n": 5030
+    },
+    "z5": {
+     "mean": 1.5999658107757568,
+     "min": 1.1889561414718628,
+     "max": 2.000598669052124,
+     "cov": 0.10604500025510788,
+     "uy_mean": 1.5978424549102783,
+     "uz_mean": 0.003931861370801926,
+     "frac_reversed": 0.0,
+     "n": 5030
+    }
+   },
+   "bed_shear_Pa": {
+    "build_area_d30": {
+     "mean": 0.032306393913398505,
+     "max": 0.046933483332395554,
+     "p95": 0.04570648819208145,
+     "frac_area_above_63um_low": 0.0,
+     "frac_area_above_63um_high": 0.0,
+     "frac_area_above_20um_low": 0.0
+    },
+    "plate_d40": {
+     "mean": 0.0327588098840612,
+     "max": 0.09990300983190536,
+     "p95": 0.07220539450645447,
+     "frac_area_above_63um_low": 0.08142082565567238,
+     "frac_area_above_63um_high": 0.0,
+     "frac_area_above_20um_low": 0.0
+    },
+    "strip_outside_plate": {
+     "mean": 0.0189342769662112,
+     "max": 0.09720185399055481,
+     "p95": 0.06783410161733627,
+     "frac_area_above_63um_low": 0.09830702135328782,
+     "frac_area_above_63um_high": 0.0,
+     "frac_area_above_20um_low": 0.0
+    },
+    "whole_block_top": {
+     "mean": 0.02000735526913198,
+     "max": 0.1476428061723709,
+     "p95": 0.06986473500728607,
+     "frac_area_above_63um_low": 0.08518771938957301,
+     "frac_area_above_63um_high": 0.005421893007047332,
+     "frac_area_above_20um_low": 0.007245954982168895
+    }
+   },
+   "pressure": {
+    "inlet_minus_outlet_Pa": 87.771534675,
+    "outlet_flow_L_min": 26.99686236,
+    "box_under_slide_minus_outlet_Pa": 86.3073948,
+    "over_plate_z3_minus_outlet_Pa": 86.3281287
+   },
+   "jet_flow": {
+    "y-20": {
+     "forward_L_min": 29.953581223702955,
+     "backward_L_min": 2.948050670509142
+    },
+    "y0": {
+     "forward_L_min": 33.79949651258035,
+     "backward_L_min": 2.808458136769849
+    },
+    "y20": {
+     "forward_L_min": 35.71152799377373,
+     "backward_L_min": 6.790688246274462
+    },
+    "y25": {
+     "forward_L_min": 34.25312712354766,
+     "backward_L_min": 7.7108052090164465
+    }
+   },
+   "capture": {
+    "n": 2730,
+    "captured": 0.9593406593406594,
+    "escaped": 0.0003663003663003663,
+    "stalled": 0.040293040293040296,
+    "captured_from_z0.5": 0.756043956043956,
+    "captured_from_z1": 1.0,
+    "captured_from_z2": 1.0,
+    "captured_from_z3": 1.0,
+    "transit_s_median_captured": 0.014709624268310467,
+    "stalled_at_collector_lower_lip": 0.03956043956043956,
+    "escaped_closest_to_slide_mm_min": 129.0122678904878,
+    "escaped_closest_to_slide_mm_median": 129.0122678904878,
+    "frac_all_within_10mm_of_slide": 0.0,
+    "frac_all_within_30mm_of_slide": 0.0,
+    "escaped_back_to_jet": 1.0,
+    "time_to_within_10mm_of_slide_s_median": null,
+    "above_jet_4_15mm": {
+     "n": 1020,
+     "captured": 0.6460784313725491,
+     "escaped": 0.22941176470588234,
+     "stalled": 0.12450980392156863,
+     "captured_from_z4": 1.0,
+     "captured_from_z6": 0.6911764705882353,
+     "captured_from_z8": 0.5882352941176471,
+     "captured_from_z10": 0.49019607843137253,
+     "captured_from_z15": 0.46078431372549017,
+     "frac_all_within_10mm_of_slide": 0.0,
+     "frac_all_within_30mm_of_slide": 0.000980392156862745,
+     "escaped_closest_to_slide_mm_median": 80.34598477014491,
+     "escaped_back_to_jet": 0.24786324786324787
+    }
+   },
+   "speed_2mm_under_slide": {
+    "mean": 0.003265494480729103,
+    "max": 0.00848318636417389
+   }
+  },
+  "sst": {
+   "case": "/tmp/ft-cfd/cross-sst",
+   "model": "sst",
+   "nozzle_lpm": 27.0,
+   "geom": {
+    "slot": {
+     "w": 45.0,
+     "h": 4.0,
+     "z0": 2.0,
+     "chan": 11.0,
+     "y_exit": -27.0,
+     "y_inlet": -38.0
+    },
+    "collector": {
+     "w": 50.0,
+     "z0": 2.0,
+     "z1": 8.0,
+     "y_face": 27.0,
+     "port": [
+      -5.0,
+      5.0,
+      2.0,
+      8.0
+     ],
+     "y_outlet": 39.5,
+     "lip": 0.0
+    }
+   },
+   "cells": 237541,
+   "time": 904.0,
+   "convergence": {
+    "iterations": 904.0,
+    "steps": 904,
+    "final_initial_residuals": {
+     "Ux": 0.00046933559,
+     "Uy": 7.8690271e-05,
+     "Uz": 0.00062410232,
+     "p": 0.00028057584,
+     "k": 0.00055815264,
+     "omega": 4.9440108e-05
+    },
+    "probe_speed_last20pct": {
+     "mean": [
+      1.9194,
+      2.6168,
+      1.4676,
+      2.7093,
+      2.393,
+      0.0027
+     ],
+     "std": [
+      0.00012,
+      0.00013,
+      0.00045,
+      2e-05,
+      0.00012,
+      0.00042
+     ],
+     "labels": [
+      "z1",
+      "z3",
+      "z5",
+      "y-15 z3",
+      "y+15 z3",
+      "under slide"
+     ]
+    }
+   },
+   "speed_over_build_area": {
+    "z1": {
+     "mean": 1.6176416873931885,
+     "min": 1.339791178703308,
+     "max": 1.766564130783081,
+     "cov": 0.051727015525102615,
+     "uy_mean": 1.6170231103897095,
+     "uz_mean": 0.0002679828612599522,
+     "frac_reversed": 0.0,
+     "n": 5030
+    },
+    "z3": {
+     "mean": 2.5718581676483154,
+     "min": 2.378021240234375,
+     "max": 2.6832962036132812,
+     "cov": 0.038845133036375046,
+     "uy_mean": 2.5711519718170166,
+     "uz_mean": 0.009904713369905949,
+     "frac_reversed": 0.0,
+     "n": 5030
+    },
+    "z5": {
+     "mean": 1.6183438301086426,
+     "min": 1.4497060775756836,
+     "max": 1.787498116493225,
+     "cov": 0.05828132480382919,
+     "uy_mean": 1.617526650428772,
+     "uz_mean": 0.03157716244459152,
+     "frac_reversed": 0.0,
+     "n": 5030
+    }
+   },
+   "bed_shear_Pa": {
+    "build_area_d30": {
+     "mean": 0.05282630923858002,
+     "max": 0.06683627516031265,
+     "p95": 0.0656665787100792,
+     "frac_area_above_63um_low": 0.5397804379879582,
+     "frac_area_above_63um_high": 0.0,
+     "frac_area_above_20um_low": 0.0
+    },
+    "plate_d40": {
+     "mean": 0.04901551223866744,
+     "max": 0.09953421354293823,
+     "p95": 0.07501485198736191,
+     "frac_area_above_63um_low": 0.4318181377876314,
+     "frac_area_above_63um_high": 0.0,
+     "frac_area_above_20um_low": 0.0
+    },
+    "strip_outside_plate": {
+     "mean": 0.024641477244744244,
+     "max": 0.10846249759197235,
+     "p95": 0.08088664710521698,
+     "frac_area_above_63um_low": 0.16961867345688297,
+     "frac_area_above_63um_high": 0.0,
+     "frac_area_above_20um_low": 0.0009594275890035816
+    },
+    "whole_block_top": {
+     "mean": 0.026434029988757154,
+     "max": 0.12890560925006866,
+     "p95": 0.07484658807516098,
+     "frac_area_above_63um_low": 0.20561580143218253,
+     "frac_area_above_63um_high": 0.0012875022803810396,
+     "frac_area_above_20um_low": 0.003187549110626457
+    },
+    "yplus_plate": {
+     "mean": 0.8208612203598022,
+     "max": 1.1889865398406982
+    }
+   },
+   "pressure": {
+    "inlet_minus_outlet_Pa": 88.00745316,
+    "outlet_flow_L_min": 27.00010188,
+    "box_under_slide_minus_outlet_Pa": 86.64155939999999,
+    "over_plate_z3_minus_outlet_Pa": 86.6799087
+   },
+   "jet_flow": {
+    "y-20": {
+     "forward_L_min": 32.49375715788117,
+     "backward_L_min": 0.18956503500803015
+    },
+    "y0": {
+     "forward_L_min": 36.77842170355889,
+     "backward_L_min": 2.4547936083836852e-20
+    },
+    "y20": {
+     "forward_L_min": 41.309091808717454,
+     "backward_L_min": 0.7541207245781263
+    },
+    "y25": {
+     "forward_L_min": 41.56484688697231,
+     "backward_L_min": 2.2636693986433443
+    }
+   },
+   "capture": {
+    "n": 2730,
+    "captured": 0.9908424908424909,
+    "escaped": 0.0,
+    "stalled": 0.009157509157509158,
+    "captured_from_z0.5": 0.945054945054945,
+    "captured_from_z1": 1.0,
+    "captured_from_z2": 1.0,
+    "captured_from_z3": 1.0,
+    "transit_s_median_captured": 0.01542275480766707,
+    "stalled_at_collector_lower_lip": 0.009157509157509158,
+    "above_jet_4_15mm": {
+     "n": 1020,
+     "captured": 0.4931372549019608,
+     "escaped": 0.3058823529411765,
+     "stalled": 0.20098039215686275,
+     "captured_from_z4": 1.0,
+     "captured_from_z6": 0.6715686274509803,
+     "captured_from_z8": 0.37254901960784315,
+     "captured_from_z10": 0.23039215686274508,
+     "captured_from_z15": 0.19117647058823528,
+     "frac_all_within_10mm_of_slide": 0.0,
+     "frac_all_within_30mm_of_slide": 0.006862745098039216,
+     "escaped_closest_to_slide_mm_median": 89.26605078086436,
+     "escaped_back_to_jet": 0.038461538461538464
+    }
+   },
+   "speed_2mm_under_slide": {
+    "mean": 0.0008859522640705109,
+    "max": 0.002373907482251525
+   }
+  }
+ },
+ "threshold_shao_lu_Pa": {
+  "20um_g0.000165": 0.1079184042,
+  "20um_g0.0003": 0.19094340420000003,
+  "20um_g0.0005": 0.3139434042,
+  "40um_g0.000165": 0.06362430840000001,
+  "40um_g0.0003": 0.10513680839999999,
+  "40um_g0.0005": 0.16663680840000003,
+  "63um_g0.000165": 0.05251100894428571,
+  "63um_g0.0003": 0.07886815180142856,
+  "63um_g0.0005": 0.11791577084904764
+ },
+ "purge": {
+  "buoyant-LH-backflow": {
+   "case": "/tmp/ft-cfd/buoy-D",
+   "kind": "buoyant",
+   "inlets": {
+    "purge_low": 20.0
+   },
+   "outlet": "vent_high",
+   "q_total_L_min": 20.0,
+   "gas_L": 23.188,
+   "t_end_s": 247.508603,
+   "t_10000ppm_min": {
+    "box": 1.4899287101770364,
+    "exhaust": 1.8072262004953488,
+    "plate": 0.6844482522205316,
+    "well_mixed_ideal": 3.527055546599229
+   },
+   "t_1000ppm_min": {
+    "box": 2.5662664431284847,
+    "exhaust": 3.8552890240665842,
+    "plate": 1.384799293644228,
+    "well_mixed_ideal": 6.196672703416525
+   },
+   "t_100ppm_min": {
+    "box": null,
+    "exhaust": null,
+    "plate": 3.369032116399048,
+    "well_mixed_ideal": 8.866289860233822
+   },
+   "ppm_at_end": {
+    "box": 195.8351741534606,
+    "exhaust": 2798.585733765375,
+    "plate": 84.40327368200323,
+    "slide": 228.69276165822768
+   },
+   "tail": {
+    "box": {
+     "decay_per_min_last20pct": 0.8480902207486171,
+     "t_100ppm_min_extrapolated": 4.917633562806488
+    },
+    "exhaust": {
+     "decay_per_min_last20pct": 0.08615625241973152,
+     "t_100ppm_min_extrapolated": 42.7955729101043
+    },
+    "plate": {
+     "decay_per_min_last20pct": 0.19151200940236196
+    }
+   },
+   "tail_decay_per_min": 1.2272841524614349,
+   "ideal_decay_per_min": 0.8625150940141453
+  },
+  "scalar-A": {
+   "case": "/tmp/ft-cfd/sc-A",
+   "kind": "scalar",
+   "inlets": {
+    "inlet": 20.0
+   },
+   "outlet": "outlet",
+   "q_total_L_min": 20.0,
+   "gas_L": 23.188,
+   "t_end_s": 3600.0,
+   "t_10000ppm_min": {
+    "box": 18.861061671468015,
+    "exhaust": 8.451238945979892,
+    "plate": 0.06666666666666667,
+    "well_mixed_ideal": 3.527055546599229
+   },
+   "t_1000ppm_min": {
+    "box": 33.159683273421216,
+    "exhaust": 22.751450383356516,
+    "plate": 6.097980124739793,
+    "well_mixed_ideal": 6.196672703416525
+   },
+   "t_100ppm_min": {
+    "box": 47.45820044594638,
+    "exhaust": 37.04894252905731,
+    "plate": 20.396155805969894,
+    "well_mixed_ideal": 8.866289860233822
+   },
+   "ppm_at_end": {
+    "box": 13.26968527175,
+    "exhaust": 2.48234762965,
+    "plate": 0.16991386046,
+    "slide": 11.9090088545
+   },
+   "tail": {
+    "box": {
+     "decay_per_min_last20pct": 0.16103608486224041
+    },
+    "exhaust": {
+     "decay_per_min_last20pct": 0.16103585532332806
+    },
+    "plate": {
+     "decay_per_min_last20pct": 0.16103593450058545
+    }
+   },
+   "tail_decay_per_min": 0.16103608496525024,
+   "ideal_decay_per_min": 0.8625150940141453,
+   "flow": {
+    "mean_speed_mm_s": 22.215332741509876,
+    "median_speed_mm_s": 15.231358528137207,
+    "vol_frac_below_1mm_s": 0.010914545381258517,
+    "vol_frac_below_3mm_s": 0.049634964219397684,
+    "vol_frac_below_10mm_s": 0.3031051978081151
+   }
+  },
+  "scalar-B": {
+   "case": "/tmp/ft-cfd/sc-B",
+   "kind": "scalar",
+   "inlets": {
+    "inlet": 5.0,
+    "purge_low": 15.0
+   },
+   "outlet": "outlet",
+   "q_total_L_min": 20.0,
+   "gas_L": 23.188,
+   "t_end_s": 3600.0,
+   "t_10000ppm_min": {
+    "box": 6.840769247327286,
+    "exhaust": 5.22870211036087,
+    "plate": 0.06666666666666667,
+    "well_mixed_ideal": 3.527055546599229
+   },
+   "t_1000ppm_min": {
+    "box": 12.24086355715664,
+    "exhaust": 10.60165856809147,
+    "plate": 0.06666666666666667,
+    "well_mixed_ideal": 6.196672703416525
+   },
+   "t_100ppm_min": {
+    "box": 17.644746081520573,
+    "exhaust": 16.00513095475262,
+    "plate": 8.820092845335019,
+    "well_mixed_ideal": 8.866289860233822
+   },
+   "ppm_at_end": {
+    "box": 1.4511756532200001e-06,
+    "exhaust": 7.2168923273e-07,
+    "plate": 3.3688678925e-08,
+    "slide": 1.9178591814499997e-06
+   },
+   "tail": {
+    "box": {
+     "decay_per_min_last20pct": 0.4261165006170002
+    },
+    "exhaust": {
+     "decay_per_min_last20pct": 0.42611649715270883
+    },
+    "plate": {
+     "decay_per_min_last20pct": 0.42611691121443485
+    }
+   },
+   "tail_decay_per_min": 0.4261105184676081,
+   "ideal_decay_per_min": 0.8625150940141453,
+   "flow": {
+    "mean_speed_mm_s": 9.841154254206211,
+    "median_speed_mm_s": 6.5860819816589355,
+    "vol_frac_below_1mm_s": 0.11487799030279075,
+    "vol_frac_below_3mm_s": 0.28028965576830256,
+    "vol_frac_below_10mm_s": 0.7745292317521828
+   }
+  },
+  "scalar-C": {
+   "case": "/tmp/ft-cfd/sc-C",
+   "kind": "scalar",
+   "inlets": {
+    "inlet": 5.0,
+    "purge_high": 15.0
+   },
+   "outlet": "outlet",
+   "q_total_L_min": 20.0,
+   "gas_L": 23.188,
+   "t_end_s": 3600.0,
+   "t_10000ppm_min": {
+    "box": 4.493169052992897,
+    "exhaust": 4.114225444899462,
+    "plate": 0.06666666666666667,
+    "well_mixed_ideal": 3.527055546599229
+   },
+   "t_1000ppm_min": {
+    "box": 7.980295277550723,
+    "exhaust": 7.588028185034901,
+    "plate": 2.710055875100831,
+    "well_mixed_ideal": 6.196672703416525
+   },
+   "t_100ppm_min": {
+    "box": 11.476750540762877,
+    "exhaust": 11.082371030084623,
+    "plate": 6.137130886215511,
+    "well_mixed_ideal": 8.866289860233822
+   },
+   "ppm_at_end": {
+    "box": 1.3504825788199998e-12,
+    "exhaust": 1.0411390960549998e-12,
+    "plate": 3.998165459e-14,
+    "slide": 8.786388518999999e-13
+   },
+   "tail": {
+    "box": {
+     "decay_per_min_last20pct": 0.6581033024642166
+    },
+    "exhaust": {
+     "decay_per_min_last20pct": 0.6581223491303356
+    },
+    "plate": {
+     "decay_per_min_last20pct": 0.6576510624356098
+    }
+   },
+   "flow": {
+    "mean_speed_mm_s": 18.81175026520069,
+    "median_speed_mm_s": 12.535347938537598,
+    "vol_frac_below_1mm_s": 0.028245894945107375,
+    "vol_frac_below_3mm_s": 0.10452504862011965,
+    "vol_frac_below_10mm_s": 0.4092054392792936
+   }
+  },
+  "scalar-D": {
+   "case": "/tmp/ft-cfd/sc-D",
+   "kind": "scalar",
+   "inlets": {
+    "inlet": 5.0,
+    "purge_low": 15.0
+   },
+   "outlet": "vent_high",
+   "q_total_L_min": 20.0,
+   "gas_L": 23.188,
+   "t_end_s": 3600.0,
+   "t_10000ppm_min": {
+    "box": 3.4892072969313412,
+    "exhaust": 3.5213881816553485,
+    "plate": 0.06666666666666667,
+    "well_mixed_ideal": 3.527055546599229
+   },
+   "t_1000ppm_min": {
+    "box": 6.126690424935975,
+    "exhaust": 6.1559013062610894,
+    "plate": 1.4867245937850508,
+    "well_mixed_ideal": 6.196672703416525
+   },
+   "t_100ppm_min": {
+    "box": 8.767139963752838,
+    "exhaust": 8.795776156101285,
+    "plate": 4.097264556130461,
+    "well_mixed_ideal": 8.866289860233822
+   },
+   "ppm_at_end": {
+    "box": 3.9058524684e-18,
+    "exhaust": 4.0073366357500004e-18,
+    "plate": 6.838601654999999e-20,
+    "slide": 6.272993973999999e-18
+   },
+   "tail": {
+    "box": {
+     "decay_per_min_last20pct": 0.8722646590487254
+    },
+    "exhaust": {
+     "decay_per_min_last20pct": 0.8722576037480024
+    },
+    "plate": {
+     "decay_per_min_last20pct": 0.8720785088605791
+    }
+   },
+   "flow": {
+    "mean_speed_mm_s": 16.368916483156163,
+    "median_speed_mm_s": 9.847596168518066,
+    "vol_frac_below_1mm_s": 0.026865608531365645,
+    "vol_frac_below_3mm_s": 0.11761172536997708,
+    "vol_frac_below_10mm_s": 0.5253936069685399
+   }
+  }
+ }
+}

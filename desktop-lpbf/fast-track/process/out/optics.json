@@ -1,0 +1,2598 @@
+{
+ "sources": {
+  "ipg": "IPG YLR-SM: 1070 nm, M2 1.05 typ / 1.1 max, standard collimators 5 mm and 7.5 mm (desktop-lpbf/quotes/ipg-ylr-500-u3-sm-ac.md, IPG spec G22-29856 as transcribed); bare QBH divergence 130-150 mrad full angle",
+  "cad": "cad/ft_model.py P and levels(): window ring on the lid (box) or the top plate (cube); window 2 mm above the ring's underside; cover slide 5.5 mm under the holder top; openings: holder \u00d840, clamp and window rings \u00d844, lid and top-plate bores \u00d853, beam tube \u00d854",
+  "window": "Edmund Optics 38-990: \u00d850.80 x 9.53 mm fused silica, 1064 nm V-coat, clear aperture \u00d845.72 (PR 266 analysis/optics/beam_path.py, read 2026-11-25)",
+  "slide": "cover slide \u00d850 x 1 mm (cad/ft_model.py); clear aperture assumed \u00d845 (est.)",
+  "linos": "LINOS F-Theta-Ronar 4401-288-000-20 datasheet O-LM_DS-4401-288-000-20_2021.12-V4 (Excelitas, via Digi-Key): EFL 254.4, BFL 299.1, WD 296.2, FFL 344.8, design beam 20 mm, mirrors m1 25.6 / m2 23.0 (m2 mech 18.5), +-17.7 deg, field 157 x 157, T > 96 %, LIDT 10 J/cm2 at 9 ns, back-reflex foci 14.2, 19.6, 52.6, 71.3, 72.4, 142.8, 457.8 mm from the first surface; no telecentricity or CW rating given",
+  "head": "SCANLAB hurrySCAN 25 (scanlab.de/en/print-product/609): 25 mm aperture, +-0.26 rad (galvo 1) and +-0.40 rad (galvo 2) optical, tracking error 0.50 ms, 1500 W at 1064 nm, housing 206.9 x 140 x 180 mm, 5.8 kg; this unit's SCANcheck sticker is dated 2003 (lead, from the listing photos)",
+  "silica": "Corning 7980: k 1.38 W/mK, dn/dT 9.6e-6 /K, alpha 0.52e-6 /K, nu 0.16, rho 2201, c 740 (as in PR 266 analysis/optics/thermal_lens.py)"
+ },
+ "stacks": {
+  "box": {
+   "state": "box",
+   "dz": 0.0,
+   "slide": [
+    129.0,
+    130.0
+   ],
+   "window": [
+    145.4,
+    154.93
+   ],
+   "lens_bot": 300.0,
+   "apertures": [
+    [
+     "cover-slide holder (under the slide)",
+     124.5,
+     128.9,
+     20.0
+    ],
+    [
+     "cover-slide holder (over the slide)",
+     130.1,
+     134.5,
+     20.0
+    ],
+    [
+     "inner clamp ring",
+     135.5,
+     141.5,
+     22.0
+    ],
+    [
+     "lid bore",
+     141.5,
+     143.4,
+     26.5
+    ],
+    [
+     "window ring ledge",
+     143.4,
+     145.4,
+     22.0
+    ],
+    [
+     "window clear aperture",
+     145.4,
+     154.93,
+     22.86
+    ],
+    [
+     "retaining flange",
+     155.1,
+     159.4,
+     22.0
+    ],
+    [
+     "beam tube",
+     159.4,
+     286.0,
+     27.0
+    ]
+   ]
+  },
+  "cube": {
+   "state": "cube",
+   "dz": 21.0,
+   "slide": [
+    221.39999999999995,
+    222.39999999999995
+   ],
+   "window": [
+    251.79999999999995,
+    261.3299999999999
+   ],
+   "lens_bot": 300.0,
+   "apertures": [
+    [
+     "cover-slide holder (under the slide)",
+     216.89999999999995,
+     221.29999999999995,
+     20.0
+    ],
+    [
+     "cover-slide holder (over the slide)",
+     222.49999999999994,
+     226.89999999999995,
+     20.0
+    ],
+    [
+     "top-plate bore",
+     226.89999999999995,
+     249.79999999999995,
+     26.5
+    ],
+    [
+     "window ring ledge",
+     249.79999999999995,
+     251.79999999999995,
+     22.0
+    ],
+    [
+     "window clear aperture",
+     251.79999999999995,
+     261.3299999999999,
+     22.86
+    ],
+    [
+     "retaining flange",
+     261.49999999999994,
+     265.79999999999995,
+     22.0
+    ],
+    [
+     "beam tube",
+     265.79999999999995,
+     286.0,
+     27.0
+    ]
+   ]
+  }
+ },
+ "spot": [
+  {
+   "D_mm": 5.0,
+   "M2": 1.05,
+   "spot_um": 72.78305789858652,
+   "zR_mm": 3.7032019858800824,
+   "dof_5pct_mm": 2.371206239189822,
+   "dz_10pct_mm": 1.6970203414006273
+  },
+  {
+   "D_mm": 5.0,
+   "M2": 1.1,
+   "spot_um": 76.24891779851923,
+   "zR_mm": 3.8795449375886593,
+   "dof_5pct_mm": 2.4841208220083857,
+   "dz_10pct_mm": 1.777830833848277
+  },
+  {
+   "D_mm": 7.5,
+   "M2": 1.05,
+   "spot_um": 48.52203859905768,
+   "zR_mm": 1.6458675492800365,
+   "dof_5pct_mm": 1.0538694396399209,
+   "dz_10pct_mm": 0.7542312628447232
+  },
+  {
+   "D_mm": 7.5,
+   "M2": 1.1,
+   "spot_um": 50.832611865679496,
+   "zR_mm": 1.7242421944838489,
+   "dof_5pct_mm": 1.104053698670394,
+   "dz_10pct_mm": 0.790147037265901
+  }
+ ],
+ "plates_focus_shift_mm": 3.265927152317881,
+ "field": [
+  {
+   "r_mm": 15.0,
+   "k": 0.6,
+   "theta_opt_deg": 3.378288886384571,
+   "theta_mech_deg": 1.6891444431922855,
+   "u_deg": 2.0269733318307424,
+   "elongation_pct": 0.06261052455951432,
+   "sag_uncorrected_mm": 0.44221698113207547,
+   "sag_over_zR": 0.1139868175897291,
+   "growth_at_sag_pct": 0.6475531040985638,
+   "lateral_shift_window_um": 104.6219083275258,
+   "lateral_shift_slide_um": 10.978164567421384,
+   "xy_shift_per_100um_height_um": 3.5392124815681587
+  },
+  {
+   "r_mm": 15.0,
+   "k": 0.86,
+   "theta_opt_deg": 3.378288886384571,
+   "theta_mech_deg": 1.6891444431922855,
+   "u_deg": 2.905328442290731,
+   "elongation_pct": 0.12870064771475231,
+   "sag_uncorrected_mm": 0.44221698113207547,
+   "sag_over_zR": 0.1139868175897291,
+   "growth_at_sag_pct": 0.6475531040985638,
+   "lateral_shift_window_um": 150.04044471590637,
+   "lateral_shift_slide_um": 15.744013086663841,
+   "xy_shift_per_100um_height_um": 5.075105259959925
+  },
+  {
+   "r_mm": 15.0,
+   "k": 0.73,
+   "theta_opt_deg": 3.378288886384571,
+   "theta_mech_deg": 1.6891444431922855,
+   "u_deg": 2.4661508870607367,
+   "elongation_pct": 0.09270419790887718,
+   "sag_uncorrected_mm": 0.44221698113207547,
+   "sag_over_zR": 0.1139868175897291,
+   "growth_at_sag_pct": 0.6475531040985638,
+   "lateral_shift_window_um": 127.32183348905765,
+   "lateral_shift_slide_um": 13.360108445861245,
+   "xy_shift_per_100um_height_um": 4.306905344918483
+  },
+  {
+   "r_mm": 20.0,
+   "k": 0.6,
+   "theta_opt_deg": 4.504385181846095,
+   "theta_mech_deg": 2.2521925909230474,
+   "u_deg": 2.7026311091076565,
+   "elongation_pct": 0.11135278560336914,
+   "sag_uncorrected_mm": 0.7861635220125786,
+   "sag_over_zR": 0.2026432312706295,
+   "growth_at_sag_pct": 2.03255750885607,
+   "lateral_shift_window_um": 139.55239738096057,
+   "lateral_shift_slide_um": 14.643483460751371,
+   "xy_shift_per_100um_height_um": 4.7204826621370835
+  },
+  {
+   "r_mm": 20.0,
+   "k": 0.86,
+   "theta_opt_deg": 4.504385181846095,
+   "theta_mech_deg": 2.2521925909230474,
+   "u_deg": 3.8737712563876414,
+   "elongation_pct": 0.22899215643181758,
+   "sag_uncorrected_mm": 0.7861635220125786,
+   "sag_over_zR": 0.2026432312706295,
+   "growth_at_sag_pct": 2.03255750885607,
+   "lateral_shift_window_um": 200.22046321664448,
+   "lateral_shift_slide_um": 21.009492467643703,
+   "xy_shift_per_100um_height_um": 6.771326952235535
+  },
+  {
+   "r_mm": 20.0,
+   "k": 0.73,
+   "theta_opt_deg": 4.504385181846095,
+   "theta_mech_deg": 2.2521925909230474,
+   "u_deg": 3.2882011827476485,
+   "elongation_pct": 0.1649065436843289,
+   "sag_uncorrected_mm": 0.7861635220125786,
+   "sag_over_zR": 0.2026432312706295,
+   "growth_at_sag_pct": 2.03255750885607,
+   "lateral_shift_window_um": 169.8642655480852,
+   "lateral_shift_slide_um": 17.82416217713381,
+   "xy_shift_per_100um_height_um": 5.745302681758142
+  },
+  {
+   "r_mm": 30.0,
+   "k": 0.6,
+   "theta_opt_deg": 6.756577772769142,
+   "theta_mech_deg": 3.378288886384571,
+   "u_deg": 4.053946663661485,
+   "elongation_pct": 0.25083469596074437,
+   "sag_uncorrected_mm": 1.7688679245283019,
+   "sag_over_zR": 0.4559472703589164,
+   "growth_at_sag_pct": 9.903954130310822,
+   "lateral_shift_window_um": 209.57097713734808,
+   "lateral_shift_slide_um": 21.990658671285214,
+   "xy_shift_per_100um_height_um": 7.087302536003865
+  },
+  {
+   "r_mm": 30.0,
+   "k": 0.86,
+   "theta_opt_deg": 6.756577772769142,
+   "theta_mech_deg": 3.378288886384571,
+   "u_deg": 5.810656884581462,
+   "elongation_pct": 0.5164641087636035,
+   "sag_uncorrected_mm": 1.7688679245283019,
+   "sag_over_zR": 0.4559472703589164,
+   "growth_at_sag_pct": 9.903954130310822,
+   "lateral_shift_window_um": 301.0453562977104,
+   "lateral_shift_slide_um": 31.589229412141698,
+   "xy_shift_per_100um_height_um": 10.176421617069515
+  },
+  {
+   "r_mm": 30.0,
+   "k": 0.73,
+   "theta_opt_deg": 6.756577772769142,
+   "theta_mech_deg": 3.378288886384571,
+   "u_deg": 4.932301774121473,
+   "elongation_pct": 0.37167811485481206,
+   "sag_uncorrected_mm": 1.7688679245283019,
+   "sag_over_zR": 0.4559472703589164,
+   "growth_at_sag_pct": 9.903954130310822,
+   "lateral_shift_window_um": 255.23318441243958,
+   "lateral_shift_slide_um": 26.78207601389713,
+   "xy_shift_per_100um_height_um": 8.62981851443154
+  },
+  {
+   "r_mm": 40.0,
+   "k": 0.6,
+   "theta_opt_deg": 9.00877036369219,
+   "theta_mech_deg": 4.504385181846095,
+   "u_deg": 5.405262218215313,
+   "elongation_pct": 0.4466544093509883,
+   "sag_uncorrected_mm": 3.144654088050314,
+   "sag_over_zR": 0.810572925082518,
+   "growth_at_sag_pct": 28.72561776417426,
+   "lateral_shift_window_um": 279.8809253591441,
+   "lateral_shift_slide_um": 29.368407697706623,
+   "xy_shift_per_100um_height_um": 9.462049568227252
+  },
+  {
+   "r_mm": 40.0,
+   "k": 0.86,
+   "theta_opt_deg": 9.00877036369219,
+   "theta_mech_deg": 4.504385181846095,
+   "u_deg": 7.747542512775283,
+   "elongation_pct": 0.9212413454781299,
+   "sag_uncorrected_mm": 3.144654088050314,
+   "sag_over_zR": 0.810572925082518,
+   "growth_at_sag_pct": 28.72561776417426,
+   "lateral_shift_window_um": 402.7309301689297,
+   "lateral_shift_slide_um": 42.25927913629902,
+   "xy_shift_per_100um_height_um": 13.605034167992565
+  },
+  {
+   "r_mm": 40.0,
+   "k": 0.73,
+   "theta_opt_deg": 9.00877036369219,
+   "theta_mech_deg": 4.504385181846095,
+   "u_deg": 6.576402365495297,
+   "elongation_pct": 0.6623563974071489,
+   "sag_uncorrected_mm": 3.144654088050314,
+   "sag_over_zR": 0.810572925082518,
+   "growth_at_sag_pct": 28.72561776417426,
+   "lateral_shift_window_um": 341.12760830123165,
+   "lateral_shift_slide_um": 35.795132035806056,
+   "xy_shift_per_100um_height_um": 11.528659743379315
+  },
+  {
+   "r_mm": 50.0,
+   "k": 0.6,
+   "theta_opt_deg": 11.260962954615236,
+   "theta_mech_deg": 5.630481477307618,
+   "u_deg": 6.756577772769141,
+   "elongation_pct": 0.6993614282495786,
+   "sag_uncorrected_mm": 4.913522012578616,
+   "sag_over_zR": 1.2665201954414342,
+   "growth_at_sag_pct": 61.37141647333362,
+   "lateral_shift_window_um": 350.5802155100055,
+   "lateral_shift_slide_um": 36.7870110713542,
+   "xy_shift_per_100um_height_um": 11.847421325218328
+  },
+  {
+   "r_mm": 50.0,
+   "k": 0.86,
+   "theta_opt_deg": 11.260962954615236,
+   "theta_mech_deg": 5.630481477307618,
+   "u_deg": 9.684428140969104,
+   "elongation_pct": 1.4456795784228094,
+   "sag_uncorrected_mm": 4.913522012578616,
+   "sag_over_zR": 1.2665201954414342,
+   "growth_at_sag_pct": 61.37141647333362,
+   "lateral_shift_window_um": 505.56920634610094,
+   "lateral_shift_slide_um": 53.05028398175246,
+   "xy_shift_per_100um_height_um": 17.065342221239874
+  },
+  {
+   "r_mm": 50.0,
+   "k": 0.73,
+   "theta_opt_deg": 11.260962954615236,
+   "theta_mech_deg": 5.630481477307618,
+   "u_deg": 8.220502956869122,
+   "elongation_pct": 1.0381540377853327,
+   "sag_uncorrected_mm": 4.913522012578616,
+   "sag_over_zR": 1.2665201954414342,
+   "growth_at_sag_pct": 61.37141647333362,
+   "lateral_shift_window_um": 427.7249697375624,
+   "lateral_shift_slide_um": 44.88194855588274,
+   "xy_shift_per_100um_height_um": 14.446749508565382
+  }
+ ],
+ "irradiance": {
+  "box, D 5.0 mm": [
+   {
+    "element": "cover slide",
+    "face": "lower face",
+    "h_mm": 129.0,
+    "h_air_mm": 128.999999999,
+    "beam_d_mm": 2.536523654002143,
+    "peak_kW_cm2": 15.831507549867508,
+    "mean_kW_cm2": 7.915753774933754
+   },
+   {
+    "element": "cover slide",
+    "face": "upper face",
+    "h_mm": 130.0,
+    "h_air_mm": 129.6898454746137,
+    "beam_d_mm": 2.5500758430859736,
+    "peak_kW_cm2": 15.663683933850635,
+    "mean_kW_cm2": 7.831841966925317
+   },
+   {
+    "element": "window",
+    "face": "lower face",
+    "h_mm": 145.4,
+    "h_air_mm": 145.0898454736137,
+    "beam_d_mm": 2.852627822636437,
+    "peak_kW_cm2": 12.517277437596006,
+    "mean_kW_cm2": 6.258638718798003
+   },
+   {
+    "element": "window",
+    "face": "upper face",
+    "h_mm": 154.93,
+    "h_air_mm": 151.66407284768212,
+    "beam_d_mm": 2.9817941004583375,
+    "peak_kW_cm2": 11.45631122639466,
+    "mean_kW_cm2": 5.72815561319733
+   }
+  ],
+  "box, D 7.5 mm": [
+   {
+    "element": "cover slide",
+    "face": "lower face",
+    "h_mm": 129.0,
+    "h_air_mm": 128.999999999,
+    "beam_d_mm": 3.8034057424346264,
+    "peak_kW_cm2": 7.041331481925947,
+    "mean_kW_cm2": 3.5206657409629734
+   },
+   {
+    "element": "cover slide",
+    "face": "upper face",
+    "h_mm": 130.0,
+    "h_air_mm": 129.6898454746137,
+    "beam_d_mm": 3.8237413612175404,
+    "peak_kW_cm2": 6.966635492073027,
+    "mean_kW_cm2": 3.4833177460365135
+   },
+   {
+    "element": "window",
+    "face": "lower face",
+    "h_mm": 145.4,
+    "h_air_mm": 145.0898454736137,
+    "beam_d_mm": 4.2777149329648765,
+    "peak_kW_cm2": 5.566425821587918,
+    "mean_kW_cm2": 2.783212910793959
+   },
+   {
+    "element": "window",
+    "face": "upper face",
+    "h_mm": 154.93,
+    "h_air_mm": 151.66407284768212,
+    "beam_d_mm": 4.47151750690637,
+    "peak_kW_cm2": 5.094367073387181,
+    "mean_kW_cm2": 2.5471835366935904
+   }
+  ],
+  "cube, D 5.0 mm": [
+   {
+    "element": "cover slide",
+    "face": "lower face",
+    "h_mm": 221.39999999999995,
+    "h_air_mm": 221.39999999899996,
+    "beam_d_mm": 4.352083089802066,
+    "peak_kW_cm2": 5.3778136485547225,
+    "mean_kW_cm2": 2.6889068242773613
+   },
+   {
+    "element": "cover slide",
+    "face": "upper face",
+    "h_mm": 222.39999999999995,
+    "h_air_mm": 222.08984547461364,
+    "beam_d_mm": 4.365639298940398,
+    "peak_kW_cm2": 5.344467065161012,
+    "mean_kW_cm2": 2.672233532580506
+   },
+   {
+    "element": "window",
+    "face": "lower face",
+    "h_mm": 251.79999999999995,
+    "h_air_mm": 251.48984547361366,
+    "beam_d_mm": 4.943391649104052,
+    "peak_kW_cm2": 4.168214561514286,
+    "mean_kW_cm2": 2.084107280757143
+   },
+   {
+    "element": "window",
+    "face": "upper face",
+    "h_mm": 261.3299999999999,
+    "h_air_mm": 258.06407284768204,
+    "beam_d_mm": 5.072587112989413,
+    "peak_kW_cm2": 3.958595052692151,
+    "mean_kW_cm2": 1.9792975263460755
+   }
+  ],
+  "cube, D 7.5 mm": [
+   {
+    "element": "cover slide",
+    "face": "lower face",
+    "h_mm": 221.39999999999995,
+    "h_air_mm": 221.39999999899996,
+    "beam_d_mm": 6.527320578257919,
+    "peak_kW_cm2": 2.3907282858182133,
+    "mean_kW_cm2": 1.1953641429091066
+   },
+   {
+    "element": "cover slide",
+    "face": "upper face",
+    "h_mm": 222.39999999999995,
+    "h_air_mm": 222.08984547461364,
+    "beam_d_mm": 6.5476573890324055,
+    "peak_kW_cm2": 2.3759003007430124,
+    "mean_kW_cm2": 1.1879501503715062
+   },
+   {
+    "element": "window",
+    "face": "lower face",
+    "h_mm": 251.79999999999995,
+    "h_air_mm": 251.48984547361366,
+    "beam_d_mm": 7.414379605004259,
+    "peak_kW_cm2": 1.8528935548641026,
+    "mean_kW_cm2": 0.9264467774320513
+   },
+   {
+    "element": "window",
+    "face": "upper face",
+    "h_mm": 261.3299999999999,
+    "h_air_mm": 258.06407284768204,
+    "beam_d_mm": 7.608190831438241,
+    "peak_kW_cm2": 1.7596946401705442,
+    "mean_kW_cm2": 0.8798473200852721
+   }
+  ]
+ },
+ "apertures": {
+  "box, centred, k 0.6": [
+   {
+    "opening": "cover-slide holder (under the slide)",
+    "z0": 124.5,
+    "z1": 128.9,
+    "r_available": 20.0,
+    "r_needed_centred_on_footprint": 18.575480160979335,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 18.575480160979335
+   },
+   {
+    "opening": "cover-slide holder (over the slide)",
+    "z0": 130.1,
+    "z1": 134.5,
+    "r_available": 20.0,
+    "r_needed_centred_on_footprint": 18.429877851398146,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 18.429877851398146
+   },
+   {
+    "opening": "inner clamp ring",
+    "z0": 135.5,
+    "z1": 141.5,
+    "r_available": 22.0,
+    "r_needed_centred_on_footprint": 18.281247455940022,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 18.281247455940022
+   },
+   {
+    "opening": "lid bore",
+    "z0": 141.5,
+    "z1": 143.4,
+    "r_available": 26.5,
+    "r_needed_centred_on_footprint": 18.116106650745746,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 18.116106650745746
+   },
+   {
+    "opening": "window ring ledge",
+    "z0": 143.4,
+    "z1": 145.4,
+    "r_available": 22.0,
+    "r_needed_centred_on_footprint": 18.063812874342258,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 18.063812874342258
+   },
+   {
+    "opening": "window clear aperture",
+    "z0": 145.4,
+    "z1": 154.93,
+    "r_available": 22.86,
+    "r_needed_centred_on_footprint": 18.008767187061103,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 18.008767187061103
+   },
+   {
+    "opening": "retaining flange",
+    "z0": 155.1,
+    "z1": 159.4,
+    "r_available": 22.0,
+    "r_needed_centred_on_footprint": 17.82314963577854,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 17.82314963577854
+   },
+   {
+    "opening": "beam tube",
+    "z0": 159.4,
+    "z1": 286.0,
+    "r_available": 27.0,
+    "r_needed_centred_on_footprint": 17.704805210628567,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 17.704805210628567
+   }
+  ],
+  "box, axis at y = -30, k 0.6": [
+   {
+    "opening": "cover-slide holder (under the slide)",
+    "z0": 124.5,
+    "z1": 128.9,
+    "r_available": 20.0,
+    "r_needed_centred_on_footprint": 18.575480160979335,
+    "footprint_centre": [
+     0.0,
+     -8.808962264150942
+    ],
+    "r_needed_about_lens_axis": 39.76651789682839
+   },
+   {
+    "opening": "cover-slide holder (over the slide)",
+    "z0": 130.1,
+    "z1": 134.5,
+    "r_available": 20.0,
+    "r_needed_centred_on_footprint": 18.42987785139815,
+    "footprint_centre": [
+     0.0,
+     -9.183243783581158
+    ],
+    "r_needed_about_lens_axis": 39.246634067816984
+   },
+   {
+    "opening": "inner clamp ring",
+    "z0": 135.5,
+    "z1": 141.5,
+    "r_available": 22.0,
+    "r_needed_centred_on_footprint": 18.28124745594003,
+    "footprint_centre": [
+     0.0,
+     -9.565319255279274
+    ],
+    "r_needed_about_lens_axis": 38.71592820066075
+   },
+   {
+    "opening": "lid bore",
+    "z0": 141.5,
+    "z1": 143.4,
+    "r_available": 26.5,
+    "r_needed_centred_on_footprint": 18.11610665074575,
+    "footprint_centre": [
+     0.0,
+     -9.989847557166062
+    ],
+    "r_needed_about_lens_axis": 38.126259093579684
+   },
+   {
+    "opening": "window ring ledge",
+    "z0": 143.4,
+    "z1": 145.4,
+    "r_available": 22.0,
+    "r_needed_centred_on_footprint": 18.06381287434226,
+    "footprint_centre": [
+     0.0,
+     -10.12428151943021
+    ],
+    "r_needed_about_lens_axis": 37.93953135491205
+   },
+   {
+    "opening": "window clear aperture",
+    "z0": 145.4,
+    "z1": 154.93,
+    "r_available": 22.86,
+    "r_needed_centred_on_footprint": 18.008767187061103,
+    "footprint_centre": [
+     0.0,
+     -10.265790953392477
+    ],
+    "r_needed_about_lens_axis": 37.74297623366862
+   },
+   {
+    "opening": "retaining flange",
+    "z0": 155.1,
+    "z1": 159.4,
+    "r_available": 22.0,
+    "r_needed_centred_on_footprint": 17.823149635778545,
+    "footprint_centre": [
+     0.0,
+     -10.742976852430337
+    ],
+    "r_needed_about_lens_axis": 37.0801727833482
+   },
+   {
+    "opening": "beam tube",
+    "z0": 159.4,
+    "z1": 286.0,
+    "r_available": 27.0,
+    "r_needed_centred_on_footprint": 17.704805210628567,
+    "footprint_centre": [
+     0.0,
+     -11.047222135449207
+    ],
+    "r_needed_about_lens_axis": 36.65758307517936
+   }
+  ],
+  "box, centred, k 0.86": [
+   {
+    "opening": "cover-slide holder (under the slide)",
+    "z0": 124.5,
+    "z1": 128.9,
+    "r_available": 20.0,
+    "r_needed_centred_on_footprint": 16.030668840224617,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 16.030668840224617
+   },
+   {
+    "opening": "cover-slide holder (over the slide)",
+    "z0": 130.1,
+    "z1": 134.5,
+    "r_available": 20.0,
+    "r_needed_centred_on_footprint": 15.776940758363587,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 15.776940758363587
+   },
+   {
+    "opening": "inner clamp ring",
+    "z0": 135.5,
+    "z1": 141.5,
+    "r_available": 22.0,
+    "r_needed_centred_on_footprint": 15.517933004414902,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 15.517933004414902
+   },
+   {
+    "opening": "lid bore",
+    "z0": 141.5,
+    "z1": 143.4,
+    "r_available": 26.5,
+    "r_needed_centred_on_footprint": 15.23015068978666,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 15.23015068978666
+   },
+   {
+    "opening": "window ring ledge",
+    "z0": 143.4,
+    "z1": 145.4,
+    "r_available": 22.0,
+    "r_needed_centred_on_footprint": 15.13902043539575,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 15.13902043539575
+   },
+   {
+    "opening": "window clear aperture",
+    "z0": 145.4,
+    "z1": 154.93,
+    "r_available": 22.86,
+    "r_needed_centred_on_footprint": 15.04309424496994,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 15.04309424496994
+   },
+   {
+    "opening": "retaining flange",
+    "z0": 155.1,
+    "z1": 159.4,
+    "r_available": 22.0,
+    "r_needed_centred_on_footprint": 14.719622989520886,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 14.719622989520886
+   },
+   {
+    "opening": "beam tube",
+    "z0": 159.4,
+    "z1": 286.0,
+    "r_available": 27.0,
+    "r_needed_centred_on_footprint": 14.513385482609907,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 14.513385482609907
+   }
+  ],
+  "box, axis at y = -30, k 0.86": [
+   {
+    "opening": "cover-slide holder (under the slide)",
+    "z0": 124.5,
+    "z1": 128.9,
+    "r_available": 20.0,
+    "r_needed_centred_on_footprint": 16.03066884022462,
+    "footprint_centre": [
+     0.0,
+     -12.626179245283017
+    ],
+    "r_needed_about_lens_axis": 33.404489594941595
+   },
+   {
+    "opening": "cover-slide holder (over the slide)",
+    "z0": 130.1,
+    "z1": 134.5,
+    "r_available": 20.0,
+    "r_needed_centred_on_footprint": 15.776940758363589,
+    "footprint_centre": [
+     0.0,
+     -13.162649423132992
+    ],
+    "r_needed_about_lens_axis": 32.61429133523059
+   },
+   {
+    "opening": "inner clamp ring",
+    "z0": 135.5,
+    "z1": 141.5,
+    "r_available": 22.0,
+    "r_needed_centred_on_footprint": 15.517933004414905,
+    "footprint_centre": [
+     0.0,
+     -13.710290932566954
+    ],
+    "r_needed_about_lens_axis": 31.807642071847948
+   },
+   {
+    "opening": "lid bore",
+    "z0": 141.5,
+    "z1": 143.4,
+    "r_available": 26.5,
+    "r_needed_centred_on_footprint": 15.230150689786663,
+    "footprint_centre": [
+     0.0,
+     -14.31878149860469
+    ],
+    "r_needed_about_lens_axis": 30.91136919118197
+   },
+   {
+    "opening": "window ring ledge",
+    "z0": 143.4,
+    "z1": 145.4,
+    "r_available": 22.0,
+    "r_needed_centred_on_footprint": 15.139020435395752,
+    "footprint_centre": [
+     0.0,
+     -14.511470177849974
+    ],
+    "r_needed_about_lens_axis": 30.627550257545774
+   },
+   {
+    "opening": "window clear aperture",
+    "z0": 145.4,
+    "z1": 154.93,
+    "r_available": 22.86,
+    "r_needed_centred_on_footprint": 15.043094244969941,
+    "footprint_centre": [
+     0.0,
+     -14.714300366529221
+    ],
+    "r_needed_about_lens_axis": 30.328793878440713
+   },
+   {
+    "opening": "retaining flange",
+    "z0": 155.1,
+    "z1": 159.4,
+    "r_available": 22.0,
+    "r_needed_centred_on_footprint": 14.719622989520886,
+    "footprint_centre": [
+     0.0,
+     -15.398266821816817
+    ],
+    "r_needed_about_lens_axis": 29.321356167704067
+   },
+   {
+    "opening": "beam tube",
+    "z0": 159.4,
+    "z1": 286.0,
+    "r_available": 27.0,
+    "r_needed_centred_on_footprint": 14.513385482609909,
+    "footprint_centre": [
+     0.0,
+     -15.834351727477195
+    ],
+    "r_needed_about_lens_axis": 28.67903375513271
+   }
+  ],
+  "cube, centred, k 0.6": [
+   {
+    "opening": "cover-slide holder (under the slide)",
+    "z0": 216.89999999999995,
+    "z1": 221.29999999999995,
+    "r_available": 20.0,
+    "r_needed_centred_on_footprint": 16.032521474757225,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 16.032521474757225
+   },
+   {
+    "opening": "cover-slide holder (over the slide)",
+    "z0": 222.49999999999994,
+    "z1": 226.89999999999995,
+    "r_available": 20.0,
+    "r_needed_centred_on_footprint": 15.886951319657875,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 15.886951319657875
+   },
+   {
+    "opening": "top-plate bore",
+    "z0": 226.89999999999995,
+    "z1": 249.79999999999995,
+    "r_available": 26.5,
+    "r_needed_centred_on_footprint": 15.765869213917277,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 15.765869213917277
+   },
+   {
+    "opening": "window ring ledge",
+    "z0": 249.79999999999995,
+    "z1": 251.79999999999995,
+    "r_available": 22.0,
+    "r_needed_centred_on_footprint": 15.135699249253003,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 15.135699249253003
+   },
+   {
+    "opening": "window clear aperture",
+    "z0": 251.79999999999995,
+    "z1": 261.3299999999999,
+    "r_available": 22.86,
+    "r_needed_centred_on_footprint": 15.080663089000423,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 15.080663089000423
+   },
+   {
+    "opening": "retaining flange",
+    "z0": 261.49999999999994,
+    "z1": 265.79999999999995,
+    "r_available": 22.0,
+    "r_needed_centred_on_footprint": 14.895075437901898,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 14.895075437901898
+   },
+   {
+    "opening": "beam tube",
+    "z0": 265.79999999999995,
+    "z1": 286.0,
+    "r_available": 27.0,
+    "r_needed_centred_on_footprint": 14.776748448302047,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 14.776748448302047
+   }
+  ],
+  "cube, axis at y = -30, k 0.6": [
+   {
+    "opening": "cover-slide holder (under the slide)",
+    "z0": 216.89999999999995,
+    "z1": 221.29999999999995,
+    "r_available": 20.0,
+    "r_needed_centred_on_footprint": 16.032521474757225,
+    "footprint_centre": [
+     0.0,
+     -15.346698113207541
+    ],
+    "r_needed_about_lens_axis": 30.68582336154968
+   },
+   {
+    "opening": "cover-slide holder (over the slide)",
+    "z0": 222.49999999999994,
+    "z1": 226.89999999999995,
+    "r_available": 20.0,
+    "r_needed_centred_on_footprint": 15.886951319657877,
+    "footprint_centre": [
+     0.0,
+     -15.720979632637754
+    ],
+    "r_needed_about_lens_axis": 30.16597168702012
+   },
+   {
+    "opening": "top-plate bore",
+    "z0": 226.89999999999995,
+    "z1": 249.79999999999995,
+    "r_available": 26.5,
+    "r_needed_centred_on_footprint": 15.76586921391728,
+    "footprint_centre": [
+     0.0,
+     -16.032300387354738
+    ],
+    "r_needed_about_lens_axis": 29.733568826562543
+   },
+   {
+    "opening": "window ring ledge",
+    "z0": 249.79999999999995,
+    "z1": 251.79999999999995,
+    "r_available": 22.0,
+    "r_needed_centred_on_footprint": 15.135699249253006,
+    "footprint_centre": [
+     0.0,
+     -17.65258340622266
+    ],
+    "r_needed_about_lens_axis": 27.48311584303034
+   },
+   {
+    "opening": "window clear aperture",
+    "z0": 251.79999999999995,
+    "z1": 261.3299999999999,
+    "r_available": 22.86,
+    "r_needed_centred_on_footprint": 15.080663089000426,
+    "footprint_centre": [
+     0.0,
+     -17.794092840184927
+    ],
+    "r_needed_about_lens_axis": 27.286570248815494
+   },
+   {
+    "opening": "retaining flange",
+    "z0": 261.49999999999994,
+    "z1": 265.79999999999995,
+    "r_available": 22.0,
+    "r_needed_centred_on_footprint": 14.895075437901898,
+    "footprint_centre": [
+     0.0,
+     -18.271278739222787
+    ],
+    "r_needed_about_lens_axis": 26.623796698679108
+   },
+   {
+    "opening": "beam tube",
+    "z0": 265.79999999999995,
+    "z1": 286.0,
+    "r_available": 27.0,
+    "r_needed_centred_on_footprint": 14.776748448302047,
+    "footprint_centre": [
+     0.0,
+     -18.575524022241655
+    ],
+    "r_needed_about_lens_axis": 26.20122442606039
+   }
+  ],
+  "cube, centred, k 0.86": [
+   {
+    "opening": "cover-slide holder (under the slide)",
+    "z0": 216.89999999999995,
+    "z1": 221.29999999999995,
+    "r_available": 20.0,
+    "r_needed_centred_on_footprint": 11.599030908719485,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 11.599030908719485
+   },
+   {
+    "opening": "cover-slide holder (over the slide)",
+    "z0": 222.49999999999994,
+    "z1": 226.89999999999995,
+    "r_available": 20.0,
+    "r_needed_centred_on_footprint": 11.345334981340299,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 11.345334981340299
+   },
+   {
+    "opening": "top-plate bore",
+    "z0": 226.89999999999995,
+    "z1": 249.79999999999995,
+    "r_available": 26.5,
+    "r_needed_centred_on_footprint": 11.134315768681464,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 11.134315768681464
+   },
+   {
+    "opening": "window ring ledge",
+    "z0": 249.79999999999995,
+    "z1": 251.79999999999995,
+    "r_available": 22.0,
+    "r_needed_centred_on_footprint": 10.036064043010901,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 10.036064043010901
+   },
+   {
+    "opening": "window clear aperture",
+    "z0": 251.79999999999995,
+    "z1": 261.3299999999999,
+    "r_available": 22.86,
+    "r_needed_centred_on_footprint": 9.940147379613665,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 9.940147379613665
+   },
+   {
+    "opening": "retaining flange",
+    "z0": 261.49999999999994,
+    "z1": 265.79999999999995,
+    "r_available": 22.0,
+    "r_needed_centred_on_footprint": 9.616706024348646,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 9.616706024348646
+   },
+   {
+    "opening": "beam tube",
+    "z0": 265.79999999999995,
+    "z1": 286.0,
+    "r_available": 27.0,
+    "r_needed_centred_on_footprint": 9.41048595298779,
+    "footprint_centre": [
+     0.0,
+     0.0
+    ],
+    "r_needed_about_lens_axis": 9.41048595298779
+   }
+  ],
+  "cube, axis at y = -30, k 0.86": [
+   {
+    "opening": "cover-slide holder (under the slide)",
+    "z0": 216.89999999999995,
+    "z1": 221.29999999999995,
+    "r_available": 20.0,
+    "r_needed_centred_on_footprint": 11.599030908719488,
+    "footprint_centre": [
+     0.0,
+     -21.996933962264144
+    ],
+    "r_needed_about_lens_axis": 19.60209694645534
+   },
+   {
+    "opening": "cover-slide holder (over the slide)",
+    "z0": 222.49999999999994,
+    "z1": 226.89999999999995,
+    "r_available": 20.0,
+    "r_needed_centred_on_footprint": 11.345334981340303,
+    "footprint_centre": [
+     0.0,
+     -22.533404140114115
+    ],
+    "r_needed_about_lens_axis": 18.811930841226182
+   },
+   {
+    "opening": "top-plate bore",
+    "z0": 226.89999999999995,
+    "z1": 249.79999999999995,
+    "r_available": 26.5,
+    "r_needed_centred_on_footprint": 11.134315768681468,
+    "footprint_centre": [
+     0.0,
+     -22.97963055520846
+    ],
+    "r_needed_about_lens_axis": 18.154685213473005
+   },
+   {
+    "opening": "window ring ledge",
+    "z0": 249.79999999999995,
+    "z1": 251.79999999999995,
+    "r_available": 22.0,
+    "r_needed_centred_on_footprint": 10.036064043010903,
+    "footprint_centre": [
+     0.0,
+     -25.302036215585815
+    ],
+    "r_needed_about_lens_axis": 14.734027827425086
+   },
+   {
+    "opening": "window clear aperture",
+    "z0": 251.79999999999995,
+    "z1": 261.3299999999999,
+    "r_available": 22.86,
+    "r_needed_centred_on_footprint": 9.940147379613666,
+    "footprint_centre": [
+     0.0,
+     -25.50486640426506
+    ],
+    "r_needed_about_lens_axis": 14.435280975348604
+   },
+   {
+    "opening": "retaining flange",
+    "z0": 261.49999999999994,
+    "z1": 265.79999999999995,
+    "r_available": 22.0,
+    "r_needed_centred_on_footprint": 9.616706024348648,
+    "footprint_centre": [
+     0.0,
+     -26.18883285955266
+    ],
+    "r_needed_about_lens_axis": 13.427873164795983
+   },
+   {
+    "opening": "beam tube",
+    "z0": 265.79999999999995,
+    "z1": 286.0,
+    "r_available": 27.0,
+    "r_needed_centred_on_footprint": 9.410485952987795,
+    "footprint_centre": [
+     0.0,
+     -26.62491776521304
+    ],
+    "r_needed_about_lens_axis": 12.78556818777475
+   }
+  ]
+ },
+ "thermal_static": {
+  "D 5.0": [
+   {
+    "state": "box",
+    "element": "cover slide \u00d850 x 1",
+    "absorption": "clean: 20 ppm/cm bulk + 0.1 % coatings",
+    "a_tot": 0.001002,
+    "P_abs_W": 0.40080000000000005,
+    "h_air_mm": 129.0,
+    "w_mm": 1.268261827010894,
+    "dT_centre_K": 121.1131058641301,
+    "D_per_m": 0.27702316227872253,
+    "focus_shift_mm": 4.450885647679339,
+    "x_zR": 1.1472700327698222
+   },
+   {
+    "state": "box",
+    "element": "cover slide \u00d850 x 1",
+    "absorption": "dirty slide: 1 % at the lower face",
+    "a_tot": 0.01,
+    "P_abs_W": 4.0,
+    "h_air_mm": 129.0,
+    "w_mm": 1.268261827010894,
+    "dT_centre_K": 1207.4871662592927,
+    "D_per_m": 2.761975710473428,
+    "focus_shift_mm": 33.88793906702351,
+    "x_zR": 8.735029394474973
+   },
+   {
+    "state": "box",
+    "element": "cover slide \u00d850 x 1",
+    "absorption": "dirty slide: 2 % at the lower face",
+    "a_tot": 0.02,
+    "P_abs_W": 8.0,
+    "h_air_mm": 129.0,
+    "w_mm": 1.268261827010894,
+    "dT_centre_K": 2414.9743325185855,
+    "D_per_m": 5.523951420946856,
+    "focus_shift_mm": 53.67547977689463,
+    "x_zR": 13.835509226052878
+   },
+   {
+    "state": "box",
+    "element": "window \u00d850.8 x 9.53",
+    "absorption": "clean: 20 ppm/cm bulk + 0.1 % coatings",
+    "a_tot": 0.00101906,
+    "P_abs_W": 0.407624,
+    "h_air_mm": 145.0898454746137,
+    "w_mm": 1.4263139113280419,
+    "dT_centre_K": 15.845520230524254,
+    "D_per_m": 0.2277865608131723,
+    "focus_shift_mm": 4.641741971639547,
+    "x_zR": 1.1964655768427916
+   },
+   {
+    "state": "cube",
+    "element": "cover slide \u00d850 x 1",
+    "absorption": "clean: 20 ppm/cm bulk + 0.1 % coatings",
+    "a_tot": 0.001002,
+    "P_abs_W": 0.40080000000000005,
+    "h_air_mm": 221.39999999999995,
+    "w_mm": 2.1760415449108583,
+    "dT_centre_K": 96.67047190421457,
+    "D_per_m": 0.09064582701253318,
+    "focus_shift_mm": 4.355855910934615,
+    "x_zR": 1.1227749596946306
+   },
+   {
+    "state": "cube",
+    "element": "cover slide \u00d850 x 1",
+    "absorption": "dirty slide: 1 % at the lower face",
+    "a_tot": 0.01,
+    "P_abs_W": 4.0,
+    "h_air_mm": 221.39999999999995,
+    "w_mm": 2.1760415449108583,
+    "dT_centre_K": 963.7872981458859,
+    "D_per_m": 0.9037312035665136,
+    "focus_shift_mm": 36.913235152709966,
+    "x_zR": 9.51483633945312
+   },
+   {
+    "state": "cube",
+    "element": "cover slide \u00d850 x 1",
+    "absorption": "dirty slide: 2 % at the lower face",
+    "a_tot": 0.02,
+    "P_abs_W": 8.0,
+    "h_air_mm": 221.39999999999995,
+    "w_mm": 2.1760415449108583,
+    "dT_centre_K": 1927.5745962917717,
+    "D_per_m": 1.8074624071330272,
+    "focus_shift_mm": 63.27658943203978,
+    "x_zR": 16.31031227888534
+   },
+   {
+    "state": "cube",
+    "element": "window \u00d850.8 x 9.53",
+    "absorption": "clean: 20 ppm/cm bulk + 0.1 % coatings",
+    "a_tot": 0.00101906,
+    "P_abs_W": 0.407624,
+    "h_air_mm": 251.48984547461365,
+    "w_mm": 2.471695824561852,
+    "dT_centre_K": 13.132864658977411,
+    "D_per_m": 0.07522459817776932,
+    "focus_shift_mm": 4.669404046168118,
+    "x_zR": 1.2035958137580944
+   }
+  ],
+  "D 7.5": [
+   {
+    "state": "box",
+    "element": "cover slide \u00d850 x 1",
+    "absorption": "clean: 20 ppm/cm bulk + 0.1 % coatings",
+    "a_tot": 0.001002,
+    "P_abs_W": 0.40080000000000005,
+    "h_air_mm": 129.0,
+    "w_mm": 1.9017028712320525,
+    "dT_centre_K": 102.71134568188464,
+    "D_per_m": 0.12010400068879777,
+    "focus_shift_mm": 1.968157197079654,
+    "x_zR": 1.141462146893361
+   },
+   {
+    "state": "box",
+    "element": "cover slide \u00d850 x 1",
+    "absorption": "dirty slide: 1 % at the lower face",
+    "a_tot": 0.01,
+    "P_abs_W": 4.0,
+    "h_air_mm": 129.0,
+    "w_mm": 1.9017028712320525,
+    "dT_centre_K": 1024.015454230039,
+    "D_per_m": 1.1974324342686409,
+    "focus_shift_mm": 17.260296176451615,
+    "x_zR": 10.010366427448712
+   },
+   {
+    "state": "box",
+    "element": "cover slide \u00d850 x 1",
+    "absorption": "dirty slide: 2 % at the lower face",
+    "a_tot": 0.02,
+    "P_abs_W": 8.0,
+    "h_air_mm": 129.0,
+    "w_mm": 1.9017028712320525,
+    "dT_centre_K": 2048.030908460078,
+    "D_per_m": 2.3948648685372818,
+    "focus_shift_mm": 30.446789251350427,
+    "x_zR": 17.658069932840647
+   },
+   {
+    "state": "box",
+    "element": "window \u00d850.8 x 9.53",
+    "absorption": "clean: 20 ppm/cm bulk + 0.1 % coatings",
+    "a_tot": 0.00101906,
+    "P_abs_W": 0.407624,
+    "h_air_mm": 145.0898454746137,
+    "w_mm": 2.1388574664971776,
+    "dT_centre_K": 13.844209997826635,
+    "D_per_m": 0.1007135331535151,
+    "focus_shift_mm": 2.0895927604187072,
+    "x_zR": 1.2118905146293708
+   },
+   {
+    "state": "cube",
+    "element": "cover slide \u00d850 x 1",
+    "absorption": "clean: 20 ppm/cm bulk + 0.1 % coatings",
+    "a_tot": 0.001002,
+    "P_abs_W": 0.40080000000000005,
+    "h_air_mm": 221.39999999999995,
+    "w_mm": 3.2636602891436994,
+    "dT_centre_K": 78.8383395482321,
+    "D_per_m": 0.03827211279727731,
+    "focus_shift_mm": 1.8602580980938543,
+    "x_zR": 1.0788844537299598
+   },
+   {
+    "state": "cube",
+    "element": "cover slide \u00d850 x 1",
+    "absorption": "dirty slide: 1 % at the lower face",
+    "a_tot": 0.01,
+    "P_abs_W": 4.0,
+    "h_air_mm": 221.39999999999995,
+    "w_mm": 3.2636602891436994,
+    "dT_centre_K": 786.0014439825748,
+    "D_per_m": 0.3815662994726652,
+    "focus_shift_mm": 17.246627570955066,
+    "x_zR": 10.00243911564746
+   },
+   {
+    "state": "cube",
+    "element": "cover slide \u00d850 x 1",
+    "absorption": "dirty slide: 2 % at the lower face",
+    "a_tot": 0.02,
+    "P_abs_W": 8.0,
+    "h_air_mm": 221.39999999999995,
+    "w_mm": 3.2636602891436994,
+    "dT_centre_K": 1572.0028879651495,
+    "D_per_m": 0.7631325989453304,
+    "focus_shift_mm": 32.00048023368068,
+    "x_zR": 18.55915621138132
+   },
+   {
+    "state": "cube",
+    "element": "window \u00d850.8 x 9.53",
+    "absorption": "clean: 20 ppm/cm bulk + 0.1 % coatings",
+    "a_tot": 0.00101906,
+    "P_abs_W": 0.407624,
+    "h_air_mm": 251.48984547461365,
+    "w_mm": 3.707189802516869,
+    "dT_centre_K": 11.147738581976915,
+    "D_per_m": 0.033111065293037645,
+    "focus_shift_mm": 2.076885831694749,
+    "x_zR": 1.204520941628194
+   }
+  ]
+ },
+ "ghosts": [
+  {
+   "state": "box",
+   "surface": "slide lower face",
+   "h_air": 129.0,
+   "eta": 0.0009036276990995531,
+   "back_W_AR": 1.0,
+   "core_W_AR": 0.0009036276990995531,
+   "core_W_bare": 0.012176200329032745
+  },
+  {
+   "state": "box",
+   "surface": "slide upper face",
+   "h_air": 129.6898454746137,
+   "eta": 0.0008940486955018879,
+   "back_W_AR": 1.0,
+   "core_W_AR": 0.0008940486955018879,
+   "core_W_bare": 0.012047125194578673
+  },
+  {
+   "state": "box",
+   "surface": "window lower face",
+   "h_air": 145.0898454746137,
+   "eta": 0.0007144587193807509,
+   "back_W_AR": 1.0,
+   "core_W_AR": 0.0007144587193807509,
+   "core_W_bare": 0.00962718661974725
+  },
+  {
+   "state": "box",
+   "surface": "window upper face",
+   "h_air": 151.66407284768212,
+   "eta": 0.0006539010969882256,
+   "back_W_AR": 1.0,
+   "core_W_AR": 0.0006539010969882256,
+   "core_W_bare": 0.008811184916350958
+  },
+  {
+   "state": "cube",
+   "surface": "slide lower face",
+   "h_air": 221.39999999999995,
+   "eta": 0.0003069537981871938,
+   "back_W_AR": 1.0,
+   "core_W_AR": 0.0003069537981871938,
+   "core_W_bare": 0.00413614029562079
+  },
+  {
+   "state": "cube",
+   "surface": "slide upper face",
+   "h_air": 222.08984547461364,
+   "eta": 0.0003050504484091289,
+   "back_W_AR": 1.0,
+   "core_W_AR": 0.0003050504484091289,
+   "core_W_bare": 0.004110493042645884
+  },
+  {
+   "state": "cube",
+   "surface": "window lower face",
+   "h_air": 251.48984547461365,
+   "eta": 0.00023791253749768916,
+   "back_W_AR": 1.0,
+   "core_W_AR": 0.00023791253749768916,
+   "core_W_bare": 0.0032058232834684588
+  },
+  {
+   "state": "cube",
+   "surface": "window upper face",
+   "h_air": 258.06407284768204,
+   "eta": 0.0002259479160729976,
+   "back_W_AR": 1.0,
+   "core_W_AR": 0.0002259479160729976,
+   "core_W_bare": 0.003044602431702568
+  }
+ ],
+ "cats_eye": [
+  {
+   "r_mm": 0.0,
+   "k": 0.6,
+   "D": 5.0,
+   "delta_mm": 0.0,
+   "eta": 1.0,
+   "core_W": 342.0
+  },
+  {
+   "r_mm": 1.0,
+   "k": 0.6,
+   "D": 5.0,
+   "delta_mm": 1.2,
+   "eta": 0.7942158526165467,
+   "core_W": 271.621821594859
+  },
+  {
+   "r_mm": 2.0,
+   "k": 0.6,
+   "D": 5.0,
+   "delta_mm": 2.4,
+   "eta": 0.3978819204512047,
+   "core_W": 136.075616794312
+  },
+  {
+   "r_mm": 3.0,
+   "k": 0.6,
+   "D": 5.0,
+   "delta_mm": 3.5999999999999996,
+   "eta": 0.1257323295944279,
+   "core_W": 43.00045672129434
+  },
+  {
+   "r_mm": 4.0,
+   "k": 0.6,
+   "D": 5.0,
+   "delta_mm": 4.8,
+   "eta": 0.025062063262558762,
+   "core_W": 8.571225635795097
+  },
+  {
+   "r_mm": 5.0,
+   "k": 0.6,
+   "D": 5.0,
+   "delta_mm": 6.0,
+   "eta": 0.0031511115984444414,
+   "core_W": 1.077680166667999
+  },
+  {
+   "r_mm": 7.0,
+   "k": 0.6,
+   "D": 5.0,
+   "delta_mm": 8.4,
+   "eta": 1.2502274127541367e-05,
+   "core_W": 0.004275777751619148
+  },
+  {
+   "r_mm": 10.0,
+   "k": 0.6,
+   "D": 5.0,
+   "delta_mm": 12.0,
+   "eta": 9.859505575991516e-11,
+   "core_W": 3.3719509069890984e-08
+  },
+  {
+   "r_mm": 0.0,
+   "k": 0.86,
+   "D": 5.0,
+   "delta_mm": 0.0,
+   "eta": 1.0,
+   "core_W": 342.0
+  },
+  {
+   "r_mm": 1.0,
+   "k": 0.86,
+   "D": 5.0,
+   "delta_mm": 1.72,
+   "eta": 0.6229157512983056,
+   "core_W": 213.0371869440205
+  },
+  {
+   "r_mm": 2.0,
+   "k": 0.86,
+   "D": 5.0,
+   "delta_mm": 3.44,
+   "eta": 0.1505626503528486,
+   "core_W": 51.49242642067422
+  },
+  {
+   "r_mm": 3.0,
+   "k": 0.86,
+   "D": 5.0,
+   "delta_mm": 5.16,
+   "eta": 0.014120946734206071,
+   "core_W": 4.829363783098477
+  },
+  {
+   "r_mm": 4.0,
+   "k": 0.86,
+   "D": 5.0,
+   "delta_mm": 6.88,
+   "eta": 0.00051388862441808,
+   "core_W": 0.17574990955098335
+  },
+  {
+   "r_mm": 5.0,
+   "k": 0.86,
+   "D": 5.0,
+   "delta_mm": 8.6,
+   "eta": 7.256593892722136e-06,
+   "core_W": 0.0024817551113109704
+  },
+  {
+   "r_mm": 7.0,
+   "k": 0.86,
+   "D": 5.0,
+   "delta_mm": 12.04,
+   "eta": 8.453495487012497e-11,
+   "core_W": 2.891095456558274e-08
+  },
+  {
+   "r_mm": 10.0,
+   "k": 0.86,
+   "D": 5.0,
+   "delta_mm": 17.2,
+   "eta": 2.7728812799886324e-21,
+   "core_W": 9.483253977561123e-19
+  },
+  {
+   "r_mm": 0.0,
+   "k": 0.73,
+   "D": 5.0,
+   "delta_mm": 0.0,
+   "eta": 1.0,
+   "core_W": 342.0
+  },
+  {
+   "r_mm": 1.0,
+   "k": 0.73,
+   "D": 5.0,
+   "delta_mm": 1.46,
+   "eta": 0.7110190900224698,
+   "core_W": 243.16852878768466
+  },
+  {
+   "r_mm": 2.0,
+   "k": 0.73,
+   "D": 5.0,
+   "delta_mm": 2.92,
+   "eta": 0.2555789283045947,
+   "core_W": 87.4079934801714
+  },
+  {
+   "r_mm": 3.0,
+   "k": 0.73,
+   "D": 5.0,
+   "delta_mm": 4.38,
+   "eta": 0.04644418546135818,
+   "core_W": 15.883911427784497
+  },
+  {
+   "r_mm": 4.0,
+   "k": 0.73,
+   "D": 5.0,
+   "delta_mm": 5.84,
+   "eta": 0.004266779294178442,
+   "core_W": 1.459238518609027
+  },
+  {
+   "r_mm": 5.0,
+   "k": 0.73,
+   "D": 5.0,
+   "delta_mm": 7.3,
+   "eta": 0.00019816708886150657,
+   "core_W": 0.06777314439063525
+  },
+  {
+   "r_mm": 7.0,
+   "k": 0.73,
+   "D": 5.0,
+   "delta_mm": 10.219999999999999,
+   "eta": 5.523085900071042e-08,
+   "core_W": 1.8888953778242965e-05
+  },
+  {
+   "r_mm": 10.0,
+   "k": 0.73,
+   "D": 5.0,
+   "delta_mm": 14.6,
+   "eta": 1.5421482238081542e-15,
+   "core_W": 5.274146925423888e-13
+  },
+  {
+   "r_mm": 0.0,
+   "k": 0.6,
+   "D": 7.5,
+   "delta_mm": 0.0,
+   "eta": 1.0,
+   "core_W": 342.0
+  },
+  {
+   "r_mm": 1.0,
+   "k": 0.6,
+   "D": 7.5,
+   "delta_mm": 1.2,
+   "eta": 0.9026684120809421,
+   "core_W": 308.7125969316822
+  },
+  {
+   "r_mm": 2.0,
+   "k": 0.6,
+   "D": 7.5,
+   "delta_mm": 2.4,
+   "eta": 0.6639157633354735,
+   "core_W": 227.05919106073193
+  },
+  {
+   "r_mm": 3.0,
+   "k": 0.6,
+   "D": 7.5,
+   "delta_mm": 3.5999999999999996,
+   "eta": 0.39788192045120474,
+   "core_W": 136.07561679431203
+  },
+  {
+   "r_mm": 4.0,
+   "k": 0.6,
+   "D": 7.5,
+   "delta_mm": 4.8,
+   "eta": 0.19429065878548815,
+   "core_W": 66.44740530463694
+  },
+  {
+   "r_mm": 5.0,
+   "k": 0.6,
+   "D": 7.5,
+   "delta_mm": 6.0,
+   "eta": 0.07730474044329971,
+   "core_W": 26.4382212316085
+  },
+  {
+   "r_mm": 7.0,
+   "k": 0.6,
+   "D": 7.5,
+   "delta_mm": 8.4,
+   "eta": 0.006620396609680046,
+   "core_W": 2.2641756405105755
+  },
+  {
+   "r_mm": 10.0,
+   "k": 0.6,
+   "D": 7.5,
+   "delta_mm": 12.0,
+   "eta": 3.5712849641635144e-05,
+   "core_W": 0.01221379457743922
+  },
+  {
+   "r_mm": 0.0,
+   "k": 0.86,
+   "D": 7.5,
+   "delta_mm": 0.0,
+   "eta": 1.0,
+   "core_W": 342.0
+  },
+  {
+   "r_mm": 1.0,
+   "k": 0.86,
+   "D": 7.5,
+   "delta_mm": 1.72,
+   "eta": 0.8102802438338863,
+   "core_W": 277.1158433911891
+  },
+  {
+   "r_mm": 2.0,
+   "k": 0.86,
+   "D": 7.5,
+   "delta_mm": 3.44,
+   "eta": 0.4310632514918189,
+   "core_W": 147.42363201020206
+  },
+  {
+   "r_mm": 3.0,
+   "k": 0.86,
+   "D": 7.5,
+   "delta_mm": 5.16,
+   "eta": 0.15056265035284852,
+   "core_W": 51.49242642067419
+  },
+  {
+   "r_mm": 4.0,
+   "k": 0.86,
+   "D": 7.5,
+   "delta_mm": 6.88,
+   "eta": 0.034527409995018486,
+   "core_W": 11.808374218296322
+  },
+  {
+   "r_mm": 5.0,
+   "k": 0.86,
+   "D": 7.5,
+   "delta_mm": 8.6,
+   "eta": 0.005198538358669418,
+   "core_W": 1.777900118664941
+  },
+  {
+   "r_mm": 7.0,
+   "k": 0.86,
+   "D": 7.5,
+   "delta_mm": 12.04,
+   "eta": 3.335241266489233e-05,
+   "core_W": 0.011406525131393177
+  },
+  {
+   "r_mm": 10.0,
+   "k": 0.86,
+   "D": 7.5,
+   "delta_mm": 17.2,
+   "eta": 7.303398726869978e-10,
+   "core_W": 2.4977623645895327e-07
+  },
+  {
+   "r_mm": 0.0,
+   "k": 0.73,
+   "D": 7.5,
+   "delta_mm": 0.0,
+   "eta": 1.0,
+   "core_W": 342.0
+  },
+  {
+   "r_mm": 1.0,
+   "k": 0.73,
+   "D": 7.5,
+   "delta_mm": 1.46,
+   "eta": 0.8593487496595466,
+   "core_W": 293.89727238356494
+  },
+  {
+   "r_mm": 2.0,
+   "k": 0.73,
+   "D": 7.5,
+   "delta_mm": 2.92,
+   "eta": 0.5453531144098193,
+   "core_W": 186.5107651281582
+  },
+  {
+   "r_mm": 3.0,
+   "k": 0.73,
+   "D": 7.5,
+   "delta_mm": 4.38,
+   "eta": 0.2555789283045947,
+   "core_W": 87.4079934801714
+  },
+  {
+   "r_mm": 4.0,
+   "k": 0.73,
+   "D": 7.5,
+   "delta_mm": 5.84,
+   "eta": 0.08845271963742024,
+   "core_W": 30.250830115997722
+  },
+  {
+   "r_mm": 5.0,
+   "k": 0.73,
+   "D": 7.5,
+   "delta_mm": 7.3,
+   "eta": 0.022606651290558652,
+   "core_W": 7.731474741371059
+  },
+  {
+   "r_mm": 7.0,
+   "k": 0.73,
+   "D": 7.5,
+   "delta_mm": 10.219999999999999,
+   "eta": 0.000594706960096687,
+   "core_W": 0.20338978035306696
+  },
+  {
+   "r_mm": 10.0,
+   "k": 0.73,
+   "D": 7.5,
+   "delta_mm": 14.6,
+   "eta": 2.61183021271896e-07,
+   "core_W": 8.932459327498844e-05
+  }
+ ],
+ "offset": {
+  "s_mm": 30.0,
+  "r_min": 10.0,
+  "r_max": 50.0,
+  "theta_max_rad": 0.19654088050314464,
+  "head_limit_rad": 0.26,
+  "lens_limit_rad": 0.3089232776029963,
+  "u_deg_k0.6": [
+   1.3513155545538282,
+   4.053946663661485,
+   6.756577772769142
+  ],
+  "delta_mm_k0.6": [
+   12.0,
+   36.0,
+   60.0
+  ],
+  "u_deg_k0.86": [
+   1.9368856281938207,
+   5.810656884581462,
+   9.684428140969104
+  ],
+  "delta_mm_k0.86": [
+   17.2,
+   51.6,
+   86.0
+  ],
+  "tilt_3": {
+   "edge_defocus_mm": 1.0481555856608242,
+   "spot_growth_pct": 3.5854461525227643,
+   "u_min_deg": [
+    4.351315554553828,
+    4.936885628193821
+   ]
+  },
+  "tilt_5": {
+   "edge_defocus_mm": 1.74977327051848,
+   "spot_growth_pct": 9.700679254703726,
+   "u_min_deg": [
+    6.351315554553828,
+    6.936885628193821
+   ]
+  },
+  "tilt_10": {
+   "edge_defocus_mm": 3.5265396141692995,
+   "spot_growth_pct": 35.14054124735366,
+   "u_min_deg": [
+    11.351315554553828,
+    11.93688562819382
+   ]
+  }
+ },
+ "melt_curvature": [
+  {
+   "Rc_mm": 0.1,
+   "eta": 0.0006639723146970284
+  },
+  {
+   "Rc_mm": 0.3,
+   "eta": 0.005944176682267707
+  },
+  {
+   "Rc_mm": 1.0,
+   "eta": 0.06230192301809891
+  },
+  {
+   "Rc_mm": 3.0,
+   "eta": 0.3742068541847728
+  },
+  {
+   "Rc_mm": 10.0,
+   "eta": 0.869180745319942
+  },
+  {
+   "Rc_mm": 100.0,
+   "eta": 0.998497174989947
+  }
+ ],
+ "lens_ghosts": [
+  {
+   "ghost_mm": 14.2,
+   "mirror": "M2",
+   "mirror_mm": 23.0,
+   "gap_mm": -8.8,
+   "spot_d_mm": 3.098591549295775,
+   "W_cm2_per_W": 13.261158150847013
+  },
+  {
+   "ghost_mm": 14.2,
+   "mirror": "M1",
+   "mirror_mm": 48.6,
+   "gap_mm": -34.400000000000006,
+   "spot_d_mm": 12.112676056338032,
+   "W_cm2_per_W": 0.8678205171727895
+  },
+  {
+   "ghost_mm": 19.6,
+   "mirror": "M2",
+   "mirror_mm": 23.0,
+   "gap_mm": -3.3999999999999986,
+   "spot_d_mm": 0.8673469387755097,
+   "W_cm2_per_W": 169.24834031330815
+  },
+  {
+   "ghost_mm": 19.6,
+   "mirror": "M1",
+   "mirror_mm": 48.6,
+   "gap_mm": -29.0,
+   "spot_d_mm": 7.397959183673469,
+   "W_cm2_per_W": 2.326410004782213
+  },
+  {
+   "ghost_mm": 52.6,
+   "mirror": "M2",
+   "mirror_mm": 23.0,
+   "gap_mm": 29.6,
+   "spot_d_mm": 2.8136882129277567,
+   "W_cm2_per_W": 16.0826709404285
+  },
+  {
+   "ghost_mm": 52.6,
+   "mirror": "M1",
+   "mirror_mm": 48.6,
+   "gap_mm": 4.0,
+   "spot_d_mm": 0.38022813688212925,
+   "W_cm2_per_W": 880.6870606978647
+  },
+  {
+   "ghost_mm": 71.3,
+   "mirror": "M2",
+   "mirror_mm": 23.0,
+   "gap_mm": 48.3,
+   "spot_d_mm": 3.3870967741935485,
+   "W_cm2_per_W": 11.098260340049805
+  },
+  {
+   "ghost_mm": 71.3,
+   "mirror": "M1",
+   "mirror_mm": 48.6,
+   "gap_mm": 22.699999999999996,
+   "spot_d_mm": 1.5918653576437585,
+   "W_cm2_per_W": 50.245532738261566
+  },
+  {
+   "ghost_mm": 72.4,
+   "mirror": "M2",
+   "mirror_mm": 23.0,
+   "gap_mm": 49.400000000000006,
+   "spot_d_mm": 3.4116022099447516,
+   "W_cm2_per_W": 10.939396016999106
+  },
+  {
+   "ghost_mm": 72.4,
+   "mirror": "M1",
+   "mirror_mm": 48.6,
+   "gap_mm": 23.800000000000004,
+   "spot_d_mm": 1.6436464088397793,
+   "W_cm2_per_W": 47.129553816898415
+  },
+  {
+   "ghost_mm": 142.8,
+   "mirror": "M2",
+   "mirror_mm": 23.0,
+   "gap_mm": 119.80000000000001,
+   "spot_d_mm": 4.194677871148459,
+   "W_cm2_per_W": 7.236238772442743
+  },
+  {
+   "ghost_mm": 142.8,
+   "mirror": "M1",
+   "mirror_mm": 48.6,
+   "gap_mm": 94.20000000000002,
+   "spot_d_mm": 3.298319327731093,
+   "W_cm2_per_W": 11.703741453524044
+  },
+  {
+   "ghost_mm": 457.8,
+   "mirror": "M2",
+   "mirror_mm": 23.0,
+   "gap_mm": 434.8,
+   "spot_d_mm": 4.748798602009611,
+   "W_cm2_per_W": 5.64602264672679
+  },
+  {
+   "ghost_mm": 457.8,
+   "mirror": "M1",
+   "mirror_mm": 48.6,
+   "gap_mm": 409.2,
+   "spot_d_mm": 4.4692005242463955,
+   "W_cm2_per_W": 6.374563277912341
+  }
+ ],
+ "lens_ghost_power_W": 1.0,
+ "lens_mount": {
+  "flange_above_bed_mm": 348.0659271523179,
+  "lens_bottom_above_bed_mm": 299.4659271523179,
+  "entrance_face_mm": 368.5659271523179,
+  "first_surface_mm": 364.0659271523179,
+  "EP_mm": 399.8659271523179
+ },
+ "thermal_scanned": [
+  {
+   "state": "box",
+   "element": "slide",
+   "a_tot": 0.001002,
+   "P_abs_mean_W": 0.11331551033079959,
+   "T_max_K": 10.640862416767646,
+   "parts": [
+    {
+     "part": "A",
+     "D_per_m": 0.0022246333707681806,
+     "focus_shift_mm": 0.03700950302071954,
+     "x_zR": 0.009539650555954867
+    },
+    {
+     "part": "B",
+     "D_per_m": 0.0017806615107960517,
+     "focus_shift_mm": 0.029625183138542996,
+     "x_zR": 0.007636252090163081
+    },
+    {
+     "part": "C",
+     "D_per_m": 0.0028932716238782913,
+     "focus_shift_mm": 0.04812896981939486,
+     "x_zR": 0.012405828671573409
+    },
+    {
+     "part": "d",
+     "D_per_m": 0.0019150031671392822,
+     "focus_shift_mm": 0.0318596972310427,
+     "x_zR": 0.00821222533662548
+    },
+    {
+     "part": "e",
+     "D_per_m": 0.0019288695318386794,
+     "focus_shift_mm": 0.032090333028859136,
+     "x_zR": 0.008271674525003688
+    }
+   ],
+   "w": 1.268261827010894,
+   "period": 6.381306435889375
+  },
+  {
+   "state": "box",
+   "element": "slide",
+   "a_tot": 0.01,
+   "P_abs_mean_W": 1.1308933166746464,
+   "T_max_K": 106.19623170426793,
+   "parts": [
+    {
+     "part": "A",
+     "D_per_m": 0.022201929847985698,
+     "focus_shift_mm": 0.3684071784076952,
+     "x_zR": 0.09496144118301658
+    },
+    {
+     "part": "B",
+     "D_per_m": 0.017771072962036387,
+     "focus_shift_mm": 0.29505202770780053,
+     "x_zR": 0.07605325687790353
+    },
+    {
+     "part": "C",
+     "D_per_m": 0.028874966306170292,
+     "focus_shift_mm": 0.47872512513128707,
+     "x_zR": 0.12339723674623546
+    },
+    {
+     "part": "d",
+     "D_per_m": 0.019111808055282297,
+     "focus_shift_mm": 0.31725742402198187,
+     "x_zR": 0.08177696846557835
+    },
+    {
+     "part": "e",
+     "D_per_m": 0.019250194928529692,
+     "focus_shift_mm": 0.3195489658010291,
+     "x_zR": 0.08236764129342591
+    }
+   ],
+   "w": 1.268261827010894,
+   "period": 6.381306435889375
+  },
+  {
+   "state": "box",
+   "element": "slide",
+   "a_tot": 0.02,
+   "P_abs_mean_W": 2.261786633349293,
+   "T_max_K": 212.39246340853586,
+   "parts": [
+    {
+     "part": "A",
+     "D_per_m": 0.044403859695971395,
+     "focus_shift_mm": 0.7347161034309277,
+     "x_zR": 0.18938203197810935
+    },
+    {
+     "part": "B",
+     "D_per_m": 0.035542145924072774,
+     "focus_shift_mm": 0.5887574346797072,
+     "x_zR": 0.15175940584558634
+    },
+    {
+     "part": "C",
+     "D_per_m": 0.057749932612340585,
+     "focus_shift_mm": 0.9539102440536703,
+     "x_zR": 0.24588199373882638
+    },
+    {
+     "part": "d",
+     "D_per_m": 0.038223616110564594,
+     "focus_shift_mm": 0.6329581761023831,
+     "x_zR": 0.16315268576210895
+    },
+    {
+     "part": "e",
+     "D_per_m": 0.038500389857059385,
+     "focus_shift_mm": 0.6375187188324326,
+     "x_zR": 0.16432822124459884
+    }
+   ],
+   "w": 1.268261827010894,
+   "period": 6.381306435889375
+  },
+  {
+   "state": "box",
+   "element": "window",
+   "a_tot": 0.00101906,
+   "P_abs_mean_W": 0.11524481432904653,
+   "T_max_K": 1.8554507645591467,
+   "parts": [
+    {
+     "part": "A",
+     "D_per_m": 0.003278124814941312,
+     "focus_shift_mm": 0.06897520668429018,
+     "x_zR": 0.017779200342801515
+    },
+    {
+     "part": "B",
+     "D_per_m": 0.002713430589282548,
+     "focus_shift_mm": 0.0570981199574058,
+     "x_zR": 0.01471773645516664
+    },
+    {
+     "part": "C",
+     "D_per_m": 0.00412498770909175,
+     "focus_shift_mm": 0.08678343785813969,
+     "x_zR": 0.02236948901333777
+    },
+    {
+     "part": "d",
+     "D_per_m": 0.0024023537623549134,
+     "focus_shift_mm": 0.05055447989913195,
+     "x_zR": 0.013031033462020988
+    },
+    {
+     "part": "e",
+     "D_per_m": 0.0024034460263613116,
+     "focus_shift_mm": 0.05057745719359299,
+     "x_zR": 0.01303695613976559
+    }
+   ],
+   "w": 1.4263139113280419,
+   "period": 6.381306435889375
+  },
+  {
+   "state": "cube",
+   "element": "slide",
+   "a_tot": 0.001002,
+   "P_abs_mean_W": 0.11328407892500963,
+   "T_max_K": 13.72040900600389,
+   "parts": [
+    {
+     "part": "A",
+     "D_per_m": 0.004759596679482867,
+     "focus_shift_mm": 0.23306012678471194,
+     "x_zR": 0.060074088722779695
+    },
+    {
+     "part": "B",
+     "D_per_m": 0.004028727297120415,
+     "focus_shift_mm": 0.19730400617569438,
+     "x_zR": 0.05085751276239351
+    },
+    {
+     "part": "C",
+     "D_per_m": 0.006060938389074405,
+     "focus_shift_mm": 0.29669670066047354,
+     "x_zR": 0.07647719138030816
+    },
+    {
+     "part": "d",
+     "D_per_m": 0.002779932152896423,
+     "focus_shift_mm": 0.13618278570390135,
+     "x_zR": 0.03510277310733926
+    },
+    {
+     "part": "e",
+     "D_per_m": 0.0026859529216018358,
+     "focus_shift_mm": 0.13158168519527388,
+     "x_zR": 0.03391678336301443
+    }
+   ],
+   "w": 2.1760415449108583,
+   "period": 6.381306435889375
+  },
+  {
+   "state": "cube",
+   "element": "slide",
+   "a_tot": 0.01,
+   "P_abs_mean_W": 1.130579629990116,
+   "T_max_K": 136.9302296008373,
+   "parts": [
+    {
+     "part": "A",
+     "D_per_m": 0.04750096486509834,
+     "focus_shift_mm": 2.3041681194713703,
+     "x_zR": 0.5939274210092104
+    },
+    {
+     "part": "B",
+     "D_per_m": 0.040206859252698735,
+     "focus_shift_mm": 1.9534688323818736,
+     "x_zR": 0.5035304046757755
+    },
+    {
+     "part": "C",
+     "D_per_m": 0.06048840707659082,
+     "focus_shift_mm": 2.9258351442007955,
+     "x_zR": 0.7541696748638141
+    },
+    {
+     "part": "d",
+     "D_per_m": 0.027743833861241716,
+     "focus_shift_mm": 1.3516436876279068,
+     "x_zR": 0.34840263726085985
+    },
+    {
+     "part": "e",
+     "D_per_m": 0.026805917381255814,
+     "focus_shift_mm": 1.3062191969397816,
+     "x_zR": 0.3366939210534484
+    }
+   ],
+   "w": 2.1760415449108583,
+   "period": 6.381306435889375
+  },
+  {
+   "state": "cube",
+   "element": "slide",
+   "a_tot": 0.02,
+   "P_abs_mean_W": 2.261159259980232,
+   "T_max_K": 273.8604592016746,
+   "parts": [
+    {
+     "part": "A",
+     "D_per_m": 0.09500192973019668,
+     "focus_shift_mm": 4.560870062810047,
+     "x_zR": 1.1756198564991664
+    },
+    {
+     "part": "B",
+     "D_per_m": 0.08041371850539747,
+     "focus_shift_mm": 3.872767248704965,
+     "x_zR": 0.9982529680690059
+    },
+    {
+     "part": "C",
+     "D_per_m": 0.12097681415318164,
+     "focus_shift_mm": 5.7753481716419435,
+     "x_zR": 1.4886663937527749
+    },
+    {
+     "part": "d",
+     "D_per_m": 0.05548766772248343,
+     "focus_shift_mm": 2.6868839887033324,
+     "x_zR": 0.6925771016776446
+    },
+    {
+     "part": "e",
+     "D_per_m": 0.05361183476251163,
+     "focus_shift_mm": 2.597115888773002,
+     "x_zR": 0.669438279631643
+    }
+   ],
+   "w": 2.1760415449108583,
+   "period": 6.381306435889375
+  },
+  {
+   "state": "cube",
+   "element": "window",
+   "a_tot": 0.00101906,
+   "P_abs_mean_W": 0.11314613230755292,
+   "T_max_K": 1.7266358469985215,
+   "parts": [
+    {
+     "part": "A",
+     "D_per_m": 0.007126995448534726,
+     "focus_shift_mm": 0.449955610272462,
+     "x_zR": 0.11598154358591681
+    },
+    {
+     "part": "B",
+     "D_per_m": 0.006503869033561839,
+     "focus_shift_mm": 0.41067940012298254,
+     "x_zR": 0.1058576216359647
+    },
+    {
+     "part": "C",
+     "D_per_m": 0.008340101657244227,
+     "focus_shift_mm": 0.526383533349413,
+     "x_zR": 0.13568177242885296
+    },
+    {
+     "part": "d",
+     "D_per_m": 0.005318148789228246,
+     "focus_shift_mm": 0.3359084493986865,
+     "x_zR": 0.08658449761571038
+    },
+    {
+     "part": "e",
+     "D_per_m": 0.005051115225362119,
+     "focus_shift_mm": 0.3190632963788599,
+     "x_zR": 0.08224245407946594
+    }
+   ],
+   "w": 2.471695824561852,
+   "period": 6.381306435889375
+  }
+ ],
+ "thermal_transient": [
+  {
+   "state": "box",
+   "element": "slide",
+   "a_tot": 0.001002,
+   "period_s": 6.381306435889375,
+   "steady_dz_mm": [
+    0.007724773748613664,
+    0.04724504990126154
+   ],
+   "mean_dz_mm": 0.058055305792937294,
+   "p95_dz_mm": 0.10369237231023128,
+   "max_dz_mm": 0.11729499778277433,
+   "max_x_zR": 0.030234215525205214,
+   "T_max_K": 10.687466583591776
+  },
+  {
+   "state": "box",
+   "element": "slide",
+   "a_tot": 0.01,
+   "period_s": 6.381306435889375,
+   "steady_dz_mm": [
+    0.0770935503853659,
+    0.4715074840445263
+   ],
+   "mean_dz_mm": 0.5793942693905917,
+   "p95_dz_mm": 1.0348540150721683,
+   "max_dz_mm": 1.170608760307129,
+   "max_x_zR": 0.3017386778962596,
+   "T_max_K": 106.66134314961852
+  },
+  {
+   "state": "box",
+   "element": "slide",
+   "a_tot": 0.02,
+   "period_s": 6.381306435889375,
+   "steady_dz_mm": [
+    0.1541871007707318,
+    0.9430149680890526
+   ],
+   "mean_dz_mm": 1.1587885387811834,
+   "p95_dz_mm": 2.0697080301443367,
+   "max_dz_mm": 2.341217520614258,
+   "max_x_zR": 0.6034773557925192,
+   "T_max_K": 213.32268629923703
+  },
+  {
+   "state": "box",
+   "element": "window",
+   "a_tot": 0.00101906,
+   "period_s": 6.381306435889375,
+   "steady_dz_mm": [
+    0.018696285519913307,
+    0.08228886583837168
+   ],
+   "mean_dz_mm": 0.08807457771782785,
+   "p95_dz_mm": 0.14370594668782163,
+   "max_dz_mm": 0.15880278805386713,
+   "max_x_zR": 0.04093335445485815,
+   "T_max_K": 2.0111921355209947
+  },
+  {
+   "state": "cube",
+   "element": "slide",
+   "a_tot": 0.001002,
+   "period_s": 6.381306435889375,
+   "steady_dz_mm": [
+    0.07454582704363165,
+    0.26700540615883833
+   ],
+   "mean_dz_mm": 0.2816806050481917,
+   "p95_dz_mm": 0.43410548279551026,
+   "max_dz_mm": 0.4710706650781551,
+   "max_x_zR": 0.12142420635832361,
+   "T_max_K": 14.992075125901906
+  },
+  {
+   "state": "cube",
+   "element": "slide",
+   "a_tot": 0.01,
+   "period_s": 6.381306435889375,
+   "steady_dz_mm": [
+    0.7439703297767629,
+    2.664724612363656
+   ],
+   "mean_dz_mm": 2.811183683115685,
+   "p95_dz_mm": 4.332390047859383,
+   "max_dz_mm": 4.701304042696158,
+   "max_x_zR": 1.2118184267297765,
+   "T_max_K": 149.62150824253396
+  },
+  {
+   "state": "cube",
+   "element": "slide",
+   "a_tot": 0.02,
+   "period_s": 6.381306435889375,
+   "steady_dz_mm": [
+    1.4879406595535258,
+    5.329449224727312
+   ],
+   "mean_dz_mm": 5.62236736623137,
+   "p95_dz_mm": 8.664780095718767,
+   "max_dz_mm": 9.402608085392316,
+   "max_x_zR": 2.423636853459553,
+   "T_max_K": 299.2430164850679
+  },
+  {
+   "state": "cube",
+   "element": "window",
+   "a_tot": 0.00101906,
+   "period_s": 6.381306435889375,
+   "steady_dz_mm": [
+    0.2075708535416654,
+    0.5680690339802278
+   ],
+   "mean_dz_mm": 0.5624557300428513,
+   "p95_dz_mm": 0.7660178888759079,
+   "max_dz_mm": 0.8190920598718751,
+   "max_x_zR": 0.21113096330854303,
+   "T_max_K": 2.6602966030073087
+  }
+ ]
+}

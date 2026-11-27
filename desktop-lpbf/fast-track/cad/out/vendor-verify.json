@@ -1,0 +1,146 @@
+[
+ {
+  "key": "linos_ftheta_254",
+  "file": "drawing",
+  "ours_mm3": 395219.4,
+  "ours_ext": [
+   69.1,
+   119.8,
+   119.8
+  ],
+  "vendor_mm3": null,
+  "vendor_ext": [
+   69.2,
+   119.8,
+   119.8
+  ],
+  "dext_max_mm": 0.1,
+  "vendor_note": "no STEP: overall extents from the maker's drawing"
+ },
+ {
+  "key": "saginaw_16el1208sslp",
+  "file": "drawing",
+  "ours_mm3": 833033.6,
+  "ours_ext": [
+   203.2,
+   304.8,
+   406.4
+  ],
+  "vendor_mm3": null,
+  "vendor_ext": [
+   203.2,
+   304.8,
+   406.4
+  ],
+  "dext_max_mm": 0.0,
+  "vendor_note": "no STEP: overall extents from the maker's drawing"
+ },
+ {
+  "key": "scanlab_hurryscan25",
+  "file": "drawing",
+  "ours_mm3": 5212489.4,
+  "ours_ext": [
+   140.0,
+   180.0,
+   206.9
+  ],
+  "vendor_mm3": null,
+  "vendor_ext": [
+   140.0,
+   180.0,
+   206.9
+  ],
+  "dext_max_mm": 0.0,
+  "vendor_note": "no STEP: overall extents from the maker's drawing"
+ },
+ {
+  "key": "thorlabs_mts50_z8",
+  "file": "MTS50_M-Z8-Step.step",
+  "ours_mm3": 81161.9,
+  "ours_ext": [
+   22.0,
+   43.0,
+   163.45
+  ],
+  "vendor_mm3": 75488.0,
+  "vendor_ext": [
+   22.0,
+   43.0,
+   163.45
+  ],
+  "dvol_pct": 7.5,
+  "dext_max_mm": 0.0
+ },
+ {
+  "key": "zaber_x_lsm100",
+  "file": "X-LSM100A-E03.step",
+  "ours_mm3": 158209.7,
+  "ours_ext": [
+   21.0,
+   84.81,
+   239.2
+  ],
+  "vendor_mm3": 150904.8,
+  "vendor_ext": [
+   21.0,
+   84.81,
+   239.2
+  ],
+  "dvol_pct": 4.8,
+  "dext_max_mm": 0.0
+ },
+ {
+  "key": "zaber_x_lsq075b",
+  "file": "X-LSQ075B-E01.step",
+  "ours_mm3": 800808.8,
+  "ours_ext": [
+   43.1,
+   65.0,
+   285.85
+  ],
+  "vendor_mm3": 471663.3,
+  "vendor_ext": [
+   43.1,
+   65.0,
+   285.85
+  ],
+  "dvol_pct": 69.8,
+  "dext_max_mm": 0.0
+ },
+ {
+  "key": "zaber_x_lsq150b",
+  "file": "X-LSQ150B-E01.step",
+  "ours_mm3": 1011061.3,
+  "ours_ext": [
+   43.1,
+   65.0,
+   360.9
+  ],
+  "vendor_mm3": 525858.0,
+  "vendor_ext": [
+   43.1,
+   65.0,
+   360.85
+  ],
+  "dvol_pct": 92.3,
+  "dext_max_mm": 0.05
+ },
+ {
+  "key": "zaber_x_vsr20a",
+  "file": "X-VSR20A-E01.step",
+  "ours_mm3": 321750.6,
+  "ours_ext": [
+   73.0,
+   88.0,
+   101.0
+  ],
+  "vendor_mm3": 282435.5,
+  "vendor_ext": [
+   73.0,
+   88.0,
+   101.0
+  ],
+  "dvol_pct": 13.9,
+  "dext_max_mm": 0.0
+ }
+]
