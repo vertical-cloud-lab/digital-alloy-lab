@@ -164,13 +164,22 @@ spread is what makes stopping a candidate early worth anything.
 
 \begin{figure}[t]
 \centering
-\input{figures/fig1-loop.tikz}
-\caption{\textbf{The loop as a function network.} Each step is a node with its
-own model and a measured cost per result (time and consumables;
-\tbd{Table~1}). Composition enters at design and at dosing; laser settings
-enter at printing. The optimizer may stop a candidate after any node.
-\ifdraft\textit{Draft schematic. The final panel uses photographs of each
-station (issue \#284) and measured costs.}\fi}
+\textbf{a}\hfill\mbox{}\\
+\includegraphics[width=\textwidth]{figures/fig1a-draft-network-photos.pdf}\\[4pt]
+\textbf{b}\hspace{0.47\textwidth}\textbf{c}\hfill\mbox{}\\
+\placeholder{0.49\textwidth}{3.0cm}{(b) Cost per result for each step: person-hours,
+machine-hours, consumables; log scale; median and range over both campaigns
+(Table~1).}\hfill
+\placeholder{0.49\textwidth}{3.0cm}{(c) One candidate's path in calendar time,
+composition to measured cube: desktop printing against an outside build.}
+\caption{\textbf{The loop as a function network.} (a) Each step is a node with its
+own model; composition enters at design and at dosing, laser settings at printing,
+and the optimizer may stop a candidate after any node. (b) What one result of each
+step costs. (c) Calendar time for one candidate. \ifdraft\textit{Panel (a) is the
+draft from issue \#284 (lab photographs; sieve and density tiles are renders; its
+composition inputs are those of the synthetic benchmark and its print tile is the
+Utah machine). It will show the desktop LPBF and the campaign's design space.
+Schematic alternative: \texttt{figures/fig1-loop.tikz}.}\fi}
 \label{fig:loop}
 \end{figure}
 
