@@ -72,6 +72,8 @@ def fixture_parts(fc, M_setup, skip=(), only=None):
             x0, x1, y0, y1, z0, z1 = p
             if nm == "edge clamp" and fc == "frame_B":   # round 9: the CAM's clamp boxes ran 5 mm into the risers'
                 y0, y1 = (y0, min(y1, 74.0)) if y0 > 0 else (max(y0, -74.0), y1)   # (y 75-125): drawn short of them
+            if nm == "edge clamp":                       # round 9: 1 mm off the blank's end faces (at 0.05 mm the voxel
+                x0, x1 = (max(x0, 159.8), x1) if x0 > 0 else (x0, min(x1, -159.8))   # stock touched both: a sandwich
             m = E.box(x0, x1, y0, y1, z0, z1)
             if nm == "edge clamp":
                 cx, cy = (x0 + x1) / 2, (y0 + y1) / 2

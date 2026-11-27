@@ -206,7 +206,7 @@
      "t_s": 1.9,
      "info": {
       "planned": false,
-      "plan_s": 0.3
+      "plan_s": 0.4
      }
     },
     {
@@ -1707,5 +1707,5 @@
    "transport_turn_deg": 30.0
   }
  },
- "run_utc": "2026-11-27T10:18Z"
+ "run_utc": "2026-11-27T10:53Z"
 }
