@@ -239,6 +239,43 @@ def gantt(res):
     plt.close(fig)
 
 
+def sequence_md(M):
+    """The order of work at the two upgrade steps, with the numbers that decide it (from the model's levels)."""
+    P, Lb, Lc = M.P, M.levels("FT-1"), M.levels("FT-1V")
+    rod_b, rod_c = Lb["rod_vis"] + P["socket"], Lc["rod_vis"] + P["socket"]
+    in_blk = P["blk_h"] - P["rod_end_z"]
+    rod_bot = P["pz_top"] - P["sub_t"] - P["hp_t"] - Lb["rod_vis"]
+    gap_bot = P["gap_top"] + P["pz_top"] - P["pz_bot"]
+    deg = P["door_open_deg"]
+    return ["## Order of work at the upgrade steps", "",
+            "Both steps start the same way: plate to the top of its stroke, heaters off and cool, substrate off, the "
+            "beam tube's two half-shells off sideways (two toggle clamps), and the box door open "
+            f"({deg:g} deg, the free angle with the layer camera on the door).", "",
+            "**FT-0 -> FT-1** (inside the box, it stays on the rails):", "",
+            "1. Under the box: the stage, its riser and bracket plate in from the front onto the base rails, the rod-end "
+            "block on the stage's platform; the FT-0 lead terminal bracket off.",
+            f"2. Inside: the FT-0 collar off the rod; the rod clamped in the rod-end block ({in_blk:g} mm of rod in it), "
+            "the pigtail on its terminal block.",
+            "3. The recoater stage, shield, arm and hopper bolted onto the deck; the four block heaters in; the M8 cable "
+            "out through the back-wall gland.", "",
+            "**FT-1 -> FT-1V** (the box comes off; the gland plate hangs "
+            f"{P['gland_t']:g} mm below the support rails' tops, so it comes off first and the box needs no lift):", "",
+            "1. Unwire the pigtail at the rod-end block (or unplug a circular plug of 12 mm or less: the gland's bore is "
+            f"12.9 mm), loosen the rod clamp, and lift the heater plate with its {rod_b:.1f} mm rod straight up out of "
+            f"the bore ({-rod_bot + 2:.1f} mm of lift).",
+            "2. Deck clamps off (4 stud nuts), the recoater's M8 and the well block's leads unplugged at the glands; the "
+            "cassette out through the door opening.",
+            f"3. Stage to the bottom of its stroke (the block is then {gap_bot:g} mm under the gland, {P['gap_top']:g} mm "
+            "at the top); unbolt the gland plate (4 x M5 from below) and take it out sideways.",
+            "4. Unbolt the box from the support rails and slide it forward off them.",
+            "5. The cube onto the rails (its underside lands where the box's was; the X-VSR20A stays), the gland onto its "
+            "bottom plate, the cassette in through a face opening of at least 247 mm (or the bare deck edge-on and the "
+            "cassette built inside), M6 deck screws.",
+            f"6. The long rod's plate assembly ({rod_c:.1f} mm rod; a second assembly made ahead, or the leads "
+            "re-potted) down through the bore and the gland into the rod-end block; window stack on the top plate, the "
+            f"cover-slide drop tube, the short half-shells; the cross-beam and optics up {Lc['dz']:.1f} mm.", ""]
+
+
 def main():
     OUT.mkdir(exist_ok=True)
     res = run()
@@ -270,6 +307,7 @@ def main():
         md += [f"**{x} -> {y}** ({len(d['added'])} added, {len(d['moved'])} moved, {len(d['removed'])} removed, "
                f"{d['kept']} unchanged)", "", f"- added: {fmt(d['added'])}", f"- moved: {fmt(d['moved'])}",
                f"- removed: {fmt(d['removed'])}", ""]
+    md += sequence_md(M)
     (OUT / "progression.md").write_text("\n".join(md) + "\n")
     gantt(res)
     print("\n".join(md))

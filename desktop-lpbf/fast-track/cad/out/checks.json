@@ -182,13 +182,13 @@
    ],
    "sight": {
     "hopper at the right park (hx 37.5)": {
-     "camera_sees_pct": 95.4,
-     "MON2_lights_pct": 0.0,
+     "camera_sees_pct": 100.0,
+     "MON2_lights_pct": 100.0,
      "MON3_lights_pct": 90.8
     },
     "hopper at the left park (hx -33.1)": {
-     "camera_sees_pct": 95.4,
-     "MON2_lights_pct": 0.0,
+     "camera_sees_pct": 100.0,
+     "MON2_lights_pct": 100.0,
      "MON3_lights_pct": 90.8
     }
    }
@@ -220,12 +220,6 @@
      "b": "Recoater M8 data and power cable",
      "volume_mm3": 245.3,
      "why": "cable through the gland"
-    },
-    {
-     "a": "Carriage bracket and arm (MK-08)",
-     "b": "Vibration motor",
-     "volume_mm3": 863.9,
-     "why": "motor clamped on the arm"
     },
     {
      "a": "Layer camera: Pi HQ, C-mount lens, FESH1000 (MON1)",
@@ -567,12 +561,6 @@
      "why": "fibre in its bend restrictor"
     },
     {
-     "a": "KF-25 ports: pump, Pirani, argon, exhaust, 2 electrical feedthroughs",
-     "b": "KF-25 pump hose and valve",
-     "volume_mm3": 43.1,
-     "why": "hose on the pump port"
-    },
-    {
      "a": "Window retaining flange (MK-02)",
      "b": "Window-stack screws, M4 x 12 flat head, flush",
      "volume_mm3": 443.2,
@@ -585,16 +573,22 @@
      "why": "screws"
     },
     {
-     "a": "Carriage bracket and arm (MK-08)",
-     "b": "Vibration motor",
-     "volume_mm3": 863.9,
-     "why": "motor clamped on the arm"
-    },
-    {
      "a": "Layer camera: Pi HQ, C-mount lens, FESH1000 (MON1)",
      "b": "Camera post, arm and foot (MK-20)",
-     "volume_mm3": 89.4,
+     "volume_mm3": 141.8,
      "why": "clamp on the camera's mount ring"
+    },
+    {
+     "a": "KF-25 pump hose and valve",
+     "b": "KF-25 ports: pump, Pirani, argon, exhaust, 2 electrical feedthroughs",
+     "volume_mm3": 272.8,
+     "why": "hose on the pump port"
+    },
+    {
+     "a": "KF-25 pump hose and valve",
+     "b": "Rotary-vane pump (McMaster 4396K21 class, envelope est.)",
+     "volume_mm3": 598.5,
+     "why": "hose on the pump inlet"
     }
    ],
    "beam_hits": [],
@@ -908,12 +902,12 @@
    },
    "sight": {
     "hopper at the right park (hx 37.5)": {
-     "camera_sees_pct": 76.1,
+     "camera_sees_pct": 100.0,
      "MON2_lights_pct": 100.0,
      "MON3_lights_pct": 92.7
     },
     "hopper at the left park (hx -33.1)": {
-     "camera_sees_pct": 68.8,
+     "camera_sees_pct": 82.6,
      "MON2_lights_pct": 0.0,
      "MON3_lights_pct": 92.7
     }
@@ -946,12 +940,6 @@
      "b": "Recoater M8 data and power cable",
      "volume_mm3": 245.3,
      "why": "cable through the gland"
-    },
-    {
-     "a": "Carriage bracket and arm (MK-08)",
-     "b": "Vibration motor",
-     "volume_mm3": 863.9,
-     "why": "motor clamped on the arm"
     },
     {
      "a": "Layer camera: Pi HQ, C-mount lens, FESH1000 (MON1)",
@@ -1017,6 +1005,7 @@
  },
  "tube_removal": {
   "FT-1": {
+   "slide_axis": "x",
    "-x half-shell": {
     "poses": 31,
     "travel_mm": 60.0,
@@ -1084,95 +1073,65 @@
    "section_length_mm": 123.5
   },
   "FT-1V": {
-   "-x half-shell": {
-    "poses": 31,
-    "travel_mm": 60.0,
-    "n_contacts": 6,
-    "contacts": [
-     {
-      "pose": 50.0,
-      "mover": "Tube section -x half-shell",
-      "part": "Layer camera: Pi HQ, C-mount lens, FESH1000 (MON1)"
-     },
-     {
-      "pose": 52.0,
-      "mover": "Tube section -x half-shell",
-      "part": "Layer camera: Pi HQ, C-mount lens, FESH1000 (MON1)"
-     },
-     {
-      "pose": 54.0,
-      "mover": "Tube section -x half-shell",
-      "part": "Layer camera: Pi HQ, C-mount lens, FESH1000 (MON1)"
-     },
-     {
-      "pose": 56.0,
-      "mover": "Tube section -x half-shell",
-      "part": "Layer camera: Pi HQ, C-mount lens, FESH1000 (MON1)"
-     },
-     {
-      "pose": 58.0,
-      "mover": "Tube section -x half-shell",
-      "part": "Layer camera: Pi HQ, C-mount lens, FESH1000 (MON1)"
-     },
-     {
-      "pose": 60.0,
-      "mover": "Tube section -x half-shell",
-      "part": "Layer camera: Pi HQ, C-mount lens, FESH1000 (MON1)"
-     }
-    ],
-    "nearest": [
-     {
-      "mover": "Tube section -x half-shell",
-      "part": "Layer camera: Pi HQ, C-mount lens, FESH1000 (MON1)",
-      "min_dist_mm": 0.0,
-      "at": 60.0
-     },
-     {
-      "mover": "Tube section -x half-shell",
-      "part": "Window retaining flange (MK-02)",
-      "min_dist_mm": 0.2,
-      "at": 0.0
-     },
-     {
-      "mover": "Tube section -x half-shell",
-      "part": "Window-stack screws, M4 x 12 flat head, flush",
-      "min_dist_mm": 0.2,
-      "at": 8.0
-     },
-     {
-      "mover": "Tube section -x half-shell",
-      "part": "Beam-tube lens collar, clamped on the lens (MK-10)",
-      "min_dist_mm": 0.2,
-      "at": 0.0
-     }
-    ]
-   },
-   "+x half-shell": {
+   "slide_axis": "y",
+   "-y half-shell": {
     "poses": 31,
     "travel_mm": 60.0,
     "n_contacts": 0,
     "contacts": [],
     "nearest": [
      {
-      "mover": "Tube section +x half-shell",
+      "mover": "Tube section -y half-shell",
       "part": "Window retaining flange (MK-02)",
       "min_dist_mm": 0.2,
       "at": 0.0
      },
      {
-      "mover": "Tube section +x half-shell",
+      "mover": "Tube section -y half-shell",
       "part": "Window-stack screws, M4 x 12 flat head, flush",
       "min_dist_mm": 0.2,
-      "at": 8.0
+      "at": 6.0
      },
      {
-      "mover": "Tube section +x half-shell",
+      "mover": "Tube section -y half-shell",
       "part": "Beam-tube lens collar, clamped on the lens (MK-10)",
       "min_dist_mm": 0.2,
       "at": 0.0
      },
      {
-      "mover": "Tube section +x half-shell",
+      "mover": "Tube section -y half-shell",
+      "part": "Window, \u00d850.8 x 9.53 fused silica, 1064 V-coat",
+      "min_dist_mm": 5.01,
+      "at": 0.0
+     }
+    ]
+   },
+   "+y half-shell": {
+    "poses": 31,
+    "travel_mm": 60.0,
+    "n_contacts": 0,
+    "contacts": [],
+    "nearest": [
+     {
+      "mover": "Tube section +y half-shell",
+      "part": "Window retaining flange (MK-02)",
+      "min_dist_mm": 0.2,
+      "at": 0.0
+     },
+     {
+      "mover": "Tube section +y half-shell",
+      "part": "Window-stack screws, M4 x 12 flat head, flush",
+      "min_dist_mm": 0.2,
+      "at": 12.0
+     },
+     {
+      "mover": "Tube section +y half-shell",
+      "part": "Beam-tube lens collar, clamped on the lens (MK-10)",
+      "min_dist_mm": 0.2,
+      "at": 0.0
+     },
+     {
+      "mover": "Tube section +y half-shell",
       "part": "Window, \u00d850.8 x 9.53 fused silica, 1064 V-coat",
       "min_dist_mm": 4.67,
       "at": 0.0
@@ -1245,19 +1204,19 @@
   },
   "FT-1V": {
    "lens_f_mm": 25.0,
-   "tilt_deg": 19.6,
-   "distance_mm": 290.2,
-   "um_per_px_across": 16.4,
-   "um_per_px_along": 17.5,
+   "tilt_deg": 24.1,
+   "distance_mm": 298.7,
+   "um_per_px_across": 17.0,
+   "um_per_px_along": 18.6,
    "field_mm": [
-    66.7,
-    50.0
+    68.8,
+    51.6
    ],
-   "scheimpflug_deg": 1.92,
-   "dof_mm_f2_8": 2.14,
-   "plate_depth_range_mm": 13.4,
-   "rayleigh_um_f2_8": 19.9,
-   "video_2028x1520_40fps_um_px": 32.9
+   "scheimpflug_deg": 2.34,
+   "dof_mm_f2_8": 2.27,
+   "plate_depth_range_mm": 16.3,
+   "rayleigh_um_f2_8": 20.6,
+   "video_2028x1520_40fps_um_px": 33.9
   }
  },
  "travel": {
@@ -1439,5 +1398,30 @@
    "stage_limit_C": 50.0
   }
  ],
- "runtime_s": 1554
+ "runtime_s": 1118,
+ "late_fixes": {
+  "FT-1": {
+   "motor_in_arm_mm3": 0.0,
+   "motor_sweep_hits": [],
+   "motor_nearest_static": [
+    97.7,
+    "Saginaw SCE-16EL1208SSLP 304 box, 16 x 12 x 8 in. (body)",
+    -45.8
+   ],
+   "clashes": 0,
+   "beam_hits": 0
+  },
+  "FT-1V": {
+   "motor_in_arm_mm3": 0.0,
+   "motor_sweep_hits": [],
+   "motor_nearest_static": [
+    55.33,
+    "Well-block heater and TC leads",
+    -45.8
+   ],
+   "clashes": 0,
+   "beam_hits": 0
+  },
+  "hose_into_pump_inlet_mm": 4.0
+ }
 }

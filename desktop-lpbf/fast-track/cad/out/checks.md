@@ -11,9 +11,9 @@ envelopes (sizes marked in `ft_model.P`). A clash with an envelope means 'check 
 | S1 | 21 | 0 | 1 | 0 | - |
 | S2 | 45 | 0 | 3 | 0 | Water-cooled beam dump, 500 W 2.7, Cover-slide holder, Ø44 opening 5.6, Window retaining flange 7.04, Window ring 7.53 |
 | FT-0 | 80 | 0 | 5 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cover-slide holder, Ø44 opening 5.6, FT-0 spreader bar, 48 mm, ground edge, parked 5.9 |
-| FT-1 | 98 | 0 | 6 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cord clamp 3.52, Silicone-cord blade, 3 mm 3.96 |
+| FT-1 | 98 | 0 | 5 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cord clamp 3.52, Silicone-cord blade, 3 mm 3.96 |
 | FT-1V | 100 | 0 | 6 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cord clamp 3.52, Silicone-cord blade, 3 mm 3.96 |
-| FT-1 (Thorlabs piston) | 97 | 0 | 6 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cord clamp 3.52, Silicone-cord blade, 3 mm 3.96 |
+| FT-1 (Thorlabs piston) | 97 | 0 | 5 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cord clamp 3.52, Silicone-cord blade, 3 mm 3.96 |
 
 Designed contacts (FT-1):
 
@@ -23,7 +23,6 @@ Designed contacts (FT-1):
 | Window retaining flange (MK-02) | Window-stack screws, M4 x 12 flat head, flush | 443.2 | screws |
 | Rod gland plate, 2 O-rings (MK-07) | Gland screws M5 x 25 with bonded seals (4) | 1134.9 | screws |
 | IP68 cable glands M16 (2, back wall) | Recoater M8 data and power cable | 245.3 | cable through the gland |
-| Carriage bracket and arm (MK-08) | Vibration motor | 863.9 | motor clamped on the arm |
 | Layer camera: Pi HQ, C-mount lens, FESH1000 (MON1) | Camera post, arm and foot (MK-20) | 242.9 | clamp on the camera's mount ring |
 
 **Apertures round the scanned beam** (lens axis at (0, -30); envelope = chief rays from the mirrors, est. 392.9 mm above the bed, to the Ø40 field, plus the beam's own half-width):
@@ -52,7 +51,7 @@ Hopper parks and the travel it needs (cassette frame, mm):
 
 | beam_r_at_hopper_top_mm | left_park | right_park | travel_needed_mm | stage_travel_mm | travel_range | spare_left_mm | spare_right_mm |
 |---|---|---|---|---|---|---|---|
-| 18.13 | -31.1 | 35.5 | 66.6 | 101.6 | (-45.8, 55.8) | 14.7 | 20.3 |
+| 18.13 | -31.1 | 35.5 | 66.6 | 101.6 | [-45.8, 55.8] | 14.7 | 20.3 |
 
 **FT-1**: recoater swept over its 101.6 mm (exact booleans, 13 positions), 0 clashes. Smallest gaps:
 
@@ -168,8 +167,8 @@ First contact at 27.0 deg:
 |---|---|---|---|---|
 | FT-1 | -x half-shell | 0 | 123.5 | Window retaining flange 0.2, Window-stack screws, M4 x 12 flat head, flush 0.2, Beam-tube lens collar, clamped on the lens 0.2 |
 | FT-1 | +x half-shell | 0 | 123.5 | Window retaining flange 0.2, Window-stack screws, M4 x 12 flat head, flush 0.2, Beam-tube lens collar, clamped on the lens 0.2 |
-| FT-1V | -x half-shell | 6 | 23.7 | Layer camera: Pi HQ, C-mount lens, FESH1000 0.0, Window retaining flange 0.2, Window-stack screws, M4 x 12 flat head, flush 0.2 |
-| FT-1V | +x half-shell | 0 | 23.7 | Window retaining flange 0.2, Window-stack screws, M4 x 12 flat head, flush 0.2, Beam-tube lens collar, clamped on the lens 0.2 |
+| FT-1V | -y half-shell | 0 | 23.7 | Window retaining flange 0.2, Window-stack screws, M4 x 12 flat head, flush 0.2, Beam-tube lens collar, clamped on the lens 0.2 |
+| FT-1V | +y half-shell | 0 | 23.7 | Window retaining flange 0.2, Window-stack screws, M4 x 12 flat head, flush 0.2, Beam-tube lens collar, clamped on the lens 0.2 |
 
 **Taking the box off the frame (FT-1 -> FT-1V)**, numbers from the model (plate at the top of its stroke):
 
@@ -190,25 +189,25 @@ Rays from 133 points on the plate (Ø38) to the camera's lens front and to each 
 
 | state | hopper | camera_sees_pct | MON2_lights_pct | MON3_lights_pct |
 |---|---|---|---|---|
-| FT-0 | hopper at the right park (hx 37.5) | 95.4 | 0.0 | 90.8 |
-| FT-0 | hopper at the left park (hx -33.1) | 95.4 | 0.0 | 90.8 |
+| FT-0 | hopper at the right park (hx 37.5) | 100.0 | 100.0 | 90.8 |
+| FT-0 | hopper at the left park (hx -33.1) | 100.0 | 100.0 | 90.8 |
 | FT-1 | hopper at the right park (hx 37.5) | 100.0 | 100.0 | 90.8 |
 | FT-1 | hopper at the left park (hx -33.1) | 78.0 | 0.0 | 90.8 |
-| FT-1V | hopper at the right park (hx 37.5) | 76.1 | 100.0 | 92.7 |
-| FT-1V | hopper at the left park (hx -33.1) | 68.8 | 0.0 | 92.7 |
+| FT-1V | hopper at the right park (hx 37.5) | 100.0 | 100.0 | 92.7 |
+| FT-1V | hopper at the left park (hx -33.1) | 82.6 | 0.0 | 92.7 |
 
 Camera (IMX477, 1.55 um pixels; f/2.8; circle of confusion two pixels):
 
 | state | lens_f_mm | tilt_deg | distance_mm | um_per_px_across | um_per_px_along | field_mm | scheimpflug_deg | dof_mm_f2_8 | plate_depth_range_mm | rayleigh_um_f2_8 | video_2028x1520_40fps_um_px |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | FT-0 | 16.0 | 30.7 | 199.4 | 17.8 | 20.7 | [72.1, 54.0] | 2.96 | 2.48 | 20.4 | 21.5 | 35.5 |
-| FT-1V | 25.0 | 19.6 | 290.2 | 16.4 | 17.5 | [66.7, 50.0] | 1.92 | 2.14 | 13.4 | 19.9 | 32.9 |
+| FT-1V | 25.0 | 24.1 | 298.7 | 17.0 | 18.6 | [68.8, 51.6] | 2.34 | 2.27 | 16.3 | 20.6 | 33.9 |
 
 ## 5. Fit
 
 | check | value |
 |---|---|
-| deck_mm | (245.0, 245.0) |
+| deck_mm | [245.0, 245.0] |
 | box_inside_mm | [402.6, 301.0, 210.8] |
 | box_door_opening_mm_est | [358.6, 257.0] |
 | deck_in_box_margins_mm | [78.8, 28.0] |
@@ -278,4 +277,15 @@ Pump speed (1 L/s effective) and base pressures are estimates; the floor is set 
 | cube (FT-1V) | 0.675 | still air | 25-36 | 61 | 50.0 |
 | cube (FT-1V) | 0.675 | fan | 8-11 | 36 | 50.0 |
 
-Run time 1554 s.
+## 8. Late fixes, re-checked separately
+
+Two parts changed while this run was going: the vibration motor moved onto the arm's top face (it sat 5 mm into it), and the pump hose's end made vertical, 10 mm onto the inlet. Their pairs were recomputed in FT-1, FT-1V and the Thorlabs variant and are in the tables above; the beam check of FT-1 and FT-1V was repeated, and the motor was swept over the recoater's travel (21 positions, exact booleans):
+
+| state | motor_in_arm_mm3 | motor_sweep_hits | motor_nearest_static | clashes | beam_hits |
+|---|---|---|---|---|---|
+| FT-1 | 0.0 | 0 | (97.7, 'Saginaw SCE-16EL1208SSLP 304 box, 16 x 12 x 8 in. (body)', -45.8) | 0 | 0 |
+| FT-1V | 0.0 | 0 | (55.33, 'Well-block heater and TC leads', -45.8) | 0 | 0 |
+
+Hose into the pump inlet: 4.0 mm.
+
+Run time 1118 s.
