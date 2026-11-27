@@ -18,7 +18,7 @@ plate at the start of a build, the hopper at its right park). Scripts: [`../../c
   nozzle the box takes 33–50 min to 1000 ppm and 47–71 min to 100 ppm (no buoyancy; two meshes), past the study's
   expected 13–31 / 18–45 min, and the analyzer on the collector's exhaust reads about 4× under the box. With 20 L/min
   of argon in through a diffuser near the floor and out a vent under the lid, the argon fills the box from the bottom
-  and pushes the air out: {LH1000} / {LH100} min to 1000 / 100 ppm (box average, with buoyancy), against 6.2 / 8.9 min
+  and pushes the air out: 2.6 / ≈ 5.0 min to 1000 / 100 ppm (box average, with buoyancy), against 6.2 / 8.9 min
   for perfect mixing. A high diffuser with the same vent mixes instead (≈ 4.7 / 6.8 min); {HLSHORT}
 - **What to change:** add a diffuser low on one wall and a vent at the top of the opposite wall (two bulkheads, a ball
   valve on the vent), sample the analyzer from the vent line, purge with the nozzle off, then close the vent and start
@@ -194,9 +194,12 @@ blue is air; grey is solid (the deck cassette, the stage, the window stack). The
 
 - **Low diffuser, high vent: the argon displaces the air.** It spreads over the floor and rises as a layer: at 2 min
   the bottom 40 mm of the box holds about 120 ppm and the top 40 mm about 1.2 % O₂ (figure). The box average reaches
-  1000 ppm in {LH1000} min and 100 ppm in {LH100} min, {LHRATIO}× faster than well mixed, after {LHVOL1} and {LHVOL} box volumes
-  of argon. 1 mm over the plate the O₂ is under 1000 ppm after {LHP1000} min and under 100 ppm after {LHP100} min. The
-  vent takes the last air, so an analyzer there reads above the box average all the way: {LHE1000} / {LHE100} min.
+  1000 ppm in 2.6 min and 102 ppm at the end of the 5 min run (≈ 5.0 min to 100 ppm), 2.4× and 1.8× faster than well
+  mixed, after 2.2 and 4.3 box volumes of argon. 1 mm over the plate the O₂ is under 1000 ppm after 1.4 min and under
+  100 ppm after 3.5 min. The vent reads above the box average while the air layer drains through it (1000 ppm at
+  2.8 min) and slightly below it at the end (100 ppm at 4.7 min; 82 against 102 ppm at 5 min): the last O₂, ~450 ppm,
+  sits under the lid at the far end from the vent, above the diffuser. A vent in the middle of the lid, or one at each
+  end, would shorten that tail (not run).
 - **High diffuser, high vent: the argon falls and mixes.** The plume from the diffuser stirs the box on its way to the
   floor, so the box is only mildly layered (the top 40 mm holds about twice the average). Because the vent still takes
   the worst gas it purges about a quarter faster than well mixed: 6,900 ppm at 3 min, ≈ 4.7 / 6.8 min to 1000 /
@@ -215,7 +218,7 @@ blue is air; grey is solid (the deck cassette, the stage, the window stack). The
    it then reads the last air to leave, not fresh argon.
 2. **The purge inlet low, through a diffuser.** About 40 × 40 mm of sintered metal or mesh (0.2 m/s at 20 L/min), just
    above the floor on the far wall, so the argon spreads along the floor instead of jetting. Low in and high out took
-   {LH1000} / {LH100} min to 1000 / 100 ppm (box average), against ≈ 4.7 / 6.8 min with the same vent and a high inlet,
+   2.6 / ≈ 5.0 min to 1000 / 100 ppm (box average), against ≈ 4.7 / 6.8 min with the same vent and a high inlet,
    and 6.2 / 8.9 min well mixed.
 3. **Purge with the nozzle off, then switch.** 20 L/min through the diffuser with the vent open until the analyzer
    reads the target; then close the vent and run the cross-flow, which leaves through the collector and holds the box
@@ -301,6 +304,15 @@ The 4 mm slot has 8 cells across its height; the bed's first cell is ~0.13 mm th
   1,020 on five heights 4–15 mm. "Into the collector": reached its plenum. "Escaped": left the 90 × 95 × 30 mm region
   round the jet. Otherwise held or circulating (speed < 0.1 mm/s, or 600 mm of path without either).
 - **Bed shear:** OpenFOAM's `wallShearStress` on the bed (the block top and the plate), × ρ.
+- **Purge flows** (simpleFoam, laminar, 32,743 cells, 2 ranks, 2–4 min each): final initial residuals 4 × 10⁻⁴ (A,
+  800 iterations; the 20 L/min jet is unsteady, as in §1), 3 × 10⁻⁵ (C, 800) and 1 × 10⁻⁷ (B at 378 iterations, D at
+  800). The 237k-cell flow for the mesh check is the 1000-iteration steady run of config A on the cross-flow mesh.
+- **Passive O₂** (scalarTransportFoam): Δt = 2 s, the upwind matrix with an explicit limitedLinear01 correction
+  (`deferredCorrection`), PBiCGStab to 10⁻⁹, about 20 iterations a step; 2.5–4 min a run on the purge mesh, 11 min for
+  20 min of purge on the 237k-cell mesh. The fully implicit limitedLinear01 matrix needed 100–1000 iterations a step at
+  the jet's Courant numbers (~1000 at Δt = 2 s).
+- **Buoyant runs:** inlets are pure argon at 25 °C; the vent holds p = p₀ (101,325 + 700 Pa) and lets gas out only.
+  Δt settled at 0.10–0.13 s (Courant 30); a 3 min run took 1,355 steps and 10–20 min on two shared cores.
 
 ### Purge runs: what physics each includes
 
