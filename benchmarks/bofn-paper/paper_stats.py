@@ -81,6 +81,10 @@ MLABEL = {"v25": "$25k", "v50": "$50k", "v100": "$100k", "auc": "anytime ($0-100
 TARGETS = (0.6, 0.7, 0.8)
 B = 10_000
 SEED_SETS = {1.0: range(20), 0.5: range(16), 0.0: range(16)}
+# Variants analysed against the eight on the same seeds when their runs exist in
+# SOURCES (the customization example of the write-ups); never part of the tables.
+VARIANTS = ("pkgfn_free",)
+VARIANT_VS = ("pkgfn", "eifn_reuse", "tiered")
 # The 2 x 2 of {KG per $, EI per $} x {partial, full chain}: (name, plus, minus) or a 4-term interaction
 CONTRASTS = (
     ("partial - full, KG", ("pkgfn",), ("kgfn",)),
@@ -97,15 +101,19 @@ def fmt_kappa(k):
 
 def load_paper(kappa, check=False):
     """{policy: {seed: run}} from the paper set; warns about missing runs."""
-    runs = {p: {} for p in POLICIES}
+    runs = {p: {} for p in POLICIES + VARIANTS}
     for root in SOURCES:
         for p in sorted((root / f"k{fmt_kappa(kappa)}").glob("*.json")):
             r = json.loads(p.read_text())
             if r["kind"] in runs:
                 runs[r["kind"]][r["seed"]] = r
+    variants = {k: runs.pop(k) for k in VARIANTS}
+    runs["_variants"] = variants
     if check:
         want = set(SEED_SETS[kappa])
         for k, v in runs.items():
+            if k == "_variants":
+                continue
             miss = sorted(want - set(v))
             if miss:
                 print(f"  kappa={kappa:g} {k}: missing seeds {miss}")
@@ -148,6 +156,7 @@ def speedup_est(Cp, Cb):
 def analyse(kappa, check=False):
     ystar = optimum(kappa)
     runs = load_paper(kappa, check)
+    variants = runs.pop("_variants")
     seeds = sorted(set.intersection(*(set(v) for v in runs.values()))) if all(runs.values()) else []
     if not seeds:
         return None
@@ -226,6 +235,22 @@ def analyse(kappa, check=False):
             res["speedup"].append({"kappa": kappa, "policy": p, "over": base, "n": len(seeds), "target": float(np.nanmean(C[base][:, -1])),
                                    "est": est, "lo95": lo95, "hi95": hi95, "lo90": lo90, "hi90": hi90,
                                    "p_not_reached": float(np.mean(bs == 0)), "p_ge_3x": float(np.mean(bs >= 3))})
+    res["variants"] = []
+    for v, vr in variants.items():  # same seeds and resamples as the eight; only if the variant has them all
+        if not all(s in vr for s in seeds):
+            continue
+        vals = [per_run(vr[s], ystar) for s in seeds]
+        Mv = {m: np.array([x[0][m] for x in vals]) for m in METRICS}
+        row = {"kappa": kappa, "policy": v, "n": len(seeds), "settings": vr[seeds[0]].get("settings")}
+        for m in METRICS:
+            row[f"{m}_mean"] = Mv[m].mean()
+            row[f"{m}_lo"], row[f"{m}_hi"] = pct(Mv[m][idx].mean(1), 0.95)
+            for b in VARIANT_VS:
+                dlt = Mv[m] - M[b][m]
+                row[f"{m}_vs_{b}"] = dlt.mean()
+                row[f"{m}_vs_{b}_lo"], row[f"{m}_vs_{b}_hi"] = pct(dlt[idx].mean(1), 0.95)
+                row[f"{m}_vs_{b}_wins"] = int((dlt > 1e-12).sum())
+        res["variants"].append(row)
     return res
 
 
@@ -313,6 +338,16 @@ def summary_md(all_res):
                  + ", ".join(f"{wr[m]:.2f}× as wide at {MLABEL[m]}" for m in METRICS)
                  + " as the interval from resampling each policy's seeds independently (over all 28 pairs).")
         L.append("")
+        if res.get("variants"):
+            L.append("### Variants on the same seeds (not in the tables above)")
+            L.append("")
+            for r in res["variants"]:
+                L.append(f"- `{r['policy']}` (settings S_ACQ={r['settings'].get('S_ACQ')}, N_CAND={r['settings'].get('N_CAND')}): "
+                         + "; ".join(f"{MLABEL[m]} {pc(r[f'{m}_mean'])}% [{pc(r[f'{m}_lo'])}, {pc(r[f'{m}_hi'])}]" for m in METRICS))
+                for b in VARIANT_VS:
+                    L.append(f"  - minus {SHORT[b]}: " + "; ".join(
+                        f"{MLABEL[m]} {pts(r[f'{m}_vs_{b}'])} {ci_pts(r[f'{m}_vs_{b}_lo'], r[f'{m}_vs_{b}_hi'])} ({r[f'{m}_vs_{b}_wins']} wins)" for m in METRICS))
+            L.append("")
         L.append("### Every pair (A − B, pp [95% matched CI]; wins of A / ties out of n)")
         L.append("")
         L.append("| A | B | $25k | $50k | $100k | anytime |")
@@ -366,6 +401,15 @@ def numbers_tex(all_res):
             put(tex_key(k, "su", r["policy"], r["over"], "ci95"), f"{r['lo95']:.1f}--{r['hi95']:.1f}")
             put(tex_key(k, "su", r["policy"], r["over"], "ci90"), f"{r['lo90']:.1f}--{r['hi90']:.1f}")
             put(tex_key(k, "su", r["over"], "target"), pc(r["target"]))
+        for r in res.get("variants", []):
+            for m in METRICS:
+                for s_ in ("mean", "lo", "hi"):
+                    put(tex_key(k, r["policy"], m, s_), pc(r[f"{m}_{s_}"]))
+                for b in VARIANT_VS:
+                    put(tex_key(k, r["policy"], b, m), f"{100 * r[f'{m}_vs_{b}']:+.1f}".replace("+", "$+$").replace("-", "$-$"))
+                    put(tex_key(k, r["policy"], b, m, "abs"), f"{abs(100 * r[f'{m}_vs_{b}']):.1f}")
+                    put(tex_key(k, r["policy"], b, m, "ci"), f"{100 * r[f'{m}_vs_{b}_lo']:.1f} to {100 * r[f'{m}_vs_{b}_hi']:.1f}".replace("-", "$-$"))
+                    put(tex_key(k, r["policy"], b, m, "wins"), r[f"{m}_vs_{b}_wins"])
         for r in res["allocation"]:
             for g in "CALT":
                 put(tex_key(k, r["policy"], "n" + g), f"{r[f'{g}_mean']:.1f}")

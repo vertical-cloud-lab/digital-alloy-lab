@@ -67,6 +67,7 @@ def read_csv(name):
 
 def matched_curves(kappa):
     runs = load_paper(kappa)
+    runs.pop("_variants", None)
     seeds = sorted(set.intersection(*(set(v) for v in runs.values())))
     ys = optimum(kappa)
     return {p: np.stack([curve(runs[p][s]["rows"], "best_validated") / ys for s in seeds]) for p in POLICIES}, seeds
