@@ -146,6 +146,8 @@ def run_piece(pc, setups, gdir):
             for a, b in zip(pts[:-1], pts[1:]):
                 stamp_segment(H, cx, cy, a, b, r, k)
                 n_seg += 1
+        tm = CS.camotics_times(moves)
+        t_min = sum(o["feed_s"] + o["vf4_rapid_s"] for o in tm.values()) / 60.0
         before = int(view.sum())
         mask = cz[None, None, :] > H[:, :, None]
         view[mask] = False
@@ -166,6 +168,8 @@ def run_piece(pc, setups, gdir):
         if hits:
             rapid_hits.append(dict(setup=su["setup"], rapids_through_target=hits, ops=ops_hit))
         out["setups"].append(dict(setup=su["setup"], up=su["up"], segments=n_seg, removed_cm3=round(removed * vox, 2),
+                                  minutes_from_moves=round(t_min, 2), minutes_recount=su["total_min"],
+                                  minutes_freecad=su["freecad_cycle_min"],
                                   stamp_s=round(time.time() - t0, 1), rapid_moves_through_target=hits))
     # free slugs (stock cut loose by a through profile, e.g. an opening's core) drop out of the vise: keep only the
     # material still joined to the piece
