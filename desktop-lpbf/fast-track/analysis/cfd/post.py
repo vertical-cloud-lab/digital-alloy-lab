@@ -763,9 +763,9 @@ def fig_purge_curves(names, labels, fname, tmax=None, title=""):
     d = load_json()["purge"]
     n = len(names)
     tmax = tmax or max(d[nm]["t_end_s"] for nm in names) / 60
-    ncol = 2 if n > 1 else 1
+    ncol = 3 if n == 3 else (2 if n > 1 else 1)
     nrow = math.ceil(n / ncol)
-    fig, axs = plt.subplots(nrow, ncol, figsize=(4.3 * ncol, 2.9 * nrow), squeeze=False, sharex=True, sharey=True,
+    fig, axs = plt.subplots(nrow, ncol, figsize=(4.3 * ncol, 2.9 * nrow + 0.3), squeeze=False, sharex=True, sharey=True,
                             constrained_layout=True)
     for ax, nm, lab in zip(axs.ravel(), names, labels):
         r = d[nm]
