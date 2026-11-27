@@ -1,4 +1,4 @@
-# Round 9, run 13 (2026-11-27): the whole assembly in one process, and round 8's audit findings fixed in the planner
+# Round 9, runs 13 and 14 (2026-11-27): the whole assembly in one process, and round 8's audit findings fixed in the planner
 
 Sterling, 2026-11-27, on what round 8 left: "deal with the stuff above". Round 8's frame audit
 ([`scene_audit_40-assembly-module.json`](../videoqa/scene_audit_40-assembly-module.json),
@@ -13,6 +13,34 @@ planner time on the shared runner, under a 3 GB cap). Run 12 had been four proce
 `ASM_CONTINUE`), with both MiRs restarting at the trunnion's dock at each join. Run 13 has no joins: every arm and MiR starts
 each step where the recording left it. Code: r9-plan at 8f635f2 (with r9-people's model change, 93adcd2, merged first, so the
 long table the planner picks from is the one the renderer draws: kit layout fa560d5f11acc467).
+
+## Run 14: F54 by one arm under the hoist (10:05-10:15 UTC)
+
+After run 13, F54 (the 13.3 kg optics bridge onto the four posts) was changed and tested alone, and run 14 re-planned **F54 to
+the end only**, continuing run 13's recording (`ASM_FF_UNTIL=F54`, `ASM_CONTINUE`: run 13's chunks to the end of F53 copied
+unchanged, the planner's arms and MiRs put back exactly where that recording left them, so the first motion of F54 starts where
+the last one ended; checked: no jump at the join). The hoist takes the bridge's weight (a person brings it to the start of its
+path, 80 mm over the posts); arm A comes to its grasp empty with the gripper open, the bridge an obstacle it may only touch,
+closes on it and guides it down onto the posts' dowels (the last 12 mm pushed home with the closed fingers). Runs 9-13 had found
+no pair of poses for the two-arm carry. The hook hangs 300 mm over the bridge throughout, checked clear. F55-F57 re-planned as
+before. Run 14 was planned with `KIT_HASH=fa560d5f11acc467`, run 13's table layout, so the table is the one already drawn.
+
+The files named for run 14 hold the whole assembly: run 13's rows and times to the end of F53, run 14's from F54 on
+([`results_run14.json`](results_run14.json), [`run14_times.json`](run14_times.json), [`round9_run14.json`](round9_run14.json));
+[`two_hands.json`](two_hands.json), [`mir_drives.json`](mir_drives.json), `robot-build/hud.json` and `times.csv` are on run 14.
+F57 by its tubes' axes was tried alone too (each tube slid into the part placed before it, the next cube onto its free end):
+five of its eight placements failed (the wrist camera on the bridge, arm A's reach to the back tubes, the cubes onto the tube
+ends), so run 14 keeps run 13's F57, failing.
+
+| | Run 12 | Run 13 | Run 14 (run 13 + F54 on re-planned) |
+|---|---|---|---|
+| checked steps passed | 99 of 108 | 104 of 110 | **105 of 110** (F54 passes) |
+| still failing | C00d, F15, F18, F26, F27, F45d, F48b, F54, F57 | F15, F18, F26, F27, F54, F57 | F15, F18, F26, F27, F57 |
+| screws driven | 124 of 129 | 125 of 129 | 125 of 129 |
+| table picks planned | 57 of 74 | 62 of 76 | 62 of 77 (F54's bridge is brought by a person on the hoist) |
+| MiR moves clear | 163 of 167 | 175 of 175 | 175 of 175 (7.2 m reversing in 31 docking legs of at most 0.5 m) |
+| steps where both arms work | 19 | 19 | 18 (F54 is one arm now) |
+| robot / person time | 3.30 h / 6.35 h | 3.27 h / 6.37 h | 3.28 h / 6.35 h |
 
 ## Against run 12
 
@@ -30,7 +58,7 @@ long table the planner picks from is the one the renderer draws: kit layout fa56
 
 Files: [`results_run13.json`](results_run13.json), [`round9_run13.json`](round9_run13.json) (against run 12, from
 `round7_summary.py`), per-step time [`run13_times.json`](run13_times.json), [`two_hands.json`](two_hands.json),
-[`mir_drives.json`](mir_drives.json), the recording check [`rec_check_run13.json`](rec_check_run13.json).
+[`mir_drives.json`](mir_drives.json) (the last two now hold run 14, which differs from run 13 only from F54 on).
 
 ## Round 8's findings, and what changed
 
@@ -56,7 +84,7 @@ Files: [`results_run13.json`](results_run13.json), [`round9_run13.json`](round9_
 | F15 | 6 of 7 (the screwdriver meets the KF-25 port on #7) | not changed: the angle-head nutrunner and the other arm were already tried for #7 | 6 of 7 |
 | F18 | 3 of 4 held rail screws | not changed (time-boxed) | 3 of 4 |
 | F26, F27 | the fingertip meets the chamber body; arm B's driver meets the funnel block | not changed: putting the cartridge in by its fin (the tending robot's way) needs the recoater run to the middle first, and the recorder draws every part at the model's home state, so a recoater moved by a step would be drawn in the wrong place | fail |
-| F54 | no pair of arm poses at the start of the carry | not changed: one arm guiding under the hoist needs the hook drawn on a single-arm place | fail |
+| F54 | no pair of arm poses at the start of the carry | run 13: not changed. Run 14: the hoist takes the weight and arm A alone guides the bridge onto the dowels, coming to it empty with the gripper open | run 13 fail; **run 14 PASS** |
 | F57 | beam tube #1 meets the dichroic | not changed: the tubes must slide along their own axes | fail |
 
 ## Two hands ([`two_hands.json`](two_hands.json))
@@ -82,13 +110,16 @@ events exactly as `asm_render.py` does (objects at their put poses, held parts o
 checks arm against arm and each arm against the parts present, with the planner's 0.1 mm meshes (the drawn meshes are decimated
 to 12,000 triangles, which closes counterbores). On the step tests before the freeze (F05b-F06, C00d-C05, the whole of chapter
 40, M18-M28) it found no pair over 1.5 mm once the fixes above were in; on the first of them it is what found the unchecked
-wrist camera (50 mm into the floor plate on C00d's move to park). On run 13 itself: [`rec_check_run13.json`](rec_check_run13.json)
-when it is there (it waits for memory behind the renders).
+wrist camera (50 mm into the floor plate on C00d's move to park). **On the whole of run 14** (run 13's recording to the end of F53, run 14's from F54; every
+3rd joint sample of every drawn arm motion): chapter 40, 4,210 samples, **0 pairs over 1.5 mm**; chapter 41, 20,439 samples,
+**0 pairs over 1.5 mm** ([`rec_check_run14.json`](rec_check_run14.json)). It checks the arms (links, tool or gripper with its
+fingers, wrist camera, changer, what they hold) against each other and against the parts present; not the MiRs (the route check
+above), the hook, or a body wholly inside another (FCL sees surfaces crossing); W4's frame audit covers what is drawn.
 
 ## Still open
 
-- F15, F18, F26, F27, F54, F57 fail as above; each is shown failing in the video, and falls to a person (5 min a step, 1 min a
-  screw in the estimates).
+- F15, F18, F26, F27 and F57 fail as above (F54 too in run 13; it passes in run 14); each is shown failing in the video, and
+  falls to a person (5 min a step, 1 min a screw in the estimates). Their next changes are in assembly.md's open points.
 - Picks at the table not planned: 5 of 76 (M04, F02b, F18, F39, F45d's first part: a fingertip meets its riser, a tray rim, the
   recoater rail or the drawer's latch studs). Nine more parts are sub-assemblies taken from a nest, not the table; they appear
   in the gripper at park (a cut, as before).

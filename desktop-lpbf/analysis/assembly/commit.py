@@ -208,6 +208,40 @@ def place(run, st, idx, actor, tool, best, body, off, G, T_obj, close, state, ro
             fetch_res = "FAIL"
             row["fetch_why"] = f"pick at the table ({slot['key']}): {pk['why']}"[:200]
         tbl.remove(idx)
+    if st.get("lift_aid") and best.get("T_start") is not None:
+        # round 9 (run 14, F54): a person brings the part on the hoist to the start of its path; the arm comes to it empty with
+        # the gripper open (planned so in arm_place), closes on it and guides it down; the hook hangs over it throughout
+        if tbl is not None:
+            tbl.remove(idx)
+        goto(run, actor, dk)
+        R.tool(actor, tool, tool_spec(run, actor))
+        R.wait(120.0, who="person", what="brings the part on the hoist to the start of its path")
+        R.put(idx, best["T_start"], state, why="on the hoist")
+        n0 = len(R.events)
+        if best.get("path") is not None:
+            R.move(actor, best["path"], "plan", close=0.0)
+        hook_static(run, R, body, best["T_start"], n0)
+        R.grip(actor, close)
+        R.attach(actor, idx, off, state, name=st["id"])
+        n1 = len(R.events)
+        k = fr.get("push_at")
+        if fr["qs"] and k:
+            # the last few mm pushed home with the closed fingers on its back face, as arm_place checked it (as below)
+            R.move(actor, fr["qs"][:k], "cart", close=close, seat_mm=0.0)
+            h1 = hook_moves(run, R, actor, body, off, n1)
+            R.grip(actor, max(0.0, close - 0.12))
+            R.detach(actor)
+            R.grip(actor, float(fr.get("push_close", 1.0)))
+            R.attach(actor, idx, fr["push_off"], state, name=st["id"])
+            n2 = len(R.events)
+            R.move(actor, fr["qs"][k:], "cart", close=float(fr.get("push_close", 1.0)), seat_mm=10.0)
+            h2 = hook_moves(run, R, actor, body, fr["push_off"], n2)
+            row["hoist_hook"] = dict(clear=h1[0] and h2[0], why=h1[1] or h2[1], above_mm=HOOK_ABOVE)
+        elif fr["qs"]:
+            R.move(actor, fr["qs"], "cart", close=close, seat_mm=10.0)
+            hook_moves(run, R, actor, body, off, n1, res=row)
+        row["fetch"] = "person"
+        return
     if fetch_res in ("-", "FAIL", "person", "tray"):
         # no table pick recorded: the part appears in the gripper at park (a cut in the video)
         if tbl is not None:
@@ -234,6 +268,50 @@ def place(run, st, idx, actor, tool, best, body, off, G, T_obj, close, state, ro
         R.move(actor, fr["qs"][k:], "cart", close=float(fr.get("push_close", 1.0)), seat_mm=10.0)
     elif fr["qs"]:
         R.move(actor, fr["qs"], "cart", close=close, seat_mm=10.0)
+
+
+def _place_moves(R, actor, path, fr, close):
+    if path is not None:
+        R.move(actor, path, "plan", close=close)
+    if fr["qs"]:
+        R.move(actor, fr["qs"], "cart", close=close, seat_mm=10.0)
+
+
+def hook_static(run, R, body, T, n0):
+    """Round 9 (run 14): the hook over a part hanging on the hoist at T, on every move recorded since n0 (the arm's approach)."""
+    v = np.asarray(body.v, float)
+    w = v @ np.asarray(T, float)[:3, :3].T + np.asarray(T, float)[:3, 3]
+    lo, hi = w.min(0), w.max(0)
+    p = np.array([0.5 * (lo[0] + hi[0]), 0.5 * (lo[1] + hi[1]), hi[2] + HOOK_ABOVE], np.float32)
+    for e in R.events[n0:]:
+        if e.get("kind") == "move" and e.get("q") is not None:
+            e["hook"] = np.repeat(p[None, :], len(e["q"]), axis=0)
+            e["hook_clear"] = True
+
+
+def hook_moves(run, R, n, body, off, n0, res=None):
+    """Round 9 (run 14): the hoist's hook over a part arm n carries in a hoist-assisted place: for each move event recorded since
+    index n0, e["hook"] (one point per joint sample, the hook's bottom, HOOK_ABOVE over the part's top) and e["hook_clear"]
+    (the hook and its chain against the cell, the parts and both arms, checked every 4th sample)."""
+    a = run.arm(n)
+    o = "B" if n == "A" else "A"
+    ok_all, why_all = True, ""
+    for e in R.events[n0:]:
+        if e.get("kind") != "move" or e.get("arm") != n or e.get("q") is None:
+            continue
+        Q = np.asarray(e["q"], float)
+        frames = [a.tcp(q, e.get("close")) @ off for q in Q]
+        QA = Q if n == "A" else [run.q["A"]] * len(Q)
+        QB = Q if n == "B" else [run.q["B"]] * len(Q)
+        h = hoist_hook(run, body, frames, QA, QB, e.get("close") if n == "A" else run.arm("A").close,
+                       e.get("close") if n == "B" else run.arm("B").close, skip_arm=n)
+        e["hook"] = np.asarray(h["p"], np.float32)
+        e["hook_clear"] = h["clear"]
+        if not h["clear"] and ok_all:
+            ok_all, why_all = False, h["why"]
+    if res is not None:
+        res["hoist_hook"] = dict(clear=ok_all, why=why_all, above_mm=HOOK_ABOVE)
+    return ok_all, why_all
 
 
 def release(run, n, qs_back, opened=True):
@@ -392,7 +470,7 @@ HOOK_ABOVE = 300.0      # mm: the hoist's hook above the carried part's top (a l
 HOOK_BOX = (30.0, 12.0, 50.0)   # half-x, half-y, height of the hook as asm_render draws it; the chain is a Ø8 line up to z 2900
 
 
-def hoist_hook(run, body, frames, QA, QB, cA, cB):
+def hoist_hook(run, body, frames, QA, QB, cA, cB, skip_arm=None):
     """Round 9: where the hoist's hook is in each frame of a hoist-assisted carry (lift_aid), and whether it and its chain are
     clear. The hook hangs HOOK_ABOVE mm over the top of the carried part, over the centre of its footprint, on a lifting bar
     whose slings go to the part (eye bolts in tapped holes of its top face): it is never inside the part. The hook and the
@@ -426,6 +504,8 @@ def hoist_hook(run, body, frames, QA, QB, cA, cB):
             for y in world.bodies.values():
                 if y.name == "floor" or y is body or y.name.startswith("held:"):
                     continue
+                if skip_arm is not None and y.name.startswith(f"{skip_arm}/gr/") and "finger" in y.name:
+                    continue            # the guiding arm's fingers on the part's edge, under the lifting bar
                 if hit(x.obj, y.obj):
                     clear, why = False, f"{x.name} meets {y.name[:50]} at frame {k}"
                     break

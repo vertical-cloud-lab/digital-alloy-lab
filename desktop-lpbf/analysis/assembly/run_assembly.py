@@ -440,7 +440,27 @@ def arm_place(run, st, idx, path, state, actor, tool, holdname, grasp=None, extr
         if fr["ok"]:
             # plan from where the arm is to the start of the path, carrying the part
             a.place(run.q[actor], close)
-            path_q, info = run.plan_to(actor, fr["qs"][0], close, allow=allow, exclude=idx)
+            if st.get("lift_aid"):
+                # round 9 (run 14, F54): the hoist holds the part at the start of the path (a person brings it there on the
+                # hoist); the arm comes to its grasp empty with the gripper open, the part an obstacle it may only touch
+                T_start = T_obj @ Tm(p=offs[0])
+                tmp = Body("hoisted part (start)", body.v, body.f, kind="machine")
+                tmp.place(T_start)
+                held_pl = a.held
+                a.release()
+                run.cl.static["__hoisted"] = tmp
+                try:
+                    a.place(run.q[actor], 0.0)
+                    path_q, info = run.plan_to(actor, fr["qs"][0], 0.0, allow=allow | frozenset([("tool", "hoisted part (start)")]),
+                                               exclude=idx)
+                finally:
+                    run.cl.static.pop("__hoisted", None)
+                    if held_pl is not None:
+                        a.hold(*held_pl)
+                    a.close = close
+                res["T_start"] = T_start
+            else:
+                path_q, info = run.plan_to(actor, fr["qs"][0], close, allow=allow, exclude=idx)
             res["plan"] = info
             res["plan_ok"] = path_q is not None
             res["path"] = path_q
@@ -466,7 +486,8 @@ def arm_place(run, st, idx, path, state, actor, tool, holdname, grasp=None, extr
     acc = {}
     if CM.on():
         CM.place(run, st, idx, actor, tool, best, body, off, G, T_obj, close_for(run, actor, width, internal), state, acc)
-    return dict(ok=ok, why=why, dock=best["dock"], fetch=acc.get("fetch"), fetch_why=acc.get("fetch_why"), min_d=fr["min_d"], min_with=fr["with_"], dest=sorted(dest)[:4],
+    return dict(ok=ok, why=why, dock=best["dock"], fetch=acc.get("fetch"), fetch_why=acc.get("fetch_why"), hoist_hook=acc.get("hoist_hook"),
+                min_d=fr["min_d"], min_with=fr["with_"], dest=sorted(dest)[:4],
                 planned=best.get("plan", {}).get("planned"), waypoints=best.get("plan", {}).get("waypoints"),
                 grasp_width=round(width, 1), push_mm=fr.get("push_mm"), drop_mm=fr.get("drop_mm"))
 
@@ -567,6 +588,8 @@ def do_place(run, st, row):
         r = arm_place(run, st, u, path, state, actor, tool, f"held:{st['id']}:{sc.short(u[0])[:30]}", st.get("grasp"),
                       extra, internal=bool(st.get("grasp", {}).get("internal")), rot_deg=st.get("rot"))
         arm_all.append(r["ok"])
+        if r.get("hoist_hook"):
+            row["hoist_hook"] = r["hoist_hook"]
         if r.get("fetch"):
             row.setdefault("fetches", []).append(r["fetch"])
             if r.get("fetch_why"):
@@ -1749,6 +1772,19 @@ def ff_done(run):
                               held=None, tool_key=(s["tool"], tuple(sorted(s["spec"].items()))))
             if s["x"] is not None:
                 cl.move_mir(n, s["x"])
+            # round 9 (run 14): the planner's arm too, exactly where the continued recording left it (joints, tool, opening), so
+            # the next motion starts there and nothing jumps (round 8's continuations started both arms from park)
+            sp = s["spec"] or {}
+            if s["tool"] == "gripper":
+                cs = str(sp.get("cap_spec") or "")
+                run.set_tool(n, ("gripper+caps" if "ring" in cs else "gripper+plate") if sp.get("caps") else "gripper")
+            elif s["tool"] in ("screwdriver", "nutrunner", "nutrunner_angle"):
+                run.set_tool(n, s["tool"], sp.get("extra_bit") or None, tip_d=sp.get("tip_d"))
+            else:
+                run.set_tool(n, s["tool"])
+            if s["q"] is not None:
+                run.q[n] = np.asarray(s["q"], float)
+            run.arm(n).place(run.q[n], float(s["close"] or 0.0))
         R.chapter = "chamber"
         R.events = []
         R._chunk_n = len(files)
