@@ -570,8 +570,9 @@ still 579.6 mm tall). With them, `interference.py` finds 0 interferences in all 
 [`L75`](../analysis/out/monitoring/mech/interference-monitoring-L75-L.md),
 [`S25`](../analysis/out/monitoring/mech/interference-monitoring-S25-S.md); 2026-11-27 09:13–09:29 UTC). Those runs now peak at
 3.4–3.5 GiB, so they ran under `/tmp/heavy 3.5`. Exact distances to the neighbours: the bracket sits 2.0 mm over the BW clamp frame
-and 3.0 mm from the recoater sensor clamp; the asphere is 6.6 mm and the tube 7.2 mm from the clamp frame. The bracket needs two
-more M4 holes in the back wall above the clamp frame (x −141 and −129.5, z 69.25, 8 deep), in setup C's A180 program.
+and 3.0 mm from the recoater sensor clamp; the asphere is 6.6 mm and the tube 7.2 mm from the clamp frame. The bracket's two M4
+holes in the back wall above the clamp frame (x −141 and −129.5, z 69.25, 8 deep) are programmed in setup C's A180 program with
+the clamp frame's ([`fabrication.md`](fabrication.md) §2).
 
 ![The BW light in the model: from the front-left across its axis, and from behind and above (clamp and bracket see-through)](../analysis/out/monitoring/optics/bw_light_view.png)
 

@@ -26,7 +26,8 @@ can cut at its existing A indexes. This script programs them and checks the prog
            (lp_cam.py adds the lid's LP under "LP"; this keeps it).
 Re-run 2026-11-27 for the ports as drawn now (the LW seat Ø40.2 x 5.5, the clamp ring's holes at 60 deg on Ø49.5, the BW
 clamp frame's third screw moved): the frame's seven programs chained, 0 rapids through stock, no gouge deeper than 1 mm,
-0 holder or fixture collisions.
+0 holder or fixture collisions. Re-run later that day with the BW light bracket's two M4 holes in mon_C180 (5.11 min by
+recount): the same results.
 
 Run (FreeCAD 1.0.2: the conda AppImage FreeCAD_1.0.2-conda-Linux-x86_64-py311.AppImage, sha256 e00be00a...904f61 as the
 release's SHA256 file, extracted with --appimage-extract; CAMotics image built from analysis/machining/camotics.Dockerfile):

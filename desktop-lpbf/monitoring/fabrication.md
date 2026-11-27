@@ -12,6 +12,8 @@ have online instant quotes.
 > programmed for the first time, on a sine plate; the three flat parts were re-drawn and re-quoted; the hours follow. Three
 > findings change the design (§0): the LP adapter's screw holes as drawn sit in its own O-ring groove, the LW clamp ring's
 > holes were too close to its edge for SendCutSend's instant quote, and the BW clamp frame's third screw had 1.2 mm of metal.
+> Later that day the A180 program gained the two M4 holes the BW light's bracket screws into (optics.md §4.1). They are drawn
+> in `frame_features.py`, which the model and the CAM both read, and the frame's programs were checked again (§2).
 
 Scripts (all in [`analysis/monitoring/fab/`](../analysis/monitoring/fab/)):
 - [`frame_features.py`](../analysis/monitoring/fab/frame_features.py) draws the left-wall viewport (LW) and the back-wall light
@@ -50,12 +52,14 @@ Scripts (all in [`analysis/monitoring/fab/`](../analysis/monitoring/fab/)):
   would overlap the window flange (mechanics.md §0 item 2).
 
 **Every new feature is programmed and checked with the repo's pipeline** (FreeCAD 1.0.2, CAMotics 1.2.0, `holder_check.py`).
-- **The frame:** FreeCAD re-posted the LW port at A90 and the BW port at A180 for the ports as drawn now. They add
-  **2.44 min at A90 and 5.05 min at A180** of cutting (G-code recount), no new setup and no new A index.
+- **The frame:** FreeCAD re-posted the LW port at A90 and the BW port at A180 for the ports as drawn now; the A180 program
+  also drills the two M4 holes for the BW light's bracket. They add **2.44 min at A90 and 5.11 min at A180** of cutting
+  (G-code recount), no new setup and no new A index.
   - **CAMotics, on the frame's seven programs chained: 0 rapids through stock and no gouge deeper than 1 mm.** Leftover deeper
     than 1 mm is 0.025 cm³, all of it at the SAE-4 ports' threads and O-ring cones, which the port tool cuts.
   - **Holder, spindle, fixture and travel check: 0 collisions** in all seven setups. The tightest new clearance is still the
-    1/4 in. end mill's shank, 2.76 mm from the stock in the BW slot.
+    1/4 in. end mill's shank, 2.76 mm from the stock in the BW slot. The drill for the bracket's holes stays 10 mm or more
+    from the fixtures.
 - **The lid (LP), new:** two programs, the lid flat (the groove and the four tap holes, 5.84 min) and the lid on the sine plate
   (the bore, 1.05 min). CAMotics on the lid: no gouge and no leftover deeper than 0.5 mm. Holder check: 0 collisions; the bore
   tool's holder passes 8.7 mm from the lid's top face where it rises toward the holder. They need two new tools: a 2.0 mm end
@@ -84,7 +88,7 @@ Scripts (all in [`analysis/monitoring/fab/`](../analysis/monitoring/fab/)):
 - The 14 small custom parts would take **48.3 h** if all were made here. Most are flat: **SendCutSend priced three of them
   on 2026-11-27 at $7.43–10.26 each** in 6061 plate (no account; they arrive Dec 1). The compound-angle boss for the lid camera
   is the one machined part worth buying ($379 at SendCutSend CNC for the layer camera's boss).
-- Recommended: **about 12.7 h in house and about $516 outside**, plus three parts bought instead of made.
+- Recommended: **about 12.8 h in house and about $516 outside**, plus three parts bought instead of made.
 
 **Bought parts** ([`monitoring-bom.csv`](../monitoring-bom.csv), list prices read on the vendors' pages on 2026-11-25; the three
 laser-cut parts re-quoted on 2026-11-27):
@@ -195,8 +199,9 @@ plate (the sight line plus ~35 mm, assumed).
 
 ### 2.1 The features
 [`frame_features.py`](../analysis/monitoring/fab/frame_features.py) ([`frame_features.json`](../analysis/out/monitoring/fab/frame_features.json))
-cuts them into the frame as `inventory.py` exports it from the default build. 35.0 cm³ come off: the frame goes from 1,582.5 to
-1,547.6 cm³. `cad/monitoring_parts.py` cuts the same solids into the model's frame.
+cuts them into the frame as `inventory.py` exports it from the default build. 35.2 cm³ come off: the frame goes from 1,582.5 to
+1,547.3 cm³. `cad/monitoring_parts.py` cuts the same solids into the model's frame: on a full build with the monitoring parts
+(337 parts, 2026-11-27) its frame is 1,547.3 cm³ too.
 
 | Port | Feature | Size | Where (model, mm) | Tool, as programmed |
 |---|---|---|---|---|
@@ -207,12 +212,17 @@ cuts them into the frame as `inventory.py` exports it from the default build. 35
 | BW, A180 | window seat | 58 × 27 mm, R4 corners, 4.5 deep (3 mm window between two 0.75 mm FKM layers) | 1 mm toward +x of the slot's middle | T9, adaptive |
 | | slot | obround 51.2 × 20.5 through, long axis 13° below x | ends at (x −130.7, z 30.8) and (−101.3, 23.9), R10.25 | T9, adaptive (T3 found no helix entry in 20.5 mm) |
 | | clamp-frame holes | 3 × M4 × 0.7, 8 deep | (−133.3, 49.9), (−88.5, 39.4) above the seat; (−86.0, 9.1) at its lower +x corner (was (−82.4, 19.5)) | T6; tap not programmed |
+| | light-bracket holes | 2 × M4 × 0.7, 8 deep | (−141.0, 69.25) and (−129.5, 69.25), above the clamp frame, under the BW light's bracket (optics.md §4.1) | T6, after the clamp-frame holes; tap not programmed |
 
 Checks on the model (`frame_features.json`):
 - **The clear apertures are clear:** 0.000 mm³ of frame inside the LW's Ø25 and the BW's Ø20 sight cylinders across the walls.
 - **Wall left to the existing holes:** LW bore 13.9 mm to the through-beam's counterbore, seat 8.6 mm to an M4 floor screw,
   clamp holes 9.5 mm or more. BW seat 2.5 mm to the outer R8 corner; clamp holes 6.1 mm and more, but the moved third one
   2.1 mm to a floor screw's hole below it.
+- **The BW light's bracket holes** (`light_bracket` in the JSON; `gaps_to_existing_features`): the first one's thread is
+  5.0 mm from the outer R8 corner, where the back face's flat ends (x −148); the second one's bottom is 6.0 mm from the back
+  wall's inner face. Their threads are 8.8 mm or more from the clamp frame's outline and 21 mm or more from the seat pocket.
+  On the full build each sits under the bracket's Ø4.5 clearance hole, on the same axis.
 - **The LW clamp ring** (Ø58 × 6.35, ID 31): 2.0 mm of ring outside each Ø4.5 hole, 2.97 mm between its flat and the nearest
   hole, 3.0 mm of wall between each tap drill and the seat.
 - **The BW clamp frame** as the model trims it (to the wall's flat face, its bottom edge, and 1 mm clear of the inlet plenum's
@@ -237,8 +247,9 @@ here with FreeCAD 1.0.2 (the official conda AppImage, sha256 checked; see Run):
 2. **Run 2:** `freecad_cam.run_cam()` on the frame with the ports, for two jobs:
    - `frame_C90` unchanged. Its wall op found the LW seat, bore, clamp holes, purge port and passage by itself, and programmed them
      with the existing recoater bore and through-beam: seat before bore, as for the SAE ports.
-   - `mon_C180`, new, after the existing `frame_C180`: the BW seat and slot (Adaptive inside their outlines) and the clamp holes.
-     The existing A180 job can't run on the new frame: its inlet-slot op profiles every inner wire of the back face, and the seat's
+   - `mon_C180`, new, after the existing `frame_C180`: the BW seat and slot (Adaptive inside their outlines), the clamp holes,
+     and the two holes for the BW light's bracket (a second drill op with the same 3.3 mm drill, so no new tool change). The
+     existing A180 job can't run on the new frame: its inlet-slot op profiles every inner wire of the back face, and the seat's
      outline is now one of them, so it would cut the seat through the wall. The one change to `freecad_cam.py`'s logic, made in
      memory, lets an op name its faces or edges.
 3. The setup-C blocks join into one Haas program with the A moves (A0, A90 with the LW, A180, A180 again for the BW, A270; 18
@@ -257,38 +268,40 @@ here with FreeCAD 1.0.2 (the official conda AppImage, sha256 checked; see Run):
 | A90, before | 0.35 | 0.36 | 4.5 | 0 | 0 |
 | A90 with the LW | 2.79 | 2.84 | 20.6 | 0 | 0 |
 | A180 (unchanged) | 2.24 | 2.41 | 17.7 | 0 | 0 |
-| mon_C180, the BW | 5.05 | 5.20 | 18.2 | 0 | 0 |
+| mon_C180, the BW and the light bracket's holes | 5.11 | 5.28 | 18.4 | 0 | 0 |
 
 - **The LW's ops:** seat (Ø40.2) 1.15 min, bore 1.01, purge port 0.12, the four clamp-hole drills 0.10, the passage 0.02 (recount).
-- **The BW's ops:** seat 2.09 min, slot 2.77, clamp holes 0.08.
-- **CAMotics, whole frame:** the model with the ports is 1,549.1 cm³ on the 0.5 mm grid, and CAMotics leaves 1,555.7 cm³
-  (+0.42 %).
+- **The BW's ops:** seat 2.09 min, slot 2.77, clamp holes 0.08, the light bracket's holes 0.05 (the same 3.3 mm drill, so no
+  new tool change).
+- **CAMotics, whole frame:** the model with the ports is 1,548.9 cm³ on the 0.5 mm grid, and CAMotics leaves 1,555.5 cm³
+  (+0.43 %).
   - No gouge deeper than 1 mm (deepest 0.5 mm, voxel noise).
   - Leftover deeper than 1 mm: 0.025 cm³ in 74 spots, deepest 1.22 mm, at the three SAE-4 ports' threads and O-ring
-    cones (the purge port's at x −156, y −20 to −13, z 66–73), which the port tool cuts.
+    cones (the purge port's at x −156, y −20 to −13, z 66–73), which the port tool cuts. The bracket's two holes add none
+    deeper than 1 mm: the drill leaves only the 0.35 mm the tap cuts, as at the clamp-frame holes.
   - No loose pieces: the adaptive clears the BW slot, so no slug drops into the frame.
   - The walls, model beside CAMotics:
 
   ![](../analysis/out/monitoring/fab/camotics_walls_monitoring.png)
 - **Holder check** ([`holder_check.py`](../analysis/machining/holder_check.py) on the chain): 0 collisions in all seven setups.
   - Tightest new clearances: the 1/4 in. end mill's shank 2.76 mm to the stock in the BW slot (its flutes 0.5 mm, the allowance);
-    fixtures 10 mm or more at mon_C180. At A90 the 1/4 in. end mill's flutes stay 3.85 mm from the dummy-floor plate at the
-    through-beam counterbore.
+    fixtures 10 mm or more at mon_C180, the bracket's holes included. At A90 the 1/4 in. end mill's flutes stay 3.85 mm from
+    the dummy-floor plate at the through-beam counterbore.
   - The holder check's own chained stock: no gouge deeper than 1 mm; leftover deeper than 1 mm 0.182 cm³ in 39 spots, at the
     SAE-4 ports' thread rings and O-ring cones, which the port tool cuts (not programmed).
-- **Not programmed, as before:** the M4 taps (7), the SAE-4 port tool, spot drills. `hours_monitoring.py` adds 0.4 min a tap and
-  1 min for the port tool.
+- **Not programmed, as before:** the M4 taps (9, with the bracket's two), the SAE-4 port tool, spot drills.
+  `hours_monitoring.py` adds 0.4 min a tap and 1 min for the port tool.
 
 ### 2.4 Hours added to machining.md's totals
-- **Frame:** no new setup and no new A index; the clamping is the same. CAM 0.37 h (LW) and 0.55 h (BW): 0.015 h a hole as in
-  `hours.py`, plus 0.25 h for each new feature that is not a plain hole (an assumption: `hours.py` has no rule for adding to a
-  proven program). Run 0.09 h and 0.11 h with the taps. Inspecting the two new seats 0.25 h each.
+- **Frame:** no new setup and no new A index; the clamping is the same. CAM 0.37 h (LW) and 0.57 h (BW, with the bracket's
+  holes): 0.015 h a hole as in `hours.py`, plus 0.25 h for each new feature that is not a plain hole (an assumption: `hours.py`
+  has no rule for adding to a proven program). Run 0.09 h and 0.12 h with the taps. Inspecting the two new seats 0.25 h each.
 - **The frame's programmed run time** goes from 65.1 to about 72.6 min.
 - **The lid:** LP adds 3.6 h, most of it the sine-plate setup (§3.1).
 - **Totals:** machining.md's 287.3 h with a 4th axis (302.3 h on 3 axes) over 57 parts grows by **5.7 h** for the features on
   the frame, lid, bridge and heater block.
   - Making all 14 new small parts here would add **48.3 h** more (to ~341 h).
-  - With the recommended split (§3) the shop does **12.7 h** in all (to ~300 h), and about $516 of parts come from outside.
+  - With the recommended split (§3) the shop does **12.8 h** in all (to ~300 h), and about $516 of parts come from outside.
 
 ## 3. The lid, the bridge, the liners and the small parts
 
@@ -359,7 +372,7 @@ mechanics.md Checks §5 (f1 128 Hz, −0.1 %).
 | Item | Where / how | Hours in house | In house | Outside | Call |
 |---|---|---:|---:|---:|---|
 | LW port in the left wall: Ø40.2 x 5.5 window seat, Ø31 bore, 4 x M4 on Ø49.5, SAE-4 purge port + Ø4 passage | chamber frame, setup C at A90 (programmed, simulated, holder-checked) | 0.7 | $46 | - | make |
-| BW port in the back wall: 58 x 27 R4 window seat 4.5 deep, 51.2 x 20.5 obround slot, 3 x M4 (the third at the seat's lower +x corner) | chamber frame, setup C at A180 (programmed, simulated, holder-checked) | 0.9 | $59 | - | make |
+| BW port in the back wall: 58 x 27 R4 window seat 4.5 deep, 51.2 x 20.5 obround slot, 3 x M4 (the third at the seat's lower +x corner); 2 x M4 above it for the BW light's bracket | chamber frame, setup C at A180 (programmed, simulated, holder-checked) | 0.95 | $61 | - | make |
 | LP in the lid, flat: the adapter's face O-ring groove (2-025, ID 31.2 x 2.3 x 1.32) and 4 x M4 on Ø48 | chamber lid, its +z setup (programmed in lp_cam.py, simulated, holder-checked) | 0.7 | $45 | - | make |
 | LP bore Ø24 on the line of sight, the lid on a sine plate at 27.93 deg: a new setup on the lid | chamber lid on a sine plate (programmed in lp_cam.py, simulated, holder-checked) | 2.9 | $186 | - | make |
 | Optics-bridge cut-out for the LP camera (54.7 x 60.1 mm through 25 mm, 74.5 cm3; in no program) | optics bridge, its existing +z setup (estimated) | 0.5 | $29 | - | make |
@@ -471,10 +484,10 @@ put in a cart.
 | The same, as recommended | 7.1 h | $516 | 3 parts bought instead | Dec 1 for the laser parts; 6–15 days for the CNC boss |
 | Bought parts, steps 0–8 (route A) | - | - | $23,092–25,554 ($21,020 with used listings) | days, except §0's lead-time items |
 
-- **Total, as recommended:** about 12.7 h of shop time (~$827 at $65/h), about $516 of outsourced parts, and
-  $23,092–25,554 of bought parts. The 2.9 h more than on 2026-11-25 is LP's bore on the line of sight: a setup of its own
-  on a sine plate (1.25 h for a large part as hours.py has it, 0.5 h to set the plate, 0.85 h of CAM), where the old Ø37 bore
-  normal to the lid rode on the lid's top setup.
+- **Total, as recommended:** about 12.8 h of shop time (~$831 at $65/h), about $516 of outsourced parts, and
+  $23,092–25,554 of bought parts. The 3.0 h more than on 2026-11-25 is mostly LP's bore on the line of sight: a setup of its
+  own on a sine plate (1.25 h for a large part as hours.py has it, 0.5 h to set the plate, 0.85 h of CAM), where the old Ø37
+  bore normal to the lid rode on the lid's top setup. The BW light bracket's two holes add 0.05 h.
 - **Two new tools** (not in tooling-bom.csv): a 2.0 mm 2-flute carbide end mill for the LP groove and a 1/2 in. × 1-1/2 in.
   LOC × 4 in. carbide end mill for the LP bore; tens of dollars each, not priced.
 - **The long pole** is a back-ordered Thorlabs detector and two overseas Thorlabs parts (steps 5, 6 and 8), and the AE quotes
@@ -494,7 +507,7 @@ put in a cart.
 - **The optics bridge's cut-out is estimated, not programmed** (no program in the repo covers the bridge). The liners and the
   small parts are estimated too.
 - **The A131.6 index for the BW was not programmed or checked.**
-- **Not programmed, so not simulated:** taps (7 on the frame, 4 on the lid), the SAE-4 port tool, spot drills, deburring.
+- **Not programmed, so not simulated:** taps (9 on the frame, 4 on the lid), the SAE-4 port tool, spot drills, deburring.
   CAMotics models drills as flat-ended.
 - **The optics of the tilted LW window** use a thin-plate formula with an assumed pupil distance; ghost reflections and the
   window's wedge are not modelled.
