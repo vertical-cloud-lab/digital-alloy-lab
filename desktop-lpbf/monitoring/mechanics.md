@@ -98,9 +98,9 @@ the argon line to the purge valve, the InGaAs and SWIR options (step 8), and any
 - **S25 and L75 too** (re-run on the merged branch, 2026-11-25 22:52–23:02 UTC): no interference in the same six states and
   eight sweeps, with 28 and 33 designed joints ([`S25`](../analysis/out/monitoring/mech/interference-monitoring-S25-S.md),
   [`L75`](../analysis/out/monitoring/mech/interference-monitoring-L75-L.md)).
-- **With the guard's bulkhead (MN-28, round 3, 2026-11-27):** 345 parts on M50, eight of them the bulkhead's. No interference in
-  the six states or the eight sweeps on M50 (11:02–11:08 UTC), S25 and L75 (BULKHEAD_S25_L75_TIMES). The bulkhead's parts touch
-  only the panel and each other, face to face, so they add no designed joint (eight contacts are declared anyway), and the
+- **With the guard's bulkhead (MN-28, round 3, 2026-11-27):** eight parts more: 345 on M50 and L75, 341 on S25. No interference
+  in the six states or the eight sweeps on M50 (11:02–11:08 UTC), L75 (11:08–11:14) and S25 (11:14–11:19). The bulkhead's parts
+  touch only the panel and each other, face to face, so they add no designed joint (eight contacts are declared anyway), and the
   sweeps' tightest gaps are unchanged. Tightest static gaps to the rest (exact OpenCascade distances, closed state, M50): the
   outside cables 9.5 mm from the rack's side panel and frame, the shroud 9.9 mm over the optics bridge, the plate 12 mm above
   the inlet filter's frame and 16 mm from the inlet trap, the inside cables 31 mm over the collimator.

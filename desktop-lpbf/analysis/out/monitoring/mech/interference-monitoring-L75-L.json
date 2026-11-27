@@ -2,12 +2,12 @@
  "variant": "L75 module, L reservoir",
  "vol_tol_mm3": 0.5,
  "chord_mm": 0.05,
- "n_parts": 337,
+ "n_parts": 345,
  "states": [
   {
    "state": "closed, parked, piston up",
    "pose": {},
-   "pairs_checked": 2288,
+   "pairs_checked": 2315,
    "interferences": []
   },
   {
@@ -16,7 +16,7 @@
     "recoater": 206.0,
     "piston": -42.0
    },
-   "pairs_checked": 2225,
+   "pairs_checked": 2252,
    "interferences": []
   },
   {
@@ -26,7 +26,7 @@
     "gdoor": 515.0,
     "piston": 8.0
    },
-   "pairs_checked": 2298,
+   "pairs_checked": 2325,
    "interferences": []
   },
   {
@@ -37,7 +37,7 @@
     "cartridge": -125.0,
     "drawer": -120.0
    },
-   "pairs_checked": 2255,
+   "pairs_checked": 2282,
    "interferences": []
   },
   {
@@ -47,7 +47,7 @@
     "module": 40.0,
     "gdoor": 515.0
    },
-   "pairs_checked": 2194,
+   "pairs_checked": 2221,
    "interferences": []
   },
   {
@@ -56,7 +56,7 @@
     "_calibration": 1.0,
     "door": 95.0
    },
-   "pairs_checked": 2300,
+   "pairs_checked": 2327,
    "interferences": []
   }
  ],
@@ -12508,5 +12508,5 @@
    "why": "tube in the valve's push-in port"
   }
  ],
- "runtime_s": 234.8
+ "runtime_s": 325.0
 }
