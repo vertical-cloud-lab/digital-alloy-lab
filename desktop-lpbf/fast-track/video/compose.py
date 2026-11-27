@@ -196,6 +196,87 @@ def top_bar(im, ov, title_alpha):
         im.paste(card, (0, E.H3 - 200), card)
 
 
+# ------------------------------------------------------------------------------------------------ chart cards
+# One series per chart, so one hue: the dataviz skill's dark categorical slot 1, checked against the panel colour with its
+# validate_palette.js (--mode dark --surface #1f2a36: all checks pass, contrast >= 3:1). Rows are named on the axis and
+# every bar carries its numbers as text, so nothing is read from colour alone; README.md has the same numbers as a table.
+BAR, GRID = "#338ced", "#3a4856"
+
+
+def range_chart(d, x, y, w, rows, xmax, ticks, tick_txt, title, sub="", label_w=330, row_h=30, val_w=170):
+    """Horizontal range bars from lo to hi on a linear axis from 0; rows = [(label, lo, hi, value text)]. Returns the y
+    under the axis labels."""
+    d.text((x, y), title, font=font(18, True), fill=INK)
+    y += 26
+    if sub:
+        d.text((x, y), sub, font=font(13), fill=MUTED)
+        y += 22
+    y += 6
+    xa, xb = x + label_w, x + w - val_w
+    ya, yb = y, y + len(rows) * row_h
+
+    def X(v):
+        return xa + (xb - xa) * v / xmax
+    for t in ticks:
+        d.line((X(t), ya, X(t), yb), fill=GRID, width=1)
+        tw = d.textlength(tick_txt(t), font=font(12))
+        d.text((X(t) - tw / 2, yb + 5), tick_txt(t), font=font(12), fill=MUTED)
+    for i, (lab, lo, hi, val) in enumerate(rows):
+        cy = ya + i * row_h + row_h / 2
+        lab = lab if d.textlength(lab, font=font(14)) <= label_w - 14 else wrap(d, lab, font(14), label_w - 30)[0] + " ..."
+        d.text((x, cy - 9), lab, font=font(14), fill=INK)
+        a, b = X(lo), X(hi)
+        if b - a < 10:
+            d.ellipse((a - 5, cy - 5, a + 5, cy + 5), fill=BAR)
+            b = a + 5
+        else:
+            d.rounded_rectangle((a, cy - 7, b, cy + 7), radius=4, fill=BAR)
+        d.text((b + 10, cy - 9), val, font=font(13), fill=INK)
+    return yb + 26
+
+
+def wk(days):
+    return f"{days / 5:.1f}".rstrip("0").rstrip(".")
+
+
+def card(ov):
+    """The chart card drawn over the 3-D picture: the orders and when they arrive (chapter 0), or the summary of the
+    milestones and the running spend (chapter 7). Returns (RGBA image, position)."""
+    if ov.get("summary"):
+        sm = ov["summary"]
+        w, h = 1300, 590
+        im = Image.new("RGBA", (w, h), (31, 42, 54, 246))
+        d = ImageDraw.Draw(im)
+        x, y = 36, 28
+        rows = [(m.replace(" (< 100 ppm)", ", < 100 ppm"), lo / 5, hi / 5, f"weeks {wk(lo)}-{wk(hi)}  (days {lo}-{hi})")
+                for m, lo, hi in sm["milestones"]]
+        y = range_chart(d, x, y, w - 2 * x, rows, 8.0, range(0, 9), lambda t: f"{t}", "Milestones: weeks from the order",
+                        f"working days / 5; earliest to latest, scenario {sm.get('scenario', '')}", label_w=380, row_h=34,
+                        val_w=230)
+        d.text((x + 380, y - 4), "weeks", font=font(12), fill=MUTED)
+        y += 34
+        sp = sm["spend"]
+        order = [st for st in ("S1", "S2", "FT-0", "FT-1", "FT-1V") if st in sp]
+        rows = [(f"{st} built", sp[st][0] / 1000, sp[st][1] / 1000, f"{money(sp[st][0])} - {money(sp[st][1])}")
+                for st in order]
+        y = range_chart(d, x, y, w - 2 * x, rows, 50.0, range(0, 51, 10), lambda t: f"${t}k",
+                        "Running spend when each state is built (US$)",
+                        "parts.csv low and high list prices, counted as ft_progression.spend() counts them", label_w=380,
+                        row_h=34, val_w=230)
+        return im, ((E.W3 - w) // 2, 150)
+    orders = ov["orders"]
+    w = 820
+    h = 22 + 26 + 22 + 6 + 27 * len(orders) + 26 + 16
+    im = Image.new("RGBA", (w, h), (31, 42, 54, 240))
+    d = ImageDraw.Draw(im)
+    rows = [(o, lo / 5, hi / 5, f"weeks {wk(lo)}-{wk(hi)}") for o, lo, hi in orders]
+    xmax = max(4.0, float(np.ceil(max(r[2] for r in rows))))
+    range_chart(d, 28, 22, w - 56, rows, xmax, range(0, int(xmax) + 1), lambda t: f"{t}",
+                "When each order is in hand", "weeks from day 0 (working days / 5), earliest to latest, scenario A",
+                label_w=300, row_h=27, val_w=130)
+    return im, (40, 118)
+
+
 def chapters():
     out = []
     for d in sorted(FR.glob("ch*")):
@@ -229,7 +310,7 @@ def main():
     p = subprocess.Popen(ff, stdin=subprocess.PIPE)
     k = 0
     chap_txt, starts = [], []
-    pcache = {}
+    pcache, ccache = {}, {}
     shots = []
     t0 = time.time()
     last_img = (None, None)
@@ -260,6 +341,12 @@ def main():
             tt = r["t"]
             ta = 1.0 if tt < 2.5 else max(0.0, 1.0 - (tt - 2.5) / 0.7)
             top_bar(frame, ov, ta)
+            if ov.get("orders") or ov.get("summary"):
+                ck = json.dumps([ov.get("orders"), ov.get("summary")], sort_keys=True)
+                if ck not in ccache:
+                    ccache[ck] = card(ov)
+                cim, cpos = ccache[ck]
+                frame.paste(cim, cpos, cim)
             dd = ImageDraw.Draw(frame)
             dd.rectangle((0, H - 6, int(W * (k + 1) / total), H), fill="#f0a63a")
             p.stdin.write(frame.tobytes())
