@@ -1509,7 +1509,7 @@
     "Q_block_min": 24.05,
     "runtime_s": 139.4,
     "n_factor": 9,
-    "clearance_change_min_um": -14253.5,
+    "clearance_change_min_um": -14.3,
     "platform_max": 26.75,
     "plate_mean_rise_layer1_K": 2.08,
     "trace": {
@@ -4394,7 +4394,7 @@
     "Q_block_min": 0.0,
     "runtime_s": 182.6,
     "n_factor": 22,
-    "clearance_change_min_um": -32326.2,
+    "clearance_change_min_um": -32.3,
     "platform_max": 26.82,
     "plate_mean_rise_layer1_K": 4.16,
     "trace": {
@@ -7547,7 +7547,7 @@
     "Q_block_min": 24.51,
     "runtime_s": 151.1,
     "n_factor": 15,
-    "clearance_change_min_um": -14990.7,
+    "clearance_change_min_um": -15.0,
     "platform_max": 26.53,
     "plate_mean_rise_layer1_K": 1.08,
     "trace": {
@@ -10432,7 +10432,7 @@
     "Q_block_min": 0.0,
     "runtime_s": 310.7,
     "n_factor": 47,
-    "clearance_change_min_um": -34265.0,
+    "clearance_change_min_um": -34.3,
     "platform_max": 26.58,
     "plate_mean_rise_layer1_K": 2.17,
     "trace": {

@@ -22,11 +22,11 @@ X-LSM100B and rod-end block drawn from the makers' STEP numbers, four Ø6 x 20 m
   65/55 °C in still air and 64/52 °C at the end of a 15 mm build: fine for FKM (and for nitrile).
 - **The 0.1 mm plate-bore gap does not bind.** At 200 °C the plate is 2.5-5 K warmer than the bore wall, which
   closes the radial gap by 0.9-1.7 µm. It would take the plate running ~210 K above the block to close it. The worst
-  cases modelled: −38 µm during warm-up with 2 x 50 W in the block (plate up to 80 K ahead of the block), −52 µm with
-  90 W of laser heat absorbed and the heaters off.
+  cases modelled: −38 µm during warm-up with 2 x 50 W in the block (plate up to 80 K ahead of the block), −52 to −54 µm
+  with 90 W of laser heat absorbed and the heaters off.
 - **Warm-up (case 2).** From 20 °C, under PI at full power: substrate at 199 °C after **6.5 min** with 4 x 50 W in
   the block (9.5 min with 2 x 50 W); block TC at 199 °C after 9.7 min (20 min with 2 x 50 W); overshoot 1.3-1.7 K
-  at the substrate, 2.4 K at the block. The substrate is within ±1 K after 9.8 min (15.4 min with 2 x 50 W); the block does not overshoot. The X-VSR20A platform takes ~85 min to come within 0.5 K of its steady 26.7 °C (mostly the room warming it from 20 °C), and drifts by 1.1 K after the first hour, ~1 µm of its lift.
+  at the substrate and none at the block. The substrate is within ±1 K after 9.8 min (15.4 min with 2 x 50 W). The X-VSR20A platform takes ~85 min to come within 0.5 K of its steady 26.7 °C (mostly the room warming it from 20 °C), and drifts by 1.1 K after the first hour, ~1 µm of its lift.
 - **Laser heat (case 3).** The plate stack passes heat to the block at **0.83 W/K** across the gap (0.69 W/K at
   the end of a 15 mm build, when 5 mm of the plate is below the block), close to the 0.9 W/K estimate. The
   substrate top only sees **0.67 W/K**, because the substrate-to-plate contact (2,000 W/m²K, an estimate) adds
@@ -177,7 +177,8 @@ held at 200 °C; the FE gives +106 K, because the plate pushes ~56 W into the bl
 losses, so the block heater switches off and the block rises 16 K. So the dwell study's numbers at 0.67 W/K stand,
 with two corrections:
 1. On the bare substrate the top swings 5 times more per layer than a 105 J/K lump (11-22 K against 2-4 K).
-2. With the block at its set point, a no-dwell build at A ≳ 0.55 also drives the block over its set point.
+2. With the block at its set point, a no-dwell build at A above ~0.53 (more than ~61 W absorbed) also switches the
+   block heater off and drives the block over its set point.
 
 **What changes the answer** (FE at pz 0, steady sweeps with the change, and 12 layers at A = 0.3 for the swing):
 
@@ -201,7 +202,7 @@ substrate's surface heating next to the footprints during each 3 s exposure; a s
 Not run in the FE (estimate): a deliberate leak through the rod. A solid 6061 rod (Ø12.7 mm, ~85 mm from the socket
 to the rod-end block, ~0.25 W/K) into a water-cooled rod-end block would draw ~44 W from the plate at 200 °C. The
 plate heater makes that up at idle (55 W of its 100 W), and the laser displaces it during a build, so a +10 K band
-would take ~55 W absorbed: close to a no-dwell build at A ≤ 0.5. The cost: a water circuit at the stage, the gland
+would allow ~55 W absorbed: close to a no-dwell build at A ≤ 0.5. The cost: a water circuit at the stage, the gland
 O-rings at ~120 °C (FKM is rated to 200 °C), and a rod whose length follows the plate's temperature.
 
 ### FT-1V
@@ -229,7 +230,7 @@ behaviour, and so case 3, carries over unchanged. Still air in the cube was not 
     convection.
   - On coaxial faces the gap is the design value: 0.1 mm plate-bore, 0.1 mm rod-gland, and contact for the rod in
     its clamp and socket. The reason: the faceted meshes of a Ø40 bore sag by up to 0.06 mm between nodes, as much
-    as the gap. Before this fix the ray-cast gap read as contact in places and gave 1.0 W/K (3.9 W/K on a coarse
+    as the gap. Before this fix the ray-cast gap read as contact in places and gave about 1.0 W/K (3.9 W/K on a coarse
     mesh) instead of 0.83 W/K.
 - **Solver.** Own P1 finite elements (scipy sparse LU): conduction, lumped heat capacity, and the convection and
   radiation coefficients iterated (Picard). The two heater powers are extra unknowns at steady state, or PI loops in
