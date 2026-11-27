@@ -48,13 +48,13 @@ Updated in round 2 (2026-11-27); §0 lists what the detailed design work changed
   - **Custom parts:** 31 kinds of piece to FT-1, every one programmed in FreeCAD CAM and checked in a voxel
     simulation: **59–123 shop hours** with PR 266's allowances, not the 25–40 that round 1 guessed
     ([`fab/`](fab/)). No honing, no vacuum seals, no 4th axis.
-  - **Cost:** **$28.9k–46.7k** with the monitoring set (camera, raking lights, coaxial photodiode, acoustic emission,
-    digitizer), **$23.6k–38.5k without it**, against $70.5k–154.1k for PR 266's BOM.
+  - **Cost:** **$28.8k–46.7k** with the monitoring set (camera, raking lights, coaxial photodiode, acoustic emission,
+    digitizer), **$23.6k–38.4k without it**, against $70.5k–154.1k for PR 266's BOM.
   - **Time:** first tracks at 2.7–7.3 weeks and **first coupons at 3.7–9.3 weeks** with the two stages on separate
     vendors' PCard orders and the shop giving 5–8 hours a working day. **With two people in the shop (12 h a day) the
-    coupons come at 3.2–6.5 weeks.** On one purchase order for both stages: 4.2–9.3 weeks.
+    coupons come at 3.2–6.4 weeks.** On one purchase order for both stages: 4.2–9.3 weeks.
 - **FT-0 is FT-1's first half:** the same optics, box and heated plate without the stages, spread by hand with a film
-  applicator. It lays single tracks and single-layer pads at **1.9–5.3 weeks for $20.8k–36.6k** ($16.3k–30.4k
+  applicator. It lays single tracks and single-layer pads at **1.9–5.2 weeks for $20.7k–36.5k** ($16.3k–30.3k
   without monitoring), and it is worth doing even if FT-1 follows, because it checks the used laser chain inside its
   return windows.
 - **What FT-1 gives up**, all of which can come back later:
@@ -140,9 +140,9 @@ The parts that make the machine slow come from requirements a first machine does
 | | Alternative | Parts + shop time | First tracks | First coupons | O₂ | Heated plate | Main risk | Verdict |
 |---|---|---|---|---|---|---|---|---|
 | A | PR 266's design, fast-tracked (used majors, swapped switches, outsourcing split) | $70k–76k at spec with used majors (`lead-times.md`) | ~11.3–13.5 wk | ~12–15 wk | 1–10 ppm | Ø25/50/75 modules | honing, 134+ BYU hours | the long-term machine, not a 6-week one |
-| **FT-0** | **Single-track bench**: used laser chain over a heated plate in a stainless box, hand-spread layers | **$20.8k–36.6k** ($16.3k–30.4k without monitoring) | **1.9–5.3 wk** | single layers and pads only | 100–1000 ppm (flow) | Ø40, 200 °C | the used laser's condition | **do first** |
-| **FT-1** | **Purge-box LPBF**: FT-0 plus a heated well, a piston stage and a hopper-blade stage | **$28.9k–46.7k** ($23.6k–38.5k without monitoring) | **2.7–7.3 wk** (PCard stages) / 3.2–7.3 wk (one PO) | **3.7–9.3 wk** / 4.2–9.3 wk; 3.2–6.5 wk with two people in the shop | 100–1000 ppm (flow) | Ø40 well, 200 °C | shop hours; approvals; hopper flow with fine Al | **recommended** |
-| FT-1V | FT-1 in a stock vacuum cube with a pump-purge kit | $39.9k–59.8k | 3.4–8.4 wk | 4.4–10.4 wk | < 100 ppm in 2–3 cycles | Ø40 well, 200 °C | stages and grease under vacuum; two POs | if O₂ below 100 ppm is required from day 1 |
+| **FT-0** | **Single-track bench**: used laser chain over a heated plate in a stainless box, hand-spread layers | **$20.7k–36.5k** ($16.3k–30.3k without monitoring) | **1.9–5.2 wk** | single layers and pads only | 100–1000 ppm (flow) | Ø40, 200 °C | the used laser's condition | **do first** |
+| **FT-1** | **Purge-box LPBF**: FT-0 plus a heated well, a piston stage and a hopper-blade stage | **$28.8k–46.7k** ($23.6k–38.4k without monitoring) | **2.7–7.3 wk** (PCard stages) / 3.2–7.3 wk (one PO) | **3.7–9.3 wk** / 4.2–9.3 wk; 3.2–6.4 wk with two people in the shop | 100–1000 ppm (flow) | Ø40 well, 200 °C | shop hours; approvals; hopper flow with fine Al | **recommended** |
+| FT-1V | FT-1 in a stock vacuum cube with a pump-purge kit | $39.9k–59.7k | 3.4–8.4 wk | 4.4–10.4 wk | < 100 ppm in 2–3 cycles | Ø40 well, 200 °C | stages and grease under vacuum; two POs | if O₂ below 100 ppm is required from day 1 |
 | E | Laser engraver as the base (PR 266 §1b) | $7.5k–9.5k for a 200 W MOPA engraver | – | – | – | add-on | pulsed only: Monport's GT 200W has no CW or quasi-CW mode, and its board is closed (Sterling's 2026-11-19 update) | no: with a CW laser swapped in it becomes FT-0 with marking-grade optics |
 | F | Buy a commercial desktop unit (AO Metal A30, Xact XM200C, ...) | $59k–130k (PR 266 §2.2) | vendor lead time + PO and any bid steps | – | ≤ 1000–3000 ppm typical | none listed on the desktop units | lead times not published; no heated plate | the go/no-go fallback, not a 6-week route |
 | G | Reduced-build-volume insert in BYU's Concept Laser M2 | an insert, ~$1k–5k (estimate) | 2–6 wk (estimate; depends on that lab) | same | the M2's | check whether the M2 has one | the lab's willingness, warranty and schedule | ask this week |
@@ -424,7 +424,7 @@ to FT-1, made each fabrication-ready, programmed it in FreeCAD CAM and checked e
 deburring on top of the programs' cycle times (the low end uses `robot-shop.md`'s smaller allowances). Round 1's 25–40
 hours left out most of the CAM and setup time. Most of it is CAM and setups, not cutting (about 4 h of programmed
 cutting in all). Nothing needs a 4th axis, a long tool, honing or welding. At 5–8 shop hours a working day the shop,
-not the parts, sets FT-1's date; with two people (12 h a day) FT-1's coupons come back to 3.2–6.5 weeks.
+not the parts, sets FT-1's date; with two people (12 h a day) FT-1's coupons come back to 3.2–6.4 weeks.
 
 ### 3.10 Day 0 and the weeks after
 
