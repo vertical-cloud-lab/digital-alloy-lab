@@ -402,6 +402,41 @@ def b_split_profiles(recess=True):
     return upper, pot, gasket, z
 
 
+def b_adapter_profiles(recess=True):
+    """Next-step variant of B's upper part (concept, not drawn or CAM'd): one turned 316L adapter from 4 in bar,
+    KF-50 flange on top, a neck for the KF clamp, an internal 45 deg cone from the 47.5 bore to the 72.9 bore, and
+    a 3 in tri-clamp ferrule face at the bottom, 32.7 mm below the KF face. The pot is the same as in
+    b_split_profiles but its tube is longer, so the joint sits about 100 mm higher above the pile."""
+    kf, tc, b = P.JOINT, P.TC3, P.B
+    full, z = option_b_vessel_profile(recess)
+    top = z["top"]
+    rb, rf, rh = kf.bore / 2, kf.flange_od / 2, kf.hub_od / 2
+    t_edge = kf.lip - (rf - rh) * math.tan(math.radians(kf.taper_deg))
+    R_o, R_i = z["R_o"], z["R_i"]
+    trf, trh = tc.flange_od / 2, tc.hub_od / 2
+    t_edge3 = tc.lip - (trf - trh) * math.tan(math.radians(tc.taper_deg))
+    z_neck = top - 16.0                                  # below the KF clamp's lower lip
+    z_hub3 = z_neck - (trh - rh)                         # 45 deg out to the ferrule's hub
+    z_fA = z_hub3 - tc.lip                               # ferrule face
+    z_cone0 = top - 18.0
+    z_cone1 = z_cone0 - (R_i - rb)                       # 45 deg inside, 47.5 -> 72.9
+    up = [(rf, top), (rf, top - t_edge), (rh, top - kf.lip), (rh, z_neck), (trh, z_hub3), (trf, z_fA + t_edge3),
+          (trf, z_fA), (R_i, z_fA), (R_i, z_cone1), (rb, z_cone0), (rb, top)]
+    if recess and kf.recess_depth:
+        rr, rd = kf.recess_d / 2, kf.recess_depth
+        up = up[:-1] + [(rb, top - rd), (rr, top - rd), (rr, top)]
+    z_fB = z_fA - b["gasket_t"]
+    flr, fr = z["floor"], b.get("bottom_fillet", 0.0)
+    arc = [(R_i - fr + fr * math.sin(math.radians(a)), flr + fr - fr * math.cos(math.radians(a)))
+           for a in np.linspace(0, 90, 10)] if fr else [(R_i, flr)]
+    pot = [(trf, z_fB), (trf, z_fB - t_edge3), (trh, z_fB - tc.lip), (R_o, z_fB - tc.lip - 1.5), (R_o, z["z_bot"]),
+           (0, z["z_bot"]), (0, flr)] + arc + [(R_i, z_fB)]
+    gasket = [(R_i, z_fB), (trf, z_fB), (trf, z_fA), (R_i, z_fA)]
+    z = dict(z, z_fA=z_fA, z_fB=z_fB, z_tt=z_fB - b["ferrule_len"], z_joint=(z_fA + z_fB) / 2,
+             z_cone0=z_cone0, z_cone1=z_cone1)
+    return up, pot, gasket, z
+
+
 def puck_profile_b(z0=0.0):
     """B's catch puck: 2 x 45 deg on top, 6 x 45 deg underneath so it clears the cap's R6 inside corner."""
     b = P.B
@@ -409,14 +444,23 @@ def puck_profile_b(z0=0.0):
     return [(0, z0), (R - cb, z0), (R, z0 + cb), (R, z0 + h - c), (R - c, z0 + h), (0, z0 + h)]
 
 
-def option_b(with_liner=None, with_puck=True, explode=0.0, tcs=True):
-    """Welded 316L cup: KF stub + 2x3 in reducer + 3 in tube + 8 mm bottom disc; liner, puck, thermocouples."""
+def option_b(with_liner=None, with_puck=True, explode=0.0, tcs=True, adapter=False):
+    """Welded 316L cup: KF stub + 2x3 in reducer + 3 in tube + 8 mm bottom disc; liner, puck, thermocouples.
+    adapter=True: the next-step variant, a turned KF-50 to 3 in adapter in place of the welded upper part (concept)."""
     kf = P.JOINT
     b = P.B
     if with_liner is None:
         with_liner = b.get("liner", True)
     prof, z = option_b_vessel_profile()
-    if b.get("split"):
+    z_liner_top = (b_split_profiles()[3]["z_fB"] - 3.0) if b.get("split") else z["z_red"] + 8.0 - 3.0
+    if adapter:
+        up, pot, gk, z = b_adapter_profiles()
+        parts = [("B': turned KF-50 to 3 in adapter (316L)", revolve(up), STEEL, "316L"),
+                 ("B': tri-clamp gasket 3 in (PTFE)", revolve(gk).translate((0, 0, -explode * 0.5)), FKM, "FKM"),
+                 ("B': pot (3 in ferrule + tube + end cap), welded", revolve(pot).translate((0, 0, -explode)),
+                  STEEL, "316L"),
+                 ("B': 3 in tri-clamp", kf_clamp(P.TC3, z["z_joint"]), STEEL_DK, "304")]
+    elif b.get("split"):
         up, pot, gk, z = b_split_profiles()
         parts = [("B: upper (KF-50 stub + 3x2 reducer + 3 in ferrule), welded", revolve(up), STEEL, "316L"),
                  ("B: tri-clamp gasket 3 in (FKM)", revolve(gk).translate((0, 0, -explode * 0.5)), FKM, "FKM"),
@@ -431,6 +475,8 @@ def option_b(with_liner=None, with_puck=True, explode=0.0, tcs=True):
     welds = [(z["z_stub"], kf.tube_od / 2), (z["z_red"], z["R_o"]), (z["z_cap"], z["R_o"])]
     if b.get("split"):
         welds.append((z["z_tt"], z["R_o"]))
+    if adapter:
+        welds = [(z["z_tt"], z["R_o"]), (z["z_cap"], z["R_o"])]
     for zz, rr in welds:
         bead = (cq.Workplane("XZ").center(rr + 0.2, zz - explode).circle(1.6)
                 .revolve(360, (-(rr + 0.2), 0, 0), (-(rr + 0.2), 1, 0)).val())
@@ -441,7 +487,7 @@ def option_b(with_liner=None, with_puck=True, explode=0.0, tcs=True):
         parts.append(("B: catch puck (304)", puck, STEEL_HOT, "304"))
         floor = floor + 0.2 + b["puck_h"]
     if with_liner:
-        top = (z["z_fB"] - 3.0 if b.get("split") else z["z_red"] + 8.0 - 3.0) - explode
+        top = z_liner_top - explode
         liner = tube(b["liner_od"] / 2, b["liner_od"] / 2 - b["liner_wall"], floor + 0.2 - explode * 0.8,
                      top - explode * 0.8)
         parts.append(("B: sacrificial liner (304)", liner, (0.70, 0.72, 0.76), "304"))
@@ -449,7 +495,10 @@ def option_b(with_liner=None, with_puck=True, explode=0.0, tcs=True):
         # 9 mm stainless bands. Top: on the stub's 12.6 mm of straight tube, clear of the hub and of weld W1 at the
         # stub's end. Bottom: on the end cap's rim, 13.5 mm up from the bottom face, clear of W3 at 20 mm.
         z_tc = (z["top"] - kf.lip - 1.5 + z["z_stub"]) / 2
-        for zz, rr, nm, hw in ((z_tc, kf.tube_od / 2, "top", 4.5), (z["z_bot"] + 13.5, z["R_o"], "bottom", 4.5)):
+        r_tc = kf.tube_od / 2
+        if adapter:                       # on the adapter's neck, between the KF flange's hub and the 45 deg shoulder
+            z_tc, r_tc = z["top"] - (kf.lip + 16.0) / 2, kf.hub_od / 2
+        for zz, rr, nm, hw in ((z_tc, r_tc, "top", 4.5), (z["z_bot"] + 13.5, z["R_o"], "bottom", 4.5)):
             band = tube(rr + 1.6, rr + 0.05, zz - hw - explode, zz + hw - explode)
             parts.append((f"B: thermocouple band clamp ({nm})", band, STEEL_DK, "304"))
             tc = (cq.Workplane("YZ").circle(1.6).extrude(60).val().translate((rr + 1.2, 0, zz - explode)))

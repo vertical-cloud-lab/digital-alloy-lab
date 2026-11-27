@@ -155,7 +155,8 @@ def pile_height(mass_g, radius):
     return mass_g * 1e-3 / (P.SHOT["rho"] * PILE_FRAC * math.pi * (radius * 1e-3) ** 2) * 1e3
 
 
-def design_B(mass_g, liner=None, puck=True, puck_mat="S304", pile_mat="PILE", pile_T=None, hangup=False, puck_h=None):
+def design_B(mass_g, liner=None, puck=True, puck_mat="S304", pile_mat="PILE", pile_T=None, hangup=False, puck_h=None,
+             adapter=False):
     """hangup=True: the mass is a lump of shot fused to the stub's bore just under the joint (the Nov 13 failure
     mode: hot metal held near the seal), and nothing at the bottom. pile_mat="POWDER", pile_T: a good run."""
     import parts as PT
@@ -165,7 +166,7 @@ def design_B(mass_g, liner=None, puck=True, puck_mat="S304", pile_mat="PILE", pi
     prof, z = PT.option_b_vessel_profile(recess=False)
     regs = joint_regions()
     if b.get("split"):
-        up, pot, gk, z = PT.b_split_profiles(recess=False)
+        up, pot, gk, z = (PT.b_adapter_profiles if adapter else PT.b_split_profiles)(recess=False)
         regs.append(F.Region("vessel_upper", "S316L", up, 1.2))
         regs.append(F.Region("gasket", "FKM", gk, 0.5))
         regs.append(F.Region("vessel", "S316L", pot, 1.2))
@@ -195,7 +196,11 @@ def design_B(mass_g, liner=None, puck=True, puck_mat="S304", pile_mat="PILE", pi
             regs.append(F.Region("puck_gap", "GAP15", [tuple(c) for c in list(gap.exterior.coords)[:-1]], 0.6))
         zz = floor + 0.5 + b["puck_h"]
     r_pile = R_i
-    top_liner = (z["z_fB"] - 3.0) if b.get("split") else z["z_red"] + 8.0 - 3.0
+    if b.get("split"):
+        # the adapter variant keeps the same liner (its top 3 mm under the split design's joint), so only the joint moves
+        top_liner = (PT.b_split_profiles(recess=False)[3] if adapter else z)["z_fB"] - 3.0
+    else:
+        top_liner = z["z_red"] + 8.0 - 3.0
     if liner:
         lo, li = b["liner_od"] / 2, b["liner_od"] / 2 - b["liner_wall"]
         regs.append(F.Region("liner_contact", "CONTACT_PUCK", rect(li, lo, zz, zz + 0.5), 0.4))
@@ -229,12 +234,18 @@ def design_B(mass_g, liner=None, puck=True, puck_mat="S304", pile_mat="PILE", pi
         h = pile_height(mass_g, r_pile)
         regs.append(F.Region("pile", pile_mat, rect(0, r_pile, zz, zz + h), 2.0, init_T=T0))
         info = dict(pile_top=zz + h, pile_r=r_pile, pile_h=h)
-    if hangup and puck and not liner:
-        pass
-    cavity = Polygon([(0, z["z_bot"]), (R_i + 0.01, z["z_bot"]), (R_i + 0.01, z["z_red"] + 8.0),
-                      (P.JOINT.bore / 2 + 0.01, z["z_stub"] - 8.0),
-                      (P.JOINT.bore / 2 + 0.01, P.JOINT.ring_thk / 2 + P.CONE_OUTLET_LEN), (0, P.JOINT.ring_thk / 2 + P.CONE_OUTLET_LEN)])
-    probes = {"TC_top": (P.JOINT.tube_od / 2, (z["top"] - P.JOINT.lip - 1.5 + z["z_stub"]) / 2),
+    if adapter:
+        cavity = Polygon([(0, z["z_bot"]), (R_i + 0.01, z["z_bot"]), (R_i + 0.01, z["z_cone1"]),
+                          (P.JOINT.bore / 2 + 0.01, z["z_cone0"]),
+                          (P.JOINT.bore / 2 + 0.01, P.JOINT.ring_thk / 2 + P.CONE_OUTLET_LEN),
+                          (0, P.JOINT.ring_thk / 2 + P.CONE_OUTLET_LEN)])
+    else:
+        cavity = Polygon([(0, z["z_bot"]), (R_i + 0.01, z["z_bot"]), (R_i + 0.01, z["z_red"] + 8.0),
+                          (P.JOINT.bore / 2 + 0.01, z["z_stub"] - 8.0),
+                          (P.JOINT.bore / 2 + 0.01, P.JOINT.ring_thk / 2 + P.CONE_OUTLET_LEN), (0, P.JOINT.ring_thk / 2 + P.CONE_OUTLET_LEN)])
+    tc_top = ((P.JOINT.hub_od / 2, z["top"] - (P.JOINT.lip + 16.0) / 2) if adapter       # on the adapter's neck
+              else (P.JOINT.tube_od / 2, (z["top"] - P.JOINT.lip - 1.5 + z["z_stub"]) / 2))
+    probes = {"TC_top": tc_top,
               "TC_bottom": (z["R_o"], z["z_bot"] + 13.5),
               "flange_rim": (P.JOINT.flange_od / 2, -P.JOINT.ring_thk / 2 - 1.0),
               "bottom_centre": (0.0, z["z_bot"])}
@@ -443,6 +454,9 @@ CASES = {
     "B_816_puck12": ("B", 816, {"puck_h": 12.0}),
 
     "C_400_boro": ("C", 400, {"glass": "BORO"}),
+    # next step: the turned KF-50 to 3 in adapter, which puts the tri-clamp joint 33 mm under the KF face
+    "B_816_adapter": ("B", 816, {"adapter": True}), "B_hangup_100_adapter": ("B", 100, {"hangup": True, "adapter": True}),
+    "B_hangup_25_adapter": ("B", 25, {"hangup": True, "adapter": True}),
 }
 SEAL_SETS = {"A": ["oring", "boring"], "B": ["oring", "gasket"], "C": ["oring", "seal_top", "seal_bot"],
              "S": ["oring", "seat", "seal_top", "seal_bot"]}

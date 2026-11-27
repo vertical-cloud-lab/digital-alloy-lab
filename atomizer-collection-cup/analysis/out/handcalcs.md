@@ -55,6 +55,18 @@ Each block names its formula and source in `handcalcs.py`.
   "Pcr_long_tube_MPa": 3.7,
   "safety_factor_vs_1bar": 182.0
  },
+ "B' pot tube (turned adapter) at 25 C": {
+  "L_mm": 183.0,
+  "Pcr_short_MPa": 14.81,
+  "Pcr_long_tube_MPa": 4.31,
+  "safety_factor_vs_1bar": 148.0
+ },
+ "B' pot tube (turned adapter) at 400 C": {
+  "L_mm": 183.0,
+  "Pcr_short_MPa": 12.74,
+  "Pcr_long_tube_MPa": 3.7,
+  "safety_factor_vs_1bar": 127.0
+ },
  "A nipple at 25 C": {
   "L_mm": 160.0,
   "Pcr_short_MPa": 31.06,

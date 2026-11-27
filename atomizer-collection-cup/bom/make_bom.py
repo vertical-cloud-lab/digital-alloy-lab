@@ -28,7 +28,7 @@ def price(vendor, pn):
 B = [
     ("B1", "KF-50 x 2 in butt-weld stub, 304L, 19.05 mm (316L QF50-200-SSL not stocked)", "A&N", "4000126", 1, 1),
     ("B2", "3 x 2 in concentric butt-weld reducer, 316L, 0.065 wall, 101.6 long", "McMaster", "5237K471", 1, 1),
-    ("B3", "3 in OD x 0.065 316 tube, 12 in (the pot's tube: 82.35 mm + facing)", "OnlineMetals", "4256", 1, 1),
+    ("B3", "3 in OD x 0.065 316 tube, 12 in (the pot's tube: 82.35 mm + facing; B': 183.0 mm)", "OnlineMetals", "4256", 1, 1),
     ("B4", "3-1/4 in 316 round bar, 1.5 in (end cap blank: 20 mm part + chuck + parting)", "Speedy", "p-2646", 1, 1.5),
     ("B5", "2-3/4 in OD x 0.065 304 tube, 12 in (liner, in the pot)", "McMaster", "11116N864", 1, 1),
     ("B6", "3 in 304 round bar, 1.5 in (catch puck Ø70 x 25, in the pot)", "Speedy", "p-1872", 1, 1.5),

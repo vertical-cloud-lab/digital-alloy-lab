@@ -94,9 +94,13 @@ def main():
         "C_400_boro": "400 g shot in the pan, borosilicate", "S_seat_120": "stock cup: 120 g of shot against the EPDM seat (Nov 13)",
         "S_glass_300": "stock cup: 300 g of shot fallen into the glass, against its wall (Nov 13)",
         "B_816_fine": "B_816 on a 0.55x finer mesh (convergence)",
-        "A_250_puck60": "250 g shot, 60 mm puck", "A_400_puck60": "400 g shot, 60 mm puck", "B_hangup_25_fine": "B_hangup_25 on a 0.55x finer mesh"}
+        "A_250_puck60": "250 g shot, 60 mm puck", "A_400_puck60": "400 g shot, 60 mm puck", "B_hangup_25_fine": "B_hangup_25 on a 0.55x finer mesh",
+        "B_816_adapter": "B' (turned adapter, joint 33 mm under the KF face): 816 g shot on the puck",
+        "B_hangup_25_adapter": "B': 25 g of shot fused in the bore just under the KF joint",
+        "B_hangup_100_adapter": "B': 100 g of shot fused in the bore just under the KF joint"}
     order = ["B_100", "B_400", "B_816", "B_816_k2", "B_816_k20", "B_816_puck12", "B_816_powder400",
-             "B_hangup_25", "B_hangup_100", "A_100", "A_250", "A_400",
+             "B_hangup_25", "B_hangup_100", "B_816_adapter", "B_hangup_25_adapter", "B_hangup_100_adapter",
+             "A_100", "A_250", "A_400",
              "A_250_puck60", "A_400_puck60", "C_400", "C_816", "C_400_boro", "S_seat_120", "S_glass_300"]
     for name in order:
         if name not in res:
@@ -124,7 +128,8 @@ def main():
         md.append(f"| {k} | {v['seal'][2:].lower()} | {v['to_150C']} | {v['to_200C']} | "
                   f"{', '.join(f'{m:.0f}: {t:.0f}' for m, t in v['points'])} |")
     alarms = {}
-    for name in ("B_400", "B_816", "B_816_powder400", "B_hangup_25", "B_hangup_100", "A_100", "A_250"):
+    for name in ("B_400", "B_816", "B_816_powder400", "B_hangup_25", "B_hangup_100", "B_816_adapter",
+                 "B_hangup_25_adapter", "B_hangup_100_adapter", "A_100", "A_250"):
         if name not in res:
             continue
         r = res[name]
@@ -148,6 +153,19 @@ def main():
         f = lambda x: "" if x is None else f"{x:.0f}"  # noqa: E731
         md.append(f"| {k} | {f(a.get('tc_top_120C_s'))} | {f(a.get('tc_bottom_150C_s'))} | {f(a.get('oring_150C_s'))} | "
                   f"{f(a.get('oring_200C_s'))} | {a.get('tc_bottom_at_60s', '')} | {a.get('tc_bottom_at_3600s', '')} |")
+    pairs = [(n, n + "_adapter") for n in ("B_816", "B_hangup_25", "B_hangup_100")
+             if n in res and n + "_adapter" in res]
+    if pairs:
+        md += ["\n## Next step: B' (the turned KF-50 to 3 in adapter) against the split B\n",
+               "Same pot, puck, liner and gasket; the tri-clamp joint moves from 134 mm to 33.5 mm under the KF face "
+               "(`cad/parts.py` b_adapter_profiles, drawing sheet 5). Peak temperatures (C):\n",
+               "| What lands | KF O-ring: B / B' | tri-clamp gasket: B / B' | TC top: B / B' | TC bottom: B / B' |",
+               "|---|---|---|---|---|"]
+        for a_, b_ in pairs:
+            pa, pb = res[a_]["peaks"], res[b_]["peaks"]
+            cell = lambda k: f"{pa[k]['T_max']:.0f} / **{pb[k]['T_max']:.0f}**"  # noqa: E731
+            md.append(f"| {what.get(a_, a_)} | {cell('N_ORING')} | {cell('N_GASKET')} | {cell('TC_TOP')} | "
+                      f"{cell('TC_BOTTOM')} |")
     md += ["\n## Checks on the model\n",
            "- `analysis/verify_axifea.py`: steady film, radiation and surface-flux cases match closed-form answers to "
            "0.001 K; a lumped transient is within 0.8 %.",

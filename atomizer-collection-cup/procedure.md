@@ -13,6 +13,15 @@ B comes in two welded parts:
 The puck (Ø70) and liner (Ø69.85) go in and out through the pot's 72.9 mm ferrule. They could not go through the
 47.5 mm KF neck, which is why the cup splits.
 
+**B' (better, if the lathe takes 4 in bar):** the upper part is one adapter turned from 316L bar (drawing sheet 5)
+instead of the stub, reducer and ferrule. The pot's tube is 183.0 mm instead of 82.35. Then skip welds W1 and
+W2a in §3 and the upper part's hydro proof in §4, and clamp the top thermocouple on the adapter's neck. Everything
+else here applies as written, with three differences (`analysis/out/thermal_summary.md`):
+- Its gasket stays at 62 °C with 816 g of shot, so §7's gasket limit doesn't apply to it.
+- Its gasket is closer to the KF joint, so a hang-up heats it (187 °C for 100 g). After a top alarm, replace the
+  gasket as well as the O-ring.
+- Its top thermocouple sits on a thicker wall: in a 25 g hang-up it reaches 120 °C at 13 s, not 4 s.
+
 ## 0. Before ordering: three checks
 
 1. **(measure)** The room under the cone: the distance from the cone's KF sealing face to the mat, with the cone

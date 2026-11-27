@@ -6,5 +6,6 @@
 | option_a | 11 | 2.04 | 175.0 | 125.0 | yes | none |
 | option_b | 18 | 3.42 | 252.0 | 48.0 | yes | none |
 | option_c | 27 | 8.06 | 234.0 | 66.0 | yes | none |
+| option_b_adapter | 16 | 3.61 | 252.0 | 48.0 | yes | none |
 
 Usable volume (cm3): A (liner + puck) 159, A (no liner, no puck) 257, B (no liner, no puck) 694, B (liner + puck) 522

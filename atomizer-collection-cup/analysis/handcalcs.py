@@ -64,7 +64,11 @@ def main():
 
     # 3. external pressure (vacuum): Windenburg-Trilling short cylinder and the long-tube limit
     rows = {}
+    sys.path.insert(0, str(ROOT / "cad"))
+    import parts as PT
+    za = PT.b_adapter_profiles(recess=False)[3]
     for name, D, t_, L in (("B body", b["body_od"], b["body_wall"], b["body_len"] - b["stub_len"] - b["reducer_len"]),
+                           ("B' pot tube (turned adapter)", b["body_od"], b["body_wall"], za["z_tt"] - za["z_cap"]),
                            ("A nipple", kf.tube_od, kf.tube_wall, P.A["nipple_len"])):
         for T, E_T in ((25, 193000.0), (400, 166000.0)):
             pcr_wt = 2.42 * E_T * (t_ / D) ** 2.5 / ((1 - nu ** 2) ** 0.75 * (L / D - 0.45 * (t_ / D) ** 0.5))

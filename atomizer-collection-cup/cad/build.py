@@ -34,6 +34,7 @@ ASSEMBLIES = {
     "option_a": lambda: PT.joint_hardware() + PT.option_a(),
     "option_b": lambda: PT.joint_hardware() + PT.option_b(),
     "option_c": lambda: PT.joint_hardware() + PT.option_c(),
+    "option_b_adapter": lambda: PT.joint_hardware() + PT.option_b(adapter=True),     # next step, concept
 }
 
 # pairs that are meant to touch along a face or a line (contact, not interference)

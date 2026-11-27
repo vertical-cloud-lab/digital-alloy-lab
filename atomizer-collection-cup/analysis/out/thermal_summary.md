@@ -13,6 +13,9 @@ Every case: the shot (or powder) lands all at once at t = 0 and the run is follo
 | B_816_powder400 | 816 g of powder at 400 C (a good run) | 28 [1890] | tri-clamp gasket 72 [960] | 29 | 87 | 93 |  |
 | B_hangup_25 | 25 g of shot fused in the bore just under the joint | 195 [22] | tri-clamp gasket 28 [810] | 177 | 25 | 25 |  |
 | B_hangup_100 | 100 g of shot fused in the bore just under the joint | 389 [53] | tri-clamp gasket 39 [720] | 698 | 26 | 26 |  |
+| B_816_adapter | B' (turned adapter, joint 33 mm under the KF face): 816 g shot on the puck | 42 [1350] | tri-clamp gasket 62 [810] | 43 | 321 | 347 |  |
+| B_hangup_25_adapter | B': 25 g of shot fused in the bore just under the KF joint | 157 [12] | tri-clamp gasket 68 [180] | 125 | 25 | 25 |  |
+| B_hangup_100_adapter | B': 100 g of shot fused in the bore just under the KF joint | 307 [39] | tri-clamp gasket 187 [131] | 350 | 26 | 26 |  |
 | A_100 | 100 g shot on the puck | 37 [1230] | bottom O-ring 138 [480] | 41 | 107 | 154 |  |
 | A_250 | 250 g shot on the puck | 66 [870] | bottom O-ring 215 [630] | 80 | 182 | 234 |  |
 | A_400 | 400 g shot on the puck | 110 [720] | bottom O-ring 248 [750] | 141 | 221 | 269 |  |
@@ -46,8 +49,21 @@ Top thermocouple alarm 120 C, bottom 150 C; blank = never within the hour.
 | B_816_powder400 |  |  |  |  | 29.0 | 72.0 |
 | B_hangup_25 | 4 |  | 3 |  | 25.0 | 25.0 |
 | B_hangup_100 | 0 |  | 2 | 4 | 25.0 | 26.0 |
+| B_816_adapter |  | 144 |  |  | 56.0 | 155.0 |
+| B_hangup_25_adapter | 13 |  | 4 |  | 25.0 | 25.0 |
+| B_hangup_100_adapter | 1 |  | 2 | 5 | 25.0 | 26.0 |
 | A_100 |  |  |  |  | 55.0 | 49.0 |
 | A_250 |  | 236 |  |  | 70.0 | 74.0 |
+
+## Next step: B' (the turned KF-50 to 3 in adapter) against the split B
+
+Same pot, puck, liner and gasket; the tri-clamp joint moves from 134 mm to 33.5 mm under the KF face (`cad/parts.py` b_adapter_profiles, drawing sheet 5). Peak temperatures (C):
+
+| What lands | KF O-ring: B / B' | tri-clamp gasket: B / B' | TC top: B / B' | TC bottom: B / B' |
+|---|---|---|---|---|
+| 816 g shot on the puck (Nov 13 charge) | 40 / **42** | 263 / **62** | 45 / **43** | 319 / **321** |
+| 25 g of shot fused in the bore just under the joint | 195 / **157** | 28 / **68** | 177 / **125** | 25 / **25** |
+| 100 g of shot fused in the bore just under the joint | 389 / **307** | 39 / **187** | 698 / **350** | 26 / **26** |
 
 ## Checks on the model
 
