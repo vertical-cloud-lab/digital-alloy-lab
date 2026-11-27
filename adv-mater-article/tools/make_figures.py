@@ -184,58 +184,115 @@ def fig6_synthetic() -> None:
     save(fig, "fig6-draft-synthetic")
 
 
-# --------------------------------------------------------------------------- benchmarks vs burden
+# --------------------------------------------------------------------------- baselines vs burden
 def fig5c_benchmarks() -> None:
-    """Yield strength against mineral burden for the benchmarks: the frame Fig. 5c will fill.
+    """Yield strength against mineral burden: the frame Fig. 5c will fill.
 
-    Datasheet rows: data/benchmark-property-window.csv (PR #285 @ a25d763). Lab row: Utah Aconity
-    MIDI AlSi10Mg, as built, horizontal, n = 4 (PR #288 @ 9ae2c34). Burden: B = sum w_i NIR_i/100
-    with MCS 2025 bounds, as a range (tools/mineral_burden_check.py)."""
+    The comparison campaign 2 is judged on is the front of the industry Sc-free baselines (EOS Al5X1,
+    Hoganas Al-HS1) printed and tested in this lab with the candidates. None has been printed here yet, so
+    this draft places them at their data-sheet values (data/scfree-baselines-datasheets.csv, checked
+    against the vendors' documents 2026-11-27). AlSi10Mg and Scalmalloy rows: data/benchmark-property-
+    window.csv (PR #285 @ a25d763). Lab row: Utah Aconity MIDI AlSi10Mg, as built, horizontal, n = 4
+    (PR #288). Burden: B = sum w_i NIR_i/100 with the campaign paper's MCS 2026 inputs. Points sit at the
+    middle of each alloy's B range; the ranges are drawn in the lower panel. Colour follows the role, not
+    the alloy (three categorical slots, scatter): blue = the Sc-free baselines, orange = AlSi10Mg,
+    aqua = this lab's measurement, gray = context."""
     sys.path.insert(0, str(ROOT / "tools"))
     from mineral_burden_check import ALLOYS, burden
 
-    rows = list(csv.DictReader(open(DATA / "benchmark-property-window.csv")))
-    fig, (ax, ax2) = plt.subplots(2, 1, figsize=(4.6, 4.6), sharex=True,
-                                   gridspec_kw={"height_ratios": [4, 1.35], "hspace": 0.22})
-    spec = {"AlSi10Mg": ("AlSi10Mg (nominal)", BLUE), "Scalmalloy (Al-Mg-Sc-Zr)": ("Scalmalloy (D2)", ORANGE)}
-    for alloy, (key, color) in spec.items():
+    bench = list(csv.DictReader(open(DATA / "benchmark-property-window.csv")))
+    base = [r for r in csv.DictReader(open(DATA / "scfree-baselines-datasheets.csv")) if r["plotted"] == "yes"]
+    fig, (ax, ax2) = plt.subplots(2, 1, figsize=(6.4, 6.0), sharex=True,
+                                   gridspec_kw={"height_ratios": [4, 2.1], "hspace": 0.12})
+
+    def heat_treated(cond: str) -> bool:
+        return not cond.startswith(("as built", "as printed", "as-built"))
+
+    def mid(key: str) -> float:
         lo, hi = burden(ALLOYS[key])
-        mid = (lo + hi) / 2
-        sel = [r for r in rows if r["alloy"] == alloy]
-        ax.axvspan(lo, hi, color=color, alpha=0.08, linewidth=0)
-        for i, r in enumerate(sel):
-            heat = "as-built" not in r["condition"]
-            x = mid + (i - len(sel) / 2) * 0.06
-            ax.scatter([x], [float(r["yield_MPa"])], marker="s" if heat else "o", s=26,
-                       facecolor="white" if heat else color, edgecolor=color, linewidth=1.3, zorder=3)
-        ax.text(mid + 0.45, 485 if "Sc" in alloy else 318, alloy.split(" (")[0], color=INK, fontsize=7.5, va="center")
-        ax.text(lo + 0.05, 128, f"B range, {alloy.split(' (')[0]}", color=color, fontsize=6, va="bottom")
-    lo, hi = burden(ALLOYS["AlSi10Mg (nominal)"])
-    ax.errorbar([(lo + hi) / 2], [228], yerr=[13], fmt="D", color=BLUE, ms=6, mfc=AQUA, mec=BLUE, capsize=2, zorder=4)
-    ax.annotate("this lab: Aconity MIDI,\nas built, n = 4", ((lo + hi) / 2, 228), (0.3, 150), fontsize=7, color=INK,
-                arrowprops=dict(arrowstyle="-", color=INK2, lw=0.6))
-    for y, lab in ((250, "FLAIME gate, Al-Mn-Cr-Zr"), (200, "FLAIME gate, Al-Zr")):
-        ax.axhline(y, color=GRAY, lw=0.8, ls="--")
-        ax.text(7.9, y + 6, lab, fontsize=6.5, color=INK2, ha="right")
+        return (lo + hi) / 2
+
+    def series(rows, key, color, label, label_xy, ha="left"):
+        m = mid(key)
+        for i, r in enumerate(rows):
+            x = m + (i - (len(rows) - 1) / 2) * 0.06
+            ht = heat_treated(r["condition"])
+            ax.scatter([x], [float(r["yield_MPa"])], marker="s" if ht else "o", s=34,
+                       facecolor="white" if ht else color, edgecolor=color, linewidth=1.4, zorder=3)
+        ax.text(*label_xy, label, color=INK, fontsize=7.2, va="center", ha=ha)
+
+    a5 = [r for r in base if r["alloy"] == "Al5X1"]
+    hs = [r for r in base if r["alloy"] == "Al-HS1"]
+    cp = [r for r in base if r["alloy"] == "Aheadd CP1"]
+    si = [r for r in bench if r["alloy"] == "AlSi10Mg"]
+    sc = [r for r in bench if r["alloy"].startswith("Scalmalloy")]
+
+    # Draft front: Al5X1 and Al-HS1 at their best aged data-sheet values, this lab's AlSi10Mg (as built)
+    # as the floor, stepped at the middle of Al5X1's B range. The pre-registration's test is per baseline
+    # (stronger, or lower B by the interval rule); this line is only its picture.
+    floor = 228.0
+    a5_mid = mid("Al5X1 (EOS, nominal)")
+    a5_best = max(float(r["yield_MPa"]) for r in a5)
+    x_max = 10.8
+    xs, ys = [0, a5_mid, a5_mid, x_max], [floor, floor, a5_best, a5_best]
+    ax.fill_between(xs, ys, [560] * 4, color=BLUE, alpha=0.06, linewidth=0, zorder=0)
+    ax.plot(xs, ys, color=BLUE, lw=1.6, ls=(0, (5, 2)), zorder=2)
+    ax.text(0.15, 522, "Campaign 2 has to land in the shaded region:\nbeyond the front of the Sc-free baselines\n"
+            "printed and tested in this lab", fontsize=7, color=INK, va="top")
+
+    series(a5, "Al5X1 (EOS, nominal)", BLUE, "EOS Al5X1 (Al-Mg-Zr-Mn)", (a5_mid, 412), ha="center")
+    series(hs, "Al-HS1 (Hoganas, typical)", BLUE, "Höganäs Al-HS1\n(Al-Mn-Cr-Zr)", (mid("Al-HS1 (Hoganas, typical)") + 0.25, 318))
+    series(cp, "Aheadd CP1 (nominal)", GRAY, "Aheadd CP1\n(context)", (0.45, 300))
+    series(si, "AlSi10Mg (nominal)", ORANGE, "AlSi10Mg\n(data sheets)", (8.25, 300))
+    series(sc, "Scalmalloy (nominal)", GRAY, "Scalmalloy\n(contains Sc;\ncontext)", (5.85, 470))
+
+    xm = mid("AlSi10Mg (nominal)")
+    ax.errorbar([xm], [floor], yerr=[13], fmt="D", color=INK2, ms=6.5, mfc=AQUA, mec=INK, mew=0.8,
+                capsize=2, zorder=4)
+    ax.annotate("this lab: AlSi10Mg,\nAconity MIDI, as built,\nn = 4 (the floor)", (xm, floor), (8.3, 196),
+                fontsize=7, color=INK, va="center", arrowprops=dict(arrowstyle="-", color=INK2, lw=0.6))
     ax.set_ylabel("Yield strength (MPa)")
     ax.set_ylim(120, 540)
-    ax.grid(axis="y", color=GRID_C, lw=0.6)
-    handles = [plt.Line2D([], [], marker="o", ls="", mfc=GRAY, mec=GRAY, label="as built (datasheet)"),
-               plt.Line2D([], [], marker="s", ls="", mfc="white", mec=GRAY, label="heat-treated (datasheet)")]
-    ax.legend(handles=handles, fontsize=7, loc="upper left")
-    seeds = ["S1 Al-4.8Mn-0.9Cr-1.1Zr-1.2Mg", "S2 Al-1.9Fe-1.0Mg-1.0Zr", "O1 Al-3.6Mg-1.2Zr", "S3 Al-3.5Si-2.5Mg"]
-    for j, name in enumerate(seeds):
-        lo, hi = burden(ALLOYS[name])
-        ax2.plot([lo, max(hi, lo + 0.04)], [j, j], color=INK2, lw=4, solid_capstyle="butt")
-        ax2.text(max(hi, lo + 0.04) + 0.1, j, name.split(" ")[1], fontsize=6.5, color=INK, va="center")
+    ax.grid(axis="y", color=GRID_C, lw=0.6, zorder=0)
+    handles = [
+        plt.Line2D([], [], marker="s", ls="", mfc=BLUE, mec=BLUE, ms=6, label="Sc-free baselines (data sheets)"),
+        plt.Line2D([], [], marker="s", ls="", mfc=ORANGE, mec=ORANGE, ms=6, label="AlSi10Mg (data sheets)"),
+        plt.Line2D([], [], marker="D", ls="", mfc=AQUA, mec=INK, mew=0.8, ms=6, label="this lab's measurement"),
+        plt.Line2D([], [], marker="s", ls="", mfc=GRAY, mec=GRAY, ms=6, label="context (data sheets)"),
+        plt.Line2D([], [], marker="o", ls="", mfc=INK2, mec=INK2, ms=6, label="as built"),
+        plt.Line2D([], [], marker="s", ls="", mfc="white", mec=INK2, mew=1.4, ms=6, label="aged or heat-treated"),
+        plt.Line2D([], [], color=BLUE, lw=1.6, ls=(0, (5, 2)), label="draft in-house front"),
+    ]
+    fig.legend(handles=handles, fontsize=6.8, loc="lower center", ncol=4, bbox_to_anchor=(0.5, 0.905))
+
+    rows = [("Aheadd CP1 (nominal)", GRAY, "CP1"), ("Al5X1 (EOS, nominal)", BLUE, "Al5X1"),
+            ("Al-HS1 (Hoganas, typical)", BLUE, "Al-HS1"), ("Scalmalloy (nominal)", GRAY, "Scalmalloy"),
+            ("AlSi10Mg (nominal)", ORANGE, "AlSi10Mg"),
+            ("S2 Al-1.9Fe-1.0Mg-1.0Zr", INK2, "seed S2 Al-1.9Fe-1.0Mg-1.0Zr"),
+            ("O1 Al-3.6Mg-1.2Zr", INK2, "seed O1 Al-3.6Mg-1.2Zr"),
+            ("S3 Al-3.5Si-2.5Mg", INK2, "seed S3 Al-3.5Si-2.5Mg"),
+            ("O3 Al-4.8Mn-0.8Cr", INK2, "seed O3 Al-4.8Mn-0.8Cr"),
+            ("S1 Al-4.8Mn-0.9Cr-1.1Zr-1.2Mg", INK2, "seed S1 Al-4.8Mn-0.9Cr-1.1Zr-1.2Mg")]
+    n = len(rows)
+    for j, (key, color, lab) in enumerate(rows):
+        lo, hi = burden(ALLOYS[key])
+        y = n - 1 - j
+        ax2.plot([lo, max(hi, lo + 0.06)], [y, y], color=color, lw=4, solid_capstyle="butt")
+        right = max(hi, lo + 0.06) + 0.12
+        if right > 8.6:
+            ax2.text(lo - 0.12, y, lab, fontsize=6.4, color=INK, va="center", ha="right")
+        else:
+            ax2.text(right, y, lab, fontsize=6.4, color=INK, va="center")
     ax2.set_yticks([]); ax2.spines["left"].set_visible(False)
-    ax2.set_ylim(-0.7, len(seeds) - 0.3)
-    ax2.set_xlim(0, 8.2)
-    ax2.set_xlabel("Mineral burden B (wt% of alloy imported, net; MCS 2025)")
-    ax2.text(0.0, 1.02, "Proposed seeds (#275): burden only, no strength yet", transform=ax2.transAxes,
-             fontsize=7, color=INK2, va="bottom")
-    fig.text(0.0, -0.06, "DRAFT for Fig. 5c. Shaded bands: B range, because MCS gives Si, Mg and Zr as bounds. "
-             "Campaign alloys will be added; datasheets are context, not the comparison.", fontsize=6.3, color=INK2, wrap=True)
+    ax2.set_ylim(-0.7, n - 0.3)
+    ax2.set_xlim(0, x_max)
+    ax2.set_xlabel("Mineral burden B_NIR (wt % of the alloy imported, net; USGS MCS 2026)")
+    ax2.text(0.0, 1.0, "B ranges (USGS gives Mg, Si and Zr import reliance as bounds); seeds (#275) have no "
+             "strength yet", transform=ax2.transAxes, fontsize=6.8, color=INK2, va="bottom")
+    fig.text(0.0, 0.035, "DRAFT for Fig. 5c. Campaign 2 replaces the data-sheet baselines with Al5X1 and Al-HS1 "
+             "printed and tested here, beside AlSi10Mg; data sheets stay\nas context. Points sit at the middle of "
+             "each alloy's B range. CP1 already lies in the region, so a candidate also has to clear published "
+             "alloys to count as new.\nBurden metric not yet frozen (D9).", fontsize=6.2, color=INK2, va="top")
     save(fig, "fig5c-draft-benchmarks")
 
 

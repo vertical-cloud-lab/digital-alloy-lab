@@ -14,12 +14,14 @@ kotadia2021	doi:10.1016/j.addma.2021.102155	LPBF Al review: microstructure and p
 michi2022	doi:10.1080/09506608.2021.1951580	high-temperature AM Al alloys
 plotkowski2020	doi:10.1016/j.actamat.2020.07.014	Al-Ce-Mn printed alloy (critical-mineral-lean family)
 croteau2018	doi:10.1016/j.actamat.2018.04.053	Al-Mg-Zr by LPBF (Zr grain refinement)
+almncrzr2024	doi:10.1016/j.matdes.2024.113160	Al-Mn-Cr-Zr alloys tailored for AM (the family of Al-HS1 and seed S1)
 schmidtke2011	doi:10.1016/j.phpro.2011.03.047	Sc-modified Al (Scalmalloy) for LPBF
 spierings2017	doi:10.1016/j.matdes.2016.11.040	Sc/Zr-modified Al-Mg by SLM microstructure
 kou2015	doi:10.1016/j.actamat.2015.01.034	solidification cracking criterion (crack index node)
 taherimousavi2026	doi:10.1002/adma.202509507	closest precedent: ML-designed Al alloy, ultrasonic atomization, LPBF, tensile
 # --- critical minerals and supply risk
 usgs2025	doi:10.3133/mcs2025	import reliance of Mn, Zr, Cr, Sc
+usgs2026	doi:10.3133/mcs2026	import reliance inputs of the burden metric (same edition as the campaign paper)
 nassar2020	doi:10.1126/sciadv.aay8647	supply risk of US manufacturing by commodity
 graedel2012	doi:10.1021/es203534z	criticality methodology
 nassar2021ofr	doi:10.3133/ofr20211045	method behind the US critical minerals list

@@ -91,6 +91,45 @@ Desktop LPBF & not modelled & not built \\
 \end{tabular}
 \end{table}
 
+\section{Industry baselines measured in house}
+\label{sec:Sbaselines}
+\tbd{For each baseline (EOS Al5X1, H\"{o}gan\"{a}s Al-HS1, commercial AlSi10Mg):
+supplier, lot and certificate; ICP-OES of the lot against the supplier's
+composition; the laser parameters it was printed with, and any power--speed sweep;
+density; hardness along its family's aging curve; tensile results on its
+supplier's aging schedule and on the family's; the parity check against the data
+sheet (\cref{tab:Sparity}); the front redrawn under each burden metric (mass-weighted
+import reliance, cost of the critical additions, Sc content). The first in-house
+measurement is the campaign paper's (\#277); campaign~2 reprints the baselines in
+each of its builds, which also tracks build-to-build drift.}
+
+\begin{table}[h]
+\centering
+\caption{\textbf{Parity of the in-house baselines with their data sheets.} Data-sheet
+values were checked against the suppliers' documents on 27 November 2026.
+\ifdraft\textit{Draft: in-house columns wait on the baselines' first builds.}\fi}
+\label{tab:Sparity}
+\footnotesize
+\begin{tabular}{@{}llccccc@{}}
+\toprule
+Alloy & Condition, orientation & \multicolumn{2}{c}{Data sheet} & \multicolumn{2}{c}{In house} & Within band?\\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}
+ & & YS / UTS (MPa) & EL (\%) & YS / UTS (MPa) & EL (\%) & \\
+\midrule
+Al5X1\cite{ds_al5x1} & as built, horizontal & 260 / 310 & 23 & \tbd{} & \tbd{} & \tbd{}\\
+ & aged \SI{400}{\celsius} \SI{6}{\hour}, horizontal & 385 / 415 & 14.5 & \tbd{} & \tbd{} & \tbd{}\\
+Al-HS1\cite{ds_hoganas} & as printed, X/Y & 220 / 285 & 25 & \tbd{} & \tbd{} & \tbd{}\\
+ & aged \SI{375}{\celsius} \SI{4}{\hour}, X/Y & 370 / 440 & 12 & \tbd{} & \tbd{} & \tbd{}\\
+AlSi10Mg\cite{ds_eos} & as built, horizontal & 270 / 461 & 10.2 & $228\pm13$ / $376\pm10$\textsuperscript{a} & $4.5\pm0.5$ & no (0.84 / 0.82)\\
+\bottomrule
+\end{tabular}
+
+\smallskip
+\raggedright\footnotesize\textsuperscript{a}April 2026 Utah build: as-printed surfaces,
+flat specimens, laser parameters not recorded, strain channel suspect on four of
+five bars; to be replaced by bars from the same builds as the candidates.
+\end{table}
+
 \section{Pre-registration and benchmarks}
 \tbd{Pre-registered baselines, targets and stopping rule (dated before the
 campaign); the twin's calibration; per-seed results.}

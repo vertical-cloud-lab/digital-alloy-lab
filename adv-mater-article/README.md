@@ -65,15 +65,27 @@ with biblatex-chem, biber and latexmk, plus Python with requests and matplotlib.
    - The clocked benchmark (PR #297) found the automated lab 2.5–2.9× faster at 2.2–2.5× the money.
    - The article's claim is therefore conditional: the gain appears when the screen is wrong, and the twin maps
      where that happens.
-5. **The mineral-burden metric needs deciding (D9).** With MCS 2025 import reliance, the Al–Mn–Cr–Zr seed scores
-   above Scalmalloy, while Zr-refined Al–Mg and Al–Fe seeds score below it. Because MCS gives Si only as "<50 %",
-   AlSi10Mg's burden range overlaps Scalmalloy's (Fig. 5c draft).
+5. **Campaign 2 is measured against industry Sc-free alloys printed here (D0, decided Nov 27).** EOS Al5X1
+   (Al–Mg–Zr–Mn) and Höganäs Al-HS1 (Al–Mn–Cr–Zr), at least one, are bought as powder and printed, aged and tested
+   in the same builds as the candidates. They are the points on the front campaign 2 has to expand, and their
+   in-house values against their data sheets show whether the lab measures on a par with industry. The campaign
+   paper (#277) adds the same baselines and owns their sourcing and first measurement.
+   - Data sheets, directly aged: Al5X1 385 MPa, Al-HS1 370 MPa yield (horizontal). Checked against the vendors'
+     documents on Nov 27.
+   - Under the campaign paper's burden metric (B_NIR, MCS 2026), Al5X1 is both stronger and lower in burden
+     (3.1–4.2 wt %) than Al-HS1 (5.4–5.6 wt %), so on data-sheet values Al5X1 alone sets the front (draft Fig. 5c).
+6. **The mineral-burden metric needs deciding (D9).** With MCS 2026 inputs, the Al–Mn–Cr–Zr seed S1 scores above
+   Scalmalloy (6.6–7.3 against 4.7–6.0 wt %), while Zr-refined Al–Mg and Al–Fe seeds score below it. B_NIR counts
+   Mg like Sc, so any alloy with less Mg than Scalmalloy's 4.7 wt % beats it on burden. That is why the claim is now
+   about the Sc-free front, not about Scalmalloy.
 
 ## Decisions for Sterling
 
 | # | Decision | Why it matters now |
 |---|---|---|
-| **D0** | **Set campaign 2's target against an in-house Sc-free reference alloy** (positive control), not "above as-built AlSi10Mg with lower burden than Scalmalloy". If the campaign can't plausibly reach it, decide now that this is a methods paper for another journal | A mock editorial review today judged desk rejection more likely than not under the current target ([`outline.md`](outline.md) §9); this was its single most useful change |
+| D0 | **Decided (Sterling, Nov 27):** campaign 2 is measured against the industry Sc-free alloys EOS Al5X1 and Höganäs Al-HS1 (at least one), printed, aged and tested in-house the same way as the candidates. They are points on the front campaign 2 tries to expand, with a parity check against their data sheets. This replaces the in-house "reference alloy" of the first revision | [`outline.md`](outline.md) §5, [`campaign2-preregistration.md`](campaign2-preregistration.md), Fig. 5c, Table 2; consistent with #277 |
+| **D0a** | **One baseline or both, and which first** (with #277's sourcing: price, lead time, who sells to a lab without the vendor's machine) | Under B_NIR, Al5X1's data sheet is stronger and lower in burden than Al-HS1's, so Al5X1 alone sets the front. Al-HS1 is the same-family comparator for the Al–Mn–Cr–Zr seeds. If only one: Al5X1 for the front claim, Al-HS1 if campaign 2 stays in Mn–Cr–Zr |
+| **D0b** | **The rule for "stronger", and n** (with #277) | With the April bars' 5.7 % scatter, the draft rule (non-overlapping 95 % CIs) needs ≈ 110 MPa over Al5X1 at n = 3, or ≈ 55 MPa at n = 5. A Welch test on the difference needs ≈ 50 or ≈ 32 MPa. Recommended: Welch, n = 5 for baselines and finalists. Also decide the parity band (proposed ±10 %) and the elongation floor |
 | **D1** | **Which collection, its exact deadline, and the article type.** #256's schedule took Feb 28, 2027 to be this article; the Oct 23 note on #160 says "late February" with no year; this thread says early 2028. No public *Advanced Materials* call matches: its collections are invited (Rising Stars, topical issues such as 2024's "Advanced Materials for Additive Manufacturing", institution issues), so the invitation letter is the source ([`journal-format.md`](journal-format.md)) | If the collection actually closes in Feb 2027, this plan folds into the campaign paper. If it's Rising Stars, the article must be "conceptualized and supervised" by the early-career PI |
 | D2 | Adopt the split with the campaign paper ([`outline.md`](outline.md) §4)? | Duplicate-publication risk; who owns Blocks A/B |
 | D3 | Commit to a second, optimizer-driven campaign in Jul–Oct 2027, with version A/B decided at G-A3 (Sep 30, 2027)? | Version A needs it; nobody has planned it yet |
@@ -82,7 +94,7 @@ with biblatex-chem, biber and latexmk, plus Python with requests and matplotlib.
 | D6 | Corrosion in this article, the campaign paper, or separately? (also asked in `alloy-corrosion/README.md`) | SI S16 and a methods paragraph |
 | D7 | Desktop LPBF: build (FT-1, FT-1V or the full design) or buy, and who orders when | The critical path for version A: first coupons ~1–2.5 months after the order, plus laser-safety and EHS approval |
 | D8 | Funding and a lab for outside ICP-OES, O/N/H and tensile | Fig. 3, Fig. 5d, independent verification |
-| D9 | The mineral-burden metric: the campaign paper's B = Σ wᵢ·NIRᵢ, and which USGS edition | **With MCS 2025 import reliance, seed S1 (Al–4.8Mn–0.9Cr–1.1Zr–1.2Mg, the FLAIME focus family) scores *higher* than Scalmalloy (B ≈ 6.4–7.0 vs 4.6–5.9).** Mn is 100 % imported and used at ~5 wt %, while Scalmalloy has only 0.66 wt % Sc. Zr is <25 % imported, so Zr-refined Al–Mg and Al–Fe alloys score lower (`tools/mineral_burden_check.py`). A metric that weights Sc's tiny, export-controlled market more heavily would rank them differently. Also, the FLAIME abstract's "100 % of zirconium mineral concentrates" doesn't match MCS 2025 (<25 %) |
+| D9 | The mineral-burden metric, frozen together with the campaign paper before its screen ranks anything: its proposed B_NIR = Σ wᵢ·NIRᵢ with MCS 2026 inputs, or an alternative | **Issue to fix: B_NIR counts Mg like Sc.** Scalmalloy's B (4.7–6.0 wt %) is mostly its 4.7 wt % Mg, so any lower-Mg alloy beats it; Al5X1 does (3.1–4.2). Seed S1 (Al–4.8Mn–0.9Cr–1.1Zr–1.2Mg, the FLAIME focus family) scores *higher* than Scalmalloy (6.6–7.3), because Mn is 100 % imported and used at ~5 wt %, and Al-HS1 overlaps it (5.4–5.6). Zr is <25 % imported, so Zr-refined Al–Mg and Al–Fe alloys score lower (`tools/mineral_burden_check.py`, now on the campaign paper's inputs). Comparing against the Sc-free front takes Scalmalloy out of the claim, but the Mg-against-Mn weighting still ranks the baselines. Also, the FLAIME abstract's "100 % of zirconium mineral concentrates" doesn't match MCS 2025 or 2026 (<25 %) |
 | D10 | Freeze the design space: Si in or out (EDS limit raised at the kickoff), and order Zr feedstock (5 of the 9 proposed seeds need it; not on the order) | The seeds and the screen depend on it |
 | D11 | Where data and code are deposited (e.g. Zenodo, with DOIs reserved only at submission) | The Data Availability Statement |
 | D12 | CLAUDE.md bars naming staff of partner companies "or at national labs". This folder withholds the author lists of cited papers by AMAZEMET and Thermo-Calc staff, but lists national-lab authors of published papers as ordinary citations. OK? | The bibliography is in a public repo |
@@ -91,7 +103,7 @@ with biblatex-chem, biber and latexmk, plus Python with requests and matplotlib.
 
 | Item | Who | By | Notes |
 |---|---|---|---|
-| D1–D12 above | **Sterling** | D1, D2, D7 by Dec 18, 2026; the rest by Mar 2027 | D7 is on the critical path |
+| D0a–D12 above | **Sterling** | D0a, D0b with the campaign paper's freeze (its draft says Dec 1); D1, D2, D7 by Dec 18, 2026; the rest by Mar 2027 | D7 is on the critical path |
 | Fix or replace the collection cup (#269); then Block A, ≥ 5 valid runs with full run records, two splits each | **Gage, Ronnie** | Mar 31, 2027 | The most important single dataset; it needs Mo plates, the 45 µm sieve and one lot of 6063 |
 | Bench logs of time and consumables for every step, from now on (L1–L2) | **everyone at a station**, compiled by Gage | ongoing | This is Fig. 1 and Table 1, and it costs nothing if logged at the bench |
 | Block B composition spread, with EDS per particle and ICP | **Gage** (runs), **Ronnie** (EDS), **Sterling** (ICP) | Jun 2027 | |
@@ -99,6 +111,7 @@ with biblatex-chem, biber and latexmk, plus Python with requests and matplotlib.
 | An ICP route that dissolves Si (HF digest, or an outside lab), and an outside lab for O/N/H (BYU has no analyser) | **Sterling** (safety, vendor, funding), **Ronnie** | Mar 2027 | Without it, Si-bearing alloys can't be shown composition-faithful; the fallback is a Si-free design space (D10) |
 | Desktop LPBF built, commissioned and printing dense Al cubes | **Carl**, after Sterling's D7 | May 2027 for version A | |
 | Utah MIDI sessions on shared powders (reference builds) | **Carl** | Sep 2027 | Find out whether Utah has the Ø55 mm kit (~30 g a build, against ~440 g) |
+| Industry baselines (B6): buy Al5X1 and/or Al-HS1 powder; print, age and tensile-test them with the candidates; ICP of each lot; parity check against the data sheets | **Sterling** (purchase, D0a), **Carl** (prints, tensile), **Gage** (powder handling); sourcing and the first measurement in the campaign paper's run (#277) | first measurement by the campaign paper's schedule; reprinted in every campaign 2 build (Jul–Oct 2027) | The parity bars are machined like the suppliers'. A baseline outside the band is explained before campaign 2's first decision |
 | Live optimizer: costs, failure handling, seeding, a non-flat acquisition, pre-registration | **Xavier, Sterling** (with Claude runs) | Jun 2027 | |
 | Mineral burden for every alloy (B4) | **Xavier** or a Claude run | Mar 2027 | |
 | Campaign 2 (~25–35 atomizer runs; prints; hardness, density; tensile on finalists) | **whole team** (new experiments) | Jul–Oct 2027 | |
@@ -113,15 +126,16 @@ with biblatex-chem, biber and latexmk, plus Python with requests and matplotlib.
 
 **Tuesday, Feb 15, 2028**, about two weeks before a late-February deadline, if D1 confirms that deadline and only
 if version A holds up:
-- **For *Advanced Materials*, only version A is realistic.** The mock review judged a platform-and-replay paper
-  (version B) a likely desk rejection. Version B is still a good paper for *npj Computational Materials*, *Digital
-  Discovery* or *Additive Manufacturing*, and it can be ready by **Jul 2027** if Block A runs by the end of March.
+- **For *Advanced Materials*, aim for version A.** Version B (the platform and a replay of the optimizer) has no
+  new alloy, so it fits *npj Computational Materials*, *Digital Discovery* or *Additive Manufacturing* better, and
+  it can be ready by **Jul 2027** if Block A runs by the end of March.
 - **Version A by Feb 2028: possible, not yet likely.** It needs:
   - the desktop LPBF ordered by January 2027 and printing Al by May;
-  - the positive-control alloy made and tested by July;
+  - the industry baselines (Al5X1 and/or Al-HS1) printed and tested here, first by the campaign paper and again in
+    campaign 2's builds;
   - campaign 2 in July–October;
   - an optimizer that makes audited step choices on lab data;
-  - an alloy that matches or beats the Sc-free reference.
+  - an alloy beyond the in-house front of those baselines (stronger, or lower in burden).
 - **If the desktop LPBF or campaign 2 slips past about August 2027,** version A moves to mid-2028 and misses the
   collection. Submit it as a regular article, and send version B elsewhere.
 - **If the collection actually closes in Feb 2027,** this plan folds into the campaign paper.

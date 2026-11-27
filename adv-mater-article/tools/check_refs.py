@@ -150,6 +150,9 @@ def main() -> None:
             status, notes, info = check_crossref(key, f, args.refresh)
         elif f.get("eprint"):
             status, notes, info = check_arxiv(key, f, args.refresh)
+        elif f["_type"] == "online" and f.get("url"):
+            status, notes = "MANUAL", [f"vendor document (no DOI); values checked by hand against it on {f.get('urldate', '?')}"]
+            info = {"title": f.get("title", ""), "year": f.get("year", ""), "venue": "web"}
         else:
             status, notes, info = "UNCHECKED", ["no DOI or arXiv id"], {}
         if key not in cites:

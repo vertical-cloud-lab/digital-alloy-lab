@@ -10,9 +10,9 @@ Dates are proposals; nothing has been booked or ordered.*
 |---|---|---|---|
 | G-A0 | Fri Dec 18, 2026 | Decisions made: collection and due date (D1), the split with the campaign paper (D2), desktop LPBF build or buy and who orders it (D7); bench logging of step times (L1–L2) started | Each week of delay on D7 moves P1 by a week |
 | G-A1 | Wed Mar 31, 2027 | ≥ 5 valid Block A runs checked against the bar (A1–A2); campaign 1 step costs compiled (L1–L2); mineral burden computed (B4); twin refit to campaign 1 records (T1, first pass) | Block A is the one thing version B can't do without: if it isn't done, run it in April before anything else |
-| G-A2 | Mon May 31, 2027 | Desktop LPBF prints dense Al cubes (P1); Block B and its ICP back (C2); campaign 2 optimizer, baselines, targets and stopping rule pre-registered and committed (B1), with the twin's out-of-sample prediction of campaign 2; positive-control alloy (B6) atomized and printed, tested by July | If P1 is late, campaign 2 starts with the Utah MIDI and the desktop joins when ready; Fig. 1c and Fig. 4 shrink |
+| G-A2 | Mon May 31, 2027 | Desktop LPBF prints dense Al cubes (P1); Block B and its ICP back (C2); campaign 2 optimizer, baselines, targets and stopping rule pre-registered and committed (B1), with the twin's out-of-sample prediction of campaign 2; the industry baselines (B6) measured in-house at least once (by the campaign paper), and their parity with the data sheets (B8) known | If P1 is late, campaign 2 starts with the Utah MIDI and the desktop joins when ready; Fig. 1c and Fig. 4 shrink |
 | — | Jul 6 – Oct 15, 2027 | **Campaign 2**: ~14 weeks including flex; ~25–35 atomizer runs; hardness and density on every print; tensile on finalists | |
-| G-A3 | Thu Sep 30, 2027 | The decision log shows acquisition stops at different steps, with the audit running (Fig. 5a–b); at least one candidate on track to match the Sc-free positive control; version A or B chosen | Version B: write it from Blocks A/B, campaign 1 data and the twin, for another journal |
+| G-A3 | Thu Sep 30, 2027 | The decision log shows acquisition stops at different steps, with the audit running (Fig. 5a–b); at least one candidate on track to expand the in-house front of the industry baselines; version A or B chosen | Version B: write it from Blocks A/B, campaign 1 data and the twin, for another journal |
 | G-A4 | Mon Nov 15, 2027 | Data freeze; finalists' samples at the outside lab (V1–V2) | Report outside results as pending, or drop V2 |
 | G-A5 | Mon Dec 20, 2027 | Outside results back; twin validated against campaign 2 (T4) and counterfactuals run (T2–T3); full draft to co-authors | |
 | — | Jan 2028 | Co-author edits; internal read by someone outside the lab; precedent scan re-run (A6); figures final; SI and data deposit ready (DOIs reserved, not published) | |
@@ -33,11 +33,12 @@ they cost almost nothing if they are logged at the bench rather than reconstruct
 ## Why February 2028 is realistic, and what would move it
 
 - **Version B by Jul 2027: likely** if Block A runs by the end of March 2027. Everything else for version B (Blocks
-  A/B, step costs, campaign 1 data, the refit twin) is in the lab's control. A mock editorial review (outline §9)
-  judged version B a likely desk rejection at *Advanced Materials*, so it belongs in another journal.
+  A/B, step costs, campaign 1 data, the refit twin) is in the lab's control. It has no new alloy, so it fits
+  another journal better than *Advanced Materials* (outline §5).
 - **Version A by Feb 2028: possible, not yet likely.** It needs three things that don't exist today: a
   desktop LPBF printing Al by about May 2027 (not yet ordered; FT-1 needs 4–9 weeks after the order plus
   safety approvals), an optimizer that makes non-trivial step choices on real data (the knowledge gradient
   is flat on most decisions in the synthetic benchmarks), and an atomizer that delivers valid runs at 2–3 a
-  week (2 of 10 runs so far were good).
+  week (2 of 10 runs so far were good). It also needs the industry baselines bought and printed here in time
+  for campaign 2's first build; their sourcing and lead times are in the campaign paper's run (#277).
 - **If the collection is actually due Feb 2027**, this plan merges into the campaign paper (see README, D1).
