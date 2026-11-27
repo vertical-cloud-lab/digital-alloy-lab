@@ -84,7 +84,7 @@ An alloy that is stronger than \AlSi without scandium, or as strong as \Scal wit
 Scandium-free routes to printable, high-strength aluminum already exist.
 In Al--Mg--Zr alloys, primary L1\textsubscript{2} Al\textsubscript{3}Zr particles refine the grains, and nanoscale Al\textsubscript{3}Zr precipitates formed on aging raise the strength by more than 40\%~\cite{croteau2018}.
 Inoculant particles added to the powder suppress cracking in 7075 and 6061~\cite{martin2017,opprecht2020}.
-Al--Mn--Cr--Zr alloys designed for LPBF reach about \SI{390}{MPa} yield strength as built~\cite{almncr2022,alloyF2024,almncrzr2024}, Al--Mg--Mn--Er--Zr alloys about \SI{440}{MPa} after aging~\cite{almgmnerzr2022}, and Al--Ce--Mn alloys keep their strength to high temperature~\cite{plotkowski2020}.
+Al--Mn--Cr--Zr-based alloys designed for LPBF reach about \SI{390}{MPa} yield strength as built~\cite{almncr2022,alloyF2024,almncrzr2024}, Al--Mg--Mn--Er--Zr alloys about \SI{440}{MPa} after aging~\cite{almgmnerzr2022}, and Al--Ce--Mn alloys keep their strength to high temperature~\cite{plotkowski2020}.
 Several scandium-free powders are now sold for LPBF: Al--Mn--Cr--Zr and Al--Mg--Zr--Mn grades with datasheet yield strengths well above \AlSi's after a direct age, and an Al--Fe--Zr grade that matches it~\cite{ds_hoganas,ds_al5x1,ds_cp1}.
 Computational design that couples CALPHAD with Bayesian optimization has produced printable alloys too, although often with scandium or rare-earth additions~\cite{thapliyal2020,taherimousavi2025}.
 Two problems remain.
@@ -118,14 +118,21 @@ Equilibrium and Scheil--Gulliver solidification were computed for each compositi
 Four quantities ranked the compositions:
 (i) the freezing range, taken between the liquidus and a solid fraction of \placeholder{0.99} in the Scheil calculation;
 (ii) Kou's index of crack susceptibility, $\lvert \mathrm{d}T / \mathrm{d}(f_\mathrm{s}^{1/2}) \rvert$ near $f_\mathrm{s}^{1/2} = 1$~\cite{kou2015};
-(iii) the predicted mole fraction of strengthening phases (L1\textsubscript{2} Al\textsubscript{3}M and other precipitates) at the aging temperature, and whether a primary L1\textsubscript{2} phase forms above the liquidus of Al to act as a grain refiner~\cite{croteau2018,spierings2017}; and
+(iii) the predicted mole fraction of strengthening phases (L1\textsubscript{2} Al\textsubscript{3}M and other precipitates) at the aging temperature, and whether a primary L1\textsubscript{2} phase forms ahead of the aluminum matrix during solidification, where it can act as a grain refiner~\cite{croteau2018,spierings2017}; and
 (iv) the critical-mineral burden $B$ (Section~\ref{sec:burden}).
 Printable laser settings for each candidate were estimated from Eagar--Tsai melt-pool calculations and printability maps that bound lack of fusion, balling and keyholing~\cite{eagar1983,johnson2019}.
 
 Four seed compositions, spanning distinct strengthening routes, were atomized first (Table~\ref{tab:compositions}).
 \note{The \#275 plan proposes S1 Al--4.8Mn--0.9Cr--1.1Zr--1.2Mg, S2 Al--1.9Fe--1.0Mg--1.0Zr, S3 Al--3.5Si--2.5Mg and S4 Al--6Mg--2.5Si--0.7Ti, chosen from the literature, not from the screen. If they stay, say so plainly here: they are literature anchors, and the screen ranks what follows.}
-Later compositions were proposed in batches of three by Bayesian optimization~\cite{balandat2020} on the measured hardness and relative density, with the CALPHAD quantities as inputs; the settings were fixed before the first round (Supplementary Section~S9). The software that schedules the steps of the loop, in the manner of a self-driving laboratory~\cite{tom2024}, is described elsewhere; here it serves only to pick compositions.
+Later compositions were proposed in batches of three by Bayesian optimization~\cite{balandat2020} on the measured hardness and relative density, with the CALPHAD quantities as inputs; the settings were fixed before the first round (Supplementary Section~S9). The software that schedules the steps of the loop, in the manner of a self-driving laboratory~\cite{tom2024}, is described elsewhere~\placeholder{ref.\ to the \textit{Adv.\ Mater.} article, if out first}; here it serves only to pick compositions.
 \note{Keep the optimizer to this paragraph. The cost-aware network optimizer and any acceleration claim belong to the \textit{Adv.\ Mater.} article (\#120); see ../outline.md.}
+
+\begin{table}[tbp]
+  \centering\footnotesize
+  \caption{Nominal compositions (wt\%, balance Al) and critical-mineral burden. $B_\mathrm{NIR}$: import-weighted burden (Eq.~\ref{eq:burden}); $B_\mathrm{cost}$: raw-material cost of the alloying additions. \placeholder{Measured compositions (EDS in-house, ICP-OES outside) are added for the campaign alloys.}}
+  \label{tab:compositions}
+  \resizebox{\textwidth}{!}{\input{generated/tab-compositions.tex}}
+\end{table}
 
 \subsection{Critical-mineral burden}
 \label{sec:burden}
@@ -359,12 +366,6 @@ A campaign alloy therefore counts as a discovery only if it lies beyond these al
   \label{fig:map}
 \end{figure}
 
-\begin{table}[tbp]
-  \centering\footnotesize
-  \caption{Nominal compositions (wt\%, balance Al) and critical-mineral burden. $B_\mathrm{NIR}$: import-weighted burden (Eq.~\ref{eq:burden}); $B_\mathrm{cost}$: raw-material cost of the alloying additions. \placeholder{Measured compositions (EDS in-house, ICP-OES outside) are added for the campaign alloys.}}
-  \label{tab:compositions}
-  \resizebox{\textwidth}{!}{\input{generated/tab-compositions.tex}}
-\end{table}
 
 % =============================================================================
 \section{Limitations}
