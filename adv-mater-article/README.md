@@ -1,12 +1,12 @@
 # *Advanced Materials* collection article (issue #120)
 
-**Working title:** *Closing the loop from custom powder to printed part: cost-aware discovery of supply-secure
-printable aluminum alloys*
+**Working title:** *Closing the Loop from Custom Powder to Printed Part: Cost-Aware Discovery of Supply-Secure
+Printable Aluminum Alloys* ("supply-secure" depends on D9)
 
 **Status on 2026-11-27:**
 - **What exists:** a planning draft. The manuscript has a drafted introduction, a claim for each Results subsection, an
   Experimental Section skeleton filled from the run records, an SI skeleton, 63 references checked against Crossref or arXiv,
-  and two draft panels drawn from data that already exist.
+  and four draft panels drawn from data that already exist (Fig. 1a, Fig. 5c's frame, Fig. 6b's layout, Figure S1).
 - **What doesn't:** none of the article's own results exist yet.
 - **Target:** an *Advanced Materials* collection due early 2028, as a Research Article (typically 3,000–8,000 words in all,
   3–8 display items). The collection itself is still unidentified: no public call matches, so it is presumably by
@@ -31,7 +31,7 @@ updated with what has happened since.
 | [`campaign2-preregistration.md`](campaign2-preregistration.md) | Draft pre-registration for the 2027 campaign: target, baselines, stopping rule, twin analysis; to be committed before its first decision |
 | [`templates/`](templates/) | `step-log.csv`: the bench log of time and consumables per step that Table 1 and Fig. 1b are built from |
 | [`references.bib`](references.bib), [`reference-check.md`](reference-check.md) | Bibliography built from Crossref/arXiv records, and the check of every entry |
-| `figures/` | `fig1-loop.tikz` (draft schematic), `figS-atomizer-runs` (every run so far), `fig6-draft-synthetic` (layout draft from the synthetic benchmark) |
+| `figures/` | `fig1a-draft-network-photos` (the loop with lab photographs, from #284), `fig1-loop.tikz` (schematic alternative), `fig5c-draft-benchmarks` (yield strength against mineral burden), `fig6-draft-synthetic` (layout from the synthetic benchmark), `figS-atomizer-runs` (every run so far) |
 | `data/` | Inputs of the draft figures, pinned to their source commits |
 | `tools/` | `build_bib.py`, `check_refs.py`, `make_figures.py`, `refs.tsv`; `atomizer_analysis.py` (Fig. 2, Fig. 3b and the repeatability check from the per-run YAML records: `make atomizer RUNS='<glob>'`, or `--selftest`); `mineral_burden_check.py` (burden ranges for D9) |
 
@@ -48,9 +48,10 @@ with biblatex-chem, biber and latexmk, plus Python with requests and matplotlib.
    - The desktop LPBF is a design with fast-track options; nothing is ordered (#260, PRs #266, #294).
    - The optimizer exists only in synthetic benchmarks. The twin exists, but isn't fitted to any lab measurement
      (audit, PR #293).
-2. **There are three papers.**
+2. **There are several papers.**
    - The campaign paper (#277, due Feb 28, 2027) takes campaign 1's alloys.
    - The BOFN methods paper (#121, drafting started today) takes the synthetic benchmarks.
+   - The powder-doser papers (in vertical-cloud-lab/powder-doser) take dosing accuracy.
    - This article takes atomization as a method, the cost-aware optimizer and step costs, the desktop LPBF, the twin,
      and a second campaign in 2027.
    - The #277 session proposed this split independently; [`outline.md`](outline.md) §4 adopts it.
@@ -64,6 +65,9 @@ with biblatex-chem, biber and latexmk, plus Python with requests and matplotlib.
    - The clocked benchmark (PR #297) found the automated lab 2.5–2.9× faster at 2.2–2.5× the money.
    - The article's claim is therefore conditional: the gain appears when the screen is wrong, and the twin maps
      where that happens.
+5. **The mineral-burden metric needs deciding (D9).** With MCS 2025 import reliance, the Al–Mn–Cr–Zr seed scores
+   above Scalmalloy, while Zr-refined Al–Mg and Al–Fe seeds score below it. Because MCS gives Si only as "<50 %",
+   AlSi10Mg's burden range overlaps Scalmalloy's (Fig. 5c draft).
 
 ## Decisions for Sterling
 
