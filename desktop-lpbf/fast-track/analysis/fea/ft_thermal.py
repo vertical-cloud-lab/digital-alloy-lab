@@ -1052,7 +1052,7 @@ def case_laser(R, which):
                        t_plate_heater_off_s=round(float(rec["t"][np.argmax(rec["Q_plate"] <= 1e-9)]), 1) if (rec["Q_plate"] <= 1e-9).any() else None,
                        Q_block_min=round(float(rec["Q_block"].min()), 2), runtime_s=round(time.time() - t0, 1), n_factor=m.n_factor,
                        clearance_change_min_um=round(float((23.6e-6 * (P["bore"] / 2 * (rec["block_mean"] - 20.0) - P["plate_d"] / 2 *
-                                                                     (rec["plate_mean"] - 20.0)) * 1e6).min()), 1),
+                                                                     (rec["plate_mean"] - 20.0)) * 1e3).min()), 1),
                        platform_max=round(float(rec["platform"].max()), 2))
             # per-layer rise of the plate mean in the first layers (heater on its way off)
             k1 = np.searchsorted(rec["t"], T_LAYER)
@@ -1080,7 +1080,8 @@ def case_warmup(R, which):
             qmax["block"] = 100.0
         ctrl = controllers(m, tc0, SET_TC, qmax)
         t0 = time.time()
-        times = np.r_[np.arange(0.0, 3600.0, 2.0), np.arange(3600.0, 4 * 3600.0 + 1, 30.0)]
+        # 2 s steps for 1.5 h, then 10 s: the PI update is explicit, so Kp dt / C must stay well below 1 (6 W/K x 10 s / 85 J/K = 0.7)
+        times = np.r_[np.arange(0.0, 5400.0, 2.0), np.arange(5400.0, 4 * 3600.0 + 1, 10.0)]
         rec, T1 = m.transient(np.full(m.N, 20.0), times, ctrl, Qmax=qmax, probes=m._pr)
         t = rec["t"]
 
@@ -1095,7 +1096,7 @@ def case_warmup(R, which):
         pf = rec["platform"]
         pf_ss = float(m._pr["platform"] @ T_ss)
         bad = np.where(np.abs(pf - pf_ss) > 0.5)[0]
-        dcl = 23.6e-6 * (P["bore"] / 2 * (rec["block_mean"] - 20.0) - P["plate_d"] / 2 * (rec["plate_mean"] - 20.0)) * 1e6
+        dcl = 23.6e-6 * (P["bore"] / 2 * (rec["block_mean"] - 20.0) - P["plate_d"] / 2 * (rec["plate_mean"] - 20.0)) * 1e3
         res = dict(Q_max=qmax, ctrl={k: list(v) for k, v in ctrl.items()}, T_in=m.T_in, nodes=m.N,
                    t_sub_190_s=first(sub >= 190.0), t_sub_199_s=first(sub >= 199.0), t_block_199_s=first(rec["tc_block"] >= 199.0),
                    sub_overshoot_K=round(float(sub.max() - SET_SUB), 2), block_overshoot_K=round(float(rec["tc_block"].max() - SET_TC), 2),
@@ -1106,7 +1107,7 @@ def case_warmup(R, which):
                    plate_minus_block_max_K=round(float((rec["plate_mean"] - rec["block_mean"]).max()), 1),
                    energy_kJ_first_hour=round(float(np.sum((rec["Q_plate"] + rec["Q_block"])[t <= 3600] * 2.0) / 1e3), 1),
                    runtime_s=round(time.time() - t0, 1))
-        sl = np.r_[np.arange(0, 1800, 5), np.arange(1800, len(t), 1)]
+        sl = np.r_[np.arange(0, 2700, 5), np.arange(2700, len(t), 6)]
         res["trace"] = {k: [round(float(v), 3) for v in rec[k][sl]] for k in ("t", "sub_top", "tc_plate", "tc_block", "plate_mean",
                                                                                 "block_mean", "platform", "clamp", "oring_upper",
                                                                                 "Q_plate", "Q_block")}
@@ -1126,38 +1127,49 @@ BLUES = ["#cce3fd", "#9dc8f7", "#6aabf1", "#338ced", "#2370cd", "#1757ac", "#0e3
 
 
 def derive(R):
-    """Shortest layer period that keeps the substrate top centre within +band of 200 °C: the cycle-mean excess is the
-    steady excess at the mean absorbed power (FE sweep, interpolated); the peak adds half the FE layer-to-layer swing."""
+    """Shortest layer period that keeps a temperature within +band of its set point. The cycle mean is the steady
+    value at the mean absorbed power (FE sweep, interpolated; heaters under control, so the plate heater covers the
+    first ~10 W); a peak adds half the FE layer-to-layer swing at the 6.46 s period (the swing per layer depends on the
+    energy a layer, not much on the period while the period is short next to the plate's ~100 s time constant).
+    Criteria: sub_mean (substrate top centre, cycle mean), sub_peak (same, peak), tc (the plate TC the dwell rule
+    reads, peak; its set point is the TC reading that puts the substrate at 200 °C without laser)."""
     D = {}
     for key, L in R.get("laser", {}).items():
         sw = L["sweep"]
+        tc0 = L["base"]["tc_plate"]
         Pv = np.array([0.0] + [r["P_abs_W"] for r in sw])
-        ex = np.array([0.0] + [r["sub_top"] - SET_SUB for r in sw])
-        ex = np.maximum.accumulate(ex)                       # monotone for the inverse interpolation
+        curves = {"sub": np.array([0.0] + [r["sub_top"] - SET_SUB for r in sw]),
+                  "tc": np.array([0.0] + [r["tc_plate"] - tc0 for r in sw])}
+        curves = {k: np.maximum.accumulate(v) for k, v in curves.items()}
         off = [r for r in sw if r["Q"]["plate"] <= 1e-6 and r["Q"]["block"] > 1e-6]
-        d = dict(G_gap_WK=[r["G_gap_WK"] for r in sw if r["Q"]["plate"] <= 1e-6],
-                 G_rod_WK=L["base"]["G_rod_WK"], heat_cap_plate_JK=round(L["heat_cap_JK"]["substrate"] + L["heat_cap_JK"]["heater plate"]
-                                                                       + L["heat_cap_JK"].get("coupons", 0.0), 1),
-                 Q_plate_base_W=round(L["base"]["Q"]["plate"], 2), Q_block_base_W=round(L["base"]["Q"]["block"], 2))
+        d = dict(G_gap_WK=sorted({r["G_gap_WK"] for r in sw if r["Q"]["plate"] <= 1e-6}), G_rod_WK=L["base"]["G_rod_WK"],
+                 heat_cap_plate_JK=round(L["heat_cap_JK"]["substrate"] + L["heat_cap_JK"]["heater plate"], 1),
+                 heat_cap_coupons_powder_JK=round(L["heat_cap_JK"].get("coupons", 0.0) + L["heat_cap_JK"].get("powder", 0.0), 1),
+                 Q_plate_base_W=round(L["base"]["Q"]["plate"], 2), Q_block_base_W=round(L["base"]["Q"]["block"], 2), tc0=tc0)
         if len(off) >= 2:
-            a, b = np.polyfit([r["P_abs_W"] for r in off], [r["sub_top"] - SET_SUB for r in off], 1)
-            d["slope_K_per_W"], d["P_zero_excess_W"], d["G_eff_WK"] = round(a, 4), round(-b / a, 2), round(1 / a, 3)
+            for nm, fld, ref in (("sub", "sub_top", SET_SUB), ("tc", "tc_plate", tc0)):
+                a, b = np.polyfit([r["P_abs_W"] for r in off], [r[fld] - ref for r in off], 1)
+                d[f"{nm}_slope_K_per_W"], d[f"{nm}_P_zero_W"], d[f"{nm}_G_eff_WK"] = round(a, 4), round(-b / a, 2), round(1 / a, 3)
         rows = []
         for A in (0.3, 0.6):
-            tr = L.get(f"transient_A{A:g}")
-            swing = (tr["sub_top_last2_max"] - tr["sub_top_last2_min"]) if tr else 0.0
+            tr = L.get(f"transient_A{A:g}", {})
+            sw_sub = (tr["sub_top_last2_max"] - tr["sub_top_last2_min"]) if tr else 0.0
+            tt = np.array(tr["trace"]["t"]) if tr else np.zeros(1)
+            sw_tc = float(np.ptp(np.array(tr["trace"]["tc_plate"])[tt > tt[-1] - 2 * T_LAYER])) if tr else 0.0
             Pm = A * E_LAYER / T_LAYER
-            row = dict(A=A, P_abs_nodwell_W=round(Pm, 1), excess_nodwell_steady_K=round(float(np.interp(Pm, Pv, ex)), 1),
-                       swing_K=round(swing, 2), E_abs_J=round(A * E_LAYER, 0),
+            row = dict(A=A, E_abs_J=round(A * E_LAYER, 0), P_abs_nodwell_W=round(Pm, 1),
+                       excess_nodwell_steady_K=round(float(np.interp(Pm, Pv, curves["sub"])), 1),
+                       excess_nodwell_after_layers_K=round(tr.get("sub_top_last2_max", np.nan) - SET_SUB, 1) if tr else None,
+                       swing_sub_K=round(sw_sub, 1), swing_tc_K=round(sw_tc, 2),
                        rise_per_layer_lumped_K=round(A * E_LAYER / d["heat_cap_plate_JK"], 2))
-            for band in (5.0, 10.0, 20.0):
-                tgt = band - swing / 2
-                Pa = float(np.interp(tgt, ex, Pv)) if tgt > 0 else 0.0
-                per = max(A * E_LAYER / Pa, T_LAYER) if Pa > 0 else None
-                row[f"P_allowed_{band:g}K_W"] = round(Pa, 1)
-                row[f"period_{band:g}K_s"] = round(per, 1) if per else None
-                row[f"build_10mm_{band:g}K_h"] = round(333 * per / 3600, 2) if per else None
-                row[f"build_15mm_{band:g}K_h"] = round(500 * per / 3600, 2) if per else None
+            for crit, curve, half in (("sub_mean", "sub", 0.0), ("sub_peak", "sub", sw_sub / 2), ("tc", "tc", sw_tc / 2)):
+                for band in (5.0, 10.0, 20.0):
+                    tgt = band - half
+                    Pa = float(np.interp(tgt, curves[curve], Pv)) if tgt > 0 else 0.0
+                    per = max(A * E_LAYER / Pa, T_LAYER) if Pa > 0 else None
+                    row[f"{crit}_{band:g}K"] = dict(P_W=round(Pa, 1), period_s=round(per, 1) if per else None,
+                                                    h_10mm=round(333 * per / 3600, 2) if per else None,
+                                                    h_15mm=round(500 * per / 3600, 2) if per else None)
             rows.append(row)
         d["by_absorptivity"] = rows
         D[key] = d
@@ -1187,8 +1199,9 @@ def _section(ax, npz, title, xlim, zlim, vmin, vmax, cmap):
             pts = pts[np.argsort(np.arctan2(pts[:, 1] - c[1], pts[:, 0] - c[0]))]
             polys.append(pts)
             vals.append(np.mean(tv))
-    pc = PolyCollection(polys, array=np.array(vals), cmap=cmap, edgecolors="face", linewidths=0.2)
-    pc.set_clim(vmin, vmax)
+    from matplotlib.colors import PowerNorm
+    pc = PolyCollection(polys, array=np.array(vals), cmap=cmap, edgecolors="face", linewidths=0.2,
+                        norm=PowerNorm(0.5, vmin=vmin, vmax=vmax))
     ax.add_collection(pc)
     ax.set_xlim(*xlim)
     ax.set_ylim(*zlim)
@@ -1221,7 +1234,6 @@ def figures(R):
                           f"heaters {s_['heaters_W']['plate']:.1f} W plate + {s_['heaters_W']['block']:.1f} W block",
                           (-62, 62), (-245, 15), 25, 202, cmap)
             ax.set_ylabel("z (mm)", fontsize=8, color=INK2)
-            lab = [("substrate 200 °C", (0, s_["sensors"] and 0), None)]
             g = dict(platform=s_["bodies"]["platform"]["mean"], clamp=s_["bodies"]["clamp"]["mean"])
             ax.annotate(f"rod-end block {g['clamp']:.0f} °C", xy=(32, -100 + (0 if 'pz0' in k else -15)), xytext=(36, -95),
                         fontsize=7, color=INK)
@@ -1229,6 +1241,11 @@ def figures(R):
             ax.annotate(f"O-rings {s_['oring_upper']:.0f}/{s_['oring_lower']:.0f} °C", xy=(8, -70), xytext=(36, -72), fontsize=7, color=INK,
                         arrowprops=dict(arrowstyle="-", color=INK2, lw=0.6))
             ax.annotate(f"block {s_['bodies']['block']['mean']:.0f} °C", xy=(30, -20), xytext=(36, 5), fontsize=7, color=INK)
+            zt_ = 0.0 if "pz0" in k else -15.0
+            ax.annotate(f"substrate top {s_['sensors']['sub_top']:.0f} °C", xy=(0, zt_), xytext=(-60, 8), fontsize=7, color=INK,
+                        arrowprops=dict(arrowstyle="-", color=INK2, lw=0.6))
+            ax.annotate(f"deck {s_['bodies']['deck']['mean']:.0f} °C, box floor {s_['bodies']['floor']['mean']:.0f} °C",
+                        xy=(-50, -58), xytext=(-60, -45), fontsize=7, color=INK)
         cb = fig.colorbar(pc, ax=axs, shrink=0.6, label="T (°C)")
         cb.outline.set_edgecolor(GRID)
         fig.suptitle("FT-1 steady at 200 °C, box air 39 °C (fan): section y = 0", fontsize=10, color=INK, x=0.02, ha="left")
@@ -1287,7 +1304,7 @@ def figures(R):
         i = 0
         for key in ("pz0", "pz-15"):
             for rr in D.get(key, {}).get("by_absorptivity", []):
-                v = [rr[f"period_{b:g}K_s"] or 0 for b in bands]
+                v = [rr[f"sub_mean_{b:g}K"]["period_s"] or 0 for b in bands]
                 a2.bar(xs + (i - 1.5) * w, v, width=w - 0.03, color=COL[i], label=f"A = {rr['A']:g}, {'pz 0' if key == 'pz0' else 'pz -15'}")
                 i += 1
         a2.axhline(T_LAYER, color=INK2, lw=0.8, ls="--")
@@ -1296,7 +1313,7 @@ def figures(R):
         a2.set_ylabel("shortest layer period (s)")
         a2.grid(axis="y", color=GRID, lw=0.6)
         a2.legend(fontsize=7, frameon=False)
-        a2.set_title("Period that holds the band", loc="left", fontsize=10, color=INK)
+        a2.set_title("Period that holds the cycle mean", loc="left", fontsize=10, color=INK)
         fig.savefig(OUT / "thermal-laser.png", dpi=130)
         plt.close(fig)
         made.append("thermal-laser.png")
