@@ -2,12 +2,12 @@
  "variant": "M50 module, M reservoir",
  "vol_tol_mm3": 0.5,
  "chord_mm": 0.05,
- "n_parts": 318,
+ "n_parts": 320,
  "states": [
   {
    "state": "closed, parked, piston up",
    "pose": {},
-   "pairs_checked": 2168,
+   "pairs_checked": 2197,
    "interferences": []
   },
   {
@@ -16,7 +16,7 @@
     "recoater": 206.0,
     "piston": -42.0
    },
-   "pairs_checked": 2110,
+   "pairs_checked": 2134,
    "interferences": []
   },
   {
@@ -26,7 +26,7 @@
     "gdoor": 515.0,
     "piston": 8.0
    },
-   "pairs_checked": 2175,
+   "pairs_checked": 2207,
    "interferences": []
   },
   {
@@ -37,7 +37,7 @@
     "cartridge": -125.0,
     "drawer": -120.0
    },
-   "pairs_checked": 2137,
+   "pairs_checked": 2166,
    "interferences": []
   },
   {
@@ -47,7 +47,7 @@
     "module": 40.0,
     "gdoor": 515.0
    },
-   "pairs_checked": 2077,
+   "pairs_checked": 2103,
    "interferences": []
   },
   {
@@ -56,7 +56,7 @@
     "_calibration": 1.0,
     "door": 95.0
    },
-   "pairs_checked": 2180,
+   "pairs_checked": 2209,
    "interferences": []
   }
  ],
@@ -593,13 +593,6 @@
   },
   {
    "group": "recoater",
-   "at": 94.42,
-   "moving": "HSS recoater blade (1.5 mm, wide nose)",
-   "other": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "gap_mm": 14.05
-  },
-  {
-   "group": "recoater",
    "at": 180.25,
    "moving": "HSS recoater blade (1.5 mm, wide nose)",
    "other": "Overflow-funnel screws, M4 x 12 316, counterbored (4 x McMaster 92290A148)",
@@ -610,6 +603,13 @@
    "at": 180.25,
    "moving": "HSS recoater blade (1.5 mm, wide nose)",
    "other": "Overflow-funnel helical inserts, M4 x 6 18-8, in the floor (4 x McMaster 91732A656)",
+   "gap_mm": 14.05
+  },
+  {
+   "group": "recoater",
+   "at": 94.42,
+   "moving": "HSS recoater blade (1.5 mm, wide nose)",
+   "other": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
    "gap_mm": 14.05
   },
   {
@@ -1413,9 +1413,9 @@
   {
    "group": "piston",
    "at": 8.0,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
-   "gap_mm": 1.738
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
+   "other": "Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod glands)",
+   "gap_mm": 1.984
   },
   {
    "group": "piston",
@@ -1426,10 +1426,38 @@
   },
   {
    "group": "piston",
+   "at": 8.0,
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
+   "other": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
+   "gap_mm": 2.011
+  },
+  {
+   "group": "piston",
    "at": -42.0,
    "moving": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
    "other": "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)",
    "gap_mm": 2.147
+  },
+  {
+   "group": "piston",
+   "at": 5.92,
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
+   "other": "Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod glands)",
+   "gap_mm": 2.634
+  },
+  {
+   "group": "piston",
+   "at": 3.83,
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
+   "other": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
+   "gap_mm": 2.661
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
+   "other": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
+   "gap_mm": 2.77
   },
   {
    "group": "piston",
@@ -1454,15 +1482,22 @@
   },
   {
    "group": "piston",
-   "at": -14.92,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "at": 8.0,
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
+   "other": "Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod glands)",
+   "gap_mm": 3.186
+  },
+  {
+   "group": "piston",
+   "at": -37.83,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
    "other": "Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod glands)",
    "gap_mm": 3.233
   },
   {
    "group": "piston",
-   "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "at": -8.67,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
    "other": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
    "gap_mm": 3.261
   },
@@ -1510,13 +1545,6 @@
   },
   {
    "group": "piston",
-   "at": -42.0,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
-   "other": "Base plate, process module (MIC-6, 15 mm)",
-   "gap_mm": 4.5
-  },
-  {
-   "group": "piston",
    "at": 1.75,
    "moving": "Heater-stack screws M50, M3 x 25 316, up through slotted counterbores in the piston head (3 x McMaster 92290A124)",
    "other": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
@@ -1531,13 +1559,6 @@
   },
   {
    "group": "piston",
-   "at": 8.0,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "other": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
-   "gap_mm": 5.5
-  },
-  {
-   "group": "piston",
    "at": -29.5,
    "moving": "Heater-block helical inserts M50, M3 18-8 (3 x McMaster 91732A647)",
    "other": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
@@ -1549,13 +1570,6 @@
    "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
    "other": "Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod glands)",
    "gap_mm": 5.757
-  },
-  {
-   "group": "piston",
-   "at": 8.0,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
-   "other": "Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm plate under the clamping module)",
-   "gap_mm": 5.885
   },
   {
    "group": "piston",
@@ -1591,13 +1605,6 @@
    "moving": "Bore seal M50 (aramid felt + carbon-filled PTFE scraper)",
    "other": "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)",
    "gap_mm": 6.469
-  },
-  {
-   "group": "piston",
-   "at": 8.0,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
-   "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
-   "gap_mm": 7.0
   },
   {
    "group": "piston",
@@ -1637,6 +1644,13 @@
   {
    "group": "piston",
    "at": 8.0,
+   "moving": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
+   "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
+   "gap_mm": 8.07
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
    "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
    "other": "Handle screws M50, M4 x 10 316 (2 x McMaster 92290A144)",
    "gap_mm": 8.224
@@ -1658,16 +1672,16 @@
   {
    "group": "piston",
    "at": 8.0,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
-   "other": "Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",
-   "gap_mm": 8.773
+   "moving": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
+   "other": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
+   "gap_mm": 8.75
   },
   {
    "group": "piston",
-   "at": -42.0,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "other": "Base plate, process module (MIC-6, 15 mm)",
-   "gap_mm": 9.503
+   "at": 8.0,
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+   "other": "Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",
+   "gap_mm": 8.773
   },
   {
    "group": "piston",
@@ -1714,9 +1728,9 @@
   {
    "group": "piston",
    "at": 8.0,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
-   "other": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
-   "gap_mm": 11.0
+   "moving": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
+   "other": "Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod glands)",
+   "gap_mm": 11.582
   },
   {
    "group": "piston",
@@ -1738,13 +1752,6 @@
    "moving": "Z sensor flag (2 mm steel tab on the carriage's -x side)",
    "other": "Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm plate under the clamping module)",
    "gap_mm": 11.967
-  },
-  {
-   "group": "piston",
-   "at": 8.0,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "other": "Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm plate under the clamping module)",
-   "gap_mm": 12.071
   },
   {
    "group": "piston",
@@ -1776,13 +1783,6 @@
   },
   {
    "group": "piston",
-   "at": 8.0,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
-   "other": "Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod glands)",
-   "gap_mm": 14.076
-  },
-  {
-   "group": "piston",
    "at": -42.0,
    "moving": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
    "other": "Handle screws M50, M4 x 10 316 (2 x McMaster 92290A144)",
@@ -1801,13 +1801,6 @@
    "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
    "other": "Base plate, process module (MIC-6, 15 mm)",
    "gap_mm": 15.0
-  },
-  {
-   "group": "piston",
-   "at": 8.0,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "other": "Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod glands)",
-   "gap_mm": 15.035
   },
   {
    "group": "piston",
@@ -1916,6 +1909,13 @@
   },
   {
    "group": "piston",
+   "at": -27.42,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
+   "gap_mm": 20.175
+  },
+  {
+   "group": "piston",
    "at": 8.0,
    "moving": "Z carriage",
    "other": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
@@ -1930,10 +1930,10 @@
   },
   {
    "group": "piston",
-   "at": -39.92,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "at": 8.0,
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
    "other": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
-   "gap_mm": 20.674
+   "gap_mm": 20.397
   },
   {
    "group": "piston",
@@ -1980,14 +1980,28 @@
   {
    "group": "piston",
    "at": 8.0,
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
+   "other": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
+   "gap_mm": 21.544
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
    "moving": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
    "other": "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)",
    "gap_mm": 21.62
   },
   {
    "group": "piston",
-   "at": -19.08,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "at": 8.0,
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
+   "other": "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)",
+   "gap_mm": 21.834
+  },
+  {
+   "group": "piston",
+   "at": 1.75,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
    "other": "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)",
    "gap_mm": 22.522
   },
@@ -2011,6 +2025,13 @@
    "moving": "Disc springs under the stack screws M50 (3 x McMaster 9713K54)",
    "other": "Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",
    "gap_mm": 22.76
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
+   "other": "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)",
+   "gap_mm": 22.871
   },
   {
    "group": "piston",
@@ -2063,6 +2084,13 @@
   },
   {
    "group": "piston",
+   "at": 8.0,
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
+   "other": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
+   "gap_mm": 23.929
+  },
+  {
+   "group": "piston",
    "at": -42.0,
    "moving": "Z carriage",
    "other": "Base plate, process module (MIC-6, 15 mm)",
@@ -2078,6 +2106,13 @@
   {
    "group": "piston",
    "at": 8.0,
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
+   "other": "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)",
+   "gap_mm": 24.886
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
    "moving": "Striker screws M50, M3 x 10 316 flat head (flush on the magnet face) (3 x McMaster 93395A204)",
    "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
    "gap_mm": 25.287
@@ -2088,6 +2123,13 @@
    "moving": "Heater-block helical inserts M50, M3 18-8 (3 x McMaster 91732A647)",
    "other": "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)",
    "gap_mm": 25.372
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
+   "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
+   "gap_mm": 25.455
   },
   {
    "group": "piston",
@@ -2147,6 +2189,20 @@
   },
   {
    "group": "piston",
+   "at": -0.33,
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
+   "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
+   "gap_mm": 26.106
+  },
+  {
+   "group": "piston",
+   "at": 5.92,
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
+   "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
+   "gap_mm": 26.214
+  },
+  {
+   "group": "piston",
    "at": -4.5,
    "moving": "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
    "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
@@ -2154,15 +2210,8 @@
   },
   {
    "group": "piston",
-   "at": 8.0,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
-   "other": "Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: \u00d888 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)",
-   "gap_mm": 26.581
-  },
-  {
-   "group": "piston",
    "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
    "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
    "gap_mm": 26.742
   },
@@ -2288,9 +2337,9 @@
   {
    "group": "piston",
    "at": 8.0,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "other": "Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: \u00d888 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)",
-   "gap_mm": 31.61
+   "moving": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
+   "other": "Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm plate under the clamping module)",
+   "gap_mm": 31.228
   },
   {
    "group": "piston",
@@ -2340,6 +2389,13 @@
    "moving": "Macor standoff rings M50 (3 standoffs x 3 rings, \u00d88, cut from 8489K75 rod; thermal break)",
    "other": "Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",
    "gap_mm": 33.453
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 33.5
   },
   {
    "group": "piston",
@@ -2567,6 +2623,20 @@
   },
   {
    "group": "piston",
+   "at": -0.33,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)",
+   "gap_mm": 40.0
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 40.205
+  },
+  {
+   "group": "piston",
    "at": -42.0,
    "moving": "Macor standoff rings M50 (3 standoffs x 3 rings, \u00d88, cut from 8489K75 rod; thermal break)",
    "other": "Zero-point module plates (2 x 6061, 10 mm, each on two posts)",
@@ -2578,13 +2648,6 @@
    "moving": "Radiation shields M50 (2 x 0.3 mm polished 316, clamped between the Macor rings)",
    "other": "Zero-point posts (4 x 6061, 16 x 16, M6 studs into floor inserts)",
    "gap_mm": 40.406
-  },
-  {
-   "group": "piston",
-   "at": -0.33,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)",
-   "gap_mm": 40.5
   },
   {
    "group": "piston",
@@ -2610,6 +2673,13 @@
   {
    "group": "piston",
    "at": -42.0,
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 40.964
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
    "moving": "Heater-stack screws M50, M3 x 25 316, up through slotted counterbores in the piston head (3 x McMaster 92290A124)",
    "other": "Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: \u00d888 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)",
    "gap_mm": 41.186
@@ -2624,16 +2694,16 @@
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "Heater-block helical inserts M50, M3 18-8 (3 x McMaster 91732A647)",
-   "other": "Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",
-   "gap_mm": 41.741
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 41.322
   },
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Base plate, process module (MIC-6, 15 mm)",
-   "gap_mm": 41.902
+   "moving": "Heater-block helical inserts M50, M3 18-8 (3 x McMaster 91732A647)",
+   "other": "Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",
+   "gap_mm": 41.741
   },
   {
    "group": "piston",
@@ -2651,17 +2721,24 @@
   },
   {
    "group": "piston",
+   "at": -2.42,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+   "gap_mm": 42.747
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 43.121
+  },
+  {
+   "group": "piston",
    "at": 8.0,
    "moving": "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
    "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
    "gap_mm": 43.24
-  },
-  {
-   "group": "piston",
-   "at": -2.42,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
-   "gap_mm": 43.246
   },
   {
    "group": "piston",
@@ -2707,6 +2784,13 @@
   },
   {
    "group": "piston",
+   "at": -12.83,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), \u00d86 x 20 316, pressed into the floor (2 x McMaster 93600A686)",
+   "gap_mm": 46.256
+  },
+  {
+   "group": "piston",
    "at": -17.0,
    "moving": "Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
    "other": "Zero-point post helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
@@ -2735,13 +2819,6 @@
   },
   {
    "group": "piston",
-   "at": -12.83,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), \u00d86 x 20 316, pressed into the floor (2 x McMaster 93600A686)",
-   "gap_mm": 46.755
-  },
-  {
-   "group": "piston",
    "at": 8.0,
    "moving": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
    "other": "Zero-point post helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
@@ -2764,6 +2841,13 @@
   {
    "group": "piston",
    "at": 8.0,
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
+   "other": "Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm plate under the clamping module)",
+   "gap_mm": 47.599
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
    "moving": "Radiation shields M50 (2 x 0.3 mm polished 316, clamped between the Macor rings)",
    "other": "Zero-point post helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
    "gap_mm": 47.748
@@ -2777,6 +2861,20 @@
   },
   {
    "group": "piston",
+   "at": -8.67,
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
+   "other": "Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm plate under the clamping module)",
+   "gap_mm": 48.25
+  },
+  {
+   "group": "piston",
+   "at": -2.42,
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
+   "other": "Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm plate under the clamping module)",
+   "gap_mm": 48.358
+  },
+  {
+   "group": "piston",
    "at": 8.0,
    "moving": "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
    "other": "Helical inserts for the module screws, M6 x 12 18-8, in the floor (2 x McMaster 91732A782)",
@@ -2785,7 +2883,7 @@
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
    "other": "Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm plate under the clamping module)",
    "gap_mm": 48.965
   },
@@ -2798,10 +2896,24 @@
   },
   {
    "group": "piston",
+   "at": 8.0,
+   "moving": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
+   "other": "Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: \u00d888 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)",
+   "gap_mm": 50.298
+  },
+  {
+   "group": "piston",
    "at": -4.5,
    "moving": "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
    "other": "Helical inserts for the module screws, M6 x 12 18-8, in the floor (2 x McMaster 91732A782)",
    "gap_mm": 50.682
+  },
+  {
+   "group": "piston",
+   "at": -4.5,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Helical inserts for the module screws, M6 x 12 18-8, in the floor (2 x McMaster 91732A782)",
+   "gap_mm": 50.823
   },
   {
    "group": "piston",
@@ -2823,13 +2935,6 @@
    "moving": "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
    "other": "Zero-point module plates (2 x 6061, 10 mm, each on two posts)",
    "gap_mm": 51.122
-  },
-  {
-   "group": "piston",
-   "at": -0.33,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Helical inserts for the module screws, M6 x 12 18-8, in the floor (2 x McMaster 91732A782)",
-   "gap_mm": 51.323
   },
   {
    "group": "piston",
@@ -2917,10 +3022,45 @@
   },
   {
    "group": "piston",
+   "at": 8.0,
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
+   "other": "Zero-point module plates (2 x 6061, 10 mm, each on two posts)",
+   "gap_mm": 57.102
+  },
+  {
+   "group": "piston",
+   "at": -2.42,
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
+   "other": "Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: \u00d888 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)",
+   "gap_mm": 57.132
+  },
+  {
+   "group": "piston",
    "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
    "other": "Zero-point module plates (2 x 6061, 10 mm, each on two posts)",
    "gap_mm": 57.742
+  },
+  {
+   "group": "piston",
+   "at": -0.33,
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
+   "other": "Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: \u00d888 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)",
+   "gap_mm": 57.782
+  },
+  {
+   "group": "piston",
+   "at": 5.92,
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
+   "other": "Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: \u00d888 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)",
+   "gap_mm": 57.894
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
+   "other": "Zero-point module plates (2 x 6061, 10 mm, each on two posts)",
+   "gap_mm": 58.02
   },
   {
    "group": "piston",
@@ -2932,7 +3072,7 @@
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
    "other": "Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: \u00d888 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)",
    "gap_mm": 58.957
   },
@@ -2946,16 +3086,9 @@
   {
    "group": "piston",
    "at": 8.0,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
-   "other": "Zero-point push-in fittings (2 x M5 elbow on the modules' release ports)",
-   "gap_mm": 59.584
-  },
-  {
-   "group": "piston",
-   "at": 8.0,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
-   "other": "Zero-point clamping pins M50 (2 x SCHUNK VERO-S SPC mini 20 class, \u00d820, 14 mm into the module; centring clearance, no alignment)",
-   "gap_mm": 59.866
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
+   "other": "Zero-point module plates (2 x 6061, 10 mm, each on two posts)",
+   "gap_mm": 59.317
   },
   {
    "group": "piston",
@@ -2973,13 +3106,6 @@
   },
   {
    "group": "piston",
-   "at": 8.0,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
-   "other": "Zero-point release-air line (\u00d84 tube, valve to a union Y to each module)",
-   "gap_mm": 62.279
-  },
-  {
-   "group": "piston",
    "at": -6.58,
    "moving": "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
    "other": "Zero-point post helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
@@ -2988,16 +3114,9 @@
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
    "other": "Zero-point posts (4 x 6061, 16 x 16, M6 studs into floor inserts)",
-   "gap_mm": 63.092
-  },
-  {
-   "group": "piston",
-   "at": 8.0,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "other": "Zero-point clamping pins M50 (2 x SCHUNK VERO-S SPC mini 20 class, \u00d820, 14 mm into the module; centring clearance, no alignment)",
-   "gap_mm": 64.773
+   "gap_mm": 62.592
   },
   {
    "group": "piston",
@@ -3005,13 +3124,6 @@
    "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
    "other": "Zero-point push-in fittings (2 x M5 elbow on the modules' release ports)",
    "gap_mm": 65.054
-  },
-  {
-   "group": "piston",
-   "at": 8.0,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "other": "Zero-point push-in fittings (2 x M5 elbow on the modules' release ports)",
-   "gap_mm": 65.125
   },
   {
    "group": "piston",
@@ -3036,13 +3148,6 @@
   },
   {
    "group": "piston",
-   "at": 8.0,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "other": "Zero-point release-air line (\u00d84 tube, valve to a union Y to each module)",
-   "gap_mm": 68.088
-  },
-  {
-   "group": "piston",
    "at": 1.75,
    "moving": "Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
    "other": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
@@ -3057,6 +3162,13 @@
   },
   {
    "group": "piston",
+   "at": -4.5,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Zero-point post helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
+   "gap_mm": 69.78
+  },
+  {
+   "group": "piston",
    "at": 8.0,
    "moving": "Heater block M50 (6061-T6, bayonet socket)",
    "other": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
@@ -3068,13 +3180,6 @@
    "moving": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
    "other": "Zero-point clamping pins M50 (2 x SCHUNK VERO-S SPC mini 20 class, \u00d820, 14 mm into the module; centring clearance, no alignment)",
    "gap_mm": 70.238
-  },
-  {
-   "group": "piston",
-   "at": -4.5,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Zero-point post helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
-   "gap_mm": 70.28
   },
   {
    "group": "piston",
@@ -3324,6 +3429,13 @@
   {
    "group": "piston",
    "at": 8.0,
+   "moving": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
+   "other": "Zero-point clamping pins M50 (2 x SCHUNK VERO-S SPC mini 20 class, \u00d820, 14 mm into the module; centring clearance, no alignment)",
+   "gap_mm": 83.995
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
    "moving": "Striker disc M50 (416 stainless, on the pot magnet)",
    "other": "Zero-point clamping pins M50 (2 x SCHUNK VERO-S SPC mini 20 class, \u00d820, 14 mm into the module; centring clearance, no alignment)",
    "gap_mm": 84.732
@@ -3387,6 +3499,13 @@
   {
    "group": "piston",
    "at": 8.0,
+   "moving": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
+   "other": "Zero-point push-in fittings (2 x M5 elbow on the modules' release ports)",
+   "gap_mm": 87.679
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
    "moving": "Striker screws M50, M3 x 10 316 flat head (flush on the magnet face) (3 x McMaster 93395A204)",
    "other": "Zero-point clamping pins M50 (2 x SCHUNK VERO-S SPC mini 20 class, \u00d820, 14 mm into the module; centring clearance, no alignment)",
    "gap_mm": 89.018
@@ -3421,6 +3540,20 @@
   },
   {
    "group": "piston",
+   "at": 8.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "gap_mm": 90.431
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
+   "other": "Zero-point release-air line (\u00d84 tube, valve to a union Y to each module)",
+   "gap_mm": 90.556
+  },
+  {
+   "group": "piston",
    "at": -4.5,
    "moving": "Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
    "other": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt (18 x McMaster 92290A154)",
@@ -3429,9 +3562,9 @@
   {
    "group": "piston",
    "at": 8.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
-   "gap_mm": 90.927
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
+   "other": "Zero-point clamping pins M50 (2 x SCHUNK VERO-S SPC mini 20 class, \u00d820, 14 mm into the module; centring clearance, no alignment)",
+   "gap_mm": 91.113
   },
   {
    "group": "piston",
@@ -3449,10 +3582,10 @@
   },
   {
    "group": "piston",
-   "at": 8.0,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
-   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 91.82
+   "at": -0.33,
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
+   "other": "Zero-point clamping pins M50 (2 x SCHUNK VERO-S SPC mini 20 class, \u00d820, 14 mm into the module; centring clearance, no alignment)",
+   "gap_mm": 91.763
   },
   {
    "group": "piston",
@@ -3463,15 +3596,22 @@
   },
   {
    "group": "piston",
+   "at": 5.92,
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
+   "other": "Zero-point clamping pins M50 (2 x SCHUNK VERO-S SPC mini 20 class, \u00d820, 14 mm into the module; centring clearance, no alignment)",
+   "gap_mm": 91.873
+  },
+  {
+   "group": "piston",
    "at": 8.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
    "other": "Floor O-ring (FKM 75A, 3.53 mm cord, vulcanized splice, 25 % squeeze; face seal in the floor plate's pad)",
-   "gap_mm": 92.59
+   "gap_mm": 92.092
   },
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
    "other": "Zero-point clamping pins M50 (2 x SCHUNK VERO-S SPC mini 20 class, \u00d820, 14 mm into the module; centring clearance, no alignment)",
    "gap_mm": 92.944
   },
@@ -3491,10 +3631,10 @@
   },
   {
    "group": "piston",
-   "at": -33.67,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
-   "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
-   "gap_mm": 93.916
+   "at": 8.0,
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
+   "other": "Zero-point push-in fittings (2 x M5 elbow on the modules' release ports)",
+   "gap_mm": 93.989
   },
   {
    "group": "piston",
@@ -3506,9 +3646,16 @@
   {
    "group": "piston",
    "at": 8.0,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 94.439
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
+   "other": "Zero-point push-in fittings (2 x M5 elbow on the modules' release ports)",
+   "gap_mm": 94.641
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
+   "other": "Zero-point push-in fittings (2 x M5 elbow on the modules' release ports)",
+   "gap_mm": 94.925
   },
   {
    "group": "piston",
@@ -3520,7 +3667,7 @@
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
    "other": "Zero-point push-in fittings (2 x M5 elbow on the modules' release ports)",
    "gap_mm": 95.603
   },
@@ -3575,13 +3722,6 @@
   },
   {
    "group": "piston",
-   "at": -42.0,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
-   "other": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
-   "gap_mm": 97.901
-  },
-  {
-   "group": "piston",
    "at": -0.33,
    "moving": "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
    "other": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt (18 x McMaster 92290A154)",
@@ -3607,13 +3747,6 @@
    "moving": "Striker disc M50 (416 stainless, on the pot magnet)",
    "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
    "gap_mm": 99.505
-  },
-  {
-   "group": "piston",
-   "at": -29.5,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
-   "gap_mm": 99.748
   },
   {
    "group": "piston",
@@ -3660,13 +3793,6 @@
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "other": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
-   "gap_mm": 103.813
-  },
-  {
-   "group": "piston",
-   "at": -42.0,
    "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
    "other": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
    "gap_mm": 104.58
@@ -3674,14 +3800,35 @@
   {
    "group": "piston",
    "at": -0.33,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
    "other": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt (18 x McMaster 92290A154)",
-   "gap_mm": 106.652
+   "gap_mm": 106.153
+  },
+  {
+   "group": "piston",
+   "at": 3.83,
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 107.036
+  },
+  {
+   "group": "piston",
+   "at": 5.92,
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 107.686
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 107.8
   },
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
    "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
    "gap_mm": 109.086
   },
@@ -3698,6 +3845,13 @@
    "moving": "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
    "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
    "gap_mm": 110.283
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 111.222
   },
   {
    "group": "piston",
@@ -3785,6 +3939,13 @@
   },
   {
    "group": "piston",
+   "at": -33.67,
+   "moving": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
+   "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
+   "gap_mm": 120.382
+  },
+  {
+   "group": "piston",
    "at": 8.0,
    "moving": "Heater-block helical inserts M50, M3 18-8 (3 x McMaster 91732A647)",
    "other": "Plate-height through-beam (M6 threaded fibre heads in the side walls, z +5 mm)",
@@ -3817,6 +3978,13 @@
    "moving": "Heater-stack screws M50, M3 x 25 316, up through slotted counterbores in the piston head (3 x McMaster 92290A124)",
    "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
    "gap_mm": 123.856
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
+   "other": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
+   "gap_mm": 124.31
   },
   {
    "group": "piston",
@@ -4038,9 +4206,30 @@
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
    "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
-   "gap_mm": 137.192
+   "gap_mm": 135.767
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
+   "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
+   "gap_mm": 136.417
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
+   "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
+   "gap_mm": 136.529
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
+   "gap_mm": 136.692
   },
   {
    "group": "piston",
@@ -4052,9 +4241,9 @@
   {
    "group": "piston",
    "at": 8.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
    "other": "Plate-height through-beam (M6 threaded fibre heads in the side walls, z +5 mm)",
-   "gap_mm": 138.154
+   "gap_mm": 137.658
   },
   {
    "group": "piston",
@@ -4093,6 +4282,13 @@
   },
   {
    "group": "piston",
+   "at": -42.0,
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
+   "other": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
+   "gap_mm": 139.765
+  },
+  {
+   "group": "piston",
    "at": 3.83,
    "moving": "Heater-stack screws M50, M3 x 25 316, up through slotted counterbores in the piston head (3 x McMaster 92290A124)",
    "other": "Leg-to-floor screws, M6 x 25 316, up each leg's \u00d811 bore (4 x McMaster 92290A330)",
@@ -4107,6 +4303,13 @@
   },
   {
    "group": "piston",
+   "at": -42.0,
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
+   "other": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
+   "gap_mm": 140.677
+  },
+  {
+   "group": "piston",
    "at": -19.08,
    "moving": "Heater-block helical inserts M50, M3 18-8 (3 x McMaster 91732A647)",
    "other": "Leg-to-floor screws, M6 x 25 316, up each leg's \u00d811 bore (4 x McMaster 92290A330)",
@@ -4115,9 +4318,9 @@
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
    "other": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
-   "gap_mm": 141.146
+   "gap_mm": 142.027
   },
   {
    "group": "piston",
@@ -4139,6 +4342,13 @@
    "moving": "Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
    "other": "Leg-to-floor screws, M6 x 25 316, up each leg's \u00d811 bore (4 x McMaster 92290A330)",
    "gap_mm": 142.976
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
+   "gap_mm": 143.147
   },
   {
    "group": "piston",
@@ -4199,16 +4409,16 @@
   {
    "group": "piston",
    "at": 8.0,
-   "moving": "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
-   "other": "Leg helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
-   "gap_mm": 151.318
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Fibre-head O-rings (2 x FKM 75A 2-010, face seals)",
+   "gap_mm": 151.204
   },
   {
    "group": "piston",
    "at": 8.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Fibre-head O-rings (2 x FKM 75A 2-010, face seals)",
-   "gap_mm": 151.702
+   "moving": "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
+   "other": "Leg helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
+   "gap_mm": 151.318
   },
   {
    "group": "piston",
@@ -4226,17 +4436,17 @@
   },
   {
    "group": "piston",
+   "at": -25.33,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Leg-to-floor screws, M6 x 25 316, up each leg's \u00d811 bore (4 x McMaster 92290A330)",
+   "gap_mm": 152.389
+  },
+  {
+   "group": "piston",
    "at": -2.42,
    "moving": "Heater block M50 (6061-T6, bayonet socket)",
    "other": "Floor-plate dowels, \u00d86 x 20 316 (pressed into the plate, slip fit in the frame), front-left and back-right corners (2 x McMaster 93600A686)",
    "gap_mm": 152.496
-  },
-  {
-   "group": "piston",
-   "at": -25.33,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Leg-to-floor screws, M6 x 25 316, up each leg's \u00d811 bore (4 x McMaster 92290A330)",
-   "gap_mm": 152.889
   },
   {
    "group": "piston",
@@ -4255,9 +4465,9 @@
   {
    "group": "piston",
    "at": -4.5,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
    "other": "Leg helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
-   "gap_mm": 154.239
+   "gap_mm": 153.74
   },
   {
    "group": "piston",
@@ -4324,17 +4534,10 @@
   },
   {
    "group": "piston",
-   "at": -33.67,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
+   "at": -35.75,
+   "moving": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
    "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 170.0
-  },
-  {
-   "group": "piston",
-   "at": -39.92,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 173.0
+   "gap_mm": 170.4
   },
   {
    "group": "piston",
@@ -4346,9 +4549,9 @@
   {
    "group": "piston",
    "at": 1.75,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
    "other": "Floor-plate dowels, \u00d86 x 20 316 (pressed into the plate, slip fit in the frame), front-left and back-right corners (2 x McMaster 93600A686)",
-   "gap_mm": 175.852
+   "gap_mm": 175.352
   },
   {
    "group": "piston",
@@ -4492,6 +4695,13 @@
   },
   {
    "group": "piston",
+   "at": -27.42,
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 189.585
+  },
+  {
+   "group": "piston",
    "at": -42.0,
    "moving": "Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
    "other": "Laser guard panels (1.5 mm aluminium)",
@@ -4527,15 +4737,29 @@
   },
   {
    "group": "piston",
-   "at": -33.67,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
+   "at": -42.0,
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 190.236
+  },
+  {
+   "group": "piston",
+   "at": -37.83,
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 190.345
+  },
+  {
+   "group": "piston",
+   "at": -35.75,
+   "moving": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
    "other": "Laser guard panels (1.5 mm aluminium)",
-   "gap_mm": 190.0
+   "gap_mm": 190.4
   },
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
    "other": "Guard frame (20 mm T-slot)",
    "gap_mm": 190.729
   },
@@ -4590,13 +4814,6 @@
   },
   {
    "group": "piston",
-   "at": -39.92,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "other": "Laser guard panels (1.5 mm aluminium)",
-   "gap_mm": 193.0
-  },
-  {
-   "group": "piston",
    "at": -42.0,
    "moving": "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
    "other": "Laser guard panels (1.5 mm aluminium)",
@@ -4615,6 +4832,13 @@
    "moving": "Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
    "other": "Guard frame (20 mm T-slot)",
    "gap_mm": 194.45
+  },
+  {
+   "group": "piston",
+   "at": -33.67,
+   "moving": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
+   "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
+   "gap_mm": 194.532
   },
   {
    "group": "piston",
@@ -4786,10 +5010,38 @@
   },
   {
    "group": "piston",
-   "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "at": -27.42,
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
    "other": "Laser guard panels (1.5 mm aluminium)",
-   "gap_mm": 210.729
+   "gap_mm": 209.585
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 210.229
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 210.236
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 210.345
+  },
+  {
+   "group": "piston",
+   "at": -31.58,
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
+   "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
+   "gap_mm": 210.637
   },
   {
    "group": "piston",
@@ -4800,24 +5052,31 @@
   },
   {
    "group": "piston",
-   "at": -33.67,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
+   "at": -42.0,
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
    "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
-   "gap_mm": 211.595
+   "gap_mm": 211.288
+  },
+  {
+   "group": "piston",
+   "at": -39.92,
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
+   "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
+   "gap_mm": 211.397
   },
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
    "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
-   "gap_mm": 211.982
+   "gap_mm": 211.482
   },
   {
    "group": "piston",
-   "at": -29.5,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
-   "gap_mm": 212.897
+   "at": -42.0,
+   "moving": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
+   "other": "Optics-post base screws, M6 x 25 316 (8 x McMaster 92290A330)",
+   "gap_mm": 223.19
   },
   {
    "group": "piston",
@@ -4857,23 +5116,30 @@
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
    "other": "Optics-post base screws, M6 x 25 316 (8 x McMaster 92290A330)",
-   "gap_mm": 240.127
+   "gap_mm": 239.099
   },
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
    "other": "Optics-post base screws, M6 x 25 316 (8 x McMaster 92290A330)",
-   "gap_mm": 240.406
+   "gap_mm": 239.914
   },
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
    "other": "Optics-post base screws, M6 x 25 316 (8 x McMaster 92290A330)",
-   "gap_mm": 241.476
+   "gap_mm": 240.677
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Optics-post base screws, M6 x 25 316 (8 x McMaster 92290A330)",
+   "gap_mm": 241.764
   },
   {
    "group": "piston",
@@ -4902,6 +5168,13 @@
    "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
    "gap_mm": 291.454
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
+   "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
+   "gap_mm": 305.636
   },
   {
    "group": "piston",
@@ -4941,23 +5214,30 @@
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 321.384
+   "gap_mm": 321.551
   },
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 322.588
+   "gap_mm": 322.835
   },
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 323.482
+   "gap_mm": 324.698
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
+   "gap_mm": 326.021
   },
   {
    "group": "door",
@@ -6979,13 +7259,6 @@
    "group": "zstage",
    "at": 0.0,
    "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
-   "other": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "gap_mm": 2.512
-  },
-  {
-   "group": "zstage",
-   "at": 0.0,
-   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
    "other": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
    "gap_mm": 2.698
   },
@@ -6995,13 +7268,6 @@
    "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
    "other": "Z sensor bracket (6061, clamped to the actuator body's -x side)",
    "gap_mm": 4.636
-  },
-  {
-   "group": "zstage",
-   "at": 0.0,
-   "moving": "Pot magnet (NdFeB in a steel cup, \u00d825 x 7, 44 lbf, holds the rod's striker)",
-   "other": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "gap_mm": 6.0
   },
   {
    "group": "zstage",
@@ -7020,30 +7286,9 @@
   {
    "group": "zstage",
    "at": 0.0,
-   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
-   "other": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
-   "gap_mm": 8.0
-  },
-  {
-   "group": "zstage",
-   "at": 0.0,
    "moving": "Pot magnet (NdFeB in a steel cup, \u00d825 x 7, 44 lbf, holds the rod's striker)",
-   "other": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
-   "gap_mm": 8.015
-  },
-  {
-   "group": "zstage",
-   "at": 0.0,
-   "moving": "Pot magnet (NdFeB in a steel cup, \u00d825 x 7, 44 lbf, holds the rod's striker)",
-   "other": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "gap_mm": 9.288
-  },
-  {
-   "group": "zstage",
-   "at": 0.0,
-   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
-   "other": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "gap_mm": 9.992
+   "other": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
+   "gap_mm": 9.0
   },
   {
    "group": "zstage",
@@ -7069,9 +7314,37 @@
   {
    "group": "zstage",
    "at": 0.0,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
+   "gap_mm": 11.242
+  },
+  {
+   "group": "zstage",
+   "at": 0.0,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
+   "gap_mm": 11.754
+  },
+  {
+   "group": "zstage",
+   "at": 0.0,
+   "moving": "Pot magnet (NdFeB in a steel cup, \u00d825 x 7, 44 lbf, holds the rod's striker)",
+   "other": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
+   "gap_mm": 11.754
+  },
+  {
+   "group": "zstage",
+   "at": 0.0,
    "moving": "Z carriage",
    "other": "Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm plate under the clamping module)",
    "gap_mm": 11.909
+  },
+  {
+   "group": "zstage",
+   "at": 0.0,
+   "moving": "Pot magnet (NdFeB in a steel cup, \u00d825 x 7, 44 lbf, holds the rod's striker)",
+   "other": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
+   "gap_mm": 13.9
   },
   {
    "group": "zstage",
@@ -7093,6 +7366,13 @@
    "moving": "Z sensor flag (2 mm steel tab on the carriage's -x side)",
    "other": "Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm plate under the clamping module)",
    "gap_mm": 15.467
+  },
+  {
+   "group": "zstage",
+   "at": 0.0,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
+   "gap_mm": 16.282
   },
   {
    "group": "zstage",
@@ -7523,13 +7803,6 @@
   },
   {
    "group": "module",
-   "at": 34.5,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
-   "other": "Base plate, process module (MIC-6, 15 mm)",
-   "gap_mm": 4.5
-  },
-  {
-   "group": "module",
    "at": 0.0,
    "moving": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
    "other": "Z-flange screws, M5 x 12 316, counterbored (4 x McMaster 92290A228)",
@@ -7576,13 +7849,6 @@
    "moving": "Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
    "other": "Cross-flow outlet plenum under the floor (316L, flat over the module path, bolted flange)",
    "gap_mm": 5.5
-  },
-  {
-   "group": "module",
-   "at": 345.0,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 5.512
   },
   {
    "group": "module",
@@ -7670,13 +7936,6 @@
   },
   {
    "group": "module",
-   "at": 51.75,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "other": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
-   "gap_mm": 7.512
-  },
-  {
-   "group": "module",
    "at": 241.5,
    "moving": "Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",
    "other": "Guard frame (20 mm T-slot)",
@@ -7719,13 +7978,6 @@
   },
   {
    "group": "module",
-   "at": 345.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 9.0
-  },
-  {
-   "group": "module",
    "at": 51.75,
    "moving": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
    "other": "Zero-point module plates (2 x 6061, 10 mm, each on two posts)",
@@ -7744,13 +7996,6 @@
    "moving": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
    "other": "Outlet plenum port (KF-25)",
    "gap_mm": 9.388
-  },
-  {
-   "group": "module",
-   "at": 34.5,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "other": "Base plate, process module (MIC-6, 15 mm)",
-   "gap_mm": 9.503
   },
   {
    "group": "module",
@@ -7779,27 +8024,6 @@
    "moving": "Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
    "other": "Outlet-plenum screws, M4 x 12 316, counterbored (6 x McMaster 92290A148)",
    "gap_mm": 10.0
-  },
-  {
-   "group": "module",
-   "at": 345.0,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
-   "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 11.0
-  },
-  {
-   "group": "module",
-   "at": 51.75,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Pot magnet (NdFeB in a steel cup, \u00d825 x 7, 44 lbf, holds the rod's striker)",
-   "gap_mm": 11.0
-  },
-  {
-   "group": "module",
-   "at": 51.75,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
-   "gap_mm": 11.192
   },
   {
    "group": "module",
@@ -7859,6 +8083,13 @@
   },
   {
    "group": "module",
+   "at": 345.0,
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 12.0
+  },
+  {
+   "group": "module",
    "at": 17.25,
    "moving": "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)",
    "other": "Z mounting flange (bolted under the floor)",
@@ -7870,13 +8101,6 @@
    "moving": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
    "other": "Zero-point post helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
    "gap_mm": 12.126
-  },
-  {
-   "group": "module",
-   "at": 51.75,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "other": "Pot magnet (NdFeB in a steel cup, \u00d825 x 7, 44 lbf, holds the rod's striker)",
-   "gap_mm": 12.223
   },
   {
    "group": "module",
@@ -7929,20 +8153,6 @@
   },
   {
    "group": "module",
-   "at": 51.75,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
-   "other": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
-   "gap_mm": 13.0
-  },
-  {
-   "group": "module",
-   "at": 51.75,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
-   "other": "Pot magnet (NdFeB in a steel cup, \u00d825 x 7, 44 lbf, holds the rod's striker)",
-   "gap_mm": 13.0
-  },
-  {
-   "group": "module",
    "at": 276.0,
    "moving": "Zero-point clamping pins M50 (2 x SCHUNK VERO-S SPC mini 20 class, \u00d820, 14 mm into the module; centring clearance, no alignment)",
    "other": "Overflow clamp (KF-40 toggle, MKS 100318805; lever to the front)",
@@ -7978,6 +8188,20 @@
   },
   {
    "group": "module",
+   "at": 51.75,
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
+   "other": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "gap_mm": 14.0
+  },
+  {
+   "group": "module",
+   "at": 51.75,
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
+   "other": "Pot magnet (NdFeB in a steel cup, \u00d825 x 7, 44 lbf, holds the rod's striker)",
+   "gap_mm": 14.0
+  },
+  {
+   "group": "module",
    "at": 17.25,
    "moving": "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)",
    "other": "Z bracket + fold-back belt housing (2:1)",
@@ -7996,6 +8220,13 @@
    "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
    "other": "Base plate, process module (MIC-6, 15 mm)",
    "gap_mm": 14.322
+  },
+  {
+   "group": "module",
+   "at": 345.0,
+   "moving": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 14.754
   },
   {
    "group": "module",
@@ -8090,17 +8321,17 @@
   },
   {
    "group": "module",
+   "at": 345.0,
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 16.9
+  },
+  {
+   "group": "module",
    "at": 138.0,
    "moving": "Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm plate under the clamping module)",
    "other": "Overflow port (KF-40, weld stub to 40 mm)",
    "gap_mm": 17.05
-  },
-  {
-   "group": "module",
-   "at": 379.5,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "other": "Guard door rail (top + bottom)",
-   "gap_mm": 17.512
   },
   {
    "group": "module",
@@ -8112,7 +8343,7 @@
   {
    "group": "module",
    "at": 138.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
    "other": "Cross-flow outlet plenum under the floor (316L, flat over the module path, bolted flange)",
    "gap_mm": 18.0
   },
@@ -8188,13 +8419,6 @@
   },
   {
    "group": "module",
-   "at": 362.25,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Guard door rail (top + bottom)",
-   "gap_mm": 21.0
-  },
-  {
-   "group": "module",
    "at": 276.0,
    "moving": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
    "other": "Hinge pins (\u00d85, 316)",
@@ -8237,13 +8461,6 @@
   },
   {
    "group": "module",
-   "at": 379.5,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
-   "other": "Guard door rail (top + bottom)",
-   "gap_mm": 23.0
-  },
-  {
-   "group": "module",
    "at": 120.75,
    "moving": "Heater-stack screws M50, M3 x 25 316, up through slotted counterbores in the piston head (3 x McMaster 92290A124)",
    "other": "Cross-flow outlet plenum under the floor (316L, flat over the module path, bolted flange)",
@@ -8276,6 +8493,13 @@
    "moving": "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)",
    "other": "Zero-point post helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
    "gap_mm": 23.878
+  },
+  {
+   "group": "module",
+   "at": 362.25,
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
+   "other": "Guard door rail (top + bottom)",
+   "gap_mm": 24.0
   },
   {
    "group": "module",
@@ -8391,6 +8615,13 @@
   },
   {
    "group": "module",
+   "at": 379.5,
+   "moving": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
+   "other": "Guard door rail (top + bottom)",
+   "gap_mm": 26.754
+  },
+  {
+   "group": "module",
    "at": 0.0,
    "moving": "Radiation shields M50 (2 x 0.3 mm polished 316, clamped between the Macor rings)",
    "other": "Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), \u00d86 x 20 316, pressed into the floor (2 x McMaster 93600A686)",
@@ -8479,6 +8710,13 @@
    "moving": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
    "other": "Door hinge leaves + knuckles (304 SS, round pin holes: the hinge holds the door's bottom edge on its land)",
    "gap_mm": 28.881
+  },
+  {
+   "group": "module",
+   "at": 362.25,
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
+   "other": "Guard door rail (top + bottom)",
+   "gap_mm": 28.9
   },
   {
    "group": "module",
@@ -8601,6 +8839,13 @@
   },
   {
    "group": "module",
+   "at": 345.0,
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 32.18
+  },
+  {
+   "group": "module",
    "at": 0.0,
    "moving": "Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
    "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
@@ -8671,6 +8916,13 @@
   },
   {
    "group": "module",
+   "at": 34.5,
+   "moving": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 33.5
+  },
+  {
+   "group": "module",
    "at": 51.75,
    "moving": "Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",
    "other": "Base plate, process module (MIC-6, 15 mm)",
@@ -8717,13 +8969,6 @@
    "moving": "Heater-block helical inserts M50, M3 18-8 (3 x McMaster 91732A647)",
    "other": "Helical inserts for the module screws, M6 x 12 18-8, in the floor (2 x McMaster 91732A782)",
    "gap_mm": 34.528
-  },
-  {
-   "group": "module",
-   "at": 0.0,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "other": "Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: \u00d888 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)",
-   "gap_mm": 34.552
   },
   {
    "group": "module",
@@ -8780,6 +9025,13 @@
    "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
    "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
    "gap_mm": 36.06
+  },
+  {
+   "group": "module",
+   "at": 345.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 36.18
   },
   {
    "group": "module",
@@ -8965,6 +9217,13 @@
   },
   {
    "group": "module",
+   "at": 34.5,
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 40.205
+  },
+  {
+   "group": "module",
    "at": 0.0,
    "moving": "Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",
    "other": "Door hinge knuckles on the chamber (304 SS, shimmed at assembly so the shut door's land just touches)",
@@ -8990,6 +9249,13 @@
    "moving": "Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod glands)",
    "other": "Guard frame (20 mm T-slot)",
    "gap_mm": 40.757
+  },
+  {
+   "group": "module",
+   "at": 34.5,
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 40.968
   },
   {
    "group": "module",
@@ -9028,13 +9294,6 @@
   },
   {
    "group": "module",
-   "at": 34.5,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Base plate, process module (MIC-6, 15 mm)",
-   "gap_mm": 41.902
-  },
-  {
-   "group": "module",
    "at": 327.75,
    "moving": "Handle screws M50, M4 x 10 316 (2 x McMaster 92290A144)",
    "other": "Guard door rail (top + bottom)",
@@ -9049,10 +9308,31 @@
   },
   {
    "group": "module",
+   "at": 51.75,
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 42.672
+  },
+  {
+   "group": "module",
    "at": 0.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
    "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
-   "gap_mm": 43.246
+   "gap_mm": 42.747
+  },
+  {
+   "group": "module",
+   "at": 362.25,
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
+   "other": "Guard door rail (top + bottom)",
+   "gap_mm": 44.18
+  },
+  {
+   "group": "module",
+   "at": 51.75,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 44.519
   },
   {
    "group": "module",
@@ -9088,6 +9368,13 @@
    "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
    "other": "Guard door rail (top + bottom)",
    "gap_mm": 46.0
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), \u00d86 x 20 316, pressed into the floor (2 x McMaster 93600A686)",
+   "gap_mm": 46.256
   },
   {
    "group": "module",
@@ -9127,13 +9414,6 @@
   {
    "group": "module",
    "at": 0.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), \u00d86 x 20 316, pressed into the floor (2 x McMaster 93600A686)",
-   "gap_mm": 46.755
-  },
-  {
-   "group": "module",
-   "at": 0.0,
    "moving": "Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm plate under the clamping module)",
    "other": "Module-present sensor (inductive M12, under the floor, sees the module flange)",
    "gap_mm": 46.78
@@ -9165,6 +9445,13 @@
    "moving": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
    "other": "Zero-point push-in fittings (2 x M5 elbow on the modules' release ports)",
    "gap_mm": 48.126
+  },
+  {
+   "group": "module",
+   "at": 362.25,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Guard door rail (top + bottom)",
+   "gap_mm": 48.18
   },
   {
    "group": "module",
@@ -9224,13 +9511,6 @@
   },
   {
    "group": "module",
-   "at": 276.0,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
-   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 49.686
-  },
-  {
-   "group": "module",
    "at": 327.75,
    "moving": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
    "other": "Guard door rail (top + bottom)",
@@ -9287,6 +9567,13 @@
   },
   {
    "group": "module",
+   "at": 0.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Helical inserts for the module screws, M6 x 12 18-8, in the floor (2 x McMaster 91732A782)",
+   "gap_mm": 50.823
+  },
+  {
+   "group": "module",
    "at": 224.25,
    "moving": "Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
    "other": "Hinge pins (\u00d85, 316)",
@@ -9315,17 +9602,17 @@
   },
   {
    "group": "module",
-   "at": 0.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Helical inserts for the module screws, M6 x 12 18-8, in the floor (2 x McMaster 91732A782)",
-   "gap_mm": 51.323
-  },
-  {
-   "group": "module",
    "at": 224.25,
    "moving": "Heater block M50 (6061-T6, bayonet socket)",
    "other": "Door hinge knuckles on the chamber (304 SS, shimmed at assembly so the shut door's land just touches)",
    "gap_mm": 51.673
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
+   "other": "Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: \u00d888 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)",
+   "gap_mm": 52.207
   },
   {
    "group": "module",
@@ -9400,14 +9687,14 @@
   {
    "group": "module",
    "at": 69.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
    "other": "Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: \u00d888 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)",
    "gap_mm": 54.902
   },
   {
    "group": "module",
    "at": 69.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
    "other": "Zero-point module plates (2 x 6061, 10 mm, each on two posts)",
    "gap_mm": 54.91
   },
@@ -9417,13 +9704,6 @@
    "moving": "Heater-stack screws M50, M3 x 25 316, up through slotted counterbores in the piston head (3 x McMaster 92290A124)",
    "other": "Zero-point post helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
    "gap_mm": 55.027
-  },
-  {
-   "group": "module",
-   "at": 276.0,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 55.727
   },
   {
    "group": "module",
@@ -9456,6 +9736,13 @@
   {
    "group": "module",
    "at": 0.0,
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
+   "other": "Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: \u00d888 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)",
+   "gap_mm": 57.132
+  },
+  {
+   "group": "module",
+   "at": 0.0,
    "moving": "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)",
    "other": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt (18 x McMaster 92290A154)",
    "gap_mm": 57.759
@@ -9463,9 +9750,23 @@
   {
    "group": "module",
    "at": 0.0,
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
+   "other": "Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: \u00d888 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)",
+   "gap_mm": 57.782
+  },
+  {
+   "group": "module",
+   "at": 0.0,
    "moving": "Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",
    "other": "Zero-point post helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
    "gap_mm": 57.989
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
+   "other": "Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: \u00d888 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)",
+   "gap_mm": 58.018
   },
   {
    "group": "module",
@@ -9546,6 +9847,13 @@
   },
   {
    "group": "module",
+   "at": 17.25,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Zero-point posts (4 x 6061, 16 x 16, M6 studs into floor inserts)",
+   "gap_mm": 62.592
+  },
+  {
+   "group": "module",
    "at": 345.0,
    "moving": "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)",
    "other": "Guard door rail (top + bottom)",
@@ -9568,13 +9876,6 @@
   {
    "group": "module",
    "at": 0.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Zero-point posts (4 x 6061, 16 x 16, M6 studs into floor inserts)",
-   "gap_mm": 63.092
-  },
-  {
-   "group": "module",
-   "at": 0.0,
    "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
    "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
    "gap_mm": 63.129
@@ -9589,7 +9890,7 @@
   {
    "group": "module",
    "at": 155.25,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
    "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
    "gap_mm": 63.637
   },
@@ -9620,13 +9921,6 @@
    "moving": "Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm plate under the clamping module)",
    "other": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt (18 x McMaster 92290A154)",
    "gap_mm": 64.457
-  },
-  {
-   "group": "module",
-   "at": 0.0,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
-   "other": "Zero-point release-air line (\u00d84 tube, valve to a union Y to each module)",
-   "gap_mm": 64.962
   },
   {
    "group": "module",
@@ -9701,6 +9995,13 @@
   {
    "group": "module",
    "at": 0.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Zero-point post helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
+   "gap_mm": 69.78
+  },
+  {
+   "group": "module",
+   "at": 0.0,
    "moving": "Handle screws M50, M4 x 10 316 (2 x McMaster 92290A144)",
    "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
    "gap_mm": 69.887
@@ -9729,23 +10030,9 @@
   {
    "group": "module",
    "at": 0.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Zero-point post helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
-   "gap_mm": 70.28
-  },
-  {
-   "group": "module",
-   "at": 0.0,
    "moving": "Heater block M50 (6061-T6, bayonet socket)",
    "other": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
    "gap_mm": 70.619
-  },
-  {
-   "group": "module",
-   "at": 0.0,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "other": "Zero-point release-air line (\u00d84 tube, valve to a union Y to each module)",
-   "gap_mm": 70.657
   },
   {
    "group": "module",
@@ -9798,6 +10085,13 @@
   },
   {
    "group": "module",
+   "at": 276.0,
+   "moving": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 73.163
+  },
+  {
+   "group": "module",
    "at": 0.0,
    "moving": "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
    "other": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
@@ -9816,6 +10110,13 @@
    "moving": "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)",
    "other": "Zero-point release-air line (\u00d84 tube, valve to a union Y to each module)",
    "gap_mm": 74.979
+  },
+  {
+   "group": "module",
+   "at": 207.0,
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 75.247
   },
   {
    "group": "module",
@@ -9847,10 +10148,24 @@
   },
   {
    "group": "module",
+   "at": 224.25,
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 77.58
+  },
+  {
+   "group": "module",
    "at": 51.75,
    "moving": "Bore seal M50 (aramid felt + carbon-filled PTFE scraper)",
    "other": "Zero-point push-in fittings (2 x M5 elbow on the modules' release ports)",
    "gap_mm": 77.979
+  },
+  {
+   "group": "module",
+   "at": 224.25,
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 78.946
   },
   {
    "group": "module",
@@ -9879,13 +10194,6 @@
    "moving": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
    "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
    "gap_mm": 79.649
-  },
-  {
-   "group": "module",
-   "at": 138.0,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
-   "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
-   "gap_mm": 79.657
   },
   {
    "group": "module",
@@ -9935,13 +10243,6 @@
    "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
    "other": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
    "gap_mm": 81.0
-  },
-  {
-   "group": "module",
-   "at": 155.25,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
-   "other": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
-   "gap_mm": 81.036
   },
   {
    "group": "module",
@@ -10023,13 +10324,6 @@
   {
    "group": "module",
    "at": 138.0,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
-   "gap_mm": 84.932
-  },
-  {
-   "group": "module",
-   "at": 138.0,
    "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
    "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
    "gap_mm": 84.992
@@ -10054,13 +10348,6 @@
    "moving": "Disc springs under the stack screws M50 (3 x McMaster 9713K54)",
    "other": "Guard frame (20 mm T-slot)",
    "gap_mm": 85.585
-  },
-  {
-   "group": "module",
-   "at": 155.25,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "other": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
-   "gap_mm": 86.224
   },
   {
    "group": "module",
@@ -10149,9 +10436,23 @@
   {
    "group": "module",
    "at": 0.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
    "other": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
-   "gap_mm": 91.803
+   "gap_mm": 91.315
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
+   "other": "Zero-point release-air line (\u00d84 tube, valve to a union Y to each module)",
+   "gap_mm": 92.404
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Floor O-ring (FKM 75A, 3.53 mm cord, vulcanized splice, 25 % squeeze; face seal in the floor plate's pad)",
+   "gap_mm": 92.731
   },
   {
    "group": "module",
@@ -10159,13 +10460,6 @@
    "moving": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
    "other": "Fibre-head O-rings (2 x FKM 75A 2-010, face seals)",
    "gap_mm": 92.797
-  },
-  {
-   "group": "module",
-   "at": 0.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Floor O-ring (FKM 75A, 3.53 mm cord, vulcanized splice, 25 % squeeze; face seal in the floor plate's pad)",
-   "gap_mm": 93.223
   },
   {
    "group": "module",
@@ -10180,6 +10474,13 @@
    "moving": "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)",
    "other": "Plate-height through-beam (M6 threaded fibre heads in the side walls, z +5 mm)",
    "gap_mm": 94.037
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
+   "other": "Zero-point push-in fittings (2 x M5 elbow on the modules' release ports)",
+   "gap_mm": 94.257
   },
   {
    "group": "module",
@@ -10226,7 +10527,14 @@
   {
    "group": "module",
    "at": 0.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
+   "other": "Zero-point push-in fittings (2 x M5 elbow on the modules' release ports)",
+   "gap_mm": 95.031
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
    "other": "Zero-point push-in fittings (2 x M5 elbow on the modules' release ports)",
    "gap_mm": 95.603
   },
@@ -10236,6 +10544,13 @@
    "moving": "Macor standoff rings M50 (3 standoffs x 3 rings, \u00d88, cut from 8489K75 rod; thermal break)",
    "other": "Guard frame (20 mm T-slot)",
    "gap_mm": 95.67
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
+   "other": "Zero-point push-in fittings (2 x M5 elbow on the modules' release ports)",
+   "gap_mm": 95.709
   },
   {
    "group": "module",
@@ -10401,9 +10716,9 @@
   {
    "group": "module",
    "at": 0.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
    "other": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt (18 x McMaster 92290A154)",
-   "gap_mm": 106.652
+   "gap_mm": 106.153
   },
   {
    "group": "module",
@@ -10425,6 +10740,13 @@
    "moving": "Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",
    "other": "Leg-to-floor screws, M6 x 25 316, up each leg's \u00d811 bore (4 x McMaster 92290A330)",
    "gap_mm": 107.908
+  },
+  {
+   "group": "module",
+   "at": 138.0,
+   "moving": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
+   "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
+   "gap_mm": 108.593
   },
   {
    "group": "module",
@@ -10453,6 +10775,13 @@
    "moving": "Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod glands)",
    "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
    "gap_mm": 110.012
+  },
+  {
+   "group": "module",
+   "at": 155.25,
+   "moving": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
+   "other": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
+   "gap_mm": 110.366
   },
   {
    "group": "module",
@@ -10526,6 +10855,13 @@
   },
   {
    "group": "module",
+   "at": 120.75,
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
+   "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
+   "gap_mm": 115.206
+  },
+  {
+   "group": "module",
    "at": 0.0,
    "moving": "Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
    "other": "Plate-height through-beam (M6 threaded fibre heads in the side walls, z +5 mm)",
@@ -10537,6 +10873,20 @@
    "moving": "Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
    "other": "Plate-height through-beam (M6 threaded fibre heads in the side walls, z +5 mm)",
    "gap_mm": 115.768
+  },
+  {
+   "group": "module",
+   "at": 120.75,
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
+   "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
+   "gap_mm": 115.857
+  },
+  {
+   "group": "module",
+   "at": 120.75,
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
+   "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
+   "gap_mm": 115.964
   },
   {
    "group": "module",
@@ -10554,6 +10904,13 @@
   },
   {
    "group": "module",
+   "at": 120.75,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
+   "gap_mm": 116.402
+  },
+  {
+   "group": "module",
    "at": 0.0,
    "moving": "Heater block M50 (6061-T6, bayonet socket)",
    "other": "Plate-height through-beam (M6 threaded fibre heads in the side walls, z +5 mm)",
@@ -10561,10 +10918,17 @@
   },
   {
    "group": "module",
-   "at": 120.75,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
-   "gap_mm": 116.902
+   "at": 138.0,
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
+   "other": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
+   "gap_mm": 116.968
+  },
+  {
+   "group": "module",
+   "at": 138.0,
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
+   "other": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
+   "gap_mm": 117.868
   },
   {
    "group": "module",
@@ -10576,9 +10940,9 @@
   {
    "group": "module",
    "at": 138.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
    "other": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
-   "gap_mm": 118.446
+   "gap_mm": 119.387
   },
   {
    "group": "module",
@@ -10600,6 +10964,13 @@
    "moving": "Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",
    "other": "Floor-plate dowels, \u00d86 x 20 316 (pressed into the plate, slip fit in the frame), front-left and back-right corners (2 x McMaster 93600A686)",
    "gap_mm": 119.965
+  },
+  {
+   "group": "module",
+   "at": 138.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
+   "gap_mm": 120.478
   },
   {
    "group": "module",
@@ -10646,9 +11017,9 @@
   {
    "group": "module",
    "at": 138.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
    "other": "Leg-to-floor screws, M6 x 25 316, up each leg's \u00d811 bore (4 x McMaster 92290A330)",
-   "gap_mm": 127.712
+   "gap_mm": 127.219
   },
   {
    "group": "module",
@@ -10785,17 +11156,17 @@
   },
   {
    "group": "module",
+   "at": 0.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Plate-height through-beam (M6 threaded fibre heads in the side walls, z +5 mm)",
+   "gap_mm": 138.36
+  },
+  {
+   "group": "module",
    "at": 17.25,
    "moving": "Macor standoff rings M50 (3 standoffs x 3 rings, \u00d88, cut from 8489K75 rod; thermal break)",
    "other": "Leg-to-floor screws, M6 x 25 316, up each leg's \u00d811 bore (4 x McMaster 92290A330)",
    "gap_mm": 138.617
-  },
-  {
-   "group": "module",
-   "at": 0.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Plate-height through-beam (M6 threaded fibre heads in the side walls, z +5 mm)",
-   "gap_mm": 138.852
   },
   {
    "group": "module",
@@ -10968,6 +11339,13 @@
   {
    "group": "module",
    "at": 0.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Fibre-head O-rings (2 x FKM 75A 2-010, face seals)",
+   "gap_mm": 151.723
+  },
+  {
+   "group": "module",
+   "at": 0.0,
    "moving": "Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",
    "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
    "gap_mm": 152.0
@@ -10985,13 +11363,6 @@
    "moving": "Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
    "other": "Floor-plate dowels, \u00d86 x 20 316 (pressed into the plate, slip fit in the frame), front-left and back-right corners (2 x McMaster 93600A686)",
    "gap_mm": 152.196
-  },
-  {
-   "group": "module",
-   "at": 0.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Fibre-head O-rings (2 x FKM 75A 2-010, face seals)",
-   "gap_mm": 152.217
   },
   {
    "group": "module",
@@ -11017,16 +11388,16 @@
   {
    "group": "module",
    "at": 0.0,
-   "moving": "Radiation shields M50 (2 x 0.3 mm polished 316, clamped between the Macor rings)",
-   "other": "Floor-plate dowels, \u00d86 x 20 316 (pressed into the plate, slip fit in the frame), front-left and back-right corners (2 x McMaster 93600A686)",
-   "gap_mm": 154.107
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Leg helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
+   "gap_mm": 153.74
   },
   {
    "group": "module",
    "at": 0.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Leg helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
-   "gap_mm": 154.239
+   "moving": "Radiation shields M50 (2 x 0.3 mm polished 316, clamped between the Macor rings)",
+   "other": "Floor-plate dowels, \u00d86 x 20 316 (pressed into the plate, slip fit in the frame), front-left and back-right corners (2 x McMaster 93600A686)",
+   "gap_mm": 154.107
   },
   {
    "group": "module",
@@ -11317,10 +11688,24 @@
   },
   {
    "group": "module",
+   "at": 207.0,
+   "moving": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
+   "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
+   "gap_mm": 172.251
+  },
+  {
+   "group": "module",
+   "at": 362.25,
+   "moving": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 172.251
+  },
+  {
+   "group": "module",
    "at": 0.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
    "other": "Floor-plate dowels, \u00d86 x 20 316 (pressed into the plate, slip fit in the frame), front-left and back-right corners (2 x McMaster 93600A686)",
-   "gap_mm": 175.856
+   "gap_mm": 175.357
   },
   {
    "group": "module",
@@ -11335,6 +11720,20 @@
    "moving": "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
    "other": "Laser guard panels (1.5 mm aluminium)",
    "gap_mm": 175.993
+  },
+  {
+   "group": "module",
+   "at": 172.5,
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
+   "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
+   "gap_mm": 176.797
+  },
+  {
+   "group": "module",
+   "at": 345.0,
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 176.804
   },
   {
    "group": "module",
@@ -11353,16 +11752,44 @@
   {
    "group": "module",
    "at": 172.5,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
    "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
-   "gap_mm": 180.1
+   "gap_mm": 178.496
   },
   {
    "group": "module",
    "at": 345.0,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
    "other": "Laser guard panels (1.5 mm aluminium)",
-   "gap_mm": 180.227
+   "gap_mm": 178.606
+  },
+  {
+   "group": "module",
+   "at": 172.5,
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
+   "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
+   "gap_mm": 179.256
+  },
+  {
+   "group": "module",
+   "at": 345.0,
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 179.365
+  },
+  {
+   "group": "module",
+   "at": 172.5,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
+   "gap_mm": 179.6
+  },
+  {
+   "group": "module",
+   "at": 345.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 179.728
   },
   {
    "group": "module",
@@ -11377,34 +11804,6 @@
    "moving": "Handle screws M50, M4 x 10 316 (2 x McMaster 92290A144)",
    "other": "Optics-post base screws, M6 x 25 316 (8 x McMaster 92290A330)",
    "gap_mm": 183.843
-  },
-  {
-   "group": "module",
-   "at": 207.0,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
-   "gap_mm": 189.0
-  },
-  {
-   "group": "module",
-   "at": 362.25,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "other": "Laser guard panels (1.5 mm aluminium)",
-   "gap_mm": 189.0
-  },
-  {
-   "group": "module",
-   "at": 0.0,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
-   "other": "Laser guard panels (1.5 mm aluminium)",
-   "gap_mm": 190.0
-  },
-  {
-   "group": "module",
-   "at": 207.0,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
-   "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
-   "gap_mm": 191.5
   },
   {
    "group": "module",
@@ -11436,6 +11835,13 @@
   },
   {
    "group": "module",
+   "at": 189.75,
+   "moving": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
+   "other": "Optics-post base screws, M6 x 25 316 (8 x McMaster 92290A330)",
+   "gap_mm": 197.479
+  },
+  {
+   "group": "module",
    "at": 172.5,
    "moving": "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
    "other": "Optics-post base screws, M6 x 25 316 (8 x McMaster 92290A330)",
@@ -11450,24 +11856,31 @@
   },
   {
    "group": "module",
-   "at": 189.75,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "at": 172.5,
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
    "other": "Optics-post base screws, M6 x 25 316 (8 x McMaster 92290A330)",
-   "gap_mm": 205.217
+   "gap_mm": 203.464
   },
   {
    "group": "module",
    "at": 189.75,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
    "other": "Optics-post base screws, M6 x 25 316 (8 x McMaster 92290A330)",
-   "gap_mm": 214.055
+   "gap_mm": 203.762
   },
   {
    "group": "module",
    "at": 189.75,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
    "other": "Optics-post base screws, M6 x 25 316 (8 x McMaster 92290A330)",
-   "gap_mm": 216.52
+   "gap_mm": 204.574
+  },
+  {
+   "group": "module",
+   "at": 189.75,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Optics-post base screws, M6 x 25 316 (8 x McMaster 92290A330)",
+   "gap_mm": 207.063
   },
   {
    "group": "module",
@@ -11527,6 +11940,13 @@
   },
   {
    "group": "module",
+   "at": 241.5,
+   "moving": "AE coaxial feedthrough M50 (SST FA40102 Microdot weld-in in the rod end's cap) with its mating 10-32 plug and cable (envelope)",
+   "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
+   "gap_mm": 271.423
+  },
+  {
+   "group": "module",
    "at": 207.0,
    "moving": "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
@@ -11535,31 +11955,33 @@
   {
    "group": "module",
    "at": 241.5,
-   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 276.877
+   "gap_mm": 276.472
   },
   {
    "group": "module",
    "at": 241.5,
-   "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
+   "moving": "AE spring M50 (Lee LC 029BB 09S316: 316, \u00d84.78 x 19.05 free, 3.94 N/mm; 15.28 long with the plate on)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 287.971
+   "gap_mm": 277.524
   },
   {
    "group": "module",
-   "at": 241.5,
-   "moving": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
+   "at": 189.75,
+   "moving": "AE sensor in the cartridge M50 (MISTRAS PICO, \u00d85 x 4, face up; its side cable's boot through the slot)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 288.882
+   "gap_mm": 281.745
+  },
+  {
+   "group": "module",
+   "at": 189.75,
+   "moving": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
+   "gap_mm": 286.685
   }
  ],
  "joints": [
-  {
-   "a": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "b": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
-   "why": "strap over the sensor"
-  },
   {
    "a": "Argon line (1/4 in. 316L)",
    "b": "Laser guard panels (1.5 mm aluminium)",
@@ -11656,31 +12078,6 @@
    "why": "magnet bonded into a pocket in the block's back face"
   },
   {
-   "a": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
-   "b": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
-   "why": "sensor face on the rod end's back face (couplant)"
-  },
-  {
-   "a": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
-   "b": "AE sensor strap clamp (6061, 2 x M3 into the rod end's back face, wave spring over the sensor)",
-   "why": "strap screwed to the rod end"
-  },
-  {
-   "a": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
-   "b": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "why": "cold end screwed into the rod end's bore floor"
-  },
-  {
-   "a": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
-   "b": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
-   "why": "feedthroughs welded into the rod-end block's bores"
-  },
-  {
-   "a": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
-   "b": "Striker disc M50 (416 stainless, on the pot magnet)",
-   "why": "striker screwed to the end cap"
-  },
-  {
    "a": "Trace O2 analyzer + dew-point transmitter (panel box)",
    "b": "O2 sample line (1/8 in. 316L)",
    "why": "tube fitting into the analyzer"
@@ -11721,5 +12118,5 @@
    "why": "tube in the valve's push-in port"
   }
  ],
- "runtime_s": 246.5
+ "runtime_s": 300.4
 }

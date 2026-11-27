@@ -230,7 +230,8 @@ makers' pages (2026-11-27, ae_preload.md's parts table):
 | MISTRAS Nano30 | Ø8 × 8 (12.8 across its boot) | 125–750 kHz (140) | 62 dB | −65 to 177 °C | no: a Ø9 cartridge leaves the leads ~1.3 mm |
 | Vallen VS600-Z2, Fuji M31 | Ø4.75 × 5.3; Ø3 × 3 | 400–800 kHz; 350 kHz resonant | – | to 110 °C; to 80 °C | size yes; band or rating no |
 
-All are quote-only. **The cost of fitting is the band's low end.** Crack AE in LPBF peaks near 100 kHz (Seleznev 2022), where the
+All are quote-only, and no maker says anything about vacuum. MISTRAS's product page gives the PICO's seal as epoxy, so pump one
+down on the bench before it goes in. **The cost of fitting is the band's low end.** Crack AE in LPBF peaks near 100 kHz (Seleznev 2022), where the
 PICO is below its band; the Nano30 would gain ~8 dB of sensitivity and the 100–200 kHz band but has no room. The WM500/1 covers
 100 kHz in the same envelope, but from its maker's sheet only, and the foot's worst case (120.8 °C, below) is at its rating.
 **Compare the PICO and the WM500/1 with pencil-lead breaks on the bench before buying two.** The PICO's integral cable ends in a
@@ -289,7 +290,7 @@ double-ended Microdot (FA49614) are too long for the 12.7 mm bore.
 | Rod end | weld counterbore | Ø6.43 × 0.51 mm |
 | Rod end | through-hole into the bore | Ø5.18, ~3 mm to the bore |
 | Rod end | laser or e-beam weld of the FA40102 | outsourced (M4-13), before the rod is welded on |
-| Heater block (socket floor) | counterbore for the waveguide's head | Ø4.4 × 1.3 mm, at r 3.2, 120° (the Ø3.4 hole through block and shields was already cut) |
+| Heater block (socket floor) | counterbore for the waveguide's head | Ø4.4 × 1.3 mm, at r 3.2, 120° (the Ø3.4 hole through block and shields was already cut); it leaves 0.4 mm of wall to the control thermocouple's Ø1.2 hole over the hole's top 0.6 mm |
 | Waveguide | Ø4 head domed R50 on a 1/8 in. rod, lapped to length | turned, or a button laser-welded on (M4-10) |
 | Cartridge | turned 316L part with a pressed-in cap | M4-10 |
 
@@ -303,7 +304,19 @@ For **modules_low.py, hot-swap.md and electrical.md** (the model cuts these with
 ### 4.8 S25
 
 S25's 3/8 in. rod (ID 7.7) holds the heater and type K leads and nothing else. It keeps the sensor clamped on its rod end's back
-face, as drawn before (26–52 dB, M4-09 as an option), or goes without AE.
+face, as drawn before (26–52 dB, M4-09 as an option), or goes without AE. Its parts are unchanged, so its interference run
+(2026-11-25) stands.
+
+### 4.9 Interference
+
+`interference.py` with `LPBF_MONITORING=1` (320 parts) finds **no interference on M50 in the six states or the eight sweeps**
+([`interference-monitoring-M50-M.md`](../analysis/out/monitoring/mech/interference-monitoring-M50-M.md), 2026-11-27 09:19 UTC).
+The AE parts only touch where they are meant to (head on spigot, foot on sensor, sensor on spring, spring and cartridge on the
+floor, feedthrough in its counterbore), each with no shared volume; the joints are declared in `interference.py`. Over the piston's
+stroke and the +8 mm overtravel the nearest other parts are the rod glands, through the rod's wall: cartridge 1.98 mm, sensor
+2.63 mm, spring 2.77 mm. The feedthrough and its plug stay more than 3 mm from everything in every sweep, including the gland
+plate's screws at the overtravel, the Z arm dropping away and the module's way out. The run peaks at 3.5 GB, so it was run under a
+4 GB cap; at 3 GB it is killed.
 
 ![AE path: a section through the M50 module at the waveguide, and the cartridge in the rod end](../analysis/out/monitoring/mech/ae.png)
 
