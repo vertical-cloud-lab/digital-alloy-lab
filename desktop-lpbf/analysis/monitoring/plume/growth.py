@@ -5,7 +5,7 @@ One Lagrangian parcel rides the centreline of the vapour jet, from the depressio
 into the bed jet, for 1 s. Along the way:
 
 Jet (beam frame; the beam is the vertical line through the source). Top-hat integral jet in a cross-flow (Lee & Cheung 1990,
-J. Hydraul. Eng. 116:1205-1222; Lee & Chu 2003, Turbulent Jets and Plumes: A Lagrangian Approach): mass, x- and z-momentum and
+J. Environ. Eng. 116:1085-1106; Lee & Chu 2003, Turbulent Jets and Plumes: A Lagrangian Approach): mass, x- and z-momentum and
 enthalpy fluxes along the trajectory, with entrainment
     dm/ds = 2 pi b rho_a [alpha_s |u - U cos(theta)| + alpha_n U |sin(theta)|]
 alpha_s = 0.08 (top-hat; reproduces Ricou & Spalding's measured m/m0 = 0.32 (z/d) (rho_a/rho_j)^0.5, J. Fluid Mech. 11:21-32,
@@ -16,8 +16,8 @@ speed, temperature, density); the mass leaving is A's 'best' (measured Mg and Zn
 jet's diameter is d0 = sqrt(4 m / (pi rho_v u0)). The enthalpy balance carries the latent heat the condensate releases and the
 beam power the particles absorb. Gaussian profiles are 2x the top-hat value on the centreline, with b_g = b / sqrt 2.
 
-Aerosol (discrete-sectional; Wu & Flagan 1988, J. Colloid Interface Sci. 123:339; Jacobson's volume-conserving
-semi-implicit coagulation, Fundamentals of Atmospheric Modeling, 2nd ed. 2005, eq. 15.8). Section 0 is the monomer (the
+Aerosol (discrete-sectional; Wu & Flagan 1988, J. Colloid Interface Sci. 123:339; the volume-conserving
+semi-implicit coagulation of Jacobson et al. 1994, Atmos. Environ. 28:1327, as in Jacobson 2005, eq. 15.8). Section 0 is the monomer (the
 vapour of the condensate's least volatile species), sections grow by 2x in volume up to ~4 um. Nucleation and condensation are
 monomer collisions; clusters lose monomers by Kelvin-enhanced evaporation (capillarity approximation, the particle's own
 temperature), so the nucleation rate follows from the cluster's surface tension (liquid Al: 0.871 - 1.55e-4 (T - 933) N/m,
@@ -37,8 +37,9 @@ Energy Combust. Sci. 51:2) and by evaporation; its temperature sets its evaporat
 
 Optics. Compact particles: Mie (miepython). Agglomerates: RDG-FA (Dobbins & Megaridis 1991, Appl. Opt. 30:4747; Sorensen 2001,
 Aerosol Sci. Technol. 35:648): absorption n_p C_abs(d_p), scattering n_p^2 C_sca(d_p) (1 + 4 k^2 Rg^2 / (3 D_f))^(-D_f/2).
-Metallic Al: Rakic 1995 (n, k), optionally hot (Drude damping from liquid Al's 24.2 uOhm cm, Desai et al. 1984, J. Phys. Chem.
-Ref. Data 13:1069, plus surface damping v_F / r, Kreibig & Vollmer 1995). Oxide (Al2O3, MgO, ZnO): n 1.665, k 0 (Boidin et al.
+Metallic Al (nominal 'damped'): Rakic 1995 (n, k) plus the Drude damping of electron scattering at the particle's surface
+(v_F / r, Kreibig & Vollmer 1995) and, when molten, of liquid Al's 24.2 uOhm cm (Desai et al. 1984, J. Phys. Chem. Ref. Data
+13:1131); 'rakic' keeps bulk room-temperature Al. Oxide (Al2O3, MgO, ZnO): n 1.665, k 0 (Boidin et al.
 2016), or Wahl et al. 2026's k = 0.019. 7075's Mg/Zn condensate takes aluminium's optics (pessimistic, plume.md §4.2).
 The beam's loss is the extinction integrated up the beam axis through the jet; the coaxial emission is the absorption
 coefficient times the Planck function at each particle's temperature, integrated the same way.
@@ -97,7 +98,7 @@ CS_AXIS = (22.0, 270.0)                              # s/m3 along the beam axis,
 
 NOMINAL = dict(alpha_s=0.08, alpha_n=0.6, Df=1.8, kf=1.3, stick=1.0, sinter=1.0, sigma_f=1.0, mdot_f=1.0, o2_ppm=100.0,
                gamma_ox=1.0, acc=0.3, optics="damped", ox_k=0.0, Ta=300.0, scan="perpendicular", heating=True,
-               jet_mass="best", t_end=1.0, K=44, w0=W0, h_coag=2.0)
+               jet_mass="best", t_end=1.0, K=44, w0=W0, h_coag=2.0, melt_agg=False)
 
 
 def p_sat(sp, T):
@@ -179,7 +180,7 @@ class Optics:
                 np.exp(np.interp(ld, np.log(self.d), np.log(np.maximum(cs, 1e-60)))))
 
 
-def section_optics(opt, band, v, dp, f_ox, Df, kf, compact=False, molten=None):
+def section_optics(opt, band, v, dp, f_ox, Df, kf, compact=False, molten=None, melt_agg=False):
     """Absorption and scattering cross-sections (m2) of one particle in each section: compact spheres if v <= v_p, else RDG-FA
     agglomerates of primaries d_p. Metal and oxide mixed by the oxidised volume fraction."""
     d_sph = (6 * v / math.pi) ** (1 / 3)
@@ -199,6 +200,8 @@ def section_optics(opt, band, v, dp, f_ox, Df, kf, compact=False, molten=None):
         rg = dp / 2 * (npri / kf) ** (1 / Df)
         gfac = (1 + 4 * k * k * rg * rg / (3 * Df)) ** (-Df / 2)
         agg = npri > 1.0 + 1e-9
+        if melt_agg and molten is not None:
+            agg = agg & ~molten                         # agglomerates heated past melting ball up into spheres
         ca = np.where(agg, npri * ca_p[0], ca_s)
         cs = np.where(agg, npri ** 2 * cs_p[0] * gfac, cs_s)
         out_a += wgt * ca
@@ -602,20 +605,25 @@ def record(S, opt, N, rho, conc_f, dp, prm, t, s, x, z, b, u, Tg, Tp, f_ox, f_co
     Tm_sec = melting_point(st["prim"], d_ev)
     molten = np.full(S.K, Tg) > Tm_sec
     Tax = np.full(S.K, Tg)
+    ma = prm["melt_agg"]
     if Iax > 0 and phase == "jet":
         for _ in range(2):
-            ca1070, _ = section_optics(opt, "1070", S.v, dp, f_ox, prm["Df"], prm["kf"], compact, molten)
+            ca1070, _ = section_optics(opt, "1070", S.v, dp, f_ox, prm["Df"], prm["kf"], compact, molten, ma)
+            if ma:
+                sph = molten | (npri <= 1)
+                area = np.where(sph, math.pi * S.d ** 2, npri * math.pi * dp ** 2)
+                d_ev = np.where(sph, S.d, dp)
             Tax = particle_temperature(Iax, Tg, P_AMB, ca1070, area, d_ev, st["prim"], prm["sigma_f"], prm["acc"])
             molten = Tax > Tm_sec
     r["molten_mass_frac"] = float(np.sum(n * S.v * ok * molten) / max(np.sum(n * S.v * ok), 1e-300))
     for band in BANDS:
-        ca, cs = section_optics(opt, band, S.v, dp, f_ox, prm["Df"], prm["kf"], compact, molten)
+        ca, cs = section_optics(opt, band, S.v, dp, f_ox, prm["Df"], prm["kf"], compact, molten, ma)
         aabs, asca = float(np.sum(n * ca * ok)), float(np.sum(n * cs * ok))
         r[f"a_abs_{band}"], r[f"a_sca_{band}"] = aabs, asca                   # 1/m at the centreline
         r[f"k_abs_{band}"] = aabs / mass if mass > 0 else 0.0                # m2/kg of condensate
         r[f"k_sca_{band}"] = asca / mass if mass > 0 else 0.0
     for band in ("700", "900", "975"):
-        ca, _ = section_optics(opt, band, S.v, dp, f_ox, prm["Df"], prm["kf"], compact, molten)
+        ca, _ = section_optics(opt, band, S.v, dp, f_ox, prm["Df"], prm["kf"], compact, molten, ma)
         r[f"j_{band}"] = float(np.sum(n * ca * ok * planck(BANDS[band], Tax)))  # W/(m3 sr m) at the centreline, beam-heated
         r[f"jg_{band}"] = float(np.sum(n * ca * ok * planck(BANDS[band], np.full(S.K, Tg))))   # same particles at the gas temperature
     r["w_mm"] = w * 1e3
@@ -796,6 +804,7 @@ def main():
             "jet carries the wall reading's vapour (momentum x2.3)": dict(jet_mass="wall"),
             "bulk Al optics (Rakic, no size or temperature damping)": dict(optics="rakic"),
             "no laser heating of particles": dict(heating=False),
+            "agglomerates crossing the beam melt into spheres (no evaporation)": dict(melt_agg=True),
             "thermal accommodation 0.1": dict(acc=0.1), "thermal accommodation 1.0": dict(acc=1.0),
             "gas at 473 K (200 C plate)": dict(Ta=473.0),
             "upper bound: slow jet mixing + vapour x2 + scan with the flow": dict(alpha_s=0.04, alpha_n=0.3, mdot_f=2.0, scan="with flow"),
@@ -898,11 +907,11 @@ def figures(full, res):
     ax.axvspan(t[0] * 1e3, tb * 1e3, color=grid, zorder=0)
     ax.text(t[0] * 1.4e3, 1.0, "centreline in the beam:\nmolten, ~2,100-2,200 K", fontsize=7.5, color=ink, va="bottom")
     ax.axhline(300, color="#52514e", lw=0.7, ls=":")
-    ax.text(0.15, 360, "300 nm, compact: the old upper bound (3-11 %)", fontsize=7, color="#52514e")
+    ax.text(2.0, 360, "300 nm: the old upper bound", fontsize=7, color="#52514e")
     for tt in (1e-3, 1e-2, 0.1, 1.0):
         q = min(rec, key=lambda qq: abs(math.log(qq["t"] / tt)))
         if q["phase"] == "jet":
-            ax.annotate(f"z {q['z_mm']:.1f} mm\nx {q['x_mm']:.0f} mm", (tt * 1e3, q["d_c_massmedian_nm"]), fontsize=6.5,
+            ax.annotate(f"z {q['z_mm']:.1f} mm\nx {q['x_mm']:.1f} mm", (tt * 1e3, q["d_c_massmedian_nm"]), fontsize=6.5,
                         textcoords="offset points", xytext=(-10, 12), color="#52514e")
     ax.set_xlabel("time since leaving the depression wall (ms)")
     ax.set_ylabel("diameter (nm)")
@@ -970,7 +979,7 @@ def figures(full, res):
         ax.bar(xs + (i - 1) * wbar, fresh, wbar * 0.92, color=c, label=f"{alloy}: fresh plume")
         ax.bar(xs + (i - 1) * wbar, old, wbar * 0.92, bottom=fresh, color=c, alpha=0.45, hatch="///", edgecolor="white",
                label=f"{alloy}: older condensate")
-    ax.set_xticks(xs, flows)
+    ax.set_xticks(xs, [f.replace(" L/min", "\nL/min") for f in flows])
     ax.set_ylabel("beam lost at 1070 nm (%)")
     ax.set_title("By cross-flow (no gas flow: before the chamber fills)", fontsize=9)
     ax.legend(fontsize=6.5, frameon=False, ncol=1)
