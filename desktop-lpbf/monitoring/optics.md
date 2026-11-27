@@ -18,6 +18,7 @@ quotes. The parts list is [`optics-parts.csv`](optics-parts.csv).
 | [`radiometry.py`](../analysis/monitoring/optics/radiometry.py) | melt pool to detector, end to end; takes worker A's `surface_fields.npz` with `--fields` | [`radiometry.md`](../analysis/out/monitoring/optics/radiometry.md), `.json`, `.png` |
 | [`viewports.py`](../analysis/monitoring/optics/viewports.py) | LW and LP cameras, windows, motion blur, light, 1070 nm at the ports | [`viewports.md`](../analysis/out/monitoring/optics/viewports.md), `.json` |
 | [`branch_figure.py`](../analysis/monitoring/optics/branch_figure.py) | top-view schematic of the coaxial branch | [`branch.png`](../analysis/out/monitoring/optics/branch.png) |
+| [`bw_light.py`](../analysis/monitoring/optics/bw_light.py) | the BW light (§4.1): ray trace from the LED die to the bed, signal at the side camera, drive and heat, eye safety | [`bw_light.md`](../analysis/out/monitoring/optics/bw_light.md), `.json`, `.png` |
 | [`parts.py`](../analysis/monitoring/optics/parts.py) | every vendor number used, with its source; writes `optics-parts.csv` | [`vendor-files.csv`](../analysis/out/monitoring/optics/vendor-files.csv) (URL and sha256 of each data file; the files stay in /tmp) |
 
 Re-run: `python ftheta.py --reuse` (2 min; without `--reuse` it re-optimises the lenses, ~6 min), then `lines.py`,
@@ -417,14 +418,164 @@ well, powder reflectance 0.5 assumed Lambertian):
   - At 20 µs, halve these: 1.3 W of LED from LP, 7.3 W from BW. At 2 µs, multiply by five.
   - From the back-half LP positions (59–62°), 6–9 % less.
   - At 10–20 µs, 10 m/s spatter smears 4–8 px (25 µm/px), and 20 m/s smears 8–16 px: streaks that give speed.
-- **Recommendation:** a Thorlabs SOLIS-850C (2.7 W minimum, $1,377.86), pulsed by a DC2200 ($2,593.01), shining through LP
-  (or a second steep port). That is just enough at 10 µs and comfortable at 20–50 µs. BW's raking light is for the layer
-  camera; the side camera can use it at ≥ 50 µs. The AeroDIODE 808 nm 10 W fibre source ($6,490) or a CAVILUX is needed for
-  1–2 µs, and is Class 4 (§0 item 7).
-- **Unverified:** whether the DC2200 can make clean 10 µs pulses. Its small-signal bandwidth is 250 kHz and no rise time is
-  published. Check on the bench.
+- **Recommendation (superseded by §4.1):** a Thorlabs SOLIS-850C (2.7 W minimum, $1,377.86), pulsed by a DC2200 ($2,593.01),
+  shining through LP (or a second steep port). The delivery efficiency of 0.3 assumed above is far too high for it: Thorlabs
+  gives 0.06 W/cm² at most at 200 mm, because it spreads 3.6 W over a Ø48 mm aperture. It doesn't fit at BW either. §4.1 images an
+  M850D3's 1 × 1 mm die onto the plate instead: 4–5 times the SOLIS's light on the field, for a third of its price. The
+  AeroDIODE 808 nm 10 W fibre source ($6,490) or a CAVILUX is still what 1–2 µs would need, and is Class 4 (§0 item 7).
+- **The DC2200's pulses:** its manual gives 27 kHz as the highest TTL modulation on its 0–2 A terminal, defined where rise plus
+  fall reach 10 % of the period: ~1.9 µs edges on a resistive load. Lead each exposure by one edge (§4.1). Check on the bench
+  with the LED.
 - **Self-emission:** the melt pool's own glow in a 10 nm band at 850 nm (ε 0.12, 2,500 K) has about the same radiance as
   powder lit at 0.18 W/cm². Both show in one frame, and hot spatter shows without any light.
+
+### 4.1 The BW light as drawn (2026-11-27)
+
+The side camera's light now has a design that fits. The BOM's SOLIS-850C doesn't fit at BW: anything over about Ø37 × 100 mm
+on that line hits the wall, the recoater sensor post or the guard's back panel (mechanics.md §6). So the light is a bare LED
+die imaged onto the plate. This was the previous run's choice; it is checked here.
+
+[`bw_light.py`](../analysis/monitoring/optics/bw_light.py) traces it from the die to the bed: 800,000 rays through the asphere's
+published Zemax prescription, the clamp frame, the window (Fresnel at each face), the slot and the liner. Outputs:
+[`bw_light.md`](../analysis/out/monitoring/optics/bw_light.md), `.json` and `.png`. Vendor numbers were read on Thorlabs' item
+pages, spec sheets, drawings and the DC2200 manual through the lab tunnel on 2026-11-27 (08:21–08:49 UTC). Every price, with its
+URL and read time, is in
+[`price_lookups_round3_bwlight.csv`](../analysis/out/monitoring/fab/price_lookups_round3_bwlight.csv).
+
+**What is drawn** ([`monitoring_parts.py`](../cad/monitoring_parts.py) `_bw_light()`; positions along the sight line, out from
+the port centre on the wall):
+
+| Part | What it does | Numbers |
+|---|---|---|
+| Thorlabs M850D3, 850 nm LED on a Ø22 × 1.6 mm metal-core board ($143.64) | the source | 1.4 W min, 1.6 W typ at 1.5 A (the CW maximum); 1 × 1 mm die; rise/fall 11/14 ns; RG0 bare. Its sheet gives no pulsed rating; the same LED's M850LP1 sheet gives **2.0 A pulsed** |
+| Thorlabs ACL25416U-B asphere, Ø25.4, f 16 mm, NA 0.79, AR 650–1050 nm ($34.33) | images the die onto the plate | die 8.2 mm behind its back face (the best focus for the camera's field; paraxial 8.9), image 192 mm away at ×10.9. Vertex 22.4 mm out |
+| SM1L05 lens tube + a second SM1RR ($14.57 + $5.21) | holds the asphere; screws into the heat sink | front rim 3 mm off the clamp frame (29.5 mm out). The rings bear on the lens at Ø22.9, so its dome stands 7.1 mm ahead of the tube |
+| Heat sink, 6061, Ø36 × 40, black anodised (custom, est. $160–260) | takes the LED's heat | SM1 internal thread at its front, five fins; 43–83 mm out. 11 K/W to 40 °C air (natural convection and radiation, estimated) |
+| Split clamp on the heat sink's collar, and an L bracket (custom, ~$27) | holds the light | 1/4 in. 6061 flange on the back wall's outer face above the BW clamp frame (2 × M4 into two new tapped holes), arm over the light |
+| Thorlabs DC2200 in TTL mode (M7-06, $2,593.01), CAB-LEDD1, CA2812, TCDT1 tape | pulses it from the Pico 2's strobe output (sync-and-data.md §1.3) | LED2 terminal: 0–2 A, up to 27 kHz, so edges ~1.9 µs (manual §3.3.7). LED1 (0–4 A) stops at 23 kHz, under 24,046 fps |
+
+The whole light is Ø36 and 61 mm long, from the asphere's vertex to the heat sink's back. It ends 36 mm short of the guard's
+back panel.
+
+**Where the light goes** (per watt the LED emits; [`bw_light.md`](../analysis/out/monitoring/optics/bw_light.md)):
+
+| | W per W |
+|---|---:|
+| outside the asphere's clear aperture (on the tube and rings) | 0.49 |
+| on the BW clamp frame (the beam is ~22 mm across there) | 0.064 |
+| reflected back out by the window's two faces (uncoated fused silica at 49°) | 0.034 |
+| on the slot's walls | 0.001 |
+| **on the bed, inside the chamber** | **0.33** |
+| of which in the side camera's 640 × 96 px field (16.2 × 10.9 mm on the bed) | 0.054 |
+
+- **Across the beam at the plate centre:** 12 × 12 mm FWHM, 0.20 W/cm² per LED watt on the axis (0.27 at its peak). It is
+  still 0.20 W/cm² 4 mm above the bed and 0.15 at 6 mm, so spatter rising off the plate stays lit.
+- **On the bed** the beam lands as a 12 mm wide stripe at 10°. In the camera's field it gives 0.031 W/cm² per watt on average.
+  The field's two far corners fall outside the stripe.
+- At 2 A (2.04 W typ, an estimate: Thorlabs publishes no output above 1.5 A): 0.41 W/cm² across the beam, 0.063 W/cm² on the
+  bed.
+
+![Where the M850D3's light lands on the bed, and the side camera's signal per pixel against the process's own light](../analysis/out/monitoring/optics/bw_light.png)
+
+**At the side camera** (Chronos 2.1-HD + Kowa 50 mm at f/4 and 176 mm, 25 µm/px; LW window, slide and lens 0.8 together, as in
+`viewports.py`; QE 0.185 at 850 nm and 0.17 at 865 nm; filters as listed, each behind the FESH1000; powder Lambertian, reflectance
+0.5; 2 A pulses; e⁻ in one pixel, full well 15,000 and read noise 25, the stand-in values):
+
+| Source | Filter | 10 µs | 20 µs |
+|---|---|---:|---:|
+| bed lit by the M850D3 | FBH850-10 (as in the BOM) | 222 (SNR 8) | 443 (SNR 14) |
+| | FBH860-10 | 297 (SNR 10) | 594 (SNR 17) |
+| | FBH850-40 | 885 (SNR 23) | 1,771 (SNR 36) |
+| a 45 µm powder particle in the beam (glint, reflectance 0.5; brightest pixel) | FBH850-10 / FBH850-40 | 459 / 1,832 | 917 / 3,664 |
+| hot spatter at 2,000 K / 1,500 K, its own light (grey 0.15) | FBH850-10 | 1,220 / 73 | 2,450 / 146 |
+| the plume, its own light (optical depth 0.002 at 2,000 K, plume.md §3.5) | FBH850-10 / FBH850-40 | 16 / 65 | 33 / 131 |
+| the melt pool at 2,000 K, its own light (ε 0.29 at the camera's 77° from the normal) | FBH850-10 / FBH850-40 | 2,390 / 9,560 | 4,770 / 19,100 |
+| the melt pool at 2,500 K | FBH850-10 | 14,100 | 28,100 |
+| bed lit by a SOLIS-850C at BW, if it fit (upper bound: Thorlabs' 0.06 W/cm² at 200 mm) | FBH850-10 / FBH850-40 | 51 / 166 | 103 / 332 |
+
+What it means:
+- **The frames are usable at 20 µs with the BOM's FBH850-10 (bed SNR 14), and at 10 µs only marginally (SNR 8).** Every lit
+  particle stands out: a 45 µm glint is twice the bed. The bed itself looks grainy at 10 µs.
+- **Swap the camera's FBH850-10 for an FBH850-40 (same $193.82).** The M850D3 peaks at ~865 nm (its plot; the sheet says 860)
+  and falls steeply past 880 nm. An FBH850-10 passes 14 % of it and an FBH850-40 57 %. That gives SNR 23 at 10 µs and 36 at
+  20 µs. The pool and spatter glow four times brighter too, so their contrast against the lit scene doesn't change. An FBH870-10
+  (20–21 %) is the narrow-band choice if a 10 nm band is wanted: it keeps up as the LED warms and its peak moves red.
+- **The light swamps the plume's own glow** (~7 % of the lit bed in either band), so the plume can't fog the frame. To see the
+  plume itself, record with the light off.
+- **Hot spatter above ~1,650 K outshines the lit bed; cold powder shows only by the light.** That is the point of the light:
+  powder entrainment and denudation become visible (plume.md §2.3).
+- **The melt pool fills or saturates its pixels:** at 2,500 K it reaches 94 % of the well at 10 µs behind the FBH850-10 and
+  saturates at 20 µs or behind the FBH850-40; at 2,000 K it saturates behind the FBH850-40 at 20 µs. It would at any useful
+  exposure.
+- **The M850D3 gives 4.3 times what a SOLIS-850C at BW would (FBH850-10), and 5.3 times behind an FBH850-40.** The SOLIS's
+  Ø6.5 mm emitter has about a fifteenth of the M850D3's radiance. Collimated to Ø48 mm, it spreads 3.6 W over ~60 cm² at 200 mm.
+  For a field a few centimetres across, radiance is what counts, not watts.
+- **§4's earlier estimate asked for 0.98 W/cm² on the plate** for half the full well at 10 µs (with 30 % of an LED in a 10 nm
+  band). This light gives 0.063 W/cm², and the FBH850-10 passes only 14 % of it: 222 e⁻ is 3 % of that half-well target, and
+  885 e⁻ behind the FBH850-40 is 12 %. That is enough for SNR 8–23, not for half the well. Opening the lens to f/2.8 doubles it
+  (depth of field 1.3 mm).
+
+**Drive, duty and heat** (TTL high = exposure + one 1.9 µs edge; heat = electrical power − light; junction to board 8 K/W,
+estimated; the guard's air at 40 °C):
+
+| Frames | Exposure | Pulse | Duty | Mean current | Heat | Junction in a burst | Junction if strobed without a break |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| 24,046 fps (640 × 96) | 10 µs | 2.0 A | 0.33 | 0.66 A | 1.6 W | 54 °C | 72 °C |
+| 24,046 fps | 20 µs | 2.0 A | 0.57 | 1.14 A | 2.8 W | 64 °C | 95 °C |
+| 10,000 fps | 10 / 20 µs | 2.0 A | 0.14 / 0.24 | 0.27 / 0.47 A | 0.7 / 1.2 W | 46 / 50 °C | 53 / 63 °C |
+| CW (alignment, or the layer camera's raking light) | – | 1.0 / 1.5 A | 1 | 1.0 / 1.5 A | 2.1 / 3.4 W | 58 / 69 °C | 82 / 107 °C |
+
+- **Timing:** the Pico 2 already has a strobe output next to the Chronos's TRIG1 (sync-and-data.md §1.3). Raise the strobe one
+  edge (~2 µs) before each exposure starts, and drop it when the exposure ends. Find the exposure's start with sync-and-data.md's
+  step 3 calibration; Kron gives ≤ 0.5 µs of jitter.
+- **2 A pulses stay inside the LED's ratings at every frame rate planned:** at most 2 A (the pulsed maximum), at most 1.14 A on
+  average (the CW maximum is 1.5 A). The DC2200's LED2 terminal reaches 27 kHz, above 24,046 fps.
+- **Bursts barely warm the heat sink.** Its time constant is ~670 s, and a burst is at most 15.5 s (32 GB at 24 kfps). The
+  junction settles 14–24 K over the heat sink within about a second (estimate).
+- **Strobing without a break at 24 kfps and 20 µs runs the junction near 95 °C** (estimated), its output 12 % down and its peak
+  10 nm redder. Keep long recordings to 10 µs or 10 kfps, or add a fan. CW: keep to ≤ 1 A.
+- **The LED's ambient rating is 0–40 °C, and the guard's air is 38–43 °C** (mechanics.md Checks §7), the same problem as the
+  cameras'.
+- **Overdriving past 2 A** would probably work for µs pulses, but nothing published supports it, and it needs the DC2200's LED1
+  terminal (0–4 A, up to 23 kHz, so below 24 kfps). Either way, leave the board's EEPROM pins unconnected, or the DC2200 caps the
+  current at 1.5 A.
+
+**Eye safety** (IEC 62471 exposure limits, as in Directive 2006/25/EC Annex I: IR-A retinal thermal, weak visual stimulus,
+6,000/α W m⁻² sr⁻¹ past 10 s, α clamped to 0.011–0.1 rad; cornea and lens 100 / 570 / 3,200 W/m² at 1,000 / 100 / 10 s):
+
+| Where | R-weighted radiance (W m⁻² sr⁻¹) | Irradiance (W/m²) | Risk group |
+|---|---:|---:|---|
+| the bare M850D3 at 200 mm (Thorlabs: RG0) | 3.7 × 10⁴ (limit 5.5 × 10⁵) | 9 | exempt (agrees) |
+| in its own beam near the plate, CW 1.5 A | 2.1 × 10⁵ (limit 6 × 10⁴) | 4,270 (3,270 over a 7 mm pupil) | RG3 |
+| the same, strobed at 2 A and 24 kfps, 10 / 20 µs (time average) | 9.6 × 10⁴ / 1.6 × 10⁵ | 1,970 / 3,270 | RG3 (RG2 by irradiance at 10 µs) |
+| a bare plate's specular reflection out of the open chamber door, CW 1.5 A | 1.6 × 10⁵ (limit 9 × 10⁴ at α 0.066) | 466 | above the retinal limit; RG1 by irradiance |
+| the brightest diffuse surface anyone can see (the lit bed) | 81 | – | exempt by 700 times |
+
+- **As a lamp system the light is RG3 in its own beam,** like the SOLIS-850C (which Thorlabs rates RG3). The asphere fills a
+  22.9 mm aperture with the die's radiance. But that beam is inside the closed chamber.
+- **No direct path leaves the guard.** All of the light ends on the bed, the tube, the clamp frame, or (the window's 3.4 %
+  reflection) on the recoater sensor post (46 %) and the guard's opaque back panel (54 %, ~250 W/m² at 2 A).
+- **The viewing panel passes 850 nm, but only scattered light can reach it.** Every chamber opening is covered by a camera or
+  this light (the laser window is under the scan head), and the lit bed's 81 W m⁻² sr⁻¹ is far under every limit. Exempt.
+- **With the chamber door open over a bare, polished plate,** 44 % of the light on the bed reflects out of the door. It lands on
+  the guard's fixed front panel (94 %) and right side (6 %), not on the viewing window. Someone at the open door, in that
+  reflection, would see the lens aperture above the retinal limit for staring past 10 s. Below 0.85 A CW it is under the limit.
+  A powder layer (diffuse) removes that path.
+- **So:** enable the light only with the chamber door shut (its door switch in the driver's enable, or the Pico 2 holding the
+  strobe low), or keep to ≤ 0.75 A CW for alignment with the door open. Show the LSO.
+
+**Mechanics:** the light and its bracket are six parts in place of the old envelope (323 parts, 48 monitoring; the machine is
+still 579.6 mm tall). With them, `interference.py` finds 0 interferences in all six states and eight sweeps on M50, L75 and S25
+([`M50`](../analysis/out/monitoring/mech/interference-monitoring-M50-M.md),
+[`L75`](../analysis/out/monitoring/mech/interference-monitoring-L75-L.md),
+[`S25`](../analysis/out/monitoring/mech/interference-monitoring-S25-S.md); 2026-11-27 09:13–09:29 UTC). Those runs now peak at
+3.4–3.5 GiB, so they ran under `/tmp/heavy 3.5`. Exact distances to the neighbours: the bracket sits 2.0 mm over the BW clamp frame
+and 3.0 mm from the recoater sensor clamp; the asphere is 6.6 mm and the tube 7.2 mm from the clamp frame. The bracket needs two
+more M4 holes in the back wall above the clamp frame (x −141 and −129.5, z 69.25, 8 deep), in setup C's A180 program.
+
+![The BW light in the model: from the front-left across its axis, and from behind and above (clamp and bracket see-through)](../analysis/out/monitoring/optics/bw_light_view.png)
+
+*From [`bw_light_view.py`](../analysis/monitoring/optics/bw_light_view.py). The red line is the BW sight line.*
 
 ## 5. Laser safety at the viewports
 
@@ -498,7 +649,11 @@ a curved pool's glints spread over ±40° as a bound for the steep ports):
 2. **Ask Thorlabs for the DMSP1000's tested curve** above 1600 nm on the unit in hand, and the DMSP1180's curve.
 3. **Ask Allied Vision for the Alvium U-030 VSWIR's EMVA 1288 data** (read noise, full well, dark current warm). Its usable
    dynamic range decides how far below 1,000 K one frame reaches (§2).
-4. **Bench-test the light:** the SOLIS-850C on the DC2200 at 10 µs pulses, measured with a fast photodiode.
+4. **Bench-test the BW light (§4.1):** the M850D3 on the DC2200's LED2 terminal at 2 A, 12–22 µs TTL pulses at 24 kHz. Measure
+   the light pulse with a fast photodiode, the image's size and focus on a card at the plate, and the board's temperature after
+   a 15 s burst and after a minute. If more light is wanted, try 3 A at ≤ 10 % duty on the LED1 terminal (0–4 A, up to 23 kHz):
+   it isn't rated. Then pick the camera's
+   filter (FBH850-40, or FBH870-10 for a narrow band) on real frames.
 5. **Check the Chronos's lens fit at LW:** 155 mm of body plus ~50 mm of Kowa lens against the 180 mm of room (fits.json),
    or worker C's Nikon 50 mm on the F mount.
 6. **Get the Chronos full well and read noise from Kron.** A stand-in from a different Luxima sensor is used here.
@@ -545,6 +700,23 @@ a curved pool's glints spread over ±40° as a bound for the steep ports):
     60 mm wide, so it needs a fold;
   - a beam trap on cube1's −y face, where the forward leak exits (that space wasn't checked either);
   - the LP window seat square to its line of sight.
+- **The BW light (§4.1):**
+  - The M850D3's output above 1.5 A (light ∝ I^0.85), its junction-to-board resistance (8 K/W), its temperature coefficients
+    (−0.3 %/K, +0.25 nm/K) and its maximum junction temperature are estimates: Thorlabs publishes none of them. Its 2 A pulsed
+    maximum is read off the M850LP1's sheet (the same LED on a larger heat sink).
+  - Its spectrum and angular pattern are digitised from the spec sheet's plots (±0.02). The pattern and the 1.6 W give 0.36 W/sr
+    on the axis; Thorlabs' "19.4 µW/mm² at 200 mm" would mean 0.78 W/sr. The trace uses the plot. If the light is really that
+    forward-peaked, the asphere collects more (up to ~1.5 times the light on the field) and the radiance in the beam, which sets
+    the eye-safety rows, is up to twice what is given.
+  - The FBH filters are modelled as flat-topped bands of the catalogue width and 92 % peak, not from their data files. The
+    asphere's B270 index is a Cauchy fit to nd and νd.
+  - Powder is a Lambertian surface of reflectance 0.5. At 10° the real bed shadows itself, so its lit tops will be brighter
+    and its gaps darker. A glint puts half its light in one pixel; a 45 µm particle is a specular sphere of reflectance 0.5.
+  - The heat sink's 11 K/W is a natural-convection estimate; the bracket's path into the back wall is not counted. The
+    lens tube's bore past its thread, the LED package and the bracket are envelopes.
+  - The eye-safety limits are the exposure limits of IEC 62471 as published in Directive 2006/25/EC; the risk-group thresholds are
+    those limits at 1,000, 100 and 10 s. The standard itself wasn't read. The light is treated as a weak visual stimulus; its
+    luminance in the lens is ~120 cd/m² by a rough CIE V(λ) tail, so that choice is the cautious one.
 - **Not reviewed:** no LSO review.
 
 ## Sources
@@ -589,3 +761,11 @@ a curved pool's glints spread over ±40° as a bound for the steep ports):
 - Barrett (2019, thesis), Bidare et al. (2018, Acta Mater. 142, 107), Thanki et al. (2023/2024), Brandau et al. (2022): via
   Edison r8-viewports and r8-coaxial-radiometry, not re-read.
 - W. J. Smith, Modern Optical Engineering, 4th ed.: tilted-plate focus shift and astigmatism.
+- Thorlabs item pages, spec sheets, drawings and Zemax file (read 2026-11-27T08:21–08:49Z through the lab tunnel; each URL and
+  time in [`price_lookups_round3_bwlight.csv`](../analysis/out/monitoring/fab/price_lookups_round3_bwlight.csv)): M850D3 spec
+  sheet MTN005519-S01 Rev D and drawing; M850LP1 spec sheet MTN005518-S01 Rev C (2.0 A pulsed); M850L3 spec sheet (Ø30.5 × 35
+  SM1 heat sink); SOLIS-850C spec sheet MTN006952-S01 Rev B; ACL25416U-B drawing and Zemax file ctn002266-s03.zmx; SM1L05 and
+  SM1RR drawings; TCDT1 spec sheet; DC2200 manual MTN005097-D02 (2023, §3.3.7 TTL modulation); "LEDs on Metal-Core PCBs" family
+  page (https://www.thorlabs.com/leds-on-metal-core-pcbs).
+- Directive 2006/25/EC of the European Parliament and of the Council (artificial optical radiation), Annex I, Table 1.1:
+  exposure limits for incoherent radiation (the IEC 62471 limits), https://eur-lex.europa.eu/eli/dir/2006/25/oj.

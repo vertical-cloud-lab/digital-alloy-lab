@@ -2,12 +2,12 @@
  "variant": "S25 module, S reservoir",
  "vol_tol_mm3": 0.5,
  "chord_mm": 0.05,
- "n_parts": 316,
+ "n_parts": 321,
  "states": [
   {
    "state": "closed, parked, piston up",
    "pose": {},
-   "pairs_checked": 2113,
+   "pairs_checked": 2146,
    "interferences": []
   },
   {
@@ -16,7 +16,7 @@
     "recoater": 206.0,
     "piston": -42.0
    },
-   "pairs_checked": 2064,
+   "pairs_checked": 2097,
    "interferences": []
   },
   {
@@ -26,7 +26,7 @@
     "gdoor": 515.0,
     "piston": 8.0
    },
-   "pairs_checked": 2126,
+   "pairs_checked": 2159,
    "interferences": []
   },
   {
@@ -37,7 +37,7 @@
     "cartridge": -125.0,
     "drawer": -120.0
    },
-   "pairs_checked": 2082,
+   "pairs_checked": 2115,
    "interferences": []
   },
   {
@@ -47,7 +47,7 @@
     "module": 40.0,
     "gdoor": 515.0
    },
-   "pairs_checked": 2031,
+   "pairs_checked": 2064,
    "interferences": []
   },
   {
@@ -56,7 +56,7 @@
     "_calibration": 1.0,
     "door": 95.0
    },
-   "pairs_checked": 2125,
+   "pairs_checked": 2158,
    "interferences": []
   }
  ],
@@ -10855,6 +10855,11 @@
    "why": "tube fitting into the manifold"
   },
   {
+   "a": "BW LED heat sink (custom 6061, black anodised, \u00d836 x 40, SM1 internal thread, five fins; envelope of a lathe part)",
+   "b": "BW LED clamp (custom 6061 split block on the heat sink's collar, 8 mm wide; envelope)",
+   "why": "split clamp on the heat sink's collar"
+  },
+  {
    "a": "Collimator (IPG affixed, 2.5 mm beam: 96 \u00b5m at f = 160; housing drawn as the 5 mm unit, 128 mm + 78 mm strain relief) on V-mount",
    "b": "Process fiber (armoured, \u2265 100 mm bend radius)",
    "why": "fiber connector (QBH) in the collimator"
@@ -10975,5 +10980,5 @@
    "why": "tube in the valve's push-in port"
   }
  ],
- "runtime_s": 235.4
+ "runtime_s": 209.5
 }

@@ -190,9 +190,40 @@ SEL = [
      "(for full frame see M7-09)", []),
     ("M7-03", "7", "side camera", "Camera filter: 850 nm, 10 nm FWHM", ("mo", "MO28"), 1, "add", "not drawn", "", []),
     ("M7-04", "7", "side camera", "Second 1070 nm blocker (short-pass 1000 nm)", ("mo", "MO29"), 1, "add", "not drawn", "", []),
-    ("M7-05", "7", "side light", "850 nm LED, 2.7 W minimum, through LP or BW", ("mo", "MO30"), 1, "add", "not drawn", "", []),
-    ("M7-06", "7", "side light", "LED driver with pulse mode", ("mo", "MO31"), 1, "add", "not drawn",
-     "my reads: an 810 nm mounted LED (M810L5, $304.15) with an LEDD1B ($380.04) costs a sixth of this pair but gives less light", []),
+    # the BW light (round 3, monitoring/optics.md §4.1; analysis/monitoring/optics/bw_light.py): the M850D3's die imaged onto the plate
+    # by an aspheric condenser, in place of the SOLIS-850C (MO30), which doesn't fit at BW and gives a fifth of the light on the field
+    ("M7-05", "7", "side light", "850 nm LED on a Ø22 metal-core board, 1.4 W min at 1.5 A CW, 2 A pulsed, 1 x 1 mm die (Thorlabs M850D3)",
+     ("p3", "BWL1"), 1, "add", "drawn (cad/monitoring_parts.py)",
+     "imaged onto the plate by M7-05a: 0.2-0.27 W/cm2 across a 12 mm beam per LED watt, 0.063 W/cm2 on the bed in the side camera's field "
+     "at 2 A (bw_light.py). 2 A is the pulsed maximum on the same LED's M850LP1 sheet; leave the board's EEPROM pins off the driver, "
+     "which otherwise caps it at 1.5 A. RG0 bare; RG3 in its own beam near the plate (inside the closed chamber)", []),
+    ("M7-05a", "7", "side light", "Aspheric condenser Ø25.4 mm, f = 16 mm, NA 0.79, AR 650-1050 nm: images the die onto the plate (m ~11)",
+     ("p3", "BWL2"), 1, "add", "drawn (cad/monitoring_parts.py)", "collects 51 % of the LED's light; the uncoated ACL25416U ($22.00) loses ~8 %", []),
+    ("M7-05b", "7", "side light", "SM1 lens tube, 0.5 in. (one SM1RR included): holds the asphere, screws into the heat sink",
+     ("p3", "BWL3"), 1, "add", "drawn (cad/monitoring_parts.py)", "", []),
+    ("M7-05c", "7", "custom (in house)", "BW light heat sink: 6061, Ø36 x 40, SM1 internal thread (single-point), five fins, black anodised",
+     ("est", 160.0, 260.0, "estimate: ~2.5 h on the lathe at hours_monitoring.csv's ~$65/h; outside CNC like the LP window retaining ring ($257)",
+      "custom", "in house"), 1, "make", "drawn (cad/monitoring_parts.py)",
+     "11 K/W to 40 C air (bw_light.py): T_j 54-64 C in 24 kfps bursts at 2 A, 72-95 C if strobed without a break", []),
+    ("M7-05d", "7", "custom (outsourced)", "BW light bracket and clamp: 1/4 in. 6061 L (flange on the back wall, 2 x M4 into new tapped holes; "
+     "arm over the light) and an 8 mm split clamp on the heat sink's collar",
+     ("custom", 27.12, "analogue: SendCutSend laser, the Z lift arm, $27.12 (the clamp's bore is bored in house)"), 1, "outsource",
+     "drawn (cad/monitoring_parts.py)", "two more M4 holes in the back wall's CAM (setup C at A180)", []),
+    ("M7-05e", "7", "side light", "SM1 retaining ring (the second one, behind the asphere)", ("p3", "BWL4"), 1, "add",
+     "drawn (cad/monitoring_parts.py)", "", []),
+    ("M7-05f", "7", "side light", "Thermally conductive double-sided tape (the LED board on the heat sink)", ("p3", "BWL8"), 1, "add", "not drawn",
+     "0.45 K/W over the Ø22 board; two M2 screws as well", []),
+    ("M7-05g", "7", "side light", "LED cable, 2 m, M8 4-pin to open wires (LED to the driver's LED2 terminal)", ("p3", "BWL6"), 1, "add",
+     "not drawn", "", []),
+    ("M7-05h", "7", "side light", "SMA to BNC cable (the Pico 2's strobe, through its buffer, to the driver's TTL input)", ("p3", "BWL7"), 1, "add",
+     "not drawn", "", []),
+    ("M7-05i", "7", "side camera", "Option: FBH850-40 in place of M7-03's FBH850-10 (4.1 x the LED's light in band; same price, so a swap)",
+     ("p3", "BWL9"), 1, "option (swap for M7-03)", "not drawn",
+     "the M850D3 peaks at ~865 nm: the FBH850-10 passes 14 % of it, the FBH850-40 57 %, the FBH870-10 20-21 % (bw_light.py)", []),
+    ("M7-06", "7", "side light", "LED driver with TTL modulation (Thorlabs DC2200), LED2 terminal: 0-2 A at up to 27 kHz",
+     ("p3", "BWL5"), 1, "add", "not drawn",
+     "TTL mode from the Pico 2's strobe: 27 kHz on LED2 (0-2 A; ~1.9 us edges), so 24,046 fps works; LED1 (0-4 A) stops at 23 kHz. "
+     "Lead each exposure by one edge (TTL high = exposure + 1.9 us). The LEDD1B (1.2 A) can't reach the M850D3's 1.5 A", []),
     ("M7-07", "7", "side camera", "Kron BNC extension cable 4 m (trigger to the sync box)", ("p2", "D6"), 1, "add", "not drawn", "", []),
     ("M7-08", "7", "custom (outsourced)", "LW camera bracket: 5/8 in. (15.9 mm) x 80 mm 6061 plate on an angle root at the floor plate's "
      "edge, and a fixed 13 deg wedge (no ball head)",

@@ -1,0 +1,929 @@
+{
+ "sources": {
+  "geometry": "cad/monitoring_spec.py, analysis/monitoring/fab/frame_features.py (run time)",
+  "vendor": {
+   "M850D3": {
+    "url": "https://www.thorlabs.com/item/M850D3",
+    "read": "2026-11-27T08:22Z",
+    "usd": 143.64,
+    "spec": "MTN005519-S01 Rev D (spec sheet, sha256 in bw_light.json)",
+    "P_min_W": 1.4,
+    "P_typ_W": 1.6,
+    "I_test_A": 1.5,
+    "I_max_cw_A": 1.5,
+    "VF_typ_V": 3.35,
+    "VF_max_V": 3.85,
+    "die_mm": [
+     1.0,
+     1.0
+    ],
+    "rise_fall_ns": [
+     11,
+     14
+    ],
+    "fwhm_nm": 30,
+    "centroid_nm": 850,
+    "peak_nm": 860,
+    "view_full_deg": 150,
+    "risk_group": "RG0 (exempt)",
+    "Ee_200mm_uW_mm2": 19.4,
+    "board": "\u00d822.0 x 1.6 mm MCPCB, 2.8 mm over the LED, 2 x \u00d82.0 holes on \u00d819.0 (M2)",
+    "op_temp_C": [
+     0,
+     40
+    ],
+    "lifetime_h": 10000
+   },
+   "M850LP1": {
+    "url": "https://www.thorlabs.com/item/M850LP1",
+    "read": "2026-11-27T08:22Z",
+    "usd": 434.72,
+    "spec": "MTN005518-S01 Rev C",
+    "I_max_pulsed_A": 2.0,
+    "note": "'Maximum Current (Pulsed) 2000 mA; limited to the maximum CW current when using the DC2200, DC4100 or DC4104' (via the EEPROM); same power, die, rise time and viewing angle as the M850D3; \u00d857 heat sink"
+   },
+   "SOLIS_850C": {
+    "url": "https://www.thorlabs.com/item/SOLIS-850C",
+    "read": "2026-11-27T08:22Z",
+    "usd": 1377.86,
+    "spec": "MTN006952-S01 Rev B",
+    "P_min_W": 2.7,
+    "P_typ_W": 3.6,
+    "emitter_d_mm": 6.5,
+    "fwhm_nm": 39,
+    "peak_nm": 850,
+    "Ee_200mm_mW_mm2": 0.6,
+    "I_max_A": 1.0,
+    "clear_aperture_mm": 48.3,
+    "optics": "LB1723-B + ACL25416U-B",
+    "risk_group": "RG3 (high risk)"
+   },
+   "ACL25416U_B": {
+    "url": "https://www.thorlabs.com/item/ACL25416U-B",
+    "read": "2026-11-27T08:23Z",
+    "usd": 34.33,
+    "glass": "B270",
+    "d_mm": 25.4,
+    "ct_mm": 14.0,
+    "efl_mm": 16.0,
+    "bfl_mm": 7.3,
+    "ca_mm": 22.9,
+    "na": 0.79,
+    "coat": "BBAR Ravg < 0.5 % 650-1050 nm",
+    "R1": 8.818197,
+    "k1": -0.9991715,
+    "A": [
+     8.6821674e-05,
+     6.3760123e-08,
+     2.4073084e-09,
+     -1.7189021e-11
+    ],
+    "R2": -69.99948
+   },
+   "DC2200": {
+    "url": "https://www.thorlabs.com/item/DC2200",
+    "read": "2026-11-27T08:23Z",
+    "usd": 2593.01,
+    "manual": "MTN005097-D02 (2023), \u00a73.3.7 TTL Modulation Mode",
+    "ttl_fmax_kHz": {
+     "LED1 0-4 A (500 mA, 1 W load)": 23,
+     "LED1 4-10 A": 18,
+     "LED2 0-2 A (250 mA, 2 W load)": 27
+    },
+    "fmax_def": "fmax: rise + fall time (10-90 %) = 10 % of the TTL period, resistive load",
+    "led2": "up to 2 A at up to 35 V (1.5 A at 50 V); M8 4-pin (CAB-LEDD1)"
+   },
+   "TCDT1": {
+    "url": "https://www.thorlabs.com/item/TCDT1",
+    "read": "2026-11-27T08:39Z",
+    "usd": 41.73,
+    "thick_mm": 0.23,
+    "z_cm2K_W": 1.7,
+    "k_W_mK": 1.4
+   }
+  },
+  "estimates": {
+   "LI_exponent": 0.85,
+   "dPdT_per_K": -0.003,
+   "dlam_dT_nm_K": 0.25,
+   "Rth_jb_K_W": 8.0,
+   "Tj_max_C": 125.0,
+   "T_air_C": 40.0,
+   "rho_bed": 0.5,
+   "tau_cam": 0.8,
+   "glint_px_fraction": 0.5,
+   "n_B270": [
+    1.523,
+    58.5
+   ]
+  },
+  "camera": "parts.py CAMS['Chronos 2.1-HD mono'], LENSES['Kowa LM50JC10M 50 mm']"
+ },
+ "layout": {
+  "t_S1_mm": 22.383452313166423,
+  "t_tube_front_mm": 29.501070176494178,
+  "die_to_S2_mm": 8.16545272108497,
+  "paraxial": {
+   "f": 16.160977272474593,
+   "h1": 1.099830188646752,
+   "h2": -8.730530888975894,
+   "s_img": 192.0371198793524,
+   "s_obj": 17.645983610060863,
+   "gap": 8.91545272108497,
+   "m": 10.882766533335232
+  },
+  "t_die_mm": 44.54890503425139,
+  "focus_scan": [
+   [
+    7.91545272108497,
+    0.02971755705685005,
+    0.05225011334621597
+   ],
+   [
+    8.16545272108497,
+    0.03135696572677685,
+    0.05513256053595559
+   ],
+   [
+    8.41545272108497,
+    0.03065739269285953,
+    0.05390255464259733
+   ],
+   [
+    8.66545272108497,
+    0.02905166017239406,
+    0.05107931765721779
+   ],
+   [
+    8.91545272108497,
+    0.024177556049349645,
+    0.04250955223527757
+   ],
+   [
+    9.16545272108497,
+    0.01853641681848754,
+    0.0325911675022906
+   ],
+   [
+    9.41545272108497,
+    0.014787813028112908,
+    0.026000283448044913
+   ],
+   [
+    9.66545272108497,
+    0.012261757429883736,
+    0.021558912608785636
+   ],
+   [
+    9.91545272108497,
+    0.009941459248523922,
+    0.017479309337859177
+   ]
+  ],
+  "bw_elevation_deg": 10.007750752847498,
+  "sight_vs_wall_normal_deg": 49.164513775389935
+ },
+ "camera": {
+  "wd_mm": 176.34435224078965,
+  "m": 0.3957438469802669,
+  "um_per_px": 25.26887044815793,
+  "elevation_deg": 12.892660960939805,
+  "roi": [
+   640,
+   96
+  ],
+  "roi_on_bed_mm": [
+   16.172077086821076,
+   10.871972091505262
+  ]
+ },
+ "budget_per_W": {
+  "on the clamp frame and flat ring (outside the opening)": 0.06412020665625,
+  "reflected by the window's two faces (back out, outside the chamber)": 0.03395833853086472,
+  "absorbed / multiply reflected in the window": 0.0008322069781039015,
+  "on the slot's walls and the gasket": 0.0008331330592459956,
+  "on the lower back liner": 0.0,
+  "on the chamber's walls (above the bed)": 0.0,
+  "on the bed, inside the chamber": 0.3287574977442854,
+  "outside the asphere's clear aperture (on the tube and retaining ring)": 0.49185625000000005,
+  "lens surfaces (AR coat, 0.5 % each)": 0.004317367031249982,
+  "emitted": 1.0
+ },
+ "bed_per_W": {
+  "E_roi_mean": 0.03066871777491399,
+  "E_roi_min": 0.0,
+  "E_roi_max": 0.0425885291790311,
+  "E_peak": 0.05053615018878684,
+  "P_in_roi": 0.053922466670354816,
+  "P_on_plate": 0.21884594070140156,
+  "roi_cm2": 1.7582237074959044
+ },
+ "beam_per_W": {
+  "E_peak": 0.2670813345921178,
+  "E_axis": 0.20210355425608598,
+  "E_7mm_pupil": 0.20428183379912424,
+  "fwhm_up_mm": 12.25,
+  "fwhm_side_mm": 12.25,
+  "E_at_height": {
+   "0 mm": 0.20923297416441022,
+   "1 mm": 0.20380091391376842,
+   "2 mm": 0.2038537211644569,
+   "4 mm": 0.20256616984164494,
+   "6 mm": 0.1487888601366662
+  }
+ },
+ "band": {
+  "FBH850-10, LED at +0 nm": 0.13929142245973578,
+  "FBH850-10, LED at +5 nm": 0.1147806185795571,
+  "FBH850-10, LED at +10 nm": 0.09443649447569176,
+  "FBH860-10, LED at +0 nm": 0.19762459150463874,
+  "FBH860-10, LED at +5 nm": 0.1682184927561785,
+  "FBH860-10, LED at +10 nm": 0.1392970353539979,
+  "FBH870-10, LED at +0 nm": 0.1957655248924603,
+  "FBH870-10, LED at +5 nm": 0.21353980383087928,
+  "FBH870-10, LED at +10 nm": 0.19763255499525517,
+  "FBH850-25, LED at +0 nm": 0.356939599236676,
+  "FBH850-25, LED at +5 nm": 0.29632620187979414,
+  "FBH850-25, LED at +10 nm": 0.243011259734077,
+  "FBH850-40, LED at +0 nm": 0.5672569190591008,
+  "FBH850-40, LED at +5 nm": 0.4918680582447389,
+  "FBH850-40, LED at +10 nm": 0.410617071754823,
+  "FBH850-10, SOLIS-850C": 0.21361003386931776,
+  "FBH850-40, SOLIS-850C": 0.6891470202123511
+ },
+ "lit_bed": {
+  "bed, 1.5 A (typ 1.60 W), 10 us, FBH850-10": {
+   "E_bed_W_cm2": 0.049069948439862385,
+   "e": 173.56781170827887,
+   "e_min_cell": 0.0,
+   "e_max_cell": 241.0272861007911
+  },
+  "bed, 1.5 A (typ 1.60 W), 10 us, FBH860-10": {
+   "E_bed_W_cm2": 0.049069948439862385,
+   "e": 232.66592622402288,
+   "e_min_cell": 0.0,
+   "e_max_cell": 323.094681058471
+  },
+  "bed, 1.5 A (typ 1.60 W), 10 us, FBH850-40": {
+   "E_bed_W_cm2": 0.049069948439862385,
+   "e": 693.3180660067292,
+   "e_min_cell": 0.0,
+   "e_max_cell": 962.7854969740355
+  },
+  "bed, 1.5 A (typ 1.60 W), 20 us, FBH850-10": {
+   "E_bed_W_cm2": 0.049069948439862385,
+   "e": 347.13562341655773,
+   "e_min_cell": 0.0,
+   "e_max_cell": 482.0545722015822
+  },
+  "bed, 1.5 A (typ 1.60 W), 20 us, FBH860-10": {
+   "E_bed_W_cm2": 0.049069948439862385,
+   "e": 465.33185244804577,
+   "e_min_cell": 0.0,
+   "e_max_cell": 646.189362116942
+  },
+  "bed, 1.5 A (typ 1.60 W), 20 us, FBH850-40": {
+   "E_bed_W_cm2": 0.049069948439862385,
+   "e": 1386.6361320134583,
+   "e_min_cell": 0.0,
+   "e_max_cell": 1925.570993948071
+  },
+  "bed, 1.5 A (min 1.40 W), 10 us, FBH850-10": {
+   "E_bed_W_cm2": 0.042936204884879585,
+   "e": 151.87183524474395,
+   "e_min_cell": 0.0,
+   "e_max_cell": 210.89887533819214
+  },
+  "bed, 1.5 A (min 1.40 W), 10 us, FBH860-10": {
+   "E_bed_W_cm2": 0.042936204884879585,
+   "e": 203.58268544602004,
+   "e_min_cell": 0.0,
+   "e_max_cell": 282.7078459261622
+  },
+  "bed, 1.5 A (min 1.40 W), 10 us, FBH850-40": {
+   "E_bed_W_cm2": 0.042936204884879585,
+   "e": 606.653307755888,
+   "e_min_cell": 0.0,
+   "e_max_cell": 842.437309852281
+  },
+  "bed, 1.5 A (min 1.40 W), 20 us, FBH850-10": {
+   "E_bed_W_cm2": 0.042936204884879585,
+   "e": 303.7436704894879,
+   "e_min_cell": 0.0,
+   "e_max_cell": 421.7977506763843
+  },
+  "bed, 1.5 A (min 1.40 W), 20 us, FBH860-10": {
+   "E_bed_W_cm2": 0.042936204884879585,
+   "e": 407.1653708920401,
+   "e_min_cell": 0.0,
+   "e_max_cell": 565.4156918523244
+  },
+  "bed, 1.5 A (min 1.40 W), 20 us, FBH850-40": {
+   "E_bed_W_cm2": 0.042936204884879585,
+   "e": 1213.306615511776,
+   "e_min_cell": 0.0,
+   "e_max_cell": 1684.874619704562
+  },
+  "bed, 2 A (typ 2.04 W), 10 us, FBH850-10": {
+   "E_bed_W_cm2": 0.06266333832640267,
+   "e": 221.64968281918448,
+   "e_min_cell": 0.0,
+   "e_max_cell": 307.796825858472
+  },
+  "bed, 2 A (typ 2.04 W), 10 us, FBH860-10": {
+   "E_bed_W_cm2": 0.06266333832640267,
+   "e": 297.119196484786,
+   "e_min_cell": 0.0,
+   "e_max_cell": 412.59858537330297
+  },
+  "bed, 2 A (typ 2.04 W), 10 us, FBH850-40": {
+   "E_bed_W_cm2": 0.06266333832640267,
+   "e": 885.3814996612762,
+   "e_min_cell": 0.0,
+   "e_max_cell": 1229.4969783099882
+  },
+  "bed, 2 A (typ 2.04 W), 20 us, FBH850-10": {
+   "E_bed_W_cm2": 0.06266333832640267,
+   "e": 443.29936563836895,
+   "e_min_cell": 0.0,
+   "e_max_cell": 615.593651716944
+  },
+  "bed, 2 A (typ 2.04 W), 20 us, FBH860-10": {
+   "E_bed_W_cm2": 0.06266333832640267,
+   "e": 594.238392969572,
+   "e_min_cell": 0.0,
+   "e_max_cell": 825.1971707466059
+  },
+  "bed, 2 A (typ 2.04 W), 20 us, FBH850-40": {
+   "E_bed_W_cm2": 0.06266333832640267,
+   "e": 1770.7629993225523,
+   "e_min_cell": 0.0,
+   "e_max_cell": 2458.9939566199764
+  },
+  "bed, 2 A (min 1.79 W), 10 us, FBH850-10": {
+   "E_bed_W_cm2": 0.05483042103560233,
+   "e": 193.94347246678637,
+   "e_min_cell": 0.0,
+   "e_max_cell": 269.322222626163
+  },
+  "bed, 2 A (min 1.79 W), 10 us, FBH860-10": {
+   "E_bed_W_cm2": 0.05483042103560233,
+   "e": 259.9792969241877,
+   "e_min_cell": 0.0,
+   "e_max_cell": 361.02376220164
+  },
+  "bed, 2 A (min 1.79 W), 10 us, FBH850-40": {
+   "E_bed_W_cm2": 0.05483042103560233,
+   "e": 774.7088122036163,
+   "e_min_cell": 0.0,
+   "e_max_cell": 1075.8098560212395
+  },
+  "bed, 2 A (min 1.79 W), 20 us, FBH850-10": {
+   "E_bed_W_cm2": 0.05483042103560233,
+   "e": 387.88694493357275,
+   "e_min_cell": 0.0,
+   "e_max_cell": 538.644445252326
+  },
+  "bed, 2 A (min 1.79 W), 20 us, FBH860-10": {
+   "E_bed_W_cm2": 0.05483042103560233,
+   "e": 519.9585938483754,
+   "e_min_cell": 0.0,
+   "e_max_cell": 722.04752440328
+  },
+  "bed, 2 A (min 1.79 W), 20 us, FBH850-40": {
+   "E_bed_W_cm2": 0.05483042103560233,
+   "e": 1549.4176244072326,
+   "e_min_cell": 0.0,
+   "e_max_cell": 2151.619712042479
+  }
+ },
+ "lit_particles_peak_px_e": {
+  "20 um sphere, R 0.5, 1.5 A, 10 us": 70.93620071816304,
+  "20 um sphere, R 0.5, 1.5 A, 10 us, FBH850-40": 283.35524316249763,
+  "20 um sphere, R 0.5, 1.5 A, 20 us": 141.87240143632607,
+  "20 um sphere, R 0.5, 1.5 A, 20 us, FBH850-40": 566.7104863249953,
+  "20 um sphere, R 0.85, 1.5 A, 10 us": 120.59154122087718,
+  "20 um sphere, R 0.85, 1.5 A, 10 us, FBH850-40": 481.703913376246,
+  "20 um sphere, R 0.85, 1.5 A, 20 us": 241.18308244175435,
+  "20 um sphere, R 0.85, 1.5 A, 20 us, FBH850-40": 963.407826752492,
+  "45 um sphere, R 0.5, 1.5 A, 10 us": 359.1145161357004,
+  "45 um sphere, R 0.5, 1.5 A, 10 us, FBH850-40": 1434.4859185101443,
+  "45 um sphere, R 0.5, 1.5 A, 20 us": 718.2290322714008,
+  "45 um sphere, R 0.5, 1.5 A, 20 us, FBH850-40": 2868.9718370202886,
+  "45 um sphere, R 0.85, 1.5 A, 10 us": 610.4946774306907,
+  "45 um sphere, R 0.85, 1.5 A, 10 us, FBH850-40": 2438.6260614672456,
+  "45 um sphere, R 0.85, 1.5 A, 20 us": 1220.9893548613813,
+  "45 um sphere, R 0.85, 1.5 A, 20 us, FBH850-40": 4877.252122934491,
+  "63 um sphere, R 0.5, 1.5 A, 10 us": 703.864451625973,
+  "63 um sphere, R 0.5, 1.5 A, 10 us, FBH850-40": 2811.5924002798833,
+  "63 um sphere, R 0.5, 1.5 A, 20 us": 1407.728903251946,
+  "63 um sphere, R 0.5, 1.5 A, 20 us, FBH850-40": 5623.184800559767,
+  "63 um sphere, R 0.85, 1.5 A, 10 us": 1196.5695677641543,
+  "63 um sphere, R 0.85, 1.5 A, 10 us, FBH850-40": 4779.707080475803,
+  "63 um sphere, R 0.85, 1.5 A, 20 us": 2393.1391355283085,
+  "63 um sphere, R 0.85, 1.5 A, 20 us, FBH850-40": 9559.414160951606,
+  "100 um sphere, R 0.5, 1.5 A, 10 us": 1773.4050179540761,
+  "100 um sphere, R 0.5, 1.5 A, 10 us, FBH850-40": 7083.881079062442,
+  "100 um sphere, R 0.5, 1.5 A, 20 us": 3546.8100359081523,
+  "100 um sphere, R 0.5, 1.5 A, 20 us, FBH850-40": 14167.762158124884,
+  "100 um sphere, R 0.85, 1.5 A, 10 us": 3014.7885305219297,
+  "100 um sphere, R 0.85, 1.5 A, 10 us, FBH850-40": 12042.597834406151,
+  "100 um sphere, R 0.85, 1.5 A, 20 us": 6029.577061043859,
+  "100 um sphere, R 0.85, 1.5 A, 20 us, FBH850-40": 24085.195668812303,
+  "20 um sphere, R 0.5, 2 A, 10 us": 90.58699441348601,
+  "20 um sphere, R 0.5, 2 A, 10 us, FBH850-40": 361.85050185272803,
+  "20 um sphere, R 0.5, 2 A, 20 us": 181.17398882697202,
+  "20 um sphere, R 0.5, 2 A, 20 us, FBH850-40": 723.7010037054561,
+  "20 um sphere, R 0.85, 2 A, 10 us": 153.9978905029262,
+  "20 um sphere, R 0.85, 2 A, 10 us, FBH850-40": 615.1458531496376,
+  "20 um sphere, R 0.85, 2 A, 20 us": 307.9957810058524,
+  "20 um sphere, R 0.85, 2 A, 20 us, FBH850-40": 1230.2917062992751,
+  "45 um sphere, R 0.5, 2 A, 10 us": 458.59665921827286,
+  "45 um sphere, R 0.5, 2 A, 10 us, FBH850-40": 1831.8681656294355,
+  "45 um sphere, R 0.5, 2 A, 20 us": 917.1933184365457,
+  "45 um sphere, R 0.5, 2 A, 20 us, FBH850-40": 3663.736331258871,
+  "45 um sphere, R 0.85, 2 A, 10 us": 779.6143206710638,
+  "45 um sphere, R 0.85, 2 A, 10 us, FBH850-40": 3114.17588157004,
+  "45 um sphere, R 0.85, 2 A, 20 us": 1559.2286413421275,
+  "45 um sphere, R 0.85, 2 A, 20 us, FBH850-40": 6228.35176314008,
+  "63 um sphere, R 0.5, 2 A, 10 us": 898.8494520678149,
+  "63 um sphere, R 0.5, 2 A, 10 us, FBH850-40": 3590.461604633694,
+  "63 um sphere, R 0.5, 2 A, 20 us": 1797.6989041356298,
+  "63 um sphere, R 0.5, 2 A, 20 us, FBH850-40": 7180.923209267388,
+  "63 um sphere, R 0.85, 2 A, 10 us": 1528.0440685152853,
+  "63 um sphere, R 0.85, 2 A, 10 us, FBH850-40": 6103.78472787728,
+  "63 um sphere, R 0.85, 2 A, 20 us": 3056.0881370305706,
+  "63 um sphere, R 0.85, 2 A, 20 us, FBH850-40": 12207.56945575456,
+  "100 um sphere, R 0.5, 2 A, 10 us": 2264.67486033715,
+  "100 um sphere, R 0.5, 2 A, 10 us, FBH850-40": 9046.262546318201,
+  "100 um sphere, R 0.5, 2 A, 20 us": 4529.3497206743,
+  "100 um sphere, R 0.5, 2 A, 20 us, FBH850-40": 18092.525092636402,
+  "100 um sphere, R 0.85, 2 A, 10 us": 3849.9472625731546,
+  "100 um sphere, R 0.85, 2 A, 10 us, FBH850-40": 15378.646328740939,
+  "100 um sphere, R 0.85, 2 A, 20 us": 7699.894525146309,
+  "100 um sphere, R 0.85, 2 A, 20 us, FBH850-40": 30757.292657481878
+ },
+ "particle_beam_W_m2_at_1mm": {
+  "1.5 A": 3260.814622620295,
+  "2 A": 4164.127667004935
+ },
+ "self_emission_e_per_px": {
+  "melt pool 1500 K (eps 0.261 at 77 deg; 0.152 normal), 10 us": 127.04148302207207,
+  "melt pool 1500 K, 10 us, FBH850-40": 508.6900212711467,
+  "melt pool 1500 K (eps 0.261 at 77 deg; 0.152 normal), 20 us": 254.08296604414414,
+  "melt pool 1500 K, 20 us, FBH850-40": 1017.3800425422934,
+  "melt pool 2000 K (eps 0.292 at 77 deg; 0.176 normal), 10 us": 2386.035371403768,
+  "melt pool 2000 K, 10 us, FBH850-40": 9559.560970807932,
+  "melt pool 2000 K (eps 0.292 at 77 deg; 0.176 normal), 20 us": 4772.070742807536,
+  "melt pool 2000 K, 20 us, FBH850-40": 19119.121941615864,
+  "melt pool 2500 K (eps 0.317 at 77 deg; 0.197 normal), 10 us": 14062.077395020246,
+  "melt pool 2500 K, 10 us, FBH850-40": 56399.05034729939,
+  "melt pool 2500 K (eps 0.317 at 77 deg; 0.197 normal), 20 us": 28124.15479004049,
+  "melt pool 2500 K, 20 us, FBH850-40": 112798.10069459878,
+  "melt pool 2763 K (eps 0.327 at 77 deg; 0.207 normal), 10 us": 27713.23973285483,
+  "melt pool 2763 K, 10 us, FBH850-40": 111210.14190890684,
+  "melt pool 2763 K (eps 0.327 at 77 deg; 0.207 normal), 20 us": 55426.47946570966,
+  "melt pool 2763 K, 20 us, FBH850-40": 222420.28381781367,
+  "plume, optical depth 0.002 at 2000 K, 10 us": 16.3288950289416,
+  "plume, optical depth 0.002 at 2000 K, 10 us, FBH850-40": 65.4280892254873,
+  "plume, optical depth 0.002 at 2000 K, 20 us": 32.6577900578832,
+  "plume, optical depth 0.002 at 2000 K, 20 us, FBH850-40": 130.8561784509746,
+  "plume, optical depth 0.01 at 2700 K, 10 us": 733.9021883809069,
+  "plume, optical depth 0.01 at 2700 K, 10 us, FBH850-40": 2945.2109461054797,
+  "plume, optical depth 0.01 at 2700 K, 20 us": 1467.8043767618137,
+  "plume, optical depth 0.01 at 2700 K, 20 us, FBH850-40": 5890.421892210959,
+  "hot spatter 1500 K (grey 0.15), 10 us": 72.89709195927414,
+  "hot spatter 1500 K (grey 0.15), 10 us, FBH850-40": 291.8952091150936,
+  "hot spatter 1500 K (grey 0.15), 20 us": 145.79418391854827,
+  "hot spatter 1500 K (grey 0.15), 20 us, FBH850-40": 583.7904182301872,
+  "hot spatter 2000 K (grey 0.15), 10 us": 1224.66712717062,
+  "hot spatter 2000 K (grey 0.15), 10 us, FBH850-40": 4907.1066919115465,
+  "hot spatter 2000 K (grey 0.15), 20 us": 2449.33425434124,
+  "hot spatter 2000 K (grey 0.15), 20 us, FBH850-40": 9814.213383823093,
+  "hot spatter 2200 K (grey 0.15), 10 us": 2644.1318294719918,
+  "hot spatter 2200 K (grey 0.15), 10 us, FBH850-40": 10599.412432172694,
+  "hot spatter 2200 K (grey 0.15), 20 us": 5288.2636589439835,
+  "hot spatter 2200 K (grey 0.15), 20 us, FBH850-40": 21198.824864345388
+ },
+ "solis": {
+  "10 us, FBH850-10": 51.2536365760157,
+  "10 us, FBH850-40": 166.0519793614097,
+  "20 us, FBH850-10": 102.5072731520314,
+  "20 us, FBH850-40": 332.1039587228194,
+  "E_bed_W_cm2_upper_bound": 0.009429059787935328,
+  "E_beam_W_cm2_at_200mm": 0.06
+ },
+ "half_full_well_e": 7500.0,
+ "read_noise_e": 25.0,
+ "heat_sink": {
+  "R_K_W": 11.08411433038386,
+  "h_conv": 5.8724230400282185,
+  "h_rad": 6.812071562943831,
+  "Ra": 95641.70253150779,
+  "mass_g": 67.66008513968902,
+  "C_J_K": 60.62343628516136,
+  "tau_s": 671.9570988854699
+ },
+ "R_tape_K_W": 0.44721223678714384,
+ "dc2200_edge_us": 1.8518518518518519,
+ "drive": [
+  {
+   "fps": 24046,
+   "exposure_us": 10.0,
+   "I_pulse_A": 1.5,
+   "ttl_high_us": 11.85,
+   "duty": 0.33,
+   "I_avg_A": 0.494,
+   "VF_V": 3.35,
+   "P_el_peak_W": 5.03,
+   "P_heat_avg_W": 1.13,
+   "Tj_burst_C": 49.5,
+   "Tj_steady_C": 62.0,
+   "within_ratings": true,
+   "driver_ok": true
+  },
+  {
+   "fps": 24046,
+   "exposure_us": 10.0,
+   "I_pulse_A": 2.0,
+   "ttl_high_us": 11.85,
+   "duty": 0.33,
+   "I_avg_A": 0.659,
+   "VF_V": 3.49,
+   "P_el_peak_W": 6.99,
+   "P_heat_avg_W": 1.63,
+   "Tj_burst_C": 53.8,
+   "Tj_steady_C": 71.8,
+   "within_ratings": true,
+   "driver_ok": true
+  },
+  {
+   "fps": 24046,
+   "exposure_us": 20.0,
+   "I_pulse_A": 1.5,
+   "ttl_high_us": 21.85,
+   "duty": 0.57,
+   "I_avg_A": 0.855,
+   "VF_V": 3.35,
+   "P_el_peak_W": 5.03,
+   "P_heat_avg_W": 1.95,
+   "Tj_burst_C": 56.5,
+   "Tj_steady_C": 78.1,
+   "within_ratings": true,
+   "driver_ok": true
+  },
+  {
+   "fps": 24046,
+   "exposure_us": 20.0,
+   "I_pulse_A": 2.0,
+   "ttl_high_us": 21.85,
+   "duty": 0.57,
+   "I_avg_A": 1.14,
+   "VF_V": 3.49,
+   "P_el_peak_W": 6.99,
+   "P_heat_avg_W": 2.82,
+   "Tj_burst_C": 63.8,
+   "Tj_steady_C": 95.1,
+   "within_ratings": true,
+   "driver_ok": true
+  },
+  {
+   "fps": 10000,
+   "exposure_us": 10.0,
+   "I_pulse_A": 1.5,
+   "ttl_high_us": 11.85,
+   "duty": 0.137,
+   "I_avg_A": 0.206,
+   "VF_V": 3.35,
+   "P_el_peak_W": 5.03,
+   "P_heat_avg_W": 0.47,
+   "Tj_burst_C": 44.0,
+   "Tj_steady_C": 49.2,
+   "within_ratings": true,
+   "driver_ok": true
+  },
+  {
+   "fps": 10000,
+   "exposure_us": 10.0,
+   "I_pulse_A": 2.0,
+   "ttl_high_us": 11.85,
+   "duty": 0.137,
+   "I_avg_A": 0.274,
+   "VF_V": 3.49,
+   "P_el_peak_W": 6.99,
+   "P_heat_avg_W": 0.68,
+   "Tj_burst_C": 45.7,
+   "Tj_steady_C": 53.2,
+   "within_ratings": true,
+   "driver_ok": true
+  },
+  {
+   "fps": 10000,
+   "exposure_us": 20.0,
+   "I_pulse_A": 1.5,
+   "ttl_high_us": 21.85,
+   "duty": 0.237,
+   "I_avg_A": 0.356,
+   "VF_V": 3.35,
+   "P_el_peak_W": 5.03,
+   "P_heat_avg_W": 0.81,
+   "Tj_burst_C": 46.9,
+   "Tj_steady_C": 55.9,
+   "within_ratings": true,
+   "driver_ok": true
+  },
+  {
+   "fps": 10000,
+   "exposure_us": 20.0,
+   "I_pulse_A": 2.0,
+   "ttl_high_us": 21.85,
+   "duty": 0.237,
+   "I_avg_A": 0.474,
+   "VF_V": 3.49,
+   "P_el_peak_W": 6.99,
+   "P_heat_avg_W": 1.17,
+   "Tj_burst_C": 49.9,
+   "Tj_steady_C": 62.9,
+   "within_ratings": true,
+   "driver_ok": true
+  },
+  {
+   "fps": 1000,
+   "exposure_us": 10.0,
+   "I_pulse_A": 1.5,
+   "ttl_high_us": 11.85,
+   "duty": 0.014,
+   "I_avg_A": 0.021,
+   "VF_V": 3.35,
+   "P_el_peak_W": 5.03,
+   "P_heat_avg_W": 0.05,
+   "Tj_burst_C": 40.4,
+   "Tj_steady_C": 40.9,
+   "within_ratings": true,
+   "driver_ok": true
+  },
+  {
+   "fps": 1000,
+   "exposure_us": 10.0,
+   "I_pulse_A": 2.0,
+   "ttl_high_us": 11.85,
+   "duty": 0.014,
+   "I_avg_A": 0.027,
+   "VF_V": 3.49,
+   "P_el_peak_W": 6.99,
+   "P_heat_avg_W": 0.07,
+   "Tj_burst_C": 40.6,
+   "Tj_steady_C": 41.3,
+   "within_ratings": true,
+   "driver_ok": true
+  },
+  {
+   "fps": 1000,
+   "exposure_us": 20.0,
+   "I_pulse_A": 1.5,
+   "ttl_high_us": 21.85,
+   "duty": 0.024,
+   "I_avg_A": 0.036,
+   "VF_V": 3.35,
+   "P_el_peak_W": 5.03,
+   "P_heat_avg_W": 0.08,
+   "Tj_burst_C": 40.7,
+   "Tj_steady_C": 41.6,
+   "within_ratings": true,
+   "driver_ok": true
+  },
+  {
+   "fps": 1000,
+   "exposure_us": 20.0,
+   "I_pulse_A": 2.0,
+   "ttl_high_us": 21.85,
+   "duty": 0.024,
+   "I_avg_A": 0.047,
+   "VF_V": 3.49,
+   "P_el_peak_W": 6.99,
+   "P_heat_avg_W": 0.12,
+   "Tj_burst_C": 41.0,
+   "Tj_steady_C": 42.3,
+   "within_ratings": true,
+   "driver_ok": true
+  },
+  {
+   "fps": "CW",
+   "exposure_us": "-",
+   "I_pulse_A": 0.75,
+   "ttl_high_us": "-",
+   "duty": 1.0,
+   "I_avg_A": 0.75,
+   "VF_V": 3.11,
+   "P_el_peak_W": 2.33,
+   "P_heat_avg_W": 1.53,
+   "Tj_burst_C": 53.0,
+   "Tj_steady_C": 70.0,
+   "within_ratings": true,
+   "driver_ok": true
+  },
+  {
+   "fps": "CW",
+   "exposure_us": "-",
+   "I_pulse_A": 1.0,
+   "ttl_high_us": "-",
+   "duty": 1.0,
+   "I_avg_A": 1.0,
+   "VF_V": 3.21,
+   "P_el_peak_W": 3.21,
+   "P_heat_avg_W": 2.14,
+   "Tj_burst_C": 58.1,
+   "Tj_steady_C": 81.8,
+   "within_ratings": true,
+   "driver_ok": true
+  },
+  {
+   "fps": "CW",
+   "exposure_us": "-",
+   "I_pulse_A": 1.5,
+   "ttl_high_us": "-",
+   "duty": 1.0,
+   "I_avg_A": 1.5,
+   "VF_V": 3.35,
+   "P_el_peak_W": 5.03,
+   "P_heat_avg_W": 3.43,
+   "Tj_burst_C": 68.9,
+   "Tj_steady_C": 106.9,
+   "within_ratings": true,
+   "driver_ok": true
+  }
+ ],
+ "warm_led": {
+  "Tj_at_Thorlabs_test_C": 53.93170191099597,
+  "cases": {
+   "24 kfps, 10 us, 2 A, burst": {
+    "Tj_C": 53.8,
+    "shift_nm": -0.0,
+    "output_factor": 1.0,
+    "in_band": {
+     "FBH850-10": 0.139,
+     "FBH860-10": 0.198,
+     "FBH870-10": 0.196,
+     "FBH850-40": 0.568
+    }
+   },
+   "24 kfps, 10 us, 2 A, steady": {
+    "Tj_C": 71.8,
+    "shift_nm": 4.5,
+    "output_factor": 0.946,
+    "in_band": {
+     "FBH850-10": 0.117,
+     "FBH860-10": 0.171,
+     "FBH870-10": 0.213,
+     "FBH850-40": 0.5
+    }
+   },
+   "24 kfps, 20 us, 2 A, burst": {
+    "Tj_C": 63.8,
+    "shift_nm": 2.5,
+    "output_factor": 0.97,
+    "in_band": {
+     "FBH850-10": 0.127,
+     "FBH860-10": 0.184,
+     "FBH870-10": 0.209,
+     "FBH850-40": 0.532
+    }
+   },
+   "24 kfps, 20 us, 2 A, steady": {
+    "Tj_C": 95.1,
+    "shift_nm": 10.3,
+    "output_factor": 0.876,
+    "in_band": {
+     "FBH850-10": 0.093,
+     "FBH860-10": 0.138,
+     "FBH870-10": 0.196,
+     "FBH850-40": 0.406
+    }
+   }
+  }
+ },
+ "eye": {
+  "R_weight_mean": 0.49226219077239897,
+  "luminance_cd_m2": 123.61228232079476,
+  "alpha_at_image_rad": 0.11924777883769012,
+  "bare_LED": {
+   "I0_W_sr": 0.3618602614030757,
+   "I0_from_Thorlabs_Ee_W_sr": 0.7759999999999999,
+   "L_W_m2_sr": 361860.2614030757,
+   "L_R_weighted_FOV_0p011": 36803.744841270876,
+   "E_IR_200mm": 9.04650653507689,
+   "group": {
+    "by_E_IR": "exempt",
+    "by_L_IR": "exempt to RG2",
+    "limits": {
+     "L_IR_weak_stimulus_t_gt_10s": 545454.5454545455,
+     "L_R_10s": 2556096.932683405,
+     "E_IR_1000s": 101.22143853426283,
+     "E_IR_100s": 569.2099788303083,
+     "E_IR_10s": 3200.9029380700613
+    }
+   },
+   "thorlabs": "RG0"
+  },
+  "CW 1.5 A": {
+   "L_R_weighted_aperture": 208283.88393507566,
+   "E_IR_image_peak": 4273.301353473885,
+   "E_IR_image_7mm": 3268.5093407859877,
+   "group": {
+    "by_E_IR": "RG3",
+    "by_L_IR": "RG3",
+    "limits": {
+     "L_IR_weak_stimulus_t_gt_10s": 60000.0,
+     "L_R_10s": 281170.6625951745,
+     "E_IR_1000s": 101.22143853426283,
+     "E_IR_100s": 569.2099788303083,
+     "E_IR_10s": 3200.9029380700613
+    }
+   }
+  },
+  "2.0 A pulses at 60 % duty (24 kfps, 20 us), time-averaged": {
+   "L_R_weighted_aperture": 159589.69473493216,
+   "E_IR_image_peak": 3274.256488917062,
+   "E_IR_image_7mm": 2504.3723886813295,
+   "group": {
+    "by_E_IR": "RG3",
+    "by_L_IR": "RG3",
+    "limits": {
+     "L_IR_weak_stimulus_t_gt_10s": 60000.0,
+     "L_R_10s": 281170.6625951745,
+     "E_IR_1000s": 101.22143853426283,
+     "E_IR_100s": 569.2099788303083,
+     "E_IR_10s": 3200.9029380700613
+    }
+   }
+  },
+  "2.0 A pulses at 36 % duty (24 kfps, 10 us), time-averaged": {
+   "L_R_weighted_aperture": 95753.81684095929,
+   "E_IR_image_peak": 1964.5538933502373,
+   "E_IR_image_7mm": 1502.6234332087977,
+   "group": {
+    "by_E_IR": "RG2",
+    "by_L_IR": "RG3",
+    "limits": {
+     "L_IR_weak_stimulus_t_gt_10s": 60000.0,
+     "L_R_10s": 281170.6625951745,
+     "E_IR_1000s": 101.22143853426283,
+     "E_IR_100s": 569.2099788303083,
+     "E_IR_10s": 3200.9029380700613
+    }
+   }
+  },
+  "lit_bed_radiance_R_weighted": 80.8977932801729,
+  "window_reflection": {
+   "W_per_W": 0.03387165174590363,
+   "share_on_recoater_post": 0.4645560561034284,
+   "share_to_guard_back_panel": 0.5354439438965716,
+   "panel_spot_centre": [
+    -3.6,
+    215.0,
+    1.1
+   ],
+   "panel_E_W_m2_at_2A": 252.23335811458008
+  },
+  "bare_plate_specular_through_open_door": {
+   "plate_R": 0.85,
+   "share_of_beam": 0.4423725171414369,
+   "door_hit_mean": [
+    98.9,
+    -95.0,
+    25.5
+   ],
+   "E_IR_at_door_W_m2_CW": 466.1114565248337,
+   "L_R_weighted": 160098.9368741216,
+   "alpha_rad": 0.06613514312283088,
+   "path_mm": 346.26068560052096,
+   "group": {
+    "by_E_IR": "RG1",
+    "by_L_IR": "RG3",
+    "limits": {
+     "L_IR_weak_stimulus_t_gt_10s": 90723.32373812777,
+     "L_R_10s": 425145.6174714319,
+     "E_IR_1000s": 101.22143853426283,
+     "E_IR_100s": 569.2099788303083,
+     "E_IR_10s": 3200.9029380700613
+    }
+   },
+   "at_guard_front": {
+    "share_to_viewing_window": 0.0,
+    "share_to_fixed_front_panel": 0.9428526948730247,
+    "share_elsewhere": 0.05714730512697532,
+    "mean_hit": [
+     288.8,
+     -270.5,
+     72.9
+    ],
+    "x_range": [
+     254.15237732817909,
+     315.9030723418689
+    ]
+   },
+   "I_max_CW_A_below_L_IR": 0.8500055544665421
+  }
+ },
+ "focus_scan_note": "die-to-S2 gaps scanned around the paraxial conjugate; the one with the highest mean bed irradiance in the ROI is used"
+}
