@@ -1,0 +1,11 @@
+date,family,alloy,charge_g,lot,powder_g,powder_basis,outcome
+2026-10-02,Al,Al 4047 (powder in an Al 6063 cup),,u23y78,0.0,not weighed,most of the charge not atomized
+2026-10-06,Al,Al 6063,180,4yghtr,0.0,not weighed,little powder
+2026-10-08,Al,Al rods,,kj0461,0.0,not weighed,a little fine powder
+2026-10-21,Al,Al 4047,169,k7m2qx,0.0,not weighed,very little powder
+2026-10-22,Al,Al 4047,169,c3k0n5,0.0,not weighed,"more powder than Oct 21, still below target"
+2026-10-27,bronze,630 bronze (C63000),1079.9,k7m2q9,984.6,weighed after sieving (<250 um),about 91% of the charge
+2026-10-28,bronze,630 bronze (C63000),858.4,,26.0,operator estimate (about 3%),plate never started atomizing
+2026-11-05,bronze,630 bronze (C63000),952.5,n05oun,,not weighed,good at first; generator tripped mid-pour
+2026-11-10,bronze,630 bronze (C63000),816.3,834try,612.0,operator estimate (about 75%),"good run, unstable at times"
+2026-11-13,bronze,630 bronze (C63000),816.0,,0.0,operator note,barely any powder; mostly pellets
