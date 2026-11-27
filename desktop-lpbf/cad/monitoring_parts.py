@@ -400,14 +400,17 @@ def lp_geometry(centre=None):
                 normal_bore_centre=cen, normal=seal_room(cen[0], cen[1], R_normal), on_axis=seal_room(c[0], c[1], r_ell))
 
 
-def lp_adapter_holes(c, r_a):
-    """4 x M4 on the LP adapter (and its blanking cap), 3.5 mm in from its edge, none on the side facing the window flange"""
-    to_c = _unit([-c[0], -c[1], 0.0])
-    out = []
-    for k in range(4):
-        ang = math.atan2(-to_c[1], -to_c[0]) + math.radians(-105 + 70 * k)
-        out.append((c[0] + (r_a - 3.5) * math.cos(ang), c[1] + (r_a - 3.5) * math.sin(ang)))
-    return out
+# the adapter's 4 x M4, where analysis/monitoring/fab/lp_cam.py programs them (its LP_BOLT): on Ø48 at +-60 and +-120 deg from the
+# direction away from the lid's centre, each in an R5.5 lug on the flange. Until 2026-11-27 they were drawn 3.5 mm in from the
+# Ø40.8 flange's edge, which put them in the adapter's own face O-ring groove (r 16.9) and their heads under the boss
+LP_BOLT = dict(r=24.0, deg=(-120.0, -60.0, 60.0, 120.0), lug_r=5.5)
+
+
+def lp_adapter_holes(c, r_a=None):
+    """4 x M4 on the LP adapter and its blanking cap (LP_BOLT); r_a, the flange's radius, is no longer used"""
+    away = math.atan2(c[1], c[0])
+    return [(c[0] + LP_BOLT["r"] * math.cos(away + math.radians(t)), c[1] + LP_BOLT["r"] * math.sin(away + math.radians(t)))
+            for t in LP_BOLT["deg"]]
 
 
 def _lp(parts, add, h):
@@ -423,7 +426,8 @@ def _lp(parts, add, h):
     sr = g["on_axis"]
     r_g, r_a = sr["r_groove"], sr["r_adapter"]
     r_go = r_g + F["width"]
-    flange = cyl(r_a, (c[0], c[1], lz1), "z", 8.0)
+    flange = fuse([cyl(r_a, (c[0], c[1], lz1), "z", 8.0)] +
+                  [cyl(LP_BOLT["lug_r"], (x, y, lz1), "z", 8.0) for x, y in lp_adapter_holes(c)])   # lugs for the M4 screws
     s_top = float(getattr(MS, "LP_GEOM", {}).get("s_top", 34.0))
     r_bo = 17.0
     boss = _cyl_ax(r_bo, c - 12.0 * a, a, s_top + 12.0 - 3.0).intersect(box(-1e3, 1e3, -1e3, 1e3, lz1, 1e3))
@@ -437,7 +441,7 @@ def _lp(parts, add, h):
     holes = lp_adapter_holes(c, r_a)
     for x, y in holes:
         body = body.cut(cyl(2.25, (x, y, lz1 - 1), "z", 10.0))
-    add(f"LP adapter boss (6061; Ø{2 * r_a:.0f} flange on the lid's face O-ring; Ø{2 * r_b:.0f} bore and window square to the line of "
+    add(f"LP adapter boss (6061; Ø{2 * r_a:.0f} flange with four screw lugs on the lid's face O-ring; Ø{2 * r_b:.0f} bore and window square to the line of "
         f"sight; cover slide inside)", body, C["anod"], 7, (0, 0, 300), mat="al6061", bom="M7-16", tags=TAG)
     pk = MP.pick_ring(2 * math.pi * r_g)
     add(f"LP adapter O-ring (FKM 75A {pk[0]}, in the lid's face groove)", tube(r_go - 0.3, r_g, (c[0], c[1], lz1 - F["depth"]), "z", F["depth"]),

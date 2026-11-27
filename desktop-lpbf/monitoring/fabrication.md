@@ -67,7 +67,8 @@ Scripts (all in [`analysis/monitoring/fab/`](../analysis/monitoring/fab/)):
 1. **The LP adapter's four M4 holes, as drawn, sit in its own O-ring groove** (r 16.9 from the port centre; the groove is
    r 15.6–17.9), and their heads would sit inside the boss body. Programmed instead on **Ø48, at ±60° and ±120° from the
    direction away from the lid's centre**: 4.1 mm of wall to the groove, heads clear of the boss, the flange's lugs 8.1 mm from
-   the window flange. `monitoring_parts.lp_adapter_holes()` and the boss's flange need the same change (§3.1).
+   the window flange. The model now has the same holes and lugs (`monitoring_parts.lp_adapter_holes()` and the boss's flange,
+   changed when the workers were merged on 2026-11-27, §3.1).
 2. **SendCutSend flagged the LW clamp ring** as drawn (4 × Ø4.5 on Ø50 in a Ø58 ring): 1.75 mm between each hole and the edge,
    and its instant quote wants 1.90 mm in 1/4 in. 6061, so the order would need a review. The holes moved to **Ø49.5**
    (`frame_features.py`): 2.0 mm, still 3.0 mm of wall between each tap drill and the window seat.
@@ -344,8 +345,9 @@ would open in the groove floor under the O-ring, and an M4 head there would sit 
 over the flange. `lp_cam.py` programs them where they clear both: **4 × M4 on Ø48, at ±60° and ±120° from the direction away
 from the lid's centre**. That leaves 4.1 mm of wall between each thread and the groove, keeps each head (Ø7, +0.5 mm) and a key's
 path 40 mm up clear of the boss, and puts the lugs the flange then needs 8.1 mm from the window flange (`"adapter_holes"` in the
-JSON). The model (`lp_adapter_holes()` and the boss's flange in `_lp`) needs the same change; until then its lid has the old
-holes and differs from the programmed one by those four holes only. The blanking cap is drawn and quoted with the new pattern.
+JSON). The model has had the same change since the workers were merged on 2026-11-27: `lp_adapter_holes()` returns this pattern
+and the boss's flange carries R5.5 lugs round each hole, as the cap does, so the model's lid and the programmed one now agree.
+The blanking cap is drawn and quoted with the new pattern.
 
 **The optics bridge's cut-out for the LP camera is in no program.** The repo programs only the frame and the floor plate. As
 the monitoring model cuts it, it is a 54.7 × 60.1 mm hull through the 25 mm bridge: 74.6 cm³ and 50.8 cm² of wall, about
@@ -481,10 +483,8 @@ put in a cart.
 - **Cheapest useful start** (steps 0, 1 and 3, and AE on the rod end with used parts): about $5,376.
 
 ## 6. Not done, and limits
-- **The model's LP adapter has the old holes.** `monitoring_parts.lp_adapter_holes()` puts them in the O-ring groove (§3.1);
-  the programs, the cap's DXF and its quote use 4 × M4 on Ø48 at ±60° and ±120°. The adapter boss's flange needs lugs there
-  (R5.5, as the cap's) and the model's interference check re-run with them. Not done here: `monitoring_parts.py` is not this
-  note's file.
+- **`lp_cam.py` was not re-run after the model's holes moved** (2026-11-27, at the merge). Its "drawn" holes are the old ones in
+  its JSON; the programmed ones were already where the model now draws them, so the programs don't change.
 - **The LW ring's holes moved 0.25 mm inward after the interference run** (Ø50 → Ø49.5). Only holes moved, so no new contact,
   but the model was not re-checked with them: two re-runs were killed at the 3 GB cap the shared runner allows.
 - **The sine-plate setup is drawn, not designed.** A 312 × 222 mm lid turned −33.69° on a 6 × 12 in. sine plate overhangs it on

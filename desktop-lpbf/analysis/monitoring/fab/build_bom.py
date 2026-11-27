@@ -52,13 +52,18 @@ SEL = [
      "lugs for 4 x M4 on Ø48 (6061 1/4 in. plate, 58.9 x 54.0 mm), on the lid's face O-ring round the Ø24 bore",
      ("custom", 7.43, "SendCutSend instant quote (2 = $5.94, 10 = $4.96 each; arrives Tue, Dec 1)", SCSQ, "2026-11-27T09:15Z"), 1,
      "outsource", "not drawn", "monitoring_spec: the LP ships blanked; its window and slides come with the steep camera (M7-17, M7-18). "
-     "Its holes are where lp_cam.py programs the lid's (fabrication.md §3.1): monitoring_parts.lp_adapter_holes() draws them in the O-ring groove", []),
+     "Its holes are where lp_cam.py programs the lid's and the model draws the adapter's (fabrication.md §3.1)", []),
     ("M0-06", "0", "ports", "FKM sheet 1.0 mm for the windows' flat gaskets and flat rings (LW, BW, LP)",
      ("est", 20.0, 40.0, "estimate (McMaster FKM sheet, not fetched)", "FKM 75A sheet, 1.0 mm", "McMaster-Carr"), 1, "add", "not drawn",
      "1.0 mm, not 1/32 in.: the 0.75 mm the seats leave squeezes 1.0 mm sheet 15-35 %, 1/32 in. only -7 to 18 % "
      "(monitoring/mechanics.md, Checks §2); the layer camera's window uses the same 1 mm flat gasket (lpbf_low.py)", []),
-    ("M0-07", "0", "ports", "FKM O-ring for the LP adapter boss's face seal on the lid (AS568-028 priced; size it to the groove)",
-     ("p1", "O1-b"), 1, "add", "not drawn", "the layer camera's adapter uses a 2-030 on a groove of ID 42", []),
+    ("M0-07", "0", "ports", "FKM O-ring AS568-025, 75A, for the LP adapter boss's face seal on the lid (the groove's ring, "
+     "monitoring_parts.py; pack of 25)",
+     ("est", 11.95, 13.27, "estimate: between the 2-024 and 2-026 packs of the same McMaster 1201T series read on 2026-11-25 "
+      "(price_lookups_optics.csv O1, O1-a); the 2-025's own page (1201T37) didn't render through the tunnel on 2026-11-27",
+      "AS568-025 FKM 75A (McMaster 1201T37, not read)", "McMaster-Carr"), 1, "add", "not drawn",
+     "was priced as a 2-028 (O1-b) until 2026-11-27; the fab worker found the groove takes a 2-025. The layer camera's adapter uses "
+     "a 2-030 on a groove of ID 42", []),
     ("M0-08", "0", "purge", "Needle valve for the LW slide purge, brass, 1/8 NPT", ("p1", "O2"), 1, "add", "not drawn", "", []),
     ("M0-09", "0", "purge", "Push-to-connect elbow, 1/4 in. tube x 1/8 NPT", ("p1", "O2-a"), 2, "add", "not drawn", "", []),
     ("M0-10", "0", "purge", "Push-to-connect tee, 1/4 in. tube (off the argon line)", ("p1", "O2-e"), 1, "add", "not drawn", "", []),
