@@ -14,10 +14,12 @@ monitoring_spec.py says where each port, window and instrument goes; this file d
   * the coaxial branch as a 30 mm cage (monitoring_spec.COAX, optics.md §2): the existing photodiode chain behind cube 1 is
     replaced by cube 2 (DMSP950, camera arm to -y), cube 3 (DMLP805: photodiode A to -y, photodiode B to -x), lens tubes,
     cage rods and plates, the IMX296 coaxial camera and two PDA36A2s, a beam trap on cube 1's far port, and posts to the bridge;
-  * the AE path (monitoring.md §5.4): a Ø2 mm 316 waveguide from the plate's spigot down through the heater block, both
-    radiation shields and the piston head's wire hole and down the hollow rod, its cold end screwed into the rod end's bore
-    floor; the AE sensor in a strap clamp on the rod end's back face (outside the gas boundary, <= ~75 C); the preamp on the
-    process base plate;
+  * the AE path (monitoring.md §5.4, monitoring/mechanics.md §4): on M50 and L75 a Ø3 mm 316 waveguide that slides free from
+    the plate's spigot (Ø4 head domed R50, in a counterbore in the socket floor) down through the heater block, both radiation
+    shields, the piston head's wire hole and the hollow rod, to its foot on a miniature sensor (MISTRAS PICO) in a 316L
+    cartridge on the rod end's bore floor, with the spring under the sensor that sets the force on the plate, and a Microdot
+    weld-in (SST FA40102) in the rod end's cap for the sensor's lead; on S25 the sensor in a strap clamp on the rod end's back
+    face, as before; the preamp on the process base plate;
   * the PicoScope 4444 and the sync breakout box on a bracket on the rack's outer side (sync-and-data.md §2.1 puts them in the
     4U drawer if its layout has room; the drawer is an envelope in the model, so they are drawn beside it).
 

@@ -110,8 +110,10 @@ def wg_fin(t, L):
     """fin profile of the waveguide from the tip (plate temperature) to the foot, as mech_monitoring check 6, with the rod segment
     cut at the foot; returns (z from tip mm, T)"""
     d = A["wg_d"]
-    rod_seg = L - (MP.BLOCK_T + MP.BREAK_T + MP.HEAD_T)
-    segs = [(MP.BLOCK_T, t["T_block"], t["T_block"], MM.h_annulus(d / 2, d / 2 + 0.2, t["T_block"], gas_k=0.024)),
+    z = ML.zlevels()
+    L_blk = (z["zb1"] - 4.0) - z["zb0"]                     # from the tip (the spigot's underside) down to the block's bottom: 10 mm
+    rod_seg = L - (L_blk + MP.BREAK_T + MP.HEAD_T)
+    segs = [(L_blk, t["T_block"], t["T_block"], MM.h_annulus(d / 2, d / 2 + 0.2, t["T_block"], gas_k=0.024)),
             (MP.BREAK_T, t["T_block"], t["T_head"], MM.h_annulus(d / 2, 4.0, (t["T_block"] + t["T_head"]) / 2, gas_k=0.022)),
             (MP.HEAD_T, t["T_head"], t["T_head"], MM.h_annulus(d / 2, d / 2 + 0.5, t["T_head"], gas_k=0.02)),
             (rod_seg, t["T_rod_gland"], t["T_rod_end"], MM.h_annulus(d / 2, MP.ROD_ID / 2, (t["T_rod_gland"] + t["T_rod_end"]) / 2))]

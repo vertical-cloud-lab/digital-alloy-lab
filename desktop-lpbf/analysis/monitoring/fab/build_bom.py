@@ -126,7 +126,7 @@ SEL = [
      ("p3", "AE-S1", ("est", 400.0, 900.0, "quote-only; estimate for a MISTRAS miniature sensor (no public price found)", "PICO",
                       "MISTRAS (quote)")), 2,
      "add", "drawn (M50, L75)", "monitoring/mechanics.md §4: the only fit in the Ø12.7 rod beside the leads is a Ø5 sensor. "
-     "QingCheng WM500/1 (AE-S2, Ø4.7 x 4, 100-1000 kHz) reaches 100 kHz but is rated 120 C, the foot's worst case; Nano30 (AE-S3) "
+     "QingCheng WM500/1 (AE-S2, Ø4.7 x 4, 100-1000 kHz) reaches 100 kHz but is rated 120 C, 2 K over the foot's worst case; Nano30 (AE-S3) "
      "does not fit. S25 keeps a sensor clamped on its rod end (M4-09)", []),
     ("M4-02", "4", "AE", "AE preamplifier 20/40/60 dB (MISTRAS 2/4/6 class)",
      ("p2", "A2", ("est", 300.0, 900.0, "quote-only; estimate, inside Edison's $1-3k for sensor + preamp", "2/4/6 (or 0/2/4)",
@@ -147,7 +147,7 @@ SEL = [
      "slides free in the Ø3.4 holes; lapped to length so the head stands 0.6 mm proud with the plate off (monitoring/mechanics.md §4)", []),
     ("M4-07", "4", "AE", "Cartridge spring: Lee Spring LC 029BB 09S316 (316, OD 4.78, free 19.05 mm, 3.94 N/mm), 2 + 2 spares",
      ("p3", "AE-SP1"), 4, "add", "drawn (M50, L75)",
-     "11.2-19.3 N on the plate over every tolerance corner, 13.3-16.9 N with the stop force set by a shim at assembly "
+     "11.2-19.2 N on the plate over every tolerance corner, 13.3-16.8 N with the stop force set by a shim at assembly "
      "(ae_preload.md §2); Century 60895SCS is the same spring (AE-SP2)", []),
     ("M4-08", "4", "AE", "SMA-to-BNC cable 48 in. (preamp to the digitizer)", ("p1", "O3-d"), 1, "add", "not drawn", "", []),
     ("M4-09", "4", "custom (outsourced)", "S25 only: AE sensor clamp on the rod end, 6061 plate + spring (S25's Ø7.7 rod has no room "

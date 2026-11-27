@@ -160,11 +160,11 @@ camera, its bracket and photodiode B all stand inside it.
 **Short answer.**
 - **The spring sets the force, not the stack.** The Ø3 mm 316 waveguide slides free in its holes. Its Ø4 head, domed R50,
   presses on the plate's spigot. Its foot sits on a Ø5 mm sensor (MISTRAS PICO) inside a 316L cartridge that stands on the rod
-  end's bore floor. A Lee Spring LC 029BB 09S316 under the sensor pushes sensor and waveguide up. The plate gets 11.2–19.3 N at
-  every corner of the tolerances and thermal cases, or 13.3–16.9 N if the stop force is set with a shim at assembly
+  end's bore floor. A Lee Spring LC 029BB 09S316 under the sensor pushes sensor and waveguide up. The plate gets 11.2–19.2 N at
+  every corner of the tolerances and thermal cases, or 13.3–16.8 N if the stop force is set with a shim at assembly
   ([`ae_preload.md`](../analysis/out/monitoring/mech/ae_preload.md) §2).
-- **Heat hardly moves it.** The waveguide and the stack it runs through grow within 0.09 mm of each other, between assembly and a
-  500 °C plate, which is 0.4 N on this spring.
+- **Heat hardly moves it.** The waveguide and the stack it runs through grow within 0.07 mm of each other, between assembly and a
+  500 °C plate, which is 0.3 N on this spring.
 - **The path loses 1–8 dB, against 26–52 dB through the stack to the rod end**, with a PFPE grease at both ends. At 500 °C (tier
   B) no grease lasts, and a dry tip loses 12–31 dB.
 - **The sensor's lead leaves through a Solid Sealing FA40102 Microdot weld-in** in the rod end's cap, above the cross-drilling. The
@@ -208,13 +208,15 @@ the stop plus 0.6 mm of its rate. The spring has to take up:
 |---|---|---|
 | pre-travel, as set | 0.6 ± 0.1 mm | lap the waveguide to length against a depth gauge from the socket floor |
 | plate to plate | ± 0.1 mm | spigot length ± 0.05 mm, graphite foil ± 0.05 mm (assumed) |
-| thermal: stack against waveguide, assembly to running | −0.092 to +0.023 mm | thermal.json's M50 cases (200 °C, powder in the gaps, 500 °C tier B) with the waveguide's own fin profile |
+| thermal: stack against waveguide, assembly to running | −0.070 to +0.029 mm | thermal.json's M50 cases (200 °C, powder in the gaps, 500 °C tier B) with the waveguide's own fin profile |
 | the spring's free length and rate | ± 2 %, ± 10 % | catalogue tolerances (assumed) |
 | module travel | 0 | the waveguide, cartridge and sensor all move with the piston and leave with the module |
 
-Over the 48 corners the plate gets **11.2–19.3 N**, inside the 10–20 N wanted. Setting the stop force with a push gauge to 12.5 ±
-0.5 N (a shim under the spring) narrows it to 13.3–16.9 N. The spring's shear stress is 626 MPa at the highest force, against 760
-MPa allowed (45 % of the wire's ~1,690 MPa tensile, assumed). Its shortest length in use leaves 6.1 mm to solid. Pressing the
+Over the 48 corners the plate gets **11.2–19.2 N**, inside the 10–20 N wanted. Setting the stop force with a push gauge to 12.5 ±
+0.5 N (a shim under the spring) narrows it to 13.3–16.8 N. The spring's shear stress is 623 MPa at the highest force, against 760
+MPa allowed (45 % of the wire's ~1,690 MPa tensile, assumed). It runs at the cartridge's temperature, between the rod end's 37–74
+°C and the foot's ≤ 118 °C (§4.3), where 316 spring wire loses little load (stainless springs are commonly used to ~250 °C; not
+checked against Lee's data). Its shortest length in use leaves 6.1 mm to solid. Pressing the
 head down with the plate off bottoms it in its counterbore at 20.4 N, before the spring can reach solid. The waveguide as a column
 buckles at 879 N, 46× the force.
 
@@ -226,19 +228,21 @@ makers' pages (2026-11-27, ae_preload.md's parts table):
 | Sensor | Size (mm) | Band (resonance) | Peak sensitivity | Rating | Fits? |
 |---|---|---|---|---|---|
 | **MISTRAS PICO** | Ø5 × 4, side cable | 200–750 kHz (250) | 54 dB ref V/(m/s) | −65 to 177 °C | **yes: chosen** |
-| QingCheng WM500/1 | Ø4.7 × 4.0, side cable | 100–1000 kHz (500) | > 58 dB | −20 to 120 °C | yes, but rated 120 °C, which the foot reaches |
+| QingCheng WM500/1 | Ø4.7 × 4.0, side cable | 100–1000 kHz (500) | > 58 dB | −20 to 120 °C | yes, but rated 120 °C, 2 K over the foot's worst case |
 | MISTRAS Nano30 | Ø8 × 8 (12.8 across its boot) | 125–750 kHz (140) | 62 dB | −65 to 177 °C | no: a Ø9 cartridge leaves the leads ~1.3 mm |
 | Vallen VS600-Z2, Fuji M31 | Ø4.75 × 5.3; Ø3 × 3 | 400–800 kHz; 350 kHz resonant | – | to 110 °C; to 80 °C | size yes; band or rating no |
 
 All are quote-only, and no maker says anything about vacuum. MISTRAS's product page gives the PICO's seal as epoxy, so pump one
-down on the bench before it goes in. **The cost of fitting is the band's low end.** Crack AE in LPBF peaks near 100 kHz (Seleznev 2022), where the
-PICO is below its band; the Nano30 would gain ~8 dB of sensitivity and the 100–200 kHz band but has no room. The WM500/1 covers
-100 kHz in the same envelope, but from its maker's sheet only, and the foot's worst case (120.8 °C, below) is at its rating.
+down on the bench before it goes in.
+
+**The cost of fitting is the band's low end.** Crack AE in LPBF peaks near 100 kHz (Seleznev 2022), where the PICO is below its
+band. The Nano30 would gain ~8 dB of sensitivity and the 100–200 kHz band, but it has no room. The WM500/1 covers 100 kHz in the
+same envelope, but only its maker's sheet says so, and the foot's worst case (118 °C, below) is 2 K under its rating.
 **Compare the PICO and the WM500/1 with pencil-lead breaks on the bench before buying two.** The PICO's integral cable ends in a
 BNC 1 m away: ask MISTRAS for a ~0.3 m cable with a 10-32 plug, or fit one.
 
-**Temperature.** The foot, taken as adiabatic (an upper bound), reaches 66–100 °C in the clean cases, 92–121 °C with powder in
-the gaps and 83–98 °C at 500 °C, against the PICO's 177 °C (ae_preload.md §5). It is warmer than the old end cap (78 °C) because
+**Temperature.** The foot, taken as adiabatic (an upper bound), reaches 64–98 °C in the clean cases, 90–118 °C with powder in
+the gaps and 79–95 °C at 500 °C, against the PICO's 177 °C (ae_preload.md §5). It is warmer than the old end cap (78 °C) because
 the foot now sits 27 mm higher, in the rod, nearer the piston head.
 
 ### 4.4 Couplant
@@ -309,14 +313,15 @@ face, as drawn before (26–52 dB, M4-09 as an option), or goes without AE. Its 
 
 ### 4.9 Interference
 
-`interference.py` with `LPBF_MONITORING=1` (320 parts) finds **no interference on M50 in the six states or the eight sweeps**
-([`interference-monitoring-M50-M.md`](../analysis/out/monitoring/mech/interference-monitoring-M50-M.md), 2026-11-27 09:19 UTC).
+`interference.py` with `LPBF_MONITORING=1` (320 parts) finds **no interference on M50 or L75 in the six states or the eight
+sweeps** ([`M50`](../analysis/out/monitoring/mech/interference-monitoring-M50-M.md) 09:19 UTC,
+[`L75`](../analysis/out/monitoring/mech/interference-monitoring-L75-L.md) 09:25 UTC, 2026-11-27; 27 designed joints each).
 The AE parts only touch where they are meant to (head on spigot, foot on sensor, sensor on spring, spring and cartridge on the
 floor, feedthrough in its counterbore), each with no shared volume; the joints are declared in `interference.py`. Over the piston's
 stroke and the +8 mm overtravel the nearest other parts are the rod glands, through the rod's wall: cartridge 1.98 mm, sensor
-2.63 mm, spring 2.77 mm. The feedthrough and its plug stay more than 3 mm from everything in every sweep, including the gland
-plate's screws at the overtravel, the Z arm dropping away and the module's way out. The run peaks at 3.5 GB, so it was run under a
-4 GB cap; at 3 GB it is killed.
+2.63 mm, spring 2.77 mm (1.9–2.8 mm on L75). The feedthrough and its plug stay more than 3 mm from everything in every
+sweep, including the gland plate's screws at the overtravel, the Z arm dropping away and the module's way out. The runs peak at
+3.5–3.6 GB, so they ran under a 4 GB cap; at 3 GB they are killed.
 
 ![AE path: a section through the M50 module at the waveguide, and the cartridge in the rod end](../analysis/out/monitoring/mech/ae.png)
 
@@ -457,12 +462,12 @@ The table above (the end cap at 78 °C, 3–9 dB) was for the waveguide leaving 
 
 | Check | Result | In one line |
 |---|---|---|
-| Stroke | −0.092 to +0.023 mm | the stack (6061 block and head, Macor, 316 rod and rod end) and the waveguide's fin profile grow alike; the most is tier B, where the hot waveguide outgrows the water-cooled head |
-| Force on the plate | 11.2–19.3 N (pass) | Lee LC 029BB 09S316 at 15.88 mm, 0.6 ± 0.1 mm pre-travel, plates ± 0.1 mm, spring ± 2 % length and ± 10 % rate, 48 corners; 13.3–16.9 N with the stop force shimmed to 12.5 ± 0.5 N |
-| Spring | pass | 626 MPa at 19.3 N against 760 MPa; 6.1 mm to solid; the head bottoms in its counterbore at 20.4 N, before solid (1,297 MPa) |
+| Stroke | −0.070 to +0.029 mm | the stack (6061 block and head, Macor, 316 rod and rod end) and the waveguide's fin profile grow alike; the most is tier B, where the hot waveguide outgrows the water-cooled head |
+| Force on the plate | 11.2–19.2 N (pass) | Lee LC 029BB 09S316 at 15.88 mm, 0.6 ± 0.1 mm pre-travel, plates ± 0.1 mm, spring ± 2 % length and ± 10 % rate, 48 corners; 13.3–16.8 N with the stop force shimmed to 12.5 ± 0.5 N |
+| Spring | pass | 623 MPa at 19.2 N against 760 MPa; 6.1 mm to solid; the head bottoms in its counterbore at 20.4 N, before solid (1,297 MPa) |
 | Tip | R50 (pass); R25 fails | on 6061 at 200 °C (E 62 GPa, ~103 MPa yield): R50 peaks at 133–161 MPa over a Ø401–486 µm spot; R25 at 211–256 MPa |
 | Loss, plate to sensor | 1.0–8.0 dB (tier A); 12.2–31.4 dB (tier B, dry) | greased dome 0.03–0.7 dB by the film model, taken up to 3 dB; Al/316 1.0; rod 0.01–0.05; rubbing 0–1; greased cold end 0–1.4, up to 3; against 26.3–52.3 dB to the rod end |
-| Sensor temperature | ≤ 121 °C (pass for the PICO) | the foot as an adiabatic fin end: 66–100 °C clean, 92–121 °C with powder in the gaps, 83–98 °C at 500 °C; PICO 177 °C; the WM500/1's 120 °C is not enough |
+| Sensor temperature | ≤ 118 °C (pass for the PICO) | the foot as an adiabatic fin end: 64–98 °C clean, 90–118 °C with powder in the gaps, 79–95 °C at 500 °C; PICO 177 °C; the WM500/1's 120 °C leaves 2 K |
 | Plate | needs the disc spring | bare bayonet: lifted 0.31 mm (0.53 N of plate); with 97125K111 the foil keeps 197–205 N (M50, needs 173) and 511–519 N (L75, needs 424); twist +9 N·mm on 0.61 N·m |
 | Column | pass | 92.8 mm pinned: P_cr 879 N, 46× the force |
 

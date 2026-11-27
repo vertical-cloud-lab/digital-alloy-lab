@@ -118,7 +118,9 @@ def main(which):
              "cage.png")
     if "ae" in which:
         import monitoring_parts as MPT
-        y_cut = MPT.REPORT.get("AE", {}).get("waveguide_xy", (0.0, 3.03))[1]
+        y_cut = MPT.REPORT.get("AE", {}).get("cartridge_xy", (0.0, 2.27))[1]        # through the cartridge's axis
+        import dataclasses
+        ae_parts = [dataclasses.replace(p, opacity=0.5) if "AE cartridge" in p.name else p for p in state_parts]
 
         def ae_col(p):
             n = p.name
@@ -135,10 +137,10 @@ def main(which):
             return None
         keep = lambda p: "M50" in p.name or (mon(p) and ("AE " in p.name)) or "Z lift arm" in p.name or "Pot magnet" in p.name  # noqa: E731
         hide = HIDE + ("Gland-plate screws", "handle", "Zero-point")
-        a = scene(state_parts, [(-150, -260, -40), (-5, 10, -75), (0, 0, 1)], box=(-90, 90, -40, 70, -150, 2),
+        a = scene(ae_parts, [(-150, -260, -40), (-5, 10, -75), (0, 0, 1)], box=(-90, 90, -40, 70, -150, 2),
                   clip=((0, 1, 0), (0, y_cut, 0)), grey_op=0.55, recolour=ae_col, keep=keep, hide=hide,
                   title="AE path, section at the waveguide (M50): domed head on the plate's spigot, down the stack and the rod")
-        b = scene(state_parts, [(-55, -95, -88), (0, 4, -120), (0, 0, 1)], box=(-45, 45, -30, 45, -150, -95),
+        b = scene(ae_parts, [(38, -80, -96), (0, 6, -118), (0, 0, 1)], box=(-45, 45, -30, 45, -150, -95),
                   clip=((0, 1, 0), (0, y_cut, 0)), grey_op=0.45, recolour=ae_col, keep=keep, hide=hide,
                   title="Rod end: cartridge (green), spring, PICO sensor (blue), Microdot weld-in in the cap (gold)")
         both = np.hstack([a, b])
