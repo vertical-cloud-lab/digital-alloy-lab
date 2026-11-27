@@ -339,18 +339,32 @@ well block 20 K below the plate, or 2.1–4.2 h with the block at setpoint ([`co
 
 | | Value |
 |---|---|
-| Heater load at 200 °C (well block + plate, convection, radiation, standoffs) | ~56 W |
+| Heater load at 200 °C (well block + plate, convection, radiation, standoffs) | ~56 W lumped; **11.0 W plate + 45.8 W block** in the thermal FEA with the fan (9.0 + 35.9 W in still air) |
 | Installed heaters | 6 × 50 W Ø6 × 20 mm 24 V cartridges, 2 in the plate and 4 in the block (round 2; McMaster's page needs a login), margin 5× |
 | Laser heat absorbed, averaged over a layer (400 W, 30 % of the plate scanned, absorptivity 0.3–0.6) | 46–91 W |
 | Box air rise, still air | 32–46 K, so ~71 °C: **over the stages' 50 °C rating** |
 | Box air rise with a fan blowing on the box | 9–14 K, ~39 °C |
 
 - **Put a fan on the box.** A 120 mm fan on the outside of the box (or a water-cooled deck) keeps the stages in their
-  rating. The thermal FEA of the cassette is in [`analysis/out/fea/`](analysis/out/fea/).
+  rating. The thermal FEA ([`analysis/out/fea/thermal.md`](analysis/out/fea/thermal.md), CalculiX-checked FE of the
+  cassette on CAD v2) found that the recoater stage, which sits in the box, takes the box air's temperature: the
+  X-LSM100B runs at 37 °C (39 °C peak) with the fan and **59 °C (71 °C peak) without it, over its 50 °C rating**. The
+  X-VSR20A under the box stays at 27 °C either way.
+- **What else the thermal FEA found** (round 2):
+  - the Ø30 build area is uniform to 0.22 K at 200 °C; the plate thermocouple reads 1.7 K above the substrate top,
+    so set the plate loop to ~201.7 °C;
+  - warm-up from 20 °C takes 6.5 min to 199 °C at the substrate with the four block heaters (9.5 min with two);
+  - **the 0.1 mm plate-to-bore gap does not bind:** at 200 °C the plate runs 2.5–5 K warmer than the bore, closing the
+    gap by 1–2 µm; the worst case modelled (laser heat with the heaters off) closes it by 54 µm;
+  - the gland O-rings run at 42–77 °C, fine for FKM or nitrile.
 - **The plate's heat sets the build time** (round 2, [`control/`](control/README.md) §7 and the thermal FEA): the plate
   passes heat to the block through the 0.1 mm argon gap at 0.67 W/K (FE, substrate top), so without a dwell the
   substrate runs 41–106 K above 200 °C. Holding it within 5 K takes a dwell of most of each layer (10 mm in 2.1–4.2 h);
-  running the block 20 K below the plate gives 0.8–1.8 h. The `ftctl` supervisor does either.
+  running the block 20 K below the plate gives 0.8–1.8 h. The `ftctl` supervisor does either. The FEA confirms the
+  lumped dwell model to about 10 % and adds two things: lower the plate's own set point when the block runs cooler, so
+  its heater stays off (otherwise the gain is a fifth smaller), and apply the band to the layer average or the plate
+  thermocouple, because each layer swings the bare substrate's top by 11–22 K (2–4 K once 15 mm is built). A graphite
+  foil under the substrate gains only 16 %, and more cross-flow nothing.
 - **Dense layers will push the plate above 200 °C,** as PR 266 found for its modules ([`heat.md`](../heat.md)): the laser
   can bring more heat than the heaters' load, so the controller just switches off. Scan less of the plate per layer,
   add an interlayer dwell, or log the plate temperature as a screening variable.
