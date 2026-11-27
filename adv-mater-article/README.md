@@ -5,7 +5,7 @@ printable aluminum alloys*
 
 **Status on 2026-11-27:**
 - **What exists:** a planning draft. The manuscript has a drafted introduction, a claim for each Results subsection, an
-  Experimental Section skeleton filled from the run records, an SI skeleton, 62 references checked against Crossref or arXiv,
+  Experimental Section skeleton filled from the run records, an SI skeleton, 63 references checked against Crossref or arXiv,
   and two draft panels drawn from data that already exist.
 - **What doesn't:** none of the article's own results exist yet.
 - **Target:** an *Advanced Materials* collection due early 2028. The collection itself is still unidentified; see D1.
