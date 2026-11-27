@@ -5,159 +5,124 @@
 \ifdraft\linenumbers\fi
 \onehalfspacing
 
-% MethodsX "Method Article" structure (see ../README.md, "MethodsX format"):
-% title, abstract with three customization bullets, graphical abstract,
-% specifications table, background, method details, method validation,
-% limitations, ethics, CRediT, data availability, declaration of interests,
-% acknowledgements, references, supplementary material.
+% MethodsX Method Article, template v7 (Sep 2024), in its section order: article
+% information (title <= 20 words; keywords >= 3; related research article),
+% abstract <= 200 words including 1-3 bullet points, graphical abstract (separate
+% file, >= 1328 x 531 px), specifications table, background (<= 500 words), method
+% details, method validation (no results/discussion section), limitations, ethics
+% statements, CRediT, acknowledgements, declaration of interests, supplementary
+% material, references. See ../README.md, "MethodsX format".
 
-\title{\textbf{Does choosing the stage pay? A seeded benchmark for cost-aware,
+\title{\textbf{Does choosing the step pay? A seeded benchmark for cost-aware,
 partial-evaluation Bayesian optimization of an alloy powder-to-part workflow}}
 % Author list, order and affiliations are not settled (README, decision M1).
-\author{\tbd{Authors and affiliations; corresponding author}}
+\author{\tbd{Authors and affiliations; corresponding author and e-mail}}
 \date{\ifdraft Draft of \today. Red brackets wait on a decision; every number is generated from the runs (\code{paper_stats.py}).\fi}
 
 \begin{document}
 \maketitle
 
+\noindent\textbf{Keywords:} Bayesian optimization; function networks;
+knowledge gradient; partial evaluation; cost-aware optimization; alloy design;
+laser powder bed fusion; benchmarking
+
+\noindent\textbf{Related research article:} \tbd{None, or the companion
+\emph{Advanced Materials} article (issue \#120) if it is under review by then.
+Co-submission through Elsevier's system works only with Elsevier journals, so ask
+the MethodsX office how to cite a Wiley manuscript under review.}
+
 % ---------------------------------------------------------------------------
 \begin{abstract}
-\noindent Materials workflows such as composition design, powder making,
-printing and mechanical testing are chains of steps whose costs differ by
-orders of magnitude. Bayesian optimization of function networks can model such
-a chain step by step, and its partial-evaluation variants choose which step to
-run next, for which candidate, by expected gain per unit cost. Whether that
-choice pays off depends on the workflow, so it should be tested before lab time
-is committed. We describe a benchmark for doing so: a synthetic alloy network
-(CALPHAD, atomization, laser powder bed fusion, tensile testing) with a known
-optimum, physical precedence rules, reusable powder lots, costs of \$10 to
-\$2,500 per step, and one knob, $\kappa$, for how badly a cheap
-CALPHAD-style crack screen misjudges the alloys that matter. Eight reference
-policies share one network model and form a $2\times2$ of
-\{knowledge gradient, expected improvement\} per dollar $\times$ \{partial,
-full-chain\} evaluation, alongside screen-then-test, standard Bayesian
-optimization and random sampling. Every run is seeded and logged, reruns
-reproduce stored runs action for action across three CPU models, and every
-comparison is reported as a matched-seed bootstrap interval. When the screen
-misses the effect ($\kappa=1$, \stat{k1-n} seeds), the partial-evaluation
-policies reached screening's \$100k result with \stat{k1-su-pkgfn-tiered}-fold
-(95\% CI \stat{k1-su-pkgfn-tiered-ci95}) and
-\stat{k1-su-eifn_reuse-tiered}-fold (\stat{k1-su-eifn_reuse-tiered-ci95}) less
-spend; their lead over full-chain evaluation was early and gone by \$100k, and
-the knowledge gradient was not better than expected improvement per dollar.
-\tbd{One sentence on $\kappa=0$ and 0.5 once the 16-seed runs are in.}
-\end{abstract}
-
-\paragraph{Customization highlights.}
+\noindent In multi-step materials workflows, such as alloy design, powder making,
+printing and tensile testing, step costs differ by orders of magnitude.
+Partial-evaluation Bayesian optimization of function networks chooses which
+step to run next, and for which candidate, by expected gain per dollar. Whether
+that pays depends on the workflow, so it should be tested in simulation before
+lab time is spent. This method is a benchmark for that test: a synthetic alloy
+powder-to-part network with a known optimum, physical precedence rules, reusable
+powder lots and a knob, $\kappa$, for how badly a cheap crack screen misjudges
+the best alloys, together with eight reference policies and a matched-seed
+protocol. \tbd{One sentence of what it shows across $\kappa$, once the 16-seed
+runs are in.}
 \begin{itemize}[nosep,leftmargin=*]
-\item Partial-evaluation (pKGFN) and full-chain (KGFN) knowledge gradient, and
-the matching expected-improvement-per-dollar policies, implemented on one
-network model with physical precedence rules and reusable powder lots, so the
-effect of choosing the stage and the effect of the acquisition function can be
-separated.
-\item A synthetic alloy powder-to-part network with a known optimum and a single
-knob ($\kappa$) for how wrong a cheap screen is.
-\item A seeded, logged protocol: runs reproduce action for action, and every
-comparison is a matched-seed bootstrap interval rather than a single run.
+\item Knowledge gradient and expected improvement per dollar, each with partial
+and full-chain evaluation, run on one network model, which separates the effect
+of choosing the step from that of the acquisition function.
+\item Seeded runs log every purchase and reproduce action for action across CPUs.
+\item Every comparison between policies is a matched-seed bootstrap interval.
 \end{itemize}
+\end{abstract}
 
 \paragraph{Graphical abstract.}
 \begin{center}
-\includegraphics[width=0.85\linewidth]{fig-network}
+\includegraphics[width=\linewidth]{graphical-abstract}
 \end{center}
-\note{MethodsX asks for a graphical abstract (see README). Draft: the network
-(this figure) with the $2\times2$ of policies and the speed-up panel
-(\cref{fig:speedup}) beside it; to be laid out once the figures are final.}
-
-\paragraph{Keywords.} Bayesian optimization; function networks; knowledge
-gradient; partial evaluation; cost-aware optimization; alloy design; laser
-powder bed fusion; benchmarking; self-driving laboratories
 
 % ---------------------------------------------------------------------------
 \section*{Specifications table}
 \begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.27\linewidth}X@{}}
 \toprule
 Subject area & Materials Science \\
-More specific subject area & Bayesian optimization for multi-stage materials
+More specific subject area & Bayesian optimization of multi-step materials
 workflows (alloy design, powder production, additive manufacturing) \\
 Name of your method & Seeded partial-evaluation benchmark for function-network
-Bayesian optimization (\code{bofn-paper}) \\
+Bayesian optimization of an alloy powder-to-part workflow \\
 Name and reference of original method & Bayesian optimization of function
 networks (EIFN)~\cite{astudillo2021}; Bayesian optimization of function networks
 with partial evaluations (p-KGFN)~\cite{buathong2024,buathong2025}; knowledge
 gradient~\cite{frazier2009}; expected improvement~\cite{jones1998} \\
-Resource availability & Code, all run records and the analysis:
+Resource availability & Code, every run record and the analysis:
 \url{https://github.com/vertical-cloud-lab/digital-alloy-lab}, folder
-\code{benchmarks/bofn-paper} (MIT licence \tbd{confirm}); archived release
-\tbd{DOI, reserved at submission}. Python~3.12, PyTorch~2.14.1, BoTorch~0.18.1,
-GPyTorch~1.15.2, NumPy~2.5.3, SciPy~1.18.1 (exact pins in
-\code{requirements.txt}). A laptop or a 2-core cloud runner suffices. \\
-Related research article & \tbd{The companion research article (issue \#120,
-\emph{Advanced Materials}, in preparation), if MethodsX's co-submission route is
-used; otherwise none.} \\
+\code{benchmarks/bofn-paper} \tbd{licence; archived release and DOI at
+submission}. Python 3.12 with PyTorch 2.14.1, BoTorch 0.18.1, GPyTorch 1.15.2,
+NumPy 2.5.3 and SciPy 1.18.1 (exact pins in \code{requirements.txt}); a laptop or
+a 2-core cloud machine is enough. \\
 \bottomrule
 \end{tabularx}
 
 % ---------------------------------------------------------------------------
 \section*{Background}
 
-A materials discovery campaign is rarely one experiment. To learn whether an
-aluminum alloy is worth making, a laboratory might calculate its phases (minutes
-of computing), make powder of it (about a day), print a coupon (a build), and
-test the coupon in tension (days). The steps differ in cost by orders of
-magnitude, and the later steps need the products of the earlier ones. Campaigns
-usually spend in a fixed order. Screen-then-test calculates many compositions
-and carries a few through the remaining steps, which is cheap and works when the
-screen is right. Carrying every candidate through the whole chain does not
-depend on the screen, but it spends most of the budget on candidates a cheap
-early step could have ruled out.
+Finding an alloy that prints well is a chain of steps: calculate its phases
+(minutes of computing), make powder (about a day), print a coupon, and test it
+in tension. The steps differ in cost by orders of magnitude, and each needs the
+product of the one before. Campaigns usually spend in a fixed order.
+Screen-then-test calculates many compositions and carries a few through the
+rest, which is cheap and works when the screen is right. Carrying every
+candidate through the whole chain does not depend on the screen, but spends most
+of the budget on candidates that a cheap early step could have ruled out.
 
-Bayesian optimization of function networks (BOFN) models such a chain as a
-network of surrogate models, one per step, whose outputs feed the next
-step~\cite{astudillo2021}. Its partial-evaluation extension, p-KGFN, goes
-further: at each decision it chooses a step and a candidate whose parents are
-already available, by the knowledge gradient of that one result per unit
-cost~\cite{buathong2024,buathong2025}. On its authors' test problems, p-KGFN
-reached better solutions for the same cost than evaluating the whole network
-each time~\cite{buathong2024}. Related multi-stage and cost-aware schemes have
-been proposed for self-driving laboratories and for alloy
-design~\cite{torresi2026,alvi2026}. All of these were tested on synthetic or
-retrospective problems, and none on a chain with the physical constraints of
-alloy powder: powder must exist before it can be printed, a build before it can
-be tested, and one powder lot can be printed many times.
+Bayesian optimization of function networks (BOFN) models such a chain as linked
+surrogate models, one per step~\cite{astudillo2021}. Its partial-evaluation
+extension, p-KGFN, picks a step and a candidate whose inputs already exist by
+the knowledge gradient of that one result per unit cost, and on its authors'
+test problems it beat evaluating the whole network each
+time~\cite{buathong2024,buathong2025}. Related multi-stage and cost-aware
+schemes target self-driving laboratories and alloy
+design~\cite{torresi2026,alvi2026}. All were tested on synthetic or
+retrospective problems without the constraints of alloy powder: powder must
+exist before it is printed and a build before it is tested, and one powder lot
+can be printed many times. Benchmarks of experiment planners in chemistry and
+materials~\cite{hase2021,felton2021,liang2021} score single-step objectives, so
+they cannot test partial evaluation.
 
-Whether choosing the step pays off is a property of the workflow (its costs,
-how informative the cheap steps are, how wrong the screen is), not of the
-algorithm alone, and a physical campaign is too expensive to run more than once.
-A synthetic benchmark lets the question be asked many times, with the answer
-known. Benchmarks of experiment planners exist for
-chemistry~\cite{hase2021,felton2021} and across experimental materials
-datasets~\cite{liang2021}, but they score single-step objectives and so cannot
-test partial evaluation.
-
-This article describes such a benchmark for an alloy powder-to-part workflow.
-It makes three customizations of the original methods. (i) It implements
-p-KGFN, a full-chain knowledge-gradient counterpart (KGFN), and network
-expected improvement per dollar with and without powder reuse on one network
-model, so that the policies form a $2\times2$ of
-\{knowledge gradient, expected improvement\} per dollar $\times$
-\{partial, full-chain\} evaluation, with screen-then-test, standard Bayesian
-optimization and random sampling as baselines. (ii) Its synthetic truth has a
-known optimum and a single knob, $\kappa$, for the part of the physics that the
-cheap screen cannot see: grain refinement by Zr and Sc nucleants, which
-suppresses hot cracking in printed high-strength aluminum
-alloys~\cite{martin2017} but is invisible to a freezing-range crack
-criterion~\cite{kou2015}. (iii) Its protocol makes every comparison checkable:
-runs are seeded, every purchase is logged with the code version and the package
-versions, reruns are checked action for action, and every comparison between
-policies is a matched-seed bootstrap interval.
-
-The benchmark is the synthetic, dollar-budget, sequential base of two larger
-simulations by the same group, which reuse its truth: a clocked version that
-adds time, asynchronous stations, noise and failures, and a digital twin of the
-laboratory. \tbd{Cite once public: bofn-clocked (DAL PR 297) and byu-vcl twin
-rounds 3--5.} The physical campaign that motivates it is reported
-separately~\tbd{ref.\ companion article}.
+Whether choosing the step pays is a property of the workflow (its costs, what
+the cheap steps reveal, how wrong the screen is) as much as of the algorithm,
+and a physical campaign can be run only once. This method customizes BOFN and
+p-KGFN into a benchmark that asks the question many times with the answer known.
+(i) One network model carries p-KGFN, a full-chain knowledge-gradient
+counterpart (KGFN), and network expected improvement per dollar with and without
+powder reuse, so the policies form a $2\times2$ of acquisition function $\times$
+evaluation mode, beside screen-then-test, standard Bayesian optimization and
+random sampling. (ii) Its synthetic truth has a known optimum and one knob,
+$\kappa$, for the effect the screen cannot see: Zr and Sc nucleants suppress hot
+cracking in printed high-strength aluminum~\cite{martin2017}, which a
+freezing-range crack criterion~\cite{kou2015} misses. (iii) Runs are seeded and
+logged, reruns are checked action for action, and every comparison is a
+matched-seed bootstrap interval. The benchmark is the dollar-budget, sequential
+base of a clocked simulation and a digital twin of the same
+laboratory~\tbd{refs once public}, and supports the companion article's
+optimizer~\tbd{ref}.
 
 % ---------------------------------------------------------------------------
 \section*{Method details}
@@ -449,7 +414,7 @@ $\kappa$ & policies & seeds & match action for action \\
 \end{tabular}
 \end{table}
 
-\subsection*{What the benchmark shows}
+\subsection*{The benchmark separates the policies and responds to $\kappa$ as designed}
 
 \Cref{fig:curves} shows the best alloy demonstrated against spend for six of
 the policies at each $\kappa$, and \cref{tab:results} the values at \$25k,
@@ -544,7 +509,7 @@ $\kappa$ (the shared start excluded). Tiered screening's CALPHAD stage is its
 \label{fig:allocation}
 \end{figure}
 
-\input{table-results}
+\input{../../benchmarks/bofn-paper/paper-stats/table-results}
 
 % ---------------------------------------------------------------------------
 \section*{Customization}
@@ -618,40 +583,39 @@ the last digits and, through a different decision, beyond.
 
 % ---------------------------------------------------------------------------
 \section*{Ethics statements}
-This work involved no human subjects, animals or data from social media.
+This work involved no human subjects, animal experiments or data collected from
+social media platforms.
 
-\section*{CRediT authorship contribution statement}
+\section*{CRediT author statement}
 \tbd{Once the author list is settled.}
 
-\section*{Data availability}
-All code, the 292 stored runs, every rerun and new run (\code{results-rerun/},
-\code{results-kgfn/}), the comparison logs and the generated statistics are in
-\url{https://github.com/vertical-cloud-lab/digital-alloy-lab} (folder
-\code{benchmarks/bofn-paper}), to be archived with a DOI at submission
-\tbd{DOI}.
+\section*{Acknowledgements}
+\tbd{Funding sources and grant numbers.}
 
-\section*{Declaration of competing interests}
+\section*{Declaration of interests}
 The authors declare that they have no known competing financial interests or
 personal relationships that could have appeared to influence the work reported
 in this paper. \tbd{confirm}
 
 \section*{Declaration of generative AI and AI-assisted technologies}
-\tbd{Required by Elsevier if AI tools were used in writing: state the tool,
-the purpose, and that the authors reviewed and edited the text and take
-responsibility for it. This draft and the analysis code were written with an AI
-coding agent (Claude), and the October code review used an AI analysis agent
-(Edison Scientific).}
+\tbd{Elsevier asks for this statement when AI tools were used in writing. State
+the tool and the purpose, and that the authors reviewed and edited the text and
+take responsibility for it. This draft, the analysis code and the figures were
+prepared with an AI coding agent (Claude, Anthropic), and the October 2026 code
+review used an AI analysis agent (Edison Scientific).}
 
-\section*{Acknowledgements}
-\tbd{Funding sources and grant numbers.}
+\section*{Data availability}
+All code, the 292 stored runs, every rerun and new run (\code{results-rerun/},
+\code{results-kgfn/}), the rerun comparisons and the generated statistics are at
+\url{https://github.com/vertical-cloud-lab/digital-alloy-lab} (folder
+\code{benchmarks/bofn-paper}), to be archived with a DOI at submission
+\tbd{DOI}.
 
-\printbibliography
-
-\clearpage
 \section*{Supplementary material}
 \note{Figures S1--S2 and the full pairwise table (every pair of the eight
 policies at every $\kappa$, at \$25k, \$50k, \$100k and over the budget) come
-from \code{paper-stats/SUMMARY.md}; to be laid out as Tables S1--S3.}
+from \code{paper-stats/SUMMARY.md}; lay them out as Tables S1--S3 in a separate
+file at submission.}
 \begin{figure}[h]
 \centering
 \includegraphics[width=\linewidth]{fig-curves-all}
@@ -662,5 +626,8 @@ from \code{paper-stats/SUMMARY.md}; to be laid out as Tables S1--S3.}
 \includegraphics[width=0.72\linewidth]{fig-speedup-over-bo}
 \caption*{\textbf{Figure S2.} As \cref{fig:speedup}, over standard BO.}
 \end{figure}
+
+\clearpage
+\printbibliography
 
 \end{document}

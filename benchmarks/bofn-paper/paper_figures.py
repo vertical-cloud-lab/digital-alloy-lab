@@ -205,6 +205,59 @@ def fig_allocation(name="fig-allocation"):
     save(fig, name)
 
 
+def graphical_abstract(name="graphical-abstract"):
+    """MethodsX graphical abstract: landscape, at least 1328 x 531 px (w x h).
+    Left: the network with its step costs. Right: speed-up over tiered screening for
+    the 2 x 2 of policies at each kappa (95% matched-seed intervals)."""
+    import matplotlib.image as mpimg
+
+    rows = [r for r in read_csv("speedup") if r["over"] == "tiered"]
+    kinds = ("pkgfn", "eifn_reuse", "kgfn", "eifn")
+    fig = plt.figure(figsize=(13.28, 5.31))
+    ax0 = fig.add_axes([0.0, 0.02, 0.56, 0.86])
+    ax0.imshow(mpimg.imread(FIG / "fig-network.png"))
+    ax0.axis("off")
+    fig.text(0.01, 0.95, "A synthetic alloy powder-to-part workflow with a known optimum", fontsize=15, color=TEXT, weight="bold")
+    fig.text(0.01, 0.895, "κ sets how badly the cheap crack screen misjudges the best alloys (Zr/Sc nucleants)", fontsize=12, color=TEXT2)
+    ax = fig.add_axes([0.73, 0.16, 0.255, 0.66])
+    lo_edge = 0.2
+    for i, p in enumerate(kinds):
+        for j, k in enumerate(KAPPAS):
+            r = next(r for r in rows if r["policy"] == p and float(r["kappa"]) == k)
+            y = i + (j - 1) * 0.24
+            est, lo, hi = float(r["est"]), float(r["lo95"]), float(r["hi95"])
+            st = KSTYLE[k]
+            ax.plot([max(lo, lo_edge), max(hi, lo_edge)], [y, y], color=st["color"], lw=2.2, solid_capstyle="butt")
+            if est > 0:
+                ax.plot(est, y, marker=st["marker"], ms=8, color=st["color"], mec="white", mew=1.2, ls="none")
+            else:
+                ax.plot(lo_edge, y, marker="<", ms=8, color=st["color"], ls="none")
+    ax.set_xscale("log")
+    ax.set_xlim(lo_edge * 0.9, 10)
+    ax.set_xticks([0.25, 1, 4])
+    ax.set_xticklabels(["0.25×", "1×", "4×"], fontsize=12)
+    ax.axvline(1, color="#8c8c8c", lw=1.0)
+    ax.set_yticks(range(len(kinds)))
+    names = {"pkgfn": "pKGFN\n(KG, partial)", "eifn_reuse": "BOFN + reuse\n(EI/$, partial)", "kgfn": "KGFN\n(KG, full chain)", "eifn": "BOFN\n(EI, full chain)"}
+    ax.set_yticklabels([names[p] for p in kinds], fontsize=11.5)
+    ax.invert_yaxis()
+    ax.spines["left"].set_visible(False)
+    ax.tick_params(axis="y", length=0)
+    ax.grid(axis="x", color=GRIDC, lw=0.8)
+    ax.set_axisbelow(True)
+    ax.set_xlabel("Speed-up over screen-then-test\n(95% matched-seed interval)", fontsize=12)
+    fig.text(0.60, 0.88, "Does choosing the step pay?", fontsize=15, color=TEXT, weight="bold")
+    handles = [plt.Line2D([], [], color=KSTYLE[k]["color"], marker=KSTYLE[k]["marker"], ms=8, mec="white", mew=1.2, lw=2.2,
+                          label={0.0: "κ = 0: screen right", 0.5: "κ = 0.5", 1.0: "κ = 1: screen wrong"}[k]) for k in KAPPAS]
+    fig.legend(handles=handles, loc="lower left", bbox_to_anchor=(0.60, 0.80), ncol=3, frameon=False, fontsize=11, numpoints=1,
+               handlelength=1.6, columnspacing=1.0)
+    FIG.mkdir(parents=True, exist_ok=True)
+    fig.savefig(FIG / f"{name}.png", dpi=200, facecolor="white")
+    fig.savefig(FIG / f"{name}.pdf", facecolor="white")
+    plt.close(fig)
+    print(f"wrote {FIG / name}.png ({int(13.28 * 200)} x {int(5.31 * 200)} px)")
+
+
 if __name__ == "__main__":
     main6 = ("pkgfn", "kgfn", "eifn_reuse", "eifn", "ei", "tiered")
     fig_curves(main6, "fig-curves")
@@ -213,3 +266,4 @@ if __name__ == "__main__":
     fig_speedup()
     fig_speedup(name="fig-speedup-over-bo", over="ei")
     fig_allocation()
+    graphical_abstract()

@@ -1,0 +1,220 @@
+\documentclass[11pt]{article}
+\def\bibstyle{chem-angew}
+\input{../preamble}
+\usepackage{lineno}
+\ifdraft\linenumbers\fi
+\onehalfspacing
+% Advanced Materials puts citations after punctuation as superscript numbers
+% (as in adv-mater-article/preamble.tex).
+\ExecuteBibliographyOptions{autocite=superscript}
+\let\cite\autocite
+
+\title{\textbf{The optimizer's synthetic benchmark, sized for the \emph{Advanced
+Materials} article (issue \#120): Experimental Section paragraph and Supporting
+Information section}}
+\author{Drop-in text for \code{adv-mater-article/} \ifdraft(see ../README.md for where each piece goes)\fi}
+\date{\ifdraft Draft of \today. Numbers are \code{\textbackslash stat} macros from \code{paper_stats.py}, shared with the MethodsX version.\fi}
+
+\begin{document}
+\maketitle
+
+\note{This file holds the short version of the BOFN methods work, written to slot
+into the \emph{Advanced Materials} article drafted on
+\code{claude/issue-120-20261127-1859}. It does not retell that article's story
+(the loop, the atomizer, the campaign); it supplies (A) one Experimental Section
+paragraph, (B) two optional sentences for \S2.6, and (C) an SI section that
+issue~\#120's figure plan calls S12 (model and acquisition) and the synthetic
+part of S14. Citation keys match \code{adv-mater-article/references.bib}, so
+the text can be pasted in. If the MethodsX companion is published first,
+section C shrinks to its first paragraph, \cref{tab:contrasts} and a citation.}
+
+% ===========================================================================
+\section*{A. Experimental Section paragraph}
+\label{sec:A}
+\note{Goes after ``Function-network model and acquisition'' and before ``Digital
+twin and benchmarks'' in \code{manuscript.tex}; about 190 words.}
+
+\paragraph{Synthetic benchmark of the optimizer.} Before the campaign, the
+optimizer was tested on a synthetic version of the workflow with a known
+optimum: CALPHAD (three outputs), atomization, printing and tensile testing as
+hand-written closed-form nodes on four composition and three process variables,
+with assumed costs of \$10, \$1,500, \$2,500 and \$200 per result, powder lots
+that can be printed repeatedly, and a parameter $\kappa$ that sets how much of
+the nucleant-driven crack suppression a freezing-range screen
+misses~\cite{martin2017,kou2015} (SI Section~S12). Eight policies shared one
+network model (one Gaussian process per node, Monte Carlo propagation through the
+network~\cite{astudillo2021,balandat2020}): partial-evaluation and full-chain
+knowledge gradient per dollar~\cite{buathong2024}, network expected improvement
+per dollar with and without powder reuse~\cite{astudillo2021}, standard Bayesian
+optimization, screen-then-test with and without powder reuse, and random
+sampling. Each policy started from the same seed data for a given seed and spent
+\$100k of new budget, on \stat{k1-n} seeds at $\kappa=1$ and \stat{k0-n} at
+$\kappa=0$ and 0.5. Policies were compared on matched seeds, with 95\%
+percentile bootstrap intervals that resample seeds jointly. Runs were seeded and
+logged and reproduced stored runs action for action. \tbd{Cite the MethodsX
+article here if it is published first.}
+
+% ===========================================================================
+\section*{B. Two optional sentences for \S2.6 (``When it pays off'')}
+\note{The calibrated twin and the clocked benchmark own \S2.6 (issue \#120's
+outline). These sentences only point to the uncalibrated synthetic result, which
+is the dollar-only, noise-free special case. Use them if \S2.6 needs a sentence
+before the twin is calibrated.}
+
+On a synthetic version of the workflow with a known optimum (SI Section~S12),
+choosing the step reached screen-then-test's \$100k result with
+\stat{k1-su-pkgfn-tiered}-fold (95\% confidence interval
+\stat{k1-su-pkgfn-tiered-ci95}) less spend when the screen missed nucleant-driven
+crack suppression, \tbd{and with \stat{k0-su-pkgfn-tiered}-fold
+(\stat{k0-su-pkgfn-tiered-ci95}) when the screen was right}. Its advantage over
+sending every candidate through the whole chain was early: \stat{k1-c-0-v25}
+percentage points of the optimum after \$25k (\stat{k1-c-0-v25-ci}), and none
+after \$100k (\stat{k1-c-0-v100}, \stat{k1-c-0-v100-ci}).
+
+% ===========================================================================
+\clearpage
+\section*{C. Supporting Information section}
+\setcounter{figure}{0}\setcounter{table}{0}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\thetable}{S\arabic{table}}
+\note{Numbered here from S1; renumber to the SI's sequence (issue \#120's figure
+plan puts the model in S12 and the twin in S14). About 1,300 words, two figures,
+two tables.}
+
+\subsection*{S12. The cost-aware network optimizer and its synthetic benchmark}
+
+\paragraph{Why a synthetic benchmark.} Whether choosing the step pays depends on
+the workflow: the step costs, how much a cheap step reveals about the expensive
+ones, and how wrong the screen is. A physical campaign can be run once, so the
+optimizer and its baselines were first compared on a synthetic version of the
+workflow whose optimum is known and in which the screen's error can be set.
+
+\paragraph{The synthetic workflow.} A design has four composition variables
+(Zn+Mg, Cu, Zr and Sc levels) and three process variables (atomizer setting,
+laser power, scan speed), all on $[0,1]$. One CALPHAD call (\$10) returns a
+strengthening-phase fraction $s$, a freezing range $f$ and a nucleant fraction
+$g$; atomization (\$1,500) returns a powder quality; printing (\$2,500) returns
+the dense, crack-free fraction of the build; a tensile test (\$200) returns a
+strength $U$. The objective is $U$ minus 0.3 times a known critical-mineral
+burden that weighs Sc heaviest~\cite{nassar2020}. A powder lot must exist before
+it is printed and a build before it is tested, and a lot can be printed any
+number of times. The node functions are closed forms written to mirror the
+qualitative metallurgy (listed in the code); nothing is fitted to data. The costs
+are assumptions; Table~1 of the main text gives the measured ones. Cracking
+depends on an effective freezing range
+$f_\mathrm{eff}=f\,[1-0.85\,\kappa\,g/(g+0.12)]$: at $\kappa=1$, Zr and Sc
+nucleants suppress cracking as in Zr-modified printed
+alloys~\cite{martin2017,croteau2018}, which a screen on $f$
+alone~\cite{kou2015} cannot see; at $\kappa=0$ they do not, and the screen is
+right. At $\kappa=1$ the optimum is a high-solute, Zr-inoculated, Sc-free alloy
+that the screen ($f\le0.25$) rejects, and the best design that passes the screen
+scores 65\% of the optimum.
+
+\paragraph{The model.} Every node is an exact Gaussian process on its own inputs
+(the design variables it uses plus its parents' outputs), with an RBF kernel
+fitted by maximum marginal likelihood in BoTorch~\cite{balandat2020}. The
+network posterior at a design is carried as 64 Monte Carlo samples, pushed
+through the nodes in order~\cite{astudillo2021}.
+
+\paragraph{The policies} (\cref{tabS:policies}). The partial-evaluation
+knowledge gradient (pKGFN) scores, for each step, the candidates whose inputs
+already exist (compositions to simulate, simulated alloys to atomize, lots to
+print, builds to test) by the expected increase in the best network posterior
+mean from that one result, per dollar~\cite{buathong2024}, and buys the best.
+When every knowledge gradient is zero it falls back to network expected
+improvement per dollar. Its full-chain counterpart (KGFN) values running the
+whole chain at the same candidate designs. Network expected improvement per
+dollar, with or without reprinting existing lots, completes a $2\times2$ of
+acquisition function $\times$ evaluation mode. Screen-then-test simulates 256
+compositions, keeps the four strongest with $f\le0.25$, and optimizes the
+atomizer and laser settings of those four.
+
+\begin{table}[t]
+\centering
+\small
+\caption{\textbf{Policies compared on the synthetic workflow.} All share the same
+seed data and budget; the first four share one network model.}
+\label{tabS:policies}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.27\linewidth}X@{}}
+\toprule
+Policy & Each decision buys \\
+\midrule
+pKGFN (KG per \$, partial) & one step for one candidate, by knowledge gradient per dollar \\
+KGFN (KG per \$, full chain) & the whole chain at one candidate design, by knowledge gradient per dollar \\
+BOFN + powder reuse (EI per \$, partial) & a new design through the chain, or a reprint and test of an existing lot, by network expected improvement per dollar \\
+BOFN (EI, full chain) & the whole chain at the design with the largest network expected improvement \\
+Standard BO & the whole chain, by expected improvement of one GP from the seven inputs to the objective \\
+Screen-then-test (with / without powder reuse) & CALPHAD on 256 compositions, keep four, then BO on their process settings, reprinting lots or making new powder each time \\
+Random & the whole chain at a random design \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{Protocol.} Each seed fixes the shared start: CALPHAD on 32
+compositions and five random designs carried through every step, a sunk cost
+that is the same for every policy. Each run then spends \$100k (about 24 full
+make--print--test cycles). The score is the true objective of the best alloy that
+has been printed and tensile-tested, as a percentage of the optimum. Seeds per
+policy: \stat{k1-n} at $\kappa=1$, \stat{k05-n} at $\kappa=0.5$ and
+\stat{k0-n} at $\kappa=0$, the same seeds for every policy. Differences are
+means over matched seeds, with 95\% percentile bootstrap intervals (10,000
+draws) that resample seeds jointly for both policies~\cite{efron1993}. The
+speed-up over a baseline is the spend at which the baseline's mean curve reaches
+its own \$100k mean, divided by the spend at which the policy's mean curve
+reaches it.
+
+\paragraph{Results.} \Cref{figS:curves} and \cref{tab:contrasts} summarize the
+runs. When the screen missed the nucleant effect ($\kappa=1$), screen-then-test
+plateaued at \stat{k1-tiered-v100-mean}\% of the optimum, below random designs
+(\stat{k1-random-v100-mean}\%), and every model-based policy finished
+\stat{k1-pkgfn-tiered-v100} to \stat{k1-eifn_reuse-tiered-v100} points
+above it. pKGFN reached screening's \$100k result at
+\stat{k1-su-pkgfn-tiered}$\times$ less spend (95\% CI
+\stat{k1-su-pkgfn-tiered-ci95}), BOFN with powder reuse at
+\stat{k1-su-eifn_reuse-tiered}$\times$ (\stat{k1-su-eifn_reuse-tiered-ci95}),
+and the full-chain policies at \stat{k1-su-eifn-tiered}$\times$ (BOFN) and
+\stat{k1-su-kgfn-tiered}$\times$ (KGFN) (\cref{figS:speedup}). Choosing the
+step bought an early lead, \stat{k1-c-0-v25} points over full-chain evaluation at
+\$25k under the knowledge gradient (\stat{k1-c-0-v25-ci}), which was gone by
+\$100k (\stat{k1-c-0-v100}, \stat{k1-c-0-v100-ci}). The knowledge gradient was
+not better than expected improvement per dollar: with partial evaluation it
+finished \stat{k1-c-2-v100} points behind (\stat{k1-c-2-v100-ci}), mostly
+because it bought prints of a few powders (\stat{k1-pkgfn-nA} powders and
+\stat{k1-pkgfn-nL} prints per run, against \stat{k1-eifn_reuse-nA} and
+\stat{k1-eifn_reuse-nL} for BOFN with reuse). \tbd{$\kappa=0$ and 0.5: two
+sentences once the 16-seed runs are in.}
+
+\paragraph{Validation.} Reruns of the stored runs with the pinned environment
+matched them action for action (the same step at the same spend at every
+decision, and the same scores to within $10^{-9}$): \tbd{140 of 140} at
+$\kappa=1$, \tbd{56 of 56} at $\kappa=0.5$ and \tbd{56 of 56} at $\kappa=0$,
+on three CPU models. The full-chain knowledge gradient agrees with a brute-force
+recomputation to within $10^{-13}$, and no Gaussian-process fit failed. The
+code, every run record and the statistics are openly available
+(\code{benchmarks/bofn-paper} in the article's repository).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{fig-curves}
+\caption{\textbf{Best alloy demonstrated against new spend on the synthetic
+workflow.} Means over matched seeds; bands are 95\% bootstrap intervals of the
+mean for pKGFN, BOFN with powder reuse and screen-then-test. Solid lines choose
+the step (partial evaluation); dashed lines run the whole chain. Blue: knowledge
+gradient per dollar; orange: expected improvement (per dollar).}
+\label{figS:curves}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.72\linewidth]{fig-speedup}
+\caption{\textbf{Spend ratio to reach screen-then-test's \$100k result}, with
+95\% matched-seed bootstrap intervals. Arrows: the policy's mean never reached it
+within \$100k.}
+\label{figS:speedup}
+\end{figure}
+
+\input{../../benchmarks/bofn-paper/paper-stats/table-contrasts}
+
+\printbibliography
+
+\end{document}
