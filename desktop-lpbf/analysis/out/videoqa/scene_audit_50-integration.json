@@ -5,12 +5,12 @@
  "recordings": [
   "/tmp/robotbuild/frames/50-integration/audit"
  ],
- "frames_recorded": 996,
- "frames_checked": 996,
+ "frames_recorded": 1070,
+ "frames_checked": 1070,
  "subsample": "every recorded frame",
  "recorded_every": 1,
  "actors": 408,
- "movers": 258,
+ "movers": 257,
  "mover_names": [
   "lift/arms",
   "lift/body",
@@ -79,7 +79,6 @@
   "m/155 Safety shutter + beam dump",
   "m/156 Coaxial photodiode chain",
   "m/157 Collimator",
-  "m/158 Process fiber",
   "m/159 Calibration power head on the plate",
   "m/16 Z carriage",
   "m/160 Calibration stand for the power head",
@@ -272,81 +271,51 @@
   "op/trousers"
  ],
  "method": "translational penetration depth (26 directions, ladder 1.5-100 mm, bisection-refined), python-fcl BVH meshes of the recorded triangles, containment by winding numbers; a pair is re-checked when a mesh or the relative pose changes; a pair deeper than its limit is re-checked every frame at the limit, its depth re-measured at most every 6 frames",
- "narrow_checks": 3302,
- "pairs_tested": 3302,
- "violations": 4,
- "worst_mm": ">100",
+ "narrow_checks": 3271,
+ "pairs_tested": 3271,
+ "violations": 2,
+ "worst_mm": 29.7,
  "worst": {
-  "a": "m/158 Process fiber",
-  "b": "m/7 Fiber laser source, 500 W single-mode, IPG YLR-5",
-  "worst_mm": ">100",
-  "worst_frame": 403,
-  "frames": 593,
+  "a": "lift/handle",
+  "b": "op/glove",
+  "worst_mm": 29.7,
+  "worst_frame": 0,
+  "frames": 132,
   "frame_ranges": [
    [
-    403,
-    995
+    0,
+    131
    ]
   ],
-  "limit_mm": 1.5,
-  "rule": null
+  "limit_mm": 25.0,
+  "rule": "hands on the load"
  },
  "pairs": [
   {
-   "a": "m/158 Process fiber",
-   "b": "m/7 Fiber laser source, 500 W single-mode, IPG YLR-5",
-   "worst_mm": ">100",
-   "worst_frame": 403,
-   "frames": 593,
+   "a": "lift/handle",
+   "b": "op/glove",
+   "worst_mm": 29.7,
+   "worst_frame": 0,
+   "frames": 132,
    "frame_ranges": [
     [
-     403,
-     995
+     0,
+     131
     ]
    ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "m/158 Process fiber",
-   "b": "m/5 19 in. rack frame",
-   "worst_mm": 19.3,
-   "worst_frame": 292,
-   "frames": 26,
-   "frame_ranges": [
-    [
-     286,
-     311
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
-  },
-  {
-   "a": "m/5 19 in. rack frame",
-   "b": "m/9 DIN-rail drawer: 24 V supply, safety relay, Clea",
-   "worst_mm": 17.7,
-   "worst_frame": 465,
-   "frames": 22,
-   "frame_ranges": [
-    [
-     465,
-     486
-    ]
-   ],
-   "limit_mm": 1.5,
-   "rule": null
+   "limit_mm": 25.0,
+   "rule": "hands on the load"
   },
   {
    "a": "lift/body",
    "b": "op/glove",
-   "worst_mm": 4.1,
-   "worst_frame": 506,
-   "frames": 2,
+   "worst_mm": 1.9,
+   "worst_frame": 563,
+   "frames": 1,
    "frame_ranges": [
     [
-     506,
-     507
+     563,
+     563
     ]
    ],
    "limit_mm": 1.5,
@@ -355,148 +324,136 @@
  ],
  "rigid_pairs": [
   {
-   "a": "m/10 Rack side panels",
-   "b": "m/158 Process fiber",
-   "worst_mm": 46.9,
-   "frames": 500
-  },
-  {
    "a": "m/19 Build module M50: spigot, flange, honed 316L cyl",
    "b": "m/35 Bore seal M50",
    "worst_mm": 45.3,
-   "frames": 996
+   "frames": 1070
   },
   {
    "a": "m/266 Recoater sensor posts",
    "b": "m/52 Zero-point release-air line",
    "worst_mm": 17.7,
-   "frames": 996
+   "frames": 1070
   },
   {
    "a": "m/178 Gas-loop + vacuum hoses",
    "b": "m/181 Guard frame",
    "worst_mm": 17.7,
-   "frames": 298
-  },
-  {
-   "a": "m/37 Rod end M50: 316L feedthrough block, rod welded ",
-   "b": "m/38 Rod end M50 feedthroughs, welded in",
-   "worst_mm": 15.2,
-   "frames": 996
+   "frames": 293
   },
   {
    "a": "m/179 Argon line",
    "b": "m/53 Process chamber body",
    "worst_mm": 15.2,
-   "frames": 298
+   "frames": 293
   },
   {
    "a": "m/53 Process chamber body",
    "b": "m/74 Fibre-head O-rings",
    "worst_mm": 14.4,
-   "frames": 996
+   "frames": 1070
   },
   {
    "a": "m/201 Helical inserts for the module screws, M6 x 12 1",
    "b": "m/54 Chamber floor plate",
    "worst_mm": 12.8,
-   "frames": 996
+   "frames": 1070
+  },
+  {
+   "a": "m/25 Zero-point arms M50",
+   "b": "m/26 Zero-point clamping pins M50",
+   "worst_mm": 11.6,
+   "frames": 1070
   },
   {
    "a": "m/105 Drawer latch receptacles in the lid",
    "b": "m/93 Chamber lid",
    "worst_mm": 11.6,
-   "frames": 996
+   "frames": 1070
   },
   {
    "a": "m/21 Module M50 bottom flange: gland plate",
    "b": "m/23 Rod O-rings M50 in the bottom flange",
    "worst_mm": 11.2,
-   "frames": 996
+   "frames": 1070
   },
   {
-   "a": "m/25 Zero-point arms M50",
-   "b": "m/26 Zero-point clamping pins M50",
-   "worst_mm": 11.2,
-   "frames": 996
+   "a": "m/224 Outlet-plenum screws, M4 x 12 316, counterbored",
+   "b": "m/60 Cross-flow outlet plenum under the floor",
+   "worst_mm": 7.5,
+   "frames": 1070
   },
   {
    "a": "m/146 Optics bridge posts",
    "b": "m/178 Gas-loop + vacuum hoses",
    "worst_mm": 6.4,
-   "frames": 298
-  },
-  {
-   "a": "m/57 Cross-flow inlet plenum + nozzle",
-   "b": "m/59 Inlet plenum port",
-   "worst_mm": 6.0,
-   "frames": 996
+   "frames": 293
   },
   {
    "a": "m/20 Spigot O-ring",
    "b": "m/54 Chamber floor plate",
    "worst_mm": 5.6,
-   "frames": 996
+   "frames": 1070
   },
   {
    "a": "m/214 Blade-cartridge dowels, \u00d83 x 10 316",
    "b": "m/81 Recoater arm",
    "worst_mm": 5.1,
-   "frames": 996
+   "frames": 1070
   },
   {
    "a": "m/127 Camera viewport adapter + boss",
    "b": "m/130 Camera window gasket, under the window",
    "worst_mm": 5.1,
-   "frames": 996
+   "frames": 1070
+  },
+  {
+   "a": "m/207 Handle screws M50, M4 x 10 316",
+   "b": "m/21 Module M50 bottom flange: gland plate",
+   "worst_mm": 4.7,
+   "frames": 1070
   },
   {
    "a": "m/204 Heater-block helical inserts M50, M3 18-8",
    "b": "m/29 Heater block M50",
    "worst_mm": 4.5,
-   "frames": 996
+   "frames": 1070
   },
   {
    "a": "m/224 Outlet-plenum screws, M4 x 12 316, counterbored",
    "b": "m/225 Outlet-plenum helical inserts, M4 x 6 18-8, in t",
    "worst_mm": 4.3,
-   "frames": 996
+   "frames": 1070
   },
   {
    "a": "m/27 Build plate M50",
    "b": "m/29 Heater block M50",
    "worst_mm": 4.1,
-   "frames": 996
+   "frames": 1070
   },
   {
    "a": "m/73 Plate-height through-beam",
    "b": "m/74 Fibre-head O-rings",
    "worst_mm": 3.9,
-   "frames": 996
-  },
-  {
-   "a": "m/157 Collimator",
-   "b": "m/158 Process fiber",
-   "worst_mm": 3.6,
-   "frames": 996
+   "frames": 1070
   },
   {
    "a": "m/183 Sliding guard door",
    "b": "m/184 OD 7+ viewing window",
    "worst_mm": 3.0,
-   "frames": 996
+   "frames": 1070
   },
   {
    "a": "m/19 Build module M50: spigot, flange, honed 316L cyl",
    "b": "m/28 Plate rim wiper M50",
    "worst_mm": 2.9,
-   "frames": 996
+   "frames": 1070
   },
   {
    "a": "m/178 Gas-loop + vacuum hoses",
    "b": "m/62 Outlet plenum port",
-   "worst_mm": 2.0,
-   "frames": 298
+   "worst_mm": 2.1,
+   "frames": 293
   }
  ],
  "allowed": [
@@ -519,7 +476,7 @@
    "depth_allowed_mm": null,
    "reason": "one person's skin, clothes, shoes and glasses are layers of one skinned body (people.py offsets the clothes from it)",
    "pairs_in_contact": 24,
-   "pair_frames": 10776,
+   "pair_frames": 13163,
    "examples": [
     [
      "op/brow",
@@ -577,7 +534,7 @@
    "depth_allowed_mm": null,
    "reason": "the scissor arms are pinned to the lift table's base and platform, and the handle is bolted to the base",
    "pairs_in_contact": 2,
-   "pair_frames": 342,
+   "pair_frames": 488,
    "examples": [
     [
      "lift/arms",
@@ -595,7 +552,7 @@
    "depth_allowed_mm": 25.0,
    "reason": "the person's gloved fingertips on the module, rack, unit or gas part being pushed, or the hands on the lift table's handle bar (people.py's fingers curl a little into what they touch), up to 25 mm",
    "pairs_in_contact": 11,
-   "pair_frames": 244,
+   "pair_frames": 223,
    "examples": [
     [
      "lift/handle",
@@ -654,8 +611,7 @@
    "worst_mm": 0.0
   }
  ],
- "seconds": 62.3,
- "stills": [
-  "desktop-lpbf/analysis/out/videoqa/scene_audit_50-integration_1.png"
- ]
+ "seconds": 66.9,
+ "peak_rss_mb": 677,
+ "memory": "streamed: BVHs dropped every 200 recorded frames and past 1800 MB"
 }

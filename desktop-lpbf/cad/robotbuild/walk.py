@@ -4,12 +4,16 @@ Sterling, 2026-11-26: "moonwalk". His byu-vcl lessons (notes/2026-11-26-byu-vcl-
 differential drive: it can't slide sideways, it drives along its heading (pivot, drive, pivot) and reverses only for a short
 docking leg; lesson 8, a person's gait phase follows the distance walked (one cycle per people.Person.STRIDE = 1016 mm), the
 lowest shoe on the floor every frame, and nobody glides. This reads audit_rec.py's recordings (ROBOTBUILD_AUDIT=1), as
-scene_audit.py does, so it measures what was drawn.
+scene_audit.py does, so it measures what was drawn. Round 9 (2026-11-27): people.py's Gait locks the stance foot, and
+``--selftest`` runs it through a straight walk, turns, side-steps and backing up, and a two-person carry (people.carry),
+measured with this file's own PersonTrack.
 
     /tmp/venv/bin/python desktop-lpbf/cad/robotbuild/walk.py 50-integration
+    /tmp/venv/bin/python desktop-lpbf/cad/robotbuild/walk.py --selftest [--gif out.gif]   # -> walk_selftest.json
 
 People (actors "<who>/shoes", people.py): the shoe mesh is split into its two feet (connected pieces; the left foot has x < 0
-in the body frame). Per frame each foot's lowest point; a foot is DOWN when it is within FOOT_DOWN mm of the lower foot (the
+in the body frame when first seen, and each piece keeps its label after that: round 9). Per frame each foot's lowest point;
+a foot is DOWN when it is within FOOT_DOWN mm of the lower foot (the
 lower one is grounded every frame). A stance is a run of frames with that foot down.
   slip        per frame, the mean horizontal travel of the foot's contact vertices (those within CONTACT mm of its lowest point
               at the earlier frame, the same vertices at the later one): a planted sole's material points don't move, so this
