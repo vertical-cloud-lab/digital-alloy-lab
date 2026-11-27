@@ -39,6 +39,16 @@ HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[1] / "cad"))
 sys.path.insert(0, str(HERE))
 from lpbf_model import box, comp, cyl, kf_stub, polyline_pipe, tslot, tube  # noqa: E402
+
+
+def tslot45(p0, axis, L):
+    """45 mm T-slot (the 30 mm profile scaled by 1.5: an envelope of the 45 mm 8-slot profile), length L along axis."""
+    s = tslot((0, 0, 0), "z", L / 1.5).scale(1.5)
+    if axis == "x":
+        s = s.rotate(V(0, 0, 0), V(0, 1, 0), 90)
+    elif axis == "y":
+        s = s.rotate(V(0, 0, 0), V(1, 0, 0), -90)
+    return s.translate(V(*p0))
 import ft_vendor as VEN  # noqa: E402
 
 V = cq.Vector
@@ -107,6 +117,9 @@ P = dict(
     # --- frame: 30 mm T-slot (McMaster 5537T101 class, study) ---
     bench_z=-272.6,               # bench top: leaves a 10 mm riser under the X-VSR20A
     rail_dy=5.25 * IN,            # support rails at the box's mounting holes (10.50 in. apart)
+    gantry="four_post",           # structural FEA (analysis/out/fea/struct.md 4c): four 45 mm posts, a front cross-beam,
+                                  # a diagonal per side, two knee braces at the back (79 Hz); "two_post" = round 1's (13 Hz)
+    post=45.0, front_post_gap=25.0, knee=120.0,   # post size; front posts this far in front of the front rail; knee brace
     # --- monitoring (MON parts; positions chosen here, checked in ft_checks) ---
     cam_xy=(-70.0, -55.0),        # layer camera port, front-left of the window stack (upstream of the plume): box door
     cam_xy_cube=(-100.0, -50.0),  # on the cube's top plate: further out, so its sight lines pass outside the drop tube
@@ -366,13 +379,38 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
             frame.append(tslot((x, y, zb + 2 * h), "z", z_rail_top - zb - 4 * h))
     add("T-slot base and support rails", comp(frame), C["tslot"], "E4", "frame")
     hb = L["head_bot"]
-    z_beam = hb + 90.0                                # cross-beam centre: the head flange plate bolts to its front face
+    z_beam = hb + 90.0                                # cross-beams' centre: the head flange plate bolts to their faces
     z_beam_max = P["lens_ffl"] + P["dz_cube"] + 90.0
     z_up_top = z_beam_max + h + 10.0
-    ups = [tslot((x, ry[1], z_rail_top), "z", z_up_top - z_rail_top) for x in ux]
+    four = P["gantry"] == "four_post"
+    hp = P["post"] / 2 if four else h                 # post half-width
+    y_f = ry[0] - h - P["front_post_gap"] - hp        # front posts: in front of the front rail, on foot brackets
+    if four:
+        ups = [tslot45((x, ry[1], z_rail_top), "z", z_up_top - z_rail_top) for x in ux]
+        ups += [tslot45((x, y_f, zb + 6.0), "z", z_up_top - zb - 6.0) for x in ux]
+    else:
+        ups = [tslot((x, ry[1], z_rail_top), "z", z_up_top - z_rail_top) for x in ux]
     add("Gantry uprights", comp(ups), C["tslot"], "E4", "frame")
-    add("Gantry cross-beam (clamped at the head height)", tslot((ux[0] + h, ry[1], z_beam), "x", ux[1] - ux[0] - 2 * h),
+    add("Gantry cross-beam (clamped at the head height)", tslot((ux[0] + hp, ry[1], z_beam), "x", ux[1] - ux[0] - 2 * hp),
         C["tslot"], "E4", "frame")
+    if four:
+        add("Gantry cross-beam, front (under the head plate's front end)",
+            tslot((ux[0] + hp, y_f, z_beam), "x", ux[1] - ux[0] - 2 * hp), C["tslot"], "E4", "frame")
+        br = []
+        for x in ux:                                  # a diagonal per side: front post's top to back post's base
+            br.append(polyline_pipe([(x, y_f + hp, z_up_top - 30.0), (x, ry[1] - hp, z_rail_top + 30.0)], 15.0,
+                                    smooth=False))
+        kb = P["knee"]                                # knee braces at the back, in the back frame's plane
+        br.append(polyline_pipe([(ux[0] + hp, ry[1], z_beam - h - kb), (ux[0] + hp + kb, ry[1], z_beam - h)], 15.0,
+                                smooth=False))
+        br.append(polyline_pipe([(ux[1] - hp, ry[1], z_beam - h - kb), (ux[1] - hp - kb, ry[1], z_beam - h)], 15.0,
+                                smooth=False))
+        add("Gantry braces: a diagonal per side, two knee braces at the back", comp(br), C["tslot"], "E4", "frame")
+        ft_ = []
+        for x in ux:                                  # L feet: under the post, up the front base rail's front face
+            ft_.append(box(x - hp - 10, x + hp + 10, y_f - hp - 10, ry[0] - h, zb, zb + 6.0))
+            ft_.append(box(x - hp - 10, x + hp + 10, ry[0] - h - 6.0, ry[0] - h, zb + 6.0, zb + 2 * h))
+        add("Front-post foot brackets (2)", comp(ft_), C["alu_dark"], "E4", "frame")
 
     # ---------------- optics (S1 on): hurrySCAN hung by its entrance face, LINOS lens, coax cube, collimator, laser ----
     lax, lay = P["axis_off"]                          # lens axis (x, y)
@@ -384,12 +422,17 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
     xe = lax - P["head_obj_x"]                        # entrance face
     y_in, z_in = lay - P["head_disp"], hb + P["head_in_z"]   # input beam axis (est.)
     fl_x0, fl_x1 = xe - 12.0, xe
-    fl = box(fl_x0, fl_x1, lay - P["head_side"][0], ry[1] - h, hb + 5, hb + 125)
+    fl = box(fl_x0, fl_x1, (y_f + h) if four else (lay - P["head_side"][0]), ry[1] - h, hb + 5, hb + 125)
     fl = fl.cut(cyl(26.0, (fl_x0 - 1, y_in, z_in), "x", 14))                  # the input turret passes through
     add("Scan-head flange plate (MK-09)", fl, C["alu"], "MK-09", "optics")
     ang = [box(fl_x0 - 40, fl_x0, ry[1] - h - 40, ry[1] - h, z_beam - 15, z_beam - 11),
            box(fl_x0 - 4, fl_x0, ry[1] - h - 40, ry[1] - h, z_beam - 15, z_beam + 15),
            box(fl_x0 - 40, fl_x0 - 36, ry[1] - h - 4, ry[1] - h, z_beam - 15, z_beam + 15)]
+    if four:                                          # the same at the front cross-beam's back face
+        yf1 = y_f + h
+        ang += [box(fl_x0 - 40, fl_x0, yf1, yf1 + 30, z_beam - 15, z_beam - 11),     # 30 deep: clear of the mirror block
+                box(fl_x0 - 4, fl_x0, yf1, yf1 + 30, z_beam - 15, z_beam + 15),
+                box(fl_x0 - 40, fl_x0 - 36, yf1, yf1 + 4, z_beam - 15, z_beam + 15)]
     add("Flange-to-beam angle brackets (MK-09)", comp(ang), C["alu_dark"], "MK-09", "optics")
     # the unit's input stack (by eye from the seller's photos): focusing turret and a 45 deg mirror block; the beam comes
     # in from -y. With a short-pass dichroic in place of the input mirror, the melt-pool light passes straight through
@@ -409,11 +452,12 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
     las = box(-800, -350, -170 + 30, 390 - 30, zb, zb + 177.8).fuse(box(-362, -350, -170, 390, zb, zb + 177.8))
     add("IPG YLR-400-SM-EOS, 19 in. rack chassis (4U, depth est.)", las, C["laser"], "L1", "optics")
     add("Fibre bend restrictor", cyl(9, (-350, 120, zb + 120), "x", 110), C["black"], "L1", "optics")
-    fib = polyline_pipe([(-241, 120, zb + 120), (-300, 120, zb + 140), (-300, 120, 300.0 + dz), (-300, -100, z_in - 30),
-                         (-240, -230, z_in), (xbm, -230, z_in), (xbm, yb0 - 110, z_in)], 3.0)
+    fxr = -335.0 if four else -300.0                  # outside the left posts and the left diagonal
+    fib = polyline_pipe([(-241, 120, zb + 120), (fxr, 120, zb + 140), (fxr, 120, 300.0 + dz), (fxr, -100, z_in - 30),
+                         (fxr, -205, z_in), (-240, -230, z_in), (xbm, -230, z_in), (xbm, yb0 - 110, z_in)], 3.0)
     add("Process fibre", fib, C["fiber"], "L1", "optics")
     add("PC with the RTC4 (or RTC5) (tower, est.)", box(420, 590, -20, 400, zb, zb + 380), C["black"], "C1", "bench")
-    add("+-15 V supply for the head (DIN, est.)", box(ux[1] - 15 - 60, ux[1] - 15, ry[1] - 15 - 30, ry[1] - 15,
+    add("+-15 V supply for the head (DIN, est.)", box(ux[1] - hp - 60, ux[1] - hp, ry[1] - hp - 30, ry[1] - hp,
                                                      hb + 10, hb + 100), C["alu_dark"], "L6", "optics")
     ys_ = lay - P["head_side"][0]
     hcab = polyline_pipe([(xe + 22, ys_ - 12.5, hb + 156), (xe + 22, ys_ - 60, hb + 156), (xe + 22, ys_ - 90, hb + 230)], 4.0)
@@ -880,7 +924,7 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
     if has_cassette:
         add("Argon regulator and solenoid valve panel", box(-330, -230, -330, -250, zb, zb + 160), C["alu_dark"], "G1",
             "gas")
-        add("Exhaust HEPA housing and check valve", cyl(45, (300, -170, zb), "z", 190), C["white"], "G4", "gas")
+        add("Exhaust HEPA housing and check valve", cyl(45, (320, -165, zb), "z", 190), C["white"], "G4", "gas")
         add("Trace O2 analyzer (Alpha Omega 3000, envelope)", box(250, 400, 250, 410, zb, zb + 140),
             C["white"], "G5", "gas")
     if state == "FT-1":
