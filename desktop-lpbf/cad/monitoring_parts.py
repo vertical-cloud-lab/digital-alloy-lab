@@ -765,6 +765,15 @@ def _cooling(parts, add, h, module="M50"):
     REPORT["cooling"] = MCOOL.draw(parts, add, h, module)
 
 
+# ======================================================================================================== guard bulkhead (MN-28)
+def _bulkhead(parts, add, h, module="M50"):
+    """The monitoring bulkhead plate on the guard's back panel, upper left (monitoring-io.csv MN-28, monitoring/mechanics.md §1): three
+    isolated BNC, an RJ45 and an M12 8-pole feedthrough in a row, a split cable entry for pre-terminated leads under a labyrinth
+    shroud, the panel's cut-out, and the mating plugs and cables on both sides as envelopes. The geometry is in monitoring_bulkhead.py."""
+    import monitoring_bulkhead as MBH
+    REPORT["bulkhead"] = MBH.draw(parts, add, h, module)
+
+
 def apply(parts, add, h, module="M50"):
     """Add the monitoring parts to lpbf_low.build()'s list `parts` (in place) and cut the holes they need."""
     REPORT.clear()
@@ -776,6 +785,7 @@ def apply(parts, add, h, module="M50"):
     _ae(parts, add, h, module)
     _daq(parts, add, h)
     _cooling(parts, add, h, module)
+    _bulkhead(parts, add, h, module)
     return parts
 
 
