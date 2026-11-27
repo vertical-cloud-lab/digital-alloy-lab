@@ -274,8 +274,8 @@ def chapter():
     # ---- the part as the programs leave it
     for i in range(int(4.0 * FPS)):
         w.frame(scn, tcam2(), "The bracket as its two programs leave it",
-                sub=f"{m1 + m2:.1f} min of cutting; the simulation removed {sim['removed_sim_cm3']:.1f} cm3 against "
-                    f"{sim['removed_exact_cm3']:.1f} cm3 of blank minus part ({sim['removed_sim_vs_cad_pct']:+.2f} %); "
+                sub=f"{m1 + m2:.1f} min of cutting; the simulation removed {sim['removed_sim_cm3']:.1f} cm3, blank minus "
+                    f"part {sim['removed_cad_voxels_cm3']:.1f} on the same voxels ({sim['removed_sim_vs_cad_pct']:+.2f} %); "
                     "the lathe slug has no program (FreeCAD 1.0.2's CAM has no turning)",
                 who=[], step="vise bracket", status="pass")
     n = w.close()
