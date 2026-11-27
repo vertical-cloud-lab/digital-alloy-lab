@@ -441,6 +441,20 @@ def nest_body_up(depth=150.0):
     return _fuse(base, *posts)
 
 
+def nest_blade():
+    """Round 10 (F26a-F27): two-pin bench nest for the recoater's blade cartridge, in the cartridge's own machine frame at the
+    recoater's park (holder x -115..-97, y -53..61, z 3..34; blade on its +x face; the two M3 blade screws along -x). cell2 turns
+    that frame -90 deg about y onto the bench (machine +x up), so the holder lies on its -x side, the blade's face up, and the screws
+    go in straight down. A riser under the holder's back 86 mm (y -25..61: its front end and fin overhang, where the gripper's lower
+    finger and the plate fingers go), a back wall at y 61..75 carrying two Ø3 pins on the arm pocket's dowel positions (x -110.5 and
+    -101.5, z 19.5) that enter the holder's two slip holes 4.5 mm, as the pocket's dowels do, and a 12 mm base plate on the bench."""
+    riser = _box(-175.0, -115.0, -25.0, 61.0, 5.0, 32.0)
+    wall = _box(-175.0, -95.0, 61.0, 75.0, 5.0, 32.0)
+    base = _box(-187.0, -175.0, -40.0, 85.0, -20.0, 58.0)
+    pins = [cq.Solid.makeCylinder(1.5, 18.5, V(x, 56.5, 19.5), V(0, 1, 0)) for x in (-110.5, -101.5)]
+    return _fuse(riser, wall, base, *pins)
+
+
 def tool_stand():
     """Tool stand on the MiR's cabinet top behind the arm base (byu-vcl PR 318 keeps finger sets on a stand on the MiR):
     a 340 x 170 plate on two cheeks holding the parked tools; drawn as the parked envelope."""
@@ -486,7 +500,7 @@ def export_steps():
                      ("ring_loader", ring_loader), ("roller_3p2", lambda: roller(3.2)[0]), ("roller_1p4", lambda: roller(1.4)[0]),
                      ("fixture_C", fixture_C), ("fixture_P", lambda: fixture_P(1000.0)), ("fixture_B", lambda: fixture_B(1000.0)),
                      ("trunnion_stands", trunnion_stands), ("trunnion_jaws", trunnion_jaws), ("nozzle", lambda: nozzle()[0]), ("pin_pusher", lambda: pin_pusher()[0]), ("ring_pad", lambda: ring_pad()[0]), ("liner_wand", lambda: liner_wand()[0]),
-                     ("nest_stack", nest_stack), ("nest_body_inv", nest_body_inv), ("nest_body_up", nest_body_up),
+                     ("nest_stack", nest_stack), ("nest_body_inv", nest_body_inv), ("nest_body_up", nest_body_up), ("nest_blade", nest_blade),
                      ("ring_caps_left", lambda: ring_caps()["left_finger_tip"]), ("ring_caps_right", lambda: ring_caps()["right_finger_tip"])):
         s = fn()
         p = OUT / f"{name}.step"

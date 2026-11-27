@@ -479,8 +479,12 @@ def add_joints(h, parts, add, module="M50"):
     # ---------------- 9b. seals: screws that set the face O-rings' squeeze metal-to-metal (seals.md item 10) ----------------
     _KEY[0] = "plenum_in"
     yb_ = cy + 6.0
-    # 7 screws (was 9): the frame ends at z -3.9, so the four below the old floor line moved to the sides, outside the O-ring loop
-    items = [((x, yb_, z), (0.0, -1.0, 0.0)) for x, z in ((-71.0, 4.5), (71.0, 4.5), (-71.0, 22.0), (71.0, 22.0), (-40.0, 34.0), (40.0, 34.0), (0.0, 34.0))]
+    # 7 screws (was 9): the frame ends at z -3.9, so the four below the old floor line moved to the sides, outside the O-ring loop.
+    # Round 10: the top middle screw is 8 mm left of the middle (was x 0). Over the KF-25 stub (flange Ø39.9 centred at z 11, top at
+    # z 30.9) the driver's Ø6.35 bit at z 34 reached down to z 30.8, so every driver met the flange's rim (runs 9-14, F15 #7); at
+    # x -8 the rim's top is at z 29.3, 1.5 mm under the bit. Same z, so the same 3 mm land outside the O-ring groove and 6 mm to
+    # the flange's top edge; spacing along the top 32 and 48 mm (was 40 and 40). The wall's inserts are cut from the same list.
+    items = [((x, yb_, z), (0.0, -1.0, 0.0)) for x, z in ((-71.0, 4.5), (71.0, 4.5), (-71.0, 22.0), (71.0, 22.0), (-40.0, 34.0), (40.0, 34.0), (-8.0, 34.0))]
     cut_parts(parts, "Cross-flow inlet plenum", [hole(p, n, -0.01, 6.01, CLEAR[4]) for p, n in items])
     cut_parts(parts, "Process chamber body", [hole(p, n, 6.0, 12.0, insert_od(ins4)) for p, n in items] + [hole(p, n, 11.99, 17.5, 4.0) for p, n in items])
     add_fasteners(h, add, "plenum_in", "Inlet-plenum screws, M4 x 16 316 (clear of the Z flange's screws)", pn4, items, 5, "G4", explode=(0, 180, 0))
