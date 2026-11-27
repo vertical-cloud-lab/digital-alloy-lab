@@ -258,6 +258,9 @@ def summary():
                                    for t, tv in v["tools"].items()}, travel=v["travel"])
                     for n, v in hc["setups"].items() if n in FROM_RUN2},
             stock_vs_model=hc.get("stock_vs_model"), stock_vs_camotics=hc.get("stock_vs_camotics"))
+    old = json.loads((OUT / "cam_monitoring.json").read_text()) if (OUT / "cam_monitoring.json").exists() else {}
+    if "LP" in old:                      # lp_cam.py's lid programs, kept across a re-run of this summary
+        res["LP"] = old["LP"]
     (OUT / "cam_monitoring.json").write_text(json.dumps(res, indent=1))
     print(json.dumps(res["recount"], indent=1))
     for m in new_ops:

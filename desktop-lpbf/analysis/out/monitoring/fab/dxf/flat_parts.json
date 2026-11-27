@@ -1,0 +1,53 @@
+{
+ "lw_clamp_ring": {
+  "material": "6061-T6 1/4 in. (6.35 mm)",
+  "size_mm": [
+   58.0,
+   58.0
+  ],
+  "area_mm2": 1801.0,
+  "holes": 4,
+  "hole_d": 4.5,
+  "web_to_outline_mm": [
+   1.75,
+   1.75,
+   1.75,
+   1.75
+  ]
+ },
+ "bw_clamp_frame": {
+  "material": "6061-T6 3/16 in. (4.76 mm)",
+  "size_mm": [
+   72.95,
+   61.9
+  ],
+  "area_mm2": 2261.5,
+  "holes": 3,
+  "hole_d": 4.5,
+  "web_to_outline_mm": [
+   4.24,
+   4.25,
+   3.35
+  ],
+  "note": "outline polygonised from frame_features.bw_clamp_outline (R6 corners as 32-segment arcs)"
+ },
+ "lp_blank_cap": {
+  "material": "6061-T6 1/4 in. (6.35 mm)",
+  "size_mm": [
+   58.9,
+   54.03
+  ],
+  "area_mm2": 1590.1,
+  "holes": 4,
+  "hole_d": 4.5,
+  "bolt_circle_d": 48.0,
+  "web_to_outline_mm": [
+   3.25,
+   3.25,
+   3.25,
+   3.25
+  ],
+  "disc_d": 40.77,
+  "lug_r": 5.5
+ }
+}

@@ -1,0 +1,101 @@
+(Exported by FreeCAD)
+(Post Processor: Path.Post.scripts.linuxcnc_post)
+(Output Time:2026-11-27 08:46:46.550579)
+(begin preamble)
+G17 G54 G40 G49 G80 G90
+G21
+(begin operation: TC15_Job_lid_LP_top)
+(machine units: mm/min)
+(TC15_Job_lid_LP_top) 
+M5
+M6 T15 
+G43 H15 
+M3 S8100 
+(finish operation: TC15_Job_lid_LP_top)
+(begin operation: LP face O-ring groove 2-025: ID 31.17, 2.3 wide, 1.32 deep, pocket)
+(machine units: mm/min)
+(Coolant On:Flood)
+M8
+(LP face O-ring groove 2-025: ID 31.17, 2.3 wide, 1.32 deep, pocket) 
+G0 Z25.000 
+G0 
+G0 X-2.808 Y16.647 
+G0 X-2.808 Y16.647 
+G1 X-2.808 Y16.647 Z-0.500 F82.296 
+G3 X-16.647 Y-2.808 Z-0.500 I2.808 J-16.647 F164.592 
+G3 X2.808 Y-16.647 Z-0.500 I16.647 J2.808 F164.592 
+G3 X16.647 Y2.808 Z-0.500 I-2.808 J16.647 F164.592 
+G3 X-2.808 Y16.647 Z-0.500 I-16.647 J-2.808 F164.592 
+G0 Z25.000 
+G0 X2.395 Y16.408 Z25.000 
+G0 X2.395 Y16.408 Z25.000 
+G1 X2.395 Y16.408 Z-0.500 F82.296 
+G3 X-2.395 Y-16.408 Z-0.500 I-2.395 J-16.408 F164.592 
+G3 X2.395 Y16.408 Z-0.500 I2.395 J16.408 F164.592 
+G0 Z25.000 
+G0 X-2.808 Y16.647 Z25.000 
+G0 X-2.808 Y16.647 Z25.000 
+G1 X-2.808 Y16.647 Z-1.000 F82.296 
+G3 X-16.647 Y-2.808 Z-1.000 I2.808 J-16.647 F164.592 
+G3 X2.808 Y-16.647 Z-1.000 I16.647 J2.808 F164.592 
+G3 X16.647 Y2.808 Z-1.000 I-2.808 J16.647 F164.592 
+G3 X-2.808 Y16.647 Z-1.000 I-16.647 J-2.808 F164.592 
+G0 Z25.000 
+G0 X2.395 Y16.408 Z25.000 
+G0 X2.395 Y16.408 Z25.000 
+G1 X2.395 Y16.408 Z-1.000 F82.296 
+G3 X-2.395 Y-16.408 Z-1.000 I-2.395 J-16.408 F164.592 
+G3 X2.395 Y16.408 Z-1.000 I2.395 J16.408 F164.592 
+G0 Z25.000 
+G0 X-2.808 Y16.647 Z25.000 
+G0 X-2.808 Y16.647 Z25.000 
+G1 X-2.808 Y16.647 Z-1.320 F82.296 
+G3 X-16.647 Y-2.808 Z-1.320 I2.808 J-16.647 F164.592 
+G3 X2.808 Y-16.647 Z-1.320 I16.647 J2.808 F164.592 
+G3 X16.647 Y2.808 Z-1.320 I-2.808 J16.647 F164.592 
+G3 X-2.808 Y16.647 Z-1.320 I-16.647 J-2.808 F164.592 
+G0 Z25.000 
+G0 X2.395 Y16.408 Z25.000 
+G0 X2.395 Y16.408 Z25.000 
+G1 X2.395 Y16.408 Z-1.320 F82.296 
+G3 X-2.395 Y-16.408 Z-1.320 I-2.395 J-16.408 F164.592 
+G3 X2.395 Y16.408 Z-1.320 I2.395 J16.408 F164.592 
+G0 Z25.000 
+G0 Z25.000 
+(finish operation: LP face O-ring groove 2-025: ID 31.17, 2.3 wide, 1.32 deep, pocket)
+(Coolant Off:Flood)
+M9
+(begin operation: TC6_Job_lid_LP_top)
+(machine units: mm/min)
+(TC6_Job_lid_LP_top) 
+M5
+M6 T6 
+G43 H6 
+M3 S5000 
+(finish operation: TC6_Job_lid_LP_top)
+(begin operation: LP adapter holes: drill 4 x 3.3 mm, M4 tapped after, 8 deep)
+(machine units: mm/min)
+(Coolant On:Flood)
+M8
+(LP adapter holes: drill 4 x 3.3 mm, M4 tapped after, 8 deep) 
+(Begin Drilling) 
+G0 Z25.000 
+G90 
+G98 
+G0 X10.637 Y21.514 
+G83 X10.637 Y21.514 Z-8.000 F500.000 Q2.475 R2.000 
+G0 X23.950 Y1.545 
+G83 X23.950 Y1.545 Z-8.000 F500.000 Q2.475 R2.000 
+G0 X-10.637 Y-21.514 
+G83 X-10.637 Y-21.514 Z-8.000 F500.000 Q2.475 R2.000 
+G0 X-23.950 Y-1.545 
+G83 X-23.950 Y-1.545 Z-8.000 F500.000 Q2.475 R2.000 
+G80 
+G0 Z25.000 
+(finish operation: LP adapter holes: drill 4 x 3.3 mm, M4 tapped after, 8 deep)
+(Coolant Off:Flood)
+M9
+(begin postamble)
+M05
+G17 G54 G90 G80 G40
+M2
