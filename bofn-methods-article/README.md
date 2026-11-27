@@ -141,3 +141,4 @@ until accepted. STAR Protocols suits a step-by-step rewrite and costs more. JOSS
 | M4 | When to reserve the archive DOI (Zenodo) | at submission, not before |
 | M5 | Whether to wait for PR 297 to merge so the clocked benchmark can be cited at a fixed commit | cite when merged |
 | M6 | The AI-use declaration Elsevier asks for | drafted as a bracket |
+| M7 | **The live campaign's acquisition function** (issue #120's Experimental Section says partial-evaluation KG per cost). On this benchmark pKGFN as implemented fails when the screen is right; BOFN with powder reuse (EI per $) is robust across κ. Decide before the campaign's pre-registration (SI S13) | flagged in `adv-mater/methods-si.tex` |

@@ -65,13 +65,13 @@ LABEL = {
     "eifn_reuse": "BOFN + powder reuse (partial, EI per $)",
     "eifn": "BOFN (full chain, EI)",
     "ei": "Standard BO (EI, one GP)",
-    "tiered": "Tiered screening",
-    "tiered_naive": "Tiered, no powder reuse",
+    "tiered": "Screen-then-test",
+    "tiered_naive": "Screen-then-test, no powder reuse",
     "random": "Random",
 }
 SHORT = {
     "pkgfn": "pKGFN", "kgfn": "KGFN", "eifn_reuse": "BOFN+reuse", "eifn": "BOFN",
-    "ei": "Std BO", "tiered": "Tiered", "tiered_naive": "Tiered (no reuse)", "random": "Random",
+    "ei": "Std BO", "tiered": "Screen", "tiered_naive": "Screen (no reuse)", "random": "Random",
 }
 AT = (25_000, 50_000, 100_000)
 METRICS = ("v25", "v50", "v100", "auc")
@@ -366,7 +366,7 @@ def numbers_tex(all_res):
 
 TEXNAME = {
     "pkgfn": "pKGFN", "kgfn": "KGFN", "eifn_reuse": "BOFN + powder reuse", "eifn": "BOFN",
-    "ei": "Standard BO", "tiered": "Tiered screening", "tiered_naive": "Tiered, no reuse", "random": "Random",
+    "ei": "Standard BO", "tiered": "Screen-then-test", "tiered_naive": "Screen-then-test, no reuse", "random": "Random",
 }
 
 
