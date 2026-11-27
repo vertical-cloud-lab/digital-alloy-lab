@@ -321,6 +321,11 @@ and at 200 °C. Seleznev's gas-pump noise needed waveform-based filtering, so re
     case.
   - So feed it room air through a ventilated dock, or fit a chilled-water fan coil. Decide it with the laser's cooling
     ([`heat.md`](heat.md) §2, [`cooling.md`](monitoring/cooling.md) §0).
+  - **First cover the guard's open floor.** The base plate's Z-stage window and slot (~0.041 m²) open the guard to the Shuttle
+    under it. The CFD puts most of the guard's air through them, so dock air on the inlet would be a sixth of the flow.
+  - The same opening is a question for the LSO, since the ports put 1070 nm light into the guard
+    ([`review-packet.md`](monitoring/review-packet.md) L10). A sheet-metal cover with a brush strip round the Z stage answers
+    both. It is not drawn or priced.
 - **In the BOM since round 2:** [`monitoring-bom.csv`](monitoring-bom.csv) itemises steps 0–8, and [`bom.csv`](bom.csv) lines T4
   and T5 carry them (§9). Most prices are list prices or Edison's ranges, not quotes.
 - **Estimates, not measurements:**
@@ -363,8 +368,8 @@ the LSO.
 | [`mechanics.md`](monitoring/mechanics.md) | every port, window, camera, the coaxial cage, the AE path and the recorder drawn in the model ([`cad/monitoring_parts.py`](cad/monitoring_parts.py), `LPBF_MONITORING=1`); loads, seals, mounts, the bridge's modes in CalculiX, the AE path's temperature and losses | 0 interferences in six machine states and eight sweeps; LP moves to (−40, 60) through a bridge cut-out; 1.0 mm FKM gaskets; round 3: the AE waveguide sprung on a sensor in the rod end |
 | [`fabrication.md`](monitoring/fabrication.md) | the ports in setup C with CAM and CAMotics, small parts made or bought, live prices ([`monitoring-bom.csv`](monitoring-bom.csv)) | ports square to their faces; round 3: both frame ports re-posted and checked, LP on a sine plate, ~5.7 h on parts made anyway; steps 0–8 $23,845–27,588 |
 | [`sync-and-data.md`](monitoring/sync-and-data.md) | timing budget, channel map ([`monitoring-io.csv`](monitoring-io.csv)), HDF5 layout, a reader checked on a synthetic build | the RTC6 has no analog input; fit the digitizer's clock every layer; correct the 0.25 ms lag |
-| [`cooling.md`](monitoring/cooling.md) (round 3) | the guard's air against every device's rating; light-trapped vents and fans, a hood for the Chronos and G-10 breaks, drawn and checked | closed, the guard runs 26–44 K over the Shuttle's air; vented, 5–10 K over its supply; the traps give OD 7.0–8.1 at 1070 nm |
-| [`review-packet.md`](monitoring/review-packet.md) (round 3) | a STEP file and views of every part monitoring makes or changes ([`review_packet.py`](analysis/monitoring/review/review_packet.py)), and the questions for the LSO and the shop | 22 made parts and 9 changed ones; L1–L9 for the LSO, S1–S14 for the shop |
+| [`cooling.md`](monitoring/cooling.md) (round 3) | the guard's air against every device's rating; light-trapped vents and fans, a hood for the Chronos and G-10 breaks, drawn and checked | closed, the guard runs 26–44 K over the Shuttle's air; vented, 5–10 K over its supply; the traps give OD 7.0–8.1 at 1070 nm; a CFD of the guard's air finds hot spots and an open floor |
+| [`review-packet.md`](monitoring/review-packet.md) (round 3) | a STEP file and views of every part monitoring makes or changes ([`review_packet.py`](analysis/monitoring/review/review_packet.py)), and the questions for the LSO and the shop | 22 made parts and 9 changed ones; L1–L10 for the LSO, S1–S14 for the shop |
 
 **The coaxial branch:**
 - **New bands.** The two-colour pair moves to 700/40 and 900/40 nm, and the camera to 955–990 nm, in place of §4's 850 nm. A
@@ -444,7 +449,8 @@ What round 3 changed in them:
 ### 9.1 Round 3: what round 2 left open (2026-11-26 and 27)
 
 PR 281's later runs worked off round 2's "Not done" list. Five more workers took it on: fab, AE, the BW light, the plume and
-camera cooling. Their work was then merged and checked again. Web reads (vendor pages, SendCutSend, NIST) went out through an
+camera cooling. Three more followed in the last run: the BW light bracket's holes in the frame's CAM, the guard's bulkhead, and a
+CFD of the guard's air. Their work was then merged and checked again. Web reads (vendor pages, SendCutSend, NIST) went out through an
 SSH tunnel to a lab Pi, which exits on BYU's network. Nothing is bought, measured or reviewed yet.
 
 | Open after round 2 | What round 3 did | What it found | Where |
@@ -452,9 +458,9 @@ SSH tunnel to a lab Pi, which exits on BYU's network. Nothing is bought, measure
 | The AE waveguide had no way out of the rod end and nothing to hold it on the plate | It slides free on a MISTRAS PICO sensor in a turned 316L cartridge on the rod end's bore floor, pushed up by a Lee spring. The lead leaves through a Solid Sealing FA40102 Microdot weld-in in the rod end's cap | 13.3–16.8 N on the plate at every tolerance and thermal corner, with the stop force shimmed at assembly. The path loses 1–8 dB, against 26–52 dB through the stack to the rod end. It needs the bayonet's disc spring. S25 keeps its sensor on the rod end | [`mechanics.md`](monitoring/mechanics.md) §4 |
 | The BOM's SOLIS-850C doesn't fit at BW | A Thorlabs M850D3 LED imaged onto the plate by an ACL25416U-B asphere, on a heat sink and an L bracket on the back wall, pulsed at 2 A by a DC2200 from the Pico 2 | The bed gives SNR 14 at 20 µs behind the BOM's FBH850-10, and 23–36 behind an FBH850-40 at the same price, so swap the filter. That is 4–5× what a SOLIS at BW would give. RG3 in its own beam inside the chamber, so enable it only with the chamber door shut | [`optics.md`](monitoring/optics.md) §4.1 |
 | The plume's beam loss lay anywhere from 0.05 % to ~10 % | A condensate growth model (`growth.py`), and Edison's [`r9-plume-growth`](edison/r9-plume-growth/answer.md) | ~0.4 % for AlSi10Mg at 320 W (0.15–1.5 %), ~0.25 % for 6061, ~0.2 % for 7075. Its glow adds ~1.5 % to the coaxial photodiodes, not 4–15 % (§10) | [`plume.md`](monitoring/plume.md) §3.4, §3.6 |
-| The cameras sat in 38–43 °C air | A heat balance of the guard. Drawn: a light-trapped inlet and exhaust in the guard's back panel with two 120 mm fans, a duct and hood for the Chronos, G-10 breaks, a fan for PB2, and a place for the LP camera's Pi | The closed guard runs 26–44 K over the Shuttle's air. Vented, it runs 5–10 K over its supply: in rating on 30 °C Shuttle air, but not in the busy case, so the guard needs room air or a chilled-water fan coil (§7). The traps give OD 7.0–8.1 at 1070 nm with black hard anodise, against the 5.4 needed | [`cooling.md`](monitoring/cooling.md) |
+| The cameras sat in 38–43 °C air | A heat balance of the guard, then a coarse OpenFOAM model of its air. Drawn: a light-trapped inlet and exhaust in the guard's back panel with two 120 mm fans, a duct and hood for the Chronos, G-10 breaks, a fan for PB2, and a place for the LP camera's Pi | The closed guard runs 26–44 K over the Shuttle's air. Vented, it runs 5–10 K over its supply: in rating on 30 °C Shuttle air (the galvo at its limit), but not in the busy case, so the guard needs room air or a chilled-water fan coil (§7). The traps give OD 7.0–8.1 at 1070 nm with black hard anodise, against the 5.4 needed. **The CFD** agrees on the mean (the exhaust 5 K over the supply). The air round the LP camera is 11–12 K over it, its Pi 9–10 K and the coaxial camera 8 K (±3 K on grid). The hood's air is 3 K over, not 0.5, since it carries the Chronos's own heat. It also found **the guard's floor open** under the chamber (§7) | [`cooling.md`](monitoring/cooling.md) §4.2 |
 | The left wall's CAM program, the quotes and the LP hours were out of date | Both frame ports re-posted with FreeCAD 1.0.2, the A180 program now also drilling the BW light bracket's two M4, and the LP bore programmed with the lid on a 27.93° sine plate. CAMotics and the holder check found 0 gouges, 0 rapids through stock and 0 collisions. SendCutSend re-quoted the flat parts | Three parts changed on the way: the LP adapter's screws sat in its own O-ring groove; the LW ring's holes were too close to its edge for SendCutSend; the BW frame's third screw had 1.2 mm of metal round it. ~5.7 h of shop time on parts made anyway; the flat parts $7.43–10.26 each | [`fabrication.md`](monitoring/fabrication.md) §0 |
-| Nothing was reviewed | A review packet: a STEP file and views of every part monitoring makes or changes, and the questions for the LSO and the shop | 22 made parts and 9 changed ones on M50; L1–L9 for the LSO, S1–S14 for the shop | [`review-packet.md`](monitoring/review-packet.md) |
+| Nothing was reviewed | A review packet: a STEP file and views of every part monitoring makes or changes, and the questions for the LSO and the shop | 22 made parts and 9 changed ones on M50; L1–L10 for the LSO, S1–S14 for the shop | [`review-packet.md`](monitoring/review-packet.md) |
 | The guard's monitoring bulkhead (MN-28) wasn't drawn | Drawn on the guard's back panel, upper left (the left panel is 6.5 mm from the rack): 3 isolated BNC, an RJ45 and an M12 8-pole feedthrough, and a split cable entry under a black labyrinth shroud | No straight path through it: the shallowest ray lands 2.8 mm outside the opening. $290–450, with a $32.85 SendCutSend quote for the plate | [`mechanics.md`](monitoring/mechanics.md) §1 |
 | The renders predated PB2's move, and NIST blocked the runner | The default renders and the build sequence re-made. `lines.py` reached NIST through the tunnel | All nine line lists match their 2026-11-25 sha256s, so `lines.json` is unchanged | [`cad/img/low/`](cad/img/low/) |
 
@@ -488,7 +494,10 @@ frame's CAM geometry and after the bulkhead was drawn):
   - the optics bridge's cut-out (~6 min in its own setup);
   - the AE features in the heater block, shields and rod end;
   - the light traps (55 bent blades).
-- **The guard's air is treated as one well-mixed volume.** No CFD of it was run.
+- **The guard's floor:** the base plate's Z-stage window and slot need a cover, for the cooling and possibly for the guard's
+  light-tightness (§7; review-packet.md L10).
+- **The guard CFD** is steady and coarse: device air ±3 K on grid, no radiation, no 500 W case. Thermocouples in the built guard
+  should check the LP camera, the coaxial camera and the hood.
 
 ## 10. Edison's review of the modelled design
 

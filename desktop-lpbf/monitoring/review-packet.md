@@ -31,6 +31,7 @@ item below says what the design does, what the LSO is asked, and where the numbe
 | L7 | Monitoring and the safety chain | Monitoring adds no safety input or output and can only ask for a stop. A hold at the next layer goes through the Pi supervisor, a stop through the scan PC, and a hazard through a request bit to the PLC. If a monitor fails, the build is not stopped | Confirm that nothing here needs to be part of the safety chain | [`sync-and-data.md`](sync-and-data.md) §4 |
 | L8 | A broken viewport window | The windows are fused silica with a safety factor of 17–34 at 1 atm, and slides in front of them catch spatter. A cracked window is a gas problem (the O₂ permissive catches it), not a laser one: the beam stays inside the guard | Note it | [`mechanics.md`](mechanics.md) Checks §1; [`sync-and-data.md`](sync-and-data.md) §4.2 |
 | L9 | Eyepieces and unfiltered cameras | Never fitted to a viewport | Put it in the SOP | [`monitoring.md`](../monitoring.md) §6 |
+| L10 | The guard's floor | The guard stands on the process base plate, whose Z-stage window, the slot for the module's rod end and the folded Z servo's window open into the 37 mm gap between the plate and the tray, which is open to the Shuttle all round: ~0.041 m² of free area, without a trap. The cooling CFD found it (most of the guard's air comes in that way). The ports put up to ~1 W of diffuse 1070 nm each into the guard, as the layer camera's window already does. Nobody has traced whether that light can leave through the floor | Decide whether the floor needs a light-tight cover as part of the guard: a sheet-metal plate under the base plate round the Z stage, with a brush strip or labyrinth where the arm and the rod end pass. The cooling needs that cover anyway. Include the floor in the leakage check before first light | [`cooling.md`](cooling.md) §4.2, `guard_cfd.py`; [`optics.md`](optics.md) §5 |
 
 ## 2. For the machine shop
 
@@ -107,7 +108,7 @@ Filled in by the reviewers, not by this note.
 
 | Reviewer | Items | Date | Outcome | Changes asked for |
 |---|---|---|---|---|
-| BYU Laser Safety Officer | L1–L9 | | | |
+| BYU Laser Safety Officer | L1–L10 | | | |
 | Machine shop | S1–S14 and the parts in [`parts.md`](../analysis/out/monitoring/review/parts.md) | | | |
 
 ## Not done / limits
