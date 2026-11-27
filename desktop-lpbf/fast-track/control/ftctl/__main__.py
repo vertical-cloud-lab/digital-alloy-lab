@@ -91,9 +91,13 @@ def cmd_info(a):
 
 
 def cmd_study_dwell(a):
-    from .studies import dwell_study
+    from .studies import dwell_study, dwell_at_conductance
     prog = load_program(a.program)
-    rows = dwell_study(prog, a.out, a.layers)
+    if a.g_pb is not None:
+        out = a.out.replace("dwell-study.csv", "dwell-study-fe.csv") if a.out.endswith("dwell-study.csv") else a.out
+        rows = dwell_at_conductance(prog, a.g_pb, out, a.layers)
+    else:
+        rows = dwell_study(prog, a.out, a.layers)
     keys = ["band_K", "plate_block_WK", "absorptivity", "block_offset_K", "argon_low_in_dwell", "result", "period_s",
             "dwell_share", "plate_max_C", "mean_absorbed_W", "build_10mm_h", "build_15mm_h", "argon_15mm_m3"]
     print(" | ".join(keys))
@@ -138,6 +142,9 @@ def main(argv=None):
     d.add_argument("--program", default=None)
     d.add_argument("--layers", type=int, default=67)
     d.add_argument("--out", default=str(pathlib.Path(__file__).resolve().parents[1] / "out" / "dwell-study.csv"))
+    d.add_argument("--g-pb", type=float, default=None,
+                   help="run the bands and block offsets at this plate-to-block conductance (W/K), e.g. the thermal FEA's; "
+                        "writes out/dwell-study-fe.csv")
     d.set_defaults(fn=cmd_study_dwell)
     pl = sub.add_parser("plot", help="figure of one simulated build")
     pl.add_argument("--program", default=None)

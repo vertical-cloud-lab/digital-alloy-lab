@@ -43,7 +43,8 @@ def test_rtc5_layer_list(program):
     tm = program.timing()
     args = dict(calls)
     # scanner delays in 10 us; laser delays in 0.5 us including the XY2-100 converter's 10 us
-    assert args["set_scanner_delays"] == (30, 15, 5)
+    # (the program's own delays: the process worker's build file carries the hurrySCAN 25's, the synthetic one the defaults)
+    assert args["set_scanner_delays"] == tuple(round(tm[k] / 10e-6) for k in ("jump_delay", "mark_delay", "polygon_delay"))
     assert args["set_laser_delays"] == (round((tm["laser_on_delay"] + 10e-6) / 0.5e-6),
                                        round((tm["laser_off_delay"] + 10e-6) / 0.5e-6))
     assert abs(args["set_jump_speed"][0] - tm["v_jump"] * 6000.0 / 1000.0) < 1e-6      # bits/ms
