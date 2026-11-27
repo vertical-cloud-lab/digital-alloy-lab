@@ -259,7 +259,16 @@ def _bw(parts, add, h):
     for p in _find(parts, "Lift-out wall liner, back lower left"):
         p.shape = p.shape.intersect(box(x_new, 0.0, -1e3, 1e3, -1e3, 1e3))
         p.name = p.name.replace("(0.5 mm 316L", f"(starts at x {x_new:.1f}, clear of the BW opening; 0.5 mm 316L")
-    # 850 nm LED on the sight line, 10 mm off the clamp frame
+    s = MS.VIEWPORTS["BW"]
+    REPORT["BW"] = dict(centre=list(s["centre"]), slot=sl, seat=st, liner_x0=x_new)
+
+
+# ======================================================================================================== BW light
+def _bw_light(parts, add, h):
+    """The light behind the BW window (monitoring.md §9: pulsed 850 nm LEDs for the side camera)."""
+    C = h.C
+    y_out = FF.OUTER["y"]
+    # 850 nm LED on the sight line, 3 mm off the clamp frame (4.76 mm plate)
     s = MS.VIEWPORTS["BW"]
     c, d = np.array(s["centre"], float), np.array(MS.axis_to_target(s["centre"]))
     a, up, side = _frame(-d)
@@ -268,7 +277,7 @@ def _bw(parts, add, h):
     led = _cyl_ax(r_led, c + t1 * a, a, L_led)
     add("BW 850 nm LED light (mounted LED + collimator, envelope Ø40 x 60; a SOLIS-850C-sized head does not fit here) on the BW sight line",
         led, C["black"], 5, (0, 260, 0), mat="misc", mass_kg=0.4, bom="M7-05", tags=TAG)
-    REPORT["BW"] = dict(centre=list(s["centre"]), slot=sl, seat=st, liner_x0=x_new, led_front=(c + t1 * a).round(1).tolist())
+    REPORT.setdefault("BW", {})["led_front"] = (c + t1 * a).round(1).tolist()
 
 
 # ======================================================================================================== LP: steep lid port
@@ -534,15 +543,23 @@ def _daq(parts, add, h):
         C["anod"], 2, (0, -400, 0), mat="misc", mass_kg=0.4, module="rack", bom="M1-07", tags=TAG)
 
 
+# ======================================================================================================== camera cooling
+def _cooling(parts, add, h, module="M50"):
+    """Cooling for the cameras and Pis in the guard's air (mechanics.md Checks §7). Nothing drawn yet."""
+    return
+
+
 def apply(parts, add, h, module="M50"):
     """Add the monitoring parts to lpbf_low.build()'s list `parts` (in place) and cut the holes they need."""
     REPORT.clear()
     _lw(parts, add, h)
     _bw(parts, add, h)
+    _bw_light(parts, add, h)
     _lp(parts, add, h)
     _cage(parts, add, h)
     _ae(parts, add, h, module)
     _daq(parts, add, h)
+    _cooling(parts, add, h, module)
     return parts
 
 

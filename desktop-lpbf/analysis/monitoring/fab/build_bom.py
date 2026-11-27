@@ -252,6 +252,16 @@ def load(path):
     return {r["key"]: r for r in csv.DictReader(open(path))} if pathlib.Path(path).exists() else {}
 
 
+def load_round3():
+    """price_lookups_round3.csv, or, while round 3's workers each keep their own, every price_lookups_round3*.csv (keys unique)"""
+    out = {}
+    for f in sorted(OUT.glob("price_lookups_round3*.csv")):
+        for k, r in load(f).items():
+            assert k not in out, f"lookup key {k} in two round-3 files"
+            out[k] = r
+    return out
+
+
 def num(v):
     try:
         return float(str(v).replace(",", "").replace("$", ""))
@@ -267,7 +277,7 @@ def main():
     ap.add_argument("--mo", default=str(D / "monitoring" / "optics-parts.csv"),
                     help="the optics worker's coaxial, side and lid camera parts (prices taken from it, not re-read)")
     a = ap.parse_args()
-    src = {"p1": load(a.p1), "p2": load(a.p2), "p3": load(LOOK["p3"]), "mo": {r["id"]: r for r in csv.DictReader(open(a.mo))} if pathlib.Path(a.mo).exists() else {},
+    src = {"p1": load(a.p1), "p2": load(a.p2), "p3": load_round3(), "mo": {r["id"]: r for r in csv.DictReader(open(a.mo))} if pathlib.Path(a.mo).exists() else {},
            "tl": {r["part_number"]: r for r in csv.DictReader(open(OUT / "stock_reads_thorlabs.csv"))}
            if (OUT / "stock_reads_thorlabs.csv").exists() else {}}
     # stock or lead time by part number, from every read (Thorlabs stock reads first, then the two lookup files)
