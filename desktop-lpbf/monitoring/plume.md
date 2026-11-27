@@ -1025,8 +1025,8 @@ $M/run_cases.sh                                    # p200, p200_lw3, p140, p200_
 for c in p200 p200_lw3 p140 p200_lw1 p200_lpback; do /tmp/capmem 4 $PY $M/particles.py /tmp/plume/$c; done   # ~10-15 min each
 /tmp/capmem 2 $PY $M/spatter.py                    # ~1-2 min
 /tmp/capmem 2 $PY $M/plume_jet.py                  # seconds; reads analysis/out/monitoring/melt/plume_source.json (--source)
-$PY $M/fouling.py && $PY $M/summarize.py           # fouling.json (same --source), summary.md
 /tmp/capmem 2 env OMP_NUM_THREADS=1 $PY $M/growth.py   # ~3 min, 70 cases: growth.json, growth_sizes.png, growth_loss.png (--quick: AlSi10Mg only)
+$PY $M/fouling.py && $PY $M/summarize.py           # fouling.json (same --source); summary.md, with growth.json's tables
 ```
 
 Here `plume_jet.py` and `fouling.py` read worker A's file from its own worktree with `--source` (the file wasn't on this

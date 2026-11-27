@@ -44,7 +44,7 @@ module. [`parts.md`](../analysis/out/monitoring/review/parts.md) lists every one
 |---|---|---|
 | Laser-cut flat plate | LW window clamp ring, BW window clamp frame, LP blanking cap | SendCutSend, quoted on 2026-11-27 at $7.43–10.26 each in 6061 ([`fabrication.md`](fabrication.md) §4) |
 | Machined, compound angle | LP adapter boss | bought: SendCutSend CNC priced the layer camera's similar boss at $379 |
-| Machined | side camera bracket and its 13° wedge; the BW LED's L bracket and split clamp | in house, or SendCutSend with the bracket's DXF |
+| Machined | side camera bracket and its 13° wedge; the BW LED's L bracket and split clamp | outsourced in the BOM (M7-08, M7-05d), or in house |
 | Turned | the BW LED's finned heat sink (Ø36 × 40, SM1 internal thread); the AE waveguide's Ø4 head domed R50 on a 1/8 in. 316 rod; the AE cartridge (316L, Ø6.3 × 0.35 wall, 25.8 long, pressed-in cap); the G-10 ring (Ø32 × Ø25.4 × 5, SM1-threaded both ends) | in house |
 | Sheet metal | the LW cover-slide clip (0.5 mm 316); the two light traps (55 blades, ~275 bends, in 2 mm frames); the side camera's hood and duct (1 mm, riveted); the exhaust plenum (1.5 mm) | in house, or a sheet-metal shop for the traps |
 | Bought and worked on | the LW purge fitting (bored through) and tube (bent, tip flattened) | in house |
