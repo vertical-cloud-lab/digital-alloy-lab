@@ -98,7 +98,7 @@ CS_AXIS = (22.0, 270.0)                              # s/m3 along the beam axis,
 
 NOMINAL = dict(alpha_s=0.08, alpha_n=0.6, Df=1.8, kf=1.3, stick=1.0, sinter=1.0, sigma_f=1.0, mdot_f=1.0, o2_ppm=100.0,
                gamma_ox=1.0, acc=0.3, optics="damped", ox_k=0.0, Ta=300.0, scan="perpendicular", heating=True,
-               jet_mass="best", t_end=1.0, K=44, w0=W0, h_coag=2.0, melt_agg=False)
+               jet_mass="best", t_end=1.0, K=44, w0=W0, h_coag=2.0, h_jet=0.05, melt_agg=False)
 
 
 def p_sat(sp, T):
@@ -437,7 +437,7 @@ def run(case, flow="200+40 L/min", P_override=None, **over):
         if vol[0] > 1e-3 * max(vol.sum(), 1e-300):        # monomers still hold vapour worth tracking
             hmax = min(hmax, prm["h_coag"] / max(float(beta[0] @ n), 1e-30))
         if phase == "jet":
-            hmax = min(hmax, 0.05 * max(b, 2e-6) / max(u, 1e-3))
+            hmax = min(hmax, prm["h_jet"] * max(b, 2e-6) / max(u, 1e-3))
         h = max(min(h * 1.06, hmax, max(t, 1e-9) * 0.08, prm["t_end"] - t + 1e-15), 1e-12)
         # --- jet ---
         ds = 0.0
@@ -751,7 +751,7 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     res = dict(about="growth.py: condensate growth in the vapour jet and the bed jet, beam loss and coaxial emission (plume.md §3.6)",
                source_file="analysis/out/monitoring/melt/plume_source.json", nominal_params=NOMINAL,
-               runs={}, edges={}, sensitivity={}, welding={}, risk2={})
+               runs={}, edges={}, sensitivity={}, convergence={}, welding={}, risk2={})
     full = {}
 
     def go(case, flow="200+40 L/min", **over):
@@ -812,6 +812,12 @@ def main():
         for lab, over in sens.items():
             r = go(cases[nominal["AlSi10Mg"]], "200+40 L/min", **over)
             res["sensitivity"][lab] = slim(r, full=False)
+        # numerical convergence on the nominal case: 4x finer coagulation steps with a 5x finer jet step, and more sections
+        res["convergence"] = {}
+        for lab, over in (("nominal (h_coag 2, h_jet 0.05, K 44)", {}), ("h_coag 0.5, h_jet 0.01", dict(h_coag=0.5, h_jet=0.01)),
+                          ("K 48 (sections to ~6 um)", dict(K=48))):
+            r = go(cases[nominal["AlSi10Mg"]], "200+40 L/min", **over)
+            res["convergence"][lab] = dict(tau_ext_1070=r["beam"]["tau_ext_1070"], column_kg_m2=r["beam"]["column_kg_m2"], steps=r["steps"])
         # welding-like comparison (Wahl et al. 2026's shape: share of the loss within 5 and 10 mm)
         for mdot in (2e-6, 7e-6, 2e-5):
             wc = welding_case(cases["map_Al_320W_1.1ms"], mdot)

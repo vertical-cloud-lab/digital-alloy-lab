@@ -23,6 +23,7 @@
   "K": 44,
   "w0": 4.8e-05,
   "h_coag": 2.0,
+  "h_jet": 0.05,
   "melt_agg": false
  },
  "runs": {
@@ -69,10 +70,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.778,
-   "cpu_s": 1.092,
+   "cpu_s": 0.9275,
    "steps": 1170,
    "beam": {
     "z_axis_mm": [
@@ -7553,10 +7555,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.9054,
-   "cpu_s": 1.226,
+   "cpu_s": 0.9629,
    "steps": 1224,
    "beam": {
     "a_abs_1070": 0.00636,
@@ -8649,10 +8652,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 1.035,
-   "cpu_s": 1.27,
+   "cpu_s": 0.9785,
    "steps": 1223,
    "beam": {
     "a_abs_1070": 0.008026,
@@ -9747,10 +9751,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.5194,
-   "cpu_s": 1.056,
+   "cpu_s": 0.833,
    "steps": 1156,
    "beam": {
     "z_axis_mm": [
@@ -17240,10 +17245,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.5959,
-   "cpu_s": 1.012,
+   "cpu_s": 0.8429,
    "steps": 1171,
    "beam": {
     "a_abs_1070": 0.004073,
@@ -18336,10 +18342,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.6681,
-   "cpu_s": 1.061,
+   "cpu_s": 0.8736,
    "steps": 1120,
    "beam": {
     "a_abs_1070": 0.004869,
@@ -19434,10 +19441,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.5533,
-   "cpu_s": 1.823,
+   "cpu_s": 1.461,
    "steps": 2736,
    "beam": {
     "z_axis_mm": [
@@ -26927,10 +26935,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.6187,
-   "cpu_s": 2.045,
+   "cpu_s": 1.561,
    "steps": 3096,
    "beam": {
     "a_abs_1070": 0.004449,
@@ -28023,10 +28032,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.6858,
-   "cpu_s": 2.156,
+   "cpu_s": 1.716,
    "steps": 3460,
    "beam": {
     "a_abs_1070": 0.005469,
@@ -29123,10 +29133,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.06116,
-   "cpu_s": 1.238,
+   "cpu_s": 1.024,
    "steps": 1898,
    "beam": {
     "a_abs_1070": 0.001617,
@@ -30219,10 +30230,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.08281,
-   "cpu_s": 1.199,
+   "cpu_s": 0.9923,
    "steps": 1808,
    "beam": {
     "a_abs_1070": 0.002828,
@@ -31317,10 +31329,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 1.058,
-   "cpu_s": 0.9594,
+   "cpu_s": 0.7748,
    "steps": 1253,
    "beam": {
     "a_abs_1070": 0.006262,
@@ -32413,10 +32426,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 1.413,
-   "cpu_s": 0.9786,
+   "cpu_s": 0.9244,
    "steps": 1377,
    "beam": {
     "a_abs_1070": 0.008993,
@@ -33511,10 +33525,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.8747,
-   "cpu_s": 0.9225,
+   "cpu_s": 0.9665,
    "steps": 1247,
    "beam": {
     "a_abs_1070": 0.005917,
@@ -34607,10 +34622,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 1.45,
-   "cpu_s": 1.18,
+   "cpu_s": 1.103,
    "steps": 1612,
    "beam": {
     "a_abs_1070": 0.01091,
@@ -35705,10 +35721,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.2646,
-   "cpu_s": 2.064,
+   "cpu_s": 2.047,
    "steps": 4288,
    "beam": {
     "a_abs_1070": 0.002714,
@@ -36801,10 +36818,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.32,
-   "cpu_s": 2.517,
+   "cpu_s": 2.6,
    "steps": 5540,
    "beam": {
     "a_abs_1070": 0.003675,
@@ -37899,10 +37917,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.6803,
-   "cpu_s": 0.7697,
+   "cpu_s": 0.9001,
    "steps": 1206,
    "beam": {
     "a_abs_1070": 0.00383,
@@ -38995,10 +39014,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.8711,
-   "cpu_s": 0.8027,
+   "cpu_s": 0.9166,
    "steps": 1220,
    "beam": {
     "a_abs_1070": 0.005234,
@@ -40093,10 +40113,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.5583,
-   "cpu_s": 0.7591,
+   "cpu_s": 0.8839,
    "steps": 1219,
    "beam": {
     "a_abs_1070": 0.003566,
@@ -41189,10 +41210,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.8688,
-   "cpu_s": 0.9518,
+   "cpu_s": 1.046,
    "steps": 1395,
    "beam": {
     "a_abs_1070": 0.006075,
@@ -42287,10 +42309,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.8512,
-   "cpu_s": 0.7468,
+   "cpu_s": 0.8606,
    "steps": 1135,
    "beam": {
     "a_abs_1070": 0.007628,
@@ -43383,10 +43406,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 1.149,
-   "cpu_s": 1.019,
+   "cpu_s": 0.8685,
    "steps": 1217,
    "beam": {
     "a_abs_1070": 0.0111,
@@ -44481,10 +44505,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.4105,
-   "cpu_s": 1.85,
+   "cpu_s": 1.496,
    "steps": 2739,
    "beam": {
     "a_abs_1070": 0.00275,
@@ -45577,10 +45602,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.5943,
-   "cpu_s": 2.659,
+   "cpu_s": 2.154,
    "steps": 4387,
    "beam": {
     "a_abs_1070": 0.004611,
@@ -46675,10 +46701,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 1.189,
-   "cpu_s": 1.252,
+   "cpu_s": 0.9712,
    "steps": 1279,
    "beam": {
     "a_abs_1070": 0.009721,
@@ -47771,10 +47798,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 1.673,
-   "cpu_s": 1.314,
+   "cpu_s": 0.9029,
    "steps": 1436,
    "beam": {
     "a_abs_1070": 0.01503,
@@ -48869,10 +48897,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.7932,
-   "cpu_s": 1.13,
+   "cpu_s": 0.7901,
    "steps": 1249,
    "beam": {
     "a_abs_1070": 0.005332,
@@ -49965,10 +49994,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 1.055,
-   "cpu_s": 1.222,
+   "cpu_s": 0.8364,
    "steps": 1323,
    "beam": {
     "a_abs_1070": 0.007564,
@@ -51063,10 +51093,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 1.261,
-   "cpu_s": 1.248,
+   "cpu_s": 0.8067,
    "steps": 1317,
    "beam": {
     "a_abs_1070": 0.006027,
@@ -52161,10 +52192,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.778,
-   "cpu_s": 1.141,
+   "cpu_s": 0.7507,
    "steps": 1170,
    "beam": {
     "a_abs_1070": 0.005543,
@@ -53230,10 +53262,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.778,
-   "cpu_s": 1.174,
+   "cpu_s": 0.7477,
    "steps": 1170,
    "beam": {
     "a_abs_1070": 0.005565,
@@ -54299,10 +54332,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.778,
-   "cpu_s": 1.142,
+   "cpu_s": 0.771,
    "steps": 1170,
    "beam": {
     "a_abs_1070": 0.005537,
@@ -55368,10 +55402,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.778,
-   "cpu_s": 1.173,
+   "cpu_s": 0.7536,
    "steps": 1170,
    "beam": {
     "a_abs_1070": 0.005568,
@@ -56437,10 +56472,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.7789,
-   "cpu_s": 1.037,
+   "cpu_s": 0.6351,
    "steps": 978,
    "beam": {
     "a_abs_1070": 0.005787,
@@ -57506,10 +57542,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.7739,
-   "cpu_s": 1.496,
+   "cpu_s": 0.8763,
    "steps": 1471,
    "beam": {
     "a_abs_1070": 0.005386,
@@ -58575,10 +58612,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.778,
-   "cpu_s": 1.251,
+   "cpu_s": 0.7222,
    "steps": 1170,
    "beam": {
     "a_abs_1070": 0.005622,
@@ -59644,10 +59682,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.778,
-   "cpu_s": 1.222,
+   "cpu_s": 0.7236,
    "steps": 1170,
    "beam": {
     "a_abs_1070": 0.005648,
@@ -60713,10 +60752,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.7759,
-   "cpu_s": 1.24,
+   "cpu_s": 0.7585,
    "steps": 1184,
    "beam": {
     "a_abs_1070": 0.005552,
@@ -61782,10 +61822,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.779,
-   "cpu_s": 1.221,
+   "cpu_s": 0.775,
    "steps": 1157,
    "beam": {
     "a_abs_1070": 0.005554,
@@ -62851,10 +62892,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.5877,
-   "cpu_s": 1.227,
+   "cpu_s": 0.7518,
    "steps": 1181,
    "beam": {
     "a_abs_1070": 0.003909,
@@ -63920,10 +63962,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.9935,
-   "cpu_s": 1.252,
+   "cpu_s": 0.7546,
    "steps": 1182,
    "beam": {
     "a_abs_1070": 0.007897,
@@ -64989,10 +65032,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.7786,
-   "cpu_s": 1.215,
+   "cpu_s": 0.7631,
    "steps": 1170,
    "beam": {
     "a_abs_1070": 0.005593,
@@ -66058,10 +66102,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.7653,
-   "cpu_s": 1.265,
+   "cpu_s": 0.8657,
    "steps": 1164,
    "beam": {
     "a_abs_1070": 0.005157,
@@ -67127,10 +67172,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.7693,
-   "cpu_s": 1.247,
+   "cpu_s": 1.089,
    "steps": 1166,
    "beam": {
     "a_abs_1070": 0.005337,
@@ -68196,10 +68242,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 1.382,
-   "cpu_s": 1.635,
+   "cpu_s": 1.051,
    "steps": 1703,
    "beam": {
     "a_abs_1070": 0.007838,
@@ -69265,10 +69312,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.6447,
-   "cpu_s": 1.154,
+   "cpu_s": 0.7739,
    "steps": 1123,
    "beam": {
     "a_abs_1070": 0.004818,
@@ -70334,10 +70382,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.9662,
-   "cpu_s": 1.396,
+   "cpu_s": 0.91,
    "steps": 1384,
    "beam": {
     "a_abs_1070": 0.006166,
@@ -71403,10 +71452,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.6092,
-   "cpu_s": 1.129,
+   "cpu_s": 0.7562,
    "steps": 1038,
    "beam": {
     "a_abs_1070": 0.005121,
@@ -72472,10 +72522,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.8429,
-   "cpu_s": 1.274,
+   "cpu_s": 0.8289,
    "steps": 1307,
    "beam": {
     "a_abs_1070": 0.006233,
@@ -73541,10 +73592,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.7145,
-   "cpu_s": 1.138,
+   "cpu_s": 0.7562,
    "steps": 1072,
    "beam": {
     "a_abs_1070": 0.005113,
@@ -74610,10 +74662,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.8163,
-   "cpu_s": 0.9806,
+   "cpu_s": 0.8068,
    "steps": 911,
    "beam": {
     "a_abs_1070": 0.006045,
@@ -75679,10 +75732,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.2336,
-   "cpu_s": 1.04,
+   "cpu_s": 0.6845,
    "steps": 926,
    "beam": {
     "a_abs_1070": 0.002099,
@@ -76748,10 +76802,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.0,
-   "cpu_s": 0.4638,
+   "cpu_s": 0.3324,
    "steps": 787,
    "beam": {
     "a_abs_1070": 0.006111,
@@ -77817,10 +77872,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": true
    },
    "absorbed_in_jet_W": 0.778,
-   "cpu_s": 1.156,
+   "cpu_s": 0.7871,
    "steps": 1170,
    "beam": {
     "a_abs_1070": 0.007789,
@@ -78886,10 +78942,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.7764,
-   "cpu_s": 1.247,
+   "cpu_s": 0.8503,
    "steps": 1252,
    "beam": {
     "a_abs_1070": 0.005547,
@@ -79955,10 +80012,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.7755,
-   "cpu_s": 0.9808,
+   "cpu_s": 0.7115,
    "steps": 1015,
    "beam": {
     "a_abs_1070": 0.005507,
@@ -81024,10 +81082,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 0.8774,
-   "cpu_s": 1.073,
+   "cpu_s": 0.8204,
    "steps": 1339,
    "beam": {
     "a_abs_1070": 0.00598,
@@ -82093,10 +82152,11 @@
     "K": 44,
     "w0": 4.8e-05,
     "h_coag": 2.0,
+    "h_jet": 0.05,
     "melt_agg": false
    },
    "absorbed_in_jet_W": 2.288,
-   "cpu_s": 1.743,
+   "cpu_s": 1.24,
    "steps": 2301,
    "beam": {
     "a_abs_1070": 0.01432,
@@ -83118,6 +83178,23 @@
      "w_mm": 0.1458
     }
    ]
+  }
+ },
+ "convergence": {
+  "nominal (h_coag 2, h_jet 0.05, K 44)": {
+   "tau_ext_1070": 0.005578,
+   "column_kg_m2": 3.56e-05,
+   "steps": 1170
+  },
+  "h_coag 0.5, h_jet 0.01": {
+   "tau_ext_1070": 0.005692,
+   "column_kg_m2": 3.616e-05,
+   "steps": 4045
+  },
+  "K 48 (sections to ~6 um)": {
+   "tau_ext_1070": 0.005578,
+   "column_kg_m2": 3.56e-05,
+   "steps": 1170
   }
  },
  "welding": {

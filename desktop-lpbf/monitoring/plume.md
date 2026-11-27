@@ -427,6 +427,9 @@ plume, Δz = 1.6 F^(1/3) x^(2/3) / U (Briggs). Cross-flow at 2.95 m/s (200 L/min
   speed is the cross-flow minus the scan: at 1.1 m/s, 1.85 m/s scanning with the flow and 4.05 m/s against it. Heights
   scale as U^(−2/3), so scanning with the flow lifts the plume ~1.4× and against it ~0.8×.
 - **At 140 L/min every height is ~1.3× the 200 L/min one.**
+- **The growth model's integral jet (§3.6) rises less:** ~4 mm up at 10 mm downstream and ~6 mm at 30 mm (AlSi10Mg, 200 + 40
+  L/min). It carries only A's `best` vapour (0.44× the `wall` reading's momentum), and the condensate's latent heat keeps its
+  mixture hot and spreading. That is nearer the measured plumes, and between §1.2's two release bands.
 
 ### 3.3 What it condenses into
 
@@ -449,8 +452,8 @@ plume, Δz = 1.6 F^(1/3) x^(2/3) / U (Briggs). Cross-flow at 2.95 m/s (200 L/min
 **The plume costs the beam ~0.6 % at 1070 nm for AlSi10Mg at 320 W, 1.1 m/s and 200 + 40 L/min, with a defensible range
 of 0.2–1.5 %. For 6061 and 7075 it is ~0.4 %.** That replaces this note's earlier 0.05–0.2 %, which had two errors that
 both made it low:
-- it took the column above the spot at the vapour's own density (19 mg/m² for AlSi10Mg), where the jet's mixture is
-  denser;
+- it took the column above the spot at the vapour's own density (19 mg/m² for AlSi10Mg), where the cooled, mixed jet is up
+  to ~10× denser;
 - it read that column as ~20 nm primaries with bulk room-temperature aluminium's optics.
 
 The growth model of §3.6 follows the vapour from the depression wall instead
@@ -477,7 +480,7 @@ It finds three things:
 | Older condensate: earlier tracks over a 10 mm part, plus the chamber's background (§1.2) | +0.05 % | +0.02 % | +0.03 % |
 | **Total, 200 + 40 L/min** | **0.61 %** | **0.38 %** | **0.43 %** |
 | Total, 140 + 30 L/min | 0.71 % | 0.44 % | 0.49 % |
-| Total with no gas flow, before the chamber fills | 1.13 % | 0.61 % | 0.70 % |
+| Total with no gas flow (~0.25 m/s of convection over the part, assumed), before the chamber fills | 1.13 % | 0.61 % | 0.70 % |
 | … then, as the chamber fills (no flow, well mixed) | +1.2 % per min of lasing | +0.45 % per min | +0.85 % per min |
 | Power absorbed in the plume (200 + 40 L/min) | 0.8 W | 0.5 W | 0.6 W |
 
@@ -503,8 +506,8 @@ with the flow raises the fresh plume's share ~1.4× and scanning against it lowe
     900 nm and 0.72 % at 955–990 nm (AlSi10Mg), more in keyhole mode and over overhangs.
   - *Light.* The beam heats the condensate in its path to ~2,000–2,200 K (§3.6). In the photodiodes' Ø1.6 mm field
     (optics.md §3's method and pool signal), that glow adds **+2.0 % to PD-A 700/40 and +2.1 % to PD-B 900/40 for
-    AlSi10Mg** and +0.8–0.9 % for 6061. It adds ~0 for 7075, whose Mg/Zn condensate evaporates in the beam rather than glow
-    (with Al's optics; §3.6).
+    AlSi10Mg** and +0.8–0.9 % for 6061. It adds ~0 for 7075, whose Mg/Zn condensate evaporates in the beam rather than
+    glowing (with Al's optics; §3.6).
   - *Range.* The glow is +0.8 % at 200 W, +3.3–3.7 % at 400–500 W and **+8.8 % over loose powder**. It is +4.5 % if the
     gas over the 200 °C plate is at 473 K, and +6.1 % if crossing agglomerates melt without evaporating; the combined
     pessimistic case gives +16 %.
@@ -627,6 +630,8 @@ each cross-flow (no gas flow: before the chamber fills). Right: AlSi10Mg's fresh
   2.6.
 - **The aerosol's own details barely matter** (under 5 %): while the particles are in the beam they are molten droplets
   that the beam holds small.
+- **The numbers are converged:** 4× finer coagulation steps with a 5× finer jet step move the loss by 2 % (0.558 →
+  0.569 %); sections up to ~6 µm instead of ~4 µm change nothing (`growth.json`, `convergence`).
 - **The glow is far more sensitive than the loss:** it rises ~8× from 2,000 to 2,500 K at 700 nm, and the particle
   temperature depends on the particle's size and shape.
 
@@ -673,7 +678,10 @@ each cross-flow (no gas flow: before the chamber fills). Right: AlSi10Mg's fresh
     px above the pool.
   - *Seeing it:* at a ~100 µs exposure with the pool saturated, averaging ~100 frames along a track gives a signal-to-noise
     of ~15 for that column (estimate: ~20 e⁻ per pixel per frame against ~20 e⁻ of read noise).
-  - *If the loss were 3–10 %* from condensate grown in the beam, the thread would be ~10× brighter and 5–10 mm tall.
+  - *If the loss were 3–10 %* because absorbing condensate collects in the beam, the thread would be several to ~20×
+    brighter (the glow scales with the power the condensate absorbs), and taller than 2–3 mm if the condensate builds up
+    along the path. A loss carried by scattering (large compact particles) wouldn't show this way; the model makes
+    scattering under 1 % of the loss, and the transverse measurement below would catch it.
   - *7075:* its thread should be ~40× fainter, because its condensate evaporates in the beam.
   - Run it with the 850/10 filter, at full and reduced cross-flow and on an overhang.
 - **A transverse extinction measurement would read the optical depth directly:** 0.24–0.48 % across the jet at 0.25–3 mm
@@ -768,6 +776,8 @@ size of a ~0.5 µm chain) and the CFD's friction velocity on each window. Source
 A's jets reach (§3.2); the 0.5–5 mm release gives 7–40× longer (and none reached the LW slide). The near-face values
 behind them rest on 15–430 tracers (§1.2), so take them to within ~2×.*
 
+- **The size assumed here holds up.** The growth model (§3.6) puts condensate 0.1–1 s old at a mass-median collision
+  diameter of ~120–140 nm (7.6 nm primaries, ~60 % oxidised at 100 ppm O₂), close to the 0.1 µm used for v_d.
 - **Thermophoresis decides it.** A window 10 K colder than the gas next to it collects 20–120× more than an isothermal
   one: 0.5 × ν ∇T/T ≈ 1 × 10⁻⁴ m/s across a 2 mm layer, against 1–5 × 10⁻⁶ m/s for Brownian and turbulent
   deposition. The other way round, **a camera slide kept a few K warmer than the gas repels sub-micron condensate.** The
