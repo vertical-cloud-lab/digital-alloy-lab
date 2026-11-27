@@ -262,11 +262,16 @@ def fig5c_benchmarks() -> None:
     a5_best = max(float(r["yield_MPa"]) for r in a5)
     x_max = 10.8
     xs, ys = [0, a5_mid, a5_mid, x_max], [floor, floor, a5_best, a5_best]
-    ax.fill_between(xs, ys, [640] * 4, color=BLUE, alpha=0.06, linewidth=0, zorder=0)
+    # T also needs B below Scalmalloy's (paired test; drawn at the midpoint reliances, as the campaign paper does).
+    sc_mid = mid("Scalmalloy (nominal)")
+    rx, ry = [0, a5_mid, a5_mid, sc_mid], [floor, floor, a5_best, a5_best]
+    ax.fill_between(rx, ry, [640] * 4, color=BLUE, alpha=0.07, linewidth=0, zorder=0)
     ax.plot(xs, ys, color=BLUE, lw=1.6, ls=(0, (5, 2)), zorder=2)
+    ax.axvline(sc_mid, color=INK2, lw=0.8, ls=(0, (4, 3)), zorder=1)
+    ax.text(sc_mid + 0.08, 128, "Scalmalloy's B\n(T needs less)", fontsize=6.4, color=INK2, va="bottom")
     ax.text(0.15, 612, "Campaign 2 has to land in the shaded region:\nbeyond the front of the Sc-free baselines\n"
-            "printed and tested in this lab. To count as new,\nit also has to clear the dotted front", fontsize=7,
-            color=INK, va="top")
+            "printed and tested in this lab, at less burden\nthan Scalmalloy. To count as new, it also has\n"
+            "to clear the dotted front", fontsize=7, color=INK, va="top")
 
     series(a5, "Al5X1 (EOS, nominal)", BLUE, "EOS Al5X1\n(Al-Mg-Zr-Mn)", (a5_mid - 0.8, 428), ha="center")
     series(hs, "Al-HS1 (Hoganas, typical)", BLUE, "Höganäs Al-HS1\n(Al-Mn-Cr-Zr)", (mid("Al-HS1 (Hoganas, typical)") + 0.25, 318))

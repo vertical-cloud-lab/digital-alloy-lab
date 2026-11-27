@@ -67,7 +67,7 @@ with biblatex-chem, biber and latexmk, plus Python with requests and matplotlib.
      where that happens.
 5. **Campaign 2 is measured against industry Sc-free alloys printed here (D0, decided Nov 27).** EOS Al5X1
    (Al–Mg–Zr–Mn) and Höganäs Al-HS1 (Al–Mn–Cr–Zr), at least one, are bought as powder and printed, aged and tested
-   in the same builds as the candidates. They are the points on the front campaign 2 has to expand, and their
+   in the same sessions as the candidates (one powder per build, so consecutive builds on the same machine). They are the points on the front campaign 2 has to expand, and their
    in-house values against their data sheets show whether the lab measures on a par with industry. The campaign
    paper (#277) adds the same baselines and owns their sourcing and first measurement. Its run recommends buying
    Al5X1 first (quotes in the week of Nov 30, a PO by Dec 11), which would give aged Al5X1 tensile results between
@@ -78,8 +78,8 @@ with biblatex-chem, biber and latexmk, plus Python with requests and matplotlib.
      (3.1–4.2 wt %) than Al-HS1 (5.4–5.6 wt %), so on data-sheet values Al5X1 alone sets the front (draft Fig. 5c).
 6. **The mineral-burden metric needs deciding (D9).** With MCS 2026 inputs, the Al–Mn–Cr–Zr seed S1 scores above
    Scalmalloy (6.6–7.3 against 4.7–6.0 wt %), while Zr-refined Al–Mg and Al–Fe seeds score below it. B_NIR counts
-   Mg like Sc, so any alloy with less Mg than Scalmalloy's 4.7 wt % beats it on burden. That is why the claim is now
-   about the Sc-free front, not about Scalmalloy.
+   Mg like Sc, so any alloy with less Mg than Scalmalloy's 4.7 wt % beats it on burden. That is why the headline is
+   now the Sc-free front; "less burden than Scalmalloy" stays only as one condition, as in the campaign paper.
 
 ## Decisions for Sterling
 
@@ -96,7 +96,7 @@ with biblatex-chem, biber and latexmk, plus Python with requests and matplotlib.
 | D6 | Corrosion in this article, the campaign paper, or separately? (also asked in `alloy-corrosion/README.md`) | SI S16 and a methods paragraph |
 | D7 | Desktop LPBF: build (FT-1, FT-1V or the full design) or buy, and who orders when | The critical path for version A: first coupons ~1–2.5 months after the order, plus laser-safety and EHS approval |
 | D8 | Funding and a lab for outside ICP-OES, O/N/H and tensile | Fig. 3, Fig. 5d, independent verification |
-| D9 | The mineral-burden metric, frozen together with the campaign paper before its screen ranks anything: its proposed B_NIR = Σ wᵢ·NIRᵢ with MCS 2026 inputs, or an alternative | **Issue to fix: B_NIR counts Mg like Sc.** Scalmalloy's B (4.7–6.0 wt %) is mostly its 4.7 wt % Mg, so any lower-Mg alloy beats it; Al5X1 does (3.1–4.2). Seed S1 (Al–4.8Mn–0.9Cr–1.1Zr–1.2Mg, the FLAIME focus family) scores *higher* than Scalmalloy (6.6–7.3), because Mn is 100 % imported and used at ~5 wt %, and Al-HS1 overlaps it (5.4–5.6). Zr is <25 % imported, so Zr-refined Al–Mg and Al–Fe alloys score lower (`tools/mineral_burden_check.py`, now on the campaign paper's inputs). Comparing against the Sc-free front takes Scalmalloy out of the claim, but the Mg-against-Mn weighting still ranks the baselines. Also, the FLAIME abstract's "100 % of zirconium mineral concentrates" doesn't match MCS 2025 or 2026 (<25 %) |
+| D9 | The mineral-burden metric, frozen together with the campaign paper before its screen ranks anything: its proposed B_NIR = Σ wᵢ·NIRᵢ with MCS 2026 inputs, or an alternative | **Issue to fix: B_NIR counts Mg like Sc.** Scalmalloy's B (4.7–6.0 wt %) is mostly its 4.7 wt % Mg, so any lower-Mg alloy beats it; Al5X1 does (3.1–4.2). Seed S1 (Al–4.8Mn–0.9Cr–1.1Zr–1.2Mg, the FLAIME focus family) scores *higher* than Scalmalloy (6.6–7.3), because Mn is 100 % imported and used at ~5 wt %, and Al-HS1 overlaps it (5.4–5.6). Zr is <25 % imported, so Zr-refined Al–Mg and Al–Fe alloys score lower (`tools/mineral_burden_check.py`, now on the campaign paper's inputs). Making the Sc-free front the headline moves the claim off Scalmalloy, but "below Scalmalloy" stays as a condition in both papers, and the Mg-against-Mn weighting still ranks the baselines. Also, the FLAIME abstract's "100 % of zirconium mineral concentrates" doesn't match MCS 2025 or 2026 (<25 %) |
 | D10 | Freeze the design space: Si in or out (EDS limit raised at the kickoff), and order Zr feedstock (5 of the 9 proposed seeds need it; not on the order) | The seeds and the screen depend on it |
 | D11 | Where data and code are deposited (e.g. Zenodo, with DOIs reserved only at submission) | The Data Availability Statement |
 | D12 | CLAUDE.md bars naming staff of partner companies "or at national labs". This folder withholds the author lists of cited papers by AMAZEMET and Thermo-Calc staff, but lists national-lab authors of published papers as ordinary citations. OK? | The bibliography is in a public repo |
