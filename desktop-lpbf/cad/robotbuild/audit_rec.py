@@ -25,6 +25,7 @@ are re-skinned in place every frame). Nothing here changes what is drawn.
 """
 from __future__ import annotations
 
+import hashlib
 import os
 import pickle
 
@@ -123,7 +124,10 @@ def record(scene, chapter):
         if rec.ver.get(name) != ver and vis:
             V = vtk_to_numpy(poly.GetPoints().GetData()).astype(np.float32)
             F = _faces(poly)
-            fk = (len(F), hash(F[: min(len(F), 2000)].tobytes()))
+            # round 9 (W2): the whole face array is hashed. With only its first 2000 faces, chapter 30's re-meshed stock
+            # (600 k faces, the same count from one frame to the next and the same first faces) was recorded with F=None,
+            # so the replay put the new points on the old faces: a tangle the audit read as the cutter 39 mm in the stock
+            fk = (len(F), hashlib.blake2b(np.ascontiguousarray(F).tobytes(), digest_size=16).hexdigest())
             same_f = rec.fkey.get(name) == fk
             key = f"{name}#{rec.count}"
             rec.count += 1
