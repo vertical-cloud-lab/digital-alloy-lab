@@ -19,7 +19,7 @@ What is simplified, and why (all within the parts' own envelopes unless stated):
     the inlet; the exhaust collector, drawn solid, gets a plenum behind its 50 x 6 mm opening and a 10 x 6 mm port
     (60 mm2, a 3/8 in. hose bore) whose end face is the outlet. Neither interior is designed yet (MK-11).
   - the well-block heaters' 2 mm stubs and the lid gasket's 1 mm gap are left out.
-Variants for the cross-flow (``--slot-h``, ``--slot-z0``, ``--col-z1``, ``--lip``): see ``cfd_solids``.
+Variants for the cross-flow (``--slot-h``, ``--slot-z0``, ``--col-z0``, ``--col-z1``, ``--lip``): see ``cfd_solids``.
 
 Run (light, ~20 s):
     /tmp/venv/bin/python desktop-lpbf/fast-track/analysis/cfd/geom.py --state FT-1 --out /tmp/ft-cfd/geom/ft1
@@ -225,13 +225,15 @@ def main():
     ap.add_argument("--out", required=True)
     ap.add_argument("--slot-h", type=float, default=None)
     ap.add_argument("--slot-z0", type=float, default=2.0)
+    ap.add_argument("--col-z0", type=float, default=2.0)
     ap.add_argument("--col-z1", type=float, default=8.0)
     ap.add_argument("--col-w", type=float, default=50.0)
     ap.add_argument("--lip", type=float, default=0.0)
     a = ap.parse_args()
     out = pathlib.Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
-    S, meta = cfd_solids(a.state, slot_h=a.slot_h, slot_z0=a.slot_z0, col_z1=a.col_z1, col_w=a.col_w, lip=a.lip)
+    S, meta = cfd_solids(a.state, slot_h=a.slot_h, slot_z0=a.slot_z0, col_z0=a.col_z0, col_z1=a.col_z1, col_w=a.col_w,
+                          lip=a.lip)
     solid = fuse_all(S)
     info = write_stl(solid, S, meta, out / "ft.stl")
     e = meta["enclosure"]

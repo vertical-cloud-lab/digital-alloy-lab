@@ -93,7 +93,7 @@ boundary ( walls {{ type wall; faces ( (0 3 2 1) (4 5 6 7) (0 4 7 3) (1 2 6 5) (
     lv = dict(inlet=3, outlet=3, bed=3, nozzle=3, collector=3, blade=3, hopper=2, block=2, pipes=2, window=1, slide=2,
               deck=1, recoater=1, frame=1)
     if profile == "purge":          # box-scale purge runs: no jet refinement, so the time step is set by the box flow
-        lv = {k: min(v, 2 if k in ("inlet", "outlet", "nozzle", "collector") else 1) for k, v in lv.items()}
+        lv = {k: min(v, 3 if k in ("inlet", "outlet", "nozzle", "collector") else 1) for k, v in lv.items()}
     rs = "\n".join(f"                {r} {{ level ({lv[r]} {lv[r]}); patchInfo {{ type {'patch' if r in ('inlet', 'outlet') else 'wall'}; }} }}"
                    for r in PATCHES_STL if r in g["regions"])
     loc = ((x0 + 25.3) * m, (y1 - 15.7) * m, (z1 - 30.1) * m)
@@ -217,7 +217,7 @@ def flow_setup(a):
     """{patch: L/min in} for inlets and the outlet's name, by kind."""
     if a.kind == "cross":
         return {"inlet": a.nozzle_lpm}, "outlet"
-    ins = {"inlet": a.nozzle_lpm}
+    ins = {"inlet": a.nozzle_lpm} if a.nozzle_lpm > 0 else {}          # nozzle off: its patch is a closed wall
     if a.inlet != "none":
         ins[a.inlet] = a.purge_lpm
     return ins, a.outlet
@@ -558,7 +558,7 @@ timeFormat general;
 runTimeModifiable true;
 adjustTimeStep yes;
 maxCo {a.max_co};
-maxDeltaT 0.5;
+maxDeltaT 0.25;
 functions
 {{
     boxAvg {{ type volFieldValue; libs (fieldFunctionObjects); fields (O2 N2 Ar); operation volAverage; regionType all; writeFields false; writeControl timeStep; writeInterval 5; log false; }}
@@ -580,12 +580,13 @@ divSchemes
 laplacianSchemes { default Gauss linear limited corrected 0.5; }
 interpolationSchemes { default linear; }
 snGradSchemes { default limited corrected 0.5; }
+fluxRequired { default no; p_rgh; }
 """
     f["system/fvSolution"] = hdr("dictionary", "fvSolution") + """solvers
 {
     "rho.*" { solver diagonal; }
-    p_rgh { solver GAMG; smoother GaussSeidel; tolerance 1e-7; relTol 0.01; }
-    p_rghFinal { $p_rgh; relTol 0; }
+    p_rgh { solver GAMG; smoother GaussSeidel; tolerance 1e-5; relTol 0.01; maxIter 100; }
+    p_rghFinal { $p_rgh; tolerance 1e-5; relTol 0.001; }
     "(U|h|e|k|epsilon|Yi)" { solver PBiCGStab; preconditioner DILU; tolerance 1e-9; relTol 0.05; }
     "(U|h|e|k|epsilon|Yi)Final" { $U; relTol 0; }
 }

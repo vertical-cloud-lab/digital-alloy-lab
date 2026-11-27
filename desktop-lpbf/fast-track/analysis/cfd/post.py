@@ -520,6 +520,9 @@ def do_cross(a):
     d.setdefault("cross", {})[a.name] = res
     d["threshold_shao_lu_Pa"] = THR
     save_json(d)
+    off = np.cumsum([0] + [len(p_) for p_ in paths])
+    flat = np.concatenate([np.array(p_) for p_ in paths if len(p_)]) if off[-1] else np.zeros((0, 3))
+    np.savez_compressed(SCR / f"{cs.path.name}_post.npz", c=c, tau=tau, p0=p0, fate=fate, flat=flat, off=off)
     if a.figs:
         fig_shear(c, tau, cs, f"Bed wall shear, {a.name}", f"bed_shear_{a.name}.png")
         fig_tracers(p0, fate, paths, cs, f"Tracers from 0.5-3 mm over the build area, {a.name}: "
@@ -623,28 +626,278 @@ class Lite:
         self.zb = self.g["zb"]
 
 
+def fig_shear_multi(rows, fname):
+    n = len(rows)
+    fig, axs = plt.subplots(1, n, figsize=(4.3 * n, 4.2), squeeze=False, constrained_layout=True)
+    lv = np.linspace(0, 0.15, 16)
+    for ax, (label, cs, P) in zip(axs[0], rows):
+        c, tau = P["c"], P["tau"]
+        sc = ax.tricontourf(c[:, 0], c[:, 1], np.clip(tau, 0, 0.1499), levels=lv, cmap="Blues")
+        ax.tricontour(c[:, 0], c[:, 1], tau, levels=[THR_LO], colors=[C2], linewidths=1.0)
+        ax.tricontour(c[:, 0], c[:, 1], tau, levels=[THR_HI], colors=[C8], linewidths=1.0)
+        tt = np.linspace(0, 2 * np.pi, 200)
+        ax.plot(19.9 * np.cos(tt), 19.9 * np.sin(tt), color=INK, lw=0.8)
+        ax.plot(15 * np.cos(tt), 15 * np.sin(tt), color=INK, lw=0.6, ls="--")
+        ax.set_aspect("equal")
+        ax.set_xlim(-40, 40)
+        ax.set_ylim(-40, 40)
+        ax.set_xlabel("x (mm)")
+        ax.set_title(label, loc="left")
+    axs[0, 0].set_ylabel("y (mm); the jet runs along +y")
+    fig.colorbar(sc, ax=axs[0], shrink=0.85, label="wall shear on the bed (Pa)")
+    fig.suptitle(f"Bed shear. Orange line: {THR_LO:.3f} Pa, red: {THR_HI:.3f} Pa (63 µm pick-up band, Shao & Lu). "
+                 "Circles: Ø40 plate, Ø30 build area", x=0.01, ha="left", fontsize=9)
+    fig.savefig(OUT / fname, dpi=120)
+    plt.close(fig)
+
+
+def fig_tracers_multi(rows, fname):
+    n = len(rows)
+    fig, axs = plt.subplots(n, 2, figsize=(9.0, 2.7 * n), squeeze=False, constrained_layout=True)
+    cols = {1: C1, 2: C2, 3: C7}
+    labs = {1: "into the collector", 2: "escaped to the box", 3: "held (lip vortex) or stalled"}
+    for (a1, a2), (label, cs, P) in zip(axs, rows):
+        p0, fate, flat, off = P["p0"], P["fate"], P["flat"], P["off"]
+        for k in (1, 3, 2):
+            idx = np.where(fate == k)[0][::3]
+            for j, i in enumerate(idx):
+                pp = np.vstack([p0[i:i + 1], flat[off[i]:off[i + 1]]])
+                kw = dict(color=cols[k], lw=0.6, alpha=0.8, label=labs[k] if j == 0 else None)
+                a1.plot(pp[:, 1], pp[:, 2] - cs.zb, **kw)
+                a2.plot(pp[:, 1], pp[:, 0], **kw)
+        a1.set_xlim(-50, 60)
+        a1.set_ylim(0, 30)
+        a1.set_ylabel("z above bed (mm)")
+        a2.set_xlim(-50, 60)
+        a2.set_ylim(-45, 45)
+        a2.set_ylabel("x (mm)")
+        a1.set_title(label, loc="left")
+        a2.legend(loc="lower right", fontsize=7)
+    axs[-1, 0].set_xlabel("y (mm), side view")
+    axs[-1, 1].set_xlabel("y (mm), top view")
+    fig.savefig(OUT / fname, dpi=120)
+    plt.close(fig)
+
+
+def fig_box_multi(rows, fname):
+    n = len(rows)
+    fig, axs = plt.subplots(1, n, figsize=(5.2 * n, 4.0), squeeze=False, constrained_layout=True)
+    for ax, (label, cs, B) in zip(axs[0], rows):
+        xs, ys, zs = B.ax
+        Y, Z = np.meshgrid(ys, zs, indexing="ij")
+        pts = np.stack([np.zeros(Y.size), Y.ravel(), Z.ravel()], axis=1)
+        U = B.itp(pts).reshape(Y.shape + (3,))
+        sp = np.linalg.norm(U, axis=2)
+        pc = ax.pcolormesh(Y, Z, np.maximum(sp, 1e-4), cmap="Blues", norm=matplotlib.colors.LogNorm(1e-3, 3), shading="auto",
+                           rasterized=True)
+        ax.streamplot(ys, zs, U[:, :, 1].T, U[:, :, 2].T, color=INK2, linewidth=0.5, density=1.3, arrowsize=0.6)
+        zsl = cs.g["z_slide"]
+        ax.plot([-20, 20], [zsl, zsl], color=C8, lw=2.5, solid_capstyle="butt")
+        ax.plot([-20, 20], [cs.zb, cs.zb], color=C2, lw=2.5, solid_capstyle="butt")
+        ax.set_aspect("equal")
+        ax.set_xlabel("y (mm)")
+        ax.set_title(label, loc="left")
+    axs[0, 0].set_ylabel("z (mm)")
+    fig.colorbar(pc, ax=axs[0], label="|U| (m/s), log scale", shrink=0.85)
+    fig.suptitle("Box section x = 0 (through the plate and the window). Red: cover slide; orange: plate", x=0.01, ha="left",
+                 fontsize=9)
+    fig.savefig(OUT / fname, dpi=120)
+    plt.close(fig)
+
+
 def do_figures(a):
-    """--cases label=path ...: x = 0 sections near the jet, one panel per case (grids from the cross step's cache)."""
-    rows = []
+    """--cases label=path ...: the jet section, bed shear, tracer and box-section figures, one panel per case
+    (from the cross step's caches under /tmp/ft-cfd/post)."""
+    rows, rows_p, rows_b = [], [], []
     for item in a.cases:
         label, path = item.split("=", 1)
         cs = Lite(path)
         d = np.load(SCR / f"{cs.path.name}_near.npz")
         rows.append((label, cs, Field({k: d[k] for k in d.files})))
-    fig_cross(rows, a.name)
+        f = SCR / f"{cs.path.name}_post.npz"
+        if f.exists():
+            rows_p.append((label, cs, dict(np.load(f))))
+        f = SCR / f"{cs.path.name}_box.npz"
+        if f.exists():
+            d = np.load(f)
+            rows_b.append((label, cs, Field({k: d[k] for k in d.files})))
+    pre = a.name or "cross"
+    fig_cross(rows, f"{pre}_jet_section.png")
+    if rows_p:
+        fig_shear_multi(rows_p, f"{pre}_bed_shear.png")
+        fig_tracers_multi(rows_p, f"{pre}_tracers.png")
+    if rows_b:
+        fig_box_multi(rows_b, f"{pre}_box_section.png")
+
+
+def fig_purge_curves(names, labels, fname):
+    """O2 against time, one panel per purge configuration: box average, exhaust (flow-weighted) and the plate (1 mm
+    above it), with the well-mixed ideal for the same flow and volume."""
+    d = load_json()["purge"]
+    n = len(names)
+    ncol = 2 if n > 1 else 1
+    nrow = math.ceil(n / ncol)
+    fig, axs = plt.subplots(nrow, ncol, figsize=(4.3 * ncol, 2.9 * nrow), squeeze=False, sharex=True, sharey=True,
+                            constrained_layout=True)
+    for ax, nm, lab in zip(axs.ravel(), names, labels):
+        r = d[nm]
+        S = np.load(SCR / f"purge_{nm}.npz")
+        tm = np.linspace(0, r["t_end_s"] / 60, 200)
+        ideal = 209500 * np.exp(-r["q_total_L_min"] * tm / r["gas_L"])
+        ax.plot(tm, ideal, color="#9a9a9a", lw=1.2, ls=(0, (4, 2)), label="well mixed, same flow")
+        ax.plot(S["t"] / 60, S["box"], color=C1, lw=2, label="box average")
+        ax.plot(S["exhaust_t"] / 60, S["exhaust"], color=C2, lw=2, label="exhaust (analyzer)")
+        ax.plot(S["plate_t"] / 60, S["plate"], color=C3, lw=2, label="1 mm over the plate")
+        for lvl in (1000, 100):
+            ax.axhline(lvl, color=INK2, lw=0.6)
+        ax.set_yscale("log")
+        ax.set_ylim(10, 3e5)
+        ax.set_xlim(0, r["t_end_s"] / 60)
+        t1 = r["t_1000ppm_min"]["exhaust"]
+        t2 = r["t_100ppm_min"]["exhaust"]
+        f = lambda v: "-" if v is None else f"{v:.1f}"
+        ax.set_title(f"{lab}\nexhaust to 1000 / 100 ppm: {f(t1)} / {f(t2)} min", loc="left")
+        ax.set_ylabel("O2 (ppm)")
+    for ax in axs[-1]:
+        ax.set_xlabel("time from the start of the purge (min)")
+    for ax in axs.ravel()[n:]:
+        ax.axis("off")
+    axs[0, 0].legend(loc="lower left", fontsize=7)
+    fig.savefig(OUT / fname, dpi=120)
+    plt.close(fig)
+
+
+def fig_purge_snap(items, t_snap, fname):
+    """O2 (ppm, log) on the y = mid-depth section (through the purge ports) at t_snap s, one panel per case."""
+    n = len(items)
+    fig, axs = plt.subplots(n, 1, figsize=(6.6, 2.55 * n), squeeze=False, constrained_layout=True)
+    for ax, (lab, path, field) in zip(axs[:, 0], items):
+        r = pv.OpenFOAMReader(str(pathlib.Path(path) / "case.foam"))
+        tv = r.time_values
+        tt = min(tv, key=lambda v: abs(v - t_snap))
+        r.set_active_time_value(tt)
+        r.cell_to_point_creation = True
+        m = r.read()["internalMesh"]
+        meta = json.loads((pathlib.Path(path) / "case_meta.json").read_text())
+        e = meta["geom"]["enclosure"]
+        ym = 0.5 * (e[2] + e[3])
+        xs = np.arange(e[0] + 0.5, e[1], 2.0)
+        zs = np.arange(e[4] + 0.5, e[5], 2.0)
+        X, Z = np.meshgrid(xs, zs, indexing="ij")
+        pts = pv.PolyData(np.stack([X.ravel(), np.full(X.size, ym), Z.ravel()], axis=1) / 1000.0)
+        s = pts.sample(m)
+        if field == "c":
+            v = np.asarray(s.point_data["c"]) * X_O2_AIR * 1e6
+        else:
+            v = x_o2(np.asarray(s.point_data["O2"]), np.asarray(s.point_data["Ar"])) * 1e6
+        ok = np.asarray(s.point_data["vtkValidPointMask"]).astype(bool)
+        v = np.where(ok, v, np.nan).reshape(X.shape)
+        pc = ax.pcolormesh(X, Z, np.clip(v, 10, 2.1e5), cmap="Blues", norm=matplotlib.colors.LogNorm(10, 2.1e5),
+                           shading="auto", rasterized=True)
+        ax.set_aspect("equal")
+        ax.set_title(f"{lab}, t = {tt / 60:.0f} min", loc="left")
+        ax.set_ylabel("z (mm)")
+    axs[-1, 0].set_xlabel(f"x (mm), section y = {ym:.0f} mm (mid-depth, through the purge ports on the left wall)")
+    fig.colorbar(pc, ax=axs[:, 0], label="O2 (ppm), log scale", shrink=0.8)
+    fig.savefig(OUT / fname, dpi=120)
+    plt.close(fig)
+
+
+def do_purgefigs(a):
+    names = [c.split("=", 1)[0] for c in a.cases]
+    labels = [c.split("=", 1)[1] for c in a.cases]
+    fig_purge_curves(names, labels, a.name)
+
+
+def do_snaps(a):
+    items = []
+    for c in a.cases:
+        lab, path, field = c.split("=", 2)
+        items.append((lab, path, field))
+    fig_purge_snap(items, a.t_snap, a.name)
+
+
+def do_tables(a):
+    """Markdown tables of the cross-flow and purge results in cfd.json (printed; results.md quotes them)."""
+    d = load_json()
+    cr = d.get("cross", {})
+    names = [n for n in (a.cases or list(cr))]
+    f2 = lambda v, n=2: "-" if v is None else f"{v:.{n}f}"
+    pc = lambda v: "-" if v is None else f"{100 * v:.0f} %"
+    L = ["| | " + " | ".join(names) + " |", "|---|" + "---|" * len(names)]
+
+    def row(label, fn):
+        vals = []
+        for n in names:
+            try:
+                vals.append(fn(cr[n]))
+            except (KeyError, TypeError):
+                vals.append("-")
+        L.append(f"| {label} | " + " | ".join(vals) + " |")
+    sp = lambda r, z: r["speed_over_build_area"]["z" + z]
+    for z in ("1", "3", "5"):
+        row(f"speed {z} mm over the Ø30 build area: mean (min-max), m/s",
+            lambda r: f"{sp(r, z)['mean']:.2f} ({sp(r, z)['min']:.2f}-{sp(r, z)['max']:.2f})")
+    for z in ("1", "3", "5"):
+        row(f"spread {z} mm (std/mean)", lambda r: pc(sp(r, z)["cov"]))
+    for zone, lab in (("build_area_d30", "Ø30 build area"), ("plate_d40", "Ø40 plate"),
+                      ("strip_outside_plate", "spread strip beside the plate"), ("whole_block_top", "whole block top")):
+        row(f"bed shear, {lab}: mean / max, Pa",
+            lambda r: f"{r['bed_shear_Pa'][zone]['mean']:.3f} / {r['bed_shear_Pa'][zone]['max']:.3f}")
+        row(f"{lab}: area over 0.053 Pa (63 µm, low cohesion)", lambda r: pc(r["bed_shear_Pa"][zone]["frac_area_above_63um_low"]))
+    cp = lambda r: r["capture"]
+    ab = lambda r: r["capture"]["above_jet_4_15mm"]
+    row("tracers 0.5-3 mm: into the collector", lambda r: pc(cp(r)["captured"]))
+    row("tracers 0.5-3 mm: held under the collector's lower lip", lambda r: pc(cp(r).get("stalled_at_collector_lower_lip", 0)))
+    row("tracers 0.5-3 mm: escaped to the box", lambda r: pc(cp(r)["escaped"]))
+    row("tracers 0.5 mm: into the collector", lambda r: pc(cp(r)["captured_from_z0.5"]))
+    row("tracers 4-15 mm (above the jet): into the collector", lambda r: pc(ab(r)["captured"]))
+    row("tracers 4-15 mm: escaped to the box", lambda r: pc(ab(r)["escaped"]))
+    row("escaped tracers: median closest approach to the slide, mm",
+        lambda r: f2(ab(r).get("escaped_closest_to_slide_mm_median"), 0))
+    row("tracers within 30 mm of the slide", lambda r: pc(ab(r).get("frac_all_within_30mm_of_slide", 0)))
+    row("gas speed 2 mm under the slide: mean, mm/s", lambda r: f"{1000 * r['speed_2mm_under_slide']['mean']:.1f}")
+    row("jet flow at y = 25 mm, forward / back, L/min",
+        lambda r: f"{r['jet_flow']['y25']['forward_L_min']:.1f} / {r['jet_flow']['y25']['backward_L_min']:.1f}")
+    row("outlet flow, L/min", lambda r: f"{r['pressure']['outlet_flow_L_min']:.1f}")
+    row("pressure drop, nozzle channel inlet to collector port, Pa", lambda r: f"{r['pressure']['inlet_minus_outlet_Pa']:.0f}")
+    row("box (under the slide) above the collector port, Pa", lambda r: f"{r['pressure']['box_under_slide_minus_outlet_Pa']:.0f}")
+    row("y+ on the plate, mean / max",
+        lambda r: f"{r['bed_shear_Pa']['yplus_plate']['mean']:.2f} / {r['bed_shear_Pa']['yplus_plate']['max']:.2f}")
+    row("cells", lambda r: f"{r['cells']:,}")
+    fr = lambda r: r["convergence"]["final_initial_residuals"]
+    row("iterations or time steps; final initial residual Ux / Uz / p",
+        lambda r: f"{r['convergence']['steps']}; {fr(r)['Ux']:.0e} / {fr(r)['Uz']:.0e} / {fr(r)['p']:.0e}")
+    print("\n".join(L))
+    pu = d.get("purge", {})
+    if pu:
+        print()
+        P = ["| config | in (L/min) | out | exhaust to 1000 / 100 ppm, min | plate | box average | well mixed | "
+             "O2 at the end (exhaust / box / under the slide), ppm |", "|---|---|---|---|---|---|---|---|"]
+        for n, r in pu.items():
+            t1, t2 = r["t_1000ppm_min"], r["t_100ppm_min"]
+            g = lambda k: f"{f2(t1[k], 1)} / {f2(t2[k], 1)}"
+            e = r["ppm_at_end"]
+            ins = ", ".join(f"{k} {v:g}" for k, v in r["inlets"].items())
+            P.append(f"| {n} | {ins} | {r['outlet']} | {g('exhaust')} | {g('plate')} | {g('box')} | "
+                     f"{t1['well_mixed_ideal']:.1f} / {t2['well_mixed_ideal']:.1f} | "
+                     f"{e['exhaust']:.0f} / {e['box']:.0f} / {e['slide']:.0f} (at {r['t_end_s'] / 60:.0f} min) |")
+        print("\n".join(P))
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("what", choices=("cross", "purge", "figures"))
+    ap.add_argument("what", choices=("cross", "purge", "figures", "purgefigs", "snaps", "tables"))
+    ap.add_argument("--t-snap", type=float, default=600.0)
     ap.add_argument("case", nargs="?")
-    ap.add_argument("--name", required=True, help="case name in cfd.json (figures: the PNG's file name)")
+    ap.add_argument("--name", default="", help="case name in cfd.json (figures: the PNG's file name)")
     ap.add_argument("--figs", action="store_true")
     ap.add_argument("--cases", nargs="*", default=[], help="figures: label=case_path ...")
     a = ap.parse_args()
     SCR.mkdir(parents=True, exist_ok=True)
     OUT.mkdir(parents=True, exist_ok=True)
-    {"cross": do_cross, "purge": do_purge, "figures": do_figures}[a.what](a)
+    {"cross": do_cross, "purge": do_purge, "figures": do_figures, "purgefigs": do_purgefigs, "snaps": do_snaps,
+     "tables": do_tables}[a.what](a)
 
 
 if __name__ == "__main__":
