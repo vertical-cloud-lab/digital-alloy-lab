@@ -208,5 +208,21 @@
  },
  "energy_J_mean": 746.3666022000001,
  "mean_W_mean": 115.48216963811659,
- "period_s_mean": 6.463138595889392
+ "period_s_mean": 6.463138595889392,
+ "ladder_programs": {
+  "rung1_bare_plate": {
+   "lines": 18,
+   "r_max_mm": 13.695345924802337,
+   "list_s": 0.44176999999999994,
+   "energy_J": 78.025,
+   "path": "rung1_bare_plate.npz"
+  },
+  "rung2_single_tracks": {
+   "lines": 25,
+   "r_max_mm": 13.945967159003352,
+   "list_s": 0.31739999999999996,
+   "energy_J": 52.657500000000006,
+   "path": "rung2_single_tracks.npz"
+  }
+ }
 }

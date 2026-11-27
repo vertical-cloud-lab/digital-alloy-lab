@@ -202,6 +202,21 @@ def main():
                 scanner_delays_bits=(int(round(tm.jump_delay / 10e-6)), int(round(tm.mark_delay / 10e-6)),
                                      int(round(tm.polygon_delay / 10e-6))),
                 da_255W=da_value(255.0), da_150W=da_value(150.0))
+    # the one-layer commissioning programs (rungs 1-3)
+    info["ladder"] = {}
+    for name in ("rung1_bare_plate", "rung2_single_tracks"):
+        p = OUT / f"{name}.npz"
+        if not p.exists():
+            continue
+        s2, k2, i2, ptr2, m2 = SPG.load_build(p)
+        parts2 = [SPG.Part(**q) for q in m2["parts"]]
+        psets2 = {kk: SPG.ParamSet(**v) for kk, v in m2["psets"].items()}
+        cmds = layer_commands(s2, k2, i2, parts2, psets2, tm)
+        txt = [f"# RTC5 list for {p.name}: {len(cmds)} commands, dry-run {dry_run_time(cmds, tm):.3f} s; "
+               f"K = {K_DEFAULT:.1f} bits/mm (example); lens axis at plate {AXIS}"]
+        txt += [f"{n}({', '.join(f'{x:.1f}' if isinstance(x, float) else str(x) for x in args)})" for n, args in cmds]
+        (OUT / f"rtc5_{name}.txt").write_text("\n".join(txt) + "\n")
+        info["ladder"][name] = dict(commands=len(cmds), dry_run_s=dry_run_time(cmds, tm))
     (OUT / "rtc5.json").write_text(json.dumps(info, indent=1))
     print(info)
 

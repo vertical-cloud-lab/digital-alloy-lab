@@ -672,8 +672,7 @@ def figures(res, keep):
         a1.plot(*ax_, marker="+", ms=12, mew=2, color=col, ls="none", label=lab)
         r7 = offset_for(10.0, K_RANGE[0])[1]
         a1.add_patch(Circle(ax_, r7, fc="none", ec=col, lw=1.5))
-    a1.text(0, 0 - offset_for(10.0, K_RANGE[0])[1] - 1.8, "specular return\nreaches the collimator", ha="center", va="top",
-            fontsize=7.5, color=INK)
+    a1.text(0, -2.2, "specular return\nreaches the\ncollimator", ha="center", va="top", fontsize=7, color=INK)
     a1.text(0, 21.5, "Ø40 plate, Ø30 build area, M2 screw heads", ha="center", fontsize=8, color=INK)
     a1.text(offset_for(10.0, K_RANGE[0])[1] + 1.0, -30, f"r < {offset_for(10.0, K_RANGE[0])[1]:.1f} mm", ha="left",
             va="center", fontsize=7.5, color=INK)

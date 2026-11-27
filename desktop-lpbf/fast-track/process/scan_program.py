@@ -562,9 +562,47 @@ def main():
                 energy_J_mean=float(np.mean([r["energy_J"] for r in rows])),
                 mean_W_mean=float(np.mean([r["mean_W"] for r in rows])),
                 period_s_mean=float(np.mean([r["period_s"] for r in rows])))
+    if (OUT / "process_window.json").exists():
+        info["ladder_programs"] = ladder_programs(tm)
+        print("ladder programs", info["ladder_programs"])
     (OUT / "scan_program.json").write_text(json.dumps(info, indent=1))
     print("heat input: mean energy per layer", info["energy_J_mean"], "J; mean W", info["mean_W_mean"])
     figures(parts, psets, segs, kinds, pidx, ptr, times)
+
+
+def ladder_programs(tm: Timing):
+    """One-layer programs for rungs 1-3, in the build-file format (one 'part' and one parameter set per line).
+    Rung 1: two 50 W lines first (back-reflection check, laser status logged), then 100-400 W x 0.25-2 m/s, 10 mm
+    lines 1.5 mm apart on a bead-blasted or anodised 6061 disc. Rungs 2 and 3: Bosio's 5 x 5 method round the cube
+    set, 9 mm tracks 1.1 mm apart on one 50 um layer. Lines run along +X (sideways to the beam tilt) and are scanned
+    from +Y to -Y (into the cross-flow)."""
+    progs = {}
+    rung1 = [(50.0, 500.0), (50.0, 500.0)] + [(P, v) for P in (100.0, 200.0, 300.0, 400.0)
+                                              for v in (250.0, 500.0, 1000.0, 2000.0)]
+    pr = json.loads((OUT / "process_window.json").read_text())["recommended"]
+    st = pr["single tracks, 25 C, one 50 um layer"]
+    rung2 = [(P, v * 1000.0) for P in st["P_list"] for v in st["v_list"]]
+    for name, lines, L, pitch, layer in (("rung1_bare_plate", rung1, 10.0, 1.5, 0.0),
+                                         ("rung2_single_tracks", rung2, 9.0, 1.1, 0.050)):
+        n = len(lines)
+        ys = (n - 1) * pitch / 2 - np.arange(n) * pitch
+        parts, psets, segs = [], {}, []
+        for i, ((P, v), y) in enumerate(zip(lines, ys)):
+            key = f"{P:.0f}W_{v / 1000:.2f}ms_{i}"
+            psets[key] = ParamSet(key, P_hatch=P, v_hatch=v, hatch=0.0, P_contour=0.0, v_contour=v, contour_offset=0.0,
+                                  hatch_offset=0.0, layer=layer, rot_deg=0.0, exclude_deg=0.0)
+            parts.append(Part(f"line {i + 1}", 0.0, float(y), L, 0.0, layer, key))
+            segs.append((-L / 2, y, L / 2, y))
+        segs = np.array(segs, float)
+        kinds = np.zeros(n, np.uint8)
+        pidx = np.arange(n, dtype=np.uint8)
+        ptr = np.array([0, n], np.int64)
+        r_max = max(math.hypot(L / 2, abs(y)) for y in ys)
+        lt = layer_time(segs, kinds, pidx, parts, psets, tm)
+        path = OUT / f"{name}.npz"
+        save_build(path, parts, psets, tm, segs, kinds, pidx, ptr, meta=dict(program=name))
+        progs[name] = dict(lines=n, r_max_mm=r_max, list_s=lt["t_list"], energy_J=lt["energy_J"], path=path.name)
+    return progs
 
 
 def figures(parts, psets, segs, kinds, pidx, ptr, times):

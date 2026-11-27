@@ -12,6 +12,7 @@ solves, checked against published data where it exists. Estimates are marked.
 | [`scan_program.py`](scan_program.py) → [`out/build_first_coupons_15mm.npz`](out/build_first_coupons_15mm.npz) | coupon layout, hatching and contours for a whole build in one file, RTC5 timing, recoat and build times, heat input |
 | [`rtc5_list.py`](rtc5_list.py) → [`out/rtc5_layer1.txt`](out/rtc5_layer1.txt) | the build file turned into RTC5 list commands (real function names and units), a ctypes binding, a dry-run timer |
 | [`out/heat_input.csv`](out/heat_input.csv) | layer-wise heat input for the FEA (also at `/tmp/ft-process/heat_input.csv`) |
+| [`out/rung1_bare_plate.npz`](out/rung1_bare_plate.npz), [`out/rung2_single_tracks.npz`](out/rung2_single_tracks.npz) → [`out/rtc5_rung1_bare_plate.txt`](out/rtc5_rung1_bare_plate.txt), [`out/rtc5_rung2_single_tracks.txt`](out/rtc5_rung2_single_tracks.txt) | one-layer programs for rungs 1–3 of the commissioning ladder (§2.2), in the same format, with their RTC5 lists |
 | [`out/build_times.csv`](out/build_times.csv), [`out/scan_program.json`](out/scan_program.json), [`out/rtc5.json`](out/rtc5.json), [`out/layout.json`](out/layout.json) | tables behind the figures |
 
 ```bash
@@ -259,6 +260,12 @@ The scanning columns use a 2D thin-plate solve of the element with the first bui
 | 4, variant B | hatch 0.12 mm | Tang 0.60, 57 J/mm³ |
 | 4, variant C | 1.0 m/s | W 190, D 90 µm, King 24.7, 85 J/mm³ |
 
+- **Programs for rungs 1–3** are written in the build-file format and turned into RTC5 lists:
+  - `out/rung1_bare_plate.npz`: 18 lines of 10 mm, 1.5 mm apart, starting with two 50 W lines; 0.44 s.
+  - `out/rung2_single_tracks.npz`: 25 tracks of 9 mm, 1.1 mm apart; 0.32 s. Rung 3 uses the same file.
+
+  Every line runs along +X, the field is scanned from +Y to −Y, and all of it lies within r = 14 mm of the plate
+  centre.
 - **Speed:** the hatch speed sits at the hurrySCAN 25's 1.27 m/s marking speed at f = 254.4. The window reaches past
   2 m/s if the delays are tuned for it.
 - **Calibration:** rung 3's widths and depths re-fit A, and the cube set moves with them. The model and the tables

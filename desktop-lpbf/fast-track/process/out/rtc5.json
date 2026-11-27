@@ -19,5 +19,15 @@
   25
  ],
  "da_255W": 2611,
- "da_150W": 1536
+ "da_150W": 1536,
+ "ladder": {
+  "rung1_bare_plate": {
+   "commands": 76,
+   "dry_run_s": 0.39041999999999993
+  },
+  "rung2_single_tracks": {
+   "commands": 106,
+   "dry_run_s": 0.26598999999999995
+  }
+ }
 }
