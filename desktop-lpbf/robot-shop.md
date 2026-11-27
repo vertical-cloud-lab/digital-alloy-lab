@@ -70,6 +70,39 @@ and their feet step after it, so no shop chapter glides or slides a planted foot
 - **What is drawn in the gripper:** the nut runner and the safety knife are drawn in the 2F-85 (round 8 drew an empty
   gripper), and so is the deburred bracket.
 
+**The checks on the round-9 frames** (the frame audit, people's feet and MiRs, and video_qa.py's camera check run on each
+chapter's raw frames; files in [`analysis/out/videoqa/`](analysis/out/videoqa/)):
+
+| Chapter | Frames | Pairs over 1.5 mm | Stance-foot slip, max | Gliding frames | MiR A: driven, reversing, sideways | Camera: jumps a minute, median shot, runs under 2 s |
+|---|---:|---:|---|---:|---|---|
+| 20 receiving | 448 | 0 | 0.0 mm | 0 | parked | 4.8, 8.6 s, 0 %: pass |
+| 29 the stock | 275 | 0 | 0.0 mm | 0 | - | 0.0, 22.9 s, 0 %: pass |
+| 30 the chamber | 2,854 | 42 (below) | 0.0 mm | 0 | 12.8 m, 0, 0.1 mm in all | 2.5, 20.8 s, 0 %: pass |
+| 31 the other parts | 1,088 | 0 | - | - | 4.25 m, 0, 0 | 2.0, 21.6 s, 0 %: pass |
+| 32 finishing | 1,001 | 0 | 0.0 mm (stands) | 0 | 1.39 m, 0, 0 | 4.3, 10.0 s, 0 %: pass |
+
+![Chapter 29: the plate carried by its ends, the carriers' feet locked](cad/img/robotbuild/round9/r9-29-carried-by-its-ends-locked-feet.png)
+![Chapter 30: the two people turn the part over at the cart beside the VF-4](cad/img/robotbuild/round9/r9-30-two-people-turn-it-over.png)
+![Chapter 30: arm A drives the platter screws through the frame's opening](cad/img/robotbuild/round9/r9-30-arm-bolts-plate-to-4th-axis.png)
+![Chapter 31: arm A's MiR turns its arm to the transport pose and drives on to the lathe](cad/img/robotbuild/round9/r9-31-mir-drives-vf4-to-lathe.png)
+![Chapter 31: arm A takes the turned part out of the ST-10](cad/img/robotbuild/round9/r9-31-lathe-unload.png)
+![Chapter 20: the pallet on the jack's forks, pushed clear of the stock rack](cad/img/robotbuild/round9/r9-20-pallet-jack-on-its-stringers.png)
+
+**What the audit still finds in chapter 30** (42 pairs over 1.5 mm, all 2,854 frames checked; round 8's audit stopped at
+200 frames with 69):
+- the two people at the door and the cart (25 pairs, 354 pair-frames): their shoulders and feet touch as they stand side
+  by side at the load's ends (coats 84 mm, shoes 47 mm: the bodies' centres 474 mm apart); fingers 31-42 mm into the
+  cart's top and 34 mm into the edge clamps where the palms are low on the end faces; a stance foot 25 mm under the sill
+  and a shirt's hem 14 mm into the sill trim during the reach-in; gloves up to 15 mm in the load in 4 frames;
+- arm A: its forearm through the work light under the roof in the clamping clip (18.5 mm, 7 frames: the light is drawn
+  but `collide=False` for the planner); the nut runner's extension 8.6 mm into the MiR's finger stand as the arm turns
+  for a drive (14 frames: the drive's sweep didn't carry the tool; it does since 83b93c6); the MiR's base through the
+  deck blocks it left behind (25 mm, 11 frames: they should ride on its deck);
+- the cutter in the stock in 1-6 frames per tool (T2 23 mm and T9 15 mm on the floor plate, the frame's drills 2-13 mm);
+- the HRT210's platter fins 1.6 mm into the dummy-floor plate (drawn 1.5 mm proud).
+Each is a scene fix (the people 120 mm further apart, the palms higher, the light on the side wall, the blocks on the
+deck); a test of the people's fix showed the reach growing past the arms, so it is not in this render.
+
 **Not done in round 9:** FreeCAD CAM for chapter 31's parts (FreeCAD isn't installed on this runner; its CAM workbench has
 no turning, and the vise bracket would need its own CAM job and gcode_sim support), so the vise bracket and the turned
 part are still shown with the door shut and the clock running, not cut; the floor plate's turnover between P-S1 and
