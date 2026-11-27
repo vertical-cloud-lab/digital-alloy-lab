@@ -75,7 +75,7 @@ Ultrasonic atomization, which breaks up a melt on a vibrating plate, makes
 spherical powder from charges of a few hundred grams\cite{rePowder2021,priyadarshi2024}
 and was recently used to make powder of a machine-learning-designed aluminum
 alloy for LPBF.\cite{taherimousavi2026} Parameter studies show how plate
-amplitude and melt conditions set the size of Al--Si powders,\cite{priyadarshi2024,yankin2025}
+amplitude and melt conditions set the size of Al and Al--Si powders,\cite{priyadarshi2024,yankin2025}
 but run-to-run repeatability at fixed settings has been reported only from three
 replicate runs of a refractory alloy,\cite{hinrichs2021} and how well the
 powder's composition follows a dosed charge has not been reported for
@@ -95,7 +95,7 @@ budget on candidates that a cheap early measurement could have ruled out.
 
 Self-driving laboratories (SDLs) close the loop between choosing experiments
 and running them, and they have accelerated discovery of molecules, thin films
-and inorganic powders.\cite{tom2024,abolhasani2023,stach2021,burger2020,macleod2020,kusne2020,szymanski2023}
+and inorganic powders.\cite{tom2024,abolhasani2023,stach2021,tobias2025,burger2020,macleod2020,kusne2020,szymanski2023}
 For structural metals they remain rare. Closed loops have optimized refractory
 alloys made by arc melting,\cite{paramore2025} multi-principal-element alloys
 made by directed energy deposition from purchased powders,\cite{nelaturu2024}
@@ -103,7 +103,7 @@ and printed NiCoCr alloys,\cite{talbot2026} and the closest physical
 precedent designed an aluminum alloy by composition-level optimization before
 atomizing, printing and testing it.\cite{taherimousavi2026} In these studies the
 optimizer chooses compositions, and every chosen candidate then goes through a
-fixed sequence of steps.\cite{tobias2025} Bayesian optimization of function
+fixed sequence of steps. Bayesian optimization of function
 networks (BOFN) instead models a multi-step workflow as a network of surrogate
 models, one per step,\cite{astudillo2021} and its partial-evaluation extension
 chooses which step to run, and for which candidate, by the expected gain per
