@@ -48,13 +48,13 @@ Updated in round 2 (2026-11-27); §0 lists what the detailed design work changed
   - **Custom parts:** 31 kinds of piece to FT-1, every one programmed in FreeCAD CAM and checked in a voxel
     simulation: **59–123 shop hours** with PR 266's allowances, not the 25–40 that round 1 guessed
     ([`fab/`](fab/)). No honing, no vacuum seals, no 4th axis.
-  - **Cost:** **$28.9k–46.7k** with the monitoring set (camera, raking lights, coaxial photodiode, acoustic emission,
-    digitizer), **$23.6k–38.5k without it**, against $70.5k–154.1k for PR 266's BOM.
+  - **Cost:** **$28.8k–46.7k** with the monitoring set (camera, raking lights, coaxial photodiode, acoustic emission,
+    digitizer), **$23.6k–38.4k without it**, against $70.5k–154.1k for PR 266's BOM.
   - **Time:** first tracks at 2.7–7.3 weeks and **first coupons at 3.7–9.3 weeks** with the two stages on separate
     vendors' PCard orders and the shop giving 5–8 hours a working day. **With two people in the shop (12 h a day) the
-    coupons come at 3.2–6.5 weeks.** On one purchase order for both stages: 4.2–9.3 weeks.
+    coupons come at 3.2–6.4 weeks.** On one purchase order for both stages: 4.2–9.3 weeks.
 - **FT-0 is FT-1's first half:** the same optics, box and heated plate without the stages, spread by hand with a film
-  applicator. It lays single tracks and single-layer pads at **1.9–5.3 weeks for $20.8k–36.6k** ($16.3k–30.4k
+  applicator. It lays single tracks and single-layer pads at **1.9–5.2 weeks for $20.7k–36.5k** ($16.3k–30.3k
   without monitoring), and it is worth doing even if FT-1 follows, because it checks the used laser chain inside its
   return windows.
 - **What FT-1 gives up**, all of which can come back later:
@@ -67,9 +67,11 @@ Updated in round 2 (2026-11-27); §0 lists what the detailed design work changed
 - **What it keeps:** the physics PR 266 chose. A CW single-mode fibre laser at 1070 nm with a galvo and f-theta (76 µm
   spot), argon, a 200 °C plate, a few tens of grams of powder per build, hardwired interlocks and Python control (the
   supervisor `ftctl` runs a whole simulated build today: [`control/`](control/README.md)).
-- **Heat, not the scanner, sets the build time.** The plate can shed the laser's ~56 W only through a 0.1 mm argon gap,
-  so each layer needs a dwell: a 15 mm build takes about 4.2 h with the block at the plate's temperature, 1.6 h with the
-  block 20 K cooler ([`control/`](control/README.md) §7). The starting set for AlSi10Mg is 255 W, 1.25 m/s, 0.10 mm
+- **Heat, not the scanner, sets the build time.** The plate sheds the laser's heat to the block only through the 0.1 mm
+  argon gap: 0.67 W/K from the substrate top in the thermal FEA. Without a dwell the substrate would run 41–106 K above
+  200 °C. At that conductance a 10 mm build takes 2.1–4.2 h holding the plate within 5 K with the block at the plate's
+  temperature, and **0.8–1.8 h with the block 20 K cooler** (absorptivity 0.3–0.6; scanning and spreading alone take
+  0.6 h) ([`control/out/dwell-study-fe.csv`](control/out/dwell-study-fe.csv), [`analysis/out/fea/`](analysis/out/fea/)). The starting set for AlSi10Mg is 255 W, 1.25 m/s, 0.10 mm
   hatch, 30 µm layers ([`process/`](process/README.md)).
 - **The long poles are now the shop and the approvals, not parts.** Registering a Class 4 laser with the LSO and an EHS
   look at aluminium powder have no published turnaround at BYU; FT-1 is a Class 1 enclosure (the beam is enclosed from
@@ -105,13 +107,26 @@ in headed Chrome with real mouse clicks. Each finding below links the folder wit
 | **The laser's rating label** (listing photos): made Feb 2015, 1/N/PE 200–240 VAC, 10 A | [`control/`](control/README.md) §3 | the laser needs its **own 208/240 V, 15 A two-pole circuit**: a Physical Facilities request on day 0. Everything else is ~440 W on one 120 V 20 A circuit |
 | **Safety chain:** Omron documents the G9SE-201 only with direct-opening switches and Type 4 OSSD sensors, and two lid switches in series mask each other's stuck contacts | [`control/`](control/README.md) §2 | **one Omron D4NS-2CF tongue switch per guard** (lid, beam tube), $96.91 each today; a contact-level check of the whole chain (1,048,576 transitions) never emits with a contact open |
 | **The trace O₂ analyzer reads only to 10,000 ppm**, so it can't show the box is safe to open | [`control/`](control/README.md) §1 | a percent-range O₂ transmitter on the exhaust, a valve that keeps the trace cell out of air, possibly a sample pump |
-| **The plate's heat sets the build time.** The laser leaves ~56 W in the plate and the 0.1 mm argon gap passes only ~11 W to the block at +5 K | [`control/`](control/README.md) §7 | a dwell takes most of each layer: 15 mm in 4.2 h (the study assumed 1.2–1.8 h for 10 mm). Running the well block 20 K below the plate gives 1.6 h. The thermal FEA's conductance is in [`analysis/out/fea/`](analysis/out/fea/) |
+| **The plate's heat sets the build time.** The thermal FEA (CalculiX, CAD v2) gives 0.67 W/K from the substrate top to the block (0.83 W/K across the 0.1 mm argon gap); without a dwell the substrate runs 41–106 K over 200 °C | [`analysis/out/fea/`](analysis/out/fea/), [`control/`](control/README.md) §7 | a dwell takes most of each layer: at the FE conductance a 10 mm build takes 2.1–4.2 h with the block at setpoint, **0.8–1.8 h with the block 20 K below the plate** (round 1 assumed 1.2–1.8 h with no dwell) |
 | **Process window** from a melt-pool model calibrated on 15 published AlSi10Mg tracks | [`process/`](process/README.md) | starting set **255 W, 1.25 m/s, 0.10 mm hatch, 30 µm layers**; first build three 10 mm and two 5 mm cubes; 0.60 h for 10 mm before any dwell; RTC lists for commissioning rungs 1–3 |
 | **Structure** (CalculiX) | [`analysis/out/fea/struct.md`](analysis/out/fea/struct.md) | a **sponge silicone gasket**, not a solid cord (the cord needs 4.0 kN to close); the gantry as drawn has a **13 Hz** first mode, so **four 45 mm posts with braces** (79 Hz); the cube plate and window pass (SF 34 and 74); the X-VSR20A must pull the rod down past its O-ring drag (7–45 N); the Thorlabs stage needs one O-ring |
 | **Cross-flow** (OpenFOAM, laminar and k-ω SST, 237k cells) | [`analysis/out/cfd/`](analysis/out/cfd/) | the slot jet holds 2.6–2.7 m/s over the build area; bed shear 0.03–0.05 Pa, below the 0.053–0.118 Pa that starts to lift 63 µm powder; 96–99 % of tracers released 0.5–3 mm up reach the collector |
 | **Fabrication** (FreeCAD CAM, 66 setups, every program checked in a voxel simulation; 35 drawings) | [`fab/`](fab/) | with PR 266's per-part allowances, FT-1's parts need **about 59–123 shop hours, not 25–40**. The schedule below is redone on them |
 | **Monitoring** after PR 266's `monitoring.md`: layer camera, two raking lights, a coaxial photodiode, acoustic emission, thermocouples, one digitizer on the laser's time base | [`cad/`](cad/README.md) (MON1–MON8), [`control/`](control/README.md) | $4.5k–6.2k at FT-0 and $5.3k–8.2k at FT-1 (`parts.csv` group "Monitoring") |
 | **Edison round 2:** seven design risks reviewed; the top five with first-week checks | [`../edison/ft-round2-review/`](../edison/ft-round2-review/answer.md) | back reflection, piston binding at 200 °C, purge leaks, hopper dosing of fine Al, cover-slide fouling; the commissioning steps in `control/ftctl/commission.py` follow them |
+
+**Which model each analysis used.** The CAD v2 model landed partway through the round, so not everything was re-run on
+it:
+
+| Work | Model | Note |
+|---|---|---|
+| CAD checks, progression, renders, STEP | v2 | [`cad/`](cad/README.md) |
+| Thermal FEA | v2 | [`analysis/out/fea/`](analysis/out/fea/) |
+| Structural FEA | v1, with the head and lens at their datasheet masses and the 30 mm offset | the gantry case should be re-run on v2's head bracket |
+| CFD | v1 (same box, cassette and nozzle) | [`analysis/out/cfd/`](analysis/out/cfd/) |
+| Process and optics | v1 geometry, own optics model | its changes (lens offset, window position) are in v2 |
+| Fabrication (pieces, CAM, drawings, hours) | v1 | v2's changes listed and costed in [`fab/out/v2/delta.md`](fab/out/v2/delta.md); `fab/parts.py` stops with a message on v2 until ported |
+| Progression video | v1 | [`video/`](video/) |
 
 ## 1. What sets the schedule of PR 266's design
 
@@ -140,9 +155,9 @@ The parts that make the machine slow come from requirements a first machine does
 | | Alternative | Parts + shop time | First tracks | First coupons | O₂ | Heated plate | Main risk | Verdict |
 |---|---|---|---|---|---|---|---|---|
 | A | PR 266's design, fast-tracked (used majors, swapped switches, outsourcing split) | $70k–76k at spec with used majors (`lead-times.md`) | ~11.3–13.5 wk | ~12–15 wk | 1–10 ppm | Ø25/50/75 modules | honing, 134+ BYU hours | the long-term machine, not a 6-week one |
-| **FT-0** | **Single-track bench**: used laser chain over a heated plate in a stainless box, hand-spread layers | **$20.8k–36.6k** ($16.3k–30.4k without monitoring) | **1.9–5.3 wk** | single layers and pads only | 100–1000 ppm (flow) | Ø40, 200 °C | the used laser's condition | **do first** |
-| **FT-1** | **Purge-box LPBF**: FT-0 plus a heated well, a piston stage and a hopper-blade stage | **$28.9k–46.7k** ($23.6k–38.5k without monitoring) | **2.7–7.3 wk** (PCard stages) / 3.2–7.3 wk (one PO) | **3.7–9.3 wk** / 4.2–9.3 wk; 3.2–6.5 wk with two people in the shop | 100–1000 ppm (flow) | Ø40 well, 200 °C | shop hours; approvals; hopper flow with fine Al | **recommended** |
-| FT-1V | FT-1 in a stock vacuum cube with a pump-purge kit | $39.9k–59.8k | 3.4–8.4 wk | 4.4–10.4 wk | < 100 ppm in 2–3 cycles | Ø40 well, 200 °C | stages and grease under vacuum; two POs | if O₂ below 100 ppm is required from day 1 |
+| **FT-0** | **Single-track bench**: used laser chain over a heated plate in a stainless box, hand-spread layers | **$20.7k–36.5k** ($16.3k–30.3k without monitoring) | **1.9–5.2 wk** | single layers and pads only | 100–1000 ppm (flow) | Ø40, 200 °C | the used laser's condition | **do first** |
+| **FT-1** | **Purge-box LPBF**: FT-0 plus a heated well, a piston stage and a hopper-blade stage | **$28.8k–46.7k** ($23.6k–38.4k without monitoring) | **2.7–7.3 wk** (PCard stages) / 3.2–7.3 wk (one PO) | **3.7–9.3 wk** / 4.2–9.3 wk; 3.2–6.4 wk with two people in the shop | 100–1000 ppm (flow) | Ø40 well, 200 °C | shop hours; approvals; hopper flow with fine Al | **recommended** |
+| FT-1V | FT-1 in a stock vacuum cube with a pump-purge kit | $39.9k–59.7k | 3.4–8.4 wk | 4.4–10.4 wk | < 100 ppm in 2–3 cycles | Ø40 well, 200 °C | stages and grease under vacuum; two POs | if O₂ below 100 ppm is required from day 1 |
 | E | Laser engraver as the base (PR 266 §1b) | $7.5k–9.5k for a 200 W MOPA engraver | – | – | – | add-on | pulsed only: Monport's GT 200W has no CW or quasi-CW mode, and its board is closed (Sterling's 2026-11-19 update) | no: with a CW laser swapped in it becomes FT-0 with marking-grade optics |
 | F | Buy a commercial desktop unit (AO Metal A30, Xact XM200C, ...) | $59k–130k (PR 266 §2.2) | vendor lead time + PO and any bid steps | – | ≤ 1000–3000 ppm typical | none listed on the desktop units | lead times not published; no heated plate | the go/no-go fallback, not a 6-week route |
 | G | Reduced-build-volume insert in BYU's Concept Laser M2 | an insert, ~$1k–5k (estimate) | 2–6 wk (estimate; depends on that lab) | same | the M2's | check whether the M2 has one | the lab's willingness, warranty and schedule | ask this week |
@@ -281,7 +296,9 @@ by its datasheet), with interference, beam, travel and fit checks. The structura
   coupons after a build. Make several.
 
 **Powder:** a 10 mm build on Ø40 mm takes about 30 g of AlSi10Mg at a 1.8× dose, and a 15 mm build about 45 g
-(`fast_track.py`, using `budgets.py`'s factors). A 10 mm build is 333 layers and about 1.2–1.8 h.
+(`fast_track.py`, using `budgets.py`'s factors). A 10 mm build is 333 layers. Scanning and spreading take 0.6 h
+([`process/`](process/README.md)); the dwell the plate needs to shed the laser's heat brings it to 0.8–1.8 h with the
+well block 20 K below the plate, or 2.1–4.2 h with the block at setpoint ([`control/out/dwell-study-fe.csv`](control/out/dwell-study-fe.csv)).
 
 ### 3.4 Gas: flow purge and a once-through cross-flow
 
@@ -308,8 +325,10 @@ by its datasheet), with interference, beam, travel and fit checks. The structura
 - **Cross-flow:** a 45 × 4 mm slot nozzle at 2.5 m/s, ~27 L/min, a few mm above the bed, across the plate to an outlet
   on the far side. The exhaust goes through a HEPA housing (McMaster 5169K72 + 9179K14) and a check valve to the
   building exhaust. **Treat the filter as a fire hazard** (PR 266 §3.7): condensate can ignite on contact with air.
-- **Argon use:** about 2.8–5.4 m³ per 10–15 mm build including the purge, so about 1.8–3.4 builds per size-300
-  cylinder, roughly $31–172 of argon a build (estimate). PR 266's recirculating loop is the fix once builds are routine.
+- **Argon use** (round 2, `ftctl`'s simulated builds at the FE conductance): with the cross-flow dropped to a 5 L/min
+  hold during dwells, a 15 mm build uses about 1.6–3.0 m³ while building (1.8 m³ with the block 20 K cooler, A 0.45),
+  plus 0.3–0.9 m³ for the purge, so about 2–4 builds per size-300 cylinder. Without the low flow in dwells it is about
+  three times that ([`control/`](control/README.md) §7). PR 266's recirculating loop is the fix once builds are routine.
 - **Water matters more than O₂ for Al** ([`vacuum-and-purge.md`](../vacuum-and-purge.md)): dry the powder in a vacuum
   oven and load it dry. Heating the plate drives water off the powder into the gas, which the once-through flow carries
   away.
@@ -326,9 +345,10 @@ by its datasheet), with interference, beam, travel and fit checks. The structura
 
 - **Put a fan on the box.** A 120 mm fan on the outside of the box (or a water-cooled deck) keeps the stages in their
   rating. The thermal FEA of the cassette is in [`analysis/out/fea/`](analysis/out/fea/).
-- **The plate's heat sets the build time** (round 2, [`control/`](control/README.md) §7): the laser leaves ~56 W in the
-  plate at the no-dwell rate, and the 0.1 mm argon gap passes only ~11 W to the block at +5 K. Holding the plate within
-  5 K takes a dwell of 80 % of each layer (15 mm in 4.2 h); running the block 20 K below the plate gives 1.6 h.
+- **The plate's heat sets the build time** (round 2, [`control/`](control/README.md) §7 and the thermal FEA): the plate
+  passes heat to the block through the 0.1 mm argon gap at 0.67 W/K (FE, substrate top), so without a dwell the
+  substrate runs 41–106 K above 200 °C. Holding it within 5 K takes a dwell of most of each layer (10 mm in 2.1–4.2 h);
+  running the block 20 K below the plate gives 0.8–1.8 h. The `ftctl` supervisor does either.
 - **Dense layers will push the plate above 200 °C,** as PR 266 found for its modules ([`heat.md`](../heat.md)): the laser
   can bring more heat than the heaters' load, so the controller just switches off. Scan less of the plate per layer,
   add an interlayer dwell, or log the plate temperature as a screening variable.
@@ -385,15 +405,17 @@ From [`parts.csv`](parts.csv) (`python fast_track.py`):
 | Group | FT-0 | FT-1 | FT-1V |
 |---|---:|---:|---:|
 | Laser and optics (used) | $4.8k–7.9k | $4.8k–7.9k | $4.8k–7.9k |
-| Scan control and computing | $1.7k–2.9k | $1.7k–2.9k | $1.7k–2.9k |
-| Motion | $0.2k–0.6k | $6.0k–6.1k | $6.0k–6.1k |
-| Enclosure or chamber | $0.8k–1.4k | $0.8k–1.4k | $11.4k–13.1k |
-| Heated plate | $0.6k–1.0k | $0.7k–1.1k | $0.7k–1.1k |
-| Gas and O₂ | $1.6k–2.1k | $1.6k–2.1k | $1.6k–2.1k |
-| Safety | $2.7k–3.5k | $2.7k–3.5k | $2.7k–3.5k |
-| Stock and shop time | $1.0k–1.6k | $2.0k–3.2k | $2.3k–3.7k |
+| Scan control and computing | $1.2k–2.5k | $1.4k–2.7k | $1.4k–2.7k |
+| Motion | $0.1k–0.6k | $6.0k–6.1k | $6.0k–6.1k |
+| Enclosure or chamber | $0.9k–1.2k | $0.9k–1.2k | $11.4k–13.1k |
+| Heated plate | $0.6k–1.0k | $0.9k–1.4k | $0.9k–1.4k |
+| Gas and O₂ | $2.7k–4.1k | $2.7k–4.1k | $2.7k–4.1k |
+| Safety | $2.8k–3.7k | $2.8k–3.7k | $2.8k–3.7k |
+| Stock and shop time ($65/h) | $3.2k–6.5k | $4.2k–8.5k | $4.7k–9.7k |
 | Glovebox (if the lab has none free) | $0–2.7k | $0–2.7k | $0–2.7k |
-| **Total** | **$13.2k–23.7k** | **$20.1k–30.9k** | **$31.1k–43.2k** |
+| Monitoring (camera, lights, photodiode, AE, digitizer) | $4.5k–6.2k | $5.3k–8.2k | $5.3k–8.2k |
+| **Total** | **$20.7k–36.5k** | **$28.8k–46.7k** | **$39.9k–59.7k** |
+| Total without monitoring | $16.3k–30.3k | $23.6k–38.4k | $34.6k–51.5k |
 
 - **Purchase orders.** FT-1 needs one only if both Zaber stages go on one order ($5,896). Buying the piston stage from
   Thorlabs instead (MTS50/M-Z8 + KDC101, $2,179.18, both "Available: Today") keeps every order under $3,500. Its 44 N
@@ -424,7 +446,19 @@ to FT-1, made each fabrication-ready, programmed it in FreeCAD CAM and checked e
 deburring on top of the programs' cycle times (the low end uses `robot-shop.md`'s smaller allowances). Round 1's 25–40
 hours left out most of the CAM and setup time. Most of it is CAM and setups, not cutting (about 4 h of programmed
 cutting in all). Nothing needs a 4th axis, a long tool, honing or welding. At 5–8 shop hours a working day the shop,
-not the parts, sets FT-1's date; with two people (12 h a day) FT-1's coupons come back to 3.2–6.5 weeks.
+not the parts, sets FT-1's date; with two people (12 h a day) FT-1's coupons come back to 3.2–6.4 weeks.
+
+- **The shop calendar** ([`fab/out/plan.md`](fab/out/plan.md)) puts each state's pieces against the dates the
+  progression needs them (S1's by working day 4, S2's by 5, FT-0's by 6, FT-1's by 9). Two people who both program and
+  cut for the first 8 working days meet every date at the expected hours (FT-1's pieces done on day 7.8). One person
+  finishes FT-1's pieces on day 15.2, which moves FT-0's first tracks from 1.8 to 2.9 weeks and FT-1's first coupons
+  from 3.2 to 4.5 weeks on the early path. Sending FT-1's two plates out saves 5.2 h; sending S1's and S2's out would
+  arrive too late (SendCutSend's 5–6 days, PR 266's quotes, not re-read).
+- **The programs are written.** If a programmer reviews and proves them out instead of writing CAM afresh (0.25 h a
+  setup), the expected hours fall to 61.6 / 83.8 / 97.0 h to FT-0 / FT-1 / FT-1V.
+- **The fabrication set follows the round-1 model.** Round 2's CAD v2 (vendor geometry, the lens offset, the monitoring
+  parts) changes 22 of the 35 pieces and adds 9, mostly monitoring hardware: about 155 expected hours to FT-1
+  (estimate, [`fab/out/v2/delta.md`](fab/out/v2/delta.md)). The monitoring pieces can wait until after first tracks.
 
 ### 3.10 Day 0 and the weeks after
 
@@ -516,6 +550,26 @@ Edison's summary is that together these "can plausibly reduce the time to first 
 acceptance test of ex-EOS lasers, PTFE near its limit at 200 °C, piston rotation in a reduction kit, and O₂
 sensitivity of crack-prone alloys. Its time savings are engineering estimates, not sourced figures.
 
+### 6.1 Edison round 2: seven design risks
+
+A second `LITERATURE_HIGH` task (`61f66d54…`, in [`../edison/ft-round2-review/`](../edison/ft-round2-review/answer.md)
+with its references and full trajectory) reviewed seven risks of this design and ranked the five most likely to cost
+weeks, each with a check that fits in the first week. Round 2 acted on each:
+
+| Rank | Risk | Edison's first-week check | What round 2 did |
+|---:|---|---|---|
+| 1 | Back reflection into the used YLR-400-SM (an ex-EOS unit may lack protection) | ask IPG with the serial number; 50 W on a bead-blasted plate off the field centre, watching the back-reflection alarm | the 30 mm lens offset that keeps the specular return out of the core ([`process/`](process/README.md)); the supervisor stops on the laser's back-reflection status bit ([`control/`](control/README.md)) |
+| 2 | The heated piston binding or leaking powder | ten strokes at 200 °C with the drive force logged; bore and plate measured hot | the thermal FEA's hot clearance ([`analysis/out/fea/`](analysis/out/fea/)); the hot piston test in `ftctl/commission.py` |
+| 3 | Purge leaks in the NEMA box | 20 L/min, time to < 500 and < 100 ppm; soap-test the seals if > 15 min | the purge CFD (a diffuser and a high vent reach the well-mixed time; [`analysis/out/cfd/`](analysis/out/cfd/)); a sponge gasket (structural FEA) |
+| 4 | The gravity hopper dosing fine AlSi10Mg unevenly | 20 dose-and-spread cycles, each weighed and photographed under raking light; CV < 15 % | the 20-cycle dose test in `ftctl/commission.py`; the raking lights and layer camera (MON1–MON3) |
+| 5 | Cover-slide fouling | 5 min at full power on Al, then the slide's transmission | the thermal-lens calculation for a sooted slide, and FT-1V's slide hung ~130 mm above the bed ([`process/`](process/README.md)) |
+
+It also found that a 200 °C plate helps AlSi10Mg but did not stop hot cracking in 7075 at 100–200 °C (Velikajne 2026),
+which matters for the alloys after AlSi10Mg. On heat, PR 266's own Edison review
+([`../edison/followup-laser-heat/`](../edison/followup-laser-heat/answer.md)) had found that a recoat dwell of about
+28–30 s kept heat from building up layer to layer (Bugatti and Colosimo 2024), the same order as the dwell `ftctl` needs
+here with the block at setpoint.
+
 ## 6b. The CAD model and the progression
 
 [`cad/`](cad/README.md) models FT-0, FT-1 and FT-1V in CadQuery as one machine that grows through five states as the
@@ -531,7 +585,14 @@ recoater, the 28 mm heater plate with its leads down the rod, M2 substrate screw
 
 1. FT-0 then FT-1, or straight to FT-1V if below 100 ppm O₂ is required from the start?
 2. Is a purge-only O₂ of 100–1000 ppm acceptable for the first coupons? EOS M 290 work on Al uses a 1000 ppm threshold.
-3. Buy the used laser chain now? Three of its four parts are returnable, it is about $5.2k–6.6k, and every route uses
-   it, including PR 266's.
-4. Who asks BYU's metal-AM lab about a reduced-build-volume insert for its Concept Laser M2?
-5. Ø40 mm plate and 15 mm builds: enough for the first coupons?
+3. Buy the used laser chain now? The laser, the hurrySCAN 25, the LINOS lens and the **RTC4** (not the RTC5) come to
+   about $4.1k–5.5k with freight and a collimator if needed; three of the four are returnable, and every route uses
+   them, including PR 266's. Before paying for the RTC4, confirm with SCANLAB or the seller that a 64-bit DLL exists.
+4. **Staff the shop.** FT-1's parts are 59–123 shop hours ([`fab/`](fab/)). Two people for the first 2–3 weeks (12 shop
+   hours a working day) keep FT-1's coupons at 3.2–6.4 weeks; one person part-time (5 h a day) gives 4.5–9.3 weeks.
+   Sending the plates and sheet parts out is the alternative.
+5. **Ask Physical Facilities for the laser's 208/240 V, 15 A two-pole circuit on day 0** if the room has none.
+6. **Monitoring from FT-0** (camera, raking lights, coaxial photodiode, digitizer, $4.5k–6.2k) or later? The
+   photodiode's dichroic sits in the beam path, so it is cheapest to fit at S1 when the head is first aligned.
+7. Who asks BYU's metal-AM lab about a reduced-build-volume insert for its Concept Laser M2?
+8. Ø40 mm plate and 15 mm builds: enough for the first coupons?

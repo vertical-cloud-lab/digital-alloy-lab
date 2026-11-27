@@ -19,7 +19,7 @@ Heat budget at 200 °C (well block + plate on Macor standoffs):
 
 | surface_W | standoffs_W | heater_load_W | heaters_W | margin | laser_avg_W | box_area_m2 | box_rise_still_K | box_rise_fan_K | box_air_C_still_vs_stage_max | box_air_C_fan |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 51.6 | 4.5 | 56.0 | 200.0 | 3.57 | 46-91 | 0.537 | 32-46 | 9-14 | 71 vs 50 | 39 |
+| 51.6 | 4.5 | 56.0 | 300.0 | 5.36 | 46-91 | 0.537 | 32-46 | 9-14 | 71 vs 50 | 39 |
 
 Optics (f = 254 mm, M2 1.1):
 
@@ -30,7 +30,7 @@ Optics (f = 254 mm, M2 1.1):
 
 Cost by alternative (parts.csv):
 
-- **FT0**: $20,756-36,589 (without the monitoring group: $16,296-30,367); vendors at or over $3,500 (PO): none
+- **FT0**: $20,733-36,500 (without the monitoring group: $16,273-30,278); vendors at or over $3,500 (PO): none
   - Laser and optics (used): $4,757-7,946
   - Scan control and computing: $1,183-2,473
   - Motion: $150-600
@@ -38,10 +38,10 @@ Cost by alternative (parts.csv):
   - Heated plate: $610-1,010
   - Gas and O2: $2,651-4,130
   - Safety: $2,780-3,682
-  - Stock and fabrication: $3,220-6,586
+  - Stock and fabrication: $3,198-6,497
   - Powder handling: $0-2,730
   - Monitoring: $4,460-6,222
-- **FT1**: $28,867-46,742 (without the monitoring group: $23,607-38,520); vendors at or over $3,500 (PO): Zaber ($5,896)
+- **FT1**: $28,844-46,653 (without the monitoring group: $23,584-38,431); vendors at or over $3,500 (PO): Zaber ($5,896)
   - Laser and optics (used): $4,757-7,946
   - Scan control and computing: $1,375-2,705
   - Motion: $5,976-6,096
@@ -49,10 +49,10 @@ Cost by alternative (parts.csv):
   - Heated plate: $946-1,406
   - Gas and O2: $2,651-4,130
   - Safety: $2,780-3,682
-  - Stock and fabrication: $4,177-8,614
+  - Stock and fabrication: $4,154-8,525
   - Powder handling: $0-2,730
   - Monitoring: $5,260-8,222
-- **FT1V**: $39,873-59,808 (without the monitoring group: $34,613-51,586); vendors at or over $3,500 (PO): Zaber ($5,896), Ideal Vacuum ($9,450)
+- **FT1V**: $39,850-59,719 (without the monitoring group: $34,590-51,497); vendors at or over $3,500 (PO): Zaber ($5,896), Ideal Vacuum ($9,450)
   - Laser and optics (used): $4,757-7,946
   - Scan control and computing: $1,375-2,705
   - Motion: $5,976-6,096
@@ -60,17 +60,17 @@ Cost by alternative (parts.csv):
   - Heated plate: $946-1,406
   - Gas and O2: $2,651-4,130
   - Safety: $2,780-3,682
-  - Stock and fabrication: $4,767-9,790
+  - Stock and fabrication: $4,744-9,701
   - Powder handling: $0-2,730
   - Monitoring: $5,260-8,222
 
 Milestones (working days -> weeks):
 
-- FT-0 single-track bench: FIRST TRACKS at 10-26 working days = 1.9-5.3 weeks
-- FT-1 purge-box LPBF (stages on one PO): FIRST TRACKS at 16-37 working days = 3.2-7.3 weeks
-- FT-1 purge-box LPBF (stages on one PO): FIRST COUPONS at 21-47 working days = 4.2-9.3 weeks
-- FT-1 purge-box LPBF (stages on PCards): FIRST TRACKS at 13-37 working days = 2.7-7.3 weeks
-- FT-1 purge-box LPBF (stages on PCards): FIRST COUPONS at 18-47 working days = 3.7-9.3 weeks
+- FT-0 single-track bench: FIRST TRACKS at 10-26 working days = 1.9-5.2 weeks
+- FT-1 purge-box LPBF (stages on one PO): FIRST TRACKS at 16-36 working days = 3.2-7.3 weeks
+- FT-1 purge-box LPBF (stages on one PO): FIRST COUPONS at 21-46 working days = 4.2-9.3 weeks
+- FT-1 purge-box LPBF (stages on PCards): FIRST TRACKS at 13-36 working days = 2.7-7.3 weeks
+- FT-1 purge-box LPBF (stages on PCards): FIRST COUPONS at 18-46 working days = 3.7-9.3 weeks
 - FT-1V same, in a stock vacuum chamber: FIRST TRACKS at 17-42 working days = 3.4-8.4 weeks
 - FT-1V same, in a stock vacuum chamber: FIRST COUPONS at 22-52 working days = 4.4-10.4 weeks
 
@@ -78,6 +78,6 @@ Shop throughput against FT-1 purge-box LPBF (stages on PCards): FIRST COUPONS (e
 
 - 5 shop h a working day: 4.5-9.3 weeks
 - 8 shop h a working day: 3.7-7.5 weeks
-- 12 shop h a working day: 3.2-6.5 weeks
+- 12 shop h a working day: 3.2-6.4 weeks
 
 Layout sketch: bed 63 mm above the box floor, 140 mm below the window; lens 363 mm above the floor; overall ~768 mm with the stage below.

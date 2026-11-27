@@ -425,16 +425,16 @@ functions
     files["constant/transportProperties"] = hdr("dictionary", "transportProperties") + f"DT {D_O2_AR:g};\n"
     files["system/fvSchemes"] = hdr("dictionary", "fvSchemes") + """ddtSchemes { default Euler; }
 gradSchemes { default Gauss linear; }
-divSchemes { default none; div(phi,T) Gauss limitedLinear01 1; }
+divSchemes { default none; div(phi,T) Gauss deferredCorrection limitedLinear01 1; }   // upwind matrix + explicit TVD correction
 laplacianSchemes { default Gauss linear limited corrected 0.5; }
 interpolationSchemes { default linear; }
 snGradSchemes { default limited corrected 0.5; }
 """
     files["system/fvSolution"] = hdr("dictionary", "fvSolution") + """solvers
 {
-    T { solver PBiCGStab; preconditioner DILU; tolerance 1e-11; relTol 0; }
+    T { solver PBiCGStab; preconditioner DILU; tolerance 1e-9; relTol 0; maxIter 200; }
 }
-SIMPLE { nNonOrthogonalCorrectors 1; }
+SIMPLE { nNonOrthogonalCorrectors 0; }
 """
     return files, dict(inlets=ins, outlet=out, closed=closed)
 
@@ -447,7 +447,10 @@ def buoyant_files(a, g):
     wall_re = WALLS[2:-2] + ("|" + "|".join(closed) if closed else "")
     f = {}
     ub = [f"    {p} {{ type flowRateInletVelocity; volumetricFlowRate constant {q / 60000.0:.6g}; extrapolateProfile no; value uniform (0 0 0); }}" for p, q in ins.items()]
-    ub += [f"    {out} {{ type pressureInletOutletVelocity; value uniform (0 0 0); }}", f'    "({wall_re})" {{ type noSlip; }}']
+    # outflow only (the exhaust's check valve): with pressureInletOutletVelocity and a uniform static pressure, the
+    # 0.3 Pa hydrostatic head across a 20 mm vent beat the ~0.15 Pa that drives the outflow and air flowed back in at
+    # the vent's top (seen in the first low-inlet run)
+    ub += [f"    {out} {{ type inletOutlet; inletValue uniform (0 0 0); value uniform (0 0 0); }}", f'    "({wall_re})" {{ type noSlip; }}']
     f["0/U"] = hdr("volVectorField", "U") + "dimensions [0 1 -1 0 0 0 0];\ninternalField uniform (0 0 0);\nboundaryField\n{\n" + "\n".join(ub) + "\n}\n"
     p0 = 101325.0 + 700.0
     f["0/p"] = hdr("volScalarField", "p") + f"""dimensions [1 -1 -2 0 0 0 0];
@@ -482,7 +485,7 @@ internalField uniform {air};
 boundaryField
 {{
     "({allin})" {{ type fixedValue; value uniform {inl}; }}
-    {out} {{ type inletOutlet; inletValue uniform {air}; value uniform {air}; }}
+    {out} {{ type inletOutlet; inletValue uniform {inl}; value uniform {air}; }}
     "({wall_re})" {{ type zeroGradient; }}
 }}
 """

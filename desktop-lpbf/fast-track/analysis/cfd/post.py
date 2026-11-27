@@ -624,6 +624,18 @@ def do_purge(a):
         k = -np.polyfit(t[m] / 60.0, np.log(b[m]), 1)[0]
         res["tail_decay_per_min"] = float(k)
         res["ideal_decay_per_min"] = q_total / V
+    if kind == "scalar":
+        # the frozen purge flow (0/U, copied from the steady case): how much of the box is nearly still
+        r = pv.OpenFOAMReader(str(case / "case.foam"))
+        r.skip_zero_time = False
+        r.set_active_time_value(0.0)
+        r.cell_to_point_creation = False
+        m = r.read()["internalMesh"]
+        u = np.linalg.norm(np.asarray(m.cell_data["U"]), axis=1)
+        vol = np.asarray(m.compute_cell_sizes(length=False, area=False, volume=True).cell_data["Volume"])
+        res["flow"] = dict(mean_speed_mm_s=float(1000 * (u * vol).sum() / vol.sum()),
+                           median_speed_mm_s=float(1000 * np.median(u)),
+                           **{f"vol_frac_below_{v}mm_s": float(vol[u < v / 1000].sum() / vol.sum()) for v in (1, 3, 10)})
     np.savez_compressed(SCR / f"purge_{a.name}.npz", **{k: v for k, v in S.items() if v is not None})
     d = load_json()
     d.setdefault("purge", {})[a.name] = res
@@ -745,7 +757,7 @@ def do_figures(a):
         fig_box_multi(rows_b, f"{pre}_box_section.png")
 
 
-def fig_purge_curves(names, labels, fname, tmax=None):
+def fig_purge_curves(names, labels, fname, tmax=None, title=""):
     """O2 against time, one panel per purge configuration: box average, exhaust (flow-weighted), the plate (1 mm
     above it) and 2 mm under the cover slide, with the well-mixed ideal for the same flow and volume."""
     d = load_json()["purge"]
@@ -781,6 +793,8 @@ def fig_purge_curves(names, labels, fname, tmax=None):
     for ax in axs.ravel()[n:]:
         ax.axis("off")
     axs[0, 0].legend(loc="lower left", fontsize=7)
+    if title:
+        fig.suptitle(title, x=0.01, ha="left", fontsize=9)
     fig.savefig(OUT / fname, dpi=120)
     plt.close(fig)
 
@@ -832,7 +846,7 @@ def fig_purge_snap(items, t_snaps, fname):
 def do_purgefigs(a):
     names = [c.split("=", 1)[0] for c in a.cases]
     labels = [c.split("=", 1)[1] for c in a.cases]
-    fig_purge_curves(names, labels, a.name, a.tmax)
+    fig_purge_curves(names, labels, a.name, a.tmax, a.title)
 
 
 def do_snaps(a):
@@ -927,6 +941,7 @@ def main():
     ap.add_argument("--t-snap", type=float, default=600.0)
     ap.add_argument("--times", type=float, nargs="*", default=[], help="snaps: snapshot times, s (one column each)")
     ap.add_argument("--tmax", type=float, default=None, help="purgefigs: x-axis limit, min")
+    ap.add_argument("--title", default="", help="purgefigs: figure title")
     ap.add_argument("case", nargs="?")
     ap.add_argument("--name", default="", help="case name in cfd.json (figures: the PNG's file name)")
     ap.add_argument("--figs", action="store_true")

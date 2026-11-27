@@ -12,6 +12,10 @@ turns them into what a shop makes:
 
 Nothing has been made, quoted or checked by a machinist. Vendor part numbers not read today are marked so.
 
+The pieces here follow the v1 model (`ft_model.py` at d117ba8). The CAD v2 model (commit e6efa1c) came during this
+round: what it changes in each piece, and an estimate of its hours, are in
+[CAD v2](#cad-v2-commit-e6efa1c-what-changes-in-the-fab-pieces).
+
 ![The 35 drawing sheets](img/drawings-contact.png)
 
 ## Short answer
@@ -28,10 +32,10 @@ Nothing has been made, quoted or checked by a machinist. Vendor part numbers not
   | Machine (cumulative) | Low | **Expected** | High | Study (`fast_track.py`, parts.csv F2a-c) | At $65/h, low / expected / high |
   |---|---:|---:|---:|---:|---|
   | S1 | 8.6 h | **19.7 h** | 26.9 h | – | $560 / 1,280 / 1,750 |
-  | S1 + S2 | 21.2 h | **41.8 h** | 62.4 h | – | $1,380 / 2,710 / 4,060 |
+  | S1 + S2 | 21.2 h | **41.8 h** | 62.5 h | – | $1,380 / 2,710 / 4,060 |
   | FT-0 (S1 + S2 + FT-0 pieces) | 43.8 h | **90.7 h** | 145.5 h | 10-15 h | $2,850 / 5,900 / 9,460 |
-  | FT-1 | 58.5 h | **121.9 h** | 189.3 h | 25-40 h | $3,800 / 7,930 / 12,300 |
-  | FT-1V | 67.6 h | **140.0 h** | 214.1 h | 30-48 h | $4,390 / 9,100 / 13,910 |
+  | FT-1 | 58.5 h | **121.9 h** | 189.3 h | 25-40 h | $3,810 / 7,930 / 12,310 |
+  | FT-1V | 67.6 h | **140.0 h** | 214.1 h | 30-48 h | $4,390 / 9,100 / 13,920 |
   <!-- /SHORT_TABLE -->
 
   - **Low:** robot-shop.md's allowances (0.7 h of CAM a piece, 20 min a setup). That is also about what reviewing
@@ -55,8 +59,9 @@ Nothing has been made, quoted or checked by a machinist. Vendor part numbers not
   - **Taken as done:** if a programmer only reviews and proves them out (0.25 h a setup, an assumption), CAM drops
     from 61.5 h to 18.5 h, and the machines to 61.6 h (FT-0), 83.8 h (FT-1) and 97.0 h (FT-1V).
 - **Every program was cut on a voxel blank** ([`sim.py`](sim.py), table [below](#the-programs-checked)).
-  - **The check found 12 faults** in the first programs, and the time recount 3 more; all are fixed in these files
-    ([list](#faults-the-checks-found)).
+  - **The check found 13 faults** in the first programs, and the time recount 3 more; all are fixed in these files
+    ([list](#faults-the-checks-found)). The last, found in this round's full run: MK-02d's slide pocket was cut on
+    one side only, so the cover slide would not have gone in.
   - **Six were FreeCAD 1.0.2 behaviours** worth knowing:
     - `PocketShape` posts no path;
     - `Pocket`, `Adaptive` and `MillFace` skip a floor that is open to the side;
@@ -66,12 +71,15 @@ Nothing has been made, quoted or checked by a machinist. Vendor part numbers not
     - a Job's first op fails headless if the Job has two tool controllers.
 - **Design changes the assembly model should take** are [listed below](#changes-for-the-assembly-model). The ones that
   matter:
-  - **The well block's thermocouple hole runs straight through a heater hole** in the model. Moved to z 10.
+  - **The well block's thermocouple hole ran straight through a heater hole** in v1. Moved to z 10 here; v2 moves it
+    8 mm under the top, which also clears its four heaters.
   - **The window ring needs a 4 mm lip and a 12 mm height** to carry an O-ring under the window (the model's lip is
-    2 mm).
+    2 mm, in v2 too).
   - **The rod gland's squeeze is right only if the rod OD is held to 0.497-0.501 in.** ASTM A269's ±0.005 in. on a
     1/2 in. seamless tube gives 9-20 %, against Parker's 10-17 %.
-  - **The carriage bracket has only 3.0 mm under the stage shield for a foot.**
+  - **The carriage bracket had only 3.0 mm under the stage shield for a foot** in v1. v2 gives it 6 mm.
+  - **v2's gland screws in the box** go through the 1.9 mm floor outside the gland's face O-ring: four open paths
+    from the box to the room. Keep them inside the face seal.
 - **Schedule** ([`plan.py`](plan.py), [calendar below](#first-week-shop-plan)):
   - **When the pieces are needed.** The study's progression network (`cad/ft_progression.py`, scenario A, early end
     of every range) needs S1's pieces by working day 4, S2's by day 5, FT-0's by day 6 and FT-1's by day 9, and the
@@ -85,6 +93,10 @@ Nothing has been made, quoted or checked by a machinist. Vendor part numbers not
     people bring it back to 1.9 and 3.1 weeks.
   - **For the study's schedule:** replace "one person at least half time" (`fast_track.py`) with two people full
     time for the first 8 working days.
+- **CAD v2** (commit e6efa1c, [below](#cad-v2-commit-e6efa1c-what-changes-in-the-fab-pieces)) makes 44 pieces: 13
+  unchanged, 12 re-dimensioned, 10 redesigned or moved, 9 new (mostly monitoring hardware). Estimated, not built:
+  122.2 / 154.8 / 188.2 h expected to FT-0 / FT-1 / FT-1V. Keeping FT-0's tracks at 1.8 weeks then takes three
+  people, or two with the monitoring pieces made after the tracks (1.9 weeks).
 
 ## Files
 
@@ -94,7 +106,10 @@ Nothing has been made, quoted or checked by a machinist. Vendor part numbers not
 | [`tools.py`](tools.py) | the common tool library (face mill, 1/2, 1/4, 1/8 in. and 2 mm end mills, a 90° spot drill, 16 drills), thread and hole tables, and PR 266's time allowances |
 | [`cam.py`](cam.py) | FreeCAD 1.0.2 CAM, headless: one Job per setup, ops from the recorded features, `linuxcnc` post → [`gcode/`](gcode/), [`out/cam.json`](out/cam.json) (per op: tool, feed, FreeCAD CycleTime, recount) |
 | [`sim.py`](sim.py) | the voxel check of every posted program → [`out/sim.json`](out/sim.json), [`img/sim-check.png`](img/sim-check.png) |
-| [`hours.py`](hours.py) | shop hours per piece, per state, and for an outsourced split → [`out/hours.md`](out/hours.md), `out/hours.csv`, `out/hours.json` |
+| [`hours.py`](hours.py) | shop hours per piece and per state at the low, expected and high allowances, and for an outsourced split → [`out/hours.md`](out/hours.md), `out/hours.csv`, `out/hours.json` |
+| [`plan.py`](plan.py) | the shop calendar: the progression network's need dates, and when each state's pieces are done for one to three people → [`out/plan.md`](out/plan.md), `out/plan.json` |
+| [`v2_delta.py`](v2_delta.py) | what the CAD v2 model changes in each piece, and the v2 hours (estimate) → [`out/v2/delta.md`](out/v2/delta.md), `out/v2/hours.json`; `plan.py out/v2/hours.json out/v2` → [`out/v2/plan.md`](out/v2/plan.md) |
+| [`tables.py`](tables.py) | fills this README's generated tables from `out/` |
 | [`drawings.py`](drawings.py) | one sheet per piece → [`drawings/`](drawings/) (PDF), [`img/drawings-contact.png`](img/drawings-contact.png) |
 | [`out/dxf/`](out/dxf/) | flat patterns of the four sheet pieces (cut layer only; bends on the drawings) |
 
@@ -104,11 +119,17 @@ Nothing has been made, quoted or checked by a machinist. Vendor part numbers not
   "import runpy; runpy.run_path('desktop-lpbf/fast-track/fab/cam.py', run_name='__main__')"   # gcode/, out/cam.json
 /tmp/tools/capmem 2 /tmp/venv/bin/python desktop-lpbf/fast-track/fab/sim.py     # out/sim.json, img/sim-check.png
 /tmp/venv/bin/python desktop-lpbf/fast-track/fab/hours.py                       # out/hours.*
+/tmp/venv/bin/python desktop-lpbf/fast-track/fab/plan.py                        # out/plan.*
+/tmp/venv/bin/python desktop-lpbf/fast-track/fab/v2_delta.py                    # out/v2/delta.md, hours.json
+/tmp/venv/bin/python desktop-lpbf/fast-track/fab/plan.py out/v2/hours.json out/v2   # out/v2/plan.*
+/tmp/venv/bin/python desktop-lpbf/fast-track/fab/plan.py out/v2/monitoring-later/hours.json out/v2/monitoring-later
+/tmp/venv/bin/python desktop-lpbf/fast-track/fab/tables.py                      # this README's tables
 /tmp/tools/capmem 2 /tmp/venv/bin/python desktop-lpbf/fast-track/fab/drawings.py   # drawings/*.pdf
 ```
 
-Run times on the shared runner: `parts.py` 10-30 s; `cam.py` 80 s for all 64 setups; `sim.py` about 10 min;
-`drawings.py` about 1 min. FreeCAD is the official 1.0.2 conda AppImage, extracted, as in PR 266.
+Run times on the shared runner: `parts.py` 10-30 s; `cam.py` 80 s for all 63 setups; `sim.py` about 15 min (1.2 GB
+peak on the cube plates); `drawings.py` about 25 s; `hours.py`, `plan.py`, `v2_delta.py` and `tables.py` a few
+seconds. FreeCAD is the official 1.0.2 conda AppImage, extracted, as in PR 266.
 
 ## The pieces
 
@@ -122,7 +143,7 @@ programmed, rapids at 25.4 m/min), times the quantity. Full columns are in [`out
 | MK-02a | Window ring | S2 | CNC mill | 3/4 in. 6061-T651 plate, 106 x 106 square (faced to 12.0) | 2 / 0 | 24.1 / 29.7 | 2.8 | **4.7** | 10.8 |
 | MK-02b | Window retaining flange (beam-tube socket on top) | S2 | CNC mill | 1/4 in. 6061 plate (6.35) faced to 6.0 both sides, 106 x 106 | 2 / 0 | 6.7 / 10.1 | 1.8 | **3.8** | 5.3 |
 | MK-02c | Inner clamp ring (box lid only) | S2 | CNC mill | 1/4 in. 6061 plate (6.35) faced to 6.0 on top, 106 x 106 | 1 / 0 | 3.8 / 6.0 | 1.4 | **2.4** | 3.2 |
-| MK-02d | Cover-slide holder, base (slide pocket) | S2 | CNC mill | 1/4 in. 6061 plate faced to 5.6, 76 x 76 | 1 / 0 | 3.6 / 5.5 | 1.4 | **2.2** | 3.0 |
+| MK-02d | Cover-slide holder, base (slide pocket) | S2 | CNC mill | 1/4 in. 6061 plate faced to 5.6, 76 x 76 | 1 / 0 | 4.4 / 7.5 | 1.4 | **2.2** | 3.0 |
 | MK-02e | Cover-slide holder, cover | S2 | CNC mill | 3/16 in. 6061 plate faced to 4.4, 76 x 76 | 1 / 0 | 2.0 / 3.1 | 1.3 | **2.2** | 3.0 |
 | MK-03 | Well block, 40.00 H7 bore | FT-0 | CNC mill | 6061 bar 1-3/4 x 3-1/2 in. (44.45 x 88.9) sawn 84 long | 4 / 0 | 10.4 / 15.2 | 2.7 | **6.7** | 16.5 |
 | MK-03s | Macor standoffs (4) | FT-0 | lathe (carbide, slow) or diamond saw + drill | McMaster 8489K75 Macor rod, 5/16 in. x 6 in. (parts.csv H4) | 0 / 2 | 0.0 / 0.0 | 2.3 | **2.2** | 3.5 |
@@ -153,7 +174,7 @@ programmed, rapids at 25.4 m/min), times the quantity. Full columns are in [`out
 | MK-17 | FT-0 rod collar (buy) | FT-0 | buy | Ruland MCL-8-A class one-piece clamp collar, 1/2 in. bore (1-1/8 in. OD x 13/32 in.) | 0 / 0 | 0.0 / 0.0 | 0.0 | **0.1** | 0.1 |
 | MK-18a | Guide-laser target stand | S1 | CNC mill | 6061 square bar 2-1/2 in. (63.5) sawn 55 long | 2 / 0 | 3.2 / 5.1 | 1.7 | **3.7** | 5.2 |
 | MK-18b | Target plate 80 x 80 x 1/8 in., black anodised (x2) | S1 | sheet: laser-cut (SendCutSend) or bandsaw + mill; anodise outside | 1/8 in. 6061 sheet (SendCutSend stock) | 0 / 0 | 0.0 / 0.0 | 0.8 | **0.8** | 0.9 |
-| **All** | 35 pieces | | | | 63 / 15 | 204 / 293 | 67.6 | **140.0** | 214.1 |
+| **All** | 35 pieces | | | | 63 / 15 | 205 / 295 | 67.6 | **140.0** | 214.1 |
 <!-- /PIECE_TABLE -->
 
 **Stock.** Part numbers that were read in PR 266's files are given with the date they were read:
@@ -276,6 +297,7 @@ All fixed in the committed programs. "Voxel" is `sim.py`; "recount" is the poste
 | voxel | MK-08e | the last 1 mm of the L outline and a sharp inside corner left | R6.5 inside corner; the second setup finishes the outline |
 | voxel | MK-09b | a round cradle along the collimator's axis, which no setup reaches | a 30 mm slot whose edges carry the collimator |
 | voxel | MK-02d, MK-15c | open pockets not cut at all | Adaptive (MK-15c); a written raster (MK-02d) |
+| voxel | MK-02d | the raster cut only the +x half of the Ø50.6 slide pocket (0.29 cm³ left, 1.2 mm deep, round the back): the 1/4 in. cutter is wider than the 5.3 mm ring between the aperture and the pocket wall, so the region eroded by its radius kept only the entry slot | the region leaves out only r < 16.8: the cutter's edge overhangs the aperture, which is already cut |
 | recount | MK-02a | a 3D Pocket on the window groove took 139 min (it cleared the whole disc inside the groove, from the top face down) | Profile of the groove wires, starting at the seat floor |
 | recount | MK-02d, MK-06 | Custom-op G-code ran 60 times too fast (feeds read as mm/s) | feeds divided by 60 on the way in |
 | recount | all | `PocketShape` ops with no path (0 min) | `Pocket` |
@@ -297,7 +319,38 @@ simpler:
 - **Timing:** the minutes are re-timed from the expanded moves (`camotics_sim.camotics_times`) as a check on the
   recount.
 
-SIM_TABLE
+<!-- SIM_TABLE -->
+| Piece | Setups | Voxel mm | Removed of blank - piece, cm³ | Gouge cm³ (deepest mm) | Left cm³ (thickest mm) | Slugs dropped cm³ | Rapids through the piece | Minutes: recount / from moves / FreeCAD |
+|---|---:|---:|---|---|---|---:|---:|---|
+| MK-01 | 2 | 0.45 | 264.6 of 263.6 (100.4 %) | 0.000 (0.45) | 0.000 (0.90) | 11.8 | 0 | 16.9 / 16.5 / 23.3 |
+| MK-02a | 2 | 0.28 | 148.2 of 148.2 (100.0 %) | 0.000 (0.28) | 0.000 (0.56) | 0.0 | 0 | 24.1 / 24.1 / 29.7 |
+| MK-02b | 2 | 0.21 | 38.5 of 38.5 (99.9 %) | 0.000 (0.21) | 0.000 (0.42) | 0.0 | 0 | 6.7 / 6.7 / 10.1 |
+| MK-02c | 1 | 0.21 | 33.1 of 33.1 (99.9 %) | 0.000 (0.21) | 0.000 (0.42) | 0.0 | 0 | 3.8 / 3.8 / 6.0 |
+| MK-02d | 1 | 0.17 | 23.5 of 23.5 (100.0 %) | 0.000 (0.17) | 0.000 (0.34) | 0.0 | 0 | 4.4 / 4.4 / 7.5 |
+| MK-02e | 1 | 0.16 | 16.3 of 16.3 (100.0 %) | 0.000 (0.16) | 0.000 (0.32) | 0.0 | 0 | 2.0 / 2.0 / 3.1 |
+| MK-03 | 4 | 0.32 | 138.9 of 139.5 (99.5 %) | 0.000 (0.32) | 0.000 (0.63) | 0.0 | 0 | 10.4 / 10.3 / 15.2 |
+| MK-04 | 3 | 0.17 | 1.9 of 1.9 (100.1 %) | 0.000 (0.17) | 0.000 (0.34) | 0.0 | 0 | 0.3 / 0.3 / 0.6 |
+| MK-05 | 1 | 0.12 | 0.1 of 0.1 (90.8 %) | 0.000 (0.12) | 0.000 (0.24) | 0.0 | 0 | 0.1 / 0.1 / 0.5 |
+| MK-06a | 2 | 0.12 | 0.1 of 0.1 (97.9 %) | 0.000 (0.12) | 0.000 (0.54) | 0.0 | 0 | 0.3 / 0.3 / 0.8 |
+| MK-06b | 2 | 0.13 | 0.1 of 0.1 (92.8 %) | 0.000 (0.00) | 0.000 (0.73) | 0.0 | 0 | 0.3 / 0.3 / 0.9 |
+| MK-07 | 2 | 0.18 | 11.5 of 11.6 (99.5 %) | 0.000 (0.18) | 0.000 (0.72) | 0.0 | 0 | 12.2 / 12.0 / 13.2 |
+| MK-08c | 3 | 0.12 | 2.6 of 2.7 (96.6 %) | 0.000 (0.00) | 0.000 (0.48) | 0.0 | 0 | 3.7 / 3.7 / 5.0 |
+| MK-08d | 3 | 0.12 | 4.1 of 4.1 (99.9 %) | 0.000 (0.12) | 0.000 (0.24) | 0.0 | 0 | 0.9 / 0.9 / 1.7 |
+| MK-08e | 3 | 0.22 | 92.6 of 92.8 (99.9 %) | 0.000 (0.22) | 0.015 (1.26) | 0.0 | 0 | 5.8 / 5.8 / 10.6 |
+| MK-09a | 2 | 0.43 | 208.6 of 208.7 (100.0 %) | 0.000 (0.43) | 0.000 (0.85) | 0.0 | 0 | 23.8 / 23.8 / 39.0 |
+| MK-09b | 3 | 0.27 | 60.9 of 61.8 (98.6 %) | 0.000 (0.00) | 0.346 (2.69) | 0.0 | 0 | 8.1 / 8.0 / 10.9 |
+| MK-10c | 3 | 0.37 | 425.7 of 425.9 (100.0 %) | 0.000 (0.37) | 0.000 (0.74) | 0.0 | 0 | 21.5 / 21.5 / 31.6 |
+| MK-11a | 4 | 0.16 | 29.5 of 29.7 (99.1 %) | 0.000 (0.16) | 0.177 (2.79) | 0.0 | 0 | 11.7 / 11.7 / 18.3 |
+| MK-11b | 4 | 0.17 | 33.5 of 33.9 (99.1 %) | 0.003 (0.33) | 0.210 (2.36) | 0.5 | 0 | 11.4 / 11.3 / 18.9 |
+| MK-13 | 2 | 0.58 | 55.6 of 55.7 (99.9 %) | 0.000 (0.00) | 0.000 (1.17) | 0.0 | 0 | 5.9 / 5.8 / 6.8 |
+| MK-14 | 2 | 0.58 | 11.2 of 11.2 (99.7 %) | 0.000 (0.00) | 0.000 (1.17) | 0.0 | 0 | 3.7 / 3.7 / 5.0 |
+| MK-15a | 2 | 0.41 | 194.0 of 194.0 (100.0 %) | 0.000 (0.41) | 0.000 (0.82) | 0.0 | 0 | 11.5 / 11.3 / 11.7 |
+| MK-15b | 2 | 0.26 | 25.6 of 25.9 (98.8 %) | 0.000 (0.26) | 0.000 (0.52) | 0.0 | 0 | 4.0 / 4.0 / 4.8 |
+| MK-15c | 3 | 0.15 | 11.3 of 11.4 (99.5 %) | 0.000 (0.15) | 0.006 (0.88) | 0.0 | 0 | 6.1 / 6.0 / 9.3 |
+| MK-16 | 2 | 0.12 | 11.7 of 11.9 (98.0 %) | 0.000 (0.13) | 0.000 (0.35) | 0.0 | 0 | 1.1 / 1.1 / 1.4 |
+| MK-18a | 2 | 0.28 | 49.2 of 50.5 (97.5 %) | 0.000 (0.28) | 0.000 (0.55) | 0.0 | 0 | 3.2 / 3.2 / 5.1 |
+| **All** | 63 | | | | | | | **204.0 / 202.6 / 291.1** |
+<!-- /SIM_TABLE -->
 
 - **Reading the table:**
   - "Removed" is the voxels cut, against the blank minus the piece;
@@ -308,7 +361,13 @@ SIM_TABLE
   - inside corners a round cutter cannot make sharp (the L bracket's corner is now drawn R6.5);
   - thin slivers at a blank's far edge that FreeCAD's Adaptive leaves (up to 2.8 mm, on the nozzle and the
     collector);
-  - the open slide pocket's two corners.
+  - the collimator saddle's slot ends (MK-09b, 0.35 cm³ up to 2.7 mm).
+- **The one gouge left** is on MK-11b, the exhaust collector: a strip 1 mm wide and 14 mm tall on the side of the
+  outlet tab, 0.2-0.33 mm deep (0.003 cm³). That is two voxels, at the limit of the check, but it looks like the
+  outside pass nicking the tab. Check it in CAMotics, or leave 0.5 mm on the tab and file it.
+- **Run:** 27 programmed pieces, 63 setups, about 11 min on the shared runner, 1.35 GB peak. The first full runs died
+  without a message after about 20 pieces: `sim.py` kept every piece's 3D arrays for the contact sheet and passed
+  its 2 GB cap. It now keeps only the top views.
 - **Pieces whose features are left to hand work** (the rod clamp's slit) are checked against the piece without them.
 - **The threads are not modelled:** tapped holes are drawn at the tap drill.
 
@@ -331,10 +390,10 @@ piece.
 | State | Pieces | This state, low / expected / high h | Cumulative (the machine), low / **expected** / high h | Cumulative at $65/h, low / expected / high | Study (`fast_track.py`) | BYU h with sheet and flat plates out, cumulative (expected) |
 |---|---:|---|---|---|---|---:|
 | S1 | 5 | 8.6 / 19.7 / 26.9 | 8.6 / **19.7** / 26.9 | $560 / 1,280 / 1,750 | - | 13.0 |
-| S2 | 7 | 12.6 / 22.1 / 35.5 | 21.2 / **41.8** / 62.4 | $1,380 / 2,710 / 4,060 | - | 32.4 |
+| S2 | 7 | 12.6 / 22.1 / 35.6 | 21.2 / **41.8** / 62.5 | $1,380 / 2,710 / 4,060 | - | 32.4 |
 | FT-0 | 10 | 22.6 / 49.0 / 83.0 | 43.8 / **90.7** / 145.5 | $2,850 / 5,900 / 9,460 | 10-15 h | 81.3 |
-| FT-1 | 9 | 14.7 / 31.2 / 43.8 | 58.5 / **121.9** / 189.3 | $3,800 / 7,930 / 12,300 | 25-40 h | 107.3 |
-| FT-1V | 4 | 9.1 / 18.1 / 24.8 | 67.6 / **140.0** / 214.1 | $4,390 / 9,100 / 13,910 | 30-48 h | 125.4 |
+| FT-1 | 9 | 14.7 / 31.2 / 43.8 | 58.5 / **121.9** / 189.3 | $3,810 / 7,930 / 12,310 | 25-40 h | 107.3 |
+| FT-1V | 4 | 9.1 / 18.1 / 24.8 | 67.6 / **140.0** / 214.1 | $4,390 / 9,100 / 13,920 | 30-48 h | 125.4 |
 <!-- /STATE_ROWS -->
 
 - **What the study's numbers left out.** `fast_track.py`'s 25-40 h for FT-1 was "about 12 simple parts". The model
@@ -396,19 +455,21 @@ delays no milestone.
 - **All the cases** (need dates in brackets; bold is late; milestones in weeks from the order):
 
 <!-- PLAN_TABLE -->
-| Hours | People | FT-1 plates | Pieces done, working day (need): S1 | S2 | FT-0 | FT-1 | FT-1V | Milestones, weeks: S1 / S2 / FT-0 tracks / FT-1 coupons / FT-1V coupons |
+| Hours | People | Variant | Pieces done, working day (need): S1 | S2 | FT-0 | FT-1 | FT-1V | Milestones, weeks: S1 / S2 / FT-0 tracks / FT-1 coupons / FT-1V coupons |
 |---|---:|---|---|---|---|---|---|---|
-| low | 1 | in house | 1.7 (4) | 2.6 (5) | 5.5 (6) | 7.3 (9) | 11.4 (14) | 1.4 / 1.6 / 1.8 / 2.9 / 3.5 |
-| low | 2 | in house | 1.4 (4) | 1.9 (5) | 2.9 (6) | 5.1 (9) | 11.2 (14) | 1.4 / 1.6 / 1.8 / 2.8 / 3.4 |
-| low | 3 | in house | 1.3 (4) | 1.6 (5) | 2.3 (6) | 5.1 (9) | 11.2 (14) | 1.4 / 1.6 / 1.8 / 2.8 / 3.4 |
-| expected | 1 | in house | 2.5 (4) | **5.2** (5) | **11.3** (6) | **15.2** (9) | **17.5** (14) | 1.4 / 1.6 / **2.9** / **4.5** / **5.0** |
-| expected | 2 | in house | 1.9 (4) | 2.7 (5) | 5.8 (6) | 7.8 (9) | 11.5 (14) | 1.4 / 1.6 / 1.8 / 3.0 / 3.6 |
-| expected | 3 | in house | 1.7 (4) | 2.3 (5) | 3.9 (6) | 5.2 (9) | 11.5 (14) | 1.4 / 1.6 / 1.8 / 2.8 / 3.4 |
-| high | 1 | in house | 3.4 (4) | **7.8** (5) | **18.2** (6) | **23.6** (9) | **26.7** (14) | 1.4 / **2.2** / **4.2** / **6.1** / **6.7** |
-| high | 2 | in house | 2.3 (4) | 4.1 (5) | **9.2** (6) | **12.0** (9) | 13.6 (14) | 1.4 / 1.6 / **2.4** / **3.8** / **4.4** |
-| high | 3 | in house | 2.1 (4) | 3.2 (5) | **6.3** (6) | 8.1 (9) | 11.6 (14) | 1.4 / 1.6 / **1.9** / 3.1 / 3.7 |
-| expected | 1 | out | 2.5 (4) | **5.2** (5) | **11.3** (6) | **14.6** (9) | **16.8** (14) | 1.4 / 1.6 / **2.9** / **4.3** / **4.9** |
-| expected | 2 | out | 1.9 (4) | 2.7 (5) | 5.8 (6) | 7.6 (9) | 11.5 (14) | 1.4 / 1.6 / 1.8 / 3.0 / 3.6 |
+| low | 1 | – | 1.7 (4) | 2.6 (5) | 5.5 (6) | 7.3 (9) | 11.4 (14) | 1.4 / 1.6 / 1.8 / 2.9 / 3.5 |
+| low | 2 | – | 1.4 (4) | 1.9 (5) | 2.9 (6) | 5.1 (9) | 11.2 (14) | 1.4 / 1.6 / 1.8 / 2.8 / 3.4 |
+| low | 3 | – | 1.3 (4) | 1.6 (5) | 2.3 (6) | 5.1 (9) | 11.2 (14) | 1.4 / 1.6 / 1.8 / 2.8 / 3.4 |
+| expected | 1 | – | 2.5 (4) | **5.2** (5) | **11.3** (6) | **15.2** (9) | **17.5** (14) | 1.4 / 1.6 / **2.9** / **4.5** / **5.0** |
+| expected | 2 | – | 1.9 (4) | 2.7 (5) | 5.8 (6) | 7.8 (9) | 11.5 (14) | 1.4 / 1.6 / 1.8 / 3.0 / 3.6 |
+| expected | 3 | – | 1.7 (4) | 2.3 (5) | 3.9 (6) | 5.2 (9) | 11.5 (14) | 1.4 / 1.6 / 1.8 / 2.8 / 3.4 |
+| high | 1 | – | 3.4 (4) | **7.8** (5) | **18.2** (6) | **23.6** (9) | **26.8** (14) | 1.4 / **2.2** / **4.2** / **6.1** / **6.7** |
+| high | 2 | – | 2.3 (4) | 4.1 (5) | **9.2** (6) | **12.0** (9) | 13.6 (14) | 1.4 / 1.6 / **2.4** / **3.8** / **4.4** |
+| high | 3 | – | 2.1 (4) | 3.2 (5) | **6.3** (6) | 8.1 (9) | 11.6 (14) | 1.4 / 1.6 / **1.9** / 3.1 / 3.7 |
+| expected | 1 | FT-1 plates out | 2.5 (4) | **5.2** (5) | **11.3** (6) | **14.6** (9) | **16.8** (14) | 1.4 / 1.6 / **2.9** / **4.3** / **4.9** |
+| expected | 2 | FT-1 plates out | 1.9 (4) | 2.7 (5) | 5.8 (6) | 7.6 (9) | 11.5 (14) | 1.4 / 1.6 / 1.8 / 3.0 / 3.6 |
+| expected | 2 | stock day 2 | 2.8 (4) | 3.6 (5) | 5.8 (6) | 7.8 (9) | 11.5 (14) | 1.4 / 1.6 / 1.8 / 3.0 / 3.6 |
+| expected | 3 | stock day 2 | 2.6 (4) | 3.2 (5) | 4.2 (6) | 5.2 (9) | 11.5 (14) | 1.4 / 1.6 / 1.8 / 2.8 / 3.4 |
 | *network as drawn* | | | 2 | 3 | 6 | 9 | 13 | 1.4 / 1.6 / 1.8 / 3.2 / 3.8 |
 <!-- /PLAN_TABLE -->
 
@@ -416,6 +477,8 @@ delays no milestone.
   - **One person** is enough only at the low allowances (or with this folder's CAM reused and 20 min setups).
   - **At the expected hours, the second person is what keeps FT-0 on time.** Sending FT-1's plates out saves
     5.2 h but changes no milestone.
+  - **Stock a day late** (day 2, the late end of the study's 1-2 days for McMaster) changes no date for two people:
+    they program ahead in the meantime, and FT-0's pieces still finish on day 5.8.
   - **At the high hours,** two people put FT-0's tracks 3 days late; a third person for the FT-0 pieces (days 2-6)
     brings them to 1.9 weeks.
   - **The network as drawn** has the shop finish S1 on day 2, S2 on day 3, FT-0 on day 6 and FT-1 on day 9, from
@@ -424,9 +487,116 @@ delays no milestone.
 - **Not modelled:** the shop's queue (other jobs, PML's hours), holidays, a machine being down, and remakes beyond
   the high case's three. A shared university shop's queue was not read and could add days before day 1.
 
+## CAD v2 (commit e6efa1c): what changes in the fab pieces
+
+The CAD worker's v2 model (branch `worktree-agent-a2b343ac764912700`, commit e6efa1c) was read here, not merged. The
+programs, the voxel check and the drawings above are the v1 set (`ft_model.py` at d117ba8).
+[`v2_delta.py`](v2_delta.py) records what v2 changes in each piece, and estimates the v2 hours with `hours.py`'s
+own allowances. The program minutes of the changed and new pieces are estimates; no CAM was posted for them.
+
+- **Why the v2 pieces were not regenerated:**
+  - v2 redesigns 9 pieces and adds 9. Each needs a new builder in `parts.py`, its CAM and a voxel check.
+  - With 4 cores shared by about seven jobs, that did not fit before this round's 13:00 UTC deadline.
+  - `parts.py` now stops with a message if it is run against v2's `ft_model.py`. It reads four parameters v2
+    removed, and with the rest it would mix v1 and v2 dimensions (a 24 mm heater plate with 25.4 mm heater holes).
+- **What changes:**
+  - **Same (13 pieces):** MK-02a/b/c, MK-03s, MK-05, MK-08a/b/c, MK-11a/b, MK-16, MK-17, MK-18b.
+  - **Re-dimensioned, same setups (12):** MK-01 (245 mm square), MK-02d/e (Ø44 opening), MK-03 (four heaters
+    from −x), MK-04 (24 mm), MK-07 (bolt circle), MK-08d, MK-12, MK-14, MK-15a/b, MK-18a.
+  - **Redesigned (9):** MK-06a/b (lead notches and a potted plug), MK-08e (for the X-LSM100B), MK-09a (a flange
+    plate on the head's entrance face), MK-10a/b (split centre sections), MK-10c (a collar for the LINOS lens),
+    MK-13 (a tilted camera bore), MK-15c (the rod-end block).
+  - **Moved (1):** the collimator saddle MK-09b becomes MK-22b.
+  - **New (9):** MK-02f drop tube, MK-09c angle brackets, MK-17b lead bracket, MK-19 camera port, MK-20 camera
+    post and wedges, MK-21 light-port rings, MK-21c light-port bores in two cube plates, MK-22a cage plate, MK-23
+    deck clamps.
+- **v2 hours (estimate), against v1:**
+
+<!-- V2_STATES -->
+| State | v1 cumulative low / expected / high h | v2 cumulative low / expected / high h | v2 pieces |
+|---|---|---|---:|
+| S1 | 8.6 / 19.7 / 26.9 | 11.6 / **25.5** / 35.0 | 7 |
+| S2 | 21.2 / 41.8 / 62.5 | 26.5 / **53.1** / 77.7 | 15 |
+| FT-0 | 43.8 / 90.7 / 145.5 | 60.3 / **122.2** / 189.4 | 29 |
+| FT-1 | 58.5 / 121.9 / 189.3 | 75.3 / **154.8** / 235.3 | 38 |
+| FT-1V | 67.6 / 140.0 / 214.1 | 90.5 / **188.2** / 280.6 | 44 |
+<!-- /V2_STATES -->
+
+- **v2 on the shop calendar** (the same need dates; table in [`out/v2/plan.md`](out/v2/plan.md)):
+  - **Two people at the expected hours** finish FT-0's pieces on day 7.8 (need 6) and FT-1's on day 9.9 (need 9).
+    FT-0's tracks move to 2.2 weeks and FT-1's coupons to 3.4 weeks.
+  - **Three people** keep 1.8 and 2.9 weeks.
+  - **Making the monitoring pieces after the rest of FT-0's** (MK-19, MK-20, MK-21, MK-22a: 19.6 h; no track
+    needs them) brings two people to day 6.5 and tracks at 1.9 weeks
+    ([`out/v2/monitoring-later/plan.md`](out/v2/monitoring-later/plan.md)).
+- **To settle with the CAD worker:**
+  - **The gland's screws in the box.** v2 puts 4 × M5 at (±21, ±21), outside the gland's face O-ring, through the
+    box's 1.9 mm floor. Each floor hole then opens from the box to the room in the gap between the floor and the
+    gland. Bonded seals under the heads seal the gland's holes, not the floor's. Keep every hole through the floor
+    inside the face seal, as the fab's (±12.5, ±12.5) does, with bonded seals under the heads. In the cube the
+    screws go into blind taps in MK-14, so the question does not arise there.
+  - **Still not taken in v2:** the window ring's 4 mm lip and 12 mm height, the flange's 2.2 mm recess, the
+    cover-slide holder split at the slide plane, the rod socket at 12.95 with a set screw, the Ø7.94 Macor
+    standoffs, the larger nozzle and collector, and the machined 6061 overflow cup.
+  - **Taken or settled in v2:** the thermocouple hole clears the heaters (8 mm under the top); the holder hangs
+    from the clamp ring with no gap; the carriage bracket gets a 6 mm foot under the shield; the rod-end block has
+    the full-height 1.5 mm slit; the collimator saddle exists (MK-22).
+
+**Per piece** (v2 counts in `v2_delta.py`; hours low / expected / high):
+
+<!-- DELTA_TABLE -->
+| v1 piece | v2 piece | First in (v2) | Status | What v2 changes | v1 expected h | v2 low / expected / high h |
+|---|---|---|---|---|---:|---|
+| MK-01 | MK-01 | S1 | re-dimensioned | outline 250 -> 245 square; X-LSM100B hole pattern (Zaber's STEP, in ft_vendor.py) in place of the X-LSQ075B's estimate; gland M5 taps at (+-21, +-21); 4 x M6 clearance at (+-112, +-92.1) for the cube's deck screws; no floor screws in the box (MK-23 clamps on the panel studs) | 5.1 | 1.9 / 5.0 / 6.7 |
+| MK-02a | MK-02a | S2 | same | v2 still draws a 2 mm lip and a 10 mm ring; the fab's 4 mm lip and 12 mm height stand | 4.7 | 2.8 / 4.7 / 10.8 |
+| MK-02b | MK-02b | S2 | same | unchanged (6 x M4 at r 40) | 3.8 | 1.8 / 3.8 / 5.3 |
+| MK-02c | MK-02c | S2 | same | unchanged; on the Saginaw box's 1.9 mm door the ring's window bore moves to (0, -11) | 2.4 | 1.4 / 2.4 / 3.2 |
+| MK-02d | MK-02d | S2 | re-dimensioned | opening 40 -> 44, OD 70, slide pocket 50.6 x 1.2 from +x; centred at (0, -11) | 2.2 | 1.4 / 2.2 / 3.0 |
+| MK-02e | MK-02e | S2 | re-dimensioned | opening 40 -> 44, OD 70 | 2.2 | 1.3 / 2.2 / 3.0 |
+| MK-03 | MK-03 | FT-0 | re-dimensioned | 4 heater holes 6.1 x 21 from the -x face at y +-15, +-30 (v1: 2); TC hole 1.6, 8 mm under the top from +y at x -30, clear of the heaters (v2's answer to the v1 clash) | 6.7 | 2.7 / 6.7 / 16.6 |
+| MK-03s | MK-03s | FT-0 | same | unchanged | 2.2 | 2.3 / 2.2 / 3.5 |
+| MK-04 | MK-04 | FT-0 | re-dimensioned | 28 -> 24 thick; heater holes 6.1 x 21 for 6 x 20 mm cartridges (v1 6.40 for 1/4 in.); TC hole 1.6 x 21; three 3 x 2.5 lead grooves in the underside from the holes to the socket | 7.0 | 2.7 / 7.0 / 10.3 |
+| MK-05 | MK-05 | FT-0 | same | unchanged | 5.1 | 2.9 / 5.1 / 7.1 |
+| MK-06a | MK-06a | FT-0 | redesigned | the 5 x 10 lead window becomes 3 notches 3 x 3.5 at 120 deg at the socket mouth (one indexed setup); a 15 mm vacuum-epoxy plug potted in the lower end (the leads leave through it) | 5.6 | 2.9 / 6.1 / 9.0 |
+| MK-06b | MK-06b | FT-1V | redesigned | as MK-06a | 5.6 | 2.9 / 6.1 / 9.0 |
+| MK-07 | MK-07 | FT-0 | re-dimensioned | 4 x M5 at (+-21, +-21), outside the face groove, with bonded-seal screws (v2), in place of the fab's (+-12.5, +-12.5) inside it; the deck needs M5 taps there (v2 does not draw them) | 6.0 | 3.0 / 6.0 / 13.4 |
+| MK-08a | MK-08a | FT-1 | same | unchanged | 1.1 | 1.1 / 1.1 / 1.2 |
+| MK-08b | MK-08b | FT-1 | same | unchanged | 1.1 | 1.1 / 1.1 / 1.2 |
+| MK-08c | MK-08c | FT-1 | same | unchanged | 4.9 | 2.0 / 4.9 / 7.2 |
+| MK-08d | MK-08d | FT-1 | re-dimensioned | 13.5 mm shorter (stage centre line y 95.5 -> 82) | 4.9 | 2.0 / 4.9 / 7.1 |
+| MK-08e | MK-08e | FT-1 | redesigned | for the X-LSM100B carriage: foot 40 x 40 x 6 on Zaber's carriage holes, upright 40 x 8, taller (carriage top 21 mm over the deck); the shield sits 2 mm over the 6 mm foot, so the fab's 3 mm foot problem is gone | 5.0 | 2.1 / 5.0 / 7.3 |
+| MK-09a | MK-09a | S1 | redesigned | becomes the scan-head flange plate: 278 x 120 x 12, standing on the head's entrance face (SCANLAB's drawing), a 52 bore for the input turret, hung from the gantry cross-beam by MK-09c | 5.0 | 1.9 / 4.9 / 6.6 |
+| MK-09b | MK-22b | S1 | moved | the collimator saddle moves to MK-22 (coaxial branch adapter); same piece, its height follows the input axis (head_in_z 60 -> 43.5) | 5.0 | 2.1 / 5.0 / 7.3 |
+| MK-10a | MK-10a | S2 | redesigned | the long tube becomes a centre section 60 x 54 split lengthwise into two half-shells with 2 toggle clamps, seated on the window flange and in the collar's socket | 1.6 | 2.1 / 4.4 / 6.2 |
+| MK-10b | MK-10b | FT-1V | redesigned | as MK-10a, short | 1.6 | 2.1 / 4.4 / 6.2 |
+| MK-10c | MK-10c | S2 | redesigned | bore 110 -> 121.2 for the LINOS lens (119.8), OD 136, 34 tall plus a 6 mm floor ring with the 62 socket 13 mm off the lens axis; clamped on the lens | 5.3 | 2.6 / 5.5 / 8.1 |
+| MK-11a | MK-11a | FT-0 | same | v2 keeps the 55 x 19 x 8 envelope; the fab's 61 x 19 x 12 stands | 6.4 | 2.5 / 6.4 / 9.5 |
+| MK-11b | MK-11b | FT-0 | same | as MK-11a | 6.4 | 2.5 / 6.4 / 9.5 |
+| MK-12 | MK-12 | FT-1 | re-dimensioned | flat pattern for the X-LSM100B: 166 x 50 top with a 145.6 x 12 slot, a 30 mm skirt | 0.8 | 0.8 / 0.8 / 0.8 |
+| MK-13 | MK-13 | FT-1V | redesigned | window bore 53 at (0, -21) (the window stack's centre in the cube); a 26 camera bore along the camera's line of sight (a tilted setup); the drop tube's M4s | 5.5 | 2.9 / 7.5 / 9.8 |
+| MK-14 | MK-14 | FT-1V | re-dimensioned | M5 gland taps at (+-21, +-21); 4 x M6 blind taps for the deck at (+-112, +-92.1) | 5.4 | 2.5 / 5.5 / 7.0 |
+| MK-15a | MK-15a | FT-1 | re-dimensioned | 296.7 x 180 x 10 across the base rails (4 x M6 at (+-70, rails)); the riser's holes | 4.8 | 1.8 / 4.8 / 6.3 |
+| MK-15b | MK-15b | FT-1 | re-dimensioned | 64 x 64 x 10 under the X-VSR20A (its foot measured from the STEP: 88 x 101; check that the riser carries its bolt pattern) | 3.7 | 1.7 / 3.6 / 5.2 |
+| MK-15c | MK-15c | FT-1 | redesigned | becomes the rod-end block 64 x 40 x 40: rod clamp (1.5 slit, M4 across), a 16 x 29 x 12 lead pocket open to -y for the potted plug's pigtail, 4 x M6 counterbored into the X-VSR20A platform, a flat AE face at +x | 5.1 | 2.5 / 6.5 / 9.6 |
+| MK-16 | MK-16 | FT-0 | same | unchanged | 3.5 | 1.6 / 3.5 / 5.0 |
+| MK-17 | MK-17 | FT-0 | same | buy the collar, as v1 | 0.1 | 0.0 / 0.1 / 0.1 |
+| MK-18a | MK-18a | S1 | re-dimensioned | height follows v2's levels (deck top to 3 mm under the powder plane) | 3.7 | 1.7 / 3.7 / 5.2 |
+| MK-18b | MK-18b | S1 | same | unchanged | 0.8 | 0.8 / 0.8 / 0.9 |
+| – | MK-02f | FT-1V | new | Cover-slide drop tube from the cube top plate: 64 x 54 tube with a 90 x 5 flange; lathe time as MK-10a x 3.5 (bored 54 through) | – | 2.2 / 4.5 / 6.3 |
+| – | MK-09c | S1 | new | Flange-to-beam angle brackets (2): two drilled angles, one batch setup | – | 1.4 / 2.3 / 3.1 |
+| – | MK-17b | FT-0 | new | FT-0 lead terminal bracket: an L with a slot: as MK-08d | – | 1.7 / 3.6 / 5.2 |
+| – | MK-19 | FT-0 | new | Camera port ring (window 25.4 x 3, cover slide): 44 x 7 ring, window seat 26 x 6: as MK-02a on a lathe | – | 2.8 / 5.0 / 6.9 |
+| – | MK-20 | FT-0 | new | Camera post, foot, arm and Scheimpflug wedges (2.9 and 1.9 deg): three turned bits and two wedges cut on a sine vise | – | 3.0 / 5.5 / 8.4 |
+| – | MK-21 | FT-0 | new | Light-port window rings (2, box walls): 44 x 6 rings with a 30 bore: as MK-19, a batch of 2 | – | 3.2 / 5.5 / 7.4 |
+| – | MK-21c | FT-1V | new | Light-port bores in the cube's left plate and door (E2 plates): a 24 bore at 15 and 30 deg on two bought plates, one tilted setup each: as MK-13 | – | 2.5 / 5.5 / 7.0 |
+| – | MK-22a | S1 | new | Coaxial branch cage-cube plate on the head flange: not drawn in v2; a 60 x 60 plate with 4 cage-rod holes and 4 bolts: as MK-02b | – | 1.7 / 3.6 / 5.2 |
+| – | MK-23 | S2 | new | Deck clamps on the box's panel studs (4): 40 x 18 x 4 bars with a 5.2 hole for the #10 panel stud, a batch | – | 1.5 / 2.4 / 3.1 |
+<!-- /DELTA_TABLE -->
+
 ## Changes for the assembly model
 
-For the CAD worker; `ft_model.py` was not edited here. Each is also on the piece's drawing sheet.
+For the CAD worker, against v1 (`ft_model.py` at d117ba8, not edited here). Each is also on the piece's drawing
+sheet. Which of them v2 took is in [CAD v2](#cad-v2-commit-e6efa1c-what-changes-in-the-fab-pieces).
 
 | MK | Change | Why |
 |---|---|---|
@@ -453,10 +623,17 @@ For the CAD worker; `ft_model.py` was not edited here. Each is also on the piece
 
 ## Not done, and what is uncertain
 
+- **The fab set is v1.** The CAD v2 pieces were listed and their hours estimated, not built, programmed, checked or
+  drawn ([CAD v2](#cad-v2-commit-e6efa1c-what-changes-in-the-fab-pieces)). The v2 hours carry estimated program
+  minutes for 21 changed or new pieces, and MK-22a is not drawn in v2 at all.
 - **Hours are allowance-based estimates.** Nobody has timed a piece, and no machinist has reviewed the drawings or
-  the programs.
+  the programs. The low-to-high spread (58.5-189.3 h for FT-1) is mostly the setup allowance.
+- **The calendar** ([`plan.py`](plan.py)) assumes 8 h days, people who both program and cut, stock on day 1, and
+  the network's early-end dates. It does not model the shop's queue, a machine being down, holidays, or remakes
+  beyond the high case's three.
 - **Vendor mounting patterns not read:** the X-LSQ075B and X-VSR20A (Zaber), the hurrySCAN 25 base (SCANLAB) and the
-  collimator size. Holes for them are marked "PATTERN EST." and must be drilled to the makers' drawings.
+  collimator size. Holes for them are marked "PATTERN EST." and must be drilled to the makers' drawings. (v2 draws
+  the Zaber stages from their STEP files, so a v2 port can take the real patterns.)
 - **Not modelled or programmed:**
   - threads, reaming, the boring-head finish, chamfers and deburring;
   - holder and fixture collisions. The voxel check treats tool and holder as one cylinder of the tool's diameter;
@@ -468,4 +645,4 @@ For the CAD worker; `ft_model.py` was not edited here. Each is also on the piece
 - **Lead times:** SendCutSend's are PR 266's 2026-11-22 reads. McMaster's 1-2 days is the study's assumption.
   Anodising and job-shop lead times were not read.
 - **Small leftovers in the voxel check** (the table above) are real and need a programmer's eye: the slivers FreeCAD's
-  Adaptive leaves at a blank's far edge, and the open pocket's corners.
+  Adaptive leaves at a blank's far edge, the saddle's slot ends, and MK-11b's 0.3 mm strip on the outlet tab.

@@ -71,3 +71,20 @@ def dwell_study(prog, out_csv, n_layers: int = 67):
         w.writeheader()
         w.writerows(rows)
     return rows
+
+
+def dwell_at_conductance(prog, g_pb: float, out_csv, n_layers: int = 67, absorptivities=(0.3, 0.45, 0.6)):
+    """The dwell study at one plate-to-block conductance (e.g. the thermal FEA's): bands of 5, 10 and 20 K with the
+    block at the plate's setpoint, and the block 10 and 20 K below it, at each absorptivity."""
+    cases = [(b, g_pb, a) for a in absorptivities for b in (5.0, 10.0, 20.0)]
+    cases += [(5.0, g_pb, a, off) for a in absorptivities for off in (-10.0, -20.0)]
+    rows = [run_case(prog, n_layers, *c) for c in cases]
+    out_csv = pathlib.Path(out_csv)
+    out_csv.parent.mkdir(parents=True, exist_ok=True)
+    keys = list(dict.fromkeys(k for r in rows for k in r))
+    with out_csv.open("w", newline="") as f:
+        w = csv.DictWriter(f, keys)
+        w.writeheader()
+        w.writerows(rows)
+    return rows
+

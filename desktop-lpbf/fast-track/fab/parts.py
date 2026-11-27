@@ -28,6 +28,9 @@ import ft_model as M  # noqa: E402
 import tools as T  # noqa: E402
 
 P = M.P
+if "clamp_h" not in P or P["deck"][0] != 250.0:
+    sys.exit("parts.py builds the v1 fab set from ft_model at d117ba8; the CAD v2 model (e6efa1c) changes or removes "
+             "parameters it reads. Port it first: README.md, 'CAD v2', and v2_delta.py list what changes.")
 V = cq.Vector
 IN = 25.4
 OUT = HERE / "out"
@@ -474,7 +477,11 @@ def mk02_holder():
     sl = cyl(25.3, h - 1.2, h + 1).fuse(box(0, 40, -25.3, 25.3, h - 1.2, h + 1))
     pcb.cut(sl)
     from shapely.geometry import Point, box as sbox
-    reg = Point(0, 0).buffer(25.3, 256).union(sbox(0, -25.3, 40.0, 25.3)).difference(Point(0, 0).buffer(19.0, 256))
+    # the 1/4 in. cutter (T3) is wider than the 5.3 mm ring between the aperture (r 20) and the pocket wall (r 25.3),
+    # so the region keeps only r < 16.8 out: the tool centre runs at r 20.0-22.1 and its edge overhangs the aperture,
+    # which is already cut through. (An exclusion at r 19 left no room for the cutter on the -x side, and the voxel
+    # check found the back half of the pocket uncut.)
+    reg = Point(0, 0).buffer(25.3, 256).union(sbox(0, -25.3, 40.0, 25.3)).difference(Point(0, 0).buffer(16.8, 256))
     pcb.features.append(dict(kind="custom_gcode", name="slide pocket 50.6 x 1.2 deep, open to +x (raster)", axis="-z",
                              tool=3, late=True, gcode=raster_gcode(reg, h, h - 1.2, 3)))
     pcb.hole("A", "clear", "M4", [(*polar(30.0, a), h) for a in (90, 180, 270)], through=True)

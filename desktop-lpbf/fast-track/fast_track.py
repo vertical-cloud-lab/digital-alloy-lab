@@ -68,14 +68,14 @@ EMISSIVITY = 0.3        # oxidised 6061 and powder (estimate)
 SIGMA = 5.670e-8
 WELL_BLOCK_MM = (80.0, 80.0, 40.0)        # 6061 block with the Ø40 bore
 STANDOFF = dict(n=4 + 3, d_mm=6.35, L_mm=12.7, k=1.46)  # Macor (k 1.46 W/mK), 4 under the block, 3 under the plate
-HEATERS_W = 4 * 50.0                      # 4 x McMaster 3714N36 (24 V, 50 W): 2 in the plate, 2 in the block
+HEATERS_W = 6 * 50.0                      # 6 x Ø6 x 20 mm 24 V 50 W cartridges (parts.csv H1): 2 in the plate, 4 in the block (round 2)
 DECK_T_MM = 10.0                          # 6061 deck plate on the box floor
 BED_Z_MM = DECK_T_MM + STANDOFF["L_mm"] + WELL_BLOCK_MM[2]   # powder plane = top of the well block
 WINDOW_ABOVE_BED_MM = BOX_IN[2] * IN * 1000 - BED_Z_MM      # window in the lid (the box's door)
 # The box sheds the heat through its walls; with a fan on the outside the wall coefficient rises (estimates).
 H_BOX_STILL, H_BOX_FAN = 6.0, 20.0        # W/m2K overall, inside-to-outside, per box area
 ABSORPTIVITY = (0.3, 0.6)                 # share of the beam absorbed by Al powder in LPBF, conduction to keyhole (estimate)
-STAGE_MAX_C = 50.0                        # Zaber X-LSQ075B and X-VSR20A operating range 0-50 C (datasheets, read 2026-11-26)
+STAGE_MAX_C = 50.0                        # Zaber X-LSM100B and X-VSR20A operating range 0-50 C (datasheets, read 2026-11-27)
 
 # Optics: used IPG YLR-400-SM (M2 <= 1.1, 1.07 µm) with IPG's standard collimators, through a used
 # hurrySCAN 25 (25 mm aperture) and a LINOS f = 254 mm F-Theta-Ronar.
@@ -409,7 +409,7 @@ def layout():
     box(cx - 30, -135, 60, 15, "#7f9cc9")
     # recoater stage (behind the section plane) and hopper-blade
     box(30, deck_t + 2, 330, 26, "#5b7fb5", ls="--", a=0.35)
-    ax.annotate("Zaber X-LSQ075B recoater stage\n(behind the well, under a shield;\nits arm reaches over the bed)", xy=(80, deck_t + 20),
+    ax.annotate("Zaber X-LSM100B recoater stage\n(behind the well, under a shield;\nits arm reaches over the bed)", xy=(80, deck_t + 20),
                 xytext=(-185, -70), fontsize=6.5, arrowprops=dict(arrowstyle="->", lw=0.6))
     hx = cx - PLATE_D_MM / 2 - 38
     ax.add_patch(Polygon([(hx, bed_z + 45), (hx + 30, bed_z + 45), (hx + 18, bed_z + 6), (hx + 12, bed_z + 6)],

@@ -11,14 +11,15 @@ a working day, for one or two people who both program and cut, pieces taken in t
   stock: McMaster on day 1 (the study's 1-2 days, early end); SendCutSend sheet and plate in hand on day 5 (5-6
          calendar days, PR 266's reads of 2026-11-22, not re-read); the cube's plates MK-13/14 when the cube arrives
          (day 11 in scenario A, early end).
-  "plates out" sends FT-1's two flat plates (MK-15a/b) to SendCutSend as well: BYU then draws them (0.5 h on day 0)
+  "FT-1 plates out" sends FT-1's two flat plates (MK-15a/b) to SendCutSend as well: BYU then draws them (0.5 h on day 0)
          and receives and finishes them (counterbores, taps) after day 5. The S1 and S2 plates that hours.py's split
          also sends out (MK-01, MK-09a, MK-02c/d/e) would arrive on day 5, after S1's need date (day 4) and on S2's
          (day 5), so the calendar keeps them in house.
+"stock day 2" has the McMaster stock in on day 2, the late end of the study's 1-2 days.
 The sheet pieces (hopper walls, shield) go to SendCutSend in every case. The target plates MK-18b are cut in house
 (bandsaw and mill from 1/8 in. plate; the anodising is outside and its lead time was not read).
 
-    /tmp/venv/bin/python desktop-lpbf/fast-track/fab/plan.py   -> out/plan.json, out/plan.md
+    /tmp/venv/bin/python desktop-lpbf/fast-track/fab/plan.py [hours.json] [outdir]   -> out/plan.json, out/plan.md
 """
 from __future__ import annotations
 
@@ -84,7 +85,7 @@ def milestones(done_day):
     return {m: round(f[m][2] / 5, 2) for m in FP.MILESTONES}
 
 
-def piece_tasks(rows, case, plates_out, cube_day):
+def piece_tasks(rows, case, variant, cube_day):
     """(pid, state, cam_h, floor_h, floor_ready_h) per piece, for case 'low', 'exp' or 'high'."""
     L = []
     order = {s: i for i, s in enumerate(STATES)}
@@ -100,12 +101,12 @@ def piece_tasks(rows, case, plates_out, cube_day):
             cam, tot = r["cam_h"], r["total_h"]
         else:
             cam, tot = r["cam_h"], r["high_h"]
-        ready = MCMASTER_DAY * DAY
+        ready = (2 if variant == "stock day 2" else MCMASTER_DAY) * DAY
         if sheet and pid not in IN_HOUSE_SHEET:
             ready = SCS_DAY * DAY
-        if plates_out and pid in PLATES:
+        if variant == "FT-1 plates out" and pid in PLATES:
             cam, tot, ready = 0.5, r["byu_h_split"], SCS_DAY * DAY
-        if pid in ("MK-13", "MK-14"):
+        if pid in ("MK-13", "MK-14", "MK-21c"):             # machined in the cube's own plates
             ready = cube_day * DAY
         L.append((pid, r["state"], cam, max(tot - cam, 0.0), ready))
     return L
@@ -150,23 +151,29 @@ def simulate(tasks, people):
 
 
 def main():
-    rows = json.loads((OUT / "hours.json").read_text())["pieces"]
+    hp = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else OUT / "hours.json"
+    od = pathlib.Path(sys.argv[2]) if len(sys.argv) > 2 else OUT
+    if not hp.is_absolute():
+        hp, od = HERE / hp, (HERE / od if not od.is_absolute() else od)
+    rows = json.loads(hp.read_text())["pieces"]
     need = need_dates()
     cube_day = int(need["_cube_arrives"][0])
     base_ms = milestones({s: need[s]["network_finish_early"] for s in STATES})
     res = []
-    runs = [(c, n, False) for c in ("low", "exp", "high") for n in (1, 2, 3)] + [("exp", 1, True), ("exp", 2, True)]
-    for case, people, plates_out in runs:
-        bys, log = simulate(piece_tasks(rows, case, plates_out, cube_day), people)
+    runs = [(c, n, "") for c in ("low", "exp", "high") for n in (1, 2, 3)] + \
+        [("exp", 1, "FT-1 plates out"), ("exp", 2, "FT-1 plates out"), ("exp", 2, "stock day 2"), ("exp", 3, "stock day 2")]
+    for case, people, variant in runs:
+        bys, log = simulate(piece_tasks(rows, case, variant, cube_day), people)
         fin = {s: round(bys[s] / DAY, 2) for s in STATES}
         late = {s: round(max(0.0, fin[s] - need[s]["early"]), 2) for s in STATES}
-        res.append(dict(case=case, people=people, plates_out=plates_out, done_day=fin, late_days=late,
-                        milestones_weeks=milestones(fin), log=log))
-    (OUT / "plan.json").write_text(json.dumps(dict(method=__doc__.split("\n\n")[1], need=need,
+        res.append(dict(case=case, people=people, variant=variant or "base", done_day=fin, late_days=late,
+                        milestones_weeks=milestones(fin),
+                        log=log if (case, people, variant) == ("exp", 2, "") else None))
+    (od / "plan.json").write_text(json.dumps(dict(method=__doc__.split("\n\n")[1], need=need,
                                                    network_milestones_weeks=base_ms, runs=res), indent=1))
     names = {"low": "low", "exp": "expected", "high": "high"}
     short = ["S1", "S2", "FT-0", "FT-1", "FT-1V"]
-    L = ["| Hours | People | FT-1 plates | Pieces done, working day (need): S1 | S2 | FT-0 | FT-1 | FT-1V | "
+    L = ["| Hours | People | Variant | Pieces done, working day (need): S1 | S2 | FT-0 | FT-1 | FT-1V | "
          "Milestones, weeks: S1 / S2 / FT-0 tracks / FT-1 coupons / FT-1V coupons |",
          "|---|---:|---|---|---|---|---|---|---|"]
     for r in res:
@@ -177,12 +184,12 @@ def main():
         ms = [r["milestones_weeks"][m] for m in FP.MILESTONES]
         msb = [base_ms[m] for m in FP.MILESTONES]
         mtxt = " / ".join(("**%.1f**" if round(a_, 1) > round(b_, 1) else "%.1f") % a_ for a_, b_ in zip(ms, msb))
-        L.append("| %s | %d | %s | %s | %s |" % (names[r["case"]], r["people"], "out" if r["plates_out"] else "in house",
+        L.append("| %s | %d | %s | %s | %s |" % (names[r["case"]], r["people"], "–" if r["variant"] == "base" else r["variant"],
                                                   " | ".join(cells), mtxt))
     L.append("| *network as drawn* | | | %s | %s |" % (
         " | ".join("%g" % need[s]["network_finish_early"] for s in STATES),
         " / ".join("%.1f" % base_ms[m] for m in FP.MILESTONES)))
-    (OUT / "plan.md").write_text("\n".join(L) + "\n")
+    (od / "plan.md").write_text("\n".join(L) + "\n")
     print("need (early, late):", {s: (need[s]["early"], need[s]["late"]) for s in short}, "cube", need["_cube_arrives"])
     print("\n".join(L))
 
