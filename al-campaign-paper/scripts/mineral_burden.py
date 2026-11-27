@@ -12,9 +12,18 @@ depends on the metric. This module computes three, from per-element inputs in
             (B_nir_low, B_nir_high) and its midpoint.
 ``B_cost``  raw-material cost of the critical alloying additions, USD per kg of alloy,
             sum over elements on the 2025 list, other than Al, of (w_i / 100) * price_i.
+``B_mass``  mass of the alloying elements on the 2025 list, wt % (every listed element counts 1).
 ``Sc``      scandium content, wt %.
 
-Aluminum is left out of all three: it is the base of every alloy compared, so it cancels.
+Aluminum is left out of all of them: it is the base of every alloy compared, so it cancels.
+
+**Comparing two alloys on B_nir.** The bounds on Si, Mg and Zr are the same unknowns for every
+alloy: Mg's reliance can't be 75 % for one alloy and 100 % for another. So two alloys are compared
+under the same import reliances, not interval against interval. ``paired_difference`` gives the
+range of B_nir(a) - B_nir(b) over every allowed choice of the bounded reliances. Because the
+difference is linear in each reliance, its extremes sit at the bounds: the upper end takes each
+element's high bound where alloy a has more of it, and its low bound where a has less. Alloy a is
+robustly below b when that upper end is below zero.
 Elements whose inputs are missing are reported, not guessed: the metric comes back as NaN
 with the missing elements listed, so a placeholder shows in the paper instead of a wrong number.
 
@@ -72,7 +81,7 @@ def burden(comp: dict[str, float], crit: pd.DataFrame) -> dict[str, object]:
         return {"Sc": float("nan"), "B_nir": float("nan"), "B_nir_low": float("nan"), "B_nir_high": float("nan"),
                 "B_nir_missing": "composition", "B_cost": float("nan"), "B_cost_missing": "composition"}
     out: dict[str, object] = {"Sc": comp.get("sc", 0.0)}
-    lo = hi = cost = 0.0
+    lo = hi = cost = mass = 0.0
     miss_n, miss_c = [], []
     w_al = 100.0 - sum(comp.values())
     for el, w in comp.items():
@@ -90,6 +99,7 @@ def burden(comp: dict[str, float], crit: pd.DataFrame) -> dict[str, object]:
             lo += w * l / 100.0
             hi += w * h / 100.0
         if on_list:
+            mass += w
             p = _num(r.get("price_usd_per_kg"))
             if math.isnan(p):
                 miss_c.append(el)
@@ -101,6 +111,8 @@ def burden(comp: dict[str, float], crit: pd.DataFrame) -> dict[str, object]:
     out["B_nir_missing"] = ",".join(miss_n)
     out["B_cost"] = float("nan") if miss_c else cost
     out["B_cost_missing"] = ",".join(miss_c)
+    # B_mass needs only the list status, so an element missing from the inputs makes it NaN.
+    out["B_mass"] = float("nan") if any(el not in crit.index for el, w in comp.items() if w > 0) else mass
     # Cost over the priced elements only (e.g. A20X, whose boron has no element price).
     out["B_cost_priced"] = cost
     # Sensitivity: the same interval with aluminum counted at its own import reliance.
@@ -111,6 +123,47 @@ def burden(comp: dict[str, float], crit: pd.DataFrame) -> dict[str, object]:
     else:
         out["B_nir_al_low"] = out["B_nir_al_high"] = float("nan")
     return out
+
+
+def paired_difference(comp_a: dict[str, float], comp_b: dict[str, float],
+                      crit: pd.DataFrame) -> tuple[float, float]:
+    """(min, max) of B_nir(a) - B_nir(b) with both alloys under the same import reliances.
+
+    Each reliance can sit anywhere in its USGS bounds, but at the same value for both alloys.
+    NaN if either alloy has an element without reliance inputs."""
+    lo = hi = 0.0
+    for el in set(comp_a) | set(comp_b):
+        d = comp_a.get(el, 0.0) - comp_b.get(el, 0.0)
+        if d == 0:
+            continue
+        if el not in crit.index:
+            return float("nan"), float("nan")
+        l, h = _num(crit.loc[el].get("nir_low_pct")), _num(crit.loc[el].get("nir_high_pct"))
+        if math.isnan(l) or math.isnan(h):
+            return float("nan"), float("nan")
+        a, b = d * l / 100.0, d * h / 100.0
+        lo += min(a, b)
+        hi += max(a, b)
+    return lo, hi
+
+
+def robustly_below(comp_a: dict[str, float], comp_b: dict[str, float], crit: pd.DataFrame) -> bool:
+    """True if alloy a has a lower B_nir than b under every allowed choice of the bounded reliances."""
+    _, hi = paired_difference(comp_a, comp_b, crit)
+    return not math.isnan(hi) and hi < 0
+
+
+def pareto_front(points: list[tuple[str, float, float]]) -> list[str]:
+    """IDs of the points no other point beats on both axes: lower burden and higher strength.
+
+    points: (id, burden, strength). A point is dominated if another has burden <= and strength >=,
+    with at least one strict. Points with a NaN coordinate are left out."""
+    pts = [(i, b, s) for i, b, s in points if not (math.isnan(b) or math.isnan(s))]
+    front = []
+    for i, b, s in pts:
+        if not any((b2 <= b and s2 >= s) and (b2 < b or s2 > s) for _, b2, s2 in pts):
+            front.append(i)
+    return front
 
 
 def table(alloys: pd.DataFrame | None = None, crit: pd.DataFrame | None = None) -> pd.DataFrame:
