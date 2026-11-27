@@ -931,7 +931,7 @@ def cut_program(w, scn, vf4, stock, names, part_obj, Q_of, cam, cap, seconds, st
 
 # ================================================================================================ clip playback
 def play(w, scn, name, cam, sub=None, caption=None, hide=(), tool_override=None, obj_color=None, rev=False,
-         cut=None, specs=None):
+         cut=None, specs=None, span=None):
     """Play a recorded clip: arms, MiRs, objects per frame; the clip's own meta unless overridden."""
     clip = load(name)
     if clip is None:
@@ -939,6 +939,8 @@ def play(w, scn, name, cam, sub=None, caption=None, hide=(), tool_override=None,
         return None
     w.clip = name
     frames = clip["frames"][::-1] if rev else clip["frames"]
+    if span is not None:                 # (first, last) frame of the clip to play
+        frames = frames[span[0]:span[1]]
     keys = set()
     for fr in frames:
         keys |= set(fr["arms"])
@@ -1530,6 +1532,11 @@ def chapter_31():
     # round 9 (P1): the lathe runs with its door shut (no posted program for the turned parts: only the clock), then
     # arm A takes the part out along the loading path run back (so checked as it was planned); the part drawn turned
     n_t = int(5 * FPS)
+    pk = load("lathe_park")
+    park = pk is not None and (pk.get("result") or {}).get("ok", False)
+    if park:                                         # the arm to its transport pose first: clear of the door's handle
+        half_ = sum(1 for f in pk["frames"] if "transport pose" in (f["meta"].get("sub") or ""))
+        play(w, scn, "lathe_park", cam_l, span=(0, half_))
     for i in range(n_t + 36):
         if i < 18:
             lathe_door(ease((i + 1) / 18))
@@ -1541,6 +1548,8 @@ def chapter_31():
                     "so no tool path is drawn" if mid or i < 18 else "the ST-10's auto door (option)",
                 who=["machine"], step="lathe class", status="pass",
                 proc_s=(5 * 60.0 - 3.0) / n_t if mid else 1.5 / 18)
+    if park:
+        play(w, scn, "lathe_park", cam_l, span=(half_, None))
     turned = dict(kind="steps", steps=[(0.0, 46.0, 27.0), (46.0, 66.0, 25.4), (66.0, 92.0, 19.0), (92.0, 100.0, 12.0)],
                   color="#cfd4d9")
     play(w, scn, "lathe_slug", cam_l, rev=True, specs={"bar slug": turned},
@@ -1698,7 +1707,7 @@ def chapter_29():
            (0, 0, 1)]                                            # from the aisle, high and to one side: both people,
                                                                  # the stand, the carry, the cart
     for i in range(2):
-        pw = (M29 @ np.r_[-1500.0 + 3000.0 * i, -2600.0, 0.0, 1.0])[:3]
+        pw = (M29 @ np.r_[-2400.0 + 4800.0 * i, -1500.0 + 200.0 * i, 0.0, 1.0])[:3]   # round 9: 2.4 m or more from the tripod
         crew.place(i, pw[0], pw[1], 0.0)
     crew.show(1.0)
     keys = [(P_from, None), (E.T((0.0, 0.0, top + 70.0)), 1.0), (E.T((0.0, cart_y, CART["h"] + 70.0)), None),

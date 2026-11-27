@@ -466,7 +466,7 @@ def st10(door=1.0, jaw_open=0.0, chuck_d=165.0, p=None, jaw_deg=90.0):
     # the door: shut over the opening; open = slid left by its width less the overlap
     x0d = p["panel_x0"] - door * (p["panel_w"] - 20.0)
     pw = p["panel_w"]
-    out["door"] = Part(merge([box(x0d, x0d + pw, -30, -6, dz0 - 20, p["win_z0"]), box(x0d, x0d + pw, -30, -6, p["win_z1"], dz1 + 30),
+    out["door"] = Part(merge([box(x0d, x0d + pw, -30, -6, max(dz0 - 20, bh + 2.0), p["win_z0"]), box(x0d, x0d + pw, -30, -6, p["win_z1"], dz1 + 30),
                               box(x0d, x0d + p["win_x0"], -30, -6, p["win_z0"], p["win_z1"]),
                               box(x0d + p["win_x0"] + p["win_w"], x0d + pw, -30, -6, p["win_z0"], p["win_z1"]),
                               box(x0d + pw - 75, x0d + pw - 55, -70, -30, 1150, 1450)]), ST10_DOOR)
