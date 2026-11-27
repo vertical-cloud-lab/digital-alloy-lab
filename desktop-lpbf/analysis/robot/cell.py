@@ -67,6 +67,7 @@ ARM_Y = (-1562.0 - 50.0 - 30.0 - MIR["W"] / 2 + 130.0) + 1030.0      # -772: arm
 MIR_Y = ARM_Y - 130.0                                                 # -902: MiR centre (the arm sits 130 mm forward)
 
 STEP_RAD = math.radians(1.5)
+CONTAIN = os.environ.get("CELL_CONTAIN", "1") == "1"      # round 10: Checker.collisions also tests containment
 DEPTH_MM = 1.5
 TOUCH_MM = 0.3
 LADDER = (DEPTH_MM, 3.0, 6.0, 12.0, 25.0, 50.0)
@@ -226,36 +227,214 @@ def hit(a, b) -> bool:
     return fcl.collide(a, b, fcl.CollisionRequest(), fcl.CollisionResult()) > 0
 
 
-def depth(x: Body, y: Body, upto=None) -> float:
+# ------------------------------------------------------------------------------------------------ containment (round 10)
+# FCL's collide() sees two meshes' surfaces crossing. A body lying wholly inside another (a 0.5 mm liner inside the chamber
+# body's wall between two samples, a dowel inside the table top) has no crossing, so until round 10 neither the planner nor
+# rec_check.py saw it, and depth() could call a pair free once a short translation had pushed a thin part wholly inside the
+# other (digital-alloy-lab #260, round 9's frame audit: 73 "part in part" pairs in chapter 41, found by winding numbers).
+# inside(): point-in-mesh by ray parity, along two fixed generic directions (a ray along an axis would graze the CAD meshes'
+# axis-aligned edges), the triangles binned on a grid across each ray, in numba; a point counts as inside only if both rays
+# say so (open seams in a mesh give one wrong ray at most).
+_RAYS = None
+_INS = {}
+
+
+def _ray_rots():
+    global _RAYS
+    if _RAYS is None:
+        out = []
+        for seed in (11, 23):
+            q = np.random.default_rng(seed).normal(size=(3, 3))
+            Q, _ = np.linalg.qr(q)
+            out.append(np.ascontiguousarray(Q, float))
+        _RAYS = out
+    return _RAYS
+
+
+try:
+    import numba as _nb
+
+    @_nb.njit(cache=True)
+    def _bin_build(Vr, F, y0, z0, dy, dz, ny, nz):
+        nt = F.shape[0]
+        counts = np.zeros(ny * nz + 1, np.int64)
+        for t in range(nt):
+            a, b, c = F[t, 0], F[t, 1], F[t, 2]
+            ymin = min(Vr[a, 1], min(Vr[b, 1], Vr[c, 1]))
+            ymax = max(Vr[a, 1], max(Vr[b, 1], Vr[c, 1]))
+            zmin = min(Vr[a, 2], min(Vr[b, 2], Vr[c, 2]))
+            zmax = max(Vr[a, 2], max(Vr[b, 2], Vr[c, 2]))
+            i0 = max(0, int((ymin - y0) / dy))
+            i1 = min(ny - 1, int((ymax - y0) / dy))
+            j0 = max(0, int((zmin - z0) / dz))
+            j1 = min(nz - 1, int((zmax - z0) / dz))
+            for i in range(i0, i1 + 1):
+                for j in range(j0, j1 + 1):
+                    counts[i * nz + j + 1] += 1
+        start = np.cumsum(counts)
+        idx = np.empty(start[-1], np.int64)
+        fill = start[:-1].copy()
+        for t in range(nt):
+            a, b, c = F[t, 0], F[t, 1], F[t, 2]
+            ymin = min(Vr[a, 1], min(Vr[b, 1], Vr[c, 1]))
+            ymax = max(Vr[a, 1], max(Vr[b, 1], Vr[c, 1]))
+            zmin = min(Vr[a, 2], min(Vr[b, 2], Vr[c, 2]))
+            zmax = max(Vr[a, 2], max(Vr[b, 2], Vr[c, 2]))
+            i0 = max(0, int((ymin - y0) / dy))
+            i1 = min(ny - 1, int((ymax - y0) / dy))
+            j0 = max(0, int((zmin - z0) / dz))
+            j1 = min(nz - 1, int((zmax - z0) / dz))
+            for i in range(i0, i1 + 1):
+                for j in range(j0, j1 + 1):
+                    k = i * nz + j
+                    idx[fill[k]] = t
+                    fill[k] += 1
+        return start, idx
+
+    @_nb.njit(cache=True)
+    def _parity(P, Vr, F, start, idx, y0, z0, dy, dz, ny, nz):
+        out = np.zeros(P.shape[0], np.int64)
+        for m in range(P.shape[0]):
+            px, py, pz = P[m, 0], P[m, 1], P[m, 2]
+            i = int((py - y0) / dy) if py >= y0 else -1
+            j = int((pz - z0) / dz) if pz >= z0 else -1
+            if i < 0 or i >= ny or j < 0 or j >= nz:
+                continue
+            k = i * nz + j
+            c = 0
+            for s in range(start[k], start[k + 1]):
+                t = idx[s]
+                a, b, cc = F[t, 0], F[t, 1], F[t, 2]
+                ay, az = Vr[a, 1], Vr[a, 2]
+                e1y, e1z = Vr[b, 1] - ay, Vr[b, 2] - az
+                e2y, e2z = Vr[cc, 1] - ay, Vr[cc, 2] - az
+                d = e1y * e2z - e2y * e1z
+                if d == 0.0:
+                    continue
+                qy, qz = py - ay, pz - az
+                u = (qy * e2z - e2y * qz) / d
+                v = (e1y * qz - qy * e1z) / d
+                if u < 0.0 or v < 0.0 or u + v > 1.0:
+                    continue
+                x = Vr[a, 0] + u * (Vr[b, 0] - Vr[a, 0]) + v * (Vr[cc, 0] - Vr[a, 0])
+                if x > px:
+                    c += 1
+            out[m] = c & 1
+        return out
+    _HAVE_NB = True
+except Exception:  # noqa: BLE001
+    _HAVE_NB = False
+
+
+def _ins_index(b: Body):
+    key = id(b.v)
+    r = _INS.get(key)
+    if r is not None and r[0] is b.v:
+        return r[1]
+    if len(_INS) > 4000:
+        _INS.clear()
+    F = np.ascontiguousarray(b.f, np.int64)
+    out = []
+    for R in _ray_rots():
+        Vr = np.ascontiguousarray(b.v @ R.T, float)
+        lo, hi = Vr.min(0), Vr.max(0)
+        ext = np.maximum(hi - lo, 1e-6)
+        ny = int(min(256, max(1, math.ceil(ext[1] / 2.0))))
+        nz = int(min(256, max(1, math.ceil(ext[2] / 2.0))))
+        dy, dz = ext[1] / ny * (1 + 1e-9), ext[2] / nz * (1 + 1e-9)
+        start, idx = _bin_build(Vr, F, float(lo[1]), float(lo[2]), float(dy), float(dz), ny, nz)
+        out.append((R, Vr, F, start, idx, float(lo[1]), float(lo[2]), float(dy), float(dz), ny, nz))
+    _INS[key] = (b.v, out)
+    return out
+
+
+def inside(b: Body, pts_world) -> np.ndarray:
+    """Which of the world points lie inside body b (at its placement): both rays' parities odd."""
+    P = np.atleast_2d(np.asarray(pts_world, float))
+    if not _HAVE_NB or not len(P):
+        return np.zeros(len(P), bool)
+    loc = (P - b.M[:3, 3]) @ b.M[:3, :3]
+    res = np.ones(len(P), bool)
+    for (R, Vr, F, start, idx, y0, z0, dy, dz, ny, nz) in _ins_index(b):
+        Pr = np.ascontiguousarray(loc @ R.T, float)
+        res &= _parity(Pr, Vr, F, start, idx, y0, z0, dy, dz, ny, nz).astype(bool)
+        if not res.any():
+            break
+    return res
+
+
+def _probe(b: Body, k=5):
+    """A few of b's vertices (world), spread over the mesh, to test against another body."""
+    n = len(b.v)
+    sel = np.unique(np.linspace(0, n - 1, min(n, k)).astype(int))
+    return b.v[sel] @ b.M[:3, :3].T + b.M[:3, 3]
+
+
+def contained(x: Body, y: Body) -> bool:
+    """One of x and y wholly inside the other, given that their surfaces do not cross (call after hit() is False): most of a
+    few probe vertices of x inside y, or of y inside x. Boxes are checked first."""
+    lx, hx = x.box()
+    ly, hy = y.box()
+    if np.any(lx > hy) or np.any(ly > hx):
+        return False
+    if np.all(lx >= ly) and np.all(hx <= hy):
+        if inside(y, _probe(x)).mean() > 0.5:
+            return True
+    if np.all(ly >= lx) and np.all(hy <= hx):
+        if inside(x, _probe(y)).mean() > 0.5:
+            return True
+    return False
+
+
+def depth(x: Body, y: Body, upto=None, contain=True) -> float:
     """byu-vcl collide.depth(): the sampled translational penetration depth of x into y, rounded up to LADDER
-    (0 = no contact, TOUCH_MM = only touching, DEEP = nothing up to 50 mm frees it)."""
-    if not hit(x.obj, y.obj):
+    (0 = no contact, TOUCH_MM = only touching, DEEP = nothing up to 50 mm frees it). Round 10 (contain=True): a pose where x
+    lies wholly inside y (or y inside x) is not free either, both at the start (a body inside another with no surface
+    crossing is in contact, not clear) and at each trial translation (round 9 could call a 0.5 mm liner free once 1.5 mm
+    had pushed it wholly inside the chamber body's wall)."""
+    h = hit(x.obj, y.obj)
+    if not h and not (contain and contained(x, y)):
         return 0.0
     xo = x.obj
-    try:
-        e = x.eroded()
-        if not hit(e, y.obj):
-            return TOUCH_MM
-        xo = e
-    except Exception:  # noqa: BLE001
-        pass
+    if h:
+        try:
+            e = x.eroded()
+            if not hit(e, y.obj) and not (contain and contained(x, y)):
+                return TOUCH_MM
+            xo = e
+        except Exception:  # noqa: BLE001
+            pass
     lx, hx = x.box()
     ly, hy = y.box()
     c = (lx + hx - ly - hy) * 0.5
     n = float(np.linalg.norm(c))
     order = np.argsort(-(_DIRS @ (c / n))) if n > 1e-9 else np.arange(len(_DIRS))
     R, p = x.M[:3, :3].copy(), x.M[:3, 3].copy()
+    M0 = x.M.copy()
+
+    def free(q):
+        xo.setTransform(fcl.Transform(R, q))
+        if hit(xo, y.obj):
+            return False
+        if not contain:
+            return True
+        M = M0.copy()
+        M[:3, 3] = q
+        x.M = M                      # (the FCL object is restored in finally; contained() reads x.M only)
+        return not contained(x, y)
     try:
         for k, t in enumerate(LADDER):
             for i in order:
-                xo.setTransform(fcl.Transform(R, p + t * _DIRS[i]))
-                if not hit(xo, y.obj):
+                if free(p + t * _DIRS[i]):
                     return float(t)
             if upto is not None and t >= upto:
                 return float(LADDER[k + 1]) if k + 1 < len(LADDER) else DEEP
         return DEEP
     finally:
+        x.M = M0
         xo.setTransform(fcl.Transform(R, p))
+        if xo is not x.obj:
+            x.obj.setTransform(fcl.Transform(R, p))
 
 
 class Group:
@@ -282,8 +461,9 @@ class Group:
         return names, lo, hi
 
 
-def group_hits(A: Group, B: Group, first=False, margin=0.0):
-    """Pairs (a, b) of bodies of A and B whose meshes intersect."""
+def group_hits(A: Group, B: Group, first=False, margin=0.0, missed=None):
+    """Pairs (a, b) of bodies of A and B whose meshes intersect. Round 10: `missed`, a list, gets the pairs whose boxes overlap
+    but whose meshes do not cross (for the containment test), unless `first` stopped early."""
     na, la, ha = A.boxes()
     nb, lb, hb = B.boxes()
     ov = np.all((la[:, None, :] - margin <= hb[None, :, :]) & (lb[None, :, :] <= ha[:, None, :] + margin), axis=2)
@@ -294,6 +474,23 @@ def group_hits(A: Group, B: Group, first=False, margin=0.0):
             out.append((a, b))
             if first:
                 return out
+        elif missed is not None:
+            missed.append((a, b))
+    return out
+
+
+def group_contained(A: Group, B: Group, kinds=("held", "tool", "gripper"), skip=(), pairs=None):
+    """Round 10: pairs (a, b), a of one of `kinds`, whose boxes overlap and surfaces do not cross but one lies wholly inside the
+    other (FCL's group_hits misses them). `pairs`: group_hits' `missed` list (box overlap, no crossing), else computed here."""
+    if pairs is None:
+        pairs = []
+        group_hits(A, B, missed=pairs)
+    out = []
+    for a, b in pairs:
+        if a.kind not in kinds or (a.name, b.name) in skip:
+            continue
+        if contained(a, b):
+            out.append((a, b))
     return out
 
 
@@ -658,7 +855,9 @@ class Checker:
                 robot.add(b)
         if a.held is not None and a.held[0].name not in robot.bodies:
             robot.add(a.held[0])
-        for x, y in group_hits(robot, self.sc.world):
+        missed = [] if CONTAIN else None
+        hits = group_hits(robot, self.sc.world, missed=missed)
+        for x, y in hits:
             key = ("held" if (a.held is not None and x is a.held[0]) else
                    ("tool" if x.kind in ("gripper", "tool") else "arm"), y.name)
             if key[0] != "arm" and ("soft", y.name) in allow:
@@ -674,6 +873,22 @@ class Checker:
                 out.append((x.name, y.name, None))
             if first:
                 return out
+        if CONTAIN:
+            # round 10: the held part, the tool and the gripper wholly inside something present (or it inside them), which
+            # group_hits cannot see; counted like a crossing deeper than the allowance (a touch that only reads as inside
+            # comes out of depth() at 1.5 mm or less and passes)
+            for x, y in group_contained(robot, self.sc.world, pairs=missed):
+                key = ("held" if (a.held is not None and x is a.held[0]) else "tool", y.name)
+                if ("soft", y.name) in allow or ("inside", y.name) in allow:
+                    continue
+                if x.group == "base" and y.name.startswith("MiR250"):
+                    continue
+                d = depth(x, y, upto=depth_limit)
+                if d <= depth_limit:
+                    continue
+                out.append((x.name, y.name, d))
+                if first:
+                    return out
         for xn, yn in a.self_hits():
             out.append((xn, yn, "self"))
             if first:
