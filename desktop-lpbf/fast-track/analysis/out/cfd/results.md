@@ -8,7 +8,22 @@ plate at the start of a build, the hopper at its right park). Scripts: [`../../c
 
 ## Short answer
 
-__SHORT__
+- **Cross-flow (FT-1, isothermal): it works as drawn.** The slot jet crosses the Ø30 build area at 2.6–2.7 m/s (3 mm
+  up) and carries 96–99 % of the fume released 0.5–3 mm over the bed into the collector. Its shear on the powder over
+  the build area, 0.03–0.05 Pa on average, is at or under the lowest pick-up threshold for 63 µm AlSi10Mg (0.053 Pa)
+  and half the 20 µm one; the coarsest grains may roll along the plate's sides (0.10 Pa). Fume that rises above the jet
+  (4–15 mm) is only half caught and drifts round the box, passing the cover slide 80–90 mm away. 88 Pa from the nozzle
+  to the collector's port. No change needed.
+- **Purge: through the nozzle alone, as drawn, it is slow; a low diffuser and a high vent make it fast.** Through the
+  nozzle the box takes 33–50 min to 1000 ppm and 47–71 min to 100 ppm (no buoyancy; two meshes), past the study's
+  expected 13–31 / 18–45 min, and the analyzer on the collector's exhaust reads about 4× under the box. With 20 L/min
+  of argon in through a diffuser near the floor and out a vent under the lid, the argon fills the box from the bottom
+  and pushes the air out: {LH1000} / {LH100} min to 1000 / 100 ppm (box average, with buoyancy), against 6.2 / 8.9 min
+  for perfect mixing. A high diffuser with the same vent mixes instead (≈ 4.7 / 6.8 min); {HLSHORT}
+- **What to change:** add a diffuser low on one wall and a vent at the top of the opposite wall (two bulkheads, a ball
+  valve on the vent), sample the analyzer from the vent line, purge with the nozzle off, then close the vent and start
+  the cross-flow. Purge before heating the plate. Every run here is isothermal and leak-free, with no air or water in
+  the powder, so the O₂ the real box reaches is set by its leaks (study §3.4), not by these times.
 
 ## 1. The cross-flow over the plate
 
@@ -174,7 +189,19 @@ reached and not decaying.
 *O₂ on a vertical section through the diffusers (y = 45 mm, mid-depth), log scale: white is argon under 10 ppm, dark
 blue is air; grey is solid (the deck cassette, the stage, the window stack). The diffusers are on the left wall in this plane; the vents are on the right wall, 90–130 mm behind it.*
 
-__BBULLETS__
+- **Low diffuser, high vent: the argon displaces the air.** It spreads over the floor and rises as a layer: at 2 min
+  the bottom 40 mm of the box holds about 120 ppm and the top 40 mm about 1.2 % O₂ (figure). The box average reaches
+  1000 ppm in {LH1000} min and 100 ppm in {LH100} min, {LHRATIO}× faster than well mixed, after {LHVOL1} and {LHVOL} box volumes
+  of argon. 1 mm over the plate the O₂ is under 1000 ppm after {LHP1000} min and under 100 ppm after {LHP100} min. The
+  vent takes the last air, so an analyzer there reads above the box average all the way: {LHE1000} / {LHE100} min.
+- **High diffuser, high vent: the argon falls and mixes.** The plume from the diffuser stirs the box on its way to the
+  floor, so the box is only mildly layered (the top 40 mm holds about twice the average). Because the vent still takes
+  the worst gas it purges about a quarter faster than well mixed: 6,900 ppm at 3 min, ≈ 4.7 / 6.8 min to 1000 /
+  100 ppm.
+- **High diffuser, low vent:** {HLBUL}
+- **The first low-inlet run** (Courant 15, the vent letting air back in) gave the same box average as the second
+  (Courant 30, outflow-only vent) to within 3 % up to 1.5 min. From ~2.5 min the air flowing back in at its vent held
+  its exhaust near 2,800 ppm, so only its box average and plate are used (§4).
 
 ### 2.3 Where the purge inlet and the exhaust go
 
