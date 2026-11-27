@@ -107,10 +107,14 @@ def _frame_to(p0, z):
 
 
 def merge(ms):
+    """One mesh of several closed pieces. Round 9: the pieces keep their own points (merge_points=False). Merged, two
+    boxes that share corners make a non-manifold mesh, and the normals pass of a smooth-shaded actor (consistent_normals)
+    then flips some of its faces: scene_audit's winding number put a basket 15 mm clear of a tank's walls "inside" the
+    tank (0.54), and the flipped faces shade dark."""
     ms = [m for m in ms if m is not None and m.n_points]
     out = ms[0].copy()
     for m in ms[1:]:
-        out = out.merge(m)
+        out = out.merge(m, merge_points=False)
     return out.triangulate()
 
 
@@ -592,7 +596,8 @@ def pallet_jack(raise_mm=0.0, handle_deg=10.0):
     fl, fw, ow = 48 * INCH, 7 * INCH, 27 * INCH
     z0 = 2.9 * INCH + raise_mm
     out = {}
-    forks = [box(0, fl, y - fw / 2, y + fw / 2, z0 - 50, z0) for y in (-(ow - fw) / 2, (ow - fw) / 2)]
+    forks = [box(40, fl, y - fw / 2, y + fw / 2, z0 - 50, z0) for y in (-(ow - fw) / 2, (ow - fw) / 2)]   # from the
+    # pump's front face (x 40; round 9: they started inside it)
     forks += [cyl((fl - 60, y, 40), (fl - 60, y + 40, 40), 40.0, res=16) for y in (-(ow - fw) / 2 - 20, (ow - fw) / 2 - 20)]
     out["pallet jack forks"] = Part(merge(forks), C["red"])
     out["pallet jack pump"] = Part(merge([box(-200, 40, -260, 260, 60, z0 + 120), cyl((-120, -40, 0 + 90), (-120, 40, 90), 90.0, res=20)]),
@@ -808,7 +813,7 @@ def box_mesh_with_tape(L, W, H, open_flaps=0.0):
         flaps.append(f.transform(Mf, inplace=False))
         tapes.append(t.transform(Mf, inplace=False))
     if open_flaps <= 0.0:
-        tape = box(-L / 2 - 1, L / 2 + 1, -24, 24, H - 2, H + 2.5)
+        tape = box(-L / 2 - 1, L / 2 + 1, -24, 24, H + 1.5, H + 2.5)      # on the shut flaps (1.5 mm board)
     else:
         tape = merge(tapes)
     return {"box": Part(body, C["box"]), "tape": Part(tape, "#d8c9a3", collide=False), "flaps": Part(merge(flaps), "#c09a64")}

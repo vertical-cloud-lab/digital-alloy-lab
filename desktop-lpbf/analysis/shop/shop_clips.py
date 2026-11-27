@@ -499,13 +499,19 @@ def clip_kit():
 RECV_BOX = ("seals, fasteners, inserts (McMaster)", 300.0, 250.0, 150.0, 4.0)
 
 
+def recv_box_parts(flaps=0.0):
+    """The box on the receiving lift table, in the receiving station's frame (round 9: on its own, so a chapter can
+    swap the shut box for the opened one without touching the table)."""
+    name, L, W, H, kg = RECV_BOX
+    bp = E.box_mesh_with_tape(L, W, H, flaps)
+    return E.placed(bp, Tm(None, (0.0, 420.0, 760.0)), "box: ")
+
+
 def recv_parts(flaps=0.0):
     """The receiving lift table (Vestil SCTAB, top at 760 mm) with a box on it, in the receiving station's frame
     (robot at -y)."""
     parts = E.placed(E.lift_table(760.0), Tm(None, (0.0, 520.0, 0.0)))
-    name, L, W, H, kg = RECV_BOX
-    bp = E.box_mesh_with_tape(L, W, H, flaps)
-    parts.update(E.placed(bp, Tm(None, (0.0, 420.0, 760.0)), "box: "))
+    parts.update(recv_box_parts(flaps))
     return parts
 
 

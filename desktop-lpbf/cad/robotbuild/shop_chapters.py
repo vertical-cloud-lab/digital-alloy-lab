@@ -806,63 +806,173 @@ def context_vf4(scn):
 
 
 # ================================================================================================ chapters
+def box_depth(P, M, half):
+    """How deep the points P (n, 3, world) are inside the box of half-extents `half` posed at M (its centre's frame):
+    per point, the distance to the nearest face if inside, else 0; and that face's outward normal (world)."""
+    loc = (np.asarray(P, float) - M[:3, 3]) @ M[:3, :3]
+    h = np.asarray(half, float)
+    gap = h - np.abs(loc)                                   # > 0 on all three axes: inside
+    inside = (gap > 0).all(axis=1)
+    k = np.argmin(gap, axis=1)
+    idx = np.arange(len(loc))
+    d = np.where(inside, gap[idx, k], 0.0)
+    nrm = np.zeros_like(loc)
+    nrm[idx, k] = np.sign(loc[idx, k])
+    return d, nrm @ M[:3, :3].T
+
+
+def seat_hands(p, hands, boxes, away, limit=0.8, iters=8):
+    """Round 9 (scene_audit: gloves 40-100 mm inside the jack's handle and the loads): put person p's palms where
+    `hands` says ({side: world point or None}), then move a palm back along `away` ({side: world unit vector}, the
+    side the hand comes from) while its glove reaches more than `limit` mm into any of the boxes [(M, half extents)]:
+    a hand on a surface, not in it. people.py's IK aims the palm, but grounding the shoes and turning the palm move it
+    10-40 mm, so each pass also re-aims the IK target by the palm's error. Returns (palm points reached, the deepest
+    the glove is left inside (mm), the largest palm error left (mm))."""
+    want = {k: (None if v is None else np.asarray(v, float)) for k, v in hands.items()}
+    tg = {k: (None if v is None else v.copy()) for k, v in want.items()}
+    left, err = 0.0, 0.0
+    for it in range(iters):
+        p.set(hands={k: (None if v is None else tuple(v)) for k, v in tg.items()})
+        P = p.posed()["glove"][0]
+        F = p.sc.gmat[p.group]
+        side = np.where(((P - F[:3, 3]) @ F[:3, 0]) < 0.0, "l", "r")   # its local -x is its left
+        worst, err, moved = 0.0, 0.0, False
+        for sd in ("l", "r"):
+            if want.get(sd) is None:
+                continue
+            e = want[sd] - p.hand_point(sd)
+            err = max(err, float(np.linalg.norm(e)))
+            deep = 0.0
+            for M, half in boxes:
+                d, _ = box_depth(P[side == sd], M, half)
+                if len(d):
+                    deep = max(deep, float(d.max()))
+            worst = max(worst, deep)
+            step = np.asarray(away[sd], float) * (deep - 0.5 * limit) if deep > limit else np.zeros(3)
+            want[sd] = want[sd] + step
+            if np.linalg.norm(e) > 1.5 or deep > limit:
+                tg[sd] = tg[sd] + e + step
+                moved = True
+        left = worst
+        if not moved:
+            break
+    return want, round(left, 2), round(err, 1)
+
+
 def chapter_20():
+    """Receiving. Round 9 (round 8's audit: the pallet and a crate driven >100 mm into the stock rack's upright, the tray
+    lifted through the box's shut flaps and tape, arm B's fingertips 42 mm in them, the person's gloves 59 mm inside the
+    jack's handle): the pallet turned so the jack's forks run along its stringers (a GMA pallet's two-way entry), between
+    its bottom boards, with the crates side by side on it; its path 350 mm clear of the rack; the flaps opened and the tape
+    cut before the tray comes out; the person's hands on the handle's bar, not in it (seat_hands)."""
     w = Writer("20-receiving", "Receiving and unpacking")
     scn = Shop()
     context_vf4(scn)
     st = Mst("receiving")
-    rp = load("recv_tape")
-    # the receiving area: lift table and box, three heavy crates on a pallet coming in
     import shop_clips as SCL
-    scn.add_parts("recv", SCL.recv_parts(0.0), st)
-    crates = [("chamber blank 13 x 9.5 x 5.5 in. 6061 (30.0 kg)", (360, 270, 180)), ("plate bundle (58 kg)", (720, 400, 110)),
-              ("IPG laser crate (52 kg)", (760, 680, 380))]
+    scn.add_parts("recv", E.placed(E.lift_table(760.0), E.T((0.0, 520.0, 0.0))), st)
+    scn.add_parts("recvbox", SCL.recv_box_parts(0.0), st)
+    # the pallet (48 in. along its x) turned so its x runs along the world's +y, the way it is pushed; the crates on it
     pal = E.pallet()
-    M_pal0 = st @ E.T((-1900.0, 3600.0, 0.0))
-    M_pal1 = st @ E.T((-1900.0, 1100.0, 0.0))
-    jack, jm = E.pallet_jack()
+    pv_, pf_ = E.fcl_items(pal)[0][1]
+    pal_spec = dict(kind="vf", v=pv_, f=pf_, color=E.C["wood"])
+    R90 = E.Rz(90.0)
+    X_PAL = 3700.0                       # world x of its centre: 280 mm clear of the lift table, 350 of the rack's base
+    Y0, Y1 = 400.0, 2850.0               # world y of its centre, start and end
+    LIFT = 20.0                          # the jack lifts it 20 mm
+    crates = [("IPG laser crate (52 kg)", (-220.0, 0.0, 0.0), (760.0, 680.0, 380.0)),
+              ("plate bundle (58 kg)", (380.0, 0.0, 0.0), (400.0, 720.0, 110.0)),
+              ("chamber blank 13 x 9.5 x 5.5 in. 6061 (30.0 kg)", (380.0, 0.0, 110.0), (270.0, 360.0, 180.0))]
+    PAL_TOP = 144.0
+
+    def M_pal(y, z):
+        return E.T((X_PAL, y, z), R90)
+
+    # the jack: forks along its +x from the pump; set so the fork rollers drop between the pallet's 4th and 5th bottom
+    # boards (pallet x 340-470) and the forks lie between its stringers; its x along the pallet's x
+    JX = 404.6 - (48 * E.INCH - 60.0)    # the pump's x in the pallet's frame (the rollers at pallet x 404.6)
+    HANDLE_DEG = 45.0                    # tilted back to the person (10 deg in round 8: the bar at 1.36 m)
+    RAISE_UP = PAL_TOP - 16.0 + LIFT - 2.9 * E.INCH     # forks' top under the top boards with the pallet lifted 20 mm
+    jack0, jm = E.pallet_jack(raise_mm=RAISE_UP, handle_deg=HANDLE_DEG)
+    for k2, pp in jack0.items():
+        scn.sc.add(f"jack/{k2}", pp.mesh, pp.color, group="jack")
+    hb = np.array([jm["handle"][0], 0.0, jm["handle"][2]])        # the bar's centre (jack frame); 40 x 300 x 40 mm
     p = scn.person
+    p.show(0.0)
+    cam0 = [(1500.0, -2500.0, 7200.0), (8000.0, 6000.0, 600.0), (0, 0, 1)]
+    for o, (nm, c, d) in enumerate(crates):              # on the jack, lifted, from the first frame
+        scn.set_obj(f"crate {o}", M_pal(Y0, LIFT) @ E.T((c[0], c[1], PAL_TOP + c[2])),
+                    dict(kind="box", b=(-d[0] / 2, d[0] / 2, -d[1] / 2, d[1] / 2, 0, d[2]), color=E.C["box"]))
+    scn.set_obj("pallet", M_pal(Y0, LIFT), pal_spec)
+    scn.sc.gmat["jack"] = M_pal(Y0, 0.0) @ E.T((JX, 0.0, 0.0))
     for i in range(int(6 * FPS)):
-        w.frame(scn, [(1500.0, -2500.0, 7200.0), (8000.0, 6000.0, 600.0), (0, 0, 1)],
-                "The robot shop: two UR12e arms on MiR250s, a VF-4 with a 4th axis, a lathe, a bandsaw",
+        w.frame(scn, cam0, "The robot shop: two UR12e arms on MiR250s, a VF-4 with a 4th axis, a lathe, a bandsaw",
                 sub="north row: VF-4, ST-10 lathe, deburr and wash, measuring, bench; south row: receiving, stock, saw, "
                     "tools; a hypothetical layout (robot-shop.md)", who=[], step="", status="")
-    for i in range(int(14 * FPS)):
-        s = ease(i / (14 * FPS - 1))
-        Mp = M_pal0 @ E.T((0, -2500.0 * s, 0)) @ np.linalg.inv(M_pal0) @ M_pal0
-        scn.set_obj("pallet", Mp, dict(kind="vf", v=E.fcl_items(pal)[0][1][0], f=E.fcl_items(pal)[0][1][1], color=E.C["wood"]))
-        z = 144.0
-        x = -460.0
-        for j, (nm, (L, W_, H)) in enumerate(crates):
-            scn.set_obj(f"crate {j}", Mp @ E.T((x + L / 2, -150.0 + j * 0.0, z)) if j < 2 else Mp @ E.T((200.0, 0.0, z)),
-                        dict(kind="box", b=(-L / 2, L / 2, -W_ / 2, W_ / 2, 0, H), color=E.C["box"]))
-            if j == 0:
-                x += L + 20.0
-        Mj = Mp @ E.T((0.0, 610.0, 0.0)) @ E.T((0, 0, 0), E.Rz(-90.0))
-        for k2, pp in jack.items():
-            scn.sc.add(f"jack/{k2}", pp.mesh, pp.color, group="jack") if i == 0 else None
-        scn.sc.gmat["jack"] = Mj @ E.T((-1250.0, 0, 0))
-        hx = (Mj @ E.T((-1250.0, 0, 0)) @ np.r_[jm["handle"][0], 0, jm["handle"][2], 1.0])[:3]
-        p.show(1.0)
-        # round 8: the person pushes the jack, facing the way it goes (world +y; round 7 faced -y and slid backwards
-        # with a forward gait); the gait phase follows the distance walked, amp > 0 whenever the body moves
-        ds = 2500.0 * (s - (ease((i - 1) / (14 * FPS - 1)) if i else 0.0))
-        p.set(x=hx[0], y=hx[1] - 420.0, hd=0.0, amp=min(1.0, 0.3 + ds / 40.0) if ds > 0.3 else 0.0,
-              phase=2 * math.pi * 2500.0 * s / people_stride(), hands={"l": tuple(hx + [-80, 0, 0]), "r": tuple(hx + [80, 0, 0])},
-              look=tuple(hx + [0, 1500, -400]), lean=8.0)
-        w.frame(scn, cam_at("receiving", (2600, -2600, 2600), (-1600, 1800, 600)), "Three crates over two arms' 22.4 kg: "
-                "the person brings them in with a pallet jack", sub="the chamber blank (30.0 kg), the plate bundle (58 kg), "
-                "the laser (52 kg); a 48 x 40 in. pallet, a 27 x 48 in. manual jack", who=["person"], step="receiving",
-                status="person")
+    cam = cam_at("receiving", (2600, -2600, 2600), (-1600, 1800, 600))
+    cap = "Three crates over two arms' 22.4 kg: the person brings them in with a pallet jack"
+    sub = ("the chamber blank (30.0 kg), the plate bundle (58 kg), the laser (52 kg); a 48 x 40 in. pallet, a 27 x 48 "
+           "in. manual jack along its stringers")
+    n_move, n_low = int(13 * FPS), 12
+    p.show(1.0)
+    seat = []
+    walk = PersonWalk(p)
+    for i in range(n_move + n_low):
+        if i < n_move:
+            s = ease((i + 1) / n_move)
+            y, z, raise_ = Y0 + (Y1 - Y0) * s, LIFT, RAISE_UP
+        else:                                            # at the end the release lever lowers the forks: the pallet lands
+            u = ease((i - n_move + 1) / n_low)
+            y, raise_ = Y1, RAISE_UP * (1.0 - u)
+            z = max(0.0, raise_ - (RAISE_UP - LIFT))
+            jk, _ = E.pallet_jack(raise_mm=raise_, handle_deg=HANDLE_DEG)
+            scn.sc.set_mesh("jack/pallet jack forks", jk["pallet jack forks"].mesh)
+        Mp = M_pal(y, z)
+        scn.set_obj("pallet", Mp, pal_spec)
+        for o, (nm, c, d) in enumerate(crates):
+            scn.set_obj(f"crate {o}", Mp @ E.T((c[0], c[1], PAL_TOP + c[2])))
+        Mj = M_pal(y, 0.0) @ E.T((JX, 0.0, 0.0))
+        scn.sc.gmat["jack"] = Mj
+        bar = Mj @ E.T(tuple(hb))
+        back = (bar @ np.r_[-20.0, 0.0, 0.0, 1.0])[:3]            # the bar's face towards the person (world -y)
+        hands = {"l": back + np.array([-110.0, -14.0, 0.0]), "r": back + np.array([110.0, -14.0, 0.0])}
+        walk.to(X_PAL, float(back[1]) - 14.0 - 300.0, 0.0, grip={"l": 0.05, "r": 0.05},
+                palm={"l": (0.0, 1.0, 0.0), "r": (0.0, 1.0, 0.0)}, look=tuple(np.r_[X_PAL, y + 900.0, 400.0]),
+                lean=6.0)
+        _, left, err = seat_hands(p, hands, [(bar, (20.0, 150.0, 20.0))],
+                                  away={"l": (0.0, -1.0, 0.0), "r": (0.0, -1.0, 0.0)})
+        seat.append((left, err))
+        w.frame(scn, cam, cap, sub=sub, who=["person"], step="receiving", status="person")
+    print("chapter 20: hands on the jack's bar: deepest left in it, largest palm error (mm):",
+          max(v[0] for v in seat), max(v[1] for v in seat), flush=True)
     p.show(0.0)
-    for k2 in list(scn.sc.actors):
-        if k2.startswith("jack/"):
-            scn.sc.alpha[k2] = 1.0
-    cam = cam_at("receiving", (-1700, -1500, 2000), (0, 420, 900))
-    play(w, scn, "recv_tape", cam)
-    play(w, scn, "recv_unbox", cam_at("receiving", (1500, -1700, 2100), (0, 300, 900)))
-    del rp
+    cam_t = cam_at("receiving", (-1700, -1500, 2000), (0, 420, 900))
+    play(w, scn, "recv_tape", cam_t)
+    # the cut: the flaps folded back and the tape cut (by a person: cardboard deforms; not planned), as the unbox clip
+    # was planned
+    scn.add_parts("recvbox", SCL.recv_box_parts(1.0), st)
+    play(w, scn, "recv_unbox", cam_at("receiving", (1500, -1700, 2100), (0, 300, 900)),
+         sub="4.0 kg tray with a 20 mm handle fin; the flaps were folded back after the cut (cardboard deforms: not "
+             "planned for the arms); FCL, 0.2 deg audit")
     return w.close()
+
+
+class PersonWalk:
+    """One person's walk, frame by frame: to(x, y, hd, ...) moves the body there (round 8's gait: its phase follows the
+    distance walked, 2 pi per stride; amp 1 while it moves). Round 9: replaced by people.py's foot-locked walker once
+    it is merged (W1); this is the one place the shop chapters set a walking body."""
+
+    def __init__(self, p):
+        self.p = p
+        self.prev = None
+        self.walked = 0.0
+
+    def to(self, x, y, hd, **kw):
+        moved = 0.0 if self.prev is None else math.hypot(x - self.prev[0], y - self.prev[1])
+        self.walked += moved
+        self.prev = (x, y)
+        self.p.set(x=x, y=y, hd=hd, amp=1.0 if moved > 0.3 else 0.0,
+                   phase=2 * math.pi * self.walked / people_stride(), **kw)
 
 
 def people_stride():
@@ -1150,7 +1260,11 @@ def chapter_32():
     scn = Shop()
     context_vf4(scn)
     scn.drop_context("wash")
-    scn.add_parts("wash", E.wash_deburr()[0], Mst("wash"))
+    scn.add_parts("wash", E.wash_deburr(basket=False)[0], Mst("wash"))   # round 9: the basket is the wash clip's object
+    wc = load("wash")                                  # ... in the tank from the start, where the clip picks it up
+    if wc is not None:
+        for o, M in wc["frames"][0]["objs"].items():
+            scn.set_obj(o, M, wc["objects"].get(o))
     scn.drop_context("measure")
     scn.add_parts("measure", E.granite_station()[0], Mst("measure"))
     # ---- TIG: the person welds the build module's body (316L tube to its flanges)
