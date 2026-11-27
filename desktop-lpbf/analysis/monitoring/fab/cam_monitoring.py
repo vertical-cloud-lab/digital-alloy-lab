@@ -102,6 +102,7 @@ def mon_c180_setup(FC, features):
     assert len(floor) == 1, "BW seat floor not found"
     slot_w = [w for w in floor[0].Wires if not w.isSame(floor[0].OuterWire)]
     assert len(slot_w) == 1, "BW slot outline not found on the seat floor"
+
     def hole_faces(pts, what):
         """the M4 holes (drawn at Ø4.0 along y) at the given (x, z), one cylinder face each"""
         out = []
