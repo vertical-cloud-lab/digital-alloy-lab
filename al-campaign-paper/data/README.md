@@ -52,6 +52,6 @@ cd al-campaign-paper/manuscript && make    # main.pdf; make si for si.pdf
   on 2026-11-26. Several values were cross-checked against vendor sheets on 2026-11-27 (A20X, Aheadd CP1, Al5X1,
   7A77, Scalmalloy's composition). All still need a person to re-check before submission.
 - **`calphad_screen.csv`:** a preliminary stand-in, not the campaign's screen. It holds the open-database (MatCalc
-  `mc_al` + COST 507) calculations of the #275 branch at `845356a` for 48 seeds and published alloys on a pure-Al
-  base. Replace it with the screen's output.
+  `mc_al` + COST 507) calculations of the #275 branch at `845356a` for 48 compositions (the nine planned seeds, 34
+  published alloys, 6063 and four exploratory variants) on a pure-Al base. Replace it with the screen's output.
 - **Everything else:** headers only. No Al campaign run has happened yet.
