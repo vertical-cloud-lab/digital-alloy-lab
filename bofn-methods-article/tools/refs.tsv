@@ -1,0 +1,37 @@
+# key	id	why it is cited (keep short)
+# Same format and tools as adv-mater-article/ (issue #120): build_bib.py turns this list into
+# references.bib from Crossref / arXiv metadata; check_refs.py re-checks every entry and writes
+# reference-check.md. Keys shared with adv-mater-article/tools/refs.tsv are spelled the same, so
+# the Advanced Materials version (adv-mater/methods-si.tex) drops into that article unchanged.
+#
+# --- Bayesian optimization of function networks, knowledge gradient, cost-aware BO
+astudillo2021	manual	BO of function networks (NeurIPS 2021); EIFN
+buathong2024	manual	partial evaluations, cost-aware pKGFN (ICML 2024)
+buathong2025	arxiv:2506.11456	fast pKGFN; EIFN proposes candidates
+frazier2009	doi:10.1287/ijoc.1080.0314	knowledge gradient for correlated beliefs
+jones1998	doi:10.1023/A:1008306431147	expected improvement (EGO)
+snoek2012	manual	cost-aware EI per second
+frazier2018	arxiv:1807.02811	BO tutorial
+torresi2026	doi:10.1039/d5dd00572h	multi-stage BO for SDLs
+alvi2026	doi:10.1038/s41524-026-01981-7	cost-aware batch BO for alloy design (in silico)
+# --- software
+balandat2020	manual	BoTorch
+gardner2018	manual	GPyTorch
+paszke2019	manual	PyTorch
+owen1998	doi:10.1006/jcom.1998.0487	scrambled Sobol points
+# --- benchmarking experiment planners
+liang2021	doi:10.1038/s41524-021-00656-9	BO benchmarking across experimental materials domains
+hase2021	doi:10.1088/2632-2153/abedc8	Olympus benchmarking framework
+felton2021	doi:10.1002/cmtd.202000051	Summit benchmarks for reaction optimization
+# --- statistics
+efron1993	doi:10.1201/9780429246593	bootstrap
+wilcoxon1945	doi:10.2307/3001968	signed-rank test
+# --- the metallurgy the synthetic network imitates
+martin2017	doi:10.1038/nature23894	Zr nucleants suppress hot cracking in printed high-strength Al (the kappa effect)
+kou2015	doi:10.1016/j.actamat.2015.01.034	solidification cracking criterion (freezing-range screen)
+croteau2018	doi:10.1016/j.actamat.2018.04.053	Al-Mg-Zr by LPBF (Zr grain refinement)
+schmidtke2011	doi:10.1016/j.phpro.2011.03.047	Sc-modified Al (Scalmalloy) for LPBF
+nassar2020	doi:10.1126/sciadv.aay8647	supply risk by commodity (mineral burden weights)
+# --- self-driving labs, closest precedent
+tom2024	doi:10.1021/acs.chemrev.4c00055	SDL review
+taherimousavi2026	doi:10.1002/adma.202509507	closest physical precedent: BO-designed Al alloy, atomized, printed

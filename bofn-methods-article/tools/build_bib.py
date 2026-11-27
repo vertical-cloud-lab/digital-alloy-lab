@@ -7,7 +7,7 @@ from memory. Conference papers without a Crossref DOI live in
 references-manual.bib and are appended unchanged; check_refs.py checks those
 against arXiv.
 
-Usage (from adv-mater-article/):
+Usage (from bofn-methods-article/):
     python tools/build_bib.py            # fetch (cached) and write references.bib
     python tools/build_bib.py --refresh  # ignore the cache
 """

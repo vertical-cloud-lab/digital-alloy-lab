@@ -9,7 +9,7 @@ Crossref update notices (corrections, retractions) attached to a DOI.
 
 Writes reference-check.md. Exit status 1 if anything fails.
 
-Usage (from adv-mater-article/):  python tools/check_refs.py [--refresh]
+Usage (from bofn-methods-article/):  python tools/check_refs.py [--refresh]
 """
 from __future__ import annotations
 
@@ -25,7 +25,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build_bib as bb  # noqa: E402  (shared fetch + cache helpers)
 
 ROOT = Path(__file__).resolve().parent.parent
-TEX_FILES = ["manuscript.tex", "supporting-information.tex"]
+TEX_FILES = ["methodsx/manuscript.tex", "adv-mater/methods-si.tex"]
 
 
 def parse_bib(text: str) -> dict[str, dict]:
