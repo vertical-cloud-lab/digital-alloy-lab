@@ -14,47 +14,15 @@
    "kg": 7.7,
    "team_guideline_kg": 30.7,
    "under_guideline": true,
-   "frames": 70,
-   "hand_gap_mm_max": 4.5,
-   "hand_gap_mm_p95": 3.8,
-   "worst": [
-    [
-     4.5,
-     43,
-     0.667,
-     0,
-     "l",
-     46.4
-    ],
-    [
-     4.3,
-     44,
-     0.685,
-     0,
-     "l",
-     49.3
-    ],
-    [
-     4.3,
-     43,
-     0.667,
-     0,
-     "r",
-     46.4
-    ],
-    [
-     4.2,
-     45,
-     0.704,
-     0,
-     "l",
-     51.9
-    ]
-   ],
-   "clear_mm": 40.3,
+   "frames": 169,
+   "glove_in_load_mm_max": 3.52,
+   "palm_error_mm_max": 42.0,
+   "reach_over_mm_max": 69.0,
+   "body_clear_mm_min": 56.0,
+   "clear_mm": 38.0,
    "nearest": "vf4/table",
    "contact": null,
-   "samples": 27,
+   "samples": 75,
    "caption": "Two people set the 7.7 kg stock on the risers",
    "sub": "7.7 kg, a reach of ~0.6 m into the machine; two-person guideline 2/3 x (23 + 23) = 30.7 kg (NIOSH load constant, HSE L23 team rule)"
   },
@@ -62,47 +30,15 @@
    "kg": 6.49,
    "team_guideline_kg": 30.7,
    "under_guideline": true,
-   "frames": 70,
-   "hand_gap_mm_max": 3.8,
-   "hand_gap_mm_p95": 2.9,
-   "worst": [
-    [
-     3.8,
-     36,
-     0.537,
-     1,
-     "r",
-     32.0
-    ],
-    [
-     3.7,
-     36,
-     0.537,
-     1,
-     "l",
-     32.0
-    ],
-    [
-     3.6,
-     29,
-     0.407,
-     0,
-     "r",
-     32.0
-    ],
-    [
-     3.5,
-     41,
-     0.63,
-     0,
-     "l",
-     32.0
-    ]
-   ],
-   "clear_mm": 41.0,
+   "frames": 169,
+   "glove_in_load_mm_max": 3.44,
+   "palm_error_mm_max": 43.2,
+   "reach_over_mm_max": 70.2,
+   "body_clear_mm_min": 57.4,
+   "clear_mm": 38.8,
    "nearest": "vf4/table",
    "contact": null,
-   "samples": 27,
+   "samples": 75,
    "caption": "Doors open: the clamps off, two people take the part out",
    "sub": "6.5 kg after F-S1; two-person guideline 2/3 x (23 + 23) = 30.7 kg (NIOSH load constant, HSE L23 team rule)"
   },
@@ -110,47 +46,15 @@
    "kg": 6.49,
    "team_guideline_kg": 30.7,
    "under_guideline": true,
-   "frames": 82,
-   "hand_gap_mm_max": 23.0,
-   "hand_gap_mm_p95": 3.8,
-   "worst": [
-    [
-     23.0,
-     73,
-     1.0,
-     0,
-     "l",
-     56.0
-    ],
-    [
-     22.5,
-     72,
-     0.985,
-     0,
-     "l",
-     56.0
-    ],
-    [
-     20.8,
-     71,
-     0.97,
-     0,
-     "l",
-     56.0
-    ],
-    [
-     18.2,
-     70,
-     0.955,
-     0,
-     "l",
-     56.0
-    ]
-   ],
-   "clear_mm": 26.5,
-   "nearest": "vf4/table",
+   "frames": 207,
+   "glove_in_load_mm_max": 4.45,
+   "palm_error_mm_max": 70.1,
+   "reach_over_mm_max": 79.6,
+   "body_clear_mm_min": 52.8,
+   "clear_mm": 22.5,
+   "nearest": "vf4/left door handle",
    "contact": null,
-   "samples": 33,
+   "samples": 94,
    "caption": "Two people turn it over onto the dummy-floor plate for F-S2",
    "sub": "6.5 kg, turned 180 deg about the line between their hands; the 18 M4 screws from below (not shown); two-person guideline 2/3 x (23 + 23) = 30.7 kg (NIOSH load constant, HSE L23 team rule)"
   },
@@ -158,91 +62,19 @@
    "kg": 10.02,
    "team_guideline_kg": 30.7,
    "under_guideline": true,
-   "frames": 82,
-   "hand_gap_mm_max": 3.9,
-   "hand_gap_mm_p95": 3.7,
-   "worst": [
-    [
-     3.9,
-     43,
-     0.545,
-     1,
-     "l",
-     56.0
-    ],
-    [
-     3.9,
-     42,
-     0.53,
-     1,
-     "l",
-     56.0
-    ],
-    [
-     3.9,
-     41,
-     0.515,
-     1,
-     "l",
-     56.0
-    ],
-    [
-     3.9,
-     40,
-     0.5,
-     1,
-     "l",
-     56.0
-    ]
-   ],
-   "clear_mm": 6.0,
-   "nearest": "vf4/table",
-   "contact": null,
-   "samples": 33,
+   "shown": false,
    "caption": "Two people set the frame and its plate on the 4th axis",
-   "sub": "frame 5.3 kg + MIC-6 plate 4.8 kg, turned 90 deg onto the platter; 4 bolts through the opening (not shown); two-person guideline 2/3 x (23 + 23) = 30.7 kg (NIOSH load constant, HSE L23 team rule)"
+   "why": "a 90 deg turn about Y: not drawn (a cut)"
   },
   "stock: Two people carry the frame's plate: 30.1 kg": {
    "kg": 30.05,
    "team_guideline_kg": 30.7,
    "under_guideline": true,
-   "frames": 82,
-   "hand_gap_mm_max": 3.1,
-   "hand_gap_mm_p95": 2.4,
-   "worst": [
-    [
-     3.1,
-     44,
-     0.561,
-     1,
-     "r",
-     33.4
-    ],
-    [
-     3.1,
-     44,
-     0.561,
-     1,
-     "l",
-     33.4
-    ],
-    [
-     3.1,
-     44,
-     0.561,
-     0,
-     "r",
-     33.4
-    ],
-    [
-     3.1,
-     44,
-     0.561,
-     0,
-     "l",
-     33.4
-    ]
-   ],
+   "frames": 124,
+   "body_clear_mm_min": 46.0,
+   "hands_in_load_mm_max": 0.0,
+   "reach_over_mm_max": -14.5,
+   "how": "people.carry (round 9)",
    "caption": "Two people carry the frame's plate: 30.1 kg",
    "sub": "13 x 9.5 x 5.5 in. 6061-T651 as delivered; 2/3 x (23 + 23) = 30.7 kg two-person guideline (NIOSH, HSE L23): within it, just (a 15 in. plate, 34.7 kg, would be over)"
   }
