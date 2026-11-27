@@ -1,0 +1,63 @@
+{
+ "video": "/tmp/r9w1/qa/w1b.mp4",
+ "tag": "",
+ "fps": 12.0,
+ "frames": 3072,
+ "seconds": 256.0,
+ "limits": {
+  "jumps_per_min": 10.0,
+  "jump_frame_share": 0.03,
+  "median_run_s": 4.0,
+  "short_run_share": 0.15,
+  "p95_speed_fw_s": 0.143
+ },
+ "method": "320x180 grey, picture area only; jump = large change with lost corner tracks (a cut or a change too large to follow), consecutive jump frames merged; camera speed = shift of the RANSAC similarity fitted to tracked corners, in frame-widths per second",
+ "overall": {
+  "seconds": 256.0,
+  "jumps": 37,
+  "jumps_per_min": 8.7,
+  "jump_frame_share": 0.012,
+  "median_run_s": 5.7,
+  "min_run_s": 4.58,
+  "short_run_share": 0.0,
+  "moving_share": 0.214,
+  "mean_speed_fw_s": 0.0157,
+  "p95_speed_fw_s": 0.061,
+  "fails": [],
+  "pass": true
+ },
+ "chapters": [
+  {
+   "chapter": "The parts: cost and lead time",
+   "start_s": 0,
+   "seconds": 172.0,
+   "jumps": 27,
+   "jumps_per_min": 9.4,
+   "jump_frame_share": 0.013,
+   "median_run_s": 5.8,
+   "min_run_s": 5.67,
+   "short_run_share": 0.0,
+   "moving_share": 0.19,
+   "mean_speed_fw_s": 0.0143,
+   "p95_speed_fw_s": 0.054,
+   "fails": [],
+   "pass": true
+  },
+  {
+   "chapter": "The arms' custom tools and fixtures",
+   "start_s": 172,
+   "seconds": 84.0,
+   "jumps": 10,
+   "jumps_per_min": 7.1,
+   "jump_frame_share": 0.01,
+   "median_run_s": 4.6,
+   "min_run_s": 4.58,
+   "short_run_share": 0.0,
+   "moving_share": 0.263,
+   "mean_speed_fw_s": 0.0186,
+   "p95_speed_fw_s": 0.073,
+   "fails": [],
+   "pass": true
+  }
+ ]
+}
