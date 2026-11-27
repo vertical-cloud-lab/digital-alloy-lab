@@ -26,7 +26,7 @@ X-LSM100B and rod-end block drawn from the makers' STEP numbers, four Ø6 x 20 m
   90 W of laser heat absorbed and the heaters off.
 - **Warm-up (case 2).** From 20 °C, under PI at full power: substrate at 199 °C after **6.5 min** with 4 x 50 W in
   the block (9.5 min with 2 x 50 W); block TC at 199 °C after 9.7 min (20 min with 2 x 50 W); overshoot 1.3-1.7 K
-  at the substrate, 2.4 K at the block. TBD-WARMUP-SETTLE
+  at the substrate, 2.4 K at the block. The substrate is within ±1 K after 9.8 min (15.4 min with 2 x 50 W); the block does not overshoot. The X-VSR20A platform takes ~85 min to come within 0.5 K of its steady 26.7 °C (mostly the room warming it from 20 °C), and drifts by 1.1 K after the first hour, ~1 µm of its lift.
 - **Laser heat (case 3).** The plate stack passes heat to the block at **0.83 W/K** across the gap (0.69 W/K at
   the end of a 15 mm build, when 5 mm of the plate is below the block), close to the 0.9 W/K estimate. The
   substrate top only sees **0.67 W/K**, because the substrate-to-plate contact (2,000 W/m²K, an estimate) adds
@@ -38,11 +38,11 @@ X-LSM100B and rod-end block drawn from the makers' STEP numbers, four Ø6 x 20 m
   **16 s at A = 0.3 to 32 s at A = 0.6**: 1.5-3.0 h for 10 mm, 2.2-4.4 h for 15 mm. A +20 K band needs 10.5-21 s.
   The FE confirms the lead's re-run of the control worker's lumped dwell study at G = 0.67 W/K
   ([`control/out/dwell-study-fe.csv`](../../../control/out/dwell-study-fe.csv), commit 49d835a) to within ~10 %
-  (below). On the bare substrate each layer swings the top centre by 11 K (A = 0.3) to 22 K (A = 0.6), because the
-  6 mm substrate (18 J/K) heats against the 0.4 K/W contact faster than the plate can take the heat. So for the first
-  few millimetres a ±10 K band on the substrate's peak is out of reach at A = 0.6 whatever the dwell. With 15 mm of
-  coupons built, the swing drops to 2-4 K.
-- **What helps most.** TBD-SENS
+  (below). On the bare substrate each layer swings the top centre by 11 K (A = 0.3) to 22 K (A = 0.6). This is the
+  substrate's surface heating next to the scanned footprints during each 3 s exposure, and no dwell removes it (a
+  graphite foil under the substrate takes off 1 K). So the band is better applied to the cycle mean or the plate TC.
+  With 15 mm of coupons built, the swing drops to 2-4 K.
+- **What helps most.** Run the block 20 K below the plate during the build and lower the plate's own set point so its heater stays off. The FE then allows 26.7 W absorbed at +10 K instead of 14.0 W: 8.4 s (A = 0.3) to 16.8 s (A = 0.6) a layer, 1.2-2.3 h for 15 mm, matching the lumped study's block −20 K rows. With the plate loop left at its normal set point the gain is smaller (21.9 W), because the heater keeps fighting the cooler block. A graphite foil under the substrate gains 16 %, and more cross-flow is no use. A bigger lever, estimated but not run: a solid aluminium rod into a water-cooled rod-end block, a deliberate ~44 W leak that the plate heater covers at idle and the laser displaces during a build.
 
 ### Case 1: steady at 200 °C
 
@@ -91,7 +91,23 @@ full power under the control worker's PI settings (`control/ftctl/config.py`: pl
 Ti 150 s; block 0.10 per K, Ti 400 s), on the plate TC (set point 201.7 °C, which puts the substrate at 200 °C) and
 the block TC. Implicit Euler, 2 s steps for 1.5 h, then 10 s, to 4 h. 35.7k nodes.
 
-TBD-WARMUP-TABLE
+| | Block 4 x 50 W (CAD v2) | Block 2 x 50 W (study) |
+|---|---:|---:|
+| Substrate top at 190 / 199 °C | 4.7 / 6.5 min | 6.5 / 9.5 min |
+| Substrate overshoot; within ±1 K for good after | 1.3 K; 9.8 min | 1.7 K; 15.4 min |
+| Block TC at 199 °C (no overshoot) | 9.7 min | 20.0 min |
+| Heaters at full power until: plate / block | 4.0 / 6.5 min | 5.4 / 11.9 min |
+| Plate stack ahead of the block, at most | 62 K | 80 K |
+| Plate-bore gap change, at most (of 0.1 mm) | −29 µm | −38 µm |
+| Heater energy in the first hour | 301 kJ (84 Wh) | 293 kJ (81 Wh) |
+| Upper gland O-ring at 15 min / 30 min / 4 h | 42 / 45 / 51 °C | 42 / 45 / 51 °C |
+| X-VSR20A platform at 1 h / 1.5 h / 4 h; within 0.5 K of steady after | 25.6 / 26.3 / 26.8 °C; 84 min | 25.7 / 26.3 / 26.8 °C; 86 min |
+
+The plate loop backs off as soon as its TC is within ~17 K of the set point (0.06 of full power per K), so the
+plate reaches temperature first and then waits on the block. The block is the slow part: 468 J/K against 46 W of
+losses at 200 °C. With 2 x 50 W it has only ~54 W to spare for heating, so 4 x 50 W halves its time. The control
+worker's 45 min heat-up timeout has 2-4 times margin. The plate runs up to 62-80 K ahead of the block, which closes
+the 0.1 mm gap by up to 38 µm: no binding.
 
 ![Warm-up](thermal-warmup.png)
 
@@ -163,7 +179,30 @@ with two corrections:
 1. On the bare substrate the top swings 5 times more per layer than a 105 J/K lump (11-22 K against 2-4 K).
 2. With the block at its set point, a no-dwell build at A ≳ 0.55 also drives the block over its set point.
 
-TBD-SENS-TABLE
+**What changes the answer** (FE at pz 0, steady sweeps with the change, and 12 layers at A = 0.3 for the swing):
+
+| Change | Allowed mean absorbed heat, +10 K | Layer period A = 0.3 / 0.6 | 10 mm | 15 mm |
+|---|---:|---:|---:|---:|
+| As designed: block at 200 °C, plate loop on its TC | 14.0 W | 15.9 / 31.9 s | 1.5-3.0 h | 2.2-4.4 h |
+| Block 20 K below the plate during the build, plate loop on its TC | 21.9 W | 10.2 / 20.4 s | 0.9-1.9 h | 1.4-2.8 h |
+| Block 20 K below, plate set point lowered so its heater stays off | **26.7 W** | **8.4 / 16.8 s** | 0.8-1.6 h | 1.2-2.3 h |
+| Graphite foil under the substrate (contact 10,000 instead of 2,000 W/m²K, estimate) | 16.3 W | 13.7 / 27.5 s | 1.3-2.5 h | 1.9-3.8 h |
+
+The block offset is the lever, but it only works if the plate's own set point comes down with it. With the plate
+loop still holding its TC at 201.7 °C, the plate heater keeps running against the block's extra pull: 17 W at 10 W
+absorbed. On top of that, the laser's heat enters at the top and leaves the substrate ~0.3 K/W above the TC. The
+heater-off row is the lumped study's case: at +5 K the FE allows 23.4 W, the lumped study 22.5 W
+([`dwell-study-fe.csv`](../../../control/out/dwell-study-fe.csv), block −20 K: 1.38-2.73 h for 15 mm). The swing
+within a layer barely changes: 11.1 K at A = 0.3 with the block 20 K down, 9.9 K with the graphite foil. It is the
+substrate's surface heating next to the footprints during each 3 s exposure; a semi-infinite-body estimate gives
+~20 K under the footprints at A = 0.3. A 20 K block offset moves the plate-bore gap by αR x 20 K = 9 µm, well inside
+0.1 mm. More cross-flow is no use: the substrate top loses only 0.024 W/K.
+
+Not run in the FE (estimate): a deliberate leak through the rod. A solid 6061 rod (Ø12.7 mm, ~85 mm from the socket
+to the rod-end block, ~0.25 W/K) into a water-cooled rod-end block would draw ~44 W from the plate at 200 °C. The
+plate heater makes that up at idle (55 W of its 100 W), and the laser displaces it during a build, so a +10 K band
+would take ~55 W absorbed: close to a no-dwell build at A ≤ 0.5. The cost: a water circuit at the stage, the gland
+O-rings at ~120 °C (FKM is rated to 200 °C), and a rod whose length follows the plate's temperature.
 
 ### FT-1V
 
@@ -198,9 +237,9 @@ behaviour, and so case 3, carries over unchanged. Still air in the cube was not 
   than 3 K). CalculiX is not used for the whole model for two reasons: its gap conductance needs mechanical contact
   elements, and it has no heater controller. Instead **ccx 2.21 checks the solver** on the well block alone (same
   C3D4 mesh, *HEAT TRANSFER steady, *DFLUX BF in the heater elements, *FILM and *RADIATE on every face):
-  TBD-VERIFY.
-- **Runs** (4 cores shared with six other jobs, under `/tmp/tools/capmem 3`): steady 4 cases 6.3 min (peak RSS
-  1.75 GB), laser 2 stages 19.6 min (1.35 GB), warm-up 2 cases TBD-WRUN, sensitivity TBD-SRUN.
+  the node temperatures agree within **0.0005 K** (7,843 nodes, 34,399 elements, 356 heater elements, 8,846 faces with film and radiation; ccx 1.6 s).
+- **Runs** (4 cores shared with six other jobs, under `/tmp/tools/capmem 3`): steady 4 cases 4.9 min (peak RSS
+  under 1.75 GB), laser 2 stages 19.6 min (1.35 GB), warm-up 2 cases 13.6 min (1.13 GB), sensitivity 5.4 min (1.17 GB), ccx check 11 s.
 
 ### Assumptions and sources
 
@@ -227,7 +266,7 @@ behaviour, and so case 3, carries over unchanged. Still air in the cube was not 
 ### Not done, and what is uncertain
 
 - **The substrate-plate contact conductance is an estimate** (2,000 W/m²K), and it sets both the 0.4 K/W in series
-  with the gap and the per-layer swing on the bare substrate. TBD-SENS-NOTE
+  with the gap and the per-layer swing on the bare substrate. A graphite foil (10,000 W/m²K) changes the allowed heat by 16 % and the swing by 1 K, so the conclusions do not hang on this value.
 - The box air is prescribed (from the study's heat balance), not solved. The lid, walls, window and scan head are
   not in the FE; the head check above is a hand estimate.
 - No melt pool and no moving spot: the laser's heat is spread over the coupon footprints for the laser-on time. The

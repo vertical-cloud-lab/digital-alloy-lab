@@ -19,13 +19,18 @@ or a heater controller, so the solve is done here: P1 conductivity and lumped ca
 convection and radiation coefficients, the two heater powers as extra unknowns so that the substrate top centre and
 the well-block thermocouple sit at their setpoints, and implicit Euler with PI or on/off control for transients.
 `verify` checks the solver against CalculiX (ccx 2.21, C3D4 *HEAT TRANSFER, *FILM, *RADIATE, *DFLUX BF) on the
-well block alone.
+well block alone: the node temperatures agree within 0.0005 K. Coaxial faces (plate-bore, rod-gland, rod in its clamp
+and socket) use the design gap, because the faceted meshes sag as much as the 0.1 mm gap.
 
-Run (worktree root):
-  OMP_NUM_THREADS=1 /tmp/tools/capmem 3 /tmp/venv/bin/python desktop-lpbf/fast-track/analysis/fea/ft_thermal.py steady
-  ... ft_thermal.py verify | warmup | laser | md
-Scratch goes to /tmp/workerA/thermal (FT_THERMAL_RUN); results to analysis/out/fea/ (thermal.json, PNGs).
-Units inside: m, W, K (temperatures in °C where printed).
+Run (worktree root), one at a time, each under /tmp/tools/capmem 3 with OMP_NUM_THREADS=2:
+  python desktop-lpbf/fast-track/analysis/fea/ft_thermal.py steady   # case 1: FT-1 pz 0 fan/still, pz -15 powder, FT-1V (5 min)
+  ... ft_thermal.py laser     # case 3: laser sweep and 110-layer transients at pz 0 and pz -15 (20 min)
+  ... ft_thermal.py warmup    # case 2: warm-up from 20 °C, block 4 x 50 W and 2 x 50 W (14 min)
+  ... ft_thermal.py sens      # case 3 levers: block 20 K below, graphite foil under the substrate (5 min)
+  ... ft_thermal.py verify    # the solver against CalculiX on the well block alone (11 s)
+  ... ft_thermal.py post      # derived layer periods (thermal.json "derived") and the three PNGs
+Scratch goes to /tmp/ft-fea2/thermal (FT_THERMAL_RUN); results to analysis/out/fea/ (thermal.json, thermal.md, PNGs).
+Transient cases use mesh scale FT_THERMAL_SCALE_T (1.3); the steady cases 1.0. Units inside: m, W, K (°C printed).
 """
 from __future__ import annotations
 
@@ -550,7 +555,8 @@ class Model:
             ex["env"].append(inside)
             ex["jet_x"].append(np.where(jet, (pm[:, 1] + 27.0) * 1e-3, np.nan))
             ex["fixed_h"].append(fixed)
-        self.cq = {k: np.concatenate(v) for k, v in cq_.items()}
+        empty = {"na": np.zeros((0, 3), np.int64), "nb": np.zeros((0, 3), np.int64), "la": np.zeros((0, 3)), "lb": np.zeros((0, 3))}
+        self.cq = {k: (np.concatenate(v) if v else empty.get(k, np.zeros(0))) for k, v in cq_.items()}    # one body: none
         self.ex = {k: np.concatenate(v) for k, v in ex.items()}
         # coupling matrix: each side carries half of its own points' conductance (symmetric, conservative)
         na, la, nb, lb, hw = self.cq["na"], self.cq["la"], self.cq["nb"], self.cq["lb"], 0.5 * self.cq["h"] * self.cq["w"]
@@ -847,7 +853,7 @@ RENDER = FT.parent / "analysis" / "fea" / "render_fea.py"
 
 
 def render(m, T, path, title, names=None, view=(-1.0, -1.5, 0.8), clim=None, zoom=1.3, clip_y=None):
-    tris, keep = [], []
+    tris = []
     for b, tets in zip(m.B, m.tets):
         if names and b["name"] not in names:
             continue
