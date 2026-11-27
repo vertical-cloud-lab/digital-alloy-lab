@@ -1,0 +1,61 @@
+# key	id	why it is cited (keep short)
+# id is doi:<DOI>, arxiv:<id>, or manual (entry lives in references-manual.bib).
+# build_bib.py turns this list into references.bib from Crossref / arXiv metadata;
+# check_refs.py re-checks every entry against Crossref and writes reference-check.md.
+#
+# --- printable Al alloys, cracking, grain refinement
+martin2017	doi:10.1038/nature23894	high-strength Al cracks in LPBF; Zr nucleants fix it
+debroy2018	doi:10.1016/j.pmatsci.2017.10.001	AM process-structure-property review; evaporation, cooling rates
+aboulkhair2019	doi:10.1016/j.pmatsci.2019.100578	LPBF of Al alloys review
+kotadia2021	doi:10.1016/j.addma.2021.102155	LPBF Al review: microstructure and properties
+michi2022	doi:10.1080/09506608.2021.1951580	high-temperature AM Al alloys
+plotkowski2020	doi:10.1016/j.actamat.2020.07.014	Al-Ce-Mn printed alloy (critical-mineral-lean family)
+croteau2018	doi:10.1016/j.actamat.2018.04.053	Al-Mg-Zr by LPBF (Zr grain refinement)
+schmidtke2011	doi:10.1016/j.phpro.2011.03.047	Sc-modified Al (Scalmalloy) for LPBF
+spierings2017	doi:10.1016/j.matdes.2016.11.040	Sc/Zr-modified Al-Mg by SLM microstructure
+kou2015	doi:10.1016/j.actamat.2015.01.034	solidification cracking criterion (crack index node)
+taherimousavi2026	doi:10.1002/adma.202509507	closest precedent: ML-designed Al alloy, ultrasonic atomization, LPBF, tensile
+# --- critical minerals and supply risk
+usgs2025	doi:10.3133/mcs2025	import reliance of Mn, Zr, Cr, Sc
+nassar2020	doi:10.1126/sciadv.aay8647	supply risk of US manufacturing by commodity
+graedel2012	doi:10.1021/es203534z	criticality methodology
+nassar2021ofr	doi:10.3133/ofr20211045	method behind the US critical minerals list
+bauer2023	doi:10.2172/1998242	DOE critical materials assessment 2023
+# --- powder production and feedstock
+zrodowski2021	doi:10.3390/ma14102541	ultrasonic atomization method (rePOWDER-type)
+priyadarshi2024	doi:10.1016/j.addma.2024.104033	ultrasonic atomization mechanism; amplitude effect on size
+dawes2015	doi:10.1595/205651315X688686	AM powder supply chain; gas atomization
+spierings2011	doi:10.1108/13552541111156504	density measurement methods for AM parts
+# --- self-driving labs and closed-loop discovery
+tom2024	doi:10.1021/acs.chemrev.4c00055	SDL review; autonomy levels; acceleration factor
+abolhasani2023	doi:10.1038/s44160-022-00231-0	rise of SDLs
+stach2021	doi:10.1016/j.matt.2021.06.036	autonomous experimentation community perspective
+szymanski2023	doi:10.1038/s41586-023-06734-w	A-Lab (oxides)
+burger2020	doi:10.1038/s41586-020-2442-2	mobile robotic chemist
+macleod2020	doi:10.1126/sciadv.aaz8867	thin-film SDL
+kusne2020	doi:10.1038/s41467-020-19597-w	closed-loop phase mapping (CAMEO)
+gongora2020	doi:10.1126/sciadv.aaz1708	BEAR: BO with 3D-printed mechanical tests
+lo2024	doi:10.1039/D3DD00223C	frugal twin concept
+liang2025	doi:10.1126/sciadv.adu7426	AMASE experiment-theory loop
+nelaturu2024	doi:10.1016/j.msea.2023.145945	DED + ML alloy discovery with purchased feedstock
+paramore2025	doi:10.1016/j.actamat.2025.120820	BIRDSHOT two-shot refractory alloy optimization
+talbot2026	doi:10.1038/s44334-026-00098-5	active learning for NiCoCr alloys in AM
+tobias2025	doi:10.1098/rsos.250646	SDL autonomy review
+# --- Bayesian optimization methods
+astudillo2021	manual	BO of function networks (NeurIPS 2021)
+buathong2024	manual	partial evaluations, cost-aware pKGFN (ICML 2024)
+buathong2025	arxiv:2506.11456	fast pKGFN
+torresi2026	doi:10.1039/d5dd00572h	multi-stage BO for SDLs
+alvi2026	doi:10.1038/s41524-026-01981-7	cost-aware batch BO for alloy design (in silico)
+balandat2020	manual	BoTorch
+daulton2021	manual	qNEHVI, noisy multi-objective BO
+snoek2012	manual	cost-aware EI per second
+frazier2018	arxiv:1807.02811	BO tutorial
+liang2021	doi:10.1038/s41524-021-00656-9	BO benchmarking across experimental materials domains
+sabanzagil2025	doi:10.1038/s43588-025-00822-9	multi-fidelity BO best practices
+mulukutla2024	doi:10.2139/ssrn.4968461	supply-risk-aware alloy design
+# --- CALPHAD, twins
+andersson2002	doi:10.1016/S0364-5916(02)00037-8	Thermo-Calc
+otis2017	doi:10.5334/jors.140	pycalphad
+mukherjee2019	doi:10.1016/j.apmt.2018.11.003	digital twin for AM qualification
+gunasegaram2021	doi:10.1016/j.addma.2021.102089	multiscale models and surrogates for AM digital twins

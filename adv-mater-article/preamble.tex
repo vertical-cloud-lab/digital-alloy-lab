@@ -1,0 +1,46 @@
+% Shared preamble for manuscript.tex and supporting-information.tex.
+% Advanced Materials takes a PDF at first submission and does not require its
+% template until revision, so this is a plain article layout in the journal's
+% section order, with Wiley-VCH (Angewandte-style) numbered references.
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{setspace}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{booktabs,tabularx,multirow}
+\usepackage{siunitx}
+\sisetup{range-phrase=--, range-units=single, separate-uncertainty=true}
+\usepackage{caption}
+\captionsetup{font=small,labelfont=bf,labelsep=period}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,calc,shapes.geometric}
+\usepackage[style=chem-angew,autocite=superscript,maxbibnames=99,sorting=none,doi=true,url=false,eprint=true]{biblatex}
+\addbibresource{references.bib}
+\usepackage[hidelinks]{hyperref}
+\usepackage[capitalise,noabbrev]{cleveref}
+
+% --- build switches: `make clean-pdf` defines \cleanbuild ----------------------
+\newif\ifdraft
+\ifdefined\cleanbuild \draftfalse \else \drafttrue \fi
+
+% Advanced Materials puts citations after punctuation as superscript numbers.
+\let\cite\autocite
+
+% [TBD: ...] marks a number or statement that waits on data. In the draft build
+% it is red; in the clean build it is a plain bracket so the prose can be read.
+\newcommand{\tbd}[1]{\ifdraft\textcolor{red!75!black}{[#1]}\else[#1]\fi}
+% \src{...}: which campaign/project supplies a result (draft build only).
+\newcommand{\src}[1]{\ifdraft\textcolor{blue!60!black}{\textsuperscript{\,$\langle$#1$\rangle$}}\fi}
+% \note{...}: an author note (draft build only).
+\newcommand{\note}[1]{\ifdraft\par\noindent\fcolorbox{orange!70!black}{orange!8}{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\footnotesize\textbf{Note.} #1}}\par\fi}
+
+% A framed placeholder for a figure panel whose data does not exist yet.
+\newcommand{\placeholder}[3]{%
+  \fcolorbox{black!40}{black!3}{\begin{minipage}[c][#2][c]{\dimexpr#1-2\fboxsep-2\fboxrule}
+  \centering\scriptsize\color{black!70}#3\end{minipage}}}
+
+\setlength{\parskip}{3pt}

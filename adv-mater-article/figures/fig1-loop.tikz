@@ -1,0 +1,40 @@
+% Fig. 1 draft: the loop as a function network. Costs are placeholders until
+% the step-time logs exist (results-needed.md L1-L3). Replace with the
+% photo version (issue #284) once each station has a photograph.
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+  font=\sffamily\small,
+  node distance=4mm,
+  step/.style={draw=black!60, rounded corners=2pt, fill=#1, align=center,
+    text width=2.05cm, minimum height=1.55cm, inner sep=2pt},
+  step/.default=black!4,
+  cost/.style={font=\sffamily\scriptsize\itshape, text=black!60, align=center},
+  arr/.style={-{Latex[length=2mm]}, thick, black!70},
+  fb/.style={-{Latex[length=2mm]}, semithick, dashed, blue!60!black},
+  inp/.style={font=\sffamily\scriptsize, align=center, text=black!75}
+]
+\node[step=blue!6]   (s1) {\textbf{Design}\\CALPHAD:\\freezing range,\\crack index};
+\node[step=orange!8, right=of s1] (s2) {\textbf{Charge}\\dose powder\\into cups};
+\node[step=orange!8, right=of s2] (s3) {\textbf{Atomize}\\ultrasonic,\\250\,g charge};
+\node[step=orange!8, right=of s3] (s4) {\textbf{Powder}\\sieve, SEM,\\EDS, O};
+\node[step=green!8,  right=of s4] (s5) {\textbf{Print}\\desktop LPBF:\\tracks, cubes};
+\node[step=green!8,  right=of s5] (s6) {\textbf{Structure}\\density, SEM,\\hardness};
+\node[step=red!7,    right=of s6] (s7) {\textbf{Properties}\\tensile,\\corrosion};
+\foreach \a/\b in {s1/s2,s2/s3,s3/s4,s4/s5,s5/s6,s6/s7} \draw[arr] (\a) -- (\b);
+\foreach \n/\c in {s1/{minutes, \$0},s2/{[h], [\$]},s3/{[1 day], [\$]},s4/{[h--day], [\$]},
+                   s5/{[h], [\$]},s6/{[day], [\$]},s7/{[days], [\$]}}
+  \node[cost, below=1mm of \n] (c\n) {\c};
+\node[inp, above=5mm of s1] (comp) {composition};
+\draw[arr] (comp) -- (s1);
+\draw[arr] (comp.east) -| (s2.north);
+\node[inp, above=5mm of s5] (laser) {laser settings};
+\draw[arr] (laser) -- (s5);
+\node[draw=blue!60!black, thick, rounded corners=3pt, fill=blue!4, align=center,
+      text width=11.5cm, minimum height=1.0cm, below=11mm of s4] (opt)
+  {\textbf{Optimizer}: one Gaussian process per step, linked as in the workflow;
+   picks the candidate and the step with the most expected gain per unit cost,
+   and may stop a candidate after any step};
+\foreach \n in {s1,s2,s3,s4,s5,s6,s7} \draw[fb] (c\n.south) -- (c\n.south |- opt.north);
+\node[inp, right=3mm of s7, text width=1.9cm] (ext) {finalists:\\outside\\chemistry and\\tensile};
+\draw[arr, black!45] (s7) -- (ext);
+\end{tikzpicture}}

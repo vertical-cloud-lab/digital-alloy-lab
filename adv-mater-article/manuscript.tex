@@ -1,0 +1,322 @@
+\documentclass[11pt]{article}
+\input{preamble}
+\usepackage{lineno}
+\ifdraft\linenumbers\fi
+\onehalfspacing
+
+\title{\textbf{Closing the loop from custom powder to printed part:\\
+cost-aware discovery of supply-secure printable aluminum alloys}}
+% Author list and order are not settled (README, decision D4). Placeholders by role.
+\author{{[Lab members who ran atomization, dosing, characterization, printing and testing]}\\
+{[Academic collaborators, if any]}\\
+Sterling G.\ Baird\thanks{Corresponding author. Department of Mechanical Engineering, Brigham Young University, Provo, UT, USA.}}
+\date{\ifdraft Draft of \today. Red brackets wait on data; blue tags name the campaign or project that supplies them.\fi}
+
+\begin{document}
+\maketitle
+
+% ---------------------------------------------------------------------------
+\begin{abstract}
+% Target <= 200 words (see journal-format.md). Numbers in brackets wait on data.
+Laser powder bed fusion can print few aluminum alloys, and the strongest of
+them depend on scandium and other elements with insecure supply. Finding new
+ones is slow for two reasons: powder for an untested composition is hard to
+obtain, and campaigns spend their budget in a fixed order, screening by
+calculation and then testing the survivors. Here, a single laboratory makes
+powder for each candidate by ultrasonic atomization of a dosed
+\SI{250}{\gram} charge, characterizes it, prints it on an in-house desktop
+system and tests it, while a cost-aware optimizer treats the whole workflow as
+a network of models and decides, for each candidate, which step to run next.
+Across \tbd{N} atomization runs on \tbd{M} compositions, the powder met a
+pre-set repeatability bar (median size within \tbd{x}\%) and its composition
+followed the charge to within \tbd{y} wt\%. Step costs spanned
+\tbd{four} orders of magnitude. In a \tbd{k}-week campaign the optimizer
+stopped \tbd{p}\% of candidates before printing and found \tbd{alloy}, with
+\tbd{YS} yield strength and \tbd{EL} elongation and a \tbd{z}\% lower
+supply-risk score than Scalmalloy. A digital twin calibrated on the campaign
+shows the approach reaches that result at \tbd{k}-fold lower cost than
+screen-then-test when the screen misses grain refinement, and matches it when
+the screen is right.
+\end{abstract}
+
+\noindent\textbf{Keywords:} aluminum alloys; laser powder bed fusion;
+ultrasonic atomization; self-driving laboratories; Bayesian optimization;
+critical minerals
+
+% ---------------------------------------------------------------------------
+\section{Introduction}
+\label{sec:intro}
+
+Laser powder bed fusion (LPBF) builds metal parts with internal channels and
+lattices that no other process can make, but it prints few aluminum alloys
+well.\cite{aboulkhair2019,kotadia2021} Most high-strength wrought alloys, such
+as 7075 and 6061, crack as they solidify in the melt pool,\cite{martin2017,kou2015}
+so printed aluminum parts mostly use the casting alloy AlSi10Mg, which is weaker
+than the wrought alloys and loses strength quickly above about
+\SI{200}{\celsius}.\cite{aboulkhair2019,michi2022} The aluminum alloys that do
+print at higher strength rely mostly on grain-refining additions: scandium and
+zirconium in Scalmalloy and Al--Mg--Zr alloys, for
+example.\cite{schmidtke2011,spierings2017,croteau2018,martin2017} Scandium,
+manganese and several other common additions are elements that the United
+States imports in full or in large
+part,\cite{usgs2025,nassar2020} \tbd{check each import-reliance figure against MCS 2025 before quoting numbers}
+so choosing a printable alloy is a supply decision as well as a metallurgical
+one.\cite{graedel2012,nassar2021ofr,bauer2023}
+
+Two things make new printable aluminum alloys slow to find. The first is
+powder. LPBF needs spherical powder in a narrow size range, typically
+\SIrange{15}{63}{\micro\metre}, and gas atomizers make it in lots far larger
+than a screening campaign needs;\cite{dawes2015} \tbd{source for typical minimum lot size and lead time}
+a custom lot is costly and slow for a composition that may never print.
+Campaigns therefore screen candidates by calculation and test only a few, blend
+elemental powders and accept inhomogeneity, or move to processes such as
+directed energy deposition that tolerate blended feedstock.\cite{nelaturu2024}
+Ultrasonic atomization, which breaks up a melt on a vibrating plate, makes
+spherical powder from charges of a few hundred grams\cite{zrodowski2021,priyadarshi2024}
+and was recently used to make powder of a machine-learning-designed aluminum
+alloy for LPBF.\cite{taherimousavi2026} Its run-to-run repeatability at fixed
+settings, and how well the powder's composition follows the charge, have not
+been reported for aluminum,\tbd{re-check before submission; see results-needed.md, A2}
+yet both matter if the atomizer is to be one step in an automated loop.
+
+The second is how a campaign spends its budget. The steps from a composition
+to a tensile result differ in cost by orders of magnitude: minutes of computing
+for a CALPHAD calculation, about a day for a powder batch, days for a tensile
+test. Yet campaigns run the steps in a fixed order. A funnel that screens many
+compositions by calculation and tests a few is efficient only if the screen is
+right, and CALPHAD-based cracking indices, for example, do not capture the grain
+refinement by Al$_3$Zr or Al$_3$Sc nucleants that makes Zr- and Sc-modified
+alloys printable.\cite{kou2015,martin2017,croteau2018} Sending every candidate
+through the whole chain is robust to a wrong screen, but it spends most of the
+budget on candidates that a cheap early measurement could have ruled out.
+
+Self-driving laboratories (SDLs) close the loop between choosing experiments
+and running them, and they have accelerated discovery of molecules, thin films
+and inorganic powders.\cite{tom2024,abolhasani2023,stach2021,burger2020,macleod2020,kusne2020,szymanski2023}
+For structural metals they remain rare. Closed loops have optimized refractory
+alloys made by arc melting,\cite{paramore2025} multi-principal-element alloys
+made by directed energy deposition from purchased powders,\cite{nelaturu2024}
+and printed NiCoCr alloys,\cite{talbot2026} and the closest physical
+precedent designed an aluminum alloy by composition-level optimization before
+atomizing, printing and testing it.\cite{taherimousavi2026} In these studies the
+optimizer chooses compositions, and every chosen candidate then goes through a
+fixed sequence of steps.\cite{tobias2025} Bayesian optimization of function
+networks (BOFN) instead models a multi-step workflow as a network of surrogate
+models, one per step,\cite{astudillo2021} and its partial-evaluation extension
+chooses which step to run, and for which candidate, by the expected gain per
+unit cost.\cite{buathong2024,buathong2025} These methods, and related
+multi-stage and cost-aware schemes,\cite{torresi2026,alvi2026,snoek2012} have so
+far been tested on synthetic or retrospective problems.
+
+Here we close the loop for aluminum alloys in one laboratory and let a
+cost-aware optimizer run it. Powder for each candidate is made by ultrasonic
+atomization of a dosed charge, characterized, printed on an in-house desktop
+LPBF system and tested; CALPHAD calculations, atomization, powder
+characterization, printing, microstructure and mechanical tests are the nodes
+of a function network, each with a measured cost (\cref{fig:loop}). We show
+that (i) ultrasonic atomization makes LPBF-grade aluminum powder repeatably and
+with composition that follows the charge, across \tbd{N} runs on \tbd{M}
+compositions (\cref{sec:atomize,sec:fidelity}); (ii) a desktop LPBF system
+prints these powders densely enough to rank candidates, with a measured offset
+from an industrial machine (\cref{sec:print}); (iii) in a \tbd{k}-week campaign
+the optimizer chose which step to run for each candidate, stopped \tbd{p}\% of
+them before printing, and found \tbd{alloy} (\cref{sec:campaign}); and (iv) a
+digital twin calibrated on the campaign shows when this beats screening and
+when it does not (\cref{sec:twin}).
+\note{Positioning check (outline.md \S3): the novelty claim is the optimizer
+choosing among costed steps on a physical alloy workflow, with powder made for
+every candidate. It holds only if Fig.~5b shows candidates stopped at different
+steps. Neither ultrasonic atomization of a custom Al alloy nor the
+composition-to-property route is new in this journal.\cite{taherimousavi2026}}
+
+% ---------------------------------------------------------------------------
+\section{Results and Discussion}
+\label{sec:results}
+
+\subsection{The loop and what each step costs}
+\label{sec:loop}
+\note{Claim: per-result costs span about \tbd{four} orders of magnitude, and in-house
+powder and printing bring a candidate from composition to a printed, measured
+cube in \tbd{d} days, at \tbd{n} candidates per week. Data: logged step times
+and consumables for every run in both campaigns (results-needed.md, L1--L3).}
+
+\begin{figure}[t]
+\centering
+\input{figures/fig1-loop.tikz}
+\caption{\textbf{The loop as a function network.} Each step is a node with its
+own model and a measured cost per result (time and consumables;
+\tbd{Table~1}). Composition enters at design and at dosing; laser settings
+enter at printing. The optimizer may stop a candidate after any node.
+\ifdraft\textit{Draft schematic. The final panel uses photographs of each
+station (issue \#284) and measured costs.}\fi}
+\label{fig:loop}
+\end{figure}
+
+\subsection{Making powder for any composition}
+\label{sec:atomize}
+\note{Claim: ultrasonic atomization of a dosed \SI{250}{\gram} charge gives
+LPBF-grade powder (\SIrange{15}{45}{\micro\metre} cut) with \tbd{in-range yield}
+and run-to-run spread inside the pre-set bar (D$_{50}$ CV $\le$ 10\%, in-range
+yield SD $\le$ 5 points), once the melt's landing point is checked before each
+run. This is where the held-back atomization data goes: every counted run from
+October 2026 to the data freeze. Data: Blocks A and B of the runs plan, all
+campaign runs, failure log (results-needed.md, A1--A6).}
+Placeholder text. \tbd{Process window (amplitude, pour pressure, plate
+material, superheat) and the failure modes engineered out: melt overshooting the
+plate, landing on the sonotrode, dripping onto a frozen lump, collection-cup
+failure.}
+
+\subsection{Composition fidelity from charge to powder to print}
+\label{sec:fidelity}
+\note{Claim: dosed charges land within \tbd{x} wt\% of target; Si in the powder
+follows the charge across the 0--30 wt\% 4047 spread (slope \tbd{s}, R$^2$
+\tbd{r}); evaporative loss of Mg in atomization and printing is \tbd{y} wt\%;
+EDS agrees with ICP-OES to \tbd{z} wt\% for Si-free alloys and \tbd{z'} for
+Si-bearing ones. The remaining error becomes measurement noise on the
+composition node. Data: dosing logs, Block B, ICP-OES on finalists, EDS
+calibration (results-needed.md, C1--C4).}
+
+\subsection{Printing in-house: a desktop LPBF system in the loop}
+\label{sec:print}
+\note{Claim: in-house powders print to $\ge$\tbd{99}\% relative density on the
+desktop system; single tracks and cubes rank candidates for cracking and
+porosity in the same order as an industrial machine (Spearman $\rho$ =
+\tbd{r}), with an offset of \tbd{d} in density and \tbd{h} in hardness measured
+on shared powders. Data: desktop LPBF (issue \#260), Utah Aconity MIDI builds
+on the same powders (issue \#138) (results-needed.md, P1--P5).}
+
+\subsection{A campaign in which the optimizer chooses the step}
+\label{sec:campaign}
+\note{Claim: over \tbd{k} weeks and \tbd{N} candidates the cost-aware network
+optimizer ran CALPHAD on \tbd{a}, made powder for \tbd{b}, printed \tbd{c} and
+tensile-tested \tbd{d}; \tbd{p}\% stopped before printing. It found
+\tbd{alloy} with \tbd{YS}/\tbd{UTS}/\tbd{EL} (as built and \tbd{heat treated}),
+better than AlSi10Mg printed and tested the same way, at a supply-risk score
+\tbd{z}\% below Scalmalloy's. Independent composition and tensile checks agree
+within \tbd{e}. Data: 2027 campaign (results-needed.md, B1--B6), with the
+Nov 2026--Feb 2027 campaign as prior data.}
+
+\subsection{What the twin says about when this pays off}
+\label{sec:twin}
+\note{Claim: a digital twin of the loop, with step costs, noise and failure
+rates fitted to the campaigns, reproduces the real campaign's spend to reach
+\tbd{target} within \tbd{x}\%; over $\ge$\tbd{20} seeds per condition,
+cost-aware network optimization reaches the target at \tbd{k}-fold (CI
+\tbd{lo--hi}) lower cost than screen-then-test when the screen misses
+nucleant-driven grain refinement, and ties when the screen is right. Data: twin
+(issue \#276), clocked benchmark (PR \#297), seeds and baselines pre-registered
+(results-needed.md, T1--T4).}
+
+\subsection{Limits}
+\label{sec:limits}
+\note{Claim: the gain depends on the ratio of step costs and on how wrong the
+cheap steps are; desktop-printed coupons rank candidates but do not qualify
+them; the composition space was \tbd{elements, bounds}. Data: twin
+sensitivity analysis (T3), desktop vs industrial offset (P4).}
+
+% ---------------------------------------------------------------------------
+\section{Conclusion}
+\label{sec:conclusion}
+\tbd{Write last. Two to three sentences on what was found, one on the general
+point: an optimizer that can stop a candidate at any step needs every step to
+be cheap enough to run on demand, which here meant making powder and printing
+in-house.}
+
+% ---------------------------------------------------------------------------
+\section{Experimental Section}
+\label{sec:methods}
+\note{Skeleton. Every subsection names the SOP or script it will cite. Settings in
+brackets are to be read from run records, not from plans.}
+
+\paragraph{Design space and CALPHAD screening.}
+\tbd{Elements and bounds; database (Thermo-Calc TCAL or the pycalphad open
+database); equilibrium and Scheil calculations; freezing range, crack
+susceptibility index after Kou,\cite{kou2015} L1$_2$ nucleant phase fraction.}
+\cite{andersson2002,otis2017}
+
+\paragraph{Supply-risk score.}
+\tbd{Definition: mass-fraction-weighted sum of each element's net import
+reliance or USGS supply-risk score;\cite{nassar2020,nassar2021ofr,usgs2025}
+values for AlSi10Mg and Scalmalloy; sensitivity to the weighting.}
+
+\paragraph{Charge preparation and dosing.}
+\tbd{Cups and plugs of 6063 (or bar plus master alloy) filled with dosed
+elemental or master-alloy powder; doser model and its mass accuracy; charge
+mass \SI{250}{\gram}; storage below \tbd{RH}\%.}
+
+\paragraph{Ultrasonic atomization.}
+\tbd{AMAZEMET rePOWDER with induction-melting module; crucible and nozzle;
+argon purge and O$_2$ level at pour; plate material (Mo; W-coated for Cu);
+booster and amplitude; pour pressure; hold time; the pre-run landing-point
+check (G0). Mass balance in six parts.}\cite{zrodowski2021,priyadarshi2024}
+
+\paragraph{Powder handling and characterization.}
+\tbd{Sieving at 250/63/45~\si{\micro\metre} on an Al-only sieve set; two splits
+per run; SEM sizing ($\ge$1000 particles) and shape ($\ge$400 particles, at
+500$\times$) per ISO 13322-1 and ISO 9276; EDS at \tbd{kV}; oxygen by inert-gas
+fusion and composition by ICP-OES at an outside laboratory on sealed samples;
+flowability.}
+
+\paragraph{Laser powder bed fusion.}
+\tbd{Desktop system: laser, spot, plate size, heating, atmosphere and O$_2$
+level, single tracks and cubes; parameter ranges. Reference builds on the
+University of Utah Aconity MIDI. Density by Archimedes and image
+analysis.}\cite{spierings2011}
+
+\paragraph{Microstructure and mechanical testing.}
+\tbd{Metallography, SEM/EDS/EBSD; Vickers hardness; sub-size tensile specimens
+(ASTM E8/E8M), orientation, strain rate; heat treatment.}
+
+\paragraph{Corrosion.}
+\tbd{If kept in scope: potentiodynamic polarization on the CubXL with the
+EZstat-Pro potentiostat in \SI{3.5}{wt\percent} NaCl.}
+
+\paragraph{Function-network model and acquisition.}
+\tbd{Nodes, inputs and outputs; one Gaussian process per node (BoTorch);
+costs from \cref{sec:loop}; partial-evaluation knowledge-gradient acquisition
+divided by cost;\cite{buathong2024,balandat2020} batching and asynchronous
+results; how failed and abandoned runs enter the models; seeding;
+pre-registered baselines and stopping rule.}
+
+\paragraph{Digital twin and benchmarks.}
+\tbd{Simulator of each step's output, time, cost, noise and failure rate,
+fitted to the campaigns; baselines (random, screen-then-test, full-chain batch
+BO); seeds; bootstrap confidence intervals.}\cite{mukherjee2019,gunasegaram2021,lo2024}
+
+\paragraph{Independent verification.}
+\tbd{Outside laboratory for composition (ICP-OES, O/N/H) and tensile tests on
+the finalists; blind sample labels.}
+
+% ---------------------------------------------------------------------------
+\section*{Supporting Information}
+Supporting Information is available from the Wiley Online Library or from the author.
+
+\section*{Acknowledgements}
+\tbd{Funding sources and grant numbers; facilities (BYU Electron Microscopy
+Facility, University of Utah); partners by company name only.}
+
+\section*{Conflict of Interest}
+The authors declare no conflict of interest. \tbd{confirm}
+
+\section*{Author Contributions}
+\tbd{CRediT roles once the author list is settled.}
+
+\section*{Data Availability Statement}
+The data that support the findings of this study (atomization run records,
+powder and print measurements, campaign logs and step costs) are openly
+available in \tbd{repository} at \tbd{DOI}, and the code for the function-network
+optimizer, the digital twin and every figure is openly available at
+\tbd{repository/DOI}. \tbd{Reserve the DOIs only when the paper is ready; do not publish them before submission.}
+
+\printbibliography
+
+\clearpage
+\section*{Table of Contents}
+\note{Advanced Materials asks for a short TOC text and a TOC graphic; see
+journal-format.md for the current limits.}
+A laboratory that makes its own powder for every candidate, prints it in-house,
+and lets a cost-aware optimizer decide which step to run next finds
+\tbd{alloy}, a printable aluminum alloy with \tbd{lower} supply risk than
+Scalmalloy, at \tbd{k}-fold lower cost than screening then testing.
+
+\end{document}

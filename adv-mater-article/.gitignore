@@ -1,0 +1,14 @@
+tools/cache/
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.log
+*.out
+*.run.xml
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*-SAVE-ERROR
+__pycache__/

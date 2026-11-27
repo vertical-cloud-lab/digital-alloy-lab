@@ -1,0 +1,59 @@
+\documentclass[11pt]{article}
+\input{preamble}
+\onehalfspacing
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\thesection}{S\arabic{section}}
+
+\title{\textbf{Supporting Information}\\[2pt]
+\large Closing the loop from custom powder to printed part:
+cost-aware discovery of supply-secure printable aluminum alloys}
+\author{}
+\date{\ifdraft Draft of \today\fi}
+
+\begin{document}
+\maketitle
+\note{Skeleton. Each section names the record it will be built from; see figure-plan.md (SI items) and results-needed.md.}
+
+\section{Atomization run records}
+\tbd{Table S1: every atomization run, counted or not, with date, run ID, charge
+(cup alloy, core powder, mass), plate, booster and amplitude, pour pressure,
+hold time, O$_2$ at pour, outcome, mass balance, sieve fractions,
+D$_{10}$/D$_{50}$/D$_{90}$, circularity, powder O. Source: the run-record YAML files
+(byu-vcl \texttt{atomizer-runs/plan-adv-mater/run-record-template.yaml}) and the
+run table in PR \#286.}
+
+\section{Repeatability analysis}
+\tbd{Block A: the bar fixed before the first counted run, its basis, split-level
+measurement noise versus run-to-run noise (nested ANOVA), and the result.}
+
+\section{Composition spread and fidelity}
+\tbd{Block B: Si in powder versus charge; EDS settings and calibration;
+ICP-OES comparison; Mg loss.}
+
+\section{Atomization failure modes}
+\tbd{Frames from the run videos for each failure (overshoot, sonotrode
+landing, frozen-lump drip, cup failure) and the fix for each.}
+
+\section{Desktop LPBF system}
+\tbd{Design, components, laser calibration, atmosphere and O$_2$ log; build
+plate; parameter sets; comparison builds on the Utah Aconity MIDI.}
+
+\section{All candidates in the campaigns}
+\tbd{Table S2: every composition, the steps it went through, every measured
+output, and why it stopped.}
+
+\section{Function-network model}
+\tbd{Node definitions, kernels and priors, cost model, acquisition settings,
+batching, handling of failed and abandoned runs, seeding.}
+
+\section{Pre-registration and benchmarks}
+\tbd{Pre-registered baselines, targets and stopping rule (dated before the
+campaign); the twin's calibration; per-seed results.}
+
+\section{Standard operating procedures}
+\tbd{Atomizer SOP (issues \#251, \#253), powder SEM preparation, sieving,
+powder safety, desktop LPBF operation.}
+
+\printbibliography
+\end{document}
