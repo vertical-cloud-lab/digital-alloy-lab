@@ -1,6 +1,6 @@
 # Outline: the Al alloy campaign paper (#277)
 
-*Draft of 2026-11-27. Due Feb 28, 2027. The text is in [`manuscript/main.tex`](manuscript/main.tex); this file is the
+*Draft of 2026-11-27 (revised the same day for the in-house Sc-free baselines). Due Feb 28, 2027. The text is in [`manuscript/main.tex`](manuscript/main.tex); this file is the
 argument behind it.*
 
 ## The claim, and the two versions
@@ -8,72 +8,103 @@ argument behind it.*
 The campaign goal from [#277](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/277) is an alloy that
 **performs better than AlSi10Mg and uses less critical minerals than Scalmalloy**. At the kickoff, Sterling loosened
 "and" to "and/or" and said that "performs better" means stronger (transcript 09:03 to 10:30,
-[PR #257](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/257)). The paper is written so that either
-outcome can be submitted, and the choice is made at gate G4 of the
-[#256 schedule](https://github.com/vertical-cloud-lab/digital-alloy-lab/blob/claude/issue-256-20261112-2149/al-campaign-schedule/README.md#gates).
+[PR #257](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/257)).
 
-| | Version A: a new alloy | Version B: a benchmarked screen |
+**Reframed on 2026-11-27** ([#277 comment](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/277#issuecomment-7228308921)).
+Sc-free LPBF aluminum stronger than AlSi10Mg is already sold, so beating AlSi10Mg is not a discovery. The campaign
+now tries to **expand the Sc-free Pareto front of yield strength against critical-mineral burden**. The front is
+anchored by commercial Sc-free powders that the lab buys, prints and tests exactly as it does its own candidates,
+AlSi10Mg and Scalmalloy: **EOS Al5X1** (Al-Mg-Zr-Mn), and **Höganäs Al-HS1** (Al-Mn-Cr-Zr) if the budget allows
+([`baselines.md`](baselines.md)). AlSi10Mg stays as the floor, and Scalmalloy as the burden reference.
+
+| | Version A: a new alloy beyond the front | Version B: a benchmarked screen on one machine |
 |---|---|---|
-| Headline | A scandium-free Al alloy, printed by LPBF from powder atomized in-house, with higher yield strength than AlSi10Mg printed and tested the same way, at equal or better elongation, and with a critical-mineral burden at least [X] % below Scalmalloy's | [N] scandium-free compositions atomized from dosed charges, printed and tested in 12 weeks, ranked against AlSi10Mg and Scalmalloy on one strength vs. mineral-burden map, with what CALPHAD got right and wrong |
-| Needs | ≥ 1 finalist with ≥ 3 valid tensile specimens, the in-house AlSi10Mg comparator from the same machine and geometry, an outside composition check | Hardness and density on most compositions, tensile on the benchmarks and the best 1-2 alloys |
+| Headline | A scandium-free Al alloy, printed by PBF-LB/M from powder atomized in-house, that lies beyond the Sc-free front: stronger than in-house Al5X1 at equal or lower burden, or less burden at equal strength, and below Scalmalloy's burden at every allowed import reliance | [N] Sc-free compositions from dosed charges, printed and tested on the same machine as four commercial powders (AlSi10Mg, Al5X1, Al-HS1, Scalmalloy), placed on one strength vs. burden map, with what CALPHAD got right and wrong and how far the machine's results sit from the vendors' datasheets |
+| Needs | ≥ 1 finalist with ≥ 3 valid tensile bars, in-house Al5X1 (and AlSi10Mg) from the same session, an outside composition check of finalist and baselines | In-house tensile on the commercial powders; hardness and density on most compositions; tensile on the best 1-2 |
 | Best journals | Letter: *Scripta Materialia*, *Materials Research Letters*, *Additive Manufacturing Letters* | Full article: *Additive Manufacturing*, *Materials & Design* |
-| Decide at | G4 (Fri Jan 29 in the schedule) | |
+| Decide at | G4 (Fri Jan 29 in the schedule), or when in-house Al5X1 data exist if that is later | |
 
 Version A's sentence, with the brackets the campaign fills:
 
-> Alloy [name], Al-[x]Mn-[y]Cr-[z]Zr (wt %), printed crack-free to [≥ 99.x] % density from powder atomized in-house,
-> reaches [YS] MPa yield strength and [EL] % elongation [as built / after a [T] °C, [t] h direct age], [Δ] MPa above
-> AlSi10Mg printed on the same machine and tested the same way (n = [n] each), with a critical-mineral burden [X] %
-> below Scalmalloy's. An outside laboratory confirmed its composition to within [±] wt %.
+> Alloy [name], Al-[x]Fe-[y]Mg-[z]Zr (wt %), printed crack-free to [≥ 99.x] % density from powder atomized in-house,
+> reaches [YS] MPa yield strength and [EL] % elongation after [a [T] °C, [t] h direct age]. That is [Δ] MPa above
+> commercial Al5X1 printed in the same session and tested the same way (n = [n] each), at [equal / X % lower]
+> import-weighted critical-mineral burden, which is below Scalmalloy's at every allowed import reliance. An outside
+> laboratory confirmed both compositions to within [±] wt %.
 
-The family in the brackets is only an example. It is whatever the screen picks.
+The family in the brackets is only an example. It is whatever the screen picks. Under B_NIR the screen leans toward
+Fe-, Zr- and Mg-lean families, because that is where the front has room (Fig. 1b).
 
-## Two definitions to freeze before the screen ranks anything (by Dec 1, before G1)
+**What "expanding the front" means, and why one front isn't enough.** On reported values the Sc-free front inside the
+region of interest has four alloys: Aheadd CP1 (Al-Fe-Zr, 300 MPa aged, B_NIR 0.14 wt %), Al-1.87Fe-1.02Mg-1.03Zr
+(376 MPa aged, 1.02), Al5X1 (385 MPa aged, 3.63) and EOS Al2139 T4 (460 MPa, 3.89). Al-HS1 sits behind Al5X1:
+weaker, at 1.4-2.4 wt % more burden at the same reliances. Measuring Al5X1 and Al-HS1 in-house fixes the front's
+middle on our own machine. Its low-burden end (B_NIR below about 3) has no bought baseline, so a low-burden candidate
+must also be checked against the reported values there (pre-registration §4). A third purchase, Aheadd CP1, would
+close that gap and is worth deciding after the screen.
 
-The claim can only be checked if these are fixed in advance. Both should be committed to the repo before the CALPHAD
-screen ranks anything (by Tue Dec 1, so the seeds can still be picked at G1 on Fri Dec 4), together with the
-optimizer settings (SI S9). A draft is in [`preregistration.md`](preregistration.md).
+## Definitions to freeze before the screen ranks anything (by Dec 1, before G1)
 
-**1. "Stronger than AlSi10Mg".** PR #285 showed that the datasheets can't be the bar: AlSi10Mg's datasheet rows already
-pass both FLAIME G3 windows, and a desktop or sub-size result won't reproduce datasheet values anyway. Proposed rule:
+The claim can only be checked if these are fixed in advance. They go into [`preregistration.md`](preregistration.md)
+and are committed before the CALPHAD screen ranks anything (by Tue Dec 1, so the seeds can still be picked at G1 on
+Fri Dec 4), together with the optimizer settings (SI S9).
 
-- The comparator is AlSi10Mg **printed on the same machine, with the same specimen geometry, surface condition and
-  test method** as the candidate. Two comparators are available or planned:
-  1. commercial gas-atomized AlSi10Mg printed at Utah in April 2026: yield 228 ± 13 MPa, UTS 376 ± 10 MPa, elongation
-     4.5 ± 0.5 % (as built, near-net-shape, horizontal, n = 4;
-     [PR #288](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/288));
-  2. AlSi10Mg-type powder atomized in-house (run D1 and its repeat D1-r), printed in the same session as the finalists.
-     This one separates the alloy from the powder route.
-- A candidate is "stronger" if its mean yield strength exceeds the comparator's by more than the half-widths of both
-  95 % confidence intervals combined, at mean elongation no lower than the comparator's, with n ≥ 3 valid specimens
-  each. AlSi10Mg is tested as built and stress-relieved, and the candidate as built and after the one heat treatment
-  chosen before printing. A candidate condition counts only if it passes against AlSi10Mg in both of its conditions.
-- Datasheet values (PR #285) are context in the paper, not the bar.
+**1. The comparators and "printed and tested the same way".**
 
-**2. "Less critical minerals than Scalmalloy".** A plain count or mass fraction of critical elements doesn't work for
-aluminum alloys: aluminum itself is on the U.S. critical minerals list, and Mg, Mn, Cr and Zr are too (the 2025 list
-is being checked element by element; see [`risks.md`](risks.md)). The kickoff said "the more that there is, that also
-is expensive" (09:48), which points to an amount-weighted metric. Proposed:
+- **Every alloy, bought or made, gets the same procedure:** same machine (Utah's Aconity MIDI), layer thickness, plate
+  temperature, scan strategy, gas, powder handling, specimen geometry and surface, test and statistics.
+- **Laser power and speed follow the same rule, not the same numbers.** Each alloy gets the same power-speed grid of
+  density cubes, and its bars are printed at its densest grid point. One parameter set for all alloys would favour
+  whichever alloy it was tuned for.
+- **Each alloy is its own build** (one powder per build), so "the same session" means consecutive builds, not one
+  build. The earlier draft's "same build" can't happen on a single-powder machine.
+- **Heat treatments are each vendor's**:
+  - Al5X1: 400 °C for 6 h, gas quench.
+  - Al-HS1: 375 °C for 4 h.
+  - Scalmalloy: 325 °C for 4 h.
+  - AlSi10Mg: as built and stress-relieved.
+  - Each candidate: as built and one direct age chosen before printing.
 
-- **Primary:** the mass-weighted U.S. net import reliance of the alloying additions,
-  B = Σᵢ wᵢ · NIRᵢ / 100 over elements other than Al, with wᵢ in wt % and NIRᵢ from USGS *Mineral Commodity Summaries 2026*.
-  It rewards using less of the elements the U.S. imports, and it is simple enough to check by hand.
-- **Secondary (sensitivity):** the raw-material cost of the additions per kg of alloy, at USGS 2025 prices, and
-  scandium content on its own. The paper reports all three and states the claim on the primary.
-- [`scripts/mineral_burden.py`](scripts/mineral_burden.py) computes them from [`data/element-criticality.csv`](data/element-criticality.csv).
-  Sterling picks the primary and the threshold [X] % (FLAIME's O4 uses ≥ 40 %, G3 uses 25 % on SRI).
-- **What the inputs show (2026-11-27).**
-  - Every element in play except Fe is on the final 2025 list, Al and Si included.
-  - On B_NIR, AlSi10Mg (5.2-10.3 wt %) scores above Scalmalloy (4.7-6.0) at the midpoints; the intervals overlap.
-    The Mn-rich seed S1 (6.6-7.3) sits above Scalmalloy's whole interval.
-  - On B_cost, with Sc priced as metal, every Sc-free alloy except the two silver-bearing Al-Cu-Mg grades is at least
-    97 % below Scalmalloy, and the silver-bearing ones are 74-87 % below. With Sc priced through an Al-2Sc master
-    alloy, the floor is 92 % for the silver-free alloys and 14-56 % for the silver-bearing ones.
-  - So B_NIR is the only one of the three that tells Sc-free alloys apart. It is still the proposed primary, with the
-    claim region "stronger than in-house AlSi10Mg, and B_NIR below Scalmalloy's lower bound (4.7 wt %)". That region
-    already holds five or six Sc-free alloys on their reported (mostly machined) values, or four or five against the
-    strongest AlSi10Mg datasheet row (Fig. 1b), so a new alloy has to beat those, not only AlSi10Mg.
-  - Details are in [`risks.md`](risks.md) (R1, R2).
+**2. "Expands the front".** A candidate condition expands the front if all of these hold:
+
+- it is **stronger than in-house AlSi10Mg** by more than the two 95 % confidence half-widths combined, at no lower
+  elongation (the floor), in both of AlSi10Mg's conditions;
+- its **B_NIR is below Scalmalloy's at every allowed import reliance** (paired test, measured compositions);
+- **no in-house baseline dominates it.** Every baseline whose burden is not robustly above the candidate's must be
+  weaker by more than the two half-widths combined. Baseline means in-house Al5X1, Al-HS1 and Scalmalloy, each in its
+  vendor condition;
+- **no reported Sc-free alloy dominates it** on reported values ([`data/literature-alloys.csv`](data/literature-alloys.csv),
+  frozen with the pre-registration). This is a secondary check, stated as against reported values.
+
+The size of the step is reported as the area it adds to the in-house front, measured inside the region of interest
+(hypervolume improvement, burden at the midpoint reliances).
+
+**3. "On par with the industry datasheets".** For each bought powder, the in-house mean yield, in the vendor's
+condition and the horizontal orientation, is at least 0.90 of the vendor's typical value (Fig. 5d). Elongation is
+reported, not tested, because as-printed sub-size bars lose more elongation than yield against machined bars. On
+April's data AlSi10Mg is at 0.76-0.85, so not on par ([`baselines.md`](baselines.md#alsi10mg-at-228-mpa-what-it-means-for-using-it-as-a-baseline)).
+
+**4. The burden metric: B_NIR** ([recommendation](baselines.md#the-burden-metric-to-freeze-before-the-screen-ranks-anything)).
+
+- **Definition.** B_NIR = Σᵢ wᵢ · NIRᵢ / 100 over the alloying elements other than Al, with wᵢ in wt % and NIRᵢ from
+  USGS *Mineral Commodity Summaries 2026*. Fe counts zero.
+- **Comparing two alloys:** under the same import reliances (Si, Mg and Zr have only bounds), so "below Scalmalloy"
+  means below at every allowed reliance.
+- **Plotting:** at the midpoint reliances.
+- **Compositions:** measured by the outside lab, for the baselines too. Al5X1's composition range alone spans B_NIR 2.0-5.7.
+- **Reported as sensitivity, not used for the claim:** B_mass (wt % of listed elements) and B_cost (cost of the
+  critical additions).
+- **Why B_NIR:**
+  - Of the three, it is the only one that both counts how much critical material an alloy uses (the kickoff's
+    "the more that there is", 09:48) and separates Sc-free alloys, which a front needs.
+  - B_cost puts every silver-free Sc-free alloy at 0.25-0.94 USD/kg against Scalmalloy's 39.9, so it can't rank them.
+  - B_NIR is FLAIME's mineral-burden node with USGS import-reliance weights.
+- **What it says now** (Table 1, SI table of paired differences):
+  - Al5X1 is below Scalmalloy at every reliance (−2.01 to −1.45 wt %).
+  - Al-HS1 depends on Mg's reliance (−0.48 to +0.82).
+  - AlSi10Mg depends on Si's (−0.66 to +5.51).
+  - Seeds S2 and O1 are below. S3 depends. S1, S4, O2 and O3 are above, so they can't meet the claim whatever
+    their strength.
 
 ## Sections and the claim each makes
 
@@ -86,17 +117,19 @@ The letter version keeps §1, §3.4, §4 and one paragraph each of §3.1-3.3, an
 | 2.1 | Design space and CALPHAD screen | The screen ranks [N] compositions on solidification range, crack susceptibility, strengthening phases and mineral burden | 450 | none | screen by G1 |
 | 2.2 | Mineral burden | Defined above, frozen before the screen ranks anything | 200 | element inputs (in progress) | G1 |
 | 2.3-2.5 | Charges, atomization, powder | Every composition is made the same way from dosed charges, and every lot has a provenance record | 600 | SOP draft, run table | first Al run |
-| 2.6-2.7 | LPBF and heat treatment | Benchmarks and candidates are printed with the same specimen set on the same machine | 400 | Utah AlSi10Mg build (Apr 2026) | P1 |
+| 2.3a | Commercial powders | AlSi10Mg, Al5X1, Al-HS1 and Scalmalloy bought, with lot certificates, handled like in-house powder | 150 | sourcing in [`baselines.md`](baselines.md); nothing ordered | PO by Dec 11 |
+| 2.6-2.7 | LPBF and heat treatment | Every alloy is printed on one machine by one procedure (same grid rule, own densest point), each vendor's heat treatment for the bought powders | 450 | Utah AlSi10Mg build (Apr 2026) | P1 |
 | 2.8-2.10 | Density, hardness, tensile, corrosion | Standard methods, with the sub-size geometry and n stated | 500 | Utah tensile method | P1 |
 | 2.11 | Independent verification | An outside lab checks composition (and, if funded, tensile) on the finalists | 200 | none | outside lab contracted by Dec 18; batch 1 ships Jan 8 |
 | 3.1 | Screen and picks | Which compositions were made and why; how the optimizer's picks differed from the CALPHAD ranking | 500 | none | Jan 29 |
 | 3.2 | Powders | Composition, size and shape of each powder; how close it came to the target | 500 | none | Feb 12 |
 | 3.3 | Printability | Which compositions printed crack-free and dense, and whether CALPHAD's crack index predicted it | 500 | none | Feb 5 |
-| 3.4 | Strength and ductility | Hardness on all, tensile on the benchmarks and finalists | 600 | in-house AlSi10Mg only | Feb 12 |
+| 3.4a | The commercial powders on our machine | In-house AlSi10Mg, Al5X1, Al-HS1 and Scalmalloy against their datasheets (on par or not), and the in-house front | 400 | in-house AlSi10Mg only (0.76-0.85 of its datasheets) | Jan 29 (best case) to Feb 12 |
+| 3.4b | Strength and ductility | Hardness on all, tensile on the finalists, placed against the in-house front | 500 | none | Feb 12 |
 | 3.5 | Corrosion | The finalists against AlSi10Mg and wrought 6063 in 3.5 wt % NaCl | 300 | none | Feb 12 |
 | 3.6 | Independent check | Outside results against in-house | 200 | none | Feb 19 |
-| 4 | Benchmark comparison | Where the campaign's alloys sit against AlSi10Mg and Scalmalloy on strength, ductility and mineral burden | 600 | datasheets and in-house AlSi10Mg (written) | Feb 12 |
-| 5 | Limits | Sub-size specimens, one machine, room temperature only, no fatigue | 300 | | Feb 19 |
+| 4 | The front and the burden metric | Where the campaign's alloys sit against the Sc-free front (in-house and reported) and Scalmalloy, on the frozen metric and its sensitivity | 600 | datasheets, in-house AlSi10Mg, the front on reported values (written) | Feb 12 |
+| 5 | Limits | Sub-size specimens, one machine, one lot per bought powder, vendor parameter sets not used, room temperature only, no fatigue | 300 | | Feb 19 |
 | 6 | Conclusions | | 150 | | Feb 22 |
 
 ## Keeping this paper apart from the *Advanced Materials* article (#120)
@@ -121,9 +154,9 @@ Sterling decides.
 
 ## Title options
 
-- A: *A scandium-free aluminum alloy for laser powder bed fusion that outperforms AlSi10Mg, found in a 12-week campaign on custom-atomized powder*
-- A, letter: *Beating AlSi10Mg without scandium: [alloy] for laser powder bed fusion*
-- B: *Twenty custom aluminum alloy powders in twelve weeks: screening scandium-free alloys for laser powder bed fusion against AlSi10Mg and Scalmalloy*
+- A: *Beyond the scandium-free front: an aluminum alloy for laser powder bed fusion that outperforms commercial Al-Mg-Zr-Mn on our machine, with less critical-mineral burden than Scalmalloy*
+- A, letter: *Expanding the scandium-free strength-burden front of PBF-LB/M aluminum with custom-atomized powder*
+- B: *Twenty custom aluminum alloy powders and four commercial ones on one machine: where scandium-free alloys for laser powder bed fusion stand against AlSi10Mg and Scalmalloy*
 
 ## Authors (to confirm)
 

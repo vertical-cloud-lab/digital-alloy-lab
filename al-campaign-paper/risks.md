@@ -1,11 +1,14 @@
 # What makes the main claim hard to support by Feb 28, 2027
 
-*Status of 2026-11-27. Evidence links are to issues, PRs and branches in this repo. Owners are proposals; change them
-in [`figure-plan.csv`](figure-plan.csv) and here.*
+*Status of 2026-11-27, revised the same day for the in-house Sc-free baselines ([`baselines.md`](baselines.md)).
+Evidence links are to issues, PRs and branches in this repo. Owners are proposals; change them in
+[`figure-plan.csv`](figure-plan.csv) and here.*
 
-The claim: **a scandium-free alloy, printed by LPBF from powder made in-house, stronger than AlSi10Mg and with less
-critical minerals than Scalmalloy.** Fourteen things stand in the way. The first two are about what the claim means and
-cost nothing to fix but a decision. The rest are about getting the data in time.
+The claim: **a scandium-free alloy, printed by LPBF from powder made in-house, that expands the Sc-free front of
+strength against critical-mineral burden.** No commercial Sc-free powder printed here, nor any reported alloy, may
+dominate it. It must also be stronger than AlSi10Mg and below Scalmalloy's burden (pre-registration §1). Seventeen
+things stand in the way. The first two are about what the claim means and cost nothing to fix but a decision. The
+rest are about getting the data in time; R15-R17 come from buying and printing the baselines.
 
 ## The two decisions that shape the paper (decide by Tue Dec 1, before the screen ranks anything)
 
@@ -27,6 +30,10 @@ S3, O1 and O2 are the ones plotted here.
   - (c) a result about the route itself, which belongs to #120 (see R12).
 - **Decision (Sterling, with Xavier):** set the campaign's objective as "beyond the Sc-free front", not "beyond
   AlSi10Mg", and keep the literature alloys as seeds only to anchor the model.
+- **Taken on 2026-11-27:** Sterling asked to buy EOS Al5X1 and Höganäs Al-HS1 (at least one) and to print and test
+  them here as points on the front. [`baselines.md`](baselines.md) recommends Al5X1 first: it is on the front on
+  reported values and below Scalmalloy at every allowed reliance. Al-HS1 sits behind it. What's left to decide is the
+  front rule in pre-registration §4 and whether to add Aheadd CP1 for the low-burden end.
 
 ### R2. The burden metric decides the claim
 
@@ -59,6 +66,13 @@ Some import reliances come only as bounds (Si > 50 %, Mg > 75 %, Zr < 25 %), so 
 - **Decision (Sterling):** pick the primary metric and the threshold before the screen ranks anything, and commit it
   (S9 in the SI). Under B_NIR, steer toward Fe-, Zr- and Mg-lean families (S2, O1) and away from Mn-rich ones (S1, O3).
   Under B_cost, say plainly that any Sc-free alloy passes.
+- **Recommendation (2026-11-27): B_NIR**, with two alloys compared under the same import reliances, not interval
+  against interval. The bounds on Si, Mg and Zr are the same unknown for every alloy. The front needs a metric that
+  separates Sc-free alloys, and B_cost can't ([`baselines.md`](baselines.md#the-burden-metric-to-freeze-before-the-screen-ranks-anything)).
+  On that test:
+  - Al5X1, S2 and O1 are below Scalmalloy at every reliance.
+  - Al-HS1, S3 and AlSi10Mg depend on the reliances.
+  - S1, S4, O2 and O3 are above.
 - **Inputs to check by hand:**
   - The Mn price is the 2023 Minerals Yearbook value, because MCS 2026 prices only ore.
   - Ce, Er and V are priced on an oxide basis.
@@ -75,24 +89,31 @@ Some import reliances come only as bounds (Si > 50 %, Mg > 75 %, Zr < 25 %), so 
 | R6 | **Feedstock for most seeds isn't ordered** | Zr, Fe, Ni, Cu and Si powder aren't on any order; no master alloys bought ([#146](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/146#issuecomment-6842840090), [#250](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/250#issuecomment-6778615370)). Zr alloys need 1040-1060 °C melts, untried on this machine (#275) | S1, S2, O1, O2 and the Scalmalloy-type D2 can't be made | Order Al-10Zr master alloy and Fe now. Run D1, S3, S4 and O3 first ([#275](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/275)) | Gage | Dec 4 |
 | R7 | **The CALPHAD screen can't yet do what the methods say** | No Thermo-Calc licence; #141 unanswered. The open MatCalc database has no Al₃Zr liquidus. The seeds come from the literature, not the screen ([#275 branch](https://github.com/vertical-cloud-lab/digital-alloy-lab/blob/claude/issue-275-20261126-0632/bofn-seeding/first-six/README.md)) | "Thermo-Calc screening" in the title of a method section would overstate it, and Zr alloys can't be ranked | Decide the licence. If none, say "pycalphad with open databases" and check the finalists in Thermo-Calc through a partner | Xavier, Sterling | Dec 4 |
 | R8 | **Composition can't be verified yet** | EDS is good to 0.2-0.5 wt % at best (kickoff 10:36-11:29); standards-based EDS has one valid run ([PR #288](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/288)). ICP for Si needs HF digestion. No outside lab contacted | "Composition confirmed by an outside lab" can't be written | Contract an outside lab now. Spark-OES on a printed coupon (ASTM E1251) avoids dissolving Si. Ship batch 1 by Jan 8, finalists by Jan 29 | Sterling | Dec 18 |
-| R9 | **Tensile set-up** | The 20 kip frame was last reported broken. April's yields for tests 1-3 are unreliable: their elastic slopes were 29-49 GPa, against about 70 GPa for Al. No extensometer is recorded ([PR #288](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/288)) | The in-house AlSi10Mg bar (228 ± 13 MPa) is provisional | Get an extensometer or DIC. Re-test commercial and in-house AlSi10Mg in the finalists' build | Carl | Jan 15 |
+| R9 | **Tensile set-up** | The 20 kip frame was last reported broken. April's yields for tests 1-3 are unreliable: their elastic slopes were 29-49 GPa, against about 70 GPa for Al. No extensometer is recorded ([PR #288](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/288)) | The in-house AlSi10Mg bar (228 ± 13 MPa) is provisional. The baselines add about 32 bars to test | Get an extensometer or DIC before the first baseline bars. Re-test commercial and in-house AlSi10Mg in the finalists' session | Carl | Jan 15 |
 | R10 | **No density or hardness set-up** | Archimedes (#144) idle since June; nothing exists ([#284](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/284#issuecomment-7175752102)). Microhardness access unconfirmed | Hardness is the optimizer's fast screen. Without it, no optimizer rounds | Set up Archimedes (Seth offered in June) and book the microhardness tester | Carl | Dec 18 |
 | R11 | **Corrosion isn't ready** | The EZstat-Pro has passed dummy-cell checks only. One reference electrode is on order. The CubXL cell is unbuilt and copper goes first ([PR #239](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/239), [PR #264](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/264)) | Fig. 6 and the corrosion results | Validate on a reference by Jan 15, or move corrosion to future work (the schedule's first cut) | Ben, Jarrett | Jan 15 |
 | R12 | **Overlap with the *Adv. Mater.* article** | #120 says the atomization results are "saved" for it, and a run on #120 started today. [`outline.md`](outline.md#keeping-this-paper-apart-from-the-advanced-materials-article-120) proposes a split | A journal checks prior publication. Two papers built on the same runs need different claims | Decide the split | Sterling | Dec 4 |
 | R13 | **Too few people** | One run takes 10-15 person-hours from charge to SEM. Only Gage, Ronnie and Sterling may run the atomizer (#160), and no third operator or new SEM users are in training | 3-4 runs a week can't be sustained | Train a third operator and two SEM users | Gage, Sterling | Dec 18 |
 | R14 | **Independent verification** | No outside lab contacted, and "we have some contacts" (kickoff 11:41) aren't named anywhere | Outside tensile by Feb 28 isn't realistic; outside chemistry is, if contracted by mid-December | Contract chemistry now (R8). Leave outside tensile for revision | Sterling | Dec 18 |
+| R15 | **Baseline powders: no public price or lead time, and the break** | EOS lists Al5X1 as "Contact sales" (article 9030-0017), and Höganäs sells Al-HS1 in 10 kg drums on request. Neither publishes a lead time, and EOS's parameters are for its own machine. Fine Al powder ships as dangerous goods ([`baselines.md`](baselines.md#sourcing-public-pages-read-through-the-labs-network-on-2026-11-27)) | A PO after Dec 11, a drum from Europe, or EOS declining to sell to a non-EOS lab puts the baselines' tensile data in late February or March | Request both quotes the week of Nov 30, asking for stock location, ship date and smallest lot; PO by Dec 11. If EOS won't sell, Al-HS1 becomes the only baseline and the front's middle rests on reported values | Gage (quotes), Sterling (PO) | Dec 11 |
+| R16 | **Utah capacity** | The baselines add 7-8 builds: 2 each for Al5X1, Al-HS1 and Scalmalloy, plus 1-2 for AlSi10Mg. That lands on five sessions that aren't booked, at about one composition per build (R4) | If Utah can't add build days, baseline builds displace seed and optimizer builds | Ask for a third January build day, or the 55 mm kit for window builds. Drop Al-HS1 before dropping Al5X1 | Carl, Ronnie | Dec 11 |
+| R17 | **Printing the baselines fairly** | Vendor datasheets use each vendor's own machine and tuned parameters. The April AlSi10Mg build's parameters and plate temperature weren't recorded (SI S5) | A baseline printed off its window looks weaker than it is, and the candidates look better than they are | Same grid rule for every alloy (pre-registration §2), same plate temperature, vendor heat treatments; report the on-par ratios (§4b) | Carl, Xavier | Jan 12 |
 
 ## What fits in each version
 
-- **Version A (a new alloy, Feb 28):** all of R3-R10 resolved by mid-December, plus a good Al run before the break.
-  Given where things stand, I put this below one in five.
-- **Version B (a benchmarked screen):** needs a good Al run by about Dec 18 and at least two Utah sessions in January.
-  It is realistic for **late March 2027**.
-- **Version C (no new experiments):** the benchmark and burden analysis in §4 of the draft is already a short paper.
-  It covers what "less critical" means for LPBF Al alloys, AlSi10Mg printed and tested in-house against the
-  datasheets, and where the Sc-free commercial and published alloys sit. It can be submitted by Feb 28 whatever
-  happens to the atomizer, but it is not the discovery the campaign is after. It would also pre-empt part of
-  versions A and B, so decide this before writing it up.
+- **Version A (a new alloy beyond the front).** The bar is higher than it was: in-house Al5X1, about 350-385 MPa after
+  aging if it prints on par, at B_NIR 3-4 wt %, instead of in-house AlSi10Mg at 228-280 MPa. The timing is unchanged
+  (about mid-April to May, after a good Al run by mid-December and Utah sessions in January), but the odds are lower.
+  By Feb 28 it is not realistic.
+- **Version B (a benchmarked screen on one machine).** Stronger than before. Four commercial powders printed and
+  tested here make it the one-to-one comparison Sterling asked for, and show how far the machine sits from the
+  datasheets. Realistic for **about Mar 31** if the POs go out by Dec 11, the drums are in U.S. stock and Utah adds a
+  January build day; **mid-April** if not.
+- **Version C (the commercial powders and the burden analysis, no atomizer data).** The baselines don't need the
+  atomizer. So a paper on the four commercial powders on one machine, the on-par check, the burden metric and the
+  front on reported values could go in **about Mar 15-31** whatever happens to the atomizer. The no-experiment version
+  of the last draft could still go by Feb 28. Neither is the discovery the campaign is after, and either would
+  pre-empt part of A and B, so decide this before writing it up.
 
 ## What the first good Al run date buys
 
@@ -103,9 +124,17 @@ post-break weeks and that R4-R10 are fixed in time. These are judgments, not a c
 
 | First Al run that makes LPBF-grade powder | Seeds made | Finalists' tensile | Version A submitted | Version B submitted |
 |---|---|---|---|---|
-| By Fri Dec 11 | S3, S4, O3 before the break; Zr seeds early January | Feb 9-12 (P5 on Feb 2-3) | Feb 28 possible but unlikely: everything else has to go right | Feb 28 |
+| By Fri Dec 11 | S3, S4, O3 before the break; Zr seeds early January | Feb 9-12 (P5 on Feb 2-3) | mid-March at best: it now has to beat in-house Al5X1 | early to mid-March |
 | Dec 14-18 | January | late February | about mid-April | about Mar 31 |
 | After the break (Jan 4 or later) | mid-January to early February | March | May-June | about Apr 30 |
+
+The baselines run on their own track, set by the PO date rather than the atomizer:
+
+| Baseline PO | Drums arrive | In-house Al5X1 aged, tensile | Effect |
+|---|---|---|---|
+| Dec 4, U.S. stock | Dec 14-18 | about Jan 22-29 | Ready for G4; no delay |
+| Dec 11, from Europe | Jan 8-15 | about Feb 8-12 | Ready for the freeze; no delay if Utah adds a build day |
+| After the break, or made to order | February | March | Version B moves to mid-April or later |
 
 "LPBF-grade" means at least about 100 g below 63 µm from one charge. None of the five Al runs so far came close
 (R3).
@@ -116,6 +145,7 @@ post-break weeks and that R4-R10 are fixed in time. These are judgments, not a c
 2. Optimizer round R4.
 3. DED (nothing is booked, and no Al DED has been discussed).
 4. Block A and the B dosing checks: under the proposed split they belong to #120 anyway.
+5. Al-HS1 (keep Al5X1), then the Al5X1 twin (keep D1 for the powder route).
 
-**Never cut:** the in-house AlSi10Mg comparator in the finalists' build, ≥ 3 valid tensile specimens per finalist, the
-outside composition check, and the frozen metric.
+**Never cut:** in-house Al5X1 and AlSi10Mg in the finalists' session, ≥ 3 valid tensile specimens per finalist and per
+baseline condition, the outside composition check (finalists and baselines), and the frozen metric.
