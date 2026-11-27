@@ -134,8 +134,9 @@ def placeholder(ax, pid: str, p: pd.DataFrame, panel: str = "") -> None:
 
 def save(fig, name: str) -> None:
     FIG.mkdir(parents=True, exist_ok=True)
-    fig.savefig(FIG / f"{name}.pdf", bbox_inches="tight")
-    fig.savefig(FIG / f"{name}.png", bbox_inches="tight", dpi=200)
+    # No timestamps in the files, so re-running with unchanged data leaves git clean.
+    fig.savefig(FIG / f"{name}.pdf", bbox_inches="tight", metadata={"CreationDate": None, "ModDate": None})
+    fig.savefig(FIG / f"{name}.png", bbox_inches="tight", dpi=200, metadata={"Software": None})
     plt.close(fig)
 
 
