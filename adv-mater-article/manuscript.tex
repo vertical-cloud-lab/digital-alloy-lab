@@ -72,12 +72,15 @@ Campaigns therefore screen candidates by calculation and test only a few, blend
 elemental powders and accept inhomogeneity, or move to processes such as
 directed energy deposition that tolerate blended feedstock.\cite{nelaturu2024}
 Ultrasonic atomization, which breaks up a melt on a vibrating plate, makes
-spherical powder from charges of a few hundred grams\cite{zrodowski2021,priyadarshi2024}
+spherical powder from charges of a few hundred grams\cite{rePowder2021,priyadarshi2024}
 and was recently used to make powder of a machine-learning-designed aluminum
-alloy for LPBF.\cite{taherimousavi2026} Its run-to-run repeatability at fixed
-settings, and how well the powder's composition follows the charge, have not
-been reported for aluminum,\tbd{re-check before submission; see results-needed.md, A2}
-yet both matter if the atomizer is to be one step in an automated loop.
+alloy for LPBF.\cite{taherimousavi2026} Parameter studies show how plate
+amplitude and melt conditions set the size of Al--Si powders,\cite{priyadarshi2024,yankin2025}
+but run-to-run repeatability at fixed settings has been reported only from three
+replicate runs of a refractory alloy,\cite{hinrichs2021} and how well the
+powder's composition follows a dosed charge has not been reported for
+aluminum.\tbd{re-check before submission; results-needed.md, A6} Both matter if
+the atomizer is to be a step that an optimizer calls on demand.
 
 The second is how a campaign spends its budget. The steps from a composition
 to a tensile result differ in cost by orders of magnitude: minutes of computing
@@ -225,69 +228,124 @@ in-house.}
 % ---------------------------------------------------------------------------
 \section{Experimental Section}
 \label{sec:methods}
-\note{Skeleton. Every subsection names the SOP or script it will cite. Settings in
-brackets are to be read from run records, not from plans.}
+\note{Skeleton, filled with what the run records and threads already fix. Values in
+red are still to be read from run records rather than plans. Each paragraph ends
+with the SOP or script it will cite in the SI.}
 
 \paragraph{Design space and CALPHAD screening.}
-\tbd{Elements and bounds; database (Thermo-Calc TCAL or the pycalphad open
-database); equilibrium and Scheil calculations; freezing range, crack
-susceptibility index after Kou,\cite{kou2015} L1$_2$ nucleant phase fraction.}
-\cite{andersson2002,otis2017}
+Candidate compositions were drawn from Al with additions of \tbd{the frozen
+palette: e.g.\ Mn, Cr, Zr, Mg, Si, Cu, Ti, Fe, Ni, Ce, Sc, Er, Zn} within
+\tbd{bounds, wt\%; Al $\ge$ 85 wt\%}, excluding \tbd{Si-bearing alloys, if the
+composition-measurement limit raised at the campaign kickoff holds}. For each
+composition, equilibrium and Scheil--Gulliver solidification were calculated with
+\tbd{Thermo-Calc and TCAL\,\textit{n}, or pycalphad with an open Al database}
+\cite{thermocalc2002,otis2017} to give the freezing range, the crack
+susceptibility index of Kou,\cite{kou2015} the fraction of strengthening
+phases, and the fraction of primary L1$_2$ Al$_3$(Zr,Sc) available as
+nucleant. Liquidus plus superheat was kept below the induction module's
+\SI{1300}{\celsius} limit. \src{campaign 1 screen; SI S12}
 
-\paragraph{Supply-risk score.}
-\tbd{Definition: mass-fraction-weighted sum of each element's net import
-reliance or USGS supply-risk score;\cite{nassar2020,nassar2021ofr,usgs2025}
-values for AlSi10Mg and Scalmalloy; sensitivity to the weighting.}
+\paragraph{Mineral burden.}
+Supply risk was scored as the mass-weighted net import reliance of the
+additions, $B=\sum_i w_i\,\mathrm{NIR}_i$, with $w_i$ in wt\% and NIR$_i$ from
+the USGS \textit{Mineral Commodity Summaries};\cite{usgs2025} the same definition
+as the campaign paper.\tbd{cite the campaign paper; decide the USGS edition}
+Raw-material cost of the additions and Sc content alone are reported as
+sensitivity checks.\cite{nassar2020,graedel2012}
 
 \paragraph{Charge preparation and dosing.}
-\tbd{Cups and plugs of 6063 (or bar plus master alloy) filled with dosed
-elemental or master-alloy powder; doser model and its mass accuracy; charge
-mass \SI{250}{\gram}; storage below \tbd{RH}\%.}
+Each \SI{250 \pm 2}{\gram} charge was a 6063 rod (\diameter\SI{20}{\milli\metre})
+bored to hold a core of dosed elemental or master-alloy powder and closed with a
+press-fit plug, or bar stock plus master-alloy pieces.\tbd{which, per campaign}
+Every part was weighed, and the core powders were dosed with \tbd{doser model}
+to \tbd{accuracy}. Charges were stored below \tbd{RH}\% until use.
+\src{dosing SOP; charge drawing, byu-vcl PR 232}
 
 \paragraph{Ultrasonic atomization.}
-\tbd{AMAZEMET rePOWDER with induction-melting module; crucible and nozzle;
-argon purge and O$_2$ level at pour; plate material (Mo; W-coated for Cu);
-booster and amplitude; pour pressure; hold time; the pre-run landing-point
-check (G0). Mass balance in six parts.}\cite{zrodowski2021,priyadarshi2024}
+Powders were made in an AMAZEMET rePOWDER ultrasonic atomizer with an induction
+melting module and a graphite crucible.\cite{rePowder2021} For Al alloys the melt
+was poured through a \SI{0.5}{\milli\metre} \tbd{confirm} nozzle onto a Mo plate
+driven through a 1.5:1 booster at \SI{90}{\percent} amplitude; Cu alloys used a
+W-coated carbon-fibre plate and a 1:1.5 booster. The chamber was evacuated and
+back-filled with argon \tbd{n} times, and a run counted only if O$_2$ was
+$\le$\SI{30}{ppm} when the sealing rod was raised, the ultrasound was on before
+the pour, and the melt's landing point on the plate had been checked cold
+before heating. Melt temperature \tbd{schedule}, hold before the pour
+\tbd{min} and pour pressure \tbd{0.19 bar, HMI reading} were fixed for each
+block of runs.\cite{priyadarshi2024,lierke1967} Each run's mass balance was
+closed in six parts (in-range powder, out-of-range powder, splats, puddle,
+skull, unaccounted). \src{atomizer SOP, issues \#251/\#253; run-record template}
 
-\paragraph{Powder handling and characterization.}
-\tbd{Sieving at 250/63/45~\si{\micro\metre} on an Al-only sieve set; two splits
-per run; SEM sizing ($\ge$1000 particles) and shape ($\ge$400 particles, at
-500$\times$) per ISO 13322-1 and ISO 9276; EDS at \tbd{kV}; oxygen by inert-gas
-fusion and composition by ICP-OES at an outside laboratory on sealed samples;
-flowability.}
+\paragraph{Powder characterization.}
+Each run's powder was split in two by \tbd{riffler or cone-and-quarter} and
+sieved at 250, 63 and \SI{45}{\micro\metre} on sieves used only for Al alloys.
+Particle size ($\ge$1,000 particles) and shape ($\ge$400 particles, at
+500$\times$) were measured on SEM images following ISO~13322-1 and ISO~9276.
+Composition was measured by EDS at \tbd{kV} on particles from the top, middle
+and bottom of the collection jar (at \SI{5}{\kilo\volt}, W M$\alpha$ overlaps
+Si K$\alpha$ and Fe K is not excited, so W and Fe pick-up were checked in
+backscattered images), and by ICP-OES at \tbd{outside laboratory}; oxygen and
+nitrogen by inert-gas fusion on sealed \SI{5}{\gram} samples. Flowability was
+measured on the doser.\cite{spierings2016flow,slotwinski2014}
+\src{powder SEM preparation SOP, byu-vcl PR 284; \texttt{sem\_psd.py}, PR \#226}
 
 \paragraph{Laser powder bed fusion.}
-\tbd{Desktop system: laser, spot, plate size, heating, atmosphere and O$_2$
-level, single tracks and cubes; parameter ranges. Reference builds on the
-University of Utah Aconity MIDI. Density by Archimedes and image
-analysis.}\cite{spierings2011}
+\tbd{Desktop system as built: e.g.\ a \SI{400}{\watt} single-mode
+\SI{1070}{\nano\metre} fibre laser with a galvanometer scanner and f-theta lens
+(spot \tbd{\SIrange{75}{96}{\micro\metre}}), a \diameter\tbd{30--50}~mm build
+plate heated to \SI{200}{\celsius}, argon atmosphere at \tbd{O$_2$ ppm}, layer
+camera and coaxial photodiode.} Single tracks and
+\SIrange{5}{10}{\milli\metre} cubes were printed over \tbd{power and speed
+ranges}, starting for AlSi10Mg-type powders from \SI{255}{\watt},
+\SI{1.25}{\metre\per\second}, \SI{0.10}{\milli\metre} hatch and
+\SI{30}{\micro\metre} layers.\cite{king2014,tang2017} Reference builds of the
+same powders were made on the Aconity MIDI at the University of Utah.
+Density was measured by the Archimedes method and by image analysis of polished
+sections.\cite{spierings2011} \src{desktop LPBF, issue \#260; SI S10}
 
 \paragraph{Microstructure and mechanical testing.}
-\tbd{Metallography, SEM/EDS/EBSD; Vickers hardness; sub-size tensile specimens
-(ASTM E8/E8M), orientation, strain rate; heat treatment.}
+Sections were ground and polished \tbd{SOP} and examined by optical microscopy
+and SEM/EDS\tbd{/EBSD}. Vickers hardness \tbd{load, dwell, n}. Tensile
+specimens \tbd{geometry: e.g.\ the flat \SI{6}{\milli\metre} $\times$ \SI{6}{\milli\metre} reduced section
+with \SI{32}{\milli\metre} parallel length used for the AlSi10Mg baseline;
+orientation; surface} were tested at room temperature at \tbd{strain rate,
+within ASTM E8/E8M}, $n\ge3$ per alloy and condition, beside AlSi10Mg printed
+and tested the same way.
 
 \paragraph{Corrosion.}
-\tbd{If kept in scope: potentiodynamic polarization on the CubXL with the
-EZstat-Pro potentiostat in \SI{3.5}{wt\percent} NaCl.}
+\tbd{If kept (decision D6): open-circuit potential, linear polarization and a
+potentiodynamic scan in \SI{3.5}{wt\percent} NaCl on the CubXL with an EZstat-Pro
+potentiostat.}
 
 \paragraph{Function-network model and acquisition.}
-\tbd{Nodes, inputs and outputs; one Gaussian process per node (BoTorch);
-costs from \cref{sec:loop}; partial-evaluation knowledge-gradient acquisition
-divided by cost;\cite{buathong2024,balandat2020} batching and asynchronous
-results; how failed and abandoned runs enter the models; seeding;
-pre-registered baselines and stopping rule.}
+Each step (CALPHAD, atomization, powder characterization, printing,
+microstructure and density, mechanical tests) was a node with its own Gaussian
+process, linked as in the workflow so that a node's outputs are inputs to its
+children.\cite{astudillo2021} The next experiment (a candidate and a node whose
+parents had already been evaluated) maximized the partial-evaluation knowledge
+gradient divided by the node's cost,\cite{buathong2024,buathong2025} with costs
+from Table~1. Pending experiments entered as fantasies, a failed step was
+modelled at the step where it failed,\tbd{per issue \#274} and the campaign
+started from \tbd{six} seed compositions.\tbd{per issue \#275} Models were
+implemented in BoTorch.\cite{balandat2020} Baselines (screen-then-test,
+full-chain network BO, standard BO and random), the target and the stopping rule
+were fixed and committed before the campaign started.\tbd{date, commit}
+\src{optimizer code; SI S12--S13}
 
 \paragraph{Digital twin and benchmarks.}
-\tbd{Simulator of each step's output, time, cost, noise and failure rate,
-fitted to the campaigns; baselines (random, screen-then-test, full-chain batch
-BO); seeds; bootstrap confidence intervals.}\cite{mukherjee2019,gunasegaram2021,lo2024}
+A simulator of the lab produced each step's outputs, duration, cost, noise and
+failures (atomization: droplet size from Lang's relation,\cite{lang1962}
+usable fraction and failure rate; printing: melt-pool, keyhole and
+lack-of-fusion criteria\cite{king2014,tang2017}), with parameters fitted to the
+run records of both campaigns.\tbd{fit, validation metric}\cite{mukherjee2019,gunasegaram2021}
+Each policy was run for $\ge$\tbd{20} seeds per condition; acceleration factors
+are ratios of spend (or days) to reach the target, with matched-seed bootstrap
+confidence intervals. \src{twin, issue \#276; SI S14}
 
 \paragraph{Independent verification.}
-\tbd{Outside laboratory for composition (ICP-OES, O/N/H) and tensile tests on
-the finalists; blind sample labels.}
+\tbd{Blind-labelled samples of the finalists went to \tbd{laboratory} for
+ICP-OES and O/N/H, and \tbd{if funded} tensile tests.}
 
-% ---------------------------------------------------------------------------
 \section*{Supporting Information}
 Supporting Information is available from the Wiley Online Library or from the author.
 

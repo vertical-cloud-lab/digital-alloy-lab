@@ -1,5 +1,8 @@
 # key	id	why it is cited (keep short)
 # id is doi:<DOI>, arxiv:<id>, or manual (entry lives in references-manual.bib).
+# An optional 4th column 'withhold' keeps the author list out of this public repo
+# (CLAUDE.md: no names of staff at partner companies such as AMAZEMET or Thermo-Calc).
+# build_bib.py --full-authors --out <private path> restores them for submission.
 # build_bib.py turns this list into references.bib from Crossref / arXiv metadata;
 # check_refs.py re-checks every entry against Crossref and writes reference-check.md.
 #
@@ -22,10 +25,21 @@ graedel2012	doi:10.1021/es203534z	criticality methodology
 nassar2021ofr	doi:10.3133/ofr20211045	method behind the US critical minerals list
 bauer2023	doi:10.2172/1998242	DOE critical materials assessment 2023
 # --- powder production and feedstock
-zrodowski2021	doi:10.3390/ma14102541	ultrasonic atomization method (rePOWDER-type)
-priyadarshi2024	doi:10.1016/j.addma.2024.104033	ultrasonic atomization mechanism; amplitude effect on size
+rePowder2021	doi:10.3390/ma14102541	ultrasonic atomization method (rePOWDER-type)	withhold
+priyadarshi2024	doi:10.1016/j.addma.2024.104033	ultrasonic atomization mechanism; amplitude effect on size	withhold
 dawes2015	doi:10.1595/205651315X688686	AM powder supply chain; gas atomization
 spierings2011	doi:10.1108/13552541111156504	density measurement methods for AM parts
+hinrichs2021	doi:10.3390/met11111723	only replicate study of ultrasonic atomization found (Oct 2026)
+yankin2025	doi:10.1038/s41598-025-06086-7	ultrasonic atomization of AlSi12; D50 spread
+balasz2024	doi:10.3390/ma17225642	ultrasonic atomization; aborted runs
+uhlmann2024	doi:10.3390/ma17143396	ultrasonically atomized NAB powder
+amazemet2026	doi:10.3390/ma19132803	C/C plate study for ultrasonic atomization	withhold
+slotwinski2014	doi:10.6028/jres.119.018	NIST powder characterization; gas-atomized spread
+lierke1967	doi:10.1016/0041-624X(67)90066-2	capillary-wave mechanism of ultrasonic atomization
+lang1962	doi:10.1121/1.1909020	Lang's droplet-size formula
+spierings2016flow	doi:10.1007/s40964-015-0001-4	powder flowability for powder-bed AM
+king2014	doi:10.1016/j.jmatprotec.2014.06.005	keyhole criterion
+tang2017	doi:10.1016/j.addma.2016.12.001	lack-of-fusion porosity criterion
 # --- self-driving labs and closed-loop discovery
 tom2024	doi:10.1021/acs.chemrev.4c00055	SDL review; autonomy levels; acceleration factor
 abolhasani2023	doi:10.1038/s44160-022-00231-0	rise of SDLs
@@ -40,6 +54,7 @@ liang2025	doi:10.1126/sciadv.adu7426	AMASE experiment-theory loop
 nelaturu2024	doi:10.1016/j.msea.2023.145945	DED + ML alloy discovery with purchased feedstock
 paramore2025	doi:10.1016/j.actamat.2025.120820	BIRDSHOT two-shot refractory alloy optimization
 talbot2026	doi:10.1038/s44334-026-00098-5	active learning for NiCoCr alloys in AM
+hur2026	arxiv:2607.04508	proposed cost-aware measurement agent for metal AM (preprint)
 tobias2025	doi:10.1098/rsos.250646	SDL autonomy review
 # --- Bayesian optimization methods
 astudillo2021	manual	BO of function networks (NeurIPS 2021)
@@ -55,7 +70,7 @@ liang2021	doi:10.1038/s41524-021-00656-9	BO benchmarking across experimental mat
 sabanzagil2025	doi:10.1038/s43588-025-00822-9	multi-fidelity BO best practices
 mulukutla2024	doi:10.2139/ssrn.4968461	supply-risk-aware alloy design
 # --- CALPHAD, twins
-andersson2002	doi:10.1016/S0364-5916(02)00037-8	Thermo-Calc
+thermocalc2002	doi:10.1016/S0364-5916(02)00037-8	Thermo-Calc	withhold
 otis2017	doi:10.5334/jors.140	pycalphad
 mukherjee2019	doi:10.1016/j.apmt.2018.11.003	digital twin for AM qualification
 gunasegaram2021	doi:10.1016/j.addma.2021.102089	multiscale models and surrogates for AM digital twins

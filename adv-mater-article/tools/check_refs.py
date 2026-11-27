@@ -94,6 +94,9 @@ def check_crossref(key: str, f: dict, refresh: bool) -> tuple[str, list[str], di
     if s < 0.9:
         notes.append(f"title similarity {s:.2f} vs Crossref {title!r}")
     people = [a for a in msg.get("author", []) if "family" in a]
+    if "withheld" in f.get("author", ""):
+        notes.append("authors withheld in the public repo (partner staff); restore with --full-authors at submission")
+        people = []
     if people:
         first_bib = f.get("author", "").split(" and ")[0].split(",")[0]
         if norm(first_bib) != norm(people[0]["family"]):
@@ -113,7 +116,8 @@ def check_crossref(key: str, f: dict, refresh: bool) -> tuple[str, list[str], di
     for rel, items in (msg.get("relation") or {}).items():
         if "retract" in rel or "correct" in rel:
             notes.append(f"Crossref relation {rel}: {[i.get('id') for i in items]}")
-    status = "OK" if not notes else ("FAIL" if any(n.startswith(("title", "first author")) for n in notes) else "WARN")
+    status = "OK" if not notes or all(n.startswith("authors withheld") for n in notes) else (
+        "FAIL" if any(n.startswith(("title", "first author")) for n in notes) else "WARN")
     return status, notes, info
 
 
