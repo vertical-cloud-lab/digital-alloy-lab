@@ -9,8 +9,8 @@ folder designs one the lab can make in days to weeks.
 - **The upper part** stays on the cone's KF-50 outlet, the only seal at the chamber. Below that seal the bore
   only widens, and nothing inside can catch hot metal. It can be welded from a KF-50 stub, a catalogue 3×2 in
   reducer and a 3 in ferrule (B, fully documented here), or **turned in one piece from 4 in bar (B', better)**.
-- **B' moves the tri-clamp joint 94 mm up, away from the pile.** With 816 g of shot its gasket peaks at 67 °C
-  instead of 263 °C, which is just over PTFE's 260 °C. Shot fused under the KF joint also heats that O-ring
+- **B' moves the tri-clamp joint 94 mm up, away from the pile.** With 816 g of shot its gasket peaks at 67 °C,
+  where B's reaches 263 °C, just over PTFE's 260 °C. Shot fused under the KF joint also heats that O-ring
   less: 158 °C instead of 195 °C for 25 g. B' is modelled, checked for interferences against the modelled clamps
   (none), drawn as a concept (sheet 5), and has lathe programs for all but its tri-clamp face groove (58 min, two
   setups). Build B' if the lathe takes 4 in bar. Its pot is B's with a longer tube; the tests and run procedure
