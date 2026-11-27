@@ -14,7 +14,11 @@ samples) and in the box, and the times to 1000 and 100 ppm against the well-mixe
 Run (light, ~1-3 min a case, < 1.5 GB):
     /tmp/tools/capmem 2 /tmp/venv/bin/python desktop-lpbf/fast-track/analysis/cfd/post.py cross /tmp/ft-cfd/cross-lam --name laminar
     /tmp/tools/capmem 1 /tmp/venv/bin/python desktop-lpbf/fast-track/analysis/cfd/post.py purge /tmp/ft-cfd/scal-A --name A ...
-    /tmp/venv/bin/python desktop-lpbf/fast-track/analysis/cfd/post.py figures
+    /tmp/venv/bin/python desktop-lpbf/fast-track/analysis/cfd/post.py figures --name cross --cases "label=case" ...
+    .../post.py purgefigs --name purge_buoyant.png --tmax 5 --cases "cfd.json name=label" ...   # O2 against time
+    .../post.py snaps --name purge_sections.png --times 60 120 180 --cases "label=case=O2" ...  # (T for scalar cases)
+    .../post.py tables [--cases names...]                                                       # markdown tables
+Levels a purge run does not reach are extrapolated from its last 20 % (cfd.json "tail"; marked in results.md).
 Results go to desktop-lpbf/fast-track/analysis/out/cfd/cfd.json (merged case by case) and the PNGs there.
 """
 from __future__ import annotations

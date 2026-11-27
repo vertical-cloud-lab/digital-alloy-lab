@@ -643,7 +643,8 @@
     }
    },
    "tail_decay_per_min": 1.2272841524614349,
-   "ideal_decay_per_min": 0.8625150940141453
+   "ideal_decay_per_min": 0.8625150940141453,
+   "note": "first low-inlet run (Courant 15); its vent let air flow back in from ~2.5 min (pressureInletOutletVelocity with a uniform static pressure), so its exhaust values after ~2.5 min are an artifact and are not used"
   },
   "scalar-A": {
    "case": "/tmp/ft-cfd/sc-A",
@@ -920,7 +921,8 @@
     "vol_frac_below_1mm_s": 0.09837025337281129,
     "vol_frac_below_3mm_s": 0.2311034393150849,
     "vol_frac_below_10mm_s": 0.6599432828579704
-   }
+   },
+   "note": "config A on the 237k-cell cross-flow mesh (mesh check), 20 min of purge"
   },
   "buoyant-HH": {
    "case": "/tmp/ft-cfd/buoy-HH",
