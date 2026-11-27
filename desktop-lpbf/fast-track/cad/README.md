@@ -435,9 +435,14 @@ model's checks cover the half-shell version only.
   `"four_post_braced_front_g2"` answers that: its three gussets (8 mm) sit under the head's footprint, at y = -100.6
   (between the front bracket and the mirror block), -15 and 15 (-55 is taken by the input turret), and run down to the
   plate's bottom edge. It is checked for clashes only (S1, FT-1, FT-1V, the Thorlabs variant: none) and is not the
-  default; the renders, STEP files and `out/checks.md` are on `"four_post_braced_front"`. `P["gantry"]` selects
-  `"four_post_braced_front"` (default), `"four_post_braced_front_g2"`, `"four_post"` (the FEA addendum's model) or
-  `"two_post"` (round 1).
+  default; the renders, STEP files and `out/checks.md` are on `"four_post_braced_front"`. The FEA found g2 no better
+  (49.8 / 66.8 / 92.7 Hz: the head's centre of mass sits ~95 mm out from a plate held near its top), so
+  `"four_post_braced_front_g3"` adds a 10 mm support plate against the head's far face (x 149.6), spanning both
+  cross-beams with its own angle brackets, and moves the ±15 V supply behind the back post. g3's new members were
+  clash-checked against everything in S1, FT-1 and FT-1V (none) and the beam envelope (no hits); it is not the default
+  either, and the real head's far face has no published mounting points, so the plate is a pad or strap (estimate).
+  `P["gantry"]` selects `"four_post_braced_front"` (default), `"four_post_braced_front_g2"`, `"..._g3"`, `"four_post"`
+  (the FEA addendum's model) or `"two_post"` (round 1).
 - **Not drawn:** the Lesker BX1212S (no STEP without a login); the gas plumbing outside the enclosure; O-ring grooves;
   the face seal under the gland; the half-shells' toggle clamps and their seam; wiring outside the enclosure.
 - **Not run here:** FEA, CFD and thermal FE are in [`../analysis/`](../analysis/) (round 2 workers). The heat numbers in
