@@ -217,10 +217,11 @@ LASERON give the time base.
 | Welded G9SE output | caught every time: the laser's own channel monitoring refuses to restart |
 
 What that means:
-- **Fit one lid switch in the chain.** Buy an **Omron D4NS-2CF** (Digi-Key Z4035-ND: 3PST, 2 NC + 1 NO, direct
-  opening, M20 conduit; 552 in stock at $79.27 on 2026-11-27), with a D4DS-K operation key on the lid. Its two NC
-  contacts go to the two channels and its NO to the Pi's LID_CLOSED input. If a second switch is wanted on the lid,
-  wire it to the Pi only.
+- **Fit one lid switch in the chain.** Buy an **Omron D4NS-2CF**: a tongue-operated safety-door switch, slow-action
+  2 NC + 1 NO, G1/2 conduit entry, IP67 ([Omron D4NS catalogue](https://www.fa.omron.co.jp/data_pdf/cat/d4ns_d4ns-sk_ds_e_9_9_csm1235.pdf);
+  Digi-Key Z4035-ND, 552 in stock at $79.27 in a search snapshot of 2026-11-27). Fit it with a D4DS-K operation key on
+  the lid. Its two NC contacts go to the two channels and its NO to the Pi's LID_CLOSED input. If a second switch is
+  wanted on the lid, wire it to the Pi only.
 - **A short proof test before each day's work** (`commission.chain_proof_test`): with the laser off, open the E-stop,
   the key, the lid and the beam tube one at a time and check that the chain opens and re-arms. In a series chain this
   is the only way a stuck contact in another device shows up.
