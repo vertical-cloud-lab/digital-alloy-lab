@@ -478,7 +478,7 @@ def table_compositions(alloys, burdens) -> None:
     (GEN / "tab-compositions.tex").write_text("\n".join(lines) + "\n")
 
 
-def numbers(tensile, runs, alloys, burdens) -> None:
+def numbers(tensile, runs, alloys, burdens, lit=None, lit_b=None) -> None:
     ih = inhouse_alsi(tensile)
     ys = mean_ci(ih["ys_mpa"]) if not ih.empty else (np.nan,) * 3 + (0,)
     uts = mean_ci(ih["uts_mpa"]) if not ih.empty else (np.nan,) * 3 + (0,)
@@ -507,6 +507,16 @@ def numbers(tensile, runs, alloys, burdens) -> None:
         lines.append(num(macro + "nirlo", g(aid, "B_nir_low"), 1, "B"))
         lines.append(num(macro + "nirhi", g(aid, "B_nir_high"), 1, "B"))
         lines.append(num(macro + "cost", g(aid, "B_cost"), 2, "B"))
+    # Sc-free comparators already in the region of interest: stronger than in-house AlSi10Mg by more than
+    # its 95 % CI half-width, and below Scalmalloy's lowest B_NIR (midpoint, and robustly at the high end).
+    if lit is not None and not lit.empty and lit_b is not None and not lit_b.empty and ys[3]:
+        sc_lo = g("Scalmalloy", "B_nir_low")
+        best = lit.groupby("alloy_id")["ys_mpa"].max()
+        thr = ys[0] + ys[2]
+        mid = [a for a in best.index if best[a] > thr and lit_b.loc[a, "B_nir"] < sc_lo]
+        rob = [a for a in best.index if best[a] > thr and lit_b.loc[a, "B_nir_high"] < sc_lo]
+        lines += [num("NLit", len(best)), num("NLitRegionMid", len(mid)), num("NLitRegionRobust", len(rob)),
+                  num("YSbar", thr)]
     (GEN / "numbers.tex").write_text("\n".join(lines) + "\n")
 
 
@@ -546,7 +556,7 @@ def main() -> None:
         table_compositions(alloys, burdens)
     table_literature(lit, lit_b)
     table_elements()
-    numbers(tensile, runs, alloys, burdens)
+    numbers(tensile, runs, alloys, burdens, lit, lit_b)
     status_md(p, status)
     for k, v in status.items():
         print(f"{k}: {v}")

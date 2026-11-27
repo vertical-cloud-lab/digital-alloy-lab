@@ -1,0 +1,35 @@
+# Cover letter (stub)
+
+*Not ready to draft. A cover letter has to state the result, and the result doesn't exist yet. Write it at G4
+(Fri Jan 29), when version A or B is chosen. The brackets below show what it will need. The journal's own
+requirements are in [`journals.md`](journals.md).*
+
+---
+
+Dear Editor,
+
+We submit "[title]" for consideration as a [article type] in [journal].
+
+**What we found.** [One sentence, version A: Alloy X, a scandium-free Al-[...] alloy printed by laser powder bed fusion
+from powder we atomized in-house, reaches [YS] MPa yield strength at [EL] % elongation, [Δ] MPa above AlSi10Mg printed
+and tested the same way, with a critical-mineral burden [X] % below Scalmalloy's.]
+
+**Why it matters for [journal]'s readers.** [Two sentences: AlSi10Mg is the default printed Al alloy and is weak;
+Scalmalloy is strong because of scandium, a critical mineral with one dominant supplier and export controls since
+April 2025; a scandium-free alloy that beats AlSi10Mg on the same machine, at a stated burden, is what part designers
+can use.]
+
+**What is new against the closest work.** [Name the Sc-free alloys this beats on strength against burden: Al-Mg-Zr-Mn,
+Al-Mn-Cr-Zr and Al-Fe-Zr (risks.md, R1). Without this paragraph the paper reads as a replication.]
+
+**How it was done.** [One sentence: CALPHAD screen with a burden metric fixed in advance; [N] compositions atomized
+from dosed charges in [W] weeks; LPBF; tensile, corrosion; composition confirmed by an outside laboratory.]
+
+**Data and code.** All data and the scripts behind every figure are openly available [DOI, minted at submission].
+
+This manuscript has not been published and is not under consideration elsewhere. [State the relationship to the
+*Advanced Materials* article (#120) if it is submitted or posted first.] [Competing interests.] [Suggested reviewers,
+if the journal asks: names and reasons only, with no conflicts of interest.]
+
+Sincerely,
+[Corresponding author]
