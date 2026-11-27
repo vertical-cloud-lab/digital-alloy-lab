@@ -75,7 +75,10 @@ collector's lower lip.*
 *The whole box in the x = 0 plane, log speed scale. The jet's surplus leaves over the collector and circulates through the
 box at 1–100 mm/s.*
 
-__VARIANTS__
+No variant of the slot or the collector was run. The as-drawn pair clears the plume from the bed (96–99 % of
+tracers) and stays at or under the lowest pick-up threshold over the build area, so the cheap changes set up for a
+poor result (a 0–12 mm collector opening, a 10 L/min purge bleed during the build) were left unrun to give the CPU to
+the purge.
 
 ## 2. The purge from air to argon
 
@@ -189,7 +192,20 @@ $PY $D/make_case.py --geom /tmp/ft-cfd/geom/ft1 --kind cross --model sst --iters
 /tmp/tools/capmem 4 bash $D/run_case.sh /tmp/ft-cfd/cross-sst copymesh /tmp/ft-cfd/cross-lam solve
 /tmp/tools/capmem 3 $PY $D/post.py cross /tmp/ft-cfd/cross-lam --name laminar     # and --name sst
 $PY $D/post.py figures --name cross --cases "laminar, steady=/tmp/ft-cfd/cross-lam" "k-omega SST, steady=/tmp/ft-cfd/cross-sst"
-__RERUN_PURGE__
+# purge: steady flows on the coarse purge mesh, then O2 as a passive scalar on each (configs A-D)
+$PY $D/make_case.py --geom /tmp/ft-cfd/geom/ft1 --res coarse --profile purge --kind purge --iters 800 \
+    --nozzle-lpm 5 --purge-lpm 15 --inlet purge_low --outlet vent_high --out /tmp/ft-cfd/pc-D      # A-D: see the table in §2
+/tmp/tools/capmem 4 bash $D/run_case.sh /tmp/ft-cfd/pmesh mesh                       # the purge mesh (pmesh = pc-A's case)
+/tmp/tools/capmem 4 bash $D/run_case.sh /tmp/ft-cfd/pc-D copymesh /tmp/ft-cfd/pmesh solve
+$PY $D/make_case.py --geom /tmp/ft-cfd/geom/ft1 --res coarse --profile purge --kind scalar --t-end 3600 --t-write 300 \
+    --dt 2 --nozzle-lpm 5 --purge-lpm 15 --inlet purge_low --outlet vent_high --out /tmp/ft-cfd/sc-D
+/tmp/tools/capmem 4 bash $D/run_case.sh /tmp/ft-cfd/sc-D scalar /tmp/ft-cfd/pc-D
+$PY $D/post.py purge /tmp/ft-cfd/sc-D --name scalar-D
+# purge with buoyancy (argon displacing air), nozzle off, 20 L/min through one diffuser
+$PY $D/make_case.py --geom /tmp/ft-cfd/geom/ft1 --res coarse --profile purge --kind buoyant --nozzle-lpm 0 --purge-lpm 20 \
+    --inlet purge_low --outlet vent_high --t-end 300 --t-write 60 --max-co 15 --out /tmp/ft-cfd/buoy-D
+/tmp/tools/capmem 4 bash $D/run_case.sh /tmp/ft-cfd/buoy-D copymesh /tmp/ft-cfd/pmesh buoyant   # ~1 h on 2 shared cores
+$PY $D/post.py purge /tmp/ft-cfd/buoy-D --name buoyant-low-in-high-out
 $PY $D/post.py tables
 ```
 
