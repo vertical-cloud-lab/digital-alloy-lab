@@ -250,12 +250,27 @@ class Alloy:
     optics: str = "drude-dc"
 
     def N(self, T):
+        if self.optics.startswith("anchored-"):
+            return anchored_index(self.m, T, float(self.optics.split("-", 1)[1]))
         old = fp.OPTICS
         fp.OPTICS = self.optics
         try:
             return fp.optical_index(self.m, T)
         finally:
             fp.OPTICS = old
+
+
+def anchored_index(m, T, A_target):
+    """Sensitivity only: the liquid's Drude index with its damping scaled so that a flat surface absorbs A_target at
+    normal incidence (e.g. 0.24, what NIST measured on bare Al 5182 before its keyhole formed). A stand-in for
+    whatever (oxide, ripples) makes a real melt absorb more than the clean liquid's Fresnel value."""
+    w = 2 * math.pi * fp.C_LIGHT / fp.LAMBDA
+    n_e = float(m.electron_density(T))
+    wp2 = n_e * fp.E_CH ** 2 / (fp.EPS0 * fp.M_E)
+    g0 = fp.EPS0 * wp2 * float(m.rho_el_liq(T))
+    A = lambda s_: float(fp.fresnel_absorptance(fp.drude_index_params(wp2, s_ * g0), 1.0)) - A_target  # noqa: E731
+    s_ = optimize.brentq(A, 0.05, 50.0)
+    return fp.drude_index_params(wp2, s_ * g0)
 
 
 # --- one process point -------------------------------------------------------------------------------------
@@ -574,6 +589,7 @@ def gan_alloy(row, mat) -> Alloy:
 
 NPROC = 3
 _CACHE: dict = {}
+_SPEC_OPTICS = "drude-dc"  # optics for the map and boundary jobs (see run_optics_sensitivity)
 
 
 def _alloy_cached(spec):
@@ -690,7 +706,7 @@ def run_maps_v2(out: pathlib.Path, log=print, powder=True, tag="", A_cond=None, 
         g = pd.read_csv(AM_DIR / f"{a['slug']}-am-module-grid-points.csv")
         g = g[g["am_class"] != "hidden"].reset_index(drop=True)
         for _, r in g.iterrows():
-            jobs.append({"spec": ("alloy", key, True, 1.0, "drude-dc"), "P": float(r["power_W"]),
+            jobs.append({"spec": ("alloy", key, True, 1.0, _SPEC_OPTICS), "P": float(r["power_W"]),
                          "v": float(r["speed_mm_s"]) / 1000.0, "r0": a["r0"], "T0": a["T0"], "hatch": a["hatch"],
                          "powder": _powder(powder), "key": key, "am_class": r["am_class"], "A_cond": A_cond,
                          "branch": branch})
@@ -759,7 +775,7 @@ def _boundary_job(job):
     return 0.5 * (lo + hi)
 
 
-def run_boundaries_v2(out: pathlib.Path, log=print, powder=True) -> dict:
+def run_boundaries_v2(out: pathlib.Path, log=print, powder=True, tag="") -> dict:
     from concurrent.futures import ProcessPoolExecutor
     jobs = []
     for key, a in fp.ALLOYS.items():
@@ -767,7 +783,7 @@ def run_boundaries_v2(out: pathlib.Path, log=print, powder=True) -> dict:
         speeds = np.unique(np.round(np.linspace(b["speed_mm_s"].min(), b["speed_mm_s"].max(), 7), -1)) / 1000.0
         for v in speeds:
             for crit in ("mode", "deep", "dimple"):
-                jobs.append({"spec": ("alloy", key, True, 1.0, "drude-dc"), "key": key, "v": float(v), "crit": crit,
+                jobs.append({"spec": ("alloy", key, True, 1.0, _SPEC_OPTICS), "key": key, "v": float(v), "crit": crit,
                              "powder": _powder(powder),
                              "P_am": float(np.interp(v * 1000, b["speed_mm_s"], b["P_keyhole_W"]))})
     with ProcessPoolExecutor(max_workers=NPROC) as ex:
@@ -777,7 +793,7 @@ def run_boundaries_v2(out: pathlib.Path, log=print, powder=True) -> dict:
         row = rows.setdefault((j["key"], j["v"]), {"alloy": j["key"], "v_m_s": j["v"], "P_keyhole_am_W": j["P_am"]})
         row[{"mode": "P_surface_boils_W", "deep": "P_keyhole_branch_appears_W", "dimple": "P_dimple_runs_away_W"}[j["crit"]]] = P
     d = pd.DataFrame(list(rows.values()))
-    d.to_csv(out / "v2-keyhole-boundary-vs-am.csv", index=False, float_format="%.5g")
+    d.to_csv(out / f"v2-keyhole-boundary-vs-am{tag}.csv", index=False, float_format="%.5g")
     s = {}
     for key in fp.ALLOYS:
         g = d[d["alloy"] == key]
@@ -904,6 +920,20 @@ def run_bifurcation(out: pathlib.Path, log=print) -> dict:
     return {"rows": len(t)}
 
 
+def run_optics_sensitivity(out: pathlib.Path, log=print, A_target=0.24) -> dict:
+    """The maps and keyhole lines again with the liquid's flat absorptance anchored at A_target instead of the clean
+    Drude-Fresnel 0.18-0.20 (anchored_index)."""
+    optics = f"anchored-{A_target}"
+    global _SPEC_OPTICS
+    _SPEC_OPTICS = optics
+    try:
+        s = {"maps": run_maps_v2(out, log, tag=f"-optics-{A_target}"),
+             "boundaries": run_boundaries_v2(out, log, tag=f"-optics-{A_target}")}
+    finally:
+        _SPEC_OPTICS = "drude-dc"
+    return s
+
+
 def run_branch_sensitivity(out: pathlib.Path, log=print) -> dict:
     """The maps with every point on its deepest stable state (where there are several), for the pool as well as the
     class."""
@@ -966,9 +996,11 @@ def main() -> None:
     global NPROC
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("cmd", choices=["all", "point", "powder", "mg", "explore", "figures", "meltflow", "conduction",
-                                    "states"])
+                                    "states", "optics", "mapflow", "plan"])
     ap.add_argument("--only", default=None)
     ap.add_argument("--drive", action="store_true", help="meltflow: the recoil-driven moving-wall experiment")
+    ap.add_argument("--src-tag", default="", help="mapflow: which map-classes CSV to take the absorptance from, "
+                                                  "e.g. -optics-0.24")
     ap.add_argument("--out", type=pathlib.Path, default=V2_DIR)
     ap.add_argument("--cache", type=pathlib.Path, default=pathlib.Path("/tmp/keyhole-open-models-cache"))
     ap.add_argument("--alloy", choices=list(fp.ALLOYS) + ["al5182"], default="blend")
@@ -985,7 +1017,7 @@ def main() -> None:
         print(json.dumps({"class": classify(res, p.get("layer", 30e-6)), **dataclasses.asdict(res)}, indent=1,
                          default=float))
         return
-    logf = open(a.out / f"v2-{a.cmd}{'-drive' if getattr(a, 'drive', False) else ''}.log", "w")
+    logf = open(a.out / f"v2-{a.cmd}{'-drive' if getattr(a, 'drive', False) else ''}{a.src_tag}.log", "w")
 
     def log(*x):
         line = " ".join(str(y) for y in x)
@@ -1003,6 +1035,17 @@ def main() -> None:
         return
     if a.cmd == "mg":
         run_mg_table(a.out, log)
+        return
+    if a.cmd == "plan":
+        run_single_track_plan(a.out, log)
+        return
+    if a.cmd == "mapflow":
+        run_maps_meltflow(a.out, log, src_tag=a.src_tag)
+        log("done in", round(time.time() - t0), "s")
+        return
+    if a.cmd == "optics":
+        s_ = run_optics_sensitivity(a.out, log)
+        (a.out / "v2-optics-sensitivity-summary.json").write_text(json.dumps(s_, indent=1, default=str) + "\n")
         return
     if a.cmd == "states":
         run_bifurcation(a.out, log)
@@ -1049,6 +1092,107 @@ MELTFLOW_CASES = [
     ("al5182-473W-0.7-own", "al5182", 473.0, 0.7, None),
     ("al5182-473W-0.7-A_measured", "al5182", 473.0, 0.7, 0.43),
 ]
+
+
+def depth_at_offset(g, T, T_iso, y_off):
+    """Deepest point of the T_iso isotherm in the plane y = y_off (linear in y between cell centres and in z)."""
+    yc, zc = g.yc, g.zc
+    j = int(np.searchsorted(yc, y_off)) - 1
+    if j < 0 or j + 1 >= yc.size:
+        return 0.0
+    f = (y_off - yc[j]) / (yc[j + 1] - yc[j])
+    Ty = (1 - f) * T[:, j, :] + f * T[:, j + 1, :]
+    best = 0.0
+    for i in range(Ty.shape[0]):
+        col = Ty[i]
+        hot = np.nonzero(col > T_iso)[0]
+        if hot.size == 0 or hot[0] != 0:
+            continue
+        k = hot[-1]
+        if k + 1 < zc.size:
+            zk = zc[k] + (zc[k + 1] - zc[k]) * (col[k] - T_iso) / max(col[k] - col[k + 1], 1e-12)
+        else:
+            zk = zc[k]
+        best = max(best, zk)
+    return float(best)
+
+
+def run_single_track_plan(out: pathlib.Path, log=print) -> dict:
+    """Grid points where single tracks would discriminate: version 2 and the AM module disagree, or the point sits
+    in the band with more than one stable keyhole. Each row carries the AM module's class and version 2's
+    predictions (analytic, melt-flow solver, and with the 0.24 optics)."""
+    d = pd.read_csv(out / "v2-map-classes.csv")
+    mf_ = pd.read_csv(out / "v2-map-classes-meltflow.csv")
+    keys = ["alloy", "P_W", "v_m_s"]
+    t = d[keys + ["am_class", "v2_class_deep_branch", "mode", "A", "d_um", "Wk_over_Dk", "bistable", "d_deep_um",
+                  "pool_depth_um", "pool_width_um", "pool_Dh_um"]].merge(
+        mf_[keys + ["mf_class", "mf_pool_depth_um", "mf_pool_width_um", "mf_pool_Dh_um"]], on=keys, how="left")
+    opt = out / "v2-map-classes-optics-0.24.csv"
+    if opt.exists():
+        o = pd.read_csv(opt)[keys + ["v2_class_deep_branch", "A", "pool_depth_um", "pool_width_um"]].rename(
+            columns={"v2_class_deep_branch": "class_optics_0.24", "A": "A_optics_0.24",
+                     "pool_depth_um": "pool_depth_optics_0.24_um", "pool_width_um": "pool_width_optics_0.24_um"})
+        t = t.merge(o, on=keys, how="left")
+    t = t.rename(columns={"v2_class_deep_branch": "v2_class"})
+    t["why"] = np.where(t["am_class"] != t["v2_class"], "classes disagree",
+                        np.where(t["bistable"].astype(bool), "two stable keyholes", ""))
+    plan = t[t["why"] != ""].sort_values(keys)
+    plan.to_csv(out / "v2-single-track-plan.csv", index=False, float_format="%.4g")
+    s = {k: {"points": int(len(g)), "disagree": int((g["why"] == "classes disagree").sum()),
+             "bistable_only": int((g["why"] == "two stable keyholes").sum())} for k, g in plan.groupby("alloy")}
+    log(s)
+    return s
+
+
+def run_maps_meltflow(out: pathlib.Path, log=print, src_tag="") -> dict:
+    """The AM maps' non-keyhole points again with the melt-flow solver (Marangoni flow, k(T) and H(T) resolved).
+    Each point gets version 2's own absorbed fraction (flat liquid, powder share, or the dimple's) as a Gaussian
+    surface flux; a dimple only 10-35 um deep isn't resolved as a cavity at r0/8. Keyhole points keep their class."""
+    import keyhole_meltflow as mf
+    d = pd.read_csv(out / f"v2-map-classes{src_tag}.csv")
+    rows = []
+    t0 = time.time()
+    for n, r in d.iterrows():
+        key = r["alloy"]
+        a = fp.ALLOYS[key]
+        row = {"alloy": key, "P_W": r["P_W"], "v_m_s": r["v_m_s"], "am_class": r["am_class"],
+               "v2_class": r["v2_class_deep_branch"], "A": r["A"]}
+        if r["v2_class_deep_branch"] == "keyhole":
+            rows.append({**row, "mf_class": "keyhole"})
+            continue
+        al = make_alloy(key)
+        mu0, E = mf.VISCOSITY[key]
+        pr = mf.props_from_material(al.m, mu0=mu0, E_mu=E, dsigma_dT=mf.DSIGMA_DT_DEFAULT,
+                                    C_darcy=mf.C_DARCY_DEFAULT, evaporation=True)
+        r0 = a["r0"]
+        g = mf.grid_for(r0, pool_D=max(1.6 * r["pool_depth_solidus_um"], 80.0) * 1e-6,
+                        pool_W=max(1.8 * r["pool_width_solidus_um"], 200.0) * 1e-6,
+                        pool_L_rear=max(1.6 * r["pool_length_solidus_um"], 400.0) * 1e-6, h_fine=r0 / 8)
+        case = mf.Case(label=f"{key}-{r['P_W']:.0f}W-{r['v_m_s']}", props=pr, P=float(r["P_W"]), v=float(r["v_m_s"]),
+                       r0=r0, T0=a["T0"], A=float(r["A"]), keyhole=None, grid=g)
+        o, T, st, kh = mf.solve_case(case, flow=True, log=lambda *x: None)
+        D = o["pool_depth_liquidus_um"]
+        Dh = depth_at_offset(g, T, pr.T_l, a["hatch"] / 2) * 1e6
+        layer = a["layer"] * 1e6
+        cls = "lof" if D <= layer else ("lof_hatch" if Dh <= layer else "none")
+        rows.append({**row, "mf_class": cls, "mf_pool_depth_um": D, "mf_pool_width_um": o["pool_width_liquidus_um"],
+                     "mf_pool_length_um": o["pool_length_liquidus_um"], "mf_pool_Dh_um": Dh,
+                     "analytic_pool_depth_um": r["pool_depth_um"], "analytic_pool_width_um": r["pool_width_um"],
+                     "analytic_pool_Dh_um": r["pool_Dh_um"], "mf_u_surface_max_m_s": o["u_surface_max_rel_m_s"],
+                     "mf_T_peak_K": o["T_peak_K"], "mf_runtime_s": o["runtime_s"]})
+        log(f"{n} {key} {r['P_W']:.0f} W {r['v_m_s']} m/s A {r['A']:.3f}: AM {r['am_class']}, v2 {r['v2_class_deep_branch']}"
+            f" -> melt flow {cls} (D {D:.0f}, W {o['pool_width_liquidus_um']:.0f}, Dh {Dh:.0f} um; "
+            f"{o['runtime_s']:.0f} s, total {time.time() - t0:.0f} s)")
+    t = pd.DataFrame(rows)
+    t.to_csv(out / f"v2-map-classes{src_tag}-meltflow.csv", index=False, float_format="%.5g")
+    s = {}
+    for key, g_ in t.groupby("alloy"):
+        s[key] = {"agree_all_classes_meltflow": int((g_["am_class"] == g_["mf_class"]).sum()),
+                  "agree_all_classes_analytic": int((g_["am_class"] == g_["v2_class"]).sum()),
+                  "confusion_meltflow": pd.crosstab(g_["am_class"], g_["mf_class"]).to_dict()}
+        log(key, json.dumps({k: v for k, v in s[key].items() if not k.startswith("confusion")}))
+    (out / f"v2-map-classes{src_tag}-meltflow-summary.json").write_text(json.dumps(s, indent=1) + "\n")
+    return s
 
 
 def run_meltflow_v2(out: pathlib.Path, log=print, only=None, drive=False) -> dict:
