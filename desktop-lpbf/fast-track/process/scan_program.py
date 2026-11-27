@@ -59,10 +59,17 @@ class ParamSet:
     note: str = ""
 
 
-# Starting set for 10 x 10 mm AlSi10Mg cubes at 200 C (meltpool.py, README section 2). Contour slower, lower power.
-CUBE_SET = ParamSet("cube", P_hatch=250.0, v_hatch=1200.0, hatch=0.10, P_contour=150.0, v_contour=800.0,
-                    contour_offset=0.08, hatch_offset=0.06, layer=0.030,
-                    note="meltpool.py starting set; refine from the rung-3 single tracks")
+# Starting sets for AlSi10Mg cubes at 200 C from meltpool.py's recommend() (out/process_window.json): 255 W at
+# 1.25 m/s keeps King's number at 22 (keyhole above 30); hatch 0.10 mm keeps Tang's sum at 0.45 (0.73 if the plate
+# is cold). The first build brackets it: B at the 200 C hatch limit (Tang 0.60), C 20 % slower (King 24.7).
+# Contour 150 W, 0.8 m/s (pool 146 x 66 um at 200 C).
+_C = dict(P_contour=150.0, v_contour=800.0, contour_offset=0.08, hatch_offset=0.06, layer=0.030)
+PSETS = {
+    "nominal": ParamSet("nominal", P_hatch=255.0, v_hatch=1250.0, hatch=0.10, note="recommended starting set", **_C),
+    "wide": ParamSet("wide", P_hatch=255.0, v_hatch=1250.0, hatch=0.12, note="hatch at Tang 0.60 (200 C)", **_C),
+    "slow": ParamSet("slow", P_hatch=255.0, v_hatch=1000.0, hatch=0.10, note="20 % slower, King 24.7", **_C),
+}
+CUBE_SET = PSETS["nominal"]
 
 
 # --------------------------------------------------------------------------------------------------
@@ -70,18 +77,26 @@ CUBE_SET = ParamSet("cube", P_hatch=250.0, v_hatch=1200.0, hatch=0.10, P_contour
 # --------------------------------------------------------------------------------------------------
 @dataclass
 class Timing:
+    """SCANLAB hurrySCAN 25 data (scanlab.de/en/print-product/609): tracking error 0.50 ms; step response 0.90 ms
+    (1 % of full scale) and 3.20 ms (10 %); marking speed 0.8 m/s and positioning speed 5.0 m/s at f = 160 mm, so
+    1.27 and 7.95 m/s at f = 254.4. (The lead's interpolation between the hurrySCAN 20 and 30 gave 0.45 ms and
+    7.2 m/s.) Delays from the tracking error by SCANLAB's usual rules: laser off and mark delay ~ the tracking error,
+    laser on about half of it, jump delay the tracking error plus settling. Starting values: tune them with a delay
+    test pattern burned on anodised Al before any powder. RTC5 units: laser delays 0.5 us a bit, scanner delays
+    10 us a bit (rtc5_list.py rounds to them)."""
     tick: float = 10e-6             # s, RTC5 list clock (10 us)
-    v_jump: float = 5000.0          # mm/s, jump speed in the field (hurrySCAN 25 at f = 254, chosen below its maximum)
-    jump_delay: float = 300e-6      # s, after a long jump (>= JumpLengthLimit)
-    jump_delay_min: float = 100e-6  # s, after a very short jump (RTC5 variable jump delay)
+    tracking_error: float = 500e-6  # s, hurrySCAN 25
+    v_jump: float = 7000.0          # mm/s, jump speed in the field (below the 7.95 m/s positioning speed at f = 254.4)
+    jump_delay: float = 700e-6      # s, after a long jump (>= jump_limit)
+    jump_delay_min: float = 300e-6  # s, after a very short jump (RTC5 variable jump delay, set_delay_mode)
     jump_limit: float = 5.0         # mm, jumps shorter than this get a delay scaled between min and full
-    mark_delay: float = 150e-6      # s, after the last mark of a polyline, before the jump
-    polygon_delay: float = 50e-6    # s, at each corner inside a polyline (contours)
-    laser_on_delay: float = 100e-6  # s, laser on after the start of the first mark of a polyline
-    laser_off_delay: float = 150e-6  # s, laser off after the end of the last mark of a polyline
+    mark_delay: float = 550e-6      # s, after the last mark of a polyline, before the jump (>= laser_off_delay)
+    polygon_delay: float = 250e-6   # s, at each corner inside a polyline (contours)
+    laser_on_delay: float = 250e-6  # s, laser on after the start of the first mark of a polyline
+    laser_off_delay: float = 500e-6  # s, laser off after the end of the last mark of a polyline
     list_overhead: float = 0.05     # s, per layer: list load and start (est.)
-    source: str = ("estimates for a 25 mm aperture head (tracking error ~0.3-0.4 ms); tune with the RTC5's "
-                   "delay test pattern on anodised Al before any powder")
+    source: str = ("SCANLAB hurrySCAN 25 data (tracking error 0.50 ms, 7.95 m/s positioning at f = 254.4); delays "
+                   "from the tracking error; tune with a delay test pattern")
 
 
 @dataclass
@@ -200,12 +215,12 @@ def first_build(height=10.0, small=True):
     """The recommended first coupon build: three 10 x 10 mm cubes with 2 mm gaps (two side by side, one centred below
     them), all inside r = 15 mm, plus the 5 x 5 mm cubes that still fit (place_small)."""
     parts = [
-        Part("A", -6.0, 5.15, 10.0, 10.0, height, "cube"),
-        Part("B", 6.0, 5.15, 10.0, 10.0, height, "cube"),
-        Part("C", 0.0, -6.9, 10.0, 10.0, height, "cube"),
+        Part("A", -6.0, 5.15, 10.0, 10.0, height, "nominal"),
+        Part("B", 6.0, 5.15, 10.0, 10.0, height, "wide"),
+        Part("C", 0.0, -6.9, 10.0, 10.0, height, "slow"),
     ]
     if small:
-        parts += place_small(parts, height=height)
+        parts += place_small(parts, height=height, pset="nominal")
     return parts
 
 
@@ -424,7 +439,7 @@ def main():
     OUT.mkdir(exist_ok=True)
     SCRATCH.mkdir(parents=True, exist_ok=True)
     tm, rc = Timing(), Recoat()
-    psets = {"cube": CUBE_SET}
+    psets = PSETS
     lay = layout_table()
     (OUT / "layout.json").write_text(json.dumps(lay, indent=1))
     for r in lay:
@@ -437,16 +452,41 @@ def main():
     back = load_build(path)
     err = float(np.abs(back[0] - segs).max())
     print(f"{len(ptr) - 1} layers, {len(segs)} vectors, {path.stat().st_size / 1e3:.0f} kB; round trip max error {err * 1e3:.2f} um")
-    summary = {}
+    layer = CUBE_SET.layer
+    summary, times = {}, []
     for stage in (X_LSM100B, X_LSQ075B):
-        rows, rec = build_schedule(parts, psets, tm, rc, stage, segs, kinds, pidx, ptr, CUBE_SET.layer)
-        summary[stage.name] = dict(recoat=rec, rows=rows)
-        for hmm in (5.0, 10.0, 15.0):
-            n = int(round(hmm / CUBE_SET.layer))
-            tt = sum(r["period_s"] for r in rows[:n])
-            print(f"{stage.name}: {hmm:g} mm, {n} layers: {tt / 3600:.2f} h; recoat {rec['t_recoat']:.2f} s, "
-                  f"mean list {np.mean([r['exposure_s'] for r in rows[:n]]):.2f} s")
-    rows = summary[X_LSM100B.name]["rows"]
+        for v_spread in (10.0, 20.0, 40.0, 80.0):
+            rcv = Recoat(v_spread=v_spread)
+            rows, rec = build_schedule(parts, psets, tm, rcv, stage, segs, kinds, pidx, ptr, layer)
+            summary[(stage.name, v_spread)] = dict(recoat=rec, rows=rows)
+            for hmm in (5.0, 10.0, 15.0):
+                n = int(round(hmm / layer))
+                tt = sum(r["period_s"] for r in rows[:n])
+                t_scan = sum(r["exposure_s"] for r in rows[:n])
+                times.append(dict(stage=stage.name, v_spread_mm_s=v_spread, build_mm=hmm, layers=n, hours=tt / 3600,
+                                  scan_h=t_scan / 3600, return_h=n * rec["t_return"] / 3600,
+                                  spread_h=n * rec["t_spread"] / 3600, step_h=n * rec["t_step"] / 3600,
+                                  overhead_h=n * rec["t_overhead"] / 3600, recoat_s=rec["t_recoat"],
+                                  list_s_mean=t_scan / n))
+    # tracking error 0.7 ms (worn 2003 galvos): every delay scaled by 0.7 / 0.5
+    s = 0.7 / 0.5
+    tm_old = Timing(tracking_error=700e-6, jump_delay=tm.jump_delay * s, jump_delay_min=tm.jump_delay_min * s,
+                    mark_delay=tm.mark_delay * s, polygon_delay=tm.polygon_delay * s, laser_on_delay=tm.laser_on_delay * s,
+                    laser_off_delay=tm.laser_off_delay * s)
+    rows_old, _ = build_schedule(parts, psets, tm_old, rc, X_LSM100B, segs, kinds, pidx, ptr, layer)
+    sens = dict(list_s_mean_0p5ms=float(np.mean([r["exposure_s"] for r in summary[(X_LSM100B.name, 40.0)]["rows"]])),
+                list_s_mean_0p7ms=float(np.mean([r["exposure_s"] for r in rows_old])))
+    for t in times:
+        if t["build_mm"] == 10.0:
+            print(f"{t['stage']}, spread {t['v_spread_mm_s']:.0f} mm/s: 10 mm in {t['hours']:.2f} h "
+                  f"(recoat {t['recoat_s']:.2f} s, list {t['list_s_mean']:.2f} s)")
+    print("tracking error sensitivity", sens)
+    with open(OUT / "build_times.csv", "w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=list(times[0]))
+        w.writeheader()
+        for t in times:
+            w.writerow({k: (f"{v:.4f}" if isinstance(v, float) else v) for k, v in t.items()})
+    rows = summary[(X_LSM100B.name, 40.0)]["rows"]
     cols = ["layer", "t_start_s", "exposure_s", "energy_J", "mean_W", "laser_on_s", "period_s"]
     for dst in (OUT / "heat_input.csv", SCRATCH / "heat_input.csv"):
         with open(dst, "w", newline="") as f:
@@ -454,7 +494,99 @@ def main():
             w.writerow(cols)
             for r in rows:
                 w.writerow([r["layer"]] + [f"{r[c]:.4f}" for c in cols[1:]])
-    print("heat input: mean energy per layer", np.mean([r["energy_J"] for r in rows]), "J")
+    per_part = {}
+    a, b = ptr[0], ptr[1]
+    for i, p in enumerate(parts):
+        sel = pidx[a:b] == i
+        lt = layer_time(segs[a:b][sel], kinds[a:b][sel], pidx[a:b][sel], parts, psets, tm)
+        per_part[p.name] = dict(pset=p.pset, cx=p.cx, cy=p.cy, sx=p.sx, sy=p.sy, energy_J_layer1=lt["energy_J"],
+                                laser_on_s=lt["t_laser_on"], list_s=lt["t_list"], vectors=lt["n_mark"])
+    info = dict(parts=per_part, psets={k: asdict(v) for k, v in psets.items()}, timing=asdict(tm),
+                recoat={f"{k[0]}, spread {k[1]:.0f} mm/s": v["recoat"] for k, v in summary.items()},
+                tracking_error_sensitivity=sens, npz=dict(path=path.name, kB=path.stat().st_size / 1e3,
+                                                          vectors=int(len(segs)), layers=int(len(ptr) - 1)),
+                energy_J_mean=float(np.mean([r["energy_J"] for r in rows])),
+                mean_W_mean=float(np.mean([r["mean_W"] for r in rows])),
+                period_s_mean=float(np.mean([r["period_s"] for r in rows])))
+    (OUT / "scan_program.json").write_text(json.dumps(info, indent=1))
+    print("heat input: mean energy per layer", info["energy_J_mean"], "J; mean W", info["mean_W_mean"])
+    figures(parts, psets, segs, kinds, pidx, ptr, times)
+
+
+def figures(parts, psets, segs, kinds, pidx, ptr, times):
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    from matplotlib.collections import LineCollection
+    from matplotlib.patches import Circle, Rectangle
+    C1, C2, C3, C4, C5 = "#257de0", "#f47230", "#00b894", "#f2a600", "#ee7fac"
+    INK, INK2, GRID = "#191919", "#666666", "#e6e6e6"
+    plt.rcParams.update({"font.size": 8.5, "axes.edgecolor": INK2, "xtick.color": INK2, "ytick.color": INK2,
+                         "axes.spines.top": False, "axes.spines.right": False})
+    # ---- layout and the vectors of layers 1 and 2 ----
+    fig, axs = plt.subplots(1, 2, figsize=(11.5, 5.6))
+    for ax, k in zip(axs, (0, 1)):
+        ax.set_aspect("equal")
+        ax.add_patch(Circle((0, 0), PLATE_R, fc="#f4f4f4", ec=INK2, lw=1.0))
+        ax.add_patch(Circle((0, 0), USABLE_R, fc="none", ec=INK2, lw=0.8, ls="--"))
+        for (sx, sy) in screws():
+            ax.add_patch(Circle((sx, sy), 1.9, fc=INK2, ec="none"))
+        a, b = ptr[k], ptr[k + 1]
+        s, kd = segs[a:b], kinds[a:b]
+        hatch = LineCollection([[(x0, y0), (x1, y1)] for x0, y0, x1, y1 in s[kd == 0]], colors=C1, linewidths=0.35)
+        cont = LineCollection([[(x0, y0), (x1, y1)] for x0, y0, x1, y1 in s[kd == 1]], colors=C2, linewidths=1.2)
+        ax.add_collection(hatch)
+        ax.add_collection(cont)
+        # jumps
+        ends = np.vstack([np.zeros((1, 2)), s[:, 2:]])[:-1]
+        starts = s[:, :2]
+        gap = np.hypot(*(starts - ends).T)
+        J = [[tuple(e), tuple(st)] for e, st, g in zip(ends, starts, gap) if g > 1.0]
+        ax.add_collection(LineCollection(J, colors=INK2, linewidths=0.6, linestyles=":"))
+        for p in parts:
+            ps = psets[p.pset]
+            ax.text(p.cx, p.cy, f"{p.name}\n{ps.P_hatch:.0f} W\n{ps.v_hatch / 1000:.2f} m/s\nh {ps.hatch:.2f}",
+                    ha="center", va="center", fontsize=6.5 if p.sx < 8 else 7.5, color=INK,
+                    bbox=dict(fc="white", ec="none", alpha=0.85, pad=0.6))
+        ax.annotate("", xy=(17, 21.5), xytext=(17, 15.5), arrowprops=dict(arrowstyle="->", color=INK2))
+        ax.text(17.6, 18, "gas", fontsize=7.5, color=INK2, rotation=90, va="center")
+        ax.annotate("", xy=(-10, -21.5), xytext=(-17, -21.5), arrowprops=dict(arrowstyle="->", color=INK2))
+        ax.text(-13.5, -23.6, "recoat", fontsize=7.5, color=INK2, ha="center")
+        ax.set_xlim(-22, 22); ax.set_ylim(-24.5, 23)
+        ax.set_xlabel("x (mm)"); ax.set_ylabel("y (mm)")
+        ax.grid(color=GRID, lw=0.5)
+        th = (CUBE_SET.rot_deg * k) % 180
+        ax.set_title(f"Layer {k + 1}: hatch at {th:.0f}°, {b - a} vectors\n(blue hatch, orange contour, dotted jumps)",
+                     fontsize=9, color=INK, loc="left")
+    fig.tight_layout()
+    fig.savefig(HERE / "img" / "coupon-layout.png", dpi=150)
+    plt.close(fig)
+    # ---- build-time breakdown, 10 mm builds ----
+    rows = [t for t in times if t["build_mm"] == 10.0]
+    labels = [f"{t['stage'].replace('Zaber ', '').replace('-E03', '').replace('-E01', '')}\nspread {t['v_spread_mm_s']:.0f} mm/s"
+              for t in rows]
+    fig, ax = plt.subplots(figsize=(11.5, 4.2))
+    left = np.zeros(len(rows))
+    parts_ = (("scan (RTC5 list)", "scan_h", C1), ("spread stroke", "spread_h", C2), ("return stroke", "return_h", C3),
+              ("plate step", "step_h", C4), ("host overhead", "overhead_h", C5))
+    for name, key, col in parts_:
+        vals = np.array([t[key] for t in rows])
+        ax.barh(np.arange(len(rows)), vals, left=left, color=col, edgecolor="white", linewidth=2, label=name, height=0.62)
+        left += vals
+    for i, t in enumerate(rows):
+        ax.text(left[i] + 0.01, i, f"{t['hours']:.2f} h", va="center", fontsize=8, color=INK)
+    ax.axvspan(1.2, 1.8, color="#efefef", zorder=0)
+    ax.text(1.5, 0.0, "study's estimate\n1.2-1.8 h", ha="center", va="center", fontsize=8, color=INK2)
+    ax.set_yticks(np.arange(len(rows)), labels, fontsize=7.5)
+    ax.invert_yaxis()
+    ax.set_xlabel("hours for a 10 mm build (333 layers of 30 um), first coupon layout")
+    ax.legend(loc="lower right", fontsize=7.5, frameon=False, ncol=5, bbox_to_anchor=(1.0, -0.22))
+    ax.grid(axis="x", color=GRID, lw=0.5)
+    ax.set_title("Build time: three 10 x 10 mm and two 5 x 5 mm cubes, by recoater stage and spreading speed",
+                 fontsize=9.5, color=INK, loc="left")
+    fig.tight_layout()
+    fig.savefig(HERE / "img" / "build-time.png", dpi=150)
+    plt.close(fig)
 
 
 if __name__ == "__main__":
