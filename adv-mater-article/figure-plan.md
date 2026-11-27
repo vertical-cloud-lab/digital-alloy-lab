@@ -33,7 +33,8 @@ SI: **S1** where the melt met the plate (Oct 2 overshoot, Oct 6 sonotrode, Oct 8
 | Panel | Content | Status | Needs | Supplied by | Due |
 |---|---|---|---|---|---|
 | a | Dosing error per element (target vs weighed charge) | **none** for charges; doser accuracy data in powder-doser repo (see results-needed C1) | C1 | dosing logs, campaign 1 | Mar 2027 |
-| b | Si in powder vs Si in charge across the 4047-in-6063 spread (0–30 wt% 4047 → ~1.3–3.9 wt% Si), EDS mean (≥ 30 particles) and ICP-OES, 1:1 line, spec range as bars | **none**: Block B not run; Oct 2 u23y78 is a pilot point | C2 | Block B (B1–B7) + outside ICP-OES | Jun 2027 |
+| b | Si in powder vs Si in charge across the 4047-in-6063 spread (0, 7.5, 15, 22.5, 30 wt% 4047 → from the cup's 0.2–0.6 wt% Si to ~3.4–4.3 wt%), EDS mean (≥ 30 particles) and ICP-OES, 1:1 line, spec range as bars | **none**: Block B not run; Oct 2 u23y78 is a pilot point | C2 | Block B (B1–B7) + outside ICP-OES | Jun 2027 |
+| b′ | **The campaign's own additions:** Zr, Sc or Er, and Mn in powder (ICP-OES, by sieve fraction, 15–45 µm cut) against the charge, including Zr dissolution at Al pouring temperatures and any loss to carbides in the graphite crucible. 5 kV EDS can't see the K lines of Mn, Cr, Fe, Ni, Cu, Zn | **none** | C5 | campaigns 1–2 + ICP-OES | Sep 2027 |
 | c | Per-particle Si at the top, middle and bottom of the jar; EDS map of a sectioned particle at the 30 wt% point | **none** | C2 | Block B, SEM prep SOP (byu-vcl PR 284) | Jun 2027 |
 | d | Mg recovery (ICP ÷ charge) through atomization and printing | **none** | C3 | ICP on powder and on prints | Sep 2027 |
 | e | EDS against ICP: bias and precision for Si-free and Si-bearing alloys, which becomes the composition node's noise | **partial**: standards-based EDS on the Utah AlSi10Mg coupon (Mg 0.35 ± 0.01, Si 11.12 ± 0.13 wt%; only 1 of 17 runs valid; PR #288) | C4 | CALIBER + outside ICP | Jun 2027 |
@@ -44,16 +45,16 @@ SI: **S1** where the melt met the plate (Oct 2 overshoot, Oct 6 sonotrode, Oct 8
 |---|---|---|---|---|---|
 | a | The desktop LPBF system (photo, section, monitoring sensors) | **none**: design only (PR #266; fast-track FT-1 in PR #294); not ordered | P1 | desktop LPBF (#260) | first Al coupons by May 2027 for version A |
 | b | Single tracks and cubes from in-house powders: power–speed map with density and cracking, layer-camera and photodiode signals | **none**: no single tracks measured anywhere (#238, #249) | P2 | desktop LPBF + campaign 2 powders | Aug 2027 |
-| c | Desktop vs Utah Aconity MIDI on shared powders: density and hardness parity, Spearman ρ, offset | **partial**: one Utah AlSi10Mg build from commercial powder (Apr 2026; as-built horizontal YS 228 ± 13 MPa, UTS 376 ± 10, EL 4.5 ± 0.5 %, n = 4; PR #288) | P3, P4 | desktop + Utah sessions on the same powder lots | Sep 2027 |
+| c | Desktop vs Utah Aconity MIDI on shared powders: density and hardness parity, Spearman ρ, offset. Needs **≥ 8 alloys** (with 5, only a perfect ranking reaches p < 0.05) and matched plate preheat; includes the **route control**, in-house AlSi10Mg printed beside the commercial lot on both machines | **partial**: one Utah AlSi10Mg build from commercial powder (Apr 2026; as-built horizontal YS 228 ± 13 MPa, UTS 376 ± 10, EL 4.5 ± 0.5 %, n = 4; PR #288) | P3, P4 | desktop + Utah sessions on the same powder lots | Sep 2027 |
 | d | Cracking against the CALPHAD crack index: Zr/Sc-bearing alloys crack-free despite a high index (the "screen is wrong" evidence that Fig. 6 builds on) | **none** | P5 | campaign 1 + 2 prints, metallography | Oct 2027 |
 
 ## Fig. 5 A campaign in which the optimizer chooses the step (§2.5)
 
 | Panel | Content | Status | Needs | Supplied by | Due |
 |---|---|---|---|---|---|
-| a | Every candidate as a row, the steps it reached, and where and why it stopped (acquisition value vs cost at each decision). **The novelty sentence rests on this panel.** | **none** | B1, B2 | campaign 2 decision log | Oct 2027 |
-| b | Best-so-far objective against cumulative spend for the real campaign, with the twin's replay of screen-then-test, full-chain BO and random on the same budget | **none** | B3, T2 | campaign 2 + calibrated twin | Nov 2027 |
-| c | Yield strength against mineral burden B (Σ wᵢ·NIRᵢ, the campaign paper's definition) for every tested alloy; AlSi10Mg printed on the same machine; Scalmalloy and AlSi10Mg datasheets (PR #285) as context; campaign 1's best | **partial**: datasheet benchmarks (`literature/al-lpbf-benchmark-alloys/` @ `a25d763`), Utah AlSi10Mg; B not computed for anything yet | B4, B5 | campaigns 1–2 | Nov 2027 |
+| a | Every candidate as a row, the steps it reached, and where and why it stopped, each stop labelled **failure, constraint or acquisition** (acquisition value vs cost at each decision). **The novelty sentence rests on the acquisition stops.** | **none** | B1, B2 | campaign 2 decision log | Oct 2027 |
+| b | **Stop audit:** the share of acquisition stops (random 25 % pushed one step further) that would have been worth continuing, i.e. the false-stop rate; plus best-so-far against spend with the twin's replays | **none** | B7, B3, T2 | campaign 2 + twin | Nov 2027 |
+| c | Yield strength against mineral burden B (Σ wᵢ·NIRᵢ, reported by element) for every tested alloy; **the in-house Sc-free reference alloy (positive control)** and AlSi10Mg printed on the same machine; Scalmalloy and AlSi10Mg datasheets (PR #285) and **Taheri-Mousavi et al.'s alloy** as context; campaign 1's best | **partial**: datasheet benchmarks (`literature/al-lpbf-benchmark-alloys/` @ `a25d763`), Utah AlSi10Mg; B not computed for anything yet | B4, B5 | campaigns 1–2 | Nov 2027 |
 | d | The finalist: stress–strain curves (n ≥ 3), micrograph, outside composition and tensile | **none** | B5, V1, V2 | campaign 2 + outside labs | Dec 2027 |
 
 ## Fig. 6 When it pays off: the twin (§2.6)
@@ -68,7 +69,7 @@ SI: **S1** where the melt met the plate (Oct 2 overshoot, Oct 6 sonotrode, Oct 8
 
 | # | Content | Status | Supplied by | Due |
 |---|---|---|---|---|
-| 1 | Each step's cost per result: median and IQR of person-hours, machine hours, consumables and $; n | none | L1–L2 | Nov 2027 |
+| 1 | Each step's cost per result: median and IQR of person-hours, machine hours, consumables and $; **powder mass each node consumes and atomizer runs per tensile set**; n | none | L1–L2 | Nov 2027 |
 | 2 | Alloys: target vs measured composition, density, hardness, YS/UTS/EL (n), mineral burden B; AlSi10Mg (same machine), Scalmalloy and AlSi10Mg (datasheets) | partial (benchmarks only) | B4–B5, V1–V2 | Dec 2027 |
 
 ## Supporting Information (beyond S1–S9 above)

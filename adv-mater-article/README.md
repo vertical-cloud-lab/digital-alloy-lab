@@ -73,6 +73,7 @@ with biblatex-chem, biber and latexmk, plus Python with requests and matplotlib.
 
 | # | Decision | Why it matters now |
 |---|---|---|
+| **D0** | **Set campaign 2's target against an in-house Sc-free reference alloy** (positive control), not "above as-built AlSi10Mg with lower burden than Scalmalloy". If the campaign can't plausibly reach it, decide now that this is a methods paper for another journal | A mock editorial review today judged desk rejection more likely than not under the current target ([`outline.md`](outline.md) §9); this was its single most useful change |
 | **D1** | **Which collection, its exact deadline, and the article type.** #256's schedule took Feb 28, 2027 to be this article; the Oct 23 note on #160 says "late February" with no year; this thread says early 2028. No public *Advanced Materials* call matches: its collections are invited (Rising Stars, topical issues such as 2024's "Advanced Materials for Additive Manufacturing", institution issues), so the invitation letter is the source ([`journal-format.md`](journal-format.md)) | If the collection actually closes in Feb 2027, this plan folds into the campaign paper. If it's Rising Stars, the article must be "conceptualized and supervised" by the early-career PI |
 | D2 | Adopt the split with the campaign paper ([`outline.md`](outline.md) §4)? | Duplicate-publication risk; who owns Blocks A/B |
 | D3 | Commit to a second, optimizer-driven campaign in Jul–Oct 2027, with version A/B decided at G-A3 (Sep 30, 2027)? | Version A needs it; nobody has planned it yet |

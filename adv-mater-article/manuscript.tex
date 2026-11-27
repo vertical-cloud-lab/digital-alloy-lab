@@ -32,10 +32,10 @@ within \tbd{x}\%), and its composition follows the charge to within \tbd{y} wt\%
 Step costs span \tbd{four} orders of magnitude. In a \tbd{k}-week campaign, the
 optimizer stops \tbd{p}\% of candidates before printing and finds \tbd{alloy},
 with \tbd{YS} yield strength, \tbd{EL} elongation and a \tbd{z}\% lower mineral
-burden than Scalmalloy. A digital twin fitted to the laboratory's records shows
-that the approach reaches this result at \tbd{k}-fold lower cost than
-screen-then-test when the screen misses grain refinement, and matches it when the
-screen is right.
+burden than Scalmalloy. A digital twin fitted to the first campaign predicts the
+second, and estimates that choosing the step saves \tbd{k}-fold over the best
+stage-gated screen when the screen misjudges grain refinement, and nothing when
+it does not.
 \end{abstract}
 
 \noindent\textbf{Keywords:} aluminum alloys, Bayesian optimization, critical
@@ -46,8 +46,8 @@ minerals, laser powder bed fusion, self-driving laboratories, ultrasonic atomiza
 \label{sec:intro}
 
 Laser powder bed fusion (LPBF) builds metal parts with internal channels and
-lattices that no other process can make, but it prints few aluminum alloys
-well.\cite{aboulkhair2019,kotadia2021} Most high-strength wrought alloys, such
+lattices that are hard or impossible to cast or machine, but it prints few
+aluminum alloys well.\cite{aboulkhair2019,kotadia2021} Most high-strength wrought alloys, such
 as 7075 and 6061, crack as they solidify in the melt pool,\cite{martin2017,kou2015}
 so printed aluminum parts mostly use the casting alloy AlSi10Mg, which is weaker
 than the wrought alloys and loses strength quickly above about
@@ -82,11 +82,14 @@ the atomizer is to be a step that an optimizer calls on demand.
 The second is how a campaign spends its budget. The steps from a composition
 to a tensile result differ in cost by orders of magnitude: minutes of computing
 for a CALPHAD calculation, about a day for a powder batch, days for a tensile
-test. Yet campaigns run the steps in a fixed order. A funnel that screens many
+test. Yet campaigns allocate effort through fixed stage-gates: a candidate that
+passes a threshold at one step goes on to the next, whatever else the same
+money could have learned. A funnel that screens many
 compositions by calculation and tests a few is efficient only if the screen is
-right, and CALPHAD-based cracking indices, for example, do not capture the grain
-refinement by Al$_3$Zr or Al$_3$Sc nucleants that makes Zr- and Sc-modified
-alloys printable.\cite{kou2015,martin2017,croteau2018} Sending every candidate
+right, and CALPHAD-based cracking indices, for example, do not capture how
+effectively primary Al$_3$Zr or Al$_3$Sc nucleates grains, the effect that
+makes Zr- and Sc-modified alloys printable; equilibrium and Scheil calculations
+predict that these phases form, not how potent they are.\cite{kou2015,martin2017,croteau2018} Sending every candidate
 through the whole chain is robust to a wrong screen, but it spends most of the
 budget on candidates that a cheap early measurement could have ruled out.
 
@@ -104,11 +107,14 @@ fixed sequence of steps. Bayesian optimization of function
 networks (BOFN) instead models a multi-step workflow as a network of surrogate
 models, one per step,\cite{astudillo2021} and its partial-evaluation extension
 chooses which step to run, and for which candidate, by the expected gain per
-unit cost.\cite{buathong2024,buathong2025} These methods, and related
-multi-stage and cost-aware schemes,\cite{torresi2026,alvi2026,snoek2012} have so
-far been tested on synthetic or retrospective problems; where cost-aware
-optimization has run on a real instrument, it chose among measurements within a
-single characterization step.\cite{chawla2026}
+unit cost.\cite{buathong2024,buathong2025} Related schemes mix cheap and expensive information sources or stop
+unpromising evaluations early,\cite{snoek2012,poloczek2017,swersky2014,li2018hyperband,alvi2026,sabanzagil2025}
+and multi-stage BO keeps partly processed samples for later
+steps,\cite{torresi2026} but partial-evaluation network optimization over
+sequential, dependent physical steps has so far been tested only on synthetic or
+retrospective problems; where cost-aware optimization has run on a real
+instrument, it chose among measurements within a single characterization
+step.\cite{chawla2026}
 
 Here we close the loop for aluminum alloys in one laboratory and let a
 cost-aware optimizer run it. Powder for each candidate is made by ultrasonic
@@ -158,8 +164,10 @@ pour itself. With the desktop system in the loop, a candidate went from
 composition to a measured cube in \tbd{d} days (median; range \tbd{a--b}),
 against \tbd{d$'$} days when the cube was printed at an outside facility
 (\cref{fig:loop}c), so the lab could take \tbd{n} candidates a week to the
-cube stage.\src{L3} These costs are what the optimizer divides by, and their
-spread is what makes stopping a candidate early worth anything.
+cube stage.\src{L3} These costs are what the optimizer divides by. The four
+orders of magnitude come mostly from CALPHAD being nearly free; the decisions
+that matter lie between the physical steps, whose costs differ by
+\tbd{one to two} orders of magnitude.
 
 \begin{figure}[t]
 \centering
@@ -182,7 +190,7 @@ Schematic alternative: \texttt{figures/fig1-loop.tikz}.}\fi}
 \label{fig:loop}
 \end{figure}
 
-\subsection{Making powder for any composition}
+\subsection{Making powder for each composition}
 \label{sec:atomize}
 \note{Claim: a dosed \SI{250}{\gram} charge gives LPBF-grade powder, and the
 spread at fixed settings meets a bar set before the first counted run, once the
@@ -209,7 +217,10 @@ deviation), and mean circularity by at most 0.02. Under these rules
 \SI{250}{\gram} 6063 charge were valid. Their D$_{50}$ was \tbd{x}~\si{\micro\metre}
 (CV \tbd{y}\%), the in-range yield \tbd{z}\% (SD \tbd{s} points) and the mean
 circularity \tbd{c} (SD \tbd{s$'$}) (\cref{fig:atomize}b,c);\src{A1, A2}
-\tbd{all / k of} the metrics met the bar. Measuring each run's powder in two
+\tbd{all / k of} the metrics met the bar on the point estimate, and \tbd{k$'$}
+on the upper 95\% confidence bound (with five runs that bound is about 2.9 times
+the estimated coefficient of variation). The bar was tested on one alloy, 6063;
+\cref{sec:fidelity} covers how other compositions behave. Measuring each run's powder in two
 splits showed that measurement accounted for \tbd{q}\% of the variance, so the
 run-to-run spread belongs to the process. The only replicate study we found, three
 runs of a refractory alloy, reported a d$_{90}$ CV of about
@@ -254,8 +265,13 @@ cups from 0 to \SI{30}{wt\percent}, which takes Si from the
 \SIrange{0.2}{0.6}{wt\percent} of the cup alone to about
 \SIrange{3.4}{4.3}{wt\percent}. Measured Si followed the charge with a slope of \tbd{s} (R$^2$ = \tbd{r};
 \cref{fig:fidelity}b), and particles from the top, middle and bottom of the
-collection jar differed by \tbd{d} wt\% (\cref{fig:fidelity}c), so the powder is
-mixed at the scale of a batch and of a particle.\src{C2} Magnesium, the most
+collection jar differed by \tbd{d} wt\% (\cref{fig:fidelity}c), so the batch is
+mixed; maps of sectioned particles from the \SIrange{15}{45}{\micro\metre} cut
+show \tbd{whether each particle is}.\src{C2} Because a \SI{5}{\kilo\volt} beam
+excites neither the K lines of Cr, Mn, Fe, Ni, Cu and Zn nor the L lines of Ce and
+Er, and barely excites Sc and Ti, the additions that matter for grain refinement
+(Zr, Sc, Er) and strength (Mn, Mg) were measured by ICP-OES on every campaign
+powder, by sieve fraction.\src{C5} Magnesium, the most
 volatile addition, was retained at \tbd{x}\% through atomization and \tbd{y}\%
 through printing (\cref{fig:fidelity}d).\src{C3} Against ICP-OES, standards-based EDS at \SI{5}{\kilo\volt} read Si with a bias
 of \tbd{b} wt\% and a precision of \tbd{p} wt\% (\cref{fig:fidelity}e),\src{C4}
@@ -296,9 +312,10 @@ on an Aconity MIDI. Densities and hardnesses from the two machines ranked the
 alloys alike (Spearman $\rho$ = \tbd{r}), with offsets of \tbd{d} in density and
 \tbd{h} in hardness (\cref{fig:print}c).\src{P3, P4} Cracking did not follow the
 CALPHAD crack index for alloys with Zr\tbd{/Sc}: \tbd{n} of them printed
-crack-free despite an index above \tbd{threshold} (\cref{fig:print}d),\src{P5} the
-grain refinement by primary Al$_3$Zr that equilibrium and Scheil calculations do
-not capture.\cite{martin2017,croteau2018} This is the screen error that decides
+crack-free despite an index above \tbd{threshold} (\cref{fig:print}d),\src{P5}
+with equiaxed grains in EBSD where primary Al$_3$Zr formed. Scheil calculations
+predict that the phase forms but not how potently it nucleates
+grains.\cite{martin2017,croteau2018} This is the screen error that decides
 whether letting the optimizer skip ahead to a print pays off (\cref{sec:twin}).
 
 \begin{figure}[t]
@@ -323,17 +340,22 @@ The campaign started from \tbd{six} seed compositions and the data of the
 first campaign,\tbd{cite the campaign paper} with baselines, target and
 stopping rule committed beforehand.\tbd{commit} Over \tbd{k} weeks the optimizer
 made \tbd{N} decisions (\cref{fig:campaign}a): \tbd{a} CALPHAD calculations,
-\tbd{b} powder runs, \tbd{c} prints and \tbd{d} tensile sets.\src{B2} \tbd{p}\%
-of the candidates that reached the powder stage stopped before printing, and
-\tbd{q}\% of printed candidates stopped before tensile testing, each because the
-expected gain of the next step was lower per unit cost than that of another
-candidate's step. Best-so-far performance rose with spend as in
-\cref{fig:campaign}b.\src{B3} The best alloy, \tbd{composition}, reached
+\tbd{b} powder runs, \tbd{c} prints and \tbd{d} tensile sets.\src{B2} Of
+the candidates that reached the powder stage, \tbd{p} stopped before printing and
+\tbd{q} printed candidates stopped before tensile testing. Each stop is labelled
+in \cref{fig:campaign}a as a failure (the step did not produce a usable result),
+a constraint, or an acquisition decision (the next step's expected gain per unit
+cost was lower than another candidate's); only the last kind tests the method. A
+pre-registered audit pushed a random quarter of the acquisition stops one step
+further: \tbd{a} of \tbd{b} audited candidates would have been worth continuing
+(\cref{fig:campaign}b).\src{B2, B7} The best alloy, \tbd{composition}, reached
 \tbd{YS}~MPa yield strength, \tbd{UTS}~MPa tensile strength and \tbd{EL}\%
 elongation \tbd{as built / after heat treatment} ($n$ = \tbd{n}), against
-\tbd{YS$_0$}~MPa for AlSi10Mg printed and tested the same way, at a mineral
-burden \tbd{z}\% below Scalmalloy's (\cref{fig:campaign}c,d;
-\cref{tab:alloys}).\src{B4, B5} An outside laboratory measured its composition
+\tbd{YS$_0$}~MPa for the in-house Sc-free reference alloy (\tbd{Al--Mg--Zr or
+Al--Mn--Cr--Zr}) and \tbd{YS$_1$}~MPa for AlSi10Mg, both made, printed and tested
+the same way, at a mineral burden of \tbd{B}~wt\% (by element in the SI) against
+Scalmalloy's \tbd{B$_\text{Sc}$} (\cref{fig:campaign}c,d;
+\cref{tab:alloys}).\src{B4, B5, B6} An outside laboratory measured its composition
 within \tbd{e} wt\% of ours.\src{V1}
 
 \begin{figure}[t]

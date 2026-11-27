@@ -99,9 +99,9 @@ than in *Digital Discovery* or *npj Computational Materials*.
 
 | | Version A: the loop finds an alloy | Version B: the loop, characterized |
 |---|---|---|
-| Headline | Campaign 2, run by the cost-aware optimizer with desktop LPBF in the loop, finds [alloy], better than campaign 1's best (or than AlSi10Mg printed and tested the same way) at lower mineral burden than Scalmalloy, at [k]-fold lower cost than screen-then-test replayed in the twin | The atomizer is repeatable and composition-faithful; step costs span four orders of magnitude; the optimizer, replayed on both campaigns' real data and on the calibrated twin, would have reached campaign 1's best at [k]-fold lower cost |
+| Headline | Campaign 2, run by the cost-aware optimizer with desktop LPBF in the loop, finds a Sc-free alloy [name] whose aged yield strength matches or beats an in-house Sc-free reference alloy (Al–Mg–Zr or Al–Mn–Cr–Zr) made, printed and tested the same way, with the grain-refinement mechanism shown by EBSD. The twin, fitted on campaign 1 and checked against its own prediction of campaign 2, estimates the saving over full-chain network BO and over the best-form screen | The atomizer is repeatable and composition-faithful; step costs span four orders of magnitude; the optimizer, replayed on both campaigns' real data and on the calibrated twin, would have reached campaign 1's best at [k]-fold lower cost |
 | Needs | Desktop LPBF printing Al by ~May 2027; the optimizer running live with partial evaluation; ≥ 1 finalist with ≥ 3 valid tensile specimens and an outside composition check; campaign 2 done by ~Oct 2027 | Blocks A and B done; step-cost logs; campaign 1 data; the twin calibrated |
-| Fits | *Advanced Materials* research article | *Advanced Materials* only if the collection is about autonomous labs or methods; otherwise *Digital Discovery*, *npj Comput. Mater.*, *Adv. Intell. Syst.* |
+| Fits | *Advanced Materials* research article, if the alloy clears the positive control (the mock review's main condition for being sent out) | Probably not *Advanced Materials*; *npj Comput. Mater.*, *Digital Discovery* or *Additive Manufacturing* |
 | Decide | Gate G-A3 (Sep 30, 2027; see [`timeline.md`](timeline.md)) | |
 
 ## 6. Sections, the claim each makes, and length
@@ -146,3 +146,20 @@ alloys score worse than Scalmalloy, so if the finalist is Al–Mn–Cr–Zr, say
 | A competitor publishes a demonstrated cost-aware network campaign on metals AM first | Novelty sentence | Re-run the precedent scan in Oct 2027 and Jan 2028 |
 | Collection deadline is actually Feb 2027 | This plan collapses into the campaign paper | Decision D1 |
 | The burden metric ranks the focus family badly: with B = Σ wᵢ·NIRᵢ (MCS 2025), Al–Mn–Cr–Zr seeds score above Scalmalloy, because Mn is 100 % imported | "Supply-secure" in the title can't rest on Al–Mn–Cr–Zr | Decide D9 before the screen ranks anything; Zr-refined Al–Mg/Al–Fe alloys score well under any import-weighted metric |
+
+## 9. Mock editorial review (2026-11-27) and what changed
+
+An independent read of the draft manuscript, figure plan and pre-registration, without this outline, played an
+*Advanced Materials* editor and a referee. Its verdict: as planned, **desk rejection is more likely than not**. The
+figures describe instruments while the alloy gets half a figure, the materials bar ("above as-built AlSi10Mg,
+lower burden than Scalmalloy") is low, and the evidence that choosing the step helps is simulated. Its points, and
+what this draft now does about them:
+
+| Objection | Change made (or still needed) |
+|---|---|
+| The target is too low to interest the journal | **Target T now set against an in-house Sc-free reference alloy** (positive control) made, printed, aged and tested the same way; B reported by element and Sc-free made a constraint (pre-registration, Fig. 5c, Table 2, results-needed B6). If campaign 2 can't plausibly reach T, version B goes to another journal |
+| The twin comparison is built in: κ = 1 is a screen ignoring a feature the CALPHAD node computes; the twin is validated in sample | Baseline is now the **best-form screen** (all CALPHAD outputs, trained on campaign 1, tuned cut-off); the **headline comparison is pKGFN vs full-chain network BO**; the twin is **fitted on campaign 1 and must predict campaign 2 out of sample**; truths drawn from the fitted posterior; measured κ primary; ±50 % cost robustness (pre-registration) |
+| "Stopped p % before printing" doesn't show the stops were right; failures will masquerade as decisions | Stops labelled failure / constraint / acquisition; a **random 25 % of acquisition stops pushed one step further** (false-stop rate); hardware failures modelled as a per-step process; design space cut to 3–5 elements (Fig. 5a, B7) |
+| Composition fidelity is tested on Si, with a method (5 kV EDS) that can't see Mn, Cr, Fe, Ni, Cu, Zn, Ce or Er | **ICP-OES on every campaign powder by sieve fraction**, a fidelity check on Zr, Sc/Er and Mn, sectioned-particle maps before any "within a particle" claim (§2.3, C5) |
+| Overclaims in the introduction and abstract | Fixed: "no other process can make", "a fixed order" (now fixed stage-gates), the universal negative about tested methods (now narrowed, with multi-information-source, freeze-thaw and Hyperband cited), the twin claim in the abstract, "any composition", Scheil wording, the best-so-far tautology |
+| Missing controls and baselines | Added to the plan: route control (in-house AlSi10Mg on both machines, P6), positive control (B6), Taheri-Mousavi's alloy on Fig. 5c, aging curves per family, ≥ 8 alloys and matched preheat for the printer transfer, powder mass per node in Table 1. **Still to decide:** whether laser remelting of cast or arc-melted buttons, a cheap hot-cracking screen that needs no powder, should be a node (or argued against), and how this route compares with nanoparticle-decorated commercial powder (Martin 2017) |

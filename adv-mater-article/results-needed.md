@@ -41,9 +41,10 @@ Suppliers:
 | ID | Result | Supplied by | Status (Nov 27) | Owner | Due |
 |---|---|---|---|---|---|
 | C1 | Charge composition as weighed vs. target, every charge, including the cup alloy's own composition (certificate or ICP of the 6063 lot) | campaigns 1 and 2 (dosing logs) + doser papers | **partial**: dose accuracy exists in the powder-doser work (e.g. 7.9928 g of 8.000 g AlSi10Mg; misses of 0.2–7 mg on 3–8 g cups). The 6063 cup is ~80 % of a charge and its spec range (~0.35 Si, ~0.6 Mg wt%) dominates the error; no charge has been checked by ICP or EDS; fine Si (−325 mesh) won't feed | Gage, Paul (cups and bar) | Mar 2027 |
-| C2 | Block B spread (B1–B7: 22.5, 7.5, 30, 0, 15, 30, 7.5 wt% 4047 → ~1.3–3.9 wt% Si): EDS per particle at top/middle/bottom of the jar, plus ICP-OES | Block B + outside lab | **none**; Oct 2 (u23y78) is a pilot point | Gage (runs), Ronnie (EDS), Sterling (ICP) | Jun 2027 |
+| C2 | Block B spread (B1–B7: 22.5, 7.5, 30, 0, 15, 30, 7.5 wt% 4047 → from the cup's 0.2–0.6 wt% Si to ~3.4–4.3 wt%): EDS per particle at top/middle/bottom of the jar, plus ICP-OES | Block B + outside lab | **none**; Oct 2 (u23y78) is a pilot point | Gage (runs), Ronnie (EDS), Sterling (ICP) | Jun 2027 |
 | C3 | Mg recovery through atomization and through printing (ICP on charge, powder, print) | campaigns 1–2 + outside lab | **none** | Ronnie, Sterling | Sep 2027 |
 | C4 | EDS against ICP for Si-free and Si-bearing alloys: bias and precision, for the composition node's noise model | CALIBER + ICP-OES | **partial**: one valid standards-based EDS run (Utah AlSi10Mg coupon: Mg 0.35 ± 0.01, Si 11.12 ± 0.13 wt%, counting error only; 1 of 17 runs valid); standardless Mg reads ~4× high; simulated particle-geometry error for Si ±0.3 wt% at 5 kV vs ±1.3 at 15 kV. **ICP route open:** acid-only digests leave Si behind (an ICP-MS/MS attempt failed); HF digestion is a safety decision; ICP-OES exists at BYU but hasn't been used | Ronnie (CALIBER); Sterling (HF or outside lab) | Jun 2027 |
+| C5 | ICP-OES on every campaign powder, by sieve fraction (15–45 µm cut), for the additions EDS at 5 kV can't see (Mn, Cr, Fe, Ni, Cu, Zn K lines; Ce, Er L lines); checks Zr dissolution at Al pouring temperatures and Zr/Sc loss to carbides in the graphite crucible | ICP-OES (HF digest or outside lab) | **none** | Ronnie, Sterling | Sep 2027 |
 
 ## §2.4 Printing in-house (Fig. 4)
 
@@ -53,7 +54,8 @@ Suppliers:
 | P2 | Single tracks and cubes of campaign 2 powders: power–speed maps, density, cracking, monitoring signals | desktop LPBF | **none**; no single tracks have been measured on any machine | Carl | Aug 2027 |
 | P3 | The same powders printed on the Utah Aconity MIDI (reference) | Utah (Spear lab) | **partial**: one AlSi10Mg build from commercial powder (Apr 2026). A full cylinder needs ~440 g; the Ø55 mm kit (~30 g) may not exist at Utah. Sessions P1–P5 proposed, not booked | Carl | Sep 2027 |
 | P4 | Archimedes density and hardness on every print; desktop vs Utah parity | campaigns 1–2 | **none**; density set-up scheduled for Dec 4 (#144) | Carl, Ronnie | Sep 2027 |
-| P5 | Metallography of cracking against the CALPHAD crack index | campaigns 1–2 | **none** | Ronnie, Xavier | Oct 2027 |
+| P5 | Metallography and EBSD of cracking and grain structure against the CALPHAD crack index (equiaxed grains where primary Al₃Zr formed) | campaigns 1–2 | **none** | Ronnie, Xavier | Oct 2027 |
+| P6 | Route control: in-house atomized AlSi10Mg printed beside the commercial lot on both machines | campaigns 1–2 | **planned** in campaign 1 (D1/D1-r runs) | Carl, Gage | Sep 2027 |
 
 ## §2.5 The optimizer chooses the step (Fig. 5, Table 2)
 
@@ -64,6 +66,8 @@ Suppliers:
 | B3 | Campaign 2 itself: ~12 weeks, ~25–35 atomizer runs, desktop printing, hardness and density on all, tensile on finalists | campaign 2 | **not planned yet** | whole team | Jul–Oct 2027 |
 | B4 | Mineral burden B = Σ wᵢ·NIRᵢ (USGS MCS 2026) for every alloy, with the campaign paper's definition | script in the campaign paper's folder | **none computed** (defined four ways in the FLAIME proposal; campaign paper proposes this one) | Xavier or a Claude run | Mar 2027 |
 | B5 | Finalists: ≥ 3 valid tensile specimens each, and AlSi10Mg printed and tested the same way | campaign 2 + Utah (the desktop plate can't make standard bars) | **partial**: Utah AlSi10Mg n = 4 (YS 228 ± 13 MPa) | Carl | Nov 2027 |
+| B6 | **Positive control:** an in-house Sc-free reference alloy (Al–Mg–Zr or Al–Mn–Cr–Zr, from the literature) atomized, printed, aged (aging curve) and tested exactly as the candidates; sets the target T | campaign 1 or early campaign 2 | **none** | Gage (runs), Carl (prints, tensile), Xavier (choice) | Jul 2027 |
+| B7 | **Stop audit:** every stop labelled failure / constraint / acquisition; a random 25 % of acquisition stops pushed one step further to measure the false-stop rate | campaign 2 | **none** | Xavier | Oct 2027 |
 
 ## §2.6 When it pays off (Fig. 6)
 
