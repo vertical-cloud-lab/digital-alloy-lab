@@ -8,7 +8,7 @@ Printable Aluminum Alloys* ("supply-secure" depends on D9)
   Experimental Section skeleton filled from the run records, an SI skeleton numbered as in the figure plan, 76 references (69 checked against Crossref or arXiv, 7 vendor data sheets checked by hand),
   and four draft panels drawn from data that already exist (Fig. 1a, Fig. 5c's frame, Fig. 6b's layout, Figure S1).
 - **The optimizer's synthetic benchmark is in** (the short version of the BOFN methods work, issue #121): a paragraph
-  and the statistics in the Experimental Section, two sentences in §2.6, and SI S12 and the synthetic part of S14,
+  and the statistics in the Experimental Section, a short paragraph in §2.6, and SI S12 and the synthetic part of S14,
   with two figures and the 2 × 2 table. Every benchmark statistic is a `\stat` macro read from
   `../benchmarks/bofn-paper/paper-stats/numbers.tex`, the file the MethodsX draft reads too.
 - **What doesn't:** none of the article's own results exist yet.

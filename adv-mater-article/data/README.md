@@ -14,7 +14,7 @@ When the YAML run records exist (one per run, byu-vcl `run-record-template.yaml`
 built from those instead.
 
 **The synthetic benchmark is not this article's result.** It is the BOFN methods paper's (#121). This article
-reports it in the SI (S12, and the synthetic part of S14), quotes two sentences of it in §2.6 until the twin is
+reports it in the SI (S12, and the synthetic part of S14), summarizes it in a short paragraph of §2.6 until the twin is
 calibrated, and uses it to lay out Fig. 6b. If the MethodsX companion is published first, the SI section shrinks to
 a summary and a citation (one macro, `\bofncompanion`, in `preamble.tex`, which both the manuscript and the SI read).
 
