@@ -348,7 +348,12 @@ which the policy's mean curve first reaches it; it is 0 if the policy's mean
 never gets there within \$100k. It is an acceleration factor in the sense used
 for self-driving laboratories~\cite{tom2024}, measured in dollars. Wilcoxon signed-rank
 $p$-values~\cite{wilcoxon1945} and win counts are reported alongside, without
-correction for the number of comparisons.
+correction for the number of comparisons. Matching pays where the shared start
+varies most: at $\kappa=1$, where the best seed alloy ranges from below zero to
+84\% of the optimum, the median matched-seed interval of a difference is
+\stat{k1-widthratio-v25} times as wide at \$25k, and \stat{k1-widthratio-auc}
+times as wide for the anytime score, as the interval from resampling each
+policy's seeds independently (\stat{k1-widthratio-v100} at \$100k; all 28 pairs).
 
 \subsection*{Reproducibility protocol}
 

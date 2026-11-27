@@ -193,6 +193,7 @@ def analyse(kappa, check=False):
         alloc["wall_s_mean"] = float(np.mean([runs[p][s].get("wall_s", float("nan")) for s in seeds]))
         res["policies"].append(row)
         res["allocation"].append(alloc)
+    idx2 = boot_idx(len(seeds), np.random.default_rng(1))  # a second, independent resample (sensitivity check)
     for a, b in combinations(POLICIES, 2):
         row = {"kappa": kappa, "a": a, "b": b, "n": len(seeds)}
         for m in METRICS:
@@ -200,6 +201,9 @@ def analyse(kappa, check=False):
             bs = dlt[idx].mean(1)
             row[f"{m}_diff"] = dlt.mean()
             row[f"{m}_lo"], row[f"{m}_hi"] = pct(bs, 0.95)
+            # width of the same interval if each policy's seeds were resampled independently
+            lo_i, hi_i = pct(M[a][m][idx].mean(1) - M[b][m][idx2].mean(1), 0.95)
+            row[f"{m}_width_ratio"] = (row[f"{m}_hi"] - row[f"{m}_lo"]) / (hi_i - lo_i) if hi_i > lo_i else float("nan")
             row[f"{m}_wins"], row[f"{m}_ties"] = int((dlt > 1e-12).sum()), int((np.abs(dlt) <= 1e-12).sum())
             row[f"{m}_p"] = wilcoxon_p(dlt)
         res["pairwise"].append(row)
@@ -304,6 +308,11 @@ def summary_md(all_res):
             fb = "—" if math.isnan(r["fallback_share"]) else f"{r['fallback_share']:.1%}"
             L.append(f"| {LABEL[r['policy']]} | {r['C_mean']:.1f} | {r['A_mean']:.1f} | {r['L_mean']:.1f} | {r['T_mean']:.1f} | {fb} | {r['gp_fit_failures']} of {r['gp_fits']} | {r['wall_s_mean']:.0f} s |")
         L.append("")
+        wr = {m: np.nanmedian([r[f"{m}_width_ratio"] for r in res["pairwise"]]) for m in METRICS}
+        L.append("Matched vs independent resampling: the median matched-seed interval is "
+                 + ", ".join(f"{wr[m]:.2f}× as wide at {MLABEL[m]}" for m in METRICS)
+                 + " as the interval from resampling each policy's seeds independently (over all 28 pairs).")
+        L.append("")
         L.append("### Every pair (A − B, pp [95% matched CI]; wins of A / ties out of n)")
         L.append("")
         L.append("| A | B | $25k | $50k | $100k | anytime |")
@@ -343,6 +352,8 @@ def numbers_tex(all_res):
                 put(tex_key(k, r["a"], r["b"], m), f"{100 * r[f'{m}_diff']:+.1f}".replace("+", "$+$").replace("-", "$-$"))
                 put(tex_key(k, r["a"], r["b"], m, "ci"), f"{100 * r[f'{m}_lo']:.1f} to {100 * r[f'{m}_hi']:.1f}".replace("-", "$-$"))
                 put(tex_key(k, r["a"], r["b"], m, "wins"), r[f"{m}_wins"])
+        for m in METRICS:
+            put(tex_key(k, "widthratio", m), f"{np.nanmedian([r[f'{m}_width_ratio'] for r in res['pairwise']]):.2f}")
         for i, r in enumerate(res["contrasts"]):
             for m in METRICS:
                 put(tex_key(k, "c", i, m), f"{100 * r[f'{m}_diff']:+.1f}".replace("+", "$+$").replace("-", "$-$"))
