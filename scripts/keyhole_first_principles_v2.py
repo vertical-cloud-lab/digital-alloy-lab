@@ -1016,6 +1016,8 @@ def main() -> None:
                                     "states", "optics", "mapflow", "plan"])
     ap.add_argument("--only", default=None)
     ap.add_argument("--drive", action="store_true", help="meltflow: the recoil-driven moving-wall experiment")
+    ap.add_argument("--no-marangoni", action="store_true",
+                    help="meltflow: flow on with dsigma/dT = 0, so only the melt going round the keyhole remains")
     ap.add_argument("--src-tag", default="", help="mapflow: which map-classes CSV to take the absorptance from, "
                                                   "e.g. -optics-0.24")
     ap.add_argument("--out", type=pathlib.Path, default=V2_DIR)
@@ -1034,7 +1036,8 @@ def main() -> None:
         print(json.dumps({"class": classify(res, p.get("layer", 30e-6)), **dataclasses.asdict(res)}, indent=1,
                          default=float))
         return
-    logf = open(a.out / f"v2-{a.cmd}{'-drive' if getattr(a, 'drive', False) else ''}{a.src_tag}.log", "w")
+    logf = open(a.out / f"v2-{a.cmd}{'-drive' if getattr(a, 'drive', False) else ''}"
+                        f"{'-no-marangoni' if a.no_marangoni else ''}{a.src_tag}.log", "w")
 
     def log(*x):
         line = " ".join(str(y) for y in x)
@@ -1073,7 +1076,7 @@ def main() -> None:
         (a.out / "v2-conduction-sensitivity-summary.json").write_text(json.dumps(s_, indent=1, default=str) + "\n")
         return
     if a.cmd == "meltflow":
-        run_meltflow_v2(a.out, log, only=a.only, drive=a.drive)
+        run_meltflow_v2(a.out, log, only=a.only, drive=a.drive, no_marangoni=a.no_marangoni)
         log("done in", round(time.time() - t0), "s")
         return
     if a.cmd == "explore":
@@ -1212,9 +1215,11 @@ def run_maps_meltflow(out: pathlib.Path, log=print, src_tag="") -> dict:
     return s
 
 
-def run_meltflow_v2(out: pathlib.Path, log=print, only=None, drive=False) -> dict:
+def run_meltflow_v2(out: pathlib.Path, log=print, only=None, drive=False, no_marangoni=False) -> dict:
     """Each case's keyhole (shape, T_w, power outside the opening) from solve_point_v2, then the melt-flow solver
-    with Marangoni off and on. The materials are version 2's (sourced k(T)); viscosities as in keyhole_meltflow."""
+    with Marangoni off and on. The materials are version 2's (sourced k(T)); viscosities as in keyhole_meltflow.
+    no_marangoni: flow on with dsigma/dT = 0, so that the only flow effect left is the melt going round the keyhole
+    instead of through it (with flow off the plate's motion passes through the keyhole's cells)."""
     import keyhole_meltflow as mf
     rows, fields = [], {}
     for label, key, P, v, Aov in MELTFLOW_CASES:
@@ -1228,8 +1233,8 @@ def run_meltflow_v2(out: pathlib.Path, log=print, only=None, drive=False) -> dic
             r0, T0, hatch = a["r0"], a["T0"], a["hatch"]
         res, sol = solve_point_v2(al, P, v, r0, T0, A_override=Aov, hatch=hatch)
         mu0, E = mf.VISCOSITY[key]
-        pr = mf.props_from_material(al.m, mu0=mu0, E_mu=E, dsigma_dT=mf.DSIGMA_DT_DEFAULT, C_darcy=mf.C_DARCY_DEFAULT,
-                                    evaporation=True)
+        pr = mf.props_from_material(al.m, mu0=mu0, E_mu=E, dsigma_dT=0.0 if no_marangoni else mf.DSIGMA_DT_DEFAULT,
+                                    C_darcy=mf.C_DARCY_DEFAULT, evaporation=True)
         kh = None
         if sol:
             kh = dict(z=np.asarray(sol["zn"]), xc=np.asarray(sol["xcn"]), r=np.asarray(sol["rn"]), T_w=sol["T_w"],
@@ -1245,22 +1250,25 @@ def run_meltflow_v2(out: pathlib.Path, log=print, only=None, drive=False) -> dic
         case = mf.Case(label=label, props=pr, P=P, v=v, r0=r0, T0=T0, A=res.A, keyhole=kh, grid=g,
                        wall_drive=drive, wall_sigma=al.m.sigma)
         log(f"{label}: v2 keyhole d {res.d_um:.0f} um, A {res.A:.3f}; grid {g.shape} = {g.n} cells")
-        for flow in ((True,) if drive else (False, True)):
+        for flow in ((True,) if (drive or no_marangoni) else (False, True)):
             o, T, st, khm = mf.solve_case(case, flow=flow, log=log)
             r = {"case": label, "alloy": key, "P_W": P, "v_m_s": v, "A": res.A, "A_fixed": Aov is not None,
                  "keyhole_depth_um": res.d_um if sol else 0.0, "front_wall_deg": res.front_wall_deg,
                  "analytic_pool_depth_um": res.pool_depth_um, "analytic_pool_width_um": res.pool_width_um,
                  "analytic_pool_length_um": res.pool_length_um,
                  "analytic_pool_length_solidus_um": res.pool_length_solidus_um, "analytic_Q_cond_W": res.Q_cond_W,
-                 "wall_drive": drive, "wall_speed_max_m_s": o.get("wall_speed_max_m_s", 0.0), **mf._row(case, o)}
+                 "wall_drive": drive, "wall_speed_max_m_s": o.get("wall_speed_max_m_s", 0.0),
+                 **({"marangoni": False} if no_marangoni else {}), **mf._row(case, o)}
             rows.append(r)
             log(json.dumps({k: (round(x, 2) if isinstance(x, float) else x) for k, x in r.items()}))
             if flow:
                 fields[label] = (case, T, st, khm)
     t = pd.DataFrame(rows)
-    tag = ("-recoil-driven" if drive else "") + ("-" + only if only else "")
+    tag = ("-recoil-driven" if drive else "") + ("-no-marangoni" if no_marangoni else "") + ("-" + only if only else "")
     t.to_csv(out / f"v2-meltflow-runs{tag}.csv", index=False, float_format="%.5g")
     for label, (case, T, st, khm) in fields.items():
+        if no_marangoni:
+            break
         if label in ("blend-375W-0.4-own", "al5182-473W-0.7-A_measured"):
             mf.figure(case, T, st, khm, out / f"v2-meltflow-{label}{'-recoil-driven' if drive else ''}.png")
     return {"rows": len(rows)}

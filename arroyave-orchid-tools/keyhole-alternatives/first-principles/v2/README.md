@@ -305,6 +305,10 @@ At version 2's states, liquidus pool depth / width / length (solidus length in b
 - **Melt flow does little to these aluminium pools.** Two effects are lumped together here: the Marangoni flow, and the melt going round the keyhole instead of through it, as the plate does with flow off.
   - Together they widen the pools by 7–12 % and make them 0–4 % shallower. Length changes by −6 to +2 %.
   - The keyhole wall delivers 1–5 % less heat with flow, so flow wouldn't move the keyhole depth much either.
+  - **Separating the two** (`meltflow --no-marangoni`: flow on with dσ/dT = 0; [`v2-meltflow-runs-no-marangoni.csv`](v2-meltflow-runs-no-marangoni.csv), added in the final review).
+    - The melt going round the keyhole, on its own, narrows the pools by 0.4–4 % and shortens them by 2–6 %. It accounts for all of the keyhole wall's lower heat.
+    - Marangoni flow then widens them by 8–14 % and leaves the wall's heat unchanged.
+    - So the widening is Marangoni's, and the change in the keyhole's heat is the blockage's.
   - The liquid's high thermal diffusivity keeps the Péclet number of a 3 m/s surface flow modest.
 - **The analytic model's averaged properties matter more than flow.** Version 1 and version 2 use one
   Kirchhoff-mean conductivity and one secant heat capacity for the whole range, and the solver resolves k(T) and H(T)
@@ -464,6 +468,7 @@ Reports, raw trajectories and the DOI check are in
 | `v2-map-classes-meltflow.csv`, `v2-map-classes-optics-0.24-meltflow.csv` (and `-summary.json`) | every non-keyhole grid point re-solved with the melt-flow solver, at version 2's absorptance and at the 0.24 one |
 | `v2-single-track-plan.csv` | the grid points where single tracks would discriminate |
 | `v2-meltflow-runs-recoil-driven.csv` | the recoil-driven melt-flow experiment (section 6) |
+| `v2-meltflow-runs-no-marangoni.csv`, `v2-meltflow-no-marangoni.log` | the melt-flow runs with Marangoni flow off but the flow on, which separates the two flow effects (section 6) |
 
 The Monte Carlo seeds are fixed.
 
@@ -506,6 +511,7 @@ python scripts/keyhole_first_principles_v2.py mapflow       # the maps' non-keyh
 python scripts/keyhole_first_principles_v2.py mapflow --src-tag=-optics-0.24   # the same at the 0.24 absorptance
 python scripts/keyhole_first_principles_v2.py plan          # the single-track plan, from the CSVs above
 python scripts/keyhole_first_principles_v2.py meltflow --drive   # the recoil-driven experiment, about 15 min
+python scripts/keyhole_first_principles_v2.py meltflow --no-marangoni   # flow on, dsigma/dT = 0, about 8 min
 python scripts/keyhole_first_principles_v2.py meltflow      # section 6, about 11 min on 4 cores
 python scripts/keyhole_first_principles_v2.py figures
 # only to regenerate the activity table (pycalphad 0.11.2, which needs Python 3.13 or older, and the orchid-project.org databases):
