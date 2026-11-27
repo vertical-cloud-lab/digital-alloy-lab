@@ -1107,7 +1107,22 @@ def merge(chapter, paths, k_stills=4):
     by name (worst depth and its frame, frame counts summed, ranges joined), allowed and CAD-overlap lists likewise; the
     stills of the worst pairs copied in."""
     import shutil
-    parts = [json.loads(Path(p).read_text()) for p in paths]
+    parts = []
+    for p in paths:
+        # round 10: "path@offset" adds offset to every frame number of that slice's audit (a slice whose frames moved when
+        # an earlier slice was drawn again on a changed recording: merge_parts.py --order, audit_parts.json's own_first_frame)
+        path_, _, off = str(p).partition("@")
+        j = json.loads(Path(path_).read_text())
+        off = int(off or 0)
+        if off:
+            for r in j.get("pairs", []):
+                r["worst_frame"] = int(r["worst_frame"]) + off
+                r["frame_ranges"] = [[int(a) + off, int(b) + off] for a, b in r.get("frame_ranges", [])]
+            for r in j.get("cad_overlaps", []):
+                if "worst_frame" in r:
+                    r["worst_frame"] = int(r["worst_frame"]) + off
+        parts.append(j)
+    paths = [str(p).partition("@")[0] for p in paths]
     pairs, allowed, cad, rigid = {}, {}, {}, {}
     out = dict(chapter=chapter, threshold_mm=DEPTH_MM, opaque_min=OPAQUE, recordings=[], frames_recorded=0, frames_checked=0,
                narrow_checks=0, pairs_tested=0, seconds=0.0, peak_rss_mb=0, merged_from=[str(p) for p in paths])

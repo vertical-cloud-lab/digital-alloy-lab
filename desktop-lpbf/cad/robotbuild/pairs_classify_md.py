@@ -68,6 +68,12 @@ def classify(r):
     pmv = 999.0 if pm is None else (None if pm == "n/a" else float(pm))
     r["kinds"] = f"{ka} x {kb}"
     r["drawn"] = drawn
+    if any("screw presenter" in nm for nm in (r["a"], r["b"])) and ks & {"shcs", "fhcs", "set"}:
+        # round 10: a screw standing in the MiR's screw presenter at its pick: the presenter is drawn (and checked by the
+        # planner) as a solid block, without the slots the screws stand in
+        r["cls"], r["cause"] = "b", ("drawn model: a screw standing in the MiR's screw presenter where the bit picks it (1-2 "
+                                     "frames); the presenter is drawn as a solid block, without the slots that hold the screws")
+        return r
     if pmv is not None and pmv <= 1.5:
         r["cls"], r["cause"] = "b", "drawn mesh: the planner's 0.1 mm mesh is clear (decimation or tessellation of the drawn mesh)"
         return r
@@ -139,7 +145,7 @@ for ch in CHAPTERS:
              f"| (a) real clipping | {cnt['a']} | by cause (pairs; distinct frames): " +
              ("; ".join(f"{CAUSE[k][0]} {v} ({len(fr_c[k])} fr)" for k, v in sorted(by_cause.items(), key=lambda kv: -kv[1]))
               or "none") + " |",
-             f"| (b) drawn-mesh artifact | {cnt['b']} | clear on the planner's 0.1 mm meshes |",
+             f"| (b) drawn-mesh artifact | {cnt['b']} | clear on the planner's 0.1 mm meshes, or a screw in the solid-block screw presenter at its pick |",
              f"| (c) intended contact | {cnt['c']} | fingertips on the part they hold, within 5 mm |"]
     if nn:
         body.append(f"| not re-measured | {nn} | an actor missing at the recorded worst frame |")

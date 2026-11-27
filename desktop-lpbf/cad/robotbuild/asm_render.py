@@ -255,6 +255,11 @@ class Replay:
         drv = pv.Cylinder(center=(0, 0, 55), direction=(0, 0, 1), radius=2.5, height=110).triangulate().merge(
             pv.Cylinder(center=(0, 0, 160), direction=(0, 0, 1), radius=14, height=100, resolution=16).triangulate())
         sc.add("op/tool/screwdriver", drv, "#c0392b", group="op/tool", specular=0.3, shown=False)
+        # round 10: a long-shank driver (an extension: 300 mm bit, handle 300-400 mm up) for a screw the short one can't reach
+        # (F18's rail screw inside the chamber at Fixture B), tip at the origin, along +z
+        drl = pv.Cylinder(center=(0, 0, 150), direction=(0, 0, 1), radius=3.0, height=300).triangulate().merge(
+            pv.Cylinder(center=(0, 0, 350), direction=(0, 0, 1), radius=14, height=100, resolution=16).triangulate())
+        sc.add("op/tool/driver_long", drl, "#c0392b", group="op/tool", specular=0.3, shown=False)
         # ---- a person for the person steps
         self.person = None
         if people_ok:
@@ -420,6 +425,10 @@ class Replay:
         s = self.st[n]
         c = s["close"] if close is None else close
         t = s.get("tool") or "gripper"
+        if t in ("gripper+plate", "gripper+caps"):
+            # fingertip caps: the TCP is the caps' grasp point (cell.Arm.tcp_mm with the cap spec), as the planner's
+            F = a.fk(s["q"])
+            return a.base @ F["tool0"] @ Tm((0.0, 0.0, self.K.TC_H + self._caps_tcp_mm(t, c)))
         if t.startswith("gripper") or t in ("hand", ""):
             return a.tcp(s["q"], c)
         key = (t, float((s.get("spec") or {}).get("extra_bit", 0.0) or 0.0), (s.get("spec") or {}).get("tip_d"))
@@ -441,6 +450,20 @@ class Replay:
 
     def tcp(self, n):
         return self.tcp_T(n)[:3, 3]
+
+    def _caps_tcp_mm(self, t, c):
+        """cell.Arm.tcp_mm with fingertip caps: the midpoint of the caps' inner faces at grasp_z in the fingertip frames."""
+        import ur_arm
+        if t == "gripper+plate":
+            import eoat
+            sp = eoat.plate_finger_spec()
+            zg, xi = float(sp["grasp_z"]), float(sp["inner_x"])
+        else:
+            zg, xi = 31.9, 23.0                      # run_assembly.set_tool's ring caps
+        G = ur_arm.gripper_fk(c)
+        pl = (G["left_finger_tip"] @ np.array([-xi, 0.0, zg, 1.0]))[:3]
+        pr = (G["right_finger_tip"] @ np.array([xi, 0.0, zg, 1.0]))[:3]
+        return float((pl[2] + pr[2]) / 2.0)
 
     def retire_tools(self, idx=None):
         """Round 9: the seal steps' hand tools (ring loader, spigot mandrel and pusher) go back to the stand when the step that
@@ -1655,7 +1678,7 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
             if fit is not None and choice[1] is None:
                 xs, ys = choice[0]["spot"]
                 P.place(x=xs, y=ys, hd=face_hd(look[0] - xs, look[1] - ys), look=look, frame=tot["n"])
-                choice = (choice[0], fit(P)[1])
+                choice = (choice[0], fit(P, force=True)[1])   # the poses there, short of reach if need be (checked)
             print(f"   {cur['id']}: no spot of {tried} keeps the person clear and in reach; the least bad: {worst[1][:3]} "
                   f"(spots ruled out: {why_all})", flush=True)
             if os.environ.get("ASM_PERSON_DEBUG") == "1":
@@ -1787,14 +1810,17 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
             u = -u
         return c + u * float(np.abs(t).max()), u
 
-    def place_driver(P, h, u):
+    def place_driver(P, h, u, long=False):
         """The hand driver in the person's right hand, pointing at the screw: its bit on the head when the hand is close
-        enough, else the handle in the hand and the bit towards the screw (never left floating)."""
+        enough, else the handle in the hand and the bit towards the screw (never left floating). long: the 300 mm one
+        (round 10), shown instead of the short one."""
+        rp.sc.alpha["op/tool/screwdriver"] = 0.0 if long else 1.0
+        rp.sc.alpha["op/tool/driver_long"] = 1.0 if long else 0.0
         hp = np.asarray(P.hand_point("r"), float)
         dv = hp - h
         L_ = float(np.linalg.norm(dv))
         zz = dv / L_ if L_ > 1e-6 else u
-        tip = h if L_ <= 260.0 else hp - 160.0 * zz
+        tip = h if L_ <= (450.0 if long else 260.0) else hp - (350.0 if long else 160.0) * zz
         xx = np.cross(zz, [0.0, 0.0, 1.0]) if abs(zz[2]) < 0.9 else np.cross(zz, [1.0, 0.0, 0.0])
         xx /= np.linalg.norm(xx)
         Rt = np.eye(4)
@@ -1843,10 +1869,10 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
         is clear; else the clear one that comes closest; else the hands at the person's sides. Every pose drawn is checked.
         Returns (what is wrong with the worst job: [(part, what, mm)], "hand"/"out of reach" for a reach short by mm;
         [pose per job])."""
-        def fit(P, quick=False):
+        def fit(P, quick=False, force=False):
             poses, worst = [], []
             ps = np.array([float(P.st["x"]), float(P.st["y"])])
-            if not quick:
+            if not quick and not force:
                 # the reach first, from the floor plan alone (no posing): every job's target within 820 mm of where they
                 # stand (people.py's right hand reaches 750-800 mm forward leaning 28 deg)
                 far = 0.0
@@ -1880,28 +1906,36 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                     h, u = screw_axis(objs[0])
                     cands = [(f"driver {d:.0f} mm", {"r": tuple(map(float, h + d * u)), "l": None}, {"l": None, "r": None},
                               (h, u)) for d in (150.0, 200.0, 120.0)]
+                    # round 10: the long-shank driver (300 mm bit) where the short one's handle can't be reached clear
+                    cands += [(f"long driver {d:.0f} mm", {"r": tuple(map(float, h + d * u)), "l": None},
+                               {"l": None, "r": None}, (h, u)) for d in (350.0, 390.0)]
 
                 def pose_it(c_, lean):
                     nm, hands, palm, hu = c_
                     P.set(hands=hands, palm=palm, lean=lean, frame=tot["n"])
                     if hu is not None:
-                        rp.sc.alpha["op/tool/screwdriver"] = 1.0
-                        place_driver(P, *hu)
-                        # a screw: the right hand on the driver's handle (110-230 mm up from its bit), the bit on the head
+                        lg = nm.startswith("long")
+                        place_driver(P, *hu, long=lg)
+                        # a screw: the right hand on the driver's handle (110-230 mm up from its bit; the long one's
+                        # 300-420 mm), the bit on the head
                         L_ = float(np.linalg.norm(np.asarray(P.hand_point("r"), float) - hu[0]))
-                        return max(0.0, 110.0 - L_, L_ - 230.0)
+                        return max(0.0, 300.0 - L_, L_ - 420.0) if lg else max(0.0, 110.0 - L_, L_ - 230.0)
                     return max(float(np.linalg.norm(np.asarray(P.hand_point(s), float) - np.asarray(hands[s], float)))
                                for s in ("l", "r") if hands.get(s) is not None)
 
                 def hits_now(c_):
-                    hs = rp.person_hits(P, own=own, extra=("op/tool/screwdriver",) if c_[3] is not None else (), limit=3)
+                    ex = () if c_[3] is None else (("op/tool/driver_long",) if c_[0].startswith("long") else
+                                                     ("op/tool/screwdriver",))
+                    hs = rp.person_hits(P, own=own, extra=ex, limit=3)
                     rp.sc.alpha["op/tool/screwdriver"] = 0.0
+                    rp.sc.alpha["op/tool/driver_long"] = 0.0
                     return hs
                 reach_ok, short = [], []
                 for c_ in cands:
                     for lean in (0.0, 15.0, 28.0):
                         r_ = pose_it(c_, lean)
                         rp.sc.alpha["op/tool/screwdriver"] = 0.0
+                        rp.sc.alpha["op/tool/driver_long"] = 0.0
                         if r_ <= 80.0:
                             reach_ok.append((c_, lean, r_))
                             break
@@ -1977,8 +2011,9 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                     pose = dict(hands={"l": None, "r": None}, palm={"l": None, "r": None}, look=tuple(work))
                 if (pose.get("hands") or {}).get("r") is None:
                     hu = None                      # the hands at their sides (nothing clear within reach): no driver drawn
+                lg = str(pose.get("name", "")).startswith("long")
                 if hu is not None:
-                    rp.sc.alpha["op/tool/screwdriver"] = 1.0
+                    rp.sc.alpha["op/tool/driver_long" if lg else "op/tool/screwdriver"] = 1.0
                 for f in range(nfj):
                     if P is not None and pstate["on"]:
                         P.set(hands=pose["hands"], palm=pose["palm"], look=pose.get("look") or tuple(map(float, work)),
@@ -1986,9 +2021,10 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                               frame=tot["n"])
                         pstate["n"] = tot["n"]
                         if hu is not None:
-                            place_driver(P, *hu)
+                            place_driver(P, *hu, long=lg)
                     elif hu is not None:
                         rp.sc.alpha["op/tool/screwdriver"] = 0.0
+                        rp.sc.alpha["op/tool/driver_long"] = 0.0
                     if f == 3:                       # the hands have reached it: the part is in its seat, the screw in
                         for i in objs:               # its hole
                             if kind == "part":
@@ -2001,6 +2037,7 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                             status="person", loc=loc):
                         return True
                 rp.sc.alpha["op/tool/screwdriver"] = 0.0
+                rp.sc.alpha["op/tool/driver_long"] = 0.0
                 if P is not None:
                     P.set(hands={"l": None, "r": None}, palm={"l": None, "r": None}, lean=0.0, frame=tot["n"])
             return False
@@ -2142,6 +2179,17 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
             elif k in ("move", "screw") and e.get("q") is not None and len(e["q"]):
                 rp.set_arm(n, q=np.asarray(e["q"][-1], float), close=e.get("close"))
                 if e.get("unplanned"):
+                    # round 10: an approach the planner could not plan (cut, not drawn) ends where its gripper closes on a
+                    # part: the fingers are drawn at that grip's closure from the cut on. Round 9 drew them open there for
+                    # the card's 1.5 s, which is the pose the planner had found in collision (F05b: a fingertip 7.9 mm in
+                    # the outlet plenum port, 19 frames)
+                    for g_ in ev[i_ev + 1:i_ev + 8]:
+                        if g_.get("arm") == n and g_["kind"] in ("move", "move2", "drive", "screw"):
+                            break
+                        if g_.get("arm") == n and g_["kind"] == "grip" and float(g_["c1"]) > float(rp.st[n]["close"]):
+                            rp.set_arm(n, close=float(g_["c1"]))
+                            g_["c0"] = float(g_["c1"])
+                            break
                     # round 9: the badge says FAIL only if the step failed (M26 passed; only its move back to park had no
                     # checked path, and round 8's card showed a FAIL badge on it)
                     nt = str(e.get("unplanned_note") or "").replace(" not planned", "")
