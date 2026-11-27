@@ -111,12 +111,20 @@ with biblatex-chem, biber and latexmk, plus Python with requests and matplotlib.
 
 ## Realistic submission date
 
-**Tuesday, Feb 15, 2028**, about two weeks before a late-February deadline, if D1 confirms that deadline:
-- **Version B by then: likely.** It needs Block A by the end of March 2027, Block B and the step-cost logs.
-- **Version A by then: possible, not yet likely.** It needs the desktop LPBF ordered by January 2027 and printing Al by
-  May, a second campaign in July–October 2027, and an optimizer that makes real step choices on lab data.
-- **If any of those slips past about August 2027,** version A moves to mid-2028 and would likely miss the collection.
-  The options then are version B for the collection, or version A as a regular submission.
+**Tuesday, Feb 15, 2028**, about two weeks before a late-February deadline, if D1 confirms that deadline and only
+if version A holds up:
+- **For *Advanced Materials*, only version A is realistic.** The mock review judged a platform-and-replay paper
+  (version B) a likely desk rejection. Version B is still a good paper for *npj Computational Materials*, *Digital
+  Discovery* or *Additive Manufacturing*, and it can be ready by **Jul 2027** if Block A runs by the end of March.
+- **Version A by Feb 2028: possible, not yet likely.** It needs:
+  - the desktop LPBF ordered by January 2027 and printing Al by May;
+  - the positive-control alloy made and tested by July;
+  - campaign 2 in July–October;
+  - an optimizer that makes audited step choices on lab data;
+  - an alloy that matches or beats the Sc-free reference.
+- **If the desktop LPBF or campaign 2 slips past about August 2027,** version A moves to mid-2028 and misses the
+  collection. Submit it as a regular article, and send version B elsewhere.
+- **If the collection actually closes in Feb 2027,** this plan folds into the campaign paper.
 
 ## Data and code availability (plan)
 

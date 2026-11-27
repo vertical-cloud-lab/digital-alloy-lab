@@ -10,7 +10,7 @@ Dates are proposals; nothing has been booked or ordered.*
 |---|---|---|---|
 | G-A0 | Fri Dec 18, 2026 | Decisions made: collection and due date (D1), the split with the campaign paper (D2), desktop LPBF build or buy and who orders it (D7); bench logging of step times (L1–L2) started | Each week of delay on D7 moves P1 by a week |
 | G-A1 | Wed Mar 31, 2027 | ≥ 5 valid Block A runs checked against the bar (A1–A2); campaign 1 step costs compiled (L1–L2); mineral burden computed (B4); twin refit to campaign 1 records (T1, first pass) | Block A is the one thing version B can't do without: if it isn't done, run it in April before anything else |
-| G-A2 | Mon May 31, 2027 | Desktop LPBF prints dense Al cubes (P1); Block B and its ICP back (C2); campaign 2 optimizer, baselines, targets and stopping rule pre-registered and committed (B1) | If P1 is late, campaign 2 starts with the Utah MIDI and the desktop joins when ready; Fig. 1c and Fig. 4 shrink |
+| G-A2 | Mon May 31, 2027 | Desktop LPBF prints dense Al cubes (P1); Block B and its ICP back (C2); campaign 2 optimizer, baselines, targets and stopping rule pre-registered and committed (B1), with the twin's out-of-sample prediction of campaign 2; positive-control alloy (B6) atomized and printed, tested by July | If P1 is late, campaign 2 starts with the Utah MIDI and the desktop joins when ready; Fig. 1c and Fig. 4 shrink |
 | — | Jul 6 – Oct 15, 2027 | **Campaign 2**: ~14 weeks including flex; ~25–35 atomizer runs; hardness and density on every print; tensile on finalists | |
 | G-A3 | Thu Sep 30, 2027 | The decision log shows candidates stopped at different steps by the acquisition (Fig. 5a); version A or B chosen | Version B: write it from Blocks A/B, campaign 1 data and the twin |
 | G-A4 | Mon Nov 15, 2027 | Data freeze; finalists' samples at the outside lab (V1–V2) | Report outside results as pending, or drop V2 |
@@ -32,8 +32,9 @@ they cost almost nothing if they are logged at the bench rather than reconstruct
 
 ## Why February 2028 is realistic, and what would move it
 
-- **Version B by Feb 2028: likely** if Block A runs by the end of March 2027. Everything else for version B
-  (Blocks A/B, step costs, campaign 1 data, the refit twin) is in the lab's control and has a year of slack.
+- **Version B by Jul 2027: likely** if Block A runs by the end of March 2027. Everything else for version B (Blocks
+  A/B, step costs, campaign 1 data, the refit twin) is in the lab's control. A mock editorial review (outline §9)
+  judged version B a likely desk rejection at *Advanced Materials*, so it belongs in another journal.
 - **Version A by Feb 2028: possible, not yet likely.** It needs three things that don't exist today: a
   desktop LPBF printing Al by about May 2027 (not yet ordered; FT-1 needs 4–9 weeks after the order plus
   safety approvals), an optimizer that makes non-trivial step choices on real data (the knowledge gradient
