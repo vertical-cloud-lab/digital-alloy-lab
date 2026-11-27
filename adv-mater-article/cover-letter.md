@@ -12,9 +12,9 @@ We submit our Research Article, "[title]", for consideration in the collection "
 
 **What we found.** [One or two sentences, version A: "A laboratory that makes powder for every candidate
 composition, prints it in-house and lets a cost-aware optimizer choose which step to run next found [alloy], a
-printable aluminum alloy with [YS] yield strength and [EL] elongation at [z] % lower supply risk than Scalmalloy,
-after stopping [p] % of candidates before printing." Version B: the atomizer as a repeatable, composition-faithful
-step, the measured cost of every step, and when cost-aware optimization pays off.]
+scandium-free printable aluminum alloy whose aged yield strength ([YS], elongation [EL]) matches or exceeds an
+in-house scandium-free reference made and tested the same way, after stopping [p] of [n] candidates before
+printing." Version B goes to another journal (outline.md §5).]
 
 **Why it matters to the journal's readers.** New printable aluminum alloys are scarce because powder for an untested
 composition is hard to get and because campaigns spend their budget in a fixed order. We address both: small-lot
