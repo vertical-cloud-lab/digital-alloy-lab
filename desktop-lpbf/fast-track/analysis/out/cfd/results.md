@@ -13,7 +13,8 @@ plate at the start of a build, the hopper at its right park). Scripts: [`../../c
   the build area, 0.03–0.05 Pa on average, is at or under the lowest pick-up threshold for 63 µm AlSi10Mg (0.053 Pa)
   and half the 20 µm one; the coarsest grains may roll along the plate's sides (0.10 Pa). Fume that rises above the jet
   (4–15 mm) is only half caught and drifts round the box, passing the cover slide 80–90 mm away. 88 Pa from the nozzle
-  to the collector's port. No change needed.
+  to the collector's port. No change needed. In FT-1V's cube the jet over the plate is the same (k-ω SST: 2.49 m/s,
+  0.055 Pa, 95 % captured, 87 Pa) and escaped fume passes the slide further away (154 mm against 89 mm).
 - **Purge: through the nozzle alone, as drawn, it is slow; a low diffuser and a high vent make it fast.** Through the
   nozzle the box takes 33–50 min to 1000 ppm and 47–71 min to 100 ppm (no buoyancy; two meshes), past the study's
   expected 13–31 / 18–45 min, and the analyzer on the collector's exhaust reads about 4× under the box. With 20 L/min
@@ -37,38 +38,38 @@ the 54 mm, so neither model is exact: the steady laminar run and the k-ω SST ru
 
 *|U| and streamlines in the x = 0 plane. The nozzle (left) and the collector (right) in grey; orange, the Ø40 plate.*
 
-| | laminar, steady | k-ω SST, steady |
-|---|---|---|
-| speed 1 mm over the Ø30 build area: mean (min-max), m/s | 1.30 (0.79-1.60) | 1.62 (1.34-1.77) |
-| speed 3 mm over the Ø30 build area: mean (min-max), m/s | 2.73 (2.64-2.80) | 2.57 (2.38-2.68) |
-| speed 5 mm over the Ø30 build area: mean (min-max), m/s | 1.60 (1.19-2.00) | 1.62 (1.45-1.79) |
-| spread 1 mm (std/mean) | 12 % | 5 % |
-| spread 3 mm (std/mean) | 2 % | 4 % |
-| spread 5 mm (std/mean) | 11 % | 6 % |
-| bed shear, Ø30 build area: mean / max, Pa | 0.032 / 0.047 | 0.053 / 0.067 |
-| Ø30 build area: area over 0.053 Pa (63 µm, low cohesion) | 0 % | 54 % |
-| bed shear, Ø40 plate: mean / max, Pa | 0.033 / 0.100 | 0.049 / 0.100 |
-| Ø40 plate: area over 0.053 Pa (63 µm, low cohesion) | 8 % | 43 % |
-| bed shear, spread strip beside the plate: mean / max, Pa | 0.019 / 0.097 | 0.025 / 0.108 |
-| spread strip beside the plate: area over 0.053 Pa (63 µm, low cohesion) | 10 % | 17 % |
-| bed shear, whole block top: mean / max, Pa | 0.020 / 0.148 | 0.026 / 0.129 |
-| whole block top: area over 0.053 Pa (63 µm, low cohesion) | 9 % | 21 % |
-| tracers 0.5-3 mm: into the collector | 96 % | 99 % |
-| tracers 0.5-3 mm: held under the collector's lower lip | 4 % | 1 % |
-| tracers 0.5-3 mm: escaped to the box | 0 % | 0 % |
-| tracers 0.5 mm: into the collector | 76 % | 95 % |
-| tracers 4-15 mm (above the jet): into the collector | 65 % | 49 % |
-| tracers 4-15 mm: escaped to the box | 23 % | 31 % |
-| escaped tracers: median closest approach to the slide, mm | 80 | 89 |
-| tracers within 30 mm of the slide | 0 % | 1 % |
-| gas speed 2 mm under the slide: mean, mm/s | 3.3 | 0.9 |
-| jet flow at y = 25 mm, forward / back, L/min | 34.3 / 7.7 | 41.6 / 2.3 |
-| outlet flow, L/min | 27.0 | 27.0 |
-| pressure drop, nozzle channel inlet to collector port, Pa | 88 | 88 |
-| box (under the slide) above the collector port, Pa | 86 | 87 |
-| y+ on the plate, mean / max | - | 0.82 / 1.19 |
-| cells | 237,541 | 237,541 |
-| iterations or time steps; final initial residual Ux / Uz / p | 2000; 2e-02 / 5e-02 / 9e-03 | 904; 5e-04 / 6e-04 / 3e-04 |
+| | laminar, steady | k-ω SST, steady | FT-1V cube, k-ω SST (§3) |
+|---|---|---|---|
+| speed 1 mm over the Ø30 build area: mean (min-max), m/s | 1.30 (0.79-1.60) | 1.62 (1.34-1.77) | 1.67 (1.49-1.79) |
+| speed 3 mm over the Ø30 build area: mean (min-max), m/s | 2.73 (2.64-2.80) | 2.57 (2.38-2.68) | 2.49 (2.26-2.65) |
+| speed 5 mm over the Ø30 build area: mean (min-max), m/s | 1.60 (1.19-2.00) | 1.62 (1.45-1.79) | 1.57 (1.41-1.74) |
+| spread 1 mm (std/mean) | 12 % | 5 % | 4 % |
+| spread 3 mm (std/mean) | 2 % | 4 % | 5 % |
+| spread 5 mm (std/mean) | 11 % | 6 % | 6 % |
+| bed shear, Ø30 build area: mean / max, Pa | 0.032 / 0.047 | 0.053 / 0.067 | 0.055 / 0.070 |
+| Ø30 build area: area over 0.053 Pa (63 µm, low cohesion) | 0 % | 54 % | 60 % |
+| bed shear, Ø40 plate: mean / max, Pa | 0.033 / 0.100 | 0.049 / 0.100 | 0.051 / 0.082 |
+| Ø40 plate: area over 0.053 Pa (63 µm, low cohesion) | 8 % | 43 % | 50 % |
+| bed shear, spread strip beside the plate: mean / max, Pa | 0.019 / 0.097 | 0.025 / 0.108 | 0.021 / 0.093 |
+| spread strip beside the plate: area over 0.053 Pa (63 µm, low cohesion) | 10 % | 17 % | 13 % |
+| bed shear, whole block top: mean / max, Pa | 0.020 / 0.148 | 0.026 / 0.129 | 0.026 / 0.137 |
+| whole block top: area over 0.053 Pa (63 µm, low cohesion) | 9 % | 21 % | 21 % |
+| tracers 0.5-3 mm: into the collector | 96 % | 99 % | 95 % |
+| tracers 0.5-3 mm: held under the collector's lower lip | 4 % | 1 % | 5 % |
+| tracers 0.5-3 mm: escaped to the box | 0 % | 0 % | 0 % |
+| tracers 0.5 mm: into the collector | 76 % | 95 % | 71 % |
+| tracers 4-15 mm (above the jet): into the collector | 65 % | 49 % | 49 % |
+| tracers 4-15 mm: escaped to the box | 23 % | 31 % | 30 % |
+| escaped tracers: median closest approach to the slide, mm | 80 | 89 | 154 |
+| tracers within 30 mm of the slide | 0 % | 1 % | 1 % |
+| gas speed 2 mm under the slide: mean, mm/s | 3.3 | 0.9 | 0.2 |
+| jet flow at y = 25 mm, forward / back, L/min | 34.3 / 7.7 | 41.6 / 2.3 | 42.2 / 1.5 |
+| outlet flow, L/min | 27.0 | 27.0 | 27.0 |
+| pressure drop, nozzle channel inlet to collector port, Pa | 88 | 88 | 87 |
+| box (under the slide) above the collector port, Pa | 86 | 87 | 85 |
+| y+ on the plate, mean / max | - | 0.82 / 1.19 | 0.85 / 1.09 |
+| cells | 237,541 | 237,541 | 233,287 |
+| iterations or time steps; final initial residual Ux / Uz / p | 2000; 2e-02 / 5e-02 / 9e-03 | 904; 5e-04 / 6e-04 / 3e-04 | 800; 1e-03 / 2e-03 / 9e-04 |
 
 - **Speed over the build area.** The jet core, 3 mm up, crosses the Ø30 build area at 2.6–2.7 m/s with a 2–4 % spread
   (std/mean). 1 mm up it runs at 1.3–1.6 m/s, and 5 mm up at 1.6 m/s. Nothing over the build area flows backwards.
@@ -240,18 +241,33 @@ run, with the analyzer on that line reading low. (A buoyant run through the port
 
 ## 3. FT-1V
 
-Not run. `geom.py --state FT-1V` exports the cube's gas (21.9 L; the cube frame's edge bars included; the bed 21 mm
-higher than in the box, the cover slide 221 mm above the bed against FT-1's 129 mm) and `make_case.py` writes its
-k-ω SST case, but the CPU went to the purge (the runner's load average was 11–15 on 4 cores). The slot, the collector
-and the bed round them are the same parts at the same spacing, so the jet over the plate should be FT-1's; what would
-differ is the slow circulation of the jet's surplus in a taller cube and how much escaped fume reaches a slide that is
-further away (expectation, not computed). To run it:
+The same deck cassette in the Ideal Vacuum cube (289.6 mm inside; `geom.py --state FT-1V`: 21.9 L of gas, the cube
+frame's edge bars included, the bed 21 mm higher than in the box, the cover slide 221 mm above the bed against FT-1's
+129 mm), k-ω SST only, the third column of the table in §1. Mesh as FT-1's: 233,287 cells (217,673 hex), max
+non-orthogonality 65.0°, max skewness 6.4 (32 faces, "Failed 1 mesh checks"), max aspect ratio 22.4. 800 iterations
+(10 min on 2 cores); the probe speeds are steady to 3 digits from iteration ~100, final initial residuals 1–2 × 10⁻³.
+
+- **The jet over the plate is FT-1's.** 2.49 m/s 3 mm over the build area (2.57 in the box), bed shear over the build
+  area 0.055 / 0.070 Pa mean / max (0.053 / 0.067), 95 % of the tracers from 0.5–3 mm into the collector (99 %; the
+  rest held under the collector's lower lip), 87 Pa (88). The slot, the collector and the bed round them are the same
+  parts at the same spacing; the enclosure and the routing of the feed and exhaust pipes changed.
+- **Escaped fume stays further from the window.** The same 30 % of the tracers from 4–15 mm escape into the cube, but
+  they pass the cover slide no closer than 154 mm (median), against 89 mm in the box, and the gas 2 mm under the slide
+  moves at 0.2 mm/s.
+- Not run for FT-1V: the laminar bracket and a purge (FT-1V pump-purges).
+
+![FT-1 and FT-1V](ft1v_box_section.png)
+
+*The x = 0 section through the plate and the window in FT-1's box (left) and FT-1V's cube (right), k-ω SST, log speed
+scale. In both, the jet's surplus leaves over the collector and circulates slowly through the whole enclosure.*
 
 ```bash
 $PY $D/geom.py --state FT-1V --out /tmp/ft-cfd/geom/ft1v
-$PY $D/make_case.py --geom /tmp/ft-cfd/geom/ft1v --kind cross --model sst --iters 700 --out /tmp/ft-cfd/ft1v-sst
-/tmp/tools/capmem 4 bash $D/run_case.sh /tmp/ft-cfd/ft1v-sst mesh solve
-$PY $D/post.py cross /tmp/ft-cfd/ft1v-sst --name ft1v-sst
+$PY $D/make_case.py --geom /tmp/ft-cfd/geom/ft1v --kind cross --model sst --iters 800 --out /tmp/ft-cfd/ft1v-sst
+# residualControl as cross-sst: p 2e-5, U and (k|omega) 2e-6 (set in system/fvSolution)
+MEM=3g /tmp/tools/capmem 3 bash $D/run_case.sh /tmp/ft-cfd/ft1v-sst mesh solve
+/tmp/tools/capmem 3 $PY $D/post.py cross /tmp/ft-cfd/ft1v-sst --name ft1v-sst
+$PY $D/post.py figures --name ft1v --cases "FT-1 box, k-omega SST=/tmp/ft-cfd/cross-sst" "FT-1V cube, k-omega SST=/tmp/ft-cfd/ft1v-sst"
 ```
 
 ## 4. Method
@@ -343,7 +359,7 @@ own gas moves at mm/s to cm/s, so a 1–2 K temperature difference in the room w
 - **A time-averaged laminar run** of the cross-flow (pimpleFoam with `fieldAverage`, set up as
   `make_case.py --transient` and `run_case.sh <case> map <steady case> pimple`): not run, for lack of CPU time on a
   runner shared by seven jobs (load average 7–12 on 4 cores during these runs).
-- **FT-1V's cube** (case 3): set up, not run (§3).
+- **FT-1V's cube** (case 3): k-ω SST only, no laminar bracket and no purge (§3).
 - **Heat:** the 200 °C plate and block, the laser plume's buoyancy and the box's own convection are not in any run.
   A hot plate drives a rising plume of its own (a few cm/s), the same order as the box circulation; it would lift fume
   above the jet and carry the purge's last O₂ round the box.
