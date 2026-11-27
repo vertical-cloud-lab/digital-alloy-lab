@@ -74,6 +74,10 @@ standing still is both feet planted. New in the API:
   front of its origin the dressed body reaches at those heights.
 * walk.py ``--selftest``: a straight walk, turns, side-steps and backing up, and a two-person carry, measured by walk.py's
   own stance-foot slip and gliding checks (round 9: 0.0 mm and 0 frames).
+* Known: with ``palm`` given and ``bend`` off, the forearm is turned to the palm's direction after the arm is solved, and
+  that turn carries the palm's centre ~20-25 mm off its target (as in round 8). ``bend=True`` aims again until it lands;
+  otherwise aim once more less the error (``hand_point(side) - target``), as shop_chapters.Crew.step and
+  ch_integration.Mover.pose_aim do.
 
 How each caller switches (grep of 2026-11-27):
 
