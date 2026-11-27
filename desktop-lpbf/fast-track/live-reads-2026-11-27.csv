@@ -41,3 +41,5 @@ Kurt J. Lesker,https://www.lesker.com/newweb/chambers/std_box_vacuum_chamber.cfm
 LulzBot,https://buy.lulzbot.com/products/24v-50w-heater-cartridge-215mm,2026-11-27T08:57Z,read,"24 V 50 W heater cartridge, 215 mm leads (SKU KT-CP0013)",20.00 (sale),,,new,add to cart,Ø6 x 20 mm 3D-printer heater cartridge
 MKS / Ophir,https://op.p1.mks.com/en/p/7Z17205,2026-11-27T08:57Z,not read (certificate error through the Pi),,,,,,,"search snapshot: BD5000W-BB-50 water-cooled dump $3,162 in stock"
 Thorlabs (catalogue),https://thorlabs.com/catalogpages/V21/512.PDF,2026-11-27T09:00Z,search result,"MTS50/M-Z8: 4.5 kg vertical load, 12 kg horizontal, 2.4-3 mm/s",,,,,,not read through the Pi
+eBay,https://www.ebay.com/itm/366737163447,2026-11-27T09:36Z,listed,SCANLAB AG 2014 RTC4 PCIe interface control card,400.00,"Estimated between Wed, Dec 2 and Tue, Dec 8",Returns accepted,Used,,"RTC4 drives XY2-100 heads such as the 2003 hurrySCAN 25 without SCANLAB's converter (control worker, RTC5 manual)"
+eBay (search),https://www.ebay.com/sch/i.html?_nkw=scanlab+xy2-100+converter,2026-11-27T09:34Z,searched,no SCANLAB XY2-100 converter listed (results were scan heads only),,,,,,
