@@ -21,7 +21,7 @@ latched. No photo or video showed it at a known scale. B is drawn 250 mm long fo
 | What it is | KF flange, reducer, DN65 butterfly valve (EPDM seat), borosilicate tube between plates | KF-50 stub + 3×2 in reducer + 3 in tube + turned end cap (R6 inside); puck and liner | KF-50 nipple 160 mm, blank on the bottom; puck and liner | stock plates, fused-quartz tube, a spacer in place of the valve, a sleeve over the top seal, a pan over the bottom seal |
 | Seals near the hot metal | valve seat right under the inlet, glass seals top and bottom | **none**: one O-ring at the cooled cone, 160+ mm above the pile | bottom O-ring next to the puck | glass seals at both ends |
 | Shot it takes before its hottest seal reaches 150 °C / 200 °C | the seat burns at once; glass cracks if shot reaches it (S cases) | **more than 816 g** both ways: O-ring 44 °C, floor 345 °C | about 120 g / 220 g | under 400 g: bottom glass seal 264 °C at 400 g |
-| Usable volume above the puck | — | 522 cm³ | 159 cm³ | about 600 cm³ |
+| Usable volume above the puck | — | 522 cm³ | 159 cm³ | about 600 cm³ (estimate) |
 | Catalogue cost (priced lines) | — | **$466** | $198 | about $520 |
 | Build | — | 4 lathe parts, 3 TIG welds, 1 milled fixture, hydro and leak tests | order and assemble | turn a spacer and sleeve, cut the quartz; valve removal not checked |
 | Edison's ranking | — | best long-term | fastest interim | not recommended |
@@ -30,7 +30,7 @@ latched. No photo or video showed it at a known scale. B is drawn 250 mm long fo
 
 | Check | Result | Where |
 |---|---|---|
-| Thermal FEA, CalculiX, 18 cases | B keeps the joint O-ring at 26 / 32 / 44 °C for 100 / 400 / 816 g of shot landing at 1050 °C. The pile conductivity (2–20 W/m K), the liner or a copper puck move it by about 2 K. **What B can't take is shot held near the seal:** 25 g fused in the bore under the joint takes the O-ring to 195 °C, 100 g to 389 °C. That is why nothing goes inside its top and the shields must be in. A's bottom O-ring passes 200 °C at about 220 g. C's bottom glass seal reaches 264 °C at 400 g. A good run (816 g of powder at 400 °C) leaves B's bottom at 86 °C | `analysis/thermal.py`, [`thermal_summary.md`](analysis/out/thermal_summary.md) |
+| Thermal FEA, CalculiX, 20 cases | B keeps the joint O-ring at 26 / 32 / 44 °C for 100 / 400 / 816 g of shot landing at 1050 °C. The pile conductivity (2–20 W/m K), the liner or a copper puck move it by about 2 K. **What B can't take is shot held near the seal:** 25 g fused in the bore under the joint takes the O-ring to 195 °C, 100 g to 389 °C. That is why nothing goes inside its top and the shields must be in. A's bottom O-ring passes 200 °C at about 220 g. C's bottom glass seal reaches 264 °C at 400 g. A good run (816 g of powder at 400 °C) leaves B's bottom at 86 °C | `analysis/thermal.py`, [`thermal_summary.md`](analysis/out/thermal_summary.md) |
 | The Nov 13 failure, reconstructed | 120 g of shot against the stock cup's EPDM seat puts the seat at 1013 °C, but the glass stays at 50 °C. 300 g that falls into the glass puts it at 931 °C, the bottom EPDM seal at 412 °C, and at least 55 MPa of tension in the borosilicate (short-term strength ~40 MPa): it cracks, as it did | `S_seat_120`, `S_glass_300` |
 | Model checks | steady film, radiation and surface-flux cases match closed-form answers to 0.001 K. A 0.55× finer mesh moves the hang-up O-ring peak from 195 to 188 °C, so the standard mesh errs on the safe side; for B_816 the O-ring moves from 43.8 to 43.6 °C and the floor from 345 to 338 °C | `analysis/verify_axifea.py`, `B_*_fine` |
 | Structural FEA, B | 4.4 MPa at +1.2 bar (1.5 × relief), 3.7 MPa under full vacuum. Worst thermal stress with 816 g of shot: 61 MPa, at most 0.52 of yield (56 MPa at 310 °C). The first design's sharp welded floor corner reached 87 MPa (0.82 of yield), so the floor became a turned end cap with an R6 corner and W3 moved 20 mm up, as Edison's final check advised | `analysis/structural.py`, [`structural_summary.md`](analysis/out/structural_summary.md) |
@@ -50,6 +50,7 @@ latched. No photo or video showed it at a known scale. B is drawn 250 mm long fo
 - [`procedure.md`](procedure.md): measure, order, machine, weld in the fixture with a back-purge, a hydro proof
   test, a bench soap test, rate-of-rise on the machine, thermocouple alarms (top 120 °C, bottom 150 °C), a safety
   lanyard, install with the clamp off, run limits, removal.
+- [`checklist.md`](checklist.md): one printable page for the person at the atomizer.
 - [`BOM.md`](BOM.md): every line linked to its catalogue page (prices 2026-11-27); alternatives in
   [`bom/README.md`](bom/README.md).
 - [`cad/drawings/collection_cup_drawings.pdf`](cad/drawings/collection_cup_drawings.pdf): the weldment, the
@@ -89,3 +90,4 @@ latched. No photo or video showed it at a known scale. B is drawn 250 mm long fo
 | `cad/` | CadQuery model (`parts.py`), checks (`build.py`), renders, drawings, build GIF |
 | `cam/` | lathe and mill CAM with their simulations |
 | `analysis/` | CalculiX thermal and structural FEA, hand calculations, verification |
+| `run_all.sh` | re-runs everything in order (about an hour on 4 cores) |
