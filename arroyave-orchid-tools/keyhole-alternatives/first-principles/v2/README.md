@@ -35,6 +35,7 @@ melt-pool data**. The sources were read through the lab Pi's browser route; Edis
 - **Two stable keyholes.** Above the power where the surface first boils, the energy balance has more than one stable depth. There is a shallow dimple that absorbs like the flat liquid, and one or more keyholes deep enough to trap light.
 - **The AM module's keyhole boundary is where a stable keyhole first appears.** For AlSi10Mg, that is the power where a stable keyhole with Wk/Dk ≤ 0.7 first exists. It is 0.96–1.01× the AM module's boundary at every speed, with nothing fitted. For the blend it is 1.16–1.25×.
   - Counting a point as a keyhole wherever one is stable gives keyhole-or-not agreement at **58 of 58** AlSi10Mg points and **25 of 27** blend points.
+  - The AM module calls 15 of the 58 AlSi10Mg points and 5 of the 27 blend points keyholes. The model finds all 15, and 3 of the 5, with none extra. Calling no point a keyhole would agree at 43 and 22.
 - **NIST's measured Al 5182 track shows the same jump.** It absorbed about 0.24 before its keyhole formed and 0.43 in it. At that point version 2 has four stable states, absorbing 0.17 (the dimple), 0.30, 0.42 and 0.53. The measured 0.43 matches the third, a keyhole about 115 µm deep.
 
 **What is still wrong:**
@@ -114,6 +115,7 @@ global balance: power absorbed in the keyhole equals the power conducted (3D mov
 
 The figure (`states` command, [`v2-stable-states-vs-power.csv`](v2-stable-states-vs-power.csv)) traces every stable
 state against power at one speed.
+- **The scan leaves out the powder layer.** The powder only changes the flat surface's absorptance, so the keyhole states are the same as on the maps, but the surface boils 10–15 W later here than on the maps: at 170 W against 156 W for AlSi10Mg at 0.9 m/s, and at 155 W against 142 W for the blend at 0.4 m/s.
 - **AlSi10Mg at the AM module's 0.9 m/s.**
   - Below 170 W the surface doesn't boil.
   - From 170 to 250 W there is only the dimple, 9–15 µm deep, absorbing 0.18.
@@ -238,9 +240,10 @@ scattering medium (Gusarov & Kruth 2005):
 
 **Coupling into the melt.**
 - In conduction mode, the beam's share ahead of the melt front lands on powder, at 0.53. The rest lands on the liquid. The melt front is the liquidus on the centre line, iterated with the absorptance.
-- The front runs ahead of the beam centre, by up to a beam radius at the slower speeds, so only **3–14 %** (AlSi10Mg) and **5–24 %** (blend) of the beam lands on powder.
+- The front runs ahead of the beam centre, by up to a beam radius at the slower speeds, so only **3–14 %** (AlSi10Mg) and **4–24 %** (blend) of the beam lands on powder.
 - The conduction-mode absorptance rises from 0.18 to 0.19–0.23 (AlSi10Mg), and from 0.20 to 0.22–0.28 (blend).
 - **No class changes on either map** (`v2-map-classes-no-powder.csv`).
+- **Once the surface boils, the powder is dropped.** In keyhole mode, including the shallow dimple, the beam outside the opening meets the flat liquid. At the maps' keyhole-mode points 0–5 % (AlSi10Mg) and 0.5–12 % (blend) of the beam falls ahead of the melt front. Counting that share as powder would raise the dimple's absorptance by about 0.02 and 0.04 at most, from 0.18–0.20, still well short of the AM module's 0.31.
 - **So the powder isn't what the lack-of-fusion side is missing.** Section 3's sensitivity points to the liquid's own absorptance in conduction mode.
   - NIST measured 0.24 on bare Al 5182 before its keyhole formed.
   - Rubenchik et al. measured "over 20 %" on flat Al.
@@ -321,7 +324,7 @@ this experiment imposes it.
 | Al 5182 473 W, 0.7 m/s, A fixed at 0.43 | 160 / 302 / 585 (661) | 163 / 293 / 620 (702) | 2.6 → 4.3 m/s | 172 → 180 W |
 
 **Driving the melt round the keyhole changes the pool by 10 % or less.**
-- The liquidus length moves by −2 to +9 %, the solidus length grows by 6–10 %, and the width shrinks by 3–6 %.
+- The liquidus length moves by −2 to +9 %, and the solidus length grows by 6–10 %. The width shrinks by 3–5 %, except at AlSi10Mg 350 W, where it is unchanged.
 - It doesn't reach the AM module's 1.47 mm blend pool either.
 - (The blend run at the AM module's absorptance hadn't settled after 60 outer iterations. Its pool sizes were steady to about 1 %.)
 - So a melt flow of the size these closures give doesn't explain the AM module's long pool.
