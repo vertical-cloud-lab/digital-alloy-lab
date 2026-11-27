@@ -828,6 +828,58 @@
    },
    "tail_decay_per_min": 1.052631600244186,
    "ideal_decay_per_min": 0.8625150940141453
+  },
+  "buoyant-HL": {
+   "case": "/tmp/ft-cfd/buoy-HL",
+   "kind": "buoyant",
+   "inlets": {
+    "purge_high": 20.0
+   },
+   "outlet": "vent_low",
+   "q_total_L_min": 20.0,
+   "gas_L": 23.188,
+   "t_end_s": 179.837,
+   "t_10000ppm_min": {
+    "box": null,
+    "exhaust": null,
+    "plate": null,
+    "well_mixed_ideal": 3.527055546599229
+   },
+   "t_1000ppm_min": {
+    "box": null,
+    "exhaust": null,
+    "plate": null,
+    "well_mixed_ideal": 6.196672703416525
+   },
+   "t_100ppm_min": {
+    "box": null,
+    "exhaust": null,
+    "plate": null,
+    "well_mixed_ideal": 8.866289860233822
+   },
+   "ppm_at_end": {
+    "box": 32434.08401561671,
+    "exhaust": 21927.020484244134,
+    "plate": 24188.54922100071,
+    "slide": 57048.26504354471
+   },
+   "tail": {
+    "box": {
+     "decay_per_min_last20pct": 0.6028458849194175,
+     "t_1000ppm_min_extrapolated": 8.768592274282991,
+     "t_100ppm_min_extrapolated": 12.588117546984874
+    },
+    "exhaust": {
+     "decay_per_min_last20pct": 0.6339822655351269,
+     "t_1000ppm_min_extrapolated": 7.867639897268962,
+     "t_100ppm_min_extrapolated": 11.499579177227364
+    },
+    "plate": {
+     "decay_per_min_last20pct": 0.49338013024497307,
+     "t_1000ppm_min_extrapolated": 9.454541185092046,
+     "t_100ppm_min_extrapolated": 14.121500699352918
+    }
+   }
   }
  }
 }

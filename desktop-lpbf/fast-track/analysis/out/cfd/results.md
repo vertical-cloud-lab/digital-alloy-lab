@@ -19,7 +19,7 @@ plate at the start of a build, the hopper at its right park). Scripts: [`../../c
   expected 13–31 / 18–45 min, and the analyzer on the collector's exhaust reads about 4× under the box. With 20 L/min
   of argon in through a diffuser near the floor and out a vent under the lid, the argon fills the box from the bottom
   and pushes the air out: 2.6 / ≈ 5.0 min to 1000 / 100 ppm (box average, with buoyancy), against 6.2 / 8.9 min
-  for perfect mixing. A high diffuser with the same vent mixes instead (≈ 4.7 / 6.8 min); {HLSHORT}
+  for perfect mixing. A high diffuser with the same vent mixes instead (≈ 4.7 / 6.8 min); a high diffuser with a low vent leaves the air on top (≈ 8.8 / 12.6 min, with the vent reading a third under the box).
 - **What to change:** add a diffuser low on one wall and a vent at the top of the opposite wall (two bulkheads, a ball
   valve on the vent), sample the analyzer from the vent line, purge with the nozzle off, then close the vent and start
   the cross-flow. Purge before heating the plate. Every run here is isothermal and leak-free, with no air or water in
@@ -179,7 +179,10 @@ on the same mesh with the same settings; only the diffuser and the vent move.
 
 | Run, with buoyancy | in (L/min) | out | box average: 1000 / 100 ppm (min) | exhaust (analyzer) | plate | O₂ at the end: box / exhaust / plate / under the slide (ppm) |
 |---|---|---|---|---|---|---|
-__BROWS__
+| Low diffuser, high vent | low diffuser 20 | high vent | 2.6 / (≈ 5) | 2.8 / 4.7 | 1.4 / 3.5 | 102 / 82 / 49 / 121 at 5.0 min |
+| High diffuser, high vent | high diffuser 20 | high vent | (≈ 5) / (≈ 7) | (≈ 5) / (≈ 7) | (≈ 4) / (≈ 5) | 6913 / 8992 / 3256 / 11537 at 3.0 min |
+| High diffuser, low vent | high diffuser 20 | low vent | (≈ 9) / (≈ 13) | (≈ 8) / (≈ 11) | (≈ 9) / (≈ 14) | 32434 / 21927 / 24189 / 57048 at 3.0 min |
+| Low diffuser, high vent, first run (Courant 15; air flowed back in at the vent from ~2.5 min) | low diffuser 20 | high vent | 2.6 / (≈ 5) | not valid | 1.4 / 3.4 | 196 / – / 84 / 229 at 4.1 min |
 | well mixed, same flow and volume | 20 | | 6.2 / 8.9 | | | |
 
 "(≈ x)": not reached in the run; extrapolated from the run's own exponential decay over its last 20 %. "> x": not
@@ -204,7 +207,11 @@ blue is air; grey is solid (the deck cassette, the stage, the window stack). The
   floor, so the box is only mildly layered (the top 40 mm holds about twice the average). Because the vent still takes
   the worst gas it purges about a quarter faster than well mixed: 6,900 ppm at 3 min, ≈ 4.7 / 6.8 min to 1000 /
   100 ppm.
-- **High diffuser, low vent:** {HLBUL}
+- **High diffuser, low vent:** **the air stays on top.** The plume falls through the air to the floor and the low vent drains the
+  argon that pools there; the air above leaves only as fast as the plume entrains it. At 3 min the box is twice as bad
+  as well mixed (32,400 against 15,800 ppm), ≈ 8.8 / 12.6 min to 1000 / 100 ppm. Under the slide it is still
+  57,000 ppm (27 % air), while the vent reads a third under the box average (21,900 ppm): an analyzer on a low exhaust
+  reads better than the box.
 - **The first low-inlet run** (Courant 15, the vent letting air back in) gave the same box average as the second
   (Courant 30, outflow-only vent) to within 3 % up to 1.5 min. From ~2.5 min the air flowing back in at its vent held
   its exhaust near 2,800 ppm, so only its box average and plate are used (§4).
@@ -227,7 +234,9 @@ blue is air; grey is solid (the deck cassette, the stage, the window stack). The
 4. **Purge before heating the plate,** or expect times nearer the well-mixed ones: a 200 °C plate drives a plume of a
    few cm/s that stirs the layers (not modelled).
 
-{HLREC}
+The collector's port, the as-drawn exhaust, sits 2–8 mm above the deck and 65–70 mm above the floor: for the purge it
+is a low exhaust. Purging out through it leaves the air above it to be stirred out, as in the high-diffuser, low-vent
+run, with the analyzer on that line reading low. (A buoyant run through the port itself was not affordable, §4.)
 
 ## 3. FT-1V
 
