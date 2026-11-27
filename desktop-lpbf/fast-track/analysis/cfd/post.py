@@ -624,6 +624,18 @@ def do_purge(a):
         k = -np.polyfit(t[m] / 60.0, np.log(b[m]), 1)[0]
         res["tail_decay_per_min"] = float(k)
         res["ideal_decay_per_min"] = q_total / V
+    if kind == "scalar":
+        # the frozen purge flow (0/U, copied from the steady case): how much of the box is nearly still
+        r = pv.OpenFOAMReader(str(case / "case.foam"))
+        r.skip_zero_time = False
+        r.set_active_time_value(0.0)
+        r.cell_to_point_creation = False
+        m = r.read()["internalMesh"]
+        u = np.linalg.norm(np.asarray(m.cell_data["U"]), axis=1)
+        vol = np.asarray(m.compute_cell_sizes(length=False, area=False, volume=True).cell_data["Volume"])
+        res["flow"] = dict(mean_speed_mm_s=float(1000 * (u * vol).sum() / vol.sum()),
+                           median_speed_mm_s=float(1000 * np.median(u)),
+                           **{f"vol_frac_below_{v}mm_s": float(vol[u < v / 1000].sum() / vol.sum()) for v in (1, 3, 10)})
     np.savez_compressed(SCR / f"purge_{a.name}.npz", **{k: v for k, v in S.items() if v is not None})
     d = load_json()
     d.setdefault("purge", {})[a.name] = res
