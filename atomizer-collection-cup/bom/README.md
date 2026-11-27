@@ -10,6 +10,10 @@ cut-to-length fees. Nothing was ordered or quoted and no vendor account was used
 | `vendor-lookups.csv` | 175 lookups, one row per vendor part: item, option, vendor, part number, material, key dimensions (mm), price, quantity break, stock or lead time, URL, fetch time, notes |
 | `vendor_dims.json` | Vendor dimensions the CAD needs, keyed by part number, from the vendors' tables, drawings and free STEP files (measured with CadQuery). `_vs_params` compares them with `params.py` |
 | `fetch_*.py` | Re-run the lookups (see the end of this file) |
+| `make_bom.py` → [`../BOM.md`](../BOM.md), `bom_A.csv`, `bom_B.csv` | **The build's BOM.** It uses the picks below plus what the design added after these lookups: the turned end cap (1.5 in of bar instead of 1 in), a spare centring ring, a KF-50 blank and clamp to cap the cup, and the 304L stub that is in stock. That brings B to $466 |
+
+The per-option totals below are the first pass (before the end cap and the extra lines) and are kept as the
+record of the lookups.
 
 ## Totals
 
