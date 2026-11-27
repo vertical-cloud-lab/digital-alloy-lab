@@ -6,11 +6,11 @@ from dataclasses import dataclass
 from typing import Dict, Optional, Set
 
 # Names of the Pi I/O node's channels (see io-list.csv for the wiring)
-OUTPUTS = ("ARGON", "ARGON_LOW", "VENT", "VIBRATOR", "HEAT_EN", "LEDS", "BEACON")
+OUTPUTS = ("ARGON", "ARGON_LOW", "VENT", "TRACE_SAMPLE", "VIBRATOR", "HEAT_EN", "LEDS", "BEACON")
 INPUTS = ("SAFETY_OK", "ESTOP_OK", "LID_CLOSED", "LASER_PS_ACTIVE", "LASER_EMISSION", "LASER_READY", "LIMIT_OK",
           "ROOM_O2_OK", "K1_ON")
 TEMPS = ("window", "beam_tube", "box_air", "stage")
-ANALOG = ("o2_ppm", "room_o2_pct")
+ANALOG = ("o2_ppm", "o2_pct", "room_o2_pct")
 
 
 class ScanCard(ABC):

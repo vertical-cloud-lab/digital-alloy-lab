@@ -35,11 +35,13 @@ class SimWorld:
         g, th = cfg.gas, cfg.thermal
         # gas
         self.o2 = g.air_o2_ppm
-        self.o2_reading = g.air_o2_ppm
+        self.o2_reading = g.analyzer_range_ppm     # trace cell, isolated in argon until its sample valve opens
+        self.o2_pct_reading = g.air_o2_ppm / 1e4   # percent-range transmitter on the exhaust
         self.leak_Lpm = g.floor_ppm * g.build_flow_Lpm / (g.air_o2_ppm - g.floor_ppm)
         self.extra_leak_Lpm = 0.0
         self.room_o2_pct = 20.9
         self.argon_used_L = 0.0
+        self.trace_cell_air_s = 0.0
         # heat
         self.room_C = room_C
         self.box_C = room_C
@@ -164,8 +166,14 @@ class SimWorld:
             css = (q_ar * g.argon_o2_ppm + q_air * g.air_o2_ppm) / q
             k = q / 60.0 / (g.mixing_factor * g.box_volume_L)
             self.o2 = css + (self.o2 - css) * math.exp(-k * dt)
-        tau = g.analyzer_t90_s / math.log(10.0)
-        self.o2_reading += (self.o2 - self.o2_reading) * (1.0 - math.exp(-dt / tau))
+        if io.get("TRACE_SAMPLE"):
+            tau = g.analyzer_t90_s / math.log(10.0)
+            target = min(self.o2, g.analyzer_range_ppm)
+            self.o2_reading += (target - self.o2_reading) * (1.0 - math.exp(-dt / tau))
+            if self.o2 > 2 * g.analyzer_range_ppm:
+                self.trace_cell_air_s += dt            # time the trace cell spent in near-air (shortens its life)
+        tau = g.pct_t90_s / math.log(10.0)
+        self.o2_pct_reading += (self.o2 / 1e4 - self.o2_pct_reading) * (1.0 - math.exp(-dt / tau))
 
     def _heat(self, t0, t1, dt):
         th = self.cfg.thermal
@@ -461,7 +469,8 @@ class SimIo(IoNode):
     def analog(self):
         self._check()
         w = self.w
-        return {"o2_ppm": min(w.o2_reading, w.cfg.gas.analyzer_range_ppm), "room_o2_pct": w.room_o2_pct}
+        return {"o2_ppm": min(w.o2_reading, w.cfg.gas.analyzer_range_ppm), "o2_pct": w.o2_pct_reading,
+                "room_o2_pct": w.room_o2_pct}
 
 class SimCamera(Camera):
     def __init__(self, world):

@@ -101,6 +101,7 @@ class Supervisor:
         self.log.sample(dict(
             t=t, state=self.sm.state.value, plate_C=s["plate_C"], block_C=s["block_C"],
             plate_out_pct=self.m.plate.output_pct(), block_out_pct=self.m.block.output_pct(), o2_ppm=s["o2_ppm"],
+            o2_pct=s["o2_pct"],
             room_o2_pct=s["room_o2_pct"], box_air_C=s["box_air"], window_C=s["window"], beam_tube_C=s["beam_tube"],
             stage_C=s["stage"], piston_mm=self.m.piston.position(), recoater_mm=self.m.recoater.position(),
             safety_ok=float(s["SAFETY_OK"]), laser_ps=float(s["LASER_PS_ACTIVE"]),
@@ -215,7 +216,7 @@ class Supervisor:
     def connect(self) -> None:
         self.m.scan.open()
         self.m.laser.open()
-        for name in ("ARGON", "ARGON_LOW", "VENT", "VIBRATOR", "HEAT_EN", "LEDS", "BEACON"):
+        for name in ("ARGON", "ARGON_LOW", "VENT", "TRACE_SAMPLE", "VIBRATOR", "HEAT_EN", "LEDS", "BEACON"):
             self.set_out(name, False)
         self.log.event("info", "CONNECTED", "scan card, laser, I/O node")
 
@@ -226,10 +227,13 @@ class Supervisor:
         self.set_out("ARGON", True)
 
         def purged():
-            o2 = self.snap["o2_ppm"]
-            if self.cfg.overlap_heat_with_purge and not self.heating and o2 < g.heat_below_ppm:
+            pct = self.snap["o2_pct"]
+            if not self.outputs.get("TRACE_SAMPLE") and pct < g.trace_open_below_pct:
+                self.set_out("TRACE_SAMPLE", True)      # the trace cell sees the box only once it is near its range
+                self.log.event("info", "TRACE_SAMPLE", f"trace O2 cell sampling at {pct:.2f} %")
+            if self.cfg.overlap_heat_with_purge and not self.heating and pct * 1e4 < g.heat_below_ppm:
                 self.heaters(True)
-            return o2 < g.o2_start_ppm
+            return self.outputs.get("TRACE_SAMPLE", False) and self.snap["o2_ppm"] < g.o2_start_ppm
 
         if not self.wait_until(purged, g.purge_timeout_s, poll=0.5):
             raise Fault(Code.O2_TIMEOUT, f"purge did not reach {g.o2_start_ppm:.0f} ppm in {g.purge_timeout_s:.0f} s "
@@ -406,13 +410,14 @@ class Supervisor:
             raise Fault(Code.PLATE_OVERTEMP, "plate still hot after 4 h of cooling", self.clock.now())
         self.times["cooldown_s"] = self.clock.now() - t0
         t1 = self.clock.now()
-        self.sm.go(S.VENT, "argon off, air in slowly through the inlet filter")
+        self.sm.go(S.VENT, "argon off, trace cell isolated, air in slowly through the inlet filter")
+        self.set_out("TRACE_SAMPLE", False)
         self.set_out("ARGON_LOW", False)
         self.set_out("VENT", True)
-        if not self.wait_until(lambda: self.snap["o2_ppm"] >= g.open_o2_ppm, 3 * 3600.0, poll=2.0):
+        if not self.wait_until(lambda: self.snap["o2_pct"] * 1e4 >= g.open_o2_ppm, 3 * 3600.0, poll=2.0):
             raise Fault(Code.O2_TIMEOUT, "vent did not reach 19.5 % O2 in 3 h", self.clock.now())
         self.times["vent_s"] = self.clock.now() - t1
-        self.sm.go(S.SAFE_TO_OPEN, f"O2 {self.snap['o2_ppm'] / 1e4:.1f} %, plate {self.snap['plate_C']:.0f} C")
+        self.sm.go(S.SAFE_TO_OPEN, f"O2 {self.snap['o2_pct']:.1f} %, plate {self.snap['plate_C']:.0f} C")
         self.set_out("BEACON", True)
         self.sm.go(S.STOPPED)
 
@@ -501,6 +506,7 @@ class Supervisor:
         )
         if w is not None:
             out["sim"] = dict(argon_used_L=round(w.argon_used_L, 1), laser_on_s=round(w.laser_on_s, 2),
+                              trace_cell_in_air_s=round(w.trace_cell_air_s, 1),
                               final_o2_ppm=round(w.o2, 1), plate_max_C=max((r["plate_C"] for r in self.log.samples),
                                                                            default=None))
             self.log.markers = list(w.markers)

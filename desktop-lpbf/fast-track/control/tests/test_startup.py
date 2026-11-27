@@ -14,8 +14,12 @@ def test_startup_sequence(rig):
     # heaters start during the purge, once O2 < 1 %; the purge ends below o2_start_ppm
     assert t_state["PURGE"] < t_heat_on < t_state["HEAT"]
     samples = r.log.samples
-    o2_at_heat_on = min((x for x in samples if x["t"] >= t_heat_on), key=lambda x: x["t"])["o2_ppm"]
+    o2_at_heat_on = min((x for x in samples if x["t"] >= t_heat_on), key=lambda x: x["t"])["o2_pct"] * 1e4
     assert o2_at_heat_on < g.heat_below_ppm * 1.05
+    # the trace cell's sample valve opened only once the percent sensor read below 1.5 %
+    t_trace = next(e["t"] for e in ev if e["code"] == "TRACE_SAMPLE")
+    pct_then = min((x for x in samples if x["t"] >= t_trace), key=lambda x: x["t"])["o2_pct"]
+    assert pct_then < g.trace_open_below_pct * 1.05
     at_heat = max((x for x in samples if x["t"] <= t_state["HEAT"]), key=lambda x: x["t"])
     assert at_heat["o2_ppm"] < g.o2_start_ppm * 1.1
     # the study expects 13-31 min to reach 1000 ppm (2-5 x perfect mixing at 20 L/min)

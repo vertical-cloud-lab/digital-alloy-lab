@@ -34,7 +34,8 @@ def test_full_2mm_build(rig, program):
     band = r.cfg.thermal.setpoint_C + r.cfg.thermal.dwell_band_K
     assert np.all(lay["plate_C_scan_start"][1:] <= band + 0.5)
     # the lid may open only at air O2 and a cool plate
-    assert r.w.o2_reading >= r.cfg.gas.open_o2_ppm
+    assert r.w.o2_pct_reading * 1e4 >= r.cfg.gas.open_o2_ppm
+    assert s["sim"]["trace_cell_in_air_s"] == 0.0              # the trace cell never saw air
     assert r.w.Tp < r.cfg.thermal.open_plate_C
 
 

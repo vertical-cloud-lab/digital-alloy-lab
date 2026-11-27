@@ -21,7 +21,8 @@ import numpy as np
 
 from . import __version__
 
-SAMPLE_FIELDS = ["t", "state", "plate_C", "block_C", "plate_out_pct", "block_out_pct", "o2_ppm", "room_o2_pct",
+SAMPLE_FIELDS = ["t", "state", "plate_C", "block_C", "plate_out_pct", "block_out_pct", "o2_ppm", "o2_pct",
+                 "room_o2_pct",
                  "box_air_C", "window_C", "beam_tube_C", "stage_C", "piston_mm", "recoater_mm", "safety_ok",
                  "laser_ps", "laser_emission", "limit_ok", "k1_on", "argon", "vibrator"]
 LAYER_FIELDS = ["layer", "z_mm", "t_start", "t_recoat_end", "t_scan_start", "t_scan_end", "t_end", "recoat_s",
