@@ -1,0 +1,12 @@
+/tmp/arroyave/venvs/rhea-mobo-full/lib/python3.12/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+Traceback (most recent call last):
+  File "/tmp/arroyave/venvs/rhea-mobo-full/bin/rhea-mobo", line 4, in <module>
+    from rhea_mobo.main import main
+  File "/tmp/arroyave/work/rhea-mobo/src/rhea_mobo/main.py", line 6, in <module>
+    from .optimization import run_optimization
+  File "/tmp/arroyave/work/rhea-mobo/src/rhea_mobo/optimization.py", line 15, in <module>
+    from .objective import elastic_analyzer, objective, sqs_generator
+  File "/tmp/arroyave/work/rhea-mobo/src/rhea_mobo/objective.py", line 13, in <module>
+    from tc_python import *
+ModuleNotFoundError: No module named 'tc_python'

@@ -1,0 +1,26 @@
+=== binaries ===
+  AL-SI AlSi-97Feu-LB.tdb: 1 invariants, 6 s
+    figure /tmp/arroyave/results/pycalphad-al-cu/figures/pd_al-si_full.png
+    figure /tmp/arroyave/results/pycalphad-al-cu/figures/pd_al-si_alrich.png
+  AL-SI AlSi-14Lia.tdb: 1 invariants, 5 s
+  AL-CU AlCu-21Kro.tdb: 19 invariants, 30 s
+    figure /tmp/arroyave/results/pycalphad-al-cu/figures/pd_al-cu_alrich.png
+    figure /tmp/arroyave/results/pycalphad-al-cu/figures/pd_al-cu_curich.png
+    figure /tmp/arroyave/results/pycalphad-al-cu/figures/pd_al-cu_full.png
+  AL-CU AlCu-98Sau-LB.tdb: 14 invariants, 11 s
+  CU-NI CuNi-92Mey-LB.tdb: 0 invariants, 6 s
+    figure /tmp/arroyave/results/pycalphad-al-cu/figures/pd_cu-ni_full.png
+  CU-NI CuNi-07Tur.tdb: 0 invariants, 5 s
+  CR-CU CrCu-17Liu.tdb: 2 invariants, 7 s
+    figure /tmp/arroyave/results/pycalphad-al-cu/figures/pd_cr-cu_full.png
+  CR-CU CrCu-95Zen-LB.tdb: 2 invariants, 8 s
+  CU-ZR CuZr-22Zho.tdb: 7 invariants, 17 s
+    figure /tmp/arroyave/results/pycalphad-al-cu/figures/pd_cu-zr_full.png
+  CU-ZR CuZr-94Zen-LB.tdb: 6 invariants, 16 s
+  CU-SN CuSn-24Oik.tdb: 7 invariants, 17 s
+    figure /tmp/arroyave/results/pycalphad-al-cu/figures/pd_cu-sn_full.png
+  CU-SN CuSn-96Shi-LB.tdb: 8 invariants, 8 s
+=== binaries done in 140 s ===
+=== table ===
+comparison.csv: 225 rows; 24 with a Thermo-Calc value, 42 with an experimental value
+=== table done in 0 s ===

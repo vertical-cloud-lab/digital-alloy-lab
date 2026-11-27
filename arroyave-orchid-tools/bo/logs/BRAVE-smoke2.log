@@ -1,0 +1,36 @@
+=== prior_eval.py as shipped (180 candidate compositions)  (03:32:05)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/BRAVE/lib/python3.11/site-packages/pandas/core/indexes/base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'YS (MPa)'
+rc=1
+=== patch priors.py column names to match data/HTMDEC_Y2_db.xlsx  (03:32:33)
+    self._check_label_shape(label, samples_count)
+  File "/tmp/arroyave/venvs/BRAVE/lib/python3.11/site-packages/catboost/core.py", line 981, in _check_label_shape
+    raise CatBoostError("Length of label={} and length of data={} is different.".format(len(label), samples_count))
+_catboost.CatBoostError: Length of label=132 and length of data=141 is different.
+rc=1 wall=34s
+wc: YS_prior.csv: No such file or directory
+wc: EUTS_prior.csv: No such file or directory
+wc: UTStoYS_prior.csv: No such file or directory
+0 total
+=== stub YS_pb (table.dat missing): zeros prior  (03:33:07)
+29:YS_pb = lambda x: np.zeros(len(x))  # smoke-test stub: table.dat is not in the repo
+39:Batch_size=4 # use more than 1 for batch BO
+40:N_GP=10; # if batch BO
+218:YS_pb_prior_tests=pd.DataFrame(pd.read_csv('YS_pb_prior.csv', header=None)).to_numpy().reshape(-1)/nz1
+288:    n_jobs=2
+=== main.py  (03:33:08)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/BRAVE/lib/python3.11/site-packages/catboost/core.py", line 863, in __init__
+    self._init(data, label, cat_features, text_features, embedding_features, embedding_features_data, pairs, graph, weight,
+  File "/tmp/arroyave/venvs/BRAVE/lib/python3.11/site-packages/catboost/core.py", line 1470, in _init
+    self._check_label_shape(label, samples_count)
+  File "/tmp/arroyave/venvs/BRAVE/lib/python3.11/site-packages/catboost/core.py", line 981, in _check_label_shape
+    raise CatBoostError("Length of label={} and length of data={} is different.".format(len(label), samples_count))
+_catboost.CatBoostError: Length of label=132 and length of data=141 is different.
+rc=1 wall=55s
+ls: cannot access 'x_query.csv': No such file or directory
+ls: cannot access 'all_candidates.csv': No such file or directory
+ls: cannot access 'all_improvements.csv': No such file or directory
+ls: cannot access 'x_query_indices.csv': No such file or directory

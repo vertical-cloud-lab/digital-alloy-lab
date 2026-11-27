@@ -1,0 +1,11 @@
+{
+  "n_rows": 186,
+  "type_accuracy": 0.9157303370786517,
+  "n_typed": 178,
+  "lambda2_MAE": 0.006718550887096767,
+  "n_lambda2": 186,
+  "delta_drift_mean_pp": -0.46545136800478704,
+  "delta_drift_min_pp": -0.5762542755591156,
+  "delta_drift_max_pp": -0.2104329866762651,
+  "delta_corr": 0.9979788643543516
+}

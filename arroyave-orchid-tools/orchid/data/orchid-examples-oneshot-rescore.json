@@ -1,0 +1,30 @@
+{
+ "SGTE CuZr-94Zen-LB": {
+  "tdb": "CuZr-94Zen-LB.tdb",
+  "tdb_sha256": "4cce85fd056a6fced1c8270faca7a1d811d2f8227b305f70e0a221925bd07f69",
+  "wall_s": 11.394070386886597,
+  "failed_cells_after_retry": 0,
+  "field": {
+   "n_points": 28,
+   "exact_assemblage_accuracy": 0.5714285714285714
+  },
+  "boundary": {
+   "n_points": 287,
+   "exact_assemblage_accuracy": 0.27177700348432055
+  }
+ },
+ "GRACE-2L-OMAT (Spark build TDB)": {
+  "tdb": "CuZr-PhaseForge-MLIP-grace-2l-omat.tdb",
+  "tdb_sha256": "a19e9736657e04ee89616ad7f5abbfcb1b4ad7cf5b6ea5cc10a98d31bfc2de32",
+  "wall_s": 10.64826488494873,
+  "failed_cells_after_retry": 0,
+  "field": {
+   "n_points": 28,
+   "exact_assemblage_accuracy": 0.21428571428571427
+  },
+  "boundary": {
+   "n_points": 287,
+   "exact_assemblage_accuracy": 0.003484320557491289
+  }
+ }
+}

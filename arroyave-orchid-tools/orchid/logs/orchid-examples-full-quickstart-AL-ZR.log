@@ -1,0 +1,77 @@
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+system=AL-ZR tdb=AlZr-01Wan cells modified=2
+executed in 3.7 s
+--- cell 1 [stream]
+data from /tmp/arroyave/src/orchid-calphad__orchid-data
+
+--- cell 3 [stream]
+743 Cu-Zr values
+
+--- cell 3 [execute_result]
+evidence_class          dft  experimental  model  unspecified
+property                                                     
+INVARIANT_TEMPERATURE     0            89     93            0
+TRANSITION_TEMPERATURE    0            88     10            0
+HM_FORM                  82            58    273            0
+PHASE_COMPOSITION         0             6      0            0
+PARTIAL_ENTHALPY          0             5      4            0
+HEAT_CONTENT              0             4      0            0
+PHASE_ASSEMBLAGE          0             1      0            0
+LATTICE_C                 0             0      0            9
+LATTICE_B                 0             0      0            2
+LATTICE_A                 0             0      0           10
+--- cell 5 [stream]
+170 accepted multi-reader experimental values; 58 formation enthalpies
+
+--- cell 5 [execute_result]
+         phases  value         unit  sigma_printed  sigma_effective  \
+10970    [AlZr]  -71.3  kJ/mol-atom            4.4              4.4   
+11516  [Al3Zr2]  -59.6  kJ/mol-atom            2.4              3.5   
+11484   [Al2Zr]  -56.3  kJ/mol-atom            2.2              3.5   
+11071   [AlZr2]  -56.1  kJ/mol-atom            3.1              3.5   
+11166  [Zr2Al3]  -55.0  kJ/mol-atom            NaN              3.5   
+11347  [Al3Zr2]  -55.0      unknown            4.0              4.0   
+11052   [ZrAl2]  -54.0  kJ/mol-atom            NaN              3.5   
+11003   [Al2Zr]  -54.0      unknown            4.0              4.0   
+11051   [Al2Zr]  -54.0  kJ/mol-atom            4.0              4.0   
+11233    [AlZr]  -53.0      unknown            4.0              4.0   
+10820    [ZrAl]  -53.0  kJ/mol-atom            NaN              3.5   
+10866    [AlZr]  -53.0  kJ/mol-atom            4.0              4.0   
+
+       temperature_K method  \
+10970         298.15   None   
+11516         298.15   None   
+11484         298.15   None   
+11071         298.15   None   
+11166         298.15   None   
+11347         298.15   None   
+11052         298.15   None   
+11003         298.15   None   
+11051         298.15   None   
+11233         298.15   None   
+10820         298.15   None   
+10866         298.15   None   
+
+[paper_citation column removed from this log: author names; see the release's DOIs]
+--- cell 7 [execute_result]
+<IPython.core.display.Image object>
+--- cell 8 [execute_result]
+            count      mean    50%       std
+dft_source                                  
+mp           45.0  3.590133  2.060  7.088557
+oqmd         45.0  3.520933  1.919  7.138028
+--- cell 10 [stream]
+12 datasets exported to /tmp/arroyave/work/qs-AL-ZR/export/AlZr-01Wan
+
+--- cell 10 [execute_result]
+folder        output 
+experimental  HM_FORM    12
+Name: datasets, dtype: int64
+--- cell 11 [stream]
+ESPEI load_datasets: 12 datasets loaded
+
+
+real	0m3.896s
+user	0m3.138s
+sys	0m0.497s
+exit=0

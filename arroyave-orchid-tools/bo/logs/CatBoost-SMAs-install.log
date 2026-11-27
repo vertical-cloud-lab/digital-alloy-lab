@@ -1,0 +1,50 @@
+Using CPython 3.12.3 interpreter at: /usr/bin/python3.12
+Creating virtual environment at: venvs/CatBoost-SMAs
+Activate with: source venvs/CatBoost-SMAs/bin/activate
+Using Python 3.12.3 environment at: venvs/CatBoost-SMAs
+Resolved 28 packages in 769ms
+Downloading scikit-learn (8.7MiB)
+Downloading catboost (92.6MiB)
+Downloading plotly (9.2MiB)
+Downloading scipy (33.7MiB)
+ Downloaded scikit-learn
+ Downloaded plotly
+ Downloaded scipy
+ Downloaded catboost
+Prepared 12 packages in 876ms
+Installed 28 packages in 94ms
+ + catboost==1.2.10
+ + cbfv==1.1.0
+ + cloudpickle==3.1.2
+ + contourpy==1.4.0
+ + cycler==0.12.1
+ + fonttools==4.68.0
+ + graphviz==0.21
+ + iniconfig==2.3.1
+ + joblib==1.6.0
+ + kiwisolver==1.5.1
+ + matplotlib==3.11.2
+ + narwhals==2.28.0
+ + numpy==2.5.4
+ + packaging==26.3
+ + pandas==3.1.1
+ + pillow==13.0.0
+ + plotly==7.1.0
+ + pluggy==1.7.0
+ + pygments==2.21.0
+ + pyparsing==3.3.3
+ + pytest==9.2.0
+ + python-dateutil==4.0.0
+ + scikit-learn==1.9.1
+ + scipy==1.18.1
+ + six==1.17.0
+ + threadpoolctl==3.7.0
+ + tqdm==4.70.1
+ + tzdata==2026.6
+Using Python 3.12.3 environment at: venvs/CatBoost-SMAs
+Resolved 1 package in 51ms
+Downloading setuptools (1.0MiB)
+ Downloaded setuptools
+Prepared 1 package in 53ms
+Installed 1 package in 6ms
+ + setuptools==80.10.2

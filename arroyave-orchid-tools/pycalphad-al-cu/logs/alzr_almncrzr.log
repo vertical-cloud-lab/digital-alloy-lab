@@ -1,0 +1,16 @@
+=== alzr ===
+  Al-Zr SGTE AlZr-98Sau-LB.tdb: invariant 660.69 C (peritectic L + Al3Zr -> (Al)), x_liq 0.00027, x_fcc 0.00080 (wt 0.271); liquidus 0.5wt 815.0, 1.0wt 894.1
+  Al-Zr SGTE AlZr-86Sau.tdb: invariant 660.92 C (peritectic L + Al3Zr -> (Al)), x_liq 0.00010, x_fcc 0.00080 (wt 0.271); liquidus 0.5wt 828.8, 1.0wt 884.3
+  Al-Zr SGTE AlZr-01Wan.tdb: invariant 660.64 C (peritectic L + Al3Zr -> (Al)), x_liq 0.00039, x_fcc 0.00084 (wt 0.283); liquidus 0.5wt 794.9, 1.0wt 878.1
+  Al-Zr SGTE AlZr-10Hir.tdb: invariant 656.90 C (eutectic L -> (Al) + Al3Zr), x_liq 0.00511, x_fcc 0.00042 (wt 0.141); liquidus 0.5wt 659.4, 1.0wt 658.4
+  Al-Zr SGTE AlZr-15Fis.tdb: invariant 660.69 C (peritectic L + Al3Zr -> (Al)), x_liq 0.00030, x_fcc 0.00083 (wt 0.279); liquidus 0.5wt 808.0, 1.0wt 885.0
+  Al-Zr SGTE AlZr-18Khv.tdb: invariant 660.23 C (eutectic L -> (Al) + Al3Zr), x_liq 0.00029, x_fcc 0.00016 (wt 0.053); liquidus 0.5wt 808.0, 1.0wt 885.0
+  Al-Zr SGTE AlZr-18Tam.tdb: invariant 656.55 C (eutectic L -> (Al) + Al3Zr), x_liq 0.00511, x_fcc 0.00000 (wt 0.000); liquidus 0.5wt 659.3, 1.0wt 658.2
+  Al-Zr SGTE AlZr-20Lon.tdb: invariant 660.17 C (eutectic L -> (Al) + Al3Zr), x_liq 0.00037, x_fcc 0.00015 (wt 0.050); liquidus 0.5wt 803.9, 1.0wt 892.5
+  Al-Zr mc_al v2.032: invariant 656.62 C (unclear), x_liq nan, x_fcc 0.00042 (wt 0.141); liquidus 0.5wt 659.4, 1.0wt 656.6
+=== alzr done in 91 s ===
+=== almncrzr ===
+[Mehta A Al-4.8Mn-0.47Zr] liq 696.3 (AL6MN) fcc-start 654.5 sol 652.7; Scheil fs0.99 652.3 (25.2 s)
+[Mehta B Al-4.9Mn-0.8Cr] liq 812.2 (AL4CR) fcc-start 656.3 sol 656.0; Scheil fs0.99 655.1 (21.0 s)
+[Mehta C Al-5.0Mn-0.8Cr-0.6Zr] liq 814.9 (AL4CR) fcc-start 654.9 sol 653.2; Scheil fs0.99 652.6 (25.3 s)
+=== almncrzr done in 77 s ===

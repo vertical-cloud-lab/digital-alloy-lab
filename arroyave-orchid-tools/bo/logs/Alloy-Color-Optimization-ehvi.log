@@ -1,0 +1,58 @@
+/tmp/arroyave/venvs/Alloy-Color-Optimization/lib/python3.12/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+/tmp/arroyave/venvs/Alloy-Color-Optimization/lib/python3.12/site-packages/botorch/acquisition/multi_objective/analytic.py:93: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  ref_point = torch.tensor(
+/tmp/arroyave/venvs/Alloy-Color-Optimization/lib/python3.12/site-packages/botorch/acquisition/multi_objective/analytic.py:93: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  ref_point = torch.tensor(
+/tmp/arroyave/venvs/Alloy-Color-Optimization/lib/python3.12/site-packages/botorch/acquisition/multi_objective/analytic.py:93: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  ref_point = torch.tensor(
+/tmp/arroyave/venvs/Alloy-Color-Optimization/lib/python3.12/site-packages/botorch/acquisition/multi_objective/analytic.py:93: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  ref_point = torch.tensor(
+/tmp/arroyave/venvs/Alloy-Color-Optimization/lib/python3.12/site-packages/botorch/acquisition/multi_objective/analytic.py:93: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  ref_point = torch.tensor(
+/tmp/arroyave/venvs/Alloy-Color-Optimization/lib/python3.12/site-packages/botorch/acquisition/multi_objective/analytic.py:93: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  ref_point = torch.tensor(
+/tmp/arroyave/venvs/Alloy-Color-Optimization/lib/python3.12/site-packages/botorch/acquisition/multi_objective/analytic.py:93: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  ref_point = torch.tensor(
+/tmp/arroyave/venvs/Alloy-Color-Optimization/lib/python3.12/site-packages/botorch/acquisition/multi_objective/analytic.py:93: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  ref_point = torch.tensor(
+/tmp/arroyave/venvs/Alloy-Color-Optimization/lib/python3.12/site-packages/botorch/acquisition/multi_objective/analytic.py:93: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  ref_point = torch.tensor(
+/tmp/arroyave/venvs/Alloy-Color-Optimization/lib/python3.12/site-packages/botorch/acquisition/multi_objective/analytic.py:93: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  ref_point = torch.tensor(
+/tmp/arroyave/venvs/Alloy-Color-Optimization/lib/python3.12/site-packages/botorch/acquisition/multi_objective/analytic.py:93: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  ref_point = torch.tensor(
+/tmp/arroyave/venvs/Alloy-Color-Optimization/lib/python3.12/site-packages/botorch/acquisition/multi_objective/analytic.py:93: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  ref_point = torch.tensor(
+/tmp/arroyave/venvs/Alloy-Color-Optimization/lib/python3.12/site-packages/botorch/acquisition/multi_objective/analytic.py:93: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  ref_point = torch.tensor(
+/tmp/arroyave/venvs/Alloy-Color-Optimization/lib/python3.12/site-packages/botorch/acquisition/multi_objective/analytic.py:93: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  ref_point = torch.tensor(
+/tmp/arroyave/venvs/Alloy-Color-Optimization/lib/python3.12/site-packages/botorch/acquisition/multi_objective/analytic.py:93: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  ref_point = torch.tensor(
+[Iter 1] idx 14 | color_dist=0.0000 | price=$50.30/g | HV=0.5023
+[Iter 2] idx 6 | color_dist=0.0202 | price=$48.81/g | HV=0.5063
+[Iter 3] idx 10 | color_dist=0.0153 | price=$46.05/g | HV=0.5154
+[Iter 4] idx 59 | color_dist=0.0528 | price=$47.36/g | HV=0.5154
+[Iter 5] idx 113 | color_dist=0.0853 | price=$45.47/g | HV=0.5154
+[Iter 6] idx 23 | color_dist=0.0102 | price=$42.50/g | HV=0.5529
+[Iter 7] idx 49 | color_dist=0.0830 | price=$38.22/g | HV=0.5803
+[Iter 8] idx 55 | color_dist=0.0603 | price=$46.60/g | HV=0.5803
+[Iter 9] idx 161 | color_dist=0.0494 | price=$44.50/g | HV=0.5803
+[Iter 10] idx 108 | color_dist=0.0673 | price=$41.43/g | HV=0.5816
+[Iter 11] idx 92 | color_dist=0.0886 | price=$44.15/g | HV=0.5816
+[Iter 12] idx 56 | color_dist=0.0361 | price=$40.09/g | HV=0.5894
+[Iter 13] idx 177 | color_dist=0.0605 | price=$41.66/g | HV=0.5894
+[Iter 14] idx 197 | color_dist=0.1129 | price=$36.89/g | HV=0.5947
+[Iter 15] idx 24 | color_dist=0.0198 | price=$42.37/g | HV=0.5948
+
+Pareto frontier (color distance, price $/g):
+  (0.1622, $29.36/g)
+  (0.2669, $18.33/g)
+  (0.1712, $19.99/g)
+  (0.0000, $50.30/g)
+  (0.0202, $48.81/g)
+  (0.0528, $47.36/g)
+  (0.0853, $45.47/g)
+  (0.0603, $46.60/g)
+  (0.0886, $44.15/g)
+  (0.1129, $36.89/g)

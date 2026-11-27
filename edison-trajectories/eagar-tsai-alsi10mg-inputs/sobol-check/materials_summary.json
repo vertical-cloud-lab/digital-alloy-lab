@@ -1,0 +1,538 @@
+{
+  "materials_check": {
+    "AlSi10Mg_property_ranges": {
+      "rows": 512,
+      "melting_rows": 386,
+      "melt_threshold_misclassified": 0,
+      "p_range": [
+        0.0578,
+        15.0095
+      ],
+      "extrapolated_rows": 23,
+      "error_inside_hull": {
+        "melt_width_um": {
+          "mean": -0.276,
+          "median_abs": 0.69,
+          "p95_abs": 2.931,
+          "p99_abs": 4.731,
+          "max_abs": 6.049
+        },
+        "melt_depth_um": {
+          "mean": -0.222,
+          "median_abs": 0.397,
+          "p95_abs": 1.526,
+          "p99_abs": 2.191,
+          "max_abs": 2.628
+        },
+        "melt_length_um": {
+          "mean": -0.173,
+          "median_abs": 0.566,
+          "p95_abs": 2.327,
+          "p99_abs": 3.151,
+          "max_abs": 4.477
+        },
+        "peak_temperature": {
+          "mean": 0.255,
+          "median_abs": 0.015,
+          "p95_abs": 1.249,
+          "p99_abs": 4.259,
+          "max_abs": 15.475
+        }
+      },
+      "error_extrapolated": {
+        "melt_width_um": {
+          "mean": 0.69,
+          "median_abs": 1.444,
+          "p95_abs": 5.045,
+          "p99_abs": 5.44,
+          "max_abs": 5.537
+        },
+        "melt_depth_um": {
+          "mean": -0.098,
+          "median_abs": 0.465,
+          "p95_abs": 2.38,
+          "p99_abs": 3.576,
+          "max_abs": 3.893
+        },
+        "melt_length_um": {
+          "mean": -4.886,
+          "median_abs": 4.403,
+          "p95_abs": 16.012,
+          "p99_abs": 19.999,
+          "max_abs": 21.027
+        },
+        "peak_temperature": {
+          "mean": 1.739,
+          "median_abs": 0.026,
+          "p95_abs": 8.964,
+          "p99_abs": 19.945,
+          "max_abs": 22.883
+        }
+      }
+    },
+    "pure_Cu": {
+      "rows": 512,
+      "melting_rows": 103,
+      "melt_threshold_misclassified": 1,
+      "p_range": [
+        0.2625,
+        31.6692
+      ],
+      "extrapolated_rows": 21,
+      "error_inside_hull": {
+        "melt_width_um": {
+          "mean": 0.035,
+          "median_abs": 0.0,
+          "p95_abs": 1.479,
+          "p99_abs": 2.247,
+          "max_abs": 3.03
+        },
+        "melt_depth_um": {
+          "mean": 0.019,
+          "median_abs": 0.0,
+          "p95_abs": 0.697,
+          "p99_abs": 1.343,
+          "max_abs": 1.567
+        },
+        "melt_length_um": {
+          "mean": 0.079,
+          "median_abs": 0.0,
+          "p95_abs": 1.353,
+          "p99_abs": 2.19,
+          "max_abs": 3.091
+        },
+        "peak_temperature": {
+          "mean": 0.086,
+          "median_abs": 0.005,
+          "p95_abs": 0.324,
+          "p99_abs": 1.586,
+          "max_abs": 6.796
+        }
+      },
+      "error_extrapolated": {
+        "melt_width_um": {
+          "mean": 1.043,
+          "median_abs": 1.367,
+          "p95_abs": 3.697,
+          "p99_abs": 4.253,
+          "max_abs": 4.392
+        },
+        "melt_depth_um": {
+          "mean": 1.407,
+          "median_abs": 1.503,
+          "p95_abs": 2.935,
+          "p99_abs": 3.829,
+          "max_abs": 4.052
+        },
+        "melt_length_um": {
+          "mean": -0.181,
+          "median_abs": 1.128,
+          "p95_abs": 2.954,
+          "p99_abs": 3.738,
+          "max_abs": 3.934
+        },
+        "peak_temperature": {
+          "mean": 0.188,
+          "median_abs": 0.036,
+          "p95_abs": 1.231,
+          "p99_abs": 1.383,
+          "max_abs": 1.422
+        }
+      }
+    }
+  },
+  "sobol_surrogate_8d_alsi10mg_property_ranges": {
+    "melt_width_um": {
+      "beam_diameter_m": {
+        "S1": 0.0042,
+        "S1_ci": [
+          -0.0038,
+          0.0134
+        ],
+        "ST": 0.0861,
+        "ST_ci": [
+          0.0827,
+          0.09
+        ]
+      },
+      "power_w": {
+        "S1": 0.2853,
+        "S1_ci": [
+          0.2682,
+          0.3023
+        ],
+        "ST": 0.4054,
+        "ST_ci": [
+          0.3872,
+          0.4225
+        ]
+      },
+      "velocity_m_s": {
+        "S1": 0.136,
+        "S1_ci": [
+          0.1204,
+          0.1505
+        ],
+        "ST": 0.2005,
+        "ST_ci": [
+          0.1887,
+          0.211
+        ]
+      },
+      "absorptivity": {
+        "S1": 0.3736,
+        "S1_ci": [
+          0.3542,
+          0.389
+        ],
+        "ST": 0.5042,
+        "ST_ci": [
+          0.4849,
+          0.5263
+        ]
+      },
+      "liquidus_temperature_k": {
+        "S1": 0.0001,
+        "S1_ci": [
+          -0.0002,
+          0.0004
+        ],
+        "ST": 0.0001,
+        "ST_ci": [
+          0.0001,
+          0.0001
+        ]
+      },
+      "thermal_conductivity_w_mk": {
+        "S1": 0.0199,
+        "S1_ci": [
+          0.0139,
+          0.0266
+        ],
+        "ST": 0.0428,
+        "ST_ci": [
+          0.0397,
+          0.0456
+        ]
+      },
+      "density_kg_m3": {
+        "S1": 0.0001,
+        "S1_ci": [
+          -0.0002,
+          0.0006
+        ],
+        "ST": 0.0002,
+        "ST_ci": [
+          0.0002,
+          0.0002
+        ]
+      },
+      "specific_heat_j_kgk": {
+        "S1": 0.0013,
+        "S1_ci": [
+          -0.0002,
+          0.0026
+        ],
+        "ST": 0.0023,
+        "ST_ci": [
+          0.0021,
+          0.0024
+        ]
+      }
+    },
+    "melt_depth_um": {
+      "beam_diameter_m": {
+        "S1": 0.0819,
+        "S1_ci": [
+          0.0714,
+          0.0902
+        ],
+        "ST": 0.1011,
+        "ST_ci": [
+          0.0971,
+          0.107
+        ]
+      },
+      "power_w": {
+        "S1": 0.2346,
+        "S1_ci": [
+          0.2162,
+          0.2501
+        ],
+        "ST": 0.3514,
+        "ST_ci": [
+          0.3334,
+          0.3726
+        ]
+      },
+      "velocity_m_s": {
+        "S1": 0.1787,
+        "S1_ci": [
+          0.1546,
+          0.1969
+        ],
+        "ST": 0.2918,
+        "ST_ci": [
+          0.2737,
+          0.3113
+        ]
+      },
+      "absorptivity": {
+        "S1": 0.297,
+        "S1_ci": [
+          0.2791,
+          0.3102
+        ],
+        "ST": 0.418,
+        "ST_ci": [
+          0.3978,
+          0.4409
+        ]
+      },
+      "liquidus_temperature_k": {
+        "S1": 0.0,
+        "S1_ci": [
+          -0.0001,
+          0.0002
+        ],
+        "ST": 0.0,
+        "ST_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "thermal_conductivity_w_mk": {
+        "S1": 0.0152,
+        "S1_ci": [
+          0.0093,
+          0.0194
+        ],
+        "ST": 0.0301,
+        "ST_ci": [
+          0.0282,
+          0.032
+        ]
+      },
+      "density_kg_m3": {
+        "S1": 0.0002,
+        "S1_ci": [
+          -0.0003,
+          0.0005
+        ],
+        "ST": 0.0002,
+        "ST_ci": [
+          0.0002,
+          0.0002
+        ]
+      },
+      "specific_heat_j_kgk": {
+        "S1": 0.0018,
+        "S1_ci": [
+          0.0004,
+          0.0035
+        ],
+        "ST": 0.0026,
+        "ST_ci": [
+          0.0025,
+          0.0028
+        ]
+      }
+    },
+    "melt_length_um": {
+      "beam_diameter_m": {
+        "S1": 0.0184,
+        "S1_ci": [
+          0.0103,
+          0.0249
+        ],
+        "ST": 0.0468,
+        "ST_ci": [
+          0.0447,
+          0.0491
+        ]
+      },
+      "power_w": {
+        "S1": 0.3302,
+        "S1_ci": [
+          0.3108,
+          0.3479
+        ],
+        "ST": 0.4397,
+        "ST_ci": [
+          0.4211,
+          0.4564
+        ]
+      },
+      "velocity_m_s": {
+        "S1": 0.0314,
+        "S1_ci": [
+          0.0252,
+          0.0378
+        ],
+        "ST": 0.0487,
+        "ST_ci": [
+          0.0461,
+          0.0516
+        ]
+      },
+      "absorptivity": {
+        "S1": 0.4124,
+        "S1_ci": [
+          0.3934,
+          0.4305
+        ],
+        "ST": 0.53,
+        "ST_ci": [
+          0.51,
+          0.5493
+        ]
+      },
+      "liquidus_temperature_k": {
+        "S1": 0.0,
+        "S1_ci": [
+          -0.0002,
+          0.0003
+        ],
+        "ST": 0.0001,
+        "ST_ci": [
+          0.0001,
+          0.0001
+        ]
+      },
+      "thermal_conductivity_w_mk": {
+        "S1": 0.0647,
+        "S1_ci": [
+          0.0554,
+          0.0749
+        ],
+        "ST": 0.1004,
+        "ST_ci": [
+          0.0966,
+          0.1058
+        ]
+      },
+      "density_kg_m3": {
+        "S1": 0.0,
+        "S1_ci": [
+          -0.0002,
+          0.0003
+        ],
+        "ST": 0.0001,
+        "ST_ci": [
+          0.0001,
+          0.0001
+        ]
+      },
+      "specific_heat_j_kgk": {
+        "S1": 0.0005,
+        "S1_ci": [
+          -0.0004,
+          0.0012
+        ],
+        "ST": 0.0008,
+        "ST_ci": [
+          0.0007,
+          0.0009
+        ]
+      }
+    },
+    "peak_temperature": {
+      "beam_diameter_m": {
+        "S1": 0.4485,
+        "S1_ci": [
+          0.4015,
+          0.4892
+        ],
+        "ST": 0.6838,
+        "ST_ci": [
+          0.6445,
+          0.7505
+        ]
+      },
+      "power_w": {
+        "S1": 0.0967,
+        "S1_ci": [
+          0.0834,
+          0.1117
+        ],
+        "ST": 0.2501,
+        "ST_ci": [
+          0.2267,
+          0.2752
+        ]
+      },
+      "velocity_m_s": {
+        "S1": 0.0111,
+        "S1_ci": [
+          0.0066,
+          0.0157
+        ],
+        "ST": 0.0234,
+        "ST_ci": [
+          0.0213,
+          0.0261
+        ]
+      },
+      "absorptivity": {
+        "S1": 0.1245,
+        "S1_ci": [
+          0.1133,
+          0.1405
+        ],
+        "ST": 0.301,
+        "ST_ci": [
+          0.2713,
+          0.3349
+        ]
+      },
+      "liquidus_temperature_k": {
+        "S1": 0.0,
+        "S1_ci": [
+          NaN,
+          NaN
+        ],
+        "ST": 0.0,
+        "ST_ci": [
+          NaN,
+          NaN
+        ]
+      },
+      "thermal_conductivity_w_mk": {
+        "S1": 0.0201,
+        "S1_ci": [
+          0.0133,
+          0.0267
+        ],
+        "ST": 0.0662,
+        "ST_ci": [
+          0.0604,
+          0.0769
+        ]
+      },
+      "density_kg_m3": {
+        "S1": -0.0,
+        "S1_ci": [
+          -0.0002,
+          0.0001
+        ],
+        "ST": 0.0,
+        "ST_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "specific_heat_j_kgk": {
+        "S1": 0.0003,
+        "S1_ci": [
+          -0.0001,
+          0.0008
+        ],
+        "ST": 0.0003,
+        "ST_ci": [
+          0.0003,
+          0.0004
+        ]
+      }
+    }
+  }
+}

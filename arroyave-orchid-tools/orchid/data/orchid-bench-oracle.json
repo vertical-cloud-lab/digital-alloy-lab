@@ -1,0 +1,15 @@
+{
+ "oracle_exit": 0,
+ "oracle_seconds": 1.68,
+ "stderr_tail": "",
+ "oracle_files_shipped": 80,
+ "oracle_files_identical": 80,
+ "score_exit": 0,
+ "score_seconds": 16.48,
+ "n_ratio_metrics": 188,
+ "ratio_metrics_not_1": [],
+ "n_not_1": 0,
+ "vs_shipped_scores_differing_leaves": 0,
+ "vs_shipped_max_abs_diff": 0.0,
+ "examples": []
+}

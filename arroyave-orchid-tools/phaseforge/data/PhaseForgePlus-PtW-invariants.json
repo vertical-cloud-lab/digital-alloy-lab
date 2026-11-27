@@ -1,0 +1,63 @@
+{
+ "start": {
+  "tdb": "pt-w.tdb",
+  "phases": [
+   "BCC_A2",
+   "FCC_A1",
+   "LIQUID"
+  ],
+  "invariants": [
+   {
+    "phases": [
+     "FCC_A1",
+     "BCC_A2",
+     "LIQUID"
+    ],
+    "T_K": 1530.52,
+    "X(W)": [
+     0.4459,
+     1.0,
+     0.4648
+    ]
+   },
+   {
+    "phases": [
+     "BCC_A2",
+     "FCC_A1",
+     "LIQUID"
+    ],
+    "T_K": 1530.52,
+    "X(W)": [
+     1.0,
+     0.4459,
+     0.4648
+    ]
+   }
+  ],
+  "map_s": 8.4
+ },
+ "tuned": {
+  "tdb": "PhaseForgePlus-PtW-tuned.tdb",
+  "phases": [
+   "BCC_A2",
+   "FCC_A1",
+   "LIQUID"
+  ],
+  "invariants": [
+   {
+    "phases": [
+     "LIQUID",
+     "BCC_A2",
+     "FCC_A1"
+    ],
+    "T_K": 2578.47,
+    "X(W)": [
+     0.6065,
+     0.9998,
+     0.6092
+    ]
+   }
+  ],
+  "map_s": 4.9
+ }
+}

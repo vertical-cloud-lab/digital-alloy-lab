@@ -1,0 +1,9 @@
+$ python scripts/PAIPAI-check_worker_calc.py <PAIPAI>/scripts/slow_worker.py   (paipai venv: MaterialsFramework 0ec8168 + tensorpotential 0.6.2.1 + TF 2.19.1 CPU)
+slow_worker GraceCalculator call: model=args.model, device=args.device, verbose=True, fmax=args.fmax_refine, max_steps=args.max_steps_refine,
+PAIPAI fast_worker.py: GraceCalculator({'model': 'GRACE-2L-OMAT', 'device': 'cpu', 'verbose': True, 'fmax': 0.1, 'max_steps': 30}) -> TypeError: object.__init__() takes exactly one argument (the instance to initialize)
+PAIPAI slow_worker.py: GraceCalculator({'model': 'GRACE-2L-OMAT', 'device': 'cpu', 'verbose': True, 'fmax': 0.01, 'max_steps': 400}) -> TypeError: object.__init__() takes exactly one argument (the instance to initialize)
+exit=0 wall=3s
+$ (same, BLADE line; previous grep filter hid it)
+PAIPAI fast_worker.py: GraceCalculator({'model': 'GRACE-2L-OMAT', 'device': 'cpu', 'verbose': True, 'fmax': 0.1, 'max_steps': 30}) -> TypeError: object.__init__() takes exactly one argument (the instance to initialize)
+PAIPAI slow_worker.py: GraceCalculator({'model': 'GRACE-2L-OMAT', 'device': 'cpu', 'verbose': True, 'fmax': 0.01, 'max_steps': 400}) -> TypeError: object.__init__() takes exactly one argument (the instance to initialize)
+BLADE blade_tdb_gen.py: GraceCalculator({'steps': 1000, 'device': 'cuda'}) -> TypeError: object.__init__() takes exactly one argument (the instance to initialize)

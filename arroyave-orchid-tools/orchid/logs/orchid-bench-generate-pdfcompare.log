@@ -1,0 +1,3 @@
+pdfs: 40 same text: 40 pixel-identical @72dpi: 40 max pixel diff: 0
+size deltas: [-5, -4, 0]
+{'shape_equal': True, 'n_pixels_differing': 11, 'max_abs_diff': 7}

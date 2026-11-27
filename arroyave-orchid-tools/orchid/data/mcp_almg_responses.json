@@ -1,0 +1,2900 @@
+{
+ "system": "Al-Mg",
+ "server": "sdk",
+ "note": "trimmed: lists cut to 5 items, strings to 240 chars; payloads identical between the SDK and fallback servers",
+ "responses": {
+  "Al-Mg/get_invariant_reactions(both)": {
+   "system": "AL-MG",
+   "source": "both",
+   "contexts": {},
+   "fields": "summary",
+   "literature_total": 31,
+   "literature_offset": 0,
+   "literature_truncated": false,
+   "literature": [
+    {
+     "id": "ORC-TGI3MWKZTF",
+     "property": "INVARIANT_TEMPERATURE",
+     "value": 736.3,
+     "unit": "K",
+     "T_K": 736.3,
+     "phases": [
+      "Al12Mg17 (AL12MG17_A12)",
+      "Liquid (LIQUID)"
+     ],
+     "reaction": "congruent melting: Al12Mg17 -> Liquid",
+     "evidence_class": "model",
+     "accepted": true,
+     "espei_ready": false,
+     "espei_certified": false,
+     "calphad_check": "not_available",
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": null,
+     "page": 69,
+     "quote": null,
+     "chemical_system": "AL-MG",
+     "paper_id": "sha256:85fd53a1a176b694",
+     "fold_lso": 3,
+     "fold_lpo": 2,
+     "review_state": "extracted",
+     "state_fully_specified": true,
+     "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-TGI3MWKZTF%20%28AL-MG%29&record_id=ORC-TGI3MWKZTF&system=AL-MG&source=p.%2069&value_shown=736.3%20K",
+     "corrected_by": [
+      "assessed_database_values"
+     ],
+     "uncertainty_budget": {
+      "quantities": {
+       "composition": {
+        "unit": "mole fraction",
+        "sigma_printed": null,
+        "sigma_reading": 0.0005,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": 0.005,
+         "class": "model_calculated",
+         "basis": "calibrated"
+        },
+        "sigma_effective": 0.005
+       },
+       "value": {
+        "unit": "K",
+        "sigma_printed": null,
+        "sigma_reading": 0.05,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": 4.0,
+         "class": "model_calculated",
+         "basis": "calibrated"
+        },
+        "sigma_effective": 4.0
+       }
+      },
+      "sigma_rule": "max(sqrt(max(printed, reading, method)^2 + composition^2 + conversion^2), scatter)",
+      "calibration": "orchid-uncertainty-calibration 2026-10-24 (audit round 2) sha256 6a2b5a92b0ec"
+     },
+     "table": "table I, row 7"
+    },
+    {
+     "id": "ORC-JOCP6MY2FE",
+     "property": "INVARIANT_TEMPERATURE",
+     "value": 733.3,
+     "unit": "K",
+     "T_K": 733.3,
+     "phases": [
+      "Al12Mg17 (AL12MG17_A12)",
+      "Liquid (LIQUID)"
+     ],
+     "reaction": "congruent melting: Al12Mg17 -> Liquid",
+     "evidence_class": "model",
+     "accepted": true,
+     "espei_ready": false,
+     "espei_certified": false,
+     "calphad_check": "not_available",
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": null,
+     "page": 63,
+     "quote": null,
+     "chemical_system": "AL-MG",
+     "paper_id": "sha256:85fd53a1a176b694",
+     "fold_lso": 3,
+     "fold_lpo": 2,
+     "review_state": "extracted",
+     "state_fully_specified": true,
+     "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-JOCP6MY2FE%20%28AL-MG%29&record_id=ORC-JOCP6MY2FE&system=AL-MG&source=p.%2063&value_shown=733.3%20K",
+     "corrected_by": [
+      "assessed_database_values"
+     ],
+     "uncertainty_budget": {
+      "quantities": {
+       "composition": {
+        "unit": "mole fraction",
+        "sigma_printed": null,
+        "sigma_reading": 0.0005,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": 0.005,
+         "class": "model_calculated",
+         "basis": "calibrated"
+        },
+        "sigma_effective": 0.005
+       },
+       "value": {
+        "unit": "K",
+        "sigma_printed": null,
+        "sigma_reading": 0.05,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": 4.0,
+         "class": "model_calculated",
+         "basis": "calibrated"
+        },
+        "sigma_effective": 4.0
+       }
+      },
+      "sigma_rule": "max(sqrt(max(printed, reading, method)^2 + composition^2 + conversion^2), scatter)",
+      "calibration": "orchid-uncertainty-calibration 2026-10-24 (audit round 2) sha256 6a2b5a92b0ec"
+     },
+     "table": "table I, row 9"
+    },
+    {
+     "id": "ORC-SUUEF56DWR",
+     "property": "INVARIANT_TEMPERATURE",
+     "value": 725.15,
+     "unit": "K",
+     "T_K": 725.15,
+     "phases": [
+      "L (LIQUID)",
+      "γ (AL12MG17_A12)",
+      "ζ (ALMG_ZETA)"
+     ],
+     "reaction": "L+γ= ζ",
+     "evidence_class": "experimental",
+     "accepted": true,
+     "espei_ready": true,
+     "espei_certified": true,
+     "calphad_check": "agrees",
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": "10.1016/0364-5916(93)90017-6",
+     "page": 10,
+     "quote": null,
+     "chemical_system": "AL-MG",
+     "paper_id": "doi:10.1016/0364-5916(93)90017-6",
+     "fold_lso": 3,
+     "fold_lpo": 0,
+     "review_state": "extracted",
+     "state_fully_specified": true,
+     "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-SUUEF56DWR%20%28AL-MG%29&record_id=ORC-SUUEF56DWR&system=AL-MG&source=doi%3A10.1016%2F0364-5916%2893%2990017-6%2C%20p.%2010&val... [259 chars]",
+     "uncertainty_budget": {
+      "quantities": {
+       "composition": {
+        "unit": "mole fraction",
+        "sigma_printed": null,
+        "sigma_reading": 0.0005,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": 0.011,
+         "class": "unknown",
+         "basis": "calibrated"
+        },
+        "sigma_effective": 0.011
+       },
+       "value": {
+        "unit": "K",
+        "sigma_printed": null,
+        "sigma_reading": 0.005,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": 11.0,
+         "class": "unknown",
+         "basis": "calibrated"
+        },
+        "sigma_effective": 11.0
+       }
+      },
+      "sigma_rule": "max(sqrt(max(printed, reading, method)^2 + composition^2 + conversion^2), scatter)",
+      "calibration": "orchid-uncertainty-calibration 2026-10-24 (audit round 2) sha256 6a2b5a92b0ec"
+     },
+     "table": "table 2, row 8"
+    },
+    {
+     "id": "ORC-KGFIRKVB2H",
+     "property": "INVARIANT_TEMPERATURE",
+     "value": 725.15,
+     "unit": "K",
+     "T_K": 725.15,
+     "phases": [
+      "L (LIQUID)",
+      "γ (AL12MG17_A12)",
+      "ζ (ALMG_ZETA)"
+     ],
+     "reaction": "L+γ= ζ",
+     "evidence_class": "model",
+     "accepted": true,
+     "espei_ready": false,
+     "espei_certified": false,
+     "calphad_check": "agrees",
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": "10.1016/0364-5916(93)90017-6",
+     "page": 10,
+     "quote": null,
+     "chemical_system": "AL-MG",
+     "paper_id": "doi:10.1016/0364-5916(93)90017-6",
+     "fold_lso": 3,
+     "fold_lpo": 0,
+     "review_state": "extracted",
+     "state_fully_specified": true,
+     "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-KGFIRKVB2H%20%28AL-MG%29&record_id=ORC-KGFIRKVB2H&system=AL-MG&source=doi%3A10.1016%2F0364-5916%2893%2990017-6%2C%20p.%2010&val... [259 chars]",
+     "uncertainty_budget": {
+      "quantities": {
+       "composition": {
+        "unit": "mole fraction",
+        "sigma_printed": null,
+        "sigma_reading": 0.0005,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": 0.005,
+         "class": "model_calculated",
+         "basis": "calibrated"
+        },
+        "sigma_effective": 0.005
+       },
+       "value": {
+        "unit": "K",
+        "sigma_printed": null,
+        "sigma_reading": 0.005,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": 4.0,
+         "class": "model_calculated",
+         "basis": "calibrated"
+        },
+        "sigma_effective": 4.0
+       }
+      },
+      "sigma_rule": "max(sqrt(max(printed, reading, method)^2 + composition^2 + conversion^2), scatter)",
+      "calibration": "orchid-uncertainty-calibration 2026-10-24 (audit round 2) sha256 6a2b5a92b0ec"
+     },
+     "table": "table 2, row 7"
+    },
+    {
+     "id": "ORC-O7TXLKQO4R",
+     "property": "INVARIANT_TEMPERATURE",
+     "value": 725.1,
+     "unit": "K",
+     "T_K": 725.1,
+     "phases": [
+      "L (LIQUID)",
+      "fcc-A1 (FCC_A1)",
+      "β (ALMG_BETA)"
+     ],
+     "reaction": "eutectic: Liquid = fcc-A1 + β",
+     "evidence_class": "model",
+     "accepted": true,
+     "espei_ready": false,
+     "espei_certified": false,
+     "calphad_check": "agrees",
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": "10.1016/j.calphad.2005.08.004",
+     "page": 6,
+     "quote": null,
+     "chemical_system": "AL-MG",
+     "paper_id": "doi:10.1016/j.calphad.2005.08.004",
+     "fold_lso": 3,
+     "fold_lpo": 3,
+     "review_state": "extracted",
+     "state_fully_specified": true,
+     "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-O7TXLKQO4R%20%28AL-MG%29&record_id=ORC-O7TXLKQO4R&system=AL-MG&source=doi%3A10.1016%2Fj.calphad.2005.08.004%2C%20p.%206&value_s... [254 chars]",
+     "uncertainty_budget": {
+      "quantities": {
+       "composition": {
+        "unit": "mole fraction",
+        "sigma_printed": null,
+        "sigma_reading": 0.0005,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": 0.005,
+         "class": "model_calculated",
+         "basis": "calibrated"
+        },
+        "sigma_effective": 0.005
+       },
+       "value": {
+        "unit": "K",
+        "sigma_printed": null,
+        "sigma_reading": 0.05,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": 4.0,
+         "class": "model_calculated",
+         "basis": "calibrated"
+        },
+        "sigma_effective": 4.0
+       }
+      },
+      "sigma_rule": "max(sqrt(max(printed, reading, method)^2 + composition^2 + conversion^2), scatter)",
+      "calibration": "orchid-uncertainty-calibration 2026-10-24 (audit round 2) sha256 6a2b5a92b0ec"
+     },
+     "table": "table 5, row 1"
+    },
+    "... 26 more items trimmed (of 31)"
+   ],
+   "calculated": [
+    {
+     "tdb": "AlMg-05Zho.tdb",
+     "tdb_sha256": "ff00db3daedb96d874b398be0852d3f587e02dbc6355d07f4dede1f45cd0fad4",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/j.calphad.2005.08.004",
+     "engine": "pycalphad 0.11.2",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-MG/AlMg-05Zho.json",
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlMg-05Zho.json",
+     "evidence_class": "model",
+     "invariants": [
+      {
+       "T": 725.1,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.16632
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.36595
+        },
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-O7TXLKQO4R",
+         "evidence_class": "model",
+         "T_K": 725.1,
+         "dT_K": 0.0
+        },
+        {
+         "id": "ORC-2MZ6GZGFUP",
+         "evidence_class": "model",
+         "T_K": 723.6,
+         "dT_K": -1.5
+        },
+        {
+         "id": "ORC-NPM2CPX345",
+         "evidence_class": "model",
+         "T_K": 723.3,
+         "dT_K": -1.8
+        }
+       ]
+      },
+      {
+       "T": 725.03,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.41271
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.473
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-2RQ4JLQVRE",
+         "evidence_class": "model",
+         "T_K": 725.0,
+         "dT_K": -0.03
+        },
+        {
+         "id": "ORC-I3RFK6UB47",
+         "evidence_class": "model",
+         "T_K": 722.7,
+         "dT_K": -2.33
+        }
+       ]
+      },
+      {
+       "T": 712.06,
+       "points": [
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.59264
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.69258
+        },
+        {
+         "phase": "HCP_A3",
+         "x": 0.88928
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-VSD3J3UTJJ",
+         "evidence_class": "model",
+         "T_K": 712.1,
+         "dT_K": 0.04
+        },
+        {
+         "id": "ORC-X3IZSKGHCU",
+         "evidence_class": "experimental",
+         "T_K": 711.15,
+         "dT_K": -0.91
+        },
+        {
+         "id": "ORC-HZ6BUQOY4T",
+         "evidence_class": "model",
+         "T_K": 710.95,
+         "dT_K": -1.11
+        }
+       ]
+      },
+      {
+       "T": 699.67,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        },
+        {
+         "phase": "ALMG_EPS",
+         "x": 0.43396
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.48406
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-RJEFNFG3IU",
+         "evidence_class": "model",
+         "T_K": 700.0,
+         "dT_K": 0.33
+        },
+        {
+         "id": "ORC-GPFZLJXPV4",
+         "evidence_class": "model",
+         "T_K": 682.9,
+         "dT_K": -16.77
+        },
+        {
+         "id": "ORC-6DT67DOVIZ",
+         "evidence_class": "model",
+         "T_K": 523.2,
+         "dT_K": -176.47
+        }
+       ]
+      },
+      {
+       "T": 523.18,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        },
+        {
+         "phase": "ALMG_EPS",
+         "x": 0.43396
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.53598
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-6DT67DOVIZ",
+         "evidence_class": "model",
+         "T_K": 523.2,
+         "dT_K": 0.02
+        },
+        {
+         "id": "ORC-XZQFPXHCCM",
+         "evidence_class": "model",
+         "T_K": 523.2,
+         "dT_K": 0.02
+        },
+        {
+         "id": "ORC-GPFZLJXPV4",
+         "evidence_class": "model",
+         "T_K": 682.9,
+         "dT_K": 159.72
+        }
+       ]
+      }
+     ],
+     "n_invariants_raw": 11
+    },
+    {
+     "tdb": "AlMg-12Tan.tdb",
+     "tdb_sha256": "e407a985a133b1679c876fc93ac8e521057bc0a745fce838dba14dc7df8377f3",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/j.tca.2011.10.017",
+     "engine": "pycalphad 0.11.2",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-MG/AlMg-12Tan.json",
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlMg-12Tan.json",
+     "evidence_class": "model",
+     "invariants": [
+      {
+       "T": 723.89,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.16613
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.36396
+        },
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-2MZ6GZGFUP",
+         "evidence_class": "model",
+         "T_K": 723.6,
+         "dT_K": -0.29
+        },
+        {
+         "id": "ORC-NPM2CPX345",
+         "evidence_class": "model",
+         "T_K": 723.3,
+         "dT_K": -0.59
+        },
+        {
+         "id": "ORC-O7TXLKQO4R",
+         "evidence_class": "model",
+         "T_K": 725.1,
+         "dT_K": 1.21
+        }
+       ]
+      },
+      {
+       "T": 723.5,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.41862
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.46709
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-I3RFK6UB47",
+         "evidence_class": "model",
+         "T_K": 722.7,
+         "dT_K": -0.8
+        },
+        {
+         "id": "ORC-2RQ4JLQVRE",
+         "evidence_class": "model",
+         "T_K": 725.0,
+         "dT_K": 1.5
+        }
+       ]
+      },
+      {
+       "T": 711.24,
+       "points": [
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.61034
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.69722
+        },
+        {
+         "phase": "HCP_A3",
+         "x": 0.86608
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-X3IZSKGHCU",
+         "evidence_class": "experimental",
+         "T_K": 711.15,
+         "dT_K": -0.09
+        },
+        {
+         "id": "ORC-HZ6BUQOY4T",
+         "evidence_class": "model",
+         "T_K": 710.95,
+         "dT_K": -0.29
+        },
+        {
+         "id": "ORC-VSD3J3UTJJ",
+         "evidence_class": "model",
+         "T_K": 712.1,
+         "dT_K": 0.86
+        }
+       ]
+      },
+      {
+       "T": 699.52,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        },
+        {
+         "phase": "ALMG_EPS",
+         "x": 0.43396
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.48287
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-RJEFNFG3IU",
+         "evidence_class": "model",
+         "T_K": 700.0,
+         "dT_K": 0.48
+        },
+        {
+         "id": "ORC-GPFZLJXPV4",
+         "evidence_class": "model",
+         "T_K": 682.9,
+         "dT_K": -16.62
+        },
+        {
+         "id": "ORC-6DT67DOVIZ",
+         "evidence_class": "model",
+         "T_K": 523.2,
+         "dT_K": -176.32
+        }
+       ]
+      },
+      {
+       "T": 523.88,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        },
+        {
+         "phase": "ALMG_EPS",
+         "x": 0.43396
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.54932
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-6DT67DOVIZ",
+         "evidence_class": "model",
+         "T_K": 523.2,
+         "dT_K": -0.68
+        },
+        {
+         "id": "ORC-XZQFPXHCCM",
+         "evidence_class": "model",
+         "T_K": 523.2,
+         "dT_K": -0.68
+        },
+        {
+         "id": "ORC-GPFZLJXPV4",
+         "evidence_class": "model",
+         "T_K": 682.9,
+         "dT_K": 159.02
+        }
+       ]
+      }
+     ],
+     "n_invariants_raw": 11
+    },
+    {
+     "tdb": "AlMg-13Tok.tdb",
+     "tdb_sha256": "36113d4594b47a083208901ac50a91f75148ec01f64236786e1db144d0fd3141",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.2320/matertrans.MI201226",
+     "engine": "pycalphad 0.11.2",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-MG/AlMg-13Tok.json",
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlMg-13Tok.json",
+     "evidence_class": "model",
+     "invariants": [
+      {
+       "T": 722.94,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.42571
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.48142
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-I3RFK6UB47",
+         "evidence_class": "model",
+         "T_K": 722.7,
+         "dT_K": -0.24
+        },
+        {
+         "id": "ORC-2RQ4JLQVRE",
+         "evidence_class": "model",
+         "T_K": 725.0,
+         "dT_K": 2.06
+        }
+       ]
+      },
+      {
+       "T": 722.85,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.15276
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.35022
+        },
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-NPM2CPX345",
+         "evidence_class": "model",
+         "T_K": 723.3,
+         "dT_K": 0.45
+        },
+        {
+         "id": "ORC-2MZ6GZGFUP",
+         "evidence_class": "model",
+         "T_K": 723.6,
+         "dT_K": 0.75
+        },
+        {
+         "id": "ORC-O7TXLKQO4R",
+         "evidence_class": "model",
+         "T_K": 725.1,
+         "dT_K": 2.25
+        }
+       ]
+      },
+      {
+       "T": 709.11,
+       "points": [
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.59728
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.7018
+        },
+        {
+         "phase": "HCP_A3",
+         "x": 0.86562
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-2PJN4OWSOZ",
+         "evidence_class": "model",
+         "T_K": 709.4,
+         "dT_K": 0.29
+        },
+        {
+         "id": "ORC-IDEXG6N5QQ",
+         "evidence_class": "model",
+         "T_K": 710.0,
+         "dT_K": 0.89
+        },
+        {
+         "id": "ORC-HZ6BUQOY4T",
+         "evidence_class": "model",
+         "T_K": 710.95,
+         "dT_K": 1.84
+        }
+       ]
+      },
+      {
+       "T": 682.14,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        },
+        {
+         "phase": "ALMG_EPS",
+         "x": 0.43396
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.49444
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-GPFZLJXPV4",
+         "evidence_class": "model",
+         "T_K": 682.9,
+         "dT_K": 0.76
+        },
+        {
+         "id": "ORC-RJEFNFG3IU",
+         "evidence_class": "model",
+         "T_K": 700.0,
+         "dT_K": 17.86
+        },
+        {
+         "id": "ORC-6DT67DOVIZ",
+         "evidence_class": "model",
+         "T_K": 523.2,
+         "dT_K": -158.94
+        }
+       ]
+      },
+      {
+       "T": 518.74,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        },
+        {
+         "phase": "ALMG_EPS",
+         "x": 0.43396
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.53594
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-6DT67DOVIZ",
+         "evidence_class": "model",
+         "T_K": 523.2,
+         "dT_K": 4.46
+        },
+        {
+         "id": "ORC-XZQFPXHCCM",
+         "evidence_class": "model",
+         "T_K": 523.2,
+         "dT_K": 4.46
+        },
+        {
+         "id": "ORC-GPFZLJXPV4",
+         "evidence_class": "model",
+         "T_K": 682.9,
+         "dT_K": 164.16
+        }
+       ]
+      }
+     ],
+     "n_invariants_raw": 11
+    },
+    {
+     "tdb": "AlMg-20Shi.tdb",
+     "tdb_sha256": "187a670f0e95cf53e84a7eb99bc26ead7600753a146d0f2a23c92c0a09f63ad4",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/j.jallcom.2020.153962",
+     "engine": "pycalphad 0.11.2",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-MG/AlMg-20Shi.json",
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlMg-20Shi.json",
+     "evidence_class": "model",
+     "invariants": [
+      {
+       "T": 728.45,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.1838
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.39296
+        },
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.41182
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-O7TXLKQO4R",
+         "evidence_class": "model",
+         "T_K": 725.1,
+         "dT_K": -3.35
+        },
+        {
+         "id": "ORC-2MZ6GZGFUP",
+         "evidence_class": "model",
+         "T_K": 723.6,
+         "dT_K": -4.85
+        },
+        {
+         "id": "ORC-NPM2CPX345",
+         "evidence_class": "model",
+         "T_K": 723.3,
+         "dT_K": -5.15
+        }
+       ]
+      },
+      {
+       "T": 711.54,
+       "points": [
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.66775
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.74027
+        },
+        {
+         "phase": "HCP_A3",
+         "x": 0.89872
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-X3IZSKGHCU",
+         "evidence_class": "experimental",
+         "T_K": 711.15,
+         "dT_K": -0.39
+        },
+        {
+         "id": "ORC-VSD3J3UTJJ",
+         "evidence_class": "model",
+         "T_K": 712.1,
+         "dT_K": 0.56
+        },
+        {
+         "id": "ORC-HZ6BUQOY4T",
+         "evidence_class": "model",
+         "T_K": 710.95,
+         "dT_K": -0.59
+        }
+       ]
+      },
+      {
+       "T": 697.83,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.41517
+        },
+        {
+         "phase": "ALMG_EPS",
+         "x": 0.46388
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.48727
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-RJEFNFG3IU",
+         "evidence_class": "model",
+         "T_K": 700.0,
+         "dT_K": 2.17
+        },
+        {
+         "id": "ORC-GPFZLJXPV4",
+         "evidence_class": "model",
+         "T_K": 682.9,
+         "dT_K": -14.93
+        },
+        {
+         "id": "ORC-6DT67DOVIZ",
+         "evidence_class": "model",
+         "T_K": 523.2,
+         "dT_K": -174.63
+        }
+       ]
+      },
+      {
+       "T": 457.89,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.4023
+        },
+        {
+         "phase": "ALMG_EPS",
+         "x": 0.4506
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.55494
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-6DT67DOVIZ",
+         "evidence_class": "model",
+         "T_K": 523.2,
+         "dT_K": 65.31
+        },
+        {
+         "id": "ORC-XZQFPXHCCM",
+         "evidence_class": "model",
+         "T_K": 523.2,
+         "dT_K": 65.31
+        },
+        {
+         "id": "ORC-GPFZLJXPV4",
+         "evidence_class": "model",
+         "T_K": 682.9,
+         "dT_K": 225.01
+        }
+       ]
+      }
+     ],
+     "n_invariants_raw": 4
+    },
+    {
+     "tdb": "AlMg-23Hal.tdb",
+     "tdb_sha256": "8b77728be5166a674454d8dd8336ede93fc9d2b7bd749a48b819d22dd8a6f619",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/j.calphad.2023.102577",
+     "engine": "pycalphad 0.11.2",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-MG/AlMg-23Hal.json",
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlMg-23Hal.json",
+     "evidence_class": "model",
+     "invariants": [
+      {
+       "T": 725.1,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.16632
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.36595
+        },
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-O7TXLKQO4R",
+         "evidence_class": "model",
+         "T_K": 725.1,
+         "dT_K": 0.0
+        },
+        {
+         "id": "ORC-2MZ6GZGFUP",
+         "evidence_class": "model",
+         "T_K": 723.6,
+         "dT_K": -1.5
+        },
+        {
+         "id": "ORC-NPM2CPX345",
+         "evidence_class": "model",
+         "T_K": 723.3,
+         "dT_K": -1.8
+        }
+       ]
+      },
+      {
+       "T": 721.47,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.44835
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.49279
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-I3RFK6UB47",
+         "evidence_class": "model",
+         "T_K": 722.7,
+         "dT_K": 1.23
+        },
+        {
+         "id": "ORC-2RQ4JLQVRE",
+         "evidence_class": "model",
+         "T_K": 725.0,
+         "dT_K": 3.53
+        }
+       ]
+      },
+      {
+       "T": 712.8,
+       "points": [
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.62571
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.69347
+        },
+        {
+         "phase": "HCP_A3",
+         "x": 0.88966
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-VSD3J3UTJJ",
+         "evidence_class": "model",
+         "T_K": 712.1,
+         "dT_K": -0.7
+        },
+        {
+         "id": "ORC-X3IZSKGHCU",
+         "evidence_class": "experimental",
+         "T_K": 711.15,
+         "dT_K": -1.65
+        },
+        {
+         "id": "ORC-HZ6BUQOY4T",
+         "evidence_class": "model",
+         "T_K": 710.95,
+         "dT_K": -1.85
+        }
+       ]
+      },
+      {
+       "T": 700.74,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        },
+        {
+         "phase": "ALMG_EPS",
+         "x": 0.43396
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.50064
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-RJEFNFG3IU",
+         "evidence_class": "model",
+         "T_K": 700.0,
+         "dT_K": -0.74
+        },
+        {
+         "id": "ORC-GPFZLJXPV4",
+         "evidence_class": "model",
+         "T_K": 682.9,
+         "dT_K": -17.84
+        },
+        {
+         "id": "ORC-6DT67DOVIZ",
+         "evidence_class": "model",
+         "T_K": 523.2,
+         "dT_K": -177.54
+        }
+       ]
+      },
+      {
+       "T": 457.91,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        },
+        {
+         "phase": "ALMG_EPS",
+         "x": 0.43396
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.55459
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-6DT67DOVIZ",
+         "evidence_class": "model",
+         "T_K": 523.2,
+         "dT_K": 65.29
+        },
+        {
+         "id": "ORC-XZQFPXHCCM",
+         "evidence_class": "model",
+         "T_K": 523.2,
+         "dT_K": 65.29
+        },
+        {
+         "id": "ORC-GPFZLJXPV4",
+         "evidence_class": "model",
+         "T_K": 682.9,
+         "dT_K": 224.99
+        }
+       ]
+      }
+     ],
+     "n_invariants_raw": 11
+    },
+    "... 5 more items trimmed (of 10)"
+   ],
+   "matching_rule": "literature_matches: literature records whose mapped CALPHAD model phases equal the calculated invariant's phase set exactly (unmapped phases never match); dT = literature - calculated.",
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_source... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_c... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts an... [247 chars]",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  },
+  "Al-Mg/get_phase_diagram": {
+   "system": "AL-MG",
+   "fields": "summary",
+   "n_assessments": 10,
+   "assessments": [
+    {
+     "evidence_class": "model",
+     "tdb": "AlMg-05Zho.tdb",
+     "tdb_sha256": "ff00db3daedb96d874b398be0852d3f587e02dbc6355d07f4dede1f45cd0fad4",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlMg-05Zho.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/j.calphad.2005.08.004",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "MG"
+     ],
+     "x_component": "MG",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "AL12MG17_A12",
+      "ALMG_BETA",
+      "ALMG_EPS",
+      "BCC_A2",
+      "FCC_A1",
+      "... 2 more items trimmed (of 7)"
+     ],
+     "invariants": [
+      {
+       "T": 725.1,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.16632
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.36595
+        },
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        }
+       ]
+      },
+      {
+       "T": 725.1,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.16612
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.3657
+        },
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        }
+       ]
+      },
+      {
+       "T": 725.03,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.41271
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.473
+        }
+       ]
+      },
+      {
+       "T": 725.02,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.41316
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.47324
+        }
+       ]
+      },
+      {
+       "T": 712.06,
+       "points": [
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.59264
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.69258
+        },
+        {
+         "phase": "HCP_A3",
+         "x": 0.88928
+        }
+       ]
+      },
+      "... 6 more items trimmed (of 11)"
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlMg-05Zho.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-MG/AlMg-05Zho.json"
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlMg-12Tan.tdb",
+     "tdb_sha256": "e407a985a133b1679c876fc93ac8e521057bc0a745fce838dba14dc7df8377f3",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlMg-12Tan.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/j.tca.2011.10.017",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "MG"
+     ],
+     "x_component": "MG",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "AL12MG17_A12",
+      "ALMG_BETA",
+      "ALMG_EPS",
+      "BCC_A2",
+      "FCC_A1",
+      "... 2 more items trimmed (of 7)"
+     ],
+     "invariants": [
+      {
+       "T": 723.89,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.16613
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.36396
+        },
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        }
+       ]
+      },
+      {
+       "T": 723.89,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.16608
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.3639
+        },
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        }
+       ]
+      },
+      {
+       "T": 723.5,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.41862
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.46709
+        }
+       ]
+      },
+      {
+       "T": 723.5,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.41888
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.46726
+        }
+       ]
+      },
+      {
+       "T": 711.24,
+       "points": [
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.61034
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.69722
+        },
+        {
+         "phase": "HCP_A3",
+         "x": 0.86608
+        }
+       ]
+      },
+      "... 6 more items trimmed (of 11)"
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlMg-12Tan.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-MG/AlMg-12Tan.json"
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlMg-13Tok.tdb",
+     "tdb_sha256": "36113d4594b47a083208901ac50a91f75148ec01f64236786e1db144d0fd3141",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlMg-13Tok.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.2320/matertrans.MI201226",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "MG"
+     ],
+     "x_component": "MG",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "AL12MG17_A12",
+      "ALMG_BETA",
+      "ALMG_EPS",
+      "BCC_A2",
+      "FCC_A1",
+      "... 2 more items trimmed (of 7)"
+     ],
+     "invariants": [
+      {
+       "T": 722.94,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.42571
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.48142
+        }
+       ]
+      },
+      {
+       "T": 722.94,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.42615
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.48171
+        }
+       ]
+      },
+      {
+       "T": 722.85,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.15276
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.35022
+        },
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        }
+       ]
+      },
+      {
+       "T": 722.85,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.15255
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.34999
+        },
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        }
+       ]
+      },
+      {
+       "T": 709.11,
+       "points": [
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.59728
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.7018
+        },
+        {
+         "phase": "HCP_A3",
+         "x": 0.86562
+        }
+       ]
+      },
+      "... 6 more items trimmed (of 11)"
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlMg-13Tok.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-MG/AlMg-13Tok.json"
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlMg-20Shi.tdb",
+     "tdb_sha256": "187a670f0e95cf53e84a7eb99bc26ead7600753a146d0f2a23c92c0a09f63ad4",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlMg-20Shi.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/j.jallcom.2020.153962",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "MG"
+     ],
+     "x_component": "MG",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "AL12MG17_A12",
+      "ALMG_BETA",
+      "ALMG_EPS",
+      "BCC_A2",
+      "FCC_A1",
+      "... 2 more items trimmed (of 7)"
+     ],
+     "invariants": [
+      {
+       "T": 728.45,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.1838
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.39296
+        },
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.41182
+        }
+       ]
+      },
+      {
+       "T": 711.54,
+       "points": [
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.66775
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.74027
+        },
+        {
+         "phase": "HCP_A3",
+         "x": 0.89872
+        }
+       ]
+      },
+      {
+       "T": 697.83,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.41517
+        },
+        {
+         "phase": "ALMG_EPS",
+         "x": 0.46388
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.48727
+        }
+       ]
+      },
+      {
+       "T": 457.89,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.4023
+        },
+        {
+         "phase": "ALMG_EPS",
+         "x": 0.4506
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.55494
+        }
+       ]
+      }
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlMg-20Shi.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-MG/AlMg-20Shi.json"
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlMg-23Hal.tdb",
+     "tdb_sha256": "8b77728be5166a674454d8dd8336ede93fc9d2b7bd749a48b819d22dd8a6f619",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlMg-23Hal.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/j.calphad.2023.102577",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "MG"
+     ],
+     "x_component": "MG",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "AL12MG17_A12",
+      "ALMG_BETA",
+      "ALMG_EPS",
+      "BCC_A2",
+      "C14_LAVES",
+      "... 5 more items trimmed (of 10)"
+     ],
+     "invariants": [
+      {
+       "T": 725.1,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.16632
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.36595
+        },
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        }
+       ]
+      },
+      {
+       "T": 725.1,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.16612
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.3657
+        },
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        }
+       ]
+      },
+      {
+       "T": 721.47,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.44835
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.49279
+        }
+       ]
+      },
+      {
+       "T": 721.47,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.44878
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.49303
+        }
+       ]
+      },
+      {
+       "T": 712.8,
+       "points": [
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.62571
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.69347
+        },
+        {
+         "phase": "HCP_A3",
+         "x": 0.88966
+        }
+       ]
+      },
+      "... 6 more items trimmed (of 11)"
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlMg-23Hal.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-MG/AlMg-23Hal.json"
+    },
+    "... 5 more items trimmed (of 10)"
+   ],
+   "note": "Each assessment is a separate CALPHAD model; results are never averaged across assessments.",
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_source... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_c... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts an... [247 chars]",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  },
+  "Al-Mg/get_phase_diagram(x_Mg=0.05,T=700)": {
+   "system": "AL-MG",
+   "fields": "summary",
+   "n_assessments": 10,
+   "assessments": [
+    {
+     "evidence_class": "model",
+     "tdb": "AlMg-05Zho.tdb",
+     "tdb_sha256": "ff00db3daedb96d874b398be0852d3f587e02dbc6355d07f4dede1f45cd0fad4",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlMg-05Zho.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/j.calphad.2005.08.004",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "MG"
+     ],
+     "x_component": "MG",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "AL12MG17_A12",
+      "ALMG_BETA",
+      "ALMG_EPS",
+      "BCC_A2",
+      "FCC_A1",
+      "... 2 more items trimmed (of 7)"
+     ],
+     "invariants": [
+      {
+       "T": 725.1,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.16632
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.36595
+        },
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        }
+       ]
+      },
+      {
+       "T": 725.1,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.16612
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.3657
+        },
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        }
+       ]
+      },
+      {
+       "T": 725.03,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.41271
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.473
+        }
+       ]
+      },
+      {
+       "T": 725.02,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.41316
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.47324
+        }
+       ]
+      },
+      {
+       "T": 712.06,
+       "points": [
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.59264
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.69258
+        },
+        {
+         "phase": "HCP_A3",
+         "x": 0.88928
+        }
+       ]
+      },
+      "... 6 more items trimmed (of 11)"
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlMg-05Zho.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-MG/AlMg-05Zho.json",
+     "phase_at": {
+      "x_requested": 0.05,
+      "T_requested_K": 700.0,
+      "grid_x": 0.05,
+      "grid_T_K": 700.0,
+      "x_component": "MG",
+      "stable_phases": [
+       "FCC_A1"
+      ],
+      "label": "FCC_A1",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlMg-12Tan.tdb",
+     "tdb_sha256": "e407a985a133b1679c876fc93ac8e521057bc0a745fce838dba14dc7df8377f3",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlMg-12Tan.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/j.tca.2011.10.017",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "MG"
+     ],
+     "x_component": "MG",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "AL12MG17_A12",
+      "ALMG_BETA",
+      "ALMG_EPS",
+      "BCC_A2",
+      "FCC_A1",
+      "... 2 more items trimmed (of 7)"
+     ],
+     "invariants": [
+      {
+       "T": 723.89,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.16613
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.36396
+        },
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        }
+       ]
+      },
+      {
+       "T": 723.89,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.16608
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.3639
+        },
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        }
+       ]
+      },
+      {
+       "T": 723.5,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.41862
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.46709
+        }
+       ]
+      },
+      {
+       "T": 723.5,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.41888
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.46726
+        }
+       ]
+      },
+      {
+       "T": 711.24,
+       "points": [
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.61034
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.69722
+        },
+        {
+         "phase": "HCP_A3",
+         "x": 0.86608
+        }
+       ]
+      },
+      "... 6 more items trimmed (of 11)"
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlMg-12Tan.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-MG/AlMg-12Tan.json",
+     "phase_at": {
+      "x_requested": 0.05,
+      "T_requested_K": 700.0,
+      "grid_x": 0.05,
+      "grid_T_K": 700.0,
+      "x_component": "MG",
+      "stable_phases": [
+       "FCC_A1"
+      ],
+      "label": "FCC_A1",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlMg-13Tok.tdb",
+     "tdb_sha256": "36113d4594b47a083208901ac50a91f75148ec01f64236786e1db144d0fd3141",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlMg-13Tok.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.2320/matertrans.MI201226",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "MG"
+     ],
+     "x_component": "MG",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "AL12MG17_A12",
+      "ALMG_BETA",
+      "ALMG_EPS",
+      "BCC_A2",
+      "FCC_A1",
+      "... 2 more items trimmed (of 7)"
+     ],
+     "invariants": [
+      {
+       "T": 722.94,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.42571
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.48142
+        }
+       ]
+      },
+      {
+       "T": 722.94,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.42615
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.48171
+        }
+       ]
+      },
+      {
+       "T": 722.85,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.15276
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.35022
+        },
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        }
+       ]
+      },
+      {
+       "T": 722.85,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.15255
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.34999
+        },
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        }
+       ]
+      },
+      {
+       "T": 709.11,
+       "points": [
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.59728
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.7018
+        },
+        {
+         "phase": "HCP_A3",
+         "x": 0.86562
+        }
+       ]
+      },
+      "... 6 more items trimmed (of 11)"
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlMg-13Tok.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-MG/AlMg-13Tok.json",
+     "phase_at": {
+      "x_requested": 0.05,
+      "T_requested_K": 700.0,
+      "grid_x": 0.05,
+      "grid_T_K": 700.0,
+      "x_component": "MG",
+      "stable_phases": [
+       "FCC_A1"
+      ],
+      "label": "FCC_A1",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlMg-20Shi.tdb",
+     "tdb_sha256": "187a670f0e95cf53e84a7eb99bc26ead7600753a146d0f2a23c92c0a09f63ad4",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlMg-20Shi.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/j.jallcom.2020.153962",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "MG"
+     ],
+     "x_component": "MG",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "AL12MG17_A12",
+      "ALMG_BETA",
+      "ALMG_EPS",
+      "BCC_A2",
+      "FCC_A1",
+      "... 2 more items trimmed (of 7)"
+     ],
+     "invariants": [
+      {
+       "T": 728.45,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.1838
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.39296
+        },
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.41182
+        }
+       ]
+      },
+      {
+       "T": 711.54,
+       "points": [
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.66775
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.74027
+        },
+        {
+         "phase": "HCP_A3",
+         "x": 0.89872
+        }
+       ]
+      },
+      {
+       "T": 697.83,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.41517
+        },
+        {
+         "phase": "ALMG_EPS",
+         "x": 0.46388
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.48727
+        }
+       ]
+      },
+      {
+       "T": 457.89,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.4023
+        },
+        {
+         "phase": "ALMG_EPS",
+         "x": 0.4506
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.55494
+        }
+       ]
+      }
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlMg-20Shi.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-MG/AlMg-20Shi.json",
+     "phase_at": {
+      "x_requested": 0.05,
+      "T_requested_K": 700.0,
+      "grid_x": 0.05,
+      "grid_T_K": 700.0,
+      "x_component": "MG",
+      "stable_phases": [
+       "FCC_A1"
+      ],
+      "label": "FCC_A1",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlMg-23Hal.tdb",
+     "tdb_sha256": "8b77728be5166a674454d8dd8336ede93fc9d2b7bd749a48b819d22dd8a6f619",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlMg-23Hal.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/j.calphad.2023.102577",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "MG"
+     ],
+     "x_component": "MG",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "AL12MG17_A12",
+      "ALMG_BETA",
+      "ALMG_EPS",
+      "BCC_A2",
+      "C14_LAVES",
+      "... 5 more items trimmed (of 10)"
+     ],
+     "invariants": [
+      {
+       "T": 725.1,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.16632
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.36595
+        },
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        }
+       ]
+      },
+      {
+       "T": 725.1,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.16612
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.3657
+        },
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        }
+       ]
+      },
+      {
+       "T": 721.47,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.44835
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.49279
+        }
+       ]
+      },
+      {
+       "T": 721.47,
+       "points": [
+        {
+         "phase": "ALMG_BETA",
+         "x": 0.38865
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.44878
+        },
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.49303
+        }
+       ]
+      },
+      {
+       "T": 712.8,
+       "points": [
+        {
+         "phase": "AL12MG17_A12",
+         "x": 0.62571
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.69347
+        },
+        {
+         "phase": "HCP_A3",
+         "x": 0.88966
+        }
+       ]
+      },
+      "... 6 more items trimmed (of 11)"
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlMg-23Hal.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-MG/AlMg-23Hal.json",
+     "phase_at": {
+      "x_requested": 0.05,
+      "T_requested_K": 700.0,
+      "grid_x": 0.05,
+      "grid_T_K": 700.0,
+      "x_component": "MG",
+      "stable_phases": [
+       "FCC_A1"
+      ],
+      "label": "FCC_A1",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    },
+    "... 5 more items trimmed (of 10)"
+   ],
+   "note": "Each assessment is a separate CALPHAD model; results are never averaged across assessments.",
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_source... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_c... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts an... [247 chars]",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  },
+  "Al-Mg/list_tdb_files([Al,Mg])": {
+   "query": {
+    "elements": [
+     "AL",
+     "MG"
+    ],
+    "exact": false,
+    "tier": null
+   },
+   "fields": "summary",
+   "total": 24,
+   "offset": 0,
+   "truncated": false,
+   "files": [
+    {
+     "name": "Al-Mg_Zhong.tdb",
+     "elements": "AL-MG",
+     "category": "Al alloy",
+     "tier": "manual",
+     "license": "NIMS copyright — redistribution permission not established",
+     "license_status": "restricted",
+     "source_url": "https://raw.githubusercontent.com/pycalphad/binder/develop/Al-Mg_Zhong.tdb",
+     "orchid_download_url": null,
+     "sha256": null
+    },
+    {
+     "name": "AlMg-05Zho.tdb",
+     "elements": "AL-MG",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlMg-05Zho.tdb",
+     "sha256": "ff00db3daedb96d874b398be0852d3f587e02dbc6355d07f4dede1f45cd0fad4"
+    },
+    {
+     "name": "AlMg-12Tan.tdb",
+     "elements": "AL-MG",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlMg-12Tan.tdb",
+     "sha256": "e407a985a133b1679c876fc93ac8e521057bc0a745fce838dba14dc7df8377f3"
+    },
+    {
+     "name": "AlMg-13Tok.tdb",
+     "elements": "AL-MG",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlMg-13Tok.tdb",
+     "sha256": "36113d4594b47a083208901ac50a91f75148ec01f64236786e1db144d0fd3141"
+    },
+    {
+     "name": "AlMg-20Shi.tdb",
+     "elements": "AL-MG",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlMg-20Shi.tdb",
+     "sha256": "187a670f0e95cf53e84a7eb99bc26ead7600753a146d0f2a23c92c0a09f63ad4"
+    },
+    "... 19 more items trimmed (of 24)"
+   ],
+   "tiers": {
+    "bundled": "redistributable; served by ORCHID",
+    "fetched": "public upstream download, not redistributed here",
+    "manual": "restricted / landing page only"
+   },
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_source... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_c... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts an... [247 chars]",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  },
+  "Al-Mg/list_tdb_files([Al,Mg],exact)": {
+   "query": {
+    "elements": [
+     "AL",
+     "MG"
+    ],
+    "exact": true,
+    "tier": null
+   },
+   "fields": "summary",
+   "total": 11,
+   "offset": 0,
+   "truncated": false,
+   "files": [
+    {
+     "name": "Al-Mg_Zhong.tdb",
+     "elements": "AL-MG",
+     "category": "Al alloy",
+     "tier": "manual",
+     "license": "NIMS copyright — redistribution permission not established",
+     "license_status": "restricted",
+     "source_url": "https://raw.githubusercontent.com/pycalphad/binder/develop/Al-Mg_Zhong.tdb",
+     "orchid_download_url": null,
+     "sha256": null
+    },
+    {
+     "name": "AlMg-05Zho.tdb",
+     "elements": "AL-MG",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlMg-05Zho.tdb",
+     "sha256": "ff00db3daedb96d874b398be0852d3f587e02dbc6355d07f4dede1f45cd0fad4"
+    },
+    {
+     "name": "AlMg-12Tan.tdb",
+     "elements": "AL-MG",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlMg-12Tan.tdb",
+     "sha256": "e407a985a133b1679c876fc93ac8e521057bc0a745fce838dba14dc7df8377f3"
+    },
+    {
+     "name": "AlMg-13Tok.tdb",
+     "elements": "AL-MG",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlMg-13Tok.tdb",
+     "sha256": "36113d4594b47a083208901ac50a91f75148ec01f64236786e1db144d0fd3141"
+    },
+    {
+     "name": "AlMg-20Shi.tdb",
+     "elements": "AL-MG",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlMg-20Shi.tdb",
+     "sha256": "187a670f0e95cf53e84a7eb99bc26ead7600753a146d0f2a23c92c0a09f63ad4"
+    },
+    "... 6 more items trimmed (of 11)"
+   ],
+   "tiers": {
+    "bundled": "redistributable; served by ORCHID",
+    "fetched": "public upstream download, not redistributed here",
+    "manual": "restricted / landing page only"
+   },
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_source... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_c... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts an... [247 chars]",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  },
+  "Al-Mg/compare_to_dft": {
+   "system": "AL-MG",
+   "unit": "kJ/mol-atom",
+   "fields": "summary",
+   "compounds": [],
+   "residual_stats_default_subset": {},
+   "dft_hull_vertices": {
+    "mp": [
+     {
+      "formula": "Al",
+      "x": 0.0,
+      "material_id": "mp-aaaaaafe",
+      "spacegroup": "Fm-3m",
+      "formation_energy_kJ_per_mol_atom": 0.0,
+      "theoretical": false
+     },
+     {
+      "formula": "MgAl2",
+      "x": 0.3333333333333333,
+      "material_id": "mp-aaackgnk",
+      "spacegroup": "P6_3/mmc",
+      "formation_energy_kJ_per_mol_atom": -2.118,
+      "theoretical": true
+     },
+     {
+      "formula": "Mg17Al12",
+      "x": 0.5862068965517241,
+      "material_id": "mp-aaaaadet",
+      "spacegroup": "I-43m",
+      "formation_energy_kJ_per_mol_atom": -2.608,
+      "theoretical": false
+     },
+     {
+      "formula": "Mg149Al",
+      "x": 0.9933333333333333,
+      "material_id": "mp-aaacplvw",
+      "spacegroup": "P-6m2",
+      "formation_energy_kJ_per_mol_atom": -2.628,
+      "theoretical": true
+     },
+     {
+      "formula": "Mg",
+      "x": 1.0,
+      "material_id": "mp-aaacidek",
+      "spacegroup": "Fm-3m",
+      "formation_energy_kJ_per_mol_atom": 0.0,
+      "theoretical": true
+     }
+    ],
+    "oqmd": [
+     {
+      "formula": "Al",
+      "x": 0.0,
+      "material_id": "oqmd-ref-Al",
+      "spacegroup": "",
+      "formation_energy_kJ_per_mol_atom": 0.0,
+      "theoretical": false
+     },
+     {
+      "formula": "Al30 Mg23",
+      "x": 0.4339622641509434,
+      "material_id": "oqmd-10496",
+      "spacegroup": "R-3",
+      "formation_energy_kJ_per_mol_atom": -1.727,
+      "theoretical": false
+     },
+     {
+      "formula": "Al12 Mg17",
+      "x": 0.5862068965517241,
+      "material_id": "oqmd-4367",
+      "spacegroup": "I-43m",
+      "formation_energy_kJ_per_mol_atom": -2.273,
+      "theoretical": false
+     },
+     {
+      "formula": "Mg",
+      "x": 1.0,
+      "material_id": "oqmd-ref-Mg",
+      "spacegroup": "",
+      "formation_energy_kJ_per_mol_atom": 0.0,
+      "theoretical": false
+     }
+    ]
+   },
+   "dft_sources": {
+    "mp": {
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": "10.1063/1.4812323",
+     "doi2": null,
+     "label": "Materials Project",
+     "license": "CC BY 4.0",
+     "reference": {
+      "kind": "dft_elemental_ground_state_0K",
+      "per": "atom",
+      "temperature_K": 0.0,
+      "units": "eV/atom"
+     },
+     "reference_note": "GGA/GGA+U mixing scheme with MP fitted energy corrections (notably anions and some transition-metal oxides); elemental ground states at 0 K.",
+     "release": "2026.04.13",
+     "snapshot": "open-tdb/hulls/snapshot/snapshot.json",
+     "snapshot_sha256": "b6deba8ecf1b67211b3d89cd33a5f98a1939d4bcd92db561818195e55187492a",
+     "thermo_type": "GGA_GGA+U",
+     "url": "https://next-gen.materialsproject.org/"
+    },
+    "oqmd": {
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": "10.1007/s11837-013-0755-4",
+     "doi2": "10.1038/npjcompumats.2015.10",
+     "label": "OQMD",
+     "license": "CC BY 4.0",
+     "reference": {
+      "kind": "dft_fitted_elemental_reference_0K",
+      "per": "atom",
+      "temperature_K": 0.0,
+      "units": "eV/atom"
+     },
+     "reference_note": "'standard' fit: elemental reference energies fitted to experimental formation enthalpies (fitted elemental reference, 0 K).",
+     "release": "qmdb_v1_8_022026",
+     "snapshot": "open-tdb/hulls/snapshot-oqmd/snapshot.json",
+     "snapshot_sha256": "2a9393262c52ec35600424236c352a4cdb3291c8b25c1c6588f5e62abe8e0d8d",
+     "thermo_type": "standard",
+     "url": "https://oqmd.org/"
+    }
+   },
+   "rules": {
+    "chem_class": {
+     "intermetallic": "intermetallics (metals and metalloids only)",
+     "other_nonmetal": "hydrides, borides, carbides, nitrides, phosphides, chalcogenides",
+     "oxide_halide": "oxides and halides (contains O, F, Cl, Br or I)"
+    },
+    "composition_offset": "dx_measured = max |x_printed - x_formula| for a printed (not formula-derived) overall composition; sigma_comp = |dx| x local hull slope (kJ/mol-atom, the Cu-Zr historical-formula rule); dx > 0.02 is not in the default subset (off_stoichiome... [288 chars]",
+    "default_subset": "evidence class experimental, extraction accepted, not unsigned-in-print, no uncorrected sign loss found by the page-image sign check, not flagged magnitude_suspect by the extraction checks (a flag set before and independently of this DFT co... [687 chars]",
+    "formula": "Parsed from the record's printed phase label(s): Greek and polymorph prefixes stripped, formula groups expanded, sublattice brackets read, tokens outside the record's system dropped; several distinct formulas in one record are refused. Fall... [293 chars]",
+    "layout": "records{rid: literature fields} + points[] (one per record x DFT source, joined by rid) + papers{paper id: citation, DOI}.",
+    "match": "Reduced composition (mole fractions rounded to 4 decimals) matched exactly to non-deprecated DFT entries; the lowest entry of the named space group (see structure), else the lowest formation energy at that composition, is used; npoly = numb... [335 chars]",
+    "method_class": {
+     "calorimetry": "calorimetry (solution, drop, combustion, direct reaction, DSC)",
+     "emf_vapour": "EMF / vapour pressure / Knudsen effusion / equilibrium",
+     "other_unknown": "other or not printed"
+    },
+    "quality_fixes": "data/literature/QUALITY_FIXES.md: the per-formula / per-atom basis of a column is decided on the printed page only (gate R2 table_basis; the earlier rule that converted a value when the converted value agreed with DFT was withdrawn in audit... [479 chars]",
+    "selection": "property HM_FORM; unit kJ/mol-atom; evidence class experimental, model or unspecified. 'kJ/mol (basis unstated)' is excluded (per-atom vs per-formula cannot be settled).",
+    "structure": "dft_structure_match (`smatch`): exact = the record names a structure (Strukturbericht designator or 'X-type' prototype in a printed label, or in a model-phase name whose formula is the compound; A1/A2/A3 ignored) and the lowest entry of tha... [469 chars]",
+    "units": "DFT eV/atom x 96.485 = kJ/mol-atom; ehull = energy above ORCHID's released hull of the same snapshot (hulls/dft-<src>/, kJ/mol-atom; one source of truth for MP and OQMD); ehull_upstream = the snapshot's upstream value (MP energy_above_hull;... [314 chars]",
+    "unsigned": "flags.unsigned_in_print, or a sign-check verdict no_minus_printed matched by paper (PDF hash prefix), page and |printed value|: such values are magnitudes by the paper's convention and are kept out of the default set."
+   },
+   "description": "Literature formation enthalpies (HM_FORM, kJ/mol-atom) against DFT formation energies at the same composition: the lowest entry of the space group the record names (Strukturbericht designator or prototype), else the ground state (lowest-ene... [385 chars]",
+   "viewer_url": "https://orchid-project.org/dft-parity/",
+   "selection_note": "compounds whose composition lies in this system, wherever reported (including papers on higher-order systems: see reported_in_system)",
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_source... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_c... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts an... [247 chars]",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  }
+ }
+}

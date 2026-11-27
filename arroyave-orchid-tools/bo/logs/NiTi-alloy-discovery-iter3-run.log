@@ -1,0 +1,16 @@
+51:Batch_size=3 # use more than 1 for batch BO
+52:N_GP=3; # if batch BO
+219:_sub = np.arange(0, N_test, 20)  # smoke test: every 20th candidate
+220:x_test = x_test[_sub]; p_test = p_test[_sub]; N_test = x_test.shape[0]
+221:test_priors = [[hys_prior_tests[_sub]],[ent_prior_tests[_sub]],[TS_prior_tests[_sub]]]
+280:    n_jobs=2
+candidates evaluated: 675
+rc=0 wall=16s
+--- smoke-test x_query.csv
+0.5,0.3,0.0,0.1,0.1,0.0,0.0
+0.5,0.3,0.0,0.1,0.1,0.0,0.0
+0.5,0.31,0.0,0.05,0.14,0.0,0.0
+--- all_improvements.csv
+5201.851588272132
+4531.514174843147
+6867.16632200621

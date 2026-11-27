@@ -1,0 +1,16 @@
+{
+  "job": "job-futurehouse-paperqa3-high",
+  "submitted_utc": "2026-11-04T19:54:01Z",
+  "tasks": {
+    "beam": {
+      "task_id": "69989f43-9df7-443e-aac4-438c040a3ea6",
+      "title": "Eagar-Tsai beam/process parameter ranges for AlSi10Mg LPBF on an Aconity MIDI",
+      "outfile": "beam-parameter-ranges.md"
+    },
+    "material": {
+      "task_id": "c678f8a7-903a-427c-a766-6706fcea069a",
+      "title": "AlSi10Mg thermophysical properties for the Eagar-Tsai model (at the liquidus)",
+      "outfile": "material-properties.md"
+    }
+  }
+}

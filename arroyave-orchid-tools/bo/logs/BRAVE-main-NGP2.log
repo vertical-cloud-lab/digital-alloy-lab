@@ -1,0 +1,82 @@
+/tmp/arroyave/venvs/BRAVE/lib/python3.11/site-packages/CBFV/composition.py:7: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+Processing Input Data:   0%|          | 0/132 [00:00<?, ?it/s]Processing Input Data: 100%|██████████| 132/132 [00:00<00:00, 32579.04it/s]
+	Featurizing Compositions...
+Assigning Features...:   0%|          | 0/132 [00:00<?, ?it/s]Assigning Features...: 100%|██████████| 132/132 [00:00<00:00, 17469.10it/s]
+	Creating Pandas Objects...
+Processing Input Data:   0%|          | 0/132 [00:00<?, ?it/s]Processing Input Data: 100%|██████████| 132/132 [00:00<00:00, 52142.41it/s]
+	Featurizing Compositions...
+Assigning Features...:   0%|          | 0/132 [00:00<?, ?it/s]Assigning Features...: 100%|██████████| 132/132 [00:00<00:00, 18739.78it/s]
+	Creating Pandas Objects...
+Processing Input Data:   0%|          | 0/132 [00:00<?, ?it/s]Processing Input Data: 100%|██████████| 132/132 [00:00<00:00, 54151.81it/s]
+	Featurizing Compositions...
+Assigning Features...:   0%|          | 0/132 [00:00<?, ?it/s]Assigning Features...: 100%|██████████| 132/132 [00:00<00:00, 26256.67it/s]
+	Creating Pandas Objects...
+Processing Input Data:   0%|          | 0/132 [00:00<?, ?it/s]Processing Input Data: 100%|██████████| 132/132 [00:00<00:00, 48489.06it/s]
+	Featurizing Compositions...
+Assigning Features...:   0%|          | 0/132 [00:00<?, ?it/s]Assigning Features...: 100%|██████████| 132/132 [00:00<00:00, 24860.72it/s]
+	Creating Pandas Objects...
+Processing Input Data:   0%|          | 0/132 [00:00<?, ?it/s]Processing Input Data: 100%|██████████| 132/132 [00:00<00:00, 58923.81it/s]
+	Featurizing Compositions...
+Assigning Features...:   0%|          | 0/132 [00:00<?, ?it/s]Assigning Features...: 100%|██████████| 132/132 [00:00<00:00, 24040.30it/s]
+	Creating Pandas Objects...
+Processing Input Data:   0%|          | 0/128 [00:00<?, ?it/s]Processing Input Data: 100%|██████████| 128/128 [00:00<00:00, 54136.42it/s]
+	Featurizing Compositions...
+Assigning Features...:   0%|          | 0/128 [00:00<?, ?it/s]Assigning Features...: 100%|██████████| 128/128 [00:00<00:00, 21715.44it/s]
+	Creating Pandas Objects...
+Processing Input Data:   0%|          | 0/128 [00:00<?, ?it/s]Processing Input Data: 100%|██████████| 128/128 [00:00<00:00, 42977.18it/s]
+	Featurizing Compositions...
+Assigning Features...:   0%|          | 0/128 [00:00<?, ?it/s]Assigning Features...: 100%|██████████| 128/128 [00:00<00:00, 22644.18it/s]
+	Creating Pandas Objects...
+Processing Input Data:   0%|          | 0/128 [00:00<?, ?it/s]Processing Input Data: 100%|██████████| 128/128 [00:00<00:00, 58815.83it/s]
+	Featurizing Compositions...
+Assigning Features...:   0%|          | 0/128 [00:00<?, ?it/s]Assigning Features...: 100%|██████████| 128/128 [00:00<00:00, 29773.23it/s]
+	Creating Pandas Objects...
+Processing Input Data:   0%|          | 0/128 [00:00<?, ?it/s]Processing Input Data: 100%|██████████| 128/128 [00:00<00:00, 60766.37it/s]
+	Featurizing Compositions...
+Assigning Features...:   0%|          | 0/128 [00:00<?, ?it/s]Assigning Features...: 100%|██████████| 128/128 [00:00<00:00, 27720.91it/s]
+	Creating Pandas Objects...
+Processing Input Data:   0%|          | 0/128 [00:00<?, ?it/s]Processing Input Data: 100%|██████████| 128/128 [00:00<00:00, 55080.63it/s]
+	Featurizing Compositions...
+Assigning Features...:   0%|          | 0/128 [00:00<?, ?it/s]Assigning Features...: 100%|██████████| 128/128 [00:00<00:00, 28899.76it/s]
+	Creating Pandas Objects...
+Processing Input Data:   0%|          | 0/56 [00:00<?, ?it/s]Processing Input Data: 100%|██████████| 56/56 [00:00<00:00, 49921.58it/s]
+	Featurizing Compositions...
+Assigning Features...:   0%|          | 0/56 [00:00<?, ?it/s]Assigning Features...: 100%|██████████| 56/56 [00:00<00:00, 24921.06it/s]
+	Creating Pandas Objects...
+Processing Input Data:   0%|          | 0/56 [00:00<?, ?it/s]Processing Input Data: 100%|██████████| 56/56 [00:00<00:00, 51172.34it/s]
+	Featurizing Compositions...
+Assigning Features...:   0%|          | 0/56 [00:00<?, ?it/s]Assigning Features...: 100%|██████████| 56/56 [00:00<00:00, 20598.18it/s]
+	Creating Pandas Objects...
+Processing Input Data:   0%|          | 0/56 [00:00<?, ?it/s]Processing Input Data: 100%|██████████| 56/56 [00:00<00:00, 51667.63it/s]
+	Featurizing Compositions...
+Assigning Features...:   0%|          | 0/56 [00:00<?, ?it/s]Assigning Features...: 100%|██████████| 56/56 [00:00<00:00, 28550.02it/s]
+	Creating Pandas Objects...
+Processing Input Data:   0%|          | 0/56 [00:00<?, ?it/s]Processing Input Data: 100%|██████████| 56/56 [00:00<00:00, 52628.51it/s]
+	Featurizing Compositions...
+Assigning Features...:   0%|          | 0/56 [00:00<?, ?it/s]Assigning Features...: 100%|██████████| 56/56 [00:00<00:00, 26979.21it/s]
+	Creating Pandas Objects...
+Processing Input Data:   0%|          | 0/56 [00:00<?, ?it/s]Processing Input Data: 100%|██████████| 56/56 [00:00<00:00, 53871.79it/s]
+	Featurizing Compositions...
+Assigning Features...:   0%|          | 0/56 [00:00<?, ?it/s]Assigning Features...: 100%|██████████| 56/56 [00:00<00:00, 25962.31it/s]
+	Creating Pandas Objects...
+Processing Input Data:   0%|          | 0/56 [00:00<?, ?it/s]Processing Input Data: 100%|██████████| 56/56 [00:00<00:00, 51724.52it/s]
+	Featurizing Compositions...
+Assigning Features...:   0%|          | 0/56 [00:00<?, ?it/s]Assigning Features...: 100%|██████████| 56/56 [00:00<00:00, 21420.98it/s]
+	Creating Pandas Objects...
+Processing Input Data:   0%|          | 0/56 [00:00<?, ?it/s]Processing Input Data: 100%|██████████| 56/56 [00:00<00:00, 53552.45it/s]
+	Featurizing Compositions...
+Assigning Features...:   0%|          | 0/56 [00:00<?, ?it/s]Assigning Features...: 100%|██████████| 56/56 [00:00<00:00, 27497.19it/s]
+	Creating Pandas Objects...
+Processing Input Data:   0%|          | 0/56 [00:00<?, ?it/s]Processing Input Data: 100%|██████████| 56/56 [00:00<00:00, 54095.12it/s]
+	Featurizing Compositions...
+Assigning Features...:   0%|          | 0/56 [00:00<?, ?it/s]Assigning Features...: 100%|██████████| 56/56 [00:00<00:00, 28065.60it/s]
+	Creating Pandas Objects...
+Processing Input Data:   0%|          | 0/56 [00:00<?, ?it/s]Processing Input Data: 100%|██████████| 56/56 [00:00<00:00, 52805.99it/s]
+	Featurizing Compositions...
+Assigning Features...:   0%|          | 0/56 [00:00<?, ?it/s]Assigning Features...: 100%|██████████| 56/56 [00:00<00:00, 26179.34it/s]
+	Creating Pandas Objects...
+Processing Input Data:   0%|          | 0/56 [00:00<?, ?it/s]Processing Input Data: 100%|██████████| 56/56 [00:00<00:00, 52984.67it/s]
+	Featurizing Compositions...
+Assigning Features...:   0%|          | 0/56 [00:00<?, ?it/s]Assigning Features...: 100%|██████████| 56/56 [00:00<00:00, 27407.35it/s]
+	Creating Pandas Objects...

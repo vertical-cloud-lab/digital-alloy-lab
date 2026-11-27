@@ -1,0 +1,52 @@
+$ prefix/bin/mc_paipai   (no args)
+Usage: /tmp/arroyave/work/PAIPAI/prefix/bin/mc_paipai INPUT_STRUCTURE [--workers N] [--steps K] [--temp T] [--p-swap-metal P] [--p-swap-inter P] [--p-exch-metal P] [--p-exch-inter P]
+exit=2
+$ prefix/bin/paipai -h
+Usage: paipai [options]
+
+Options:
+  -i, --input FILE        Initial structure file (default: struc.in)
+      --model NAME        MLIP model name (default: GRACE-2L-OMAT)
+$ timeout 8 prefix/bin/mc_paipai struc.in --workers 2 --steps 1 --temp 0.001   (master alone, no Python workers)
+ELEMENT: Nb
+ELEMENT: Ta
+ELEMENT: Ti
+ELEMENT: Hf
+INTERSTITIAL ELEMENT: B
+INTERSTITIAL ELEMENT: O
+Number of B atoms: 2
+Number of O atoms: 2
+Number of Interstitial site: 375
+Number of metallic atoms: 250
+DirectFractional coords used
+Metallic structure read successfully
+Direct
+Atomic coordinates shuffled
+we swap  226 & 163
+we swap  53 & 59
+Same atom type when swaping positions of two metallic atoms
+we swap  242 & 134
+we swap  159 & 161
+Same atom type when swaping positions of two metallic atoms
+exit=124 (124 = killed by timeout) wall=8s
+--- files written:
+./SAVE
+./fast/.go_1
+./fast/.go_2
+./fast/POSCAR1
+./fast/POSCAR2
+./fast/SAVE1
+./fast/SAVE2
+./mc.log
+./struc.in
+--- mc.log:
+--- fast/POSCAR1 header:
+NbTaTiHf + BO
+1.0
+16.5 0 0
+0 16.5 0
+0 0 16.5
+Nb Ta Ti Hf B O
+113 63 37 37 2 2
+Cartesian
+0 0 0

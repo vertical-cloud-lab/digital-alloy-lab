@@ -1,0 +1,125 @@
+$ python scripts/sqs-benchmark-mini.py /tmp/arroyave/work/sqs-benchmark /tmp/arroyave/work/sqsb_run 3 20   (ATAT on PATH)
+Warning: unit cell is not primitive.
+Cluster file contains no clusters.
+Cluster file contains no clusters.
+Warning: unit cell is not primitive.
+Cluster file contains no clusters.
+Cluster file contains no clusters.
+Warning: unit cell is not primitive.
+Cluster file contains no clusters.
+Cluster file contains no clusters.
+3.1649999999999996 3.1649999999999996 3.1649999999999996 90 90 90
+1 0 0
+0 1 0
+0 0 1
+3.1649999999999996 3.1649999999999996 3.1649999999999996 90 90 90
+1 0 0
+0 1 0
+0 0 1
+0.000000 0.000000 0.000000 a
+0.500000 0.500000 0.500000 a
+File created at: /tmp/arroyave/work/sqsb_run/BLADE/SQS/BCCmcsqs1_3/rndstr.skel
+File created at: /tmp/arroyave/work/sqsb_run/BLADE/SQS/BCCmcsqs1_3/sqsgen.in
+sqsdb_lev=0_a=0.33333,0.33333,0.33333
+Directories setup
+
+Neighbor shells:
+  1NN = 1.000000
+  2NN = 1.154701
+  3NN = 1.632993
+  4NN = 1.914854
+  5NN = 2.000000
+  6NN = 2.309401
+  7NN = 2.516611
+  8NN = 2.581989
+  9NN = 2.828427
+Derived cutoffs: 2.00000 (pairs), 1.91485 (triplets), 1.63299 (quadruplets)
+Running corrdump in [0.33333, 0.33333, 0.33333]
+Running mcsqs with 48 atoms in [0.33333, 0.33333, 0.33333]
+Starting mcsqs -ip=1 in /tmp/arroyave/work/sqsb_run/BLADE/SQS/BCCmcsqs1_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333
+Starting mcsqs -ip=2 in /tmp/arroyave/work/sqsb_run/BLADE/SQS/BCCmcsqs1_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333
+All mcsqs processes finished before time limit
+Wrote stopsqs at /tmp/arroyave/work/sqsb_run/BLADE/SQS/BCCmcsqs1_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333/stopsqs after 20.0s
+mcsqs -ip=1 finished (exit code 1) in /tmp/arroyave/work/sqsb_run/BLADE/SQS/BCCmcsqs1_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333
+mcsqs -ip=2 finished (exit code 1) in /tmp/arroyave/work/sqsb_run/BLADE/SQS/BCCmcsqs1_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333
+No bestcorr*.out files in /tmp/arroyave/work/sqsb_run/BLADE/SQS/BCCmcsqs1_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333; skipping mcsqs -best
+No bestcorr.out found in /tmp/arroyave/work/sqsb_run/BLADE/SQS/BCCmcsqs1_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333
+3.1649999999999996 3.1649999999999996 3.1649999999999996 90 90 90
+1 0 0
+0 1 0
+0 0 1
+3.1649999999999996 3.1649999999999996 3.1649999999999996 90 90 90
+1 0 0
+0 1 0
+0 0 1
+0.000000 0.000000 0.000000 a
+0.500000 0.500000 0.500000 a
+File created at: /tmp/arroyave/work/sqsb_run/BLADE/SQS/BCCmcsqs2_3/rndstr.skel
+File created at: /tmp/arroyave/work/sqsb_run/BLADE/SQS/BCCmcsqs2_3/sqsgen.in
+sqsdb_lev=0_a=0.33333,0.33333,0.33333
+Directories setup
+
+Neighbor shells:
+  1NN = 1.000000
+  2NN = 1.154701
+  3NN = 1.632993
+  4NN = 1.914854
+  5NN = 2.000000
+  6NN = 2.309401
+  7NN = 2.516611
+  8NN = 2.581989
+  9NN = 2.828427
+Derived cutoffs: 2.00000 (pairs), 1.91485 (triplets), 1.63299 (quadruplets)
+Running corrdump in [0.33333, 0.33333, 0.33333]
+Running mcsqs with 48 atoms in [0.33333, 0.33333, 0.33333]
+Starting mcsqs -ip=1 in /tmp/arroyave/work/sqsb_run/BLADE/SQS/BCCmcsqs2_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333
+Starting mcsqs -ip=2 in /tmp/arroyave/work/sqsb_run/BLADE/SQS/BCCmcsqs2_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333
+All mcsqs processes finished before time limit
+Wrote stopsqs at /tmp/arroyave/work/sqsb_run/BLADE/SQS/BCCmcsqs2_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333/stopsqs after 20.0s
+mcsqs -ip=1 finished (exit code 1) in /tmp/arroyave/work/sqsb_run/BLADE/SQS/BCCmcsqs2_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333
+mcsqs -ip=2 finished (exit code 1) in /tmp/arroyave/work/sqsb_run/BLADE/SQS/BCCmcsqs2_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333
+No bestcorr*.out files in /tmp/arroyave/work/sqsb_run/BLADE/SQS/BCCmcsqs2_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333; skipping mcsqs -best
+No bestcorr.out found in /tmp/arroyave/work/sqsb_run/BLADE/SQS/BCCmcsqs2_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333
+3.1649999999999996 3.1649999999999996 3.1649999999999996 90 90 90
+1 0 0
+0 1 0
+0 0 1
+3.1649999999999996 3.1649999999999996 3.1649999999999996 90 90 90
+1 0 0
+0 1 0
+0 0 1
+0.000000 0.000000 0.000000 a
+0.500000 0.500000 0.500000 a
+File created at: /tmp/arroyave/work/sqsb_run/BLADE/SQS/BCCmcsqs3_3/rndstr.skel
+File created at: /tmp/arroyave/work/sqsb_run/BLADE/SQS/BCCmcsqs3_3/sqsgen.in
+sqsdb_lev=0_a=0.33333,0.33333,0.33333
+Directories setup
+
+Neighbor shells:
+  1NN = 1.000000
+  2NN = 1.154701
+  3NN = 1.632993
+  4NN = 1.914854
+  5NN = 2.000000
+  6NN = 2.309401
+  7NN = 2.516611
+  8NN = 2.581989
+  9NN = 2.828427
+Derived cutoffs: 2.00000 (pairs), 1.91485 (triplets), 1.63299 (quadruplets)
+Running corrdump in [0.33333, 0.33333, 0.33333]
+Running mcsqs with 48 atoms in [0.33333, 0.33333, 0.33333]
+Starting mcsqs -ip=1 in /tmp/arroyave/work/sqsb_run/BLADE/SQS/BCCmcsqs3_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333
+Starting mcsqs -ip=2 in /tmp/arroyave/work/sqsb_run/BLADE/SQS/BCCmcsqs3_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333
+All mcsqs processes finished before time limit
+Wrote stopsqs at /tmp/arroyave/work/sqsb_run/BLADE/SQS/BCCmcsqs3_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333/stopsqs after 20.0s
+mcsqs -ip=1 finished (exit code 1) in /tmp/arroyave/work/sqsb_run/BLADE/SQS/BCCmcsqs3_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333
+mcsqs -ip=2 finished (exit code 1) in /tmp/arroyave/work/sqsb_run/BLADE/SQS/BCCmcsqs3_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333
+No bestcorr*.out files in /tmp/arroyave/work/sqsb_run/BLADE/SQS/BCCmcsqs3_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333; skipping mcsqs -best
+No bestcorr.out found in /tmp/arroyave/work/sqsb_run/BLADE/SQS/BCCmcsqs3_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333
+  random structure → sqsdb_lev=0_a=0.33333,0.33333,0.33333 (Nb16V16W16)
+  random structure → sqsdb_lev=0_a=0.33333,0.33333,0.33333 (Nb16V16W16)
+  random structure → sqsdb_lev=0_a=0.33333,0.33333,0.33333 (Nb16V16W16)
+timing BCCmcsqs1: 10.1 s
+timing BCCmcsqs2: 10.1 s
+timing BCCmcsqs3: 10.1 s
+exit=0 wall=30s

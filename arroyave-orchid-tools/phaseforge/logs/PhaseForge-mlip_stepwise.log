@@ -1,0 +1,25 @@
+2026-11-05 04:19:54.286118: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1793852394.298163   29593 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1793852394.301638   29593 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+W0000 00:00:1793852394.312844   29593 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1793852394.312874   29593 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1793852394.312876   29593 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1793852394.312894   29593 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+WARNING:tensorflow:UserWarning: enabling the new type promotion must happen at the beginning of the program. Please ensure no TF APIs have been used yet.
+2026-11-05 04:19:56.394837: E external/local_xla/xla/stream_executor/cuda/cuda_platform.cc:51] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: UNKNOWN ERROR (303)
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1793852397.621433   29593 service.cc:152] XLA service 0x322acc20 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+I0000 00:00:1793852397.621483   29593 service.cc:160]   StreamExecutor device (0): Host, Default Version
+I0000 00:00:1793852400.345736   29593 device_compiler.h:188] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
+[tensorpotential] Info: Environment variable TF_USE_LEGACY_KERAS is automatically set to '1'.
+[tensorpotential] Info: tf.experimental.numpy behavior enabled.
+[tensorpotential] Info: TensorFloat-32 execution disabled.
+Using cached GRACE model from /tmp/arroyave/home/.cache/grace/GRACE-2L-OMAT
+Model license: Academic Software License
+Al {'a0_A': np.float64(4.038366119897196), 'B_GPa': np.float64(78.5472422439236), 'E0_eV_per_atom': np.float64(-3.74415558392665)}
+Cu {'a0_A': np.float64(3.611441508804501), 'B_GPa': np.float64(144.4809204218241), 'E0_eV_per_atom': np.float64(-3.7550376800334293)}
+Ni {'a0_A': np.float64(3.50758654320164), 'B_GPa': np.float64(201.4540330139006), 'E0_eV_per_atom': np.float64(-5.493774806072952)}
+sqs_lev=0_a_Cu=1 {'n_atoms': 1, 'E_eV_per_atom': -3.755033830278964, 'x_Ni': 0, 'V_A3_per_atom': 11.78042707388726} 0.1s
+sqs_lev=0_a_Ni=1 {'n_atoms': 1, 'E_eV_per_atom': -5.493778009393443, 'x_Ni': 1.0, 'V_A3_per_atom': 10.786002000442114} 0.2s
+sqs_lev=1_a_Cu=0.5,a_Ni=0.5 {'n_atoms': 32, 'E_eV_per_atom': -4.60180502326072, 'x_Ni': 0.5, 'V_A3_per_atom': 11.213667690981861} 9.1s

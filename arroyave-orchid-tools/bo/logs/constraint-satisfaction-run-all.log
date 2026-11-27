@@ -1,0 +1,5 @@
+campaign_const_w_priors rc=0 wall=23s
+campaign_const_NO_priors rc=0 wall=24s
+campaign_pehvi rc=0 wall=26s
+campaign_ehvi_pof rc=0 wall=35s
+campaign_random rc=0 wall=32s

@@ -1,0 +1,18 @@
+$ python scripts/BLADE-analysis_smoke.py <BLADE_run2>/BLADE/SQS/HEDB1_2 . figures/BLADE-contcar-smoke.png data/BLADE-volume-smoke.csv
+skip sqsdb_lev=0_a=1.0,0.0: end-member template with multi-species sites
+wrote /tmp/arroyave/work/BLADE_ana/CrHf/HEDB1_2/sqs_lev=1_a_A=0.5,a_B=0.5 (HfCrB4, 24 atoms)
+wrote /tmp/arroyave/work/BLADE_ana/CrHf/HEDB1_2/sqs_lev=2_a_A=0.75,a_B=0.25 (HfCr3B8, 24 atoms)
+wrote /tmp/arroyave/work/BLADE_ana/CrHf/HEDB1_2/sqs_lev=5_a_A=0.625,a_B=0.375 (Hf3Cr5B16, 24 atoms)
+wrote /tmp/arroyave/work/BLADE_ana/CrHf/HEDB1_2/sqs_lev=5_a_A=0.875,a_B=0.125 (HfCr7B16, 24 atoms)
+Checking for POSCARs in: /tmp/arroyave/work/BLADE_ana/CrHf
+  Found POSCAR: /tmp/arroyave/work/BLADE_ana/CrHf/HEDB1_2/sqs_lev=1_a_A=0.5,a_B=0.5/POSCAR
+  Found POSCAR: /tmp/arroyave/work/BLADE_ana/CrHf/HEDB1_2/sqs_lev=2_a_A=0.75,a_B=0.25/POSCAR
+  Found POSCAR: /tmp/arroyave/work/BLADE_ana/CrHf/HEDB1_2/sqs_lev=5_a_A=0.625,a_B=0.375/POSCAR
+  Found POSCAR: /tmp/arroyave/work/BLADE_ana/CrHf/HEDB1_2/sqs_lev=5_a_A=0.875,a_B=0.125/POSCAR
+  composition_folder phase_folder  sqs_level          sqs_a_fracs_json                                                                     poscar_path   volume_A3  natoms  volume_per_atom_A3       a_A       b_A       c_A  alpha_deg   beta_deg  gamma_deg           poscar_counts_json
+0               CrHf      HEDB1_2          1      {"A": 0.5, "B": 0.5}      /tmp/arroyave/work/BLADE_ana/CrHf/HEDB1_2/sqs_lev=1_a_A=0.5,a_B=0.5/POSCAR  206.398006      24            8.599917  6.931809  4.384062  8.768124  90.000000  90.000000  50.768466  {"B": 16, "Cr": 4, "Hf": 4}
+1               CrHf      HEDB1_2          2    {"A": 0.75, "B": 0.25}    /tmp/arroyave/work/BLADE_ana/CrHf/HEDB1_2/sqs_lev=2_a_A=0.75,a_B=0.25/POSCAR  206.398006      24            8.599917  4.384061  6.199999  8.201829  95.422024  97.679455  69.295168  {"B": 16, "Cr": 6, "Hf": 2}
+2               CrHf      HEDB1_2          5  {"A": 0.625, "B": 0.375}  /tmp/arroyave/work/BLADE_ana/CrHf/HEDB1_2/sqs_lev=5_a_A=0.625,a_B=0.375/POSCAR  206.398006      24            8.599917  4.384061  6.199999  8.201829  95.422024  97.679455  69.295168  {"B": 16, "Cr": 5, "Hf": 3}
+3               CrHf      HEDB1_2          5  {"A": 0.875, "B": 0.125}  /tmp/arroyave/work/BLADE_ana/CrHf/HEDB1_2/sqs_lev=5_a_A=0.875,a_B=0.125/POSCAR  206.398006      24            8.599917  6.931810  4.384061  8.201829  82.320545  70.241178  61.683485  {"B": 16, "Cr": 7, "Hf": 1}
+saved /tmp/arroyave/results/phaseforge/figures/BLADE-contcar-smoke.png
+exit=0 wall=6s

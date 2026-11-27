@@ -1,0 +1,28 @@
+/tmp/arroyave/venvs/CatBoost-SMAs/lib/python3.10/site-packages/CBFV/composition.py:7: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+Processing Input Data:   0%|          | 0/1689 [00:00<?, ?it/s]Processing Input Data: 100%|██████████| 1689/1689 [00:00<00:00, 28848.02it/s]
+	Featurizing Compositions...
+Assigning Features...:   0%|          | 0/1689 [00:00<?, ?it/s]Assigning Features...:  79%|███████▉  | 1338/1689 [00:00<00:00, 13377.33it/s]Assigning Features...: 100%|██████████| 1689/1689 [00:00<00:00, 14007.11it/s]
+/tmp/arroyave/venvs/CatBoost-SMAs/lib/python3.10/site-packages/CBFV/composition.py:325: FutureWarning: The default value of numeric_only in DataFrame.median is deprecated. In a future version, it will default to False. In addition, specifying 'numeric_only=None' is deprecated. Select only valid columns or specify the value of numeric_only to silence this warning.
+  median_values = X[cols].median()
+/tmp/arroyave/venvs/CatBoost-SMAs/lib/python3.10/site-packages/catboost/core.py:1411: FutureWarning: iteritems is deprecated and will be removed in a future version. Use .items instead.
+  self._init_pool(data, label, cat_features, text_features, embedding_features, embedding_features_data, pairs, weight,
+/tmp/arroyave/venvs/CatBoost-SMAs/lib/python3.10/site-packages/catboost/core.py:1411: FutureWarning: iteritems is deprecated and will be removed in a future version. Use .items instead.
+  self._init_pool(data, label, cat_features, text_features, embedding_features, embedding_features_data, pairs, weight,
+/tmp/arroyave/venvs/CatBoost-SMAs/lib/python3.10/site-packages/catboost/core.py:1411: FutureWarning: iteritems is deprecated and will be removed in a future version. Use .items instead.
+  self._init_pool(data, label, cat_features, text_features, embedding_features, embedding_features_data, pairs, weight,
+/tmp/arroyave/venvs/CatBoost-SMAs/lib/python3.10/site-packages/catboost/core.py:1411: FutureWarning: iteritems is deprecated and will be removed in a future version. Use .items instead.
+  self._init_pool(data, label, cat_features, text_features, embedding_features, embedding_features_data, pairs, weight,
+/tmp/arroyave/venvs/CatBoost-SMAs/lib/python3.10/site-packages/catboost/core.py:1411: FutureWarning: iteritems is deprecated and will be removed in a future version. Use .items instead.
+  self._init_pool(data, label, cat_features, text_features, embedding_features, embedding_features_data, pairs, weight,
+/tmp/arroyave/venvs/CatBoost-SMAs/lib/python3.10/site-packages/catboost/core.py:1411: FutureWarning: iteritems is deprecated and will be removed in a future version. Use .items instead.
+  self._init_pool(data, label, cat_features, text_features, embedding_features, embedding_features_data, pairs, weight,
+	Creating Pandas Objects...
+Training performance
+RMSE: 19.66195884606423
+MAE: 13.95077288515233
+R2: 0.9656580139538591
+Testing performance
+RMSE: 24.69304358832215
+MAE: 17.028220741302093
+R2: 0.9362837652703002

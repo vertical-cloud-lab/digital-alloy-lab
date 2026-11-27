@@ -1,0 +1,28 @@
+$ PYTHONPATH=BLADE/src python scripts/BLADE-tdb_stage_check.py /tmp/arroyave/work/BLADE_tdb   (paipai venv = upstream MaterialsFramework 0ec8168 + GRACE)
+    super().__init__(**kwargs)
+  File "/tmp/arroyave/venvs/paipai/lib/python3.12/site-packages/materialsframework/tools/calculator.py", line 157, in __init__
+    super().__init__(**kwargs)
+  File "/tmp/arroyave/venvs/paipai/lib/python3.12/site-packages/materialsframework/tools/md.py", line 160, in __init__
+    super().__init__(**kwargs)
+TypeError: object.__init__() takes exactly one argument (the instance to initialize)
+exit=1 wall=2s
+
+$ PYTHONPATH=BLADE/src:scripts/PAIPAI-shim python scripts/BLADE-tdb_stage_check.py /tmp/arroyave/work/BLADE_tdb   (shim drops device=, as for PAIPAI)
+    self._run_sqsfit(comp, phase_list)
+  File "/tmp/arroyave/work/BLADE/src/blade/tools/blade_tdb_gen.py", line 207, in _run_sqsfit
+    sqs.fit(
+  File "/tmp/arroyave/venvs/paipai/lib/python3.12/site-packages/materialsframework/utils.py", line 97, in wrapper
+    raise ImportError(f"{names} {verb} required. Install {pronoun} with: {install_hint}")
+ImportError: 'pycalphad' is required. Install it with: pip install materialsframework[calphad]
+exit=1 wall=2s
+
+$ uv pip install --python venvs/paipai pycalphad   (MaterialsFramework [calphad] extra)
+ + vcs-versioning==2.6.0
+ + xarray==2026.9.0
+$ PYTHONPATH=BLADE/src:scripts/PAIPAI-shim python scripts/BLADE-tdb_stage_check.py /tmp/arroyave/work/BLADE_tdb
+    sqs.fit(
+  File "/tmp/arroyave/venvs/paipai/lib/python3.12/site-packages/materialsframework/utils.py", line 98, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+TypeError: Sqs2tdb.fit() got an unexpected keyword argument 'paths'
+exit=1 wall=2s

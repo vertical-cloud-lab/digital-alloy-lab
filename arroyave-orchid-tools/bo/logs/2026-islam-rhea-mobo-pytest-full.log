@@ -1,0 +1,39 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.2.0, pluggy-1.7.0 -- /tmp/arroyave/venvs/rhea-mobo-full/bin/python
+rootdir: /tmp/arroyave/work/rhea-mobo
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collecting ... collected 24 items
+
+tests/test_composition.py::test_compositions_preserve_element_fractions[src/rhea_mobo/objective.py-1] PASSED [  4%]
+tests/test_composition.py::test_compositions_preserve_element_fractions[src/rhea_mobo/optimization.py-1] PASSED [  8%]
+tests/test_composition.py::test_compositions_preserve_element_fractions[scripts/bo_script_full.py-2] PASSED [ 12%]
+tests/test_constraints.py::test_inequality_constraints_reference_all_six_components PASSED [ 16%]
+tests/test_cost.py::test_cost_model_matches_manual_dot_product PASSED    [ 20%]
+tests/test_cost.py::test_cost_aware_ehvi_divides_base_value_by_cost PASSED [ 25%]
+tests/test_cost.py::test_cost_aware_ehvi_clamps_cost_to_avoid_division_by_zero PASSED [ 29%]
+tests/test_cost.py::test_cost_aware_ehvi_stores_base_acqf_and_underlying_model PASSED [ 33%]
+tests/test_crack_configuration.py::test_crack_configuration_matches_manuscript[src/rhea_mobo/objective.py] PASSED [ 37%]
+tests/test_crack_configuration.py::test_crack_configuration_matches_manuscript[scripts/bo_script_full.py] PASSED [ 41%]
+tests/test_feasible_grid.py::test_feasible_points_sum_to_one PASSED      [ 45%]
+tests/test_feasible_grid.py::test_feasible_points_have_equal_co_and_hf PASSED [ 50%]
+tests/test_feasible_grid.py::test_feasible_points_are_all_positive PASSED [ 54%]
+tests/test_gp_utils.py::test_fit_single_task_model_returns_fitted_gp PASSED [ 58%]
+tests/test_gp_utils.py::test_build_model_drops_rows_with_nan_and_fits_one_gp_per_objective PASSED [ 62%]
+tests/test_gp_utils.py::test_build_model_raises_when_every_row_is_nan PASSED [ 66%]
+tests/test_gp_utils.py::test_get_acquisition_builds_ehvi_over_pareto_front PASSED [ 70%]
+tests/test_local_search.py::test_keeps_candidate_that_clears_five_percent_margin PASSED [ 75%]
+tests/test_local_search.py::test_exploration_can_replace_a_better_candidate PASSED [ 79%]
+tests/test_local_search.py::test_failed_restarts_are_skipped PASSED      [ 83%]
+tests/test_local_search.py::test_returns_none_when_every_restart_fails PASSED [ 87%]
+tests/test_local_search.py::test_other_exceptions_are_not_swallowed PASSED [ 91%]
+tests/test_toy.py::test_grid_and_synthetic_objectives PASSED             [ 95%]
+tests/test_toy.py::test_random_baseline_is_paired_unique_and_rng_independent PASSED [100%]
+
+=============================== warnings summary ===============================
+../../venvs/rhea-mobo-full/lib/python3.12/site-packages/torch/jit/_script.py:1491
+  /tmp/arroyave/venvs/rhea-mobo-full/lib/python3.12/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 24 passed, 1 warning in 42.81s ========================

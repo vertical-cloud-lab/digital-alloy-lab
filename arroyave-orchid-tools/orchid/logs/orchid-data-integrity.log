@@ -1,0 +1,34 @@
+$ python -I scripts/orchid_data_integrity.py --data <orchid-data>
+== 1. parquet/MANIFEST.json
+release: orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)
+  dft_parity                 rows   7646 (manifest   7646) file_sha256 OK
+  experimental_context       rows   1504 (manifest   1504) file_sha256 OK
+  hull_vertices              rows  28143 (manifest  28143) file_sha256 OK
+  literature_values          rows  73542 (manifest  73542) file_sha256 OK
+  papers                     rows   4882 (manifest   4882) file_sha256 OK
+  phase_diagram_index        rows   2774 (manifest   2774) file_sha256 OK
+  phase_diagram_invariants   rows  15336 (manifest  15336) file_sha256 OK
+  input hulls/dft-mp/catalog.json: OK
+  input hulls/dft-oqmd/catalog.json: OK
+  input literature/contexts.json: OK
+  input literature/dft_parity.json: OK
+  input literature/index.json: OK
+  input literature/orchid-literature.jsonl.gz: OK
+  input literature/papers.json: OK
+  input phase-diagrams/index.json: OK
+  input phase-diagrams/sgte/*.json (sha256 of 'sha256  name' lines): 2774 files, OK
+
+== 2. DATASET_CARD.md counts vs data
+  values (card: 'There are N values')              card   73538  parquet   73542  DIFFERENT
+  accepted (card: 'N values are accepted')         card   72359  parquet   66551  DIFFERENT
+  papers (card: 'values from N papers')            card    1321  parquet    1321  same
+  systems (card: 'covering N chemical systems')    card    1405  parquet    1474  DIFFERENT
+  evidence_class=experimental                      card   36268  parquet   36288  DIFFERENT
+  evidence_class=model                             card   26214  parquet   26153  DIFFERENT
+  evidence_class=dft                               card    5807  parquet    6150  DIFFERENT
+  evidence_class=unspecified                       card    5249  parquet    4951  DIFFERENT
+  JSONL dump: 73542 rows, flags.extraction_accepted true 66551 / false 6991
+
+== 3. Al-Si literature values: acceptance
+  13 values, accepted 0; properties {'INVARIANT_TEMPERATURE': 9, 'TRANSITION_TEMPERATURE': 4}; gate failure codes {'state_phases_missing': 12}
+exit=0 elapsed=6.541041042s

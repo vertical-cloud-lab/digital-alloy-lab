@@ -1,0 +1,127 @@
+{
+ "import_s": 3.76,
+ "constructor_s": 0.67,
+ "n_params": 22,
+ "zpf_datasets": 8,
+ "neq_blocks_generated": 3,
+ "neq_block_phases_field": "'BCC_A2'",
+ "neq_block_solver_keys": [
+  "mode",
+  "sublattice_configuraations",
+  "sublattice_occupancies",
+  "sublattice_site_ratios"
+ ],
+ "neq_blocks_used_by_espei": 0,
+ "neq_loglik_x0": 0.0,
+ "neq_grad_norm_x0": 0.0,
+ "espei_query_hits_as_generated": {
+  "BCC_A2": 0,
+  "FCC_A1": 0,
+  "LIQUID": 0
+ },
+ "espei_query_hits_with_phases_as_list": {
+  "BCC_A2": 1,
+  "FCC_A1": 1,
+  "LIQUID": 1
+ },
+ "next_failure_after_phases_fix": "KeyError: 'sublattice_configurations'",
+ "optimizer_status": "stopped by wall-clock budget (560 s)",
+ "optimizer_s": 583.2,
+ "n_evals": 16,
+ "objective_x0": 6627.569423753329,
+ "objective_best": 2004.5460917643097,
+ "pfp_db_symbols_to_fit_after_run": 0,
+ "pfp_get_initial_values_len_after_run": 0,
+ "db_start_symbols_to_fit_after_run": 22,
+ "params": {
+  "VV0000": {
+   "x0": -1255.0753,
+   "best": -1258.7459616911128
+  },
+  "VV0001": {
+   "x0": 726.7389,
+   "best": 730.7262011100768
+  },
+  "VV0002": {
+   "x0": -584.1299,
+   "best": -586.1784801532198
+  },
+  "VV0003": {
+   "x0": 720.7682,
+   "best": 721.1487120563978
+  },
+  "VV0004": {
+   "x0": -47.424455841449,
+   "best": -48.96827018232546
+  },
+  "VV0005": {
+   "x0": 15.808155841448999,
+   "best": 15.331133273735059
+  },
+  "VV0006": {
+   "x0": -139.7262,
+   "best": -139.65468882855342
+  },
+  "VV0007": {
+   "x0": -1231.9729,
+   "best": -1228.3022383089035
+  },
+  "VV0008": {
+   "x0": 726.4869,
+   "best": 722.4995988899235
+  },
+  "VV0009": {
+   "x0": -588.6705000000001,
+   "best": -586.6219198467803
+  },
+  "VV0010": {
+   "x0": 718.732,
+   "best": 718.3514879436021
+  },
+  "VV0011": {
+   "x0": -129.5648792783825,
+   "best": -130.82101906474938
+  },
+  "VV0012": {
+   "x0": 43.1882792783825,
+   "best": 42.5872576347631
+  },
+  "VV0013": {
+   "x0": -75.2093,
+   "best": -77.40988913437678
+  },
+  "VV0014": {
+   "x0": -1121.9458,
+   "best": -1121.9458
+  },
+  "VV0015": {
+   "x0": -536.6784,
+   "best": -536.6784
+  },
+  "VV0016": {
+   "x0": -125.10289999999999,
+   "best": -119.64489660873065
+  },
+  "VV0017": {
+   "x0": -61.058800000000005,
+   "best": -60.98122251851186
+  },
+  "VV0018": {
+   "x0": 0.0,
+   "best": -1.9819723693979774
+  },
+  "VV0019": {
+   "x0": 0.0,
+   "best": 1.1267295678244458
+  },
+  "VV0020": {
+   "x0": 0.0,
+   "best": -9.198606589427959
+  },
+  "VV0021": {
+   "x0": 0.0,
+   "best": -3.334576921659452
+  }
+ },
+ "tuned_tdb": "PhaseForgePlus-PtW-tuned.tdb"
+}

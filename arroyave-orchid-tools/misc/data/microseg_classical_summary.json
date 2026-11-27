@@ -1,0 +1,116 @@
+{
+  "run_segmentation_without_sam2": "RuntimeError: SAM2 root not found: /tmp/arroyave/work/microseg_lab/sam2",
+  "spot2_0d_0": {
+    "input_shape": [
+      512,
+      512,
+      3
+    ],
+    "processed_shape": [
+      512,
+      512
+    ],
+    "downsample_scale": 1.0,
+    "targets": [
+      "Voids"
+    ],
+    "modules": [
+      "adaptive_threshold",
+      "blob_log",
+      "edge_contours",
+      "threshold_regions",
+      "watershed"
+    ],
+    "num_candidates": 952,
+    "num_selected": 250,
+    "selected_by_target": {
+      "Voids": 250
+    },
+    "union_area_frac": 0.5114822387695312,
+    "top_scores": [
+      1.507,
+      1.485,
+      1.481,
+      1.473,
+      1.468
+    ],
+    "classical_good_enough (would skip SAM)": false,
+    "seconds": 41.22,
+    "IoU_vs_bundled_mask (mask>127, frac=0.154)": 0.007,
+    "IoU_vs_bundled_mask (mask<=127, frac=0.846)": 0.596
+  },
+  "spot2_0d_4": {
+    "input_shape": [
+      512,
+      512,
+      3
+    ],
+    "processed_shape": [
+      512,
+      512
+    ],
+    "downsample_scale": 1.0,
+    "targets": [
+      "Voids"
+    ],
+    "modules": [
+      "adaptive_threshold",
+      "blob_log",
+      "edge_contours",
+      "threshold_regions",
+      "watershed"
+    ],
+    "num_candidates": 908,
+    "num_selected": 250,
+    "selected_by_target": {
+      "Voids": 250
+    },
+    "union_area_frac": 0.5301437377929688,
+    "top_scores": [
+      1.5,
+      1.488,
+      1.475,
+      1.471,
+      1.468
+    ],
+    "classical_good_enough (would skip SAM)": false,
+    "seconds": 45.28
+  },
+  "36": {
+    "input_shape": [
+      6450,
+      6450,
+      3
+    ],
+    "processed_shape": [
+      1024,
+      1024
+    ],
+    "downsample_scale": 0.15875968992248063,
+    "targets": [
+      "Voids"
+    ],
+    "modules": [
+      "adaptive_threshold",
+      "blob_log",
+      "edge_contours",
+      "threshold_regions",
+      "watershed"
+    ],
+    "num_candidates": 716,
+    "num_selected": 183,
+    "selected_by_target": {
+      "Voids": 183
+    },
+    "union_area_frac": 0.016687393188476562,
+    "top_scores": [
+      1.55,
+      1.55,
+      1.55,
+      1.55,
+      1.55
+    ],
+    "classical_good_enough (would skip SAM)": true,
+    "seconds": 79.37
+  }
+}

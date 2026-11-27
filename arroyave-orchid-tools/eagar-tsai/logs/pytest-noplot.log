@@ -1,0 +1,19 @@
+plugins: platformdirs-4.14.5
+collected 102 items / 11 deselected / 91 selected
+
+tests/test_api.py ...........................                            [ 29%]
+tests/test_core.py ......................................                [ 71%]
+tests/test_types.py ..........................                           [100%]
+
+=============================== warnings summary ===============================
+tests/test_api.py::TestComputeMeltPoolOutput::test_serial_and_parallel_produce_same_results
+tests/test_api.py::TestComputeMeltPoolOutput::test_serial_and_parallel_produce_same_results
+  /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=9300) is multi-threaded, use of fork() may lead to deadlocks in the child.
+    self.pid = os.fork()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================ 91 passed, 11 deselected, 2 warnings in 3.91s =================
+
+real	0m5.353s
+user	0m4.690s
+sys	0m0.215s

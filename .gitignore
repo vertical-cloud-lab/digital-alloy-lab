@@ -194,3 +194,6 @@ wheels/
 
 # Per-proposal private files (cloned from <slug>-private repos)
 private/
+
+# Run logs of the #235 tool tests (arroyave-orchid-tools/) are evidence, not LaTeX build logs
+!arroyave-orchid-tools/**/*.log

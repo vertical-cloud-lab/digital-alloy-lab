@@ -1,0 +1,10 @@
+$ cd PAIPAI_run_noshim && timeout 40 prefix/bin/paipai --input small_struc.in --fast 1 --slow 1 --steps 3 --pool-cap 8   (no shim: upstream MaterialsFramework as-is)
+exit=124 wall=42s
+--- mc.log:
+--- last line of each worker log:
+fast_1.log: TypeError: object.__init__() takes exactly one argument (the instance to initialize)
+slow_slow-01.log: TypeError: object.__init__() takes exactly one argument (the instance to initialize)
+--- stdout tail:
+[INFO] Cleaning up: killing all background workers...
+[INFO] Cleaning up: killing all background workers...
+timeout: the monitored command dumped core

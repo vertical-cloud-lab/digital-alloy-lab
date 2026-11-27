@@ -1,0 +1,194 @@
+{
+  "ready": true,
+  "errors": [],
+  "review_required": [],
+  "acknowledged": [],
+  "target_sha256": "64333150958f0d77da466da8ce08c4f7bfd4b8501d44620f4be0b2e38f965da5",
+  "target_provenance": null,
+  "phase_identity_assertions": {},
+  "selection_sha256": "a0d5323f652ade66c79a7808dfdc602b84de5b59308f73989970389f4fb5f3d2",
+  "datasets_checked": 29,
+  "inputs": [
+    {
+      "path": "experimental/AL-ZR/AlZr-01Wan.hmr-00-AL2ZR3.json",
+      "bundle_sha256": "95fde7674ec0a492577c0bf29ccd028d9073a533adfb05de091dc1557028a5a5",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/experimental/AL-ZR/AlZr-01Wan.hmr-00-AL2ZR3.json",
+      "fit_sha256": "95fde7674ec0a492577c0bf29ccd028d9073a533adfb05de091dc1557028a5a5"
+    },
+    {
+      "path": "experimental/AL-ZR/AlZr-01Wan.hmr-00-AL2ZR_C14.json",
+      "bundle_sha256": "f64b50983aadf7d8396f04d9e4de5e47adf68e38204623a6bc25f002f0b1eb09",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/experimental/AL-ZR/AlZr-01Wan.hmr-00-AL2ZR_C14.json",
+      "fit_sha256": "f64b50983aadf7d8396f04d9e4de5e47adf68e38204623a6bc25f002f0b1eb09"
+    },
+    {
+      "path": "experimental/AL-ZR/AlZr-01Wan.hmr-00-AL3ZR2.json",
+      "bundle_sha256": "bff240000201bbbf617016011c77ae1762015bf662a4be1da62dc02e9f7a5a13",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/experimental/AL-ZR/AlZr-01Wan.hmr-00-AL3ZR2.json",
+      "fit_sha256": "bff240000201bbbf617016011c77ae1762015bf662a4be1da62dc02e9f7a5a13"
+    },
+    {
+      "path": "experimental/AL-ZR/AlZr-01Wan.hmr-00-AL3ZR5_D8M.json",
+      "bundle_sha256": "f1e0df8fc4f72867328fcc4ee20915dc0a20f7988cb4bac1bf11388c33b81a44",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/experimental/AL-ZR/AlZr-01Wan.hmr-00-AL3ZR5_D8M.json",
+      "fit_sha256": "f1e0df8fc4f72867328fcc4ee20915dc0a20f7988cb4bac1bf11388c33b81a44"
+    },
+    {
+      "path": "experimental/AL-ZR/AlZr-01Wan.hmr-00-AL3ZR_D023.json",
+      "bundle_sha256": "1be0f3cb320f483e2f9eed8ec6c8294dcac86a763c468f3343d8aea5412f4548",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/experimental/AL-ZR/AlZr-01Wan.hmr-00-AL3ZR_D023.json",
+      "fit_sha256": "1be0f3cb320f483e2f9eed8ec6c8294dcac86a763c468f3343d8aea5412f4548"
+    },
+    {
+      "path": "experimental/AL-ZR/AlZr-01Wan.hmr-00-AL4ZR5.json",
+      "bundle_sha256": "fba61ff6256207cfeb918d6f2c2b90a06154988066b769a2e682a80f851d5870",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/experimental/AL-ZR/AlZr-01Wan.hmr-00-AL4ZR5.json",
+      "fit_sha256": "fba61ff6256207cfeb918d6f2c2b90a06154988066b769a2e682a80f851d5870"
+    },
+    {
+      "path": "experimental/AL-ZR/AlZr-01Wan.hmr-00-ALZR_B33.json",
+      "bundle_sha256": "54e4d72c9237d0fcda56f19e18b8897357c5a3c469a2efcb0705b4b6dc532fdb",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/experimental/AL-ZR/AlZr-01Wan.hmr-00-ALZR_B33.json",
+      "fit_sha256": "54e4d72c9237d0fcda56f19e18b8897357c5a3c469a2efcb0705b4b6dc532fdb"
+    },
+    {
+      "path": "experimental/AL-ZR/AlZr-01Wan.hmr-01-AL2ZR_C14.json",
+      "bundle_sha256": "a99f6c06e8a49ab09342353642410c0b9509671b8c0266cebd86472b6560514d",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/experimental/AL-ZR/AlZr-01Wan.hmr-01-AL2ZR_C14.json",
+      "fit_sha256": "a99f6c06e8a49ab09342353642410c0b9509671b8c0266cebd86472b6560514d"
+    },
+    {
+      "path": "experimental/AL-ZR/AlZr-01Wan.hmr-01-AL3ZR_D023.json",
+      "bundle_sha256": "4202b0f6a376a2e17533c4d0868f01728dfe51b9247e4aed56d2ea5867d6b048",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/experimental/AL-ZR/AlZr-01Wan.hmr-01-AL3ZR_D023.json",
+      "fit_sha256": "4202b0f6a376a2e17533c4d0868f01728dfe51b9247e4aed56d2ea5867d6b048"
+    },
+    {
+      "path": "experimental/AL-ZR/AlZr-01Wan.hmr-02-AL2ZR_C14.json",
+      "bundle_sha256": "a7e9805ed46e824367ad4f26a00d676b27b2f6fc96ed8951ce6e74faf01c14db",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/experimental/AL-ZR/AlZr-01Wan.hmr-02-AL2ZR_C14.json",
+      "fit_sha256": "a7e9805ed46e824367ad4f26a00d676b27b2f6fc96ed8951ce6e74faf01c14db"
+    },
+    {
+      "path": "experimental/AL-ZR/AlZr-01Wan.hmr-02-AL3ZR_D023.json",
+      "bundle_sha256": "b7c5d406e0cf972b576f401d0702e61fa6f777a15200c10ad4b8a08b18bb10fd",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/experimental/AL-ZR/AlZr-01Wan.hmr-02-AL3ZR_D023.json",
+      "fit_sha256": "b7c5d406e0cf972b576f401d0702e61fa6f777a15200c10ad4b8a08b18bb10fd"
+    },
+    {
+      "path": "experimental/AL-ZR/AlZr-01Wan.hmr-03-AL2ZR_C14.json",
+      "bundle_sha256": "d372dfea6fd2bfb8960fc1b5885f7035856f6e34b9d995ed3ef52da18b7ce1a8",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/experimental/AL-ZR/AlZr-01Wan.hmr-03-AL2ZR_C14.json",
+      "fit_sha256": "d372dfea6fd2bfb8960fc1b5885f7035856f6e34b9d995ed3ef52da18b7ce1a8"
+    },
+    {
+      "path": "experimental/AL-ZR/AlZr-15Fis.hmr-00-AL3ZR_D023.json",
+      "bundle_sha256": "cecf9c7c4a72214dac84b7b92b190aea051ea2c3a8a46d6b20cad8830de2c8d0",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/experimental/AL-ZR/AlZr-15Fis.hmr-00-AL3ZR_D023.json",
+      "fit_sha256": "cecf9c7c4a72214dac84b7b92b190aea051ea2c3a8a46d6b20cad8830de2c8d0"
+    },
+    {
+      "path": "experimental/AL-ZR/AlZr-15Fis.hmr-02-AL2ZR_C14.json",
+      "bundle_sha256": "e367976b8b26fe3562ec5271348aca5d61049577bc91ba340f8bb21bd2a060ba",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/experimental/AL-ZR/AlZr-15Fis.hmr-02-AL2ZR_C14.json",
+      "fit_sha256": "e367976b8b26fe3562ec5271348aca5d61049577bc91ba340f8bb21bd2a060ba"
+    },
+    {
+      "path": "experimental/AL-ZR/AlZr-15Fis.hmr-05-AL3ZR2.json",
+      "bundle_sha256": "5813a1a119601c49df67195149db9e8d297a1e0e391bc759fd7fd6627399faf7",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/experimental/AL-ZR/AlZr-15Fis.hmr-05-AL3ZR2.json",
+      "fit_sha256": "5813a1a119601c49df67195149db9e8d297a1e0e391bc759fd7fd6627399faf7"
+    },
+    {
+      "path": "experimental/AL-ZR/AlZr-15Fis.hmr-06-ALZR_B33.json",
+      "bundle_sha256": "f0d459f0e7bd9fec815ebf1f3b6942c1cbf9c14969f251a5832c2dd2588baef6",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/experimental/AL-ZR/AlZr-15Fis.hmr-06-ALZR_B33.json",
+      "fit_sha256": "f0d459f0e7bd9fec815ebf1f3b6942c1cbf9c14969f251a5832c2dd2588baef6"
+    },
+    {
+      "path": "experimental/AL-ZR/AlZr-15Fis.hmr-07-AL4ZR5.json",
+      "bundle_sha256": "743e982096e836fdbe673ade73f6c019406445c188ed1bf57a3fd888592ba760",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/experimental/AL-ZR/AlZr-15Fis.hmr-07-AL4ZR5.json",
+      "fit_sha256": "743e982096e836fdbe673ade73f6c019406445c188ed1bf57a3fd888592ba760"
+    },
+    {
+      "path": "experimental/AL-ZR/AlZr-15Fis.hmr-08-AL2ZR3.json",
+      "bundle_sha256": "15b1994f957db4a4fd47e80f82916fb4d42c2cb9f19685d204e00e9703c507fe",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/experimental/AL-ZR/AlZr-15Fis.hmr-08-AL2ZR3.json",
+      "fit_sha256": "15b1994f957db4a4fd47e80f82916fb4d42c2cb9f19685d204e00e9703c507fe"
+    },
+    {
+      "path": "experimental/AL-ZR/AlZr-15Fis.hmr-09-AL3ZR5_D8M.json",
+      "bundle_sha256": "0277b915b8de8f169b5702b291fdfbd37015d0ce09df54fb8820100cb11da7d3",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/experimental/AL-ZR/AlZr-15Fis.hmr-09-AL3ZR5_D8M.json",
+      "fit_sha256": "0277b915b8de8f169b5702b291fdfbd37015d0ce09df54fb8820100cb11da7d3"
+    },
+    {
+      "path": "experimental/AL-ZR/AlZr-18Khv.zpf-00.json",
+      "bundle_sha256": "5110003d11967e644182d0c7f6aebab60efa9c2f12e20181723fa1362a247ca4",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/experimental/AL-ZR/AlZr-18Khv.zpf-00.json",
+      "fit_sha256": "5110003d11967e644182d0c7f6aebab60efa9c2f12e20181723fa1362a247ca4"
+    },
+    {
+      "path": "invariants/AL-ZR/AlZr-15Fis.zpf-00.json",
+      "bundle_sha256": "c3ea96a88c30509c4e76e89150c45000115f19cc1a85c43581846100aa341e07",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/invariants/AL-ZR/AlZr-15Fis.zpf-00.json",
+      "fit_sha256": "c3ea96a88c30509c4e76e89150c45000115f19cc1a85c43581846100aa341e07"
+    },
+    {
+      "path": "invariants/AL-ZR/AlZr-15Fis.zpf-01.json",
+      "bundle_sha256": "81adc9328a1c4d5205e90138ad1d404cb4bed05241e8b08bb57c0a3fc36c47e4",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/invariants/AL-ZR/AlZr-15Fis.zpf-01.json",
+      "fit_sha256": "81adc9328a1c4d5205e90138ad1d404cb4bed05241e8b08bb57c0a3fc36c47e4"
+    },
+    {
+      "path": "invariants/AL-ZR/AlZr-15Fis.zpf-02.json",
+      "bundle_sha256": "829b5bdd8a98d81bca7c571e52aec95b3add7a9b5f378cb5a8f16cd4204f35d3",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/invariants/AL-ZR/AlZr-15Fis.zpf-02.json",
+      "fit_sha256": "829b5bdd8a98d81bca7c571e52aec95b3add7a9b5f378cb5a8f16cd4204f35d3"
+    },
+    {
+      "path": "invariants/AL-ZR/AlZr-18Tam.zpf-00.json",
+      "bundle_sha256": "7aaa633ebdc00c2a22b53f1ae44b3320872af5574d566b02c7cab4b1a4d4d6bd",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/invariants/AL-ZR/AlZr-18Tam.zpf-00.json",
+      "fit_sha256": "7aaa633ebdc00c2a22b53f1ae44b3320872af5574d566b02c7cab4b1a4d4d6bd"
+    },
+    {
+      "path": "invariants/AL-ZR/AlZr-18Tam.zpf-02.json",
+      "bundle_sha256": "1fd36c7c07bc0f022bb4f73b02fd968536fdb7ed09a534c815596528a06d3039",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/invariants/AL-ZR/AlZr-18Tam.zpf-02.json",
+      "fit_sha256": "1fd36c7c07bc0f022bb4f73b02fd968536fdb7ed09a534c815596528a06d3039"
+    },
+    {
+      "path": "invariants/AL-ZR/AlZr-18Tam.zpf-03.json",
+      "bundle_sha256": "a8944faddb98488d3135db4b8c0f968748178c9354d7301ea2b0642a62b61589",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/invariants/AL-ZR/AlZr-18Tam.zpf-03.json",
+      "fit_sha256": "a8944faddb98488d3135db4b8c0f968748178c9354d7301ea2b0642a62b61589"
+    },
+    {
+      "path": "invariants/AL-ZR/AlZr-20Lon.zpf-00.json",
+      "bundle_sha256": "bd72a700bad762b265c1b4b4f7440631bfb9f6ab19e866e516ee5e6c66b3754f",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/invariants/AL-ZR/AlZr-20Lon.zpf-00.json",
+      "fit_sha256": "bd72a700bad762b265c1b4b4f7440631bfb9f6ab19e866e516ee5e6c66b3754f"
+    },
+    {
+      "path": "invariants/AL-ZR/AlZr-20Lon.zpf-03.json",
+      "bundle_sha256": "8c2a242789fc89e70918c58bdde4b96bd1cf44ebff4554ef796843320c1db833",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/invariants/AL-ZR/AlZr-20Lon.zpf-03.json",
+      "fit_sha256": "8c2a242789fc89e70918c58bdde4b96bd1cf44ebff4554ef796843320c1db833"
+    },
+    {
+      "path": "invariants/AL-ZR/AlZr-20Lon.zpf-05.json",
+      "bundle_sha256": "8d5bfcd790447613f15b71ca0fdef562f5de7f885ac60b15f6913fa05be42c40",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/invariants/AL-ZR/AlZr-20Lon.zpf-05.json",
+      "fit_sha256": "8d5bfcd790447613f15b71ca0fdef562f5de7f885ac60b15f6913fa05be42c40"
+    }
+  ],
+  "weight_overrides": [],
+  "limitations": [
+    "Preflight checks input compatibility, not model accuracy or residual convergence.",
+    "ZPF uses driving-force tolerance; temperature/composition budgets are not automatically propagated.",
+    "Shared-source covariance is not estimated."
+  ],
+  "release_modified": false
+}

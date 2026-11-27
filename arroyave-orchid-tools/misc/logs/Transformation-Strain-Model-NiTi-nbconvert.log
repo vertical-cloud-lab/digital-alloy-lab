@@ -1,0 +1,128 @@
+[NbConvertApp] Converting notebook main.ipynb to notebook
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+Traceback (most recent call last):
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/bin/jupyter-nbconvert", line 10, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/jupyter_core/application.py", line 284, in launch_instance
+    super().launch_instance(argv=argv, **kwargs)
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/traitlets/config/application.py", line 1080, in launch_instance
+    app.start()
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/nbconvert/nbconvertapp.py", line 420, in start
+    self.convert_notebooks()
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/nbconvert/nbconvertapp.py", line 597, in convert_notebooks
+    self.convert_single_notebook(notebook_filename)
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/nbconvert/nbconvertapp.py", line 563, in convert_single_notebook
+    output, resources = self.export_single_notebook(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/nbconvert/nbconvertapp.py", line 487, in export_single_notebook
+    output, resources = self.exporter.from_filename(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/nbconvert/exporters/exporter.py", line 201, in from_filename
+    return self.from_file(f, resources=resources, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/nbconvert/exporters/exporter.py", line 220, in from_file
+    return self.from_notebook_node(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/nbconvert/exporters/notebook.py", line 36, in from_notebook_node
+    nb_copy, resources = super().from_notebook_node(nb, resources, **kw)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/nbconvert/exporters/exporter.py", line 154, in from_notebook_node
+    nb_copy, resources = self._preprocess(nb_copy, resources)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/nbconvert/exporters/exporter.py", line 353, in _preprocess
+    nbc, resc = preprocessor(nbc, resc)
+                ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/nbconvert/preprocessors/base.py", line 48, in __call__
+    return self.preprocess(nb, resources)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py", line 103, in preprocess
+    self.preprocess_cell(cell, resources, index)
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py", line 124, in preprocess_cell
+    cell = self.execute_cell(cell, index, store_history=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import sys
+from importlib.metadata import version
+
+import ast
+import pandas as pd
+import numpy as np
+
+
+
+from helper import (
+    TransformationStrainCalculator,
+    DataHandler,
+    FeatureGenerator,
+    deformation_matrices,
+    LambdaCalculator,
+    Lambda2Model,
+)
+
+
+from catboost import CatBoostRegressor
+from sklearn.model_selection import KFold
+
+from sklearn.metrics import root_mean_squared_error, mean_absolute_error, r2_score
+
+print("Python version: " + sys.version)
+print("NumPy version: {}".format(version("numpy")))
+print("pandas version: {}".format(version("pandas")))
+print("SymPy version: {}".format(version("sympy")))
+print("scikit-learn version: {}".format(version("scikit-learn")))
+print("CatBoost version: {}".format(version("catboost")))
+print("CBFV version: {}".format(version("CBFV")))
+------------------
+
+----- stderr -----
+/tmp/arroyave/work/NiTi-TS/helper.py:615: SyntaxWarning: invalid escape sequence '\d'
+  .replace("\d+", "", regex=True)
+----- stderr -----
+/tmp/arroyave/work/NiTi-TS/helper.py:615: SyntaxWarning: invalid escape sequence '\d'
+  .replace("\d+", "", regex=True)
+------------------
+
+[31m---------------------------------------------------------------------------[39m
+[31mModuleNotFoundError[39m                       Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[1][39m[32m, line 10[39m
+[32m      6[39m [38;5;28;01mimport[39;00m numpy [38;5;28;01mas[39;00m np
+[32m      7[39m 
+[32m      8[39m 
+[32m      9[39m 
+[32m---> [39m[32m10[39m from helper import (
+[32m     11[39m     TransformationStrainCalculator,
+[32m     12[39m     DataHandler,
+[32m     13[39m     FeatureGenerator,
+
+[36mFile [39m[32m/tmp/arroyave/work/NiTi-TS/helper.py:11[39m
+[32m      9[39m [38;5;28;01mimport[39;00m[38;5;250m [39m[34;01mpandas[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[34;01mpd[39;00m
+[32m     10[39m [38;5;28;01mimport[39;00m[38;5;250m [39m[34;01msympy[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[34;01msp[39;00m
+[32m---> [39m[32m11[39m [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mCBFV[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m composition
+[32m     12[39m [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mfunctools[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m reduce
+[32m     13[39m [38;5;28;01mimport[39;00m[38;5;250m [39m[34;01mcontextlib[39;00m
+
+[36mFile [39m[32m/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/CBFV/composition.py:7[39m
+[32m      5[39m [38;5;28;01mimport[39;00m[38;5;250m [39m[34;01mtqdm[39;00m
+[32m      6[39m [38;5;28;01mimport[39;00m[38;5;250m [39m[34;01mos[39;00m
+[32m----> [39m[32m7[39m [38;5;28;01mimport[39;00m[38;5;250m [39m[34;01mpkg_resources[39;00m
+[32m      8[39m [38;5;66;03m# dirpath = os.getcwd()[39;00m
+[32m     10[39m [38;5;28;01mclass[39;00m[38;5;250m [39m[34;01mCompositionError[39;00m([38;5;167;01mException[39;00m):
+
+[31mModuleNotFoundError[39m: No module named 'pkg_resources'
+
+
+real	0m7.400s
+user	0m5.614s
+sys	0m0.457s

@@ -1,0 +1,6 @@
+=== ITER=2 (03:50:28)
+  File "/tmp/arroyave/work/HTMDEC/bbo_python/run_iter.py", line 79, in <module>
+    dimensions_input_number = data_input[dimensions_input_names].to_numpy().shape[1]
+                              ^^^^^^^^^^
+NameError: name 'data_input' is not defined
+rc=1 wall=1s

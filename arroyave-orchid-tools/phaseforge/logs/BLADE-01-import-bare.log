@@ -1,0 +1,13 @@
+$ python -c 'from blade import BladeCompositions, BladeSQS, BladeCutoff, BladeVisualizer, BLADEVolume'  (bare install, pyproject dependencies=[])
+--- BladeCompositions
+import OK
+--- BladeSQS
+ModuleNotFoundError: No module named 'numpy'
+--- BladeCutoff
+ModuleNotFoundError: No module named 'numpy'
+--- BladeTDBGen
+import OK
+--- BladeVisualizer
+ModuleNotFoundError: No module named 'imageio'
+--- BLADEVolume
+ModuleNotFoundError: No module named 'numpy'

@@ -1,0 +1,26 @@
+$ ORCHID_RELEASE_TOOLS=release-site/tools python -m pytest -q -p no:cacheprovider contributions/tests
+....................                                                     [100%]
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED contributions/tests/test_orchid_contrib.py::test_orcid_checksum
+PASSED contributions/tests/test_orchid_contrib.py::test_system_and_doi
+PASSED contributions/tests/test_orchid_contrib.py::test_valid_correction
+PASSED contributions/tests/test_orchid_contrib.py::test_correction_errors
+PASSED contributions/tests/test_orchid_contrib.py::test_correction_duplicate_merged_and_applied
+PASSED contributions/tests/test_orchid_contrib.py::test_correction_value_range_and_sign
+PASSED contributions/tests/test_orchid_contrib.py::test_correction_phase_compositions
+PASSED contributions/tests/test_orchid_contrib.py::test_valid_data_and_conversion
+PASSED contributions/tests/test_orchid_contrib.py::test_data_errors
+PASSED contributions/tests/test_orchid_contrib.py::test_duplicates
+PASSED contributions/tests/test_orchid_contrib.py::test_csv_template_row
+PASSED contributions/tests/test_orchid_contrib.py::test_templates_are_skipped
+PASSED contributions/tests/test_orchid_contrib.py::test_phase_rule_liquid_impossible
+PASSED contributions/tests/test_orchid_contrib.py::test_paper_suggestions
+PASSED contributions/tests/test_orchid_contrib.py::test_tdb_contribution
+PASSED contributions/tests/test_orchid_contrib.py::test_apply_corrections
+PASSED contributions/tests/test_orchid_contrib.py::test_credit
+PASSED contributions/tests/test_orchid_contrib.py::test_example_payloads[pr1-valid-correction.jsonl-contributions/corrections/pr1.jsonl-True]
+PASSED contributions/tests/test_orchid_contrib.py::test_example_payloads[pr2-invalid-correction.jsonl-contributions/corrections/pr2.jsonl-False]
+PASSED contributions/tests/test_orchid_contrib.py::test_example_payloads[pr3-data-contribution.json-contributions/data/pr3.json-True]
+20 passed in 0.26s
+exit=0 elapsed=.579562984s

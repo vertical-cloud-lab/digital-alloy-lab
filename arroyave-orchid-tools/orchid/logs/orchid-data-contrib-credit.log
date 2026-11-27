@@ -1,0 +1,3 @@
+$ python contributions/tools/orchid_contrib.py credit --check
+credit: up to date
+exit=0 elapsed=.045347527s

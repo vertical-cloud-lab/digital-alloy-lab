@@ -1,0 +1,99 @@
+                                       alloy           formula    delta  delta_chi_pauling     vec  mixing_enthalpy  mixing_entropy  melting_temperature    omega    gamma     lambda         phi  density microstructure
+           Cantor CoCrFeMnNi (reference HEA)        CoCrFeMnNi 3.269464           7.834759  8.0000        -4.160000       13.381611                 1802 5.796554 1.025905   1.251859   34.702127 8.007017            FCC
+                   FeCoCrNi (README example)          FeCoCrNi 0.302116           5.312934  8.2500        -3.750000       11.526293                 1872 5.753925 1.025901 126.282311 3585.017693 8.160250            FCC
+              AlCoCrFeNi (Al-containing HEA)        AlCoCrFeNi 5.777890           6.780952  7.2000       -12.320000       13.381611                 1685 1.830196 1.158109   0.400839    6.010789 6.708723        BCC+FCC
+Al-10Si-0.35Mg at.% (AlSi10Mg-like, Al-rich) Al89.65Si10Mg0.35 6.014738           5.441435  3.0965        -6.874902        2.893432                 1009 0.424657 1.232748   0.079980   -4.151116 2.648916            BCC
+                  Cu-30Ni at.% (cupronickel)          Cu70Ni30 1.156121           0.240808 10.7000         3.360000        5.079008                 1469 2.220555 1.025829   3.799900   72.174399 8.933845            FCC
+                                Cu-50Ni at.%          Cu50Ni50 1.267829           0.262467 10.5000         4.000000        5.763146                 1543 2.223134 1.025879   3.585406   67.760008 8.922584            FCC
+           Cu-0.8Cr-0.1Zr at.% (CuCrZr-like)  Cu99.1Cr0.8Zr0.1 0.829303           1.471377 10.9530         0.288988        0.453085                 1366 2.141662 1.285792   0.658800   10.557826 8.930912            FCC
+
+          formula        model_1        model_2        model_3         model_4         model_5         model_6        model_7         model_8
+       CoCrFeMnNi Solid Solution Solid Solution Solid Solution  Solid Solution  Solid Solution  Solid Solution Solid Solution  Solid Solution
+         FeCoCrNi Solid Solution Solid Solution Solid Solution  Solid Solution  Solid Solution  Solid Solution Solid Solution  Solid Solution
+       AlCoCrFeNi Solid Solution  Intermetallic Solid Solution Multiple Phases Multiple Phases Multiple Phases  Intermetallic Multiple Phases
+Al89.65Si10Mg0.35  Intermetallic Solid Solution  Intermetallic   Intermetallic Multiple Phases             N/A            N/A  Solid Solution
+         Cu70Ni30 Solid Solution  Intermetallic Solid Solution  Solid Solution  Solid Solution  Solid Solution Solid Solution  Solid Solution
+         Cu50Ni50 Solid Solution  Intermetallic Solid Solution  Solid Solution  Solid Solution  Solid Solution Solid Solution  Solid Solution
+ Cu99.1Cr0.8Zr0.1 Solid Solution Solid Solution  Intermetallic Multiple Phases Multiple Phases Multiple Phases Solid Solution Multiple Phases
+
+Hand check Cu70Ni30:
+  mixing_entropy       hand=     5.07901  package=     5.07901  rel.diff=0.00e+00
+  mixing_enthalpy      hand=     3.36000  package=     3.36000  rel.diff=0.00e+00
+  delta                hand=     1.15612  package=     1.15612  rel.diff=0.00e+00
+  vec                  hand=    10.70000  package=    10.70000  rel.diff=0.00e+00
+  melting_temperature  hand=  1468.88400  package=  1469.00000  rel.diff=7.90e-05
+  omega                hand=     2.22038  package=     2.22055  rel.diff=7.90e-05
+  pair enthalpies (kJ/mol): {'Cu-Ni': 4.0}  radii (pm): {'Cu': 127.8, 'Ni': 124.6}
+
+Hand check Al89.65Si10Mg0.35:
+  mixing_entropy       hand=     2.89343  package=     2.89343  rel.diff=0.00e+00
+  mixing_enthalpy      hand=    -6.87490  package=    -6.87490  rel.diff=0.00e+00
+  delta                hand=     6.01474  package=     6.01474  rel.diff=0.00e+00
+  vec                  hand=     3.09650  package=     3.09650  rel.diff=0.00e+00
+  melting_temperature  hand=  1008.80188  package=  1009.00000  rel.diff=1.96e-04
+  omega                hand=     0.42457  package=     0.42466  rel.diff=1.96e-04
+  pair enthalpies (kJ/mol): {'Al-Si': -19.0, 'Al-Mg': -2.0, 'Si-Mg': -26.0}  radii (pm): {'Al': 143.2, 'Si': 115.3, 'Mg': 160.1}
+--- CLI:
+                                                                                
+ Usage: HEACalculator [OPTIONS] COMMAND [ARGS]...                               
+                                                                                
+ A tool for calculating High-Entropy Alloy (HEA) specific parameters and        
+ solid-solution predictions.                                                    
+                                                                                
+╭─ Options ────────────────────────────────────────────────────────────────────╮
+│ --version             -V        Show the HEACalculator version and exit.     │
+│ --install-completion            Install completion for the current shell.    │
+│ --show-completion               Show completion for the current shell, to    │
+│                                 copy it or customize the installation.       │
+│ --help                -h        Show this message and exit.                  │
+╰──────────────────────────────────────────────────────────────────────────────╯
+╭─ Commands ───────────────────────────────────────────────────────────────────╮
+│ gui     Starts the HEACalculator Graphical User Interface (GUI).             │
+│ search  Parameter search commands                                            │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+Usage: HEACalculator [OPTIONS] COMMAND [ARGS]...
+Try 'HEACalculator -h' for help.
+╭─ Error ──────────────────────────────────────────────────────────────────────╮
+│ No such command 'single'.                                                    │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+real	0m2.251s
+user	0m1.194s
+sys	0m0.200s
+====================Cu70Ni30====================
+Density                  :       8.93 g/cm^3
+Delta                    :       1.16 %
+Delta (CN12)             :       1.08 %
+Delta Chi (Allen)        :       0.74 %
+Delta Chi (Pauling)      :       0.24 %
+Omega                    :       2.22
+Gamma                    :       1.03
+Lambda                   :       3.80
+Phi                      :      72.17
+VEC                      :      10.70
+e/a                      :       1.30
+Mixing Enthalpy          :       3.36 kJ/mol
+Mixing Entropy           :       5.08 J/K.mol
+Formation Enthalpy       :      -5.04 meV/atom
+Min. Formation Enthalpy  :      -6.00 meV/atom
+Max. Formation Enthalpy  :      -6.00 meV/atom
+Melting Temperature      :       1469 K
+Critical Temperature     :     807.95 K
+Phi (BCC)                :      94.42
+Phi (FCC)                :      58.41
+Delta G_ss               :      -5.53 kJ/mol
+Delta G_max              :       1.10 kJ/mol
+Phi (King)               :       5.02
+
+==================Predictions===================
+Microstructure           :     FCC
+Model 1                  :     Solid Solution (Omega=2.22, Delta=1.08)
+Model 2                  :     Intermetallic (DeltaHmix=3.36, Delta=1.16)
+Model 3                  :     Solid Solution (Gamma=1.03)
+Model 4                  :     Solid Solution (Lambda=3.80)
+Model 5                  :     Solid Solution (phi=72.17)
+Model 6                  :     Solid Solution (Hf_min=-6.00, Hf_max=-6.00)
+Model 7                  :     Solid Solution (k1=-0.14, k1_cr=1.49)
+Model 8                  :     Solid Solution (Phi=5.02)
+

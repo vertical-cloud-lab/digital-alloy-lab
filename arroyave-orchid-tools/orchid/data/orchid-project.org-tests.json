@@ -1,0 +1,616 @@
+[
+ {
+  "file": "test_assessed_assemblages.py",
+  "runner": "script",
+  "exit": 0,
+  "seconds": 9.6,
+  "pytest_summary": null,
+  "script_PASS_lines": 34,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "0 failure(s)"
+  ]
+ },
+ {
+  "file": "test_bibliography.py",
+  "runner": "script",
+  "exit": 0,
+  "seconds": 0.2,
+  "pytest_summary": null,
+  "script_PASS_lines": 29,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "0 failures"
+  ]
+ },
+ {
+  "file": "test_boride_evidence_review.py",
+  "runner": "pytest",
+  "exit": 0,
+  "seconds": 1.1,
+  "pytest_summary": "11 passed in 0.25s",
+  "script_PASS_lines": 0,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "11 passed in 0.25s"
+  ]
+ },
+ {
+  "file": "test_calculated_diagram_audit.py",
+  "runner": "pytest",
+  "exit": 0,
+  "seconds": 1.0,
+  "pytest_summary": "5 passed in 0.08s",
+  "script_PASS_lines": 0,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "5 passed in 0.08s"
+  ]
+ },
+ {
+  "file": "test_contributions_hook.py",
+  "runner": "pytest",
+  "exit": 0,
+  "seconds": 1.3,
+  "pytest_summary": null,
+  "script_PASS_lines": 0,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "1 skipped in 0.05s"
+  ]
+ },
+ {
+  "file": "test_dense_field_grid.py",
+  "runner": "script",
+  "exit": 0,
+  "seconds": 1.8,
+  "pytest_summary": null,
+  "script_PASS_lines": 13,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "0 failure(s)"
+  ]
+ },
+ {
+  "file": "test_dft_evidence_identity.py",
+  "runner": "pytest",
+  "exit": 0,
+  "seconds": 0.9,
+  "pytest_summary": "14 passed in 0.07s",
+  "script_PASS_lines": 0,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "14 passed in 0.07s"
+  ]
+ },
+ {
+  "file": "test_diagram_recovery.py",
+  "runner": "pytest",
+  "exit": 1,
+  "seconds": 1.3,
+  "pytest_summary": "1 failed, 11 passed in 0.20s",
+  "script_PASS_lines": 0,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [
+   "=================================== FAILURES ===================================",
+   "E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/arroyave/work/open-tdb/databases/sgte-binary/MgY-98Luk.tdb'",
+   "/home/runner/.local/share/uv/python/cpython-3.13.18-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py:537: FileNotFoundError",
+   "FAILED tools/tests/test_diagram_recovery.py::test_mgy_repair_preserves_every_other_byte_and_is_hash_scoped"
+  ],
+  "last_stdout": [
+   "1 failed, 11 passed in 0.20s"
+  ]
+ },
+ {
+  "file": "test_doi_corrections.py",
+  "runner": "script",
+  "exit": 0,
+  "seconds": 11.7,
+  "pytest_summary": null,
+  "script_PASS_lines": 32,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "0 failure(s)"
+  ]
+ },
+ {
+  "file": "test_espei_bundle_gate.py",
+  "runner": "script",
+  "exit": 0,
+  "seconds": 18.7,
+  "pytest_summary": null,
+  "script_PASS_lines": 13,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "0 failures"
+  ]
+ },
+ {
+  "file": "test_espei_fit_preflight.py",
+  "runner": "pytest",
+  "exit": 0,
+  "seconds": 16.5,
+  "pytest_summary": "9 passed, 1 warning in 14.05s",
+  "script_PASS_lines": 0,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "9 passed, 1 warning in 14.05s"
+  ]
+ },
+ {
+  "file": "test_human_review_corrections.py",
+  "runner": "pytest",
+  "exit": 0,
+  "seconds": 1.1,
+  "pytest_summary": "4 passed in 0.05s",
+  "script_PASS_lines": 0,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "4 passed in 0.05s"
+  ]
+ },
+ {
+  "file": "test_independent_check.py",
+  "runner": "script",
+  "exit": 0,
+  "seconds": 4.5,
+  "pytest_summary": null,
+  "script_PASS_lines": 11,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "0 failures"
+  ]
+ },
+ {
+  "file": "test_individual_weights.py",
+  "runner": "pytest",
+  "exit": 0,
+  "seconds": 1.1,
+  "pytest_summary": "5 passed in 0.24s",
+  "script_PASS_lines": 0,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "5 passed in 0.24s"
+  ]
+ },
+ {
+  "file": "test_known_issues_20261027.py",
+  "runner": "pytest",
+  "exit": 0,
+  "seconds": 1.2,
+  "pytest_summary": "10 passed in 0.24s",
+  "script_PASS_lines": 0,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "10 passed in 0.24s"
+  ]
+ },
+ {
+  "file": "test_literature_gates.py",
+  "runner": "script",
+  "exit": 0,
+  "seconds": 0.3,
+  "pytest_summary": null,
+  "script_PASS_lines": 101,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "0 failures"
+  ]
+ },
+ {
+  "file": "test_mgpb_evidence_review.py",
+  "runner": "pytest",
+  "exit": 0,
+  "seconds": 1.4,
+  "pytest_summary": "5 passed in 0.24s",
+  "script_PASS_lines": 0,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "5 passed in 0.24s"
+  ]
+ },
+ {
+  "file": "test_ml_folds.py",
+  "runner": "script",
+  "exit": 0,
+  "seconds": 19.3,
+  "pytest_summary": "0 failed",
+  "script_PASS_lines": 22,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [
+   "0 failed"
+  ],
+  "last_stdout": [
+   "0 failed"
+  ]
+ },
+ {
+  "file": "test_phase_aliases.py",
+  "runner": "script",
+  "exit": 0,
+  "seconds": 9.5,
+  "pytest_summary": null,
+  "script_PASS_lines": 20,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "all passed"
+  ]
+ },
+ {
+  "file": "test_phase_mapper_structures.py",
+  "runner": "script",
+  "exit": 0,
+  "seconds": 0.1,
+  "pytest_summary": "0 failed",
+  "script_PASS_lines": 23,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [
+   "0 failed"
+  ],
+  "last_stdout": [
+   "0 failed"
+  ]
+ },
+ {
+  "file": "test_phase_rule.py",
+  "runner": "script",
+  "exit": 0,
+  "seconds": 37.5,
+  "pytest_summary": null,
+  "script_PASS_lines": 47,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "all passed"
+  ]
+ },
+ {
+  "file": "test_placeholder_reaccept.py",
+  "runner": "script",
+  "exit": 0,
+  "seconds": 0.3,
+  "pytest_summary": null,
+  "script_PASS_lines": 7,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "all passed"
+  ]
+ },
+ {
+  "file": "test_placeholder_recovery_20261027.py",
+  "runner": "pytest",
+  "exit": 0,
+  "seconds": 0.9,
+  "pytest_summary": "7 passed in 0.22s",
+  "script_PASS_lines": 0,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "7 passed in 0.22s"
+  ]
+ },
+ {
+  "file": "test_precision_sample.py",
+  "runner": "script",
+  "exit": 1,
+  "seconds": 0.3,
+  "pytest_summary": null,
+  "script_PASS_lines": 26,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [
+   "Traceback (most recent call last):",
+   "FileNotFoundError: [Errno 2] No such file or directory: '/tmp/arroyave/work/orchid-project.org/data/literature/orchid-literature.jsonl.gz'"
+  ],
+  "last_stdout": [
+   "PASS distributed kit: re-draw from its population reproduced it"
+  ]
+ },
+ {
+  "file": "test_quote_clip.py",
+  "runner": "script",
+  "exit": 0,
+  "seconds": 0.1,
+  "pytest_summary": null,
+  "script_PASS_lines": 14,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "0 failures"
+  ]
+ },
+ {
+  "file": "test_r2_compositions.py",
+  "runner": "script",
+  "exit": 0,
+  "seconds": 34.7,
+  "pytest_summary": null,
+  "script_PASS_lines": 29,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "0 failures"
+  ]
+ },
+ {
+  "file": "test_r2_dft.py",
+  "runner": "script",
+  "exit": 0,
+  "seconds": 12.6,
+  "pytest_summary": "0 failed",
+  "script_PASS_lines": 27,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [
+   "0 failed"
+  ],
+  "last_stdout": [
+   "0 failed"
+  ]
+ },
+ {
+  "file": "test_r2_phases.py",
+  "runner": "script",
+  "exit": 0,
+  "seconds": 31.3,
+  "pytest_summary": null,
+  "script_PASS_lines": 47,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "all passed"
+  ]
+ },
+ {
+  "file": "test_r2_thermo.py",
+  "runner": "script",
+  "exit": 0,
+  "seconds": 37.7,
+  "pytest_summary": null,
+  "script_PASS_lines": 33,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "0 failures"
+  ]
+ },
+ {
+  "file": "test_r3.py",
+  "runner": "script",
+  "exit": 0,
+  "seconds": 32.4,
+  "pytest_summary": null,
+  "script_PASS_lines": 44,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "0 failures"
+  ]
+ },
+ {
+  "file": "test_r4_placeholder_phases.py",
+  "runner": "script",
+  "exit": 0,
+  "seconds": 5.6,
+  "pytest_summary": null,
+  "script_PASS_lines": 29,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "0 failures"
+  ]
+ },
+ {
+  "file": "test_reaction_system_reconciliation.py",
+  "runner": "pytest",
+  "exit": 0,
+  "seconds": 1.2,
+  "pytest_summary": "3 passed in 0.23s",
+  "script_PASS_lines": 0,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "3 passed in 0.23s"
+  ]
+ },
+ {
+  "file": "test_reader_agreement.py",
+  "runner": "script",
+  "exit": 0,
+  "seconds": 0.4,
+  "pytest_summary": null,
+  "script_PASS_lines": 9,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "0 failures"
+  ]
+ },
+ {
+  "file": "test_release_integrity.py",
+  "runner": "script",
+  "exit": 0,
+  "seconds": 43.9,
+  "pytest_summary": null,
+  "script_PASS_lines": 58,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "0 failures"
+  ]
+ },
+ {
+  "file": "test_report_links.py",
+  "runner": "pytest",
+  "exit": 0,
+  "seconds": 0.9,
+  "pytest_summary": "3 passed in 0.04s",
+  "script_PASS_lines": 0,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "3 passed in 0.04s"
+  ]
+ },
+ {
+  "file": "test_source_reference_corrections.py",
+  "runner": "pytest",
+  "exit": 0,
+  "seconds": 1.0,
+  "pytest_summary": "6 passed in 0.06s",
+  "script_PASS_lines": 0,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "6 passed in 0.06s"
+  ]
+ },
+ {
+  "file": "test_srsi_evidence_review.py",
+  "runner": "pytest",
+  "exit": 0,
+  "seconds": 0.9,
+  "pytest_summary": "21 passed in 0.08s",
+  "script_PASS_lines": 0,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "21 passed in 0.08s"
+  ]
+ },
+ {
+  "file": "test_state_page_corrections.py",
+  "runner": "pytest",
+  "exit": 0,
+  "seconds": 1.0,
+  "pytest_summary": "3 passed in 0.18s",
+  "script_PASS_lines": 0,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "3 passed in 0.18s"
+  ]
+ },
+ {
+  "file": "test_table_context_20261027.py",
+  "runner": "pytest",
+  "exit": 0,
+  "seconds": 0.7,
+  "pytest_summary": "5 passed in 0.05s",
+  "script_PASS_lines": 0,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "5 passed in 0.05s"
+  ]
+ },
+ {
+  "file": "test_table_context_batches_20261027.py",
+  "runner": "script",
+  "exit": 0,
+  "seconds": 16.8,
+  "pytest_summary": null,
+  "script_PASS_lines": 6,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "all passed"
+  ]
+ },
+ {
+  "file": "test_table_defects_20261028.py",
+  "runner": "pytest",
+  "exit": 0,
+  "seconds": 1.4,
+  "pytest_summary": "12 passed in 0.84s",
+  "script_PASS_lines": 0,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "12 passed in 0.84s"
+  ]
+ },
+ {
+  "file": "test_temperature_page_corrections.py",
+  "runner": "pytest",
+  "exit": 0,
+  "seconds": 1.5,
+  "pytest_summary": "6 passed in 0.15s",
+  "script_PASS_lines": 0,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "6 passed in 0.15s"
+  ]
+ },
+ {
+  "file": "test_terminal_mapping.py",
+  "runner": "pytest",
+  "exit": 0,
+  "seconds": 2.6,
+  "pytest_summary": "5 passed in 1.26s",
+  "script_PASS_lines": 0,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "5 passed in 1.26s"
+  ]
+ },
+ {
+  "file": "test_uncertainty_budget.py",
+  "runner": "script",
+  "exit": 0,
+  "seconds": 5.7,
+  "pytest_summary": null,
+  "script_PASS_lines": 18,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "0 failures"
+  ]
+ },
+ {
+  "file": "test_uncertainty_separation.py",
+  "runner": "pytest",
+  "exit": 0,
+  "seconds": 1.0,
+  "pytest_summary": "3 passed in 0.17s",
+  "script_PASS_lines": 0,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "3 passed in 0.17s"
+  ]
+ },
+ {
+  "file": "test_zenodo_writeback.py",
+  "runner": "script",
+  "exit": 0,
+  "seconds": 0.1,
+  "pytest_summary": null,
+  "script_PASS_lines": 20,
+  "script_FAIL_lines": 1,
+  "first_error_lines": [
+   "FAIL: 2 file(s) still hold a zenodo.PENDING- placeholder (binary files such as Parquet and .gz need the staged rebuild; text files need inspection)"
+  ],
+  "last_stdout": [
+   "0 failure(s)"
+  ]
+ }
+]

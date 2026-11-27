@@ -1,0 +1,46 @@
+{
+ "phases": [
+  "FCC_A1",
+  "LIQUID"
+ ],
+ "sgte_vv": {
+  "VV0000": 12.04861,
+  "VV0001": 1.29893,
+  "VV0002": 8.04772,
+  "VV0003": 3.42217
+ },
+ "start_vv": {
+  "VV0000": 18.04861,
+  "VV0001": 1.29893,
+  "VV0002": 4.04772,
+  "VV0003": 3.42217
+ },
+ "perturb": [
+  "VV0000=+6",
+  "VV0002=-4"
+ ],
+ "constructor_s": 0.22,
+ "symbols": [
+  "VV0000",
+  "VV0001",
+  "VV0002",
+  "VV0003"
+ ],
+ "zpf_datasets": 1,
+ "scipy_message": "Optimization terminated successfully.",
+ "scipy_nit": 10,
+ "scipy_success": true,
+ "optimizer_status": "finished",
+ "optimizer_s": 15.4,
+ "n_evals": 48,
+ "objective_x0": 65.43503393410583,
+ "objective_best": 62.61355061363703,
+ "best_vv": {
+  "VV0000": 15.773905120270042,
+  "VV0001": -2.267949447078072,
+  "VV0002": 4.652096139245362,
+  "VV0003": 4.32725161892932
+ },
+ "start_tdb": "PhaseForgePlus-CuNi-perturbed-start.tdb",
+ "tuned_tdb": "PhaseForgePlus-CuNi-perturbed-tuned.tdb"
+}

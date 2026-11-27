@@ -1,0 +1,369 @@
+{
+ "pdfs": [
+  {
+   "doc": "syn-AgCu-06He-v0",
+   "file": "vector.pdf",
+   "pages": 4,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 305816,
+   "size_regen": 305816
+  },
+  {
+   "doc": "syn-AgCu-06He-v0",
+   "file": "image_only.pdf",
+   "pages": 4,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 446583,
+   "size_regen": 446583
+  },
+  {
+   "doc": "syn-AgNi-04Din-v0",
+   "file": "vector.pdf",
+   "pages": 4,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 286005,
+   "size_regen": 286005
+  },
+  {
+   "doc": "syn-AgNi-04Din-v0",
+   "file": "image_only.pdf",
+   "pages": 4,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 439500,
+   "size_regen": 439496
+  },
+  {
+   "doc": "syn-AgSn-12Gie-v0",
+   "file": "vector.pdf",
+   "pages": 4,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 321089,
+   "size_regen": 321089
+  },
+  {
+   "doc": "syn-AgSn-12Gie-v0",
+   "file": "image_only.pdf",
+   "pages": 4,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 467098,
+   "size_regen": 467094
+  },
+  {
+   "doc": "syn-AlBi-06Kim-v0",
+   "file": "vector.pdf",
+   "pages": 5,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 317239,
+   "size_regen": 317239
+  },
+  {
+   "doc": "syn-AlBi-06Kim-v0",
+   "file": "image_only.pdf",
+   "pages": 5,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 516877,
+   "size_regen": 516877
+  },
+  {
+   "doc": "syn-AlCu-02Mie-v0",
+   "file": "vector.pdf",
+   "pages": 5,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 361969,
+   "size_regen": 361969
+  },
+  {
+   "doc": "syn-AlCu-02Mie-v0",
+   "file": "image_only.pdf",
+   "pages": 5,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 601678,
+   "size_regen": 601678
+  },
+  {
+   "doc": "syn-AlMg-12Tan-v0",
+   "file": "vector.pdf",
+   "pages": 4,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 355189,
+   "size_regen": 355189
+  },
+  {
+   "doc": "syn-AlMg-12Tan-v0",
+   "file": "image_only.pdf",
+   "pages": 4,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 498775,
+   "size_regen": 498771
+  },
+  {
+   "doc": "syn-AlNi-14Zhu-v0",
+   "file": "vector.pdf",
+   "pages": 5,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 370158,
+   "size_regen": 370158
+  },
+  {
+   "doc": "syn-AlNi-14Zhu-v0",
+   "file": "image_only.pdf",
+   "pages": 5,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 646863,
+   "size_regen": 646858
+  },
+  {
+   "doc": "syn-AlSi-12Tan-v0",
+   "file": "vector.pdf",
+   "pages": 4,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 293114,
+   "size_regen": 293114
+  },
+  {
+   "doc": "syn-AlSi-12Tan-v0",
+   "file": "image_only.pdf",
+   "pages": 4,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 455304,
+   "size_regen": 455300
+  },
+  {
+   "doc": "syn-AlZn-93Mey-LB-v0",
+   "file": "vector.pdf",
+   "pages": 4,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 297972,
+   "size_regen": 297972
+  },
+  {
+   "doc": "syn-AlZn-93Mey-LB-v0",
+   "file": "image_only.pdf",
+   "pages": 4,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 454841,
+   "size_regen": 454837
+  },
+  {
+   "doc": "syn-BiSn-08Li-v0",
+   "file": "vector.pdf",
+   "pages": 4,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 294031,
+   "size_regen": 294031
+  },
+  {
+   "doc": "syn-BiSn-08Li-v0",
+   "file": "image_only.pdf",
+   "pages": 4,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 454239,
+   "size_regen": 454239
+  },
+  {
+   "doc": "syn-CrFe-11Xio-v0",
+   "file": "vector.pdf",
+   "pages": 4,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 286670,
+   "size_regen": 286670
+  },
+  {
+   "doc": "syn-CrFe-11Xio-v0",
+   "file": "image_only.pdf",
+   "pages": 4,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 482758,
+   "size_regen": 482754
+  },
+  {
+   "doc": "syn-CuMg-16Hal-v0",
+   "file": "vector.pdf",
+   "pages": 5,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 315024,
+   "size_regen": 315024
+  },
+  {
+   "doc": "syn-CuMg-16Hal-v0",
+   "file": "image_only.pdf",
+   "pages": 5,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 576415,
+   "size_regen": 576415
+  },
+  {
+   "doc": "syn-CuNi-87Jan-v0",
+   "file": "vector.pdf",
+   "pages": 4,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 269070,
+   "size_regen": 269070
+  },
+  {
+   "doc": "syn-CuNi-87Jan-v0",
+   "file": "image_only.pdf",
+   "pages": 4,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 429130,
+   "size_regen": 429130
+  },
+  {
+   "doc": "syn-CuPb-86Hay-LB-v0",
+   "file": "vector.pdf",
+   "pages": 4,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 316624,
+   "size_regen": 316624
+  },
+  {
+   "doc": "syn-CuPb-86Hay-LB-v0",
+   "file": "image_only.pdf",
+   "pages": 4,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 484433,
+   "size_regen": 484429
+  },
+  {
+   "doc": "syn-CuZn-08Gie-v0",
+   "file": "vector.pdf",
+   "pages": 5,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 389889,
+   "size_regen": 389889
+  },
+  {
+   "doc": "syn-CuZn-08Gie-v0",
+   "file": "image_only.pdf",
+   "pages": 5,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 512299,
+   "size_regen": 512299
+  },
+  {
+   "doc": "syn-MgSi-12Sch-v0",
+   "file": "vector.pdf",
+   "pages": 4,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 302839,
+   "size_regen": 302839
+  },
+  {
+   "doc": "syn-MgSi-12Sch-v0",
+   "file": "image_only.pdf",
+   "pages": 4,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 447528,
+   "size_regen": 447524
+  },
+  {
+   "doc": "syn-MgSn-04Fri-v0",
+   "file": "vector.pdf",
+   "pages": 4,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 289614,
+   "size_regen": 289614
+  },
+  {
+   "doc": "syn-MgSn-04Fri-v0",
+   "file": "image_only.pdf",
+   "pages": 4,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 417610,
+   "size_regen": 417610
+  },
+  {
+   "doc": "syn-NiTi-04Tok-v0",
+   "file": "vector.pdf",
+   "pages": 5,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 363218,
+   "size_regen": 363218
+  },
+  {
+   "doc": "syn-NiTi-04Tok-v0",
+   "file": "image_only.pdf",
+   "pages": 5,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 626492,
+   "size_regen": 626492
+  },
+  {
+   "doc": "syn-PbSn-17Gie-v0",
+   "file": "vector.pdf",
+   "pages": 4,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 286921,
+   "size_regen": 286921
+  },
+  {
+   "doc": "syn-PbSn-17Gie-v0",
+   "file": "image_only.pdf",
+   "pages": 4,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 452221,
+   "size_regen": 452221
+  },
+  {
+   "doc": "syn-PbZn-98Jan-v0",
+   "file": "vector.pdf",
+   "pages": 4,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 281747,
+   "size_regen": 281747
+  },
+  {
+   "doc": "syn-PbZn-98Jan-v0",
+   "file": "image_only.pdf",
+   "pages": 4,
+   "same_text": true,
+   "max_pixel_diff_72dpi": 0,
+   "size_shipped": 477538,
+   "size_regen": 477534
+  }
+ ],
+ "png_syn-CuZn-08Gie-v0/clean/page-4.png": {
+  "shape_equal": true,
+  "n_pixels_differing": 11,
+  "max_abs_diff": 7
+ }
+}

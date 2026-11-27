@@ -1,0 +1,4304 @@
+{
+ "system": "Al-Zr",
+ "server": "sdk",
+ "note": "trimmed: lists cut to 5 items, strings to 240 chars; payloads identical between the SDK and fallback servers",
+ "responses": {
+  "Al-Zr/get_invariant_reactions(both)": {
+   "system": "AL-ZR",
+   "source": "both",
+   "contexts": {},
+   "fields": "summary",
+   "literature_total": 178,
+   "literature_offset": 0,
+   "literature_truncated": false,
+   "literature": [
+    {
+     "id": "ORC-YKCDIVAUMS",
+     "property": "INVARIANT_TEMPERATURE",
+     "value": 1933.0,
+     "unit": "K",
+     "T_K": 1933.0,
+     "phases": [
+      "L (LIQUID)",
+      "ZrAl2 (AL2ZR_C14)"
+     ],
+     "reaction": "congruent melting: L <-> ZrAl2",
+     "evidence_class": "experimental",
+     "accepted": true,
+     "espei_ready": false,
+     "espei_certified": false,
+     "calphad_check": "not_available",
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": "10.1007/s12385-001-0072-4",
+     "page": 2,
+     "quote": null,
+     "chemical_system": "AL-ZR",
+     "paper_id": "doi:10.1007/s12385-001-0072-4",
+     "fold_lso": 1,
+     "fold_lpo": 1,
+     "review_state": "extracted",
+     "state_fully_specified": true,
+     "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-YKCDIVAUMS%20%28AL-ZR%29&record_id=ORC-YKCDIVAUMS&system=AL-ZR&source=doi%3A10.1007%2Fs12385-001-0072-4%2C%20p.%202&value_shown... [249 chars]",
+     "uncertainty_budget": {
+      "quantities": {
+       "composition": {
+        "unit": "mole fraction",
+        "sigma_printed": null,
+        "sigma_reading": 0.0005,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": 0.011,
+         "class": "unknown",
+         "basis": "calibrated"
+        },
+        "sigma_effective": 0.011
+       },
+       "value": {
+        "unit": "K",
+        "sigma_printed": null,
+        "sigma_reading": 0.05,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": 11.0,
+         "class": "unknown",
+         "basis": "calibrated"
+        },
+        "sigma_effective": 11.0
+       }
+      },
+      "sigma_rule": "max(sqrt(max(printed, reading, method)^2 + composition^2 + conversion^2), scatter)",
+      "calibration": "orchid-uncertainty-calibration 2026-10-24 (audit round 2) sha256 6a2b5a92b0ec"
+     },
+     "table": "table 1, row 27"
+    },
+    {
+     "id": "ORC-IMDZ6IG2PI",
+     "property": "INVARIANT_TEMPERATURE",
+     "value": 1931.0,
+     "unit": "K",
+     "T_K": 1931.0,
+     "phases": [
+      "L (LIQUID)",
+      "ZrAl2 (AL2ZR_C14)"
+     ],
+     "reaction": "congruent melting: L <-> ZrAl2",
+     "evidence_class": "model",
+     "accepted": true,
+     "espei_ready": false,
+     "espei_certified": false,
+     "calphad_check": "not_available",
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": "10.1007/s12385-001-0072-4",
+     "page": 2,
+     "quote": null,
+     "chemical_system": "AL-ZR",
+     "paper_id": "doi:10.1007/s12385-001-0072-4",
+     "fold_lso": 1,
+     "fold_lpo": 1,
+     "review_state": "extracted",
+     "state_fully_specified": true,
+     "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-IMDZ6IG2PI%20%28AL-ZR%29&record_id=ORC-IMDZ6IG2PI&system=AL-ZR&source=doi%3A10.1007%2Fs12385-001-0072-4%2C%20p.%202&value_shown... [249 chars]",
+     "uncertainty_budget": {
+      "quantities": {
+       "composition": {
+        "unit": "mole fraction",
+        "sigma_printed": null,
+        "sigma_reading": 0.0005,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": 0.005,
+         "class": "model_calculated",
+         "basis": "calibrated"
+        },
+        "sigma_effective": 0.005
+       },
+       "value": {
+        "unit": "K",
+        "sigma_printed": null,
+        "sigma_reading": 0.05,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": 4.0,
+         "class": "model_calculated",
+         "basis": "calibrated"
+        },
+        "sigma_effective": 4.0
+       }
+      },
+      "sigma_rule": "max(sqrt(max(printed, reading, method)^2 + composition^2 + conversion^2), scatter)",
+      "calibration": "orchid-uncertainty-calibration 2026-10-24 (audit round 2) sha256 6a2b5a92b0ec"
+     },
+     "table": "table 1, row 28"
+    },
+    {
+     "id": "ORC-QEQ3G6VZUL",
+     "property": "INVARIANT_TEMPERATURE",
+     "value": 1907.0,
+     "unit": "K",
+     "T_K": 1907.0,
+     "phases": [
+      "Al2Zr (AL2ZR_C14)",
+      "Liquid (LIQUID)"
+     ],
+     "reaction": "congruent melting: Al2Zr -> Liquid",
+     "evidence_class": "model",
+     "accepted": true,
+     "espei_ready": false,
+     "espei_certified": false,
+     "calphad_check": "not_available",
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": null,
+     "page": 131,
+     "quote": null,
+     "chemical_system": "AL-ZR",
+     "paper_id": "sha256:85fd53a1a176b694",
+     "fold_lso": 1,
+     "fold_lpo": 2,
+     "review_state": "extracted",
+     "state_fully_specified": true,
+     "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-QEQ3G6VZUL%20%28AL-ZR%29&record_id=ORC-QEQ3G6VZUL&system=AL-ZR&source=p.%20131&value_shown=1907%20K",
+     "corrected_by": [
+      "assessed_database_values"
+     ],
+     "uncertainty_budget": {
+      "quantities": {
+       "composition": {
+        "unit": "mole fraction",
+        "sigma_printed": null,
+        "sigma_reading": 0.0005,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": 0.005,
+         "class": "model_calculated",
+         "basis": "calibrated"
+        },
+        "sigma_effective": 0.005
+       },
+       "value": {
+        "unit": "K",
+        "sigma_printed": null,
+        "sigma_reading": 0.05,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": 4.0,
+         "class": "model_calculated",
+         "basis": "calibrated"
+        },
+        "sigma_effective": 4.0
+       }
+      },
+      "sigma_rule": "max(sqrt(max(printed, reading, method)^2 + composition^2 + conversion^2), scatter)",
+      "calibration": "orchid-uncertainty-calibration 2026-10-24 (audit round 2) sha256 6a2b5a92b0ec"
+     },
+     "table": "table I, row 4"
+    },
+    {
+     "id": "ORC-U2T6SSAFFC",
+     "property": "INVARIANT_TEMPERATURE",
+     "value": 1893.0,
+     "unit": "K",
+     "T_K": 1893.0,
+     "phases": [
+      "Al3Zr (AL3ZR_D023)",
+      "Liquid (LIQUID)"
+     ],
+     "reaction": "congruent melting: Al3Zr -> Liquid",
+     "evidence_class": "model",
+     "accepted": true,
+     "espei_ready": false,
+     "espei_certified": false,
+     "calphad_check": "not_available",
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": null,
+     "page": 131,
+     "quote": null,
+     "chemical_system": "AL-ZR",
+     "paper_id": "sha256:85fd53a1a176b694",
+     "fold_lso": 1,
+     "fold_lpo": 2,
+     "review_state": "extracted",
+     "state_fully_specified": true,
+     "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-U2T6SSAFFC%20%28AL-ZR%29&record_id=ORC-U2T6SSAFFC&system=AL-ZR&source=p.%20131&value_shown=1893%20K",
+     "corrected_by": [
+      "assessed_database_values"
+     ],
+     "uncertainty_budget": {
+      "quantities": {
+       "composition": {
+        "unit": "mole fraction",
+        "sigma_printed": null,
+        "sigma_reading": 0.005,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": 0.005,
+         "class": "model_calculated",
+         "basis": "calibrated"
+        },
+        "sigma_effective": 0.005
+       },
+       "value": {
+        "unit": "K",
+        "sigma_printed": null,
+        "sigma_reading": 0.05,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": 4.0,
+         "class": "model_calculated",
+         "basis": "calibrated"
+        },
+        "sigma_effective": 4.0
+       }
+      },
+      "sigma_rule": "max(sqrt(max(printed, reading, method)^2 + composition^2 + conversion^2), scatter)",
+      "calibration": "orchid-uncertainty-calibration 2026-10-24 (audit round 2) sha256 6a2b5a92b0ec"
+     },
+     "table": "table I, row 2"
+    },
+    {
+     "id": "ORC-A5DFL5VD4Q",
+     "property": "INVARIANT_TEMPERATURE",
+     "value": 1888.0,
+     "unit": "K",
+     "T_K": 1888.0,
+     "phases": [
+      "Liquid (LIQUID)",
+      "Al3Zr (AL3ZR_D023)",
+      "Al2Zr (AL2ZR_C14)"
+     ],
+     "reaction": "eutectic: Liquid -> Al3Zr + Al2Zr",
+     "evidence_class": "model",
+     "accepted": true,
+     "espei_ready": false,
+     "espei_certified": false,
+     "calphad_check": "not_available",
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": null,
+     "page": 131,
+     "quote": null,
+     "chemical_system": "AL-ZR",
+     "paper_id": "sha256:85fd53a1a176b694",
+     "fold_lso": 1,
+     "fold_lpo": 2,
+     "review_state": "extracted",
+     "state_fully_specified": true,
+     "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-A5DFL5VD4Q%20%28AL-ZR%29&record_id=ORC-A5DFL5VD4Q&system=AL-ZR&source=p.%20131&value_shown=1888%20K",
+     "corrected_by": [
+      "assessed_database_values"
+     ],
+     "uncertainty_budget": {
+      "quantities": {
+       "composition": {
+        "unit": "mole fraction",
+        "sigma_printed": null,
+        "sigma_reading": 0.0005,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": 0.005,
+         "class": "model_calculated",
+         "basis": "calibrated"
+        },
+        "sigma_effective": 0.005
+       },
+       "value": {
+        "unit": "K",
+        "sigma_printed": null,
+        "sigma_reading": 0.05,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": 4.0,
+         "class": "model_calculated",
+         "basis": "calibrated"
+        },
+        "sigma_effective": 4.0
+       }
+      },
+      "sigma_rule": "max(sqrt(max(printed, reading, method)^2 + composition^2 + conversion^2), scatter)",
+      "calibration": "orchid-uncertainty-calibration 2026-10-24 (audit round 2) sha256 6a2b5a92b0ec"
+     },
+     "table": "table I, row 3"
+    },
+    "... 173 more items trimmed (of 178)"
+   ],
+   "calculated": [
+    {
+     "tdb": "AlZr-01Wan.tdb",
+     "tdb_sha256": "4b09f4b519f6d63968ee503b8e6207577e1d003895d9a321f3f727f6341ee565",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1007/s12385-001-0072-4",
+     "engine": "pycalphad 0.11.2",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-ZR/AlZr-01Wan.json",
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlZr-01Wan.json",
+     "evidence_class": "model",
+     "invariants": [
+      {
+       "T": 1865.52,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.40207
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-LMG6UYNXUG",
+         "evidence_class": "model",
+         "T_K": 1865.0,
+         "dT_K": -0.52
+        },
+        {
+         "id": "ORC-UIXHQNGXA6",
+         "evidence_class": "experimental",
+         "T_K": 1868.0,
+         "dT_K": 2.48
+        },
+        {
+         "id": "ORC-37JGCFF2CE",
+         "evidence_class": "experimental",
+         "T_K": 1863.0,
+         "dT_K": -2.52
+        }
+       ]
+      },
+      {
+       "T": 1856.21,
+       "points": [
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.25387
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-GSXXDU3JXL",
+         "evidence_class": "model",
+         "T_K": 1856.0,
+         "dT_K": -0.21
+        },
+        {
+         "id": "ORC-XTJRZMXXWG",
+         "evidence_class": "model",
+         "T_K": 1855.0,
+         "dT_K": -1.21
+        },
+        {
+         "id": "ORC-EMNH7RVG5J.939560",
+         "evidence_class": "model",
+         "T_K": 1858.0,
+         "dT_K": 1.79
+        }
+       ]
+      },
+      {
+       "T": 1752.49,
+       "points": [
+        {
+         "phase": "AL4ZR5",
+         "x": 0.55556
+        },
+        {
+         "phase": "AL2ZR3",
+         "x": 0.6
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.62206
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-X3322BTOHO",
+         "evidence_class": "experimental",
+         "T_K": 1753.0,
+         "dT_K": 0.51
+        },
+        {
+         "id": "ORC-AXEHFC4D6Y",
+         "evidence_class": "experimental",
+         "T_K": 1753.0,
+         "dT_K": 0.51
+        },
+        {
+         "id": "ORC-XJYLNXZLDV",
+         "evidence_class": "experimental",
+         "T_K": 1753.0,
+         "dT_K": 0.51
+        }
+       ]
+      },
+      {
+       "T": 1750.07,
+       "points": [
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.48989
+        },
+        {
+         "phase": "AL4ZR5",
+         "x": 0.55556
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-JIPIZ43BFM",
+         "evidence_class": "model",
+         "T_K": 1750.0,
+         "dT_K": -0.07
+        },
+        {
+         "id": "ORC-3IZUKKO6TA",
+         "evidence_class": "model",
+         "T_K": 1752.0,
+         "dT_K": 1.93
+        },
+        {
+         "id": "ORC-ZWQFUDRXOF",
+         "evidence_class": "experimental",
+         "T_K": 1753.0,
+         "dT_K": 2.93
+        }
+       ]
+      },
+      {
+       "T": 1676.01,
+       "points": [
+        {
+         "phase": "AL2ZR3",
+         "x": 0.6
+        },
+        {
+         "phase": "AL3ZR5_D8M",
+         "x": 0.625
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.67586
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-Y6E2YQEWVK",
+         "evidence_class": "model",
+         "T_K": 1676.0,
+         "dT_K": -0.01
+        },
+        {
+         "id": "ORC-DTM47LULCS",
+         "evidence_class": "model",
+         "T_K": 1674.0,
+         "dT_K": -2.01
+        },
+        {
+         "id": "ORC-VRKK7U2JT2",
+         "evidence_class": "experimental",
+         "T_K": 1673.0,
+         "dT_K": -3.01
+        }
+       ]
+      },
+      "... 9 more items trimmed (of 14)"
+     ],
+     "n_invariants_raw": 27
+    },
+    {
+     "tdb": "AlZr-10Hir.tdb",
+     "tdb_sha256": "4806bb3f89606d7f3fa574035392e63b783efe226d8bbafc5f1aa4668d5f802d",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1515/HTMP.2010.29.5–6.347",
+     "engine": "pycalphad 0.11.2",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-ZR/AlZr-10Hir.json",
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlZr-10Hir.json",
+     "evidence_class": "model",
+     "invariants": [
+      {
+       "T": 1852.86,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.42066
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-EMNH7RVG5J.540bf0",
+         "evidence_class": "model",
+         "T_K": 1858.0,
+         "dT_K": 5.14
+        },
+        {
+         "id": "ORC-NZOTQETCAF",
+         "evidence_class": "experimental",
+         "T_K": 1846.0,
+         "dT_K": -6.86
+        },
+        {
+         "id": "ORC-KFFVDFY4EC",
+         "evidence_class": "model",
+         "T_K": 1845.0,
+         "dT_K": -7.86
+        }
+       ]
+      },
+      {
+       "T": 1818.87,
+       "points": [
+        {
+         "phase": "LIQUID",
+         "x": 0.22104
+        },
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-O5JPA76HIL",
+         "evidence_class": "model",
+         "T_K": 1847.0,
+         "dT_K": 28.13
+        },
+        {
+         "id": "ORC-42UH3XAITE",
+         "evidence_class": "model",
+         "T_K": 1847.0,
+         "dT_K": 28.13
+        },
+        {
+         "id": "ORC-42ZYVM6HZY",
+         "evidence_class": "experimental",
+         "T_K": 1852.0,
+         "dT_K": 33.13
+        }
+       ]
+      },
+      {
+       "T": 1759.91,
+       "points": [
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.49845
+        },
+        {
+         "phase": "AL4ZR5",
+         "x": 0.55556
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-I3QXNDYSHR",
+         "evidence_class": "experimental",
+         "T_K": 1758.0,
+         "dT_K": -1.91
+        },
+        {
+         "id": "ORC-ZT2I3NGQD5",
+         "evidence_class": "experimental",
+         "T_K": 1758.0,
+         "dT_K": -1.91
+        },
+        {
+         "id": "ORC-WU2EWE4DHR",
+         "evidence_class": "experimental",
+         "T_K": 1758.0,
+         "dT_K": -1.91
+        }
+       ]
+      },
+      {
+       "T": 1751.89,
+       "points": [
+        {
+         "phase": "AL4ZR5",
+         "x": 0.55556
+        },
+        {
+         "phase": "AL2ZR3",
+         "x": 0.6
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.61937
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-3SVMCN6XBF",
+         "evidence_class": "model",
+         "T_K": 1751.0,
+         "dT_K": -0.89
+        },
+        {
+         "id": "ORC-X3322BTOHO",
+         "evidence_class": "experimental",
+         "T_K": 1753.0,
+         "dT_K": 1.11
+        },
+        {
+         "id": "ORC-AXEHFC4D6Y",
+         "evidence_class": "experimental",
+         "T_K": 1753.0,
+         "dT_K": 1.11
+        }
+       ]
+      },
+      {
+       "T": 1665.45,
+       "points": [
+        {
+         "phase": "AL2ZR3",
+         "x": 0.6
+        },
+        {
+         "phase": "AL3ZR5_D8M",
+         "x": 0.625
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.69734
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-XIS6ILUAET",
+         "evidence_class": "model",
+         "T_K": 1667.0,
+         "dT_K": 1.55
+        },
+        {
+         "id": "ORC-WDYQJRXXU3",
+         "evidence_class": "experimental",
+         "T_K": 1668.0,
+         "dT_K": 2.55
+        },
+        {
+         "id": "ORC-VRKK7U2JT2",
+         "evidence_class": "experimental",
+         "T_K": 1673.0,
+         "dT_K": 7.55
+        }
+       ]
+      },
+      "... 11 more items trimmed (of 16)"
+     ],
+     "n_invariants_raw": 28
+    },
+    {
+     "tdb": "AlZr-15Fis.tdb",
+     "tdb_sha256": "24ba1ed7e58494bd89232a0f0a4d07afa20cadf492303da7d0763a8b5a559f79",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1007/s11669-015-0398-y",
+     "engine": "pycalphad 0.11.2",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-ZR/AlZr-15Fis.json",
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlZr-15Fis.json",
+     "evidence_class": "model",
+     "invariants": [
+      {
+       "T": 1858.18,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.40721
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-EMNH7RVG5J.540bf0",
+         "evidence_class": "model",
+         "T_K": 1858.0,
+         "dT_K": -0.18
+        },
+        {
+         "id": "ORC-37JGCFF2CE",
+         "evidence_class": "experimental",
+         "T_K": 1863.0,
+         "dT_K": 4.82
+        },
+        {
+         "id": "ORC-UQCKMNKIOJ",
+         "evidence_class": "experimental",
+         "T_K": 1863.0,
+         "dT_K": 4.82
+        }
+       ]
+      },
+      {
+       "T": 1857.82,
+       "points": [
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.25587
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-EMNH7RVG5J.939560",
+         "evidence_class": "model",
+         "T_K": 1858.0,
+         "dT_K": 0.18
+        },
+        {
+         "id": "ORC-GSXXDU3JXL",
+         "evidence_class": "model",
+         "T_K": 1856.0,
+         "dT_K": -1.82
+        },
+        {
+         "id": "ORC-XTJRZMXXWG",
+         "evidence_class": "model",
+         "T_K": 1855.0,
+         "dT_K": -2.82
+        }
+       ]
+      },
+      {
+       "T": 1752.54,
+       "points": [
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.49599
+        },
+        {
+         "phase": "AL4ZR5",
+         "x": 0.55556
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-ZWQFUDRXOF",
+         "evidence_class": "experimental",
+         "T_K": 1753.0,
+         "dT_K": 0.46
+        },
+        {
+         "id": "ORC-3IZUKKO6TA",
+         "evidence_class": "model",
+         "T_K": 1752.0,
+         "dT_K": -0.54
+        },
+        {
+         "id": "ORC-JIPIZ43BFM",
+         "evidence_class": "model",
+         "T_K": 1750.0,
+         "dT_K": -2.54
+        }
+       ]
+      },
+      {
+       "T": 1724.08,
+       "points": [
+        {
+         "phase": "AL4ZR5",
+         "x": 0.55556
+        },
+        {
+         "phase": "AL2ZR3",
+         "x": 0.6
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.62871
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-H4ZYFP2TOD",
+         "evidence_class": "model",
+         "T_K": 1724.0,
+         "dT_K": -0.08
+        },
+        {
+         "id": "ORC-I3FKQCETAZ",
+         "evidence_class": "model",
+         "T_K": 1701.8,
+         "dT_K": -22.28
+        },
+        {
+         "id": "ORC-LIWUNXQHEV",
+         "evidence_class": "model",
+         "T_K": 1748.0,
+         "dT_K": 23.92
+        }
+       ]
+      },
+      {
+       "T": 1653.64,
+       "points": [
+        {
+         "phase": "AL2ZR3",
+         "x": 0.6
+        },
+        {
+         "phase": "AL3ZR5_D8M",
+         "x": 0.625
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.67676
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-27YD7W767B",
+         "evidence_class": "model",
+         "T_K": 1654.0,
+         "dT_K": 0.36
+        },
+        {
+         "id": "ORC-3JYTC3LECQ",
+         "evidence_class": "model",
+         "T_K": 1655.8,
+         "dT_K": 2.16
+        },
+        {
+         "id": "ORC-XIS6ILUAET",
+         "evidence_class": "model",
+         "T_K": 1667.0,
+         "dT_K": 13.36
+        }
+       ]
+      },
+      "... 11 more items trimmed (of 16)"
+     ],
+     "n_invariants_raw": 25
+    },
+    {
+     "tdb": "AlZr-18Khv.tdb",
+     "tdb_sha256": "c638fa151494d0c0b87160913084f1a9b8dd9b85f1a933eab78e37d639999033",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/j.jallcom.2018.02.023",
+     "engine": "pycalphad 0.11.2",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-ZR/AlZr-18Khv.json",
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlZr-18Khv.json",
+     "evidence_class": "model",
+     "invariants": [
+      {
+       "T": 1858.18,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.40721
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-EMNH7RVG5J.540bf0",
+         "evidence_class": "model",
+         "T_K": 1858.0,
+         "dT_K": -0.18
+        },
+        {
+         "id": "ORC-37JGCFF2CE",
+         "evidence_class": "experimental",
+         "T_K": 1863.0,
+         "dT_K": 4.82
+        },
+        {
+         "id": "ORC-UQCKMNKIOJ",
+         "evidence_class": "experimental",
+         "T_K": 1863.0,
+         "dT_K": 4.82
+        }
+       ]
+      },
+      {
+       "T": 1857.82,
+       "points": [
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.25583
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-EMNH7RVG5J.939560",
+         "evidence_class": "model",
+         "T_K": 1858.0,
+         "dT_K": 0.18
+        },
+        {
+         "id": "ORC-GSXXDU3JXL",
+         "evidence_class": "model",
+         "T_K": 1856.0,
+         "dT_K": -1.82
+        },
+        {
+         "id": "ORC-XTJRZMXXWG",
+         "evidence_class": "model",
+         "T_K": 1855.0,
+         "dT_K": -2.82
+        }
+       ]
+      },
+      {
+       "T": 1752.54,
+       "points": [
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.49599
+        },
+        {
+         "phase": "AL4ZR5",
+         "x": 0.55556
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-ZWQFUDRXOF",
+         "evidence_class": "experimental",
+         "T_K": 1753.0,
+         "dT_K": 0.46
+        },
+        {
+         "id": "ORC-3IZUKKO6TA",
+         "evidence_class": "model",
+         "T_K": 1752.0,
+         "dT_K": -0.54
+        },
+        {
+         "id": "ORC-JIPIZ43BFM",
+         "evidence_class": "model",
+         "T_K": 1750.0,
+         "dT_K": -2.54
+        }
+       ]
+      },
+      {
+       "T": 1724.08,
+       "points": [
+        {
+         "phase": "AL4ZR5",
+         "x": 0.55556
+        },
+        {
+         "phase": "AL2ZR3",
+         "x": 0.6
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.62871
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-H4ZYFP2TOD",
+         "evidence_class": "model",
+         "T_K": 1724.0,
+         "dT_K": -0.08
+        },
+        {
+         "id": "ORC-I3FKQCETAZ",
+         "evidence_class": "model",
+         "T_K": 1701.8,
+         "dT_K": -22.28
+        },
+        {
+         "id": "ORC-LIWUNXQHEV",
+         "evidence_class": "model",
+         "T_K": 1748.0,
+         "dT_K": 23.92
+        }
+       ]
+      },
+      {
+       "T": 1653.64,
+       "points": [
+        {
+         "phase": "AL2ZR3",
+         "x": 0.6
+        },
+        {
+         "phase": "AL3ZR5_D8M",
+         "x": 0.625
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.67676
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-27YD7W767B",
+         "evidence_class": "model",
+         "T_K": 1654.0,
+         "dT_K": 0.36
+        },
+        {
+         "id": "ORC-3JYTC3LECQ",
+         "evidence_class": "model",
+         "T_K": 1655.8,
+         "dT_K": 2.16
+        },
+        {
+         "id": "ORC-XIS6ILUAET",
+         "evidence_class": "model",
+         "T_K": 1667.0,
+         "dT_K": 13.36
+        }
+       ]
+      },
+      "... 11 more items trimmed (of 16)"
+     ],
+     "n_invariants_raw": 25
+    },
+    {
+     "tdb": "AlZr-18Tam.tdb",
+     "tdb_sha256": "8010f4209dbbc4750a02f444380120e87924b56ec12a70bc5739071655a86a5a",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1007/s10973-017-6635-3",
+     "engine": "pycalphad 0.11.2",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-ZR/AlZr-18Tam.json",
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlZr-18Tam.json",
+     "evidence_class": "model",
+     "invariants": [
+      {
+       "T": 1846.97,
+       "points": [
+        {
+         "phase": "LIQUID",
+         "x": 0.24791
+        },
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-O5JPA76HIL",
+         "evidence_class": "model",
+         "T_K": 1847.0,
+         "dT_K": 0.03
+        },
+        {
+         "id": "ORC-42UH3XAITE",
+         "evidence_class": "model",
+         "T_K": 1847.0,
+         "dT_K": 0.03
+        },
+        {
+         "id": "ORC-42ZYVM6HZY",
+         "evidence_class": "experimental",
+         "T_K": 1852.0,
+         "dT_K": 5.03
+        }
+       ]
+      },
+      {
+       "T": 1844.42,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.42106
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-KFFVDFY4EC",
+         "evidence_class": "model",
+         "T_K": 1845.0,
+         "dT_K": 0.58
+        },
+        {
+         "id": "ORC-ZRY4MKU2VM",
+         "evidence_class": "experimental",
+         "T_K": 1845.0,
+         "dT_K": 0.58
+        },
+        {
+         "id": "ORC-XFPDWKB27S",
+         "evidence_class": "experimental",
+         "T_K": 1845.0,
+         "dT_K": 0.58
+        }
+       ]
+      },
+      {
+       "T": 1771.14,
+       "points": [
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.49353
+        },
+        {
+         "phase": "AL4ZR5",
+         "x": 0.55556
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-C7D2HNSCFG",
+         "evidence_class": "model",
+         "T_K": 1771.0,
+         "dT_K": -0.14
+        },
+        {
+         "id": "ORC-RJ52TTIGL4",
+         "evidence_class": "model",
+         "T_K": 1772.0,
+         "dT_K": 0.86
+        },
+        {
+         "id": "ORC-25KZQ6IXQN",
+         "evidence_class": "model",
+         "T_K": 1765.3,
+         "dT_K": -5.84
+        }
+       ]
+      },
+      {
+       "T": 1750.77,
+       "points": [
+        {
+         "phase": "AL4ZR5",
+         "x": 0.55556
+        },
+        {
+         "phase": "AL2ZR3",
+         "x": 0.6
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.62798
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-3SVMCN6XBF",
+         "evidence_class": "model",
+         "T_K": 1751.0,
+         "dT_K": 0.23
+        },
+        {
+         "id": "ORC-X3322BTOHO",
+         "evidence_class": "experimental",
+         "T_K": 1753.0,
+         "dT_K": 2.23
+        },
+        {
+         "id": "ORC-AXEHFC4D6Y",
+         "evidence_class": "experimental",
+         "T_K": 1753.0,
+         "dT_K": 2.23
+        }
+       ]
+      },
+      {
+       "T": 1674.54,
+       "points": [
+        {
+         "phase": "AL2ZR3",
+         "x": 0.6
+        },
+        {
+         "phase": "AL3ZR5_D8M",
+         "x": 0.625
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.6854
+        }
+       ],
+       "literature_matches": [
+        {
+         "id": "ORC-DTM47LULCS",
+         "evidence_class": "model",
+         "T_K": 1674.0,
+         "dT_K": -0.54
+        },
+        {
+         "id": "ORC-Y6E2YQEWVK",
+         "evidence_class": "model",
+         "T_K": 1676.0,
+         "dT_K": 1.46
+        },
+        {
+         "id": "ORC-VRKK7U2JT2",
+         "evidence_class": "experimental",
+         "T_K": 1673.0,
+         "dT_K": -1.54
+        }
+       ]
+      },
+      "... 9 more items trimmed (of 14)"
+     ],
+     "n_invariants_raw": 28
+    },
+    "... 3 more items trimmed (of 8)"
+   ],
+   "matching_rule": "literature_matches: literature records whose mapped CALPHAD model phases equal the calculated invariant's phase set exactly (unmapped phases never match); dT = literature - calculated.",
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_source... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_c... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts an... [247 chars]",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  },
+  "Al-Zr/get_phase_diagram": {
+   "system": "AL-ZR",
+   "fields": "summary",
+   "n_assessments": 8,
+   "assessments": [
+    {
+     "evidence_class": "model",
+     "tdb": "AlZr-01Wan.tdb",
+     "tdb_sha256": "4b09f4b519f6d63968ee503b8e6207577e1d003895d9a321f3f727f6341ee565",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlZr-01Wan.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1007/s12385-001-0072-4",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "ZR"
+     ],
+     "x_component": "ZR",
+     "T_range_K": [
+      300,
+      4000
+     ],
+     "phases": [
+      "AL2ZR3",
+      "AL2ZR_C14",
+      "AL3ZR2",
+      "AL3ZR4",
+      "AL3ZR5_D8M",
+      "... 9 more items trimmed (of 14)"
+     ],
+     "invariants": [
+      {
+       "T": 1865.52,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.40207
+        }
+       ]
+      },
+      {
+       "T": 1865.52,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.40213
+        }
+       ]
+      },
+      {
+       "T": 1865.52,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.40184
+        }
+       ]
+      },
+      {
+       "T": 1856.21,
+       "points": [
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.25387
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      {
+       "T": 1856.21,
+       "points": [
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.25416
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      "... 22 more items trimmed (of 27)"
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlZr-01Wan.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-ZR/AlZr-01Wan.json"
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlZr-10Hir.tdb",
+     "tdb_sha256": "4806bb3f89606d7f3fa574035392e63b783efe226d8bbafc5f1aa4668d5f802d",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlZr-10Hir.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1515/HTMP.2010.29.5–6.347",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "ZR"
+     ],
+     "x_component": "ZR",
+     "T_range_K": [
+      300,
+      4000
+     ],
+     "phases": [
+      "AL2ZR3",
+      "AL2ZR_C14",
+      "AL3ZR2",
+      "AL3ZR4",
+      "AL3ZR5_D8M",
+      "... 9 more items trimmed (of 14)"
+     ],
+     "invariants": [
+      {
+       "T": 1852.86,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.42066
+        }
+       ]
+      },
+      {
+       "T": 1852.86,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.42067
+        }
+       ]
+      },
+      {
+       "T": 1852.86,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.42046
+        }
+       ]
+      },
+      {
+       "T": 1818.87,
+       "points": [
+        {
+         "phase": "LIQUID",
+         "x": 0.22104
+        },
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      {
+       "T": 1818.87,
+       "points": [
+        {
+         "phase": "LIQUID",
+         "x": 0.22114
+        },
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      "... 23 more items trimmed (of 28)"
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlZr-10Hir.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-ZR/AlZr-10Hir.json"
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlZr-15Fis.tdb",
+     "tdb_sha256": "24ba1ed7e58494bd89232a0f0a4d07afa20cadf492303da7d0763a8b5a559f79",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlZr-15Fis.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1007/s11669-015-0398-y",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "ZR"
+     ],
+     "x_component": "ZR",
+     "T_range_K": [
+      300,
+      4000
+     ],
+     "phases": [
+      "AL2ZR3",
+      "AL2ZR_C14",
+      "AL3ZR2",
+      "AL3ZR4",
+      "AL3ZR5_D8M",
+      "... 9 more items trimmed (of 14)"
+     ],
+     "invariants": [
+      {
+       "T": 1858.18,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.40721
+        }
+       ]
+      },
+      {
+       "T": 1858.18,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.40696
+        }
+       ]
+      },
+      {
+       "T": 1857.82,
+       "points": [
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.25587
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      {
+       "T": 1857.81,
+       "points": [
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.25551
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      {
+       "T": 1752.54,
+       "points": [
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.49599
+        },
+        {
+         "phase": "AL4ZR5",
+         "x": 0.55556
+        }
+       ]
+      },
+      "... 20 more items trimmed (of 25)"
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlZr-15Fis.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-ZR/AlZr-15Fis.json"
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlZr-18Khv.tdb",
+     "tdb_sha256": "c638fa151494d0c0b87160913084f1a9b8dd9b85f1a933eab78e37d639999033",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlZr-18Khv.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/j.jallcom.2018.02.023",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "ZR"
+     ],
+     "x_component": "ZR",
+     "T_range_K": [
+      300,
+      4000
+     ],
+     "phases": [
+      "AL2ZR3",
+      "AL2ZR_C14",
+      "AL3ZR2",
+      "AL3ZR4",
+      "AL3ZR5_D8M",
+      "... 9 more items trimmed (of 14)"
+     ],
+     "invariants": [
+      {
+       "T": 1858.18,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.40721
+        }
+       ]
+      },
+      {
+       "T": 1858.18,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.40696
+        }
+       ]
+      },
+      {
+       "T": 1857.82,
+       "points": [
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.25583
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      {
+       "T": 1857.81,
+       "points": [
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.25551
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      {
+       "T": 1752.54,
+       "points": [
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.49599
+        },
+        {
+         "phase": "AL4ZR5",
+         "x": 0.55556
+        }
+       ]
+      },
+      "... 20 more items trimmed (of 25)"
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlZr-18Khv.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-ZR/AlZr-18Khv.json"
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlZr-18Tam.tdb",
+     "tdb_sha256": "8010f4209dbbc4750a02f444380120e87924b56ec12a70bc5739071655a86a5a",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlZr-18Tam.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1007/s10973-017-6635-3",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "ZR"
+     ],
+     "x_component": "ZR",
+     "T_range_K": [
+      300,
+      4000
+     ],
+     "phases": [
+      "AL2ZR3",
+      "AL2ZR_C14",
+      "AL3ZR2",
+      "AL3ZR4",
+      "AL3ZR5_D8M",
+      "... 9 more items trimmed (of 14)"
+     ],
+     "invariants": [
+      {
+       "T": 1846.97,
+       "points": [
+        {
+         "phase": "LIQUID",
+         "x": 0.24791
+        },
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      {
+       "T": 1846.97,
+       "points": [
+        {
+         "phase": "LIQUID",
+         "x": 0.24808
+        },
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      {
+       "T": 1844.42,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.42106
+        }
+       ]
+      },
+      {
+       "T": 1844.42,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.42088
+        }
+       ]
+      },
+      {
+       "T": 1771.14,
+       "points": [
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.49353
+        },
+        {
+         "phase": "AL4ZR5",
+         "x": 0.55556
+        }
+       ]
+      },
+      "... 23 more items trimmed (of 28)"
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlZr-18Tam.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-ZR/AlZr-18Tam.json"
+    },
+    "... 3 more items trimmed (of 8)"
+   ],
+   "note": "Each assessment is a separate CALPHAD model; results are never averaged across assessments.",
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_source... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_c... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts an... [247 chars]",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  },
+  "Al-Zr/get_phase_diagram(x_Zr=0.25,T=1000)": {
+   "system": "AL-ZR",
+   "fields": "summary",
+   "n_assessments": 8,
+   "assessments": [
+    {
+     "evidence_class": "model",
+     "tdb": "AlZr-01Wan.tdb",
+     "tdb_sha256": "4b09f4b519f6d63968ee503b8e6207577e1d003895d9a321f3f727f6341ee565",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlZr-01Wan.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1007/s12385-001-0072-4",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "ZR"
+     ],
+     "x_component": "ZR",
+     "T_range_K": [
+      300,
+      4000
+     ],
+     "phases": [
+      "AL2ZR3",
+      "AL2ZR_C14",
+      "AL3ZR2",
+      "AL3ZR4",
+      "AL3ZR5_D8M",
+      "... 9 more items trimmed (of 14)"
+     ],
+     "invariants": [
+      {
+       "T": 1865.52,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.40207
+        }
+       ]
+      },
+      {
+       "T": 1865.52,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.40213
+        }
+       ]
+      },
+      {
+       "T": 1865.52,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.40184
+        }
+       ]
+      },
+      {
+       "T": 1856.21,
+       "points": [
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.25387
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      {
+       "T": 1856.21,
+       "points": [
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.25416
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      "... 22 more items trimmed (of 27)"
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlZr-01Wan.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-ZR/AlZr-01Wan.json",
+     "phase_at": {
+      "x_requested": 0.25,
+      "T_requested_K": 1000.0,
+      "grid_x": 0.25,
+      "grid_T_K": 1000.0,
+      "x_component": "ZR",
+      "stable_phases": [
+       "AL3ZR_D023"
+      ],
+      "label": "AL3ZR_D023",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlZr-10Hir.tdb",
+     "tdb_sha256": "4806bb3f89606d7f3fa574035392e63b783efe226d8bbafc5f1aa4668d5f802d",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlZr-10Hir.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1515/HTMP.2010.29.5–6.347",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "ZR"
+     ],
+     "x_component": "ZR",
+     "T_range_K": [
+      300,
+      4000
+     ],
+     "phases": [
+      "AL2ZR3",
+      "AL2ZR_C14",
+      "AL3ZR2",
+      "AL3ZR4",
+      "AL3ZR5_D8M",
+      "... 9 more items trimmed (of 14)"
+     ],
+     "invariants": [
+      {
+       "T": 1852.86,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.42066
+        }
+       ]
+      },
+      {
+       "T": 1852.86,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.42067
+        }
+       ]
+      },
+      {
+       "T": 1852.86,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.42046
+        }
+       ]
+      },
+      {
+       "T": 1818.87,
+       "points": [
+        {
+         "phase": "LIQUID",
+         "x": 0.22104
+        },
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      {
+       "T": 1818.87,
+       "points": [
+        {
+         "phase": "LIQUID",
+         "x": 0.22114
+        },
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      "... 23 more items trimmed (of 28)"
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlZr-10Hir.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-ZR/AlZr-10Hir.json",
+     "phase_at": {
+      "x_requested": 0.25,
+      "T_requested_K": 1000.0,
+      "grid_x": 0.25,
+      "grid_T_K": 1000.0,
+      "x_component": "ZR",
+      "stable_phases": [
+       "AL3ZR_D023"
+      ],
+      "label": "AL3ZR_D023",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlZr-15Fis.tdb",
+     "tdb_sha256": "24ba1ed7e58494bd89232a0f0a4d07afa20cadf492303da7d0763a8b5a559f79",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlZr-15Fis.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1007/s11669-015-0398-y",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "ZR"
+     ],
+     "x_component": "ZR",
+     "T_range_K": [
+      300,
+      4000
+     ],
+     "phases": [
+      "AL2ZR3",
+      "AL2ZR_C14",
+      "AL3ZR2",
+      "AL3ZR4",
+      "AL3ZR5_D8M",
+      "... 9 more items trimmed (of 14)"
+     ],
+     "invariants": [
+      {
+       "T": 1858.18,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.40721
+        }
+       ]
+      },
+      {
+       "T": 1858.18,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.40696
+        }
+       ]
+      },
+      {
+       "T": 1857.82,
+       "points": [
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.25587
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      {
+       "T": 1857.81,
+       "points": [
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.25551
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      {
+       "T": 1752.54,
+       "points": [
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.49599
+        },
+        {
+         "phase": "AL4ZR5",
+         "x": 0.55556
+        }
+       ]
+      },
+      "... 20 more items trimmed (of 25)"
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlZr-15Fis.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-ZR/AlZr-15Fis.json",
+     "phase_at": {
+      "x_requested": 0.25,
+      "T_requested_K": 1000.0,
+      "grid_x": 0.25,
+      "grid_T_K": 1000.0,
+      "x_component": "ZR",
+      "stable_phases": [
+       "AL3ZR_D023"
+      ],
+      "label": "AL3ZR_D023",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlZr-18Khv.tdb",
+     "tdb_sha256": "c638fa151494d0c0b87160913084f1a9b8dd9b85f1a933eab78e37d639999033",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlZr-18Khv.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/j.jallcom.2018.02.023",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "ZR"
+     ],
+     "x_component": "ZR",
+     "T_range_K": [
+      300,
+      4000
+     ],
+     "phases": [
+      "AL2ZR3",
+      "AL2ZR_C14",
+      "AL3ZR2",
+      "AL3ZR4",
+      "AL3ZR5_D8M",
+      "... 9 more items trimmed (of 14)"
+     ],
+     "invariants": [
+      {
+       "T": 1858.18,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.40721
+        }
+       ]
+      },
+      {
+       "T": 1858.18,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.40696
+        }
+       ]
+      },
+      {
+       "T": 1857.82,
+       "points": [
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.25583
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      {
+       "T": 1857.81,
+       "points": [
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.25551
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      {
+       "T": 1752.54,
+       "points": [
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.49599
+        },
+        {
+         "phase": "AL4ZR5",
+         "x": 0.55556
+        }
+       ]
+      },
+      "... 20 more items trimmed (of 25)"
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlZr-18Khv.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-ZR/AlZr-18Khv.json",
+     "phase_at": {
+      "x_requested": 0.25,
+      "T_requested_K": 1000.0,
+      "grid_x": 0.25,
+      "grid_T_K": 1000.0,
+      "x_component": "ZR",
+      "stable_phases": [
+       "AL3ZR_D023"
+      ],
+      "label": "AL3ZR_D023",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlZr-18Tam.tdb",
+     "tdb_sha256": "8010f4209dbbc4750a02f444380120e87924b56ec12a70bc5739071655a86a5a",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlZr-18Tam.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1007/s10973-017-6635-3",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "ZR"
+     ],
+     "x_component": "ZR",
+     "T_range_K": [
+      300,
+      4000
+     ],
+     "phases": [
+      "AL2ZR3",
+      "AL2ZR_C14",
+      "AL3ZR2",
+      "AL3ZR4",
+      "AL3ZR5_D8M",
+      "... 9 more items trimmed (of 14)"
+     ],
+     "invariants": [
+      {
+       "T": 1846.97,
+       "points": [
+        {
+         "phase": "LIQUID",
+         "x": 0.24791
+        },
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      {
+       "T": 1846.97,
+       "points": [
+        {
+         "phase": "LIQUID",
+         "x": 0.24808
+        },
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      {
+       "T": 1844.42,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.42106
+        }
+       ]
+      },
+      {
+       "T": 1844.42,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.42088
+        }
+       ]
+      },
+      {
+       "T": 1771.14,
+       "points": [
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.49353
+        },
+        {
+         "phase": "AL4ZR5",
+         "x": 0.55556
+        }
+       ]
+      },
+      "... 23 more items trimmed (of 28)"
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlZr-18Tam.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-ZR/AlZr-18Tam.json",
+     "phase_at": {
+      "x_requested": 0.25,
+      "T_requested_K": 1000.0,
+      "grid_x": 0.25,
+      "grid_T_K": 1000.0,
+      "x_component": "ZR",
+      "stable_phases": [
+       "AL3ZR_D023"
+      ],
+      "label": "AL3ZR_D023",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    },
+    "... 3 more items trimmed (of 8)"
+   ],
+   "note": "Each assessment is a separate CALPHAD model; results are never averaged across assessments.",
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_source... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_c... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts an... [247 chars]",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  },
+  "Al-Zr/get_phase_diagram(x_Zr=0.002,T=900)": {
+   "system": "AL-ZR",
+   "fields": "summary",
+   "n_assessments": 8,
+   "assessments": [
+    {
+     "evidence_class": "model",
+     "tdb": "AlZr-01Wan.tdb",
+     "tdb_sha256": "4b09f4b519f6d63968ee503b8e6207577e1d003895d9a321f3f727f6341ee565",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlZr-01Wan.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1007/s12385-001-0072-4",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "ZR"
+     ],
+     "x_component": "ZR",
+     "T_range_K": [
+      300,
+      4000
+     ],
+     "phases": [
+      "AL2ZR3",
+      "AL2ZR_C14",
+      "AL3ZR2",
+      "AL3ZR4",
+      "AL3ZR5_D8M",
+      "... 9 more items trimmed (of 14)"
+     ],
+     "invariants": [
+      {
+       "T": 1865.52,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.40207
+        }
+       ]
+      },
+      {
+       "T": 1865.52,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.40213
+        }
+       ]
+      },
+      {
+       "T": 1865.52,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.40184
+        }
+       ]
+      },
+      {
+       "T": 1856.21,
+       "points": [
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.25387
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      {
+       "T": 1856.21,
+       "points": [
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.25416
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      "... 22 more items trimmed (of 27)"
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlZr-01Wan.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-ZR/AlZr-01Wan.json",
+     "phase_at": {
+      "x_requested": 0.002,
+      "T_requested_K": 900.0,
+      "grid_x": 0.0,
+      "grid_T_K": 900.0,
+      "x_component": "ZR",
+      "stable_phases": [
+       "FCC_A1"
+      ],
+      "label": "FCC_A1",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlZr-10Hir.tdb",
+     "tdb_sha256": "4806bb3f89606d7f3fa574035392e63b783efe226d8bbafc5f1aa4668d5f802d",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlZr-10Hir.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1515/HTMP.2010.29.5–6.347",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "ZR"
+     ],
+     "x_component": "ZR",
+     "T_range_K": [
+      300,
+      4000
+     ],
+     "phases": [
+      "AL2ZR3",
+      "AL2ZR_C14",
+      "AL3ZR2",
+      "AL3ZR4",
+      "AL3ZR5_D8M",
+      "... 9 more items trimmed (of 14)"
+     ],
+     "invariants": [
+      {
+       "T": 1852.86,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.42066
+        }
+       ]
+      },
+      {
+       "T": 1852.86,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.42067
+        }
+       ]
+      },
+      {
+       "T": 1852.86,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.42046
+        }
+       ]
+      },
+      {
+       "T": 1818.87,
+       "points": [
+        {
+         "phase": "LIQUID",
+         "x": 0.22104
+        },
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      {
+       "T": 1818.87,
+       "points": [
+        {
+         "phase": "LIQUID",
+         "x": 0.22114
+        },
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      "... 23 more items trimmed (of 28)"
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlZr-10Hir.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-ZR/AlZr-10Hir.json",
+     "phase_at": {
+      "x_requested": 0.002,
+      "T_requested_K": 900.0,
+      "grid_x": 0.0,
+      "grid_T_K": 900.0,
+      "x_component": "ZR",
+      "stable_phases": [
+       "FCC_A1"
+      ],
+      "label": "FCC_A1",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlZr-15Fis.tdb",
+     "tdb_sha256": "24ba1ed7e58494bd89232a0f0a4d07afa20cadf492303da7d0763a8b5a559f79",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlZr-15Fis.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1007/s11669-015-0398-y",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "ZR"
+     ],
+     "x_component": "ZR",
+     "T_range_K": [
+      300,
+      4000
+     ],
+     "phases": [
+      "AL2ZR3",
+      "AL2ZR_C14",
+      "AL3ZR2",
+      "AL3ZR4",
+      "AL3ZR5_D8M",
+      "... 9 more items trimmed (of 14)"
+     ],
+     "invariants": [
+      {
+       "T": 1858.18,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.40721
+        }
+       ]
+      },
+      {
+       "T": 1858.18,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.40696
+        }
+       ]
+      },
+      {
+       "T": 1857.82,
+       "points": [
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.25587
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      {
+       "T": 1857.81,
+       "points": [
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.25551
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      {
+       "T": 1752.54,
+       "points": [
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.49599
+        },
+        {
+         "phase": "AL4ZR5",
+         "x": 0.55556
+        }
+       ]
+      },
+      "... 20 more items trimmed (of 25)"
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlZr-15Fis.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-ZR/AlZr-15Fis.json",
+     "phase_at": {
+      "x_requested": 0.002,
+      "T_requested_K": 900.0,
+      "grid_x": 0.0,
+      "grid_T_K": 900.0,
+      "x_component": "ZR",
+      "stable_phases": [
+       "FCC_A1"
+      ],
+      "label": "FCC_A1",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlZr-18Khv.tdb",
+     "tdb_sha256": "c638fa151494d0c0b87160913084f1a9b8dd9b85f1a933eab78e37d639999033",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlZr-18Khv.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/j.jallcom.2018.02.023",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "ZR"
+     ],
+     "x_component": "ZR",
+     "T_range_K": [
+      300,
+      4000
+     ],
+     "phases": [
+      "AL2ZR3",
+      "AL2ZR_C14",
+      "AL3ZR2",
+      "AL3ZR4",
+      "AL3ZR5_D8M",
+      "... 9 more items trimmed (of 14)"
+     ],
+     "invariants": [
+      {
+       "T": 1858.18,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.40721
+        }
+       ]
+      },
+      {
+       "T": 1858.18,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.40696
+        }
+       ]
+      },
+      {
+       "T": 1857.82,
+       "points": [
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.25583
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      {
+       "T": 1857.81,
+       "points": [
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.25551
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      {
+       "T": 1752.54,
+       "points": [
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.49599
+        },
+        {
+         "phase": "AL4ZR5",
+         "x": 0.55556
+        }
+       ]
+      },
+      "... 20 more items trimmed (of 25)"
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlZr-18Khv.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-ZR/AlZr-18Khv.json",
+     "phase_at": {
+      "x_requested": 0.002,
+      "T_requested_K": 900.0,
+      "grid_x": 0.0,
+      "grid_T_K": 900.0,
+      "x_component": "ZR",
+      "stable_phases": [
+       "FCC_A1"
+      ],
+      "label": "FCC_A1",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlZr-18Tam.tdb",
+     "tdb_sha256": "8010f4209dbbc4750a02f444380120e87924b56ec12a70bc5739071655a86a5a",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlZr-18Tam.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1007/s10973-017-6635-3",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "ZR"
+     ],
+     "x_component": "ZR",
+     "T_range_K": [
+      300,
+      4000
+     ],
+     "phases": [
+      "AL2ZR3",
+      "AL2ZR_C14",
+      "AL3ZR2",
+      "AL3ZR4",
+      "AL3ZR5_D8M",
+      "... 9 more items trimmed (of 14)"
+     ],
+     "invariants": [
+      {
+       "T": 1846.97,
+       "points": [
+        {
+         "phase": "LIQUID",
+         "x": 0.24791
+        },
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      {
+       "T": 1846.97,
+       "points": [
+        {
+         "phase": "LIQUID",
+         "x": 0.24808
+        },
+        {
+         "phase": "AL3ZR_D023",
+         "x": 0.25
+        },
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        }
+       ]
+      },
+      {
+       "T": 1844.42,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.42106
+        }
+       ]
+      },
+      {
+       "T": 1844.42,
+       "points": [
+        {
+         "phase": "AL2ZR_C14",
+         "x": 0.33333
+        },
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.42088
+        }
+       ]
+      },
+      {
+       "T": 1771.14,
+       "points": [
+        {
+         "phase": "AL3ZR2",
+         "x": 0.4
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.49353
+        },
+        {
+         "phase": "AL4ZR5",
+         "x": 0.55556
+        }
+       ]
+      },
+      "... 23 more items trimmed (of 28)"
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlZr-18Tam.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-ZR/AlZr-18Tam.json",
+     "phase_at": {
+      "x_requested": 0.002,
+      "T_requested_K": 900.0,
+      "grid_x": 0.0,
+      "grid_T_K": 900.0,
+      "x_component": "ZR",
+      "stable_phases": [
+       "AL3ZR_D023",
+       "FCC_A1"
+      ],
+      "label": "AL3ZR_D023+FCC_A1",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    },
+    "... 3 more items trimmed (of 8)"
+   ],
+   "note": "Each assessment is a separate CALPHAD model; results are never averaged across assessments.",
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_source... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_c... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts an... [247 chars]",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  },
+  "Al-Zr/list_tdb_files([Al,Zr])": {
+   "query": {
+    "elements": [
+     "AL",
+     "ZR"
+    ],
+    "exact": false,
+    "tier": null
+   },
+   "fields": "summary",
+   "total": 21,
+   "offset": 0,
+   "truncated": false,
+   "files": [
+    {
+     "name": "AlZr-01Wan.tdb",
+     "elements": "AL-ZR",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlZr-01Wan.tdb",
+     "sha256": "4b09f4b519f6d63968ee503b8e6207577e1d003895d9a321f3f727f6341ee565"
+    },
+    {
+     "name": "AlZr-10Hir.tdb",
+     "elements": "AL-ZR",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlZr-10Hir.tdb",
+     "sha256": "4806bb3f89606d7f3fa574035392e63b783efe226d8bbafc5f1aa4668d5f802d"
+    },
+    {
+     "name": "AlZr-15Fis.tdb",
+     "elements": "AL-ZR",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlZr-15Fis.tdb",
+     "sha256": "24ba1ed7e58494bd89232a0f0a4d07afa20cadf492303da7d0763a8b5a559f79"
+    },
+    {
+     "name": "AlZr-18Khv.tdb",
+     "elements": "AL-ZR",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlZr-18Khv.tdb",
+     "sha256": "c638fa151494d0c0b87160913084f1a9b8dd9b85f1a933eab78e37d639999033"
+    },
+    {
+     "name": "AlZr-18Tam.tdb",
+     "elements": "AL-ZR",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlZr-18Tam.tdb",
+     "sha256": "8010f4209dbbc4750a02f444380120e87924b56ec12a70bc5739071655a86a5a"
+    },
+    "... 16 more items trimmed (of 21)"
+   ],
+   "tiers": {
+    "bundled": "redistributable; served by ORCHID",
+    "fetched": "public upstream download, not redistributed here",
+    "manual": "restricted / landing page only"
+   },
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_source... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_c... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts an... [247 chars]",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  },
+  "Al-Zr/list_tdb_files([Al,Zr],exact)": {
+   "query": {
+    "elements": [
+     "AL",
+     "ZR"
+    ],
+    "exact": true,
+    "tier": null
+   },
+   "fields": "summary",
+   "total": 8,
+   "offset": 0,
+   "truncated": false,
+   "files": [
+    {
+     "name": "AlZr-01Wan.tdb",
+     "elements": "AL-ZR",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlZr-01Wan.tdb",
+     "sha256": "4b09f4b519f6d63968ee503b8e6207577e1d003895d9a321f3f727f6341ee565"
+    },
+    {
+     "name": "AlZr-10Hir.tdb",
+     "elements": "AL-ZR",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlZr-10Hir.tdb",
+     "sha256": "4806bb3f89606d7f3fa574035392e63b783efe226d8bbafc5f1aa4668d5f802d"
+    },
+    {
+     "name": "AlZr-15Fis.tdb",
+     "elements": "AL-ZR",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlZr-15Fis.tdb",
+     "sha256": "24ba1ed7e58494bd89232a0f0a4d07afa20cadf492303da7d0763a8b5a559f79"
+    },
+    {
+     "name": "AlZr-18Khv.tdb",
+     "elements": "AL-ZR",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlZr-18Khv.tdb",
+     "sha256": "c638fa151494d0c0b87160913084f1a9b8dd9b85f1a933eab78e37d639999033"
+    },
+    {
+     "name": "AlZr-18Tam.tdb",
+     "elements": "AL-ZR",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlZr-18Tam.tdb",
+     "sha256": "8010f4209dbbc4750a02f444380120e87924b56ec12a70bc5739071655a86a5a"
+    },
+    "... 3 more items trimmed (of 8)"
+   ],
+   "tiers": {
+    "bundled": "redistributable; served by ORCHID",
+    "fetched": "public upstream download, not redistributed here",
+    "manual": "restricted / landing page only"
+   },
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_source... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_c... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts an... [247 chars]",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  },
+  "Al-Zr/compare_to_dft": {
+   "system": "AL-ZR",
+   "unit": "kJ/mol-atom",
+   "fields": "summary",
+   "compounds": [
+    {
+     "formula": "Al2Zr",
+     "composition": {
+      "Al": 0.6667,
+      "Zr": 0.3333
+     },
+     "literature": [
+      {
+       "id": "ORC-2L47BZWLRI.223156",
+       "value_kJ_per_mol_atom": -45.81,
+       "evidence_class": "experimental",
+       "in_default_subset": true,
+       "accepted": true,
+       "phase": "Al2Zr",
+       "T_K": 298.15,
+       "citation": "[citation text omitted in this copy; see the doi field]",
+       "doi": "10.1179/mst.1986.2.6.520",
+       "page": 5,
+       "quote": null,
+       "table": "Table 2",
+       "residual_dft_minus_lit": {
+        "mp": -6.082,
+        "oqmd": -6.305
+       },
+       "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-2L47BZWLRI.223156%20%28AL-ZR%29&record_id=ORC-2L47BZWLRI.223156&system=AL-ZR&source=doi%3A10.1179%2Fmst.1986.2.6.520%2C%20p.%20... [276 chars]"
+      },
+      {
+       "id": "ORC-2T5RSR2E6B.f79f20",
+       "value_kJ_per_mol_atom": -45.536,
+       "evidence_class": "model",
+       "in_default_subset": false,
+       "accepted": true,
+       "phase": "Al2Zr",
+       "T_K": null,
+       "citation": "[citation text omitted in this copy; see the doi field]",
+       "doi": "10.1007/s11669-020-00827-z",
+       "page": 7,
+       "quote": null,
+       "table": "Table 4",
+       "residual_dft_minus_lit": {
+        "mp": -6.356,
+        "oqmd": -6.579
+       },
+       "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-2T5RSR2E6B.f79f20%20%28AL-ZR%29&record_id=ORC-2T5RSR2E6B.f79f20&system=AL-ZR&source=doi%3A10.1007%2Fs11669-020-00827-z%2C%20p.%... [279 chars]"
+      },
+      {
+       "id": "ORC-33URECZ6HH.67529d",
+       "value_kJ_per_mol_atom": -45.81,
+       "evidence_class": "model",
+       "in_default_subset": false,
+       "accepted": true,
+       "phase": "Al2Zr",
+       "T_K": null,
+       "citation": "[citation text omitted in this copy; see the doi field]",
+       "doi": "10.1007/s11669-020-00827-z",
+       "page": 7,
+       "quote": null,
+       "table": "Table 4",
+       "residual_dft_minus_lit": {
+        "mp": -6.082,
+        "oqmd": -6.305
+       },
+       "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-33URECZ6HH.67529d%20%28AL-ZR%29&record_id=ORC-33URECZ6HH.67529d&system=AL-ZR&source=doi%3A10.1007%2Fs11669-020-00827-z%2C%20p.%... [278 chars]"
+      },
+      {
+       "id": "ORC-3XJ3XR2ZPB",
+       "value_kJ_per_mol_atom": -45.8,
+       "evidence_class": "model",
+       "in_default_subset": false,
+       "accepted": true,
+       "phase": "ZrAl2",
+       "T_K": null,
+       "citation": "[citation text omitted in this copy; see the doi field]",
+       "doi": "10.1007/s12385-001-0072-4",
+       "page": 2,
+       "quote": null,
+       "table": "Table 2",
+       "residual_dft_minus_lit": {
+        "mp": -6.092,
+        "oqmd": -6.315
+       },
+       "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-3XJ3XR2ZPB%20%28AL-ZR%29&record_id=ORC-3XJ3XR2ZPB&system=AL-ZR&source=doi%3A10.1007%2Fs12385-001-0072-4%2C%20p.%202&value_shown... [262 chars]"
+      },
+      {
+       "id": "ORC-4OAZ4XCDMO",
+       "value_kJ_per_mol_atom": -52.6,
+       "evidence_class": "model",
+       "in_default_subset": false,
+       "accepted": true,
+       "phase": "ZrAl2",
+       "T_K": null,
+       "citation": "[citation text omitted in this copy; see the doi field]",
+       "doi": "10.1007/s12385-001-0072-4",
+       "page": 2,
+       "quote": null,
+       "table": "Table 2",
+       "residual_dft_minus_lit": {
+        "mp": 0.708,
+        "oqmd": 0.485
+       },
+       "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-4OAZ4XCDMO%20%28AL-ZR%29&record_id=ORC-4OAZ4XCDMO&system=AL-ZR&source=doi%3A10.1007%2Fs12385-001-0072-4%2C%20p.%202&value_shown... [262 chars]"
+      },
+      "... 29 more items trimmed (of 34)"
+     ],
+     "dft": {
+      "mp": {
+       "kJ_per_mol_atom": -51.892,
+       "material_id": "mp-aaaaaecq",
+       "spacegroup": "P6_3/mmc",
+       "e_above_hull_kJ_per_mol_atom": 0.0,
+       "e_above_hull_eV": 0.0
+      },
+      "oqmd": {
+       "kJ_per_mol_atom": -52.115,
+       "material_id": "oqmd-9987",
+       "spacegroup": "P63/mmc",
+       "e_above_hull_kJ_per_mol_atom": 0.0,
+       "e_above_hull_eV": 0.0
+      }
+     }
+    },
+    {
+     "formula": "Al2Zr3",
+     "composition": {
+      "Al": 0.4,
+      "Zr": 0.6
+     },
+     "literature": [
+      {
+       "id": "ORC-2WIXIZBQU7.e1524d",
+       "value_kJ_per_mol_atom": -50.284,
+       "evidence_class": "model",
+       "in_default_subset": false,
+       "accepted": true,
+       "phase": "Al2Zr3",
+       "T_K": null,
+       "citation": "[citation text omitted in this copy; see the doi field]",
+       "doi": "10.1007/s11669-020-00827-z",
+       "page": 7,
+       "quote": null,
+       "table": "Table 4",
+       "residual_dft_minus_lit": {
+        "mp": 11.504,
+        "oqmd": 11.487
+       },
+       "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-2WIXIZBQU7.e1524d%20%28AL-ZR%29&record_id=ORC-2WIXIZBQU7.e1524d&system=AL-ZR&source=doi%3A10.1007%2Fs11669-020-00827-z%2C%20p.%... [279 chars]"
+      },
+      {
+       "id": "ORC-3CDDJG5D3S",
+       "value_kJ_per_mol_atom": -38.18,
+       "evidence_class": "model",
+       "in_default_subset": false,
+       "accepted": true,
+       "phase": "Al2Zr3",
+       "T_K": 298.15,
+       "citation": "[citation text omitted in this copy; see the doi field]",
+       "doi": "10.1007/s11669-015-0398-y",
+       "page": 4,
+       "quote": null,
+       "table": "Table 2",
+       "residual_dft_minus_lit": {
+        "mp": -0.6,
+        "oqmd": -0.617
+       },
+       "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-3CDDJG5D3S%20%28AL-ZR%29&record_id=ORC-3CDDJG5D3S&system=AL-ZR&source=doi%3A10.1007%2Fs11669-015-0398-y%2C%20p.%204&value_shown... [263 chars]"
+      },
+      {
+       "id": "ORC-457PKW5PB2.e06709",
+       "value_kJ_per_mol_atom": -38.427,
+       "evidence_class": "model",
+       "in_default_subset": false,
+       "accepted": true,
+       "phase": "Al2Zr3",
+       "T_K": null,
+       "citation": "[citation text omitted in this copy; see the doi field]",
+       "doi": "10.1007/s11669-020-00827-z",
+       "page": 7,
+       "quote": null,
+       "table": "Table 4",
+       "residual_dft_minus_lit": {
+        "mp": -0.353,
+        "oqmd": -0.37
+       },
+       "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-457PKW5PB2.e06709%20%28AL-ZR%29&record_id=ORC-457PKW5PB2.e06709&system=AL-ZR&source=doi%3A10.1007%2Fs11669-020-00827-z%2C%20p.%... [279 chars]"
+      },
+      {
+       "id": "ORC-45TNKBZZD5.9f7ec9",
+       "value_kJ_per_mol_atom": -40.08,
+       "evidence_class": "model",
+       "in_default_subset": false,
+       "accepted": true,
+       "phase": "Al2Zr3",
+       "T_K": null,
+       "citation": "[citation text omitted in this copy; see the doi field]",
+       "doi": "10.1179/mst.1986.2.6.520",
+       "page": 5,
+       "quote": null,
+       "table": "Table 2",
+       "residual_dft_minus_lit": {
+        "mp": 1.3,
+        "oqmd": 1.283
+       },
+       "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-45TNKBZZD5.9f7ec9%20%28AL-ZR%29&record_id=ORC-45TNKBZZD5.9f7ec9&system=AL-ZR&source=doi%3A10.1179%2Fmst.1986.2.6.520%2C%20p.%20... [276 chars]"
+      },
+      {
+       "id": "ORC-5VTMM5DOCY",
+       "value_kJ_per_mol_atom": -55.2,
+       "evidence_class": "model",
+       "in_default_subset": false,
+       "accepted": true,
+       "phase": "Al2Zr3",
+       "T_K": 298.15,
+       "citation": "[citation text omitted in this copy; see the doi field]",
+       "doi": "10.1007/s11669-015-0398-y",
+       "page": 4,
+       "quote": null,
+       "table": "Table 2",
+       "residual_dft_minus_lit": {
+        "mp": 16.42,
+        "oqmd": 16.403
+       },
+       "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-5VTMM5DOCY%20%28AL-ZR%29&record_id=ORC-5VTMM5DOCY&system=AL-ZR&source=doi%3A10.1007%2Fs11669-015-0398-y%2C%20p.%204&value_shown... [262 chars]"
+      },
+      "... 23 more items trimmed (of 28)"
+     ],
+     "dft": {
+      "mp": {
+       "kJ_per_mol_atom": -38.78,
+       "material_id": "mp-aaaaatyc",
+       "spacegroup": "P4_2/mnm",
+       "e_above_hull_kJ_per_mol_atom": 3.1898,
+       "e_above_hull_eV": 0.03306
+      },
+      "oqmd": {
+       "kJ_per_mol_atom": -38.797,
+       "material_id": "oqmd-10621",
+       "spacegroup": "P42/mnm",
+       "e_above_hull_kJ_per_mol_atom": 3.1324,
+       "e_above_hull_eV": 0.03247
+      }
+     }
+    },
+    {
+     "formula": "Al3Zr",
+     "composition": {
+      "Al": 0.75,
+      "Zr": 0.25
+     },
+     "literature": [
+      {
+       "id": "ORC-2MM7X7BAGN",
+       "value_kJ_per_mol_atom": -39.59,
+       "evidence_class": "model",
+       "in_default_subset": false,
+       "accepted": true,
+       "phase": "Al3Zr",
+       "T_K": 298.15,
+       "citation": "[citation text omitted in this copy; see the doi field]",
+       "doi": "10.1007/s11669-015-0398-y",
+       "page": 4,
+       "quote": null,
+       "table": "Table 2",
+       "residual_dft_minus_lit": {
+        "mp": -7.423,
+        "oqmd": -7.491
+       },
+       "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-2MM7X7BAGN%20%28AL-ZR%29&record_id=ORC-2MM7X7BAGN&system=AL-ZR&source=doi%3A10.1007%2Fs11669-015-0398-y%2C%20p.%204&value_shown... [263 chars]"
+      },
+      {
+       "id": "ORC-6FRRLGVC4X",
+       "value_kJ_per_mol_atom": -46.78,
+       "evidence_class": "model",
+       "in_default_subset": false,
+       "accepted": true,
+       "phase": "Al3Zr",
+       "T_K": 298.15,
+       "citation": "[citation text omitted in this copy; see the doi field]",
+       "doi": "10.1007/s11669-015-0398-y",
+       "page": 4,
+       "quote": null,
+       "table": "Table 2",
+       "residual_dft_minus_lit": {
+        "mp": -0.233,
+        "oqmd": -0.301
+       },
+       "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-6FRRLGVC4X%20%28AL-ZR%29&record_id=ORC-6FRRLGVC4X&system=AL-ZR&source=doi%3A10.1007%2Fs11669-015-0398-y%2C%20p.%204&value_shown... [263 chars]"
+      },
+      {
+       "id": "ORC-6XHHBQTLFH.cd6016",
+       "value_kJ_per_mol_atom": -48.4,
+       "evidence_class": "experimental",
+       "in_default_subset": true,
+       "accepted": true,
+       "phase": "Al3Zr",
+       "T_K": 298.15,
+       "citation": "[citation text omitted in this copy; see the doi field]",
+       "doi": "10.1007/s11669-015-0398-y",
+       "page": 4,
+       "quote": null,
+       "table": "Table 2",
+       "residual_dft_minus_lit": {
+        "mp": 1.387,
+        "oqmd": 1.319
+       },
+       "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-6XHHBQTLFH.cd6016%20%28AL-ZR%29&record_id=ORC-6XHHBQTLFH.cd6016&system=AL-ZR&source=doi%3A10.1007%2Fs11669-015-0398-y%2C%20p.%2... [276 chars]"
+      },
+      {
+       "id": "ORC-7B2XPF6LGK",
+       "value_kJ_per_mol_atom": -48.5,
+       "evidence_class": "model",
+       "in_default_subset": false,
+       "accepted": true,
+       "phase": "Al3Zr",
+       "T_K": 298.15,
+       "citation": "[citation text omitted in this copy; see the doi field]",
+       "doi": "10.1007/s11669-015-0398-y",
+       "page": 4,
+       "quote": null,
+       "table": "Table 2",
+       "residual_dft_minus_lit": {
+        "mp": 1.487,
+        "oqmd": 1.419
+       },
+       "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-7B2XPF6LGK%20%28AL-ZR%29&record_id=ORC-7B2XPF6LGK&system=AL-ZR&source=doi%3A10.1007%2Fs11669-015-0398-y%2C%20p.%204&value_shown... [262 chars]"
+      },
+      {
+       "id": "ORC-A3FEXYVVIN.1e56a9",
+       "value_kJ_per_mol_atom": -40.6,
+       "evidence_class": "model",
+       "in_default_subset": false,
+       "accepted": true,
+       "phase": "Al3Zr",
+       "T_K": null,
+       "citation": "[citation text omitted in this copy; see the doi field]",
+       "doi": "10.1007/s11669-020-00827-z",
+       "page": 7,
+       "quote": null,
+       "table": "Table 4",
+       "residual_dft_minus_lit": {
+        "mp": -6.413,
+        "oqmd": -6.481
+       },
+       "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-A3FEXYVVIN.1e56a9%20%28AL-ZR%29&record_id=ORC-A3FEXYVVIN.1e56a9&system=AL-ZR&source=doi%3A10.1007%2Fs11669-020-00827-z%2C%20p.%... [277 chars]"
+      },
+      "... 28 more items trimmed (of 33)"
+     ],
+     "dft": {
+      "mp": {
+       "kJ_per_mol_atom": -47.013,
+       "material_id": "mp-aaaaaapf",
+       "spacegroup": "I4/mmm",
+       "e_above_hull_kJ_per_mol_atom": 0.0,
+       "e_above_hull_eV": 0.0
+      },
+      "oqmd": {
+       "kJ_per_mol_atom": -47.081,
+       "material_id": "oqmd-18198",
+       "spacegroup": "I4/mmm",
+       "e_above_hull_kJ_per_mol_atom": 0.0,
+       "e_above_hull_eV": 0.0
+      }
+     }
+    },
+    {
+     "formula": "Al3Zr2",
+     "composition": {
+      "Al": 0.6,
+      "Zr": 0.4
+     },
+     "literature": [
+      {
+       "id": "ORC-2RR3K6VFF5",
+       "value_kJ_per_mol_atom": -49.84,
+       "evidence_class": "model",
+       "in_default_subset": false,
+       "accepted": true,
+       "phase": "Al3Zr2",
+       "T_K": 298.15,
+       "citation": "[citation text omitted in this copy; see the doi field]",
+       "doi": "10.1007/s11669-015-0398-y",
+       "page": 4,
+       "quote": null,
+       "table": "Table 2",
+       "residual_dft_minus_lit": {
+        "mp": -0.467,
+        "oqmd": -0.431
+       },
+       "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-2RR3K6VFF5%20%28AL-ZR%29&record_id=ORC-2RR3K6VFF5&system=AL-ZR&source=doi%3A10.1007%2Fs11669-015-0398-y%2C%20p.%204&value_shown... [263 chars]"
+      },
+      {
+       "id": "ORC-2TIQ2F2TSA",
+       "value_kJ_per_mol_atom": -49.96,
+       "evidence_class": "model",
+       "in_default_subset": false,
+       "accepted": true,
+       "phase": "Al3Zr2",
+       "T_K": 298.15,
+       "citation": "[citation text omitted in this copy; see the doi field]",
+       "doi": "10.1007/s11669-015-0398-y",
+       "page": 4,
+       "quote": null,
+       "table": "Table 2",
+       "residual_dft_minus_lit": {
+        "mp": -0.347,
+        "oqmd": -0.311
+       },
+       "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-2TIQ2F2TSA%20%28AL-ZR%29&record_id=ORC-2TIQ2F2TSA&system=AL-ZR&source=doi%3A10.1007%2Fs11669-015-0398-y%2C%20p.%204&value_shown... [263 chars]"
+      },
+      {
+       "id": "ORC-7ALOQWRVP4",
+       "value_kJ_per_mol_atom": -50.12,
+       "evidence_class": "model",
+       "in_default_subset": false,
+       "accepted": true,
+       "phase": "Al3Zr2",
+       "T_K": 298.15,
+       "citation": "[citation text omitted in this copy; see the doi field]",
+       "doi": "10.1007/s11669-015-0398-y",
+       "page": 4,
+       "quote": null,
+       "table": "Table 2",
+       "residual_dft_minus_lit": {
+        "mp": -0.187,
+        "oqmd": -0.151
+       },
+       "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-7ALOQWRVP4%20%28AL-ZR%29&record_id=ORC-7ALOQWRVP4&system=AL-ZR&source=doi%3A10.1007%2Fs11669-015-0398-y%2C%20p.%204&value_shown... [263 chars]"
+      },
+      {
+       "id": "ORC-7U2KK4ZXAN",
+       "value_kJ_per_mol_atom": -56.6,
+       "evidence_class": "model",
+       "in_default_subset": false,
+       "accepted": true,
+       "phase": "Zr2Al3",
+       "T_K": null,
+       "citation": "[citation text omitted in this copy; see the doi field]",
+       "doi": "10.1007/s12385-001-0072-4",
+       "page": 2,
+       "quote": null,
+       "table": "Table 2",
+       "residual_dft_minus_lit": {
+        "mp": 6.293,
+        "oqmd": 6.329
+       },
+       "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-7U2KK4ZXAN%20%28AL-ZR%29&record_id=ORC-7U2KK4ZXAN&system=AL-ZR&source=doi%3A10.1007%2Fs12385-001-0072-4%2C%20p.%202&value_shown... [262 chars]"
+      },
+      {
+       "id": "ORC-AGL5FS54TO.3158dc",
+       "value_kJ_per_mol_atom": -49.005,
+       "evidence_class": "model",
+       "in_default_subset": false,
+       "accepted": true,
+       "phase": "Al3Zr2",
+       "T_K": null,
+       "citation": "[citation text omitted in this copy; see the doi field]",
+       "doi": "10.1007/s11669-020-00827-z",
+       "page": 7,
+       "quote": null,
+       "table": "Table 4",
+       "residual_dft_minus_lit": {
+        "mp": -1.302,
+        "oqmd": -1.266
+       },
+       "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-AGL5FS54TO.3158dc%20%28AL-ZR%29&record_id=ORC-AGL5FS54TO.3158dc&system=AL-ZR&source=doi%3A10.1007%2Fs11669-020-00827-z%2C%20p.%... [279 chars]"
+      },
+      "... 24 more items trimmed (of 29)"
+     ],
+     "dft": {
+      "mp": {
+       "kJ_per_mol_atom": -50.307,
+       "material_id": "mp-aaaaacfa",
+       "spacegroup": "Fdd2",
+       "e_above_hull_kJ_per_mol_atom": 0.0,
+       "e_above_hull_eV": 0.0
+      },
+      "oqmd": {
+       "kJ_per_mol_atom": -50.271,
+       "material_id": "oqmd-10622",
+       "spacegroup": "Fdd2",
+       "e_above_hull_kJ_per_mol_atom": 0.0,
+       "e_above_hull_eV": 0.0
+      }
+     }
+    },
+    {
+     "formula": "Al3Zr4",
+     "composition": {
+      "Al": 0.4286,
+      "Zr": 0.5714
+     },
+     "literature": [
+      {
+       "id": "ORC-2R6GLFN6K4",
+       "value_kJ_per_mol_atom": -44.38,
+       "evidence_class": "model",
+       "in_default_subset": false,
+       "accepted": true,
+       "phase": "Al3Zr4",
+       "T_K": 298.15,
+       "citation": "[citation text omitted in this copy; see the doi field]",
+       "doi": "10.1007/s11669-015-0398-y",
+       "page": 4,
+       "quote": null,
+       "table": "Table 2",
+       "residual_dft_minus_lit": {
+        "mp": -0.028,
+        "oqmd": -0.035
+       },
+       "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-2R6GLFN6K4%20%28AL-ZR%29&record_id=ORC-2R6GLFN6K4&system=AL-ZR&source=doi%3A10.1007%2Fs11669-015-0398-y%2C%20p.%204&value_shown... [263 chars]"
+      },
+      {
+       "id": "ORC-354MIDSXP4",
+       "value_kJ_per_mol_atom": -41.18,
+       "evidence_class": "model",
+       "in_default_subset": false,
+       "accepted": true,
+       "phase": "Al3Zr4",
+       "T_K": 298.15,
+       "citation": "[citation text omitted in this copy; see the doi field]",
+       "doi": "10.1007/s11669-015-0398-y",
+       "page": 4,
+       "quote": null,
+       "table": "Table 2",
+       "residual_dft_minus_lit": {
+        "mp": -3.228,
+        "oqmd": -3.235
+       },
+       "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-354MIDSXP4%20%28AL-ZR%29&record_id=ORC-354MIDSXP4&system=AL-ZR&source=doi%3A10.1007%2Fs11669-015-0398-y%2C%20p.%204&value_shown... [263 chars]"
+      },
+      {
+       "id": "ORC-4FZB6UC6GR.790619",
+       "value_kJ_per_mol_atom": -58.48,
+       "evidence_class": "model",
+       "in_default_subset": false,
+       "accepted": true,
+       "phase": "Al3Zr4",
+       "T_K": null,
+       "citation": "[citation text omitted in this copy; see the doi field]",
+       "doi": "10.1007/s11669-020-00827-z",
+       "page": 7,
+       "quote": null,
+       "table": "Table 4",
+       "residual_dft_minus_lit": {
+        "mp": 14.072,
+        "oqmd": 14.065
+       },
+       "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-4FZB6UC6GR.790619%20%28AL-ZR%29&record_id=ORC-4FZB6UC6GR.790619&system=AL-ZR&source=doi%3A10.1007%2Fs11669-020-00827-z%2C%20p.%... [278 chars]"
+      },
+      {
+       "id": "ORC-5SEEN2EMNP",
+       "value_kJ_per_mol_atom": -44.57,
+       "evidence_class": "model",
+       "in_default_subset": false,
+       "accepted": true,
+       "phase": "Al3Zr4",
+       "T_K": 298.15,
+       "citation": "[citation text omitted in this copy; see the doi field]",
+       "doi": "10.1007/s11669-015-0398-y",
+       "page": 4,
+       "quote": null,
+       "table": "Table 2",
+       "residual_dft_minus_lit": {
+        "mp": 0.162,
+        "oqmd": 0.155
+       },
+       "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-5SEEN2EMNP%20%28AL-ZR%29&record_id=ORC-5SEEN2EMNP&system=AL-ZR&source=doi%3A10.1007%2Fs11669-015-0398-y%2C%20p.%204&value_shown... [263 chars]"
+      },
+      {
+       "id": "ORC-BKOHOFVXNS.016c60",
+       "value_kJ_per_mol_atom": -40.894,
+       "evidence_class": "model",
+       "in_default_subset": false,
+       "accepted": true,
+       "phase": "Al3Zr4",
+       "T_K": null,
+       "citation": "[citation text omitted in this copy; see the doi field]",
+       "doi": "10.1007/s11669-020-00827-z",
+       "page": 7,
+       "quote": null,
+       "table": "Table 4",
+       "residual_dft_minus_lit": {
+        "mp": -3.514,
+        "oqmd": -3.521
+       },
+       "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-BKOHOFVXNS.016c60%20%28AL-ZR%29&record_id=ORC-BKOHOFVXNS.016c60&system=AL-ZR&source=doi%3A10.1007%2Fs11669-020-00827-z%2C%20p.%... [279 chars]"
+      },
+      "... 9 more items trimmed (of 14)"
+     ],
+     "dft": {
+      "mp": {
+       "kJ_per_mol_atom": -44.408,
+       "material_id": "mp-aaaaaswm",
+       "spacegroup": "P6/mmm",
+       "e_above_hull_kJ_per_mol_atom": 0.0,
+       "e_above_hull_eV": 0.0
+      },
+      "oqmd": {
+       "kJ_per_mol_atom": -44.415,
+       "material_id": "oqmd-27981",
+       "spacegroup": "P6/mmm",
+       "e_above_hull_kJ_per_mol_atom": 0.0,
+       "e_above_hull_eV": 0.0
+      }
+     }
+    },
+    "... 5 more items trimmed (of 10)"
+   ],
+   "residual_stats_default_subset": {
+    "mp": {
+     "n": 45,
+     "MAE_kJ_per_mol_atom": 5.612,
+     "mean_residual": 3.59
+    },
+    "oqmd": {
+     "n": 45,
+     "MAE_kJ_per_mol_atom": 5.601,
+     "mean_residual": 3.521
+    }
+   },
+   "dft_hull_vertices": {
+    "mp": [
+     {
+      "formula": "Al",
+      "x": 0.0,
+      "material_id": "mp-aaaaaafe",
+      "spacegroup": "Fm-3m",
+      "formation_energy_kJ_per_mol_atom": 0.0,
+      "theoretical": false
+     },
+     {
+      "formula": "ZrAl3",
+      "x": 0.25,
+      "material_id": "mp-aaaaaapf",
+      "spacegroup": "I4/mmm",
+      "formation_energy_kJ_per_mol_atom": -47.013,
+      "theoretical": false
+     },
+     {
+      "formula": "ZrAl2",
+      "x": 0.3333333333333333,
+      "material_id": "mp-aaaaaecq",
+      "spacegroup": "P6_3/mmc",
+      "formation_energy_kJ_per_mol_atom": -51.892,
+      "theoretical": false
+     },
+     {
+      "formula": "Zr2Al3",
+      "x": 0.4,
+      "material_id": "mp-aaaaacfa",
+      "spacegroup": "Fdd2",
+      "formation_energy_kJ_per_mol_atom": -50.307,
+      "theoretical": false
+     },
+     {
+      "formula": "Zr4Al3",
+      "x": 0.5714285714285714,
+      "material_id": "mp-aaaaaswm",
+      "spacegroup": "P6/mmm",
+      "formation_energy_kJ_per_mol_atom": -44.408,
+      "theoretical": false
+     },
+     "... 2 more items trimmed (of 7)"
+    ],
+    "oqmd": [
+     {
+      "formula": "Al",
+      "x": 0.0,
+      "material_id": "oqmd-ref-Al",
+      "spacegroup": "",
+      "formation_energy_kJ_per_mol_atom": 0.0,
+      "theoretical": false
+     },
+     {
+      "formula": "Al3 Zr1",
+      "x": 0.25,
+      "material_id": "oqmd-18198",
+      "spacegroup": "I4/mmm",
+      "formation_energy_kJ_per_mol_atom": -47.081,
+      "theoretical": false
+     },
+     {
+      "formula": "Al2 Zr1",
+      "x": 0.3333333333333333,
+      "material_id": "oqmd-9987",
+      "spacegroup": "P63/mmc",
+      "formation_energy_kJ_per_mol_atom": -52.115,
+      "theoretical": false
+     },
+     {
+      "formula": "Al3 Zr2",
+      "x": 0.4,
+      "material_id": "oqmd-10622",
+      "spacegroup": "Fdd2",
+      "formation_energy_kJ_per_mol_atom": -50.271,
+      "theoretical": false
+     },
+     {
+      "formula": "Al3 Zr4",
+      "x": 0.5714285714285714,
+      "material_id": "oqmd-27981",
+      "spacegroup": "P6/mmm",
+      "formation_energy_kJ_per_mol_atom": -44.415,
+      "theoretical": false
+     },
+     "... 2 more items trimmed (of 7)"
+    ]
+   },
+   "dft_sources": {
+    "mp": {
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": "10.1063/1.4812323",
+     "doi2": null,
+     "label": "Materials Project",
+     "license": "CC BY 4.0",
+     "reference": {
+      "kind": "dft_elemental_ground_state_0K",
+      "per": "atom",
+      "temperature_K": 0.0,
+      "units": "eV/atom"
+     },
+     "reference_note": "GGA/GGA+U mixing scheme with MP fitted energy corrections (notably anions and some transition-metal oxides); elemental ground states at 0 K.",
+     "release": "2026.04.13",
+     "snapshot": "open-tdb/hulls/snapshot/snapshot.json",
+     "snapshot_sha256": "b6deba8ecf1b67211b3d89cd33a5f98a1939d4bcd92db561818195e55187492a",
+     "thermo_type": "GGA_GGA+U",
+     "url": "https://next-gen.materialsproject.org/"
+    },
+    "oqmd": {
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": "10.1007/s11837-013-0755-4",
+     "doi2": "10.1038/npjcompumats.2015.10",
+     "label": "OQMD",
+     "license": "CC BY 4.0",
+     "reference": {
+      "kind": "dft_fitted_elemental_reference_0K",
+      "per": "atom",
+      "temperature_K": 0.0,
+      "units": "eV/atom"
+     },
+     "reference_note": "'standard' fit: elemental reference energies fitted to experimental formation enthalpies (fitted elemental reference, 0 K).",
+     "release": "qmdb_v1_8_022026",
+     "snapshot": "open-tdb/hulls/snapshot-oqmd/snapshot.json",
+     "snapshot_sha256": "2a9393262c52ec35600424236c352a4cdb3291c8b25c1c6588f5e62abe8e0d8d",
+     "thermo_type": "standard",
+     "url": "https://oqmd.org/"
+    }
+   },
+   "rules": {
+    "chem_class": {
+     "intermetallic": "intermetallics (metals and metalloids only)",
+     "other_nonmetal": "hydrides, borides, carbides, nitrides, phosphides, chalcogenides",
+     "oxide_halide": "oxides and halides (contains O, F, Cl, Br or I)"
+    },
+    "composition_offset": "dx_measured = max |x_printed - x_formula| for a printed (not formula-derived) overall composition; sigma_comp = |dx| x local hull slope (kJ/mol-atom, the Cu-Zr historical-formula rule); dx > 0.02 is not in the default subset (off_stoichiome... [288 chars]",
+    "default_subset": "evidence class experimental, extraction accepted, not unsigned-in-print, no uncorrected sign loss found by the page-image sign check, not flagged magnitude_suspect by the extraction checks (a flag set before and independently of this DFT co... [687 chars]",
+    "formula": "Parsed from the record's printed phase label(s): Greek and polymorph prefixes stripped, formula groups expanded, sublattice brackets read, tokens outside the record's system dropped; several distinct formulas in one record are refused. Fall... [293 chars]",
+    "layout": "records{rid: literature fields} + points[] (one per record x DFT source, joined by rid) + papers{paper id: citation, DOI}.",
+    "match": "Reduced composition (mole fractions rounded to 4 decimals) matched exactly to non-deprecated DFT entries; the lowest entry of the named space group (see structure), else the lowest formation energy at that composition, is used; npoly = numb... [335 chars]",
+    "method_class": {
+     "calorimetry": "calorimetry (solution, drop, combustion, direct reaction, DSC)",
+     "emf_vapour": "EMF / vapour pressure / Knudsen effusion / equilibrium",
+     "other_unknown": "other or not printed"
+    },
+    "quality_fixes": "data/literature/QUALITY_FIXES.md: the per-formula / per-atom basis of a column is decided on the printed page only (gate R2 table_basis; the earlier rule that converted a value when the converted value agreed with DFT was withdrawn in audit... [479 chars]",
+    "selection": "property HM_FORM; unit kJ/mol-atom; evidence class experimental, model or unspecified. 'kJ/mol (basis unstated)' is excluded (per-atom vs per-formula cannot be settled).",
+    "structure": "dft_structure_match (`smatch`): exact = the record names a structure (Strukturbericht designator or 'X-type' prototype in a printed label, or in a model-phase name whose formula is the compound; A1/A2/A3 ignored) and the lowest entry of tha... [469 chars]",
+    "units": "DFT eV/atom x 96.485 = kJ/mol-atom; ehull = energy above ORCHID's released hull of the same snapshot (hulls/dft-<src>/, kJ/mol-atom; one source of truth for MP and OQMD); ehull_upstream = the snapshot's upstream value (MP energy_above_hull;... [314 chars]",
+    "unsigned": "flags.unsigned_in_print, or a sign-check verdict no_minus_printed matched by paper (PDF hash prefix), page and |printed value|: such values are magnitudes by the paper's convention and are kept out of the default set."
+   },
+   "description": "Literature formation enthalpies (HM_FORM, kJ/mol-atom) against DFT formation energies at the same composition: the lowest entry of the space group the record names (Strukturbericht designator or prototype), else the ground state (lowest-ene... [385 chars]",
+   "viewer_url": "https://orchid-project.org/dft-parity/",
+   "selection_note": "compounds whose composition lies in this system, wherever reported (including papers on higher-order systems: see reported_in_system)",
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_source... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_c... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts an... [247 chars]",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  }
+ }
+}

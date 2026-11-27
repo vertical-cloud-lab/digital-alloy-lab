@@ -1,0 +1,4 @@
+ERROR    root:observers.py:288 attempt to add attribute without a program for attribute ndCoordIn
+=========================== short test summary info ============================
+FAILED tests/test_plot.py::test_plot_3d_returns_figure - pyvista.plotting.err...
+========================= 1 failed, 10 passed in 8.78s =========================

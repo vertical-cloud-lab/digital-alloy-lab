@@ -1,0 +1,26 @@
+ + pygments==2.21.0
+ + pymatgen==2026.10.24
+ + pymatgen-core==2026.10.31
+ + pyparsing==3.3.3
+ + pytest==9.2.0
+ + pytest-cov==7.1.0
+ + python-dateutil==4.0.0
+ + requests==2.34.2
+ + ruamel-yaml==0.19.1
+ + runtype==0.5.3
+ + scipy==1.18.1
+ + setuptools==84.2.1
+ + setuptools-scm==10.3.4
+ + spglib==2.8.0
+ + symengine==0.13.0
+ + sympy==1.14.0
+ + tabulate==0.10.0
+ + tinydb==4.9.0
+ + tqdm==4.70.1
+ + typing-extensions==4.16.0
+ + tzdata==2026.6
+ + uncertainties==3.2.3
+ + urllib3==2.8.0
+ + vcs-versioning==2.6.0
+ + xarray==2026.9.0
+elapsed 4s

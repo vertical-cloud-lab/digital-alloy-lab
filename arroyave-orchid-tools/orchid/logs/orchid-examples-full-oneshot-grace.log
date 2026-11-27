@@ -1,0 +1,9 @@
+Thu Nov  5 04:08:11 UTC 2026
+grace_repro            field    n= 28 recall 0.426 [0.296,0.554] prec 0.412 F1 0.327 acc 0.780 exact 0.214
+grace_repro            boundary n=287 recall 0.410 [0.383,0.435] | eq-cluster [0.371,0.449] source-cluster(n=11) [0.340,0.474] prec 0.512 F1 0.312 acc 0.626 exact 0.003
+  -> /tmp/arroyave/work/oneshot-out/cuzr_grace_repro.json  (11 s, retries {'cells_failed_first_pass': 0, 'recovered_alone': 0, 'recovered_drop_one_min_gm': 0, 'recovered_nudged': 0, 'still_failed': 0}, failed cells 0)
+
+real	0m28.837s
+user	0m28.645s
+sys	0m0.189s
+exit=0

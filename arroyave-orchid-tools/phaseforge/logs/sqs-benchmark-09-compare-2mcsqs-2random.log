@@ -1,0 +1,37 @@
+$ python scripts/sqs-benchmark-run_compare.py <repo>/scripts/compare_methods.py /tmp/arroyave/work/sqsb_long 2   (mcsqs runs 1-2 = 2 procs x 200 s each; random runs 1-2 = seeds 1-2)
+Reference files:
+  clusters.out : /tmp/arroyave/work/sqsb_long/BLADE/SQS/BCCmcsqs1_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333/clusters.out
+  rndstr.in    : /tmp/arroyave/work/sqsb_long/BLADE/SQS/BCCmcsqs1_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333/rndstr.in
+
+corrdump cutoffs : -2=5.48 -3=5.18 -4=4.48
+native mcsqs     : wr=20.0  wn=0.75  wd=1.0
+normalize 1NN    : True
+
+  warning: clusters=125 diffs=88 for /tmp/arroyave/work/sqsb_long/BLADE/SQS/BCCmcsqs1_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333/bestsqs.out; using 88
+  mcsqs   run  1: native=-46.241737  computed=-46.241731  reported=-46.241737  corrdump=-0.011996  pair=-0.000272  epa=None
+  warning: clusters=125 diffs=88 for /tmp/arroyave/work/sqsb_long/BLADE/SQS/BCCmcsqs2_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333/bestsqs.out; using 88
+  mcsqs   run  2: native=-46.241572  computed=-46.241497  reported=-46.241572  corrdump=-0.009481  pair=-0.000095  epa=None
+  SCRAPS  run  1: native=None  computed=None  reported=None  corrdump=None  pair=None  epa=None
+  SCRAPS  run  2: native=None  computed=None  reported=None  corrdump=None  pair=None  epa=None
+  warning: clusters=125 diffs=88 for /tmp/arroyave/work/sqsb_long/SCRAPS/BCC_test_2/SQS/BCCrandom1_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333/bestsqs.out; using 88
+  Random  run  1: native=-46.238911  computed=-46.238911  reported=None  corrdump=-0.018166  pair=-0.000242  epa=None
+  warning: clusters=125 diffs=88 for /tmp/arroyave/work/sqsb_long/SCRAPS/BCC_test_2/SQS/BCCrandom2_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333/bestsqs.out; using 88
+  Random  run  2: native=-46.237020  computed=-46.237020  reported=None  corrdump=-0.020764  pair=-0.000833  epa=None
+
+Saved all_runs.csv → /tmp/arroyave/work/sqsb_long/BLADE/Files/BCC_Benchmark/comparison_results
+
+Method               mean          std         best     epa mean
+----------------------------------------------------------------
+Native mcsqs-scale objective (more negative = better)
+
+  mcsqs        -46.241654     0.000117   -46.241737          nan
+  SCRAPS     no objective data
+  Random       -46.237966     0.001337   -46.238911          nan
+
+mcsqs validation (computed − reported):
+  mean diff = 0.00004054  max abs = 0.00007479
+
+Saved: /tmp/arroyave/work/sqsb_long/BLADE/Files/BCC_Benchmark/comparison_results/bcc_method_comparison.png
+Saved: /tmp/arroyave/work/sqsb_long/BLADE/Files/BCC_Benchmark/comparison_results/bcc_objective_per_run.png
+CSV:   /tmp/arroyave/work/sqsb_long/BLADE/Files/BCC_Benchmark/comparison_results/all_runs.csv
+exit=0 wall=2s

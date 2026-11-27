@@ -1,0 +1,48 @@
+[fallback] server: orchid-mcp  (ORCHID_OFFLINE=1)
+  initialize                                                 149.8 ms       852 B ok
+  serverInfo={'name': 'orchid', 'version': '0.1.0'} protocolVersion=2025-06-18
+  tools/list                                                   2.9 ms     13988 B ok
+  tools (15): ['compare_to_dft', 'get_assessment_evidence', 'get_formation_enthalpy', 'get_invariant_reactions', 'get_paper', 'get_paper_relations', 'get_phase', 'get_phase_diagram', 'get_structure_type', 'get_system_data', 'get_tdb', 'list_tdb_files', 'search_papers', 'search_phases', 'search_systems']
+  Al-Cu/get_invariant_reactions(both)                        102.8 ms    344655 B ok
+  Al-Cu/get_phase_diagram                                      2.8 ms     35813 B ok
+  Al-Cu/get_phase_diagram(x_Cu=0.02,T=800)                     4.8 ms     40081 B ok
+  Al-Cu/get_phase_diagram(x_Cu=0.33,T=700)                     4.8 ms     40081 B ok
+  Al-Cu/list_tdb_files([Al,Cu])                               34.6 ms     24183 B ok
+  Al-Cu/list_tdb_files([Al,Cu],exact)                          3.0 ms      9005 B ok
+  Al-Cu/compare_to_dft                                       193.7 ms     21753 B ok
+  Al-Si/get_invariant_reactions(both)                         41.5 ms     11800 B ok
+  Al-Si/get_phase_diagram                                      1.1 ms     15216 B ok
+  Al-Si/get_phase_diagram(x_Si=0.1,T=800)                      3.5 ms     19676 B ok
+  Al-Si/get_phase_diagram(x_Si=0.126,T=900)                    1.1 ms     19446 B ok
+  Al-Si/list_tdb_files([Al,Si])                                6.2 ms     22322 B ok
+  Al-Si/list_tdb_files([Al,Si],exact)                          6.1 ms      9704 B ok
+  Al-Si/compare_to_dft                                         5.0 ms     18346 B ok
+  Al-Mg/get_invariant_reactions(both)                         55.1 ms    175180 B ok
+  Al-Mg/get_phase_diagram                                      6.7 ms     53938 B ok
+  Al-Mg/get_phase_diagram(x_Mg=0.05,T=700)                     6.0 ms     62378 B ok
+  Al-Mg/list_tdb_files([Al,Mg])                                9.8 ms     24550 B ok
+  Al-Mg/list_tdb_files([Al,Mg],exact)                          6.1 ms     13772 B ok
+  Al-Mg/compare_to_dft                                         2.7 ms     20104 B ok
+  Al-Zr/get_invariant_reactions(both)                        177.6 ms    772396 B ok
+  Al-Zr/get_phase_diagram                                      8.3 ms     79262 B ok
+  Al-Zr/get_phase_diagram(x_Zr=0.25,T=1000)                    7.6 ms     86174 B ok
+  Al-Zr/get_phase_diagram(x_Zr=0.002,T=900)                    8.6 ms     86066 B ok
+  Al-Zr/list_tdb_files([Al,Zr])                                3.0 ms     22420 B ok
+  Al-Zr/list_tdb_files([Al,Zr],exact)                          2.8 ms     11442 B ok
+  Al-Zr/compare_to_dft                                        18.6 ms    447326 B ok
+  Cu-Ni/get_invariant_reactions(both)                          4.3 ms      9190 B ok
+  Cu-Ni/get_phase_diagram                                      0.6 ms     10570 B ok
+  Cu-Ni/get_phase_diagram(x_Ni=0.3,T=1000)                     0.6 ms     13946 B ok
+  Cu-Ni/get_phase_diagram(x_Ni=0.5,T=1650)                     0.5 ms     13946 B ok
+  Cu-Ni/list_tdb_files([Cu,Ni])                                2.8 ms     21526 B ok
+  Cu-Ni/list_tdb_files([Cu,Ni],exact)                          2.7 ms      8194 B ok
+  Cu-Ni/compare_to_dft                                         2.3 ms     18706 B ok
+  get_formation_enthalpy(Al2Cu)                                7.2 ms     15200 B ok
+  get_formation_enthalpy(Al3Zr)                               23.5 ms    233356 B ok
+  get_formation_enthalpy(Al3Mg2)                              17.1 ms     11444 B ok
+  list_tdb_files(all)                                         11.6 ms      5686 B ok
+  search_systems([Al])                                         3.1 ms     66320 B ok
+  search_systems([Cu])                                         2.3 ms     47078 B ok
+  error-probe/get_phase_diagram(bad assessment)                0.5 ms       467 B ERROR: {"error": "assessment 'no-such-assessment' not found for AL-CU; available: ['AlCu-02Mie.tdb', 'AlCu-04Wit.tdb', 'AlCu-15Lia.tdb', 'AlCu-21Kro.tdb', 'AlCu-98Sau-LB.tdb']"}
+[fallback] server exit code 0; wall 1.36 s; stray messages 0
+[fallback] calls 43, errors 1

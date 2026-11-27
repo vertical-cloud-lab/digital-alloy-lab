@@ -1,0 +1,22 @@
+{
+  "synthetic": true,
+  "seed": 42,
+  "grid_count": 1716,
+  "feasible_count": 1621,
+  "oracle_pareto_count": 12,
+  "oracle_hypervolume": 29.165484786628483,
+  "reference_point": [
+    -1.0,
+    -1.0,
+    -1.0,
+    -1.0,
+    -1.0
+  ],
+  "initial": 8,
+  "iterations": 3,
+  "final_oracle_fraction": 0.8105466924447398,
+  "random_seed": 43,
+  "random_final_oracle_fraction": 0.7222945667111256,
+  "comparison_budget": "accepted objective evaluations; screening effort is not matched",
+  "torch_version": "2.14.1+cpu"
+}

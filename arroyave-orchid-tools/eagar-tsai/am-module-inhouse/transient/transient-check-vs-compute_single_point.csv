@@ -1,0 +1,29 @@
+case,isotherm,source,tau_us,L_um,W_um,D_um,peak_K,seconds
+alsi10mg,liquidus 867 K,"eagar-tsai compute_single_point, steady, 1 um grid",inf,318.0,220.0,105.0,6404.429,3.057
+alsi10mg,liquidus 867 K,"this script, steady (t to inf), 2 um grid",inf,318.447,221.089,105.942,6404.959,0.682
+alsi10mg,liquidus 867 K,"this script, 10 sigma/v after switch-on, 2 um grid",314.27,269.012,211.162,100.336,6383.121,0.483
+alsi10mg,liquidus 867 K,"this script, 20 sigma/v after switch-on, 2 um grid",628.539,309.121,219.946,105.303,6403.015,0.729
+alsi10mg,liquidus 867 K,"this script, 50 sigma/v after switch-on, 2 um grid",1571.348,318.412,221.086,105.941,6404.955,1.091
+alsi10mg,liquidus 867 K,"this script, 100 sigma/v after switch-on, 2 um grid",3142.697,318.447,221.089,105.942,6404.959,1.147
+alsi10mg,liquidus 867 K,"this script, 200 sigma/v after switch-on, 2 um grid",6285.394,318.447,221.089,105.942,6404.959,1.238
+alsi10mg,solidus 843 K,"eagar-tsai compute_single_point, steady, 1 um grid",inf,333.0,228.0,109.0,6404.429,2.949
+alsi10mg,solidus 843 K,"this script, steady (t to inf), 2 um grid",inf,334.27,228.667,109.917,6404.959,0.682
+alsi10mg,solidus 843 K,"this script, 10 sigma/v after switch-on, 2 um grid",314.27,277.841,217.638,103.717,6383.121,0.483
+alsi10mg,solidus 843 K,"this script, 20 sigma/v after switch-on, 2 um grid",628.539,322.924,227.375,109.194,6403.015,0.729
+alsi10mg,solidus 843 K,"this script, 50 sigma/v after switch-on, 2 um grid",1571.348,334.225,228.663,109.915,6404.955,1.091
+alsi10mg,solidus 843 K,"this script, 100 sigma/v after switch-on, 2 um grid",3142.697,334.27,228.667,109.917,6404.959,1.147
+alsi10mg,solidus 843 K,"this script, 200 sigma/v after switch-on, 2 um grid",6285.394,334.27,228.667,109.917,6404.959,1.238
+byu-blend,liquidus 1019 K,"eagar-tsai compute_single_point, steady, 1 um grid",inf,397.0,320.0,156.0,10995.117,3.373
+byu-blend,liquidus 1019 K,"this script, steady (t to inf), 2 um grid",inf,398.502,321.549,156.548,10995.259,0.721
+byu-blend,liquidus 1019 K,"this script, 10 sigma/v after switch-on, 2 um grid",795.495,333.831,295.044,142.533,10912.835,0.559
+byu-blend,liquidus 1019 K,"this script, 20 sigma/v after switch-on, 2 um grid",1590.99,377.526,314.743,152.953,10977.709,0.826
+byu-blend,liquidus 1019 K,"this script, 50 sigma/v after switch-on, 2 um grid",3977.476,397.675,321.321,156.428,10994.731,1.173
+byu-blend,liquidus 1019 K,"this script, 100 sigma/v after switch-on, 2 um grid",7954.951,398.495,321.547,156.547,10995.255,1.185
+byu-blend,liquidus 1019 K,"this script, 200 sigma/v after switch-on, 2 um grid",15909.903,398.502,321.549,156.548,10995.259,1.257
+byu-blend,eutectic 850 K,"eagar-tsai compute_single_point, steady, 1 um grid",inf,501.0,382.0,188.0,10995.117,3.412
+byu-blend,eutectic 850 K,"this script, steady (t to inf), 2 um grid",inf,500.532,383.584,188.35,10995.259,0.721
+byu-blend,eutectic 850 K,"this script, 10 sigma/v after switch-on, 2 um grid",795.495,391.035,342.988,167.15,10912.835,0.559
+byu-blend,eutectic 850 K,"this script, 20 sigma/v after switch-on, 2 um grid",1590.99,458.924,372.338,182.481,10977.709,0.826
+byu-blend,eutectic 850 K,"this script, 50 sigma/v after switch-on, 2 um grid",3977.476,498.548,383.192,188.144,10994.731,1.173
+byu-blend,eutectic 850 K,"this script, 100 sigma/v after switch-on, 2 um grid",7954.951,500.515,383.581,188.348,10995.255,1.185
+byu-blend,eutectic 850 K,"this script, 200 sigma/v after switch-on, 2 um grid",15909.903,500.532,383.584,188.35,10995.259,1.257

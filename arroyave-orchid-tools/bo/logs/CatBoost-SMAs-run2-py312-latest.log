@@ -1,0 +1,17 @@
+    return values._reduce(name, skipna=skipna, keepdims=True, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/CatBoost-SMAs/lib/python3.12/site-packages/pandas/core/arrays/string_.py", line 981, in _reduce
+    raise TypeError(f"Cannot perform reduction '{name}' with string dtype")
+TypeError: Cannot perform reduction 'median' with string dtype
+/tmp/arroyave/work/CatBoost-SMAs/main.py:68: SyntaxWarning: invalid escape sequence '\d'
+  formula_df['family'] = formula_df.formula.replace('\d+', '', regex=True).replace("AlNiTiZr","NiTiZrAl").replace("NiRhTi","NiTiRh").replace("CuNiPdTi", "NiTiPdCu").replace("NiPdPtTi", "NiTiPdPt").replace("NbNiTiZr", "NiTiNbZr").replace("HfNiTiZr", "NiTiHfZr").replace("NiPdTaTi", "NiTiPdTa").replace
+/tmp/arroyave/venvs/CatBoost-SMAs/lib/python3.12/site-packages/CBFV/composition.py:7: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this packa
+  import pkg_resources
+Processing Input Data:   0%|          | 0/1689 [00:00<?, ?it/s]Processing Input Data: 100%|██████████| 1689/1689 [00:00<00:00, 40714.85it/s]
+	Featurizing Compositions...
+Assigning Features...:   0%|          | 0/1689 [00:00<?, ?it/s]Assigning Features...: 100%|██████████| 1689/1689 [00:00<00:00, 24647.65it/s]
+	Creating Pandas Objects...
+Traceback (most recent call last):
+  File "/tmp/arroyave/work/CatBoost-SMAs/main.py", line 87, in <module>
+    X, _, _, _ = composition.generate_features(formula_df, elem_prop='jarvis', extend_features=True, sum_feat = True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

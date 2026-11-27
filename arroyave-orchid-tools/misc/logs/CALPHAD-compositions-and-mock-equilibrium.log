@@ -1,0 +1,46 @@
+Compositions.py as shipped: 1.03 s, 91236 KB
+-rw-r--r-- 1 runner runner 654850 Nov  5 03:49 TiVCo_n3_d200_all_systems.csv
+-rw-r--r-- 1 runner runner  15664 Nov  5 03:49 TiVCo_n3_d200_nonlargest_systems.csv
+-rw-r--r-- 1 runner runner 639226 Nov  5 03:49 TiVCo_n3_d200_single_system.csv
+-rw-r--r-- 1 runner runner   5396 Nov  5 03:49 TiVCo_n3_d200_system_Ti-Co.csv
+-rw-r--r-- 1 runner runner 639226 Nov  5 03:49 TiVCo_n3_d200_system_Ti-V-Co.csv
+-rw-r--r-- 1 runner runner   5095 Nov  5 03:49 TiVCo_n3_d200_system_Ti-V.csv
+-rw-r--r-- 1 runner runner   5197 Nov  5 03:49 TiVCo_n3_d200_system_V-Co.csv
+-rw-r--r-- 1 runner runner     96 Nov  5 03:49 TiVCo_n3_d200_system_unaries.csv
+  20302 TiVCo_n3_d200_all_systems.csv
+    601 TiVCo_n3_d200_nonlargest_systems.csv
+  19702 TiVCo_n3_d200_single_system.csv
+    200 TiVCo_n3_d200_system_Ti-Co.csv
+  19702 TiVCo_n3_d200_system_Ti-V-Co.csv
+    200 TiVCo_n3_d200_system_Ti-V.csv
+    200 TiVCo_n3_d200_system_V-Co.csv
+      4 TiVCo_n3_d200_system_unaries.csv
+  60911 total
+   970 AlCuMgSi_n4_d20_single_system.csv
+   172 TiVCo_n3_d20_single_system.csv
+  1772 AlCuMgSi_n4_d20_all_systems.csv
+   232 TiVCo_n3_d20_all_systems.csv
+  3146 total
+  model_input.at[i, f'VolFra_{phase}_at_{temp}'] = value
+/tmp/arroyave/work/CALPHAD/Equilibrium/run/TC_Equilibrium_mock2.py:84: Pandas4Warning: Setting a value on a DataFrame via .at with a key that does not exist in the index is deprecated and will raise a KeyError in a future version. Use .loc instead.
+  model_input.at[i, f'MolVol_{phase}_from_{temp}_to_25'] = mv
+Completed: Equil_OUT_86.csv
+Completed: Equil_OUT_0.csv
+Script execution finished in 0.24 seconds
+Log file written to: TiVCo_n3_d20_single_system_TCequi1/execution_log.txt
+TC_Equilibrium (mock) wall 0.58 s
+All_data.csv
+EQUIL_OUT_0.csv
+EQUIL_OUT_86.csv
+all_checks_passed.txt
+cpu_log_170.txt
+cpu_log_85.txt
+execution_log.txt
+Material,Ti,V,Co,system_sig,system_size,VolFra_BCC_A2_at_1000,MolVol_BCC_A2_from_1000_to_25
+61,0.05,0.05,0.9,Ti-V-Co,3,0.24000000000000002,7.1e-06
+62,0.05,0.1,0.85,Ti-V-Co,3,0.28,7.15e-06
+172 TiVCo_n3_d20_single_system_TCequi1/All_data.csv
+
+real	0m2.518s
+user	0m2.207s
+sys	0m0.332s

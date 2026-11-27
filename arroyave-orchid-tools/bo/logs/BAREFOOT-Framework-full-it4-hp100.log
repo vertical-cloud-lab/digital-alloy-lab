@@ -1,0 +1,78 @@
+2026-11-05 03:48:46,538	WARNING authentication_token_setup.py:85 -- Token authentication is enabled for this Ray cluster. Set RAY_AUTH_MODE=disabled to opt out. For more information, see https://docs.ray.io/en/latest/ray-security/token-auth.html
+2026-11-05 03:48:48,501	INFO worker.py:2038 -- Started a local Ray instance.
+/tmp/arroyave/work/barefoot/barefoot.py:349: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  self.evaluatedPoints = pd.concat([self.evaluatedPoints,temp])
+/tmp/arroyave/work/barefoot/barefoot.py:372: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  self.iterationData = pd.concat([self.iterationData,temp])
+*** SIGTERM received at time=1793850926 on cpu 1 ***
+PC: @     0x7fd69a898e51  (unknown)  (unknown)
+    @     0x7fd69a845330  (unknown)  (unknown)
+    @     0x7fd69a8a5098         96  (unknown)
+    @     0x555f16979fcc         96  PyThread_acquire_lock_timed
+    @     0x555f169dad77         96  acquire_timed
+    @     0x555f169daf4c         32  lock_PyThread_acquire_lock
+    @     0x555f168d90f3         64  method_vectorcall_VARARGS_KEYWORDS
+    @     0x555f168228e2        736  _PyEval_EvalFrameDefault
+    @     0x555f167c0373        208  _PyFunction_Vectorcall
+    @     0x555f168228e2        736  _PyEval_EvalFrameDefault
+    @     0x555f167c0373        208  _PyFunction_Vectorcall
+    @     0x555f168228e2        736  _PyEval_EvalFrameDefault
+    @     0x555f167c0373        208  _PyFunction_Vectorcall
+    @     0x555f168228e2        736  _PyEval_EvalFrameDefault
+    @     0x555f167c0373        208  _PyFunction_Vectorcall
+    @     0x555f168228e2        736  _PyEval_EvalFrameDefault
+    @     0x555f167c0373        208  _PyFunction_Vectorcall
+    @     0x555f168228e2        736  _PyEval_EvalFrameDefault
+    @     0x555f167c0373        208  _PyFunction_Vectorcall
+    @     0x555f168228e2        736  _PyEval_EvalFrameDefault
+    @     0x555f167c0373        208  _PyFunction_Vectorcall
+    @     0x555f168228e2        736  _PyEval_EvalFrameDefault
+    @     0x555f167c0373        208  _PyFunction_Vectorcall
+    @     0x555f168500ec        144  call_function
+    @     0x555f16836795        736  _PyEval_EvalFrameDefault
+    @     0x555f167c0373        208  _PyFunction_Vectorcall
+    @     0x555f168228e2        736  _PyEval_EvalFrameDefault
+    @     0x555f167c0373        208  _PyFunction_Vectorcall
+    @     0x555f168228e2        736  _PyEval_EvalFrameDefault
+    @     0x555f1693d472        208  _PyEval_Vector
+    @     0x555f16973d82        128  run_mod
+    @     0x555f1670628c         80  pyrun_file
+    @     0x555f16705d93         80  _PyRun_SimpleFileObject
+    @ ... and at least 9 more frames
+[2026-11-05 03:55:26,253 E 20046 20046] logging.cc:474: *** SIGTERM received at time=1793850926 on cpu 1 ***
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474: PC: @     0x7fd69a898e51  (unknown)  (unknown)
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x7fd69a845330  (unknown)  (unknown)
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x7fd69a8a5098         96  (unknown)
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f16979fcc         96  PyThread_acquire_lock_timed
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f169dad77         96  acquire_timed
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f169daf4c         32  lock_PyThread_acquire_lock
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f168d90f3         64  method_vectorcall_VARARGS_KEYWORDS
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f168228e2        736  _PyEval_EvalFrameDefault
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f167c0373        208  _PyFunction_Vectorcall
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f168228e2        736  _PyEval_EvalFrameDefault
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f167c0373        208  _PyFunction_Vectorcall
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f168228e2        736  _PyEval_EvalFrameDefault
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f167c0373        208  _PyFunction_Vectorcall
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f168228e2        736  _PyEval_EvalFrameDefault
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f167c0373        208  _PyFunction_Vectorcall
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f168228e2        736  _PyEval_EvalFrameDefault
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f167c0373        208  _PyFunction_Vectorcall
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f168228e2        736  _PyEval_EvalFrameDefault
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f167c0373        208  _PyFunction_Vectorcall
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f168228e2        736  _PyEval_EvalFrameDefault
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f167c0373        208  _PyFunction_Vectorcall
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f168228e2        736  _PyEval_EvalFrameDefault
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f167c0373        208  _PyFunction_Vectorcall
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f168500ec        144  call_function
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f16836795        736  _PyEval_EvalFrameDefault
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f167c0373        208  _PyFunction_Vectorcall
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f168228e2        736  _PyEval_EvalFrameDefault
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f167c0373        208  _PyFunction_Vectorcall
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f168228e2        736  _PyEval_EvalFrameDefault
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f1693d472        208  _PyEval_Vector
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f16973d82        128  run_mod
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f1670628c         80  pyrun_file
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @     0x555f16705d93         80  _PyRun_SimpleFileObject
+[2026-11-05 03:55:26,254 E 20046 20046] logging.cc:474:     @ ... and at least 9 more frames
+2026-11-05 03:55:27,059	WARNING worker.py:1681 -- SIGTERM handler is not set because current thread is not the main thread.
+timeout: the monitored command dumped core

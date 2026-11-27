@@ -1,0 +1,55 @@
+{
+  "Cu70Ni30": {
+    "hand": {
+      "mixing_entropy": 5.079008404106073,
+      "mixing_enthalpy": 3.36,
+      "delta": 1.1561212727734689,
+      "vec": 10.7,
+      "melting_temperature": 1468.884,
+      "omega": 2.220379220433615,
+      "pairs_kJ/mol": {
+        "Cu-Ni": 4.0
+      },
+      "radii_pm": {
+        "Cu": 127.8,
+        "Ni": 124.6
+      }
+    },
+    "package": {
+      "mixing_entropy": 5.079008404106073,
+      "mixing_enthalpy": 3.36,
+      "delta": 1.1561212727734689,
+      "vec": 10.7,
+      "melting_temperature": 1469,
+      "omega": 2.2205545671523277
+    }
+  },
+  "Al89.65Si10Mg0.35": {
+    "hand": {
+      "mixing_entropy": 2.8934319125001307,
+      "mixing_enthalpy": -6.8749020000000005,
+      "delta": 6.0147381792994095,
+      "vec": 3.0965000000000003,
+      "melting_temperature": 1008.8018800000002,
+      "omega": 0.4245732598053219,
+      "pairs_kJ/mol": {
+        "Al-Si": -19.0,
+        "Al-Mg": -2.0,
+        "Si-Mg": -26.0
+      },
+      "radii_pm": {
+        "Al": 143.2,
+        "Si": 115.3,
+        "Mg": 160.1
+      }
+    },
+    "package": {
+      "mixing_entropy": 2.8934319125001307,
+      "mixing_enthalpy": -6.8749020000000005,
+      "delta": 6.0147381792994095,
+      "vec": 3.0965000000000003,
+      "melting_temperature": 1009,
+      "omega": 0.4246566423365208
+    }
+  }
+}

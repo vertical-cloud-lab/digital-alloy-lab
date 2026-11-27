@@ -1,0 +1,71 @@
+set mlip_name = 
+set model_name = 
+set is_static = 0
+set checkrelaxcutoff = 
+foreach arg ( -mlip=Grace -model=GRACE-2L-OMAT )
+if ( `echo "$arg" | grep -q "^-mlip="; echo $?` == 0 ) then
+echo -mlip=Grace
+grep -q ^-mlip=
+echo 0
+set mlip_name = `expr "$arg" : '-mlip=\(.*\)'`
+expr -mlip=Grace : -mlip=\(.*\)
+echo MLIP Name=Grace
+MLIP Name=Grace
+else if ( `echo "$arg" | grep -q "^-model="; echo $?` == 0 ) then
+end
+if ( `echo "$arg" | grep -q "^-mlip="; echo $?` == 0 ) then
+echo -model=GRACE-2L-OMAT
+grep -q ^-mlip=
+echo 1
+if ( `echo "$arg" | grep -q "^-model="; echo $?` == 0 ) then
+echo -model=GRACE-2L-OMAT
+grep -q ^-model=
+echo 0
+set model_name = `expr "$arg" : '-model=\(.*\)'`
+expr -model=GRACE-2L-OMAT : -model=\(.*\)
+echo Model=GRACE-2L-OMAT
+Model=GRACE-2L-OMAT
+else if ( -model=GRACE-2L-OMAT == -static ) then
+end
+if ( Grace ==  || GRACE-2L-OMAT ==  ) then
+if ( ! -e vasp.wrap ) then
+runstruct_vasp -nr
+awk: tmp.awk:27: print "    if (`echo \"$checkrelaxcutoff $relax_val\" | awk '" (if ($1 < $2) print 1; else print 0) "'` == 1) then"
+awk: tmp.awk:27:                                                                 ^ syntax error
+if ( ! -e POSCAR ) then
+if ( 0 == 1 ) then
+MLIPrelax -mlip=Grace -model=GRACE-2L-OMAT
+Running relaxation with GraceCalculator and model 'GRACE-2L-OMAT'...
+Traceback (most recent call last):
+  File "/tmp/arroyave/venvs/paipai/lib/python3.12/site-packages/pymatgen/io/vasp/inputs.py", line 365, in from_str
+    chunks[0] = "\n" + chunks[0]
+                       ~~~~~~^^^
+IndexError: list index out of range
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/tmp/arroyave/work/pf-CuNi2/FCC_A1/sqs_lev=0_a_Cu=1/MLIPrelax.py", line 6, in <module>
+    struct = Structure.from_file("POSCAR")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/paipai/lib/python3.12/site-packages/pymatgen/core/structure.py", line 3198, in from_file
+    struct = dispatch_read_file(handler, filename, primitive=primitive, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/paipai/lib/python3.12/site-packages/pymatgen/io/registry.py", line 495, in dispatch_read_file
+    return handler.read_str(contents, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/paipai/lib/python3.12/site-packages/pymatgen/io/vasp/__init__.py", line 38, in _poscar_read_str
+    return Poscar.from_str(
+           ^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/paipai/lib/python3.12/site-packages/pymatgen/io/vasp/inputs.py", line 367, in from_str
+    raise ValueError("Empty POSCAR")
+ValueError: Empty POSCAR
+endif
+extract_MLIP
+sed: can't read CONTCAR: No such file or directory
+sed: can't read CONTCAR: No such file or directory
+sed: can't read force_temp.out: No such file or directory
+cat: stress_temp.out: No such file or directory
+numbers: Subscript out of range.
+if ( 1 &&  !=  ) then
+then: then/endif not found.

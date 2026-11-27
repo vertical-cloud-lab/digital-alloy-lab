@@ -1,0 +1,51 @@
+Thu Nov  5 04:04:15 UTC 2026
+Using CPython 3.12.3 interpreter at: /usr/bin/python3.12
+Creating virtual environment at: /tmp/arroyave/venvs/orchid-examples-full
+Activate with: source /tmp/arroyave/venvs/orchid-examples-full/bin/activate
+Using Python 3.12.3 environment at: /tmp/arroyave/venvs/orchid-examples-full
+Resolved 33 packages in 99ms
+Downloading pandas (11.5MiB)
+ Downloaded pandas
+Prepared 1 package in 165ms
+Installed 33 packages in 48ms
+ + contourpy==1.4.0
+ + coverage==7.17.0
+ + cycler==0.12.1
+ + flexcache==0.3
+ + flexparser==0.4
+ + fonttools==4.67.0
+ + iniconfig==2.3.1
+ + kiwisolver==1.5.1
+ + matplotlib==3.10.7
+ + numpy==2.3.2
+ + packaging==26.3
+ + pandas==3.1.0
+ + pillow==13.0.0
+ + pint==0.26.2
+ + platformdirs==4.13.5
+ + pluggy==1.7.0
+ + pycalphad==0.11.2
+ + pygments==2.21.0
+ + pyparsing==3.3.3
+ + pytest==9.1.1
+ + pytest-cov==7.1.0
+ + python-dateutil==3.0.0
+ + runtype==0.5.3
+ + scipy==1.16.1
+ + setuptools==84.2.1
+ + setuptools-scm==10.3.4
+ + six==1.17.0
+ + symengine==0.13.0
+ + tinydb==4.9.0
+ + typing-extensions==4.16.0
+ + tzdata==2026.5
+ + vcs-versioning==2.6.0
+ + xarray==2025.7.1
+sgte_94Zen_repro       field    n= 28 recall 0.722 [0.593,0.843] prec 0.650 F1 0.665 acc 0.898 exact 0.571
+sgte_94Zen_repro       boundary n=287 recall 0.728 [0.696,0.761] | eq-cluster [0.674,0.776] source-cluster(n=11) [0.593,0.855] prec 0.720 F1 0.712 acc 0.877 exact 0.272
+  -> /tmp/arroyave/work/oneshot-out/cuzr_sgte_94Zen_repro.json  (11 s, retries {'cells_failed_first_pass': 0, 'recovered_alone': 0, 'recovered_drop_one_min_gm': 0, 'recovered_nudged': 0, 'still_failed': 0}, failed cells 0)
+
+real	0m31.354s
+user	0m31.030s
+sys	0m0.284s
+exit=0

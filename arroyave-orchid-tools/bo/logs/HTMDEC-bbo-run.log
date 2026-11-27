@@ -1,0 +1,25 @@
+=== shipped package_BBO_single_iteration.py
+  File "/tmp/arroyave/work/HTMDEC/bbo_python/package_BBO_single_iteration.py", line 55, in <module>
+    print(f'Starting hypervolume: {data_input["hypervolume"].max()}')
+                                   ^^^^^^^^^^
+NameError: name 'data_input' is not defined
+rc=1
+=== ITER=1 (03:50:05)
+2  0.25  0.0  0.00  0.05  0.30  0.40
+3  0.15  0.0  0.05  0.05  0.10  0.65
+4  0.30  0.0  0.05  0.20  0.00  0.45
+Iteration 2 predicted and exported
+Hypervolume: from 231.7 to 238.66
+Optimization iteration completed
+rc=0 wall=11s
+=== ITER=2 (03:50:16)
+Traceback (most recent call last):
+  File "/tmp/arroyave/work/HTMDEC/bbo_python/run_iter.py", line 57, in <module>
+    print(f'Starting hypervolume: {data_input["hypervolume"].max()}')
+                                   ^^^^^^^^^^
+NameError: name 'data_input' is not defined
+rc=1 wall=1s
+candidates_unique_1_to_2.xlsx
+hyperparameter.csv
+inputSpace_from1000_size20_iter1.xlsx
+inputSpace_from1000_size20_iter2.xlsx

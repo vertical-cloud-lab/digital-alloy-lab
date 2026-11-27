@@ -1,0 +1,3 @@
+{"vector_docs": 20, "byte_identical": 20}
+rerun {'precision': 0.8470031545741324, 'recall': 0.9728260869565217, 'value_only_recall': 0.9734340687999363, 'values_pred': 634, 'values_true': 552}
+shipped {'precision': 0.8470031545741324, 'recall': 0.9728260869565217, 'value_only_recall': 0.9734340687999363, 'values_pred': 634, 'values_true': 552}

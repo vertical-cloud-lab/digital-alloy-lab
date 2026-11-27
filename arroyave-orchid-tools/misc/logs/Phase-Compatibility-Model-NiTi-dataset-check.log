@@ -1,0 +1,13 @@
+rows: 186 | Transformation labels: {'B19prime': 107, 'B19': 71, 'B19prime_pw': 8}
+type accuracy on labelled rows: 0.916 (n=178)
+predicted  B19  B19'
+label               
+B19         56    15
+B19'         0   107
+lambda2 MAE vs lambda2_combined: 0.0067 (n=186)
+delta(2.x) - Delta(stored): mean -0.465, min -0.576, max -0.210 (percentage points), n=186
+Pearson r between the two: 0.9980
+
+real	0m2.348s
+user	0m0.628s
+sys	0m0.092s

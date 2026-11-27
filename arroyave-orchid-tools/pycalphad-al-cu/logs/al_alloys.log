@@ -1,0 +1,34 @@
+=== al-alloys ===
+[AlSi10Mg] 37 phases; models built 1 s
+[AlSi10Mg] events liquidus=595.4C, solidus=568.8C, FCC_A1=595.4C, SI_DIAMOND_A4=575.9C (5 s)
+[AlSi10Mg] equilibrium done (6 s); Scheil...
+[AlSi10Mg] liq 595.4 sol 568.8 Si-start 575.9; Scheil fs0.9 568.0 fs0.99 559.4 end 559.4 f_eut 0.766 (11.5 s)
+[AlSi10Mg+0.3Fe] 67 phases; models built 1 s
+[AlSi10Mg+0.3Fe] events liquidus=594.9C, solidus=567.6C, FCC_A1=594.9C, SI_DIAMOND_A4=575.0C, ALFESI_T6=573.9C (4 s)
+[AlSi10Mg+0.3Fe] equilibrium done (5 s); Scheil...
+[AlSi10Mg+0.3Fe] liq 594.9 sol 567.6 Si-start 575.0; Scheil fs0.9 566.7 fs0.99 558.9 end 558.9 f_eut 0.766 (14.1 s)
+[AlSi12Mg (Si-enriched)] 37 phases; models built 0 s
+[AlSi12Mg (Si-enriched)] events liquidus=580.9C, solidus=568.6C, FCC_A1=580.9C, SI_DIAMOND_A4=576.2C (3 s)
+[AlSi12Mg (Si-enriched)] equilibrium done (3 s); Scheil...
+[AlSi12Mg (Si-enriched)] liq 580.9 sol 568.6 Si-start 576.2; Scheil fs0.9 567.9 fs0.99 559.5 end 559.4 f_eut 0.950 (6.5 s)
+[AlSi12Mg+0.3Fe (Si-enriched)] 67 phases; models built 1 s
+[AlSi12Mg+0.3Fe (Si-enriched)] events liquidus=580.5C, solidus=567.4C, FCC_A1=580.5C, SI_DIAMOND_A4=575.5C, ALFESI_T6=573.9C (6 s)
+[AlSi12Mg+0.3Fe (Si-enriched)] equilibrium done (7 s); Scheil...
+[AlSi12Mg+0.3Fe (Si-enriched)] liq 580.5 sol 567.4 Si-start 575.5; Scheil fs0.9 566.6 fs0.99 559.0 end 558.9 f_eut 0.939 (13.1 s)
+[AlSi12 (binary Al-12Si)] 27 phases; models built 0 s
+[AlSi12 (binary Al-12Si)] events liquidus=581.8C, solidus=577.7C, FCC_A1=581.8C, SI_DIAMOND_A4=577.7C (2 s)
+[AlSi12 (binary Al-12Si)] equilibrium done (3 s); Scheil...
+[AlSi12 (binary Al-12Si)] liq 581.8 sol 577.7 Si-start 577.7; Scheil fs0.9 577.6 fs0.99 577.6 end 577.6 f_eut 0.951 (4.8 s)
+[AlSi10Mg (Al-9.92Si-0.291Mg-0.137Fe powder)] 67 phases; models built 1 s
+[AlSi10Mg (Al-9.92Si-0.291Mg-0.137Fe powder)] events liquidus=595.9C, solidus=569.2C, FCC_A1=595.9C, SI_DIAMOND_A4=575.8C, ALFESI_T6=573.1C (8 s)
+[AlSi10Mg (Al-9.92Si-0.291Mg-0.137Fe powder)] equilibrium done (9 s); Scheil...
+[AlSi10Mg (Al-9.92Si-0.291Mg-0.137Fe powder)] liq 595.9 sol 569.2 Si-start 575.8; Scheil fs0.9 568.3 fs0.99 558.9 end 558.9 f_eut 0.755 (20.8 s)
+=== al-alloys done in 80 s ===
+=== figures ===
+=== figures done in 1 s ===
+=== literature ===
+wrote 42 rows to /tmp/arroyave/results/pycalphad-al-cu/data/literature_values.csv
+=== literature done in 0 s ===
+=== table ===
+comparison.csv: 229 rows; 24 with a Thermo-Calc value, 42 with an experimental value
+=== table done in 0 s ===

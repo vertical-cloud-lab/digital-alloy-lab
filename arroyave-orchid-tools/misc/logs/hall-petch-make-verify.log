@@ -1,0 +1,13 @@
+/tmp/arroyave/venvs/hall-petch/bin/python scripts/06_validation/validate_manuscript.py
+Traceback (most recent call last):
+  File "/tmp/arroyave/work/hall-petch/scripts/06_validation/validate_manuscript.py", line 171, in <module>
+    main()
+  File "/tmp/arroyave/work/hall-petch/scripts/06_validation/validate_manuscript.py", line 148, in main
+    assert definition in manuscript
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+make: *** [Makefile:118: verify] Error 1
+
+real	0m0.405s
+user	0m0.346s
+sys	0m0.054s

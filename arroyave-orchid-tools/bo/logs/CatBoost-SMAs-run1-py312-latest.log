@@ -1,0 +1,8 @@
+/tmp/arroyave/work/CatBoost-SMAs/main.py:68: SyntaxWarning: invalid escape sequence '\d'
+  formula_df['family'] = formula_df.formula.replace('\d+', '', regex=True).replace("AlNiTiZr","NiTiZrAl").replace("NiRhTi","NiTiRh").replace("CuNiPdTi", "NiTiPdCu").replace("NiPdPtTi", "NiTiPdPt").replace("NbNiTiZr", "NiTiNbZr").replace("HfNiTiZr", "NiTiHfZr").replace("NiPdTaTi", "NiTiPdTa").replace("CuNiTi","NiTiCu").replace("NiPtTi","NiTiPt").replace("HfNiTi","NiTiHf").replace("AuCuNiTi", "NiTiCuAu").replace("AuNiTi", "NiTiAu").replace("BNiPdTi","NiTiPdB").replace("BNiTiZr","NiTiZrB").replace("CoCuNiTi","NiTiCuCo").replace("CoInMnNi","NiMnCoIn").replace("CoNiPdTi","NiTiPdCo").replace("CuFeHfNiTi","NiTiHfFeCu").replace("CuHfNiTi","NiTiHfCu").replace("CuHfNiTiZr","NiTiHfZrCu").replace("CuNbNiTi","NiTiCuNb").replace("CuNiTiZr","NiTiCuZr").replace("HfNiPdTi","NiTiPdHf").replace("NbNiTi","NiTiNb").replace("NiPdScTi","NiTiPdSc").replace("NiPdTi", "NiTiPd")
+Traceback (most recent call last):
+  File "/tmp/arroyave/work/CatBoost-SMAs/main.py", line 4, in <module>
+    from CBFV import composition
+  File "/tmp/arroyave/venvs/CatBoost-SMAs/lib/python3.12/site-packages/CBFV/composition.py", line 7, in <module>
+    import pkg_resources
+ModuleNotFoundError: No module named 'pkg_resources'

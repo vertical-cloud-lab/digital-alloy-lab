@@ -1,0 +1,7 @@
+$ /usr/bin/python3.12 -c 'import pymatgen, materialsframework'   (interpreter CMake baked into bin/paipai by default)
+ModuleNotFoundError: No module named 'pymatgen'
+$ cmake .. -DCMAKE_INSTALL_PREFIX=<prefix> -DPython3_EXECUTABLE=/tmp/arroyave/venvs/paipai/bin/python && cmake --build . -j2 --target install
+-- Installing: /tmp/arroyave/work/PAIPAI/prefix/bin/paipai
+-- Up-to-date: /tmp/arroyave/work/PAIPAI/prefix/bin/fast_worker.py
+-- Up-to-date: /tmp/arroyave/work/PAIPAI/prefix/bin/slow_worker.py
+12:PYTHON="/tmp/arroyave/venvs/paipai/bin/python"

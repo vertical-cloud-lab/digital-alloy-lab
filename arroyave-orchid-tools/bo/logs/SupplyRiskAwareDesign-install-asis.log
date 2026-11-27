@@ -1,0 +1,17 @@
+Using CPython 3.12.3 interpreter at: /usr/bin/python3.12
+Creating virtual environment at: /tmp/arroyave/venvs/srad
+Activate with: source /tmp/arroyave/venvs/srad/bin/activate
+Using Python 3.12.3 environment at: /tmp/arroyave/venvs/srad
+Resolved 8 packages in 64ms
+   Building sradd @ file:///tmp/arroyave/work/srad-asis
+error: Failed to build `sradd @ file:///tmp/arroyave/work/srad-asis`
+  cause: The build backend returned an error
+  cause: Call to `setuptools.build_meta.get_requires_for_build_editable` failed (exit status: 1)
+
+         [stdout]
+         running egg_info
+
+         [stderr]
+         error: error in 'egg_base' option: 'src' does not exist or is not a directory
+
+hint: Build failures usually indicate a problem with the package or the build environment

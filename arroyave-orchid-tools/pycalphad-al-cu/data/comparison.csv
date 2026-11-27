@@ -1,0 +1,226 @@
+system_or_alloy,quantity,pycalphad_value,database,thermocalc_value,thermocalc_db,thermocalc_source_doi,experiment_value,experiment_source,delta_pycalphad_vs_tc,delta_pycalphad_vs_exp,notes
+AlSi10Mg,equilibrium liquidus (C),595.4,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,597.0,"DSC on AlSi10Mg powder (DIN EN 1706), doi:10.48550/arXiv.2507.23422",,-1.6187,"No Thermo-Calc liquidus found for standard AlSi10Mg. TCAL7 gives (Al) onset ~590 C for a 0.8Mn die-casting variant Al-10Si-0.35Mg-0.8Mn-0.3Fe (doi:10.1007/s40962-023-01018-5): different alloy, not used"
+AlSi10Mg,equilibrium solidus (C),568.8,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,563.0,"DSC on AlSi10Mg powder (DIN EN 1706), doi:10.48550/arXiv.2507.23422",,5.8,DSC powder composition not given; variation < 2 C between powder fractions
+AlSi10Mg,"Al-Si eutectic start, equilibrium (C)",575.9,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,"TCAL7 gives ~570 C (also ~574 C) for the 0.8Mn variant of doi:10.1007/s40962-023-01018-5: different alloy, not used"
+AlSi10Mg,equilibrium freezing range (K),26.6,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,34.0,"DSC on AlSi10Mg powder (DIN EN 1706), doi:10.48550/arXiv.2507.23422 (597 - 563)",,-7.4,"a calculated range of ~30 C is quoted for AlSi10Mg in doi:10.3390/ma12071007 (from Tang et al. 2016; software and database not verified), not used"
+AlSi10Mg,Scheil T at fs=0.90 (C),568.0,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi10Mg,Scheil T at fs=0.99 (C),559.4,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi10Mg,Scheil terminal (final eutectic) T (C),559.4,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi10Mg,"Scheil freezing range, equilibrium liquidus to fs=0.99 (K)",36.0,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,Scheil uses 1 K steps from liquidus + 2 K
+AlSi10Mg,Scheil fraction eutectic (mole),0.7656,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,solid formed after Si first appears
+AlSi10Mg,equilibrium liquid fraction at eutectic start (mole),0.7573,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi10Mg,equilibrium Si mass fraction at 300 C,0.0976,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi10Mg,equilibrium Mg2Si mass fraction at 300 C,0.0049,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi10Mg+0.3Fe,equilibrium liquidus (C),594.9,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi10Mg+0.3Fe,equilibrium solidus (C),567.6,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi10Mg+0.3Fe,"Al-Si eutectic start, equilibrium (C)",575.0,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi10Mg+0.3Fe,equilibrium freezing range (K),27.3,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi10Mg+0.3Fe,Scheil T at fs=0.90 (C),566.7,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi10Mg+0.3Fe,Scheil T at fs=0.99 (C),558.9,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi10Mg+0.3Fe,Scheil terminal (final eutectic) T (C),558.9,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi10Mg+0.3Fe,"Scheil freezing range, equilibrium liquidus to fs=0.99 (K)",36.0,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,Scheil uses 1 K steps from liquidus + 2 K
+AlSi10Mg+0.3Fe,Scheil fraction eutectic (mole),0.7665,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,solid formed after Si first appears
+AlSi10Mg+0.3Fe,equilibrium liquid fraction at eutectic start (mole),0.7541,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi10Mg+0.3Fe,equilibrium Si mass fraction at 300 C,0.0969,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi10Mg+0.3Fe,equilibrium Mg2Si mass fraction at 300 C,0.0049,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi10Mg+0.3Fe,equilibrium beta-AlFeSi (ALFESI_T6) mass fraction at 500 C,0.0111,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi12Mg (Si-enriched),equilibrium liquidus (C),580.9,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi12Mg (Si-enriched),equilibrium solidus (C),568.6,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi12Mg (Si-enriched),"Al-Si eutectic start, equilibrium (C)",576.2,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi12Mg (Si-enriched),equilibrium freezing range (K),12.3,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi12Mg (Si-enriched),Scheil T at fs=0.90 (C),567.9,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi12Mg (Si-enriched),Scheil T at fs=0.99 (C),559.5,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi12Mg (Si-enriched),Scheil terminal (final eutectic) T (C),559.4,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi12Mg (Si-enriched),"Scheil freezing range, equilibrium liquidus to fs=0.99 (K)",21.5,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,Scheil uses 1 K steps from liquidus + 2 K
+AlSi12Mg (Si-enriched),Scheil fraction eutectic (mole),0.9502,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,solid formed after Si first appears
+AlSi12Mg (Si-enriched),equilibrium liquid fraction at eutectic start (mole),0.9419,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi12Mg (Si-enriched),equilibrium Si mass fraction at 300 C,0.1176,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi12Mg (Si-enriched),equilibrium Mg2Si mass fraction at 300 C,0.0049,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi12Mg+0.3Fe (Si-enriched),equilibrium liquidus (C),580.5,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi12Mg+0.3Fe (Si-enriched),equilibrium solidus (C),567.4,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi12Mg+0.3Fe (Si-enriched),"Al-Si eutectic start, equilibrium (C)",575.5,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi12Mg+0.3Fe (Si-enriched),equilibrium freezing range (K),13.1,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi12Mg+0.3Fe (Si-enriched),Scheil T at fs=0.90 (C),566.6,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi12Mg+0.3Fe (Si-enriched),Scheil T at fs=0.99 (C),559.0,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi12Mg+0.3Fe (Si-enriched),Scheil terminal (final eutectic) T (C),558.9,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi12Mg+0.3Fe (Si-enriched),"Scheil freezing range, equilibrium liquidus to fs=0.99 (K)",21.6,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,Scheil uses 1 K steps from liquidus + 2 K
+AlSi12Mg+0.3Fe (Si-enriched),Scheil fraction eutectic (mole),0.9391,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,solid formed after Si first appears
+AlSi12Mg+0.3Fe (Si-enriched),equilibrium liquid fraction at eutectic start (mole),0.9395,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi12Mg+0.3Fe (Si-enriched),equilibrium Si mass fraction at 300 C,0.1169,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi12Mg+0.3Fe (Si-enriched),equilibrium Mg2Si mass fraction at 300 C,0.0049,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi12Mg+0.3Fe (Si-enriched),equilibrium beta-AlFeSi (ALFESI_T6) mass fraction at 500 C,0.0111,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi12 (binary Al-12Si),equilibrium liquidus (C),581.8,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",581.0,"Thermo-Calc 2022a, TCAL7 (Scheil)",10.1007/s11665-023-08502-3,,,0.8188,,"""alloy melting temperature 854 K (581 C) as per Scheil calculation""; paper alloy is nominal Al-12Si"
+AlSi12 (binary Al-12Si),equilibrium solidus (C),577.7,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",577.0,"Thermo-Calc 2022a, TCAL7 (Scheil)",10.1007/s11665-023-08502-3,,,0.6938,,binary: solidus = eutectic temperature
+AlSi12 (binary Al-12Si),"Al-Si eutectic start, equilibrium (C)",577.7,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",577.0,"Thermo-Calc 2022a, TCAL7 (Scheil)",10.1007/s11665-023-08502-3,,,0.6938,,Scheil eutectic temperature
+AlSi12 (binary Al-12Si),equilibrium freezing range (K),4.1,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi12 (binary Al-12Si),Scheil T at fs=0.90 (C),577.6,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi12 (binary Al-12Si),Scheil T at fs=0.99 (C),577.6,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi12 (binary Al-12Si),Scheil terminal (final eutectic) T (C),577.6,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",577.0,"Thermo-Calc 2022a, TCAL7 (Scheil)",10.1007/s11665-023-08502-3,,,0.6249,,binary: Scheil ends at the eutectic
+AlSi12 (binary Al-12Si),"Scheil freezing range, equilibrium liquidus to fs=0.99 (K)",4.2,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",3.6,"Thermo-Calc 2022a, TCAL7 (Scheil)",10.1007/s11665-023-08502-3,,,0.5918,,"Scheil uses 1 K steps from liquidus + 2 K | ""solidification range ... is 3.6 C"""
+AlSi12 (binary Al-12Si),Scheil fraction eutectic (mole),0.9508,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",0.9995,"Thermo-Calc 2022a, TCAL7 (Scheil)",10.1007/s11665-023-08502-3,,,-0.0487,,"solid formed after Si first appears | paper: ""more than 99.95% ... undergo a eutectic solidification at 577 C""; this is inconsistent with its own 581 C liquidus (lever rule gives about 0.95 eutectic), so the statement may mean something else"
+AlSi12 (binary Al-12Si),equilibrium liquid fraction at eutectic start (mole),0.9497,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi12 (binary Al-12Si),equilibrium Si mass fraction at 300 C,0.1194,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi12 (binary Al-12Si),equilibrium Mg2Si mass fraction at 300 C,0.0,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi10Mg (Al-9.92Si-0.291Mg-0.137Fe powder),equilibrium liquidus (C),595.9,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi10Mg (Al-9.92Si-0.291Mg-0.137Fe powder),equilibrium solidus (C),569.2,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi10Mg (Al-9.92Si-0.291Mg-0.137Fe powder),"Al-Si eutectic start, equilibrium (C)",575.8,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi10Mg (Al-9.92Si-0.291Mg-0.137Fe powder),equilibrium freezing range (K),26.7,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi10Mg (Al-9.92Si-0.291Mg-0.137Fe powder),Scheil T at fs=0.90 (C),568.3,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi10Mg (Al-9.92Si-0.291Mg-0.137Fe powder),Scheil T at fs=0.99 (C),558.9,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi10Mg (Al-9.92Si-0.291Mg-0.137Fe powder),Scheil terminal (final eutectic) T (C),558.9,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi10Mg (Al-9.92Si-0.291Mg-0.137Fe powder),"Scheil freezing range, equilibrium liquidus to fs=0.99 (K)",37.0,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,Scheil uses 1 K steps from liquidus + 2 K
+AlSi10Mg (Al-9.92Si-0.291Mg-0.137Fe powder),Scheil fraction eutectic (mole),0.7548,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,solid formed after Si first appears
+AlSi10Mg (Al-9.92Si-0.291Mg-0.137Fe powder),equilibrium liquid fraction at eutectic start (mole),0.7497,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi10Mg (Al-9.92Si-0.291Mg-0.137Fe powder),equilibrium Si mass fraction at 300 C,0.0968,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi10Mg (Al-9.92Si-0.291Mg-0.137Fe powder),equilibrium Mg2Si mass fraction at 300 C,0.004,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi10Mg (Al-9.92Si-0.291Mg-0.137Fe powder),equilibrium beta-AlFeSi (ALFESI_T6) mass fraction at 500 C,0.0051,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+AlSi10Mg (Al-9.92Si-0.291Mg-0.137Fe powder),equilibrium (Al) FCC_A1 mass fraction at 25 C,0.8935,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",0.8933,"Thermo-Calc 2023b, TCAL6 (equilibrium, room temperature)",10.3390/ma16144920,,,0.0002,,Table 4 of the source (value transcribed by the page reader)
+AlSi10Mg (Al-9.92Si-0.291Mg-0.137Fe powder),equilibrium Si (diamond) mass fraction at 25 C,0.0973,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",0.0971,"Thermo-Calc 2023b, TCAL6 (equilibrium, room temperature)",10.3390/ma16144920,,,0.0002,,Table 4
+AlSi10Mg (Al-9.92Si-0.291Mg-0.137Fe powder),equilibrium Mg2Si mass fraction at 25 C,0.0046,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",0.0046,"Thermo-Calc 2023b, TCAL6 (equilibrium, room temperature)",10.3390/ma16144920,,,-0.0,,Table 4
+AlSi10Mg (Al-9.92Si-0.291Mg-0.137Fe powder),equilibrium beta-AlFeSi (ALFESI_T6) mass fraction at 25 C,0.0,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",0.0051,"Thermo-Calc 2023b, TCAL6 (equilibrium, room temperature)",10.3390/ma16144920,,,-0.0051,,Table 4 lists Al9Fe2Si2 (beta-AlFeSi)
+AlSi10Mg (Al-9.92Si-0.291Mg-0.137Fe powder),equilibrium pi-AlFeMgSi mass fraction at 25 C,0.0,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",0.0,"Thermo-Calc 2023b, TCAL6 (equilibrium, room temperature)",10.3390/ma16144920,,,0.0,,pi not in the TCAL6 equilibrium list (it appears only in their Scheil result)
+AlSi10Mg (Al-9.92Si-0.291Mg-0.137Fe powder),"equilibrium alpha-Al(Fe,Mn)Si (ALCRFEMNSI_A) mass fraction at 25 C",0.0045,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",0.0,"Thermo-Calc 2023b, TCAL6 (equilibrium, room temperature)",10.3390/ma16144920,,,0.0045,,no alpha-AlFe(Mn)Si in the TCAL6 equilibrium list
+AlSi10Mg (Al-9.92Si-0.291Mg-0.137Fe powder),"equilibrium total Fe-bearing intermetallics, mass fraction at 25 C",0.0045,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",0.0051,"Thermo-Calc 2023b, TCAL6 (equilibrium, room temperature)",10.3390/ma16144920,,,-0.0006,,all Fe phases: FCC_A1 0.8935; SI_DIAMOND_A4 0.0973; MG2SI_B 0.0046; ALCRFEMNSI_A 0.0045 | TCAL6: Al9Fe2Si2 is the only Fe phase (0.51 wt%)
+Al-Zr (Al-rich),Al-rich invariant T (C),660.7,SGTE binary AlZr-98Sau-LB.tdb,,,,660.9,"ORCHID literature record (CC BY 4.0), paper doi:10.1007/s11669-015-0398-y (934 K, Al3Zr + L -> fcc; accepted)",,-0.1641,peritectic L + Al3Zr -> (Al) | Contested: a eutectic L -> (Al) + Al3Zr at 929 K (655.85 C) with liquid at 0.72 at% Zr is reported in doi:10.1007/s11669-015-0398-y and doi:10.1007/s11669-020-00827-z (cited to doi:10.1007/s10973-013-3113-4). 661 C (934 K) also in doi:10.1051/matecconf/202032606002. No Thermo-Calc number found
+Al-Zr (Al-rich),max Zr solubility in (Al) at the invariant (wt%),0.2713,SGTE binary AlZr-98Sau-LB.tdb,0.25,"Thermo-Calc 2021a, TCAL7 (equilibrium)",10.1557/s43578-022-00533-1,,,0.0213,,"TC: ""0.5 wt% Zr instead of 0.25 wt% Zr at equilibrium"" (0.5 wt% when primary Al3Zr is suppressed). 0.28 wt% at the peritectic is quoted in Brunel-group papers (source unverified), not used"
+Al-Zr (Al-rich),liquid composition at the invariant (at% Zr),0.027,SGTE binary AlZr-98Sau-LB.tdb,,,,,,,,
+Al-0.217Zr (wt%),liquidus (C),732.9,SGTE binary AlZr-98Sau-LB.tdb,,,,,,,,No Thermo-Calc value. JMatPro (not Thermo-Calc) gives 720 C for Al-0.217Zr (doi:10.3390/ma12010022)
+Al-0.5Zr (wt%),liquidus (C),815.0,SGTE binary AlZr-98Sau-LB.tdb,,,,,,,,No Thermo-Calc or experimental value found
+Al-1.0Zr (wt%),liquidus (C),894.1,SGTE binary AlZr-98Sau-LB.tdb,,,,,,,,
+Al-Zr (Al-rich),Al-rich invariant T (C),660.9,SGTE binary AlZr-86Sau.tdb,,,,660.9,"ORCHID literature record (CC BY 4.0), paper doi:10.1007/s11669-015-0398-y (934 K, Al3Zr + L -> fcc; accepted)",,0.0703,peritectic L + Al3Zr -> (Al) | Contested: a eutectic L -> (Al) + Al3Zr at 929 K (655.85 C) with liquid at 0.72 at% Zr is reported in doi:10.1007/s11669-015-0398-y and doi:10.1007/s11669-020-00827-z (cited to doi:10.1007/s10973-013-3113-4). 661 C (934 K) also in doi:10.1051/matecconf/202032606002. No Thermo-Calc number found
+Al-Zr (Al-rich),max Zr solubility in (Al) at the invariant (wt%),0.2715,SGTE binary AlZr-86Sau.tdb,0.25,"Thermo-Calc 2021a, TCAL7 (equilibrium)",10.1557/s43578-022-00533-1,,,0.0215,,"TC: ""0.5 wt% Zr instead of 0.25 wt% Zr at equilibrium"" (0.5 wt% when primary Al3Zr is suppressed). 0.28 wt% at the peritectic is quoted in Brunel-group papers (source unverified), not used"
+Al-Zr (Al-rich),liquid composition at the invariant (at% Zr),0.0103,SGTE binary AlZr-86Sau.tdb,,,,,,,,
+Al-0.217Zr (wt%),liquidus (C),769.5,SGTE binary AlZr-86Sau.tdb,,,,,,,,No Thermo-Calc value. JMatPro (not Thermo-Calc) gives 720 C for Al-0.217Zr (doi:10.3390/ma12010022)
+Al-0.5Zr (wt%),liquidus (C),828.8,SGTE binary AlZr-86Sau.tdb,,,,,,,,No Thermo-Calc or experimental value found
+Al-1.0Zr (wt%),liquidus (C),884.3,SGTE binary AlZr-86Sau.tdb,,,,,,,,
+Al-Zr (Al-rich),Al-rich invariant T (C),660.6,SGTE binary AlZr-01Wan.tdb,,,,660.9,"ORCHID literature record (CC BY 4.0), paper doi:10.1007/s11669-015-0398-y (934 K, Al3Zr + L -> fcc; accepted)",,-0.2109,peritectic L + Al3Zr -> (Al) | Contested: a eutectic L -> (Al) + Al3Zr at 929 K (655.85 C) with liquid at 0.72 at% Zr is reported in doi:10.1007/s11669-015-0398-y and doi:10.1007/s11669-020-00827-z (cited to doi:10.1007/s10973-013-3113-4). 661 C (934 K) also in doi:10.1051/matecconf/202032606002. No Thermo-Calc number found
+Al-Zr (Al-rich),max Zr solubility in (Al) at the invariant (wt%),0.2831,SGTE binary AlZr-01Wan.tdb,0.25,"Thermo-Calc 2021a, TCAL7 (equilibrium)",10.1557/s43578-022-00533-1,,,0.0331,,"TC: ""0.5 wt% Zr instead of 0.25 wt% Zr at equilibrium"" (0.5 wt% when primary Al3Zr is suppressed). 0.28 wt% at the peritectic is quoted in Brunel-group papers (source unverified), not used"
+Al-Zr (Al-rich),liquid composition at the invariant (at% Zr),0.0388,SGTE binary AlZr-01Wan.tdb,,,,,,,,
+Al-0.217Zr (wt%),liquidus (C),707.3,SGTE binary AlZr-01Wan.tdb,,,,,,,,No Thermo-Calc value. JMatPro (not Thermo-Calc) gives 720 C for Al-0.217Zr (doi:10.3390/ma12010022)
+Al-0.5Zr (wt%),liquidus (C),794.9,SGTE binary AlZr-01Wan.tdb,,,,,,,,No Thermo-Calc or experimental value found
+Al-1.0Zr (wt%),liquidus (C),878.1,SGTE binary AlZr-01Wan.tdb,,,,,,,,
+Al-Zr (Al-rich),Al-rich invariant T (C),656.9,SGTE binary AlZr-10Hir.tdb,,,,660.9,"ORCHID literature record (CC BY 4.0), paper doi:10.1007/s11669-015-0398-y (934 K, Al3Zr + L -> fcc; accepted)",,-3.9,eutectic L -> (Al) + Al3Zr | Contested: a eutectic L -> (Al) + Al3Zr at 929 K (655.85 C) with liquid at 0.72 at% Zr is reported in doi:10.1007/s11669-015-0398-y and doi:10.1007/s11669-020-00827-z (cited to doi:10.1007/s10973-013-3113-4). 661 C (934 K) also in doi:10.1051/matecconf/202032606002. No Thermo-Calc number found
+Al-Zr (Al-rich),max Zr solubility in (Al) at the invariant (wt%),0.1413,SGTE binary AlZr-10Hir.tdb,0.25,"Thermo-Calc 2021a, TCAL7 (equilibrium)",10.1557/s43578-022-00533-1,,,-0.1087,,"TC: ""0.5 wt% Zr instead of 0.25 wt% Zr at equilibrium"" (0.5 wt% when primary Al3Zr is suppressed). 0.28 wt% at the peritectic is quoted in Brunel-group papers (source unverified), not used"
+Al-Zr (Al-rich),liquid composition at the invariant (at% Zr),0.511,SGTE binary AlZr-10Hir.tdb,,,,,,,,
+Al-0.217Zr (wt%),liquidus (C),659.9,SGTE binary AlZr-10Hir.tdb,,,,,,,,No Thermo-Calc value. JMatPro (not Thermo-Calc) gives 720 C for Al-0.217Zr (doi:10.3390/ma12010022)
+Al-0.5Zr (wt%),liquidus (C),659.4,SGTE binary AlZr-10Hir.tdb,,,,,,,,No Thermo-Calc or experimental value found
+Al-1.0Zr (wt%),liquidus (C),658.4,SGTE binary AlZr-10Hir.tdb,,,,,,,,
+Al-Zr (Al-rich),Al-rich invariant T (C),660.7,SGTE binary AlZr-15Fis.tdb,,,,660.9,"ORCHID literature record (CC BY 4.0), paper doi:10.1007/s11669-015-0398-y (934 K, Al3Zr + L -> fcc; accepted)",,-0.1641,peritectic L + Al3Zr -> (Al) | Contested: a eutectic L -> (Al) + Al3Zr at 929 K (655.85 C) with liquid at 0.72 at% Zr is reported in doi:10.1007/s11669-015-0398-y and doi:10.1007/s11669-020-00827-z (cited to doi:10.1007/s10973-013-3113-4). 661 C (934 K) also in doi:10.1051/matecconf/202032606002. No Thermo-Calc number found
+Al-Zr (Al-rich),max Zr solubility in (Al) at the invariant (wt%),0.2791,SGTE binary AlZr-15Fis.tdb,0.25,"Thermo-Calc 2021a, TCAL7 (equilibrium)",10.1557/s43578-022-00533-1,,,0.0291,,"TC: ""0.5 wt% Zr instead of 0.25 wt% Zr at equilibrium"" (0.5 wt% when primary Al3Zr is suppressed). 0.28 wt% at the peritectic is quoted in Brunel-group papers (source unverified), not used"
+Al-Zr (Al-rich),liquid composition at the invariant (at% Zr),0.0295,SGTE binary AlZr-15Fis.tdb,,,,,,,,
+Al-0.217Zr (wt%),liquidus (C),726.6,SGTE binary AlZr-15Fis.tdb,,,,,,,,No Thermo-Calc value. JMatPro (not Thermo-Calc) gives 720 C for Al-0.217Zr (doi:10.3390/ma12010022)
+Al-0.5Zr (wt%),liquidus (C),808.0,SGTE binary AlZr-15Fis.tdb,,,,,,,,No Thermo-Calc or experimental value found
+Al-1.0Zr (wt%),liquidus (C),885.0,SGTE binary AlZr-15Fis.tdb,,,,,,,,
+Al-Zr (Al-rich),Al-rich invariant T (C),660.2,SGTE binary AlZr-18Khv.tdb,,,,660.9,"ORCHID literature record (CC BY 4.0), paper doi:10.1007/s11669-015-0398-y (934 K, Al3Zr + L -> fcc; accepted)",,-0.6172,eutectic L -> (Al) + Al3Zr | Contested: a eutectic L -> (Al) + Al3Zr at 929 K (655.85 C) with liquid at 0.72 at% Zr is reported in doi:10.1007/s11669-015-0398-y and doi:10.1007/s11669-020-00827-z (cited to doi:10.1007/s10973-013-3113-4). 661 C (934 K) also in doi:10.1051/matecconf/202032606002. No Thermo-Calc number found
+Al-Zr (Al-rich),max Zr solubility in (Al) at the invariant (wt%),0.0531,SGTE binary AlZr-18Khv.tdb,0.25,"Thermo-Calc 2021a, TCAL7 (equilibrium)",10.1557/s43578-022-00533-1,,,-0.1969,,"TC: ""0.5 wt% Zr instead of 0.25 wt% Zr at equilibrium"" (0.5 wt% when primary Al3Zr is suppressed). 0.28 wt% at the peritectic is quoted in Brunel-group papers (source unverified), not used"
+Al-Zr (Al-rich),liquid composition at the invariant (at% Zr),0.0294,SGTE binary AlZr-18Khv.tdb,,,,,,,,
+Al-0.217Zr (wt%),liquidus (C),726.6,SGTE binary AlZr-18Khv.tdb,,,,,,,,No Thermo-Calc value. JMatPro (not Thermo-Calc) gives 720 C for Al-0.217Zr (doi:10.3390/ma12010022)
+Al-0.5Zr (wt%),liquidus (C),808.0,SGTE binary AlZr-18Khv.tdb,,,,,,,,No Thermo-Calc or experimental value found
+Al-1.0Zr (wt%),liquidus (C),885.0,SGTE binary AlZr-18Khv.tdb,,,,,,,,
+Al-Zr (Al-rich),Al-rich invariant T (C),656.5,SGTE binary AlZr-18Tam.tdb,,,,660.9,"ORCHID literature record (CC BY 4.0), paper doi:10.1007/s11669-015-0398-y (934 K, Al3Zr + L -> fcc; accepted)",,-4.3,eutectic L -> (Al) + Al3Zr | Contested: a eutectic L -> (Al) + Al3Zr at 929 K (655.85 C) with liquid at 0.72 at% Zr is reported in doi:10.1007/s11669-015-0398-y and doi:10.1007/s11669-020-00827-z (cited to doi:10.1007/s10973-013-3113-4). 661 C (934 K) also in doi:10.1051/matecconf/202032606002. No Thermo-Calc number found
+Al-Zr (Al-rich),max Zr solubility in (Al) at the invariant (wt%),0.0,SGTE binary AlZr-18Tam.tdb,0.25,"Thermo-Calc 2021a, TCAL7 (equilibrium)",10.1557/s43578-022-00533-1,,,-0.25,,"TC: ""0.5 wt% Zr instead of 0.25 wt% Zr at equilibrium"" (0.5 wt% when primary Al3Zr is suppressed). 0.28 wt% at the peritectic is quoted in Brunel-group papers (source unverified), not used"
+Al-Zr (Al-rich),liquid composition at the invariant (at% Zr),0.5113,SGTE binary AlZr-18Tam.tdb,,,,,,,,
+Al-0.217Zr (wt%),liquidus (C),659.9,SGTE binary AlZr-18Tam.tdb,,,,,,,,No Thermo-Calc value. JMatPro (not Thermo-Calc) gives 720 C for Al-0.217Zr (doi:10.3390/ma12010022)
+Al-0.5Zr (wt%),liquidus (C),659.3,SGTE binary AlZr-18Tam.tdb,,,,,,,,No Thermo-Calc or experimental value found
+Al-1.0Zr (wt%),liquidus (C),658.2,SGTE binary AlZr-18Tam.tdb,,,,,,,,
+Al-Zr (Al-rich),Al-rich invariant T (C),660.2,SGTE binary AlZr-20Lon.tdb,,,,660.9,"ORCHID literature record (CC BY 4.0), paper doi:10.1007/s11669-015-0398-y (934 K, Al3Zr + L -> fcc; accepted)",,-0.6797,eutectic L -> (Al) + Al3Zr | Contested: a eutectic L -> (Al) + Al3Zr at 929 K (655.85 C) with liquid at 0.72 at% Zr is reported in doi:10.1007/s11669-015-0398-y and doi:10.1007/s11669-020-00827-z (cited to doi:10.1007/s10973-013-3113-4). 661 C (934 K) also in doi:10.1051/matecconf/202032606002. No Thermo-Calc number found
+Al-Zr (Al-rich),max Zr solubility in (Al) at the invariant (wt%),0.0504,SGTE binary AlZr-20Lon.tdb,0.25,"Thermo-Calc 2021a, TCAL7 (equilibrium)",10.1557/s43578-022-00533-1,,,-0.1996,,"TC: ""0.5 wt% Zr instead of 0.25 wt% Zr at equilibrium"" (0.5 wt% when primary Al3Zr is suppressed). 0.28 wt% at the peritectic is quoted in Brunel-group papers (source unverified), not used"
+Al-Zr (Al-rich),liquid composition at the invariant (at% Zr),0.0366,SGTE binary AlZr-20Lon.tdb,,,,,,,,
+Al-0.217Zr (wt%),liquidus (C),712.9,SGTE binary AlZr-20Lon.tdb,,,,,,,,No Thermo-Calc value. JMatPro (not Thermo-Calc) gives 720 C for Al-0.217Zr (doi:10.3390/ma12010022)
+Al-0.5Zr (wt%),liquidus (C),803.9,SGTE binary AlZr-20Lon.tdb,,,,,,,,No Thermo-Calc or experimental value found
+Al-1.0Zr (wt%),liquidus (C),892.5,SGTE binary AlZr-20Lon.tdb,,,,,,,,
+Al-Zr (Al-rich),Al-rich invariant T (C),656.6,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,660.9,"ORCHID literature record (CC BY 4.0), paper doi:10.1007/s11669-015-0398-y (934 K, Al3Zr + L -> fcc; accepted)",,-4.2,eutectic L -> (Al) + Al3Zr | Contested: a eutectic L -> (Al) + Al3Zr at 929 K (655.85 C) with liquid at 0.72 at% Zr is reported in doi:10.1007/s11669-015-0398-y and doi:10.1007/s11669-020-00827-z (cited to doi:10.1007/s10973-013-3113-4). 661 C (934 K) also in doi:10.1051/matecconf/202032606002. No Thermo-Calc number found
+Al-Zr (Al-rich),max Zr solubility in (Al) at the invariant (wt%),0.1409,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",0.25,"Thermo-Calc 2021a, TCAL7 (equilibrium)",10.1557/s43578-022-00533-1,,,-0.1091,,"TC: ""0.5 wt% Zr instead of 0.25 wt% Zr at equilibrium"" (0.5 wt% when primary Al3Zr is suppressed). 0.28 wt% at the peritectic is quoted in Brunel-group papers (source unverified), not used"
+Al-Zr (Al-rich),liquid composition at the invariant (at% Zr),0.4862,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+Al-0.217Zr (wt%),liquidus (C),659.9,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,No Thermo-Calc value. JMatPro (not Thermo-Calc) gives 720 C for Al-0.217Zr (doi:10.3390/ma12010022)
+Al-0.5Zr (wt%),liquidus (C),659.4,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,No Thermo-Calc or experimental value found
+Al-1.0Zr (wt%),liquidus (C),656.6,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+Mehta A Al-4.8Mn-0.47Zr,equilibrium liquidus (C),696.3,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,"primary AL6MN; Fe, Si omitted"
+Mehta A Al-4.8Mn-0.47Zr,"(Al) start T, equilibrium (C)",654.5,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+Mehta A Al-4.8Mn-0.47Zr,equilibrium solidus (C),652.7,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+Mehta A Al-4.8Mn-0.47Zr,Scheil T at fs=0.99 (C),652.3,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+Mehta B Al-4.9Mn-0.8Cr,equilibrium liquidus (C),812.2,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,"primary AL4CR; Fe, Si omitted"
+Mehta B Al-4.9Mn-0.8Cr,"(Al) start T, equilibrium (C)",656.3,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+Mehta B Al-4.9Mn-0.8Cr,equilibrium solidus (C),656.0,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+Mehta B Al-4.9Mn-0.8Cr,Scheil T at fs=0.99 (C),655.1,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+Mehta C Al-5.0Mn-0.8Cr-0.6Zr,equilibrium liquidus (C),814.9,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,"primary AL4CR; Fe, Si omitted | Mehta et al. 2022 (doi:10.1557/s43578-022-00533-1, Thermo-Calc 2021a TCAL7) give no numeric liquidus or solidus in the text"
+Mehta C Al-5.0Mn-0.8Cr-0.6Zr,"(Al) start T, equilibrium (C)",654.9,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+Mehta C Al-5.0Mn-0.8Cr-0.6Zr,equilibrium solidus (C),653.2,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+Mehta C Al-5.0Mn-0.8Cr-0.6Zr,Scheil T at fs=0.99 (C),652.6,"mc_al v2.032 (MatCalc open, pycalphad/binder TDB; sha256 54624a7b...)",,,,,,,,
+Al-Si,eutectic L -> (Al) + (Si): T (C),577.0,SGTE binary AlSi-97Feu-LB.tdb,577.0,"Thermo-Calc 2022a, TCAL7 (Scheil)",10.1007/s11665-023-08502-3,577.0,"ORCHID literature record (CC BY 4.0), paper doi:10.1007/s11669-024-01160-5 (850.15 K; ORCHID extraction_accepted=false); 577 C also in doi:10.3390/ma10010076 (ASM handbook)",0.0009,0.0009,Thermo-Calc value is the Al-12Si Scheil eutectic
+Al-Si,eutectic L -> (Al) + (Si): liquid composition (at% Si),12.1,SGTE binary AlSi-97Feu-LB.tdb,,,,,,,,
+Al-Si,eutectic L -> (Al) + (Si): T (C),577.0,SGTE binary AlSi-14Lia.tdb,577.0,"Thermo-Calc 2022a, TCAL7 (Scheil)",10.1007/s11665-023-08502-3,577.0,"ORCHID literature record (CC BY 4.0), paper doi:10.1007/s11669-024-01160-5 (850.15 K; ORCHID extraction_accepted=false); 577 C also in doi:10.3390/ma10010076 (ASM handbook)",0.0015,0.0015,Thermo-Calc value is the Al-12Si Scheil eutectic
+Al-Si,eutectic L -> (Al) + (Si): liquid composition (at% Si),12.1,SGTE binary AlSi-14Lia.tdb,,,,,,,,
+Al-Cu,eutectic L -> (Al) + theta-Al2Cu: T (C),548.5,SGTE binary AlCu-21Kro.tdb,,,,550.0,"ORCHID literature record (CC BY 4.0), paper doi:10.1007/s11669-024-01160-5 (823.15 K; extraction_accepted=false; cited to doi:10.1179/imr.1985.30.1.211)",,-1.4758,
+Al-Cu,eutectic L -> (Al) + theta-Al2Cu: liquid composition (at% Cu),18.1,SGTE binary AlCu-21Kro.tdb,,,,,,,,
+Al-Cu,eutectic L -> (Al) + theta-Al2Cu: T (C),547.6,SGTE binary AlCu-98Sau-LB.tdb,,,,550.0,"ORCHID literature record (CC BY 4.0), paper doi:10.1007/s11669-024-01160-5 (823.15 K; extraction_accepted=false; cited to doi:10.1179/imr.1985.30.1.211)",,-2.4,
+Al-Cu,eutectic L -> (Al) + theta-Al2Cu: liquid composition (at% Cu),17.5,SGTE binary AlCu-98Sau-LB.tdb,,,,,,,,
+Al-Cu,peritectic L + eta -> theta: T (C),593.0,SGTE binary AlCu-21Kro.tdb,,,,590.0,"ORCHID literature record (CC BY 4.0), paper doi:10.1007/s10853-020-05423-7 (862.15 and 864.15 K, L + eta -> theta; accepted)",,3.0,mean of two records (589.0 and 591.0 C)
+Al-Cu,peritectic L + eta -> theta: liquid composition (at% Cu),33.5,SGTE binary AlCu-21Kro.tdb,,,,,,,,
+Al-Cu,peritectic L + eta -> theta: T (C),595.9,SGTE binary AlCu-98Sau-LB.tdb,,,,590.0,"ORCHID literature record (CC BY 4.0), paper doi:10.1007/s10853-020-05423-7 (862.15 and 864.15 K, L + eta -> theta; accepted)",,5.9,mean of two records (589.0 and 591.0 C)
+Al-Cu,peritectic L + eta -> theta: liquid composition (at% Cu),31.9,SGTE binary AlCu-98Sau-LB.tdb,,,,,,,,
+Cu-Al,eutectic L -> (Cu) + beta: T (C),1042.7,SGTE binary AlCu-21Kro.tdb,,,,1035.0,"ORCHID literature record (CC BY 4.0), paper doi:10.1007/s10853-020-05423-7 (1308.15 K, liq -> beta + (Cu); accepted)",,7.7,1032.0 C (1305.15 K) in doi:10.1007/s11661-002-0173-7
+Cu-Al,eutectic L -> (Cu) + beta: liquid composition (at% Cu),82.2,SGTE binary AlCu-21Kro.tdb,,,,,,,,
+Cu-Al,eutectic L -> (Cu) + beta: T (C),1036.1,SGTE binary AlCu-98Sau-LB.tdb,,,,1035.0,"ORCHID literature record (CC BY 4.0), paper doi:10.1007/s10853-020-05423-7 (1308.15 K, liq -> beta + (Cu); accepted)",,1.1271,1032.0 C (1305.15 K) in doi:10.1007/s11661-002-0173-7
+Cu-Al,eutectic L -> (Cu) + beta: liquid composition (at% Cu),81.8,SGTE binary AlCu-98Sau-LB.tdb,,,,,,,,
+Cu-Al,eutectoid beta -> (Cu) + gamma2: T (C),567.4,SGTE binary AlCu-21Kro.tdb,,,,567.0,"ORCHID literature record (CC BY 4.0), paper doi:10.1007/s10853-020-05423-7 and 10.1007/s11661-002-0173-7 (840.15 K, beta -> (Cu) + gamma2; accepted)",,0.4333,839.85 K also reported
+Cu-Al,eutectoid beta -> (Cu) + gamma2: T (C),564.7,SGTE binary AlCu-98Sau-LB.tdb,,,,567.0,"ORCHID literature record (CC BY 4.0), paper doi:10.1007/s10853-020-05423-7 and 10.1007/s11661-002-0173-7 (840.15 K, beta -> (Cu) + gamma2; accepted)",,-2.3,839.85 K also reported
+Cu-Cr,eutectic L -> (Cu) + (Cr): T (C),1077.4,SGTE binary CrCu-17Liu.tdb,,,,1075.8,"ORCHID literature record (CC BY 4.0), paper doi:10.1007/s11106-006-0106-x (1349 K; accepted)",,1.5651,seven accepted records span 1343-1349 K
+Cu-Cr,eutectic L -> (Cu) + (Cr): liquid composition (at% Cr),1.21,SGTE binary CrCu-17Liu.tdb,,,,1.56,"ORCHID literature record (CC BY 4.0), paper doi:10.1007/s11106-006-0106-x (L at 0.0156; accepted)",,-0.35,another record gives 1.83 at% Cr
+Cu-Cr,eutectic L -> (Cu) + (Cr): T (C),1074.8,SGTE binary CrCu-95Zen-LB.tdb,,,,1075.8,"ORCHID literature record (CC BY 4.0), paper doi:10.1007/s11106-006-0106-x (1349 K; accepted)",,-1.0523,seven accepted records span 1343-1349 K
+Cu-Cr,eutectic L -> (Cu) + (Cr): liquid composition (at% Cr),1.833,SGTE binary CrCu-95Zen-LB.tdb,,,,1.56,"ORCHID literature record (CC BY 4.0), paper doi:10.1007/s11106-006-0106-x (L at 0.0156; accepted)",,0.273,another record gives 1.83 at% Cr
+Cu-Zr,eutectic L -> (Cu) + Cu5Zr: T (C),970.0,SGTE binary CuZr-22Zho.tdb,,,,973.9,"ORCHID literature record (CC BY 4.0), paper doi:10.1007/bf02647618 (L -> (Cu) + Cu5Zr; median of 10 accepted records)",,-3.8,records span 1237-1253 K (963.85-979.85 C)
+Cu-Zr,eutectic L -> (Cu) + Cu5Zr: liquid composition (at% Zr),7.9,SGTE binary CuZr-22Zho.tdb,,,,,,,,
+Cu-Zr,eutectic L -> (Cu) + Cu5Zr: T (C),967.6,SGTE binary CuZr-94Zen-LB.tdb,,,,973.9,"ORCHID literature record (CC BY 4.0), paper doi:10.1007/bf02647618 (L -> (Cu) + Cu5Zr; median of 10 accepted records)",,-6.2,records span 1237-1253 K (963.85-979.85 C)
+Cu-Zr,eutectic L -> (Cu) + Cu5Zr: liquid composition (at% Zr),7.7,SGTE binary CuZr-94Zen-LB.tdb,,,,,,,,
+Cu-Sn,peritectic L + (Cu) -> beta: T (C),785.8,SGTE binary CuSn-24Oik.tdb,,,,797.9,"ORCHID literature record (CC BY 4.0), paper doi:10.1016/j.intermet.2012.10.010 (1071 K, alpha + L -> beta; accepted)",,-12.1,798.0 C (1071.15 K) in doi:10.1007/s11661-002-0173-7
+Cu-Sn,peritectic L + (Cu) -> beta: liquid composition (at% Sn),16.0,SGTE binary CuSn-24Oik.tdb,,,,15.0,"ORCHID literature record (CC BY 4.0), paper doi:10.1016/j.intermet.2012.10.010 (L at 0.150; accepted)",,1.047,15.5 at% in doi:10.1007/s11661-002-0173-7
+Cu-Sn,peritectic L + (Cu) -> beta: T (C),796.0,SGTE binary CuSn-96Shi-LB.tdb,,,,797.9,"ORCHID literature record (CC BY 4.0), paper doi:10.1016/j.intermet.2012.10.010 (1071 K, alpha + L -> beta; accepted)",,-1.8802,798.0 C (1071.15 K) in doi:10.1007/s11661-002-0173-7
+Cu-Sn,peritectic L + (Cu) -> beta: liquid composition (at% Sn),16.4,SGTE binary CuSn-96Shi-LB.tdb,,,,15.0,"ORCHID literature record (CC BY 4.0), paper doi:10.1016/j.intermet.2012.10.010 (L at 0.150; accepted)",,1.356,15.5 at% in doi:10.1007/s11661-002-0173-7
+C63000 NAB (Cu-10Al-5Ni-3Fe),equilibrium liquidus (C),1124.5,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,1054.0,handbook (CDA physical properties via supplier data sheet https://www.concast.com/c63000.php),,70.5,"primary kappa NiAl (B2) | No Thermo-Calc (TCCU) number found in open sources. Handbook values are for the specification range, not this nominal composition"
+C63000 NAB (Cu-10Al-5Ni-3Fe),equilibrium solidus (C),1044.2,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,1035.0,handbook (CDA physical properties via supplier data sheet https://www.concast.com/c63000.php),,9.2,"cooling-curve measurement on Cu-10.9Al-4.9Ni-4.0Fe-1.3Mn: start 1045.4 C (about 7 C undercooling), end 1038 C (doi:10.1038/s41598-023-44146-y)"
+C63000 NAB (Cu-10Al-5Ni-3Fe),Scheil T at fs=0.99 (C),1033.0,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,,,,,
+C63000 NAB (Cu-10Al-5Ni-3Fe-1Mn),equilibrium liquidus (C),1121.5,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,1054.0,handbook (CDA physical properties via supplier data sheet https://www.concast.com/c63000.php),,67.5,primary kappa NiAl (B2) | C63000 allows up to 1.5 Mn
+C63000 NAB (Cu-10Al-5Ni-3Fe-1Mn),equilibrium solidus (C),1037.1,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,1035.0,handbook (CDA physical properties via supplier data sheet https://www.concast.com/c63000.php),,2.1,
+C63000 NAB (Cu-10Al-5Ni-3Fe-1Mn),Scheil T at fs=0.99 (C),1023.5,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,,,,,
+C95800 NAB (Cu-9.2Al-4.5Ni-4Fe-1.2Mn),equilibrium liquidus (C),1111.5,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,1060.0,handbook (CDA physical properties via supplier data sheet https://www.concast.com/c95800.php),,51.5,primary kappa Fe-rich bcc | No Thermo-Calc number found
+C95800 NAB (Cu-9.2Al-4.5Ni-4Fe-1.2Mn),equilibrium solidus (C),1035.6,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,1043.0,handbook (CDA physical properties via supplier data sheet https://www.concast.com/c95800.php),,-7.4,
+C95800 NAB (Cu-9.2Al-4.5Ni-4Fe-1.2Mn),Scheil T at fs=0.99 (C),1019.5,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,,,,,
+C70600 (Cu-10Ni-1.4Fe-0.8Mn),equilibrium liquidus (C),1131.3,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,1149.0,"handbook (supplier data sheet, values match CDA; https://avivametals.com)",,-17.7,primary alpha (fcc) | No Thermo-Calc number found
+C70600 (Cu-10Ni-1.4Fe-0.8Mn),equilibrium solidus (C),1104.0,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,1099.0,"handbook (supplier data sheet, values match CDA; https://avivametals.com)",,5.0,
+C70600 (Cu-10Ni-1.4Fe-0.8Mn),Scheil T at fs=0.99 (C),1018.3,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,,,,,
+C71500 (Cu-30Ni-0.6Fe-0.6Mn),equilibrium liquidus (C),1229.2,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,1238.0,"handbook (supplier data sheet, values match CDA; https://avivametals.com)",,-8.8,primary alpha (fcc) | No Thermo-Calc number found
+C71500 (Cu-30Ni-0.6Fe-0.6Mn),equilibrium solidus (C),1171.2,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,1171.0,"handbook (supplier data sheet, values match CDA; https://avivametals.com)",,0.1859,
+C71500 (Cu-30Ni-0.6Fe-0.6Mn),Scheil T at fs=0.99 (C),1061.2,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,,,,,
+Cu-10Ni (binary),equilibrium liquidus (C),1128.1,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,,,,,primary alpha (fcc)
+Cu-10Ni (binary),equilibrium solidus (C),1115.5,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,,,,,
+Cu-10Ni (binary),Scheil T at fs=0.99 (C),1093.1,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,,,,,
+Cu-30Ni (binary),equilibrium liquidus (C),1227.1,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,,,,,primary alpha (fcc)
+Cu-30Ni (binary),equilibrium solidus (C),1178.1,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,,,,,
+Cu-30Ni (binary),Scheil T at fs=0.99 (C),1104.1,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,,,,,
+Cu-10Ni (binary),equilibrium liquidus (C),1146.7,SGTE binary CuNi-92Mey-LB.tdb,,,,,,,,
+Cu-10Ni (binary),equilibrium solidus (C),1126.2,SGTE binary CuNi-92Mey-LB.tdb,,,,,,,,
+Cu-30Ni (binary),equilibrium liquidus (C),1246.7,SGTE binary CuNi-92Mey-LB.tdb,,,,,,,,
+Cu-30Ni (binary),equilibrium solidus (C),1199.5,SGTE binary CuNi-92Mey-LB.tdb,,,,,,,,
+Cu-10Ni (binary),equilibrium liquidus (C),1151.4,SGTE binary CuNi-07Tur.tdb,,,,,,,,
+Cu-10Ni (binary),equilibrium solidus (C),1127.7,SGTE binary CuNi-07Tur.tdb,,,,,,,,
+Cu-30Ni (binary),equilibrium liquidus (C),1255.2,SGTE binary CuNi-07Tur.tdb,,,,,,,,
+Cu-30Ni (binary),equilibrium solidus (C),1199.9,SGTE binary CuNi-07Tur.tdb,,,,,,,,
+Cu-10Ni (binary),equilibrium liquidus (C),1145.6,SGTE binary CuNi-87Jan.tdb,,,,,,,,
+Cu-10Ni (binary),equilibrium solidus (C),1126.7,SGTE binary CuNi-87Jan.tdb,,,,,,,,
+Cu-30Ni (binary),equilibrium liquidus (C),1243.8,SGTE binary CuNi-87Jan.tdb,,,,,,,,
+Cu-30Ni (binary),equilibrium solidus (C),1200.6,SGTE binary CuNi-87Jan.tdb,,,,,,,,
+Cu-10Ni (binary),equilibrium liquidus (C),1136.0,SGTE binary CuNi-89Sri.tdb,,,,,,,,
+Cu-10Ni (binary),equilibrium solidus (C),1119.5,SGTE binary CuNi-89Sri.tdb,,,,,,,,
+Cu-30Ni (binary),equilibrium liquidus (C),1234.5,SGTE binary CuNi-89Sri.tdb,,,,,,,,
+Cu-30Ni (binary),equilibrium solidus (C),1187.7,SGTE binary CuNi-89Sri.tdb,,,,,,,,
+C63000 NAB,"lowest T with equilibrium beta, 5 C grid (C)",835.0,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,,,,,
+C63000 NAB,"alpha (fcc) start on cooling, 5 C grid (C)",940.0,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,,,,,
+C63000 NAB,equilibrium phase mole fractions at 900 C,kappa NiAl (B2) 0.073; kappa Fe-rich bcc 0.016; beta (Cu-rich bcc) 0.703; alpha (fcc) 0.209,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,,,,,
+C63000 NAB,equilibrium phase mole fractions at 800 C,kappa NiAl (B2) 0.084; kappa Fe-rich bcc 0.040; alpha (fcc) 0.876,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,,,,,
+C63000 NAB,equilibrium phase mole fractions at 600 C,kappa NiAl (B2) 0.092; kappa Fe-rich bcc 0.041; alpha (fcc) 0.867,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,,,,,
+C95800 NAB,"lowest T with equilibrium beta, 5 C grid (C)",730.0,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,,,,,
+C95800 NAB,"alpha (fcc) start on cooling, 5 C grid (C)",955.0,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,,,,,
+C95800 NAB,equilibrium phase mole fractions at 900 C,kappa Fe-rich bcc 0.035; kappa NiAl (B2) 0.055; beta (Cu-rich bcc) 0.658; alpha (fcc) 0.252,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,,,,,
+C95800 NAB,equilibrium phase mole fractions at 800 C,kappa Fe-rich bcc 0.052; kappa NiAl (B2) 0.069; beta (Cu-rich bcc) 0.227; alpha (fcc) 0.652,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,,,,,
+C95800 NAB,equilibrium phase mole fractions at 600 C,kappa Fe-rich bcc 0.057; kappa NiAl (B2) 0.082; alpha (fcc) 0.861,mc_ni v2.036 (MatCalc open; sha256 84ba8131...),,,,,,,,

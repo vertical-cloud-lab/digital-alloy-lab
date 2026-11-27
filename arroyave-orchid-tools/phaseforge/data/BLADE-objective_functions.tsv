@@ -1,0 +1,5 @@
+folder	bestcorr_path	objective
+sqsdb_lev=2_a=0.75,0.25	sqsdb_lev=2_a=0.75,0.25/bestcorr.out	-46.134581
+sqsdb_lev=5_a=0.625,0.375	sqsdb_lev=5_a=0.625,0.375/bestcorr.out	-46.139459
+sqsdb_lev=5_a=0.875,0.125	sqsdb_lev=5_a=0.875,0.125/bestcorr.out	-46.161645
+sqsdb_lev=1_a=0.5,0.5	sqsdb_lev=1_a=0.5,0.5/bestcorr.out	-85.860277

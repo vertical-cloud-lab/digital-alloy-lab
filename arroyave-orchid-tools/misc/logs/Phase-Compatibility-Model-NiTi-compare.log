@@ -1,0 +1,43 @@
+### code cell 0: DIFFERS
+--- stored:
+Python version: 3.12.7 | packaged by conda-forge | (main, Oct  4 2024, 15:47:54) [MSC v.1941 64 bit (AMD64)]
+NumPy version: 1.26.4
+pandas version: 2.2.2
+CBFV version: 1.1.0
+
+--- re-run (with shim):
+Python version: 3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]
+NumPy version: 1.26.4
+pandas version: 2.2.2
+CBFV version: 1.1.0
+
+/tmp/arroyave/venvs/Phase-Compatibility-Model-NiTi/lib/python3.12/site-packages/CBFV/composition.py:7: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+
+### code cell 1: IDENTICAL
+### code cell 2: DIFFERS
+--- stored:
+               composition              formula Alloy_System  \
+0  Cu8.0Hf27.0Ni41.9Ti23.1  Cu80Hf270Ni419Ti231     NiTiHfCu   
+
+   jarvis_avg_first_ion_en_divi_voro_coord  jarvis_dev_mol_vol hea_Delta  \
+0                                 0.647085            2.737797     10.83   
+
+   jarvis_avg_first_ion_en  jarvis_avg_voro_coord  jarvis_avg_atom_mass  \
+0                 7.239251                 11.307             88.925792   
+
+   jarvis_avg_mol_vol  
+0             9.41665  
+--- re-run (with shim):
+               composition              formula Alloy_System  \
+0  Cu8.0Hf27.0Ni41.9Ti23.1  Cu80Hf270Ni419Ti231     NiTiHfCu   
+
+   jarvis_avg_first_ion_en_divi_voro_coord  jarvis_dev_mol_vol  hea_Delta  \
+0                                 0.647085            2.737797  10.296757   
+
+   jarvis_avg_first_ion_en  jarvis_avg_voro_coord  jarvis_avg_atom_mass  \
+0                 7.239251                 11.307             88.925792   
+
+   jarvis_avg_mol_vol  
+0             9.41665  
+### code cell 3: IDENTICAL

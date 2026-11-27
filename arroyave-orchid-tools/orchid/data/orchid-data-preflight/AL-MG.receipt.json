@@ -1,0 +1,73 @@
+{
+  "ready": false,
+  "errors": [
+    {
+      "code": "target_phases_missing",
+      "path": "invariants/AL-MG/AlMg-93Zuo.zpf-00.json",
+      "phases": [
+        "AL8MG5_BETA",
+        "ALMG_ZETA"
+      ]
+    },
+    {
+      "code": "target_phases_missing",
+      "path": "invariants/AL-MG/AlMg-93Zuo.zpf-01.json",
+      "phases": [
+        "AL8MG5_BETA"
+      ]
+    }
+  ],
+  "review_required": [
+    {
+      "code": "unverified_phase_identity",
+      "paths": [
+        "invariants/AL-MG/AlMg-93Zuo.zpf-00.json"
+      ],
+      "phase": "AL8MG5_BETA",
+      "acknowledgement": null
+    },
+    {
+      "code": "unverified_phase_identity",
+      "paths": [
+        "invariants/AL-MG/AlMg-93Zuo.zpf-00.json"
+      ],
+      "phase": "ALMG_ZETA",
+      "acknowledgement": null
+    },
+    {
+      "code": "unverified_phase_identity",
+      "paths": [
+        "invariants/AL-MG/AlMg-93Zuo.zpf-01.json"
+      ],
+      "phase": "AL8MG5_BETA",
+      "acknowledgement": null
+    }
+  ],
+  "acknowledged": [],
+  "target_sha256": "8b77728be5166a674454d8dd8336ede93fc9d2b7bd749a48b819d22dd8a6f619",
+  "target_provenance": null,
+  "phase_identity_assertions": {},
+  "selection_sha256": "a95ad057e82190cfc6dc4575258fe81f2351d8e8679f164ae5cdb7528865a1b8",
+  "datasets_checked": 2,
+  "inputs": [
+    {
+      "path": "invariants/AL-MG/AlMg-93Zuo.zpf-00.json",
+      "bundle_sha256": "652651aa56fd577bfb46923897298dea47262566b2e6360a5f888dbd8491cc96",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/invariants/AL-MG/AlMg-93Zuo.zpf-00.json",
+      "fit_sha256": "652651aa56fd577bfb46923897298dea47262566b2e6360a5f888dbd8491cc96"
+    },
+    {
+      "path": "invariants/AL-MG/AlMg-93Zuo.zpf-01.json",
+      "bundle_sha256": "3ae68ede07ca945ff805a3d9a717791fa5742582fd1fa3a7472792f83c471ce9",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/invariants/AL-MG/AlMg-93Zuo.zpf-01.json",
+      "fit_sha256": "3ae68ede07ca945ff805a3d9a717791fa5742582fd1fa3a7472792f83c471ce9"
+    }
+  ],
+  "weight_overrides": [],
+  "limitations": [
+    "Preflight checks input compatibility, not model accuracy or residual convergence.",
+    "ZPF uses driving-force tolerance; temperature/composition budgets are not automatically propagated.",
+    "Shared-source covariance is not estimated."
+  ],
+  "release_modified": false
+}

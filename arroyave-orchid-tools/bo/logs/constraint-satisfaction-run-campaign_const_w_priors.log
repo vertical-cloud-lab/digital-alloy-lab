@@ -1,0 +1,13 @@
+[main] Launching 2 seeds with 2 workers...
+Running campaign seed=1
+[Data] Total points: 40553
+[Data] True feasible (all constraints incl. BCC): 24
+[Fixed ranges] ST, -Den, YS, Pugh = [1.0, 0.9942884670370269, 0.9999887335752332, 0.9971877287306181]
+Running campaign seed=2
+[Data] Total points: 40553
+[Data] True feasible (all constraints incl. BCC): 24
+[Fixed ranges] ST, -Den, YS, Pugh = [1.0, 0.9942884670370269, 0.9999887335752332, 0.9971877287306181]
+[main] seed 1 finished.
+[main] seed 2 finished.
+[main] Completed 2 seeds.
+[main] All seeds done.

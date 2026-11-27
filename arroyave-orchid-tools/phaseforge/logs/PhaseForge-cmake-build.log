@@ -1,0 +1,33 @@
+-- The CXX compiler identification is GNU 13.3.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done (0.1s)
+-- Generating done (0.0s)
+-- Build files have been written to: /tmp/arroyave/work/PhaseForge/build
+[ 50%] Building CXX object CMakeFiles/ternary_search.dir/src/ternary_search.cpp.o
+[100%] Linking CXX executable /tmp/arroyave/work/PhaseForge/bin/ternary_search
+[100%] Built target ternary_search
+[100%] Built target ternary_search
+Install the project...
+-- Install configuration: ""
+-- Installing: /tmp/arroyave/work/PhaseForge/install/bin
+-- Installing: /tmp/arroyave/work/PhaseForge/install/bin/MLIPmd
+-- Installing: /tmp/arroyave/work/PhaseForge/install/bin/MLIPcalc
+-- Installing: /tmp/arroyave/work/PhaseForge/install/bin/sqscal
+-- Installing: /tmp/arroyave/work/PhaseForge/install/bin/robustrelax_MLIP
+-- Installing: /tmp/arroyave/work/PhaseForge/install/bin/MLIPlammps
+-- Installing: /tmp/arroyave/work/PhaseForge/install/bin/extract_MLIP
+-- Installing: /tmp/arroyave/work/PhaseForge/install/bin/MLIPliquid
+-- Installing: /tmp/arroyave/work/PhaseForge/install/bin/runstruct_MLIP
+-- Installing: /tmp/arroyave/work/PhaseForge/install/bin/ternary_search
+-- Installing: /tmp/arroyave/work/PhaseForge/install/bin/MLIPrelax
+CMake Error at cmake_install.cmake:50 (file):
+  file INSTALL cannot find
+  "/tmp/arroyave/work/PhaseForge/third_party/lammps/src/ML-GNNP": No such
+  file or directory.
+
+
+make: *** [Makefile:100: install] Error 1

@@ -1,0 +1,274 @@
+################ build-add_cite_as.log
+cite_as current in 2 root(s)
+################ build-assessed_assemblages.log
+Traceback (most recent call last):
+  File "/tmp/arroyave/work/site_siblings/orchid-project.org/tools/build_assessed_assemblages.py", line 1756, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/tmp/arroyave/work/site_siblings/orchid-project.org/tools/build_assessed_assemblages.py", line 1680, in main
+    records, exclusions, espei_excl, ed, et, cnt, method = build(a)
+                                                           ~~~~~^^^
+  File "/tmp/arroyave/work/site_siblings/orchid-project.org/tools/build_assessed_assemblages.py", line 523, in build
+    manifest = json.load(open(os.path.join(run, "run_manifest.json"), encoding="utf-8"))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/arroyave/work/site_home/projects/open-tdb/build/okamoto-annotation/run-20261021h-full/run_manifest.json'
+################ build-bibliography.log
+Traceback (most recent call last):
+  File "/tmp/arroyave/work/site_siblings/orchid-project.org/tools/build_bibliography.py", line 2250, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/tmp/arroyave/work/site_siblings/orchid-project.org/tools/build_bibliography.py", line 2238, in main
+    src = Sources(args.data, args.open_tdb)
+  File "/tmp/arroyave/work/site_siblings/orchid-project.org/tools/build_bibliography.py", line 161, in __init__
+    self.tdb_links = self._json(os.path.join(self.corpus, "tdb_pdf_links.json"),
+                     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                "open-tdb/build/sgte-corpus/tdb_pdf_links.json")["links"]
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/work/site_siblings/orchid-project.org/tools/build_bibliography.py", line 223, in _json
+    with open(path, "rb") as f:
+         ~~~~^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/arroyave/work/site_home/projects/open-tdb/build/sgte-corpus/tdb_pdf_links.json'
+################ build-dft_parity.log
+Traceback (most recent call last):
+  File "/tmp/arroyave/work/site_siblings/orchid-project.org/tools/build_dft_parity.py", line 1088, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/tmp/arroyave/work/site_siblings/orchid-project.org/tools/build_dft_parity.py", line 1061, in main
+    data = build(a.open_tdb, a.sign_check, a.hulls)
+  File "/tmp/arroyave/work/site_siblings/orchid-project.org/tools/build_dft_parity.py", line 665, in build
+    dft = {k: DFT(k, open_tdb) for k in SOURCES}
+              ~~~^^^^^^^^^^^^^
+  File "/tmp/arroyave/work/site_siblings/orchid-project.org/tools/build_dft_parity.py", line 373, in __init__
+    with open(path, encoding="utf-8") as fh:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/arroyave/work/site_home/projects/open-tdb/hulls/snapshot/snapshot.json'
+################ build-espei_bundle.log
+Traceback (most recent call last):
+  File "/tmp/arroyave/work/site_siblings/orchid-project.org/tools/build_espei_bundle.py", line 3216, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/tmp/arroyave/work/site_siblings/orchid-project.org/tools/build_espei_bundle.py", line 3132, in main
+    v1 = run_espei(a.espei_python, {rel: dumps(d) for rel, d in alld.items()}, "check")
+  File "/tmp/arroyave/work/site_siblings/orchid-project.org/tools/build_espei_bundle.py", line 1822, in run_espei
+    r = subprocess.run([espei_py, "-I", "-c", VALIDATOR, tmp, mode, json.dumps(GROUPS + PGROUPS)], capture_output=True,
+                       text=True, cwd=tmp)
+  File "/home/runner/.local/share/uv/python/cpython-3.13.18-linux-x86_64-gnu/lib/python3.13/subprocess.py", line 555, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/.local/share/uv/python/cpython-3.13.18-linux-x86_64-gnu/lib/python3.13/subprocess.py", line 1040, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        pass_fds, cwd, env,
+                        ^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                        gid, gids, uid, umask,
+                        ^^^^^^^^^^^^^^^^^^^^^^
+                        start_new_session, process_group)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/.local/share/uv/python/cpython-3.13.18-linux-x86_64-gnu/lib/python3.13/subprocess.py", line 1992, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/arroyave/work/site_home/.venvs/espei/bin/python'
+################ build-espei_bundle2.log
+evaluation pass 1: {'ok': 3285, 'error': 200, 'tdb_error': 3}
+evaluation pass 2: {'ok': 3285}
+out of date: 9 changed/missing, 5304 stale
+  README.md
+  UNCERTAINTY_SPLITS.json
+  UNCERTAINTY_SUMMARY.md
+  UPSTREAM_CORRECTIONS.md
+  VALIDATION.md
+  index.csv
+  index.json
+  references.bib
+  validation.json
+  assessed/AG-AL/AgAl-04Wit.AG-AL-p46.json
+  assessed/AG-CA/AgCa-14Bra.AG-CA-p49.json
+  assessed/AG-CU/AgCu-04Wit-LB.AG-CU-p50.json
+  assessed/AG-DY/AgDy-10Lon.AG-DY-p51.json
+  assessed/AG-ER/AgEr-10Lon.AG-ER-p51.json
+  assessed/AG-ER/AgEr-10Wan.AG-ER-p51.json
+  assessed/AG-GA/AgGa-06Zha.AG-GA-p52.json
+  assessed/AG-GA/AgGa-11Gie.AG-GA-p52.json
+  assessed/AG-GD/AgGd-08Wan.AG-GD-p52.json
+  assessed/AG-GD/AgGd-09Wan.AG-GD-p52.json
+  assessed/AG-GE/AgGe-11Wan.AG-GE-p53.json
+################ build-export_literature.log
+Traceback (most recent call last):
+  File "/tmp/arroyave/work/site_siblings/orchid-project.org/tools/export_literature_data.py", line 1704, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/tmp/arroyave/work/site_siblings/orchid-project.org/tools/export_literature_data.py", line 1658, in main
+    store, records, papers, contexts = build(a.corpus, a.pdfs, a.open_tdb, a.data)
+                                       ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/work/site_siblings/orchid-project.org/tools/export_literature_data.py", line 1247, in build
+    records, qreport = quality.apply(records, open_tdb)
+                       ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/work/site_siblings/orchid-project.org/tools/literature_quality.py", line 627, in apply
+    classify_dft_outliers(records, open_tdb, log, counts)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/work/site_siblings/orchid-project.org/tools/literature_quality.py", line 508, in classify_dft_outliers
+    dft = {k: P.DFT(k, open_tdb) for k in P.SOURCES}
+              ~~~~~^^^^^^^^^^^^^
+  File "/tmp/arroyave/work/site_siblings/orchid-project.org/tools/build_dft_parity.py", line 373, in __init__
+    with open(path, encoding="utf-8") as fh:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/arroyave/work/site_home/projects/open-tdb/hulls/snapshot/snapshot.json'
+################ build-kim2017-write.log
+{
+ "status": "reference_not_available_locally",
+ "orchid_candidates": {
+  "formulas": 610,
+  "records": 1452
+ },
+ "result": null
+}
+################ build-kim2017_crosscheck.log
+stale: data/literature/kim2017_crosscheck.json, data/literature/kim2017_crosscheck.md
+################ build-parquet.log
+parquet/ is up to date (7 tables)
+################ build-phase_aliases.log
+64 aliases in 32 systems; 0 problems
+################ build-phase_registry.log
+Traceback (most recent call last):
+  File "/tmp/arroyave/work/site_siblings/orchid-project.org/tools/build_phase_registry.py", line 2300, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/tmp/arroyave/work/site_siblings/orchid-project.org/tools/build_phase_registry.py", line 2220, in main
+    out, reg, counts = build(a)
+                       ~~~~~^^^
+  File "/tmp/arroyave/work/site_siblings/orchid-project.org/tools/build_phase_registry.py", line 791, in build
+    mmc2 = load_mmc2(inputs.add("Hallstedt 2025 mmc2.xlsx", a.mmc2))
+                     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/work/site_siblings/orchid-project.org/tools/build_phase_registry.py", line 769, in add
+    self.hashes[label] = sha256_file(path)
+                         ~~~~~~~~~~~^^^^^^
+  File "/tmp/arroyave/work/site_siblings/orchid-project.org/tools/build_phase_registry.py", line 150, in sha256_file
+    with open(path, "rb") as f:
+         ~~~~^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/arroyave/work/site_home/data/PD-extraction/sources/hallstedt2025_mmc2.xlsx'
+################ build-precision_sample.log
+precision sample frozen and intact (sample sha256 5c3d02e5c1fd1343, 300 items; population a4b72c282ebf7ac9); all ids released (12 merged into a duplicate); 210 item(s) with a released value changed since sampling: n1 ORC-YWBVIERCPX [phases], n2 ORC-K5Y2XXIE5D [phases], n3 ORC-UC2HC47S2O [phases], n4 ORC-GZD3P2O5ZF [phases], n5 ORC-BX56I4S3KT [phases], n6 ORC-46IP44UVYD [phases], n7 ORC-EZIWG5WZGJ [phases], n8 ORC-EKG3YQ4ACK [phases] ...
+################ build-site_numbers-write.log
+wrote phases/index.html
+################ build-site_numbers.log
+stale: phases/index.html
+FAIL: 1 problem(s)
+################ build-static_pages.log
+OK: 24347 files current (18295 HTML pages)
+################ build-zenodo-metadata-write.log
+wrote zenodo/orchid-data.metadata.json
+wrote zenodo/literature.metadata.json
+wrote zenodo/phase-diagrams.metadata.json
+wrote zenodo/hulls.metadata.json
+wrote zenodo/dft-benchmark.metadata.json
+wrote zenodo/phase-registry.metadata.json
+wrote zenodo/espei.metadata.json
+wrote zenodo/bibliography.metadata.json
+wrote zenodo/orchid-examples.metadata.json
+################ build-zenodo2-manifest.log
+git rev-parse --verify 6d68789772775a74b55b54a1b3de62843899833f^{commit} failed in /tmp/arroyave/work/site_siblings/orchid-examples: fatal: Needed a single revision
+################ build-zenodo2-metadata.log
+stale Zenodo metadata: zenodo/orchid-data.metadata.json, zenodo/literature.metadata.json, zenodo/phase-diagrams.metadata.json, zenodo/hulls.metadata.json, zenodo/dft-benchmark.metadata.json, zenodo/phase-registry.metadata.json, zenodo/espei.metadata.json, zenodo/bibliography.metadata.json, zenodo/orchid-examples.metadata.json
+################ build-zenodo2-plan.log
+ORCHID data release v2026.10 (version 2026.10), data repository /tmp/arroyave/work/site_siblings/orchid-data
+
+orchid-data     ORCHID data: umbrella record of the ORCHID datasets                     
+    DOI 10.5281/zenodo.23736065
+    23 files, 312.4 kB -> dist/orchid-data-v2026.10.zip
+      (top level)         9 files   138.6 kB
+      parquet             1 files    26.1 kB
+      zenodo             13 files   147.7 kB
+
+literature      ORCHID-Values: thermodynamic and phase-equilibrium values read from the literature
+    DOI 10.5281/zenodo.23735569
+    1510 files, 290.7 MB -> dist/orchid-literature-v2026.10.zip
+      (top level)         8 files   135.9 kB
+      literature       1497 files   281.9 MB
+      parquet             4 files     8.7 MB
+      zenodo              1 files    14.9 kB
+
+phase-diagrams  ORCHID-Diagrams: calculated binary phase diagrams                       
+    DOI 10.5281/zenodo.23735859
+    2791 files, 123.7 MB -> dist/orchid-phase-diagrams-v2026.10.zip
+... [trimmed 73 lines] ...
+      zenodo              1 files     9.7 kB
+
+espei           ORCHID ESPEI datasets: literature and database-derived thermodynamic fitting inputs
+    DOI 10.5281/zenodo.23735788
+    8618 files, 73.5 MB -> dist/orchid-espei-v2026.10.zip
+      (top level)         7 files    74.3 kB
+      espei            8610 files    73.4 MB
+      zenodo              1 files    14.5 kB
+
+bibliography    ORCHID-Bibliography: papers and typed citation relations                
+    DOI 10.5281/zenodo.23736021
+    13750 files, 218.4 MB -> dist/orchid-bibliography-v2026.10.zip
+      (top level)         7 files    74.3 kB
+      bibliography    13742 files   218.3 MB
+      zenodo              1 files    13.6 kB
+
+orchid-examples ORCHID examples: runnable workflows on the ORCHID data (PhaseForge+, ESP
+    DOI 10.5281/zenodo.23736043
+    426 files, 13.9 MB -> dist/orchid-examples-v2026.10.zip (git archive of commit 6d68789772)
+git rev-parse --verify 6d68789772775a74b55b54a1b3de62843899833f^{commit} failed in /tmp/arroyave/work/site_siblings/orchid-examples: fatal: Needed a single revision
+################ build-zenodo_card.log
+dataset card current (sizes match parquet/MANIFEST.json; hf/README.md identical)
+################ build-zenodo_manifest.log
+examples repository not found at /tmp/arroyave/work/site_siblings/orchid-examples: skipped
+zenodo manifests current (9 data records + examples)
+################ build-zenodo_metadata.log
+stale Zenodo metadata: zenodo/orchid-data.metadata.json, zenodo/literature.metadata.json, zenodo/phase-diagrams.metadata.json, zenodo/hulls.metadata.json, zenodo/dft-benchmark.metadata.json, zenodo/phase-registry.metadata.json, zenodo/espei.metadata.json, zenodo/bibliography.metadata.json, zenodo/orchid-examples.metadata.json
+################ build-zenodo_plan.log
+ORCHID data release v2026.10 (version 2026.10), data repository /tmp/arroyave/work/site_siblings/orchid-data
+
+orchid-data     ORCHID data: umbrella record of the ORCHID datasets                     
+    DOI 10.5281/zenodo.23736065
+    23 files, 312.4 kB -> dist/orchid-data-v2026.10.zip
+      (top level)         9 files   138.6 kB
+      parquet             1 files    26.1 kB
+      zenodo             13 files   147.7 kB
+
+literature      ORCHID-Values: thermodynamic and phase-equilibrium values read from the literature
+    DOI 10.5281/zenodo.23735569
+    1510 files, 290.7 MB -> dist/orchid-literature-v2026.10.zip
+      (top level)         8 files   135.9 kB
+      literature       1497 files   281.9 MB
+      parquet             4 files     8.7 MB
+      zenodo              1 files    14.9 kB
+
+phase-diagrams  ORCHID-Diagrams: calculated binary phase diagrams                       
+    DOI 10.5281/zenodo.23735859
+    2791 files, 123.7 MB -> dist/orchid-phase-diagrams-v2026.10.zip
+... [trimmed 76 lines] ...
+    DOI 10.5281/zenodo.23735788
+    8618 files, 73.5 MB -> dist/orchid-espei-v2026.10.zip
+      (top level)         7 files    74.3 kB
+      espei            8610 files    73.4 MB
+      zenodo              1 files    14.5 kB
+
+bibliography    ORCHID-Bibliography: papers and typed citation relations                
+    DOI 10.5281/zenodo.23736021
+    13750 files, 218.4 MB -> dist/orchid-bibliography-v2026.10.zip
+      (top level)         7 files    74.3 kB
+      bibliography    13742 files   218.3 MB
+      zenodo              1 files    13.6 kB
+
+orchid-examples ORCHID examples: runnable workflows on the ORCHID data (PhaseForge+, ESP
+    DOI 10.5281/zenodo.23736043
+    PROBLEM: examples repository not found at /tmp/arroyave/work/site_siblings/orchid-examples (--examples)
+
+Not in any record (static web views, the hf mirror card, the zenodo file manifests): compounds, contributions, hf, papers, systems, zenodo
+Limit check: every record < 50 GB; upload one zip per record (Zenodo also caps a record at 100 files).
+FAIL: 1 problem(s)
+################ build-zenodo_scan.log
+orchid-data                     23 files; types: .json 14, .md 7, .cff 1, (none) 1
+literature                    1510 files; types: .json 1493, .md 9, .parquet 3, (none) 1, .cff 1, .txt 1, .csv.gz 1, .jsonl.gz 1
+phase-diagrams                2791 files; types: .json 2782, .md 5, .parquet 2, (none) 1, .cff 1
+hulls                        18201 files; types: .json 18192, .md 5, (none) 1, .cff 1, .tar.gz 1, .parquet 1
+dft-benchmark                   14 files; types: .md 7, .json 5, (none) 1, .parquet 1
+phase-registry                1266 files; types: .json 1250, .md 8, .jsonld 2, .csv 2, .parquet 2, (none) 1, .cff 1
+assessed-phase-assemblages    2161 files; types: .json 2141, .md 7, .csv 4, .jsonl 3, .jsonl.gz 2, .parquet 2, (none) 1, .cff 1
+espei                         8618 files; types: .json 8599, .md 13, .py 2, (none) 1, .cff 1, .csv 1, .bib 1
+bibliography                 13750 files; types: .json 13731, .md 8, .jsonld 2, .csv 2, .jsonl 2, .parquet 2, (none) 1, .cff 1
+SCAN OK (no restricted file type or path, no secret pattern)
+Not checked here: verbatim quotes are capped by a PI decision (see the runbook); licences per file are in LICENSES.md / NOTICE.md.

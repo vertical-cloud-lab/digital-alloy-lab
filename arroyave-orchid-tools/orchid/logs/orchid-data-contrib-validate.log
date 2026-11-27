@@ -1,0 +1,3 @@
+$ python contributions/tools/orchid_contrib.py validate --require-release-tools --release-tools release-site/tools --json contribution-report.json
+validated 4 file(s): 0 error(s), 0 warning(s), 0 contributed value(s) converted
+exit=0 elapsed=8.748846597s

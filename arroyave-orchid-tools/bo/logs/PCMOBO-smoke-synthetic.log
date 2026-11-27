@@ -1,0 +1,5 @@
+/tmp/arroyave/venvs/pcmobo/lib/python3.12/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+[run_campaign] benchmark=constrained_branin_currin policy=qlogpof seeds=1 iterations=1 workers=1
+[run_campaign] seed=1 done
+[run_campaign] done in 43.93s -> runs/synthetic/smoke

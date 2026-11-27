@@ -1,0 +1,156 @@
+/tmp/arroyave/venvs/tamubo/lib/python3.12/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+/tmp/arroyave/venvs/tamubo/lib/python3.12/site-packages/sklearn/gaussian_process/kernels.py:440: ConvergenceWarning: The optimal value found for dimension 1 of parameter k1__k2__length_scale is close to the specified lower bound 0.01. Decreasing the bound and calling fit again may find a better value.
+  warnings.warn(
+/tmp/arroyave/venvs/tamubo/lib/python3.12/site-packages/sklearn/gaussian_process/kernels.py:440: ConvergenceWarning: The optimal value found for dimension 1 of parameter k1__k2__length_scale is close to the specified lower bound 0.01. Decreasing the bound and calling fit again may find a better value.
+  warnings.warn(
+/tmp/arroyave/venvs/tamubo/lib/python3.12/site-packages/sklearn/gaussian_process/kernels.py:440: ConvergenceWarning: The optimal value found for dimension 0 of parameter k2__noise_level is close to the specified lower bound 1e-10. Decreasing the bound and calling fit again may find a better value.
+  warnings.warn(
+/tmp/arroyave/venvs/tamubo/lib/python3.12/site-packages/sklearn/gaussian_process/kernels.py:440: ConvergenceWarning: The optimal value found for dimension 0 of parameter k2__noise_level is close to the specified lower bound 1e-10. Decreasing the bound and calling fit again may find a better value.
+  warnings.warn(
+/tmp/arroyave/venvs/tamubo/lib/python3.12/site-packages/sklearn/gaussian_process/kernels.py:440: ConvergenceWarning: The optimal value found for dimension 0 of parameter k2__noise_level is close to the specified lower bound 1e-10. Decreasing the bound and calling fit again may find a better value.
+  warnings.warn(
+/tmp/arroyave/venvs/tamubo/lib/python3.12/site-packages/sklearn/gaussian_process/kernels.py:440: ConvergenceWarning: The optimal value found for dimension 0 of parameter k2__noise_level is close to the specified lower bound 1e-10. Decreasing the bound and calling fit again may find a better value.
+  warnings.warn(
+/tmp/arroyave/venvs/tamubo/lib/python3.12/site-packages/sklearn/gaussian_process/kernels.py:440: ConvergenceWarning: The optimal value found for dimension 0 of parameter k2__noise_level is close to the specified lower bound 1e-10. Decreasing the bound and calling fit again may find a better value.
+  warnings.warn(
+/tmp/arroyave/venvs/tamubo/lib/python3.12/site-packages/sklearn/gaussian_process/kernels.py:440: ConvergenceWarning: The optimal value found for dimension 0 of parameter k2__noise_level is close to the specified lower bound 1e-10. Decreasing the bound and calling fit again may find a better value.
+  warnings.warn(
+Iteration 1/10
+Current training data: 
+X: [[0.25 0.25]
+ [0.25 0.75]
+ [0.75 0.25]
+ [0.75 0.75]], 
+y: [ 1.98827116  0.23742853 -0.86399004  1.29866133]
+Evaluated new point: [0.81 0.25] -> [-1.43176087]
+Iteration 2/10
+Current training data: 
+X: [[0.25 0.25]
+ [0.25 0.75]
+ [0.75 0.25]
+ [0.75 0.75]
+ [0.81 0.25]], 
+y: [ 1.98827116  0.23742853 -0.86399004  1.29866133 -1.43176087]
+Evaluated new point: [0.97 0.25] -> [-1.54625693]
+Iteration 3/10
+Current training data: 
+X: [[0.25 0.25]
+ [0.25 0.75]
+ [0.75 0.25]
+ [0.75 0.75]
+ [0.81 0.25]
+ [0.97 0.25]], 
+y: [ 1.98827116  0.23742853 -0.86399004  1.29866133 -1.43176087 -1.54625693]
+Evaluated new point: [0.95 0.26] -> [-1.7031548]
+Iteration 4/10
+Current training data: 
+X: [[0.25 0.25]
+ [0.25 0.75]
+ [0.75 0.25]
+ [0.75 0.75]
+ [0.81 0.25]
+ [0.97 0.25]
+ [0.95 0.26]], 
+y: [ 1.98827116  0.23742853 -0.86399004  1.29866133 -1.43176087 -1.54625693
+ -1.7031548 ]
+Evaluated new point: [0.9  0.35] -> [-1.78373168]
+Iteration 5/10
+Current training data: 
+X: [[0.25 0.25]
+ [0.25 0.75]
+ [0.75 0.25]
+ [0.75 0.75]
+ [0.81 0.25]
+ [0.97 0.25]
+ [0.95 0.26]
+ [0.9  0.35]], 
+y: [ 1.98827116  0.23742853 -0.86399004  1.29866133 -1.43176087 -1.54625693
+ -1.7031548  -1.78373168]
+Evaluated new point: [0. 1.] -> [0.99636133]
+Iteration 6/10
+Current training data: 
+X: [[0.25 0.25]
+ [0.25 0.75]
+ [0.75 0.25]
+ [0.75 0.75]
+ [0.81 0.25]
+ [0.97 0.25]
+ [0.95 0.26]
+ [0.9  0.35]
+ [0.   1.  ]], 
+y: [ 1.98827116  0.23742853 -0.86399004  1.29866133 -1.43176087 -1.54625693
+ -1.7031548  -1.78373168  0.99636133]
+Evaluated new point: [0.9  0.28] -> [-1.89121324]
+Iteration 7/10
+Current training data: 
+X: [[0.25 0.25]
+ [0.25 0.75]
+ [0.75 0.25]
+ [0.75 0.75]
+ [0.81 0.25]
+ [0.97 0.25]
+ [0.95 0.26]
+ [0.9  0.35]
+ [0.   1.  ]
+ [0.9  0.28]], 
+y: [ 1.98827116  0.23742853 -0.86399004  1.29866133 -1.43176087 -1.54625693
+ -1.7031548  -1.78373168  0.99636133 -1.89121324]
+Evaluated new point: [0.44 1.  ] -> [1.97902575]
+Iteration 8/10
+Current training data: 
+X: [[0.25 0.25]
+ [0.25 0.75]
+ [0.75 0.25]
+ [0.75 0.75]
+ [0.81 0.25]
+ [0.97 0.25]
+ [0.95 0.26]
+ [0.9  0.35]
+ [0.   1.  ]
+ [0.9  0.28]
+ [0.44 1.  ]], 
+y: [ 1.98827116  0.23742853 -0.86399004  1.29866133 -1.43176087 -1.54625693
+ -1.7031548  -1.78373168  0.99636133 -1.89121324  1.97902575]
+Evaluated new point: [1. 1.] -> [2.19227061]
+Iteration 9/10
+Current training data: 
+X: [[0.25 0.25]
+ [0.25 0.75]
+ [0.75 0.25]
+ [0.75 0.75]
+ [0.81 0.25]
+ [0.97 0.25]
+ [0.95 0.26]
+ [0.9  0.35]
+ [0.   1.  ]
+ [0.9  0.28]
+ [0.44 1.  ]
+ [1.   1.  ]], 
+y: [ 1.98827116  0.23742853 -0.86399004  1.29866133 -1.43176087 -1.54625693
+ -1.7031548  -1.78373168  0.99636133 -1.89121324  1.97902575  2.19227061]
+Evaluated new point: [0.   0.59] -> [1.01800293]
+Iteration 10/10
+Current training data: 
+X: [[0.25 0.25]
+ [0.25 0.75]
+ [0.75 0.25]
+ [0.75 0.75]
+ [0.81 0.25]
+ [0.97 0.25]
+ [0.95 0.26]
+ [0.9  0.35]
+ [0.   1.  ]
+ [0.9  0.28]
+ [0.44 1.  ]
+ [1.   1.  ]
+ [0.   0.59]], 
+y: [ 1.98827116  0.23742853 -0.86399004  1.29866133 -1.43176087 -1.54625693
+ -1.7031548  -1.78373168  0.99636133 -1.89121324  1.97902575  2.19227061
+  1.01800293]
+Evaluated new point: [0.94 0.  ] -> [0.81546433]
+framework=botorch_grid_ei
+best_x=[0.9  0.28]
+best_y=-1.8912132365524643
+backend=BackendInfo(requested='cpu', selected='cpu', cupynumeric_available=False)
+log_saved=/tmp/arroyave/work/tamubo/examples/bo/logs/cpu_botorch_grid_ei.json

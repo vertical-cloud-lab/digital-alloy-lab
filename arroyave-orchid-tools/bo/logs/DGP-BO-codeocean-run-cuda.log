@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/tmp/arroyave/work/DGP-BO/code/dgp-het-tec-MO-11-cuda.py", line 392, in <module>
+    train_x1 = torch.from_numpy((dirlet5D(2,5))/32).cuda()#[np.random.randint(0,557,size=3),:]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/DGP-BO/lib/python3.12/site-packages/torch/cuda/__init__.py", line 293, in _lazy_init
+    raise AssertionError("Torch not compiled with CUDA enabled")
+AssertionError: Torch not compiled with CUDA enabled

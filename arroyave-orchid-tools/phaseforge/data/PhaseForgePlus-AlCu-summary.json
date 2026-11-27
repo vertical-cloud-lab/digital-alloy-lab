@@ -1,0 +1,38 @@
+{
+ "phases": [
+  "AL2CU_C16",
+  "BCC_A2",
+  "FCC_A1",
+  "LIQUID"
+ ],
+ "start_vv": {
+  "VV0000": -67.094,
+  "VV0001": 8.555,
+  "VV0002": -47.406,
+  "VV0003": 6.75
+ },
+ "constructor_s": 0.18,
+ "symbols": [
+  "VV0000",
+  "VV0001",
+  "VV0002",
+  "VV0003"
+ ],
+ "zpf_datasets": 1,
+ "scipy_message": "Optimization terminated successfully.",
+ "scipy_nit": 2,
+ "scipy_success": true,
+ "optimizer_status": "finished",
+ "optimizer_s": 4.0,
+ "n_evals": 18,
+ "objective_x0": 93.92038303225337,
+ "objective_best": 93.92035911802537,
+ "best_vv": {
+  "VV0000": -66.52864083110856,
+  "VV0001": 9.043068252146394,
+  "VV0002": -47.47582445913556,
+  "VV0003": 6.719876770946421
+ },
+ "start_tdb": "PhaseForgePlus-AlCu-start.tdb",
+ "tuned_tdb": "PhaseForgePlus-AlCu-tuned.tdb"
+}

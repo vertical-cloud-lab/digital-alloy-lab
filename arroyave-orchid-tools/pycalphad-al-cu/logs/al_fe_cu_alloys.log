@@ -1,0 +1,50 @@
+=== al-alloys:AlSi10Mg+0.3Fe|AlSi12Mg+0.3Fe (Si-enriched) ===
+[AlSi10Mg+0.3Fe] 67 phases; models built 2 s
+[AlSi10Mg+0.3Fe] events liquidus=594.9C, solidus=567.6C, FCC_A1=594.9C, SI_DIAMOND_A4=575.0C, ALFESI_T6=573.9C (9 s)
+[AlSi10Mg+0.3Fe] equilibrium done (10 s); Scheil...
+[AlSi10Mg+0.3Fe] liq 594.9 sol 567.6 Si-start 575.0; Scheil fs0.9 566.7 fs0.99 558.9 end 558.9 f_eut 0.766 (25.8 s)
+[AlSi12Mg+0.3Fe (Si-enriched)] 67 phases; models built 1 s
+[AlSi12Mg+0.3Fe (Si-enriched)] events liquidus=580.5C, solidus=567.4C, FCC_A1=580.5C, SI_DIAMOND_A4=575.5C, ALFESI_T6=573.9C (9 s)
+[AlSi12Mg+0.3Fe (Si-enriched)] equilibrium done (9 s); Scheil...
+[AlSi12Mg+0.3Fe (Si-enriched)] liq 580.5 sol 567.4 Si-start 575.5; Scheil fs0.9 566.6 fs0.99 558.9 end 558.9 f_eut 0.939 (21.7 s)
+=== al-alloys:AlSi10Mg+0.3Fe|AlSi12Mg+0.3Fe (Si-enriched) done in 54 s ===
+=== cu-alloys ===
+  mc_ni C63000 NAB (Cu-10Al-5Ni-3Fe): 1044.2-1124.5 C primary kappa NiAl (B2); Scheil 99% 1033.0
+  mc_ni C63000 NAB (Cu-10Al-5Ni-3Fe-1Mn): 1037.1-1121.5 C primary kappa NiAl (B2); Scheil 99% 1023.5
+  mc_ni C95800 NAB (Cu-9.2Al-4.5Ni-4Fe-1.2Mn): 1035.6-1111.5 C primary kappa Fe-rich bcc; Scheil 99% 1019.5
+  mc_ni C70600 (Cu-10Ni-1.4Fe-0.8Mn): 1104.0-1131.3 C primary alpha (fcc); Scheil 99% 1018.3
+  mc_ni C71500 (Cu-30Ni-0.6Fe-0.6Mn): 1171.2-1229.2 C primary alpha (fcc); Scheil 99% 1061.2
+  mc_ni Cu-10Ni (binary): 1115.5-1128.1 C primary alpha (fcc); Scheil 99% 1093.1
+  mc_ni Cu-30Ni (binary): 1178.1-1227.1 C primary alpha (fcc); Scheil 99% 1104.1
+                  database  wt_Ni   liquidus_C    solidus_C
+0   SGTE CuNi-92Mey-LB.tdb      5  1116.810937  1105.873437
+1   SGTE CuNi-92Mey-LB.tdb     10  1146.732812  1126.185937
+2   SGTE CuNi-92Mey-LB.tdb     20  1200.482812  1164.076562
+3   SGTE CuNi-92Mey-LB.tdb     30  1246.732812  1199.467187
+4   SGTE CuNi-92Mey-LB.tdb     45  1302.435937  1251.185937
+5   SGTE CuNi-92Mey-LB.tdb     70  1374.232812  1344.232812
+6      SGTE CuNi-07Tur.tdb      5  1119.701562  1107.045312
+7      SGTE CuNi-07Tur.tdb     10  1151.420312  1127.748437
+8      SGTE CuNi-07Tur.tdb     20  1207.670312  1165.404687
+9      SGTE CuNi-07Tur.tdb     30  1255.248437  1199.857812
+10     SGTE CuNi-07Tur.tdb     45  1311.029687  1251.107812
+11     SGTE CuNi-07Tur.tdb     70  1381.576562  1350.092187
+12     SGTE CuNi-87Jan.tdb      5  1116.654687  1106.107812
+13     SGTE CuNi-87Jan.tdb     10  1145.560937  1126.654687
+14     SGTE CuNi-87Jan.tdb     20  1197.357812  1164.935937
+15     SGTE CuNi-87Jan.tdb     30  1243.764062  1200.639062
+16     SGTE CuNi-87Jan.tdb     45  1303.529687  1252.201562
+17     SGTE CuNi-87Jan.tdb     70  1379.623437  1346.576562
+18     SGTE CuNi-89Sri.tdb      5  1110.092187  1102.279687
+19     SGTE CuNi-89Sri.tdb     10  1136.029687  1119.467187
+20     SGTE CuNi-89Sri.tdb     20  1187.123437  1153.295312
+21     SGTE CuNi-89Sri.tdb     30  1234.545312  1187.670312
+22     SGTE CuNi-89Sri.tdb     45  1297.357812  1242.592187
+23     SGTE CuNi-89Sri.tdb     70  1380.951562  1345.326562
+24            mc_ni v2.036      5  1105.639062  1100.014062
+25            mc_ni v2.036     10  1128.139062  1115.482812
+26            mc_ni v2.036     20  1176.732812  1146.576562
+27            mc_ni v2.036     30  1227.123437  1178.060937
+28            mc_ni v2.036     45  1294.545312  1228.373437
+29            mc_ni v2.036     70  1377.670312  1335.170312
+=== cu-alloys done in 169 s ===

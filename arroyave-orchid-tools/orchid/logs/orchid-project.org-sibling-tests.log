@@ -1,0 +1,3 @@
+{"file": "test_diagram_recovery.py", "runner": "pytest", "exit": 0, "seconds": 0.9, "pytest_summary": "12 passed in 0.08s", "script_PASS_lines": 0, "script_FAIL_lines": 0, "first_error_lines": [], "last_stdout": ["12 passed in 0.08s"]}
+{"file": "test_precision_sample.py", "runner": "script", "exit": 0, "seconds": 17.1, "pytest_summary": null, "script_PASS_lines": 27, "script_FAIL_lines": 0, "first_error_lines": [], "last_stdout": ["0 failure(s)"]}
+{"file": "test_contributions_hook.py", "runner": "pytest", "exit": 0, "seconds": 1.7, "pytest_summary": "1 passed in 0.51s", "script_PASS_lines": 0, "script_FAIL_lines": 0, "first_error_lines": [], "last_stdout": ["1 passed in 0.51s"]}

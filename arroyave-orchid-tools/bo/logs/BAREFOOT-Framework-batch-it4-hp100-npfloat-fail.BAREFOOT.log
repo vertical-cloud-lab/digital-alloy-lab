@@ -1,0 +1,32 @@
+2026-11-05 03:47:08,673 - BAREFOOT - INFO - #########################################################
+2026-11-05 03:47:08,674 - BAREFOOT - INFO - #                                                       #
+2026-11-05 03:47:08,674 - BAREFOOT - INFO - #        Start BAREFOOT Framework Initialization        #
+2026-11-05 03:47:08,674 - BAREFOOT - INFO - #                                                       #
+2026-11-05 03:47:08,674 - BAREFOOT - INFO - #########################################################
+2026-11-05 03:47:08,674 - BAREFOOT - INFO - *********************************************************
+2026-11-05 03:47:08,674 - BAREFOOT - INFO - * Calculation Name: BatchOnly   
+2026-11-05 03:47:08,674 - BAREFOOT - INFO - *********************************************************
+2026-11-05 03:47:37,057 - BAREFOOT - INFO - Initialization Completed
+2026-11-05 03:47:37,059 - BAREFOOT - INFO - Reification Object Initialized. Ready for Calculations
+2026-11-05 03:47:37,059 - BAREFOOT - INFO - Start Batch Only Framework Calculation
+2026-11-05 03:47:37,059 - BAREFOOT - INFO - #########################################################
+2026-11-05 03:47:37,059 - BAREFOOT - INFO - #                Start Iteration : 0000                 #
+2026-11-05 03:47:37,059 - BAREFOOT - INFO - #########################################################
+2026-11-05 03:47:37,064 - BAREFOOT - INFO - Start Acquisition Function Evaluations for 100 Parameter Sets
+2026-11-05 03:47:46,448 - BAREFOOT - INFO - Acquisition Function Evaluations Completed
+2026-11-05 03:47:46,451 - BAREFOOT - CRITICAL - Optimization Code Failed - See Error Below
+2026-11-05 03:47:46,452 - BAREFOOT - ERROR - module 'numpy' has no attribute 'float'.
+`np.float` was a deprecated alias for the builtin `float`. To avoid this error in existing code, use `float` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.float64` here.
+The aliases was originally deprecated in NumPy 1.20; for more details and guidance see the original release note at:
+    https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+Traceback (most recent call last):
+  File "/tmp/arroyave/work/barefoot/barefoot.py", line 1686, in close_subs
+    func(self)
+  File "/tmp/arroyave/work/barefoot/barefoot.py", line 2059, in run_BATCH
+    "Input Values":np.array(x_test[int(kg_output[medoids[iii],1]),:], dtype=np.float),
+  File "/tmp/arroyave/venvs/barefoot/lib/python3.10/site-packages/numpy/__init__.py", line 319, in __getattr__
+    raise AttributeError(__former_attrs__[attr])
+AttributeError: module 'numpy' has no attribute 'float'.
+`np.float` was a deprecated alias for the builtin `float`. To avoid this error in existing code, use `float` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.float64` here.
+The aliases was originally deprecated in NumPy 1.20; for more details and guidance see the original release note at:
+    https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations

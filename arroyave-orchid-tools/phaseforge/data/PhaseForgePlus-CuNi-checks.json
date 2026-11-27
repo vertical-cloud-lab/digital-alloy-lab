@@ -1,0 +1,41 @@
+{
+ "sgte_start": {
+  "tdb": "PhaseForgePlus-CuNi-start.tdb",
+  "solidus_K_x0.5": 1535.0,
+  "liquidus_K_x0.5": 1585.5,
+  "tie_1559.7K": {
+   "LIQUID": 0.4224,
+   "FCC_A1": 0.5683
+  },
+  "fcc_gap_top_K_grid5K": 640.0
+ },
+ "sgte_tuned": {
+  "tdb": "PhaseForgePlus-CuNi-tuned.tdb",
+  "solidus_K_x0.5": 1538.0,
+  "liquidus_K_x0.5": 1588.5,
+  "tie_1559.7K": {
+   "LIQUID": 0.4135,
+   "FCC_A1": 0.5595
+  },
+  "fcc_gap_top_K_grid5K": 635.0
+ },
+ "perturbed_start": {
+  "tdb": "PhaseForgePlus-CuNi-perturbed-start.tdb",
+  "solidus_K_x0.5": 1768.5,
+  "liquidus_K_x0.5": 1815.0,
+  "tie_1559.7K": {
+   "FCC_A1": 0.4968
+  },
+  "fcc_gap_top_K_grid5K": 485.0
+ },
+ "perturbed_tuned": {
+  "tdb": "PhaseForgePlus-CuNi-perturbed-tuned.tdb",
+  "solidus_K_x0.5": 1544.0,
+  "liquidus_K_x0.5": 1583.5,
+  "tie_1559.7K": {
+   "LIQUID": 0.4219,
+   "FCC_A1": 0.5489
+  },
+  "fcc_gap_top_K_grid5K": 490.0
+ }
+}

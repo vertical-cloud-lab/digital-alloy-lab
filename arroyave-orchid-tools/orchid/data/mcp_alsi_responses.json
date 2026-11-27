@@ -1,0 +1,1669 @@
+{
+ "system": "Al-Si",
+ "server": "sdk",
+ "note": "trimmed: lists cut to 5 items, strings to 240 chars; payloads identical between the SDK and fallback servers",
+ "responses": {
+  "Al-Si/get_invariant_reactions(both)": {
+   "system": "AL-SI",
+   "source": "both",
+   "contexts": {},
+   "fields": "summary",
+   "literature_total": 0,
+   "literature_offset": 0,
+   "literature_truncated": false,
+   "literature": [],
+   "calculated": [
+    {
+     "tdb": "AlSi-12Tan.tdb",
+     "tdb_sha256": "21db02512088b4f41983e308a9a1677ef9d19ef498bdf8e0dc7dc15319c1567e",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/j.tca.2011.10.017",
+     "engine": "pycalphad 0.11.2",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-SI/AlSi-12Tan.json",
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlSi-12Tan.json",
+     "evidence_class": "model",
+     "invariants": [
+      {
+       "T": 850.16,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.0174
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.12105
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 1.0
+        }
+       ]
+      }
+     ],
+     "n_invariants_raw": 2
+    },
+    {
+     "tdb": "AlSi-14Lia.tdb",
+     "tdb_sha256": "256542a28352f7562c47a15d334016301e88d508dc1cb7ba80d35b97dc3618a9",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/j.actamat.2014.02.042",
+     "engine": "pycalphad 0.11.2",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-SI/AlSi-14Lia.json",
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlSi-14Lia.json",
+     "evidence_class": "model",
+     "invariants": [
+      {
+       "T": 850.15,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.01489
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.12071
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 0.99999
+        }
+       ]
+      }
+     ],
+     "n_invariants_raw": 2
+    },
+    {
+     "tdb": "AlSi-86Mey.tdb",
+     "tdb_sha256": "ff4e72f4da77273dde6e9a2dc75f02d273b9bb011ec32e4929115eb1d56f21b3",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": null,
+     "engine": "pycalphad 0.11.2",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-SI/AlSi-86Mey.json",
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlSi-86Mey.json",
+     "evidence_class": "model",
+     "invariants": [
+      {
+       "T": 853.27,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.02319
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.12405
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 1.0
+        }
+       ]
+      }
+     ],
+     "n_invariants_raw": 2
+    },
+    {
+     "tdb": "AlSi-96Jac.tdb",
+     "tdb_sha256": "2f8447bac48ae55e9f24cb302ec4234d4d22e07b3e98026ef2ac4cee816ea94e",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/S0364-5916(96)00033-8",
+     "engine": "pycalphad 0.11.2",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-SI/AlSi-96Jac.json",
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlSi-96Jac.json",
+     "evidence_class": "model",
+     "invariants": [
+      {
+       "T": 850.09,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.01636
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.12201
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 1.0
+        }
+       ]
+      }
+     ],
+     "n_invariants_raw": 2
+    },
+    {
+     "tdb": "AlSi-97Feu-LB.tdb",
+     "tdb_sha256": "c8b80517b049587863b37bde0719234e14e5e960e24c9f00e67f27fece0ea415",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/S0925-8388(96)02655-2",
+     "engine": "pycalphad 0.11.2",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-SI/AlSi-97Feu-LB.json",
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlSi-97Feu-LB.json",
+     "evidence_class": "model",
+     "invariants": [
+      {
+       "T": 850.15,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.0149
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.12077
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 1.0
+        }
+       ]
+      }
+     ],
+     "n_invariants_raw": 2
+    }
+   ],
+   "matching_rule": "literature_matches: literature records whose mapped CALPHAD model phases equal the calculated invariant's phase set exactly (unmapped phases never match); dT = literature - calculated.",
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_source... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_c... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts an... [247 chars]",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  },
+  "Al-Si/get_phase_diagram": {
+   "system": "AL-SI",
+   "fields": "summary",
+   "n_assessments": 5,
+   "assessments": [
+    {
+     "evidence_class": "model",
+     "tdb": "AlSi-12Tan.tdb",
+     "tdb_sha256": "21db02512088b4f41983e308a9a1677ef9d19ef498bdf8e0dc7dc15319c1567e",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlSi-12Tan.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/j.tca.2011.10.017",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "SI"
+     ],
+     "x_component": "SI",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "BCC_A2",
+      "DIAMOND_A4",
+      "FCC_A1",
+      "HCP_A3",
+      "LIQUID"
+     ],
+     "invariants": [
+      {
+       "T": 850.16,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.0174
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.12105
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 1.0
+        }
+       ]
+      },
+      {
+       "T": 850.16,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.01739
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.12098
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 1.0
+        }
+       ]
+      }
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlSi-12Tan.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-SI/AlSi-12Tan.json"
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlSi-14Lia.tdb",
+     "tdb_sha256": "256542a28352f7562c47a15d334016301e88d508dc1cb7ba80d35b97dc3618a9",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlSi-14Lia.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/j.actamat.2014.02.042",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "SI"
+     ],
+     "x_component": "SI",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "BCC_A2",
+      "DIAMOND_A4",
+      "FCC_A1",
+      "HCP_A3",
+      "LIQUID"
+     ],
+     "invariants": [
+      {
+       "T": 850.15,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.01489
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.12071
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 0.99999
+        }
+       ]
+      },
+      {
+       "T": 850.15,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.01489
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.1207
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 0.99999
+        }
+       ]
+      }
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlSi-14Lia.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-SI/AlSi-14Lia.json"
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlSi-86Mey.tdb",
+     "tdb_sha256": "ff4e72f4da77273dde6e9a2dc75f02d273b9bb011ec32e4929115eb1d56f21b3",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlSi-86Mey.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": null,
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "SI"
+     ],
+     "x_component": "SI",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "BCC_A2",
+      "DIAMOND_A4",
+      "FCC_A1",
+      "HCP_A3",
+      "LIQUID"
+     ],
+     "invariants": [
+      {
+       "T": 853.27,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.02319
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.12405
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 1.0
+        }
+       ]
+      },
+      {
+       "T": 853.27,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.02316
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.12395
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 1.0
+        }
+       ]
+      }
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlSi-86Mey.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-SI/AlSi-86Mey.json"
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlSi-96Jac.tdb",
+     "tdb_sha256": "2f8447bac48ae55e9f24cb302ec4234d4d22e07b3e98026ef2ac4cee816ea94e",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlSi-96Jac.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/S0364-5916(96)00033-8",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "SI"
+     ],
+     "x_component": "SI",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "BCC_A2",
+      "DIAMOND_A4",
+      "FCC_A1",
+      "HCP_A3",
+      "LIQUID"
+     ],
+     "invariants": [
+      {
+       "T": 850.09,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.01636
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.12201
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 1.0
+        }
+       ]
+      },
+      {
+       "T": 850.09,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.01635
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.12194
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 1.0
+        }
+       ]
+      }
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlSi-96Jac.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-SI/AlSi-96Jac.json"
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlSi-97Feu-LB.tdb",
+     "tdb_sha256": "c8b80517b049587863b37bde0719234e14e5e960e24c9f00e67f27fece0ea415",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlSi-97Feu-LB.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/S0925-8388(96)02655-2",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "SI"
+     ],
+     "x_component": "SI",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "BCC_A2",
+      "DIAMOND_A4",
+      "FCC_A1",
+      "HCP_A3",
+      "LIQUID"
+     ],
+     "invariants": [
+      {
+       "T": 850.15,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.0149
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.12077
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 1.0
+        }
+       ]
+      },
+      {
+       "T": 850.15,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.01489
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.1207
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 1.0
+        }
+       ]
+      }
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlSi-97Feu-LB.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-SI/AlSi-97Feu-LB.json"
+    }
+   ],
+   "note": "Each assessment is a separate CALPHAD model; results are never averaged across assessments.",
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_source... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_c... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts an... [247 chars]",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  },
+  "Al-Si/get_phase_diagram(x_Si=0.1,T=800)": {
+   "system": "AL-SI",
+   "fields": "summary",
+   "n_assessments": 5,
+   "assessments": [
+    {
+     "evidence_class": "model",
+     "tdb": "AlSi-12Tan.tdb",
+     "tdb_sha256": "21db02512088b4f41983e308a9a1677ef9d19ef498bdf8e0dc7dc15319c1567e",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlSi-12Tan.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/j.tca.2011.10.017",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "SI"
+     ],
+     "x_component": "SI",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "BCC_A2",
+      "DIAMOND_A4",
+      "FCC_A1",
+      "HCP_A3",
+      "LIQUID"
+     ],
+     "invariants": [
+      {
+       "T": 850.16,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.0174
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.12105
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 1.0
+        }
+       ]
+      },
+      {
+       "T": 850.16,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.01739
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.12098
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 1.0
+        }
+       ]
+      }
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlSi-12Tan.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-SI/AlSi-12Tan.json",
+     "phase_at": {
+      "x_requested": 0.1,
+      "T_requested_K": 800.0,
+      "grid_x": 0.1,
+      "grid_T_K": 800.0,
+      "x_component": "SI",
+      "stable_phases": [
+       "DIAMOND_A4",
+       "FCC_A1"
+      ],
+      "label": "DIAMOND_A4+FCC_A1",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlSi-14Lia.tdb",
+     "tdb_sha256": "256542a28352f7562c47a15d334016301e88d508dc1cb7ba80d35b97dc3618a9",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlSi-14Lia.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/j.actamat.2014.02.042",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "SI"
+     ],
+     "x_component": "SI",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "BCC_A2",
+      "DIAMOND_A4",
+      "FCC_A1",
+      "HCP_A3",
+      "LIQUID"
+     ],
+     "invariants": [
+      {
+       "T": 850.15,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.01489
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.12071
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 0.99999
+        }
+       ]
+      },
+      {
+       "T": 850.15,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.01489
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.1207
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 0.99999
+        }
+       ]
+      }
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlSi-14Lia.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-SI/AlSi-14Lia.json",
+     "phase_at": {
+      "x_requested": 0.1,
+      "T_requested_K": 800.0,
+      "grid_x": 0.1,
+      "grid_T_K": 800.0,
+      "x_component": "SI",
+      "stable_phases": [
+       "DIAMOND_A4",
+       "FCC_A1"
+      ],
+      "label": "DIAMOND_A4+FCC_A1",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlSi-86Mey.tdb",
+     "tdb_sha256": "ff4e72f4da77273dde6e9a2dc75f02d273b9bb011ec32e4929115eb1d56f21b3",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlSi-86Mey.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": null,
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "SI"
+     ],
+     "x_component": "SI",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "BCC_A2",
+      "DIAMOND_A4",
+      "FCC_A1",
+      "HCP_A3",
+      "LIQUID"
+     ],
+     "invariants": [
+      {
+       "T": 853.27,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.02319
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.12405
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 1.0
+        }
+       ]
+      },
+      {
+       "T": 853.27,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.02316
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.12395
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 1.0
+        }
+       ]
+      }
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlSi-86Mey.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-SI/AlSi-86Mey.json",
+     "phase_at": {
+      "x_requested": 0.1,
+      "T_requested_K": 800.0,
+      "grid_x": 0.1,
+      "grid_T_K": 800.0,
+      "x_component": "SI",
+      "stable_phases": [
+       "DIAMOND_A4",
+       "FCC_A1"
+      ],
+      "label": "DIAMOND_A4+FCC_A1",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlSi-96Jac.tdb",
+     "tdb_sha256": "2f8447bac48ae55e9f24cb302ec4234d4d22e07b3e98026ef2ac4cee816ea94e",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlSi-96Jac.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/S0364-5916(96)00033-8",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "SI"
+     ],
+     "x_component": "SI",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "BCC_A2",
+      "DIAMOND_A4",
+      "FCC_A1",
+      "HCP_A3",
+      "LIQUID"
+     ],
+     "invariants": [
+      {
+       "T": 850.09,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.01636
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.12201
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 1.0
+        }
+       ]
+      },
+      {
+       "T": 850.09,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.01635
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.12194
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 1.0
+        }
+       ]
+      }
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlSi-96Jac.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-SI/AlSi-96Jac.json",
+     "phase_at": {
+      "x_requested": 0.1,
+      "T_requested_K": 800.0,
+      "grid_x": 0.1,
+      "grid_T_K": 800.0,
+      "x_component": "SI",
+      "stable_phases": [
+       "DIAMOND_A4",
+       "FCC_A1"
+      ],
+      "label": "DIAMOND_A4+FCC_A1",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlSi-97Feu-LB.tdb",
+     "tdb_sha256": "c8b80517b049587863b37bde0719234e14e5e960e24c9f00e67f27fece0ea415",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlSi-97Feu-LB.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/S0925-8388(96)02655-2",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "SI"
+     ],
+     "x_component": "SI",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "BCC_A2",
+      "DIAMOND_A4",
+      "FCC_A1",
+      "HCP_A3",
+      "LIQUID"
+     ],
+     "invariants": [
+      {
+       "T": 850.15,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.0149
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.12077
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 1.0
+        }
+       ]
+      },
+      {
+       "T": 850.15,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.01489
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.1207
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 1.0
+        }
+       ]
+      }
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlSi-97Feu-LB.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-SI/AlSi-97Feu-LB.json",
+     "phase_at": {
+      "x_requested": 0.1,
+      "T_requested_K": 800.0,
+      "grid_x": 0.1,
+      "grid_T_K": 800.0,
+      "x_component": "SI",
+      "stable_phases": [
+       "DIAMOND_A4",
+       "FCC_A1"
+      ],
+      "label": "DIAMOND_A4+FCC_A1",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    }
+   ],
+   "note": "Each assessment is a separate CALPHAD model; results are never averaged across assessments.",
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_source... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_c... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts an... [247 chars]",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  },
+  "Al-Si/get_phase_diagram(x_Si=0.126,T=900)": {
+   "system": "AL-SI",
+   "fields": "summary",
+   "n_assessments": 5,
+   "assessments": [
+    {
+     "evidence_class": "model",
+     "tdb": "AlSi-12Tan.tdb",
+     "tdb_sha256": "21db02512088b4f41983e308a9a1677ef9d19ef498bdf8e0dc7dc15319c1567e",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlSi-12Tan.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/j.tca.2011.10.017",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "SI"
+     ],
+     "x_component": "SI",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "BCC_A2",
+      "DIAMOND_A4",
+      "FCC_A1",
+      "HCP_A3",
+      "LIQUID"
+     ],
+     "invariants": [
+      {
+       "T": 850.16,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.0174
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.12105
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 1.0
+        }
+       ]
+      },
+      {
+       "T": 850.16,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.01739
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.12098
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 1.0
+        }
+       ]
+      }
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlSi-12Tan.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-SI/AlSi-12Tan.json",
+     "phase_at": {
+      "x_requested": 0.126,
+      "T_requested_K": 900.0,
+      "grid_x": 0.13,
+      "grid_T_K": 900.0,
+      "x_component": "SI",
+      "stable_phases": [
+       "LIQUID"
+      ],
+      "label": "LIQUID",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlSi-14Lia.tdb",
+     "tdb_sha256": "256542a28352f7562c47a15d334016301e88d508dc1cb7ba80d35b97dc3618a9",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlSi-14Lia.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/j.actamat.2014.02.042",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "SI"
+     ],
+     "x_component": "SI",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "BCC_A2",
+      "DIAMOND_A4",
+      "FCC_A1",
+      "HCP_A3",
+      "LIQUID"
+     ],
+     "invariants": [
+      {
+       "T": 850.15,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.01489
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.12071
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 0.99999
+        }
+       ]
+      },
+      {
+       "T": 850.15,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.01489
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.1207
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 0.99999
+        }
+       ]
+      }
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlSi-14Lia.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-SI/AlSi-14Lia.json",
+     "phase_at": {
+      "x_requested": 0.126,
+      "T_requested_K": 900.0,
+      "grid_x": 0.13,
+      "grid_T_K": 900.0,
+      "x_component": "SI",
+      "stable_phases": [
+       "LIQUID"
+      ],
+      "label": "LIQUID",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlSi-86Mey.tdb",
+     "tdb_sha256": "ff4e72f4da77273dde6e9a2dc75f02d273b9bb011ec32e4929115eb1d56f21b3",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlSi-86Mey.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": null,
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "SI"
+     ],
+     "x_component": "SI",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "BCC_A2",
+      "DIAMOND_A4",
+      "FCC_A1",
+      "HCP_A3",
+      "LIQUID"
+     ],
+     "invariants": [
+      {
+       "T": 853.27,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.02319
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.12405
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 1.0
+        }
+       ]
+      },
+      {
+       "T": 853.27,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.02316
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.12395
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 1.0
+        }
+       ]
+      }
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlSi-86Mey.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-SI/AlSi-86Mey.json",
+     "phase_at": {
+      "x_requested": 0.126,
+      "T_requested_K": 900.0,
+      "grid_x": 0.13,
+      "grid_T_K": 900.0,
+      "x_component": "SI",
+      "stable_phases": [
+       "LIQUID"
+      ],
+      "label": "LIQUID",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlSi-96Jac.tdb",
+     "tdb_sha256": "2f8447bac48ae55e9f24cb302ec4234d4d22e07b3e98026ef2ac4cee816ea94e",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlSi-96Jac.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/S0364-5916(96)00033-8",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "SI"
+     ],
+     "x_component": "SI",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "BCC_A2",
+      "DIAMOND_A4",
+      "FCC_A1",
+      "HCP_A3",
+      "LIQUID"
+     ],
+     "invariants": [
+      {
+       "T": 850.09,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.01636
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.12201
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 1.0
+        }
+       ]
+      },
+      {
+       "T": 850.09,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.01635
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.12194
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 1.0
+        }
+       ]
+      }
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlSi-96Jac.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-SI/AlSi-96Jac.json",
+     "phase_at": {
+      "x_requested": 0.126,
+      "T_requested_K": 900.0,
+      "grid_x": 0.13,
+      "grid_T_K": 900.0,
+      "x_component": "SI",
+      "stable_phases": [
+       "LIQUID"
+      ],
+      "label": "LIQUID",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "AlSi-97Feu-LB.tdb",
+     "tdb_sha256": "c8b80517b049587863b37bde0719234e14e5e960e24c9f00e67f27fece0ea415",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlSi-97Feu-LB.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1016/S0925-8388(96)02655-2",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "AL",
+      "SI"
+     ],
+     "x_component": "SI",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "BCC_A2",
+      "DIAMOND_A4",
+      "FCC_A1",
+      "HCP_A3",
+      "LIQUID"
+     ],
+     "invariants": [
+      {
+       "T": 850.15,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.0149
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.12077
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 1.0
+        }
+       ]
+      },
+      {
+       "T": 850.15,
+       "points": [
+        {
+         "phase": "FCC_A1",
+         "x": 0.01489
+        },
+        {
+         "phase": "LIQUID",
+         "x": 0.1207
+        },
+        {
+         "phase": "DIAMOND_A4",
+         "x": 1.0
+        }
+       ]
+      }
+     ],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/AlSi-97Feu-LB.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#AL-SI/AlSi-97Feu-LB.json",
+     "phase_at": {
+      "x_requested": 0.126,
+      "T_requested_K": 900.0,
+      "grid_x": 0.13,
+      "grid_T_K": 900.0,
+      "x_component": "SI",
+      "stable_phases": [
+       "LIQUID"
+      ],
+      "label": "LIQUID",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    }
+   ],
+   "note": "Each assessment is a separate CALPHAD model; results are never averaged across assessments.",
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_source... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_c... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts an... [247 chars]",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  },
+  "Al-Si/list_tdb_files([Al,Si])": {
+   "query": {
+    "elements": [
+     "AL",
+     "SI"
+    ],
+    "exact": false,
+    "tier": null
+   },
+   "fields": "summary",
+   "total": 21,
+   "offset": 0,
+   "truncated": false,
+   "files": [
+    {
+     "name": "AlSi-12Tan.tdb",
+     "elements": "AL-SI",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlSi-12Tan.tdb",
+     "sha256": "21db02512088b4f41983e308a9a1677ef9d19ef498bdf8e0dc7dc15319c1567e"
+    },
+    {
+     "name": "AlSi-14Lia.tdb",
+     "elements": "AL-SI",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlSi-14Lia.tdb",
+     "sha256": "256542a28352f7562c47a15d334016301e88d508dc1cb7ba80d35b97dc3618a9"
+    },
+    {
+     "name": "AlSi-24Zob-3g.tdb",
+     "elements": "AL-SI",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlSi-24Zob-3g.tdb",
+     "sha256": null
+    },
+    {
+     "name": "AlSi-86Mey.tdb",
+     "elements": "AL-SI",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlSi-86Mey.tdb",
+     "sha256": "ff4e72f4da77273dde6e9a2dc75f02d273b9bb011ec32e4929115eb1d56f21b3"
+    },
+    {
+     "name": "AlSi-96Jac.tdb",
+     "elements": "AL-SI",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlSi-96Jac.tdb",
+     "sha256": "2f8447bac48ae55e9f24cb302ec4234d4d22e07b3e98026ef2ac4cee816ea94e"
+    },
+    "... 16 more items trimmed (of 21)"
+   ],
+   "tiers": {
+    "bundled": "redistributable; served by ORCHID",
+    "fetched": "public upstream download, not redistributed here",
+    "manual": "restricted / landing page only"
+   },
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_source... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_c... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts an... [247 chars]",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  },
+  "Al-Si/list_tdb_files([Al,Si],exact)": {
+   "query": {
+    "elements": [
+     "AL",
+     "SI"
+    ],
+    "exact": true,
+    "tier": null
+   },
+   "fields": "summary",
+   "total": 6,
+   "offset": 0,
+   "truncated": false,
+   "files": [
+    {
+     "name": "AlSi-12Tan.tdb",
+     "elements": "AL-SI",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlSi-12Tan.tdb",
+     "sha256": "21db02512088b4f41983e308a9a1677ef9d19ef498bdf8e0dc7dc15319c1567e"
+    },
+    {
+     "name": "AlSi-14Lia.tdb",
+     "elements": "AL-SI",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlSi-14Lia.tdb",
+     "sha256": "256542a28352f7562c47a15d334016301e88d508dc1cb7ba80d35b97dc3618a9"
+    },
+    {
+     "name": "AlSi-24Zob-3g.tdb",
+     "elements": "AL-SI",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlSi-24Zob-3g.tdb",
+     "sha256": null
+    },
+    {
+     "name": "AlSi-86Mey.tdb",
+     "elements": "AL-SI",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlSi-86Mey.tdb",
+     "sha256": "ff4e72f4da77273dde6e9a2dc75f02d273b9bb011ec32e4929115eb1d56f21b3"
+    },
+    {
+     "name": "AlSi-96Jac.tdb",
+     "elements": "AL-SI",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/AlSi-96Jac.tdb",
+     "sha256": "2f8447bac48ae55e9f24cb302ec4234d4d22e07b3e98026ef2ac4cee816ea94e"
+    },
+    "... 1 more items trimmed (of 6)"
+   ],
+   "tiers": {
+    "bundled": "redistributable; served by ORCHID",
+    "fetched": "public upstream download, not redistributed here",
+    "manual": "restricted / landing page only"
+   },
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_source... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_c... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts an... [247 chars]",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  },
+  "Al-Si/compare_to_dft": {
+   "system": "AL-SI",
+   "unit": "kJ/mol-atom",
+   "fields": "summary",
+   "compounds": [],
+   "residual_stats_default_subset": {},
+   "dft_hull_vertices": {
+    "mp": [
+     {
+      "formula": "Al",
+      "x": 0.0,
+      "material_id": "mp-aaaaaafe",
+      "spacegroup": "Fm-3m",
+      "formation_energy_kJ_per_mol_atom": 0.0,
+      "theoretical": false
+     },
+     {
+      "formula": "Si",
+      "x": 1.0,
+      "material_id": "mp-aaaaaaft",
+      "spacegroup": "Fd-3m",
+      "formation_energy_kJ_per_mol_atom": 0.0,
+      "theoretical": false
+     }
+    ],
+    "oqmd": [
+     {
+      "formula": "Al",
+      "x": 0.0,
+      "material_id": "oqmd-ref-Al",
+      "spacegroup": "",
+      "formation_energy_kJ_per_mol_atom": 0.0,
+      "theoretical": false
+     },
+     {
+      "formula": "Si1",
+      "x": 1.0,
+      "material_id": "oqmd-5714",
+      "spacegroup": "Fd-3m",
+      "formation_energy_kJ_per_mol_atom": 0.0,
+      "theoretical": false
+     }
+    ]
+   },
+   "dft_sources": {
+    "mp": {
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": "10.1063/1.4812323",
+     "doi2": null,
+     "label": "Materials Project",
+     "license": "CC BY 4.0",
+     "reference": {
+      "kind": "dft_elemental_ground_state_0K",
+      "per": "atom",
+      "temperature_K": 0.0,
+      "units": "eV/atom"
+     },
+     "reference_note": "GGA/GGA+U mixing scheme with MP fitted energy corrections (notably anions and some transition-metal oxides); elemental ground states at 0 K.",
+     "release": "2026.04.13",
+     "snapshot": "open-tdb/hulls/snapshot/snapshot.json",
+     "snapshot_sha256": "b6deba8ecf1b67211b3d89cd33a5f98a1939d4bcd92db561818195e55187492a",
+     "thermo_type": "GGA_GGA+U",
+     "url": "https://next-gen.materialsproject.org/"
+    },
+    "oqmd": {
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": "10.1007/s11837-013-0755-4",
+     "doi2": "10.1038/npjcompumats.2015.10",
+     "label": "OQMD",
+     "license": "CC BY 4.0",
+     "reference": {
+      "kind": "dft_fitted_elemental_reference_0K",
+      "per": "atom",
+      "temperature_K": 0.0,
+      "units": "eV/atom"
+     },
+     "reference_note": "'standard' fit: elemental reference energies fitted to experimental formation enthalpies (fitted elemental reference, 0 K).",
+     "release": "qmdb_v1_8_022026",
+     "snapshot": "open-tdb/hulls/snapshot-oqmd/snapshot.json",
+     "snapshot_sha256": "2a9393262c52ec35600424236c352a4cdb3291c8b25c1c6588f5e62abe8e0d8d",
+     "thermo_type": "standard",
+     "url": "https://oqmd.org/"
+    }
+   },
+   "rules": {
+    "chem_class": {
+     "intermetallic": "intermetallics (metals and metalloids only)",
+     "other_nonmetal": "hydrides, borides, carbides, nitrides, phosphides, chalcogenides",
+     "oxide_halide": "oxides and halides (contains O, F, Cl, Br or I)"
+    },
+    "composition_offset": "dx_measured = max |x_printed - x_formula| for a printed (not formula-derived) overall composition; sigma_comp = |dx| x local hull slope (kJ/mol-atom, the Cu-Zr historical-formula rule); dx > 0.02 is not in the default subset (off_stoichiome... [288 chars]",
+    "default_subset": "evidence class experimental, extraction accepted, not unsigned-in-print, no uncorrected sign loss found by the page-image sign check, not flagged magnitude_suspect by the extraction checks (a flag set before and independently of this DFT co... [687 chars]",
+    "formula": "Parsed from the record's printed phase label(s): Greek and polymorph prefixes stripped, formula groups expanded, sublattice brackets read, tokens outside the record's system dropped; several distinct formulas in one record are refused. Fall... [293 chars]",
+    "layout": "records{rid: literature fields} + points[] (one per record x DFT source, joined by rid) + papers{paper id: citation, DOI}.",
+    "match": "Reduced composition (mole fractions rounded to 4 decimals) matched exactly to non-deprecated DFT entries; the lowest entry of the named space group (see structure), else the lowest formation energy at that composition, is used; npoly = numb... [335 chars]",
+    "method_class": {
+     "calorimetry": "calorimetry (solution, drop, combustion, direct reaction, DSC)",
+     "emf_vapour": "EMF / vapour pressure / Knudsen effusion / equilibrium",
+     "other_unknown": "other or not printed"
+    },
+    "quality_fixes": "data/literature/QUALITY_FIXES.md: the per-formula / per-atom basis of a column is decided on the printed page only (gate R2 table_basis; the earlier rule that converted a value when the converted value agreed with DFT was withdrawn in audit... [479 chars]",
+    "selection": "property HM_FORM; unit kJ/mol-atom; evidence class experimental, model or unspecified. 'kJ/mol (basis unstated)' is excluded (per-atom vs per-formula cannot be settled).",
+    "structure": "dft_structure_match (`smatch`): exact = the record names a structure (Strukturbericht designator or 'X-type' prototype in a printed label, or in a model-phase name whose formula is the compound; A1/A2/A3 ignored) and the lowest entry of tha... [469 chars]",
+    "units": "DFT eV/atom x 96.485 = kJ/mol-atom; ehull = energy above ORCHID's released hull of the same snapshot (hulls/dft-<src>/, kJ/mol-atom; one source of truth for MP and OQMD); ehull_upstream = the snapshot's upstream value (MP energy_above_hull;... [314 chars]",
+    "unsigned": "flags.unsigned_in_print, or a sign-check verdict no_minus_printed matched by paper (PDF hash prefix), page and |printed value|: such values are magnitudes by the paper's convention and are kept out of the default set."
+   },
+   "description": "Literature formation enthalpies (HM_FORM, kJ/mol-atom) against DFT formation energies at the same composition: the lowest entry of the space group the record names (Strukturbericht designator or prototype), else the ground state (lowest-ene... [385 chars]",
+   "viewer_url": "https://orchid-project.org/dft-parity/",
+   "selection_note": "compounds whose composition lies in this system, wherever reported (including papers on higher-order systems: see reported_in_system)",
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_source... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_c... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts an... [247 chars]",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  }
+ }
+}

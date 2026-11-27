@@ -1,0 +1,8 @@
+call,readme_bytes_after,measured_text_bytes,ratio,envelope_bytes,ms,is_error
+"get_system_data(""CU-ZR"")",23234,83240,3.583,89993,156.9,False
+"get_invariant_reactions(""CU-ZR"")",83218,149078,1.791,164463,211.9,False
+"get_phase_diagram(""CU-ZR"")",38958,39813,1.022,45552,7.2,False
+"compare_to_dft(""CU-ZR"")",37597,53798,1.431,57133,112.1,False
+"get_formation_enthalpy(""CuZr2"")",15140,30698,2.028,33019,21.9,False
+"search_systems([""Cu""])",12135,12960,1.068,14261,40.1,False
+"list_tdb_files([""Cu"",""Zr""])",10294,11155,1.084,12080,41.0,False

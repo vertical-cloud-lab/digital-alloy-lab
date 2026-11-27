@@ -1,0 +1,39 @@
+start 04:05:11
+Elements in the system: Cu,Ni
+Lattices in the system: FCC_A1
+Using MLIP: Grace, model: GRACE-2L-OMAT
+Calculating FCC_A1 phase
+Using species: Cu,Ni
+Edit the file FCC_A1/species.in (if needed) and rerun the same command.
+Using species: Cu,Ni
+Preparing sqs_lev=0_a_Cu=1 directory
+sh: 1: Syntax error: "&" unexpected
+Preparing sqs_lev=0_a_Ni=1 directory
+sh: 1: Syntax error: "&" unexpected
+Preparing sqs_lev=1_a_Cu=0.5,a_Ni=0.5 directory
+sh: 1: Syntax error: "&" unexpected
+Copied SQSs
+/tmp/arroyave/work/pf-CuNi/FCC_A1/sqs_lev=0_a_Cu=1
+MLIP Name=Grace
+Model=GRACE-2L-OMAT
+/tmp/arroyave/work/pf-CuNi/FCC_A1/sqs_lev=0_a_Ni=1
+MLIP Name=Grace
+Model=GRACE-2L-OMAT
+/tmp/arroyave/work/pf-CuNi/FCC_A1/sqs_lev=1_a_Cu=0.5,a_Ni=0.5
+MLIP Name=Grace
+Model=GRACE-2L-OMAT
+sqs_lev=0_a_Cu=1 skipped for property func
+sqs_lev=0_a_Ni=1 skipped for property func
+sqs_lev=1_a_Cu=0.5,a_Ni=0.5 skipped for property func
+Found no data for func
+sqs_lev=0_a_Cu=1 skipped for property energy
+sqs_lev=0_a_Ni=1 skipped for property energy
+sqs_lev=1_a_Cu=0.5,a_Ni=0.5 skipped for property energy
+Found no data for energy
+sqs_lev=0_a_Cu=1 skipped for property svib_ht
+sqs_lev=0_a_Ni=1 skipped for property svib_ht
+sqs_lev=1_a_Cu=0.5,a_Ni=0.5 skipped for property svib_ht
+Found no data for svib_ht
+Fit completed
+Found elements CU NI
+Phases found in SGTE database: 

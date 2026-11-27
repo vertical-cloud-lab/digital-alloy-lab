@@ -1,0 +1,45 @@
+$ python -I scripts/orchid_data_duckdb_card_examples.py --data <orchid-data>
+duckdb 2.0.0
+== invariants_vs_sgte: 42433 rows in 0.06 s
+system                reaction   T_lit  T_calc               tdb
+ AG-AL         (Ag) + liq -> β 1053.00 1052.96    AgAl-04Wit.tdb
+ AG-AL         (Ag) + liq -> β 1053.00 1050.50    AgAl-20Ter.tdb
+ AG-AL         (Ag) + liq -> β 1053.00 1048.21    AgAl-80Spe.tdb
+ AG-AL         (Ag) + liq -> β 1053.00 1048.92    AgAl-87Spe.tdb
+ AG-AL         (Ag) + liq -> β 1053.00 1051.22 AgAl-95Lim-LB.tdb
+  AG-B Liquid#1 -> (Ag) + (βB) 1235.15 1234.92  AgB-04Kor-LB.tdb
+  AG-B Liquid#1 -> (Ag) + (βB) 1235.15 1235.48     AgB-20Zho.tdb
+  AG-B Liquid#1 -> (Ag) + (βB) 1235.15 1234.93     AgB-20Zho.tdb
+== dft_vs_experiment: 2 rows in 0.01 s
+dft_source    n      mae
+        mp 1070 9.572299
+      oqmd 1107 8.250429
+== hull_al_ni: 13 rows in 0.00 s
+source formula        x  formation_energy_kJ_per_mol_atom material_id
+    mp   Al3Ni 0.250000                        -39.068311 mp-aaabjkld
+    mp  Al3Ni2 0.400000                        -59.166812 mp-aaaaabor
+    mp  Al4Ni3 0.428571                        -60.634162 mp-aaaaaylf
+    mp    AlNi 0.500000                        -63.568177 mp-aaaaacff
+    mp  Al3Ni5 0.625000                        -54.600048 mp-aaaaayle
+    mp   AlNi3 0.750000                        -41.883701 mp-aaaaadvt
+  oqmd Al3 Ni1 0.250000                        -39.608464  oqmd-10517
+  oqmd Al3 Ni2 0.400000                        -59.714684  oqmd-18699
+== values_with_papers_cu_zn: 20 rows in 0.01 s
+   citation non-null: 20/20 (column not printed)
+            id              property   value        unit  year
+ORC-2D2CJVCNYU                   EMF   1.560          mV  2003
+ORC-2E5WTQ7AYE                   EMF   0.750          mV  2003
+ORC-2IAERNKEGJ INVARIANT_TEMPERATURE 872.000           K  2008
+ORC-2RQYGC27FN                   EMF   0.600 unspecified  2003
+ORC-36FN7ZI5HT                   EMF   0.790          mV  2003
+ORC-3AXTYXJJ7M                   EMF   1.350          mV  2003
+ORC-3BQ7W7TANQ INVARIANT_TEMPERATURE 873.000           K  2011
+ORC-3F7F7JZXXB                   EMF   0.775          mV  2003
+== invariants_vs_sgte_al_cu_subset: 4 rows in 0.02 s
+system  n_lit_exp_accepted  n_pairs_within_20K
+ AL-CU                  30                 292
+ AL-MG                   5                 187
+ AL-ZR                  86                 900
+ CU-ZR                 189                3802
+== pandas AL-NI example: 215 values, 6 accepted experimental HM_FORM, 306 exploded composition rows (0.14 s)
+exit=0 elapsed=1.186193752s

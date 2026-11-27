@@ -1,0 +1,12 @@
+baselines/ocr_cache.py | exit=1 | 1.6s | FileNotFoundError: [Errno 2] No such file or directory: 'tesseract'
+baselines/vector_figures.py | exit=1 | 0.8s | ModuleNotFoundError: No module named 'thermo_extractor'
+baselines/assessed_pd_raster.py | exit=1 | 0.7s | ModuleNotFoundError: No module named 'assessed_pd'
+baselines/ocr_pdf.py | exit=1 | 1.5s | FileNotFoundError: [Errno 2] No such file or directory: 'tesseract'
+baselines/tdb_topology.py | exit=0 | 0.8s | 
+baselines/raster_pd.py | exit=1 | 0.6s | ModuleNotFoundError: No module named 'assessed_pd'
+baselines/tables_camelot.py | exit=1 | 0.7s | ModuleNotFoundError: No module named 'thermo_extractor'
+baselines/tables_ocr.py | exit=0 | 4.9s | 
+baselines/raster_xy.py | exit=1 | 0.6s | ModuleNotFoundError: No module named 'thermo_extractor'
+ai/prepare.py | exit=1 | 0.2s | ModuleNotFoundError: No module named 'gemini_table_reader'
+ai/map_outputs.py | exit=1 | 0.2s | ModuleNotFoundError: No module named 'text_reader_v6'
+showcase/build.py | exit=1 | 2.8s | ModuleNotFoundError: No module named 'assessed_pd'

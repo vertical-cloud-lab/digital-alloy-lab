@@ -1,0 +1,3 @@
+alloy,composition_wt,database,liquidus_K,solidus_K,liquidus_C,solidus_C,primary_phase,FCC_A1_start_K,SI_DIAMOND_A4_start_K,MG2SI_B_start_K,wall_s
+"AlSi10Mg, as sent to Thermo-Calc",AL89.675 MG0.325 SI10.000,mc_al v2.032,868.6,842.7,595.4,569.5,FCC_A1,868.6,849.2,,1.4
+BYU AA1100+Si+AlSi10Mg blend,AL75.560 MG0.140 SI24.300,mc_al v2.032,1019.3,846.7,746.2,573.6,SI_DIAMOND_A4,850.2,1019.3,,1.3

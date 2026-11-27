@@ -1,0 +1,18 @@
+Thu Nov  5 04:03:35 UTC 2026
+  ok  quickstart/cuzr_exp_vs_dft.pdf: identical (sha256 1cc716056063)
+FAIL quickstart/cuzr_exp_vs_dft.png: differs from figures/cuzr_exp_vs_dft.png
+quickstart: quick path 9 s
+FAILED: quickstart
+
+real	0m9.381s
+user	0m8.137s
+sys	0m0.848s
+exit=1
+--- hygiene
+430 files, 13.3 MB
+hygiene ok
+
+real	0m0.108s
+user	0m0.095s
+sys	0m0.013s
+exit=0

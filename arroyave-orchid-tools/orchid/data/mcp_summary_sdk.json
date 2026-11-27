@@ -1,0 +1,1724 @@
+{
+ "server": "sdk",
+ "wall_s": 6.305,
+ "systems": {
+  "Al-Cu": {
+   "system": "Al-Cu",
+   "system_id": "AL-CU",
+   "literature_invariants_accepted": 80,
+   "literature_invariants_by_evidence_class_first_page": {
+    "model": 50,
+    "experimental": 30
+   },
+   "sgte_assessments": [
+    {
+     "tdb": "AlCu-02Mie.tdb",
+     "assessment_doi": "10.1007/s11661-002-0173-7",
+     "n_invariants_calc": 7,
+     "n_invariants_raw": 7,
+     "n_with_literature_match": 4,
+     "median_abs_dT_best_match_K": 0.33,
+     "n_with_experimental_match": 3,
+     "n_experimental_within_10K": 2,
+     "median_abs_dT_best_experimental_K": 1.38
+    },
+    {
+     "tdb": "AlCu-04Wit.tdb",
+     "assessment_doi": "10.1016/j.jallcom.2004.04.126",
+     "n_invariants_calc": 14,
+     "n_invariants_raw": 14,
+     "n_with_literature_match": 1,
+     "median_abs_dT_best_match_K": 0.0,
+     "n_with_experimental_match": 0,
+     "n_experimental_within_10K": 0,
+     "median_abs_dT_best_experimental_K": null
+    },
+    {
+     "tdb": "AlCu-15Lia.tdb",
+     "assessment_doi": "10.1016/j.calphad.2015.10.004",
+     "n_invariants_calc": 17,
+     "n_invariants_raw": 17,
+     "n_with_literature_match": 7,
+     "median_abs_dT_best_match_K": 0.04,
+     "n_with_experimental_match": 7,
+     "n_experimental_within_10K": 4,
+     "median_abs_dT_best_experimental_K": 9.33
+    },
+    {
+     "tdb": "AlCu-21Kro.tdb",
+     "assessment_doi": "10.1007/s10853-020-05423-7",
+     "n_invariants_calc": 19,
+     "n_invariants_raw": 25,
+     "n_with_literature_match": 13,
+     "median_abs_dT_best_match_K": 0.04,
+     "n_with_experimental_match": 11,
+     "n_experimental_within_10K": 9,
+     "median_abs_dT_best_experimental_K": 1.74
+    },
+    {
+     "tdb": "AlCu-98Sau-LB.tdb",
+     "assessment_doi": null,
+     "n_invariants_calc": 14,
+     "n_invariants_raw": 14,
+     "n_with_literature_match": 1,
+     "median_abs_dT_best_match_K": 0.02,
+     "n_with_experimental_match": 0,
+     "n_experimental_within_10K": 0,
+     "median_abs_dT_best_experimental_K": null
+    }
+   ],
+   "n_calculated_diagrams": 5,
+   "diagram_tdbs": [
+    "AlCu-02Mie.tdb",
+    "AlCu-04Wit.tdb",
+    "AlCu-15Lia.tdb",
+    "AlCu-21Kro.tdb",
+    "AlCu-98Sau-LB.tdb"
+   ],
+   "diagram_x_component": [
+    "CU"
+   ],
+   "diagram_status": [
+    "ok"
+   ],
+   "phase_at_points": [
+    {
+     "tdb": "AlCu-02Mie.tdb",
+     "element": "Cu",
+     "x_element": 0.02,
+     "T_K": 800.0,
+     "x_component": "CU",
+     "x_sent": 0.02,
+     "grid_x": 0.02,
+     "grid_T_K": 800.0,
+     "stable_phases": [
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1 (Al-rich solid solution)"
+    },
+    {
+     "tdb": "AlCu-04Wit.tdb",
+     "element": "Cu",
+     "x_element": 0.02,
+     "T_K": 800.0,
+     "x_component": "CU",
+     "x_sent": 0.02,
+     "grid_x": 0.02,
+     "grid_T_K": 800.0,
+     "stable_phases": [
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1 (Al-rich solid solution)"
+    },
+    {
+     "tdb": "AlCu-15Lia.tdb",
+     "element": "Cu",
+     "x_element": 0.02,
+     "T_K": 800.0,
+     "x_component": "CU",
+     "x_sent": 0.02,
+     "grid_x": 0.02,
+     "grid_T_K": 800.0,
+     "stable_phases": [
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1 (Al-rich solid solution)"
+    },
+    {
+     "tdb": "AlCu-21Kro.tdb",
+     "element": "Cu",
+     "x_element": 0.02,
+     "T_K": 800.0,
+     "x_component": "CU",
+     "x_sent": 0.02,
+     "grid_x": 0.02,
+     "grid_T_K": 800.0,
+     "stable_phases": [
+      "AL2CU_C16",
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1 (Al-rich solid solution)"
+    },
+    {
+     "tdb": "AlCu-98Sau-LB.tdb",
+     "element": "Cu",
+     "x_element": 0.02,
+     "T_K": 800.0,
+     "x_component": "CU",
+     "x_sent": 0.02,
+     "grid_x": 0.02,
+     "grid_T_K": 800.0,
+     "stable_phases": [
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1 (Al-rich solid solution)"
+    },
+    {
+     "tdb": "AlCu-02Mie.tdb",
+     "element": "Cu",
+     "x_element": 0.33,
+     "T_K": 700.0,
+     "x_component": "CU",
+     "x_sent": 0.33,
+     "grid_x": 0.33,
+     "grid_T_K": 700.0,
+     "stable_phases": [
+      "BCC_A2"
+     ],
+     "error": null,
+     "expected": "AL2CU (theta) or theta + neighbour"
+    },
+    {
+     "tdb": "AlCu-04Wit.tdb",
+     "element": "Cu",
+     "x_element": 0.33,
+     "T_K": 700.0,
+     "x_component": "CU",
+     "x_sent": 0.33,
+     "grid_x": 0.33,
+     "grid_T_K": 700.0,
+     "stable_phases": [
+      "AL2CU_C16"
+     ],
+     "error": null,
+     "expected": "AL2CU (theta) or theta + neighbour"
+    },
+    {
+     "tdb": "AlCu-15Lia.tdb",
+     "element": "Cu",
+     "x_element": 0.33,
+     "T_K": 700.0,
+     "x_component": "CU",
+     "x_sent": 0.33,
+     "grid_x": 0.33,
+     "grid_T_K": 700.0,
+     "stable_phases": [
+      "AL2CU_C16"
+     ],
+     "error": null,
+     "expected": "AL2CU (theta) or theta + neighbour"
+    },
+    {
+     "tdb": "AlCu-21Kro.tdb",
+     "element": "Cu",
+     "x_element": 0.33,
+     "T_K": 700.0,
+     "x_component": "CU",
+     "x_sent": 0.33,
+     "grid_x": 0.33,
+     "grid_T_K": 700.0,
+     "stable_phases": [
+      "AL2CU_C16"
+     ],
+     "error": null,
+     "expected": "AL2CU (theta) or theta + neighbour"
+    },
+    {
+     "tdb": "AlCu-98Sau-LB.tdb",
+     "element": "Cu",
+     "x_element": 0.33,
+     "T_K": 700.0,
+     "x_component": "CU",
+     "x_sent": 0.33,
+     "grid_x": 0.33,
+     "grid_T_K": 700.0,
+     "stable_phases": [
+      "AL2CU_C16"
+     ],
+     "error": null,
+     "expected": "AL2CU (theta) or theta + neighbour"
+    }
+   ],
+   "tdb_files_containing": {
+    "total": 24,
+    "returned": 24,
+    "tiers": [
+     "bundled",
+     "fetched",
+     "manual"
+    ],
+    "names": [
+     "AlCu-02Mie.tdb",
+     "AlCu-04Wit.tdb",
+     "AlCu-15Lia.tdb",
+     "AlCu-21Kro.tdb",
+     "AlCu-98Sau-LB.tdb",
+     "Al-Cu-Y.tdb",
+     "Al-Cu-Zr_Zhou.tdb",
+     "AlAgCuWitusiewicz2005.TDB",
+     "alcuzr-viscosity.tdb",
+     "AlCuMgZn.tdb",
+     "N.TDB",
+     "mc_al_v2.032.pycalphad.tdb",
+     "COST MP0602 High-temp Solders (SOLDERS)",
+     "cost507R-macros.TDB",
+     "cost507r-scheil.TDB",
+     "mc_ni_v2.034.pycalphad.tdb",
+     "mc_fe_v2.059.pycalphad.tdb",
+     "mc_fecocrnbti.tdb",
+     "steel_database_fix.tdb",
+     "COST507-modified.tdb",
+     "COST507.pycalphad.tdb",
+     "COST507.tdb",
+     "unary50_bengt.tdb",
+     "SGTE-unary1991-2010.TDB"
+    ]
+   },
+   "tdb_files_exact": {
+    "total": 5,
+    "returned": 5,
+    "tiers": [
+     "bundled"
+    ],
+    "names": [
+     "AlCu-02Mie.tdb",
+     "AlCu-04Wit.tdb",
+     "AlCu-15Lia.tdb",
+     "AlCu-21Kro.tdb",
+     "AlCu-98Sau-LB.tdb"
+    ]
+   },
+   "compare_to_dft_keys": [
+    "compounds",
+    "description",
+    "dft_hull_vertices",
+    "dft_sources",
+    "fields",
+    "orchid",
+    "residual_stats_default_subset",
+    "rules",
+    "selection_note",
+    "system",
+    "unit",
+    "viewer_url"
+   ]
+  },
+  "Al-Si": {
+   "system": "Al-Si",
+   "system_id": "AL-SI",
+   "literature_invariants_accepted": 0,
+   "literature_invariants_by_evidence_class_first_page": {},
+   "sgte_assessments": [
+    {
+     "tdb": "AlSi-12Tan.tdb",
+     "assessment_doi": "10.1016/j.tca.2011.10.017",
+     "n_invariants_calc": 1,
+     "n_invariants_raw": 2,
+     "n_with_literature_match": 0,
+     "median_abs_dT_best_match_K": null,
+     "n_with_experimental_match": 0,
+     "n_experimental_within_10K": 0,
+     "median_abs_dT_best_experimental_K": null
+    },
+    {
+     "tdb": "AlSi-14Lia.tdb",
+     "assessment_doi": "10.1016/j.actamat.2014.02.042",
+     "n_invariants_calc": 1,
+     "n_invariants_raw": 2,
+     "n_with_literature_match": 0,
+     "median_abs_dT_best_match_K": null,
+     "n_with_experimental_match": 0,
+     "n_experimental_within_10K": 0,
+     "median_abs_dT_best_experimental_K": null
+    },
+    {
+     "tdb": "AlSi-86Mey.tdb",
+     "assessment_doi": null,
+     "n_invariants_calc": 1,
+     "n_invariants_raw": 2,
+     "n_with_literature_match": 0,
+     "median_abs_dT_best_match_K": null,
+     "n_with_experimental_match": 0,
+     "n_experimental_within_10K": 0,
+     "median_abs_dT_best_experimental_K": null
+    },
+    {
+     "tdb": "AlSi-96Jac.tdb",
+     "assessment_doi": "10.1016/S0364-5916(96)00033-8",
+     "n_invariants_calc": 1,
+     "n_invariants_raw": 2,
+     "n_with_literature_match": 0,
+     "median_abs_dT_best_match_K": null,
+     "n_with_experimental_match": 0,
+     "n_experimental_within_10K": 0,
+     "median_abs_dT_best_experimental_K": null
+    },
+    {
+     "tdb": "AlSi-97Feu-LB.tdb",
+     "assessment_doi": "10.1016/S0925-8388(96)02655-2",
+     "n_invariants_calc": 1,
+     "n_invariants_raw": 2,
+     "n_with_literature_match": 0,
+     "median_abs_dT_best_match_K": null,
+     "n_with_experimental_match": 0,
+     "n_experimental_within_10K": 0,
+     "median_abs_dT_best_experimental_K": null
+    }
+   ],
+   "n_calculated_diagrams": 5,
+   "diagram_tdbs": [
+    "AlSi-12Tan.tdb",
+    "AlSi-14Lia.tdb",
+    "AlSi-86Mey.tdb",
+    "AlSi-96Jac.tdb",
+    "AlSi-97Feu-LB.tdb"
+   ],
+   "diagram_x_component": [
+    "SI"
+   ],
+   "diagram_status": [
+    "ok"
+   ],
+   "phase_at_points": [
+    {
+     "tdb": "AlSi-12Tan.tdb",
+     "element": "Si",
+     "x_element": 0.1,
+     "T_K": 800.0,
+     "x_component": "SI",
+     "x_sent": 0.1,
+     "grid_x": 0.1,
+     "grid_T_K": 800.0,
+     "stable_phases": [
+      "DIAMOND_A4",
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1 + DIAMOND_A4 (below the 850 K eutectic)"
+    },
+    {
+     "tdb": "AlSi-14Lia.tdb",
+     "element": "Si",
+     "x_element": 0.1,
+     "T_K": 800.0,
+     "x_component": "SI",
+     "x_sent": 0.1,
+     "grid_x": 0.1,
+     "grid_T_K": 800.0,
+     "stable_phases": [
+      "DIAMOND_A4",
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1 + DIAMOND_A4 (below the 850 K eutectic)"
+    },
+    {
+     "tdb": "AlSi-86Mey.tdb",
+     "element": "Si",
+     "x_element": 0.1,
+     "T_K": 800.0,
+     "x_component": "SI",
+     "x_sent": 0.1,
+     "grid_x": 0.1,
+     "grid_T_K": 800.0,
+     "stable_phases": [
+      "DIAMOND_A4",
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1 + DIAMOND_A4 (below the 850 K eutectic)"
+    },
+    {
+     "tdb": "AlSi-96Jac.tdb",
+     "element": "Si",
+     "x_element": 0.1,
+     "T_K": 800.0,
+     "x_component": "SI",
+     "x_sent": 0.1,
+     "grid_x": 0.1,
+     "grid_T_K": 800.0,
+     "stable_phases": [
+      "DIAMOND_A4",
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1 + DIAMOND_A4 (below the 850 K eutectic)"
+    },
+    {
+     "tdb": "AlSi-97Feu-LB.tdb",
+     "element": "Si",
+     "x_element": 0.1,
+     "T_K": 800.0,
+     "x_component": "SI",
+     "x_sent": 0.1,
+     "grid_x": 0.1,
+     "grid_T_K": 800.0,
+     "stable_phases": [
+      "DIAMOND_A4",
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1 + DIAMOND_A4 (below the 850 K eutectic)"
+    },
+    {
+     "tdb": "AlSi-12Tan.tdb",
+     "element": "Si",
+     "x_element": 0.126,
+     "T_K": 900.0,
+     "x_component": "SI",
+     "x_sent": 0.126,
+     "grid_x": 0.13,
+     "grid_T_K": 900.0,
+     "stable_phases": [
+      "LIQUID"
+     ],
+     "error": null,
+     "expected": "LIQUID (above the eutectic)"
+    },
+    {
+     "tdb": "AlSi-14Lia.tdb",
+     "element": "Si",
+     "x_element": 0.126,
+     "T_K": 900.0,
+     "x_component": "SI",
+     "x_sent": 0.126,
+     "grid_x": 0.13,
+     "grid_T_K": 900.0,
+     "stable_phases": [
+      "LIQUID"
+     ],
+     "error": null,
+     "expected": "LIQUID (above the eutectic)"
+    },
+    {
+     "tdb": "AlSi-86Mey.tdb",
+     "element": "Si",
+     "x_element": 0.126,
+     "T_K": 900.0,
+     "x_component": "SI",
+     "x_sent": 0.126,
+     "grid_x": 0.13,
+     "grid_T_K": 900.0,
+     "stable_phases": [
+      "LIQUID"
+     ],
+     "error": null,
+     "expected": "LIQUID (above the eutectic)"
+    },
+    {
+     "tdb": "AlSi-96Jac.tdb",
+     "element": "Si",
+     "x_element": 0.126,
+     "T_K": 900.0,
+     "x_component": "SI",
+     "x_sent": 0.126,
+     "grid_x": 0.13,
+     "grid_T_K": 900.0,
+     "stable_phases": [
+      "LIQUID"
+     ],
+     "error": null,
+     "expected": "LIQUID (above the eutectic)"
+    },
+    {
+     "tdb": "AlSi-97Feu-LB.tdb",
+     "element": "Si",
+     "x_element": 0.126,
+     "T_K": 900.0,
+     "x_component": "SI",
+     "x_sent": 0.126,
+     "grid_x": 0.13,
+     "grid_T_K": 900.0,
+     "stable_phases": [
+      "LIQUID"
+     ],
+     "error": null,
+     "expected": "LIQUID (above the eutectic)"
+    }
+   ],
+   "tdb_files_containing": {
+    "total": 21,
+    "returned": 21,
+    "tiers": [
+     "bundled",
+     "fetched",
+     "manual"
+    ],
+    "names": [
+     "AlSi-12Tan.tdb",
+     "AlSi-14Lia.tdb",
+     "AlSi-24Zob-3g.tdb",
+     "AlSi-86Mey.tdb",
+     "AlSi-96Jac.tdb",
+     "AlSi-97Feu-LB.tdb",
+     "N.TDB",
+     "PrecHiMn-04_2.pycalphad.tdb",
+     "mc_al_v2.032.pycalphad.tdb",
+     "COST MP0602 High-temp Solders (SOLDERS)",
+     "cost507R-macros.TDB",
+     "cost507r-scheil.TDB",
+     "mc_ni_v2.034.pycalphad.tdb",
+     "mc_fe_v2.059.pycalphad.tdb",
+     "mc_fecocrnbti.tdb",
+     "steel_database_fix.tdb",
+     "COST507-modified.tdb",
+     "COST507.pycalphad.tdb",
+     "COST507.tdb",
+     "unary50_bengt.tdb",
+     "SGTE-unary1991-2010.TDB"
+    ]
+   },
+   "tdb_files_exact": {
+    "total": 6,
+    "returned": 6,
+    "tiers": [
+     "bundled"
+    ],
+    "names": [
+     "AlSi-12Tan.tdb",
+     "AlSi-14Lia.tdb",
+     "AlSi-24Zob-3g.tdb",
+     "AlSi-86Mey.tdb",
+     "AlSi-96Jac.tdb",
+     "AlSi-97Feu-LB.tdb"
+    ]
+   },
+   "compare_to_dft_keys": [
+    "compounds",
+    "description",
+    "dft_hull_vertices",
+    "dft_sources",
+    "fields",
+    "orchid",
+    "residual_stats_default_subset",
+    "rules",
+    "selection_note",
+    "system",
+    "unit",
+    "viewer_url"
+   ]
+  },
+  "Al-Mg": {
+   "system": "Al-Mg",
+   "system_id": "AL-MG",
+   "literature_invariants_accepted": 31,
+   "literature_invariants_by_evidence_class_first_page": {
+    "model": 26,
+    "experimental": 5
+   },
+   "sgte_assessments": [
+    {
+     "tdb": "AlMg-05Zho.tdb",
+     "assessment_doi": "10.1016/j.calphad.2005.08.004",
+     "n_invariants_calc": 5,
+     "n_invariants_raw": 11,
+     "n_with_literature_match": 5,
+     "median_abs_dT_best_match_K": 0.03,
+     "n_with_experimental_match": 1,
+     "n_experimental_within_10K": 1,
+     "median_abs_dT_best_experimental_K": 0.91
+    },
+    {
+     "tdb": "AlMg-12Tan.tdb",
+     "assessment_doi": "10.1016/j.tca.2011.10.017",
+     "n_invariants_calc": 5,
+     "n_invariants_raw": 11,
+     "n_with_literature_match": 5,
+     "median_abs_dT_best_match_K": 0.48,
+     "n_with_experimental_match": 1,
+     "n_experimental_within_10K": 1,
+     "median_abs_dT_best_experimental_K": 0.09
+    },
+    {
+     "tdb": "AlMg-13Tok.tdb",
+     "assessment_doi": "10.2320/matertrans.MI201226",
+     "n_invariants_calc": 5,
+     "n_invariants_raw": 11,
+     "n_with_literature_match": 5,
+     "median_abs_dT_best_match_K": 0.45,
+     "n_with_experimental_match": 0,
+     "n_experimental_within_10K": 0,
+     "median_abs_dT_best_experimental_K": null
+    },
+    {
+     "tdb": "AlMg-20Shi.tdb",
+     "assessment_doi": "10.1016/j.jallcom.2020.153962",
+     "n_invariants_calc": 4,
+     "n_invariants_raw": 4,
+     "n_with_literature_match": 4,
+     "median_abs_dT_best_match_K": 2.76,
+     "n_with_experimental_match": 1,
+     "n_experimental_within_10K": 1,
+     "median_abs_dT_best_experimental_K": 0.39
+    },
+    {
+     "tdb": "AlMg-23Hal.tdb",
+     "assessment_doi": "10.1016/j.calphad.2023.102577",
+     "n_invariants_calc": 5,
+     "n_invariants_raw": 11,
+     "n_with_literature_match": 5,
+     "median_abs_dT_best_match_K": 0.74,
+     "n_with_experimental_match": 1,
+     "n_experimental_within_10K": 1,
+     "median_abs_dT_best_experimental_K": 1.65
+    },
+    {
+     "tdb": "AlMg-86Lud.tdb",
+     "assessment_doi": "10.1515/ijmr-1986-770303",
+     "n_invariants_calc": 6,
+     "n_invariants_raw": 13,
+     "n_with_literature_match": 3,
+     "median_abs_dT_best_match_K": 1.77,
+     "n_with_experimental_match": 1,
+     "n_experimental_within_10K": 1,
+     "median_abs_dT_best_experimental_K": 0.24
+    },
+    {
+     "tdb": "AlMg-90Sau.tdb",
+     "assessment_doi": "10.1016/0364-5916(90)90040-7",
+     "n_invariants_calc": 7,
+     "n_invariants_raw": 12,
+     "n_with_literature_match": 5,
+     "median_abs_dT_best_match_K": 0.11,
+     "n_with_experimental_match": 2,
+     "n_experimental_within_10K": 2,
+     "median_abs_dT_best_experimental_K": 0.64
+    },
+    {
+     "tdb": "AlMg-93Zuo.tdb",
+     "assessment_doi": "10.1016/0364-5916(93)90017-6",
+     "n_invariants_calc": 7,
+     "n_invariants_raw": 15,
+     "n_with_literature_match": 5,
+     "median_abs_dT_best_match_K": 0.82,
+     "n_with_experimental_match": 4,
+     "n_experimental_within_10K": 4,
+     "median_abs_dT_best_experimental_K": 1.23
+    },
+    {
+     "tdb": "AlMg-98Lia-LB.tdb",
+     "assessment_doi": "10.3139/ijmr-1998-0101",
+     "n_invariants_calc": 5,
+     "n_invariants_raw": 11,
+     "n_with_literature_match": 5,
+     "median_abs_dT_best_match_K": 0.03,
+     "n_with_experimental_match": 0,
+     "n_experimental_within_10K": 0,
+     "median_abs_dT_best_experimental_K": null
+    },
+    {
+     "tdb": "AlMg-98Zak.tdb",
+     "assessment_doi": null,
+     "n_invariants_calc": 7,
+     "n_invariants_raw": 12,
+     "n_with_literature_match": 5,
+     "median_abs_dT_best_match_K": 0.47,
+     "n_with_experimental_match": 2,
+     "n_experimental_within_10K": 2,
+     "median_abs_dT_best_experimental_K": 0.34
+    }
+   ],
+   "n_calculated_diagrams": 10,
+   "diagram_tdbs": [
+    "AlMg-05Zho.tdb",
+    "AlMg-12Tan.tdb",
+    "AlMg-13Tok.tdb",
+    "AlMg-20Shi.tdb",
+    "AlMg-23Hal.tdb",
+    "AlMg-86Lud.tdb",
+    "AlMg-90Sau.tdb",
+    "AlMg-93Zuo.tdb",
+    "AlMg-98Lia-LB.tdb",
+    "AlMg-98Zak.tdb"
+   ],
+   "diagram_x_component": [
+    "MG"
+   ],
+   "diagram_status": [
+    "ok"
+   ],
+   "phase_at_points": [
+    {
+     "tdb": "AlMg-05Zho.tdb",
+     "element": "Mg",
+     "x_element": 0.05,
+     "T_K": 700.0,
+     "x_component": "MG",
+     "x_sent": 0.05,
+     "grid_x": 0.05,
+     "grid_T_K": 700.0,
+     "stable_phases": [
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1"
+    },
+    {
+     "tdb": "AlMg-12Tan.tdb",
+     "element": "Mg",
+     "x_element": 0.05,
+     "T_K": 700.0,
+     "x_component": "MG",
+     "x_sent": 0.05,
+     "grid_x": 0.05,
+     "grid_T_K": 700.0,
+     "stable_phases": [
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1"
+    },
+    {
+     "tdb": "AlMg-13Tok.tdb",
+     "element": "Mg",
+     "x_element": 0.05,
+     "T_K": 700.0,
+     "x_component": "MG",
+     "x_sent": 0.05,
+     "grid_x": 0.05,
+     "grid_T_K": 700.0,
+     "stable_phases": [
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1"
+    },
+    {
+     "tdb": "AlMg-20Shi.tdb",
+     "element": "Mg",
+     "x_element": 0.05,
+     "T_K": 700.0,
+     "x_component": "MG",
+     "x_sent": 0.05,
+     "grid_x": 0.05,
+     "grid_T_K": 700.0,
+     "stable_phases": [
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1"
+    },
+    {
+     "tdb": "AlMg-23Hal.tdb",
+     "element": "Mg",
+     "x_element": 0.05,
+     "T_K": 700.0,
+     "x_component": "MG",
+     "x_sent": 0.05,
+     "grid_x": 0.05,
+     "grid_T_K": 700.0,
+     "stable_phases": [
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1"
+    },
+    {
+     "tdb": "AlMg-86Lud.tdb",
+     "element": "Mg",
+     "x_element": 0.05,
+     "T_K": 700.0,
+     "x_component": "MG",
+     "x_sent": 0.05,
+     "grid_x": 0.05,
+     "grid_T_K": 700.0,
+     "stable_phases": [
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1"
+    },
+    {
+     "tdb": "AlMg-90Sau.tdb",
+     "element": "Mg",
+     "x_element": 0.05,
+     "T_K": 700.0,
+     "x_component": "MG",
+     "x_sent": 0.05,
+     "grid_x": 0.05,
+     "grid_T_K": 700.0,
+     "stable_phases": [
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1"
+    },
+    {
+     "tdb": "AlMg-93Zuo.tdb",
+     "element": "Mg",
+     "x_element": 0.05,
+     "T_K": 700.0,
+     "x_component": "MG",
+     "x_sent": 0.05,
+     "grid_x": 0.05,
+     "grid_T_K": 700.0,
+     "stable_phases": [
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1"
+    },
+    {
+     "tdb": "AlMg-98Lia-LB.tdb",
+     "element": "Mg",
+     "x_element": 0.05,
+     "T_K": 700.0,
+     "x_component": "MG",
+     "x_sent": 0.05,
+     "grid_x": 0.05,
+     "grid_T_K": 700.0,
+     "stable_phases": [
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1"
+    },
+    {
+     "tdb": "AlMg-98Zak.tdb",
+     "element": "Mg",
+     "x_element": 0.05,
+     "T_K": 700.0,
+     "x_component": "MG",
+     "x_sent": 0.05,
+     "grid_x": 0.05,
+     "grid_T_K": 700.0,
+     "stable_phases": [
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1"
+    }
+   ],
+   "tdb_files_containing": {
+    "total": 24,
+    "returned": 24,
+    "tiers": [
+     "bundled",
+     "fetched",
+     "manual"
+    ],
+    "names": [
+     "Al-Mg_Zhong.tdb",
+     "AlMg-05Zho.tdb",
+     "AlMg-12Tan.tdb",
+     "AlMg-13Tok.tdb",
+     "AlMg-20Shi.tdb",
+     "AlMg-23Hal.tdb",
+     "AlMg-86Lud.tdb",
+     "AlMg-90Sau.tdb",
+     "AlMg-93Zuo.tdb",
+     "AlMg-98Lia-LB.tdb",
+     "AlMg-98Zak.tdb",
+     "AlMgZn.tdb",
+     "AlCuMgZn.tdb",
+     "N.TDB",
+     "mc_al_v2.032.pycalphad.tdb",
+     "COST MP0602 High-temp Solders (SOLDERS)",
+     "cost507R-macros.TDB",
+     "cost507r-scheil.TDB",
+     "diffusion.tdb",
+     "COST507-modified.tdb",
+     "COST507.pycalphad.tdb",
+     "COST507.tdb",
+     "unary50_bengt.tdb",
+     "SGTE-unary1991-2010.TDB"
+    ]
+   },
+   "tdb_files_exact": {
+    "total": 11,
+    "returned": 11,
+    "tiers": [
+     "bundled",
+     "manual"
+    ],
+    "names": [
+     "Al-Mg_Zhong.tdb",
+     "AlMg-05Zho.tdb",
+     "AlMg-12Tan.tdb",
+     "AlMg-13Tok.tdb",
+     "AlMg-20Shi.tdb",
+     "AlMg-23Hal.tdb",
+     "AlMg-86Lud.tdb",
+     "AlMg-90Sau.tdb",
+     "AlMg-93Zuo.tdb",
+     "AlMg-98Lia-LB.tdb",
+     "AlMg-98Zak.tdb"
+    ]
+   },
+   "compare_to_dft_keys": [
+    "compounds",
+    "description",
+    "dft_hull_vertices",
+    "dft_sources",
+    "fields",
+    "orchid",
+    "residual_stats_default_subset",
+    "rules",
+    "selection_note",
+    "system",
+    "unit",
+    "viewer_url"
+   ]
+  },
+  "Al-Zr": {
+   "system": "Al-Zr",
+   "system_id": "AL-ZR",
+   "literature_invariants_accepted": 178,
+   "literature_invariants_by_evidence_class_first_page": {
+    "experimental": 88,
+    "model": 90
+   },
+   "sgte_assessments": [
+    {
+     "tdb": "AlZr-01Wan.tdb",
+     "assessment_doi": "10.1007/s12385-001-0072-4",
+     "n_invariants_calc": 14,
+     "n_invariants_raw": 27,
+     "n_with_literature_match": 14,
+     "median_abs_dT_best_match_K": 0.2,
+     "n_with_experimental_match": 13,
+     "n_experimental_within_10K": 13,
+     "median_abs_dT_best_experimental_K": 0.7
+    },
+    {
+     "tdb": "AlZr-10Hir.tdb",
+     "assessment_doi": "10.1515/HTMP.2010.29.5–6.347",
+     "n_invariants_calc": 16,
+     "n_invariants_raw": 28,
+     "n_with_literature_match": 14,
+     "median_abs_dT_best_match_K": 4.45,
+     "n_with_experimental_match": 13,
+     "n_experimental_within_10K": 8,
+     "median_abs_dT_best_experimental_K": 6.86
+    },
+    {
+     "tdb": "AlZr-15Fis.tdb",
+     "assessment_doi": "10.1007/s11669-015-0398-y",
+     "n_invariants_calc": 16,
+     "n_invariants_raw": 25,
+     "n_with_literature_match": 14,
+     "median_abs_dT_best_match_K": 0.41,
+     "n_with_experimental_match": 8,
+     "n_experimental_within_10K": 7,
+     "median_abs_dT_best_experimental_K": 3.7
+    },
+    {
+     "tdb": "AlZr-18Khv.tdb",
+     "assessment_doi": "10.1016/j.jallcom.2018.02.023",
+     "n_invariants_calc": 16,
+     "n_invariants_raw": 25,
+     "n_with_literature_match": 14,
+     "median_abs_dT_best_match_K": 0.42,
+     "n_with_experimental_match": 8,
+     "n_experimental_within_10K": 7,
+     "median_abs_dT_best_experimental_K": 3.7
+    },
+    {
+     "tdb": "AlZr-18Tam.tdb",
+     "assessment_doi": "10.1007/s10973-017-6635-3",
+     "n_invariants_calc": 14,
+     "n_invariants_raw": 28,
+     "n_with_literature_match": 14,
+     "median_abs_dT_best_match_K": 0.24,
+     "n_with_experimental_match": 11,
+     "n_experimental_within_10K": 11,
+     "median_abs_dT_best_experimental_K": 2.23
+    },
+    {
+     "tdb": "AlZr-20Lon.tdb",
+     "assessment_doi": "10.1007/s11669-020-00827-z",
+     "n_invariants_calc": 14,
+     "n_invariants_raw": 27,
+     "n_with_literature_match": 14,
+     "median_abs_dT_best_match_K": 0.36,
+     "n_with_experimental_match": 13,
+     "n_experimental_within_10K": 13,
+     "median_abs_dT_best_experimental_K": 2.6
+    },
+    {
+     "tdb": "AlZr-86Sau.tdb",
+     "assessment_doi": "10.1179/mst.1986.2.6.520",
+     "n_invariants_calc": 13,
+     "n_invariants_raw": 24,
+     "n_with_literature_match": 12,
+     "median_abs_dT_best_match_K": 5.64,
+     "n_with_experimental_match": 10,
+     "n_experimental_within_10K": 5,
+     "median_abs_dT_best_experimental_K": 12.72
+    },
+    {
+     "tdb": "AlZr-98Sau-LB.tdb",
+     "assessment_doi": null,
+     "n_invariants_calc": 12,
+     "n_invariants_raw": 26,
+     "n_with_literature_match": 12,
+     "median_abs_dT_best_match_K": 0.04,
+     "n_with_experimental_match": 8,
+     "n_experimental_within_10K": 6,
+     "median_abs_dT_best_experimental_K": 3.86
+    }
+   ],
+   "n_calculated_diagrams": 8,
+   "diagram_tdbs": [
+    "AlZr-01Wan.tdb",
+    "AlZr-10Hir.tdb",
+    "AlZr-15Fis.tdb",
+    "AlZr-18Khv.tdb",
+    "AlZr-18Tam.tdb",
+    "AlZr-20Lon.tdb",
+    "AlZr-86Sau.tdb",
+    "AlZr-98Sau-LB.tdb"
+   ],
+   "diagram_x_component": [
+    "ZR"
+   ],
+   "diagram_status": [
+    "ok"
+   ],
+   "phase_at_points": [
+    {
+     "tdb": "AlZr-01Wan.tdb",
+     "element": "Zr",
+     "x_element": 0.25,
+     "T_K": 1000.0,
+     "x_component": "ZR",
+     "x_sent": 0.25,
+     "grid_x": 0.25,
+     "grid_T_K": 1000.0,
+     "stable_phases": [
+      "AL3ZR_D023"
+     ],
+     "error": null,
+     "expected": "AL3ZR (D0_23)"
+    },
+    {
+     "tdb": "AlZr-10Hir.tdb",
+     "element": "Zr",
+     "x_element": 0.25,
+     "T_K": 1000.0,
+     "x_component": "ZR",
+     "x_sent": 0.25,
+     "grid_x": 0.25,
+     "grid_T_K": 1000.0,
+     "stable_phases": [
+      "AL3ZR_D023"
+     ],
+     "error": null,
+     "expected": "AL3ZR (D0_23)"
+    },
+    {
+     "tdb": "AlZr-15Fis.tdb",
+     "element": "Zr",
+     "x_element": 0.25,
+     "T_K": 1000.0,
+     "x_component": "ZR",
+     "x_sent": 0.25,
+     "grid_x": 0.25,
+     "grid_T_K": 1000.0,
+     "stable_phases": [
+      "AL3ZR_D023"
+     ],
+     "error": null,
+     "expected": "AL3ZR (D0_23)"
+    },
+    {
+     "tdb": "AlZr-18Khv.tdb",
+     "element": "Zr",
+     "x_element": 0.25,
+     "T_K": 1000.0,
+     "x_component": "ZR",
+     "x_sent": 0.25,
+     "grid_x": 0.25,
+     "grid_T_K": 1000.0,
+     "stable_phases": [
+      "AL3ZR_D023"
+     ],
+     "error": null,
+     "expected": "AL3ZR (D0_23)"
+    },
+    {
+     "tdb": "AlZr-18Tam.tdb",
+     "element": "Zr",
+     "x_element": 0.25,
+     "T_K": 1000.0,
+     "x_component": "ZR",
+     "x_sent": 0.25,
+     "grid_x": 0.25,
+     "grid_T_K": 1000.0,
+     "stable_phases": [
+      "AL3ZR_D023"
+     ],
+     "error": null,
+     "expected": "AL3ZR (D0_23)"
+    },
+    {
+     "tdb": "AlZr-20Lon.tdb",
+     "element": "Zr",
+     "x_element": 0.25,
+     "T_K": 1000.0,
+     "x_component": "ZR",
+     "x_sent": 0.25,
+     "grid_x": 0.25,
+     "grid_T_K": 1000.0,
+     "stable_phases": [
+      "AL3ZR_D023"
+     ],
+     "error": null,
+     "expected": "AL3ZR (D0_23)"
+    },
+    {
+     "tdb": "AlZr-86Sau.tdb",
+     "element": "Zr",
+     "x_element": 0.25,
+     "T_K": 1000.0,
+     "x_component": "ZR",
+     "x_sent": 0.25,
+     "grid_x": 0.25,
+     "grid_T_K": 1000.0,
+     "stable_phases": [
+      "AL3ZR_D023"
+     ],
+     "error": null,
+     "expected": "AL3ZR (D0_23)"
+    },
+    {
+     "tdb": "AlZr-98Sau-LB.tdb",
+     "element": "Zr",
+     "x_element": 0.25,
+     "T_K": 1000.0,
+     "x_component": "ZR",
+     "x_sent": 0.25,
+     "grid_x": 0.25,
+     "grid_T_K": 1000.0,
+     "stable_phases": [
+      "AL3ZR_D023"
+     ],
+     "error": null,
+     "expected": "AL3ZR (D0_23)"
+    },
+    {
+     "tdb": "AlZr-01Wan.tdb",
+     "element": "Zr",
+     "x_element": 0.002,
+     "T_K": 900.0,
+     "x_component": "ZR",
+     "x_sent": 0.002,
+     "grid_x": 0.0,
+     "grid_T_K": 900.0,
+     "stable_phases": [
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1 + AL3ZR"
+    },
+    {
+     "tdb": "AlZr-10Hir.tdb",
+     "element": "Zr",
+     "x_element": 0.002,
+     "T_K": 900.0,
+     "x_component": "ZR",
+     "x_sent": 0.002,
+     "grid_x": 0.0,
+     "grid_T_K": 900.0,
+     "stable_phases": [
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1 + AL3ZR"
+    },
+    {
+     "tdb": "AlZr-15Fis.tdb",
+     "element": "Zr",
+     "x_element": 0.002,
+     "T_K": 900.0,
+     "x_component": "ZR",
+     "x_sent": 0.002,
+     "grid_x": 0.0,
+     "grid_T_K": 900.0,
+     "stable_phases": [
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1 + AL3ZR"
+    },
+    {
+     "tdb": "AlZr-18Khv.tdb",
+     "element": "Zr",
+     "x_element": 0.002,
+     "T_K": 900.0,
+     "x_component": "ZR",
+     "x_sent": 0.002,
+     "grid_x": 0.0,
+     "grid_T_K": 900.0,
+     "stable_phases": [
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1 + AL3ZR"
+    },
+    {
+     "tdb": "AlZr-18Tam.tdb",
+     "element": "Zr",
+     "x_element": 0.002,
+     "T_K": 900.0,
+     "x_component": "ZR",
+     "x_sent": 0.002,
+     "grid_x": 0.0,
+     "grid_T_K": 900.0,
+     "stable_phases": [
+      "AL3ZR_D023",
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1 + AL3ZR"
+    },
+    {
+     "tdb": "AlZr-20Lon.tdb",
+     "element": "Zr",
+     "x_element": 0.002,
+     "T_K": 900.0,
+     "x_component": "ZR",
+     "x_sent": 0.002,
+     "grid_x": 0.0,
+     "grid_T_K": 900.0,
+     "stable_phases": [
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1 + AL3ZR"
+    },
+    {
+     "tdb": "AlZr-86Sau.tdb",
+     "element": "Zr",
+     "x_element": 0.002,
+     "T_K": 900.0,
+     "x_component": "ZR",
+     "x_sent": 0.002,
+     "grid_x": 0.0,
+     "grid_T_K": 900.0,
+     "stable_phases": [
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1 + AL3ZR"
+    },
+    {
+     "tdb": "AlZr-98Sau-LB.tdb",
+     "element": "Zr",
+     "x_element": 0.002,
+     "T_K": 900.0,
+     "x_component": "ZR",
+     "x_sent": 0.002,
+     "grid_x": 0.0,
+     "grid_T_K": 900.0,
+     "stable_phases": [
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1 + AL3ZR"
+    }
+   ],
+   "tdb_files_containing": {
+    "total": 21,
+    "returned": 21,
+    "tiers": [
+     "bundled",
+     "fetched",
+     "manual"
+    ],
+    "names": [
+     "AlZr-01Wan.tdb",
+     "AlZr-10Hir.tdb",
+     "AlZr-15Fis.tdb",
+     "AlZr-18Khv.tdb",
+     "AlZr-18Tam.tdb",
+     "AlZr-20Lon.tdb",
+     "AlZr-86Sau.tdb",
+     "AlZr-98Sau-LB.tdb",
+     "Al-Cu-Zr_Zhou.tdb",
+     "alcuzr-viscosity.tdb",
+     "al2o3_nd2o3_zro2.tdb",
+     "zrlayalo.tdb",
+     "mc_al_v2.032.pycalphad.tdb",
+     "cost507R-macros.TDB",
+     "cost507r-scheil.TDB",
+     "mc_ni_v2.034.pycalphad.tdb",
+     "COST507-modified.tdb",
+     "COST507.pycalphad.tdb",
+     "COST507.tdb",
+     "unary50_bengt.tdb",
+     "SGTE-unary1991-2010.TDB"
+    ]
+   },
+   "tdb_files_exact": {
+    "total": 8,
+    "returned": 8,
+    "tiers": [
+     "bundled"
+    ],
+    "names": [
+     "AlZr-01Wan.tdb",
+     "AlZr-10Hir.tdb",
+     "AlZr-15Fis.tdb",
+     "AlZr-18Khv.tdb",
+     "AlZr-18Tam.tdb",
+     "AlZr-20Lon.tdb",
+     "AlZr-86Sau.tdb",
+     "AlZr-98Sau-LB.tdb"
+    ]
+   },
+   "compare_to_dft_keys": [
+    "compounds",
+    "description",
+    "dft_hull_vertices",
+    "dft_sources",
+    "fields",
+    "orchid",
+    "residual_stats_default_subset",
+    "rules",
+    "selection_note",
+    "system",
+    "unit",
+    "viewer_url"
+   ]
+  },
+  "Cu-Ni": {
+   "system": "Cu-Ni",
+   "system_id": "CU-NI",
+   "literature_invariants_accepted": 0,
+   "literature_invariants_by_evidence_class_first_page": {},
+   "sgte_assessments": [
+    {
+     "tdb": "CuNi-07Tur.tdb",
+     "assessment_doi": "10.1007/s11106-007-0013-9",
+     "n_invariants_calc": 0,
+     "n_invariants_raw": 0,
+     "n_with_literature_match": 0,
+     "median_abs_dT_best_match_K": null,
+     "n_with_experimental_match": 0,
+     "n_experimental_within_10K": 0,
+     "median_abs_dT_best_experimental_K": null
+    },
+    {
+     "tdb": "CuNi-87Jan.tdb",
+     "assessment_doi": null,
+     "n_invariants_calc": 0,
+     "n_invariants_raw": 0,
+     "n_with_literature_match": 0,
+     "median_abs_dT_best_match_K": null,
+     "n_with_experimental_match": 0,
+     "n_experimental_within_10K": 0,
+     "median_abs_dT_best_experimental_K": null
+    },
+    {
+     "tdb": "CuNi-89Sri.tdb",
+     "assessment_doi": "10.1179/mst.1989.5.5.427",
+     "n_invariants_calc": 0,
+     "n_invariants_raw": 0,
+     "n_with_literature_match": 0,
+     "median_abs_dT_best_match_K": null,
+     "n_with_experimental_match": 0,
+     "n_experimental_within_10K": 0,
+     "median_abs_dT_best_experimental_K": null
+    },
+    {
+     "tdb": "CuNi-92Mey-LB.tdb",
+     "assessment_doi": null,
+     "n_invariants_calc": 0,
+     "n_invariants_raw": 0,
+     "n_with_literature_match": 0,
+     "median_abs_dT_best_match_K": null,
+     "n_with_experimental_match": 0,
+     "n_experimental_within_10K": 0,
+     "median_abs_dT_best_experimental_K": null
+    }
+   ],
+   "n_calculated_diagrams": 4,
+   "diagram_tdbs": [
+    "CuNi-07Tur.tdb",
+    "CuNi-87Jan.tdb",
+    "CuNi-89Sri.tdb",
+    "CuNi-92Mey-LB.tdb"
+   ],
+   "diagram_x_component": [
+    "NI"
+   ],
+   "diagram_status": [
+    "ok"
+   ],
+   "phase_at_points": [
+    {
+     "tdb": "CuNi-07Tur.tdb",
+     "element": "Ni",
+     "x_element": 0.3,
+     "T_K": 1000.0,
+     "x_component": "NI",
+     "x_sent": 0.3,
+     "grid_x": 0.3,
+     "grid_T_K": 1000.0,
+     "stable_phases": [
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1 (isomorphous)"
+    },
+    {
+     "tdb": "CuNi-87Jan.tdb",
+     "element": "Ni",
+     "x_element": 0.3,
+     "T_K": 1000.0,
+     "x_component": "NI",
+     "x_sent": 0.3,
+     "grid_x": 0.3,
+     "grid_T_K": 1000.0,
+     "stable_phases": [
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1 (isomorphous)"
+    },
+    {
+     "tdb": "CuNi-89Sri.tdb",
+     "element": "Ni",
+     "x_element": 0.3,
+     "T_K": 1000.0,
+     "x_component": "NI",
+     "x_sent": 0.3,
+     "grid_x": 0.3,
+     "grid_T_K": 1000.0,
+     "stable_phases": [
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1 (isomorphous)"
+    },
+    {
+     "tdb": "CuNi-92Mey-LB.tdb",
+     "element": "Ni",
+     "x_element": 0.3,
+     "T_K": 1000.0,
+     "x_component": "NI",
+     "x_sent": 0.3,
+     "grid_x": 0.3,
+     "grid_T_K": 1000.0,
+     "stable_phases": [
+      "FCC_A1"
+     ],
+     "error": null,
+     "expected": "FCC_A1 (isomorphous)"
+    },
+    {
+     "tdb": "CuNi-07Tur.tdb",
+     "element": "Ni",
+     "x_element": 0.5,
+     "T_K": 1650.0,
+     "x_component": "NI",
+     "x_sent": 0.5,
+     "grid_x": 0.5,
+     "grid_T_K": 1650.0,
+     "stable_phases": [
+      "LIQUID"
+     ],
+     "error": null,
+     "expected": "LIQUID"
+    },
+    {
+     "tdb": "CuNi-87Jan.tdb",
+     "element": "Ni",
+     "x_element": 0.5,
+     "T_K": 1650.0,
+     "x_component": "NI",
+     "x_sent": 0.5,
+     "grid_x": 0.5,
+     "grid_T_K": 1650.0,
+     "stable_phases": [
+      "LIQUID"
+     ],
+     "error": null,
+     "expected": "LIQUID"
+    },
+    {
+     "tdb": "CuNi-89Sri.tdb",
+     "element": "Ni",
+     "x_element": 0.5,
+     "T_K": 1650.0,
+     "x_component": "NI",
+     "x_sent": 0.5,
+     "grid_x": 0.5,
+     "grid_T_K": 1650.0,
+     "stable_phases": [
+      "LIQUID"
+     ],
+     "error": null,
+     "expected": "LIQUID"
+    },
+    {
+     "tdb": "CuNi-92Mey-LB.tdb",
+     "element": "Ni",
+     "x_element": 0.5,
+     "T_K": 1650.0,
+     "x_component": "NI",
+     "x_sent": 0.5,
+     "grid_x": 0.5,
+     "grid_T_K": 1650.0,
+     "stable_phases": [
+      "LIQUID"
+     ],
+     "error": null,
+     "expected": "LIQUID"
+    }
+   ],
+   "tdb_files_containing": {
+    "total": 20,
+    "returned": 20,
+    "tiers": [
+     "bundled",
+     "fetched",
+     "manual"
+    ],
+    "names": [
+     "CuNi-07Tur.tdb",
+     "CuNi-87Jan.tdb",
+     "CuNi-89Sri.tdb",
+     "CuNi-92Mey-LB.tdb",
+     "COST 531 Lead-free Solders",
+     "mc_al_v2.032.pycalphad.tdb",
+     "iron-04.tdb",
+     "iron4cd.TDB",
+     "COST MP0602 High-temp Solders (SOLDERS)",
+     "cost507R-macros.TDB",
+     "cost507r-scheil.TDB",
+     "mc_ni_v2.034.pycalphad.tdb",
+     "mc_fe_v2.059.pycalphad.tdb",
+     "mc_fecocrnbti.tdb",
+     "steel_database_fix.tdb",
+     "COST507-modified.tdb",
+     "COST507.pycalphad.tdb",
+     "COST507.tdb",
+     "unary50_bengt.tdb",
+     "SGTE-unary1991-2010.TDB"
+    ]
+   },
+   "tdb_files_exact": {
+    "total": 4,
+    "returned": 4,
+    "tiers": [
+     "bundled"
+    ],
+    "names": [
+     "CuNi-07Tur.tdb",
+     "CuNi-87Jan.tdb",
+     "CuNi-89Sri.tdb",
+     "CuNi-92Mey-LB.tdb"
+    ]
+   },
+   "compare_to_dft_keys": [
+    "compounds",
+    "description",
+    "dft_hull_vertices",
+    "dft_sources",
+    "fields",
+    "orchid",
+    "residual_stats_default_subset",
+    "rules",
+    "selection_note",
+    "system",
+    "unit",
+    "viewer_url"
+   ]
+  }
+ },
+ "formation_enthalpy": {
+  "Al2Cu": {
+   "formula": "Al2Cu",
+   "composition": {
+    "AL": 0.6667,
+    "CU": 0.3333
+   },
+   "summary": {
+    "dft_mp_lowest": -17.181,
+    "dft_oqmd_lowest": -16.884
+   },
+   "keys": [
+    "composition",
+    "dft",
+    "fields",
+    "formula",
+    "literature",
+    "literature_match_rule",
+    "literature_other_units",
+    "orchid",
+    "summary",
+    "summary_rule",
+    "system",
+    "unit"
+   ]
+  },
+  "Al3Zr": {
+   "formula": "Al3Zr",
+   "composition": {
+    "AL": 0.75,
+    "ZR": 0.25
+   },
+   "summary": {
+    "literature_experimental": {
+     "n": 9,
+     "mean": -46.7,
+     "median": -48.4,
+     "min": -51.6,
+     "max": -40.75,
+     "stdev": 3.8948
+    },
+    "literature_model": {
+     "n": 24,
+     "mean": -44.5466,
+     "median": -45.5455,
+     "min": -52.87,
+     "max": -37.8,
+     "stdev": 3.9934
+    },
+    "literature_dft": {
+     "n": 4,
+     "mean": -45.5623,
+     "median": -46.775,
+     "min": -49.106,
+     "max": -39.593,
+     "stdev": 4.1284
+    },
+    "dft_mp_lowest": -47.013,
+    "dft_oqmd_lowest": -47.081
+   },
+   "keys": [
+    "composition",
+    "dft",
+    "fields",
+    "formula",
+    "literature",
+    "literature_match_rule",
+    "literature_other_units",
+    "orchid",
+    "summary",
+    "summary_rule",
+    "system",
+    "unit"
+   ]
+  },
+  "Al3Mg2": {
+   "formula": "Al3Mg2",
+   "composition": {
+    "AL": 0.6,
+    "MG": 0.4
+   },
+   "summary": {},
+   "keys": [
+    "composition",
+    "dft",
+    "fields",
+    "formula",
+    "literature",
+    "literature_match_rule",
+    "literature_other_units",
+    "orchid",
+    "summary",
+    "summary_rule",
+    "system",
+    "unit"
+   ]
+  }
+ }
+}

@@ -1,0 +1,7 @@
+/tmp/arroyave/venvs/DGP-BO/lib/python3.12/site-packages/linear_operator/utils/interpolation.py:71: UserWarning: torch.sparse.SparseTensor(indices, values, shape, *, device=) is deprecated.  Please use torch.sparse_coo_tensor(indices, values, shape, dtype=, device=). (Triggered internally at ../torch/csrc/utils/tensor_new.cpp:618.)
+  summing_matrix = cls(summing_matrix_indices, summing_matrix_values, size)
+************** 0 ************************
+************** 1 ************************
+************** 2 ************************
+************** 3 ************************
+************** 4 ************************

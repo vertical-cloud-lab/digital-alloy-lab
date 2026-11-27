@@ -1,0 +1,19 @@
+..................                                                       [100%]
+=============================== warnings summary ===============================
+../../venvs/pfp/lib/python3.11/site-packages/espei/refdata.py:43
+  /tmp/arroyave/venvs/pfp/lib/python3.11/site-packages/espei/refdata.py:43: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+    import pkg_resources
+
+../../venvs/pfp/lib/python3.11/site-packages/emcee/ptsampler.py:17
+  /tmp/arroyave/venvs/pfp/lib/python3.11/site-packages/emcee/ptsampler.py:17: DeprecationWarning: invalid escape sequence '\e'
+    """Returns a ladder of :math:`\beta \equiv 1/T` with temperatures
+
+tests/test_helpers.py: 4 warnings
+tests/test_loaders.py: 1 warning
+tests/test_main.py: 6 warnings
+  /tmp/arroyave/venvs/pfp/lib/python3.11/site-packages/pycalphad/io/tdb.py:1017: UserWarning: The type definition character `%` was defined in the following phases: ['BCC_A2', 'FCC_A1', 'LIQUID'], but no corresponding TYPE_DEFINITION line was found in the TDB.
+    warnings.warn(f"The type definition character `{typechar}` was defined in the following phases: "
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+18 passed, 13 warnings in 18.89s
+exit=0 elapsed=22s

@@ -1,0 +1,24 @@
+Thu Nov  5 04:09:56 UTC 2026
+  ok  cuzr-espei-mcmc/gate_sgte_start.json: identical (sha256 c8f91edac29e)
+  ok  cuzr-espei-mcmc/fig_espei_negative.png: bytes differ, pixel RMS 0.000 (tol 2.0)
+  ok  cuzr-espei-mcmc/fig_espei_negative.pdf: identical (sha256 6e243d754f57)
+cuzr-espei-mcmc: quick path 10 s
+  ok  mlip-formation-enthalpy/summary.json: identical (sha256 93ed5f0602e1)
+  ok  mlip-formation-enthalpy/mlip_benchmark.png: bytes differ, pixel RMS 0.000 (tol 2.0)
+  warn mlip-formation-enthalpy/mlip_benchmark.pdf: differs (PNG rasterisation differs on this platform; not failed without --strict)
+mlip-formation-enthalpy: quick path 21 s
+all quick paths regenerate identically
+
+real	0m31.036s
+user	0m30.413s
+sys	0m0.621s
+exit=0
+  ok  quickstart/cuzr_exp_vs_dft.png: bytes differ, pixel RMS 0.000 (tol 2.0)
+  ok  quickstart/cuzr_exp_vs_dft.pdf: identical (sha256 1cc716056063)
+quickstart: quick path 4 s
+all quick paths regenerate identically
+
+real	0m4.149s
+user	0m3.367s
+sys	0m0.543s
+exit=0

@@ -1,0 +1,44 @@
+grid 3876 alloys, 3852 pass Tm constraint; truth eval 1.0s
+with_SR {'iteration': 0, 'n_eval': 10, 'hv': 33202.879102770654, 'hv_frac': 0.4775107776156325, 'pareto_mean_SR': 49.819539014292, 'pareto_min_SR': 47.21655505659646, 'best_YS': 381.7060705715355}
+  suggest_batch 33.7s
+with_SR {'iteration': 1, 'n_eval': 15, 'hv': 43117.30461830955, 'hv_frac': 0.6200961547115058, 'pareto_mean_SR': 50.9315626276647, 'pareto_min_SR': 47.21655505659646, 'best_YS': 465.9438668125876}
+  suggest_batch 56.7s
+with_SR {'iteration': 2, 'n_eval': 20, 'hv': 51395.663208513215, 'hv_frac': 0.7391522593207998, 'pareto_mean_SR': 50.998336885026745, 'pareto_min_SR': 47.21655505659646, 'best_YS': 465.9438668125876}
+  suggest_batch 63.1s
+with_SR {'iteration': 3, 'n_eval': 25, 'hv': 54926.540025620685, 'hv_frac': 0.7899319441000424, 'pareto_mean_SR': 50.75311329959785, 'pareto_min_SR': 45.55208821214307, 'best_YS': 524.6865437642704}
+  suggest_batch 77.3s
+with_SR {'iteration': 4, 'n_eval': 30, 'hv': 56629.22619324885, 'hv_frac': 0.8144193083862215, 'pareto_mean_SR': 50.71833816966481, 'pareto_min_SR': 45.55208821214307, 'best_YS': 524.6865437642704}
+without_SR {'iteration': 0, 'n_eval': 10, 'hv': 1587.991875549466, 'hv_frac': 0.49831264391837937, 'pareto_mean_SR': 50.63883760358324, 'pareto_min_SR': 48.72770286777293, 'best_YS': 381.7060705715355}
+  suggest_batch 4.9s
+without_SR {'iteration': 1, 'n_eval': 15, 'hv': 2189.8180028991114, 'hv_frac': 0.687165983356903, 'pareto_mean_SR': 52.068165865248, 'pareto_min_SR': 48.72770286777293, 'best_YS': 469.06962532554087}
+  suggest_batch 6.1s
+without_SR {'iteration': 2, 'n_eval': 20, 'hv': 2593.938621949952, 'hv_frac': 0.8139792355163179, 'pareto_mean_SR': 51.47613218611288, 'pareto_min_SR': 48.72770286777293, 'best_YS': 539.7437052283991}
+  suggest_batch 6.2s
+without_SR {'iteration': 3, 'n_eval': 25, 'hv': 2991.7914432095313, 'hv_frac': 0.9388256495974029, 'pareto_mean_SR': 52.490864667297586, 'pareto_min_SR': 52.00709190439373, 'best_YS': 539.7437052283991}
+  suggest_batch 7.6s
+without_SR {'iteration': 4, 'n_eval': 30, 'hv': 3118.1193450784444, 'hv_frac': 0.9784674083181003, 'pareto_mean_SR': 52.873069143522855, 'pareto_min_SR': 52.00709190439373, 'best_YS': 565.0383134793522}
+{
+ "grid": 3876,
+ "feasible": 3852,
+ "seed": 0,
+ "with_SR": {
+  "true_hv": 69533.25591636589,
+  "iteration": 4,
+  "n_eval": 30,
+  "hv": 56629.22619324885,
+  "hv_frac": 0.8144193083862215,
+  "pareto_mean_SR": 50.71833816966481,
+  "pareto_min_SR": 45.55208821214307,
+  "best_YS": 524.6865437642704
+ },
+ "without_SR": {
+  "true_hv": 3186.7380748411624,
+  "iteration": 4,
+  "n_eval": 30,
+  "hv": 3118.1193450784444,
+  "hv_frac": 0.9784674083181003,
+  "pareto_mean_SR": 52.873069143522855,
+  "pareto_min_SR": 52.00709190439373,
+  "best_YS": 565.0383134793522
+ }
+}

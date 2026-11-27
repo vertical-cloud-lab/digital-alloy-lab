@@ -1,0 +1,9 @@
+### [plain] orchid-mcp --version
+orchid-mcp 0.1.0
+rc=0
+### [mcp] orchid-mcp --version
+orchid-mcp 0.1.0
+rc=0
+### [plain] orchid-mcp --transport http --port 18765 (SDK absent: expected refusal)
+streamable HTTP needs the MCP SDK: pip install mcp
+rc=2

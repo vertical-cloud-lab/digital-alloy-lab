@@ -1,0 +1,80 @@
+2026-11-05 03:55:48,460	WARNING authentication_token_setup.py:85 -- Token authentication is enabled for this Ray cluster. Set RAY_AUTH_MODE=disabled to opt out. For more information, see https://docs.ray.io/en/latest/ray-security/token-auth.html
+2026-11-05 03:55:51,935	INFO worker.py:2038 -- Started a local Ray instance.
+/tmp/arroyave/work/barefoot/barefoot.py:349: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  self.evaluatedPoints = pd.concat([self.evaluatedPoints,temp])
+/tmp/arroyave/work/barefoot/barefoot.py:372: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  self.iterationData = pd.concat([self.iterationData,temp])
+*** SIGTERM received at time=1793851147 on cpu 3 ***
+PC: @     0x7faf0f898e51  (unknown)  (unknown)
+    @     0x7faf0f845330  (unknown)  (unknown)
+    @     0x7faf0f8a5098         96  (unknown)
+    @     0x56432011afcc         96  PyThread_acquire_lock_timed
+    @     0x56432017bd77         96  acquire_timed
+    @     0x56432017bf4c         32  lock_PyThread_acquire_lock
+    @     0x56432007a0f3         64  method_vectorcall_VARARGS_KEYWORDS
+    @     0x56431ffc38e2        736  _PyEval_EvalFrameDefault
+    @     0x56431ff61373        208  _PyFunction_Vectorcall
+    @     0x56431ffc38e2        736  _PyEval_EvalFrameDefault
+    @     0x56431ff61373        208  _PyFunction_Vectorcall
+    @     0x56431ffc38e2        736  _PyEval_EvalFrameDefault
+    @     0x56431ff61373        208  _PyFunction_Vectorcall
+    @     0x56431ffc38e2        736  _PyEval_EvalFrameDefault
+    @     0x56431ff61373        208  _PyFunction_Vectorcall
+    @     0x56431ffc38e2        736  _PyEval_EvalFrameDefault
+    @     0x56431ff61373        208  _PyFunction_Vectorcall
+    @     0x56431ffc38e2        736  _PyEval_EvalFrameDefault
+    @     0x56431ff61373        208  _PyFunction_Vectorcall
+    @     0x56431ffc38e2        736  _PyEval_EvalFrameDefault
+    @     0x56431ff61373        208  _PyFunction_Vectorcall
+    @     0x56431ffc38e2        736  _PyEval_EvalFrameDefault
+    @     0x56431ff61373        208  _PyFunction_Vectorcall
+    @     0x56431fff10ec        144  call_function
+    @     0x56431ffd7795        736  _PyEval_EvalFrameDefault
+    @     0x56431ff61373        208  _PyFunction_Vectorcall
+    @     0x56431ffc38e2        736  _PyEval_EvalFrameDefault
+    @     0x56431ff61373        208  _PyFunction_Vectorcall
+    @     0x56431ffc38e2        736  _PyEval_EvalFrameDefault
+    @     0x5643200de472        208  _PyEval_Vector
+    @     0x564320114d82        128  run_mod
+    @     0x56431fea728c         80  pyrun_file
+    @     0x56431fea6d93         80  _PyRun_SimpleFileObject
+    @ ... and at least 9 more frames
+[2026-11-05 03:59:07,800 E 22648 22648] logging.cc:474: *** SIGTERM received at time=1793851147 on cpu 3 ***
+[2026-11-05 03:59:07,800 E 22648 22648] logging.cc:474: PC: @     0x7faf0f898e51  (unknown)  (unknown)
+[2026-11-05 03:59:07,802 E 22648 22648] logging.cc:474:     @     0x7faf0f845330  (unknown)  (unknown)
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x7faf0f8a5098         96  (unknown)
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x56432011afcc         96  PyThread_acquire_lock_timed
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x56432017bd77         96  acquire_timed
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x56432017bf4c         32  lock_PyThread_acquire_lock
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x56432007a0f3         64  method_vectorcall_VARARGS_KEYWORDS
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x56431ffc38e2        736  _PyEval_EvalFrameDefault
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x56431ff61373        208  _PyFunction_Vectorcall
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x56431ffc38e2        736  _PyEval_EvalFrameDefault
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x56431ff61373        208  _PyFunction_Vectorcall
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x56431ffc38e2        736  _PyEval_EvalFrameDefault
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x56431ff61373        208  _PyFunction_Vectorcall
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x56431ffc38e2        736  _PyEval_EvalFrameDefault
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x56431ff61373        208  _PyFunction_Vectorcall
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x56431ffc38e2        736  _PyEval_EvalFrameDefault
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x56431ff61373        208  _PyFunction_Vectorcall
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x56431ffc38e2        736  _PyEval_EvalFrameDefault
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x56431ff61373        208  _PyFunction_Vectorcall
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x56431ffc38e2        736  _PyEval_EvalFrameDefault
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x56431ff61373        208  _PyFunction_Vectorcall
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x56431ffc38e2        736  _PyEval_EvalFrameDefault
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x56431ff61373        208  _PyFunction_Vectorcall
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x56431fff10ec        144  call_function
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x56431ffd7795        736  _PyEval_EvalFrameDefault
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x56431ff61373        208  _PyFunction_Vectorcall
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x56431ffc38e2        736  _PyEval_EvalFrameDefault
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x56431ff61373        208  _PyFunction_Vectorcall
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x56431ffc38e2        736  _PyEval_EvalFrameDefault
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x5643200de472        208  _PyEval_Vector
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x564320114d82        128  run_mod
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x56431fea728c         80  pyrun_file
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @     0x56431fea6d93         80  _PyRun_SimpleFileObject
+[2026-11-05 03:59:07,803 E 22648 22648] logging.cc:474:     @ ... and at least 9 more frames
+[33m(raylet)[0m A worker died or was killed while executing a task by an unexpected system error. To troubleshoot the problem, check the logs for the dead worker. Lease ID: 01000000f0a5b06eb9a1a555c456709488835151d5473abb0d6a5243ef2ab632 Worker ID: 1d9de65dd0e80e5bb482bb2fbd3ed875081942e4c9881a6f2647a7fd Node ID: 3b468c79eaa9e4f35833630c95b6fa1fafac08f0783bbfc442c23470 Worker IP address: <ip-redacted> Worker port: 37939 Worker PID: 22821 Worker exit type: SYSTEM_ERROR Worker exit detail: Worker unexpectedly exits with a connection error code 2. End of file. Some common causes include: (1) the process was killed by the OOM killer due to high memory usage, (2) ray stop --force was called, or (3) the worker crashed unexpectedly due to SIGSEGV or another unexpected error. If the process was killed by the kernel OOM killer (verifiable by checking for OOM in dmesg of the OOMing node), consider enabling resource isolation via --enable-resource-isolation to prevent node deaths by resource contention and significant loss of progress by uninformed kernel OOM killing.
+[33m(raylet)[0m A worker died or was killed while executing a task by an unexpected system error. To troubleshoot the problem, check the logs for the dead worker. Lease ID: 040000001cd39a6a6e1959dbbdfd427eb48367b74be14c6ec8ceab947bd38b42 Worker ID: ca6c74622f01d1aa7e04aba397f385c35cd800339a86a1fd8a54a7f7 Node ID: 3b468c79eaa9e4f35833630c95b6fa1fafac08f0783bbfc442c23470 Worker IP address: <ip-redacted> Worker port: 36459 Worker PID: 23016 Worker exit type: SYSTEM_ERROR Worker exit detail: Worker unexpectedly exits with a connection error code 2. End of file. Some common causes include: (1) the process was killed by the OOM killer due to high memory usage, (2) ray stop --force was called, or (3) the worker crashed unexpectedly due to SIGSEGV or another unexpected error. If the process was killed by the kernel OOM killer (verifiable by checking for OOM in dmesg of the OOMing node), consider enabling resource isolation via --enable-resource-isolation to prevent node deaths by resource contention and significant loss of progress by uninformed kernel OOM killing.
+2026-11-05 03:59:08,598	WARNING worker.py:1681 -- SIGTERM handler is not set because current thread is not the main thread.
+timeout: the monitored command dumped core

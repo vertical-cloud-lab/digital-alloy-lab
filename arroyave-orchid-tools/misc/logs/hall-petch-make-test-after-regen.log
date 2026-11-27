@@ -1,0 +1,7 @@
+pytest tests/ -q
+...................                                                      [100%]
+19 passed in 1.37s
+
+real	0m1.866s
+user	0m1.272s
+sys	0m0.380s
