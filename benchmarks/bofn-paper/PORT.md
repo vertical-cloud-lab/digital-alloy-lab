@@ -1,8 +1,12 @@
 # Port notes: `bofn-prelim` → `bofn-paper`
 
-This folder starts the BOFN methods paper (Digital Discovery; preprint planned
-for Feb 26, 2027; issue #121). It is the MS&T26 benchmark carried over
-unchanged, with code added on top. [`README.md`](README.md) still describes
+This folder holds the BOFN methods work (issue #121). It is the MS&T26
+benchmark carried over unchanged, with code added on top. (An earlier version
+of this line named a journal and a preprint date; neither was planned, per
+issue #121, Oct 12. The write-ups are in
+[`../../bofn-methods-article/`](../../bofn-methods-article/): a MethodsX-style
+method article and a short methods/SI version for the Advanced Materials
+article of issue #120.) [`README.md`](README.md) still describes
 the MS&T26 results, and none of its claims were changed.
 
 ## What was copied
@@ -200,7 +204,7 @@ slide figures do not include KGFN and are unchanged; the figure above is
 the one with KGFN. The p-values are per-comparison, with no correction for
 testing several pairs and spend levels.
 
-## Rerun one cell by hand (Xavier, before Oct 23)
+## Rerun one cell by hand
 
 ```bash
 python3.12 -m venv /tmp/bofn-venv
