@@ -1,5 +1,5 @@
 {
- "method": "Per piece: CAM programming + setups + machine time + deburr/inspect, with PR 266's allowances\n(desktop-lpbf/analysis/machining/hours.py, quoted in tools.ALLOW):\n  CAM     0.5 h + 0.6 h per mill setup + 0.015 h per hole, +1 h if it is also turned; a lathe-only piece 0.25 h\n          (a sketch for the lathe hand); sheet parts 0.5 h (flat pattern and drawing for the vendor)\n  setups  0.75 h per mill setup in a vise; 1.25 h if the blank is over 200 mm (PR 266 used 300 mm: the 260 mm deck\n          and the 275 mm head plate do not go in a vise either); 0.5 h per lathe setup (estimate); a batch shares\n          its setups\n  machine mill: the posted programs' recount (cam.json: feeds as programmed, rapids at 25.4 m/min) + 4.2 s per tool\n          change + 12 s per rigid-tapped hole (estimate) + 10 min of boring head on the 40 H7 bore (estimate);\n          lathe: parts.py's feed-and-length estimates; manual steps as listed per piece (estimates)\n  deburr  0.25 h a piece (+0.05 h for each extra in a batch), 1 h for a piece with a sealing face\nThe low bound uses robot-shop.md's smaller allowances (0.7 h of CAM a piece, 20 min a setup), as PR 266 did.",
+ "method": "Per piece: CAM programming + setups + machine time + deburr/inspect, with PR 266's allowances\n(desktop-lpbf/analysis/machining/hours.py, quoted in tools.ALLOW):\n  CAM     0.5 h + 0.6 h per mill setup + 0.015 h per hole, +1 h if it is also turned; a lathe-only piece 0.25 h\n          (a sketch for the lathe hand); sheet parts 0.5 h (flat pattern and drawing for the vendor)\n  setups  0.75 h per mill setup in a vise; 1.25 h if the blank is over 200 mm (PR 266 used 300 mm: the 260 mm deck\n          and the 275 mm head plate do not go in a vise either); 0.5 h per lathe setup (estimate); a batch shares\n          its setups\n  machine mill: the posted programs' recount (cam.json: feeds as programmed, rapids at 25.4 m/min) + 4.2 s per tool\n          change + 12 s per rigid-tapped hole (estimate) + 10 min of boring head on the 40 H7 bore (estimate);\n          lathe: parts.py's feed-and-length estimates; manual steps as listed per piece (estimates)\n  deburr  0.25 h a piece (+0.05 h for each extra in a batch), 1 h for a piece with a sealing face\nThe low bound uses robot-shop.md's smaller allowances (0.7 h of CAM a piece, 20 min a setup), as PR 266 did; 0.7 h a\npiece is also about what reviewing and proving out this folder's programs would take at 0.25 h a mill setup.\nThe high bound keeps the expected CAM and deburr and takes: setups at 1.5 h (the top of the 68-90 min median of\nModern Machine Shop's survey that PR 266's hours.py cites), 2.0 h on a blank over 200 mm, 1.0 h a lathe setup;\nFreeCAD's own cycle time in place of the recount; lathe and hand steps x 1.5; and the three tight-fit pieces (MK-03's\nH7 bore, MK-07's rod gland, MK-02a's window seat) made twice (setups, machine and inspection again, CAM reused).",
  "rate_usd_h": 65.0,
  "pieces": [
   {
@@ -26,6 +26,7 @@
    "deburr_h": 0.25,
    "total_h": 5.07,
    "low_h": 1.95,
+   "high_h": 6.67,
    "split": "SendCutSend (plate: profile and holes; 6061 up to 1/2 in.); BYU: 8 c'bores and 15 taps by hand after SendCutSend cuts the profile and drills",
    "byu_h_split": 1.77,
    "seal": false,
@@ -55,6 +56,7 @@
    "deburr_h": 1.0,
    "total_h": 4.73,
    "low_h": 2.78,
+   "high_h": 10.83,
    "split": "in house",
    "byu_h_split": 4.73,
    "seal": true,
@@ -84,6 +86,7 @@
    "deburr_h": 0.25,
    "total_h": 3.76,
    "low_h": 1.75,
+   "high_h": 5.32,
    "split": "in house",
    "byu_h_split": 3.76,
    "seal": false,
@@ -113,6 +116,7 @@
    "deburr_h": 0.25,
    "total_h": 2.37,
    "low_h": 1.39,
+   "high_h": 3.16,
    "split": "SendCutSend (plate: profile and holes; 6061 up to 1/2 in.); BYU: 11 taps by hand",
    "byu_h_split": 1.77,
    "seal": false,
@@ -142,6 +146,7 @@
    "deburr_h": 0.25,
    "total_h": 2.21,
    "low_h": 1.35,
+   "high_h": 2.99,
    "split": "SendCutSend (plate: profile and holes; 6061 up to 1/2 in.); BYU: slide pocket 1.2 deep (one mill setup)",
    "byu_h_split": 1.5,
    "seal": false,
@@ -171,6 +176,7 @@
    "deburr_h": 0.25,
    "total_h": 2.18,
    "low_h": 1.32,
+   "high_h": 2.95,
    "split": "SendCutSend (plate: profile and holes; 6061 up to 1/2 in.); BYU: none",
    "byu_h_split": 0.75,
    "seal": false,
@@ -200,6 +206,7 @@
    "deburr_h": 0.25,
    "total_h": 6.69,
    "low_h": 2.66,
+   "high_h": 16.48,
    "split": "in house",
    "byu_h_split": 6.69,
    "seal": false,
@@ -229,6 +236,7 @@
    "deburr_h": 0.4,
    "total_h": 2.18,
    "low_h": 2.3,
+   "high_h": 3.45,
    "split": "in house",
    "byu_h_split": 2.18,
    "seal": false,
@@ -258,6 +266,7 @@
    "deburr_h": 0.25,
    "total_h": 7.01,
    "low_h": 2.72,
+   "high_h": 10.31,
    "split": "in house",
    "byu_h_split": 7.01,
    "seal": false,
@@ -287,6 +296,7 @@
    "deburr_h": 0.7,
    "total_h": 5.09,
    "low_h": 2.9,
+   "high_h": 7.13,
    "split": "in house",
    "byu_h_split": 5.09,
    "seal": false,
@@ -316,6 +326,7 @@
    "deburr_h": 0.25,
    "total_h": 5.62,
    "low_h": 2.44,
+   "high_h": 8.21,
    "split": "in house",
    "byu_h_split": 5.62,
    "seal": false,
@@ -345,6 +356,7 @@
    "deburr_h": 0.25,
    "total_h": 5.62,
    "low_h": 2.44,
+   "high_h": 8.21,
    "split": "in house",
    "byu_h_split": 5.62,
    "seal": false,
@@ -374,6 +386,7 @@
    "deburr_h": 1.0,
    "total_h": 6.02,
    "low_h": 2.96,
+   "high_h": 13.36,
    "split": "in house",
    "byu_h_split": 6.02,
    "seal": true,
@@ -403,6 +416,7 @@
    "deburr_h": 0.25,
    "total_h": 1.08,
    "low_h": 1.08,
+   "high_h": 1.25,
    "split": "SendCutSend: laser-cut and bent",
    "byu_h_split": 1.08,
    "seal": false,
@@ -432,6 +446,7 @@
    "deburr_h": 0.25,
    "total_h": 1.08,
    "low_h": 1.08,
+   "high_h": 1.25,
    "split": "SendCutSend: laser-cut and bent",
    "byu_h_split": 1.08,
    "seal": false,
@@ -461,6 +476,7 @@
    "deburr_h": 0.25,
    "total_h": 4.9,
    "low_h": 2.02,
+   "high_h": 7.18,
    "split": "in house",
    "byu_h_split": 4.9,
    "seal": false,
@@ -490,6 +506,7 @@
    "deburr_h": 0.25,
    "total_h": 4.87,
    "low_h": 1.98,
+   "high_h": 7.14,
    "split": "in house",
    "byu_h_split": 4.87,
    "seal": false,
@@ -519,6 +536,7 @@
    "deburr_h": 0.25,
    "total_h": 4.95,
    "low_h": 2.06,
+   "high_h": 7.28,
    "split": "in house",
    "byu_h_split": 4.95,
    "seal": false,
@@ -548,6 +566,7 @@
    "deburr_h": 0.25,
    "total_h": 5.01,
    "low_h": 2.04,
+   "high_h": 6.76,
    "split": "SendCutSend (plate: profile and holes; 6061 up to 1/2 in.); BYU: 6 taps by hand",
    "byu_h_split": 1.65,
    "seal": false,
@@ -577,6 +596,7 @@
    "deburr_h": 0.25,
    "total_h": 5.04,
    "low_h": 2.1,
+   "high_h": 7.34,
    "split": "in house",
    "byu_h_split": 5.04,
    "seal": false,
@@ -606,6 +626,7 @@
    "deburr_h": 0.25,
    "total_h": 1.57,
    "low_h": 1.68,
+   "high_h": 2.6,
    "split": "in house",
    "byu_h_split": 1.57,
    "seal": false,
@@ -635,6 +656,7 @@
    "deburr_h": 0.25,
    "total_h": 1.57,
    "low_h": 1.68,
+   "high_h": 2.6,
    "split": "in house",
    "byu_h_split": 1.57,
    "seal": false,
@@ -664,6 +686,7 @@
    "deburr_h": 0.25,
    "total_h": 5.26,
    "low_h": 2.32,
+   "high_h": 7.68,
    "split": "in house",
    "byu_h_split": 5.26,
    "seal": false,
@@ -693,6 +716,7 @@
    "deburr_h": 0.25,
    "total_h": 6.4,
    "low_h": 2.49,
+   "high_h": 9.51,
    "split": "in house",
    "byu_h_split": 6.4,
    "seal": false,
@@ -722,6 +746,7 @@
    "deburr_h": 0.25,
    "total_h": 6.39,
    "low_h": 2.48,
+   "high_h": 9.52,
    "split": "in house",
    "byu_h_split": 6.39,
    "seal": false,
@@ -751,6 +776,7 @@
    "deburr_h": 0.25,
    "total_h": 0.75,
    "low_h": 0.75,
+   "high_h": 0.75,
    "split": "SendCutSend: laser-cut and bent",
    "byu_h_split": 0.75,
    "seal": false,
@@ -780,6 +806,7 @@
    "deburr_h": 1.0,
    "total_h": 5.5,
    "low_h": 2.5,
+   "high_h": 7.02,
    "split": "in house",
    "byu_h_split": 5.5,
    "seal": true,
@@ -809,6 +836,7 @@
    "deburr_h": 1.0,
    "total_h": 5.4,
    "low_h": 2.45,
+   "high_h": 6.92,
    "split": "in house",
    "byu_h_split": 5.4,
    "seal": true,
@@ -838,6 +866,7 @@
    "deburr_h": 0.25,
    "total_h": 4.77,
    "low_h": 1.81,
+   "high_h": 6.27,
    "split": "SendCutSend (plate: profile and holes; 6061 up to 1/2 in.); BYU: 4 c'bores",
    "byu_h_split": 1.5,
    "seal": false,
@@ -867,6 +896,7 @@
    "deburr_h": 0.25,
    "total_h": 3.67,
    "low_h": 1.71,
+   "high_h": 5.18,
    "split": "SendCutSend (plate: profile and holes; 6061 up to 1/2 in.); BYU: 8 taps by hand (both faces)",
    "byu_h_split": 1.7,
    "seal": false,
@@ -896,6 +926,7 @@
    "deburr_h": 0.25,
    "total_h": 5.14,
    "low_h": 2.23,
+   "high_h": 7.52,
    "split": "in house",
    "byu_h_split": 5.14,
    "seal": false,
@@ -925,6 +956,7 @@
    "deburr_h": 0.25,
    "total_h": 3.47,
    "low_h": 1.64,
+   "high_h": 4.98,
    "split": "in house",
    "byu_h_split": 3.47,
    "seal": false,
@@ -954,6 +986,7 @@
    "deburr_h": 0.1,
    "total_h": 0.1,
    "low_h": 0.0,
+   "high_h": 0.1,
    "split": "in house",
    "byu_h_split": 0.1,
    "seal": false,
@@ -983,6 +1016,7 @@
    "deburr_h": 0.25,
    "total_h": 3.7,
    "low_h": 1.69,
+   "high_h": 5.23,
    "split": "in house",
    "byu_h_split": 3.7,
    "seal": false,
@@ -1012,6 +1046,7 @@
    "deburr_h": 0.25,
    "total_h": 0.85,
    "low_h": 0.85,
+   "high_h": 0.9,
    "split": "SendCutSend: laser-cut and bent",
    "byu_h_split": 0.85,
    "seal": false,
@@ -1022,36 +1057,46 @@
   "S1": {
    "h": 19.67,
    "low": 8.63,
+   "high": 26.9,
    "split": 13.01,
    "prog": 52.0,
+   "cam": 8.58,
    "n": 5
   },
   "S2": {
    "h": 22.08,
    "low": 12.59,
+   "high": 35.53,
    "split": 19.34,
    "prog": 61.7,
+   "cam": 9.91,
    "n": 7
   },
   "FT-0": {
    "h": 48.97,
    "low": 22.59,
+   "high": 83.05,
    "split": 48.97,
    "prog": 48.6,
+   "cam": 21.91,
    "n": 10
   },
   "FT-1": {
    "h": 31.21,
    "low": 14.72,
+   "high": 43.82,
    "split": 25.97,
    "prog": 32.0,
+   "cam": 14.51,
    "n": 9
   },
   "FT-1V": {
    "h": 18.09,
    "low": 9.07,
+   "high": 24.75,
    "split": 18.09,
    "prog": 9.9,
+   "cam": 6.64,
    "n": 4
   }
  },
@@ -1059,27 +1104,37 @@
   "S1": {
    "h": 19.67,
    "low": 8.63,
-   "split": 13.01
+   "high": 26.9,
+   "split": 13.01,
+   "cam": 8.58
   },
   "S2": {
    "h": 41.75,
    "low": 21.22,
-   "split": 32.35
+   "high": 62.43,
+   "split": 32.35,
+   "cam": 18.49
   },
   "FT-0": {
    "h": 90.72,
    "low": 43.81,
-   "split": 81.32
+   "high": 145.48,
+   "split": 81.32,
+   "cam": 40.4
   },
   "FT-1": {
    "h": 121.93,
    "low": 58.53,
-   "split": 107.29
+   "high": 189.3,
+   "split": 107.29,
+   "cam": 54.91
   },
   "FT-1V": {
    "h": 140.02,
    "low": 67.6,
-   "split": 125.38
+   "high": 214.05,
+   "split": 125.38,
+   "cam": 61.55
   }
  },
  "study": {
@@ -1094,6 +1149,17 @@
   "FT-1V": [
    30,
    48
+  ]
+ },
+ "high_allowances": {
+  "setup_vise": 1.5,
+  "setup_large": 2.0,
+  "setup_lathe": 1.0,
+  "est_factor": 1.5,
+  "remake": [
+   "MK-02a",
+   "MK-03",
+   "MK-07"
   ]
  }
 }

@@ -21,30 +21,39 @@ Nothing has been made, quoted or checked by a machinist. Vendor part numbers not
   - 3 only turned or sawn (the Macor standoffs and the two beam tubes);
   - 4 bent or cut sheet, for SendCutSend (the hopper's two walls, the stage shield, the target plate);
   - MK-17, the FT-0 rod collar, is bought: it is a catalogue 1/2 in. clamp collar.
-- **Shop hours are 3-5 times the study's estimate.** Counted per piece with PR 266's allowances (CAM, setups,
-  machine time, deburr and inspection; "Low" uses robot-shop.md's smaller allowances):
+- **Shop hours are 3-5 times the study's estimate** at the expected allowances, and 1.5-4 times at the low ones.
+  Counted per piece (CAM, setups, machine time, deburr and inspection; the allowances are [below](#shop-hours)):
 
-  | Machine (cumulative) | This count | Low | Study (`fast_track.py`, parts.csv F2a-c) | At $65/h |
-  |---|---:|---:|---:|---:|
-  | FT-0 (S1 + S2 + FT-0 pieces) | **92 h** | 44 h | 10-15 h | $2.9k-6.0k |
-  | FT-1 | **123 h** | 59 h | 25-40 h | $3.8k-8.0k |
-  | FT-1V | **141 h** | 68 h | 30-48 h | $4.4k-9.2k |
+  <!-- SHORT_TABLE -->
+  | Machine (cumulative) | Low | **Expected** | High | Study (`fast_track.py`, parts.csv F2a-c) | At $65/h, low / expected / high |
+  |---|---:|---:|---:|---:|---|
+  | S1 | 8.6 h | **19.7 h** | 26.9 h | – | $560 / 1,280 / 1,750 |
+  | S1 + S2 | 21.2 h | **41.8 h** | 62.4 h | – | $1,380 / 2,710 / 4,060 |
+  | FT-0 (S1 + S2 + FT-0 pieces) | 43.8 h | **90.7 h** | 145.5 h | 10-15 h | $2,850 / 5,900 / 9,460 |
+  | FT-1 | 58.5 h | **121.9 h** | 189.3 h | 25-40 h | $3,800 / 7,930 / 12,300 |
+  | FT-1V | 67.6 h | **140.0 h** | 214.1 h | 30-48 h | $4,390 / 9,100 / 13,910 |
+  <!-- /SHORT_TABLE -->
 
-  The study's estimate covered "about 12 simple parts". Drawn to size, with every joint, the same machine is 35 pieces
-  in 64 mill setups.
-- **Where the 141 h go:**
-  - CAM: 62 h;
-  - setups: 61 h;
-  - deburr and inspection: 12 h;
-  - machine time: 6.5 h. Of that, 3.4 h is programmed cutting (FreeCAD's own estimate 4.8 h), 0.7 h tapping and
+  - **Low:** robot-shop.md's allowances (0.7 h of CAM a piece, 20 min a setup). That is also about what reviewing
+    and proving out this folder's programs would take (0.25 h a mill setup, 18.5 h in all).
+  - **Expected:** PR 266's allowances (CAM written fresh, 45 min a vise setup). Use this one in the schedule.
+  - **High:** setups at 90 min, the top of the survey median PR 266 cites; FreeCAD's own cycle times; and the three
+    tight-fit pieces (well block, gland, window ring) made twice.
+  - **Why the study is low:** its estimate covered "4 simple parts" for FT-0 and "about 12 simple parts" for FT-1.
+    Drawn to size with every joint, the machine is 35 pieces in 63 mill setups and 15 lathe setups.
+- **Where the expected 140 h go:**
+  - CAM: 61.5 h;
+  - setups: 59.8 h;
+  - deburr and inspection: 12.2 h;
+  - machine time: 6.5 h. Of that, 3.4 h is programmed cutting (FreeCAD's own estimate 4.9 h), 0.6 h tapping and
     tool changes, 1.6 h turning and 0.9 h hand work.
 
   The cutting is the small part, as in PR 266's count, so the levers are fewer pieces, fewer setups, and CAM that
   is reused rather than rewritten.
 - **The CAM is written and posted.**
-  - **Programs:** 64 setups, 189 FreeCAD operations, `linuxcnc` post, in [`gcode/`](gcode/).
+  - **Programs:** 63 setups, 188 FreeCAD operations, `linuxcnc` post, in [`gcode/`](gcode/).
   - **Taken as done:** if a programmer only reviews and proves them out (0.25 h a setup, an assumption), CAM drops
-    from 62 h to 19 h, and the FT-1 machine to about 85 h.
+    from 61.5 h to 18.5 h, and the machines to 61.6 h (FT-0), 83.8 h (FT-1) and 97.0 h (FT-1V).
 - **Every program was cut on a voxel blank** ([`sim.py`](sim.py), table [below](#the-programs-checked)).
   - **The check found 12 faults** in the first programs, and the time recount 3 more; all are fixed in these files
     ([list](#faults-the-checks-found)).
@@ -63,12 +72,19 @@ Nothing has been made, quoted or checked by a machinist. Vendor part numbers not
   - **The rod gland's squeeze is right only if the rod OD is held to 0.497-0.501 in.** ASTM A269's ±0.005 in. on a
     1/2 in. seamless tube gives 9-20 %, against Parker's 10-17 %.
   - **The carriage bracket has only 3.0 mm under the stage shield for a foot.**
-- **Schedule:**
-  - **The risk:** one machinist making the S1, S2 and FT-0 pieces in that order, with PR 266's allowances, needs
-    11.5 working days, about 2.3 weeks. FT-0's earliest start is 1.8 weeks (scenario A, `cad/README.md`), so FT-0
-    would wait on the shop for about half a week.
-  - **The fix:** reuse this CAM. FT-0's pieces are then done in about 8 working days (11 calendar days), and FT-1's
-    by day 11 (2.1 weeks, against FT-1's earliest 3.2 weeks). See the [first-week plan](#first-week-shop-plan).
+- **Schedule** ([`plan.py`](plan.py), [calendar below](#first-week-shop-plan)):
+  - **When the pieces are needed.** The study's progression network (`cad/ft_progression.py`, scenario A, early end
+    of every range) needs S1's pieces by working day 4, S2's by day 5, FT-0's by day 6 and FT-1's by day 9, and the
+    cube plates within 3 working days of the cube's arrival. Day 0 is the order day.
+  - **One person** meets those dates only at the low allowances. At the expected hours one person finishes FT-0's
+    pieces on day 11.3 and FT-1's on day 15.2. FT-0's first tracks then move from 1.8 to 2.9 weeks, and FT-1's first
+    coupons from 3.2 to 4.5 weeks.
+  - **Two people who both program and cut, from day 0 to day 8,** meet every date at the expected hours: S1 day
+    1.9, S2 2.7, FT-0 5.8, FT-1 7.8. FT-1's coupons then come at 3.0 weeks, against the network's 3.2.
+  - **At the high hours** two people are 3 days late on FT-0 (tracks at 2.4 weeks, coupons at 3.8), and three
+    people bring it back to 1.9 and 3.1 weeks.
+  - **For the study's schedule:** replace "one person at least half time" (`fast_track.py`) with two people full
+    time for the first 8 working days.
 
 ## Files
 
@@ -100,43 +116,44 @@ Shop h uses PR 266's allowances; Low uses robot-shop.md's. Program min is the po
 programmed, rapids at 25.4 m/min), times the quantity. Full columns are in [`out/hours.md`](out/hours.md).
 
 <!-- PIECE_TABLE -->
-| Piece | What | First in | Route | Stock | Setups (mill / lathe) | Program min | Shop h | Low h |
-|---|---|---|---|---|---:|---:|---:|---:|
-| MK-01 | Deck plate | S1 | CNC mill | 1/2 in. 6061-T651 plate (12.7 +0/+0.69), 260 x 260 cut from a 12 x 24 in. sheet | 2 / 0 | 16.9 | 5.1 | 1.9 |
-| MK-02a | Window ring | S2 | CNC mill | 3/4 in. 6061-T651 plate, 106 x 106 square (faced to 12.0) | 2 / 0 | 24.1 | 4.7 | 2.8 |
-| MK-02b | Window retaining flange (beam-tube socket on top) | S2 | CNC mill | 1/4 in. 6061 plate (6.35) faced to 6.0 both sides, 106 x 106 | 2 / 0 | 6.7 | 3.8 | 1.8 |
-| MK-02c | Inner clamp ring (box lid only) | S2 | CNC mill | 1/4 in. 6061 plate (6.35) faced to 6.0 on top, 106 x 106 | 1 / 0 | 3.8 | 2.4 | 1.4 |
-| MK-02d | Cover-slide holder, base (slide pocket) | S2 | CNC mill | 1/4 in. 6061 plate faced to 5.6, 76 x 76 | 1 / 0 | 3.6 | 2.2 | 1.4 |
-| MK-02e | Cover-slide holder, cover | S2 | CNC mill | 3/16 in. 6061 plate faced to 4.4, 76 x 76 | 1 / 0 | 2.0 | 2.2 | 1.3 |
-| MK-03 | Well block, 40.00 H7 bore | FT-0 | CNC mill | 6061 bar 1-3/4 x 3-1/2 in. (44.45 x 88.9) sawn 84 long | 4 / 0 | 10.4 | 6.7 | 2.7 |
-| MK-03s | Macor standoffs (4) | FT-0 | lathe (carbide, slow) or diamond saw + drill | McMaster 8489K75 Macor rod, 5/16 in. x 6 in. (parts.csv H4) | 0 / 2 | 0.0 | 2.2 | 2.3 |
-| MK-04 | Heater plate | FT-0 | lathe + CNC mill | 6061 round bar 1-3/4 in. (44.45) sawn 34 long | 3 / 2 | 0.3 | 7.0 | 2.7 |
-| MK-05 | Substrate discs (10) | FT-0 | lathe + CNC mill | 6061 round bar 1-3/4 in., one 100 mm length makes ten discs | 1 / 2 | 1.2 | 5.1 | 2.9 |
-| MK-06a | Piston rod, box (81.6 long) | FT-0 | cut-off saw + lathe + CNC mill | seamless 304 tube, 1/2 in. OD x 0.035 in. wall (12.70 x 0.89), cut 86 long | 2 / 2 | 0.3 | 5.6 | 2.4 |
-| MK-06b | Piston rod, cube, 21 mm longer (102.6 long) | FT-1V | cut-off saw + lathe + CNC mill | seamless 304 tube, 1/2 in. OD x 0.035 in. wall (12.70 x 0.89), cut 107 long | 2 / 2 | 0.3 | 5.6 | 2.4 |
-| MK-07 | Rod gland plate, 2 x AS568-112 rod seals | FT-0 | CNC mill + lathe (4-jaw) | 1/2 in. 6061 plate, 64 x 64 (faced to 12.0) | 2 / 1 | 12.2 | 6.0 | 3.0 |
-| MK-08a | Hopper wall A (with both end walls) | FT-1 | sheet: laser-cut and bent (SendCutSend) | SendCutSend 304 stainless (0.030-0.031 in. gauge as listed by them) | 0 / 0 | 0.0 | 1.1 | 1.1 |
-| MK-08b | Hopper wall B (with rivet flanges) | FT-1 | sheet: laser-cut and bent (SendCutSend) | SendCutSend 304 stainless (0.030-0.031 in. gauge as listed by them) | 0 / 0 | 0.0 | 1.1 | 1.1 |
-| MK-08c | Cord clamp | FT-1 | CNC mill | 6061 bar 1/4 x 1/2 in. sawn 50 long | 3 / 0 | 3.7 | 4.9 | 2.0 |
-| MK-08d | Hopper arm | FT-1 | CNC mill | 6061 bar 3/8 x 3/4 in. sawn 60 long | 3 / 0 | 0.9 | 4.9 | 2.0 |
-| MK-08e | Carriage bracket (L: 3 mm foot under the shield, 8 mm web) | FT-1 | CNC mill | 6061 bar 2 x 2 in. (50.8) sawn 43 long | 3 / 0 | 5.8 | 5.0 | 2.1 |
-| MK-09a | Scan-head plate | S1 | CNC mill | 1/2 in. 6061-T651 plate, 210 x 275 from a 12 x 24 in. sheet | 2 / 0 | 23.8 | 5.0 | 2.0 |
-| MK-09b | Collimator saddle | S1 | CNC mill | 6061 bar 1-3/4 x 2 in. (44.45 x 50.8) sawn 88 long | 3 / 0 | 8.1 | 5.0 | 2.1 |
-| MK-10a | Beam tube, long (123.6 long) | S2 | saw + lathe | 6061 round tube 60.3 x 3.18 wall (2-3/8 x 0.125 in.) | 0 / 2 | 0.0 | 1.6 | 1.7 |
-| MK-10b | Beam tube, short (17.2 long) | FT-1V | saw + lathe | 6061 round tube 60.3 x 3.18 wall (2-3/8 x 0.125 in.) | 0 / 2 | 0.0 | 1.6 | 1.7 |
-| MK-10c | Lens collar | S2 | CNC mill | 1-1/4 in. 6061 plate (31.75), 130 x 130 | 3 / 0 | 21.5 | 5.3 | 2.3 |
-| MK-11a | Slot nozzle 45 x 4 | FT-0 | CNC mill | 6061 bar 3/4 x 1-1/4 in. (19.05 x 31.75) sawn 65 long | 4 / 0 | 11.7 | 6.4 | 2.5 |
-| MK-11b | Exhaust collector | FT-0 | CNC mill | 6061 bar 3/4 x 1-1/4 in. sawn 70 long | 4 / 0 | 11.4 | 6.4 | 2.5 |
-| MK-12 | Stage shield | FT-1 | sheet: laser-cut and bent (SendCutSend) | SendCutSend 304 stainless, 0.036 in. class (their gauge list not read) | 0 / 0 | 0.0 | 0.8 | 0.8 |
-| MK-13 | Cube top plate (Ideal Vacuum P108171 blank, bored for the window ring) | FT-1V | CNC mill | Ideal Vacuum P108171 blank plate (E2) | 2 / 0 | 5.9 | 5.5 | 2.5 |
-| MK-14 | Cube bottom plate (P108171 blank, bored for the rod gland) | FT-1V | CNC mill | Ideal Vacuum P108171 blank plate (E2) | 2 / 0 | 3.7 | 5.4 | 2.5 |
-| MK-15a | Piston-stage bracket plate | FT-1 | CNC mill | 1/2 in. 6061-T651 plate, 190 x 270, faced to 10.0 | 2 / 0 | 11.5 | 4.8 | 1.8 |
-| MK-15b | Piston-stage riser | FT-1 | CNC mill | 5/8 in. 6061 plate (15.88), 126 x 86, faced to 15.0 | 2 / 0 | 4.0 | 3.7 | 1.7 |
-| MK-15c | Rod clamp (split) | FT-1 | CNC mill + saw slit | 6061 bar 1-1/4 in. square (31.75) sawn 28 long | 3 / 0 | 6.1 | 5.1 | 2.2 |
-| MK-16 | Overflow cup | FT-0 | CNC mill | 6061 bar 1/2 x 2 in. (12.7 x 50.8) sawn 25 long | 2 / 0 | 1.1 | 3.5 | 1.6 |
-| MK-17 | FT-0 rod collar (buy) | FT-0 | buy | Ruland MCL-8-A class one-piece clamp collar, 1/2 in. bore (1-1/8 in. OD x 13/32 in.) | 0 / 0 | 0.0 | 0.1 | 0.0 |
-| MK-18a | Guide-laser target stand | S1 | CNC mill | 6061 square bar 2-1/2 in. (63.5) sawn 55 long | 2 / 0 | 3.2 | 3.7 | 1.7 |
-| MK-18b | Target plate 80 x 80 x 1/8 in., black anodised (x2) | S1 | sheet: laser-cut (SendCutSend) or bandsaw + mill; anodise outside | 1/8 in. 6061 sheet (SendCutSend stock) | 0 / 0 | 0.0 | 0.8 | 0.8 |
+| Piece | What | First in | Route | Stock | Setups (mill / lathe) | Cycle min: recount / FreeCAD | Low h | **Expected h** | High h |
+|---|---|---|---|---|---:|---|---:|---:|---:|
+| MK-01 | Deck plate | S1 | CNC mill | 1/2 in. 6061-T651 plate (12.7 +0/+0.69), 260 x 260 cut from a 12 x 24 in. sheet | 2 / 0 | 16.9 / 23.3 | 1.9 | **5.1** | 6.7 |
+| MK-02a | Window ring | S2 | CNC mill | 3/4 in. 6061-T651 plate, 106 x 106 square (faced to 12.0) | 2 / 0 | 24.1 / 29.7 | 2.8 | **4.7** | 10.8 |
+| MK-02b | Window retaining flange (beam-tube socket on top) | S2 | CNC mill | 1/4 in. 6061 plate (6.35) faced to 6.0 both sides, 106 x 106 | 2 / 0 | 6.7 / 10.1 | 1.8 | **3.8** | 5.3 |
+| MK-02c | Inner clamp ring (box lid only) | S2 | CNC mill | 1/4 in. 6061 plate (6.35) faced to 6.0 on top, 106 x 106 | 1 / 0 | 3.8 / 6.0 | 1.4 | **2.4** | 3.2 |
+| MK-02d | Cover-slide holder, base (slide pocket) | S2 | CNC mill | 1/4 in. 6061 plate faced to 5.6, 76 x 76 | 1 / 0 | 3.6 / 5.5 | 1.4 | **2.2** | 3.0 |
+| MK-02e | Cover-slide holder, cover | S2 | CNC mill | 3/16 in. 6061 plate faced to 4.4, 76 x 76 | 1 / 0 | 2.0 / 3.1 | 1.3 | **2.2** | 3.0 |
+| MK-03 | Well block, 40.00 H7 bore | FT-0 | CNC mill | 6061 bar 1-3/4 x 3-1/2 in. (44.45 x 88.9) sawn 84 long | 4 / 0 | 10.4 / 15.2 | 2.7 | **6.7** | 16.5 |
+| MK-03s | Macor standoffs (4) | FT-0 | lathe (carbide, slow) or diamond saw + drill | McMaster 8489K75 Macor rod, 5/16 in. x 6 in. (parts.csv H4) | 0 / 2 | 0.0 / 0.0 | 2.3 | **2.2** | 3.5 |
+| MK-04 | Heater plate | FT-0 | lathe + CNC mill | 6061 round bar 1-3/4 in. (44.45) sawn 34 long | 3 / 2 | 0.3 / 0.6 | 2.7 | **7.0** | 10.3 |
+| MK-05 | Substrate discs (10) | FT-0 | lathe + CNC mill | 6061 round bar 1-3/4 in., one 100 mm length makes ten discs | 1 / 2 | 1.2 / 4.8 | 2.9 | **5.1** | 7.1 |
+| MK-06a | Piston rod, box (81.6 long) | FT-0 | cut-off saw + lathe + CNC mill | seamless 304 tube, 1/2 in. OD x 0.035 in. wall (12.70 x 0.89), cut 86 long | 2 / 2 | 0.3 / 0.8 | 2.4 | **5.6** | 8.2 |
+| MK-06b | Piston rod, cube, 21 mm longer (102.6 long) | FT-1V | cut-off saw + lathe + CNC mill | seamless 304 tube, 1/2 in. OD x 0.035 in. wall (12.70 x 0.89), cut 107 long | 2 / 2 | 0.3 / 0.9 | 2.4 | **5.6** | 8.2 |
+| MK-07 | Rod gland plate, 2 x AS568-112 rod seals | FT-0 | CNC mill + lathe (4-jaw) | 1/2 in. 6061 plate, 64 x 64 (faced to 12.0) | 2 / 1 | 12.2 / 13.2 | 3.0 | **6.0** | 13.4 |
+| MK-08a | Hopper wall A (with both end walls) | FT-1 | sheet: laser-cut and bent (SendCutSend) | SendCutSend 304 stainless (0.030-0.031 in. gauge as listed by them) | 0 / 0 | 0.0 / 0.0 | 1.1 | **1.1** | 1.2 |
+| MK-08b | Hopper wall B (with rivet flanges) | FT-1 | sheet: laser-cut and bent (SendCutSend) | SendCutSend 304 stainless (0.030-0.031 in. gauge as listed by them) | 0 / 0 | 0.0 / 0.0 | 1.1 | **1.1** | 1.2 |
+| MK-08c | Cord clamp | FT-1 | CNC mill | 6061 bar 1/4 x 1/2 in. sawn 50 long | 3 / 0 | 3.7 / 5.0 | 2.0 | **4.9** | 7.2 |
+| MK-08d | Hopper arm | FT-1 | CNC mill | 6061 bar 3/8 x 3/4 in. sawn 60 long | 3 / 0 | 0.9 / 1.7 | 2.0 | **4.9** | 7.1 |
+| MK-08e | Carriage bracket (L: 3 mm foot under the shield, 8 mm web) | FT-1 | CNC mill | 6061 bar 2 x 2 in. (50.8) sawn 43 long | 3 / 0 | 5.8 / 10.7 | 2.1 | **5.0** | 7.3 |
+| MK-09a | Scan-head plate | S1 | CNC mill | 1/2 in. 6061-T651 plate, 210 x 275 from a 12 x 24 in. sheet | 2 / 0 | 23.8 / 39.0 | 2.0 | **5.0** | 6.8 |
+| MK-09b | Collimator saddle | S1 | CNC mill | 6061 bar 1-3/4 x 2 in. (44.45 x 50.8) sawn 88 long | 3 / 0 | 8.1 / 10.9 | 2.1 | **5.0** | 7.3 |
+| MK-10a | Beam tube, long (123.6 long) | S2 | saw + lathe | 6061 round tube 60.3 x 3.18 wall (2-3/8 x 0.125 in.) | 0 / 2 | 0.0 / 0.0 | 1.7 | **1.6** | 2.6 |
+| MK-10b | Beam tube, short (17.2 long) | FT-1V | saw + lathe | 6061 round tube 60.3 x 3.18 wall (2-3/8 x 0.125 in.) | 0 / 2 | 0.0 / 0.0 | 1.7 | **1.6** | 2.6 |
+| MK-10c | Lens collar | S2 | CNC mill | 1-1/4 in. 6061 plate (31.75), 130 x 130 | 3 / 0 | 21.5 / 31.6 | 2.3 | **5.3** | 7.7 |
+| MK-11a | Slot nozzle 45 x 4 | FT-0 | CNC mill | 6061 bar 3/4 x 1-1/4 in. (19.05 x 31.75) sawn 65 long | 4 / 0 | 11.7 / 18.3 | 2.5 | **6.4** | 9.5 |
+| MK-11b | Exhaust collector | FT-0 | CNC mill | 6061 bar 3/4 x 1-1/4 in. sawn 70 long | 4 / 0 | 11.4 / 18.9 | 2.5 | **6.4** | 9.5 |
+| MK-12 | Stage shield | FT-1 | sheet: laser-cut and bent (SendCutSend) | SendCutSend 304 stainless, 0.036 in. class (their gauge list not read) | 0 / 0 | 0.0 / 0.0 | 0.8 | **0.8** | 0.8 |
+| MK-13 | Cube top plate (Ideal Vacuum P108171 blank, bored for the window ring) | FT-1V | CNC mill | Ideal Vacuum P108171 blank plate (E2) | 2 / 0 | 5.9 / 6.8 | 2.5 | **5.5** | 7.0 |
+| MK-14 | Cube bottom plate (P108171 blank, bored for the rod gland) | FT-1V | CNC mill | Ideal Vacuum P108171 blank plate (E2) | 2 / 0 | 3.7 / 5.0 | 2.5 | **5.4** | 6.9 |
+| MK-15a | Piston-stage bracket plate | FT-1 | CNC mill | 1/2 in. 6061-T651 plate, 190 x 270, faced to 10.0 | 2 / 0 | 11.5 / 11.7 | 1.8 | **4.8** | 6.3 |
+| MK-15b | Piston-stage riser | FT-1 | CNC mill | 5/8 in. 6061 plate (15.88), 126 x 86, faced to 15.0 | 2 / 0 | 4.0 / 4.8 | 1.7 | **3.7** | 5.2 |
+| MK-15c | Rod clamp (split) | FT-1 | CNC mill + saw slit | 6061 bar 1-1/4 in. square (31.75) sawn 28 long | 3 / 0 | 6.1 / 9.3 | 2.2 | **5.1** | 7.5 |
+| MK-16 | Overflow cup | FT-0 | CNC mill | 6061 bar 1/2 x 2 in. (12.7 x 50.8) sawn 25 long | 2 / 0 | 1.1 / 1.4 | 1.6 | **3.5** | 5.0 |
+| MK-17 | FT-0 rod collar (buy) | FT-0 | buy | Ruland MCL-8-A class one-piece clamp collar, 1/2 in. bore (1-1/8 in. OD x 13/32 in.) | 0 / 0 | 0.0 / 0.0 | 0.0 | **0.1** | 0.1 |
+| MK-18a | Guide-laser target stand | S1 | CNC mill | 6061 square bar 2-1/2 in. (63.5) sawn 55 long | 2 / 0 | 3.2 / 5.1 | 1.7 | **3.7** | 5.2 |
+| MK-18b | Target plate 80 x 80 x 1/8 in., black anodised (x2) | S1 | sheet: laser-cut (SendCutSend) or bandsaw + mill; anodise outside | 1/8 in. 6061 sheet (SendCutSend stock) | 0 / 0 | 0.0 / 0.0 | 0.8 | **0.8** | 0.9 |
+| **All** | 35 pieces | | | | 63 / 15 | 204 / 293 | 67.6 | **140.0** | 214.1 |
 <!-- /PIECE_TABLE -->
 
 **Stock.** Part numbers that were read in PR 266's files are given with the date they were read:
@@ -299,76 +316,113 @@ SIM_TABLE
 
 ## Shop hours
 
-[`hours.py`](hours.py), per piece:
+[`hours.py`](hours.py), per piece, with three sets of allowances. None of them has been checked against a timed
+piece.
 
-- **CAM:** 0.5 h + 0.6 h a mill setup + 0.015 h a hole, + 1 h for a piece that is also turned (PR 266's
-  `hours.py`). A lathe-only piece gets 0.25 h; a sheet piece 0.5 h for its flat pattern and drawing.
-- **Setups:**
-  - 0.75 h each in a vise;
-  - 1.25 h if the blank is over 200 mm. PR 266 used 300 mm, but the 260 mm deck and the 275 mm head plate don't go
-    in a vise either;
-  - 0.5 h a lathe setup (estimate);
-  - a batch shares its setups.
-- **Machine time:** the recount, plus 4.2 s a tool change and 12 s a tapped hole, plus the lathe and hand steps.
-- **Deburr and inspection:** 0.25 h a piece (+0.05 h for each extra in a batch), 1 h for a piece with a sealing face.
+| Item | Low | **Expected** (use in the schedule) | High |
+|---|---|---|---|
+| CAM | 0.7 h a piece (robot-shop.md); 0.5 h a sheet piece | 0.5 h + 0.6 h a mill setup + 0.015 h a hole, + 1 h if also turned (PR 266's `hours.py`: "an estimate, no published rule"); 0.25 h a lathe-only piece; 0.5 h a sheet piece (flat pattern and drawing) | as expected |
+| Setups | 20 min each, mill or lathe (robot-shop.md) | 0.75 h in a vise; 1.25 h for a blank over 200 mm (PR 266 used 300 mm, but the 260 mm deck and 275 mm head plate don't go in a vise either); 0.5 h a lathe setup (estimate); a batch shares its setups | 1.5 h, the top of the 68-90 min Modern Machine Shop survey median that PR 266 cites; 2.0 h over 200 mm; 1.0 h a lathe setup |
+| Machine time | as expected | the posted programs' recount (feeds as programmed, rapids at 25.4 m/min) + 4.2 s a tool change + 12 s a tapped hole + 10 min of boring head on the Ø40 H7 bore; lathe from feeds and lengths (`parts.py`); hand steps as listed (estimates) | FreeCAD's own cycle time instead of the recount; lathe and hand steps × 1.5 |
+| Deburr and inspection | as expected | 0.25 h a piece (+0.05 h for each extra in a batch); 1 h for a piece with a sealing face | as expected |
+| Remakes | none | none | the three tight-fit pieces made twice (setups, machine and inspection again; CAM reused): MK-03's H7 bore, MK-07's gland, MK-02a's window seat |
 
 <!-- STATE_ROWS -->
-| State | Pieces | Shop h | Low h | Machine | Cumulative shop h | Cumulative low h | At $65/h | Study | BYU h if sheet and plates go out (cumulative) |
-|---|---:|---:|---:|---|---:|---:|---:|---|---:|
-| S1 | 5 | 19.7 | 8.6 | S1 | **19.7** | 8.6 | $560-1,280 | - | 13.0 |
-| S2 | 7 | 22.1 | 12.6 | S1 + S2 | **41.8** | 21.2 | $1,380-2,710 | - | 32.4 |
-| FT-0 | 10 | 49.0 | 22.6 | FT-0 | **90.7** | 43.8 | $2,850-5,900 | 10-15 h | 81.3 |
-| FT-1 | 9 | 31.2 | 14.7 | FT-1 | **121.9** | 58.5 | $3,800-7,930 | 25-40 h | 107.3 |
-| FT-1V | 4 | 18.1 | 9.1 | FT-1V | **140.0** | 67.6 | $4,390-9,100 | 30-48 h | 125.4 |
+| State | Pieces | This state, low / expected / high h | Cumulative (the machine), low / **expected** / high h | Cumulative at $65/h, low / expected / high | Study (`fast_track.py`) | BYU h with sheet and flat plates out, cumulative (expected) |
+|---|---:|---|---|---|---|---:|
+| S1 | 5 | 8.6 / 19.7 / 26.9 | 8.6 / **19.7** / 26.9 | $560 / 1,280 / 1,750 | - | 13.0 |
+| S2 | 7 | 12.6 / 22.1 / 35.5 | 21.2 / **41.8** / 62.4 | $1,380 / 2,710 / 4,060 | - | 32.4 |
+| FT-0 | 10 | 22.6 / 49.0 / 83.0 | 43.8 / **90.7** / 145.5 | $2,850 / 5,900 / 9,460 | 10-15 h | 81.3 |
+| FT-1 | 9 | 14.7 / 31.2 / 43.8 | 58.5 / **121.9** / 189.3 | $3,800 / 7,930 / 12,300 | 25-40 h | 107.3 |
+| FT-1V | 4 | 9.1 / 18.1 / 24.8 | 67.6 / **140.0** / 214.1 | $4,390 / 9,100 / 13,910 | 30-48 h | 125.4 |
 <!-- /STATE_ROWS -->
 
 - **What the study's numbers left out.** `fast_track.py`'s 25-40 h for FT-1 was "about 12 simple parts". The model
-  needs 35, so the per-piece floor of CAM, setups and inspection (about 3-4 h each with PR 266's allowances) sets
-  the total.
-- **The allowances are the uncertain input,** as in PR 266. Nobody has timed a piece. A BYU machinist's estimate for
-  three of them would pin the total down better than more modelling: the well block (4 setups), the gland (mill +
-  lathe) and a small bracket.
+  needs 35, so the per-piece floor of CAM, setups and inspection (about 3-4 h a piece at the expected allowances)
+  sets the total.
+- **The allowances are the uncertain input,** as in PR 266. Setups alone move the FT-1 machine by 60 h between the
+  low and high cases. Nobody has timed a piece. A BYU machinist's estimate for three of them would pin the total down
+  better than more modelling: the well block (4 setups), the gland (mill + lathe) and a small bracket.
 - **Reusing this CAM** saves most of the CAM hours. With 0.25 h a setup for review and prove-out (an assumption), CAM
-  falls from 62 h to 19 h. The machines then come to:
-  - FT-0: about 63 h;
-  - FT-1: about 85 h;
-  - FT-1V: about 98 h.
+  falls from 61.5 h to 18.5 h. The machines then come to:
+  - FT-0: 61.6 h;
+  - FT-1: 83.8 h;
+  - FT-1V: 97.0 h.
 
 **Outsourced split** (sheet parts and flat plates out; turned, sealing and precision parts in):
 
-- **Out to SendCutSend** (laser or waterjet; plate profiles and through holes):
-  - the hopper walls, the shield and the target plates;
-  - the deck, the head plate, the stage bracket plate and riser;
-  - the inner clamp ring and the two cover-slide holder pieces.
-- **Still done at BYU on those:** a drawing (0.5 h), receiving (0.25 h), and the counterbores and taps (one setup or
-  hand taps).
-- **Hours saved:** 16 h on the FT-1 machine (123 → 107 h). The plates are not where the hours are.
-- **Lead times:** SendCutSend's delivered dates were 5-6 days out for sheet and plate and 6-15 days for CNC.
-  - Source: PR 266's [`outsourcing.md`](../../outsourcing.md), read there on 2026-11-22; not re-read today.
-  - Not read: anodising for the target plate, and any machine shop's lead time for the in-house pieces.
+- **Out to SendCutSend in every case:** the hopper walls and the stage shield (FT-1).
+- **Flat plates `hours.py` also sends out:** the deck, the head plate, the stage bracket plate and riser, the inner
+  clamp ring and the two cover-slide holder pieces.
+  - **Still done at BYU on those:** a drawing (0.5 h), receiving (0.25 h), and the counterbores and taps (one setup
+    or hand taps).
+  - **Hours saved:** 14.6 h on the FT-1 machine (121.9 → 107.3 h, expected). The plates are not where the hours are.
+  - **But the dates don't allow most of them.** Delivered on calendar day 5-6, they are in hand on working day 5:
+    after S1's need date (day 4) and on S2's (day 5). Only FT-1's two plates (MK-15a/b, needed by day 9) go out
+    without a wait. They save 5.2 h, and FT-1's pieces finish on day 7.6 instead of 7.8 with two people.
+- **The target plates (MK-18b)** are 80 mm squares: the calendar cuts them in house on the bandsaw and mill, so S1
+  does not wait for a delivery. Anodising them is an outside job.
+- **Lead times:**
+  - **SendCutSend:** delivered dates were 5-6 days out for sheet and plate, and 6-15 days for CNC. Source: PR 266's
+    instant quotes of 2026-11-22 in [`outsourcing.md`](../../outsourcing.md); not re-read today.
+  - **McMaster stock:** 1-2 days, the study's assumption ("most orders arrive same or next day").
+  - **Not read:** anodising for the target plate, and any job shop's lead time for the in-house pieces.
 - **The 10 mm deck** is not a standard SendCutSend plate thickness. Outsourcing it means 3/8 in. (9.53 mm) plate and
   `deck_t` = 9.525 in the model.
 
 ## First-week shop plan
 
-One machinist, 8 h a day, this folder's CAM reviewed rather than rewritten (0.25 h a setup). Hours below are that
-case; PR 266's full allowances add about half (92 h instead of 63 h to the end of FT-0).
+[`plan.py`](plan.py) puts the pieces on a calendar: 8 h a working day, day 0 the order day, the pieces taken in the
+order of the state that needs them. Each piece is a CAM task (no stock needed) and a floor task (after its CAM and
+after its stock arrives). The need dates come from the study's progression network (`cad/ft_progression.py`, scenario
+A, early end of every range): each shop task is replaced by a fixed finish, and the need date is the latest one that
+delays no milestone.
 
-| Working day | Shop | Why then |
+**The plan: two people, both programming and cutting, from day 0 to day 8, at the expected hours.**
+
+| Working day | Shop | Done (need) |
 |---|---|---|
-| 0 (order day) | Order the McMaster stock (1-2 days, the study's assumption) and the SendCutSend sheet (MK-08a/b, MK-12, MK-18b; 5-6 days delivered). Review and prove out the S1 programs; set the tool library (T1-T7 and the drills in `tools.py`) | CAM needs only the model |
-| 1-2 | **S1:** MK-09a head plate, MK-09b saddle, MK-18a target stand, MK-01 deck (about 14 h) | S1 starts at 1.4 weeks at the earliest, when the laser chain is in |
-| 2-4 | **S2:** MK-02a window ring, MK-02b flange, MK-02c clamp ring, MK-02d/e cover-slide holder, MK-10c lens collar, MK-10a long tube (about 16 h) | S2 at 1.6 weeks at the earliest |
-| 4-8 | **FT-0:** MK-03 well block (boring-head finish), MK-07 gland (lathe first), MK-04 heater plate and MK-05 substrates (lathe batch), MK-06a rod, MK-11a/b nozzle and collector, MK-16 cup, MK-03s Macor standoffs; buy MK-17 (about 33 h) | FT-0 at 1.8 weeks at the earliest; its O₂ log decides FT-1V |
-| 8-11 | **FT-1:** MK-15a/b/c stage plate, riser and rod clamp; MK-08c/d/e cord clamp, arm and bracket; rivet the hopper when the sheet arrives (about 22 h) | FT-1 at 3.2 weeks at the earliest |
-| when the cube is in | **FT-1V:** MK-13, MK-14 (the Ideal Vacuum blanks), MK-06b rod, MK-10b tube (about 13 h) | the cube arrives on its own schedule |
+| 0 (order day) | Order the McMaster stock (in on day 1) and send the hopper walls and shield to SendCutSend (in hand on day 5). Both people program the S1 and S2 pieces (18.5 h of CAM) and set up the tool library (T1-T7 and the drills in `tools.py`) | |
+| 1 | **S1:** MK-01 deck, MK-09a head plate, MK-09b saddle, MK-18a stand, MK-18b targets (bandsaw and mill). Start S2: MK-02a window ring, MK-02b flange | S1 on day 1.9 (4) |
+| 2 | **S2:** MK-02c clamp ring, MK-02d/e cover-slide holder, MK-10c lens collar, MK-10a long tube. Start FT-0: program and cut MK-03 well block, MK-03s Macor standoffs | S2 on day 2.7 (5) |
+| 3 | **FT-0:** MK-03 (4 setups, boring-head finish of the Ø40 H7 bore), MK-03s; MK-04 heater plate and MK-05 substrates (lathe batch) | |
+| 4 | **FT-0:** MK-06a rod, MK-07 gland (lathe first), MK-11a nozzle; program MK-11b | |
+| 5 | **FT-0:** MK-11a, MK-11b collector, MK-16 cup; buy MK-17 (a catalogue collar). The sheet arrives: rivet the hopper (MK-08a/b) | FT-0 on day 5.8 (6) |
+| 6-7 | **FT-1:** MK-08c/d/e cord clamp, arm and bracket; MK-12 shield; MK-15a/b/c stage plate, riser and rod clamp | FT-1 on day 7.8 (9) |
+| 7-8 | **FT-1V, ahead of the cube:** MK-06b long rod, MK-10b short tube; program MK-13/14 | |
+| cube + 0.5 | **FT-1V:** MK-13, MK-14 from the Ideal Vacuum plates (the cube is in on day 11 at the earliest) | day 11.5 (14) |
 
-- **In this order no state waits on the shop.**
-  - **The tightest:** FT-0, done on working day 8 (11 calendar days), against its earliest start of 12.6 days.
-  - **With PR 266's full allowances:** FT-0 slips to working day 12 (16 calendar days), which leaves the rig waiting
-    about 3 days.
-  - **Avoiding that:** send the flat plates out, or put a second person on the lathe pieces (the substrates, heater
-    plate, gland, rods and standoffs).
+- **In this order no state waits on the shop.** The tightest is FT-0: its pieces are done on day 5.8, against day 6.
+- **All the cases** (need dates in brackets; bold is late; milestones in weeks from the order):
+
+<!-- PLAN_TABLE -->
+| Hours | People | FT-1 plates | Pieces done, working day (need): S1 | S2 | FT-0 | FT-1 | FT-1V | Milestones, weeks: S1 / S2 / FT-0 tracks / FT-1 coupons / FT-1V coupons |
+|---|---:|---|---|---|---|---|---|---|
+| low | 1 | in house | 1.7 (4) | 2.6 (5) | 5.5 (6) | 7.3 (9) | 11.4 (14) | 1.4 / 1.6 / 1.8 / 2.9 / 3.5 |
+| low | 2 | in house | 1.4 (4) | 1.9 (5) | 2.9 (6) | 5.1 (9) | 11.2 (14) | 1.4 / 1.6 / 1.8 / 2.8 / 3.4 |
+| low | 3 | in house | 1.3 (4) | 1.6 (5) | 2.3 (6) | 5.1 (9) | 11.2 (14) | 1.4 / 1.6 / 1.8 / 2.8 / 3.4 |
+| expected | 1 | in house | 2.5 (4) | **5.2** (5) | **11.3** (6) | **15.2** (9) | **17.5** (14) | 1.4 / 1.6 / **2.9** / **4.5** / **5.0** |
+| expected | 2 | in house | 1.9 (4) | 2.7 (5) | 5.8 (6) | 7.8 (9) | 11.5 (14) | 1.4 / 1.6 / 1.8 / 3.0 / 3.6 |
+| expected | 3 | in house | 1.7 (4) | 2.3 (5) | 3.9 (6) | 5.2 (9) | 11.5 (14) | 1.4 / 1.6 / 1.8 / 2.8 / 3.4 |
+| high | 1 | in house | 3.4 (4) | **7.8** (5) | **18.2** (6) | **23.6** (9) | **26.7** (14) | 1.4 / **2.2** / **4.2** / **6.1** / **6.7** |
+| high | 2 | in house | 2.3 (4) | 4.1 (5) | **9.2** (6) | **12.0** (9) | 13.6 (14) | 1.4 / 1.6 / **2.4** / **3.8** / **4.4** |
+| high | 3 | in house | 2.1 (4) | 3.2 (5) | **6.3** (6) | 8.1 (9) | 11.6 (14) | 1.4 / 1.6 / **1.9** / 3.1 / 3.7 |
+| expected | 1 | out | 2.5 (4) | **5.2** (5) | **11.3** (6) | **14.6** (9) | **16.8** (14) | 1.4 / 1.6 / **2.9** / **4.3** / **4.9** |
+| expected | 2 | out | 1.9 (4) | 2.7 (5) | 5.8 (6) | 7.6 (9) | 11.5 (14) | 1.4 / 1.6 / 1.8 / 3.0 / 3.6 |
+| *network as drawn* | | | 2 | 3 | 6 | 9 | 13 | 1.4 / 1.6 / 1.8 / 3.2 / 3.8 |
+<!-- /PLAN_TABLE -->
+
+- **What the table says:**
+  - **One person** is enough only at the low allowances (or with this folder's CAM reused and 20 min setups).
+  - **At the expected hours, the second person is what keeps FT-0 on time.** Sending FT-1's plates out saves
+    5.2 h but changes no milestone.
+  - **At the high hours,** two people put FT-0's tracks 3 days late; a third person for the FT-0 pieces (days 2-6)
+    brings them to 1.9 weeks.
+  - **The network as drawn** has the shop finish S1 on day 2, S2 on day 3, FT-0 on day 6 and FT-1 on day 9, from
+    about 35 h ("~3", "~8", "~12" and "~12 shop hours" in `ft_progression.py`). The counted hours need two people to
+    keep those dates.
+- **Not modelled:** the shop's queue (other jobs, PML's hours), holidays, a machine being down, and remakes beyond
+  the high case's three. A shared university shop's queue was not read and could add days before day 1.
 
 ## Changes for the assembly model
 

@@ -1,4 +1,4 @@
-"""Fill README.md's generated tables (pieces, hours by state, the voxel check) from out/*.json (#260).
+"""Fill README.md's generated tables (pieces, hours by state, the shop calendar, the voxel check) from out/ (#260).
 
     /tmp/venv/bin/python desktop-lpbf/fast-track/fab/tables.py
 """
@@ -14,27 +14,47 @@ OUT = HERE / "out"
 
 def piece_table(h, spec):
     by = {p["pid"]: p for p in spec["pieces"]}
-    L = ["| Piece | What | First in | Route | Stock | Setups (mill / lathe) | Program min | Shop h | Low h |",
-         "|---|---|---|---|---|---:|---:|---:|---:|"]
+    L = ["| Piece | What | First in | Route | Stock | Setups (mill / lathe) | Cycle min: recount / FreeCAD | Low h "
+         "| **Expected h** | High h |", "|---|---|---|---|---|---:|---|---:|---:|---:|"]
+    tot = [0, 0, 0.0, 0.0, 0.0, 0.0, 0.0]
     for r in h["pieces"]:
         stock = by[r["pid"]]["stock"].split(";")[0]
-        L.append("| %s | %s%s | %s | %s | %s | %d / %d | %.1f | %.1f | %.1f |" % (
+        L.append("| %s | %s%s | %s | %s | %s | %d / %d | %.1f / %.1f | %.1f | **%.1f** | %.1f |" % (
             r["pid"], r["name"], (" (x%d)" % r["qty"]) if r["qty"] > 1 and "(" not in r["name"] else "", r["state"],
-            r["route"], stock, r["mill_setups"], r["lathe_setups"], r["program_min"], r["total_h"], r["low_h"]))
+            r["route"], stock, r["mill_setups"], r["lathe_setups"], r["program_min"], r["freecad_min"], r["low_h"],
+            r["total_h"], r["high_h"]))
+        for i, k in enumerate(("mill_setups", "lathe_setups", "program_min", "freecad_min", "low_h", "total_h",
+                               "high_h")):
+            tot[i] += r[k]
+    L.append("| **All** | %d pieces | | | | %d / %d | %.0f / %.0f | %.1f | **%.1f** | %.1f |" % (
+        len(h["pieces"]), *tot))
     return "\n".join(L)
 
 
 def state_rows(h):
     st, cu = h["by_state"], h["cumulative"]
-    names = {"S1": "S1", "S2": "S1 + S2", "FT-0": "FT-0", "FT-1": "FT-1", "FT-1V": "FT-1V"}
-    L = ["| State | Pieces | Shop h | Low h | Machine | Cumulative shop h | Cumulative low h | At $65/h | Study "
-         "| BYU h if sheet and plates go out (cumulative) |", "|---|---:|---:|---:|---|---:|---:|---:|---|---:|"]
+    L = ["| State | Pieces | This state, low / expected / high h | Cumulative (the machine), low / **expected** / high h "
+         "| Cumulative at $65/h, low / expected / high | Study (`fast_track.py`) | BYU h with sheet and flat plates out, "
+         "cumulative (expected) |", "|---|---:|---|---|---|---|---:|"]
     for s in ("S1", "S2", "FT-0", "FT-1", "FT-1V"):
         stu = h["study"].get(s)
-        L.append("| %s | %d | %.1f | %.1f | %s | **%.1f** | %.1f | $%s-%s | %s | %.1f |" % (
-            s, st[s]["n"], st[s]["h"], st[s]["low"], names[s], cu[s]["h"], cu[s]["low"],
-            format(int(round(cu[s]["low"] * 65, -1)), ","), format(int(round(cu[s]["h"] * 65, -1)), ","),
+        L.append("| %s | %d | %.1f / %.1f / %.1f | %.1f / **%.1f** / %.1f | $%s / %s / %s | %s | %.1f |" % (
+            s, st[s]["n"], st[s]["low"], st[s]["h"], st[s]["high"], cu[s]["low"], cu[s]["h"], cu[s]["high"],
+            *[format(int(round(cu[s][k] * 65, -1)), ",") for k in ("low", "h", "high")],
             ("%d-%d h" % tuple(stu)) if stu else "-", cu[s]["split"]))
+    return "\n".join(L)
+
+
+def short_table(h):
+    cu = h["cumulative"]
+    names = {"S1": "S1", "S2": "S1 + S2", "FT-0": "FT-0 (S1 + S2 + FT-0 pieces)", "FT-1": "FT-1", "FT-1V": "FT-1V"}
+    L = ["  | Machine (cumulative) | Low | **Expected** | High | Study (`fast_track.py`, parts.csv F2a-c) "
+         "| At $65/h, low / expected / high |", "  |---|---:|---:|---:|---:|---|"]
+    for s in ("S1", "S2", "FT-0", "FT-1", "FT-1V"):
+        stu = h["study"].get(s)
+        L.append("  | %s | %.1f h | **%.1f h** | %.1f h | %s | $%s / %s / %s |" % (
+            names[s], cu[s]["low"], cu[s]["h"], cu[s]["high"], ("%d-%d h" % tuple(stu)) if stu else "–",
+            *[format(int(round(cu[s][k] * 65, -1)), ",") for k in ("low", "h", "high")]))
     return "\n".join(L)
 
 
@@ -63,11 +83,11 @@ def sim_table(sim, cam):
     return "\n".join(L)
 
 
-def put(text, key, block):
-    mark = "<!-- %s -->\n%s\n<!-- /%s -->" % (key, block, key)
+def put(text, key, block, indent=""):
+    mark = "%s<!-- %s -->\n%s\n%s<!-- /%s -->" % (indent, key, block, indent, key)
     if key in text and "<!-- %s -->" % key not in text:
-        return text.replace(key, mark)
-    return re.sub(r"<!-- %s -->.*?<!-- /%s -->" % (key, key), lambda m: mark, text, flags=re.S)
+        return re.sub(r"^[ ]*%s$" % key, lambda m: mark, text, count=1, flags=re.M)
+    return re.sub(r"^[ ]*<!-- %s -->.*?<!-- /%s -->" % (key, key), lambda m: mark, text, flags=re.S | re.M)
 
 
 def main():
@@ -77,6 +97,9 @@ def main():
     rd = (HERE / "README.md").read_text()
     rd = put(rd, "PIECE_TABLE", piece_table(h, spec))
     rd = put(rd, "STATE_ROWS", state_rows(h))
+    rd = put(rd, "SHORT_TABLE", short_table(h), indent="  ")
+    if (OUT / "plan.md").exists():
+        rd = put(rd, "PLAN_TABLE", (OUT / "plan.md").read_text().strip())
     if (OUT / "sim.json").exists():
         rd = put(rd, "SIM_TABLE", sim_table(json.loads((OUT / "sim.json").read_text()), cam))
     (HERE / "README.md").write_text(rd)
