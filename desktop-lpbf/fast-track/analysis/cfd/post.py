@@ -757,7 +757,7 @@ def do_figures(a):
         fig_box_multi(rows_b, f"{pre}_box_section.png")
 
 
-def fig_purge_curves(names, labels, fname, tmax=None):
+def fig_purge_curves(names, labels, fname, tmax=None, title=""):
     """O2 against time, one panel per purge configuration: box average, exhaust (flow-weighted), the plate (1 mm
     above it) and 2 mm under the cover slide, with the well-mixed ideal for the same flow and volume."""
     d = load_json()["purge"]
@@ -793,6 +793,8 @@ def fig_purge_curves(names, labels, fname, tmax=None):
     for ax in axs.ravel()[n:]:
         ax.axis("off")
     axs[0, 0].legend(loc="lower left", fontsize=7)
+    if title:
+        fig.suptitle(title, x=0.01, ha="left", fontsize=9)
     fig.savefig(OUT / fname, dpi=120)
     plt.close(fig)
 
@@ -844,7 +846,7 @@ def fig_purge_snap(items, t_snaps, fname):
 def do_purgefigs(a):
     names = [c.split("=", 1)[0] for c in a.cases]
     labels = [c.split("=", 1)[1] for c in a.cases]
-    fig_purge_curves(names, labels, a.name, a.tmax)
+    fig_purge_curves(names, labels, a.name, a.tmax, a.title)
 
 
 def do_snaps(a):
@@ -939,6 +941,7 @@ def main():
     ap.add_argument("--t-snap", type=float, default=600.0)
     ap.add_argument("--times", type=float, nargs="*", default=[], help="snaps: snapshot times, s (one column each)")
     ap.add_argument("--tmax", type=float, default=None, help="purgefigs: x-axis limit, min")
+    ap.add_argument("--title", default="", help="purgefigs: figure title")
     ap.add_argument("case", nargs="?")
     ap.add_argument("--name", default="", help="case name in cfd.json (figures: the PNG's file name)")
     ap.add_argument("--figs", action="store_true")
