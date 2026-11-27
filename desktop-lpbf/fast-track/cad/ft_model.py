@@ -388,8 +388,9 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
     z_beam_max = P["lens_ffl"] + P["dz_cube"] + 90.0
     z_up_top = z_beam_max + h + 10.0
     four = P["gantry"].startswith("four_post")
-    front_braced = P["gantry"] in ("four_post_braced_front", "four_post_braced_front_g2")
-    g2 = P["gantry"] == "four_post_braced_front_g2"
+    front_braced = P["gantry"] in ("four_post_braced_front", "four_post_braced_front_g2", "four_post_braced_front_g3")
+    g2 = P["gantry"] in ("four_post_braced_front_g2", "four_post_braced_front_g3")
+    g3 = P["gantry"] == "four_post_braced_front_g3"   # g2 + a support plate on the head's far face (FEA on g2)
     hp = P["post"] / 2 if four else h                 # post half-width
     y_f = ry[0] - h - P["front_post_gap"] - hp        # front posts: in front of the front rail, on foot brackets
     if four:
@@ -460,6 +461,15 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
                    .close().extrude(gt, both=True).val())
             gs.append(tri.translate(V(0, yg, 0)))
         add("Head-plate gussets, 3 (MK-09)", comp(gs), C["alu"], "MK-09", "optics")
+        if g3:     # FEA on g2: the head yawed on a plate held near its top; hold its far face too, from both beams
+            xf0 = xe + P["head"][0]                   # the head's far face (x 149.6)
+            fp = box(xf0, xf0 + 10.0, y_f + h, ry[1] - h, hb + 5, hb + 125)
+            add("Head far-side support plate, between both cross-beams (MK-09)", fp, C["alu"], "MK-09", "optics")
+            fb = []
+            for ya, yb_ in ((ry[1] - h - 30, ry[1] - h), (y_f + h, y_f + h + 30)):
+                fb += [box(xf0 + 10, xf0 + 50, ya, yb_, z_beam - 15, z_beam - 11),
+                       box(xf0 + 10, xf0 + 14, ya, yb_, z_beam - 15, z_beam + 15)]
+            add("Far-side support angle brackets (MK-09)", comp(fb), C["alu_dark"], "MK-09", "optics")
     # the unit's input stack (by eye from the seller's photos): focusing turret and a 45 deg mirror block; the beam comes
     # in from -y. With a short-pass dichroic in place of the input mirror, the melt-pool light passes straight through
     # the block to the photodiode on its back face (MON4).
@@ -483,7 +493,8 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
                          (fxr, -205, z_in), (-240, -230, z_in), (xbm, -230, z_in), (xbm, yb0 - 110, z_in)], 3.0)
     add("Process fibre", fib, C["fiber"], "L1", "optics")
     add("PC with the RTC4 (or RTC5) (tower, est.)", box(420, 590, -20, 400, zb, zb + 380), C["black"], "C1", "bench")
-    add("+-15 V supply for the head (DIN, est.)", box(ux[1] - hp - 60, ux[1] - hp, ry[1] - hp - 30, ry[1] - hp,
+    ysu = (ry[1] + hp + 5, ry[1] + hp + 35) if g3 else (ry[1] - hp - 30, ry[1] - hp)   # g3: behind the back post
+    add("+-15 V supply for the head (DIN, est.)", box(ux[1] - hp - 60, ux[1] - hp, ysu[0], ysu[1],
                                                      hb + 10, hb + 100), C["alu_dark"], "L6", "optics")
     ys_ = lay - P["head_side"][0]
     hcab = polyline_pipe([(xe + 22, ys_ - 12.5, hb + 156), (xe + 22, ys_ - 60, hb + 156), (xe + 22, ys_ - 90, hb + 230)], 4.0)
