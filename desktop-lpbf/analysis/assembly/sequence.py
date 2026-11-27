@@ -390,14 +390,13 @@ def steps(module="M50"):
     # dowel positions, the blade face up), its screws are driven straight down there, and the whole cartridge goes in as the
     # tending robot changes it (analysis/robot/ops.py job_blade, reversed): the plate fingers on its grip fin, in over the sill
     # 12 mm high, down, and 10 mm back into the arm's pocket onto its dowels, with the recoater in the middle, where F18 left it
-    # (parked, the fin is 4 mm inside the door opening's side). F26a and F26b are "bench_place" so that kit_table.py keeps the
-    # holder and blade in their F26 slot and the fin in its own (the long table's layout does not change).
-    a(dict(P("F26a", "Blade holder (its grip fin fitted by the shop) onto the two-pin bench nest, on its side",
-             ["Blade holder", "Blade-cartridge grip fin"], "blade", "blade_nest", [(0, 0, 0), (0, -10, 0), (70, -10, 0)],
-             grasp=dict(point=(-106.0, -45.0, 18.0), z=(0.0, 1.0, 0.0), x=(1.0, 0.0, 0.0), width=18.0)), do="bench_place"))
-    a(dict(P("F26b", "HSS blade onto the holder's face on the nest (small-part vacuum nozzle)", ["HSS recoater blade"], "blade", "blade_nest",
-             [(0, 0, 0), (60, 0, 0)], tool="nozzle", grasp=dict(point=(-95.5, 0.0, 9.0), z=(-1.0, 0.0, 0.0), x=(0.0, 1.0, 0.0))),
-           do="bench_place"))
+    # (parked, the fin is 4 mm inside the door opening's side). F26a is a "bench_place" so that kit_table.py keeps the holder and
+    # blade in their F26 slot and the fin in its own (the long table's layout does not change). The holder and blade are kitted
+    # together in that slot, so the gripper takes them together, the blade clamped on the holder's face (with the holder alone, its
+    # fingertip met the blade beside it as it lifted: the pick was not planned)
+    a(dict(P("F26a", "Blade holder and blade (the grip fin fitted to the holder by the shop) onto the two-pin bench nest, on its side",
+             ["Blade holder", "HSS recoater blade", "Blade-cartridge grip fin"], "blade", "blade_nest", [(0, 0, 0), (0, -10, 0), (70, -10, 0)],
+             grasp=dict(point=(-105.25, -45.0, 18.0), z=(0.0, 1.0, 0.0), x=(1.0, 0.0, 0.0), width=19.5)), do="bench_place"))
     a(S("F27", "Two M3 x 8 blade screws straight down into the holder on the bench nest", "blade", "blade", "blade_nest", actor="A",
         torque_Nm=1.1))
     a(P("F26", "Blade cartridge (holder, grip fin, blade and its two screws) off the bench nest and into the recoater arm's pocket by its "
