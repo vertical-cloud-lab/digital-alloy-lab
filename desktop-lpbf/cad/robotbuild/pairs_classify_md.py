@@ -137,7 +137,7 @@ head = ["| Chapter | Pairs | (a) real | (b) mesh artifact | (c) intended |", "|-
 head += [f"| {ch} | {n} | {cnt['a']} | {cnt['b']} | {cnt['c']} |" for ch, n, cnt, nn in summary]
 head += ["", "Why 41's count rose (round 8: 209 pairs, 10,325 frames; round 9: 238, 13,640 frames): 138 pairs are in both "
          "rounds; 71 of round 8's are gone (the hoist hook in the build module, 22; parts in parts, 25; fingers in parts, 11; "
-         "the wrist and a gripper, the stretchers, the jaws in their stands, the person in MiR A's tool stand, the seal tools); "
+         "the wrist and a gripper, the stretchers, the jaws in their stands, the person in MiR A's tool stand); "
          "100 are new, 76 of them fingertips on parts and 22 parts in parts. No pair is a decimation artifact any more: round 9 "
          "draws each part at the scene file's 12,000 triangles (round 8 drew 2,500, which closed bores and counterbores), and "
          "only 11 parts have more than that (hoses, the chamber body, the floor plate, two servos); every pair re-measured on "
