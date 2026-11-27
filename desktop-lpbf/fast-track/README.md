@@ -550,6 +550,26 @@ Edison's summary is that together these "can plausibly reduce the time to first 
 acceptance test of ex-EOS lasers, PTFE near its limit at 200 °C, piston rotation in a reduction kit, and O₂
 sensitivity of crack-prone alloys. Its time savings are engineering estimates, not sourced figures.
 
+### 6.1 Edison round 2: seven design risks
+
+A second `LITERATURE_HIGH` task (`61f66d54…`, in [`../edison/ft-round2-review/`](../edison/ft-round2-review/answer.md)
+with its references and full trajectory) reviewed seven risks of this design and ranked the five most likely to cost
+weeks, each with a check that fits in the first week. Round 2 acted on each:
+
+| Rank | Risk | Edison's first-week check | What round 2 did |
+|---:|---|---|---|
+| 1 | Back reflection into the used YLR-400-SM (an ex-EOS unit may lack protection) | ask IPG with the serial number; 50 W on a bead-blasted plate off the field centre, watching the back-reflection alarm | the 30 mm lens offset that keeps the specular return out of the core ([`process/`](process/README.md)); the supervisor stops on the laser's back-reflection status bit ([`control/`](control/README.md)) |
+| 2 | The heated piston binding or leaking powder | ten strokes at 200 °C with the drive force logged; bore and plate measured hot | the thermal FEA's hot clearance ([`analysis/out/fea/`](analysis/out/fea/)); the hot piston test in `ftctl/commission.py` |
+| 3 | Purge leaks in the NEMA box | 20 L/min, time to < 500 and < 100 ppm; soap-test the seals if > 15 min | the purge CFD (a diffuser and a high vent reach the well-mixed time; [`analysis/out/cfd/`](analysis/out/cfd/)); a sponge gasket (structural FEA) |
+| 4 | The gravity hopper dosing fine AlSi10Mg unevenly | 20 dose-and-spread cycles, each weighed and photographed under raking light; CV < 15 % | the 20-cycle dose test in `ftctl/commission.py`; the raking lights and layer camera (MON1–MON3) |
+| 5 | Cover-slide fouling | 5 min at full power on Al, then the slide's transmission | the thermal-lens calculation for a sooted slide, and FT-1V's slide hung ~130 mm above the bed ([`process/`](process/README.md)) |
+
+It also found that a 200 °C plate helps AlSi10Mg but did not stop hot cracking in 7075 at 100–200 °C (Velikajne 2026),
+which matters for the alloys after AlSi10Mg. On heat, PR 266's own Edison review
+([`../edison/followup-laser-heat/`](../edison/followup-laser-heat/answer.md)) had found that a recoat dwell of about
+28–30 s kept heat from building up layer to layer (Bugatti and Colosimo 2024), the same order as the dwell `ftctl` needs
+here with the block at setpoint.
+
 ## 6b. The CAD model and the progression
 
 [`cad/`](cad/README.md) models FT-0, FT-1 and FT-1V in CadQuery as one machine that grows through five states as the
