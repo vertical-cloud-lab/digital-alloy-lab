@@ -482,6 +482,38 @@ source, the checks and all the results. In short:
   render.
 - **Edison's round 3 came back grounded** (51 of 52 DOIs correct). It found that Al 5182 lead.
 
+### Version 2: the items version 1 left out
+
+Sterling asked for version 1's "not done" items. They are in
+[`first-principles/v2/`](first-principles/v2/README.md), with nothing fitted to keyhole or melt-pool data:
+- **Mg evaporation.**
+  - JANAF vapour pressures and mc_al activities, with Mg depletion at the wall.
+  - The wall keeps only 0.5–3 % of the bulk Mg, so it is 1–7 K cooler for our alloys and 28–96 K for Al 5182.
+  - No map class changes.
+- **A powder layer.**
+  - A radiative-transfer model over-traps light against Boley et al.'s ray tracing and Rubenchik et al.'s measurement, so the measured 0.53 is used.
+  - The melt front runs ahead of the beam, so only 3–24 % of the beam lands on powder. No class changes.
+- **A tilted keyhole.**
+  - Kaplan's front-wall balance gives front walls 7–26° from vertical, and changes absorptance and depth very little.
+  - A free-form shape from the point-by-point balance becomes a funnel that makes the X-ray depths worse, so it isn't used.
+- **Melt flow, with our own 3D beam-frame solver** (Marangoni flow on a flat surface, keyhole as a cavity at T_w; 5 validation checks pass).
+  - Flow widens pools by 7–12 % and barely changes depth or length.
+  - Resolving the temperature-dependent properties, which the analytic model averages, lengthens them by 21–65 %.
+  - Neither reaches the AM module's 1.47 mm blend pool.
+- **Sourced properties:**
+  - Sun et al. 2019 confirms the blend's resistivity formula to 20 wt % Si;
+  - Boivineau et al. 2006 and Pichler et al. 2020 supply Ti-6Al-4V and 316L;
+  - Yang et al. 2018 supplies LPBF AlSi10Mg's k(T).
+- **New: more than one stable keyhole.**
+  - Above the power where the surface first boils, both a shallow dimple and deeper keyholes are stable.
+  - The power where a stable keyhole with Wk/Dk ≤ 0.7 first exists is **0.96–1.01× the AM module's boundary for AlSi10Mg** (1.16–1.25× for the blend).
+  - Calling a keyhole wherever one is stable agrees with the AM module at 58 of 58 and 25 of 27 points.
+  - NIST's Al 5182 track shows the same jump: measured 0.24 → 0.43, against the model's 0.17 and 0.53.
+- **Still wrong:**
+  - lack of fusion at every AM "no defect" point, because the dimple absorbs 0.18 where the AM module has 0.31;
+  - Al6061 keyholes are 2.3× too deep;
+  - the AM module's long blend pool, which probably needs recoil-driven flow.
+
 ## An ORCHID-style benchmark for keyhole models
 
 ORCHID ([`../orchid/`](../orchid/)) is useful because it pairs open models with curated, accepted reference values and

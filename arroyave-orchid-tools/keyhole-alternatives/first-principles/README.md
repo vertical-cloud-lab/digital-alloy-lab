@@ -1,5 +1,16 @@
 # Our own first-principles keyhole and melt-pool model (#249)
 
+> **Version 2 is in [`v2/`](v2/README.md).** It adds what this version lists as left out:
+> - Mg evaporation;
+> - a powder layer;
+> - a tilted keyhole, and an attempt at a free-form shape;
+> - melt flow (our own 3D solver);
+> - sourced resistivities and solid conductivity.
+>
+> It also finds that the AM module's keyhole boundary is where a stable keyhole first appears. One correction to this
+> page: the 0.315 at the AlSi10Mg render is one of several stable depths there. The shallowest is a 16 µm dimple
+> absorbing 0.18 ([v2, section 3](v2/README.md#3-the-keyhole-its-tilt-its-stable-states-and-the-am-modules-boundary)).
+
 Sterling asked in #249 for our own implementation, from first principles, of what the AM module does for keyholing
 and keyhole-mode pool size. The sources were to be read through the Pi, and databases used with citations, with
 Edison's help. This folder has the result.
