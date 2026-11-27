@@ -1376,6 +1376,52 @@ def case_verify(R, h_film=10.0, q_heat=45.0):
     save_json(R)
 
 
+def case_sens(R):
+    """Design levers for case 3 at pz 0: (a) the block held 20 K below the plate during the build; (b) a graphite foil
+    between substrate and heater plate (contact 10,000 W/m2K instead of 2,000, est.). Steady excess at 20-50 W absorbed
+    and the layer-to-layer swing of 12 layers at A = 0.3 started from the steady state at its no-dwell mean power."""
+    out = {}
+    sched_on, Pm03 = T_ON, 0.3 * E_LAYER / T_LAYER
+
+    def run(m, tag, block_sp=SET_TC):
+        m.lvec = m.laser_vector(m.geo["zt"], ["substrate"])
+        m._pr = probes(m)
+        T0, Q0 = m.steady()
+        tc0 = m.at(T0, "tc_plate")
+        res = dict(base_Q=Q0, tc0=round(tc0, 2), block_setpoint=block_sp, rows=[])
+        T = T0
+        for Pm in (10.0, 20.0, 35.0, 50.0):
+            T, Q = m.steady(setp=(tc0, block_sp), laser_W=Pm, laser_vec=m.lvec, T0=T, sensor_plate="tc_plate")
+            res["rows"].append(dict(P_abs_W=Pm, Q=Q, sub_top=round(m.at(T, "sub_top"), 2), tc_plate=round(m.at(T, "tc_plate"), 2),
+                                    tc_block=round(m.at(T, "tc_block"), 2)))
+        Ts, Qs = m.steady(setp=(tc0, block_sp), laser_W=Pm03, laser_vec=m.lvec, T0=T, sensor_plate="tc_plate")
+        ctrl = controllers(m, tc0, block_sp, Q_MAX)
+        def lz(a, b):        # A = 0.3 of 746 J a layer, laser on for the first T_ON s of each T_LAYER
+            k0 = int(a // T_LAYER)
+            on = sum(max(0.0, min(b, k * T_LAYER + sched_on) - max(a, k * T_LAYER)) for k in (k0, k0 + 1))
+            return 0.3 * E_LAYER / sched_on * on / (b - a)
+        times = np.arange(0.0, 12 * T_LAYER + 1e-9, 0.25)
+        rec, _ = m.transient(Ts, times, ctrl, laser=lz, probes=m._pr, I0=i0_for(ctrl, Qs))
+        last = rec["t"] > times[-1] - 2 * T_LAYER
+        res["swing_A0.3"] = dict(sub_top=round(float(np.ptp(rec["sub_top"][last])), 2), tc_plate=round(float(np.ptp(rec["tc_plate"][last])), 2),
+                                 plate_mean=round(float(np.ptp(rec["plate_mean"][last])), 2),
+                                 sub_top_mean=round(float(rec["sub_top"][last].mean()), 2), steady_at_mean=round(m.at(Ts, "sub_top"), 2))
+        out[tag] = res
+        print(f"  {tag}: base {Q0}; rows {[(r['P_abs_W'], r['sub_top'], r['Q']) for r in res['rows']]}; swing {res['swing_A0.3']}")
+
+    m = Model("FT-1", 0.0, "fan", scale=MESH_T)
+    run(m, "block_minus20K", block_sp=SET_TC - 20.0)
+    run(m, "reference_tc_swing", block_sp=SET_TC)
+    H_CONTACT[("heater plate", "substrate")] = 10000.0
+    try:
+        m2 = Model("FT-1", 0.0, "fan", scale=MESH_T)
+        run(m2, "graphite_foil_10000", block_sp=SET_TC)
+    finally:
+        H_CONTACT[("heater plate", "substrate")] = 2000.0
+    R["sens"] = out
+    save_json(R)
+
+
 def main():
     args = sys.argv[1:] or ["steady"]
     R = load_json()
@@ -1386,6 +1432,8 @@ def main():
         case_laser(R, args[1:] or ["pz0", "pz-15"])
     elif args[0] == "warmup":
         case_warmup(R, args[1:] or ["block4x50", "block2x50"])
+    elif args[0] == "sens":
+        case_sens(R)
     elif args[0] == "verify":
         case_verify(R)
     elif args[0] == "post":
