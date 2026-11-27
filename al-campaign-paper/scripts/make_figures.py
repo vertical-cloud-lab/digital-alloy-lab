@@ -390,7 +390,8 @@ def table_benchmarks(bench, tensile) -> None:
         src = (src.replace("EOS process data sheet EOS M 290 30 um", "EOS M 290 [eos]")
                .replace("Nikon SLM Solutions MDS AlSi10Mg SLM 500 30 um", "Nikon SLM 500 [nikon]")
                .replace("Colibrium Additive M2 Series 5 Al-Mg-Sc 400 W 50 um", "Colibrium M2 [colibrium]")
-               .replace("3D Systems Certified Scalmalloy (A) datasheet 2022-02-23", "3D Systems [3dsystems]"))
+               .replace("3D Systems Certified Scalmalloy (A) datasheet 2022-02-23", "3D Systems [3dsystems]")
+               .replace("3D Systems Certified Scalmalloy", "3D Systems [3dsystems]"))
         key = src[src.find("[") + 1: src.find("]")] if "[" in src else ""
         src = src.split(" [")[0] + (rf"~\cite{{ds_{key}}}" if key else "")
         cond = r["condition"].split(" (")[0]
@@ -506,7 +507,8 @@ def numbers(tensile, runs, alloys, burdens, lit=None, lit_b=None) -> None:
         lines.append(num(macro + "nir", g(aid, "B_nir"), 1, "B"))
         lines.append(num(macro + "nirlo", g(aid, "B_nir_low"), 1, "B"))
         lines.append(num(macro + "nirhi", g(aid, "B_nir_high"), 1, "B"))
-        lines.append(num(macro + "cost", g(aid, "B_cost"), 2, "B"))
+        c = g(aid, "B_cost")
+        lines.append(num(macro + "cost", c, 0 if (not math.isnan(c) and c >= 10) else 2, "B"))
     # Sc-free comparators already in the region of interest: stronger than in-house AlSi10Mg by more than
     # its 95 % CI half-width, and below Scalmalloy's lowest B_NIR (midpoint, and robustly at the high end).
     if lit is not None and not lit.empty and lit_b is not None and not lit_b.empty and ys[3]:

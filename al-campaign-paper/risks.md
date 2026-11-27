@@ -90,6 +90,22 @@ Some import reliances come only as bounds (Si > 50 %, Mg > 75 %, Zr < 25 %), so 
   happens to the atomizer, but it is not the discovery the campaign is after. It would also pre-empt part of
   versions A and B, so decide this before writing it up.
 
+## What the first good Al run date buys
+
+The critical path is: a good Al run, the seeds, a Utah session for cubes, a pick of finalists, finalist powder, a Utah
+session for tensile bars, heat treatment and testing, and outside chemistry (2-3 weeks). It assumes the
+[#256 schedule](https://github.com/vertical-cloud-lab/digital-alloy-lab/blob/claude/issue-256-20261112-2149/al-campaign-schedule/README.md)'s
+post-break weeks and that R4-R10 are fixed in time. These are judgments, not a computed schedule.
+
+| First Al run that makes LPBF-grade powder | Seeds made | Finalists' tensile | Version A submitted | Version B submitted |
+|---|---|---|---|---|
+| By Fri Dec 11 | S3, S4, O3 before the break; Zr seeds early January | Feb 9-12 (P5 on Feb 2-3) | Feb 28 possible but unlikely: everything else has to go right | Feb 28 |
+| Dec 14-18 | January | late February | about mid-April | about Mar 31 |
+| After the break (Jan 4 or later) | mid-January to early February | March | May-June | about Apr 30 |
+
+"LPBF-grade" means at least about 100 g below 63 µm from one charge. None of the five Al runs so far came close
+(R3).
+
 ## Cut order if behind (from the schedule, adjusted)
 
 1. Corrosion beyond the finalists (or all of it, if R11 isn't fixed by Jan 15).

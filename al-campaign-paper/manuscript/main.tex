@@ -63,7 +63,7 @@ laser powder bed fusion \sep aluminum alloys \sep scandium-free \sep critical mi
 
 \end{frontmatter}
 
-\note{Elsevier journals ask for 3--5 highlights of at most 85 characters each, uploaded as a separate file. Draft them at G4.}
+\note{Highlights (Elsevier: 3--5 bullets, at most 85 characters each, separate file). Drafts, to be fixed at G4: (1) Scandium-free Al alloy [X] printed crack-free from in-house powder. (2) [YS] MPa yield, above AlSi10Mg printed and tested the same way. (3) Critical-mineral burden [X]\% below Scalmalloy on a metric fixed in advance. (4) [N] compositions atomized and tested in 12 weeks.}
 
 % =============================================================================
 \section{Introduction}
@@ -88,8 +88,15 @@ Al--Mn--Cr--Zr-based alloys designed for LPBF reach about \SI{390}{MPa} yield st
 Several scandium-free powders are now sold for LPBF: Al--Mn--Cr--Zr and Al--Mg--Zr--Mn grades with datasheet yield strengths well above \AlSi's after a direct age, and an Al--Fe--Zr grade that matches it~\cite{ds_hoganas,ds_al5x1,ds_cp1}.
 Computational design that couples CALPHAD with Bayesian optimization has produced printable alloys too, although often with scandium or rare-earth additions~\cite{thapliyal2020,taherimousavi2025}.
 Two problems remain.
-First, almost none of these alloys has been compared with \AlSi printed and tested in the same way, so whether an alloy is ``better'' depends on which datasheet it is compared with (Section~\ref{sec:benchmark}).
+First, almost none of these alloys has been compared with \AlSi printed and tested in the same way, so whether an alloy is ``better'' depends on which datasheet it is compared with (Fig.~\ref{fig:map}a, Section~\ref{sec:benchmark}).
 Second, removing scandium does not by itself reduce the critical-mineral burden. The final 2025 U.S.\ list includes aluminum and silicon themselves, as well as Mg, Mn, Cr, Zr, Ti, Cu, Ni and the rare earths; of the elements used in these alloys, only iron is absent~\cite{fr2025}. A claim of ``less critical minerals'' therefore needs a burden metric that weights each element, stated in advance~\cite{graedel2012,mulukutla2025}.
+
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig1-benchmark-map.pdf}
+  \caption{Where the campaign's alloys sit against the benchmarks. (a) Yield strength against elongation. Open blue and orange markers, \AlSi and \Scal vendor datasheets~\cite{ds_eos,ds_nikon,ds_colibrium,ds_3dsystems}; filled blue, \AlSi printed by the authors at the University of Utah (as built, as-printed surfaces, horizontal; mean $\pm$ s.d., $n=\InhouseN$); grey diamonds, scandium-free alloys on vendor datasheets~\cite{ds_hoganas,ds_al5x1,ds_cp1,ds_a20x,ds_7a77,ds_al2139}; grey triangles, scandium-free alloys in papers~\cite{alloyF2024,croteau2018,almgmnerzr2022,alfezr2025,alsimg2020}; grey shading, where a candidate must land to be stronger than the authors' \AlSi under the rule of Section~\ref{sec:stats} at no lower elongation. (b) Yield strength against the import-weighted burden $B_\mathrm{NIR}$ (Eq.~\ref{eq:burden}), plotted at the midpoint of its interval; the horizontal bars on the benchmarks show the interval. Green ticks mark the burden of the planned seed compositions, whose strength is not yet measured. Shading: stronger than the authors' \AlSi and below the lower end of \Scal's burden. \placeholder{Campaign alloys (green dots) are added as their tensile data arrive.}}
+  \label{fig:map}
+\end{figure}
 
 The slower problem is powder.
 Every new composition needs its own powder, and gas atomization, the usual route, runs at a scale and lead time suited to production rather than exploration~\cite{anderson2018}.
@@ -336,7 +343,6 @@ Under the rule of Section~\ref{sec:stats}, with $n = \InhouseN$ for \AlSi (95\% 
 
 A co-author asked at the campaign's kickoff whether there are already alloys close to the line between \AlSi and \Scal.
 There are (Fig.~\ref{fig:map}a, grey markers).
-\placeholder{Add the grey series to Fig.~1 from data/literature-alloys.csv.}
 On their vendors' datasheets, a directly aged Al--Mn--Cr--Zr powder reaches \SIrange{355}{370}{MPa} yield strength with \SIrange{12}{16}{\%} elongation~\cite{ds_hoganas}, a directly aged Al--Mg--Zr--Mn powder \SIrange{380}{385}{MPa} with 13--14.5\%~\cite{ds_al5x1}, and a heat-treated Al--Fe--Zr powder about \SI{300}{MPa} with 10--12\%~\cite{ds_cp1}; silver-bearing Al--Cu--Mg alloys reach \SIrange{350}{385}{MPa} as built and \SIrange{390}{460}{MPa} after a T7 or T4 treatment~\cite{ds_al2139,ds_a20x}, and a Zr-modified 7xxx alloy \SIrange{490}{585}{MPa} after hot isostatic pressing and heat treatment~\cite{ds_7a77}.
 In the peer-reviewed literature, Al--Mn--Cr--Zr--Mg reached \SI{390}{MPa} as built with 17\% elongation~\cite{alloyF2024}, Al--Mg--Zr \SI{350}{MPa} after aging with 17--19\%~\cite{croteau2018}, Al--Mg--Mn--Er--Zr \SI{440}{MPa} after aging with 15.5\%~\cite{almgmnerzr2022}, Al--Fe--Mg--Zr \SI{376}{MPa} after aging with 11\%~\cite{alfezr2025}, and a tailored Al--Si--Mg alloy \SIrange{270}{417}{MPa} as built, depending on plate temperature and machine~\cite{alsimg2020}.
 \note{These values were read from the sources by the \#275 survey (research/datasheets.md, 26 Nov 2026) and must be re-checked against each source before submission.}
@@ -359,12 +365,6 @@ Of the \NLit{} scandium-free comparators in Fig.~\ref{fig:map}, \NLitRegionMid{}
 A campaign alloy therefore counts as a discovery only if it lies beyond these alloys on strength against burden, under the metric fixed in advance.
 \note{This is the main risk to the paper's claim (risks.md, R1--R2). Sterling: pick the primary metric now. Under $B_\mathrm{NIR}$, steer the screen toward Fe-, Zr- and Mg-lean families (S2, O1) and away from Mn-rich ones (S1, O3); under $B_\mathrm{cost}$, any Sc-free alloy passes and the claim rests on strength alone.}
 
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=\textwidth]{figures/fig1-benchmark-map.pdf}
-  \caption{Where the campaign's alloys sit against the benchmarks. (a) Yield strength against elongation. Open blue and orange markers, \AlSi and \Scal vendor datasheets~\cite{ds_eos,ds_nikon,ds_colibrium,ds_3dsystems}; filled blue, \AlSi printed by the authors at the University of Utah (as built, as-printed surfaces, horizontal; mean $\pm$ s.d., $n=\InhouseN$); grey diamonds, scandium-free alloys on vendor datasheets~\cite{ds_hoganas,ds_al5x1,ds_cp1,ds_a20x,ds_7a77,ds_al2139}; grey triangles, scandium-free alloys in papers~\cite{alloyF2024,croteau2018,almgmnerzr2022,alfezr2025,alsimg2020}; grey shading, where a candidate must land to be stronger than the authors' \AlSi under the rule of Section~\ref{sec:stats} at no lower elongation. (b) Yield strength against the import-weighted burden $B_\mathrm{NIR}$ (Eq.~\ref{eq:burden}), plotted at the midpoint of its interval; the horizontal bars on the benchmarks show the interval. Green ticks mark the burden of the planned seed compositions, whose strength is not yet measured. Shading: stronger than the authors' \AlSi and below the lower end of \Scal's burden. \placeholder{Campaign alloys (green dots) are added as their tensile data arrive.}}
-  \label{fig:map}
-\end{figure}
 
 
 % =============================================================================
@@ -381,7 +381,7 @@ A campaign alloy therefore counts as a discovery only if it lies beyond these al
 The data behind every figure and table (run records, powder, print, density, hardness, tensile and corrosion data, and outside laboratory reports) are in the project repository, \url{https://github.com/vertical-cloud-lab/digital-alloy-lab}, under \texttt{al-campaign-paper/data/}, and will be archived with a DOI at \placeholder{Zenodo, DOI to be minted at submission}. Vendor datasheet values are cited to their sources and are not redistributed.
 
 \section*{Code availability}
-The scripts that compute the critical-mineral burden and draw every figure and table from the data are in \texttt{al-campaign-paper/scripts/} in the same repository, released under the repository's \placeholder{licence}, and archived with the data.
+The scripts that compute the critical-mineral burden and draw every figure and table from the data are in \texttt{al-campaign-paper/scripts/} in the same repository, released under the repository's MIT licence, and archived with the data.
 
 \section*{CRediT authorship contribution statement}
 \placeholder{For each author: conceptualization, methodology, investigation, formal analysis, software, data curation, writing, supervision, funding acquisition.}
@@ -389,8 +389,8 @@ The scripts that compute the critical-mineral burden and draw every figure and t
 \section*{Declaration of competing interest}
 \placeholder{To confirm with each author.}
 
-\section*{Declaration of generative AI use}
-\placeholder{Elsevier requires a statement if generative AI tools were used in writing. Parts of this draft and its analysis scripts were prepared with an AI assistant (Claude, Anthropic) and reviewed by the authors; confirm wording against the chosen journal's policy.}
+\section*{Declaration of generative AI and AI-assisted technologies in the writing process}
+\placeholder{Confirm against the chosen journal's policy. Elsevier's template:} During the preparation of this work the authors used Claude (Anthropic) to draft text, compile and check references, and write the analysis scripts. After using this tool, the authors reviewed and edited the content as needed and take full responsibility for the content of the published article.
 
 \section*{Acknowledgements}
 \placeholder{University of Utah Metal 3D Printing Core Facility; funding.}
