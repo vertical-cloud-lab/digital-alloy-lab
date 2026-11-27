@@ -8,6 +8,8 @@ what a planner said it would draw: people, bases, loads, failed attempts and scr
     /tmp/venv/bin/python desktop-lpbf/cad/robotbuild/scene_audit.py names 50-integration      # the chapter's actors
     /tmp/capmem 3G /tmp/venv/bin/python desktop-lpbf/cad/robotbuild/scene_audit.py run 50-integration [--every 1]
     xvfb-run -a ... scene_audit.py run 50-integration --stills 3    # and close-up stills of the worst pairs
+    scene_audit.py run 41-assembly-chamber --parts 4 --out /tmp/a41/p4 --stills 3   # round 9: one slice of a long chapter
+    scene_audit.py merge 41-assembly-chamber /tmp/a41/p*/scene_audit_41-assembly-chamber.json   # ... and the slices joined
 
 Method
 ------
