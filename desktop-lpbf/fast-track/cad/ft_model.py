@@ -172,7 +172,8 @@ MON = {
                  "(+ 25 mm for FT-1V), Thorlabs FESH1000 short-pass in front, Pi 5 camera cable; through MK-19"),
     "MON2": dict(first="FT-0", what="raking light from -x at 15 deg: Thorlabs mounted white LED (MCWHL7 class) + SM1 "
                  "tube with an aspheric condenser (ACL2520U class) + LEDD1B driver (TTL, fired in turn by the Pi)"),
-    "MON3": dict(first="FT-0", what="raking light from -y at 30 deg over the nozzle: as MON2"),
+    "MON3": dict(first="FT-0", what="raking light from -y at 30 deg over the nozzle: as MON2 (parts.csv MON2 has both, "
+                 "quantity 2)"),
     "MON4": dict(first="S1", what="coaxial photodiode: a short-pass dichroic (DMSP1000 class, cut to the head's input "
                  "mirror) in place of the hurrySCAN's 45 deg input mirror, so it still folds the 1070 nm beam into the "
                  "head and passes 400-1000 nm straight back out of the mirror block's back port; there an SM1 tube "
@@ -186,9 +187,10 @@ MON = {
                  "compression fitting) from FT-0"),
     "MON7": dict(first="FT-0", what="RTC4 (or RTC5) sync (no geometry): laser gate and a job-list layer/trigger bit "
                  "from the card's I/O to the digitizer and the Pi through an isolator"),
-    "MON8": dict(first="FT-0", what="digitizer: PicoScope 4444 class, 4 differential channels (photodiode, AE, laser "
-                 "gate, layer sync)"),
-    "MON9": dict(first="S2", what="thermocouple logger: MCC 134 class 4-channel HAT on the Pi (C2); no geometry"),
+    "MON8": dict(first="FT-0", what="digitizer: PicoScope 4824A class, 8 channels on one clock (photodiode, AE, laser "
+                 "gate, layer sync, spares)"),
+    "MON9": dict(first="S2", what="thermocouple logger: MCC 134 4-channel HAT on the Pi I/O node (parts.csv row C3); "
+                 "no geometry"),
 }
 
 STATES = ("S1", "S2", "FT-0", "FT-1", "FT-1V")
@@ -841,7 +843,7 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
     for k, lg in lights.items():
         _add_light(add, k, lg, has_box)
     if monitoring and mon("MON8"):
-        add("Digitizer, PicoScope 4444 class (MON8, envelope est.)", box(440, 630, -210, -40, zb, zb + 40), C["blue"],
+        add("Digitizer, PicoScope 4824A class (MON8, envelope est.)", box(440, 630, -210, -40, zb, zb + 40), C["blue"],
             "MON8", "monitoring")
 
     # ---------------- gas, O2 and safety outside (FT-0 on for gas; S2 on for safety) ----------------
