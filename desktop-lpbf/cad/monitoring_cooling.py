@@ -9,7 +9,7 @@ What is drawn (all tagged "monitoring"; every part's name says "envelope" where 
     with a 60 mm fan that carry part of the inlet air over the side camera and down into a hood round its body;
   * the HOOD round the Chronos 2.1-HD: top, sides and back of 1 mm aluminium, open at the lens end, so the duct's air runs
     along the camera body and leaves past the lens toward the LW port;
-  * an EXHAUST in the back panel, high on the right (x 40..284, z 230..344): the same chevron trap inside, and two 120 mm
+  * an EXHAUST in the back panel on the right (x 40..284, z 108..338): the same chevron trap inside, and two 120 mm
     24 V fans on a short plenum outside, blowing out of the guard toward the tray's back edge (or into a dock duct);
   * G-10 thermal breaks: a 6 mm pad between the side camera bracket's root and the chamber floor plate (the bracket's root
     is trimmed by the pad's thickness so the camera stays where it was), and a 5 mm G-10 ring in place of the first 5 mm of
@@ -37,7 +37,7 @@ LOUVRE = dict(D=32.0, A=10.0, n=6, p=10.0, t=1.0, finish="black anodised 5052 or
 # the back panel's inner face is y = 215; the traps' blades sit at y 181.5..213.5 and their frame's flange touches the panel
 Y_TRAP = (215.0 - 1.5 - LOUVRE["D"], 215.0 - 1.5)
 INLET = dict(x=(-394.0, -218.0), z=(-118.0, 202.0), what="inlet: filter outside, trap inside; back panel, low left")
-EXHAUST = dict(x=(40.0, 284.0), z=(228.0, 338.0), what="exhaust: trap inside, two 120 mm fans outside; back panel, high right")
+EXHAUST = dict(x=(40.0, 284.0), z=(108.0, 338.0), what="exhaust: trap inside, two 120 mm fans outside at its top; back panel, right")
 FILTER = dict(t=10.0, frame_t=1.5, media="polyester or polyurethane filter pad, 10 mm (G3/G4 class)")
 
 # plenum behind the inlet trap's right-hand part, duct over the side camera, hood round its body
@@ -131,8 +131,8 @@ def draw(parts, add, h, module="M50"):
     for t_ in (op_in, op_ex):
         s = s.cut(t_)
     pn.shape = s.clean() if hasattr(s, "clean") else s
-    nb_in = louvre(xi0, xi1, zi0, zi1, "Guard inlet", "MC-02", (0, 180, 0))
-    nb_ex = louvre(xe0, xe1, ze0, ze1, "Guard exhaust", "MC-02", (0, 180, 0))
+    nb_in = louvre(xi0, xi1, zi0, zi1, "Guard inlet", "M0-C3", (0, 180, 0))
+    nb_ex = louvre(xe0, xe1, ze0, ze1, "Guard exhaust", "M0-C3", (0, 180, 0))
 
     # ------------------------------------------------------------------ inlet filter (outside the back panel)
     yo = yb + G["panel_t"]
@@ -140,7 +140,7 @@ def draw(parts, add, h, module="M50"):
     fr_ = box(xi0 - 6.0, xi1 + 6.0, yo, yo + ft + 1.5, zi0 - 6.0, zi1 + 6.0).cut(box(xi0, xi1, yo - 1.0, yo + ft + 3.0, zi0, zi1))
     pad = box(xi0, xi1, yo, yo + ft, zi0, zi1)
     add(f"Guard inlet filter: {FILTER['media']} ({xi1 - xi0:.0f} x {zi1 - zi0:.0f} mm) in a 1.5 mm aluminium frame on the back panel's outside; "
-        "a duct from the dock can replace it", comp([pad, fr_]), C["panel"], 12, (0, 240, 0), mat="misc", mass_kg=0.15, bom="MC-03", tags=TAG)
+        "a duct from the dock can replace it", comp([pad, fr_]), C["panel"], 12, (0, 240, 0), mat="misc", mass_kg=0.15, bom="M0-C5", tags=TAG)
 
     # ------------------------------------------------------------------ plenum, ducts, hood (1 mm sheet)
     t = SHEET_T
@@ -172,7 +172,7 @@ def draw(parts, add, h, module="M50"):
     d2 = d2.cut(box(fo[0], fo[1], D2["y"][0] + t, D2["y"][1] - t, D2["z"][0] - 1.0, D2["z"][0] + t + 0.01))                    # down into the hood
     add("Hood duct: plenum behind the inlet trap's right-hand part and a duct over the side camera (1 mm aluminium, riveted; "
         f"{D1['x'][1] - D1['x'][0]:.0f} x {D1['z'][1] - D1['z'][0]:.0f} mm, then {D2['x'][1] - D2['x'][0]:.0f} x {D2['z'][1] - D2['z'][0]:.0f} mm)",
-        comp([plen, d1, d2]), C["panel"], 12, (0, 120, 160), mat="al6061", mass_kg=0.45, bom="MC-04", tags=TAG)
+        comp([plen, d1, d2]), C["panel"], 12, (0, 120, 160), mat="al6061", mass_kg=0.45, bom="M7-C1", tags=TAG)
     # hood: sides, back and top over the camera body; open at the lens end (+x) and the bottom (the bracket closes part of it)
     hx, hy, hz = H["x"], H["y"], H["z"]
     brb = find("Side camera bracket")[0].shape.BoundingBox()
@@ -183,13 +183,13 @@ def draw(parts, add, h, module="M50"):
             box(hx[0], hx[0] + t, hy[0] + t, hy[1] - t, hz[0] + t, hz[1] - t),   # back
             floor]                                                          # floor, cut round the bracket plate
     add("Side camera hood (1 mm aluminium: sides, back and floor round the Chronos body, the duct's floor is its top; open at the lens end)",
-        comp(hood), C["panel"], 12, (-150, 0, 120), mat="al6061", mass_kg=0.25, bom="MC-04", tags=TAG)
+        comp(hood), C["panel"], 12, (-150, 0, 120), mat="al6061", mass_kg=0.25, bom="M7-C1", tags=TAG)
     fc = np.array(FAN_HOOD["centre"])
     fs, fd = FAN_HOOD["size"], FAN_HOOD["depth"]
     fan_h = box(fc[0] - fs / 2, fc[0] + fs / 2, fc[1] - fd / 2, fc[1] + fd / 2, fc[2] - fs / 2, fc[2] + fs / 2)
     fan_h = fan_h.cut(cyl(fs / 2 - 2.0, (fc[0], fc[1] - fd, fc[2]), "y", 2 * fd)).fuse(cyl(15.0, (fc[0], fc[1] - fd / 2, fc[2]), "y", fd))
     add(f"Hood fan in the duct ({FAN_HOOD['part']}), blowing toward the camera", fan_h, C["black"], 12, (0, 120, 220), mat="misc", mass_kg=0.05,
-        bom="MC-05", tags=TAG)
+        bom="M7-C2", tags=TAG)
 
     # ------------------------------------------------------------------ exhaust plenum and fans outside the back panel
     yp0, yp1 = EXH_PLENUM["y"]
@@ -199,7 +199,7 @@ def draw(parts, add, h, module="M50"):
     ex_z = (min(ze0, fz0) - 2.0, max(ze1, fz0 + fsz) + 2.0)
     pl = box(ex_w[0], ex_w[1], yp0, yp1, ex_z[0], ex_z[1]).cut(box(ex_w[0] + 1.5, ex_w[1] - 1.5, yp0 - 1.0, yp1 + 1.0, ex_z[0] + 1.5, ex_z[1] - 1.5))
     add("Guard exhaust plenum outside the back panel (1.5 mm aluminium, gasketed to the panel)", pl, C["panel"], 12, (0, 240, 0), mat="al6061",
-        mass_kg=0.2, bom="MC-04", tags=TAG)
+        mass_kg=0.2, bom="M0-C6", tags=TAG)
     fans = []
     for i in range(nf):
         x0 = fx0 + i * fsz
@@ -209,7 +209,7 @@ def draw(parts, add, h, module="M50"):
             cyl(fsz / 2 - 3.0, (x0 + fsz / 2, yp1 + fdp - 1.0, fz0 + fsz / 2), "y", FAN_EXH["guard"] + 2.0))
         fans += [f, g]
     add(f"Guard exhaust fans ({nf} x {FAN_EXH['part']}) with finger guards, blowing out of the back of the guard", comp(fans), C["black"], 12,
-        (0, 260, 0), mat="misc", mass_kg=0.17 * nf, bom="MC-01", tags=TAG)
+        (0, 260, 0), mat="misc", mass_kg=0.2 * nf, bom="M0-C1", tags=TAG)
 
     # ------------------------------------------------------------------ G-10 under the side camera bracket's root
     br = find("Side camera bracket")[0]
@@ -225,7 +225,7 @@ def draw(parts, add, h, module="M50"):
         box(x_face - 25.0, x_face + 0.1, fy - FF.FIBRE_HEAD["flange_r"] - 2.0, fy + FF.FIBRE_HEAD["flange_r"] + 2.0, fz - 8.5, fz + 8.5))
     add(f"G-10 thermal break under the side camera bracket's root ({tg:.0f} mm G-10/FR-4, {bbb.ymax - bbb.ymin:.0f} x {root_z[1] - root_z[0]:.0f} mm; "
         "screws in G-10 shoulder washers)", pad, C["yellow"], 12, (-200, 0, 0),
-        mat="misc", mass_kg=0.015, bom="MC-06", tags=TAG)
+        mat="misc", mass_kg=0.015, bom="M7-C3", tags=TAG)
 
     # ------------------------------------------------------------------ G-10 ring in the LP camera's filter holder
     import monitoring_spec as MS
@@ -243,7 +243,7 @@ def draw(parts, add, h, module="M50"):
     ring = cq.Solid.makeCylinder(G10_RING["od"] / 2, tr, V(*map(float, p0)), V(*map(float, a))).cut(
         cq.Solid.makeCylinder(G10_RING["id"] / 2 + 0.5, tr + 1.0, V(*map(float, p0 - 0.5 * a)), V(*map(float, a))))
     add(f"G-10 thermal break ring under the LP camera's filter holder (Ø{G10_RING['od']:.0f} x Ø{G10_RING['id']:.1f} x {tr:.0f} mm, "
-        "SM1-threaded both ends)", ring, C["yellow"], 7, (0, 0, 345), mat="misc", mass_kg=0.004, bom="MC-06", tags=TAG)
+        "SM1-threaded both ends)", ring, C["yellow"], 7, (0, 0, 345), mat="misc", mass_kg=0.004, bom="M7-C3", tags=TAG)
 
     # ------------------------------------------------------------------ PB2: a 40 mm fan on its +x end wall
     pb2 = find("PB2 process-module box")[0]
@@ -252,14 +252,14 @@ def draw(parts, add, h, module="M50"):
     yc4, zc4 = 0.5 * (pbb.ymin + pbb.ymax), 0.5 * (pbb.zmin + pbb.zmax)
     f4 = box(pbb.xmax, pbb.xmax + fd4, yc4 - fs4 / 2, yc4 + fs4 / 2, zc4 - fs4 / 2, zc4 + fs4 / 2)
     add(f"PB2 vent fan ({FAN_PB2['part']}) on PB2's +x end wall over a Ø38 hole; a filtered vent at the other end", f4, C["black"], 12,
-        (120, 0, 120), mat="misc", mass_kg=0.02, bom="MC-07", tags=TAG)
+        (120, 0, 120), mat="misc", mass_kg=0.02, bom="M0-C7", tags=TAG)
 
     # ------------------------------------------------------------------ the LP camera's Pi in a heat-sink case on the bridge
     zb1 = h.P["z_bridge1"]
     pc = PI2_CASE
     case = box(pc["x"][0], pc["x"][1], pc["y"][0], pc["y"][1], zb1 + pc["z_gap"], zb1 + pc["z_gap"] + pc["h"])
     add(f"LP camera's Pi: {pc['part']} on the optics bridge, on four 0.5 mm pads; CSI ribbon to the LP camera", case, C["alu_dark"], 12,
-        (0, 0, 300), mat="misc", mass_kg=0.25, bom="MC-08", tags=TAG)
+        (0, 0, 300), mat="misc", mass_kg=0.25, bom="M7-C4", tags=TAG)
 
     REPORT.update(inlet=dict(opening=INLET, blades=nb_in, face_m2=round(opening_area_m2("inlet"), 4)),
                   exhaust=dict(opening=EXHAUST, blades=nb_ex, face_m2=round(opening_area_m2("exhaust"), 4)),

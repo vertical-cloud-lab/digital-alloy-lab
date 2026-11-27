@@ -1,0 +1,3002 @@
+{
+ "cases": {
+  "typical": {
+   "T_s": 30.2,
+   "load": "typical",
+   "what": "typical build, rest of Shuttle 1 idling"
+  },
+  "busy": {
+   "T_s": 38.0,
+   "load": "typical",
+   "what": "typical build, PR 318's busy Shuttle"
+  },
+  "busy_worst": {
+   "T_s": 42.6,
+   "load": "worst",
+   "what": "500 W continuous, PR 318's busy Shuttle"
+  }
+ },
+ "room_c": 22.0,
+ "operating_point": {
+  "fan": "Delta AFB1224SH, 120 x 120 x 25.4 mm, 24 V, 3400 rpm",
+  "n": 2,
+  "q_m3h": 118.0,
+  "dp_Pa": 63.8,
+  "dp_filter": 11.6,
+  "dp_inlet_trap": 25.2,
+  "dp_exhaust_trap": 25.4,
+  "dp_plenum_guards": 1.5,
+  "inlet_face_m2": 0.056319999999999995,
+  "exhaust_face_m2": 0.056119999999999996,
+  "fan_power_W": 13.44
+ },
+ "alternative_fans": {
+  "AFB1224M": {
+   "fan": "Delta AFB1224M, 120 mm, 24 V, 2200 rpm",
+   "n": 2,
+   "q_m3h": 78.3,
+   "dp_Pa": 30.7,
+   "dp_filter": 7.7,
+   "dp_inlet_trap": 11.1,
+   "dp_exhaust_trap": 11.2,
+   "dp_plenum_guards": 0.7,
+   "inlet_face_m2": 0.056319999999999995,
+   "exhaust_face_m2": 0.056119999999999996,
+   "fan_power_W": 5.76
+  }
+ },
+ "hood": {
+  "q_m3h": 20.4,
+  "dp_Pa": 16.0,
+  "duct_area_m2": 0.0047,
+  "hood_free_area_m2": 0.0106,
+  "v_along_camera_m_s": 0.54,
+  "fan": "Delta AFB0624H-A, 60 x 60 x 25 mm, 24 V, 2.2 W, 34 dB(A)"
+ },
+ "trap": {
+  "geometry": {
+   "D": 32.0,
+   "A": 10.0,
+   "n": 6,
+   "p": 10.0,
+   "t": 1.0,
+   "finish": "black anodised 5052 or 6061 (MIL-A-8625 Type II, class 2 black)"
+  },
+  "flow": {
+   "phi_deg": 61.9,
+   "gap_mm": 3.71,
+   "porosity": 0.371,
+   "K_turns": 10.7,
+   "K_total": 18.11,
+   "Re_at_1p5": 654
+  },
+  "cases": [
+   {
+    "surface": "Thorlabs BKF12 foil lining",
+    "rho": 0.055,
+    "specular_fraction": 0.0,
+    "OD_diffuse": 10.97,
+    "OD_collimated_worst": 9.84,
+    "worst_angle_deg": 75,
+    "min_bounces": 5,
+    "back_to_guard": 0.036
+   },
+   {
+    "surface": "black hard anodise, NASA TP-3595 (low reading)",
+    "rho": 0.12,
+    "specular_fraction": 0.3,
+    "OD_diffuse": 9.19,
+    "OD_collimated_worst": 8.1,
+    "worst_angle_deg": 85,
+    "min_bounces": 5,
+    "back_to_guard": 0.074
+   },
+   {
+    "surface": "black hard anodise, NASA TP-3595 (high reading)",
+    "rho": 0.2,
+    "specular_fraction": 0.3,
+    "OD_diffuse": 7.86,
+    "OD_collimated_worst": 6.96,
+    "worst_angle_deg": 85,
+    "min_bounces": 5,
+    "back_to_guard": 0.125
+   },
+   {
+    "surface": "dyed black anodise, Anoplate chart",
+    "rho": 0.29,
+    "specular_fraction": 0.3,
+    "OD_diffuse": 6.83,
+    "OD_collimated_worst": 6.08,
+    "worst_angle_deg": 85,
+    "min_bounces": 5,
+    "back_to_guard": 0.183
+   },
+   {
+    "surface": "rho 0.40 (bound for OD 5.4)",
+    "rho": 0.4,
+    "specular_fraction": 0.3,
+    "OD_diffuse": 5.84,
+    "OD_collimated_worst": 5.25,
+    "worst_angle_deg": 85,
+    "min_bounces": 5,
+    "back_to_guard": 0.256
+   },
+   {
+    "surface": "rho 0.50",
+    "rho": 0.5,
+    "specular_fraction": 0.3,
+    "OD_diffuse": 5.07,
+    "OD_collimated_worst": 4.6,
+    "worst_angle_deg": 85,
+    "min_bounces": 5,
+    "back_to_guard": 0.326
+   },
+   {
+    "surface": "black flocked paper, Thorlabs",
+    "rho": 0.66,
+    "specular_fraction": 0.0,
+    "OD_diffuse": 4.02,
+    "OD_collimated_worst": 3.45,
+    "worst_angle_deg": 75,
+    "min_bounces": 5,
+    "back_to_guard": 0.465
+   }
+  ],
+  "seed_spread_OD_BKF12": [
+   10.85,
+   10.82,
+   11.52
+  ],
+  "required_OD": {
+   "class1_500W": 5.4,
+   "margin": 7.0,
+   "basis": "safety.md \u00a74.2: guard window or filter OD for Class 1 behind it, direct 500 W; OD 7 passes 50 uW"
+  }
+ },
+ "results": {
+  "typical/as_drawn": {
+   "shuttle": {
+    "T_s": 30.2,
+    "load": "typical",
+    "what": "typical build, rest of Shuttle 1 idling"
+   },
+   "config": "as drawn before this round: closed guard, no fans, no breaks",
+   "T_in": null,
+   "guard": {
+    "T_g": 57.8,
+    "Q_devices_W": 101.5,
+    "Q_chamber_W": 7.1,
+    "UA_passive": {
+     "A_panels_m2": 1.624,
+     "U_panel": 1.79,
+     "U_window": 4.24,
+     "U_top": 2.31,
+     "U_base": 0.96,
+     "UA_W_per_K": 3.93
+    },
+    "Q_through_panels_W": 108.6,
+    "Q_vent_W": 0.0,
+    "Q_coil_W": 0.0
+   },
+   "bridge_c": 66.7,
+   "devices": [
+    {
+     "device": "Chronos 2.1-HD (side camera)",
+     "rating_c": [
+      -20,
+      40
+     ],
+     "rating_basis": "ambient (Kron: -20 to +40 C; has its own fan)",
+     "air_c": 57.8,
+     "case_c": 65.7,
+     "checked_c": 57.8,
+     "margin_k": -17.8,
+     "ok": false,
+     "mount_c": 60.0,
+     "terms": {
+      "P": 20.0,
+      "G_air": 1.587,
+      "G_rad": 0.0024,
+      "G_mount": 1.3
+     }
+    },
+    {
+     "device": "LP camera (IMX296 board in a housing)",
+     "rating_c": [
+      0,
+      50
+     ],
+     "rating_basis": "ambient (Pi GS camera brief; InnoMaker publishes none)",
+     "air_c": 57.8,
+     "case_c": 60.9,
+     "checked_c": 60.9,
+     "margin_k": -10.9,
+     "ok": false,
+     "mount_c": 60.0,
+     "terms": {
+      "P": 0.75,
+      "G_air": 0.126,
+      "G_rad": 0.001,
+      "G_mount": 0.4
+     }
+    },
+    {
+     "device": "Coaxial camera (IMX296 board on the cage)",
+     "rating_c": [
+      0,
+      50
+     ],
+     "rating_basis": "ambient (Pi GS camera brief)",
+     "air_c": 57.8,
+     "case_c": 66.8,
+     "checked_c": 66.8,
+     "margin_k": -16.8,
+     "ok": false,
+     "mount_c": 66.7,
+     "terms": {
+      "P": 0.75,
+      "G_air": 0.074,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "Alvium 1800 U-030 VSWIR (route B, in the coaxial arm)",
+     "rating_c": [
+      -20,
+      55
+     ],
+     "rating_basis": "housing (Allied Vision)",
+     "air_c": 57.8,
+     "case_c": 68.3,
+     "checked_c": 68.3,
+     "margin_k": -13.3,
+     "ok": false,
+     "mount_c": 66.7,
+     "terms": {
+      "P": 2.2,
+      "G_air": 0.059,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "Photodiode PDA36A2 (each)",
+     "rating_c": [
+      10,
+      40
+     ],
+     "rating_basis": "not stated ambient or case (Thorlabs)",
+     "air_c": 57.8,
+     "case_c": 67.4,
+     "checked_c": 57.8,
+     "margin_k": -17.8,
+     "ok": false,
+     "mount_c": 66.7,
+     "terms": {
+      "P": 2.0,
+      "G_air": 0.13,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "BW 850 nm LED (M850LP1 class)",
+     "rating_c": [
+      0,
+      40
+     ],
+     "rating_basis": "ambient (Thorlabs; casing up to +25 K)",
+     "air_c": 57.8,
+     "case_c": 66.0,
+     "checked_c": 57.8,
+     "margin_k": -17.8,
+     "ok": false,
+     "mount_c": 57.8,
+     "terms": {
+      "P": 1.0,
+      "G_air": 0.122,
+      "G_rad": 0.0005,
+      "G_mount": 0.0
+     }
+    },
+    {
+     "device": "AE preamp (PreAmp One)",
+     "rating_c": [
+      -40,
+      65
+     ],
+     "rating_basis": "operating (MISTRAS)",
+     "air_c": 57.8,
+     "case_c": 58.9,
+     "checked_c": 58.9,
+     "margin_k": 6.1,
+     "ok": true,
+     "mount_c": 57.8,
+     "terms": {
+      "P": 1.0,
+      "G_air": 0.38,
+      "G_rad": 0.0,
+      "G_mount": 0.5
+     }
+    },
+    {
+     "device": "Galvo basiCube 20 (context)",
+     "rating_c": [
+      15,
+      35
+     ],
+     "rating_basis": "operating (SCANLAB: 25 +/- 10 C)",
+     "air_c": 57.8,
+     "case_c": 57.8,
+     "checked_c": 57.8,
+     "margin_k": -22.8,
+     "ok": false,
+     "mount_c": 66.7,
+     "terms": {
+      "P": 0.0,
+      "G_air": 1.139,
+      "G_rad": 0.0,
+      "G_mount": 0.0
+     }
+    },
+    {
+     "device": "Kowa LM50JC10M lenses",
+     "rating_c": [
+      -10,
+      50
+     ],
+     "rating_basis": "Kowa",
+     "air_c": 57.8,
+     "case_c": 57.8,
+     "checked_c": 57.8,
+     "margin_k": -7.8,
+     "ok": false,
+     "mount_c": 57.8,
+     "terms": {
+      "P": 0.0,
+      "G_air": 0.103,
+      "G_rad": 0.0,
+      "G_mount": 0.0
+     }
+    }
+   ],
+   "pis": {
+    "pb2_box_air_c": 82.3,
+    "pb2_vented": false,
+    "pb2_UA_sealed": 0.327,
+    "pi5_rating_c": [
+     0,
+     70
+    ],
+    "soc_throttle_c": 80,
+    "pb2_soc_c": 99.8,
+    "pi2_case_air_c": 57.8,
+    "pi2_soc_c": 75.3,
+    "pb2_box_ok": false,
+    "pb2_soc_ok": false,
+    "pi2_soc_ok": true,
+    "pb2_sealed_box_air_c": 82.3,
+    "pb2_sealed_soc_c": 99.8
+   }
+  },
+  "typical/vent_shuttle": {
+   "shuttle": {
+    "T_s": 30.2,
+    "load": "typical",
+    "what": "typical build, rest of Shuttle 1 idling"
+   },
+   "config": "drawn cooling, supply from the Shuttle's air",
+   "T_in": 30.2,
+   "guard": {
+    "T_g": 35.6,
+    "Q_devices_W": 116.4,
+    "Q_chamber_W": 99.6,
+    "UA_passive": {
+     "A_panels_m2": 1.624,
+     "U_panel": 1.24,
+     "U_window": 3.57,
+     "U_top": 1.59,
+     "U_base": 0.83,
+     "UA_W_per_K": 2.9
+    },
+    "Q_through_panels_W": 15.6,
+    "Q_vent_W": 200.4,
+    "Q_coil_W": 0.0
+   },
+   "bridge_c": 44.7,
+   "devices": [
+    {
+     "device": "Chronos 2.1-HD (side camera)",
+     "rating_c": [
+      -20,
+      40
+     ],
+     "rating_basis": "ambient (Kron: -20 to +40 C; has its own fan)",
+     "air_c": 30.7,
+     "case_c": 44.3,
+     "checked_c": 30.7,
+     "margin_k": 9.3,
+     "ok": true,
+     "mount_c": 60.0,
+     "terms": {
+      "P": 20.0,
+      "G_air": 1.587,
+      "G_rad": 0.0021,
+      "G_mount": 0.1
+     }
+    },
+    {
+     "device": "LP camera (IMX296 board in a housing)",
+     "rating_c": [
+      0,
+      50
+     ],
+     "rating_basis": "ambient (Pi GS camera brief; InnoMaker publishes none)",
+     "air_c": 35.6,
+     "case_c": 41.4,
+     "checked_c": 41.4,
+     "margin_k": 8.6,
+     "ok": true,
+     "mount_c": 60.0,
+     "terms": {
+      "P": 0.75,
+      "G_air": 0.184,
+      "G_rad": 0.0009,
+      "G_mount": 0.017
+     }
+    },
+    {
+     "device": "Coaxial camera (IMX296 board on the cage)",
+     "rating_c": [
+      0,
+      50
+     ],
+     "rating_basis": "ambient (Pi GS camera brief)",
+     "air_c": 35.6,
+     "case_c": 44.5,
+     "checked_c": 44.5,
+     "margin_k": 5.5,
+     "ok": true,
+     "mount_c": 44.7,
+     "terms": {
+      "P": 0.75,
+      "G_air": 0.109,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "Alvium 1800 U-030 VSWIR (route B, in the coaxial arm)",
+     "rating_c": [
+      -20,
+      55
+     ],
+     "rating_basis": "housing (Allied Vision)",
+     "air_c": 35.6,
+     "case_c": 45.9,
+     "checked_c": 45.9,
+     "margin_k": 9.1,
+     "ok": true,
+     "mount_c": 44.7,
+     "terms": {
+      "P": 2.2,
+      "G_air": 0.094,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "Photodiode PDA36A2 (each)",
+     "rating_c": [
+      10,
+      40
+     ],
+     "rating_basis": "not stated ambient or case (Thorlabs)",
+     "air_c": 35.6,
+     "case_c": 45.1,
+     "checked_c": 35.6,
+     "margin_k": 4.4,
+     "ok": true,
+     "mount_c": 44.7,
+     "terms": {
+      "P": 2.0,
+      "G_air": 0.168,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "BW 850 nm LED (M850LP1 class)",
+     "rating_c": [
+      0,
+      40
+     ],
+     "rating_basis": "ambient (Thorlabs; casing up to +25 K)",
+     "air_c": 35.6,
+     "case_c": 41.7,
+     "checked_c": 35.6,
+     "margin_k": 4.4,
+     "ok": true,
+     "mount_c": 35.6,
+     "terms": {
+      "P": 1.0,
+      "G_air": 0.166,
+      "G_rad": 0.0005,
+      "G_mount": 0.0
+     }
+    },
+    {
+     "device": "AE preamp (PreAmp One)",
+     "rating_c": [
+      -40,
+      65
+     ],
+     "rating_basis": "operating (MISTRAS)",
+     "air_c": 35.6,
+     "case_c": 36.7,
+     "checked_c": 36.7,
+     "margin_k": 28.3,
+     "ok": true,
+     "mount_c": 35.6,
+     "terms": {
+      "P": 1.0,
+      "G_air": 0.427,
+      "G_rad": 0.0,
+      "G_mount": 0.5
+     }
+    },
+    {
+     "device": "Galvo basiCube 20 (context)",
+     "rating_c": [
+      15,
+      35
+     ],
+     "rating_basis": "operating (SCANLAB: 25 +/- 10 C)",
+     "air_c": 35.6,
+     "case_c": 35.6,
+     "checked_c": 35.6,
+     "margin_k": -0.6,
+     "ok": false,
+     "mount_c": 44.7,
+     "terms": {
+      "P": 0.0,
+      "G_air": 1.272,
+      "G_rad": 0.0,
+      "G_mount": 0.0
+     }
+    },
+    {
+     "device": "Kowa LM50JC10M lenses",
+     "rating_c": [
+      -10,
+      50
+     ],
+     "rating_basis": "Kowa",
+     "air_c": 35.6,
+     "case_c": 35.6,
+     "checked_c": 35.6,
+     "margin_k": 14.4,
+     "ok": true,
+     "mount_c": 35.6,
+     "terms": {
+      "P": 0.0,
+      "G_air": 0.143,
+      "G_rad": 0.0,
+      "G_mount": 0.0
+     }
+    }
+   ],
+   "pis": {
+    "pb2_box_air_c": 39.9,
+    "pb2_vented": true,
+    "pb2_UA_sealed": 0.29,
+    "pi5_rating_c": [
+     0,
+     70
+    ],
+    "soc_throttle_c": 80,
+    "pb2_soc_c": 57.4,
+    "pi2_case_air_c": 35.6,
+    "pi2_soc_c": 53.1,
+    "pb2_box_ok": true,
+    "pb2_soc_ok": true,
+    "pi2_soc_ok": true,
+    "pb2_sealed_box_air_c": 63.1,
+    "pb2_sealed_soc_c": 80.6
+   }
+  },
+  "typical/vent_dock": {
+   "shuttle": {
+    "T_s": 30.2,
+    "load": "typical",
+    "what": "typical build, rest of Shuttle 1 idling"
+   },
+   "config": "drawn cooling, supply ducted from the room through a ventilated dock (22 C)",
+   "T_in": 22.0,
+   "guard": {
+    "T_g": 28.7,
+    "Q_devices_W": 116.4,
+    "Q_chamber_W": 130.0,
+    "UA_passive": {
+     "A_panels_m2": 1.624,
+     "U_panel": 0.94,
+     "U_window": 3.25,
+     "U_top": 1.2,
+     "U_base": 0.74,
+     "UA_W_per_K": 2.35
+    },
+    "Q_through_panels_W": -3.5,
+    "Q_vent_W": 250.0,
+    "Q_coil_W": 0.0
+   },
+   "bridge_c": 37.9,
+   "devices": [
+    {
+     "device": "Chronos 2.1-HD (side camera)",
+     "rating_c": [
+      -20,
+      40
+     ],
+     "rating_basis": "ambient (Kron: -20 to +40 C; has its own fan)",
+     "air_c": 22.5,
+     "case_c": 36.6,
+     "checked_c": 22.5,
+     "margin_k": 17.5,
+     "ok": true,
+     "mount_c": 60.0,
+     "terms": {
+      "P": 20.0,
+      "G_air": 1.587,
+      "G_rad": 0.002,
+      "G_mount": 0.1
+     }
+    },
+    {
+     "device": "LP camera (IMX296 board in a housing)",
+     "rating_c": [
+      0,
+      50
+     ],
+     "rating_basis": "ambient (Pi GS camera brief; InnoMaker publishes none)",
+     "air_c": 28.7,
+     "case_c": 35.3,
+     "checked_c": 35.3,
+     "margin_k": 14.7,
+     "ok": true,
+     "mount_c": 60.0,
+     "terms": {
+      "P": 0.75,
+      "G_air": 0.18,
+      "G_rad": 0.0009,
+      "G_mount": 0.017
+     }
+    },
+    {
+     "device": "Coaxial camera (IMX296 board on the cage)",
+     "rating_c": [
+      0,
+      50
+     ],
+     "rating_basis": "ambient (Pi GS camera brief)",
+     "air_c": 28.7,
+     "case_c": 37.7,
+     "checked_c": 37.7,
+     "margin_k": 12.3,
+     "ok": true,
+     "mount_c": 37.9,
+     "terms": {
+      "P": 0.75,
+      "G_air": 0.107,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "Alvium 1800 U-030 VSWIR (route B, in the coaxial arm)",
+     "rating_c": [
+      -20,
+      55
+     ],
+     "rating_basis": "housing (Allied Vision)",
+     "air_c": 28.7,
+     "case_c": 39.1,
+     "checked_c": 39.1,
+     "margin_k": 15.9,
+     "ok": true,
+     "mount_c": 37.9,
+     "terms": {
+      "P": 2.2,
+      "G_air": 0.092,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "Photodiode PDA36A2 (each)",
+     "rating_c": [
+      10,
+      40
+     ],
+     "rating_basis": "not stated ambient or case (Thorlabs)",
+     "air_c": 28.7,
+     "case_c": 38.3,
+     "checked_c": 28.7,
+     "margin_k": 11.3,
+     "ok": true,
+     "mount_c": 37.9,
+     "terms": {
+      "P": 2.0,
+      "G_air": 0.164,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "BW 850 nm LED (M850LP1 class)",
+     "rating_c": [
+      0,
+      40
+     ],
+     "rating_basis": "ambient (Thorlabs; casing up to +25 K)",
+     "air_c": 28.7,
+     "case_c": 35.0,
+     "checked_c": 28.7,
+     "margin_k": 11.3,
+     "ok": true,
+     "mount_c": 28.7,
+     "terms": {
+      "P": 1.0,
+      "G_air": 0.161,
+      "G_rad": 0.0005,
+      "G_mount": 0.0
+     }
+    },
+    {
+     "device": "AE preamp (PreAmp One)",
+     "rating_c": [
+      -40,
+      65
+     ],
+     "rating_basis": "operating (MISTRAS)",
+     "air_c": 28.7,
+     "case_c": 29.8,
+     "checked_c": 29.8,
+     "margin_k": 35.2,
+     "ok": true,
+     "mount_c": 28.7,
+     "terms": {
+      "P": 1.0,
+      "G_air": 0.412,
+      "G_rad": 0.0,
+      "G_mount": 0.5
+     }
+    },
+    {
+     "device": "Galvo basiCube 20 (context)",
+     "rating_c": [
+      15,
+      35
+     ],
+     "rating_basis": "operating (SCANLAB: 25 +/- 10 C)",
+     "air_c": 28.7,
+     "case_c": 28.7,
+     "checked_c": 28.7,
+     "margin_k": 6.3,
+     "ok": true,
+     "mount_c": 37.9,
+     "terms": {
+      "P": 0.0,
+      "G_air": 1.227,
+      "G_rad": 0.0,
+      "G_mount": 0.0
+     }
+    },
+    {
+     "device": "Kowa LM50JC10M lenses",
+     "rating_c": [
+      -10,
+      50
+     ],
+     "rating_basis": "Kowa",
+     "air_c": 28.7,
+     "case_c": 28.7,
+     "checked_c": 28.7,
+     "margin_k": 21.3,
+     "ok": true,
+     "mount_c": 28.7,
+     "terms": {
+      "P": 0.0,
+      "G_air": 0.14,
+      "G_rad": 0.0,
+      "G_mount": 0.0
+     }
+    }
+   ],
+   "pis": {
+    "pb2_box_air_c": 33.0,
+    "pb2_vented": true,
+    "pb2_UA_sealed": 0.28,
+    "pi5_rating_c": [
+     0,
+     70
+    ],
+    "soc_throttle_c": 80,
+    "pb2_soc_c": 50.5,
+    "pi2_case_air_c": 28.7,
+    "pi2_soc_c": 46.2,
+    "pb2_box_ok": true,
+    "pb2_soc_ok": true,
+    "pi2_soc_ok": true,
+    "pb2_sealed_box_air_c": 57.3,
+    "pb2_sealed_soc_c": 74.8
+   }
+  },
+  "typical/fan_coil": {
+   "shuttle": {
+    "T_s": 30.2,
+    "load": "typical",
+    "what": "typical build, rest of Shuttle 1 idling"
+   },
+   "config": "not drawn: vents closed, a chilled-water fan coil (20 C water, UA 15 W/K) in the guard",
+   "T_in": null,
+   "guard": {
+    "T_g": 33.6,
+    "Q_devices_W": 107.5,
+    "Q_chamber_W": 104.8,
+    "UA_passive": {
+     "A_panels_m2": 1.624,
+     "U_panel": 1.11,
+     "U_window": 3.45,
+     "U_top": 1.43,
+     "U_base": 0.8,
+     "UA_W_per_K": 2.68
+    },
+    "Q_through_panels_W": 9.0,
+    "Q_vent_W": 0.0,
+    "Q_coil_W": 203.3
+   },
+   "bridge_c": 42.7,
+   "devices": [
+    {
+     "device": "Chronos 2.1-HD (side camera)",
+     "rating_c": [
+      -20,
+      40
+     ],
+     "rating_basis": "ambient (Kron: -20 to +40 C; has its own fan)",
+     "air_c": 33.6,
+     "case_c": 47.0,
+     "checked_c": 33.6,
+     "margin_k": 6.4,
+     "ok": true,
+     "mount_c": 60.0,
+     "terms": {
+      "P": 20.0,
+      "G_air": 1.587,
+      "G_rad": 0.0021,
+      "G_mount": 0.1
+     }
+    },
+    {
+     "device": "LP camera (IMX296 board in a housing)",
+     "rating_c": [
+      0,
+      50
+     ],
+     "rating_basis": "ambient (Pi GS camera brief; InnoMaker publishes none)",
+     "air_c": 33.6,
+     "case_c": 43.2,
+     "checked_c": 43.2,
+     "margin_k": 6.8,
+     "ok": true,
+     "mount_c": 60.0,
+     "terms": {
+      "P": 0.75,
+      "G_air": 0.109,
+      "G_rad": 0.0009,
+      "G_mount": 0.017
+     }
+    },
+    {
+     "device": "Coaxial camera (IMX296 board on the cage)",
+     "rating_c": [
+      0,
+      50
+     ],
+     "rating_basis": "ambient (Pi GS camera brief)",
+     "air_c": 33.6,
+     "case_c": 42.8,
+     "checked_c": 42.8,
+     "margin_k": 7.2,
+     "ok": true,
+     "mount_c": 42.7,
+     "terms": {
+      "P": 0.75,
+      "G_air": 0.064,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "Alvium 1800 U-030 VSWIR (route B, in the coaxial arm)",
+     "rating_c": [
+      -20,
+      55
+     ],
+     "rating_basis": "housing (Allied Vision)",
+     "air_c": 33.6,
+     "case_c": 44.3,
+     "checked_c": 44.3,
+     "margin_k": 10.7,
+     "ok": true,
+     "mount_c": 42.7,
+     "terms": {
+      "P": 2.2,
+      "G_air": 0.052,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "Photodiode PDA36A2 (each)",
+     "rating_c": [
+      10,
+      40
+     ],
+     "rating_basis": "not stated ambient or case (Thorlabs)",
+     "air_c": 33.6,
+     "case_c": 43.6,
+     "checked_c": 33.6,
+     "margin_k": 6.4,
+     "ok": true,
+     "mount_c": 42.7,
+     "terms": {
+      "P": 2.0,
+      "G_air": 0.112,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "BW 850 nm LED (M850LP1 class)",
+     "rating_c": [
+      0,
+      40
+     ],
+     "rating_basis": "ambient (Thorlabs; casing up to +25 K)",
+     "air_c": 33.6,
+     "case_c": 43.1,
+     "checked_c": 33.6,
+     "margin_k": 6.4,
+     "ok": true,
+     "mount_c": 33.6,
+     "terms": {
+      "P": 1.0,
+      "G_air": 0.105,
+      "G_rad": 0.0005,
+      "G_mount": 0.0
+     }
+    },
+    {
+     "device": "AE preamp (PreAmp One)",
+     "rating_c": [
+      -40,
+      65
+     ],
+     "rating_basis": "operating (MISTRAS)",
+     "air_c": 33.6,
+     "case_c": 34.8,
+     "checked_c": 34.8,
+     "margin_k": 30.2,
+     "ok": true,
+     "mount_c": 33.6,
+     "terms": {
+      "P": 1.0,
+      "G_air": 0.323,
+      "G_rad": 0.0,
+      "G_mount": 0.5
+     }
+    },
+    {
+     "device": "Galvo basiCube 20 (context)",
+     "rating_c": [
+      15,
+      35
+     ],
+     "rating_basis": "operating (SCANLAB: 25 +/- 10 C)",
+     "air_c": 33.6,
+     "case_c": 33.6,
+     "checked_c": 33.6,
+     "margin_k": 1.4,
+     "ok": true,
+     "mount_c": 42.7,
+     "terms": {
+      "P": 0.0,
+      "G_air": 0.968,
+      "G_rad": 0.0,
+      "G_mount": 0.0
+     }
+    },
+    {
+     "device": "Kowa LM50JC10M lenses",
+     "rating_c": [
+      -10,
+      50
+     ],
+     "rating_basis": "Kowa",
+     "air_c": 33.6,
+     "case_c": 33.6,
+     "checked_c": 33.6,
+     "margin_k": 16.4,
+     "ok": true,
+     "mount_c": 33.6,
+     "terms": {
+      "P": 0.0,
+      "G_air": 0.089,
+      "G_rad": 0.0,
+      "G_mount": 0.0
+     }
+    }
+   ],
+   "pis": {
+    "pb2_box_air_c": 37.8,
+    "pb2_vented": true,
+    "pb2_UA_sealed": 0.287,
+    "pi5_rating_c": [
+     0,
+     70
+    ],
+    "soc_throttle_c": 80,
+    "pb2_soc_c": 55.3,
+    "pi2_case_air_c": 33.6,
+    "pi2_soc_c": 51.1,
+    "pb2_box_ok": true,
+    "pb2_soc_ok": true,
+    "pi2_soc_ok": true,
+    "pb2_sealed_box_air_c": 61.4,
+    "pb2_sealed_soc_c": 78.9
+   }
+  },
+  "busy/as_drawn": {
+   "shuttle": {
+    "T_s": 38.0,
+    "load": "typical",
+    "what": "typical build, PR 318's busy Shuttle"
+   },
+   "config": "as drawn before this round: closed guard, no fans, no breaks",
+   "T_in": null,
+   "guard": {
+    "T_g": 63.8,
+    "Q_devices_W": 101.5,
+    "Q_chamber_W": 0.0,
+    "UA_passive": {
+     "A_panels_m2": 1.624,
+     "U_panel": 1.78,
+     "U_window": 4.39,
+     "U_top": 2.28,
+     "U_base": 0.95,
+     "UA_W_per_K": 3.93
+    },
+    "Q_through_panels_W": 101.5,
+    "Q_vent_W": 0.0,
+    "Q_coil_W": 0.0
+   },
+   "bridge_c": 72.6,
+   "devices": [
+    {
+     "device": "Chronos 2.1-HD (side camera)",
+     "rating_c": [
+      -20,
+      40
+     ],
+     "rating_basis": "ambient (Kron: -20 to +40 C; has its own fan)",
+     "air_c": 63.8,
+     "case_c": 69.0,
+     "checked_c": 63.8,
+     "margin_k": -23.8,
+     "ok": false,
+     "mount_c": 60.0,
+     "terms": {
+      "P": 20.0,
+      "G_air": 1.587,
+      "G_rad": 0.0025,
+      "G_mount": 1.3
+     }
+    },
+    {
+     "device": "LP camera (IMX296 board in a housing)",
+     "rating_c": [
+      0,
+      50
+     ],
+     "rating_basis": "ambient (Pi GS camera brief; InnoMaker publishes none)",
+     "air_c": 63.8,
+     "case_c": 62.3,
+     "checked_c": 62.3,
+     "margin_k": -12.3,
+     "ok": false,
+     "mount_c": 60.0,
+     "terms": {
+      "P": 0.75,
+      "G_air": 0.131,
+      "G_rad": 0.001,
+      "G_mount": 0.4
+     }
+    },
+    {
+     "device": "Coaxial camera (IMX296 board on the cage)",
+     "rating_c": [
+      0,
+      50
+     ],
+     "rating_basis": "ambient (Pi GS camera brief)",
+     "air_c": 63.8,
+     "case_c": 72.7,
+     "checked_c": 72.7,
+     "margin_k": -22.7,
+     "ok": false,
+     "mount_c": 72.6,
+     "terms": {
+      "P": 0.75,
+      "G_air": 0.077,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "Alvium 1800 U-030 VSWIR (route B, in the coaxial arm)",
+     "rating_c": [
+      -20,
+      55
+     ],
+     "rating_basis": "housing (Allied Vision)",
+     "air_c": 63.8,
+     "case_c": 74.2,
+     "checked_c": 74.2,
+     "margin_k": -19.2,
+     "ok": false,
+     "mount_c": 72.6,
+     "terms": {
+      "P": 2.2,
+      "G_air": 0.061,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "Photodiode PDA36A2 (each)",
+     "rating_c": [
+      10,
+      40
+     ],
+     "rating_basis": "not stated ambient or case (Thorlabs)",
+     "air_c": 63.8,
+     "case_c": 73.3,
+     "checked_c": 63.8,
+     "margin_k": -23.8,
+     "ok": false,
+     "mount_c": 72.6,
+     "terms": {
+      "P": 2.0,
+      "G_air": 0.135,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "BW 850 nm LED (M850LP1 class)",
+     "rating_c": [
+      0,
+      40
+     ],
+     "rating_basis": "ambient (Thorlabs; casing up to +25 K)",
+     "air_c": 63.8,
+     "case_c": 71.6,
+     "checked_c": 63.8,
+     "margin_k": -23.8,
+     "ok": false,
+     "mount_c": 63.8,
+     "terms": {
+      "P": 1.0,
+      "G_air": 0.127,
+      "G_rad": 0.0005,
+      "G_mount": 0.0
+     }
+    },
+    {
+     "device": "AE preamp (PreAmp One)",
+     "rating_c": [
+      -40,
+      65
+     ],
+     "rating_basis": "operating (MISTRAS)",
+     "air_c": 63.8,
+     "case_c": 64.9,
+     "checked_c": 64.9,
+     "margin_k": 0.1,
+     "ok": true,
+     "mount_c": 63.8,
+     "terms": {
+      "P": 1.0,
+      "G_air": 0.396,
+      "G_rad": 0.0,
+      "G_mount": 0.5
+     }
+    },
+    {
+     "device": "Galvo basiCube 20 (context)",
+     "rating_c": [
+      15,
+      35
+     ],
+     "rating_basis": "operating (SCANLAB: 25 +/- 10 C)",
+     "air_c": 63.8,
+     "case_c": 63.8,
+     "checked_c": 63.8,
+     "margin_k": -28.8,
+     "ok": false,
+     "mount_c": 72.6,
+     "terms": {
+      "P": 0.0,
+      "G_air": 1.185,
+      "G_rad": 0.0,
+      "G_mount": 0.0
+     }
+    },
+    {
+     "device": "Kowa LM50JC10M lenses",
+     "rating_c": [
+      -10,
+      50
+     ],
+     "rating_basis": "Kowa",
+     "air_c": 63.8,
+     "case_c": 63.8,
+     "checked_c": 63.8,
+     "margin_k": -13.8,
+     "ok": false,
+     "mount_c": 63.8,
+     "terms": {
+      "P": 0.0,
+      "G_air": 0.107,
+      "G_rad": 0.0,
+      "G_mount": 0.0
+     }
+    }
+   ],
+   "pis": {
+    "pb2_box_air_c": 87.5,
+    "pb2_vented": false,
+    "pb2_UA_sealed": 0.338,
+    "pi5_rating_c": [
+     0,
+     70
+    ],
+    "soc_throttle_c": 80,
+    "pb2_soc_c": 105.0,
+    "pi2_case_air_c": 63.8,
+    "pi2_soc_c": 81.3,
+    "pb2_box_ok": false,
+    "pb2_soc_ok": false,
+    "pi2_soc_ok": false,
+    "pb2_sealed_box_air_c": 87.5,
+    "pb2_sealed_soc_c": 105.0
+   }
+  },
+  "busy/vent_shuttle": {
+   "shuttle": {
+    "T_s": 38.0,
+    "load": "typical",
+    "what": "typical build, PR 318's busy Shuttle"
+   },
+   "config": "drawn cooling, supply from the Shuttle's air",
+   "T_in": 38.0,
+   "guard": {
+    "T_g": 42.6,
+    "Q_devices_W": 116.4,
+    "Q_chamber_W": 69.1,
+    "UA_passive": {
+     "A_panels_m2": 1.624,
+     "U_panel": 1.21,
+     "U_window": 3.71,
+     "U_top": 1.54,
+     "U_base": 0.83,
+     "UA_W_per_K": 2.88
+    },
+    "Q_through_panels_W": 13.3,
+    "Q_vent_W": 172.3,
+    "Q_coil_W": 0.0
+   },
+   "bridge_c": 51.7,
+   "devices": [
+    {
+     "device": "Chronos 2.1-HD (side camera)",
+     "rating_c": [
+      -20,
+      40
+     ],
+     "rating_basis": "ambient (Kron: -20 to +40 C; has its own fan)",
+     "air_c": 38.5,
+     "case_c": 51.6,
+     "checked_c": 38.5,
+     "margin_k": 1.5,
+     "ok": true,
+     "mount_c": 60.0,
+     "terms": {
+      "P": 20.0,
+      "G_air": 1.587,
+      "G_rad": 0.0022,
+      "G_mount": 0.1
+     }
+    },
+    {
+     "device": "LP camera (IMX296 board in a housing)",
+     "rating_c": [
+      0,
+      50
+     ],
+     "rating_basis": "ambient (Pi GS camera brief; InnoMaker publishes none)",
+     "air_c": 42.6,
+     "case_c": 47.7,
+     "checked_c": 47.7,
+     "margin_k": 2.3,
+     "ok": true,
+     "mount_c": 60.0,
+     "terms": {
+      "P": 0.75,
+      "G_air": 0.189,
+      "G_rad": 0.0009,
+      "G_mount": 0.017
+     }
+    },
+    {
+     "device": "Coaxial camera (IMX296 board on the cage)",
+     "rating_c": [
+      0,
+      50
+     ],
+     "rating_basis": "ambient (Pi GS camera brief)",
+     "air_c": 42.6,
+     "case_c": 51.4,
+     "checked_c": 51.4,
+     "margin_k": -1.4,
+     "ok": false,
+     "mount_c": 51.7,
+     "terms": {
+      "P": 0.75,
+      "G_air": 0.112,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "Alvium 1800 U-030 VSWIR (route B, in the coaxial arm)",
+     "rating_c": [
+      -20,
+      55
+     ],
+     "rating_basis": "housing (Allied Vision)",
+     "air_c": 42.6,
+     "case_c": 52.9,
+     "checked_c": 52.9,
+     "margin_k": 2.1,
+     "ok": true,
+     "mount_c": 51.7,
+     "terms": {
+      "P": 2.2,
+      "G_air": 0.096,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "Photodiode PDA36A2 (each)",
+     "rating_c": [
+      10,
+      40
+     ],
+     "rating_basis": "not stated ambient or case (Thorlabs)",
+     "air_c": 42.6,
+     "case_c": 52.0,
+     "checked_c": 42.6,
+     "margin_k": -2.6,
+     "ok": false,
+     "mount_c": 51.7,
+     "terms": {
+      "P": 2.0,
+      "G_air": 0.174,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "BW 850 nm LED (M850LP1 class)",
+     "rating_c": [
+      0,
+      40
+     ],
+     "rating_basis": "ambient (Thorlabs; casing up to +25 K)",
+     "air_c": 42.6,
+     "case_c": 48.5,
+     "checked_c": 42.6,
+     "margin_k": -2.6,
+     "ok": false,
+     "mount_c": 42.6,
+     "terms": {
+      "P": 1.0,
+      "G_air": 0.17,
+      "G_rad": 0.0005,
+      "G_mount": 0.0
+     }
+    },
+    {
+     "device": "AE preamp (PreAmp One)",
+     "rating_c": [
+      -40,
+      65
+     ],
+     "rating_basis": "operating (MISTRAS)",
+     "air_c": 42.6,
+     "case_c": 43.7,
+     "checked_c": 43.7,
+     "margin_k": 21.3,
+     "ok": true,
+     "mount_c": 42.6,
+     "terms": {
+      "P": 1.0,
+      "G_air": 0.443,
+      "G_rad": 0.0,
+      "G_mount": 0.5
+     }
+    },
+    {
+     "device": "Galvo basiCube 20 (context)",
+     "rating_c": [
+      15,
+      35
+     ],
+     "rating_basis": "operating (SCANLAB: 25 +/- 10 C)",
+     "air_c": 42.6,
+     "case_c": 42.6,
+     "checked_c": 42.6,
+     "margin_k": -7.6,
+     "ok": false,
+     "mount_c": 51.7,
+     "terms": {
+      "P": 0.0,
+      "G_air": 1.32,
+      "G_rad": 0.0,
+      "G_mount": 0.0
+     }
+    },
+    {
+     "device": "Kowa LM50JC10M lenses",
+     "rating_c": [
+      -10,
+      50
+     ],
+     "rating_basis": "Kowa",
+     "air_c": 42.6,
+     "case_c": 42.6,
+     "checked_c": 42.6,
+     "margin_k": 7.4,
+     "ok": true,
+     "mount_c": 42.6,
+     "terms": {
+      "P": 0.0,
+      "G_air": 0.147,
+      "G_rad": 0.0,
+      "G_mount": 0.0
+     }
+    }
+   ],
+   "pis": {
+    "pb2_box_air_c": 46.9,
+    "pb2_vented": true,
+    "pb2_UA_sealed": 0.301,
+    "pi5_rating_c": [
+     0,
+     70
+    ],
+    "soc_throttle_c": 80,
+    "pb2_soc_c": 64.4,
+    "pi2_case_air_c": 42.6,
+    "pi2_soc_c": 60.1,
+    "pb2_box_ok": true,
+    "pb2_soc_ok": true,
+    "pi2_soc_ok": true,
+    "pb2_sealed_box_air_c": 69.2,
+    "pb2_sealed_soc_c": 86.7
+   }
+  },
+  "busy/vent_dock": {
+   "shuttle": {
+    "T_s": 38.0,
+    "load": "typical",
+    "what": "typical build, PR 318's busy Shuttle"
+   },
+   "config": "drawn cooling, supply ducted from the room through a ventilated dock (22 C)",
+   "T_in": 22.0,
+   "guard": {
+    "T_g": 29.3,
+    "Q_devices_W": 116.4,
+    "Q_chamber_W": 127.5,
+    "UA_passive": {
+     "A_panels_m2": 1.624,
+     "U_panel": 1.37,
+     "U_window": 3.69,
+     "U_top": 1.78,
+     "U_base": 0.87,
+     "UA_W_per_K": 3.15
+    },
+    "Q_through_panels_W": -27.5,
+    "Q_vent_W": 271.4,
+    "Q_coil_W": 0.0
+   },
+   "bridge_c": 38.4,
+   "devices": [
+    {
+     "device": "Chronos 2.1-HD (side camera)",
+     "rating_c": [
+      -20,
+      40
+     ],
+     "rating_basis": "ambient (Kron: -20 to +40 C; has its own fan)",
+     "air_c": 22.5,
+     "case_c": 36.6,
+     "checked_c": 22.5,
+     "margin_k": 17.5,
+     "ok": true,
+     "mount_c": 60.0,
+     "terms": {
+      "P": 20.0,
+      "G_air": 1.587,
+      "G_rad": 0.002,
+      "G_mount": 0.1
+     }
+    },
+    {
+     "device": "LP camera (IMX296 board in a housing)",
+     "rating_c": [
+      0,
+      50
+     ],
+     "rating_basis": "ambient (Pi GS camera brief; InnoMaker publishes none)",
+     "air_c": 29.3,
+     "case_c": 35.8,
+     "checked_c": 35.8,
+     "margin_k": 14.2,
+     "ok": true,
+     "mount_c": 60.0,
+     "terms": {
+      "P": 0.75,
+      "G_air": 0.18,
+      "G_rad": 0.0009,
+      "G_mount": 0.017
+     }
+    },
+    {
+     "device": "Coaxial camera (IMX296 board on the cage)",
+     "rating_c": [
+      0,
+      50
+     ],
+     "rating_basis": "ambient (Pi GS camera brief)",
+     "air_c": 29.3,
+     "case_c": 38.2,
+     "checked_c": 38.2,
+     "margin_k": 11.8,
+     "ok": true,
+     "mount_c": 38.4,
+     "terms": {
+      "P": 0.75,
+      "G_air": 0.107,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "Alvium 1800 U-030 VSWIR (route B, in the coaxial arm)",
+     "rating_c": [
+      -20,
+      55
+     ],
+     "rating_basis": "housing (Allied Vision)",
+     "air_c": 29.3,
+     "case_c": 39.7,
+     "checked_c": 39.7,
+     "margin_k": 15.3,
+     "ok": true,
+     "mount_c": 38.4,
+     "terms": {
+      "P": 2.2,
+      "G_air": 0.092,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "Photodiode PDA36A2 (each)",
+     "rating_c": [
+      10,
+      40
+     ],
+     "rating_basis": "not stated ambient or case (Thorlabs)",
+     "air_c": 29.3,
+     "case_c": 38.9,
+     "checked_c": 29.3,
+     "margin_k": 10.7,
+     "ok": true,
+     "mount_c": 38.4,
+     "terms": {
+      "P": 2.0,
+      "G_air": 0.164,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "BW 850 nm LED (M850LP1 class)",
+     "rating_c": [
+      0,
+      40
+     ],
+     "rating_basis": "ambient (Thorlabs; casing up to +25 K)",
+     "air_c": 29.3,
+     "case_c": 35.5,
+     "checked_c": 29.3,
+     "margin_k": 10.7,
+     "ok": true,
+     "mount_c": 29.3,
+     "terms": {
+      "P": 1.0,
+      "G_air": 0.161,
+      "G_rad": 0.0005,
+      "G_mount": 0.0
+     }
+    },
+    {
+     "device": "AE preamp (PreAmp One)",
+     "rating_c": [
+      -40,
+      65
+     ],
+     "rating_basis": "operating (MISTRAS)",
+     "air_c": 29.3,
+     "case_c": 30.4,
+     "checked_c": 30.4,
+     "margin_k": 34.6,
+     "ok": true,
+     "mount_c": 29.3,
+     "terms": {
+      "P": 1.0,
+      "G_air": 0.414,
+      "G_rad": 0.0,
+      "G_mount": 0.5
+     }
+    },
+    {
+     "device": "Galvo basiCube 20 (context)",
+     "rating_c": [
+      15,
+      35
+     ],
+     "rating_basis": "operating (SCANLAB: 25 +/- 10 C)",
+     "air_c": 29.3,
+     "case_c": 29.3,
+     "checked_c": 29.3,
+     "margin_k": 5.7,
+     "ok": true,
+     "mount_c": 38.4,
+     "terms": {
+      "P": 0.0,
+      "G_air": 1.231,
+      "G_rad": 0.0,
+      "G_mount": 0.0
+     }
+    },
+    {
+     "device": "Kowa LM50JC10M lenses",
+     "rating_c": [
+      -10,
+      50
+     ],
+     "rating_basis": "Kowa",
+     "air_c": 29.3,
+     "case_c": 29.3,
+     "checked_c": 29.3,
+     "margin_k": 20.7,
+     "ok": true,
+     "mount_c": 29.3,
+     "terms": {
+      "P": 0.0,
+      "G_air": 0.14,
+      "G_rad": 0.0,
+      "G_mount": 0.0
+     }
+    }
+   ],
+   "pis": {
+    "pb2_box_air_c": 33.6,
+    "pb2_vented": true,
+    "pb2_UA_sealed": 0.28,
+    "pi5_rating_c": [
+     0,
+     70
+    ],
+    "soc_throttle_c": 80,
+    "pb2_soc_c": 51.1,
+    "pi2_case_air_c": 29.3,
+    "pi2_soc_c": 46.8,
+    "pb2_box_ok": true,
+    "pb2_soc_ok": true,
+    "pi2_soc_ok": true,
+    "pb2_sealed_box_air_c": 57.8,
+    "pb2_sealed_soc_c": 75.3
+   }
+  },
+  "busy/fan_coil": {
+   "shuttle": {
+    "T_s": 38.0,
+    "load": "typical",
+    "what": "typical build, PR 318's busy Shuttle"
+   },
+   "config": "not drawn: vents closed, a chilled-water fan coil (20 C water, UA 15 W/K) in the guard",
+   "T_in": null,
+   "guard": {
+    "T_g": 34.5,
+    "Q_devices_W": 107.5,
+    "Q_chamber_W": 100.7,
+    "UA_passive": {
+     "A_panels_m2": 1.624,
+     "U_panel": 1.13,
+     "U_window": 3.56,
+     "U_top": 1.45,
+     "U_base": 0.81,
+     "UA_W_per_K": 2.73
+    },
+    "Q_through_panels_W": -9.5,
+    "Q_vent_W": 0.0,
+    "Q_coil_W": 217.7
+   },
+   "bridge_c": 43.6,
+   "devices": [
+    {
+     "device": "Chronos 2.1-HD (side camera)",
+     "rating_c": [
+      -20,
+      40
+     ],
+     "rating_basis": "ambient (Kron: -20 to +40 C; has its own fan)",
+     "air_c": 34.5,
+     "case_c": 47.9,
+     "checked_c": 34.5,
+     "margin_k": 5.5,
+     "ok": true,
+     "mount_c": 60.0,
+     "terms": {
+      "P": 20.0,
+      "G_air": 1.587,
+      "G_rad": 0.0021,
+      "G_mount": 0.1
+     }
+    },
+    {
+     "device": "LP camera (IMX296 board in a housing)",
+     "rating_c": [
+      0,
+      50
+     ],
+     "rating_basis": "ambient (Pi GS camera brief; InnoMaker publishes none)",
+     "air_c": 34.5,
+     "case_c": 44.0,
+     "checked_c": 44.0,
+     "margin_k": 6.0,
+     "ok": true,
+     "mount_c": 60.0,
+     "terms": {
+      "P": 0.75,
+      "G_air": 0.109,
+      "G_rad": 0.0009,
+      "G_mount": 0.017
+     }
+    },
+    {
+     "device": "Coaxial camera (IMX296 board on the cage)",
+     "rating_c": [
+      0,
+      50
+     ],
+     "rating_basis": "ambient (Pi GS camera brief)",
+     "air_c": 34.5,
+     "case_c": 43.8,
+     "checked_c": 43.8,
+     "margin_k": 6.2,
+     "ok": true,
+     "mount_c": 43.6,
+     "terms": {
+      "P": 0.75,
+      "G_air": 0.064,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "Alvium 1800 U-030 VSWIR (route B, in the coaxial arm)",
+     "rating_c": [
+      -20,
+      55
+     ],
+     "rating_basis": "housing (Allied Vision)",
+     "air_c": 34.5,
+     "case_c": 45.3,
+     "checked_c": 45.3,
+     "margin_k": 9.7,
+     "ok": true,
+     "mount_c": 43.6,
+     "terms": {
+      "P": 2.2,
+      "G_air": 0.052,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "Photodiode PDA36A2 (each)",
+     "rating_c": [
+      10,
+      40
+     ],
+     "rating_basis": "not stated ambient or case (Thorlabs)",
+     "air_c": 34.5,
+     "case_c": 44.5,
+     "checked_c": 34.5,
+     "margin_k": 5.5,
+     "ok": true,
+     "mount_c": 43.6,
+     "terms": {
+      "P": 2.0,
+      "G_air": 0.113,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "BW 850 nm LED (M850LP1 class)",
+     "rating_c": [
+      0,
+      40
+     ],
+     "rating_basis": "ambient (Thorlabs; casing up to +25 K)",
+     "air_c": 34.5,
+     "case_c": 44.0,
+     "checked_c": 34.5,
+     "margin_k": 5.5,
+     "ok": true,
+     "mount_c": 34.5,
+     "terms": {
+      "P": 1.0,
+      "G_air": 0.106,
+      "G_rad": 0.0005,
+      "G_mount": 0.0
+     }
+    },
+    {
+     "device": "AE preamp (PreAmp One)",
+     "rating_c": [
+      -40,
+      65
+     ],
+     "rating_basis": "operating (MISTRAS)",
+     "air_c": 34.5,
+     "case_c": 35.7,
+     "checked_c": 35.7,
+     "margin_k": 29.3,
+     "ok": true,
+     "mount_c": 34.5,
+     "terms": {
+      "P": 1.0,
+      "G_air": 0.325,
+      "G_rad": 0.0,
+      "G_mount": 0.5
+     }
+    },
+    {
+     "device": "Galvo basiCube 20 (context)",
+     "rating_c": [
+      15,
+      35
+     ],
+     "rating_basis": "operating (SCANLAB: 25 +/- 10 C)",
+     "air_c": 34.5,
+     "case_c": 34.5,
+     "checked_c": 34.5,
+     "margin_k": 0.5,
+     "ok": true,
+     "mount_c": 43.6,
+     "terms": {
+      "P": 0.0,
+      "G_air": 0.974,
+      "G_rad": 0.0,
+      "G_mount": 0.0
+     }
+    },
+    {
+     "device": "Kowa LM50JC10M lenses",
+     "rating_c": [
+      -10,
+      50
+     ],
+     "rating_basis": "Kowa",
+     "air_c": 34.5,
+     "case_c": 34.5,
+     "checked_c": 34.5,
+     "margin_k": 15.5,
+     "ok": true,
+     "mount_c": 34.5,
+     "terms": {
+      "P": 0.0,
+      "G_air": 0.089,
+      "G_rad": 0.0,
+      "G_mount": 0.0
+     }
+    }
+   ],
+   "pis": {
+    "pb2_box_air_c": 38.8,
+    "pb2_vented": true,
+    "pb2_UA_sealed": 0.288,
+    "pi5_rating_c": [
+     0,
+     70
+    ],
+    "soc_throttle_c": 80,
+    "pb2_soc_c": 56.3,
+    "pi2_case_air_c": 34.5,
+    "pi2_soc_c": 52.0,
+    "pb2_box_ok": true,
+    "pb2_soc_ok": true,
+    "pi2_soc_ok": true,
+    "pb2_sealed_box_air_c": 62.2,
+    "pb2_sealed_soc_c": 79.7
+   }
+  },
+  "busy_worst/as_drawn": {
+   "shuttle": {
+    "T_s": 42.6,
+    "load": "worst",
+    "what": "500 W continuous, PR 318's busy Shuttle"
+   },
+   "config": "as drawn before this round: closed guard, no fans, no breaks",
+   "T_in": null,
+   "guard": {
+    "T_g": 86.1,
+    "Q_devices_W": 192.0,
+    "Q_chamber_W": 0.0,
+    "UA_passive": {
+     "A_panels_m2": 1.624,
+     "U_panel": 2.03,
+     "U_window": 4.88,
+     "U_top": 2.57,
+     "U_base": 0.99,
+     "UA_W_per_K": 4.42
+    },
+    "Q_through_panels_W": 192.0,
+    "Q_vent_W": 0.0,
+    "Q_coil_W": 0.0
+   },
+   "bridge_c": 106.1,
+   "devices": [
+    {
+     "device": "Chronos 2.1-HD (side camera)",
+     "rating_c": [
+      -20,
+      40
+     ],
+     "rating_basis": "ambient (Kron: -20 to +40 C; has its own fan)",
+     "air_c": 86.1,
+     "case_c": 88.2,
+     "checked_c": 86.1,
+     "margin_k": -46.1,
+     "ok": false,
+     "mount_c": 60.0,
+     "terms": {
+      "P": 40.0,
+      "G_air": 1.587,
+      "G_rad": 0.0027,
+      "G_mount": 1.3
+     }
+    },
+    {
+     "device": "LP camera (IMX296 board in a housing)",
+     "rating_c": [
+      0,
+      50
+     ],
+     "rating_basis": "ambient (Pi GS camera brief; InnoMaker publishes none)",
+     "air_c": 86.1,
+     "case_c": 68.9,
+     "checked_c": 68.9,
+     "margin_k": -18.9,
+     "ok": false,
+     "mount_c": 60.0,
+     "terms": {
+      "P": 1.0,
+      "G_air": 0.149,
+      "G_rad": 0.0011,
+      "G_mount": 0.4
+     }
+    },
+    {
+     "device": "Coaxial camera (IMX296 board on the cage)",
+     "rating_c": [
+      0,
+      50
+     ],
+     "rating_basis": "ambient (Pi GS camera brief)",
+     "air_c": 86.1,
+     "case_c": 105.4,
+     "checked_c": 105.4,
+     "margin_k": -55.4,
+     "ok": false,
+     "mount_c": 106.1,
+     "terms": {
+      "P": 1.0,
+      "G_air": 0.087,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "Alvium 1800 U-030 VSWIR (route B, in the coaxial arm)",
+     "rating_c": [
+      -20,
+      55
+     ],
+     "rating_basis": "housing (Allied Vision)",
+     "air_c": 86.1,
+     "case_c": 106.8,
+     "checked_c": 106.8,
+     "margin_k": -51.8,
+     "ok": false,
+     "mount_c": 106.1,
+     "terms": {
+      "P": 2.2,
+      "G_air": 0.07,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "Photodiode PDA36A2 (each)",
+     "rating_c": [
+      10,
+      40
+     ],
+     "rating_basis": "not stated ambient or case (Thorlabs)",
+     "air_c": 86.1,
+     "case_c": 107.7,
+     "checked_c": 86.1,
+     "margin_k": -46.1,
+     "ok": false,
+     "mount_c": 106.1,
+     "terms": {
+      "P": 5.0,
+      "G_air": 0.156,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "BW 850 nm LED (M850LP1 class)",
+     "rating_c": [
+      0,
+      40
+     ],
+     "rating_basis": "ambient (Thorlabs; casing up to +25 K)",
+     "air_c": 86.1,
+     "case_c": 120.8,
+     "checked_c": 86.1,
+     "margin_k": -46.1,
+     "ok": false,
+     "mount_c": 86.1,
+     "terms": {
+      "P": 5.1,
+      "G_air": 0.146,
+      "G_rad": 0.0006,
+      "G_mount": 0.0
+     }
+    },
+    {
+     "device": "AE preamp (PreAmp One)",
+     "rating_c": [
+      -40,
+      65
+     ],
+     "rating_basis": "operating (MISTRAS)",
+     "air_c": 86.1,
+     "case_c": 88.3,
+     "checked_c": 88.3,
+     "margin_k": -23.3,
+     "ok": false,
+     "mount_c": 86.1,
+     "terms": {
+      "P": 2.1,
+      "G_air": 0.458,
+      "G_rad": 0.0,
+      "G_mount": 0.5
+     }
+    },
+    {
+     "device": "Galvo basiCube 20 (context)",
+     "rating_c": [
+      15,
+      35
+     ],
+     "rating_basis": "operating (SCANLAB: 25 +/- 10 C)",
+     "air_c": 86.1,
+     "case_c": 86.1,
+     "checked_c": 86.1,
+     "margin_k": -51.1,
+     "ok": false,
+     "mount_c": 106.1,
+     "terms": {
+      "P": 0.0,
+      "G_air": 1.373,
+      "G_rad": 0.0,
+      "G_mount": 0.0
+     }
+    },
+    {
+     "device": "Kowa LM50JC10M lenses",
+     "rating_c": [
+      -10,
+      50
+     ],
+     "rating_basis": "Kowa",
+     "air_c": 86.1,
+     "case_c": 86.1,
+     "checked_c": 86.1,
+     "margin_k": -36.1,
+     "ok": false,
+     "mount_c": 86.1,
+     "terms": {
+      "P": 0.0,
+      "G_air": 0.123,
+      "G_rad": 0.0,
+      "G_mount": 0.0
+     }
+    }
+   ],
+   "pis": {
+    "pb2_box_air_c": 117.6,
+    "pb2_vented": false,
+    "pb2_UA_sealed": 0.381,
+    "pi5_rating_c": [
+     0,
+     70
+    ],
+    "soc_throttle_c": 80,
+    "pb2_soc_c": 152.6,
+    "pi2_case_air_c": 86.1,
+    "pi2_soc_c": 121.1,
+    "pb2_box_ok": false,
+    "pb2_soc_ok": false,
+    "pi2_soc_ok": false,
+    "pb2_sealed_box_air_c": 117.6,
+    "pb2_sealed_soc_c": 152.6
+   }
+  },
+  "busy_worst/vent_shuttle": {
+   "shuttle": {
+    "T_s": 42.6,
+    "load": "worst",
+    "what": "500 W continuous, PR 318's busy Shuttle"
+   },
+   "config": "drawn cooling, supply from the Shuttle's air",
+   "T_in": 42.6,
+   "guard": {
+    "T_g": 48.8,
+    "Q_devices_W": 206.9,
+    "Q_chamber_W": 43.3,
+    "UA_passive": {
+     "A_panels_m2": 1.624,
+     "U_panel": 1.3,
+     "U_window": 3.9,
+     "U_top": 1.65,
+     "U_base": 0.85,
+     "UA_W_per_K": 3.06
+    },
+    "Q_through_panels_W": 19.0,
+    "Q_vent_W": 231.3,
+    "Q_coil_W": 0.0
+   },
+   "bridge_c": 69.7,
+   "devices": [
+    {
+     "device": "Chronos 2.1-HD (side camera)",
+     "rating_c": [
+      -20,
+      40
+     ],
+     "rating_basis": "ambient (Kron: -20 to +40 C; has its own fan)",
+     "air_c": 43.1,
+     "case_c": 67.8,
+     "checked_c": 43.1,
+     "margin_k": -3.1,
+     "ok": false,
+     "mount_c": 60.0,
+     "terms": {
+      "P": 40.0,
+      "G_air": 1.587,
+      "G_rad": 0.0022,
+      "G_mount": 0.1
+     }
+    },
+    {
+     "device": "LP camera (IMX296 board in a housing)",
+     "rating_c": [
+      0,
+      50
+     ],
+     "rating_basis": "ambient (Pi GS camera brief; InnoMaker publishes none)",
+     "air_c": 48.8,
+     "case_c": 54.5,
+     "checked_c": 54.5,
+     "margin_k": -4.5,
+     "ok": false,
+     "mount_c": 60.0,
+     "terms": {
+      "P": 1.0,
+      "G_air": 0.194,
+      "G_rad": 0.0009,
+      "G_mount": 0.017
+     }
+    },
+    {
+     "device": "Coaxial camera (IMX296 board on the cage)",
+     "rating_c": [
+      0,
+      50
+     ],
+     "rating_basis": "ambient (Pi GS camera brief)",
+     "air_c": 48.8,
+     "case_c": 68.4,
+     "checked_c": 68.4,
+     "margin_k": -18.4,
+     "ok": false,
+     "mount_c": 69.7,
+     "terms": {
+      "P": 1.0,
+      "G_air": 0.115,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "Alvium 1800 U-030 VSWIR (route B, in the coaxial arm)",
+     "rating_c": [
+      -20,
+      55
+     ],
+     "rating_basis": "housing (Allied Vision)",
+     "air_c": 48.8,
+     "case_c": 69.8,
+     "checked_c": 69.8,
+     "margin_k": -14.8,
+     "ok": false,
+     "mount_c": 69.7,
+     "terms": {
+      "P": 2.2,
+      "G_air": 0.098,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "Photodiode PDA36A2 (each)",
+     "rating_c": [
+      10,
+      40
+     ],
+     "rating_basis": "not stated ambient or case (Thorlabs)",
+     "air_c": 48.8,
+     "case_c": 70.8,
+     "checked_c": 48.8,
+     "margin_k": -8.8,
+     "ok": false,
+     "mount_c": 69.7,
+     "terms": {
+      "P": 5.0,
+      "G_air": 0.178,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "BW 850 nm LED (M850LP1 class)",
+     "rating_c": [
+      0,
+      40
+     ],
+     "rating_basis": "ambient (Thorlabs; casing up to +25 K)",
+     "air_c": 48.8,
+     "case_c": 77.9,
+     "checked_c": 48.8,
+     "margin_k": -8.8,
+     "ok": false,
+     "mount_c": 48.8,
+     "terms": {
+      "P": 5.1,
+      "G_air": 0.175,
+      "G_rad": 0.0005,
+      "G_mount": 0.0
+     }
+    },
+    {
+     "device": "AE preamp (PreAmp One)",
+     "rating_c": [
+      -40,
+      65
+     ],
+     "rating_basis": "operating (MISTRAS)",
+     "air_c": 48.8,
+     "case_c": 51.0,
+     "checked_c": 51.0,
+     "margin_k": 14.0,
+     "ok": true,
+     "mount_c": 48.8,
+     "terms": {
+      "P": 2.1,
+      "G_air": 0.458,
+      "G_rad": 0.0,
+      "G_mount": 0.5
+     }
+    },
+    {
+     "device": "Galvo basiCube 20 (context)",
+     "rating_c": [
+      15,
+      35
+     ],
+     "rating_basis": "operating (SCANLAB: 25 +/- 10 C)",
+     "air_c": 48.8,
+     "case_c": 48.8,
+     "checked_c": 48.8,
+     "margin_k": -13.8,
+     "ok": false,
+     "mount_c": 69.7,
+     "terms": {
+      "P": 0.0,
+      "G_air": 1.363,
+      "G_rad": 0.0,
+      "G_mount": 0.0
+     }
+    },
+    {
+     "device": "Kowa LM50JC10M lenses",
+     "rating_c": [
+      -10,
+      50
+     ],
+     "rating_basis": "Kowa",
+     "air_c": 48.8,
+     "case_c": 48.8,
+     "checked_c": 48.8,
+     "margin_k": 1.2,
+     "ok": true,
+     "mount_c": 48.8,
+     "terms": {
+      "P": 0.0,
+      "G_air": 0.151,
+      "G_rad": 0.0,
+      "G_mount": 0.0
+     }
+    }
+   ],
+   "pis": {
+    "pb2_box_air_c": 55.1,
+    "pb2_vented": true,
+    "pb2_UA_sealed": 0.312,
+    "pi5_rating_c": [
+     0,
+     70
+    ],
+    "soc_throttle_c": 80,
+    "pb2_soc_c": 90.1,
+    "pi2_case_air_c": 48.8,
+    "pi2_soc_c": 83.8,
+    "pb2_box_ok": true,
+    "pb2_soc_ok": false,
+    "pi2_soc_ok": false,
+    "pb2_sealed_box_air_c": 87.3,
+    "pb2_sealed_soc_c": 122.3
+   }
+  },
+  "busy_worst/vent_dock": {
+   "shuttle": {
+    "T_s": 42.6,
+    "load": "worst",
+    "what": "500 W continuous, PR 318's busy Shuttle"
+   },
+   "config": "drawn cooling, supply ducted from the room through a ventilated dock (22 C)",
+   "T_in": 22.0,
+   "guard": {
+    "T_g": 31.7,
+    "Q_devices_W": 206.9,
+    "Q_chamber_W": 116.9,
+    "UA_passive": {
+     "A_panels_m2": 1.624,
+     "U_panel": 1.45,
+     "U_window": 3.83,
+     "U_top": 1.87,
+     "U_base": 0.89,
+     "UA_W_per_K": 3.3
+    },
+    "Q_through_panels_W": -36.1,
+    "Q_vent_W": 360.0,
+    "Q_coil_W": 0.0
+   },
+   "bridge_c": 52.9,
+   "devices": [
+    {
+     "device": "Chronos 2.1-HD (side camera)",
+     "rating_c": [
+      -20,
+      40
+     ],
+     "rating_basis": "ambient (Kron: -20 to +40 C; has its own fan)",
+     "air_c": 22.5,
+     "case_c": 48.4,
+     "checked_c": 22.5,
+     "margin_k": 17.5,
+     "ok": true,
+     "mount_c": 60.0,
+     "terms": {
+      "P": 40.0,
+      "G_air": 1.587,
+      "G_rad": 0.002,
+      "G_mount": 0.1
+     }
+    },
+    {
+     "device": "LP camera (IMX296 board in a housing)",
+     "rating_c": [
+      0,
+      50
+     ],
+     "rating_basis": "ambient (Pi GS camera brief; InnoMaker publishes none)",
+     "air_c": 31.7,
+     "case_c": 39.2,
+     "checked_c": 39.2,
+     "margin_k": 10.8,
+     "ok": true,
+     "mount_c": 60.0,
+     "terms": {
+      "P": 1.0,
+      "G_air": 0.182,
+      "G_rad": 0.0009,
+      "G_mount": 0.017
+     }
+    },
+    {
+     "device": "Coaxial camera (IMX296 board on the cage)",
+     "rating_c": [
+      0,
+      50
+     ],
+     "rating_basis": "ambient (Pi GS camera brief)",
+     "air_c": 31.7,
+     "case_c": 51.8,
+     "checked_c": 51.8,
+     "margin_k": -1.8,
+     "ok": false,
+     "mount_c": 52.9,
+     "terms": {
+      "P": 1.0,
+      "G_air": 0.108,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "Alvium 1800 U-030 VSWIR (route B, in the coaxial arm)",
+     "rating_c": [
+      -20,
+      55
+     ],
+     "rating_basis": "housing (Allied Vision)",
+     "air_c": 31.7,
+     "case_c": 53.1,
+     "checked_c": 53.1,
+     "margin_k": 1.9,
+     "ok": true,
+     "mount_c": 52.9,
+     "terms": {
+      "P": 2.2,
+      "G_air": 0.093,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "Photodiode PDA36A2 (each)",
+     "rating_c": [
+      10,
+      40
+     ],
+     "rating_basis": "not stated ambient or case (Thorlabs)",
+     "air_c": 31.7,
+     "case_c": 54.2,
+     "checked_c": 31.7,
+     "margin_k": 8.3,
+     "ok": true,
+     "mount_c": 52.9,
+     "terms": {
+      "P": 5.0,
+      "G_air": 0.166,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "BW 850 nm LED (M850LP1 class)",
+     "rating_c": [
+      0,
+      40
+     ],
+     "rating_basis": "ambient (Thorlabs; casing up to +25 K)",
+     "air_c": 31.7,
+     "case_c": 62.9,
+     "checked_c": 31.7,
+     "margin_k": 8.3,
+     "ok": true,
+     "mount_c": 31.7,
+     "terms": {
+      "P": 5.1,
+      "G_air": 0.163,
+      "G_rad": 0.0005,
+      "G_mount": 0.0
+     }
+    },
+    {
+     "device": "AE preamp (PreAmp One)",
+     "rating_c": [
+      -40,
+      65
+     ],
+     "rating_basis": "operating (MISTRAS)",
+     "air_c": 31.7,
+     "case_c": 33.9,
+     "checked_c": 33.9,
+     "margin_k": 31.1,
+     "ok": true,
+     "mount_c": 31.7,
+     "terms": {
+      "P": 2.1,
+      "G_air": 0.419,
+      "G_rad": 0.0,
+      "G_mount": 0.5
+     }
+    },
+    {
+     "device": "Galvo basiCube 20 (context)",
+     "rating_c": [
+      15,
+      35
+     ],
+     "rating_basis": "operating (SCANLAB: 25 +/- 10 C)",
+     "air_c": 31.7,
+     "case_c": 31.7,
+     "checked_c": 31.7,
+     "margin_k": 3.3,
+     "ok": true,
+     "mount_c": 52.9,
+     "terms": {
+      "P": 0.0,
+      "G_air": 1.246,
+      "G_rad": 0.0,
+      "G_mount": 0.0
+     }
+    },
+    {
+     "device": "Kowa LM50JC10M lenses",
+     "rating_c": [
+      -10,
+      50
+     ],
+     "rating_basis": "Kowa",
+     "air_c": 31.7,
+     "case_c": 31.7,
+     "checked_c": 31.7,
+     "margin_k": 18.3,
+     "ok": true,
+     "mount_c": 31.7,
+     "terms": {
+      "P": 0.0,
+      "G_air": 0.141,
+      "G_rad": 0.0,
+      "G_mount": 0.0
+     }
+    }
+   ],
+   "pis": {
+    "pb2_box_air_c": 38.1,
+    "pb2_vented": true,
+    "pb2_UA_sealed": 0.284,
+    "pi5_rating_c": [
+     0,
+     70
+    ],
+    "soc_throttle_c": 80,
+    "pb2_soc_c": 73.1,
+    "pi2_case_air_c": 31.7,
+    "pi2_soc_c": 66.7,
+    "pb2_box_ok": true,
+    "pb2_soc_ok": true,
+    "pi2_soc_ok": true,
+    "pb2_sealed_box_air_c": 73.9,
+    "pb2_sealed_soc_c": 108.9
+   }
+  },
+  "busy_worst/fan_coil": {
+   "shuttle": {
+    "T_s": 42.6,
+    "load": "worst",
+    "what": "500 W continuous, PR 318's busy Shuttle"
+   },
+   "config": "not drawn: vents closed, a chilled-water fan coil (20 C water, UA 15 W/K) in the guard",
+   "T_in": null,
+   "guard": {
+    "T_g": 39.2,
+    "Q_devices_W": 198.0,
+    "Q_chamber_W": 80.6,
+    "UA_passive": {
+     "A_panels_m2": 1.624,
+     "U_panel": 1.13,
+     "U_window": 3.66,
+     "U_top": 1.44,
+     "U_base": 0.81,
+     "UA_W_per_K": 2.75
+    },
+    "Q_through_panels_W": -9.4,
+    "Q_vent_W": 0.0,
+    "Q_coil_W": 288.0
+   },
+   "bridge_c": 60.3,
+   "devices": [
+    {
+     "device": "Chronos 2.1-HD (side camera)",
+     "rating_c": [
+      -20,
+      40
+     ],
+     "rating_basis": "ambient (Kron: -20 to +40 C; has its own fan)",
+     "air_c": 39.2,
+     "case_c": 64.1,
+     "checked_c": 39.2,
+     "margin_k": 0.8,
+     "ok": true,
+     "mount_c": 60.0,
+     "terms": {
+      "P": 40.0,
+      "G_air": 1.587,
+      "G_rad": 0.0022,
+      "G_mount": 0.1
+     }
+    },
+    {
+     "device": "LP camera (IMX296 board in a housing)",
+     "rating_c": [
+      0,
+      50
+     ],
+     "rating_basis": "ambient (Pi GS camera brief; InnoMaker publishes none)",
+     "air_c": 39.2,
+     "case_c": 49.7,
+     "checked_c": 49.7,
+     "margin_k": 0.3,
+     "ok": true,
+     "mount_c": 60.0,
+     "terms": {
+      "P": 1.0,
+      "G_air": 0.113,
+      "G_rad": 0.0009,
+      "G_mount": 0.017
+     }
+    },
+    {
+     "device": "Coaxial camera (IMX296 board on the cage)",
+     "rating_c": [
+      0,
+      50
+     ],
+     "rating_basis": "ambient (Pi GS camera brief)",
+     "air_c": 39.2,
+     "case_c": 59.9,
+     "checked_c": 59.9,
+     "margin_k": -9.9,
+     "ok": false,
+     "mount_c": 60.3,
+     "terms": {
+      "P": 1.0,
+      "G_air": 0.066,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "Alvium 1800 U-030 VSWIR (route B, in the coaxial arm)",
+     "rating_c": [
+      -20,
+      55
+     ],
+     "rating_basis": "housing (Allied Vision)",
+     "air_c": 39.2,
+     "case_c": 61.3,
+     "checked_c": 61.3,
+     "margin_k": -6.3,
+     "ok": false,
+     "mount_c": 60.3,
+     "terms": {
+      "P": 2.2,
+      "G_air": 0.053,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "Photodiode PDA36A2 (each)",
+     "rating_c": [
+      10,
+      40
+     ],
+     "rating_basis": "not stated ambient or case (Thorlabs)",
+     "air_c": 39.2,
+     "case_c": 62.6,
+     "checked_c": 39.2,
+     "margin_k": 0.8,
+     "ok": true,
+     "mount_c": 60.3,
+     "terms": {
+      "P": 5.0,
+      "G_air": 0.116,
+      "G_rad": 0.0,
+      "G_mount": 1.0
+     }
+    },
+    {
+     "device": "BW 850 nm LED (M850LP1 class)",
+     "rating_c": [
+      0,
+      40
+     ],
+     "rating_basis": "ambient (Thorlabs; casing up to +25 K)",
+     "air_c": 39.2,
+     "case_c": 85.9,
+     "checked_c": 39.2,
+     "margin_k": 0.8,
+     "ok": true,
+     "mount_c": 39.2,
+     "terms": {
+      "P": 5.1,
+      "G_air": 0.109,
+      "G_rad": 0.0005,
+      "G_mount": 0.0
+     }
+    },
+    {
+     "device": "AE preamp (PreAmp One)",
+     "rating_c": [
+      -40,
+      65
+     ],
+     "rating_basis": "operating (MISTRAS)",
+     "air_c": 39.2,
+     "case_c": 41.7,
+     "checked_c": 41.7,
+     "margin_k": 23.3,
+     "ok": true,
+     "mount_c": 39.2,
+     "terms": {
+      "P": 2.1,
+      "G_air": 0.336,
+      "G_rad": 0.0,
+      "G_mount": 0.5
+     }
+    },
+    {
+     "device": "Galvo basiCube 20 (context)",
+     "rating_c": [
+      15,
+      35
+     ],
+     "rating_basis": "operating (SCANLAB: 25 +/- 10 C)",
+     "air_c": 39.2,
+     "case_c": 39.2,
+     "checked_c": 39.2,
+     "margin_k": -4.2,
+     "ok": false,
+     "mount_c": 60.3,
+     "terms": {
+      "P": 0.0,
+      "G_air": 1.005,
+      "G_rad": 0.0,
+      "G_mount": 0.0
+     }
+    },
+    {
+     "device": "Kowa LM50JC10M lenses",
+     "rating_c": [
+      -10,
+      50
+     ],
+     "rating_basis": "Kowa",
+     "air_c": 39.2,
+     "case_c": 39.2,
+     "checked_c": 39.2,
+     "margin_k": 10.8,
+     "ok": true,
+     "mount_c": 39.2,
+     "terms": {
+      "P": 0.0,
+      "G_air": 0.092,
+      "G_rad": 0.0,
+      "G_mount": 0.0
+     }
+    }
+   ],
+   "pis": {
+    "pb2_box_air_c": 45.6,
+    "pb2_vented": true,
+    "pb2_UA_sealed": 0.296,
+    "pi5_rating_c": [
+     0,
+     70
+    ],
+    "soc_throttle_c": 80,
+    "pb2_soc_c": 80.6,
+    "pi2_case_air_c": 39.2,
+    "pi2_soc_c": 74.2,
+    "pb2_box_ok": true,
+    "pb2_soc_ok": false,
+    "pi2_soc_ok": true,
+    "pb2_sealed_box_air_c": 79.8,
+    "pb2_sealed_soc_c": 114.8
+   }
+  }
+ },
+ "shuttle_budget": {
+  "typical": {
+   "vent_shuttle": {
+    "added_W": 14.9,
+    "removed_W": 0.0,
+    "note": "the guard's heat stays in the Shuttle; only the fans are new"
+   },
+   "vent_dock": {
+    "added_W": 14.9,
+    "removed_W": 250.0,
+    "shuttle_change_K": -0.76,
+    "air_m3h": 118.0
+   },
+   "fan_coil": {
+    "added_W": 6.0,
+    "removed_W": 203.3,
+    "shuttle_change_K": -0.64,
+    "chiller_load_W": 203.3
+   }
+  },
+  "busy": {
+   "vent_shuttle": {
+    "added_W": 14.9,
+    "removed_W": 0.0,
+    "note": "the guard's heat stays in the Shuttle; only the fans are new"
+   },
+   "vent_dock": {
+    "added_W": 14.9,
+    "removed_W": 271.4,
+    "shuttle_change_K": -0.83,
+    "air_m3h": 118.0
+   },
+   "fan_coil": {
+    "added_W": 6.0,
+    "removed_W": 217.7,
+    "shuttle_change_K": -0.69,
+    "chiller_load_W": 217.7
+   }
+  },
+  "busy_worst": {
+   "vent_shuttle": {
+    "added_W": 14.9,
+    "removed_W": 0.0,
+    "note": "the guard's heat stays in the Shuttle; only the fans are new"
+   },
+   "vent_dock": {
+    "added_W": 14.9,
+    "removed_W": 360.0,
+    "shuttle_change_K": -1.12,
+    "air_m3h": 118.0
+   },
+   "fan_coil": {
+    "added_W": 6.0,
+    "removed_W": 288.0,
+    "shuttle_change_K": -0.92,
+    "chiller_load_W": 288.0
+   }
+  }
+ },
+ "sources": {
+  "galvo (basiCube 20)": {
+   "W_typical": 30.0,
+   "W_worst": 69.3,
+   "basis": "tray_budget.json loads 'galvo' (estimate 30 W typical; 24 V x 2.6 A rated)"
+  },
+  "Z and recoater servos": {
+   "W_typical": 20.0,
+   "W_worst": 20.0,
+   "basis": "tray_budget.json 'servos' 30 W for three ClearPath-SD axes, two inside the guard (estimate)"
+  },
+  "dosing stepper": {
+   "W_typical": 5.0,
+   "W_worst": 10.0,
+   "basis": "NEMA 17 holding current (estimate)"
+  },
+  "PB2 (Pi 5, lid sensors, DC-DC)": {
+   "W_typical": 8.0,
+   "W_worst": 12.0,
+   "basis": "electrical analysis/out/electrical/power.md \u00a74 'Pi 5 + DC-DC'"
+  },
+  "LP camera's Pi 5 (second Pi)": {
+   "W_typical": 5.0,
+   "W_worst": 8.0,
+   "basis": "Pi 5 brief: ~4 W bare board active (800 mA at 5 V) + one camera (estimate)"
+  },
+  "Chronos 2.1-HD": {
+   "W_typical": 20.0,
+   "W_worst": 40.0,
+   "basis": "Kron: 40 W input rating; typical draw not published (half assumed)"
+  },
+  "two PDA36A2": {
+   "W_typical": 4.0,
+   "W_worst": 10.0,
+   "basis": "Thorlabs: 'actual usage < 5 W' each; 2 W each typical assumed"
+  },
+  "IMX296 boards (LP, coaxial)": {
+   "W_typical": 1.5,
+   "W_worst": 2.0,
+   "basis": "not published by InnoMaker; ~0.75 W each assumed"
+  },
+  "BW 850 nm LED": {
+   "W_typical": 1.0,
+   "W_worst": 5.1,
+   "basis": "M850LP1: 5.1 W at 1.5 A CW; pulsed, ~1 W mean assumed"
+  },
+  "AE preamp": {
+   "W_typical": 1.0,
+   "W_worst": 2.1,
+   "basis": "MISTRAS PreAmp One 28 V: < 1.0 W quiescent, < 2.1 W max"
+  },
+  "layer camera (Pi HQ)": {
+   "W_typical": 1.0,
+   "W_worst": 1.5,
+   "basis": "estimate"
+  },
+  "beam path (collimator, shutter coil, dichroic, beam trap, f-theta)": {
+   "W_typical": 5.0,
+   "W_worst": 12.0,
+   "basis": "estimate: ~1 % of the beam plus a held shutter coil"
+  },
+  "guard fans (2 x AFB1224SH, 60 mm, 40 mm)": {
+   "W_typical": 0.0,
+   "W_worst": 0.0,
+   "basis": "added per configuration from the fan data"
+  }
+ },
+ "chamber": {
+  "A_out_m2": 0.295,
+  "G_legs_W_per_K": 4.29,
+  "T_wall_c": 60.0,
+  "note": "the 60 C wall is thermal.json's hot-chamber bound, not a result: a typical build puts ~300 W into the chamber (heaters ~97 W + 210 W of beam), more than a 60 C outside passes to the guard"
+ }
+}
