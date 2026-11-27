@@ -1,6 +1,6 @@
 {
  "chapter": "32-finishing",
- "frames_recorded": 925,
+ "frames_recorded": 1001,
  "recordings": [
   "/tmp/robotbuild/frames/32-finishing/audit"
  ],
@@ -34,16 +34,16 @@
     },
     {
      "foot": "L",
-     "start": 708,
-     "end": 803,
+     "start": 784,
+     "end": 879,
      "frames": 96,
      "slip_mm": 0.0,
      "max_frame_mm": 0.0
     },
     {
      "foot": "R",
-     "start": 708,
-     "end": 803,
+     "start": 784,
+     "end": 879,
      "frames": 96,
      "slip_mm": 0.0,
      "max_frame_mm": 0.0
@@ -56,7 +56,7 @@
    "gliding_worst": [],
    "jumps": [
     [
-     708,
+     784,
      4273
     ]
    ]
@@ -65,10 +65,10 @@
  "mirs": [
   {
    "mir": "mirA",
-   "frames": 473,
-   "driven_mm": 0,
+   "frames": 550,
+   "driven_mm": 1390,
    "forward": "local +x",
-   "forward_mm": 0,
+   "forward_mm": 1390,
    "reverse_mm": 0,
    "reverse_legs": 0,
    "longest_reverse_leg_mm": 0,
@@ -83,13 +83,7 @@
    "turned_deg": 0.0,
    "jumps": [
     [
-     621,
-     1390,
-     1390,
-     0
-    ],
-    [
-     804,
+     880,
      9578,
      -8401,
      4600
@@ -127,5 +121,5 @@
   "jump_mm": 250.0,
   "mir_jump_mm": 150.0
  },
- "seconds": 0.4
+ "seconds": 0.3
 }
