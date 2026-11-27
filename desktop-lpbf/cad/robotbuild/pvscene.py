@@ -103,6 +103,7 @@ class PVScene:
         self._mats: dict = {}
         self._sent: dict = {}
         self.view_angle = 30.0
+        self.before_render = []          # round 9: callables run first in render() (people.Person's feet catch up)
 
     # ------------------------------------------------------------------------------------------- actors
     def add(self, name, poly, color, group="static", opacity=1.0, shown=True, **kw):
@@ -200,7 +201,9 @@ class PVScene:
         self.pl.renderer.ResetCameraClippingRange()
 
     def render(self, cam=None, view_angle=None) -> np.ndarray:
-        """apply(), the camera (if given), render; the frame as an H x W x 3 uint8 array."""
+        """The before_render hooks, apply(), the camera (if given), render; the frame as an H x W x 3 uint8 array."""
+        for f in list(getattr(self, "before_render", ())):
+            f()
         self.apply()
         if cam is not None:
             self.camera(cam, view_angle)

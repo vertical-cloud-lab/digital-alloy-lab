@@ -1,0 +1,92 @@
+{
+ "test": "people.py's Gait (round 9 foot lock) through walk.py's PersonTrack",
+ "limits": {
+  "slip_per_stance_mm": 10.0,
+  "gliding_frames": 0,
+  "body_clear_mm": 30.0
+ },
+ "passed": true,
+ "results": {
+  "straight": {
+   "frames": 80,
+   "walked_mm": 3000,
+   "stances": 11,
+   "steps": 10,
+   "slip_per_stance_mm": {
+    "max": 0.0,
+    "p95": 0.0,
+    "mean": 0.0
+   },
+   "slipping_frames": 0,
+   "gliding_frames": 0,
+   "overreach_frames": 0
+  },
+  "turn": {
+   "frames": 133,
+   "walked_mm": 2256,
+   "stances": 18,
+   "steps": 16,
+   "slip_per_stance_mm": {
+    "max": 0.0,
+    "p95": 0.0,
+    "mean": 0.0
+   },
+   "slipping_frames": 0,
+   "gliding_frames": 0,
+   "overreach_frames": 0
+  },
+  "side-step": {
+   "frames": 112,
+   "walked_mm": 1300,
+   "stances": 12,
+   "steps": 10,
+   "slip_per_stance_mm": {
+    "max": 0.0,
+    "p95": 0.0,
+    "mean": 0.0
+   },
+   "slipping_frames": 0,
+   "gliding_frames": 0,
+   "overreach_frames": 0
+  },
+  "carry/op": {
+   "frames": 171,
+   "walked_mm": 3449,
+   "stances": 22,
+   "steps": 20,
+   "slip_per_stance_mm": {
+    "max": 0.0,
+    "p95": 0.0,
+    "mean": 0.0
+   },
+   "slipping_frames": 0,
+   "gliding_frames": 0,
+   "overreach_frames": 0
+  },
+  "carry/op2": {
+   "frames": 171,
+   "walked_mm": 3449,
+   "stances": 23,
+   "steps": 21,
+   "slip_per_stance_mm": {
+    "max": 0.0,
+    "p95": 0.0,
+    "mean": 0.0
+   },
+   "slipping_frames": 0,
+   "gliding_frames": 0,
+   "overreach_frames": 0
+  },
+  "carry": {
+   "load": "330 x 241 x 140 mm block, carried by its ends (side grip)",
+   "body_clear_mm_min": 33.4,
+   "hands_in_load_mm_max": 0.7,
+   "reach_mm_worst": -6.8,
+   "stance": {
+    "front_mm": 248.0,
+    "lean_deg": 6.0
+   }
+  }
+ },
+ "seconds": 16.4
+}
