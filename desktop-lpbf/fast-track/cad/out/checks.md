@@ -279,4 +279,4 @@ Pump speed (1 L/s effective) and base pressures are estimates; the floor is set 
 | cube (FT-1V) | 0.675 | still air | 25-36 | 61 | 50.0 |
 | cube (FT-1V) | 0.675 | fan | 8-11 | 36 | 50.0 |
 
-Run time 1051 s.
+Run time 810 s.

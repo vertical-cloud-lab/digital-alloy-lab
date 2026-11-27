@@ -128,8 +128,7 @@ the Lesker BX1212S (VacuCAD login). Those stay estimates, marked in `ft_model.P`
 | FT-1V | 103 | 0 | 8 | 0 |
 | FT-1, Thorlabs MTS50/M-Z8 piston | 100 | 0 | 7 | 0 |
 
-The last run (1051 s on one core, capped at 3 GB) was on the final model except one detail: the lid's two coded
-switches became one Omron D4NS-2CF tongue switch per guard afterwards (one box fewer; no effect on clashes).
+The last run took 810 s on one core (capped at 3 GB) on the final model.
 
 - **Beam:** with the lens axis at (0, -30) the envelope is an oblique cone; the nearest parts are the cord clamp at
   the hopper's park (3.5 mm) and the cover-slide holder (5.6 mm). Margins round the envelope at the apertures:
