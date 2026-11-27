@@ -52,7 +52,7 @@ import ft_model as M  # noqa: E402
 from lpbf_model import box, cyl, tube  # noqa: E402
 
 OUT = FT / "analysis" / "out" / "fea"
-RUN = pathlib.Path(os.environ.get("FT_THERMAL_RUN", "/tmp/workerA/thermal"))
+RUN = pathlib.Path(os.environ.get("FT_THERMAL_RUN", "/tmp/ft-fea2/thermal"))
 HEAT_CSV = pathlib.Path(os.environ.get("FT_HEAT_CSV", "/tmp/ft-process/heat_input.csv"))
 SIGMA = 5.670374e-8
 G = 9.81
@@ -87,7 +87,7 @@ CASES_AIR = {"fan": 39.0, "still": 71.0}                 # box air, study (fast_
 CUBE_AIR = {"fan": 36.0, "still": 61.0}                  # cube air, cad/out/checks.md
 SET_SUB, SET_TC = 200.0, 200.0
 H_RISER_BOTTOM = 50.0     # W/m2K from the stage bracket plate into the T-slot rails and bench at room temperature (est.)
-Q_MAX = dict(plate=100.0, block=100.0)                  # 2 x 50 W each (study); the block may get 4 x 50 W
+Q_MAX = dict(plate=100.0, block=200.0)                  # plate 2 x 50 W; block 4 x 50 W as drawn in CAD v2 (study: 2 x 50 W)
 HEATER = dict(d=6.0, l=20.0)                            # plate heaters Ø6 x 20 mm, 24 V 50 W (lead, 2026-11-27)
 
 
@@ -133,6 +133,21 @@ def find(parts, pid=None, name=None):
     return None
 
 
+def vsr_body(z0):
+    """Thermal stand-in for the X-VSR20A's fixed part (base, core, drive housing, connector) from the same numbers as
+    ft_vendor.zaber_x_vsr20a, with square corners: gmsh cannot mesh the fused vendor-measured solid (PLC error at the
+    core's 2.5 mm corner round where it meets the base). Turned 180 deg about z and based at z0, as build() places it."""
+    V_ = M.VEN.VSR
+    s2 = V_["sq"] / 2
+    hx0, hx1, hy0, hy1, hz0, hz1 = V_["housing"]
+    cx0, cx1, cy0, cy1, cz0, cz1 = V_["conn"]
+    out = box(-s2, s2, -s2, s2, z0, z0 + V_["base_h"])
+    for q in (box(-s2 + 4, s2 - 4, -s2 + 4, s2 - 4, z0 + V_["base_h"] - 0.5, z0 + V_["h"] - V_["plat_t"] - 1.0),
+              box(-hx1, -hx0, -hy1, -hy0, z0 + hz0, z0 + hz1), box(-cx1, -cx0, -cy1, -cy0, z0 + cz0, z0 + cz1)):
+        out = out.fuse(q)
+    return out.clean()
+
+
 def bodies(state="FT-1", pz=0.0, powder=False, recoater="model"):
     """The thermal bodies of a state: list of dicts (name, shape, mat, eps, h mm, plus geometry helpers) and the
     sensor points (mm)."""
@@ -162,8 +177,10 @@ def bodies(state="FT-1", pz=0.0, powder=False, recoater="model"):
     zb0 = zbed - bh
     blk = box(-bw / 2, bw / 2, -bd / 2, bd / 2, zb0, zbed).cut(cyl(P["bore"] / 2, (0, 0, zb0 - 1), "z", bh + 2))
     blk = blk.cut(box(P["ovf_x"][0], P["ovf_x"][1], -P["ovf_y"], P["ovf_y"], zb0 - 1, zbed + 1))
+    # well-block heaters as drawn in CAD v2: Ø6 x 20 cartridges in holes from the -x face at y = P["blk_heaters"]
+    blk_y = P.get("blk_heaters", (-30.0, 30.0))
     add("block", blk, "al6061", EPS["al"], 3.0,
-        src=dict(kind="block", xcyl=[((-bw / 2, 0.0), sy, zb0 + bh / 2, 3.0) for sy in (-30.0, 30.0)]))
+        src=dict(kind="block", xcyl=[((-bw / 2, -bw / 2 + HEATER["l"]), sy, zb0 + bh / 2, HEATER["d"] / 2) for sy in blk_y]))
     so = cq.Compound.makeCompound([cyl(P["so_d"] / 2, (sx, sy, zb0 - P["so_l"]), "z", P["so_l"])
                                    for sx in (-P["so_xy"], P["so_xy"]) for sy in (-P["so_xy"], P["so_xy"])])
     add("standoffs", so, "macor", EPS["macor"], 1.6)
@@ -180,11 +197,15 @@ def bodies(state="FT-1", pz=0.0, powder=False, recoater="model"):
     rin = P["rod_od"] / 2 - P["rod_wall"]
     add("rod", rod.shape, "ss304", EPS["ss"], 1.5, adiabatic=("r_lt", rin + 0.3))
     add("gland", find(parts, "MK-07").shape, "ss304", EPS["ss"], 3.0)
-    if find(parts, "MK-15", "Rod clamp") is not None:
-        add("clamp", find(parts, "MK-15", "Rod clamp").shape, "al6061", EPS["al"], 2.5)
-        add("platform", find(parts, "M2", "X-VSR20A platform").shape, "stage", EPS["stage"], 6.0)
-        add("column", find(parts, "M2", "X-VSR20A lift column").shape, "stage", EPS["stage"], 6.0)
-        add("stage body", find(parts, "M2", "Zaber X-VSR20A").shape, "stage", EPS["stage"], 9.0)
+    clamp = find(parts, "MK-15", "Rod-end block") or find(parts, "MK-15", "Rod clamp")    # CAD v2 / v1 names
+    if clamp is not None:
+        add("clamp", clamp.shape, "al6061", EPS["al"], 3.5 if clamp.name.startswith("Rod-end") else 2.5)
+        add("platform", find(parts, "M2", "X-VSR20A platform").shape, "stage", EPS["stage"], 6.0)   # v2: skirt + platform
+        col = find(parts, "M2", "X-VSR20A lift column")                                         # v1 model only
+        if col is not None:
+            add("column", col.shape, "stage", EPS["stage"], 6.0)
+        sb = find(parts, "M2", "Zaber X-VSR20A")
+        add("stage body", vsr_body(sb.shape.BoundingBox().zmin) if col is None else sb.shape, "stage", EPS["stage"], 9.0)
         rs = find(parts, "MK-15", "Piston-stage bracket").shape
         add("riser", rs, "al6061", EPS["al"], 9.0, fixed=("z_lt", rs.BoundingBox().zmin + 0.5, H_RISER_BOTTOM))
     rc = find(parts, "M1b") or find(parts, None, "Zaber X-LS")
@@ -198,7 +219,8 @@ def bodies(state="FT-1", pz=0.0, powder=False, recoater="model"):
     add("collector", find(parts, "MK-11", "Exhaust collector").shape, "ss304", EPS["ss"], 2.5)
     if powder and pz < -0.5:
         add("powder", cyl(P["bore"] / 2 - 0.005, (0, 0, zt), "z", -pz), "powder", EPS["powder"], 2.0)
-    sens = dict(sub_top=(0.0, 0.0, zt), tc_block=(-30.0, 10.0, zb0 + bh / 2),
+    # sensors where CAD v2 draws them: block TC tip at (-30, 10) 8 mm below the block top, plate TC tip 3.5 mm under the plate top
+    sens = dict(sub_top=(0.0, 0.0, zt), tc_block=(-30.0, 10.0, zbed - 8.0),
                 tc_plate=(P["heater_r"] * math.cos(math.radians(270)), P["heater_r"] * math.sin(math.radians(270)), hole_top))
     geo = dict(state=state, pz=pz, zbed=zbed, zt=zt, zb0=zb0, hp_z0=hp_z0, under=L["under"], floor_top=L["floor_top"],
                cube=cube, xc=xc, yc=yc, gland=(L["gland_bot"], L["under"]), deck_top=L["floor_top"] + P["deck_t"],
@@ -667,7 +689,7 @@ def clearance(m, T, alpha=23.6e-6, T0=20.0, dz=2.0):
         if a.sum() < 3 or bw.sum() < 3:
             continue
         Tp, Tb, Tbw = T[pl[a]].mean(), T[bk[b]].mean(), T[bk[bw]].mean()
-        dc = alpha * (P["bore"] / 2 * (Tb - T0) - P["plate_d"] / 2 * (Tp - T0)) * 1e3
+        dc = alpha * (P["bore"] / 2 * (Tb - T0) - P["plate_d"] / 2 * (Tp - T0))          # mm
         out.append(dict(z_mm=round(float(z), 1), T_plate=round(float(Tp), 2), T_bore_wall=round(float(Tbw), 2), T_block=round(float(Tb), 2),
                         dT_plate_minus_bore=round(float(Tp - Tbw), 2), d_clearance_um=round(float(dc * 1e3), 2)))
     return out
@@ -780,7 +802,6 @@ def case_steady(R, which):
         "ft1v_pz0_fan": dict(state="FT-1V", pz=0.0, air="fan"),
         "ft1v_pz0_still": dict(state="FT-1V", pz=0.0, air="still"),
         "ft1_pz0_fan_fine": dict(state="FT-1", pz=0.0, air="fan", scale=0.7),
-        "ft1_pz0_fan_lsm100b": dict(state="FT-1", pz=0.0, air="fan", recoater="X-LSM100B"),
     }
     for key in which:
         kw = runs[key]
