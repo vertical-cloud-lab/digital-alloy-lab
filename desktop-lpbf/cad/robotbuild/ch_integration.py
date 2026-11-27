@@ -21,11 +21,12 @@ leak check's curve is the expected one (seals.md: pump-down to 1 mbar in about a
 a measurement.
 
 Round 8 (Sterling, 2026-11-26: "moonwalk, motion sickness, collisions and interference"): fixed cameras or slow drifts,
-cuts between them, every shot at least 4 s. The person is posed by Mover: when they walk, the gait phase follows the
-distance (2 pi per people.Person.STRIDE), amp > 0 only while stepping, turns are small steps, and they never move on still
-legs. But walk.py's scan of people.py's gait (phase from distance) found the planted foot sliding 0.34-1.0 m for every metre
-walked, whatever the amp, because people.py doesn't lock the stance foot; so here the person changes place only across a
-cut (the time-lapse), and on screen stands, leans, reaches and pushes. Loads slide 26 mm over the tray floor (its rim is
+cuts between them, every shot at least 4 s. Round 9 (2026-11-27): people.py locks the stance foot (its Gait), so the person
+now walks on screen: from the lift table's handle round its end to push the module, along the access table to the hoses
+and the dock, and back from the tray for the leak check (walk.py checks every stance); a place change that a time-lapse
+covers (the lift table reloaded) is still a cut. The process fiber is lpbf_low.py's round-9 route (laser rear panel, the
+rack's side slot, R 75-77) and appears with the hoses at T04, once the laser is in; the rack frame is 580 mm, so the 4U
+drawer slides in under its top rails. Loads slide 26 mm over the tray floor (its rim is
 20 mm high) and settle; the lift table stands in front of the VLM's access table (its platform can't pass over it); the
 person stands 850 mm in front of the tray's edge at the access table, or behind the lift table, and pushes on the guard
 frame's posts, the rack's posts, the units' front panels and the base plates' edges with the fingertips (people.py's wrists
@@ -117,6 +118,8 @@ def group_of(name, step):
     """Which move a part arrives with."""
     if "VLM tray" in name:
         return "tray"
+    if name.startswith("Process fiber"):        # round 9: connected once the laser is in, with the hoses and lines (T04);
+        return "hoses"                          # with the process module it stood in the rack's path as the rack came in
     if "Base plate, process" in name or "Leveling mounts, process" in name:
         return "proc"
     if "Base plate, gas" in name or "Leveling mounts, gas" in name:
@@ -205,69 +208,90 @@ def wrap(a):
 
 
 class Mover:
-    """Moves people.Person the way walk.py checks it (round 8; Sterling, 2026-11-26: "moonwalk"): the gait phase follows
-    the distance walked (2 pi per people.Person.STRIDE), amp > 0 only while stepping, a turn is small steps on the spot
-    (the phase follows the feet's arc), and the body never moves while the legs stand still. Every method is a generator
-    that poses the person and yields once per frame."""
+    """Moves people.Person along a path, one pose a frame (round 9). Since round 9 people.py locks the feet itself (its
+    Gait plants each foot on a footprint and steps it when the body moves away; walk.py checks it), so a walk here is
+    only the body's path: turn on the spot towards the leg (the feet step round), walk it with an ease in and out at a
+    careful 0.66 m/s, turn to the heading wanted. Every method is a generator that poses the person and yields once per
+    frame; ``place`` is for a cut."""
 
-    AMP = 0.6            # people.py's gait slides its planted foot least at amp 0.6 with the phase from distance (walk.py
-                         # scan, 2026-11-26: about 0.34 m of slip per metre walked, against 0.65 m at amp 1.0)
-    V = 55.0             # mm a frame (0.66 m/s): a careful walk in a machine bay (people.py's gait slides less per
-                         # metre the faster it walks: walk.py scan, 0.58 m a metre at 40 mm a frame, 0.34 at 100)
-    TURN_R = 160.0       # mm: the feet's arc when turning on the spot
-    TURN_STEP = 5.0      # deg a frame
+    V = 55.0             # mm a frame (0.66 m/s): a careful walk in a machine bay
+    TURN_STEP = 6.0      # deg a frame turning on the spot (72 deg/s: the feet take a step every ~0.6 s)
 
     def __init__(self, op, x, y, hd):
-        self.op, self.x, self.y, self.hd, self.ph = op, float(x), float(y), float(hd), 0.0
+        self.op, self.x, self.y, self.hd = op, float(x), float(y), float(hd)
         self.arm = dict(hands={"l": None, "r": None}, lean=0.0, look=None, grip={"l": 0.3, "r": 0.3},
                         palm={"l": None, "r": None})
+        self.walked = 0.0
 
     def place(self, x, y, hd):
-        """Across a cut only (the time-lapse moves the person between shots)."""
+        """Across a cut only: both feet planted at the new place."""
         self.x, self.y, self.hd = float(x), float(y), float(hd)
-        self.pose()
+        self.op.place(x=self.x, y=self.y, hd=self.hd, **self.arm)
 
-    def pose(self, amp=0.0, **kw):
+    def pose(self, **kw):
         for k, v in kw.items():
             if k in ("hands", "grip", "palm"):
                 self.arm[k] = dict(self.arm[k], **v)
             else:
                 self.arm[k] = v
-        self.op.set(x=self.x, y=self.y, hd=self.hd, amp=amp, phase=self.ph, **self.arm)
+        self.op.set(x=self.x, y=self.y, hd=self.hd, **self.arm)
 
     def turn_to(self, hd1, **kw):
         d = wrap(hd1 - self.hd)
         n = int(math.ceil(abs(d) / self.TURN_STEP))
+        h0 = self.hd
         for k in range(n):
-            self.hd += d / n
-            self.ph += math.radians(abs(d) / n) * self.TURN_R * 2 * math.pi / people.Person.STRIDE
-            self.pose(amp=0.35 * min(1.0, (k + 1) / 3.0, (n - k) / 3.0), **kw)
+            self.hd = h0 + d * ease((k + 1) / n)
+            self.pose(**kw)
             yield
+        self.hd = h0 + d
         self.pose(**kw)
 
-    def walk_to(self, x1, y1, hd_end=None, v=None, face=None, **kw):
-        """Turn to the leg's direction (or keep `face`, a heading for a few side or back steps), walk it, turn to hd_end."""
+    def walk_path(self, pts, hd_end=None, v=None, face=None, **kw):
+        """Walk through the waypoints pts [(x, y)] on a smooth curve (Catmull-Rom), heading along it (or keeping `face`
+        for a few side or back steps), easing in and out; then turn to hd_end."""
         v = v or self.V
-        dx, dy = x1 - self.x, y1 - self.y
-        L = math.hypot(dx, dy)
-        if L > 1.0:
-            head = math.degrees(math.atan2(-dx, dy)) if face is None else face
-            if abs(wrap(head - self.hd)) > 4.0:
-                yield from self.turn_to(head, **kw)
-            n = max(6, int(math.ceil(L / v)) + 4)
-            w = np.array([min(1.0, (k + 1) / 4.0, (n - k) / 4.0) for k in range(n)])
-            ds = w / w.sum() * L
-            s = 0.0
-            for k in range(n):
-                s += ds[k]
-                self.x += dx / L * ds[k]
-                self.y += dy / L * ds[k]
-                self.ph += 2 * math.pi * ds[k] / people.Person.STRIDE
-                self.pose(amp=self.AMP * min(1.0, 0.25 + s / 150.0, 0.15 + (L - s) / 150.0), **kw)
+        P = np.array([(self.x, self.y)] + [tuple(p) for p in pts], float)
+        keep = [0] + [i for i in range(1, len(P)) if np.linalg.norm(P[i] - P[i - 1]) > 1.0]
+        P = P[keep]
+        if len(P) >= 2:
+            E = np.r_[[2 * P[0] - P[1]], P, [2 * P[-1] - P[-2]]]
+            C = []
+            for i in range(1, len(E) - 2):
+                p0, p1, p2, p3 = E[i - 1], E[i], E[i + 1], E[i + 2]
+                for t in np.linspace(0.0, 1.0, 24, endpoint=False):
+                    C.append(0.5 * (2 * p1 + (-p0 + p2) * t + (2 * p0 - 5 * p1 + 4 * p2 - p3) * t * t
+                                    + (-p0 + 3 * p1 - 3 * p2 + p3) * t ** 3))
+            C.append(P[-1])
+            C = np.array(C)
+            seg = np.linalg.norm(np.diff(C, axis=0), axis=1)
+            s_c = np.r_[0.0, np.cumsum(seg)]
+            L = float(s_c[-1])
+            t0 = C[min(3, len(C) - 1)] - C[0]
+            head0 = math.degrees(math.atan2(-t0[0], t0[1])) if face is None else face
+            if abs(wrap(head0 - self.hd)) > 4.0:
+                yield from self.turn_to(head0, **kw)
+            n = max(6, int(math.ceil(L / v)) + 6)
+            w = np.array([min(1.0, (k + 1) / 6.0, (n - k) / 6.0) for k in range(n)])
+            s_k = np.cumsum(w / w.sum() * L)
+            for s in s_k:
+                x = float(np.interp(s, s_c, C[:, 0]))
+                y = float(np.interp(s, s_c, C[:, 1]))
+                if face is None:
+                    j = min(int(np.searchsorted(s_c, s)), len(C) - 1)
+                    tg = C[min(j + 1, len(C) - 1)] - C[max(j - 1, 0)]
+                    if np.linalg.norm(tg) > 1e-6:
+                        self.hd = self.hd + wrap(math.degrees(math.atan2(-tg[0], tg[1])) - self.hd)
+                self.walked += math.hypot(x - self.x, y - self.y)
+                self.x, self.y = x, y
+                self.pose(**kw)
                 yield
         if hd_end is not None and abs(wrap(hd_end - self.hd)) > 1.0:
             yield from self.turn_to(hd_end, **kw)
         self.pose(**kw)
+
+    def walk_to(self, x1, y1, hd_end=None, v=None, face=None, **kw):
+        yield from self.walk_path([(x1, y1)], hd_end=hd_end, v=v, face=face, **kw)
 
     def stand(self, n, **kw):
         for _ in range(n):
@@ -452,18 +476,31 @@ def main():
          "The shop's scissor table (Vestil SCTAB-1000-2040-AC, 20 x 40 in, 1,000 lb; robot-shop-equipment.csv), turned so "
          "the 730 mm base sits along its 40 in. side; its platform 26 mm over the tray floor, clear of the 20 mm rim", "T01",
          180.0)
-    # cut: behind the table, hands on the guard frame's front posts at chest height, pushing as far as the arms reach
+    # round 9: the person walks (on screen, feet locked) from the handle round the table's end to behind it, puts both hands
+    # on the guard frame's front posts at chest height and pushes as far as the arms reach
     zp = 1150.0 + LIP
 
     def post_pts(off, z=zp):
         return {s: (x, -265.0 + off - TIP, z) for s, x in POST.items()}
-    m.place(xm, -265.0 + off0 - TIP - 260.0, 0.0)
-    pp = post_pts(off0)
-    m.pose(lean=4.0, look=(xm, -265.0 + off0 + 400.0, 1150.0), **push(pp["l"], pp["r"]))
     st = {}
 
+    def reach(tg, n, lean0, lean1, look):
+        """Ease both hands from where they hang to tg {"l", "r"} over n frames, leaning from lean0 to lean1."""
+        r0 = {s: np.asarray(op.rest_hand(s), float) for s in ("l", "r")}
+        for i in range(n):
+            u = ease((i + 1) / n)
+            h_ = {s: tuple(r0[s] + (np.asarray(tg[s], float) - r0[s]) * u) for s in ("l", "r")}
+            m.pose(lean=lean0 + (lean1 - lean0) * u, look=look, **push(h_["l"], h_["r"]))
+            yield
+
     def push_lift():
-        yield from m.stand(6)
+        m.pose(lean=0.0, **free())
+        yield from m.stand(3)
+        # round the lift table's -x end (its corner at x -563, y -1108; the handle's uprights at x -623), 0.3 m off it
+        yield from m.walk_path([(-850.0, -1330.0), (-420.0, -1470.0), (xm, -265.0 + off0 - TIP - 260.0)], hd_end=0.0,
+                               look=(xm, -300.0, 1100.0))
+        yield from reach(post_pts(off0), 8, 0.0, 4.0, (xm, -265.0 + off0 + 400.0, 1150.0))
+        yield from m.stand(4)
         far = (m.y + REACH["chest"]) - (-265.0 - TIP)       # the offset at which the hands are REACH ahead
         n = int(3.2 * FPS)
         for i in range(n):
@@ -537,7 +574,7 @@ def main():
     c5 = cam_at((-650.0, -800.0, 1150.0), 3500.0, -40.0, 14.0)
     shot(c5, cam_at((-650.0, -800.0, 1150.0), 3400.0, -37.0, 14.0), push_rack(), 5 * FPS,
          "T02: the 12U rack (22 kg) onto the tray's left end, from the lift table",
-         "19 in. 4-post rack, 560 mm tall: the UPS, laser, PC and DIN drawer go in it next", "T02", 300.0)
+         "19 in. 4-post rack, 580 mm tall: the UPS, laser, PC and DIN drawer go in it next", "T02", 300.0)
     lift_at(3200.0, -2600.0, LIFT["lo"], shown=False)
     RH = 100.0                        # the rack's front feet just inside the tray's rim
     sc.gmat["rack"] = T((0.0, -RH, 0.0))
@@ -615,7 +652,7 @@ def main():
     sc.gmat["gasbase"] = T((0.0, goff0, LIP))
     show("gasbase", 1.0)
     m.place(xg, gb[2] + goff0 - TIP - 240.0, 0.0)
-    zg = 909.0 + LIP - 2.0
+    zg = 909.0 + LIP + 8.0            # round 9: 10 mm higher on the plate's edge (round 8's gloves brushed the lift's platform)
     q = gplate(goff0, zg)
     m.pose(lean=16.0, look=(xg, gb[2] + goff0 + 300.0, 950.0), **push(q["l"], q["r"]))
 
@@ -700,9 +737,10 @@ def main():
     c9 = cam_at((250.0, -250.0, 1100.0), 3700.0, -12.0, 30.0)
     c9b = cam_at((700.0, -200.0, 1100.0), 3300.0, 18.0, 26.0)
     for g, cap, sub, secs, step, spots in (
-            ("hoses", "T04: KF-25 bellows, the vacuum valve, the argon and O2 lines",
-             "Hoses and wing-nut clamps are a person's job (deformable parts; sequence.py T04); shown fitted in the "
-             "time-lapse", 2700.0, "T04", (350.0,)),
+            ("hoses", "T04: the process fiber, KF-25 bellows, valve, gas lines",
+             "The fiber runs from the laser's back through the rack to the collimator (bends 75 mm; IPG's minimum 70); "
+             "hoses and wing-nut clamps are a person's job (sequence.py T04); shown fitted in the time-lapse", 2700.0, "T04",
+             (350.0,)),
             ("dock", "T05: the tray dock, the umbilicals and the power box",
              "Power, Ethernet, argon, water and exhaust mate sideways at the tray's back-right corner", 1200.0, "T05",
              (950.0,))):
@@ -711,8 +749,11 @@ def main():
 
         def fit(g=g, spots=spots):
             for k, xs in enumerate(spots):
-                m.place(xs, y_front, 0.0)                 # across the cut into this shot
+                # round 9: along the access table on screen (side-steps for a short move, a walk for a long one)
                 m.pose(lean=0.0, look=(xs, 0.0, 1050.0), **free())
+                yield from m.stand(4)
+                yield from m.walk_to(xs, y_front, hd_end=0.0, face=0.0 if abs(xs - m.x) < 450.0 else None,
+                                     v=38.0 if abs(xs - m.x) < 450.0 else None, look=(xs, 0.0, 1050.0))
                 if k == 0:
                     for i in range(8):
                         show(g, (i + 1) / 8.0)
@@ -730,8 +771,10 @@ def main():
         shot(c9 if g == "hoses" else c9b, c9 if g == "hoses" else c9b, fit(), 5 * FPS, cap, sub, step, secs)
     # ---------------------------------------------------------------- T06: the leak check
     def step_back():
-        m.place(m.x - 250.0, -1650.0, -20.0)          # across the cut into the leak check
+        # round 9: on screen: backs away 0.8 m from the tray, still facing the machine, and turns a little to watch it
         m.pose(lean=0.0, look=(0.0, -100.0, 1100.0), **free())
+        yield from m.stand(6)
+        yield from m.walk_to(m.x - 250.0, -1650.0, hd_end=-20.0, face=-10.0, v=32.0, look=(0.0, -100.0, 1100.0))
         while True:
             m.pose(look=(0.0, -100.0, 1100.0))
             yield

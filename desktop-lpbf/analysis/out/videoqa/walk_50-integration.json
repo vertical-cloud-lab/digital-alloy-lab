@@ -1,15 +1,15 @@
 {
  "chapter": "50-integration",
- "frames_recorded": 996,
+ "frames_recorded": 1062,
  "recordings": [
   "/tmp/robotbuild/frames/50-integration/audit"
  ],
  "people": [
   {
    "person": "op",
-   "frames": 996,
-   "walked_mm": 0,
-   "stances": 20,
+   "frames": 1062,
+   "walked_mm": 3040,
+   "stances": 41,
    "slip_per_stance_mm": {
     "max": 0.0,
     "p95": 0.0,
@@ -19,80 +19,80 @@
     {
      "foot": "L",
      "start": 0,
-     "end": 131,
-     "frames": 132,
+     "end": 135,
+     "frames": 136,
      "slip_mm": 0.0,
      "max_frame_mm": 0.0
     },
     {
      "foot": "R",
      "start": 0,
-     "end": 131,
-     "frames": 132,
+     "end": 142,
+     "frames": 143,
      "slip_mm": 0.0,
      "max_frame_mm": 0.0
     },
     {
      "foot": "L",
-     "start": 132,
-     "end": 191,
-     "frames": 60,
+     "start": 141,
+     "end": 150,
+     "frames": 10,
      "slip_mm": 0.0,
      "max_frame_mm": 0.0
     },
     {
      "foot": "R",
-     "start": 132,
-     "end": 191,
-     "frames": 60,
+     "start": 149,
+     "end": 157,
+     "frames": 9,
      "slip_mm": 0.0,
      "max_frame_mm": 0.0
     },
     {
      "foot": "L",
-     "start": 192,
-     "end": 251,
-     "frames": 60,
+     "start": 157,
+     "end": 163,
+     "frames": 7,
      "slip_mm": 0.0,
      "max_frame_mm": 0.0
     },
     {
      "foot": "R",
-     "start": 192,
-     "end": 251,
-     "frames": 60,
+     "start": 163,
+     "end": 170,
+     "frames": 8,
      "slip_mm": 0.0,
      "max_frame_mm": 0.0
     },
     {
      "foot": "L",
-     "start": 252,
-     "end": 311,
-     "frames": 60,
+     "start": 170,
+     "end": 178,
+     "frames": 9,
      "slip_mm": 0.0,
      "max_frame_mm": 0.0
     },
     {
      "foot": "R",
-     "start": 252,
-     "end": 311,
-     "frames": 60,
+     "start": 177,
+     "end": 186,
+     "frames": 10,
      "slip_mm": 0.0,
      "max_frame_mm": 0.0
     },
     {
      "foot": "L",
-     "start": 312,
-     "end": 495,
-     "frames": 184,
+     "start": 185,
+     "end": 195,
+     "frames": 11,
      "slip_mm": 0.0,
      "max_frame_mm": 0.0
     },
     {
      "foot": "R",
-     "start": 312,
-     "end": 495,
-     "frames": 184,
+     "start": 193,
+     "end": 204,
+     "frames": 12,
      "slip_mm": 0.0,
      "max_frame_mm": 0.0
     }
@@ -104,40 +104,24 @@
    "gliding_worst": [],
    "jumps": [
     [
-     132,
-     1092
-    ],
-    [
-     192,
+     245,
      639
     ],
     [
-     252,
+     305,
      931
     ],
     [
-     312,
+     365,
      699
     ],
     [
-     496,
+     549,
      1514
     ],
     [
-     544,
+     597,
      657
-    ],
-    [
-     696,
-     285
-    ],
-    [
-     756,
-     600
-    ],
-    [
-     816,
-     838
     ]
    ]
   }
@@ -145,7 +129,7 @@
  "mirs": [
   {
    "mir": "mirrA",
-   "frames": 996,
+   "frames": 1062,
    "driven_mm": 0,
    "forward": "local +x",
    "forward_mm": 0,
@@ -165,7 +149,7 @@
   },
   {
    "mir": "mirrB",
-   "frames": 996,
+   "frames": 1062,
    "driven_mm": 0,
    "forward": "local +x",
    "forward_mm": 0,
@@ -194,5 +178,5 @@
   "jump_mm": 250.0,
   "mir_jump_mm": 150.0
  },
- "seconds": 0.8
+ "seconds": 0.7
 }

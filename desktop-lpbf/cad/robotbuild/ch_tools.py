@@ -101,9 +101,22 @@ def tool_polys(fn, args):
     return out
 
 
+def _register(sc, name, actor, group):
+    """Round 9: put an actor drawn with common.MAT into the pvscene adapter as well, so audit_rec.py can record it
+    (ROBOTBUILD_AUDIT=1; round 8 drew this chapter straight to the plotter, so the frame audit never saw it)."""
+    sc.actors[name] = actor
+    sc.group_of[name] = group
+    sc.alpha[name] = 1.0
+    sc.base_alpha[name] = 1.0
+    sc.gmat.setdefault(group, np.eye(4))
+    sc._hold(name, actor)
+
+
 def main():
+    import pvscene
     ch = common.Chapter(NAME, TITLE)
     pl = common.plotter()
+    sc = pvscene.PVScene(pl)
     # round 8: 4.8 s a tool (0.8 s still, a 50 deg turn over 3.2 s, 0.8 s still). Round 7's 2.6 s, 150 deg turn and 0.6 s
     # hold failed video_qa.py's camera gate (median shot 3.1 s against 4 s; 95th-percentile speed 0.18 frame widths a second
     # against the 7-second rule's 0.14)
@@ -115,6 +128,8 @@ def main():
         except Exception as e:  # noqa: BLE001
             print(f"skip {fn}: {type(e).__name__}: {e}", flush=True)
             continue
+        for nm in list(sc.actors):
+            sc.remove(nm)
         pl.clear_actors()
         lo = np.min([p.points.min(0) for p in polys], axis=0)
         hi = np.max([p.points.max(0) for p in polys], axis=0)
@@ -122,15 +137,16 @@ def main():
         size = hi - lo
         col = common.COL["fixture"] if fn.startswith(("fixture", "nest", "trunnion", "tool_stand")) else common.COL["tool"]
         acts = []
-        for p in polys:
+        for j, p in enumerate(polys):
             q = p.copy()
             q.points = q.points - c
             acts.append(pl.add_mesh(q, color=col, **common.MAT))
+            _register(sc, f"tool/{fn}/{j}", acts[-1], "tool")
         # a 50 mm scale bar on the floor of the bounding box, along x
         import pyvista as pv
         bar = pv.Box(bounds=(-size[0] / 2, -size[0] / 2 + 50.0, -size[1] / 2 - 12.0, -size[1] / 2 - 6.0,
                              -size[2] / 2, -size[2] / 2 + 2.0))
-        pl.add_mesh(bar, color="#2b2f33")
+        _register(sc, "scale bar", pl.add_mesh(bar, color="#2b2f33"), "static")
         R = 1.9 * float(np.linalg.norm(size)) + 60.0
         dims = " x ".join(f"{s:.0f}" for s in sorted(size, reverse=True))
         sub = what
@@ -145,6 +161,8 @@ def main():
             pl.camera.view_angle = 30.0
             pl.reset_camera()            # fit the bounding sphere along this view direction (same distance every frame)
             pl.camera.zoom(1.25)
+            sc.apply()
+            pvscene._audit(sc)           # round 9: recorded for scene_audit.py (the tool's pieces never move: 0 movers)
             img = pl.screenshot(return_img=True)
             ch.frame(img, title, sub=sub, who=[], status=status, proc_s=0.0, no_clock=True, labels=labels)
         print(f"{fn}: {n_pre + n_turn + n_hold} frames", flush=True)
