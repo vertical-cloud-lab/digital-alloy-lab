@@ -54,12 +54,13 @@ Updated in round 2 (2026-11-27); §0 lists what the detailed design work changed
   - **Time:** first tracks at 2.7–7.3 weeks and **first coupons at 3.7–9.3 weeks** with the two stages on separate
     vendors' PCard orders and the shop giving 5–8 hours a working day. **With two people in the shop (12 h a day) the
     coupons come at 3.2–6.4 weeks.** On one purchase order for both stages: 4.2–9.3 weeks.
-- **FT-0 is FT-1's first half:** the same optics, box and heated plate without the stages, spread by hand with a film
-  applicator. It lays single tracks and single-layer pads at **1.9–5.2 weeks for $20.9k–36.6k** ($16.5k–30.4k
+- **FT-0 is FT-1's first half:** the same optics, box and heated plate without the stages, spread by hand with a 48 mm
+  spreader bar. It lays single tracks and single-layer pads at **1.9–5.2 weeks for $20.9k–36.6k** ($16.5k–30.4k
   without monitoring), and it is worth doing even if FT-1 follows, because it checks the used laser chain inside its
   return windows.
 - **What FT-1 gives up**, all of which can come back later:
-  - O₂ of 100–1000 ppm by flow purge, against PR 266's 1–10 ppm by pump-purge. EOS M 290 work on Al uses a 1000 ppm
+  - O₂ of 100–1000 ppm by flow purge, against PR 266's 1–10 ppm by pump-purge. The purge CFD has the box at 1000 ppm
+    in about 2.6 min and 100 ppm in about 5 min with a low diffuser and a high vent; leaks set the floor. EOS M 290 work on Al uses a 1000 ppm
     threshold and small commercial machines purge to 1000–3000 ppm (PR 266 §2.3), and PR 266's own review found O₂
     matters less than the powder's water ([`vacuum-and-purge.md`](../vacuum-and-purge.md)).
     FT-1V, the same machine in a stock vacuum cube, keeps pump-purge for $10.9k–12.9k more and about a week longer.
