@@ -71,12 +71,15 @@ round: what it changes in each piece, and an estimate of its hours, are in
     - a Job's first op fails headless if the Job has two tool controllers.
 - **Design changes the assembly model should take** are [listed below](#changes-for-the-assembly-model). The ones that
   matter:
-  - **The well block's thermocouple hole runs straight through a heater hole** in the model. Moved to z 10.
+  - **The well block's thermocouple hole ran straight through a heater hole** in v1. Moved to z 10 here; v2 moves it
+    8 mm under the top, which also clears its four heaters.
   - **The window ring needs a 4 mm lip and a 12 mm height** to carry an O-ring under the window (the model's lip is
-    2 mm).
+    2 mm, in v2 too).
   - **The rod gland's squeeze is right only if the rod OD is held to 0.497-0.501 in.** ASTM A269's ±0.005 in. on a
     1/2 in. seamless tube gives 9-20 %, against Parker's 10-17 %.
-  - **The carriage bracket has only 3.0 mm under the stage shield for a foot.**
+  - **The carriage bracket had only 3.0 mm under the stage shield for a foot** in v1. v2 gives it 6 mm.
+  - **v2's gland screws in the box** go through the 1.9 mm floor outside the gland's face O-ring: four open paths
+    from the box to the room. Keep them inside the face seal.
 - **Schedule** ([`plan.py`](plan.py), [calendar below](#first-week-shop-plan)):
   - **When the pieces are needed.** The study's progression network (`cad/ft_progression.py`, scenario A, early end
     of every range) needs S1's pieces by working day 4, S2's by day 5, FT-0's by day 6 and FT-1's by day 9, and the
@@ -90,6 +93,10 @@ round: what it changes in each piece, and an estimate of its hours, are in
     people bring it back to 1.9 and 3.1 weeks.
   - **For the study's schedule:** replace "one person at least half time" (`fast_track.py`) with two people full
     time for the first 8 working days.
+- **CAD v2** (commit e6efa1c, [below](#cad-v2-commit-e6efa1c-what-changes-in-the-fab-pieces)) makes 44 pieces: 13
+  unchanged, 12 re-dimensioned, 10 redesigned or moved, 9 new (mostly monitoring hardware). Estimated, not built:
+  122.2 / 154.8 / 188.2 h expected to FT-0 / FT-1 / FT-1V. Keeping FT-0's tracks at 1.8 weeks then takes three
+  people, or two with the monitoring pieces made after the tracks (1.9 weeks).
 
 ## Files
 
