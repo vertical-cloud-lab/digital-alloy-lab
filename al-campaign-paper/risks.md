@@ -108,7 +108,7 @@ Some import reliances come only as bounds (Si > 50 %, Mg > 75 %, Zr < 25 %), so 
 - **Version B (a benchmarked screen on one machine).** Stronger than before. Four commercial powders printed and
   tested here make it the one-to-one comparison Sterling asked for, and show how far the machine sits from the
   datasheets. Realistic for **about Mar 31** if the POs go out by Dec 11, the drums are in U.S. stock and Utah adds a
-  January build day; **mid-April** if not.
+  January build day; **mid-April** if not. As before, it also needs a good Al run by about Dec 18 (table below).
 - **Version C (the commercial powders and the burden analysis, no atomizer data).** The baselines don't need the
   atomizer. So a paper on the four commercial powders on one machine, the on-par check, the burden metric and the
   front on reported values could go in **about Mar 15-31** whatever happens to the atomizer. The no-experiment version
@@ -132,8 +132,8 @@ The baselines run on their own track, set by the PO date rather than the atomize
 
 | Baseline PO | Drums arrive | In-house Al5X1 aged, tensile | Effect |
 |---|---|---|---|
-| Dec 4, U.S. stock | Dec 14-18 | about Jan 22-29 | Ready for G4; no delay |
-| Dec 11, from Europe | Jan 8-15 | about Feb 8-12 | Ready for the freeze; no delay if Utah adds a build day |
+| Dec 4, U.S. stock | Dec 14-18 | about Jan 6-15 (window and tensile in one build at P2), or Jan 26-Feb 2 (separate) | Ready for G4; no delay |
+| Dec 11, from Europe | Jan 8-15 | about Feb 3-12 (one combined build at P3 or P4) | Ready for the freeze; no delay if Utah adds a build day |
 | After the break, or made to order | February | March | Version B moves to mid-April or later |
 
 "LPBF-grade" means at least about 100 g below 63 µm from one charge. None of the five Al runs so far came close
