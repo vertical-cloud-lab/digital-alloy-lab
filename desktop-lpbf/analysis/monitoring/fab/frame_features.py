@@ -12,7 +12,8 @@ aperture through the whole wall:
     the angle between the sight line and the wall's normal (computed here; the optics cost is in fabrication.md).
   * BW, at A180 (the back wall up): the sight line is ~49 deg off the back wall's normal, so a round normal bore would
     have to be ~49 mm across. It is a slot normal to the wall, shaped to the projection of the clear Ø20 cylinder
-    across the wall (an obround), with a rectangular window seat over it, flat on the wall, and four clamp holes.
+    across the wall (an obround), with a rectangular window seat over it, flat on the wall, and three clamp holes (the third
+    placed by bw_hole3() clear of the clamp frame's trim at the inlet plenum's flange).
     The A131.6 alternative (the rotary takes out the 49 deg azimuth) is checked in cam_monitoring.py's notes, not cut.
 It also checks each new cut against the frame's existing holes (wall left between them), the outer R8 corners, the floor
 screws under the back wall, and the liners (the hole or notch each liner needs).
@@ -227,10 +228,12 @@ def lw_features(frame):
     r_seat = (win["d"] + 0.2) / 2
     seat_depth = GASKET + win["t"] + GASKET
     land = r_seat - 0.1 - R               # gasket land between the bore and the window's edge
-    bc_r = ceil_to(r_seat + 1.65 + 3.0, 0.5)   # M4 tap drill 3.3 with 3 mm of wall outside the seat
+    # M4 tap drill 3.3 with 3 mm of wall outside the seat (rounded to 0.25 mm; it was 0.5, which put the holes on Ø50 and left
+    # 1.75 mm of ring outside their Ø4.5 clearance holes: SendCutSend's instant quote wants 1.90 mm, 2026-11-27)
+    bc_r = ceil_to(r_seat + 1.65 + 3.0, 0.25)
     holes = [(float(cen[1] + bc_r * math.cos(math.radians(LW_HOLE0_DEG + 90 * k))),
               float(cen[2] + bc_r * math.sin(math.radians(LW_HOLE0_DEG + 90 * k)))) for k in range(4)]
-    ring_od = 2 * (bc_r + 4.0)
+    ring_od = 2 * (bc_r + 4.25)                 # 2.0 mm of ring outside the clearance holes (was 4.0: 1.75 mm)
     # argon purge: SAE-4 port above the clamp ring (its fitting's 9/16 in. hex is ~16.5 mm across the corners)
     purge = (float(cen[1]), float(cen[2] + ring_od / 2 + 8.3 + 1.0))
     # liner hole (left liner at x -139.9..-139.4)

@@ -156,7 +156,7 @@
     "note": "concentric with the bore, flat on the wall: 0.75 mm gasket, 4.0 mm window, 0.75 mm flat ring; the clamp ring bottoms on the wall face"
    },
    "clamp_ring": {
-    "bolt_circle_d": 50.0,
+    "bolt_circle_d": 49.5,
     "od": 58.0,
     "id": 31.0,
     "screws": "4 x M4 x 0.7, tapped 8 deep (3.3 drill 10 deep)",
@@ -167,24 +167,24 @@
       0.5455,
       -0.8381
      ],
-     "web_to_hole_mm": 2.75
+     "web_to_hole_mm": 2.97
     },
     "holes_yz": [
      [
-      -6.47,
-      55.8
+      -6.6,
+      55.59
      ],
      [
-      -40.62,
-      46.65
+      -40.41,
+      46.53
      ],
      [
-      -31.47,
-      12.5
+      -31.35,
+      12.72
      ],
      [
-      2.68,
-      21.65
+      2.46,
+      21.78
      ]
     ]
    },
@@ -403,7 +403,7 @@
     "LW clamp-ring hole 1 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": null,
     "LW clamp-ring hole 2 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": null,
     "LW clamp-ring hole 3 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": {
-     "min_gap_mm": 9.78,
+     "min_gap_mm": 9.81,
      "to": "CYLINDER",
      "at": [
       -152.0,
@@ -412,7 +412,7 @@
      ]
     },
     "LW clamp-ring hole 4 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": {
-     "min_gap_mm": 9.47,
+     "min_gap_mm": 9.56,
      "to": "CYLINDER",
      "at": [
       -155.3,
@@ -1139,7 +1139,7 @@
     "pieces_free_after_setup_cm3": []
    },
    "frame_C90": {
-    "removed_cm3": 20.61,
+    "removed_cm3": 20.6,
     "n_rapids_through_stock": 0,
     "rapids": [],
     "time": {
@@ -1448,7 +1448,7 @@
     "travel": {
      "table_z_setup": -215.9,
      "x_span_mm": 74.2,
-     "y_span_mm": 112.6,
+     "y_span_mm": 112.4,
      "x_ok": true,
      "y_ok": true,
      "z": [

@@ -48,10 +48,11 @@ SEL = [
      ("est", 40.0, 120.0, "estimate (custom cut; no catalogue size)", "custom", "glass shop / Edmund custom"), 1, "add", "not drawn",
      "A light window only (no imaging): fused silica only. Borosilicate would need an abraded strength of 12.5 MPa that nobody "
      "publishes (monitoring/mechanics.md, Checks §1). The seat is 58 x 27 x 4.5 mm (frame_features.py)", []),
-    ("M0-04", "0", "custom (outsourced)", "LP blanking cap until the steep camera is bought: the adapter boss's Ø40.8 outline and 4 holes "
-     "(6061 1/4 in. plate) on the lid's face O-ring round the Ø24 bore (the quote is for the earlier Ø64 disc)", ("custom", 11.44, "SendCutSend instant quote (2 = $9.15, 10 = $7.21 each; arrives Nov 30)",
-                                              SCSQ, "2026-11-25T07:49Z"), 1,
-     "outsource", "not drawn", "monitoring_spec: the LP ships blanked; its window and slides come with the steep camera (M7-17, M7-18)", []),
+    ("M0-04", "0", "custom (outsourced)", "LP blanking cap until the steep camera is bought: the adapter boss's Ø40.8 outline with four "
+     "lugs for 4 x M4 on Ø48 (6061 1/4 in. plate, 58.9 x 54.0 mm), on the lid's face O-ring round the Ø24 bore",
+     ("custom", 7.43, "SendCutSend instant quote (2 = $5.94, 10 = $4.96 each; arrives Tue, Dec 1)", SCSQ, "2026-11-27T09:15Z"), 1,
+     "outsource", "not drawn", "monitoring_spec: the LP ships blanked; its window and slides come with the steep camera (M7-17, M7-18). "
+     "Its holes are where lp_cam.py programs the lid's (fabrication.md §3.1): monitoring_parts.lp_adapter_holes() draws them in the O-ring groove", []),
     ("M0-06", "0", "ports", "FKM sheet 1.0 mm for the windows' flat gaskets and flat rings (LW, BW, LP)",
      ("est", 20.0, 40.0, "estimate (McMaster FKM sheet, not fetched)", "FKM 75A sheet, 1.0 mm", "McMaster-Carr"), 1, "add", "not drawn",
      "1.0 mm, not 1/32 in.: the 0.75 mm the seats leave squeezes 1.0 mm sheet 15-35 %, 1/32 in. only -7 to 18 % "
@@ -65,12 +66,16 @@ SEL = [
     ("M0-12", "0", "purge", "SAE-4 (7/16-20) x 1/8 in. tube fitting, bored through, 316, with a 1/8 in. 316 tube bent and flattened as the nozzle",
      ("est", 40.0, 70.0, "estimate (Swagelok-class; not fetched)", "SS-200-1-4ST class, bored through", "Swagelok distributor"), 1,
      "add (replaces a machined nozzle)", "not drawn", "the frame's SAE-4 purge port and its Ø4 passage are programmed (cam_monitoring.json)", []),
-    ("M0-13", "0", "custom (outsourced)", "LW window clamp ring, 6061 1/4 in. plate, Ø56, ID 31, 4 x Ø4.5",
-     ("custom", 9.83, "SendCutSend instant quote (2 = $7.86, 10 = $6.68 each; arrives Nov 30)", SCSQ, "2026-11-25T07:45Z"), 1,
-     "outsource", "not drawn", "4.6 h on a lathe and mill in house (hours_monitoring.csv)", []),
-    ("M0-14", "0", "custom (outsourced)", "BW window clamp frame, 6061 3/16 in. plate, ~76 x 49 with a 53 x 22.5 opening, 3 x Ø4.5",
-     ("custom", 9.87, "SendCutSend instant quote (2 = $7.89, 10 = $6.18 each; arrives Nov 30)", SCSQ, "2026-11-25T07:47Z"), 1,
-     "outsource", "not drawn", "the quoted outline is a stand-in: it needs fitting above the frame's bottom edge", []),
+    ("M0-13", "0", "custom (outsourced)", "LW window clamp ring, 6061 1/4 in. plate, Ø58 with a flat toward the through-beam's fibre head, "
+     "ID 31, 4 x Ø4.5 on Ø49.5",
+     ("custom", 10.26, "SendCutSend instant quote (2 = $8.20, 10 = $6.95 each; arrives Tue, Dec 1)", SCSQ, "2026-11-27T09:12Z"), 1,
+     "outsource", "drawn (cad/monitoring_parts.py)", "4.6 h on a lathe and mill in house (hours_monitoring.csv); holes on Ø49.5 so "
+     "2.0 mm of ring is left outside them, over SendCutSend's 1.90 mm for an instant quote", []),
+    ("M0-14", "0", "custom (outsourced)", "BW window clamp frame, 6061 3/16 in. plate, 72.9 x 61.9 mm as trimmed to the back wall and "
+     "clear of the inlet plenum's flange, a 53 x 22.5 opening, 3 x Ø4.5",
+     ("custom", 9.28, "SendCutSend instant quote (2 = $7.42, 10 = $5.84 each; arrives Tue, Dec 1)", SCSQ, "2026-11-27T09:13Z"), 1,
+     "outsource", "drawn (cad/monitoring_parts.py)", "the outline the model trims it to; its third screw at the seat's lower +x corner "
+     "(frame_features.bw_hole3: 3.35 mm of metal round the hole)", []),
     ("M0-15", "0", "custom (outsourced)", "Cover-slide holders (LW on the left liner; LP), 316 sheet clips",
      ("custom", 22.85, "analogue: OSH Cut, a 316 liner, $22.85"), 2, "outsource with the liners", "not drawn", "", []),
     ("M0-17", "0", "coax safety (now)", "Beam trap on cube 1's far port, 30 mm cage, 5 W CW (the DMSP1000 passes 0.3-0.6 W of the "
@@ -362,7 +367,8 @@ def main():
                 r.update(unit_low_usd=usd, unit_high_usd=usd, price_basis="quote (instant, online): " + basis,
                          price_source="quotes/sendcutsend_quotes.csv",
                          part_number="custom (flat_parts_dxf.py)", vendor="SendCutSend", url=url, fetched_utc=when,
-                         stock_lead="arrives as soon as Mon Nov 30")
+                         stock_lead="arrives as soon as " + (re.search(r"arrives ([^;)]+)", basis).group(1)
+                                                             if re.search(r"arrives ([^;)]+)", basis) else "Mon Nov 30"))
             else:            # the closest instant quote for a similar part (outsourcing-quotes.csv, 2026-11-22)
                 _, usd, basis = s
                 r.update(unit_low_usd=usd, unit_high_usd=usd, price_basis=basis, part_number="custom (hours_monitoring.csv)",

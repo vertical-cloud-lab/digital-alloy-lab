@@ -7,8 +7,10 @@
   * the LP blanking cap (6061, 1/4 in.): over the lid's face O-ring until the steep camera is bought: the adapter's Ø40.8
     outline with four lugs for the M4 screws where lp_cam.py programs them (Ø48, outside the O-ring groove; the adapter as
     drawn has them inside it). It was a Ø64 disc when LP was at (-60, -80).
-SendCutSend priced the 2026-11-25 versions with no account; scs_quote.py re-prices these (quotes/sendcutsend_quotes.csv).
-Also writes dxf/flat_parts.json: each outline's size, area and the metal round each hole.
+SendCutSend priced the 2026-11-25 versions with no account; scs_quote.py re-priced these on 2026-11-27
+(quotes/sendcutsend_quotes.csv, with each file's sha256). The DXF header carries the export time and a GUID, so a re-run
+changes the sha256 but not the geometry. Also writes dxf/flat_parts.json: each outline's size, area and the metal round each
+hole (SendCutSend's instant quote wants 1.90 mm between a hole and an edge in 1/4 in. 6061).
 
 Run: /tmp/venv/bin/python desktop-lpbf/analysis/monitoring/fab/flat_parts_dxf.py   (writes analysis/out/monitoring/fab/dxf/)
 """
@@ -86,13 +88,13 @@ info["bw_clamp_frame"] = dict(material="6061-T6 3/16 in. (4.76 mm)", size_mm=[ro
 L = lp_cam.lp()
 c, r_a = L["c"], L["r_a"]
 lug = lp_cam.LP_BOLT["lug_r"]
-cap = cq.Workplane("XY").circle(r_a).extrude(6.35)
-for x, y in L["holes"]:
-    cap = cap.union(cq.Workplane("XY").center(x - c[0], y - c[1]).circle(lug).extrude(6.35))
-try:   # round the eight inside corners where the lugs meet the disc
-    cap = cap.edges("|Z").edges(cq.selectors.BoxSelector((-40, -40, -1), (40, 40, 8))).fillet(1.5)
-except Exception as e:  # noqa: BLE001
-    print("cap fillet skipped:", type(e).__name__, str(e)[:100])
+# the outline as one closed polyline (disc and lugs joined, the eight inside corners rounded R1.5 by a closing buffer): a
+# cadquery fillet there exported as arcs SendCutSend read as open entities (2026-11-27)
+from shapely.geometry import Point  # noqa: E402
+from shapely.ops import unary_union  # noqa: E402
+shp = unary_union([Point(0, 0).buffer(r_a, quad_segs=24)] + [Point(x - c[0], y - c[1]).buffer(lug, quad_segs=12) for x, y in L["holes"]])
+shp = shp.buffer(1.5, quad_segs=6).buffer(-1.5, quad_segs=6)
+cap = cq.Workplane("XY").polyline([tuple(map(float, q)) for q in list(shp.exterior.coords)[:-1]]).close().extrude(6.35)
 for x, y in L["holes"]:
     cap = cap.cut(cq.Workplane("XY").center(x - c[0], y - c[1]).circle(2.25).extrude(10).translate((0, 0, -1)))
 sec = cq.Workplane("XY").add(cap.val()).section(3.0)
