@@ -408,9 +408,9 @@ def mk02_ring():
     pc.setup("-Z", face=(2, 3.5 - 0.0), outline=(2, -6.0), label="bottom up: face, base O-ring groove, outline half")
     pc.setup("+Z", face=(2, WR_H), outline=(2, -0.3), label="top up: face to 12.0, aperture, seat, window groove, "
                                                               "holes, rest of the outline", hold="soft jaws on the OD")
-    pc.tol += ["window seat floor (z 4): flatness 0.01, Ra 0.8 um (O-ring land under fused silica)",
-               "base face (z 0): flatness 0.02, Ra 0.8 um, lay circular", "seat bore 51.30 +0.10/0",
-               "O-ring grooves: Ra 1.6 um sides, 0.8 um floor; radius 0.13-0.38 at the floor corners (cutter)"]
+    pc.tol += ["window seat floor (z 4): flatness 0.01, Ra 0.4 um (Parker Chart 4-3: 16 RMS for gas and vacuum face seals)",
+               "base face (z 0): flatness 0.02, Ra 0.4 um (16 RMS), lay circular", "seat bore 51.30 +0.10/0",
+               "O-ring grooves: floor Ra 0.8 um (32 RMS), sides Ra 1.6; floor corner radius 0.13-0.38 (.005-.015 in.)"]
     pc.changes += ["height 10 -> 12 and the lip 2 -> 4 mm: a 2 mm lip cannot carry a 1.32 mm deep O-ring groove",
                    "aperture 44 -> 38 mm so the window groove fits inside the 51.3 seat (the scanned beam at the window "
                    "is 26.8 mm across in the box, 16.8 mm in the cube: 5.6 mm margin)",
@@ -421,9 +421,8 @@ def mk02_ring():
 
 def mk02_flange():
     pc = Piece("MK-02b", "MK-02", "Window retaining flange (beam-tube socket on top)", material="6061-T651", qty=1,
-               route="CNC mill", state="S2", stock="1/4 in. 6061 plate would be 6.35: use 3/8 in. plate faced to 6.0, "
-                                                  "106 x 106", stock_pn="3/8 in. 6061-T651 plate (PN not read)",
-               blank=blank_box(-53, 53, -53, 53, -1.75, 7.78),
+               route="CNC mill", state="S2", stock="1/4 in. 6061 plate (6.35) faced to 6.0 both sides, 106 x 106",
+               stock_pn="1/4 in. 6061-T651 plate (PN not read)", blank=blank_box(-53, 53, -53, 53, -0.175, 6.175),
                pos="part z 0 = flange underside = ring top (world z 155.4 box / 282.8 cube)")
     t = 6.0
     pc.solid = cyl(50.0, 0, t)
@@ -447,17 +446,16 @@ def mk02_flange():
 
 def mk02_clamp():
     pc = Piece("MK-02c", "MK-02", "Inner clamp ring (box lid only)", material="6061-T651", qty=1, route="CNC mill",
-               state="S2", stock="3/8 in. 6061 plate faced to 6.0, 106 x 106", stock_pn="3/8 in. 6061 plate (PN not read)",
-               blank=blank_box(-53, 53, -53, 53, -1.75, 7.78),
+               state="S2", stock="1/4 in. 6061 plate (6.35) faced to 6.0 on top, 106 x 106",
+               stock_pn="1/4 in. 6061 plate (PN not read)", blank=blank_box(-53, 53, -53, 53, 0.0, 6.35),
                pos="part z 0 = underside (world z 135.5), top against the lid sheet")
     t = 6.0
     pc.solid = cyl(50.0, 0, t)
     pc.bore("aperture", 22.0, 0, 0, t, 0, tool=2)
     pc.hole("A", "tap", "M5", [(*polar(BC_R, 45 * k), t) for k in range(8)], through=True, thread="through (6)",
             note="the window stack's screws")
-    pc.hole("B", "tap", "M4", [(*polar(30.0, a), 0.0) for a in (90, 180, 270)], axis="+z", through=True,
+    pc.hole("B", "tap", "M4", [(*polar(30.0, a), t) for a in (90, 180, 270)], through=True,
             thread="through", note="cover-slide holder")
-    pc.setup("-Z", face=(2, 1.75), label="bottom up: face")
     pc.setup("+Z", face=(2, t), outline=(2, -0.3), label="top up: face, aperture, holes, outline")
     pc.changes += ["added: 8 x M5 tapped (the stack's screws), 3 x M4 tapped for the cover-slide holder"]
     return pc
@@ -662,8 +660,8 @@ def mk06(which):
     pc.lathe_op("polish the OD (gland zone) to Ra <= 0.4 um, 320 then 600 grit", 6.0)
     pc.setup("-Y", label="in a V-block: lead window (1/8 in. end mill, through one wall)", hold="V-block")
     pc.setup("+X", label="turned 90 deg in the V-block: set-screw dimple", hold="V-block")
-    pc.tol += ["OD 12.70 +-0.13 as bought (ASTM A269); gland zone polished Ra 0.2-0.4 um (Parker: dynamic rod "
-               "surface 8-16 uin)", "length %.1f +-0.1; ends square within 0.05" % ln,
+    pc.tol += ["OD 12.62-12.73 (0.497-0.501 in.), measured: ASTM A269 allows +-0.13, which takes the rod seal "
+               "outside Parker's 10-17 % squeeze; gland zone polished to 16 RMS (Ra ~0.4 um; Parker 10-20 uin)", "length %.1f +-0.1; ends square within 0.05" % ln,
                "no weld seam: seamless tube only (a welded seam leaks past the rod seal)"]
     pc.changes += ["added: 5 x 10 lead window just under the plate (leads from the heaters into the rod); it stays "
                    "2.7 mm above the floor at the bottom of the stroke", "added: 2.5 dimple for the plate's set screw",
@@ -715,7 +713,7 @@ def mk07():
     pc.tol += ["throat 12.95 +0.05/0 (rod 12.70 +-0.13 as bought)",
                "rod grooves %.2f +0.05/0 dia x %.2f +0.13/0 wide (Parker gland depth %.2f-%.2f mm)"
                % (gdia, gw, mm(GLANDS["rod"]["L"][0]), mm(GLANDS["rod"]["L"][1])),
-               "groove sides and floor Ra 1.6 um, corner radius 0.13-0.38", "top face flatness 0.02, Ra 0.8 um",
+               "rod grooves: bottom 32 RMS (Ra 0.8), sides 32 RMS; corner radius 0.13-0.38 (Parker p. 5-31)", "top face flatness 0.02, Ra 0.4 um (16 RMS, face seal)",
                "grooves concentric with the throat within 0.03"]
     pc.changes += ["two internal rod grooves for AS568-112 (0.487 x 0.103 in.), 1.6 mm lands in the 12 mm plate",
                    "throat 12.90 -> 12.95 (rod tolerance); face groove for AS568-031 round both the rod and the "
@@ -1142,7 +1140,7 @@ def mk13():
             axis="+z", depth=10.0, thread="8", note="cover-slide holder, inside")
     pc.setup("+Z", label="outside face up: spot face, bore, 8 x M5", hold="toe clamps on the plate edge")
     pc.setup("-Z", label="boss face up: 3 x M4", hold="toe clamps; the boss on parallels")
-    pc.tol += ["spot face 104 x 0.3: flatness 0.02, Ra 0.8 um (window ring's AS568-140 seal)",
+    pc.tol += ["spot face 104 x 0.3: flatness 0.02, Ra 0.4 um (window ring's AS568-140 seal)",
                "bore 53 +0.2/0, true position 0.2 to the plate centre; the plate's own O-ring face untouched"]
     pc.changes += ["added: 104 mm spot face for the ring's face seal, 8 x M5 blind (no through holes in the vacuum "
                    "wall), 3 x M4 blind inside for the cover-slide holder"]
@@ -1168,7 +1166,7 @@ def mk14():
     pc.hole("B", "tap", "M5", [(sx * 115.0, sy * 115.0, 0.0) for sx in (-1, 1) for sy in (-1, 1)], axis="+z", depth=12.0, thread="10", note="deck corners (blind)")
     pc.setup("+Z", label="outside face up: spot face, gland holes", hold="toe clamps on the plate edge")
     pc.setup("-Z", label="boss face up: rod hole, deck-corner taps", hold="toe clamps; the boss on parallels")
-    pc.tol += ["spot face 56 x 0.3: flatness 0.02, Ra 0.8 um", "holes A +-0.1 to the rod hole"]
+    pc.tol += ["spot face 56 x 0.3: flatness 0.02, Ra 0.4 um", "holes A +-0.1 to the rod hole"]
     pc.changes += ["added: 56 mm spot face, 4 x 5.5 gland holes inside the gland's seal, 4 x M5 blind at the deck "
                    "corners (+-115 from the cube centre)"]
     # the rod hole sits at the world origin; deck corners about the cube centre (part 0, 0)

@@ -515,7 +515,8 @@ def main():
     os.makedirs(os.path.dirname(OUT_JSON), exist_ok=True)
     old = {}
     if os.environ.get("FT_CAM_ONLY") and os.path.exists(OUT_JSON):
-        old = {r["setup"]: r for r in json.load(open(OUT_JSON)).get("setups", [])}
+        redo = set(os.environ["FT_CAM_ONLY"].split(","))
+        old = {r["setup"]: r for r in json.load(open(OUT_JSON)).get("setups", []) if r["pid"] not in redo}
     for r in results:
         old[r["setup"]] = r
     out = dict(tool="FreeCAD %s (%s) CAM workbench, freecadcmd headless; linuxcnc post" % (".".join(version[:3]),

@@ -2,8 +2,8 @@
 same kernel FreeCAD's TechDraw uses), drawn with matplotlib, with overall dimensions, the hole table, material, stock,
 the tolerances that matter and the finish. Sheet parts also get their flat pattern. Third-angle projection, mm.
 
-FreeCAD TechDraw was not used: its page export (SVG/PDF of a whole sheet with a template) lives in TechDrawGui, which
-needs the GUI; the App-level HLR it relies on is reached here directly through OCP.
+FreeCAD TechDraw was not tried headless (time); TechDraw's views come from the same OpenCascade HLR, reached here
+directly through OCP.
 
     /tmp/tools/capmem 2 /tmp/venv/bin/python desktop-lpbf/fast-track/fab/drawings.py [pid ...]
         -> fab/drawings/<pid>.pdf, fab/img/drawings-contact.png
