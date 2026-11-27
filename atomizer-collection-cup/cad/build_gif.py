@@ -76,9 +76,12 @@ def b_parts():
     red_top, red_bot = z["z_stub"], z["z_red"]
     out["reducer"] = PT.revolve([(rb, red_top), (rt, red_top), (rt, red_top - 8.0), (R_o, red_bot + 8.0),
                                  (R_o, red_bot), (R_i, red_bot), (R_i, red_bot + 8.0), (rb, red_top - 8.0)])
-    out["tube"] = PT.tube(R_o, R_i, z["floor"], red_bot)
-    out["disc"] = PT.revolve([(0, z["z_bot"]), (R_o - 0.5, z["z_bot"]), (R_o, z["z_bot"] + 0.5),
-                              (R_o, z["floor"] - 1.0), (R_o - 1.0, z["floor"]), (0, z["floor"])])
+    out["tube"] = PT.tube(R_o, R_i, z["z_cap"], red_bot)
+    fr = b["bottom_fillet"]
+    arc = [(R_i - fr + fr * math.cos(math.radians(a)), z["floor"] + fr + fr * math.sin(math.radians(a)))
+           for a in np.linspace(0, -90, 10)]
+    out["disc"] = PT.revolve([(0, z["z_bot"]), (R_o - 0.5, z["z_bot"]), (R_o, z["z_bot"] + 0.5), (R_o, z["z_cap"]),
+                              (R_i, z["z_cap"])] + arc + [(0, z["floor"])])          # the turned end cap
     parts = {n: s for n, s, c, m in PT.option_b()}
     out["puck"] = next(s for n, s in parts.items() if "puck" in n)
     out["liner"] = next(s for n, s in parts.items() if "liner" in n)
@@ -92,7 +95,7 @@ def b_parts():
     out["cap"] = PT.kf_blank(kf, 0.0).rotate((0, 0, 0), (1, 0, 0), 180)
     # stock as bought
     out["stock_tube"] = PT.tube(R_o, R_i, 0, 304.8)
-    out["stock_bar_disc"] = PT.tube(3.25 * 25.4 / 2, 0, 0, 19.0)
+    out["stock_bar_disc"] = PT.tube(3.25 * 25.4 / 2, 0, 0, 31.0)
     out["stock_bar_puck"] = PT.tube(3.0 * 25.4 / 2, 0, 0, b["puck_h"] + 11.0)
     out["stock_liner"] = PT.tube(b["liner_od"] / 2, b["liner_od"] / 2 - b["liner_wall"], 0, 304.8)
     import mill_cam as MC
@@ -105,7 +108,7 @@ def b_parts():
                 .revolve(360, (-(r + 0.3), 0, 0), (-(r + 0.3), 1, 0)).val())
     out["w1"] = bead(rt, red_top)          # the stub's tube end meets the reducer's 2 in end
     out["w2"] = bead(R_o, red_bot)
-    out["w3"] = bead(R_o, z["floor"] - 0.5)
+    out["w3"] = bead(R_o, z["z_cap"])
     shield_r = P.CONE_TOP_D / 2 - 6.0
     out["shield"] = PT.tube(shield_r, 0.0, 0, 1.5)
     return out, z
@@ -271,7 +274,7 @@ def render(n_scale=1.0):
         pl.close()
     # ---- 2. machining: stock -> parts
     pairs = [("stock_tube", "tube", (0, 0, 0), "saw + face to %.2f" % (z["z_red"] - z["floor"])),
-             ("stock_bar_disc", "disc", (140, 0, 0), "turn: disc + 1x45 weld prep"),
+             ("stock_bar_disc", "disc", (140, 0, 0), "turn: end cap, R6 inside"),
              ("stock_bar_puck", "puck", (260, 0, 0), "turn: catch puck"),
              ("stock_liner", "liner", (380, 0, 0), "saw + face liner"),
              ("fixture_stock", "fixture", (560, 0, 0), "mill: V-block fixture")]
@@ -334,7 +337,7 @@ def render(n_scale=1.0):
         add(pl, M["disc"], steel, (0, 0, -80 * (1 - ease(t / 0.5))), section=True)
         if t > 0.55:
             add(pl, M["w3"], hot, section=True, opacity=ease((t - 0.55) / 0.3))
-        caption(pl, "3  Bottom disc: 1x45 prep into the tube end, W3", "section view")
+        caption(pl, "3  End cap onto the tube, W3 at its rim (20 mm up, clear of the R6 corner)", "section view")
         pl.camera_position = [(260, -900, -80), (0, 0, -130), (0, 0, 1)]
         frames.append(pl.screenshot(return_img=True))
         pl.close()
@@ -364,7 +367,7 @@ def render(n_scale=1.0):
         if t > 0.65:
             for k in ("band_top", "band_bot", "tc_top", "tc_bot"):
                 add(pl, M[k], dark if "band" in k else PT.BRASS_TC, opacity=ease((t - 0.65) / 0.3))
-        caption(pl, "5  Puck, liner, thermocouples", "TCs to a 2-channel meter, alarm 120 C top / 450 C bottom")
+        caption(pl, "5  Puck, liner, thermocouples", "washer TCs under bands to a 2-channel meter; alarms 120 C top, 150 C bottom")
         pl.camera_position = [(260, -900, -80), (0, 0, -120), (0, 0, 1)]
         frames.append(pl.screenshot(return_img=True))
         pl.close()

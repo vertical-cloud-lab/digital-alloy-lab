@@ -26,10 +26,10 @@ McMaster 4518K38). 304L welds to 316L with ER316L filler.
 
 | Part | Machine | Program | Check |
 |---|---|---|---|
-| Bottom disc Ø76.2 × 8 with a 1×45° weld prep, 316L | lathe | `cam/gcode/B_bottom_disc_op1.nc`, `_op2.nc` | `cam/out/lathe_B_bottom_disc.png` |
+| End cap Ø76.2 × 20, 316L: 8 mm floor, 12 mm rim at the tube's wall, R6 inside corner | lathe (blind pocket) | `cam/gcode/B_bottom_cap_op1.nc`, `_op2.nc` | `cam/out/lathe_B_bottom_cap.png` |
 | Body tube 3 in × 0.065, faced to length | lathe (spider in the bore) | `B_body_tube_op1/2.nc` | `lathe_B_body_tube.png` |
 | Liner 2-3/4 in × 0.065 304, faced to length | lathe (collet or soft jaws) | `B_liner_op1/2.nc` | `lathe_B_liner.png` |
-| Catch puck Ø70 × 25, 304 (or OFHC Cu for copper alloys) | lathe | `B_puck_op1/2.nc` | `lathe_B_puck.png` |
+| Catch puck Ø70 × 25, 304 (or OFHC Cu for copper alloys), 6×45° underneath to clear the R6 corner | lathe | `B_puck_op1/2.nc` | `lathe_B_puck.png` |
 | Weld-alignment V-block, 6061 | mill, 2 setups | `fixture_op1.nc`, `fixture_op2.nc` | CAMotics, `cam/out/mill_fixture_sections.png` |
 
 The programs are Haas/LinuxCNC-style metric G-code. Prove them out in the shop's own CAM or simulator, at the
@@ -49,21 +49,27 @@ side, and the FEA shows at least 1.2 mm of it left when hot.
    an arc. Keep the purge on until each weld is below about 300 °C.
 4. Tack each seam three times, 120° apart. W1 is the stub's end to the reducer's 2 in end, at 19.05 mm from the
    sealing face. W2 is the reducer's 3 in end to the tube, at 120.65 mm, over the fixture's slot.
-5. Weld W1 and W2, rolling the part in the V. Use full penetration on 1.65 mm wall: about 40–60 A DCEN with a
-   1/16 in ER316L rod, or autogenous with a good fit-up.
-6. Stand the part upright, fit the disc's chamfered face into the tube's end, purge again and weld W3 flush.
+5. Weld W1 and W2, rolling the part in the V. Use full penetration on 1.65 mm wall: pulsed DCEN, about 40–60 A,
+   with a 1/16 in ER316L rod, or autogenous with a good fit-up. Keep the heat input at or below about 0.5 kJ/mm
+   (Edison's final check), and weld in short balanced segments. For W1, which is 19 mm from the sealing face,
+   clamp a copper chill block round the flange.
+6. Stand the part upright, fit the end cap's rim to the tube's end (both square), purge again and weld W3. W3 is
+   wall to wall like W2, 20 mm above the bottom. The cap's turned R6 inside corner takes the floor's thermal
+   stress, so don't add a fillet bead inside.
 7. Check the inside: full penetration, no sugaring (oxidised root) and no drop-through. Pickle or passivate the
    welds, using citric or nitric gel or the shop's usual process.
-8. Check the sealing face is flat (straight edge and a 0.05 mm feeler), the O-ring area is unscratched, and the
-   bore runs true to the flange within about 0.3 mm TIR.
+8. Check the sealing face is flat (straight edge and a 0.05 mm feeler) and the O-ring area is unscratched. Check
+   the bore runs true to the flange within about 0.3 mm TIR; above about 0.5 mm the centring ring may not seat.
+   Dye-penetrant check the three welds if the shop has it.
 
 ## 4. Leak and pressure test
 
 | Test | How | Pass |
 |---|---|---|
-| Bench soap test | KF-50 blank with a gas port (or a KF-50 to KF-16 reducer and a fitting) on top, centring ring, **over-pressure ring**, clamp. Argon at +0.3 bar from a regulator. Snoop on W1–W3 and the joint | no bubbles in 2 min |
-| Proof (optional) | same set-up at +1.2 bar (1.5 × the chamber's +0.8 bar relief) for 10 min, behind a shield | no change in a sealed-off gauge, then soap clean |
-| On the machine: rate of rise | cup installed, chamber pumped to full vacuum, pump valved off, gauge logged for 5 min | under about 1 mbar/min. A leak big enough to explain the Nov 13 O₂ readings rises about 25–30 mbar/min |
+| Proof (hydrostatic, once) | the welded body alone, without the KF seal: fill with water, cap with a blank and a code-rated clamp, 1.2 bar gauge for 10 min. That is 1.5 × an MAWP of +0.8 bar, the chamber's relief setting; the ASME VIII-1 minimum is 1.3 ×. Then drain, dry and passivate | no drop on a gauge, no weep. Edison prefers this to a pneumatic proof test |
+| Bench soap test | KF-50 blank with a gas port (or a KF-50 to KF-16 reducer and a fitting) on top, centring ring, **over-pressure ring**, clamp. Argon at +0.3 bar from a regulator. Snoop on W1–W3 and the joint, then rinse and dry | no bubbles in 2 min |
+| Assembled, optional | same set-up at about +0.9 bar (1.1 × MAWP), staged, behind a barrier | no change in a sealed-off gauge |
+| On the machine: rate of rise | cup installed, chamber pumped to full vacuum, pump valved off, gauge logged for 5 min. Record a baseline the first time and trend against it; some furnace-to-chamber leak through the graphite seals is normal | Edison's project-specific targets for 10–20 L: under about 0.04 mbar/min (gross, 10⁻² mbar·L/s), and about 0.004 mbar/min to purge well. A leak big enough to explain the Nov 13 O₂ readings rises about 25–30 mbar/min |
 | On the machine: soap at overpressure | chamber at its normal +150 mbar | no bubbles at the joint or welds |
 | AMAZEMET's one-minute rule | after a refill above +50 mbar, with the sensor's argon bleed flowing (blue cabinet) | O₂ below 1000 ppm within a minute and falling steadily |
 
@@ -81,7 +87,12 @@ only to about 1.5 bar absolute, while the relief opens at about 1.8 bar absolute
 
    The top clamp may have a zinc-plated screw, which is rated 121 °C. The bottom clamp must be all stainless.
    Keep the fibreglass leads (316 °C) off the hot wall.
-3. Connect both to the 2-channel meter (Auber SYL-2813AC). Each channel's relay drives the buzzer.
+3. Connect both to the 2-channel meter (Auber SYL-2813AC). Each channel's relay drives the buzzer. A washer
+   probe outside the wall lags the inside by tens of degrees in a fast transient. If the lab can log the two
+   channels (any USB type K logger), keep the traces with each run's record; a rate-of-rise trend catches what a
+   fixed set point misses.
+4. Hang a stainless safety lanyard from the cup to the frame, slack, so a failed clamp or burned O-ring can't
+   drop the cup (Edison's final check).
 
 | Channel | Alarm | What the FEA says it means |
 |---|---|---|
@@ -98,7 +109,8 @@ only to about 1.5 bar absolute, while the relief opens at about 1.8 bar absolute
    (stainless, FKM O-ring), put the over-pressure ring around the O-ring, then fit the clamp finger-tight.
    The hand calculation gives about 1.8 kN of clamping at finger-tight, against 0.84 kN of separating force at
    +1.2 bar.
-4. Check the cup hangs straight and the thermocouple leads are clear of the door and the frame.
+4. Check the cup hangs straight, the safety lanyard is clipped, and the thermocouple leads are clear of the door
+   and the frame.
 
 ## 7. Run limits
 
@@ -119,7 +131,8 @@ only to about 1.5 bar absolute, while the relief opens at about 1.8 bar absolute
 2. Take the clamp off, drop the cup 5 mm so the centring ring leaves the cone's 2 mm recess, slide it out
    toward you, and fit a KF-50 blank and clamp on top to carry it.
 3. Empty it by inverting over a sieve or a tray; the puck and liner come out too. Look at the liner and puck.
-   Replace them if metal is welded on or they no longer drop in.
+   Replace them if metal is welded on or they no longer drop in. Self-mated stainless can gall in argon, so keep
+   the edges rounded and the 1.5 mm gap. Don't use hydrocarbon anti-seize: it would end up in the powder.
 4. If the top thermocouple went over 150 °C, replace the O-ring. Edison's review notes FKM takes a compression
    set above about 200 °C.
 

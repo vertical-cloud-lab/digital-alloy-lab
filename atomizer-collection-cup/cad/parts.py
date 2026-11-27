@@ -11,6 +11,7 @@ import sys
 from pathlib import Path
 
 import cadquery as cq
+import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import params as P  # noqa: E402
@@ -358,13 +359,22 @@ def option_b_vessel_profile(recess=True):
     tan_len = 8.0   # straight ends of the sanitary reducer
     outer = [(rf, top), (rf, top - t_edge), (rh, top - kf.lip), (rt, top - kf.lip - 1.5), (rt, z_stub - tan_len),
              (R_o, z_red + tan_len), (R_o, z_bot)]
-    inner = [(0, z_bot), (0, z_bot + b["bottom_t"]), (R_i, z_bot + b["bottom_t"]), (R_i, z_red + tan_len),
-             (rb, z_stub - tan_len), (rb, top)]
+    fl, fr = z_bot + b["bottom_t"], b.get("bottom_fillet", 0.0)
+    arc = [(R_i - fr + fr * math.sin(math.radians(a)), fl + fr - fr * math.cos(math.radians(a)))
+           for a in np.linspace(0, 90, 10)] if fr else [(R_i, fl)]
+    inner = [(0, z_bot), (0, fl)] + arc + [(R_i, z_red + tan_len), (rb, z_stub - tan_len), (rb, top)]
     if recess and kf.recess_depth:
         rr, rd = kf.recess_d / 2, kf.recess_depth
         inner = inner[:-1] + [(rb, top - rd), (rr, top - rd), (rr, top)]
     return outer + inner, dict(top=top, z_stub=z_stub, z_red=z_red, z_bot=z_bot, R_o=R_o, R_i=R_i,
-                               floor=z_bot + b["bottom_t"])
+                               floor=z_bot + b["bottom_t"], z_cap=z_bot + b["bottom_t"] + b.get("bottom_rim", 0.0))
+
+
+def puck_profile_b(z0=0.0):
+    """B's catch puck: 2 x 45 deg on top, 6 x 45 deg underneath so it clears the cap's R6 inside corner."""
+    b = P.B
+    R, h, c, cb = b["puck_d"] / 2, b["puck_h"], b["puck_chamfer"], b.get("puck_chamfer_bottom", b["puck_chamfer"])
+    return [(0, z0), (R - cb, z0), (R, z0 + cb), (R, z0 + h - c), (R - c, z0 + h), (0, z0 + h)]
 
 
 def option_b(with_liner=True, with_puck=True, explode=0.0, tcs=True):
@@ -376,14 +386,13 @@ def option_b(with_liner=True, with_puck=True, explode=0.0, tcs=True):
     parts = [("B: welded 316L vessel", vessel, STEEL, "316L")]
     # weld beads (visual only, not separate parts in the interference check)
     # W1: stub's tube end to the reducer's 2 in end; W2: reducer's 3 in end to the tube; W3: tube end to the disc
-    for zz, rr in ((z["z_stub"], kf.tube_od / 2), (z["z_red"], z["R_o"]), (z["floor"], z["R_o"])):
+    for zz, rr in ((z["z_stub"], kf.tube_od / 2), (z["z_red"], z["R_o"]), (z["z_cap"], z["R_o"])):
         bead = (cq.Workplane("XZ").center(rr + 0.2, zz - explode).circle(1.6)
                 .revolve(360, (-(rr + 0.2), 0, 0), (-(rr + 0.2), 1, 0)).val())
         parts.append((f"B: weld bead z={zz:.0f}", bead, STEEL_HOT, "weld"))
     floor = z["floor"] - explode
     if with_puck:
-        puck = (cq.Workplane("XY").circle(b["puck_d"] / 2).extrude(b["puck_h"])
-                .edges().chamfer(b["puck_chamfer"]).val().translate((0, 0, floor + 0.2 - explode * 0.4)))
+        puck = revolve(puck_profile_b()).translate((0, 0, floor + 0.2 - explode * 0.4))
         parts.append(("B: catch puck (304)", puck, STEEL_HOT, "304"))
         floor = floor + 0.2 + b["puck_h"]
     if with_liner:

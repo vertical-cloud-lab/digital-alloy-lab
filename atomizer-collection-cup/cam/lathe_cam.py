@@ -78,6 +78,8 @@ class Part:
     section: list                # target half-section polygon, part frame, setup-1 orientation
     ops: list = field(default_factory=list)
     note: str = ""
+    blind_z: float = None        # a blind pocket: drill only to this z (part frame) and part off through the centre
+    drill_r: float = None        # drill radius for a blind pocket
 
 
 def liner_length_b():
@@ -87,23 +89,29 @@ def liner_length_b():
 
 
 def body_tube_length_b():
-    return round(P.B["body_len"] - P.B["stub_len"] - P.B["reducer_len"] - P.B["bottom_t"], 1)
+    """From the reducer's 3 in end to the end cap's rim (W2 to W3)."""
+    return round(P.B["body_len"] - P.B["stub_len"] - P.B["reducer_len"] - P.B["bottom_t"] - P.B.get("bottom_rim", 0.0), 2)
 
 
 def parts():
     b, a, c, s = P.B, P.A, P.C, P.STOCK
     out = []
-    R, t, ch = b["body_od"] / 2, b["bottom_t"], 1.0
-    out.append(Part("B_bottom_disc", "316L", (0, 3.25 * INCH / 2, -10.0, t + 1.0),
-                    [(0, 0), (R - 0.5, 0), (R, 0.5), (R, t - ch), (R - ch, t), (0, t)],
-                    ops=["face", "rough_od", "finish_od", "part", "op2_face", "op2_chamfer"],
-                    note="3-1/4 in. 316L bar. The 1 x 45 deg chamfered face goes against the tube's square end; "
-                         "with the tube that makes the groove the TIG root fills (argon back-purge inside)."))
+    R, t = b["body_od"] / 2, b["bottom_t"]
+    Ri, fr, H = R - b["body_wall"], b["bottom_fillet"], b["bottom_t"] + b["bottom_rim"]
+    arc = [(Ri - fr + fr * math.cos(math.radians(a)), t + fr + fr * math.sin(math.radians(a)))
+           for a in np.linspace(0, -90, 10)]
+    out.append(Part("B_bottom_cap", "316L", (0, 3.25 * INCH / 2, -10.0, H + 1.0),
+                    [(0, 0), (R - 0.5, 0), (R, 0.5), (R, H), (Ri, H)] + arc + [(0, t)],
+                    ops=["face", "drill", "bore", "rough_od", "finish_od", "part", "op2_face", "op2_chamfer"],
+                    blind_z=t + 1.5, drill_r=12.5,
+                    note="3-1/4 in. 316L bar. An end cap: 8 mm floor, 12 mm rim the tube's wall (W3 is a square butt "
+                         "weld 20 mm up), R6 inside corner (no sharp welded corner where the floor's thermal stress peaks)."))
     for tag, d in (("B", b), ("A", a)):
         R, h, cf = d["puck_d"] / 2, d["puck_h"], d["puck_chamfer"]
+        cb = d.get("puck_chamfer_bottom", cf)          # B: 6 x 45 deg underneath, to clear the cap's R6 corner
         bar = (3.0 if R * 2 > 50 else 2.0) * INCH / 2
         out.append(Part(f"{tag}_puck", "304", (0, bar, -10.0, h + 1.0),
-                        [(0, 0), (R - cf, 0), (R, cf), (R, h - cf), (R - cf, h), (0, h)],
+                        [(0, 0), (R - cb, 0), (R, cb), (R, h - cf), (R - cf, h), (0, h)],
                         ops=["face", "rough_od", "finish_od", "part", "op2_face", "op2_chamfer"],
                         note=f"{bar * 2 / INCH:.0f} in. 304 bar. Sits loose on the floor; the liner stands on it."))
     ro, ri = b["liner_od"] / 2, b["liner_od"] / 2 - b["liner_wall"]
@@ -259,15 +267,17 @@ def gen(part):
     r_hole = r_in
     if "drill" in part.ops and r_in == 0:
         p.use("drill")
-        dd = min(r_bore_min - 1.5, 12.5)
-        p.lines.append(f"(drill Ø{2 * dd:.1f} through, 5 mm pecks; spot drill first)")
+        dd = part.drill_r if part.drill_r else min(r_bore_min - 1.5, 12.5)
+        z_end = part.blind_z if part.blind_z is not None else zmin - 2.5
+        p.lines.append(f"(drill Ø{2 * dd:.1f} {'to z %.1f' % z_end if part.blind_z is not None else 'through'}, "
+                       f"5 mm pecks; spot drill first)")
         p.g0(0, zmax + 3)
         zd = zmax
-        while zd > zmin - 2.5:
-            zd = max(zd - 5.0, zmin - 2.5)
+        while zd > z_end:
+            zd = max(zd - 5.0, z_end)
             p.g1(0, zd, 0.10)
             p.g0(0, zmax + 3)
-        p.moves.append(("DRILL", "drill", (0, zmax + 3), (dd, zmin - 2.5), 0.10, 20))
+        p.moves.append(("DRILL", "drill", (0, zmax + 3), (dd, z_end), 0.10, 20))
         r_hole = dd
     if "bore" in part.ops:
         tb = TOOLS["bore"]
@@ -354,8 +364,9 @@ def gen(part):
         p.use("part")
         tp = TOOLS["part"]
         zc = zmin - tp.width / 2 - 0.3
+        r_stop = -0.3 if (part.blind_z is not None or r_hole <= 0) else r_hole - 0.5
         p.g0(clear, zc)
-        p.g1((r_hole - 0.5) if r_hole > 0 else -0.3, zc, tp.f)
+        p.g1(r_stop, zc, tp.f)
         p.g0(clear, zc)
     p.end()
     progs.append(p)
@@ -374,7 +385,7 @@ def gen(part):
             q.g0(x_in2, zf - tf.nose_r - 1.0)
             q.g0(clear, zf - tf.nose_r - 1.0)
     if "op2_chamfer" in part.ops:
-        path = nose_path(sec, tf.nose_r, zmin - tf.nose_r, zmin + 3.0)
+        path = nose_path(sec, tf.nose_r, zmin - tf.nose_r, zmin + 7.0)      # up to a 6 mm chamfer
         r_hi, keep = path[0][0], []
         for r_, z_ in path:           # stop where the OD steps back in (an edge facing the free end of setup 2)
             if r_ < r_hi - 0.02 and z_ > zmin + 1.0:

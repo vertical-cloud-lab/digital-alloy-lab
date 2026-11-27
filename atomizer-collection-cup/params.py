@@ -97,12 +97,16 @@ A = dict(
 # drop in. The 3 in body gives the capacity a 2 in nipple can't (see option_capacity_cm3()).
 B = dict(
     stub_len=19.05,            # KF-50 x 2 in butt-weld stub, face to tube end (McMaster 4518K38, Lesker QF50-200-SST)
-    reducer_len=101.6,         # 3 x 2 in butt-weld concentric reducer, 316L, 0.065 wall (McMaster 5237K471)
+    reducer_len=101.6,         # 3 x 2 in butt-weld concentric reducer, 316L, 0.065 wall (McMaster 5237K471);
+                               # drawn with 8 mm straight ends (parts.py tan_len); McMaster's STEP is a plain cone
+                               # (cad/out/vendor_check.md), so check the real part's ends before welding
     body_od=76.2, body_wall=1.65,  # 3 in x 0.065 in 316 tube (OnlineMetals 4256)
     body_len=250.0,            # KF face to the outside of the bottom; check against the measured room
-    bottom_t=8.0,              # welded 316L disc (a flat floor and some heat sink)
+    bottom_t=8.0,              # floor of the turned 316L end cap (heat sink)
+    bottom_rim=12.0,           # the cap's rim above the floor: W3 is a wall-to-wall butt weld 20 mm up, away from
+    bottom_fillet=6.0,         # the inside corner, which is turned to R6 (Edison final check: no sharp welded corner)
     liner_od=69.85, liner_wall=1.65,   # 2-3/4 in x 0.065 in 304 tube (McMaster 11116N864; 0.049 not stocked)
-    puck_d=70.0, puck_h=25.0, puck_chamfer=2.0,
+    puck_d=70.0, puck_h=25.0, puck_chamfer=2.0, puck_chamfer_bottom=6.0,   # 6 x 45 deg clears the R6 corner
 )
 
 # Option C: glass rebuild. Stock plates, tie rods and valve body; fused-quartz tube; FKM seals; a

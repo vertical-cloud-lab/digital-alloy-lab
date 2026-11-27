@@ -167,9 +167,18 @@ def design_B(mass_g, liner=True, puck=True, puck_mat="S304", pile_mat="PILE", pi
     R_i = z["R_i"]
     zz = floor
     if puck:
-        regs.append(F.Region("puck_contact", "CONTACT_PUCK", rect(0, b["puck_d"] / 2, floor, floor + 0.5), 0.5))
-        regs.append(F.Region("puck", puck_mat, rect(0, b["puck_d"] / 2, floor + 0.5, floor + 0.5 + b["puck_h"]), 2.5))
-        regs.append(F.Region("puck_gap", "GAP15", rect(b["puck_d"] / 2, R_i, floor, floor + 0.5 + b["puck_h"]), 0.7))
+        from shapely.geometry import box as _box
+        R, cb = b["puck_d"] / 2, b.get("puck_chamfer_bottom", 0.0)
+        contact = rect(0, R - cb, floor, floor + 0.5)
+        pk = [(x, y + floor + 0.5) for x, y in PT.puck_profile_b()][:4] + [(R, floor + 0.5 + b["puck_h"]),
+                                                                         (0, floor + 0.5 + b["puck_h"])]
+        regs.append(F.Region("puck_contact", "CONTACT_PUCK", contact, 0.5))
+        regs.append(F.Region("puck", puck_mat, pk, 2.5))
+        # the argon between the puck (chamfer, side) and the cap's R6 corner and wall, up to the puck's top
+        gap = (_box(0, floor - 0.01, R_i, floor + 0.5 + b["puck_h"]).difference(Polygon(prof))
+               .difference(Polygon(pk)).difference(Polygon(contact)))
+        gap = max(getattr(gap, "geoms", [gap]), key=lambda q: q.area)
+        regs.append(F.Region("puck_gap", "GAP15", [tuple(c) for c in list(gap.exterior.coords)[:-1]], 0.6))
         zz = floor + 0.5 + b["puck_h"]
     r_pile = R_i
     top_liner = z["z_red"] + 8.0 - 3.0
@@ -397,6 +406,7 @@ CASES = {
     "B_hangup_25": ("B", 25, {"hangup": True}), "B_hangup_100": ("B", 100, {"hangup": True}),
     "B_816_powder400": ("B", 816, {"pile_mat": "POWDER", "pile_T": 400.0}),
     "S_seat_120": ("S", 120, {}), "S_glass_300": ("S", 300, {"where": "glass"}),
+    "B_816_fine": ("B", 816, {}, {"mesh_scale": 0.55}), "B_hangup_25_fine": ("B", 25, {"hangup": True}, {"mesh_scale": 0.55}),
     "C_400_boro": ("C", 400, {"glass": "BORO"}),
 }
 SEAL_SETS = {"A": ["oring", "boring"], "B": ["oring"], "C": ["oring", "seal_top", "seal_bot"],
@@ -693,13 +703,14 @@ def pile_power(m, blocks, pile_top):
 
 def run_case(name, spec):
     design, mass, kw = spec[0], spec[1], spec[2]
-    extra = spec[3] if len(spec) > 3 else {}
+    extra = dict(spec[3]) if len(spec) > 3 else {}
+    mesh_scale = extra.pop("mesh_scale", MESH_SCALE)
     d = OUT / name
     d.mkdir(parents=True, exist_ok=True)
     regs, cavity, probes, info = DESIGNS[design](mass, **kw)
     t0 = time.time()
     for r in regs:
-        r.size *= MESH_SCALE
+        r.size *= mesh_scale
     m = F.build_mesh(regs, order=1)
     deck1 = write_deck(d / "pass1.inp", m, regs, cavity, probes, info, extra, None, design)
     F.run_ccx("pass1", d, threads=1)

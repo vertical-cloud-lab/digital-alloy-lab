@@ -28,8 +28,8 @@ def price(vendor, pn):
 B = [
     ("B1", "KF-50 x 2 in butt-weld stub, 304L, 19.05 mm (316L QF50-200-SSL not stocked)", "A&N", "4000126", 1, 1),
     ("B2", "3 x 2 in concentric butt-weld reducer, 316L, 0.065 wall, 101.6 long", "McMaster", "5237K471", 1, 1),
-    ("B3", "3 in OD x 0.065 316 tube, 12 in (body: 121.35 mm + facing)", "OnlineMetals", "4256", 1, 1),
-    ("B4", "3-1/4 in 316 round bar, 1 in (bottom disc blank)", "Speedy", "p-2646", 1, 1),
+    ("B3", "3 in OD x 0.065 316 tube, 12 in (body: 109.35 mm + facing)", "OnlineMetals", "4256", 1, 1),
+    ("B4", "3-1/4 in 316 round bar, 1.5 in (end cap blank: 20 mm part + chuck + parting)", "Speedy", "p-2646", 1, 1.5),
     ("B5", "2-3/4 in OD x 0.065 304 tube, 12 in (liner)", "OnlineMetals", "mp-00038303", 1, 1),
     ("B6", "3 in 304 round bar, 1.5 in (catch puck blank)", "Speedy", "p-1872", 1, 1.5),
     ("B7", "Over-pressure ring for the cone's KF-50 joint, 304L, 50 psig", "A&N", "4000076", 1, 1),
@@ -50,6 +50,7 @@ B_NOT_PRICED = [
     ("B19", "304 shim stock 0.025 in (0.64 mm), a 1 x 3 in strip (flange shim in the fixture)", "shop stock"),
     ("B20", "All-stainless worm clamp for the 3 in body (bottom thermocouple)", "not priced"),
     ("B21", "AMAZEMET cone shields", "should be in the lab (AMAZEMET: 'you should have the replacements')"),
+    ("B22", "Stainless safety lanyard / wire rope with a clip, cup to frame (Edison: secondary restraint)", "shop stock"),
 ]
 A = [
     ("A1", "KF-50 full nipple, 160 mm, 304", "Duniway", "KF50-NP", 1, 1),

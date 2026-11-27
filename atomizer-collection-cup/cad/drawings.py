@@ -106,8 +106,8 @@ def weld_symbol(ax, xy, xytext, text):
 def sheet_b_weldment(pdf):
     kf, b = P.JOINT, P.B
     prof, z = PT.option_b_vessel_profile()
-    fig, ax = sheet("B: welded 316L cup (weldment)", 1, "KF-50 stub 304/316L; reducer, tube, disc 316L; filler ER316L",
-                    ["TIG, argon back-purge inside (vessel capped, 5-10 L/min), full penetration, flush inside.",
+    fig, ax = sheet("B: welded 316L cup (weldment)", 1, "KF-50 stub 304/316L; reducer, tube, end cap 316L; filler ER316L",
+                    ["TIG (pulsed, <=0.5 kJ/mm), argon back-purge inside, full penetration; copper chill on the flange for W1.",
                      "Leak-test before use: soap at +0.15 bar and rate-of-rise (procedure.md).",
                      "Pickle/passivate welds (citric or nitric) or brush with a stainless-only brush.",
                      "Weld in the V-block fixture (sheet 3); check the bore runs true to 0.3 TIR."])
@@ -117,13 +117,15 @@ def sheet_b_weldment(pdf):
     R_o = z["R_o"]
     # dimensions on the right
     x = R_o + 22
-    for y in (top, z["z_stub"], z["z_red"], z["floor"], zb):
+    for y in (top, z["z_stub"], z["z_red"], z["z_cap"], z["floor"], zb):
         ext(ax, (R_o + 1, y), (x + 3, y))
     dim_v(ax, x, zb, top, f"{b['body_len']:.0f} overall (sealing face to bottom) *")
     dim_v(ax, x - 9, z["z_stub"], top, f"{b['stub_len']:.2f} stub", fs=6.5)
     dim_v(ax, x - 9, z["z_red"], z["z_stub"], f"{b['reducer_len']:.1f} reducer", fs=6.5)
-    dim_v(ax, x - 9, z["floor"], z["z_red"], f"{z['z_red'] - z['floor']:.2f} tube", fs=6.5)
-    dim_v(ax, x - 9, zb, z["floor"], f"{b['bottom_t']:.0f}", fs=6.5)
+    dim_v(ax, x - 9, z["z_cap"], z["z_red"], f"{z['z_red'] - z['z_cap']:.2f} tube", fs=6.5)
+    dim_v(ax, x - 9, zb, z["z_cap"], f"{z['z_cap'] - zb:.0f} cap", fs=6.5)
+    dim_v(ax, x - 18, zb, z["floor"], f"{b['bottom_t']:.0f}", fs=6.0)
+    leader(ax, (z["R_i"] - 2.5, z["floor"] + 1.2), (z["R_i"] + 30, z["floor"] + 25), f"R{b['bottom_fillet']:.0f} inside")
     # diameters
     dim_h(ax, -kf.flange_od / 2, kf.flange_od / 2, top + 9, f"KF-50 flange Ø{kf.flange_od:.2f}")
     dim_h(ax, -kf.bore / 2, kf.bore / 2, top - 30, f"bore Ø{kf.bore:.1f}", above=False)
@@ -134,12 +136,12 @@ def sheet_b_weldment(pdf):
     weld_symbol(ax, (-kf.tube_od / 2, z["z_stub"]), (-120, z["z_stub"] + 4),
                 "W1: square butt, TIG, full pen.\nstub to reducer (0.065 wall)")
     weld_symbol(ax, (-R_o, z["z_red"]), (-125, z["z_red"] - 4), "W2: square butt, TIG, full pen.\nreducer to tube")
-    weld_symbol(ax, (-R_o, zb + 1), (-125, zb + 14), "W3: disc 1x45 chamfer into the tube\nend, TIG, fill flush")
+    weld_symbol(ax, (-R_o, z["z_cap"]), (-125, z["z_cap"] + 10), "W3: square butt, TIG, full pen.\ntube to the end cap's rim")
     # catalogue part list
     rows = [("1", "KF-50 x 2 in butt-weld stub, 19.05 long", "McMaster 4518K38 (304) / Lesker QF50-200-SST", "1"),
             ("2", "3 x 2 in concentric butt-weld reducer, 316L", "McMaster 5237K471", "1"),
-            ("3", f"3 in OD x 0.065 316 tube, cut and faced to {z['z_red'] - z['floor']:.2f}", "OnlineMetals 4256", "1"),
-            ("4", "bottom disc Ø76.2 x 8, 316L (sheet 2)", "turned from 3-1/4 in bar (Speedy p-2646)", "1")]
+            ("3", f"3 in OD x 0.065 316 tube, cut and faced to {z['z_red'] - z['z_cap']:.2f}", "OnlineMetals 4256", "1"),
+            ("4", "end cap Ø76.2 x 20, R6 inside, 316L (sheet 2)", "turned from 3-1/4 in bar (Speedy p-2646)", "1")]
     y0 = top + 40
     ax.text(-160, y0 + 8, "Parts", fontsize=9, weight="bold")
     for i, r in enumerate(rows):
@@ -169,7 +171,7 @@ def sheet_b_parts(pdf):
                      "Liner: deburr the bore by hand; it must drop in freely (1.5 mm radial gap).",
                      "Tube: square ends, no burr, no gap at W2/W3 (fit-up for autogenous root)."])
     x0 = 0
-    for name, label, extra in (("B_bottom_disc", "Bottom disc (W3)", "1 x 45 deg chamfer = weld prep"),
+    for name, label, extra in (("B_bottom_cap", "End cap (W3 at the rim)", "8 floor, 12 rim, R6 inside"),
                                ("B_puck", "Catch puck", "loose; sits on the floor"),
                                ("B_liner", "Liner", "2-3/4 in x 0.065 304 tube"),
                                ("B_body_tube", "Body tube", "3 in x 0.065, faced square")):
