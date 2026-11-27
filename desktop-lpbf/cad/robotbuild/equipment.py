@@ -190,6 +190,8 @@ VF4 = dict(
     spindle_y=838.0, table_front_y=341.0, nose_to_table=(107.0, 742.0),
     door_w=1588.0, sill_z=880.0, header_z=1900.0, front_t=60.0,   # aperture (2023 drawing); sill and header est.
     door_t=28.0, win=(560.0, 600.0),                               # each door's window (est.)
+    column_y=1350.0,     # the column's front face (est.; round 9: at 1180 the table, 508 mm of Y travel back from its
+                         # load position, ran 164 mm into it while F-S1 cut the part's front edge)
     pendant=(477.0, 635.0, 95.0),                                  # NGC pendant as PR 318 fitted it on the ST-10
     carousel_r=360.0, pockets=20,
 )
@@ -255,7 +257,9 @@ def hrt210(a_deg=0.0, riser=63.5, with_tail=False, tail_x=420.0):
     return parts, dict(axis=(0.0, 0.0, zc), riser=riser)
 
 
-TABLE_LAYOUT = dict(hrt_face=-200.0, fixture=100.0, vise=300.0)   # table-local x of the platter face, the 3-axis
+TABLE_LAYOUT = dict(hrt_face=-240.0, fixture=180.0, vise=300.0)   # table-local x of the platter face, the 3-axis
+# (round 9: the HRT210 40 mm further left and the 3-axis fixtures 80 mm further right: with the floor plate's
+# O-ring groove cut at its left edge, the head came down onto the HRT210's housing)
                                                                   # fixtures' centre and the vise's centre (our layout)
 
 
@@ -285,7 +289,7 @@ def vf4(door=1.0, table_x=0.0, table_y=0.0, spindle_z=None, vise_open=150.0, hrt
     # round 9 (scene_audit, chapter 30): the head rides up into the column hood at Z home, so the hood over the head is a
     # sheet-metal shell (4 mm walls, open below) and the roof has the hood's opening; the hood behind y 1180 covers the
     # column's top (the column fills it)
-    hw_, hy0, hy1, sh = 330.0, 600.0, 1180.0, 4.0
+    hw_, hy0, hy1, sh = 330.0, 600.0, P["column_y"], 4.0
     out["roof"] = Part(merge([box(-W / 2, -560, ft, D, H - 20, H), box(560, W / 2, ft, D, H - 20, H),
                               box(-560, -hw_, 600, 1050, H - 20, H), box(hw_, 560, 600, 1050, H - 20, H)]), C["haas"])
     out["roof panel over the table"] = Part(box(-560, 560, ft, 600, H - 20, H), C["haas"], group="roof panel")
@@ -333,15 +337,16 @@ def vf4(door=1.0, table_x=0.0, table_y=0.0, spindle_z=None, vise_open=150.0, hrt
     yc = tf + tW / 2 + table_y
     out["saddle"] = Part(box(xc * 0 - 700, 700, yc - 330, yc + 330, 420, tz - tt), C["haas_dark"])
     out["base casting"] = Part(box(-W / 2 + 120, W / 2 - 120, tf - 20, D - 80, 0, 420), C["haas_dark"])
-    out["Y way cover (bellows)"] = Part(box(-650, 650, yc + 330, 1180, tz - tt - 60, tz - tt - 20), "#596169")
+    out["Y way cover (bellows)"] = Part(box(-650, 650, yc + 330, P["column_y"], tz - tt - 60, tz - tt - 20), "#596169")
     body, slots = vf4_table(tz, xc, yc, P)
     out["table"] = Part(body, C["table"], group="table")
     out["table T-slots"] = Part(slots, C["slot"], collide=False, group="table")
     ysp = P["spindle_y"]
     nose = tz + (P["nose_to_table"][1] if spindle_z is None else spindle_z)
-    out["column"] = Part(box(-560, 560, 1180, D - 80, 420, P["col_top"] - 60), C["haas_dark"])
-    out["head"] = Part(merge([box(-250, 250, ysp - 170, 1180, nose + 150, nose + 820),
-                              box(-200, 200, ysp + 120, 1180, nose + 820, nose + 1050)]), C["haas"], group="head")
+    cy = P["column_y"]
+    out["column"] = Part(box(-560, 560, cy, D - 80, 420, P["col_top"] - 60), C["haas_dark"])
+    out["head"] = Part(merge([box(-250, 250, ysp - 170, cy, nose + 150, nose + 820),
+                              box(-200, 200, ysp + 120, cy, nose + 820, nose + 1050)]), C["haas"], group="head")
     out["head stripe"] = Part(box(-252, 252, ysp - 172, ysp - 168, nose + 700, nose + 740), C["haas_red"], collide=False,
                               group="head")
     out["spindle nose"] = Part(cyl((0, ysp, nose), (0, ysp, nose + 150), 85.0, res=48), C["steel"], group="head")

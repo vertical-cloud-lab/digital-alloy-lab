@@ -509,17 +509,33 @@ def pair_lift(w, scn, crew, name, spec, keys, kg, caption, sub, step, cam, hand_
     seq = [(0.0, 0, 0.0)] * 0
     gaps, clears, reaches, deep = [], [], [], []
     poses = []
+    def via(p, s_, h, away, u):
+        """A hand from where it hangs (u 0) to h (u 1) by way of a point 150 mm out from the end face (along `away`)
+        at h's height: it comes in level, never through the load or what it stands on."""
+        pre = np.asarray(h, float) + 150.0 * np.asarray(away, float)
+        r = p.rest_hand(s_)
+        if u < 0.55:
+            return tuple(r + (pre - r) * ease(u / 0.55))
+        return tuple(pre + (np.asarray(h, float) - pre) * ease((u - 0.55) / 0.45))
+
+    def away_of(i, P):
+        nrm = M[:3, :3] @ P[:3, :3] @ np.array([1.0, 0.0, 0.0])
+        nrm = nrm * (1.0 if float(nrm @ (M[:3, :3] @ np.array([1.0, 0, 0]))) >= 0 else -1.0)
+        return -nrm if i == 0 else nrm                  # the end face's outward normal (world)
+
     # reach in: the hands from where they hang to the load, the lean easing in
     for k in range(n_reach):
-        u = ease((k + 1) / n_reach)
+        u = (k + 1) / n_reach
         for i in range(2):
             org, hd, lean, hands, r = stance(i, P0)
             p = crew.p[i]
-            tg = {s: tuple(p.rest_hand(s) + (np.asarray(hands[s]) - p.rest_hand(s)) * u) for s in hands}
-            nrm = np.array([-1.0, 0.0, 0.0]) if i == 0 else np.array([1.0, 0.0, 0.0])
-            nrm = M[:3, :3] @ nrm
+            aw = away_of(i, P0)
+            tg = {s: via(p, s, hands[s], aw, u) for s in hands}
             crew.step(i, org[0], org[1], hd, hands=tg, look=tuple((np.asarray(hands["l"]) + hands["r"]) / 2),
-                      lean=lean * u, palm={"l": tuple(-nrm), "r": tuple(-nrm)}, grip={"l": 0.1, "r": 0.1})
+                      lean=lean * ease(u), palm={"l": tuple(-aw), "r": tuple(-aw)}, grip={"l": 0.1, "r": 0.1})
+            if u >= 1.0:
+                Mbox0 = M @ P0 @ E.T(tuple(c_loc))
+                seat_hands(p, hands, [(Mbox0, half)], away={"l": tuple(aw), "r": tuple(aw)})
         w.frame(scn, cam, caption, sub=sub, who=["person"], step=step, status="person")
     # the carry along the keys
     Pprev = P0
@@ -538,9 +554,7 @@ def pair_lift(w, scn, crew, name, spec, keys, kg, caption, sub, step, cam, hand_
             Mbox = M @ P @ E.T(tuple(c_loc))
             for i in range(2):
                 org, hd, lean, hands, r = stance(i, P)
-                nrm = M[:3, :3] @ P[:3, :3] @ np.array([1.0, 0.0, 0.0])
-                nrm = nrm * (1.0 if float(nrm @ (M[:3, :3] @ np.array([1.0, 0, 0]))) >= 0 else -1.0)
-                away = -nrm if i == 0 else nrm                  # the end face's outward normal (world)
+                away = away_of(i, P)
                 p = crew.p[i]
                 crew.step(i, org[0], org[1], hd, hands={s: tuple(v_) for s, v_ in hands.items()},
                           look=tuple((np.asarray(hands["l"]) + hands["r"]) / 2), lean=lean,
@@ -556,12 +570,14 @@ def pair_lift(w, scn, crew, name, spec, keys, kg, caption, sub, step, cam, hand_
     # let go: the hands back down, the lean out
     Pend = keys[-1][0]
     for k in range(n_rel):
-        u = ease((k + 1) / n_rel)
+        u = (k + 1) / n_rel
         for i in range(2):
             org, hd, lean, hands, r = stance(i, Pend)
             p = crew.p[i]
-            tg = {s: tuple(np.asarray(hands[s]) + (p.rest_hand(s) - np.asarray(hands[s])) * u) for s in hands}
-            crew.step(i, org[0], org[1], hd, hands=tg, look=None, lean=lean * (1.0 - u))
+            aw = away_of(i, Pend)
+            tg = {s: via(p, s, hands[s], aw, 1.0 - u) for s in hands}
+            crew.step(i, org[0], org[1], hd, hands=tg, look=None, lean=lean * (1.0 - ease(u)),
+                      palm={"l": tuple(-aw), "r": tuple(-aw)}, grip={"l": 0.1, "r": 0.1})
         w.frame(scn, cam, caption, sub=sub, who=["person"], step=step, status="person")
     for i in range(2):
         crew.step(i, crew.st[i]["x"], crew.st[i]["y"], crew.st[i]["hd"], lean=0.0)
@@ -586,7 +602,7 @@ def pair_lift(w, scn, crew, name, spec, keys, kg, caption, sub, step, cam, hand_
 
 
 def carry_lift(w, scn, crew, name, spec, keys, kg, caption, sub, step, cam, ends=("-x", "+x"), grip=None, M_st=None,
-               frames_per_m=55.0, walk_in=True):
+               frames_per_m=55.0, walk_in=True, inset=None, z_below_top=None, clear=40.0):
     """Two people carrying a load by its two ends (people.carry: each stands outside one end, facing the load, its
     hands on the faces beside the end or under it): they walk to their stances, take hold, carry it along the keys
     [(load pose in M_st's frame, seconds or None)] (their stances rigid in the load's frame, so the Gait walks them
@@ -601,24 +617,65 @@ def carry_lift(w, scn, crew, name, spec, keys, kg, caption, sub, step, cam, ends
     keep = ("x", "y", "hd", "lean", "hands", "palm", "elbow", "bend", "grip", "look")
 
     def st_at(P):
-        return SS.people.carry(lo, hi, M @ P, ends=ends, grip=grip)
+        zh = None
+        if z_below_top is not None:                   # the hands near the top edge, so the fingers stay off what
+            cw = np.array([[x, y, z] for x in (lo[0], hi[0]) for y in (lo[1], hi[1]) for z in (lo[2], hi[2])])
+            zh = float(((M @ P)[:3, :3] @ cw.T).T[:, 2].max() + (M @ P)[2, 3]) - z_below_top   # it stands on
+        return SS.people.carry(lo, hi, M @ P, ends=ends, grip=grip, inset=inset, z_hands=zh, clear=clear)
+
+    half = (hi - lo) / 2
+
+    def seat(i, d, P):
+        """Round 9: each palm moved off the face it is on until the glove is outside the load (2.5 mm): one person's
+        two hands on two opposite faces read, to the frame audit, as the load clamped inside the glove."""
+        if not d.get("hands") or not d.get("palm"):
+            return 0.0
+        away = {s_: -np.asarray(d["palm"][s_], float) for s_ in d["hands"] if d["palm"].get(s_) is not None
+                and not isinstance(d["palm"][s_], str)}
+        if len(away) < 2:
+            return 0.0
+        _, left, _ = seat_hands(crew.p[i], {s_: np.asarray(h, float) for s_, h in d["hands"].items()},
+                                [(M @ P @ E.T(tuple(c_loc)), half)], away=away)
+        return left
 
     crew.show(1.0)
     scn.set_obj(name, M @ P0, spec)
     s0 = st_at(P0)
     if walk_in:
-        crew.walk_to(w, [(s_["x"], s_["y"]) for s_ in s0], cam, caption, sub, step, face=[s_["hd"] for s_ in s0])
+        # first to 450 mm behind each stance, then the last steps straight in along it (round 9: walking straight to
+        # the stances brushed the load's corners)
+        pre = []
+        for s_ in s0:
+            a = math.radians(s_["hd"])
+            pre.append((s_["x"] - 450.0 * -math.sin(a), s_["y"] - 450.0 * math.cos(a)))
+        crew.walk_to(w, pre, cam, caption, sub, step, face=[s_["hd"] for s_ in s0], settle=2)
+        crew.walk_to(w, [(s_["x"], s_["y"]) for s_ in s0], cam, caption, sub, step, face=[s_["hd"] for s_ in s0],
+                     speed=600.0)
     n_reach, n_rel = 10, 10
     clears, deep, reaches = [], [], []
+    def via(p, s_, h, hd_, u):
+        """A hand from where it hangs (u 0) to h (u 1) by way of a point 150 mm out from the load towards the body at
+        h's height, so it comes in level and never through the load or what it stands on."""
+        a = math.radians(hd_)
+        back = -np.array([-math.sin(a), math.cos(a), 0.0])
+        pre = np.asarray(h, float) + 150.0 * back
+        r = p.rest_hand(s_)
+        if u < 0.55:
+            v_ = ease(u / 0.55)
+            return tuple(r + (pre - r) * v_)
+        v_ = ease((u - 0.55) / 0.45)
+        return tuple(pre + (np.asarray(h, float) - pre) * v_)
+
     for k in range(n_reach):
-        u = ease((k + 1) / n_reach)
+        u = (k + 1) / n_reach
         for i in range(2):
             d = {kk: s0[i][kk] for kk in keep if kk in s0[i]}
             p = crew.p[i]
-            d["hands"] = {s: tuple(p.rest_hand(s) + (np.asarray(h) - p.rest_hand(s)) * u) for s, h in s0[i]["hands"].items()}
-            d["lean"] = s0[i]["lean"] * u
+            d["hands"] = {s: via(p, s, h, s0[i]["hd"], u) for s, h in s0[i]["hands"].items()}
+            d["lean"] = s0[i]["lean"] * ease(u)
             crew.st[i].update(x=d["x"], y=d["y"], hd=d["hd"])
             p.set(**d)
+            seat(i, d, P0)
         w.frame(scn, cam, caption, sub=sub, who=["person"], step=step, status="person")
     poses = []
     for (Pa, _), (Pb, secs) in zip(keys[:-1], keys[1:]):
@@ -641,6 +698,7 @@ def carry_lift(w, scn, crew, name, spec, keys, kg, caption, sub, step, cam, ends
                 d = {kk: ss[i][kk] for kk in keep if kk in ss[i]}
                 crew.st[i].update(x=d["x"], y=d["y"], hd=d["hd"])
                 crew.p[i].set(**d)
+                seat(i, d, P)
                 cc = SS.people.carry_check(crew.p[i], lo, hi, M @ P)
                 clears.append(cc["body_clear_mm"])
                 deep.append(cc["hands_in_mm"])
@@ -649,13 +707,14 @@ def carry_lift(w, scn, crew, name, spec, keys, kg, caption, sub, step, cam, ends
     Pend = keys[-1][0]
     se = st_at(Pend)
     for k in range(n_rel):
-        u = ease((k + 1) / n_rel)
+        u = (k + 1) / n_rel
         for i in range(2):
             d = {kk: se[i][kk] for kk in keep if kk in se[i]}
             p = crew.p[i]
-            d["hands"] = {s: tuple(np.asarray(h) + (p.rest_hand(s) - np.asarray(h)) * u) for s, h in se[i]["hands"].items()}
-            d["lean"] = se[i]["lean"] * (1.0 - u)
+            d["hands"] = {s: via(p, s, h, se[i]["hd"], 1.0 - u) for s, h in se[i]["hands"].items()}
+            d["lean"] = se[i]["lean"] * (1.0 - ease(u))
             p.set(**d)
+            seat(i, d, Pend)
         w.frame(scn, cam, caption, sub=sub, who=["person"], step=step, status="person")
     for i in range(2):
         crew.p[i].set(hands={"l": None, "r": None}, palm={"l": None, "r": None}, elbow={"l": None, "r": None},
@@ -1253,6 +1312,11 @@ def chapter_30():
     crew.show(0.0)                                   # at the cut: they have gone (arm A docks where they stood)
     # ---- arm A tightens the four edge clamps (the planned clip), then the doors shut, same camera
     play(w, scn, "vf4_clamps", cam_arm, hide=("frame part",))
+    # round 9: arm A's MiR drives off (to the lathe) before the doors shut: they shut through its arm in round 8
+    if (load("drive_vf4c_lathe") or {}).get("result", {}).get("ok", False):
+        play(w, scn, "drive_vf4c_lathe", cam_arm, hide=("frame part",))
+    else:
+        scn.show_arm("A", False)
     for i in range(18):
         vf4.set(door=1.0 - ease((i + 1) / 18))
         w.frame(scn, cam_arm, "Doors shut; cycle start", sub="the auto door (option), ~1.5 s", who=["machine"],
@@ -1374,6 +1438,10 @@ def chapter_30():
                  "parallels")
         scn.hide_obj("floor part")
         vf4.part("floor part", fl.spec(), PF)
+        if (load("drive_vf4f_lathe") or {}).get("result", {}).get("ok", False):
+            play(w, scn, "drive_vf4f_lathe", cam_arm, hide=("floor part",))
+        else:
+            scn.show_arm("A", False)
         for i in range(18):
             vf4.set(door=1.0 - ease((i + 1) / 18))
             w.frame(scn, cam_arm, "Doors shut; cycle start", sub="the auto door (option), ~1.5 s", who=["machine"],
@@ -1525,11 +1593,11 @@ def chapter_32():
 
 
 def plate_stand(top=900.0):
-    """A narrow receiving stand for heavy stock (our estimate, not a catalogue item): two 50 mm square rails 220 mm apart
+    """A narrow receiving stand for heavy stock (our estimate, not a catalogue item): two 50 mm square rails 120 mm apart
     on a welded frame, top at `top`, 600 mm long, so two people can stand at a block's ends and hold it by its sides."""
-    rails = [E.box(x - 25, x + 25, -300, 300, top - 50, top) for x in (-110.0, 110.0)]
-    legs = [E.box(x - 20, x + 20, y - 20, y + 20, 0, top - 50) for x in (-110.0, 110.0) for y in (-270.0, 270.0)]
-    feet = [E.box(-135, 135, y - 25, y + 25, 0, 30) for y in (-270.0, 270.0)]
+    rails = [E.box(x - 25, x + 25, -300, 300, top - 50, top) for x in (-60.0, 60.0)]
+    legs = [E.box(x - 20, x + 20, y - 20, y + 20, 0, top - 50) for x in (-60.0, 60.0) for y in (-270.0, 270.0)]
+    feet = [E.box(-85, 85, y - 25, y + 25, 0, 30) for y in (-270.0, 270.0)]
     return {"plate stand": E.Part(E.merge(rails + legs + feet), E.C["stand"])}
 
 
@@ -1564,15 +1632,17 @@ def chapter_29():
     cap = f"Two people carry the frame's plate: {kg:.1f} kg"
     sub = (f"13 x 9.5 x 5.5 in. 6061-T651 as delivered; 2/3 x (23 + 23) = {TEAM_KG:.1f} kg two-person guideline "
            f"(NIOSH, HSE L23): {within} (a 15 in. plate, {kg15:.1f} kg, would be over)")
-    cam = [tuple((M29 @ np.r_[3900.0, -900.0, 3500.0, 1.0])[:3]), tuple((M29 @ np.r_[0.0, -700.0, 800.0, 1.0])[:3]),
-           (0, 0, 1)]                                            # from the side, high: the stand, the carry, the cart
+    cam = [tuple((M29 @ np.r_[2700.0, -3600.0, 2700.0, 1.0])[:3]), tuple((M29 @ np.r_[0.0, -720.0, 850.0, 1.0])[:3]),
+           (0, 0, 1)]                                            # from the aisle, high and to one side: both people,
+                                                                 # the stand, the carry, the cart
     for i in range(2):
         pw = (M29 @ np.r_[-1500.0 + 3000.0 * i, -2600.0, 0.0, 1.0])[:3]
         crew.place(i, pw[0], pw[1], 0.0)
     crew.show(1.0)
     keys = [(P_from, None), (E.T((0.0, 0.0, top + 70.0)), 1.0), (E.T((0.0, cart_y, CART["h"] + 70.0)), None),
             (P_to, 1.0)]
-    res = carry_lift(w, scn, crew, "plate", spec, keys, kg, cap, sub, "stock", cam, ends=("-x", "+x"), M_st=M29)
+    res = carry_lift(w, scn, crew, "plate", spec, keys, kg, cap, sub, "stock", cam, ends=("-x", "+x"), M_st=M29,
+                     grip="side", inset=28.0, z_below_top=32.0)
     cap2 = "Next: its core cut out by waterjet, off site"
     sub2 = ("setup_plan.json F-S0: BYU's ME prototyping lab (the robot shop has no waterjet); the 274 x 184 mm core "
             "out as one slug, then F-S1 on the VF-4")

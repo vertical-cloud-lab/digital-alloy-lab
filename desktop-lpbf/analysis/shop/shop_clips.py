@@ -70,6 +70,8 @@ def fixture_parts(fc, M_setup, skip=(), only=None):
         key = f"{nm} {n[nm]}"
         if kind == "box":
             x0, x1, y0, y1, z0, z1 = p
+            if nm == "edge clamp" and fc == "frame_B":   # round 9: the CAM's clamp boxes ran 5 mm into the risers'
+                y0, y1 = (y0, min(y1, 74.0)) if y0 > 0 else (max(y0, -74.0), y1)   # (y 75-125): drawn short of them
             m = E.box(x0, x1, y0, y1, z0, z1)
             if nm == "edge clamp":
                 cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
@@ -784,6 +786,27 @@ def clip_drive(name, chapter, akey, from_clip, to_clip, world_parts, caption, su
     return clip
 
 
+def clip_drive_vf4c_lathe():
+    """Chapter 30: MiR A from the VF-4 after the F-S1 clamps to the lathe, so the doors can shut behind it."""
+    row = next(r for r in states()["rows"] if r.get("setup") == "F-S1")
+    parts, meta, P, M_setup, m = vf4_setup("frame_B", k_state=0, rots=row["rots"])
+    return clip_drive("drive_vf4c_lathe", "30-machining-chamber", "A", "vf4_clamps", "lathe_slug",
+                      [("vf4", parts), ("lathe", E.st10(door=1.0, jaw_open=6.0)[0])],
+                      "Arm A's MiR drives on to the lathe; the doors shut behind it",
+                      "pivot, drive forward, pivot (a differential-drive base: no sliding sideways); 1.0 m/s, 0.3 m/s2; "
+                      "every pose swept with FCL", "F-S1")
+
+
+def clip_drive_vf4f_lathe():
+    """Chapter 30: MiR A from the VF-4 after loading the floor plate (P-S1) to the lathe."""
+    row = next(r for r in states()["rows"] if r.get("setup") == "P-S1")
+    parts, meta, P, M_setup, m = vf4_setup("floor_A", k_state=0, part="floor", rots=row["rots"])
+    return clip_drive("drive_vf4f_lathe", "30-machining-chamber", "A", "vf4_floor_load", "lathe_slug",
+                      [("vf4", parts), ("lathe", E.st10(door=1.0, jaw_open=6.0)[0])],
+                      "Arm A's MiR drives on to the lathe; the doors shut behind it",
+                      "pivot, drive forward, pivot; every pose swept with FCL", "P-S1")
+
+
 def clip_drive_vf4_lathe():
     """Chapter 31: MiR A from the VF-4 (after the vise part) to the lathe (before the slug), along the north row."""
     vf4p, _ = E.vf4(door=1.0, table_x=-E.TABLE_LAYOUT["vise"], with_vise=True, vise_open=120.0, with_hrt=True)
@@ -797,7 +820,8 @@ def clip_drive_vf4_lathe():
 CLIPS = dict(vf4_clamps=clip_vf4_clamps, vf4_floor_load=clip_floor_load, vf4_vise_part=clip_vise_part,
              lathe_slug=clip_lathe_slug, lathe_big=clip_lathe_big, saw_bar=clip_saw, deburr=clip_deburr, wash=clip_wash,
              measure=clip_measure, kit=clip_kit, recv_tape=clip_recv_tape, recv_unbox=clip_recv_unbox,
-             drive_vf4_lathe=clip_drive_vf4_lathe)
+             drive_vf4_lathe=clip_drive_vf4_lathe, drive_vf4c_lathe=clip_drive_vf4c_lathe,
+             drive_vf4f_lathe=clip_drive_vf4f_lathe)
 
 
 def main(argv):

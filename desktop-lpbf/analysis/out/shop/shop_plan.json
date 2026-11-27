@@ -50,7 +50,7 @@
      "kind": "joint",
      "note": "edge clamp 2: to the approach",
      "ok": true,
-     "t_s": 0.3,
+     "t_s": 0.2,
      "info": {
       "planned": false
      }
@@ -110,7 +110,7 @@
      "kind": "joint",
      "note": "edge clamp 4: to the approach",
      "ok": true,
-     "t_s": 0.3,
+     "t_s": 0.2,
      "info": {
       "planned": false
      }
@@ -140,11 +140,11 @@
      "kind": "joint",
      "note": "back to the carry pose",
      "ok": true,
-     "t_s": 4.1,
+     "t_s": 4.2,
      "info": {
       "planned": true,
-      "iterations": 85,
-      "nodes": 61,
+      "iterations": 117,
+      "nodes": 70,
       "waypoints": 3
      }
     }
@@ -162,7 +162,7 @@
    "name": "VF-4 P-S1: arm A (VGP20) loads the floor plate's blank onto the parallels",
    "ok": true,
    "fail": null,
-   "time_s": 9.1,
+   "time_s": 8.9,
    "gripper": "VGP20",
    "fine_audit_0p2deg": [],
    "worst_torque_frac": 0.512,
@@ -203,10 +203,10 @@
      "kind": "joint",
      "note": "carry to above the place pose",
      "ok": true,
-     "t_s": 2.1,
+     "t_s": 2.0,
      "info": {
       "planned": false,
-      "plan_s": 0.1
+      "plan_s": 0.3
      }
     },
     {
@@ -236,7 +236,7 @@
      "kind": "joint",
      "note": "out to home",
      "ok": true,
-     "t_s": 2.1,
+     "t_s": 2.0,
      "info": {
       "planned": false
      }
@@ -298,7 +298,7 @@
      "t_s": 2.3,
      "info": {
       "planned": false,
-      "plan_s": 0.2
+      "plan_s": 0.4
      }
     },
     {
@@ -390,7 +390,7 @@
      "t_s": 1.5,
      "info": {
       "planned": false,
-      "plan_s": 0.1
+      "plan_s": 0.2
      }
     },
     {
@@ -1184,7 +1184,219 @@
    "reverse_mm": 0.0,
    "sideways_mm": 0.0,
    "time_s": 14.61
+  },
+  "drive_vf4c_lathe": {
+   "ok": true,
+   "fail": null,
+   "poses_checked": 3178,
+   "transport_turn_deg": -120.0,
+   "tried": [
+    {
+     "turn_deg": 0.0,
+     "hit": [
+      "drive",
+      0.283,
+      "A/upper_arm",
+      "vf4/right door"
+     ]
+    },
+    {
+     "turn_deg": 30.0,
+     "hit": [
+      "drive",
+      0.283,
+      "A/upper_arm",
+      "vf4/right door"
+     ]
+    },
+    {
+     "turn_deg": -30.0,
+     "hit": [
+      "drive",
+      0.269,
+      "A/upper_arm",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "turn_deg": 60.0,
+     "hit": [
+      "drive",
+      0.226,
+      "A/wrist2",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "turn_deg": -60.0,
+     "hit": [
+      "drive",
+      0.226,
+      "A/upper_arm",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "turn_deg": 90.0,
+     "hit": [
+      "drive",
+      0.269,
+      "A/wrist2",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "turn_deg": -90.0,
+     "hit": [
+      "drive",
+      0.241,
+      "A/upper_arm",
+      "vf4/right door handle"
+     ]
+    },
+    {
+     "turn_deg": 120.0,
+     "hit": [
+      "drive",
+      0.292,
+      "A/forearm",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "turn_deg": -120.0,
+     "hit": null
+    }
+   ],
+   "legs": [
+    {
+     "kind": "pivot",
+     "seconds": 0.58,
+     "amount": 2.3
+    },
+    {
+     "kind": "drive",
+     "seconds": 7.59,
+     "amount": 4253.4
+    },
+    {
+     "kind": "pivot",
+     "seconds": 0.58,
+     "amount": 2.3
+    }
+   ],
+   "drive_s": 8.74,
+   "clear_mm": 64.2,
+   "reverse_mm": 0.0,
+   "sideways_mm": 0.0,
+   "time_s": 14.61
+  },
+  "drive_vf4f_lathe": {
+   "ok": true,
+   "fail": null,
+   "poses_checked": 3178,
+   "transport_turn_deg": -120.0,
+   "tried": [
+    {
+     "turn_deg": 0.0,
+     "hit": [
+      "drive",
+      0.283,
+      "A/upper_arm",
+      "vf4/right door"
+     ]
+    },
+    {
+     "turn_deg": 30.0,
+     "hit": [
+      "drive",
+      0.283,
+      "A/upper_arm",
+      "vf4/right door"
+     ]
+    },
+    {
+     "turn_deg": -30.0,
+     "hit": [
+      "drive",
+      0.269,
+      "A/upper_arm",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "turn_deg": 60.0,
+     "hit": [
+      "drive",
+      0.226,
+      "A/wrist2",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "turn_deg": -60.0,
+     "hit": [
+      "drive",
+      0.226,
+      "A/upper_arm",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "turn_deg": 90.0,
+     "hit": [
+      "drive",
+      0.269,
+      "A/wrist2",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "turn_deg": -90.0,
+     "hit": [
+      "drive",
+      0.241,
+      "A/upper_arm",
+      "vf4/right door handle"
+     ]
+    },
+    {
+     "turn_deg": 120.0,
+     "hit": [
+      "drive",
+      0.292,
+      "A/forearm",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "turn_deg": -120.0,
+     "hit": null
+    }
+   ],
+   "legs": [
+    {
+     "kind": "pivot",
+     "seconds": 0.58,
+     "amount": 2.3
+    },
+    {
+     "kind": "drive",
+     "seconds": 7.59,
+     "amount": 4253.4
+    },
+    {
+     "kind": "pivot",
+     "seconds": 0.58,
+     "amount": 2.3
+    }
+   ],
+   "drive_s": 8.74,
+   "clear_mm": 64.2,
+   "reverse_mm": 0.0,
+   "sideways_mm": 0.0,
+   "time_s": 14.61
   }
  },
- "run_utc": "2026-11-27T08:30Z"
+ "run_utc": "2026-11-27T08:41Z"
 }
