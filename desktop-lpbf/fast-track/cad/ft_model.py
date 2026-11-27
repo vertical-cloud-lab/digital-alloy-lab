@@ -117,9 +117,13 @@ P = dict(
     # --- frame: 30 mm T-slot (McMaster 5537T101 class, study) ---
     bench_z=-272.6,               # bench top: leaves a 10 mm riser under the X-VSR20A
     rail_dy=5.25 * IN,            # support rails at the box's mounting holes (10.50 in. apart)
-    gantry="four_post",           # structural FEA (analysis/out/fea/struct.md 4c): four 45 mm posts, a front cross-beam,
-                                  # a diagonal per side, two knee braces at the back (79 Hz); "two_post" = round 1's (13 Hz)
+    gantry="four_post",           # structural FEA (analysis/out/fea/struct.md 4c): four 45 mm posts, a front
+                                  # cross-beam, a diagonal per side, knee braces at the back ("four_post": 43.1 Hz as drawn,
+                                  # FEA addendum) and at the front, MK-09 with a top flange on both beams and three gussets;
+                                  # "two_post" = round 1's frame (13 Hz)
     post=45.0, front_post_gap=25.0, knee=120.0,   # post size; front posts this far in front of the front rail; knee brace
+    knee_front=80.0,              # front knee braces ("four_post_braced_front"): clear of the collimator
+    head_flange=60.0, head_gussets_y=(-10.0, 40.0, 90.0),   # MK-09's top flange depth (-x) on both beams, gusset positions
     # --- monitoring (MON parts; positions chosen here, checked in ft_checks) ---
     cam_xy=(-70.0, -55.0),        # layer camera port, front-left of the window stack (upstream of the plume): box door
     cam_xy_cube=(-100.0, -50.0),  # on the cube's top plate: further out, so its sight lines pass outside the drop tube
@@ -382,7 +386,8 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
     z_beam = hb + 90.0                                # cross-beams' centre: the head flange plate bolts to their faces
     z_beam_max = P["lens_ffl"] + P["dz_cube"] + 90.0
     z_up_top = z_beam_max + h + 10.0
-    four = P["gantry"] == "four_post"
+    four = P["gantry"].startswith("four_post")
+    front_braced = P["gantry"] == "four_post_braced_front"
     hp = P["post"] / 2 if four else h                 # post half-width
     y_f = ry[0] - h - P["front_post_gap"] - hp        # front posts: in front of the front rail, on foot brackets
     if four:
@@ -406,6 +411,11 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
         br.append(polyline_pipe([(ux[1] - hp, ry[1], z_beam - h - kb), (ux[1] - hp - kb, ry[1], z_beam - h)], 15.0,
                                 smooth=False))
         add("Gantry braces: a diagonal per side, two knee braces at the back", comp(br), C["tslot"], "E4", "frame")
+        if front_braced:                              # FEA 4c addendum: the front portal racked in x (43 Hz)
+            kf = P["knee_front"]                      # shorter than the back ones: clear of the collimator at x -132
+            fk = [polyline_pipe([(ux[0] + hp, y_f, z_beam - h - kf), (ux[0] + hp + kf, y_f, z_beam - h)], 15.0, smooth=False),
+                  polyline_pipe([(ux[1] - hp, y_f, z_beam - h - kf), (ux[1] - hp - kf, y_f, z_beam - h)], 15.0, smooth=False)]
+            add("Gantry knee braces, front (2)", comp(fk), C["tslot"], "E4", "frame")
         ft_ = []
         for x in ux:                                  # L feet: under the post, up the front base rail's front face
             ft_.append(box(x - hp - 10, x + hp + 10, y_f - hp - 10, ry[0] - h, zb, zb + 6.0))
@@ -434,6 +444,16 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
                 box(fl_x0 - 4, fl_x0, yf1, yf1 + 30, z_beam - 15, z_beam + 15),
                 box(fl_x0 - 40, fl_x0 - 36, yf1, yf1 + 4, z_beam - 15, z_beam + 15)]
     add("Flange-to-beam angle brackets (MK-09)", comp(ang), C["alu_dark"], "MK-09", "optics")
+    if four and front_braced:                         # FEA 4c addendum: the head nodded on the 12 mm plate (67 Hz)
+        zt_ = z_beam + h                              # top faces of both cross-beams
+        tf = box(fl_x0 - P["head_flange"], fl_x1, y_f - h, ry[1] + h, zt_, zt_ + 12.0)
+        add("Head-plate top flange on both cross-beams (MK-09)", tf, C["alu"], "MK-09", "optics")
+        gs = []
+        for yg in P["head_gussets_y"]:                # clear of the input turret and mirror block (y -95..-25)
+            tri = (cq.Workplane("XZ").polyline([(fl_x0, zt_), (fl_x0 - P["head_flange"] + 5, zt_), (fl_x0, zt_ - 55.0)])
+                   .close().extrude(5.0, both=True).val())
+            gs.append(tri.translate(V(0, yg, 0)))
+        add("Head-plate gussets, 3 (MK-09)", comp(gs), C["alu"], "MK-09", "optics")
     # the unit's input stack (by eye from the seller's photos): focusing turret and a 45 deg mirror block; the beam comes
     # in from -y. With a short-pass dichroic in place of the input mirror, the melt-pool light passes straight through
     # the block to the photodiode on its back face (MON4).
