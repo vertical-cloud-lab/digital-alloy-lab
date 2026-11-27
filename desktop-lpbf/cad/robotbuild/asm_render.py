@@ -590,6 +590,38 @@ class Replay:
             P += [a + (b - a) * k / n for k in range(n + 1)]
         return self._clear_pts(P, boxes, r) if P else True
 
+    def mir_room_moves(self, work, reach=1500.0):
+        """Round 10: [(arm, x along its lane)] a MiR could back off to, to make room for a person working at `work`: MiRs within
+        `reach` of the work along x whose arm is parked (park pose, nothing held), moved 900-1300 mm away along their own lane
+        (x in -1400..2150), the lane between clear of the cell's static bodies on the floor plan."""
+        out = []
+        wx = float(work[0])
+        static = self._static_boxes()
+        for n in ("A", "B"):
+            s = self.st[n]
+            if s.get("pose") is not None or s["held"] is not None or abs(float(s["x"]) - wx) > reach:
+                continue
+            if float(np.max(np.abs(np.asarray(s["q"], float) - np.asarray(self.arm[n].park_q(), float)))) > 0.05:
+                continue
+            x0 = float(s["x"])
+            for dx in (-900.0, 900.0, -1300.0, 1300.0):
+                x1 = x0 + dx
+                if not -1400.0 <= x1 <= 2150.0:
+                    continue
+                ok = True
+                for u in np.linspace(0.0, 1.0, 7):
+                    for _, (v, f), _ in self.K.mir_bodies(n, x0 + (x1 - x0) * u, "front" if n == "A" else "back"):
+                        v = np.asarray(v, float)
+                        b = (v[:, 0].min(), v[:, 1].min(), v[:, 0].max(), v[:, 1].max())
+                        if any(not (b[2] < x0_ or x1_ < b[0] or b[3] < y0_ or y1_ < b[1]) for x0_, y0_, x1_, y1_ in static):
+                            ok = False
+                            break
+                    if not ok:
+                        break
+                if ok:
+                    out.append((n, x1))
+        return out
+
     @staticmethod
     def _seg_d(p, a, b):
         """Distance from p to segment ab (2-D) and where along it (0 at a, 1 at b)."""
@@ -1461,10 +1493,11 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
         look = (float(work[0]), float(work[1]), float(work[2]) if len(work) > 2 else 950.0)
         cams_ = place_cands(loc)
         back = pstate.get("out_n") == tot["n"] and pstate.get("out_at") is not None
-        # the spots, in tiers: walked to from the aisle, within reach of the work (a job with the hands: 700 mm), out of the
+        # the spots, in tiers: walked to from the aisle, within reach of the work (a job with the hands: 780 mm), out of the
         # place's tripods' sight lines or blocking some of them (costlier); put in place across a cut, within reach; then,
         # if nothing within reach is clear, anywhere clear (the job drawn from there)
-        rmax = 700.0 if fit is not None else None
+        rmax = 780.0 if fit is not None else None     # people.py's right hand reaches 525-575 mm forward at 1.1-1.25 m
+        # upright, 750-800 mm leaning 28 deg (/tmp/r10/w3/reach_test.py)
         tiers = [dict(cams=cams_, blocked_ok=True, rmax=rmax)]
         if rmax is not None:
             tiers.append(dict(cams=cams_, blocked_ok=True, rmax=rmax, relaxed=True))
@@ -1479,28 +1512,44 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
         if hit is not None:
             choice = (dict(hit["c"]), hit["data"])
             tiers = []
-        for tier in tiers:
-            cands = rp.person_spots(work[:2], side, **tier)
-            for k_, v_ in getattr(rp, "last_spot_why", {}).items():
-                why_all[k_] = why_all.get(k_, 0) + v_
-            for c in cands[:NSPOT]:
-                tried += 1
-                c["relaxed"] = bool(tier.get("relaxed"))
-                xs, ys = c["spot"]
-                P.place(x=xs, y=ys, hd=face_hd(look[0] - xs, look[1] - ys), look=look, frame=tot["n"])
-                data = None
-                if fit is not None:
-                    hits, data = fit(P)               # the whole body in the job's poses (reach first: cheap)
-                else:
-                    hits = rp.person_hits(P, limit=2)  # standing there
-                if not hits:
-                    choice = (c, data)
-                    break
-                if worst is None or len(hits) < len(worst[1]) or \
-                        (len(hits) == len(worst[1]) and max(h[2] for h in hits) < max(h[2] for h in worst[1])):
-                    worst = ((c, data), hits)
-            if choice is not None:
-                break
+        def search(tiers_, mir=None):
+            nonlocal tried, worst
+            for tier in tiers_:
+                cands = rp.person_spots(work[:2], side, **tier)
+                for k_, v_ in getattr(rp, "last_spot_why", {}).items():
+                    why_all[k_] = why_all.get(k_, 0) + v_
+                for c in cands[:NSPOT]:
+                    tried += 1
+                    c["relaxed"] = bool(tier.get("relaxed"))
+                    c["mir"] = mir
+                    xs, ys = c["spot"]
+                    P.place(x=xs, y=ys, hd=face_hd(look[0] - xs, look[1] - ys), look=look, frame=tot["n"])
+                    data = None
+                    if fit is not None:
+                        hits, data = fit(P)               # the whole body in the job's poses (reach first: cheap)
+                    else:
+                        hits = rp.person_hits(P, limit=2)  # standing there
+                    if not hits:
+                        return (c, data)
+                    if mir is None and (worst is None or len(hits) < len(worst[1]) or
+                                        (len(hits) == len(worst[1]) and max(h[2] for h in hits) < max(h[2] for h in worst[1]))):
+                        worst = ((c, data), hits)
+            return None
+        if tiers:
+            choice = search(tiers[:2] if rmax is not None else tiers)
+            if choice is None and rmax is not None:
+                # round 10: nothing within reach with the MiRs where they are (both docked round Fixture B: the F18 screw
+                # round 9 could not draw anyone at): a MiR whose arm is parked backs off along its lane to make room, then
+                # comes back after the person has gone (drawn, labelled; its lane checked clear on the floor plan)
+                for n_, x1_ in rp.mir_room_moves(work):
+                    x0_ = rp.st[n_]["x"]
+                    rp.set_arm(n_, x=x1_)
+                    choice = search(tiers[:2], mir=(n_, float(x0_), float(x1_)))
+                    rp.set_arm(n_, x=x0_)
+                    if choice is not None:
+                        break
+            if choice is None and rmax is not None:
+                choice = search(tiers[2:])
         if choice is None and worst is None:
             print(f"   {cur['id']}: no spot for the person by {np.round(np.asarray(work, float), 0).tolist()} "
                   f"({why_all}): the job is drawn without them", flush=True)
@@ -1528,56 +1577,84 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
             print(f"   {cur['id']}: person at ({c['spot'][0]:.0f}, {c['spot'][1]:.0f}) for the work at "
                   f"({look[0]:.0f}, {look[1]:.0f}, {look[2]:.0f}), r {c['r']:.0f} mm, {'relaxed, ' if relaxed else ''}"
                   f"blocks {c['blocked'] or 'no tripod'}; back to back: {back}; poses: "
-                  f"{[(d_['name'], round(d_['reach'])) for d_ in (data or [])]}", flush=True)
+                  f"{[(d_['name'], round(d_['reach'])) for d_ in (data or [])]}"
+                  f"{'; MiR %s makes room: x %.0f -> %.0f' % tuple(c['mir']) if c.get('mir') else ''}", flush=True)
         (xs, ys), (xa, ya) = c["spot"], c["aisle"]
         hd_job = face_hd(look[0] - xs, look[1] - ys)
-        if relaxed:
-            # no clear walk in from the aisle (both MiRs docked round the station): the person is put on the spot, across a
-            # cut each way (round 9: F18's screw had no person at all)
-            P.show(1.0)
-            P.place(x=xs, y=ys, hd=hd_job, look=look, frame=tot["n"])
-            pstate.update(on=True, n=tot["n"])
-            last["force"] = "person put in place"
-            r_ = job_frames()
-            P.show(0.0)
-            pstate.update(on=False, out_n=None, out_at=None, fit=None, blocked=None)
-            last["force"] = "person gone"
-            return r_
-        hd_in = face_hd(xs - xa, ys - ya)
-        legs_in = [(xa, ya), (xs, ys)]
-        h0 = hd_in
-        P.show(1.0)
-        if back and pstate["out_at"][1] * ya > 0.0 and abs(pstate["out_at"][0] - xa) < 4000.0:
-            # still standing at the aisle where the last job left them: turn round and walk along the aisle and in
-            x0, y0, h0 = pstate["out_at"]
-            P.place(x=x0, y=y0, hd=h0, look=look, frame=tot["n"])        # where they stand (no move: the feet stay)
-            legs_in = [(x0, y0), (xa, ya), (xs, ys)]
-        else:
-            if back:
-                # back to back but on the other side of the cell: out of the picture for a frame, then from that aisle
-                P.show(0.0)
-                pstate["on"] = False
-                if emit(cur["label"], "a person walks over from the aisle (real time)", ["person"], status="person", loc=loc):
+        mir = c.get("mir")
+
+        def mir_drive(n_, x0_, x1_, out_):
+            """A MiR makes room for the person along its lane (or comes back to its dock): drawn at about 0.35 m/s, eased."""
+            d_ = abs(x1_ - x0_)
+            nf_ = max(24, int(round(d_ / 350.0 * FPS)))
+            txt_ = (f"MiR {n_} backs off {d_ / 1000:.1f} m along its lane to make room for the person (its arm parked; not in "
+                    "the planner's recording, the lane clear on the floor plan)" if out_ else
+                    f"MiR {n_} drives back {d_ / 1000:.1f} m to its dock")
+            for f_ in range(nf_):
+                rp.set_arm(n_, x=x0_ + (x1_ - x0_) * smooth((f_ + 1) / nf_))
+                if emit(cur["label"], txt_ + " (real time)", [f"robot {n_}"], add={"robot_h": 1.0 / FPS / 3600.0}, loc=loc):
                     return True
+            rp.set_arm(n_, x=x1_)
+            return False
+
+        def the_job():
+            if relaxed:
+                # no clear walk in from the aisle (both MiRs docked round the station): the person is put on the spot,
+                # across a cut each way (round 9: F18's screw had no person at all)
                 P.show(1.0)
-            P.place(x=xa, y=ya, hd=hd_in, look=look, frame=tot["n"])
-        pstate.update(on=True, n=tot["n"])
-        for legs, hs, h1, txt in ((legs_in, h0, hd_job, "a person walks over from the aisle"),
-                                  (None, 0.0, 0.0, ""),
-                                  ([(xs, ys), (xa, ya)], hd_job, hd_in + 180.0, "the person walks back to the aisle")):
-            if legs is None:
-                if job_frames():
-                    return True
-                continue
-            for x, y, h in rp.walk_seq(legs, hs, h1):
-                P.set(x=x, y=y, hd=h, look=look, frame=tot["n"])
-                pstate["n"] = tot["n"]
-                if emit(cur["label"], txt + " (real time)", ["person"], add={"person_h": 1.0 / FPS / 3600.0}, status="person",
-                        loc=loc):
-                    return True
-        P.show(0.0)
-        pstate.update(on=False, out_n=tot["n"], out_at=(float(P.st["x"]), float(P.st["y"]), float(P.st["hd"])), fit=None,
-                      blocked=None)
+                P.place(x=xs, y=ys, hd=hd_job, look=look, frame=tot["n"])
+                pstate.update(on=True, n=tot["n"])
+                last["force"] = "person put in place"
+                r_ = job_frames()
+                P.show(0.0)
+                pstate.update(on=False, out_n=None, out_at=None, fit=None, blocked=None)
+                last["force"] = "person gone"
+                return r_
+            hd_in = face_hd(xs - xa, ys - ya)
+            legs_in = [(xa, ya), (xs, ys)]
+            h0 = hd_in
+            P.show(1.0)
+            if back and pstate["out_at"][1] * ya > 0.0 and abs(pstate["out_at"][0] - xa) < 4000.0:
+                # still standing at the aisle where the last job left them: turn round and walk along the aisle and in
+                x0, y0, h0 = pstate["out_at"]
+                P.place(x=x0, y=y0, hd=h0, look=look, frame=tot["n"])        # where they stand (no move: the feet stay)
+                legs_in = [(x0, y0), (xa, ya), (xs, ys)]
+            else:
+                if back:
+                    # back to back but on the other side of the cell: out of the picture for a frame, then from that aisle
+                    P.show(0.0)
+                    pstate["on"] = False
+                    if emit(cur["label"], "a person walks over from the aisle (real time)", ["person"], status="person",
+                            loc=loc):
+                        return True
+                    P.show(1.0)
+                P.place(x=xa, y=ya, hd=hd_in, look=look, frame=tot["n"])
+            pstate.update(on=True, n=tot["n"])
+            for legs, hs, h1, txt in ((legs_in, h0, hd_job, "a person walks over from the aisle"),
+                                      (None, 0.0, 0.0, ""),
+                                      ([(xs, ys), (xa, ya)], hd_job, hd_in + 180.0, "the person walks back to the aisle")):
+                if legs is None:
+                    if job_frames():
+                        return True
+                    continue
+                for x, y, h in rp.walk_seq(legs, hs, h1):
+                    P.set(x=x, y=y, hd=h, look=look, frame=tot["n"])
+                    pstate["n"] = tot["n"]
+                    if emit(cur["label"], txt + " (real time)", ["person"], add={"person_h": 1.0 / FPS / 3600.0},
+                            status="person", loc=loc):
+                        return True
+            P.show(0.0)
+            pstate.update(on=False, out_n=tot["n"], out_at=(float(P.st["x"]), float(P.st["y"]), float(P.st["hd"])), fit=None,
+                          blocked=None)
+            return False
+        if mir is not None and mir_drive(mir[0], float(mir[1]), float(mir[2]), True):
+            return True
+        if the_job():
+            return True
+        if mir is not None:
+            if mir_drive(mir[0], float(mir[2]), float(mir[1]), False):
+                return True
+            pstate["out_n"] = None                 # frames since the walk-out: the next job is not back to back
         return False
 
     def obj_world(i, M=None):
@@ -1692,8 +1769,14 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                             place_driver(P, *hu)
                             extra = ("op/tool/screwdriver",)
                         tgt = [np.asarray(v, float) for v in hands.values() if v is not None]
-                        reach = max(float(np.linalg.norm(np.asarray(P.hand_point(s), float) - np.asarray(hands[s], float)))
-                                    for s in ("l", "r") if hands.get(s) is not None)
+                        if hu is not None:
+                            # a screw: the right hand on the driver's handle (110-210 mm up from its bit), the bit on the
+                            # head (place_driver: the hand within 260 mm of it)
+                            L_ = float(np.linalg.norm(np.asarray(P.hand_point("r"), float) - hu[0]))
+                            reach = max(0.0, 110.0 - L_, L_ - 230.0)
+                        else:
+                            reach = max(float(np.linalg.norm(np.asarray(P.hand_point(s), float) - np.asarray(hands[s], float)))
+                                        for s in ("l", "r") if hands.get(s) is not None)
                         if reach > 80.0:
                             rp.sc.alpha["op/tool/screwdriver"] = 0.0
                             if best is None or (1, True, 0.0, reach, lean) < best[0]:

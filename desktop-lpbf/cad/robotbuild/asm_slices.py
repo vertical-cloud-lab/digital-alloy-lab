@@ -79,6 +79,11 @@ def main(argv):
                 log(f"slice {key} finished, exit {p.returncode}")
                 del running[key]
         limit = int(opt.get("max-running", 3))
+        if opt.get("max-running-file") and os.path.exists(opt["max-running-file"]):
+            try:                       # round 10: the limit can be changed while it runs (fewer while another chapter renders)
+                limit = int(open(opt["max-running-file"]).read().strip())
+            except ValueError:
+                pass
         started = False
         if len(running) < limit:
             for qi, (chapter, k, a, b) in enumerate(queue):
