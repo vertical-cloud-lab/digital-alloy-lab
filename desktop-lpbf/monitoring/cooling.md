@@ -66,9 +66,10 @@ part's name says "envelope".
     warmer: the LP camera 11.7 K over the supply, its Pi 10.2, the coaxial camera 8.4, the photodiodes 5.9–6.8, PB2 6.7, the galvo
     6.2 (1–3 K less on a 9 mm grid, so ±3 K). In the typical case only the galvo is over (36.4 against 35 °C). In the busy case the
     CFD adds the LP camera's board (53.6 against 50) and the Chronos's hood air to §3's five. **The Chronos's 20 W warms its hood's
-    20.4 m³/h by 3.1 K,** so in the busy case its air averages 41.2 °C (39.7 in its back half) against 40, not §3's 38.5. **The base
-    plate's Z-stage window and slot open the guard's floor to the Shuttle:** with cooling.py's fans and resistances they would take
-    133 of 160 m³/h, and the inlet 6. A cover with a brush strip round the Z stage is the cheapest fix, and dock air needs it.
+    20.4 m³/h by 3.1 K,** so in the busy case its air averages 41.2 °C (39.7 in its back half) against 40, not §3's 38.5; ~40 °C
+    with the ~37 m³/h the exhaust's suction probably drives through the hood. **The base plate's Z-stage window and slot open the
+    guard's floor to the Shuttle:** with cooling.py's fans and resistances they would take 133 of 160 m³/h, and the inlet 6. A cover
+    with a brush strip round the Z stage is the cheapest fix, and dock air needs it.
 
 ## 1. Ratings
 
@@ -354,8 +355,9 @@ air, as §3 assumes:** in the busy case the hood's air averages 41.2 °C (39.7 i
 Chronos's 40 °C rating. Whether that is over depends on where the camera's own fan draws from, which Kron doesn't publish. Two
 things help. **The hood's flow is probably larger than 20 m³/h:** the exhaust holds the guard ~40 Pa under the Shuttle, and the
 hood's path runs in parallel with the inlet, so with cooling.py's resistances it carries ~37 m³/h (`network()`, `guard_cfd.json`
-`network.sealed`), which halves the rise. The CFD keeps cooling.py's 20.4 m³/h. And the dock's 22 °C air, §2's answer for the busy
-case, puts the hood's air at ~25 °C.
+`network.sealed`). The CFD with that flow (case `hood12`, of which only the hood is read: the rest of the guard had not settled)
+puts the hood's air 2.0 K over the supply on average and 1.2 K in its back half: ~40 °C in the busy case, at the rating. And the
+dock's 22 °C air, §2's answer for the busy case, puts the hood's air at ~25 °C.
 
 **The guard's floor is open.** The guard stands on the process base plate, and the plate has the Z stage's window, the slot to its
 front edge for the module's rod end, and the folded Z servo's window under the chamber (`lpbf_low.build`). They open into the 37 mm
@@ -510,7 +512,7 @@ From [`monitoring-bom.csv`](../monitoring-bom.csv) (rebuilt by `build_bom.py`), 
   2–6 K between the 18 and 12 mm grids and by 1–3 K between 12 and 9 mm, so read it as ±3 K; a finer or transient run would settle
   it. The worst load (500 W) was not run; the CFD's local excess would add ~0.5 K to the coaxial camera's board (§3's 51.8 °C with
   dock air) and ~5 K to the LP camera's. Seams are not modelled; with the base plate's window covered they are the guard's next
-  leaks. The hood's flow is cooling.py's 20.4 m³/h, though the network gives ~37 (§4.2). Put thermocouples at the LP camera, the
+  leaks. The hood's flow is cooling.py's 20.4 m³/h in every case but `hood12`, though the network gives ~37 (§4.2). Put thermocouples at the LP camera, the
   coaxial camera and in the Chronos's hood in the built guard, and read the Chronos's own sensor.
 - **The chamber's heat is a bound, not a balance.** Its outside is held at 60 °C. A typical build's ~300 W into the chamber is more than
   that releases; where the rest goes (gas loop, legs, a hotter wall) needs the chamber's own model.

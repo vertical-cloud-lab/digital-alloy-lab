@@ -47,11 +47,13 @@ Re-running (cases under /tmp/guard-cfd, nothing in the repo; each solve through 
         --variant "base plate window open" --out /tmp/guard-cfd/floor12                      # run with typ12 as the map source
     $PY $G/guard_cfd.py case --h 18 --supply-c 30.2 --iters 2500 --average-from 1700 --out /tmp/guard-cfd/typ18
     $PY $G/guard_cfd.py case --h 9 --supply-c 30.2 --iters 1500 --average-from 900 --out /tmp/guard-cfd/typ9   # map source typ12a
+    $PY $G/guard_cfd.py case --h 12 --supply-c 30.2 --q-exhaust 114.6 --q-hood 36.8 --iters 1500 --average-from 900 \
+        --init-from /tmp/guard-cfd/typ12a --variant "hood at the network's 36.8 m3/h, exhaust 114.6" --out /tmp/guard-cfd/hood12
     $R "$G/run_guard_cfd.sh <case> [<map source>]" for each, then
     $PY $G/guard_cfd.py post /tmp/guard-cfd/typ12a /tmp/guard-cfd/busy12b /tmp/guard-cfd/typ9 /tmp/guard-cfd/typ18 /tmp/guard-cfd/flip12 \
-        /tmp/guard-cfd/floor12
+        /tmp/guard-cfd/floor12 /tmp/guard-cfd/hood12
 (As run: flip12 went from h-relax 0.3 to 0.6 at iteration ~220; floor12 and typ18 ran at 0.6 throughout, with fieldAverage added
-before they started; busy12b and typ9 exactly as written above.)
+before they started; busy12b, typ9 and hood12 exactly as written above. hood12 had not settled outside the hood.)
 """
 from __future__ import annotations
 
