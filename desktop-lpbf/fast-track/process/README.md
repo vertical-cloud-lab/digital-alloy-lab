@@ -12,12 +12,13 @@ solves, checked against published data where it exists. Estimates are marked.
 | [`scan_program.py`](scan_program.py) → [`out/build_first_coupons_15mm.npz`](out/build_first_coupons_15mm.npz) | coupon layout, hatching and contours for a whole build in one file, RTC5 timing, recoat and build times, heat input |
 | [`rtc5_list.py`](rtc5_list.py) → [`out/rtc5_layer1.txt`](out/rtc5_layer1.txt) | the build file turned into RTC5 list commands (real function names and units), a ctypes binding, a dry-run timer |
 | [`out/heat_input.csv`](out/heat_input.csv) | layer-wise heat input for the FEA (also at `/tmp/ft-process/heat_input.csv`) |
+| [`out/rung1_bare_plate.npz`](out/rung1_bare_plate.npz), [`out/rung2_single_tracks.npz`](out/rung2_single_tracks.npz) → [`out/rtc5_rung1_bare_plate.txt`](out/rtc5_rung1_bare_plate.txt), [`out/rtc5_rung2_single_tracks.txt`](out/rtc5_rung2_single_tracks.txt) | one-layer programs for rungs 1–3 of the commissioning ladder (§2.2), in the same format, with their RTC5 lists |
 | [`out/build_times.csv`](out/build_times.csv), [`out/scan_program.json`](out/scan_program.json), [`out/rtc5.json`](out/rtc5.json), [`out/layout.json`](out/layout.json) | tables behind the figures |
 
 ```bash
 python desktop-lpbf/fast-track/process/meltpool.py        # 42 s, 150 MB
 python desktop-lpbf/fast-track/process/scan_program.py    # 29 s, 115 MB (writes the NPZ and heat_input.csv)
-python desktop-lpbf/fast-track/process/optics.py          # 18 s, 390 MB (needs the NPZ)
+python desktop-lpbf/fast-track/process/optics.py          # 106 s, 390 MB (needs the NPZ; run it under capmem 2)
 python desktop-lpbf/fast-track/process/rtc5_list.py       # 6 s
 ```
 
@@ -36,11 +37,13 @@ python desktop-lpbf/fast-track/process/rtc5_list.py       # 6 s
 
   The full CAD list is in [the CAD section](#5-changes-for-the-cad).
 - **Thermal lens:** with the clean optics (20 ppm/cm bulk plus a pessimistic 0.1 % coating loss), a parked beam
-  moves the focus 4.4–4.7 mm (1.2 z_R). During a coupon build the layer-averaged lens is only 0.03–0.5 mm.
+  moves the focus 4.4–4.7 mm (1.2 z_R). While a coupon build scans, the beam sees at most 0.12–0.16 mm in the box
+  and 0.47–0.82 mm in the cube (transient 2D solve along the real scan path).
   - **A sooted cover slide (1–2 %) is the real risk:**
     - with a parked beam, 34–63 mm of focus shift (the slide would crack first);
-    - while scanning, 0.3–1.0 mm in the box and 1.3–5.8 mm in the cube (up to 1.5 z_R).
-  - Change the slide every build in the cube.
+    - while scanning, up to 1.2–2.3 mm in the box (0.3–0.6 z_R) and 4.7–9.4 mm in the cube (1.2–2.4 z_R).
+  - The cube is worse because its slide hangs under the top plate, 221 mm up. **In FT-1V, hang the slide ~130 mm
+    above the bed, as in the box,** or change it every build.
 - **AlSi10Mg starting set for the cubes:** **255 W, 1.25 m/s, 0.10 mm hatch, 30 µm layers**, 67° rotation, one
   contour at 150 W and 0.8 m/s.
   - At 200 °C the model gives a pool 176 µm wide and 83 µm deep.
@@ -61,7 +64,7 @@ python desktop-lpbf/fast-track/process/rtc5_list.py       # 6 s
 
   - Per layer: the scan list takes 3.40 s and the recoat 3.07 s.
   - The study's 1.2–1.8 h for 10 mm assumed 8–15 s of spreading a layer.
-  - The X-LSQ075B (280 mm/s) saves only 4 % (0.58 h), because the spreading speed sets the recoat time, not the
+  - The X-LSQ075B (280 mm/s) saves only 3 % (0.58 h), because the spreading speed sets the recoat time, not the
     stage.
 - **Heat input for the FEA:** 746 J of laser energy a layer, 115 W averaged over the 6.46 s layer period. That is
   35–69 W absorbed at A = 0.3–0.6.
@@ -73,7 +76,7 @@ python desktop-lpbf/fast-track/process/rtc5_list.py       # 6 s
 | Item | Value | Source |
 |---|---|---|
 | Laser | IPG YLR-400-SM-EOS (made 2015-02), 1070 ± 10 nm, M² < 1.1, CW or modulated to 50 kHz, power 10–100 %, a 5 mm affixed collimator up to 400 W (2.5 and 7.5 mm options) | [IPG YLR datasheet](https://cdn.ipgphotonics.com/6f98cba1-ae50-4feb-8635-b10901309bcd/IPG_YLR-Series_DS_EN_LTR.pdf) ("2/26"); label from the listing (lead) |
-| Scan head | SCANLAB hurrySCAN 25: 25 mm aperture, mirror spacing (beam displacement) 29.88 mm, ±0.26 rad (galvo 1) and ±0.40 rad (galvo 2) optical, tracking error 0.50 ms, step response 0.90 ms at 1 % of full scale, 0.8 m/s marking and 5.0 m/s positioning at f = 160, 1500 W at 1064 nm, 206.9 × 140 × 180 mm, 5.8 kg, XY2-100 | [SCANLAB product page](https://scanlab.de/en/print-product/609); this unit's SCANcheck sticker is dated 2003 (lead) |
+| Scan head | SCANLAB hurrySCAN 25: 25 mm aperture, beam displacement 29.88 mm (read here as the X-to-Y mirror spacing), ±0.26 rad (galvo 1) and ±0.40 rad (galvo 2) optical, tracking error 0.50 ms, step response 0.90 ms at 1 % of full scale, 0.8 m/s marking and 5.0 m/s positioning at f = 160, 1500 W at 1064 nm, 206.9 × 140 × 180 mm, 5.8 kg, XY2-100 | [SCANLAB product page](https://scanlab.de/en/print-product/609); this unit's SCANcheck sticker is dated 2003 (lead) |
 | Lens | LINOS F-Theta-Ronar 4401-288-000-20: EFL 254.4, BFL 299.1, WD 296.2, FFL 344.8 mm; design beam 20 mm; mirrors m1 25.6 / m2 23.0 mm; ±17.7°; field 157 × 157 mm; T > 96 %; back-reflex foci 14.2, 19.6, 52.6, 71.3, 72.4, 142.8, 457.8 mm from the first surface. Not given: telecentricity, field curvature, CW rating | [datasheet 2021.12-V4](https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/1068/4401-288-000-20_2021.12-V4.pdf) |
 | Window, slide | Edmund 38-990, Ø50.8 × 9.53 fused silica, V-coat, CA Ø45.72; cover slide Ø50 × 1 | `cad/ft_model.py`, PR 266 `beam_path.py` |
 | Heights above the bed | box: slide 129.0–130.0, window 145.4–154.9; cube: slide 221.4–222.4, window 251.8–261.3 | `cad/ft_model.py` `levels()` and `build()` |
@@ -136,26 +139,36 @@ a 2D steady conduction solve with the rim held at the mount temperature.*
 The static case uses an r-z finite-volume solve of the disc with the rim held at the mount temperature, after PR 266's
 `analysis/optics/thermal_lens.py`. The focus shift is Δz = h²D/(1 + hD), against z_R = 3.88 mm.
 
-| Case (400 W, 5 mm beam) | Absorbed | Parked beam: Δz (× z_R) | Scanning the first build, layer-averaged: Δz (× z_R) |
-|---|---|---|---|
-| Box, clean slide (20 ppm/cm + 0.1 %) | 0.40 W | 4.45 mm (1.15) | 0.03–0.05 mm (≤ 0.01) |
-| Box, clean window | 0.41 W | 4.64 mm (1.20) | 0.05–0.09 mm (≤ 0.02) |
-| Box, slide 1 % soot | 4.0 W | 33.9 mm (8.7), ΔT ~1200 K | 0.30–0.48 mm (≤ 0.12) |
-| Box, slide 2 % soot | 8.0 W | 53.7 mm (13.8), ΔT ~2400 K | 0.59–0.95 mm (≤ 0.25) |
-| Cube, clean slide | 0.40 W | 4.36 mm (1.12) | 0.13–0.30 mm (≤ 0.08) |
-| Cube, clean window | 0.41 W | 4.67 mm (1.20) | 0.32–0.53 mm (≤ 0.14) |
-| Cube, slide 1 % soot | 4.0 W | 36.9 mm (9.5) | 1.3–2.9 mm (≤ 0.75) |
-| Cube, slide 2 % soot | 8.0 W | 63.3 mm (16.3) | 2.6–5.8 mm (≤ 1.49) |
+The scanning columns use a 2D thin-plate solve of the element with the first build's layer 1 as the source:
+- *steady:* the layer-averaged irradiance, at the five parts' images;
+- *transient:* explicit time steps along the real, time-stamped scan path for two layer periods (scan, then
+  recoat), starting from the steady field. Δz is sampled every 10 ms where the beam is. The model is linear in the
+  absorbed power, so one run per element gives every absorption case.
+
+| Case (400 W, 5 mm beam) | Absorbed while on | Parked beam: Δz (× z_R) | Scanning, steady: Δz | Scanning, transient: mean / max Δz (max × z_R) |
+|---|---|---|---|---|
+| Box, clean slide (20 ppm/cm + 0.1 %) | 0.40 W | 4.45 mm (1.15) | 0.01–0.05 mm | 0.06 / 0.12 mm (0.03) |
+| Box, clean window | 0.41 W | 4.64 mm (1.20) | 0.02–0.08 mm | 0.09 / 0.16 mm (0.04) |
+| Box, slide 1 % soot | 4.0 W | 33.9 mm (8.7), ΔT ~1200 K | 0.08–0.47 mm | 0.58 / 1.17 mm (0.30) |
+| Box, slide 2 % soot | 8.0 W | 53.7 mm (13.8), ΔT ~2400 K | 0.15–0.94 mm | 1.16 / 2.34 mm (0.60) |
+| Cube, clean slide | 0.40 W | 4.36 mm (1.12) | 0.07–0.27 mm | 0.28 / 0.47 mm (0.12) |
+| Cube, clean window | 0.41 W | 4.67 mm (1.20) | 0.21–0.57 mm | 0.56 / 0.82 mm (0.21) |
+| Cube, slide 1 % soot | 4.0 W | 36.9 mm (9.5) | 0.74–2.66 mm | 2.81 / 4.70 mm (1.21) |
+| Cube, slide 2 % soot | 8.0 W | 63.3 mm (16.3) | 1.49–5.33 mm | 5.62 / 9.40 mm (2.42) |
 
 - **The parked-beam rows are bounds.** They need a beam held in one place for longer than the local time constant
   (~0.5 s), as in a slow focus ladder or a stuck scanner. The linear model also stops meaning anything once ΔT
   passes a few hundred kelvin: the slide would crack first.
 - **0.1 % coating loss is pessimistic.** A good V-coat absorbs < 50 ppm a face, which cuts the clean rows about
   15-fold.
+- **The transient lens is 1.2–2.5 times the steady one.** Heat builds up over one part's image while that part is
+  hatched (~0.8 s), faster than it spreads.
 - **The cube is worse than the box.** Its slide is higher (h² in Δz), and the scan pattern's image on it is smaller,
-  which concentrates the heat.
+  which concentrates the heat. Hanging the cube's slide ~130 mm above the bed, as in the box, gives it the box's
+  numbers.
+- **The window is thick (9.53 mm) for a thin-plate model,** so its scanning rows are rougher than the slide's.
 - **Rules that follow:**
-  - change the slide every build in the cube, and when it looks grey in the box;
+  - change the slide when it looks grey, and every build until the soot rate is known;
   - never park the beam at full power;
   - log a focus check (one short ladder on the plate margin) at the start of each build.
 
@@ -223,7 +236,9 @@ The static case uses an r-z finite-volume solve of the disc with the rim held at
   - Plateau-Rayleigh (L/W > π) never triggers here: the model's L/W is 1.0–2.2 over all the maps.
   - So low-power balling in Al is a too-shallow pool, not a long one.
 - **Keyhole:** [King et al. 2014](https://doi.org/10.1016/j.jmatprotec.2014.06.005) Eq. 2.6,
-  ΔH/h_s = A·P/(h_s·√(π·D·v·σ³)), with σ = w0/2 and h_s = ρcT_m. Threshold 30 ± 4 (316L).
+  ΔH/h_s = A·P/(h_s·√(π·D·v·σ³)), with h_s = ρcT_m. Threshold 30 ± 4 (316L).
+  - σ is the Gaussian standard deviation (I ∝ exp(−r²/2σ²)), so σ = w0/2 here. The paper doesn't say which
+    beam size went into Eq. 2.6; σ = D4σ/4 is the reading that fits its own Table 3.
   - With A = 0.20, Bosio's and Kempen's tracks fall at 8–23, and Kempen's "deep penetration" at 200 W and 0.2 m/s at
     ~29. Consistent.
   - For the 76 µm spot this puts the keyhole onset at P ≈ 310 W·√(v / 1 m/s).
@@ -245,6 +260,12 @@ The static case uses an r-z finite-volume solve of the disc with the rim held at
 | 4, variant B | hatch 0.12 mm | Tang 0.60, 57 J/mm³ |
 | 4, variant C | 1.0 m/s | W 190, D 90 µm, King 24.7, 85 J/mm³ |
 
+- **Programs for rungs 1–3** are written in the build-file format and turned into RTC5 lists:
+  - `out/rung1_bare_plate.npz`: 18 lines of 10 mm, 1.5 mm apart, starting with two 50 W lines; 0.44 s.
+  - `out/rung2_single_tracks.npz`: 25 tracks of 9 mm, 1.1 mm apart; 0.32 s. Rung 3 uses the same file.
+
+  Every line runs along +X, the field is scanned from +Y to −Y, and all of it lies within r = 14 mm of the plate
+  centre.
 - **Speed:** the hatch speed sits at the hurrySCAN 25's 1.27 m/s marking speed at f = 254.4. The window reaches past
   2 m/s if the delays are tuned for it.
 - **Calibration:** rung 3's widths and depths re-fit A, and the cube set moves with them. The model and the tables
@@ -366,7 +387,10 @@ Sent to the lead as `/tmp/ft-process/cad_changes.md`:
    at 348.1 mm. In the beam envelope, chief rays pivot f/k = 296–424 mm above the focus.
 4. **Head:** 206.9 × 140 × 180 mm on datum A, so its top is ~528 mm above the bed in the box. Possibly a 3–5 mm
    spacer under the head (lens ghost, §1.5).
-5. **Optional:** a 3° head tilt about X, only if the back-reflection alarm trips.
+5. **Cube slide height (recommended):** hang the FT-1V cover slide ~130 mm above the bed on a drop tube from the top
+   plate, as in the box, instead of under the top plate at 221 mm. A 2 % sooted slide then defocuses by ≤ 0.6 z_R
+   instead of 2.4 z_R.
+6. **Optional:** a 3° head tilt about X, only if the back-reflection alarm trips.
 
 ## 6. Checks on arrival this work adds
 
@@ -389,7 +413,7 @@ Sent to the lead as `/tmp/ft-process/cad_changes.md`:
 
 - **Lens and scanner:** no lens prescription, so k (0.60–0.86), field curvature and ghost positions relative to the
   real mirrors are ranges or vendor numbers. The ghost check uses LINOS's recommended mirror distances and SCANLAB's
-  29.88 mm spacing; the real distances are unknown. The hurrySCAN delays are datasheet-based starting values for a
+  29.88 mm beam displacement read as the mirror spacing; the real distances are unknown. The hurrySCAN delays are datasheet-based starting values for a
   23-year-old head.
 - **Melt-pool model:**
   - Eagar-Tsai has no latent heat, no Marangoni flow and no powder layer. One absorptivity covers both modes, so
@@ -400,5 +424,8 @@ Sent to the lead as `/tmp/ft-process/cad_changes.md`:
 - **Timing and heat input:** the recoat accelerations, spreading speeds and host overhead are estimates; the
   spreading speed decides the build time. The heat input assumes every layer is scanned as programmed; no
   inter-layer dwell is added.
-- **Thermal lens:** the scanned case is layer-averaged and steady. The transient lens within a layer (time constant
-  ~0.5 s, beam moving 0.6 m/s on the slide) was not modelled.
+- **Thermal lens:**
+  - the scanning cases are thin-plate 2D solves of layer 1 only;
+  - the window's 9.53 mm thickness is beyond the thin-plate model;
+  - the soot is taken as uniform over the slide;
+  - no CalculiX cross-check was run here (PR 266 checked its r-z solver against CalculiX for its slide).

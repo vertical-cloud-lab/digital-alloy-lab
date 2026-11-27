@@ -439,6 +439,41 @@ def layer_time(segs, kinds, pidx, parts, psets, tm: Timing, start=(0.0, 0.0), en
                 mark_mm=mark_len, jump_mm=jump_len)
 
 
+def layer_path(segs, kinds, pidx, parts, psets, tm: Timing, dt=1e-4, start=(0.0, 0.0)):
+    """Time-stamped beam positions while the laser is on, with the same rules as layer_time (jumps, variable jump
+    delay, mark and polygon delays; laser on from the first mark to the last of each polyline). Returns arrays
+    t (s), x, y (mm), P (W), one sample per dt of marking."""
+    t = 0.0
+    pos = np.array(start, float)
+    in_poly = False
+    T, X, Y, PW = [], [], [], []
+    for s, kd, ii in zip(segs, kinds, pidx):
+        p0, p1 = s[:2], s[2:]
+        ps = psets[parts[ii].pset]
+        P, v = (ps.P_hatch, ps.v_hatch) if kd == 0 else (ps.P_contour, ps.v_contour)
+        gap = float(np.hypot(*(p0 - pos)))
+        if gap > 1e-3 or not in_poly:
+            if in_poly:
+                t += tm.mark_delay
+            if gap > 1e-3:
+                jd = tm.jump_delay if gap >= tm.jump_limit else tm.jump_delay_min + (tm.jump_delay - tm.jump_delay_min) * gap / tm.jump_limit
+                t += ticks(gap / tm.v_jump, tm.tick) + ticks(jd, tm.tick)
+            in_poly = True
+        else:
+            t += tm.polygon_delay
+        L = float(np.hypot(*(p1 - p0)))
+        dur = ticks(L / v, tm.tick)
+        n = max(int(round(dur / dt)), 1)
+        f = (np.arange(n) + 0.5) / n
+        T.append(t + f * dur)
+        X.append(p0[0] + (p1[0] - p0[0]) * f)
+        Y.append(p0[1] + (p1[1] - p0[1]) * f)
+        PW.append(np.full(n, P))
+        t += dur
+        pos = p1
+    return np.concatenate(T), np.concatenate(X), np.concatenate(Y), np.concatenate(PW)
+
+
 def build_schedule(parts, psets, tm, rc, stage, segs, kinds, pidx, ptr, layer_mm):
     rec = recoat_time(rc, stage, layer_mm)
     rows = []
@@ -527,9 +562,47 @@ def main():
                 energy_J_mean=float(np.mean([r["energy_J"] for r in rows])),
                 mean_W_mean=float(np.mean([r["mean_W"] for r in rows])),
                 period_s_mean=float(np.mean([r["period_s"] for r in rows])))
+    if (OUT / "process_window.json").exists():
+        info["ladder_programs"] = ladder_programs(tm)
+        print("ladder programs", info["ladder_programs"])
     (OUT / "scan_program.json").write_text(json.dumps(info, indent=1))
     print("heat input: mean energy per layer", info["energy_J_mean"], "J; mean W", info["mean_W_mean"])
     figures(parts, psets, segs, kinds, pidx, ptr, times)
+
+
+def ladder_programs(tm: Timing):
+    """One-layer programs for rungs 1-3, in the build-file format (one 'part' and one parameter set per line).
+    Rung 1: two 50 W lines first (back-reflection check, laser status logged), then 100-400 W x 0.25-2 m/s, 10 mm
+    lines 1.5 mm apart on a bead-blasted or anodised 6061 disc. Rungs 2 and 3: Bosio's 5 x 5 method round the cube
+    set, 9 mm tracks 1.1 mm apart on one 50 um layer. Lines run along +X (sideways to the beam tilt) and are scanned
+    from +Y to -Y (into the cross-flow)."""
+    progs = {}
+    rung1 = [(50.0, 500.0), (50.0, 500.0)] + [(P, v) for P in (100.0, 200.0, 300.0, 400.0)
+                                              for v in (250.0, 500.0, 1000.0, 2000.0)]
+    pr = json.loads((OUT / "process_window.json").read_text())["recommended"]
+    st = pr["single tracks, 25 C, one 50 um layer"]
+    rung2 = [(P, v * 1000.0) for P in st["P_list"] for v in st["v_list"]]
+    for name, lines, L, pitch, layer in (("rung1_bare_plate", rung1, 10.0, 1.5, 0.0),
+                                         ("rung2_single_tracks", rung2, 9.0, 1.1, 0.050)):
+        n = len(lines)
+        ys = (n - 1) * pitch / 2 - np.arange(n) * pitch
+        parts, psets, segs = [], {}, []
+        for i, ((P, v), y) in enumerate(zip(lines, ys)):
+            key = f"{P:.0f}W_{v / 1000:.2f}ms_{i}"
+            psets[key] = ParamSet(key, P_hatch=P, v_hatch=v, hatch=0.0, P_contour=0.0, v_contour=v, contour_offset=0.0,
+                                  hatch_offset=0.0, layer=layer, rot_deg=0.0, exclude_deg=0.0)
+            parts.append(Part(f"line {i + 1}", 0.0, float(y), L, 0.0, layer, key))
+            segs.append((-L / 2, y, L / 2, y))
+        segs = np.array(segs, float)
+        kinds = np.zeros(n, np.uint8)
+        pidx = np.arange(n, dtype=np.uint8)
+        ptr = np.array([0, n], np.int64)
+        r_max = max(math.hypot(L / 2, abs(y)) for y in ys)
+        lt = layer_time(segs, kinds, pidx, parts, psets, tm)
+        path = OUT / f"{name}.npz"
+        save_build(path, parts, psets, tm, segs, kinds, pidx, ptr, meta=dict(program=name))
+        progs[name] = dict(lines=n, r_max_mm=r_max, list_s=lt["t_list"], energy_J=lt["energy_J"], path=path.name)
+    return progs
 
 
 def figures(parts, psets, segs, kinds, pidx, ptr, times):

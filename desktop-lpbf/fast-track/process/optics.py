@@ -427,6 +427,102 @@ def scanned_lens(st, element, a_tot, D=5.0, k=K_MID, axis=(0.0, 0.0), npz=None, 
                 T_max_K=float(T.max()), parts=out, T=T, edges=edges, I=m["I"], w=w, period=m["period"])
 
 
+def transient_lens(st, element, a_tot, npz, D=5.0, k=None, axis=None, pix=0.15, dt=2.5e-3, periods=2,
+                   sample=0.01, h_face=10.0):
+    """Within-layer (transient) thermal lens of the slide or window while the first build's layer 1 is scanned.
+    2D thin plate, explicit time steps: rho c t dT/dt = k t lap(T) - 2 h T + q, rim (r > the holder radius about the
+    stack centre) at the mount temperature. Starts from the steady solution of the layer-averaged source, runs
+    `periods` layer periods (scan, then recoat with the laser off) and records, every `sample` s while the laser is
+    on, the lens power the beam sees (Gaussian-weighted paraboloid fit of OPD = chi t T over 2w). Returns the time
+    series and its statistics against the steady value."""
+    k = K_MID if k is None else k
+    axis = AXIS if axis is None else axis
+    sys.path.insert(0, str(HERE))
+    import scan_program as SPG  # noqa: E402
+    segs, kinds, pidx, ptr, meta = SPG.load_build(npz)
+    parts = [SPG.Part(**p) for p in meta["parts"]]
+    psets = {kk: SPG.ParamSet(**v) for kk, v in meta["psets"].items()}
+    tm = SPG.Timing(**meta["timing"])
+    a, b = ptr[0], ptr[1]
+    T_, X_, Y_, P_ = SPG.layer_path(segs[a:b], kinds[a:b], pidx[a:b], parts, psets, tm, dt=1e-4)
+    t_list = SPG.layer_time(segs[a:b], kinds[a:b], pidx[a:b], parts, psets, tm)["t_list"]
+    period = t_list + SPG.recoat_time(SPG.Recoat(), SPG.X_LSM100B, next(iter(psets.values())).layer)["t_recoat"]
+    z0, z1 = st["slide"] if element == "slide" else st["window"]
+    th = (z1 - z0) * 1e-3
+    ha = air_height(st, z0)
+    w = w_at(D, ha)
+    cx, cy = chief_xy(X_, Y_, ha, k, axis)
+    E_ = P_ * 1e-4 * a_tot                                        # absorbed J per path sample
+    cen = (0.0, STACK_Y[st["state"]])
+    Rrim = HOLDER_R if element == "slide" else 22.0
+    n = int(math.ceil(2 * (Rrim + 1.0) / pix))
+    edges_x = cen[0] - (Rrim + 1.0) + np.arange(n + 1) * pix
+    edges_y = cen[1] - (Rrim + 1.0) + np.arange(n + 1) * pix
+    xc, yc = (edges_x[:-1] + edges_x[1:]) / 2, (edges_y[:-1] + edges_y[1:]) / 2
+    Xg, Yg = np.meshgrid(xc, yc, indexing="ij")
+    inside = np.hypot(Xg - cen[0], Yg - cen[1]) < Rrim
+    from scipy.ndimage import gaussian_filter
+    sig_pix = (w / 2) / pix
+    pm = pix * 1e-3
+    rc_t = FS["rho"] * FS["c"] * th * pm * pm                     # J/K per cell
+    G = FS["k"] * th                                              # W/K between neighbours (square cells)
+    Hl = 2 * h_face * pm * pm                                     # W/K to the gas, both faces
+
+    def deposit(sel):
+        H, _, _ = np.histogram2d(cx[sel], cy[sel], bins=[edges_x, edges_y], weights=E_[sel])
+        return gaussian_filter(H, sig_pix, mode="constant")      # J per cell
+
+    # steady state of the layer-averaged source
+    q_avg = deposit(np.ones(len(T_), bool)) / period              # W per cell
+    idx = -np.ones(Xg.shape, int)
+    idx[inside] = np.arange(inside.sum())
+    ii, jj = np.nonzero(inside)
+    N = len(ii)
+    rows, cols, vals = [np.arange(N)], [np.arange(N)], [np.full(N, Hl + 4 * G)]
+    for di, dj in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+        nb = idx[np.clip(ii + di, 0, n - 1), np.clip(jj + dj, 0, n - 1)]
+        okk = nb >= 0
+        rows.append(np.arange(N)[okk]); cols.append(nb[okk]); vals.append(np.full(okk.sum(), -G))
+    A = sp.csr_matrix((np.concatenate(vals), (np.concatenate(rows), np.concatenate(cols))), shape=(N, N))
+    Tm = np.zeros(Xg.shape)
+    Tm[inside] = spla.spsolve(A.tocsc(), q_avg[inside])
+
+    def lens_at(Tf, px, py):
+        r2 = (Xg - px) ** 2 + (Yg - py) ** 2
+        sel = r2 < (2 * w) ** 2
+        wt = np.exp(-2 * r2[sel] / w ** 2)
+        xx, yy = (Xg[sel] - px) * 1e-3, (Yg[sel] - py) * 1e-3
+        Am = np.vstack([np.ones_like(xx), xx, yy, xx ** 2 + yy ** 2]).T
+        sw = np.sqrt(wt)
+        coef = np.linalg.lstsq(sw[:, None] * Am, sw * FS["chi"] * th * Tf[sel], rcond=None)[0]
+        return focus_shift_mm(ha, -2 * coef[3])
+
+    steady = [lens_at(Tm, px, py) for px, py in zip(cx[::2000], cy[::2000])]
+    Tf = Tm.copy()
+    out_t, out_dz = [], []
+    nsteps = int(math.ceil(period / dt))
+    lap = np.zeros_like(Tf)
+    for per in range(periods):
+        next_sample = 0.0
+        for s_ in range(nsteps):
+            t0, t1 = s_ * dt, (s_ + 1) * dt
+            sel = (T_ >= t0) & (T_ < t1)
+            src = deposit(sel) if sel.any() else 0.0
+            lap[1:-1, 1:-1] = Tf[2:, 1:-1] + Tf[:-2, 1:-1] + Tf[1:-1, 2:] + Tf[1:-1, :-2] - 4 * Tf[1:-1, 1:-1]
+            Tf = Tf + (G * lap * dt - Hl * Tf * dt + src) / rc_t
+            Tf[~inside] = 0.0
+            if per == periods - 1 and sel.any() and t0 >= next_sample:
+                j = np.nonzero(sel)[0][-1]
+                out_t.append(t1)
+                out_dz.append(lens_at(Tf, cx[j], cy[j]))
+                next_sample = t0 + sample
+    dz = np.array(out_dz)
+    return dict(state=st["state"], element=element, a_tot=a_tot, w_mm=w, period_s=period, dt=dt, pix=pix,
+                steady_dz_mm=[float(np.min(steady)), float(np.max(steady))],
+                transient_dz_mm=dict(mean=float(dz.mean()), p95=float(np.percentile(dz, 95)), max=float(dz.max())),
+                x_zR_max=float(dz.max() / z_rayleigh(D)), T_max_K=float(Tf.max()), t=out_t, dz=dz.tolist())
+
+
 # ---------------------------------------------------------------------------------------------------------------
 # G. Back-reflection
 # ---------------------------------------------------------------------------------------------------------------
@@ -533,6 +629,19 @@ def main():
             r = scanned_lens(st, el, a_tot, axis=AXIS, npz=npz)
             keep[(s, el, a_tot)] = r
             res["thermal_scanned"].append({k: v for k, v in r.items() if k not in ("T", "edges", "I")})
+    # within-layer (transient) lens: one run per element at a reference absorption; the model is linear in it
+    res["thermal_transient"] = []
+    for s, st in STACKS.items():
+        for el, a_ref, cases in (("slide", 0.01, (20e-6 * 0.1 + 1e-3, 0.01, 0.02)), ("window", 20e-6 * 0.953 + 1e-3,
+                                                                                    (20e-6 * 0.953 + 1e-3,))):
+            r = transient_lens(st, el, a_ref, npz)
+            for a_tot in cases:
+                f = a_tot / a_ref
+                res["thermal_transient"].append(dict(
+                    state=s, element=el, a_tot=a_tot, period_s=r["period_s"],
+                    steady_dz_mm=[x * f for x in r["steady_dz_mm"]],
+                    mean_dz_mm=r["transient_dz_mm"]["mean"] * f, p95_dz_mm=r["transient_dz_mm"]["p95"] * f,
+                    max_dz_mm=r["transient_dz_mm"]["max"] * f, max_x_zR=r["x_zR_max"] * f, T_max_K=r["T_max_K"] * f))
     (OUT / "optics.json").write_text(json.dumps(res, indent=1, default=float))
     figures(res, keep)
     return res
@@ -563,8 +672,7 @@ def figures(res, keep):
         a1.plot(*ax_, marker="+", ms=12, mew=2, color=col, ls="none", label=lab)
         r7 = offset_for(10.0, K_RANGE[0])[1]
         a1.add_patch(Circle(ax_, r7, fc="none", ec=col, lw=1.5))
-    a1.text(0, 0 - offset_for(10.0, K_RANGE[0])[1] - 1.8, "specular return\nreaches the collimator", ha="center", va="top",
-            fontsize=7.5, color=INK)
+    a1.text(0, -2.2, "specular return\nreaches the\ncollimator", ha="center", va="top", fontsize=7, color=INK)
     a1.text(0, 21.5, "Ø40 plate, Ø30 build area, M2 screw heads", ha="center", fontsize=8, color=INK)
     a1.text(offset_for(10.0, K_RANGE[0])[1] + 1.0, -30, f"r < {offset_for(10.0, K_RANGE[0])[1]:.1f} mm", ha="left",
             va="center", fontsize=7.5, color=INK)

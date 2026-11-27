@@ -404,7 +404,8 @@ def figure(maps, band, rec, cal):
         ax.clabel(cw, fmt=lambda x: f"W {x:.0f}", fontsize=6.5)
         if "hatch" in k and "7.5" not in k:
             for a, mb in band.items():
-                ax.contour(V, P, mb["lof"].astype(float), levels=[0.5], colors=[C_LOF], linewidths=0.8, linestyles=":")
+                ax.contour(V, P, np.nan_to_num(mb["tang"], posinf=99.0), levels=[1.0], colors=[C_LOF], linewidths=0.9,
+                           linestyles=":")
         ax.set_title(k, fontsize=9.5, color=INK, loc="left")
         ax.grid(color=GRID, lw=0.5)
         ax.text(0.15, 390, "keyhole (King ΔH/h_s > 30)", color=INK, fontsize=7.5, va="top")
