@@ -30,16 +30,21 @@ name says "envelope".
    bridge, inside the 66 × 67 mm the modal check used (−0.1 % on the first mode). (−20, 80) fails, because its line of sight
    meets PB2 above the bridge at (−35, 139). At the old (−60, −80) the camera blocks the reservoirs' way out (Checks §5).
 3. **The LW window is the catalogue Edmund 36-983 (Ø40 × 4), flat on the wall.** Its clamp ring grows to Ø58 and then meets
-   the plate-height through-beam's fibre head. So the ring gets a flat toward it, and its four screws move from 45° to 60°,
-   which leaves 2.75 mm of metal between the flat and the nearest hole. The left wall's CAM program has to be re-posted for
-   the new seat (Ø40.2 × 5.5) and holes. This runner has no FreeCAD or CAMotics, so it wasn't.
+   the plate-height through-beam's fibre head. So the ring gets a flat toward it, and its four screws move from 45° to 60°.
+   Round 3 put them on Ø49.5, which leaves 2.0 mm of ring outside each hole and 2.97 mm between the flat and the nearest hole.
+   It also re-posted the left wall's CAM program for the new seat (Ø40.2 × 5.5) and holes, and checked it in CAMotics and the
+   holder check ([`fabrication.md`](fabrication.md) §0).
 4. **The coaxial branch fits above the bridge as a 30 mm cage**, with the cubes where `monitoring_spec.COAX` puts them (x −155,
    −215, −285) and a post under every cube and every branch end. Photodiode B overhangs the bridge's −x edge by 38 mm on its
    rods, 14 mm from the process fibre and 22 mm inside the guard's side panel.
-5. **The AE waveguide can't leave the rod end the way the checks assumed.** The rod end is the gas boundary. The striker and
-   magnet sit under the rod's axis, the feedthroughs fill its front face, and the rod's bore is narrower than the block, so a
-   straight waveguide has no way out. It is drawn screwed into the rod end's bore floor, with the sensor outside on the rod
-   end's back face. What holds its domed tip on the plate at 10–20 N is the open question (§4).
+5. **The AE waveguide can't leave the rod end the way the checks assumed, so round 3 put the sensor inside it (§4).** The rod
+   end is the gas boundary. The striker and magnet sit under the rod's axis, the feedthroughs fill its front face, and the
+   rod's bore is narrower than the block, so a straight waveguide has no way out.
+   - **What holds it:** the waveguide slides free, with its foot on a MISTRAS PICO sensor in a 316L cartridge on the rod end's
+     bore floor. A spring under the sensor pushes both up.
+   - **The force:** with the stop force shimmed at assembly, its domed tip presses on the plate at 13.3–16.8 N.
+   - **The lead** leaves through a Microdot weld-in in the rod end's cap.
+   - **The loss:** 1–8 dB, against 26–52 dB through the stack to the rod end.
 
 ## 1. What is drawn
 
@@ -505,10 +510,16 @@ The table above (the end cap at 78 °C, 3–9 dB) was for the waveguide leaving 
 |---|---|---|---|
 | outer windows (LW, BW, LP) | 25-60 | at the wall or lid temperature (thermal.json T_ch cases) | FKM gasket 200 C |
 | inside cover slides | 25-60.9 | chamber gas/wall + 0.86 K from the plate's radiation (check 1) | fused silica: none |
-| Chronos body and lens (outside the LW port) | 30 (typical) / 38-43 (busy VLM) | air in the guard = Shuttle air; the 60 C wall adds 0.23 W of radiation to its front face | Kron's operating range not found in the repo (machine-vision cameras: typically 0-40 or 0-45 C) |
-| IMX296 lid camera and coaxial cage | 30-43 | above the lid/bridge, in the guard's air | InnoMaker board: check (Pi GS camera 0-50 C) |
+| Chronos body and lens (outside the LW port) | 30 (typical) / 38-43 (busy VLM) if the guard's air were the Shuttle's; see the flag | the 60 C wall adds 0.23 W of radiation to its front face | −20 to +40 °C (Kron, read 2026-11-27, [`cooling.md`](cooling.md) §1) |
+| IMX296 lid camera and coaxial cage | 30-43, the same | above the lid/bridge, in the guard's air | 0–50 °C (the Pi Global Shutter camera; InnoMaker publishes none) |
+| Side camera bracket's root | – | bolted to the chamber's floor plate | a 6 mm G-10 pad under it (round 3, cooling.md §4) |
 
-- **Flag:** the busy-VLM air (38-43 C) is at or above a 40 C camera limit; the cameras need the same answer as the laser (heat.md §2: chilled water or a ducted exhaust).
+- **Flag (round 3, [`cooling.md`](cooling.md)):** the guard's air is not the Shuttle's.
+  - Closed, it runs 26–44 K over the Shuttle's air, and every camera, the photodiodes, PB2's Pi and the galvo are over their
+    ratings.
+  - With the drawn vents it sits 5–10 K over its supply. That is in rating on 30 °C Shuttle air, but not on the busy case's
+    38–43 °C.
+  - So the supply has to be room air from a ventilated dock, or a chilled-water fan coil, decided with the laser (heat.md §2).
 
 **The LW slide with its argon purge.** The purge blows bottled argon across the slide's chamber face; the slide's other face looks at the outer window across the bore. plume.md (§4.3) found that a slide 10 K colder than the gas next to it collects 20–120× more condensate:
 

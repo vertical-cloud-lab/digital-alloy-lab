@@ -112,6 +112,11 @@ Edison's historical IEC 60825-4 test times are 30,000 s (T1), 100 s (T2) and 10 
 
 - A **1.6 mm aluminium guard is plausible as a second barrier but not proven**; the answer depends on absorptance, which changes as the surface oxidises or soots. Only a test on the finished panel, at worst-case focus, decides.
 - The **chamber is the primary barrier**: 12.7-16 mm 6061 walls and lid are ten times the thickness of the guard sheet.
+- **Two light-trapped vents in the guard's back panel** (2026-11-27, [`monitoring/cooling.md`](monitoring/cooling.md) §4–5) cool the
+  monitoring cameras. Each is a stack of black-anodised 1 mm blades with no straight path through it, off every straight path of the
+  beam: traced OD 7.0–8.1 at 1070 nm against the 5.4 of §4.2. A black blade absorbs ~90 % of a held beam where bare panel absorbs
+  ~8 %. So include a trap in the panel burn test and in the leakage check before first light, and show the vents to the LSO
+  ([`monitoring/review-packet.md`](monitoring/review-packet.md) L6).
 - **The polycarbonate panel must never see the beam.** The design already says so (no chamber viewport, beam inside an opaque chamber); keep a labyrinth or baffle between any beam path and the panel, and prefer an absorbing glass filter.
 - **Interlock response is cheap.** A 20 ms path (relay plus shutter) lets 10 J reach a stationary spot against a 5 kJ T3 budget. A 100 ms path lets 50 J. The shutter and the laser's inhibit should both fire from the safety controller.
 

@@ -341,6 +341,15 @@ change it by ≤ 18 %. Full tables: [`radiometry.md`](../analysis/out/monitoring
   column's absorption at 2,700 K (an upper bound, since part of the loss is scattering), the plume adds 4–15 % to PD-A and
   PD-B and 3–12 % at 1,550 nm. If it were at 3,360 K it would add 12–68 %. Its spectrum is close to the depression's, so it
   mostly raises the signal rather than biasing the ratio.
+- **Superseded in round 3 (2026-11-27) by the plume's growth model** ([`plume.md`](plume.md) §3.4 and §3.6):
+  - **The loss:** ~0.4 % for AlSi10Mg (0.15–1.5 %).
+  - **What glows:** the condensate in the beam's path is 2–5 nm droplets at ~2,100 K, not a 2,700 K column.
+  - **The glow:** it adds **~1.5 % to PD-A and PD-B** (0.5–6 %; ~8 % over overhangs; ~0 for 7075). The plume also dims the
+    pool's light by ~0.5–0.7 %.
+  - **Net:** about +0.8 % at 700 nm and +1.05 % at 900 nm, so the ratio moves ~4 K at 2,600 K, well inside a sample's
+    ±75–125 K.
+
+  Coaxial pyrometry on aluminium reads the depression, not the plume.
 - **Calibrate the whole train** with a radiance source in the chamber, as Hooper did (a stabilised lamp in an integrating
   sphere), at several galvo angles. Brandau et al. 2022 saw the coaxial signal fall 36–51 % across the field (via Edison).
 

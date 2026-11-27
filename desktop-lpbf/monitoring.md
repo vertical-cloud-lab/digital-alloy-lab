@@ -17,7 +17,8 @@ Edison's review of the same questions is in [`edison/monitoring-in-situ/`](ediso
 
 **Round 2 (PR 281, later on 2026-11-25).** Six detailed notes in [`monitoring/`](monitoring/) work this plan out: the melt pool,
 the optics, the plume, the mechanics, the fabrication, and the sync and data. §9 lists what they changed, and §10 is Edison's
-review of the result. Where §0–§7 and §9 differ, §9 is the later word.
+review of the result. Where §0–§7 and §9 differ, §9 is the later word. **Round 3 (PR 281, 2026-11-26 and 27)** closed what round 2
+left open and added two notes: cooling for the cameras in the laser guard, and a review packet for the LSO and the shop (§9.1).
 
 ## 0. Short answer
 
@@ -304,8 +305,23 @@ and at 200 °C. Seleznev's gas-pump noise needed waveform-based filtering, so re
 
 ## 7. Not done, or open
 - **Drawn since round 2** (§9, `LPBF_MONITORING=1`): the ports, the bridge cut-out, the coaxial cage, the AE waveguide and the
-  digitizer. **Still not drawn:** the trigger generator inside PB2, cables, the purge's argon line, the InGaAs and SWIR options,
-  the guard's monitoring bulkhead and the waveguide's preload ([`mechanics.md`](monitoring/mechanics.md) §1).
+  digitizer. Round 3 (§9.1) added the waveguide's sprung cold end, the back-wall LED light, and the guard's vents, fans, hood and
+  thermal breaks. **Still not drawn:**
+  - the trigger generator inside PB2, cables, and the purge's argon line;
+  - the InGaAs and SWIR options;
+  - the guard's monitoring bulkhead;
+  - a chilled-water fan coil, and PB2's filtered vent and Active Cooler;
+  - the bayonet's disc spring that the AE preload needs.
+
+  See [`mechanics.md`](monitoring/mechanics.md) §1 and §4.10, and [`cooling.md`](monitoring/cooling.md) §10.
+- **Not reviewed.** Nothing has been shown to BYU's LSO or the machine shop. [`review-packet.md`](monitoring/review-packet.md) is what
+  to send them: a STEP file and views of every part monitoring makes or changes, and the questions for each reviewer.
+- **The guard needs air from outside the Shuttle.**
+  - Closed, the guard runs 26–44 K over the Shuttle's air.
+  - With the drawn vents it is 5–10 K over its supply. That keeps everything in rating on 30 °C Shuttle air, but not in the busy
+    case.
+  - So feed it room air through a ventilated dock, or fit a chilled-water fan coil. Decide it with the laser's cooling
+    ([`heat.md`](heat.md) §2, [`cooling.md`](monitoring/cooling.md) §0).
 - **In the BOM since round 2:** [`monitoring-bom.csv`](monitoring-bom.csv) itemises steps 0–8, and [`bom.csv`](bom.csv) lines T4
   and T5 carry them (§9). Most prices are list prices or Edison's ranges, not quotes.
 - **Estimates, not measurements:**
@@ -344,10 +360,12 @@ the LSO.
 |---|---|---|
 | [`melt-pool.md`](monitoring/melt-pool.md) | analytic and 3D finite-volume melt-pool models, process maps, track ends, evaporation source terms | the transition regime: a shallow depression in a conduction-shaped track up to ~350 W; the pool is 200–440 × 160–320 µm; the mushy zone lasts 22–156 µs |
 | [`optics.md`](monitoring/optics.md) | the f-theta traced 600–1700 nm, radiometry on the melt-pool fields, the side and lid cameras, light, 1070 nm at the ports, parts with list prices ([`optics-parts.csv`](monitoring/optics-parts.csv)) | new coaxial bands; silicon sees only the hot core, so a SWIR camera for the pool edge; every camera needs OD ≥ 8 at 1070 nm |
-| [`plume.md`](monitoring/plume.md) | CFD with the ports and the LW purge, condensate and spatter tracking, fouling, the plume jet | the bed jet removes the plume; LW is the cleanest window; LP belongs in the back half; spatter sets the laser slide's life |
-| [`mechanics.md`](monitoring/mechanics.md) | every port, window, camera, the coaxial cage, the AE path and the recorder drawn in the model ([`cad/monitoring_parts.py`](cad/monitoring_parts.py), `LPBF_MONITORING=1`); loads, seals, mounts, the bridge's modes in CalculiX, the AE path's temperature and losses | 0 interferences in six machine states and eight sweeps; LP moves to (−40, 60) through a bridge cut-out; 1.0 mm FKM gaskets; the AE waveguide's preload is open |
-| [`fabrication.md`](monitoring/fabrication.md) | the ports in setup C with CAM and CAMotics, small parts made or bought, live prices ([`monitoring-bom.csv`](monitoring-bom.csv)) | ports square to their faces; ~2.8 h on parts made anyway; steps 0–8 $23,096–25,558 |
+| [`plume.md`](monitoring/plume.md) | CFD with the ports and the LW purge, condensate and spatter tracking, fouling, the plume jet | the bed jet removes the plume; LW is the cleanest window; LP belongs in the back half; spatter sets the laser slide's life; round 3: the plume costs the beam ~0.4 % |
+| [`mechanics.md`](monitoring/mechanics.md) | every port, window, camera, the coaxial cage, the AE path and the recorder drawn in the model ([`cad/monitoring_parts.py`](cad/monitoring_parts.py), `LPBF_MONITORING=1`); loads, seals, mounts, the bridge's modes in CalculiX, the AE path's temperature and losses | 0 interferences in six machine states and eight sweeps; LP moves to (−40, 60) through a bridge cut-out; 1.0 mm FKM gaskets; round 3: the AE waveguide sprung on a sensor in the rod end |
+| [`fabrication.md`](monitoring/fabrication.md) | the ports in setup C with CAM and CAMotics, small parts made or bought, live prices ([`monitoring-bom.csv`](monitoring-bom.csv)) | ports square to their faces; round 3: both frame ports re-posted and checked, LP on a sine plate, ~5.7 h on parts made anyway; steps 0–8 $23,555–27,138 |
 | [`sync-and-data.md`](monitoring/sync-and-data.md) | timing budget, channel map ([`monitoring-io.csv`](monitoring-io.csv)), HDF5 layout, a reader checked on a synthetic build | the RTC6 has no analog input; fit the digitizer's clock every layer; correct the 0.25 ms lag |
+| [`cooling.md`](monitoring/cooling.md) (round 3) | the guard's air against every device's rating; light-trapped vents and fans, a hood for the Chronos and G-10 breaks, drawn and checked | closed, the guard runs 26–44 K over the Shuttle's air; vented, 5–10 K over its supply; the traps give OD 7.0–8.1 at 1070 nm |
+| [`review-packet.md`](monitoring/review-packet.md) (round 3) | a STEP file and views of every part monitoring makes or changes ([`review_packet.py`](analysis/monitoring/review/review_packet.py)), and the questions for the LSO and the shop | 20 made parts and 9 changed ones; L1–L9 for the LSO, S1–S13 for the shop |
 
 **The coaxial branch:**
 - **New bands.** The two-colour pair moves to 700/40 and 900/40 nm, and the camera to 955–990 nm, in place of §4's 850 nm. A
@@ -377,7 +395,7 @@ the LSO.
 - **Purge the LW slide.** 1–3 L/min of argon cuts its condensate 13–45×. Keep camera slides at or above the gas temperature
   (thermophoresis).
 - **Light the side camera with pulsed 850 nm LEDs.** The guard's viewing panel is transparent at 808–850 nm, so an 808 nm diode
-  laser would take the machine out of Class 1.
+  laser would take the machine out of Class 1. Round 3 drew the light: an M850D3 imaged onto the plate from BW (§9.1).
 - **Every camera needs OD ≥ 8 at 1070 nm.** The layer camera has OD 5.1: add a FESH1000 before filming during lasing.
 - **The Chronos at LW takes 10–20 µs exposures.** Its 4/3 in. sensor needs the F mount for full frames.
 
@@ -406,16 +424,70 @@ the LSO.
 - **AE:**
   - A Ø3 mm 316 waveguide is under 60 °C 17–25 mm past the rod's end cap, and loses 3–9 dB against 26–52 dB through the module
     to the rod end. Use a domed tip, R ≥ 25 mm, at 10–20 N.
-  - **It has no straight way out through the rod end, and nothing holds it on the plate yet** (mechanics.md §4).
+  - Round 3 gave it a way out and a preload: it slides free on a sensor that a spring pushes up from inside the rod end (§9.1).
 - **Temperatures:**
   - A room-temperature LW purge keeps the slide up to 30 K colder than the gas, which draws condensate. Warm it (≤ 1.6 W),
     or take it from the recirculation loop.
-  - The cameras sit in 38–43 °C air, at or above a 40 °C rating.
+  - The cameras sit in the guard's air, not the Shuttle's, and closed it runs 26–44 K over it. Round 3 vents the guard (§9.1).
 
-**Cost:** steps 0–8 come to $23,096–25,558 new, or $21,024 with used listings
-([`fabrication.md`](monitoring/fabrication.md) §0), against §4's ~$20–38k. [`bom.csv`](bom.csv) carries them as two lines:
-- T4: steps 0–6, $8,391–10,853, in the machine's total;
-- T5: steps 7–8, $12,477–20,176, an option outside it.
+**Cost**, rebuilt with round 3's lines on 2026-11-27: steps 0–8 come to $23,555–27,138 new, or $21,349 with used listings
+([`monitoring-bom.csv`](monitoring-bom.csv)), against §4's ~$20–38k. Round 2 had $23,096–25,558. [`bom.csv`](bom.csv) carries
+them as two lines:
+- T4: steps 0–6, $9,592–12,915 (was $8,391–10,853), in the machine's total;
+- T5: steps 7–8, $11,736–19,694 (was $12,477–20,176), an option outside it.
+
+What round 3 changed in them:
+- **Step 0** gains the guard's vents and fans (M0-C1 to C8, $530–950).
+- **Step 4** gains the sprung AE cold end.
+- **Step 7** gains the side camera's hood and duct (M7-C1 to C4, $170–330).
+- **The BW light** (M850D3, asphere, heat sink, DC2200; $3,059–3,159) replaces the $3,971 of pulsed LED light that round 2 priced.
+
+### 9.1 Round 3: what round 2 left open (2026-11-26 and 27)
+
+PR 281's later runs worked off round 2's "Not done" list. Five more workers took it on: fab, AE, the BW light, the plume and
+camera cooling. Their work was then merged and checked again. Web reads (vendor pages, SendCutSend, NIST) went out through an
+SSH tunnel to a lab Pi, which exits on BYU's network. Nothing is bought, measured or reviewed yet.
+
+| Open after round 2 | What round 3 did | What it found | Where |
+|---|---|---|---|
+| The AE waveguide had no way out of the rod end and nothing to hold it on the plate | It slides free on a MISTRAS PICO sensor in a turned 316L cartridge on the rod end's bore floor, pushed up by a Lee spring. The lead leaves through a Solid Sealing FA40102 Microdot weld-in in the rod end's cap | 13.3–16.8 N on the plate at every tolerance and thermal corner, with the stop force shimmed at assembly. The path loses 1–8 dB, against 26–52 dB through the stack to the rod end. It needs the bayonet's disc spring. S25 keeps its sensor on the rod end | [`mechanics.md`](monitoring/mechanics.md) §4 |
+| The BOM's SOLIS-850C doesn't fit at BW | A Thorlabs M850D3 LED imaged onto the plate by an ACL25416U-B asphere, on a heat sink and an L bracket on the back wall, pulsed at 2 A by a DC2200 from the Pico 2 | The bed gives SNR 14 at 20 µs behind the BOM's FBH850-10, and 23–36 behind an FBH850-40 at the same price, so swap the filter. That is 4–5× what a SOLIS at BW would give. RG3 in its own beam inside the chamber, so enable it only with the chamber door shut | [`optics.md`](monitoring/optics.md) §4.1 |
+| The plume's beam loss lay anywhere from 0.05 % to ~10 % | A condensate growth model (`growth.py`), and Edison's [`r9-plume-growth`](edison/r9-plume-growth/answer.md) | ~0.4 % for AlSi10Mg at 320 W (0.15–1.5 %), ~0.25 % for 6061, ~0.2 % for 7075. Its glow adds ~1.5 % to the coaxial photodiodes, not 4–15 % (§10) | [`plume.md`](monitoring/plume.md) §3.4, §3.6 |
+| The cameras sat in 38–43 °C air | A heat balance of the guard. Drawn: a light-trapped inlet and exhaust in the guard's back panel with two 120 mm fans, a duct and hood for the Chronos, G-10 breaks, a fan for PB2, and a place for the LP camera's Pi | The closed guard runs 26–44 K over the Shuttle's air. Vented, it runs 5–10 K over its supply: in rating on 30 °C Shuttle air, but not in the busy case, so the guard needs room air or a chilled-water fan coil (§7). The traps give OD 7.0–8.1 at 1070 nm with black hard anodise, against the 5.4 needed | [`cooling.md`](monitoring/cooling.md) |
+| The left wall's CAM program, the quotes and the LP hours were out of date | Both frame ports re-posted with FreeCAD 1.0.2, and the LP bore programmed with the lid on a 27.93° sine plate. CAMotics and the holder check found 0 gouges, 0 rapids through stock and 0 collisions. SendCutSend re-quoted the flat parts | Three parts changed on the way: the LP adapter's screws sat in its own O-ring groove; the LW ring's holes were too close to its edge for SendCutSend; the BW frame's third screw had 1.2 mm of metal round it. ~5.7 h of shop time on parts made anyway; the flat parts $7.43–10.26 each | [`fabrication.md`](monitoring/fabrication.md) §0 |
+| Nothing was reviewed | A review packet: a STEP file and views of every part monitoring makes or changes, and the questions for the LSO and the shop | 20 made parts and 9 changed ones on M50; L1–L9 for the LSO, S1–S13 for the shop | [`review-packet.md`](monitoring/review-packet.md) |
+| The renders predated PB2's move, and NIST blocked the runner | The default renders and the build sequence re-made. `lines.py` reached NIST through the tunnel | All nine line lists match their 2026-11-25 sha256s, so `lines.json` is unchanged | [`cad/img/low/`](cad/img/low/) |
+
+**Checked again after merging** (2026-11-27, 09:55–10:07 UTC):
+- **Interference:** with every monitoring part from rounds 2 and 3 (337 parts on M50 and L75, 333 on S25), `interference.py` finds
+  0 interferences in the six machine states and the eight motion sweeps on all three modules
+  ([`M50`](analysis/out/monitoring/mech/interference-monitoring-M50-M.md),
+  [`S25`](analysis/out/monitoring/mech/interference-monitoring-S25-S.md),
+  [`L75`](analysis/out/monitoring/mech/interference-monitoring-L75-L.md)). The default model's runs are unchanged. The runs peak
+  at 3.6 GB, so they need a cap of 4 GB or more.
+- **No change to the machine's size:** the model's outer extents are the same with and without the monitoring parts (the machine
+  is still 579.6 mm tall).
+- **The BOM** rebuilds unchanged from its price lookups.
+
+**What round 3 leaves open** (each note's "Not done" section has the detail):
+- **Nothing is bought, measured or reviewed.** The review packet is ready to send.
+- **The guard's air supply**, room air through a dock or a fan coil, is the laser's decision too (§7).
+- **AE:**
+  - the bayonet's disc spring;
+  - a quote for the PICO;
+  - Solid Sealing's word on welding the weld-in on the cap's curve;
+  - the leads' route past the cartridge;
+  - the robot cell's drawbar, which wants the same space in the rod.
+- **The BW light:**
+  - the LED's 0–40 °C rating, against the guard's air;
+  - the door-shut enable, which the LSO is asked to approve.
+- **The plume:** the growth model is one parcel on the centreline of a steady integral jet. The LW camera can test it (risk 2
+  in §10).
+- **Not programmed:**
+  - the optics bridge's cut-out (~6 min in its own setup);
+  - the AE features in the heater block, shields and rod end;
+  - the light traps (55 bent blades).
+- **The guard's air is treated as one well-mixed volume.** No CFD of it was run.
 
 ## 10. Edison's review of the modelled design
 
@@ -451,9 +523,20 @@ published measurements, which failure modes others have hit, and the five bigges
 
   To lose 11 % at 1070 nm, the column above our spot (19 mg/m² for AlSi10Mg, plume.md §3.4) would have to be ~90× denser as
   20 nm primaries, or only ~1.6× denser as fully grown 300 nm agglomerates. Grown fully in the beam path, our own columns
-  would cost 3–11 % (6061 to 7075). So the answer hinges on how far the condensate grows in the < 1 ms before the scan and the
-  cross-flow carry it off the beam, which nothing here models. It matters: optics.md §3 finds that a plume absorbing 0.05–0.2 %
-  already adds 4–15 % to the photodiodes as emission. Treat 0.05–0.2 % as the low end; the test is in risk 2.
+  would cost 3–11 % (6061 to 7075). So the answer hinged on how far the condensate grows in the < 1 ms before the scan and the
+  cross-flow carry it off the beam.
+
+  **Round 3 modelled that growth** ([`plume.md`](monitoring/plume.md) §3.6).
+  - **The loss:** ~0.4 % for AlSi10Mg at 320 W and 200 + 40 L/min (0.15–1.5 %), ~0.25 % for 6061 and ~0.2 % for 7075.
+  - **Why it stays low:** the beam keeps the condensate in its path at 2–5 nm, as molten droplets. The cross-flow bends the jet
+    off the beam, 1–3 mm up, before the condensate agglomerates.
+  - **What has been measured:** Edison's follow-up ([`edison/r9-plume-growth/`](edison/r9-plume-growth/answer.md)) found no LPBF
+    measurement on Al and none against cross-flow. The nearest is Wahl et al. (2026): ~3 % for Al and ~13 % for steel through a
+    welding keyhole, most of it within 10 mm of the surface. The model's welding-like check also puts half or more of its loss
+    there.
+  - **The glow:** it adds ~1.5 % to the photodiodes (0.5–6 %; ~8 % over overhangs), not the 4–15 % that optics.md §3 had.
+
+  The test is in risk 2.
 
 **The failure modes it lists, and where the notes stand:**
 
@@ -474,7 +557,7 @@ cross-flow test in risk 2 is ours.
 | # | Risk | Cheapest experiment | When (§4) |
 |---|---|---|---|
 | 1 | The coaxial response changes across the field, and differently in each band, which corrupts the two-colour ratio | Laser off: step a stable lamp in an integrating sphere (or a diffuse target) over the field with the galvo, record every band against the RTC6 position, fit a map per channel, and repeat warm. Accept if the residuals are under 2–3 % (Brandau's reference-based system reached 1.8 %) and the ratio is flat | step 2, with the spectral check |
-| 2 | The two-colour ratio read as a temperature | Single tracks on bare AlSi10Mg plate and on powder over a randomised power, speed and focus matrix. Record both raw channels, the ratio, coaxial frames, a side view and cross-sections; add an oxide comparison and an ND filter over one band. If the ~2,600 K follows depression onset and nothing else, it is a regime index. The same tracks at full and at reduced cross-flow test the plume's beam loss: a 5–10 % loss narrows a conduction track by ~3–5 % (width ~ √P) | commissioning, step 5 |
+| 2 | The two-colour ratio read as a temperature | Single tracks on bare AlSi10Mg plate and on powder over a randomised power, speed and focus matrix. Record both raw channels, the ratio, coaxial frames, a side view and cross-sections; add an oxide comparison and an ND filter over one band. If the ~2,600 K follows depression onset and nothing else, it is a regime index. The plume's ~0.4 % can't be seen as a narrower track at full against reduced cross-flow (< 0.05 %). The LW camera can test it by the height and brightness of the beam's glowing thread above the pool (plume.md §3.6) | commissioning, step 5 |
 | 3 | AE buried in machine noise | Before any powder: record the noise with the pump, blower, recoater, Z servo, galvos and laser supply on, one at a time and together. Then pencil-lead breaks at several plate positions, pump off and on, through each AE path; run on battery power to find EMI | step 4, before choosing the path |
 | 4 | Window and slide fouling drifting every optical signal | Weighed witness coupons beside the laser slide and the LW slide, and a fixed LED shining through each window. Equal laser-on doses with the purge off and on, and with the slide colder than, equal to and warmer than the gas | step 0's ports, first builds |
 | 5 | Silicon can't see solidification | A heated Al coupon of known emissivity, viewed through the installed coaxial path at the planned exposures and stepped over 450–900 °C: find where each camera reaches SNR 5. Run one silicon + InGaAs single-track trial before buying a full SWIR camera | before step 8 |
