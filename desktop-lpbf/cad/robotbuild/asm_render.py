@@ -161,7 +161,10 @@ class Replay:
         scn = pickle.load(open(TRAJ / "asm_scene.pkl", "rb"))
         self.objs = scn["objs"]
         self.ev = load_events(chapter)
-        self.pl = common.plotter()
+        # round 10: pvscene.plotter() waits for the X display and retries a window that came up without it (common.plotter()
+        # does not: two slices' xvfb-run -a starting together left one on a dead display, and it failed at its first frame,
+        # after its whole first pass)
+        self.pl = pvscene.plotter() if hasattr(pvscene, "plotter") else common.plotter()
         self.sc = pvscene.PVScene(self.pl)
         sc = self.sc
         # ---- static: floor, bench and fixtures (cell2's static bodies), the long table, pallets and bins
@@ -592,27 +595,34 @@ class Replay:
             P += [a + (b - a) * k / n for k in range(n + 1)]
         return self._clear_pts(P, boxes, r) if P else True
 
-    def feet_clear(self, P, legs, h0, h1, boxes, clock0=0, margin=20.0):
-        """Round 10: the walk along `legs` (walk_seq, starting turned to h0, ending turned to h1) replayed on a copy of the
-        person's Gait: is every foot (a 150 mm circle round the forefoot, its centre 70 mm ahead of the ankle), planted or
-        swinging, at least `margin` mm clear of the floor plan's boxes? Round 9's first chapter-40 test had a shoe 31 mm in
+    @staticmethod
+    def gait_fresh(P):
+        """Round 10: a placement forgets the last walk's acceleration too (people.Gait.reset keeps `a`, which then bends the
+        first steps of the next walk), so a walk is the same as feet_clear replayed it."""
+        P.gait.a = np.zeros(2)
+        P.gait.last = 1
+
+    def feet_clear(self, P, legs_in, h0, h_job, legs_out, h_out, boxes, settle=24, margin=20.0):
+        """Round 10: the person's whole visit replayed on a copy of their Gait (as person_job draws it: placed at the start of
+        legs_in turned to h0, walked in and turned to h_job, standing `settle` frames, walked out along legs_out and turned
+        to h_out): is every foot (a 150 mm circle round the forefoot, its centre 70 mm ahead of the ankle), planted or
+        swinging, at least `margin` mm clear of the floor plan's boxes? Round 10's first chapter-40 test had a shoe 50 mm in
         MiR A as the person turned at the bench to walk out (the body's path was clear, the steps round it were not)."""
         import copy
         g = copy.deepcopy(P.gait)
         g.explicit = True
-        g.reset(float(legs[0][0]), float(legs[0][1]), float(h0), clock=clock0)
-        k = clock0
+        g.reset(float(legs_in[0][0]), float(legs_in[0][1]), float(h0), clock=0)
+        g.a, g.last = np.zeros(2), 1
+        k = 0
         pts = []
-        x, y = float(legs[-1][0]), float(legs[-1][1])
-        for x, y, h in self.walk_seq(legs, h0, h1):
+        seq = list(self.walk_seq(legs_in, h0, h_job))
+        xs, ys = float(legs_in[-1][0]), float(legs_in[-1][1])
+        seq += [(xs, ys, h_job)] * settle + list(self.walk_seq(legs_out, h_job, h_out))
+        xe, ye = float(legs_out[-1][0]), float(legs_out[-1][1])
+        seq += [(xe, ye, h_out)] * 8
+        for x, y, h in seq:
             k += 1
             g.update(x, y, h, clock=k)
-            for fx, fy, psi, lift, pitch in g.pose():
-                a = math.radians(psi)
-                pts.append((fx - 70.0 * math.sin(a), fy + 70.0 * math.cos(a)))
-        for _ in range(8):                                    # the last steps settle
-            k += 1
-            g.update(x, y, h1, clock=k)
             for fx, fy, psi, lift, pitch in g.pose():
                 a = math.radians(psi)
                 pts.append((fx - 70.0 * math.sin(a), fy + 70.0 * math.cos(a)))
@@ -1308,6 +1318,15 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=(), fail_
     fail_notes = dict(fail_notes or {})
     fail_steps = tuple(fail_steps) + tuple(k for k in fail_notes if k not in fail_steps)
     rp = Replay(chapter)
+    if os.environ.get("ASM_PLAN_ONLY") != "1":
+        # round 10: one frame drawn first, so a render window without a working display fails now (asm_slices.py starts the
+        # slice again), not after the whole first pass
+        try:
+            rp.sc.camera([(-3900.0, -4700.0, 4600.0), (900.0, 0.0, 500.0), (0.0, 0.0, 1.0)], view_angle=46.0)
+            rp.sc.render()
+        except Exception as e:                 # noqa: BLE001
+            print(f"no working render window ({type(e).__name__}: {e}); exit 3 to be started again", flush=True)
+            sys.exit(3)
     name, title = CHAP[chapter]
     ev = rp.ev
     if fail_pkl and fail_steps:
@@ -1563,8 +1582,12 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                         # the steps of the walk in and out, and the turns at each end, clear of the floor plan (feet_clear)
                         xa_, ya_ = c["aisle"]
                         hi_, hj_ = face_hd(xs - xa_, ys - ya_), face_hd(look[0] - xs, look[1] - ys)
-                        if not (rp.feet_clear(P, [(xa_, ya_), (xs, ys)], hi_, hj_, fboxes) and
-                                rp.feet_clear(P, [(xs, ys), (xa_, ya_)], hj_, hi_ + 180.0, fboxes)):
+                        if back and pstate["out_at"][1] * ya_ > 0.0 and abs(pstate["out_at"][0] - xa_) < 4000.0:
+                            x0_, y0_, h0_ = pstate["out_at"]
+                            lin_ = [(x0_, y0_), (xa_, ya_), (xs, ys)]
+                        else:
+                            lin_, h0_ = [(xa_, ya_), (xs, ys)], hi_
+                        if not rp.feet_clear(P, lin_, h0_, hj_, [(xs, ys), (xa_, ya_)], hi_ + 180.0, fboxes):
                             why_all["feet"] = why_all.get("feet", 0) + 1
                             continue
                     P.place(x=xs, y=ys, hd=face_hd(look[0] - xs, look[1] - ys), look=look, frame=tot["n"])
@@ -1650,6 +1673,7 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                 # across a cut each way (round 9: F18's screw had no person at all)
                 P.show(1.0)
                 P.place(x=xs, y=ys, hd=hd_job, look=look, frame=tot["n"])
+                rp.gait_fresh(P)
                 pstate.update(on=True, n=tot["n"])
                 last["force"] = "person put in place"
                 r_ = job_frames()
@@ -1664,7 +1688,7 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
             if back and pstate["out_at"][1] * ya > 0.0 and abs(pstate["out_at"][0] - xa) < 4000.0:
                 # still standing at the aisle where the last job left them: turn round and walk along the aisle and in
                 x0, y0, h0 = pstate["out_at"]
-                P.place(x=x0, y=y0, hd=h0, look=look, frame=tot["n"])        # where they stand (no move: the feet stay)
+                P.set(x=x0, y=y0, hd=h0, look=look, frame=tot["n"])          # where they stand: the feet stay where they are
                 legs_in = [(x0, y0), (xa, ya), (xs, ys)]
             else:
                 if back:
@@ -1676,6 +1700,7 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                         return True
                     P.show(1.0)
                 P.place(x=xa, y=ya, hd=hd_in, look=look, frame=tot["n"])
+                rp.gait_fresh(P)
             pstate.update(on=True, n=tot["n"])
             for legs, hs, h1, txt in ((legs_in, h0, hd_job, "a person walks over from the aisle"),
                                       (None, 0.0, 0.0, ""),

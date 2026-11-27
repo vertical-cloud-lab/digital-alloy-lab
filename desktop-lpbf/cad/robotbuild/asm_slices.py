@@ -73,11 +73,16 @@ def main(argv):
         return bool(last) and last in done_steps()
 
     running = {}
+    specs_of, tries = {}, {}            # round 10: a slice's queue entry and how often it was started
     while queue or running:
         for key, p in list(running.items()):
             if p.poll() is not None:
                 log(f"slice {key} finished, exit {p.returncode}")
                 del running[key]
+                spec_ = specs_of.get(key)
+                if p.returncode != 0 and spec_ is not None and tries.get(key, 0) < 3:
+                    queue.insert(0, spec_)  # round 10: a failed slice (an X display race, a crash) is drawn again
+                    log(f"slice {key} queued again (try {tries.get(key, 0) + 1})")
         limit = int(opt.get("max-running", 3))
         if opt.get("max-running-file") and os.path.exists(opt["max-running-file"]):
             try:                       # round 10: the limit can be changed while it runs (fewer while another chapter renders)
@@ -96,18 +101,22 @@ def main(argv):
                            ASM_CUTS=",".join(cut_of[chapter]), ASM_UPTO=upto, OMP_NUM_THREADS="1", LP_NUM_THREADS="1")
                 env.pop("ASM_PART", None)
                 env.pop("ASM_RANGE", None)
-                lf = open(os.path.join(opt.get("logdir", "/tmp"), f"asm_slice_{chapter}_{k}.log"), "w")
+                lf = open(os.path.join(opt.get("logdir", "/tmp"), f"asm_slice_{chapter}_{k}.log"), "a")
                 cmd = ["xvfb-run", "-a", "-s", "-screen 0 1920x1080x24", "/tmp/memslot", mem, sys.executable, "asm_render.py",
                        chapter]
                 if chapter == "chamber" and notes.exists():
                     cmd.append(f"--fail_notes={notes}")
                 running[f"{chapter}.{k}"] = subprocess.Popen(cmd, cwd=str(HERE), env=env, stdout=lf, stderr=subprocess.STDOUT)
+                specs_of[f"{chapter}.{k}"] = (chapter, k, a, b)
+                tries[f"{chapter}.{k}"] = tries.get(f"{chapter}.{k}", 0) + 1
                 log(f"slice {chapter}.{k} [{a or 'opening'}, {b or 'end'}) started "
                     f"(chapter recorded: {'yes' if chapter_done(chapter) else 'not yet'})")
                 started = True
                 break
         if not started:
             time.sleep(20)
+        else:
+            time.sleep(10)              # round 10: two xvfb-run -a starting together can race for one display number
     log("all slices done")
 
 
