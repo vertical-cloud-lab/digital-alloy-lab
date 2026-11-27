@@ -68,6 +68,7 @@ MIR_Y = ARM_Y - 130.0                                                 # -902: Mi
 
 STEP_RAD = math.radians(1.5)
 CONTAIN = os.environ.get("CELL_CONTAIN", "1") == "1"      # round 10: Checker.collisions also tests containment
+CONTAIN_HITS = {}                                          # (robot body, world body) -> checks failed by containment alone
 DEPTH_MM = 1.5
 TOUCH_MM = 0.3
 LADDER = (DEPTH_MM, 3.0, 6.0, 12.0, 25.0, 50.0)
@@ -886,6 +887,7 @@ class Checker:
                 d = depth(x, y, upto=depth_limit)
                 if d <= depth_limit:
                     continue
+                CONTAIN_HITS[(x.name.split("/")[-1][:30], y.name[:40])] = CONTAIN_HITS.get((x.name.split("/")[-1][:30], y.name[:40]), 0) + 1
                 out.append((x.name, y.name, d))
                 if first:
                     return out

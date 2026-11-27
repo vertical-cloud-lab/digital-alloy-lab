@@ -215,13 +215,19 @@ class Run:
         self.arm(n).place(self.q[n])
 
     # ---- Cartesian path with one IK branch, checked frame by frame
-    def follow(self, n, Ts, close, allow, seeds=None, exclude=(), dist_every=6):
-        """Ts: list of TCP poses (world). Returns dict(ok, qs, hit, at, min_d, with)."""
+    def follow(self, n, Ts, close, allow, seeds=None, exclude=(), dist_every=6, strict=False):
+        """Ts: list of TCP poses (world). Returns dict(ok, qs, hit, at, min_d, with). Round 10, strict: only the IK branch the
+        arm is on (a retreat must start where the arm is: round 10's first chapter-41 test drew one on another branch, a
+        141 deg cut, C05)."""
         a = self.arm(n)
         chk = K.checker(self.cl, n, exclude)
         first = a.ik_all(Ts[0], seed=self.q[n])
         if seeds:
             first = seeds + first
+        if strict:
+            first = [q for q in first if np.abs(np.asarray(q) - np.asarray(self.q[n])).max() < 0.02][:1]
+            if not first:
+                return dict(ok=False, qs=[], hit="the arm's own branch does not reach the first pose", at=0, min_d=None, with_=None)
         best = None
         for q0 in first[:10]:
             qs, prev, ok, hit, at = [], q0, True, None, None
@@ -612,7 +618,7 @@ def arm_place(run, st, idx, path, state, actor, tool, holdname, grasp=None, extr
     return dict(ok=ok, why=why, dock=best["dock"], fetch=acc.get("fetch"), fetch_why=acc.get("fetch_why"), hoist_hook=acc.get("hoist_hook"),
                 min_d=fr["min_d"], min_with=fr["with_"], dest=sorted(dest)[:4],
                 planned=best.get("plan", {}).get("planned"), waypoints=best.get("plan", {}).get("waypoints"),
-                grasp_width=round(width, 1), push_mm=fr.get("push_mm"), drop_mm=fr.get("drop_mm"), tool_in=tool_in,
+                grasp_width=round(width, 1), push_mm=fr.get("push_mm"), drop_mm=fr.get("drop_mm"), tool_in=tool_in, dest_all=sorted(dest),
                 seat_in=sorted(seat_in)[:4] if seat_in else None, close=best.get("close"))
 
 
@@ -649,6 +655,19 @@ def push_backoff(run, n, q_rel, c_grasp, T_push0, c_push, body, T_part, allow, i
     held = a.held
     c_open = max(0.0, float(c_grasp) - 0.12)
     a.release()
+    tmp0 = Body("released part", body.v, body.f, kind="machine")
+    tmp0.place(T_part)
+    run.cl.static["__released"] = tmp0
+    try:
+        chk0 = K.checker(run.cl, n, idx)
+        allow0 = frozenset(allow) | frozenset([("tool", "released part")])
+        for dc in (0.12, 0.06, 0.0):          # round 10: the widest opening clear where it lets go (C09: 0.12 met the KF-25 port)
+            c_try = max(0.0, float(c_grasp) - dc)
+            if not chk0.collisions(q_rel, c_try, allow0, first=True):
+                c_open = c_try
+                break
+    finally:
+        run.cl.static.pop("__released", None)
     fl_rel = a.tcp(q_rel, c_grasp) @ inv(a.tcp_local(c_grasp))
     fl_push = T_push0 @ inv(a.tcp_local(c_push))
     dz = float((inv(fl_rel) @ fl_push)[2, 3])            # the push's flange lies dz along the tool axis from the release's
@@ -734,10 +753,13 @@ def retreat(run, n, dist=60.0, near=(), names=(), seat=None):
             if not chk.collisions(run.q[n], c, allow, first=True):
                 c_open = c
                 break
-    fl = a.tcp(run.q[n], c0) @ inv(a.tcp_local(c0))
-    Ts = [fl @ Tm(p=(0, 0, -s)) @ a.tcp_local(c_open) for s in np.linspace(0, dist, 7)]
+    # straight back along the tool's own axis (the TCP's z: a driver's bit, an angle head's socket), the TCP placed for the opening
+    T0 = a.tcp(run.q[n], c0)
+    Ts = [T0 @ Tm(p=(0, 0, -s)) @ inv(a.tcp_local(c0)) @ a.tcp_local(c_open) for s in np.linspace(0, dist, 7)]
     a.close = c_open
-    fr = run.follow(n, Ts, c_open, allow, dist_every=99)
+    fr = run.follow(n, Ts, c_open, allow, dist_every=99, strict=True)
+    if not fr["ok"]:
+        log(f"   retreat of arm {n} stops after {len(fr['qs'])} of {len(Ts)} frames: {fr['hit']}")
     put = None
     if seat is not None:
         u, phase, state = seat               # phase: the phase's name, or the machine frame itself (a shifted step, F26)
@@ -839,7 +861,7 @@ def do_place(run, st, row):
             if not sub["ok"]:
                 why.append(sub["why"])
             if not sub.get("released"):         # round 10 (F18): the holder already let go after its slide and parked
-                retreat(run, actor, near=u)
+                retreat(run, actor, near=u, names=r.get("dest_all") or ())
         elif st.get("hold_first") and r["ok"]:
             # round 8 (two hands): keep it pressed on its seal while the other arm drives its first screws
             run.add(u, st["grp"], st["phase"], state)
@@ -850,10 +872,11 @@ def do_place(run, st, row):
                 run._hold_trial = False
                 hres = dict(step=st["id"], status="error", why=f"{type(e).__name__}: {e}"[:200])
             row.setdefault("holds", []).append(hres)
-            retreat(run, actor, near=u)
+            retreat(run, actor, near=u, names=r.get("dest_all") or ())
         else:
             T_seat = shifted(run, st)
-            retreat(run, actor, seat=(u, st["phase"] if T_seat is None else T_seat, state))
+            # round 10: the fingers or tool may still touch the part's seat contacts where they let go (1.5 mm), as when placing
+            retreat(run, actor, names=r.get("dest_all") or (), seat=(u, st["phase"] if T_seat is None else T_seat, state))
             run.add(u, st["grp"], st["phase"], state, T=T_seat)
         go_park(run, actor)
     gmin = min(gaps) if gaps else (None, None)
@@ -2076,6 +2099,11 @@ def main(argv):
             run.rows.append(sr)
         run.sub_rows = []
         log(st["id"], row.get("sweep"), row.get("arm"), row.get("gap"), row.get("arm_clear"), (row.get("why") or "")[:160])
+        if C.CONTAIN_HITS:
+            top = sorted(C.CONTAIN_HITS.items(), key=lambda kv: -kv[1])[:4]
+            log("   containment hits: " + "; ".join(f"{a_} in/around {b_} x{k_}" for (a_, b_), k_ in top))
+            row["contain_hits"] = [dict(a=a_, b=b_, n=k_) for (a_, b_), k_ in top]
+            C.CONTAIN_HITS.clear()
         save(run)
     save(run, final=True)
     if RECM.REC is not None:
