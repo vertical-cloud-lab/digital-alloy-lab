@@ -113,6 +113,19 @@ in headed Chrome with real mouse clicks. Each finding below links the folder wit
 | **Monitoring** after PR 266's `monitoring.md`: layer camera, two raking lights, a coaxial photodiode, acoustic emission, thermocouples, one digitizer on the laser's time base | [`cad/`](cad/README.md) (MON1–MON8), [`control/`](control/README.md) | $4.5k–6.2k at FT-0 and $5.3k–8.2k at FT-1 (`parts.csv` group "Monitoring") |
 | **Edison round 2:** seven design risks reviewed; the top five with first-week checks | [`../edison/ft-round2-review/`](../edison/ft-round2-review/answer.md) | back reflection, piston binding at 200 °C, purge leaks, hopper dosing of fine Al, cover-slide fouling; the commissioning steps in `control/ftctl/commission.py` follow them |
 
+**Which model each analysis used.** The CAD v2 model landed partway through the round, so not everything was re-run on
+it:
+
+| Work | Model | Note |
+|---|---|---|
+| CAD checks, progression, renders, STEP | v2 | [`cad/`](cad/README.md) |
+| Thermal FEA | v2 | [`analysis/out/fea/`](analysis/out/fea/) |
+| Structural FEA | v1, with the head and lens at their datasheet masses and the 30 mm offset | the gantry case should be re-run on v2's head bracket |
+| CFD | v1 (same box, cassette and nozzle) | [`analysis/out/cfd/`](analysis/out/cfd/) |
+| Process and optics | v1 geometry, own optics model | its changes (lens offset, window position) are in v2 |
+| Fabrication (pieces, CAM, drawings, hours) | v1 | v2's changes listed and costed in [`fab/out/v2/delta.md`](fab/out/v2/delta.md); `fab/parts.py` stops with a message on v2 until ported |
+| Progression video | v1 | [`video/`](video/) |
+
 ## 1. What sets the schedule of PR 266's design
 
 | Long pole | Time | Source |
