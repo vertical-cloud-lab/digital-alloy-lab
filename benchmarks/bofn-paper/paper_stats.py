@@ -355,6 +355,7 @@ def numbers_tex(all_res):
                 put(tex_key(k, r["a"], r["b"], m, "abs"), f"{abs(100 * r[f'{m}_diff']):.1f}")
         for m in METRICS:
             put(tex_key(k, "widthratio", m), f"{np.nanmedian([r[f'{m}_width_ratio'] for r in res['pairwise']]):.2f}")
+            put(tex_key(k, "halfwidth", m), f"{np.median([50 * (r[f'{m}_hi'] - r[f'{m}_lo']) for r in res['pairwise']]):.1f}")
         for i, r in enumerate(res["contrasts"]):
             for m in METRICS:
                 put(tex_key(k, "c", i, m), f"{100 * r[f'{m}_diff']:+.1f}".replace("+", "$+$").replace("-", "$-$"))

@@ -37,17 +37,18 @@ the MethodsX office how to cite a Wiley manuscript under review.}
 printing and tensile testing, step costs differ by orders of magnitude.
 Partial-evaluation Bayesian optimization of function networks chooses which
 step to run next, and for which candidate, by expected gain per dollar. Whether
-that pays depends on the workflow, so it should be tested in simulation before
-lab time is spent. This method is a benchmark for that test: a synthetic alloy
-powder-to-part network with a known optimum, physical precedence rules, reusable
-powder lots and a knob, $\kappa$, for how badly a cheap crack screen misjudges
-the best alloys, together with eight reference policies and a matched-seed
-protocol. \tbd{One sentence of what it shows across $\kappa$, once the 16-seed
-runs are in.}
+that pays depends on the workflow, so it should be tested in simulation first.
+This method is a benchmark for that test: a synthetic alloy powder-to-part network
+with a known optimum, physical precedence rules, reusable powder lots and a knob,
+$\kappa$, for how badly a cheap crack screen misjudges the best alloys, with eight
+reference policies and a matched-seed protocol. In 16--20 seeds per policy,
+choosing the step bought an early lead but no better final alloy; screen-then-test
+was best only when the screen was right; expected improvement per dollar with
+powder reuse was the most robust policy, and the knowledge gradient was
+competitive only with a wrong screen.
 \begin{itemize}[nosep,leftmargin=*]
 \item Knowledge gradient and expected improvement per dollar, each with partial
-and full-chain evaluation, on one network model, to separate the effect of
-choosing the step from that of the acquisition function.
+and full-chain evaluation, on one network model.
 \item Seeded runs log every purchase and reproduce action for action across CPUs.
 \item Every comparison between policies is a matched-seed bootstrap interval.
 \end{itemize}
@@ -563,12 +564,35 @@ at $\kappa=0$ under either acquisition function (at \$25k, \stat{k0-c-1-v25}\pp{
 under expected improvement, \stat{k0-c-1-v25-ci}; \stat{k0-c-0-v25}\pp{} under
 the knowledge gradient, \stat{k0-c-0-v25-ci}).
 
-\paragraph{Half right ($\kappa=0.5$).} \tbd{Two or three sentences once the
-16-seed runs are in.}
+\paragraph{Half right ($\kappa=0.5$).} Screen-then-test led early (at \$25k,
+full-chain BOFN was \stat{k05-eifn-tiered-v25-abs}\pp{} behind it, difference
+\stat{k05-eifn-tiered-v25-ci}), but the expected-improvement network policies
+finished ahead: BOFN with powder reuse reached \stat{k05-eifn_reuse-v100-mean}\%
+of the optimum at \$100k against \stat{k05-tiered-v100-mean}\% (difference
+\stat{k05-eifn_reuse-tiered-v100}\pp, \stat{k05-eifn_reuse-tiered-v100-ci};
+ahead on \stat{k05-eifn_reuse-tiered-v100-wins} of \stat{k05-n} seeds). The
+knowledge-gradient policies again trailed their expected-improvement
+counterparts at \$100k: pKGFN by \stat{k05-c-2-v100-abs}\pp{}
+(\stat{k05-c-2-v100-ci}) and KGFN by \stat{k05-c-3-v100-abs}\pp{}
+(\stat{k05-c-3-v100-ci}).
 
-\paragraph{Across $\kappa$.} \tbd{Summary once the runs are in: which policies
-are robust across $\kappa$, what choosing the step buys at each $\kappa$, and
-where the knowledge gradient fails.}
+\paragraph{Across $\kappa$.} Three regularities held at every $\kappa$.
+First, choosing the step never bought a better final alloy: no partial-minus-full
+contrast at \$100k or over the whole budget excluded zero. Its early lead was
+clear only under the knowledge gradient with a wrong screen, and positive but
+unresolved under expected improvement at every $\kappa$ (\stat{k0-c-1-v25},
+\stat{k05-c-1-v25} and \stat{k1-c-1-v25}\pp{} at \$25k for $\kappa=0$, 0.5
+and 1). Second, the knowledge gradient as implemented here was competitive only
+when the screen was wrong. Third, BOFN with powder reuse was the most robust
+policy: \stat{k0-eifn_reuse-v100-mean}\%, \stat{k05-eifn_reuse-v100-mean}\%
+and \stat{k1-eifn_reuse-v100-mean}\% of the optimum at \$100k for $\kappa=0$,
+0.5 and 1. Screen-then-test, by contrast, went from the most reliable policy
+($\kappa=0$) to one that plateaued below random designs ($\kappa=1$). These are
+the regularities a user of the benchmark should expect to reproduce. With 16--20
+seeds the benchmark resolves differences of roughly ten points of the optimum at
+\$100k: the median half-width of a pairwise 95\% interval at \$100k is
+\stat{k1-halfwidth-v100} points at $\kappa=1$, \stat{k05-halfwidth-v100} at
+$\kappa=0.5$ and \stat{k0-halfwidth-v100} at $\kappa=0$.
 
 \begin{figure}[t]
 \centering
