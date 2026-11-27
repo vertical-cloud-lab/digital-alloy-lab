@@ -33,8 +33,8 @@ candidates before printing and finds \tbd{alloy}, a scandium-free alloy that is
 stronger, or carries a smaller import-weighted burden of alloying elements, than
 commercial scandium-free alloys printed and tested alongside it. A digital twin fitted to the first campaign predicts
 the second and estimates that choosing the step saves \tbd{k}-fold over the
-best stage-gated screen when the screen misjudges grain refinement, and nothing
-when it does not.
+best stage-gated screen when the screen misjudges grain refinement, and that the
+screen does better when it is right.
 \end{abstract}
 
 \noindent\textbf{Keywords:} aluminum alloys, Bayesian optimization, critical
@@ -351,7 +351,19 @@ stopping rule committed beforehand.\tbd{commit} Over \tbd{k} weeks the optimizer
 made \tbd{N} decisions (\cref{fig:campaign}a): \tbd{a} CALPHAD calculations,
 \tbd{b} powder runs, \tbd{c} prints and \tbd{d} tensile sets.\src{B2} Of
 the candidates that reached the powder stage, \tbd{p} stopped before printing and
-\tbd{q} printed candidates stopped before tensile testing. Each stop is labelled
+\tbd{q} printed candidates stopped before tensile testing.\note{This paragraph
+assumes the knowledge-gradient option of decision M7 (pKGFN). Under the other
+option, network expected improvement per dollar with powder reuse, the optimizer
+never stops a candidate after CALPHAD or after atomization: each decision is a new
+design through the whole chain or a reprint and test of an existing lot (the
+policy table in SI Section S12). On the synthetic benchmark at $\kappa=1$ it
+simulated \stat{k1-eifn_reuse-nC} new compositions per run and atomized
+\stat{k1-eifn_reuse-nA}, and it printed \stat{k1-eifn_reuse-nL} times and
+tested \stat{k1-eifn_reuse-nT}; pKGFN simulated \stat{k1-pkgfn-nC}, atomized
+\stat{k1-pkgfn-nA}, printed \stat{k1-pkgfn-nL} times and tested
+\stat{k1-pkgfn-nT}. Fig.~5a--b and the novelty sentence would then
+report reprint-or-new choices, not stops. Both options, with their evidence, are
+in \code{campaign2-preregistration.md}.} Each stop is labelled
 in \cref{fig:campaign}a as a failure (the step did not produce a usable result),
 a constraint, or an acquisition decision (the next step's expected gain per unit
 cost was lower than another candidate's); only the last kind tests the method. A
@@ -414,34 +426,53 @@ Omitted from the clean build.}
 
 \subsection{When it pays off}
 \label{sec:twin}
-\note{Claim: a twin fitted to both campaigns reproduces campaign 2's spend
-within \tbd{x}\%; cost-aware network optimization reaches the target at
-\tbd{k}-fold lower cost than screen-then-test when the screen is wrong, and ties
-when it is right. Supplied by: the twin (\#276), refit on lab records
-(results-needed.md, T1--T4).}
+\note{Claim: a twin fitted to campaign 1 predicts campaign 2's spend within
+\tbd{x}\%; cost-aware network optimization reaches the target at \tbd{k}-fold
+lower cost than screen-then-test when the screen is wrong, and screen-then-test
+wins when the screen is right. That second half is what the synthetic benchmark
+(issue \#121) and the clocked benchmark (PR \#297) both found, so it is the
+expectation, not a tie (decision M8). Supplied by: the synthetic benchmark (SI
+S14, now) and the twin (\#276), refit on lab records (results-needed.md,
+T1--T4).}
 
-A physical campaign cannot be repeated often enough to compare strategies, so we
-fitted a digital twin of the lab to the records of both campaigns: each step's
+A physical campaign cannot be repeated often enough to compare strategies. On a
+synthetic version of the workflow with a known optimum (SI Section~S14), network
+optimization that chooses the step by expected improvement per dollar (BOFN with
+powder reuse) reached screen-then-test's \$100k result with
+\stat{k1-su-eifn_reuse-tiered}-fold (95\% confidence interval
+\stat{k1-su-eifn_reuse-tiered-ci95}) less spend when the screen missed
+nucleant-driven crack suppression, and did not reach it within the budget when
+the screen was right; screen-then-test then had the best mean
+(\stat{k0-tiered-v100-mean}\% of the optimum, against
+\stat{k0-eifn_reuse-v100-mean}\% for BOFN with powder reuse). The
+knowledge-gradient version (pKGFN) also needed \stat{k1-su-pkgfn-tiered}-fold
+less spend (\stat{k1-su-pkgfn-tiered-ci95}) with a wrong screen, and with a right
+one finished lower still (\stat{k0-pkgfn-v100-mean}\%). With a wrong screen, choosing the
+step bought an early lead over running every candidate through the whole chain
+rather than a better final alloy: after \$25k it was \stat{k1-c-0-v25-abs}
+percentage points of the optimum ahead under the knowledge gradient (95\% CI
+\stat{k1-c-0-v25-ci}) and \stat{k1-c-1-v25-abs} under expected improvement per
+dollar (\stat{k1-c-1-v25-ci}, not resolved); at \$100k neither difference was
+resolved. That benchmark is noise-free and its costs are assumed, so we fitted a
+digital twin of the lab to the records of the first campaign: each step's
 outputs, duration, cost, failure rate and noise (\cref{fig:twin}a).\src{T1}
-Given campaign 2's decisions, the twin reproduced its spend to the target within
-\tbd{x}\%.\src{T4} We then ran each strategy \tbd{20} times per condition. When
-the CALPHAD screen missed grain refinement by Zr and Sc nucleants, cost-aware
-network optimization reached the target with \tbd{k}-fold less spend than
-screening then testing (90\% CI \tbd{lo--hi}); when the screen was right, the
-two were within \tbd{x}\% and screening was \tbd{faster/slower}
-(\cref{fig:twin}b).\src{T2} The gain grew with the cost ratio between making
-powder and running a calculation and vanished below \tbd{r}
-(\cref{fig:twin}c).\src{T3} \ifdraft\textit{(The synthetic benchmark in
-\cref{fig:twin-draft}, which this panel will replace, gave 3.75-fold, 90\% CI
-2.0--5.7, at $\kappa$ = 1 and favoured screening at $\kappa$ = 0; it is
-noise-free and uncalibrated.)}\fi
+Before campaign 2 started, the twin predicted its spend to the target within
+\tbd{x}\%.\src{T4} Refitted on both campaigns, it then ran each strategy
+\tbd{20} times per condition. When the CALPHAD screen missed grain refinement by
+Zr and Sc nucleants, \tbd{the campaign's policy (decision M7)} reached the target
+with \tbd{k}-fold less spend than screen-then-test (95\% CI \tbd{lo--hi}); when
+the screen was right, screen-then-test reached it \tbd{first, with x-fold less
+spend / and the network policy did not reach it within the budget}
+(\cref{fig:twin}b),\src{T2} as on the synthetic benchmark. The gain grew with
+the cost ratio between making powder and running a calculation and vanished below
+\tbd{r} (\cref{fig:twin}c).\src{T3}
 
 \begin{figure}[t]
 \centering
 \placeholder{\textwidth}{3.4cm}{\textbf{Figure 6 (planned).} (a) Twin against
 lab: step times, costs, failure rates, usable powder, tensile scatter.
 (b) Spend to the target for each strategy, screen wrong ($\kappa$ = 1) and
-right ($\kappa$ = 0), $\ge$20 seeds, matched-seed bootstrap intervals.
+right ($\kappa$ = 0), $\ge$20 seeds, 95\% matched-seed bootstrap intervals.
 (c) Acceleration against screen error and step-cost ratio.}
 \caption{\textbf{When it pays off.} \tbd{Caption once the data exist.}}
 \label{fig:twin}
@@ -452,8 +483,14 @@ right ($\kappa$ = 0), $\ge$20 seeds, matched-seed bootstrap intervals.
 \centering
 \includegraphics[width=0.9\textwidth]{figures/fig6-draft-synthetic.pdf}
 \caption{\textbf{Draft only: layout for \cref{fig:twin}b from the synthetic
-benchmark} (bofn-prelim, noise-free, not calibrated to the lab). Not a result of
-this article; omitted from the clean build.}
+benchmark} (SI Section~S14; noise-free, costs assumed, not calibrated to the
+lab). Best alloy printed and tested against new spend for the eight policies at
+$\kappa$ = 1, 0.5 and 0: means over \stat{k1-n}, \stat{k05-n} and \stat{k0-n}
+matched seeds, 95\% t-intervals of the mean for pKGFN, BOFN with powder reuse
+and screen-then-test, and the spend ratio to screen-then-test's \$100k mean
+(dotted) with its 95\% matched-seed bootstrap interval. Drawn from the BOFN
+paper set's \code{curves.csv} and \code{numbers.tex}. The twin will replace it;
+omitted from the clean build.}
 \label{fig:twin-draft}
 \end{figure}
 \fi
@@ -465,7 +502,8 @@ are; desktop coupons rank candidates but do not qualify them. Supplied by: T3,
 P4.}
 The advantage is conditional. It comes from steps whose cost differs by orders of
 magnitude and from a cheap step that is wrong about the alloys that matter; with
-an accurate screen, screening is as good or better (\cref{fig:twin}b). The
+an accurate screen, screen-then-test does better (\cref{fig:twin}b; SI
+Section~S14). The
 desktop system ranks candidates but does not qualify them: its coupons are small,
 and its offset from an industrial machine (\cref{fig:print}c) must be measured
 for each new alloy family. The commercial baselines were printed by the
@@ -552,7 +590,8 @@ also carry less $B$ than Scalmalloy, it never decides the comparison.
 and prints in-house can let an optimizer decide, candidate by candidate, which
 result is worth its cost. Here that found \tbd{alloy} after \tbd{N} decisions
 and \tbd{\$}, and a twin fitted to the lab shows the approach pays off when the
-cheap screen is wrong about the alloys that matter, and not otherwise. The
+cheap screen is wrong about the alloys that matter, and that the screen does
+better otherwise. The
 condition generalizes: an optimizer that can stop a candidate at any step needs
 every step to be cheap and fast enough to call on demand, which here meant
 bringing powder making and printing into the lab.
@@ -700,26 +739,48 @@ G59), then cyclic polarization reversed at \SI{1}{\milli\ampere\per\centi\metre\
 Each step (CALPHAD, atomization, powder characterization, printing,
 microstructure and density, mechanical tests) was a node with its own Gaussian
 process, linked as in the workflow so that a node's outputs are inputs to its
-children.\cite{astudillo2021} The next experiment (a candidate and a node whose
-parents had already been evaluated) maximized the partial-evaluation knowledge
-gradient divided by the node's cost,\cite{buathong2024,buathong2025} with costs
-from Table~1. Pending experiments entered as fantasies, a failed step was
-modelled at the step where it failed,\tbd{per issue \#274} and the campaign
-started from \tbd{six} seed compositions.\tbd{per issue \#275} Models were
-implemented in BoTorch.\cite{balandat2020} Baselines (screen-then-test,
-full-chain network BO, standard BO and random), the target and the stopping rule
-were fixed and committed before the campaign started.\tbd{date, commit}
-\src{optimizer code; SI S12--S13}
+children.\cite{astudillo2021} The next experiment was chosen by
+\tbd{decision M7: either the partial-evaluation knowledge gradient divided by
+the node's cost, over every candidate and node whose parents had already been
+evaluated,\cite{buathong2024,buathong2025} or network expected improvement
+divided by cost with powder reuse, choosing between a new design through the
+whole chain and a reprint and test of an existing powder
+lot\cite{astudillo2021}}, with costs from Table~1. Pending experiments entered
+as fantasies, a failed step was modelled at the step where it failed,\tbd{per
+issue \#274} and the campaign started from \tbd{six} seed
+compositions.\tbd{per issue \#275} Models were implemented in
+BoTorch.\cite{balandat2020} Baselines (screen-then-test, full-chain network BO,
+standard BO and random), the target and the stopping rule were fixed and
+committed before the campaign started.\tbd{date, commit} \src{optimizer code;
+SI S12--S13}
+
+\paragraph{Synthetic benchmark of the optimizer.} Before the campaign, the
+optimizer was tested on a synthetic version of the workflow with a known
+optimum: CALPHAD (three outputs), atomization, printing and tensile testing as
+hand-written closed-form nodes on four composition and three process variables,
+with assumed costs of \$10, \$1,500, \$2,500 and \$200 per result, powder lots
+that can be printed repeatedly, and a parameter $\kappa$ that sets how much of
+the nucleant-driven crack suppression\cite{martin2017} a freezing-range
+screen\cite{kou2015} misses (SI Sections~S12 and S14). Eight policies were
+compared, four of them on one network model (one Gaussian process per node,
+Monte Carlo propagation through the network\cite{astudillo2021,balandat2020}):
+partial-evaluation and full-chain knowledge gradient per
+dollar,\cite{buathong2024} network expected improvement per dollar with and
+without powder reuse,\cite{astudillo2021} standard Bayesian optimization,
+screen-then-test with and without powder reuse, and random sampling. For a given
+seed every policy started from the same data, and each then had \$100k of new
+budget. Runs were seeded and logged, and reruns reproduced them action for
+action.\bofncite
 
 \paragraph{Digital twin and benchmarks.}
 A simulator of the lab produced each step's outputs, duration, cost, noise and
 failures (atomization: droplet size from Lang's relation,\cite{lang1962}
 usable fraction and failure rate; printing: melt-pool, keyhole and
 lack-of-fusion criteria\cite{king2014,tang2017}), with parameters fitted to the
-run records of both campaigns.\tbd{fit, validation metric}\cite{mukherjee2019,gunasegaram2021}
+run records of the first campaign, then of both.\tbd{fit, validation metric}\cite{mukherjee2019,gunasegaram2021}
 Each policy was run for $\ge$\tbd{20} seeds per condition; acceleration factors
-are ratios of spend (or days) to reach the target, with matched-seed bootstrap
-confidence intervals. \src{twin, issue \#276; SI S14}
+are ratios of spend (or days) to reach the target, with 95\% matched-seed
+bootstrap confidence intervals. \src{twin, issue \#276; SI S14}
 
 \paragraph{Independent verification.}
 \tbd{Blind-labelled samples of the finalists went to \tbd{laboratory} for
@@ -731,8 +792,17 @@ mean $\pm$ standard deviation unless stated; coefficients of variation with 95\%
 confidence intervals on the standard deviation from the $\chi^2$ distribution;
 variance components from a one-way random-effects model with two splits per run
 (\texttt{tools/atomizer\_analysis.py}); acceleration factors as ratios of median
-spend to the target with matched-seed bootstrap 90\% intervals, counting seeds
-that never reach the target as censored; software and versions.} As in the first
+spend to the target with matched-seed bootstrap 95\% intervals, counting seeds
+that never reach the target as censored; software and versions.} Synthetic
+benchmark of the optimizer: \stat{k1-n} seeds per policy at $\kappa=1$,
+\stat{k05-n} at $\kappa=0.5$ and \stat{k0-n} at $\kappa=0$, the same seeds for
+every policy. Scores are
+the true objective of the best printed and tested alloy as a percentage of the
+optimum, reported as means over seeds; differences between policies are means
+over matched seeds with 95\% percentile bootstrap confidence intervals (10,000
+draws, seeds resampled jointly for both policies). No correction was made for
+multiple comparisons. Analysis in Python (NumPy, SciPy;
+\code{paper_stats.py}). As in the first
 campaign, a candidate expanded the baselines' front if it was stronger than in-house
 AlSi10Mg (as built and stress-relieved) at no lower elongation, carried less $B$ than
 Scalmalloy, was stronger than every in-house baseline (Al5X1, Al-HS1, Scalmalloy)
@@ -759,10 +829,12 @@ The authors declare no conflict of interest. \tbd{confirm}
 
 \section*{Data Availability Statement}
 The data that support the findings of this study are openly available in
-\tbd{repository} at \tbd{http://doi.org/[doi]}: atomization run records, powder
-and print measurements, campaign decision logs and step-cost logs. The code for
-the function-network optimizer, the digital twin and every figure is archived at
-\tbd{repository, DOI}. \tbd{Cite each dataset in the references as
+\tbd{repository} at \tbd{DOI}: atomization run records, powder and print
+measurements, campaign decision logs and step-cost logs. The code for the
+function-network optimizer, the digital twin and every figure is archived at
+\tbd{repository, DOI}, as are the synthetic benchmark of the optimizer, every one
+of its runs and the statistics drawn from them (\code{benchmarks/bofn-paper}).
+\tbd{Cite each dataset in the references as
 ``[dataset] Authors; Year; Title; Repository; Version; Identifier''. Reserve the
 DOIs at submission; publish them at acceptance or with the preprint.}
 

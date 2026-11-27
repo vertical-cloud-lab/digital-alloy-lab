@@ -72,6 +72,8 @@ liang2021	doi:10.1038/s41524-021-00656-9	BO benchmarking across experimental mat
 sabanzagil2025	doi:10.1038/s43588-025-00822-9	multi-fidelity BO best practices
 chawla2026	doi:10.1039/d5dd00518c	cost-aware BO run on a real nanoindentation workflow (within one instrument)
 mulukutla2024	doi:10.2139/ssrn.4968461	supply-risk-aware alloy design
+# --- statistics
+efron1993	doi:10.1201/9780429246593	bootstrap (matched-seed intervals for the optimizer benchmark)
 # --- CALPHAD, twins
 thermocalc2002	doi:10.1016/S0364-5916(02)00037-8	Thermo-Calc	withhold
 otis2017	doi:10.5334/jors.140	pycalphad

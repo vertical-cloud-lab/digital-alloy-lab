@@ -4,6 +4,12 @@
 \renewcommand{\thefigure}{S\arabic{figure}}
 \renewcommand{\thetable}{S\arabic{table}}
 \renewcommand{\thesection}{S\arabic{section}}
+% The manuscript, figure-plan.md and the BOFN short version cite SI sections by
+% number (S12 model, S13 pre-registration, S14 twin and benchmark, S17 baselines),
+% so the order below follows figure-plan.md and the build stops if it drifts.
+\newcommand{\checksec}[1]{\ifnum\value{section}=#1\relax\else
+  \PackageError{SI}{Section numbering drifted: this section must be S#1}{The
+  manuscript and figure-plan.md cite SI sections by number.}\fi}
 
 \title{\textbf{Supporting Information}\\[2pt]
 \large Closing the loop from custom powder to printed part:
@@ -13,9 +19,13 @@ cost-aware discovery of supply-secure printable aluminum alloys}
 
 \begin{document}
 \maketitle
-\note{Skeleton. Each section names the record it will be built from; see figure-plan.md (SI items) and results-needed.md.}
+\note{Skeleton, numbered as in figure-plan.md (S1--S18). Each section names the
+record it will be built from; see results-needed.md. S12 and the synthetic part
+of S14 hold the short version of the BOFN methods work (issue \#121), with every
+number a \code{\stat} macro from \code{benchmarks/bofn-paper/paper-stats/numbers.tex}.}
 
-\section{Atomization run records}
+\section{Atomization runs, and where the melt met the plate}
+\label{sec:Sruns}
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{figures/figS-atomizer-runs.pdf}
@@ -37,32 +47,113 @@ hold time, O$_2$ at pour, outcome, mass balance, sieve fractions,
 D$_{10}$/D$_{50}$/D$_{90}$, circularity, powder O. Source: the run-record YAML files
 (byu-vcl \texttt{atomizer-runs/plan-adv-mater/run-record-template.yaml}) and the
 run table in PR \#286.}
-
-\section{Repeatability analysis}
-\tbd{Block A: the bar fixed before the first counted run, its basis, split-level
-measurement noise versus run-to-run noise (nested ANOVA), and the result.}
-
-\section{Composition spread and fidelity}
-\tbd{Block B: Si in powder versus charge; EDS settings and calibration;
-ICP-OES comparison; Mg loss.}
-
-\section{Atomization failure modes}
 \tbd{Frames from the run videos for each failure (overshoot, sonotrode
 landing, frozen-lump drip, cup failure) and the fix for each.}
 
+\section{Process logs}
+\tbd{Per run: O$_2$ through the washes and at the pour, melt temperature, pour
+pressure, read from the HMI export or from video frames.}
+
+\section{Mass balance of every run}
+\tbd{Six-part mass balance (in-range powder, out-of-range powder, splats,
+puddle, skull, unaccounted) for every run, failed runs included.}
+
+\section{Repeatability analysis}
+\label{sec:Srepeat}
+\tbd{Block A: the bar fixed before the first counted run, its basis, split-level
+measurement noise versus run-to-run noise (nested ANOVA), and the result.}
+
+\section{Powder cross-sections}
+\tbd{Porosity, and Mo or W pick-up from the plate, in sectioned particles.}
+
+\section{Plate wear}
+\tbd{Plate surface and mass against the number of runs, by plate material.}
+
+\section{Flowability}
+\tbd{Doser flow (V$_g$) and Hausner ratio of in-house powders against commercial
+AlSi10Mg.}
+
+\section{Powder oxygen}
+\tbd{Powder O and N against chamber O$_2$ at the pour and storage time.}
+
+\section{The collection cup}
+\tbd{The collection-cup failure of 13 November 2026 (\#269) and the redesign.}
+
 \section{Desktop LPBF system}
+\label{sec:Slpbf}
 \tbd{Design, components, laser calibration, atmosphere and O$_2$ log; build
 plate; parameter sets; comparison builds on the Utah Aconity MIDI.}
 
 \section{All candidates in the campaigns}
+\label{sec:Scandidates}
 \tbd{Table S2: every composition, the steps it went through, every measured
 output, and why it stopped.}
 
-\section{Function-network model}
-\tbd{Node definitions, kernels and priors, cost model, acquisition settings,
-batching, handling of failed and abandoned runs, seeding.}
+\section{The function-network model and the optimizer's policies}
+\label{sec:Smodel}\checksec{12}
+\tbd{The live campaign's model: node definitions, kernels and priors, cost model
+(Table~1 of the main text), acquisition settings, batching, handling of failed
+and abandoned runs (\#274), seeding (\#275). Its acquisition function is decision
+M7, fixed in the pre-registration (\cref{sec:Sprereg}).} The rest of this section
+describes the optimizer and its baselines as they were tested on the synthetic
+workflow of \cref{sec:Stwin}.\bofncite
+\ifbofnfull
 
-\section{Twin specification and calibration}
+\paragraph{The model.} Every node is an exact Gaussian process on its own inputs
+(the design variables it uses plus its parents' outputs), with an RBF kernel
+whose hyperparameters are a maximum a posteriori fit in
+BoTorch.\cite{balandat2020} The network posterior at a design is carried as 64
+Monte Carlo samples, pushed through the nodes in order.\cite{astudillo2021}
+
+\paragraph{The policies} (\cref{tabS:policies}). The partial-evaluation
+knowledge gradient (pKGFN) scores, for each step, the candidates whose inputs
+already exist (compositions to simulate, simulated alloys to atomize, lots to
+print, builds to test) by the expected increase in the best network posterior
+mean from that one result, per dollar,\cite{buathong2024} and buys the best.
+When every knowledge gradient is zero it falls back to network expected
+improvement per dollar. Its full-chain counterpart (KGFN) values running the
+whole chain at the same candidate designs. Network expected improvement per
+dollar, with or without reprinting existing lots, completes a $2\times2$ of
+acquisition function $\times$ evaluation mode (the rows also differ in their
+candidate pools). Standard BO and screen-then-test use one GP from the seven
+design variables to the objective. Screen-then-test simulates 256 compositions,
+keeps the four with the largest strength minus 0.3 times the burden among those
+with $f\le0.25$, and optimizes the atomizer and laser settings of those four.
+
+\begin{table}[t]
+\centering
+\small
+\caption{\textbf{Policies compared on the synthetic workflow.} All share the same
+seed data and budget; the first four share one network model.}
+\label{tabS:policies}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.27\linewidth}X@{}}
+\toprule
+Policy & Each decision buys \\
+\midrule
+pKGFN (KG per \$, partial) & one step for one candidate, by knowledge gradient per dollar \\
+KGFN (KG per \$, full chain) & the whole chain at one candidate design, by knowledge gradient per dollar \\
+BOFN + powder reuse (EI per \$, partial) & a new design through the chain, or a reprint and test of an existing lot, by network expected improvement per dollar \\
+BOFN (EI, full chain) & the whole chain at the design with the largest network expected improvement \\
+Standard BO & the whole chain, by expected improvement of one GP from the seven inputs to the objective \\
+Screen-then-test (with / without powder reuse) & CALPHAD on 256 compositions, keep four, then BO on their process settings, reprinting lots or making new powder each time \\
+Random & the whole chain at a random design \\
+\bottomrule
+\end{tabularx}
+\end{table}
+\fi
+
+\section{Pre-registration}
+\label{sec:Sprereg}\checksec{13}
+\tbd{The pre-registration of campaign~2 (\code{campaign2-preregistration.md}),
+committed before its first decision, with its commit hash and date: baselines,
+target, stopping rule, the acquisition function chosen at decision M7 with the
+evidence for both options, the twin's out-of-sample prediction of campaign~2, and
+every deviation.}
+
+\section{Twin specification, calibration and benchmarks}
+\label{sec:Stwin}\checksec{14}
+
+\subsection*{The digital twin}
 \tbd{Twin description (steps simulated, output models, cost, time and failure
 models) and the fit to lab records.} \Cref{tab:Stwin} lists the twin's
 round-2 assumptions against the lab's records as of November 2026; each row is
@@ -91,8 +182,135 @@ Desktop LPBF & not modelled & not built \\
 \end{tabular}
 \end{table}
 
+\subsection*{The synthetic benchmark of the optimizer}
+
+\paragraph{Why a synthetic benchmark.} Whether choosing the step pays depends on
+the workflow: the step costs, how much a cheap step reveals about the expensive
+ones, and how wrong the screen is. A physical campaign can be run once, so the
+optimizer and its baselines were first compared on a synthetic version of the
+workflow whose optimum is known and in which the screen's error can be set.
+\ifbofnfull\else The workflow, the protocol and the full results are in the
+companion article;\bofncite{} \cref{tab:contrasts} summarizes the comparisons
+this article relies on.\fi
+\ifbofnfull
+
+\paragraph{The synthetic workflow.} A design has four composition variables
+(Zn+Mg, Cu, Zr and Sc levels) and three process variables (atomizer setting,
+laser power, scan speed), all on $[0,1]$. One CALPHAD call (\$10) returns a
+strengthening-phase fraction $s$, a freezing range $f$ and a nucleant fraction
+$g$; atomization (\$1,500) returns a powder quality; printing (\$2,500) returns
+the dense, crack-free fraction of the build; a tensile test (\$200) returns a
+strength $U$. The objective is $U$ minus 0.3 times a known critical-mineral
+burden that weighs Sc heaviest.\cite{nassar2020} A powder lot must exist before
+it is printed and a build before it is tested, and a lot can be printed any
+number of times. The node functions are closed forms written to mirror the
+qualitative metallurgy (listed in the code); nothing is fitted to data. The costs
+are assumptions; Table~1 of the main text gives the measured ones. Cracking
+depends on an effective freezing range
+$f_\mathrm{eff}=f\,[1-0.85\,\kappa\,g/(g+0.12)]$: at $\kappa=1$, Zr and Sc
+nucleants suppress cracking as in Zr-modified printed
+alloys,\cite{martin2017,croteau2018} which a screen on $f$
+alone\cite{kou2015} cannot see; at $\kappa=0$ they do not, and the screen is
+right. At $\kappa=1$ the optimum is a high-solute, Zr-inoculated, Sc-free alloy
+that the screen ($f\le0.25$) rejects, and the best design that passes the screen
+scores 65\% of the optimum. The policies are those of \cref{sec:Smodel}
+(\cref{tabS:policies}).
+
+\paragraph{Protocol.} Each seed fixes the shared start: CALPHAD on 32
+compositions and five random designs carried through every step, a sunk cost
+that is the same for every policy. Each run then has \$100k of new budget
+(about 23 full make--print--test cycles; a run stops when its cheapest next
+purchase no longer fits). The score is the true objective of the best alloy that
+has been printed and tensile-tested, as a percentage of the optimum. Seeds per
+policy: \stat{k1-n} at $\kappa=1$, \stat{k05-n} at $\kappa=0.5$ and
+\stat{k0-n} at $\kappa=0$, the same seeds for every policy. Differences are
+means over matched seeds, with 95\% percentile bootstrap intervals (10,000
+draws) that resample seeds jointly for both policies.\cite{efron1993} The
+speed-up over a baseline is the spend at which the baseline's mean curve reaches
+its own \$100k mean, divided by the spend at which the policy's mean curve
+reaches it.
+
+\paragraph{Results.} \Cref{figS:curves} and \cref{tab:contrasts} summarize the
+runs. When the screen missed the nucleant effect ($\kappa=1$), screen-then-test
+plateaued at \stat{k1-tiered-v100-mean}\% of the optimum, below random designs
+(\stat{k1-random-v100-mean}\%), and every policy that searched the whole design
+space with a model finished \stat{k1-pkgfn-tiered-v100-abs} to
+\stat{k1-eifn_reuse-tiered-v100-abs} points above it. pKGFN reached screening's \$100k result at
+\stat{k1-su-pkgfn-tiered}$\times$ less spend (95\% CI
+\stat{k1-su-pkgfn-tiered-ci95}), BOFN with powder reuse at
+\stat{k1-su-eifn_reuse-tiered}$\times$ (\stat{k1-su-eifn_reuse-tiered-ci95}),
+and the full-chain policies at \stat{k1-su-eifn-tiered}$\times$ (BOFN) and
+\stat{k1-su-kgfn-tiered}$\times$ (KGFN) (\cref{figS:speedup}). Choosing the
+step bought an early lead, \stat{k1-c-0-v25-abs} points over full-chain evaluation
+at \$25k under the knowledge gradient (difference \stat{k1-c-0-v25-ci}), which was
+gone by \$100k (\stat{k1-c-0-v100}, \stat{k1-c-0-v100-ci}); in four reruns
+with four times the Monte Carlo samples, pKGFN's \$25k result fell from 69\% to
+46\% of the optimum, so this lead may depend on its Monte Carlo settings. The knowledge
+gradient was not better than expected improvement per dollar: with partial
+evaluation it finished \stat{k1-c-2-v100-abs} points behind (difference
+\stat{k1-c-2-v100-ci}), mostly
+because it bought prints of a few powders (\stat{k1-pkgfn-nA} powders and
+\stat{k1-pkgfn-nL} prints per run, against \stat{k1-eifn_reuse-nA} and
+\stat{k1-eifn_reuse-nL} for BOFN with reuse). When the screen was right
+($\kappa=0$), screen-then-test was the most reliable policy
+(\stat{k0-tiered-v100-mean}\% of the optimum at \$100k, 95\% CI
+\stat{k0-tiered-v100-lo}--\stat{k0-tiered-v100-hi}) and no other policy's mean
+reached that level within the budget. The network policies with expected
+improvement averaged \stat{k0-eifn_reuse-v100-mean}\% (with powder reuse) and
+\stat{k0-eifn-v100-mean}\%, and the knowledge-gradient policies had the
+lowest means of the model-based policies (pKGFN \stat{k0-pkgfn-v100-mean}\%, KGFN
+\stat{k0-kgfn-v100-mean}\%):
+pKGFN atomizes only alloys it has simulated, and the optimum at $\kappa=0$ is a
+lean, nucleant-free alloy that the seed compositions do not reach.
+With the screen half right ($\kappa=0.5$), BOFN with powder reuse finished ahead
+of screen-then-test (\stat{k05-eifn_reuse-v100-mean}\% against
+\stat{k05-tiered-v100-mean}\%, difference \stat{k05-eifn_reuse-tiered-v100-ci}
+points), full-chain BOFN was level with it, and pKGFN trailed
+(\stat{k05-pkgfn-v100-mean}\%).
+
+\paragraph{Validation.} Reruns of the stored runs with the pinned environment
+matched them action for action (the same step at the same spend at every
+decision, and the same scores to within $10^{-9}$): 140 of 140 at $\kappa=1$,
+56 of 56 at $\kappa=0.5$ and 56 of 56 at $\kappa=0$, on three CPU models. The full-chain knowledge gradient agrees with a brute-force
+recomputation to within $10^{-13}$, and none of the 62,350 Gaussian-process fits
+failed. The
+code, every run record and the statistics are openly available
+(\code{benchmarks/bofn-paper} in the article's repository).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{../bofn-methods-article/figures/fig-curves-am.pdf}
+\caption{\textbf{Best alloy demonstrated against new spend on the synthetic
+workflow.} Means over matched seeds; bands are 95\% bootstrap intervals of the
+mean for pKGFN, BOFN with powder reuse and screen-then-test. Solid lines choose
+the step (partial evaluation); dashed lines run the whole chain. Blue: knowledge
+gradient per dollar; orange: expected improvement (per dollar).}
+\label{figS:curves}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.72\linewidth]{../bofn-methods-article/figures/fig-speedup-am.pdf}
+\caption{\textbf{Spend ratio to reach screen-then-test's \$100k result}, with
+95\% matched-seed bootstrap intervals. Arrows: the policy's mean never reached it
+within \$100k.}
+\label{figS:speedup}
+\end{figure}
+\fi
+
+\input{../benchmarks/bofn-paper/paper-stats/table-contrasts}
+
+\section{Standard operating procedures}
+\label{sec:Ssop}
+\tbd{Atomizer SOP (issues \#251, \#253), powder SEM preparation, sieving,
+powder safety, desktop LPBF operation.}
+
+\section{Corrosion}
+\tbd{If kept (decision D6): coupons, the O-ring well, open-circuit potential,
+polarization resistance and cyclic polarization for each alloy.}
+
 \section{Industry baselines measured in house}
-\label{sec:Sbaselines}
+\checksec{17}\label{sec:Sbaselines}
 \tbd{For each baseline (EOS Al5X1, H\"{o}gan\"{a}s Al-HS1 if bought, commercial AlSi10Mg,
 Scalmalloy):
 supplier, lot and certificate; ICP-OES of the lot against the supplier's
@@ -133,13 +351,10 @@ flat specimens, laser parameters not recorded, strain channel suspect on four of
 five bars; to be replaced by bars printed in the same sessions as the candidates.
 \end{table}
 
-\section{Pre-registration and benchmarks}
-\tbd{Pre-registered baselines, targets and stopping rule (dated before the
-campaign); the twin's calibration; per-seed results.}
-
-\section{Standard operating procedures}
-\tbd{Atomizer SOP (issues \#251, \#253), powder SEM preparation, sieving,
-powder safety, desktop LPBF operation.}
+\section{Composition spread and fidelity}
+\label{sec:Scomposition}
+\tbd{Block B: Si in powder versus charge; EDS settings and calibration;
+ICP-OES comparison; Mg loss.}
 
 \printbibliography
 \end{document}

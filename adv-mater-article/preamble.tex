@@ -47,5 +47,27 @@
 \newcommand{\placeholder}[3]{%
   \fcolorbox{black!40}{black!3}{\begin{minipage}[c][#2][c]{\dimexpr#1-2\fboxsep-2\fboxrule}
   \centering\scriptsize\color{black!70}#3\end{minipage}}}
+\newcommand{\code}[1]{\texttt{\detokenize{#1}}}
+
+% --- The optimizer's synthetic benchmark (the BOFN methods work, issue #121) ----
+% Every number from it is a \stat{key} macro read from the file that work's
+% paper_stats.py writes, at the same path as on its branch, so this article and the
+% MethodsX draft cannot disagree. A missing key prints as a bold ??key??. Do not
+% edit the file here: rerun paper_stats.py on the BOFN branch, then `make bofn-sync`.
+\input{../benchmarks/bofn-paper/paper-stats/numbers.tex}
+%
+% The MethodsX companion: one switch (decision M2). While \bofncompanion is
+% undefined, this article reports the benchmark itself (Experimental Section, SI
+% S12 and S14) and cites nothing for it. If the companion is published or accepted
+% first, add its entry to tools/refs.tsv, run `make refs`, and uncomment the line
+% below with its key. \bofncite then cites it where the benchmark is introduced
+% (Experimental Section and SI S12), and the SI drops the parts the companion
+% holds (\ifbofnfull ... \fi): S12 keeps its campaign paragraph, and the synthetic
+% part of S14 keeps its first paragraph and the 2 x 2 contrasts table. Nothing
+% else moves.
+%\def\bofncompanion{<citation key>}
+\newcommand{\bofncite}{\ifdefined\bofncompanion\expandafter\cite\expandafter{\bofncompanion}\fi}
+\newif\ifbofnfull
+\ifdefined\bofncompanion\bofnfullfalse\else\bofnfulltrue\fi
 
 \setlength{\parskip}{3pt}
