@@ -450,11 +450,32 @@ class Replay:
                     return False
         return True
 
-    def person_spot(self, work, side):
+    @staticmethod
+    def _seg_d(p, a, b):
+        """Distance from p to segment ab (2-D) and where along it (0 at a, 1 at b)."""
+        p, a, b = np.asarray(p, float), np.asarray(a, float), np.asarray(b, float)
+        d = b - a
+        t = float(np.clip(np.dot(p - a, d) / max(float(np.dot(d, d)), 1e-9), 0.0, 1.0))
+        return float(np.linalg.norm(p - (a + t * d))), t
+
+    def _blocks_view(self, pts, work, cams, r=520.0):
+        """Would a person at any of pts stand in a tripod's line of sight to the work (within r of it, between the two)?"""
+        for c in cams:
+            for q in pts:
+                d, t = self._seg_d(q, c, work)
+                if d < r and 0.05 < t < 0.97:
+                    return True
+        return False
+
+    def person_spot(self, work, side, cams=()):
         """(spot (x, y), aisle point (x, +-AISLE)) for a person working at `work` (x, y) from side A (y < 0) or B: the nearest
-        spot whose floor is clear by PERSON_R and whose straight walk in from the aisle is clear too. None if there is none."""
+        spot whose floor is clear by PERSON_R and whose straight walk in from the aisle is clear too, out of the lines of sight
+        from the place's tripods `cams` (x, y) to the work (round 9: a person in front of the bench's tripod hid the work). None
+        if there is none."""
         boxes = self.floor_boxes()
         wx, wy = float(work[0]), float(work[1])
+        names = list(cams)
+        cams = [tuple(map(float, cam_def(c)[0][:2])) for c in names]
         best = None
         for s in ((-1.0, 1.0) if side == "A" else (1.0, -1.0)):
             for r in (600.0, 750.0, 900.0, 1100.0, 1350.0, 1650.0, 2000.0):
@@ -467,7 +488,12 @@ class Replay:
                         continue
                     if not self._clear_path([(x, s * self.AISLE), (x, y)], boxes, self.PERSON_R - 60.0):
                         continue
+                    walk = [(x, y + (s * self.AISLE - y) * u) for u in (0.0, 0.25, 0.5, 0.75)]
+                    if cams and self._blocks_view(walk, (wx, wy), cams):
+                        continue
                     cost = r + 3.0 * abs(ang) + (0.0 if s == (-1.0 if side == "A" else 1.0) else 1500.0)
+                    if names and not any(in_view(c, (x, y, 1000.0), margin=0.8) for c in names):
+                        cost += 900.0            # seen from none of the place's tripods: only if nothing else is clear
                     if best is None or cost < best[0]:
                         best = (cost, (x, y), (x, s * self.AISLE))
             if best is not None:
@@ -1178,7 +1204,7 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
         """Round 9: the person walks in from the aisle to a clear spot by `work`, job_frames() draws the job (the person standing
         there), and they walk back out. True if the slice ended."""
         P = rp.person
-        sp = rp.person_spot(work[:2], side) if P is not None else None
+        sp = rp.person_spot(work[:2], side, place_cands(loc)) if P is not None else None
         if sp is None:
             return job_frames()
         (xs, ys), (xa, ya) = sp
