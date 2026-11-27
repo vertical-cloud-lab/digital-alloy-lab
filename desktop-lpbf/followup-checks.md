@@ -9,6 +9,21 @@ seal, use Shigley, heat transfer and CalculiX, and say what the machine costs us
 Nothing here has been built, quoted by a shop, or reviewed by BYU's Laser Safety Officer or EHS. Each note below has
 its own sources, assumptions and re-run instructions.
 
+## 0. Round 9 (2026-11-27): what round 8's frame audit still found, fixed; the robot-build video on YouTube
+
+Every chapter planned and rendered again ([`robot-build/video.md`](robot-build/video.md) round 9; 40 min 56 s, public at
+[youtu.be/B9k2RO6CxCM](https://youtu.be/B9k2RO6CxCM), subscribers not notified). People's feet are locked
+([`people.py`](cad/robotbuild/people.py)'s `Gait`: 0.0 mm stance slip outside the assembly chapters). The assembly is planned
+and recorded in one process (run 13, 45 min) with run 14 continuing it from F54: 105 of 110 steps, 125 of 129 screws, 175 of 175
+MiR moves clear ([`round9_run13.md`](analysis/out/assembly/round9_run13.md)). The planner had never checked the arms' wrist
+cameras and tool changers; fixed. A person now does each step the arms fail. The shop has the lathe unload, MiR drives and the
+4th-axis bolt-up, and a new chapter 31b cuts the vise bracket with its own FreeCAD programs. The camera check passes on the whole
+file (4.7 cuts a minute; round 8 8.1). Every frame is audited: 0 pairs over 1.5 mm in nine chapters; 40 has 29 (round 8: 221),
+30 has 42 (its first full audit), and 41 has 238 (round 8: 209). In 41 none of round 8's large faults are left; most of what
+remains is fingertips in held parts and parts sliding home, from the plan and the model. Still failing: F15, F18, F26, F27, F57
+([`assembly.md`](assembly.md)). The CAD build animation with the MakeHuman person is up unlisted as version 3.1
+([`build-sequence.md`](build-sequence.md)).
+
 ## 0. Round 8 (2026-11-26): the robot-build video re-made against "moonwalk, motion sickness, collisions and interference, dummy tool paths"
 
 Every chapter planned and rendered again ([`robot-build/video.md`](robot-build/video.md) round 8; 33 min 17 s). The chamber is cut by its eight posted programs with a voxel material-removal simulation of them ([`gcode_sim.py`](cad/robotbuild/gcode_sim.py)); two people lift by hand (no lifter; the 30.0 kg plate as delivered is inside a 30.7 kg two-person guideline, only just); every MiR move is pivot-drive-pivot (6.9 m of reversing in docking legs, against 402 m in round 7); the assembly is filmed from fixed tripods (6.5 and 10.3 jumps a minute, against 84 and 103); the second arm holds a part on its seal while the first drives the first screws (M19, C04, the lid F30; three more need a hold that Fixture B blocks). Assembly run 12 passes the same 99 of 108 steps as run 11 ([`round8_run12.md`](analysis/out/assembly/round8_run12.md)). A new audit of every drawn frame still finds collisions in chapters 20, 30, 31, 32 and 40 and sliding feet in the shop chapters' two-person carries; they are listed in video.md for the next round.

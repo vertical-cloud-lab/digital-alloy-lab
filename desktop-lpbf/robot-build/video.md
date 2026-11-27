@@ -1,4 +1,4 @@
-# The desktop LPBF built by two mobile manipulators: the video (round 8, 2026-11-26)
+# The desktop LPBF built by two mobile manipulators: the video (round 9, 2026-11-27)
 
 For [issue #260](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/260) and PR 266. Sterling asked on
 2026-11-25 to see the build carried out **by** two UR12e arms, each on a MiR250, using the full set of parts spread
@@ -6,7 +6,7 @@ along a long table; every machining step and the assembly (screws, seals, tighte
 really needed; and, on screen, the running cost by category (new against used, with the expensive items one by one),
 the lead times (the long ones, and how short they get bought used), and time estimates for machining and assembly.
 
-**Video:** [`cad/img/robotbuild/robot-build.mp4`](../cad/img/robotbuild/robot-build.mp4) (33 min 17 s, 23,968 frames at 12 fps, 1280 x 720, 39.1 MB; composed 2026-11-26 (09:07 UTC) from the frames rendered in round 8; round 7's cut is in the history at a9cefef).
+**Video:** [`cad/img/robotbuild/robot-build.mp4`](../cad/img/robotbuild/robot-build.mp4) (40 min 56 s, 29,473 frames at 12 fps, 1280 x 720, 41.5 MB; composed 2026-11-27 (12:11 UTC) from the frames rendered in round 9; round 8's cut is in the history at 670dcf8). **On YouTube, public: [youtu.be/B9k2RO6CxCM](https://youtu.be/B9k2RO6CxCM)** (uploaded 2026-11-27, subscribers not notified; the robot-build video's first upload).
 YouTube chapter list: [`chapters.txt`](../cad/img/robotbuild/chapters.txt); four frames of every chapter:
 [`contact-sheet.jpg`](../cad/img/robotbuild/contact-sheet.jpg); what went in: [`compose.json`](../cad/img/robotbuild/compose.json).
 
@@ -18,6 +18,94 @@ YouTube chapter list: [`chapters.txt`](../cad/img/robotbuild/chapters.txt); four
 ![A MiR turning round beside the table: pivot, drive, pivot](../analysis/out/assembly/r8_mir_turn_round.png)
 ![Chapter 41 on a fixed tripod: the vacuum-port screws (F17)](../cad/img/robotbuild/still-41-assembly-chamber-48.png)
 ![The summary](../cad/img/robotbuild/still-60-summary-55.png)
+
+## Round 9 (2026-11-27): what round 8's audit still found
+
+Sterling, 2026-11-27: "Deal with the stuff above, including my note on YouTube uploads" (round 8's list of what its frame
+audit still found and what it had not done; and: a major change goes up on YouTube public without notifying subscribers, a
+trivial or partial one unlisted). Round 8's frames and plans were lost with its runner, so every chapter was planned and
+rendered again. Five workers ran in parallel (people and the other chapters, the shop, the assembly planner, the assembly
+renderer and audit, and the bracket's programs), every heavy job queued on one memory ledger. Nothing here has been built.
+
+| What round 8 left | Round 9 | Where |
+|---|---|---|
+| People moonwalked: `people.py`'s gait didn't lock the stance foot (0.3-1.0 m of slip per metre walked) | Each person has a `Gait`: footprints planned along the body's path; a planted foot never moves; a foot that has to move steps on a raised arc to the next footprint; each leg solved by two-bone IK to its foot, the pelvis dropping as far as both legs need. Turns, side-steps and backing up come from the path; standing still is both feet planted. `people.carry()` puts two people's hands on a load's edges with their bodies clear of it. Self-test (a walk, turns, side-steps, a carry): 0.0 mm stance slip, 0 gliding frames. `walk.py` had a bug that could swap the feet mid-walk and report slip that wasn't there; fixed | [`people.py`](../cad/robotbuild/people.py), [`walk.py`](../cad/robotbuild/walk.py), [`walk_selftest.json`](../analysis/out/videoqa/walk_selftest.json), [the carry](../cad/img/robotbuild/round9/r9-foot-lock-carry.gif) |
+| The assembly planned in four processes (the agent harness stops a background job after 30 minutes), with forced cuts at F39 and F51 where both MiRs restarted at the dock | **Run 13 planned and recorded the whole assembly in one detached process (08:36-09:21 UTC).** Run 14 re-planned F54 to the end on top of run 13's recording, every arm and MiR restored where run 13 left them, so nothing jumps at the join. 105 of 110 checked steps pass (run 12: 99 of 108), 125 of 129 screws (124), 62 of 77 table picks planned (57 of 74), 175 of 175 MiR moves clear (163 of 167). Replaying the recording as it is drawn (`rec_check.py`, the planner's own meshes): 0 arm-arm or arm-part pairs over 1.5 mm in 24,649 samples | [`round9_run13.md`](../analysis/out/assembly/round9_run13.md), [`assembly.md`](../assembly.md) round 9 |
+| Collisions the audit found in the assembly's plans: the two nutrunners into each other, arm A's wrist through a screw, its fingertips in the galvo, the gripper in the module handle, MiR A in the table's stretchers, MiR B on the zero-point air line, the trunnion's jaws in their stands, the hoist hook through the module | **Causes found and fixed in the planner:** after a failed screw attempt the planner left the arm where the recording didn't have it (now put back, and parked before the other arm tries); **the planner never checked the arms' wrist cameras and tool changers** (`cell.Checker.collisions` dropped them after the first check, since round 7; it found arm A's camera 50 mm into the floor plate); the push home was recorded with the fingers open; the turn-overs now take the handle's grip block, approached with the gripper open; the stretchers are cross rails in the planner's table model and the drawn one; a coiled line is its coil's box; the trunnion's stands have bearing bores; the hook is planned 300 mm over the part and recorded | [`round9_run13.md`](../analysis/out/assembly/round9_run13.md) |
+| Drawing faults in 40 and 41: seal tools inside the module (one left there to the end), the person's legs in a MiR's tool stand | The seal tools go back to their stand when their step ends; parts are drawn at 12,000 triangles so bores stay open; a part an arm still holds no longer follows the opening gripper; the person walks in from the aisle on clear floor, out of the cameras' sight lines, at 450 mm/s; a cut is forced only where something really jumps, and arm jumps under 5 deg are a short labelled move | [`asm_render.py`](../cad/robotbuild/asm_render.py) |
+| Holds: three blocked by Fixture B; the door's not tried | **F51b** closes the door's two draw latches over their strikes before the hinge pins, so the latches hold it on its cord. **F33b and F37b can't have a hold:** the vacuum gripper placing the Ø100 window flange and retaining ring covers both bolt circles, so their screws are run down snug in a star pattern (the first screw tilts the part 0.3 deg at most). **F43** is blocked by Fixture B with the roles either way round | [`two_hands.json`](../analysis/out/assembly/two_hands.json) |
+| Nine failing steps, and nobody drawn doing them | **Five fail** (F15, F18, F26, F27, F57; C00d, F45d, F48b and F54 now pass). After each failed attempt a person walks in on locked feet and sets the part or drives the screw with a hand driver, time-lapsed to the estimate (5 min a part, 1 min a screw). Not drawn: the person at F18's screw (no clear spot round Fixture B; a card says so) and at F57 | [`assembly.md`](../assembly.md) |
+| Shop collisions: 20 (13 pairs), 29 (22), 30 (not audited), 31 (2), 32 (2) | The pallet on the jack's forks and clear of the rack, crates apart, flaps and tape before the unbox; the VF-4's sill trim, hollow column hood, column moved back so the table's travel clears it, rotary and fixtures apart; the lathe's door foot out of its base; the wash basket not drawn inside the washer; two-person lifts by `people.carry()` and a side-by-side lift that reaches (palm error at most 18 mm, was 160-200 mm). `audit_rec.py` recorded only the first 2,000 faces of a re-meshed stock (round 8's "cutter 39 mm in the stock"); fixed | [`robot-shop.md`](../robot-shop.md) round 9 |
+| Chapter 30's audit ran out of memory | `scene_audit.py` streams (drops its BVHs every 200 frames): a synthetic chapter-30 recording that killed the old code at 3 GB within 9 frames peaks at 746 MB. Every frame of every chapter is audited | [`scene_audit.py`](../cad/robotbuild/scene_audit.py) |
+| Integration: the process fiber through the laser's box and the rack; the DIN drawer's ears in the rack posts | The fiber leaves the laser's rear panel and bends at 75-77 mm (IPG's minimum is 70 mm) up the slot beside the rack units, through grommeted holes, to the collimator; the rack frame is 580 mm tall (was 560), so the drawer clears its rails; the person walks on screen | [`lpbf_low.py`](../cad/lpbf_low.py) |
+| The machining workflow (round 7's open points: MiR drives between stations, unloading the lathe, the 4th-axis bolt-up; the vise bracket had no program) | MiR A drives VF-4 to lathe and deburr to measuring (pivot, drive, pivot; every pose swept with FCL); the lathe shuts, runs and opens, and arm A takes the turned part out along its checked loading path run back; arm A bolts the frame to the HRT210's platter with the nut runner (four M8, planned, 25 s). **New chapter 31b:** the recoater motor bracket cut by its own FreeCAD 1.0.2 programs (op 1 face and outline, op 2 turned over; 3.06 min), the cutter only on program lines (600 of 600 frames, worst 0.00005 mm off), the voxel simulation removing 152.2 cm³ against 152.2 for blank minus part. There is no lathe program: FreeCAD 1.0.2's CAM has no turning, so the slug's profile in 31 stays illustrative | [`gcode/parts/README.md`](../analysis/out/machining/gcode/parts/README.md), [`ch_programs.py`](../cad/robotbuild/ch_programs.py) |
+
+**The camera check on the finished file** ([round 9](../analysis/out/videoqa/camera-round9-video.json), same limits as round 8):
+
+| Chapter | Round 8: jumps a minute, median run, result | Round 9: jumps a minute, median run, runs under 2 s, p95 speed (fw/s), result |
+|---|---|---|
+| The hall: two mobile manipulators, one long table | 8.6, 5.9 s, pass | 8.6, 5.9 s, 11 %, 0.06, pass |
+| The parts: cost and lead time | 9.8, 5.7 s, pass | 9.4, 5.9 s, 4 %, 0.05, pass |
+| Time estimates: machining, routes, assembly | 0.0, 30.0 s, pass | 0.0, 30.0 s, 0 %, 0.00, pass |
+| Receiving and unpacking | 6.5, 6.1 s, pass | 7.9, 6.0 s, 33 %, 0.02, pass |
+| The stock: two people carry the 5.5 in. plate | 7.5, 7.9 s, pass | 0.0, 22.0 s, 0 %, 0.09, pass |
+| Machining the chamber: the VF-4 and its 4th axis | 4.4, 10.2 s, pass | 2.8, 17.2 s, 17 %, 0.03, FAIL (short_run_share) |
+| Machining the other parts: vise, lathe, saw | 6.8, 9.9 s, FAIL | 2.0, 21.6 s, 17 %, 0.01, pass |
+| Finishing: welding, honing, deburring, washing, measuring, kitting | 5.5, 9.8 s, pass | 5.7, 7.9 s, 22 %, 0.01, FAIL (short_run_share) |
+| The arms' custom tools and fixtures | 5.7, 4.6 s, pass | 6.4, 4.7 s, 0 %, 0.07, pass |
+| Assembly 1: the build module, by two UR12e on MiR250s | 6.5, 5.0 s, pass | 3.9, 8.4 s, 6 %, 0.01, pass |
+| Assembly 2: the chamber and the process module, by two UR12e on MiR250s | 10.3, 3.9 s, FAIL | 4.6, 8.7 s, 7 %, 0.01, pass |
+| Onto the VLM tray: rack, gas module, hoses, leak check | 8.7, 4.9 s, pass | 8.1, 4.9 s, 8 %, 0.01, pass |
+| Time and cost: in-house, outsourced, robot shop | 2.3, 11.2 s, pass | 2.8, 10.6 s, 17 %, 0.00, pass |
+| **Whole video** | 8.1, 5.7 s, pass | 4.7, 8.0 s, 4 %, 0.02, pass |
+
+Chapters 30 and 32 fail narrowly on short runs: 2 of 12 runs under 2 s in 30 (a 0.5 s one) and 2 of 9 in 32 (one 0.17 s).
+Chapters 31 and 41, which failed in round 8, pass.
+
+<!-- audit -->
+**The audit of every drawn frame** (as in round 8: `scene_audit.py` on every recorded frame, penetration deeper than 1.5 mm,
+round 8's pairs in brackets; `walk.py` for people's stance feet, gliding and the MiRs):
+
+| Chapter | Frames audited | Pairs over 1.5 mm (round 8) | Worst | The largest | Stance-foot slip, max per stance (round 8) | Gliding frames | MiR reversing | MiR sideways, max per frame |
+|---|---|---:|---|---|---|---:|---|---|
+| 00-intro | 669 of 669 | 0 (0) | 0.0 |  | op 0 | 0 | mirA 0.0 m (longest 0 mm), mirB 0.0 m (longest 0 mm) | mirA 0.0, mirB 0.0 |
+| 10-parts | 2,064 of 2,064 | 0 (0) | 0.0 |  | op 0 | 0 | mirA 0.0 m (longest 0 mm), mirB 0.0 m (longest 0 mm) | mirA 0.0, mirB 0.0 |
+| 20-receiving | 448 of 448 | 0 (13) | 0.0 |  | op 0 (473) | 0 | mirA 0.0 m (longest 0 mm), mirB 0.0 m (longest 0 mm) | mirA 0.0, mirB 0.0 |
+| 29-stock | 275 of 275 | 0 (22) | 0.0 |  | op 0, op2 0 (1033) | 0 | - | - |
+| 30-machining-chamber | 2,854 of 2,854 | 42 (not audited (69 in 200 frames)) | 84.4 | op/coat / op2/coat (84.4 mm, 21 fr); op/shoes / op2/shoes (46.9 mm, 31 fr) | op 0, op2 0 (1400) | 0 | mirA 0.0 m (longest 0 mm) | mirA 0.0 |
+| 31-machining-parts | 1,088 of 1,088 | 0 (2) | 0.0 |  | - | 0 | mirA 0.0 m (longest 0 mm), mirB 0.0 m (longest 0 mm) | mirA 0.0, mirB 0.0 |
+| 31b-machining-programs | 736 of 736 | 0 ((new)) | 0.0 |  | - | - | - | - |
+| 32-finishing | 1,001 of 1,001 | 0 (2) | 0.0 |  | op 0 | 0 | mirA 0.0 m (longest 0 mm), mirB 0.0 m (longest 0 mm) | mirA 0.0, mirB 0.0 |
+| 38-tools | 1,008 of 1,008 | 0 (-) | 0.0 |  | - | - | - | - |
+| 40-assembly-module | 2,974 of 2,974 | 29 (221) | 10.5 | A/gr/left_finger_tip/0 / o24 (10.5 mm, 4 fr); A/gr/right_finger_tip/0 / o24 (10.5 mm, 4 fr) | op 34 | 0 | mirA 0.8 m (longest 300 mm), mirB 0.1 m (longest 150 mm) | mirA 0.1, mirB 0.2 |
+| 41-assembly-chamber | 13,640 of 13,640 | 238 (209) | 40.6 | kt/long table top / o253 (40.6 mm, 4 fr); kt/long table top / o254 (40.6 mm, 4 fr) | op 383 (327) | 0 | mirA 3.8 m (longest 500 mm), mirB 0.9 m (longest 440 mm) | mirA 0.1, mirB 0.1 |
+| 50-integration | 1,070 of 1,070 | 0 (4) | 0.0 |  | op 0 | 0 | mirrA 0.0 m (longest 0 mm), mirrB 0.0 m (longest 0 mm) | mirrA 0.0, mirrB 0.0 |
+
+What it still finds:
+- **41, the chamber (238 pairs, round 8: 209; worst 40.6 mm, round 8: over 100 mm).** None of round 8's large ones are left
+  (the MiR tool stands, the trunnion's jaws, the hoist hook, the seal tools, the nutrunners). What remains comes from the plan
+  and the model more than the drawing: 101 fingertip pairs in the parts the fingers hold (worst 16.9 mm), 82 part-in-part pairs
+  as parts slide home (worst 37.5 mm, the liners into the chamber body), a staged put sinking the floor plate's dowels and
+  inserts 40.6 mm into the table top (frame 277), the ring pad and liner wand about 20 mm into parts, and the person's hand
+  28 mm into the chamber body where they set a part. 23 more overlaps are parts at their designed positions, listed apart. Only
+  41's last slice has the fix that stops a released part following the opening fingers, so earlier releases may sit about 2 mm
+  off their seats.
+- **40, the module (29 pairs, round 8: 221; worst 10.5 mm, round 8: 78.1 mm):** fingertips up to 10.5 mm in the module handle
+  during the turn-overs.
+- **30, the chamber's machining (42 pairs; its first full audit):** 25 are the two people at the lifts (coats and shoes
+  touching side by side at the load's ends, fingers 31-42 mm into the cart top and 34 mm into the edge clamps, a foot 25 mm under
+  the sill); arm A's forearm through a work light the planner is told to ignore (18.5 mm); the nut runner 8.6 mm into the MiR's
+  finger stand while the arm turns (the drive check now includes the tool, but these frames were rendered before that); the deck
+  blocks not travelling with the MiR (25 mm); the cutter inside the stock for 1-6 frames a tool (up to 23 mm).
+- **People's feet:** 0.0 mm stance slip and 0 gliding frames in every chapter except the assembly's: 40 (max 34 mm a stance)
+  and 41 (95th percentile 34 mm, one stance 383 mm); neither has gliding frames.
+- **Everything else** (00, 10, 20, 29, 31, 31b, 32, 38, 50): 0 pairs over 1.5 mm.
+<!-- /audit -->
+
+**Two numbers that don't match:** hud.json's 8.9 assembly person-hours include two steps the assembly chapters don't draw
+(M25, 120 min, and M02, 3 min), so the video's person clock runs about 2.3 h lower; robot-hours agree (3.32 h in the frames
+against 3.40 h). With the rack now 580 mm, some generated outputs (the inventory, mass and audit files and
+`analysis/out/electrical/enclosures.md`) still say 560 mm.
 
 ## Round 8 (2026-11-26): what changed, and what the checks still find
 
@@ -59,7 +147,6 @@ was lost with its runner, so every chapter was planned and rendered again in thi
 
 Two chapters still fail narrowly: 41 (10.3 jumps a minute, a median run of 3.9 s, 26 % of runs under 2 s; mostly the cuts where a fetch from the table is cut out, and the forced cuts at F39 and F51) and 31 (29 % of runs under 2 s).
 
-<!-- audit -->
 **The audit of every drawn frame** ([`scene_audit.py`](../cad/robotbuild/scene_audit.py), [`walk.py`](../cad/robotbuild/walk.py); per chapter in [`analysis/out/videoqa/`](../analysis/out/videoqa/)). Every renderer ran with `ROBOTBUILD_AUDIT=1`, so [`audit_rec.py`](../cad/robotbuild/audit_rec.py) recorded each frame's meshes and poses as drawn. The audit replays them and checks everything that moves against everything visible and at least 30 % opaque: python-fcl BVH collision on the recorded triangles, then a translational penetration depth (26 directions, bisection-refined) and containment by winding numbers; pairs deeper than 1.5 mm count unless they are on the short allowed list (a person's own clothing layers, a screw, insert or dowel in its hole, a driver's socket on its screw, a held part in the fingers holding it, a load in the hands carrying it). Pairs of parts that never move against each other are listed apart as the CAD's own overlaps. `walk.py` follows each person's lowest shoe through each stance and each MiR's footprint: stance-foot slip, gliding (the body moving while both feet are planted), and MiR sideways slip and reversing.
 
 | Chapter | Frames audited | Pairs over 1.5 mm | Pair-frames | Worst | The largest | Stance-foot slip, max per stance (mm) | Gliding frames | MiR reversing | MiR sideways, max per frame (mm) |
@@ -83,7 +170,6 @@ Two chapters still fail narrowly: 41 (10.3 jumps a minute, a median run of 3.9 s
 - **20, 31, 32:** the pallet and a crate driven into the stock rack's upright, a tray through the receiving bench, arm B's fingertips 42 mm into it; the VF-4's doors 20 mm through its front panel; the wash basket inside the wash station's body.
 - **50, integration:** only the machine CAD's own overlaps (the process fiber through the laser's box and the rack, the DIN drawer's ears in the rack posts) and a 4 mm brush of a glove.
 - **00 and 10:** nothing over 1.5 mm; MiR A drives 3.15 m nose first with no reversing or side slip.
-<!-- /audit -->
 
 ## How it is made
 
@@ -133,16 +219,17 @@ Rendered in this cut (from [`compose.json`](../cad/img/robotbuild/compose.json))
 | `00-intro`: The hall: two mobile manipulators, one long table | 0:00 | 669 | 0:56 |
 | `10-parts`: The parts: cost and lead time | 0:56 | 2,064 | 2:52 |
 | `15-estimates`: Time estimates: machining, routes, assembly | 3:48 | 366 | 0:30 |
-| `20-receiving`: Receiving and unpacking | 4:18 | 446 | 0:37 |
-| `29-stock`: The stock: two people carry the 5.5 in. plate | 4:55 | 186 | 0:16 |
-| `30-machining-chamber`: Machining the chamber: the VF-4 and its 4th axis | 5:11 | 1,626 | 2:16 |
-| `31-machining-parts`: Machining the other parts: vise, lathe, saw | 7:26 | 629 | 0:52 |
-| `32-finishing`: Finishing: welding, honing, deburring, washing, measuring, kitting | 8:19 | 925 | 1:17 |
-| `38-tools`: The arms' custom tools and fixtures | 9:36 | 1,008 | 1:24 |
-| `40-assembly-module`: Assembly 1: the build module, by two UR12e on MiR250s | 11:00 | 3,448 | 4:47 |
-| `41-assembly-chamber`: Assembly 2: the chamber and the process module, by two UR12e on MiR250s | 15:47 | 10,325 | 14:20 |
-| `50-integration`: Onto the VLM tray: rack, gas module, hoses, leak check | 30:08 | 996 | 1:23 |
-| `60-summary`: Time and cost: in-house, outsourced, robot shop | 31:31 | 1,280 | 1:47 |
+| `20-receiving`: Receiving and unpacking | 4:18 | 448 | 0:37 |
+| `29-stock`: The stock: two people carry the 5.5 in. plate | 4:56 | 275 | 0:23 |
+| `30-machining-chamber`: Machining the chamber: the VF-4 and its 4th axis | 5:18 | 2,854 | 3:58 |
+| `31-machining-parts`: Machining the other parts: vise, lathe, saw | 9:16 | 1,088 | 1:31 |
+| `31b-machining-programs`: Machining the other parts: vise, lathe, saw | 10:47 | 736 | 1:01 |
+| `32-finishing`: Finishing: welding, honing, deburring, washing, measuring, kitting | 11:48 | 1,001 | 1:23 |
+| `38-tools`: The arms' custom tools and fixtures | 13:12 | 1,008 | 1:24 |
+| `40-assembly-module`: Assembly 1: the build module, by two UR12e on MiR250s | 14:36 | 2,974 | 4:08 |
+| `41-assembly-chamber`: Assembly 2: the chamber and the process module, by two UR12e on MiR250s | 18:44 | 13,640 | 18:57 |
+| `50-integration`: Onto the VLM tray: rack, gas module, hoses, leak check | 37:40 | 1,070 | 1:29 |
+| `60-summary`: Time and cost: in-house, outsourced, robot shop | 39:09 | 1,280 | 1:47 |
 
 | Chapter | What it shows | Where its motion comes from | Time |
 |---|---|---|---|
@@ -156,8 +243,8 @@ Rendered in this cut (from [`compose.json`](../cad/img/robotbuild/compose.json))
 
 ## Caveats
 
-- **The assembly chapters replay run 12** (round 8): the same steps pass as in run 11 (99 of 108, 124 of 129 screws, 57 of 74 table picks), with the holds and MiR routes above. It is four joined processes, not one sequential run: after the forced cuts at F39 and F51, the idle MiR and arm stand where the fast-forward left them.
-- **Nine assembly steps still fail in run 12** (C00d, F15, F18, F26, F27, F45d, F48b, F54, F57); the video shows each failed attempt with a FAIL badge, and moves on. Those steps would fall to a person (the time estimates count 5 min each, or 1 min a screw), who is not drawn for them. Their next changes are in [`assembly.md`](../assembly.md). Seventeen picks at the table are not planned and are shown as cards, not animated.
+- **The assembly chapters replay runs 13 and 14** (round 9): run 13 planned and recorded everything in one process; run 14 re-planned F54 to the end on top of it, starting every arm and MiR where run 13 left them. 105 of 110 checked steps pass, 125 of 129 screws, 62 of 77 table picks; the 15 picks the planner couldn't plan are cards, not animations.
+- **Five assembly steps still fail** (F15, F18, F26, F27, F57): the video shows each failed attempt with a FAIL badge, then a person doing it (except at F18's screw and F57), time-lapsed to the estimates' 5 min a step or 1 min a screw. Their next changes are in [`assembly.md`](../assembly.md).
 - **The integration chapter's person and lift table are illustrations, not plans.** The steps and who does them are
   sequence.py's (T01-T06). The lift table drawn is the shop's (Vestil SCTAB-1000-2040-AC, 20 x 40 in, 1,000 lb, from
   [`robot-shop-equipment.csv`](../robot-shop-equipment.csv)); whether it rises to the tray's 857 mm and rolls is not
@@ -190,6 +277,7 @@ python desktop-lpbf/cad/robotbuild/ch_integration.py    # 50-integration
 python desktop-lpbf/cad/robotbuild/ch_summary.py        # 60-summary
 python desktop-lpbf/cad/robotbuild/shop_chapters.py 20 29 30 31 32   # the shop (after shop_chamber_cache.py and analysis/shop/shop_clips.py; robot-shop.md)
 python desktop-lpbf/cad/robotbuild/asm_render.py module|chamber      # 40, 41 (after run_assembly.py with ASM_RECORD; slices: asm_slices.py, merge_parts.py)
+python desktop-lpbf/cad/robotbuild/ch_programs.py      # 31b-machining-programs (after analysis/machining/parts_cam.py: gcode/parts/README.md)
 python desktop-lpbf/cad/robotbuild/ch_tools.py         # 38-tools
 python desktop-lpbf/cad/robotbuild/compose.py           # the MP4, chapters.txt, contact sheet, compose.json
 python desktop-lpbf/cad/robotbuild/video_qa.py desktop-lpbf/cad/img/robotbuild/robot-build.mp4 --chapters desktop-lpbf/cad/img/robotbuild/chapters.txt
