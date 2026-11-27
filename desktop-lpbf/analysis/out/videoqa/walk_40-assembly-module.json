@@ -1,163 +1,105 @@
 {
  "chapter": "40-assembly-module",
- "frames_recorded": 2974,
+ "frames_recorded": 2983,
  "recordings": [
   "/tmp/robotbuild/frames/40-assembly-module/audit.part0",
-  "/tmp/robotbuild/frames/40-assembly-module/audit.part1",
-  "/tmp/robotbuild/frames/40-assembly-module/audit.part2",
-  "/tmp/robotbuild/frames/40-assembly-module/audit.part3"
+  "/tmp/robotbuild/frames/40-assembly-module/audit.part1"
  ],
  "people": [
   {
    "person": "op",
-   "frames": 444,
-   "walked_mm": 10398,
-   "stances": 56,
+   "frames": 451,
+   "walked_mm": 10792,
+   "stances": 53,
    "slip_per_stance_mm": {
-    "max": 34.2,
-    "p95": 31.2,
-    "mean": 4.3
+    "max": 0.0,
+    "p95": 0.0,
+    "mean": 0.0
    },
    "worst_stances": [
     {
-     "foot": "R",
-     "start": 585,
-     "end": 590,
-     "frames": 6,
-     "slip_mm": 34.2,
-     "max_frame_mm": 34.2
-    },
-    {
-     "foot": "R",
-     "start": 1464,
-     "end": 1472,
-     "frames": 9,
-     "slip_mm": 34.2,
-     "max_frame_mm": 34.2
+     "foot": "L",
+     "start": 454,
+     "end": 460,
+     "frames": 7,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
     },
     {
      "foot": "R",
-     "start": 571,
-     "end": 579,
+     "start": 460,
+     "end": 467,
+     "frames": 8,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "L",
+     "start": 467,
+     "end": 474,
+     "frames": 8,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 474,
+     "end": 481,
+     "frames": 8,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "L",
+     "start": 481,
+     "end": 488,
+     "frames": 8,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 488,
+     "end": 496,
      "frames": 9,
-     "slip_mm": 32.3,
-     "max_frame_mm": 32.3
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
     },
     {
      "foot": "L",
-     "start": 579,
-     "end": 584,
-     "frames": 6,
-     "slip_mm": 30.9,
-     "max_frame_mm": 15.2
+     "start": 495,
+     "end": 506,
+     "frames": 12,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 504,
+     "end": 515,
+     "frames": 12,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
     },
     {
      "foot": "L",
-     "start": 565,
-     "end": 571,
-     "frames": 7,
-     "slip_mm": 26.7,
-     "max_frame_mm": 24.4
+     "start": 513,
+     "end": 524,
+     "frames": 12,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
     },
     {
-     "foot": "L",
-     "start": 1458,
-     "end": 1464,
-     "frames": 7,
-     "slip_mm": 25.2,
-     "max_frame_mm": 22.7
-    },
-    {
-     "foot": "L",
-     "start": 1563,
-     "end": 1569,
-     "frames": 7,
-     "slip_mm": 24.7,
-     "max_frame_mm": 15.7
-    },
-    {
-     "foot": "L",
-     "start": 1183,
-     "end": 1189,
-     "frames": 7,
-     "slip_mm": 21.0,
-     "max_frame_mm": 20.0
-    },
-    {
-     "foot": "L",
-     "start": 1077,
-     "end": 1083,
-     "frames": 7,
-     "slip_mm": 9.8,
-     "max_frame_mm": 9.8
-    },
-    {
-     "foot": "L",
-     "start": 1472,
-     "end": 1480,
-     "frames": 9,
-     "slip_mm": 2.4,
-     "max_frame_mm": 2.4
+     "foot": "R",
+     "start": 522,
+     "end": 550,
+     "frames": 29,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
     }
    ],
-   "slipping_frames": 11,
-   "slipping_frame_list": [
-    [
-     571,
-     "L",
-     24.4
-    ],
-    [
-     572,
-     "R",
-     32.3
-    ],
-    [
-     583,
-     "L",
-     15.2
-    ],
-    [
-     584,
-     "L",
-     15.0
-    ],
-    [
-     586,
-     "R",
-     34.2
-    ],
-    [
-     1083,
-     "L",
-     9.8
-    ],
-    [
-     1189,
-     "L",
-     20.0
-    ],
-    [
-     1464,
-     "L",
-     22.7
-    ],
-    [
-     1465,
-     "R",
-     34.2
-    ],
-    [
-     1568,
-     "L",
-     9.0
-    ],
-    [
-     1569,
-     "L",
-     15.7
-    ]
-   ],
+   "slipping_frames": 0,
+   "slipping_frame_list": [],
    "gliding_frames": 0,
    "gliding_ranges": [],
    "gliding_worst": [],
@@ -167,32 +109,32 @@
  "mirs": [
   {
    "mir": "mirA",
-   "frames": 2890,
-   "driven_mm": 3705,
+   "frames": 2903,
+   "driven_mm": 3734,
    "forward": "local +x",
-   "forward_mm": 2955,
+   "forward_mm": 2984,
    "reverse_mm": 750,
    "reverse_legs": 4,
    "longest_reverse_leg_mm": 300,
    "reverse_leg_list": [
     {
-     "start": 2778,
-     "end": 2781,
+     "start": 2784,
+     "end": 2787,
      "mm": 300
     },
     {
-     "start": 1621,
-     "end": 1623,
+     "start": 1626,
+     "end": 1628,
      "mm": 150
     },
     {
-     "start": 2121,
-     "end": 2123,
+     "start": 2126,
+     "end": 2128,
      "mm": 150
     },
     {
-     "start": 2611,
-     "end": 2613,
+     "start": 2621,
+     "end": 2623,
      "mm": 150
     }
    ],
@@ -333,134 +275,134 @@
     ],
     [
      231,
-     169,
-     169,
+     173,
+     173,
      0
     ],
     [
      232,
-     229,
-     229,
+     234,
+     234,
      0
     ],
     [
      233,
-     284,
-     284,
+     289,
+     289,
      0
     ],
     [
      234,
-     334,
-     334,
+     340,
+     340,
      0
     ],
     [
      235,
-     380,
-     380,
+     387,
+     387,
      0
     ],
     [
      236,
-     421,
-     421,
+     428,
+     428,
      0
     ],
     [
      237,
-     458,
-     458,
+     464,
+     464,
      0
     ],
     [
      238,
-     490,
-     490,
+     496,
+     496,
      0
     ],
     [
      239,
-     517,
-     517,
+     522,
+     522,
      0
     ],
     [
      240,
-     540,
-     540,
+     544,
+     544,
      0
     ],
     [
      241,
-     558,
-     558,
+     561,
+     561,
      0
     ],
     [
      242,
-     572,
-     572,
+     573,
+     573,
      0
     ],
     [
      243,
-     581,
-     581,
+     580,
+     580,
      0
     ],
     [
      244,
-     585,
-     585,
+     582,
+     582,
      0
     ],
     [
      245,
-     585,
-     585,
+     579,
+     579,
      0
     ],
     [
      246,
-     580,
-     580,
+     572,
+     572,
      0
     ],
     [
      247,
-     570,
-     570,
+     559,
+     559,
      0
     ],
     [
      248,
-     556,
-     556,
+     542,
+     542,
      0
     ],
     [
      249,
-     537,
-     537,
+     520,
+     520,
      0
     ]
    ]
   },
   {
    "mir": "mirB",
-   "frames": 2960,
-   "driven_mm": 1013,
+   "frames": 2971,
+   "driven_mm": 1313,
    "forward": "local +x",
-   "forward_mm": 863,
-   "reverse_mm": 150,
+   "forward_mm": 1013,
+   "reverse_mm": 300,
    "reverse_legs": 1,
-   "longest_reverse_leg_mm": 150,
+   "longest_reverse_leg_mm": 300,
    "reverse_leg_list": [
     {
-     "start": 2153,
-     "end": 2155,
-     "mm": 150
+     "start": 2159,
+     "end": 2162,
+     "mm": 300
     }
    ],
    "sideways_mm": {
@@ -473,67 +415,67 @@
    "turned_deg": 355.0,
    "jumps": [
     [
-     1835,
-     183,
-     183,
-     0
-    ],
-    [
-     1836,
-     247,
-     247,
-     0
-    ],
-    [
-     1837,
-     290,
-     290,
-     0
-    ],
-    [
-     1838,
-     312,
-     312,
-     0
-    ],
-    [
-     1839,
-     314,
-     314,
-     0
-    ],
-    [
      1840,
-     296,
-     296,
+     183,
+     183,
      0
     ],
     [
      1841,
-     257,
-     257,
+     247,
+     247,
      0
     ],
     [
      1842,
+     290,
+     290,
+     0
+    ],
+    [
+     1843,
+     312,
+     312,
+     0
+    ],
+    [
+     1844,
+     314,
+     314,
+     0
+    ],
+    [
+     1845,
+     296,
+     296,
+     0
+    ],
+    [
+     1846,
+     257,
+     257,
+     0
+    ],
+    [
+     1847,
      198,
      198,
      0
     ],
     [
-     1863,
+     1868,
      173,
      173,
      0
     ],
     [
-     1864,
+     1869,
      195,
      195,
      0
     ],
     [
-     1865,
+     1870,
      183,
      183,
      0
@@ -551,5 +493,5 @@
   "jump_mm": 250.0,
   "mir_jump_mm": 150.0
  },
- "seconds": 2.4
+ "seconds": 1.3
 }
