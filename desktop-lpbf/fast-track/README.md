@@ -19,6 +19,12 @@ in an Al alloy: the smallest result that shows a working LPBF machine.
 | [`img/gantt.png`](img/gantt.png), [`img/ft1-section.png`](img/ft1-section.png) | the schedules, and FT-1's layout to scale |
 | [`cad/`](cad/) | **the CadQuery model of FT-0, FT-1 and FT-1V, and the progression between them as parts arrive** (model, checks, schedule, renders, STEP); see [`cad/README.md`](cad/README.md) |
 | [`../edison/ft-fast-track-review/`](../edison/ft-fast-track-review/) | Edison `LITERATURE_HIGH` review of minimal LPBF builds (query, answer, references, trajectory) |
+| [`live-reads-2026-11-27.csv`](live-reads-2026-11-27.csv) | round 2's reads through the lab Pi (headed Chrome, real mouse clicks): eBay, Zaber, Thorlabs, Digi-Key, Digilent, box and heater vendors |
+| [`process/`](process/README.md) | round 2: optics chain, back reflection, thermal lens, AlSi10Mg melt-pool model and starting set, the first build's scan program and RTC lists, build times |
+| [`control/`](control/README.md) | round 2: the build supervisor `ftctl` (simulated and real backends, 54 tests), interlock check, I/O list, power budget, wiring diagrams, dwell study, commissioning |
+| [`analysis/`](analysis/) | round 2: structural and thermal FEA (CalculiX) and gas CFD (OpenFOAM) of FT-1/FT-1V |
+| [`fab/`](fab/) | round 2: fabrication-ready parts, FreeCAD CAM and G-code, voxel checks, drawings, shop hours |
+| [`../edison/ft-round2-review/`](../edison/ft-round2-review/answer.md) | Edison round 2: seven design risks and the top five with first-week checks |
 
 ## Short answer
 
@@ -68,6 +74,29 @@ in an Al alloy: the smallest result that shows a working LPBF machine.
 *Working days from the decision; dark bars are the early estimate and light bars run to the late one. Grey: approvals
 whose length at BYU is unknown (assumed 1–3 weeks). Red: milestones. Every duration and its basis is in
 [`out/schedule.csv`](out/schedule.csv).*
+
+## 0. Round 2 (2026-11-27): what the detailed design changed
+
+Sterling asked for the design to be worked through properly: real vendor geometry, analysis, fabrication and a video.
+This round did that in parallel workers, each in its own folder, and read prices and drawings live through the lab Pi
+in headed Chrome with real mouse clicks. Each finding below links the folder with its numbers and method.
+
+| Finding | Where | What changes |
+|---|---|---|
+| **With the lens over the plate's centre, a flat aluminium plate at focus would send about 342 W back into the used laser's fibre core** (R 0.9 at 400 W) | [`process/`](process/README.md) | the scan head and lens move **30 mm toward −Y** (the nozzle): every plate point is then 10–50 mm off axis and the return misses the core; the window stack moves to y = −11 mm (box) / −21 mm (cube); the cover-slide holder opens to Ø44 mm. First test on arrival: 50 W on a bead-blasted plate, watching the laser's back-reflection status bit; ask IPG with the serial number whether this unit has back-reflection protection (Edison's top risk) |
+| **The RTC5 can't drive the 2003 hurrySCAN 25**: its head connector speaks only SL2-100, the head XY2-100 | [`control/`](control/README.md) §6 | a used **RTC4 PCIe ($400)**, which drives XY2-100 natively, replaces the RTC5 ($1,499.99); the supervisor has backends for both. Unconfirmed: a 64-bit DLL for the RTC4 |
+| **Zaber's own STEP shows the X-LSQ075B is 285.9 mm long**, not the ~241 mm estimated last round, so it doesn't fit the deck or the cube | [`cad/`](cad/README.md) | the recoater is the **X-LSM100B-E03** (239.2 mm, 101.6 mm travel, $2,871, 1–5 days); the deck is 245 mm |
+| The other bought parts measured from the makers' files: X-VSR20A 88 × 101 mm; hurrySCAN 20/30 housing 206.9 × 140 × 180 mm, 5.8 kg; LINOS working distance 296.2 mm; the box is a real part (Saginaw SCE-16EL1208SSLP, $694.24) | [`cad/`](cad/README.md), [`live-reads-2026-11-27.csv`](live-reads-2026-11-27.csv) | the model is redrawn on them (CAD v2) |
+| **The laser's rating label** (listing photos): made Feb 2015, 1/N/PE 200–240 VAC, 10 A | [`control/`](control/README.md) §3 | the laser needs its **own 208/240 V, 15 A two-pole circuit**: a Physical Facilities request on day 0. Everything else is ~440 W on one 120 V 20 A circuit |
+| **Safety chain:** Omron documents the G9SE-201 only with direct-opening switches and Type 4 OSSD sensors, and two lid switches in series mask each other's stuck contacts | [`control/`](control/README.md) §2 | **one Omron D4NS-2CF tongue switch per guard** (lid, beam tube), $96.91 each today; a contact-level check of the whole chain (1,048,576 transitions) never emits with a contact open |
+| **The trace O₂ analyzer reads only to 10,000 ppm**, so it can't show the box is safe to open | [`control/`](control/README.md) §1 | a percent-range O₂ transmitter on the exhaust, a valve that keeps the trace cell out of air, possibly a sample pump |
+| **The plate's heat sets the build time.** The laser leaves ~56 W in the plate and the 0.1 mm argon gap passes only ~11 W to the block at +5 K | [`control/`](control/README.md) §7 | a dwell takes most of each layer: 15 mm in 4.2 h (the study assumed 1.2–1.8 h for 10 mm). Running the well block 20 K below the plate gives 1.6 h. The thermal FEA's conductance is in [`analysis/out/fea/`](analysis/out/fea/) |
+| **Process window** from a melt-pool model calibrated on 15 published AlSi10Mg tracks | [`process/`](process/README.md) | starting set **255 W, 1.25 m/s, 0.10 mm hatch, 30 µm layers**; first build three 10 mm and two 5 mm cubes; 0.60 h for 10 mm before any dwell; RTC lists for commissioning rungs 1–3 |
+| **Structure** (CalculiX) | [`analysis/out/fea/struct.md`](analysis/out/fea/struct.md) | a **sponge silicone gasket**, not a solid cord (the cord needs 4.0 kN to close); the gantry as drawn has a **13 Hz** first mode, so **four 45 mm posts with braces** (79 Hz); the cube plate and window pass (SF 34 and 74); the X-VSR20A must pull the rod down past its O-ring drag (7–45 N); the Thorlabs stage needs one O-ring |
+| **Cross-flow** (OpenFOAM, laminar and k-ω SST, 237k cells) | [`analysis/out/cfd/`](analysis/out/cfd/) | the slot jet holds 2.6–2.7 m/s over the build area; bed shear 0.03–0.05 Pa, below the 0.053–0.118 Pa that starts to lift 63 µm powder; 96–99 % of tracers released 0.5–3 mm up reach the collector |
+| **Fabrication** (FreeCAD CAM, 66 setups, every program checked in a voxel simulation; 35 drawings) | [`fab/`](fab/) | with PR 266's per-part allowances, FT-1's parts need **about 59–123 shop hours, not 25–40**. The schedule below is redone on them |
+| **Monitoring** after PR 266's `monitoring.md`: layer camera, two raking lights, a coaxial photodiode, acoustic emission, thermocouples, one digitizer on the laser's time base | [`cad/`](cad/README.md) (MON1–MON8), [`control/`](control/README.md) | $4.5k–6.2k at FT-0 and $5.3k–8.2k at FT-1 (`parts.csv` group "Monitoring") |
+| **Edison round 2:** seven design risks reviewed; the top five with first-week checks | [`../edison/ft-round2-review/`](../edison/ft-round2-review/answer.md) | back reflection, piston binding at 200 °C, purge leaks, hopper dosing of fine Al, cover-slide fouling; the commissioning steps in `control/ftctl/commission.py` follow them |
 
 ## 1. What sets the schedule of PR 266's design
 
