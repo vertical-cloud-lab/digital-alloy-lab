@@ -6,9 +6,10 @@ monitoring_spec.py says where each port, window and instrument goes; this file d
     Ø40 x 4 window flat on the wall between two FKM flat gaskets, the clamp ring, the cover slide and its clip on the left liner
     (with the liner's hole), the argon purge (SAE-4 bored-through fitting, 1/8 in. 316 tube through the wall, flattened tip over
     the slide, needle valve outside), and the Chronos 2.1-HD with lens and filters on a tilt block and a T-slot post;
-  * BW, back-wall light window: the obround slot, rectangular seat and clamp holes (frame_features again), the window, its
-    gaskets and clamp frame, the lower back liner's left piece shortened, and the 850 nm LED light outside on the sight line (an
-    M850D3 imaged onto the plate by an ACL25416U-B in an SM1L05, on a finned heat sink, clamp and L bracket: _bw_light());
+  * BW, back-wall light window: the obround slot, rectangular seat, clamp holes and the light bracket's two tapped holes
+    (frame_features again), the window, its gaskets and clamp frame, the lower back liner's left piece shortened, and the 850 nm
+    LED light outside on the sight line (an M850D3 imaged onto the plate by an ACL25416U-B in an SM1L05, on a finned heat sink,
+    clamp and L bracket: _bw_light());
   * LP, steep lid port: a bore normal to the lid sized to pass the clear aperture across the lid, an adapter boss whose window
     sits square to the line of sight (optics.md §0 item 10), the cover slide in the boss under the window, the face O-ring, the
     IMX296 camera with its 50 mm lens and filters, and the cut-out in the optics bridge the camera passes through;
@@ -284,7 +285,7 @@ BWL = dict(
     led=dict(board_d=22.0, board_t=1.6, pkg=3.5, h=2.8, emit=2.6),  # emit: the die's face above the board's back (estimate)
     hs=dict(d=36.0, L=40.0, collar=10.0, root_d=24.0, fins=5, fin_t=2.0, fin_pitch=6.0, bore_d=26.29, bore_past_tube=0.38, pedestal_d=22.5),
     clamp=dict(t0=1.0, w=8.0, half=23.0, up=25.0, top_z=60.5),     # split block on the heat sink's collar, its top flat under the arm
-    bracket=dict(t=6.35, x=(-147.5, -123.0), z=(60.5, 78.0), holes_x=(-141.0, -129.5), hole_z=69.25,
+    bracket=dict(t=6.35, x=(-147.5, -123.0), z=(60.5, 78.0),        # its 2 x M4 are frame_features.BW_BRACKET (the CAM's too)
                  arm=[(-147.5, 111.0), (-123.0, 111.0), (-123.0, 118.0), (-141.0, 162.0), (-150.0, 164.0), (-178.0, 130.0),
                       (-170.0, 118.0), (-156.0, 111.0)]),
 )
@@ -358,14 +359,17 @@ def _bw_light(parts, add, h):
     blk = blk.cut(_local(box(-Cl["half"] - 1, -Hs["d"] / 2 + 1.0, -0.5, 0.5, t_hs, t_hs + Hs["collar"]), c, a, up))   # the split, below
     add("BW LED clamp (custom 6061 split block on the heat sink's collar, 8 mm wide; envelope)", blk, C["alu_dark"], 5, (0, 300, 0),
         mat="al6061", mass_kg=0.03, bom="M7-05d", tags=TAG)
-    # L bracket: a 1/4 in. 6061 flange on the back wall's outer face above the clamp frame (2 x M4 into new tapped holes), and an arm
+    # L bracket: a 1/4 in. 6061 flange on the back wall's outer face above the clamp frame, and an arm. Its 2 x M4 go into the
+    # tapped holes frame_features.bw_features() draws (BW_BRACKET), which _bw() has already cut into the frame with the port and
+    # which cam_monitoring.py drills in setup C's A180 program
     z0, z1 = Bk["z"]
+    holes_xz = FF.BW_BRACKET["holes_xz"]
+    assert all(Bk["x"][0] + 4.5 <= x <= Bk["x"][1] - 4.5 and z0 + 4.5 <= z <= z1 - 4.5 for x, z in holes_xz), holes_xz
     flange = box(Bk["x"][0], Bk["x"][1], y_out, y_out + Bk["t"], z0, z1)
     arm = cq.Solid.extrudeLinear(cq.Face.makeFromWires(cq.Wire.makePolygon([V(x, y, z0) for x, y in Bk["arm"]], close=True)), V(0, 0, Bk["t"]))
-    holes = [h.cyl(2.25, (x, y_out - 1.0, Bk["hole_z"]), "y", Bk["t"] + 2.0) for x in Bk["holes_x"]]
+    holes = [h.cyl(2.25, (x, y_out - 1.0, z), "y", Bk["t"] + 2.0) for x, z in holes_xz]
     add("BW LED bracket (custom 6061 1/4 in. L: flange on the back wall above the BW clamp frame, 2 x M4; arm over the light; envelope)",
         fuse([flange, arm]).cut(h.comp(holes)), C["alu_dark"], 5, (0, 320, 0), mat="al6061", mass_kg=0.06, bom="M7-05d", tags=TAG)
-    _cut(parts, "Process chamber body", [h.cyl(1.65, (x, y_out + 0.01, Bk["hole_z"]), "-y", 8.0) for x in Bk["holes_x"]])   # M4 tap drill, 8 deep
     REPORT["BW_light"] = dict(t_asphere_vertex=round(t_s1, 2), t_tube_front=round(t_tube, 2), t_die=round(t_die, 2), t_board_back=round(t_board, 2),
                               t_heat_sink=(round(t_hs, 2), round(t_hs + Hs["L"], 2)), die=P(t_die).round(1).tolist(),
                               heat_sink_back=P(t_hs + Hs["L"]).round(1).tolist(), asphere_vertex=P(t_s1).round(1).tolist())

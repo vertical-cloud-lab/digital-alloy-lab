@@ -9,9 +9,10 @@ can cut at its existing A indexes. This script programs them and checks the prog
            run 2 (under freecadcmd): freecad_cam.run_cam() on the frame with the ports, for two jobs:
              * frame_C90 as it is. Its "wall" op finds every bore and hole normal to the left wall, so it programs the LW
                port (seat, bore, clamp-ring holes, purge port and passage) with the recoater bore and the through-beam;
-             * mon_C180, new: the BW seat and slot (Adaptive inside their outlines) and its three clamp holes. The A180
-               job's inlet-slot op profiles every inner wire of the back face, which would now include the seat's
-               outline and cut it through the wall, so frame_C180 stays as run 1 posted it and mon_C180 follows it.
+             * mon_C180, new: the BW seat and slot (Adaptive inside their outlines), its three clamp holes and the BW
+               light bracket's two holes above them. The A180 job's inlet-slot op profiles every inner wire of the back
+               face, which would now include the seat's outline and cut it through the wall, so frame_C180 stays as run 1
+               posted it and mon_C180 follows it.
              The one change to freecad_cam.py's code, made in memory here and not in the file: an op whose settings carry
              "subs" (face or edge names) uses them instead of freecad_cam's own selectors.
            Joins setup C into one Haas program with the A moves: A0 door; A90 (run 2); A180 (run 1's frame_C180, then
@@ -100,15 +101,21 @@ def mon_c180_setup(FC, features):
     assert len(floor) == 1, "BW seat floor not found"
     slot_w = [w for w in floor[0].Wires if not w.isSame(floor[0].OuterWire)]
     assert len(slot_w) == 1, "BW slot outline not found on the seat floor"
-    holes = []
-    for x, z in features["BW"]["clamp_frame"]["holes_xz"]:
-        for i, f in enumerate(s.Faces):
-            su = f.Surface
-            if type(su).__name__ == "Cylinder" and abs(abs(su.Axis.y) - 1) < 1e-6 and abs(su.Radius - 2.0) < 1e-3 \
-                    and abs(su.Center.x - x) < 0.05 and abs(su.Center.z - z) < 0.05:
-                holes.append("Face%d" % (i + 1))
-                break
-    assert len(holes) == len(features["BW"]["clamp_frame"]["holes_xz"]), "BW clamp holes not found"
+    def hole_faces(pts, what):
+        """the M4 holes (drawn at Ø4.0 along y) at the given (x, z), one cylinder face each"""
+        out = []
+        for x, z in pts:
+            for i, f in enumerate(s.Faces):
+                su = f.Surface
+                if type(su).__name__ == "Cylinder" and abs(abs(su.Axis.y) - 1) < 1e-6 and abs(su.Radius - 2.0) < 1e-3 \
+                        and abs(su.Center.x - x) < 0.05 and abs(su.Center.z - z) < 0.05:
+                    out.append("Face%d" % (i + 1))
+                    break
+        assert len(out) == len(pts), what + " not found"
+        return out
+
+    holes = hole_faces(features["BW"]["clamp_frame"]["holes_xz"], "BW clamp holes")
+    bracket = hole_faces(features["BW"]["light_bracket"]["holes_xz"], "BW light-bracket holes")
     sl = features["BW"]["slot"]
     se = features["BW"]["seat"]
     return dict(name="mon_C180", part="frame", rot=FC.ROT_A[180], a_deg=180, rotary="frame_C",
@@ -121,6 +128,9 @@ def mon_c180_setup(FC, features):
          dict(start=111.0 - seat_depth, final=94.5, step=6.0, stepover=15, subs=edge_names(slot_w[0]))),
         ("BW clamp-frame holes: drill %d x 3.3 mm, M4 tapped after, 10 deep" % len(holes), "drill", 6, None,
          dict(start=111.0, final=101.0, through=False, subs=holes)),
+        # the BW light's bracket, above the clamp frame (frame_features.BW_BRACKET; added 2026-11-27 once the light was drawn)
+        ("BW light-bracket holes: drill %d x 3.3 mm, M4 tapped after, 10 deep" % len(bracket), "drill", 6, None,
+         dict(start=111.0, final=101.0, through=False, subs=bracket)),
     ])
 
 
