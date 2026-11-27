@@ -285,3 +285,45 @@ def draw(parts, add, h, module="M50"):
                   shroud={k: round(v, 2) for k, v in B.items()}, light_check=lc,
                   inside_rear_y=round(min(y_rear, y_in_end), 2))
     return REPORT
+
+
+# ================================================================================================================ the plate's DXF
+def plate_dxf(path):
+    """the plate flattened into XY (machine x -> X, machine z -> Y, origin at its lower left corner), in mm, for an instant quote.
+    SendCutSend priced the file this wrote on 2026-11-27 (analysis/out/monitoring/fab/quotes/sendcutsend_quotes.csv, with its
+    sha256). The DXF header carries the export time, so a re-run changes the sha256 but not the geometry."""
+    import cadquery as cq
+
+    P, x0, z0 = PLATE, PLATE["x"][0], PLATE["z"][0]
+
+    def xy(x, z):
+        return (x - x0, z - z0)
+
+    solid = cq.Workplane("XY").rect(P["x"][1] - x0, P["z"][1] - z0, centered=False).extrude(P["t"]).edges("|Z").fillet(P["r"]).val()
+    holes = []
+    for x in BNC_X + (RJ45_X,):
+        holes += [(xy(x, ROW_Z), DS["hole_d"]), (xy(x - DS["screw_dx"], ROW_Z + DS["screw_dz"]), DS["screw_d"]),
+                  (xy(x + DS["screw_dx"], ROW_Z - DS["screw_dz"]), DS["screw_d"])]
+    holes.append((xy(M12["x"], ROW_Z), M12["hole_d"]))
+    for sx in (-1, 1):
+        for sz in (-1, 1):
+            holes.append((xy(KEL["x"] + sx * KEL["screws"][0] / 2, KEL["z"] + sz * KEL["screws"][1] / 2), KEL["screw_d"]))
+    holes += [(xy(x, z), SCREW_D) for (x, z) in SCREWS]
+    for (c, d) in holes:
+        solid = solid.cut(cq.Solid.makeCylinder(d / 2, P["t"] + 2, cq.Vector(c[0], c[1], -1), cq.Vector(0, 0, 1)))
+    kc = xy(KEL["x"], KEL["z"])
+    solid = solid.cut(cq.Solid.makeBox(KEL["cut"][0], KEL["cut"][1], P["t"] + 2,
+                                       cq.Vector(kc[0] - KEL["cut"][0] / 2, kc[1] - KEL["cut"][1] / 2, -1)))
+    face = cq.Workplane("XY").add(solid).faces(">Z").val()
+    cq.exporters.export(cq.Workplane("XY").add(face), str(path), exportType="DXF")
+    bb = face.BoundingBox()
+    return dict(size_mm=(round(bb.xlen, 3), round(bb.ylen, 3)), holes=len(holes), area_mm2=round(face.Area(), 1))
+
+
+if __name__ == "__main__":
+    import pathlib
+    import sys
+    out = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else (pathlib.Path(__file__).resolve().parents[1]
+                                                               / "analysis/out/monitoring/fab/dxf/bulkhead_plate.dxf")
+    print(plate_dxf(out), "->", out)
+    print(light_check())

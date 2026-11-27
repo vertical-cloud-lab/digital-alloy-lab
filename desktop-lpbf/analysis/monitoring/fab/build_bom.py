@@ -133,8 +133,8 @@ SEL = [
     # ---------------- step 0: the guard's monitoring bulkhead, MN-28 (round 3, 2026-11-27; cad/monitoring_bulkhead.py) -----------
     ("M0-B1", "0", "custom (guard bulkhead)", "Guard bulkhead plate MN-28: 6061-T6 0.080 in. (2.03 mm), 180 x 126 mm, laser-cut: four "
      "D-size cut-outs (Ø24 + 2 x Ø3.2), an Ø16.1 hole, the KEL's 65 x 36 cut-out and 4 x Ø5.8, 8 x Ø4.5; bare or clear chromate (conductive)",
-     ("est", 15.0, 40.0, "estimate (laser-cut flat plate, not quoted; SendCutSend quoted the LW ring and the LP cap at $7.43-10.26 each "
-                         "on 2026-11-27, fabrication.md §4)", "custom (monitoring_bulkhead.py PLATE)", "SendCutSend"), 1, "outsource",
+     ("custom", 32.85, "SendCutSend instant quote for 6061-T6 .080 in. (2 = $25.52, 10 = $20.68 each; arrives Tue, Dec 1)", SCSQ,
+      "2026-11-27T11:23Z", "custom (monitoring_bulkhead.plate_dxf(): dxf/bulkhead_plate.dxf)"), 1, "outsource",
      "drawn (monitoring_bulkhead.py)", "on the guard's back panel, upper left (x -400..-220, z 220..346), over a 152 x 98 mm cut-out in "
      "the panel, 8 x M4 into rivet nuts (M0-B8). Cut the panel's cut-out with the vents' openings (S9)", []),
     ("M0-B2", "0", "guard bulkhead", "Isolated BNC feedthroughs in black D-shape housings (Neutrik NBB75DFIB) for the two photodiodes "
@@ -520,11 +520,11 @@ def main():
             _, lo, hi, basis, pn, vendor = s
             r.update(unit_low_usd=lo, unit_high_usd=hi, price_basis=basis, part_number=pn, vendor=vendor, price_source="estimate")
         elif s[0] == "custom":
-            if len(s) > 3:   # an instant quote for this part
-                _, usd, basis, url, when = s
+            if len(s) > 3:   # an instant quote for this part (an optional 6th item names the script that drew its DXF)
+                _, usd, basis, url, when = s[:5]
                 r.update(unit_low_usd=usd, unit_high_usd=usd, price_basis="quote (instant, online): " + basis,
                          price_source="quotes/sendcutsend_quotes.csv",
-                         part_number="custom (flat_parts_dxf.py)", vendor="SendCutSend", url=url, fetched_utc=when,
+                         part_number=s[5] if len(s) > 5 else "custom (flat_parts_dxf.py)", vendor="SendCutSend", url=url, fetched_utc=when,
                          stock_lead="arrives as soon as " + (re.search(r"arrives ([^;)]+)", basis).group(1)
                                                              if re.search(r"arrives ([^;)]+)", basis) else "Mon Nov 30"))
             else:            # the closest instant quote for a similar part (outsourcing-quotes.csv, 2026-11-22)

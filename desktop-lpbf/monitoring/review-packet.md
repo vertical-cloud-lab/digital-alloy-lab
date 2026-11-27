@@ -42,7 +42,7 @@ module. [`parts.md`](../analysis/out/monitoring/review/parts.md) lists every one
 
 | Kind | Parts | How they're meant to be made |
 |---|---|---|
-| Laser-cut flat plate | LW window clamp ring, BW window clamp frame, LP blanking cap; the guard's bulkhead plate (0.080 in. 6061, 180 × 126 mm, round 3) | SendCutSend, quoted on 2026-11-27 at $7.43–10.26 each in 6061 ([`fabrication.md`](fabrication.md) §4); the bulkhead plate is not quoted (BOM M0-B1, $15–40 estimated) |
+| Laser-cut flat plate | LW window clamp ring, BW window clamp frame, LP blanking cap; the guard's bulkhead plate (0.080 in. 6061, 180 × 126 mm, round 3) | SendCutSend, quoted on 2026-11-27 at $7.43–10.26 each in 6061 ([`fabrication.md`](fabrication.md) §4); the bulkhead plate at $32.85 in 0.080 in. 6061 (SendCutSend's instant quote of 11:23 UTC, from [`bulkhead_plate.dxf`](../analysis/out/monitoring/fab/dxf/bulkhead_plate.dxf); BOM M0-B1) |
 | Machined, compound angle | LP adapter boss | bought: SendCutSend CNC priced the layer camera's similar boss at $379 |
 | Machined | side camera bracket and its 13° wedge; the BW LED's L bracket and split clamp | outsourced in the BOM (M7-08, M7-05d), or in house |
 | Turned | the BW LED's finned heat sink (Ø36 × 40, SM1 internal thread); the AE waveguide's Ø4 head domed R50 on a 1/8 in. 316 rod; the AE cartridge (316L, Ø6.3 × 0.35 wall, 25.8 long, pressed-in cap); the G-10 ring (Ø32 × Ø25.4 × 5, SM1-threaded both ends) | in house |
