@@ -222,7 +222,17 @@ def place(run, st, idx, actor, tool, best, body, off, G, T_obj, close, state, ro
     path = best.get("path")
     if path is not None:
         R.move(actor, path, "plan", close=close)
-    if fr["qs"]:
+    k = fr.get("push_at")
+    if fr["qs"] and k:
+        # round 9 (pick-insert-push): in with the part held, let go short of the seat, close the fingers, then push it home on
+        # its back face with the closed fingertips, as arm_place checked it (the part rides on the closed fingers' TCP)
+        R.move(actor, fr["qs"][:k], "cart", close=close, seat_mm=0.0)
+        R.grip(actor, max(0.0, close - 0.12))
+        R.detach(actor)
+        R.grip(actor, float(fr.get("push_close", 1.0)))
+        R.attach(actor, idx, fr["push_off"], state, name=st["id"])
+        R.move(actor, fr["qs"][k:], "cart", close=float(fr.get("push_close", 1.0)), seat_mm=10.0)
+    elif fr["qs"]:
         R.move(actor, fr["qs"], "cart", close=close, seat_mm=10.0)
 
 
@@ -362,15 +372,66 @@ def dual(run, st, best, frames, body, idx, gA, gB, cA, cB):
     QA, QB = np.array(best["qsA"]), np.array(best["qsB"])
     tcpA = np.array([run.arm("A").tcp(q, cA)[:3, 3] for q in QA])
     dur = RECM.joint_time(QA, tcpA, cart=True) * 1.5            # a two-arm carry runs slower: 1.5x (estimate)
+    hook = None
+    if st.get("lift_aid"):
+        hook = hoist_hook(run, body, frames[:len(QA)], QA, QB, cA, cB)
+        res["hook"] = dict(clear=hook["clear"], why=hook["why"], above_mm=HOOK_ABOVE)
     R._ev("move2", arm="A+B", qA=QA.astype(np.float32), qB=QB.astype(np.float32), closeA=cA, closeB=cB, dur=round(dur, 2),
-          frames=np.array(frames[:len(QA)], np.float32), lift_aid=bool(st.get("lift_aid")))
+          frames=np.array(frames[:len(QA)], np.float32), lift_aid=bool(st.get("lift_aid")),
+          hook=None if hook is None else np.asarray(hook["p"], np.float32), hook_clear=None if hook is None else hook["clear"])
     if st.get("lift_aid") and R.step is not None:
         R.step["person_s"] += dur
     R.state["A"]["q"], R.state["B"]["q"] = QA[-1].copy(), QB[-1].copy()
     if R.step is not None:
         R.step["robot_s"]["B"] += dur
     # B lets go first (its own retreat is recorded by retreat()); the part is released by A
-    return dict(approach="PASS" if ok_all else "FAIL")
+    return dict(approach="PASS" if ok_all else "FAIL", hook=res.get("hook"))
+
+
+HOOK_ABOVE = 300.0      # mm: the hoist's hook above the carried part's top (a lifting bar on two slings; estimate)
+HOOK_BOX = (30.0, 12.0, 50.0)   # half-x, half-y, height of the hook as asm_render draws it; the chain is a Ø8 line up to z 2900
+
+
+def hoist_hook(run, body, frames, QA, QB, cA, cB):
+    """Round 9: where the hoist's hook is in each frame of a hoist-assisted carry (lift_aid), and whether it and its chain are
+    clear. The hook hangs HOOK_ABOVE mm over the top of the carried part, over the centre of its footprint, on a lifting bar
+    whose slings go to the part (eye bolts in tapped holes of its top face): it is never inside the part. The hook and the
+    chain (a vertical line up to z 2900) are checked with FCL against the cell, the parts present and both arms at that frame.
+    Round 8 drew the hook 60 mm over the midpoint of the arms' TCPs, which for the chamber carried by two legs (F05b) put it
+    50 mm into the build module (chapter 41, frames 3297-3376). -> dict(p=(n, 3) hook points (bottom of the hook), clear, why)"""
+    import cell2 as K
+    from cell import Body, box_mesh, hit
+    cl = run.cl
+    v = np.asarray(body.v, float)
+    v = v[:: max(1, len(v) // 4000)]
+    pts, clear, why = [], True, ""
+    hx, hy, hh = HOOK_BOX
+    for k, F in enumerate(frames):
+        w = v @ np.asarray(F, float)[:3, :3].T + np.asarray(F, float)[:3, 3]
+        lo, hi = w.min(0), w.max(0)
+        p = np.array([0.5 * (lo[0] + hi[0]), 0.5 * (lo[1] + hi[1]), hi[2] + HOOK_ABOVE])
+        pts.append(p)
+        if not clear or (k % 4 and k != len(frames) - 1):
+            continue
+        hook_b = Body("hoist hook", *box_mesh(p[0] - hx, p[0] + hx, p[1] - hy, p[1] + hy, p[2], p[2] + hh), kind="tool")
+        chain = Body("hoist chain", *box_mesh(p[0] - 4.0, p[0] + 4.0, p[1] - 4.0, p[1] + 4.0, p[2] + hh, 2900.0), kind="tool")
+        hook_b.place(np.eye(4))
+        chain.place(np.eye(4))
+        cl.A.place(QA[k], cA)
+        cl.B.place(QB[k], cB)
+        world = cl.world("A", other=True)
+        for b in list(cl.A.bodies()):
+            world.add(b)
+        for x in (hook_b, chain):
+            for y in world.bodies.values():
+                if y.name == "floor" or y is body or y.name.startswith("held:"):
+                    continue
+                if hit(x.obj, y.obj):
+                    clear, why = False, f"{x.name} meets {y.name[:50]} at frame {k}"
+                    break
+            if not clear:
+                break
+    return dict(p=np.array(pts), clear=clear, why=why)
 
 
 def flip(run, st, actor, fr, body_idx, G_m, close, T0, plan_path):

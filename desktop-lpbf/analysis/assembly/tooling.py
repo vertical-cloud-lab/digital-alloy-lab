@@ -282,7 +282,12 @@ def fixture_B(z_top, x0=-420.0, x1=310.0, y0=-265.0, y1=215.0):
     return _fuse(*cols, foot)
 
 
-TRUNNION = dict(h_axis=1000.0, half_span=330.0, stand=(90.0, 260.0), shaft_d=50.0, jaw=(12.0, 90.0, 70.0), jaw_y=-20.0, jaw_z=60.0)
+TRUNNION = dict(h_axis=1000.0, half_span=330.0, stand=(90.0, 260.0), shaft_d=50.0, jaw=(12.0, 90.0, 70.0), jaw_y=-20.0, jaw_z=60.0,
+                bore_d=53.0, bore_depth=60.0, shaft_in=50.0)
+# round 9: each stand has its bearing bore (Ø53 x 60 deep, for the Ø50 shaft) and the shaft runs 50 mm into it. Round 8's shaft
+# ended flush on the stands' solid faces, which the frame audit counted as the jaws 88 mm into their stands in every frame of
+# chapter 41 (a zero-clearance face contact read as containment); now the parts are clear of each other by 1.5 mm radially and
+# 10 mm at the bore's bottom, as a shaft in its bearing is.
 
 
 def trunnion_stands():
@@ -296,7 +301,10 @@ def trunnion_stands():
         xa = s_ * hs
         parts.append(_box(min(xa, xa + s_ * sx), max(xa, xa + s_ * sx), -sy / 2, sy / 2, -h, 60.0))
         parts.append(_box(min(xa, xa + s_ * sx), max(xa, xa + s_ * sx), -sy, sy, -h, -h + 20.0))
-    return _fuse(*parts)
+    out = _fuse(*parts)
+    for s_ in (-1, 1):
+        out = out.cut(cq.Solid.makeCylinder(t["bore_d"] / 2, t["bore_depth"], V(s_ * hs, 0, 0), V(s_, 0, 0)))
+    return out.clean()
 
 
 def trunnion_jaws():
@@ -310,7 +318,7 @@ def trunnion_jaws():
         parts.append(_box(min(x_face, x_face + s_ * jt), max(x_face, x_face + s_ * jt), t["jaw_y"] - jy / 2, t["jaw_y"] + jy / 2,
                           t["jaw_z"] - 50.0 - jz / 2, t["jaw_z"] - 50.0 + jz / 2))
         x0 = x_face + s_ * jt
-        parts.append(cq.Solid.makeCylinder(t["shaft_d"] / 2, abs(t["half_span"] - abs(x0)), V(x0, 0, 0), V(s_, 0, 0)))
+        parts.append(cq.Solid.makeCylinder(t["shaft_d"] / 2, abs(t["half_span"] - abs(x0)) + t["shaft_in"], V(x0, 0, 0), V(s_, 0, 0)))
     return _fuse(*parts)
 
 
@@ -353,7 +361,11 @@ def liner_wand():
 # the 2F-85's fingertips do not fit (run 7: F48b) and the Ø6 nozzle cup is wider than the 2.1 mm ring. An annular silicone lip
 # (OD 24.6, ID 21.4, 3 mm) on a Ø8 stem under the VGC10's adaptor plate, with a soft centre plug so it also seals on the window.
 # run 10 (2026-11-25): stem 55 -> 100 mm: in run 9 the VGC10 body met the camera boss 63 mm along the line of sight (F48b)
-RINGPAD = dict(od=24.6, id=21.4, lip=3.0, stem_d=8.0, stem_l=100.0)
+# round 9: lip OD 24.6 -> 24.0. Runs 10-12 met the boss at the seat (63 mm along the line of sight, the counterbore's bottom)
+# whatever the stem: the 24.6 lip left 0.5 mm a side in the Ø25.6 counterbore, which the tessellations and a grasp centre taken
+# from the part's tilted mesh use up, and in a tilted bore no world-axis step frees a touching tool, so the depth check read
+# the touch as deep. At 24.0 (0.8 mm a side) the lip still covers the rings' 21.0-25.2 face from 21.4 to 24.0.
+RINGPAD = dict(od=24.0, id=21.4, lip=3.0, stem_d=8.0, stem_l=100.0)
 
 
 def ring_pad():

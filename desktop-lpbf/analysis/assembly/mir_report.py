@@ -1,7 +1,7 @@
 """The MiRs' recorded base moves, as a differential-drive MiR250 makes them (round 8, issue #260, PR #266): reversing distance,
 pivots, and the swept-footprint check of every leg (mir_route.py), from a run's recording (run_assembly.py with ASM_RECORD).
 
-    /tmp/venv/bin/python desktop-lpbf/analysis/assembly/mir_report.py /tmp/robotbuild/traj/run12
+    /tmp/venv/bin/python desktop-lpbf/analysis/assembly/mir_report.py /tmp/robotbuild/traj/run13 [run 13 (round 9)]
 Writes analysis/out/assembly/mir_drives.json.
 """
 from __future__ import annotations
@@ -26,7 +26,7 @@ def events(d, chapter):
     return ev
 
 
-def main(rec_dir):
+def main(rec_dir, label="run 13 (round 9)"):
     import mir_route as MR
     d = pathlib.Path(rec_dir)
     drives = []
@@ -48,14 +48,15 @@ def main(rec_dir):
     n = len(drives)
     fails = [x for x in drives if not x["ok"]]
     out = dict(
-        note="Every recorded MiR base move of run 12 (round 8): pivot, drive along the heading, pivot (mir_route.py). Each MiR docks "
+        note=f"Every recorded MiR base move of {label}: pivot, drive along the heading, pivot (mir_route.py). Each MiR docks "
              "heading +x; a move toward +x is one forward drive; a move toward -x of at most 0.5 m is a straight reverse (the "
              "docking leg); a longer one turns round at a clear spot (pivot 90 deg away from the bench, 130 mm out, pivot 90 deg), "
              "drives back along the return lane and turns in at a clear spot at or behind the dock. Every pose of every leg "
              "(pivots every 2 deg, straight legs every 20 mm) was checked with FCL for the MiR body, cabinet, mounting plate, tool "
              "stand, screw presenter and the parked arm with its tool and anything it held, against the bench, fixtures and "
              "nests, the trunnion, the machine parts in the cell, the other MiR and its arm where the recording has them, and "
-             "the long table's top, legs, nests, trays and the items still on it.",
+             "the long table's top, legs, stretchers (round 9: a cross rail at each leg pair), nests, trays and the items still on "
+             "it (round 9: a hose or line as the box of its coil, as it is drawn).",
         speeds=dict(drive="trapezoid 0.3 m/s^2, 1.0 m/s (MiR250 datasheet, as record.py)",
                     pivot=f"{MR.PIV_RATE:.0f} deg/s with {MR.T_PIV_RAMP} s to start and stop: an ESTIMATE (no published MiR250 pivot rate was found)",
                     dock="6 s to dock at a marker: estimate (record.py)"),
@@ -82,4 +83,4 @@ def main(rec_dir):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1] if len(sys.argv) > 1 else "/tmp/robotbuild/traj/run12")
+    main(sys.argv[1] if len(sys.argv) > 1 else "/tmp/robotbuild/traj/run13", *(sys.argv[2:3]))

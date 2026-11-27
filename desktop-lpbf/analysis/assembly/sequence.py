@@ -190,13 +190,17 @@ def steps(module="M50"):
            phase="chamber_up_P", path=[(0, 0, 0), (0, 0, 150)], docks="P", grip_gap=16.0,
            grasps={"A": dict(point=(-148.0, 0.0, 108.0), z=DN, x=(1.0, 0.0, 0.0)), "B": dict(point=(148.0, 0.0, 108.0), z=DN, x=(1.0, 0.0, 0.0))}))
     a(S("C00d", "Eighteen M4 x 16 floor-plate screws up through the U-notches into the frame's skirt, from under the plate's edge",
-        "floor", "chamber", "chamber_up_P", torque_Nm=1.1))
+        "floor", "chamber", "chamber_up_P", torque_Nm=1.1, later_ok=True))
     a(dict(do="dual", id="C01", label="Chamber (frame + floor plate, 7.4 kg) carried upright by both arms from Fixture P into the trunnion's jaws",
            keys=["@chamberset"], grp="chamber", phase="chamber_up_T", frm="chamber_up_P", whole=True, path=[(0, 0, 0), (0, 0, 120)],
            docks="PT", grip_gap=16.0, lift=230.0,      # run 7: 230 (was 150): the funnel's KF-40 stub now hangs 62 mm under the plate
            grasps={"A": dict(point=(-148.0, 60.0, 108.0), z=DN, x=(1.0, 0.0, 0.0)), "B": dict(point=(148.0, 60.0, 108.0), z=DN, x=(1.0, 0.0, 0.0))}))
     a(dict(do="rotate", id="C01b", label="The trunnion turns the chamber upside down (180 deg about x), both arms parked", grp="chamber",
            frm="chamber_up_T", to="chamber_inv"))
+    # round 9: a floor-plate screw that had no approach from under the plate on Fixture P (runs 9-12: 17 of 18) is driven here, from
+    # above, with the chamber upside down in the trunnion (the floor plate on top)
+    a(S("C01c", "The floor-plate screws left from C00d, from above with the chamber upside down in the trunnion", "floor", "chamber",
+        "chamber_inv", torque_Nm=1.1))
     a(P("C02", "Locating dowel and diamond pin into the floor", ["Locating dowel"], "chamber", "chamber_inv", [(0, 0, 0), (0, 0, -60)],
         force="dowel"))
     a(dict(do="seal", id="C03", label="Outlet-plenum O-ring (2-044) into the plenum's flange groove, plenum on a nest, PFPE film",
@@ -418,6 +422,8 @@ def steps(module="M50"):
                                                                                                "Metering-base dock-face"],
         "machine", "upright", "explode", merge="mbase", moved=True, grasp=dict(point=(-90.0, 0.0, 172.0), z=DN, x=(1.0, 0.0, 0.0)),
         hold_first=dict(joint="dose", k=2)))
+    # round 9: with the roles swapped (arm B places and holds, arm A drives) arm A's upper arm met Fixture B on every first screw
+    # as arm B's had (round 8); F44 drives all four with no arm holding. Both arms' bodies are over the base: the roles stay.
     a(S("F44", "Four M4 x 16 metering-base screws (before the roller feedthrough covers two of them)", "dose", "machine", "upright",
         torque_Nm=2.2))
     # run 10: F45-F45c by arm B from the back (run 9: arm A's upper arm met the base plate, or found no pose, at the lid's back left)
@@ -429,9 +435,19 @@ def steps(module="M50"):
     a(P("F45c", "Dosing stepper, its shaft into the coupling (arm B)", ["Dosing stepper"], "machine", "upright", [(0, 0, 0), (0, 30, 0), (0, 30, 70)],
         actor="B", note="its screws are not drawn"))
     # run 9: the load cell carries the dock rails, so it goes first (the rails first blocked it)
-    a(P("F45d", "Load cell, then the dock rails on it, the NFC reader, side port blank and docked sensor, from just above", ["Load cell",
-        "Dovetail rails", "NFC reader", "Side reservoir port", "Reservoir-docked sensor"], "machine", "upright", [(0, 0, 0), (0, 0, 70)],
+    a(P("F45d", "Load cell, then the dock rails on it and the docked sensor, from just above", ["Load cell",
+        "Dovetail rails", "Reservoir-docked sensor"], "machine", "upright", [(0, 0, 0), (0, 0, 70)],
         per_part=True, note="their screws are not drawn"))
+    # round 9: the NFC reader's antenna sits in a pocket open to the metering base's -x side face (lpbf_low: x xd-16.5..xd-14,
+    # z zd-21.5..zd-3.5), and the side port's blanked KF-16 stub stands out of that face along -x (its explode is -x). Both go in
+    # from that side along +x, after coming down beside the base, the fingers across y (level, clear of the lid 22 mm below).
+    # Runs 9-12 brought them straight down with F45d's other parts: the antenna met the metering base on the 70 mm drop, and
+    # with it out of the way (round 9's first try) the stub met the dock rails
+    a(P("F45e", "NFC reader antenna into its pocket in the metering base's side face, from the side", ["NFC reader"], "machine", "upright",
+        [(0, 0, 0), (-40, 0, 0), (-40, 0, 70)], grasp=dict(point=(-106.5, -18.0, 167.5), z=(1.0, 0.0, 0.0), x=(0.0, 1.0, 0.0), width=19.0),
+        note="its cable is not drawn"))
+    a(P("F45f", "Side reservoir port's blanked KF-16 stub onto the metering base's side face, from the side", ["Side reservoir port"],
+        "machine", "upright", [(0, 0, 0), (-60, 0, 0), (-60, 0, 70)], note="its blank's clamp is not drawn"))
     a(P("F46", "Reservoir M slid onto the dovetail dock (about 94 N to seat on the dock O-ring)", [f"Reservoir {'M'}"], "machine", "upright",
         [(0, 0, 0), (0, -160, 0)], force="reservoir", grasp=dict(point=(-90.0, 0.0, 255.0), z=DN, x=(1.0, 0.0, 0.0))))
     a(dict(do="seal", id="F47", label="Camera adapter O-ring (2-022), PFPE film", keys=["Camera adapter O-ring"], grp="camad", phase="upright",
@@ -463,6 +479,12 @@ def steps(module="M50"):
         "machine", "upright", [(0, 0, 0), (0, -200, 0)], grasp=dict(point=(0.0, -150.0, 95.0), z=(0.0, 1.0, 0.0), x=(1.0, 0.0, 0.0)),
         bench_person=("the 1.78 mm cord rolled into the door's half-dovetail and inspected by a person on the bench (Edison r7: keep "
                       "manual until validated)", 5.0)))
+    # round 9 (two hands): the 20 N door stands on its knuckles until both pins are in, and the pins need the knuckles in line. Its
+    # two draw latches close over their strikes (F50) first: they pull the door onto its cord, so it holds itself, knuckles in line,
+    # while the pin pusher works, and no arm has to hold it (round 8 had this as a hold not tried)
+    a(N("F51b", "The door's two draw latches closed over their strikes: they hold the door on its cord, knuckles in line", "robot A",
+        "A toggle lever each, pushed over centre by the closed fingers (about 30 N each, estimate); the latches are envelopes in "
+        "the model, so the push is not planned"))
     # round 7 (run 8): run 7 slid both pins together 160 mm along x, held at the right one, and arm A's upper arm met its cabinet.
     # Each Ø5 x 44 pin now goes in from its own outer side along the hinge axis, held at its outer end by the fingers across it and
     # pushed home on its end face (the pick-insert-push): the left one from the left (the door drive on that axis goes on after it),

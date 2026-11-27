@@ -5,7 +5,8 @@ human has two hands, holding something down for example." His byu-vcl lesson (no
 lesson 3): use the second arm where a part would move, tip or spring back, put the number behind it, and no decorative holds
 ("holding the lid down while working the latch seems unnecessary?").
 
-For every candidate step this writes the mechanical reason for or against a hold and what run 12 did:
+For every candidate step this writes the mechanical reason for or against a hold and what the run did (round 8: run 12;
+round 9: run 13, the default):
   * a part placed on a face seal floats on it: the seal needs far more force to squeeze than the part weighs, so until the
     screws engage, the first screw pulls its side down and the ring lifts the other (the part tips and its holes walk off
     the threads). Squeeze force: Lindley's formula as in seals_forces.py (Gent's modulus at 75 Shore A, Parker 2-0xx IDs),
@@ -19,7 +20,7 @@ For every candidate step this writes the mechanical reason for or against a hold
   * the two-arm carries and the existing holds of round 6 and 7 (rail F18, optics posts F03, cord and spigot seals) are
     listed as they are.
 
-    /tmp/venv/bin/python desktop-lpbf/analysis/assembly/two_hands.py [results_run12.json] [assembly_run12.json]
+    /tmp/venv/bin/python desktop-lpbf/analysis/assembly/two_hands.py [results_run13.json] [assembly_run13.json] [run13]
 Writes analysis/out/assembly/two_hands.json.
 """
 from __future__ import annotations
@@ -80,11 +81,11 @@ def masses():
     return out
 
 
-def main(res_path=None, rec_path=None):
-    res = json.loads(pathlib.Path(res_path or OUT / "results_run12.json").read_text())
+def main(res_path=None, rec_path=None, run="run13"):
+    res = json.loads(pathlib.Path(res_path or OUT / f"results_{run}.json").read_text())
     rows = {r["id"]: r for r in res["rows"]}
     rec = None
-    rp = pathlib.Path(rec_path or "/tmp/robotbuild/data/assembly_run12.json")
+    rp = pathlib.Path(rec_path or f"/tmp/robotbuild/data/assembly_{run}.json")
     if rp.exists():
         rec = json.loads(rp.read_text())
     seals = {r["gland"]: r for r in json.loads((OUT / "seals_forces.json").read_text())["seals"]["rows"]}
@@ -115,22 +116,28 @@ def main(res_path=None, rec_path=None):
                 c.update(status="hold used", reason=(
                     f"it floats on its seal: {c['squeeze_N_20pct']:,} N to squeeze it 20 % against {W:.0f} N of weight "
                     f"({c['squeeze_over_weight']}x), so the first screw would tip it"),
-                    run12=f"arm {sub.get('holder')} keeps it pressed while arm {sub.get('actor')} drives {sub['n_ok']} of the "
+                    **{run: f"arm {sub.get('holder')} keeps it pressed while arm {sub.get('actor')} drives {sub['n_ok']} of the "
                           f"{h.get('n_joint', '?')} screws ({jstep} drives the rest after it lets go)"
-                          + (f"; tried and blocked first: {'; '.join(h.get('fails', []))[:160]}" if h.get("fails") else ""))
+                          + (f"; tried and blocked first: {'; '.join(h.get('fails', []))[:160]}" if h.get("fails") else "")})
             else:
                 h = holds[0] if holds else {}
                 c.update(status="not possible", reason=(
                     f"needed: {c.get('squeeze_N_20pct', 0):,} N to squeeze the seal 20 % against {W:.0f} N of weight"),
-                    run12=("arm " + str(h.get("driver", "?")) + " could not drive a screw while arm " + str(h.get("holder", "?"))
-                           + " held it: " + "; ".join(h.get("fails", []))[:240]) if h else
-                          ("the placement failed, so no hold was tried" if r.get("arm") == "FAIL" else "no hold recorded"))
+                    **{run: ("arm " + str(h.get("driver", "?")) + " could not drive a screw while arm " + str(h.get("holder", "?"))
+                             + " held it: " + "; ".join(h.get("fails", []))[:240]) if h else
+                            ("the placement failed, so no hold was tried" if r.get("arm") == "FAIL" else "no hold recorded")})
+                if h.get("covered"):
+                    # round 9: the holding tool itself covers the screws (the VGC10's 100 x 100 mm body on a Ø100 flange)
+                    c["reason"] += ("; the vacuum gripper that places and holds it covers the bolt circle, so no arm can reach "
+                                    "a screw while it holds. Without a hold the screws are run down snug in a star pattern before "
+                                    "any is torqued: the seal's 20 % squeeze is 0.36 mm, so the first screw tilts the part by "
+                                    "about 0.3 deg at most, which the clearance holes take")
         elif kind == "dowel":
             c.update(status="not needed", reason=(
                 f"located and carried by two dowels in a transition fit (H7/m6) before its seal is touched; the seal "
                 f"({c.get('squeeze_N_20pct', 0):,} N to squeeze 20 %) is pulled in by the screws, which the dowels keep in line"),
-                     run12=("round 7 removed this hold: the holding wrist met the driving arm on every screw (run10_fail_notes.json); "
-                            "the dowel fix stays") if sid in ("F14", "F16", "F23") else "two-arm carry onto the dowels (C00c), then the screws")
+                     **{run: ("round 7 removed this hold: the holding wrist met the driving arm on every screw (run10_fail_notes.json); "
+                              "the dowel fix stays") if sid in ("F14", "F16", "F23") else "two-arm carry onto the dowels (C00c), then the screws"})
         elif kind == "gravity":
             c.update(status="not needed", reason=(
                 f"its {W:.0f} N of weight holds it on a flat seat or a pilot; no seal under it and nothing that springs back; the "
@@ -141,15 +148,23 @@ def main(res_path=None, rec_path=None):
         elif kind == "held":
             st = rows.get(jstep) or {}
             c.update(status="hold used", reason="the part stands on a wall or under a plate: it would slide or fall before its screws are in",
-                     run12=f"{st.get('n_ok', '?')} of {st.get('n', '?')} screws driven while it was held" if st else "see the step table")
+                     **{run: f"{st.get('n_ok', '?')} of {st.get('n', '?')} screws driven while it was held" if st else "see the step table"})
+        elif kind == "door" and "F51b" in rows:
+            # round 9: the door's draw latches are closed over their strikes (F51b) before the pins: they pull it onto its cord
+            c.update(status="not needed", reason=(
+                f"the {W:.0f} N door stands on its knuckles until both hinge pins are in, and the pins need the knuckles in line; "
+                "its two draw latches are closed first (F51b): they pull it onto its cord and hold it there, knuckles in line, "
+                "while the pin pusher works, so no arm has to hold it (round 8 listed this hold as not tried)"),
+                **{run: "F51b closes the latches (robot A, not planned: the latches are envelopes in the model); F52 and F52b "
+                        "push the pins with the door held by them"})
         elif kind == "door":
             c.update(status="not tried", reason=(
                 f"needed: the {W:.0f} N door stands on its knuckles with nothing else holding it until both hinge pins are in, "
                 "and the pins need the knuckles in line"),
-                run12=("not tried in run 12: arm A places the door and then needs the pin pusher, so the hold would be arm B "
+                **{run: ("not tried in run 12: arm A places the door and then needs the pin pusher, so the hold would be arm B "
                        "pushing both pins from the back, round the chamber's sides past the recoater motor (left) and the vacuum "
                        "port (right). Next: arm B holds the door while arm A pushes the pins (two tool changes), or the draw "
-                       "latches closed first so they hold the door against its cord"))
+                       "latches closed first so they hold the door against its cord")})
         cands.append(c)
     # every step where both arms do something (the recording's per-arm robot time)
     both = []
@@ -167,24 +182,25 @@ def main(res_path=None, rec_path=None):
             prev = None
     n_steps = len([s for s in (rec or {}).get("steps", []) if s.get("do") != "note"])
     out = dict(
-        note="Two arms as two hands (round 8, run 12): every candidate step, with the number behind a hold or against it. "
+        note=f"Two arms as two hands ({run}; round 8 was run 12): every candidate step, with the number behind a hold or against it. "
              "Squeeze forces are Lindley's formula (seals_forces.py) at 20 and 25 % over the ring's centre line, an estimate; "
              "masses from the parts' CAD (kit_table.py). A UR12e's F/T sensor reads +-100 N (seals_forces.json): the holding "
              "arm keeps the part flat and in place in position control while the first two screws engage; it does not squeeze "
              "the seal, the screws do.",
         candidates=cands,
         counts={k: sum(1 for c in cands if c["status"] == k) for k in ("hold used", "not needed", "not possible", "not tried")},
-        new_holds_run12=[c["step"] for c in cands if c["status"] == "hold used" and c["kind"] == "seal"],
-        steps_with_both_arms=dict(run12=len(both), run12_steps=both, of_robot_steps=n_steps,
+        run=run,
+        holds_on_seals=[c["step"] for c in cands if c["status"] == "hold used" and c["kind"] == "seal"],
+        steps_with_both_arms=dict(this_run=len(both), steps=both, of_robot_steps=n_steps,
                                   run11=len(prev) if prev is not None else None,
                                   how="steps in which the recording has motion time for both arm A and arm B (holds, two-arm "
                                       "carries, a screw handed to the other arm, a seal fed by one and rolled by the other)"),
     )
     (OUT / "two_hands.json").write_text(json.dumps(out, indent=1))
-    print(json.dumps(out["counts"]), out["new_holds_run12"], "both arms:", len(both), "of", n_steps, "run 11:",
+    print(json.dumps(out["counts"]), out["holds_on_seals"], "both arms:", len(both), "of", n_steps, "run 11:",
           len(prev) if prev is not None else None)
     return out
 
 
 if __name__ == "__main__":
-    main(*(sys.argv[1:3]))
+    main(*(sys.argv[1:4]))

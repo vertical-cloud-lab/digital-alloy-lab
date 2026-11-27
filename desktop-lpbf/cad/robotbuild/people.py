@@ -1,4 +1,5 @@
-"""People for the robot-built desktop LPBF video (issue #260, PR #266, round 7): a skinned human, dressed for a machine shop.
+"""People for the robot-built desktop LPBF video (issue #260, PR #266, round 7; the feet locked in round 9): a skinned
+human, dressed for a machine shop.
 
 Vendored from byu-vcl PR 318 (vertical-cloud-lab/byu-vcl, branch claude/issue-303-20261103-1736, commit 9740ba8,
 ``vertical-lab/people.py``, round 11 of #303), which is the lab's own code. Changed here, and nothing else:
@@ -49,6 +50,49 @@ API as round 10's ``upkeep_clip.Person``: ``set(x, y, hd, lean, phase, amp, hand
 ``hold``, ``let_go``, ``held``, ``rest_hand``, ``names``, ``show``; and ``hand_point`` (a palm's centre, world) and
 ``posed`` (each part's world points and faces, for collision checks).
 
+Round 9 (2026-11-27; Sterling: "moonwalk"; round 8's audit: the phase-driven gait slid the planted foot 0.34-1.0 m per
+metre walked): **the feet are locked.** ``set()`` keeps its arguments, but the legs no longer play a walk cycle from
+``phase`` and ``amp`` (both are now accepted and ignored). Each Person has a ``Gait`` (below): a planted foot stays on its
+footprint in the world, a foot that has to move steps there on a raised arc, and each leg is solved to its foot by
+two-bone IK (hip, knee over the toes, ankle; the foot flat on its heading; the pelvis drops as far as both legs need).
+Walking, turning on the spot, side-steps, backing up and shuffles come out of the body's path by themselves, and
+standing still is both feet planted. New in the API:
+
+* ``place(x, y, hd, **set_kw)``: both feet planted under the body, no steps (a cut). A move of more than 250 mm or 45 deg
+  in one frame, or of more than 10 mm within one frame, is taken as a cut too.
+* ``set(..., frame=k)``: the frame number, for tests; by default it is the open common.Chapter's (``common.CURRENT.n``),
+  so a renderer need not pass it. pvscene.PVScene.render() runs ``Person._tick`` first, so a foot in the air lands and a
+  last settling step is taken while the caller holds the body still without calling set().
+* ``set(..., elbow={"l": world direction})``: where the elbow points (default: out and down); ``bend={"l": True}``
+  turns the wrist (up to 45 deg) so the palm faces exactly ``palm``, the fingers flat along the face it rests on and the
+  thumb back.
+* ``walking`` (a foot in the air or the body moving), ``gait.steps``, ``gait.overreach_frames`` (frames a stance leg
+  couldn't reach its footprint: the body outran the steps; should be 0), ``drop`` (the pelvis' drop this frame, mm).
+* ``carry(lo, hi, M, ends=("-x", "+x"))``: two people carrying a box-shaped load by its ends: each one's stance, hands,
+  palms, elbows and lean, so the hands hold the load's sides (or underside) and the dressed body stays >= 30 mm off it;
+  ``carry_check(person, lo, hi, M)`` measures a drawn pose against the box. ``body_front(zlo, zhi, lean)``: how far in
+  front of its origin the dressed body reaches at those heights.
+* walk.py ``--selftest``: a straight walk, turns, side-steps and backing up, and a two-person carry, measured by walk.py's
+  own stance-foot slip and gliding checks (round 9: 0.0 mm and 0 frames).
+
+How each caller switches (grep of 2026-11-27):
+
+* **Anything that moves a person** (shop_chapters.Crew.step / walk_to / step_back, ch_integration.Mover): set x, y, hd every
+  frame along a path a person can walk (up to ~1.3 m/s and ~12 deg a frame turning on the spot; ease in and out); the
+  feet follow. Stop advancing ``phase``/``amp`` (ignored now) and drop Crew.step's second ``set(hands=fix)`` (round 9's
+  pelvis drop is decided before the arm IK, so the hands land on their targets; it is harmless if left). A person who
+  must be somewhere else across a cut: ``place()``. Don't walk a person in a time-lapse: cut.
+* **Two-person lifts** (shop_chapters.team_lift: stance_xy and end_hands): per frame, ``st = people.carry(lo, hi,
+  M_world, ends=...)`` with the load's own box (lo, hi) and world pose; then for each person ``p.set(**{k: s[k] for k in
+  ("x", "y", "hd", "lean", "hands", "palm", "elbow", "bend", "grip", "look")})``. The stance is rigid in the load's frame,
+  so moving the load walks the people with it (one forwards, one backwards, or both sideways). Walk them to their
+  stances first (set x, y, hd towards ``st[i]``), and ease the hands from ``rest_hand`` to ``st[i]["hands"]``.
+  ``reach_mm`` > 0 means the load rides too low or too far to hold at arm's length: raise it (the side grip holds a block
+  whose middle is about 1.0 m up). ``carry_check`` per frame gives the body's clearance and the hands' depth.
+* **People who only stand** (ch_intro, ch_parts and hall.py's person; asm_render's operator; shop_chapters' person at the
+  bench, the saw, the welder): nothing to change. A ``set()`` that moves them between shots is a placement (both feet
+  planted at once); ``place()`` says so explicitly.
+
     xvfb-run -a -s "-screen 0 1920x1080x24" /tmp/venv/bin/python desktop-lpbf/cad/robotbuild/people.py
                                          # close-up stills of the poses -> /tmp/robotbuild/people_*.png
 """
@@ -60,6 +104,7 @@ import json
 import math
 import os
 import pickle
+import sys
 import urllib.request
 from pathlib import Path
 
@@ -210,8 +255,11 @@ def _build_model() -> dict:
 
 @functools.lru_cache(maxsize=None)
 def model() -> dict:
+    # keyed on the code that builds the model (from _fetch to the Person class), not the whole file: round 9's walker and
+    # posing code change without rebuilding the derived model (about a minute) in every worker's process
     src = Path(__file__).read_text()
-    key = hashlib.sha256((src + MH_SHA).encode()).hexdigest()[:12]
+    a, b = src.find("def _fetch("), src.find("\nclass Person")
+    key = hashlib.sha256((src[a:b] + MH_SHA).encode()).hexdigest()[:12]
     path = CACHE / f"model_v{MODEL_V}_{key}.pkl"
     if path.exists():
         try:
@@ -780,8 +828,16 @@ class Person:
         self.groups = [self.group, *self.hand_groups.values()]
         self.held = {}                                   # side -> (group, offset from the hand's frame)
         self.st = dict(x=0.0, y=0.0, hd=0.0, lean=0.0, phase=0.0, amp=0.0, hands={"l": None, "r": None}, look=None,
-                       grip={"l": 0.3, "r": 0.3}, palm={"l": None, "r": None})
+                       grip={"l": 0.3, "r": 0.3}, palm={"l": None, "r": None}, elbow={"l": None, "r": None},
+                       bend={"l": False, "r": False})
         self._rest_arm()
+        self._rest_leg()
+        self.gait = Gait()                               # round 9: the feet (stance foot locked, swing foot on an arc)
+        self.drop = 0.0                                  # the pelvis' drop under its rest height this frame, mm
+        self._posed_key = None
+        hooks = getattr(sc, "before_render", None)       # pvscene.PVScene: the feet keep stepping while nobody calls set()
+        if isinstance(hooks, list):
+            hooks.append(self._tick)
         self.set()
 
     # ------------------------------------------------------------------------------------------- set-up
@@ -790,6 +846,26 @@ class Person:
 
     def T(self, b) -> np.ndarray:
         return self.m["tail"][self.bi[b]]
+
+    def _rest_leg(self):
+        """The rest leg's geometry for the IK (round 9): hip (upperleg01's head), knee (lowerleg01's), ankle (foot's), the
+        thigh's and shin's rest frames (the bone, then the body's x made square to it: the knee's hinge), and each shoe's
+        points about its ankle (to keep the sole on the floor, flat or pitched)."""
+        d = self.m["parts"]["shoes"]
+        P = d["P"]
+        self.leg = {}
+        for i, side in enumerate(("L", "R")):
+            hip, knee, ankle = self.H(f"upperleg01.{side}"), self.H(f"lowerleg01.{side}"), self.H(f"foot.{side}")
+            frames = []
+            for a, b in ((hip, knee), (knee, ankle)):
+                e1 = _unit(b - a)
+                e2 = _unit(np.array([1.0, 0.0, 0.0]) - e1[0] * e1)
+                frames.append(np.c_[e1, e2, np.cross(e1, e2)])
+            sole = P[(P[:, 0] < 0) if side == "L" else (P[:, 0] > 0)] - ankle
+            self.leg[i] = dict(side=side, hip=hip, knee=knee, ankle=ankle, L1=float(np.linalg.norm(knee - hip)),
+                               L2=float(np.linalg.norm(ankle - knee)), B1=frames[0], B2=frames[1], sole=sole)
+        # the ankle over the floor with the foot flat and its sole's lowest point at GROUND
+        self.ankle_z = GROUND - float(min(self.leg[i]["sole"][:, 2].min() for i in (0, 1)))
 
     def _rest_arm(self):
         """The rest arm's geometry for the IK (the upper arm, the elbow to the palm's centre, the flexion axis) and
@@ -831,24 +907,51 @@ class Person:
         return _M(np.array([[c, -si, 0], [si, c, 0], [0, 0, 1.0]]), (s["x"], s["y"], 0.0))
 
     def rest_hand(self, side) -> np.ndarray:
-        """Where a hand hangs (world): at the side, a little forward, swinging against the legs when walking."""
-        s = self.st
+        """Where a hand hangs (world): at the side, a little forward, swinging against the legs when walking (round 9:
+        the swing follows the feet, the left hand forward as the right foot is)."""
         sx = -1.0 if side == "l" else 1.0
-        swing = sx * 115.0 * s["amp"] * math.sin(s["phase"])
+        swing = self.gait.arm_swing(side, self.st)
         a = self.arm[side]
         sh = self.H(f"upperarm01.{a['side']}")
         local = np.r_[sx * (abs(sh[0]) + 40.0), 45.0 + swing,
-                      sh[2] - a["L1"] - a["L2"] + 18.0 + 0.25 * abs(swing), 1.0]
+                      sh[2] - a["L1"] - a["L2"] + 18.0 + 0.25 * abs(swing) - self.drop, 1.0]
         return (self.frame() @ local)[:3]
 
     def set(self, **kw):
+        """Pose the person: x, y (mm), hd (deg) put its frame in the world; lean (deg), hands {"l", "r": world point or
+        None}, palm, grip, look as before. Round 9: the legs are no longer a phase-driven cycle: the feet are planted on
+        footprints and step when the body moves away from them (Gait), each leg solved to its foot. ``phase`` and
+        ``amp`` are accepted and ignored. ``frame=k`` gives the frame number explicitly (default: the open
+        common.Chapter's, or, with none open, one frame per call that moves the body)."""
         s = self.st
+        clock = kw.pop("frame", None)
         for k, v in kw.items():
-            if k in ("hands", "grip", "palm"):
+            if k in ("hands", "grip", "palm", "elbow", "bend"):
                 s[k] = dict(s[k], **v)
             else:
                 s[k] = v
+        if clock is not None:
+            self.gait.explicit = True
+        self.gait.update(s["x"], s["y"], s["hd"], _clock() if clock is None else int(clock))
         self._pose()
+
+    def place(self, x=None, y=None, hd=None, **kw):
+        """Put the person somewhere new, both feet planted under the body (a cut: no steps drawn)."""
+        s = self.st
+        s.update({k: float(v) for k, v in (("x", x), ("y", y), ("hd", hd)) if v is not None})
+        self.gait.reset(s["x"], s["y"], s["hd"], clock=kw.get("frame", _clock()))
+        self.set(**kw)
+
+    def _tick(self):
+        """pvscene's before_render hook: bring the feet up to the frame being drawn (a swing foot lands, a last step
+        settles) when nobody called set() for this frame."""
+        if self.gait.update(self.st["x"], self.st["y"], self.st["hd"], _clock(), passive=True):
+            self._pose()
+
+    @property
+    def walking(self) -> bool:
+        """A foot is in the air or the body is moving."""
+        return self.gait.busy()
 
     def hold(self, side, group):
         """Carry Scene group `group` in a hand from now on (as it is now, relative to the hand)."""
@@ -892,37 +995,78 @@ class Person:
                 S[i] = base @ L
         return S
 
+    def _legs(self, Q, Rr, Finv):
+        """Round 9: each leg solved to its foot (two-bone IK, the knee towards the foot's toes), the foot flat on its
+        heading (pitched a little in the air). The pelvis drops just enough for both legs to reach their feet (a knee
+        never quite straight). Returns the root's transform; fills Q's thigh, shin and foot rotations."""
+        hips = (self.H("upperleg01.L") + self.H("upperleg01.R")) / 2
+        t0 = hips - Rr @ hips
+        feet = self.gait.pose()                          # [(x, y, heading deg, lift mm, pitch deg)] world, left and right
+        hd = self.st["hd"]
+        tg = []
+        need = self.gait.knee_flex()                     # a little more knee while walking
+        for i, (fx, fy, psi, lift, pitch) in enumerate(feet):
+            lg = self.leg[i]
+            Rf = _rot((0, 0, 1), math.radians(psi - hd)) @ _rot((1, 0, 0), math.radians(pitch))
+            lowest = float((lg["sole"] @ Rf.T)[:, 2].min())
+            A = (Finv @ np.r_[fx, fy, GROUND - lowest + lift, 1.0])[:3]
+            Hp = Rr @ lg["hip"] + t0
+            dxy = float(np.hypot(*(A[:2] - Hp[:2])))
+            Lm = 0.985 * (lg["L1"] + lg["L2"])
+            reach = math.sqrt(max(Lm * Lm - dxy * dxy, 0.0))
+            need = max(need, float(Hp[2] - A[2] - reach))
+            tg.append((A, Rf))
+        drop = min(max(need, 0.0), 180.0)
+        self.drop = drop
+        root = _M(Rr, t0 + np.array([0.0, 0.0, -drop]))
+        over = 0.0
+        for i, (A, Rf) in enumerate(tg):
+            lg = self.leg[i]
+            sd = lg["side"]
+            Hp = root[:3, :3] @ lg["hip"] + root[:3, 3]
+            d = A - Hp
+            L1, L2 = lg["L1"], lg["L2"]
+            Lr = float(np.linalg.norm(d))
+            L = min(max(Lr, abs(L1 - L2) + 5.0), L1 + L2 - 0.5)
+            over = max(over, Lr - L)
+            du = _unit(d)
+            pole = Rf[:, 1]                              # the knee goes over the toes
+            v = pole - (pole @ du) * du
+            v = _unit(v if np.linalg.norm(v) > 1e-6 else np.array([0.0, 1.0, 0.0]))
+            a = (L1 * L1 - L2 * L2 + L * L) / (2 * L)
+            b = math.sqrt(max(L1 * L1 - a * a, 0.0))
+            K = Hp + a * du + b * v
+            A2 = Hp + L * du
+            e2 = _unit(np.cross(du, v))
+            e1 = _unit(K - Hp)
+            Rth = np.c_[e1, e2, np.cross(e1, e2)] @ lg["B1"].T
+            e1 = _unit(A2 - K)
+            Rsh = np.c_[e1, e2, np.cross(e1, e2)] @ lg["B2"].T
+            Q[f"upperleg01.{sd}"] = Rr.T @ Rth
+            Q[f"lowerleg01.{sd}"] = Rth.T @ Rsh
+            Q[f"foot.{sd}"] = Rsh.T @ Rf
+        self.gait.note_overreach(over)
+        return root
+
     def _pose(self):
         s = self.st
         Q = {}
-        ph, amp = s["phase"], s["amp"]
         lean = math.radians(s["lean"])
-        # the legs: stood naturally (MakeHuman's rest stance is wide), then the gait
-        thetas = {}
-        for side, sx, off in (("L", -1.0, 0.0), ("R", 1.0, math.pi)):
-            p = ph + off
-            th = amp * math.radians(21.0) * math.sin(p)
-            kn = amp * (math.radians(58.0) * max(0.0, math.cos(p - 0.35)) ** 1.6 + math.radians(6.0))
-            thetas[side] = (th, kn)
-            Q[f"upperleg01.{side}"] = _rot((1, 0, 0), th + self.LEAN_HIPS * lean) @ _rot((0, 1, 0), sx * math.radians(7.0))
-            Q[f"lowerleg01.{side}"] = _rot((1, 0, 0), -kn) @ _rot((0, 1, 0), sx * math.radians(2.0))
-            Q[f"foot.{side}"] = _rot((1, 0, 0), -0.75 * (th - kn))
-        # the pelvis: the lean's share at the hips, about the hip joints; the walk's bob
-        hips = (self.H("upperleg01.L") + self.H("upperleg01.R")) / 2
-        leg = float(hips[2] - SOLE)
-        drop = 0.0                      # the walk's bob: grounding the lowest shoe (below) lowers the hips
-        Rr = _rot((1, 0, 0), -self.LEAN_HIPS * lean) @ _rot((0, 0, 1), 0.06 * amp * math.sin(ph))
-        root = _M(Rr, hips - Rr @ hips + np.array([0.0, 0.0, -drop]))
+        F = self.frame()
+        Finv = np.linalg.inv(F)
+        # the pelvis: the lean's share at the hips, about the hip joints, and a little yaw with the feet; the legs to the
+        # feet (round 9: the stance foot stays on its footprint; the pelvis drops so both legs reach)
+        sway = self.gait.sway(s)
+        Rr = _rot((1, 0, 0), -self.LEAN_HIPS * lean) @ _rot((0, 0, 1), sway)
+        root = self._legs(Q, Rr, Finv)
         rest = (1.0 - self.LEAN_HIPS) * lean
         for b in ("spine05", "spine04", "spine03", "spine02"):
             Q[b] = _rot((1, 0, 0), -rest / 4)
-        Q["spine01"] = _rot((0, 0, 1), -0.08 * amp * math.sin(ph))
+        Q["spine01"] = _rot((0, 0, 1), -1.3 * sway)
         # the head: towards what it looks at, or ahead
         S = self._chain(Q, root)
         look = s["look"]
         yaw = pitch = 0.0
-        F = self.frame()
-        Finv = np.linalg.inv(F)
         if look is not None:
             loc = Finv @ np.r_[np.asarray(look, float), 1.0]
             hpos = (S[self.bi["head"]] @ np.r_[self.H("head") + (0, 60.0, 40.0), 1.0])[:3]
@@ -937,11 +1081,41 @@ class Person:
         S = self._chain(Q, root)
         # the arms: two-bone IK from the posed shoulder to each palm target
         for side in ("l", "r"):
-            a = self.arm[side]
-            sd = a["side"]
             tgt = s["hands"][side]
             Hw = self.rest_hand(side) if tgt is None else np.asarray(tgt, float)
             Hl = (Finv @ np.r_[Hw, 1.0])[:3]
+            bend = bool(s["bend"][side]) and tgt is not None and s["palm"][side] is not None
+            aim = Hl
+            for _ in range(3 if bend else 1):            # with a bent wrist the palm moves: aim again, less its error
+                self._arm(Q, root, S, side, aim, tgt, Finv, bend)
+                if bend:
+                    St = self._chain(Q, root)
+                    got = (St[self.bi[f"wrist.{self.arm[side]['side']}"]] @ np.r_[self.arm[side]["palm"], 1.0])[:3]
+                    aim = aim + (Hl - got)
+        S = self._chain(Q, root)
+        # round 9: no grounding shift here: each foot is already where its footprint (or its swing) puts it, the lowest
+        # point of a planted sole at GROUND (round 8 shifted the whole body to ground the lowest shoe, which dragged the
+        # planted foot along with the gait)
+        self.S = S
+        # the hands' frames (world), for what they hold
+        for side in ("l", "r"):
+            Mh = F @ S[self.bi[f"wrist.{self.arm[side]['side']}"]]
+            self.sc.gmat[self.hand_groups[side]] = Mh
+            if side in self.held:
+                grp, off = self.held[side]
+                self.sc.gmat[grp] = Mh @ off
+                self.sc.parent.pop(grp, None)
+        self._skin(S)
+        self.sc.gmat[self.group] = F
+
+    def _arm(self, Q, root, S, side, Hl, tgt, Finv, bend=False):
+        """One arm: two-bone IK from the posed shoulder to the palm target Hl (local), the forearm turned to the palm's
+        direction, the wrist bent (bend: round 9, up to 45 deg) to finish turning it, the fingers curled."""
+        s = self.st
+        if True:
+            a = self.arm[side]
+            sd = a["side"]
+            Q.pop(f"wrist.{sd}", None)
             Sh = (S[self.bi[f"shoulder01.{sd}"]] @ np.r_[self.H(f"upperarm01.{sd}"), 1.0])[:3]
             d = Hl - Sh
             L = float(np.linalg.norm(d))
@@ -949,7 +1123,7 @@ class Person:
             L = min(max(L, abs(L1 - L2) + 5.0), L1 + L2 - 2.0)
             du = _unit(d)
             sx = -1.0 if side == "l" else 1.0
-            pole = np.array([sx * 0.75, -0.30, -1.0])
+            pole = np.array([sx * 0.75, -0.30, -1.0]) if s["elbow"][side] is None else Finv[:3, :3] @ _unit(s["elbow"][side])
             v = pole - (pole @ du) * du
             if np.linalg.norm(v) < 1e-6:
                 v = np.array([sx, 0.0, 0.0]) - du[0] * sx * du
@@ -981,6 +1155,15 @@ class Person:
                 u0, u1 = n0 - (n0 @ fax) * fax, tdir - (tdir @ fax) * fax
                 th = math.atan2(float(fax @ np.cross(u0, u1)), float(u0 @ u1))
                 Q[f"lowerarm02.{sd}"] = _rot(a["fw"], th)
+                if bend:                                 # round 9: the wrist finishes the turn (the fingers along a face)
+                    St = self._chain(Q, root)
+                    Rp = St[self.bi[f"wrist.{sd}"]][:3, :3]
+                    n1 = Rp @ a["palm_n"]
+                    ax = np.cross(n1, tdir)
+                    ang = math.atan2(float(np.linalg.norm(ax)), float(n1 @ tdir))
+                    if np.linalg.norm(ax) > 1e-9 and ang > 1e-3:
+                        Rm = _rot(ax, min(ang, math.radians(45.0)))
+                        Q[f"wrist.{sd}"] = Rp.T @ Rm @ Rp
             # the fingers: together, curled a little, more when holding
             g = s["grip"][side] if side not in self.held else 0.8
             for fi in range(2, 6):
@@ -989,27 +1172,15 @@ class Person:
                     ax = _unit(np.cross(_unit(self.T(b) - self.H(b)), a["palm_n"]))
                     R_ = _rot(ax, math.radians(70.0) * g * w)
                     Q[b] = R_ @ a["close"][fi] if (j == 1 and fi in a["close"]) else R_
-            for j in (2, 3):
+            for j in (1, 2, 3):
                 b = f"finger1-{j}.{sd}"
                 ax = _unit(np.cross(_unit(self.T(b) - self.H(b)), a["palm_n"]))
-                Q[b] = _rot(ax, math.radians(35.0) * g)
-        S = self._chain(Q, root)
-        # on the floor: the shoes' lowest point at GROUND (the gait and the lean move the hips, not the floor)
-        d, _ = self.parts["shoes"]
-        Pk = np.einsum("kij,kj->ki", S[d["cols"], 2:3, :3], d["P"][d["rows"]])[:, 0] + S[d["cols"], 2, 3]
-        zs = np.bincount(d["rows"], weights=d["vals"] * Pk, minlength=len(d["P"]))
-        S[:, 2, 3] += GROUND - float(zs.min())
-        self.S = S
-        # the hands' frames (world), for what they hold
-        for side in ("l", "r"):
-            Mh = F @ S[self.bi[f"wrist.{self.arm[side]['side']}"]]
-            self.sc.gmat[self.hand_groups[side]] = Mh
-            if side in self.held:
-                grp, off = self.held[side]
-                self.sc.gmat[grp] = Mh @ off
-                self.sc.parent.pop(grp, None)
-        self._skin(S)
-        self.sc.gmat[self.group] = F
+                if bend:                                 # a flat hand on a face: the thumb back out of the palm's way
+                    Q[b] = _rot(ax, math.radians(-22.0))
+                elif j > 1:
+                    Q[b] = _rot(ax, math.radians(35.0) * g)
+                else:
+                    Q.pop(b, None)
 
     def _skin(self, S):
         for part, (d, poly) in self.parts.items():
@@ -1034,6 +1205,460 @@ class Person:
             P = np.asarray(poly.points, float)
             out[part] = (P @ F[:3, :3].T + F[:3, 3], d["F"])
         return out
+
+
+# ================================================================================================ the feet (round 9)
+def _clock():
+    """The frame being drawn: the open common.Chapter's frame count (audit_rec.py numbers its records the same way), or
+    None when no chapter is open."""
+    c = sys.modules.get("common")
+    cur = getattr(c, "CURRENT", None) if c is not None else None
+    n = getattr(cur, "n", None)
+    return int(n) if n is not None else None
+
+
+def _wrap(a):
+    return (a + 180.0) % 360.0 - 180.0
+
+
+def _smooth(u):
+    u = min(max(u, 0.0), 1.0)
+    return u * u * (3.0 - 2.0 * u)
+
+
+class Gait:
+    """Round 9's foot lock (Sterling, 2026-11-26: "moonwalk"; round 8's audit: people.py's phase-driven gait slid the
+    planted foot 0.34-1.0 m per metre walked). Each Person owns one (``person.gait``); nobody needs to drive it.
+
+    The body's frame (x, y, hd: the pelvis' path on the floor) is whatever the caller sets, frame by frame. Each foot is
+    either planted on a footprint (its ankle's point on the floor and its heading, world) or in the air on its way to the
+    next one. A planted foot never moves: its sole's lowest point is at GROUND and the leg is solved to it (Person._legs:
+    two-bone IK hip-knee-ankle, the knee over the toes, the foot flat on its heading; the pelvis drops as far as both legs
+    need). When the body moves away from where a foot would stand (its home: HOME_X to the side of the body's line,
+    HOME_Y behind its origin, toes out TOE_OUT), the foot further off steps: it lifts and travels a raised arc (smoothstep
+    along the floor, a sine up and down, toes down then up) for n frames to the footprint where it would stand when the
+    body has gone half a step past it (the body's speed and turn rate times the time to landing plus half a step), with the
+    feet kept MIN_SEP apart across the body, no more than SPREAD_MAX apart, and turning at most TURN_MAX a step. Then the
+    other foot. So walking, turning on the spot, side-steps, backing up and shuffles all come out as discrete steps, and
+    standing still is both feet planted. The cadence follows the speed: 1.25 steps a second standing (settling steps) to
+    2.0 at 1.3 m/s, the foot in the air for about 0.78 of a step.
+
+    Time is the drawn frame: the open common.Chapter's frame number (or ``set(frame=k)``; with no chapter open, one frame
+    per set() that moves the body). Calling set() again in the same frame re-solves that frame from the previous one, so
+    a caller may set the body several times before it renders. pvscene.PVScene.render() calls Person._tick first, so the
+    feet keep stepping (a swing lands, a settling step) while a caller holds the body still without calling set(). A
+    move of more than JUMP_MM (walk.py's JUMP_MM, 3 m/s) or JUMP_DEG in one frame is a cut: the feet are put under the
+    body, as is a move of more than PLACE_MM within one frame. ``Person.place(x, y, hd)`` does that explicitly.
+
+    What it can't do: a body that moves faster than about 1.4 m/s outruns the steps (the stance leg can't reach its
+    footprint and the foot would be dragged; ``overreach_frames`` counts such frames); a person should not walk in a
+    time-lapse (cut instead)."""
+
+    FPS = 12.0
+    HOME_X, HOME_X_WALK, HOME_Y = 110.0, 95.0, -15.0   # mm: the ankles' home about the body's origin, standing and walking
+    TOE_OUT = 5.0                       # deg each foot turns out
+    JUMP_MM, JUMP_DEG = 250.0, 45.0     # one frame's move that is a cut, not walking
+    PLACE_MM, PLACE_DEG = 10.0, 3.0     # a move within one frame (no time for a step) that is a placement
+    R_TURN = 160.0                      # mm of a foot's "distance from home" per radian of heading error
+    STEP_MAX = 1300.0                   # mm a foot travels in one step at most (a stride: twice the step length)
+    SPREAD_MAX = 760.0                  # mm between the planted ankles at most (a long step)
+    MIN_SEP = 160.0                     # mm between the ankles across the body at least (the shoes are 116 mm wide)
+    TURN_MAX = 50.0                     # deg a foot turns in one step at most
+    SETTLE_MM, STEP_MM = 70.0, 25.0     # a foot steps when this far from home: standing, and walking at speed
+
+    def __init__(self):
+        self.feet = None                # [left, right]: dict(p=ankle's floor point (2,), psi=heading deg, sw=None or the swing)
+        self.body = None                # (x, y, hd) at the last frame advanced
+        self.v = np.zeros(2)            # the body's velocity, mm a frame (smoothed)
+        self.w = 0.0                    # its turn rate, deg a frame (smoothed)
+        self.since = 99                 # frames since a foot landed
+        self.last = 1                   # the foot that stepped last
+        self.clock = None               # the frame the state is at
+        self.virtual = False            # the clock is our own (no chapter open)
+        self.base = None                # (clock, state) before this frame: a second set() in the frame starts from it
+        self.seen = None                # ((x, y, hd), clock) of the last update
+        self.steps = 0
+        self.overreach_frames = 0
+        self.overreach_mm = 0.0
+        self.explicit = False           # set(frame=k) was used: the render hook leaves the clock to the caller
+
+    # ---------------------------------------------------------------------------------------- state
+    @staticmethod
+    def _cp(feet):
+        return None if feet is None else [dict(f, p=f["p"].copy(), sw=None if f["sw"] is None else dict(f["sw"]))
+                                          for f in feet]
+
+    def _state(self):
+        return self._cp(self.feet), self.body, self.v.copy(), self.w, self.since, self.last, self.steps
+
+    def _restore(self, st):
+        feet, self.body, v, self.w, self.since, self.last, self.steps = st
+        self.feet, self.v = self._cp(feet), v.copy()
+
+    def home(self, x, y, hd, i, walk=0.0):
+        """Foot i's (0 left, 1 right) footprint for a body at (x, y, hd): (ankle's floor point, heading)."""
+        sx = -1.0 if i == 0 else 1.0
+        hx = self.HOME_X + (self.HOME_X_WALK - self.HOME_X) * walk
+        a = math.radians(hd)
+        c, s = math.cos(a), math.sin(a)
+        lx, ly = sx * hx, self.HOME_Y
+        return np.array([x + c * lx - s * ly, y + s * lx + c * ly]), hd - sx * self.TOE_OUT
+
+    def reset(self, x, y, hd, clock=None):
+        """Both feet planted at home under a body at (x, y, hd) (a cut)."""
+        self.feet = []
+        for i in (0, 1):
+            p, psi = self.home(x, y, hd, i)
+            self.feet.append(dict(p=p, psi=psi, sw=None))
+        self.body = (float(x), float(y), float(hd))
+        self.v, self.w, self.since = np.zeros(2), 0.0, 99
+        if clock is not None:
+            self.clock = clock
+        self.base = (self.clock, self._state())
+        self.seen = None
+
+    # ---------------------------------------------------------------------------------------- time
+    def update(self, x, y, hd, clock=None, passive=False):
+        """Bring the feet to frame `clock` (None: our own clock) with the body at (x, y, hd). True if anything changed."""
+        body = (float(x), float(y), float(hd))
+        if passive and (clock is None or self.virtual or self.explicit):
+            return False                                 # the render hook follows a chapter's clock only
+        virtual = clock is None
+        if virtual:
+            if self.virtual and self.seen is not None and self.seen[0] == body:
+                return False
+            clock = self.clock + 1 if (self.virtual and self.clock is not None) else 0
+        if passive and self.seen is not None and self.seen == (body, clock):
+            return False
+        before = self.pose() if self.feet is not None else None
+        if self.feet is None or virtual != self.virtual or self.clock is None or clock < self.clock:
+            # a new sequence (the first pose, a chapter opened): adopt the clock; a move now is a placement
+            self.virtual = virtual
+            if self.feet is None or self._moved(body, self.body):
+                self.reset(*body, clock=clock)
+            else:
+                self.body = body
+                self.clock = clock
+                self.base = (clock, self._state())
+        else:
+            if clock > self.clock:
+                self.base = (self.clock, self._state())
+                self.clock = clock
+            else:
+                self._restore(self.base[1])
+            k = clock - self.base[0]
+            b0 = self.body
+            moved = math.hypot(body[0] - b0[0], body[1] - b0[1])
+            turned = abs(_wrap(body[2] - b0[2]))
+            if k <= 0:
+                if self._moved(body, b0):
+                    self.reset(*body, clock=clock)
+                else:
+                    self.body = body
+            elif moved / k > self.JUMP_MM or turned / k > self.JUMP_DEG:
+                self.reset(*body, clock=clock)
+            else:
+                for j in range(1, k + 1):
+                    u = j / k
+                    self._frame((b0[0] + (body[0] - b0[0]) * u, b0[1] + (body[1] - b0[1]) * u,
+                                 b0[2] + _wrap(body[2] - b0[2]) * u))
+        self.seen = (body, clock)
+        return before is None or before != self.pose() or not passive
+
+    def _moved(self, a, b):
+        return math.hypot(a[0] - b[0], a[1] - b[1]) > self.PLACE_MM or abs(_wrap(a[2] - b[2])) > self.PLACE_DEG
+
+    def _speed(self):
+        return float(np.linalg.norm(self.v)) + self.R_TURN * math.radians(abs(self.w))
+
+    def _timing(self, speed):
+        """(frames from one landing to the next, frames a foot is in the air, frames both feet stay down after a landing,
+        counting the landing's) at `speed` mm a frame: 1.4 steps a second for a settling step, 1.9 at 1 m/s, 2.3 at most."""
+        vm = speed * self.FPS / 1000.0
+        c = float(np.clip(1.4 + 0.5 * vm, 1.4, 2.3))       # steps a second
+        P = max(4, int(round(self.FPS / c)))
+        ds = 1 + int(speed < 25.0) + int(speed < 8.0)
+        return P, int(np.clip(P - ds + 1, 4, 9)), ds
+
+    def _frame(self, body):
+        x, y, hd = body
+        d = np.array([x - self.body[0], y - self.body[1]])
+        v0 = self.v
+        self.v = 0.5 * self.v + 0.5 * d
+        self.a = 0.5 * getattr(self, "a", np.zeros(2)) + 0.5 * (self.v - v0)
+        self.w = 0.5 * self.w + 0.5 * _wrap(hd - self.body[2])
+        self.body = body
+        self.since += 1
+        for i, f in enumerate(self.feet):
+            sw = f["sw"]
+            if sw is None:
+                continue
+            sw["k"] += 1
+            if 2 * sw["k"] <= sw["n"]:                   # the first half of a swing still aims at the moving target,
+                n_now = self._timing(self._speed())[1]   # and a body speeding up shortens it
+                if n_now < sw["n"]:
+                    sw["n"] = max(sw["k"] + 2, n_now)
+                sw["p1"], sw["psi1"] = self._target(i, sw["n"] - sw["k"])
+            elif sw["k"] <= sw["n"] - 2:                 # later, it follows a body that slows down (a shorter last
+                p1, psi1 = self._target(i, sw["n"] - sw["k"])   # step instead of one past the stop), 45 mm a frame at most
+                dp = p1 - np.asarray(sw["p1"], float)
+                dl = float(np.linalg.norm(dp))
+                sw["p1"] = np.asarray(sw["p1"], float) + (dp * (45.0 / dl) if dl > 45.0 else dp)
+                sw["psi1"] = psi1
+            if sw["k"] >= sw["n"]:
+                f["p"], f["psi"], f["sw"] = np.asarray(sw["p1"], float).copy(), float(sw["psi1"]), None
+                self.since, self.last = 0, i
+        if self.feet[0]["sw"] is None and self.feet[1]["sw"] is None:
+            self._maybe_step()
+
+    def _target(self, i, t):
+        """Foot i's next footprint if it lands in t frames: as far ahead of the body as it will be behind it when it
+        lifts again (a stance lasts a step and the double support after it)."""
+        x, y, hd = self.body
+        v = self.v
+        sp = float(np.linalg.norm(v))
+        vl = v + getattr(self, "a", np.zeros(2)) * t   # the body's velocity at the landing: speeding up or slowing down
+        if sp < 1e-6 or float(vl @ v) <= 0.0:
+            vl = np.zeros(2)
+        else:
+            vl = vl * min(1.0, (sp + 6.0 * t) / max(float(np.linalg.norm(vl)), 1e-9))
+        P, _, ds = self._timing(float(np.linalg.norm(vl)) + self.R_TURN * math.radians(abs(self.w)))
+        half = 0.5 * (P + ds)
+        hdp = hd + self.w * (t + half)
+        walk = float(np.clip(sp / 40.0, 0.0, 1.0))
+        ahead = 0.5 * (v + vl) * t + vl * half
+        p, psi = self.home(x + ahead[0], y + ahead[1], hdp, i, walk)
+        o, f = self.feet[1 - i], self.feet[i]
+        a = math.radians(hdp)
+        right = np.array([math.cos(a), math.sin(a)])
+        sx = -1.0 if i == 0 else 1.0
+        lat = float((p - o["p"]) @ right)
+        if sx * lat < self.MIN_SEP:                      # never across (or onto) the other foot
+            p = p + right * sx * (self.MIN_SEP - sx * lat)
+        dv = p - o["p"]
+        dl = float(np.linalg.norm(dv))
+        if dl > self.SPREAD_MAX:
+            p = o["p"] + dv * (self.SPREAD_MAX / dl)
+        tv = p - f["p"]
+        tl = float(np.linalg.norm(tv))
+        if tl > self.STEP_MAX:
+            p = f["p"] + tv * (self.STEP_MAX / tl)
+        return p, f["psi"] + float(np.clip(_wrap(psi - f["psi"]), -self.TURN_MAX, self.TURN_MAX))
+
+    def _maybe_step(self):
+        speed = self._speed()
+        P, n, ds = self._timing(speed)
+        if self.since < ds:
+            return
+        thr = float(np.clip(self.SETTLE_MM - 2.5 * speed, self.STEP_MM, self.SETTLE_MM))
+        errs, tg = [], []
+        for i in (0, 1):
+            p1, psi1 = self._target(i, n)
+            f = self.feet[i]
+            errs.append(float(np.linalg.norm(p1 - f["p"])) + self.R_TURN * math.radians(abs(_wrap(psi1 - f["psi"]))))
+            tg.append((p1, psi1))
+        i = int(np.argmax(errs))
+        if errs[i] < thr:
+            return
+        if i == self.last and errs[1 - i] >= thr:        # alternate feet while both want to go
+            i = 1 - i
+        f = self.feet[i]
+        p1, psi1 = tg[i]
+        travel = float(np.linalg.norm(p1 - f["p"]))
+        f["sw"] = dict(p0=f["p"].copy(), psi0=f["psi"], p1=p1, psi1=psi1, k=1, n=n,
+                       lift=float(np.clip(30.0 + 0.07 * travel, 30.0, 75.0)))
+        self.steps += 1
+
+    # ---------------------------------------------------------------------------------------- what is drawn
+    def pose(self):
+        """Each foot now: [(x, y, heading deg, lift mm, pitch deg)], left then right (world)."""
+        out = []
+        for f in self.feet:
+            sw = f["sw"]
+            if sw is None:
+                out.append((float(f["p"][0]), float(f["p"][1]), float(f["psi"]), 0.0, 0.0))
+                continue
+            u = sw["k"] / sw["n"]
+            s = _smooth(u)
+            p = sw["p0"] + (np.asarray(sw["p1"]) - sw["p0"]) * s
+            psi = sw["psi0"] + _wrap(sw["psi1"] - sw["psi0"]) * s
+            out.append((float(p[0]), float(p[1]), float(psi), sw["lift"] * math.sin(math.pi * u),
+                        -10.0 * math.sin(2.0 * math.pi * u)))
+        return out
+
+    def _split(self, st):
+        """The right foot's lead over the left along the body's heading, mm."""
+        a = math.radians(st["hd"])
+        fwd = np.array([-math.sin(a), math.cos(a)])
+        P = self.pose()
+        return float((np.array(P[1][:2]) - np.array(P[0][:2])) @ fwd)
+
+    def arm_swing(self, side, st):
+        """How far forward a hanging hand swings (mm): against the feet, the left hand forward with the right foot."""
+        if self.feet is None:
+            return 0.0
+        d = self._split(st)
+        return float(np.clip((0.2 if side == "l" else -0.2) * d, -110.0, 110.0))
+
+    def sway(self, st):
+        """The pelvis' yaw (rad), the hip over the forward foot a little ahead."""
+        if self.feet is None:
+            return 0.0
+        return 0.05 * float(np.clip(self._split(st) / 400.0, -1.0, 1.0))
+
+    def knee_flex(self):
+        """The pelvis' least drop (mm): the knees a little bent while walking."""
+        return 15.0 * float(np.clip(np.linalg.norm(self.v) / 30.0, 0.0, 1.0))
+
+    def busy(self):
+        return self.feet is not None and (any(f["sw"] is not None for f in self.feet) or self._speed() > 0.5)
+
+    def note_overreach(self, mm):
+        if mm > 1.0:
+            self.overreach_frames += 1
+            self.overreach_mm = max(self.overreach_mm, float(mm))
+
+
+# ================================================================================================ two people carrying (round 9)
+ARM_BONES = ("upperarm", "lowerarm", "wrist", "metacarpal", "finger", "shoulder", "clavicle")
+HIP_PIVOT = (12.8, 911.3)               # (y, z) of the hip joints at rest: a lean turns the body above them about x
+
+
+@functools.lru_cache(maxsize=None)
+def _body_points():
+    """The dressed body at rest without its arms (local frame): the points a carried load must stay clear of."""
+    m = model()
+    order = m["order"]
+    out = []
+    for part, d in m["parts"].items():
+        if d is None or part in ("glove", "forearm", "iris", "sclera", "brow"):
+            continue
+        n = len(d["P"])
+        best, dom = np.zeros(n), np.zeros(n, int)
+        for r, c, v in zip(d["rows"], d["cols"], d["vals"]):
+            if v > best[r]:
+                best[r], dom[r] = v, c
+        arm = np.array([order[c].startswith(ARM_BONES) for c in dom])
+        out.append(d["P"][~arm])
+    return np.vstack(out)
+
+
+def body_front(zlo, zhi, lean=0.0):
+    """How far in front of its origin (local y, mm) the dressed body reaches between heights zlo and zhi, leaning `lean`
+    degrees (the body above the hips turned about them), arms left out."""
+    P = _body_points()
+    y, z = P[:, 1], P[:, 2]
+    a = math.radians(lean)
+    yp, zp = HIP_PIVOT
+    up = z > zp
+    y2 = np.where(up, yp + (y - yp) * math.cos(a) + (z - zp) * math.sin(a), y)
+    z2 = np.where(up, zp + (z - zp) * math.cos(a) - (y - yp) * math.sin(a), z)
+    sel = (z2 >= zlo) & (z2 <= zhi)
+    return float(y2[sel].max()) if sel.any() else 0.0
+
+
+def carry(lo, hi, M, ends=("-x", "+x"), grip=None, clear=30.0, inset=None, gap=18.0, z_hands=None):
+    """Two people carrying a box-shaped load, one at each of two opposite ends (round 9; round 8's audit found their gloves
+    and coats over 100 mm inside the plate they carried). Returns [dict] per person, ready for ``Person.set(**d)`` (x, y,
+    hd, lean, hands, palm, grip, look), plus ``reach_mm`` (how far the hardest hand is from the arm's reach, < 0 when
+    within it) and ``front_mm`` (the body's front to the load's face).
+
+    lo, hi: the load's box in its own frame (mm); M: its pose (4 x 4, world; the load level). ends: the two faces held,
+    "-x", "+x", "-y" or "+y" of the load's frame; each person stands outside one, facing the load. grip: "side" (palms
+    in on the two faces beside the end, `inset` mm in from it, at z_hands or the box's mid-height, `gap` mm off the faces
+    so the wrists and forearms stay out) or "under" (palms up under the bottom face, `inset` in from the end; the
+    forearms must come in level, so the load rides at elbow height); default "side" when the end is at most 420 mm wide.
+    The person stands as close as keeps the dressed body (people.py's mesh at rest, arms left out, leaned as needed to
+    reach) `clear` mm off the load's face. A stance is rigid in the load's frame, so moving the load moves the people
+    with it, and their Gait walks them there (``carry_check`` measures what was drawn)."""
+    lo, hi = np.asarray(lo, float), np.asarray(hi, float)
+    M = np.asarray(M, float)
+    R, t = M[:3, :3], M[:3, 3]
+    corners = np.array([[x, y, z] for x in (lo[0], hi[0]) for y in (lo[1], hi[1]) for z in (lo[2], hi[2])]) @ R.T + t
+    zb, zt = float(corners[:, 2].min()), float(corners[:, 2].max())
+    out = []
+    for e in ends:
+        ax = "xyz".index(e[1])
+        sgn = -1.0 if e[0] == "-" else 1.0
+        lat = 1 - ax if ax < 2 else 0                    # the other horizontal axis of the load
+        nrm = R[:, ax] * sgn                             # the end face's outward normal (world)
+        nh = np.array([nrm[0], nrm[1]]) / max(1e-9, float(np.hypot(nrm[0], nrm[1])))
+        face_c = (lo + hi) / 2
+        face_c[ax] = hi[ax] if sgn > 0 else lo[ax]
+        fc = R @ face_c + t
+        width = hi[lat] - lo[lat]
+        length = hi[ax] - lo[ax]
+        g = grip or ("side" if width <= 420.0 else "under")
+        ins = inset if inset is not None else (min(90.0, 0.25 * length) if g == "side" else 30.0)
+        hd = math.degrees(math.atan2(nh[0], -nh[1]))     # facing -nh: forward (-sin hd, cos hd) = -nh
+        a = math.radians(hd)
+        right = np.array([math.cos(a), math.sin(a)])
+        latw = R[:, lat] * (1.0 if float(R[:2, lat] @ right) >= 0 else -1.0)   # the load's lateral axis, to the right
+        zc = (zb + zt) / 2 if z_hands is None else float(z_hands)
+        fwd3 = np.array([-nh[0], -nh[1], 0.0])
+        right3 = np.array([right[0], right[1], 0.0])
+        best = None
+        for lean in np.arange(0.0, 26.0, 2.0):
+            d = body_front(zb - 40.0, zt + 40.0, lean) + clear + 6.0      # 6 mm for the walk (pelvis sway, drop)
+            hands, palm, elbow = {}, {}, {}
+            for s, sx in (("l", -1.0), ("r", 1.0)):
+                if g == "side":                          # the forearm along the side face, elbow down: the fingers
+                    c = fc - nrm * ins + latw * sx * (width / 2 + gap)    # run along the face, not into it
+                    c[2] = zc
+                    hands[s], palm[s] = c, tuple(-latw * sx)
+                    elbow[s] = tuple(right3 * sx * 0.25 - fwd3 * 0.25 + np.array([0.0, 0.0, -1.0]))
+                else:
+                    c = fc - nrm * ins + latw * sx * min(width / 2 - 40.0, 190.0)
+                    c[2] = zb - gap * 0.3
+                    hands[s], palm[s], elbow[s] = c, (0.0, 0.0, 1.0), None
+            org = np.array([fc[0], fc[1]]) + nh * d
+            # the reach: each shoulder (upperarm01's head, turned with the lean about the hips, the pelvis 25 mm down) to
+            # its hand, against 470 mm of the 520 mm arm (the walk's bob takes up to 50 mm more)
+            worst = -1e9
+            for s, sx in (("l", -1.0), ("r", 1.0)):
+                yp, zp = HIP_PIVOT
+                sy = yp + (15.2 - yp) * math.cos(math.radians(lean)) + (1407.0 - zp) * math.sin(math.radians(lean))
+                sz = zp + (1407.0 - zp) * math.cos(math.radians(lean)) - 25.0
+                loc = np.array([(hands[s][:2] - org) @ right, (hands[s][:2] - org) @ -nh, hands[s][2]])
+                worst = max(worst, float(np.linalg.norm(loc - np.array([sx * 174.7, sy, sz]))) - 470.0)
+            cand = dict(x=float(org[0]), y=float(org[1]), hd=hd, lean=float(lean),
+                        hands={s: tuple(float(v) for v in hands[s]) for s in hands}, palm=palm, elbow=elbow,
+                        grip={"l": 0.0, "r": 0.0} if g == "side" else {"l": 0.05, "r": 0.05}, bend={"l": True, "r": True},
+                        look=tuple(float(v) for v in (R @ ((lo + hi) / 2) + t)), reach_mm=round(worst, 1),
+                        front_mm=round(d, 1), end=e, kind=g)
+            if best is None or worst < best["reach_mm"] - 1.0:
+                best = cand
+            if worst <= 0.0:
+                best = cand
+                break
+        out.append(best)
+    return out
+
+
+def carry_check(person, lo, hi, M):
+    """What a drawn pose does with a carried box (lo, hi in its frame, pose M): the dressed body's (arms and hands left
+    out) nearest distance to it, mm (negative: inside), and the hands' and sleeves' deepest point inside it."""
+    M = np.asarray(M, float)
+    R, t = M[:3, :3], M[:3, 3]
+    lo, hi = np.asarray(lo, float), np.asarray(hi, float)
+    order = person.order
+    body, arms = [], []
+    for part, (P, F) in person.posed().items():
+        d = person.parts[part][0]
+        n = len(d["P"])
+        best, dom = np.zeros(n), np.zeros(n, int)
+        for r, c, v in zip(d["rows"], d["cols"], d["vals"]):
+            if v > best[r]:
+                best[r], dom[r] = v, c
+        arm = np.array([order[c].startswith(ARM_BONES) for c in dom]) | (part in ("glove", "forearm"))
+        q = (P - t) @ R
+        out_d = np.linalg.norm(np.maximum(np.maximum(lo - q, q - hi), 0.0), axis=1)
+        in_d = np.minimum(q - lo, hi - q).min(1)
+        sd = np.where(in_d > 0, -in_d, out_d)
+        body.append(sd[~arm])
+        arms.append(sd[arm])
+    b, a = np.concatenate(body), np.concatenate(arms)
+    return dict(body_clear_mm=round(float(b.min()), 1), hands_in_mm=round(float(max(0.0, -a.min())), 1))
 
 
 # ================================================================================================ a look at it

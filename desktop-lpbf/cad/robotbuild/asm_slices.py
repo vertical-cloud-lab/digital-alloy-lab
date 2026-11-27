@@ -1,14 +1,18 @@
-"""Render an assembly chapter in slices while the planner is still running (round 8, issue #260, PR #266).
+"""Render the assembly chapters in slices while the planner is still running (round 8; round 9: both chapters from one queue,
+under /tmp/memslot; issue #260, PR #266).
 
-    /tmp/venv/bin/python asm_slices.py chamber C09f,C14,F05b,F10a,F16,F25,F31,F39,F45,F51,F55 [--results=results_run12.json]
-        [--traj=/tmp/robotbuild/traj/run12] [--upto=T01] [--max-running=2] [--max-done=3]
+    /tmp/venv/bin/python asm_slices.py module:M12,M19,M26 chamber:C09f,C14,F05b,F10a,F16,F25,F31,F39,F45,F51,F55 \\
+        [--results=<planner's results_run13.json>] [--traj=/tmp/robotbuild/traj/run13] [--upto=T01] [--max-running=3]
+        [--slices=module:1,chamber:4] [--mem=3]
 
-The cut list splits the chapter at those steps: slice k is [cut k-1, cut k) (the first from the chapter's opening, the last to
-its end). Slice k is started once the planner has finished its last step (its row is in the results file, which
-run_assembly.py rewrites after every step) or the run is over (asm_<chapter>.pkl exists); every slice gets the same ASM_CUTS,
-so each boundary is a forced cut and the slices' frames are the chapter's own (asm_render.py). At most --max-running slices
-at a time while the planner runs (its 3 GB and two 3 GB renders: 9 GB), --max-done once it is over, and none while a slice of
-another chapter is still rendering. Every slice runs with ROBOTBUILD_AUDIT=1 under /tmp/capmem 3G; then merge_parts.py.
+Each chapter's cut list splits it at those steps: slice k is [cut k-1, cut k) (the first from the chapter's opening, the last to
+its end). Slice k is started once the planner has finished its last step (the step at cut k has a row in the results file,
+which run_assembly.py rewrites after every step) or the chapter's recording is complete (asm_<chapter>.pkl exists, or, for a
+run recorded in pieces, the results file has a row for the chapter's last step). Every slice gets its chapter's whole cut list
+as ASM_CUTS: each boundary is a soft one (asm_render.py, round 9: no shot-plan decision reaches across it, but the camera may
+carry on across it), so each slice's frames are the chapter's own. At most --max-running slices at a time, module slices first;
+each runs with ROBOTBUILD_AUDIT=1 under /tmp/memslot <mem> (which waits for room in the runner's shared memory budget, then
+caps the slice). Then merge_parts.py.
 """
 from __future__ import annotations
 
@@ -21,6 +25,7 @@ import time
 
 HERE = pathlib.Path(__file__).resolve().parent
 OUT = HERE.parents[1] / "analysis" / "out" / "assembly"
+LAST = {"module": "M30", "chamber": None}      # the chapter's last step (None: the chamber ends where --upto says)
 
 
 def log(*a):
@@ -28,16 +33,28 @@ def log(*a):
 
 
 def main(argv):
-    chapter, cuts = argv[0], [c for c in argv[1].split(",") if c]
-    opt = {a.split("=")[0][2:]: a.split("=", 1)[1] for a in argv[2:] if a.startswith("--") and "=" in a}
-    res = OUT / opt.get("results", "results_run12.json")
-    traj = pathlib.Path(opt.get("traj", "/tmp/robotbuild/traj/run12"))
+    specs = [a for a in argv if not a.startswith("--")]
+    opt = {a.split("=")[0][2:]: a.split("=", 1)[1] for a in argv if a.startswith("--") and "=" in a}
+    res = OUT / opt.get("results", "results_run13.json")
+    traj = pathlib.Path(opt.get("traj", "/tmp/robotbuild/traj/run13"))
+    upto = opt.get("upto", "T01")
+    mem = opt.get("mem", "3")
     notes = OUT / "run10_fail_notes.json"
-    bounds = [""] + cuts + [""]
-    queue = [(k, bounds[k], bounds[k + 1]) for k in range(len(bounds) - 1)]
-    only = [int(x) for x in opt.get("slices", "").split(",") if x]
-    if only:
-        queue = [s for s in queue if s[0] in only]
+    only = {}
+    for x in opt.get("slices", "").split(","):
+        if ":" in x:
+            c, k = x.split(":")
+            only.setdefault(c, set()).add(int(k))
+    queue, cut_of = [], {}
+    for spec in specs:
+        chapter, _, cl = spec.partition(":")
+        cuts = [c for c in cl.split(",") if c]
+        cut_of[chapter] = cuts
+        bounds = [""] + cuts + [""]
+        for k in range(len(bounds) - 1):
+            if chapter in only and k not in only[chapter]:
+                continue
+            queue.append((chapter, k, bounds[k], bounds[k + 1]))
 
     def done_steps():
         try:
@@ -45,35 +62,41 @@ def main(argv):
         except Exception:   # noqa: BLE001  (being rewritten)
             return set()
 
-    def planner_done():
-        return (traj / f"asm_{chapter}.pkl").exists()
-
-    def other_running():
-        other = "module" if chapter == "chamber" else "chamber"
-        return bool(subprocess.run(["pgrep", "-f", f"asm_render.py {other}"], capture_output=True, text=True).stdout.split())
+    def chapter_done(chapter):
+        if (traj / f"asm_{chapter}.pkl").exists():
+            return True
+        last = LAST.get(chapter) or upto
+        return bool(last) and last in done_steps()
 
     running = {}
     while queue or running:
-        for k, p in list(running.items()):
+        for key, p in list(running.items()):
             if p.poll() is not None:
-                log(f"slice {k} finished, exit {p.returncode}")
-                del running[k]
-        limit = int(opt.get("max-done", 3)) if planner_done() else int(opt.get("max-running", 2))
-        if queue and len(running) < limit and not other_running():
-            k, a, b = queue[0]
-            if planner_done() or (b and b in done_steps()):
-                queue.pop(0)
+                log(f"slice {key} finished, exit {p.returncode}")
+                del running[key]
+        limit = int(opt.get("max-running", 3))
+        started = False
+        if len(running) < limit:
+            for qi, (chapter, k, a, b) in enumerate(queue):
+                if not (chapter_done(chapter) or (b and b in done_steps())):
+                    continue
+                queue.pop(qi)
                 env = dict(os.environ, ROBOTBUILD_AUDIT="1", ASM_TRAJ=str(traj), ASM_STEPS=f"{a}:{b}", ASM_RANGE_IDX=str(k),
-                           ASM_CUTS=",".join(cuts), ASM_UPTO=opt.get("upto", "T01"))
+                           ASM_CUTS=",".join(cut_of[chapter]), ASM_UPTO=upto, OMP_NUM_THREADS="1", LP_NUM_THREADS="1")
                 env.pop("ASM_PART", None)
+                env.pop("ASM_RANGE", None)
                 lf = open(f"/tmp/asm_slice_{chapter}_{k}.log", "w")
-                cmd = ["xvfb-run", "-a", "-s", "-screen 0 1920x1080x24", "/tmp/capmem", "3G", sys.executable, "asm_render.py", chapter]
+                cmd = ["xvfb-run", "-a", "-s", "-screen 0 1920x1080x24", "/tmp/memslot", mem, sys.executable, "asm_render.py",
+                       chapter]
                 if chapter == "chamber" and notes.exists():
                     cmd.append(f"--fail_notes={notes}")
-                running[k] = subprocess.Popen(cmd, cwd=str(HERE), env=env, stdout=lf, stderr=subprocess.STDOUT)
-                log(f"slice {k} [{a or 'opening'}, {b or 'end'}) started (planner {'done' if planner_done() else 'running'})")
-                continue
-        time.sleep(20)
+                running[f"{chapter}.{k}"] = subprocess.Popen(cmd, cwd=str(HERE), env=env, stdout=lf, stderr=subprocess.STDOUT)
+                log(f"slice {chapter}.{k} [{a or 'opening'}, {b or 'end'}) started "
+                    f"(chapter recorded: {'yes' if chapter_done(chapter) else 'not yet'})")
+                started = True
+                break
+        if not started:
+            time.sleep(20)
     log("all slices done")
 
 
