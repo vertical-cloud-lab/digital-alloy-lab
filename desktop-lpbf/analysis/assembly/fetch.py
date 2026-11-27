@@ -370,7 +370,8 @@ def presenter_trip(run, n, q_from, q_to, close=0.0, held=None, allow=frozenset()
             a.hold(*held)
             try:
                 chk2 = K.checker(cl, n)
-                allow2 = frozenset(allow) | frozenset([("held", f"{n} screw presenter"), ("tool", f"{n} screw presenter")])
+                # the screw starts in the presenter's pick-up nest, inside its envelope (a box): that contact is the pick itself
+                allow2 = frozenset(allow) | frozenset([("soft", f"{n} screw presenter"), ("tool", f"{n} screw presenter")])
                 bad = next((q for q in qs_dn if chk2.collisions(q, close, allow2, first=True)), None)
                 if bad is not None:
                     best = dict(ok=False, why="up out of the presenter with the screw: blocked")
