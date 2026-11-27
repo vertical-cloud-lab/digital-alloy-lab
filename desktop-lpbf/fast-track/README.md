@@ -67,9 +67,11 @@ Updated in round 2 (2026-11-27); §0 lists what the detailed design work changed
 - **What it keeps:** the physics PR 266 chose. A CW single-mode fibre laser at 1070 nm with a galvo and f-theta (76 µm
   spot), argon, a 200 °C plate, a few tens of grams of powder per build, hardwired interlocks and Python control (the
   supervisor `ftctl` runs a whole simulated build today: [`control/`](control/README.md)).
-- **Heat, not the scanner, sets the build time.** The plate can shed the laser's ~56 W only through a 0.1 mm argon gap,
-  so each layer needs a dwell: a 15 mm build takes about 4.2 h with the block at the plate's temperature, 1.6 h with the
-  block 20 K cooler ([`control/`](control/README.md) §7). The starting set for AlSi10Mg is 255 W, 1.25 m/s, 0.10 mm
+- **Heat, not the scanner, sets the build time.** The plate sheds the laser's heat to the block only through the 0.1 mm
+  argon gap: 0.67 W/K from the substrate top in the thermal FEA. Without a dwell the substrate would run 41–106 K above
+  200 °C. At that conductance a 10 mm build takes 2.1–4.2 h holding the plate within 5 K with the block at the plate's
+  temperature, and **0.8–1.8 h with the block 20 K cooler** (absorptivity 0.3–0.6; scanning and spreading alone take
+  0.6 h) ([`control/out/dwell-study-fe.csv`](control/out/dwell-study-fe.csv), [`analysis/out/fea/`](analysis/out/fea/)). The starting set for AlSi10Mg is 255 W, 1.25 m/s, 0.10 mm
   hatch, 30 µm layers ([`process/`](process/README.md)).
 - **The long poles are now the shop and the approvals, not parts.** Registering a Class 4 laser with the LSO and an EHS
   look at aluminium powder have no published turnaround at BYU; FT-1 is a Class 1 enclosure (the beam is enclosed from
@@ -105,7 +107,7 @@ in headed Chrome with real mouse clicks. Each finding below links the folder wit
 | **The laser's rating label** (listing photos): made Feb 2015, 1/N/PE 200–240 VAC, 10 A | [`control/`](control/README.md) §3 | the laser needs its **own 208/240 V, 15 A two-pole circuit**: a Physical Facilities request on day 0. Everything else is ~440 W on one 120 V 20 A circuit |
 | **Safety chain:** Omron documents the G9SE-201 only with direct-opening switches and Type 4 OSSD sensors, and two lid switches in series mask each other's stuck contacts | [`control/`](control/README.md) §2 | **one Omron D4NS-2CF tongue switch per guard** (lid, beam tube), $96.91 each today; a contact-level check of the whole chain (1,048,576 transitions) never emits with a contact open |
 | **The trace O₂ analyzer reads only to 10,000 ppm**, so it can't show the box is safe to open | [`control/`](control/README.md) §1 | a percent-range O₂ transmitter on the exhaust, a valve that keeps the trace cell out of air, possibly a sample pump |
-| **The plate's heat sets the build time.** The laser leaves ~56 W in the plate and the 0.1 mm argon gap passes only ~11 W to the block at +5 K | [`control/`](control/README.md) §7 | a dwell takes most of each layer: 15 mm in 4.2 h (the study assumed 1.2–1.8 h for 10 mm). Running the well block 20 K below the plate gives 1.6 h. The thermal FEA's conductance is in [`analysis/out/fea/`](analysis/out/fea/) |
+| **The plate's heat sets the build time.** The thermal FEA (CalculiX, CAD v2) gives 0.67 W/K from the substrate top to the block (0.83 W/K across the 0.1 mm argon gap); without a dwell the substrate runs 41–106 K over 200 °C | [`analysis/out/fea/`](analysis/out/fea/), [`control/`](control/README.md) §7 | a dwell takes most of each layer: at the FE conductance a 10 mm build takes 2.1–4.2 h with the block at setpoint, **0.8–1.8 h with the block 20 K below the plate** (round 1 assumed 1.2–1.8 h with no dwell) |
 | **Process window** from a melt-pool model calibrated on 15 published AlSi10Mg tracks | [`process/`](process/README.md) | starting set **255 W, 1.25 m/s, 0.10 mm hatch, 30 µm layers**; first build three 10 mm and two 5 mm cubes; 0.60 h for 10 mm before any dwell; RTC lists for commissioning rungs 1–3 |
 | **Structure** (CalculiX) | [`analysis/out/fea/struct.md`](analysis/out/fea/struct.md) | a **sponge silicone gasket**, not a solid cord (the cord needs 4.0 kN to close); the gantry as drawn has a **13 Hz** first mode, so **four 45 mm posts with braces** (79 Hz); the cube plate and window pass (SF 34 and 74); the X-VSR20A must pull the rod down past its O-ring drag (7–45 N); the Thorlabs stage needs one O-ring |
 | **Cross-flow** (OpenFOAM, laminar and k-ω SST, 237k cells) | [`analysis/out/cfd/`](analysis/out/cfd/) | the slot jet holds 2.6–2.7 m/s over the build area; bed shear 0.03–0.05 Pa, below the 0.053–0.118 Pa that starts to lift 63 µm powder; 96–99 % of tracers released 0.5–3 mm up reach the collector |
@@ -294,7 +296,9 @@ by its datasheet), with interference, beam, travel and fit checks. The structura
   coupons after a build. Make several.
 
 **Powder:** a 10 mm build on Ø40 mm takes about 30 g of AlSi10Mg at a 1.8× dose, and a 15 mm build about 45 g
-(`fast_track.py`, using `budgets.py`'s factors). A 10 mm build is 333 layers and about 1.2–1.8 h.
+(`fast_track.py`, using `budgets.py`'s factors). A 10 mm build is 333 layers. Scanning and spreading take 0.6 h
+([`process/`](process/README.md)); the dwell the plate needs to shed the laser's heat brings it to 0.8–1.8 h with the
+well block 20 K below the plate, or 2.1–4.2 h with the block at setpoint ([`control/out/dwell-study-fe.csv`](control/out/dwell-study-fe.csv)).
 
 ### 3.4 Gas: flow purge and a once-through cross-flow
 
@@ -321,8 +325,10 @@ by its datasheet), with interference, beam, travel and fit checks. The structura
 - **Cross-flow:** a 45 × 4 mm slot nozzle at 2.5 m/s, ~27 L/min, a few mm above the bed, across the plate to an outlet
   on the far side. The exhaust goes through a HEPA housing (McMaster 5169K72 + 9179K14) and a check valve to the
   building exhaust. **Treat the filter as a fire hazard** (PR 266 §3.7): condensate can ignite on contact with air.
-- **Argon use:** about 2.8–5.4 m³ per 10–15 mm build including the purge, so about 1.8–3.4 builds per size-300
-  cylinder, roughly $31–172 of argon a build (estimate). PR 266's recirculating loop is the fix once builds are routine.
+- **Argon use** (round 2, `ftctl`'s simulated builds at the FE conductance): with the cross-flow dropped to a 5 L/min
+  hold during dwells, a 15 mm build uses about 1.6–3.0 m³ while building (1.8 m³ with the block 20 K cooler, A 0.45),
+  plus 0.3–0.9 m³ for the purge, so about 2–4 builds per size-300 cylinder. Without the low flow in dwells it is about
+  three times that ([`control/`](control/README.md) §7). PR 266's recirculating loop is the fix once builds are routine.
 - **Water matters more than O₂ for Al** ([`vacuum-and-purge.md`](../vacuum-and-purge.md)): dry the powder in a vacuum
   oven and load it dry. Heating the plate drives water off the powder into the gas, which the once-through flow carries
   away.
@@ -339,9 +345,10 @@ by its datasheet), with interference, beam, travel and fit checks. The structura
 
 - **Put a fan on the box.** A 120 mm fan on the outside of the box (or a water-cooled deck) keeps the stages in their
   rating. The thermal FEA of the cassette is in [`analysis/out/fea/`](analysis/out/fea/).
-- **The plate's heat sets the build time** (round 2, [`control/`](control/README.md) §7): the laser leaves ~56 W in the
-  plate at the no-dwell rate, and the 0.1 mm argon gap passes only ~11 W to the block at +5 K. Holding the plate within
-  5 K takes a dwell of 80 % of each layer (15 mm in 4.2 h); running the block 20 K below the plate gives 1.6 h.
+- **The plate's heat sets the build time** (round 2, [`control/`](control/README.md) §7 and the thermal FEA): the plate
+  passes heat to the block through the 0.1 mm argon gap at 0.67 W/K (FE, substrate top), so without a dwell the
+  substrate runs 41–106 K above 200 °C. Holding it within 5 K takes a dwell of most of each layer (10 mm in 2.1–4.2 h);
+  running the block 20 K below the plate gives 0.8–1.8 h. The `ftctl` supervisor does either.
 - **Dense layers will push the plate above 200 °C,** as PR 266 found for its modules ([`heat.md`](../heat.md)): the laser
   can bring more heat than the heaters' load, so the controller just switches off. Scan less of the plate per layer,
   add an interlayer dwell, or log the plate temperature as a screening variable.
