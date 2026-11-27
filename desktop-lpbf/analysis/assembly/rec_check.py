@@ -362,6 +362,8 @@ def main(argv):
                     if i in failed:
                         hidden.add(i)
                     T = np.asarray(e["T"], float)
+                    if i in released and released[i][1] != step:
+                        released.pop(i)                # let go in an earlier step: its next put is another move, not its seat
                     if i in released:
                         p0, s0, c = released.pop(i)
                         dd = float(np.linalg.norm(p0[:3, 3] - T[:3, 3]))
@@ -454,6 +456,8 @@ def main(argv):
                     n_samples += 1
                     tick()
             elif k == "turn":
+                for i in e["objs"]:
+                    released.pop(int(i), None)
                 TT = np.asarray(e["TT"], float)
                 Rm = TT @ Tm(C.rot((1, 0, 0), float(e["sign"]) * 180.0)) @ np.linalg.inv(TT)
                 for i in e["objs"]:
