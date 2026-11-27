@@ -519,9 +519,11 @@ class Replay:
         return None if best is None else (best[1], best[2])
 
     @staticmethod
-    def walk_seq(pts, hd0, hd_end, v=850.0, turn=10.0):
+    def walk_seq(pts, hd0, hd_end, v=450.0, turn=10.0):
         """Per frame (x, y, heading): turn on the spot (at most `turn` deg a frame) to each leg's heading, walk the leg eased in
-        and out (mean v mm/s, so at most 1.5 v), and at the end turn to hd_end."""
+        and out (mean v mm/s, so at most 1.5 v), and at the end turn to hd_end. Round 9: v = 450 mm/s (at most 675): on this
+        eased profile people.py's Gait keeps every planted foot still (0.0 mm stance slip, 0 overreach frames; at 850 mm/s,
+        peak 1.3 m/s, the steps could not keep up and the planted foot slid up to 0.5 m a stance, measured with walk.py)."""
         out = []
         hd = float(hd0)
 
