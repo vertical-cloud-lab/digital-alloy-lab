@@ -4,6 +4,7 @@
 #   make clean-pdf  same text, markers hidden (to read the prose as a reviewer would)
 #   make refs     rebuild references.bib from tools/refs.tsv and re-check it against Crossref
 #   make figs     regenerate the figures that have scripts
+#   make atomizer RUNS='<glob of run.yaml>'   Fig. 2/3b and the repeatability check from run records
 #   make all      refs + figs + draft + clean-pdf
 #   make clean    remove LaTeX intermediates
 #
@@ -12,7 +13,7 @@
 LATEXMK = latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error
 CLEANDEF = \def\cleanbuild{}
 
-.PHONY: all draft clean-pdf refs figs clean
+.PHONY: all draft clean-pdf refs figs atomizer clean
 
 draft: manuscript.pdf supporting-information.pdf
 
@@ -32,6 +33,9 @@ refs:
 
 figs:
 	python tools/make_figures.py
+
+atomizer:
+	python tools/atomizer_analysis.py --runs '$(RUNS)' --out figures/
 
 all: refs figs draft clean-pdf
 

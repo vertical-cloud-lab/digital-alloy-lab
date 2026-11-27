@@ -31,7 +31,7 @@ updated with what has happened since.
 | [`references.bib`](references.bib), [`reference-check.md`](reference-check.md) | Bibliography built from Crossref/arXiv records, and the check of every entry |
 | `figures/` | `fig1-loop.tikz` (draft schematic), `figS-atomizer-runs` (every run so far), `fig6-draft-synthetic` (layout draft from the synthetic benchmark) |
 | `data/` | Inputs of the draft figures, pinned to their source commits |
-| `tools/` | `build_bib.py`, `check_refs.py`, `make_figures.py`, `refs.tsv` |
+| `tools/` | `build_bib.py`, `check_refs.py`, `make_figures.py`, `refs.tsv`; `atomizer_analysis.py` (Fig. 2, Fig. 3b and the repeatability check from the per-run YAML records: `make atomizer RUNS='<glob>'`, or `--selftest`); `mineral_burden_check.py` (burden ranges for D9) |
 
 **Build:** `make draft` builds the manuscript and SI. `make clean-pdf` builds the same text with the markers hidden.
 `make refs` rebuilds and re-checks the bibliography, and `make figs` redraws the draft panels. You need TeX Live
