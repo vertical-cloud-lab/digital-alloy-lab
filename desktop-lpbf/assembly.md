@@ -332,6 +332,23 @@ these, noted on each; run 13 (round 9) fixed C00d, F45d and F48b, noted on each;
   left it in the way); arm B drives #7 and #16, 18 of 18. C01c (new) drives any floor-plate screw left, from above with the chamber
   upside down in the trunnion; in run 13 it had none.
 
+**The next change for each step still failing after run 13** (round 9; each is shown failing in the video, done by a person):
+- **F15** (inlet-plenum screw #7): the screwdriver's body meets the plenum's welded KF-25 stub, and the angle-head nutrunner and
+  the other arm meet it too (runs 11-13). Next: move that hole 5 mm along the flange away from the stub (the plenum's hole
+  pattern in `cad/joints.py`, plenum_in), then re-run F15 alone.
+- **F18** (held rail screw #1 of 4): arm A's screwdriver meets the chamber body (round 9; with other bits its wrist or forearm
+  met the base plate). Next: once three of the four screws are in, the rail no longer needs holding: arm B, the holder, lets go
+  and drives #1 itself from above the open top (`run_assembly.hold_and_drive`: a screw the driver can't reach goes to the holder
+  after the others are in).
+- **F26** (blade holder): the 2F-85's fingertip meets the chamber body however high it enters. Next: put the whole cartridge
+  (holder, blade, grip fin, screws) in by its fin with the plate fingers, as the tending robot's blade-cartridge job does
+  (`analysis/robot/ops.py` job_blade, which passes on the finished machine), with the recoater run 106 mm to the middle first
+  (parked, the fin is 4 mm inside the door opening's side). The recorder must first carry a part's state pose (record.py's put
+  and attach give the machine frame only, so asm_render.py would draw the moved recoater parked).
+- **F27** (two blade screws): arm B's driver meets the overflow funnel block from the back. Next: drive them on the bench before
+  F26, with the cartridge on a two-pin bench nest (to be modelled like the stack nest) and the driver straight down; F26 then
+  carries the cartridge with its screws in.
+
 **Other open points**
 - **Picks at the table that were not planned:** run 9 had 25, mostly parts gripped sideways at their seat whose kitted pose put
   the arm's flange behind its own base. The grasp-down layout (`kit_table.py`: the arm turns the part on its way to the
