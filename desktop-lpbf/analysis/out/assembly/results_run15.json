@@ -3054,31 +3054,30 @@
    "gap_with": "Lift-out wall liner, back upper left (0.5 mm 316L, behind the ball screw, spring clips)",
    "arm_clear": null,
    "arm_clear_with": null,
-   "why": "released 24 mm short and pushed home with the closed fingers; held-part screws: d thro: screwdriver: A/upper_arm hits Fixture B (open stand); also no way with nutrunner, nutrunne; screws after the slide: d thro: screwdriver: A/tool/screwdriver hits Process chamber body (6061-T6 through-frame from 5.5 ",
+   "why": "released 24 mm short and pushed home with the closed fingers; screws after the slide: d thro: screwdriver: A/upper_arm hits Base plate, process module (MIC-6, 15 mm); also no way with ",
    "docks": [
     1350.0
    ],
    "n_units": 1,
    "fetch": "PASS",
    "fetch_why": "",
-   "seconds": 314.5,
-   "compute_s": 314.5
+   "seconds": 787.3,
+   "compute_s": 787.3,
+   "spliced": "re-planned alone on run 15's recording (W2, round 10): chunk 48 replaced, both arms ending where run 15's F18 left them"
   },
   {
-   "presenter": "1/2",
-   "presenter_why": "presenter to the hole: the screw cuts the hole's edge on the way in",
+   "presenter": "3/3",
    "sweep": "PASS",
-   "arm": "PART",
+   "arm": "PASS",
    "n": 3,
-   "n_ok": 2,
+   "n_ok": 3,
    "n_drive": 3,
    "arm_clear": 0.5,
    "arm_clear_with": "nutrunner_angle to B/gr/base",
-   "why": "d thro: screwdriver: A/upper_arm hits Fixture B (open stand); also no way with nutrunner, nutrunne",
+   "why": "",
    "docks": [
     1130.0,
-    1350.0,
-    1570.0
+    1350.0
    ],
    "hex": 3.0,
    "screw_L": 16.0,
@@ -3087,6 +3086,7 @@
    ],
    "driver_why": [
     "screwdriver blocked (A/tool/screwdriver hits Process chamber body (6061-T6 throug)",
+    "screwdriver blocked (A/upper_arm hits A cabinet)",
     "screwdriver blocked (A/upper_arm hits Fixture B (open stand))"
    ],
    "per_screw": [
@@ -3104,14 +3104,14 @@
      "drive_ok": true,
      "driver": "nutrunner_angle",
      "arm": "A",
-     "note": "screwdriver blocked (A/tool/screwdriver hits Process chamber body (6061-T6 throug)"
+     "note": "screwdriver blocked (A/upper_arm hits A cabinet)"
     },
     {
      "screw": "Recoater rail screws, M4 x 16 316, into M4 holes tapped through the back wall #3",
      "ok": true,
      "why": "",
-     "dock": 1570.0,
-     "roll": 210,
+     "dock": 1350.0,
+     "roll": 300,
      "withdraw": true,
      "clear": [
       1.9,
@@ -3124,16 +3124,19 @@
     },
     {
      "screw": "Recoater rail screws, M4 x 16 316, into M4 holes tapped through the back wall #4",
-     "ok": false,
-     "why": "screwdriver: A/upper_arm hits Fixture B (open stand); also no way with nutrunner, nutrunner_angle",
+     "ok": true,
+     "why": "",
      "dock": 1350.0,
-     "roll": 210,
+     "roll": 300,
      "withdraw": true,
-     "clear": null,
+     "clear": [
+      1.9,
+      "nutrunner_angle to Recoater guide rail (15 mm, 260 mm)"
+     ],
      "drive_ok": true,
      "driver": "nutrunner_angle",
      "arm": "A",
-     "note": ""
+     "note": "screwdriver blocked (A/tool/screwdriver hits Process chamber body (6061-T6 throug)"
     }
    ],
    "id": "F18h",
@@ -3141,7 +3144,8 @@
    "do": "screws",
    "joint": "rail",
    "actor": "A",
-   "holder": "B"
+   "holder": "B",
+   "spliced": "re-planned alone on run 15's recording (W2, round 10): chunk 48 replaced, both arms ending where run 15's F18 left them"
   },
   {
    "presenter": "0/0",
@@ -3152,7 +3156,7 @@
    "n_drive": 1,
    "arm_clear": null,
    "arm_clear_with": null,
-   "why": "d thro: screwdriver: A/tool/screwdriver hits Process chamber body (6061-T6 through-frame from 5.5 ",
+   "why": "d thro: screwdriver: A/upper_arm hits Base plate, process module (MIC-6, 15 mm); also no way with ",
    "docks": [
     1350.0
    ],
@@ -3166,9 +3170,9 @@
     {
      "screw": "Recoater rail screws, M4 x 16 316, into M4 holes tapped through the back wall #1",
      "ok": false,
-     "why": "screwdriver: A/tool/screwdriver hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R1; also no way with nutrunner, nutrunner_angle",
+     "why": "screwdriver: A/upper_arm hits Base plate, process module (MIC-6, 15 mm); also no way with nutrunner, nutrunner_angle",
      "dock": 1350.0,
-     "roll": 270,
+     "roll": 300,
      "withdraw": true,
      "clear": null,
      "drive_ok": true,
@@ -3181,7 +3185,8 @@
    "label": "Recoater rail with its carriage, carriage block, b: screws of rail the carriage covered, driven after arm B pushed it 106 mm along the rail",
    "do": "screws",
    "joint": "rail",
-   "actor": "A"
+   "actor": "A",
+   "spliced": "re-planned alone on run 15's recording (W2, round 10): chunk 48 replaced, both arms ending where run 15's F18 left them"
   },
   {
    "id": "F19",
@@ -5927,5 +5932,8 @@
    "compute_s": 0.0
   }
  ],
- "generated_s": 5723.3
+ "generated_s": 5723.3,
+ "spliced": [
+  "F18"
+ ]
 }

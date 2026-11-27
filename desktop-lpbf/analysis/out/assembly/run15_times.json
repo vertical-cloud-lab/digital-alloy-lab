@@ -1,6 +1,6 @@
 {
  "note": "Real-world time per assembly step (issue #260, round 7): robot motion from the recorded, collision-checked trajectories at the speeds in analysis/assembly/record.py (estimates where marked there: tool changes 8 s, MiR docking 6 s, screw torque phase 1 s, gripper 0.8 s); persons' times are estimates per step. 'seconds' is the step's elapsed time (both arms can work at once, so robot_A_s + robot_B_s can exceed it).",
- "robot_h": 3.42,
+ "robot_h": 3.43,
  "person_h": 6.38,
  "steps": [
   {
@@ -1268,14 +1268,15 @@
     "robot A",
     "robot B"
    ],
-   "seconds": 225.9,
-   "robot_A_s": 86.1,
-   "robot_B_s": 139.8,
+   "seconds": 261.2,
+   "robot_A_s": 121.0,
+   "robot_B_s": 140.2,
    "person_s": 0.0,
    "status": "fail",
-   "why": "released 24 mm short and pushed home with the closed fingers; held-part screws: d thro: screwdriver: A/upper_arm hits Fixture B (open stand); also no way with nutrunner, nutrunne; screws after the sli",
+   "why": "released 24 mm short and pushed home with the closed fingers; screws after the slide: d thro: screwdriver: A/upper_arm hits Base plate, process module (MIC-6, 15 mm); also no way with ",
    "chapter": "chamber",
-   "fetch": "PASS"
+   "fetch": "PASS",
+   "spliced": true
   },
   {
    "id": "F19",
@@ -2313,5 +2314,8 @@
    "chapter": "chamber",
    "fetch": null
   }
+ ],
+ "spliced": [
+  "F18"
  ]
 }

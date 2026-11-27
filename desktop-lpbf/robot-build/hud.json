@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-11-27T20:57Z",
+ "generated_utc": "2026-11-27T20:59Z",
  "what": "Cost, lead-time and time numbers for the robot-built desktop LPBF video (issue #260, PR #266, round 7)",
  "how_to_show": "Tour the categories in the order of 'categories'. For each, show hud.new (at spec, all new) against hud.used (the used picks where a sensible listing exists, new elsewhere) and the running totals hud.run_new / hud.run_used; hud.range_new / hud.range_used are the BOM's full low-high ranges. Call out the category's 'items' in order with their hud.new, hud.used, hud.lead_new and hud.lead_used. 'offtable' and 'services' are not on the table: show them as text rows at the end of the tour.",
  "definitions": {
@@ -9309,11 +9309,11 @@
      "do": "place",
      "actor": "B",
      "status": "fail",
-     "robot_s": 225.9,
+     "robot_s": 261.2,
      "person_min": 5.0,
-     "checker_compute_s": 314.5,
+     "checker_compute_s": 787.3,
      "force": "released 24 mm short and pushed home with the closed fingers; held-part screws: d thro: screwdriver: B/upper_arm hits Base plate, process module (MIC-6, 15 mm); also no way with",
-     "note": "released 24 mm short and pushed home with the closed fingers; held-part screws: d thro: screwdriver: A/upper_arm hits Fixture B (open stand); also no way with n",
+     "note": "released 24 mm short and pushed home with the closed fingers; screws after the slide: d thro: screwdriver: A/upper_arm hits Base plate, process module (MIC-6, 1",
      "recorded": true
     },
     {
@@ -9322,12 +9322,12 @@
      "label": "Recoater rail with its carriage, carriage block, ball nut an: screws of rail driven while arm B holds it",
      "do": "screws",
      "actor": "A",
-     "status": "part",
-     "robot_s": 50.0,
-     "person_min": 1.0,
+     "status": "pass",
+     "robot_s": 65.0,
+     "person_min": 0.0,
      "checker_compute_s": null,
      "force": "2.2 N m | 3/4 screws; d thro: screwdriver: B/upper_arm hits Base plate, process module (MIC-6, 15 mm); also no way with",
-     "note": "1 of 3 screws by a person (1 min each, estimate)"
+     "note": ""
     },
     {
      "step": "F18s",
@@ -9340,7 +9340,7 @@
      "person_min": 6.0,
      "checker_compute_s": null,
      "force": "",
-     "note": "d thro: screwdriver: A/tool/screwdriver hits Process chamber body (6061-T6 through-frame from 5.5 "
+     "note": "d thro: screwdriver: A/upper_arm hits Base plate, process module (MIC-6, 15 mm); also no way with "
     },
     {
      "step": "F19",
@@ -10330,9 +10330,9 @@
     },
     "41-assembly-chamber": {
      "steps": 116,
-     "robot_s": 10659.2,
-     "person_min": 236.4,
-     "fail": 6,
+     "robot_s": 10709.5,
+     "person_min": 235.4,
+     "fail": 5,
      "person_steps": 11,
      "fetch_trips": 0,
      "fetch_s": 0.0
@@ -10349,10 +10349,10 @@
    },
    "totals": {
     "steps": 153,
-    "robot_h": 3.54,
+    "robot_h": 3.55,
     "fetch_h": 0.0,
-    "person_h": 8.8,
-    "fail_steps": 6,
+    "person_h": 8.78,
+    "fail_steps": 5,
     "person_steps": 19
    },
    "assumptions": {
@@ -11292,10 +11292,10 @@
   },
   "assembly": {
    "steps": 153,
-   "robot_h": 3.54,
+   "robot_h": 3.55,
    "mir_fetch_h": 0.0,
-   "person_h": 8.8,
-   "failed_or_partial": 6,
+   "person_h": 8.78,
+   "failed_or_partial": 5,
    "person_or_shop_steps": 19,
    "basis": "the recorded run's real time (run15_times.json): motions at cobot speeds, tool changes, docking and persons' minutes estimated"
   },

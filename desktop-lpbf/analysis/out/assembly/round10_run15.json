@@ -10,7 +10,7 @@
   "file": "results_run15.json",
   "checked": 112,
   "passed": 108,
-  "screws_ok": 127,
+  "screws_ok": 128,
   "screws": 129
  },
  "fetch": {
@@ -37,19 +37,19 @@
   ]
  },
  "presenter": {
-  "planned": 109,
-  "driven": 121
+  "planned": 111,
+  "driven": 122
  },
  "still_failing": [
   {
    "id": "F18",
    "label": "Recoater rail with its carriage, carriage block, ball nut and arm (bought and pre-assemble",
-   "why": "released 24 mm short and pushed home with the closed fingers; held-part screws: d thro: screwdriver: A/upper_arm hits Fixture B (open stand); also no way with nutrunner, nutrunne; screws after the sli"
+   "why": "released 24 mm short and pushed home with the closed fingers; screws after the slide: d thro: screwdriver: A/upper_arm hits Base plate, process module (MIC-6, 15 mm); also no way with "
   },
   {
    "id": "F18s",
    "label": "Recoater rail with its carriage, carriage block, b: screws of rail the carriage covered, d",
-   "why": "d thro: screwdriver: A/tool/screwdriver hits Process chamber body (6061-T6 through-frame from 5.5 "
+   "why": "d thro: screwdriver: A/upper_arm hits Base plate, process module (MIC-6, 15 mm); also no way with "
   },
   {
    "id": "F35",
@@ -69,12 +69,12 @@
   "F57"
  ],
  "time": {
-  "robot_h": 3.42,
+  "robot_h": 3.43,
   "person_h": 6.38,
-  "elapsed_h": 10.3,
+  "elapsed_h": 10.31,
   "by_chapter": {
    "module": 0.62,
-   "chamber": 9.68
+   "chamber": 9.69
   }
  }
 }

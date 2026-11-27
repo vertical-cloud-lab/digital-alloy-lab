@@ -220,7 +220,7 @@
    "weight_N": 9.8,
    "status": "hold used",
    "reason": "the part stands on a wall or under a plate: it would slide or fall before its screws are in",
-   "run15": "2 of 3 screws driven while it was held"
+   "run15": "3 of 3 screws driven while it was held"
   },
   {
    "step": "F03",
