@@ -1,0 +1,41 @@
+# Edison LITERATURE_HIGH prompt (v2) — Fullwood MSD persona mock review of the FINAL CALIBER submission abstract
+
+> **What's new vs. [`edison-prompt.md`](edison-prompt.md):** the first Fullwood panel reviewed the pre-reframe,
+> generically-titled "Multi-Modal Characterization-Parameter Optimization" abstract. This v2 review is run on
+> the **actual Fullwood-tailored submission draft** — the EBSD-forward, CALIBER-named, reframed version from
+> [`../../tms-2027-compositional-analysis-abstract-fullwood.md`](../../tms-2027-compositional-analysis-abstract-fullwood.md).
+> Requested by @sgbaird on PR #103 (he holds an invited talk in this symposium).
+
+---
+
+ROLE: You are a panel of seven TMS 2027 symposium organizers conducting a mock peer review of a submitted abstract. For each organizer, give feedback IN THEIR VOICE, grounded in their actual research expertise (summarized below), then converge on a committee recommendation. Use real literature (with DOIs/arXiv IDs) to support claims about EBSD/HR-EBSD, microstructure-sensitive design (MSD), statistical microstructure characterization, indexing/pattern-quality metrology, and AI/autonomous characterization.
+
+THE SYMPOSIUM (TMS 2027; sponsored by the TMS Materials Processing & Manufacturing Division and Structural Materials Division; Advanced Characterization/Testing/Simulation, Computational Materials Science & Engineering, and Mechanical Behavior of Materials Committees):
+"Microstructure-Sensitive Design and Advanced Characterization: An MPMD/SMD Symposium Honoring David T. Fullwood." Scope: honoring Prof. David T. Fullwood's contributions, emphasizing advanced characterization techniques and modeling to understand the link between a material's microstructure and its mechanical behavior. Core topics: (1) Microstructure-Sensitive Design (MSD) and statistical microstructure descriptions; (2) advanced electron-based characterization (EBSD, HR-EBSD techniques); (3) computational and experimental mechanics integration; (4) multiscale deformation analysis across atomic to macroscopic scales.
+
+IMPORTANT CONTEXT: This is a **BYU-hosted, in-house-flavored symposium** honoring a BYU professor; three of the seven organizers are BYU Mechanical Engineering faculty. **The abstract under review is from the BYU Vertical Cloud Lab (BYU Mechanical Engineering) — i.e., the same department as the honoree and several organizers.** The submitting PI (Sterling Baird) also holds an invited talk in this same symposium. Weigh both scientific fit and the practical reality that this is a friendly home venue.
+
+THE ORGANIZERS AND THEIR EXPERTISE (role-play each as a reviewer):
+1. Oliver K. Johnson, Brigham Young University — microstructure/grain-boundary structure-property relationships; graph/network analysis; machine learning for microstructure; EBSD. BYU ME.
+2. Eric R. Homer, Brigham Young University — grain-boundary structure, HR-EBSD, GND measurement, atomistics, ML representations of grain boundaries; co-directs the BYU Microstructure lab. BYU ME.
+3. Michael P. Miles, Brigham Young University — friction-stir processing/welding, formability, EBSD, digital image correlation. BYU Manufacturing Engineering.
+4. Stephen R. Niezgoda, Ohio State University — microstructure-sensitive design, texture, statistical microstructure descriptors, uncertainty quantification, ICME. Deep MSD lineage (Kalidindi/Adams/Fullwood school).
+5. Marko Knezevic, University of New Hampshire — crystal plasticity, texture evolution, AM, multiscale modeling of deformation.
+6. Josh Kacher, Georgia Institute of Technology — in-situ TEM deformation, EBSD, local chemistry effects on defects (dislocations, twins), multiscale defect characterization; co-author of "Thinking Microscopes" (agentic/autonomous microscopy).
+7. Tim J. Ruggles, Sandia National Laboratories — HR-EBSD; cross-correlation EBSD for local stress and GND density; in-situ HR-EBSD + DIC; EBSD pattern-quality/indexing methodology.
+(The honoree, David T. Fullwood, BYU — HR-EBSD, GND, MSD, spherical-harmonic microstructure representation — is the thematic anchor.)
+
+THE ABSTRACT UNDER REVIEW (BYU Vertical Cloud Lab, FLAIME project — final Fullwood-tailored draft):
+
+Title: "Patterns First: A Retrieval-Augmented, Uncertainty-Aware Platform (CALIBER) for High-Fidelity EBSD Acquisition to Enable Microstructure-Sensitive Design."
+
+Abstract (149 words): "Trustworthy microstructure-sensitive design begins with trustworthy patterns: HR-EBSD elastic-strain and GND-density measurements, and the statistical microstructure descriptors they feed, are only as reliable as the upstream EBSD acquisition — yet that step is fragile and operator-dependent. On laser-powder-bed-fusion Al–Si, EBSD indexing yield rose from ~40% to ~77% of points above CI = 0.1 once beam current and a custom AlSi10Mg / diamond-cubic-Si phase model were corrected; standardless SEM-EDS separately over-reported trace Mg several-fold. We present CALIBER, an uncertainty-aware platform that recommends and iteratively refines EBSD — and complementary EDS/XRF — acquisition parameters for a given sample and analysis goal. Recommendations are grounded in retrieval over characterization standards and HR-EBSD literature, electron-beam and interaction-volume simulation, and a growing provenance-tracked dataset of parameter sweeps. The result is a reproducible, transferable route to high-quality patterns, and a labeled dataset for statistical microstructure quantification, that makes downstream HR-EBSD, GND, and MSD analyses defensible."
+
+WHAT WE NEED FROM YOU:
+A. FIT ASSESSMENT. Assess fit honestly for a symposium on MSD + advanced (EBSD/HR-EBSD) characterization honoring Fullwood. This draft has been deliberately reframed to lead with EBSD pattern-quality/indexing yield as the *upstream enabler* of HR-EBSD, GND, and statistical microstructure descriptors (Topic 2 + the "MSD" thread), with EDS/XRF/ICP demoted to supporting cast. Assess whether that reframe successfully moves it from "instrument informatics" into the room's science. Where is the overlap now genuinely strong, and where does a residual gap remain (it still does not itself compute GNDs, elastic strain, or property predictions — it enables them)? Did the "Patterns First" / "garbage patterns in → garbage MSD out" enabling framing land, or does it still read as tooling to a mechanics audience?
+B. PER-ORGANIZER MOCK REVIEW. For each of the 7 organizers, 3–5 sentences in their voice: accept or reject, what specifically excites or bothers them about THIS reframed draft, and the single change that would most improve it for them. (Ruggles and Homer especially: does the "pattern quality is the prerequisite for reliable HR-EBSD strain/GND" argument serve the workflows they care about? Niezgoda: does the "labeled dataset for statistical microstructure quantification" hook connect to MSD descriptors credibly? Kacher: does CALIBER read as a concrete realization of the "Thinking Microscopes" agentic-microscopy vision?)
+C. VERDICT. Committee-level recommendation: SUBMIT / SUBMIT-IF-RETAILORED / DO-NOT-SUBMIT, with confidence and the single biggest remaining risk. Compare explicitly to the prior panel's verdict on the un-reframed version (SUBMIT-IF-RETAILORED, confidence High, ~5–2 for): did this reframe move the needle toward a clean SUBMIT?
+D. TAILORING PLAYBOOK. Concrete, prioritized edits to sharpen THIS draft further for this room — e.g., whether to add one explicit forward-looking mechanics sentence (validated EBSD → CPFE / DIC-EBSD / process–structure–property) to satisfy Knezevic; whether a before/after cross-correlation-quality figure is worth it; which specific citations to name-drop (the honoree's own HR-EBSD/GND work; Ram & De Graef dictionary indexing; Niezgoda/Kalidindi statistical descriptors; Kacher "Thinking Microscopes"). Ground in real literature (DOIs).
+E. LITERATURE. Cite real, verifiable sources (DOIs/arXiv) on (i) EBSD indexing quality / pattern quality / dictionary indexing and beam-condition effects, (ii) HR-EBSD and GND measurement (Fullwood/Wilkinson lineage), and (iii) MSD and statistical microstructure characterization.
+
+Return a well-structured report: one-paragraph executive summary with the bottom-line verdict at top, then sections A–E, with per-organizer subsections in B.
