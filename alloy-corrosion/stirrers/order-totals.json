@@ -1,0 +1,60 @@
+{
+ "price_seen": "2026-10-19 (stirrer item 13: 2026-10-29); before shipping and tax",
+ "rows": 35,
+ "priced_rows": 32,
+ "unpriced_or_quote": [
+  "B10 Drill rod 3 mm O1 tool steel; 3 ft",
+  "B45 C95800 nickel-aluminium bronze; continuous-cast ba",
+  "B46 PTFE rod 3/4 in; 1 ft (the S4 blank: cut 6 mm disc"
+ ],
+ "corrosion_usd": 2025.53,
+ "of_which_B19_reference_placeholder_usd": 261.0,
+ "stirrers_usd": 47.26,
+ "stirrers_without_ST4_usd": 40.27,
+ "total_usd": 2072.79,
+ "by_vendor_usd": {
+  "Government Scientific Source": 328.0,
+  "OnlineMetals": 326.5,
+  "PACE Technologies": 265.0,
+  "Innovative Instruments": 261.0,
+  "Advent Research Materials": 216.0,
+  "Ossila": 165.0,
+  "Fisher Scientific": 108.9,
+  "AquaPhoenix Scientific": 92.43,
+  "Sigma-Aldrich": 60.0,
+  "totalElement": 52.78,
+  "The O-Ring Store": 52.0,
+  "Amazon": 47.26,
+  "Digi-Key": 43.95,
+  "Adafruit": 22.35,
+  "ShowMeCables": 14.19,
+  "ChemicalStore (MiniScience)": 8.0,
+  "McMaster-Carr": 5.45,
+  "Ace Hardware": 1.99,
+  "Zoro": 1.99
+ },
+ "optional_stirrer_usd": 6.72,
+ "covered_by_stirrer_order": {
+  "B13": "same insert as the stirrer BOM's item 11 (100 from ME order 13518): the cell takes 12, three more stirrers 12",
+  "B18": "JST-XH 4-pin pairs come with the stirrer BOM's item 9 (10 pairs, ME order 13518): the tray takes 2, three more stirrers 3"
+ },
+ "check_stock": {
+  "B34": "filament: about 0.42 kg of PLA for the corrosion plates (bom/a1-mini) and 0.1 kg of PETG for the stirrer parts"
+ },
+ "left_out": {
+  "B23": "potentiostat: the EZstat-Pro is set up",
+  "B24": "potentiostat box",
+  "B25": "potentiostat",
+  "B27": "potentiostat",
+  "B28": "potentiostat adapter",
+  "B35": "tips: enough on hand for a few tests",
+  "B05": "fallback O-ring cap only",
+  "B30": "optional polish",
+  "B31": "optional polish",
+  "B32": "optional polish",
+  "B33": "optional polish",
+  "B37": "aluminium only: add it if the aluminium shakedown runs too",
+  "B42": "only if the ICP lab won't dilute into its own tubes",
+  "B48": "optional: only if the lid's bridged ceiling is rough"
+ }
+}

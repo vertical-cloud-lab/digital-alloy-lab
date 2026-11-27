@@ -1,0 +1,1091 @@
+{
+ "made_by": "make_plates.py",
+ "printer": "Bambu Lab A1 mini 0.4 nozzle",
+ "process": "0.20mm Standard @BBL A1M",
+ "filament": "Bambu PLA Basic @BBL A1M",
+ "bed_mm": [
+  180.0,
+  180.0
+ ],
+ "margin_mm": 5.0,
+ "min_gap_mm": 5.0,
+ "holder_cut": "9VialHolder20mL_TightFit.step cut at y = -148.5 (between positions 5 and 6)",
+ "plates": {
+  "plate1-fit-check": {
+   "title": "1  Fit check (print first)",
+   "bambu_plate_name": "1 Fit check",
+   "when": "First. Check the cap over the lid's boss, the carrier in the cap, and the strips' holes on real tips and tubes",
+   "pauses": [
+    {
+     "pocket_top_z": 5.6,
+     "pause_before_layer_z": 5.8,
+     "insert": "two 4 x 2 mm magnets in the lid, same pole up"
+    }
+   ],
+   "min_gap_mm": 6.0,
+   "parts": [
+    {
+     "bom": "P12",
+     "part": "Fit strip, tube",
+     "qty": 1,
+     "infill": "15% (profile)",
+     "on_the_bed": "",
+     "volume_cm3": 2.22
+    },
+    {
+     "bom": "P12",
+     "part": "Fit strip, tip",
+     "qty": 1,
+     "infill": "15% (profile)",
+     "on_the_bed": "",
+     "volume_cm3": 2.29
+    },
+    {
+     "bom": "P03",
+     "part": "Well lid v2, AS568-006",
+     "qty": 1,
+     "infill": "100%",
+     "on_the_bed": "bottom face down; two magnets at the pause",
+     "volume_cm3": 5.02
+    },
+    {
+     "bom": "P01",
+     "part": "Electrode cap",
+     "qty": 1,
+     "infill": "100%",
+     "on_the_bed": "skirt down",
+     "volume_cm3": 6.69
+    },
+    {
+     "bom": "P02",
+     "part": "Electrode carrier",
+     "qty": 1,
+     "infill": "100%",
+     "on_the_bed": "turned over: plug on the bed, legs up",
+     "volume_cm3": 0.14
+    }
+   ],
+   "placements": [
+    {
+     "name": "P12_strip_tube_1",
+     "centre_xy": [
+      90,
+      62
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      76.0,
+      14.0
+     ],
+     "height_mm": 3.0
+    },
+    {
+     "name": "P12_strip_tip_1",
+     "centre_xy": [
+      90,
+      42
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      63.5,
+      14.0
+     ],
+     "height_mm": 3.0
+    },
+    {
+     "name": "P03_lid_006_1",
+     "centre_xy": [
+      62,
+      100
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      24.0,
+      35.0
+     ],
+     "height_mm": 10.0
+    },
+    {
+     "name": "P01_cap_1",
+     "centre_xy": [
+      96,
+      100
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      27.97,
+      27.99
+     ],
+     "height_mm": 15.37
+    },
+    {
+     "name": "P02_carrier_1",
+     "centre_xy": [
+      124,
+      100
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      7.59,
+      7.6
+     ],
+     "height_mm": 11.1
+    }
+   ],
+   "slice": {
+    "slicer_version": "02.09.01.70",
+    "time_s": 3129,
+    "time_h": 0.87,
+    "filament_g": 18.83,
+    "pause_count": 1,
+    "filament_m": 6.21,
+    "bed_temp_C": 65,
+    "nozzle_temp_C": 220,
+    "pauses": [
+     {
+      "before_layer_z": 5.8,
+      "progress_pct": 67,
+      "elapsed_h": 0.6,
+      "remaining_h": 0.27
+     }
+    ],
+    "extrusion_xy_extent_mm": [
+     50.2,
+     35.2,
+     127.8,
+     117.3
+    ],
+    "magnet_pockets": [
+     {
+      "part": "P03_lid_006_1",
+      "pocket_xy": [
+       56.85,
+       91.08
+      ],
+      "nearest_extrusion_mm_at_z_5.6": 2.25,
+      "nearest_extrusion_mm_at_z_5.8": 0.19
+     },
+     {
+      "part": "P03_lid_006_1",
+      "pocket_xy": [
+       67.15,
+       108.92
+      ],
+      "nearest_extrusion_mm_at_z_5.6": 2.25,
+      "nearest_extrusion_mm_at_z_5.8": 0.19
+     }
+    ]
+   }
+  },
+  "plate2-cell": {
+   "title": "2  Cell: lids, cap, carriers, shims, tray",
+   "bambu_plate_name": "2 Cell parts",
+   "when": "After plate 1 shows the cap slides over the boss",
+   "pauses": [
+    {
+     "pocket_top_z": 5.6,
+     "pause_before_layer_z": 5.8,
+     "insert": "twelve 4 x 2 mm magnets, two per lid, same pole up"
+    }
+   ],
+   "min_gap_mm": 6.0,
+   "parts": [
+    {
+     "bom": "P06",
+     "part": "Coupon tray",
+     "qty": 1,
+     "infill": "15% (profile)",
+     "on_the_bed": "pockets up",
+     "volume_cm3": 68.34
+    },
+    {
+     "bom": "P03",
+     "part": "Well lid v2, AS568-006",
+     "qty": 4,
+     "infill": "100%",
+     "on_the_bed": "bottom face down; two magnets at the pause",
+     "volume_cm3": 20.08
+    },
+    {
+     "bom": "P04",
+     "part": "Well lid v2, AS568-008",
+     "qty": 1,
+     "infill": "100%",
+     "on_the_bed": "bottom face down; two magnets at the pause",
+     "volume_cm3": 4.99
+    },
+    {
+     "bom": "P05",
+     "part": "Well lid v2, AS568-010",
+     "qty": 1,
+     "infill": "100%",
+     "on_the_bed": "bottom face down; two magnets at the pause",
+     "volume_cm3": 4.95
+    },
+    {
+     "bom": "P01",
+     "part": "Electrode cap",
+     "qty": 1,
+     "infill": "100%",
+     "on_the_bed": "skirt down",
+     "volume_cm3": 6.69
+    },
+    {
+     "bom": "P02",
+     "part": "Electrode carrier",
+     "qty": 2,
+     "infill": "100%",
+     "on_the_bed": "turned over: plug on the bed, legs up",
+     "volume_cm3": 0.27
+    },
+    {
+     "bom": "P07",
+     "part": "Shim 1 mm",
+     "qty": 4,
+     "infill": "15% (profile)",
+     "on_the_bed": "",
+     "volume_cm3": 1.64
+    },
+    {
+     "bom": "P07",
+     "part": "Shim 3 mm",
+     "qty": 4,
+     "infill": "15% (profile)",
+     "on_the_bed": "",
+     "volume_cm3": 4.91
+    }
+   ],
+   "placements": [
+    {
+     "name": "P06_tray_1",
+     "centre_xy": [
+      90,
+      30
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      105.0,
+      40.0
+     ],
+     "height_mm": 19.5
+    },
+    {
+     "name": "P03_lid_006_1",
+     "centre_xy": [
+      25,
+      75.5
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      24.0,
+      35.0
+     ],
+     "height_mm": 10.0
+    },
+    {
+     "name": "P03_lid_006_2",
+     "centre_xy": [
+      55,
+      75.5
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      24.0,
+      35.0
+     ],
+     "height_mm": 10.0
+    },
+    {
+     "name": "P03_lid_006_3",
+     "centre_xy": [
+      85,
+      75.5
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      24.0,
+      35.0
+     ],
+     "height_mm": 10.0
+    },
+    {
+     "name": "P03_lid_006_4",
+     "centre_xy": [
+      25,
+      116.5
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      24.0,
+      35.0
+     ],
+     "height_mm": 10.0
+    },
+    {
+     "name": "P04_lid_008_1",
+     "centre_xy": [
+      55,
+      116.5
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      24.0,
+      35.0
+     ],
+     "height_mm": 10.0
+    },
+    {
+     "name": "P05_lid_010_1",
+     "centre_xy": [
+      85,
+      116.5
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      24.0,
+      35.0
+     ],
+     "height_mm": 10.0
+    },
+    {
+     "name": "P01_cap_1",
+     "centre_xy": [
+      120,
+      75.5
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      27.97,
+      27.99
+     ],
+     "height_mm": 15.37
+    },
+    {
+     "name": "P02_carrier_1",
+     "centre_xy": [
+      147,
+      75.5
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      7.59,
+      7.6
+     ],
+     "height_mm": 11.1
+    },
+    {
+     "name": "P02_carrier_2",
+     "centre_xy": [
+      162,
+      75.5
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      7.59,
+      7.6
+     ],
+     "height_mm": 11.1
+    },
+    {
+     "name": "P07_shim_1_1",
+     "centre_xy": [
+      120,
+      116.5
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      20.4,
+      20.4
+     ],
+     "height_mm": 1.0
+    },
+    {
+     "name": "P07_shim_1_2",
+     "centre_xy": [
+      146.4,
+      116.5
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      20.4,
+      20.4
+     ],
+     "height_mm": 1.0
+    },
+    {
+     "name": "P07_shim_3_1",
+     "centre_xy": [
+      24,
+      150.2
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      20.4,
+      20.4
+     ],
+     "height_mm": 3.0
+    },
+    {
+     "name": "P07_shim_3_2",
+     "centre_xy": [
+      50.4,
+      150.2
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      20.4,
+      20.4
+     ],
+     "height_mm": 3.0
+    },
+    {
+     "name": "P07_shim_3_3",
+     "centre_xy": [
+      76.8,
+      150.2
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      20.4,
+      20.4
+     ],
+     "height_mm": 3.0
+    },
+    {
+     "name": "P07_shim_3_4",
+     "centre_xy": [
+      103.2,
+      150.2
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      20.4,
+      20.4
+     ],
+     "height_mm": 3.0
+    },
+    {
+     "name": "P07_shim_1_3",
+     "centre_xy": [
+      129.6,
+      150.2
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      20.4,
+      20.4
+     ],
+     "height_mm": 1.0
+    },
+    {
+     "name": "P07_shim_1_4",
+     "centre_xy": [
+      156,
+      150.2
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      20.4,
+      20.4
+     ],
+     "height_mm": 1.0
+    }
+   ],
+   "slice": {
+    "slicer_version": "02.09.01.70",
+    "time_s": 10816,
+    "time_h": 3.0,
+    "filament_g": 81.92,
+    "pause_count": 1,
+    "filament_m": 27.03,
+    "bed_temp_C": 65,
+    "nozzle_temp_C": 220,
+    "pauses": [
+     {
+      "before_layer_z": 5.8,
+      "progress_pct": 60,
+      "elapsed_h": 1.8,
+      "remaining_h": 1.2
+     }
+    ],
+    "extrusion_xy_extent_mm": [
+     13.2,
+     10.2,
+     166.0,
+     160.2
+    ],
+    "magnet_pockets": [
+     {
+      "part": "P03_lid_006_1",
+      "pocket_xy": [
+       30.15,
+       84.42
+      ],
+      "nearest_extrusion_mm_at_z_5.6": 2.25,
+      "nearest_extrusion_mm_at_z_5.8": 0.19
+     },
+     {
+      "part": "P03_lid_006_1",
+      "pocket_xy": [
+       19.85,
+       66.58
+      ],
+      "nearest_extrusion_mm_at_z_5.6": 2.25,
+      "nearest_extrusion_mm_at_z_5.8": 0.19
+     },
+     {
+      "part": "P03_lid_006_2",
+      "pocket_xy": [
+       49.85,
+       66.58
+      ],
+      "nearest_extrusion_mm_at_z_5.6": 2.25,
+      "nearest_extrusion_mm_at_z_5.8": 0.19
+     },
+     {
+      "part": "P03_lid_006_2",
+      "pocket_xy": [
+       60.15,
+       84.42
+      ],
+      "nearest_extrusion_mm_at_z_5.6": 2.25,
+      "nearest_extrusion_mm_at_z_5.8": 0.19
+     },
+     {
+      "part": "P03_lid_006_3",
+      "pocket_xy": [
+       79.85,
+       66.58
+      ],
+      "nearest_extrusion_mm_at_z_5.6": 2.25,
+      "nearest_extrusion_mm_at_z_5.8": 0.19
+     },
+     {
+      "part": "P03_lid_006_3",
+      "pocket_xy": [
+       90.15,
+       84.42
+      ],
+      "nearest_extrusion_mm_at_z_5.6": 2.25,
+      "nearest_extrusion_mm_at_z_5.8": 0.19
+     },
+     {
+      "part": "P03_lid_006_4",
+      "pocket_xy": [
+       30.15,
+       125.42
+      ],
+      "nearest_extrusion_mm_at_z_5.6": 2.25,
+      "nearest_extrusion_mm_at_z_5.8": 0.19
+     },
+     {
+      "part": "P03_lid_006_4",
+      "pocket_xy": [
+       19.85,
+       107.58
+      ],
+      "nearest_extrusion_mm_at_z_5.6": 2.25,
+      "nearest_extrusion_mm_at_z_5.8": 0.19
+     },
+     {
+      "part": "P04_lid_008_1",
+      "pocket_xy": [
+       49.85,
+       107.58
+      ],
+      "nearest_extrusion_mm_at_z_5.6": 2.25,
+      "nearest_extrusion_mm_at_z_5.8": 0.19
+     },
+     {
+      "part": "P04_lid_008_1",
+      "pocket_xy": [
+       60.15,
+       125.42
+      ],
+      "nearest_extrusion_mm_at_z_5.6": 2.25,
+      "nearest_extrusion_mm_at_z_5.8": 0.19
+     },
+     {
+      "part": "P05_lid_010_1",
+      "pocket_xy": [
+       79.85,
+       107.58
+      ],
+      "nearest_extrusion_mm_at_z_5.6": 2.25,
+      "nearest_extrusion_mm_at_z_5.8": 0.19
+     },
+     {
+      "part": "P05_lid_010_1",
+      "pocket_xy": [
+       90.15,
+       125.42
+      ],
+      "nearest_extrusion_mm_at_z_5.6": 2.25,
+      "nearest_extrusion_mm_at_z_5.8": 0.19
+     }
+    ]
+   }
+  },
+  "plate3-deck": {
+   "title": "3  Deck: cup block, racks, tip waste, vial caps",
+   "bambu_plate_name": "3 Deck parts and vial caps",
+   "when": "After the fit strips from plate 1 have picked the rack holes (rerun cad_build_parts.py if they changed)",
+   "pauses": [
+    {
+     "pocket_top_z": 44.6,
+     "pause_before_layer_z": 44.8,
+     "insert": "six 4 x 2 mm magnets in the cup block, same pole up as the lids"
+    }
+   ],
+   "min_gap_mm": 6.0,
+   "parts": [
+    {
+     "bom": "P10",
+     "part": "Tube rack 2 x 8",
+     "qty": 1,
+     "infill": "15% (profile)",
+     "on_the_bed": "upside down: the hole plate on the bed, like the fit strip",
+     "volume_cm3": 18.99
+    },
+    {
+     "bom": "P08",
+     "part": "Cup block",
+     "qty": 1,
+     "infill": "100%",
+     "on_the_bed": "base down; six magnets at the pause",
+     "volume_cm3": 70.48
+    },
+    {
+     "bom": "P09",
+     "part": "Tip waste cup",
+     "qty": 1,
+     "infill": "15% (profile)",
+     "on_the_bed": "",
+     "volume_cm3": 10.84
+    },
+    {
+     "bom": "P11",
+     "part": "Tip rack 2 x 15",
+     "qty": 1,
+     "infill": "15% (profile)",
+     "on_the_bed": "upside down: the hole plate on the bed, like the fit strip",
+     "volume_cm3": 48.81
+    },
+    {
+     "bom": "P13",
+     "part": "Magnetic vial cap",
+     "qty": 8,
+     "infill": "15% (profile)",
+     "on_the_bed": "skirt down; PDMS fill and steel disc afterwards",
+     "volume_cm3": 27.82
+    }
+   ],
+   "placements": [
+    {
+     "name": "P10_tube_rack_1",
+     "centre_xy": [
+      60,
+      25
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      96.0,
+      34.0
+     ],
+     "height_mm": 30.0
+    },
+    {
+     "name": "P08_cup_block_1",
+     "centre_xy": [
+      58,
+      62
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      92.0,
+      28.0
+     ],
+     "height_mm": 49.0
+    },
+    {
+     "name": "P09_tip_waste_1",
+     "centre_xy": [
+      34,
+      104
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      43.96,
+      43.98
+     ],
+     "height_mm": 50.0
+    },
+    {
+     "name": "P11_tip_rack_1",
+     "centre_xy": [
+      124,
+      77
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      20.0,
+      138.0
+     ],
+     "height_mm": 64.7
+    },
+    {
+     "name": "P13_vial_cap_1",
+     "centre_xy": [
+      154,
+      22
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      28.0,
+      27.99
+     ],
+     "height_mm": 18.5
+    },
+    {
+     "name": "P13_vial_cap_2",
+     "centre_xy": [
+      154,
+      56
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      28.0,
+      27.99
+     ],
+     "height_mm": 18.5
+    },
+    {
+     "name": "P13_vial_cap_3",
+     "centre_xy": [
+      154,
+      90
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      28.0,
+      27.99
+     ],
+     "height_mm": 18.5
+    },
+    {
+     "name": "P13_vial_cap_4",
+     "centre_xy": [
+      154,
+      124
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      28.0,
+      27.99
+     ],
+     "height_mm": 18.5
+    },
+    {
+     "name": "P13_vial_cap_5",
+     "centre_xy": [
+      154,
+      158
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      28.0,
+      27.99
+     ],
+     "height_mm": 18.5
+    },
+    {
+     "name": "P13_vial_cap_6",
+     "centre_xy": [
+      26,
+      146
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      28.0,
+      27.99
+     ],
+     "height_mm": 18.5
+    },
+    {
+     "name": "P13_vial_cap_7",
+     "centre_xy": [
+      60,
+      146
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      28.0,
+      27.99
+     ],
+     "height_mm": 18.5
+    },
+    {
+     "name": "P13_vial_cap_8",
+     "centre_xy": [
+      94,
+      96
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      28.0,
+      27.99
+     ],
+     "height_mm": 18.5
+    }
+   ],
+   "slice": {
+    "slicer_version": "02.09.01.70",
+    "time_s": 20834,
+    "time_h": 5.79,
+    "filament_g": 207.0,
+    "pause_count": 1,
+    "filament_m": 68.3,
+    "bed_temp_C": 65,
+    "nozzle_temp_C": 220,
+    "pauses": [
+     {
+      "before_layer_z": 44.8,
+      "progress_pct": 89,
+      "elapsed_h": 5.2,
+      "remaining_h": 0.58
+     }
+    ],
+    "extrusion_xy_extent_mm": [
+     12.2,
+     8.2,
+     167.8,
+     171.8
+    ],
+    "magnet_pockets": [
+     {
+      "part": "P08_cup_block_1",
+      "pocket_xy": [
+       33.15,
+       70.92
+      ],
+      "nearest_extrusion_mm_at_z_44.6": 2.25,
+      "nearest_extrusion_mm_at_z_44.8": 0.19
+     },
+     {
+      "part": "P08_cup_block_1",
+      "pocket_xy": [
+       22.85,
+       53.08
+      ],
+      "nearest_extrusion_mm_at_z_44.6": 2.25,
+      "nearest_extrusion_mm_at_z_44.8": 0.18
+     },
+     {
+      "part": "P08_cup_block_1",
+      "pocket_xy": [
+       63.15,
+       70.92
+      ],
+      "nearest_extrusion_mm_at_z_44.6": 2.25,
+      "nearest_extrusion_mm_at_z_44.8": 0.19
+     },
+     {
+      "part": "P08_cup_block_1",
+      "pocket_xy": [
+       52.85,
+       53.08
+      ],
+      "nearest_extrusion_mm_at_z_44.6": 2.25,
+      "nearest_extrusion_mm_at_z_44.8": 0.18
+     },
+     {
+      "part": "P08_cup_block_1",
+      "pocket_xy": [
+       93.15,
+       70.92
+      ],
+      "nearest_extrusion_mm_at_z_44.6": 2.25,
+      "nearest_extrusion_mm_at_z_44.8": 0.19
+     },
+     {
+      "part": "P08_cup_block_1",
+      "pocket_xy": [
+       82.85,
+       53.08
+      ],
+      "nearest_extrusion_mm_at_z_44.6": 2.25,
+      "nearest_extrusion_mm_at_z_44.8": 0.18
+     }
+    ]
+   }
+  },
+  "plate4-bench-cell": {
+   "title": "4  Bench cell (copper calibration)",
+   "bambu_plate_name": "4 Bench cell",
+   "when": "Any time; nothing on it depends on the fit check",
+   "pauses": [],
+   "min_gap_mm": 14.1,
+   "parts": [
+    {
+     "bom": "P15",
+     "part": "Bench cell body",
+     "qty": 1,
+     "infill": "100%",
+     "on_the_bed": "floor down",
+     "volume_cm3": 73.88
+    },
+    {
+     "bom": "P17",
+     "part": "Bench cell cover",
+     "qty": 1,
+     "infill": "15% (profile)",
+     "on_the_bed": "turned over: flat top on the bed, lip up",
+     "volume_cm3": 12.37
+    },
+    {
+     "bom": "P16",
+     "part": "Bench cell clamp plate",
+     "qty": 1,
+     "infill": "15% (profile)",
+     "on_the_bed": "counterbored face down",
+     "volume_cm3": 13.28
+    }
+   ],
+   "placements": [
+    {
+     "name": "P15_cell_body_1",
+     "centre_xy": [
+      45,
+      55
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      65.94,
+      65.97
+     ],
+     "height_mm": 90.0
+    },
+    {
+     "name": "P17_cell_cover_1",
+     "centre_xy": [
+      127,
+      55
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      69.93,
+      69.97
+     ],
+     "height_mm": 7.0
+    },
+    {
+     "name": "P16_cell_clamp_1",
+     "centre_xy": [
+      90,
+      130
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      46.0,
+      46.0
+     ],
+     "height_mm": 8.0
+    }
+   ],
+   "slice": {
+    "slicer_version": "02.09.01.70",
+    "time_s": 16784,
+    "time_h": 4.66,
+    "filament_g": 109.48,
+    "pause_count": 0,
+    "filament_m": 36.12,
+    "bed_temp_C": 65,
+    "nozzle_temp_C": 220,
+    "pauses": [],
+    "extrusion_xy_extent_mm": [
+     12.2,
+     20.2,
+     161.8,
+     152.8
+    ],
+    "magnet_pockets": []
+   }
+  },
+  "plate5-vial-holder-optional": {
+   "title": "5  Optional: 9-vial holder in two pieces",
+   "bambu_plate_name": "5 Vial holder (optional)",
+   "when": "Only if the deck has no full 9-position holder yet",
+   "pauses": [],
+   "min_gap_mm": 10.6,
+   "parts": [
+    {
+     "bom": "P14",
+     "part": "9-vial holder, positions 1-5",
+     "qty": 1,
+     "infill": "15% (profile)",
+     "on_the_bed": "cut from PANDA-BEAR's one-piece holder",
+     "volume_cm3": 90.8
+    },
+    {
+     "bom": "P14",
+     "part": "9-vial holder, positions 6-9",
+     "qty": 1,
+     "infill": "15% (profile)",
+     "on_the_bed": "cut from PANDA-BEAR's one-piece holder",
+     "volume_cm3": 72.62
+    }
+   ],
+   "placements": [
+    {
+     "name": "P14_holder_a_1",
+     "centre_xy": [
+      69,
+      90
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      33.4,
+      165.2
+     ],
+     "height_mm": 35.0
+    },
+    {
+     "name": "P14_holder_b_1",
+     "centre_xy": [
+      113,
+      90
+     ],
+     "rot_z": 0,
+     "footprint_mm": [
+      33.4,
+      132.2
+     ],
+     "height_mm": 35.0
+    }
+   ],
+   "slice": {
+    "slicer_version": "02.09.01.70",
+    "time_s": 8223,
+    "time_h": 2.28,
+    "filament_g": 76.43,
+    "pause_count": 0,
+    "filament_m": 25.22,
+    "bed_temp_C": 65,
+    "nozzle_temp_C": 220,
+    "pauses": [],
+    "extrusion_xy_extent_mm": [
+     52.5,
+     7.6,
+     129.5,
+     172.4
+    ],
+    "magnet_pockets": []
+   }
+  }
+ },
+ "bambu_studio": "02.09.01.70",
+ "required_total": {
+  "time_h": 14.3,
+  "filament_g": 417.2
+ }
+}

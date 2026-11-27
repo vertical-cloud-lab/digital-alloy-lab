@@ -1,0 +1,968 @@
+{
+ "layout": {
+  "stirrers": {
+   "A": {
+    "vial_xy": [
+     76.0,
+     45.0
+    ],
+    "holds": "ASW (D1141, no heavy metals)",
+    "stage_xy": [
+     171.0,
+     56.0
+    ]
+   },
+   "B": {
+    "vial_xy": [
+     76.0,
+     90.0
+    ],
+    "holds": "ASW + 0.1 mg/L S",
+    "stage_xy": [
+     171.0,
+     101.0
+    ]
+   },
+   "C": {
+    "vial_xy": [
+     76.0,
+     135.0
+    ],
+    "holds": "ASW + 10 mg/L S",
+    "stage_xy": [
+     171.0,
+     146.0
+    ]
+   },
+   "D": {
+    "vial_xy": [
+     76.0,
+     180.0
+    ],
+    "holds": "spare: FeSO4 on non-sulfide nights, or a fourth electrolyte",
+    "stage_xy": [
+     171.0,
+     191.0
+    ]
+   }
+  },
+  "stirrer_base_mm": [
+   49.0,
+   44.0
+  ],
+  "stirred_vial_rim_z": 67.6,
+  "stirred_cap_top_z": 82.6,
+  "tip_rack_1": {
+   "a1": [
+    291.332,
+    89.0
+   ],
+   "a2": [
+    282.832,
+    89.0
+   ],
+   "pickup_z": 59.0
+  },
+  "tip_rack_2": {
+   "a1": [
+    266.332,
+    89.0
+   ],
+   "a2": [
+    257.832,
+    89.0
+   ],
+   "pickup_z": 59.0
+  },
+  "tip_rack_2_rect": [
+   252.082,
+   85.0,
+   272.082,
+   212.0
+  ],
+  "holder_stocks": {
+   "DI water": [
+    318.0,
+    35.0
+   ],
+   "1 M HNO3, trace metal": [
+    318.0,
+    68.0
+   ]
+  }
+ },
+ "rigid_head_check": {
+  "events_checked": 124,
+  "events_with_problems": 0,
+  "tightest_pass_mm": {
+   "pipette_bare over park cup": 16.0,
+   "capper over tube rack": 22.0,
+   "pipette_bare over vial holder": 25.0,
+   "capper over vial holder": 44.0
+  },
+  "travel_clearance_mm": {
+   "pipette tip end at travel": 87.0,
+   "electrode cap tips at travel": 86.2,
+   "tallest deck item": 71.0
+  },
+  "hang_mm": {
+   "capper": 16.0,
+   "capper+cap": 35.8,
+   "pipette": 35.0,
+   "pipette_bare": 0.0
+  }
+ },
+ "rigid_head_problems": [],
+ "move_check": {
+  "unstaged": {
+   "fills": 24,
+   "fills_passing": 3,
+   "worst_tip": {
+    "closest_mm": 0.0,
+    "move": "aspirate A #2",
+    "capped_vial": "B"
+   },
+   "worst_carried_cap": {
+    "closest_mm": 12.0,
+    "move": "aspirate A #1",
+    "capped_vial": "B"
+   }
+  },
+  "staged": {
+   "fills": 24,
+   "fills_passing": 24,
+   "worst_tip": {
+    "closest_mm": 34.0,
+    "move": "pick up tip",
+    "capped_vial": "A"
+   },
+   "worst_carried_cap": {
+    "closest_mm": 34.0,
+    "move": "dispense S1 #1",
+    "capped_vial": "A"
+   }
+  }
+ },
+ "move_check_keepouts_mm": {
+  "tip": 24.0,
+  "carried cap": 28.0
+ },
+ "move_check_fills": [
+  {
+   "stock": "A",
+   "well": "S1",
+   "staged": false,
+   "decap_before_tip": false,
+   "tip": {
+    "closest_mm": 0.0,
+    "move": "aspirate A #2",
+    "capped_vial": "B"
+   },
+   "carried cap": {
+    "closest_mm": 45.0,
+    "move": "aspirate A #1",
+    "capped_vial": "B"
+   },
+   "pass": false
+  },
+  {
+   "stock": "A",
+   "well": "S1",
+   "staged": false,
+   "decap_before_tip": true,
+   "tip": {
+    "closest_mm": 0.0,
+    "move": "aspirate A #2",
+    "capped_vial": "B"
+   },
+   "carried cap": {
+    "closest_mm": 12.0,
+    "move": "aspirate A #1",
+    "capped_vial": "B"
+   },
+   "pass": false
+  },
+  {
+   "stock": "A",
+   "well": "S1",
+   "staged": true,
+   "decap_before_tip": false,
+   "tip": {
+    "closest_mm": 34.0,
+    "move": "pick up tip",
+    "capped_vial": "A"
+   },
+   "carried cap": {
+    "closest_mm": 40.0,
+    "move": "stage A",
+    "capped_vial": "B"
+   },
+   "pass": true
+  },
+  {
+   "stock": "A",
+   "well": "S1",
+   "staged": true,
+   "decap_before_tip": true,
+   "tip": {
+    "closest_mm": 34.0,
+    "move": "aspirate A #1",
+    "capped_vial": "B"
+   },
+   "carried cap": {
+    "closest_mm": 40.0,
+    "move": "stage A",
+    "capped_vial": "B"
+   },
+   "pass": true
+  },
+  {
+   "stock": "A",
+   "well": "S2",
+   "staged": false,
+   "decap_before_tip": false,
+   "tip": {
+    "closest_mm": 0.0,
+    "move": "aspirate A #2",
+    "capped_vial": "B"
+   },
+   "carried cap": {
+    "closest_mm": 45.0,
+    "move": "aspirate A #1",
+    "capped_vial": "B"
+   },
+   "pass": false
+  },
+  {
+   "stock": "A",
+   "well": "S2",
+   "staged": false,
+   "decap_before_tip": true,
+   "tip": {
+    "closest_mm": 0.0,
+    "move": "aspirate A #2",
+    "capped_vial": "B"
+   },
+   "carried cap": {
+    "closest_mm": 12.0,
+    "move": "aspirate A #1",
+    "capped_vial": "B"
+   },
+   "pass": false
+  },
+  {
+   "stock": "A",
+   "well": "S2",
+   "staged": true,
+   "decap_before_tip": false,
+   "tip": {
+    "closest_mm": 34.0,
+    "move": "pick up tip",
+    "capped_vial": "A"
+   },
+   "carried cap": {
+    "closest_mm": 40.0,
+    "move": "stage A",
+    "capped_vial": "B"
+   },
+   "pass": true
+  },
+  {
+   "stock": "A",
+   "well": "S2",
+   "staged": true,
+   "decap_before_tip": true,
+   "tip": {
+    "closest_mm": 34.0,
+    "move": "aspirate A #1",
+    "capped_vial": "B"
+   },
+   "carried cap": {
+    "closest_mm": 40.0,
+    "move": "stage A",
+    "capped_vial": "B"
+   },
+   "pass": true
+  },
+  {
+   "stock": "A",
+   "well": "S3",
+   "staged": false,
+   "decap_before_tip": false,
+   "tip": {
+    "closest_mm": 0.0,
+    "move": "aspirate A #2",
+    "capped_vial": "B"
+   },
+   "carried cap": {
+    "closest_mm": 45.0,
+    "move": "aspirate A #1",
+    "capped_vial": "B"
+   },
+   "pass": false
+  },
+  {
+   "stock": "A",
+   "well": "S3",
+   "staged": false,
+   "decap_before_tip": true,
+   "tip": {
+    "closest_mm": 0.0,
+    "move": "aspirate A #2",
+    "capped_vial": "B"
+   },
+   "carried cap": {
+    "closest_mm": 12.0,
+    "move": "aspirate A #1",
+    "capped_vial": "B"
+   },
+   "pass": false
+  },
+  {
+   "stock": "A",
+   "well": "S3",
+   "staged": true,
+   "decap_before_tip": false,
+   "tip": {
+    "closest_mm": 34.0,
+    "move": "pick up tip",
+    "capped_vial": "A"
+   },
+   "carried cap": {
+    "closest_mm": 40.0,
+    "move": "stage A",
+    "capped_vial": "B"
+   },
+   "pass": true
+  },
+  {
+   "stock": "A",
+   "well": "S3",
+   "staged": true,
+   "decap_before_tip": true,
+   "tip": {
+    "closest_mm": 34.0,
+    "move": "aspirate A #1",
+    "capped_vial": "B"
+   },
+   "carried cap": {
+    "closest_mm": 40.0,
+    "move": "stage A",
+    "capped_vial": "B"
+   },
+   "pass": true
+  },
+  {
+   "stock": "B",
+   "well": "S1",
+   "staged": false,
+   "decap_before_tip": false,
+   "tip": {
+    "closest_mm": 0.0,
+    "move": "aspirate B #2",
+    "capped_vial": "C"
+   },
+   "carried cap": {
+    "closest_mm": 34.0,
+    "move": "dispense S1 #1",
+    "capped_vial": "A"
+   },
+   "pass": false
+  },
+  {
+   "stock": "B",
+   "well": "S1",
+   "staged": false,
+   "decap_before_tip": true,
+   "tip": {
+    "closest_mm": 0.0,
+    "move": "aspirate B #2",
+    "capped_vial": "C"
+   },
+   "carried cap": {
+    "closest_mm": 33.0,
+    "move": "aspirate B #1",
+    "capped_vial": "A"
+   },
+   "pass": false
+  },
+  {
+   "stock": "B",
+   "well": "S1",
+   "staged": true,
+   "decap_before_tip": false,
+   "tip": {
+    "closest_mm": 34.0,
+    "move": "pick up tip",
+    "capped_vial": "A"
+   },
+   "carried cap": {
+    "closest_mm": 34.0,
+    "move": "dispense S1 #1",
+    "capped_vial": "A"
+   },
+   "pass": true
+  },
+  {
+   "stock": "B",
+   "well": "S1",
+   "staged": true,
+   "decap_before_tip": true,
+   "tip": {
+    "closest_mm": 34.0,
+    "move": "aspirate B #1",
+    "capped_vial": "C"
+   },
+   "carried cap": {
+    "closest_mm": 34.0,
+    "move": "dispense S1 #1",
+    "capped_vial": "A"
+   },
+   "pass": true
+  },
+  {
+   "stock": "B",
+   "well": "S2",
+   "staged": false,
+   "decap_before_tip": false,
+   "tip": {
+    "closest_mm": 0.0,
+    "move": "aspirate B #2",
+    "capped_vial": "C"
+   },
+   "carried cap": {
+    "closest_mm": 34.0,
+    "move": "dispense S2 #1",
+    "capped_vial": "A"
+   },
+   "pass": false
+  },
+  {
+   "stock": "B",
+   "well": "S2",
+   "staged": false,
+   "decap_before_tip": true,
+   "tip": {
+    "closest_mm": 0.0,
+    "move": "aspirate B #2",
+    "capped_vial": "C"
+   },
+   "carried cap": {
+    "closest_mm": 33.0,
+    "move": "aspirate B #1",
+    "capped_vial": "A"
+   },
+   "pass": false
+  },
+  {
+   "stock": "B",
+   "well": "S2",
+   "staged": true,
+   "decap_before_tip": false,
+   "tip": {
+    "closest_mm": 34.0,
+    "move": "pick up tip",
+    "capped_vial": "A"
+   },
+   "carried cap": {
+    "closest_mm": 34.0,
+    "move": "dispense S2 #1",
+    "capped_vial": "A"
+   },
+   "pass": true
+  },
+  {
+   "stock": "B",
+   "well": "S2",
+   "staged": true,
+   "decap_before_tip": true,
+   "tip": {
+    "closest_mm": 34.0,
+    "move": "aspirate B #1",
+    "capped_vial": "C"
+   },
+   "carried cap": {
+    "closest_mm": 34.0,
+    "move": "dispense S2 #1",
+    "capped_vial": "A"
+   },
+   "pass": true
+  },
+  {
+   "stock": "B",
+   "well": "S3",
+   "staged": false,
+   "decap_before_tip": false,
+   "tip": {
+    "closest_mm": 0.0,
+    "move": "aspirate B #2",
+    "capped_vial": "C"
+   },
+   "carried cap": {
+    "closest_mm": 34.0,
+    "move": "dispense S3 #1",
+    "capped_vial": "A"
+   },
+   "pass": false
+  },
+  {
+   "stock": "B",
+   "well": "S3",
+   "staged": false,
+   "decap_before_tip": true,
+   "tip": {
+    "closest_mm": 0.0,
+    "move": "aspirate B #2",
+    "capped_vial": "C"
+   },
+   "carried cap": {
+    "closest_mm": 33.0,
+    "move": "aspirate B #1",
+    "capped_vial": "A"
+   },
+   "pass": false
+  },
+  {
+   "stock": "B",
+   "well": "S3",
+   "staged": true,
+   "decap_before_tip": false,
+   "tip": {
+    "closest_mm": 34.0,
+    "move": "pick up tip",
+    "capped_vial": "A"
+   },
+   "carried cap": {
+    "closest_mm": 34.0,
+    "move": "dispense S3 #1",
+    "capped_vial": "A"
+   },
+   "pass": true
+  },
+  {
+   "stock": "B",
+   "well": "S3",
+   "staged": true,
+   "decap_before_tip": true,
+   "tip": {
+    "closest_mm": 34.0,
+    "move": "aspirate B #1",
+    "capped_vial": "C"
+   },
+   "carried cap": {
+    "closest_mm": 34.0,
+    "move": "dispense S3 #1",
+    "capped_vial": "A"
+   },
+   "pass": true
+  },
+  {
+   "stock": "C",
+   "well": "S1",
+   "staged": false,
+   "decap_before_tip": false,
+   "tip": {
+    "closest_mm": 0.0,
+    "move": "aspirate C #2",
+    "capped_vial": "D"
+   },
+   "carried cap": {
+    "closest_mm": 34.0,
+    "move": "dispense S1 #1",
+    "capped_vial": "B"
+   },
+   "pass": false
+  },
+  {
+   "stock": "C",
+   "well": "S1",
+   "staged": false,
+   "decap_before_tip": true,
+   "tip": {
+    "closest_mm": 0.0,
+    "move": "aspirate C #1",
+    "capped_vial": "B"
+   },
+   "carried cap": {
+    "closest_mm": 12.0,
+    "move": "aspirate C #1",
+    "capped_vial": "B"
+   },
+   "pass": false
+  },
+  {
+   "stock": "C",
+   "well": "S1",
+   "staged": true,
+   "decap_before_tip": false,
+   "tip": {
+    "closest_mm": 34.0,
+    "move": "pick up tip",
+    "capped_vial": "A"
+   },
+   "carried cap": {
+    "closest_mm": 34.0,
+    "move": "dispense S1 #1",
+    "capped_vial": "B"
+   },
+   "pass": true
+  },
+  {
+   "stock": "C",
+   "well": "S1",
+   "staged": true,
+   "decap_before_tip": true,
+   "tip": {
+    "closest_mm": 34.0,
+    "move": "aspirate C #1",
+    "capped_vial": "D"
+   },
+   "carried cap": {
+    "closest_mm": 34.0,
+    "move": "dispense S1 #1",
+    "capped_vial": "B"
+   },
+   "pass": true
+  },
+  {
+   "stock": "C",
+   "well": "S2",
+   "staged": false,
+   "decap_before_tip": false,
+   "tip": {
+    "closest_mm": 0.0,
+    "move": "aspirate C #2",
+    "capped_vial": "D"
+   },
+   "carried cap": {
+    "closest_mm": 34.0,
+    "move": "dispense S2 #1",
+    "capped_vial": "B"
+   },
+   "pass": false
+  },
+  {
+   "stock": "C",
+   "well": "S2",
+   "staged": false,
+   "decap_before_tip": true,
+   "tip": {
+    "closest_mm": 0.0,
+    "move": "aspirate C #1",
+    "capped_vial": "B"
+   },
+   "carried cap": {
+    "closest_mm": 12.0,
+    "move": "aspirate C #1",
+    "capped_vial": "B"
+   },
+   "pass": false
+  },
+  {
+   "stock": "C",
+   "well": "S2",
+   "staged": true,
+   "decap_before_tip": false,
+   "tip": {
+    "closest_mm": 34.0,
+    "move": "pick up tip",
+    "capped_vial": "A"
+   },
+   "carried cap": {
+    "closest_mm": 34.0,
+    "move": "dispense S2 #1",
+    "capped_vial": "B"
+   },
+   "pass": true
+  },
+  {
+   "stock": "C",
+   "well": "S2",
+   "staged": true,
+   "decap_before_tip": true,
+   "tip": {
+    "closest_mm": 34.0,
+    "move": "aspirate C #1",
+    "capped_vial": "D"
+   },
+   "carried cap": {
+    "closest_mm": 34.0,
+    "move": "dispense S2 #1",
+    "capped_vial": "B"
+   },
+   "pass": true
+  },
+  {
+   "stock": "C",
+   "well": "S3",
+   "staged": false,
+   "decap_before_tip": false,
+   "tip": {
+    "closest_mm": 0.0,
+    "move": "aspirate C #2",
+    "capped_vial": "D"
+   },
+   "carried cap": {
+    "closest_mm": 34.0,
+    "move": "dispense S3 #1",
+    "capped_vial": "B"
+   },
+   "pass": false
+  },
+  {
+   "stock": "C",
+   "well": "S3",
+   "staged": false,
+   "decap_before_tip": true,
+   "tip": {
+    "closest_mm": 0.0,
+    "move": "aspirate C #1",
+    "capped_vial": "B"
+   },
+   "carried cap": {
+    "closest_mm": 12.0,
+    "move": "aspirate C #1",
+    "capped_vial": "B"
+   },
+   "pass": false
+  },
+  {
+   "stock": "C",
+   "well": "S3",
+   "staged": true,
+   "decap_before_tip": false,
+   "tip": {
+    "closest_mm": 34.0,
+    "move": "pick up tip",
+    "capped_vial": "A"
+   },
+   "carried cap": {
+    "closest_mm": 34.0,
+    "move": "dispense S3 #1",
+    "capped_vial": "B"
+   },
+   "pass": true
+  },
+  {
+   "stock": "C",
+   "well": "S3",
+   "staged": true,
+   "decap_before_tip": true,
+   "tip": {
+    "closest_mm": 34.0,
+    "move": "aspirate C #1",
+    "capped_vial": "D"
+   },
+   "carried cap": {
+    "closest_mm": 34.0,
+    "move": "dispense S3 #1",
+    "capped_vial": "B"
+   },
+   "pass": true
+  },
+  {
+   "stock": "D",
+   "well": "S1",
+   "staged": false,
+   "decap_before_tip": false,
+   "tip": {
+    "closest_mm": 34.0,
+    "move": "pick up tip",
+    "capped_vial": "A"
+   },
+   "carried cap": {
+    "closest_mm": 34.0,
+    "move": "dispense S1 #1",
+    "capped_vial": "C"
+   },
+   "pass": true
+  },
+  {
+   "stock": "D",
+   "well": "S1",
+   "staged": false,
+   "decap_before_tip": true,
+   "tip": {
+    "closest_mm": 0.0,
+    "move": "aspirate D #1",
+    "capped_vial": "B"
+   },
+   "carried cap": {
+    "closest_mm": 12.0,
+    "move": "aspirate D #1",
+    "capped_vial": "B"
+   },
+   "pass": false
+  },
+  {
+   "stock": "D",
+   "well": "S1",
+   "staged": true,
+   "decap_before_tip": false,
+   "tip": {
+    "closest_mm": 34.0,
+    "move": "pick up tip",
+    "capped_vial": "A"
+   },
+   "carried cap": {
+    "closest_mm": 34.0,
+    "move": "dispense S1 #1",
+    "capped_vial": "C"
+   },
+   "pass": true
+  },
+  {
+   "stock": "D",
+   "well": "S1",
+   "staged": true,
+   "decap_before_tip": true,
+   "tip": {
+    "closest_mm": 45.0,
+    "move": "aspirate D #1",
+    "capped_vial": "C"
+   },
+   "carried cap": {
+    "closest_mm": 34.0,
+    "move": "dispense S1 #1",
+    "capped_vial": "C"
+   },
+   "pass": true
+  },
+  {
+   "stock": "D",
+   "well": "S2",
+   "staged": false,
+   "decap_before_tip": false,
+   "tip": {
+    "closest_mm": 34.0,
+    "move": "pick up tip",
+    "capped_vial": "A"
+   },
+   "carried cap": {
+    "closest_mm": 34.0,
+    "move": "dispense S2 #1",
+    "capped_vial": "C"
+   },
+   "pass": true
+  },
+  {
+   "stock": "D",
+   "well": "S2",
+   "staged": false,
+   "decap_before_tip": true,
+   "tip": {
+    "closest_mm": 0.0,
+    "move": "aspirate D #1",
+    "capped_vial": "B"
+   },
+   "carried cap": {
+    "closest_mm": 12.0,
+    "move": "aspirate D #1",
+    "capped_vial": "B"
+   },
+   "pass": false
+  },
+  {
+   "stock": "D",
+   "well": "S2",
+   "staged": true,
+   "decap_before_tip": false,
+   "tip": {
+    "closest_mm": 34.0,
+    "move": "pick up tip",
+    "capped_vial": "A"
+   },
+   "carried cap": {
+    "closest_mm": 34.0,
+    "move": "dispense S2 #1",
+    "capped_vial": "C"
+   },
+   "pass": true
+  },
+  {
+   "stock": "D",
+   "well": "S2",
+   "staged": true,
+   "decap_before_tip": true,
+   "tip": {
+    "closest_mm": 45.0,
+    "move": "aspirate D #1",
+    "capped_vial": "C"
+   },
+   "carried cap": {
+    "closest_mm": 34.0,
+    "move": "dispense S2 #1",
+    "capped_vial": "C"
+   },
+   "pass": true
+  },
+  {
+   "stock": "D",
+   "well": "S3",
+   "staged": false,
+   "decap_before_tip": false,
+   "tip": {
+    "closest_mm": 34.0,
+    "move": "pick up tip",
+    "capped_vial": "A"
+   },
+   "carried cap": {
+    "closest_mm": 34.0,
+    "move": "dispense S3 #1",
+    "capped_vial": "C"
+   },
+   "pass": true
+  },
+  {
+   "stock": "D",
+   "well": "S3",
+   "staged": false,
+   "decap_before_tip": true,
+   "tip": {
+    "closest_mm": 0.0,
+    "move": "aspirate D #1",
+    "capped_vial": "B"
+   },
+   "carried cap": {
+    "closest_mm": 12.0,
+    "move": "aspirate D #1",
+    "capped_vial": "B"
+   },
+   "pass": false
+  },
+  {
+   "stock": "D",
+   "well": "S3",
+   "staged": true,
+   "decap_before_tip": false,
+   "tip": {
+    "closest_mm": 34.0,
+    "move": "pick up tip",
+    "capped_vial": "A"
+   },
+   "carried cap": {
+    "closest_mm": 34.0,
+    "move": "dispense S3 #1",
+    "capped_vial": "C"
+   },
+   "pass": true
+  },
+  {
+   "stock": "D",
+   "well": "S3",
+   "staged": true,
+   "decap_before_tip": true,
+   "tip": {
+    "closest_mm": 45.0,
+    "move": "aspirate D #1",
+    "capped_vial": "C"
+   },
+   "carried cap": {
+    "closest_mm": 34.0,
+    "move": "dispense S3 #1",
+    "capped_vial": "C"
+   },
+   "pass": true
+  }
+ ]
+}

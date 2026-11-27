@@ -1,0 +1,260 @@
+{
+ "made_by": "deck_keys.py (CadQuery 2.8.0)",
+ "units": "mm",
+ "deck": {
+  "slot_pitch_x": 25.0,
+  "slot_pitch_y": 45.0,
+  "slot_w": 10.0,
+  "slot_l": 25.0,
+  "plate_t_in_step": 10.0,
+  "slot_centres": "X = 12.5 + 25.0 n, Y = 0.0 + 45.0 m (CubOS frame of Ben's 2026-10-02 calibration; best estimate, about +/-1 mm in X and +/-2 mm in Y)",
+  "evidence": [
+   {
+    "what": "Ben's 2026-10-02 deck: vial_1 of the Cubware 9-vial holder at (136.668, 45)",
+    "why": "Cubware's 9VialHolder.step has a key pocket directly under its first vial (and one 225 mm along)",
+    "slot_x_mod_25": 11.67,
+    "slot_y_mod_45": 0.0
+   },
+   {
+    "what": "Ben's tip rack 1 (panda_2x15_tip_rack, Cubware TipRack.stl): A1 (291.332, 89), A2 (282.832, 89)",
+    "why": "TipRack.stl has two pockets 90 mm apart, 3.86 mm from the A1 column toward A2 and 0.86 mm past the A1 row; tip pick-up needs about 1 mm, so this is the most precisely taught of the three",
+    "slot_x_mod_25": 12.45,
+    "slot_y_mod_45": 43.14
+   },
+   {
+    "what": "Ben's 2026-11-05 stir-module trial: the stirred vial at (126, 45)",
+    "why": "the compact stirrer's two keys are 12.5 mm either side of its vial, on the vial's row",
+    "slot_x_mod_25": 13.5,
+    "slot_y_mod_45": 0.0
+   }
+  ]
+ },
+ "key": {
+  "pill_mm": [
+   9.8,
+   24.8,
+   10.0
+  ],
+  "nub_h_mm": 2.0,
+  "nub_lead_in_mm": 0.3,
+  "triangle_circumradius_mm": 3.1,
+  "print": "pill on the bed, nub up, as the STLs are",
+  "files": {
+   "deck_key": {
+    "step": "deck_key.step",
+    "stl": "deck_key.stl",
+    "press_each_side_mm": 0.05,
+    "corner_radius_mm": 1.15,
+    "A_corner_to_flat_mm": 6.95,
+    "B_across_corners_mm": 7.669,
+    "dimples": 1,
+    "bbox_mm": [
+     9.8,
+     24.8,
+     12.01
+    ],
+    "volume_mm3": 2293.1
+   },
+   "deck_key_fit_0.10": {
+    "step": "deck_key_fit_0.10.step",
+    "stl": "deck_key_fit_0.10.stl",
+    "press_each_side_mm": 0.1,
+    "corner_radius_mm": 1.2,
+    "A_corner_to_flat_mm": 7.05,
+    "B_across_corners_mm": 7.769,
+    "dimples": 2,
+    "bbox_mm": [
+     9.8,
+     24.8,
+     12.01
+    ],
+    "volume_mm3": 2295.0
+   },
+   "deck_key_fit_0.15": {
+    "step": "deck_key_fit_0.15.step",
+    "stl": "deck_key_fit_0.15.stl",
+    "press_each_side_mm": 0.15,
+    "corner_radius_mm": 1.25,
+    "A_corner_to_flat_mm": 7.15,
+    "B_across_corners_mm": 7.869,
+    "dimples": 3,
+    "bbox_mm": [
+     9.8,
+     24.8,
+     12.01
+    ],
+    "volume_mm3": 2296.9
+   }
+  }
+ },
+ "pocket": {
+  "corner_radius_mm": 1.1,
+  "depth_mm": 2.1,
+  "A_corner_to_flat_mm": 6.85,
+  "B_across_corners_mm": 7.569
+ },
+ "checks": {
+  "min_wall_mm": 1.5,
+  "min_ceiling_mm": 0.8
+ },
+ "parts": {
+  "coupon_tray": {
+   "file": "copper/cad/coupon_tray.step",
+   "pockets": [
+    {
+     "x": 187.5,
+     "y": 225.0,
+     "corner_deg": 90.0,
+     "underside_z": 0.0,
+     "pocket_volume_mm3": 71.41,
+     "part_inside_pocket_mm3": 0.0,
+     "wall_and_ceiling_solid_pct": 100.0,
+     "underside_on_deck_pct": 100.0
+    },
+    {
+     "x": 262.5,
+     "y": 225.0,
+     "corner_deg": 90.0,
+     "underside_z": 0.0,
+     "pocket_volume_mm3": 71.41,
+     "part_inside_pocket_mm3": 0.0,
+     "wall_and_ceiling_solid_pct": 100.0,
+     "underside_on_deck_pct": 100.0
+    }
+   ]
+  },
+  "cup_block_3": {
+   "file": "bom/cad/cup_block_3.step",
+   "pockets": [
+    {
+     "x": 37.5,
+     "y": 225.0,
+     "corner_deg": -90.0,
+     "underside_z": 0.0,
+     "pocket_volume_mm3": 71.41,
+     "part_inside_pocket_mm3": 0.0,
+     "wall_and_ceiling_solid_pct": 100.0,
+     "underside_on_deck_pct": 100.0
+    },
+    {
+     "x": 87.5,
+     "y": 225.0,
+     "corner_deg": -90.0,
+     "underside_z": 0.0,
+     "pocket_volume_mm3": 71.41,
+     "part_inside_pocket_mm3": 0.0,
+     "wall_and_ceiling_solid_pct": 100.0,
+     "underside_on_deck_pct": 100.0
+    }
+   ]
+  },
+  "tube_rack_2x8": {
+   "file": "bom/cad/tube_rack_2x8.step",
+   "pockets": [
+    {
+     "x": 187.5,
+     "y": 45.0,
+     "corner_deg": -90.0,
+     "underside_z": 0.0,
+     "pocket_volume_mm3": 71.41,
+     "part_inside_pocket_mm3": 0.0,
+     "wall_and_ceiling_solid_pct": 100.0,
+     "underside_on_deck_pct": 100.0
+    },
+    {
+     "x": 237.5,
+     "y": 45.0,
+     "corner_deg": -90.0,
+     "underside_z": 0.0,
+     "pocket_volume_mm3": 71.41,
+     "part_inside_pocket_mm3": 0.0,
+     "wall_and_ceiling_solid_pct": 100.0,
+     "underside_on_deck_pct": 100.0
+    }
+   ]
+  },
+  "tip_waste_cup": {
+   "file": "bom/cad/tip_waste_cup.step",
+   "pockets": [
+    {
+     "x": 387.5,
+     "y": 135.0,
+     "corner_deg": 90.0,
+     "underside_z": 0.0,
+     "pocket_volume_mm3": 71.41,
+     "part_inside_pocket_mm3": 0.0,
+     "wall_and_ceiling_solid_pct": 100.0,
+     "underside_on_deck_pct": 100.0
+    }
+   ]
+  },
+  "tip_rack_2x15": {
+   "file": "bom/cad/tip_rack_2x15.step",
+   "pockets": [
+    {
+     "x": 262.5,
+     "y": 90.0,
+     "corner_deg": -90.0,
+     "underside_z": 0.0,
+     "pocket_volume_mm3": 71.41,
+     "part_inside_pocket_mm3": 0.0,
+     "wall_and_ceiling_solid_pct": 100.0,
+     "underside_on_deck_pct": 100.0
+    },
+    {
+     "x": 262.5,
+     "y": 180.0,
+     "corner_deg": -90.0,
+     "underside_z": 0.0,
+     "pocket_volume_mm3": 71.41,
+     "part_inside_pocket_mm3": 0.0,
+     "wall_and_ceiling_solid_pct": 100.0,
+     "underside_on_deck_pct": 100.0
+    }
+   ]
+  }
+ },
+ "keys_needed": {
+  "coupon_tray": 2,
+  "cup_block_3": 2,
+  "tube_rack_2x8": 2,
+  "tip_waste_cup": 1,
+  "tip_rack_2x15": 2
+ },
+ "hold_down": {
+  "cap_pull_up_N": [
+   1.03,
+   1.72
+  ],
+  "assumptions": {
+   "pins_push_down_N": 0.59,
+   "pla_g_cm3": 1.24,
+   "shell_mm": 0.8
+  },
+  "coupon_tray": {
+   "loads_g": {
+    "tray (15 % infill)": 30.9,
+    "4 lids, 100 %, with magnets and pins": 26.9,
+    "3 Cu-Ni coupons, 6 mm": 62.9,
+    "PTFE blank": 3.8,
+    "8 M3 x 8 screws and 8 inserts": 9.6,
+    "12 P75 pins and the wires": 3.2
+   },
+   "weight_N": 1.35,
+   "tips_at_x_185_above_N": 0.79,
+   "tips_at_x_210_above_N": 1.09,
+   "holds_without_help": false
+  },
+  "cup_block_3": {
+   "loads_g": {
+    "cup block (100 %)": 92.9,
+    "six magnets": 1.1,
+    "two rinse cups filled": 3.9
+   },
+   "weight_N": 0.96,
+   "tips_at_x_90_above_N": 0.58,
+   "tips_at_x_60_above_N": 0.96,
+   "holds_without_help": false
+  }
+ }
+}
