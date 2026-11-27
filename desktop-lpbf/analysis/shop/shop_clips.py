@@ -440,14 +440,13 @@ def clip_measure():
                        end_objs={"bracket": T_to} if res else None, extra=dict(part_kg=round(kg, 2)))
 
 
-KIT_SLOTS = pathlib.Path("/home/runner/work/digital-alloy-lab/digital-alloy-lab/.claude/worktrees/agent-a0f79a7c83e4b003f/"
-                         "desktop-lpbf/analysis/out/assembly/kit_slots.json")
+KIT_SLOTS = SP.LPBF / "analysis" / "out" / "assembly" / "kit_slots.json"   # kit_table.py writes it (committed);
+                                                                               # round 9: relative to the repo, not a worktree
 
 
 def kit_slots():
-    for p in (SP.LPBF / "analysis" / "out" / "assembly" / "kit_slots.json", KIT_SLOTS):
-        if p.exists():
-            return json.loads(p.read_text())
+    if KIT_SLOTS.exists():
+        return json.loads(KIT_SLOTS.read_text())
     return None
 
 

@@ -270,17 +270,28 @@ def vf4(door=1.0, table_x=0.0, table_y=0.0, spindle_z=None, vise_open=150.0, hrt
     out["front panel above the door"] = Part(box(-W / 2, W / 2, 0, ft, s1, H), C["haas"])
     out["front panel left of the door"] = Part(box(-W / 2, -dw / 2, 0, ft, s0, s1), C["haas"])
     out["front panel right of the door"] = Part(box(dw / 2, W / 2, 0, ft, s0, s1), C["haas"])
-    out["front sill trim"] = Part(box(-dw / 2 - 30, dw / 2 + 30, -20, ft, s0 - 40, s0), C["haas_dark"])
+    # round 9 (scene_audit, chapter 31): the doors run 6-34 mm in front of the front face, so the trim stops 2 mm behind
+    # them (it stood 20 mm proud and the shut doors went through it)
+    out["front sill trim"] = Part(box(-dw / 2 - 30, dw / 2 + 30, -4, ft, s0 - 40, s0), C["haas_dark"])
     out["Haas red stripe"] = Part(box(-W / 2, W / 2, -2, 0, H - 120, H - 90), C["haas_red"], collide=False)
     out["left wall"] = Part(box(-W / 2, -W / 2 + 20, ft, D, 0, H), C["haas"], opacity=1.0)
     out["right wall"] = Part(box(W / 2 - 20, W / 2, ft, D, 0, H), C["haas"])
     out["back wall"] = Part(box(-W / 2, W / 2, D - 20, D, 0, H), C["haas"])
     # the roof; its panel over the table (y 60-600) lifts off for crane loading (our assumption, to check on the machine)
+    # round 9 (scene_audit, chapter 30): the head rides up into the column hood at Z home, so the hood over the head is a
+    # sheet-metal shell (4 mm walls, open below) and the roof has the hood's opening; the hood behind y 1180 covers the
+    # column's top (the column fills it)
+    hw_, hy0, hy1, sh = 330.0, 600.0, 1180.0, 4.0
     out["roof"] = Part(merge([box(-W / 2, -560, ft, D, H - 20, H), box(560, W / 2, ft, D, H - 20, H),
-                              box(-560, 560, 600, 1050, H - 20, H)]), C["haas"])
+                              box(-560, -hw_, 600, 1050, H - 20, H), box(hw_, 560, 600, 1050, H - 20, H)]), C["haas"])
     out["roof panel over the table"] = Part(box(-560, 560, ft, 600, H - 20, H), C["haas"], group="roof panel")
-    out["column hood"] = Part(merge([box(-560, 560, 1050, D - 60, H - 20, P["col_top"]),
-                                     box(-330, 330, 600, 1050, H - 20, P["col_top"] - 40)]), C["haas"])
+    out["column hood"] = Part(merge([box(-560, 560, hy1, D - 60, H - 20, P["col_top"]),
+                                     box(-560, -hw_, 1050, hy1, H - 20, P["col_top"]),
+                                     box(hw_, 560, 1050, hy1, H - 20, P["col_top"]),
+                                     box(-hw_, hw_, hy0, hy0 + sh, H - 20, P["col_top"]),
+                                     box(-hw_, -hw_ + sh, hy0, hy1, H - 20, P["col_top"]),
+                                     box(hw_ - sh, hw_, hy0, hy1, H - 20, P["col_top"]),
+                                     box(-hw_, hw_, hy0, hy1, P["col_top"] - sh, P["col_top"])]), C["haas"])
     # ---- the two sliding doors, each with its window; open = parted to the sides behind the front frame
     dwi = dw / 2 + 40.0
     for side, sgn in (("left", -1), ("right", 1)):
@@ -349,7 +360,8 @@ def vf4(door=1.0, table_x=0.0, table_y=0.0, spindle_z=None, vise_open=150.0, hrt
         holders.append(cyl((px, py, cz - 140), (px, py, cz - 40), 26.0, res=16))
     out["tool carousel (20 pockets)"] = Part(merge(rim), C["haas"])
     out["tool holders in the carousel"] = Part(merge(holders), C["holder"], collide=False)
-    out["carousel arm"] = Part(box(cxx, -200, cyy - 60, cyy + 60, cz + 150, cz + 260), C["haas_dark"])
+    out["carousel arm"] = Part(box(cxx, -262, cyy - 60, cyy + 60, cz + 150, cz + 260), C["haas_dark"])   # clear of the
+    # head's side (x -250) at Z home (round 9: it reached x -200, into the head)
     out["coolant tank"] = Part(box(-W / 2 + 60, -W / 2 + 900, D - 700, D - 90, 0, 350), "#2f6f9f", collide=False)
     out["work light"] = Part(box(-200, 200, 200, 260, H - 70, H - 30), "#f6f4d2", collide=False)
     # ---- workholding on the table: Kurt XL6A on the right half, HRT210 + riser + tailstock on the left half
@@ -642,7 +654,7 @@ def bench(w=1830.0, d=760.0, h=860.0, top=C["wood"]):
     return out
 
 
-def wash_deburr(lid_open=True, basket_up=0.0):
+def wash_deburr(lid_open=True, basket_up=0.0, basket=True):
     """Deburr and wash bench: the Crest Powersonic 7 gal tank (19.5 x 11.75 x 8 in. inside) at the left with its basket,
     a rinse tank, the ATI compliant deburr spindle on a fixed stand and a brush wheel at the right, a drying air knife.
     Frame: the bench's front edge centre on the floor (robot at -y)."""
@@ -660,6 +672,8 @@ def wash_deburr(lid_open=True, basket_up=0.0):
                                        box(x0 + 45 + ti / 2 - 10, x0 + 45 + ti / 2 + 10, y0 + 60, y0 + 70, bz + 150, bz + 200),
                                        box(x0 + 45 + ti / 2 - 10, x0 + 45 + ti / 2 + 10, y0 + 20 + tw, y0 + 30 + tw, bz + 150, bz + 200)]),
                                 "#9aa3ab")
+    if not basket:          # round 9: a chapter that carries the basket draws it as its own object (32's audit found the
+        del out["parts basket"], out["basket handle"]   # carried basket inside this static copy)
     if lid_open:
         out["tank lid (open)"] = Part(box(x0, x0 + ti + 90, y0 + tw + 90, y0 + tw + 110, h + td + 120, h + td + 120 + tw), C["tank"])
     xr = x0 + ti + 90 + 60                            # the rinse tank: the basket goes from the ultrasonic tank into it
@@ -780,14 +794,21 @@ def cantilever_rack(bars=True):
 
 def box_mesh_with_tape(L, W, H, open_flaps=0.0):
     """A shipping box: body, the tape seam along x on top, and the two long top flaps (open_flaps 0 shut .. 1 open,
-    folded out to the sides about their hinges on the long edges)."""
+    folded out to the sides about their hinges on the long edges). Round 9: each flap is the half of the top on its own
+    hinge's side and turns about that hinge, up and outwards (round 7's flaps were the other halves and, opened, hung
+    detached outside the box); once open, the tape is cut: one half rides on each flap's free edge."""
     body = open_box(-L / 2, L / 2, -W / 2, W / 2, 0, H - 2, 4.0)     # corrugated board, 4 mm
-    tape = box(-L / 2 - 1, L / 2 + 1, -24, 24, H - 2, H + 0.5)
     a = 120.0 * open_flaps
-    flaps = []
+    flaps, tapes = [], []
     for sgn in (-1, 1):
-        f = box(-L / 2, L / 2, -W / 2 if sgn > 0 else 0.0, 0.0 if sgn > 0 else W / 2, -1.5, 1.5)
-        # hinge on the long edge at y = sgn * W / 2: the flap lies from the hinge towards the middle when shut
-        Mf = T((0, sgn * W / 2, H)) @ T((0, 0, 0), Rx(sgn * a)) @ T((0, -sgn * W / 2, 0))
+        # the flap from the middle (y 0, its free edge) to its hinge at y = sgn * W / 2, on the box's top edge
+        f = box(-L / 2, L / 2, 0.0 if sgn > 0 else -W / 2, W / 2 if sgn > 0 else 0.0, -1.5, 1.5)
+        t = box(-L / 2 - 1, L / 2 + 1, 0.0 if sgn > 0 else -24.0, 24.0 if sgn > 0 else 0.0, 1.5, 2.5)
+        Mf = T((0, sgn * W / 2, H)) @ T((0, 0, 0), Rx(-sgn * a)) @ T((0, -sgn * W / 2, 0))
         flaps.append(f.transform(Mf, inplace=False))
+        tapes.append(t.transform(Mf, inplace=False))
+    if open_flaps <= 0.0:
+        tape = box(-L / 2 - 1, L / 2 + 1, -24, 24, H - 2, H + 2.5)
+    else:
+        tape = merge(tapes)
     return {"box": Part(body, C["box"]), "tape": Part(tape, "#d8c9a3", collide=False), "flaps": Part(merge(flaps), "#c09a64")}
