@@ -30,8 +30,8 @@ The family in the brackets is only an example. It is whatever the screen picks.
 
 ## Two definitions to freeze before the first optimizer round (G1)
 
-The claim can only be checked if these are fixed in advance. Both should be committed to the repo before the
-first optimizer round, as the schedule already asks for the AI benchmark.
+The claim can only be checked if these are fixed in advance. Both should be committed to the repo before the CALPHAD
+screen ranks anything (G1, Fri Dec 4), together with the optimizer settings (SI S9).
 
 **1. "Stronger than AlSi10Mg".** PR #285 showed that the datasheets can't be the bar: AlSi10Mg's datasheet rows already
 pass both FLAIME G3 windows, and a desktop or sub-size result won't reproduce datasheet values anyway. Proposed rule:
@@ -55,7 +55,7 @@ is being checked element by element; see [`risks.md`](risks.md)). The kickoff sa
 is expensive" (09:48), which points to an amount-weighted metric. Proposed:
 
 - **Primary:** the mass-weighted U.S. net import reliance of the alloying additions,
-  B = Σᵢ wᵢ · NIRᵢ over elements other than Al, with wᵢ in wt % and NIRᵢ from USGS *Mineral Commodity Summaries 2026*.
+  B = Σᵢ wᵢ · NIRᵢ / 100 over elements other than Al, with wᵢ in wt % and NIRᵢ from USGS *Mineral Commodity Summaries 2026*.
   It rewards using less of the elements the U.S. imports, and it is simple enough to check by hand.
 - **Secondary (sensitivity):** the raw-material cost of the additions per kg of alloy, at USGS 2025 prices, and
   scandium content on its own. The paper reports all three and states the claim on the primary.
@@ -63,12 +63,15 @@ is expensive" (09:48), which points to an amount-weighted metric. Proposed:
   Sterling picks the primary and the threshold [X] % (FLAIME's O4 uses ≥ 40 %, G3 uses 25 % on SRI).
 - **What the inputs show (2026-11-27).**
   - Every element in play except Fe is on the final 2025 list, Al and Si included.
-  - On B_NIR, AlSi10Mg (5.2-10.3 wt %) scores *above* Scalmalloy (4.7-6.0), and so do the Mn-rich seeds (S1 at
-    6.6-7.3).
-  - On B_cost, every Sc-free alloy except silver-bearing A20X is at least 97 % below Scalmalloy.
+  - On B_NIR, AlSi10Mg (5.2-10.3 wt %) scores above Scalmalloy (4.7-6.0) at the midpoints; the intervals overlap.
+    The Mn-rich seed S1 (6.6-7.3) sits above Scalmalloy's whole interval.
+  - On B_cost, with Sc priced as metal, every Sc-free alloy except the two silver-bearing Al-Cu-Mg grades is at least
+    97 % below Scalmalloy (92 % if Sc is priced through an Al-2Sc master alloy); the silver-bearing ones are 74-87 %
+    below.
   - So B_NIR is the only one of the three that tells Sc-free alloys apart. It is still the proposed primary, with the
     claim region "stronger than in-house AlSi10Mg, and B_NIR below Scalmalloy's lower bound (4.7 wt %)". That region
-    already holds five or six Sc-free alloys (Fig. 1b), so a new alloy has to beat those, not only AlSi10Mg.
+    already holds five or six Sc-free alloys on their reported (mostly machined) values, or four or five against the
+    strongest AlSi10Mg datasheet row (Fig. 1b), so a new alloy has to beat those, not only AlSi10Mg.
   - Details are in [`risks.md`](risks.md) (R1, R2).
 
 ## Sections and the claim each makes
@@ -84,9 +87,9 @@ The letter version keeps §1, §3.4, §4 and one paragraph each of §3.1-3.3, an
 | 2.3-2.5 | Charges, atomization, powder | Every composition is made the same way from dosed charges, and every lot has a provenance record | 600 | SOP draft, run table | first Al run |
 | 2.6-2.7 | LPBF and heat treatment | Benchmarks and candidates are printed with the same specimen set on the same machine | 400 | Utah AlSi10Mg build (Apr 2026) | P1 |
 | 2.8-2.10 | Density, hardness, tensile, corrosion | Standard methods, with the sub-size geometry and n stated | 500 | Utah tensile method | P1 |
-| 2.11 | Independent verification | An outside lab checks composition (and, if funded, tensile) on the finalists | 200 | none | outside lab chosen by Jan 8 |
+| 2.11 | Independent verification | An outside lab checks composition (and, if funded, tensile) on the finalists | 200 | none | outside lab contracted by Dec 18; batch 1 ships Jan 8 |
 | 3.1 | Screen and picks | Which compositions were made and why; how the optimizer's picks differed from the CALPHAD ranking | 500 | none | Jan 29 |
-| 3.2 | Powders | Composition, size and shape of each powder; how close it came to the target | 500 | none | Feb 5 |
+| 3.2 | Powders | Composition, size and shape of each powder; how close it came to the target | 500 | none | Feb 12 |
 | 3.3 | Printability | Which compositions printed crack-free and dense, and whether CALPHAD's crack index predicted it | 500 | none | Feb 5 |
 | 3.4 | Strength and ductility | Hardness on all, tensile on the benchmarks and finalists | 600 | in-house AlSi10Mg only | Feb 12 |
 | 3.5 | Corrosion | The finalists against AlSi10Mg and wrought 6063 in 3.5 wt % NaCl | 300 | none | Feb 12 |

@@ -26,7 +26,7 @@ revilla2017,True,10.1149/2.0461702jes,Crossref,ok,1.00,2016,2016,revilla,revilla
 rubben2019,True,10.1016/j.corsci.2018.11.038,Crossref,ok,1.00,2019,2019,rubben,rubben,Influence of heat treatments on the corrosion mechanism of additive manufactured AlSi10Mg,
 astudillo2021,True,10.48550/arXiv.2112.15311,DataCite,ok,1.00,2021,2021,astudillo,astudillo,Bayesian Optimization of Function Networks,
 buathong2024,True,10.48550/arXiv.2311.02146,DataCite,ok,1.00,2023,2023,buathong,buathong,Bayesian Optimization of Function Networks with Partial Evaluations,
-balandat2020,True,10.48550/arXiv.1910.06403,DataCite,ok,1.00,2019,2019,balandat,balandat,BoTorch: A Framework for Efficient Monte-Carlo Bayesian Optimization,
+balandat2020,True,10.48550/arXiv.1910.06403,DataCite,check: year,1.00,2020,2019,balandat,balandat,BoTorch: A Framework for Efficient Monte-Carlo Bayesian Optimization,
 alloyF2024,True,10.1016/j.jallcom.2023.171685,Crossref,ok,1.00,2023,2023,mehta,mehta,Advancing novel Al-Mn-Cr-Zr based family of alloys tailored for powder bed fusion-laser beam process,
 almncrzr2024,True,10.1016/j.matdes.2024.113160,Crossref,ok,1.00,2024,2024,mehta,mehta,Mechanical properties and microstructural characterisation including high-temperature performance of Al-Mn-Cr-Zr-based alloys tailored for additive manufacturing,
 alfezr2025,True,10.1080/17452759.2025.2516663,Crossref,ok,1.00,2025,2025,li,li,"Precipitation evolution, aging strengthening and thermal stability in Al–Fe-Mg-Zr eutectic alloy via laser powder bed fusion",
@@ -37,9 +37,9 @@ ds_eos,True,,,no DOI: check the URL by hand,,2026,,eos gmbh,,,https://www.eos.in
 ds_nikon,True,,,no DOI: check the URL by hand,,2025,,nikon slm solutions,,,https://nikon-slm-solutions.com/wp-content/uploads/2025/11/mds5123.pdf
 ds_colibrium,True,,,no DOI: check the URL by hand,,2025,,colibrium additive,,,https://www.colibriumadditive.com/sites/default/files/M2SERIES5_Al-Mg-Sc_400W_CMDS_20250821_RevB%20%281%29.pdf
 ds_3dsystems,True,,,no DOI: check the URL by hand,,2022,,3d systems,,,https://3dsystems.com/sites/default/files/2022-02/3d-systems-certified-scalmalloy(a)-datasheet-usen-2022-02-23-a-print.pdf
-ds_hoganas,True,,,no DOI: check the URL by hand,,,,h ogan as ab,,,https://www.hoganas.com/globalassets/downloads/libary/additive-manufacturing_foram-al-hs1-20-63-ga_3312hog.pdf
-ds_al5x1,True,,,no DOI: check the URL by hand,,,,eos gmbh,,,https://www.eos.info/metal-solutions/metal-materials/data-sheets/mds-eos-aluminium-al5x1
-ds_cp1,True,,,no DOI: check the URL by hand,,,,eos gmbh,,,https://www.eos.info/metal-solutions/data-sheets/aluminium/pds-eos-aluminium-constellium-cp1-eos-m-290-60um
+ds_hoganas,True,,,no DOI: check the URL by hand,,2026,,h ogan as ab,,,https://www.hoganas.com/globalassets/downloads/libary/additive-manufacturing_foram-al-hs1-20-63-ga_3312hog.pdf
+ds_al5x1,True,,,no DOI: check the URL by hand,,2026,,eos gmbh,,,https://www.eos.info/metal-solutions/metal-materials/data-sheets/mds-eos-aluminium-al5x1
+ds_cp1,True,,,no DOI: check the URL by hand,,2026,,eos gmbh,,,https://www.eos.info/metal-solutions/data-sheets/aluminium/pds-eos-aluminium-constellium-cp1-eos-m-290-60um
 ds_a20x,True,,,no DOI: check the URL by hand,,2020,,eckart gmbh,,,https://www.eckart.net/download/document/view/id/216/
 ds_7a77,True,,,no DOI: check the URL by hand,,2019,,hrl laboratories,,,https://www.hrl.com/products-services/materials/_assets/7A77-data-sheet.pdf
 usgs2026sc,True,,,no DOI: check the URL by hand,,2026,,u s geological survey,,,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-scandium.pdf
@@ -61,4 +61,4 @@ astm_e1251,True,10.1520/E1251-17A,Crossref,ok,1.00,2017,,astm international,,Tes
 astm_f3318,True,10.1520/F3318-18,Crossref,ok,1.00,2018,,astm international,,for Additive Manufacturing	Finished Part Properties  Specification for AlSi10Mg with Powder Bed Fusion  Laser Beam,
 usgs2026,True,10.3133/mcs2026,Crossref,ok,1.00,2026,2026,u s geological survey,,Mineral commodity summaries 2026,
 doe2023,True,10.2172/1998242,Crossref,ok,1.00,2023,2023,bauer,,2023 Critical Materials Strategy,
-ds_al2139,True,,,no DOI: check the URL by hand,,,,eos gmbh,,,https://www.eos.info/metal-solutions/data-sheets/aluminium/pds-eos-aluminium-al2139-am-eos-m-290-60um
+ds_al2139,True,,,no DOI: check the URL by hand,,2026,,eos gmbh,,,https://www.eos.info/metal-solutions/data-sheets/aluminium/pds-eos-aluminium-al2139-am-eos-m-290-60um

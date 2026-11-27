@@ -1,18 +1,18 @@
 element,on_2025_list,nir_reported,nir_low_pct,nir_high_pct,price_usd_per_kg,price_basis,price_year,source
-al,yes,60 (metal); bauxite >75,60,60,3.97,"ingot, U.S. spot, 180 cents/lb (converted)",2025,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-aluminum.pdf
-si,yes,>50 (metal and ferrosilicon; metal alone >50),50,100,2.87,"silicon metal, 130 cents/lb Si, Jan-Oct mean (converted)",2025,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-silicon.pdf
-mg,yes,>75,75,100,7.05,"metal, U.S. spot Western, $3.20/lb (converted)",2025,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-magnesium-metal.pdf
-mn,yes,100,100,100,3.48,"electrolytic metal, 157.79 cents/lb (converted); 2023 value, Minerals Yearbook, as MCS 2026 gives only ore",2023,https://pubs.usgs.gov/myb/vol1/2023/myb1-2023-manganese.pdf
-cr,yes,79,79,79,13.01,"metal, $5.90/lb gross weight (converted)",2025,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-chromium.pdf
-zr,yes,<25 (ores and concentrates); net exporter of Zr metal,0,25,22,"sponge, ex-works China",2025,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-zirconium-hafnium.pdf
-sc,yes,100,100,100,5200,"metal, ex-works China (oxide $640/kg; Al-2Sc ingot $30/kg of master alloy)",2025,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-scandium.pdf
-fe,no,net exporter (iron ore),0,0,,not on the list; left out of B_cost,2025,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-iron-ore.pdf
-cu,yes,57,57,57,10.80,"cathode, U.S., 490 cents/lb (converted)",2025,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-copper.pdf
-ni,yes,41,41,41,15.00,"LME cash, $15,000/t",2025,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-nickel.pdf
-ce,yes,67 (all rare-earth compounds and metals),67,67,2.10,"CeO2 >=99.5% FOB $1.71/kg, per kg of contained Ce (oxide basis, not metal)",2025,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-rare-earths.pdf
-er,yes,100 (heavy rare earths),100,100,52.6,"Er2O3 >=99.5% FOB $46/kg, per kg of contained Er (oxide basis, not metal)",2025,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-rare-earths-heavy.pdf
-ti,yes,100 (sponge),100,100,12,"sponge, landed import value",2025,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-titanium.pdf
-ag,yes,77,77,77,1222,"$38/troy oz (converted)",2025,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-silver.pdf
-v,yes,41,41,41,19.75,"V2O5 $5.02/lb, per kg of contained V (oxide basis)",2025,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-vanadium.pdf
-b,yes,net exporter,0,0,,no element price (borates only),2025,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-boron.pdf
-zn,yes,not collected,,,,not collected,,
+al,yes,60 (metal); bauxite >75,60.0,60.0,3.97,"ingot, U.S. spot, 180 cents/lb (converted)",2025.0,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-aluminum.pdf
+si,yes,>50 (metal and ferrosilicon; metal alone >50),50.0,100.0,2.87,"silicon metal, 130 cents/lb Si, Jan-Oct mean (converted)",2025.0,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-silicon.pdf
+mg,yes,>75,75.0,100.0,7.05,"metal, U.S. spot Western, $3.20/lb (converted)",2025.0,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-magnesium-metal.pdf
+mn,yes,100,100.0,100.0,3.48,"electrolytic metal, 157.79 cents/lb (converted); 2023 value, Minerals Yearbook, as MCS 2026 gives only ore",2023.0,https://pubs.usgs.gov/myb/vol1/2023/myb1-2023-manganese.pdf
+cr,yes,79,79.0,79.0,13.01,"metal, $5.90/lb gross weight (converted)",2025.0,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-chromium.pdf
+zr,yes,<25 (ores and concentrates); net exporter of Zr metal,0.0,25.0,22.0,"sponge, ex-works China",2025.0,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-zirconium-hafnium.pdf
+sc,yes,100,100.0,100.0,5200.0,"metal, ex-works China (oxide $640/kg; Al-2Sc ingot $30/kg of master alloy)",2025.0,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-scandium.pdf
+fe,no,net exporter (iron ore),0.0,0.0,,not on the list; left out of B_cost,2025.0,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-iron-ore.pdf
+cu,yes,57,57.0,57.0,10.8,"cathode, U.S., 490 cents/lb (converted)",2025.0,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-copper.pdf
+ni,yes,41,41.0,41.0,15.0,"LME cash, $15,000/t",2025.0,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-nickel.pdf
+ce,yes,67 (all rare-earth compounds and metals),67.0,67.0,2.1,"CeO2 >=99.5% FOB $1.71/kg, per kg of contained Ce (oxide basis, not metal)",2025.0,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-rare-earths.pdf
+er,yes,100 (heavy rare earths),100.0,100.0,52.6,"Er2O3 >=99.5% FOB $46/kg, per kg of contained Er (oxide basis, not metal)",2025.0,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-rare-earths-heavy.pdf
+ti,yes,100 (sponge),100.0,100.0,12.0,"sponge, landed import value",2025.0,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-titanium.pdf
+ag,yes,77,77.0,77.0,1222.0,$38/troy oz (converted),2025.0,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-silver.pdf
+v,yes,41,41.0,41.0,19.75,"V2O5 $5.02/lb, per kg of contained V (oxide basis)",2025.0,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-vanadium.pdf
+b,yes,net exporter,0.0,0.0,,no element price (borates only),2025.0,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-boron.pdf
+zn,yes,73,73.0,73.0,3.285,149 cents/lb (converted),2025.0,https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-zinc.pdf

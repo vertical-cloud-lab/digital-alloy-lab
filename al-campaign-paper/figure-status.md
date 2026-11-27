@@ -11,8 +11,8 @@
 | Fig5 | Strength and ductility | (a) placeholder; (b) placeholder; (c) in-house AlSi10Mg drawn | Jan 29 | Feb 12, 2027 | 77 | Freeze (Feb 12) | Carl |
 | Fig6 | Corrosion in 3.5 wt% NaCl | placeholder (no rows yet) | Jan 29 | Feb 12, 2027 | 77 | Freeze (Feb 12) | Ben and Jarrett |
 | GA | Graphical abstract | Placeholder | Feb 05 | Feb 19, 2027 | 84 | G4 (Jan 29) | Sterling |
-| Tab1 | Compositions: target and measured; mineral burden | Benchmarks and the nine planned #275 seeds filled, with burden; measured compositions pending | Jan 29 | Feb 19, 2027 | 84 | Outside (Feb 19) | Ronnie |
-| Tab2 | Properties against the benchmarks | Benchmark rows filled; campaign rows placeholders | Feb 05 | Feb 12, 2027 | 77 | Freeze (Feb 12) | Sterling |
+| Tab1 | Compositions: target and measured; mineral burden | Benchmarks and the seven planned Sc-free #275 seeds filled, with burden; measured compositions pending | Jan 29 | Feb 19, 2027 | 84 | Outside (Feb 19) | Ronnie |
+| Tab2 | Tensile properties against the benchmarks | Benchmark rows filled; campaign rows placeholders | Feb 05 | Feb 12, 2027 | 77 | Freeze (Feb 12) | Sterling |
 | Tab3 | Independent verification | Placeholder; no outside lab engaged yet | Feb 12 | Feb 19, 2027 | 84 | Outside (Feb 19) | Sterling |
 | S1 | Atomizer runs used in the paper | Run table exists up to Nov 13 (no Al campaign runs yet) | Jan 04 | Feb 12, 2027 | 77 | Freeze (Feb 12) | Gage |
 | S2 | CALPHAD settings and the full ranked list | Placeholder | Dec 11 | Jan 29, 2027 | 63 | G1 (Dec 4) | Xavier |
@@ -22,4 +22,4 @@
 | S6 | Specimen drawings and every stress-strain curve | Utah Apr 2026 drawing and 5 curves exist (PR #288) | Feb 12 | Feb 15, 2027 | 80 | Freeze (Feb 12) | Carl |
 | S7 | Corrosion set-up validation | Placeholder | Jan 15 | Feb 12, 2027 | 77 | G2 (Jan 15) | Ben and Jarrett |
 | S8 | Provenance records for the finalists | Template exists (PR #286) | Feb 05 | Feb 15, 2027 | 80 | Freeze (Feb 12) | Gage |
-| S9 | Pre-registration | Proposed in outline.md; not frozen | Dec 04 | Dec 18, 2026 | 21 | G1 (Dec 4) | Sterling |
+| S9 | Pre-registration | Proposed in outline.md; to freeze before the screen ranks anything (G1) | Dec 01 | Dec 04, 2026 | 7 | G1 (Dec 4) | Sterling |

@@ -176,6 +176,14 @@ def fig1(p, bench, tensile, alloys, burdens, lit, lit_b) -> str:
         a.text(29.6, 598, "stronger than in-house AlSi10Mg,\nas ductile", ha="right",
                va="top", fontsize=6.3, color=INK2)
     if not lit.empty:
+        # Rows that are the two ends of a published range are not a pair: draw the range as a box.
+        rng = lit["basis"].astype(str).str.startswith("range end")
+        for (aid, cond), g in lit[rng].groupby(["alloy_id", "condition"]):
+            a.add_patch(Rectangle((g["el_pct"].min(), g["ys_mpa"].min()), g["el_pct"].max() - g["el_pct"].min(),
+                                  g["ys_mpa"].max() - g["ys_mpa"].min(), facecolor="none", edgecolor=GREY,
+                                  linewidth=0.8, linestyle=(0, (2, 1.5)), zorder=2))
+        com = com[~com["basis"].astype(str).str.startswith("range end")]
+        a.plot([], [], color=GREY, linewidth=0.8, linestyle=(0, (2, 1.5)), label="Sc-free, datasheet range")
         a.scatter(com["el_pct"], com["ys_mpa"], s=22, marker="D", facecolors="white", edgecolors=GREY,
                   linewidths=0.9, zorder=2, label="Sc-free, datasheets")
         a.scatter(pap["el_pct"], pap["ys_mpa"], s=26, marker="^", facecolors="white", edgecolors=GREY,
@@ -255,7 +263,7 @@ def fig1(p, bench, tensile, alloys, burdens, lit, lit_b) -> str:
             prev = x
             b.plot([x, x], [100, 118], color=C_NEW, linewidth=1.4, zorder=5)
             b.text(x, 122 + 13 * level, aid, fontsize=5.8, ha="center", va="bottom", color=INK)
-        b.text(8.3, 190, "ticks at the bottom:\nplanned seeds (#275),\nburden only", fontsize=6.0,
+        b.text(8.3, 190, "ticks at the bottom:\nplanned seed compositions,\nburden only", fontsize=6.0,
                color=INK2, ha="left", va="center")
         cand = burdens.drop(index=[i for i in burdens.index if i in ("AlSi10Mg", "Scalmalloy")])
         if not camp.empty and not cand.empty:
@@ -404,6 +412,8 @@ def table_benchmarks(bench, tensile) -> None:
         key = src[src.find("[") + 1: src.find("]")] if "[" in src else ""
         src = src.split(" [")[0] + (rf"~\cite{{ds_{key}}}" if key else "")
         cond = r["condition"].split(" (")[0]
+        if "unmachined" in str(r["series"]):
+            cond += ", as-printed surface"
         lines.append(f"{tex_escape(r['alloy'].split(' (')[0])} & {src} & {tex_escape(cond)} & "
                      f"{tex_escape(r['orientation'])} & {fmt(r['yield_MPa'])} & {fmt(r['uts_MPa'])} & "
                      f"{fmt(r['elongation_pct'], 1)} \\\\")
@@ -516,8 +526,26 @@ def numbers(tensile, runs, alloys, burdens, lit=None, lit_b=None) -> None:
         lines.append(num(macro + "nir", g(aid, "B_nir"), 1, "B"))
         lines.append(num(macro + "nirlo", g(aid, "B_nir_low"), 1, "B"))
         lines.append(num(macro + "nirhi", g(aid, "B_nir_high"), 1, "B"))
+        lines.append(num(macro + "nirallo", g(aid, "B_nir_al_low"), 1, "B"))
+        lines.append(num(macro + "niralhi", g(aid, "B_nir_al_high"), 1, "B"))
         c = g(aid, "B_cost")
         lines.append(num(macro + "cost", c, 0 if (not math.isnan(c) and c >= 10) else 2, "B"))
+    # Comparisons typed in the text, generated here so they follow the data.
+    lines += [num("InhouseYSpctEOS", 100 * ys[0] / 270), num("InhouseUTSpctEOS", 100 * uts[0] / 461)]
+    sc_w = g("Scalmalloy", "Sc")
+    sc_cost = g("Scalmalloy", "B_cost")
+    master = sc_w / 2.0 * 30.0  # kg of Al-2Sc master alloy per kg of alloy is w_Sc/2; USGS: 30 USD/kg
+    sc_cost_master = sc_cost - sc_w / 100.0 * 5200.0 + master
+    lines += [num("ScalSc", sc_w, 2), num("ScalMasterCost", master), num("ScalCostMaster", sc_cost_master)]
+    if lit is not None and not lit.empty and lit_b is not None and not lit_b.empty:
+        ag = set(lit.loc[lit["family"].astype(str).str.contains("Ag"), "alloy_id"])
+        nonag = lit_b.loc[[a for a in lit_b.index if a not in ag], "B_cost"].dropna()
+        agc = lit_b.loc[[a for a in lit_b.index if a in ag], "B_cost_priced"].dropna()
+        # Floors, because the text says "at least".
+        lines += [num("CostRedMinNonAg", math.floor(100 * (1 - nonag.max() / sc_cost))),
+                  num("CostRedMinMaster", math.floor(100 * (1 - nonag.max() / sc_cost_master))),
+                  num("CostRedAgLo", math.floor(100 * (1 - agc.max() / sc_cost))),
+                  num("CostRedAgHi", math.floor(100 * (1 - agc.min() / sc_cost)))]
     # Sc-free comparators already in the region of interest: stronger than in-house AlSi10Mg by more than
     # its 95 % CI half-width, and below Scalmalloy's lowest B_NIR (midpoint, and robustly at the high end).
     if lit is not None and not lit.empty and lit_b is not None and not lit_b.empty and ys[3]:
@@ -526,8 +554,12 @@ def numbers(tensile, runs, alloys, burdens, lit=None, lit_b=None) -> None:
         thr = ys[0] + ys[2]
         mid = [a for a in best.index if best[a] > thr and lit_b.loc[a, "B_nir"] < sc_lo]
         rob = [a for a in best.index if best[a] > thr and lit_b.loc[a, "B_nir_high"] < sc_lo]
-        lines += [num("NLit", len(best)), num("NLitRegionMid", len(mid)), num("NLitRegionRobust", len(rob)),
-                  num("YSbar", thr)]
+        onmap = [a for a in best.index if not math.isnan(lit_b.loc[a, "B_nir"])]
+        ds_bar = 300.0  # strongest machined as-built AlSi10Mg datasheet row (Nikon, horizontal)
+        mid_ds = [a for a in onmap if best[a] > ds_bar and lit_b.loc[a, "B_nir"] < sc_lo]
+        rob_ds = [a for a in onmap if best[a] > ds_bar and lit_b.loc[a, "B_nir_high"] < sc_lo]
+        lines += [num("NLit", len(onmap)), num("NLitRegionMid", len(mid)), num("NLitRegionRobust", len(rob)),
+                  num("NLitRegionMidDS", len(mid_ds)), num("NLitRegionRobustDS", len(rob_ds)), num("YSbar", thr)]
     (GEN / "numbers.tex").write_text("\n".join(lines) + "\n")
 
 

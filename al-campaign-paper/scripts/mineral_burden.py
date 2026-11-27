@@ -74,6 +74,7 @@ def burden(comp: dict[str, float], crit: pd.DataFrame) -> dict[str, object]:
     out: dict[str, object] = {"Sc": comp.get("sc", 0.0)}
     lo = hi = cost = 0.0
     miss_n, miss_c = [], []
+    w_al = 100.0 - sum(comp.values())
     for el, w in comp.items():
         if w <= 0:
             continue
@@ -100,6 +101,15 @@ def burden(comp: dict[str, float], crit: pd.DataFrame) -> dict[str, object]:
     out["B_nir_missing"] = ",".join(miss_n)
     out["B_cost"] = float("nan") if miss_c else cost
     out["B_cost_missing"] = ",".join(miss_c)
+    # Cost over the priced elements only (e.g. A20X, whose boron has no element price).
+    out["B_cost_priced"] = cost
+    # Sensitivity: the same interval with aluminum counted at its own import reliance.
+    if "al" in crit.index and not miss_n:
+        al_lo, al_hi = _num(crit.loc["al"].get("nir_low_pct")), _num(crit.loc["al"].get("nir_high_pct"))
+        out["B_nir_al_low"] = lo + w_al * al_lo / 100.0
+        out["B_nir_al_high"] = hi + w_al * al_hi / 100.0
+    else:
+        out["B_nir_al_low"] = out["B_nir_al_high"] = float("nan")
     return out
 
 
