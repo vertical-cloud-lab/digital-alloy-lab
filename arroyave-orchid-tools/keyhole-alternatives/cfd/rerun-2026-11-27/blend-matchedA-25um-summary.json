@@ -1,0 +1,149 @@
+{
+  "run": "blend-matchedA-25um",
+  "case": "blend",
+  "label": "BYU blend (Al-24Si), 375 W, 0.4 m/s, 45 um beam, 30 C plate",
+  "meta": {
+    "case": "blend",
+    "label": "BYU blend (Al-24Si), 375 W, 0.4 m/s, 45 um beam, 30 C plate",
+    "P": 375.0,
+    "v": 0.4,
+    "r0": 4.5e-05,
+    "T0": 303.15,
+    "T_l": 1019.3,
+    "T_s": 846.7,
+    "Si": 0.243,
+    "Lx": 0.0013,
+    "Lz": 0.00064,
+    "metal_depth": 0.0006,
+    "x_start": 0.00015,
+    "am_module": {
+      "A": 0.3841,
+      "peak_T_K": 3119.0,
+      "pool_depth_um": 349.0,
+      "pool_length_um": 1470.0,
+      "pool_halfwidth_um": 231.0
+    },
+    "props": {
+      "k": 110.0,
+      "rho": 2650.0,
+      "cp": 1040.0,
+      "nu": 4.9e-07,
+      "beta": 0.0001,
+      "sigma": 0.86,
+      "dsigma_dT": -0.00035,
+      "T_vap": 2743.0,
+      "L_vap": 10900000.0,
+      "M": 0.02698,
+      "e_num_density": 1.81e+29,
+      "elec_resistivity": 4e-07,
+      "wavelength": 1.07e-06,
+      "emissivity": 0.1
+    },
+    "latent_heat": 735499.0,
+    "geometry": {
+      "dx": 2.5e-05,
+      "nx": 52,
+      "ny": 28,
+      "nz": 26,
+      "y_surface": 0.0001,
+      "Lx": 0.0013000000000000002,
+      "Ly": 0.0007,
+      "Lz": 0.0006500000000000001,
+      "y_laser": 5e-05
+    },
+    "end_time": 0.0012,
+    "write_interval": 0.0001,
+    "x_end": 0.0006299999999999999,
+    "n_proc": 2,
+    "maxCo": 0.3,
+    "absorbed_fraction": 0.3841,
+    "laser_power_set": 144.0375,
+    "note": "endTime lowered to 1.2 ms while running, to compare with blend-matchedA's last write and fit the job's time"
+  },
+  "n_steps": 2448,
+  "t_end_reached_ms": 1.2,
+  "wall_s": 460.84,
+  "A_eff_mean_second_half": 0.3795096,
+  "A_eff_std_second_half": 0.0,
+  "A_eff_first_step": 0.3795096,
+  "dt_median_s": 5e-07,
+  "dt_min_s": 1.200005e-09,
+  "last_write": {
+    "t_ms": 1.2,
+    "x_beam_mm": 0.6299999999999999,
+    "T_max_K": 3017.609,
+    "keyhole_depth_um": 137.87892233963052,
+    "keyhole_width_surface_um": 250.0,
+    "keyhole_width_q1_um": 100.0,
+    "keyhole_width_mid_um": 75.0,
+    "keyhole_x_um_rel_beam": 7.500000000000128,
+    "pool_depth_um": 211.2980283264559,
+    "pool_width_um": 229.99689163862251,
+    "pool_length_um": 289.7513632849232,
+    "pool_front_um_rel_beam": 68.40224434219184,
+    "pool_back_um_rel_beam": -221.34911894273134,
+    "pool_back_touches_domain_start": false,
+    "pool_volume_mm3": 0.004156250000000001,
+    "n_liquid_regions": 1,
+    "pool_depth_solidus_um": 227.76197108783936,
+    "pool_width_solidus_um": 324.8732699193354,
+    "pool_length_solidus_um": 462.75425603508717
+  },
+  "second_half_of_writes": {
+    "T_max_K": {
+      "mean": 3100.097857142857,
+      "min": 2944.624,
+      "max": 3282.941
+    },
+    "keyhole_depth_um": {
+      "mean": 135.39337154229793,
+      "min": 100.68928749883332,
+      "max": 153.13710853572698
+    },
+    "keyhole_width_surface_um": {
+      "mean": 182.14285714285714,
+      "min": 150.0,
+      "max": 250.0
+    },
+    "keyhole_width_q1_um": {
+      "mean": 103.57142857142857,
+      "min": 100.0,
+      "max": 125.0
+    },
+    "keyhole_width_mid_um": {
+      "mean": 57.142857142857146,
+      "min": 50.0,
+      "max": 75.0
+    },
+    "pool_depth_um": {
+      "mean": 199.23788290333474,
+      "min": 178.28806207689655,
+      "max": 211.2980283264559
+    },
+    "pool_width_um": {
+      "mean": 229.52939644927542,
+      "min": 224.53685422836455,
+      "max": 233.17202056279928
+    },
+    "pool_length_um": {
+      "mean": 267.74968405405065,
+      "min": 246.18012007672073,
+      "max": 289.7513632849232
+    },
+    "pool_depth_solidus_um": {
+      "mean": 218.92601642754704,
+      "min": 209.7657966147403,
+      "max": 227.76197108783936
+    },
+    "pool_width_solidus_um": {
+      "mean": 319.8057422514092,
+      "min": 300.0,
+      "max": 350.0
+    },
+    "pool_length_solidus_um": {
+      "mean": 417.2334811821307,
+      "min": 366.2510757123933,
+      "max": 462.75425603508717
+    }
+  }
+}

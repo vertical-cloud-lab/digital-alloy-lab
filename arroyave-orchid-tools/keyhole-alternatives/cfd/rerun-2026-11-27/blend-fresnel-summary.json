@@ -1,0 +1,148 @@
+{
+  "run": "blend-fresnel",
+  "case": "blend",
+  "label": "BYU blend (Al-24Si), 375 W, 0.4 m/s, 45 um beam, 30 C plate",
+  "meta": {
+    "case": "blend",
+    "label": "BYU blend (Al-24Si), 375 W, 0.4 m/s, 45 um beam, 30 C plate",
+    "P": 375.0,
+    "v": 0.4,
+    "r0": 4.5e-05,
+    "T0": 303.15,
+    "T_l": 1019.3,
+    "T_s": 846.7,
+    "Si": 0.243,
+    "Lx": 0.0013,
+    "Lz": 0.00064,
+    "metal_depth": 0.0006,
+    "x_start": 0.00015,
+    "am_module": {
+      "A": 0.3841,
+      "peak_T_K": 3119.0,
+      "pool_depth_um": 349.0,
+      "pool_length_um": 1470.0,
+      "pool_halfwidth_um": 231.0
+    },
+    "props": {
+      "k": 110.0,
+      "rho": 2650.0,
+      "cp": 1040.0,
+      "nu": 4.9e-07,
+      "beta": 0.0001,
+      "sigma": 0.86,
+      "dsigma_dT": -0.00035,
+      "T_vap": 2743.0,
+      "L_vap": 10900000.0,
+      "M": 0.02698,
+      "e_num_density": 1.81e+29,
+      "elec_resistivity": 4e-07,
+      "wavelength": 1.07e-06,
+      "emissivity": 0.1
+    },
+    "latent_heat": 735499.0,
+    "geometry": {
+      "dx": 1.75e-05,
+      "nx": 74,
+      "ny": 38,
+      "nz": 37,
+      "y_surface": 7e-05,
+      "Lx": 0.001295,
+      "Ly": 0.0006649999999999999,
+      "Lz": 0.0006475,
+      "y_laser": 3.5e-05
+    },
+    "end_time": 0.001,
+    "write_interval": 0.0001,
+    "x_end": 0.00055,
+    "n_proc": 2,
+    "maxCo": 0.3,
+    "absorbed_fraction": null,
+    "laser_power_set": 375.0
+  },
+  "n_steps": 2028,
+  "t_end_reached_ms": 1.0,
+  "wall_s": 718.77,
+  "A_eff_mean_second_half": 0.13925731000000002,
+  "A_eff_std_second_half": 7.0437475730123e-05,
+  "A_eff_first_step": 0.13899978666666668,
+  "dt_median_s": 5e-07,
+  "dt_min_s": 1.200005e-09,
+  "last_write": {
+    "t_ms": 1.0,
+    "x_beam_mm": 0.55,
+    "T_max_K": 2522.322,
+    "keyhole_depth_um": 26.72977958911826,
+    "keyhole_width_surface_um": 122.5,
+    "keyhole_width_q1_um": 122.5,
+    "keyhole_width_mid_um": 122.5,
+    "pool_depth_um": 67.73313321081436,
+    "pool_width_um": 145.03546447098918,
+    "pool_length_um": 150.65977958468807,
+    "pool_front_um_rel_beam": 50.65975719248405,
+    "pool_back_um_rel_beam": -100.00002239220402,
+    "pool_back_touches_domain_start": false,
+    "pool_volume_mm3": 0.0005198593749999998,
+    "n_liquid_regions": 1,
+    "pool_depth_solidus_um": 84.04665001683948,
+    "pool_width_solidus_um": 175.91010476414556,
+    "pool_length_solidus_um": 211.44408483560835,
+    "keyhole_x_um_rel_beam": 1.2499999999999492
+  },
+  "second_half_of_writes": {
+    "T_max_K": {
+      "mean": 2501.2186666666666,
+      "min": 2311.912,
+      "max": 2632.532
+    },
+    "keyhole_depth_um": {
+      "mean": 12.920225135628078,
+      "min": 9.186008039681987,
+      "max": 26.72977958911826
+    },
+    "keyhole_width_surface_um": {
+      "mean": 122.5,
+      "min": 122.5,
+      "max": 122.5
+    },
+    "keyhole_width_q1_um": {
+      "mean": 122.5,
+      "min": 122.5,
+      "max": 122.5
+    },
+    "keyhole_width_mid_um": {
+      "mean": 122.5,
+      "min": 122.5,
+      "max": 122.5
+    },
+    "pool_depth_um": {
+      "mean": 66.51396627331492,
+      "min": 63.44867739524815,
+      "max": 68.8838424246436
+    },
+    "pool_width_um": {
+      "mean": 141.7953605141452,
+      "min": 137.5304531612199,
+      "max": 145.03546447098918
+    },
+    "pool_length_um": {
+      "mean": 150.0872889521395,
+      "min": 148.90561972118167,
+      "max": 152.1839225988322
+    },
+    "pool_depth_solidus_um": {
+      "mean": 81.5318948755321,
+      "min": 77.92757891828678,
+      "max": 84.04665001683948
+    },
+    "pool_width_solidus_um": {
+      "mean": 173.96269554630126,
+      "min": 171.82485216090018,
+      "max": 175.91010476414556
+    },
+    "pool_length_solidus_um": {
+      "mean": 204.48931891070683,
+      "min": 193.85144676424937,
+      "max": 211.44408483560835
+    }
+  }
+}

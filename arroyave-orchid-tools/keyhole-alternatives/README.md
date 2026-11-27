@@ -36,7 +36,8 @@ for in #238, together with our own single-track cross-sections.
 
 ## Tests
 
-[`scripts/keyhole_open_models.py`](../../scripts/keyhole_open_models.py) runs everything below in about 2 s. It
+[`scripts/keyhole_open_models.py`](../../scripts/keyhole_open_models.py) runs everything below in about 2 s, and
+a rerun from a fresh checkout in the final review reproduced its outputs exactly. It
 reads #238's digitized AM-module boundaries and grid classes, and downloads Gan et al.'s Supplementary Data 1
 (CC BY 4.0) into a cache, checking its sha256. Settings are #238's:
 - AlSi10Mg: A = 0.31, beam 1/e² radius 40 µm, T_l 867 K, 150 °C plate;
@@ -298,7 +299,8 @@ same speed, since eagar-tsai's field depends on A·P only.
    - So the 65 µΩ cm run, the one that keyholes, is the closer of the two. laserbeamFoam takes one resistivity for
      the whole melt, though, and at 24 wt % Si the formula is a short extrapolation.
 3. **Given the AM module's absorbed power, laserbeamFoam agrees with the AM map's keyhole call at two of the three
-   points, one of them narrowly, and disagrees at the third.** Each is judged by the AM module's own test,
+   points, one of them narrowly, and disagrees at the third.** A rerun flips the narrow one, the blend
+   ([below](#rerun-in-the-final-review)). Each is judged by the AM module's own test,
    Wk/Dk ≤ 0.7, applied to the CFD keyhole:
    - **AlSi10Mg at 250 W, which the AM map calls defect-free: agrees.** A dimple 40 µm deep and 165 µm across
      (Wk/Dk 4.1), so no keyhole. Peak 2,894 K, against the AM module's 3,044 K.
@@ -309,6 +311,9 @@ same speed, since eagar-tsai's field depends on A·P only.
      - Over 0.6–1.2 ms Wk/Dk was 0.79, and the 25 µm mesh gives 0.82.
      - Between writes Wk/Dk swings from 0.3 to 1.0 over 0.8–1.6 ms (up to 2.1 earlier) as the keyhole collapses and
        reopens.
+     - **A rerun in the final review calls it the other way** ([below](#rerun-in-the-final-review)). Run from t = 0
+       without the original's restart, the keyhole averages 155 µm deep and 119 µm wide over 0.8–1.6 ms, Wk/Dk 0.76.
+       With swings that large, nine writes can't place this point on either side of 0.7.
    - **With reflections (65 µΩ cm) the blend keyhole is clearly a keyhole:** 211 µm deep and 102 µm wide over
      0.6–1.2 ms (Wk/Dk 0.49). But it is absorbing 1.7× the AM module's power.
 4. **The keyholes are 2–5× shallower than Gan's depth law, even where the law is inside its fitted range.**
@@ -398,6 +403,9 @@ How the agreement moves with the keyhole width, at the AM module's absorptivity 
   - Most remaining disagreements are on the lack-of-fusion side, which is eagar-tsai's, as in #238.
 - **The keyhole width is the least certain number in the chain.**
   - It comes from one run (blend) or two (AlSi10Mg), on 15–17.5 µm cells, so ±1 cell is ±0.2 in c_w.
+  - Rerunning the CFD moves the blend's c_w from 1.10 to 1.32, and leaves AlSi10Mg's at 1.76. The combined model's
+    scores don't change: 49 and 23 points in all classes, 55 and 25 keyhole-or-not
+    ([below](#rerun-in-the-final-review)).
   - How it is measured matters. For the blend, c_w is 1.10 at a quarter of the keyhole's depth, 2.81 at the plate
     surface and 0.65 at half depth.
   - With reflections (the 65 µΩ cm run) the blend keyhole is about as wide (102 µm at a quarter depth, c_w 1.14) but
@@ -440,6 +448,8 @@ How the agreement moves with the keyhole width, at the AM module's absorptivity 
 ```bash
 # OpenFOAM v2506 from openfoam.com's apt repository (dl.openfoam.com/add-debian-repo.sh), then laserbeamFoam
 sudo apt-get install openfoam2506-dev
+# (if openfoam.com's repository serves a bot-check page, as it did to the Actions runner on 2026-11-27, use the
+#  official image instead: docker pull opencfd/openfoam-dev:2506, and run the steps below inside it)
 git clone https://github.com/laserbeamfoam/LaserbeamFoam && cd LaserbeamFoam && git checkout 38a6d38
 source /usr/lib/openfoam/openfoam2506/etc/bashrc
 (cd src && ./Allwmake -j 4) && (cd applications/solvers/laserbeamFoam && wmake -j 4) && cd ..
@@ -451,6 +461,42 @@ python scripts/keyhole_cfd_laserbeamfoam.py post --case-dir /tmp/$R --out $OUT
 python scripts/keyhole_cfd_laserbeamfoam.py figures --post-dir $OUT --case-dirs /tmp/<each run> --out $OUT
 python scripts/keyhole_amalgamation.py --cfd-dir $OUT --out $OUT
 ```
+
+### Rerun in the final review
+
+All seven runs were redone on 2026-11-27 ([`cfd/rerun-2026-11-27/`](cfd/rerun-2026-11-27/README.md)).
+- **The build.** openfoam.com's apt repository now serves the runner a bot-check page, so `apt-get` no longer
+  works. OpenFOAM v2506 came from the official Docker image `opencfd/openfoam-dev:2506` instead, and laserbeamFoam
+  `38a6d38` was built in it.
+- **The runs.** Each committed case ran unchanged, from t = 0, on 2 ranks. Three of the originals had been
+  restarted partway (`alsi10mg-fresnel`, `blend-fresnel-rho65`, `blend-matchedA`).
+- Means over the second half of each run, original → rerun:
+
+| Run | Absorbed | Keyhole depth (µm) | Keyhole width at ¼ depth (µm) | Wk/Dk | Pool depth / width / length, liquidus (µm) | Largest change, liquidus pool | Largest change, solidus pool |
+|---|---|---|---|---|---|---|---|
+| `alsi10mg-fresnel` | 0.139 → 0.139 | 10 → 10 | 75 → 75 | 7.86 → 7.86 | 57 / 112 / 192 → 57 / 112 / 192 | 0.0 % | 0.0 % |
+| `alsi10mg-matchedA` | 0.304 → 0.304 | 40 → 42 | 165 → 162 | 4.12 → 3.84 | 103 / 176 / 314 → 102 / 176 / 315 | 0.3 % | 0.2 % |
+| `alsi10mg-350W-matchedA` | 0.304 → 0.304 | 83 → 80 | 117 → 120 | 1.40 → 1.50 | 140 / 210 / 407 → 139 / 213 / 406 | 1.6 % | 3.2 % |
+| `blend-fresnel` | 0.139 → 0.139 | 13 → 13 | 122 → 122 | 9.19 → 9.48 | 67 / 142 / 150 → 67 / 142 / 150 | 0.1 % | 0.1 % |
+| `blend-fresnel-rho65` | 0.658 → 0.660 | 211 → 230 | 102 → 95 | 0.49 → 0.41 | 281 / 333 / 346 → 283 / 335 / 348 | 0.8 % | 2.6 % |
+| `blend-matchedA` | 0.380 → 0.380 | 172 → 155 | 99 → 119 | **0.58 → 0.76** | 225 / 237 / 257 → 212 / 238 / 255 | 5.9 % | 4.9 % |
+| `blend-matchedA-25um` | 0.380 → 0.380 | 131 → 135 | 107 → 104 | 0.82 → 0.76 | 199 / 235 / 269 → 199 / 230 / 268 | 2.3 % | 0.8 % |
+
+- **Where there's no keyhole, the runs repeat almost exactly.** The two conduction-mode runs reproduce to 0.1 %,
+  including `alsi10mg-fresnel`, whose original was continued from a test run.
+- **With a keyhole, the pools repeat to within 6 %.** The keyholes move by up to 20 %, because they open and
+  collapse from one write to the next. The 65 µΩ cm run's absorbed fraction repeats to 0.3 %.
+- **One keyhole call flips: the blend at the AM module's absorbed power.**
+  - Its Wk/Dk is 0.76 in the rerun, against 0.58 in the original, so the AM module's test now says no keyhole.
+  - With the keyhole swinging between Wk/Dk 0.3 and 1.7 from write to write, nine writes can't place it on either
+    side of 0.7.
+  - So laserbeamFoam agrees with the AM map at one of the three points (AlSi10Mg at 250 W), and the blend is a
+    toss-up.
+- **The combined model's scores are unchanged.** The blend's keyhole width goes from 1.10 to 1.32 beam diameters,
+  and AlSi10Mg's stays at 1.76.
+  - Keyhole-or-not: 55 of 58 and 25 of 27.
+  - All classes: 49 and 23.
+  - The blend's two disagreements are now two missed keyholes, where before they were one missed and one extra.
 
 ## Our own first-principles model
 
@@ -672,7 +718,8 @@ command's `--round 3` is that script's own numbering.
 | `cfd/cases/<run>/` | each laserbeamFoam case as run (`./Allrun 2` after sourcing OpenFOAM v2506) |
 | `cfd/<run>-pool-vs-time.csv`, `cfd/<run>-absorbed-power-vs-time.csv`, `cfd/<run>-summary.json` | each run's pool and keyhole at every write, its absorbed power every few steps, and a summary |
 | `cfd/logs/<run>-log.laserbeamFoam.digest.txt` | the start and end of each solver log (the full logs ran to gigabytes) |
-| `cfd/amalgamation-render-points.csv`, `cfd/amalgamation-map-classes.csv`, `cfd/amalgamation-summary.json` | the combined model at the CFD points and at every map grid point, and its scores |
+| `cfd/amalgamation-render-points.csv`, `cfd/amalgamation-map-classes.csv`, `cfd/amalgamation-summary.json` | the combined model at the CFD points and at every map grid point, and its scores (a rerun from the committed CFD summaries reproduces them exactly) |
+| [`cfd/rerun-2026-11-27/`](cfd/rerun-2026-11-27/README.md) | the seven laserbeamFoam runs redone in the final review, and the combined model rescored on them |
 | `cfd/cfd-histories.png`, `cfd/cfd-sections.png`, `cfd/amalgamation-maps-vs-am-module.png` | the three CFD figures |
 | [`first-principles/`](first-principles/README.md) | our own first-principles model: write-up, per-point tables, sensitivity runs and figures |
 | [`../../scripts/keyhole_first_principles.py`](../../scripts/keyhole_first_principles.py), [`../../scripts/test_keyhole_first_principles.py`](../../scripts/test_keyhole_first_principles.py), [`../../scripts/keyhole_fp_enthalpy_mc_al.py`](../../scripts/keyhole_fp_enthalpy_mc_al.py) | the model, its 8 checks, and the pycalphad enthalpy table it reads |
