@@ -28,6 +28,25 @@ Nothing here has been built or tried on hardware. The numbers come from the mode
 - the chamber change of [chamber-construction.md](chamber-construction.md): a through-frame and a bolted floor plate with a second 3.53 mm cord;
 - for run 2, two items from this note's patch list: the lid gland's R13 corners and the floor port's lead-in.
 
+## Round 9 (2026-11-27): run 13, the whole assembly in one process, and round 8's audit findings fixed in the planner
+
+Run 13 plans and records chapters 40 and 41 in **one sequential process** (45 min of planner time, 08:36-09:21 UTC; run 12 was
+four processes joined at F29, F39 and F51). It passes **104 of 110** checked steps (run 12: 99 of 108), drives **125 of 129** screws
+(124), plans **62 of 76** table picks (57 of 74), and **all 175** MiR moves are clear (163 of 167). Fixed: C00d (18 of 18: the arm
+that can't reach a screw parks and the other drives it), F45d (the NFC reader and the side port's stub go in from the side, new
+steps F45e and F45f) and F48b (the ring pad's lip 24.0 mm). Still failing: F15, F18, F26, F27, F54, F57. Round 8's frame audit
+traced to the planner: a failed screw attempt left the planner's arm where the recording did not have it (the two nutrunners in
+each other), the wrist camera and tool changer were never checked (`cell.Checker.collisions` dropped them), the push after a
+short release was drawn with the fingers open (the fingertip in the galvo), the turn-overs gripped the module through its handle
+and approached with the module already held, the planner's long table had no stretchers and checked a coiled line as its fitted
+shape (MiR B at F45, F45b), the trunnion's shafts ended flush on their stands, and the hoist's hook was drawn inside the chamber;
+each is fixed and checked. Two hands: the holds on M19, C04 and F30 stay; F33b and F37b can't have one (the vacuum gripper's
+100 x 100 mm body covers the screws), F43 can't either way round (tried swapped); the door is held by its draw latches, closed
+first (F51b). [`rec_check.py`](analysis/assembly/rec_check.py) replays a recording as the video draws it and checks it.
+Details: [`analysis/out/assembly/round9_run13.md`](analysis/out/assembly/round9_run13.md),
+[`results_run13.json`](analysis/out/assembly/results_run13.json), [`two_hands.json`](analysis/out/assembly/two_hands.json),
+[`mir_drives.json`](analysis/out/assembly/mir_drives.json).
+
 ## Round 8 (2026-11-26): run 12, two hands, MiRs that drive like MiRs, fixed cameras
 
 Run 12 passes the same steps as run 11 (99 of 108, 124 of 129 screws, 57 of 74 table picks). The placing arm now holds a part on its face seal while the other arm drives the first two screws (M19, C04, F30); F33b, F37b and F43 need the same hold, but arm B's upper arm meets Fixture B; the door before its hinge pins (F51-F52) was not tried. Every MiR move is pivot, drive forward, pivot (167 moves, 6.9 m of reversing in docking legs of at most 0.5 m; 4 moves at F45 and F45b not clear). Run 12 was planned in four processes joined at F29, F39 and F51 (`ASM_FF_UNTIL`, `ASM_CONTINUE`). Details: [`analysis/out/assembly/round8_run12.md`](analysis/out/assembly/round8_run12.md), [`two_hands.json`](analysis/out/assembly/two_hands.json), [`mir_drives.json`](analysis/out/assembly/mir_drives.json); the video: [`robot-build/video.md`](robot-build/video.md) round 8.
@@ -277,10 +296,11 @@ Rendered with [`cad/robotbuild/asm_render.py`](cad/robotbuild/asm_render.py) fro
 ### Open points
 
 **Still failing in run 10, and the next change for each** (run 10's changes are in the table above; run 11 tried four of
-these, noted on each):
+these, noted on each; run 13 (round 9) fixed C00d, F45d and F48b, noted on each; F15, F18, F26, F27, F54 and F57 still fail):
 - **F15** (6 of 7 screws: the driver meets the plenum's KF-25 port on one, with or without the 60 mm extension): drive that
   screw before the port's stub goes on (the stub is welded, so: a shorter stub, or the screw moved 5 mm along the flange). Run 11's 100 mm extension didn't help: the side-mounted driver's body meets the port, so try the
-  angle-head nutrunner on that screw.
+  angle-head nutrunner on that screw. Runs 12-13 tried the angle head and the other arm on #7 (drive_screw's fallbacks): the
+  same; the screw moved along the flange is what is left.
 - **F18** (3 of 4 held rail screws): with the 60 mm extension arm A's wrist 1 meets the base plate; without it the driver met
   the chamber body. Try a 30 mm extension between the two, or swap the roles back for that one screw (arm A holds, arm B
   drives from above the open top). Run 11's 30 mm bit: arm A's forearm meets the base plate instead.
@@ -289,19 +309,28 @@ these, noted on each):
   bench nest and put the whole cartridge in by its fin (robot-ops.md's blade-cartridge job passes that way on the finished
   machine). Run 11 entered 15 mm high: the same fingertip contact, so it is the fingers' width.
 - **F27** (blade screws): arm B's driver meets the overflow funnel block. Drive them on the bench with the cartridge on a
-  nest before F26 (the cartridge is quick-swap anyway, with dowels and ball plungers).
+  nest before F26 (the cartridge is quick-swap anyway, with dowels and ball plungers). Round 9 looked at both: with the recoater parked the
+  fin is at x -106, 4 mm inside the door opening's side (|x| < 110), where the plate fingers meet the frame, so the cartridge
+  goes in by its fin only with the recoater run 106 mm to the middle first (as the tending job does), and the recorder draws every part at the model's home state (a put's
+  state is not used by asm_render.py), so a recoater moved by a step would be drawn parked: that needs the recorder to carry
+  the pose first.
 - **F45** (roller feedthrough): the part's own path. **Fixed in run 11** with a 35 mm axial leg before the lift.
 - **F45d**: the NFC reader's antenna meets the metering base on its 70 mm drop: bring it in from the side, or fit it before
-  F43.
+  F43. **Fixed in run 13**: the antenna (F45e) and, behind it, the side port's KF-16 stub (F45f, which met the rails once the
+  antenna was out of the way) go in from the metering base's -x side along +x; F45d keeps the load cell, rails and docked sensor.
 - **F48b** (camera window stack): the ring pad meets the camera boss at the seat, not on the way; check the pad's axis
   against the tilted counterbore (the tool may come in vertical while the part follows the line of sight), and the lip's
-  0.5 mm radial clearance.
+  0.5 mm radial clearance. **Fixed in run 13**: the pad's lip is 24.0 mm (was 24.6). The 0.5 mm a side in the tilted Ø25.6
+  counterbore was used up by the meshes' facets and a grasp centre taken from the tilted part, and in a tilted bore no world-axis
+  step frees a touching tool, so the depth check read a touch as deep.
 - **F57** (beam line): the tubes' ends sit in the cubes' ports, so the tubes have to slide in along their own axes: each
   tube into the cube placed before it, then the next cube onto the tube's free end.
 - **F54** optics bridge: still no pair of arm poses at the start of the carry 80 mm above the posts. With the hoist taking the
   14.3 kg, one arm (or a person) can guide it onto the posts' dowels; check one-arm guidance.
 - **C00d** 17 of 18: one screw has no approach even at 2,000 planner iterations; drive it after C01, with the chamber in the
-  trunnion.
+  trunnion. **Fixed in run 13**: the arm that can't reach a screw now parks before the other arm tries it (round 8
+  left it in the way); arm B drives #7 and #16, 18 of 18. C01c (new) drives any floor-plate screw left, from above with the chamber
+  upside down in the trunnion; in run 13 it had none.
 
 **Other open points**
 - **Picks at the table that were not planned:** run 9 had 25, mostly parts gripped sideways at their seat whose kitted pose put

@@ -1,15 +1,15 @@
 {
  "chapter": "50-integration",
- "frames_recorded": 1062,
+ "frames_recorded": 1070,
  "recordings": [
   "/tmp/robotbuild/frames/50-integration/audit"
  ],
  "people": [
   {
    "person": "op",
-   "frames": 1062,
+   "frames": 1070,
    "walked_mm": 3040,
-   "stances": 41,
+   "stances": 43,
    "slip_per_stance_mm": {
     "max": 0.0,
     "p95": 0.0,
@@ -51,48 +51,48 @@
     {
      "foot": "L",
      "start": 157,
-     "end": 163,
-     "frames": 7,
+     "end": 164,
+     "frames": 8,
      "slip_mm": 0.0,
      "max_frame_mm": 0.0
     },
     {
      "foot": "R",
-     "start": 163,
+     "start": 164,
      "end": 170,
-     "frames": 8,
+     "frames": 7,
      "slip_mm": 0.0,
      "max_frame_mm": 0.0
     },
     {
      "foot": "L",
      "start": 170,
-     "end": 178,
-     "frames": 9,
+     "end": 177,
+     "frames": 8,
      "slip_mm": 0.0,
      "max_frame_mm": 0.0
     },
     {
      "foot": "R",
      "start": 177,
-     "end": 186,
-     "frames": 10,
+     "end": 185,
+     "frames": 9,
      "slip_mm": 0.0,
      "max_frame_mm": 0.0
     },
     {
      "foot": "L",
-     "start": 185,
-     "end": 195,
-     "frames": 11,
+     "start": 184,
+     "end": 193,
+     "frames": 10,
      "slip_mm": 0.0,
      "max_frame_mm": 0.0
     },
     {
      "foot": "R",
-     "start": 193,
-     "end": 204,
-     "frames": 12,
+     "start": 192,
+     "end": 202,
+     "frames": 11,
      "slip_mm": 0.0,
      "max_frame_mm": 0.0
     }
@@ -104,23 +104,23 @@
    "gliding_worst": [],
    "jumps": [
     [
-     245,
+     249,
      639
     ],
     [
-     305,
+     309,
      931
     ],
     [
-     365,
+     369,
      699
     ],
     [
-     549,
+     553,
      1514
     ],
     [
-     597,
+     601,
      657
     ]
    ]
@@ -129,7 +129,7 @@
  "mirs": [
   {
    "mir": "mirrA",
-   "frames": 1062,
+   "frames": 1070,
    "driven_mm": 0,
    "forward": "local +x",
    "forward_mm": 0,
@@ -149,7 +149,7 @@
   },
   {
    "mir": "mirrB",
-   "frames": 1062,
+   "frames": 1070,
    "driven_mm": 0,
    "forward": "local +x",
    "forward_mm": 0,

@@ -53,6 +53,12 @@ def ease(u):
 
 def load(name):
     p = common.DATA / name
+    if not p.exists() and name == "assembly.json":    # round 9: the planner writes its run's summary as assembly_run<N>.json
+        runs = sorted(common.DATA.glob("assembly_run*.json"),
+                      key=lambda q: int("".join(c for c in q.stem if c.isdigit()) or 0))
+        p = runs[-1] if runs else p
+    if not p.exists() and name == "asm_fail_notes.json":   # the notes the assembly chapters draw (asm_render --fail_notes)
+        p = common.LPBF / "analysis" / "out" / "assembly" / "run10_fail_notes.json"
     if not p.exists():
         return None
     try:
@@ -442,6 +448,10 @@ def _steps(kind):
     if kind == "redesign":                                     # the assembly's failed steps and their round-7 fixes
         notes = load("asm_fail_notes.json") or {}
         have = {o[0] for o in out}
+        asm = load("assembly.json") or {}
+        failing = {s.get("id") for s in asm.get("steps") or [] if (s.get("status") or "").lower() in ("fail", "partial")}
+        if asm.get("steps"):                                   # round 9: only the notes of steps that fail in this run
+            notes = {k: v for k, v in notes.items() if k in failing}
         for sid, note in notes.items():
             if sid in have:
                 out = [o for o in out if o[0] != sid]

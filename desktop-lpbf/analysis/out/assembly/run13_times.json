@@ -1,0 +1,2302 @@
+{
+ "note": "Real-world time per assembly step, run 13 (round 9): one sequential process, the recorder's own sums (record.py save_summary; two-arm carries counted for both arms); estimates where record.py marks them. Real-world time per assembly step (issue #260, round 7): robot motion from the recorded, collision-checked trajectories at the speeds in analysis/assembly/record.py (estimates where marked there: tool changes 8 s, MiR docking 6 s, screw torque phase 1 s, gripper 0.8 s); persons' times are estimates per step. 'seconds' is the step's elapsed time (both arms can work at once, so robot_A_s + robot_B_s can exceed it).",
+ "robot_h": 3.27,
+ "person_h": 6.37,
+ "steps": [
+  {
+   "id": "M01",
+   "label": "Heater block onto the stack nest, bayonet face down",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 76.2,
+   "robot_A_s": 76.2,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "module",
+   "fetch": "PASS"
+  },
+  {
+   "id": "M02",
+   "label": "Three M3 helical inserts in the block's underside",
+   "do": "note",
+   "who": [
+    "machine"
+   ],
+   "seconds": 0.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "machine",
+   "why": "Installed right after tapping with a powered insert tool and the tang broken off, as for every insert in the chamber body (render_build chapter 2); a cobot would need a dedicated inserter and tang-bre",
+   "chapter": "module",
+   "fetch": null
+  },
+  {
+   "id": "M03",
+   "label": "Three cartridge heaters into their bores",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 98.0,
+   "robot_A_s": 98.0,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "released 24 mm short and pushed home with the closed fingers",
+   "chapter": "module",
+   "fetch": "PASS"
+  },
+  {
+   "id": "M04",
+   "label": "Three type K thermocouples (control, edge, limit) into their bores",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 20.7,
+   "robot_A_s": 20.7,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "released 36 mm short and pushed home with the closed fingers",
+   "chapter": "module",
+   "fetch": "FAIL"
+  },
+  {
+   "id": "M05",
+   "label": "Macor rings and radiation shields over three guide pins",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 268.7,
+   "robot_A_s": 268.7,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "released 9 mm above its seat and let drop over its guide; released 6 mm above its seat and let drop over its guide",
+   "chapter": "module",
+   "fetch": "PASS"
+  },
+  {
+   "id": "M06",
+   "label": "Piston head onto the break",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 90.7,
+   "robot_A_s": 90.7,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "module",
+   "fetch": "PASS"
+  },
+  {
+   "id": "M07",
+   "label": "Disc springs into the head's slotted counterbores (small-part vacuum nozzle)",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 108.4,
+   "robot_A_s": 108.4,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "module",
+   "fetch": "PASS"
+  },
+  {
+   "id": "M08",
+   "label": "Three M3 x 25 stack screws down through the head (torque-controlled: disc-spring preload)",
+   "do": "screws",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 95.4,
+   "robot_A_s": 95.4,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "module",
+   "fetch": null
+  },
+  {
+   "id": "M09",
+   "label": "Bore seal (aramid felt + carbon-filled PTFE scraper) stretched into the head's groove",
+   "do": "note",
+   "who": [
+    "person"
+   ],
+   "seconds": 180.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 180.0,
+   "status": "person",
+   "why": "A felt strip and a split PTFE scraper are wrapped, not pushed; no published robot method for felt.",
+   "chapter": "module",
+   "fetch": null
+  },
+  {
+   "id": "M10",
+   "label": "Gland-plate face O-ring (2-034) into the gland plate's groove, groove up, PFPE film",
+   "do": "seal",
+   "who": [],
+   "seconds": 0.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "module",
+   "fetch": null
+  },
+  {
+   "id": "M11",
+   "label": "Gland plate, its face O-ring held by the film, turned over onto its own nest (face down, rod bore vertical)",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 35.0,
+   "robot_A_s": 35.0,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "module",
+   "fetch": "-"
+  },
+  {
+   "id": "M12",
+   "label": "Two 2-114 rod O-rings folded through the \u00d815.93 throat into their grooves (ring loader), plate on its nest",
+   "do": "seal",
+   "who": [
+    "robot A",
+    "person"
+   ],
+   "seconds": 50.2,
+   "robot_A_s": 20.2,
+   "robot_B_s": 0.0,
+   "person_s": 30.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "module",
+   "fetch": null
+  },
+  {
+   "id": "M13",
+   "label": "Rod (its rod end welded on by the shop: a 316L block with seven weld-in feedthroughs) lowered top end first through the gland plate's two rod O-rings, on its PEEK bullet",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 85.4,
+   "robot_A_s": 85.4,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "module",
+   "fetch": "PASS"
+  },
+  {
+   "id": "M14",
+   "label": "Rod, with the gland plate riding on it, into the piston head's socket (stack upside down: from above)",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 28.3,
+   "robot_A_s": 28.3,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "module",
+   "fetch": "-"
+  },
+  {
+   "id": "M15",
+   "label": "Two M4 cup-point set screws into the rod (radial)",
+   "do": "screws",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 56.5,
+   "robot_A_s": 56.5,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "module",
+   "fetch": null
+  },
+  {
+   "id": "M16",
+   "label": "Welded module body onto its upright nest (flange on the nest's three posts), gripped across the tube",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 91.0,
+   "robot_A_s": 91.0,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "module",
+   "fetch": "PASS"
+  },
+  {
+   "id": "M17",
+   "label": "Spigot O-ring (2-238) over the mandrel into the spigot groove (before the stack: the mandrel reaches into the bore)",
+   "do": "seal",
+   "who": [
+    "robot A",
+    "robot B"
+   ],
+   "seconds": 70.8,
+   "robot_A_s": 19.4,
+   "robot_B_s": 51.3,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "module",
+   "fetch": null
+  },
+  {
+   "id": "M18",
+   "label": "Module body turned upside down (wrist roll) onto its spigot nest, the tube's open end up",
+   "do": "flip",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 35.7,
+   "robot_A_s": 35.7,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "module",
+   "fetch": null
+  },
+  {
+   "id": "M19",
+   "label": "Heater stack, rod and gland plate lowered into the bore from the tube's open end (body upside down); the gland plate lands on the welded collar",
+   "do": "place",
+   "who": [
+    "robot A",
+    "robot B"
+   ],
+   "seconds": 99.4,
+   "robot_A_s": 29.0,
+   "robot_B_s": 70.3,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "module",
+   "fetch": "-"
+  },
+  {
+   "id": "M20",
+   "label": "Six M4 x 20 gland-plate screws on the arc behind the rod end's block (round 6, joints.py)",
+   "do": "screws",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 107.4,
+   "robot_A_s": 107.4,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "module",
+   "fetch": null
+  },
+  {
+   "id": "M21",
+   "label": "Handle lowered in front of the rod end's sleeves, then slid 15 mm back onto the gland plate (module upside down; held by its riser's two ends from above)",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 91.5,
+   "robot_A_s": 91.5,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "module",
+   "fetch": "PASS"
+  },
+  {
+   "id": "M22",
+   "label": "Two M4 handle screws",
+   "do": "screws",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 53.1,
+   "robot_A_s": 53.1,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "module",
+   "fetch": null
+  },
+  {
+   "id": "M23",
+   "label": "Striker disc onto the rod end",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 93.6,
+   "robot_A_s": 93.6,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "released 24 mm short and pushed home with the closed fingers",
+   "chapter": "module",
+   "fetch": "PASS"
+  },
+  {
+   "id": "M24",
+   "label": "Three M3 x 10 flat-head striker screws",
+   "do": "screws",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 78.0,
+   "robot_A_s": 78.0,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "module",
+   "fetch": null
+  },
+  {
+   "id": "M25",
+   "label": "Rod end's seven weld-in feedthroughs (3 x FA11631 + 3 x FA11632 type K, 1 x FA10443 4-pin power) welded into the 316L block's front face, and the rod into its top",
+   "do": "note",
+   "who": [
+    "machine"
+   ],
+   "seconds": 0.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "machine",
+   "why": "TIG welds at the block's face and at the rod, on the bare rod before chapter 3, away from every O-ring; the inner joints to the feedthrough pins are made before the sleeves are welded. Ask Solid Seali",
+   "chapter": "module",
+   "fetch": null
+  },
+  {
+   "id": "M26",
+   "label": "Module turned upright (wrist roll, 180 deg about the tool axis) onto the upright nest",
+   "do": "flip",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 43.6,
+   "robot_A_s": 43.6,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "module",
+   "fetch": null
+  },
+  {
+   "id": "M27",
+   "label": "Rim wiper onto the plate; plate into the bore onto the bayonet, turned 60 deg (piston at +8 mm overtravel)",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 87.9,
+   "robot_A_s": 87.9,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "released 18 mm short and pushed home with the closed fingers",
+   "chapter": "module",
+   "fetch": "PASS"
+  },
+  {
+   "id": "M28",
+   "label": "Module turned upside down again (wrist roll) onto its spigot nest, ready for the chamber (C10)",
+   "do": "flip",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 36.2,
+   "robot_A_s": 36.2,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "module",
+   "fetch": null
+  },
+  {
+   "id": "M29",
+   "label": "Right zero-point arm with its clamping pin (SPC mini 20 class, screwed in on the bench) onto the flange's ear at 50 deg; its screws into the ear are not drawn",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 81.2,
+   "robot_A_s": 81.2,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "module",
+   "fetch": "PASS"
+  },
+  {
+   "id": "M30",
+   "label": "Left zero-point arm with its clamping pin onto the flange's ear at 135 deg",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 83.1,
+   "robot_A_s": 83.1,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "module",
+   "fetch": "PASS"
+  },
+  {
+   "id": "C00",
+   "label": "Overflow funnel: its 2-042 in the block's groove, the block (KF-40 stub welded on) and its four M4 x 12 onto the floor plate's underside, on the bench before C00a",
+   "do": "note",
+   "who": [
+    "person"
+   ],
+   "seconds": 360.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 360.0,
+   "status": "person",
+   "why": "operations.md A2.13: with the plate on the bench, face down, all four screws are open from above; on the machine two sit under the KF-40 stub's flange (run 6: 2 of 4). Not checked here: the bench is n",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "C00a",
+   "label": "Floor plate (inserts, the two frame dowels and the overflow funnel already on) onto Fixture P, gland face up, by the vacuum gripper",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 86.1,
+   "robot_A_s": 86.1,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "C00b",
+   "label": "Floor O-ring cord (3.53 mm, vulcanized splice) rolled into the floor plate's pad gland",
+   "do": "seal",
+   "who": [
+    "robot A",
+    "robot B"
+   ],
+   "seconds": 88.6,
+   "robot_A_s": 46.3,
+   "robot_B_s": 42.2,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "C00c",
+   "label": "Frame lowered onto the floor plate's dowels, one arm on each side wall",
+   "do": "dual",
+   "who": [
+    "robot A",
+    "robot B",
+    "person"
+   ],
+   "seconds": 177.6,
+   "robot_A_s": 27.3,
+   "robot_B_s": 30.3,
+   "person_s": 120.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "C00d",
+   "label": "Eighteen M4 x 16 floor-plate screws up through the U-notches into the frame's skirt, from under the plate's edge",
+   "do": "screws",
+   "who": [
+    "robot A",
+    "robot B"
+   ],
+   "seconds": 591.1,
+   "robot_A_s": 537.8,
+   "robot_B_s": 53.3,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "C01",
+   "label": "Chamber (frame + floor plate, 7.4 kg) carried upright by both arms from Fixture P into the trunnion's jaws",
+   "do": "dual",
+   "who": [
+    "robot A",
+    "robot B"
+   ],
+   "seconds": 98.1,
+   "robot_A_s": 29.5,
+   "robot_B_s": 68.7,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "C01b",
+   "label": "The trunnion turns the chamber upside down (180 deg about x), both arms parked",
+   "do": "rotate",
+   "who": [
+    "robot A",
+    "robot B"
+   ],
+   "seconds": 8.8,
+   "robot_A_s": 0.4,
+   "robot_B_s": 0.4,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "C01c",
+   "label": "The floor-plate screws left from C00d, from above with the chamber upside down in the trunnion",
+   "do": "screws",
+   "who": [],
+   "seconds": 0.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "all screws of this joint were already driven (with the part held)",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "C02",
+   "label": "Locating dowel and diamond pin into the floor",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 92.2,
+   "robot_A_s": 92.2,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "C03",
+   "label": "Outlet-plenum O-ring (2-044) into the plenum's flange groove, plenum on a nest, PFPE film",
+   "do": "seal",
+   "who": [],
+   "seconds": 0.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "C04",
+   "label": "Outlet plenum with its O-ring and KF-25 port onto the floor",
+   "do": "place",
+   "who": [
+    "robot A",
+    "robot B"
+   ],
+   "seconds": 80.0,
+   "robot_A_s": 23.4,
+   "robot_B_s": 56.7,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "-"
+  },
+  {
+   "id": "C05",
+   "label": "Six M4 x 12 outlet-plenum screws (60 mm bit extension: two sit beside the KF-25 port)",
+   "do": "screws",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 119.0,
+   "robot_A_s": 119.0,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "C09",
+   "label": "Module-present sensor",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 100.4,
+   "robot_A_s": 100.4,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "released 30 mm short and pushed home with the closed fingers",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "C09f",
+   "label": "Door hinge knuckles onto the frame's front face, one at a time (shimmed at assembly; screws not drawn)",
+   "do": "place",
+   "who": [
+    "robot B"
+   ],
+   "seconds": 156.1,
+   "robot_A_s": 0.0,
+   "robot_B_s": 156.1,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "released 9 mm short and pushed home with the closed fingers; released 9 mm short and pushed home with the closed fingers; released 9 mm short and pushed home with the closed fingers; released 9 mm sho",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "C12",
+   "label": "Z mounting flange alone onto the floor (the actuator goes on after the module, its screws now)",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 79.6,
+   "robot_A_s": 79.6,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "released 30 mm short and pushed home with the closed fingers",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "C13",
+   "label": "Four counterbored M5 x 12 Z-flange screws",
+   "do": "screws",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 101.4,
+   "robot_A_s": 101.4,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "C09b",
+   "label": "Four zero-point posts turned into the floor's M6 inserts by their studs",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 143.5,
+   "robot_A_s": 143.5,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "C09c",
+   "label": "Two zero-point module plates (10 mm 6061) onto the posts; their screws into the posts' ends are not drawn",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 103.7,
+   "robot_A_s": 103.7,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "C09d",
+   "label": "Two SCHUNK NSE-HT mini 88-20 zero-point modules (\u00d888, 1.0 kg) onto the plates, pin face up: the vacuum gripper on the pin face (\u00d888 is past the 2F-85's stroke)",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 108.3,
+   "robot_A_s": 108.3,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "C09e",
+   "label": "M5 push-in elbows into the modules' release ports, and a temporary \u00d84 release-air line from the cell's supply",
+   "do": "note",
+   "who": [
+    "person"
+   ],
+   "seconds": 180.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 180.0,
+   "status": "person",
+   "why": "Small threaded fittings with a tube to follow. The modules have to be open (6 bar) for the clamping pins to enter in C10.",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "C10",
+   "label": "Build module (upside down) into the \u00d896 floor port along its swap path, held by its handle's grip block; dowel and diamond pin through its flange lugs, clamping pins into the open zero-point modules",
+   "do": "place",
+   "who": [
+    "robot B"
+   ],
+   "seconds": 47.7,
+   "robot_A_s": 0.0,
+   "robot_B_s": 47.7,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "-"
+  },
+  {
+   "id": "C11",
+   "label": "Release air off: the zero-point modules' springs lock both clamping pins (2 x 0.5 kN); no screws",
+   "do": "note",
+   "who": [
+    "machine"
+   ],
+   "seconds": 3.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "machine",
+   "why": "The cell vents the temporary line. 1 kN holds 4.6x the worst separating load (hot-swap.md 3.2a). The spigot ring is already home: arm B pushed the module in at C10 (132 N running). The captive M6 are ",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "C13b",
+   "label": "Z actuator, belt fold, servo, carriage, arm and magnet (pre-assembled) onto the flange",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 110.5,
+   "robot_A_s": 110.5,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "C14",
+   "label": "Four legs onto the floor, one at a time",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 141.8,
+   "robot_A_s": 141.8,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "C15",
+   "label": "One M6 x 25 down each leg's \u00d811 bore (160 mm bit extension)",
+   "do": "screws",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 170.1,
+   "robot_A_s": 170.1,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "C15b",
+   "label": "Overflow-jar sensor on its bracket, and the bracket's two M4 x 10, onto the front-right leg on the bench before C14",
+   "do": "note",
+   "who": [
+    "person"
+   ],
+   "seconds": 240.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 240.0,
+   "status": "person",
+   "why": "A leg on a nest is open on every side; on the machine its back face is hemmed in by the frame, the other legs, the Z servo and (upright) the base plate. Not checked here: the bench nest is not modelle",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F01",
+   "label": "Process base plate (11.8 kg) onto Fixture B: the hoist lifts, both arms guide",
+   "do": "dual",
+   "who": [
+    "robot A",
+    "robot B",
+    "person"
+   ],
+   "seconds": 240.2,
+   "robot_A_s": 32.1,
+   "robot_B_s": 28.2,
+   "person_s": 185.1,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F02",
+   "label": "Levelling mounts",
+   "do": "note",
+   "who": [
+    "person"
+   ],
+   "seconds": 0.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "person",
+   "why": "They thread in when the finished process module goes onto the tray (chapter 5); until then Fixture B carries the plate on its ends.",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F02b",
+   "label": "Zero-point release valve (3/2 NC, 24 V, on its sub-base) onto the base plate; its screws are not drawn",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 29.9,
+   "robot_A_s": 29.9,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "FAIL"
+  },
+  {
+   "id": "F05",
+   "label": "The trunnion turns the chamber assembly (module, Z stage, legs) back upright",
+   "do": "rotate",
+   "who": [
+    "robot A",
+    "robot B"
+   ],
+   "seconds": 8.8,
+   "robot_A_s": 0.4,
+   "robot_B_s": 0.4,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F05b",
+   "label": "Chamber assembly (19.6 kg, with the module, zero-point clamps, Z stage and legs) from the trunnion onto the base plate: the hoist lifts, both arms guide it by two legs",
+   "do": "dual",
+   "who": [
+    "robot A",
+    "robot B",
+    "person"
+   ],
+   "seconds": 287.8,
+   "robot_A_s": 32.0,
+   "robot_B_s": 75.8,
+   "person_s": 230.6,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F06",
+   "label": "Eight M6 x 25 base-plate-to-leg screws, from under the plate",
+   "do": "screws",
+   "who": [
+    "robot A",
+    "robot B"
+   ],
+   "seconds": 322.6,
+   "robot_A_s": 150.0,
+   "robot_B_s": 172.7,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F06b",
+   "label": "Release-air line: \u00d84 tube from the valve through a union Y to both zero-point modules' push-in elbows (in place of the temporary line); the valve's supply comes from the rack's air prep in chapter 5",
+   "do": "note",
+   "who": [
+    "person"
+   ],
+   "seconds": 300.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 300.0,
+   "status": "person",
+   "why": "Tube routing (deformable), as the hoses in chapter 5. The modules stay locked while the line is swapped: their springs hold.",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F07",
+   "label": "Overflow jar in from the front along its lane and up 8 mm onto its KF-40 port, held by its grip fin",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 92.8,
+   "robot_A_s": 92.8,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F08",
+   "label": "KF-40 toggle clamp (MKS 100318805) round the jar's flange, lever to the front",
+   "do": "note",
+   "who": [
+    "person"
+   ],
+   "seconds": 60.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 60.0,
+   "status": "person",
+   "why": "Its hinged ring has to be held open round both flanges before one push on the lever locks it; nothing on the 2F-85 holds the ring open. An air-released KF clamp would let the robot do it (hot-swap.md)",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F11",
+   "label": "LED bar (small-part vacuum nozzle on its top face)",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 102.0,
+   "robot_A_s": 102.0,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F10a",
+   "label": "Wall liner, back lower left, in through the door opening and onto its wall (liner wand: two \u00d815 suction cups on its face)",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 121.6,
+   "robot_A_s": 121.6,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F10b",
+   "label": "Wall liner, back upper left, in through the door opening and onto its wall (liner wand: two \u00d815 suction cups on its face)",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 98.1,
+   "robot_A_s": 98.1,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F10c",
+   "label": "Wall liner, left, in through the door opening and onto its wall, held by its hanger tab (plate fingers)",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 114.4,
+   "robot_A_s": 114.4,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F10d",
+   "label": "Wall liner, back lower right, in through the door opening and onto its wall (liner wand: two \u00d815 suction cups on its face)",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 91.0,
+   "robot_A_s": 91.0,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F10e",
+   "label": "Wall liner, back upper right, in through the door opening and onto its wall (liner wand: two \u00d815 suction cups on its face)",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 83.1,
+   "robot_A_s": 83.1,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F10f",
+   "label": "Wall liner, right, in through the door opening and onto its wall, held by its hanger tab (plate fingers)",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 102.8,
+   "robot_A_s": 102.8,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F12",
+   "label": "Through-beam fibre heads with their 2-010 O-rings, threaded into the side walls from outside",
+   "do": "note",
+   "who": [
+    "person"
+   ],
+   "seconds": 360.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 360.0,
+   "status": "person",
+   "why": "Threading an M6 head with a fibre attached means winding the fibre with it; the ring itself is a pick-and-place.",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F13",
+   "label": "Inlet-plenum O-ring (2-044) into the plenum's flange groove, PFPE film",
+   "do": "seal",
+   "who": [],
+   "seconds": 0.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F14",
+   "label": "Inlet plenum with its O-ring and KF-25 port onto the back wall's two dowels by arm B (it hangs there on its own)",
+   "do": "place",
+   "who": [
+    "robot B"
+   ],
+   "seconds": 39.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 39.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "-"
+  },
+  {
+   "id": "F15",
+   "label": "Nine M4 x 16 inlet-plenum screws into the back wall (100 mm bit extension: runs 9-10 met the KF-25 port on one)",
+   "do": "screws",
+   "who": [
+    "robot A",
+    "robot B"
+   ],
+   "seconds": 188.1,
+   "robot_A_s": 6.0,
+   "robot_B_s": 182.1,
+   "person_s": 0.0,
+   "status": "fail",
+   "why": "316 #7: screwdriver: B/tool/screwdriver hits Inlet plenum port (KF-25); also no way with nutrunner",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F16",
+   "label": "Vacuum-port adapter (KF-25 stub welded in) with its 2-024 O-ring onto the right wall's two dowels (it hangs there)",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 104.7,
+   "robot_A_s": 104.7,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "released 12 mm short and pushed home with the closed fingers",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F17",
+   "label": "Four M5 x 20 vacuum-port screws",
+   "do": "screws",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 125.7,
+   "robot_A_s": 125.7,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F18",
+   "label": "Recoater rail with its carriage, carriage block, ball nut and arm (bought and pre-assembled on the rail) onto the back wall",
+   "do": "place",
+   "who": [
+    "robot A",
+    "robot B"
+   ],
+   "seconds": 140.8,
+   "robot_A_s": 111.1,
+   "robot_B_s": 29.7,
+   "person_s": 0.0,
+   "status": "fail",
+   "why": "released 24 mm short and pushed home with the closed fingers; held-part screws: d thro: screwdriver: A/tool/screwdriver hits Process chamber body (6061-T6 through-frame from 5.5 ",
+   "chapter": "chamber",
+   "fetch": "FAIL"
+  },
+  {
+   "id": "F19",
+   "label": "Five M4 x 16 rail screws, driven from inside the chamber toward the back wall (30 mm bit extension)",
+   "do": "screws",
+   "who": [],
+   "seconds": 0.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "all screws of this joint were already driven (with the part held)",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F21",
+   "label": "Ball screw in through the right wall's bore and turned through the ball nut (30 turns at 10 mm lead) into the left bore",
+   "do": "place",
+   "who": [
+    "robot A",
+    "person"
+   ],
+   "seconds": 134.6,
+   "robot_A_s": 104.6,
+   "robot_B_s": 0.0,
+   "person_s": 30.0,
+   "status": "pass",
+   "why": "released 33 mm short and pushed home with the closed fingers",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F22",
+   "label": "Feedthrough spacer, its two 2-024 O-rings, the Ferrotec unit and the coupling on the left wall",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 79.1,
+   "robot_A_s": 79.1,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F23",
+   "label": "Blind bearing cap and its 2-019 O-ring onto the right wall's two dowels (it hangs there; round 7)",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 86.6,
+   "robot_A_s": 86.6,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "released 15 mm short and pushed home with the closed fingers",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F24",
+   "label": "Four M4 x 20 bearing-cap screws",
+   "do": "screws",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 118.2,
+   "robot_A_s": 118.2,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F25",
+   "label": "Motor standoff onto the left wall's feedthrough",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 90.3,
+   "robot_A_s": 90.3,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F25b",
+   "label": "Motor bracket lowered onto the base plate from above",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 81.5,
+   "robot_A_s": 81.5,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F25c",
+   "label": "Recoater servo onto the bracket, its shaft into the coupling along +x",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 87.6,
+   "robot_A_s": 87.6,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F26",
+   "label": "Blade holder and blade, in through the door opening and up under the recoater arm",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 71.5,
+   "robot_A_s": 71.5,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "fail",
+   "why": "arm A: A/gr/right_finger_tip hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 117 mm along the insertion",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F27",
+   "label": "Two M3 x 8 blade screws by arm B from the back (100 mm bit extension: run 7's driver met the module and Fixture B; run 9's arm A met Fixture B)",
+   "do": "screws",
+   "who": [
+    "robot A",
+    "robot B"
+   ],
+   "seconds": 15.2,
+   "robot_A_s": 7.4,
+   "robot_B_s": 7.8,
+   "person_s": 0.0,
+   "status": "fail",
+   "why": "316 #1: screwdriver: B/tool/screwdriver hits Overflow funnel block (316L, bolted, FKM face O-ring); 316 #2: screwdriver: B/tool/screwdriver hits Overflow funnel block (316L, bolted, FKM face O-ring)",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F28",
+   "label": "Gas knife and dose chute",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 111.6,
+   "robot_A_s": 111.6,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F29",
+   "label": "Lid O-ring cord (3.53 mm) rolled into the body's top gland: arm A rolls, arm B feeds the cord",
+   "do": "seal",
+   "who": [
+    "robot A",
+    "robot B"
+   ],
+   "seconds": 96.9,
+   "robot_A_s": 63.8,
+   "robot_B_s": 33.1,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F30",
+   "label": "Lid (inserts in) onto the cord, by the vacuum gripper",
+   "do": "place",
+   "who": [
+    "robot A",
+    "robot B"
+   ],
+   "seconds": 177.2,
+   "robot_A_s": 93.9,
+   "robot_B_s": 83.2,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F31",
+   "label": "Twenty M5 x 25 lid screws, star pattern",
+   "do": "screws",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 647.3,
+   "robot_A_s": 647.3,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F32",
+   "label": "Window-flange O-ring (2-036) into the flange's lower groove, PFPE film",
+   "do": "seal",
+   "who": [],
+   "seconds": 0.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F33",
+   "label": "Field stop",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 94.7,
+   "robot_A_s": 94.7,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "released 27 mm short and pushed home with the closed fingers",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F33b",
+   "label": "Window flange with its O-ring (\u00d8100: the vacuum gripper)",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 33.2,
+   "robot_A_s": 33.2,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "-"
+  },
+  {
+   "id": "F34",
+   "label": "Six counterbored M4 x 16 window-flange screws (torque-controlled)",
+   "do": "screws",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 161.8,
+   "robot_A_s": 161.8,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F35",
+   "label": "Window O-ring (2-031) into the flange's seat groove",
+   "do": "seal",
+   "who": [
+    "robot B"
+   ],
+   "seconds": 27.9,
+   "robot_A_s": 0.0,
+   "robot_B_s": 27.9,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F36",
+   "label": "\u00d82 in. fused-silica window onto its O-ring",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 103.1,
+   "robot_A_s": 103.1,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "released 27 mm short and pushed home with the closed fingers",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F37",
+   "label": "FKM flat ring",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 106.5,
+   "robot_A_s": 106.5,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "released 24 mm short and pushed home with the closed fingers",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F37b",
+   "label": "Window retaining ring (\u00d8100: the vacuum gripper)",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 93.7,
+   "robot_A_s": 93.7,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F38",
+   "label": "Six M3 x 10 retaining-ring screws (torque-controlled: clamp the silica evenly)",
+   "do": "screws",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 153.6,
+   "robot_A_s": 153.6,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F39",
+   "label": "Cover-slide drawer (2-033 in its half-dovetail, put in on the bench) into the lid's front edge",
+   "do": "place",
+   "who": [
+    "robot A",
+    "person"
+   ],
+   "seconds": 217.3,
+   "robot_A_s": 37.3,
+   "robot_B_s": 0.0,
+   "person_s": 180.0,
+   "status": "pass",
+   "why": "released 6 mm short and pushed home with the closed fingers",
+   "chapter": "chamber",
+   "fetch": "FAIL"
+  },
+  {
+   "id": "F40",
+   "label": "Quarter-turn drawer latches",
+   "do": "note",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 10.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "robot",
+   "why": "Two quarter-turn studs, turned with a slotted bit on the screwdriver; the latch hardware is an envelope in the model (seals.md: no catalogue latch fits).",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F41",
+   "label": "Drawer-closed sensor",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 90.6,
+   "robot_A_s": 90.6,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "released 18 mm short and pushed home with the closed fingers",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F42",
+   "label": "Metering-base O-ring (2-040) on its lid side (groove faces down when fitted: PFPE film)",
+   "do": "seal",
+   "who": [],
+   "seconds": 0.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F42b",
+   "label": "Metering-base dock-face O-ring (2-040), groove up",
+   "do": "seal",
+   "who": [],
+   "seconds": 0.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F43",
+   "label": "Metering base alone (feedthrough, coupling and stepper not yet on) onto the lid",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 31.7,
+   "robot_A_s": 31.7,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "-"
+  },
+  {
+   "id": "F44",
+   "label": "Four M4 x 16 metering-base screws (before the roller feedthrough covers two of them)",
+   "do": "screws",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 111.7,
+   "robot_A_s": 111.7,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F45",
+   "label": "Roller feedthrough (M8 x 1 nose over its 2-012) into the metering base along its axis (arm B)",
+   "do": "place",
+   "who": [
+    "robot B"
+   ],
+   "seconds": 99.6,
+   "robot_A_s": 0.0,
+   "robot_B_s": 99.6,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F45b",
+   "label": "Roller drive coupling onto the feedthrough's shaft (arm B)",
+   "do": "place",
+   "who": [
+    "robot B"
+   ],
+   "seconds": 87.4,
+   "robot_A_s": 0.0,
+   "robot_B_s": 87.4,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F45c",
+   "label": "Dosing stepper, its shaft into the coupling (arm B)",
+   "do": "place",
+   "who": [
+    "robot B"
+   ],
+   "seconds": 82.6,
+   "robot_A_s": 0.0,
+   "robot_B_s": 82.6,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F45d",
+   "label": "Load cell, then the dock rails on it and the docked sensor, from just above",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 145.1,
+   "robot_A_s": 145.1,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "released 36 mm short and pushed home with the closed fingers; released 18 mm short and pushed home with the closed fingers",
+   "chapter": "chamber",
+   "fetch": "FAIL"
+  },
+  {
+   "id": "F45e",
+   "label": "NFC reader antenna into its pocket in the metering base's side face, from the side",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 85.9,
+   "robot_A_s": 85.9,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "released 24 mm short and pushed home with the closed fingers",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F45f",
+   "label": "Side reservoir port's blanked KF-16 stub onto the metering base's side face, from the side",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 88.7,
+   "robot_A_s": 88.7,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "released 39 mm short and pushed home with the closed fingers",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F46",
+   "label": "Reservoir M slid onto the dovetail dock (about 94 N to seat on the dock O-ring)",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 86.6,
+   "robot_A_s": 86.6,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F47",
+   "label": "Camera adapter O-ring (2-022), PFPE film",
+   "do": "seal",
+   "who": [],
+   "seconds": 0.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F48",
+   "label": "Camera viewport adapter with its 2-030",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 23.7,
+   "robot_A_s": 23.7,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "-"
+  },
+  {
+   "id": "F48b",
+   "label": "Camera window gasket (1 mm FKM flat ring), window and flat ring into the counterbore along the line of sight (ring pad)",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 131.5,
+   "robot_A_s": 131.5,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F48c",
+   "label": "Camera window retaining ring, then the camera, along the line of sight",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 104.2,
+   "robot_A_s": 104.2,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "released 21 mm short and pushed home with the closed fingers",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F49",
+   "label": "Pressure transducer and relief valve into their SAE-4 ports from above (threads started by wrist rotation)",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 117.2,
+   "robot_A_s": 117.2,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F50",
+   "label": "The two draw-latch strikes on the chamber's side faces (the hinge knuckles went on in C09f)",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 109.4,
+   "robot_A_s": 109.4,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F51",
+   "label": "Door (cord rolled into its half-dovetail on the bench) brought in, knuckles in line",
+   "do": "place",
+   "who": [
+    "robot A",
+    "person"
+   ],
+   "seconds": 384.8,
+   "robot_A_s": 84.8,
+   "robot_B_s": 0.0,
+   "person_s": 300.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F51b",
+   "label": "The door's two draw latches closed over their strikes: they hold the door on its cord, knuckles in line",
+   "do": "note",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 10.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "robot",
+   "why": "A toggle lever each, pushed over centre by the closed fingers (about 30 N each, estimate); the latches are envelopes in the model, so the push is not planned",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F52",
+   "label": "Left hinge pin slid in from the left along the hinge axis by the pin pusher (a magnet holds its end)",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 90.9,
+   "robot_A_s": 90.9,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F52b",
+   "label": "Right hinge pin slid in from the right along the hinge axis by the pin pusher",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 81.5,
+   "robot_A_s": 81.5,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F03",
+   "label": "Optics posts (moved here: they blocked the side-wall parts and the right latch) onto the base plate, one at a time, held by arm B while arm A drives their base screws from below",
+   "do": "place",
+   "who": [
+    "robot A",
+    "robot B"
+   ],
+   "seconds": 414.5,
+   "robot_A_s": 180.1,
+   "robot_B_s": 234.4,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F04",
+   "label": "Two M6 x 25 up into each post's bottom cap, from under the plate",
+   "do": "screws",
+   "who": [],
+   "seconds": 0.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "all screws of this joint were already driven (with the part held)",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F53",
+   "label": "f-theta lens threaded into its adapter ring over its 3 mm shim stack, under the bridge (on the bench, bridge upside down)",
+   "do": "note",
+   "who": [
+    "person"
+   ],
+   "seconds": 600.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 600.0,
+   "status": "person",
+   "why": "The \u00d890 lens is wider than the 2F-85's 85 mm stroke and threads M85 x 1; a strap wrench by hand (operations.md: lens and ring fitted to the bridge on the bench).",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F54",
+   "label": "Optics bridge (13.3 kg, lens and ring under it) onto the four posts: the hoist lifts, both arms guide",
+   "do": "dual",
+   "who": [
+    "robot A",
+    "robot B",
+    "person"
+   ],
+   "seconds": 200.9,
+   "robot_A_s": 2.2,
+   "robot_B_s": 18.7,
+   "person_s": 180.0,
+   "status": "fail",
+   "why": "no collision-free pair of arm poses at the start of the carry",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F55",
+   "label": "Eight M6 x 35 bridge screws down into the posts",
+   "do": "screws",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 256.3,
+   "robot_A_s": 256.3,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F56",
+   "label": "Galvo riser plate (155 x 130: the vacuum gripper)",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 91.1,
+   "robot_A_s": 91.1,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F56b",
+   "label": "basiCube 20 scan head on the riser (3.75 kg: the vacuum gripper on its top)",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 89.4,
+   "robot_A_s": 89.4,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "pass",
+   "why": "",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F57",
+   "label": "Beam tubes, dichroic and fold-mirror cubes, shutter, photodiode chain and collimator",
+   "do": "place",
+   "who": [
+    "robot A"
+   ],
+   "seconds": 239.3,
+   "robot_A_s": 239.3,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "fail",
+   "why": "released 9 mm short and pushed home with the closed fingers; arm A: held:F57:Enclosed beam tubes #1 hits Coaxial-monitoring dichroic (Thorlabs DMSP1000, 45 deg: reflects 1070 nm into the galvo, passes",
+   "chapter": "chamber",
+   "fetch": "PASS"
+  },
+  {
+   "id": "F57b",
+   "label": "Beam alignment and scan-field calibration (alignment laser, power head, test marks)",
+   "do": "note",
+   "who": [
+    "person"
+   ],
+   "seconds": 5400.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 5400.0,
+   "status": "person",
+   "why": "Optics alignment and calibration need judgment and instruments (Edison r7 review); the robot only placed the parts.",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F58",
+   "label": "Process fiber routed to the collimator",
+   "do": "note",
+   "who": [
+    "person"
+   ],
+   "seconds": 480.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 480.0,
+   "status": "person",
+   "why": "Armoured fiber, >= 100 mm bend radius: cable routing stays manual.",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "F59",
+   "label": "Class 1 laser guard: T-slot frame, panels, door rail, sliding door, guard lock, operator panel",
+   "do": "note",
+   "who": [
+    "person"
+   ],
+   "seconds": 3600.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 3600.0,
+   "status": "person",
+   "why": "T-slot nuts and 1.5 mm panels up to 730 mm wide; its hardware is not drawn (joints.NOT_DRAWN).",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "T01",
+   "label": "Process module (84 kg) off Fixture B onto the VLM tray; levelling mounts threaded in",
+   "do": "note",
+   "who": [
+    "person"
+   ],
+   "seconds": 900.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 900.0,
+   "status": "person",
+   "why": "84 kg is 3.4 times two UR12e payloads; a hoist or lift table.",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "T02",
+   "label": "19 in. rack and its units (UPS 23 kg, laser 40 kg, PC 8 kg, DIN drawer 9 kg)",
+   "do": "note",
+   "who": [
+    "person"
+   ],
+   "seconds": 2700.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 2700.0,
+   "status": "person",
+   "why": "the UPS and the laser exceed a UR12e's 12.5 kg; cage nuts and screws are not drawn",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "T03",
+   "label": "Gas module: base plate, scroll pump (26 kg), blower, filter housing, O2 box, argon manifold",
+   "do": "note",
+   "who": [
+    "person"
+   ],
+   "seconds": 2700.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 2700.0,
+   "status": "person",
+   "why": "the pump exceeds 12.5 kg; the units' screws are not drawn",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "T04",
+   "label": "KF-25 bellows, vacuum valve, argon and O2 lines, and the zero-point valve's air supply",
+   "do": "note",
+   "who": [
+    "person"
+   ],
+   "seconds": 2400.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 2400.0,
+   "status": "person",
+   "why": "hose and tube routing (deformable, KF wing-nut clamps)",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "T05",
+   "label": "Tray dock and umbilicals",
+   "do": "note",
+   "who": [
+    "person"
+   ],
+   "seconds": 1200.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 1200.0,
+   "status": "person",
+   "why": "cable and hose routing",
+   "chapter": "chamber",
+   "fetch": null
+  },
+  {
+   "id": "T06",
+   "label": "Leak check: rate of rise from <= 1 mbar, O2 drift at +20 mbar argon",
+   "do": "note",
+   "who": [
+    "machine"
+   ],
+   "seconds": 1800.0,
+   "robot_A_s": 0.0,
+   "robot_B_s": 0.0,
+   "person_s": 0.0,
+   "status": "machine",
+   "why": "the seal verification in assembly.md",
+   "chapter": "chamber",
+   "fetch": null
+  }
+ ]
+}

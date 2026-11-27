@@ -209,5 +209,7 @@
    "worst_mm": null
   }
  ],
- "seconds": 2.5
+ "seconds": 2.2,
+ "peak_rss_mb": 270,
+ "memory": "streamed: BVHs dropped every 200 recorded frames and past 1800 MB"
 }

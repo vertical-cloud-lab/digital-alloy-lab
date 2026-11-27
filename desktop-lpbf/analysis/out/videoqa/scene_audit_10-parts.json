@@ -21,5 +21,7 @@
  "pairs": [],
  "rigid_pairs": [],
  "allowed": [],
- "seconds": 0.1
+ "seconds": 0.2,
+ "peak_rss_mb": 58,
+ "memory": "streamed: BVHs dropped every 200 recorded frames and past 1800 MB"
 }

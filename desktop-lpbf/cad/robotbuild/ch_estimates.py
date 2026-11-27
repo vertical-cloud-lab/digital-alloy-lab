@@ -140,7 +140,9 @@ def slide_assembly(u, hud):
     if not a:
         return S.note_slide("The assembly estimate (hud.json) was not ready for this cut")
     tiles = [("Steps", f"{a.get('steps', 0)}", "in the build sequence"),
-             ("Robots", f"{a.get('robot_h', 0):.1f}", f"hours, + {a.get('mir_fetch_h', 0):.1f} h of MiR fetching"),
+             ("Robots", f"{a.get('robot_h', 0):.1f}", (f"hours, + {a['mir_fetch_h']:.1f} h of MiR fetching"
+                                                       if float(a.get("mir_fetch_h") or 0) >= 0.05 else
+                                                       "hours, the MiRs' drives included")),
              ("People", f"{a.get('person_h', 0):.1f}", "hours (estimates per step)"),
              ("Failed or partial", f"{a.get('failed_or_partial', 0)}", "steps for the arms"),
              ("Person or shop", f"{a.get('person_or_shop_steps', 0)}", "steps")]

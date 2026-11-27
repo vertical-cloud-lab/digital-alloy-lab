@@ -74,6 +74,10 @@ standing still is both feet planted. New in the API:
   front of its origin the dressed body reaches at those heights.
 * walk.py ``--selftest``: a straight walk, turns, side-steps and backing up, and a two-person carry, measured by walk.py's
   own stance-foot slip and gliding checks (round 9: 0.0 mm and 0 frames).
+* Known: with ``palm`` given and ``bend`` off, the forearm is turned to the palm's direction after the arm is solved, and
+  that turn carries the palm's centre ~20-25 mm off its target (as in round 8). ``bend=True`` aims again until it lands;
+  otherwise aim once more less the error (``hand_point(side) - target``), as shop_chapters.Crew.step and
+  ch_integration.Mover.pose_aim do.
 
 How each caller switches (grep of 2026-11-27):
 
@@ -1690,7 +1694,12 @@ def _preview():
     p = Person(sc, "p")
     imgs = []
     for nm, kw in poses.items():
-        p.set(**kw)
+        if nm == "walk":                    # round 9: a walk is a path now: 0.9 m at 0.8 m/s, stopped mid-stride at y 0
+            p.place(0.0, -900.0, 0.0, frame=0, **{k: v for k, v in kw.items() if k not in ("amp", "phase")})
+            for k in range(1, 14):
+                p.set(x=0.0, y=-900.0 + 900.0 * min(1.0, k / 13.0), hd=0.0, frame=k)
+        else:
+            p.place(0.0, 0.0, 0.0, **kw)
         row = [sc.render(cam, 30.0 if cn != "face" else 26.0) for cn, cam in cams.items()]
         path = out / f"people_{nm}.png"
         Image.fromarray(np.concatenate(row, axis=1)).save(path)

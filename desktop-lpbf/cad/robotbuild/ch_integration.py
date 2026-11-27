@@ -236,6 +236,18 @@ class Mover:
                 self.arm[k] = v
         self.op.set(x=self.x, y=self.y, hd=self.hd, **self.arm)
 
+    def pose_aim(self, **kw):
+        """pose(), then aim the hands again less their error: people.py turns the forearm to the palm's direction after
+        solving the arm, which carries the palm ~24 mm off its target (round 9: the hands on the lift table's handle bar
+        sat 30 mm into it)."""
+        self.pose(**kw)
+        tg = {s: np.asarray(p, float) for s, p in (kw.get("hands") or {}).items() if p is not None}
+        aim = dict(tg)
+        for _ in range(2):
+            aim = {s: aim[s] - (self.op.hand_point(s) - tg[s]) for s in tg}
+            self.op.set(hands={s: tuple(v) for s, v in aim.items()})
+        self.arm["hands"] = dict(self.arm["hands"], **{s: tuple(v) for s, v in tg.items()})
+
     def turn_to(self, hd1, **kw):
         d = wrap(hd1 - self.hd)
         n = int(math.ceil(abs(d) / self.TURN_STEP))
@@ -452,9 +464,9 @@ def main():
     show("proc", 1.0)
     hx = xm - LIFT["L"] / 2 - 60.0                        # the handle's bar (x)
     m = Mover(op, hx - 320.0, ly, -90.0)                  # at the handle, facing the table (+x)
-    grip = dict(hands={"l": (hx - 30.0, ly + 150.0, 990.0 + 34.0), "r": (hx - 30.0, ly - 150.0, 990.0 + 34.0)},
+    grip = dict(hands={"l": (hx, ly + 150.0, 990.0 + 34.0), "r": (hx, ly - 150.0, 990.0 + 34.0)},     # round 9: over the bar, aimed
                 palm={"l": "down", "r": "down"}, grip={"l": 0.35, "r": 0.35})
-    m.pose(lean=6.0, look=(xm, ly, 1000.0), **grip)
+    m.pose_aim(lean=6.0, look=(xm, ly, 1000.0), **grip)
     a1 = cam_at((0.0, -450.0, 1050.0), 5600.0, -32.0, 19.0)
     b1 = cam_at((0.0, -450.0, 1050.0), 5380.0, -28.0, 19.0)
     labs1 = [("VLM tray, 857 mm", (900.0, -300.0, TRAY_FLOOR)), ("lift table", (xm + 300.0, ly - 200.0, LIFT["lo"]))]
@@ -470,7 +482,7 @@ def main():
             h = h0 + (h1 - h0) * u
             lift_at(xm, ly, h)
             sc.gmat["proc"] = T((0.0, off0, h - TRAY_FLOOR))
-            m.pose(look=(xm, ly, h + 150.0), **grip)
+            m.pose_aim(look=(xm, ly, h + 150.0), **grip)
             yield
     shot(c2, c2b, raise_lift(4 * FPS), 5 * FPS, "T01: the lift table raises the module over the tray's rim",
          "The shop's scissor table (Vestil SCTAB-1000-2040-AC, 20 x 40 in, 1,000 lb; robot-shop-equipment.csv), turned so "
@@ -652,7 +664,7 @@ def main():
     sc.gmat["gasbase"] = T((0.0, goff0, LIP))
     show("gasbase", 1.0)
     m.place(xg, gb[2] + goff0 - TIP - 240.0, 0.0)
-    zg = 909.0 + LIP + 8.0            # round 9: 10 mm higher on the plate's edge (round 8's gloves brushed the lift's platform)
+    zg = 909.0 + LIP + 14.0           # round 9: 16 mm higher on the plate's edge (the gloves brushed the lift's platform)
     q = gplate(goff0, zg)
     m.pose(lean=16.0, look=(xg, gb[2] + goff0 + 300.0, 950.0), **push(q["l"], q["r"]))
 
