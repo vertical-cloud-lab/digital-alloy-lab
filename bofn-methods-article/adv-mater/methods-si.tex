@@ -54,14 +54,14 @@ hand-written closed-form nodes on four composition and three process variables,
 with assumed costs of \$10, \$1,500, \$2,500 and \$200 per result, powder lots
 that can be printed repeatedly, and a parameter $\kappa$ that sets how much of
 the nucleant-driven crack suppression a freezing-range screen
-misses~\cite{martin2017,kou2015} (SI Section~S12). Eight policies shared one
-network model (one Gaussian process per node, Monte Carlo propagation through the
+misses~\cite{martin2017,kou2015} (SI Section~S12). Eight policies were compared, four of them on one network
+model (one Gaussian process per node, Monte Carlo propagation through the
 network~\cite{astudillo2021,balandat2020}): partial-evaluation and full-chain
 knowledge gradient per dollar~\cite{buathong2024}, network expected improvement
 per dollar with and without powder reuse~\cite{astudillo2021}, standard Bayesian
 optimization, screen-then-test with and without powder reuse, and random
-sampling. Each policy started from the same seed data for a given seed and spent
-\$100k of new budget. Runs were seeded and logged, and reran action for action.
+sampling. For a given seed every policy started from the same data, and each
+then had \$100k of new budget. Runs were seeded and logged, and reran action for action.
 \tbd{Cite the MethodsX article here if it is published first.}
 
 \paragraph{For the closing ``Statistical Analysis'' sub-section.} Synthetic
@@ -136,7 +136,8 @@ scores 65\% of the optimum.
 
 \paragraph{The model.} Every node is an exact Gaussian process on its own inputs
 (the design variables it uses plus its parents' outputs), with an RBF kernel
-fitted by maximum marginal likelihood in BoTorch~\cite{balandat2020}. The
+whose hyperparameters are a maximum a posteriori fit in
+BoTorch~\cite{balandat2020}. The
 network posterior at a design is carried as 64 Monte Carlo samples, pushed
 through the nodes in order~\cite{astudillo2021}.
 
@@ -149,9 +150,11 @@ When every knowledge gradient is zero it falls back to network expected
 improvement per dollar. Its full-chain counterpart (KGFN) values running the
 whole chain at the same candidate designs. Network expected improvement per
 dollar, with or without reprinting existing lots, completes a $2\times2$ of
-acquisition function $\times$ evaluation mode. Screen-then-test simulates 256
-compositions, keeps the four strongest with $f\le0.25$, and optimizes the
-atomizer and laser settings of those four.
+acquisition function $\times$ evaluation mode (the rows also differ in their
+candidate pools). Standard BO and screen-then-test use one GP from the seven
+design variables to the objective. Screen-then-test simulates 256 compositions,
+keeps the four with the largest strength minus 0.3 times the burden among those
+with $f\le0.25$, and optimizes the atomizer and laser settings of those four.
 
 \begin{table}[t]
 \centering
@@ -176,8 +179,9 @@ Random & the whole chain at a random design \\
 
 \paragraph{Protocol.} Each seed fixes the shared start: CALPHAD on 32
 compositions and five random designs carried through every step, a sunk cost
-that is the same for every policy. Each run then spends \$100k (about 24 full
-make--print--test cycles). The score is the true objective of the best alloy that
+that is the same for every policy. Each run then has \$100k of new budget
+(about 23 full make--print--test cycles; a run stops when its cheapest next
+purchase no longer fits). The score is the true objective of the best alloy that
 has been printed and tensile-tested, as a percentage of the optimum. Seeds per
 policy: \stat{k1-n} at $\kappa=1$, \stat{k05-n} at $\kappa=0.5$ and
 \stat{k0-n} at $\kappa=0$, the same seeds for every policy. Differences are

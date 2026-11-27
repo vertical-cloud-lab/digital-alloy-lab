@@ -3,6 +3,8 @@ matched-seed bootstrap interval.
 
     python paper_stats.py                 # all three kappas, writes paper-stats/
     python paper_stats.py --check         # also prints which runs are missing
+    python paper_stats.py --sources runs --kappas 0.5 --out runs-stats   # your own runs (any seeds; only
+                                          # seeds every policy has are used)
 
 Which runs: the "paper set", i.e. every run written by this port's run_sweep.py
 with provenance (settings, git commit, package versions, purchase log):
@@ -327,7 +329,7 @@ def numbers_tex(all_res):
         defs.append(f"\\expandafter\\def\\csname stat@{key}\\endcsname{{{val}}}")
 
     for res in all_res:
-        k = {0.0: "k0", 0.5: "k05", 1.0: "k1"}[res["kappa"]]
+        k = {0.0: "k0", 0.5: "k05", 1.0: "k1"}.get(res["kappa"], f"k{res['kappa']:g}".replace(".", ""))
         put(tex_key(k, "n"), res["n"])
         for r in res["policies"]:
             for m in METRICS:
@@ -418,7 +420,14 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--check", action="store_true", help="list missing runs")
     ap.add_argument("--out", default=str(OUT))
+    ap.add_argument("--sources", nargs="+", help="run folders to read (default: results-rerun results-kgfn), e.g. your own --out of run_sweep.py")
+    ap.add_argument("--kappas", nargs="+", type=float, help="default: 0 0.5 1")
     a = ap.parse_args()
+    global SOURCES, KAPPAS
+    if a.sources:
+        SOURCES = tuple(Path(s) for s in a.sources)
+    if a.kappas:
+        KAPPAS = tuple(a.kappas)
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
     all_res = [r for r in (analyse(k, a.check) for k in KAPPAS) if r]
