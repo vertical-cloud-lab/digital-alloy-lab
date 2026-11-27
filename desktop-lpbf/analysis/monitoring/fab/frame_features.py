@@ -13,7 +13,8 @@ aperture through the whole wall:
   * BW, at A180 (the back wall up): the sight line is ~49 deg off the back wall's normal, so a round normal bore would
     have to be ~49 mm across. It is a slot normal to the wall, shaped to the projection of the clear Ø20 cylinder
     across the wall (an obround), with a rectangular window seat over it, flat on the wall, and three clamp holes (the third
-    placed by bw_hole3() clear of the clamp frame's trim at the inlet plenum's flange).
+    placed by bw_hole3() clear of the clamp frame's trim at the inlet plenum's flange). Above the clamp frame, two M4 holes
+    for the BW light's bracket (BW_BRACKET), cut in the same A180 program.
     The A131.6 alternative (the rotary takes out the 49 deg azimuth) is checked in cam_monitoring.py's notes, not cut.
 It also checks each new cut against the frame's existing holes (wall left between them), the outer R8 corners, the floor
 screws under the back wall, and the liners (the hole or notch each liner needs).
@@ -66,6 +67,10 @@ LW_HOLE0_DEG = 60.0
 # left 1.2 mm of metal outside the third screw's hole (mechanics.md §6), so that hole is placed by bw_hole3() below
 BW_FRAME = dict(grow_L=18.0, grow_W=22.0, r=6.0, x_min=-FLAT_X + 0.5, z_min=-3.4, plenum_x=-78.0, plenum_z_top=40.0, trim=1.0,
                 hole_clear_r=2.25)
+# the BW light's L bracket (cad/monitoring_parts.BWL["bracket"]: a 1/4 in. 6061 flange on the back wall's outer face above the
+# clamp frame, x -147.5..-123.0, z 60.5..78.0) screws to the wall with 2 x M4. Their tapped holes are cut here with the clamp
+# frame's, so the model (monitoring_parts._bw_light reads them) and setup C's A180 program (cam_monitoring.py) share them
+BW_BRACKET = dict(holes_xz=((-141.0, 69.25), (-129.5, 69.25)))
 M4_MAJOR_R = 2.0     # an M4 thread's major radius: the wall to a pocket is measured from it
 GASKET = 0.75        # squeezed FKM flat gasket under the window and flat ring over it (the layer camera's window, lpbf_low)
 LAND_MIN = 3.0       # flat gasket land wanted round an opening (mm)
@@ -323,6 +328,10 @@ def bw_features(frame, z_shift=0.0):
     cuts = [("BW slot (obround through the back wall)", slot), ("BW window seat (rounded rectangle)", seat)]
     for k, (x, z) in enumerate(holes):
         cuts.append((f"BW clamp-frame hole {k + 1} (M4 x 0.7, 8 deep; drawn at 4.0 x 10)", cyl(2.0, (x, y_out + 1, z), (0, -1, 0), 11.0)))
+    # the BW light's bracket screws (BW_BRACKET), drawn as the clamp frame's are; they stay put if the port moves (z_shift)
+    bk = [(float(x), float(z)) for x, z in BW_BRACKET["holes_xz"]]
+    for k, (x, z) in enumerate(bk):
+        cuts.append((f"BW light-bracket hole {k + 1} (M4 x 0.7, 8 deep; drawn at 4.0 x 10)", cyl(2.0, (x, y_out + 1, z), (0, -1, 0), 11.0)))
     # lower back liner, left piece (x -130.5..-0.5, z 16..32) at y 94.4..94.9
     lp = clear_points(c, d, rc, 1, y_lin0, y_lin1)
     info = dict(
@@ -344,6 +353,13 @@ def bw_features(frame, z_shift=0.0):
                          outline_bbox_xz=[round(v, 2) for v in outline.bounds],
                          note="webs: metal between each Ø4.5 clearance hole and the clamp frame's outline as monitoring_parts._bw "
                               "trims it (BW_FRAME); walls: between each M4 thread (major Ø4) and the seat pocket"),
+        light_bracket=dict(holes_xz=[[round(x, 2), round(z, 2)] for x, z in bk], screws="2 x M4 x 0.7, tapped 8 deep",
+                           part="BW LED bracket (cad/monitoring_parts.BWL, _bw_light): its 1/4 in. flange on the wall above the clamp frame",
+                           thread_to_clamp_frame_mm=[round(outline.distance(Point(*p)) - M4_MAJOR_R, 2) for p in bk],
+                           thread_wall_to_seat_mm=[round(seat_poly.exterior.distance(Point(*p)) - M4_MAJOR_R, 2) for p in bk],
+                           thread_to_flat_face_end_mm=round(min(x for x, _ in bk) - M4_MAJOR_R + FLAT_X, 2),
+                           note="each M4 thread (major Ø4) to the clamp frame's trimmed outline, to the seat pocket, and to the end of "
+                                "the back face's flat (x -148, where the outer R8 corner starts)"),
         liner=dict(liner="Lift-out wall liner, back lower left (z 16..32, x -130.5..-0.5)",
                    x_range=[round(float(lp[:, 0].min()) - 0.5, 1), round(float(lp[:, 0].max()) + 0.5, 1)],
                    z_range=[round(float(lp[:, 2].min()) - 0.5, 1), round(float(lp[:, 2].max()) + 0.5, 1)]),

@@ -119,7 +119,9 @@ def main():
         lw_min = round(cs["frame_C90"]["time"]["with_vf4_rapids_min"] - 0.34, 2)
         bw_min = cs["mon_C180"]["time"]["with_vf4_rapids_min"]
     lw_extra = 4 * TAP_MIN + PORT_TOOL_MIN + 2 * TC_MIN       # 4 M4 taps, the purge port tool, 2 more tool changes
-    bw_extra = 3 * TAP_MIN + 2 * TC_MIN
+    # the BW's 3 clamp-frame M4 and the BW light bracket's M4 above them (frame_features.BW_BRACKET, in the same A180 program)
+    n_bw = 3 + len(cm.get("features", {}).get("BW", {}).get("light_bracket", {}).get("holes_xz", [[0, 0]] * 2))
+    bw_extra = n_bw * TAP_MIN + 2 * TC_MIN
     scs_quotes()
     lp = cm.get("LP", {}).get("setups", {})
     lp_top = lp.get("lid_LP_top", {}).get("totals", {}).get("total_min", 5.84)
@@ -134,8 +136,9 @@ def main():
              "chamber frame, setup C at A90 (programmed, simulated, holder-checked)", "feature", holes=8, run_min=lw_min + lw_extra,
              seal=True, extra_cam_h=FEATURE_CAM_H, note="programmed time %.2f min + %.2f min of taps, port tool and tool changes" % (lw_min, lw_extra),
              step="0"),
-        part("BW port in the back wall: 58 x 27 R4 window seat 4.5 deep, 51.2 x 20.5 obround slot, 3 x M4 (the third at the seat's lower +x corner)",
-             "chamber frame, setup C at A180 (programmed, simulated, holder-checked)", "feature", holes=3, run_min=bw_min + bw_extra,
+        part("BW port in the back wall: 58 x 27 R4 window seat 4.5 deep, 51.2 x 20.5 obround slot, 3 x M4 (the third at the seat's lower +x corner); "
+             "%d x M4 above it for the BW light's bracket" % (n_bw - 3),
+             "chamber frame, setup C at A180 (programmed, simulated, holder-checked)", "feature", holes=n_bw, run_min=bw_min + bw_extra,
              seal=True, extra_cam_h=2 * FEATURE_CAM_H,
              note="programmed time %.2f min + %.2f min of taps and tool changes; two non-circular features" % (bw_min, bw_extra), step="0"),
         part("LP in the lid, flat: the adapter's face O-ring groove (%s, ID 31.2 x 2.3 x 1.32) and 4 x M4 on Ø48" % lp_groove,

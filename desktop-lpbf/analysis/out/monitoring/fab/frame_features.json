@@ -1,5 +1,5 @@
 {
- "frame": "/tmp/fab-e/parts/process_chamber_body_6061_t6_through_frame_from_5_5_in_plate.brep",
+ "frame": "/tmp/fab-r11/parts/process_chamber_body_6061_t6_through_frame_from_5_5_in_plate.brep",
  "LW": {
   "port": "LW",
   "index_deg": 90,
@@ -200,6 +200,30 @@
    ],
    "note": "webs: metal between each \u00d84.5 clearance hole and the clamp frame's outline as monitoring_parts._bw trims it (BW_FRAME); walls: between each M4 thread (major \u00d84) and the seat pocket"
   },
+  "light_bracket": {
+   "holes_xz": [
+    [
+     -141.0,
+     69.25
+    ],
+    [
+     -129.5,
+     69.25
+    ]
+   ],
+   "screws": "2 x M4 x 0.7, tapped 8 deep",
+   "part": "BW LED bracket (cad/monitoring_parts.BWL, _bw_light): its 1/4 in. flange on the wall above the clamp frame",
+   "thread_to_clamp_frame_mm": [
+    8.78,
+    11.15
+   ],
+   "thread_wall_to_seat_mm": [
+    21.39,
+    22.15
+   ],
+   "thread_to_flat_face_end_mm": 5.0,
+   "note": "each M4 thread (major \u00d84) to the clamp frame's trimmed outline, to the seat pocket, and to the end of the back face's flat (x -148, where the outer R8 corner starts)"
+  },
   "liner": {
    "liner": "Lift-out wall liner, back lower left (z 16..32, x -130.5..-0.5)",
    "x_range": [
@@ -258,8 +282,8 @@
  "checks": {
   "frame_volume_cm3": {
    "before": 1582.512,
-   "after": 1547.559,
-   "removed": 34.953
+   "after": 1547.308,
+   "removed": 35.204
   },
   "clear_aperture_blocked_mm3": {
    "LW": 0.0,
@@ -341,6 +365,24 @@
      107.0,
      0.8
     ]
+   },
+   "BW light-bracket hole 1 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": {
+    "min_gap_mm": 5.0,
+    "to": "CYLINDER",
+    "at": [
+     -152.0,
+     107.0,
+     58.0
+    ]
+   },
+   "BW light-bracket hole 2 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": {
+    "min_gap_mm": 6.0,
+    "to": "CYLINDER",
+    "at": [
+     -135.0,
+     90.0,
+     60.0
+    ]
    }
   },
   "bw_shift_search": [
@@ -351,5 +393,5 @@
    }
   ]
  },
- "method": "cad/monitoring_spec.py puts a left-wall viewport (LW) and a back-wall light window (BW) on lines of sight to the plate\ncentre. Setup C holds the frame on the HRT210 with A along the frame's z (machining.md, setup C). Turning about A brings\nany horizontal direction up to the spindle, so a port's azimuth (its turn about z away from the wall's normal) is free.\nIts elevation (the tilt down toward the plate) is a turn about an axis across A: a 4th axis can't take it out. So this\nscript draws each port so a vertical tool at one A index cuts it, and checks that the optics still get their clear\naperture through the whole wall:\n  * LW, at A90 (the left wall up, as setup C has it): a bore normal to the wall, opened from the clear \u00d825 to the circle\n    that holds the \u00d825 cylinder on the sight line across the 16 mm wall; the window seat, flat gasket and clamp-ring\n    holes concentric with it, flat on the wall; an SAE-4 port and \u00d84 passage for the argon purge. The window then sits at\n    the angle between the sight line and the wall's normal (computed here; the optics cost is in fabrication.md).\n  * BW, at A180 (the back wall up): the sight line is ~49 deg off the back wall's normal, so a round normal bore would\n    have to be ~49 mm across. It is a slot normal to the wall, shaped to the projection of the clear \u00d820 cylinder\n    across the wall (an obround), with a rectangular window seat over it, flat on the wall, and three clamp holes (the third\n    placed by bw_hole3() clear of the clamp frame's trim at the inlet plenum's flange).\n    The A131.6 alternative (the rotary takes out the 49 deg azimuth) is checked in cam_monitoring.py's notes, not cut.\nIt also checks each new cut against the frame's existing holes (wall left between them), the outer R8 corners, the floor\nscrews under the back wall, and the liners (the hole or notch each liner needs)."
+ "method": "cad/monitoring_spec.py puts a left-wall viewport (LW) and a back-wall light window (BW) on lines of sight to the plate\ncentre. Setup C holds the frame on the HRT210 with A along the frame's z (machining.md, setup C). Turning about A brings\nany horizontal direction up to the spindle, so a port's azimuth (its turn about z away from the wall's normal) is free.\nIts elevation (the tilt down toward the plate) is a turn about an axis across A: a 4th axis can't take it out. So this\nscript draws each port so a vertical tool at one A index cuts it, and checks that the optics still get their clear\naperture through the whole wall:\n  * LW, at A90 (the left wall up, as setup C has it): a bore normal to the wall, opened from the clear \u00d825 to the circle\n    that holds the \u00d825 cylinder on the sight line across the 16 mm wall; the window seat, flat gasket and clamp-ring\n    holes concentric with it, flat on the wall; an SAE-4 port and \u00d84 passage for the argon purge. The window then sits at\n    the angle between the sight line and the wall's normal (computed here; the optics cost is in fabrication.md).\n  * BW, at A180 (the back wall up): the sight line is ~49 deg off the back wall's normal, so a round normal bore would\n    have to be ~49 mm across. It is a slot normal to the wall, shaped to the projection of the clear \u00d820 cylinder\n    across the wall (an obround), with a rectangular window seat over it, flat on the wall, and three clamp holes (the third\n    placed by bw_hole3() clear of the clamp frame's trim at the inlet plenum's flange). Above the clamp frame, two M4 holes\n    for the BW light's bracket (BW_BRACKET), cut in the same A180 program.\n    The A131.6 alternative (the rotary takes out the 49 deg azimuth) is checked in cam_monitoring.py's notes, not cut.\nIt also checks each new cut against the frame's existing holes (wall left between them), the outer R8 corners, the floor\nscrews under the back wall, and the liners (the hole or notch each liner needs)."
 }

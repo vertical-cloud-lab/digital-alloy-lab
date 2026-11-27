@@ -3,8 +3,8 @@
  "summary": {
   "rate_usd_h": 65.0,
   "features_on_existing_parts": {
-   "total_h": 5.67,
-   "in_house_usd": 368.0
+   "total_h": 5.72,
+   "in_house_usd": 370.0
   },
   "new_parts_all_made_in_house": {
    "total_h": 48.26,
@@ -12,7 +12,7 @@
    "n": 14
   },
   "recommended": {
-   "in_house_h": 12.73,
+   "in_house_h": 12.78,
    "outsourced_usd": 516.39,
    "outsourced_items": 10,
    "bought_instead": 3,
@@ -21,7 +21,7 @@
   "frame_programmed_run_min": {
    "before": 65.1,
    "added_LW": 2.41,
-   "added_BW": 5.05,
+   "added_BW": 5.11,
    "after": 72.6,
    "note": "machining.md round 6: 65.1 min (63.1 cutting + tool changes + A indexes); taps not programmed"
   },
@@ -54,25 +54,25 @@
    "note": "programmed time 2.41 min + 2.74 min of taps, port tool and tool changes"
   },
   {
-   "item": "BW port in the back wall: 58 x 27 R4 window seat 4.5 deep, 51.2 x 20.5 obround slot, 3 x M4 (the third at the seat's lower +x corner)",
+   "item": "BW port in the back wall: 58 x 27 R4 window seat 4.5 deep, 51.2 x 20.5 obround slot, 3 x M4 (the third at the seat's lower +x corner); 2 x M4 above it for the BW light's bracket",
    "step": "0",
    "where": "chamber frame, setup C at A180 (programmed, simulated, holder-checked)",
    "kind": "feature",
    "setups": 0,
-   "holes": 3,
+   "holes": 5,
    "lathe": false,
    "seal": true,
-   "cam_h": 0.55,
+   "cam_h": 0.57,
    "setup_h": 0.0,
-   "run_h": 0.11,
+   "run_h": 0.12,
    "deburr_inspect_h": 0.25,
-   "total_h": 0.9,
-   "in_house_usd": 59.0,
+   "total_h": 0.95,
+   "in_house_usd": 61.0,
    "outside_usd": null,
    "outside_basis": "",
    "buy_instead": null,
    "call": "make",
-   "note": "programmed time 5.05 min + 1.34 min of taps and tool changes; two non-circular features"
+   "note": "programmed time 5.11 min + 2.14 min of taps and tool changes; two non-circular features"
   },
   {
    "item": "LP in the lid, flat: the adapter's face O-ring groove (2-025, ID 31.2 x 2.3 x 1.32) and 4 x M4 on \u00d848",
