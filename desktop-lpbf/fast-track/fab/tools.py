@@ -23,8 +23,8 @@ TOOLS = {
             flutes=3, rpm=8100, ipt=0.0015, length=38.0, edge=25.4),
     4: dict(name="1/8 in. (3.175 mm) 2-flute carbide end mill", shape="endmill", d=3.175, flutes=2, rpm=8100,
             ipt=0.0008, length=16.0, edge=9.5),
-    5: dict(name="3/32 in. (2.381 mm) 2-flute carbide end mill (O-ring grooves for 0.070 in. rings)",
-            shape="endmill", d=2.381, flutes=2, rpm=8100, ipt=0.0006, length=12.0, edge=7.1),
+    5: dict(name="2.0 mm 2-flute carbide end mill (O-ring grooves: Parker's vacuum widths are 2.13-2.26 and "
+                 "3.05-3.18 mm)", shape="endmill", d=2.0, flutes=2, rpm=8100, ipt=0.0005, length=10.0, edge=6.0),
     6: dict(name="3/4 in. (19.05 mm) 3-flute carbide end mill", shape="endmill", d=19.05, flutes=3, rpm=5100,
             ipt=0.005, length=66.0, edge=38.1),
     7: dict(name="1/2 in. 90 deg carbide spot drill (spotting, countersinks, chamfers)", shape="chamfer", d=12.7,

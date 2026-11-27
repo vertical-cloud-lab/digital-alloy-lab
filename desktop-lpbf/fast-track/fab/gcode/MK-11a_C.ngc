@@ -1,0 +1,47 @@
+(Exported by FreeCAD)
+(Post Processor: Path.Post.scripts.linuxcnc_post)
+(Output Time:2026-11-27 09:25:15.959217)
+(begin preamble)
+G17 G54 G40 G49 G80 G90
+G21
+(begin operation: TC4_Job_MK_11a_C)
+(machine units: mm/min)
+(TC4_Job_MK_11a_C) 
+M5
+M6 T4 
+G43 H4 
+M3 S8100 
+(finish operation: TC4_Job_MK_11a_C)
+(begin operation: slot exit 45 x 4 through the 2 mm front wall, profile to z -29.80)
+(machine units: mm/min)
+(Coolant On:Flood)
+M8
+(slot exit 45 x 4 through the 2 mm front wall, profile to z -29.80) 
+(Compensated Tool Path. Diameter: 3.175) 
+G0 Z-17.750 
+G0 X20.913 Y-3.588 
+G0 Z-19.750 
+G1 X20.913 Y-3.588 Z-28.000 F164.592 
+G1 X-20.913 Y-3.588 Z-28.000 F329.184 
+G1 X-20.913 Y-4.413 Z-28.000 F329.184 
+G1 X20.913 Y-4.413 Z-28.000 F329.184 
+G1 X20.913 Y-3.588 Z-28.000 F329.184 
+G1 X20.913 Y-3.588 Z-29.000 F164.592 
+G1 X-20.913 Y-3.588 Z-29.000 F329.184 
+G1 X-20.913 Y-4.413 Z-29.000 F329.184 
+G1 X20.913 Y-4.413 Z-29.000 F329.184 
+G1 X20.913 Y-3.588 Z-29.000 F329.184 
+G1 X20.913 Y-3.588 Z-29.800 F164.592 
+G1 X-20.913 Y-3.588 Z-29.800 F329.184 
+G1 X-20.913 Y-4.413 Z-29.800 F329.184 
+G1 X20.913 Y-4.413 Z-29.800 F329.184 
+G1 X20.913 Y-3.588 Z-29.800 F329.184 
+G0 Z-17.750 
+G0 Z-17.750 
+(finish operation: slot exit 45 x 4 through the 2 mm front wall, profile to z -29.80)
+(Coolant Off:Flood)
+M9
+(begin postamble)
+M05
+G17 G54 G90 G80 G40
+M2

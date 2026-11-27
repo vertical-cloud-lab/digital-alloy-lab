@@ -1,0 +1,66 @@
+(Exported by FreeCAD)
+(Post Processor: Path.Post.scripts.linuxcnc_post)
+(Output Time:2026-11-27 09:06:12.958942)
+(begin preamble)
+G17 G54 G40 G49 G80 G90
+G21
+(begin operation: TC24_Job_MK_05_A)
+(machine units: mm/min)
+(TC24_Job_MK_05_A) 
+M5
+M6 T24 
+G43 H24 
+M3 S8100 
+(finish operation: TC24_Job_MK_05_A)
+(begin operation: Drill 3 x 2.40 M2, z 6.00 to -1.22)
+(machine units: mm/min)
+(Coolant On:Flood)
+M8
+(Drill 3 x 2.40 M2, z 6.00 to -1.22) 
+(Begin Drilling) 
+G0 Z11.000 
+G90 
+G98 
+G0 X0.000 Y17.100 
+G83 X0.000 Y17.100 Z-1.220 F486.000 Q1.800 R8.000 
+G0 X14.809 Y-8.550 
+G83 X14.809 Y-8.550 Z-1.220 F486.000 Q1.800 R8.000 
+G0 X-14.809 Y-8.550 
+G83 X-14.809 Y-8.550 Z-1.220 F486.000 Q1.800 R8.000 
+G80 
+G0 Z11.000 
+(finish operation: Drill 3 x 2.40 M2, z 6.00 to -1.22)
+(Coolant Off:Flood)
+M9
+(begin operation: TC7_Job_MK_05_A)
+(machine units: mm/min)
+(TC7_Job_MK_05_A) 
+M5
+M6 T7 
+G43 H7 
+M3 S4000 
+(finish operation: TC7_Job_MK_05_A)
+(begin operation: Countersink 3 x 4.40 , z 6.00 to 3.80)
+(machine units: mm/min)
+(Coolant On:Flood)
+M8
+(Countersink 3 x 4.40 , z 6.00 to 3.80) 
+(Begin Drilling) 
+G0 Z11.000 
+G90 
+G98 
+G0 X0.000 Y17.100 
+G81 X0.000 Y17.100 Z3.800 F320.000 R8.000 
+G0 X14.809 Y-8.550 
+G81 X14.809 Y-8.550 Z3.800 F320.000 R8.000 
+G0 X-14.809 Y-8.550 
+G81 X-14.809 Y-8.550 Z3.800 F320.000 R8.000 
+G80 
+G0 Z11.000 
+(finish operation: Countersink 3 x 4.40 , z 6.00 to 3.80)
+(Coolant Off:Flood)
+M9
+(begin postamble)
+M05
+G17 G54 G90 G80 G40
+M2
