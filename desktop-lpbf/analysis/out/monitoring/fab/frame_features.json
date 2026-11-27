@@ -1,5 +1,5 @@
 {
- "frame": "/tmp/fab-e/parts/process_chamber_body_model.brep",
+ "frame": "/tmp/fab-e/parts/process_chamber_body_6061_t6_through_frame_from_5_5_in_plate.brep",
  "LW": {
   "port": "LW",
   "index_deg": 90,
@@ -162,11 +162,43 @@
      39.38
     ],
     [
-     -82.41,
-     19.45
+     -85.99,
+     9.09
     ]
    ],
-   "screws": "3 x M4 x 0.7, tapped 8 deep"
+   "screws": "3 x M4 x 0.7, tapped 8 deep",
+   "web_to_trimmed_edge_mm": [
+    4.25,
+    4.25,
+    3.35
+   ],
+   "thread_wall_to_seat_mm": [
+    2.5,
+    2.5,
+    1.53
+   ],
+   "hole3": {
+    "was_xz": [
+     -82.41,
+     19.45
+    ],
+    "web_was_mm": 1.16,
+    "moved_xz": [
+     -3.57,
+     -10.36
+    ],
+    "along_slot_mm": -1.1,
+    "across_mm": -10.9,
+    "web_mm": 3.35,
+    "wall_to_seat_mm": 1.53
+   },
+   "outline_bbox_xz": [
+    -147.5,
+    -3.4,
+    -74.55,
+    58.5
+   ],
+   "note": "webs: metal between each \u00d84.5 clearance hole and the clamp frame's outline as monitoring_parts._bw trims it (BW_FRAME); walls: between each M4 thread (major \u00d84) and the seat pocket"
   },
   "liner": {
    "liner": "Lift-out wall liner, back lower left (z 16..32, x -130.5..-0.5)",
@@ -302,12 +334,12 @@
    },
    "BW clamp-frame hole 2 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": null,
    "BW clamp-frame hole 3 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": {
-    "min_gap_mm": 7.24,
+    "min_gap_mm": 2.11,
     "to": "CYLINDER",
     "at": [
-     -71.0,
-     108.0,
-     22.0
+     -82.0,
+     107.0,
+     0.8
     ]
    }
   },
