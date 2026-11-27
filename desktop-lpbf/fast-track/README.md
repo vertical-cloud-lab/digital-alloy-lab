@@ -426,6 +426,18 @@ hours left out most of the CAM and setup time. Most of it is CAM and setups, not
 cutting in all). Nothing needs a 4th axis, a long tool, honing or welding. At 5–8 shop hours a working day the shop,
 not the parts, sets FT-1's date; with two people (12 h a day) FT-1's coupons come back to 3.2–6.4 weeks.
 
+- **The shop calendar** ([`fab/out/plan.md`](fab/out/plan.md)) puts each state's pieces against the dates the
+  progression needs them (S1's by working day 4, S2's by 5, FT-0's by 6, FT-1's by 9). Two people who both program and
+  cut for the first 8 working days meet every date at the expected hours (FT-1's pieces done on day 7.8). One person
+  finishes FT-1's pieces on day 15.2, which moves FT-0's first tracks from 1.8 to 2.9 weeks and FT-1's first coupons
+  from 3.2 to 4.5 weeks on the early path. Sending FT-1's two plates out saves 5.2 h; sending S1's and S2's out would
+  arrive too late (SendCutSend's 5–6 days, PR 266's quotes, not re-read).
+- **The programs are written.** If a programmer reviews and proves them out instead of writing CAM afresh (0.25 h a
+  setup), the expected hours fall to 61.6 / 83.8 / 97.0 h to FT-0 / FT-1 / FT-1V.
+- **The fabrication set follows the round-1 model.** Round 2's CAD v2 (vendor geometry, the lens offset, the monitoring
+  parts) changes 22 of the 35 pieces and adds 9, mostly monitoring hardware: about 155 expected hours to FT-1
+  (estimate, [`fab/out/v2/delta.md`](fab/out/v2/delta.md)). The monitoring pieces can wait until after first tracks.
+
 ### 3.10 Day 0 and the weeks after
 
 - **Day 0:**
