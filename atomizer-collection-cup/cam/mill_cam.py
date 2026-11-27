@@ -3,14 +3,14 @@
     python cam/mill_cam.py            # writes cam/gcode/fixture_op1.nc, fixture_op2.nc, cam/out/mill_sim.json + PNGs
                                       # (needs Docker and the camotics:1.2.0 image, see CAMOTICS below)
 
-The part: a 6061-T6 V-block, 240 x 114.3 x 60 mm, that holds option B's weldment coaxial while it is tacked and
-welded. A 90 deg V carries the 3 in body tube (76.2 OD), the reducer's 3 in end and, on a folded 0.025 in (0.64 mm) shim, the KF-50 flange
+The part: a 6061-T6 V-block, 120 x 114.3 x 60 mm, that holds each of option B's two welded parts coaxial while it
+is tacked and welded (each part's 3 in ferrule overhangs one end of the block). A 90 deg V carries the 3 in body tube (76.2 OD), the reducer's 3 in end and, on a folded 0.025 in (0.64 mm) shim, the KF-50 flange
 rim (74.93 OD): in a 90 deg V the axis sits r*sqrt(2) above the apex, so a cylinder 0.635 mm smaller in radius
 needs a 0.635 mm shim on each flank to share the axis. The 2 in stub and the reducer's cone clear the V. There is
 no slot under the seams: the V supports everything continuously and the welds are made on top as the part rolls.
 A 6 mm relief along the apex keeps the tube off the sharp corner. Four M6 tapped holes take two strap clamps.
 
-Stock: 6061-T6 flat bar 2-1/2 x 4-1/2 in (63.5 x 114.3), sawn to 240 (ends and sides as sawn/as rolled).
+Stock: 6061-T6 flat bar 2-1/2 x 4-1/2 in (63.5 x 114.3), sawn to 120 (ends and sides as sawn/as rolled).
 Setup 1: bottom up, face 0.5 mm. Setup 2: top up, face 3.0 mm to 60.0; rough the V in 2 mm z-levels with a 12 mm
 end mill, leaving 0.3 mm on the flanks; finish both flanks with a 12.7 mm 90 deg chamfer mill in passes down the
 flank; cut the apex relief with a 6 mm end mill; spot, drill and tap 4 x M6.
@@ -46,7 +46,10 @@ IMAGE = "camotics:1.2.0"
 SHIFT = 1000.0
 
 # ----------------------------------------------------------------------------------------------- part
-L = round(P.B["body_len"] - 10.0)        # the end cap overhangs the block's far end
+# 120 mm long so that each welded part's 3 in ferrule (flange OD 90.9, wider than the V) overhangs an end:
+# the upper part sits KF flange on the shim at x = 0 with its ferrule past x = 120; the pot sits ferrule past x = 0
+# with its tube and end cap (both 76.2 OD) in the V.
+L = 120.0
 W, H = 114.3, 60.0
 STOCK_H = 63.5
 V_HALF = 36.0                  # half-width of the V at the top face; apex depth = V_HALF (90 deg)
@@ -55,7 +58,7 @@ SEAM_X = P.B["stub_len"] + P.B["reducer_len"]     # reducer-to-body seam, from t
 SLOT = False      # no cross slot: the V carries the reducer's 3 in end and the tube continuously (W2 is welded on
                   # top as the part rolls; the back-purge looks after the root)
 SLOT_W, SLOT_HALF_Y, SLOT_Z = 20.0, 40.0, -40.0
-HOLES = [(x, y) for x in (round(SEAM_X + 30.0), L - 15.0) for y in (46.0, -46.0)]
+HOLES = [(x, y) for x in (30.0, L - 20.0) for y in (46.0, -46.0)]
 TAP_DRILL, DRILL_Z, TAP_Z = 5.0, -16.0, -12.0
 R_TUBE = P.B["body_od"] / 2
 R_FLANGE = P.JOINT.flange_od / 2
@@ -355,7 +358,7 @@ def sections_compare(sim, cad_mesh):
 
     out = {}
     planes = [("x=60", [60, 0, 0], [1, 0, 0], lambda p: (p[1], p[2])),
-              ("x=%.2f (seam W2)" % SEAM_X, [SEAM_X, 0, 0], [1, 0, 0], lambda p: (p[1], p[2])),
+              ("x=%.0f" % (L - 10), [L - 10, 0, 0], [1, 0, 0], lambda p: (p[1], p[2])),
               ("x=%.0f (holes)" % HOLES[0][0], [HOLES[0][0], 0, 0], [1, 0, 0], lambda p: (p[1], p[2])),
               ("x=%.0f (holes)" % HOLES[2][0], [HOLES[2][0], 0, 0], [1, 0, 0], lambda p: (p[1], p[2])),
               ("z=-5", [0, 0, -5], [0, 0, 1], lambda p: (p[0], p[1]))]
@@ -410,7 +413,7 @@ def main():
     p1, p2 = op1(), op2()
     for pr in (p1, p2):
         (GC / f"{pr.name}.nc").write_text(pr.text())
-    res = {"part": "B weld-alignment fixture (6061-T6)", "stock": "2-1/2 x 4-1/2 in 6061-T6 flat bar, sawn to 240",
+    res = {"part": "B weld-alignment fixture (6061-T6)", "stock": "2-1/2 x 4-1/2 in 6061-T6 flat bar, sawn to 120",
            "axis_height_above_top_mm": round(axis_height(), 3), "shim_mm": round(SHIM, 3),
            "cad_volume_cm3": round(solid.Volume() / 1e3, 1), "mass_kg": round(solid.Volume() * 2.70e-6, 2)}
     # setup 2 on the bottom-faced stock (63.0 tall, its top 3.0 above work zero)

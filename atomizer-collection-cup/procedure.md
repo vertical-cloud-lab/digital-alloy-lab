@@ -53,8 +53,10 @@ gap is 1.5 mm a side when cold, and the FEA leaves at least 1.1 mm when hot.
 1. Clean every part with acetone, inside and out. Use stainless-only brushes.
 2. **Upper part:** stub + reducer + ferrule.
    - Fold a 0.025 in (0.64 mm) stainless shim to 90° and lay it in the V-block at the flange end.
-   - Lay the stub and reducer in the V, with the flange rim on the shim. The reducer's 3 in end rests in the V.
-   - Fit the ferrule to the reducer's 3 in end, face outward.
+   - Lay the stub and reducer in the V, with the flange rim on the shim at the block's x = 0 end. The reducer's
+     3 in end rests in the V.
+   - Fit the ferrule to the reducer's 3 in end, face outward. It overhangs the block's far end: its 90.9 mm
+     flange is wider than the V, so the block is only 120 mm long.
 3. **Back-purge** each part:
    - tape over the open ends, feed argon at 5–10 L/min through a hole in one tape, and vent through the other;
    - purge at least 2 min (about 10 volume changes) before striking an arc;
@@ -68,6 +70,7 @@ gap is 1.5 mm a side when cold, and the FEA leaves at least 1.1 mm when hot.
    - Keep the heat input at or below about 0.5 kJ/mm, in short balanced segments (Edison's final check).
    - Clamp a copper chill round the KF flange for W1, and round the ferrule's face for W2a.
 6. **Pot:** ferrule + tube + end cap.
+   - Lay the tube and end cap in the V (no shim; both are 76.2 OD), with the ferrule overhanging the x = 0 end.
    - W2b: the ferrule to the tube's top, chill on the ferrule face.
    - W3: the tube's bottom to the end cap's rim, wall to wall, 20 mm above the bottom. The cap's turned R6 inside
      corner takes the floor's thermal stress, so don't add a fillet bead inside.

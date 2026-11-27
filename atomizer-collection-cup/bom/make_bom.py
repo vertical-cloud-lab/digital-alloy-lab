@@ -44,7 +44,7 @@ B = [
     ("B17", "Leak-check fluid, Snoop 8 oz", "Keep Supply", "MS-SNOOP-8OZ", 1, 1),
 ]
 B_NOT_PRICED = [
-    ("B18", "6061-T6 flat bar 2-1/2 x 4-1/2 in, 10 in (weld fixture)", "shop stock or any metals supplier"),
+    ("B18", "6061-T6 flat bar 2-1/2 x 4-1/2 in, 5 in (weld fixture, 120 mm)", "shop stock or any metals supplier"),
     ("B19", "304 shim stock 0.025 in (0.64 mm), a 1 x 3 in strip (flange shim in the fixture)", "shop stock"),
     ("B12", "All-stainless worm clamps with a ~9 mm band, one for the 2 in stub, one for the 3 in end cap (the stub has "
             "12.6 mm of straight tube; McMaster 5415K's 12.7 mm band is too wide and its screw is zinc-plated)", "not priced"),

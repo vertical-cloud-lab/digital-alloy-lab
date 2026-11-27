@@ -230,11 +230,11 @@ def sheet_b_parts(pdf):
 # --------------------------------------------------------------------------------------------- sheet 3
 def sheet_fixture(pdf):
     import mill_cam as MC
-    fig, ax = sheet("B: weld-alignment V-block fixture", 3, "6061-T6 flat bar 2-1/2 x 4-1/2 in, sawn to 240",
+    fig, ax = sheet("B: weld-alignment V-block fixture", 3, "6061-T6 flat bar 2-1/2 x 4-1/2 in, sawn to 120",
                     ["CAM: cam/gcode/fixture_op1.nc (face bottom), fixture_op2.nc (top); checked in CAMotics.",
                      f"Flange rim rests on a folded 0.025 in ({MC.SHIM:.2f} mm) shim so the flange and tube share an axis.",
                      f"Part axis {MC.axis_height():.2f} above the top face; strap clamps on the 4 x M6.",
-                     "No slot: the V carries the reducer's 3 in end and the tube; weld on top as the part rolls."])
+                     "Each part's 3 in ferrule overhangs an end: upper part ferrule past x=120, pot ferrule past x=0."])
     L, W, H = MC.L, MC.W, MC.H
     # top view (x along, y across), origin at (0, 80)
     oy = 110
@@ -246,13 +246,13 @@ def sheet_fixture(pdf):
     if MC.SLOT:
         ax.add_patch(Rectangle((MC.SEAM_X - MC.SLOT_W / 2, oy - MC.SLOT_HALF_Y), MC.SLOT_W, 2 * MC.SLOT_HALF_Y,
                                facecolor="0.9", edgecolor="k", lw=LW))
-    ax.plot([MC.SEAM_X, MC.SEAM_X], [oy - MC.V_HALF, oy + MC.V_HALF], color="k", lw=0.5, ls=":")
+    pass
     for x, y in MC.HOLES:
         ax.add_patch(plt.Circle((x, oy + y), MC.TAP_DRILL / 2, fill=False, lw=LW))
         ax.add_patch(plt.Circle((x, oy + y), 3.0, fill=False, lw=0.5, ls="--"))
     dim_h(ax, 0, L, oy + W / 2 + 8, f"{L:.0f}")
     dim_v(ax, -10, oy - W / 2, oy + W / 2, f"{W:.1f}", side=-1)
-    dim_h(ax, 0, MC.SEAM_X, oy - W / 2 - 8, f"{MC.SEAM_X:.2f} (weld W2 over here)", above=False)
+    pass
     hx = sorted({x for x, _ in MC.HOLES})
     dim_h(ax, 0, hx[0], oy + 46 + 12, f"{hx[0]:.0f}", fs=6.5)
     dim_h(ax, hx[0], hx[1], oy + 46 + 12, f"{hx[1] - hx[0]:.0f}", fs=6.5)

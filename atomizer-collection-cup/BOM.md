@@ -23,7 +23,7 @@ overpressure ratings are in `bom/README.md`.
 | B15 | Panel buzzer, 30-120 VAC | McMaster | [56965T26](https://www.mcmaster.com/products/panel-mount-buzzers/) | 1 | 11.30 | 11.30 | not shown |
 | B16 | ER316L TIG rod 1/16 in, 1 lb | McMaster | [7972A501](https://www.mcmaster.com/products/tig-welding-rods/tig-welding-rods-2~~/) | 1 | 27.13 | 27.13 | in stock; part page: Delivers Monday (20 |
 | B17 | Leak-check fluid, Snoop 8 oz | Keep Supply | [MS-SNOOP-8OZ](https://www.keepsupply.com/ms-snoop-8oz-swagelok-snoop-liquid-leak-detector-8-oz-236-ml-bottle) | 1 | 12.84 | 12.84 | In stock, ships today |
-| B18 | 6061-T6 flat bar 2-1/2 x 4-1/2 in, 10 in (weld fixture) | shop stock or any metals supplier | | | | | |
+| B18 | 6061-T6 flat bar 2-1/2 x 4-1/2 in, 5 in (weld fixture, 120 mm) | shop stock or any metals supplier | | | | | |
 | B19 | 304 shim stock 0.025 in (0.64 mm), a 1 x 3 in strip (flange shim in the fixture) | shop stock | | | | | |
 | B12 | All-stainless worm clamps with a ~9 mm band, one for the 2 in stub, one for the 3 in end cap (the stub has 12.6 mm of straight tube; McMaster 5415K's 12.7 mm band is too wide and its screw is zinc-plated) | not priced | | | | | |
 | B13 | 3 in tri-clamp end cap with a 1/4 NPT port (test closure for both welded parts) | sanitary catalogue, not priced | | | | | |
