@@ -1,7 +1,7 @@
 {
  "states": {
   "S1": {
-   "n_parts": 24,
+   "n_parts": 27,
    "clashes": [],
    "contacts": [
     {
@@ -11,10 +11,28 @@
      "why": "brace bolted to the post"
     },
     {
+     "a": "Gantry uprights",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1312.0,
+     "why": "brace bolted to the post"
+    },
+    {
      "a": "Gantry cross-beam (clamped at the head height)",
      "b": "Gantry braces: a diagonal per side, two knee braces at the back",
      "volume_mm3": 1891.4,
      "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Gantry cross-beam, front (under the head plate's front end)",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Scan-head flange plate (MK-09)",
+     "b": "Head-plate top flange on both cross-beams (MK-09)",
+     "volume_mm3": 43084.8,
+     "why": "top flange welded to the flange plate"
     },
     {
      "a": "Fibre bend restrictor",
@@ -27,7 +45,7 @@
    "beam_nearest": []
   },
   "S2": {
-   "n_parts": 48,
+   "n_parts": 51,
    "clashes": [],
    "contacts": [
     {
@@ -37,10 +55,28 @@
      "why": "brace bolted to the post"
     },
     {
+     "a": "Gantry uprights",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1312.0,
+     "why": "brace bolted to the post"
+    },
+    {
      "a": "Gantry cross-beam (clamped at the head height)",
      "b": "Gantry braces: a diagonal per side, two knee braces at the back",
      "volume_mm3": 1891.4,
      "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Gantry cross-beam, front (under the head plate's front end)",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Scan-head flange plate (MK-09)",
+     "b": "Head-plate top flange on both cross-beams (MK-09)",
+     "volume_mm3": 43084.8,
+     "why": "top flange welded to the flange plate"
     },
     {
      "a": "Fibre bend restrictor",
@@ -135,7 +171,7 @@
    }
   },
   "FT-0": {
-   "n_parts": 83,
+   "n_parts": 86,
    "clashes": [],
    "contacts": [
     {
@@ -145,10 +181,28 @@
      "why": "brace bolted to the post"
     },
     {
+     "a": "Gantry uprights",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1312.0,
+     "why": "brace bolted to the post"
+    },
+    {
      "a": "Gantry cross-beam (clamped at the head height)",
      "b": "Gantry braces: a diagonal per side, two knee braces at the back",
      "volume_mm3": 1891.4,
      "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Gantry cross-beam, front (under the head plate's front end)",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Scan-head flange plate (MK-09)",
+     "b": "Head-plate top flange on both cross-beams (MK-09)",
+     "volume_mm3": 43084.8,
+     "why": "top flange welded to the flange plate"
     },
     {
      "a": "Fibre bend restrictor",
@@ -230,7 +284,7 @@
    }
   },
   "FT-1": {
-   "n_parts": 101,
+   "n_parts": 104,
    "clashes": [],
    "contacts": [
     {
@@ -240,10 +294,28 @@
      "why": "brace bolted to the post"
     },
     {
+     "a": "Gantry uprights",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1312.0,
+     "why": "brace bolted to the post"
+    },
+    {
      "a": "Gantry cross-beam (clamped at the head height)",
      "b": "Gantry braces: a diagonal per side, two knee braces at the back",
      "volume_mm3": 1891.4,
      "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Gantry cross-beam, front (under the head plate's front end)",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Scan-head flange plate (MK-09)",
+     "b": "Head-plate top flange on both cross-beams (MK-09)",
+     "volume_mm3": 43084.8,
+     "why": "top flange welded to the flange plate"
     },
     {
      "a": "Fibre bend restrictor",
@@ -599,7 +671,7 @@
    }
   },
   "FT-1V": {
-   "n_parts": 103,
+   "n_parts": 106,
    "clashes": [],
    "contacts": [
     {
@@ -609,10 +681,28 @@
      "why": "brace bolted to the post"
     },
     {
+     "a": "Gantry uprights",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1312.0,
+     "why": "brace bolted to the post"
+    },
+    {
      "a": "Gantry cross-beam (clamped at the head height)",
      "b": "Gantry braces: a diagonal per side, two knee braces at the back",
      "volume_mm3": 1891.4,
      "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Gantry cross-beam, front (under the head plate's front end)",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Scan-head flange plate (MK-09)",
+     "b": "Head-plate top flange on both cross-beams (MK-09)",
+     "volume_mm3": 43084.8,
+     "why": "top flange welded to the flange plate"
     },
     {
      "a": "Fibre bend restrictor",
@@ -974,7 +1064,7 @@
    }
   },
   "FT-1 (Thorlabs piston)": {
-   "n_parts": 100,
+   "n_parts": 103,
    "clashes": [],
    "contacts": [
     {
@@ -984,10 +1074,28 @@
      "why": "brace bolted to the post"
     },
     {
+     "a": "Gantry uprights",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1312.0,
+     "why": "brace bolted to the post"
+    },
+    {
      "a": "Gantry cross-beam (clamped at the head height)",
      "b": "Gantry braces: a diagonal per side, two knee braces at the back",
      "volume_mm3": 1891.4,
      "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Gantry cross-beam, front (under the head plate's front end)",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Scan-head flange plate (MK-09)",
+     "b": "Head-plate top flange on both cross-beams (MK-09)",
+     "volume_mm3": 43084.8,
+     "why": "top flange welded to the flange plate"
     },
     {
      "a": "Fibre bend restrictor",
@@ -1470,5 +1578,5 @@
    "stage_limit_C": 50.0
   }
  ],
- "runtime_s": 810
+ "runtime_s": 770
 }

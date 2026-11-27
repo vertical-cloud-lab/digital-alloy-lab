@@ -60,9 +60,11 @@ PyVista, python-fcl and trimesh.
   sideways (no contact over 60 mm). The door then swings 24 degrees before the layer camera meets the lens collar
   (26 degrees with the camera unclipped), which lifts its front edge 120 mm: a tight opening for hand-spreading and
   plate changes.
-- **The gantry is the structural FEA's four-post frame** (45 mm posts, front and back cross-beams carrying the head's
-  flange plate, a diagonal per side, two knee braces at the back: 79 Hz in the FEA against 13 Hz for round 1's two
-  uprights), checked here for clashes, the beam and the lid's swing.
+- **The gantry is the structural FEA's four-post frame, braced front and back:** 45 mm posts, front and back
+  cross-beams carrying the head's flange plate, a diagonal per side, knee braces at the back and (after the FEA's
+  addendum) at the front, and a top flange with three gussets that ties the head's flange plate to both beams. The FEA
+  found the frame without the front braces and the flange at 43.1 / 59.7 / 67.2 Hz, under its 60 Hz minimum; the
+  braced version is drawn and checked here for clashes, the beam and the lid's swing, but not yet run in the FEA.
 - **Gas volume from the model:** FT-0 24.2 L, FT-1 24.0 L, FT-1V 22.6 L (Ideal Vacuum gives the empty cube 22.6 L).
 - **Monitoring (MON1-MON9)** is drawn: a Raspberry Pi HQ layer camera through its own window port (17.8 µm per pixel
   across the plate in the box), two raking LED lights through wall ports, a coaxial photodiode behind the head's input
@@ -94,7 +96,7 @@ files, in our code (`ft_vendor.py`; no vendor geometry is copied or committed; U
 | Window-stack screws | not drawn | 6 x M4 x 12 flat heads, countersunk flush, so the half-shells slide over them | this model |
 | Rod's lower end | open question | a **potted plug** (vacuum epoxy, 15 mm) in the hollow rod; the 6-wire pigtail leaves into a pocket in the **rod-end block** (MK-15: rod clamp, M4 screw, the AE sensor's face) and plugs into a 6-way terminal block on it | this model |
 | FT-0 layer spreading | 70 mm film applicator (knobs to ±41 mm) | **48 mm spreader bar** (48 x 12 x 30 mm, ground edge), parked at +x out of the raking light: the slot nozzle and exhaust collector leave 54 mm on the block top (video worker) | this model |
-| Gantry | two 30 mm uprights and a cross-beam at the back, the head cantilevered (13 Hz, structural FEA) | **four 45 mm posts, front and back cross-beams, a diagonal per side, two back knee braces** (79 Hz in the FEA); the head's flange plate spans both cross-beams | structural FEA 4c |
+| Gantry | two 30 mm uprights and a cross-beam at the back, the head cantilevered (13 Hz, structural FEA) | **four 45 mm posts, front and back cross-beams, a diagonal per side, knee braces at the back and the front**; the head's flange plate spans both cross-beams, with a 60 mm top flange bolted on both and three gussets (`P["gantry"] = "four_post_braced_front"`) | structural FEA 4c and its addendum (43.1 / 59.7 / 67.2 Hz without the front braces and the flange) |
 | Monitoring | none | MON1-MON9 (below) | PR 266/281 `monitoring.md`, adapted |
 | Cables and fasteners | not drawn | recoater M8 to a back-wall gland (box) or a KF-25 feedthrough (cube); X-VSR20A M8; well-block leads; heater and TC cable; gland screws M5 x 25 with bonded seals, inside the gland's face seal at (±12.5, ±12.5) and into M5 taps in the deck (fab worker); deck clamps on the panel studs (box), M6 deck screws into the bottom plate (cube); bracket-plate screws into T-nuts | this model |
 
@@ -121,14 +123,14 @@ the Lesker BX1212S (VacuCAD login). Those stay estimates, marked in `ft_model.P`
 
 | State | Parts | Clashes | Designed contacts | Parts in the beam envelope |
 |---|---:|---:|---:|---:|
-| S1 | 24 | 0 | 3 | 0 |
-| S2 | 48 | 0 | 5 | 0 |
-| FT-0 | 83 | 0 | 7 | 0 |
-| FT-1 | 101 | 0 | 7 | 0 |
-| FT-1V | 103 | 0 | 8 | 0 |
-| FT-1, Thorlabs MTS50/M-Z8 piston | 100 | 0 | 7 | 0 |
+| S1 | 27 | 0 | 6 | 0 |
+| S2 | 51 | 0 | 8 | 0 |
+| FT-0 | 86 | 0 | 10 | 0 |
+| FT-1 | 104 | 0 | 10 | 0 |
+| FT-1V | 106 | 0 | 11 | 0 |
+| FT-1, Thorlabs MTS50/M-Z8 piston | 103 | 0 | 10 | 0 |
 
-The last run took 810 s on one core (capped at 3 GB) on the final model.
+The last run took 770 s on one core (capped at 3 GB), on the final model.
 
 - **Beam:** with the lens axis at (0, -30) the envelope is an oblique cone; the nearest parts are the cord clamp at
   the hopper's park (3.5 mm) and the cover-slide holder (5.6 mm). Margins round the envelope at the apertures:
@@ -322,9 +324,8 @@ Spend by the state that first needs each `parts.csv` line (the lead's round-2 fi
 | FT-1V | $11.7k-13.8k | $40.8k-61.0k |
 
 The FT-1 and FT-1V sums are the study's stand-alone totals (`fast_track.py`, from the same `parts.csv`) plus what
-growing costs: FT-0's spreader bar M4 ($30-80) and, at FT-1V, the box E1 ($694-760), which then becomes the
-spreadability rig. (Re-run by the lead after the last `parts.csv` changes: the four-post frame E4, the spreader bar M4
-and the purge diffuser and vent G9.)
+growing costs: FT-0's spreader M4 ($150-600) and, at FT-1V, the box E1 ($694-760), which then becomes the
+spreadability rig.
 
 ![Schedule of the progression](../img/progression-gantt.png)
 
@@ -380,10 +381,12 @@ Green: added. Blue: moved. Red: removed (faint). Grey: unchanged. The part lists
   lens collar; one direct-opening Omron D4NS-2CF tongue switch per guard (S5): on the box's front for the lid
   (the cube's door in FT-1V) and on the lens collar for the beam tube.
 - **Gantry:** four 45 mm T-slot posts, the back pair on the back support rail and the front pair on the bench in
-  front of the front rail, a cross-beam between each pair at the head's height, a diagonal per side and two knee
-  braces at the back (the structural FEA's frame). In FT-1V both cross-beams slide up 21.0 mm with the head.
+  front of the front rail, a cross-beam between each pair at the head's height, a diagonal per side, knee braces at the
+  back (120 mm) and at the front (80 mm, short enough to clear the collimator), the structural FEA's frame. In FT-1V
+  both cross-beams slide up 21.0 mm with the head.
 - **Optics:** the hurrySCAN hangs by its entrance face from a 12 mm flange plate (MK-09) bolted to both cross-beams
-  with angle brackets; the input turret and the 45 deg mirror block stick out of the entrance face toward
+  with angle brackets, stiffened against the head's pitch by a 60 x 12 mm top flange that lies on both beams and three
+  triangular gussets between it and the plate (at y = -10, 40 and 90 mm, clear of the input stack); the input turret and the 45 deg mirror block stick out of the entrance face toward
   -x, the collimator comes in from -y, the photodiode branch (MON4) sits on the block's back. The lens screws into
   the head (M85 x 1).
 - **Beam envelope:** chief rays from a pivot 392.9 mm above the bed (estimate, inside the process worker's 296-424 mm)
@@ -421,12 +424,14 @@ model's checks cover the half-shell version only.
   the chief-ray pivot; the box door's hinge axis (taken as the door's back top edge). A clash or a fit against these
   means "check the maker's drawing", not a certainty.
 - **The gantry is the structural FEA's frame** ([`../analysis/out/fea/struct.md`](../analysis/out/fea/struct.md), 4c:
-  13 Hz for round 1's two uprights, 79 Hz for this one): four 45 mm posts (drawn as the 30 mm profile scaled up, an
+  13 Hz for round 1's two uprights, 79 Hz for four posts with the head on a horizontal plate): four 45 mm posts (drawn as the 30 mm profile scaled up, an
   envelope), the front pair 25 mm in front of the front rail on L feet, a front cross-beam that carries the head
   plate's front end, a diagonal per side from the front post's top to the back post's base, and two knee braces at the
-  back; no front knee braces, because the lid swings through that space. It is checked here for clashes, the beam and
-  the door's swing, but its frequencies are the FEA's on round 1's plate; the FEA has not been re-run on v2's
-  entrance-face hanger. `P["gantry"] = "two_post"` draws round 1's frame.
+  back. The FEA's addendum ran that frame as drawn here (43.1 / 59.7 / 67.2 Hz: the front portal racking in x, and the
+  head nodding on its 12 mm flange plate), so this model adds 80 mm knee braces in the front portal (above the lid's
+  swing; the lid hinges at the back, so its front edge never comes forward of the box) and a top flange with three
+  gussets on MK-09. That braced version has not been run in the FEA yet. `P["gantry"]` selects
+  `"four_post_braced_front"` (default), `"four_post"` (the FEA addendum's model) or `"two_post"` (round 1).
 - **Not drawn:** the Lesker BX1212S (no STEP without a login); the gas plumbing outside the enclosure; O-ring grooves;
   the face seal under the gland; the half-shells' toggle clamps and their seam; wiring outside the enclosure.
 - **Not run here:** FEA, CFD and thermal FE are in [`../analysis/`](../analysis/) (round 2 workers). The heat numbers in

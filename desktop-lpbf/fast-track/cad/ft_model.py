@@ -117,7 +117,7 @@ P = dict(
     # --- frame: 30 mm T-slot (McMaster 5537T101 class, study) ---
     bench_z=-272.6,               # bench top: leaves a 10 mm riser under the X-VSR20A
     rail_dy=5.25 * IN,            # support rails at the box's mounting holes (10.50 in. apart)
-    gantry="four_post",           # structural FEA (analysis/out/fea/struct.md 4c): four 45 mm posts, a front
+    gantry="four_post_braced_front",  # structural FEA (analysis/out/fea/struct.md 4c): four 45 mm posts, a front
                                   # cross-beam, a diagonal per side, knee braces at the back ("four_post": 43.1 Hz as drawn,
                                   # FEA addendum) and at the front, MK-09 with a top flange on both beams and three gussets;
                                   # "two_post" = round 1's frame (13 Hz)

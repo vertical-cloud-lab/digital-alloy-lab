@@ -8,19 +8,22 @@ envelopes (sizes marked in `ft_model.P`). A clash with an envelope means 'check 
 
 | State | Parts | Clashes | Designed contacts | Beam envelope hits | Nearest parts to the beam (mm) |
 |---|---:|---:|---:|---:|---|
-| S1 | 24 | 0 | 3 | 0 | - |
-| S2 | 48 | 0 | 5 | 0 | Water-cooled beam dump, 1 kW 2.7, Cover-slide holder, Ø44 opening 5.6, Window retaining flange 7.04, Window ring 7.53 |
-| FT-0 | 83 | 0 | 7 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cover-slide holder, Ø44 opening 5.6, FT-0 spreader bar, 48 mm, ground edge, parked 5.9 |
-| FT-1 | 101 | 0 | 7 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cord clamp 3.52, Silicone-cord blade, 3 mm 3.96 |
-| FT-1V | 103 | 0 | 8 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cord clamp 3.52, Silicone-cord blade, 3 mm 3.96 |
-| FT-1 (Thorlabs piston) | 100 | 0 | 7 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cord clamp 3.52, Silicone-cord blade, 3 mm 3.96 |
+| S1 | 27 | 0 | 6 | 0 | - |
+| S2 | 51 | 0 | 8 | 0 | Water-cooled beam dump, 1 kW 2.7, Cover-slide holder, Ø44 opening 5.6, Window retaining flange 7.04, Window ring 7.53 |
+| FT-0 | 86 | 0 | 10 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cover-slide holder, Ø44 opening 5.6, FT-0 spreader bar, 48 mm, ground edge, parked 5.9 |
+| FT-1 | 104 | 0 | 10 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cord clamp 3.52, Silicone-cord blade, 3 mm 3.96 |
+| FT-1V | 106 | 0 | 11 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cord clamp 3.52, Silicone-cord blade, 3 mm 3.96 |
+| FT-1 (Thorlabs piston) | 103 | 0 | 10 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cord clamp 3.52, Silicone-cord blade, 3 mm 3.96 |
 
 Designed contacts (FT-1):
 
 | a | b | volume_mm3 | why |
 |---|---|---|---|
 | Gantry uprights | Gantry braces: a diagonal per side, two knee braces at the back | 5294.3 | brace bolted to the post |
+| Gantry uprights | Gantry knee braces, front (2) | 1312.0 | brace bolted to the post |
 | Gantry cross-beam (clamped at the head height) | Gantry braces: a diagonal per side, two knee braces at the back | 1891.4 | knee brace bolted under the cross-beam |
+| Gantry cross-beam, front (under the head plate's front end) | Gantry knee braces, front (2) | 1891.4 | knee brace bolted under the cross-beam |
+| Scan-head flange plate (MK-09) | Head-plate top flange on both cross-beams (MK-09) | 43084.8 | top flange welded to the flange plate |
 | Fibre bend restrictor | Process fibre | 563.1 | fibre in its bend restrictor |
 | Window retaining flange (MK-02) | Window-stack screws, M4 x 12 flat head, flush | 443.2 | screws |
 | Rod gland plate, 2 O-rings (MK-07) | Gland screws M5 x 25 with bonded seals (4) | 1134.9 | screws |
@@ -279,4 +282,4 @@ Pump speed (1 L/s effective) and base pressures are estimates; the floor is set 
 | cube (FT-1V) | 0.675 | still air | 25-36 | 61 | 50.0 |
 | cube (FT-1V) | 0.675 | fan | 8-11 | 36 | 50.0 |
 
-Run time 810 s.
+Run time 770 s.
