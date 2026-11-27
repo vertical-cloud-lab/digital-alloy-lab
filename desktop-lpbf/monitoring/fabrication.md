@@ -225,7 +225,8 @@ Checks on the model (`frame_features.json`):
   −90.8 and z 14.3 to 36.1, the whole of that 16 mm band, so the piece starts at x −90.8 instead of having a hole.
 - **Interference** with the BW frame's screw moved (`interference.py`, `LPBF_MONITORING=1`, M50, 318 parts, 2026-11-27
   08:34–08:37 UTC): 0 interfering pairs in the six states and the eight sweeps, 33 designed joints; the report is the
-  committed one but for its run time. The LW ring's holes moved after that run (0.25 mm inward, holes only).
+  committed one but for its run time. The LW ring's holes moved after that run (0.25 mm inward, holes only); two re-runs
+  at 09:18 and 09:20 UTC were killed at the 3 GB memory cap after meshing, before any state was checked.
 
 ### 2.2 How it was programmed
 [`cam_monitoring.py`](../analysis/monitoring/fab/cam_monitoring.py) runs the repo's machining scripts without editing them,
@@ -485,7 +486,7 @@ put in a cart.
   (R5.5, as the cap's) and the model's interference check re-run with them. Not done here: `monitoring_parts.py` is not this
   note's file.
 - **The LW ring's holes moved 0.25 mm inward after the interference run** (Ø50 → Ø49.5). Only holes moved, so no new contact,
-  but the model was not re-checked with them.
+  but the model was not re-checked with them: two re-runs were killed at the 3 GB cap the shared runner allows.
 - **The sine-plate setup is drawn, not designed.** A 312 × 222 mm lid turned −33.69° on a 6 × 12 in. sine plate overhangs it on
   every side; a larger tilting table or an angle plate set to 27.93° may suit the shop better. The fixtures in the holder check
   are a 400 × 400 × 25 mm plate on 1 in. parallels and four toe clamps at the lid's ends; work zero (the LP centre on the top
