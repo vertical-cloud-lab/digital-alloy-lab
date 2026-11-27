@@ -298,8 +298,12 @@ class SimLaser(Laser):
 
 
 class SimAxis(Axis):
-    def __init__(self, world: SimWorld, name: str, travel: float, vmax: float, amax: float, pos: float = 0.0):
+    def __init__(self, world: SimWorld, name: str, travel: float, vmax: float, amax: float, pos: float = 0.0,
+                 thrust_N: float = 100.0, load_N: float = 0.0):
         self.w = world
+        self.thrust_N = thrust_N          # continuous thrust at full run current (Zaber specs)
+        self.load_N = load_N              # drag + weight it must overcome (estimate)
+        self.run_current = 1.0
         self.name = name
         self.travel = travel
         self.vmax = vmax
@@ -357,6 +361,10 @@ class SimAxis(Axis):
         v = min(speed or self.vmax, self.vmax)
         a = accel or self.amax
         x1 = pos_mm
+        if self.thrust_N * self.run_current < self.load_N:     # not enough thrust: stalls where it stands
+            self.w.at(self.w.clock.now() + 0.05, lambda w: self._flags.add("FS"))
+            self.move = (self.w.clock.now(), self.pos, self.pos, v, a, 0.05)
+            return
         if self.stall_next:                     # stalls half way and sets FS (STALLED_AND_STOPPED)
             x1 = self.pos + 0.5 * (pos_mm - self.pos)
         T = self._duration(abs(x1 - self.pos), v, a)
@@ -381,6 +389,14 @@ class SimAxis(Axis):
 
     def flags(self):
         return set(self._flags)
+
+    def clear_flags(self):
+        f = set(self._flags)
+        self._flags = {x for x in self._flags if not x.startswith("F")}
+        return f
+
+    def set_run_current(self, fraction: float) -> None:
+        self.run_current = fraction
 
     def planned_time(self, target, speed=None, accel=None):
         return self._duration(abs(target - self.pos), min(speed or self.vmax, self.vmax), accel or self.amax)
@@ -490,8 +506,11 @@ def make_sim_machine(cfg: Config, clock, timing: dict, seed: int = 1) -> Machine
     machine = Machine(
         scan=SimScan(w, timing),
         laser=SimLaser(w),
-        piston=SimAxis(w, "piston", m.piston_travel_mm, 48.0, m.piston_accel, pos=8.0),
-        recoater=SimAxis(w, "recoater", m.recoater_travel_mm, 104.0, m.recoater_accel, pos=60.0),
+        # X-VSR20A: 100 N continuous; load = hot O-ring drag ~20 N (estimate) + plate, disc and rod ~3 N
+        piston=SimAxis(w, "piston", m.piston_travel_mm, 48.0, m.piston_accel, pos=8.0, thrust_N=100.0, load_N=23.0),
+        # X-LSM100B: 25 N continuous; load = blade and hopper drag ~5 N (estimate)
+        recoater=SimAxis(w, "recoater", m.recoater_travel_mm, 104.0, m.recoater_accel, pos=60.0, thrust_N=25.0,
+                         load_N=5.0),
         plate=SimHeater(w, "plate", *th.pid_plate),
         block=SimHeater(w, "block", *th.pid_block),
         io=io,
