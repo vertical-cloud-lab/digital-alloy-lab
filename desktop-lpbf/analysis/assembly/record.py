@@ -169,6 +169,11 @@ class Rec:
         self._ev("move", arm=n, q=Q.astype(np.float32), close=close, how=kind, dur=round(dur, 2),
                  held=None if st["held"] is None else st["held"]["name"])
         st["q"] = Q[-1].copy()
+        # round 9 (for run 15): the gripper is drawn at `close` through this move, so that is where the next grip starts. Until
+        # round 9 the state kept the opening before the move, and a grip after an open approach (close 0) was drawn closing from
+        # an earlier step's opening (up to 0.88), the fingertips through the part for the grip's first frames (chapter 41: 39 of
+        # 206 grips; the frame audit's 45 "fingers closed past the part" pairs)
+        st["close"] = close
 
     def drive(self, n, x1, check=None, route=None):
         """route (round 8, mir_route.plan): the legs (pivot / line, each with its duration) the MiR drives, pivot-drive-pivot;

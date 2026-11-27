@@ -52,6 +52,27 @@ axes was tried alone and still fails. Details: [`analysis/out/assembly/round9_ru
 [`results_run14.json`](analysis/out/assembly/results_run14.json) (run 13 to F53, run 14 from F54),
 [`two_hands.json`](analysis/out/assembly/two_hands.json), [`mir_drives.json`](analysis/out/assembly/mir_drives.json).
 
+**For run 15 (not in the round-9 video, which is runs 13 and 14).** W4's classification of chapter 41's frame audit
+([`round9_41_pairs.md`](analysis/out/videoqa/round9_41_pairs.md)) put two causes of real clipping on the planner. Changed after
+the video, each tested on its steps alone (scratch recordings, run 13's table layout), not re-planned in full:
+- **Fingers closed past the part (45 pairs).** At the grasp itself the fingers are no deeper than 0.3 mm in the part they hold
+  (every attach of M23-M30, run 13 and the test alike). The clipping is in the grip that follows an approach drawn with the
+  gripper open: `record.py`'s `move` drew the arm at the move's opening but kept the previous one in its state, so the next
+  grip was drawn closing from an earlier step's opening (up to 0.88) instead of from open, the fingertips through the part for
+  its first frames. That is 9 of 50 grips in chapter 40's recording and 35 of 206 in 41's. Now a move's opening is where the next
+  grip starts. Tests: M23-C00c and C01-C03 alone, all steps pass as before, 0 of 25 grips start more closed than the motion
+  before them, and `rec_check.py` finds no pair over 1.5 mm (1,634 samples). Also `fit_close` (run_assembly.py): the 2F-85
+  opens until no finger is more than 1.5 mm into the part at the grasp; in the tested steps it changed no closure.
+- **The floor plate's pieces in the table top (30 pairs, chapter 41 frames 277-280).** Those frames are C00a's pick at the
+  table, not a two-arm carry's staged put: the pick attached the plate together with the overflow funnel a person fitted to it
+  on the bench in C00, which lies in its own slot, so the funnel was drawn hanging through the table top under the plate
+  (replaying run 13's recording, the funnel's port reaches z 802 against the top's 820-860; the plate itself stays at or above
+  860). A part that carries pieces fitted in a person's bench step is now staged from the bench, not picked from the table.
+  Test: C00a passes, its fetch is "person" and no table pick is recorded (of the planned picks only C00a carries such pieces;
+  F54's bridge, with the lens fitted in F53, was already staged), so the planned table picks would fall from 62 to 61.
+- **Not done:** checking tools and parts against the part being placed along insertion paths (W4's 73 part-in-part pairs) is
+  the next one; it was not attempted in the time.
+
 ## Round 8 (2026-11-26): run 12, two hands, MiRs that drive like MiRs, fixed cameras
 
 Run 12 passes the same steps as run 11 (99 of 108, 124 of 129 screws, 57 of 74 table picks). The placing arm now holds a part on its face seal while the other arm drives the first two screws (M19, C04, F30); F33b, F37b and F43 need the same hold, but arm B's upper arm meets Fixture B; the door before its hinge pins (F51-F52) was not tried. Every MiR move is pivot, drive forward, pivot (167 moves, 6.9 m of reversing in docking legs of at most 0.5 m; 4 moves at F45 and F45b not clear). Run 12 was planned in four processes joined at F29, F39 and F51 (`ASM_FF_UNTIL`, `ASM_CONTINUE`). Details: [`analysis/out/assembly/round8_run12.md`](analysis/out/assembly/round8_run12.md), [`two_hands.json`](analysis/out/assembly/two_hands.json), [`mir_drives.json`](analysis/out/assembly/mir_drives.json); the video: [`robot-build/video.md`](robot-build/video.md) round 8.
