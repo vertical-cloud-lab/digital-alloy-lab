@@ -669,6 +669,116 @@
     "vol_frac_below_3mm_s": 0.11761172536997708,
     "vol_frac_below_10mm_s": 0.5253936069685399
    }
+  },
+  "scalar-A-medium": {
+   "case": "/tmp/ft-cfd/scal-A",
+   "kind": "scalar",
+   "inlets": {
+    "inlet": 20.0
+   },
+   "outlet": "outlet",
+   "q_total_L_min": 20.0,
+   "gas_L": 23.188,
+   "t_end_s": 1200.0,
+   "t_10000ppm_min": {
+    "box": null,
+    "exhaust": 8.901127767356748,
+    "plate": 0.06666666666666667,
+    "well_mixed_ideal": 3.527055546599229
+   },
+   "t_1000ppm_min": {
+    "box": null,
+    "exhaust": null,
+    "plate": 5.817740551101446,
+    "well_mixed_ideal": 6.196672703416525
+   },
+   "t_100ppm_min": {
+    "box": null,
+    "exhaust": null,
+    "plate": null,
+    "well_mixed_ideal": 8.866289860233822
+   },
+   "ppm_at_end": {
+    "box": 24445.850241999997,
+    "exhaust": 3043.27151915,
+    "plate": 218.3941968,
+    "slide": 23895.729219999997
+   },
+   "tail": {
+    "box": {
+     "decay_per_min_last20pct": 0.10718288820634174,
+     "t_1000ppm_min_extrapolated": 49.82248874567446,
+     "t_100ppm_min_extrapolated": 71.30525648525295
+    },
+    "exhaust": {
+     "decay_per_min_last20pct": 0.10718250605992172,
+     "t_1000ppm_min_extrapolated": 30.383533053132382,
+     "t_100ppm_min_extrapolated": 51.86637738695265
+    },
+    "plate": {
+     "decay_per_min_last20pct": 0.10718894086040412,
+     "t_100ppm_min_extrapolated": 27.287426107870168
+    }
+   },
+   "flow": {
+    "mean_speed_mm_s": 11.073685448547497,
+    "median_speed_mm_s": 16.16798210144043,
+    "vol_frac_below_1mm_s": 0.09837025337281129,
+    "vol_frac_below_3mm_s": 0.2311034393150849,
+    "vol_frac_below_10mm_s": 0.6599432828579704
+   }
+  },
+  "buoyant-HH": {
+   "case": "/tmp/ft-cfd/buoy-HH",
+   "kind": "buoyant",
+   "inlets": {
+    "purge_high": 20.0
+   },
+   "outlet": "vent_high",
+   "q_total_L_min": 20.0,
+   "gas_L": 23.188,
+   "t_end_s": 180.0,
+   "t_10000ppm_min": {
+    "box": 2.660665806335199,
+    "exhaust": 2.902490656056706,
+    "plate": 2.26154374073692,
+    "well_mixed_ideal": 3.527055546599229
+   },
+   "t_1000ppm_min": {
+    "box": null,
+    "exhaust": null,
+    "plate": null,
+    "well_mixed_ideal": 6.196672703416525
+   },
+   "t_100ppm_min": {
+    "box": null,
+    "exhaust": null,
+    "plate": null,
+    "well_mixed_ideal": 8.866289860233822
+   },
+   "ppm_at_end": {
+    "box": 6913.387625350021,
+    "exhaust": 8992.016530156703,
+    "plate": 3256.2766045075846,
+    "slide": 11537.062194999446
+   },
+   "tail": {
+    "box": {
+     "decay_per_min_last20pct": 1.1089392757628254,
+     "t_1000ppm_min_extrapolated": 4.743521768588563,
+     "t_100ppm_min_extrapolated": 6.819906962367661
+    },
+    "exhaust": {
+     "decay_per_min_last20pct": 1.2365030569965345,
+     "t_1000ppm_min_extrapolated": 4.776248848751484,
+     "t_100ppm_min_extrapolated": 6.638423859128752
+    },
+    "plate": {
+     "decay_per_min_last20pct": 1.4570576943679403,
+     "t_1000ppm_min_extrapolated": 3.8102523334112233,
+     "t_100ppm_min_extrapolated": 5.390550149959173
+    }
+   }
   }
  }
 }
