@@ -422,6 +422,7 @@ class Replay:
     # fixtures, table and pallets, the parts in the cell), and they walk in from the aisle beside the cell and out again,
     # their feet locked (people.py's Gait, round 9), never through a MiR.
     PERSON_R = 330.0              # clearance of a standing person's centre from anything (shoulders, elbows, a step), mm
+    PERSON_R_SPOT = 240.0         # round 10: of the spot they work from (their body is then checked in 3-D), mm
     AISLE = 2700.0                # |y| of the aisle the person comes from: under the side tripods, out of their pictures
     # round 10: the person's posed body checked against everything drawn, with the frame audit's own measure (scene_audit.py:
     # python-fcl, translational penetration depth over 1.5 mm). Round 9 aimed the hands at the part's centre and checked only
@@ -618,13 +619,19 @@ class Replay:
                 for ang in range(-85, 86, 5):
                     a = math.radians(ang)
                     x, y = wx + r * math.sin(a), wy + s * r * math.cos(a)
-                    if s * y < 250.0 or s * y > self.AISLE - 300.0:
+                    # round 10: a spot may be up to 150 mm across the bench's centre line (round 9: at least 250 mm on the
+                    # person's side), so past a station's end, between Fixture B and the table, counts (the floor check keeps
+                    # them out of the bench and fixtures)
+                    if s * y < -150.0 or s * y > self.AISLE - 300.0:
                         why["y"] = why.get("y", 0) + 1
                         continue
-                    if not self._clear((x, y), boxes, self.PERSON_R - (60.0 if relaxed else 0.0)):
+                    # round 10: the spot itself needs less floor clearance (PERSON_R_SPOT): person_job checks the standing
+                    # body against everything drawn (person_hits) before it is used
+                    if not self._clear((x, y), boxes, self.PERSON_R_SPOT - (40.0 if relaxed else 0.0)):
                         why["floor"] = why.get("floor", 0) + 1
                         continue
-                    if not relaxed and not self._clear_path([(x, s * self.AISLE), (x, y)], boxes, self.PERSON_R - 60.0):
+                    if not relaxed and not self._clear_path([(x, s * self.AISLE), (x, y + s * min(250.0, s * (s * self.AISLE - y)))],
+                                                            boxes, self.PERSON_R - 60.0):
                         why["walk"] = why.get("walk", 0) + 1
                         continue
                     walk = [(x, y + (s * self.AISLE - y) * u) for u in (0.0, 0.25, 0.5, 0.75)]
@@ -828,6 +835,51 @@ DRIVE_HOLD = os.environ.get("ASM_DRIVE_HOLD", "0") == "1"
 CAM_MIN = float(os.environ.get("ASM_PERSON_CAM_MIN", "0") or 0.0)
 # round 10: how many of the best spots person_job tries (each: the standing body and the job's poses checked)
 NSPOT = int(os.environ.get("ASM_PERSON_SPOTS", "24"))
+# round 10: the person's spots and poses, once searched, are kept: pass 2 reuses pass 1's, and with ASM_PERSON_CACHE=<file.json>
+# every slice of a chapter shares them (keyed by step, the job's number in the chapter, side and work point; delete the file
+# when the recording changes)
+_PCACHE = None
+
+
+def person_cache():
+    global _PCACHE
+    if _PCACHE is None:
+        _PCACHE = {}
+        f = os.environ.get("ASM_PERSON_CACHE")
+        if f and os.path.exists(f):
+            try:
+                _PCACHE.update(json.loads(pathlib.Path(f).read_text()))
+            except Exception as e:      # noqa: BLE001
+                print("person cache unreadable:", e, flush=True)
+    return _PCACHE
+
+
+def _jsonable(x):
+    if isinstance(x, dict):
+        return {k: _jsonable(v) for k, v in x.items()}
+    if isinstance(x, (list, tuple)):
+        return [_jsonable(v) for v in x]
+    if isinstance(x, np.ndarray):
+        return [_jsonable(v) for v in x.tolist()]
+    if isinstance(x, (np.floating, np.integer)):
+        return x.item()
+    return x
+
+
+def person_cache_put(key, val):
+    val = _jsonable(val)
+    person_cache()[key] = val
+    f = os.environ.get("ASM_PERSON_CACHE")
+    if not f:
+        return
+    try:
+        cur_ = json.loads(pathlib.Path(f).read_text()) if os.path.exists(f) else {}
+        cur_[key] = val
+        tmp = f"{f}.{os.getpid()}.tmp"
+        pathlib.Path(tmp).write_text(json.dumps(cur_))
+        os.replace(tmp, f)
+    except Exception as e:              # noqa: BLE001
+        print("person cache not written:", e, flush=True)
 
 
 def kind_key(e, rep):
@@ -1396,6 +1448,14 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
             tiers.append(dict(cams=cams_, blocked_ok=True))
         tiers.append(dict(cams=cams_, blocked_ok=True, relaxed=True))
         choice, worst, tried, why_all = None, None, 0, {}
+        # the search is deterministic: pass 2, and every other slice of the chapter, reuse pass 1's choice (person_cache)
+        pstate["jobs"] = pstate.get("jobs", 0) + 1
+        ckey = (f"{cur['id']}|{pstate['jobs']}|{side}|{int(fit is not None)}|" +
+                ",".join(f"{v:.0f}" for v in look))
+        hit = person_cache().get(ckey)
+        if hit is not None:
+            choice = (dict(hit["c"]), hit["data"])
+            tiers = []
         for tier in tiers:
             cands = rp.person_spots(work[:2], side, **tier)
             for k_, v_ in getattr(rp, "last_spot_why", {}).items():
@@ -1429,11 +1489,18 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                 choice = (choice[0], fit(P)[1])
             print(f"   {cur['id']}: no spot of {tried} keeps the person clear and in reach; the least bad: {worst[1][:3]} "
                   f"(spots ruled out: {why_all})", flush=True)
+            if os.environ.get("ASM_PERSON_DEBUG") == "1":
+                wx_, wy_ = float(work[0]), float(work[1])
+                near_ = [tuple(round(v) for v in b) for b in rp.floor_boxes()
+                         if b[0] - 1300 < wx_ < b[2] + 1300 and b[1] - 1300 < wy_ < b[3] + 1300]
+                print(f"   floor boxes within 1.3 m of the work: {near_}", flush=True)
         c, data = choice
+        if hit is None:
+            person_cache_put(ckey, dict(c=c, data=data))
         relaxed = c["relaxed"]
         pstate["fit"] = data
         pstate["blocked"] = list(c["blocked"]) or None
-        if plan is not None:                    # pass 1 only: what the person does where (the log)
+        if plan is not None and hit is None:    # where the person was put, and how (the log)
             print(f"   {cur['id']}: person at ({c['spot'][0]:.0f}, {c['spot'][1]:.0f}) for the work at "
                   f"({look[0]:.0f}, {look[1]:.0f}, {look[2]:.0f}), r {c['r']:.0f} mm, {'relaxed, ' if relaxed else ''}"
                   f"blocks {c['blocked'] or 'no tripod'}; back to back: {back}; poses: "
@@ -1591,23 +1658,31 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                     h, u = screw_axis(objs[0])
                     cands = [(f"driver {d:.0f} mm", {"r": tuple(map(float, h + d * u)), "l": None}, {"l": None, "r": None},
                               (h, u)) for d in (150.0, 200.0, 120.0)]
+                done_ = False
                 for nm, hands, palm, hu in cands:
-                    P.set(hands=hands, palm=palm, frame=tot["n"])
-                    extra = ()
-                    if hu is not None:
-                        rp.sc.alpha["op/tool/screwdriver"] = 1.0
-                        place_driver(P, *hu)
-                        extra = ("op/tool/screwdriver",)
-                    tgt = [np.asarray(v, float) for v in hands.values() if v is not None]
-                    reach = max(float(np.linalg.norm(np.asarray(P.hand_point(s), float) - np.asarray(hands[s], float)))
-                                for s in ("l", "r") if hands.get(s) is not None)
-                    hits = rp.person_hits(P, own=own, extra=extra, limit=3)
-                    rp.sc.alpha["op/tool/screwdriver"] = 0.0
-                    score = (len(hits), reach > 80.0, max([h_[2] for h_ in hits], default=0.0), reach)
-                    if best is None or score < best[0]:
-                        best = (score, dict(name=nm, hands=hands, palm=palm, look=tuple(np.mean(tgt, axis=0)), reach=reach),
-                                hits)
-                    if not hits and reach <= 80.0:
+                    for lean in (0.0, 15.0, 28.0):      # round 10: leaning in from the hips to reach further (people.py)
+                        P.set(hands=hands, palm=palm, lean=lean, frame=tot["n"])
+                        extra = ()
+                        if hu is not None:
+                            rp.sc.alpha["op/tool/screwdriver"] = 1.0
+                            place_driver(P, *hu)
+                            extra = ("op/tool/screwdriver",)
+                        tgt = [np.asarray(v, float) for v in hands.values() if v is not None]
+                        reach = max(float(np.linalg.norm(np.asarray(P.hand_point(s), float) - np.asarray(hands[s], float)))
+                                    for s in ("l", "r") if hands.get(s) is not None)
+                        if reach > 80.0 and lean < 28.0:
+                            rp.sc.alpha["op/tool/screwdriver"] = 0.0
+                            continue                    # out of reach: lean further before checking
+                        hits = rp.person_hits(P, own=own, extra=extra, limit=3)
+                        rp.sc.alpha["op/tool/screwdriver"] = 0.0
+                        score = (len(hits), reach > 80.0, max([h_[2] for h_ in hits], default=0.0), reach, lean)
+                        if best is None or score < best[0]:
+                            best = (score, dict(name=nm + (f", leaning {lean:.0f} deg" if lean else ""), hands=hands, palm=palm,
+                                                look=tuple(np.mean(tgt, axis=0)), reach=reach, lean=lean), hits)
+                        if not hits and reach <= 80.0:
+                            done_ = True
+                            break
+                    if done_:
                         break
                 for i, (M0, a0) in keep.items():
                     if M0 is not None:
@@ -1617,7 +1692,7 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                 bad = list(best[2]) + ([("hand", "out of reach", round(best[1]["reach"], 1))] if best[1]["reach"] > 80.0 else [])
                 if len(bad) > len(worst):
                     worst = bad
-            P.set(hands={"l": None, "r": None}, palm={"l": None, "r": None}, frame=tot["n"])
+            P.set(hands={"l": None, "r": None}, palm={"l": None, "r": None}, lean=0.0, frame=tot["n"])
             return worst, poses
         return fit
 
@@ -1659,7 +1734,8 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                     rp.sc.alpha["op/tool/screwdriver"] = 1.0
                 for f in range(nfj):
                     if P is not None and pstate["on"]:
-                        P.set(hands=pose["hands"], palm=pose["palm"], look=pose["look"], frame=tot["n"])
+                        P.set(hands=pose["hands"], palm=pose["palm"], look=pose["look"], lean=float(pose.get("lean", 0.0)),
+                              frame=tot["n"])
                         pstate["n"] = tot["n"]
                         if hu is not None:
                             place_driver(P, *hu)
@@ -1678,7 +1754,7 @@ def _play(rp, ev, nfr, fail_notes, fail_steps, plan=None, scores=None, cams=None
                         return True
                 rp.sc.alpha["op/tool/screwdriver"] = 0.0
                 if P is not None:
-                    P.set(hands={"l": None, "r": None}, palm={"l": None, "r": None}, frame=tot["n"])
+                    P.set(hands={"l": None, "r": None}, palm={"l": None, "r": None}, lean=0.0, frame=tot["n"])
             return False
         for _ in range(int(FPS * 2.0)):
             if emit(cur["label"], f"a person is needed: {what}", ["person"], status="person", loc=loc):
