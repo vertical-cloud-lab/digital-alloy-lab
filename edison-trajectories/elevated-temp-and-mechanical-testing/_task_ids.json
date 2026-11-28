@@ -3,54 +3,68 @@
     "task_id": "07f61d8e-9c58-40eb-aca6-9b9dbfcc55fc",
     "job": "LITERATURE_HIGH",
     "job_name": "job-futurehouse-paperqa3-high",
-    "submitted_utc": "2026-11-28T08:50:23Z"
+    "submitted_utc": "2026-11-28T08:50:23Z",
+    "status": "success",
+    "fetched_utc": "2026-11-28T09:20:33Z"
   },
   "02-aluminum-elevated-temperature": {
     "task_id": "70b30d81-b24e-4722-b0c2-f7814a005ce3",
     "job": "LITERATURE_HIGH",
     "job_name": "job-futurehouse-paperqa3-high",
-    "submitted_utc": "2026-11-28T08:50:23Z"
+    "submitted_utc": "2026-11-28T08:50:23Z",
+    "status": "success",
+    "fetched_utc": "2026-11-28T09:20:37Z"
   },
   "03-mechanical-tests-beyond-tensile": {
     "task_id": "a45aed31-b276-48bf-a64f-7b98b9e53ce5",
     "job": "LITERATURE_HIGH",
     "job_name": "job-futurehouse-paperqa3-high",
-    "submitted_utc": "2026-11-28T08:50:24Z"
+    "submitted_utc": "2026-11-28T08:50:24Z",
+    "status": "in progress"
   },
   "04-strain-rate-and-test-settings": {
     "task_id": "3e8ecc0e-60e6-4a27-b51f-b9579e2503d9",
     "job": "LITERATURE_HIGH",
     "job_name": "job-futurehouse-paperqa3-high",
-    "submitted_utc": "2026-11-28T08:50:25Z"
+    "submitted_utc": "2026-11-28T08:50:25Z",
+    "status": "in progress"
   },
   "05-precedent-sc-free-lpbf-al-creep": {
     "task_id": "f9528333-5325-4e15-8b3a-a9fa72e2f559",
     "job": "PRECEDENT",
     "job_name": "job-futurehouse-paperqa3-precedent",
-    "submitted_utc": "2026-11-28T08:50:26Z"
+    "submitted_utc": "2026-11-28T08:50:26Z",
+    "status": "success",
+    "fetched_utc": "2026-11-28T09:20:40Z"
   },
   "06-precedent-high-throughput-hot-screening": {
     "task_id": "c4f7596a-f443-46cc-ace3-b4ca7301f6d7",
     "job": "PRECEDENT",
     "job_name": "job-futurehouse-paperqa3-precedent",
-    "submitted_utc": "2026-11-28T08:50:27Z"
+    "submitted_utc": "2026-11-28T08:50:27Z",
+    "status": "success",
+    "fetched_utc": "2026-11-28T09:20:41Z"
   },
   "07-precedent-lpbf-al-high-strain-rate": {
     "task_id": "07cb554e-a9bb-44f3-bff9-9367949f6fab",
     "job": "PRECEDENT",
     "job_name": "job-futurehouse-paperqa3-precedent",
-    "submitted_utc": "2026-11-28T08:50:27Z"
+    "submitted_utc": "2026-11-28T08:50:27Z",
+    "status": "success",
+    "fetched_utc": "2026-11-28T09:20:44Z"
   },
   "08-equipment-and-facilities": {
     "task_id": "07da7c29-6053-42b9-b611-9308831018ce",
     "job": "LITERATURE",
     "job_name": "job-futurehouse-paperqa3",
-    "submitted_utc": "2026-11-28T08:50:28Z"
+    "submitted_utc": "2026-11-28T08:50:28Z",
+    "status": "in progress"
   },
   "09-industry-documented-usage": {
     "task_id": "3504bd05-6cf5-416e-87b4-8f581829577a",
     "job": "LITERATURE",
     "job_name": "job-futurehouse-paperqa3",
-    "submitted_utc": "2026-11-28T08:50:29Z"
+    "submitted_utc": "2026-11-28T08:50:29Z",
+    "status": "in progress"
   }
 }
