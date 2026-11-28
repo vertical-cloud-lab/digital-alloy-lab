@@ -273,7 +273,9 @@ def sequence_md(M):
             "cassette built inside), M6 deck screws.",
             f"6. The long rod's plate assembly ({rod_c:.1f} mm rod; a second assembly made ahead, or the leads "
             "re-potted) down through the bore and the gland into the rod-end block; window stack on the top plate, the "
-            f"cover-slide drop tube, the short half-shells; the cross-beam and optics up {Lc['dz']:.1f} mm.", ""]
+            f"cover-slide drop tube, the short half-shells; both cross-beams up {Lc['dz']:.1f} mm on the posts, carrying "
+            "the head with its flange plate, top flange, gussets and far-side support plate (MK-09), the lens and the "
+            "input stack as one unit; the knee braces re-bolted under the beams.", ""]
 
 
 def main():
@@ -301,6 +303,12 @@ def main():
     sys.path.insert(0, str(HERE))
     import ft_model as M
     md += ["", "What changes at each step (from the CAD model; moved = the part's bounding box shifted):", ""]
+    s1 = M.build("S1")
+    names = lambda lst: "; ".join(f"{p.name} [{p.pid}]" if p.pid else p.name for p in lst) or "none"  # noqa: E731
+    mounts = [p for p in s1 if p.sub == "frame" or p.pid == "MK-09"]
+    md += [f"**S1** (the first state, {len(s1)} parts, all new; the gantry is `P['gantry'] = \"{M.P['gantry']}\"`)", "",
+           f"- the frame and the head's mounts ({len(mounts)}): {names(mounts)}",
+           f"- the rest ({len(s1) - len(mounts)}): {names([p for p in s1 if all(p is not q for q in mounts)])}", ""]
     for x, y in zip(M.STATES[:-1], M.STATES[1:]):
         d = M.diff_states(x, y)
         fmt = lambda lst: "; ".join(f"{n} [{pid}]" if pid else n for n, pid in lst) or "none"  # noqa: E731
