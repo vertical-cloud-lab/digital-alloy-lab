@@ -5,10 +5,10 @@ Milestones in weeks (5 working days), earliest to latest:
 | Milestone | A | B | C |
 |---|---|---|---|
 | S1 guide-laser and scanner checks | 1.4-3.8 | 1.4-3.8 | 1.4-3.8 |
-| S2 FULL POWER INTO THE DUMP | 1.6-4.2 | 1.6-4.2 | 1.6-4.2 |
-| FT-0 FIRST TRACKS | 1.9-5.2 | 1.9-5.2 | 1.9-5.2 |
-| FT-1 FIRST COUPONS | 3.1-8.1 | 3.1-8.1 | 3.6-8.1 |
-| FT-1V FIRST COUPONS (< 100 ppm) | 3.7-9.3 | 5.1-10.9 | 5.1-10.9 |
+| S2 FULL POWER INTO THE DUMP | 1.7-4.6 | 1.7-4.6 | 1.7-4.6 |
+| FT-0 FIRST TRACKS | 2.4-6.9 | 2.4-6.9 | 2.4-6.9 |
+| FT-1 FIRST COUPONS | 3.6-9.8 | 3.6-9.8 | 3.6-9.8 |
+| FT-1V FIRST COUPONS (< 100 ppm) | 4.2-11.0 | 5.9-13.3 | 5.9-13.3 |
 
 Scenarios: A: stages on PCards, cube ordered on day 0; B: stages on PCards, cube ordered after FT-0's O2 log; C: both stages on one Zaber PO, cube after the O2 log
 
@@ -17,10 +17,10 @@ Spend by the state that first needs each parts.csv line:
 | State | Lines | Adds | Cumulative |
 |---|---|---:|---:|
 | S1 | L1, L2, L3, L4, L5, L5b, L6, L7, L10, L11, C1, E4, S2, MON4 | $6,521-11,160 | $6,521-11,160 |
-| S2 | L8, L9, E1, S1, S5, S6, C2, C3, C4, MON6 | $3,140-4,006 | $9,661-15,166 |
-| FT-0 | H1, H2, H3, H4, G1, G2, G3, G4, G5, G6, G7, G8, M4, S3, S4, F1, F2a, P1, MON1, MON2, MON3, MON7, MON8 | $11,203-21,265 | $20,864-36,431 |
-| FT-1 | M1c, M2, M3, H5, C5, F2b, MON5 | $8,261-10,753 | $29,125-47,184 |
-| FT-1V | E2, E3, E5, F2c | $11,700-13,826 | $40,825-61,010 |
+| S2 | L8, L9, E1, S1, S5, S6, C2, C3, C4, MON6 | $3,133-3,958 | $9,654-15,118 |
+| FT-0 | H1, H2, H3, H4, G1, G2, G3, G4, G5, G6, G7, G8, M4, S3, S4, F1, F2a, P1, MON1, MON2, MON3, MON7, MON8 | $12,866-24,230 | $22,520-39,349 |
+| FT-1 | M1c, M2, M3, H5, C5, F2b, MON5 | $8,003-10,131 | $30,523-49,480 |
+| FT-1V | E2, E3, E5, F2c | $12,281-14,846 | $42,805-64,325 |
 
 What changes at each step (from the CAD model; moved = the part's bounding box shifted):
 
