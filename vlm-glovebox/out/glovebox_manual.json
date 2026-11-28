@@ -1,0 +1,71 @@
+{
+ "name": "glovebox_manual",
+ "fps": 15,
+ "n_frames": 291,
+ "size": [
+  1280,
+  720
+ ],
+ "substeps": [
+  {
+   "label": "1/4",
+   "caption": "Now and then a job needs hands: a jar that won't open, a spill, a new fixture. The operator asks for manual mode at the VLM's panel. Tray G stays at the opening and the VLM won't move it while a cover is off.",
+   "start_frame": 0,
+   "end_frame": 68
+  },
+  {
+   "label": "2/4",
+   "caption": "The covers swing flat against the window. The gloves stay inside the box the whole time; only the caps open.",
+   "start_frame": 69,
+   "end_frame": 98
+  },
+  {
+   "label": "3/4",
+   "caption": "Hands in: two 8 in butyl gloves, over the deck's left half (the gantry parks right while they are in).",
+   "start_frame": 99,
+   "end_frame": 113
+  },
+  {
+   "label": "3/4",
+   "caption": "Hands in: two 8 in butyl gloves, over the deck's left half (the gantry parks right while they are in).",
+   "start_frame": 114,
+   "end_frame": 141
+  },
+  {
+   "label": "3/4",
+   "caption": "Hands in: two 8 in butyl gloves, over the deck's left half (the gantry parks right while they are in).",
+   "start_frame": 142,
+   "end_frame": 161
+  },
+  {
+   "label": "3/4",
+   "caption": "Hands in: two 8 in butyl gloves, over the deck's left half (the gantry parks right while they are in).",
+   "start_frame": 162,
+   "end_frame": 181
+  },
+  {
+   "label": "3/4",
+   "caption": "Hands in: two 8 in butyl gloves, over the deck's left half (the gantry parks right while they are in).",
+   "start_frame": 182,
+   "end_frame": 201
+  },
+  {
+   "label": "4/4",
+   "caption": "Hands out, covers on. Both sensors read closed, so the VLM may move the tray again, and the box is back in automatic.",
+   "start_frame": 202,
+   "end_frame": 224
+  },
+  {
+   "label": "4/4",
+   "caption": "Hands out, covers on. Both sensors read closed, so the VLM may move the tray again, and the box is back in automatic.",
+   "start_frame": 225,
+   "end_frame": 251
+  },
+  {
+   "label": "4/4",
+   "caption": "Hands out, covers on. Both sensors read closed, so the VLM may move the tray again, and the box is back in automatic.",
+   "start_frame": 252,
+   "end_frame": 290
+  }
+ ]
+}
