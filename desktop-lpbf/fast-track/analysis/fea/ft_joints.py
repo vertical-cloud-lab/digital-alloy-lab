@@ -552,6 +552,9 @@ VARIANTS = {
     "back_diagonal": lambda yf, yb, xl, xr: [((xl, yb, 185.0), (xr, yb, 275.0))],
     "front_lower": lambda yf, yb, xl, xr: [((xl, yf, -240.0), (xr, yf, 140.0))],
     "front_lower_back": lambda yf, yb, xl, xr: [((xl, yf, -240.0), (xr, yf, 140.0)), ((xl, yb, 185.0), (xr, yb, 275.0))],
+    # round 3 retry: front_lower_back as the CAD draws it (variant g4b): the back diagonal ends 20 mm lower on the right
+    # post (z 255), clear of the back right knee brace
+    "front_lower_back_g4b": lambda yf, yb, xl, xr: [((xl, yf, -240.0), (xr, yf, 140.0)), ((xl, yb, 185.0), (xr, yb, 255.0))],
 }
 
 

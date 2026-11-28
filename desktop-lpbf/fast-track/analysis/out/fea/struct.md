@@ -280,6 +280,13 @@ drawn posts' axes, with the same joints as the rest). None is drawn in the CAD y
   - Route the process fibre around the new braces.
 - **The bench is not in the FE.** The base rails under the back posts are bolted T-slot too, and the plate values are
   estimates. The tap test below measures the whole.
+- **The CAD's answer** (round 3, [`../../../cad/README.md`](../../../cad/README.md), variant g4b): the two diagonals
+  draw clean in S1, S2, FT-0 and FT-1, out of the beam, and the lid keeps its 24° swing and front gap. The back
+  diagonal ends 20 mm lower there, at z 255, clear of the knee brace. **Re-run as drawn** (`ft_joints.py variant
+  front_lower_back_g4b 12 kr3e6_braces1e8,kr3e6_braces1e8_base1e8,kr3e6_braces1e8_base3e7`, `struct-joints.json`):
+  **70.3 / 61.6 / 54.5 Hz** with the feet fixed / on a thick plate / on a bolted plate, against 70.7 / 62.0 / 54.8 Hz
+  with the end at z 275. Still over 60 Hz on the thick plates, by 1.6 Hz. In FT-1V the back diagonal runs through
+  the cube and the lower front one stops the cube's door at 8°, so FT-1V needs its own back brace and its own run.
 
 #### Tap test for the built frame
 
