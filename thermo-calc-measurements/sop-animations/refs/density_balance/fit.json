@@ -1,0 +1,177 @@
+{
+ "key": "density_balance",
+ "free": [
+  "beaker_h",
+  "arm_z",
+  "kit_pan_h",
+  "label_x",
+  "label_z",
+  "base_h",
+  "susp_h",
+  "susp_dy",
+  "basket_z",
+  "dish_d"
+ ],
+ "params": {
+  "beaker_h": 74.1,
+  "arm_z": 155.2,
+  "kit_pan_h": 9.8,
+  "label_x": -38.3,
+  "label_z": 137.5,
+  "base_h": 57.0,
+  "susp_h": 64.0,
+  "susp_dy": 44.0,
+  "basket_z": 53.0,
+  "dish_d": 41.8
+ },
+ "start": {
+  "beaker_h": 75.0,
+  "arm_z": 157.0,
+  "kit_pan_h": 10.0,
+  "label_x": -38.0,
+  "label_z": 150.0,
+  "base_h": 57.0,
+  "susp_h": 64.0,
+  "susp_dy": 44.0,
+  "basket_z": 53.0,
+  "dish_d": 40.0
+ },
+ "lenses": {
+  "front": {
+   "focal_px": 1685.8,
+   "k1": -0.0001,
+   "hfov_deg": 41.6,
+   "width_px": 1280,
+   "fitted_from": [
+    "kit"
+   ]
+  },
+  "wide": {
+   "focal_px": 1236.0,
+   "k1": -0.0007,
+   "hfov_deg": 54.8,
+   "width_px": 1280,
+   "fitted_from": [
+    "wide"
+   ]
+  }
+ },
+ "views": {
+  "kit": {
+   "source": "https://youtu.be/b9Lm_9UVVzQ?t=52",
+   "size": [
+    1280,
+    720
+   ],
+   "holdout": false,
+   "camera": [
+    1.3503496187819324,
+    -0.07946052644188768,
+    0.017583047388208713,
+    -15.987276992357277,
+    121.4430206165968,
+    498.29584720756844,
+    7.4299846525118385,
+    -9.295889878739915e-05
+   ],
+   "focal_px": 1685.8,
+   "k1": -0.0001,
+   "hfov_deg": 41.6,
+   "lens": "fitted, shared by 1 view(s) of front",
+   "rms_px_camera_only": 11.23,
+   "rms_px": 7.57,
+   "residual_px": {
+    "label tl": 3.6,
+    "label bl": 3.0,
+    "thermo top": 3.3,
+    "holder dish (1)": 0.5,
+    "holder dish (2)": 5.4,
+    "holder dish (3)": 22.0,
+    "beaker rim (1)": 6.1,
+    "beaker rim (2)": 5.2,
+    "beaker rim (3)": 18.3,
+    "basket rim (1)": 0.6,
+    "basket rim (2)": 1.9,
+    "basket rim (3)": 1.3,
+    "bracket pan left (1)": 1.2,
+    "bracket pan left (2)": 3.0,
+    "bracket pan left (3)": 0.3,
+    "kit pan rim (1)": 1.4,
+    "kit pan rim (2)": 3.4
+   }
+  },
+  "wide": {
+   "source": "https://youtu.be/b9Lm_9UVVzQ?t=38",
+   "size": [
+    1280,
+    720
+   ],
+   "holdout": false,
+   "camera": [
+    1.5427491654996393,
+    -0.6077835041719301,
+    0.6001624050621724,
+    -188.10033787992842,
+    133.28588935516353,
+    845.5687325060212,
+    7.119598141391597,
+    -0.0007290729428849493
+   ],
+   "focal_px": 1236.0,
+   "k1": -0.0007,
+   "hfov_deg": 54.8,
+   "lens": "fitted, shared by 1 view(s) of wide",
+   "rms_px_camera_only": 4.46,
+   "rms_px": 4.91,
+   "residual_px": {
+    "cap front left": 2.1,
+    "cap front right": 4.2,
+    "top back left": 10.4,
+    "door left top back": 3.2,
+    "foot front left": 5.2,
+    "holder dish (1)": 2.2,
+    "holder dish (2)": 2.6,
+    "holder dish (3)": 0.5,
+    "holder dish (4)": 6.2
+   },
+   "rms_px_lines": 2.49,
+   "line_residual_px": {
+    "z (1)": 3.8,
+    "z (2)": 2.0,
+    "z (3)": 0.7
+   }
+  },
+  "pan": {
+   "source": "https://youtu.be/b9Lm_9UVVzQ?t=5",
+   "size": [
+    1280,
+    720
+   ],
+   "holdout": true,
+   "camera": [
+    1.2687093252053616,
+    0.5661048745119605,
+    -0.4968847830726137,
+    -30.06154629943239,
+    124.36578685770046,
+    371.316647950329,
+    7.4299846525118385,
+    -9.295889878739915e-05
+   ],
+   "focal_px": 1685.8,
+   "k1": -0.0001,
+   "hfov_deg": 41.6,
+   "lens": "held fixed at the lens of kit",
+   "rms_px_camera_only": 12.86,
+   "rms_px": 13.96,
+   "residual_px": {
+    "label tl": 12.9,
+    "label tr": 20.3,
+    "label bl": 14.4,
+    "label br": 18.7,
+    "susp top left": 4.0,
+    "susp top right": 4.4
+   }
+  }
+ }
+}

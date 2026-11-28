@@ -1,0 +1,83 @@
+1. (zhao2005highthroughputdiffusionmultiples pages 1-3): J.-C. Zhao, Xuan Zheng, and David G. Cahill. High-throughput diffusion multiples. Materials Today, 8:28-37, Oct 2005. URL: https://doi.org/10.1016/s1369-7021(05)71122-6, doi:10.1016/s1369-7021(05)71122-6. This article has 149 citations and is from a highest quality peer-reviewed journal.
+
+2. (zhao2014highthroughputexperimentaltools pages 4-6): Ji-Cheng Zhao. High-throughput experimental tools for the materials genome initiative. Chinese Science Bulletin, 59:1652-1661, Jan 2014. URL: https://doi.org/10.1007/s11434-014-0120-1, doi:10.1007/s11434-014-0120-1. This article has 40 citations.
+
+3. (zhao2014highthroughputexperimentaltools pages 2-4): Ji-Cheng Zhao. High-throughput experimental tools for the materials genome initiative. Chinese Science Bulletin, 59:1652-1661, Jan 2014. URL: https://doi.org/10.1007/s11434-014-0120-1, doi:10.1007/s11434-014-0120-1. This article has 40 citations.
+
+4. (zhao2005highthroughputdiffusionmultiples pages 8-10): J.-C. Zhao, Xuan Zheng, and David G. Cahill. High-throughput diffusion multiples. Materials Today, 8:28-37, Oct 2005. URL: https://doi.org/10.1016/s1369-7021(05)71122-6, doi:10.1016/s1369-7021(05)71122-6. This article has 149 citations and is from a highest quality peer-reviewed journal.
+
+5. (zhao2005highthroughputdiffusionmultiples pages 3-4): J.-C. Zhao, Xuan Zheng, and David G. Cahill. High-throughput diffusion multiples. Materials Today, 8:28-37, Oct 2005. URL: https://doi.org/10.1016/s1369-7021(05)71122-6, doi:10.1016/s1369-7021(05)71122-6. This article has 149 citations and is from a highest quality peer-reviewed journal.
+
+6. (zhao2020highthroughputandsystematic pages 1-2): Ji-Cheng Zhao. High-throughput and systematic study of phase transformations and metastability using dual-anneal diffusion multiples. Metallurgical and Materials Transactions A, 51:5006-5022, Jul 2020. URL: https://doi.org/10.1007/s11661-020-05915-w, doi:10.1007/s11661-020-05915-w. This article has 19 citations.
+
+7. (decost2022towardsautomateddesign pages 1-4): Brian DeCost, Howie Joress, Suchismita Sarker, Apurva Mehta, and Jason Hattrick-Simpers. Towards automated design of corrosion resistant alloy coatings with an autonomous scanning droplet cell. JOM, 74:2941-2950, Jun 2022. URL: https://doi.org/10.1007/s11837-022-05367-0, doi:10.1007/s11837-022-05367-0. This article has 30 citations and is from a peer-reviewed journal.
+
+8. (decost2022towardsautomateddesign pages 4-7): Brian DeCost, Howie Joress, Suchismita Sarker, Apurva Mehta, and Jason Hattrick-Simpers. Towards automated design of corrosion resistant alloy coatings with an autonomous scanning droplet cell. JOM, 74:2941-2950, Jun 2022. URL: https://doi.org/10.1007/s11837-022-05367-0, doi:10.1007/s11837-022-05367-0. This article has 30 citations and is from a peer-reviewed journal.
+
+9. (vecchio2021highthroughputrapidexperimental pages 1-4): Kenneth S. Vecchio, Olivia F. Dippo, Kevin R. Kaufmann, and Xiao Liu. High-throughput rapid experimental alloy development (ht-read). Acta Materialia, 221:117352, Dec 2021. URL: https://doi.org/10.1016/j.actamat.2021.117352, doi:10.1016/j.actamat.2021.117352. This article has 106 citations and is from a highest quality peer-reviewed journal.
+
+10. (vecchio2021highthroughputrapidexperimental pages 4-7): Kenneth S. Vecchio, Olivia F. Dippo, Kevin R. Kaufmann, and Xiao Liu. High-throughput rapid experimental alloy development (ht-read). Acta Materialia, 221:117352, Dec 2021. URL: https://doi.org/10.1016/j.actamat.2021.117352, doi:10.1016/j.actamat.2021.117352. This article has 106 citations and is from a highest quality peer-reviewed journal.
+
+11. (vecchio2021highthroughputrapidexperimental pages 7-11): Kenneth S. Vecchio, Olivia F. Dippo, Kevin R. Kaufmann, and Xiao Liu. High-throughput rapid experimental alloy development (ht-read). Acta Materialia, 221:117352, Dec 2021. URL: https://doi.org/10.1016/j.actamat.2021.117352, doi:10.1016/j.actamat.2021.117352. This article has 106 citations and is from a highest quality peer-reviewed journal.
+
+12. (vecchio2021highthroughputrapidexperimental pages 11-13): Kenneth S. Vecchio, Olivia F. Dippo, Kevin R. Kaufmann, and Xiao Liu. High-throughput rapid experimental alloy development (ht-read). Acta Materialia, 221:117352, Dec 2021. URL: https://doi.org/10.1016/j.actamat.2021.117352, doi:10.1016/j.actamat.2021.117352. This article has 106 citations and is from a highest quality peer-reviewed journal.
+
+13. (martucci2023developmentandcharacterisation pages 15-16): A Martucci. Development and characterisation of al-based alloys processed by pbf-lb/m. Unknown journal, 2023.
+
+14. (mehta2021highperformancealuminium pages 21-24): B Mehta. High performance aluminium alloys for laser powder bed fusion: alloy design and development. Unknown journal, 2021.
+
+15. (martucci2023ongoingchallengesof pages 3-4): Alessandra Martucci, Alberta Aversa, and Mariangela Lombardi. Ongoing challenges of laser-based powder bed fusion processing of al alloys and potential solutions from the literature—a review. Materials, 16:1084, Jan 2023. URL: https://doi.org/10.3390/ma16031084, doi:10.3390/ma16031084. This article has 85 citations.
+
+16. (miracle2021emergingcapabilitiesfor pages 4-4): Daniel B. Miracle, Mu Li, Zhaohan Zhang, Rohan Mishra, and Katharine M. Flores. Emerging capabilities for the high-throughput characterization of structural materials. Annual Review of Materials Research, 51:131-164, Jul 2021. URL: https://doi.org/10.1146/annurev-matsci-080619-022100, doi:10.1146/annurev-matsci-080619-022100. This article has 90 citations and is from a domain leading peer-reviewed journal.
+
+17. (sur2023ahighthroughput pages 6-6): Debashish Sur, Howie Joress, Jason Hattrick-Simpers, and John R. Scully. A high throughput aqueous passivation testing methodology for compositionally complex alloys using a scanning droplet cell. Journal of The Electrochemical Society, 170:081507, Aug 2023. URL: https://doi.org/10.1149/1945-7111/aceeb8, doi:10.1149/1945-7111/aceeb8. This article has 21 citations and is from a peer-reviewed journal.
+
+18. (sur2023ahighthroughput pages 2-3): Debashish Sur, Howie Joress, Jason Hattrick-Simpers, and John R. Scully. A high throughput aqueous passivation testing methodology for compositionally complex alloys using a scanning droplet cell. Journal of The Electrochemical Society, 170:081507, Aug 2023. URL: https://doi.org/10.1149/1945-7111/aceeb8, doi:10.1149/1945-7111/aceeb8. This article has 21 citations and is from a peer-reviewed journal.
+
+19. (lai2023perspectivesoncorrosion pages 10-12): Zhaogui Lai, Min Liu, Peng Bi, Feifei Huang, and Ying Jin. Perspectives on corrosion studies using scanning electrochemical cell microscopy: challenges and opportunities. Analytical chemistry, 95:15833-15850, Oct 2023. URL: https://doi.org/10.1021/acs.analchem.3c02423, doi:10.1021/acs.analchem.3c02423. This article has 27 citations and is from a highest quality peer-reviewed journal.
+
+20. (gu2022indentationplastometryof pages 1-2): Wenchen Gu, Jimmy Campbell, Yuanbo Tang, Hamed Safaie, Richard Johnston, Yuchen Gu, Cameron Pleydell-Pearce, Max Burley, James Dean, and Trevor William Clyne. Indentation plastometry of welds. Advanced Engineering Materials, Feb 2022. URL: https://doi.org/10.1002/adem.202101645, doi:10.1002/adem.202101645. This article has 34 citations and is from a peer-reviewed journal.
+
+21. (campbell2021acriticalappraisal pages 4-5): Jimmy E. Campbell, Hannah Zhang, Max Burley, Mark Gee, Antony Thomas Fry, James Dean, and Trevor William Clyne. A critical appraisal of the instrumented indentation technique and profilometry‐based inverse finite element method indentation plastometry for obtaining stress–strain curves. Advanced Engineering Materials, Feb 2021. URL: https://doi.org/10.1002/adem.202001496, doi:10.1002/adem.202001496. This article has 53 citations and is from a peer-reviewed journal.
+
+22. (wang2023studyofphase pages 36-44): Chuangye Wang. Study of phase equilibria and diffusion in several binary and multinary alloy systems. Collection, Jan 2023. URL: https://doi.org/10.13016/dspace/fmrq-lkab, doi:10.13016/dspace/fmrq-lkab. This article has 0 citations.
+
+23. (bocklund2024espeiforefficient pages 1-5): Brandon Bocklund, Richard Otis, Aleksei Egorov, Abdulmonem Obaied, Irina Roslyakova, and Zi-Kui Liu. Espei for efficient thermodynamic database development, modification, and uncertainty quantification: application to cu–mg. Zentropy, pages 393-416, May 2024. URL: https://doi.org/10.1201/9781003514466-19, doi:10.1201/9781003514466-19. This article has 2 citations.
+
+24. (bocklund2024espeiforefficient pages 5-9): Brandon Bocklund, Richard Otis, Aleksei Egorov, Abdulmonem Obaied, Irina Roslyakova, and Zi-Kui Liu. Espei for efficient thermodynamic database development, modification, and uncertainty quantification: application to cu–mg. Zentropy, pages 393-416, May 2024. URL: https://doi.org/10.1201/9781003514466-19, doi:10.1201/9781003514466-19. This article has 2 citations.
+
+25. (bocklund2024espeiforefficient pages 13-17): Brandon Bocklund, Richard Otis, Aleksei Egorov, Abdulmonem Obaied, Irina Roslyakova, and Zi-Kui Liu. Espei for efficient thermodynamic database development, modification, and uncertainty quantification: application to cu–mg. Zentropy, pages 393-416, May 2024. URL: https://doi.org/10.1201/9781003514466-19, doi:10.1201/9781003514466-19. This article has 2 citations.
+
+26. (bocklund2024espeiforefficient pages 9-13): Brandon Bocklund, Richard Otis, Aleksei Egorov, Abdulmonem Obaied, Irina Roslyakova, and Zi-Kui Liu. Espei for efficient thermodynamic database development, modification, and uncertainty quantification: application to cu–mg. Zentropy, pages 393-416, May 2024. URL: https://doi.org/10.1201/9781003514466-19, doi:10.1201/9781003514466-19. This article has 2 citations.
+
+27. (palma2023thermodynamicmodelingwith pages 26-28): Jorge Paz Soldan Palma, Rushi Gong, Brandon J. Bocklund, Richard Otis, Max Poschmann, Markus Piro, Tatiana G. Levitskaia, Shenyang Hu, Nathan D. Smith, Yi Wang, Hojong Kim, Zi-Kui Liu, and Shun-Li Shang. Thermodynamic modeling with uncertainty quantification using the modified quasichemical model in quadruplet approximation: implementation into pycalphad and espei. SSRN Electronic Journal, Apr 2022. URL: https://doi.org/10.48550/arxiv.2204.09111, doi:10.48550/arxiv.2204.09111. This article has 14 citations.
+
+28. (richter2026thermodynamicmodelingof pages 1-6): Alexander Richter, Abdulmonem Obaied, Irina Roslyakova, Boris Wilthan, Allison Beese, and Zi-Kui Liu. Thermodynamic modeling of pure elements from 0 k with uncertainty quantification using pycalphad and espei. Calphad, Apr 2026. URL: https://doi.org/10.48550/arxiv.2604.22910, doi:10.48550/arxiv.2604.22910. This article has 0 citations.
+
+29. (palma2023thermodynamicmodelingwith pages 10-15): Jorge Paz Soldan Palma, Rushi Gong, Brandon J. Bocklund, Richard Otis, Max Poschmann, Markus Piro, Tatiana G. Levitskaia, Shenyang Hu, Nathan D. Smith, Yi Wang, Hojong Kim, Zi-Kui Liu, and Shun-Li Shang. Thermodynamic modeling with uncertainty quantification using the modified quasichemical model in quadruplet approximation: implementation into pycalphad and espei. SSRN Electronic Journal, Apr 2022. URL: https://doi.org/10.48550/arxiv.2204.09111, doi:10.48550/arxiv.2204.09111. This article has 14 citations.
+
+30. (honarmandi2019uncertaintyquantificationand pages 9-10): Pejman Honarmandi, Noah H Paulson, Raymundo Arróyave, and Marius Stan. Uncertainty quantification and propagation in calphad modeling. Modelling and Simulation in Materials Science and Engineering, 27:034003, Mar 2019. URL: https://doi.org/10.1088/1361-651x/ab08c3, doi:10.1088/1361-651x/ab08c3. This article has 33 citations and is from a peer-reviewed journal.
+
+31. (yu2024implementingnumericalalgorithms pages 1-2): Taiwu Yu, Adam Hope, and Paul Mason. Implementing numerical algorithms to optimize the parameters in kampmann–wagner numerical (kwn) precipitation models. npj Computational Materials, Oct 2024. URL: https://doi.org/10.1038/s41524-024-01415-2, doi:10.1038/s41524-024-01415-2. This article has 13 citations and is from a peer-reviewed journal.
+
+32. (yu2024implementingnumericalalgorithms pages 2-4): Taiwu Yu, Adam Hope, and Paul Mason. Implementing numerical algorithms to optimize the parameters in kampmann–wagner numerical (kwn) precipitation models. npj Computational Materials, Oct 2024. URL: https://doi.org/10.1038/s41524-024-01415-2, doi:10.1038/s41524-024-01415-2. This article has 13 citations and is from a peer-reviewed journal.
+
+33. (alizadeh2025gradientbasedcalibrationof pages 7-9): Amir Alizadeh, Maaouia Souissi, Mian Zhou, and Hamid Assadi. Gradient-based calibration of a precipitation hardening model for 6xxx series aluminium alloys. Metals, 15:1035, Sep 2025. URL: https://doi.org/10.3390/met15091035, doi:10.3390/met15091035. This article has 6 citations.
+
+34. (alizadeh2025gradientbasedcalibrationof pages 11-12): Amir Alizadeh, Maaouia Souissi, Mian Zhou, and Hamid Assadi. Gradient-based calibration of a precipitation hardening model for 6xxx series aluminium alloys. Metals, 15:1035, Sep 2025. URL: https://doi.org/10.3390/met15091035, doi:10.3390/met15091035. This article has 6 citations.
+
+35. (alizadeh2025gradientbasedcalibrationof pages 5-7): Amir Alizadeh, Maaouia Souissi, Mian Zhou, and Hamid Assadi. Gradient-based calibration of a precipitation hardening model for 6xxx series aluminium alloys. Metals, 15:1035, Sep 2025. URL: https://doi.org/10.3390/met15091035, doi:10.3390/met15091035. This article has 6 citations.
+
+36. (akhavan2025multifidelityframeworkand pages 1-3): Sara Akhavan, Soumya Sridar, H. Babaee, and Wei Xiong. Multi-fidelity framework and uncertainty quantification for thermal conductivities of aluminum alloys. Journal of Applied Physics, Aug 2025. URL: https://doi.org/10.1063/5.0277770, doi:10.1063/5.0277770. This article has 2 citations and is from a peer-reviewed journal.
+
+37. (hu2026calphadinformedmappriors pages 1-3): Hai-Peng Hu, Tao Hong, Jun-Jie Zhu, Xin-Jie Yao, Zhou-Peng Guo, and Da-Hai Xia. Calphad-informed map priors for cold-start composition-space partitioning in active alloy design. Computers, Materials &amp; Continua, 89:1-10, Jan 2026. URL: https://doi.org/10.32604/cmc.2026.086475, doi:10.32604/cmc.2026.086475. This article has 0 citations and is from a peer-reviewed journal.
+
+38. (olson2024genomicmaterialsdesign pages 29-34): G.B. Olson and Z.K. Liu. Genomic materials design: calculation of phase dynamics. Calphad, 82:102590, Sep 2023. URL: https://doi.org/10.1016/j.calphad.2023.102590, doi:10.1016/j.calphad.2023.102590. This article has 40 citations.
+
+39. (adapa2025rapiddevelopmentof pages 19-21): Venkata Surya Karthik Adapa, Surya R. Kalidindi, and Christopher J. Saldana. Rapid development of metal additive manufacturing using artificial intelligence/machine learning and high-throughput material testing. Annual Review of Materials Research, 55:175-201, Jul 2025. URL: https://doi.org/10.1146/annurev-matsci-080423-121436, doi:10.1146/annurev-matsci-080423-121436. This article has 30 citations and is from a domain leading peer-reviewed journal.
+
+40. (czerwinski2020ontheal–al11ce3 pages 20-22): Frank Czerwinski and Babak Shalchi Amirkhiz. On the al–al11ce3 eutectic transformation in aluminum–cerium binary alloys. Materials, 13:4549, Oct 2020. URL: https://doi.org/10.3390/ma13204549, doi:10.3390/ma13204549. This article has 107 citations.
+
+41. (moore2020thermodynamicmodelingof pages 17-20): Emily E. Moore, P. Turchi, Vincenzo Lordi, D. Weiss, Zachary C. Sims, H. Henderson, M. Kesler, Orlando Rios, Scott K. McCall, and A. Perron. Thermodynamic modeling of the al-ce-cu-mg-si system and its application to aluminum-cerium alloy design. Journal of Phase Equilibria and Diffusion, 41:764-783, Nov 2020. URL: https://doi.org/10.1007/s11669-020-00852-y, doi:10.1007/s11669-020-00852-y. This article has 32 citations and is from a peer-reviewed journal.
+
+42. (moore2020thermodynamicmodelingof pages 13-15): Emily E. Moore, P. Turchi, Vincenzo Lordi, D. Weiss, Zachary C. Sims, H. Henderson, M. Kesler, Orlando Rios, Scott K. McCall, and A. Perron. Thermodynamic modeling of the al-ce-cu-mg-si system and its application to aluminum-cerium alloy design. Journal of Phase Equilibria and Diffusion, 41:764-783, Nov 2020. URL: https://doi.org/10.1007/s11669-020-00852-y, doi:10.1007/s11669-020-00852-y. This article has 32 citations and is from a peer-reviewed journal.

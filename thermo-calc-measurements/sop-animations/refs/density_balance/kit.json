@@ -1,0 +1,10 @@
+{"source": "https://youtu.be/b9Lm_9UVVzQ?t=52", "video": "b9Lm_9UVVzQ", "t": 52.0, "camera": "front",
+ "note": "the same video: the kit set up for solids, from the front right, close",
+ "pose": {"grid_pan": 1.0},
+ "points": {"label tl": [343, 284], "label bl": [343, 348], "thermo top": [582, 22]},
+ "curves": {"holder dish": [[504, 122], [650, 122], [577, 129]],
+            "beaker rim": [[417, 333], [726, 333], [571, 341]],
+            "basket rim": [[497, 551], [661, 549], [578, 560]],
+            "bracket pan left": [[270, 591], [404, 589], [338, 600]],
+            "kit pan rim": [[739, 580], [575, 600]]},
+ "holdout": false}

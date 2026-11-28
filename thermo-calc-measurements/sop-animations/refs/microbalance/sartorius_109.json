@@ -1,0 +1,53 @@
+{
+ "source": "https://youtu.be/7EjFumYx1eo?t=109",
+ "video": "7EjFumYx1eo",
+ "t": 109,
+ "camera": "sartorius",
+ "pose": {
+  "electronics": 0.0
+ },
+ "points": {
+  "back bottom near": [
+   214,
+   648
+  ],
+  "back top near": [
+   214,
+   549
+  ],
+  "step low near": [
+   282,
+   544
+  ],
+  "step top near": [
+   282,
+   520
+  ],
+  "strip top": [
+   412,
+   535
+  ],
+  "strip bottom": [
+   412,
+   597
+  ]
+ },
+ "curves": {
+  "chamber top": [
+   [
+    390,
+    523
+   ],
+   [
+    420,
+    518
+   ],
+   [
+    448,
+    522
+   ]
+  ]
+ },
+ "holdout": false,
+ "note": "the module's front corners are hidden behind the chamber glass and the pedestal, so they are not picked"
+}

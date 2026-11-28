@@ -1,0 +1,6 @@
+{"source": "https://youtu.be/iGkhh2gYXN4?t=35", "video": "iGkhh2gYXN4", "t": 35.0, "camera": "hand",
+ "note": "the same video, another shot: the front, a hand on the panel",
+ "pose": {},
+ "points": {"front top left": [20, 492], "front top right": [990, 497], "badge tl": [563, 530],
+            "badge tr": [945, 531], "tower foot left": [172, 352], "tower foot right": [830, 352]},
+ "holdout": false}

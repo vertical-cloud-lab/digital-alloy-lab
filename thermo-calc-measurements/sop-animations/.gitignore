@@ -1,0 +1,10 @@
+vl/
+out/clean/
+.cache/
+.frames/
+__pycache__/
+*.pyc
+# reference frames from makers and others are not committed: each view JSON keeps its source to fetch it again
+refs/**/*.jpg
+refs/**/*.png
+refs/**/*.webp

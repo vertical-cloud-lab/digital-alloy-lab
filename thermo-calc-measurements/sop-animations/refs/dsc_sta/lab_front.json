@@ -1,0 +1,57 @@
+{
+ "source": "https://youtu.be/mmuGqG-1LNE?t=64",
+ "video": "mmuGqG-1LNE",
+ "t": 64,
+ "camera": "lab_phone",
+ "pose": {
+  "hoist": 0.0,
+  "furnace": 0.0
+ },
+ "points": {
+  "panel top left": [
+   455,
+   282
+  ],
+  "panel top right": [
+   686,
+   282
+  ],
+  "panel bottom left": [
+   457,
+   548
+  ],
+  "panel bottom right": [
+   684,
+   548
+  ],
+  "logo": [
+   988,
+   574
+  ],
+  "light low left": [
+   497,
+   186
+  ],
+  "light low right": [
+   668,
+   186
+  ],
+  "band low left": [
+   496,
+   100
+  ],
+  "band low right": [
+   668,
+   100
+  ],
+  "deck front left": [
+   311,
+   270
+  ],
+  "deck front right": [
+   1103,
+   270
+  ]
+ },
+ "holdout": false
+}

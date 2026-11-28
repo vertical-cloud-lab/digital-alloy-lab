@@ -1,0 +1,88 @@
+{
+ "source": "https://youtu.be/b9Lm_9UVVzQ?t=38",
+ "video": "b9Lm_9UVVzQ",
+ "t": 38.5,
+ "camera": "wide",
+ "note": "Mettler Toledo, 'How to mount XPR/XSR Analytical density kit': the whole XPR from the front left, left door slid back, the kit in place; the slid-back door's bottom corner is not picked (its track along the rear housing is not drawn)",
+ "pose": {
+  "door_left": 1.0,
+  "grid_pan": 1.0
+ },
+ "points": {
+  "cap front left": [
+   400,
+   96
+  ],
+  "cap front right": [
+   611,
+   121
+  ],
+  "top back left": [
+   262,
+   131
+  ],
+  "door left top back": [
+   152,
+   155
+  ],
+  "foot front left": [
+   386,
+   612
+  ]
+ },
+ "curves": {
+  "holder dish": [
+   [
+    410,
+    312
+   ],
+   [
+    460,
+    312
+   ],
+   [
+    435,
+    316
+   ],
+   [
+    435,
+    308
+   ]
+  ]
+ },
+ "lines": {
+  "z": [
+   [
+    [
+     398,
+     105
+    ],
+    [
+     388,
+     535
+    ]
+   ],
+   [
+    [
+     262,
+     135
+    ],
+    [
+     258,
+     515
+    ]
+   ],
+   [
+    [
+     153,
+     160
+    ],
+    [
+     156,
+     520
+    ]
+   ]
+  ]
+ },
+ "holdout": false
+}

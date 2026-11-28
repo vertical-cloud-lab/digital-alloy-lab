@@ -1,0 +1,6 @@
+{"source": "https://youtu.be/b9Lm_9UVVzQ?t=5", "video": "b9Lm_9UVVzQ", "t": 5.0, "camera": "front",
+ "note": "the same video and camera as kit.json, before the kit: the grid pan and the pan suspension; held out",
+ "pose": {"grid_pan": 0.0},
+ "points": {"label tl": [343, 283], "label tr": [526, 282], "label bl": [343, 348], "label br": [526, 343],
+            "susp top left": [344, 419], "susp top right": [520, 409]},
+ "holdout": true}

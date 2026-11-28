@@ -1,0 +1,74 @@
+{
+ "source": "https://youtu.be/SU6AoWTDZcY?t=24",
+ "video": "SU6AoWTDZcY",
+ "t": 24,
+ "camera": "SU6AoWTDZcY",
+ "pose": {},
+ "points": {
+  "top front left": [
+   446,
+   320
+  ],
+  "top front right": [
+   783,
+   319
+  ],
+  "upper bottom left": [
+   446,
+   520
+  ],
+  "upper bottom right": [
+   783,
+   520
+  ],
+  "window tl": [
+   484,
+   367
+  ],
+  "window tr": [
+   722,
+   367
+  ],
+  "window bl": [
+   484,
+   480
+  ],
+  "window br": [
+   722,
+   480
+  ],
+  "door seam top": [
+   745,
+   320
+  ],
+  "door seam bottom": [
+   745,
+   520
+  ],
+  "pedestal foot left": [
+   502,
+   695
+  ],
+  "pedestal top left": [
+   507,
+   521
+  ],
+  "bay top left": [
+   570,
+   521
+  ],
+  "chimney top front left": [
+   622,
+   248
+  ],
+  "chimney top front right": [
+   752,
+   248
+  ],
+  "chimney foot front left": [
+   622,
+   316
+  ]
+ },
+ "note": "'bay foot right' dropped: the bay frame's lower right corner sits 7-11 px right of the housing's edge in both frames (a base proud of the housing?), not modelled"
+}

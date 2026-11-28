@@ -1,0 +1,169 @@
+{
+ "key": "onh_analyzer",
+ "free": [
+  "sx0",
+  "sx1",
+  "sz0",
+  "sz1",
+  "hx0",
+  "hx1",
+  "hz0",
+  "hz1",
+  "bz0",
+  "px1",
+  "H"
+ ],
+ "params": {
+  "sx0": 39.8,
+  "sx1": 324.1,
+  "sz0": 176.8,
+  "sz1": 719.1,
+  "hx0": 414.0,
+  "hx1": 705.8,
+  "hz0": 461.9,
+  "hz1": 718.2,
+  "bz0": 271.4,
+  "px1": 668.4,
+  "H": 928.4
+ },
+ "start": {
+  "sx0": 40.0,
+  "sx1": 396.0,
+  "sz0": 175.0,
+  "sz1": 665.0,
+  "hx0": 419.0,
+  "hx1": 655.0,
+  "hz0": 484.0,
+  "hz1": 750.0,
+  "bz0": 274.0,
+  "px1": 670.0,
+  "H": 914.0
+ },
+ "lenses": {
+  "leco14": {
+   "focal_px": 1776.6,
+   "k1": -0.0001,
+   "hfov_deg": 39.6,
+   "width_px": 1280,
+   "fitted_from": [
+    "leco14"
+   ]
+  },
+  "leco22": {
+   "focal_px": 1061.1,
+   "k1": 0.0,
+   "hfov_deg": 62.2,
+   "width_px": 1280,
+   "fitted_from": [
+    "leco22"
+   ]
+  }
+ },
+ "views": {
+  "leco14": {
+   "source": "https://youtu.be/W5IGSUMWQq8?t=14",
+   "size": [
+    1280,
+    720
+   ],
+   "holdout": false,
+   "camera": [
+    1.30605351409341,
+    -0.4970878302368436,
+    0.560187526425622,
+    -231.79966776947109,
+    562.9257034321092,
+    2721.256433599836,
+    7.482439112255327,
+    -0.0001424673373245477
+   ],
+   "focal_px": 1776.6,
+   "k1": -0.0001,
+   "hfov_deg": 39.6,
+   "lens": "fitted, shared by 1 view(s) of leco14",
+   "rms_px_camera_only": 26.49,
+   "rms_px": 5.72,
+   "residual_px": {
+    "screen tl": 3.3,
+    "screen tr": 6.0,
+    "screen bl": 4.1,
+    "screen br": 6.6,
+    "head bottom left": 7.4
+   }
+  },
+  "leco22": {
+   "source": "https://youtu.be/W5IGSUMWQq8?t=22",
+   "size": [
+    1280,
+    720
+   ],
+   "holdout": false,
+   "camera": [
+    1.4370843570603866,
+    0.10793836094111608,
+    -0.09544903156434545,
+    426.9174032425945,
+    513.4444964065156,
+    2435.565108226285,
+    6.967093223193306,
+    1.3395394119681323e-05
+   ],
+   "focal_px": 1061.1,
+   "k1": 0.0,
+   "hfov_deg": 62.2,
+   "lens": "fitted, shared by 1 view(s) of leco22",
+   "rms_px_camera_only": 20.39,
+   "rms_px": 2.96,
+   "residual_px": {
+    "screen tl": 4.1,
+    "screen tr": 4.8,
+    "screen bl": 1.3,
+    "screen br": 3.9,
+    "cabinet top left": 1.7,
+    "head top left": 2.5,
+    "head top right": 2.5,
+    "head bottom left": 3.5,
+    "head bottom right": 1.6,
+    "bay floor right": 0.2
+   }
+  },
+  "dealer40": {
+   "source": "https://youtu.be/SJcUGXPb1Dw?t=40",
+   "size": [
+    640,
+    480
+   ],
+   "holdout": true,
+   "camera": [
+    1.4613630232476043,
+    0.003318327093283863,
+    -0.019006210525167547,
+    -26.115978032057765,
+    483.61387393348866,
+    2040.2941938484098,
+    6.267287613081958,
+    0.0001449804484111365
+   ],
+   "focal_px": 527.0,
+   "k1": 0.0001,
+   "hfov_deg": 62.5,
+   "lens": "its own (no fitted view of this video)",
+   "rms_px_camera_only": 6.39,
+   "rms_px": 13.91,
+   "residual_px": {
+    "screen tl": 20.7,
+    "screen tr": 29.9,
+    "screen bl": 6.5,
+    "screen br": 21.0,
+    "cabinet top left": 9.4,
+    "foot front left": 7.0,
+    "head top left": 10.3,
+    "head top right": 9.2,
+    "head bottom left": 2.9,
+    "head bottom right": 5.8,
+    "bay floor right": 9.0,
+    "plinth label": 8.3
+   }
+  }
+ }
+}

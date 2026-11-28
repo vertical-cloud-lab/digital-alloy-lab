@@ -1,0 +1,58 @@
+{
+ "source": "https://youtu.be/SJcUGXPb1Dw?t=40",
+ "video": "SJcUGXPb1Dw",
+ "t": 40,
+ "pose": {},
+ "points": {
+  "screen tl": [
+   200.7,
+   178.3
+  ],
+  "screen tr": [
+   311.7,
+   178.3
+  ],
+  "screen bl": [
+   200.7,
+   318.3
+  ],
+  "screen br": [
+   311.7,
+   318.3
+  ],
+  "cabinet top left": [
+   186.7,
+   113
+  ],
+  "foot front left": [
+   187,
+   376
+  ],
+  "head top left": [
+   321.7,
+   145
+  ],
+  "head top right": [
+   405,
+   145
+  ],
+  "head bottom left": [
+   321.7,
+   233.3
+  ],
+  "head bottom right": [
+   405,
+   233.3
+  ],
+  "bay floor right": [
+   405,
+   300
+  ],
+  "plinth label": [
+   365,
+   321.7
+  ]
+ },
+ "holdout": true,
+ "note": "a dealer's 2016 video of a real ONH836 (640x360 picture letterboxed in 640x480); its screen is squarer than the one in LECO's current renders, so it is kept as a check, out of the fit"
+}

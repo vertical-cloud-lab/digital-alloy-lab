@@ -1,0 +1,7 @@
+{"source": "https://youtu.be/sRsm8SS_LyM?t=10", "video": "sRsm8SS_LyM", "t": 10.0, "camera": "front",
+ "note": "American Instrument Exchange, 'Memmert Universal Oven UN30': the UN30 from the front, a little from the left and above",
+ "pose": {},
+ "points": {"top front left": [357, 98], "top front right": [928, 106], "panel bottom left": [366, 249],
+            "panel bottom right": [912, 258], "knob": [640, 196], "handle top": [430, 257],
+            "handle bottom": [455, 650]},
+ "holdout": false}

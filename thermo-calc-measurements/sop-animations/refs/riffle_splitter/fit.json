@@ -1,0 +1,94 @@
+{
+ "key": "riffle_splitter",
+ "free": [
+  "hopper_h",
+  "bank_z1",
+  "plate_w"
+ ],
+ "params": {
+  "hopper_h": 35.8,
+  "bank_z1": 112.0,
+  "plate_w": 54.2
+ },
+ "start": {
+  "hopper_h": 38.0,
+  "bank_z1": 112.0,
+  "plate_w": 50.0
+ },
+ "lenses": {
+  "gilson_a": {
+   "focal_px": 2710.5,
+   "k1": -0.0001,
+   "hfov_deg": 20.9,
+   "width_px": 1000,
+   "fitted_from": [
+    "gilson_3q"
+   ]
+  }
+ },
+ "views": {
+  "gilson_3q": {
+   "source": "Gilson SP-171X product photo (certifiedmtp.com product page, 1280x1280 image 193673... 273537)",
+   "size": [
+    1000,
+    1000
+   ],
+   "holdout": false,
+   "camera": [
+    1.8905717732612208,
+    0.652487920160794,
+    -0.2611644063920269,
+    -21.143305432794616,
+    45.491913862462646,
+    797.7492526211952,
+    7.90489701808017,
+    -0.00012522997056339192
+   ],
+   "focal_px": 2710.5,
+   "k1": -0.0001,
+   "hfov_deg": 20.9,
+   "lens": "fitted, shared by 1 view(s) of gilson_a",
+   "rms_px_camera_only": 10.34,
+   "rms_px": 8.04,
+   "residual_px": {
+    "rim front left": 10.0,
+    "rim front right": 4.1,
+    "rim back right": 9.8,
+    "rim back left": 10.2,
+    "upright top left": 2.4
+   }
+  },
+  "gilson_front": {
+   "source": "Gilson SP-171X product photo (globalgilson.com, 0017428_micro-riffle-splitters_600.jpeg)",
+   "size": [
+    600,
+    498
+   ],
+   "holdout": true,
+   "camera": [
+    1.9953819600659237,
+    0.7881901346677331,
+    -0.37173796798021647,
+    -12.238357991321095,
+    22.285987402478423,
+    366.95510055483066,
+    6.3245705888725645,
+    0.0
+   ],
+   "focal_px": 558.1,
+   "k1": 0.0,
+   "hfov_deg": 56.5,
+   "lens": "its own (no fitted view of this video)",
+   "rms_px_camera_only": 6.01,
+   "rms_px": 4.52,
+   "residual_px": {
+    "rim front left": 2.6,
+    "rim front right": 3.0,
+    "rim back right": 3.8,
+    "rim back left": 4.0,
+    "upright top left": 4.8,
+    "upright top right": 7.3
+   }
+  }
+ }
+}

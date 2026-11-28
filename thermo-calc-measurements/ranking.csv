@@ -1,0 +1,16 @@
+rank,key,measurement,matrix_rows,info,tc_check,cost,effort,speed,score,quick_win,sop
+1,composition,"Composition (ICP-OES) and O/N/H of every powder, plus one print per alloy","A4, PM1",5,5,3,4,4,26,True,05
+2,hardness,Vickers hardness as-built and through an aging matrix,"M3, K6",5,4,5,4,3,26,True,04
+3,dsc,"DSC/DTA: solidus, liquidus, fs(T), latent heat, hot-cracking indices","S1, S2, S5, T3",4,5,4,4,4,25,True,01
+4,density,"Archimedes density, porosity type and crack density of cubes","T4, A5, S5, B3",5,3,5,4,3,25,True,03
+5,xrd,"XRD phases and Al lattice parameter (powder, as-built, annealed)","P1, P4, T6",3,4,5,4,5,24,True,-
+6,eddy,"Eddy-current conductivity (%IACS), as-built and through the aging matrix","T8, T9, K6",3,4,4,5,3,22,True,04
+7,tracks,Single-track cross-sections and heat-source calibration,"A1, A5",4,5,3,2,3,21,True,02
+8,tensile,Sub-size tensile on benchmarks and finalists,"B1, M3",5,3,3,2,2,20,False,-
+9,corrosion,"Potentiodynamic polarization in NaCl (once the reference electrodes arrive, #221)","B5, P8",4,2,4,3,3,20,True,-
+10,ebsd,"SEM/EBSD of tracks and pads: grains, CET, cell spacing, cracks","S6, A3, K5",4,3,3,2,3,19,False,-
+11,htxrd,High-temperature XRD: CTE and phase changes on heating,T5,2,3,4,4,4,19,False,-
+12,lfa,Laser flash on 3-4 alloys to calibrate the conductivity relation,T8,2,4,2,4,2,16,False,-
+13,absorb,Calorimetric absorptivity on the desktop machine,A6,3,4,3,2,1,16,False,-
+14,prisma,TEM / SAXS / APT of finalist precipitates,K4,3,5,2,1,1,15,False,-
+15,couples,Diffusion couples,K1,1,4,4,2,2,14,False,-

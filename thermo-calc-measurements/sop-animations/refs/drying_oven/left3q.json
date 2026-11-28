@@ -1,0 +1,7 @@
+{"source": "https://youtu.be/sRsm8SS_LyM?t=24", "video": "sRsm8SS_LyM", "t": 24.0, "camera": "left3q",
+ "note": "the same video: from the front left and above",
+ "pose": {},
+ "points": {"top front left": [566, 230], "top front right": [900, 147], "top back left": [418, 143],
+            "bottom front left": [580, 628], "bottom back left": [455, 478], "knob": [768, 262],
+            "panel bottom left": [575, 352]},
+ "holdout": false}

@@ -1,0 +1,101 @@
+1. (king2014observationofkeyholemode pages 28-36): Wayne E. King, Holly D. Barth, Victor M. Castillo, Gilbert F. Gallegos, John W. Gibbs, Douglas E. Hahn, Chandrika Kamath, and Alexander M. Rubenchik. Observation of keyhole-mode laser melting in laser powder-bed fusion additive manufacturing. Journal of Materials Processing Technology, 214:2915-2925, Dec 2014. URL: https://doi.org/10.1016/j.jmatprotec.2014.06.005, doi:10.1016/j.jmatprotec.2014.06.005. This article has 2226 citations and is from a domain leading peer-reviewed journal.
+
+2. (king2014observationofkeyholemode pages 15-19): Wayne E. King, Holly D. Barth, Victor M. Castillo, Gilbert F. Gallegos, John W. Gibbs, Douglas E. Hahn, Chandrika Kamath, and Alexander M. Rubenchik. Observation of keyhole-mode laser melting in laser powder-bed fusion additive manufacturing. Journal of Materials Processing Technology, 214:2915-2925, Dec 2014. URL: https://doi.org/10.1016/j.jmatprotec.2014.06.005, doi:10.1016/j.jmatprotec.2014.06.005. This article has 2226 citations and is from a domain leading peer-reviewed journal.
+
+3. (king2014observationofkeyholemode pages 11-15): Wayne E. King, Holly D. Barth, Victor M. Castillo, Gilbert F. Gallegos, John W. Gibbs, Douglas E. Hahn, Chandrika Kamath, and Alexander M. Rubenchik. Observation of keyhole-mode laser melting in laser powder-bed fusion additive manufacturing. Journal of Materials Processing Technology, 214:2915-2925, Dec 2014. URL: https://doi.org/10.1016/j.jmatprotec.2014.06.005, doi:10.1016/j.jmatprotec.2014.06.005. This article has 2226 citations and is from a domain leading peer-reviewed journal.
+
+4. (soares2026processoptimizationof pages 74-81): MA Soares. Process optimization of metal 3d printing through thermographic analysis of the melt pool. Unknown journal, 2026.
+
+5. (gargalis2021determiningprocessingbehaviour pages 2-3): Leonidas Gargalis, Jianchao Ye, Maria Strantza, Alexander Rubenchik, James W. Murray, Adam T. Clare, Ian A. Ashcroft, Richard Hague, and Manyalibo J. Matthews. Determining processing behaviour of pure cu in laser powder bed fusion using direct micro-calorimetry. Journal of Materials Processing Technology, 294:117130, Aug 2021. URL: https://doi.org/10.1016/j.jmatprotec.2021.117130, doi:10.1016/j.jmatprotec.2021.117130. This article has 68 citations and is from a domain leading peer-reviewed journal.
+
+6. (trapp2017insituabsorptivity pages 1-2): Johannes Trapp, Alexander M. Rubenchik, Gabe Guss, and Manyalibo J. Matthews. In situ absorptivity measurements of metallic powders during laser powder-bed fusion additive manufacturing. Applied Materials Today, 9:341-349, Dec 2017. URL: https://doi.org/10.1016/j.apmt.2017.08.006, doi:10.1016/j.apmt.2017.08.006. This article has 658 citations and is from a peer-reviewed journal.
+
+7. (simonds2018timeresolvedabsorptanceand pages 5-8): Brian J. Simonds, Jeffrey Sowards, Josh Hadler, Erik Pfeif, Boris Wilthan, Jack Tanner, Chandler Harris, Paul Williams, and John Lehman. Time-resolved absorptance and melt pool dynamics during intense laser irradiation of a metal. Physical Review Applied, Oct 2018. URL: https://doi.org/10.1103/physrevapplied.10.044061, doi:10.1103/physrevapplied.10.044061. This article has 114 citations and is from a domain leading peer-reviewed journal.
+
+8. (gargalis2021determiningprocessingbehaviour pages 7-8): Leonidas Gargalis, Jianchao Ye, Maria Strantza, Alexander Rubenchik, James W. Murray, Adam T. Clare, Ian A. Ashcroft, Richard Hague, and Manyalibo J. Matthews. Determining processing behaviour of pure cu in laser powder bed fusion using direct micro-calorimetry. Journal of Materials Processing Technology, 294:117130, Aug 2021. URL: https://doi.org/10.1016/j.jmatprotec.2021.117130, doi:10.1016/j.jmatprotec.2021.117130. This article has 68 citations and is from a domain leading peer-reviewed journal.
+
+9. (gargalis2021determiningprocessingbehaviour pages 1-2): Leonidas Gargalis, Jianchao Ye, Maria Strantza, Alexander Rubenchik, James W. Murray, Adam T. Clare, Ian A. Ashcroft, Richard Hague, and Manyalibo J. Matthews. Determining processing behaviour of pure cu in laser powder bed fusion using direct micro-calorimetry. Journal of Materials Processing Technology, 294:117130, Aug 2021. URL: https://doi.org/10.1016/j.jmatprotec.2021.117130, doi:10.1016/j.jmatprotec.2021.117130. This article has 68 citations and is from a domain leading peer-reviewed journal.
+
+10. (tumulu2025laserpowderbed pages 38-42): SK Tumulu. Laser powder bed fusion additive manufacturing (lpbf-am) of aluminum-copper alloys. Unknown journal, 2025.
+
+11. (rahman2025acomprehensivestudy pages 19-20): Atiqur Rahman, Sriram Praneeth Isanaka, and Frank Liou. A comprehensive study of cooling rate effects on diffusion, microstructural evolution, and characterization of aluminum alloys. Machines, 13:160, Feb 2025. URL: https://doi.org/10.3390/machines13020160, doi:10.3390/machines13020160. This article has 39 citations.
+
+12. (bertoli2018processstructurepropertiesrelationshipsin pages 103-108): US Bertoli. Process-structure-properties relationships in laser powder bed fusion additive manufacturing. Unknown journal, 2018.
+
+13. (bertoli2018processstructurepropertiesrelationshipsin pages 89-93): US Bertoli. Process-structure-properties relationships in laser powder bed fusion additive manufacturing. Unknown journal, 2018.
+
+14. (lu2023microstructuralevaluationand pages 6-9): Yuxian Lu, Hao Zhang, Peng Xue, Lihui Wu, Fengchao Liu, Luanluan Jia, Dingrui Ni, Bolv Xiao, and Zongyi Ma. Microstructural evaluation and tensile properties of al-mg-sc-zr alloys prepared by lpbf. Crystals, 13:913, Jun 2023. URL: https://doi.org/10.3390/cryst13060913, doi:10.3390/cryst13060913. This article has 28 citations.
+
+15. (lu2023microstructuralevaluationand pages 9-10): Yuxian Lu, Hao Zhang, Peng Xue, Lihui Wu, Fengchao Liu, Luanluan Jia, Dingrui Ni, Bolv Xiao, and Zongyi Ma. Microstructural evaluation and tensile properties of al-mg-sc-zr alloys prepared by lpbf. Crystals, 13:913, Jun 2023. URL: https://doi.org/10.3390/cryst13060913, doi:10.3390/cryst13060913. This article has 28 citations.
+
+16. (michi2022towardshightemperatureapplications pages 6-7): Richard A. Michi, Alex Plotkowski, Amit Shyam, Ryan R. Dehoff, and Sudarsanam Suresh Babu. Towards high-temperature applications of aluminium alloys enabled by additive manufacturing. International Materials Reviews, 67:298-345, Jul 2021. URL: https://doi.org/10.1080/09506608.2021.1951580, doi:10.1080/09506608.2021.1951580. This article has 386 citations and is from a domain leading peer-reviewed journal.
+
+17. (lu2023microstructuralevaluationand pages 2-4): Yuxian Lu, Hao Zhang, Peng Xue, Lihui Wu, Fengchao Liu, Luanluan Jia, Dingrui Ni, Bolv Xiao, and Zongyi Ma. Microstructural evaluation and tensile properties of al-mg-sc-zr alloys prepared by lpbf. Crystals, 13:913, Jun 2023. URL: https://doi.org/10.3390/cryst13060913, doi:10.3390/cryst13060913. This article has 28 citations.
+
+18. (cattano2019feasibilitystudieson pages 100-103): G Cattano. Feasibility studies on laser powder bed fusion of powders mixtures based on aluminium alloys or high entropy alloys. Unknown journal, 2019.
+
+19. (bartl2022influenceofsurface pages 8-10): Marko Bärtl, Xiao Xiao, Jürgen Brillo, and Frank Palm. Influence of surface tension and evaporation on melt dynamics of aluminum alloys for laser powder bed fusion. Journal of Materials Engineering and Performance, 31:6221-6233, Jan 2022. URL: https://doi.org/10.1007/s11665-022-06592-z, doi:10.1007/s11665-022-06592-z. This article has 32 citations and is from a peer-reviewed journal.
+
+20. (bartl2022influenceofsurface pages 1-2): Marko Bärtl, Xiao Xiao, Jürgen Brillo, and Frank Palm. Influence of surface tension and evaporation on melt dynamics of aluminum alloys for laser powder bed fusion. Journal of Materials Engineering and Performance, 31:6221-6233, Jan 2022. URL: https://doi.org/10.1007/s11665-022-06592-z, doi:10.1007/s11665-022-06592-z. This article has 32 citations and is from a peer-reviewed journal.
+
+21. (rangaswamy2026multiscalemultiphysicsand pages 51-55): S Rangaswamy. Multiscale, multiphysics, and data-driven modelling of the laser powder bed fusion processing of nitinol shape memory alloy. Unknown journal, 2026.
+
+22. (sheikh2024anautomatedcomputational pages 4-5): Sofia Sheikh, Brent Vela, Pejman Honarmandi, Peter Morcos, David Shoukr, Ibrahim Karaman, Alaa Elwany, and Raymundo Arróyave. An automated computational framework to construct printability maps for additively manufactured metal alloys. npj Computational Materials, Nov 2024. URL: https://doi.org/10.1038/s41524-024-01436-x, doi:10.1038/s41524-024-01436-x. This article has 16 citations and is from a peer-reviewed journal.
+
+23. (zhang2021aprintabilityassessment pages 2-3): Bing Zhang, Raiyan Seede, Austin Whitt, David Shoukr, Xueqin Huang, Ibrahim Karaman, Raymundo Arroyave, and Alaa Elwany. A printability assessment framework for fabricating low variability nickel-niobium parts using laser powder bed fusion additive manufacturing. Rapid Prototyping Journal, 27:1737-1748, Jul 2021. URL: https://doi.org/10.1108/rpj-01-2021-0024, doi:10.1108/rpj-01-2021-0024. This article has 20 citations and is from a peer-reviewed journal.
+
+24. (sheikh2024anautomatedcomputational pages 1-2): Sofia Sheikh, Brent Vela, Pejman Honarmandi, Peter Morcos, David Shoukr, Ibrahim Karaman, Alaa Elwany, and Raymundo Arróyave. An automated computational framework to construct printability maps for additively manufactured metal alloys. npj Computational Materials, Nov 2024. URL: https://doi.org/10.1038/s41524-024-01436-x, doi:10.1038/s41524-024-01436-x. This article has 16 citations and is from a peer-reviewed journal.
+
+25. (sheikh2024anautomatedcomputational pages 3-3): Sofia Sheikh, Brent Vela, Pejman Honarmandi, Peter Morcos, David Shoukr, Ibrahim Karaman, Alaa Elwany, and Raymundo Arróyave. An automated computational framework to construct printability maps for additively manufactured metal alloys. npj Computational Materials, Nov 2024. URL: https://doi.org/10.1038/s41524-024-01436-x, doi:10.1038/s41524-024-01436-x. This article has 16 citations and is from a peer-reviewed journal.
+
+26. (zhang2021aprintabilityassessment pages 7-9): Bing Zhang, Raiyan Seede, Austin Whitt, David Shoukr, Xueqin Huang, Ibrahim Karaman, Raymundo Arroyave, and Alaa Elwany. A printability assessment framework for fabricating low variability nickel-niobium parts using laser powder bed fusion additive manufacturing. Rapid Prototyping Journal, 27:1737-1748, Jul 2021. URL: https://doi.org/10.1108/rpj-01-2021-0024, doi:10.1108/rpj-01-2021-0024. This article has 20 citations and is from a peer-reviewed journal.
+
+27. (rangaswamy2026multiscalemultiphysicsand pages 137-140): S Rangaswamy. Multiscale, multiphysics, and data-driven modelling of the laser powder bed fusion processing of nitinol shape memory alloy. Unknown journal, 2026.
+
+28. (mohammadtaheri2025arobustfinite pages 102-106): H Mohammadtaheri. A robust finite element–ai framework for predicting residual stresses and distortions in laser powder bed fusion process. Unknown journal, 2025.
+
+29. (kuzel1993oftheeuropean pages 26-27): R Kužel. Of the european conference on residual stresses. Unknown journal, 1993.
+
+30. (bertoli2018processstructurepropertiesrelationshipsin pages 117-122): US Bertoli. Process-structure-properties relationships in laser powder bed fusion additive manufacturing. Unknown journal, 2018.
+
+31. (guo2024correlativespatterand pages 1-3): Da Guo, Rubén Lambert-Garcia, Samy Hocine, Xianqiang Fan, Henry Greenhalgh, Ravi Shahani, Marta Majkut, Alexander Rack, Peter D Lee, and Chu Lun Alex Leung. Correlative spatter and vapour depression dynamics during laser powder bed fusion of an al-fe-zr alloy. International Journal of Extreme Manufacturing, 6:055601, Jun 2024. URL: https://doi.org/10.1088/2631-7990/ad4e1d, doi:10.1088/2631-7990/ad4e1d. This article has 63 citations.
+
+32. (li2022areviewof pages 7-8): Zheng Li, Hao Li, Jie Yin, Yan Li, Zhenguo Nie, Xiangyou Li, Deyong You, Kai Guan, Wei Duan, Longchao Cao, Dengzhi Wang, Linda Ke, Yang Liu, Ping Zhao, Lin Wang, Kunpeng Zhu, Zhengwen Zhang, Liang Gao, and Liang Hao. A review of spatter in laser powder bed fusion additive manufacturing: in situ detection, generation, effects, and countermeasures. Micromachines, 13:1366, Aug 2022. URL: https://doi.org/10.3390/mi13081366, doi:10.3390/mi13081366. This article has 192 citations.
+
+33. (liu2023reviewofvisual pages 17-19): Jiaqi Liu, Bin Wei, Hongjie Chang, Jie Li, and Guang Yang. Review of visual measurement methods for metal vaporization processes in laser powder bed fusion. Micromachines, 14:1351, Jun 2023. URL: https://doi.org/10.3390/mi14071351, doi:10.3390/mi14071351. This article has 20 citations.
+
+34. (liu2023reviewofvisual pages 23-25): Jiaqi Liu, Bin Wei, Hongjie Chang, Jie Li, and Guang Yang. Review of visual measurement methods for metal vaporization processes in laser powder bed fusion. Micromachines, 14:1351, Jun 2023. URL: https://doi.org/10.3390/mi14071351, doi:10.3390/mi14071351. This article has 20 citations.
+
+35. (shi2024areviewof pages 6-8): Guanglei Shi, Runze Zhang, Yachao Cao, and Guang Yang. A review of the vaporization behavior of some metal elements in the lpbf process. Micromachines, 15:846, Jun 2024. URL: https://doi.org/10.3390/mi15070846, doi:10.3390/mi15070846. This article has 39 citations.
+
+36. (gibbons2024metalpowderfeedstock pages 25-26): Duncan W. Gibbons, Preyin Govender, and Andre F. van der Merwe. Metal powder feedstock evaluation and management for powder bed fusion: a review of literature, standards, and practical guidelines. Progress in Additive Manufacturing, 9:805-833, Jul 2023. URL: https://doi.org/10.1007/s40964-023-00484-x, doi:10.1007/s40964-023-00484-x. This article has 58 citations and is from a peer-reviewed journal.
+
+37. (lorenzo2021metallicpowderflowability pages 9-10): Marchetti Lorenzo and Hulme Christopher. Metallic powder flowability: a comparison between testing methods and the effect of particle size distribution. ArXiv, Feb 2021. URL: https://doi.org/10.20944/preprints202102.0049.v1, doi:10.20944/preprints202102.0049.v1. This article has 1 citations.
+
+38. (brika2020influenceofparticle pages 5-8): Salah Eddine Brika, Morgan Letenneur, Christopher Alex Dion, and Vladimir Brailovski. Influence of particle morphology and size distribution on the powder flowability and laser powder bed fusion manufacturability of ti-6al-4v alloy. Additive manufacturing, 31:100929, Jan 2020. URL: https://doi.org/10.1016/j.addma.2019.100929, doi:10.1016/j.addma.2019.100929. This article has 612 citations and is from a highest quality peer-reviewed journal.
+
+39. (gibbons2024metalpowderfeedstock pages 7-8): Duncan W. Gibbons, Preyin Govender, and Andre F. van der Merwe. Metal powder feedstock evaluation and management for powder bed fusion: a review of literature, standards, and practical guidelines. Progress in Additive Manufacturing, 9:805-833, Jul 2023. URL: https://doi.org/10.1007/s40964-023-00484-x, doi:10.1007/s40964-023-00484-x. This article has 58 citations and is from a peer-reviewed journal.
+
+40. (gibbons2024metalpowderfeedstock pages 14-16): Duncan W. Gibbons, Preyin Govender, and Andre F. van der Merwe. Metal powder feedstock evaluation and management for powder bed fusion: a review of literature, standards, and practical guidelines. Progress in Additive Manufacturing, 9:805-833, Jul 2023. URL: https://doi.org/10.1007/s40964-023-00484-x, doi:10.1007/s40964-023-00484-x. This article has 58 citations and is from a peer-reviewed journal.
+
+41. (gibbons2024metalpowderfeedstock pages 11-12): Duncan W. Gibbons, Preyin Govender, and Andre F. van der Merwe. Metal powder feedstock evaluation and management for powder bed fusion: a review of literature, standards, and practical guidelines. Progress in Additive Manufacturing, 9:805-833, Jul 2023. URL: https://doi.org/10.1007/s40964-023-00484-x, doi:10.1007/s40964-023-00484-x. This article has 58 citations and is from a peer-reviewed journal.
+
+42. (navarreteUnknownyearinfluenceofcontour pages 17-20): RAM NAVARRETE. Influence of contour parameters on the fatigue properties of alsi10mg produced by l-pbf. Unknown journal, Unknown year.
+
+43. (king2014observationofkeyholemode pages 19-28): Wayne E. King, Holly D. Barth, Victor M. Castillo, Gilbert F. Gallegos, John W. Gibbs, Douglas E. Hahn, Chandrika Kamath, and Alexander M. Rubenchik. Observation of keyhole-mode laser melting in laser powder-bed fusion additive manufacturing. Journal of Materials Processing Technology, 214:2915-2925, Dec 2014. URL: https://doi.org/10.1016/j.jmatprotec.2014.06.005, doi:10.1016/j.jmatprotec.2014.06.005. This article has 2226 citations and is from a domain leading peer-reviewed journal.
+
+44. (hong2026fittingfreediagnosisof pages 4-5): Gisuk Hong, Jaebong Cho, and Hyunbo Cho. Fitting-free diagnosis of conduction-model breakdown in laser powder bed fusion. Materials, 19:3290, Aug 2026. URL: https://doi.org/10.3390/ma19153290, doi:10.3390/ma19153290. This article has 0 citations.
+
+45. (hong2026fittingfreediagnosisof pages 2-4): Gisuk Hong, Jaebong Cho, and Hyunbo Cho. Fitting-free diagnosis of conduction-model breakdown in laser powder bed fusion. Materials, 19:3290, Aug 2026. URL: https://doi.org/10.3390/ma19153290, doi:10.3390/ma19153290. This article has 0 citations.
+
+46. (rangaswamy2026multiscalemultiphysicsand pages 71-74): S Rangaswamy. Multiscale, multiphysics, and data-driven modelling of the laser powder bed fusion processing of nitinol shape memory alloy. Unknown journal, 2026.
+
+47. (ye2019energycouplingmechanisms pages 2-3): Jianchao Ye, Saad A. Khairallah, Alexander M. Rubenchik, Michael F. Crumb, Gabe Guss, Jim Belak, and Manyalibo J. Matthews. Energy coupling mechanisms and scaling behavior associated with laser powder bed fusion additive manufacturing. Advanced Engineering Materials, May 2019. URL: https://doi.org/10.1002/adem.201900185, doi:10.1002/adem.201900185. This article has 340 citations and is from a peer-reviewed journal.
+
+48. (bertoli2018processstructurepropertiesrelationshipsin pages 113-117): US Bertoli. Process-structure-properties relationships in laser powder bed fusion additive manufacturing. Unknown journal, 2018.
+
+49. (shi2024areviewof pages 8-10): Guanglei Shi, Runze Zhang, Yachao Cao, and Guang Yang. A review of the vaporization behavior of some metal elements in the lpbf process. Micromachines, 15:846, Jun 2024. URL: https://doi.org/10.3390/mi15070846, doi:10.3390/mi15070846. This article has 39 citations.
+
+50. (li2022areviewof pages 13-15): Zheng Li, Hao Li, Jie Yin, Yan Li, Zhenguo Nie, Xiangyou Li, Deyong You, Kai Guan, Wei Duan, Longchao Cao, Dengzhi Wang, Linda Ke, Yang Liu, Ping Zhao, Lin Wang, Kunpeng Zhu, Zhengwen Zhang, Liang Gao, and Liang Hao. A review of spatter in laser powder bed fusion additive manufacturing: in situ detection, generation, effects, and countermeasures. Micromachines, 13:1366, Aug 2022. URL: https://doi.org/10.3390/mi13081366, doi:10.3390/mi13081366. This article has 192 citations.
+
+51. (wadia2023qualifying174ph pages 20-25): ZJ WADIA. Qualifying 17-4 ph steel powder in additively manufactured parts. Unknown journal, 2023.

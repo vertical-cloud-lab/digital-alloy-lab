@@ -1,0 +1,2 @@
+run_id,sample_id,atomizer_run,sieve_cut_um,form,mass_mg,crucible,atmosphere,rate_K_min,segment,instrument,facility,date,trace_file,tau_s,solidus_C,liquidus_C,latent_heat_J_g,kou_index_K,csc,operator_role,notes
+EXAMPLE-DSC-01,S1-P,S1,20-63,powder,15.2,Al2O3 with lid,Ar 5.0 50 mL/min,10,heat2,TA SDT 650,Utah MCL (mail-in),2026-12-01,dsc/S1_h2_10K.csv,3.1,,,,,,student,example row: delete
