@@ -1596,7 +1596,49 @@
     }
    },
    "tail_decay_per_min": 1.3492984728618003,
-   "ideal_decay_per_min": 0.8375209380234506
+   "ideal_decay_per_min": 0.8375209380234506,
+   "above_vent_top": {
+    "z_mm": 133.69,
+    "volume_L": 1.3779606702365872,
+    "by_time": [
+     {
+      "t_s": 60.0,
+      "box_ppm": 43794.246845809605,
+      "above_vent_ppm": 164889.8941756512,
+      "above_vent_share_of_O2": 0.2170215094772483
+     },
+     {
+      "t_s": 90.0,
+      "box_ppm": 13594.938193509095,
+      "above_vent_ppm": 82759.1788509237,
+      "above_vent_share_of_O2": 0.3508849474495659
+     },
+     {
+      "t_s": 120.0,
+      "box_ppm": 5089.517892577219,
+      "above_vent_ppm": 35785.905875581,
+      "above_vent_share_of_O2": 0.4052855990795278
+     },
+     {
+      "t_s": 150.0,
+      "box_ppm": 2241.4478380010532,
+      "above_vent_ppm": 15441.568971706412,
+      "above_vent_share_of_O2": 0.3970896719750874
+     },
+     {
+      "t_s": 180.0,
+      "box_ppm": 1109.6562753058518,
+      "above_vent_ppm": 7202.273186799757,
+      "above_vent_share_of_O2": 0.37411654885385176
+     },
+     {
+      "t_s": 210.0,
+      "box_ppm": 609.2693707700284,
+      "above_vent_ppm": 3602.226762875573,
+      "above_vent_share_of_O2": 0.34079052002354454
+     }
+    ]
+   }
   },
   "v2-ft1v-buoyant-LH": {
    "case": "/tmp/r3-cfd/v2c-buoy-LH",
@@ -1646,7 +1688,49 @@
     }
    },
    "tail_decay_per_min": 1.7990268669495268,
-   "ideal_decay_per_min": 0.9002925950934053
+   "ideal_decay_per_min": 0.9002925950934053,
+   "above_vent_top": {
+    "z_mm": 232.89499999999995,
+    "volume_L": 0.9506673527185349,
+    "by_time": [
+     {
+      "t_s": 60.0,
+      "box_ppm": 31269.109454255737,
+      "above_vent_ppm": 167022.67527435964,
+      "above_vent_share_of_O2": 0.22901453065594113
+     },
+     {
+      "t_s": 90.0,
+      "box_ppm": 5238.95137920653,
+      "above_vent_ppm": 56509.49579427048,
+      "above_vent_share_of_O2": 0.46246639464254535
+     },
+     {
+      "t_s": 120.0,
+      "box_ppm": 1290.1200557231584,
+      "above_vent_ppm": 14327.576885094166,
+      "above_vent_share_of_O2": 0.4761521356724022
+     },
+     {
+      "t_s": 150.0,
+      "box_ppm": 452.139371843456,
+      "above_vent_ppm": 4449.757580109899,
+      "above_vent_share_of_O2": 0.4219559745721599
+     },
+     {
+      "t_s": 180.0,
+      "box_ppm": 205.20391003552442,
+      "above_vent_ppm": 1735.7713903298782,
+      "above_vent_share_of_O2": 0.36266864504148183
+     },
+     {
+      "t_s": 210.0,
+      "box_ppm": 105.42453729300661,
+      "above_vent_ppm": 782.2936646801775,
+      "above_vent_share_of_O2": 0.31814948546549027
+     }
+    ]
+   }
   }
  },
  "leak": {

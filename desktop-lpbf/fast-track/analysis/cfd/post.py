@@ -644,6 +644,25 @@ def do_purge(a):
         res["flow"] = dict(mean_speed_mm_s=float(1000 * (u * vol).sum() / vol.sum()),
                            median_speed_mm_s=float(1000 * np.median(u)),
                            **{f"vol_frac_below_{v}mm_s": float(vol[u < v / 1000].sum() / vol.sum()) for v in (1, 3, 10)})
+    if kind != "scalar" and "vent_high" in meta.get("ports", {}):
+        # round 3: the gas above the high vent's top (the box's door dish, the cube's layer under its top plate),
+        # which the vent drains only by mixing: its O2 against the box average, at each written time from 60 s
+        ztop = meta["ports"]["vent_high"][5]
+        r = pv.OpenFOAMReader(str(case / "case.foam"))
+        r.cell_to_point_creation = False
+        rows = []
+        for tv in r.time_values:
+            if tv < 59.0:
+                continue
+            r.set_active_time_value(tv)
+            m = r.read()["internalMesh"]
+            vol = np.asarray(m.compute_cell_sizes(length=False, area=False, volume=True).cell_data["Volume"])
+            top = np.asarray(m.cell_centers().points)[:, 2] * 1000.0 > ztop
+            x = x_o2(np.asarray(m.cell_data["O2"]), np.asarray(m.cell_data["Ar"])) * 1e6
+            rows.append(dict(t_s=float(tv), box_ppm=float((x * vol).sum() / vol.sum()),
+                             above_vent_ppm=float((x[top] * vol[top]).sum() / vol[top].sum()),
+                             above_vent_share_of_O2=float((x[top] * vol[top]).sum() / (x * vol).sum())))
+        res["above_vent_top"] = dict(z_mm=ztop, volume_L=float(vol[top].sum() * 1000.0), by_time=rows)
     np.savez_compressed(SCR / f"purge_{a.name}.npz", **{k: v for k, v in S.items() if v is not None})
     d = load_json()
     d.setdefault("purge", {})[a.name] = res

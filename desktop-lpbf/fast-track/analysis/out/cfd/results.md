@@ -266,7 +266,7 @@ pump-purged (§3); this is the flow purge, set against the 0-D pump-purge of
 | well mixed, same flow and volume | 6.4 / 9.1 min | 5.9 / 8.5 min |
 | argon used to 1000 ppm (box average), in gas volumes | 2.6 | 1.9 |
 | O₂ at 3.5 min: box / exhaust / plate / under the slide | 620 / 851 / 46 / 168 ppm | 107 / 149 / 2 / 10 ppm |
-| gas above the vent's top: volume; O₂ at 2 / 3 / 3.5 min | 1.38 L; 35,800 / 7,200 / 3,600 ppm | 0.95 L; 14,300 / 1,700 / 780 ppm |
+| gas above the vent's top (`above_vent_top`): volume; O₂ at 2 / 3 / 3.5 min | 1.38 L; 35,800 / 7,200 / 3,600 ppm | 0.95 L; 14,300 / 1,700 / 780 ppm |
 | that layer's share of all the O₂, 1.5–3.5 min | 34–41 % | 32–48 % |
 
 ![FT-1V purge against the box](purge_ft1v_v2.png)
@@ -433,7 +433,7 @@ $PY $D/post.py leak /tmp/r3-cfd/v2-leak --name v2-leak --figname leak_section.pn
 # startFrom latestTime, decomposePar -latestTime, mpirun -np 2 buoyantSimpleFoam -parallel, reconstructPar)
 $PY $D/make_case.py --geom /tmp/r3-cfd/geom/ft1 --kind heat --model sst --iters 500 --out /tmp/r3-cfd/v2-heat
 MEM=1500m /tmp/tools/capmem 1.5 bash $D/run_case.sh /tmp/r3-cfd/v2-heat heat /tmp/r3-cfd/v2-cross-sst
-/tmp/tools/capmem 2 $PY $D/post.py heat /tmp/r3-cfd2/v2-heat-c --name v2-heat --figname heat_section.png \
+/tmp/tools/capmem 3 $PY $D/post.py heat /tmp/r3-cfd2/v2-heat-c --name v2-heat --figname heat_section.png \
     --ref /tmp/r3-cfd/v2-cross-sst
 ```
 
