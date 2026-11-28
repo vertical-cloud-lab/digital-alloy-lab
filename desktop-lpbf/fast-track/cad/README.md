@@ -90,8 +90,9 @@ PyVista, python-fcl and trimesh.
   across the plate in the box), two raking LED lights through wall ports, a coaxial photodiode behind the head's input
   mirror, an acoustic-emission sensor on the rod-end block, thermocouples, and a digitizer on the laser's sync.
 - **The cube's face opening is still unverified** (Ideal Vacuum's site blocked us), but round 3 pinned down what it
-  must be. The cassette is 245 x 245 mm and 107.7 mm tall, and in the billet frame its deck lies in the bottom face's
-  pocket, which is as big as the face opening: so the opening must be **square, at least 245 mm plus clearance
+  must be. The cassette is 245 x 245 mm and 107.7 mm tall, and in the billet frame (one through-pocket per face, as
+  drawn) its deck lies in the bottom face's pocket, which is as big as the face opening: so the opening must be
+  **square, at least 245 mm plus clearance
   (247 mm with 1 mm a side) with sharp corners, and 245 + 0.586 r with corner radius r** (252.4 mm at r = 1/2 in.,
   259.9 mm at 1 in.; python-fcl insertion through a parametric opening). Tilting or rolling the cassette lets it
   through a 196-207 mm face but not onto the floor, so it doesn't help in this cube, and round 2's fallback (the bare
@@ -298,8 +299,9 @@ along the door's axis the cassette sweeps 245.0 x 107.7 mm, and the same along x
 
 **The frame decides it, not the door.** The P107540 frame is one billet with interchangeable 12 x 12 in. plates, so
 each face's opening runs straight through as a pocket, and each plate's 7.6 mm boss sits in its pocket (the model
-draws it so). The deck rests on the bottom plate's boss, below the side pockets' edges (11.8 mm below them with the
-266 mm estimate), so it lies in the bottom face's pocket, which is exactly as big as the face opening. The opening
+draws it so; the brochure's 11.4 in. plate to plate inside a 12 in. frame fits 0.3 in. bosses). The deck rests on the
+bottom plate's boss, and the side pockets' lower edges are above it (11.8 mm above the floor with the 266 mm
+estimate, over a 10 mm deck), so it lies in the bottom face's pocket, which is exactly as big as the face opening. The opening
 therefore has to hold the deck's footprint, whichever way the cassette comes in, and has to be square (or square with
 small corner radii). The deck's sharp corners meet the pocket's corner radius r first: the pocket needs a side of
 **245 + 0.586 r** (zero clearance). A python-fcl run confirms it: the frame redrawn with a parametric pocket on all six
