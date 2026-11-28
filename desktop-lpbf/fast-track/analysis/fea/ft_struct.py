@@ -442,32 +442,47 @@ def lindley(cs, shore, s):
 
 
 def lid_geometry():
+    """CAD v2: the Saginaw SCE-16EL1208SSLP's own door is the lid (0.075 in. 304, a dished panel with a 5.5 mm return as
+    drawn), on the box's poured-in-place gasket (8 x 4 mm, drawn on the body's lip, 4 mm in from the door's edge). It is
+    held by one quarter-turn latch at the middle of the front (-y) edge and two concealed hinges at the back (+y) edge,
+    both inside the gasket line (ft_vendor.saginaw_16el1208sslp). The window stack sits at P['win_c']['box'] and the
+    layer camera's port ring (MK-19) at P['cam_xy'], each over a bore in the door."""
     xc, yc = P["deck_c"]
-    bx, by, _ = P["box_in"]
     t = P["box_t"]
     L = M.levels("FT-1")
-    x0, x1, y0, y1 = xc - bx / 2, xc + bx / 2, yc - by / 2, yc + by / 2
-    zr = L["roof_in"]
-    lz0 = zr + P["gasket"]
-    return dict(xc=xc, yc=yc, x0=x0, x1=x1, y0=y0, y1=y1, t=t, zr=zr, lz0=lz0, ltop=lz0 + t, skirt_bot=lz0 - 15.0,
-                lid_x=(x0 - t - 3, x1 + t + 3), lid_y=(y0 - t - 3, y1 + t + 3),
-                g_out=(x0 - t, x1 + t, y0 - t, y1 + t), g_in=(x0 + 6, x1 - 6, y0 + 6, y1 - 6),
-                win_z=lz0 + t, flange_ceiling=lz0 + t + 10 - 0.1 + 1.8, ledge=lz0 + t + 2,
-                hinge_z=lz0 + 1.0)
+    S_ = M.VEN.SAG
+    dx, dy = S_["door"]
+    gw, gh = S_["gasket"]
+    iy = S_["out"][1] - 2 * t
+    zr = L["roof_in"]                                              # the door's inner face
+    g_out = (xc - dx / 2 + 4, xc + dx / 2 - 4, yc - dy / 2 + 4, yc + dy / 2 - 4)
+    g_in = (g_out[0] + gw, g_out[1] - gw, g_out[2] + gw, g_out[3] - gw)
+    ys = -iy / 2 + S_["lip"] + 8.0                                 # latch shaft (local y)
+    yh = iy / 2 - S_["lip"]                                        # concealed hinges: leaf on the door's inner face
+    wx, wy = P["win_c"]["box"]
+    cam = M.camera_geometry("FT-1")["W"]
+    return dict(xc=xc, yc=yc, t=t, zr=zr, ltop=zr + t, skirt_bot=L["rim"] + gh, g_out=g_out, g_in=g_in, gasket_w=gw,
+                gasket_h=gh, door=(xc - dx / 2, xc + dx / 2, yc - dy / 2, yc + dy / 2), latch=(xc, yc + ys), latch_r=S_["latch_d"] / 2,
+                hinges=[(xc + hx_ - 20.0, xc + hx_ + 20.0, yc + yh - 16.0, yc + yh - 1.0) for hx_ in S_["hinge_x"]],
+                win=(wx, wy), cam=(cam[0], cam[1]), flange_ceiling=zr + t + 10 - 0.1 + 1.8, cam_top=zr + t + 7.0)
 
 
 GASKETS = {
-    # solid FKM cord, 3 mm, 75 Shore A, squeezed 22 % by the clamps (Parker's face-seal range is 20-30 %; estimate of the design)
-    "fkm": dict(label="solid FKM cord Ø3 mm, 75A, 22 % squeeze (0.66 mm)", cs=3.0, shore=75.0, s=0.22, rho=1850.0),
-    # closed-cell silicone sponge strip 3 mm thick on the drawn 7.9 mm width, ASTM D1056 grade 2A2 (compression-deflection
-    # 5-9 psi at 25 %): 7 psi = 0.048 MPa at 25 % (0.75 mm)
-    "sponge": dict(label="closed-cell silicone sponge 3 x 7.9 mm, ASTM D1056 2A2 (7 psi at 25 %), 25 % squeeze (0.75 mm)",
-                   cs=3.0, cfd=7.0 * 0.006894757, s=0.25, rho=300.0),
+    # CAD v2: the box's own poured-in-place foam gasket, 8 mm wide x 4 mm, modelled as a closed-cell sponge squeezed 25 %
+    # (1.0 mm, estimate). Its maker's compression data were not found, so two ASTM D1056 grades bracket it:
+    # 2A2 (5-9 psi at 25 %: 7 psi = 0.048 MPa) and 2A4 (13-17 psi: 15 psi = 0.103 MPa).
+    "foam_2a2": dict(label="poured foam gasket 8 x 4 mm as ASTM D1056 2A2 sponge (7 psi at 25 %), 25 % squeeze (1.0 mm)",
+                     cs=4.0, cfd=7.0 * 0.006894757, s=0.25, rho=300.0),
+    "foam_2a4": dict(label="poured foam gasket 8 x 4 mm as ASTM D1056 2A4 sponge (15 psi at 25 %), 25 % squeeze (1.0 mm)",
+                     cs=4.0, cfd=15.0 * 0.006894757, s=0.25, rho=300.0),
 }
+# door return (the dished panel's skirt) as drawn (5.5 mm) and a deeper one for the sensitivity run (the maker's
+# render shows a deeper formed return than the CAD envelope; its depth is not published)
+DOOR_RETURN_DEEP = 20.0
 
 
 SPRING_T = 10.0   # mm: the gasket's spring bed is a 10 mm layer on the drawn gasket's footprint, so the squeeze is a small strain
-                  # (on the drawn 1 mm layer a 0.66 mm squeeze is 66 % strain, where NLGEOM's St. Venant-Kirchhoff material softens ~4x)
+                  # (on a thin layer a 1 mm squeeze is a large strain, where NLGEOM's St. Venant-Kirchhoff material softens)
 
 
 def gasket_props(gk, width):
@@ -484,7 +499,7 @@ def gasket_props(gk, width):
 
 
 def case4a_check(R):
-    """A clamped 400 x 300 x 1.9 mm 304 plate at 1 kPa on the lid's mesh size, against Timoshenko's clamped-plate coefficient."""
+    """A clamped 400 x 300 plate of the door's gauge at 1 kPa on the lid's mesh size, against Timoshenko's clamped-plate coefficient."""
     hmax = float(os.environ.get("FT_LID_HMAX", "7"))
     a, b, t = 400.0, 300.0, P["box_t"]
     shape = cq.Solid.makeBox(a, b, t, cq.Vector(-a / 2, -b / 2, 0))
@@ -505,11 +520,21 @@ def case4a_check(R):
     ab = a / b
     alpha = 0.00191 + (ab - 1.3) / 0.1 * (0.00207 - 0.00191)
     w_th = alpha * 0.001 * b ** 4 / D
-    r = dict(case="4a-check: clamped 400 x 300 x 1.9 mm 304 plate at 1 kPa, lid mesh size", hmax=hmax,
+    r = dict(case=f"4a-check: clamped 400 x 300 x {t:.3f} mm 304 plate at 1 kPa, lid mesh size", hmax=hmax,
              w_fe_mm=float(-U[c, 2]), w_timoshenko_mm=w_th, ratio=float(-U[c, 2] / w_th))
     stamp(r, m, sol, hmax=hmax)
     R["4a_check"] = r
     print(f"  4a-check: w FE {-U[c, 2]:.4f} mm vs Timoshenko {w_th:.4f} mm (ratio {r['ratio']:.3f})")
+
+
+def door_shape(g, ret):
+    """The door as a dished panel with a return of depth ret (mm) round its edge, the window and camera bores cut (the
+    drawn door has ret = 5.5 mm; the drawn shape is used when ret is None)."""
+    x0, x1, y0, y1 = g["door"]
+    t, zr = g["t"], g["zr"]
+    d = M.box(x0, x1, y0, y1, zr, zr + t).fuse(M.box(x0, x1, y0, y1, zr - ret, zr).cut(M.box(x0 + t, x1 - t, y0 + t, y1 - t, zr - ret - 1, zr + 1)))
+    d = d.cut(M.cyl(26.5, (g["win"][0], g["win"][1], zr - 12), "z", 30)).cut(M.cyl(14.0, (g["cam"][0], g["cam"][1], zr - 12), "z", 30))
+    return d
 
 
 def case4a(R):
@@ -517,167 +542,177 @@ def case4a(R):
     parts = M.build("FT-1")
     hmax = float(os.environ.get("FT_LID_HMAX", "7"))
     gi, go = g["g_in"], g["g_out"]
-    z_gb = g["zr"] + P["gasket"] - SPRING_T                       # the spring bed's fixed bottom (the box rim, moved down)
-    spring = M.box(go[0], go[1], go[2], go[3], z_gb, g["lz0"]).cut(M.box(gi[0], gi[1], gi[2], gi[3], z_gb - 1, g["lz0"] + 1))
-    bodies = [("lid", part(parts, "Box lid (the door)").shape), ("gasket spring bed", spring),
-              ("inner ring", part(parts, "Inner clamp ring (MK-02)").shape), ("window ring", part(parts, "Window ring (MK-02)").shape),
-              ("flange", part(parts, "Window retaining flange (MK-02)").shape)]
-    m = mesh_bodies(bodies, "c4a_lid", hmax=hmax, hmin=1.0, curv=10)
+    z_gb = g["zr"] - SPRING_T                                     # the spring bed's fixed bottom (the body's lip, moved down)
+    spring = M.box(go[0], go[1], go[2], go[3], z_gb, g["zr"]).cut(M.box(gi[0], gi[1], gi[2], gi[3], z_gb - 1, g["zr"] + 1))
+    door_drawn = part(parts, "Box door (the lid)").shape
+    configs = {"drawn": door_drawn}
+    if os.environ.get("FT_LID_DEEP", "1") == "1":
+        configs["deep_return"] = door_shape(g, DOOR_RETURN_DEEP)
     xc, yc = g["xc"], g["yc"]
-    width = gi[0] - go[0]
-    # pressure: the lid's underside inside the gasket, the inner clamp ring's underside, the window's load on the flange's
-    # recess ceiling (p x the area inside the window's O-ring at r = 23.7 mm)
-    inside = lambda c: (c[:, 0] > gi[0]) & (c[:, 0] < gi[1]) & (c[:, 1] > gi[2]) & (c[:, 1] < gi[3])
-    f_lid = faces_on(m, surfaces(m, planar("z", g["lz0"])), inside)
-    f_ring = faces_on(m, surfaces(m, planar("z", g["lz0"] - 6.0)))
-    f_ceil = faces_on(m, surfaces(m, planar("z", g["flange_ceiling"])))
-    r_seal = 23.7
-    a_ceil = f_ceil["area"].sum()
-    # supports: gasket bottom (the box rim) fixed in z; clamps: z on the skirt's bottom edge over each clamp's 24 mm;
-    # hinge: the back face's nodes within 1 mm of the pin height, fixed in x, y, z (a pin line)
-    gb = nodes_on(m, surfaces(m, planar("z", z_gb)))
-    sk = surfaces(m, planar("z", g["skirt_bot"]))
-    lx, ly = g["lid_x"], g["lid_y"]
-    clamps = {
-        "CLF1": lambda q: (np.abs(q[:, 0] - (xc - 120)) <= 12) & (q[:, 1] < ly[0] + 2.5),
-        "CLF2": lambda q: (np.abs(q[:, 0] - (xc + 120)) <= 12) & (q[:, 1] < ly[0] + 2.5),
-        "CLL": lambda q: (np.abs(q[:, 1] - yc) <= 12) & (q[:, 0] < lx[0] + 2.5),
-        "CLR": lambda q: (np.abs(q[:, 1] - yc) <= 12) & (q[:, 0] > lx[1] - 2.5),
-    }
-    cl_ids = {k: nodes_on(m, sk, f) for k, f in clamps.items()}
-    hinge = nodes_on(m, surfaces(m, planar("y", ly[1])), lambda q: np.abs(q[:, 2] - g["hinge_z"]) <= 1.0)
-    # results sets: the gasket's top (lid/gasket interface) and the window seat
-    q = m["xyz"]
-    band = ((q[:, 0] <= gi[0] + 1e-6) | (q[:, 0] >= gi[1] - 1e-6) | (q[:, 1] <= gi[2] + 1e-6) | (q[:, 1] >= gi[3] - 1e-6)) & \
-           (q[:, 0] >= go[0] - 1e-6) & (q[:, 0] <= go[1] + 1e-6) & (q[:, 1] >= go[2] - 1e-6) & (q[:, 1] <= go[3] + 1e-6)
-    gtop = np.nonzero(band & (np.abs(q[:, 2] - g["lz0"]) < 1e-3))[0]
-    seat = m["idx"][np.unique(f_ceil["tri"].ravel())]
-    # perimeter coordinate along the gasket's centre line, starting at the front-left corner, counter-clockwise from above
+    width = g["gasket_w"]
     cx0, cx1, cy0, cy1 = go[0] + width / 2, go[1] - width / 2, go[2] + width / 2, go[3] - width / 2
     Lx, Ly = cx1 - cx0, cy1 - cy0
-    p = q[gtop]
-    dist = np.stack([np.abs(p[:, 1] - cy0), np.abs(p[:, 0] - cx1), np.abs(p[:, 1] - cy1), np.abs(p[:, 0] - cx0)], 1)
-    side = np.argmin(dist, 1)
-    s_coord = np.where(side == 0, p[:, 0] - cx0, np.where(side == 1, Lx + p[:, 1] - cy0,
-                       np.where(side == 2, Lx + Ly + cx1 - p[:, 0], 2 * Lx + Ly + cy1 - p[:, 1])))
-    on_line = dist[np.arange(len(p)), side] <= 2.0
-    s_cl = {"CLF1": (xc - 120) - cx0, "CLF2": (xc + 120) - cx0, "CLR": Lx + yc - cy0, "CLL": 2 * Lx + Ly + cy1 - yc}
-    A_p = f_lid["area"].sum() + f_ring["area"].sum()
-    # nodes away from the idealised supports (30 mm from a clamp patch's centre, 15 mm from the hinge's back face): the clamp
-    # patches and the pin line are singular points of the model, so the peak there depends on the mesh
-    sb = g["skirt_bot"]
-    ccen = np.array([(xc - 120, ly[0], sb), (xc + 120, ly[0], sb), (lx[0], yc, sb), (lx[1], yc, sb)])
-    dmin = np.min(np.linalg.norm(q[:, None, :] - ccen[None, :, :], axis=2), axis=1)
-    away = (dmin > 30.0) & (q[:, 1] < ly[1] - 15.0)
-    ring_zone = np.hypot(q[:, 0], q[:, 1]) <= 75.0
-    out = {}
+    r_seal, r_cam = 23.7, 12.7
     sol = os.environ.get("FEA_SOLVER") or "SPOOLES"     # the soft gasket layer makes the PCG solver crawl; SPOOLES if it fits
-    for gname, gk in GASKETS.items():
-        gp = gasket_props(gk, width)
-        mats = [MAT["ss304"], dict(E=gp["E_layer"], nu=0.0, rho=gk["rho"]), MAT["al6061"], MAT["al6061"], MAT["al6061"]]
-        sets = nset("GBOT", gb) + nset("HINGE", hinge) + "".join(nset(k, v) for k, v in cl_ids.items())
-        d0 = gp["squeeze_mm"]
-        bc = f"GBOT,3,3\nHINGE,1,2\nHINGE,3,3,{-d0}\n" + "".join(f"{k},3,3,{-d0}\n" for k in cl_ids)
-        prints = "*NODE PRINT, NSET=HINGE, TOTALS=ONLY\nRF\n" + "".join(f"*NODE PRINT, NSET={k}, TOTALS=ONLY\nRF\n" for k in cl_ids) + \
-                 "*NODE PRINT, NSET=GBOT, TOTALS=ONLY\nRF\n"
+    gas_todo = os.environ.get("FT_LID_GASKETS", ",".join(GASKETS)).split(",")
+    out_cfg = {}
+    for cname, door in configs.items():
+        bodies = [("door", door), ("gasket spring bed", spring),
+                  ("inner ring", part(parts, "Inner clamp ring (MK-02)").shape), ("window ring", part(parts, "Window ring (MK-02)").shape),
+                  ("flange", part(parts, "Window retaining flange (MK-02)").shape),
+                  ("camera port ring", part(parts, "Camera port ring").shape)]
+        m = mesh_bodies(bodies, f"c4a_door_{cname}", hmax=hmax, hmin=1.0, curv=10)
+        inside = lambda c: (c[:, 0] > gi[0]) & (c[:, 0] < gi[1]) & (c[:, 1] > gi[2]) & (c[:, 1] < gi[3])
+        f_lid = faces_on(m, surfaces(m, planar("z", g["zr"])), inside)
+        f_ring = faces_on(m, surfaces(m, planar("z", g["zr"] - 6.0)))
+        f_ceil = faces_on(m, surfaces(m, planar("z", g["flange_ceiling"])))
+        f_cam = faces_on(m, surfaces(m, planar("z", g["cam_top"])))
+        a_ceil, a_cam = f_ceil["area"].sum(), f_cam["area"].sum()
+        gb = nodes_on(m, surfaces(m, planar("z", z_gb)))
+        q = m["xyz"]
+        door_nodes = np.unique(m["idx"][m["tets"][m["body"] == 0]].ravel())
+        in_door = np.zeros(len(q), bool)
+        in_door[door_nodes] = True
+        lx_, ly_ = g["latch"]
+        latch = m["ntags"][in_door & (np.abs(q[:, 2] - g["ltop"]) < 1e-3) & (np.hypot(q[:, 0] - lx_, q[:, 1] - ly_) <= g["latch_r"])]
+        hinges = {}
+        for k, (hx0, hx1, hy0, hy1) in enumerate(g["hinges"]):
+            hinges[f"HINGE{k + 1}"] = m["ntags"][in_door & (np.abs(q[:, 2] - g["zr"]) < 1e-3) & (q[:, 0] >= hx0) & (q[:, 0] <= hx1)
+                                                 & (q[:, 1] >= hy0) & (q[:, 1] <= hy1)]
+        print(f"  4a {cname}: latch {len(latch)} nodes, hinges {[len(v) for v in hinges.values()]}, gasket bottom {len(gb)}")
+        band = ((q[:, 0] <= gi[0] + 1e-6) | (q[:, 0] >= gi[1] - 1e-6) | (q[:, 1] <= gi[2] + 1e-6) | (q[:, 1] >= gi[3] - 1e-6)) & \
+               (q[:, 0] >= go[0] - 1e-6) & (q[:, 0] <= go[1] + 1e-6) & (q[:, 1] >= go[2] - 1e-6) & (q[:, 1] <= go[3] + 1e-6)
+        gtop = np.nonzero(band & (np.abs(q[:, 2] - g["zr"]) < 1e-3))[0]
+        seat = m["idx"][np.unique(f_ceil["tri"].ravel())]
+        p = q[gtop]
+        dist = np.stack([np.abs(p[:, 1] - cy0), np.abs(p[:, 0] - cx1), np.abs(p[:, 1] - cy1), np.abs(p[:, 0] - cx0)], 1)
+        side = np.argmin(dist, 1)
+        s_coord = np.where(side == 0, p[:, 0] - cx0, np.where(side == 1, Lx + p[:, 1] - cy0,
+                           np.where(side == 2, Lx + Ly + cx1 - p[:, 0], 2 * Lx + Ly + cy1 - p[:, 1])))
+        on_line = dist[np.arange(len(p)), side] <= 2.0
+        s_sup = {"LATCH": lx_ - cx0, "HINGE1": Lx + Ly + cx1 - (g["hinges"][0][0] + 20.0), "HINGE2": Lx + Ly + cx1 - (g["hinges"][1][0] + 20.0)}
+        A_p = f_lid["area"].sum() + f_ring["area"].sum()
+        # nodes away from the idealised supports (30 mm from the latch's axis and from each hinge leaf)
+        dmin = np.hypot(q[:, 0] - lx_, q[:, 1] - ly_)
+        for (hx0, hx1, hy0, hy1) in g["hinges"]:
+            dmin = np.minimum(dmin, np.hypot(np.maximum(np.maximum(hx0 - q[:, 0], q[:, 0] - hx1), 0), np.maximum(np.maximum(hy0 - q[:, 1], q[:, 1] - hy1), 0)))
+        away = dmin > 30.0
+        ring_zone = np.hypot(q[:, 0] - g["win"][0], q[:, 1] - g["win"][1]) <= 75.0
+        set_names = ["LATCH"] + list(hinges)
 
-        def loads(pr):
-            if pr == 0:
-                return ""
-            return "*DLOAD, OP=NEW\n" + dload_lines(f_lid, pr) + dload_lines(f_ring, pr) + dload_lines(f_ceil, pr * math.pi * r_seal ** 2 / a_ceil)
-
-        job = f"c4a_lid_{gname}"
-        write_model(job, m, mats, sets)
-        txt = ""
-        for pr in (0.0, 0.001, 0.005):
-            txt += f"*STEP\n*STATIC, SOLVER={sol}\n*BOUNDARY\n{bc}" + loads(pr) + prints + "*NODE FILE\nU\n*EL FILE\nS\n*END STEP\n"
-        append(job, txt)
-        t_lin = run_ccx(job)
-        res = step_results(m, job)
-        tot = read_totals(job)
-        steps = {}
-        for k, (tag, pr) in enumerate((("preload", 0.0), ("plus10mbar", 0.001), ("plus50mbar", 0.005))):
-            U, S, vm = res[k]
+        def profile(U):
             comp = -U[gtop, 2]
-            i = int(np.argmax(vm))
-            on_lid = m["body"] == 0
-            # nodal von Mises per body: take nodes of lid elements
-            lid_nodes = np.unique(m["idx"][m["tets"][on_lid]].ravel())
+            sc, cc = s_coord[on_line], comp[on_line]
+            nb = int(math.ceil((2 * Lx + 2 * Ly) / 5.0))
+            bins = np.minimum((sc / 5.0).astype(int), nb - 1)
+            prof = np.full(nb, np.nan)
+            for b_ in np.unique(bins):
+                prof[b_] = cc[bins == b_].mean()
+            return prof
+
+        out = {}
+        for gname, gk in GASKETS.items():
+            if gname not in gas_todo:
+                continue
+            if cname != "drawn" and gname != "foam_2a2":
+                continue
+            gp = gasket_props(gk, width)
+            mats = [MAT["ss304"], dict(E=gp["E_layer"], nu=0.0, rho=gk["rho"]), MAT["al6061"], MAT["al6061"], MAT["al6061"], MAT["al6061"]]
+            sets = nset("GBOT", gb) + nset("LATCH", latch) + "".join(nset(k, v) for k, v in hinges.items())
+            d0 = gp["squeeze_mm"]
+            bc = f"GBOT,3,3\nLATCH,3,3,{-d0}\n" + "".join(f"{k},1,2\n{k},3,3,{-d0}\n" for k in hinges)
+            prints = "".join(f"*NODE PRINT, NSET={k}, TOTALS=ONLY\nRF\n" for k in set_names) + "*NODE PRINT, NSET=GBOT, TOTALS=ONLY\nRF\n"
+
+            def loads(pr):
+                if pr == 0:
+                    return ""
+                return ("*DLOAD, OP=NEW\n" + dload_lines(f_lid, pr) + dload_lines(f_ring, pr) + dload_lines(f_ceil, pr * math.pi * r_seal ** 2 / a_ceil)
+                        + dload_lines(f_cam, -pr * math.pi * r_cam ** 2 / a_cam))
+
+            job = f"c4a_door_{cname}_{gname}"
+            write_model(job, m, mats, sets)
+            txt = ""
+            for pr in (0.0, 0.001, 0.005):
+                txt += f"*STEP\n*STATIC, SOLVER={sol}\n*BOUNDARY\n{bc}" + loads(pr) + prints + "*NODE FILE\nU\n*EL FILE\nS\n*END STEP\n"
+            append(job, txt)
+            t_lin = run_ccx(job)
+            res = step_results(m, job)
+            tot = read_totals(job)
+            steps = {}
+            lid_nodes = door_nodes
             ring_nodes = np.unique(m["idx"][m["tets"][m["body"] >= 2]].ravel())
-            vm_lid = vm[lid_nodes]
-            j = lid_nodes[int(np.argmax(vm_lid))]
-            # bins of 5 mm along the centre line: mean compression of the nodes within 2 mm of the line
-            sc, cc = s_coord[on_line], comp[on_line]
-            nb = int(math.ceil((2 * Lx + 2 * Ly) / 5.0))
-            bins = np.minimum((sc / 5.0).astype(int), nb - 1)
-            prof = np.full(nb, np.nan)
-            for b_ in np.unique(bins):
-                prof[b_] = cc[bins == b_].mean()
-            rf = {k2: tot.get((k2, k + 1)) for k2 in list(cl_ids) + ["HINGE", "GBOT"]}
             far = lid_nodes[away[lid_nodes]]
-            steps[tag] = dict(p_MPa=pr, vm_lid_max=float(vm_lid.max()), vm_lid_max_at=m["xyz"][j].tolist(),
-                              vm_lid_p995=float(np.percentile(vm_lid, 99.5)), vm_ring_max=float(vm[ring_nodes].max()),
-                              vm_lid_away_max=float(vm[far].max()), vm_lid_away_at=m["xyz"][far[int(np.argmax(vm[far]))]].tolist(),
-                              vm_ring_zone_max=float(vm[lid_nodes[ring_zone[lid_nodes]]].max()),
-                              u_max_mm=float(np.linalg.norm(U, axis=1).max()),
-                              lid_uz_max_mm=float(U[lid_nodes, 2].max()), lid_uz_max_at=m["xyz"][lid_nodes[int(np.argmax(U[lid_nodes, 2]))]].tolist(),
-                              window_seat_uz_mm=float(U[seat, 2].mean()),
-                              gasket_comp_min_mm=float(np.nanmin(prof)), gasket_comp_max_mm=float(np.nanmax(prof)),
-                              gasket_comp_min_at_s=float(np.nanargmin(prof) * 5.0 + 2.5),
-                              gasket_open_length_mm=float(np.sum(prof < 0) * 5.0),
-                              gasket_below_half_length_mm=float(np.sum(prof < d0 / 2) * 5.0),
-                              reactions_N={k2: (None if v is None else [round(x, 2) for x in v]) for k2, v in rf.items()},
-                              profile=[None if np.isnan(x) else round(float(x), 4) for x in prof])
-            if tag == "plus50mbar":
-                steps[tag]["_U"], steps[tag]["_vm"] = U, vm
-        # NLGEOM at +50 mbar: preload then pressure, in increments
-        job_nl = f"c4a_lid_{gname}_nl"
-        write_model(job_nl, m, mats, sets)
-        append(job_nl, f"*STEP, NLGEOM, INC=100\n*STATIC, SOLVER={sol}\n0.5,1.0,1e-4,1.0\n*BOUNDARY\n{bc}" + prints + "*NODE FILE\nU\n*EL FILE\nS\n*END STEP\n"
-               + f"*STEP, NLGEOM, INC=100\n*STATIC, SOLVER={sol}\n0.25,1.0,1e-4,0.5\n" + loads(0.005) + prints + "*NODE FILE\nU\n*EL FILE\nS\n*END STEP\n")
-        try:
-            t_nl = run_ccx(job_nl)
-            U, S, vm = step_results(m, job_nl)[-1]
-            comp = -U[gtop, 2]
-            sc, cc = s_coord[on_line], comp[on_line]
-            nb = int(math.ceil((2 * Lx + 2 * Ly) / 5.0))
-            bins = np.minimum((sc / 5.0).astype(int), nb - 1)
-            prof = np.full(nb, np.nan)
-            for b_ in np.unique(bins):
-                prof[b_] = cc[bins == b_].mean()
-            lid_nodes = np.unique(m["idx"][m["tets"][m["body"] == 0]].ravel())
-            tot = last_totals(read_totals(job_nl))
-            far = lid_nodes[away[lid_nodes]]
-            nl = dict(vm_lid_max=float(vm[lid_nodes].max()), vm_lid_p995=float(np.percentile(vm[lid_nodes], 99.5)),
-                      vm_lid_away_max=float(vm[far].max()), vm_lid_away_at=m["xyz"][far[int(np.argmax(vm[far]))]].tolist(),
-                      vm_ring_zone_max=float(vm[lid_nodes[ring_zone[lid_nodes]]].max()),
-                      lid_uz_max_mm=float(U[lid_nodes, 2].max()), window_seat_uz_mm=float(U[seat, 2].mean()),
-                      gasket_comp_min_mm=float(np.nanmin(prof)), gasket_open_length_mm=float(np.sum(prof < 0) * 5.0),
-                      gasket_below_half_length_mm=float(np.sum(prof < d0 / 2) * 5.0),
-                      reactions_N={k2: (None if tot.get(k2) is None else [round(x, 2) for x in tot.get(k2)]) for k2 in list(cl_ids) + ["HINGE", "GBOT"]},
-                      profile=[None if np.isnan(x) else round(float(x), 4) for x in prof], ccx_s=round(t_nl))
-        except RuntimeError as e:
-            print(f"  NLGEOM run failed: {str(e)[:400]}")
-            nl = dict(error=str(e)[:400])
-        U50, vm50 = steps["plus50mbar"].pop("_U"), steps["plus50mbar"].pop("_vm")
-        out[gname] = dict(gasket=gk["label"], **{k: (round(v, 4) if isinstance(v, float) else v) for k, v in gp.items()},
-                          total_preload_N=gp["force_per_mm"] * 2 * (Lx + Ly), steps=steps, nlgeom_plus50mbar=nl, ccx_s=round(t_lin))
-        if gname == "fkm":
-            i = int(np.argmax(vm50))
-            png = "struct-lid.png"
-            render(m, U50, vm50, OUT / png, f"4a: FT-1 lid (14 ga 304) on a solid FKM cord, clamps closed + 50 mbar inside (linear)\n"
-                   f"max von Mises {vm50.max():.0f} MPa", (-0.9, -1.4, 1.3), mark=m["xyz"][i], clim=(0, float(np.percentile(vm50, 99.5)) * 1.1))
-            out[gname]["png"] = png
-        print(f"  4a {gname}: preload {out[gname]['total_preload_N']:.0f} N; " + "; ".join(
-            f"{k}: lid uz max {v['lid_uz_max_mm']:.3f} mm, vm {v['vm_lid_max']:.0f} MPa, gasket comp min {v['gasket_comp_min_mm']:.3f} mm, open {v['gasket_open_length_mm']:.0f} mm"
-            for k, v in steps.items()))
-    r = dict(case="4a FT-1 box lid on its gasket: clamp preload, +10 mbar purge, +50 mbar fault", material="lid: " + MAT["ss304"]["label"] + "; rings: " + MAT["al6061"]["label"],
-             pressure_area_mm2=float(A_p), window_seal_r_mm=r_seal, gasket_width_mm=width, perimeter_mm=2 * (Lx + Ly),
-             clamp_s_mm=s_cl, sides_s_mm=dict(front=(0, Lx), right=(Lx, Lx + Ly), back=(Lx + Ly, 2 * Lx + Ly), left=(2 * Lx + Ly, 2 * Lx + 2 * Ly)),
-             force_10mbar_N=0.001 * A_p + 0.001 * math.pi * r_seal ** 2, force_50mbar_N=0.005 * A_p + 0.005 * math.pi * r_seal ** 2,
-             supports="gasket bottom (box rim) fixed in z; each clamp pulls the skirt's bottom edge down by the squeeze over 24 mm; hinge = back face nodes within 1 mm of the pin height, x-y-z fixed (pin line), pulled down by the squeeze",
-             gaskets=out)
-    stamp(r, m, sol, hmax=hmax)
+            for k, (tag, pr) in enumerate((("preload", 0.0), ("plus10mbar", 0.001), ("plus50mbar", 0.005))):
+                U, S, vm = res[k]
+                prof = profile(U)
+                vm_lid = vm[lid_nodes]
+                j = lid_nodes[int(np.argmax(vm_lid))]
+                rf = {k2: tot.get((k2, k + 1)) for k2 in set_names + ["GBOT"]}
+                steps[tag] = dict(p_MPa=pr, vm_lid_max=float(vm_lid.max()), vm_lid_max_at=m["xyz"][j].tolist(),
+                                  vm_lid_p995=float(np.percentile(vm_lid, 99.5)), vm_ring_max=float(vm[ring_nodes].max()),
+                                  vm_lid_away_max=float(vm[far].max()), vm_lid_away_at=m["xyz"][far[int(np.argmax(vm[far]))]].tolist(),
+                                  vm_ring_zone_max=float(vm[lid_nodes[ring_zone[lid_nodes]]].max()),
+                                  u_max_mm=float(np.linalg.norm(U, axis=1).max()),
+                                  lid_uz_max_mm=float(U[lid_nodes, 2].max()), lid_uz_max_at=m["xyz"][lid_nodes[int(np.argmax(U[lid_nodes, 2]))]].tolist(),
+                                  window_seat_uz_mm=float(U[seat, 2].mean()),
+                                  gasket_comp_min_mm=float(np.nanmin(prof)), gasket_comp_max_mm=float(np.nanmax(prof)),
+                                  gasket_comp_mean_mm=float(np.nanmean(prof)),
+                                  gasket_comp_min_at_s=float(np.nanargmin(prof) * 5.0 + 2.5),
+                                  gasket_open_length_mm=float(np.sum(prof < 0) * 5.0),
+                                  gasket_below_half_length_mm=float(np.sum(prof < d0 / 2) * 5.0),
+                                  reactions_N={k2: (None if v is None else [round(x, 2) for x in v]) for k2, v in rf.items()},
+                                  profile=[None if np.isnan(x) else round(float(x), 4) for x in prof])
+                if tag == "plus50mbar":
+                    steps[tag]["_U"], steps[tag]["_vm"] = U, vm
+            # NLGEOM at +50 mbar: preload then pressure, in increments
+            job_nl = f"c4a_door_{cname}_{gname}_nl"
+            write_model(job_nl, m, mats, sets)
+            append(job_nl, f"*STEP, NLGEOM, INC=100\n*STATIC, SOLVER={sol}\n0.5,1.0,1e-4,1.0\n*BOUNDARY\n{bc}" + prints + "*NODE FILE\nU\n*EL FILE\nS\n*END STEP\n"
+                   + f"*STEP, NLGEOM, INC=100\n*STATIC, SOLVER={sol}\n0.25,1.0,1e-4,0.5\n" + loads(0.005) + prints + "*NODE FILE\nU\n*EL FILE\nS\n*END STEP\n")
+            try:
+                t_nl = run_ccx(job_nl)
+                U, S, vm = step_results(m, job_nl)[-1]
+                prof = profile(U)
+                tot = last_totals(read_totals(job_nl))
+                nl = dict(vm_lid_max=float(vm[lid_nodes].max()), vm_lid_p995=float(np.percentile(vm[lid_nodes], 99.5)),
+                          vm_lid_away_max=float(vm[far].max()), vm_lid_away_at=m["xyz"][far[int(np.argmax(vm[far]))]].tolist(),
+                          vm_ring_zone_max=float(vm[lid_nodes[ring_zone[lid_nodes]]].max()),
+                          lid_uz_max_mm=float(U[lid_nodes, 2].max()), window_seat_uz_mm=float(U[seat, 2].mean()),
+                          gasket_comp_min_mm=float(np.nanmin(prof)), gasket_comp_mean_mm=float(np.nanmean(prof)),
+                          gasket_open_length_mm=float(np.sum(prof < 0) * 5.0),
+                          gasket_below_half_length_mm=float(np.sum(prof < d0 / 2) * 5.0),
+                          reactions_N={k2: (None if tot.get(k2) is None else [round(x, 2) for x in tot.get(k2)]) for k2 in set_names + ["GBOT"]},
+                          profile=[None if np.isnan(x) else round(float(x), 4) for x in prof], ccx_s=round(t_nl))
+            except RuntimeError as e:
+                print(f"  NLGEOM run failed: {str(e)[:400]}")
+                nl = dict(error=str(e)[:400])
+            U50, vm50 = steps["plus50mbar"].pop("_U"), steps["plus50mbar"].pop("_vm")
+            out[gname] = dict(gasket=gk["label"], **{k: (round(v, 4) if isinstance(v, float) else v) for k, v in gp.items()},
+                              total_preload_N=gp["force_per_mm"] * 2 * (Lx + Ly), steps=steps, nlgeom_plus50mbar=nl, ccx_s=round(t_lin))
+            if gname == "foam_2a2" and cname == "drawn":
+                i = int(np.argmax(vm50))
+                png = "struct-lid-v2.png"
+                render(m, U50, vm50, OUT / png, f"4a (CAD v2): Saginaw door on its poured foam gasket (2A2), latch + 2 hinges, +50 mbar inside (linear)\n"
+                       f"max von Mises {vm50.max():.0f} MPa", (-0.9, -1.4, 1.3), mark=m["xyz"][i], clim=(0, float(np.percentile(vm50, 99.5)) * 1.1))
+                out[gname]["png"] = png
+            print(f"  4a {cname} {gname}: preload {out[gname]['total_preload_N']:.0f} N; " + "; ".join(
+                f"{k}: lid uz max {v['lid_uz_max_mm']:.3f} mm, vm away {v['vm_lid_away_max']:.0f} MPa, gasket comp min {v['gasket_comp_min_mm']:.3f} mm, open {v['gasket_open_length_mm']:.0f} mm"
+                for k, v in steps.items()) + f"; NLGEOM +50: comp min {nl.get('gasket_comp_min_mm', float('nan')):.3f} mm, open {nl.get('gasket_open_length_mm', float('nan')):.0f} mm", flush=True)
+        out_cfg[cname] = dict(gaskets=out, nodes=int(len(m["ntags"])), elements=int(len(m["tets"])), pressure_area_mm2=float(A_p),
+                              door_return_mm=(g["zr"] - g["skirt_bot"]) if cname == "drawn" else DOOR_RETURN_DEEP)
+    r = dict(case="4a (CAD v2) FT-1 box door (Saginaw SCE-16EL1208SSLP) on its poured gasket: latch and hinges closed, +10 mbar purge, +50 mbar fault",
+             material="door: " + MAT["ss304"]["label"] + f" {g['t']:.3f} mm; rings: " + MAT["al6061"]["label"],
+             window_seal_r_mm=r_seal, gasket_width_mm=width, perimeter_mm=2 * (Lx + Ly), support_s_mm=s_sup,
+             sides_s_mm=dict(front=(0, Lx), right=(Lx, Lx + Ly), back=(Lx + Ly, 2 * Lx + Ly), left=(2 * Lx + Ly, 2 * Lx + 2 * Ly)),
+             latch_xy=list(g["latch"]), hinge_patches=g["hinges"], window_xy=list(g["win"]), camera_port_xy=list(g["cam"]),
+             supports="gasket bottom (the body's lip) fixed in z; the latch pulls a Ø25 patch of the door's top face down by the squeeze; "
+                      "each concealed hinge holds its 40 x 15 mm leaf on the door's inner face in x and y and pulls it down by the squeeze",
+             configs=out_cfg)
+    A_p = out_cfg["drawn"]["pressure_area_mm2"]
+    r["force_10mbar_N"] = 0.001 * A_p + 0.001 * math.pi * r_seal ** 2
+    r["force_50mbar_N"] = 0.005 * A_p + 0.005 * math.pi * r_seal ** 2
+    r["run"] = dict(utc=time.strftime("%Y-%m-%d %H:%M", time.gmtime()), commit=model_commit(), solver=sol, hmax=hmax,
+                    nodes={k: v["nodes"] for k, v in out_cfg.items()})
     R["4a"] = r
 
 
@@ -1286,47 +1321,52 @@ def case4d(R):
 # plot and write-up
 # --------------------------------------------------------------------------------------------
 def plot_gasket(R):
-    """Gasket compression along the lid's gasket line: one panel per gasket, load steps light -> dark (one blue ramp)."""
+    """Gasket compression along the door's gasket line (CAD v2): one panel per run (door return x gasket grade), load
+    steps light -> dark (one blue ramp); dashed lines: the latch and the two hinges."""
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     r = R["4a"]
     ramp = {"preload": "#84b9f3", "plus10mbar": "#2370cd", "plus50mbar": "#0e3d7e"}
-    names = {"preload": "clamps closed", "plus10mbar": "+10 mbar purge", "plus50mbar": "+50 mbar fault (NLGEOM)"}
-    ink, ink2, grid = "#191919", "#666666", "#e6e6e6"
-    fig, axes = plt.subplots(1, 2, figsize=(11.5, 4.0), sharey=True, dpi=130)
-    ymax = 0.0
-    for ax, (gname, g) in zip(axes, r["gaskets"].items()):
+    names = {"preload": "latch and hinges closed", "plus10mbar": "+10 mbar purge", "plus50mbar": "+50 mbar fault (NLGEOM)"}
+    ink, ink2, grid, bad = "#191919", "#666666", "#e6e6e6", "#c0392b"
+    runs = [(c, gname, gk) for c, cfg in r["configs"].items() for gname, gk in cfg["gaskets"].items()]
+    title = {("drawn", "foam_2a2"): "door return 5.5 mm (as drawn), foam 2A2", ("drawn", "foam_2a4"): "door return 5.5 mm (as drawn), foam 2A4",
+             ("deep_return", "foam_2a2"): f"door return {DOOR_RETURN_DEEP:.0f} mm, foam 2A2"}
+    fig, axes = plt.subplots(1, len(runs), figsize=(4.6 * len(runs), 4.0), sharey=True, dpi=130)
+    axes = np.atleast_1d(axes)
+    ymin, ymax = 0.0, 0.0
+    for ax, (c, gname, g) in zip(axes, runs):
         for tag in ("preload", "plus10mbar", "plus50mbar"):
             prof = g["nlgeom_plus50mbar"]["profile"] if tag == "plus50mbar" and "profile" in g["nlgeom_plus50mbar"] else g["steps"][tag]["profile"]
             y = np.array([np.nan if v is None else v for v in prof], dtype=float)
             x = np.arange(len(y)) * 5.0 + 2.5
             ax.plot(x, y, color=ramp[tag], lw=2.0, label=names[tag], solid_capstyle="round")
-            ymax = max(ymax, np.nanmax(y))
-            j = len(y) - 1 - np.argmax(~np.isnan(y[::-1]))
-        for k, s in r["clamp_s_mm"].items():
+            ymax, ymin = max(ymax, np.nanmax(y)), min(ymin, np.nanmin(y))
+        for k, s in r["support_s_mm"].items():
             ax.axvline(s, color=ink2, lw=0.8, ls=(0, (3, 3)))
         for side, (a, b) in r["sides_s_mm"].items():
-            ax.text((a + b) / 2, 1.02, side + (" (hinge)" if side == "back" else ""), transform=ax.get_xaxis_transform(), ha="center",
-                    va="bottom", fontsize=8, color=ink2)
+            ax.text((a + b) / 2, 1.02, side + (" (latch)" if side == "front" else " (hinges)" if side == "back" else ""),
+                    transform=ax.get_xaxis_transform(), ha="center", va="bottom", fontsize=8, color=ink2)
             ax.axvline(a, color=grid, lw=0.8)
         ax.axhline(g["squeeze_mm"], color=ink2, lw=0.8)
+        ax.axhline(0.0, color=bad, lw=0.9)
         ax.text(r["perimeter_mm"] * 0.995, g["squeeze_mm"], f"set squeeze {g['squeeze_mm']:.2f} mm", ha="right", va="bottom", fontsize=8, color=ink2)
-        ax.set_title(("Solid FKM cord Ø3 mm, 75A" if gname == "fkm" else "Silicone sponge 3 mm, ASTM D1056 2A2") +
-                     f": {g['total_preload_N'] / 1000:.2f} kN to close", fontsize=9.5, color=ink, pad=16)
+        ax.text(r["perimeter_mm"] * 0.5, 0.0, "below: open", ha="center", va="top", fontsize=8, color=bad)
+        ax.set_title(title.get((c, gname), f"{c}, {gname}") + f": {g['total_preload_N']:.0f} N to close", fontsize=9.5, color=ink, pad=16)
         ax.set_xlim(0, r["perimeter_mm"])
-        ax.set_xlabel("position along the gasket line from the front-left corner (mm); dashed: clamps", fontsize=8.5, color=ink)
+        ax.set_xlabel("position along the gasket line from the front-left corner (mm)", fontsize=8.5, color=ink)
         ax.grid(axis="y", color=grid, lw=0.6)
         for sp in ("top", "right"):
             ax.spines[sp].set_visible(False)
         ax.tick_params(colors=ink2, labelsize=8)
     axes[0].set_ylabel("gasket compression (mm)", fontsize=9, color=ink)
-    axes[0].set_ylim(0, max(0.85, ymax * 1.1))
-    axes[1].legend(loc="lower right", fontsize=8, frameon=False)
-    fig.suptitle("4a: FT-1 lid gasket compression between the clamps (CalculiX, lid + window stack + gasket as a bonded spring bed)",
-                 fontsize=10, color=ink, y=1.0)
+    axes[0].set_ylim(min(-0.3, ymin * 1.1), max(1.1, ymax * 1.1))
+    axes[-1].legend(loc="lower right", fontsize=8, frameon=False)
+    fig.suptitle("4a (CAD v2): Saginaw door's gasket compression, one latch (front middle) and two hinges (back), dashed "
+                 "(CalculiX, door + window stack + gasket as a bonded spring bed)", fontsize=10, color=ink, y=1.0)
     fig.tight_layout()
-    fig.savefig(OUT / "struct-lid-gasket.png", bbox_inches="tight", facecolor="white")
+    fig.savefig(OUT / "struct-lid-gasket-v2.png", bbox_inches="tight", facecolor="white")
     plt.close(fig)
 
 
@@ -1620,21 +1660,27 @@ def main():
     RUN.mkdir(parents=True, exist_ok=True)
     jf = OUT / "struct.json"
     R = json.loads(jf.read_text()) if jf.exists() else {}
-    todo = sys.argv[1:] or ["4a_check", "4a", "4b", "4c", "4d"]
+    # round 3: the round-1 model's (v1, model d117ba8) results of 4a, 4a-check, 4b and 4d are kept under R["v1"]; the
+    # cases now run on CAD v2 and write R["4a"] etc.
+    if "v1" not in R:
+        R["v1"] = {k: R[k] for k in ("4a_check", "4a", "4b", "4d") if k in R}
+        R["v1"]["note"] = "round-1 CAD model (d117ba8): 14 ga custom lid on four clamps and a hinge line, window stack at (0, 0)"
+    todo = sys.argv[1:] or ["4a_check", "4a", "4b", "4d"]
     fn = {"4a": case4a, "4a_check": case4a_check, "4b": case4b, "4c": case4c, "4d": case4d, "4c_model": case4c_model}
     for c in todo:
-        if c == "md":
+        if c in ("md", "plot"):
             continue
         t0 = time.time()
         print(f"case {c}")
         fn[c](R)
         print(f"  case {c} done in {time.time() - t0:.0f} s")
         jf.write_text(json.dumps(R, indent=1, default=float))
-    if todo == ["4c_model"]:
-        return          # the frame as drawn: struct.json only; its addendum in struct.md is written by hand
-    if "4a" in R:
+    if "4a" in R and "configs" in R["4a"] and ("4a" in todo or "plot" in todo):
         plot_gasket(R)
-    write_md(R)
+    # struct.md is maintained by hand since round 2 (the 4c addendum, the round-3 section); write_md(R) wrote round 1's
+    # version from R and is kept for reference only (it reads the v1 result layout)
+    if "md" in todo:
+        write_md(R["v1"] | {k: v for k, v in R.items() if k == "4c"})
 
 
 if __name__ == "__main__":
