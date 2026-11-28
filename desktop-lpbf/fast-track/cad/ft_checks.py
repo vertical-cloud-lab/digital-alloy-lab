@@ -698,7 +698,7 @@ def main():
     OUT.mkdir(exist_ok=True)
     t0 = time.time()
     only = sys.argv[1:]
-    res = dict(states={})
+    res = dict(gantry=P["gantry"], states={})
     gas = {}
     runs = [(s, "zaber") for s in M.STATES] + [("FT-1", "thorlabs")]
     for st, pist in runs:
@@ -745,8 +745,12 @@ def main():
 
 
 def write_md(res):
-    md = ["# Checks on the fast-track model (`ft_checks.py`, round 2)", "",
-          "Generated from `ft_model.py` (2026-11-27). The stages are drawn from Zaber's and Thorlabs' STEP files, the box,",
+    g = res.get("gantry", P["gantry"])
+    md = ["# Checks on the fast-track model (`ft_checks.py`)", "",
+          f"Generated from `ft_model.py` with the gantry `P['gantry'] = \"{g}\"`"
+          + (" (the g3 frame: the head's far face held from both cross-beams, the default since round 3, 2026-11-28)."
+             if g.endswith("_g3") else "."),
+          "The stages are drawn from Zaber's and Thorlabs' STEP files, the box,",
           "head and lens from their makers' drawings (`ft_vendor.py`, `out/vendor-verify.json`); other bought parts are",
           "envelopes (sizes marked in `ft_model.P`). A clash with an envelope means 'check the maker's drawing'.", ""]
     md += ["## 1. Interference and the beam, by state", "",
