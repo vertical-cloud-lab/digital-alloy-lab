@@ -20,16 +20,20 @@ in an Al alloy: the smallest result that shows a working LPBF machine.
 | [`cad/`](cad/) | **the CadQuery model of FT-0, FT-1 and FT-1V, and the progression between them as parts arrive** (model, checks, schedule, renders, STEP); see [`cad/README.md`](cad/README.md) |
 | [`../edison/ft-fast-track-review/`](../edison/ft-fast-track-review/) | Edison `LITERATURE_HIGH` review of minimal LPBF builds (query, answer, references, trajectory) |
 | [`live-reads-2026-11-27.csv`](live-reads-2026-11-27.csv) | round 2's reads through the lab Pi (headed Chrome, real mouse clicks): eBay, Zaber, Thorlabs, Digi-Key, Digilent, box and heater vendors |
-| [`process/`](process/README.md) | round 2: optics chain, back reflection, thermal lens, AlSi10Mg melt-pool model and starting set, the first build's scan program and RTC lists, build times |
+| [`process/`](process/README.md) | rounds 2–3: optics chain, back reflection, thermal lens, AlSi10Mg melt-pool model and starting set, the first build's scan program and RTC lists, build times |
 | [`control/`](control/README.md) | round 2: the build supervisor `ftctl` (simulated and real backends, 54 tests), interlock check, I/O list, power budget, wiring diagrams, dwell study, commissioning |
-| [`analysis/`](analysis/) | round 2: structural and thermal FEA (CalculiX) and gas CFD (OpenFOAM) of FT-1/FT-1V |
-| [`fab/`](fab/) | round 2: fabrication-ready parts, FreeCAD CAM and G-code, voxel checks, drawings, shop hours |
+| [`analysis/`](analysis/) | rounds 2–3: structural and thermal FEA (CalculiX) and gas CFD (OpenFOAM) of FT-1/FT-1V, on CAD v2 since round 3 |
+| [`fab/`](fab/) | rounds 2–3: fabrication-ready parts (CAD v2 since round 3), FreeCAD CAM and G-code, voxel checks, drawings, shop hours |
 | [`../edison/ft-round2-review/`](../edison/ft-round2-review/answer.md) | Edison round 2: seven design risks and the top five with first-week checks |
 | [`video/`](video/README.md) | round 2: the progression video, S1 → FT-1V on the round-1 model with the real scan programs ([YouTube](https://youtu.be/kdaj7jzdJyI)), its pipeline, QA and frame audit |
+| [`day0/`](day0/README.md) | round 3: every request a person has to send on day 0 (LSO, EHS and the Fire Marshal, Physical Facilities, sellers and makers, BYU Purchasing), and FT-1's laser-hazard numbers for the LSO |
+| [`live-reads-2026-11-28.csv`](live-reads-2026-11-28.csv), [`…-notes.md`](live-reads-2026-11-28-notes.md) | round 3's reads through the lab Pi: SCANLAB's RTC4 package, PicoScope, the Pi HQ camera, the AE chain, Digi-Key, the cube's face opening, BYU's card rules and laser-safety pages |
+| [`fab/review-r3.md`](fab/review-r3.md) | round 3: a separate review of the fabrication programs and the shop-hour allowances |
 
 ## Short answer
 
-Updated in round 2 (2026-11-27); §0 lists what the detailed design work changed.
+Updated in round 3 (2026-11-28). §0 lists what round 3 found, working through round 2's not-done list; §0a lists
+what round 2's detailed design changed.
 
 - **PR 266's design can't reach 6 weeks.** Bought new, the IPG laser alone takes 12–15 weeks to arrive. With the laser,
   scan head and card bought used, fabrication sets the date: about 10–11.5 weeks to an assembled machine
@@ -46,24 +50,28 @@ Updated in round 2 (2026-11-27); §0 lists what the detailed design work changed
   - **Powder bed:** two stock Zaber stages (1–5 day lead time). The X-VSR20A lowers a Ø40 mm heated plate in a heated
     aluminium well. The **X-LSM100B** moves a small gravity-fed hopper with the blade, as Heriot-Watt's rig did; Zaber's
     STEP showed round 1's X-LSQ075B is 285.9 mm long, too long for the deck.
-  - **Custom parts:** 31 kinds of piece to FT-1, every one programmed in FreeCAD CAM and checked in a voxel
-    simulation: **59–123 shop hours** with PR 266's allowances, not the 25–40 that round 1 guessed
-    ([`fab/`](fab/)). No honing, no vacuum seals, no 4th axis.
-  - **Cost:** **$29.2k–47.3k** with the monitoring set (camera, raking lights, coaxial photodiode, acoustic emission,
-    digitizer), **$23.9k–39.1k without it**, against $70.5k–154.1k for PR 266's BOM.
-  - **Time:** first tracks at 2.7–7.3 weeks and **first coupons at 3.7–9.3 weeks** with the two stages on separate
-    vendors' PCard orders and the shop giving 5–8 hours a working day. **With two people in the shop (12 h a day) the
-    coupons come at 3.2–6.4 weeks.** On one purchase order for both stages: 4.2–9.3 weeks.
+  - **Custom parts:** 41 kinds of piece to FT-1 on CAD v2 (47 with FT-1V's), every machined one programmed in
+    FreeCAD CAM: **81–166 shop hours** with PR 266's allowances (round 2's set on the round-1 model: 59–122; round 1
+    guessed 25–40) ([`fab/`](fab/)). A separate review found fixes the programs needed before they run; round 3 made them, and the review's own hours for FT-1 on v2 are 107–137 h with a machinist. No honing, no vacuum seals, no 4th axis.
+  - **Cost:** **$30.6k–49.8k** with the monitoring set (camera, raking lights, coaxial photodiode, acoustic emission,
+    digitizer), **$25.4k–42.2k without it**, against $70.5k–154.1k for PR 266's BOM. Round 3's rise is the shop
+    time on v2's pieces.
+  - **Time:** first tracks at 3.2–9.0 weeks and **first coupons at 4.2–11.0 weeks** with the shop giving 5–8 hours
+    a working day. The shop, not the parts, sets the date, so how the stages are bought no longer matters. At 12 shop
+    hours a day the coupons come at 3.6–7.1 weeks. **With two people programming and cutting full time for the first
+    11 working days, every piece is ready when the build needs it: first coupons at 3.5 weeks at the expected hours,
+    4.6 at the high ones** ([`fab/out/plan.md`](fab/out/plan.md)). One person gives 5.5 weeks.
 - **FT-0 is FT-1's first half:** the same optics, box and heated plate without the stages, spread by hand with a 48 mm
-  spreader bar. It lays single tracks and single-layer pads at **1.9–5.2 weeks for $20.9k–36.6k** ($16.5k–30.4k
+  spreader bar. It lays single tracks and single-layer pads at **2.4–6.9 weeks for $22.7k–39.7k** ($18.0k–33.3k
   without monitoring), and it is worth doing even if FT-1 follows, because it checks the used laser chain inside its
   return windows.
 - **What FT-1 gives up**, all of which can come back later:
-  - O₂ of 100–1000 ppm by flow purge, against PR 266's 1–10 ppm by pump-purge. The purge CFD has the box at 1000 ppm
-    in about 2.6 min and 100 ppm in about 5 min with a low diffuser and a high vent; leaks set the floor. EOS M 290 work on Al uses a 1000 ppm
-    threshold and small commercial machines purge to 1000–3000 ppm (PR 266 §2.3), and PR 266's own review found O₂
-    matters less than the powder's water ([`vacuum-and-purge.md`](../vacuum-and-purge.md)).
-    FT-1V, the same machine in a stock vacuum cube, keeps pump-purge for $10.9k–12.9k more and about a week longer.
+  - O₂ of 100–1000 ppm by flow purge, against PR 266's 1–10 ppm by pump-purge. The purge CFD on CAD v2 has the box at
+    1000 ppm in about 3.1 min and 100 ppm in about 5 min with a low diffuser and a vent at the top of the door. With
+    the lid seated and the box at +5–10 mbar, leaks set a floor of a few ppm (0-D estimate). EOS M 290 work on Al
+    uses a 1000 ppm threshold and small commercial machines purge to 1000–3000 ppm (PR 266 §2.3), and PR 266's own
+    review found O₂ matters less than the powder's water ([`vacuum-and-purge.md`](../vacuum-and-purge.md)).
+    FT-1V, the same machine in a stock vacuum cube, keeps pump-purge for $11.4k–13.7k more and 0.7–1.8 weeks longer.
   - One Ø40 mm plate instead of Ø25/50/75 modules; builds up to 15 mm.
   - No VLM tray fit, no robot features, no recirculating gas loop (argon runs once through).
 - **What it keeps:** the physics PR 266 chose. A CW single-mode fibre laser at 1070 nm with a galvo and f-theta (76 µm
@@ -71,14 +79,25 @@ Updated in round 2 (2026-11-27); §0 lists what the detailed design work changed
   supervisor `ftctl` runs a whole simulated build today: [`control/`](control/README.md)).
 - **Heat, not the scanner, sets the build time.** The plate sheds the laser's heat to the block only through the 0.1 mm
   argon gap: 0.67 W/K from the substrate top in the thermal FEA. Without a dwell the substrate would run 41–106 K above
-  200 °C. At that conductance a 10 mm build takes 2.1–4.2 h holding the plate within 5 K with the block at the plate's
-  temperature, and **0.8–1.8 h with the block 20 K cooler** (absorptivity 0.3–0.6; scanning and spreading alone take
-  0.6 h) ([`control/out/dwell-study-fe.csv`](control/out/dwell-study-fe.csv), [`analysis/out/fea/`](analysis/out/fea/)). The starting set for AlSi10Mg is 255 W, 1.25 m/s, 0.10 mm
-  hatch, 30 µm layers ([`process/`](process/README.md)).
+  200 °C. At that conductance a 10 mm build on CAD v2 takes 1.5–3.0 h holding the substrate within +10 K with the
+  block at the set point, and **0.8–1.6 h with the block 20 K cooler** (absorptivity 0.3–0.6; scanning and recoating
+  alone take 0.6 h; [`process/`](process/README.md) §R3.3). Round 2's +5 K hold gave 2.1–4.2 and 0.8–1.8 h
+  ([`control/out/dwell-study-fe.csv`](control/out/dwell-study-fe.csv), [`analysis/out/fea/`](analysis/out/fea/)). The
+  starting set for AlSi10Mg is 255 W, 1.25 m/s, 0.10 mm hatch, 30 µm layers ([`process/`](process/README.md)).
 - **The long poles are now the shop and the approvals, not parts.** Registering a Class 4 laser with the LSO and an EHS
   look at aluminium powder have no published turnaround at BYU; FT-1 is a Class 1 enclosure (the beam is enclosed from
   the fibre to the plate) to make that review simple, and both requests should go out on day 0, with a Physical
-  Facilities request for the laser's 208/240 V circuit if the room has none.
+  Facilities request for the laser's 208/240 V circuit if the room has none ([`day0/`](day0/README.md) has every
+  request written out).
+- **What round 3 changed in the design** (§0):
+  - put the purge vent through the box's door, at its top;
+  - measure the delivered door's return, and if it is under about 15 mm add a toggle clamp near each front corner:
+    as drawn, the door's front corners lift off the gasket above about +22 mbar;
+  - round the deck plate's corners to R 30, so the cassette lies flat in the cube at the estimated 250–260 mm face
+    opening, and ask Ideal Vacuum for the frame's drawing before ordering the cube;
+  - put focus ladders and reference crosses on the back half of the plate: its front 5 mm can return up to ~256 W of
+    a polished plate's 342 W onto the scan mirrors;
+  - brace the gantry's portals: with real bolted joints g3's first mode falls from 62 Hz to 44–54 Hz (34 Hz on bolted foot plates). A low diagonal in the front portal, one over the box at the back, a second bracket at each brace end and a thick plate under each foot bring it back to 62 Hz; then tap-test the built frame.
 - **Two routes need no building and cost a phone call:** BYU's own metal-AM lab runs aluminium on a Concept Laser M2
   ([`safety.md`](../safety.md)); a reduced-build-volume insert there is how many groups screen alloys with little powder.
   And outside builds (a service bureau's reduced-volume machine, or the University of Utah's Aconity MIDI) can cover a
@@ -94,7 +113,53 @@ whose length at BYU is unknown (assumed 1–3 weeks). Red: milestones. The shop 
 `fab/`'s hours per state: the low hours at 8 shop hours a working day, early, and the full hours at 5, late. Every
 duration and its basis is in [`out/schedule.csv`](out/schedule.csv).*
 
-## 0. Round 2 (2026-11-27): what the detailed design changed
+## 0. Round 3 (2026-11-28): the not-done list, worked through
+
+Sterling asked on PR 294 to do the PR's "What wasn't done" list where it could be done. Round 3 re-ran every analysis
+on CAD v2, now with the g3 gantry as the model's default. It also finished what round 2 had left open, read what the
+lab Pi could reach, had the fabrication programs reviewed by a separate worker, and wrote out the requests that need a
+person. The first attempt ran out of credits partway through; the retry merged its workers' commits and finished the
+rest. Nothing has been measured, bought or sent.
+
+| Not done in round 2 | Where | What round 3 found | What changes |
+|---|---|---|---|
+| Nothing bought, built, quoted by a person, or reviewed by the LSO or EHS | [`day0/`](day0/README.md) | every request a person has to send, written out: the LSO, EHS and the Fire Marshal, Physical Facilities, the sellers and makers, BYU Purchasing. FT-1's laser-hazard numbers by PR 266's method: eyewear OD ≥ 5.3 for the direct 400 W, NHZ 162 m for the direct beam through the f-theta ([`lso-numbers.md`](day0/lso-numbers.md)) | still needs a person on day 0. BYU's laser-safety pages need a BYU login, so the forms themselves are not known |
+| The g3 gantry clash-checked only on its new members; renders on the braced frame | [`cad/`](cad/README.md) | g3 is the default. **0 clashes and 0 parts in the beam envelope** in S1, S2, FT-0, FT-1, FT-1V and the Thorlabs variant (29 / 53 / 88 / 106 / 108 / 105 parts); renders, STEP and progression redone. The head comes off with MK-09 once the collimator is out ([`head-service.md`](cad/out/head-service.md)) | none |
+| The gantry FEA's joints bonded | [`struct.md`](analysis/out/fea/struct.md) | **With real bolted joints, g3 is under the 60 Hz minimum.** With each joint a single T-slot bracket (estimated 1–10 kN·m/rad and 10–50 kN/mm, from Huth's bolt-flexibility formula), mode 1 drops from 61.9 Hz bonded to 43.9–54.4 Hz with the feet fixed, 41.1 Hz on a thick foot plate and 34.1 Hz on a bolted plate. The 12 brace ends matter most among the joints, and the feet more than any joint. Options (feet fixed / thick plate / bolted plate): both portals braced with stiff brace ends 72.8 / 64.4 / 57.5 Hz; **a low front diagonal and a back diagonal, brace ends stiffened, 70.7 / 62.0 / 54.8 Hz** (60.1 Hz on the thick plate with the other joints at the soft end). No option passes on plain bolted foot plates | **brace the portals:** a diagonal low in the front portal (the left post's foot to the right post at z 140, about 590 mm, clear of the door's front gap) and one in the back portal over the box (about 480 mm); a second bracket or a doweled end plate at all 16 brace ends; a 12–15 mm plate under each front post, bolted to the bench, and each back post bolted to its base rail through an end plate. Then **tap-test the built frame** against 60 Hz (`struct.md` 4c has the procedure). The CAD model's default frame is still g3 without these braces.<!--G4--> |
+| Fabrication on the round-1 model | [`fab/`](fab/) | ported to CAD v2 with g3: **47 pieces** (v1 35), 85 setups and 261 FreeCAD operations (v1 63 / 188), re-posted with no errors after the review's fixes. **81 / 166 / 249 shop hours to FT-1** (low / expected / high; v1 59 / 122 / 189). v2 adds the monitoring hardware, g3's plates and brackets, and the deck clamps | the schedule and the shop-time lines of `parts.csv` use these hours (below) |
+| The shop hours rest on allowances; nobody reviewed the programs | [`fab/review-r3.md`](fab/review-r3.md) | a separate review of round 2's 63 programs. The basics pass in all of them, but **six setups can't run with the tool library as defined, 194 Adaptive links would cut material as a Haas's dogleg rapids, MK-02a_B cuts its soft jaws, and the 304 window runs above the makers' charts**. The allowances' range is credible; its low end leaves out 10–20 h (fixtures, tool setting, sawing), and its expected case counts the CAM as written from scratch. FT-1 (v1): 77–98 h with the CAM fixed and a machinist on the floor, 92–125 h with a student doing half of it | **fixed on v2** ([`fab/README.md`](fab/README.md), round 3): 11,221 Adaptive links now run as feed moves, so no rapid cuts material on a Haas; the holder clears the stock in every setup; helix starts 1 mm up, outlines on flipped pieces split, a 304 cutter with a ramp entry, long-series drills. Two faults the v2 port had added are fixed too: MK-10c's lens bore left a 50 × 34 mm pillar, and its set-screw holes ran across the bore. 85 setups and 261 operations, no errors, with a setup sheet for each ([`setup-sheets.md`](fab/out/setup-sheets.md)). The review's own hours on v2: FT-1 107–137 h with a machinist, 129–178 h with a student, inside the allowances' 81–249 h |
+| Structural FEA on the round-1 model (lid, cube plate, rod) | [`struct.md`](analysis/out/fea/struct.md) | **The Saginaw door, as drawn, doesn't hold its gasket at a +50 mbar fault.** With one latch and two hinges its front corners lift: the seal starts to open at about +22 mbar, and 155 mm of the 1,314 mm line is open at +50 mbar. A 15–20 mm door return, or a toggle clamp near each front corner (~140 N each at +50 mbar), keeps ≥ 0.5 mm of the 1.0 mm squeeze. The cube plate (SF 32), window (SF 74) and rod (Euler 88 kN at 200 °C) still pass | measure the delivered door's return (the CAD draws 5.5 mm, an envelope); if it is under ~15 mm, add the two front clamps; set the purge's relief below +20 mbar (`parts.csv` E6, new) |
+| Process and optics on the round-1 model | [`process/`](process/README.md) | no part of v2 is in the beam (tightest: the cover-slide holder, 2.8 mm at the Ø40 plate's edge). **The plate's front 5 mm can return up to ~256 W of a polished plate's 342 W onto the scan mirrors**; the Ø30 build area returns ≥ 17.4 mm off and misses them. RTC4 lists: 803–1,105 commands a layer, so one list a layer. A 10 mm build takes 0.8–1.6 h with the block 20 K below the plate, 1.5–3.0 h with it at the set point (holding +10 K) | focus ladders and reference crosses go on the back half of the plate margin; `control/`'s scan offset set to −30 mm, the lens axis's offset |
+| CFD on the round-1 model | [`results.md`](analysis/out/cfd/results.md) | the cross-flow is unchanged on v2 (2.50 m/s 3 mm up, 0.055 Pa bed shear, 94–99 % of fume caught). The low-diffuser purge takes 3.1 / ≈ 4.9 min to 1000 / 100 ppm (v1 2.6 / 5.0): the Saginaw's dished door holds the last third of the O₂ above any wall vent | **put the vent through the door**, at its top (`parts.csv` G9) |
+| The purge CFD isothermal and leak-free | [`results.md`](analysis/out/cfd/results.md) | **Leaks (0-D, estimates):** with the lid seated and the box at +5–10 mbar the exhaust reads 2–6 ppm at 27 L/min (argon 5.0 is 2 of it), 9–48 ppm at a 2 L/min dwell; with no overpressure a 30 µm gap along the seam holds the purge at ~60 ppm. **Leak CFD:** O₂ that leaks in at the lid stays in the box: 1 mm over the build area it is about a tenth of the exhaust reading. **Heat (CFD, R3.7):** a 200 °C bed and block leave the jet as it was (2.52 m/s, 0.056 Pa), but their plume reaches the lid: 54–56 °C under the cover slide, 47 °C at the exhaust, 39 °C box average. Fume that escapes above the jet passes the slide at 40–70 mm, not 103 mm (rough: the plume moves). The plate loses 3.9 W by convection, as the thermal FEA has it | keep +5–10 mbar on the box; the exhaust analyzer gives the conservative number; expect the cover slide to foul faster than the isothermal runs suggested, and watch it in the first builds |
+| The FT-1V purge CFD not run | [`results.md`](analysis/out/cfd/results.md) | the cube's flow purge (20 L/min, low diffuser, high vent) reaches 1000 / 100 ppm in 2.1 / ≈ 3.5 min, faster than the box; again the last air waits above the vent (32–48 % of the O₂ under the top plate). Two pump cycles to 1 mbar still do better: about 2 ppm in 5.0 min with 45 L of argon (0-D), where the flow purge needs ~75 L for 100 ppm (R3.6) | keep pump-purging FT-1V; if it is ever flow-purged, vent through the top plate |
+| The cube's face opening unpublished | [`cad/`](cad/README.md), [`live-reads-2026-11-28-notes.md`](live-reads-2026-11-28-notes.md) | still unpublished: Ideal Vacuum's site blocks the Pi, and the frame's STEP was never archived. Estimated 250–260 mm from Ideal Vacuum's render, 243 mm from the brochure's volume. The deck has to lie in the cube's bottom pocket, which is as big as the face opening, so the opening must be ≥ 245 mm square (247 mm with 1 mm a side), or 245 + 0.586 r with corner radius r. Tilting the cassette doesn't help, and round 2's edge-on fallback can't lie flat either | **round the deck plate's (MK-01) corners to R 30**: it then fits a 250–260 mm opening with corners up to R 25.4. At 243 mm only a 240.2 × 197.3 mm deck fits. Ask Ideal Vacuum for P107540's drawing before ordering the cube |
+| A 64-bit DLL for the RTC4 unconfirmed | [`control/`](control/README.md), [`live-reads-2026-11-28-notes.md`](live-reads-2026-11-28-notes.md) §2 | **it exists:** SCANLAB's public RTC4 Software 2023-11-02 has `RTC4DLLx64.dll` and a signed x64 driver, and SCANLAB's RTC4 brochure (11/2026) still lists the RTC4 PCIe. `rtc4.py`'s prototypes now match SCANLAB's `RTC4expl.h` (`select_rtc` fixed). The hardware list stop is wired to the RTC4's /STOP (laser connector pin 9) too (I/O list S-13) | run the RTC4's PC on Windows 10 x64: Windows 11 isn't named |
+| Prices not read | [`live-reads-2026-11-28.csv`](live-reads-2026-11-28.csv) | PicoScope 4824A US$2,999, in stock. Acoustic emission: a PXR15 sensor and a used PAC 1220A preamp come to about $455 on eBay, against `parts.csv`'s $800–2,000. The Pi HQ camera (C/CS mount) is out of stock at every seller read (Digi-Key expects stock on 28 Dec); the M12 version is in stock. **The stray-beam thermostat in `parts.csv` was a normally open part**: the normally closed Sensata 67L075 ($8.11, 1,368 in stock) replaces it | `parts.csv` S6 and the monitoring lines |
+| BYU's purchasing-card rules not checked | [`live-reads-2026-11-28-notes.md`](live-reads-2026-11-28-notes.md) §7 | $3,500 a purchase at most, no split purchases, $10k a month on a card ($20k on a department card); eBay isn't mentioned | `fast_track.py` totals the card orders: FT-1's come to about $29k at the high prices, 2.9 cards' monthly limit, so spread them over cards or months. Zaber's two stages ($5,896) need a Workday requisition |
+| Progression video on the round-1 model | [`video/`](video/README.md) | **not re-rendered.** Its port to v2 was half done when the first attempt stopped (the planner's assembly paths still collided with v2's new parts), and a render takes hours | the round-2 video stands, labelled as round 1's model |
+
+**Which model each analysis used, after round 3:**
+
+| Work | Model |
+|---|---|
+| CAD checks, progression, renders, STEP | v2, g3 gantry (round 3) |
+| Process and optics, RTC4 lists | v2 (round 3) |
+| Structural FEA | v2 (round 3): door, cube plate, rod; the gantry g3 with bolted joints |
+| Thermal FEA | v2 (round 2) |
+| CFD | v2 (round 3) |
+| Fabrication (pieces, CAM, hours) | v2, g3 gantry (round 3); drawings on v2 too (47 sheets) |
+| Progression video | v1 (round 2) |
+
+**What round 3 does to the dates and the cost.** The v2 fabrication set is 47 pieces (41 to FT-1), and its 81–166
+shop hours now set FT-1's date. At 5–8 shop hours a working day FT-1's first coupons come at 4.2–11.0 weeks (round 2:
+3.7–9.3), and at 3.6–7.1 weeks with 12 shop hours a day ([`out/summary.md`](out/summary.md)). The shop calendar's
+two-person case still meets every date at the expected hours: two people who program and cut full time for the first
+11 working days give first coupons at 3.5 weeks, 4.6 at the high hours ([`fab/out/plan.md`](fab/out/plan.md)). FT-1
+costs $30.6k–49.8k ($25.4k–42.2k without monitoring), $1.5k–2.5k more than round 2, almost all of it shop time. FT-0
+costs $22.7k–39.7k with first tracks at 2.4–6.9 weeks; FT-1V $42.1k–63.5k with first coupons at 4.9–12.8 weeks.
+
+## 0a. Round 2 (2026-11-27): what the detailed design changed
 
 Sterling asked for the design to be worked through properly: real vendor geometry, analysis, fabrication and a video.
 This round did that in parallel workers, each in its own folder, and read prices and drawings live through the lab Pi
@@ -159,9 +224,9 @@ The parts that make the machine slow come from requirements a first machine does
 | | Alternative | Parts + shop time | First tracks | First coupons | O₂ | Heated plate | Main risk | Verdict |
 |---|---|---|---|---|---|---|---|---|
 | A | PR 266's design, fast-tracked (used majors, swapped switches, outsourcing split) | $70k–76k at spec with used majors (`lead-times.md`) | ~11.3–13.5 wk | ~12–15 wk | 1–10 ppm | Ø25/50/75 modules | honing, 134+ BYU hours | the long-term machine, not a 6-week one |
-| **FT-0** | **Single-track bench**: used laser chain over a heated plate in a stainless box, hand-spread layers | **$20.9k–36.6k** ($16.5k–30.4k without monitoring) | **1.9–5.2 wk** | single layers and pads only | 100–1000 ppm (flow) | Ø40, 200 °C | the used laser's condition | **do first** |
-| **FT-1** | **Purge-box LPBF**: FT-0 plus a heated well, a piston stage and a hopper-blade stage | **$29.2k–47.3k** ($23.9k–39.1k without monitoring) | **2.7–7.3 wk** (PCard stages) / 3.2–7.3 wk (one PO) | **3.7–9.3 wk** / 4.2–9.3 wk; 3.2–6.4 wk with two people in the shop | 100–1000 ppm (flow) | Ø40 well, 200 °C | shop hours; approvals; hopper flow with fine Al | **recommended** |
-| FT-1V | FT-1 in a stock vacuum cube with a pump-purge kit | $40.1k–60.2k | 3.4–8.4 wk | 4.4–10.4 wk | < 100 ppm in 2–3 cycles | Ø40 well, 200 °C | stages and grease under vacuum; two POs | if O₂ below 100 ppm is required from day 1 |
+| **FT-0** | **Single-track bench**: used laser chain over a heated plate in a stainless box, hand-spread layers | **$22.7k–39.7k** ($18.0k–33.3k without monitoring) | **2.4–6.9 wk** | single layers and pads only | 100–1000 ppm (flow) | Ø40, 200 °C | the used laser's condition | **do first** |
+| **FT-1** | **Purge-box LPBF**: FT-0 plus a heated well, a piston stage and a hopper-blade stage | **$30.6k–49.8k** ($25.4k–42.2k without monitoring) | **3.2–9.0 wk** | **4.2–11.0 wk** at 5–8 shop h a day; 3.5 wk with two people full time in the shop for 11 days | 100–1000 ppm (flow) | Ø40 well, 200 °C | shop hours; approvals; hopper flow with fine Al | **recommended** |
+| FT-1V | FT-1 in a stock vacuum cube with a pump-purge kit | $42.1k–63.5k | 3.9–10.8 wk | 4.9–12.8 wk | < 100 ppm in 2–3 cycles | Ø40 well, 200 °C | stages and grease under vacuum; two POs | if O₂ below 100 ppm is required from day 1 |
 | E | Laser engraver as the base (PR 266 §1b) | $7.5k–9.5k for a 200 W MOPA engraver | – | – | – | add-on | pulsed only: Monport's GT 200W has no CW or quasi-CW mode, and its board is closed (Sterling's 2026-11-19 update) | no: with a CW laser swapped in it becomes FT-0 with marking-grade optics |
 | F | Buy a commercial desktop unit (AO Metal A30, Xact XM200C, ...) | $59k–130k (PR 266 §2.2) | vendor lead time + PO and any bid steps | – | ≤ 1000–3000 ppm typical | none listed on the desktop units | lead times not published; no heated plate | the go/no-go fallback, not a 6-week route |
 | G | Reduced-build-volume insert in BYU's Concept Laser M2 | an insert, ~$1k–5k (estimate) | 2–6 wk (estimate; depends on that lab) | same | the M2's | check whether the M2 has one | the lab's willingness, warranty and schedule | ask this week |
@@ -329,6 +394,12 @@ well block 20 K below the plate, or 2.1–4.2 h with the block at setpoint ([`co
     released 0.5–3 mm up into the collector; its shear on the bed (0.03–0.05 Pa) is at or under the lowest pick-up
     threshold for 63 µm AlSi10Mg (0.053 Pa). Fume that rises above the jet is only half caught. In FT-1V's cube the
     same jet gives 2.49 m/s over the build area and 95 % capture (k-ω SST, 233k cells).
+- **Round 3's CFD on CAD v2** ([`results.md`](analysis/out/cfd/results.md) R3): the cross-flow is unchanged (2.50 m/s
+  3 mm up, 0.055 Pa); the low-diffuser purge takes 3.1 / ≈ 4.9 min to 1000 / 100 ppm, because the Saginaw's dished door
+  holds the last third of the O₂ above any wall vent, so **the vent goes through the door, at its top**. With the lid
+  seated and the box at +5–10 mbar, the leaks the 0-D budget can name hold the exhaust at 2–6 ppm at 27 L/min and
+  9–48 ppm at a 2 L/min dwell (estimates); O₂ that does leak in stays in the box, at about a tenth of the exhaust
+  reading 1 mm over the build area (leak CFD). In FT-1V's cube the same flow purge reaches 1000 / 100 ppm in 2.1 / ≈ 3.5 min, but two pump cycles to 1 mbar still give about 2 ppm in 5.0 min. With the bed and block at 200 °C the jet is unchanged, but a plume reaches the lid (54–56 °C under the cover slide), and fume that escapes above the jet passes the slide at 40–70 mm instead of 103 mm (rough), so the slide may foul faster than the isothermal runs suggested.
 - **Box gas volume:** ~23.5 L (25.2 L less 1.7 L of internals, measured in the CAD model; FT-1V's cube: ~22 L, which it
   pump-purges below 100 ppm in about 7 minutes with ~44 L of argon, [`cad/out/checks.md`](cad/out/checks.md)).
 - **The nearest precedent got there by purging alone.** Heriot-Watt's 350 × 230 × 220 mm Perspex box reached < 0.5 % O₂;
@@ -440,17 +511,17 @@ From [`parts.csv`](parts.csv) (`python fast_track.py`):
 | Group | FT-0 | FT-1 | FT-1V |
 |---|---:|---:|---:|
 | Laser and optics (used) | $4.8k–7.9k | $4.8k–7.9k | $4.8k–7.9k |
-| Scan control and computing | $1.2k–2.5k | $1.4k–2.7k | $1.4k–2.7k |
+| Scan control and computing | $1.2k–2.5k | $1.4k–2.8k | $1.4k–2.8k |
 | Motion | $0.0k–0.1k | $6.0k–6.1k | $6.0k–6.1k |
-| Enclosure or chamber | $1.2k–1.7k | $1.2k–1.7k | $11.6k–13.6k |
+| Enclosure or chamber | $1.3k–1.9k | $1.3k–1.9k | $11.6k–13.6k |
 | Heated plate | $0.6k–1.0k | $0.9k–1.4k | $0.9k–1.4k |
 | Gas and O₂ | $2.7k–4.3k | $2.7k–4.3k | $2.7k–4.1k |
-| Safety | $2.8k–3.7k | $2.8k–3.7k | $2.8k–3.7k |
-| Stock and shop time ($65/h) | $3.2k–6.5k | $4.2k–8.5k | $4.7k–9.7k |
+| Safety | $2.8k–3.6k | $2.8k–3.6k | $2.8k–3.6k |
+| Stock and shop time ($65/h) | $4.6k–9.2k | $5.6k–11.4k | $6.8k–13.6k |
 | Glovebox (if the lab has none free) | $0–2.7k | $0–2.7k | $0–2.7k |
-| Monitoring (camera, lights, photodiode, AE, digitizer) | $4.5k–6.2k | $5.3k–8.2k | $5.3k–8.2k |
-| **Total** | **$20.9k–36.6k** | **$29.2k–47.3k** | **$40.1k–60.2k** |
-| Total without monitoring | $16.5k–30.4k | $23.9k–39.1k | $34.8k–51.9k |
+| Monitoring (camera, lights, photodiode, AE, digitizer) | $4.7k–6.4k | $5.2k–7.6k | $5.2k–7.6k |
+| **Total** | **$22.7k–39.7k** | **$30.6k–49.8k** | **$42.1k–63.5k** |
+| Total without monitoring | $18.0k–33.3k | $25.4k–42.2k | $36.9k–55.9k |
 
 - **Purchase orders.** FT-1 needs one only if both Zaber stages go on one order ($5,896). Buying the piston stage from
   Thorlabs instead (MTS50/M-Z8 + KDC101, $2,179.18, both "Available: Today") keeps the stage orders under $3,500. Its
@@ -458,8 +529,15 @@ From [`parts.csv`](parts.csv) (`python fast_track.py`):
   Ideal Vacuum (~$9.5k). **At the high end McMaster's lines now come to about $3.7k–4.0k** (stock, the four-post frame,
   fittings, HEPA, extinguisher), over the $3,500 PCard limit: they fall naturally into orders days apart (S1's frame and
   stock on day 0, FT-0's gas and safety parts later), or go on BYU's McMaster account if it has one (not checked).
+- **BYU's purchasing-card rules** (public page, read in round 3): at most $3,500 a purchase, no split purchases, and
+  $10k a month on a card ($20k on a department custodian's card). Two Zaber stages on two charges would be a split
+  purchase, so they need a Workday requisition, or the piston stage comes from Thorlabs. `fast_track.py` totals what
+  is left for cards: FT-1's card orders come to about $29k at the high prices, 2.9 times one card's monthly limit, so
+  they go on two or three cards or over two months. Public pages don't mention eBay.
 - **Prices** are in [`live-reads-2026-11-26.csv`](live-reads-2026-11-26.csv) and round 2's
-  [`live-reads-2026-11-27.csv`](live-reads-2026-11-27.csv) (all 14 eBay listings read; the Edwards RV3 pump had sold).
+  [`live-reads-2026-11-27.csv`](live-reads-2026-11-27.csv) (all 14 eBay listings read; the Edwards RV3 pump had sold), and
+  round 3's [`live-reads-2026-11-28.csv`](live-reads-2026-11-28.csv) (PicoScope, the Pi HQ camera, the AE chain, the
+  normally closed thermostat, SCANLAB's RTC4 package, BYU's card rules).
 
 ### 3.9 What has to be made (FT-1)
 
@@ -479,23 +557,27 @@ to FT-1, made each fabrication-ready, programmed it in FreeCAD CAM and checked e
 11. the slot nozzle;
 12. the stage shield (bent sheet).
 
-**That is 59–123 shop hours to FT-1** (FT-0: 44–92 h; FT-1V: 68–141 h), with PR 266's allowances for CAM, setups and
-deburring on top of the programs' cycle times (the low end uses `robot-shop.md`'s smaller allowances). Round 1's 25–40
+**On CAD v2 that is 81–166 shop hours to FT-1** (FT-0: 66–133 h; FT-1V: 99–200 h; round 2's set on the round-1
+model: 59–122 h to FT-1), with PR 266's allowances for CAM, setups and deburring on top of the programs' cycle times
+(the low end uses `robot-shop.md`'s smaller allowances). Round 3 ported the set to v2 with the g3 gantry: 47 pieces, 85
+setups, 261 FreeCAD operations ([`fab/`](fab/)). Round 1's 25–40
 hours left out most of the CAM and setup time. Most of it is CAM and setups, not cutting (about 4 h of programmed
 cutting in all). Nothing needs a 4th axis, a long tool, honing or welding. At 5–8 shop hours a working day the shop,
-not the parts, sets FT-1's date; with two people (12 h a day) FT-1's coupons come back to 3.2–6.4 weeks.
+not the parts, sets FT-1's date: first coupons at 4.2–11.0 weeks, or 3.6–7.1 weeks at 12 shop hours a day.
 
-- **The shop calendar** ([`fab/out/plan.md`](fab/out/plan.md)) puts each state's pieces against the dates the
-  progression needs them (S1's by working day 4, S2's by 5, FT-0's by 6, FT-1's by 9). Two people who both program and
-  cut for the first 8 working days meet every date at the expected hours (FT-1's pieces done on day 7.8). One person
-  finishes FT-1's pieces on day 15.2, which moves FT-0's first tracks from 1.8 to 2.9 weeks and FT-1's first coupons
-  from 3.2 to 4.5 weeks on the early path. Sending FT-1's two plates out saves 5.2 h; sending S1's and S2's out would
+- **The shop calendar** ([`fab/out/plan.md`](fab/out/plan.md), round 3 on v2) puts each state's pieces against the
+  dates the progression needs them (S1's by working day 4, S2's by 5, FT-0's by 9, FT-1's by 11). Two people who both
+  program and cut for the first 11 working days meet every date at the expected hours (FT-1's pieces done on day
+  10.6): first coupons at 3.5 weeks, 4.6 at the high hours. One person finishes FT-1's pieces on day 20.7, which moves
+  FT-0's first tracks to 3.9 weeks and FT-1's first coupons to 5.5 weeks. Round 2's v1 set needed 8 days of two people. Sending FT-1's two plates out saves 5.2 h; sending S1's and S2's out would
   arrive too late (SendCutSend's 5–6 days, PR 266's quotes, not re-read).
 - **The programs are written.** If a programmer reviews and proves them out instead of writing CAM afresh (0.25 h a
   setup), the expected hours fall to 61.6 / 83.8 / 97.0 h to FT-0 / FT-1 / FT-1V.
-- **The fabrication set follows the round-1 model.** Round 2's CAD v2 (vendor geometry, the lens offset, the monitoring
-  parts) changes 22 of the 35 pieces and adds 9, mostly monitoring hardware: about 155 expected hours to FT-1
-  (estimate, [`fab/out/v2/delta.md`](fab/out/v2/delta.md)). The monitoring pieces can wait until after first tracks.
+- **The fabrication set follows CAD v2 since round 3** (round 2's estimate of v2 was about 155 expected hours to FT-1,
+  [`fab/out/v2/delta.md`](fab/out/v2/delta.md); the port gives 166). The monitoring pieces can wait until after first
+  tracks.
+- **The programs were reviewed in round 3** ([`fab/review-r3.md`](fab/review-r3.md)), by a separate worker reading the
+  posted G-code as a CAM programmer would: six setups the tool library couldn't cut, Adaptive links that a Haas would run as dogleg rapids into the material, an outline that cut its soft jaws, and a 304 cut above the makers' charts. Round 3 fixed them on v2, with two faults the port had added at MK-10c, and re-posted all 85 setups with no errors; [`fab/out/setup-sheets.md`](fab/out/setup-sheets.md) gives each setup's holding, stock, G54 and tools. The review's own hours, applied to v2's pieces: FT-1 107–137 h with a machinist on the floor, 129–178 h if a student does half of it, inside the allowances' 81–249 h. Still open: no Haas post, two walls deeper than their cutters' flutes (MK-15c_C, MK-11b_A), and no piece timed.
 
 ### 3.10 Day 0 and the weeks after
 
@@ -506,7 +588,8 @@ not the parts, sets FT-1's date; with two people (12 h a day) FT-1's coupons com
   - send the LSO the layout and interlock list, and send EHS the powder plan;
   - check the room's power for the laser: it needs its own 208/240 V, 15 A two-pole circuit (rating label 200–240 V,
     10 A); if there is none, file the Physical Facilities request the same day;
-  - book the shop: 59–123 hours to FT-1 ([`fab/`](fab/)), so two people for the first 2–3 weeks if 6 weeks matters.
+  - book the shop: 81–166 hours to FT-1 on CAD v2 ([`fab/`](fab/)), so two people for the first 11 working days if
+    the date matters.
 - **Week 1:** the shop starts on S1's parts (the head plate, collimator saddle, deck and target stand), then S2's; the
   laser chain arrives. Check it with the guide laser and the RTC4 as soon as the LSO allows and the circuit is in.
 - **Weeks 2–3:** the stages arrive; assemble; purge and heat to 200 °C while logging O₂; commission the interlocks. First
@@ -625,8 +708,8 @@ drawings, and took the other workers' findings:
   48 mm spreader bar for FT-0 (the 70 mm applicator didn't fit between the nozzle and the collector); the structural
   FEA's **four-post gantry**, then braced in front and with the head's flange plate stiffened after the FEA re-ran it as
   drawn (13 Hz in round 1; 43 / 60 / 67 Hz as first drawn; **50 / 67 / 94 Hz braced**, still under the 60 Hz minimum in
-  mode 1; a second support on the head's far face (variant `four_post_braced_front_g3`, drawn and clash-checked, not
-  yet the default) gives 62 / 101 / 179 Hz, over the minimum); one D4NS-2CF switch per guard; the rod-gland screws moved
+  mode 1; a second support on the head's far face (variant `four_post_braced_front_g3`, the default since round 3)
+  gives 62 / 101 / 179 Hz with bonded joints, over the minimum); one D4NS-2CF switch per guard; the rod-gland screws moved
   inside the gland's face seal (the fabrication worker found four leak paths outside it); a potted plug and a rod-end
   block for the heater leads.
 - **Monitoring MON1–MON9** is drawn: a Pi HQ layer camera through its own lid port (17.8 µm per pixel across the plate),
@@ -636,14 +719,20 @@ drawings, and took the other workers' findings:
   over its full 101.6 mm and the plate over its 20 mm stroke without contact (exact booleans and a python-fcl mesh
   sweep). The box door now opens, but only 24° before the layer camera meets the lens collar: tight for hand-spreading
   and plate changes. Gas: FT-0 24.2 L, FT-1 24.0 L, FT-1V 22.6 L.
-- **Still open:** the cube's face opening (the cassette needs ≥ 247 mm; Ideal Vacuum's brochure gives only the 289.6 mm
-  inside); the purge diffuser and vent the CFD recommends are not drawn yet; the fabrication set (`fab/`) is still the
-  round-1 geometry (v2's changes are listed in `fab/out/v2/delta.md`).
+- **Round 3:** full checks, renders, STEP and progression on g3 (0 clashes and 0 beam hits in every state, 29–108
+  parts); the cassette into the cube ([`cad/out/cassette.md`](cad/out/cassette.md)): the deck lies in the bottom face's
+  pocket, as big as the face opening, so the opening must be ≥ 245 mm square (247 with 1 mm a side), or 245 + 0.586 r
+  with corner radius r; tilting doesn't help, and round 2's edge-on fallback can't lie flat. Rounding MK-01's corners to
+  R 30 makes it fit the estimated 250–260 mm opening with corners up to R 25.4. Taking the head off
+  ([`cad/out/head-service.md`](cad/out/head-service.md)): MK-09 lifts off with the head once the collimator is out.
+- **Still open:** the cube's face opening is unpublished (estimated 250–260 mm); the purge diffuser and the vent
+  through the door that the CFD recommends are not drawn yet, nor the door's front clamps.
 
-**The progression's schedule** (`cad/out/progression.md`, on `fast_track.py`'s tasks and the shop hours): FT-0's first
-tracks at 1.9–5.2 weeks, FT-1's first coupons at 3.1–8.1 weeks with the stages on PCards, FT-1V's at 3.7–9.3 weeks if
-the cube is ordered on day 0 (5.1–10.9 if it waits for FT-0's O₂ log). Building FT-0 first does not delay FT-1: its
-commissioning happens while the shop makes FT-1's parts.
+**The progression's schedule** (`cad/out/progression.md`, on `fast_track.py`'s tasks and, since round 3, v2's shop
+hours): FT-0's first tracks at 2.4–6.9 weeks, FT-1's first coupons at 3.6–9.8 weeks, FT-1V's at 4.2–11.0 weeks if the
+cube is ordered on day 0 (5.9–13.3 if it waits for FT-0's O₂ log). Round 2 had 1.9–5.2, 3.1–8.1 and 3.7–9.3 weeks on
+the round-1 set's hours. How the stages are bought no longer moves FT-1, because the shop sets its date. Building FT-0
+first does not delay FT-1: its commissioning happens while the shop makes FT-1's parts.
 
 ![The five states](img/cad-progression.png)
 
@@ -655,11 +744,17 @@ commissioning happens while the shop makes FT-1's parts.
    about $4.1k–5.5k with freight and a collimator if needed; three of the four are returnable, and every route uses
    them, including PR 266's. SCANLAB's RTC4 package has a 64-bit DLL (round 3); ask the seller whether the card's
    driver package comes with it.
-4. **Staff the shop.** FT-1's parts are 59–123 shop hours ([`fab/`](fab/)). Two people for the first 2–3 weeks (12 shop
-   hours a working day) keep FT-1's coupons at 3.2–6.4 weeks; one person part-time (5 h a day) gives 4.5–9.3 weeks.
-   Sending the plates and sheet parts out is the alternative.
+4. **Staff the shop.** FT-1's parts are 81–166 shop hours on CAD v2 ([`fab/`](fab/)). Two people who program and cut
+   full time for the first 11 working days keep FT-1's first coupons at 3.5 weeks (4.6 at the high hours); one person
+   full time gives 5.5 weeks, and 5 shop hours a day up to 11 weeks. Sending the plates and sheet parts out is the
+   alternative.
 5. **Ask Physical Facilities for the laser's 208/240 V, 15 A two-pole circuit on day 0** if the room has none.
-6. **Monitoring from FT-0** (camera, raking lights, coaxial photodiode, digitizer, $4.5k–6.2k) or later? The
+6. **Monitoring from FT-0** (camera, raking lights, coaxial photodiode, digitizer, $4.7k–6.4k) or later? The
    photodiode's dichroic sits in the beam path, so it is cheapest to fit at S1 when the head is first aligned.
 7. Who asks BYU's metal-AM lab about a reduced-build-volume insert for its Concept Laser M2?
 8. Ø40 mm plate and 15 mm builds: enough for the first coupons?
+9. **The gantry with real bolted joints** (round 3, [`struct.md`](analysis/out/fea/struct.md) 4c): the T-slot frame needs
+   a low front diagonal, a back diagonal, a second bracket at each brace end and thick foot plates to reach 62 Hz, with
+   little margin over the 60 Hz minimum. Build that and tap-test it, or go to a welded or doweled frame?
+10. **Who sends the day-0 requests** in [`day0/`](day0/README.md) (LSO, EHS and the Fire Marshal, Physical Facilities,
+    the sellers, Purchasing)? They need a BYU account and a person.
