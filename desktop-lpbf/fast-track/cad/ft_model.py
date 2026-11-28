@@ -85,7 +85,8 @@ P = dict(
     hx_default=37.5,             # hopper parked at the right while lasing (the right park is +35.5, ft_checks)
     # --- gas on the well block top (study: 45 x 4 mm slot at 2.5 m/s) ---
     nozzle_slot=(45.0, 4.0), ovf_x=(22.0, 29.0), ovf_y=22.0,
-    # --- deck cassette: 245 mm so it needs a cube face opening of >= 247 mm (the opening is not published) ---
+    # --- deck cassette: 245 mm; it lies in the cube's bottom pocket, as big as the face opening, so the opening must be
+    #     >= 245 mm + clearance with sharp corners, 245 + 0.586 r with corner radius r (ft_cassette.py; not published) ---
     deck=(245.0, 245.0), deck_c=(-28.0, 45.0),
     # --- the box: Saginaw SCE-16EL1208SSLP, 16 x 12 x 8 in. outside, 0.075 in. 304 (drawing; see ft_vendor.SAG) ---
     box_out=(16 * IN, 12 * IN, 8 * IN), box_t=0.075 * IN,
@@ -173,7 +174,9 @@ MADE = {
     "MK-06": "piston rods, 1/2 in. thin-wall 304 tube with a potted lead plug: one for the box, one 21 mm longer for the cube",
     "MK-07": "rod gland plate, two O-rings (rated for rough vacuum so it moves to the cube unchanged), 4 x M5",
     "MK-08": "hopper (bent 304), cord clamp, arm and carriage bracket",
-    "MK-09": "scan-head flange plate, 12 mm 6061: bolts to the head's entrance face, hangs from the gantry cross-beam",
+    "MK-09": "scan-head flange plate, 12 mm 6061: bolts to the head's entrance face, hangs between both cross-beams on "
+             "angle brackets, with a top flange on the beams and three gussets; on g3 (the default) also a 10 mm support "
+             "plate on the head's far face between both cross-beams, with its own angle brackets",
     "MK-10": "beam tube: lens collar (floor ring, Ø50 spigot) and a centre section split in two half-shells with 2 toggle "
              "clamps: long (box), short (cube)",
     "MK-11": "slot nozzle and exhaust collector, 304",
