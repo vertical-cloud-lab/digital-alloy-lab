@@ -6,8 +6,9 @@ export WAYLAND_DISPLAY=${WAYLAND_DISPLAY:-wayland-0} XDG_RUNTIME_DIR=${XDG_RUNTI
 echo "== board";   tr -d '\0' < /proc/device-tree/model; echo; free -m | awk '/^Mem/{print "RAM " $2 " MB"}'
 echo "== os";      . /etc/os-release; echo "$PRETTY_NAME, kernel $(uname -r)"
 echo "== desktop"; systemctl get-default; pgrep -x labwc >/dev/null && echo "labwc running" || echo "no labwc"
-echo "== hdmi connectors"
-for c in /sys/class/drm/card*-HDMI-A-*; do
+echo "== display connectors (HDMI and DSI)"
+shopt -s nullglob
+for c in /sys/class/drm/card*-HDMI-A-* /sys/class/drm/card*-DSI-*; do
   echo "$(basename $c): $(cat $c/status), EDID $(wc -c < $c/edid) bytes, modes: $(sort -u $c/modes | tr '\n' ' ')"
 done
 echo "== active mode (KMS)"; kmsprint 2>/dev/null | grep -E "^Connector|Crtc" | sed 's/^ *//'

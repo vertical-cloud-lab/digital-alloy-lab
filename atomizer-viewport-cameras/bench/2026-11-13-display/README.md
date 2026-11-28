@@ -168,8 +168,9 @@ The Pi has to be powered off to plug the camera's ribbon in.
 1. Run [`probe.sh`](probe.sh) again: board, mode, EDID, cameras, USB and input devices. It changes nothing and prints
    no host names or addresses. The display lines should match the "After" column above.
 2. Look at the test card on the panel, or point a camera at it.
-3. Show the camera on the panel with picamera2's preview while it encodes a 1080p30 stream, and replace the synthetic
-   numbers above with real ones.
+3. Put the cameras on the panel with [`../../viewer/`](../../viewer/), a full-screen viewer that starts at every boot
+   (added 28 November; its README has the plug-in checklist for all three units). Then measure a 1080p30 encode
+   alongside it, and replace the synthetic numbers above with real ones.
 
 ## Rerunning
 
