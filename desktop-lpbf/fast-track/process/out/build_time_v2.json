@@ -1,0 +1,195 @@
+{
+ "parks": {
+  "left": -31.1,
+  "right": 35.5,
+  "drawn_right": 37.5,
+  "stage_travel": 101.6,
+  "stage": "X-LSM100B-E03"
+ },
+ "strokes": {
+  "v2 parks (ft_checks)": 66.6,
+  "to the drawn park (hx 37.5)": 68.6
+ },
+ "recoat": {
+  "v2 parks (ft_checks), 1000 mm/s2, spread 40 mm/s": {
+   "stage": "Zaber X-LSM100B-E03",
+   "v_return": 104.0,
+   "v_spread": 40.0,
+   "t_return": 0.7443846153846153,
+   "t_spread": 1.7049999999999998,
+   "t_step": 0.12449489742783179,
+   "t_overhead": 0.5,
+   "t_recoat": 3.073879512812447
+  },
+  "v2 parks (ft_checks), 1000 mm/s2, spread 10 mm/s": {
+   "stage": "Zaber X-LSM100B-E03",
+   "v_return": 104.0,
+   "v_spread": 10.0,
+   "t_return": 0.7443846153846153,
+   "t_spread": 6.669999999999999,
+   "t_step": 0.12449489742783179,
+   "t_overhead": 0.5,
+   "t_recoat": 8.038879512812446
+  },
+  "v2 parks (ft_checks), 250 mm/s2, spread 40 mm/s": {
+   "stage": "Zaber X-LSM100B-E03",
+   "v_return": 104.0,
+   "v_spread": 40.0,
+   "t_return": 1.0563846153846153,
+   "t_spread": 1.8249999999999997,
+   "t_step": 0.12449489742783179,
+   "t_overhead": 0.5,
+   "t_recoat": 3.505879512812447
+  },
+  "v2 parks (ft_checks), 250 mm/s2, spread 10 mm/s": {
+   "stage": "Zaber X-LSM100B-E03",
+   "v_return": 104.0,
+   "v_spread": 10.0,
+   "t_return": 1.0563846153846153,
+   "t_spread": 6.699999999999999,
+   "t_step": 0.12449489742783179,
+   "t_overhead": 0.5,
+   "t_recoat": 8.380879512812447
+  },
+  "to the drawn park (hx 37.5), 1000 mm/s2, spread 40 mm/s": {
+   "stage": "Zaber X-LSM100B-E03",
+   "v_return": 104.0,
+   "v_spread": 40.0,
+   "t_return": 0.7636153846153846,
+   "t_spread": 1.755,
+   "t_step": 0.12449489742783179,
+   "t_overhead": 0.5,
+   "t_recoat": 3.1431102820432164
+  },
+  "to the drawn park (hx 37.5), 1000 mm/s2, spread 10 mm/s": {
+   "stage": "Zaber X-LSM100B-E03",
+   "v_return": 104.0,
+   "v_spread": 10.0,
+   "t_return": 0.7636153846153846,
+   "t_spread": 6.869999999999999,
+   "t_step": 0.12449489742783179,
+   "t_overhead": 0.5,
+   "t_recoat": 8.258110282043216
+  },
+  "to the drawn park (hx 37.5), 250 mm/s2, spread 40 mm/s": {
+   "stage": "Zaber X-LSM100B-E03",
+   "v_return": 104.0,
+   "v_spread": 40.0,
+   "t_return": 1.0756153846153846,
+   "t_spread": 1.8749999999999998,
+   "t_step": 0.12449489742783179,
+   "t_overhead": 0.5,
+   "t_recoat": 3.5751102820432163
+  },
+  "to the drawn park (hx 37.5), 250 mm/s2, spread 10 mm/s": {
+   "stage": "Zaber X-LSM100B-E03",
+   "v_return": 104.0,
+   "v_spread": 10.0,
+   "t_return": 1.0756153846153846,
+   "t_spread": 6.8999999999999995,
+   "t_step": 0.12449489742783179,
+   "t_overhead": 0.5,
+   "t_recoat": 8.600110282043216
+  }
+ },
+ "layer_mm": 0.03,
+ "layers": 500,
+ "scan_s_mean": 3.396119540000021,
+ "scan_s_range": [
+  3.301749999999969,
+  3.4384800000000455
+ ],
+ "energy_J_mean": 746.3672958000002,
+ "P_allowed_W": {
+  "block at set point": 14.0,
+  "block 20 K below": 26.7
+ },
+ "lumped_fe_5K": [
+  {
+   "band_K": "5.0",
+   "block_offset_K": "0.0",
+   "A": "0.3",
+   "period_s": "24.42",
+   "build_10mm_h": "2.26",
+   "build_15mm_h": "3.39",
+   "build_5mm_h": 1.13
+  },
+  {
+   "band_K": "5.0",
+   "block_offset_K": "0.0",
+   "A": "0.45",
+   "period_s": "35.45",
+   "build_10mm_h": "3.28",
+   "build_15mm_h": "4.92",
+   "build_5mm_h": 1.64
+  },
+  {
+   "band_K": "5.0",
+   "block_offset_K": "0.0",
+   "A": "0.6",
+   "period_s": "45.63",
+   "build_10mm_h": "4.22",
+   "build_15mm_h": "6.34",
+   "build_5mm_h": 2.12
+  },
+  {
+   "band_K": "5.0",
+   "block_offset_K": "-10.0",
+   "A": "0.3",
+   "period_s": "14.22",
+   "build_10mm_h": "1.32",
+   "build_15mm_h": "1.97",
+   "build_5mm_h": 0.66
+  },
+  {
+   "band_K": "5.0",
+   "block_offset_K": "-20.0",
+   "A": "0.3",
+   "period_s": "9.95",
+   "build_10mm_h": "0.92",
+   "build_15mm_h": "1.38",
+   "build_5mm_h": 0.46
+  },
+  {
+   "band_K": "5.0",
+   "block_offset_K": "-10.0",
+   "A": "0.45",
+   "period_s": "20.98",
+   "build_10mm_h": "1.94",
+   "build_15mm_h": "2.91",
+   "build_5mm_h": 0.97
+  },
+  {
+   "band_K": "5.0",
+   "block_offset_K": "-20.0",
+   "A": "0.45",
+   "period_s": "14.95",
+   "build_10mm_h": "1.38",
+   "build_15mm_h": "2.08",
+   "build_5mm_h": 0.69
+  },
+  {
+   "band_K": "5.0",
+   "block_offset_K": "-10.0",
+   "A": "0.6",
+   "period_s": "27.4",
+   "build_10mm_h": "2.53",
+   "build_15mm_h": "3.81",
+   "build_5mm_h": 1.27
+  },
+  {
+   "band_K": "5.0",
+   "block_offset_K": "-20.0",
+   "A": "0.6",
+   "period_s": "19.63",
+   "build_10mm_h": "1.82",
+   "build_15mm_h": "2.73",
+   "build_5mm_h": 0.91
+  }
+ ],
+ "v1": {
+  "stroke_mm": 66.4,
+  "recoat_s": 3.07,
+  "no_dwell_10mm_h": 0.6
+ }
+}
