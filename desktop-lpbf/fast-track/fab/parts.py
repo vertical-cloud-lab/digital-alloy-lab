@@ -1867,6 +1867,55 @@ def build_all():
     return pcs
 
 
+def bought_frame():
+    """Bought frame and hardware parts the g3 frame and the v2 pieces need (not made here, no shop hours): T-slot cut to
+    length (lengths from ft_model's frame arithmetic, frame()), brackets and fasteners (counts: this folder's estimate).
+    Rows: (item, qty, size or length mm, where, source)."""
+    f = FR
+    h, hp = f["h"], f["hp"]
+    ry, ux = f["ry"], f["ux"]
+    d_len = math.hypot((ry[1] - hp) - (f["y_f"] + hp), (f["z_up_top"] - 30.0) - (f["z_rail_top"] + 30.0))
+    d_ang = math.degrees(math.atan2((f["z_up_top"] - 30.0) - (f["z_rail_top"] + 30.0), (ry[1] - hp) - (f["y_f"] + hp)))
+    rows = [
+        ("T-slot 45 mm, back posts", 2, round(f["z_up_top"] - f["z_rail_top"], 1), "on the support rails", "ft_model"),
+        ("T-slot 45 mm, front posts", 2, round(f["z_up_top"] - f["zb"] - 6.0, 1), "on foot brackets, %.0f in front of "
+         "the front rail" % P["front_post_gap"], "ft_model"),
+        ("T-slot 30 mm, base and support rails (along x)", 4, 580.0, "under the box's mounting holes", "ft_model"),
+        ("T-slot 30 mm, base cross members (along y)", 2, round(ry[1] - ry[0] - 2 * h, 1), "bench ends", "ft_model"),
+        ("T-slot 30 mm, support posts", 4, round(f["z_rail_top"] - f["zb"] - 4 * h, 1), "base to support rails",
+         "ft_model"),
+        ("T-slot 30 mm, gantry cross-beams (back, front)", 2, round(ux[1] - ux[0] - 2 * hp, 1), "at the head flange",
+         "ft_model"),
+        ("T-slot 30 mm, side diagonals, ends mitred %.1f deg" % d_ang, 2, round(d_len, 1),
+         "front post top to back post base", "ft_model (cut length est.: to the ends' pivot brackets)"),
+        ("T-slot 30 mm, knee braces, back, 45 deg ends", 2, round(P["knee"] * math.sqrt(2), 1), "back posts to the back "
+         "beam", "ft_model"),
+        ("T-slot 30 mm, knee braces, front, 45 deg ends", 2, round(P["knee_front"] * math.sqrt(2), 1), "front posts to "
+         "the front beam", "ft_model"),
+        ("pivot (hinge) brackets, 30 series, for the diagonals and knee braces", 12, "", "one per brace end (12 ends)",
+         "estimate; catalogue part, PN not read"),
+        ("corner brackets 30 series (2 per joint)", 24, "", "base frame (8), support posts (16)", "estimate"),
+        ("corner brackets 45-to-30 (2 per joint)", 8, "", "cross-beams to the four posts", "estimate"),
+        ("foot plates for the 45 mm front posts", 2, "", "ft_model's front-post foot brackets", "estimate; catalogue part"),
+        ("drop-in T-nuts M6, 30 series", 40, "", "frame, MK-09c/d, MK-15a, MK-22b", "estimate"),
+        ("drop-in T-nuts M5, 30 series", 16, "", "spares", "estimate"),
+        ("toggle clamps (draw latches), small, stainless", 4, "", "two per beam-tube centre section (MK-10a, MK-10b)",
+         "catalogue part, PN not read"),
+        ("12 mm post (M6 / M4) and right-angle post clamp", 1, "", "camera post and arm (MK-20)", "Thorlabs class, "
+         "PN not read"),
+        ("M5 SHCS with bonded seals", 4, "M5 x 25", "gland to the deck through the box floor (MK-07)", "estimate"),
+    ]
+    return rows
+
+
+def export_bought(path):
+    import csv
+    with open(path, "w", newline="") as fh:
+        w = csv.writer(fh)
+        w.writerow(["item", "qty", "size_or_length_mm", "where", "source"])
+        w.writerows(bought_frame())
+
+
 def export_dxf(pc, path):
     """flat pattern outline and holes (cut layer only; bend lines go on the drawing, not in the cut file)"""
     import ezdxf
@@ -1917,6 +1966,7 @@ def export(pcs):
                                 tolerance=0.02, angularTolerance=0.1)
             rec["has_target"] = True
         recs.append(rec)
+    export_bought(OUT / "bought.csv")
     spec = dict(made=time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime()), pieces=recs)
     (SCRATCH / "pieces.json").write_text(json.dumps(spec, indent=1))
     (OUT / "pieces.json").write_text(json.dumps(spec, indent=1))

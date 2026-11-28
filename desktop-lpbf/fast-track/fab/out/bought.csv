@@ -1,0 +1,19 @@
+item,qty,size_or_length_mm,where,source
+"T-slot 45 mm, back posts",2,548.7,on the support rails,ft_model
+"T-slot 45 mm, front posts",2,750.7,"on foot brackets, 25 in front of the front rail",ft_model
+"T-slot 30 mm, base and support rails (along x)",4,580.0,under the box's mounting holes,ft_model
+"T-slot 30 mm, base cross members (along y)",2,236.7,bench ends,ft_model
+"T-slot 30 mm, support posts",4,148.0,base to support rails,ft_model
+"T-slot 30 mm, gantry cross-beams (back, front)",2,475.0,at the head flange,ft_model
+"T-slot 30 mm, side diagonals, ends mitred 59.8 deg",2,565.3,front post top to back post base,ft_model (cut length est.: to the ends' pivot brackets)
+"T-slot 30 mm, knee braces, back, 45 deg ends",2,169.7,back posts to the back beam,ft_model
+"T-slot 30 mm, knee braces, front, 45 deg ends",2,113.1,front posts to the front beam,ft_model
+"pivot (hinge) brackets, 30 series, for the diagonals and knee braces",12,,one per brace end (12 ends),"estimate; catalogue part, PN not read"
+corner brackets 30 series (2 per joint),24,,"base frame (8), support posts (16)",estimate
+corner brackets 45-to-30 (2 per joint),8,,cross-beams to the four posts,estimate
+foot plates for the 45 mm front posts,2,,ft_model's front-post foot brackets,estimate; catalogue part
+"drop-in T-nuts M6, 30 series",40,,"frame, MK-09c/d, MK-15a, MK-22b",estimate
+"drop-in T-nuts M5, 30 series",16,,spares,estimate
+"toggle clamps (draw latches), small, stainless",4,,"two per beam-tube centre section (MK-10a, MK-10b)","catalogue part, PN not read"
+12 mm post (M6 / M4) and right-angle post clamp,1,,camera post and arm (MK-20),"Thorlabs class, PN not read"
+M5 SHCS with bonded seals,4,M5 x 25,gland to the deck through the box floor (MK-07),estimate
