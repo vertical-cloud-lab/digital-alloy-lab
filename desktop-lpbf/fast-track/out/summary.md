@@ -30,54 +30,54 @@ Optics (f = 254 mm, M2 1.1):
 
 Cost by alternative (parts.csv):
 
-- **FT0**: $20,944-36,621 (without the monitoring group: $16,484-30,399); vendors at or over $3,500 (PO): McMaster ($4,010)
+- **FT0**: $22,600-39,539 (without the monitoring group: $17,901-33,092); vendors at or over $3,500 (PO): McMaster ($4,010); on cards (every other vendor, high prices): $26,891, 2.7x one card's $10,000 monthly limit (1.3x a department custodian card's $20,000)
   - Laser and optics (used): $4,757-7,946
   - Scan control and computing: $1,183-2,473
   - Motion: $30-80
   - Enclosure and chamber: $1,194-1,660
   - Heated plate: $610-1,010
   - Gas and O2: $2,731-4,320
-  - Safety: $2,780-3,682
-  - Stock and fabrication: $3,198-6,497
+  - Safety: $2,772-3,634
+  - Stock and fabrication: $4,623-9,238
   - Powder handling: $0-2,730
-  - Monitoring: $4,460-6,222
-- **FT1**: $29,175-47,294 (without the monitoring group: $23,915-39,072); vendors at or over $3,500 (PO): Zaber ($5,896), McMaster ($3,930)
+  - Monitoring: $4,699-6,447
+- **FT1**: $30,573-49,590 (without the monitoring group: $25,369-41,960); vendors at or over $3,500 (PO): Zaber ($5,896), McMaster ($3,930); on cards (every other vendor, high prices): $28,992, 2.9x one card's $10,000 monthly limit (1.4x a department custodian card's $20,000)
   - Laser and optics (used): $4,757-7,946
-  - Scan control and computing: $1,375-2,705
+  - Scan control and computing: $1,375-2,794
   - Motion: $5,976-6,096
   - Enclosure and chamber: $1,194-1,660
   - Heated plate: $946-1,406
   - Gas and O2: $2,731-4,320
-  - Safety: $2,780-3,682
-  - Stock and fabrication: $4,155-8,526
+  - Safety: $2,772-3,634
+  - Stock and fabrication: $5,617-11,372
   - Powder handling: $0-2,730
-  - Monitoring: $5,260-8,222
-- **FT1V**: $40,100-60,170 (without the monitoring group: $34,840-51,948); vendors at or over $3,500 (PO): Zaber ($5,896), Ideal Vacuum ($9,450), McMaster ($3,740)
+  - Monitoring: $5,204-7,630
+- **FT1V**: $42,080-63,485 (without the monitoring group: $36,876-55,855); vendors at or over $3,500 (PO): Zaber ($5,896), Ideal Vacuum ($9,450), McMaster ($3,740); on cards (every other vendor, high prices): $31,432, 3.1x one card's $10,000 monthly limit (1.6x a department custodian card's $20,000)
   - Laser and optics (used): $4,757-7,946
-  - Scan control and computing: $1,375-2,705
+  - Scan control and computing: $1,375-2,794
   - Motion: $5,976-6,096
   - Enclosure and chamber: $11,610-13,550
   - Heated plate: $946-1,406
   - Gas and O2: $2,651-4,130
-  - Safety: $2,780-3,682
-  - Stock and fabrication: $4,745-9,702
+  - Safety: $2,772-3,634
+  - Stock and fabrication: $6,788-13,568
   - Powder handling: $0-2,730
-  - Monitoring: $5,260-8,222
+  - Monitoring: $5,204-7,630
 
 Milestones (working days -> weeks):
 
-- FT-0 single-track bench: FIRST TRACKS at 10-26 working days = 1.9-5.2 weeks
-- FT-1 purge-box LPBF (stages on one PO): FIRST TRACKS at 16-36 working days = 3.2-7.3 weeks
-- FT-1 purge-box LPBF (stages on one PO): FIRST COUPONS at 21-46 working days = 4.2-9.3 weeks
-- FT-1 purge-box LPBF (stages on PCards): FIRST TRACKS at 13-36 working days = 2.7-7.3 weeks
-- FT-1 purge-box LPBF (stages on PCards): FIRST COUPONS at 18-46 working days = 3.7-9.3 weeks
-- FT-1V same, in a stock vacuum chamber: FIRST TRACKS at 17-42 working days = 3.4-8.4 weeks
-- FT-1V same, in a stock vacuum chamber: FIRST COUPONS at 22-52 working days = 4.4-10.4 weeks
+- FT-0 single-track bench: FIRST TRACKS at 12-34 working days = 2.4-6.9 weeks
+- FT-1 purge-box LPBF (stages on one PO): FIRST TRACKS at 16-45 working days = 3.2-9.0 weeks
+- FT-1 purge-box LPBF (stages on one PO): FIRST COUPONS at 21-55 working days = 4.2-11.0 weeks
+- FT-1 purge-box LPBF (stages on PCards): FIRST TRACKS at 16-45 working days = 3.2-9.0 weeks
+- FT-1 purge-box LPBF (stages on PCards): FIRST COUPONS at 21-55 working days = 4.2-11.0 weeks
+- FT-1V same, in a stock vacuum chamber: FIRST TRACKS at 19-54 working days = 3.9-10.8 weeks
+- FT-1V same, in a stock vacuum chamber: FIRST COUPONS at 24-64 working days = 4.9-12.8 weeks
 
 Shop throughput against FT-1 purge-box LPBF (stages on PCards): FIRST COUPONS (early with the low hours, late with the full hours):
 
-- 5 shop h a working day: 4.5-9.3 weeks
-- 8 shop h a working day: 3.7-7.5 weeks
-- 12 shop h a working day: 3.2-6.4 weeks
+- 5 shop h a working day: 5.4-11.0 weeks
+- 8 shop h a working day: 4.2-8.6 weeks
+- 12 shop h a working day: 3.6-7.1 weeks
 
 Layout sketch: bed 63 mm above the box floor, 140 mm below the window; lens 363 mm above the floor; overall ~768 mm with the stage below.
