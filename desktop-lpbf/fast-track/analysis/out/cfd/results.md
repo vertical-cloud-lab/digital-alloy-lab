@@ -694,7 +694,7 @@ non-orthogonality 65.0°, max skewness 6.4 (32 faces, "Failed 1 mesh checks"), m
 - **Escaped fume stays further from the window.** The same 30 % of the tracers from 4–15 mm escape into the cube, but
   they pass the cover slide no closer than 154 mm (median), against 89 mm in the box, and the gas 2 mm under the slide
   moves at 0.2 mm/s.
-- Not run for FT-1V: the laminar bracket and a purge (FT-1V pump-purges).
+- Not run for FT-1V: the laminar bracket and a purge (FT-1V pump-purges). Round 3 ran the purge on CAD v2 (R3.6).
 
 ![FT-1 and FT-1V](ft1v_box_section.png)
 
@@ -799,10 +799,11 @@ own gas moves at mm/s to cm/s, so a 1–2 K temperature difference in the room w
 - **A time-averaged laminar run** of the cross-flow (pimpleFoam with `fieldAverage`, set up as
   `make_case.py --transient` and `run_case.sh <case> map <steady case> pimple`): not run, for lack of CPU time on a
   runner shared by seven jobs (load average 7–12 on 4 cores during these runs).
-- **FT-1V's cube** (case 3): k-ω SST only, no laminar bracket and no purge (§3).
+- **FT-1V's cube** (case 3): k-ω SST only, no laminar bracket and no purge (§3). Round 3: the purge, R3.6.
 - **Heat:** the 200 °C plate and block, the laser plume's buoyancy and the box's own convection are not in any run.
   A hot plate drives a rising plume of its own (a few cm/s), the same order as the box circulation; it would lift fume
-  above the jet and carry the purge's last O₂ round the box.
+  above the jet and carry the purge's last O₂ round the box. Round 3 ran the 200 °C bed and block on the v2
+  cross-flow (R3.7): the plume rises at up to 0.3 m/s and does lift the escaping fume towards the cover slide.
 - **Spatter** (50–150 µm, ballistic) was not tracked; tracers stand for fume and condensate only.
 - **Mesh independence** was checked only for the passive purge (config A on the purge mesh and on the cross-flow
   mesh, §2.1). The cross-flow ran on one mesh (237,541 cells; 8 cells across the slot); the buoyant runs on the
