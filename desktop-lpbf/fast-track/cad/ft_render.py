@@ -378,6 +378,37 @@ def gantry():
     print("wrote cad-gantry-g3.png")
 
 
+def gantry_g4():
+    """Round 3: FT-0 with the box lid open on g4b (lower front + back diagonal) and on g4 (three diagonals), side by
+    side; neither is the default (P['gantry'] is restored to g3)."""
+    hide = ("Bench top", "PC with", "IPG YLR", "Safety relay", "E-stop", "Key switch", "Argon regulator", "Exhaust HEPA",
+            "Trace O2", "Digitizer", "120 mm fan", "Fibre bend restrictor", "Rotary-vane", "KF-25 pump hose", "Emission lamp")
+    g0, panels = M.P["gantry"], []
+    for g, title in (("four_post_braced_front_g4b", "g4b: lower front + back diagonal (2)"),
+                     ("four_post_braced_front_g4", "g4: both portals braced (3)")):
+        M.P["gantry"] = g
+        parts = M.build("FT-0", lid_open=True)
+        colors, opac = {}, {}
+        for p in parts:
+            if p.name.startswith("Gantry portal diagonals"):
+                colors[key(p)] = ADDED
+            elif p.sub == "frame":
+                colors[key(p)], opac[key(p)] = KEPT, 0.6
+        pl = plotter((880, 760))
+        add_parts(pl, parts, colors, opac, hide=hide)
+        cam(pl, dict(pos=(-760, -1500, 760), focal=(-28, -40, 120), view_angle=31))
+        panels.append(caption(shot(pl), title))
+    M.P["gantry"] = g0
+    both = np.hstack([panels[0], np.full((panels[0].shape[0], 6, 3), 255, np.uint8), panels[1]])
+    img = caption(both, "FT-0, box door open 24 deg (beam tube's centre section off), from the front-left: the added "
+                  "portal diagonals in green (round 3, not the default)",
+                  "g4b's lower front diagonal stays below the box's rim (z <= 116 mm inside the box's width); g4's upper "
+                  "one crosses the door's front gap (z 159-286 mm), 43 mm in front of the box",
+                  legend=[("portal diagonals", ADDED)])
+    Image.fromarray(img).save(IMG / "cad-gantry-g4.png")
+    print("wrote cad-gantry-g4.png")
+
+
 def cassette_in():
     """FT-1V's cassette carried halfway in through the cube's door at mid-height of the opening, and (green, faint)
     where it ends up: down in the bottom face's pocket, which is as big as the face opening (ft_cassette.py)."""

@@ -1,0 +1,1129 @@
+{
+ "gantry": "four_post_braced_front_g4b",
+ "utc": "2026-11-28 10:54",
+ "states": {
+  "FT-0": {
+   "n_parts": 89,
+   "clashes": [],
+   "contacts": [
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 5294.3,
+     "why": "brace bolted to the post"
+    },
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1312.0,
+     "why": "brace bolted to the post"
+    },
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry portal diagonals (g4b): 1 in the front portal, 1 in the back",
+     "volume_mm3": 1328.7,
+     "why": "g4 portal diagonal bolted to the post"
+    },
+    {
+     "a": "Gantry cross-beam (clamped at the head height)",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Gantry cross-beam, front (under the head plate's front end)",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Scan-head flange plate (MK-09)",
+     "b": "Head-plate top flange on both cross-beams (MK-09)",
+     "volume_mm3": 43084.8,
+     "why": "top flange welded to the flange plate"
+    },
+    {
+     "a": "Fibre bend restrictor",
+     "b": "Process fibre",
+     "volume_mm3": 563.1,
+     "why": "fibre in its bend restrictor"
+    },
+    {
+     "a": "Window retaining flange (MK-02)",
+     "b": "Window-stack screws, M4 x 12 flat head, flush",
+     "volume_mm3": 443.2,
+     "why": "screws"
+    },
+    {
+     "a": "Rod gland plate, 2 O-rings (MK-07)",
+     "b": "Gland screws M5 x 25 with bonded seals (4)",
+     "volume_mm3": 1134.9,
+     "why": "screws"
+    },
+    {
+     "a": "Lead terminal block, 6-way pluggable",
+     "b": "Lead pigtail, 4 heater + 2 TC wires",
+     "volume_mm3": 6.0,
+     "why": "wires in the terminal block"
+    },
+    {
+     "a": "Layer camera: Pi HQ, C-mount lens, FESH1000 (MON1)",
+     "b": "Camera post, arm and foot (MK-20)",
+     "volume_mm3": 242.9,
+     "why": "clamp on the camera's mount ring"
+    }
+   ],
+   "diagonal_contacts": [
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry portal diagonals (g4b): 1 in the front portal, 1 in the back",
+     "volume_mm3": 1328.7,
+     "why": "g4 portal diagonal bolted to the post"
+    }
+   ],
+   "beam_hits": [],
+   "beam_nearest": [
+    {
+     "part": "Well block, \u00d840.00 bore (MK-03)",
+     "clearance_mm": 0.0
+    },
+    {
+     "part": "Substrate disc \u00d839.8 x 6 (MK-05)",
+     "clearance_mm": 0.0
+    },
+    {
+     "part": "Cover-slide holder, \u00d844 opening (MK-02)",
+     "clearance_mm": 5.6
+    },
+    {
+     "part": "FT-0 spreader bar, 48 mm, ground edge, parked (M4)",
+     "clearance_mm": 5.9
+    },
+    {
+     "part": "Heater plate \u00d839.8 x 24 (MK-04)",
+     "clearance_mm": 6.0
+    },
+    {
+     "part": "Slot nozzle 45 x 4 mm (MK-11)",
+     "clearance_mm": 6.61
+    },
+    {
+     "part": "Exhaust collector (MK-11)",
+     "clearance_mm": 6.9
+    },
+    {
+     "part": "Window retaining flange (MK-02)",
+     "clearance_mm": 7.04
+    }
+   ]
+  },
+  "FT-1": {
+   "n_parts": 107,
+   "clashes": [],
+   "contacts": [
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 5294.3,
+     "why": "brace bolted to the post"
+    },
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1312.0,
+     "why": "brace bolted to the post"
+    },
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry portal diagonals (g4b): 1 in the front portal, 1 in the back",
+     "volume_mm3": 1328.7,
+     "why": "g4 portal diagonal bolted to the post"
+    },
+    {
+     "a": "Gantry cross-beam (clamped at the head height)",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Gantry cross-beam, front (under the head plate's front end)",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Scan-head flange plate (MK-09)",
+     "b": "Head-plate top flange on both cross-beams (MK-09)",
+     "volume_mm3": 43084.8,
+     "why": "top flange welded to the flange plate"
+    },
+    {
+     "a": "Fibre bend restrictor",
+     "b": "Process fibre",
+     "volume_mm3": 563.1,
+     "why": "fibre in its bend restrictor"
+    },
+    {
+     "a": "Window retaining flange (MK-02)",
+     "b": "Window-stack screws, M4 x 12 flat head, flush",
+     "volume_mm3": 443.2,
+     "why": "screws"
+    },
+    {
+     "a": "Rod gland plate, 2 O-rings (MK-07)",
+     "b": "Gland screws M5 x 25 with bonded seals (4)",
+     "volume_mm3": 1134.9,
+     "why": "screws"
+    },
+    {
+     "a": "IP68 cable glands M16 (2, back wall)",
+     "b": "Recoater M8 data and power cable",
+     "volume_mm3": 245.3,
+     "why": "cable through the gland"
+    },
+    {
+     "a": "Layer camera: Pi HQ, C-mount lens, FESH1000 (MON1)",
+     "b": "Camera post, arm and foot (MK-20)",
+     "volume_mm3": 242.9,
+     "why": "clamp on the camera's mount ring"
+    }
+   ],
+   "diagonal_contacts": [
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry portal diagonals (g4b): 1 in the front portal, 1 in the back",
+     "volume_mm3": 1328.7,
+     "why": "g4 portal diagonal bolted to the post"
+    }
+   ],
+   "beam_hits": [],
+   "beam_nearest": [
+    {
+     "part": "Well block, \u00d840.00 bore (MK-03)",
+     "clearance_mm": 0.0
+    },
+    {
+     "part": "Substrate disc \u00d839.8 x 6 (MK-05)",
+     "clearance_mm": 0.0
+    },
+    {
+     "part": "Cord clamp (MK-08)",
+     "clearance_mm": 3.52
+    },
+    {
+     "part": "Silicone-cord blade, 3 mm",
+     "clearance_mm": 3.96
+    },
+    {
+     "part": "Cover-slide holder, \u00d844 opening (MK-02)",
+     "clearance_mm": 5.6
+    },
+    {
+     "part": "Heater plate \u00d839.8 x 24 (MK-04)",
+     "clearance_mm": 6.0
+    },
+    {
+     "part": "Slot nozzle 45 x 4 mm (MK-11)",
+     "clearance_mm": 6.61
+    },
+    {
+     "part": "Exhaust collector (MK-11)",
+     "clearance_mm": 6.9
+    }
+   ]
+  },
+  "FT-1V": {
+   "n_parts": 109,
+   "clashes": [
+    {
+     "a": "Gantry portal diagonals (g4b): 1 in the front portal, 1 in the back",
+     "b": "Ideal Vacuum 12 in. cube frame P107540 (face opening est.)",
+     "volume_mm3": 29941.4
+    },
+    {
+     "a": "Gantry portal diagonals (g4b): 1 in the front portal, 1 in the back",
+     "b": "Cube top plate, bored for the window ring and the camera port (MK-13)",
+     "volume_mm3": 459.9
+    },
+    {
+     "a": "Gantry portal diagonals (g4b): 1 in the front portal, 1 in the back",
+     "b": "Cube back plate (KF-25 feedthroughs)",
+     "volume_mm3": 11316.3
+    },
+    {
+     "a": "Gantry portal diagonals (g4b): 1 in the front portal, 1 in the back",
+     "b": "Cube left plate (pump and gauge ports), light port",
+     "volume_mm3": 13312.6
+    },
+    {
+     "a": "Gantry portal diagonals (g4b): 1 in the front portal, 1 in the back",
+     "b": "Cube right plate (argon in, exhaust, vent)",
+     "volume_mm3": 11129.3
+    }
+   ],
+   "contacts": [
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 5294.3,
+     "why": "brace bolted to the post"
+    },
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1312.0,
+     "why": "brace bolted to the post"
+    },
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry portal diagonals (g4b): 1 in the front portal, 1 in the back",
+     "volume_mm3": 1328.7,
+     "why": "g4 portal diagonal bolted to the post"
+    },
+    {
+     "a": "Gantry cross-beam (clamped at the head height)",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Gantry cross-beam, front (under the head plate's front end)",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Scan-head flange plate (MK-09)",
+     "b": "Head-plate top flange on both cross-beams (MK-09)",
+     "volume_mm3": 43084.8,
+     "why": "top flange welded to the flange plate"
+    },
+    {
+     "a": "Fibre bend restrictor",
+     "b": "Process fibre",
+     "volume_mm3": 587.8,
+     "why": "fibre in its bend restrictor"
+    },
+    {
+     "a": "KF-25 ports: pump, Pirani, argon, exhaust, 2 electrical feedthroughs",
+     "b": "KF-25 pump hose and valve",
+     "volume_mm3": 47.6,
+     "why": "hose on the pump port"
+    },
+    {
+     "a": "Rotary-vane pump (McMaster 4396K21 class, envelope est.)",
+     "b": "KF-25 pump hose and valve",
+     "volume_mm3": 598.5,
+     "why": "hose on the pump inlet"
+    },
+    {
+     "a": "Window retaining flange (MK-02)",
+     "b": "Window-stack screws, M4 x 12 flat head, flush",
+     "volume_mm3": 443.2,
+     "why": "screws"
+    },
+    {
+     "a": "Rod gland plate, 2 O-rings (MK-07)",
+     "b": "Gland screws M5 x 25 with bonded seals (4)",
+     "volume_mm3": 1134.9,
+     "why": "screws"
+    },
+    {
+     "a": "Layer camera: Pi HQ, C-mount lens, FESH1000 (MON1)",
+     "b": "Camera post, arm and foot (MK-20)",
+     "volume_mm3": 141.8,
+     "why": "clamp on the camera's mount ring"
+    }
+   ],
+   "diagonal_contacts": [
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry portal diagonals (g4b): 1 in the front portal, 1 in the back",
+     "volume_mm3": 1328.7,
+     "why": "g4 portal diagonal bolted to the post"
+    }
+   ],
+   "beam_hits": [],
+   "beam_nearest": [
+    {
+     "part": "Well block, \u00d840.00 bore (MK-03)",
+     "clearance_mm": 0.0
+    },
+    {
+     "part": "Substrate disc \u00d839.8 x 6 (MK-05)",
+     "clearance_mm": 0.0
+    },
+    {
+     "part": "Cord clamp (MK-08)",
+     "clearance_mm": 3.52
+    },
+    {
+     "part": "Silicone-cord blade, 3 mm",
+     "clearance_mm": 3.96
+    },
+    {
+     "part": "Cover-slide holder, \u00d844 opening (MK-02)",
+     "clearance_mm": 5.6
+    },
+    {
+     "part": "Heater plate \u00d839.8 x 24 (MK-04)",
+     "clearance_mm": 6.0
+    },
+    {
+     "part": "Slot nozzle 45 x 4 mm (MK-11)",
+     "clearance_mm": 6.61
+    },
+    {
+     "part": "Exhaust collector (MK-11)",
+     "clearance_mm": 6.9
+    }
+   ]
+  },
+  "S1": {
+   "n_parts": 30,
+   "clashes": [],
+   "contacts": [
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 5294.3,
+     "why": "brace bolted to the post"
+    },
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1312.0,
+     "why": "brace bolted to the post"
+    },
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry portal diagonals (g4b): 1 in the front portal, 1 in the back",
+     "volume_mm3": 1328.7,
+     "why": "g4 portal diagonal bolted to the post"
+    },
+    {
+     "a": "Gantry cross-beam (clamped at the head height)",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Gantry cross-beam, front (under the head plate's front end)",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Scan-head flange plate (MK-09)",
+     "b": "Head-plate top flange on both cross-beams (MK-09)",
+     "volume_mm3": 43084.8,
+     "why": "top flange welded to the flange plate"
+    },
+    {
+     "a": "Fibre bend restrictor",
+     "b": "Process fibre",
+     "volume_mm3": 563.1,
+     "why": "fibre in its bend restrictor"
+    }
+   ],
+   "diagonal_contacts": [
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry portal diagonals (g4b): 1 in the front portal, 1 in the back",
+     "volume_mm3": 1328.7,
+     "why": "g4 portal diagonal bolted to the post"
+    }
+   ],
+   "beam_hits": [],
+   "beam_nearest": []
+  },
+  "S2": {
+   "n_parts": 54,
+   "clashes": [],
+   "contacts": [
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 5294.3,
+     "why": "brace bolted to the post"
+    },
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1312.0,
+     "why": "brace bolted to the post"
+    },
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry portal diagonals (g4b): 1 in the front portal, 1 in the back",
+     "volume_mm3": 1328.7,
+     "why": "g4 portal diagonal bolted to the post"
+    },
+    {
+     "a": "Gantry cross-beam (clamped at the head height)",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Gantry cross-beam, front (under the head plate's front end)",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Scan-head flange plate (MK-09)",
+     "b": "Head-plate top flange on both cross-beams (MK-09)",
+     "volume_mm3": 43084.8,
+     "why": "top flange welded to the flange plate"
+    },
+    {
+     "a": "Fibre bend restrictor",
+     "b": "Process fibre",
+     "volume_mm3": 563.1,
+     "why": "fibre in its bend restrictor"
+    },
+    {
+     "a": "Water-cooled beam dump, 1 kW (EKSMA 990-0820 class, envelope)",
+     "b": "Dump water lines",
+     "volume_mm3": 26.3,
+     "why": "hose on the dump"
+    },
+    {
+     "a": "Window retaining flange (MK-02)",
+     "b": "Window-stack screws, M4 x 12 flat head, flush",
+     "volume_mm3": 443.2,
+     "why": "screws"
+    }
+   ],
+   "diagonal_contacts": [
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry portal diagonals (g4b): 1 in the front portal, 1 in the back",
+     "volume_mm3": 1328.7,
+     "why": "g4 portal diagonal bolted to the post"
+    }
+   ],
+   "beam_hits": [],
+   "beam_nearest": [
+    {
+     "part": "Water-cooled beam dump, 1 kW (EKSMA 990-0820 class, envelope)",
+     "clearance_mm": 2.7
+    },
+    {
+     "part": "Cover-slide holder, \u00d844 opening (MK-02)",
+     "clearance_mm": 5.6
+    },
+    {
+     "part": "Window retaining flange (MK-02)",
+     "clearance_mm": 7.04
+    },
+    {
+     "part": "Window ring (MK-02)",
+     "clearance_mm": 7.53
+    },
+    {
+     "part": "Inner clamp ring (MK-02)",
+     "clearance_mm": 7.54
+    },
+    {
+     "part": "Beam tube centre section, split, long (MK-10)",
+     "clearance_mm": 9.33
+    },
+    {
+     "part": "Beam-tube lens collar, clamped on the lens (MK-10)",
+     "clearance_mm": 11.68
+    },
+    {
+     "part": "Box door (the lid): window bore, camera port",
+     "clearance_mm": 12.1
+    }
+   ]
+  }
+ },
+ "diagonals": [
+  {
+   "portal": "front",
+   "z_left_post": -240.0,
+   "z_right_post": 140.0,
+   "slope_deg": 36.2,
+   "box left wall": {
+    "x": -229.3,
+    "z": [
+     -215.7,
+     -197.1,
+     -178.5
+    ]
+   },
+   "plate": {
+    "x": 0.0,
+    "z": [
+     -48.1,
+     -29.5,
+     -11.0
+    ]
+   },
+   "box right wall": {
+    "x": 173.3,
+    "z": [
+     78.5,
+     97.1,
+     115.7
+    ]
+   }
+  },
+  {
+   "portal": "back",
+   "z_left_post": 185.0,
+   "z_right_post": 255.0,
+   "slope_deg": 7.7,
+   "box left wall": {
+    "x": -229.3,
+    "z": [
+     177.8,
+     192.9,
+     208.0
+    ]
+   },
+   "plate": {
+    "x": 0.0,
+    "z": [
+     208.6,
+     223.8,
+     238.9
+    ]
+   },
+   "box right wall": {
+    "x": 173.3,
+    "z": [
+     232.0,
+     247.1,
+     262.2
+    ]
+   }
+  }
+ ],
+ "runtime_s": 266,
+ "front_gap": {
+  "state": "FT-0",
+  "door_open_deg": 24.0,
+  "wall_plane_y": -107.4,
+  "line_end_y": -75.2,
+  "gap_x": [
+   -229.3,
+   173.3
+  ],
+  "door_front_edge": {
+   "y": -80.2,
+   "z_lower": 263.4
+  },
+  "rim_z": 138.6,
+  "pitches": {
+   "0 deg down": {
+    "with diagonals": {
+     "clear_fraction": 0.516,
+     "at_plate_x": [
+      [
+       144.0,
+       262.0,
+       120.0
+      ]
+     ],
+     "tallest_window": {
+      "50 mm wide": {
+       "height_mm": 120.0,
+       "where": {
+        "x": [
+         -221.3,
+         -173.3
+        ],
+        "z_at_wall": [
+         144.0,
+         262.0
+        ]
+       }
+      },
+      "100 mm wide": {
+       "height_mm": 120.0,
+       "where": {
+        "x": [
+         -221.3,
+         -121.3
+        ],
+        "z_at_wall": [
+         144.0,
+         262.0
+        ]
+       }
+      },
+      "150 mm wide": {
+       "height_mm": 120.0,
+       "where": {
+        "x": [
+         -221.3,
+         -69.3
+        ],
+        "z_at_wall": [
+         144.0,
+         262.0
+        ]
+       }
+      }
+     }
+    },
+    "without (g3)": {
+     "clear_fraction": 0.516,
+     "at_plate_x": [
+      [
+       144.0,
+       262.0,
+       120.0
+      ]
+     ],
+     "tallest_window": {
+      "50 mm wide": {
+       "height_mm": 120.0,
+       "where": {
+        "x": [
+         -221.3,
+         -173.3
+        ],
+        "z_at_wall": [
+         144.0,
+         262.0
+        ]
+       }
+      },
+      "100 mm wide": {
+       "height_mm": 120.0,
+       "where": {
+        "x": [
+         -221.3,
+         -121.3
+        ],
+        "z_at_wall": [
+         144.0,
+         262.0
+        ]
+       }
+      },
+      "150 mm wide": {
+       "height_mm": 120.0,
+       "where": {
+        "x": [
+         -221.3,
+         -69.3
+        ],
+        "z_at_wall": [
+         144.0,
+         262.0
+        ]
+       }
+      }
+     }
+    }
+   },
+   "30 deg down": {
+    "with diagonals": {
+     "clear_fraction": 0.539,
+     "at_plate_x": [
+      [
+       154.0,
+       278.0,
+       109.1
+      ]
+     ],
+     "tallest_window": {
+      "50 mm wide": {
+       "height_mm": 109.1,
+       "where": {
+        "x": [
+         102.7,
+         150.7
+        ],
+        "z_at_wall": [
+         154.0,
+         278.0
+        ]
+       }
+      },
+      "100 mm wide": {
+       "height_mm": 109.1,
+       "where": {
+        "x": [
+         50.7,
+         150.7
+        ],
+        "z_at_wall": [
+         154.0,
+         278.0
+        ]
+       }
+      },
+      "150 mm wide": {
+       "height_mm": 109.1,
+       "where": {
+        "x": [
+         -1.3,
+         150.7
+        ],
+        "z_at_wall": [
+         154.0,
+         278.0
+        ]
+       }
+      }
+     }
+    },
+    "without (g3)": {
+     "clear_fraction": 0.539,
+     "at_plate_x": [
+      [
+       154.0,
+       278.0,
+       109.1
+      ]
+     ],
+     "tallest_window": {
+      "50 mm wide": {
+       "height_mm": 109.1,
+       "where": {
+        "x": [
+         102.7,
+         150.7
+        ],
+        "z_at_wall": [
+         154.0,
+         278.0
+        ]
+       }
+      },
+      "100 mm wide": {
+       "height_mm": 109.1,
+       "where": {
+        "x": [
+         50.7,
+         150.7
+        ],
+        "z_at_wall": [
+         154.0,
+         278.0
+        ]
+       }
+      },
+      "150 mm wide": {
+       "height_mm": 109.1,
+       "where": {
+        "x": [
+         -1.3,
+         150.7
+        ],
+        "z_at_wall": [
+         154.0,
+         278.0
+        ]
+       }
+      }
+     }
+    }
+   },
+   "45 deg down": {
+    "with diagonals": {
+     "clear_fraction": 0.53,
+     "at_plate_x": [
+      [
+       164.0,
+       290.0,
+       90.5
+      ]
+     ],
+     "tallest_window": {
+      "50 mm wide": {
+       "height_mm": 90.5,
+       "where": {
+        "x": [
+         102.7,
+         150.7
+        ],
+        "z_at_wall": [
+         164.0,
+         290.0
+        ]
+       }
+      },
+      "100 mm wide": {
+       "height_mm": 90.5,
+       "where": {
+        "x": [
+         50.7,
+         150.7
+        ],
+        "z_at_wall": [
+         164.0,
+         290.0
+        ]
+       }
+      },
+      "150 mm wide": {
+       "height_mm": 90.5,
+       "where": {
+        "x": [
+         -1.3,
+         150.7
+        ],
+        "z_at_wall": [
+         164.0,
+         290.0
+        ]
+       }
+      }
+     }
+    },
+    "without (g3)": {
+     "clear_fraction": 0.53,
+     "at_plate_x": [
+      [
+       164.0,
+       290.0,
+       90.5
+      ]
+     ],
+     "tallest_window": {
+      "50 mm wide": {
+       "height_mm": 90.5,
+       "where": {
+        "x": [
+         102.7,
+         150.7
+        ],
+        "z_at_wall": [
+         164.0,
+         290.0
+        ]
+       }
+      },
+      "100 mm wide": {
+       "height_mm": 90.5,
+       "where": {
+        "x": [
+         50.7,
+         150.7
+        ],
+        "z_at_wall": [
+         164.0,
+         290.0
+        ]
+       }
+      },
+      "150 mm wide": {
+       "height_mm": 90.5,
+       "where": {
+        "x": [
+         -1.3,
+         150.7
+        ],
+        "z_at_wall": [
+         164.0,
+         290.0
+        ]
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "door": {
+  "hinge_axis_y": 192.7,
+  "hinge_axis_z": 150.0,
+  "camera_on_door": true,
+  "first_contact": {
+   "angle_deg": 25.0,
+   "contacts": [
+    {
+     "pose": 25.0,
+     "mover": "Layer camera: Pi HQ, C-mount lens, FESH1000 (MON1)",
+     "part": "Beam-tube lens collar, clamped on the lens (MK-10)"
+    }
+   ]
+  },
+  "last_free_deg": 24.0,
+  "front_edge_rise_mm": 120.2
+ },
+ "door_no_camera": {
+  "hinge_axis_y": 192.7,
+  "hinge_axis_z": 150.0,
+  "camera_on_door": false,
+  "first_contact": {
+   "angle_deg": 27.0,
+   "contacts": [
+    {
+     "pose": 27.0,
+     "mover": "Quarter-turn latch",
+     "part": "Beam-tube lens collar, clamped on the lens (MK-10)"
+    }
+   ]
+  },
+  "last_free_deg": 26.0,
+  "front_edge_rise_mm": 129.5
+ },
+ "tube_removal": {
+  "FT-1": {
+   "slide_axis": "x",
+   "-x half-shell": {
+    "poses": 31,
+    "travel_mm": 60.0,
+    "n_contacts": 0,
+    "contacts": [],
+    "nearest": [
+     {
+      "mover": "Tube section -x half-shell",
+      "part": "Window retaining flange (MK-02)",
+      "min_dist_mm": 0.2,
+      "at": 0.0
+     },
+     {
+      "mover": "Tube section -x half-shell",
+      "part": "Window-stack screws, M4 x 12 flat head, flush",
+      "min_dist_mm": 0.2,
+      "at": 2.0
+     },
+     {
+      "mover": "Tube section -x half-shell",
+      "part": "Beam-tube lens collar, clamped on the lens (MK-10)",
+      "min_dist_mm": 0.2,
+      "at": 0.0
+     },
+     {
+      "mover": "Tube section -x half-shell",
+      "part": "Layer camera: Pi HQ, C-mount lens, FESH1000 (MON1)",
+      "min_dist_mm": 4.26,
+      "at": 60.0
+     }
+    ]
+   },
+   "+x half-shell": {
+    "poses": 31,
+    "travel_mm": 60.0,
+    "n_contacts": 0,
+    "contacts": [],
+    "nearest": [
+     {
+      "mover": "Tube section +x half-shell",
+      "part": "Window retaining flange (MK-02)",
+      "min_dist_mm": 0.2,
+      "at": 0.0
+     },
+     {
+      "mover": "Tube section +x half-shell",
+      "part": "Window-stack screws, M4 x 12 flat head, flush",
+      "min_dist_mm": 0.2,
+      "at": 2.0
+     },
+     {
+      "mover": "Tube section +x half-shell",
+      "part": "Beam-tube lens collar, clamped on the lens (MK-10)",
+      "min_dist_mm": 0.2,
+      "at": 0.0
+     },
+     {
+      "mover": "Tube section +x half-shell",
+      "part": "Window, \u00d850.8 x 9.53 fused silica, 1064 V-coat",
+      "min_dist_mm": 4.67,
+      "at": 0.0
+     }
+    ]
+   },
+   "section_length_mm": 123.5
+  },
+  "FT-1V": {
+   "slide_axis": "y",
+   "-y half-shell": {
+    "poses": 31,
+    "travel_mm": 60.0,
+    "n_contacts": 0,
+    "contacts": [],
+    "nearest": [
+     {
+      "mover": "Tube section -y half-shell",
+      "part": "Window retaining flange (MK-02)",
+      "min_dist_mm": 0.2,
+      "at": 0.0
+     },
+     {
+      "mover": "Tube section -y half-shell",
+      "part": "Window-stack screws, M4 x 12 flat head, flush",
+      "min_dist_mm": 0.2,
+      "at": 6.0
+     },
+     {
+      "mover": "Tube section -y half-shell",
+      "part": "Beam-tube lens collar, clamped on the lens (MK-10)",
+      "min_dist_mm": 0.2,
+      "at": 0.0
+     },
+     {
+      "mover": "Tube section -y half-shell",
+      "part": "Window, \u00d850.8 x 9.53 fused silica, 1064 V-coat",
+      "min_dist_mm": 5.01,
+      "at": 0.0
+     }
+    ]
+   },
+   "+y half-shell": {
+    "poses": 31,
+    "travel_mm": 60.0,
+    "n_contacts": 0,
+    "contacts": [],
+    "nearest": [
+     {
+      "mover": "Tube section +y half-shell",
+      "part": "Window retaining flange (MK-02)",
+      "min_dist_mm": 0.2,
+      "at": 0.0
+     },
+     {
+      "mover": "Tube section +y half-shell",
+      "part": "Window-stack screws, M4 x 12 flat head, flush",
+      "min_dist_mm": 0.2,
+      "at": 12.0
+     },
+     {
+      "mover": "Tube section +y half-shell",
+      "part": "Beam-tube lens collar, clamped on the lens (MK-10)",
+      "min_dist_mm": 0.2,
+      "at": 0.0
+     },
+     {
+      "mover": "Tube section +y half-shell",
+      "part": "Window, \u00d850.8 x 9.53 fused silica, 1064 V-coat",
+      "min_dist_mm": 4.67,
+      "at": 0.0
+     }
+    ]
+   },
+   "section_length_mm": 23.7
+  }
+ },
+ "cube_door": {
+  "hinge_axis_y": -128.7,
+  "hinge_axis_z": -27.8,
+  "first_contact": {
+   "angle_deg": 9.0,
+   "contacts": [
+    {
+     "pose": 9.0,
+     "mover": "Cube front plate = door (hinge kit P106868), light port",
+     "part": "Gantry portal diagonals (g4b): 1 in the front portal, 1 in the back"
+    }
+   ]
+  },
+  "last_free_deg": 8.0
+ },
+ "cube_door_g3": {
+  "hinge_axis_y": -128.7,
+  "hinge_axis_z": -27.8,
+  "first_contact": null,
+  "last_free_deg": 90
+ }
+}

@@ -43,6 +43,7 @@ JOINTS = [
     ("Gantry uprights", "Gantry cross-beam", "T-slot joint"),
     ("Gantry braces", "Gantry uprights", "brace bolted to the post"),
     ("Gantry braces", "Gantry cross-beam", "knee brace bolted under the cross-beam"),
+    ("Gantry portal diagonals", "Gantry uprights", "g4 portal diagonal bolted to the post"),
     ("Gantry braces", "T-slot base", "diagonal's foot at the back support rail"),
     ("Front-post foot brackets", "Gantry uprights", "post on its foot"),
     ("Front-post foot brackets", "T-slot base", "foot bolted to the front base rail"),
@@ -845,5 +846,194 @@ def write_md(res):
     (OUT / "checks.md").write_text("\n".join(md) + "\n")
 
 
+# --------------------------------------------------------------------------------------------------
+# Round 3: the portal-braced gantries g4 / g4b (the joint FEA's "portals_braced" / "front_lower_back")
+# --------------------------------------------------------------------------------------------------
+PORTAL = "Gantry portal diagonals"
+
+
+def front_gap_access(state="FT-0", pitches=(0.0, 30.0, 45.0), dx=4.0, dz=2.0, y0=-420.0):
+    """The opened door's front gap seen from the front, with and without the portal diagonals. The door (the lid,
+    hinged at the back) open to P['door_open_deg'] and the beam tube's centre section off (M.open_door). Straight
+    lines (a forearm's axis) come from the front (y0) at a downward pitch and end 5 mm behind the opened door's front
+    edge; each is indexed by (x, z) where it crosses the box's front-wall plane. A line is clear if it meets no part
+    (trimesh ray casting, first hit). Returns per pitch the clear heights (perpendicular to the line) at the plate's x
+    and the largest clear window of a given width, for the scene with the diagonals and without them (= g3)."""
+    import trimesh
+    parts = M.open_door(M.build(state), state)
+    xc, yc = P["deck_c"]
+    bx, by = P["box_out"][0], P["box_out"][1]
+    y_w = yc - by / 2                                             # the box's front-wall outer face
+    door = [p for p in parts if p.name.startswith("Box door")][0].shape.BoundingBox()
+    d0 = [p for p in M.build(state) if p.name.startswith("Box door")][0].shape.BoundingBox()   # closed
+    yh, zh = M.door_hinge(state)
+    th = math.radians(P["door_open_deg"])
+    z_edge = zh - (d0.ymin - yh) * math.sin(th) + (d0.zmin - zh) * math.cos(th)   # the open door's front lower edge
+    y_end = door.ymin + 5.0
+    x_in = (xc - bx / 2 + P["box_t"], xc + bx / 2 - P["box_t"])  # the gap's width: the body's inside
+    xs = np.arange(x_in[0] + dx / 2, x_in[1], dx)
+    zs = np.arange(100.0, 330.0 + 1e-6, dz)
+    corridor = (x_in[0] - 40, x_in[1] + 40, y0 - 10, y_end + 10)
+    near = [p for p in parts if not (p.shape.BoundingBox().xmax < corridor[0] or p.shape.BoundingBox().xmin > corridor[1]
+                                     or p.shape.BoundingBox().ymax < corridor[2] or p.shape.BoundingBox().ymin > corridor[3])]
+    meshes = {}
+    for lab, keep in (("with diagonals", near), ("without (g3)", [p for p in near if not p.name.startswith(PORTAL)])):
+        ms = []
+        for p in keep:
+            m = _mesh(p.shape, 0.5)
+            if m is not None:
+                ms.append(trimesh.Trimesh(vertices=m[0], faces=m[1], process=False))
+        meshes[lab] = trimesh.util.concatenate(ms)
+    out = dict(state=state, door_open_deg=P["door_open_deg"], wall_plane_y=round(y_w, 1), line_end_y=round(y_end, 1),
+               gap_x=[round(v, 1) for v in x_in], door_front_edge=dict(y=round(door.ymin, 1), z_lower=round(z_edge, 1)),
+               rim_z=round(M.levels(state)["rim"], 1), pitches={})
+    X, Z = np.meshgrid(xs, zs)                                    # rows z, columns x
+    for a in pitches:
+        ta, ca = math.tan(math.radians(a)), math.cos(math.radians(a))
+        org = np.c_[X.ravel(), np.full(X.size, y0), Z.ravel() + (y_w - y0) * ta]
+        d = np.array([0.0, ca, -math.sin(math.radians(a))])
+        L_ = (y_end - y0) / ca
+        res = {}
+        for lab, mesh in meshes.items():
+            clear = np.ones(len(org), bool)
+            for c0 in range(0, len(org), 1000):                 # in chunks: trimesh's candidate lists grow fast
+                o_ = org[c0:c0 + 1000]
+                locs, idx, _ = mesh.ray.intersects_location(o_, np.tile(d, (len(o_), 1)), multiple_hits=False)
+                hit_d = np.linalg.norm(locs - o_[idx], axis=1)
+                clear[c0 + idx[hit_d < L_]] = False
+            clear &= org[:, 2] - (y_end - y0) * ta < z_edge         # under the door's edge: into the box, not over it
+            G = clear.reshape(X.shape)
+            j0 = int(np.argmin(abs(xs - 0.0)))                    # the plate's x
+            runs, best = [], 0
+            col = G[:, j0]
+            k = 0
+            while k < len(zs):
+                if col[k]:
+                    k1 = k
+                    while k1 + 1 < len(zs) and col[k1 + 1]:
+                        k1 += 1
+                    runs.append([round(zs[k], 1), round(zs[k1], 1), round((zs[k1] - zs[k] + dz) * ca, 1)])
+                    k = k1 + 1
+                else:
+                    k += 1
+            win = {}
+            for w in (50.0, 100.0, 150.0):                        # the tallest clear window this wide (perpendicular)
+                nw = int(round(w / dx))
+                bestw = (0.0, None)
+                for j in range(0, len(xs) - nw + 1):
+                    rowok = G[:, j:j + nw].all(axis=1)
+                    k = 0
+                    while k < len(zs):
+                        if rowok[k]:
+                            k1 = k
+                            while k1 + 1 < len(zs) and rowok[k1 + 1]:
+                                k1 += 1
+                            hgt = (zs[k1] - zs[k] + dz) * ca
+                            if hgt > bestw[0]:
+                                bestw = (round(hgt, 1), dict(x=[round(xs[j] - dx / 2, 1), round(xs[j + nw - 1] + dx / 2, 1)],
+                                                             z_at_wall=[round(zs[k], 1), round(zs[k1], 1)]))
+                            k = k1 + 1
+                        else:
+                            k += 1
+                win[f"{w:g} mm wide"] = dict(height_mm=bestw[0], where=bestw[1])
+            res[lab] = dict(clear_fraction=round(float(G.mean()), 3), at_plate_x=runs, tallest_window=win)
+        out["pitches"][f"{a:g} deg down"] = res
+    return out
+
+
+def cube_door_swing(state="FT-1V", max_deg=90, step=1.0):
+    """FT-1V: the cube's front plate (its door, hinge kit along x at its bottom, as drawn) and the MON3 light on it
+    rotated forward and down about the hinge's axis; the first angle at which they touch a fixed part outside the
+    cube (python-fcl), and what."""
+    parts = M.build(state)
+    hb = [p for p in parts if p.name.startswith("Door hinges")][0].shape.BoundingBox()
+    y_h, z_h = (hb.ymin + hb.ymax) / 2, (hb.zmin + hb.zmax) / 2
+    door = [p for p in parts if p.name.startswith(("Cube front plate", "Raking light from -y", "Light port ring and window (MK-21, MON3)"))]
+    statics = [p for p in parts if p not in door and not p.name.startswith(("Ideal Vacuum", "Cube ", "Door hinges", "Door interlock", "Bench top",
+                                                                             "Surface thermocouples"))]
+    pivot = np.array([0.0, y_h, z_h])
+    poses = []
+    for k in range(0, int(max_deg / step) + 1):
+        R = _rot_x(math.radians(k * step))                      # the top goes forward (-y) and down
+        poses.append((k * step, R, pivot - R @ pivot))
+    rows, hits = fcl_sweep(statics, door, poses, "cube door")
+    first = None
+    if hits:
+        a0 = min(h["pose"] for h in hits)
+        first = dict(angle_deg=float(a0), contacts=[h for h in hits if h["pose"] == a0][:6])
+    return dict(hinge_axis_y=round(y_h, 1), hinge_axis_z=round(z_h, 1), first_contact=first,
+                last_free_deg=(first["angle_deg"] - step) if first else max_deg)
+
+
+def portal_diagonal_bands():
+    """Where each added diagonal's Ø30 tube passes, in its portal plane: z (centre, and the band's bottom and top
+    measured vertically) at the box's inside walls and at the plate's x."""
+    xc, yc = P["deck_c"]
+    ux = (xc - 260.0, xc + 260.0)
+    bx = P["box_out"][0]
+    out = []
+    for side, zl, zr in P["portal_diag"][P["gantry"]]:
+        s = (zr - zl) / (ux[1] - ux[0])
+        half = 15.0 * math.sqrt(1 + s * s)
+        row = dict(portal=side, z_left_post=zl, z_right_post=zr, slope_deg=round(math.degrees(math.atan(s)), 1))
+        for lab, x in (("box left wall", xc - bx / 2 + P["box_t"]), ("plate", 0.0), ("box right wall", xc + bx / 2 - P["box_t"])):
+            zc_ = zl + (x - ux[0]) * s
+            row[lab] = dict(x=round(x, 1), z=[round(zc_ - half, 1), round(zc_, 1), round(zc_ + half, 1)])
+        out.append(row)
+    return out
+
+
+def gantry_variant(gantry, states=("FT-0", "FT-1", "FT-1V", "S1", "S2"), extras=True):
+    """Clash, designed-contact and beam checks for one gantry variant, then (extras) the door swing, the beam-tube
+    removal and the front gap; writes out/checks-<g>.json after each step."""
+    P["gantry"] = gantry
+    g = gantry.rsplit("_", 1)[-1]
+    path = OUT / f"checks-{g}.json"
+    res = dict(gantry=gantry, utc=time.strftime("%Y-%m-%d %H:%M", time.gmtime()), states={},
+               diagonals=portal_diagonal_bands())
+    t0 = time.time()
+
+    def save():
+        res["runtime_s"] = round(time.time() - t0)
+        path.write_text(json.dumps(res, indent=1, default=str))
+    save()
+    if extras:
+        res["front_gap"] = front_gap_access("FT-0")
+        save()
+        print(f"{g}: front gap done ({time.time() - t0:.0f} s)", flush=True)
+
+    def check(st):
+        parts = M.build(st)
+        clashes, contacts = interference(parts)
+        hits, near = beam_check(st, parts) if st != "S1" else ([], [])
+        new = [c for c in contacts if PORTAL in c["a"] or PORTAL in c["b"]]
+        res["states"][st] = dict(n_parts=len(parts), clashes=clashes, contacts=contacts, diagonal_contacts=new,
+                                 beam_hits=hits, beam_nearest=near[:8])
+        save()
+        print(f"{g} {st}: {len(parts)} parts, {len(clashes)} clashes, {len(contacts)} contacts ({len(new)} diagonal), "
+              f"{len(hits)} beam hits ({time.time() - t0:.0f} s)", flush=True)
+    for st in states:
+        if st.startswith("FT"):
+            check(st)
+    if extras:
+        res["door"] = door_swing("FT-1")
+        res["door_no_camera"] = door_swing("FT-1", camera=False)
+        res["cube_door"] = cube_door_swing("FT-1V")
+        save()
+        print(f"{g}: door {res['door']['last_free_deg']} / {res['door_no_camera']['last_free_deg']} deg "
+              f"({time.time() - t0:.0f} s)", flush=True)
+        res["tube_removal"] = {st: tube_removal(st) for st in ("FT-1", "FT-1V")}
+        save()
+        print(f"{g}: tube removal {res['tube_removal']} ({time.time() - t0:.0f} s)", flush=True)
+    for st in states:
+        if not st.startswith("FT"):
+            check(st)
+    return res
+
+
 if __name__ == "__main__":
-    main()
+    if sys.argv[1:2] == ["gantry"]:        # python ft_checks.py gantry four_post_braced_front_g4b[,...g4] [states...]
+        for g_ in sys.argv[2].split(","):  # -> out/checks-g4b.json (, out/checks-g4.json)
+            gantry_variant(g_, tuple(sys.argv[3:]) or ("FT-0", "FT-1", "FT-1V", "S1", "S2"))
+    else:
+        main()

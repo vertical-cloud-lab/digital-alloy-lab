@@ -24,7 +24,7 @@ It extends the study in [`../README.md`](../README.md).
 | [`ft_model.py`](ft_model.py) | the model: parameters with sources (`P`), `build(state, pz, hx, lid_open, piston, monitoring)`, the made parts (`MADE`, MK-01 to MK-23), the monitoring parts (`MON`, MON1 to MON9), the diff between states, STEP export |
 | [`ft_vendor.py`](ft_vendor.py) → [`out/vendor-verify.json`](out/vendor-verify.json) | the bought parts drawn to the makers' dimensions, with `measure` and `verify` modes against the vendors' STEP files |
 | [`vendor-cad-manifest.csv`](vendor-cad-manifest.csv) | where each vendor file came from (URL, sha256, date); the files themselves are not committed |
-| [`ft_checks.py`](ft_checks.py) → [`out/checks.md`](out/checks.md), [`out/checks.json`](out/checks.json) | all the checks above, by state |
+| [`ft_checks.py`](ft_checks.py) → [`out/checks.md`](out/checks.md), [`out/checks.json`](out/checks.json) | all the checks above, by state; round 3: `gantry <name>` checks a gantry variant → [`out/checks-g4b.json`](out/checks-g4b.json), [`out/checks-g4.json`](out/checks-g4.json) ([g4b and g4](#g4b-and-g4-bracing-the-portals-round-3-not-the-default)) |
 | [`ft_progression.py`](ft_progression.py) → [`out/progression.md`](out/progression.md), [`out/progression.csv`](out/progression.csv) | the schedule of the five states (three ordering scenarios), the spend by state, what each step adds, moves and removes, and the assembly order at each step |
 | [`ft_cassette.py`](ft_cassette.py) → [`out/cassette.md`](out/cassette.md), [`out/cassette.json`](out/cassette.json) | round 3: what the deck cassette needs to get into the cube (envelope, the smallest square or round opening at every roll angle, the pocket it sits in, a python-fcl insertion through a parametric opening) |
 | [`ft_head_service.py`](ft_head_service.py) → [`out/head-service.md`](out/head-service.md), [`out/head-service.json`](out/head-service.json) | round 3: taking the scan head off the g3 gantry (python-fcl and exact booleans along each route) |
@@ -39,7 +39,9 @@ python desktop-lpbf/fast-track/cad/ft_progression.py                # out/progre
 python desktop-lpbf/fast-track/cad/ft_cassette.py                   # out/cassette.*  (~6 min)
 python desktop-lpbf/fast-track/cad/ft_cassette.py estimates         # adds the estimated openings (~2 min)
 python desktop-lpbf/fast-track/cad/ft_head_service.py               # out/head-service.*  (~2 min)
+python desktop-lpbf/fast-track/cad/ft_checks.py gantry four_post_braced_front_g4b,four_post_braced_front_g4   # ~9 min
 xvfb-run -a -s "-screen 0 1920x1080x24" python desktop-lpbf/fast-track/cad/ft_render.py
+xvfb-run -a -s "-screen 0 1920x1080x24" python desktop-lpbf/fast-track/cad/ft_render.py gantry_g4   # img/cad-gantry-g4.png
 ```
 
 All of it is on the g3 gantry (`P["gantry"] = "four_post_braced_front_g3"`, the default since round 3): the checks,
@@ -87,6 +89,12 @@ PyVista, python-fcl and trimesh.
   through MK-09, so either MK-09 lifts off with the head on it (after the collimator comes off, or it catches under
   the front cross-beam), or the far-side plate and the mirror block come off and the head slides 46 mm toward +x
   before it lifts. Details in [the head section](#taking-the-scan-head-off-on-g3).
+- **Bracing the portals (round 3, not the default) works in the box but not with the cube.** With bolted joints the
+  FEA puts g3 at 47-57 Hz. g4b adds a lower front diagonal and a back diagonal (70.7 Hz feet fixed, 62.0 Hz on foot
+  plates). It draws clean in FT-0, FT-1, S1 and S2, and leaves the box lid's front gap and swing as on g3. g4 adds
+  an upper front diagonal as well (72.8 / 64.4 Hz); it cuts the clear height at the plate's x from 91-120 mm to
+  50-70 mm. In FT-1V the back diagonal runs through the cube, and the front diagonal stops the cube's door at
+  8 degrees. Details in [g4b and g4](#g4b-and-g4-bracing-the-portals-round-3-not-the-default).
 - **Gas volume from the model:** FT-0 24.2 L, FT-1 24.0 L, FT-1V 22.6 L (Ideal Vacuum gives the empty cube 22.6 L).
 - **Monitoring (MON1-MON9)** is drawn: a Raspberry Pi HQ layer camera through its own window port (17.8 µm per pixel
   across the plate in the box), two raking LED lights through wall ports, a coaxial photodiode behind the head's input
@@ -433,6 +441,77 @@ Nothing traps the head for good, but on g3 it can't simply be lifted out of its 
   branch has to be re-aligned afterwards.
 - **Refitting:** bolt the head to MK-09 first and bring the far-side pad up to its face last, so the pad does not push
   the head sideways (the pad or strap is an estimate: the head's far face has no published mounting points).
+
+## g4b and g4: bracing the portals (round 3, not the default)
+
+Round 3's joint FEA (`analysis/fea/ft_joints.py`, joints worker) models g3's bolted joints as springs rather than
+bonded joints. That drops mode 1 from 62 Hz to 47-57 Hz, and diagonals in the portals (the frames between the two front posts
+and between the two back posts) bring it back. Both variants below are g3 plus Ø30 mm diagonals in the portal planes,
+drawn like g3's side diagonals (round stand-ins for 30 mm T-slot, tagged E4, square ends on the posts' inner faces).
+`P["gantry"]` stays g3; set it to one of these to build them.
+
+| Variant | Added diagonals: z on the left post → z on the right post | FEA mode 1, brace ends stiffened |
+|---|---|---|
+| `four_post_braced_front_g4b` (the joints worker's pick) | front portal -240 → 140 mm; back portal 185 → **255** mm | 70.7 Hz feet fixed, 62.0 Hz on thick foot plates |
+| `four_post_braced_front_g4` (the FEA's "portals_braced") | front 160 → 285 and -240 → 140 mm; back 185 → 275 mm | 72.8 Hz feet fixed, 64.4 Hz on a thick foot plate |
+
+g4b's back diagonal ends 20 mm lower on the right post than in the FEA (255 mm, not 275), because at 275 it grazed the
+back right knee brace. The FEA has not been re-run with 255; the change should be small (estimate).
+
+`python ft_checks.py gantry four_post_braced_front_g4b,four_post_braced_front_g4` writes
+[`out/checks-g4b.json`](out/checks-g4b.json) and [`out/checks-g4.json`](out/checks-g4.json) (about 5 min each):
+
+| Check | g3 (default) | g4b | g4 |
+|---|---|---|---|
+| clashes in FT-0, FT-1, S1, S2 (g4b and g4: 89, 107, 30, 54 parts) | 0 | 0 | 0 |
+| clashes in FT-1V | 0 | **5: the back diagonal runs through the cube** (its frame and top, back, left and right plates) | 5, the same |
+| parts in the scanned-beam envelope | 0 | 0 | 0 |
+| box lid's free swing (FT-1), camera on / unclipped | 24 / 26 deg | 24 / 26 deg | 24 / 26 deg |
+| beam-tube half-shells slid off (FT-1, FT-1V) | no contact over 60 mm | the same | the same |
+| cube's door (FT-1V, drops forward on a hinge along its bottom edge) | free to 90 deg | **8 deg**, then the lower front diagonal | **2 deg**, then the upper front diagonal |
+| box lid's front gap (FT-0), clear at the plate's x: horizontal / 30 deg down / 45 deg down | 120 / 109 / 91 mm | the same as g3 | **70 / 50 / 59 mm** |
+| the same gap, share of lines that get in clear (0 / 30 / 45 deg) | 0.52 / 0.54 / 0.53 | the same as g3 | 0.40 / 0.40 / 0.41 |
+
+![g4b and g4 with the box lid open](../img/cad-gantry-g4.png)
+
+**The box lid's front gap.** The lid is hinged at the back and opens 24 degrees before the layer camera meets the lens
+collar. Its front lower edge then sits at z 263 mm, 27 mm behind the box's front face, over the rim at z 139 mm:
+hand-spreading (FT-0) and plate changes go in through this 125 mm high, 403 mm wide gap. The front portal's plane is
+43 mm in front of the box. `front_gap_access` casts straight lines (a forearm's axis) from the front into the gap,
+horizontal and 30 and 45 degrees down, on a 4 x 2 mm grid. It counts the lines that get in without touching any part,
+with the diagonals and without them, and gives the clear height across each line.
+
+- **g4b leaves the gap as it is on g3.** Its lower front diagonal stays under the rim across the whole box: the tube's
+  top is at z 116 mm at the box's right inner wall and at -11 mm at the plate's x. It passes 57 mm under the MON3 light
+  (bottom at z 60.7 mm) and 28 mm in front of the box's front face. The back diagonal passes 28 mm over the closed lid
+  at the box's left edge and doesn't change the lid's swing.
+- **g4's upper front diagonal gets in the way.** It crosses the gap from corner to corner: the tube spans z 159-190 mm
+  at the box's left inner wall, 214-245 mm at the plate's x and 256-286 mm at the right wall. At the plate's x, the
+  clear height drops to 50-70 mm from g3's 91-120 mm. The 48 x 12 x 30 mm spreader bar and a flat hand still pass, but
+  a forearm is roughly 60-70 mm thick (estimate), so every reach to the plate has to thread under the tube.
+  If g4 is wanted for its extra 2.1-2.4 Hz, put its upper front diagonal on quick-release pins: off for loading, back
+  on before a run. The FEA would then need the stiffness of a pinned end, not "stiffened brace ends".
+
+**FT-1V: neither variant fits the cube as drawn.**
+
+- **The cube fills the back portal up to z 271 mm**, where the box filled it only up to z 150 mm. Its top plate is at
+  z 248-271 mm and its back plate at y 190-213 mm, behind the back posts' centre plane (y 178 mm). So the back
+  diagonal has to come off when the cube goes in. Over the cube, the back knee braces' lower ends are at about z 314 mm
+  (the beams are clamped 21 mm higher in FT-1V). That leaves 43 mm: room for a horizontal tie but not a diagonal.
+  Two options, neither checked: a back diagonal from the left post just over the cube (z ≈ 290 mm) up to the back
+  cross-beam's underside, or the cube bolted to the back posts so it acts as the shear panel.
+- **The cube's door is its front plate, hinged along its bottom edge** (y -128.7, z -27.8 mm as drawn). It drops
+  forward through the front portal, and the lower front diagonal's tube is only 13 mm in front of it. The diagonal
+  stops the door at 8 degrees, so in FT-1V it has to come off for every plate change (quick-release pins, or two
+  bolts into T-nuts at each end). It is also in the way when the box slides forward off its rails and the cube slides
+  on (steps 7 and 8 of the FT-1 → FT-1V order above): from x -73 mm to the box's right side, the tube is in the box's
+  height range, 28 mm in front of its front face (from the model's coordinates, not a sweep).
+- **The FEA so far is FT-1's frame only.** For FT-1V it needs the head and both cross-beams 21 mm higher, whatever back
+  brace fits over the cube, and the front diagonal's ends as pinned.
+
+Not drawn: the joints worker's 12-15 mm plate under each front post bolted to the bench, the back posts' end plates on
+their base rail, and a second bracket or doweled end plate at all 16 brace ends. The checks count the diagonals' square
+ends in the posts as a designed contact.
 
 ## The PCard route's piston stage: Thorlabs MTS50/M-Z8
 
