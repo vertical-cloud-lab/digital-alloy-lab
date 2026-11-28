@@ -503,7 +503,9 @@ with the diagonals and without them, and gives the clear height across each line
 - **The cube's door is its front plate, hinged along its bottom edge** (y -128.7, z -27.8 mm as drawn). It drops
   forward through the front portal, and the lower front diagonal's tube is only 13 mm in front of it. The diagonal
   stops the door at 8 degrees, so in FT-1V it has to come off for every plate change (quick-release pins, or two
-  bolts into T-nuts at each end).
+  bolts into T-nuts at each end). It is also in the way when the box slides forward off its rails and the cube slides
+  on (steps 7 and 8 of the FT-1 → FT-1V order above): from x -73 mm to the box's right side, the tube is in the box's
+  height range, 28 mm in front of its front face (from the model's coordinates, not a sweep).
 - **The FEA so far is FT-1's frame only.** For FT-1V it needs the head and both cross-beams 21 mm higher, whatever back
   brace fits over the cube, and the front diagonal's ends as pinned.
 
