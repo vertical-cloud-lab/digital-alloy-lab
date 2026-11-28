@@ -317,6 +317,8 @@ faces and the five closed plates' bosses, the cassette carried in through the do
 | 25.4 (1 in.) | 259.9 | 261.9 | 285.8 |
 | 38.1 (1.5 in.) | 267.3 | 269.3 | over 289 |
 
+![The cassette carried into the cube at mid-height](../img/cad-cassette-into-cube.png)
+
 - **The model's 266 mm estimate** passes with 10.5 mm a side, and would take a corner radius up to 35.8 mm.
 - **Carry it in at mid-height, not along the sill:** slid along the sill, the deck's lower corners meet the opening's
   own corner radii (the last column). With 10.5 mm a side or less there is no room for fingers beside the deck, so it

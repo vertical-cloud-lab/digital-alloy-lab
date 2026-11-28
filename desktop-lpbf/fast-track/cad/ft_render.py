@@ -378,9 +378,38 @@ def gantry():
     print("wrote cad-gantry-g3.png")
 
 
+def cassette_in():
+    """FT-1V's cassette carried halfway in through the cube's door at mid-height of the opening, and (green, faint)
+    where it ends up: down in the bottom face's pocket, which is as big as the face opening (ft_cassette.py)."""
+    import ft_cassette as K
+    parts = M.build("FT-1V")
+    cas = [p for p in parts if p.group != "piston" and not p.name.startswith(K.LOOSE)
+           and (p.sub in ("cassette", "recoater") or p.name.startswith(K.ON_DECK))]
+    L = M.levels("FT-1V")
+    h = max(p.shape.BoundingBox().zmax for p in cas) - L["floor_top"]
+    lift = K.HALF_IN - h / 2                                   # underside at mid-height of the opening, less half its height
+    dy = -M.P["cube_frame"] / 2 - 10.0                         # the deck's centre 10 mm outside the door's plane
+    keep = ("Ideal Vacuum 12", "Cube bottom plate", "Cube back plate", "Cube left plate", "Cube right plate")
+    pl = plotter()
+    add_parts(pl, [p for p in parts if p.name.startswith(keep)], opac={key(p): 0.55 for p in parts})
+    for p in cas:
+        m = tess(p.shape)
+        if m is None:
+            continue
+        pl.add_mesh(m.translate((0.0, dy, lift), inplace=False), color=hex2rgb(p.color), opacity=1.0, **MAT)
+        pl.add_mesh(m, color=hex2rgb(ADDED), opacity=0.22, **MAT)
+    xc, yc = M.P["deck_c"]
+    cam(pl, dict(pos=(xc - 620, yc - 980, L["cube_c"] + 560), focal=(xc, yc - 90, L["cube_c"] - 40), view_angle=30))
+    img = caption(shot(pl), f"FT-1V: the cassette (245 x 245 x {h:.1f} mm) carried in through the cube's door at "
+                  "mid-height of the opening", "green, faint: where it ends up, in the bottom face's pocket, which is as "
+                  "big as the face opening (266 mm est.): so the opening must be >= 245 mm + clearance (ft_cassette.py)")
+    Image.fromarray(img).save(IMG / "cad-cassette-into-cube.png")
+    print("wrote cad-cassette-into-cube.png")
+
+
 if __name__ == "__main__":
     IMG.mkdir(exist_ok=True)
     what = sys.argv[1:] or ["states", "sections", "steps", "strip", "monitoring", "camera_view", "thorlabs", "door", "gantry",
-                            "gif"]
+                            "cassette_in", "gif"]
     for w in what:
         globals()[w]()
