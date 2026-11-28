@@ -329,6 +329,26 @@ faces and the five closed plates' bosses, the cassette carried in through the do
   across its corners, more than the 289.6 mm inside. (A round door alone would need 246.9 mm along y, 245.2 mm along
   x.)
 
+**At the estimated openings (estimates until Ideal Vacuum sends P107540's drawing).** The live-reads worker couldn't
+read the opening (idealvac.com refused the Pi and the runner) and estimates **250-260 mm, most likely about 255 mm**,
+scaled from the rails of Ideal Vacuum's 6 in. cube manual and its 12 in. frame render; another reading of the 2019
+brochure gives 243 mm. Checked with the same fcl insertion (carried in at mid-height, set down on the floor; zero
+clearance; [`out/cassette.md`](out/cassette.md) section 5):
+
+| Opening (estimate) | Clearance a side, sharp corners | The 245 mm deck as drawn goes in flat | With the deck's corners rounded | Fallback |
+|---|---:|---|---|---|
+| 243 mm (brochure reading) | -1.0 mm | **no**, at any corner radius | no (the deck's sides are the limit) | a deck cut to **240.2 x 197.3 mm** (the X-LSM100B's length plus 0.5 mm a side; nozzle to stage) with the stage shield cut back 2.1 mm: goes in flat with corner radii up to 25.4 mm (fcl), 1.4 mm a side; it needs 240.2 mm |
+| 250 mm | 2.5 mm | yes up to r = 8.5 mm (fcl: yes at 6.35, no at 12.7) | R 15: yes up to r = 12.7; R 30: yes up to 25.4 | |
+| 255 mm (most likely) | 5.0 mm | yes up to r = 17 mm (fcl: yes at 12.7, no at 25.4) | R 15 or R 30: yes up to 25.4 | |
+| 260 mm | 7.5 mm | yes up to r = 25.6 mm (fcl: yes at 25.4) | yes | |
+
+Edge-on insertion and taking parts off don't help at 243 mm: the deck gets through the door edge-on, but its own
+245 mm sides can't lie in a 243 mm bottom pocket. So, before the drawing arrives: **round MK-01's four corners to
+R 30** (no cost in the shop; the X-LSM100B's corner stays on the deck), which covers 250-260 mm at any corner radius up
+to 1 in.; and if the drawing shows under about 247 mm, cut MK-01 to 240.2 x 197.3 mm instead (the box's deck clamps,
+MK-23, then need re-checking; not done here). Under about 241 mm the X-LSM100B itself (239.2 mm) can't sit square in
+the cube, and the Lesker box is the chamber.
+
 **Tilting or rotating doesn't lower it in this cube.** Rolled about the insertion axis so that the deck runs along the
 opening's diagonal, the cassette passes a much smaller square face: 207.3 mm at 39.3 deg through the door with the
 hopper at its right park, **196.9 mm** with the hopper parked at the left (43.6 deg), 196.2 mm through a side plate

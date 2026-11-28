@@ -74,3 +74,28 @@ The model's estimated 266 mm square opening: passes.
 Rolled 39.3 deg through a 19.4 mm wall with a square hole (no pocket behind it): needs 207.3 mm in 2D; in 3D hole 207.8 mm: passes, hole 206.8 mm: blocked at step 4.
 
 Run time 337 s.
+
+## 5. The live-reads worker's estimates of the opening (243, 250, 255, 260 mm; estimates until Ideal Vacuum's P107540 drawing)
+
+Carried in at mid-height of the door's opening and set down on the floor (python-fcl, as in 4); yes = in flat with no contact (zero clearance).
+
+| Cassette | Corner radius r (mm) | 243 mm | 250 mm | 255 mm | 260 mm |
+|---|---:|---:|---:|---:|---:|
+| deck as drawn (245 x 245, sharp corners) | 0 | no | yes | yes | yes |
+| deck as drawn (245 x 245, sharp corners) | 6.35 | no | yes | yes | yes |
+| deck as drawn (245 x 245, sharp corners) | 12.7 | no | no | yes | yes |
+| deck as drawn (245 x 245, sharp corners) | 25.4 | no | no | no | yes |
+| deck corners rounded to R 15 | 0 | no | yes | yes | yes |
+| deck corners rounded to R 15 | 6.35 | no | yes | yes | yes |
+| deck corners rounded to R 15 | 12.7 | no | yes | yes | yes |
+| deck corners rounded to R 15 | 25.4 | no | no | yes | yes |
+| deck corners rounded to R 30 | 0 | no | yes | yes | yes |
+| deck corners rounded to R 30 | 6.35 | no | yes | yes | yes |
+| deck corners rounded to R 30 | 12.7 | no | yes | yes | yes |
+| deck corners rounded to R 30 | 25.4 | no | yes | yes | yes |
+| cube deck cut to the parts' spread, shield cut back | 0 | yes | yes | yes | yes |
+| cube deck cut to the parts' spread, shield cut back | 6.35 | yes | yes | yes | yes |
+| cube deck cut to the parts' spread, shield cut back | 12.7 | yes | yes | yes | yes |
+| cube deck cut to the parts' spread, shield cut back | 25.4 | yes | yes | yes | yes |
+
+The cube deck is 240.2 x 197.3 mm and needs a sharp-cornered opening of 240.21 mm.

@@ -268,9 +268,119 @@ def fit_centre(H, r=0.0):
 
 
 # --------------------------------------------------------------------------------------------------
+# 5. The live-reads worker's estimates of the opening (round 3): 243, 250, 255, 260 mm
+# --------------------------------------------------------------------------------------------------
+ESTIMATES = (243.0, 250.0, 255.0, 260.0)
+EST_RADII = (0.0, 6.35, 12.7, 25.4)
+
+
+def cassette_variant(deck_round=0.0, cube_deck=False, hx=None):
+    """The cassette's mesh in the cube's frame (z from the floor) and its height, with the deck's corners rounded to
+    deck_round, or (cube_deck) a deck cut to the parts' own spread (the X-LSM100B's length in x plus 0.5 mm a side,
+    nozzle to stage in y plus 0.5 mm) with the stage shield cut back to the stage's ends; the cube is then centred on
+    that deck."""
+    L = M.levels("FT-1V")
+    xc, yc = P["deck_c"]
+    parts = [p for p in M.build("FT-1V", hx=hx) if p.group != "piston" and not p.name.startswith(LOOSE)
+             and (p.sub in ("cassette", "recoater") or p.name.startswith(ON_DECK))]
+    shapes = []
+    z0 = L["floor_top"]
+    if cube_deck:
+        st = [p for p in parts if p.name.startswith("Zaber X-LSM100B")][0].shape.BoundingBox()
+        others = [p for p in parts if not p.name.startswith("Deck plate")]
+        x0, x1 = st.xmin - 0.5, st.xmax + 0.5
+        y0 = min(p.shape.BoundingBox().ymin for p in others) - 0.5
+        y1 = max(p.shape.BoundingBox().ymax for p in others) + 0.5
+        for p in others:
+            sh = p.shape
+            if p.name.startswith("Stage shield"):
+                sh = sh.intersect(M.box(x0, x1, -500, 500, -500, 500))
+            shapes.append(sh)
+        shapes.append(M.box(x0, x1, y0, y1, z0, z0 + P["deck_t"]))
+        cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
+        size = (round(x1 - x0, 1), round(y1 - y0, 1))
+    else:
+        for p in parts:
+            sh = p.shape
+            if p.name.startswith("Deck plate") and deck_round > 0:
+                rr = (cq.Workplane("XY").rect(*P["deck"]).extrude(P["deck_t"]).edges("|Z").fillet(deck_round).val()
+                      .translate(cq.Vector(xc, yc, z0)))
+                sh = sh.intersect(rr)
+            shapes.append(sh)
+        cx, cy = xc, yc
+        size = tuple(P["deck"])
+    meshes = []
+    for sh in shapes:
+        vs, ts = sh.tessellate(0.2, 0.2)
+        if ts:
+            meshes.append((np.array([(v.x - cx, v.y - cy, v.z - z0) for v in vs], float), np.array(ts, np.int32)))
+    V, Fc = _merge(meshes)
+    return _bvh(V, Fc), float(V[:, 2].max()), size
+
+
+def door_passes(cas_g, height, s, r):
+    V, Fc = cube_frame(s, r)
+    return _collides(cas_g, _bvh(V, Fc), door_path(s, height)) is None
+
+
+def estimates():
+    """Carried in through the door at mid-height and set down on the floor, at the estimated openings: the deck as
+    drawn, with rounded corners, and the cut-down cube deck."""
+    t0 = time.time()
+    out = dict(openings_mm=list(ESTIMATES), corner_radii_mm=list(EST_RADII), rows=[])
+    variants = [("deck as drawn (245 x 245, sharp corners)", dict()),
+                ("deck corners rounded to R 15", dict(deck_round=15.0)),
+                ("deck corners rounded to R 30", dict(deck_round=30.0)),
+                ("cube deck cut to the parts' spread, shield cut back", dict(cube_deck=True))]
+    for lab, kw in variants:
+        g, h, size = cassette_variant(**kw)
+        for s in ESTIMATES:
+            for r in EST_RADII:
+                ok = door_passes(g, h, s, r)
+                out["rows"].append(dict(cassette=lab, deck_mm=list(size), opening_mm=s, corner_r_mm=r, goes_in_flat=ok))
+        if kw.get("cube_deck"):
+            lo, hi = 235.0, 250.0
+            while hi - lo > 0.05:
+                mid = (lo + hi) / 2
+                lo, hi = (lo, mid) if door_passes(g, h, mid, 0.0) else (mid, hi)
+            out["cube_deck_smallest_sharp_opening_mm"] = round(hi, 2)
+            out["cube_deck_mm"] = list(size)
+        print(f"estimates: {lab} ({time.time() - t0:.0f} s)", flush=True)
+    return out
+
+
+def write_estimates_md(est):
+    md = ["", "## 5. The live-reads worker's estimates of the opening (243, 250, 255, 260 mm; estimates until Ideal "
+          "Vacuum's P107540 drawing)", "",
+          "Carried in at mid-height of the door's opening and set down on the floor (python-fcl, as in 4); "
+          "yes = in flat with no contact (zero clearance).", ""]
+    cas = []
+    for r_ in est["rows"]:
+        if r_["cassette"] not in cas:
+            cas.append(r_["cassette"])
+    hdr = "| Cassette | Corner radius r (mm) | " + " | ".join(f"{s:g} mm" for s in est["openings_mm"]) + " |"
+    md += [hdr, "|---|---:|" + "---:|" * len(est["openings_mm"])]
+    for c in cas:
+        for r in est["corner_radii_mm"]:
+            cells = [next(("yes" if x["goes_in_flat"] else "no") for x in est["rows"]
+                          if x["cassette"] == c and x["corner_r_mm"] == r and x["opening_mm"] == s)
+                     for s in est["openings_mm"]]
+            md.append(f"| {c} | {r:g} | " + " | ".join(cells) + " |")
+    md += ["", f"The cube deck is {est['cube_deck_mm'][0]} x {est['cube_deck_mm'][1]} mm and needs a sharp-cornered "
+           f"opening of {est['cube_deck_smallest_sharp_opening_mm']} mm."]
+    return md
+
+
 def main():
     t0 = time.time()
     OUT.mkdir(exist_ok=True)
+    if sys.argv[1:] == ["estimates"]:
+        res = json.loads((OUT / "cassette.json").read_text())
+        res["estimates"] = estimates()
+        (OUT / "cassette.json").write_text(json.dumps(res, indent=1))
+        write_md(res)
+        print(f"updated out/cassette.json, out/cassette.md in {time.time() - t0:.0f} s")
+        return
     res = dict(note="cube frame: x, y from the cube's axis (= the deck's centre), z above the floor (the bottom plate's "
                     "boss); hopper at the right park unless stated", cube_inside_mm=P["cube_in"],
                cube_open_est_mm=P["cube_open"], frame_mm=round(F, 1))
@@ -383,6 +493,8 @@ def write_md(res):
            f"{rw['square_needed_mm']} mm in 2D; in 3D " + ", ".join(f"{k}: {v}" for k, v in rw.items()
                                                                     if k.startswith("hole")) + ".",
            "", f"Run time {res['runtime_s']} s."]
+    if "estimates" in res:
+        md += write_estimates_md(res["estimates"])
     (OUT / "cassette.md").write_text("\n".join(md) + "\n")
 
 

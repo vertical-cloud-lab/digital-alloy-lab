@@ -372,5 +372,666 @@
   "hole 207.8 mm": "passes",
   "hole 206.8 mm": "blocked at step 4"
  },
- "runtime_s": 337
+ "runtime_s": 337,
+ "estimates": {
+  "openings_mm": [
+   243.0,
+   250.0,
+   255.0,
+   260.0
+  ],
+  "corner_radii_mm": [
+   0.0,
+   6.35,
+   12.7,
+   25.4
+  ],
+  "rows": [
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": true
+   }
+  ],
+  "cube_deck_smallest_sharp_opening_mm": 240.21,
+  "cube_deck_mm": [
+   240.2,
+   197.3
+  ]
+ }
 }
