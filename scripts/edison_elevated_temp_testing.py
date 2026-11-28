@@ -31,6 +31,12 @@ OUT = (pathlib.Path(__file__).resolve().parent.parent / "edison-trajectories"
 IDS = OUT / "_task_ids.json"
 DONE = {"success", "fail", "failed", "cancelled", "error"}
 EMAIL = re.compile(r"[\w.+-]+@[\w-]+(?:\.[\w-]+)+")
+# Publisher PDFs stamp "downloaded from IP address a.b.c.d" (the crawler's address) into the text.
+DOWNLOAD_IP = re.compile(r"(downloaded from IP address )(?:\d{1,3}\.){3}\d{1,3}")
+
+
+def redact(text: str) -> str:
+    return DOWNLOAD_IP.sub(r"\1[redacted]", EMAIL.sub("[email redacted]", text))
 
 CONTEXT = (
     "Context: the BYU Vertical Cloud Lab designs aluminum alloys for laser powder bed fusion "
@@ -308,8 +314,8 @@ def fetch() -> None:
             print(f"{key}: {status}, not fetched")
             continue
         raw = verbose.model_dump(mode="json")
-        # The retrieved paper text carries authors' e-mail addresses; this repo is public.
-        traj = EMAIL.sub("[email redacted]", json.dumps(raw, indent=1, default=str))
+        # The retrieved paper text carries authors' e-mail addresses and download stamps; this repo is public.
+        traj = redact(json.dumps(raw, indent=1, default=str))
         (OUT / f"{key}.trajectory.json").write_text(traj + "\n")
         resp = c.get_task(task_id=task_id)
         answer = getattr(resp, "formatted_answer", None) or getattr(resp, "answer", None) or ""
@@ -327,7 +333,7 @@ def fetch() -> None:
             "-->\n\n"
             f"**Question ({rec['job']}):** {QUERIES[key]['query']}\n\n---\n\n"
         )
-        (OUT / f"{key}.md").write_text(header + EMAIL.sub("[email redacted]", str(answer)) + "\n")
+        (OUT / f"{key}.md").write_text(header + redact(str(answer)) + "\n")
         rec["fetched_utc"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
         print(f"{key}: {status}, {len(str(answer))} chars saved")
     IDS.write_text(json.dumps(ids, indent=2) + "\n")
