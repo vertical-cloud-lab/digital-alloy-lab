@@ -130,10 +130,79 @@ See [detailed submission guidance in alloy-workflow-review.md](alloy-workflow-re
 
 ### 8. NSF EAGER — **Opportunistic**
 
-- Up to $300K for high-risk/high-reward exploratory research
-- Requires prior PO discussion and buy-in — cannot be submitted cold
-- Best used for a radical methodological idea (e.g., a novel AI algorithm for alloy design, not infrastructure)
-- Worth pitching during PO conversations about CAREER or DMR TMRP
+#### Official EAGER requirements ([PAPPG 24-1, Chapter II.F.3](https://www.nsf.gov/policies/pappg/24-1/ch-2-proposal-preparation#2F3))
+
+EAGER (EArly-concept Grants for Exploratory Research) supports "exploratory work in its early stages on untested, but potentially transformative, research ideas or approaches" that are "especially high risk-high payoff" — for example, work that "involves radically different approaches, applies new expertise, or engages novel disciplinary or interdisciplinary perspectives."
+
+| Requirement | Details |
+|---|---|
+| **Budget** | Up to **$300,000** (including indirect costs) |
+| **Duration** | Up to **2 years** |
+| **Project Description** | Maximum **8 pages** (vs. 15 for standard proposals). Must include clear statements as to why the project is appropriate for EAGER funding, including why it does not fit into existing programs and why it is a good fit for EAGER |
+| **Pre-submission** | PI must submit a **Concept Outline** to the cognizant PO before submitting a full proposal. ~~ProSPCT (Program Suitability and Proposal Concept Tool) was previously used but was~~ [decommissioned May 12, 2025](https://suitability.nsf.gov/s/) — Concept Outlines should now be **emailed directly** to the PO or the program contact listed in the funding opportunity |
+| **PO concurrence** | The PO concurrence email confirming approval to submit must be uploaded as "Program Officer Concurrence Email" in the Supplementary Documentation section of Research.gov |
+| **Review** | Only **internal NSF merit review** is required (no external panel review by default, though POs may elect external review) |
+| **Title prefix** | Project title must be preceded by **"EAGER:"** |
+| **Reconsideration** | EAGER proposals are **not eligible for reconsideration** if declined |
+| **Renewal** | Renewed funding requires a Traditional or Accomplishment-Based Renewal proposal subject to full external merit review |
+| **Not appropriate for** | Projects suitable for standard NSF proposals; planning grants; preliminary data collection; providing services to NSF |
+
+EAGER proposals must otherwise comply with all standard PAPPG proposal preparation requirements (formatting, biographical sketches, current & pending support, data management plan, etc.).
+
+**Note for DMR TMRP submissions:** Per [NSF 23-612](https://www.nsf.gov/funding/opportunities/dmr-tmrp-division-materials-research-topical-materials-research/nsf23-612/solicitation), EAGER proposals are explicitly **exempt from the per-PI per-fiscal-year submission limit** that applies to standard DMR TMRP proposals, and may be submitted anytime after PO consultation and approval.
+
+#### Official NSF documents related to EAGER
+
+| Document | URL |
+|---|---|
+| PAPPG 24-1, Ch. II.F.3 (EAGER) | [nsf.gov/policies/pappg/24-1/ch-2-proposal-preparation](https://www.nsf.gov/policies/pappg/24-1/ch-2-proposal-preparation#2F3) |
+| PAPPG 24-1 full PDF (NSF 24-1) | [nsf-gov-resources.nsf.gov/files/nsf24_1.pdf](https://nsf-gov-resources.nsf.gov/files/nsf24_1.pdf) |
+| PAPPG 24-1, Ch. I (Concept Outlines) | [nsf.gov/policies/pappg/24-1/ch-1-pre-submission](https://www.nsf.gov/policies/pappg/24-1/ch-1-pre-submission) |
+| ProSPCT decommission notice | [suitability.nsf.gov/s/](https://suitability.nsf.gov/s/) |
+| NSF Concept Outlines info | [nsf.gov/events/concept-outlines-nsf](https://www.nsf.gov/events/concept-outlines-nsf) |
+| NSF Award Search (search funded EAGERs) | [nsf.gov/awardsearch/advancedSearch.jsp](https://www.nsf.gov/awardsearch/advancedSearch.jsp) |
+| NSF Award Data API | [research.gov/common/webapi/awardapisearch-v1.htm](https://www.research.gov/common/webapi/awardapisearch-v1.htm) |
+| NSF Preparing Your Proposal | [nsf.gov/funding/preparing-proposal](https://www.nsf.gov/funding/preparing-proposal) |
+| DMR-TMRP solicitation (NSF 23-612) | [nsf.gov/.../nsf23-612/solicitation](https://www.nsf.gov/funding/opportunities/dmr-tmrp-division-materials-research-topical-materials-research/nsf23-612/solicitation) |
+| MEP program page | [nsf.gov/.../mep.../504950/pd17-8092](https://www.nsf.gov/funding/opportunities/mep-materials-engineering-processing/504950/pd17-8092) |
+| AM program page | [nsf.gov/.../am-advanced-manufacturing](https://www.nsf.gov/funding/opportunities/am-advanced-manufacturing) |
+
+#### Who to contact for the Vertical Cloud Lab concept
+
+The [vertical cloud lab vision](https://github.com/vertical-cloud-lab) — vertical lift module (VLM) automation with electrified trays, cloud-accessible user facility, and a mix of low- and high-cost hardware enabling a highly multi-station autonomous materials discovery lab — is a strong EAGER candidate because the VLM-based lab architecture is genuinely high-risk/high-reward and has no precedent in materials research.
+
+| Program Officer | Division | Email | Phone | Why This PO | Contact Approach |
+|---|---|---|---|---|---|
+| **Dr. Jonathan Madison** | DMR — Metals & Metallic Nanostructures (MMN) | [jmadison@nsf.gov](mailto:jmadison@nsf.gov) | (703) 292-2937 | Background in 3D characterization, solidification (formerly Sandia). The high-throughput alloy screening and characterization aspects fit DMR | Email Concept Outline; can discuss alongside a DMR TMRP or CAREER pre-submission conversation |
+| **Dr. Alexis Lewis** | CMMI — Materials Engineering & Processing (MEP) | [mep@nsf.gov](mailto:mep@nsf.gov) | (703) 292-2624 | Expertise in processing-microstructure relationships and scale-up (formerly NRL). The multi-station powder-to-part pipeline fits MEP scope | Email mep@nsf.gov with Concept Outline; MEP program recommends reaching out at least 4 weeks before any submission |
+| **NSF Advanced Manufacturing program** | CMMI — Advanced Manufacturing (AM) | [AdvancedManufacturing@nsf.gov](mailto:AdvancedManufacturing@nsf.gov) | (703) 292-7225 | LPBF research, process monitoring, AI/ML process optimization | Email group address with Concept Outline; ask whether an EAGER would be appropriate for the VLM automation concept |
+
+**NSF AM program directors — who to reach out to:**
+
+All five AM PDs share the [AdvancedManufacturing@nsf.gov](mailto:AdvancedManufacturing@nsf.gov) inbox, so an email there reaches the group. For the VCL concept specifically, two PDs are the strongest fit:
+
+| PD | Phone | Home institution | Research focus | VCL fit |
+|---|---|---|---|---|
+| **Linkan Bian** ⭐ | (703) 292-8136 | Mississippi State (ISE) | AI/ML in AM, process-structure-property modeling, in-situ monitoring, digital twins for AM | **Best fit** — the VCL's AI-driven autonomous LPBF alloy discovery pipeline maps directly onto his AI/ML + AM + process-structure-property focus |
+| **Satish Bukkapatnam** ⭐ | (703) 292-4813 | Texas A&M (ISE) | Smart manufacturing, digital twins, real-time process monitoring, cyber-physical systems, "Smart Manufacturing Multiplex" | **Strong fit** — his "Smart Manufacturing Multiplex" concept (multiple process chains + integrated sensors + digital twins) is close to the VCL architecture |
+| Andrew B. Wells | (703) 292-7225 | NSF (permanent staff) | Precision engineering, electron microscopy, laser micromachining, nanomachining | Moderate — precision manufacturing systems knowledge, but less directly tied to AM/alloy discovery |
+| Khershed Cooper | (703) 292-7017 | NSF (permanent staff) | Nanomanufacturing, advanced materials processing, manufacturing policy & partnerships | Moderate — policy leadership and materials processing expertise, but more nano-focused |
+| Pranav Soman | (703) 292-4322 | Syracuse (BME) | Biomanufacturing, bioprinting, tissue engineering, organ-on-chip | Low — biomedical focus does not align with alloy/metals work |
+
+**Recommendation:** Email [AdvancedManufacturing@nsf.gov](mailto:AdvancedManufacturing@nsf.gov) with the Concept Outline and request that it be routed to **Linkan Bian** or **Satish Bukkapatnam**, noting the AI/ML-driven autonomous manufacturing and smart manufacturing multiplex aspects of the VCL. Bian's AI/ML+AM expertise and Bukkapatnam's "Smart Manufacturing Multiplex" concept are the closest matches to VLM-based autonomous lab automation.
+
+*Contact info verified from [NSF DMR-TMRP solicitation NSF 23-612](https://www.nsf.gov/funding/opportunities/dmr-tmrp-division-materials-research-topical-materials-research/nsf23-612/solicitation), [NSF MEP program page](https://www.nsf.gov/funding/opportunities/mep-materials-engineering-processing/504950/pd17-8092), and [NSF AM program page](https://www.nsf.gov/funding/opportunities/am-advanced-manufacturing). PO assignments rotate — verify on current program pages before contacting.*
+
+#### How to approach the conversation
+
+Per PAPPG 24-1, a **Concept Outline** must be submitted to the PO before a full EAGER proposal. Since ProSPCT has been decommissioned, Concept Outlines are now emailed directly to the PO.
+
+1. Prepare a Concept Outline covering the VCL vision: VLM with electrified trays for sample transport, cloud-based remote experiment scheduling, integration of ultrasonic atomization + LPBF + automated characterization in a single autonomous loop — see [draft concept outline (LaTeX)](eager-concept-outline.tex) and [VLM Equipment Justification](main%20(2).pdf) (prior feasibility study at UofT/Acceleration Consortium establishing VLM specs, vibration validation, and equipment compatibility; PI now pursuing concept at BYU with initial equipment)
+2. Emphasize what makes this *high-risk*: no precedent for VLM-based lab automation in materials science; electrified tray integration with diverse instruments is untested; cloud user-facility model for autonomous materials labs is novel
+3. Emphasize what makes this *high-reward*: potential 10–100× throughput increase for alloy discovery; democratized access to an autonomous lab via cloud interface; pathway to a replicable facility model at other universities
+4. Email the PO(s) above with this Concept Outline, explicitly asking: "Would this concept be appropriate for an EAGER proposal in your program?"
+5. If the PO approves, they will send a concurrence email — this must be uploaded to Research.gov with the full EAGER proposal (8-page Project Description, prefixed "EAGER:" in title)
+6. The PO may redirect to a different division or suggest a standard proposal instead — both are useful outcomes
 
 ---
 
