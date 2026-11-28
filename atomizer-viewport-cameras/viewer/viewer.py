@@ -213,7 +213,10 @@ def resolve_cameras(specs, infos):
 
 def flags(*values):
     """OR Qt flags of different types: PyQt5's are ints, PyQt6's are enums with .value."""
-    return sum(int(getattr(v, "value", v)) for v in values)
+    out = 0
+    for v in values:
+        out |= int(getattr(v, "value", v))
+    return out
 
 
 def parse_controls(pairs):
@@ -361,7 +364,10 @@ def main(argv=None):
         QtCore.QTimer.singleShot(int(args.run_s * 1000), shoot)
     code = app.exec() if hasattr(app, "exec") else app.exec_()
     for src in sources:
-        src.stop()
+        try:
+            src.stop()
+        except Exception as e:  # a camera that has gone away; still close the others
+            print(f"{src.label}: {e}", flush=True)
     return code
 
 
