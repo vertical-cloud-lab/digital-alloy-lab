@@ -838,7 +838,7 @@ def fig_purge_snap(items, t_snaps, fname):
         pc = ax.pcolormesh(X, Z, np.clip(v, 10, 2.1e5), cmap="Blues", norm=matplotlib.colors.LogNorm(10, 2.1e5),
                            shading="auto", rasterized=True)
         ax.set_aspect("equal")
-        ax.set_title(f"{lab}, t = {tt / 60:.0f} min" if j == 0 else f"t = {tt / 60:.0f} min", loc="left", fontsize=8)
+        ax.set_title(f"{lab}, t = {tt / 60:g} min" if j == 0 else f"t = {tt / 60:g} min", loc="left", fontsize=8)
         if j == 0:
             ax.set_ylabel("z (mm)")
         if i < n - 1:

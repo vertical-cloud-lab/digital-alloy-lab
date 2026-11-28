@@ -642,6 +642,18 @@ def leak_files(a, g):
     {{ name seamLoc; type cellZoneSet; action new; source setToCellZone; set seamLoc; }}
 );
 """
+    shut = "|".join(closed)
+    for fld in ("sAll", "sLoc"):                                         # the function object needs the field on disk
+        files[f"0/{fld}"] = hdr("volScalarField", fld) + f"""dimensions [0 0 0 0 0 0 0];
+internalField uniform 0;
+boundaryField
+{{
+    inlet {{ type fixedValue; value uniform 0; }}
+    {out} {{ type inletOutlet; inletValue uniform 0; value uniform 0; }}
+    {WALLS} {{ type zeroGradient; }}
+{('    "(' + shut + ')" { type zeroGradient; }') if shut else ''}
+}}
+"""
     q_src = 1e-6                                                         # m3/s of "s" (any: the problem is linear)
     zb = g["zb"]
     pts = " ".join(f"(0 0 {(zb + z) * 1e-3:.6g})" for z in (1, 3, 5)) + f" {slide_pt(g)}"
@@ -649,7 +661,7 @@ def leak_files(a, g):
     for fld, zone in (("sAll", "seam"), ("sLoc", "seamLoc")):
         fo += f"""    {fld}
     {{
-        type scalarTransport; libs (solverFunctionObjects); field {fld}; phi phi; nut nut;
+        type scalarTransport; libs (solverFunctionObjects); field {fld}; phi phi;
         alphaD {D_O2_AR / NU:.4g}; alphaDt {1 / 0.7:.4g}; nCorr 1; schemesField sAll; resetOnStartUp false;
         writeControl writeTime;
         fvOptions {{ src {{ type scalarSemiImplicitSource; selectionMode cellZone; cellZone {zone}; volumeMode absolute;
