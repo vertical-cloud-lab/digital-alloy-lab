@@ -30,7 +30,7 @@ Optics (f = 254 mm, M2 1.1):
 
 Cost by alternative (parts.csv):
 
-- **FT0**: $22,671-39,751 (without the monitoring group: $17,972-33,304); vendors at or over $3,500 (PO): McMaster ($4,210); on cards (every other vendor, high prices): $26,891, 2.7x one card's $10,000 monthly limit (1.3x a department custodian card's $20,000)
+- **FT0**: $22,669-39,749 (without the monitoring group: $17,970-33,302); vendors at or over $3,500 (PO): McMaster ($4,210); on cards (every other vendor, high prices): $26,891, 2.7x one card's $10,000 monthly limit (1.3x a department custodian card's $20,000)
   - Laser and optics (used): $4,757-7,946
   - Scan control and computing: $1,183-2,473
   - Motion: $30-80
@@ -38,10 +38,10 @@ Cost by alternative (parts.csv):
   - Heated plate: $610-1,010
   - Gas and O2: $2,731-4,320
   - Safety: $2,772-3,634
-  - Stock and fabrication: $4,634-9,250
+  - Stock and fabrication: $4,632-9,248
   - Powder handling: $0-2,730
   - Monitoring: $4,699-6,447
-- **FT1**: $30,649-49,806 (without the monitoring group: $25,445-42,176); vendors at or over $3,500 (PO): Zaber ($5,896), McMaster ($4,130); on cards (every other vendor, high prices): $28,992, 2.9x one card's $10,000 monthly limit (1.4x a department custodian card's $20,000)
+- **FT1**: $30,647-49,804 (without the monitoring group: $25,443-42,174); vendors at or over $3,500 (PO): Zaber ($5,896), McMaster ($4,130); on cards (every other vendor, high prices): $28,992, 2.9x one card's $10,000 monthly limit (1.4x a department custodian card's $20,000)
   - Laser and optics (used): $4,757-7,946
   - Scan control and computing: $1,375-2,794
   - Motion: $5,976-6,096
@@ -49,10 +49,10 @@ Cost by alternative (parts.csv):
   - Heated plate: $946-1,406
   - Gas and O2: $2,731-4,320
   - Safety: $2,772-3,634
-  - Stock and fabrication: $5,633-11,389
+  - Stock and fabrication: $5,631-11,387
   - Powder handling: $0-2,730
   - Monitoring: $5,204-7,630
-- **FT1V**: $42,099-63,503 (without the monitoring group: $36,895-55,873); vendors at or over $3,500 (PO): Zaber ($5,896), Ideal Vacuum ($9,450), McMaster ($3,740); on cards (every other vendor, high prices): $31,432, 3.1x one card's $10,000 monthly limit (1.6x a department custodian card's $20,000)
+- **FT1V**: $42,097-63,502 (without the monitoring group: $36,893-55,872); vendors at or over $3,500 (PO): Zaber ($5,896), Ideal Vacuum ($9,450), McMaster ($3,740); on cards (every other vendor, high prices): $31,432, 3.1x one card's $10,000 monthly limit (1.6x a department custodian card's $20,000)
   - Laser and optics (used): $4,757-7,946
   - Scan control and computing: $1,375-2,794
   - Motion: $5,976-6,096
@@ -60,7 +60,7 @@ Cost by alternative (parts.csv):
   - Heated plate: $946-1,406
   - Gas and O2: $2,651-4,130
   - Safety: $2,772-3,634
-  - Stock and fabrication: $6,806-13,586
+  - Stock and fabrication: $6,804-13,584
   - Powder handling: $0-2,730
   - Monitoring: $5,204-7,630
 
