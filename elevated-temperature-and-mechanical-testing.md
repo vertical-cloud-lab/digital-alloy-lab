@@ -10,8 +10,8 @@ The first round, on cryogenic testing, is [`cryogenic-testing-aerospace-alloys.m
   [`edison-trajectories/elevated-temp-and-mechanical-testing/`](edison-trajectories/elevated-temp-and-mechanical-testing/).
   The script is [`scripts/edison_elevated_temp_testing.py`](scripts/edison_elevated_temp_testing.py).
 - **Browser.** Headed Chrome sent its traffic out through a lab Raspberry Pi on BYU's network, and xdotool drove
-  the mouse and keyboard. It ran 12 Semantic Scholar, 6 NASA NTRS and 3 OSTI searches, and opened 26 papers and
-  records, including Edison-cited papers whose numbers I checked
+  the mouse and keyboard. It ran 12 Semantic Scholar, 5 NASA NTRS and 3 OSTI searches, and opened 28 papers, records and
+  standards pages, including Edison-cited papers whose numbers I checked
   ([search log](edison-trajectories/elevated-temp-and-mechanical-testing/browser-search-log.md)).
 - **Web survey.** It covered equipment makers, test labs and industry write-ups, and fetched about 50 pages.
 
@@ -158,7 +158,7 @@ Section 9 says which source each fact came from and where I corrected Edison. Ma
 | θ′ (Al₂Cu) | 2219, 2014, 2519 | Coarsens above about 225 °C, then turns into incoherent θ | about 200–250 °C |
 | Ω (with Ag and Mg) | 2039/2139, A20X/A205 | More stable than θ′, still overages | about 200–250 °C |
 | θ′ stabilized by Mn and Zr | ACMZ (Al-Cu-Mn-Zr) | No measurable θ′ coarsening after 5,000 h at 300 °C (cast) | about 300–350 °C |
-| L1₂ Al₃(Sc,Zr) | Scalmalloy and other Al-Mg-Sc-Zr | Precipitates resist coarsening, but the Mg-strengthened matrix softens; coarsening is measurable near 325 °C | precipitates stable to about 300 °C, strength gone by about 250 °C |
+| L1₂ Al₃(Sc,Zr) | Scalmalloy and other Al-Mg-Sc-Zr | Precipitates resist coarsening, but the Mg-strengthened matrix softens; coarsening is measurable near 325 °C | precipitates stable to about 300 °C, but most of the strength is gone by 250 °C |
 | Al₁₁Ce₃ eutectic | Al-Ce, Al-Ce-Mg | Ce barely dissolves or diffuses in Al; cast alloys keep more than 60 % of their yield strength at 300 °C | about 300–400 °C, pending creep data |
 | Al₁₂(Fe,V)₃Si dispersoids | 8009 (FVS0812, powder metallurgy) | Creep threshold stresses of 112, 95, 70 and 55 MPa at 300, 350, 400 and 450 °C; sheet unchanged after 504 h at 400 °C | about 400–450 °C |
 | Al₃Ni, Al-Ce-Ni eutectic, plus Al₃Zr | Al-Ce-Ni-Mn(-Zr), "DuAlumin-3D" | Thermally stable intermetallic skeleton | about 300–400 °C |
@@ -291,8 +291,8 @@ From Edison 03 unless marked. ASTM B871's withdrawal is from the survey; Edison 
   specimen hardening change the actual rate as the test goes on.
   - With crosshead control, a nominal 0.4 %/s test actually ran at 0.369–0.428 %/s on average, with excursions up to
     0.278 %/s. DIC-based closed-loop control held the nominal rate (via Edison 04).
-  - In older steel data, closed-loop extensometer control halved the scatter in yield strength compared with open-loop
-    machines (via Edison 04).
+  - In older steel data, closed-loop extensometer control cut the scatter in yield strength from ±3.0 to ±1.7 ksi
+    compared with open-loop machines (via Edison 04).
 
 ### 4.2 How big the rate effect is in aluminum
 
@@ -424,7 +424,7 @@ the shelf.
   - **Tensile campaign:** exposures to 30,000 h at 93, 107 and 135 °C; tests at −54 °C, room temperature, 93, 107 and
     135 °C (NASA/TP-2004-212988, Pi).
   - **Companion work:** creep tests (Taminger et al. 1998) and a parallel toughness study, which dropped RX818.
-- **Supersonic successors.** The 2650-T6 damage-tolerance work in Europe tested exposures of 30,000 h at 100 and
+- **Supersonic successors.** Later damage-tolerance work on 2650-T6 for a supersonic skin tested exposures of 30,000 h at 100 and
   130 °C and 20,000 h at 175 °C, then creep, fatigue and creep-fatigue crack growth on compact-tension specimens
   (Hénaff et al., [10.5772/15153](https://doi.org/10.5772/15153), via Edison 09).
 - **Compressor wheels.** Turbocharger 2618A wheels coarsen in service, which motivated aging-dependent fatigue and
@@ -518,9 +518,10 @@ extracted with pypdf because WebFetch couldn't read them.
   used the 1964 *Air & Cosmos* article and Hénaff et al. instead.
 - **HSCT soak temperature.** My query said HSCT exposures ran to 177 °C. Edison 09 correctly said the tensile campaign
   stopped at 135 °C; 177 °C is the TPS-protected structure limit.
-- **ASTM B871.** Edison 03 described it as a current standard. ASTM lists it as withdrawn in 2017 (survey).
+- **ASTM B871.** Edison 03 described it as a current standard. ASTM's store page lists it as "Withdrawn 2017, No
+  replacement" ([page](https://store.astm.org/b0871-01r13.html), survey and Pi).
 - **AMS 7003.** Edison 03 called it a wire-feed specification. It is SAE's laser powder bed fusion process
-  specification.
+  specification: SAE's own address for it is `standards/ams7003-laser-powder-bed-fusion-process` (Pi).
 - **ORNL report figure.** Its caption labels the benchmark "2618-T61", but the text says 2219-T61. Edison 02 noticed
   this and used 2219-T61, as here.
 - **"2219 compressor wheel".** Edison 09 found that the documented 2219 engine part is a cast fan *case*, not a

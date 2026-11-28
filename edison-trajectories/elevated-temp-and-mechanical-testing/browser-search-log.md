@@ -1,6 +1,6 @@
 # Browser search log (issue #254, second round)
 
-Searches typed into headed Chrome on the runner's virtual display, with its traffic tunnelled through a lab Raspberry Pi so it left from BYU's network (AS6510). For each search, xdotool moved the mouse to the site's search box, clicked it, typed the query and pressed Enter, then scrolled with the mouse wheel. Page text was read through Chrome DevTools. Run on 2026-11-28 between 08:52 and 09:24 UTC with byu-vcl's pinned `rig.sh` and a small driver script (kept in `/tmp`, not committed). The lists below give the first results on each page, in the order shown, unfiltered; the synthesis says which ones mattered.
+Searches typed into headed Chrome on the runner's virtual display, with its traffic tunnelled through a lab Raspberry Pi so it left from BYU's network (AS6510). For each search, xdotool moved the mouse to the site's search box, clicked it, typed the query and pressed Enter, then scrolled with the mouse wheel. Page text was read through Chrome DevTools. Run on 2026-11-28 between 08:52 and 09:34 UTC with byu-vcl's pinned `rig.sh` and a small driver script (kept in `/tmp`, not committed). The lists below give the first results on each page, in the order shown, unfiltered; the synthesis says which ones mattered.
 
 - **Google Scholar:** blocked again. On the first page load, before any query was typed, it showed its "unusual traffic from your computer network" page with a CAPTCHA. No attempt was made to get past it, and no Scholar results are included.
 - **NASA NTRS** uses AND matching, so one long query returned nothing; it is listed as such. Two NTRS queries had to be re-run because the results list had not rendered when the page was read.
@@ -250,6 +250,8 @@ Each was opened by typing its address into the omnibox with xdotool; for Semanti
 - [Strain Rate Sensitivity of the Additive Manufacturing Material Scalmalloy®](https://link.springer.com/article/10.1007/s40870-021-00298-4)
 - [Microstructural Variations in Laser Powder Bed Fused Al–15%Fe Alloy at Intermediate Temperatures](https://www.mdpi.com/1996-1944/15/13/4497)
 - [Creep properties of heat-resistant ultrafine-grained Al (HITEMAL©) determined by small punch testing](https://link.springer.com/article/10.1007/s10853-024-10139-z)
+- [SAE AMS7003, Laser Powder Bed Fusion Process](https://www.sae.org/standards/ams7003-laser-powder-bed-fusion-process/) (the page body did not render; the redirect address gives the title)
+- [ASTM B871, Standard Test Method for Tear Testing of Aluminum Alloy Products (Withdrawn 2017)](https://store.astm.org/b0871-01r13.html)
 
 ### Screenshots
 
