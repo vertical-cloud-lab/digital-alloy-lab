@@ -22,7 +22,7 @@ Run:  cd <repo> && OMP_NUM_THREADS=2 /tmp/tools/capmem 4 /tmp/venv/bin/python de
   bonded <hmax> <point|inertia>     the bonded g3 model (mesh check, inertia check)
   sweep <hmax>                      the joint model on one mesh, every stiffness case in SWEEP
   variant <name> <hmax>             a geometric option (extra braces), with the joint model
-  plot                              struct-joints-mode1.png from struct-joints.json
+  plot                              struct-joints-mode1.png and struct-joints-options.png from struct-joints.json
 Scratch goes to /tmp/r3-fea-joints/struct (env FT_STRUCT_RUN); results to analysis/out/fea/struct-joints.json.
 """
 from __future__ import annotations
@@ -92,6 +92,7 @@ SWEEP = {
     # the brace ends stiffened (two brackets, or a pinned and bolted end plate, at each end) with the feet on a bolted plate
     "kr3e6_braces1e8_base3e7": case(3e6, 2e4, 3e7, 5e4, kr_by={"brace": 1e8}, kt_by={"brace": 1e5}),
     "kr3e6_braces1e8_base1e8": case(3e6, 2e4, 1e8, 1e5, kr_by={"brace": 1e8}, kt_by={"brace": 1e5}),
+    "kr1e6_kt1e4_braces1e8_base1e8": case(1e6, 1e4, 1e8, 1e5, kr_by={"brace": 1e8}, kt_by={"brace": 1e5}),
 }
 
 
@@ -589,7 +590,8 @@ def cmd_plot(hmax=12):
     plain = lambda st: not st["kr_by"] and not st["kt_by"]
     pa = sorted(((RIG if st["kr"] >= STIFF else st["kr"] / 1e6), f) for st, f in sel(lambda st: plain(st) and st["kt"] == 2e4 and st["kr_base"] is None))
     pb = sorted(((RIG if st["kt"] >= STIFF_T else st["kt"] / 1e3), f) for st, f in sel(lambda st: plain(st) and st["kr"] == 1e7 and st["kr_base"] is None))
-    base = sorted((st["kr"] / 1e6, f[0]) for st, f in sel(lambda st: plain(st) and st["kr_base"] is not None))
+    base = sorted((st["kr"] / 1e6, f[0]) for st, f in sel(lambda st: plain(st) and st["kr_base"] is not None
+                                                          and st["kr_base"] == st["kr"]))
     bonded = R.get(f"bonded_h{hmax:g}_inertia", {}).get("freqs_hz", [None])[0]
     fig, axes = plt.subplots(1, 2, figsize=(11.5, 4.9), dpi=140, sharey=True)
     ymax = max(f[2] for _, f in pa + pb) * 1.12
@@ -644,6 +646,71 @@ def cmd_plot(hmax=12):
     print("  wrote struct-joints-mode1.png")
 
 
+OPTIONS = [
+    # (label, run key with the feet fixed, run key with the feet on a bolted plate, run key at the soft corner of the range)
+    ("bonded joints (the g3 FEA)", "bonded_h12_inertia", None, None),
+    ("bolted, single brackets", "joints_h12_kr3e6_kt2e4", "joints_h12_kr3e6_kt2e4_base3e7", "joints_h12_kr1e6_kt1e4"),
+    ("+ brace ends stiffened", "joints_h12_kr3e6_braces1e8", None, None),
+    ("+ front diagonal", "variant_front_diagonal_h12_kr3e6_kt2e4", "variant_front_diagonal_h12_kr3e6_kt2e4_base3e7",
+     "variant_front_diagonal_h12_kr1e6_kt1e4"),
+    ("+ front diagonal, brace ends stiffened", "variant_front_diagonal_h12_kr3e6_braces1e8", None, None),
+    ("+ front zigzag", "variant_front_zigzag_h12_kr3e6_kt2e4", "variant_front_zigzag_h12_kr3e6_kt2e4_base3e7",
+     "variant_front_zigzag_h12_kr1e6_kt1e4"),
+    ("+ front zigzag, brace ends stiffened", "variant_front_zigzag_h12_kr3e6_braces1e8", "variant_front_zigzag_h12_kr3e6_braces1e8_base3e7", None),
+    ("+ both portals braced", "variant_portals_braced_h12_kr3e6_kt2e4", None, None),
+    ("+ both portals braced, brace ends stiffened", "variant_portals_braced_h12_kr3e6_braces1e8",
+     "variant_portals_braced_h12_kr3e6_braces1e8_base3e7", None),
+]
+
+
+def cmd_plot_options():
+    """struct-joints-options.png: mode 1 of each option, feet fixed (as the bonded model) and on a bolted foot plate
+    (30 kN m/rad, 50 kN/mm per foot, estimate), against the 60 Hz minimum. A thin line runs down to the soft corner of
+    the single-bracket range (1 kN m/rad, 10 kN/mm) where it was run."""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    R = load_json()["runs"]
+    f1 = lambda k: R[k]["freqs_hz"][0] if k and k in R else None
+    rows = [(lab, f1(a), f1(b), f1(c)) for lab, a, b, c in OPTIONS if f1(a) is not None]
+    ink, ink2, grid = "#191919", "#666666", "#e6e6e6"
+    cols = ["#257de0", "#f47230"]                        # categorical slots 1-2 (validated, light mode)
+    fig, ax = plt.subplots(figsize=(10.5, 0.42 * len(rows) + 1.6), dpi=140)
+    for i, (lab, fx, fb, fl) in enumerate(rows):
+        y = len(rows) - 1 - i
+        if fl is not None:
+            ax.plot([fl, fx], [y, y], color=cols[0], lw=2.0, alpha=0.35, solid_capstyle="round", zorder=2)
+        if fb is not None:
+            ax.plot([fb, fx], [y, y], color="#bdbdbd", lw=1.0, zorder=1)
+            ax.plot(fb, y, ls="none", marker="o", ms=8, mfc=cols[1], mec="white", mew=1.5, zorder=4)
+            ax.text(fb - 0.8, y + 0.02, f"{fb:.1f}", ha="right", va="center", color=ink2, fontsize=8)
+        ax.plot(fx, y, ls="none", marker="o", ms=8, mfc=cols[0], mec="white", mew=1.5, zorder=4)
+        ax.text(fx + 0.8, y + 0.02, f"{fx:.1f}", ha="left", va="center", color=ink, fontsize=8.5)
+    ax.axvline(60.0, color=ink2, lw=1.0, ls=(0, (4, 3)), zorder=0)
+    ax.text(60.3, len(rows) - 0.45, "60 Hz minimum", color=ink2, fontsize=8.5, va="bottom")
+    ax.set_yticks(range(len(rows)))
+    ax.set_yticklabels([r[0] for r in rows][::-1], color=ink, fontsize=9)
+    ax.set_ylim(-0.6, len(rows) - 0.2)
+    ax.set_xlim(20, 72)
+    ax.set_xlabel("mode 1, Hz (12 mm mesh, head and lens inertia)", color=ink, fontsize=9.5)
+    ax.grid(axis="x", color=grid, lw=0.8)
+    ax.set_axisbelow(True)
+    for s_ in ("top", "right", "left"):
+        ax.spines[s_].set_visible(False)
+    ax.spines["bottom"].set_color("#bdbdbd")
+    ax.tick_params(colors=ink2, labelsize=8.5, left=False)
+    h1, = ax.plot([], [], ls="none", marker="o", ms=8, mfc=cols[0], mec="white", label="feet fixed (as the bonded model)")
+    h2, = ax.plot([], [], ls="none", marker="o", ms=8, mfc=cols[1], mec="white", label="feet on a bolted plate (estimate)")
+    h3, = ax.plot([], [], color=cols[0], lw=2.0, alpha=0.35, label="down to the soft end of the bracket range")
+    ax.legend(handles=[h1, h2, h3], loc="lower center", bbox_to_anchor=(0.45, 1.0), ncol=3, frameon=False, fontsize=8.5,
+              labelcolor=ink)
+    fig.suptitle("g3 gantry, mode 1 with bolted joints (3 kN·m/rad, 20 kN/mm per joint unless stated): options",
+                 color=ink, fontsize=11, x=0.01, ha="left")
+    fig.tight_layout()
+    fig.savefig(OUT / "struct-joints-options.png")
+    print("  wrote struct-joints-options.png")
+
+
 def main():
     S.OUT.mkdir(parents=True, exist_ok=True)
     RUN.mkdir(parents=True, exist_ok=True)
@@ -656,6 +723,7 @@ def main():
         cmd_variant(sys.argv[2], float(sys.argv[3]), tuple(sys.argv[4].split(",")) if len(sys.argv) > 4 else ("kr3e6_kt2e4", "stiff"))
     elif cmd == "plot":
         cmd_plot()
+        cmd_plot_options()
     else:
         raise SystemExit(__doc__)
 
