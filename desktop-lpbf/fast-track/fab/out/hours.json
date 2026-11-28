@@ -797,18 +797,18 @@
    "tapped": 4,
    "cam_h": 2.36,
    "setup_h": 2.25,
-   "program_min": 28.3,
-   "freecad_min": 35.9,
-   "machine_min": 29.4,
+   "program_min": 26.7,
+   "freecad_min": 33.3,
+   "machine_min": 27.9,
    "lathe_min": 0,
    "manual_min": 0,
-   "run_h": 0.49,
+   "run_h": 0.46,
    "deburr_h": 0.25,
-   "total_h": 5.35,
-   "low_h": 2.44,
-   "high_h": 7.73,
+   "total_h": 5.32,
+   "low_h": 2.41,
+   "high_h": 7.68,
    "split": "in house",
-   "byu_h_split": 5.35,
+   "byu_h_split": 5.32,
    "seal": false,
    "large": false
   },
@@ -1424,11 +1424,11 @@
    "n": 10
   },
   "S2": {
-   "h": 29.15,
-   "low": 15.51,
-   "high": 45.11,
-   "split": 26.35,
-   "prog": 74.6,
+   "h": 29.12,
+   "low": 15.48,
+   "high": 45.06,
+   "split": 26.32,
+   "prog": 73.0,
    "cam": 13.5,
    "n": 8
   },
@@ -1469,31 +1469,31 @@
    "cam": 19.58
   },
   "S2": {
-   "h": 74.94,
-   "low": 34.83,
-   "high": 107.86,
-   "split": 56.66,
+   "h": 74.91,
+   "low": 34.8,
+   "high": 107.81,
+   "split": 56.63,
    "cam": 33.08
   },
   "FT-0": {
-   "h": 133.08,
-   "low": 65.91,
-   "high": 202.46,
-   "split": 114.8,
+   "h": 133.05,
+   "low": 65.88,
+   "high": 202.41,
+   "split": 114.77,
    "cam": 57.21
   },
   "FT-1": {
-   "h": 165.98,
-   "low": 81.27,
-   "high": 248.92,
-   "split": 142.46,
+   "h": 165.95,
+   "low": 81.24,
+   "high": 248.87,
+   "split": 142.43,
    "cam": 72.38
   },
   "FT-1V": {
-   "h": 199.79,
-   "low": 99.33,
-   "high": 295.92,
-   "split": 176.27,
+   "h": 199.76,
+   "low": 99.3,
+   "high": 295.87,
+   "split": 176.24,
    "cam": 84.47
   }
  },
@@ -1562,10 +1562,10 @@
     "lathe_setups": 0
    },
    "S2": {
-    "machinist_low": 19.13,
-    "machinist_high": 23.75,
-    "student_low": 23.38,
-    "student_high": 30.93,
+    "machinist_low": 19.1,
+    "machinist_high": 23.72,
+    "student_low": 23.35,
+    "student_high": 30.9,
     "mill_setups": 13,
     "lathe_setups": 2
    },
@@ -1604,34 +1604,34 @@
     "lathe_setups": 0.0
    },
    "S2": {
-    "machinist_low": 46.44,
-    "machinist_high": 58.59,
-    "student_low": 55.85,
-    "student_high": 74.89,
+    "machinist_low": 46.41,
+    "machinist_high": 58.56,
+    "student_low": 55.82,
+    "student_high": 74.86,
     "mill_setups": 35.0,
     "lathe_setups": 2.0
    },
    "FT-0": {
-    "machinist_low": 86.2,
-    "machinist_high": 110.75,
-    "student_low": 104.97,
-    "student_high": 144.55,
+    "machinist_low": 86.17,
+    "machinist_high": 110.72,
+    "student_low": 104.94,
+    "student_high": 144.52,
     "mill_setups": 58.0,
     "lathe_setups": 15.0
    },
    "FT-1": {
-    "machinist_low": 106.84,
-    "machinist_high": 137.45,
-    "student_low": 128.93,
-    "student_high": 177.5,
+    "machinist_low": 106.81,
+    "machinist_high": 137.42,
+    "student_low": 128.91,
+    "student_high": 177.47,
     "mill_setups": 75.0,
     "lathe_setups": 15.0
    },
    "FT-1V": {
-    "machinist_low": 131.89,
-    "machinist_high": 173.16,
-    "student_low": 161.13,
-    "student_high": 227.87,
+    "machinist_low": 131.86,
+    "machinist_high": 173.13,
+    "student_low": 161.11,
+    "student_high": 227.84,
     "mill_setups": 85.0,
     "lathe_setups": 21.0
    }
@@ -1899,12 +1899,12 @@
    },
    "MK-10c": {
     "machinist": [
-     3.31,
-     4.37
+     3.28,
+     4.34
     ],
     "student": [
-     3.83,
-     5.37
+     3.8,
+     5.34
     ]
    },
    "MK-11a": {

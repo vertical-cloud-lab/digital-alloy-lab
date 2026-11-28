@@ -1332,15 +1332,18 @@ def mk10_collar():
     body = body.cut(cyl(SPIG_R - SPIG_W, -SPIG_H - 1, 7.0, tx, ty))
     pc.solid = body
     pc.features.append(dict(kind="adaptive", name="lens bore %.1f x 34 (adaptive, 3/4 in.)" % (2 * ri), axis="-z", tool=6,
-                            probe=[ri - 8.0, 0.0, 6.0], note="", z_top=None))
+                            probe=[ri - 8.0, 0.0, 6.0], note="", z_top=None, use_outline=True))
     pc.boss("spigot %.0f x %.1f wall x %.0f, inside the centre section's upper end" % (2 * SPIG_R, SPIG_W, SPIG_H),
             (tx, ty + SPIG_R - SPIG_W / 2, -SPIG_H), 0.0, axis="+z", tool=2)
     pc.bore("tube bore %.0f through the floor and the spigot" % (2 * (SPIG_R - SPIG_W)), SPIG_R - SPIG_W, tx, ty, -SPIG_H,
             6.0, axis="+z", tool=2)
     pc.hole("A", "tap", "M3", [(ro, 0.0, z) for z in (11.0, 23.0)], axis="-x", depth=5.0, thread="4",
             note="beam-tube interlock switch D4NS-2CF (S5) on the +x side (est.)")
+    # round 3: through the near wall only (8.0 mm, +1 mm into the bore); through=True ran the drill 128 mm, across the
+    # lens bore and through the far wall
+    wall_b = math.sqrt(ro ** 2 - 25.0 ** 2) - math.sqrt(ri ** 2 - 25.0 ** 2)
     pc.hole("B", "tap", "M4", [(math.sqrt(ro ** 2 - 25.0 ** 2), sy, 30.0) for sy in (-25.0, 25.0)], axis="-x",
-            through=True, thread="through the wall", note="nylon-tip set screws onto the lens body")
+            depth=round(wall_b + 1.0, 2), thread="through the wall", note="nylon-tip set screws onto the lens body")
     pc.setup("+Z", face=(2, H), outline=(2, 18.0), label="open end up: face to 40, outline to z 18, lens bore",
              hold="blank on parallels, toe clamps")
     pc.setup("-Z", face=(2, SPIG_H), outline=(2, -17.5), label="floor up: face to the spigot, the outline's rest, round "

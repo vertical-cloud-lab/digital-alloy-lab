@@ -75,7 +75,7 @@
     "S2": 4.35,
     "FT-0": 8.24,
     "FT-1": 10.16,
-    "FT-1V": 12.42
+    "FT-1V": 12.41
    },
    "late_days": {
     "S1": 0.0,
@@ -101,7 +101,7 @@
     "S1": 1.9,
     "S2": 2.48,
     "FT-0": 5.17,
-    "FT-1": 5.27,
+    "FT-1": 5.26,
     "FT-1V": 11.55
    },
    "late_days": {
@@ -153,14 +153,14 @@
    "variant": "base",
    "done_day": {
     "S1": 5.72,
-    "S2": 9.37,
+    "S2": 9.36,
     "FT-0": 16.62,
     "FT-1": 20.73,
     "FT-1V": 24.96
    },
    "late_days": {
     "S1": 1.72,
-    "S2": 4.37,
+    "S2": 4.36,
     "FT-0": 7.62,
     "FT-1": 9.73,
     "FT-1V": 8.96
@@ -181,7 +181,7 @@
    "done_day": {
     "S1": 3.18,
     "S2": 4.82,
-    "FT-0": 8.42,
+    "FT-0": 8.41,
     "FT-1": 10.62,
     "FT-1V": 12.63
    },
@@ -470,7 +470,7 @@
      "pid": "MK-10c",
      "state": "S2",
      "start": 33.41,
-     "end": 36.4
+     "end": 36.37
     },
     {
      "who": 1,
@@ -485,8 +485,8 @@
      "kind": "cam",
      "pid": "MK-03",
      "state": "FT-0",
-     "start": 36.4,
-     "end": 38.89
+     "start": 36.37,
+     "end": 38.86
     },
     {
      "who": 1,
@@ -517,8 +517,8 @@
      "kind": "floor",
      "pid": "MK-03",
      "state": "FT-0",
-     "start": 38.89,
-     "end": 41.78
+     "start": 38.86,
+     "end": 41.75
     },
     {
      "who": 1,
@@ -533,16 +533,16 @@
      "kind": "cam",
      "pid": "MK-05",
      "state": "FT-0",
-     "start": 41.78,
-     "end": 43.93
+     "start": 41.75,
+     "end": 43.9
     },
     {
      "who": 0,
      "kind": "floor",
      "pid": "MK-05",
      "state": "FT-0",
-     "start": 43.93,
-     "end": 46.87
+     "start": 43.9,
+     "end": 46.84
     },
     {
      "who": 1,
@@ -557,8 +557,8 @@
      "kind": "cam",
      "pid": "MK-06a",
      "state": "FT-0",
-     "start": 46.87,
-     "end": 49.58
+     "start": 46.84,
+     "end": 49.55
     },
     {
      "who": 1,
@@ -573,8 +573,8 @@
      "kind": "floor",
      "pid": "MK-06a",
      "state": "FT-0",
-     "start": 49.58,
-     "end": 53.02
+     "start": 49.55,
+     "end": 52.99
     },
     {
      "who": 1,
@@ -589,8 +589,8 @@
      "kind": "cam",
      "pid": "MK-11a",
      "state": "FT-0",
-     "start": 53.02,
-     "end": 55.96
+     "start": 52.99,
+     "end": 55.93
     },
     {
      "who": 1,
@@ -605,8 +605,8 @@
      "kind": "floor",
      "pid": "MK-11a",
      "state": "FT-0",
-     "start": 55.96,
-     "end": 59.42
+     "start": 55.93,
+     "end": 59.39
     },
     {
      "who": 1,
@@ -621,8 +621,8 @@
      "kind": "cam",
      "pid": "MK-16",
      "state": "FT-0",
-     "start": 59.42,
-     "end": 61.12
+     "start": 59.39,
+     "end": 61.09
     },
     {
      "who": 1,
@@ -653,8 +653,8 @@
      "kind": "floor",
      "pid": "MK-16",
      "state": "FT-0",
-     "start": 61.12,
-     "end": 62.89
+     "start": 61.09,
+     "end": 62.86
     },
     {
      "who": 1,
@@ -669,32 +669,32 @@
      "kind": "cam",
      "pid": "MK-20a",
      "state": "FT-0",
-     "start": 62.89,
-     "end": 63.14
+     "start": 62.86,
+     "end": 63.11
     },
     {
      "who": 0,
      "kind": "floor",
      "pid": "MK-20a",
      "state": "FT-0",
-     "start": 63.14,
-     "end": 64.46
+     "start": 63.11,
+     "end": 64.43
     },
     {
      "who": 0,
      "kind": "cam",
      "pid": "MK-20c",
      "state": "FT-0",
-     "start": 64.46,
-     "end": 64.71
+     "start": 64.43,
+     "end": 64.68
     },
     {
      "who": 0,
      "kind": "floor",
      "pid": "MK-20c",
      "state": "FT-0",
-     "start": 64.71,
-     "end": 67.33
+     "start": 64.68,
+     "end": 67.3
     },
     {
      "who": 1,
@@ -733,8 +733,8 @@
      "kind": "cam",
      "pid": "MK-08c",
      "state": "FT-1",
-     "start": 67.33,
-     "end": 69.66
+     "start": 67.3,
+     "end": 69.63
     },
     {
      "who": 1,
@@ -749,8 +749,8 @@
      "kind": "floor",
      "pid": "MK-08c",
      "state": "FT-1",
-     "start": 69.66,
-     "end": 72.23
+     "start": 69.63,
+     "end": 72.2
     },
     {
      "who": 1,
@@ -765,8 +765,8 @@
      "kind": "cam",
      "pid": "MK-08e",
      "state": "FT-1",
-     "start": 72.23,
-     "end": 74.61
+     "start": 72.2,
+     "end": 74.58
     },
     {
      "who": 1,
@@ -797,8 +797,8 @@
      "kind": "floor",
      "pid": "MK-08e",
      "state": "FT-1",
-     "start": 74.61,
-     "end": 77.28
+     "start": 74.58,
+     "end": 77.25
     },
     {
      "who": 1,
@@ -813,8 +813,8 @@
      "kind": "cam",
      "pid": "MK-15b",
      "state": "FT-1",
-     "start": 77.28,
-     "end": 79.1
+     "start": 77.25,
+     "end": 79.07
     },
     {
      "who": 1,
@@ -829,16 +829,16 @@
      "kind": "floor",
      "pid": "MK-15b",
      "state": "FT-1",
-     "start": 79.1,
-     "end": 80.93
+     "start": 79.07,
+     "end": 80.9
     },
     {
      "who": 0,
      "kind": "cam",
      "pid": "MK-02f",
      "state": "FT-1V",
-     "start": 80.93,
-     "end": 83.73
+     "start": 80.9,
+     "end": 83.7
     },
     {
      "who": 1,
@@ -853,8 +853,8 @@
      "kind": "floor",
      "pid": "MK-02f",
      "state": "FT-1V",
-     "start": 83.73,
-     "end": 86.96
+     "start": 83.7,
+     "end": 86.93
     },
     {
      "who": 1,
@@ -869,8 +869,8 @@
      "kind": "cam",
      "pid": "MK-10b",
      "state": "FT-1V",
-     "start": 86.96,
-     "end": 89.78
+     "start": 86.93,
+     "end": 89.75
     },
     {
      "who": 1,
@@ -885,8 +885,8 @@
      "kind": "floor",
      "pid": "MK-10b",
      "state": "FT-1V",
-     "start": 89.78,
-     "end": 93.21
+     "start": 89.75,
+     "end": 93.18
     },
     {
      "who": 1,
@@ -909,16 +909,16 @@
      "kind": "cam",
      "pid": "MK-14",
      "state": "FT-1V",
-     "start": 93.21,
-     "end": 95.03
+     "start": 93.18,
+     "end": 95.0
     },
     {
      "who": 0,
      "kind": "floor",
      "pid": "MK-14",
      "state": "FT-1V",
-     "start": 95.03,
-     "end": 98.61
+     "start": 95.0,
+     "end": 98.58
     },
     {
      "who": 1,
@@ -945,7 +945,7 @@
    "done_day": {
     "S1": 2.41,
     "S2": 3.23,
-    "FT-0": 5.63,
+    "FT-0": 5.62,
     "FT-1": 7.16,
     "FT-1V": 11.58
    },
@@ -960,8 +960,8 @@
     "S1 guide-laser and scanner checks": 1.4,
     "S2 FULL POWER INTO THE DUMP": 1.6,
     "FT-0 FIRST TRACKS": 1.8,
-    "FT-1 FIRST COUPONS": 2.93,
-    "FT-1V FIRST COUPONS (< 100 ppm)": 3.53
+    "FT-1 FIRST COUPONS": 2.92,
+    "FT-1V FIRST COUPONS (< 100 ppm)": 3.52
    },
    "log": null
   },
@@ -974,21 +974,21 @@
     "S2": 13.48,
     "FT-0": 25.29,
     "FT-1": 31.1,
-    "FT-1V": 36.98
+    "FT-1V": 36.97
    },
    "late_days": {
     "S1": 3.84,
     "S2": 8.48,
     "FT-0": 16.29,
     "FT-1": 20.1,
-    "FT-1V": 20.98
+    "FT-1V": 20.97
    },
    "milestones_weeks": {
     "S1 guide-laser and scanner checks": 2.17,
     "S2 FULL POWER INTO THE DUMP": 3.3,
     "FT-0 FIRST TRACKS": 5.66,
     "FT-1 FIRST COUPONS": 7.62,
-    "FT-1V FIRST COUPONS (< 100 ppm)": 8.4
+    "FT-1V FIRST COUPONS (< 100 ppm)": 8.39
    },
    "log": null
   },
@@ -1000,15 +1000,15 @@
     "S1": 4.32,
     "S2": 6.88,
     "FT-0": 12.87,
-    "FT-1": 15.89,
-    "FT-1V": 18.67
+    "FT-1": 15.88,
+    "FT-1V": 18.66
    },
    "late_days": {
     "S1": 0.32,
     "S2": 1.88,
     "FT-0": 3.87,
-    "FT-1": 4.89,
-    "FT-1V": 2.67
+    "FT-1": 4.88,
+    "FT-1V": 2.66
    },
    "milestones_weeks": {
     "S1 guide-laser and scanner checks": 1.46,
@@ -1052,17 +1052,17 @@
    "variant": "FT-1 plates out",
    "done_day": {
     "S1": 5.72,
-    "S2": 9.37,
+    "S2": 9.36,
     "FT-0": 16.62,
     "FT-1": 20.08,
-    "FT-1V": 24.31
+    "FT-1V": 24.3
    },
    "late_days": {
     "S1": 1.72,
-    "S2": 4.37,
+    "S2": 4.36,
     "FT-0": 7.62,
     "FT-1": 9.08,
-    "FT-1V": 8.31
+    "FT-1V": 8.3
    },
    "milestones_weeks": {
     "S1 guide-laser and scanner checks": 1.74,
@@ -1080,7 +1080,7 @@
    "done_day": {
     "S1": 3.18,
     "S2": 4.82,
-    "FT-0": 8.42,
+    "FT-0": 8.41,
     "FT-1": 10.42,
     "FT-1V": 12.3
    },
@@ -1133,7 +1133,7 @@
    "variant": "stock day 2",
    "done_day": {
     "S1": 3.55,
-    "S2": 4.02,
+    "S2": 4.01,
     "FT-0": 5.66,
     "FT-1": 7.14,
     "FT-1V": 11.58
