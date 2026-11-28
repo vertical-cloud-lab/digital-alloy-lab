@@ -17,16 +17,16 @@
    "tapped": 15,
    "cam_h": 2.04,
    "setup_h": 2.5,
-   "program_min": 10.3,
-   "freecad_min": 14.3,
-   "machine_min": 13.9,
+   "program_min": 10.9,
+   "freecad_min": 14.9,
+   "machine_min": 14.5,
    "lathe_min": 0,
    "manual_min": 0,
-   "run_h": 0.23,
+   "run_h": 0.24,
    "deburr_h": 0.25,
-   "total_h": 5.03,
-   "low_h": 1.85,
-   "high_h": 6.59,
+   "total_h": 5.04,
+   "low_h": 1.86,
+   "high_h": 6.6,
    "split": "SendCutSend (plate: profile and holes; 6061 up to 1/2 in.); BYU: 4 c'bores and 15 taps by hand after SendCutSend cuts the profile and drills",
    "byu_h_split": 1.88,
    "seal": false,
@@ -47,18 +47,18 @@
    "tapped": 0,
    "cam_h": 1.82,
    "setup_h": 1.5,
-   "program_min": 24.1,
-   "freecad_min": 29.7,
-   "machine_min": 24.6,
+   "program_min": 23.1,
+   "freecad_min": 27.6,
+   "machine_min": 23.6,
    "lathe_min": 0,
    "manual_min": 0,
-   "run_h": 0.41,
+   "run_h": 0.39,
    "deburr_h": 1.0,
-   "total_h": 4.73,
-   "low_h": 2.78,
-   "high_h": 10.83,
+   "total_h": 4.71,
+   "low_h": 2.76,
+   "high_h": 10.76,
    "split": "in house",
-   "byu_h_split": 4.73,
+   "byu_h_split": 4.71,
    "seal": true,
    "large": false
   },
@@ -77,18 +77,18 @@
    "tapped": 0,
    "cam_h": 1.82,
    "setup_h": 1.5,
-   "program_min": 9.1,
-   "freecad_min": 12.4,
-   "machine_min": 9.6,
+   "program_min": 9.5,
+   "freecad_min": 12.5,
+   "machine_min": 10.0,
    "lathe_min": 0,
    "manual_min": 0,
-   "run_h": 0.16,
+   "run_h": 0.17,
    "deburr_h": 0.25,
-   "total_h": 3.73,
+   "total_h": 3.74,
    "low_h": 1.78,
-   "high_h": 5.28,
+   "high_h": 5.29,
    "split": "in house",
-   "byu_h_split": 3.73,
+   "byu_h_split": 3.74,
    "seal": false,
    "large": false
   },
@@ -107,14 +107,14 @@
    "tapped": 11,
    "cam_h": 1.27,
    "setup_h": 0.75,
-   "program_min": 3.8,
-   "freecad_min": 6.0,
-   "machine_min": 6.2,
+   "program_min": 4.2,
+   "freecad_min": 6.3,
+   "machine_min": 6.6,
    "lathe_min": 0,
    "manual_min": 0,
-   "run_h": 0.1,
+   "run_h": 0.11,
    "deburr_h": 0.25,
-   "total_h": 2.37,
+   "total_h": 2.38,
    "low_h": 1.39,
    "high_h": 3.16,
    "split": "SendCutSend (plate: profile and holes; 6061 up to 1/2 in.); BYU: 11 taps by hand",
@@ -137,12 +137,12 @@
    "tapped": 0,
    "cam_h": 1.15,
    "setup_h": 0.75,
-   "program_min": 4.8,
-   "freecad_min": 8.3,
-   "machine_min": 5.0,
+   "program_min": 5.1,
+   "freecad_min": 8.6,
+   "machine_min": 5.3,
    "lathe_min": 0,
    "manual_min": 0,
-   "run_h": 0.08,
+   "run_h": 0.09,
    "deburr_h": 0.25,
    "total_h": 2.23,
    "low_h": 1.37,
@@ -167,16 +167,16 @@
    "tapped": 0,
    "cam_h": 1.15,
    "setup_h": 0.75,
-   "program_min": 3.5,
-   "freecad_min": 5.6,
-   "machine_min": 3.6,
+   "program_min": 3.8,
+   "freecad_min": 5.9,
+   "machine_min": 3.9,
    "lathe_min": 0,
    "manual_min": 0,
-   "run_h": 0.06,
+   "run_h": 0.07,
    "deburr_h": 0.25,
    "total_h": 2.21,
-   "low_h": 1.34,
-   "high_h": 2.99,
+   "low_h": 1.35,
+   "high_h": 3.0,
    "split": "SendCutSend (plate: profile and holes; 6061 up to 1/2 in.); BYU: none",
    "byu_h_split": 0.75,
    "seal": false,
@@ -197,12 +197,12 @@
    "tapped": 3,
    "cam_h": 2.8,
    "setup_h": 2.5,
-   "program_min": 0.9,
+   "program_min": 0.8,
    "freecad_min": 0.6,
-   "machine_min": 1.6,
+   "machine_min": 1.5,
    "lathe_min": 27.0,
    "manual_min": 0,
-   "run_h": 0.48,
+   "run_h": 0.47,
    "deburr_h": 0.25,
    "total_h": 6.03,
    "low_h": 2.76,
@@ -227,18 +227,18 @@
    "tapped": 8,
    "cam_h": 2.49,
    "setup_h": 2.25,
-   "program_min": 10.3,
-   "freecad_min": 15.1,
-   "machine_min": 22.5,
+   "program_min": 10.9,
+   "freecad_min": 15.8,
+   "machine_min": 23.2,
    "lathe_min": 0,
    "manual_min": 0,
-   "run_h": 0.38,
+   "run_h": 0.39,
    "deburr_h": 0.25,
-   "total_h": 5.37,
-   "low_h": 2.33,
-   "high_h": 12.91,
+   "total_h": 5.38,
+   "low_h": 2.34,
+   "high_h": 12.93,
    "split": "in house",
-   "byu_h_split": 5.37,
+   "byu_h_split": 5.38,
    "seal": false,
    "large": false
   },
@@ -317,9 +317,9 @@
    "tapped": 0,
    "cam_h": 2.15,
    "setup_h": 1.75,
-   "program_min": 1.2,
+   "program_min": 1.1,
    "freecad_min": 4.8,
-   "machine_min": 2.6,
+   "machine_min": 2.5,
    "lathe_min": 27.4,
    "manual_min": 0,
    "run_h": 0.5,
@@ -347,18 +347,18 @@
    "tapped": 0,
    "cam_h": 2.71,
    "setup_h": 2.5,
-   "program_min": 0.1,
-   "freecad_min": 1.2,
-   "machine_min": 0.4,
+   "program_min": 2.0,
+   "freecad_min": 6.4,
+   "machine_min": 2.3,
    "lathe_min": 9.1,
    "manual_min": 30.0,
-   "run_h": 0.66,
+   "run_h": 0.69,
    "deburr_h": 0.25,
-   "total_h": 6.12,
-   "low_h": 2.94,
-   "high_h": 8.97,
+   "total_h": 6.15,
+   "low_h": 2.97,
+   "high_h": 9.05,
    "split": "in house",
-   "byu_h_split": 6.12,
+   "byu_h_split": 6.15,
    "seal": false,
    "large": false
   },
@@ -377,18 +377,18 @@
    "tapped": 0,
    "cam_h": 2.71,
    "setup_h": 2.5,
-   "program_min": 0.1,
-   "freecad_min": 1.5,
-   "machine_min": 0.4,
+   "program_min": 2.0,
+   "freecad_min": 7.3,
+   "machine_min": 2.3,
    "lathe_min": 9.1,
    "manual_min": 30.0,
-   "run_h": 0.66,
+   "run_h": 0.69,
    "deburr_h": 0.25,
-   "total_h": 6.12,
-   "low_h": 2.94,
-   "high_h": 8.97,
+   "total_h": 6.15,
+   "low_h": 2.97,
+   "high_h": 9.07,
    "split": "in house",
-   "byu_h_split": 6.12,
+   "byu_h_split": 6.15,
    "seal": false,
    "large": false
   },
@@ -407,18 +407,18 @@
    "tapped": 2,
    "cam_h": 2.79,
    "setup_h": 2.0,
-   "program_min": 12.3,
-   "freecad_min": 13.4,
-   "machine_min": 13.1,
+   "program_min": 13.1,
+   "freecad_min": 14.1,
+   "machine_min": 14.0,
    "lathe_min": 2.9,
    "manual_min": 0,
-   "run_h": 0.27,
+   "run_h": 0.28,
    "deburr_h": 1.0,
-   "total_h": 6.06,
-   "low_h": 2.97,
-   "high_h": 13.41,
+   "total_h": 6.07,
+   "low_h": 2.98,
+   "high_h": 13.43,
    "split": "in house",
-   "byu_h_split": 6.06,
+   "byu_h_split": 6.07,
    "seal": true,
    "large": false
   },
@@ -527,16 +527,16 @@
    "tapped": 2,
    "cam_h": 2.34,
    "setup_h": 2.25,
-   "program_min": 0.9,
-   "freecad_min": 1.6,
-   "machine_min": 1.6,
+   "program_min": 1.0,
+   "freecad_min": 1.8,
+   "machine_min": 1.8,
    "lathe_min": 0,
    "manual_min": 0,
    "run_h": 0.03,
    "deburr_h": 0.25,
    "total_h": 4.87,
    "low_h": 1.98,
-   "high_h": 7.13,
+   "high_h": 7.14,
    "split": "in house",
    "byu_h_split": 4.87,
    "seal": false,
@@ -557,18 +557,18 @@
    "tapped": 1,
    "cam_h": 2.38,
    "setup_h": 2.25,
-   "program_min": 9.2,
-   "freecad_min": 20.3,
-   "machine_min": 9.8,
+   "program_min": 10.1,
+   "freecad_min": 21.9,
+   "machine_min": 10.7,
    "lathe_min": 0,
    "manual_min": 0,
-   "run_h": 0.16,
+   "run_h": 0.18,
    "deburr_h": 0.25,
-   "total_h": 5.04,
-   "low_h": 2.11,
-   "high_h": 7.47,
+   "total_h": 5.05,
+   "low_h": 2.13,
+   "high_h": 7.5,
    "split": "in house",
-   "byu_h_split": 5.04,
+   "byu_h_split": 5.05,
    "seal": false,
    "large": false
   },
@@ -587,16 +587,16 @@
    "tapped": 8,
    "cam_h": 2.57,
    "setup_h": 3.75,
-   "program_min": 21.9,
-   "freecad_min": 20.0,
-   "machine_min": 24.2,
+   "program_min": 23.8,
+   "freecad_min": 21.2,
+   "machine_min": 26.0,
    "lathe_min": 0,
    "manual_min": 0,
-   "run_h": 0.4,
+   "run_h": 0.43,
    "deburr_h": 0.25,
-   "total_h": 6.97,
-   "low_h": 2.35,
-   "high_h": 9.19,
+   "total_h": 7.0,
+   "low_h": 2.38,
+   "high_h": 9.21,
    "split": "SendCutSend (plate: profile and holes; 6061 up to 1/2 in.); BYU: 4 c'bores, 6 c'sinks, 8 taps (one setup and hand taps)",
    "byu_h_split": 1.7,
    "seal": false,
@@ -647,16 +647,16 @@
    "tapped": 0,
    "cam_h": 1.91,
    "setup_h": 2.5,
-   "program_min": 35.3,
-   "freecad_min": 41.3,
-   "machine_min": 35.7,
+   "program_min": 39.7,
+   "freecad_min": 44.9,
+   "machine_min": 40.2,
    "lathe_min": 0,
    "manual_min": 0,
-   "run_h": 0.6,
+   "run_h": 0.67,
    "deburr_h": 0.25,
-   "total_h": 5.26,
-   "low_h": 2.21,
-   "high_h": 6.85,
+   "total_h": 5.33,
+   "low_h": 2.29,
+   "high_h": 6.92,
    "split": "SendCutSend (plate: profile and holes; 6061 up to 1/2 in.); BYU: 12 c'bores (one setup)",
    "byu_h_split": 1.5,
    "seal": false,
@@ -677,18 +677,18 @@
    "tapped": 4,
    "cam_h": 2.36,
    "setup_h": 2.25,
-   "program_min": 5.9,
+   "program_min": 7.1,
    "freecad_min": 10.5,
-   "machine_min": 9.0,
+   "machine_min": 10.1,
    "lathe_min": 0,
    "manual_min": 0,
-   "run_h": 0.15,
+   "run_h": 0.17,
    "deburr_h": 0.35,
-   "total_h": 5.11,
-   "low_h": 2.2,
+   "total_h": 5.13,
+   "low_h": 2.22,
    "high_h": 7.44,
    "split": "in house",
-   "byu_h_split": 5.11,
+   "byu_h_split": 5.13,
    "seal": false,
    "large": false
   },
@@ -707,16 +707,16 @@
    "tapped": 4,
    "cam_h": 1.82,
    "setup_h": 2.5,
-   "program_min": 11.0,
-   "freecad_min": 12.4,
-   "machine_min": 12.3,
+   "program_min": 12.1,
+   "freecad_min": 13.2,
+   "machine_min": 13.3,
    "lathe_min": 0,
    "manual_min": 0,
-   "run_h": 0.2,
+   "run_h": 0.22,
    "deburr_h": 0.25,
-   "total_h": 4.77,
-   "low_h": 1.82,
-   "high_h": 6.3,
+   "total_h": 4.79,
+   "low_h": 1.84,
+   "high_h": 6.31,
    "split": "SendCutSend (plate: profile and holes; 6061 up to 1/2 in.); BYU: 4 c'bores, 4 taps (one setup)",
    "byu_h_split": 1.6,
    "seal": false,
@@ -737,7 +737,7 @@
    "tapped": 8,
    "cam_h": 2.82,
    "setup_h": 2.5,
-   "program_min": 0.2,
+   "program_min": 0.1,
    "freecad_min": 0.6,
    "machine_min": 1.9,
    "lathe_min": 4.1,
@@ -797,18 +797,18 @@
    "tapped": 4,
    "cam_h": 2.36,
    "setup_h": 2.25,
-   "program_min": 31.9,
-   "freecad_min": 45.2,
-   "machine_min": 33.0,
+   "program_min": 28.3,
+   "freecad_min": 35.9,
+   "machine_min": 29.4,
    "lathe_min": 0,
    "manual_min": 0,
-   "run_h": 0.55,
+   "run_h": 0.49,
    "deburr_h": 0.25,
-   "total_h": 5.41,
-   "low_h": 2.5,
-   "high_h": 7.88,
+   "total_h": 5.35,
+   "low_h": 2.44,
+   "high_h": 7.73,
    "split": "in house",
-   "byu_h_split": 5.41,
+   "byu_h_split": 5.35,
    "seal": false,
    "large": false
   },
@@ -827,18 +827,18 @@
    "tapped": 0,
    "cam_h": 2.94,
    "setup_h": 3.0,
-   "program_min": 11.8,
-   "freecad_min": 19.2,
-   "machine_min": 12.2,
+   "program_min": 12.1,
+   "freecad_min": 18.6,
+   "machine_min": 12.6,
    "lathe_min": 0,
    "manual_min": 0,
-   "run_h": 0.2,
+   "run_h": 0.21,
    "deburr_h": 0.25,
-   "total_h": 6.4,
+   "total_h": 6.41,
    "low_h": 2.49,
-   "high_h": 9.52,
+   "high_h": 9.51,
    "split": "in house",
-   "byu_h_split": 6.4,
+   "byu_h_split": 6.41,
    "seal": false,
    "large": false
   },
@@ -857,18 +857,18 @@
    "tapped": 0,
    "cam_h": 2.94,
    "setup_h": 3.0,
-   "program_min": 11.4,
-   "freecad_min": 18.9,
-   "machine_min": 11.9,
+   "program_min": 11.9,
+   "freecad_min": 19.3,
+   "machine_min": 12.4,
    "lathe_min": 0,
    "manual_min": 0,
-   "run_h": 0.2,
+   "run_h": 0.21,
    "deburr_h": 0.25,
-   "total_h": 6.39,
-   "low_h": 2.48,
+   "total_h": 6.4,
+   "low_h": 2.49,
    "high_h": 9.52,
    "split": "in house",
-   "byu_h_split": 6.39,
+   "byu_h_split": 6.4,
    "seal": false,
    "large": false
   },
@@ -917,15 +917,15 @@
    "tapped": 16,
    "cam_h": 1.94,
    "setup_h": 2.5,
-   "program_min": 6.0,
-   "freecad_min": 7.8,
-   "machine_min": 9.5,
+   "program_min": 6.2,
+   "freecad_min": 8.0,
+   "machine_min": 9.7,
    "lathe_min": 0,
    "manual_min": 60.0,
    "run_h": 1.16,
    "deburr_h": 1.0,
    "total_h": 6.6,
-   "low_h": 3.52,
+   "low_h": 3.53,
    "high_h": 8.63,
    "split": "in house",
    "byu_h_split": 6.6,
@@ -947,9 +947,9 @@
    "tapped": 4,
    "cam_h": 1.82,
    "setup_h": 2.5,
-   "program_min": 3.7,
-   "freecad_min": 4.7,
-   "machine_min": 4.8,
+   "program_min": 3.8,
+   "freecad_min": 4.8,
+   "machine_min": 4.9,
    "lathe_min": 0,
    "manual_min": 0,
    "run_h": 0.08,
@@ -977,16 +977,16 @@
    "tapped": 0,
    "cam_h": 1.82,
    "setup_h": 2.5,
-   "program_min": 11.9,
-   "freecad_min": 13.3,
-   "machine_min": 12.4,
+   "program_min": 13.0,
+   "freecad_min": 14.3,
+   "machine_min": 13.5,
    "lathe_min": 0,
    "manual_min": 0,
-   "run_h": 0.21,
+   "run_h": 0.22,
    "deburr_h": 0.25,
-   "total_h": 4.78,
-   "low_h": 1.82,
-   "high_h": 6.3,
+   "total_h": 4.79,
+   "low_h": 1.84,
+   "high_h": 6.32,
    "split": "SendCutSend (plate: profile and holes; 6061 up to 1/2 in.); BYU: 4 c'bores",
    "byu_h_split": 1.5,
    "seal": false,
@@ -1007,14 +1007,14 @@
    "tapped": 8,
    "cam_h": 1.82,
    "setup_h": 1.5,
-   "program_min": 2.4,
-   "freecad_min": 2.8,
-   "machine_min": 4.3,
+   "program_min": 2.7,
+   "freecad_min": 3.2,
+   "machine_min": 4.6,
    "lathe_min": 0,
    "manual_min": 0,
-   "run_h": 0.07,
+   "run_h": 0.08,
    "deburr_h": 0.25,
-   "total_h": 3.64,
+   "total_h": 3.65,
    "low_h": 1.69,
    "high_h": 5.15,
    "split": "SendCutSend (plate: profile and holes; 6061 up to 1/2 in.); BYU: 8 taps by hand (both faces)",
@@ -1037,18 +1037,18 @@
    "tapped": 0,
    "cam_h": 2.98,
    "setup_h": 3.0,
-   "program_min": 18.1,
-   "freecad_min": 23.9,
-   "machine_min": 18.6,
+   "program_min": 19.9,
+   "freecad_min": 26.0,
+   "machine_min": 20.4,
    "lathe_min": 0,
    "manual_min": 10.0,
-   "run_h": 0.48,
+   "run_h": 0.51,
    "deburr_h": 0.25,
-   "total_h": 6.7,
-   "low_h": 2.76,
-   "high_h": 9.88,
+   "total_h": 6.73,
+   "low_h": 2.79,
+   "high_h": 9.92,
    "split": "in house",
-   "byu_h_split": 6.7,
+   "byu_h_split": 6.73,
    "seal": false,
    "large": false
   },
@@ -1157,18 +1157,18 @@
    "tapped": 4,
    "cam_h": 1.88,
    "setup_h": 1.5,
-   "program_min": 3.2,
-   "freecad_min": 5.1,
-   "machine_min": 4.3,
+   "program_min": 2.3,
+   "freecad_min": 3.5,
+   "machine_min": 3.5,
    "lathe_min": 0,
    "manual_min": 0,
-   "run_h": 0.07,
+   "run_h": 0.06,
    "deburr_h": 0.25,
-   "total_h": 3.7,
-   "low_h": 1.69,
-   "high_h": 5.23,
+   "total_h": 3.69,
+   "low_h": 1.67,
+   "high_h": 5.21,
    "split": "in house",
-   "byu_h_split": 3.7,
+   "byu_h_split": 3.69,
    "seal": false,
    "large": false
   },
@@ -1217,18 +1217,18 @@
    "tapped": 0,
    "cam_h": 1.76,
    "setup_h": 1.5,
-   "program_min": 17.2,
-   "freecad_min": 22.0,
-   "machine_min": 18.2,
+   "program_min": 17.6,
+   "freecad_min": 22.4,
+   "machine_min": 18.7,
    "lathe_min": 0,
    "manual_min": 0,
-   "run_h": 0.3,
+   "run_h": 0.31,
    "deburr_h": 1.1,
-   "total_h": 4.66,
-   "low_h": 2.77,
-   "high_h": 6.24,
+   "total_h": 4.67,
+   "low_h": 2.78,
+   "high_h": 6.25,
    "split": "in house",
-   "byu_h_split": 4.66,
+   "byu_h_split": 4.67,
    "seal": true,
    "large": false
   },
@@ -1337,18 +1337,18 @@
    "tapped": 0,
    "cam_h": 1.82,
    "setup_h": 1.5,
-   "program_min": 5.8,
-   "freecad_min": 8.3,
-   "machine_min": 6.2,
+   "program_min": 6.6,
+   "freecad_min": 9.2,
+   "machine_min": 7.0,
    "lathe_min": 0,
    "manual_min": 0,
-   "run_h": 0.1,
+   "run_h": 0.12,
    "deburr_h": 0.25,
-   "total_h": 3.67,
-   "low_h": 1.72,
-   "high_h": 5.21,
+   "total_h": 3.69,
+   "low_h": 1.73,
+   "high_h": 5.23,
    "split": "in house",
-   "byu_h_split": 3.67,
+   "byu_h_split": 3.69,
    "seal": false,
    "large": false
   },
@@ -1367,18 +1367,18 @@
    "tapped": 0,
    "cam_h": 2.94,
    "setup_h": 3.0,
-   "program_min": 13.4,
-   "freecad_min": 17.4,
-   "machine_min": 13.9,
+   "program_min": 14.7,
+   "freecad_min": 18.7,
+   "machine_min": 15.2,
    "lathe_min": 0,
    "manual_min": 10.0,
-   "run_h": 0.4,
+   "run_h": 0.42,
    "deburr_h": 0.25,
-   "total_h": 6.59,
-   "low_h": 2.68,
-   "high_h": 9.74,
+   "total_h": 6.61,
+   "low_h": 2.7,
+   "high_h": 9.76,
    "split": "in house",
-   "byu_h_split": 6.59,
+   "byu_h_split": 6.61,
    "seal": false,
    "large": false
   },
@@ -1397,9 +1397,9 @@
    "tapped": 0,
    "cam_h": 1.11,
    "setup_h": 0.75,
-   "program_min": 0.5,
+   "program_min": 0.6,
    "freecad_min": 1.0,
-   "machine_min": 1.0,
+   "machine_min": 1.1,
    "lathe_min": 0,
    "manual_min": 0,
    "run_h": 0.02,
@@ -1415,85 +1415,85 @@
  ],
  "by_state": {
   "S1": {
-   "h": 45.61,
-   "low": 19.15,
-   "high": 62.62,
-   "split": 30.26,
-   "prog": 107.0,
+   "h": 45.79,
+   "low": 19.32,
+   "high": 62.75,
+   "split": 30.31,
+   "prog": 117.4,
    "cam": 19.58,
    "n": 10
   },
   "S2": {
-   "h": 29.21,
-   "low": 15.58,
-   "high": 45.31,
-   "split": 26.42,
-   "prog": 77.9,
+   "h": 29.15,
+   "low": 15.51,
+   "high": 45.11,
+   "split": 26.35,
+   "prog": 74.7,
    "cam": 13.5,
    "n": 8
   },
   "FT-0": {
-   "h": 58.07,
-   "low": 31.01,
-   "high": 94.48,
-   "split": 58.07,
-   "prog": 67.6,
+   "h": 58.15,
+   "low": 31.08,
+   "high": 94.6,
+   "split": 58.15,
+   "prog": 72.0,
    "cam": 24.13,
    "n": 14
   },
   "FT-1": {
-   "h": 32.84,
-   "low": 15.29,
-   "high": 46.36,
-   "split": 27.62,
-   "prog": 46.2,
+   "h": 32.9,
+   "low": 15.36,
+   "high": 46.46,
+   "split": 27.66,
+   "prog": 50.4,
    "cam": 15.17,
    "n": 9
   },
   "FT-1V": {
-   "h": 33.78,
-   "low": 18.02,
-   "high": 46.9,
-   "split": 33.78,
-   "prog": 10.8,
+   "h": 33.81,
+   "low": 18.06,
+   "high": 47.0,
+   "split": 33.81,
+   "prog": 12.9,
    "cam": 12.09,
    "n": 6
   }
  },
  "cumulative": {
   "S1": {
-   "h": 45.61,
-   "low": 19.15,
-   "high": 62.62,
-   "split": 30.26,
+   "h": 45.79,
+   "low": 19.32,
+   "high": 62.75,
+   "split": 30.31,
    "cam": 19.58
   },
   "S2": {
-   "h": 74.82,
-   "low": 34.73,
-   "high": 107.93,
-   "split": 56.68,
+   "h": 74.94,
+   "low": 34.83,
+   "high": 107.86,
+   "split": 56.66,
    "cam": 33.08
   },
   "FT-0": {
-   "h": 132.89,
-   "low": 65.74,
-   "high": 202.41,
-   "split": 114.75,
+   "h": 133.09,
+   "low": 65.91,
+   "high": 202.46,
+   "split": 114.81,
    "cam": 57.21
   },
   "FT-1": {
-   "h": 165.73,
-   "low": 81.03,
-   "high": 248.77,
-   "split": 142.37,
+   "h": 165.99,
+   "low": 81.27,
+   "high": 248.92,
+   "split": 142.47,
    "cam": 72.38
   },
   "FT-1V": {
-   "h": 199.51,
-   "low": 99.05,
-   "high": 295.67,
-   "split": 176.15,
+   "h": 199.8,
+   "low": 99.33,
+   "high": 295.92,
+   "split": 176.28,
    "cam": 84.47
   }
  },
@@ -1521,5 +1521,592 @@
    "MK-03",
    "MK-07"
   ]
+ },
+ "reviewed": {
+  "basis": "round 3: review-r3.md section 4's sensitivity per piece (hours.py REVIEWED); an estimate",
+  "allowances": {
+   "first_setup": 0.75,
+   "first_setup_large": 1.25,
+   "next_setup": [
+    0.25,
+    0.5
+   ],
+   "lathe_setup": 0.5,
+   "cam_per_mill_setup": 0.25,
+   "cam_lathe_only": 0.25,
+   "mill_factor": [
+    1.08,
+    1.16
+   ],
+   "est_factor": [
+    1.5,
+    3.0
+   ],
+   "extras_per_mill_setup": [
+    0.17543859649122806,
+    0.3508771929824561
+   ],
+   "student_share": 0.5,
+   "student_extra": [
+    0.7,
+    1.0
+   ]
+  },
+  "by_state": {
+   "S1": {
+    "machinist_low": 27.31,
+    "machinist_high": 34.84,
+    "student_low": 32.47,
+    "student_high": 43.97,
+    "mill_setups": 22,
+    "lathe_setups": 0
+   },
+   "S2": {
+    "machinist_low": 19.13,
+    "machinist_high": 23.75,
+    "student_low": 23.38,
+    "student_high": 30.93,
+    "mill_setups": 13,
+    "lathe_setups": 2
+   },
+   "FT-0": {
+    "machinist_low": 39.76,
+    "machinist_high": 52.16,
+    "student_low": 49.12,
+    "student_high": 69.66,
+    "mill_setups": 23,
+    "lathe_setups": 13
+   },
+   "FT-1": {
+    "machinist_low": 20.64,
+    "machinist_high": 26.7,
+    "student_low": 23.97,
+    "student_high": 32.95,
+    "mill_setups": 17,
+    "lathe_setups": 0
+   },
+   "FT-1V": {
+    "machinist_low": 25.05,
+    "machinist_high": 35.71,
+    "student_low": 32.2,
+    "student_high": 50.37,
+    "mill_setups": 10,
+    "lathe_setups": 6
+   }
+  },
+  "cumulative": {
+   "S1": {
+    "machinist_low": 27.31,
+    "machinist_high": 34.84,
+    "student_low": 32.47,
+    "student_high": 43.97,
+    "mill_setups": 22.0,
+    "lathe_setups": 0.0
+   },
+   "S2": {
+    "machinist_low": 46.44,
+    "machinist_high": 58.59,
+    "student_low": 55.85,
+    "student_high": 74.89,
+    "mill_setups": 35.0,
+    "lathe_setups": 2.0
+   },
+   "FT-0": {
+    "machinist_low": 86.2,
+    "machinist_high": 110.75,
+    "student_low": 104.97,
+    "student_high": 144.55,
+    "mill_setups": 58.0,
+    "lathe_setups": 15.0
+   },
+   "FT-1": {
+    "machinist_low": 106.84,
+    "machinist_high": 137.45,
+    "student_low": 128.93,
+    "student_high": 177.5,
+    "mill_setups": 75.0,
+    "lathe_setups": 15.0
+   },
+   "FT-1V": {
+    "machinist_low": 131.89,
+    "machinist_high": 173.16,
+    "student_low": 161.13,
+    "student_high": 227.87,
+    "mill_setups": 85.0,
+    "lathe_setups": 21.0
+   }
+  },
+  "pieces": {
+   "MK-01": {
+    "machinist": [
+     2.86,
+     3.48
+    ],
+    "student": [
+     3.47,
+     4.48
+    ]
+   },
+   "MK-02a": {
+    "machinist": [
+     3.28,
+     3.91
+    ],
+    "student": [
+     3.98,
+     5.03
+    ]
+   },
+   "MK-02b": {
+    "machinist": [
+     2.28,
+     2.9
+    ],
+    "student": [
+     2.72,
+     3.65
+    ]
+   },
+   "MK-02c": {
+    "machinist": [
+     1.54,
+     1.73
+    ],
+    "student": [
+     1.89,
+     2.23
+    ]
+   },
+   "MK-02d": {
+    "machinist": [
+     1.52,
+     1.7
+    ],
+    "student": [
+     1.87,
+     2.2
+    ]
+   },
+   "MK-02e": {
+    "machinist": [
+     1.5,
+     1.68
+    ],
+    "student": [
+     1.85,
+     2.18
+    ]
+   },
+   "MK-02f": {
+    "machinist": [
+     3.8,
+     5.08
+    ],
+    "student": [
+     4.83,
+     7.01
+    ]
+   },
+   "MK-03": {
+    "machinist": [
+     3.19,
+     4.25
+    ],
+    "student": [
+     3.72,
+     5.25
+    ]
+   },
+   "MK-03s": {
+    "machinist": [
+     2.45,
+     3.25
+    ],
+    "student": [
+     3.22,
+     4.75
+    ]
+   },
+   "MK-04": {
+    "machinist": [
+     3.96,
+     5.12
+    ],
+    "student": [
+     4.88,
+     6.75
+    ]
+   },
+   "MK-05": {
+    "machinist": [
+     3.61,
+     4.47
+    ],
+    "student": [
+     4.7,
+     6.38
+    ]
+   },
+   "MK-06a": {
+    "machinist": [
+     4.12,
+     5.7
+    ],
+    "student": [
+     5.25,
+     7.93
+    ]
+   },
+   "MK-06b": {
+    "machinist": [
+     4.12,
+     5.7
+    ],
+    "student": [
+     5.25,
+     7.93
+    ]
+   },
+   "MK-07": {
+    "machinist": [
+     3.68,
+     4.37
+    ],
+    "student": [
+     4.58,
+     5.81
+    ]
+   },
+   "MK-08a": {
+    "machinist": [
+     1.08,
+     1.08
+    ],
+    "student": [
+     1.08,
+     1.08
+    ]
+   },
+   "MK-08b": {
+    "machinist": [
+     1.08,
+     1.08
+    ],
+    "student": [
+     1.08,
+     1.08
+    ]
+   },
+   "MK-08c": {
+    "machinist": [
+     2.86,
+     3.89
+    ],
+    "student": [
+     3.38,
+     4.89
+    ]
+   },
+   "MK-08d": {
+    "machinist": [
+     2.81,
+     3.84
+    ],
+    "student": [
+     3.33,
+     4.84
+    ]
+   },
+   "MK-08e": {
+    "machinist": [
+     2.97,
+     4.01
+    ],
+    "student": [
+     3.49,
+     5.01
+    ]
+   },
+   "MK-09a": {
+    "machinist": [
+     3.74,
+     4.81
+    ],
+    "student": [
+     4.44,
+     6.06
+    ]
+   },
+   "MK-09c": {
+    "machinist": [
+     2.26,
+     2.87
+    ],
+    "student": [
+     2.75,
+     3.69
+    ]
+   },
+   "MK-09d": {
+    "machinist": [
+     3.32,
+     3.98
+    ],
+    "student": [
+     3.94,
+     4.98
+    ]
+   },
+   "MK-09e": {
+    "machinist": [
+     3.06,
+     4.1
+    ],
+    "student": [
+     3.62,
+     5.15
+    ]
+   },
+   "MK-09f": {
+    "machinist": [
+     2.84,
+     3.46
+    ],
+    "student": [
+     3.45,
+     4.46
+    ]
+   },
+   "MK-10a": {
+    "machinist": [
+     4.11,
+     5.69
+    ],
+    "student": [
+     5.24,
+     7.92
+    ]
+   },
+   "MK-10b": {
+    "machinist": [
+     4.11,
+     5.69
+    ],
+    "student": [
+     5.24,
+     7.92
+    ]
+   },
+   "MK-10c": {
+    "machinist": [
+     3.31,
+     4.37
+    ],
+    "student": [
+     3.83,
+     5.37
+    ]
+   },
+   "MK-11a": {
+    "machinist": [
+     3.68,
+     5.15
+    ],
+    "student": [
+     4.29,
+     6.4
+    ]
+   },
+   "MK-11b": {
+    "machinist": [
+     3.67,
+     5.14
+    ],
+    "student": [
+     4.29,
+     6.39
+    ]
+   },
+   "MK-12": {
+    "machinist": [
+     0.75,
+     0.75
+    ],
+    "student": [
+     0.75,
+     0.75
+    ]
+   },
+   "MK-13": {
+    "machinist": [
+     5.03,
+     7.14
+    ],
+    "student": [
+     6.43,
+     10.01
+    ]
+   },
+   "MK-14": {
+    "machinist": [
+     3.44,
+     4.05
+    ],
+    "student": [
+     4.31,
+     5.42
+    ]
+   },
+   "MK-15a": {
+    "machinist": [
+     2.84,
+     3.46
+    ],
+    "student": [
+     3.46,
+     4.46
+    ]
+   },
+   "MK-15b": {
+    "machinist": [
+     2.18,
+     2.79
+    ],
+    "student": [
+     2.62,
+     3.54
+    ]
+   },
+   "MK-15c": {
+    "machinist": [
+     4.07,
+     5.8
+    ],
+    "student": [
+     4.77,
+     7.3
+    ]
+   },
+   "MK-16": {
+    "machinist": [
+     2.12,
+     2.73
+    ],
+    "student": [
+     2.56,
+     3.48
+    ]
+   },
+   "MK-17": {
+    "machinist": [
+     0.1,
+     0.1
+    ],
+    "student": [
+     0.1,
+     0.1
+    ]
+   },
+   "MK-17b": {
+    "machinist": [
+     0.75,
+     0.75
+    ],
+    "student": [
+     0.75,
+     0.75
+    ]
+   },
+   "MK-18a": {
+    "machinist": [
+     2.16,
+     2.77
+    ],
+    "student": [
+     2.6,
+     3.52
+    ]
+   },
+   "MK-18b": {
+    "machinist": [
+     0.85,
+     0.85
+    ],
+    "student": [
+     0.85,
+     0.85
+    ]
+   },
+   "MK-19": {
+    "machinist": [
+     3.29,
+     3.91
+    ],
+    "student": [
+     4.02,
+     5.09
+    ]
+   },
+   "MK-20a": {
+    "machinist": [
+     1.61,
+     1.72
+    ],
+    "student": [
+     2.08,
+     2.45
+    ]
+   },
+   "MK-20c": {
+    "machinist": [
+     3.53,
+     5.5
+    ],
+    "student": [
+     4.67,
+     8.13
+    ]
+   },
+   "MK-21c": {
+    "machinist": [
+     4.55,
+     8.05
+    ],
+    "student": [
+     6.14,
+     12.08
+    ]
+   },
+   "MK-22a": {
+    "machinist": [
+     2.23,
+     2.84
+    ],
+    "student": [
+     2.66,
+     3.59
+    ]
+   },
+   "MK-22b": {
+    "machinist": [
+     3.98,
+     5.7
+    ],
+    "student": [
+     4.68,
+     7.2
+    ]
+   },
+   "MK-23": {
+    "machinist": [
+     1.6,
+     1.77
+    ],
+    "student": [
+     2.0,
+     2.35
+    ]
+   }
+  }
  }
 }

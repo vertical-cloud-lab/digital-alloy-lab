@@ -50,6 +50,42 @@ PLATE_SECONDARY = {"MK-01": "4 c'bores and 15 taps by hand after SendCutSend cut
                    "MK-02c": "11 taps by hand", "MK-02d": "slide pocket 1.2 deep (one mill setup)", "MK-02e": "none"}
 
 
+# round 3: a "reviewed" case, the CAM review's sensitivity (review-r3.md section 4) per piece. It takes the programs
+# as written, fixed and proven out, and a machinist on the floor:
+#   setups   a piece's first mill setup 0.75 h (1.25 h over 200 mm), its further setups 0.25-0.5 h, 0.5 h a lathe setup
+#   CAM      0.25 h a mill setup to review and prove out; 0.25 h a lathe-only piece
+#   machine  the set's mill time x 1.08-1.16 (acceleration, tool changes, spindle starts: the review's recount)
+#   lathe and hand work: the set's estimates x 1.5-3; deburr and inspection, sheet and bought parts as the set
+#   extras   fixtures 4-8 h, loading the tools 1-2.5 h, sawing blanks 2-4 h, CAM fixes 3-6 h: 10-20 h on v1's 57 mill
+#            setups to FT-1, so 10/57-20/57 h a mill setup here (scaled with the setups; round 3 made some of the CAM
+#            fixes, the rest are kept in: ramp entries into pockets and profiles, setup sheets, a Haas post, prove-out)
+#   student  a student doing half the setups, lathe and hand work and deburring at 1.7-2.0 x a machinist's time
+# Low and high here are the two ends of each range above. It reproduces the review's v1 figures: 76.8-97.7 h
+# (machinist) and 92.3-125.0 h (with a student) to FT-1. An estimate, like the allowances: no piece has been timed.
+REVIEWED = dict(first_setup=0.75, first_setup_large=1.25, next_setup=(0.25, 0.5), lathe_setup=0.5,
+                cam_per_mill_setup=0.25, cam_lathe_only=0.25, mill_factor=(1.08, 1.16), est_factor=(1.5, 3.0),
+                extras_per_mill_setup=(10.0 / 57, 20.0 / 57), student_share=0.5, student_extra=(0.7, 1.0))
+
+
+def reviewed_hours(r):
+    """the reviewed case for one hours row: machinist (low, high), machinist and student (low, high), and its parts"""
+    R = REVIEWED
+    if r["route"] == "buy" or r["route"].startswith("sheet"):
+        t = r["total_h"]
+        return dict(mach=(t, t), stu=(t, t), setups=(0.0, 0.0), cam=0.0, extras=(0.0, 0.0))
+    n_mill, n_lathe = r["mill_setups"], r["lathe_setups"]
+    first = (R["first_setup_large"] if r["large"] else R["first_setup"]) if n_mill else 0.0
+    su = [first + max(0, n_mill - 1) * ns + n_lathe * R["lathe_setup"] for ns in R["next_setup"]]
+    cam = R["cam_per_mill_setup"] * n_mill if n_mill else (R["cam_lathe_only"] if n_lathe else 0.0)
+    mill = [r["machine_min"] / 60 * f for f in R["mill_factor"]]
+    lh = [(r["lathe_min"] + r["manual_min"]) / 60 * f for f in R["est_factor"]]
+    deb = r["deburr_h"]
+    ex = [n_mill * e for e in R["extras_per_mill_setup"]]
+    mach = [su[i] + cam + mill[i] + lh[i] + deb + ex[i] for i in (0, 1)]
+    stu = [mach[i] + R["student_share"] * (su[i] + lh[i] + deb) * R["student_extra"][i] for i in (0, 1)]
+    return dict(mach=tuple(mach), stu=tuple(stu), setups=tuple(su), cam=cam, extras=tuple(ex))
+
+
 def piece_hours(p, cam_setups):
     pid = p["pid"]
     qty = p["qty"]
@@ -146,10 +182,32 @@ def main():
         w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
         w.writeheader()
         w.writerows(rows)
+    # round 3: the reviewed case (machinist; machinist and student), per state and cumulative
+    rv_st = {s: dict(machinist_low=0.0, machinist_high=0.0, student_low=0.0, student_high=0.0, mill_setups=0,
+                     lathe_setups=0) for s in STATES}
+    rv_pc = {}
+    for r in rows:
+        q = reviewed_hours(r)
+        d = rv_st[r["state"]]
+        d["machinist_low"] += q["mach"][0]
+        d["machinist_high"] += q["mach"][1]
+        d["student_low"] += q["stu"][0]
+        d["student_high"] += q["stu"][1]
+        d["mill_setups"] += r["mill_setups"]
+        d["lathe_setups"] += r["lathe_setups"]
+        rv_pc[r["pid"]] = dict(machinist=[round(v, 2) for v in q["mach"]], student=[round(v, 2) for v in q["stu"]])
+    rv_cum, c2 = {}, {k: 0.0 for k in rv_st["S1"]}
+    for s in STATES:
+        for k in c2:
+            c2[k] += rv_st[s][k]
+        rv_cum[s] = dict(c2)
+    reviewed = dict(basis="round 3: review-r3.md section 4's sensitivity per piece (hours.py REVIEWED); an estimate",
+                    allowances=REVIEWED, by_state={s: {k: round(v, 2) for k, v in rv_st[s].items()} for s in STATES},
+                    cumulative={s: {k: round(v, 2) for k, v in rv_cum[s].items()} for s in STATES}, pieces=rv_pc)
     out = dict(method=__doc__.split("\n\n")[1], rate_usd_h=T.RATE_USD_H, pieces=rows,
                by_state={s: {k: round(v, 2) for k, v in st[s].items()} for s in STATES},
                cumulative={s: {k: round(v, 2) for k, v in cum[s].items()} for s in STATES}, study=STUDY,
-               high_allowances=dict(HIGH, remake=sorted(REMAKE)))
+               high_allowances=dict(HIGH, remake=sorted(REMAKE)), reviewed=reviewed)
     (OUT / "hours.json").write_text(json.dumps(out, indent=1))
     # markdown
     L = ["| Piece | What | State | Qty | Route | Mill / lathe setups | Holes (tapped) | Program min | CAM h | Setups h "
@@ -170,11 +228,23 @@ def main():
             ("%d-%d h" % stu) if stu else "-",
             *[format(int(round(cum[s][k_] * T.RATE_USD_H, -1)), ",") for k_ in ("low", "h", "high")],
             st[s]["split"], cum[s]["split"]))
+    L += ["", "Round 3, the reviewed case (review-r3.md section 4 per piece; programs fixed and proven out):", "",
+          "| State | Mill / lathe setups (cumulative) | Machinist, cumulative h | Machinist and student, cumulative h "
+          "| The set's low / expected / high, cumulative h |", "|---|---|---|---|---|"]
+    for s in STATES:
+        a = rv_cum[s]
+        L.append("| %s | %d / %d | %.1f-%.1f | %.1f-%.1f | %.1f / %.1f / %.1f |" % (
+            s, a["mill_setups"], a["lathe_setups"], a["machinist_low"], a["machinist_high"], a["student_low"],
+            a["student_high"], cum[s]["low"], cum[s]["h"], cum[s]["high"]))
     (OUT / "hours.md").write_text("\n".join(L) + "\n")
     for s in STATES:
         print("%-6s n %2d  %.1f h (low %.1f, high %.1f)  cumulative %.1f h (low %.1f, high %.1f) = $%.0f   split %.1f "
               "(cum %.1f)" % (s, st[s]["n"], st[s]["h"], st[s]["low"], st[s]["high"], cum[s]["h"], cum[s]["low"],
                               cum[s]["high"], cum[s]["h"] * T.RATE_USD_H, st[s]["split"], cum[s]["split"]))
+    for s in STATES:
+        a = rv_cum[s]
+        print("%-6s reviewed (cumulative): machinist %.1f-%.1f h, with a student %.1f-%.1f h (%d mill setups)" % (
+            s, a["machinist_low"], a["machinist_high"], a["student_low"], a["student_high"], a["mill_setups"]))
 
 
 if __name__ == "__main__":
