@@ -321,6 +321,8 @@ def gantt(sched):
     import matplotlib.pyplot as plt
 
     alts = list(sched)
+    # the axis runs to the latest finish plus room for its label, in whole weeks, at least 12 weeks
+    end = max(60, 5 * (int(max(v[3] for a in alts for v in sched[a].values()) / 5 + 0.999) + 2))
     fig, axes = plt.subplots(len(alts), 1, figsize=(11.5, 2.6 + 0.36 * sum(len(sched[a]) for a in alts)),
                              gridspec_kw=dict(height_ratios=[len(sched[a]) for a in alts]))
     for ax, alt in zip(axes, alts):
@@ -338,9 +340,9 @@ def gantt(sched):
         ax.set_yticks(range(len(names)))
         ax.set_yticklabels(names, fontsize=7.5)
         ax.invert_yaxis()
-        ax.set_xlim(0, 60)
-        ax.set_xticks(range(0, 61, 5))
-        ax.set_xticklabels([f"{d // 5}" for d in range(0, 61, 5)], fontsize=8)
+        ax.set_xlim(0, end)
+        ax.set_xticks(range(0, end + 1, 5))
+        ax.set_xticklabels([f"{d // 5}" for d in range(0, end + 1, 5)], fontsize=8)
         ax.axvspan(15, 30, color="#4daf4a", alpha=0.06)
         ax.set_title(alt, fontsize=9.5, loc="left")
         ax.grid(axis="x", color="#dddddd", lw=0.6)
@@ -349,7 +351,7 @@ def gantt(sched):
                         "green band = 3-6 weeks", fontsize=8)
     fig.suptitle("Fast-track alternatives: forward-pass schedule (estimates; approvals grey, milestones red)", fontsize=10.5)
     fig.tight_layout(rect=(0, 0, 1, 0.985))
-    fig.savefig(IMG / "gantt.png", dpi=130)
+    fig.savefig(IMG / "gantt.png", dpi=130, bbox_inches="tight")
     plt.close(fig)
 
 
