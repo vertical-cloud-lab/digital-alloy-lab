@@ -338,7 +338,7 @@ mass balance (SOP 05).
   - Nanoindentation (Utah Nanofab) gives a local modulus, but pile-up in soft Al biases it.
 - **Single-crystal Cij (M2):** compare Voigt–Reuss–Hill averages of the predicted Cij with M1, since we can't make single crystals.
 - **Hardness and yield strength (M3):** Vickers (ASTM E384, SOP 04).
-  - σy ≈ HV/3 (Tabor) is only a screen. Calibrate it against our own tensile bars.
+  - σy ≈ HV/3 (Tabor) is only a screen, with HV in MPa (σy ≈ 9.807 × HV/3 for HV in kgf/mm²). Calibrate it against our own tensile bars.
   - Profilometry-based indentation plastometry gives a full stress–strain curve from one indent on a small coupon.
     Edison flags it as specialized equipment; the PLX instrument is commercial ([Edison q3 §5](edison/q3-high-throughput-calibration/answer.md)).
   - A send-out PIP test on finalists would stretch scarce tensile powder.

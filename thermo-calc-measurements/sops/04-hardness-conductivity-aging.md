@@ -26,7 +26,8 @@
 - **Spacing:** at least 2.5 diagonals from each other and from edges.
 - **Tracks:** on a single track use HV0.05 inside the fusion zone (one indent per track).
 - **Report:** mean ± SD. On an automated stage, map a line across the build height.
-- **Strength:** σy ≈ HV/3 (Tabor) is only a screen; calibrate it on our own tensile bars (#255 finalists)
+- **Strength:** σy ≈ HV/3 (Tabor) is only a screen, and only with HV in MPa: σy (MPa) ≈ 9.807 × HV (kgf/mm²) / 3
+  ([Edison v3](../sop-animations/edison/v3-hardness-eddy-icp-onh/answer.md)). Calibrate it on our own tensile bars (#255 finalists)
   before quoting MPa.
 - **Time:** about 10 min per sample (manual); unattended with an auto-stage.
 

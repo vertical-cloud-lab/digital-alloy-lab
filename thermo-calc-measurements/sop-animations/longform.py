@@ -140,20 +140,17 @@ def build():
     video = MP4 / "sop_longform_video.mp4"
     lst = MP4 / "longform.concat.txt"
     lst.write_text("".join(f"file '{f.name}'\n" for f in files))
-    if same:
-        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", str(lst), "-c",
-                        "copy", str(video)], check=True)
-    else:                       # mixed sizes: scale everything to the first part's size, re-encode
-        w, h, fps = info[1]["w"], info[1]["h"], info[1]["fps"]
-        ins, filt = [], []
-        for i, f in enumerate(files):
-            ins += ["-i", str(f)]
-            filt.append(f"[{i}:v]scale={w}:{h}:force_original_aspect_ratio=decrease,pad={w}:{h}:(ow-iw)/2:(oh-ih)/2,"
-                        f"fps={fps},setsar=1[v{i}]")
-        filt.append("".join(f"[v{i}]" for i in range(len(files))) + f"concat=n={len(files)}:v=1:a=0[v]")
-        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", *ins, "-filter_complex", ";".join(filt), "-map", "[v]",
-                        "-c:v", "libx264", "-preset", "medium", "-crf", "21", "-pix_fmt", "yuv420p", str(video)],
-                       check=True)
+    # delivered at 1920 x 1080 and 30 fps whatever each part was drawn at (chapters drawn at 15 fps are doubled)
+    W, H, FPS_OUT = (int(v) for v in os.environ.get("LONGFORM_FORMAT", "1920x1080x30").split("x"))
+    ins, filt = [], []
+    for i, f in enumerate(files):
+        ins += ["-i", str(f)]
+        filt.append(f"[{i}:v]scale={W}:{H}:force_original_aspect_ratio=decrease:flags=lanczos,"
+                    f"pad={W}:{H}:(ow-iw)/2:(oh-ih)/2:white,fps={FPS_OUT},setsar=1[v{i}]")
+    filt.append("".join(f"[v{i}]" for i in range(len(files))) + f"concat=n={len(files)}:v=1:a=0[v]")
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", *ins, "-filter_complex", ";".join(filt), "-map", "[v]",
+                    "-c:v", "libx264", "-preset", os.environ.get("LONGFORM_PRESET", "veryfast"), "-crf", "20",
+                    "-pix_fmt", "yuv420p", str(video)], check=True)
     lst.unlink()
     offsets, t = {}, 0.0
     for p, i in zip(parts, info):
