@@ -5,23 +5,39 @@ hurrySCAN 25 takes XY2-100 (control/README.md §6). rtc5_list.py's lists are RTC
 the RTC4. The command names and their order follow the supervisor's RTC4 backend, control/ftctl/hw/rtc4.py
 (Rtc4Scan.load_layer), so a list written here is the list the supervisor loads. Not run against a card: there is none.
 
-RTC4 units (RTC4 manual Rev. 1.3 e, and the RTC5 manual Rev. 1.9 e §2.7 "Notes for RTC4 users", pp. 31-34, as cited
-in rtc4.py; see the README for what was and wasn't confirmed):
-  jump_abs(X, Y), mark_abs(X, Y)            16-bit signed field, -32768 ... 32767 bits (RTC5: 20-bit)
-  K16 = K20 / 16 bits per mm                here from ftctl's Scan.K(): 2^20 / (2 f theta) / 16, f = 254 mm,
-                                            theta = 0.35 rad (hurrySCAN typical angle): 368.6 bits/mm, 2.71 um a bit;
-                                            the real K is the .ctb correction table's
-  set_mark_speed / set_jump_speed(v)        bits per ms (double): v [mm/s] x K / 1000
-  set_laser_delays(on, off)                 1 us a bit, signed 16-bit (RTC5: 0.5 us); rtc4.py keeps off > on
-  set_scanner_delays(jump, mark, polygon)   10 us a bit
-  set_delay_mode(VarPoly, DirectMove3D, EdgeLevel, MinJumpDelay, JumpLengthLimit)
-                                            as rtc4.py: (0, 0, 65500 = off, min jump delay in 10 us, limit in bits)
-  write_da_1_list(V)                        10-bit, 0 ... 1023 = 0 ... 10 V with ANALOG OUT1 jumpered to 0-10 V
-                                            (RTC5: 12-bit); the IPG takes 1-10 V for 10-100 % (ftctl config.Laser)
-  write_io_port_list(bits)                  16-bit digital out (EXTENSION 1); bit 0 = the layer marker (rtc4.py)
-  list_nop(), set_start_list(n), set_end_of_list(), execute_list(n)
-  list memory                               two lists of 4,000 commands (rtc4.py: LIST_MAX)
-  list clock                                10 us (vectors are stepped every 10 us, as on the RTC5)
+RTC4 facts used (M = RTC4 manual Rev. 1.3 e, 2006, https://www.manualslib.com/manual/1581336/Scanlab-Rtc-4.html;
+SW = SCANLAB "RTC4 Software, Release 2023-11-02" from scanlab.de/en/downloads/rtc-software, its readme and C headers;
+R5 = RTC5 manual Rev. 1.9 e; read 2026-11-28):
+  jump_abs(X, Y), mark_abs(X, Y)            (short, short): -32768 ... 32767 bits (M pp. 29, 90, 98, 130); no higher
+                                            internal resolution is mentioned. RTC5: 20-bit
+  K = 2^16 / a0 bits per mm (M p. 29)       the real K comes with the .ctb correction table. Here ftctl's Scan.K() / 16
+                                            = 2^20 / (2 f theta) / 16 with f = 254 mm, theta = 0.35 rad (hurrySCAN
+                                            typical angle): 368.6 bits/mm, 2.71 um a bit (2^16 / 157 mm: 417.4)
+  list clock                                a fixed 10 us raster; vectors are stepped every 10 us (M pp. 12, 16)
+  set_mark_speed / set_jump_speed(v)        list commands, double, bits/ms, 1 ... 50,000 (M pp. 107, 109)
+  set_laser_delays(on, off)                 list command, (short, short), 1 us (RTC5: 0.5 us); -8000 ... 8000 and
+                                            2 ... 8000; off must exceed on, and the mark delay must exceed off - on
+                                            (M pp. 24, 107)
+  set_scanner_delays(jump, mark, polygon)   list command, 10 us, 0 ... 32767 (M pp. 17, 113)
+  set_delay_mode(varpoly, directmove3d, edgelevel, MinJumpDelay, JumpLengthLimit)
+                                            a CONTROL command on the RTC4, not a list command (set_delay_mode_list is
+                                            RTC5 only, R5 p. 416): edgelevel 65500 = off (default), MinJumpDelay
+                                            0 ... 32500 x 10 us, JumpLengthLimit 0 ... 32500 bits (M p. 104). It is
+                                            called once before the lists here; rtc4.py calls it while a list is open,
+                                            where it takes effect at once and is not stored in the list
+  write_da_1_list(V)                        10-bit, 0 ... 1023; ANALOG OUT1 is 0-10 V with jumper X3 at 2-3 (0-2.56 V
+                                            at 1-2) (M pp. 114, 123, 130). RTC5: 12-bit. The IPG takes 1-10 V for
+                                            10-100 % (ftctl config.Laser)
+  write_io_port_list(bits)                  16-bit port on EXTENSION 1; bit 0 = the layer marker (M pp. 123-124)
+  list_nop() (10 us, M p. 94), set_start_list(1|2), set_end_of_list(), execute_list(1|2)
+  list memory                               two lists of 4,000 commands, or one of 8,000, or an 8,000-entry circular
+                                            queue (set_list_mode(1), get_list_space); a long job fills the idle list
+                                            while the other runs and calls auto_change (M pp. 12, 44, 75, 81, 84, 130)
+  not on the RTC4                           sky writing (R5 p. 37 and pp. 477-479: "RTC4 -> RTC5 new command");
+                                            set_laser_control (automatic laser suppression on a head error)
+  on the RTC4 but not used by rtc4.py       save_and_restart_timer / get_time (list timer), set_trigger (2 channels of
+                                            32,768 samples, 1-65,535 x 10 us) with measurement_status / get_waveform
+                                            (M pp. 88, 99, 117); RTC4DLLx64.dll (SW readme: 64-bit DLL, version 460)
 
 The plate frame of the build file (cad/ft_model.py: origin at the plate centre) is turned into the head frame by the
 lens-axis offset (CAD v2 P['axis_off'] = (0, -30): the lens axis meets the bed 30 mm in front of the plate centre) and
@@ -80,15 +96,20 @@ def ticks10(t):
     return int(math.ceil(t / 10e-6 - 1e-9))
 
 
+def control_commands(tm: SPG.Timing, K=K16):
+    """Control commands (executed at once, not stored in a list) sent once before the lists: the variable jump delay
+    (set_delay_mode is a control command on the RTC4, M p. 104)."""
+    return [("set_delay_mode", (0, 0, 65500, ticks10(tm.jump_delay_min), min(int(round(tm.jump_limit * K)), 32500)))]
+
+
 def layer_commands(segs, kinds, pidx, parts, psets, tm: SPG.Timing, list_no=1, K=K16):
-    """The RTC4 command list of one layer, in rtc4.py's order: [(name, args), ...]."""
+    """The RTC4 list of one layer, in rtc4.py's order (less set_delay_mode, see control_commands): [(name, args)]."""
     on = int(round(tm.laser_on_delay / 1e-6))
     off = max(int(round(tm.laser_off_delay / 1e-6)), on + 1)
     c = [("set_start_list", (list_no,)),
          ("write_io_port_list", (1,)),
          ("set_scanner_delays", (ticks10(tm.jump_delay), ticks10(tm.mark_delay), ticks10(tm.polygon_delay))),
          ("set_laser_delays", (on, off)),
-         ("set_delay_mode", (0, 0, 65500, ticks10(tm.jump_delay_min), min(int(round(tm.jump_limit * K)), 32500))),
          ("set_jump_speed", (tm.v_jump * K / 1000.0,))]
     pos = None
     cur_P = cur_v = None
@@ -112,7 +133,7 @@ def layer_commands(segs, kinds, pidx, parts, psets, tm: SPG.Timing, list_no=1, K
     return c
 
 
-def dry_run(cmds, tm: SPG.Timing):
+def dry_run(cmds, tm: SPG.Timing, control=None):
     """List time from the commands with the RTC4's rules as modelled here: 10 us clock, mark/jump durations rounded
     up to whole ticks, mark delay before a jump, polygon delay inside a polyline, and the variable jump delay of
     set_delay_mode (linear from MinJumpDelay at 0 to the full jump delay at JumpLengthLimit, as scan_program.py's
@@ -132,7 +153,7 @@ def dry_run(cmds, tm: SPG.Timing):
             E += P * on
         seq = 0.0
 
-    for name, args in cmds:
+    for name, args in list(control or control_commands(tm)) + list(cmds):
         if name == "set_scanner_delays":
             jd, md, pd = (x * 10e-6 for x in args)
         elif name == "set_laser_delays":
@@ -195,8 +216,10 @@ def quantisation(segs, kinds, pidx, parts, psets, K):
                                           n=int(len(dev))))
 
 
-def write_list(path, header, cmds):
-    lines = header + [f"{n}({', '.join(f'{x:.3f}' if isinstance(x, float) else str(x) for x in args)})"
+def write_list(path, header, cmds, control=None):
+    ctl = [f"# control, once before the lists (not list entries): {n}({', '.join(str(x) for x in args)})"
+           for n, args in (control or [])]
+    lines = header + ctl + [f"{n}({', '.join(f'{x:.3f}' if isinstance(x, float) else str(x) for x in args)})"
                       for n, args in cmds]
     path.write_text("\n".join(lines) + "\n")
 
@@ -234,7 +257,7 @@ def main():
                       f"{max(xs)} bits of {FIELD_MAX4}",
                       "# units: positions in bits; speeds bits/ms; laser delays 1 us; scanner delays 10 us; "
                       "write_da_1_list 10-bit (1023 = 10 V = 400 W)"]
-            write_list(OUT / "rtc4_layer1.txt", header, cmds)
+            write_list(OUT / "rtc4_layer1.txt", header, cmds, control_commands(tm))
             info["layer1"] = dict(commands=len(cmds), dry_run_s=dr["t_list"], laser_on_s=dr["t_laser_on"],
                                   energy_J=dr["energy_J"], layer_time_s=lt["t_list"], layer_energy_J=lt["energy_J"],
                                   max_abs_bits=max(xs), quantisation=q, quantisation_K_LINOS=q2)
@@ -247,7 +270,7 @@ def main():
                 jump_speed_bits_per_ms=tm.v_jump * K16 / 1000.0,
                 laser_delays_us=(int(round(tm.laser_on_delay / 1e-6)), int(round(tm.laser_off_delay / 1e-6))),
                 scanner_delays_10us=(ticks10(tm.jump_delay), ticks10(tm.mark_delay), ticks10(tm.polygon_delay)),
-                delay_mode=(0, 0, 65500, ticks10(tm.jump_delay_min), int(round(tm.jump_limit * K16))),
+                control=control_commands(tm),
                 da={f"{P:g} W": da4(P) for P in (50.0, 150.0, 255.0, 400.0)},
                 da_step_W=P_FULL / DA_BITS, da_step_W_rtc5=P_FULL / 4095)
     print(f"{len(counts)} layers; commands per layer {min(counts)}-{max(counts)} (layer {worst[1]}); "
@@ -269,7 +292,7 @@ def main():
                   f"K = {K16:.1f} bits/mm; lens axis at plate {AXIS}",
                   "# units: positions in bits; speeds bits/ms; laser delays 1 us; scanner delays 10 us; "
                   "write_da_1_list 10-bit (1023 = 10 V = 400 W)"]
-        write_list(OUT / f"rtc4_{name}.txt", header, cmds)
+        write_list(OUT / f"rtc4_{name}.txt", header, cmds, control_commands(tm))
         info["ladder"][name] = dict(commands=len(cmds), dry_run_s=dr["t_list"], laser_on_s=dr["t_laser_on"],
                                     energy_J=dr["energy_J"], layer_time_s=lt["t_list"], max_abs_bits=max(xs),
                                     powers_da={f"{q.P_hatch:g} W": da4(q.P_hatch) for q in psets2.values()})

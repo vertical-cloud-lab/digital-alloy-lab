@@ -15,7 +15,7 @@
  "list_capacity": 4000,
  "field_max_bits": 32767,
  "layer1": {
-  "commands": 804,
+  "commands": 803,
   "dry_run_s": 3.319220000000004,
   "laser_on_s": 3.0067699999999986,
   "energy_J": 745.8466471163293,
@@ -43,8 +43,8 @@
    }
   }
  },
- "commands_min": 804,
- "commands_max": 1106,
+ "commands_min": 803,
+ "commands_max": 1105,
  "worst_layer": 2,
  "layers": 500,
  "layers_over_list": 0,
@@ -124,12 +124,17 @@
   55,
   25
  ],
- "delay_mode": [
-  0,
-  0,
-  65500,
-  30,
-  1843
+ "control": [
+  [
+   "set_delay_mode",
+   [
+    0,
+    0,
+    65500,
+    30,
+    1843
+   ]
+  ]
  ],
  "da": {
   "50 W": 128,
@@ -141,7 +146,7 @@
  "da_step_W_rtc5": 0.09768009768009768,
  "ladder": {
   "rung1_bare_plate": {
-   "commands": 69,
+   "commands": 68,
    "dry_run_s": 0.44674999999999987,
    "laser_on_s": 0.34468,
    "energy_J": 78.08284652981428,
@@ -156,7 +161,7 @@
    }
   },
   "rung2_single_tracks": {
-   "commands": 91,
+   "commands": 90,
    "dry_run_s": 0.3222,
    "laser_on_s": 0.2066,
    "energy_J": 52.66987292277615,

@@ -1,11 +1,11 @@
-# RTC4 list for layer 1 of build_first_coupons_15mm.npz: 804 commands (of 4000 a list); K = 368.6 bits/mm (16-bit; the .ctb table's K replaces it); lens axis at plate (0.0, -30.0)
+# RTC4 list for layer 1 of build_first_coupons_15mm.npz: 803 commands (of 4000 a list); K = 368.6 bits/mm (16-bit; the .ctb table's K replaces it); lens axis at plate (0.0, -30.0)
 # dry run 3.319 s, laser on 3.007 s, 746 J; scan_program.layer_time 3.314 s, 746 J; largest |coordinate| 14770 bits of 32767
 # units: positions in bits; speeds bits/ms; laser delays 1 us; scanner delays 10 us; write_da_1_list 10-bit (1023 = 10 V = 400 W)
+# control, once before the lists (not list entries): set_delay_mode(0, 0, 65500, 30, 1843)
 set_start_list(1)
 write_io_port_list(1)
 set_scanner_delays(70, 55, 25)
 set_laser_delays(250, 500)
-set_delay_mode(0, 0, 65500, 30, 1843)
 set_jump_speed(2580.157)
 jump_abs(-4003, 14744)
 write_da_1_list(652)
