@@ -40,8 +40,8 @@ checked against a measurement.
 - **A 200 °C bed leaves the jet over the plate as it was, but sends a plume to the lid** (CFD, R3.7): 2.52 m/s 3 mm
   up and 0.056 Pa bed shear (isothermal 2.50 m/s, 0.055 Pa); fume from 0.5–3 mm is still all caught or held at
   the collector. Above the jet the gas rises at up to 0.3 m/s; the box averages 39 °C, the gas under the cover
-  slide 54–56 °C, the exhaust 47 °C. Fume that escapes above the jet now passes the slide at 42 mm (median;
-  isothermal 103 mm), 9 % of it within 30 mm: expect the slide to foul faster. The plate loses 3.9 W by
+  slide 54–56 °C, the exhaust 47 °C. Fume that escapes above the jet now passes the slide at 40–70 mm (median;
+  isothermal 103 mm), 4–9 % of it within 30 mm: expect the slide to foul faster. The plate loses 3.9 W by
   convection, the thermal FEA's figure.
 
 ### R3.1 The model, ported to CAD v2
@@ -372,8 +372,9 @@ sweep the top of the box past the cover slide (red). Orange: the plate.*
   still all caught or held at the collector (89 % in, 11 % under its lower lip, against 94 / 6 %; that vortex is the
   least converged part of the jet). Of the fume released 4–15 mm up, about the same share escapes (30 %, against
   28 %), but the plume carries it up: its median closest approach to the slide falls from 103 to 42 mm, and 9 % of
-  it comes within 30 mm (1.4 % isothermal). So expect the slide to foul faster than round 2's isothermal tracers
-  suggested. If it does, a small argon flow across the slide's face is the usual fix (not modelled).
+  it comes within 30 mm (1.4 % isothermal). These follow the moving plume (at iteration 500: 67 mm and 4 %), so read
+  them as a few centimetres and several per cent. Either way, expect the slide to foul faster than round 2's
+  isothermal tracers suggested. If it does, a small argon flow across the slide's face is the usual fix (not modelled).
 - **The heat losses agree with the thermal FEA.** The plate's top loses 3.9 W by convection alone (h ≈ 18 W/m²K),
   the FEA's figure for convection and radiation together. With ~0.9 W of radiation (ε 0.3, an estimate) the plate
   heater would need ~1 W more than the FEA's 11.0 W. All the 200 °C faces lose 32 W by convection, against the FEA's
