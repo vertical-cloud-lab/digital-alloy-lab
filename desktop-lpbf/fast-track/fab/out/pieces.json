@@ -1,5 +1,5 @@
 {
- "made": "2026-11-27 10:55 UTC",
+ "made": "2026-11-28 09:53 UTC",
  "pieces": [
   {
    "pid": "MK-01",
@@ -9,15 +9,15 @@
    "qty": 1,
    "route": "CNC mill",
    "state": "S1",
-   "stock": "1/2 in. 6061-T651 plate (12.7 +0/+0.69), 260 x 260 cut from a 12 x 24 in. sheet; faced to 10.0",
+   "stock": "1/2 in. 6061-T651 plate (12.7 +0/+0.69), 255 x 255 cut from a 12 x 24 in. sheet; faced to 10.0",
    "stock_pn": "McMaster 89155K135 (1/2 x 12 x 24 in., $148.74 read 2026-11-17 in PR 266's mcmaster-parts.csv)",
    "blank": {
     "type": "box",
     "box": [
-     -158.0,
-     102.0,
-     -85.0,
-     175.0,
+     -155.5,
+     99.5,
+     -82.5,
+     172.5,
      -1.35,
      11.35
     ]
@@ -25,14 +25,14 @@
    "seal": false,
    "pos": "part (x, y) = world (x, y); part z 0 = the deck's underside (world z -62.7 in the box)",
    "bbox": [
-    -153.0,
-    97.0,
-    -80.0,
-    170.0,
+    -150.5,
+    94.5,
+    -77.5,
+    167.5,
     0.0,
     10.0
    ],
-   "volume_cm3": 596.36,
+   "volume_cm3": 572.17,
    "features": [
     {
      "kind": "bore",
@@ -161,97 +161,86 @@
      "kind": "drill",
      "hid": "C",
      "axis": "-z",
-     "d": 5.5,
-     "tool": 31,
+     "d": 6.6,
+     "tool": 33,
      "pts": [
       [
-       -143.0,
-       -70.0,
+       -140.0,
+       -47.099999999999994,
        10.0
       ],
       [
-       -143.0,
-       160.0,
+       -140.0,
+       137.1,
        10.0
       ],
       [
-       87.0,
-       -70.0,
+       84.0,
+       -47.099999999999994,
        10.0
       ],
       [
-       87.0,
-       160.0,
+       84.0,
+       137.1,
        10.0
       ]
      ],
      "depth": 0.0,
      "through": true,
-     "size": "M5",
-     "hole_kind": "cbore"
-    },
-    {
-     "kind": "cbore",
-     "hid": "C",
-     "axis": "-z",
-     "d": 9.5,
-     "depth": 5.5,
-     "tool": 4,
-     "pts": [
-      [
-       -143.0,
-       -70.0,
-       10.0
-      ],
-      [
-       -143.0,
-       160.0,
-       10.0
-      ],
-      [
-       87.0,
-       -70.0,
-       10.0
-      ],
-      [
-       87.0,
-       160.0,
-       10.0
-      ]
-     ],
-     "hole_d": 5.5
+     "size": "M6",
+     "hole_kind": "clear"
     },
     {
      "kind": "drill",
      "hid": "D",
      "axis": "-z",
-     "d": 3.3,
-     "tool": 26,
+     "d": 2.5,
+     "tool": 25,
      "pts": [
       [
-       -120.0,
-       70.5,
+       -62.925,
+       72.0,
        10.0
       ],
       [
-       -120.0,
-       120.5,
+       -62.925,
+       92.0,
        10.0
       ],
       [
-       60.0,
-       70.5,
+       -22.924999999999997,
+       72.0,
        10.0
       ],
       [
-       60.0,
-       120.5,
+       -22.924999999999997,
+       92.0,
+       10.0
+      ],
+      [
+       37.075,
+       72.0,
+       10.0
+      ],
+      [
+       37.075,
+       92.0,
+       10.0
+      ],
+      [
+       77.075,
+       72.0,
+       10.0
+      ],
+      [
+       77.075,
+       92.0,
        10.0
       ]
      ],
      "depth": 0.0,
      "through": true,
-     "size": "M4",
+     "size": "M3",
      "hole_kind": "tap"
     },
     {
@@ -262,18 +251,18 @@
      "tool": 25,
      "pts": [
       [
-       -130.0,
-       49.0,
+       -60.0,
+       51.0,
        10.0
       ],
       [
-       -28.0,
-       49.0,
+       10.0,
+       51.0,
        10.0
       ],
       [
-       74.0,
-       49.0,
+       80.0,
+       51.0,
        10.0
       ]
      ],
@@ -319,7 +308,7 @@
      "n": 4,
      "kind": "tap",
      "size": "M5",
-     "callout": "M5 x through deep thread, tap drill 4.20 x through - rod-gland screws from below (box: through the floor sheet; cube: through MK-14)",
+     "callout": "M5 x through deep thread, tap drill 4.20 x through - rod-gland screws from below, inside the gland's face seal (box: through the floor; cube: through MK-14). Through, not the model's 8 mm blind: the S1 target stand screws into them from above",
      "axis": "-z",
      "pts": [
       [
@@ -347,59 +336,79 @@
     {
      "id": "C",
      "n": 4,
-     "kind": "cbore",
-     "size": "M5",
-     "callout": "5.5 through, c'bore 9.5 x 5.5 (M5 SHCS) - deck to enclosure floor (box: M5 nuts under the floor; cube: MK-14 tapped)",
+     "kind": "clear",
+     "size": "M6",
+     "callout": "6.6 M6 clearance through - cube only: M6 x 16 down into MK-14's blind taps (the box holds the deck with MK-23)",
      "axis": "-z",
      "pts": [
       [
-       -143.0,
-       -70.0,
+       -140.0,
+       -47.1,
        10.0
       ],
       [
-       -143.0,
-       160.0,
+       -140.0,
+       137.1,
        10.0
       ],
       [
-       87.0,
-       -70.0,
+       84.0,
+       -47.1,
        10.0
       ],
       [
-       87.0,
-       160.0,
+       84.0,
+       137.1,
        10.0
       ]
      ]
     },
     {
      "id": "D",
-     "n": 4,
+     "n": 8,
      "kind": "tap",
-     "size": "M4",
-     "callout": "M4 x through deep thread, tap drill 3.30 x through - X-LSQ075B base: PATTERN EST., drill to Zaber's drawing",
+     "size": "M3",
+     "callout": "M3 x through deep thread, tap drill 2.50 x through - X-LSM100B base: M3 screws down through its base slots (Zaber STEP, ft_vendor.LSM); 8 of the 16 slots",
      "axis": "-z",
      "pts": [
       [
-       -120.0,
-       70.5,
+       -62.92,
+       72.0,
        10.0
       ],
       [
-       -120.0,
-       120.5,
+       -62.92,
+       92.0,
        10.0
       ],
       [
-       60.0,
-       70.5,
+       -22.92,
+       72.0,
        10.0
       ],
       [
-       60.0,
-       120.5,
+       -22.92,
+       92.0,
+       10.0
+      ],
+      [
+       37.08,
+       72.0,
+       10.0
+      ],
+      [
+       37.08,
+       92.0,
+       10.0
+      ],
+      [
+       77.08,
+       72.0,
+       10.0
+      ],
+      [
+       77.08,
+       92.0,
        10.0
       ]
      ]
@@ -413,18 +422,18 @@
      "axis": "-z",
      "pts": [
       [
-       -130.0,
-       49.0,
+       -60.0,
+       51.0,
        10.0
       ],
       [
-       -28.0,
-       49.0,
+       10.0,
+       51.0,
        10.0
       ],
       [
-       74.0,
-       49.0,
+       80.0,
+       51.0,
        10.0
       ]
      ]
@@ -440,8 +449,9 @@
      ],
      "outline": null,
      "label": "bottom up: face, c'bores and drill every through hole",
-     "hold": "plate in 6 in. vise jaws on the 260 mm blank's margins (or toe clamps), on parallels",
-     "stock_note": ""
+     "hold": "plate in 6 in. vise jaws on the 255 mm blank's margins (or toe clamps), on parallels",
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-01_B",
@@ -456,7 +466,8 @@
      ],
      "label": "top up: face to 10.0, rod hole, cut-out, outline through",
      "hold": "screwed to a sacrificial plate through holes A and B (8 screws), so the outline can go through",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     }
    ],
    "lathe": [],
@@ -467,15 +478,15 @@
    ],
    "notes": [],
    "changes": [
-    "added: 4 M3 c'bored holes for the well-block standoffs, 4 M5 tapped for the rod gland at (+-12.5, +-12.5), 4 M5 c'bored corner holes, 4 M4 for the X-LSQ075B (pattern est.), 3 M3 for the shield foot",
-    "cut-out corners R4 (model sharp): a 1/4 in. end mill leaves R3.2",
-    "10 mm from faced 1/2 in. plate; 3/8 in. (9.53) plate would skip the facing and could go to SendCutSend: then deck_t = 9.525 in ft_model"
+    "v2: 245 mm square (was 250); X-LSM100B base taps from Zaber's STEP (was the X-LSQ075B's estimate); 4 x M6 clearance for the cube's deck screws (was 4 x M5 c'bored corner holes); no deck-to-floor screws in the box (MK-23 clamps the deck on the panel studs)",
+    "kept from v1: 4 M3 c'bored for the standoffs, gland taps at (+-12.5, +-12.5) (v2 took the fab's pattern), 3 M3 for the shield foot, cut-out corners R4",
+    "gland taps through (model: 8 mm blind from below): the S1 target stand screws into them"
    ],
    "finish": "6061: deburr, break edges 0.2-0.5 x 45 deg; as machined, Ra 3.2 um unless stated",
    "sheet": null,
    "buy": null,
-   "n_holes": 19,
-   "start_volume_cm3": 858.52
+   "n_holes": 23,
+   "start_volume_cm3": 825.82
   },
   {
    "pid": "MK-02a",
@@ -683,7 +694,8 @@
      ],
      "label": "bottom up: face, base O-ring groove, outline half",
      "hold": "",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-02a_B",
@@ -698,7 +710,8 @@
      ],
      "label": "top up: face to 12.0, aperture, seat, window groove, holes, rest of the outline",
      "hold": "soft jaws on the OD",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     }
    ],
    "lathe": [],
@@ -725,13 +738,13 @@
   {
    "pid": "MK-02b",
    "mk": "MK-02",
-   "name": "Window retaining flange (beam-tube socket on top)",
+   "name": "Window retaining flange (beam-tube spigot on top)",
    "material": "6061-T651",
    "qty": 1,
    "route": "CNC mill",
    "state": "S2",
-   "stock": "1/4 in. 6061 plate (6.35) faced to 6.0 both sides, 106 x 106",
-   "stock_pn": "1/4 in. 6061-T651 plate (PN not read)",
+   "stock": "3/8 in. 6061 plate (9.53) faced to 9.0, 106 x 106",
+   "stock_pn": "3/8 in. 6061-T651 plate (PN not read)",
    "blank": {
     "type": "box",
     "box": [
@@ -739,33 +752,33 @@
      53,
      -53,
      53,
-     -0.175,
-     6.175
+     -0.265,
+     9.265
     ]
    },
    "seal": false,
-   "pos": "part z 0 = flange underside = ring top (world z 155.4 box / 282.8 cube)",
+   "pos": "part z 0 = flange underside = ring top (world z 162.0 box / 282.8 cube); the spigot at part (0, -6) is the beam tube's centre",
    "bbox": [
     -50.0,
     50.0,
     -50.0,
     50.0,
     0.0,
-    6.0
+    9.0
    ],
-   "volume_cm3": 31.93,
+   "volume_cm3": 37.13,
    "features": [
     {
      "kind": "bore",
-     "name": "beam aperture",
+     "name": "beam aperture 37.6 (from the spigot top)",
      "axis": "-z",
      "tool": 2,
-     "r": 22.0,
+     "r": 18.8,
      "xy": [
       0,
       0
      ],
-     "z_top": 6.0,
+     "z_top": 9.0,
      "z_bot": 0,
      "finish": null
     },
@@ -783,14 +796,26 @@
      "z_top": null
     },
     {
+     "kind": "boss",
+     "name": "beam-tube spigot 53 x 1.5 wall x 3 tall, centred on the tube (round it: down to the face)",
+     "axis": "-z",
+     "tool": 2,
+     "probe": [
+      25.75,
+      -6.0,
+      9.0
+     ],
+     "z_base": 6.0
+    },
+    {
      "kind": "pocket",
-     "name": "beam-tube socket 60.5 x 2",
+     "name": "inside the spigot, outside the aperture (crescent, down to the face)",
      "axis": "-z",
      "tool": 3,
      "probe": [
-      28.0,
-      0,
-      4.0
+      0.0,
+      -29.8,
+      6.0
      ],
      "note": "",
      "z_top": null
@@ -896,39 +921,6 @@
        6.0
       ]
      ]
-    },
-    {
-     "kind": "drill",
-     "hid": "B",
-     "axis": "-z",
-     "d": 3.3,
-     "tool": 26,
-     "pts": [
-      [
-       36.95518130045147,
-       15.307337294603592,
-       6.0
-      ],
-      [
-       -15.307337294603588,
-       36.95518130045147,
-       6.0
-      ],
-      [
-       -36.95518130045147,
-       -15.307337294603586,
-       6.0
-      ],
-      [
-       15.3073372946036,
-       -36.955181300451464,
-       6.0
-      ]
-     ],
-     "depth": 0.0,
-     "through": true,
-     "size": "M4",
-     "hole_kind": "tap"
     }
    ],
    "holes": [
@@ -937,7 +929,7 @@
      "n": 8,
      "kind": "csk",
      "size": "M5",
-     "callout": "5.5 through, c'sink 90 deg to 11.4 (M5 flat head) - M5 x 25 (box) / M5 x 20 (cube) flat-head ISO 10642, flush so the beam tube sits on the face",
+     "callout": "5.5 through, c'sink 90 deg to 11.4 (M5 flat head) - M5 x 25 (box) / M5 x 20 (cube) flat-head ISO 10642, flush",
      "axis": "-z",
      "pts": [
       [
@@ -981,36 +973,6 @@
        6.0
       ]
      ]
-    },
-    {
-     "id": "B",
-     "n": 4,
-     "kind": "tap",
-     "size": "M4",
-     "callout": "M4 x through deep thread, tap drill 3.30 x through - beam-tube tie rods (M4 304 threaded rod)",
-     "axis": "-z",
-     "pts": [
-      [
-       36.96,
-       15.31,
-       6.0
-      ],
-      [
-       -15.31,
-       36.96,
-       6.0
-      ],
-      [
-       -36.96,
-       -15.31,
-       6.0
-      ],
-      [
-       15.31,
-       -36.96,
-       6.0
-      ]
-     ]
     }
    ],
    "setups": [
@@ -1019,46 +981,49 @@
      "up": "-Z",
      "face": [
       2,
-      1.75
+      0.265
      ],
      "outline": null,
      "label": "bottom up: face, window recess",
      "hold": "",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-02b_B",
      "up": "+Z",
      "face": [
       2,
-      6.0
+      9.0
      ],
      "outline": [
       2,
       -0.3
      ],
-     "label": "top up: face to 6.0, aperture, socket, holes, outline",
+     "label": "top up: face the spigot top, cut round the spigot to 6.0, inside it, aperture, c'sinks, outline",
      "hold": "",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     }
    ],
    "lathe": [],
    "manual": [],
    "tol": [
     "recess depth 2.20 +0.05/0 (sets the cushion's squeeze)",
-    "socket 60.50 +0.10/0"
+    "spigot OD 53.00 -0.10/0 (the tube's bore is 54): the half-shells slide off it sideways"
    ],
    "notes": [],
    "changes": [
-    "recess 1.8 -> 2.2 mm deep: room for a 0.8 mm FKM cushion ring over the window (15 % squeeze)",
-    "the beam tube's bottom flange is merged into this flange: a 2 mm socket on its top holds the tube, and four M4 tie rods from here to the lens collar hold the tube (no bonding, tube swappable)",
-    "added: 8 x M5 countersinks (flush), 4 x M4 tapped for the tie rods"
+    "v2: the beam tube's centre section is two half-shells that slide off sideways, so the flange carries a 53 mm spigot inside the tube's bore (ft_model) in place of v1's 60.5 socket and 4 M4 tie rods",
+    "the spigot is centred on the tube, (0, -6) from the window in the box; in the cube the model puts it (0, -3) from the window. One flange can't do both: made for the box (FT-1); for FT-1V move the cube's tube centre to (0, -27) in ft_model, or make a second flange",
+    "aperture 44 -> 38 (the window ring's is 38 too): the spigot's bore passes 19 mm from the window centre on its +y side",
+    "kept from v1: recess 2.2 mm deep, 8 x M5 countersinks on the 84 mm circle (the model's 6 x M4 flat heads at r 40 would have to pass the fab's 8-screw stack)"
    ],
    "finish": "6061: deburr, break edges 0.2-0.5 x 45 deg; as machined, Ra 3.2 um unless stated",
    "sheet": null,
    "buy": null,
-   "n_holes": 12,
-   "start_volume_cm3": 71.35
+   "n_holes": 8,
+   "start_volume_cm3": 107.08
   },
   {
    "pid": "MK-02c",
@@ -1280,7 +1245,8 @@
      ],
      "label": "top up: face, aperture, holes, outline",
      "hold": "",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     }
    ],
    "lathe": [],
@@ -1327,14 +1293,14 @@
     0.0,
     5.6
    ],
-   "volume_cm3": 12.63,
+   "volume_cm3": 11.47,
    "features": [
     {
      "kind": "bore",
      "name": "aperture",
      "axis": "-z",
      "tool": 2,
-     "r": 20.0,
+     "r": 22.0,
      "xy": [
       0,
       0
@@ -6833,7 +6799,8 @@
      ],
      "label": "top up: face, aperture, slide pocket, holes, outline",
      "hold": "",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     }
    ],
    "lathe": [],
@@ -6843,7 +6810,8 @@
    ],
    "notes": [],
    "changes": [
-    "the model's one-piece holder had a 1.2 mm undercut slot; split at the slide plane into a base with an open 2.5D pocket and a plain cover, held by the same 3 x M4 screws"
+    "the model's one-piece holder had a 1.2 mm undercut slot; split at the slide plane into a base with an open 2.5D pocket and a plain cover, held by the same 3 x M4 screws",
+    "v2: opening 40 -> 44 (ft_model cs_id); OD 70 and the pocket as v1"
    ],
    "finish": "6061: deburr, break edges 0.2-0.5 x 45 deg; as machined, Ra 3.2 um unless stated",
    "sheet": null,
@@ -6854,13 +6822,13 @@
   {
    "pid": "MK-02e",
    "mk": "MK-02",
-   "name": "Cover-slide holder, cover",
+   "name": "Cover-slide holder, cover (11.0 tall)",
    "material": "6061-T651",
    "qty": 1,
    "route": "CNC mill",
    "state": "S2",
-   "stock": "3/16 in. 6061 plate faced to 4.4, 76 x 76",
-   "stock_pn": "3/16 in. 6061 plate (PN not read)",
+   "stock": "1/2 in. 6061 plate faced to 11.0, 76 x 76",
+   "stock_pn": "1/2 in. 6061 plate (PN not read)",
    "blank": {
     "type": "box",
     "box": [
@@ -6869,32 +6837,32 @@
      -38,
      38,
      0.0,
-     4.76
+     12.7
     ]
    },
    "seal": false,
-   "pos": "part z 0 = slide plane (stacks on the base)",
+   "pos": "part z 0 = the base's top (stacks on the base)",
    "bbox": [
     -35.0,
     35.0,
     -35.0,
     35.0,
     0.0,
-    4.4
+    11.02
    ],
-   "volume_cm3": 11.19,
+   "volume_cm3": 25.13,
    "features": [
     {
      "kind": "bore",
      "name": "aperture",
      "axis": "-z",
      "tool": 2,
-     "r": 20.0,
+     "r": 22.0,
      "xy": [
       0,
       0
      ],
-     "z_top": 4.4,
+     "z_top": 11.02,
      "z_bot": 0,
      "finish": null
     },
@@ -6908,17 +6876,17 @@
       [
        1.83697019872103e-15,
        30.0,
-       4.4
+       11.02
       ],
       [
        -30.0,
        3.67394039744206e-15,
-       4.4
+       11.02
       ],
       [
        -5.510910596163089e-15,
        -30.0,
-       4.4
+       11.02
       ]
      ],
      "depth": 0.0,
@@ -6933,23 +6901,23 @@
      "n": 3,
      "kind": "clear",
      "size": "M4",
-     "callout": "4.5 M4 clearance through - M4 x 12 into MK-02c (box, + a 1 mm washer: see changes) or MK-13 (cube)",
+     "callout": "4.5 M4 clearance through - M4 x 20 into MK-02c (box) or the drop tube MK-02f (cube)",
      "axis": "-z",
      "pts": [
       [
        0.0,
        30.0,
-       4.4
+       11.02
       ],
       [
        -30.0,
        0.0,
-       4.4
+       11.02
       ],
       [
        -0.0,
        -30.0,
-       4.4
+       11.02
       ]
      ]
     }
@@ -6960,7 +6928,7 @@
      "up": "+Z",
      "face": [
       2,
-      4.4
+      11.02
      ],
      "outline": [
       2,
@@ -6968,7 +6936,8 @@
      ],
      "label": "top up: face, aperture, holes, outline",
      "hold": "",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     }
    ],
    "lathe": [],
@@ -6976,13 +6945,213 @@
    "tol": [],
    "notes": [],
    "changes": [
-    "in the box the model leaves a 1 mm gap between holder and clamp ring (cs_top = roof_in - 6, ring bottom = roof_in - 5): close it in ft_model or stack a 1 mm washer on each screw"
+    "v2: the holder hangs from the clamp ring with no gap (ft_model cs_top = the ring's underside), so the cover is 11.0 tall (v1 4.4); opening 44",
+    "in the cube ft_model hangs the holder 2.1 mm lower under the drop tube (MK-02f): the drop tube is made 2.1 mm shorter so this holder serves both"
    ],
    "finish": "6061: deburr, break edges 0.2-0.5 x 45 deg; as machined, Ra 3.2 um unless stated",
    "sheet": null,
    "buy": null,
    "n_holes": 3,
-   "start_volume_cm3": 27.49
+   "start_volume_cm3": 73.36
+  },
+  {
+   "pid": "MK-02f",
+   "mk": "MK-02",
+   "name": "Cover-slide drop tube from the cube top plate (84.8 long, two flanges)",
+   "material": "6061-T6511",
+   "qty": 1,
+   "route": "lathe + CNC mill",
+   "state": "FT-1V",
+   "stock": "6061 round bar 3-1/2 in. (88.9) sawn 91 long",
+   "stock_pn": "6061 round bar 3-1/2 in. (PN not read)",
+   "blank": {
+    "type": "cyl",
+    "r": 44.45,
+    "z": [
+     -3.0,
+     87.8
+    ]
+   },
+   "seal": false,
+   "pos": "part z 0 = bottom flange's underside (the holder hangs from it); z 84.8 = top flange's top, on MK-13's boss face; axis at world (0, -11)",
+   "bbox": [
+    -44.0,
+    44.0,
+    -44.0,
+    44.0,
+    0.0,
+    84.8
+   ],
+   "volume_cm3": 98.95,
+   "features": [
+    {
+     "kind": "drill",
+     "hid": "A",
+     "axis": "-z",
+     "d": 4.5,
+     "tool": 29,
+     "pts": [
+      [
+       35.56936200168454,
+       14.733312146055956,
+       84.8
+      ],
+      [
+       -14.733312146055955,
+       35.56936200168454,
+       84.8
+      ],
+      [
+       -35.569362001684546,
+       -14.733312146055953,
+       84.8
+      ],
+      [
+       14.733312146055965,
+       -35.56936200168454,
+       84.8
+      ]
+     ],
+     "depth": 0.0,
+     "through": true,
+     "size": "M4",
+     "hole_kind": "clear"
+    },
+    {
+     "kind": "drill",
+     "hid": "B",
+     "axis": "+z",
+     "d": 3.3,
+     "tool": 26,
+     "pts": [
+      [
+       1.83697019872103e-15,
+       30.0,
+       0.0
+      ],
+      [
+       -30.0,
+       3.67394039744206e-15,
+       0.0
+      ],
+      [
+       -5.510910596163089e-15,
+       -30.0,
+       0.0
+      ]
+     ],
+     "depth": 5.0,
+     "through": false,
+     "size": "M4",
+     "hole_kind": "tap"
+    }
+   ],
+   "holes": [
+    {
+     "id": "A",
+     "n": 4,
+     "kind": "clear",
+     "size": "M4",
+     "callout": "4.5 M4 clearance through - M4 x 12 up into MK-13's blind taps",
+     "axis": "-z",
+     "pts": [
+      [
+       35.57,
+       14.73,
+       84.8
+      ],
+      [
+       -14.73,
+       35.57,
+       84.8
+      ],
+      [
+       -35.57,
+       -14.73,
+       84.8
+      ],
+      [
+       14.73,
+       -35.57,
+       84.8
+      ]
+     ]
+    },
+    {
+     "id": "B",
+     "n": 3,
+     "kind": "tap",
+     "size": "M4",
+     "callout": "M4 x through the flange deep thread, tap drill 3.30 x 5.0 - the cover-slide holder (its 3 x M4 at r 30)",
+     "axis": "+z",
+     "pts": [
+      [
+       0.0,
+       30.0,
+       0.0
+      ],
+      [
+       -30.0,
+       0.0,
+       0.0
+      ],
+      [
+       -0.0,
+       -30.0,
+       0.0
+      ]
+     ]
+    }
+   ],
+   "setups": [
+    {
+     "name": "MK-02f_A",
+     "up": "-Z",
+     "face": null,
+     "outline": null,
+     "label": "bottom flange up: 3 x M4",
+     "hold": "soft jaws on the tube",
+     "stock_note": "",
+     "repeat": 1
+    },
+    {
+     "name": "MK-02f_B",
+     "up": "+Z",
+     "face": null,
+     "outline": null,
+     "label": "top flange up: 4 x 4.5",
+     "hold": "soft jaws on the tube",
+     "stock_note": "",
+     "repeat": 1
+    }
+   ],
+   "lathe": [
+    [
+     "face, turn the flanges 88 and 76 and the tube 64 between them",
+     10.86
+    ],
+    [
+     "drill 25, bore 54 through",
+     8.78
+    ],
+    [
+     "part off, face to length in a second op",
+     7.36
+    ]
+   ],
+   "manual": [],
+   "tol": [],
+   "notes": [],
+   "changes": [
+    "new in v2 (ft_model MK-02, FT-1V): the cover-slide holder hangs 85 mm under the cube's top plate on this tube",
+    "centred on the holder (0, -11), not ft_model's (0, -16): there two of the holder's three screws miss the tube's wall. The beam still clears: within 18 mm of (0, -11) at the plate and the holder",
+    "a bottom flange (76) for the holder's screws; made 2.1 mm shorter than drawn so the box's holder (11.0 cover) fits"
+   ],
+   "finish": "6061: deburr, break edges 0.2-0.5 x 45 deg; as machined, Ra 3.2 um unless stated",
+   "sheet": null,
+   "buy": null,
+   "n_holes": 7,
+   "start_volume_cm3": 99.51
   },
   {
    "pid": "MK-03",
@@ -7015,7 +7184,7 @@
     0.0,
     40.0
    ],
-   "volume_cm3": 190.8,
+   "volume_cm3": 190.94,
    "features": [
     {
      "kind": "bore",
@@ -7059,8 +7228,8 @@
      "kind": "drill",
      "hid": "A",
      "axis": "+x",
-     "d": 6.4,
-     "tool": 32,
+     "d": 6.1,
+     "tool": 36,
      "pts": [
       [
        -40.0,
@@ -7069,29 +7238,39 @@
       ],
       [
        -40.0,
+       -15.0,
+       20.0
+      ],
+      [
+       -40.0,
+       15.0,
+       20.0
+      ],
+      [
+       -40.0,
        30.0,
        20.0
       ]
      ],
-     "depth": 40.0,
+     "depth": 21.0,
      "through": false,
-     "size": "6.40",
+     "size": "6.1",
      "hole_kind": "plain"
     },
     {
      "kind": "drill",
      "hid": "B",
-     "axis": "-y",
+     "axis": "+x",
      "d": 2.0,
      "tool": 21,
      "pts": [
       [
-       -30.0,
-       40.0,
-       10.0
+       -40.0,
+       0.0,
+       32.0
       ]
      ],
-     "depth": 31.0,
+     "depth": 15.0,
      "through": false,
      "size": "2.0",
      "hole_kind": "plain"
@@ -7179,15 +7358,25 @@
    "holes": [
     {
      "id": "A",
-     "n": 2,
+     "n": 4,
      "kind": "plain",
-     "size": "6.40",
-     "callout": "6.40 plain x 40.0 - block heaters 1/4 x 1-1/2 in.: drill 6.40 (ream 6.35 +0.03 if the heater maker asks)",
+     "size": "6.1",
+     "callout": "6.10 plain x 21.0 - block heaters, 6 x 20 mm cartridges (24 V 50 W): drill 6.1 x 21",
      "axis": "+x",
      "pts": [
       [
        -40.0,
        -30.0,
+       20.0
+      ],
+      [
+       -40.0,
+       -15.0,
+       20.0
+      ],
+      [
+       -40.0,
+       15.0,
        20.0
       ],
       [
@@ -7202,13 +7391,13 @@
      "n": 1,
      "kind": "plain",
      "size": "2.0",
-     "callout": "2.00 plain x 31.0 - block thermocouple, 1/16 in. sheath: 15 x D, parabolic drill, 0.5 mm pecks",
-     "axis": "-y",
+     "callout": "2.00 plain x 15.0 - block thermocouple, 1/16 in. sheath, 8 mm under the top, between the heaters (model: 1.6)",
+     "axis": "+x",
      "pts": [
       [
-       -30.0,
-       40.0,
-       10.0
+       -40.0,
+       0.0,
+       32.0
       ]
      ]
     },
@@ -7297,7 +7486,8 @@
      ],
      "label": "top up: face, outline to mid-height, bore, slot half, top holes",
      "hold": "",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-03_B",
@@ -7312,25 +7502,18 @@
      ],
      "label": "bottom up: face to 40.00, outline, slot half, standoff taps",
      "hold": "",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-03_C",
      "up": "-X",
      "face": null,
      "outline": null,
-     "label": "-X face up: heater holes",
+     "label": "-X face up: four heater holes and the thermocouple hole",
      "hold": "vise on the faced Y faces",
-     "stock_note": ""
-    },
-    {
-     "name": "MK-03_D",
-     "up": "+Y",
-     "face": null,
-     "outline": null,
-     "label": "+Y face up: thermocouple hole",
-     "hold": "vise on the X faces",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     }
    ],
    "lathe": [],
@@ -7338,18 +7521,19 @@
    "tol": [
     "bore 40.000 +0.025/0 (H7), cylindricity 0.01, Ra 0.8 um; perpendicular to the top face within 0.02",
     "top face (powder plane): flatness 0.02, Ra 0.8; height 40.00 +-0.02; bore edge sharp (0.1 max)",
-    "heater holes 6.40 +0.05/0: a cartridge heater wants 0.05-0.1 mm diametral clearance"
+    "heater holes 6.10 +0.05/0: a 6 mm cartridge heater wants 0.05-0.1 mm diametral clearance"
    ],
    "notes": [],
    "changes": [
-    "block thermocouple hole moved from z 20 to z 10 and opened to 2.0 mm: at z 20 the model's hole (x -30, along -y) runs straight through the y = +30 heater hole",
+    "v2: four 6.1 x 21 heater holes from the -x face at y -30, -15, 15, 30 (v1: two 6.40 x 40); the thermocouple hole comes from -x too, 8 mm under the top at y 0 (v1: from +y), so the +Y setup goes (3 setups, v1 4); it clears the heaters by 11 mm in y and 8 mm in z, and the bore by 5 mm",
+    "thermocouple hole 2.0 for the 1/16 in. (1.59) sheath (model 1.6: a press fit)",
     "overflow slot drawn with full-round ends (R3.5): cut from both faces with a long 1/4 in. cutter",
     "added: 4 M3 for the standoffs, 2 M3 for the nozzle, 2 M3 for the collector"
    ],
    "finish": "6061: deburr, break edges 0.2-0.5 x 45 deg; as machined, Ra 3.2 um unless stated",
    "sheet": null,
    "buy": null,
-   "n_holes": 11,
+   "n_holes": 13,
    "start_volume_cm3": 331.93
   },
   {
@@ -7421,34 +7605,34 @@
    "qty": 1,
    "route": "lathe + CNC mill",
    "state": "FT-0",
-   "stock": "6061 round bar 1-3/4 in. (44.45) sawn 34 long",
+   "stock": "6061 round bar 1-3/4 in. (44.45) sawn 30 long",
    "stock_pn": "McMaster 1610T family (6061 rod, length chosen on the page; 1610T27 is the 3-1/4 in. size in plate-materials.csv); 1-3/4 in. suffix not read",
    "blank": {
     "type": "cyl",
     "r": 22.224999999999998,
     "z": [
      -3.0,
-     31.0
+     27.0
     ]
    },
    "seal": false,
-   "pos": "part z 0 = plate underside (world z -34 at the start of a build, box)",
+   "pos": "part z 0 = plate underside (world z -30 at the start of a build, box)",
    "bbox": [
     -19.9,
     19.9,
     -19.9,
     19.9,
     -0.0,
-    28.0
+    24.0
    ],
-   "volume_cm3": 30.69,
+   "volume_cm3": 26.11,
    "features": [
     {
      "kind": "drill",
      "hid": "A",
      "axis": "+z",
-     "d": 6.4,
-     "tool": 32,
+     "d": 6.1,
+     "tool": 36,
      "pts": [
       [
        9.959292143521045,
@@ -7461,9 +7645,9 @@
        0.0
       ]
      ],
-     "depth": 25.9,
+     "depth": 21.0,
      "through": false,
-     "size": "6.40",
+     "size": "6.1",
      "hole_kind": "plain"
     },
     {
@@ -7479,10 +7663,160 @@
        0.0
       ]
      ],
-     "depth": 25.9,
+     "depth": 21.0,
      "through": false,
      "size": "2.0",
      "hole_kind": "plain"
+    },
+    {
+     "kind": "custom_gcode",
+     "name": "lead groove 1, 3 x 2.5 deep, socket to the heater hole",
+     "axis": "+z",
+     "tool": 5,
+     "late": true,
+     "gcode": [
+      "G0 Z2.000",
+      "G0 X4.501 Y-3.153",
+      "G1 Z-0.500 F102.9",
+      "G1 X9.719 Y-6.166 F205.7",
+      "G0 Z2.000",
+      "G0 X10.199 Y-5.334",
+      "G1 Z-0.500 F102.9",
+      "G1 X4.981 Y-2.322 F205.7",
+      "G0 Z2.000",
+      "G0 X4.501 Y-3.153",
+      "G1 Z-1.000 F102.9",
+      "G1 X9.719 Y-6.166 F205.7",
+      "G0 Z2.000",
+      "G0 X10.199 Y-5.334",
+      "G1 Z-1.000 F102.9",
+      "G1 X4.981 Y-2.322 F205.7",
+      "G0 Z2.000",
+      "G0 X4.501 Y-3.153",
+      "G1 Z-1.500 F102.9",
+      "G1 X9.719 Y-6.166 F205.7",
+      "G0 Z2.000",
+      "G0 X10.199 Y-5.334",
+      "G1 Z-1.500 F102.9",
+      "G1 X4.981 Y-2.322 F205.7",
+      "G0 Z2.000",
+      "G0 X4.501 Y-3.153",
+      "G1 Z-2.000 F102.9",
+      "G1 X9.719 Y-6.166 F205.7",
+      "G0 Z2.000",
+      "G0 X10.199 Y-5.334",
+      "G1 Z-2.000 F102.9",
+      "G1 X4.981 Y-2.322 F205.7",
+      "G0 Z2.000",
+      "G0 X4.501 Y-3.153",
+      "G1 Z-2.500 F102.9",
+      "G1 X9.719 Y-6.166 F205.7",
+      "G0 Z2.000",
+      "G0 X10.199 Y-5.334",
+      "G1 Z-2.500 F102.9",
+      "G1 X4.981 Y-2.322 F205.7",
+      "G0 Z5.000"
+     ]
+    },
+    {
+     "kind": "custom_gcode",
+     "name": "lead groove 2, 3 x 2.5 deep, socket to the heater hole",
+     "axis": "+z",
+     "tool": 5,
+     "late": true,
+     "gcode": [
+      "G0 Z2.000",
+      "G0 X-4.981 Y-2.322",
+      "G1 Z-0.500 F102.9",
+      "G1 X-10.199 Y-5.334 F205.7",
+      "G0 Z2.000",
+      "G0 X-9.719 Y-6.166",
+      "G1 Z-0.500 F102.9",
+      "G1 X-4.501 Y-3.153 F205.7",
+      "G0 Z2.000",
+      "G0 X-4.981 Y-2.322",
+      "G1 Z-1.000 F102.9",
+      "G1 X-10.199 Y-5.334 F205.7",
+      "G0 Z2.000",
+      "G0 X-9.719 Y-6.166",
+      "G1 Z-1.000 F102.9",
+      "G1 X-4.501 Y-3.153 F205.7",
+      "G0 Z2.000",
+      "G0 X-4.981 Y-2.322",
+      "G1 Z-1.500 F102.9",
+      "G1 X-10.199 Y-5.334 F205.7",
+      "G0 Z2.000",
+      "G0 X-9.719 Y-6.166",
+      "G1 Z-1.500 F102.9",
+      "G1 X-4.501 Y-3.153 F205.7",
+      "G0 Z2.000",
+      "G0 X-4.981 Y-2.322",
+      "G1 Z-2.000 F102.9",
+      "G1 X-10.199 Y-5.334 F205.7",
+      "G0 Z2.000",
+      "G0 X-9.719 Y-6.166",
+      "G1 Z-2.000 F102.9",
+      "G1 X-4.501 Y-3.153 F205.7",
+      "G0 Z2.000",
+      "G0 X-4.981 Y-2.322",
+      "G1 Z-2.500 F102.9",
+      "G1 X-10.199 Y-5.334 F205.7",
+      "G0 Z2.000",
+      "G0 X-9.719 Y-6.166",
+      "G1 Z-2.500 F102.9",
+      "G1 X-4.501 Y-3.153 F205.7",
+      "G0 Z5.000"
+     ]
+    },
+    {
+     "kind": "custom_gcode",
+     "name": "lead groove 3, 3 x 2.5 deep, socket to the thermocouple hole",
+     "axis": "+z",
+     "tool": 5,
+     "late": true,
+     "gcode": [
+      "G0 Z2.000",
+      "G0 X0.480 Y5.475",
+      "G1 Z-0.500 F102.9",
+      "G1 X0.480 Y11.500 F205.7",
+      "G0 Z2.000",
+      "G0 X-0.480 Y11.500",
+      "G1 Z-0.500 F102.9",
+      "G1 X-0.480 Y5.475 F205.7",
+      "G0 Z2.000",
+      "G0 X0.480 Y5.475",
+      "G1 Z-1.000 F102.9",
+      "G1 X0.480 Y11.500 F205.7",
+      "G0 Z2.000",
+      "G0 X-0.480 Y11.500",
+      "G1 Z-1.000 F102.9",
+      "G1 X-0.480 Y5.475 F205.7",
+      "G0 Z2.000",
+      "G0 X0.480 Y5.475",
+      "G1 Z-1.500 F102.9",
+      "G1 X0.480 Y11.500 F205.7",
+      "G0 Z2.000",
+      "G0 X-0.480 Y11.500",
+      "G1 Z-1.500 F102.9",
+      "G1 X-0.480 Y5.475 F205.7",
+      "G0 Z2.000",
+      "G0 X0.480 Y5.475",
+      "G1 Z-2.000 F102.9",
+      "G1 X0.480 Y11.500 F205.7",
+      "G0 Z2.000",
+      "G0 X-0.480 Y11.500",
+      "G1 Z-2.000 F102.9",
+      "G1 X-0.480 Y5.475 F205.7",
+      "G0 Z2.000",
+      "G0 X0.480 Y5.475",
+      "G1 Z-2.500 F102.9",
+      "G1 X0.480 Y11.500 F205.7",
+      "G0 Z2.000",
+      "G0 X-0.480 Y11.500",
+      "G1 Z-2.500 F102.9",
+      "G1 X-0.480 Y5.475 F205.7",
+      "G0 Z5.000"
+     ]
     },
     {
      "kind": "drill",
@@ -7494,17 +7828,17 @@
       [
        1.047073013270987e-15,
        17.1,
-       28.0
+       24.0
       ],
       [
        -14.809034404713902,
        -8.550000000000002,
-       28.0
+       24.0
       ],
       [
        14.809034404713897,
        -8.550000000000008,
-       28.0
+       24.0
       ]
      ],
      "depth": 3.5,
@@ -7522,7 +7856,7 @@
       [
        19.9,
        0.0,
-       4.0
+       5.0
       ]
      ],
      "depth": 13.0,
@@ -7536,8 +7870,8 @@
      "id": "A",
      "n": 2,
      "kind": "plain",
-     "size": "6.40",
-     "callout": "6.40 plain x 25.9 - plate heaters 1/4 x 1 in., leads out of the bottom",
+     "size": "6.1",
+     "callout": "6.10 plain x 21.0 - plate heaters, 6 x 20 mm cartridges, leads out of the bottom into the grooves",
      "axis": "+z",
      "pts": [
       [
@@ -7557,7 +7891,7 @@
      "n": 1,
      "kind": "plain",
      "size": "2.0",
-     "callout": "2.00 plain x 25.9 - plate thermocouple, 1/16 in. sheath (13 x D: parabolic drill)",
+     "callout": "2.00 plain x 21.0 - plate thermocouple, 1/16 in. sheath (model 1.6; 10 x D: parabolic drill)",
      "axis": "+z",
      "pts": [
       [
@@ -7578,17 +7912,17 @@
       [
        0.0,
        17.1,
-       28.0
+       24.0
       ],
       [
        -14.81,
        -8.55,
-       28.0
+       24.0
       ],
       [
        14.81,
        -8.55,
-       28.0
+       24.0
       ]
      ]
     },
@@ -7603,7 +7937,7 @@
       [
        19.9,
        0.0,
-       4.0
+       5.0
       ]
      ]
     }
@@ -7614,9 +7948,10 @@
      "up": "-Z",
      "face": null,
      "outline": null,
-     "label": "bottom up in a 5C collet block: heater and thermocouple holes",
+     "label": "bottom up in a 5C collet block: heater and thermocouple holes, three lead grooves",
      "hold": "5C collet block",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-04_B",
@@ -7625,7 +7960,8 @@
      "outline": null,
      "label": "top up in the collet block: 3 x M2",
      "hold": "5C collet block",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-04_C",
@@ -7634,13 +7970,14 @@
      "outline": null,
      "label": "collet block on its side: radial M3 set-screw hole",
      "hold": "5C collet block, side",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     }
    ],
    "lathe": [
     [
-     "face, turn 39.80 x 30 (from 44.45)",
-     0.65
+     "face, turn 39.80 x 26 (from 44.45)",
+     0.59
     ],
     [
      "rope groove 3 x 3 (3 mm grooving tool)",
@@ -7651,28 +7988,27 @@
      0.09
     ],
     [
-     "part off; face to 28.00 in a soft-jaw second op",
+     "part off; face to 24.00 in a soft-jaw second op",
      4.17
     ]
    ],
    "manual": [],
    "tol": [
     "OD 39.80 0/-0.025 (with the 40.000-40.025 bore: 0.200-0.250 mm diametral clearance)",
-    "top face flatness 0.02, Ra 1.6; parallel to the bottom within 0.03; length 28.00 +-0.05",
-    "rod socket 12.95 +0.05/0 x 8.0"
+    "top face flatness 0.02, Ra 1.6; parallel to the bottom within 0.03; length 24.00 +-0.05",
+    "rod socket 12.95 +0.05/0 x 8.0",
+    "heater holes 6.10 +0.05/0"
    ],
    "notes": [],
    "changes": [
-    "rod socket 12.80 -> 12.95: seamless 1/2 in. tube is 12.70 +-0.13 (ASTM A269), so 12.80 may not take the rod; the rod is located by an M3 dog-point set screw instead of the fit",
-    "plate thermocouple hole 1.6 -> 2.0 (1/16 in. sheath)",
-    "added: 3 x M2 x 3 tapped for the substrate (3.0 thread leaves 0.5 mm above the rope groove; moving the groove 2 mm down would allow a 1.5 x D thread)",
-    "added: radial M3 set screw at z 4"
+    "v2: 24 mm thick (v1 28); two 6.1 x 21 heater holes for 6 x 20 mm cartridges at r 11.5 (v1 6.40 for 1/4 in.); three 3 x 2.5 lead grooves in the underside from the holes to the socket (ft_model)",
+    "kept from v1: rod socket 12.95 (model 12.8) with an M3 dog-point set screw, now at z 5 (clear of the grooves); thermocouple hole 2.0 (model 1.6); 3 x M2 x 3 for the substrate"
    ],
    "finish": "6061 as machined; top face Ra 1.6",
    "sheet": null,
    "buy": null,
    "n_holes": 7,
-   "start_volume_cm3": 32.57
+   "start_volume_cm3": 27.59
   },
   {
    "pid": "MK-05",
@@ -7792,7 +8128,8 @@
      "outline": null,
      "label": "top up, ten at a time in a fixture plate with ten 39.85 pockets",
      "hold": "fixture plate (FX-1)",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     }
    ],
    "lathe": [
@@ -7827,46 +8164,46 @@
   {
    "pid": "MK-06a",
    "mk": "MK-06",
-   "name": "Piston rod, box (81.6 long)",
+   "name": "Piston rod, box (84.6 long)",
    "material": "304 seamless tube 1/2 x 0.035 in.",
    "qty": 1,
    "route": "cut-off saw + lathe + CNC mill",
    "state": "FT-0",
-   "stock": "seamless 304 tube, 1/2 in. OD x 0.035 in. wall (12.70 x 0.89), cut 86 long",
+   "stock": "seamless 304 tube, 1/2 in. OD x 0.035 in. wall (12.70 x 0.89), cut 89 long",
    "stock_pn": "McMaster 89895K family ('Smooth-Bore Seamless 304 Stainless Steel Tubing'; 89895K623 is the 2-1/4 in. size in mcmaster-parts.csv); 1/2 x 0.035 in. suffix not read",
    "blank": {
     "type": "cyl",
     "r": 6.35,
     "z": [
      -2.0,
-     83.60000000000001
+     86.605
     ]
    },
    "seal": false,
-   "pos": "part z 0 = rod bottom end; z 81.6 = top end in the plate socket",
+   "pos": "part z 0 = rod bottom end; z 84.6 = top end in the plate socket",
    "bbox": [
     -6.35,
     6.35,
     -6.35,
     6.35,
     -0.0,
-    81.6
+    84.61
    ],
-   "volume_cm3": 2.64,
+   "volume_cm3": 2.76,
    "features": [
     {
      "kind": "custom_slot",
-     "name": "lead window 5 x 10 through one wall",
+     "name": "lead notch 3 x 3.5 through one wall (x3: index 120 deg)",
      "axis": "+y",
      "tool": 4,
      "center": [
       0.0,
       -6.35,
-      67.60000000000001
+      77.355
      ],
      "size": [
-      5.0,
-      10.0
+      3.0,
+      3.5
      ],
      "depth": 1.49
     },
@@ -7880,7 +8217,7 @@
       [
        6.35,
        0.0,
-       77.60000000000001
+       81.605
       ]
      ],
      "depth": 1.19,
@@ -7895,13 +8232,13 @@
      "n": 1,
      "kind": "plain",
      "size": "2.5",
-     "callout": "2.50 plain x 1.2 - set-screw dimple, one wall",
+     "callout": "2.50 plain x 1.2 - set-screw dimple, one wall (the plate's M3 dog point at z 5)",
      "axis": "-x",
      "pts": [
       [
        6.35,
        0.0,
-       77.6
+       81.61
       ]
      ]
     }
@@ -7912,18 +8249,20 @@
      "up": "-Y",
      "face": null,
      "outline": null,
-     "label": "in a V-block: lead window (1/8 in. end mill, through one wall)",
-     "hold": "V-block",
-     "stock_note": ""
+     "label": "in a V-block on a 5C indexer: lead notch, then index 120 deg and repeat twice",
+     "hold": "5C collet indexer",
+     "stock_note": "",
+     "repeat": 3
     },
     {
      "name": "MK-06a_B",
      "up": "+X",
      "face": null,
      "outline": null,
-     "label": "turned 90 deg in the V-block: set-screw dimple",
-     "hold": "V-block",
-     "stock_note": ""
+     "label": "turned 90 deg: set-screw dimple",
+     "hold": "5C collet indexer",
+     "stock_note": "",
+     "repeat": 1
     }
    ],
    "lathe": [
@@ -7936,67 +8275,73 @@
      6.0
     ]
    ],
-   "manual": [],
+   "manual": [
+    [
+     "pot the lead plug: 15 mm of vacuum epoxy in the lower end round the 6 leads (mix, fill, cure overnight)",
+     30.0
+    ]
+   ],
    "tol": [
     "OD 12.62-12.73 (0.497-0.501 in.), measured: ASTM A269 allows +-0.13, which takes the rod seal outside Parker's 10-17 % squeeze; gland zone polished to 16 RMS (Ra ~0.4 um; Parker 10-20 uin)",
-    "length 81.6 +-0.1; ends square within 0.05",
-    "no weld seam: seamless tube only (a welded seam leaks past the rod seal)"
+    "length 84.6 +-0.1; ends square within 0.05",
+    "no weld seam: seamless tube only (a welded seam leaks past the rod seal)",
+    "notches lined up with the plate's lead grooves (30, 150, 270 deg from the set screw)"
    ],
    "notes": [],
    "changes": [
-    "added: 5 x 10 lead window just under the plate (leads from the heaters into the rod); it stays 2.7 mm above the floor at the bottom of the stroke",
-    "added: 2.5 dimple for the plate's set screw",
-    "the rod's lower end is potted (not a machining step)"
+    "v2: the 5 x 10 lead window becomes three 3 x 3.5 notches at 120 deg at the socket mouth, under the plate's lead grooves (ft_model); the leads run down the rod to a 15 mm potted plug in its lower end",
+    "length 84.6 from ft_model's levels (rod_vis 76.61 + socket 8)",
+    "kept from v1: 2.5 dimple for the plate's set screw (now 5 mm above the socket mouth)"
    ],
    "finish": "304: deburr inside and out; polish OD as above; passivate optional",
    "sheet": null,
    "buy": null,
    "n_holes": 1,
-   "start_volume_cm3": 2.69
+   "start_volume_cm3": 2.79
   },
   {
    "pid": "MK-06b",
    "mk": "MK-06",
-   "name": "Piston rod, cube, 21 mm longer (102.6 long)",
+   "name": "Piston rod, cube, 21 mm longer (105.6 long)",
    "material": "304 seamless tube 1/2 x 0.035 in.",
    "qty": 1,
    "route": "cut-off saw + lathe + CNC mill",
    "state": "FT-1V",
-   "stock": "seamless 304 tube, 1/2 in. OD x 0.035 in. wall (12.70 x 0.89), cut 107 long",
+   "stock": "seamless 304 tube, 1/2 in. OD x 0.035 in. wall (12.70 x 0.89), cut 110 long",
    "stock_pn": "McMaster 89895K family ('Smooth-Bore Seamless 304 Stainless Steel Tubing'; 89895K623 is the 2-1/4 in. size in mcmaster-parts.csv); 1/2 x 0.035 in. suffix not read",
    "blank": {
     "type": "cyl",
     "r": 6.35,
     "z": [
      -2.0,
-     104.60000000000001
+     107.6
     ]
    },
    "seal": false,
-   "pos": "part z 0 = rod bottom end; z 102.6 = top end in the plate socket",
+   "pos": "part z 0 = rod bottom end; z 105.6 = top end in the plate socket",
    "bbox": [
     -6.35,
     6.35,
     -6.35,
     6.35,
     -0.0,
-    102.6
+    105.6
    ],
-   "volume_cm3": 3.34,
+   "volume_cm3": 3.45,
    "features": [
     {
      "kind": "custom_slot",
-     "name": "lead window 5 x 10 through one wall",
+     "name": "lead notch 3 x 3.5 through one wall (x3: index 120 deg)",
      "axis": "+y",
      "tool": 4,
      "center": [
       0.0,
       -6.35,
-      88.60000000000001
+      98.35
      ],
      "size": [
-      5.0,
-      10.0
+      3.0,
+      3.5
      ],
      "depth": 1.49
     },
@@ -8010,7 +8355,7 @@
       [
        6.35,
        0.0,
-       98.60000000000001
+       102.6
       ]
      ],
      "depth": 1.19,
@@ -8025,13 +8370,13 @@
      "n": 1,
      "kind": "plain",
      "size": "2.5",
-     "callout": "2.50 plain x 1.2 - set-screw dimple, one wall",
+     "callout": "2.50 plain x 1.2 - set-screw dimple, one wall (the plate's M3 dog point at z 5)",
      "axis": "-x",
      "pts": [
       [
        6.35,
        0.0,
-       98.6
+       102.6
       ]
      ]
     }
@@ -8042,18 +8387,20 @@
      "up": "-Y",
      "face": null,
      "outline": null,
-     "label": "in a V-block: lead window (1/8 in. end mill, through one wall)",
-     "hold": "V-block",
-     "stock_note": ""
+     "label": "in a V-block on a 5C indexer: lead notch, then index 120 deg and repeat twice",
+     "hold": "5C collet indexer",
+     "stock_note": "",
+     "repeat": 3
     },
     {
      "name": "MK-06b_B",
      "up": "+X",
      "face": null,
      "outline": null,
-     "label": "turned 90 deg in the V-block: set-screw dimple",
-     "hold": "V-block",
-     "stock_note": ""
+     "label": "turned 90 deg: set-screw dimple",
+     "hold": "5C collet indexer",
+     "stock_note": "",
+     "repeat": 1
     }
    ],
    "lathe": [
@@ -8066,23 +8413,29 @@
      6.0
     ]
    ],
-   "manual": [],
+   "manual": [
+    [
+     "pot the lead plug: 15 mm of vacuum epoxy in the lower end round the 6 leads (mix, fill, cure overnight)",
+     30.0
+    ]
+   ],
    "tol": [
     "OD 12.62-12.73 (0.497-0.501 in.), measured: ASTM A269 allows +-0.13, which takes the rod seal outside Parker's 10-17 % squeeze; gland zone polished to 16 RMS (Ra ~0.4 um; Parker 10-20 uin)",
-    "length 102.6 +-0.1; ends square within 0.05",
-    "no weld seam: seamless tube only (a welded seam leaks past the rod seal)"
+    "length 105.6 +-0.1; ends square within 0.05",
+    "no weld seam: seamless tube only (a welded seam leaks past the rod seal)",
+    "notches lined up with the plate's lead grooves (30, 150, 270 deg from the set screw)"
    ],
    "notes": [],
    "changes": [
-    "added: 5 x 10 lead window just under the plate (leads from the heaters into the rod); it stays 2.7 mm above the floor at the bottom of the stroke",
-    "added: 2.5 dimple for the plate's set screw",
-    "the rod's lower end is potted (not a machining step)"
+    "v2: the 5 x 10 lead window becomes three 3 x 3.5 notches at 120 deg at the socket mouth, under the plate's lead grooves (ft_model); the leads run down the rod to a 15 mm potted plug in its lower end",
+    "length 105.6 from ft_model's levels (rod_vis 97.60 + socket 8)",
+    "kept from v1: 2.5 dimple for the plate's set screw (now 5 mm above the socket mouth)"
    ],
    "finish": "304: deburr inside and out; polish OD as above; passivate optional",
    "sheet": null,
    "buy": null,
    "n_holes": 1,
-   "start_volume_cm3": 3.39
+   "start_volume_cm3": 3.49
   },
   {
    "pid": "MK-07",
@@ -8115,7 +8468,7 @@
     0.0,
     12.0
    ],
-   "volume_cm3": 38.2,
+   "volume_cm3": 38.14,
    "features": [
     {
      "kind": "groove",
@@ -8193,6 +8546,29 @@
       ]
      ],
      "hole_d": 5.5
+    },
+    {
+     "kind": "drill",
+     "hid": "B",
+     "axis": "+z",
+     "d": 2.5,
+     "tool": 25,
+     "pts": [
+      [
+       -12.0,
+       -25.0,
+       0.0
+      ],
+      [
+       12.0,
+       -25.0,
+       0.0
+      ]
+     ],
+     "depth": 6.0,
+     "through": false,
+     "size": "M3",
+     "hole_kind": "tap"
     }
    ],
    "holes": [
@@ -8201,7 +8577,7 @@
      "n": 4,
      "kind": "cbore",
      "size": "M5",
-     "callout": "5.5 through, c'bore 9.5 x 5.5 (M5 SHCS) - M5 SHCS up through the floor into the deck (box M5 x 25, cube M5 x 45)",
+     "callout": "5.5 through, c'bore 9.5 x 5.5 (M5 SHCS) - M5 SHCS with bonded seals up through the floor into the deck (box M5 x 25, cube M5 x 45)",
      "axis": "+z",
      "pts": [
       [
@@ -8225,6 +8601,26 @@
        0.0
       ]
      ]
+    },
+    {
+     "id": "B",
+     "n": 2,
+     "kind": "tap",
+     "size": "M3",
+     "callout": "M3 x 5 deep thread, tap drill 2.50 x 6.0 - FT-0 lead terminal bracket (MK-17b) under the gland",
+     "axis": "+z",
+     "pts": [
+      [
+       -12.0,
+       -25.0,
+       0.0
+      ],
+      [
+       12.0,
+       -25.0,
+       0.0
+      ]
+     ]
     }
    ],
    "setups": [
@@ -8241,7 +8637,8 @@
      ],
      "label": "top up: face, outline, face O-ring groove",
      "hold": "",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-07_B",
@@ -8256,7 +8653,8 @@
      ],
      "label": "bottom up: face to 12.0, rest of outline, c'bores",
      "hold": "",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     }
    ],
    "lathe": [
@@ -8283,6 +8681,7 @@
    ],
    "notes": [],
    "changes": [
+    "v2 took the fab's gland: 60 x 60 x 12, 4 x M5 at (+-12.5, +-12.5) inside the face seal; added 2 x M3 underneath for the FT-0 lead terminal bracket (MK-17b)",
     "two internal rod grooves for AS568-112 (0.487 x 0.103 in.), 1.6 mm lands in the 12 mm plate",
     "throat 12.90 -> 12.95 (rod tolerance); face groove for AS568-031 round both the rod and the bolts; 4 x M5 c'bored at (+-12.5, +-12.5), inside the face seal, so no bolt hole leaks",
     "material 6061 (the model colours it stainless): no galling risk at this speed, easier to groove"
@@ -8290,7 +8689,7 @@
    "finish": "6061: deburr, break edges 0.2-0.5 x 45 deg; as machined, Ra 3.2 um unless stated",
    "sheet": null,
    "buy": null,
-   "n_holes": 4,
+   "n_holes": 6,
    "start_volume_cm3": 49.62
   },
   {
@@ -8667,7 +9066,8 @@
      ],
      "label": "top up: face, outline",
      "hold": "",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-08c_B",
@@ -8679,7 +9079,8 @@
      "outline": null,
      "label": "bottom up: face, cord groove",
      "hold": "",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-08c_C",
@@ -8688,7 +9089,8 @@
      "outline": null,
      "label": "wall face up: 2 x M2",
      "hold": "",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     }
    ],
    "lathe": [],
@@ -8713,7 +9115,7 @@
    "qty": 1,
    "route": "CNC mill",
    "state": "FT-1",
-   "stock": "6061 bar 3/8 x 3/4 in. sawn 60 long",
+   "stock": "6061 bar 3/8 x 3/4 in. sawn 49 long",
    "stock_pn": "6061 bar 3/8 x 3/4 in. (PN not read)",
    "blank": {
     "type": "box",
@@ -8721,7 +9123,7 @@
      -9.53,
      9.53,
      21.0,
-     81.5,
+     70.0,
      -0.76,
      8.77
     ]
@@ -8732,11 +9134,11 @@
     -8.0,
     8.0,
     23.0,
-    79.5,
+    68.0,
     0.0,
     8.0
    ],
-   "volume_cm3": 7.0,
+   "volume_cm3": 5.52,
    "features": [
     {
      "kind": "drill",
@@ -8747,7 +9149,7 @@
      "pts": [
       [
        0.0,
-       75.5,
+       64.0,
        8.0
       ]
      ],
@@ -8766,7 +9168,7 @@
      "pts": [
       [
        0.0,
-       75.5,
+       64.0,
        8.0
       ]
      ],
@@ -8807,7 +9209,7 @@
      "pts": [
       [
        0.0,
-       75.5,
+       64.0,
        8.0
       ]
      ]
@@ -8847,7 +9249,8 @@
      ],
      "label": "top up: face, outline through (on parallels, tabs kept by 0.3 skin), c'bores",
      "hold": "",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-08d_B",
@@ -8859,7 +9262,8 @@
      "outline": null,
      "label": "bottom up: face to 8.0",
      "hold": "",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-08d_C",
@@ -8868,7 +9272,8 @@
      "outline": null,
      "label": "hopper end up (vise): 2 x M3",
      "hold": "",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     }
    ],
    "lathe": [],
@@ -8876,46 +9281,47 @@
    "tol": [],
    "notes": [],
    "changes": [
-    "added: 2 M3 c'bored into the bracket notch, 2 M3 tapped into the hopper's end wall; the vibration motor is held by a cable tie or hose clamp (not machined)"
+    "v2: 45 long, from the hopper's end wall (y 23) to the back of the bracket's upright (y 68): the X-LSM100B's centre line is at y 82 (v1 95.5)",
+    "added: 1 M3 c'bored into the bracket notch, 2 M3 tapped into the hopper's end wall; the vibration motor is held by a cable tie or hose clamp (not machined)"
    ],
    "finish": "6061: deburr, break edges 0.2-0.5 x 45 deg; as machined, Ra 3.2 um unless stated",
    "sheet": null,
    "buy": null,
    "n_holes": 3,
-   "start_volume_cm3": 10.99
+   "start_volume_cm3": 8.9
   },
   {
    "pid": "MK-08e",
    "mk": "MK-08",
-   "name": "Carriage bracket (L: 3 mm foot under the shield, 8 mm web)",
+   "name": "Carriage bracket (L: 6 mm foot on the X-LSM100B carriage, 8 mm upright)",
    "material": "6061-T6511",
    "qty": 1,
    "route": "CNC mill",
    "state": "FT-1",
-   "stock": "6061 bar 2 x 2 in. (50.8) sawn 43 long",
-   "stock_pn": "6061 square bar 2 in. (PN not read)",
+   "stock": "6061 bar 1-3/4 x 3 in. (44.45 x 76.2) sawn 43 long",
+   "stock_pn": "6061 bar 1-3/4 x 3 in. (PN not read)",
    "blank": {
     "type": "box",
     "box": [
      -21.5,
      21.5,
-     69.5,
-     120.3,
-     -12.7,
-     38.099999999999994
+     57.8,
+     102.25,
+     -36.2,
+     40.0
     ]
    },
    "seal": false,
-   "pos": "part (x, y, z) = hopper frame: x about the hopper centre, z from the powder plane",
+   "pos": "part (x, y, z) = hopper frame: x about the hopper centre, y world, z from the powder plane",
    "bbox": [
     -20.0,
     20.0,
-    71.5,
-    111.5,
-    -9.7,
+    60.0,
+    100.0,
+    -31.7,
     35.0
    ],
-   "volume_cm3": 17.34,
+   "volume_cm3": 27.77,
    "features": [
     {
      "kind": "pocket",
@@ -8924,7 +9330,7 @@
      "tool": 3,
      "probe": [
       5.0,
-      75.5,
+      64.0,
       27.0
      ],
      "note": "",
@@ -8939,7 +9345,7 @@
      "pts": [
       [
        0.0,
-       75.5,
+       64.0,
        27.0
       ]
      ],
@@ -8956,39 +9362,61 @@
      "tool": 27,
      "pts": [
       [
-       -12.0,
-       103.5,
-       -6.699999999999999
+       -15.0,
+       77.0,
+       -25.700000000000003
       ],
       [
-       12.0,
-       103.5,
-       -6.699999999999999
+       -15.0,
+       97.0,
+       -25.700000000000003
+      ],
+      [
+       15.0,
+       77.0,
+       -25.700000000000003
+      ],
+      [
+       15.0,
+       97.0,
+       -25.700000000000003
       ]
      ],
      "depth": 0.0,
      "through": true,
      "size": "M3",
-     "hole_kind": "csk"
+     "hole_kind": "cbore"
     },
     {
-     "kind": "csk",
+     "kind": "cbore",
      "hid": "B",
      "axis": "-z",
-     "d": 6.9,
-     "tool": 7,
+     "d": 6.5,
+     "depth": 3.4,
+     "tool": 4,
      "pts": [
       [
-       -12.0,
-       103.5,
-       -6.699999999999999
+       -15.0,
+       77.0,
+       -25.700000000000003
       ],
       [
-       12.0,
-       103.5,
-       -6.699999999999999
+       -15.0,
+       97.0,
+       -25.700000000000003
+      ],
+      [
+       15.0,
+       77.0,
+       -25.700000000000003
+      ],
+      [
+       15.0,
+       97.0,
+       -25.700000000000003
       ]
-     ]
+     ],
+     "hole_d": 3.4
     }
    ],
    "holes": [
@@ -9002,28 +9430,38 @@
      "pts": [
       [
        0.0,
-       75.5,
+       64.0,
        27.0
       ]
      ]
     },
     {
      "id": "B",
-     "n": 2,
-     "kind": "csk",
+     "n": 4,
+     "kind": "cbore",
      "size": "M3",
-     "callout": "3.4 through, c'sink 90 deg to 6.9 (M3 flat head) - to the X-LSQ carriage: PATTERN EST., drill to Zaber's drawing; flat heads under the shield's 3 mm gap",
+     "callout": "3.4 through, c'bore 6.5 x 3.4 (M3 SHCS) - to the X-LSM100B carriage's M3 taps (Zaber STEP: ft_vendor.LSM car_m3), heads 0.4 under the foot top: the shield clears the foot by 2 mm. Long-reach c'bore (61 mm under the upright's top)",
      "axis": "-z",
      "pts": [
       [
-       -12.0,
-       103.5,
-       -6.7
+       -15.0,
+       77.0,
+       -25.7
       ],
       [
-       12.0,
-       103.5,
-       -6.7
+       -15.0,
+       97.0,
+       -25.7
+      ],
+      [
+       15.0,
+       77.0,
+       -25.7
+      ],
+      [
+       15.0,
+       97.0,
+       -25.7
       ]
      ]
     }
@@ -9041,8 +9479,9 @@
       -19.0
      ],
      "label": "L profile up (x up): face, outline of the L to x -19",
-     "hold": "2 in. bar in the vise, 41 mm out",
-     "stock_note": ""
+     "hold": "bar in the vise, 41 mm out",
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-08e_B",
@@ -9057,16 +9496,18 @@
      ],
      "label": "flip: face to 40.0 wide, last 1.5 mm of the outline",
      "hold": "",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-08e_C",
      "up": "+Z",
      "face": null,
      "outline": null,
-     "label": "foot down on parallels: arm notch, M3, c'sinks",
-     "hold": "vise on the web's y faces",
-     "stock_note": ""
+     "label": "foot down on parallels: arm notch, M3, c'bores",
+     "hold": "vise on the upright's y faces",
+     "stock_note": "",
+     "repeat": 1
     }
    ],
    "lathe": [],
@@ -9074,57 +9515,57 @@
    "tol": [],
    "notes": [],
    "changes": [
-    "the model's bracket is a plain plate standing on the carriage; it needs a foot to bolt down. The shield leaves 3.0 mm over the carriage, so the foot is 3 mm thick with flat-head screws. A 4-6 mm foot would be stiffer: raise the shield by 3 mm in ft_model to allow it",
-    "arm sits in a 16 x 8 notch in the web's top (the model's boxes overlap there)"
+    "v2: redesigned for the X-LSM100B carriage (ft_model): foot 40 x 40 x 6 on four of the carriage's M3 taps (Zaber's STEP), upright 40 x 8, 66.7 tall; the shield sits 2 mm over the foot, so v1's 3 mm foot is gone",
+    "the arm sits in a 16 x 8 notch in the upright's top"
    ],
    "finish": "6061: deburr, break edges 0.2-0.5 x 45 deg; as machined, Ra 3.2 um unless stated",
    "sheet": null,
    "buy": null,
-   "n_holes": 3,
-   "start_volume_cm3": 110.97
+   "n_holes": 5,
+   "start_volume_cm3": 145.64
   },
   {
    "pid": "MK-09a",
    "mk": "MK-09",
-   "name": "Scan-head plate",
+   "name": "Scan-head flange plate (on the head's entrance face, between the cross-beams)",
    "material": "6061-T651",
    "qty": 1,
    "route": "CNC mill",
    "state": "S1",
-   "stock": "1/2 in. 6061-T651 plate, 210 x 275 from a 12 x 24 in. sheet; faced to 12.0",
+   "stock": "1/2 in. 6061-T651 plate, 309 x 110 from a 12 x 24 in. sheet; faced to 12.0",
    "stock_pn": "McMaster 89155K135 (second blank from the deck's sheet)",
    "blank": {
     "type": "box",
     "box": [
-     -105,
-     105,
-     -95,
-     180.0,
+     -5,
+     304.2,
+     -5,
+     105.0,
      -0.35,
      12.35
     ]
    },
    "seal": false,
-   "pos": "part (x, y) = world (x, y); part z 0 = underside (world z 354 box, 375 cube)",
+   "pos": "part x = world y - -135.85; part y = world z - 353.1; part z 0 = the face on the head (world x -57.3), z 12 = the outer face (-x)",
    "bbox": [
-    -100.0,
+    -0.0,
+    299.2,
+    -0.0,
     100.0,
-    -90.0,
-    175.0,
-    0.0,
+    -0.0,
     12.0
    ],
-   "volume_cm3": 506.74,
+   "volume_cm3": 326.91,
    "features": [
     {
      "kind": "bore",
-     "name": "lens opening 116",
+     "name": "input-turret opening 52",
      "axis": "-z",
      "tool": 2,
-     "r": 58.0,
+     "r": 26.0,
      "xy": [
-      0,
-      0
+      75.44999999999999,
+      38.5
      ],
      "z_top": 12.0,
      "z_bot": 0,
@@ -9138,25 +9579,61 @@
      "tool": 33,
      "pts": [
       [
-       -60.0,
-       160.0,
+       30.94999999999999,
+       10.0,
        12.0
       ],
       [
-       0.0,
-       160.0,
+       30.94999999999999,
+       88.0,
        12.0
       ],
       [
-       60.0,
-       160.0,
+       150.95,
+       10.0,
+       12.0
+      ],
+      [
+       150.95,
+       88.0,
        12.0
       ]
      ],
      "depth": 0.0,
      "through": true,
      "size": "M6",
-     "hole_kind": "clear"
+     "hole_kind": "cbore"
+    },
+    {
+     "kind": "cbore",
+     "hid": "A",
+     "axis": "-z",
+     "d": 11.0,
+     "depth": 6.6,
+     "tool": 4,
+     "pts": [
+      [
+       30.94999999999999,
+       10.0,
+       12.0
+      ],
+      [
+       30.94999999999999,
+       88.0,
+       12.0
+      ],
+      [
+       150.95,
+       10.0,
+       12.0
+      ],
+      [
+       150.95,
+       88.0,
+       12.0
+      ]
+     ],
+     "hole_d": 6.6
     },
     {
      "kind": "drill",
@@ -9166,23 +9643,23 @@
      "tool": 28,
      "pts": [
       [
-       -65.0,
-       -55.0,
+       10.0,
+       85.0,
        12.0
       ],
       [
-       -65.0,
-       55.0,
+       25.0,
+       85.0,
        12.0
       ],
       [
-       65.0,
-       -55.0,
+       274.2,
+       85.0,
        12.0
       ],
       [
-       65.0,
-       55.0,
+       289.2,
+       85.0,
        12.0
       ]
      ],
@@ -9194,22 +9671,114 @@
     {
      "kind": "drill",
      "hid": "C",
-     "axis": "-z",
+     "axis": "+z",
+     "d": 5.5,
+     "tool": 31,
+     "pts": [
+      [
+       35.25,
+       45.0,
+       0.0
+      ],
+      [
+       35.25,
+       85.0,
+       0.0
+      ],
+      [
+       120.85,
+       45.0,
+       0.0
+      ],
+      [
+       120.85,
+       85.0,
+       0.0
+      ],
+      [
+       150.85,
+       45.0,
+       0.0
+      ],
+      [
+       150.85,
+       85.0,
+       0.0
+      ]
+     ],
+     "depth": 0.0,
+     "through": true,
+     "size": "M5",
+     "hole_kind": "csk"
+    },
+    {
+     "kind": "csk",
+     "hid": "C",
+     "axis": "+z",
+     "d": 11.4,
+     "tool": 7,
+     "pts": [
+      [
+       35.25,
+       45.0,
+       0.0
+      ],
+      [
+       35.25,
+       85.0,
+       0.0
+      ],
+      [
+       120.85,
+       45.0,
+       0.0
+      ],
+      [
+       120.85,
+       85.0,
+       0.0
+      ],
+      [
+       150.85,
+       45.0,
+       0.0
+      ],
+      [
+       150.85,
+       85.0,
+       0.0
+      ]
+     ]
+    },
+    {
+     "kind": "drill",
+     "hid": "D",
+     "axis": "-y",
      "d": 4.2,
      "tool": 28,
      "pts": [
       [
-       -94.0,
-       -9.0,
-       12.0
+       40.0,
+       100.0,
+       6.0
       ],
       [
-       -94.0,
-       9.0,
-       12.0
+       110.0,
+       100.0,
+       6.0
+      ],
+      [
+       190.0,
+       100.0,
+       6.0
+      ],
+      [
+       260.0,
+       100.0,
+       6.0
       ]
      ],
-     "depth": 10.0,
+     "depth": 12.0,
      "through": false,
      "size": "M5",
      "hole_kind": "tap"
@@ -9218,25 +9787,30 @@
    "holes": [
     {
      "id": "A",
-     "n": 3,
-     "kind": "clear",
+     "n": 4,
+     "kind": "cbore",
      "size": "M6",
-     "callout": "6.6 M6 clearance through - M6 x 20 up into drop-in T-nuts (McMaster 5278N47) in the cross-beam",
+     "callout": "6.6 through, c'bore 11.0 x 6.6 (M6 SHCS) - M6 into the hurrySCAN's entrance face: PATTERN EST. (SCANLAB's drawing gives M6 screws and 6 h6 pins, no positions): drill to the drawing",
      "axis": "-z",
      "pts": [
       [
-       -60.0,
-       160.0,
+       30.95,
+       10.0,
        12.0
       ],
       [
-       0.0,
-       160.0,
+       30.95,
+       88.0,
        12.0
       ],
       [
-       60.0,
-       160.0,
+       150.95,
+       10.0,
+       12.0
+      ],
+      [
+       150.95,
+       88.0,
        12.0
       ]
      ]
@@ -9246,48 +9820,98 @@
      "n": 4,
      "kind": "tap",
      "size": "M5",
-     "callout": "M5 x through deep thread, tap drill 4.20 x through - hurrySCAN 25 base: PATTERN EST., drill to SCANLAB's drawing",
+     "callout": "M5 x through deep thread, tap drill 4.20 x through - angle brackets MK-09c to the cross-beams' faces",
      "axis": "-z",
      "pts": [
       [
-       -65.0,
-       -55.0,
+       10.0,
+       85.0,
        12.0
       ],
       [
-       -65.0,
-       55.0,
+       25.0,
+       85.0,
        12.0
       ],
       [
-       65.0,
-       -55.0,
+       274.2,
+       85.0,
        12.0
       ],
       [
-       65.0,
-       55.0,
+       289.2,
+       85.0,
        12.0
       ]
      ]
     },
     {
      "id": "C",
-     "n": 2,
-     "kind": "tap",
+     "n": 6,
+     "kind": "csk",
      "size": "M5",
-     "callout": "M5 x 8 deep thread, tap drill 4.20 x 10.0 - collimator saddle (MK-09b)",
-     "axis": "-z",
+     "callout": "5.5 through, c'sink 90 deg to 11.4 (M5 flat head) - gussets MK-09e: flat heads flush on the head's side, put in before the head",
+     "axis": "+z",
      "pts": [
       [
-       -94.0,
-       -9.0,
-       12.0
+       35.25,
+       45.0,
+       0.0
       ],
       [
-       -94.0,
-       9.0,
-       12.0
+       35.25,
+       85.0,
+       0.0
+      ],
+      [
+       120.85,
+       45.0,
+       0.0
+      ],
+      [
+       120.85,
+       85.0,
+       0.0
+      ],
+      [
+       150.85,
+       45.0,
+       0.0
+      ],
+      [
+       150.85,
+       85.0,
+       0.0
+      ]
+     ]
+    },
+    {
+     "id": "D",
+     "n": 4,
+     "kind": "tap",
+     "size": "M5",
+     "callout": "M5 x 10 deep thread, tap drill 4.20 x 12.0 - top flange MK-09d down into the plate's top edge",
+     "axis": "-y",
+     "pts": [
+      [
+       40.0,
+       100.0,
+       6.0
+      ],
+      [
+       110.0,
+       100.0,
+       6.0
+      ],
+      [
+       190.0,
+       100.0,
+       6.0
+      ],
+      [
+       260.0,
+       100.0,
+       6.0
       ]
      ]
     }
@@ -9298,12 +9922,13 @@
      "up": "-Z",
      "face": [
       1,
-      0.0
+      0.35
      ],
      "outline": null,
-     "label": "bottom up: face 0.35",
+     "label": "head face up: face, gusset c'sinks",
      "hold": "vise jaws on the blank's long edges",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-09a_B",
@@ -9316,74 +9941,785 @@
       2,
       -0.3
      ],
-     "label": "top up: face to 12.0, lens opening, holes, outline",
-     "hold": "screwed down through holes B to a sacrificial plate",
-     "stock_note": ""
+     "label": "outer face up: face to 12.0, turret opening, c'bores, bracket taps, outline",
+     "hold": "screwed down through holes A to a sacrificial plate",
+     "stock_note": "",
+     "repeat": 1
+    },
+    {
+     "name": "MK-09a_C",
+     "up": "+Y",
+     "face": null,
+     "outline": null,
+     "label": "top edge up: 4 x M5 for the top flange",
+     "hold": "vise, plate on edge",
+     "stock_note": "",
+     "repeat": 1
     }
    ],
    "lathe": [],
    "manual": [],
    "tol": [
-    "thickness 12.0 +-0.1; flatness 0.05 under the head",
-    "lens opening 116 +0.5/0 (clearance only)"
+    "thickness 12.0 +-0.05; flatness 0.05 on the head face",
+    "top edge square to the head face within 0.05"
    ],
    "notes": [],
    "changes": [
-    "added: 3 x M6 to the cross-beam's T-nuts, 4 x M5 for the head (pattern est.), 2 x M5 for the saddle",
-    "corners R5"
+    "v2: the head hangs by its entrance face from a 299 x 100 x 12 plate between both cross-beams (g3 frame), not on a 275 mm horizontal plate",
+    "ft_model draws the plate 120 tall, up through the top flange (they overlap by 12 mm); here it stops under the flange, which bolts to its top edge (4 x M5). The FEA took them as one piece",
+    "added: turret opening 52 (model), 4 x M6 for the head (pattern est.), 4 x M5 for the angle brackets, 6 x M5 c'sinks for the gussets, 4 x M5 in the top edge"
    ],
    "finish": "6061: deburr, break edges 0.2-0.5 x 45 deg; as machined, Ra 3.2 um unless stated",
    "sheet": null,
    "buy": null,
-   "n_holes": 9,
-   "start_volume_cm3": 733.42
+   "n_holes": 18,
+   "start_volume_cm3": 431.95
   },
   {
-   "pid": "MK-09b",
+   "pid": "MK-09c",
    "mk": "MK-09",
-   "name": "Collimator saddle",
-   "material": "6061-T6511",
-   "qty": 1,
-   "route": "CNC mill",
+   "name": "Angle brackets, plates to the cross-beams (4: 2 flange plate, 2 far-side plate)",
+   "material": "6061-T6 angle",
+   "qty": 4,
+   "route": "saw + CNC mill",
    "state": "S1",
-   "stock": "6061 bar 1-3/4 x 2 in. (44.45 x 50.8) sawn 88 long",
-   "stock_pn": "6061 rectangular bar 1-3/4 x 2 in. (PN not read)",
+   "stock": "6061 angle 1-1/2 x 1-1/2 x 3/16 in. sawn 30 long (4 from one 6 in. length)",
+   "stock_pn": "6061 equal angle 1-1/2 x 3/16 in. (PN not read)",
    "blank": {
     "type": "box",
     "box": [
-     -174.0,
-     -86.0,
-     -22.225,
-     22.225,
-     -2.0,
-     48.8
+     0,
+     38.1,
+     0,
+     38.1,
+     0,
+     30.0
     ]
    },
    "seal": false,
-   "pos": "part (x, y) = world (x, y); part z 0 = head-plate top (world z 366 box)",
+   "pos": "part x along leg B, y along leg A, z up the 30 mm height; leg A on the plate, leg B on the beam",
    "bbox": [
-    -172.0,
-    -88.0,
-    -22.0,
-    22.0,
     0.0,
-    46.77
+    38.1,
+    0.0,
+    38.1,
+    0.0,
+    30.0
    ],
-   "volume_cm3": 135.85,
+   "volume_cm3": 9.81,
    "features": [
     {
-     "kind": "adaptive",
-     "name": "collimator slot 30 wide x 8 deep along x (the collimator sits on its edges)",
-     "axis": "-z",
-     "tool": 2,
-     "probe": [
-      -136.0,
-      0.0,
-      38.77124344467705
+     "kind": "drill",
+     "hid": "A",
+     "axis": "-x",
+     "d": 5.5,
+     "tool": 31,
+     "pts": [
+      [
+       4.76,
+       14.76,
+       15.0
+      ],
+      [
+       4.76,
+       29.759999999999998,
+       15.0
+      ]
      ],
-     "note": "",
-     "z_top": null
+     "depth": 0.0,
+     "through": true,
+     "size": "M5",
+     "hole_kind": "clear"
     },
+    {
+     "kind": "drill",
+     "hid": "B",
+     "axis": "-y",
+     "d": 6.6,
+     "tool": 33,
+     "pts": [
+      [
+       22.0,
+       4.76,
+       15.0
+      ]
+     ],
+     "depth": 0.0,
+     "through": true,
+     "size": "M6",
+     "hole_kind": "clear"
+    }
+   ],
+   "holes": [
+    {
+     "id": "A",
+     "n": 2,
+     "kind": "clear",
+     "size": "M5",
+     "callout": "5.5 M5 clearance through - M5 x 10 into the plate's taps",
+     "axis": "-x",
+     "pts": [
+      [
+       4.76,
+       14.76,
+       15.0
+      ],
+      [
+       4.76,
+       29.76,
+       15.0
+      ]
+     ]
+    },
+    {
+     "id": "B",
+     "n": 1,
+     "kind": "clear",
+     "size": "M6",
+     "callout": "6.6 M6 clearance through - M6 x 12 into a drop-in T-nut in the beam's face slot",
+     "axis": "-y",
+     "pts": [
+      [
+       22.0,
+       4.76,
+       15.0
+      ]
+     ]
+    }
+   ],
+   "setups": [
+    {
+     "name": "MK-09c_A",
+     "up": "+X",
+     "face": null,
+     "outline": null,
+     "label": "leg B down in the vise: 2 x 5.5 in leg A",
+     "hold": "vise, four at a time on a stop",
+     "stock_note": "",
+     "repeat": 1
+    },
+    {
+     "name": "MK-09c_B",
+     "up": "+Y",
+     "face": null,
+     "outline": null,
+     "label": "leg A down: 6.6 in leg B",
+     "hold": "vise, four at a time",
+     "stock_note": "",
+     "repeat": 1
+    }
+   ],
+   "lathe": [],
+   "manual": [],
+   "tol": [],
+   "notes": [],
+   "changes": [
+    "new in v2 (MK-09 in ft_model): two at the flange plate's ends; g3 adds two at the far-side plate's ends. Drawn in ft_model as a corner of three 4 mm plates; made here from standard angle"
+   ],
+   "finish": "6061: deburr, break edges 0.2-0.5 x 45 deg; as machined, Ra 3.2 um unless stated",
+   "sheet": null,
+   "buy": null,
+   "n_holes": 3,
+   "start_volume_cm3": 10.2
+  },
+  {
+   "pid": "MK-09d",
+   "mk": "MK-09",
+   "name": "Head-plate top flange on both cross-beams",
+   "material": "6061-T651",
+   "qty": 1,
+   "route": "CNC mill",
+   "state": "S1",
+   "stock": "1/2 in. 6061-T651 plate, 80 x 367, faced to 12.0",
+   "stock_pn": "McMaster 89155K135 (offcut of the deck's sheet)",
+   "blank": {
+    "type": "box",
+    "box": [
+     -133.3,
+     -53.3,
+     -169.85,
+     197.35,
+     -0.35,
+     12.35
+    ]
+   },
+   "seal": false,
+   "pos": "part (x, y) = world (x, y); part z 0 = underside, on the cross-beams' tops (world z 453.1)",
+   "bbox": [
+    -129.3,
+    -57.3,
+    -165.85,
+    193.35,
+    0.0,
+    12.0
+   ],
+   "volume_cm3": 301.57,
+   "features": [
+    {
+     "kind": "drill",
+     "hid": "A",
+     "axis": "-z",
+     "d": 6.6,
+     "tool": 33,
+     "pts": [
+      [
+       -111.30000000000001,
+       -150.85,
+       12.0
+      ],
+      [
+       -111.30000000000001,
+       178.35,
+       12.0
+      ],
+      [
+       -87.30000000000001,
+       -150.85,
+       12.0
+      ],
+      [
+       -87.30000000000001,
+       178.35,
+       12.0
+      ]
+     ],
+     "depth": 0.0,
+     "through": true,
+     "size": "M6",
+     "hole_kind": "cbore"
+    },
+    {
+     "kind": "cbore",
+     "hid": "A",
+     "axis": "-z",
+     "d": 11.0,
+     "depth": 6.6,
+     "tool": 4,
+     "pts": [
+      [
+       -111.30000000000001,
+       -150.85,
+       12.0
+      ],
+      [
+       -111.30000000000001,
+       178.35,
+       12.0
+      ],
+      [
+       -87.30000000000001,
+       -150.85,
+       12.0
+      ],
+      [
+       -87.30000000000001,
+       178.35,
+       12.0
+      ]
+     ],
+     "hole_d": 6.6
+    },
+    {
+     "kind": "drill",
+     "hid": "B",
+     "axis": "-z",
+     "d": 5.5,
+     "tool": 31,
+     "pts": [
+      [
+       -63.3,
+       -95.85,
+       12.0
+      ],
+      [
+       -63.3,
+       -25.849999999999994,
+       12.0
+      ],
+      [
+       -63.3,
+       54.150000000000006,
+       12.0
+      ],
+      [
+       -63.3,
+       124.15,
+       12.0
+      ]
+     ],
+     "depth": 0.0,
+     "through": true,
+     "size": "M5",
+     "hole_kind": "cbore"
+    },
+    {
+     "kind": "cbore",
+     "hid": "B",
+     "axis": "-z",
+     "d": 9.5,
+     "depth": 5.5,
+     "tool": 4,
+     "pts": [
+      [
+       -63.3,
+       -95.85,
+       12.0
+      ],
+      [
+       -63.3,
+       -25.849999999999994,
+       12.0
+      ],
+      [
+       -63.3,
+       54.150000000000006,
+       12.0
+      ],
+      [
+       -63.3,
+       124.15,
+       12.0
+      ]
+     ],
+     "hole_d": 5.5
+    },
+    {
+     "kind": "drill",
+     "hid": "C",
+     "axis": "-z",
+     "d": 5.5,
+     "tool": 31,
+     "pts": [
+      [
+       -84.3,
+       -100.6,
+       12.0
+      ],
+      [
+       -84.3,
+       -15.0,
+       12.0
+      ],
+      [
+       -84.3,
+       15.0,
+       12.0
+      ],
+      [
+       -109.3,
+       -100.6,
+       12.0
+      ],
+      [
+       -109.3,
+       -15.0,
+       12.0
+      ],
+      [
+       -109.3,
+       15.0,
+       12.0
+      ]
+     ],
+     "depth": 0.0,
+     "through": true,
+     "size": "M5",
+     "hole_kind": "cbore"
+    },
+    {
+     "kind": "cbore",
+     "hid": "C",
+     "axis": "-z",
+     "d": 9.5,
+     "depth": 5.5,
+     "tool": 4,
+     "pts": [
+      [
+       -84.3,
+       -100.6,
+       12.0
+      ],
+      [
+       -84.3,
+       -15.0,
+       12.0
+      ],
+      [
+       -84.3,
+       15.0,
+       12.0
+      ],
+      [
+       -109.3,
+       -100.6,
+       12.0
+      ],
+      [
+       -109.3,
+       -15.0,
+       12.0
+      ],
+      [
+       -109.3,
+       15.0,
+       12.0
+      ]
+     ],
+     "hole_d": 5.5
+    }
+   ],
+   "holes": [
+    {
+     "id": "A",
+     "n": 4,
+     "kind": "cbore",
+     "size": "M6",
+     "callout": "6.6 through, c'bore 11.0 x 6.6 (M6 SHCS) - M6 x 20 into drop-in T-nuts in both beams' top slots",
+     "axis": "-z",
+     "pts": [
+      [
+       -111.3,
+       -150.85,
+       12.0
+      ],
+      [
+       -111.3,
+       178.35,
+       12.0
+      ],
+      [
+       -87.3,
+       -150.85,
+       12.0
+      ],
+      [
+       -87.3,
+       178.35,
+       12.0
+      ]
+     ]
+    },
+    {
+     "id": "B",
+     "n": 4,
+     "kind": "cbore",
+     "size": "M5",
+     "callout": "5.5 through, c'bore 9.5 x 5.5 (M5 SHCS) - M5 x 25 into the flange plate's top edge",
+     "axis": "-z",
+     "pts": [
+      [
+       -63.3,
+       -95.85,
+       12.0
+      ],
+      [
+       -63.3,
+       -25.85,
+       12.0
+      ],
+      [
+       -63.3,
+       54.15,
+       12.0
+      ],
+      [
+       -63.3,
+       124.15,
+       12.0
+      ]
+     ]
+    },
+    {
+     "id": "C",
+     "n": 6,
+     "kind": "cbore",
+     "size": "M5",
+     "callout": "5.5 through, c'bore 9.5 x 5.5 (M5 SHCS) - M5 x 20 into the gussets' top edges",
+     "axis": "-z",
+     "pts": [
+      [
+       -84.3,
+       -100.6,
+       12.0
+      ],
+      [
+       -84.3,
+       -15.0,
+       12.0
+      ],
+      [
+       -84.3,
+       15.0,
+       12.0
+      ],
+      [
+       -109.3,
+       -100.6,
+       12.0
+      ],
+      [
+       -109.3,
+       -15.0,
+       12.0
+      ],
+      [
+       -109.3,
+       15.0,
+       12.0
+      ]
+     ]
+    }
+   ],
+   "setups": [
+    {
+     "name": "MK-09d_A",
+     "up": "-Z",
+     "face": [
+      1,
+      0.35
+     ],
+     "outline": null,
+     "label": "underside up: face",
+     "hold": "vise on the blank's long edges",
+     "stock_note": "",
+     "repeat": 1
+    },
+    {
+     "name": "MK-09d_B",
+     "up": "+Z",
+     "face": [
+      1,
+      12.0
+     ],
+     "outline": [
+      2,
+      -0.3
+     ],
+     "label": "top up: face to 12.0, c'bores, outline",
+     "hold": "toe clamps; then screwed down through holes A",
+     "stock_note": "",
+     "repeat": 1
+    }
+   ],
+   "lathe": [],
+   "manual": [],
+   "tol": [],
+   "notes": [],
+   "changes": [
+    "new in v2 (g2/g3 frame, ft_model): a 72 x 359 x 12 flange on both beams' tops, bolted to the flange plate's top edge and the three gussets"
+   ],
+   "finish": "6061: deburr, break edges 0.2-0.5 x 45 deg; as machined, Ra 3.2 um unless stated",
+   "sheet": null,
+   "buy": null,
+   "n_holes": 14,
+   "start_volume_cm3": 373.08
+  },
+  {
+   "pid": "MK-09e",
+   "mk": "MK-09",
+   "name": "Head-plate gussets (3)",
+   "material": "6061-T651",
+   "qty": 3,
+   "route": "CNC mill",
+   "state": "S1",
+   "stock": "5/16 in. 6061 plate (7.94), 63 x 108 each",
+   "stock_pn": "5/16 in. 6061-T651 plate (PN not read)",
+   "blank": {
+    "type": "box",
+    "box": [
+     -59.0,
+     4,
+     -3.96875,
+     3.96875,
+     -4,
+     104.0
+    ]
+   },
+   "seal": false,
+   "pos": "part x 0 = the flange plate's outer face (world x -69.3), x < 0 away from the head; z 0 = the plate's bottom edge; at world y -100.6, -15.0, 15.0",
+   "bbox": [
+    -55.0,
+    0.0,
+    -3.97,
+    3.97,
+    0.0,
+    100.0
+   ],
+   "volume_cm3": 21.14,
+   "features": [
+    {
+     "kind": "drill",
+     "hid": "A",
+     "axis": "-x",
+     "d": 4.2,
+     "tool": 28,
+     "pts": [
+      [
+       0.0,
+       0.0,
+       45.0
+      ],
+      [
+       0.0,
+       0.0,
+       85.0
+      ]
+     ],
+     "depth": 12.0,
+     "through": false,
+     "size": "M5",
+     "hole_kind": "tap"
+    },
+    {
+     "kind": "drill",
+     "hid": "B",
+     "axis": "-z",
+     "d": 4.2,
+     "tool": 28,
+     "pts": [
+      [
+       -15.0,
+       0.0,
+       100.0
+      ],
+      [
+       -40.0,
+       0.0,
+       100.0
+      ]
+     ],
+     "depth": 12.0,
+     "through": false,
+     "size": "M5",
+     "hole_kind": "tap"
+    }
+   ],
+   "holes": [
+    {
+     "id": "A",
+     "n": 2,
+     "kind": "tap",
+     "size": "M5",
+     "callout": "M5 x 10 deep thread, tap drill 4.20 x 12.0 - from the flange plate (flat heads on the head side)",
+     "axis": "-x",
+     "pts": [
+      [
+       0.0,
+       0.0,
+       45.0
+      ],
+      [
+       0.0,
+       0.0,
+       85.0
+      ]
+     ]
+    },
+    {
+     "id": "B",
+     "n": 2,
+     "kind": "tap",
+     "size": "M5",
+     "callout": "M5 x 10 deep thread, tap drill 4.20 x 12.0 - from the top flange; 8 mm edge: tap straight",
+     "axis": "-z",
+     "pts": [
+      [
+       -15.0,
+       0.0,
+       100.0
+      ],
+      [
+       -40.0,
+       0.0,
+       100.0
+      ]
+     ]
+    }
+   ],
+   "setups": [
+    {
+     "name": "MK-09e_A",
+     "up": "+Y",
+     "face": [
+      2,
+      3.96875
+     ],
+     "outline": [
+      2,
+      -4.26875
+     ],
+     "label": "flat up: outline of the triangle",
+     "hold": "screwed to a sacrificial plate, or three from one blank on tabs",
+     "stock_note": "",
+     "repeat": 1
+    },
+    {
+     "name": "MK-09e_B",
+     "up": "+X",
+     "face": null,
+     "outline": null,
+     "label": "plate edge up (vise): 2 x M5",
+     "hold": "vise",
+     "stock_note": "",
+     "repeat": 1
+    },
+    {
+     "name": "MK-09e_C",
+     "up": "+Z",
+     "face": null,
+     "outline": null,
+     "label": "top edge up (vise): 2 x M5",
+     "hold": "vise",
+     "stock_note": "",
+     "repeat": 1
+    }
+   ],
+   "lathe": [],
+   "manual": [],
+   "tol": [],
+   "notes": [],
+   "changes": [
+    "new in v2 (g2/g3 frame): 55 x 100 triangles, 8 mm in ft_model, 5/16 in. (7.94) plate here; bolted to the flange plate and the top flange (the model fuses them)"
+   ],
+   "finish": "6061: deburr, break edges 0.2-0.5 x 45 deg; as machined, Ra 3.2 um unless stated",
+   "sheet": null,
+   "buy": null,
+   "n_holes": 4,
+   "start_volume_cm3": 54.01
+  },
+  {
+   "pid": "MK-09f",
+   "mk": "MK-09",
+   "name": "Head far-side support plate, between both cross-beams (g3)",
+   "material": "6061-T651",
+   "qty": 1,
+   "route": "CNC mill",
+   "state": "S1",
+   "stock": "1/2 in. 6061-T651 plate, 309 x 130, faced to 10.0",
+   "stock_pn": "McMaster 89155K135 (second sheet)",
+   "blank": {
+    "type": "box",
+    "box": [
+     -5,
+     304.2,
+     -5,
+     125.0,
+     -1.35,
+     11.35
+    ]
+   },
+   "seal": false,
+   "pos": "part x = world y - -135.85; part y = world z - 353.1; part z 0 = the face on the head's far side (world x 149.6)",
+   "bbox": [
+    -0.0,
+    299.2,
+    -0.0,
+    120.0,
+    0.0,
+    10.0
+   ],
+   "volume_cm3": 356.42,
+   "features": [
     {
      "kind": "drill",
      "hid": "A",
@@ -9392,14 +10728,24 @@
      "tool": 31,
      "pts": [
       [
-       -94.0,
-       -9.0,
-       12.0
+       35.94999999999999,
+       20.0,
+       10.0
       ],
       [
-       -94.0,
-       9.0,
-       12.0
+       35.94999999999999,
+       100.0,
+       10.0
+      ],
+      [
+       145.95,
+       20.0,
+       10.0
+      ],
+      [
+       145.95,
+       100.0,
+       10.0
       ]
      ],
      "depth": 0.0,
@@ -9416,14 +10762,24 @@
      "tool": 4,
      "pts": [
       [
-       -94.0,
-       -9.0,
-       12.0
+       35.94999999999999,
+       20.0,
+       10.0
       ],
       [
-       -94.0,
-       9.0,
-       12.0
+       35.94999999999999,
+       100.0,
+       10.0
+      ],
+      [
+       145.95,
+       20.0,
+       10.0
+      ],
+      [
+       145.95,
+       100.0,
+       10.0
       ]
      ],
      "hole_d": 5.5
@@ -9432,54 +10788,64 @@
      "kind": "drill",
      "hid": "B",
      "axis": "-z",
-     "d": 3.3,
-     "tool": 26,
+     "d": 4.2,
+     "tool": 28,
      "pts": [
       [
-       -165.0,
-       -18.5,
-       46.77124344467705
+       10.0,
+       85.0,
+       10.0
       ],
       [
-       -165.0,
-       18.5,
-       46.77124344467705
+       25.0,
+       85.0,
+       10.0
       ],
       [
-       -107.0,
-       -18.5,
-       46.77124344467705
+       274.2,
+       85.0,
+       10.0
       ],
       [
-       -107.0,
-       18.5,
-       46.77124344467705
+       289.2,
+       85.0,
+       10.0
       ]
      ],
-     "depth": 8.0,
-     "through": false,
-     "size": "M4",
+     "depth": 0.0,
+     "through": true,
+     "size": "M5",
      "hole_kind": "tap"
     }
    ],
    "holes": [
     {
      "id": "A",
-     "n": 2,
+     "n": 4,
      "kind": "cbore",
      "size": "M5",
-     "callout": "5.5 through, c'bore 9.5 x 5.5 (M5 SHCS) - to the head plate",
+     "callout": "5.5 through, c'bore 9.5 x 5.5 (M5 SHCS) - into the head's far face: PATTERN EST. (no holes known there: tap the housing or use its cover screws; check with SCANLAB)",
      "axis": "-z",
      "pts": [
       [
-       -94.0,
-       -9.0,
-       12.0
+       35.95,
+       20.0,
+       10.0
       ],
       [
-       -94.0,
-       9.0,
-       12.0
+       35.95,
+       100.0,
+       10.0
+      ],
+      [
+       145.95,
+       20.0,
+       10.0
+      ],
+      [
+       145.95,
+       100.0,
+       10.0
       ]
      ]
     },
@@ -9487,314 +10853,588 @@
      "id": "B",
      "n": 4,
      "kind": "tap",
-     "size": "M4",
-     "callout": "M4 x 6 deep thread, tap drill 3.30 x 8.0 - strap over the collimator (est.)",
+     "size": "M5",
+     "callout": "M5 x through deep thread, tap drill 4.20 x through - angle brackets MK-09c to the cross-beams",
      "axis": "-z",
      "pts": [
       [
-       -165.0,
-       -18.5,
-       46.77
+       10.0,
+       85.0,
+       10.0
       ],
       [
-       -165.0,
-       18.5,
-       46.77
+       25.0,
+       85.0,
+       10.0
       ],
       [
-       -107.0,
-       -18.5,
-       46.77
+       274.2,
+       85.0,
+       10.0
       ],
       [
-       -107.0,
-       18.5,
-       46.77
+       289.2,
+       85.0,
+       10.0
       ]
      ]
     }
    ],
    "setups": [
     {
-     "name": "MK-09b_A",
-     "up": "+Y",
+     "name": "MK-09f_A",
+     "up": "-Z",
      "face": [
-      2,
-      22.0
+      1,
+      1.35
      ],
-     "outline": [
-      2,
-      -6.5
-     ],
-     "label": "profile plane up (part +y): face, L outline to y -6.5",
-     "hold": "vise, bar standing 44.45 tall",
-     "stock_note": ""
-    },
-    {
-     "name": "MK-09b_B",
-     "up": "-Y",
-     "face": [
-      2,
-      22.0
-     ],
-     "outline": [
-      2,
-      6.0
-     ],
-     "label": "flip: face to 44.0, rest of the L outline",
-     "hold": "",
-     "stock_note": ""
-    },
-    {
-     "name": "MK-09b_C",
-     "up": "+Z",
-     "face": null,
      "outline": null,
-     "label": "slot up: collimator slot, holes A and B",
-     "hold": "vise on the y faces",
-     "stock_note": ""
+     "label": "head face up: face",
+     "hold": "vise jaws on the long edges",
+     "stock_note": "",
+     "repeat": 1
+    },
+    {
+     "name": "MK-09f_B",
+     "up": "+Z",
+     "face": [
+      1,
+      10.0
+     ],
+     "outline": [
+      2,
+      -0.3
+     ],
+     "label": "outer face up: face to 10.0, c'bores, taps, outline",
+     "hold": "screwed down through holes A",
+     "stock_note": "",
+     "repeat": 1
     }
    ],
    "lathe": [],
    "manual": [],
-   "tol": [
-    "slot edges at z 46.77 +-0.05 above the plate: they set the collimator axis at z 60.0",
-    "slot 30.00 +-0.05 wide, its edges broken 0.3 x 45 deg (line contact)"
-   ],
+   "tol": [],
    "notes": [],
    "changes": [
-    "new piece (the model has no saddle): an L bracket on the head plate's -x end; the \u00d840 collimator rests on the two edges of a 30 mm slot (2.5D from the top) instead of a round cradle along its axis, which no 3-axis setup reaches; strap holes est."
+    "new in v2 (g3, the frame to build: 62 / 101 / 179 Hz in the FEA): a 299 x 120 x 10 plate on the head's far (+x) face, held at both ends by angle brackets on the cross-beams",
+    "the head's far face has no published mounting holes: the 4 x M5 here are an estimate"
    ],
    "finish": "6061: deburr, break edges 0.2-0.5 x 45 deg; as machined, Ra 3.2 um unless stated",
    "sheet": null,
    "buy": null,
-   "n_holes": 6,
-   "start_volume_cm3": 198.71
+   "n_holes": 8,
+   "start_volume_cm3": 510.49
   },
   {
    "pid": "MK-10a",
    "mk": "MK-10",
-   "name": "Beam tube, long (123.6 long)",
+   "name": "Beam tube centre section, long (121.5 long), split in two half-shells",
    "material": "6061-T6 tube 2-3/8 x 0.125 in.",
    "qty": 1,
-   "route": "saw + lathe",
+   "route": "saw + lathe + CNC mill + slitting saw",
    "state": "S2",
-   "stock": "6061 round tube 60.3 x 3.18 wall (2-3/8 x 0.125 in.); if not stocked, 2-1/2 x 1/8 in. and open the sockets to 63.6",
+   "stock": "6061 round tube 60.3 x 3.18 wall (2-3/8 x 0.125 in.; ID 54)",
    "stock_pn": "6061 round tube (PN not read)",
    "blank": {
     "type": "cyl",
     "r": 30.16,
     "z": [
      -2.0,
-     125.6
+     123.475
     ]
    },
    "seal": false,
-   "pos": "part z 0 = bottom end in the flange socket",
+   "pos": "part z 0 = bottom end on the window flange's spigot; the halves slide off along x",
    "bbox": [
     -30.16,
     30.16,
     -30.16,
     30.16,
-    0.0,
-    123.6
-   ],
-   "volume_cm3": 70.14,
-   "features": [],
-   "holes": [],
-   "setups": [],
-   "lathe": [
-    [
-     "saw, face both ends to 123.6 +-0.2, deburr",
-     4.08
-    ]
-   ],
-   "manual": [],
-   "tol": [
-    "length 123.6 +-0.2 (the tie rods take up the rest); ends square within 0.2"
-   ],
-   "notes": [],
-   "changes": [
-    "tube clamped between the flange socket and the collar socket by 4 M4 tie rods instead of being fused to a flange (model): light-tight, and the long tube swaps for the short one"
-   ],
-   "finish": "black anodise inside (stray light) or as is",
-   "sheet": null,
-   "buy": null,
-   "n_holes": 0,
-   "start_volume_cm3": 364.64
-  },
-  {
-   "pid": "MK-10b",
-   "mk": "MK-10",
-   "name": "Beam tube, short (17.2 long)",
-   "material": "6061-T6 tube 2-3/8 x 0.125 in.",
-   "qty": 1,
-   "route": "saw + lathe",
-   "state": "FT-1V",
-   "stock": "6061 round tube 60.3 x 3.18 wall (2-3/8 x 0.125 in.); if not stocked, 2-1/2 x 1/8 in. and open the sockets to 63.6",
-   "stock_pn": "6061 round tube (PN not read)",
-   "blank": {
-    "type": "cyl",
-    "r": 30.16,
-    "z": [
-     -2.0,
-     19.200000000000045
-    ]
-   },
-   "seal": false,
-   "pos": "part z 0 = bottom end in the flange socket",
-   "bbox": [
-    -30.16,
-    30.16,
-    -30.16,
-    30.16,
-    0.0,
-    17.2
-   ],
-   "volume_cm3": 9.76,
-   "features": [],
-   "holes": [],
-   "setups": [],
-   "lathe": [
-    [
-     "saw, face both ends to 17.2 +-0.2, deburr",
-     4.08
-    ]
-   ],
-   "manual": [],
-   "tol": [
-    "length 17.2 +-0.2 (the tie rods take up the rest); ends square within 0.2"
-   ],
-   "notes": [],
-   "changes": [
-    "tube clamped between the flange socket and the collar socket by 4 M4 tie rods instead of being fused to a flange (model): light-tight, and the long tube swaps for the short one"
-   ],
-   "finish": "black anodise inside (stray light) or as is",
-   "sheet": null,
-   "buy": null,
-   "n_holes": 0,
-   "start_volume_cm3": 60.58
-  },
-  {
-   "pid": "MK-10c",
-   "mk": "MK-10",
-   "name": "Lens collar",
-   "material": "6061-T651",
-   "qty": 1,
-   "route": "CNC mill",
-   "state": "S2",
-   "stock": "1-1/4 in. 6061 plate (31.75), 130 x 130",
-   "stock_pn": "1-1/4 in. 6061-T651 plate (PN not read)",
-   "blank": {
-    "type": "box",
-    "box": [
-     -65,
-     65,
-     -65,
-     65,
-     0,
-     31.75
-    ]
-   },
-   "seal": false,
-   "pos": "part z 0 = collar floor underside (world z 280 box)",
-   "bbox": [
-    -62.0,
-    62.0,
-    -62.0,
-    62.0,
     -0.0,
-    31.75
+    121.48
    ],
-   "volume_cm3": 113.8,
+   "volume_cm3": 68.18,
    "features": [
-    {
-     "kind": "pocket",
-     "name": "lens bore 112 x 25.75",
-     "axis": "-z",
-     "tool": 2,
-     "probe": [
-      50.0,
-      0,
-      6.0
-     ],
-     "note": "",
-     "z_top": null
-    },
-    {
-     "kind": "bore",
-     "name": "tube bore 54",
-     "axis": "+z",
-     "tool": 2,
-     "r": 27.0,
-     "xy": [
-      0,
-      0
-     ],
-     "z_top": 6.0,
-     "z_bot": 0,
-     "finish": null
-    },
-    {
-     "kind": "pocket",
-     "name": "tube socket 60.5 x 3",
-     "axis": "+z",
-     "tool": 3,
-     "probe": [
-      29.0,
-      0,
-      3.0
-     ],
-     "note": "",
-     "z_top": null
-    },
     {
      "kind": "drill",
      "hid": "A",
-     "axis": "-z",
-     "d": 4.5,
-     "tool": 29,
+     "axis": "-y",
+     "d": 2.5,
+     "tool": 25,
      "pts": [
       [
-       36.95518130045147,
-       15.307337294603592,
-       6.0
+       -12.0,
+       27.669940368566028,
+       52.7375
       ],
       [
-       -15.307337294603588,
-       36.95518130045147,
-       6.0
+       -12.0,
+       27.669940368566028,
+       68.7375
       ],
       [
-       -36.95518130045147,
-       -15.307337294603586,
-       6.0
+       12.0,
+       27.669940368566028,
+       52.7375
       ],
       [
-       15.3073372946036,
-       -36.955181300451464,
-       6.0
+       12.0,
+       27.669940368566028,
+       68.7375
       ]
      ],
-     "depth": 0.0,
-     "through": true,
-     "size": "M4",
-     "hole_kind": "clear"
+     "depth": 4.5,
+     "through": false,
+     "size": "M3",
+     "hole_kind": "tap"
     },
     {
      "kind": "drill",
      "hid": "B",
+     "axis": "+y",
+     "d": 2.5,
+     "tool": 25,
+     "pts": [
+      [
+       -12.0,
+       -27.669940368566028,
+       52.7375
+      ],
+      [
+       -12.0,
+       -27.669940368566028,
+       68.7375
+      ],
+      [
+       12.0,
+       -27.669940368566028,
+       52.7375
+      ],
+      [
+       12.0,
+       -27.669940368566028,
+       68.7375
+      ]
+     ],
+     "depth": 4.5,
+     "through": false,
+     "size": "M3",
+     "hole_kind": "tap"
+    }
+   ],
+   "holes": [
+    {
+     "id": "A",
+     "n": 4,
+     "kind": "tap",
+     "size": "M3",
+     "callout": "M3 x through the wall deep thread, tap drill 2.50 x 4.5 - toggle clamp across the +y seam (latch body on one half, catch on the other; bought)",
+     "axis": "-y",
+     "pts": [
+      [
+       -12.0,
+       27.67,
+       52.74
+      ],
+      [
+       -12.0,
+       27.67,
+       68.74
+      ],
+      [
+       12.0,
+       27.67,
+       52.74
+      ],
+      [
+       12.0,
+       27.67,
+       68.74
+      ]
+     ]
+    },
+    {
+     "id": "B",
+     "n": 4,
+     "kind": "tap",
+     "size": "M3",
+     "callout": "M3 x through the wall deep thread, tap drill 2.50 x 4.5 - toggle clamp across the -y seam (latch body on one half, catch on the other; bought)",
+     "axis": "+y",
+     "pts": [
+      [
+       -12.0,
+       -27.67,
+       52.74
+      ],
+      [
+       -12.0,
+       -27.67,
+       68.74
+      ],
+      [
+       12.0,
+       -27.67,
+       52.74
+      ],
+      [
+       12.0,
+       -27.67,
+       68.74
+      ]
+     ]
+    }
+   ],
+   "setups": [
+    {
+     "name": "MK-10a_A",
+     "up": "+Y",
+     "face": null,
+     "outline": null,
+     "label": "+y seam up in V-blocks: 4 x M3 for its toggle clamp",
+     "hold": "V-blocks",
+     "stock_note": "",
+     "repeat": 1
+    },
+    {
+     "name": "MK-10a_B",
+     "up": "-Y",
+     "face": null,
+     "outline": null,
+     "label": "-y seam up: 4 x M3",
+     "hold": "V-blocks",
+     "stock_note": "",
+     "repeat": 1
+    }
+   ],
+   "lathe": [
+    [
+     "saw, face both ends to 121.5 +-0.2, deburr",
+     4.08
+    ]
+   ],
+   "manual": [
+    [
+     "slit both seams with a 0.8 mm slitting saw (tube in a fixture), deburr",
+     25.0
+    ],
+    [
+     "bond a 0.5 mm light-baffle strip along the inside of one half's seams",
+     10.0
+    ]
+   ],
+   "tol": [
+    "length 121.5 +-0.2; ends square within 0.1 (it butts on the flange and the collar)",
+    "the halves match at the seams within 0.2 (light-tight with the baffle strip)"
+   ],
+   "notes": [],
+   "changes": [
+    "v2: the beam tube's centre section, split lengthwise into two half-shells held by 2 toggle clamps; it seats over the window flange's spigot and the collar's (ft_model). 121.5 long: ft_model's 123.5 less the fab's 2 mm taller window ring",
+    "the tie rods and sockets of v1 are gone"
+   ],
+   "finish": "black anodise inside (stray light) or as is",
+   "sheet": null,
+   "buy": null,
+   "n_holes": 8,
+   "start_volume_cm3": 68.93
+  },
+  {
+   "pid": "MK-10b",
+   "mk": "MK-10",
+   "name": "Beam tube centre section, short (21.7 long), split in two half-shells",
+   "material": "6061-T6 tube 2-3/8 x 0.125 in.",
+   "qty": 1,
+   "route": "saw + lathe + CNC mill + slitting saw",
+   "state": "FT-1V",
+   "stock": "6061 round tube 60.3 x 3.18 wall (2-3/8 x 0.125 in.; ID 54)",
+   "stock_pn": "6061 round tube (PN not read)",
+   "blank": {
+    "type": "cyl",
+    "r": 30.16,
+    "z": [
+     -2.0,
+     23.700000000000045
+    ]
+   },
+   "seal": false,
+   "pos": "part z 0 = bottom end on the window flange's spigot; the halves slide off along y",
+   "bbox": [
+    -30.16,
+    30.16,
+    -30.16,
+    30.16,
+    -0.0,
+    21.7
+   ],
+   "volume_cm3": 12.07,
+   "features": [
+    {
+     "kind": "drill",
+     "hid": "A",
      "axis": "-x",
      "d": 2.5,
      "tool": 25,
      "pts": [
       [
-       62.0,
-       0.0,
-       13.0
+       27.669940368566028,
+       -12.0,
+       4.0
       ],
       [
-       62.0,
+       27.669940368566028,
+       -12.0,
+       17.700000000000045
+      ],
+      [
+       27.669940368566028,
+       12.0,
+       4.0
+      ],
+      [
+       27.669940368566028,
+       12.0,
+       17.700000000000045
+      ]
+     ],
+     "depth": 4.5,
+     "through": false,
+     "size": "M3",
+     "hole_kind": "tap"
+    },
+    {
+     "kind": "drill",
+     "hid": "B",
+     "axis": "+x",
+     "d": 2.5,
+     "tool": 25,
+     "pts": [
+      [
+       -27.669940368566028,
+       -12.0,
+       4.0
+      ],
+      [
+       -27.669940368566028,
+       -12.0,
+       17.700000000000045
+      ],
+      [
+       -27.669940368566028,
+       12.0,
+       4.0
+      ],
+      [
+       -27.669940368566028,
+       12.0,
+       17.700000000000045
+      ]
+     ],
+     "depth": 4.5,
+     "through": false,
+     "size": "M3",
+     "hole_kind": "tap"
+    }
+   ],
+   "holes": [
+    {
+     "id": "A",
+     "n": 4,
+     "kind": "tap",
+     "size": "M3",
+     "callout": "M3 x through the wall deep thread, tap drill 2.50 x 4.5 - toggle clamp across the +x seam (latch body on one half, catch on the other; bought)",
+     "axis": "-x",
+     "pts": [
+      [
+       27.67,
+       -12.0,
+       4.0
+      ],
+      [
+       27.67,
+       -12.0,
+       17.7
+      ],
+      [
+       27.67,
+       12.0,
+       4.0
+      ],
+      [
+       27.67,
+       12.0,
+       17.7
+      ]
+     ]
+    },
+    {
+     "id": "B",
+     "n": 4,
+     "kind": "tap",
+     "size": "M3",
+     "callout": "M3 x through the wall deep thread, tap drill 2.50 x 4.5 - toggle clamp across the -x seam (latch body on one half, catch on the other; bought)",
+     "axis": "+x",
+     "pts": [
+      [
+       -27.67,
+       -12.0,
+       4.0
+      ],
+      [
+       -27.67,
+       -12.0,
+       17.7
+      ],
+      [
+       -27.67,
+       12.0,
+       4.0
+      ],
+      [
+       -27.67,
+       12.0,
+       17.7
+      ]
+     ]
+    }
+   ],
+   "setups": [
+    {
+     "name": "MK-10b_A",
+     "up": "+X",
+     "face": null,
+     "outline": null,
+     "label": "+x seam up in V-blocks: 4 x M3 for its toggle clamp",
+     "hold": "V-blocks",
+     "stock_note": "",
+     "repeat": 1
+    },
+    {
+     "name": "MK-10b_B",
+     "up": "-X",
+     "face": null,
+     "outline": null,
+     "label": "-x seam up: 4 x M3",
+     "hold": "V-blocks",
+     "stock_note": "",
+     "repeat": 1
+    }
+   ],
+   "lathe": [
+    [
+     "saw, face both ends to 21.7 +-0.2, deburr",
+     4.08
+    ]
+   ],
+   "manual": [
+    [
+     "slit both seams with a 0.8 mm slitting saw (tube in a fixture), deburr",
+     25.0
+    ],
+    [
+     "bond a 0.5 mm light-baffle strip along the inside of one half's seams",
+     10.0
+    ]
+   ],
+   "tol": [
+    "length 21.7 +-0.2; ends square within 0.1 (it butts on the flange and the collar)",
+    "the halves match at the seams within 0.2 (light-tight with the baffle strip)"
+   ],
+   "notes": [],
+   "changes": [
+    "v2: the beam tube's centre section, split lengthwise into two half-shells held by 2 toggle clamps; it seats over the window flange's spigot and the collar's (ft_model). 21.7 long: ft_model's 23.7 less the fab's 2 mm taller window ring",
+    "the tie rods and sockets of v1 are gone"
+   ],
+   "finish": "black anodise inside (stray light) or as is",
+   "sheet": null,
+   "buy": null,
+   "n_holes": 8,
+   "start_volume_cm3": 12.31
+  },
+  {
+   "pid": "MK-10c",
+   "mk": "MK-10",
+   "name": "Lens collar with the tube's upper spigot (on the lens)",
+   "material": "6061-T651",
+   "qty": 1,
+   "route": "CNC mill",
+   "state": "S2",
+   "stock": "1-3/4 in. 6061 plate (44.45), 140 x 140",
+   "stock_pn": "1-3/4 in. 6061-T651 plate (PN not read)",
+   "blank": {
+    "type": "box",
+    "box": [
+     -70,
+     70,
+     -70,
+     70,
+     -3.7,
+     40.75
+    ]
+   },
+   "seal": false,
+   "pos": "part (x, y) = from the lens axis; part z 0 = the floor's underside (world z 289.5 box); the spigot hangs 3 below at (0, 13)",
+   "bbox": [
+    -68.0,
+    68.0,
+    -68.0,
+    68.0,
+    -3.0,
+    40.0
+   ],
+   "volume_cm3": 177.43,
+   "features": [
+    {
+     "kind": "adaptive",
+     "name": "lens bore 121.2 x 34 (adaptive)",
+     "axis": "-z",
+     "tool": 2,
+     "probe": [
+      52.6,
+      0.0,
+      6.0
+     ],
+     "note": "",
+     "z_top": null
+    },
+    {
+     "kind": "boss",
+     "name": "spigot 53 x 1.5 wall x 3, inside the centre section's upper end",
+     "axis": "+z",
+     "tool": 2,
+     "probe": [
+      0.0,
+      38.75,
+      -3.0
+     ],
+     "z_base": 0.0
+    },
+    {
+     "kind": "bore",
+     "name": "tube bore 50 through the floor and the spigot",
+     "axis": "+z",
+     "tool": 2,
+     "r": 25.0,
+     "xy": [
+      0.0,
+      13.0
+     ],
+     "z_top": -3.0,
+     "z_bot": 6.0,
+     "finish": null
+    },
+    {
+     "kind": "drill",
+     "hid": "A",
+     "axis": "-x",
+     "d": 2.5,
+     "tool": 25,
+     "pts": [
+      [
+       68.0,
+       0.0,
+       11.0
+      ],
+      [
+       68.0,
        0.0,
        23.0
       ]
@@ -9803,36 +11443,49 @@
      "through": false,
      "size": "M3",
      "hole_kind": "tap"
+    },
+    {
+     "kind": "drill",
+     "hid": "B",
+     "axis": "-x",
+     "d": 3.3,
+     "tool": 26,
+     "pts": [
+      [
+       63.23764701504951,
+       -25.0,
+       30.0
+      ],
+      [
+       63.23764701504951,
+       25.0,
+       30.0
+      ]
+     ],
+     "depth": 0.0,
+     "through": true,
+     "size": "M4",
+     "hole_kind": "tap"
     }
    ],
    "holes": [
     {
      "id": "A",
-     "n": 4,
-     "kind": "clear",
-     "size": "M4",
-     "callout": "4.5 M4 clearance through - tie rods; nuts inside the collar",
-     "axis": "-z",
+     "n": 2,
+     "kind": "tap",
+     "size": "M3",
+     "callout": "M3 x 4 deep thread, tap drill 2.50 x 5.0 - beam-tube interlock switch D4NS-2CF (S5) on the +x side (est.)",
+     "axis": "-x",
      "pts": [
       [
-       36.96,
-       15.31,
-       6.0
+       68.0,
+       0.0,
+       11.0
       ],
       [
-       -15.31,
-       36.96,
-       6.0
-      ],
-      [
-       -36.96,
-       -15.31,
-       6.0
-      ],
-      [
-       15.31,
-       -36.96,
-       6.0
+       68.0,
+       0.0,
+       23.0
       ]
      ]
     },
@@ -9840,19 +11493,19 @@
      "id": "B",
      "n": 2,
      "kind": "tap",
-     "size": "M3",
-     "callout": "M3 x 4 deep thread, tap drill 2.50 x 5.0 - beam-tube interlock switch (est.)",
+     "size": "M4",
+     "callout": "M4 x through the wall deep thread, tap drill 3.30 x through - nylon-tip set screws onto the lens body",
      "axis": "-x",
      "pts": [
       [
-       62.0,
-       0.0,
-       13.0
+       63.24,
+       -25.0,
+       30.0
       ],
       [
-       62.0,
-       0.0,
-       23.0
+       63.24,
+       25.0,
+       30.0
       ]
      ]
     }
@@ -9861,54 +11514,60 @@
     {
      "name": "MK-10c_A",
      "up": "+Z",
-     "face": null,
+     "face": [
+      2,
+      40.0
+     ],
      "outline": [
       2,
-      1.0
+      -3.3
      ],
-     "label": "open end up: outline, lens bore",
+     "label": "open end up: face to 40, outline, lens bore",
      "hold": "blank on parallels, toe clamps",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-10c_B",
      "up": "-Z",
-     "face": null,
-     "outline": [
+     "face": [
       2,
-      -32.05
+      3.0
      ],
-     "label": "floor up: tube bore, socket, tie-rod holes, rest of the outline",
+     "outline": null,
+     "label": "floor up: face to the spigot, round the spigot, the 50 bore",
      "hold": "soft jaws in the lens bore (ID clamp)",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-10c_C",
      "up": "+X",
      "face": null,
      "outline": null,
-     "label": "on its side: 2 x M3 for the interlock switch",
+     "label": "on its side: interlock-switch taps, two set screws",
      "hold": "vise, V-block",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     }
    ],
    "lathe": [],
    "manual": [],
    "tol": [
-    "lens bore 112 +0.5/0 (lens envelope 110 est.: measure the lens first)",
-    "socket 60.50 +0.10/0"
+    "lens bore 121.2 +0.3/0 (the LINOS lens is 119.8)",
+    "spigot OD 53 -0.10/0"
    ],
    "notes": [],
    "changes": [
-    "collar height 32 -> 31.75 (1-1/4 in. plate, wall 25.75): no effect on fit",
-    "added: 4 x M4 tie-rod holes, socket for the tube, 2 x M3 for the interlock switch (est.)",
-    "light seal: a felt or foam ring in the 1 mm gap round the lens (not machined)"
+    "v2: bore 112 -> 121.2 for the LINOS lens (119.8), OD 136, 34 tall on a 6 mm floor (ft_model); the tube's upper spigot hangs under the floor, 13 mm off the lens axis",
+    "ft_model's floor hole (54) is wider than the spigot's bore (50), which leaves the spigot hanging in air: here the floor is bored 50, the spigot's bore",
+    "held on the lens body by two nylon-tip M4 set screws (the model says 'clamped on the lens')"
    ],
    "finish": "6061: deburr, break edges 0.2-0.5 x 45 deg; as machined, Ra 3.2 um unless stated",
    "sheet": null,
    "buy": null,
-   "n_holes": 6,
-   "start_volume_cm3": 536.58
+   "n_holes": 4,
+   "start_volume_cm3": 871.22
   },
   {
    "pid": "MK-11a",
@@ -10079,7 +11738,8 @@
      "outline": null,
      "label": "bottom up: face, plenum",
      "hold": "vise",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-11a_B",
@@ -10094,7 +11754,8 @@
      ],
      "label": "top up: face to 12, outline with the boss, c'bores",
      "hold": "",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-11a_C",
@@ -10103,7 +11764,8 @@
      "outline": null,
      "label": "front face up: slot exit (1/8 in. end mill)",
      "hold": "vise on the x ends",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-11a_D",
@@ -10112,7 +11774,8 @@
      "outline": null,
      "label": "boss up: feed-tube hole",
      "hold": "vise on the x ends",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     }
    ],
    "lathe": [],
@@ -10299,7 +11962,8 @@
      "outline": null,
      "label": "bottom up: face, plenum",
      "hold": "",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-11b_B",
@@ -10314,7 +11978,8 @@
      ],
      "label": "top up: face to 14, outline with the boss, c'bores",
      "hold": "",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-11b_C",
@@ -10323,7 +11988,8 @@
      "outline": null,
      "label": "front face up: inlet window",
      "hold": "",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-11b_D",
@@ -10332,7 +11998,8 @@
      "outline": null,
      "label": "boss up: exhaust-tube hole",
      "hold": "",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     }
    ],
    "lathe": [],
@@ -10363,14 +12030,14 @@
    "seal": false,
    "pos": "part (x, y) = world (x, y); part z 0 = deck top",
    "bbox": [
-    -150.5,
-    94.5,
-    44.0,
-    136.0,
+    -73.0,
+    93.0,
+    46.0,
+    107.0,
     0.0,
-    46.91
+    29.91
    ],
-   "volume_cm3": 28.77,
+   "volume_cm3": 12.0,
    "features": [],
    "holes": [],
    "setups": [],
@@ -10381,7 +12048,8 @@
    ],
    "notes": [],
    "changes": [
-    "added: a 10 mm foot along the front skirt with 3 x 3.4 holes to the deck (M3)",
+    "v2: for the X-LSM100B: 166 x 50 top with a 145.6 x 12 slot, a 30 mm skirt (ft_model)",
+    "added: a 10 mm foot along the skirt with 3 x 3.4 holes to the deck (M3)",
     "slot ends full round (R6)"
    ],
    "finish": "as supplied (2B)",
@@ -10394,52 +12062,52 @@
       0
      ],
      [
-      245.0,
+      166.0,
       0
      ],
      [
-      245.0,
-      138.387
+      166.0,
+      90.387
      ],
      [
       0,
-      138.387
+      90.387
      ]
     ],
     "slot": {
-     "u0": 60.0,
-     "u1": 241.0,
-     "v0": 54.045,
-     "v1": 66.045
+     "u0": 5.200000000000003,
+     "u1": 150.8,
+     "v0": 36.545,
+     "v1": 48.545
     },
     "holes": [
      [
-      20.5,
-      134.29674301326406,
+      13.0,
+      86.29674301326406,
       3.4
      ],
      [
-      122.5,
-      134.29674301326406,
+      83.0,
+      86.29674301326406,
       3.4
      ],
      [
-      224.5,
-      134.29674301326406,
+      153.0,
+      86.29674301326406,
       3.4
      ]
     ],
     "bends": [
      {
       "line": "top/skirt",
-      "v": 81.119,
+      "v": 50.119,
       "angle": 90.0,
       "inside_r": 0.91,
       "allowance": 2.058
      },
      {
       "line": "skirt/foot",
-      "v": 128.268,
+      "v": 80.268,
       "angle": 90.0,
       "inside_r": 0.91,
       "allowance": 2.058
@@ -10452,10 +12120,10 @@
   {
    "pid": "MK-13",
    "mk": "MK-13",
-   "name": "Cube top plate (Ideal Vacuum P108171 blank, bored for the window ring)",
+   "name": "Cube top plate (Ideal Vacuum P108171 blank: window ring, drop tube, camera port)",
    "material": "6061 (Ideal Vacuum blank)",
    "qty": 1,
-   "route": "CNC mill",
+   "route": "CNC mill + tilted setup",
    "state": "FT-1V",
    "stock": "Ideal Vacuum P108171 blank plate (E2)",
    "stock_pn": "Ideal Vacuum P108171 (parts.csv E2)",
@@ -10471,7 +12139,7 @@
     ]
    },
    "seal": true,
-   "pos": "part z 0 = boss face (inside); window at part (x, y) = (-xc, -yc) = (28, -45)",
+   "pos": "part z 0 = boss face (inside); part (x, y) = world (x, y) - (-28, 45)",
    "bbox": [
     -150.9,
     150.9,
@@ -10480,7 +12148,7 @@
     0.0,
     22.9
    ],
-   "volume_cm3": 1869.21,
+   "volume_cm3": 1855.68,
    "features": [
     {
      "kind": "pocket",
@@ -10489,7 +12157,7 @@
      "tool": 2,
      "probe": [
       73.0,
-      -45.0,
+      -66.0,
       22.599999999999998
      ],
      "note": "",
@@ -10503,7 +12171,7 @@
      "r": 26.5,
      "xy": [
       28.0,
-      -45.0
+      -66.0
      ],
      "z_top": 22.9,
      "z_bot": 0,
@@ -10518,42 +12186,42 @@
      "pts": [
       [
        70.0,
-       -45.0,
+       -66.0,
        22.599999999999998
       ],
       [
        57.698484809834994,
-       -15.301515190165006,
+       -36.301515190165006,
        22.599999999999998
       ],
       [
        28.000000000000004,
-       -3.0,
+       -24.0,
        22.599999999999998
       ],
       [
        -1.6984848098349943,
-       -15.301515190165002,
+       -36.301515190165006,
        22.599999999999998
       ],
       [
        -14.0,
-       -44.99999999999999,
+       -66.0,
        22.599999999999998
       ],
       [
        -1.6984848098350014,
-       -74.698484809835,
+       -95.698484809835,
        22.599999999999998
       ],
       [
        27.999999999999993,
-       -87.0,
+       -108.0,
        22.599999999999998
       ],
       [
        57.69848480983499,
-       -74.69848480983501,
+       -95.69848480983501,
        22.599999999999998
       ]
      ],
@@ -10570,24 +12238,62 @@
      "tool": 26,
      "pts": [
       [
-       28.000000000000004,
-       -15.0,
+       63.56936200168454,
+       -41.26668785394404,
        0.0
       ],
       [
-       -2.0,
-       -44.99999999999999,
+       13.266687853944045,
+       -20.43063799831546,
        0.0
       ],
       [
-       27.999999999999993,
-       -75.0,
+       -7.569362001684546,
+       -70.73331214605595,
+       0.0
+      ],
+      [
+       42.733312146055965,
+       -91.56936200168454,
        0.0
       ]
      ],
-     "depth": 10.0,
+     "depth": 9.0,
      "through": false,
      "size": "M4",
+     "hole_kind": "tap"
+    },
+    {
+     "kind": "drill",
+     "hid": "C",
+     "axis": "-z",
+     "d": 2.5,
+     "tool": 25,
+     "pts": [
+      [
+       -56.797204204489226,
+       -79.79720420448923,
+       22.9
+      ],
+      [
+       -87.20279579551077,
+       -79.79720420448923,
+       22.9
+      ],
+      [
+       -87.20279579551078,
+       -110.20279579551077,
+       22.9
+      ],
+      [
+       -56.79720420448923,
+       -110.20279579551078,
+       22.9
+      ]
+     ],
+     "depth": 8.0,
+     "through": false,
+     "size": "M3",
      "hole_kind": "tap"
     }
    ],
@@ -10602,68 +12308,103 @@
      "pts": [
       [
        70.0,
-       -45.0,
+       -66.0,
        22.6
       ],
       [
        57.7,
-       -15.3,
+       -36.3,
        22.6
       ],
       [
        28.0,
-       -3.0,
+       -24.0,
        22.6
       ],
       [
        -1.7,
-       -15.3,
+       -36.3,
        22.6
       ],
       [
        -14.0,
-       -45.0,
+       -66.0,
        22.6
       ],
       [
        -1.7,
-       -74.7,
+       -95.7,
        22.6
       ],
       [
        28.0,
-       -87.0,
+       -108.0,
        22.6
       ],
       [
        57.7,
-       -74.7,
+       -95.7,
        22.6
       ]
      ]
     },
     {
      "id": "B",
-     "n": 3,
+     "n": 4,
      "kind": "tap",
      "size": "M4",
-     "callout": "M4 x 8 deep thread, tap drill 3.30 x 10.0 - cover-slide holder, inside",
+     "callout": "M4 x 7 deep thread, tap drill 3.30 x 9.0 - cover-slide drop tube MK-02f, inside",
      "axis": "+z",
      "pts": [
       [
-       28.0,
-       -15.0,
+       63.57,
+       -41.27,
        0.0
       ],
       [
-       -2.0,
-       -45.0,
+       13.27,
+       -20.43,
        0.0
       ],
       [
-       28.0,
-       -75.0,
+       -7.57,
+       -70.73,
        0.0
+      ],
+      [
+       42.73,
+       -91.57,
+       0.0
+      ]
+     ]
+    },
+    {
+     "id": "C",
+     "n": 4,
+     "kind": "tap",
+     "size": "M3",
+     "callout": "M3 x 6 deep thread, tap drill 2.50 x 8.0 - camera port ring MK-19 (blind)",
+     "axis": "-z",
+     "pts": [
+      [
+       -56.8,
+       -79.8,
+       22.9
+      ],
+      [
+       -87.2,
+       -79.8,
+       22.9
+      ],
+      [
+       -87.2,
+       -110.2,
+       22.9
+      ],
+      [
+       -56.8,
+       -110.2,
+       22.9
       ]
      ]
     }
@@ -10674,34 +12415,43 @@
      "up": "+Z",
      "face": null,
      "outline": null,
-     "label": "outside face up: spot face, bore, 8 x M5",
+     "label": "outside face up: spot face, window bore, 8 x M5, 4 x M3",
      "hold": "toe clamps on the plate edge",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-13_B",
      "up": "-Z",
      "face": null,
      "outline": null,
-     "label": "boss face up: 3 x M4",
+     "label": "boss face up: 4 x M4 for the drop tube",
      "hold": "toe clamps; the boss on parallels",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     }
    ],
    "lathe": [],
-   "manual": [],
+   "manual": [
+    [
+     "camera bore 26 along the line of sight, 24.1 deg from vertical: plate on a tilting table or sine plate, helix-milled through (a tilted setup: 45 min to set up, 15 min to cut; estimate)",
+     60.0
+    ]
+   ],
    "tol": [
     "spot face 104 x 0.3: flatness 0.02, Ra 0.4 um (window ring's AS568-140 seal)",
-    "bore 53 +0.2/0, true position 0.2 to the plate centre; the plate's own O-ring face untouched"
+    "bore 53 +0.2/0, true position 0.2 to the plate centre; the plate's own O-ring face untouched",
+    "camera bore: +-0.5 deg on its tilt (it only has to clear the camera's view cone)"
    ],
    "notes": [],
    "changes": [
-    "added: 104 mm spot face for the ring's face seal, 8 x M5 blind (no through holes in the vacuum wall), 3 x M4 blind inside for the cover-slide holder"
+    "v2: window bore at the cube's window centre (28, -66 from the plate centre); a 26 camera bore along the camera's line of sight (24.1 deg, a tilted setup: estimated, not programmed); 4 x M4 inside for the cover-slide drop tube",
+    "kept from v1: 104 spot face for the ring's face seal, 8 x M5 blind"
    ],
    "finish": "6061: deburr, break edges 0.2-0.5 x 45 deg; as machined, Ra 3.2 um unless stated",
    "sheet": null,
    "buy": null,
-   "n_holes": 11,
+   "n_holes": 16,
    "start_volume_cm3": 1923.26
   },
   {
@@ -10735,7 +12485,7 @@
     0.0,
     22.9
    ],
-   "volume_cm3": 1912.59,
+   "volume_cm3": 1912.29,
    "features": [
     {
      "kind": "bore",
@@ -10801,33 +12551,33 @@
      "kind": "drill",
      "hid": "B",
      "axis": "+z",
-     "d": 4.2,
-     "tool": 28,
+     "d": 5.0,
+     "tool": 30,
      "pts": [
       [
-       -115.0,
-       -115.0,
+       -112.0,
+       -92.1,
        0.0
       ],
       [
-       -115.0,
-       115.0,
+       -112.0,
+       92.1,
        0.0
       ],
       [
-       115.0,
-       -115.0,
+       112.0,
+       -92.1,
        0.0
       ],
       [
-       115.0,
-       115.0,
+       112.0,
+       92.1,
        0.0
       ]
      ],
      "depth": 12.0,
      "through": false,
-     "size": "M5",
+     "size": "M6",
      "hole_kind": "tap"
     }
    ],
@@ -10866,28 +12616,28 @@
      "id": "B",
      "n": 4,
      "kind": "tap",
-     "size": "M5",
-     "callout": "M5 x 10 deep thread, tap drill 4.20 x 12.0 - deck corners (blind)",
+     "size": "M6",
+     "callout": "M6 x 10 deep thread, tap drill 5.00 x 12.0 - deck screws (blind), ft_model's (+-112, +-92.1)",
      "axis": "+z",
      "pts": [
       [
-       -115.0,
-       -115.0,
+       -112.0,
+       -92.1,
        0.0
       ],
       [
-       -115.0,
-       115.0,
+       -112.0,
+       92.1,
        0.0
       ],
       [
-       115.0,
-       -115.0,
+       112.0,
+       -92.1,
        0.0
       ],
       [
-       115.0,
-       115.0,
+       112.0,
+       92.1,
        0.0
       ]
      ]
@@ -10901,16 +12651,18 @@
      "outline": null,
      "label": "outside face up: spot face, gland holes",
      "hold": "toe clamps on the plate edge",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-14_B",
      "up": "-Z",
      "face": null,
      "outline": null,
-     "label": "boss face up: rod hole, deck-corner taps",
+     "label": "boss face up: rod hole, deck taps",
      "hold": "toe clamps; the boss on parallels",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     }
    ],
    "lathe": [],
@@ -10921,7 +12673,7 @@
    ],
    "notes": [],
    "changes": [
-    "added: 56 mm spot face, 4 x 5.5 gland holes inside the gland's seal, 4 x M5 blind at the deck corners (+-115 from the cube centre)"
+    "v2: the deck screws are 4 x M6 blind at (+-112, +-92.1) about the cube centre (v1 4 x M5 at the corners); the gland holes stay inside the gland's face seal at (+-12.5, +-12.5)"
    ],
    "finish": "6061: deburr, break edges 0.2-0.5 x 45 deg; as machined, Ra 3.2 um unless stated",
    "sheet": null,
@@ -10937,30 +12689,30 @@
    "qty": 1,
    "route": "CNC mill",
    "state": "FT-1",
-   "stock": "1/2 in. 6061-T651 plate, 190 x 270, faced to 10.0",
+   "stock": "1/2 in. 6061-T651 plate, 190 x 307, faced to 10.0",
    "stock_pn": "McMaster 89155K135 (second sheet)",
    "blank": {
     "type": "box",
     "box": [
      -95,
      95,
-     -90.0,
-     180.0,
+     -108.35,
+     198.35,
      -1.35,
      11.35
     ]
    },
    "seal": false,
-   "pos": "part (x, y) = world (x, y); part z 0 = underside, on the base rails (world z -222.6)",
+   "pos": "part (x, y) = world (x, y); part z 0 = underside, on the base rails (world z -242.6)",
    "bbox": [
     -90.0,
     90.0,
-    -85.0,
-    175.0,
+    -103.35,
+    193.35,
     0.0,
     10.0
    ],
-   "volume_cm3": 464.43,
+   "volume_cm3": 530.49,
    "features": [
     {
      "kind": "drill",
@@ -10970,23 +12722,23 @@
      "tool": 33,
      "pts": [
       [
-       -60.0,
        -70.0,
+       -88.35,
        10.0
       ],
       [
-       -60.0,
-       160.0,
-       10.0
-      ],
-      [
-       60.0,
        -70.0,
+       178.35,
        10.0
       ],
       [
-       60.0,
-       160.0,
+       70.0,
+       -88.35,
+       10.0
+      ],
+      [
+       70.0,
+       178.35,
        10.0
       ]
      ],
@@ -11003,23 +12755,23 @@
      "tool": 31,
      "pts": [
       [
-       -50.0,
-       -30.0,
+       -15.0,
+       -15.0,
        0.0
       ],
       [
-       -50.0,
-       30.0,
+       -15.0,
+       15.0,
        0.0
       ],
       [
-       50.0,
-       -30.0,
+       15.0,
+       -15.0,
        0.0
       ],
       [
-       50.0,
-       30.0,
+       15.0,
+       15.0,
        0.0
       ]
      ],
@@ -11037,23 +12789,23 @@
      "tool": 4,
      "pts": [
       [
-       -50.0,
-       -30.0,
+       -15.0,
+       -15.0,
        0.0
       ],
       [
-       -50.0,
-       30.0,
+       -15.0,
+       15.0,
        0.0
       ],
       [
-       50.0,
-       -30.0,
+       15.0,
+       -15.0,
        0.0
       ],
       [
-       50.0,
-       30.0,
+       15.0,
+       15.0,
        0.0
       ]
      ],
@@ -11066,27 +12818,27 @@
      "n": 4,
      "kind": "clear",
      "size": "M6",
-     "callout": "6.6 M6 clearance through - M6 x 16 into drop-in T-nuts (5278N47) in the base rails",
+     "callout": "6.6 M6 clearance through - M6 x 16 into drop-in T-nuts (5278N47) in the base rails (ft_model)",
      "axis": "-z",
      "pts": [
       [
-       -60.0,
        -70.0,
+       -88.35,
        10.0
       ],
       [
-       -60.0,
-       160.0,
-       10.0
-      ],
-      [
-       60.0,
        -70.0,
+       178.35,
        10.0
       ],
       [
-       60.0,
-       160.0,
+       70.0,
+       -88.35,
+       10.0
+      ],
+      [
+       70.0,
+       178.35,
        10.0
       ]
      ]
@@ -11100,23 +12852,23 @@
      "axis": "+z",
      "pts": [
       [
-       -50.0,
-       -30.0,
+       -15.0,
+       -15.0,
        0.0
       ],
       [
-       -50.0,
-       30.0,
+       -15.0,
+       15.0,
        0.0
       ],
       [
-       50.0,
-       -30.0,
+       15.0,
+       -15.0,
        0.0
       ],
       [
-       50.0,
-       30.0,
+       15.0,
+       15.0,
        0.0
       ]
      ]
@@ -11133,7 +12885,8 @@
      "outline": null,
      "label": "bottom up: face, c'bores, drill through",
      "hold": "",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-15a_B",
@@ -11148,7 +12901,8 @@
      ],
      "label": "top up: face to 10, outline",
      "hold": "screwed down through A",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     }
    ],
    "lathe": [],
@@ -11156,13 +12910,14 @@
    "tol": [],
    "notes": [],
    "changes": [
-    "added: 4 x M6 to the base rails, 4 x M5 c'bored for the riser"
+    "v2: 180 x 296.7 across both base rails (ft_model; v1 190 x 270)",
+    "added: 4 x M6 to the base rails at (+-70, rails), 4 x M5 c'bored for the riser"
    ],
    "finish": "6061: deburr, break edges 0.2-0.5 x 45 deg; as machined, Ra 3.2 um unless stated",
    "sheet": null,
    "buy": null,
    "n_holes": 8,
-   "start_volume_cm3": 651.51
+   "start_volume_cm3": 740.07
   },
   {
    "pid": "MK-15b",
@@ -11172,30 +12927,30 @@
    "qty": 1,
    "route": "CNC mill",
    "state": "FT-1",
-   "stock": "5/8 in. 6061 plate (15.88), 126 x 86, faced to 15.0",
-   "stock_pn": "5/8 in. 6061 plate (PN not read)",
+   "stock": "1 in. 6061 plate (25.4), 70 x 70, faced to 20.0",
+   "stock_pn": "1 in. 6061 plate (PN not read)",
    "blank": {
     "type": "box",
     "box": [
-     -63,
-     63,
-     -43,
-     43,
-     -0.44,
-     15.44
+     -35,
+     35,
+     -35,
+     35,
+     -2.5,
+     22.9
     ]
    },
    "seal": false,
-   "pos": "part z 0 = underside (world z -212.6)",
+   "pos": "part z 0 = underside, on the bracket plate (world z -232.6)",
    "bbox": [
-    -60.0,
-    60.0,
-    -40.0,
-    40.0,
+    -32.0,
+    32.0,
+    -32.0,
+    32.0,
     0.0,
-    15.0
+    20.0
    ],
-   "volume_cm3": 142.24,
+   "volume_cm3": 80.03,
    "features": [
     {
      "kind": "drill",
@@ -11205,23 +12960,23 @@
      "tool": 28,
      "pts": [
       [
-       -50.0,
-       -30.0,
+       -15.0,
+       -15.0,
        0.0
       ],
       [
-       -50.0,
-       30.0,
+       -15.0,
+       15.0,
        0.0
       ],
       [
-       50.0,
-       -30.0,
+       15.0,
+       -15.0,
        0.0
       ],
       [
-       50.0,
-       30.0,
+       15.0,
+       15.0,
        0.0
       ]
      ],
@@ -11238,28 +12993,28 @@
      "tool": 30,
      "pts": [
       [
-       -40.0,
-       -20.0,
-       15.0
+       -25.0,
+       -25.0,
+       19.995000000000005
       ],
       [
-       -40.0,
-       20.0,
-       15.0
+       -25.0,
+       25.0,
+       19.995000000000005
       ],
       [
-       40.0,
-       -20.0,
-       15.0
+       25.0,
+       -25.0,
+       19.995000000000005
       ],
       [
-       40.0,
-       20.0,
-       15.0
+       25.0,
+       25.0,
+       19.995000000000005
       ]
      ],
-     "depth": 0.0,
-     "through": true,
+     "depth": 14.0,
+     "through": false,
      "size": "M6",
      "hole_kind": "tap"
     }
@@ -11274,23 +13029,23 @@
      "axis": "+z",
      "pts": [
       [
-       -50.0,
-       -30.0,
+       -15.0,
+       -15.0,
        0.0
       ],
       [
-       -50.0,
-       30.0,
+       -15.0,
+       15.0,
        0.0
       ],
       [
-       50.0,
-       -30.0,
+       15.0,
+       -15.0,
        0.0
       ],
       [
-       50.0,
-       30.0,
+       15.0,
+       15.0,
        0.0
       ]
      ]
@@ -11300,28 +13055,28 @@
      "n": 4,
      "kind": "tap",
      "size": "M6",
-     "callout": "M6 x through deep thread, tap drill 5.00 x through - X-VSR20A base: PATTERN EST., drill to Zaber's drawing",
+     "callout": "M6 x 12 deep thread, tap drill 5.00 x 14.0 - X-VSR20A base: M6 clearance holes on a 50 mm square (Zaber STEP, ft_vendor.VSR base_holes)",
      "axis": "-z",
      "pts": [
       [
-       -40.0,
-       -20.0,
-       15.0
+       -25.0,
+       -25.0,
+       20.0
       ],
       [
-       -40.0,
-       20.0,
-       15.0
+       -25.0,
+       25.0,
+       20.0
       ],
       [
-       40.0,
-       -20.0,
-       15.0
+       25.0,
+       -25.0,
+       20.0
       ],
       [
-       40.0,
-       20.0,
-       15.0
+       25.0,
+       25.0,
+       20.0
       ]
      ]
     }
@@ -11332,15 +13087,16 @@
      "up": "+Z",
      "face": [
       2,
-      15.0
+      19.995000000000005
      ],
      "outline": [
       2,
-      1.0
+      -0.3
      ],
-     "label": "top up: face, outline, stage holes",
+     "label": "top up: face to 20.0, outline, stage taps",
      "hold": "",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-15b_B",
@@ -11349,13 +13105,11 @@
       2,
       0.0
      ],
-     "outline": [
-      2,
-      -15.3
-     ],
-     "label": "bottom up: face to 15, riser taps",
+     "outline": null,
+     "label": "bottom up: face, riser taps",
      "hold": "",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     }
    ],
    "lathe": [],
@@ -11363,46 +13117,46 @@
    "tol": [],
    "notes": [],
    "changes": [
-    "added: 4 x M5 from the plate, 4 x M6 for the stage (pattern est.)"
+    "v2: 64 x 64 x 20.0 under the X-VSR20A (ft_model; its 64 x 64 base face, from Zaber's STEP); the stage's 4 x M6 on a 50 mm square are now read, not estimated"
    ],
    "finish": "6061: deburr, break edges 0.2-0.5 x 45 deg; as machined, Ra 3.2 um unless stated",
    "sheet": null,
    "buy": null,
    "n_holes": 8,
-   "start_volume_cm3": 172.08
+   "start_volume_cm3": 124.46
   },
   {
    "pid": "MK-15c",
    "mk": "MK-15",
-   "name": "Rod clamp (split)",
+   "name": "Rod-end block: rod clamp, lead pocket, AE face",
    "material": "6061-T6511",
    "qty": 1,
    "route": "CNC mill + saw slit",
    "state": "FT-1",
-   "stock": "6061 bar 1-1/4 in. square (31.75) sawn 28 long",
-   "stock_pn": "6061 square bar 1-1/4 in. (PN not read)",
+   "stock": "6061 bar 1-3/4 x 2-3/4 in. (44.45 x 69.85) sawn 43 long",
+   "stock_pn": "6061 bar 1-3/4 x 2-3/4 in. (PN not read)",
    "blank": {
     "type": "box",
     "box": [
-     -15.9,
-     15.9,
-     -15.9,
-     15.9,
+     -34.9,
+     34.9,
+     -22.2,
+     22.2,
      -1.5,
-     26.5
+     41.5
     ]
    },
    "seal": false,
-   "pos": "part z 0 = clamp underside on the X-VSR20A platform",
+   "pos": "part z 0 = underside on the X-VSR20A platform; the rod on the z axis",
    "bbox": [
-    -15.0,
-    15.0,
-    -15.0,
-    15.0,
-    0.0,
-    25.0
+    -32.0,
+    32.0,
+    -20.0,
+    20.0,
+    -0.0,
+    40.0
    ],
-   "volume_cm3": 16.79,
+   "volume_cm3": 85.44,
    "features": [
     {
      "kind": "bore",
@@ -11414,19 +13168,19 @@
       0,
       0
      ],
-     "z_top": 25.0,
-     "z_bot": 0,
+     "z_top": 40.0,
+     "z_bot": 16.0,
      "finish": null
     },
     {
-     "kind": "adaptive",
-     "name": "lead exit 6 x 6 toward -y",
-     "axis": "+z",
-     "tool": 4,
+     "kind": "pocket",
+     "name": "lead pocket 16 x 28 x 12, open to -y",
+     "axis": "+y",
+     "tool": 3,
      "probe": [
       0,
-      -11.0,
-      6.0
+      8.0,
+      10.0
      ],
      "note": "",
      "z_top": null
@@ -11435,129 +13189,144 @@
      "kind": "drill",
      "hid": "A",
      "axis": "-z",
-     "d": 4.5,
-     "tool": 29,
+     "d": 6.6,
+     "tool": 33,
      "pts": [
       [
-       -10.5,
-       -10.5,
-       25.0
+       -25.0,
+       -12.5,
+       40.0
       ],
       [
-       10.5,
-       -10.5,
-       25.0
+       -25.0,
+       12.5,
+       40.0
+      ],
+      [
+       25.0,
+       -12.5,
+       40.0
+      ],
+      [
+       25.0,
+       12.5,
+       40.0
       ]
      ],
      "depth": 0.0,
      "through": true,
-     "size": "M4",
+     "size": "M6",
      "hole_kind": "cbore"
     },
     {
      "kind": "cbore",
      "hid": "A",
      "axis": "-z",
-     "d": 8.0,
-     "depth": 4.5,
+     "d": 11.0,
+     "depth": 6.6,
      "tool": 4,
      "pts": [
       [
-       -10.5,
-       -10.5,
-       25.0
+       -25.0,
+       -12.5,
+       40.0
       ],
       [
-       10.5,
-       -10.5,
-       25.0
+       -25.0,
+       12.5,
+       40.0
+      ],
+      [
+       25.0,
+       -12.5,
+       40.0
+      ],
+      [
+       25.0,
+       12.5,
+       40.0
       ]
      ],
-     "hole_d": 4.5
+     "hole_d": 6.6
     },
     {
      "kind": "drill",
      "hid": "B",
-     "axis": "+x",
-     "d": 3.4,
-     "tool": 27,
+     "axis": "-x",
+     "d": 4.5,
+     "tool": 29,
      "pts": [
       [
-       -15.0,
-       10.75,
-       8.0
-      ],
-      [
-       -15.0,
-       10.75,
-       18.0
+       32.0,
+       12.0,
+       30.0
       ]
      ],
      "depth": 0.0,
      "through": true,
-     "size": "M3",
+     "size": "M4",
      "hole_kind": "cbore"
     },
     {
      "kind": "cbore",
      "hid": "B",
-     "axis": "+x",
-     "d": 6.5,
-     "depth": 3.4,
+     "axis": "-x",
+     "d": 8.0,
+     "depth": 4.5,
      "tool": 4,
      "pts": [
       [
-       -15.0,
-       10.75,
-       8.0
-      ],
-      [
-       -15.0,
-       10.75,
-       18.0
+       32.0,
+       12.0,
+       30.0
       ]
      ],
-     "hole_d": 3.4
+     "hole_d": 4.5
     }
    ],
    "holes": [
     {
      "id": "A",
-     "n": 2,
+     "n": 4,
      "kind": "cbore",
-     "size": "M4",
-     "callout": "4.5 through, c'bore 8.0 x 4.5 (M4 SHCS) - to the stage platform (pattern est.)",
+     "size": "M6",
+     "callout": "6.6 through, c'bore 11.0 x 6.6 (M6 SHCS) - M6 x 35 into the X-VSR20A platform's M6 grid (Zaber STEP)",
      "axis": "-z",
      "pts": [
       [
-       -10.5,
-       -10.5,
-       25.0
+       -25.0,
+       -12.5,
+       40.0
       ],
       [
-       10.5,
-       -10.5,
-       25.0
+       -25.0,
+       12.5,
+       40.0
+      ],
+      [
+       25.0,
+       -12.5,
+       40.0
+      ],
+      [
+       25.0,
+       12.5,
+       40.0
       ]
      ]
     },
     {
      "id": "B",
-     "n": 2,
+     "n": 1,
      "kind": "cbore",
-     "size": "M3",
-     "callout": "3.4 through, c'bore 6.5 x 3.4 (M3 SHCS) - clamp screws across the slit; the far half is tapped M3 by hand after drilling 2.5",
-     "axis": "+x",
+     "size": "M4",
+     "callout": "4.5 through, c'bore 8.0 x 4.5 (M4 SHCS) - clamp screw across the slit (ft_model); the far half tapped M4 by hand after drilling 3.3",
+     "axis": "-x",
      "pts": [
       [
-       -15.0,
-       10.75,
-       8.0
-      ],
-      [
-       -15.0,
-       10.75,
-       18.0
+       32.0,
+       12.0,
+       30.0
       ]
      ]
     }
@@ -11568,15 +13337,16 @@
      "up": "+Z",
      "face": [
       2,
-      25.0
+      40.0
      ],
      "outline": [
       2,
-      1.0
+      -0.3
      ],
      "label": "top up: face, outline, rod bore, c'bores",
-     "hold": "",
-     "stock_note": ""
+     "hold": "vise on the blank's y faces, on parallels",
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-15c_B",
@@ -11585,45 +13355,54 @@
       2,
       0.0
      ],
-     "outline": [
-      2,
-      -25.3
-     ],
-     "label": "bottom up: face to 25, lead exit",
-     "hold": "",
-     "stock_note": ""
+     "outline": null,
+     "label": "bottom up: face to 40",
+     "hold": "vise",
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-15c_C",
-     "up": "-X",
+     "up": "-Y",
      "face": null,
      "outline": null,
-     "label": "-X face up: clamp-screw holes",
+     "label": "-y face up: lead pocket",
+     "hold": "vise on the x ends",
+     "stock_note": "",
+     "repeat": 1
+    },
+    {
+     "name": "MK-15c_D",
+     "up": "+X",
+     "face": null,
+     "outline": null,
+     "label": "+x (AE) face up: clamp-screw hole",
      "hold": "vise on the y faces",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     }
    ],
    "lathe": [],
    "manual": [
     [
-     "slit 1.5 wide from the bore to +y, full height (slitting saw or bandsaw)",
+     "slit 1.5 wide from the bore to +y, z 20 to the top (slitting saw or bandsaw)",
      10.0
     ]
    ],
    "tol": [
-    "rod bore 12.95 +0.05/0, perpendicular to the base within 0.02 (the rod must run true in the gland)"
+    "rod bore 12.95 +0.05/0, perpendicular to the base within 0.02 (the rod must run true in the gland)",
+    "+x face flat within 0.02, Ra 1.6 (acoustic-emission sensor couplant)"
    ],
    "notes": [],
    "changes": [
-    "slit 4 -> 1.5 mm and through the full height, two M3 clamp screws (the model's 8 mm tall slit would not close)",
-    "added: 6 x 6 lead exit at the bottom (the rod's leads leave here)",
-    "added: 2 x M4 to the platform (pattern est.)"
+    "v2: the rod clamp becomes the rod-end block (ft_model): 64 x 40 x 40, a lead pocket open to -y for the potted plug's pigtail, 4 x M6 into the stage's platform (read from Zaber's STEP), a flat AE face",
+    "kept from v1: rod bore 12.95 (model 12.8), the slit 1.5 wide sawn by hand"
    ],
    "finish": "6061: deburr, break edges 0.2-0.5 x 45 deg; as machined, Ra 3.2 um unless stated",
    "sheet": null,
    "buy": null,
-   "n_holes": 4,
-   "start_volume_cm3": 28.31
+   "n_holes": 5,
+   "start_volume_cm3": 133.26
   },
   {
    "pid": "MK-16",
@@ -11687,7 +13466,8 @@
      ],
      "label": "top up: face, outline, pocket",
      "hold": "",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-16_B",
@@ -11699,7 +13479,8 @@
      "outline": null,
      "label": "bottom up: face to height",
      "hold": "",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     }
    ],
    "lathe": [],
@@ -11753,6 +13534,110 @@
    "n_holes": 0
   },
   {
+   "pid": "MK-17b",
+   "mk": "MK-17",
+   "name": "FT-0 lead terminal bracket under the gland (bent sheet)",
+   "material": "5052-H32 aluminium sheet 0.080 in. (2.03)",
+   "qty": 1,
+   "route": "sheet: laser-cut and bent (SendCutSend)",
+   "state": "FT-0",
+   "stock": "SendCutSend 5052-H32, 0.080 in.",
+   "stock_pn": "flat pattern out/dxf/MK-17b.dxf",
+   "blank": null,
+   "seal": false,
+   "pos": "part (x, y) = world; part z 0 = the gland's underside (world z -76.6)",
+   "bbox": [
+    -20.0,
+    20.0,
+    -54.0,
+    -20.0,
+    -60.0,
+    0.0
+   ],
+   "volume_cm3": 7.05,
+   "features": [],
+   "holes": [],
+   "setups": [],
+   "lathe": [],
+   "manual": [],
+   "tol": [
+    "bends +-1 deg; holes +-0.2"
+   ],
+   "notes": [],
+   "changes": [
+    "new in v2 (ft_model MK-17, FT-0): a Z of 0.080 in. 5052 sheet: a tab under the gland (2 x M3 into MK-07), a 60 mm upright with a 14 x 12 window for the pigtail, a 20 mm shelf for the terminal block. ft_model's 4 mm L touches the gland only at an edge: the tab gives it screws"
+   ],
+   "finish": "as supplied",
+   "sheet": {
+    "thickness": 2.03,
+    "k_factor": 0.44,
+    "outline": [
+     [
+      -20.0,
+      0
+     ],
+     [
+      20.0,
+      0
+     ],
+     [
+      20.0,
+      95.064
+     ],
+     [
+      -20.0,
+      95.064
+     ]
+    ],
+    "holes": [
+     [
+      -12.0,
+      5.0,
+      3.4
+     ],
+     [
+      12.0,
+      5.0,
+      3.4
+     ],
+     [
+      -10.0,
+      85.064,
+      3.4
+     ],
+     [
+      10.0,
+      85.064,
+      3.4
+     ]
+    ],
+    "slot": {
+     "u0": -7.0,
+     "u1": 7.0,
+     "v0": 50.562,
+     "v1": 62.562
+    },
+    "bends": [
+     {
+      "line": "tab/upright",
+      "v": 14.266,
+      "angle": 90.0,
+      "inside_r": 2.03,
+      "allowance": 4.592
+     },
+     {
+      "line": "upright/shelf",
+      "v": 74.798,
+      "angle": 90.0,
+      "inside_r": 2.03,
+      "allowance": 4.592
+     }
+    ]
+   },
+   "buy": null,
+   "n_holes": 0
+  },
+  {
    "pid": "MK-18a",
    "mk": "MK-18",
    "name": "Guide-laser target stand",
@@ -11770,7 +13655,7 @@
      -31.75,
      31.75,
      -1.7,
-     53.125000000000014
+     53.13000000000001
     ]
    },
    "seal": false,
@@ -11783,7 +13668,7 @@
     0.0,
     51.43
    ],
-   "volume_cm3": 171.97,
+   "volume_cm3": 171.98,
    "features": [
     {
      "kind": "drill",
@@ -11828,25 +13713,25 @@
       [
        -12.5,
        -12.5,
-       51.42500000000001
+       51.43000000000001
       ],
       [
        -12.5,
        12.5,
-       51.42500000000001
+       51.43000000000001
       ],
       [
        12.5,
        -12.5,
-       51.42500000000001
+       51.43000000000001
       ],
       [
        12.5,
        12.5,
-       51.42500000000001
+       51.43000000000001
       ]
      ],
-     "depth": 36.42500000000001,
+     "depth": 36.43000000000001,
      "through": false,
      "size": "10.0",
      "hole_kind": "plain"
@@ -11861,22 +13746,22 @@
       [
        -24.0,
        -24.0,
-       51.42500000000001
+       51.43000000000001
       ],
       [
        -24.0,
        24.0,
-       51.42500000000001
+       51.43000000000001
       ],
       [
        24.0,
        -24.0,
-       51.42500000000001
+       51.43000000000001
       ],
       [
        24.0,
        24.0,
-       51.42500000000001
+       51.43000000000001
       ]
      ],
      "depth": 8.0,
@@ -11983,7 +13868,7 @@
      "up": "+Z",
      "face": [
       2,
-      51.42500000000001
+      51.43000000000001
      ],
      "outline": [
       2,
@@ -11991,7 +13876,8 @@
      ],
      "label": "top up: face, outline, wells, M3",
      "hold": "",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     },
     {
      "name": "MK-18a_B",
@@ -12002,11 +13888,12 @@
      ],
      "outline": [
       2,
-      -51.72500000000001
+      -51.730000000000004
      ],
      "label": "bottom up: face to height, holes A",
      "hold": "",
-     "stock_note": ""
+     "stock_note": "",
+     "repeat": 1
     }
    ],
    "lathe": [],
@@ -12024,7 +13911,7 @@
    "sheet": null,
    "buy": null,
    "n_holes": 12,
-   "start_volume_cm3": 221.07
+   "start_volume_cm3": 221.09
   },
   {
    "pid": "MK-18b",
@@ -12111,6 +13998,932 @@
    },
    "buy": null,
    "n_holes": 0
+  },
+  {
+   "pid": "MK-19",
+   "mk": "MK-19",
+   "name": "Port ring: camera port (MK-19) and the two light ports (MK-21), one design (x3)",
+   "material": "6061-T651",
+   "qty": 3,
+   "route": "CNC mill",
+   "state": "FT-0",
+   "stock": "3/8 in. 6061 plate (9.53) faced to 7.0, 56 x 56 each",
+   "stock_pn": "3/8 in. 6061 plate (PN not read)",
+   "blank": {
+    "type": "box",
+    "box": [
+     -28,
+     28,
+     -28,
+     28,
+     -1.27,
+     8.26
+    ]
+   },
+   "seal": true,
+   "pos": "part z 0 = the face on the enclosure (box door or wall; MK-13 or the cube's plates in FT-1V)",
+   "bbox": [
+    -25.0,
+    25.0,
+    -25.0,
+    25.0,
+    0.0,
+    7.0
+   ],
+   "volume_cm3": 10.16,
+   "features": [
+    {
+     "kind": "bore",
+     "name": "aperture 20",
+     "axis": "-z",
+     "tool": 3,
+     "r": 10.0,
+     "xy": [
+      0,
+      0
+     ],
+     "z_top": 7.0,
+     "z_bot": 0,
+     "finish": null
+    },
+    {
+     "kind": "pocket",
+     "name": "window seat 25.6 x 4.1 (25.4 x 3 window over a 1.0 cover slide)",
+     "axis": "-z",
+     "tool": 3,
+     "probe": [
+      11.5,
+      0,
+      2.9000000000000004
+     ],
+     "note": "",
+     "z_top": null
+    },
+    {
+     "kind": "groove",
+     "name": "face O-ring groove (AS568-026)",
+     "axis": "+z",
+     "tool": 5,
+     "probe": [
+      16.886999499999998,
+      0,
+      1.3208
+     ],
+     "note": "",
+     "z_top": null
+    },
+    {
+     "kind": "drill",
+     "hid": "A",
+     "axis": "-z",
+     "d": 3.4,
+     "tool": 27,
+     "pts": [
+      [
+       15.202795795510772,
+       15.20279579551077,
+       7.0
+      ],
+      [
+       -15.20279579551077,
+       15.202795795510772,
+       7.0
+      ],
+      [
+       -15.202795795510776,
+       -15.20279579551077,
+       7.0
+      ],
+      [
+       15.202795795510768,
+       -15.202795795510776,
+       7.0
+      ]
+     ],
+     "depth": 0.0,
+     "through": true,
+     "size": "M3",
+     "hole_kind": "clear"
+    }
+   ],
+   "holes": [
+    {
+     "id": "A",
+     "n": 4,
+     "kind": "clear",
+     "size": "M3",
+     "callout": "3.4 M3 clearance through - M3 to the door or wall (nuts or PEM studs inside, within the O-ring) / MK-13's taps",
+     "axis": "-z",
+     "pts": [
+      [
+       15.2,
+       15.2,
+       7.0
+      ],
+      [
+       -15.2,
+       15.2,
+       7.0
+      ],
+      [
+       -15.2,
+       -15.2,
+       7.0
+      ],
+      [
+       15.2,
+       -15.2,
+       7.0
+      ]
+     ]
+    }
+   ],
+   "setups": [
+    {
+     "name": "MK-19_A",
+     "up": "-Z",
+     "face": [
+      2,
+      1.27
+     ],
+     "outline": null,
+     "label": "face side up: face, O-ring groove",
+     "hold": "vise, three at a time",
+     "stock_note": "",
+     "repeat": 1
+    },
+    {
+     "name": "MK-19_B",
+     "up": "+Z",
+     "face": [
+      2,
+      7.0
+     ],
+     "outline": [
+      2,
+      -0.3
+     ],
+     "label": "top up: face to 7, aperture, window seat, holes, outline",
+     "hold": "screwed to a sacrificial plate through holes A",
+     "stock_note": "",
+     "repeat": 1
+    }
+   ],
+   "lathe": [],
+   "manual": [],
+   "tol": [
+    "seat floor flatness 0.02 (the cover slide and window rest on it)",
+    "face (z 0): flatness 0.02, Ra 0.4 um (16 RMS) inside the groove"
+   ],
+   "notes": [],
+   "changes": [
+    "new in v2 (ft_model MK-19 and MK-21): ft_model draws a 44 x 7 ring whose 26 bore lets the 25.4 window fall through and has no seal; here OD 50, a 20 aperture under a 25.6 x 4.1 seat (window and cover slide, bonded with RTV at the top edge), an AS568-026 face groove round the enclosure's 28 hole, 4 x M3",
+    "the camera port and the two light ports take the same ring: one program, three pieces"
+   ],
+   "finish": "6061: deburr, break edges 0.2-0.5 x 45 deg; as machined, Ra 3.2 um unless stated",
+   "sheet": null,
+   "buy": null,
+   "n_holes": 4,
+   "start_volume_cm3": 29.89
+  },
+  {
+   "pid": "MK-20a",
+   "mk": "MK-20",
+   "name": "Camera post foot (bonded to the door or the top plate)",
+   "material": "6061-T6511",
+   "qty": 1,
+   "route": "lathe",
+   "state": "FT-0",
+   "stock": "6061 round bar 1-1/4 in. (31.75) sawn 12 long",
+   "stock_pn": "6061 round bar 1-1/4 in. (PN not read)",
+   "blank": {
+    "type": "cyl",
+    "r": 15.875,
+    "z": [
+     -1.0,
+     7.0
+    ]
+   },
+   "seal": false,
+   "pos": "part z 0 = the face bonded to the enclosure",
+   "bbox": [
+    -15.0,
+    15.0,
+    -15.0,
+    15.0,
+    0.0,
+    6.0
+   ],
+   "volume_cm3": 4.14,
+   "features": [],
+   "holes": [],
+   "setups": [],
+   "lathe": [
+    [
+     "face, turn 30, drill 5.0 x 5, tap M6 (the post's thread), chamfer, part off",
+     2.69
+    ],
+    [
+     "second op: face to 6.0, scuff the face for the epoxy",
+     1.59
+    ]
+   ],
+   "manual": [],
+   "tol": [],
+   "notes": [],
+   "changes": [
+    "new in v2 (ft_model MK-20): a foot bonded with structural epoxy, so the door gets no more holes; post (12 mm, M6) and right-angle clamp bought (Thorlabs class)"
+   ],
+   "finish": "6061: deburr, break edges 0.2-0.5 x 45 deg; as machined, Ra 3.2 um unless stated",
+   "sheet": null,
+   "buy": null,
+   "n_holes": 0,
+   "start_volume_cm3": 6.33
+  },
+  {
+   "pid": "MK-20c",
+   "mk": "MK-20",
+   "name": "Scheimpflug wedges, C-mount (2: 2.96 deg box, 2.34 deg cube)",
+   "material": "6061-T6511, black anodised",
+   "qty": 2,
+   "route": "lathe + sine vise",
+   "state": "FT-0",
+   "stock": "6061 round bar 1-3/4 in. (44.45), 12 long each",
+   "stock_pn": "6061 round bar 1-3/4 in. (PN not read)",
+   "blank": {
+    "type": "cyl",
+    "r": 22.2,
+    "z": [
+     -1.0,
+     9.0
+    ]
+   },
+   "seal": false,
+   "pos": "part z 0 = the lens side",
+   "bbox": [
+    -19.0,
+    19.0,
+    -19.0,
+    19.0,
+    0.0,
+    5.98
+   ],
+   "volume_cm3": 3.77,
+   "features": [],
+   "holes": [],
+   "setups": [],
+   "lathe": [
+    [
+     "face, turn 38, bore 22, single-point the C-mount (1-32 UN) inside, each",
+     12.41
+    ],
+    [
+     "second op: the male C-mount thread on the other side, each",
+     12.15
+    ]
+   ],
+   "manual": [
+    [
+     "wedge face on a sine vise: 2.96 and 2.34 deg, a facing pass each (set-up 20 min, 5 min each)",
+     30.0
+    ]
+   ],
+   "tol": [],
+   "notes": [],
+   "changes": [
+    "new in v2 (ft_model MK-20): the Scheimpflug angles from camera_geometry: 2.96 deg (box, 16 mm lens) and 2.34 deg (cube, 25 mm)"
+   ],
+   "finish": "black anodise (outside service), or black-out paint",
+   "sheet": null,
+   "buy": null,
+   "n_holes": 0,
+   "start_volume_cm3": 15.48
+  },
+  {
+   "pid": "MK-21c",
+   "mk": "MK-21",
+   "name": "Light-port bores in the cube's left plate and door (2 Ideal Vacuum E2 plates)",
+   "material": "6061 (Ideal Vacuum plates)",
+   "qty": 2,
+   "route": "tilted setup on the mill",
+   "state": "FT-1V",
+   "stock": "the cube's left plate and its door (parts.csv E2)",
+   "stock_pn": "Ideal Vacuum (parts.csv E2)",
+   "blank": null,
+   "seal": true,
+   "pos": "plate frame as MK-13: z 0 = the boss face (inside)",
+   "bbox": [
+    -150.9,
+    150.9,
+    -150.9,
+    150.9,
+    0.0,
+    22.9
+   ],
+   "volume_cm3": 1912.54,
+   "features": [],
+   "holes": [],
+   "setups": [],
+   "lathe": [],
+   "manual": [
+    [
+     "per plate: on a tilting table or sine plate at the light's elevation (15 deg left, 30 deg door), helix-mill a 24 bore through (45 min to set up, 15 min to cut), then 4 x M3 x 8 blind for the port ring on the outside face (10 min); estimate, not programmed",
+     140.0
+    ]
+   ],
+   "tol": [
+    "bore direction +-0.5 deg; the port ring's face is the plate's own outside face (flat, O-ring land)"
+   ],
+   "notes": [],
+   "changes": [
+    "new in v2 (ft_model MK-21): 24 bores along the raking lights' lines (left plate 15 deg, door 30 deg) with a port ring (MK-19) on each; tilted, so estimated, not programmed"
+   ],
+   "finish": "6061: deburr, break edges 0.2-0.5 x 45 deg; as machined, Ra 3.2 um unless stated",
+   "sheet": null,
+   "buy": null,
+   "n_holes": 0
+  },
+  {
+   "pid": "MK-22a",
+   "mk": "MK-22",
+   "name": "Coaxial branch plate: SM1 bore and 30 mm cage on the mirror block's back face",
+   "material": "6061-T651",
+   "qty": 1,
+   "route": "CNC mill",
+   "state": "S1",
+   "stock": "3/8 in. 6061 plate (9.53), 64 x 64, faced to 8.0",
+   "stock_pn": "3/8 in. 6061 plate (PN not read)",
+   "blank": {
+    "type": "box",
+    "box": [
+     -32,
+     32,
+     -32,
+     32,
+     -0.76,
+     8.77
+    ]
+   },
+   "seal": false,
+   "pos": "part z 0 = the face on the mirror block",
+   "bbox": [
+    -30.0,
+    30.0,
+    -30.0,
+    30.0,
+    0.0,
+    8.0
+   ],
+   "volume_cm3": 22.56,
+   "features": [
+    {
+     "kind": "bore",
+     "name": "SM1 bore 25.6 (SM1 thread: Thorlabs SM1 tap)",
+     "axis": "-z",
+     "tool": 3,
+     "r": 12.8,
+     "xy": [
+      0,
+      0
+     ],
+     "z_top": 8.0,
+     "z_bot": 0,
+     "finish": null
+    },
+    {
+     "kind": "drill",
+     "hid": "A",
+     "axis": "-z",
+     "d": 6.1,
+     "tool": 36,
+     "pts": [
+      [
+       -15.0,
+       -15.0,
+       8.0
+      ],
+      [
+       -15.0,
+       15.0,
+       8.0
+      ],
+      [
+       15.0,
+       -15.0,
+       8.0
+      ],
+      [
+       15.0,
+       15.0,
+       8.0
+      ]
+     ],
+     "depth": 0.0,
+     "through": true,
+     "size": "6.1",
+     "hole_kind": "plain"
+    },
+    {
+     "kind": "drill",
+     "hid": "B",
+     "axis": "-z",
+     "d": 4.5,
+     "tool": 29,
+     "pts": [
+      [
+       -22.0,
+       -22.0,
+       8.0
+      ],
+      [
+       -22.0,
+       22.0,
+       8.0
+      ],
+      [
+       22.0,
+       -22.0,
+       8.0
+      ],
+      [
+       22.0,
+       22.0,
+       8.0
+      ]
+     ],
+     "depth": 0.0,
+     "through": true,
+     "size": "M4",
+     "hole_kind": "cbore"
+    },
+    {
+     "kind": "cbore",
+     "hid": "B",
+     "axis": "-z",
+     "d": 8.0,
+     "depth": 4.5,
+     "tool": 4,
+     "pts": [
+      [
+       -22.0,
+       -22.0,
+       8.0
+      ],
+      [
+       -22.0,
+       22.0,
+       8.0
+      ],
+      [
+       22.0,
+       -22.0,
+       8.0
+      ],
+      [
+       22.0,
+       22.0,
+       8.0
+      ]
+     ],
+     "hole_d": 4.5
+    }
+   ],
+   "holes": [
+    {
+     "id": "A",
+     "n": 4,
+     "kind": "plain",
+     "size": "6.1",
+     "callout": "6.10 plain through - 30 mm cage rods (6 mm), bonded or held by M3 set screws from the edge",
+     "axis": "-z",
+     "pts": [
+      [
+       -15.0,
+       -15.0,
+       8.0
+      ],
+      [
+       -15.0,
+       15.0,
+       8.0
+      ],
+      [
+       15.0,
+       -15.0,
+       8.0
+      ],
+      [
+       15.0,
+       15.0,
+       8.0
+      ]
+     ]
+    },
+    {
+     "id": "B",
+     "n": 4,
+     "kind": "cbore",
+     "size": "M4",
+     "callout": "4.5 through, c'bore 8.0 x 4.5 (M4 SHCS) - to the mirror block's back face: PATTERN EST. (the block was drawn from listing photos)",
+     "axis": "-z",
+     "pts": [
+      [
+       -22.0,
+       -22.0,
+       8.0
+      ],
+      [
+       -22.0,
+       22.0,
+       8.0
+      ],
+      [
+       22.0,
+       -22.0,
+       8.0
+      ],
+      [
+       22.0,
+       22.0,
+       8.0
+      ]
+     ]
+    }
+   ],
+   "setups": [
+    {
+     "name": "MK-22a_A",
+     "up": "-Z",
+     "face": [
+      2,
+      0.76
+     ],
+     "outline": null,
+     "label": "block face up: face",
+     "hold": "vise",
+     "stock_note": "",
+     "repeat": 1
+    },
+    {
+     "name": "MK-22a_B",
+     "up": "+Z",
+     "face": [
+      2,
+      8.0
+     ],
+     "outline": [
+      2,
+      -0.3
+     ],
+     "label": "top up: face to 8, SM1 bore, cage holes, c'bores, outline",
+     "hold": "",
+     "stock_note": "",
+     "repeat": 1
+    }
+   ],
+   "lathe": [],
+   "manual": [],
+   "tol": [],
+   "notes": [],
+   "changes": [
+    "new in v2 (MK-22 in ft_model, not drawn there): the photodiode branch (MON4) mounts on the input mirror block's back port through this plate"
+   ],
+   "finish": "6061: deburr, break edges 0.2-0.5 x 45 deg; as machined, Ra 3.2 um unless stated",
+   "sheet": null,
+   "buy": null,
+   "n_holes": 8,
+   "start_volume_cm3": 39.03
+  },
+  {
+   "pid": "MK-22b",
+   "mk": "MK-22",
+   "name": "Collimator clamp block, hung under the front cross-beam",
+   "material": "6061-T6511",
+   "qty": 1,
+   "route": "CNC mill + saw slit",
+   "state": "S1",
+   "stock": "6061 bar 1 x 3-1/2 in. (25.4 x 88.9) sawn 72 long",
+   "stock_pn": "6061 bar 1 x 3-1/2 in. (PN not read)",
+   "blank": {
+    "type": "box",
+    "box": [
+     -44.45,
+     44.45,
+     -38.0,
+     33.5,
+     -0.2,
+     25.2
+    ]
+   },
+   "seal": false,
+   "pos": "part x = world x - (-132.3); part y = world z - 391.6 (the collimator's axis at the origin); part z along the collimator (+y world), 0 = world y -163.3",
+   "bbox": [
+    -40.0,
+    40.0,
+    -36.0,
+    31.5,
+    0.0,
+    25.0
+   ],
+   "volume_cm3": 95.62,
+   "features": [
+    {
+     "kind": "bore",
+     "name": "collimator bore 40.10",
+     "axis": "-z",
+     "tool": 2,
+     "r": 20.05,
+     "xy": [
+      0.0,
+      0.0
+     ],
+     "z_top": 25.0,
+     "z_bot": 0.0,
+     "finish": null
+    },
+    {
+     "kind": "drill",
+     "hid": "A",
+     "axis": "+y",
+     "d": 6.6,
+     "tool": 33,
+     "pts": [
+      [
+       -30.0,
+       -36.0,
+       12.5
+      ],
+      [
+       30.0,
+       -36.0,
+       12.5
+      ]
+     ],
+     "depth": 0.0,
+     "through": true,
+     "size": "M6",
+     "hole_kind": "cbore"
+    },
+    {
+     "kind": "cbore",
+     "hid": "A",
+     "axis": "+y",
+     "d": 11.0,
+     "depth": 6.6,
+     "tool": 4,
+     "pts": [
+      [
+       -30.0,
+       -36.0,
+       12.5
+      ],
+      [
+       30.0,
+       -36.0,
+       12.5
+      ]
+     ],
+     "hole_d": 6.6
+    },
+    {
+     "kind": "drill",
+     "hid": "B",
+     "axis": "-x",
+     "d": 5.5,
+     "tool": 31,
+     "pts": [
+      [
+       40.0,
+       -28.0,
+       12.5
+      ]
+     ],
+     "depth": 0.0,
+     "through": true,
+     "size": "M5",
+     "hole_kind": "cbore"
+    },
+    {
+     "kind": "cbore",
+     "hid": "B",
+     "axis": "-x",
+     "d": 9.5,
+     "depth": 5.5,
+     "tool": 4,
+     "pts": [
+      [
+       40.0,
+       -28.0,
+       12.5
+      ]
+     ],
+     "hole_d": 5.5
+    }
+   ],
+   "holes": [
+    {
+     "id": "A",
+     "n": 2,
+     "kind": "cbore",
+     "size": "M6",
+     "callout": "6.6 through, c'bore 11.0 x 6.6 (M6 SHCS) - M6 x 70 up into drop-in T-nuts in the front beam's bottom slot",
+     "axis": "+y",
+     "pts": [
+      [
+       -30.0,
+       -36.0,
+       12.5
+      ],
+      [
+       30.0,
+       -36.0,
+       12.5
+      ]
+     ]
+    },
+    {
+     "id": "B",
+     "n": 1,
+     "kind": "cbore",
+     "size": "M5",
+     "callout": "5.5 through, c'bore 9.5 x 5.5 (M5 SHCS) - clamp screw across the slit; the far half tapped M5 by hand after drilling 4.2",
+     "axis": "-x",
+     "pts": [
+      [
+       40.0,
+       -28.0,
+       12.5
+      ]
+     ]
+    }
+   ],
+   "setups": [
+    {
+     "name": "MK-22b_A",
+     "up": "+Z",
+     "face": [
+      2,
+      25.0
+     ],
+     "outline": [
+      2,
+      -0.3
+     ],
+     "label": "bore face up: face, outline, collimator bore",
+     "hold": "screwed to a sacrificial plate, or vise on the 88.9 bar's edges",
+     "stock_note": "",
+     "repeat": 1
+    },
+    {
+     "name": "MK-22b_B",
+     "up": "-Z",
+     "face": [
+      2,
+      0.0
+     ],
+     "outline": null,
+     "label": "flip: face to 25.0",
+     "hold": "vise",
+     "stock_note": "",
+     "repeat": 1
+    },
+    {
+     "name": "MK-22b_C",
+     "up": "-Y",
+     "face": null,
+     "outline": null,
+     "label": "bottom up: 2 x M6 c'bores",
+     "hold": "vise on the z faces",
+     "stock_note": "",
+     "repeat": 1
+    },
+    {
+     "name": "MK-22b_D",
+     "up": "+X",
+     "face": null,
+     "outline": null,
+     "label": "+x end up: clamp-screw hole",
+     "hold": "vise on the z faces",
+     "stock_note": "",
+     "repeat": 1
+    }
+   ],
+   "lathe": [],
+   "manual": [
+    [
+     "slit 1.5 wide from the bore down through the bottom wall (slitting saw or bandsaw)",
+     10.0
+    ]
+   ],
+   "tol": [
+    "bore 40.10 +0.05/0, its axis 31.5 under the beam's underside (the input beam's height)"
+   ],
+   "notes": [],
+   "changes": [
+    "v2: the collimator saddle (v1 MK-09b, on the horizontal head plate) becomes a clamp block hung under the front cross-beam: v2's head hangs on a vertical plate, and ft_model draws the collimator with no support. Its axis follows head_in_z (world z 391.6)"
+   ],
+   "finish": "6061: deburr, break edges 0.2-0.5 x 45 deg; as machined, Ra 3.2 um unless stated",
+   "sheet": null,
+   "buy": null,
+   "n_holes": 3,
+   "start_volume_cm3": 161.45
+  },
+  {
+   "pid": "MK-23",
+   "mk": "MK-23",
+   "name": "Deck clamps on the box's panel studs (4)",
+   "material": "6061-T6511",
+   "qty": 4,
+   "route": "saw + CNC mill",
+   "state": "S2",
+   "stock": "6061 bar 3/16 x 3/4 in. (4.76 x 19.05) sawn 42 long",
+   "stock_pn": "6061 bar 3/16 x 3/4 in. (PN not read)",
+   "blank": {
+    "type": "box",
+    "box": [
+     -1.0,
+     41.375,
+     -9.525,
+     9.525,
+     0.0,
+     4.76
+    ]
+   },
+   "seal": false,
+   "pos": "part x 0 = the stud end; the deck end presses on the deck's top 14 mm in from its edge",
+   "bbox": [
+    -0.0,
+    40.38,
+    -9.0,
+    9.0,
+    0.0,
+    4.76
+   ],
+   "volume_cm3": 3.31,
+   "features": [
+    {
+     "kind": "drill",
+     "hid": "A",
+     "axis": "-z",
+     "d": 5.5,
+     "tool": 31,
+     "pts": [
+      [
+       6.0,
+       0.0,
+       4.76
+      ]
+     ],
+     "depth": 0.0,
+     "through": true,
+     "size": "M5",
+     "hole_kind": "clear"
+    }
+   ],
+   "holes": [
+    {
+     "id": "A",
+     "n": 1,
+     "kind": "clear",
+     "size": "M5",
+     "callout": "5.5 M5 clearance through - the #10 panel stud (4.8); a 10 mm spacer under this end (the stud stands on the floor, the deck 10 mm higher)",
+     "axis": "-z",
+     "pts": [
+      [
+       6.0,
+       0.0,
+       4.76
+      ]
+     ]
+    }
+   ],
+   "setups": [
+    {
+     "name": "MK-23_A",
+     "up": "+Z",
+     "face": null,
+     "outline": [
+      2,
+      -0.3
+     ],
+     "label": "four in the vise: hole, outline (ends rounded R3)",
+     "hold": "vise, on a stop",
+     "stock_note": "",
+     "repeat": 1
+    }
+   ],
+   "lathe": [],
+   "manual": [],
+   "tol": [],
+   "notes": [],
+   "changes": [
+    "new in v2 (ft_model MK-23): 40 x 18 x 4.76 bars (model 4 thick: 3/16 in. bar as sawn) holding the deck on the box's four panel studs, so the floor gets no screw holes"
+   ],
+   "finish": "6061: deburr, break edges 0.2-0.5 x 45 deg; as machined, Ra 3.2 um unless stated",
+   "sheet": null,
+   "buy": null,
+   "n_holes": 1,
+   "start_volume_cm3": 3.84
   }
  ]
 }
