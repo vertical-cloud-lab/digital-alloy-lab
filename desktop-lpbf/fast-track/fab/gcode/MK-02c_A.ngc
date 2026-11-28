@@ -1,6 +1,6 @@
 (Exported by FreeCAD)
 (Post Processor: Path.Post.scripts.linuxcnc_post)
-(Output Time:2026-11-27 10:27:30.577355)
+(Output Time:2026-11-28 09:56:41.829034)
 (begin preamble)
 G17 G54 G40 G49 G80 G90
 G21
@@ -52,11 +52,11 @@ G0 Z11.350
 (finish operation: Face top 6.35 to z 6.00)
 (Coolant Off:Flood)
 M9
-(begin operation: Outside, adaptive, z 6.00 to -0.031)
+(begin operation: Outside, adaptive, z 6.00 to -0.30)
 (machine units: mm/min)
 (Coolant On:Flood)
 M8
-(Outside, adaptive, z 6.00 to -0.031) 
+(Outside, adaptive, z 6.00 to -0.30) 
 G0 Z11.350 
 G0 X55.775 Y-57.850 Z11.350 
 G1 X55.775 Y-57.850 Z-0.300 F868.680 
@@ -2306,7 +2306,7 @@ G1 X5.944 Y-56.031 F1737.360
 G1 X5.938 Y-56.025 F1737.360 
 G0 Z11.350 
 G0 Z11.350 
-(finish operation: Outside, adaptive, z 6.00 to -0.031)
+(finish operation: Outside, adaptive, z 6.00 to -0.30)
 (Coolant Off:Flood)
 M9
 (begin operation: aperture, helix z 6.00 to -0.50)

@@ -1,6 +1,6 @@
 (Exported by FreeCAD)
 (Post Processor: Path.Post.scripts.linuxcnc_post)
-(Output Time:2026-11-27 09:40:03.422720)
+(Output Time:2026-11-28 10:04:21.718289)
 (begin preamble)
 G17 G54 G40 G49 G80 G90
 G21
@@ -12,47 +12,47 @@ M6 T4
 G43 H4 
 M3 S8100 
 (finish operation: TC4_Job_MK_06a_A)
-(begin operation: lead window 5 x 10 through one wall, custom zig-zag)
+(begin operation: lead notch 3 x 3.5 through one wall, x3: index 120 deg, custom zig-zag)
 (machine units: mm/min)
 (Coolant On:Flood)
 M8
-(lead window 5 x 10 through one wall, custom zig-zag) 
+(lead notch 3 x 3.5 through one wall, x3: index 120 deg, custom zig-zag) 
 (Begin Custom) 
-G0 X-0.913 Y-71.013 
+G0 X0.087 Y-77.517 
 G0 Z8.350 
 G1 Z6.050 F164.598 
-G1 X-0.913 Y-71.013 F329.202 
-G1 X-0.913 Y-64.188 F329.202 
-G1 X0.913 Y-64.188 F329.202 
-G1 X0.913 Y-71.013 F329.202 
-G1 X-0.913 Y-71.013 F329.202 
+G1 X0.087 Y-77.517 F329.202 
+G1 X0.087 Y-77.193 F329.202 
+G1 X-0.087 Y-77.193 F329.202 
+G1 X-0.087 Y-77.517 F329.202 
+G1 X0.087 Y-77.517 F329.202 
 G1 Z5.750 F164.598 
-G1 X-0.913 Y-71.013 F329.202 
-G1 X-0.913 Y-64.188 F329.202 
-G1 X0.913 Y-64.188 F329.202 
-G1 X0.913 Y-71.013 F329.202 
-G1 X-0.913 Y-71.013 F329.202 
+G1 X0.087 Y-77.517 F329.202 
+G1 X0.087 Y-77.193 F329.202 
+G1 X-0.087 Y-77.193 F329.202 
+G1 X-0.087 Y-77.517 F329.202 
+G1 X0.087 Y-77.517 F329.202 
 G1 Z5.450 F164.598 
-G1 X-0.913 Y-71.013 F329.202 
-G1 X-0.913 Y-64.188 F329.202 
-G1 X0.913 Y-64.188 F329.202 
-G1 X0.913 Y-71.013 F329.202 
-G1 X-0.913 Y-71.013 F329.202 
+G1 X0.087 Y-77.517 F329.202 
+G1 X0.087 Y-77.193 F329.202 
+G1 X-0.087 Y-77.193 F329.202 
+G1 X-0.087 Y-77.517 F329.202 
+G1 X0.087 Y-77.517 F329.202 
 G1 Z5.150 F164.598 
-G1 X-0.913 Y-71.013 F329.202 
-G1 X-0.913 Y-64.188 F329.202 
-G1 X0.913 Y-64.188 F329.202 
-G1 X0.913 Y-71.013 F329.202 
-G1 X-0.913 Y-71.013 F329.202 
+G1 X0.087 Y-77.517 F329.202 
+G1 X0.087 Y-77.193 F329.202 
+G1 X-0.087 Y-77.193 F329.202 
+G1 X-0.087 Y-77.517 F329.202 
+G1 X0.087 Y-77.517 F329.202 
 G1 Z4.860 F164.598 
-G1 X-0.913 Y-71.013 F329.202 
-G1 X-0.913 Y-64.188 F329.202 
-G1 X0.913 Y-64.188 F329.202 
-G1 X0.913 Y-71.013 F329.202 
-G1 X-0.913 Y-71.013 F329.202 
+G1 X0.087 Y-77.517 F329.202 
+G1 X0.087 Y-77.193 F329.202 
+G1 X-0.087 Y-77.193 F329.202 
+G1 X-0.087 Y-77.517 F329.202 
+G1 X0.087 Y-77.517 F329.202 
 G0 Z11.350 
 (End Custom) 
-(finish operation: lead window 5 x 10 through one wall, custom zig-zag)
+(finish operation: lead notch 3 x 3.5 through one wall, x3: index 120 deg, custom zig-zag)
 (Coolant Off:Flood)
 M9
 (begin postamble)

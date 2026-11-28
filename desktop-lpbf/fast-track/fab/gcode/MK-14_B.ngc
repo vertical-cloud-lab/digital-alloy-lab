@@ -1,6 +1,6 @@
 (Exported by FreeCAD)
 (Post Processor: Path.Post.scripts.linuxcnc_post)
-(Output Time:2026-11-27 09:06:12.958942)
+(Output Time:2026-11-28 09:56:41.829034)
 (begin preamble)
 G17 G54 G40 G49 G80 G90
 G21
@@ -188,34 +188,34 @@ G0 Z5.000
 (finish operation: rod hole 20, helix z 0.00 to -23.40)
 (Coolant Off:Flood)
 M9
-(begin operation: TC28_Job_MK_14_B)
+(begin operation: TC30_Job_MK_14_B)
 (machine units: mm/min)
-(TC28_Job_MK_14_B) 
+(TC30_Job_MK_14_B) 
 M5
-M6 T28 
-G43 H28 
+M6 T30 
+G43 H30 
 M3 S8100 
-(finish operation: TC28_Job_MK_14_B)
-(begin operation: Drill 4 x 4.20 M5, z 0.00 to -13.26)
+(finish operation: TC30_Job_MK_14_B)
+(begin operation: Drill 4 x 5.00 M6, z 0.00 to -13.50)
 (machine units: mm/min)
 (Coolant On:Flood)
 M8
-(Drill 4 x 4.20 M5, z 0.00 to -13.26) 
+(Drill 4 x 5.00 M6, z 0.00 to -13.50) 
 (Begin Drilling) 
 G0 Z5.000 
 G90 
 G98 
-G0 X-115.000 Y115.000 
-G83 X-115.000 Y115.000 Z-13.260 F850.500 Q3.150 R2.000 
-G0 X-115.000 Y-115.000 
-G83 X-115.000 Y-115.000 Z-13.260 F850.500 Q3.150 R2.000 
-G0 X115.000 Y-115.000 
-G83 X115.000 Y-115.000 Z-13.260 F850.500 Q3.150 R2.000 
-G0 X115.000 Y115.000 
-G83 X115.000 Y115.000 Z-13.260 F850.500 Q3.150 R2.000 
+G0 X-112.000 Y92.100 
+G83 X-112.000 Y92.100 Z-13.500 F1012.500 Q3.750 R2.000 
+G0 X-112.000 Y-92.100 
+G83 X-112.000 Y-92.100 Z-13.500 F1012.500 Q3.750 R2.000 
+G0 X112.000 Y-92.100 
+G83 X112.000 Y-92.100 Z-13.500 F1012.500 Q3.750 R2.000 
+G0 X112.000 Y92.100 
+G83 X112.000 Y92.100 Z-13.500 F1012.500 Q3.750 R2.000 
 G80 
 G0 Z5.000 
-(finish operation: Drill 4 x 4.20 M5, z 0.00 to -13.26)
+(finish operation: Drill 4 x 5.00 M6, z 0.00 to -13.50)
 (Coolant Off:Flood)
 M9
 (begin postamble)

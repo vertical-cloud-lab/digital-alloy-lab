@@ -765,16 +765,17 @@ def mk06(which):
     pc.solid = turned
     gw, gd = P["lead_groove"]
     z0, z1 = ln - P["socket"] - 1.0, ln - P["socket"] + gd        # at the socket mouth, under the plate's lead grooves
-    for k, a in enumerate((270.0, 30.0, 150.0)):
-        n = box(-gw / 2, gw / 2, -ro - 1, -ri + 0.3, z0, z1).rotate(V(0, 0, 0), V(0, 0, 1), a - 270.0)
-        pc.cut(n)
-        if k == 0:
-            pc.cam_solid = pc.solid           # the CAM model and the voxel check carry the first notch only
+    notches = [box(-gw / 2, gw / 2, -ro - 1, -ri + 0.3, z0, z1).rotate(V(0, 0, 0), V(0, 0, 1), a - 270.0)
+               for a in (270.0, 30.0, 150.0)]
+    pc.cut(notches[0])
     pc.features.append(dict(kind="custom_slot", name="lead notch %.0f x %.1f through one wall (x3: index 120 deg)"
                             % (gw, z1 - z0), axis="+y", tool=4, center=[0.0, -ro, (z0 + z1) / 2],
                             size=[gw, z1 - z0], depth=P["rod_wall"] + 0.6))
     pc.hole("A", "plain", "2.5", [(ro, 0.0, ln - P["socket"] + 5.0)], axis="-x", depth=P["rod_wall"] + 0.3,
             note="set-screw dimple, one wall (the plate's M3 dog point at z 5)", tool=T.drill_tool(2.5))
+    pc.cam_solid = pc.solid                   # the CAM model and the voxel check carry the first notch only
+    for n in notches[1:]:
+        pc.cut(n)
     pc.lathe_op("face both ends to length +-0.1, 0.5 x 15 deg lead-in chamfer at the top end",
                 2 * face_min(12.7) + 3.0)
     pc.lathe_op("polish the OD (gland zone) to Ra <= 0.4 um, 320 then 600 grit", 6.0)
@@ -1066,8 +1067,8 @@ def mk09_plate():
     pc.solid = rbox(0, Lp, 0, Hp, 0, t, 3.0)
     xi, zi = f["y_in"] - y0, f["z_in"] - z0
     pc.bore("input-turret opening 52", 26.0, xi, zi, t, 0, tool=2)
-    hy = (LAY - P["head_side"][0] + 10.0 - y0, LAY + P["head_side"][1] - 10.0 - y0)
-    pc.hole("A", "cbore", "M6", [(x, z, t) for x in hy for z in (10.0, Hp - 12.0)], through=True,
+    # head screws: between the gussets (part x 35, 121, 151) and clear of the bracket taps and the turret opening
+    pc.hole("A", "cbore", "M6", [(x, z, t) for x in (50.0, 100.0) for z in (10.0, 70.0)], through=True,
             note="M6 into the hurrySCAN's entrance face: PATTERN EST. (SCANLAB's drawing gives M6 screws and 6 h6 pins, "
                  "no positions): drill to the drawing")
     pc.hole("B", "tap", "M5", [(x, f["z_beam"] - z0, t) for x in (BRK_Y[0], BRK_Y[1], Lp - BRK_Y[1], Lp - BRK_Y[0])],

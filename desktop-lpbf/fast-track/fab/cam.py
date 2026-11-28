@@ -292,7 +292,7 @@ def run():
                 attempt("outline", _outline)
             # 3. features entering from above in this setup
             feats = [f for f in pc["features"] if UP_OF[f["axis"]] == up]
-            order = {"adaptive": 0, "pocket": 1, "face_region": 1, "custom_gcode": 1, "groove": 2, "opening": 3, "custom_slot": 3, "bore": 4, "drill": 5,
+            order = {"boss": -0.5, "adaptive": 0, "pocket": 1, "face_region": 1, "custom_gcode": 1, "groove": 2, "opening": 3, "custom_slot": 3, "bore": 4, "drill": 5,
                      "cbore": 6, "csk": 7}
             feats.sort(key=lambda f: (order[f["kind"]] + (4.5 if f.get("late") else 0), f.get("tool", 0), -f.get("d", 0)))
             for f in feats:
@@ -360,6 +360,23 @@ def run():
                         op.Side = "Outside"
                         set_depths(op, face.BoundBox.ZMax, z_exit - 0.3, STEP.get(t, 1.0))
                         finish(op, lab + ", profile to z %.2f" % (z_exit - 0.3), t, dict(kind=k))
+                    elif k == "boss":
+                        # material round a boss: Adaptive outside the boss's top face, down to the face round it
+                        p = rot(up, f["probe"])
+                        n, face = face_at(p)
+                        ex = list(f["probe"])
+                        ex[AXIS_I[f["axis"][1]]] = f["z_base"]
+                        z_base = rot(up, ex)[2]
+                        tc_for(t)
+                        op = Path.Op.Adaptive.Create("Adaptive", parentJob=job)
+                        op.Base = [(base, [n])]
+                        op.Side = "Outside"
+                        op.OperationType = "Clearing"
+                        op.UseOutline = True
+                        op.StepOver = 12
+                        op.Tolerance = 0.1
+                        set_depths(op, top_z, z_base, ADAPT_STEP.get(t, 6.0))
+                        finish(op, lab + ", adaptive outside to z %.2f" % z_base, t, dict(kind=k))
                     elif k == "custom_gcode":
                         tc_for(t)
                         op = Path.Op.Custom.Create("Custom", parentJob=job)
@@ -489,7 +506,8 @@ def run():
                 if ct and re.fullmatch(r"\d+:\d\d:\d\d", ct):
                     h_, mi_, s_ = (int(x) for x in ct.split(":"))
                     fc_s += 3600 * h_ + 60 * mi_ + s_
-            res = dict(pid=pc["pid"], setup=su["name"], up=up, label=su.get("label"), rotation=[list(r) for r in R],
+            res = dict(pid=pc["pid"], setup=su["name"], up=up, label=su.get("label"), repeat=su.get("repeat", 1),
+                       rotation=[list(r) for r in R],
                        stock_box_setup=[round(v, 3) for v in (sx0, sy0, sz0, sL, sW, sH)],
                        gcode=os.path.relpath(gpath, HERE) if posted else None, ops=metas, errors=errors,
                        tool_changes=ntc, cut_min=round(tot["feed_s"] / 60, 2), rapid_min=round(tot["rapid_s"] / 60, 2),

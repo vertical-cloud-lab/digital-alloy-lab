@@ -1,6 +1,6 @@
 (Exported by FreeCAD)
 (Post Processor: Path.Post.scripts.linuxcnc_post)
-(Output Time:2026-11-27 09:25:15.959217)
+(Output Time:2026-11-28 09:56:41.829034)
 (begin preamble)
 G17 G54 G40 G49 G80 G90
 G21
@@ -533,8 +533,8 @@ G1 X-36.425 Y-27.900 F1737.360
 G0 Z6.700 
 G0 Z6.700 
 G0 X34.525 Y-36.600 Z6.700 
-G1 X34.525 Y-36.600 Z-51.725 F868.680 
-(Adaptive - depth: -51.725000) 
+G1 X34.525 Y-36.600 Z-51.730 F868.680 
+(Adaptive - depth: -51.730000) 
 G1 X34.525 Y-36.600 F1737.360 
 G1 X34.206 Y-36.481 F1737.360 
 G1 X33.706 Y-36.394 F1737.360 
