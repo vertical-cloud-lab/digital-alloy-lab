@@ -97,9 +97,11 @@ PyVista, python-fcl and trimesh.
   (247 mm with 1 mm a side) with sharp corners, and 245 + 0.586 r with corner radius r** (252.4 mm at r = 1/2 in.,
   259.9 mm at 1 in.; python-fcl insertion through a parametric opening). Tilting or rolling the cassette lets it
   through a 196-207 mm face but not onto the floor, so it doesn't help in this cube, and round 2's fallback (the bare
-  deck edge-on through 180.3 mm, the cassette built inside) doesn't work either. Rounding the deck's corners (up to
-  ~33 mm) covers larger corner radii; under 245 mm the cube can't take this cassette, and Kurt J. Lesker's BX1212S,
-  with a full-face door, is the documented alternative.
+  deck edge-on through 180.3 mm, the cassette built inside) doesn't work either. At the live-reads worker's estimate
+  (250-260 mm, most likely ~255 mm; an estimate until Ideal Vacuum's drawing) the deck goes in flat, at 255 mm with
+  corner radii up to 17 mm; **rounding MK-01's corners to R 30 covers 250-260 mm at any radius up to 1 in.** At 243 mm
+  (another reading of the brochure) it doesn't fit, but a deck cut to 240.2 x 197.3 mm does; under about 241 mm the
+  X-LSM100B itself doesn't fit, and Kurt J. Lesker's BX1212S, with a full-face door, is the documented alternative.
 
 ## What round 2 changed, and why
 
@@ -378,8 +380,9 @@ the shield too 192.6 mm, down to the bare deck's 180.3 mm.
 
 ## FT-1V's chamber: the Ideal Vacuum cube or a Lesker box
 
-Ideal Vacuum's sites blocked every fetch on 2026-11-27, so the cube's face opening is still an estimate (266 mm).
-Round 3 worked out what the cassette needs ([previous section](#will-the-cassette-fit-through-the-cubes-face)): a
+Ideal Vacuum's sites blocked every fetch on 2026-11-27 and again in round 3, so the cube's face opening is still an
+estimate: the model draws 266 mm; round 3's live-reads worker estimates 250-260 mm, most likely about 255 mm (243 mm
+on another reading). Round 3 worked out what the cassette needs ([previous section](#will-the-cassette-fit-through-the-cubes-face)): a
 square opening of at least **245 mm plus clearance** (247 mm with 1 mm a side) if its corners are sharp, more if they
 are radiused, because the deck lies in the bottom face's pocket, which is as big as the face opening. Round 2's
 fallback for a smaller opening (the bare deck in edge-on through 180.3 mm and the cassette built inside) does not work
