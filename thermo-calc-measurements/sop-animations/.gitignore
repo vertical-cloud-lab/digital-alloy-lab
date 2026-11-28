@@ -1,0 +1,8 @@
+vl/
+out/clean/
+.cache/
+.frames/
+__pycache__/
+*.pyc
+refs/**/*.jpg
+!refs/**/lab_*.jpg
