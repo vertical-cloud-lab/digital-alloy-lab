@@ -4211,7 +4211,7 @@
    "up": "+Z",
    "label": "open end up: face to 40, outline to z 18, lens bore",
    "repeat": 1,
-   "g0_links_to_g1": 3238,
+   "g0_links_to_g1": 1676,
    "rotation": [
     [
      1,
@@ -4269,19 +4269,19 @@
      "feed_mm_min": 1943.1,
      "kind": "adaptive",
      "safe_z": 43.75,
-     "freecad_cycle_time": "00:07:22",
-     "commands": 17842,
-     "cut_min": 5.85,
+     "freecad_cycle_time": "00:05:16",
+     "commands": 7540,
+     "cut_min": 5.1,
      "rapid_min": 0.01
     }
    ],
    "errors": [],
    "tool_changes": 2,
-   "cut_min": 12.78,
-   "rapid_min": 0.03,
-   "total_min": 12.81,
-   "freecad_cycle_min": 16.58,
-   "freecad_job_cycle": "00:16:35"
+   "cut_min": 12.03,
+   "rapid_min": 0.02,
+   "total_min": 12.06,
+   "freecad_cycle_min": 14.48,
+   "freecad_job_cycle": "00:14:29"
   },
   {
    "pid": "MK-10c",
@@ -4419,37 +4419,25 @@
      "rapid_min": 0.01
     },
     {
-     "label": "Drill 1 x 3.30 M4, z 63.24 to -65.37",
+     "label": "Drill 2 x 3.30 M4, z 63.24 to 53.22",
      "tool": 26,
      "tool_name": "3.30 mm drill, jobber (36 mm flutes)",
      "feed_mm_min": 672.3,
      "kind": "drill",
-     "holes": 1,
-     "freecad_cycle_time": "00:00:22",
-     "commands": 9,
-     "cut_min": 0.21,
-     "rapid_min": 0.21
-    },
-    {
-     "label": "Drill 1 x 3.30 M4, z 63.24 to -65.038",
-     "tool": 26,
-     "tool_name": "3.30 mm drill, jobber (36 mm flutes)",
-     "feed_mm_min": 672.3,
-     "kind": "drill",
-     "holes": 1,
-     "freecad_cycle_time": "00:00:22",
-     "commands": 9,
-     "cut_min": 0.21,
-     "rapid_min": 0.21
+     "holes": 2,
+     "freecad_cycle_time": "00:00:16",
+     "commands": 11,
+     "cut_min": 0.04,
+     "rapid_min": 0.01
     }
    ],
    "errors": [],
    "tool_changes": 2,
-   "cut_min": 0.45,
-   "rapid_min": 0.43,
-   "total_min": 0.88,
-   "freecad_cycle_min": 0.95,
-   "freecad_job_cycle": "00:00:57"
+   "cut_min": 0.07,
+   "rapid_min": 0.02,
+   "total_min": 0.09,
+   "freecad_cycle_min": 0.48,
+   "freecad_job_cycle": "00:00:29"
   },
   {
    "pid": "MK-11a",

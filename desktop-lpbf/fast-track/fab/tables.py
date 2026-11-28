@@ -79,7 +79,39 @@ def sim_table(sim, cam):
             r["pid"], n, r["res_mm"], r["removed_cm3"], r["expected_removal_cm3"], r["removed_pct_of_expected"],
             r["gouge_deep_cm3"], r["gouge_max_depth_mm"], r["left_thick_cm3"], r["left_max_thickness_mm"],
             r.get("slugs_dropped_cm3", 0.0), sum(h_["rapids_through_target"] for h_ in r["rapid_hits"]), rc, mv, fc))
-    L.append("| **All** | %d | | | | | | | **%.1f / %.1f / %.1f** |" % (len(cam["setups"]), tot[0], tot[1], tot[2]))
+    n_su = sum(tc.get(r["pid"], [0, 0, 0])[2] for r in sim["pieces"])      # the setups of the pieces simulated
+    L.append("| **All** | %d | | | | | | | **%.1f / %.1f / %.1f** |" % (n_su, tot[0], tot[1], tot[2]))
+    return "\n".join(L)
+
+
+def v1v2_table(h):
+    """round 3: v1 (round 2, out/v1/hours.json), round 2's estimate of v2 (out/v2/hours.json) and v2 as built in round 3
+    with the CAM review's fixes (out/hours.json), cumulative by state"""
+    v1 = json.loads((OUT / "v1" / "hours.json").read_text())
+    est = json.loads((OUT / "v2" / "hours.json").read_text())
+    L = ["| State | Pieces, v1 -> v2 (cumulative) | v1 (round 2), low / expected / high h | v2 estimated in round 2 "
+         "| **v2, round 3** (CAM fixed), low / expected / high h | Change from v1, expected |", "|---|---|---|---|---|---:|"]
+    n1 = n2 = 0
+    for s in ("S1", "S2", "FT-0", "FT-1", "FT-1V"):
+        a, e, b = v1["cumulative"][s], est["cumulative"][s], h["cumulative"][s]
+        n1 += v1["by_state"][s]["n"]
+        n2 += h["by_state"][s]["n"]
+        L.append("| %s | %d -> %d | %.1f / %.1f / %.1f | %.1f / %.1f / %.1f | %.1f / **%.1f** / %.1f | +%.1f h (+%.0f %%) |" % (
+            s, n1, n2, a["low"], a["h"], a["high"], e["low"], e["h"], e["high"], b["low"], b["h"], b["high"],
+            b["h"] - a["h"], 100 * (b["h"] / a["h"] - 1)))
+    return "\n".join(L)
+
+
+def reviewed_table(h):
+    """round 3: the reviewed case (hours.py REVIEWED: review-r3.md section 4 per piece), cumulative by state"""
+    rv, cu = h["reviewed"]["cumulative"], h["cumulative"]
+    L = ["| State | Mill / lathe setups (cumulative) | Machinist, h | Machinist and student, h "
+         "| The set's low / expected / high, h |", "|---|---|---|---|---|"]
+    for s in ("S1", "S2", "FT-0", "FT-1", "FT-1V"):
+        a = rv[s]
+        L.append("| %s | %d / %d | %.1f-%.1f | %.1f-%.1f | %.1f / %.1f / %.1f |" % (
+            s, a["mill_setups"], a["lathe_setups"], a["machinist_low"], a["machinist_high"], a["student_low"],
+            a["student_high"], cu[s]["low"], cu[s]["h"], cu[s]["high"]))
     return "\n".join(L)
 
 
@@ -95,17 +127,21 @@ def main():
     spec = json.loads((OUT / "pieces.json").read_text())
     cam = json.loads((OUT / "cam.json").read_text())
     rd = (HERE / "README.md").read_text()
-    rd = put(rd, "PIECE_TABLE", piece_table(h, spec))
-    rd = put(rd, "STATE_ROWS", state_rows(h))
-    rd = put(rd, "SHORT_TABLE", short_table(h), indent="  ")
+    # Round 3: out/ is CAD v2's now. The round-2 tables in the README (SHORT_TABLE, PIECE_TABLE, STATE_ROWS,
+    # PLAN_TABLE, SIM_TABLE, DELTA_TABLE, V2_STATES) describe v1 and stay as round 2 wrote them (v1's hours, plan and
+    # voxel check are in out/v1/). Only the round-3 tables are filled. Round 2's calls, for the record:
+    #   PIECE_TABLE piece_table(h, spec); STATE_ROWS state_rows(h); SHORT_TABLE short_table(h); PLAN_TABLE plan.md;
+    #   SIM_TABLE sim_table(sim, cam); DELTA_TABLE and V2_STATES from out/v2/delta.md
+    rd = put(rd, "R3_PIECE_TABLE", piece_table(h, spec))
+    rd = put(rd, "R3_STATE_ROWS", state_rows(h))
+    if (OUT / "v1" / "hours.json").exists():
+        rd = put(rd, "V1V2_TABLE", v1v2_table(h))
+    if "reviewed" in h:
+        rd = put(rd, "R3_REVIEWED", reviewed_table(h))
     if (OUT / "plan.md").exists():
-        rd = put(rd, "PLAN_TABLE", (OUT / "plan.md").read_text().strip())
-    if (OUT / "v2" / "delta.md").exists():
-        d1, d2 = (OUT / "v2" / "delta.md").read_text().strip().split("\n\n")
-        rd = put(rd, "DELTA_TABLE", d1)
-        rd = put(rd, "V2_STATES", d2)
+        rd = put(rd, "R3_PLAN", (OUT / "plan.md").read_text().strip())
     if (OUT / "sim.json").exists():
-        rd = put(rd, "SIM_TABLE", sim_table(json.loads((OUT / "sim.json").read_text()), cam))
+        rd = put(rd, "R3_SIM", sim_table(json.loads((OUT / "sim.json").read_text()), cam))
     (HERE / "README.md").write_text(rd)
     print("README tables filled")
 

@@ -357,6 +357,10 @@ def run():
                             op.Base = [(base, [n])]
                             op.Side = "Inside"
                             op.OperationType = "Clearing"
+                            if f.get("use_outline"):
+                                # round 3: clear the floor face's whole outline; else Adaptive keeps a hole in the
+                                # floor as an island (MK-10c's 50 mm tube bore left a 34 mm pillar in the lens bore)
+                                op.UseOutline = True
                             op.StepOver = 15
                             op.Tolerance = 0.1
                             set_depths(op, top_z, face.BoundBox.ZMax, ADAPT_STEP.get(t, 6.0))

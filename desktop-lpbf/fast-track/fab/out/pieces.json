@@ -1,5 +1,5 @@
 {
- "made": "2026-11-28 10:33 UTC",
+ "made": "2026-11-28 10:40 UTC",
  "pieces": [
   {
    "pid": "MK-01",
@@ -11394,7 +11394,7 @@
     -3.0,
     40.0
    ],
-   "volume_cm3": 177.43,
+   "volume_cm3": 177.57,
    "features": [
     {
      "kind": "adaptive",
@@ -11407,7 +11407,8 @@
       6.0
      ],
      "note": "",
-     "z_top": null
+     "z_top": null,
+     "use_outline": true
     },
     {
      "kind": "boss",
@@ -11476,8 +11477,8 @@
        30.0
       ]
      ],
-     "depth": 0.0,
-     "through": true,
+     "depth": 9.03,
+     "through": false,
      "size": "M4",
      "hole_kind": "tap"
     }
@@ -11508,7 +11509,7 @@
      "n": 2,
      "kind": "tap",
      "size": "M4",
-     "callout": "M4 x through the wall deep thread, tap drill 3.30 x through - nylon-tip set screws onto the lens body",
+     "callout": "M4 x through the wall deep thread, tap drill 3.30 x 9.0 - nylon-tip set screws onto the lens body",
      "axis": "-x",
      "pts": [
       [
