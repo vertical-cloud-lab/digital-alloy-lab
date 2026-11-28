@@ -28,7 +28,7 @@ python desktop-lpbf/fast-track/process/scan_program.py    # 29 s, 115 MB (writes
 python desktop-lpbf/fast-track/process/optics.py          # 106 s, 390 MB (needs the NPZ; run it under capmem 2)
 python desktop-lpbf/fast-track/process/rtc5_list.py       # 6 s
 # round 3 (CadQuery: run under capmem 2)
-python desktop-lpbf/fast-track/process/optics_v2.py       # 9 min, < 2 GB
+python desktop-lpbf/fast-track/process/optics_v2.py       # 11 min, < 2 GB
 python desktop-lpbf/fast-track/process/optics_v2.py --sight
 python desktop-lpbf/fast-track/process/rtc4_list.py       # 10 s
 python desktop-lpbf/fast-track/process/build_time_v2.py   # 20 s

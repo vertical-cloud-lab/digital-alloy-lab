@@ -19,7 +19,7 @@ geometry from ft_model itself (P, levels() and the parts of build(state)) and re
 
 Everything is compared with round 2's out/optics.json (v1). Nothing here has been checked on hardware.
 
-Run: /tmp/tools/capmem 2 python desktop-lpbf/fast-track/process/optics_v2.py      (writes out/optics_v2.json; 9 min)
+Run: /tmp/tools/capmem 2 python desktop-lpbf/fast-track/process/optics_v2.py      (writes out/optics_v2.json; 11 min)
      /tmp/tools/capmem 2 python desktop-lpbf/fast-track/process/optics_v2.py --sight   (adds the camera and light
      sight lines from cad/ft_checks.py to the same file)
 """
