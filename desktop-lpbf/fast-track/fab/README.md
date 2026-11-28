@@ -85,9 +85,9 @@ hours, shop plan and voxel check are in [`out/v1/`](out/v1/). See [Round 3](#rou
     two voxels).
 - **2.5D (`gcheck.py`):**
   - 0 issues: units, plane, G54, tool changes with G43 H, spindle and coolant before feed moves, no F0, arcs, M2;
-  - the tool in the spindle matches `cam.json` for all 262 operations;
-  - cycle time: the recount is 307.6 min (`cam.json` 306.7 min), 312.6-318.8 min with acceleration, and 339.8 min
-    with exact stop.
+  - the tool in the spindle matches `cam.json` for all 261 operations;
+  - cycle time, each program once: the checker's recount is 306.0 min (`cam.json` 305.2 min), 310.8-316.5 min with
+    acceleration, and 335.1 min with exact stop.
 - **Voxel cut (`sim.py`, 10 pieces):**
   - no gouges, and no rapids through a piece;
   - MK-10c first left 62 cm³, a pillar 50 mm across and 34 mm tall in the lens bore. The v2 programs from before
