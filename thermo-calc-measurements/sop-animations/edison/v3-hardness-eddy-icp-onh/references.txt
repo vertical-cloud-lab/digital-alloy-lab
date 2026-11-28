@@ -1,0 +1,83 @@
+1. (kumar2025characterisationofin718 pages 25-29): S Suresh Kumar. Characterisation of in718 nickel superalloy-powder bed fusion laser additive manufacturing. Unknown journal, 2025.
+
+2. (argyrou2025multiscalemechanicalanisotropy pages 4-7): Aikaterini Argyrou, Leonidas Gargalis, Leonidas Karavias, Evangelia K. Karaxi, and Elias P. Koumoulos. Multi-scale mechanical anisotropy and heat treatment effects in additively manufactured alsi10mg. Metals, 15:890, Aug 2025. URL: https://doi.org/10.3390/met15080890, doi:10.3390/met15080890. This article has 3 citations.
+
+3. (amir2022studyonthe pages 2-3): Ben Amir, Yuval Gale, Alon Sadot, Shmuel Samuha, and Oren Sadot. Study on the effects of manufacturing parameters on the dynamic properties of alsi10mg under dynamic loads using taguchi procedure. Materials &amp; Design, 223:111125, Nov 2022. URL: https://doi.org/10.1016/j.matdes.2022.111125, doi:10.1016/j.matdes.2022.111125. This article has 24 citations and is from a highest quality peer-reviewed journal.
+
+4. (argyrou2026lpbfalsi10mgat pages 9-10): Aikaterini Argyrou, Leonidas Gargalis, Leonidas Karavias, Evangelia K. Karaxi, and Elias P. Koumoulos. Lpbf alsi10mg at the nanoscale: a critical review of processing–microstructure–property correlations via nanoindentation. Applied Sciences, 16:2730, Mar 2026. URL: https://doi.org/10.3390/app16062730, doi:10.3390/app16062730. This article has 4 citations.
+
+5. (khangholi2021effectsofnatural pages 14-19): Siamak Nikzad Khangholi, Mousa Javidani, Alexandre Maltais, and X.-Grant Chen. Effects of natural aging and pre-aging on the strength and electrical conductivity in al-mg-si aa6201 conductor alloys. Materials Science and Engineering: A, Jul 2021. URL: https://doi.org/10.1016/j.msea.2021.141538, doi:10.1016/j.msea.2021.141538. This article has 107 citations.
+
+6. (tavakkolisaiej2025optimizationofmechanical pages 138-141): V Tavakkolisaiej. Optimization of mechanical and electrical properties in age-hardened aluminum alloy through hpte processing. Unknown journal, 2025.
+
+7. (hales2020hardnessstrengthcorrelationsin pages 8-11): SJ Hales and DE Stegall. Hardness-strength correlations in zr (cu)-based bmg alloys for qa purposes. Unknown journal, 2020.
+
+8. (li2021effectofaging pages 2-4): Yitai Li, Weiou Qin, Shuyuan Yu, Jun La, Yaokun Fu, Jidong Li, Wenchao Yang, and Yongzhong Zhan. Effect of aging treatment on the corrosion resistance properties of 7n01 extrusion aluminum alloy. Materials, 14:3615, Jun 2021. URL: https://doi.org/10.3390/ma14133615, doi:10.3390/ma14133615. This article has 8 citations.
+
+9. (shen2012theeffectsof pages 52-63): Peng Shen. The effects of heat treatment on the microstructure and mechanical properties of the aa2618 dc cast plate. ArXiv, Jan 2012. URL: https://doi.org/10.1522/030350100, doi:10.1522/030350100. This article has 5 citations.
+
+10. (czerwinski2024aluminumalloysfor pages 3-5): Frank Czerwinski. Aluminum alloys for electrical engineering: a review. Journal of Materials Science, 59:14847-14892, Aug 2024. URL: https://doi.org/10.1007/s10853-024-09890-0, doi:10.1007/s10853-024-09890-0. This article has 192 citations and is from a peer-reviewed journal.
+
+11. (shao2025newgenerationof pages 67-72): Q Shao. New generation of high performance aluminum electrical conductors for elevated temperature applications. Unknown journal, 2025.
+
+12. (shao2025newgenerationof pages 47-54): Q Shao. New generation of high performance aluminum electrical conductors for elevated temperature applications. Unknown journal, 2025.
+
+13. (khangholi2021effectsofnatural pages 19-23): Siamak Nikzad Khangholi, Mousa Javidani, Alexandre Maltais, and X.-Grant Chen. Effects of natural aging and pre-aging on the strength and electrical conductivity in al-mg-si aa6201 conductor alloys. Materials Science and Engineering: A, Jul 2021. URL: https://doi.org/10.1016/j.msea.2021.141538, doi:10.1016/j.msea.2021.141538. This article has 107 citations.
+
+14. (ghio2025laserpowderbedfused pages 1-2): Emanuele Ghio, Lorenzo Curti, Daniele Carosi, Alessandro Morri, and Emanuela Cerri. Laser powder bed-fused scalmalloy®: effect of long thermal aging on hardness and electrical conductivity. Metals, 15(12):1364, Dec 2025. URL: https://doi.org/10.3390/met15121364, doi:10.3390/met15121364. This article has 2 citations.
+
+15. (shao2025newgenerationof pages 87-91): Q Shao. New generation of high performance aluminum electrical conductors for elevated temperature applications. Unknown journal, 2025.
+
+16. (bosio2021laserpowderbed pages 199-204): F Bosio. Laser powder bed fusion of alsi10mg+ 4cu and alsi10mg alloys. Unknown journal, 2021.
+
+17. (cerri2024mainheattreatments pages 11-14): Emanuela Cerri, Lorenzo Curti, and Emanuele Ghio. Main heat treatments currently applied on laser powder bed-fused scalmalloy®: a review. Crystals, 15:25, Dec 2024. URL: https://doi.org/10.3390/cryst15010025, doi:10.3390/cryst15010025. This article has 17 citations.
+
+18. (ghio2025laserpowderbedfused pages 2-4): Emanuele Ghio, Lorenzo Curti, Daniele Carosi, Alessandro Morri, and Emanuela Cerri. Laser powder bed-fused scalmalloy®: effect of long thermal aging on hardness and electrical conductivity. Metals, 15(12):1364, Dec 2025. URL: https://doi.org/10.3390/met15121364, doi:10.3390/met15121364. This article has 2 citations.
+
+19. (belelli2022investigationandcharacterization pages 8-14): F. Belelli, R. Casati, C. Andrianopoli, F. Cuccaro, and M. Vedani. Investigation and characterization of an al-mg-zr-sc alloy with reduced sc content for laser powder bed fusion. Journal of Alloys and Compounds, 924:166519, Nov 2022. URL: https://doi.org/10.1016/j.jallcom.2022.166519, doi:10.1016/j.jallcom.2022.166519. This article has 42 citations and is from a peer-reviewed journal.
+
+20. (zhao2022laserdirectedenergy pages 8-9): Tong Zhao, Teng Chen, Yuhan Wang, Mengjie Wang, Maha Bakir, Marius Dahmen, Wangcan Cai, Chen Hong, Thomas Schopphoven, Norbert Pirch, Matthias Brucki, Andres Gasser, and Constantin Leon Häfner. Laser directed energy deposition of an almgsczr-alloy in high-speed process regimes. Materials, 15:8951, Dec 2022. URL: https://doi.org/10.3390/ma15248951, doi:10.3390/ma15248951. This article has 18 citations.
+
+21. (yamani2021preparationandcertification pages 2-3): Randa N. Yamani, M.S. Rizk, and Ebtesam A.H. Shehab. Preparation and certification of three new aluminum alloy reference materials using inter-laboratory comparison approach. Jun 2021. URL: https://doi.org/10.1016/j.arabjc.2021.103174, doi:10.1016/j.arabjc.2021.103174. This article has 5 citations and is from a peer-reviewed journal.
+
+22. (robinson2025ggrhandbookof pages 9-10): Philip Robinson. Ggr handbook of rock and mineral analysis chapter 2 (part 1) analysis of geological materials – 1: sample preparation methods. Geostandards and Geoanalytical Research, Feb 2025. URL: https://doi.org/10.1111/ggr.12555, doi:10.1111/ggr.12555. This article has 5 citations and is from a peer-reviewed journal.
+
+23. (lotter2014analysisofzirconium pages 90-97): SJ Lotter. Analysis of zirconium containing materials using multiple digestion and spectrometric techniques. Unknown journal, 2014.
+
+24. (malefo2016quantificationofhafnium pages 95-100): GAA Malefo. Quantification of hafnium in selected inorganic and organometallic compounds. Unknown journal, 2016.
+
+25. (lotter2014analysisofzirconium pages 107-112): SJ Lotter. Analysis of zirconium containing materials using multiple digestion and spectrometric techniques. Unknown journal, 2014.
+
+26. (uemoto2011instrumentalchemicalanalysis pages 3-5): Michihisa Uemoto. Instrumental chemical analysis of magnesium and magnesium alloys. ArXiv, Jan 2011. URL: https://doi.org/10.5772/13727, doi:10.5772/13727. This article has 7 citations.
+
+27. (brown1999rapidaluminumalloy pages 41-46): EA Brown. Rapid aluminum alloy analysis utilizing inductively coupled plasma atomic emission spectrometry. Unknown journal, 1999.
+
+28. (lotter2008identificationandquantification pages 61-67): SJ Lötter. Identification and quantification of impurities in zircon, pdz and other relevant zirconium products. Unknown journal, 2008.
+
+29. (brown1999rapidaluminumalloy pages 46-50): EA Brown. Rapid aluminum alloy analysis utilizing inductively coupled plasma atomic emission spectrometry. Unknown journal, 1999.
+
+30. (paplewskiUnknownyearanalyticalsolutionsfor pages 4-7): P Paplewski. Analytical solutions for powder metallurgy and additive manufacturing processes: determination of ar, o, n, h and c, s by gas fusion analysis and …. Unknown journal, Unknown year.
+
+31. (liu2025fastdeterminationof pages 1-4): Pan Liu, Qianqian Chen, Shuo Wang, Lijuan Zhang, Yi Zhang, Jianhao Zhang, and Xinyao Zhang. Fast determination of oxygen in fesial magnetic alloy by inert gas fusion method. Journal of Physics: Conference Series, 2959:012001, Feb 2025. URL: https://doi.org/10.1088/1742-6596/2959/1/012001, doi:10.1088/1742-6596/2959/1/012001. This article has 0 citations.
+
+32. (liu2025fastdeterminationof pages 4-6): Pan Liu, Qianqian Chen, Shuo Wang, Lijuan Zhang, Yi Zhang, Jianhao Zhang, and Xinyao Zhang. Fast determination of oxygen in fesial magnetic alloy by inert gas fusion method. Journal of Physics: Conference Series, 2959:012001, Feb 2025. URL: https://doi.org/10.1088/1742-6596/2959/1/012001, doi:10.1088/1742-6596/2959/1/012001. This article has 0 citations.
+
+33. (liu2025fastdeterminationof pages 6-8): Pan Liu, Qianqian Chen, Shuo Wang, Lijuan Zhang, Yi Zhang, Jianhao Zhang, and Xinyao Zhang. Fast determination of oxygen in fesial magnetic alloy by inert gas fusion method. Journal of Physics: Conference Series, 2959:012001, Feb 2025. URL: https://doi.org/10.1088/1742-6596/2959/1/012001, doi:10.1088/1742-6596/2959/1/012001. This article has 0 citations.
+
+34. (rezaei2026powderdegradationand pages 27-29): Sina Rezaei, Sara Biamino, Federica Bondioli, Daniele Ugues, Paolo Fino, and Mariangela Lombardi. Powder degradation and recycling strategies for aluminum alloys in additive manufacturing: a comprehensive review. Jul 2026. URL: https://doi.org/10.3390/app16136822, doi:10.3390/app16136822. This article has 1 citations.
+
+35. (rezaei2026powderdegradationand pages 32-33): Sina Rezaei, Sara Biamino, Federica Bondioli, Daniele Ugues, Paolo Fino, and Mariangela Lombardi. Powder degradation and recycling strategies for aluminum alloys in additive manufacturing: a comprehensive review. Jul 2026. URL: https://doi.org/10.3390/app16136822, doi:10.3390/app16136822. This article has 1 citations.
+
+36. (paplewskiUnknownyearanalyticalsolutionsfora pages 2-4): P Paplewski. Analytical solutions for powder metallurgy and additive manufacturing processes: determination of ar, o, n, h and c, s by gas fusion analysis and …. Unknown journal, Unknown year.
+
+37. (paplewskiUnknownyearanalyticalsolutionsfor pages 1-2): P Paplewski. Analytical solutions for powder metallurgy and additive manufacturing processes: determination of ar, o, n, h and c, s by gas fusion analysis and …. Unknown journal, Unknown year.
+
+38. (doris2023effectofmultiple pages 36-40): A Doris. Effect of multiple machine configurations and wall thickness on microstructure and microhardness of laser powder bed fusion (l-pbf) additively manufactured …. Unknown journal, 2023.
+
+39. (hales2020hardnessstrengthcorrelationsin pages 11-16): SJ Hales and DE Stegall. Hardness-strength correlations in zr (cu)-based bmg alloys for qa purposes. Unknown journal, 2020.
+
+40. (lotter2014analysisofzirconium pages 97-102): SJ Lotter. Analysis of zirconium containing materials using multiple digestion and spectrometric techniques. Unknown journal, 2014.
+
+41. (lotter2014analysisofzirconium pages 112-116): SJ Lotter. Analysis of zirconium containing materials using multiple digestion and spectrometric techniques. Unknown journal, 2014.
+
+42. (paplewskiUnknownyearanalyticalsolutionsfor pages 2-4): P Paplewski. Analytical solutions for powder metallurgy and additive manufacturing processes: determination of ar, o, n, h and c, s by gas fusion analysis and …. Unknown journal, Unknown year.

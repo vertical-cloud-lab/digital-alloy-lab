@@ -1,0 +1,11 @@
+<!-- Edison artifact key: artifact-01 -->
+| Standard metal | Purity (%) | Nominal melting point (°C) | Enthalpy of fusion (J/g) | Typical sample mass (mg) | Expanded uncertainty of melting point (°C) | Notes |
+|---|---:|---:|---:|---:|---:|---|
+| Indium (In) | High-purity CRM; certificate-specific | 156.6 | 28.71 ± 0.08 | 1–20; about 10 for conventional calibration | ±0.2 (k = 2) | ASTM E968 heat-calibration repeatability reported as 0.94% at the In melting point and 1.4% within 265°C of it; performance worsens by about 0.7 percentage point per additional 100°C. ASTM D3418 benchmark: ±4.2°C for onset and ±7.3% for enthalpy. (pqac-00000012, pqac-00000015, pqac-00000016, pqac-00000018) |
+| Zinc (Zn) | High-purity CRM; certificate-specific | 419.5 | 108.6 ± 0.5 | 10–40 | ±0.2 (k = 2) | Use the extrapolated melting onset for temperature calibration and integrated peak area for enthalpy calibration; run using the same crucible, atmosphere, heating rate, and configuration as the specimens. (pqac-00000014, pqac-00000015, pqac-00000018) |
+| Aluminium (Al) | High-purity CRM; certificate-specific | 660.3 | 401.3 ± 1.6 | 10–40 | ±0.2 (k = 2) | Appropriate high-temperature calibration point for Al-alloy work; low standard masses sharpen the melting peak and reduce onset-picking uncertainty. (pqac-00000014, pqac-00000015, pqac-00000018) |
+| Silver (Ag) | High-purity CRM; certificate-specific | 961.8 | Not established in the cited excerpts; use certified value | 10–40 | ±0.2 (k = 2) | Useful for bracketing Cu-alloy measurements near 1000°C; determine temperature from extrapolated onset and enthalpy from baseline-corrected peak integration. (pqac-00000014, pqac-00000015) |
+| Gold (Au) | High-purity CRM; certificate-specific | 1064.2 | Not established in the cited excerpts; use certified value | 10–40 | ±0.2 (k = 2) | High-temperature calibration point for Cu-alloy programs approaching 1150°C; heat to about 20°C above melting, then hold isothermally to complete melting and stabilize the signal. (pqac-00000014, pqac-00000015) |
+
+
+*Table: Temperature and enthalpy reference points for high-temperature DSC calibration under ASTM E967/E968-type practice. Certificate-specific purity and enthalpy values should govern where the cited evidence does not quantify them.*

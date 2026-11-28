@@ -99,6 +99,8 @@ def fetch():
             m = re.search(r"\nReferences\n(.*)$", text, re.S)
             refs = m.group(1) if m else ""
         (OUT / k / "references.txt").write_text(refs)
+        for name, body in sorted((answer.get("artifacts") or {}).items()):
+            (OUT / k / f"{name}.md").write_text(f"<!-- Edison artifact key: {name} -->\n{body}")
 
 
 if __name__ == "__main__":

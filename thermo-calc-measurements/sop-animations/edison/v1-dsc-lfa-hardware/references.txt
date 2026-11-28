@@ -1,0 +1,61 @@
+1. (rawson2021suitabilityofaluminium pages 4-4): Anthony Rawson, Carolina Villada, Matthias Kolbe, Veronika Stahl, and Florian Kargl. Suitability of aluminium copper silicon eutectic as a phase change material for thermal storage applications: thermophysical properties and compatibility. Nov 2021. URL: https://doi.org/10.1002/est2.299, doi:10.1002/est2.299. This article has 21 citations and is from a peer-reviewed journal.
+
+2. (tadgell2019examiningthemechanisms pages 69-76): C Tadgell. Examining the mechanisms and kinetics of transient liquid phase bonding of titanium alloys using copper and nickel filler metals. Unknown journal, 2019.
+
+3. (matteo2014characterizingthemeasurement pages 6-10): Matteo Luisi. Characterizing the measurement uncertainty of a high-temperature heat flux differential scanning calorimeter. 2014. URL: https://doi.org/10.3217/0mn3h-mgs77, doi:10.3217/0mn3h-mgs77. This article has 13 citations.
+
+4. (zhang2017differentialscanningcalorimetry pages 2-3): Duyao Zhang, Helen V. Atkinson, Hongbiao Dong, and Qiang Zhu. Differential scanning calorimetry (dsc) and thermodynamic prediction of liquid fraction vs temperature for two high-performance alloys for semi-solid processing (al-si-cu-mg (319s) and al-cu-ag (201)). Metallurgical and Materials Transactions A, 48:4701-4712, Jul 2017. URL: https://doi.org/10.1007/s11661-017-4235-2, doi:10.1007/s11661-017-4235-2. This article has 24 citations.
+
+5. (xu2018basicpropertiesof pages 3-3): Xiankun Xu, Ghazal Dehghani, Juexiao Ning, and Peiwen Li. Basic properties of eutectic chloride salts nacl-kcl-zncl2 and nacl-kcl-mgcl2 as htfs and thermal storage media measured using simultaneous dsc-tga. Solar Energy, 162:431-441, Mar 2018. URL: https://doi.org/10.1016/j.solener.2018.01.067, doi:10.1016/j.solener.2018.01.067. This article has 173 citations and is from a domain leading peer-reviewed journal.
+
+6. (steau2021elevatedtemperaturethermal pages 4-8): Edward Steau and Mahen Mahendran. Elevated temperature thermal properties of fire protective boards and insulation materials for light steel frame systems. Journal of Building Engineering, 43:102571, Nov 2021. URL: https://doi.org/10.1016/j.jobe.2021.102571, doi:10.1016/j.jobe.2021.102571. This article has 54 citations and is from a peer-reviewed journal.
+
+7. (teodorescu2026investigationofalsicu pages 3-6): Laura Teodorescu, Ángel Serrano, Kyran Williamson, Cristina Luengo, Artem Nikulin, Elena Palomo Del Barrio, and Grégory Largiller. Investigation of al-si-cu alloys as phase change materials for high temperature thermal energy storage. Journal of Energy Storage, 143:119635, Jan 2026. URL: https://doi.org/10.1016/j.est.2025.119635, doi:10.1016/j.est.2025.119635. This article has 8 citations and is from a domain leading peer-reviewed journal.
+
+8. (dogan2018microstructuralandthermal pages 1-3): Z. Ezel Doğan, Fulya Kahrıman, and Ş. Hakan Atapek. Microstructural and thermal characterization of aluminum bronzes. Kocaeli Journal of Science and Engineering, 1:6-10, May 2018. URL: https://doi.org/10.34088/kojose.405810, doi:10.34088/kojose.405810. This article has 10 citations.
+
+9. (hearn2019microstructuresolidificationmaps pages 1-4): William Hearn, Abdoul-Aziz Bogno, Jose Spinelli, Jonas Valloton, and Hani Henein. Microstructure solidification maps for al-10 wt pct si alloys. Metallurgical and Materials Transactions A, 50:1333-1345, Jan 2019. URL: https://doi.org/10.1007/s11661-018-5093-2, doi:10.1007/s11661-018-5093-2. This article has 33 citations.
+
+10. (bogno2018effectsofscandium pages 1-4): A.-A. Bogno, J. Valloton, H. Henein, D. G. Ivey, A. J. Locock, and M. Gallerneault. Effects of scandium on hypoeutectic aluminium copper microstructures under low solidification rate conditions. Canadian Metallurgical Quarterly, 57:148-159, Apr 2018. URL: https://doi.org/10.1080/00084433.2017.1403106, doi:10.1080/00084433.2017.1403106. This article has 14 citations and is from a peer-reviewed journal.
+
+11. (harvey2021quantificationofthe pages 2-3): J.-P. Harvey, Shanti Singh, Kentaro Oishi, Barbara Acheson, Richard Turcotte, Daniel Pilon, Jonathan Lavoie, and Bernard Grange. Quantification of the chemical reactivity of molten nitrate salts with heat treatable aluminum alloys. Materials & Design, 198:109293, Jan 2021. URL: https://doi.org/10.1016/j.matdes.2020.109293, doi:10.1016/j.matdes.2020.109293. This article has 12 citations and is from a highest quality peer-reviewed journal.
+
+12. (matteo2014characterizingthemeasurement pages 30-33): Matteo Luisi. Characterizing the measurement uncertainty of a high-temperature heat flux differential scanning calorimeter. 2014. URL: https://doi.org/10.3217/0mn3h-mgs77, doi:10.3217/0mn3h-mgs77. This article has 13 citations.
+
+13. (braga2011methodologyfordsc pages 6-8): Carlos Isidoro Braga, Mirabel Cerqueira Rezende, and Michelle Leali Costa. Methodology for dsc calibration in high heating rates. Journal of Aerospace Technology and Management, 3:179-192, Aug 2011. URL: https://doi.org/10.5028/jatm.2011.03021911, doi:10.5028/jatm.2011.03021911. This article has 46 citations.
+
+14. (chapman2019determiningtheinfluence pages 55-59): J CHAPMAN. Determining the influence of surface preparation on transient liquid phase bonding of inconel 718/bni-2. Unknown journal, 2019.
+
+15. (anmark2012acalorimetricanalysis pages 46-49): Niclas Ånmark. A calorimetric analysis and solid-solubility examination of aluminium alloys containing low-melting-point elements. Jan 2012. URL: https://doi.org/10.13140/rg.2.1.2025.1683, doi:10.13140/rg.2.1.2025.1683. This article has 5 citations.
+
+16. (anmark2012acalorimetricanalysis pages 43-46): Niclas Ånmark. A calorimetric analysis and solid-solubility examination of aluminium alloys containing low-melting-point elements. Jan 2012. URL: https://doi.org/10.13140/rg.2.1.2025.1683, doi:10.13140/rg.2.1.2025.1683. This article has 5 citations.
+
+17. (rawson2021suitabilityofaluminium pages 8-8): Anthony Rawson, Carolina Villada, Matthias Kolbe, Veronika Stahl, and Florian Kargl. Suitability of aluminium copper silicon eutectic as a phase change material for thermal storage applications: thermophysical properties and compatibility. Nov 2021. URL: https://doi.org/10.1002/est2.299, doi:10.1002/est2.299. This article has 21 citations and is from a peer-reviewed journal.
+
+18. (matteo2014characterizingthemeasurement pages 21-23): Matteo Luisi. Characterizing the measurement uncertainty of a high-temperature heat flux differential scanning calorimeter. 2014. URL: https://doi.org/10.3217/0mn3h-mgs77, doi:10.3217/0mn3h-mgs77. This article has 13 citations.
+
+19. (matteo2014characterizingthemeasurement pages 33-38): Matteo Luisi. Characterizing the measurement uncertainty of a high-temperature heat flux differential scanning calorimeter. 2014. URL: https://doi.org/10.3217/0mn3h-mgs77, doi:10.3217/0mn3h-mgs77. This article has 13 citations.
+
+20. (braga2011methodologyfordsc pages 5-6): Carlos Isidoro Braga, Mirabel Cerqueira Rezende, and Michelle Leali Costa. Methodology for dsc calibration in high heating rates. Journal of Aerospace Technology and Management, 3:179-192, Aug 2011. URL: https://doi.org/10.5028/jatm.2011.03021911, doi:10.5028/jatm.2011.03021911. This article has 46 citations.
+
+21. (braga2011methodologyfordsc pages 2-3): Carlos Isidoro Braga, Mirabel Cerqueira Rezende, and Michelle Leali Costa. Methodology for dsc calibration in high heating rates. Journal of Aerospace Technology and Management, 3:179-192, Aug 2011. URL: https://doi.org/10.5028/jatm.2011.03021911, doi:10.5028/jatm.2011.03021911. This article has 46 citations.
+
+22. (sundar2024thermaltransportand pages 10-14): R. Sundar and C. Sudha. Thermal transport and thermal diffusivity by laser flash technique: a review. International Journal of Thermophysics, Dec 2024. URL: https://doi.org/10.1007/s10765-024-03479-0, doi:10.1007/s10765-024-03479-0. This article has 62 citations and is from a peer-reviewed journal.
+
+23. (wang2025referencematerialsfor pages 15-23): Hsin Wang, Stephanie Curlin, Anne Campbell, and Josina W. Geringer. Reference materials for laser and xenon flash thermal diffusivity systems. ArXiv, Jan 2025. URL: https://doi.org/10.2172/2573408, doi:10.2172/2573408. This article has 0 citations.
+
+24. (costa2021thermalcharacterizationof pages 68-71): ALA Costa. Thermal characterization of injected thermoplastic composites by laser flash analysis. Unknown journal, 2021.
+
+25. (toney2022technicalguidanceon pages 6-12): Gretchen Toney and Chris Jensen. Technical guidance on use of the netzsch lfa 447 nanoflash for measurement of ceramic-metallic (cermet) pellet specimen. ArXiv, Sep 2022. URL: https://doi.org/10.2172/1888925, doi:10.2172/1888925. This article has 5 citations.
+
+26. (toney2022technicalguidanceon pages 12-17): Gretchen Toney and Chris Jensen. Technical guidance on use of the netzsch lfa 447 nanoflash for measurement of ceramic-metallic (cermet) pellet specimen. ArXiv, Sep 2022. URL: https://doi.org/10.2172/1888925, doi:10.2172/1888925. This article has 5 citations.
+
+27. (akiyoshi2018validationofminiature pages 1-2): Masafumi Akiyoshi, Ryuta Kasada, Yuko Ishibashi, Lauren M. Garrison, Josina W. Geringer, Wallace D. Porter, and Yutai Katoh. Validation of miniature test specimens for post-irradiation thermal diffusivity measurement. Fusion Engineering and Design, 136:513-517, Nov 2018. URL: https://doi.org/10.1016/j.fusengdes.2018.03.008, doi:10.1016/j.fusengdes.2018.03.008. This article has 8 citations and is from a peer-reviewed journal.
+
+28. (costa2021thermalcharacterizationofa pages 36-40): ALA Costa. Thermal characterization of injected thermoplastic composites by laser flash analysis. Unknown journal, 2021.
+
+29. (sundar2024thermaltransportand pages 20-22): R. Sundar and C. Sudha. Thermal transport and thermal diffusivity by laser flash technique: a review. International Journal of Thermophysics, Dec 2024. URL: https://doi.org/10.1007/s10765-024-03479-0, doi:10.1007/s10765-024-03479-0. This article has 62 citations and is from a peer-reviewed journal.
+
+30. (costa2021thermalcharacterizationof pages 40-45): ALA Costa. Thermal characterization of injected thermoplastic composites by laser flash analysis. Unknown journal, 2021.
+
+31. (costa2021thermalcharacterizationof pages 36-40): ALA Costa. Thermal characterization of injected thermoplastic composites by laser flash analysis. Unknown journal, 2021.

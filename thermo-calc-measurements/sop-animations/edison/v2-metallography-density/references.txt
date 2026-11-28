@@ -1,0 +1,85 @@
+1. (aboulkhair2016ontheformation pages 3-4): Nesma T. Aboulkhair, Ian Maskery, Chris Tuck, Ian Ashcroft, and Nicola M. Everitt. On the formation of alsi10mg single tracks and layers in selective laser melting: microstructure and nano-mechanical properties. Journal of Materials Processing Technology, 230:88-98, Apr 2016. URL: https://doi.org/10.1016/j.jmatprotec.2015.11.016, doi:10.1016/j.jmatprotec.2015.11.016. This article has 474 citations and is from a domain leading peer-reviewed journal.
+
+2. (bogdanova2024mesoscalesimulationof pages 3-5): Maria Bogdanova, Stanislav Chernyshikhin, Andrey Zakirov, Boris Zotov, Leonid Fedorenko, Sergei Belousov, Anastasia Perepelkina, Boris Korneev, Maria Lyange, Ivan Pelevin, Inna Iskandarova, Ella Dzidziguri, Boris Potapkin, and Alexander Gromov. Mesoscale simulation of laser powder bed fusion with an increased layer thickness for alsi10mg alloy. Journal of Manufacturing and Materials Processing, 8:7, Jan 2024. URL: https://doi.org/10.3390/jmmp8010007, doi:10.3390/jmmp8010007. This article has 27 citations.
+
+3. (bogdanova2024mesoscalesimulationof pages 5-7): Maria Bogdanova, Stanislav Chernyshikhin, Andrey Zakirov, Boris Zotov, Leonid Fedorenko, Sergei Belousov, Anastasia Perepelkina, Boris Korneev, Maria Lyange, Ivan Pelevin, Inna Iskandarova, Ella Dzidziguri, Boris Potapkin, and Alexander Gromov. Mesoscale simulation of laser powder bed fusion with an increased layer thickness for alsi10mg alloy. Journal of Manufacturing and Materials Processing, 8:7, Jan 2024. URL: https://doi.org/10.3390/jmmp8010007, doi:10.3390/jmmp8010007. This article has 27 citations.
+
+4. (shrestha2018singletrackscanning pages 1-2): Subin Shrestha and Kevin Chou. Single track scanning experiment in laser powder bed fusion process. Procedia Manufacturing, 26:857-864, Jan 2018. URL: https://doi.org/10.1016/j.promfg.2018.07.110, doi:10.1016/j.promfg.2018.07.110. This article has 44 citations and is from a peer-reviewed journal.
+
+5. (volpp2021fluctuationsoftracks pages 2-4): Joerg Volpp, Filippo Belelli, and Riccardo Casati. Fluctuations of tracks and layers during aluminium laser powder-bed fusion. Applied Sciences, 11:3132, Apr 2021. URL: https://doi.org/10.3390/app11073132, doi:10.3390/app11073132. This article has 4 citations.
+
+6. (bogdanova2024mesoscalesimulationof pages 10-13): Maria Bogdanova, Stanislav Chernyshikhin, Andrey Zakirov, Boris Zotov, Leonid Fedorenko, Sergei Belousov, Anastasia Perepelkina, Boris Korneev, Maria Lyange, Ivan Pelevin, Inna Iskandarova, Ella Dzidziguri, Boris Potapkin, and Alexander Gromov. Mesoscale simulation of laser powder bed fusion with an increased layer thickness for alsi10mg alloy. Journal of Manufacturing and Materials Processing, 8:7, Jan 2024. URL: https://doi.org/10.3390/jmmp8010007, doi:10.3390/jmmp8010007. This article has 27 citations.
+
+7. (wu2025improvingshieldinggas pages 2-4): H. Hugo Estrada Medinilla, Christopher J. Elkins, Jorge Mireles, Andres Estrada, and Ryan B. Wicker. Improving shielding gas flow distribution to enhance quality and consistency in metal laser powder bed fusion processes. Journal of Manufacturing and Materials Processing, 10:3, Dec 2025. URL: https://doi.org/10.3390/jmmp10010003, doi:10.3390/jmmp10010003. This article has 0 citations.
+
+8. (maddison2022insitumonitoringanda pages 116-121): G Maddison. In-situ monitoring and control during laser powder bed fusion of nickel superalloys. Unknown journal, 2022.
+
+9. (reijonen2020ontheeffect pages 3-4): Joni Reijonen, Alejandro Revuelta, Tuomas Riipinen, Kimmo Ruusuvuori, and Pasi Puukko. On the effect of shielding gas flow on porosity and melt pool geometry in laser powder bed fusion additive manufacturing. Additive Manufacturing, 32:101030, Mar 2020. URL: https://doi.org/10.1016/j.addma.2019.101030, doi:10.1016/j.addma.2019.101030. This article has 285 citations and is from a highest quality peer-reviewed journal.
+
+10. (maddison2022insitumonitoringand pages 116-121): G Maddison. In-situ monitoring and control during laser powder bed fusion of nickel superalloys. Unknown journal, 2022.
+
+11. (reijonen2020ontheeffect pages 4-5): Joni Reijonen, Alejandro Revuelta, Tuomas Riipinen, Kimmo Ruusuvuori, and Pasi Puukko. On the effect of shielding gas flow on porosity and melt pool geometry in laser powder bed fusion additive manufacturing. Additive Manufacturing, 32:101030, Mar 2020. URL: https://doi.org/10.1016/j.addma.2019.101030, doi:10.1016/j.addma.2019.101030. This article has 285 citations and is from a highest quality peer-reviewed journal.
+
+12. (abeyta2024anexperimentalapproach pages 64-73): A Abeyta. An experimental approach for characterizing gas flow in the build chamber of laser powder bed fusion systems utilizing particle image velocimetry. Unknown journal, 2024.
+
+13. (anwar2026acloserlook pages 3-5): Tasrif Ul Anwar and Nadia Kouraytem. A closer look at shielding gas in laser powder bed fusion: a review. Journal of Physics: Materials, 9(1):012003, Jan 2026. URL: https://doi.org/10.1088/2515-7639/ae2a70, doi:10.1088/2515-7639/ae2a70. This article has 1 citations.
+
+14. (bosio2021laserpowderbed pages 47-49): F Bosio. Laser powder bed fusion of alsi10mg+ 4cu and alsi10mg alloys. Unknown journal, 2021.
+
+15. (vallabh2022predictingmeltpool pages 11-15): Chaitanya Krishna Prasad Vallabh, Soumya Sridar, Wei Xiong, and Xiayun Zhao. Predicting melt pool depth and grain length using multiple signatures from in-situ single camera two-wavelength imaging pyrometry for laser powder bed fusion. Journal of Materials Processing Technology, 308:117724, Oct 2022. URL: https://doi.org/10.1016/j.jmatprotec.2022.117724, doi:10.1016/j.jmatprotec.2022.117724. This article has 55 citations and is from a domain leading peer-reviewed journal.
+
+16. (geels2007metallographicandmaterialographic pages 392-395): K. Geels, Db Fowler, W-U Kopp, and M. Rückert. Metallographic and materialographic specimen preparation, light microscopy, image analysis and hardness testing. ArXiv, Jan 2007. URL: https://doi.org/10.1520/mnl46-eb, doi:10.1520/mnl46-eb. This article has 210 citations.
+
+17. (geels2007metallographicandmaterialographic pages 80-84): K. Geels, Db Fowler, W-U Kopp, and M. Rückert. Metallographic and materialographic specimen preparation, light microscopy, image analysis and hardness testing. ArXiv, Jan 2007. URL: https://doi.org/10.1520/mnl46-eb, doi:10.1520/mnl46-eb. This article has 210 citations.
+
+18. (geels2007metallographicandmaterialographic pages 77-80): K. Geels, Db Fowler, W-U Kopp, and M. Rückert. Metallographic and materialographic specimen preparation, light microscopy, image analysis and hardness testing. ArXiv, Jan 2007. URL: https://doi.org/10.1520/mnl46-eb, doi:10.1520/mnl46-eb. This article has 210 citations.
+
+19. (geels2007metallographicandmaterialographic pages 84-87): K. Geels, Db Fowler, W-U Kopp, and M. Rückert. Metallographic and materialographic specimen preparation, light microscopy, image analysis and hardness testing. ArXiv, Jan 2007. URL: https://doi.org/10.1520/mnl46-eb, doi:10.1520/mnl46-eb. This article has 210 citations.
+
+20. (mackenzie2005analyticalcharacterizationof pages 34-39): Analytical Characterization of Aluminum, Steel, and Superalloys This article has 119 citations.
+
+21. (geels2007metallographicandmaterialographic pages 373-377): K. Geels, Db Fowler, W-U Kopp, and M. Rückert. Metallographic and materialographic specimen preparation, light microscopy, image analysis and hardness testing. ArXiv, Jan 2007. URL: https://doi.org/10.1520/mnl46-eb, doi:10.1520/mnl46-eb. This article has 210 citations.
+
+22. (geels2007metallographicandmaterialographic pages 146-150): K. Geels, Db Fowler, W-U Kopp, and M. Rückert. Metallographic and materialographic specimen preparation, light microscopy, image analysis and hardness testing. ArXiv, Jan 2007. URL: https://doi.org/10.1520/mnl46-eb, doi:10.1520/mnl46-eb. This article has 210 citations.
+
+23. (geels2007metallographicandmaterialographic pages 395-399): K. Geels, Db Fowler, W-U Kopp, and M. Rückert. Metallographic and materialographic specimen preparation, light microscopy, image analysis and hardness testing. ArXiv, Jan 2007. URL: https://doi.org/10.1520/mnl46-eb, doi:10.1520/mnl46-eb. This article has 210 citations.
+
+24. (geels2007metallographicandmaterialographic pages 399-402): K. Geels, Db Fowler, W-U Kopp, and M. Rückert. Metallographic and materialographic specimen preparation, light microscopy, image analysis and hardness testing. ArXiv, Jan 2007. URL: https://doi.org/10.1520/mnl46-eb, doi:10.1520/mnl46-eb. This article has 210 citations.
+
+25. (geels2007metallographicandmaterialographic pages 213-215): K. Geels, Db Fowler, W-U Kopp, and M. Rückert. Metallographic and materialographic specimen preparation, light microscopy, image analysis and hardness testing. ArXiv, Jan 2007. URL: https://doi.org/10.1520/mnl46-eb, doi:10.1520/mnl46-eb. This article has 210 citations.
+
+26. (tamadon2017developmentofmetallographic pages 3-5): Abbas Tamadon, Dirk Pons, Kamil Sued, and Don Clucas. Development of metallographic etchants for the microstructure evolution of a6082-t6 bfsw welds. ArXiv, 7:423, Oct 2017. URL: https://doi.org/10.3390/met7100423, doi:10.3390/met7100423. This article has 51 citations.
+
+27. (tamadon2017developmentofmetallographic pages 1-3): Abbas Tamadon, Dirk Pons, Kamil Sued, and Don Clucas. Development of metallographic etchants for the microstructure evolution of a6082-t6 bfsw welds. ArXiv, 7:423, Oct 2017. URL: https://doi.org/10.3390/met7100423, doi:10.3390/met7100423. This article has 51 citations.
+
+28. (geels2007metallographicandmaterialographic pages 231-234): K. Geels, Db Fowler, W-U Kopp, and M. Rückert. Metallographic and materialographic specimen preparation, light microscopy, image analysis and hardness testing. ArXiv, Jan 2007. URL: https://doi.org/10.1520/mnl46-eb, doi:10.1520/mnl46-eb. This article has 210 citations.
+
+29. (geels2007metallographicandmaterialographic pages 611-617): K. Geels, Db Fowler, W-U Kopp, and M. Rückert. Metallographic and materialographic specimen preparation, light microscopy, image analysis and hardness testing. ArXiv, Jan 2007. URL: https://doi.org/10.1520/mnl46-eb, doi:10.1520/mnl46-eb. This article has 210 citations.
+
+30. (smith2022meltpoolsprocess pages 29-33): Lonnie Smith. Melt pools, process parameters, and defects in lpbf uns n07718. Text, Jan 2022. URL: https://doi.org/10.1184/r1/19874881.v1, doi:10.1184/r1/19874881.v1. This article has 0 citations and is from a peer-reviewed journal.
+
+31. (geels2007metallographicandmaterialographic pages 624-628): K. Geels, Db Fowler, W-U Kopp, and M. Rückert. Metallographic and materialographic specimen preparation, light microscopy, image analysis and hardness testing. ArXiv, Jan 2007. URL: https://doi.org/10.1520/mnl46-eb, doi:10.1520/mnl46-eb. This article has 210 citations.
+
+32. (porrang2026evaluatingdifferentmethods pages 9-13): Bita Porrang, Muhammad Asim Ghaffar, and Ali Hosseini. Evaluating different methods to measure porosity in fused filament fabricated metals. Transactions of the Canadian Society for Mechanical Engineering, 50:1-9, Jan 2026. URL: https://doi.org/10.1139/tcsme-2025-0092, doi:10.1139/tcsme-2025-0092. This article has 4 citations and is from a peer-reviewed journal.
+
+33. (porrang2026evaluatingdifferentmethods pages 6-9): Bita Porrang, Muhammad Asim Ghaffar, and Ali Hosseini. Evaluating different methods to measure porosity in fused filament fabricated metals. Transactions of the Canadian Society for Mechanical Engineering, 50:1-9, Jan 2026. URL: https://doi.org/10.1139/tcsme-2025-0092, doi:10.1139/tcsme-2025-0092. This article has 4 citations and is from a peer-reviewed journal.
+
+34. (letenneur2020laserpowderbed pages 3-6): Morgan Letenneur, Pete Imbrogno, Amin Molavi-Kakhki, and Vladimir Brailovski. Laser powder bed fusion with intentionally-seeded porosity for prototyping of powder metallurgy parts. Journal of Manufacturing and Materials Processing, 4:119, Dec 2020. URL: https://doi.org/10.3390/jmmp4040119, doi:10.3390/jmmp4040119. This article has 11 citations.
+
+35. (brika2020influenceofparticle pages 8-12): Salah Eddine Brika, Morgan Letenneur, Christopher Alex Dion, and Vladimir Brailovski. Influence of particle morphology and size distribution on the powder flowability and laser powder bed fusion manufacturability of ti-6al-4v alloy. Additive manufacturing, 31:100929, Jan 2020. URL: https://doi.org/10.1016/j.addma.2019.100929, doi:10.1016/j.addma.2019.100929. This article has 617 citations and is from a highest quality peer-reviewed journal.
+
+36. (drobner2022theeffectof pages 23-30): E Drobner. The effect of heat transfer on microstructural development for inconel718 nickel-based superalloy in laser powder bed fusion. Unknown journal, 2022.
+
+37. (zheng2021defectanalysisof pages 14-17): Zhi-Ping Zheng, L. Peng, and Di Wang. Defect analysis of 316 l stainless steel prepared by lpbf additive manufacturing processes. Coatings, 11:1562, Dec 2021. URL: https://doi.org/10.3390/coatings11121562, doi:10.3390/coatings11121562. This article has 34 citations.
+
+38. (li2024simultaneousporedetection pages 7-10): Jiaming Li, Xiaoxun Zhang, Fang Ma, Shuxian Wang, and Yuanyou Huang. Simultaneous pore detection and morphological features extraction in laser powder bed fusion with image processing. Materials, 17:1373, Mar 2024. URL: https://doi.org/10.3390/ma17061373, doi:10.3390/ma17061373. This article has 9 citations.
+
+39. (ellendt2021poreanalyzer—anopensourceframework pages 2-4): Nils Ellendt, Fabian Fabricius, and Anastasiya Toenjes. Poreanalyzer—an open-source framework for the analysis and classification of defects in additive manufacturing. Applied Sciences, 11:6086, Jun 2021. URL: https://doi.org/10.3390/app11136086, doi:10.3390/app11136086. This article has 13 citations.
+
+40. (li2024simultaneousporedetection pages 1-2): Jiaming Li, Xiaoxun Zhang, Fang Ma, Shuxian Wang, and Yuanyou Huang. Simultaneous pore detection and morphological features extraction in laser powder bed fusion with image processing. Materials, 17:1373, Mar 2024. URL: https://doi.org/10.3390/ma17061373, doi:10.3390/ma17061373. This article has 9 citations.
+
+41. (jaramilloisaza2023correlationofenergy pages 7-10): Catalina Jaramillo-Isaza, Oscar-Fabian Higuera-Cobos, July-Andrea Taborda-Ríos, Omar E. Lopez-Botello, and Patricia Zambrano-Robledo. Correlation of energy density and manufacturing variables of aa6061 through laser powder bed fusion and its effect on the densification mechanism. Metals, 13:1904, Nov 2023. URL: https://doi.org/10.3390/met13111904, doi:10.3390/met13111904. This article has 6 citations.
+
+42. (riener2022processabilityofhighstrength pages 10-12): Kirstin Riener, Tino Pfalz, Florian Funcke, and Gerhard Leichtfried. Processability of high-strength aluminum 6182 series alloy via laser powder bed fusion (lpbf). The International Journal of Advanced Manufacturing Technology, 119:4963-4977, Jan 2022. URL: https://doi.org/10.1007/s00170-022-08673-8, doi:10.1007/s00170-022-08673-8. This article has 56 citations.
+
+43. (li2024additivemanufacturingof pages 31-34): Ying-Jie Li. Additive manufacturing of 6061 and 7075 aluminium alloy with selective laser melting. Unknown journal, 2024. URL: https://doi.org/10.70675/5f083431z1407z40f1z83bfz19a675dc42f6, doi:10.70675/5f083431z1407z40f1z83bfz19a675dc42f6.
