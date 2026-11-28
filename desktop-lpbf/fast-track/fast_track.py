@@ -162,7 +162,10 @@ def optics():
 # 2. Cost from parts.csv
 # --------------------------------------------------------------------------------------------------
 OPTIONS = ("FT0", "FT1", "FT1V")
-PO_LIMIT = 3500.0   # BYU: a PO for a single-vendor order of $3,500 or more (capstone.byu.edu, read 2026-11-25)
+PO_LIMIT = 3500.0   # BYU: a PO for a single-vendor order of $3,500 or more (capstone.byu.edu, read 2026-11-25); purchasing.byu.edu
+                    # (read 2026-11-28): "Per-transaction limit: Up to $3,500", raises "will not be approved", split
+                    # transactions prohibited, over $3,500 "Create a Workday requisition instead"
+CARD_MONTH = (10000.0, 20000.0)  # BYU purchasing card monthly limits: individual card, department custodian card (2026-11-28)
 
 
 def costs():
@@ -185,8 +188,9 @@ def costs():
             if r["part_number"] != "(labour)":          # internal shop time is not a purchase
                 by_vendor[r["vendor"]] = by_vendor.get(r["vendor"], 0.0) + q * uh
         po = {v: round(t) for v, t in by_vendor.items() if t >= PO_LIMIT}
+        card = round(sum(t for v, t in by_vendor.items() if t < PO_LIMIT))   # everything else goes on cards (high prices)
         res[opt] = dict(low=round(lo), high=round(hi), groups={k: (round(a), round(b)) for k, (a, b) in groups.items()},
-                        po_vendors=po)
+                        po_vendors=po, card_total=card)
     return rows, res
 
 
@@ -485,7 +489,10 @@ def main():
         m = v["groups"].get("Monitoring", (0, 0))
         lines.append(f"- **{opt}**: ${v['low']:,}-{v['high']:,} (without the monitoring group: ${v['low'] - m[0]:,}-{v['high'] - m[1]:,}); "
                      f"vendors at or over ${PO_LIMIT:,.0f} (PO): "
-                     + (", ".join(f"{k} (${t:,})" for k, t in v["po_vendors"].items()) or "none"))
+                     + (", ".join(f"{k} (${t:,})" for k, t in v["po_vendors"].items()) or "none")
+                     + f"; on cards (every other vendor, high prices): ${v['card_total']:,}, "
+                     + f"{v['card_total'] / CARD_MONTH[0]:.1f}x one card's ${CARD_MONTH[0]:,.0f} monthly limit "
+                     + f"({v['card_total'] / CARD_MONTH[1]:.1f}x a department custodian card's ${CARD_MONTH[1]:,.0f})")
         for g, (a, bb) in v["groups"].items():
             lines.append(f"  - {g}: ${a:,}-{bb:,}")
     s = schedule()
