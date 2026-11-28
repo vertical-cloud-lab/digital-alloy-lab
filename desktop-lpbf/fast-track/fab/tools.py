@@ -24,18 +24,36 @@ TOOLS = {
     4: dict(name="1/8 in. (3.175 mm) 2-flute carbide end mill", shape="endmill", d=3.175, flutes=2, rpm=8100,
             ipt=0.0008, length=16.0, edge=9.5),
     5: dict(name="2.0 mm 2-flute carbide end mill (O-ring grooves: Parker's vacuum widths are 2.13-2.26 and "
-                 "3.05-3.18 mm)", shape="endmill", d=2.0, flutes=2, rpm=8100, ipt=0.0005, length=10.0, edge=6.0),
+                 "3.05-3.18 mm), 15 mm stick-out", shape="endmill", d=2.0, flutes=2, rpm=8100, ipt=0.0005, length=15.0,
+            edge=6.0),
     6: dict(name="3/4 in. (19.05 mm) 3-flute carbide end mill", shape="endmill", d=19.05, flutes=3, rpm=5100,
             ipt=0.005, length=66.0, edge=38.1),
     7: dict(name="1/2 in. 90 deg carbide spot drill (spotting, countersinks, chamfers)", shape="chamfer", d=12.7,
             rpm=4000, mm_rev=0.08, length=40.0, angle=90.0),
+    # round 3 (the CAM review, review-r3.md section 7): a 304 controller for the rod's lead notches, and a long-reach
+    # 1/8 in. end mill for counterbores far under a wall (MK-08e's foot)
+    8: dict(name="2.0 mm 2-flute carbide end mill for 304 stainless (MK-06 lead notches; ramp entry)", shape="endmill",
+            d=2.0, flutes=2, rpm=5000, ipt=0.0003, length=15.0, edge=6.0),
+    9: dict(name="1/8 in. (3.175 mm) 2-flute carbide end mill, long reach (2.5 in. reach, necked)", shape="endmill",
+            d=3.175, flutes=2, rpm=8100, ipt=0.0006, length=66.0, edge=9.5),
 }
-# drills by diameter (carbide jobber unless noted); T numbers 20+
+# drills by diameter (jobber length unless noted); T numbers 20+
 DRILL_D = [1.6, 2.0, 2.05, 2.2, 2.4, 2.5, 3.3, 3.4, 4.2, 4.5, 5.0, 5.5, 6.4, 6.6, 9.6, 10.0, 6.1]   # 6.1: v2 heaters
+# round 3 (review-r3.md section 7): each drill gets a flute length and a stick-out. Flute lengths are DIN 338's jobber
+# series, and DIN 340's long series for the four sizes that go deep or sit close to a wall on CAD v2 (2.0 mm: MK-03,
+# MK-04; 3.4 mm: MK-08e's foot; 4.5 mm: MK-02f, MK-15c; 5.5 mm: MK-22b). The stick-out is the flute length plus 6 mm
+# (jobber) or 10 mm (long series), so the collet grips the shank only. Round 2 had no flute length and a 30 mm (12 x D)
+# stick-out, which the CAM review's holder check failed on MK-03_D.
+DRILL_FLUTE = {1.6: 20.0, 2.0: 56.0, 2.05: 24.0, 2.2: 27.0, 2.4: 30.0, 2.5: 30.0, 3.3: 36.0, 3.4: 73.0, 4.2: 43.0,
+               4.5: 82.0, 5.0: 52.0, 5.5: 91.0, 6.4: 63.0, 6.6: 69.0, 9.6: 87.0, 10.0: 87.0, 6.1: 63.0}
+DRILL_LONG = {2.0, 3.4, 4.5, 5.5}
 for _i, _d in enumerate(DRILL_D):
-    TOOLS[20 + _i] = dict(name="%.2f mm carbide drill" % _d, shape="drill", d=_d,
-                          rpm=min(8100, int(round(60000 / _d / 10.0)) * 10),     # ~60-70 m/min surface speed in 6061
-                          mm_rev=round(min(0.15, 0.025 * _d), 3), length=max(30.0, 12 * _d), angle=118.0)
+    TOOLS[20 + _i] = dict(name="%.2f mm drill, %s (%.0f mm flutes)" % (
+                              _d, "long series" if _d in DRILL_LONG else "jobber", DRILL_FLUTE[_d]), shape="drill", d=_d,
+                          rpm=min(8100, int(round(60000 / _d / 10.0)) * 10),     # 60000/d rpm = 60/pi ~ 19 m/min surface speed
+                          mm_rev=round(min(0.15, 0.025 * _d), 3),
+                          length=DRILL_FLUTE[_d] + (10.0 if _d in DRILL_LONG else 6.0), edge=DRILL_FLUTE[_d],
+                          angle=118.0)
 
 
 def drill_tool(d):

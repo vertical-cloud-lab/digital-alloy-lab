@@ -170,7 +170,7 @@ class Piece:
         self.solid = self.solid.cut(s)
 
     def hole(self, hid, kind, size, pts, axis="-z", depth=None, through=False, thread=None, note="", tool=None,
-             tip=True):
+             tip=True, cbore_tool=4):
         """kind: tap | clear | cbore | csk | plain | ream | press. pts: hole mouths (x, y, z) in the part frame.
         depth: full-diameter depth (blind). Draws the drilled hole (tapped holes at the tap drill) with a 118 deg
         point on blind holes, plus the counterbore or countersink."""
@@ -203,7 +203,7 @@ class Piece:
         self.features.append(f)
         if kind == "cbore":
             cd, ch = T.CBORE[size]
-            self.features.append(dict(kind="cbore", hid=hid, axis=axis, d=cd, depth=ch, tool=4,
+            self.features.append(dict(kind="cbore", hid=hid, axis=axis, d=cd, depth=ch, tool=cbore_tool,
                                       pts=[list(p) for p in pts], hole_d=dd))
         if kind == "csk":
             self.features.append(dict(kind="csk", hid=hid, axis=axis, d=T.CSK[size], tool=7, pts=[list(p) for p in pts]))
@@ -475,8 +475,8 @@ def mk02_ring():
     pc.hole("A", "clear", "M5", [(*polar(BC_R, 45 * k), WR_H) for k in range(8)], through=True,
             note="8 x M5 flat-head through flange, ring and lid into MK-02c (box) or MK-13 (cube)")
     pc.setup("-Z", face=(2, 3.5 - 0.0), outline=(2, -6.0), label="bottom up: face, base O-ring groove, outline half")
-    pc.setup("+Z", face=(2, WR_H), outline=(2, -0.3), label="top up: face to 12.0, aperture, seat, window groove, "
-                                                              "holes, rest of the outline", hold="soft jaws on the OD")
+    pc.setup("+Z", face=(2, WR_H), outline=(2, 5.5), label="top up: face to 12.0, aperture, seat, window groove, "
+             "holes, the outline down to 5.5 (A cut 0-6)", hold="soft jaws on the OD's lower 5 mm")
     pc.tol += ["window seat floor (z 4): flatness 0.01, Ra 0.4 um (Parker Chart 4-3: 16 RMS for gas and vacuum face seals)",
                "base face (z 0): flatness 0.02, Ra 0.4 um (16 RMS), lay circular", "seat bore 51.30 +0.10/0",
                "O-ring grooves: floor Ra 0.8 um (32 RMS), sides Ra 1.6; floor corner radius 0.13-0.38 (.005-.015 in.)"]
@@ -603,8 +603,10 @@ def mk03():
                blank=blank_box(-42, 42, -44.45, 44.45, -2.2, 42.25), seal=False,
                pos="part (x, y) = world (x, y); part z 0 = block underside (world z -40 box, -19 cube)")
     pc.solid = box(-bw / 2, bw / 2, -bd / 2, bd / 2, 0, bh)
-    pc.bore("40.00 H7 bore (rough 39.6 by helix; finish with a boring head)", P["bore"] / 2, 0, 0, bh, 0, tool=2,
-            finish="boring head to 40.000-40.025, Ra 0.8")
+    pc.bore("40.00 H7 bore, top half (rough by helix; finish with a boring head)", P["bore"] / 2, 0, 0, bh, bh / 2 - 0.5,
+            tool=2, finish="boring head to 40.000-40.025, Ra 0.8")
+    pc.bore("40.00 H7 bore, bottom half (rough by helix from below)", P["bore"] / 2, 0, 0, 0.0, bh / 2 + 0.5, axis="+z",
+            tool=2)
     x0, x1 = P["ovf_x"]
     oy = P["ovf_y"]
     sl = slot_xy(x0, x1, -oy, oy, -1, bh + 1)
@@ -769,7 +771,7 @@ def mk06(which):
                for a in (270.0, 30.0, 150.0)]
     pc.cut(notches[0])
     pc.features.append(dict(kind="custom_slot", name="lead notch %.0f x %.1f through one wall (x3: index 120 deg)"
-                            % (gw, z1 - z0), axis="+y", tool=4, center=[0.0, -ro, (z0 + z1) / 2],
+                            % (gw, z1 - z0), axis="+y", tool=8, center=[0.0, -ro, (z0 + z1) / 2],
                             size=[gw, z1 - z0], depth=P["rod_wall"] + 0.6))
     pc.hole("A", "plain", "2.5", [(ro, 0.0, ln - P["socket"] + 5.0)], axis="-x", depth=P["rod_wall"] + 0.3,
             note="set-screw dimple, one wall (the plate's M3 dog point at z 5)", tool=T.drill_tool(2.5))
@@ -835,7 +837,8 @@ def mk07():
     pc.hole("B", "tap", "M3", [(sx, -25.0, 0.0) for sx in (-12.0, 12.0)], axis="+z", depth=6.0, thread="5",
             note="FT-0 lead terminal bracket (MK-17b) under the gland")
     pc.setup("+Z", face=(2, t), outline=(2, 3.0), label="top up: face, outline, face O-ring groove")
-    pc.setup("-Z", face=(2, 0.0), outline=(2, -t - 0.3), label="bottom up: face to 12.0, rest of outline, c'bores")
+    pc.setup("-Z", face=(2, 0.0), outline=(2, -3.5), label="bottom up: face to 12.0, the outline's last 3.5 mm, c'bores",
+             hold="vise on the outline A cut")
     pc.lathe_op("4-jaw on the sawn 64 x 64 blank: face, drill 12, bore the throat 12.95", face_min(64) + drill_min(12.0, 14) +
                 turn_min(12.0, THROAT, 13, f=0.08))
     pc.lathe_op("two internal grooves %.2f x %.2f wide (internal grooving tool, 3 mm insert, 2 plunges each)"
@@ -1027,13 +1030,15 @@ def mk08_bracket():
               tool=3)
     pc.hole("A", "tap", "M3", [(0.0, yr - 18.0, z_top - 8.0)], depth=8.0, thread="6", note="arm screw")
     car = [(x, yr + y) for (x, y) in VEN.LSM["car_m3"] if abs(x) == 15.0 and y in (-5.0, 15.0)]
-    pc.hole("B", "cbore", "M3", [(x, y, z_car + 6.0) for x, y in car], through=True,
+    pc.hole("B", "cbore", "M3", [(x, y, z_car + 6.0) for x, y in car], through=True, cbore_tool=9,
             note="to the X-LSM100B carriage's M3 taps (Zaber STEP: ft_vendor.LSM car_m3), heads 0.4 under the foot top: "
                  "the shield clears the foot by 2 mm. Long-reach c'bore (61 mm under the upright's top)")
-    pc.setup("+X", face=(2, 20.0), outline=(2, -19.0), label="L profile up (x up): face, outline of the L to x -19",
-             hold="bar in the vise, 41 mm out")
-    pc.setup("-X", face=(2, 20.0), outline=(2, 18.5), label="flip: face to 40.0 wide, last 1.5 mm of the outline")
-    pc.setup("+Z", label="foot down on parallels: arm notch, M3, c'bores", hold="vise on the upright's y faces")
+    pc.setup("+X", face=(2, 20.0), outline=(2, 0.0), label="L profile up (x up): face, outline of the L to x 0",
+             hold="bar in the vise, 22 mm out")
+    pc.setup("-X", face=(2, 20.0), outline=(2, -0.5), label="flip: face to 40.0 wide, the rest of the outline (20.5)",
+             hold="vise on the outline A cut")
+    pc.setup("+Z", label="foot down on parallels: arm notch, M3, c'bores (long-reach 1/8 in. cutter)",
+             hold="vise on the upright's y faces")
     pc.changes += ["v2: redesigned for the X-LSM100B carriage (ft_model): foot 40 x 40 x 6 on four of the carriage's M3 "
                    "taps (Zaber's STEP), upright 40 x 8, %.1f tall; the shield sits 2 mm over the foot, so v1's 3 mm "
                    "foot is gone" % H,
@@ -1326,7 +1331,7 @@ def mk10_collar():
     body = body.fuse(ring(SPIG_R, SPIG_R - SPIG_W, -SPIG_H, 0.01, tx, ty)).clean()
     body = body.cut(cyl(SPIG_R - SPIG_W, -SPIG_H - 1, 7.0, tx, ty))
     pc.solid = body
-    pc.features.append(dict(kind="adaptive", name="lens bore %.1f x 34 (adaptive)" % (2 * ri), axis="-z", tool=2,
+    pc.features.append(dict(kind="adaptive", name="lens bore %.1f x 34 (adaptive, 3/4 in.)" % (2 * ri), axis="-z", tool=6,
                             probe=[ri - 8.0, 0.0, 6.0], note="", z_top=None))
     pc.boss("spigot %.0f x %.1f wall x %.0f, inside the centre section's upper end" % (2 * SPIG_R, SPIG_W, SPIG_H),
             (tx, ty + SPIG_R - SPIG_W / 2, -SPIG_H), 0.0, axis="+z", tool=2)
@@ -1336,9 +1341,10 @@ def mk10_collar():
             note="beam-tube interlock switch D4NS-2CF (S5) on the +x side (est.)")
     pc.hole("B", "tap", "M4", [(math.sqrt(ro ** 2 - 25.0 ** 2), sy, 30.0) for sy in (-25.0, 25.0)], axis="-x",
             through=True, thread="through the wall", note="nylon-tip set screws onto the lens body")
-    pc.setup("+Z", face=(2, H), outline=(2, -SPIG_H - 0.3), label="open end up: face to 40, outline, lens bore",
+    pc.setup("+Z", face=(2, H), outline=(2, 18.0), label="open end up: face to 40, outline to z 18, lens bore",
              hold="blank on parallels, toe clamps")
-    pc.setup("-Z", face=(2, SPIG_H), label="floor up: face to the spigot, round the spigot, the 50 bore",
+    pc.setup("-Z", face=(2, SPIG_H), outline=(2, -17.5), label="floor up: face to the spigot, the outline's rest, round "
+             "the spigot, the 50 bore",
              hold="soft jaws in the lens bore (ID clamp)")
     pc.setup("+X", label="on its side: interlock-switch taps, two set screws", hold="vise, V-block")
     pc.tol += ["lens bore %.1f +0.3/0 (the LINOS lens is 119.8)" % (2 * ri), "spigot OD %.0f -0.10/0" % (2 * SPIG_R)]
@@ -1575,8 +1581,10 @@ def mk15_riser():
             note="from the bracket plate")
     pc.hole("B", "tap", "M6", [(x, y, h) for x, y in VEN.VSR["base_holes"]], depth=14.0, thread="12",
             note="X-VSR20A base: M6 clearance holes on a 50 mm square (Zaber STEP, ft_vendor.VSR base_holes)")
-    pc.setup("+Z", face=(2, h), outline=(2, -0.3), label="top up: face to %.1f, outline, stage taps" % h)
-    pc.setup("-Z", face=(2, 0.0), label="bottom up: face, riser taps")
+    pc.setup("+Z", face=(2, h), outline=(2, 4.0), label="top up: face to %.1f, outline to z 4, stage taps" % h,
+             hold="vise on the blank's margins")
+    pc.setup("-Z", face=(2, 0.0), outline=(2, -4.5), label="bottom up: face, the outline's last 4.5 mm, riser taps",
+             hold="vise on the outline A cut")
     pc.changes += ["v2: 64 x 64 x %.1f under the X-VSR20A (ft_model; its 64 x 64 base face, from Zaber's STEP); the stage's "
                    "4 x M6 on a 50 mm square are now read, not estimated" % h]
     return pc
@@ -1602,9 +1610,10 @@ def mk15_clamp():
     pc.cam_solid = pc.solid
     pc.cut(box(-0.75, 0.75, 0, 21, 20.0, bh + 1))
     pc.manual.append(("slit 1.5 wide from the bore to +y, z 20 to the top (slitting saw or bandsaw)", 10.0))
-    pc.setup("+Z", face=(2, bh), outline=(2, -0.3), label="top up: face, outline, rod bore, c'bores",
+    pc.setup("+Z", face=(2, bh), outline=(2, 10.0), label="top up: face, outline to z 10, rod bore, c'bores",
              hold="vise on the blank's y faces, on parallels")
-    pc.setup("-Z", face=(2, 0.0), label="bottom up: face to 40", hold="vise")
+    pc.setup("-Z", face=(2, 0.0), outline=(2, -10.5), label="bottom up: face to 40, the outline's last 10.5 mm",
+             hold="vise on the outline A cut")
     pc.setup("-Y", label="-y face up: lead pocket", hold="vise on the x ends")
     pc.setup("+X", label="+x (AE) face up: clamp-screw hole", hold="vise on the y faces")
     pc.tol += ["rod bore 12.95 +0.05/0, perpendicular to the base within 0.02 (the rod must run true in the gland)",
@@ -1833,8 +1842,10 @@ def mk18():
                note="screw wells, 10 x D: peck; the M5 head sits on the drill point 12 above the base (washer)")
     stand.hole("B", "tap", "M3", [(sx * 24.0, sy * 24.0, h) for sx in (-1, 1) for sy in (-1, 1)], depth=8.0, thread="6",
                note="target plate")
-    stand.setup("+Z", face=(2, h), outline=(2, 1.0), label="top up: face, outline, wells, M3")
-    stand.setup("-Z", face=(2, 0.0), outline=(2, -h - 0.3), label="bottom up: face to height, holes A")
+    stand.setup("+Z", face=(2, h), outline=(2, 25.0), label="top up: face, outline to z 25, wells, M3",
+                hold="vise on the bar's lower 25 mm")
+    stand.setup("-Z", face=(2, 0.0), outline=(2, -25.5), label="bottom up: face to height, the outline's rest (25.5), "
+                "holes A", hold="vise on the outline A cut")
     stand.tol += ["height %.2f +-0.05 (puts the target's top at the powder plane, z 0)" % h,
                   "top parallel to the base within 0.03"]
     stand.changes += ["height %.2f (model 51.6) for a 1/8 in. (3.18) target plate instead of 3.0" % h,
