@@ -451,35 +451,36 @@ Weeks are scenario A's (stages on PCards, cube ordered on day 0); `out/progressi
 this folder's own task graph (`ft_progression.py`), built on `fast_track.py`'s task durations: the orders and
 approvals in its `COMMON` (the RTC4's eBay window, the 208/240 V circuit for the laser, the O₂ analyzers), and its
 per-state shop days from the fabrication worker's hours ([`../fab/out/hours.json`](../fab/out/hours.json), at 8 h a
-working day early and 5 h late). The upgrade steps (1-2 days each) are estimates.
+working day early and 5 h late; since round 3, the hours of the fabrication set on CAD v2: 81 / 166 h to FT-1, low /
+expected). The upgrade steps (1-2 days each) are estimates.
 
 | State | Starts | Needs these to have arrived (parts.csv) | Made parts first used | What it can do | Gate before the next state |
 |---|---|---|---|---|---|
 | **S1** optics bench | checks at 1.4-3.8 wk | laser chain L1-L7 (RTC4 L5b), water L10-L11, PC C1, T-slot frame E4, eyewear S2, coaxial photodiode MON4 | deck MK-01, target stand MK-18, the head's mounts MK-09 (flange plate, top flange, gussets, and g3's far-side support plate with its angle brackets) | guide laser only: the head and the RTC4 talk; field size and distortion on a target at the powder plane; the photodiode branch aligned | LSO registration; the laser's interface and the 208/240 V circuit |
-| **S2** box round the beam | full power at 1.6-4.2 wk | box E1, window and cover slides L8, beam dump L9, safety relay and switches S1, S5, S6, the Pi and its I/O node C2-C4, thermocouples MON6 | window stack MK-02, beam tube MK-10 (long section), deck clamps MK-23 | full power into a water-cooled dump inside a closed Class 1 box: calorimetry, a focus ladder, interlocks proven | the laser makes its power and its spot, inside its return window |
-| **FT-0** single-track bench | tracks at 1.9-5.2 wk | heater parts H1 (2), H2-H4, gas and O₂ G1-G8, extinguisher and room O₂ S3-S4, spreader bar M4, stock F1, glovebox P1, camera, lights and digitizer MON1-MON3, MON7-MON8 | well block MK-03, heater plate MK-04, substrates MK-05, rod MK-06, gland MK-07, nozzle and collector MK-11, overflow cup MK-16, collar and terminal bracket MK-17, camera and light ports MK-19-MK-21 | flow purge with an O₂ log, the plate at 200 °C, single tracks on hand-spread layers, pads | EHS review; O₂ log; stages and FT-1 parts in |
-| **FT-1** purge-box LPBF | coupons at 3.1-8.1 wk | X-LSM100B M1c, X-VSR20A M2 (or the MTS50 M2b), hopper parts M3, second heater zone H5, stage supplies C5, AE sensor MON5 | arm and hopper MK-08, shield MK-12, bracket, riser and rod-end block MK-15 | multi-layer coupons at 100-1000 ppm O₂, plate and well at 200 °C | coupons made, or the O₂ log asks for FT-1V |
-| **FT-1V** cube | coupons at 3.7-9.3 wk | cube frame and plates E2, pump-purge kit E3, feedthroughs E5 | cube top and bottom plates MK-13/14, long rod MK-06, short beam-tube section MK-10, cover-slide drop tube | the same coupons at < 100 ppm by pump-purge; the box becomes the spreadability rig | - |
+| **S2** box round the beam | full power at 1.7-4.6 wk | box E1, window and cover slides L8, beam dump L9, safety relay and switches S1, S5, S6, the Pi and its I/O node C2-C4, thermocouples MON6 | window stack MK-02, beam tube MK-10 (long section), deck clamps MK-23 | full power into a water-cooled dump inside a closed Class 1 box: calorimetry, a focus ladder, interlocks proven | the laser makes its power and its spot, inside its return window |
+| **FT-0** single-track bench | tracks at 2.4-6.9 wk | heater parts H1 (2), H2-H4, gas and O₂ G1-G8, extinguisher and room O₂ S3-S4, spreader bar M4, stock F1, glovebox P1, camera, lights and digitizer MON1-MON3, MON7-MON8 | well block MK-03, heater plate MK-04, substrates MK-05, rod MK-06, gland MK-07, nozzle and collector MK-11, overflow cup MK-16, collar and terminal bracket MK-17, camera and light ports MK-19-MK-21 | flow purge with an O₂ log, the plate at 200 °C, single tracks on hand-spread layers, pads | EHS review; O₂ log; stages and FT-1 parts in |
+| **FT-1** purge-box LPBF | coupons at 3.6-9.8 wk | X-LSM100B M1c, X-VSR20A M2 (or the MTS50 M2b), hopper parts M3, second heater zone H5, stage supplies C5, AE sensor MON5 | arm and hopper MK-08, shield MK-12, bracket, riser and rod-end block MK-15 | multi-layer coupons at 100-1000 ppm O₂, plate and well at 200 °C | coupons made, or the O₂ log asks for FT-1V |
+| **FT-1V** cube | coupons at 4.2-11.0 wk | cube frame and plates E2, pump-purge kit E3, feedthroughs E5 | cube top and bottom plates MK-13/14, long rod MK-06, short beam-tube section MK-10, cover-slide drop tube | the same coupons at < 100 ppm by pump-purge; the box becomes the spreadability rig | - |
 
 Milestones in weeks, earliest to latest:
 
 | Milestone | A: stages on PCards, cube ordered on day 0 | B: stages on PCards, cube ordered after FT-0's O2 log | C: both stages on one Zaber PO, cube after the O2 log |
 |---|---|---|---|
 | S1 guide-laser and scanner checks | 1.4-3.8 wk | 1.4-3.8 wk | 1.4-3.8 wk |
-| S2 FULL POWER INTO THE DUMP | 1.6-4.2 wk | 1.6-4.2 wk | 1.6-4.2 wk |
-| FT-0 FIRST TRACKS | 1.9-5.2 wk | 1.9-5.2 wk | 1.9-5.2 wk |
-| FT-1 FIRST COUPONS | 3.1-8.1 wk | 3.1-8.1 wk | 3.6-8.1 wk |
-| FT-1V FIRST COUPONS (< 100 ppm) | 3.7-9.3 wk | 5.1-10.9 wk | 5.1-10.9 wk |
+| S2 FULL POWER INTO THE DUMP | 1.7-4.6 wk | 1.7-4.6 wk | 1.7-4.6 wk |
+| FT-0 FIRST TRACKS | 2.4-6.9 wk | 2.4-6.9 wk | 2.4-6.9 wk |
+| FT-1 FIRST COUPONS | 3.6-9.8 wk | 3.6-9.8 wk | 3.6-9.8 wk |
+| FT-1V FIRST COUPONS (< 100 ppm) | 4.2-11.0 wk | 5.9-13.3 wk | 5.9-13.3 wk |
 
-Spend by the state that first needs each `parts.csv` line (the lead's round-2 file):
+Spend by the state that first needs each `parts.csv` line (round 3's file, with the shop time on v2's hours):
 
 | State | Adds | Cumulative |
 |---|---:|---:|
 | S1 | $6.5k-11.2k | $6.5k-11.2k |
-| S2 | $3.1k-4.0k | $9.7k-15.2k |
-| FT-0 | $11.2k-21.3k | $20.9k-36.4k |
-| FT-1 | $8.3k-10.8k | $29.1k-47.2k |
-| FT-1V | $11.7k-13.8k | $40.8k-61.0k |
+| S2 | $3.1k-4.0k | $9.7k-15.1k |
+| FT-0 | $12.9k-24.2k | $22.5k-39.3k |
+| FT-1 | $8.0k-10.1k | $30.5k-49.5k |
+| FT-1V | $12.3k-14.8k | $42.8k-64.3k |
 
 The FT-1 and FT-1V sums are the study's stand-alone totals (`fast_track.py`, from the same `parts.csv`) plus what
 growing costs: FT-0's spreader M4 ($150-600) and, at FT-1V, the box E1 ($694-760), which then becomes the
