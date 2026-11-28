@@ -82,7 +82,7 @@ class Motion:
     # Recoater: Zaber X-LSM100B-E03, 101.6 mm, 104 mm/s, 25 N (zaber.com, read 2026-11-27)
     recoater_travel_mm: float = 101.6
     recoater_offset_mm: float = 48.5    # stage position = machine X + this (estimate, puts the parks mid-travel)
-    park_left_x: float = -30.9          # hopper parks clear of the beam (cad/README.md, drawn for the X-LSQ075B)
+    park_left_x: float = -31.1          # hopper parks clear of the beam (cad/README.md, CAD v2 with the X-LSM100B)
     park_right_x: float = 35.5
     spread_speed: float = 40.0          # forward stroke that lays the layer (process/scan_program.py; estimate)
     return_speed: float = 104.0         # the X-LSM100B's maximum
@@ -133,7 +133,8 @@ class Scan:
     focal_mm: float = 254.0             # LINOS F-Theta-Ronar 4401-288-000-20 (EFL 254.4 mm)
     K_bits_per_mm: float = 0.0          # 0 = 2^20 / (2 f theta); the real K comes from get_table_para(1, 1)
     x_offset_mm: float = 0.0            # lens axis to machine origin (process/optics.py; set with the burned grid)
-    y_offset_mm: float = 0.0
+    y_offset_mm: float = -30.0          # CAD v2: the lens axis is 30 mm toward -Y of the plate centre (ft_model P['axis_off'],
+                                        # the back-reflection fix, process/README.md); field y = machine y + 30 mm
     swap_xy: bool = False               # head mounting: set at commissioning from the burned grid
     flip_x: bool = False
     flip_y: bool = False
