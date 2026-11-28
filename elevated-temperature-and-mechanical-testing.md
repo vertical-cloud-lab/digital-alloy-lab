@@ -48,11 +48,12 @@ Section 9 says which source each fact came from and where I corrected Edison. Ma
     wrought 2219-T61 is down to about 25 MPa (ORNL/TM-2024/3244, via Edison 02).
 - **Data on AM aluminum at temperature are thin, and that matters for this lab.**
   - **Creep data exist** for a handful of LPBF alloys: Al-Ce, Al-Ce-Ni-Mn(-Zr), Al-Cu-Mn-Zr, Al-Mg-Zr, Al-Zr-X and A20X.
-  - **No stress-rupture test reached 1,000 h.** The 1,000 h results are all unstressed aging.
+  - **No 1,000 h stress-rupture life was found for any Sc-free LPBF alloy.** The 1,000 h results are all unstressed
+    aging (Edison 05; Scalmalloy, AlSi10Mg and A20X were outside that search).
   - **Fatigue at temperature is almost absent.** One exception is ORNL's piston alloy, with fatigue strengths of
-    115, 100 and 60 MPa at 150, 250 and 350 °C.
-  - **Composition-resolved hot screening has not been demonstrated** (Edison 05, 06). Sc-lean Al-Mg-Zr, Al-Fe-Zr and
-    Al-Ni-Zr have the least data.
+    115, 100 and 60 MPa at 150, 250 and 350 °C (via Edison 09).
+  - **No composition-resolved hot screen was found** (Edison 06, which calls this a search-limited finding).
+  - **Sc-lean Al-Mg-Zr, Al-Fe-Zr and Al-Ni-Zr have the least data** (Edison 02).
 - **Beyond tensile, fatigue usually decides whether an LPBF aluminum part survives.**
   - **Fatigue** is limited by rough as-built surfaces ("killer notches"), pores and build orientation.
   - **Toughness and corrosion:** fracture toughness, fatigue-crack growth, and stress-corrosion and exfoliation
@@ -88,7 +89,7 @@ Section 9 says which source each fact came from and where I corrected Edison. Ma
 
 | Location | Temperature | What is tested | Source |
 |---|---:|---|---|
-| Concorde skin (Mach 2.0–2.2 cruise) | about 120 °C, local spots up to 150 °C; Mach 2.2 equilibrium about 130 °C (300 °C at Mach 3) | Hot and post-exposure tensile, creep, fatigue; 10,000 to 30,000 h exposures | *Air & Cosmos* 1964 (survey †); [Hénaff et al.](https://doi.org/10.5772/15153) (via Edison 09) |
+| Concorde skin (Mach 2.0–2.2 cruise) | about 120 °C, local spots up to 150 °C, and an equilibrium of about 130 °C at Mach 2.2 (300 °C at Mach 3) (*Air & Cosmos*); a maximum of about 130 °C at Mach 2.05 (Hénaff) | Hot and post-exposure tensile, creep, fatigue; 10,000 to 30,000 h exposures | *Air & Cosmos* 1964 (survey †); [Hénaff et al.](https://doi.org/10.5772/15153) (via Edison 09) |
 | NASA HSCT (Mach 2.4 study) | 93–135 °C (200–275 °F) | 30,000 h exposures, hot tensile, creep, toughness. The 60,000 h life was a *goal*, not a test length | [NASA/TP-2004-212988](https://ntrs.nasa.gov/citations/20040047195) (Pi); NASA CR-4517 (via Edison 09) |
 | Aluminum under a thermal-protection system (Shuttle, hypersonic concepts) | kept at or below about 175 °C (350 °F) | Hot strength of the structure under the tiles | [Tenney et al. 1989](https://doi.org/10.2514/3.45868) (via Edison 01, 09) |
 | Turbocharger and small-engine compressor wheels (2618A) | up to about 230 °C in service | Fatigue at room temperature and 230 °C; creep and fatigue after aging | [Fraunhofer IWM](https://iwm.fraunhofer.de/en/services/materials-assessment-lifetime-concepts/highlights/aging-lifetime-radial-compressor-wheels.html); [Sheffield thesis](https://etheses.whiterose.ac.uk/12861/) (survey) |
@@ -190,7 +191,7 @@ freely distributed.
 | AlSi10Mg, as built | Hot tensile after 30 min holds | YS about 300 MPa at room temperature, little change below 200 °C, about 25 MPa at 400 °C as Si coarsens | [Cao et al. 2020](https://doi.org/10.1016/j.jmst.2020.04.066) (Pi abstract) |
 | AlSi10Mg | Fatigue at 350 °C | 30 MPa at 10⁷ cycles at 20 Hz; longer lives at 20 kHz | [Bahl et al. 2025](https://doi.org/10.1016/j.actamat.2025.121866) (Pi) |
 | Al-Mg-Sc-Zr, 350 °C / 4 h | Hot tensile | UTS and elongation: 560.6 MPa and 11.1 % at room temperature; 435.1 and 25.8 at 100 °C; 269.4 and 20.1 at 150 °C; 102.8 and 47.9 at 200 °C; 54.0 and 72.2 at 250 °C | [Ren et al. 2024](https://doi.org/10.3390/met14080890) (Pi) |
-| Scalmalloy, aged | Yield from a review figure | About 470 MPa at room temperature, about 60 MPa at 300 °C | Michi et al. 2022 review (via Edison 02) |
+| Scalmalloy, aged | Yield | 468–493 MPa at room temperature after 325 °C / 4 h ([Cerri et al.](https://doi.org/10.3390/cryst15010025)); about 60 MPa at 300 °C, read from the Michi et al. 2022 review's figure | via Edison 02 |
 | Al-10Ce-8Mn | Hot tensile to 400 °C; after 200 h at 400 °C | Strength retention up to 400 °C better than wrought and AM benchmarks | [Plotkowski et al. 2020](https://doi.org/10.1016/j.actamat.2020.07.014) (Pi abstract) |
 | Al-11Ce-7Mg, Al-15Ce-9Mg | Hot tensile | Higher yield than AlSi10Mg up to 350 °C, better retention than Scalmalloy | [Sisco et al. 2021](https://doi.org/10.1038/s41598-021-86370-4) (via Edison 02) |
 | Al-9Ce-4Ni-0.5Mn-1Zr ("DuAlumin-3D"), 350 °C / 8 h | Hot tensile, two orientations | Yield about 350, 300, 240, 170 and 115 MPa at room temperature, 93, 204, 343 and 398 °C; beat 2219-T61 throughout | ORNL/TM-2024/3244 (record Pi; numbers via Edison 02) |
@@ -208,14 +209,16 @@ freely distributed.
 
 ### 2.4 Gaps that matter for this lab
 
-1. **No stress-rupture life of 1,000 h or more for any LPBF aluminum alloy.** The 1,000–2,016 h results are unstressed
-   aging, not creep lives (Edison 05).
-2. **Fatigue at temperature is almost absent.** Exceptions: ORNL's piston alloy at 150–350 °C, and AlSi10Mg at
-   350 °C. There is no creep-fatigue or thermomechanical-fatigue data for LPBF aluminum (Edison 02).
+1. **No stress-rupture life of 1,000 h or more was found for any Sc-free LPBF aluminum alloy.** The 1,000–2,016 h
+   results are unstressed aging, not creep lives (Edison 05). Edison's search didn't cover Scalmalloy, AlSi10Mg or A20X.
+2. **Fatigue at temperature is almost absent.** Exceptions: ORNL's piston alloy at 150–350 °C (via Edison 09), and
+   AlSi10Mg at 350 °C (Pi). Creep-fatigue data are scarce (Edison 02). I found no thermomechanical-fatigue data for
+   LPBF aluminum, but didn't search for it specifically.
 3. **Sc-lean and rare-earth-lean alloys have the least data.** Al-Mg-Zr (Addalloy-type), Al-Fe-Zr, Al-Ni-Zr and
    lean Al-Mn-Sc lack creep maps, hot fatigue and long-exposure property data (Edison 02).
 4. **No composition-resolved hot screen.** Hot indentation, bending creep and parallel small-punch creep have each
-   been done on aluminum, but nobody has run them across a graded or combinatorial AM aluminum library (Edison 06).
+   been done on aluminum. Edison found no study running them across a graded or combinatorial AM aluminum library, and
+   calls that a search-limited finding (Edison 06).
 5. **Commercial AM grades** (Constellium Aheadd, HRL 7A77) publish little or no elevated-temperature data. HRL's
    7A77 datasheet is room-temperature only (survey).
 
@@ -230,22 +233,22 @@ freely distributed.
 | Kahn tear | ASTM B871 (withdrawn 2017, no replacement) | Tear initiation and propagation energy of sheet | 35 × 60 mm × thickness, no precrack, cheap | Low-cost toughness ranking of thin sections |
 | High-cycle fatigue | ASTM E466 | S-N curve, endurance limit; sensitivity to surface and defects | 15–30 specimens per curve; days to weeks | Usually the limiting property (§3.2) |
 | Low-cycle fatigue | ASTM E606 | Cyclic hardening or softening, strain-life | Extensometer, about 10⁻³ s⁻¹ | Thermally cycled parts |
-| Very-high-cycle fatigue | Ultrasonic, 20 kHz | Life to 10⁹ cycles in about 14 h (579 days at 20 Hz); internal initiation | Small resonant specimens; watch self-heating and rate effects | Pores inside LPBF parts |
+| Very-high-cycle fatigue | Ultrasonic, 20 kHz | Life to 10⁹ cycles in about 14 h (579 days at 20 Hz, Edison 08); internal initiation | Small resonant specimens; watch self-heating and rate effects (Edison 08) | Pores inside LPBF parts |
 | Fatigue-crack growth | ASTM E647 | da/dN versus ΔK, threshold | C(T) or M(T); weeks | Damage tolerance |
 | Charpy impact | ASTM E23 | Absorbed energy; brittle transition in steels | 10 × 10 × 55 mm | Discriminates poorly for Al, which has no ductile-to-brittle transition (Edison 03, moderate support) |
 | Notched tension | ASTM E602 | Notch-strength ratio, notch sensitivity | Notched round bar | Cheap check relevant to rough surfaces |
-| Compression | ASTM E9 | Compressive yield; tension-compression asymmetry | Short cylinders; minutes | Required by MMPDS; separates anisotropy from inhomogeneity |
-| Shear, bearing | ASTM B769, B565; E238 | Shear strength (about 55–65 % of UTS); bearing strength (about 1.5–2 × UTS) | Small plates and pins | Required by MMPDS; fastened joints |
+| Compression | ASTM E9 | Compressive yield; tension-compression asymmetry | Short cylinders; minutes | Required by MMPDS (survey); separates anisotropy from inhomogeneity |
+| Shear, bearing | ASTM B769, B565; E238 | Shear strength (about 55–65 % of UTS); bearing strength (about 1.5–2 × UTS) | Small plates and pins | Required by MMPDS (survey); fastened joints |
 | Hardness | ASTM E18, E92, E384, E10 | Fast proxy for yield: σ_y ≈ 0.383 HV − 101.5 for Al-Mg-Si (R² 0.94); within ±15–30 % once calibrated | Seconds per indent | Screening and mapping; calibrate per alloy family |
-| Nanoindentation | ISO 14577 | Local hardness and modulus, maps; hot stages to 800–1,000 °C | Hundreds to thousands of indents; about 0.2 s each in fast modes | Composition gradients; size effects and pile-up need care |
+| Nanoindentation | ISO 14577 | Local hardness and modulus, maps; vendors' hot stages go to 800–1,000 °C (survey), though one 800 °C stage was used only to 500 °C (Edison 08) | Hundreds to thousands of indents; about 0.2 s each in fast modes | Composition gradients; size effects and pile-up need care |
 | Stress corrosion, exfoliation | ASTM G47, G139; G34 | Environment-assisted cracking; layered corrosion | 20–30 days (G47); 48–96 h (G34) | Needed for 2xxx and 7xxx. G47 and G139 may not rank close tempers |
 | Residual stress | XRD, hole drilling (E837), contour, neutron diffraction | Built-in surface tension that speeds crack initiation | — | High in as-built LPBF |
-| Small punch | ASTM E3205 | Estimates of yield and UTS; creep (small-punch creep) | 8 mm × 0.5 mm disc, about 25 mm³ | Many compositions from one build |
+| Small punch | ASTM E3205 | Estimates of yield and UTS; creep (small-punch creep, Edison 06) | 8 mm × 0.5 mm disc, about 25 mm³ | Many compositions from one build |
 | Profilometry-based indentation plastometry (PIP) | Plastometrex | A full stress-strain curve from one spherical indent and an inverse finite-element fit | Minutes; probes about 1 mm across | Screening and maps; hot stage to 800 °C |
 | Micropillar compression | — | Flow of a single grain or phase | Hours of FIB milling per pillar | Mechanisms, not engineering data |
-| Bending creep with DIC | — | Tension and compression creep at several stresses from one beam | Small beams | Matched uniaxial creep for LPBF A20X at 200 °C and AlSi10Mg at 250 °C |
+| Bending creep with DIC | — | Tension and compression creep at several stresses from one beam | Small beams | For LPBF A20X at 200 °C, rates matched uniaxial creep below 170 MPa and were within a factor of two above it; an AlSi10Mg result at 250 °C is reported second-hand (Edison 06) |
 
-From Edison 03 unless marked. ASTM B871's withdrawal is from the survey; Edison 03 presents B871 as current.
+From Edison 03 unless marked. ASTM B871's withdrawal is from the survey and the Pi browser; Edison 03 presents B871 as current.
 
 ### 3.2 Why fatigue, not tensile strength, limits LPBF aluminum
 
@@ -300,8 +303,8 @@ From Edison 03 unless marked. ASTM B871's withdrawal is from the survey; Edison 
 |---|---|---|---|
 | AA6061 | 2.5 × 10⁻³, 2.5 × 10⁻² and 2.5 × 10⁻¹ s⁻¹, at room temperature and 250 °C | Yield about 270–272 MPa at room temperature, barely rate-dependent; 192–220 MPa at 250 °C | Ma'at et al. 2019 (via Edison 04) |
 | AA6016-T4 / T6 sheet | 10⁻³ against 500 s⁻¹ | Yield +54 % / +38 %; UTS +13–14 %; elongation +75 % / +105 % | [Ubertalli et al. 2020](https://doi.org/10.3390/met10020242) (via Edison 04) |
-| AA5754, AA5182 sheet | 600–1,500 s⁻¹ against 3.3 × 10⁻³ s⁻¹ | Flow stress changed little; elongation over 40 % above 2,000 s⁻¹, against about 30 % quasi-statically | [Smerd et al. 2005](https://doi.org/10.1016/j.ijimpeng.2005.04.013) (via Edison 04, 09) |
-| AA5082, AA5182 | 10⁻⁴ to 10³ s⁻¹ | Negative rate sensitivity and serrated flow from 10⁻⁴ to 10⁻¹ s⁻¹; turns positive near 100 s⁻¹ | [Yamada et al. 2018](https://doi.org/10.3390/met8080576) (via Edison 04) |
+| AA5754, AA5182 sheet | 600–1,500 s⁻¹ against 3.3 × 10⁻³ s⁻¹ | Flow stress changed little; failure elongation rose markedly at high rate | [Smerd et al. 2005](https://doi.org/10.1016/j.ijimpeng.2005.04.013) (via Edison 04, 09) |
+| AA5082, AA5182 | 10⁻⁴ to 10³ s⁻¹ | Negative rate sensitivity and serrated flow from 10⁻⁴ to 10⁻¹ s⁻¹; AA5182 turns positive near 100 s⁻¹ | [Yamada et al. 2018](https://doi.org/10.3390/met8080576) (via Edison 04) |
 | 2024-T351 plate | 10⁻⁴ to 10⁴ s⁻¹, −50 to 450 °C | Little change in plastic flow up to about 5,000 s⁻¹; tension, compression and shear curves differ | [Seidt & Gilat 2013](https://doi.org/10.1016/j.ijsolstr.2013.02.006) (via Edison 09) |
 | 2024-T351 | Direct-impact Hopkinson bar, about 5 × 10⁴ s⁻¹ | Small rate sensitivity above 10⁴ s⁻¹ | NASA Glenn, [NTRS 20240014937](https://ntrs.nasa.gov/citations/20240014937) (Pi) |
 | LPBF AlSi10Mg | 2.8 × 10⁻⁶ to 2.8 × 10⁻¹ s⁻¹ | Rate-sensitive, unlike conventionally made Al: flow stress and hardening exponent change with rate | [Rosenthal et al. 2017](https://doi.org/10.1016/j.msea.2016.11.070) (Pi abstract) |
@@ -486,13 +489,14 @@ Cheapest first. Steps 1–4 fit the existing ladder of single tracks, density cu
 4. **Screening across compositions.**
    - **Tests:** hardness (and hot hardness), PIP with a hot stage, or small-punch discs cut from a single build.
      Calibrate each against a few full tensile or creep tests.
-   - **Why it's new:** no published composition-resolved hot screen of AM aluminum exists (Edison 06).
-   - **Bending creep:** cantilever creep with DIC has been validated on LPBF A20X and AlSi10Mg. It is a cheap creep
+   - **Why it's new:** Edison found no published composition-resolved hot screen of AM aluminum (Edison 06).
+   - **Bending creep:** cantilever creep with DIC has been checked against uniaxial creep on LPBF A20X and AlSi10Mg
+     (Edison 06). It is a cheap creep
      ranking that needs a small furnace, a camera and dead weights.
 5. **Fatigue and toughness on the down-selected alloys.** Machined and as-built high-cycle fatigue (ASTM E466) tells
    whether the alloy or the surface limits life. Add E399/E1820 toughness, or a Kahn-type tear test for thin sections.
 6. **Partners for creep and high rate.**
-   - **Creep:** E139 creep and rupture to 1,000 h or more, which no LPBF aluminum alloy has yet. Candidates are
+   - **Creep:** E139 creep and rupture to 1,000 h or more, which Edison found for no Sc-free LPBF alloy. Candidates are
      ORNL's creep lab, a commercial lab or a university with lever-arm frames.
    - **High rate:** 10²–10³ s⁻¹ through SwRI or a university Hopkinson-bar lab such as Ohio State. This only matters
      if crash, impact or debris loads are in scope.
@@ -526,6 +530,8 @@ extracted with pypdf because WebFetch couldn't read them.
   this and used 2219-T61, as here.
 - **"2219 compressor wheel".** Edison 09 found that the documented 2219 engine part is a cast fan *case*, not a
   rotating wheel, so I don't cite 2219 wheels.
+- **ISO 6892-1 Method B.** Edison 04 described it as crosshead-displacement control. It controls the stress rate
+  (ZwickRoell's page).
 - **ISO 6892-1 ranges.** Edison 04 repeated my query's four-range list, including 0.025 s⁻¹. I give only the two
   recommended rates, which ZwickRoell and the standard's well-known values support.
 - **Johnson-Cook sets.** Edison 04 took the 2024-T3, 6061-T6 and 7075-T6 parameters from a 2026 compilation, not from
