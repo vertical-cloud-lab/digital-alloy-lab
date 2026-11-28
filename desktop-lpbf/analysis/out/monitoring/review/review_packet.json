@@ -1,0 +1,1282 @@
+{
+ "module": "M50",
+ "built_s": 26.3,
+ "run_s": 53.8,
+ "parts_default": 276,
+ "parts_monitoring": 345,
+ "made": [
+  {
+   "slug": "lw-window-clamp-ring",
+   "kind": "made",
+   "name": "LW window clamp ring (6061, 1/4 in. plate, \u00d858 x \u00d831, 4 x M4 on \u00d849.5, a flat clear of the through-beam's fibre head; bottoms on the wall face)",
+   "bom": "M0-13",
+   "bom_group": "custom (outsourced)",
+   "bom_action": "outsource",
+   "mat": "al6061",
+   "module": "process",
+   "motion_group": "",
+   "bbox": {
+    "min": [
+     -162.3,
+     -48.0,
+     5.1
+    ],
+    "max": [
+     -156.0,
+     10.0,
+     63.1
+    ],
+    "size": [
+     6.3,
+     58.0,
+     58.0
+    ]
+   },
+   "volume_cm3": 11.44,
+   "mass_g": 30.9,
+   "step": "step/lw-window-clamp-ring.step",
+   "png": "png/lw-window-clamp-ring.png"
+  },
+  {
+   "slug": "lw-cover-slide-clip",
+   "kind": "made",
+   "name": "LW cover-slide clip (0.5 mm 316, folded sheet on the left liner; \u00d827 opening)",
+   "bom": "M0-15",
+   "bom_group": "custom (outsourced)",
+   "bom_action": "outsource with the liners",
+   "mat": "ss316l",
+   "module": "process",
+   "motion_group": "",
+   "bbox": {
+    "min": [
+     -139.4,
+     -35.8,
+     14.0
+    ],
+    "max": [
+     -137.4,
+     0.2,
+     50.0
+    ],
+    "size": [
+     2.0,
+     36.0,
+     36.0
+    ]
+   },
+   "volume_cm3": 0.52,
+   "mass_g": 4.2,
+   "step": "step/lw-cover-slide-clip.step",
+   "png": "png/lw-cover-slide-clip.png"
+  },
+  {
+   "slug": "lw-purge-fitting",
+   "kind": "bought, modified",
+   "name": "LW purge fitting (SAE-4 7/16-20 O-ring boss x 1/8 in. tube, 316, bored through; envelope)",
+   "bom": "M0-12",
+   "bom_group": "purge",
+   "bom_action": "add (replaces a machined nozzle)",
+   "mat": "ss316l",
+   "module": "process",
+   "motion_group": "",
+   "bbox": {
+    "min": [
+     -176.0,
+     -27.2,
+     65.3
+    ],
+    "max": [
+     -156.0,
+     -10.7,
+     79.6
+    ],
+    "size": [
+     20.0,
+     16.5,
+     14.3
+    ]
+   },
+   "volume_cm3": 2.19,
+   "mass_g": 17.5,
+   "step": "step/lw-purge-fitting.step",
+   "png": "png/lw-purge-fitting.png"
+  },
+  {
+   "slug": "lw-purge-tube",
+   "kind": "bought, modified",
+   "name": "LW purge tube (1/8 in. 316, through the wall's \u00d84 passage; bent down inside, tip flattened to a 6 x 1 slot over the slide)",
+   "bom": "M0-12",
+   "bom_group": "purge",
+   "bom_action": "add (replaces a machined nozzle)",
+   "mat": "ss316l",
+   "module": "process",
+   "motion_group": "",
+   "bbox": {
+    "min": [
+     -173.9,
+     -22.0,
+     50.5
+    ],
+    "max": [
+     -134.5,
+     -16.0,
+     106.5
+    ],
+    "size": [
+     39.3,
+     6.0,
+     56.0
+    ]
+   },
+   "volume_cm3": 1.2,
+   "mass_g": 9.6,
+   "step": "step/lw-purge-tube.step",
+   "png": "png/lw-purge-tube.png"
+  },
+  {
+   "slug": "side-camera-bracket",
+   "kind": "made",
+   "name": "Side camera bracket (6061, 5/8 in. x 80 mm plate, 139 mm reach, on an angle root, 6 mm shorter for a G-10 break, bolted to the floor plate's left edge)",
+   "bom": "M7-08",
+   "bom_group": "custom (outsourced)",
+   "bom_action": "outsource",
+   "mat": "al6061",
+   "module": "process",
+   "motion_group": "",
+   "bbox": {
+    "min": [
+     -340.0,
+     -78.0,
+     -20.0
+    ],
+    "max": [
+     -162.0,
+     2.0,
+     4.0
+    ],
+    "size": [
+     178.0,
+     80.0,
+     24.0
+    ]
+   },
+   "volume_cm3": 231.72,
+   "mass_g": 625.6,
+   "step": "step/side-camera-bracket.step",
+   "png": "png/side-camera-bracket.png"
+  },
+  {
+   "slug": "side-camera-wedge",
+   "kind": "made",
+   "name": "Side camera wedge (6061, fixed 13 deg; the camera's 1/4-20 thread screws into it)",
+   "bom": "M7-08",
+   "bom_group": "custom (outsourced)",
+   "bom_action": "outsource",
+   "mat": "al6061",
+   "module": "process",
+   "motion_group": "",
+   "bbox": {
+    "min": [
+     -360.4,
+     -75.5,
+     -0.0
+    ],
+    "max": [
+     -265.1,
+     -4.7,
+     45.4
+    ],
+    "size": [
+     95.3,
+     70.8,
+     45.4
+    ]
+   },
+   "volume_cm3": 179.53,
+   "mass_g": 484.7,
+   "step": "step/side-camera-wedge.step",
+   "png": "png/side-camera-wedge.png"
+  },
+  {
+   "slug": "bw-window-clamp-frame",
+   "kind": "made",
+   "name": "BW window clamp frame (6061, 3/16 in. plate, 3 x M4; trimmed to the wall's flat face and bottom edge)",
+   "bom": "M0-14",
+   "bom_group": "custom (outsourced)",
+   "bom_action": "outsource",
+   "mat": "al6061",
+   "module": "process",
+   "motion_group": "",
+   "bbox": {
+    "min": [
+     -147.5,
+     111.0,
+     -3.4
+    ],
+    "max": [
+     -74.6,
+     115.8,
+     58.5
+    ],
+    "size": [
+     72.9,
+     4.8,
+     61.9
+    ]
+   },
+   "volume_cm3": 10.54,
+   "mass_g": 28.5,
+   "step": "step/bw-window-clamp-frame.step",
+   "png": "png/bw-window-clamp-frame.png"
+  },
+  {
+   "slug": "bw-led-heat-sink",
+   "kind": "made",
+   "name": "BW LED heat sink (custom 6061, black anodised, \u00d836 x 40, SM1 internal thread, five fins; envelope of a lathe part)",
+   "bom": "M7-05c",
+   "bom_group": "custom (in house)",
+   "bom_action": "make",
+   "mat": "al6061",
+   "module": "process",
+   "motion_group": "",
+   "bbox": {
+    "min": [
+     -196.8,
+     125.5,
+     19.2
+    ],
+    "max": [
+     -144.5,
+     177.6,
+     61.3
+    ],
+    "size": [
+     52.3,
+     52.1,
+     42.1
+    ]
+   },
+   "volume_cm3": 27.06,
+   "mass_g": 73.1,
+   "step": "step/bw-led-heat-sink.step",
+   "png": "png/bw-led-heat-sink.png"
+  },
+  {
+   "slug": "bw-led-clamp",
+   "kind": "made",
+   "name": "BW LED clamp (custom 6061 split block on the heat sink's collar, 8 mm wide; envelope)",
+   "bom": "M7-05d",
+   "bom_group": "custom (outsourced)",
+   "bom_action": "outsource",
+   "mat": "al6061",
+   "module": "process",
+   "motion_group": "",
+   "bbox": {
+    "min": [
+     -181.6,
+     119.8,
+     14.5
+    ],
+    "max": [
+     -139.0,
+     164.9,
+     60.5
+    ],
+    "size": [
+     42.5,
+     45.0,
+     46.0
+    ]
+   },
+   "volume_cm3": 8.75,
+   "mass_g": 23.6,
+   "step": "step/bw-led-clamp.step",
+   "png": "png/bw-led-clamp.png"
+  },
+  {
+   "slug": "bw-led-bracket",
+   "kind": "made",
+   "name": "BW LED bracket (custom 6061 1/4 in. L: flange on the back wall above the BW clamp frame, 2 x M4; arm over the light; envelope)",
+   "bom": "M7-05d",
+   "bom_group": "custom (outsourced)",
+   "bom_action": "outsource",
+   "mat": "al6061",
+   "module": "process",
+   "motion_group": "",
+   "bbox": {
+    "min": [
+     -178.0,
+     111.0,
+     60.5
+    ],
+    "max": [
+     -123.0,
+     164.0,
+     78.0
+    ],
+    "size": [
+     55.0,
+     53.0,
+     17.5
+    ]
+   },
+   "volume_cm3": 13.25,
+   "mass_g": 35.8,
+   "step": "step/bw-led-bracket.step",
+   "png": "png/bw-led-bracket.png"
+  },
+  {
+   "slug": "lp-adapter-boss",
+   "kind": "made",
+   "name": "LP adapter boss (6061; \u00d841 flange with four screw lugs on the lid's face O-ring; \u00d824 bore and window square to the line of sight; cover slide inside)",
+   "bom": "M7-16",
+   "bom_group": "custom (outsourced)",
+   "bom_action": "option",
+   "mat": "al6061",
+   "module": "process",
+   "motion_group": "",
+   "bbox": {
+    "min": [
+     -69.5,
+     33.0,
+     136.0
+    ],
+    "max": [
+     -10.5,
+     87.7,
+     171.4
+    ],
+    "size": [
+     58.9,
+     54.8,
+     35.4
+    ]
+   },
+   "volume_cm3": 18.54,
+   "mass_g": 50.0,
+   "step": "step/lp-adapter-boss.step",
+   "png": "png/lp-adapter-boss.png"
+  },
+  {
+   "slug": "ae-waveguide-m50",
+   "kind": "made",
+   "name": "AE waveguide M50 (\u00d83 mm 316, slides free; \u00d84 head domed R50 on the plate's spigot; foot on the sensor)",
+   "bom": "M4-06",
+   "bom_group": "AE",
+   "bom_action": "add",
+   "mat": "ss316l",
+   "module": "process",
+   "motion_group": "piston",
+   "bbox": {
+    "min": [
+     -3.6,
+     0.8,
+     -107.8
+    ],
+    "max": [
+     0.4,
+     4.8,
+     -14.0
+    ],
+    "size": [
+     4.0,
+     4.0,
+     93.8
+    ]
+   },
+   "volume_cm3": 0.67,
+   "mass_g": 5.3,
+   "step": "step/ae-waveguide-m50.step",
+   "png": "png/ae-waveguide-m50.png"
+  },
+  {
+   "slug": "ae-cartridge-m50",
+   "kind": "made",
+   "name": "AE cartridge M50 (316L, \u00d86.3 tube on the rod end's bore floor: spring seat, stop cap, guide hole)",
+   "bom": "M4-10",
+   "bom_group": "custom (outsourced)",
+   "bom_action": "outsource",
+   "mat": "ss316l",
+   "module": "process",
+   "motion_group": "piston",
+   "bbox": {
+    "min": [
+     -4.8,
+     -0.9,
+     -132.0
+    ],
+    "max": [
+     1.5,
+     5.4,
+     -106.2
+    ],
+    "size": [
+     6.3,
+     6.3,
+     25.8
+    ]
+   },
+   "volume_cm3": 0.17,
+   "mass_g": 1.4,
+   "step": "step/ae-cartridge-m50.step",
+   "png": "png/ae-cartridge-m50.png"
+  },
+  {
+   "slug": "guard-inlet-light-trap-32-chevron-blades",
+   "kind": "made",
+   "name": "Guard inlet light trap: 32 chevron blades (1 mm aluminium, six legs, 10 mm pitch, 32 mm deep), black anodised, in a 2 mm frame on the back panel's inside",
+   "bom": "M0-C3",
+   "bom_group": "cooling (guard)",
+   "bom_action": "make or outsource",
+   "mat": "al6061",
+   "module": "process",
+   "motion_group": "",
+   "bbox": {
+    "min": [
+     -396.0,
+     181.5,
+     -120.1
+    ],
+    "max": [
+     -216.0,
+     215.0,
+     204.0
+    ],
+    "size": [
+     180.0,
+     33.5,
+     324.1
+    ]
+   },
+   "volume_cm3": 449.98,
+   "mass_g": 1214.9,
+   "step": "step/guard-inlet-light-trap-32-chevron-blades.step",
+   "png": "png/guard-inlet-light-trap-32-chevron-blades.png"
+  },
+  {
+   "slug": "guard-exhaust-light-trap-23-chevron-blades",
+   "kind": "made",
+   "name": "Guard exhaust light trap: 23 chevron blades (1 mm aluminium, six legs, 10 mm pitch, 32 mm deep), black anodised, in a 2 mm frame on the back panel's inside",
+   "bom": "M0-C3",
+   "bom_group": "cooling (guard)",
+   "bom_action": "make or outsource",
+   "mat": "al6061",
+   "module": "process",
+   "motion_group": "",
+   "bbox": {
+    "min": [
+     38.0,
+     181.5,
+     105.9
+    ],
+    "max": [
+     286.0,
+     215.0,
+     340.0
+    ],
+    "size": [
+     248.0,
+     33.5,
+     234.1
+    ]
+   },
+   "volume_cm3": 445.67,
+   "mass_g": 1203.3,
+   "step": "step/guard-exhaust-light-trap-23-chevron-blades.step",
+   "png": "png/guard-exhaust-light-trap-23-chevron-blades.png"
+  },
+  {
+   "slug": "hood-duct-plenum-behind-the-inlet-trap-s-right-hand-part-and",
+   "kind": "made",
+   "name": "Hood duct: plenum behind the inlet trap's right-hand part and a duct over the side camera (1 mm aluminium, riveted; 65 x 76 mm, then 178 x 76 mm)",
+   "bom": "M7-C1",
+   "bom_group": "side camera cooling",
+   "bom_action": "make",
+   "mat": "al6061",
+   "module": "process",
+   "motion_group": "",
+   "bbox": {
+    "min": [
+     -396.0,
+     -106.0,
+     -118.0
+    ],
+    "max": [
+     -218.0,
+     181.5,
+     203.0
+    ],
+    "size": [
+     178.0,
+     287.5,
+     321.0
+    ]
+   },
+   "volume_cm3": 154.84,
+   "mass_g": 418.1,
+   "step": "step/hood-duct-plenum-behind-the-inlet-trap-s-right-hand-part-and.step",
+   "png": "png/hood-duct-plenum-behind-the-inlet-trap-s-right-hand-part-and.png"
+  },
+  {
+   "slug": "side-camera-hood",
+   "kind": "made",
+   "name": "Side camera hood (1 mm aluminium: sides, back and floor round the Chronos body, the duct's floor is its top; open at the lens end)",
+   "bom": "M7-C1",
+   "bom_group": "side camera cooling",
+   "bom_action": "make",
+   "mat": "al6061",
+   "module": "process",
+   "motion_group": "",
+   "bbox": {
+    "min": [
+     -396.0,
+     -106.0,
+     -15.0
+    ],
+    "max": [
+     -214.0,
+     27.0,
+     126.0
+    ],
+    "size": [
+     182.0,
+     133.0,
+     141.0
+    ]
+   },
+   "volume_cm3": 83.09,
+   "mass_g": 224.3,
+   "step": "step/side-camera-hood.step",
+   "png": "png/side-camera-hood.png"
+  },
+  {
+   "slug": "guard-exhaust-plenum-outside-the-back-panel",
+   "kind": "made",
+   "name": "Guard exhaust plenum outside the back panel (1.5 mm aluminium, gasketed to the panel)",
+   "bom": "M0-C6",
+   "bom_group": "cooling (guard)",
+   "bom_action": "make",
+   "mat": "al6061",
+   "module": "process",
+   "motion_group": "",
+   "bbox": {
+    "min": [
+     38.0,
+     216.5,
+     106.0
+    ],
+    "max": [
+     284.0,
+     226.5,
+     345.0
+    ],
+    "size": [
+     246.0,
+     10.0,
+     239.0
+    ]
+   },
+   "volume_cm3": 14.46,
+   "mass_g": 39.0,
+   "step": "step/guard-exhaust-plenum-outside-the-back-panel.step",
+   "png": "png/guard-exhaust-plenum-outside-the-back-panel.png"
+  },
+  {
+   "slug": "g-10-thermal-break-under-the-side-camera-bracket-s-root",
+   "kind": "made",
+   "name": "G-10 thermal break under the side camera bracket's root (6 mm G-10/FR-4, 80 x 16 mm; screws in G-10 shoulder washers)",
+   "bom": "M7-C3",
+   "bom_group": "camera thermal breaks",
+   "bom_action": "add",
+   "mat": "misc",
+   "module": "process",
+   "motion_group": "",
+   "bbox": {
+    "min": [
+     -162.0,
+     -78.0,
+     -20.0
+    ],
+    "max": [
+     -156.0,
+     2.0,
+     -4.0
+    ],
+    "size": [
+     6.0,
+     80.0,
+     16.0
+    ]
+   },
+   "volume_cm3": 7.68,
+   "mass_g": 14.2,
+   "step": "step/g-10-thermal-break-under-the-side-camera-bracket-s-root.step",
+   "png": "png/g-10-thermal-break-under-the-side-camera-bracket-s-root.png"
+  },
+  {
+   "slug": "g-10-thermal-break-ring-under-the-lp-camera-s-filter-holder",
+   "kind": "made",
+   "name": "G-10 thermal break ring under the LP camera's filter holder (\u00d832 x \u00d825.4 x 5 mm, SM1-threaded both ends)",
+   "bom": "M7-C3",
+   "bom_group": "camera thermal breaks",
+   "bom_action": "add",
+   "mat": "misc",
+   "module": "process",
+   "motion_group": "",
+   "bbox": {
+    "min": [
+     -66.4,
+     59.7,
+     161.2
+    ],
+    "max": [
+     -34.2,
+     91.1,
+     180.6
+    ],
+    "size": [
+     32.2,
+     31.4,
+     19.4
+    ]
+   },
+   "volume_cm3": 1.28,
+   "mass_g": 2.4,
+   "step": "step/g-10-thermal-break-ring-under-the-lp-camera-s-filter-holder.step",
+   "png": "png/g-10-thermal-break-ring-under-the-lp-camera-s-filter-holder.png"
+  },
+  {
+   "slug": "guard-bulkhead-plate",
+   "kind": "made",
+   "name": "Guard bulkhead plate (MN-28: 6061 0.080 in. = 2.03 mm, 180 x 126 mm, laser-cut: four D-size cut-outs, an M12 hole and the KEL's cut-out; on the guard's back panel over a 152 x 98 mm cut-out, 8 x M4 into rivet nuts, bare faces together for the bond)",
+   "bom": "M0-B1",
+   "bom_group": "custom (guard bulkhead)",
+   "bom_action": "outsource",
+   "mat": "al6061",
+   "module": "process",
+   "motion_group": "",
+   "bbox": {
+    "min": [
+     -400.0,
+     216.5,
+     220.0
+    ],
+    "max": [
+     -220.0,
+     218.5,
+     346.0
+    ],
+    "size": [
+     180.0,
+     2.0,
+     126.0
+    ]
+   },
+   "volume_cm3": 36.54,
+   "mass_g": 98.7,
+   "step": "step/guard-bulkhead-plate.step",
+   "png": "png/guard-bulkhead-plate.png"
+  },
+  {
+   "slug": "guard-bulkhead-cable-entry-light-shroud",
+   "kind": "made",
+   "name": "Guard bulkhead cable-entry light shroud (a labyrinth over the KEL's inside: 1.5 mm aluminium, black anodised, 34 mm deep; the leads turn toward +x and leave through a 24 mm channel whose side wall reaches 30 mm past the front wall, so no straight path reaches the grommets)",
+   "bom": "M0-B6",
+   "bom_group": "custom (guard bulkhead)",
+   "bom_action": "make or outsource",
+   "mat": "al6061",
+   "module": "process",
+   "motion_group": "",
+   "bbox": {
+    "min": [
+     -383.5,
+     152.5,
+     238.0
+    ],
+    "max": [
+     -240.0,
+     216.5,
+     303.0
+    ],
+    "size": [
+     143.5,
+     64.0,
+     65.0
+    ]
+   },
+   "volume_cm3": 33.69,
+   "mass_g": 91.0,
+   "step": "step/guard-bulkhead-cable-entry-light-shroud.step",
+   "png": "png/guard-bulkhead-cable-entry-light-shroud.png"
+  }
+ ],
+ "changed": [
+  {
+   "slug": "heater-block-m50",
+   "name": "Heater block M50 (6061-T6, bayonet socket)",
+   "default_name": "Heater block M50 (6061-T6, bayonet socket)",
+   "bom": "H1",
+   "mat": "al6061",
+   "module": "process",
+   "motion_group": "piston",
+   "bbox": {
+    "min": [
+     -25.1,
+     -25.1,
+     -24.0
+    ],
+    "max": [
+     25.1,
+     25.1,
+     -10.0
+    ],
+    "size": [
+     50.2,
+     50.2,
+     14.1
+    ]
+   },
+   "volume_default_cm3": 25.42,
+   "volume_cm3": 25.32,
+   "removed_cm3": 0.096,
+   "added_cm3": 0.0,
+   "mass_change_g": -0.3,
+   "places": [
+    {
+     "bbox": {
+      "min": [
+       -3.8,
+       0.6,
+       -24.0
+      ],
+      "max": [
+       0.6,
+       5.0,
+       -14.3
+      ],
+      "size": [
+       4.4,
+       4.4,
+       9.7
+      ]
+     },
+     "removed_cm3": 0.096,
+     "solids": 1,
+     "png": "png/heater-block-m50-1.png"
+    }
+   ],
+   "step": "step/heater-block-m50.step",
+   "removed_step": "step/heater-block-m50-removed.step",
+   "png": "png/heater-block-m50.png"
+  },
+  {
+   "slug": "radiation-shields-m50",
+   "name": "Radiation shields M50 (2 x 0.3 mm polished 316, clamped between the Macor rings)",
+   "default_name": "Radiation shields M50 (2 x 0.3 mm polished 316, clamped between the Macor rings)",
+   "bom": "H1",
+   "mat": "ss316l",
+   "module": "process",
+   "motion_group": "piston",
+   "bbox": {
+    "min": [
+     -24.1,
+     -24.1,
+     -29.5
+    ],
+    "max": [
+     24.1,
+     24.1,
+     -26.5
+    ],
+    "size": [
+     48.2,
+     48.2,
+     3.0
+    ]
+   },
+   "volume_default_cm3": 1.0,
+   "volume_cm3": 1.0,
+   "removed_cm3": 0.005,
+   "added_cm3": 0.0,
+   "mass_change_g": -0.0,
+   "places": [
+    {
+     "bbox": {
+      "min": [
+       -3.3,
+       1.1,
+       -29.5
+      ],
+      "max": [
+       0.1,
+       4.5,
+       -26.5
+      ],
+      "size": [
+       3.4,
+       3.4,
+       3.0
+      ]
+     },
+     "removed_cm3": 0.005,
+     "solids": 2,
+     "png": "png/radiation-shields-m50-1.png"
+    }
+   ],
+   "step": "step/radiation-shields-m50.step",
+   "removed_step": "step/radiation-shields-m50-removed.step",
+   "png": "png/radiation-shields-m50.png"
+  },
+  {
+   "slug": "rod-end-m50-316l-feedthrough-block-rod-welded-into-its-top-8",
+   "name": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+   "default_name": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+   "bom": "H1",
+   "mat": "ss316l",
+   "module": "process",
+   "motion_group": "piston",
+   "bbox": {
+    "min": [
+     -40.5,
+     -22.0,
+     -140.0
+    ],
+    "max": [
+     40.5,
+     11.0,
+     -117.0
+    ],
+    "size": [
+     81.0,
+     33.0,
+     23.0
+    ]
+   },
+   "volume_default_cm3": 29.28,
+   "volume_cm3": 29.07,
+   "removed_cm3": 0.21,
+   "added_cm3": 0.0,
+   "mass_change_g": -1.7,
+   "places": [
+    {
+     "bbox": {
+      "min": [
+       0.8,
+       -0.0,
+       -129.7
+      ],
+      "max": [
+       8.2,
+       11.0,
+       -122.3
+      ],
+      "size": [
+       7.4,
+       11.0,
+       7.4
+      ]
+     },
+     "removed_cm3": 0.21,
+     "solids": 1,
+     "png": "png/rod-end-m50-316l-feedthrough-block-rod-welded-into-its-top-8-1.png"
+    }
+   ],
+   "step": "step/rod-end-m50-316l-feedthrough-block-rod-welded-into-its-top-8.step",
+   "removed_step": "step/rod-end-m50-316l-feedthrough-block-rod-welded-into-its-top-8-removed.step",
+   "png": "png/rod-end-m50-316l-feedthrough-block-rod-welded-into-its-top-8.png"
+  },
+  {
+   "slug": "process-chamber-body",
+   "name": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "default_name": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "bom": "G1",
+   "mat": "al6061",
+   "module": "process",
+   "motion_group": "",
+   "bbox": {
+    "min": [
+     -156.0,
+     -111.0,
+     -3.9
+    ],
+    "max": [
+     156.0,
+     111.0,
+     120.0
+    ],
+    "size": [
+     312.1,
+     222.0,
+     123.9
+    ]
+   },
+   "volume_default_cm3": 1582.51,
+   "volume_cm3": 1547.31,
+   "removed_cm3": 35.204,
+   "added_cm3": 0.0,
+   "mass_change_g": -95.1,
+   "places": [
+    {
+     "bbox": {
+      "min": [
+       -156.0,
+       -42.4,
+       10.7
+      ],
+      "max": [
+       -140.0,
+       4.5,
+       78.9
+      ],
+      "size": [
+       16.0,
+       46.9,
+       68.2
+      ]
+     },
+     "removed_cm3": 16.606,
+     "solids": 6,
+     "png": "png/process-chamber-body-1.png"
+    },
+    {
+     "bbox": {
+      "min": [
+       -145.5,
+       94.5,
+       7.1
+      ],
+      "max": [
+       -84.0,
+       111.0,
+       71.3
+      ],
+      "size": [
+       61.5,
+       16.5,
+       64.2
+      ]
+     },
+     "removed_cm3": 18.598,
+     "solids": 6,
+     "png": "png/process-chamber-body-2.png"
+    }
+   ],
+   "step": "step/process-chamber-body.step",
+   "removed_step": "step/process-chamber-body-removed.step",
+   "png": "png/process-chamber-body.png"
+  },
+  {
+   "slug": "lift-out-wall-liner-left",
+   "name": "Lift-out wall liner, left (0.5 mm 316L, screw hole slotted to the back edge, spring clips)",
+   "default_name": "Lift-out wall liner, left (0.5 mm 316L, screw hole slotted to the back edge, spring clips)",
+   "bom": "A2",
+   "mat": "ss316l",
+   "module": "process",
+   "motion_group": "",
+   "bbox": {
+    "min": [
+     -139.9,
+     -70.5,
+     16.0
+    ],
+    "max": [
+     -139.4,
+     85.5,
+     104.0
+    ],
+    "size": [
+     0.5,
+     156.0,
+     88.0
+    ]
+   },
+   "volume_default_cm3": 6.62,
+   "volume_cm3": 6.32,
+   "removed_cm3": 0.296,
+   "added_cm3": 0.0,
+   "mass_change_g": -2.4,
+   "places": [
+    {
+     "bbox": {
+      "min": [
+       -139.9,
+       -31.4,
+       18.7
+      ],
+      "max": [
+       -139.4,
+       -4.4,
+       75.0
+      ],
+      "size": [
+       0.5,
+       27.0,
+       56.2
+      ]
+     },
+     "removed_cm3": 0.296,
+     "solids": 2,
+     "png": "png/lift-out-wall-liner-left-1.png"
+    }
+   ],
+   "step": "step/lift-out-wall-liner-left.step",
+   "removed_step": "step/lift-out-wall-liner-left-removed.step",
+   "png": "png/lift-out-wall-liner-left.png"
+  },
+  {
+   "slug": "lift-out-wall-liner-back-lower-left",
+   "name": "Lift-out wall liner, back lower left (starts at x -90.8, clear of the BW opening; 0.5 mm 316L, behind the ball screw, spring clips)",
+   "default_name": "Lift-out wall liner, back lower left (0.5 mm 316L, behind the ball screw, spring clips)",
+   "bom": "A2",
+   "mat": "ss316l",
+   "module": "process",
+   "motion_group": "",
+   "bbox": {
+    "min": [
+     -90.8,
+     94.4,
+     16.0
+    ],
+    "max": [
+     -0.5,
+     94.9,
+     32.0
+    ],
+    "size": [
+     90.3,
+     0.5,
+     16.0
+    ]
+   },
+   "volume_default_cm3": 1.04,
+   "volume_cm3": 0.72,
+   "removed_cm3": 0.318,
+   "added_cm3": 0.0,
+   "mass_change_g": -2.5,
+   "places": [
+    {
+     "bbox": {
+      "min": [
+       -130.5,
+       94.4,
+       16.0
+      ],
+      "max": [
+       -90.8,
+       94.9,
+       32.0
+      ],
+      "size": [
+       39.7,
+       0.5,
+       16.0
+      ]
+     },
+     "removed_cm3": 0.318,
+     "solids": 1,
+     "png": "png/lift-out-wall-liner-back-lower-left-1.png"
+    }
+   ],
+   "step": "step/lift-out-wall-liner-back-lower-left.step",
+   "removed_step": "step/lift-out-wall-liner-back-lower-left-removed.step",
+   "png": "png/lift-out-wall-liner-back-lower-left.png"
+  },
+  {
+   "slug": "chamber-lid",
+   "name": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "default_name": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "bom": "G1",
+   "mat": "al6061",
+   "module": "process",
+   "motion_group": "",
+   "bbox": {
+    "min": [
+     -156.0,
+     -111.0,
+     120.0
+    ],
+    "max": [
+     156.0,
+     111.0,
+     136.0
+    ],
+    "size": [
+     312.0,
+     222.0,
+     16.1
+    ]
+   },
+   "volume_default_cm3": 975.85,
+   "volume_cm3": 967.06,
+   "removed_cm3": 8.786,
+   "added_cm3": 0.0,
+   "mass_change_g": -23.7,
+   "places": [
+    {
+     "bbox": {
+      "min": [
+       -65.6,
+       36.8,
+       120.0
+      ],
+      "max": [
+       -14.4,
+       83.2,
+       136.0
+      ],
+      "size": [
+       51.2,
+       46.3,
+       16.0
+      ]
+     },
+     "removed_cm3": 8.786,
+     "solids": 6,
+     "png": "png/chamber-lid-1.png"
+    }
+   ],
+   "step": "step/chamber-lid.step",
+   "removed_step": "step/chamber-lid-removed.step",
+   "png": "png/chamber-lid.png"
+  },
+  {
+   "slug": "optics-bridge",
+   "name": "Optics bridge (6061, 25 mm)",
+   "default_name": "Optics bridge (6061, 25 mm)",
+   "bom": "F5",
+   "mat": "al6061",
+   "module": "process",
+   "motion_group": "",
+   "bbox": {
+    "min": [
+     -360.0,
+     -190.0,
+     211.1
+    ],
+    "max": [
+     245.0,
+     180.0,
+     236.2
+    ],
+    "size": [
+     605.0,
+     370.0,
+     25.1
+    ]
+   },
+   "volume_default_cm3": 4932.18,
+   "volume_cm3": 4857.63,
+   "removed_cm3": 74.555,
+   "added_cm3": 0.0,
+   "mass_change_g": -201.3,
+   "places": [
+    {
+     "bbox": {
+      "min": [
+       -95.5,
+       70.9,
+       211.1
+      ],
+      "max": [
+       -40.8,
+       130.9,
+       236.1
+      ],
+      "size": [
+       54.7,
+       60.1,
+       25.0
+      ]
+     },
+     "removed_cm3": 74.555,
+     "solids": 1,
+     "png": "png/optics-bridge-1.png"
+    }
+   ],
+   "step": "step/optics-bridge.step",
+   "removed_step": "step/optics-bridge-removed.step",
+   "png": "png/optics-bridge.png"
+  },
+  {
+   "slug": "laser-guard-panels",
+   "name": "Laser guard panels (1.5 mm aluminium)",
+   "default_name": "Laser guard panels (1.5 mm aluminium)",
+   "bom": "S9",
+   "mat": "al6061",
+   "module": "process",
+   "motion_group": "",
+   "bbox": {
+    "min": [
+     -421.5,
+     -266.5,
+     -160.0
+    ],
+    "max": [
+     311.5,
+     216.5,
+     367.6
+    ],
+    "size": [
+     733.0,
+     483.0,
+     527.6
+    ]
+   },
+   "volume_default_cm3": 2044.61,
+   "volume_cm3": 1859.03,
+   "removed_cm3": 185.571,
+   "added_cm3": 0.0,
+   "mass_change_g": -501.0,
+   "places": [
+    {
+     "bbox": {
+      "min": [
+       -396.0,
+       215.0,
+       -116.0
+      ],
+      "max": [
+       -220.0,
+       216.5,
+       342.0
+      ],
+      "size": [
+       176.0,
+       1.5,
+       458.0
+      ]
+     },
+     "removed_cm3": 104.211,
+     "solids": 10,
+     "png": "png/laser-guard-panels-1.png"
+    },
+    {
+     "bbox": {
+      "min": [
+       42.0,
+       215.0,
+       110.0
+      ],
+      "max": [
+       282.0,
+       216.5,
+       336.0
+      ],
+      "size": [
+       240.0,
+       1.5,
+       226.0
+      ]
+     },
+     "removed_cm3": 81.36,
+     "solids": 1,
+     "png": "png/laser-guard-panels-2.png"
+    }
+   ],
+   "step": "step/laser-guard-panels.step",
+   "removed_step": "step/laser-guard-panels-removed.step",
+   "png": "png/laser-guard-panels.png"
+  }
+ ],
+ "note": "STEP in mm, machine coordinates (the model's); bought parts are envelopes and are not in the packet"
+}

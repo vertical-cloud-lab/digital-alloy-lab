@@ -1,0 +1,184 @@
+{
+ "steps": {
+  "0": {
+   "what": "before machining: the ports' parts",
+   "new_low": 1794.92,
+   "new_high": 2513.24,
+   "with_used": 1794.92,
+   "unpriced": [],
+   "estimated": [
+    "M0-03",
+    "M0-06",
+    "M0-07",
+    "M0-12",
+    "M0-16",
+    "M0-C3",
+    "M0-C6",
+    "M0-B6",
+    "M0-B7",
+    "M0-B8"
+   ],
+   "options": [
+    "M0-C9",
+    "M0-C10"
+   ],
+   "options_usd": 785.0,
+   "options_used_usd": 785.0,
+   "cumulative_new_low": 1794.92,
+   "cumulative_with_used": 1794.92
+  },
+  "1": {
+   "what": "clock and recorder",
+   "new_low": 2257.3,
+   "new_high": 2457.3,
+   "with_used": 2001.3,
+   "unpriced": [],
+   "estimated": [
+    "M1-07",
+    "M1-08"
+   ],
+   "options": [
+    "M1-09"
+   ],
+   "options_usd": 9170.0,
+   "options_used_usd": 1800.0,
+   "cumulative_new_low": 4052.22,
+   "cumulative_with_used": 3796.22
+  },
+  "2": {
+   "what": "spectral check of the scan head",
+   "new_low": 0,
+   "new_high": 0,
+   "with_used": 0,
+   "unpriced": [],
+   "estimated": [],
+   "options": [],
+   "options_usd": 0,
+   "options_used_usd": 0,
+   "cumulative_new_low": 4052.22,
+   "cumulative_with_used": 3796.22
+  },
+  "3": {
+   "what": "layer camera tuned",
+   "new_low": 1302.2,
+   "new_high": 1327.2,
+   "with_used": 1302.2,
+   "unpriced": [],
+   "estimated": [
+    "M3-05"
+   ],
+   "options": [],
+   "options_usd": 0,
+   "options_used_usd": 0,
+   "cumulative_new_low": 5354.42,
+   "cumulative_with_used": 5098.42
+  },
+  "4": {
+   "what": "acoustic emission",
+   "new_low": 1788.12,
+   "new_high": 4328.12,
+   "with_used": 1638.07,
+   "unpriced": [],
+   "estimated": [
+    "M4-01",
+    "M4-02",
+    "M4-03",
+    "M4-10",
+    "M4-13"
+   ],
+   "options": [
+    "M4-09"
+   ],
+   "options_usd": 27.12,
+   "options_used_usd": 27.12,
+   "cumulative_new_low": 7142.54,
+   "cumulative_with_used": 6736.49
+  },
+  "5": {
+   "what": "two-colour coaxial",
+   "new_low": 2179.12,
+   "new_high": 2179.12,
+   "with_used": 2179.12,
+   "unpriced": [],
+   "estimated": [],
+   "options": [],
+   "options_usd": 0,
+   "options_used_usd": 0,
+   "cumulative_new_low": 9321.66,
+   "cumulative_with_used": 8915.61
+  },
+  "6": {
+   "what": "coaxial camera",
+   "new_low": 987.05,
+   "new_high": 987.05,
+   "with_used": 987.05,
+   "unpriced": [],
+   "estimated": [
+    "M6-09"
+   ],
+   "options": [
+    "M6-08"
+   ],
+   "options_usd": 215.57,
+   "options_used_usd": 215.57,
+   "cumulative_new_low": 10308.71,
+   "cumulative_with_used": 9902.66
+  },
+  "7": {
+   "what": "side high-speed camera (and the steep lid camera)",
+   "new_low": 11375.5,
+   "new_high": 11635.5,
+   "with_used": 9575.5,
+   "unpriced": [],
+   "estimated": [
+    "M7-05c",
+    "M7-C1"
+   ],
+   "options": [
+    "M7-05i",
+    "M7-09",
+    "M7-10",
+    "M7-11",
+    "M7-12",
+    "M7-13",
+    "M7-14",
+    "M7-15",
+    "M7-16",
+    "M7-17",
+    "M7-18"
+   ],
+   "options_usd": 13637.33,
+   "options_used_usd": 13497.28,
+   "cumulative_new_low": 21684.21,
+   "cumulative_with_used": 19478.16
+  },
+  "8": {
+   "what": "cooling through solidification",
+   "new_low": 2160.32,
+   "new_high": 2160.32,
+   "with_used": 2160.32,
+   "unpriced": [],
+   "estimated": [
+    "M8-04"
+   ],
+   "options": [
+    "M8-06",
+    "M8-07",
+    "M8-08",
+    "M8-09",
+    "M8-10",
+    "M8-11",
+    "M8-12"
+   ],
+   "options_usd": 18334.93,
+   "options_used_usd": 11651.93,
+   "cumulative_new_low": 23844.53,
+   "cumulative_with_used": 21638.48
+  }
+ },
+ "missing": [
+  "M4-01",
+  "M4-02",
+  "M4-03"
+ ]
+}

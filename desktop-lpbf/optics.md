@@ -447,6 +447,10 @@ Same MPE (5 mW/cm², t ≥ 10 s at 1070 nm) and method as [`safety.md`](safety.m
   lens is several glasses, so treat these as the size of the effect.
 - **It is the cheapest way to measure k** (§1.4) before the lid is machined: put a card on the plate, steer the galvo
   to the field edge, step the piston down 20 mm, and the spot moves outward by 20·tan(u′).
+- **2026-11-25: do both before the DMSP1000 goes in.** The short-pass dichroic that folds the beam into the galvo passes
+  92–97 % of the red guide beam straight through, so with it fitted almost none of the guide beam reaches the galvo
+  ([`monitoring/optics.md`](monitoring/optics.md), [`monitoring/sync-and-data.md`](monitoring/sync-and-data.md) §0 item 9).
+  After that, align and calibrate with the process beam at low power on the VRC2 card or a burn target.
 
 ### 4.5 Melt-pool monitoring
 

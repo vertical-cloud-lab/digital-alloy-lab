@@ -1,0 +1,599 @@
+"""Build desktop-lpbf/monitoring-bom.csv: the bought parts for monitoring.md §4's steps 0-8 (issue #260, PR 281).
+
+Prices are list prices read on the vendors' own pages through the lab tunnel on 2026-11-25 (the lookups, with URL, UTC time,
+stock or lead time and notes, are analysis/out/monitoring/fab/price_lookups_optics.csv and price_lookups_cameras.csv), used
+listings read on eBay the same way, the closest instant quotes already in the repo for the custom parts
+(hours_monitoring.csv), or labelled estimates. Nothing is a quote for this machine, and nothing was ordered.
+
+Columns follow optics-bom.csv, plus the step (0-8 of monitoring.md §4), extended prices, stock or lead time, and the used
+option. Totals per step: new (low / high) and with the used options taken where a listing exists.
+
+Run: /tmp/venv/bin/python desktop-lpbf/analysis/monitoring/fab/build_bom.py [--p1 CSV] [--p2 CSV] [--mo optics-parts.csv]
+     (defaults: the committed lookups and desktop-lpbf/monitoring/optics-parts.csv, the optics worker's file)
+"""
+from __future__ import annotations
+
+import argparse
+import csv
+import json
+import pathlib
+import re
+
+HERE = pathlib.Path(__file__).resolve().parent
+D = HERE.parents[2]
+OUT = D / "analysis" / "out" / "monitoring" / "fab"
+BOM = D / "monitoring-bom.csv"
+LOOK = {"p1": OUT / "price_lookups_optics.csv", "p2": OUT / "price_lookups_cameras.csv",
+        "p3": OUT / "price_lookups_round3.csv"}   # round 3 (2026-11-26): the AE preload, the BW light, cooling
+SCSQ = "analysis/out/monitoring/fab/quotes/sendcutsend_quotes.csv"
+STEPS = {"0": "before machining: the ports' parts", "1": "clock and recorder", "2": "spectral check of the scan head",
+         "3": "layer camera tuned", "4": "acoustic emission", "5": "two-colour coaxial", "6": "coaxial camera",
+         "7": "side high-speed camera (and the steep lid camera)", "8": "cooling through solidification"}
+
+# (id, step, group, element, source, qty, action, in_model, notes, used_keys)
+#   source: ("p1"|"p2"|"p3", key)  - a lookup row;  ("est", low, high, basis, part_number, vendor)  - an estimate;
+#           ("custom", usd, basis)  - a custom part's outside price (hours_monitoring.csv)
+SEL = [
+    # ---------------- step 0: the ports (bought when the ports are cut; blanks are not needed if the windows go in) ---------
+    ("M0-01", "0", "ports", "LW window: UV fused silica Ø40 x 4 mm, NIR I AR 600-1050 nm (no Ø38.1 mm NIR-coated catalogue window exists)",
+     ("p1", "W1"), 1, "add; change the LW seat to Ø40.2 x 5.5 mm (frame_features.py has Ø38.3 x 6.5 for monitoring_spec's Ø38.1 x 5)",
+     "not drawn", "Robinson's minimum for the Ø31 opening at 1 bar, F/S 10, is 2.4 mm (Edison r8-viewports): 4 mm is ample. "
+     "Fit it from the start instead of making a blank (hours_monitoring.csv)", []),
+    ("M0-02", "0", "ports", "LW cover slides, fused silica Ø30 x 1.5 mm (laser-head protective glass), 6 to start",
+     ("p1", "W4-b"), 6, "add (consumable)", "not drawn",
+     "6+ price $41.17 each. Edmund 22-695 (Ø30 x 1, $101; 6-25: $81) is the optical-grade option. Cloudray-type fibre-laser "
+     "windows show ~GBP 7.30 each in a search snippet (eBay blocked the tunnel): check size and coating before relying on them. "
+     "Measure how often a slide must change before stocking more (monitoring.md §6)", []),
+    ("M0-03", "0", "ports", "BW window: rectangle ~57.7 x 26.7 x 3 mm, UV fused silica, corners chamfered 2 mm",
+     ("est", 40.0, 120.0, "estimate (custom cut; no catalogue size)", "custom", "glass shop / Edmund custom"), 1, "add", "not drawn",
+     "A light window only (no imaging): fused silica only. Borosilicate would need an abraded strength of 12.5 MPa that nobody "
+     "publishes (monitoring/mechanics.md, Checks §1). The seat is 58 x 27 x 4.5 mm (frame_features.py)", []),
+    ("M0-04", "0", "custom (outsourced)", "LP blanking cap until the steep camera is bought: the adapter boss's Ø40.8 outline with four "
+     "lugs for 4 x M4 on Ø48 (6061 1/4 in. plate, 58.9 x 54.0 mm), on the lid's face O-ring round the Ø24 bore",
+     ("custom", 7.43, "SendCutSend instant quote (2 = $5.94, 10 = $4.96 each; arrives Tue, Dec 1)", SCSQ, "2026-11-27T09:15Z"), 1,
+     "outsource", "not drawn", "monitoring_spec: the LP ships blanked; its window and slides come with the steep camera (M7-17, M7-18). "
+     "Its holes are where lp_cam.py programs the lid's and the model draws the adapter's (fabrication.md §3.1)", []),
+    ("M0-06", "0", "ports", "FKM sheet 1.0 mm for the windows' flat gaskets and flat rings (LW, BW, LP)",
+     ("est", 20.0, 40.0, "estimate (McMaster FKM sheet, not fetched)", "FKM 75A sheet, 1.0 mm", "McMaster-Carr"), 1, "add", "not drawn",
+     "1.0 mm, not 1/32 in.: the 0.75 mm the seats leave squeezes 1.0 mm sheet 15-35 %, 1/32 in. only -7 to 18 % "
+     "(monitoring/mechanics.md, Checks §2); the layer camera's window uses the same 1 mm flat gasket (lpbf_low.py)", []),
+    ("M0-07", "0", "ports", "FKM O-ring AS568-025, 75A, for the LP adapter boss's face seal on the lid (the groove's ring, "
+     "monitoring_parts.py; pack of 25)",
+     ("est", 11.95, 13.27, "estimate: between the 2-024 and 2-026 packs of the same McMaster 1201T series read on 2026-11-25 "
+      "(price_lookups_optics.csv O1, O1-a); the 2-025's own page (1201T37) didn't render through the tunnel on 2026-11-27",
+      "AS568-025 FKM 75A (McMaster 1201T37, not read)", "McMaster-Carr"), 1, "add", "not drawn",
+     "was priced as a 2-028 (O1-b) until 2026-11-27; the fab worker found the groove takes a 2-025. The layer camera's adapter uses "
+     "a 2-030 on a groove of ID 42", []),
+    ("M0-08", "0", "purge", "Needle valve for the LW slide purge, brass, 1/8 NPT", ("p1", "O2"), 1, "add", "not drawn", "", []),
+    ("M0-09", "0", "purge", "Push-to-connect elbow, 1/4 in. tube x 1/8 NPT", ("p1", "O2-a"), 2, "add", "not drawn", "", []),
+    ("M0-10", "0", "purge", "Push-to-connect tee, 1/4 in. tube (off the argon line)", ("p1", "O2-e"), 1, "add", "not drawn", "", []),
+    ("M0-11", "0", "purge", "Polyurethane tube 1/4 in. OD, per ft", ("p1", "O2-c"), 10, "add", "not drawn", "", []),
+    ("M0-12", "0", "purge", "SAE-4 (7/16-20) x 1/8 in. tube fitting, bored through, 316, with a 1/8 in. 316 tube bent and flattened as the nozzle",
+     ("est", 40.0, 70.0, "estimate (Swagelok-class; not fetched)", "SS-200-1-4ST class, bored through", "Swagelok distributor"), 1,
+     "add (replaces a machined nozzle)", "not drawn", "the frame's SAE-4 purge port and its Ø4 passage are programmed (cam_monitoring.json)", []),
+    ("M0-13", "0", "custom (outsourced)", "LW window clamp ring, 6061 1/4 in. plate, Ø58 with a flat toward the through-beam's fibre head, "
+     "ID 31, 4 x Ø4.5 on Ø49.5",
+     ("custom", 10.26, "SendCutSend instant quote (2 = $8.20, 10 = $6.95 each; arrives Tue, Dec 1)", SCSQ, "2026-11-27T09:12Z"), 1,
+     "outsource", "drawn (cad/monitoring_parts.py)", "4.6 h on a lathe and mill in house (hours_monitoring.csv); holes on Ø49.5 so "
+     "2.0 mm of ring is left outside them, over SendCutSend's 1.90 mm for an instant quote", []),
+    ("M0-14", "0", "custom (outsourced)", "BW window clamp frame, 6061 3/16 in. plate, 72.9 x 61.9 mm as trimmed to the back wall and "
+     "clear of the inlet plenum's flange, a 53 x 22.5 opening, 3 x Ø4.5",
+     ("custom", 9.28, "SendCutSend instant quote (2 = $7.42, 10 = $5.84 each; arrives Tue, Dec 1)", SCSQ, "2026-11-27T09:13Z"), 1,
+     "outsource", "drawn (cad/monitoring_parts.py)", "the outline the model trims it to; its third screw at the seat's lower +x corner "
+     "(frame_features.bw_hole3: 3.35 mm of metal round the hole)", []),
+    ("M0-15", "0", "custom (outsourced)", "Cover-slide holders (LW on the left liner; LP), 316 sheet clips",
+     ("custom", 22.85, "analogue: OSH Cut, a 316 liner, $22.85"), 2, "outsource with the liners", "not drawn", "", []),
+    ("M0-17", "0", "coax safety (now)", "Beam trap on cube 1's far port, 30 mm cage, 5 W CW (the DMSP1000 passes 0.3-0.6 W of the "
+     "forward beam)", ("tl", "BTC30"), 1, "add now", "not drawn",
+     "optics-parts.csv MO2 (optics worker): a Class 4 stray beam exists today wherever cube 1's -y face is open; it estimated $100-200 "
+     "for a BTC30-class trap", []),
+    ("M0-16", "0", "fasteners", "M4 x 12 socket-head screws, A4 stainless, for the clamp ring and frame (7)",
+     ("est", 5.0, 12.0, "estimate (not fetched)", "M4 x 12 A4 SHCS", "McMaster-Carr"), 1, "add", "not drawn", "", []),
+    # cooling for the cameras and Pis in the guard (monitoring/cooling.md, cad/monitoring_cooling.py; round 3, 2026-11-27): shared
+    # by every camera in the guard, so step 0. The guard's own air runs 28-44 K over the Shuttle's without it (cooling.json)
+    ("M0-C1", "0", "cooling (guard)", "Guard exhaust fans, 120 x 120 x 25 mm, 24 V, 3400 rpm (Delta AFB1224SH: 192 m3/h free air, "
+     "107 Pa, 46.5 dB(A), 6.7 W), two on a plenum outside the back panel", ("p3", "CL5"), 2, "add", "drawn (monitoring_cooling.py)",
+     "two in parallel give ~118 m3/h through the drawn traps and filter (cooling.json). Marketplace price, authenticity not checked: "
+     "buy from a distributor (Digi-Key, Mouser blocked the tunnel). Noctua NF-F12 iPPC-24V-3000 (CL7-a, $34.95, 187 m3/h, 75 Pa, "
+     "43.5 dB(A)) is the quieter option; its curve isn't published", []),
+    ("M0-C2", "0", "cooling (guard)", "Finger guards for the 120 mm exhaust fans (Qualtek 08130)", ("p3", "CL25"), 2, "add",
+     "drawn (monitoring_cooling.py)", "", []),
+    ("M0-C3", "0", "cooling (guard)", "Light traps for the guard's inlet (176 x 320 mm) and exhaust (244 x 230 mm): 1 mm aluminium "
+     "blades bent to six legs (32 mm deep, 10 mm pitch, 10 mm amplitude), black anodised, in 2 mm frames; 55 blades",
+     ("est", 300.0, 650.0, "estimate (custom sheet metal: ~275 press-brake bends, frames, a black-anodise lot; not quoted)",
+      "custom (monitoring_cooling.py LOUVRE)", "sheet-metal shop + anodiser"), 1, "make or outsource", "drawn (monitoring_cooling.py)",
+     "OD >= 5.4 at 1070 nm needs a blade reflectance <= ~0.4, OD 7 needs <= ~0.25 (cooling.json); no maker publishes black "
+     "anodise's at 1 um, so measure a blade, or line them with BKF12 (M0-C4)", []),
+    ("M0-C4", "0", "cooling (guard)", "Black aluminium foil to line the trap blades (Thorlabs BKF12, 5.5 % reflectance at 1064 nm on "
+     "Thorlabs' graph; 305 mm x 15.2 m)", ("p3", "CL61"), 1, "add", "drawn (as the blades' finish)",
+     "~1.5 m2 for both traps' blades, both faces. With it the traps reach OD ~10 (cooling.json). Thorlabs: not intended for laser "
+     "safety use, so the guard's leakage test before first light still decides", []),
+    ("M0-C5", "0", "cooling (guard)", "Inlet filter media: 30 ppi polyurethane foam pad, 1/4 in., 16 x 20 in (two 176 x 320 mm pieces: "
+     "one fitted, one spare), in the frame of M0-C6", ("p3", "CL92-a"), 1, "add", "drawn (monitoring_cooling.py)",
+     "no pressure drop is published for it: cooling.py takes 20 Pa at 1 m/s (estimate); measure the guard's flow when built. A duct "
+     "from a ventilated dock can bolt on in its place (the supply that keeps the busy case in rating)", []),
+    ("M0-C6", "0", "cooling (guard)", "Exhaust plenum outside the back panel (1.5 mm aluminium box, gasket) carrying the two fans, "
+     "and the inlet filter's frame", ("est", 60.0, 130.0, "estimate (bent and riveted sheet, two parts)", "custom (monitoring_cooling.py)",
+                                      "shop"), 1, "make",
+     "drawn (monitoring_cooling.py)", "", []),
+    ("M0-C7", "0", "cooling (PB2)", "PB2 vent fan, 40 x 40 x 10 mm 24 V (Noctua NF-A4x10 24V PWM: 8.9 m3/h, 19 Pa, 19.6 dB(A)), over a "
+     "Ø38 hole in PB2's +x end; a filtered vent at the other end", ("p3", "CL91"), 1, "add",
+     "drawn (monitoring_cooling.py)", "sealed, PB2's air runs ~25 K over the guard's and the Pi throttles (SoC 81-87 C in the vented "
+     "guard, cooling.json); vented, 3 K. PB2 drops from IP66 to IP2x, inside the guard", []),
+    ("M0-C8", "0", "cooling (PB2)", "Raspberry Pi 5 Active Cooler for PB2's Pi", ("p3", "CL32"), 1, "add", "not drawn (inside PB2)",
+     "PiShop $12.95 (CL32-a)", []),
+    ("M0-C9", "0", "cooling (guard)", "Option, not drawn: chilled-water fan coil in a closed guard (120 mm radiator, 24 V fan, quick "
+     "couplings on the dock's chilled water), in place of the vents", ("est", 150.0, 400.0, "estimate (radiator, fan, fittings, hose; "
+                                                                        "not fetched)", "fan coil", "various"), 1,
+     "option (if the chilled water is chosen for the laser)", "not drawn",
+     "holds the guard at 34 C in the busy case with 20 C water and UA 15 W/K (cooling.json); ~0.2 kW on the chiller", []),
+    ("M0-C10", "0", "cooling (guard)", "Option, not recommended: thermoelectric air-to-air enclosure cooler, 24 V (TE Technology AC-094)",
+     ("p3", "CL80"), 1, "option (not recommended)", "not drawn",
+     "94 W at dT 0 is half the guard's load, and its ~240 W input goes into the Shuttle", []),
+    # ---------------- step 0: the guard's monitoring bulkhead, MN-28 (round 3, 2026-11-27; cad/monitoring_bulkhead.py) -----------
+    ("M0-B1", "0", "custom (guard bulkhead)", "Guard bulkhead plate MN-28: 6061-T6 0.080 in. (2.03 mm), 180 x 126 mm, laser-cut: four "
+     "D-size cut-outs (Ø24 + 2 x Ø3.2), an Ø16.1 hole, the KEL's 65 x 36 cut-out and 4 x Ø5.8, 8 x Ø4.5; bare or clear chromate (conductive)",
+     ("custom", 32.85, "SendCutSend instant quote for 6061-T6 .080 in. (2 = $25.52, 10 = $20.68 each; arrives Tue, Dec 1)", SCSQ,
+      "2026-11-27T11:23Z", "custom (monitoring_bulkhead.plate_dxf(): dxf/bulkhead_plate.dxf)"), 1, "outsource",
+     "drawn (monitoring_bulkhead.py)", "on the guard's back panel, upper left (x -400..-220, z 220..346), over a 152 x 98 mm cut-out in "
+     "the panel, 8 x M4 into rivet nuts (M0-B8). Cut the panel's cut-out with the vents' openings (S9)", []),
+    ("M0-B2", "0", "guard bulkhead", "Isolated BNC feedthroughs in black D-shape housings (Neutrik NBB75DFIB) for the two photodiodes "
+     "and the AE (MN-13, MN-14, MN-17)", ("p3", "BH1"), 3, "add", "drawn (monitoring_bulkhead.py, envelope)",
+     "isolated from the plate, so the cable shields stay off the guard (sync-and-data.md §2.3); 75 ohm, which doesn't matter below "
+     "1 MHz. Metal BNC caps on any unplugged (M0-B8)", []),
+    ("M0-B3", "0", "guard bulkhead", "RJ45 feedthrough, Cat6A, shielded, black D-shape (Neutrik NE8FDX-P6-B) for the Chronos's "
+     "Ethernet (MN-10)", ("p3", "BH2"), 1, "add", "drawn (monitoring_bulkhead.py, envelope)",
+     "a plain RJ45 plug mates it; a hinged cover (SCDX, M0-B8) closes it unplugged", []),
+    ("M0-B4", "0", "guard bulkhead", "M12 8-pole A-coded panel feed-through, male/female, shielded (Murrelektronik 7000-48111-0000000) "
+     "for the RTC6 bits (MN-02 to MN-05)", ("p3", "BH3"), 1, "add", "drawn (monitoring_bulkhead.py)",
+     "its brass housing bonds to the plate: keep the outside cordset's shield off its coupling nut, so MN-02's shield stays grounded "
+     "at the drawer only", []),
+    ("M0-B5", "0", "guard bulkhead", "Split cable entry frame for pre-terminated leads, six KT small grommets, IP54 (icotek KEL 10|6, "
+     "42216) for the Chronos's and the LDS12Bs' power leads (MN-11, MN-15)", ("p3", "BH4"), 1, "add",
+     "drawn (monitoring_bulkhead.py, frame solid)", "sold in packs of 10 by the US distributor read ($197.70); a single piece is "
+     "~EUR 28 in Europe", []),
+    ("M0-B5a", "0", "guard bulkhead", "KT grommets for the KEL frame: three sized to the leads (KT 5 clamps 5-6 mm), three blind for "
+     "the spare places", ("p3", "BH5"), 6, "add", "not drawn (inside the KEL frame)",
+     "measure the leads first; the spares can take the exhaust fans' leads if they are fed from PB2 (MN-29)", []),
+    ("M0-B6", "0", "custom (guard bulkhead)", "Light shroud over the KEL's inside: 1.5 mm 5052, bent and riveted, black anodised; a "
+     "labyrinth 34 mm deep with a 24 mm side channel, so no straight path reaches the grommets",
+     ("est", 40.0, 120.0, "estimate (small bent and riveted sheet part, black anodised with the traps' lot; not quoted)",
+      "custom (monitoring_bulkhead.py SHROUD)", "sheet-metal shop + anodiser"), 1, "make or outsource", "drawn (monitoring_bulkhead.py)",
+     "", []),
+    ("M0-B7", "0", "guard bulkhead", "Cables the bulkhead adds: inside, an M12 8-pole female cordset to PB2 (Murrelektronik "
+     "7000-17041-2920300, 3 m, $34.00 read: BH6); outside, a shielded M12 8-pole male cordset to the drawer's DIN breakout; one more "
+     "Cat6A S/FTP patch cable (the Chronos's run is now two)",
+     ("est", 75.0, 130.0, "estimate: $34.00 read (BH6) + a shielded male cordset $30-70 + a patch cable $8-25 (not read)",
+      "7000-17041-2920300 + M12 8-pole male shielded cordset + Cat6A S/FTP patch cable", "AutomationDirect / various"), 1, "add",
+     "drawn as envelopes (plugs and the first bends)", "the BNC runs each become two cables: M1-03's six 48 in. cables cover the "
+     "three", []),
+    ("M0-B8", "0", "guard bulkhead", "Bulkhead hardware: 8 x M4 steel rivet nuts and M4 screws with serrated washers (the plate's bond), "
+     "a bonding strap to the guard frame, 3 x metal BNC dust caps, a Neutrik SCDX hinged cover ($1.94 read: BH7), an M12 metal cap",
+     ("est", 20.0, 45.0, "estimate (McMaster-class hardware and caps, not read; the SCDX read $1.94)", "rivet nuts, screws, caps, strap",
+      "McMaster-Carr / Markertek"), 1, "add", "not drawn (their holes are)", "", []),
+    # ---------------- step 1: clock and recorder -----------------------------------------------------------------------
+    ("M1-01", "1", "recorder", "Digitizer: PicoScope 4444, 4 differential inputs, 12/14-bit, 20 MHz, 400 MS/s, 256 MS memory",
+     ("p2", "D1"), 1, "add", "not drawn",
+     "Pico sells it with at least one probe; for single-ended BNC sources (photodiodes, AE preamp, laser gate, sync) use TA271 D9-BNC "
+     "adaptors (M1-02). Pico's own store showed GBP 1,115 (~$1,460). Kit with 3 PicoConnect 441 + 1 TA271: $1,985 (3 in stock)",
+     ["D1-u1"]),
+    ("M1-02", "1", "recorder", "Pico TA271 D9-to-BNC single-ended adaptor", ("p2", "D1-c"), 4, "add", "not drawn", "", []),
+    ("M1-03", "1", "recorder", "BNC M-M RG-58 cables, 48 in.", ("p1", "O3"), 6, "add", "not drawn", "", []),
+    ("M1-04", "1", "recorder", "BNC tee F-M-F (sync line to the digitizer and the cameras)", ("p1", "O4"), 2, "add", "not drawn", "", []),
+    ("M1-05", "1", "sync", "D-sub 25 to terminal block, DIN rail (the RTC6's extension port to the sync wiring)", ("p1", "O5"), 1, "add",
+     "not drawn", "the RTC6's digital I/O comes with the board (SCANLAB: no separate I/O board price, quote-only)", []),
+    ("M1-06", "1", "sync", "4-channel digital isolator boards, 5 V TTL (camera triggers and layer marks, isolated from the RTC6)",
+     ("p1", "O6"), 2, "add", "not drawn", "functional isolation only; needs an isolated 5 V on the far side", []),
+    ("M1-07", "1", "sync", "Sync breakout box: enclosure, 8 BNC bulkheads, 5 V isolated DC-DC",
+     ("est", 40.0, 90.0, "estimate (not fetched)", "enclosure + BNC bulkheads", "various"), 1, "add (hand-drilled, 2.4 h)", "not drawn", "", []),
+    ("M1-08", "1", "storage", "Data storage, 4 TB SSD (a fully instrumented build is 0.1-1 TB raw, monitoring.md §5.3)",
+     ("est", 250.0, 400.0, "estimate (not fetched)", "4 TB NVMe/USB SSD", "various"), 1, "add", "not drawn", "", []),
+    ("M1-09", "1", "recorder", "Alternative digitizer: NI USB-6366, 8 simultaneous 16-bit inputs at 2 MS/s each", ("p2", "D3"), 1,
+     "option (alternative to M1-01)", "not drawn", "NI shows a 16-17 week lead time; confirm the BNC variant before ordering",
+     ["D3-u1", "D3-u2"]),
+    # ---------------- step 2: spectral check (borrow) -------------------------------------------------------------------
+    ("M2-01", "2", "borrow", "Stabilised tungsten-halogen lamp 360-2600 nm (reference price; borrow)", ("p1", "R2"), 0, "borrow", "-", "", []),
+    ("M2-02", "2", "borrow", "Compact spectrometer 200-1000 nm (reference price; borrow)", ("p1", "R1-b"), 0, "borrow", "-",
+     "CCS200/M is superseded by CCT10", []),
+    ("M2-03", "2", "borrow", "NIR spectrometer 900-1650 nm (reference price; borrow, or ask SCANLAB for the coating curve)",
+     ("p1", "R3"), 0, "borrow", "-", "", []),
+    # ---------------- step 3: layer camera tuned -------------------------------------------------------------------------
+    ("M3-01", "3", "layer camera", "12 mm C-mount lens, f/1.8-16, 2/3 in. format (to run the Pi HQ at f/2-2.8)", ("p1", "L3"), 1,
+     "add (replaces optics-bom O20's estimate)", "Layer camera (Pi HQ + C-mount lens)",
+     "rated for 2.74 um pixels: softer than the Pi HQ's 1.55 um at pixel level. Edmund 86-570 (1.1 in., high resolution) is $835; "
+     "Computar M1214-MP2 ($181.35) is softer still", []),
+    ("M3-02", "3", "layer light", "White LED bar light 300 mm, 24 V, behind the back-wall window (raking light)", ("p1", "I5-a"), 1,
+     "add (replaces optics-bom O23's estimate)", "not drawn",
+     "constant-on; switch it from the PLC to fire the lights in turn. The strobe-capable L300 is $995.40", []),
+    ("M3-03", "3", "layer light", "M12 4-pin cable 5 m for the light", ("p1", "I6-c"), 1, "add", "not drawn", "", []),
+    ("M3-04", "3", "layer light", "Second (steep) light by the camera: 285 mm industrial LED strip, 12-30 V",
+     ("p1", "I6"), 1, "add", "not drawn", "price from a search snippet (page did not render); a $20-60 LED bar also works", []),
+    ("M3-06", "3", "layer camera", "Second 1070 nm blocker behind the FESH0950 (for video during lasing)", ("mo", "MO38"), 1, "add",
+     "Layer camera (Pi HQ + C-mount lens)", "", []),
+    ("M3-05", "3", "layer light", "Two-channel 24 V switching for the lights (MOSFET or relay module on PLC outputs)",
+     ("est", 15.0, 40.0, "estimate (not fetched)", "2-ch 24 V module", "various"), 1, "add", "not drawn", "", []),
+    # ---------------- step 4: acoustic emission ---------------------------------------------------------------------------
+    ("M4-01", "4", "AE", "AE sensor in each AE module's cartridge (M50, L75), on the waveguide's foot: MISTRAS PICO, Ø5 x 4 mm, "
+     "200-750 kHz, -65 to 177 C; its integral coax shortened to ~0.3 m with a 10-32 plug (ask MISTRAS)",
+     ("p3", "AE-S1", ("est", 400.0, 900.0, "quote-only; estimate for a MISTRAS miniature sensor (no public price found)", "PICO",
+                      "MISTRAS (quote)")), 2,
+     "add", "drawn (M50, L75)", "monitoring/mechanics.md §4: the only fit in the Ø12.7 rod beside the leads is a Ø5 sensor. "
+     "QingCheng WM500/1 (AE-S2, Ø4.7 x 4, 100-1000 kHz) reaches 100 kHz but is rated 120 C, 2 K over the foot's worst case; Nano30 (AE-S3) "
+     "does not fit. S25 keeps a sensor clamped on its rod end (M4-09)", []),
+    ("M4-02", "4", "AE", "AE preamplifier 20/40/60 dB (MISTRAS 2/4/6 class)",
+     ("p2", "A2", ("est", 300.0, 900.0, "quote-only; estimate, inside Edison's $1-3k for sensor + preamp", "2/4/6 (or 0/2/4)",
+                   "MISTRAS (quote)")), 1, "add", "not drawn",
+     "a 28 V phantom-powered preamp needs a decoupler to feed the PicoScope (M4-03); MISTRAS's 5 V PreAmp One (eBay $449.95, new) "
+     "runs from USB power", ["A2-u4", "A2-u5", "A2-u1"]),
+    ("M4-03", "4", "AE", "Preamp power / decoupling box (28 V phantom to a plain BNC input)",
+     ("p2", "A5", ("est", 0.0, 400.0, "estimate: $0 with a 5 V USB-powered preamp (MISTRAS PreAmp One), up to ~$400 for a decoupler",
+                   "decoupler or none", "MISTRAS / Vallen (quote)")), 1, "add", "not drawn", "", []),
+    ("M4-04", "4", "AE", "Couplant at both ends of the waveguide: Krytox LVP PFPE vacuum grease, 2 oz (-15 to 300 C, 1e-5 Torr at 200 C)",
+     ("p3", "AE-C1"), 1, "add", "not drawn",
+     "replaces Molykote 41 (silicone oil, no vacuum data; silicone vapour fouls windows). A dab on each plate's spigot underside and on the "
+     "sensor's face. Tier B (500 C): no grease lasts; a dry annealed Al foil under the domed head (monitoring/mechanics.md §4)", []),
+    ("M4-05", "4", "AE", "Pencil leads 0.5 mm 2H for Hsu-Nielsen breaks (plus any 0.5 mm pencil)", ("p1", "A4"), 2, "add", "not drawn",
+     "a Nielsen shoe is quote-only from AE suppliers; a PTFE guide ring made here does the same", []),
+    ("M4-06", "4", "AE", "Waveguides: 316 rod Ø1/8 in. (3.18 mm) x 1 ft, makes three 94 mm guides (M50, L75, a spare); the Ø4 head "
+     "domed R50 is M4-10's shop work", ("p1", "A1"), 1, "add", "drawn (M50, L75; Ø3.0 in the model)",
+     "slides free in the Ø3.4 holes; lapped to length so the head stands 0.6 mm proud with the plate off (monitoring/mechanics.md §4)", []),
+    ("M4-07", "4", "AE", "Cartridge spring: Lee Spring LC 029BB 09S316 (316, OD 4.78, free 19.05 mm, 3.94 N/mm), 2 + 2 spares",
+     ("p3", "AE-SP1"), 4, "add", "drawn (M50, L75)",
+     "13.3-16.8 N on the plate over every tolerance corner with the stop force set by a shim at assembly; 10.2-20.4 N as bought "
+     "(ae_preload.md §2); Century 60895SCS is the same spring (AE-SP2)", []),
+    ("M4-08", "4", "AE", "SMA-to-BNC cable 48 in. (preamp to the digitizer)", ("p1", "O3-d"), 1, "add", "not drawn", "", []),
+    ("M4-09", "4", "custom (outsourced)", "S25 only: AE sensor clamp on the rod end, 6061 plate + spring (S25's Ø7.7 rod has no room "
+     "for the waveguide and cartridge)",
+     ("custom", 27.12, "analogue: SendCutSend laser, the 1/2 in. Z lift arm, $27.12"), 1, "option (S25)", "drawn (S25)",
+     "the rod-end route: 26-52 dB from the plate (checks.md §6); a third PICO in it if S25 needs AE", []),
+    ("M4-10", "4", "custom (outsourced)", "AE cartridge (turned 316L: Ø6.3 x 0.35 tube, 25.8 mm, floor, stop cap with the guide hole, "
+     "legs over the cross-drilling, lead slot) and the waveguide's Ø4 head domed R50, one set per AE module",
+     ("est", 40.0, 120.0, "estimate: a small turned 316L part and a domed head, ~1 h outsourced each (no quote)", "custom", "machine shop"),
+     2, "outsource", "drawn (M50, L75)", "", []),
+    ("M4-11", "4", "AE", "Microdot (10-32) weld-in feedthrough for the sensor's lead, in the rod end's cap: Solid Sealing FA40102",
+     ("p3", "AE-FT1"), 2, "add", "drawn (M50, L75)",
+     "laser or e-beam weld (SST NS40102), not TIG: send the rod end to SST or a laser welder with the part (M4-13). Lesker IFTCG012011 "
+     "(SMA, AE-FT3) is too long for the cap", []),
+    ("M4-12", "4", "AE", "Air-side Microdot plug and cable to the preamp, 120 in.: Solid Sealing FA21382", ("p3", "AE-FT2"), 2, "add",
+     "drawn as an envelope (plug)", "rated 75 C with the feedthrough, about 1 K over the rod end's worst case: a PTFE 10-32 cable to "
+     "125 C (CeramTec 14544-01-A, not priced) leaves margin. Unplugged at a module swap, like the type K and power plugs", []),
+    ("M4-13", "4", "AE", "Gas-side lead: Kapton coax pigtail on the feedthrough's pin (push-on socket) up the rod to an in-line 10-32 "
+     "joint with the sensor's lead; and the feedthrough's laser weld",
+     ("est", 60.0, 250.0, "estimate: UHV Kapton coax and push-on contact, plus an outsourced laser weld (not priced)", "custom",
+      "Allectra / Lesker class; weld shop"), 2, "add", "not drawn", "fitted before the rod is welded to the rod end", []),
+    # ---------------- step 5: two-colour coaxial (the optics worker's parts: monitoring/optics-parts.csv) -------------------
+    ("M5-01", "5", "coaxial", "Shared 1070 nm blocker after cube 1: short-pass 1000 nm (replaces the NF1064-44, which would cut 700 nm)",
+     ("mo", "MO3"), 1, "add", "not drawn", "", []),
+    ("M5-02", "5", "coaxial", "Cube 3 dichroic: long-pass 805 nm, Ø1 in. (reflects < 790 nm to photodiode A, passes > 825 nm to B)",
+     ("mo", "MO5"), 1, "add", "not drawn", "", []),
+    ("M5-03", "5", "coaxial", "Photodiode A band: 700 nm, 40 nm FWHM", ("mo", "MO6"), 1, "add", "not drawn", "", []),
+    ("M5-04", "5", "coaxial", "Photodiode B band: 900 nm, 40 nm FWHM", ("mo", "MO7"), 1, "add", "not drawn", "", []),
+    ("M5-05", "5", "coaxial", "Photodiode B, Si switchable gain (A is the existing optics-bom O15)", ("mo", "MO8"), 1, "add", "not drawn",
+     "my read 2026-11-25T06:44Z: 0 in US stock, 'Lead Time' (price_lookups_optics.csv P1)", []),
+    ("M5-06", "5", "coaxial", "Photodiode lens f = 50 mm achromat (one exists as O18)", ("mo", "MO9"), 1, "add", "not drawn", "", []),
+    ("M5-07", "5", "coaxial", "Field stops, 500 um pinholes, one per photodiode", ("mo", "MO10"), 2, "add", "not drawn", "", []),
+    ("M5-08", "5", "coaxial", "30 mm cage cube for a round Ø1 in. dichroic (C4W + B4C/M + FFM1): cube 3", ("mo", "MO14"), 1, "add",
+     "not drawn", "CM1-DCH/M ($205.91) takes only 25 x 36 mm optics", []),
+    ("M5-09", "5", "coaxial", "Cage plates, rods and lens tubes for the branch (typical counts)", ("mo", "MO15"), 1, "add", "not drawn", "", []),
+    ("M5-10", "5", "coaxial", "BNC cable 48 in. (photodiode B to the digitizer)", ("p1", "O3"), 1, "add", "not drawn", "", []),
+    # ---------------- step 6: coaxial camera -------------------------------------------------------------------------------------
+    ("M6-01", "6", "coaxial camera", "Cube 2 dichroic: short-pass 950 nm, Ø1 in. (reflects 955-990 nm to the camera)", ("mo", "MO4"), 1, "add",
+     "not drawn", "the camera band sits above the galvo coatings' 750-875 nm stop band", []),
+    ("M6-02", "6", "coaxial camera", "Monochrome IMX296 board for the Pi 5 (C/CS mount, trigger input)", ("mo", "MO11"), 1, "add", "not drawn",
+     "the Raspberry Pi Global Shutter Camera (colour) was out of stock at all five resellers checked", []),
+    ("M6-03", "6", "coaxial camera", "Tube lens f = 75 mm achromat (7.4 um/px)", ("mo", "MO12"), 1, "add", "not drawn", "", []),
+    ("M6-04", "6", "coaxial camera", "Second 1070 nm blocker in the camera arm (short-pass 1000 nm)", ("mo", "MO13"), 1, "add", "not drawn", "", []),
+    ("M6-05", "6", "coaxial camera", "30 mm cage cube for a round Ø1 in. dichroic: cube 2", ("mo", "MO14"), 1, "add", "not drawn", "", []),
+    ("M6-06", "6", "coaxial camera", "SM1-to-C-mount adapter (external C-mount, internal SM1) for the camera", ("p1", "C5"), 1, "add", "not drawn",
+     "not in optics-parts.csv", []),
+    ("M6-07", "6", "coaxial camera", "Pi 5 camera cable 22-to-15-pin, 500 mm", ("p2", "K4"), 1, "add", "not drawn",
+     "the Pi 5 in PB2 has two camera ports: the layer camera and this one", []),
+    ("M6-08", "6", "coaxial camera", "30 mm cage XY translator (centres the camera on the beam)", ("p1", "C7"), 1, "option", "not drawn",
+     "0 in US stock at fetch", []),
+    ("M6-09", "6", "custom (outsourced)", "Camera adapter plate (IMX296 board on a 30 mm cage plate)",
+     ("custom", 10.0, "estimate: SendCutSend laser, small 1/8 in. 6061 part (the three parts quoted today were $9.83-11.44)"), 1,
+     "outsource or print", "not drawn", "", []),
+    # ---------------- step 7: side high-speed camera, and the steep lid camera ---------------------------------------------------
+    ("M7-01", "7", "side camera", "Kron Chronos 2.1-HD, 8 GB, mono (4/3 in. sensor; 24,046 fps at 640 x 96)", ("mo", "MO26"), 1, "add",
+     "Side high-speed camera (overlay only, render_monitoring.py)",
+     "Kron's page also showed a 10 % anniversary sale, $6,120 for 8 GB, at 2026-11-25T06:58Z (price_lookups_cameras.csv K5); 1-3 "
+     "business days. Two BNC trigger inputs / frame-strobe outputs, an isolated AUX trigger, a REST API", ["K5-u2", "K5-u1"]),
+    ("M7-02", "7", "side camera", "50 mm C-mount lens focusing at 176 mm (MOD 100 mm), 400-1000 nm coating", ("mo", "MO27"), 1, "add",
+     "not drawn", "2/3 in. image circle: it covers the cropped high-rate modes, not the 4/3 in. sensor's full 19.2 x 10.8 mm frame "
+     "(for full frame see M7-09)", []),
+    ("M7-03", "7", "side camera", "Camera filter: 850 nm, 10 nm FWHM", ("mo", "MO28"), 1, "add", "not drawn", "", []),
+    ("M7-04", "7", "side camera", "Second 1070 nm blocker (short-pass 1000 nm)", ("mo", "MO29"), 1, "add", "not drawn", "", []),
+    # the BW light (round 3, monitoring/optics.md §4.1; analysis/monitoring/optics/bw_light.py): the M850D3's die imaged onto the plate
+    # by an aspheric condenser, in place of the SOLIS-850C (MO30), which doesn't fit at BW and gives a fifth of the light on the field
+    ("M7-05", "7", "side light", "850 nm LED on a Ø22 metal-core board, 1.4 W min at 1.5 A CW, 2 A pulsed, 1 x 1 mm die (Thorlabs M850D3)",
+     ("p3", "BWL1"), 1, "add", "drawn (cad/monitoring_parts.py)",
+     "imaged onto the plate by M7-05a: 0.2-0.27 W/cm2 across a 12 mm beam per LED watt, 0.063 W/cm2 on the bed in the side camera's field "
+     "at 2 A (bw_light.py). 2 A is the pulsed maximum on the same LED's M850LP1 sheet; leave the board's EEPROM pins off the driver, "
+     "which otherwise caps it at 1.5 A. RG0 bare; RG3 in its own beam near the plate (inside the closed chamber)", []),
+    ("M7-05a", "7", "side light", "Aspheric condenser Ø25.4 mm, f = 16 mm, NA 0.79, AR 650-1050 nm: images the die onto the plate (m ~11)",
+     ("p3", "BWL2"), 1, "add", "drawn (cad/monitoring_parts.py)", "collects 51 % of the LED's light; the uncoated ACL25416U ($22.00) loses ~8 %", []),
+    ("M7-05b", "7", "side light", "SM1 lens tube, 0.5 in. (one SM1RR included): holds the asphere, screws into the heat sink",
+     ("p3", "BWL3"), 1, "add", "drawn (cad/monitoring_parts.py)", "", []),
+    ("M7-05c", "7", "custom (in house)", "BW light heat sink: 6061, Ø36 x 40, SM1 internal thread (single-point), five fins, black anodised",
+     ("est", 160.0, 260.0, "estimate: ~2.5 h on the lathe at hours_monitoring.csv's ~$65/h; outside CNC like the LP window retaining ring ($257)",
+      "custom", "in house"), 1, "make", "drawn (cad/monitoring_parts.py)",
+     "11 K/W to 40 C air (bw_light.py): T_j 54-64 C in 24 kfps bursts at 2 A, 72-95 C if strobed without a break", []),
+    ("M7-05d", "7", "custom (outsourced)", "BW light bracket and clamp: 1/4 in. 6061 L (flange on the back wall, 2 x M4 into new tapped holes; "
+     "arm over the light) and an 8 mm split clamp on the heat sink's collar",
+     ("custom", 27.12, "analogue: SendCutSend laser, the Z lift arm, $27.12 (the clamp's bore is bored in house)"), 1, "outsource",
+     "drawn (cad/monitoring_parts.py)", "two more M4 holes in the back wall, drilled in setup C's A180 program (frame_features.BW_BRACKET)", []),
+    ("M7-05e", "7", "side light", "SM1 retaining ring (the second one, behind the asphere)", ("p3", "BWL4"), 1, "add",
+     "drawn (cad/monitoring_parts.py)", "", []),
+    ("M7-05f", "7", "side light", "Thermally conductive double-sided tape (the LED board on the heat sink)", ("p3", "BWL8"), 1, "add", "not drawn",
+     "0.45 K/W over the Ø22 board; two M2 screws as well", []),
+    ("M7-05g", "7", "side light", "LED cable, 2 m, M8 4-pin to open wires (LED to the driver's LED2 terminal)", ("p3", "BWL6"), 1, "add",
+     "not drawn", "", []),
+    ("M7-05h", "7", "side light", "SMA to BNC cable (the Pico 2's strobe, through its buffer, to the driver's TTL input)", ("p3", "BWL7"), 1, "add",
+     "not drawn", "", []),
+    ("M7-05i", "7", "side camera", "Option: FBH850-40 in place of M7-03's FBH850-10 (4.1 x the LED's light in band; same price, so a swap)",
+     ("p3", "BWL9"), 1, "option (swap for M7-03)", "not drawn",
+     "the M850D3 peaks at ~865 nm: the FBH850-10 passes 14 % of it, the FBH850-40 57 %, the FBH870-10 20-21 % (bw_light.py)", []),
+    ("M7-06", "7", "side light", "LED driver with TTL modulation (Thorlabs DC2200), LED2 terminal: 0-2 A at up to 27 kHz",
+     ("p3", "BWL5"), 1, "add", "not drawn",
+     "TTL mode from the Pico 2's strobe: 27 kHz on LED2 (0-2 A; ~1.9 us edges), so 24,046 fps works; LED1 (0-4 A) stops at 23 kHz. "
+     "Lead each exposure by one edge (TTL high = exposure + 1.9 us). The LEDD1B (1.2 A) can't reach the M850D3's 1.5 A", []),
+    ("M7-07", "7", "side camera", "Kron BNC extension cable 4 m (trigger to the sync box)", ("p2", "D6"), 1, "add", "not drawn", "", []),
+    ("M7-08", "7", "custom (outsourced)", "LW camera bracket: 5/8 in. (15.9 mm) x 80 mm 6061 plate on an angle root at the floor plate's "
+     "edge, and a fixed 13 deg wedge (no ball head)",
+     ("custom", 27.12, "analogue: SendCutSend laser, the Z lift arm, $27.12"), 1, "outsource", "drawn (cad/monitoring_parts.py)",
+     "f1 169 Hz at a 139 mm reach (monitoring/mechanics.md, Checks §3); the analogue is a thinner part, so expect more", []),
+    ("M7-09", "7", "side camera", "Option: full-frame lens, Nikon F 50 mm f/1.8G (order the Chronos with the F mount)", ("p2", "K8"), 1, "option",
+     "not drawn", "a G lens has no aperture ring: check that Kron's F mount sets the aperture, or buy the D version", ["K8-u1"]),
+    ("M7-10", "7", "side light", "Option: 808 nm 10 W fibre-coupled source, pulses from 10 us (Class 4: LSO review first)", ("mo", "MO32"), 1,
+     "option", "not drawn", "", []),
+    ("M7-11", "7", "side camera", "Option: Chronos 1.4 (1 us minimum exposure)", ("mo", "MO33"), 1, "option", "not drawn",
+     "my read: $4,050 for 8 GB on the 10 % sale (price_lookups_cameras.csv K5-c)", []),
+    ("M7-12", "7", "steep lid camera", "Option: monochrome IMX296 board for the lid port (LP)", ("mo", "MO35"), 1, "option", "not drawn", "", []),
+    ("M7-13", "7", "steep lid camera", "Option: 50 mm C-mount lens, MOD 100 mm", ("mo", "MO36"), 1, "option", "not drawn", "", []),
+    ("M7-14", "7", "steep lid camera", "Option: filters, 850 nm 10 nm bandpass + 1070 nm short-pass", ("mo", "MO37"), 1, "option", "not drawn", "", []),
+    ("M7-15", "7", "steep lid camera", "Option: Raspberry Pi 5, 4 GB (the PB2 Pi's two camera ports are taken)", ("p2", "K3-b"), 1, "option",
+     "not drawn", "", []),
+    ("M7-16", "7", "custom (outsourced)", "Option: LP adapter boss (compound angle), SendCutSend CNC",
+     ("custom", 379.48, "analogue: SendCutSend CNC, the layer camera's viewport adapter + boss, $379.48"), 1, "option", "not drawn",
+     "7.1 h in house with a sine plate on the rotary (hours.csv)", []),
+    ("M7-17", "7", "steep lid camera", "Option: LP window, UV fused silica Ø25.4 x 3 mm, uncoated (on the boss, square to the sight line)",
+     ("p1", "W3-e"), 1, "option", "not drawn", "Edmund 25-310 (VIS-NIR AR, $120, 1 in stock) cuts the ghost reflections", []),
+    ("M7-18", "7", "steep lid camera", "Option: LP cover slides, fused silica Ø24.4 x 2 mm (laser-head protective glass), 6 to start",
+     ("p1", "W5-c"), 6, "option (consumable)", "not drawn",
+     "6+ price $37.19 each; Edmund 19-837 Ø25 x 1 mm is $86. With a Ø37 bore in the lid the slide must sit in the boss or grow to Ø40-42", []),
+    # cooling for the side and lid cameras (monitoring/cooling.md; round 3)
+    ("M7-C1", "7", "side camera cooling", "Side camera hood and its duct: plenum behind the inlet trap, duct over the camera, hood round "
+     "its body (1 mm aluminium, riveted)", ("est", 120.0, 280.0, "estimate (bent and riveted sheet, ~0.7 kg; not quoted)",
+                                           "custom (monitoring_cooling.py)", "shop"), 1, "make", "drawn (monitoring_cooling.py)",
+     "keeps the Chronos in supply air: 38.5 C in the busy Shuttle against 42.6 C guard air (cooling.json)", []),
+    ("M7-C2", "7", "side camera cooling", "Hood fan, 60 x 60 x 25 mm 24 V (Delta AFB0624H-A: 40 m3/h free air, 52 Pa, 34 dB(A)), in the "
+     "duct", ("p3", "CL90"), 1, "add", "drawn (monitoring_cooling.py)", "~20 m3/h through the trap's right part, the duct and the hood "
+     "(cooling.json). Marketplace price, authenticity not checked", []),
+    ("M7-C3", "7", "camera thermal breaks", "G-10/FR-4 sheet, 1/4 in., 6 x 6 in (McMaster 85345K741): the side camera bracket's root "
+     "pad and the LP camera's Ø32 ring", ("p3", "CL51"), 1, "add", "drawn (monitoring_cooling.py)",
+     "the ring is turned and SM1-threaded both ends (in house). G-10 shoulder washers for the root's screws not priced", []),
+    ("M7-C4", "7", "steep lid camera", "Fanless aluminium heat-sink case for the LP camera's Pi 5 (Geekworm P573)", ("p3", "CL33"), 1,
+     "add with M7-15", "drawn (monitoring_cooling.py, envelope)",
+     "Geekworm's test: +35 K over the air at full load for 20 min (not steady). Flirc (CL30, $16.95) publishes no figure", []),
+    # ---------------- step 8: cooling through solidification -------------------------------------------------------------------
+    ("M8-01", "8", "InGaAs coaxial", "Route A: InGaAs photodiode behind the DMSP1000 (1625-1725 nm leaks through it at 3-30 %)",
+     ("mo", "MO16"), 1, "add (route A)", "not drawn", "", []),
+    ("M8-02", "8", "InGaAs coaxial", "Route A: two 1070 nm blockers, long-pass 1250 nm", ("mo", "MO17"), 2, "add (route A)", "not drawn", "", []),
+    ("M8-03", "8", "InGaAs coaxial", "Route A: lens f = 100 mm, 1050-1700 nm AR, and a 1.0 mm pinhole", ("mo", "MO18"), 1, "add (route A)",
+     "not drawn", "", []),
+    ("M8-04", "8", "InGaAs coaxial", "Route A: fourth cube in the camera arm with a ~1180 nm dichroic (DMLP1180 / DMSP1180 class)",
+     ("mo", "MO19", ("est", 602.50, 602.50, "estimate from optics-parts.csv MO19's note: a Ø1 in. dichroic $331.76 + a cube $270.74",
+                     "DMLP1180 / DMSP1180 class + cube", "Thorlabs")), 1, "add (route A)", "not drawn",
+     "curve not read: check it splits 955-990 nm from 1600-1750 nm", []),
+    ("M8-05", "8", "InGaAs coaxial", "Route A: the shared FESH1000 moves into the two Si photodiode arms (it blocks 1550-1650 nm)",
+     ("mo", "MO20"), 2, "add (route A)", "not drawn", "", []),
+    ("M8-06", "8", "InGaAs coaxial", "Not recommended: notch dichroic NFD01-1064 in place of the DMSP1000 (no CW rating)", ("mo", "MO23"), 1,
+     "option (not recommended)", "not drawn", "", []),
+    # route B, the optics worker's choice (monitoring/optics.md §0 item 6): the SWIR camera in the coaxial camera arm, in place of
+    # the IMX296, working off the 1600-1750 nm the DMSP1000 lets through and the DMSP950 reflects into that arm
+    ("M8-07", "8", "SWIR camera", "Route B: coaxial SWIR camera in the camera arm (Alvium 1800 U-030 VSWIR, IMX991 InGaAs, 5 um)",
+     ("mo", "MO21"), 1, "option (route B)", "not drawn",
+     "optics.md §0 item 6: sees ~860 K at 500 us (core saturated) and 990-1,030 K with the core in range; replaces the IMX296 "
+     "(M6-02) in the arm", []),
+    ("M8-08", "8", "SWIR camera", "Route B: tube lens f = 100 mm, 1050-1700 nm AR (8 um/px)", ("mo", "MO22"), 1, "option (route B)",
+     "not drawn", "", []),
+    ("M8-09", "8", "SWIR camera", "Route B: two 1070 nm blockers, long-pass 1250 nm, in front of the SWIR camera", ("mo", "MO17"), 2,
+     "option (route B)", "not drawn", "the same part as route A's M8-02", []),
+    # route C, monitoring.md §2.3's first idea: an off-axis SWIR camera through the LW window (no used Alvium was found; this
+    # class has used listings)
+    ("M8-10", "8", "SWIR camera", "Route C: off-axis SWIR camera at LW, 640 x 512 class, InGaAs, GigE, hardware trigger (LUCID Triton TRI003S-WC)",
+     ("p2", "K6-c"), 1, "option (route C)", "not drawn",
+     "Edmund's price; LUCID's own pages now hide prices (a search snippet showed $5,650)",
+     ["K6-u5", "K6-u7", "K6-u8"]),
+    ("M8-11", "8", "SWIR camera", "Route C: 50 mm SWIR C-mount lens 900-1700 nm", ("p1", "L4"), 1, "option (route C)", "not drawn", "", []),
+    ("M8-12", "8", "SWIR camera", "Route C: NIR ND filter OD 2, SM1 mounted (the pool is ~240x brighter than 600 C metal at 1.55 um)",
+     ("p1", "F9-b"), 1, "option (route C)", "not drawn", "", []),
+]
+
+
+def load(path):
+    return {r["key"]: r for r in csv.DictReader(open(path))} if pathlib.Path(path).exists() else {}
+
+
+def load_round3():
+    """price_lookups_round3.csv, or, while round 3's workers each keep their own, every price_lookups_round3*.csv (keys unique)"""
+    out = {}
+    for f in sorted(OUT.glob("price_lookups_round3*.csv")):
+        for k, r in load(f).items():
+            assert k not in out, f"lookup key {k} in two round-3 files"
+            out[k] = r
+    return out
+
+
+def num(v):
+    try:
+        return float(str(v).replace(",", "").replace("$", ""))
+    except (TypeError, ValueError):
+        return None
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    # the committed lookups by default; pass fresh lookup files (same columns) to re-price, and they are copied next to the BOM
+    ap.add_argument("--p1", default=str(LOOK["p1"]))
+    ap.add_argument("--p2", default=str(LOOK["p2"]))
+    ap.add_argument("--mo", default=str(D / "monitoring" / "optics-parts.csv"),
+                    help="the optics worker's coaxial, side and lid camera parts (prices taken from it, not re-read)")
+    a = ap.parse_args()
+    src = {"p1": load(a.p1), "p2": load(a.p2), "p3": load_round3(), "mo": {r["id"]: r for r in csv.DictReader(open(a.mo))} if pathlib.Path(a.mo).exists() else {},
+           "tl": {r["part_number"]: r for r in csv.DictReader(open(OUT / "stock_reads_thorlabs.csv"))}
+           if (OUT / "stock_reads_thorlabs.csv").exists() else {}}
+    # stock or lead time by part number, from every read (Thorlabs stock reads first, then the two lookup files)
+    stock = {}
+    for k in ("p3", "p2", "p1"):
+        for lk in src[k].values():
+            pn = (lk.get("part_number") or "").split(" (")[0].strip()
+            if pn and lk.get("stock_or_lead") and num(lk.get("unit_usd")) is not None:
+                stock.setdefault(pn, "%s (%s)" % (lk["stock_or_lead"][:60], lk["fetched_utc"]))
+    for t in src["tl"].values():
+        stock[t["part_number"]] = "%s (%s)" % (t["stock_or_lead"], t["fetched_utc"])
+    stock["Chronos 2.1-HD"] = stock.get("CR21-1.0-8M-FNL", "in stock; lead time 1-3 business days (Kron store, 2026-11-25T06:58Z)")
+    stock["CAM-IMX296RAW (mono)"] = "add to cart shown, stock not stated (inno-maker.com, 2026-11-25)"
+    for k, p in (("p1", a.p1), ("p2", a.p2)):  # keep the lookups next to the BOM
+        if pathlib.Path(p).exists() and pathlib.Path(p).resolve() != LOOK[k].resolve():
+            LOOK[k].write_text(pathlib.Path(p).read_text())
+    rows, missing = [], []
+    for (rid, step, group, element, s, qty, action, in_model, notes, used_keys) in SEL:
+        r = dict(id=rid, step=step, group=group, element=element, part_number="", vendor="", qty=qty, unit_low_usd=None,
+                 unit_high_usd=None, ext_low_usd=None, ext_high_usd=None, price_basis="", price_source="", url="", fetched_utc="",
+                 stock_lead="",
+                 used_unit_usd=None, used_url="", used_fetched_utc="", used_condition="", action=action, in_model=in_model, notes=notes)
+        if s[0] == "tl":
+            t = src["tl"].get(s[1])
+            r.update(part_number=t["part_number"], vendor="Thorlabs", unit_low_usd=num(t["list_usd"]), unit_high_usd=num(t["list_usd"]),
+                     price_basis="fetched (list price)", price_source="stock_reads_thorlabs.csv " + s[1], url=t["url"],
+                     fetched_utc=t["fetched_utc"], stock_lead=t["stock_or_lead"])
+        elif s[0] == "mo":
+            mo = src["mo"].get(s[1])
+            fb = s[2] if len(s) > 2 else None
+            if mo is None:
+                r.update(price_basis="not reached (optics-parts.csv %s missing)" % s[1])
+                missing.append(rid)
+            else:
+                r.update(part_number=mo["part_number"], vendor=mo["vendor"], url=mo["url"], fetched_utc=mo["fetched_utc"],
+                         price_source="optics-parts.csv %s (optics worker)" % s[1])
+                u = num(mo["unit_usd"])
+                est = re.findall(r"\$?([0-9][0-9,.]*)\s*-\s*\$?([0-9][0-9,.]*)", mo["price_basis"])
+                if u is not None:
+                    r.update(unit_low_usd=u, unit_high_usd=u, price_basis=mo["price_basis"])
+                elif est:
+                    r.update(unit_low_usd=num(est[0][0]), unit_high_usd=num(est[0][1]), price_basis=mo["price_basis"])
+                elif fb:
+                    _, lo, hi, fbasis, pn, vendor = fb
+                    r.update(unit_low_usd=lo, unit_high_usd=hi, price_basis=fbasis)
+                else:
+                    r.update(price_basis=mo["price_basis"] or "not priced")
+                    missing.append(rid)
+                if mo.get("notes"):
+                    r["notes"] = (r["notes"] + " | " if r["notes"] else "") + "optics-parts.csv: " + mo["notes"][:240]
+        elif s[0] in ("p1", "p2", "p3"):
+            lk = src[s[0]].get(s[1])
+            fb = s[2] if len(s) > 2 else None          # a labelled estimate for a quote-only or unread line
+            if lk is None or num(lk.get("unit_usd")) is None:
+                basis = lk.get("basis") if lk else "not reached"
+                r.update(part_number=(lk or {}).get("part_number", ""), vendor=(lk or {}).get("vendor", ""),
+                         price_basis=("quote-only" if basis == "quote-only" else "not priced (%s)" % basis),
+                         url=(lk or {}).get("url", ""), fetched_utc=(lk or {}).get("fetched_utc", ""),
+                         stock_lead=(lk or {}).get("stock_or_lead", ""))
+                if fb:
+                    _, lo, hi, fbasis, pn, vendor = fb
+                    r.update(unit_low_usd=lo, unit_high_usd=hi, price_basis=fbasis, part_number=r["part_number"] or pn, price_source="estimate (quote-only)",
+                             vendor=r["vendor"] or vendor)
+                if lk and lk.get("notes"):
+                    r["notes"] = (r["notes"] + " | " if r["notes"] else "") + lk["notes"][:300]
+                missing.append(rid)
+            else:
+                u = num(lk["unit_usd"])
+                r["price_source"] = {"p1": "price_lookups_optics.csv ", "p2": "price_lookups_cameras.csv ",
+                                     "p3": "price_lookups_round3.csv "}[s[0]] + s[1]
+                r.update(part_number=lk["part_number"], vendor=lk["vendor"], unit_low_usd=u, unit_high_usd=u,
+                         price_basis={"fetched": "fetched (list price)", "search-snippet": "search snippet (page did not show it)"}
+                         .get(lk["basis"], lk["basis"]), url=lk["url"], fetched_utc=lk["fetched_utc"], stock_lead=lk["stock_or_lead"])
+                if lk.get("price_note"):
+                    r["notes"] = (r["notes"] + " | " if r["notes"] else "") + "price: " + lk["price_note"][:160]
+        elif s[0] == "est":
+            _, lo, hi, basis, pn, vendor = s
+            r.update(unit_low_usd=lo, unit_high_usd=hi, price_basis=basis, part_number=pn, vendor=vendor, price_source="estimate")
+        elif s[0] == "custom":
+            if len(s) > 3:   # an instant quote for this part (an optional 6th item names the script that drew its DXF)
+                _, usd, basis, url, when = s[:5]
+                r.update(unit_low_usd=usd, unit_high_usd=usd, price_basis="quote (instant, online): " + basis,
+                         price_source="quotes/sendcutsend_quotes.csv",
+                         part_number=s[5] if len(s) > 5 else "custom (flat_parts_dxf.py)", vendor="SendCutSend", url=url, fetched_utc=when,
+                         stock_lead="arrives as soon as " + (re.search(r"arrives ([^;)]+)", basis).group(1)
+                                                             if re.search(r"arrives ([^;)]+)", basis) else "Mon Nov 30"))
+            else:            # the closest instant quote for a similar part (outsourcing-quotes.csv, 2026-11-22)
+                _, usd, basis = s
+                r.update(unit_low_usd=usd, unit_high_usd=usd, price_basis=basis, part_number="custom (hours_monitoring.csv)",
+                         price_source="hours_monitoring.csv (analogue quote)",
+                         vendor="SendCutSend / OSH Cut (analogue)", url="outsourcing-quotes.csv", fetched_utc="2026-11-22")
+        if r["price_source"].startswith("optics-parts.csv") and not r["stock_lead"]:
+            parts_ = [x.strip() for x in re.split(r"\s\+\s|,", r["part_number"]) if x.strip()]
+            got = ["%s: %s" % (x, stock[x]) for x in parts_ if x in stock]
+            if got:
+                r["stock_lead"] = "; ".join(got)
+        # cheapest used listing
+        best = None
+        for uk in used_keys:
+            lk = src["p3"].get(uk) or src["p2"].get(uk) or src["p1"].get(uk)
+            if lk and num(lk.get("unit_usd")) is not None and (best is None or num(lk["unit_usd"]) < num(best["unit_usd"])):
+                best = lk
+        if best:
+            r.update(used_unit_usd=num(best["unit_usd"]), used_url=best["url"], used_fetched_utc=best["fetched_utc"],
+                     used_condition="%s: %s (%s)" % (best["stock_or_lead"], best["item"][:90], best["part_number"][:40]))
+        if r["unit_low_usd"] is not None:
+            r["ext_low_usd"] = round(r["unit_low_usd"] * qty, 2)
+            r["ext_high_usd"] = round(r["unit_high_usd"] * qty, 2)
+        rows.append(r)
+    # totals per step: new (low, high); with the used listings taken where one exists (the cheapest; else the new low).
+    # Options (action "option ..."), borrowed instruments and notes are left out and summed apart.
+    def counted(r):
+        return r["qty"] and not r["action"].startswith(("option", "borrow", "note"))
+
+    tot = {}
+    for st in STEPS:
+        rs = [r for r in rows if r["step"] == st and counted(r)]
+        lo = sum(r["ext_low_usd"] or 0 for r in rs)
+        hi = sum(r["ext_high_usd"] or 0 for r in rs)
+        used = sum((r["used_unit_usd"] * r["qty"]) if r["used_unit_usd"] is not None else (r["ext_low_usd"] or 0) for r in rs)
+        q = [r["id"] for r in rs if r["unit_low_usd"] is None]
+        est = [r["id"] for r in rs if "estimate" in (r["price_basis"] or "")]
+        opts = [r for r in rows if r["step"] == st and r["action"].startswith("option")]
+        tot[st] = dict(what=STEPS[st], new_low=round(lo, 2), new_high=round(hi, 2), with_used=round(used, 2), unpriced=q,
+                       estimated=est, options=[r["id"] for r in opts],
+                       options_usd=round(sum((r["unit_low_usd"] or 0) * (r["qty"] or 1) for r in opts), 2),
+                       options_used_usd=round(sum(((r["used_unit_usd"] if r["used_unit_usd"] is not None else (r["unit_low_usd"] or 0))
+                                                   * (r["qty"] or 1)) for r in opts), 2))
+    cum = cum_used = 0.0
+    trows = []
+    for st, t in tot.items():
+        cum += t["new_low"]
+        cum_used += t["with_used"]
+        t["cumulative_new_low"], t["cumulative_with_used"] = round(cum, 2), round(cum_used, 2)
+        trows.append(dict(id="TOTAL-%s" % st, step=st, group="total", element="Step %s, %s: new $%s-%s; with used listings $%s%s%s"
+                          % (st, t["what"], f"{t['new_low']:,.2f}", f"{t['new_high']:,.2f}", f"{t['with_used']:,.2f}",
+                             ("; options not counted (%s): $%s new, $%s used" % (", ".join(t["options"]), f"{t['options_usd']:,.2f}",
+                                                                                f"{t['options_used_usd']:,.2f}")) if t["options"] else "",
+                             ("; not priced: " + ", ".join(t["unpriced"])) if t["unpriced"] else ""),
+                          ext_low_usd=t["new_low"], ext_high_usd=t["new_high"], used_unit_usd=t["with_used"],
+                          price_basis="sum of the counted lines; estimates in it: %s" % (", ".join(t["estimated"]) or "none"),
+                          notes="cumulative after this step: new (low) $%s, with used listings $%s" % (f"{cum:,.2f}", f"{cum_used:,.2f}")))
+    fields = list(rows[0].keys())
+    with open(BOM, "w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=fields)
+        w.writeheader()
+        for r in rows + trows:
+            w.writerow({k: ("" if r.get(k) is None else r.get(k, "")) for k in fields})
+    (OUT / "bom_totals.json").write_text(json.dumps(dict(steps=tot, missing=missing), indent=1))
+    for st, t in tot.items():
+        print(st, t)
+    print("missing", missing)
+
+
+if __name__ == "__main__":
+    main()

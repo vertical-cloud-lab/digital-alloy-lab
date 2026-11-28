@@ -1,0 +1,2354 @@
+{
+ "what": "the LW and BW ports programmed in setup C (frame_features.py's geometry), FreeCAD 1.0.2 + CAMotics 1.2.0 + holder_check.py, all from analysis/machining, unchanged",
+ "recount": {
+  "frame_C90_before_min": 0.35,
+  "frame_C90_with_LW_min": 2.79,
+  "LW_added_min": 2.44,
+  "mon_C180_BW_min": 5.11,
+  "tool_changes_C90_before": 3,
+  "tool_changes_C90_with_LW": 4,
+  "tool_changes_mon_C180": 2
+ },
+ "new_ops": [
+  {
+   "setup": "frame_C90",
+   "label": "Left wall: 1 x bore 40.20 mm, helix, z 150.50..156.00",
+   "kind": "helix_bore",
+   "tool": 3,
+   "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill, 38 mm stick-out",
+   "feed_mm_min": 1158.2,
+   "start_depth": 156.0,
+   "final_depth": 150.5,
+   "cut_time_min": 1.15,
+   "rapid_time_min": 0.01,
+   "error": null
+  },
+  {
+   "setup": "frame_C90",
+   "label": "Left wall: 1 x bore 31.00 mm, helix, z 139.50..150.50",
+   "kind": "helix_bore",
+   "tool": 3,
+   "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill, 38 mm stick-out",
+   "feed_mm_min": 1158.2,
+   "start_depth": 150.5,
+   "final_depth": 139.5,
+   "cut_time_min": 1.01,
+   "rapid_time_min": 0.0,
+   "error": null
+  },
+  {
+   "setup": "frame_C90",
+   "label": "Left wall: 1 x SAE-4 port to the 25/64 in. tap drill 11.11 mm, helix, z 144.50..156.00",
+   "kind": "helix_bore",
+   "tool": 9,
+   "tool_name": "1/4 in. (6.35 mm) 3-flute carbide end mill (added: 8 mm slot, U-notches)",
+   "feed_mm_min": 1234.4,
+   "start_depth": 156.0,
+   "final_depth": 144.5,
+   "cut_time_min": 0.12,
+   "rapid_time_min": 0.0,
+   "error": null
+  },
+  {
+   "setup": "frame_C90",
+   "label": "Left wall: drill 4 x 3.3 mm for 4.000 mm, z 146.00..156.00",
+   "kind": "drill",
+   "tool": 6,
+   "tool_name": "3.3 mm carbide drill (M4 tap drill)",
+   "feed_mm_min": 500.0,
+   "start_depth": 156.0,
+   "final_depth": 146.0,
+   "cut_time_min": 0.1,
+   "rapid_time_min": 0.02,
+   "error": null
+  },
+  {
+   "setup": "frame_C90",
+   "label": "Left wall: drill 1 x 3.3 mm for 4.000 mm, z 140.00..144.50, through",
+   "kind": "drill",
+   "tool": 6,
+   "tool_name": "3.3 mm carbide drill (M4 tap drill)",
+   "feed_mm_min": 500.0,
+   "start_depth": 144.5,
+   "final_depth": 140.0,
+   "cut_time_min": 0.02,
+   "rapid_time_min": 0.0,
+   "error": null
+  },
+  {
+   "setup": "mon_C180",
+   "label": "BW window seat 58 x 27 R4, 4.5 deep, adaptive",
+   "kind": "adaptive_in",
+   "tool": 9,
+   "tool_name": "1/4 in. (6.35 mm) 3-flute carbide end mill (added: 8 mm slot, U-notches)",
+   "feed_mm_min": 925.8,
+   "start_depth": 111.0,
+   "final_depth": 106.5,
+   "cut_time_min": 2.09,
+   "rapid_time_min": 0.04,
+   "error": null
+  },
+  {
+   "setup": "mon_C180",
+   "label": "BW slot 51.2 x 20.5 obround through, adaptive",
+   "kind": "adaptive_in",
+   "tool": 9,
+   "tool_name": "1/4 in. (6.35 mm) 3-flute carbide end mill (added: 8 mm slot, U-notches)",
+   "feed_mm_min": 925.8,
+   "start_depth": 106.5,
+   "final_depth": 94.5,
+   "cut_time_min": 2.77,
+   "rapid_time_min": 0.05,
+   "error": null
+  },
+  {
+   "setup": "mon_C180",
+   "label": "BW clamp-frame holes: drill 3 x 3.3 mm, M4 tapped after, 10 deep",
+   "kind": "drill",
+   "tool": 6,
+   "tool_name": "3.3 mm carbide drill (M4 tap drill)",
+   "feed_mm_min": 500.0,
+   "start_depth": 111.0,
+   "final_depth": 101.0,
+   "cut_time_min": 0.08,
+   "rapid_time_min": 0.01,
+   "error": null
+  },
+  {
+   "setup": "mon_C180",
+   "label": "BW light-bracket holes: drill 2 x 3.3 mm, M4 tapped after, 10 deep",
+   "kind": "drill",
+   "tool": 6,
+   "tool_name": "3.3 mm carbide drill (M4 tap drill)",
+   "feed_mm_min": 500.0,
+   "start_depth": 111.0,
+   "final_depth": 101.0,
+   "cut_time_min": 0.05,
+   "rapid_time_min": 0.01,
+   "error": null
+  }
+ ],
+ "features": {
+  "LW": {
+   "port": "LW",
+   "index_deg": 90,
+   "tool_axis": "x (wall normal)",
+   "spec_centre": [
+    -156.0,
+    -20.0,
+    36.0
+   ],
+   "sight_axis": [
+    0.9669,
+    0.124,
+    -0.2231
+   ],
+   "sight_vs_wall_normal_deg": 14.79,
+   "azimuth_deg": 7.31,
+   "elevation_deg": 12.89,
+   "index_that_removes_the_azimuth_deg": 82.69,
+   "bore": {
+    "centre_yz": [
+     -18.97,
+     34.15
+    ],
+    "d": 31.0,
+    "needed_d": 30.47,
+    "through": "x -156.0..-140.0",
+    "note": "normal to the wall; holds the clear \u00d825 cylinder on the sight line across the 16 mm wall"
+   },
+   "seat": {
+    "d": 40.2,
+    "depth": 5.5,
+    "window": {
+     "d": 40.0,
+     "t": 4.0,
+     "mat": "UV fused silica, NIR I AR 600-1050 nm (Edmund 36-983)"
+    },
+    "gasket_land_mm": 4.5,
+    "note": "concentric with the bore, flat on the wall: 0.75 mm gasket, 4.0 mm window, 0.75 mm flat ring; the clamp ring bottoms on the wall face"
+   },
+   "clamp_ring": {
+    "bolt_circle_d": 49.5,
+    "od": 58.0,
+    "id": 31.0,
+    "screws": "4 x M4 x 0.7, tapped 8 deep (3.3 drill 10 deep)",
+    "hole0_deg": 60.0,
+    "flat": {
+     "dist_mm": 27.28,
+     "dir_yz": [
+      0.5455,
+      -0.8381
+     ],
+     "web_to_hole_mm": 2.97
+    },
+    "holes_yz": [
+     [
+      -6.6,
+      55.59
+     ],
+     [
+      -40.41,
+      46.53
+     ],
+     [
+      -31.35,
+      12.72
+     ],
+     [
+      2.46,
+      21.78
+     ]
+    ]
+   },
+   "purge_port": {
+    "yz": [
+     -18.97,
+     72.45
+    ],
+    "kind": "SAE-4 (7/16-20 UNF) O-ring boss + \u00d84 passage through"
+   },
+   "liner_hole": {
+    "liner": "Lift-out wall liner, left",
+    "centre_yz": [
+     -17.9,
+     32.23
+    ],
+    "d": 27.0
+   },
+   "sight_at_outer_face": [
+    -156.0,
+    -20.0,
+    36.0
+   ],
+   "sight_at_inner_face": [
+    -140.0,
+    -17.95,
+    32.31
+   ]
+  },
+  "BW": {
+   "port": "BW",
+   "index_deg": 180,
+   "tool_axis": "y (wall normal)",
+   "spec_centre": [
+    -125.0,
+    111.0,
+    29.5
+   ],
+   "centre_used": [
+    -125.0,
+    111.0,
+    29.5
+   ],
+   "z_shift_mm": 0.0,
+   "sight_axis": [
+    0.7364,
+    -0.6539,
+    -0.1738
+   ],
+   "sight_vs_wall_normal_deg": 49.16,
+   "azimuth_deg": -48.39,
+   "elevation_deg": 10.01,
+   "index_that_removes_the_azimuth_deg": 131.61,
+   "slot": {
+    "kind": "obround, normal to the wall, through",
+    "length": 51.22,
+    "width": 20.5,
+    "end_centres_xz": [
+     [
+      -130.69,
+      30.84
+     ],
+     [
+      -101.29,
+      23.9
+     ]
+    ],
+    "radius": 10.25,
+    "long_axis_deg_from_x": -13.28,
+    "round_bore_needed_d": 50.7
+   },
+   "seat": {
+    "L": 58,
+    "W": 27,
+    "corner_r": 4.0,
+    "depth": 4.5,
+    "window": "57.7 x 26.7 x 3.0 mm, corners chamfered 2 mm (rectangular N-BK7 or fused silica)",
+    "x_min": -146.34,
+    "z_min": 7.34,
+    "on_flat_face": true,
+    "clear_of_floor_screws": true
+   },
+   "clamp_frame": {
+    "holes_xz": [
+     [
+      -133.27,
+      49.95
+     ],
+     [
+      -88.5,
+      39.38
+     ],
+     [
+      -85.99,
+      9.09
+     ]
+    ],
+    "screws": "3 x M4 x 0.7, tapped 8 deep",
+    "web_to_trimmed_edge_mm": [
+     4.25,
+     4.25,
+     3.35
+    ],
+    "thread_wall_to_seat_mm": [
+     2.5,
+     2.5,
+     1.53
+    ],
+    "hole3": {
+     "was_xz": [
+      -82.41,
+      19.45
+     ],
+     "web_was_mm": 1.16,
+     "moved_xz": [
+      -3.57,
+      -10.36
+     ],
+     "along_slot_mm": -1.1,
+     "across_mm": -10.9,
+     "web_mm": 3.35,
+     "wall_to_seat_mm": 1.53
+    },
+    "outline_bbox_xz": [
+     -147.5,
+     -3.4,
+     -74.55,
+     58.5
+    ],
+    "note": "webs: metal between each \u00d84.5 clearance hole and the clamp frame's outline as monitoring_parts._bw trims it (BW_FRAME); walls: between each M4 thread (major \u00d84) and the seat pocket"
+   },
+   "light_bracket": {
+    "holes_xz": [
+     [
+      -141.0,
+      69.25
+     ],
+     [
+      -129.5,
+      69.25
+     ]
+    ],
+    "screws": "2 x M4 x 0.7, tapped 8 deep",
+    "part": "BW LED bracket (cad/monitoring_parts.BWL, _bw_light): its 1/4 in. flange on the wall above the clamp frame",
+    "thread_to_clamp_frame_mm": [
+     8.78,
+     11.15
+    ],
+    "thread_wall_to_seat_mm": [
+     21.39,
+     22.15
+    ],
+    "thread_to_flat_face_end_mm": 5.0,
+    "note": "each M4 thread (major \u00d84) to the clamp frame's trimmed outline, to the seat pocket, and to the end of the back face's flat (x -148, where the outer R8 corner starts)"
+   },
+   "liner": {
+    "liner": "Lift-out wall liner, back lower left (z 16..32, x -130.5..-0.5)",
+    "x_range": [
+     -122.4,
+     -90.8
+    ],
+    "z_range": [
+     14.3,
+     36.1
+    ],
+    "what": "the opening spans the band's full height (z 16..32): start the piece at x -90.8 (was -130.5)"
+   },
+   "sight_at_outer_face": [
+    -125.0,
+    111.0,
+    29.5
+   ],
+   "sight_at_inner_face": [
+    -106.98,
+    95.0,
+    25.25
+   ],
+   "as_specified": {
+    "seat": {
+     "L": 58,
+     "W": 27,
+     "corner_r": 4.0,
+     "depth": 4.5,
+     "window": "57.7 x 26.7 x 3.0 mm, corners chamfered 2 mm (rectangular N-BK7 or fused silica)",
+     "x_min": -146.34,
+     "z_min": 7.34,
+     "on_flat_face": true,
+     "clear_of_floor_screws": true
+    },
+    "slot": {
+     "kind": "obround, normal to the wall, through",
+     "length": 51.22,
+     "width": 20.5,
+     "end_centres_xz": [
+      [
+       -130.69,
+       30.84
+      ],
+      [
+       -101.29,
+       23.9
+      ]
+     ],
+     "radius": 10.25,
+     "long_axis_deg_from_x": -13.28,
+     "round_bore_needed_d": 50.7
+    },
+    "elevation_deg": 10.01
+   }
+  },
+  "checks": {
+   "frame_volume_cm3": {
+    "before": 1582.512,
+    "after": 1547.308,
+    "removed": 35.204
+   },
+   "clear_aperture_blocked_mm3": {
+    "LW": 0.0,
+    "BW": 0.0
+   },
+   "gaps_to_existing_features": {
+    "LW bore": {
+     "min_gap_mm": 13.88,
+     "to": "CYLINDER",
+     "at": [
+      -155.3,
+      0.0,
+      5.0
+     ]
+    },
+    "LW window seat": {
+     "min_gap_mm": 8.55,
+     "to": "CYLINDER",
+     "at": [
+      -152.0,
+      -20.0,
+      0.8
+     ]
+    },
+    "LW clamp-ring hole 1 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": null,
+    "LW clamp-ring hole 2 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": null,
+    "LW clamp-ring hole 3 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": {
+     "min_gap_mm": 9.81,
+     "to": "CYLINDER",
+     "at": [
+      -152.0,
+      -20.0,
+      0.8
+     ]
+    },
+    "LW clamp-ring hole 4 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": {
+     "min_gap_mm": 9.56,
+     "to": "CYLINDER",
+     "at": [
+      -155.3,
+      0.0,
+      5.0
+     ]
+    },
+    "LW purge port (SAE-4, 7/16-20, and its \u00d84 passage)": null,
+    "BW slot (obround through the back wall)": {
+     "min_gap_mm": 0.0,
+     "to": "CYLINDER",
+     "at": [
+      -135.0,
+      90.0,
+      60.0
+     ]
+    },
+    "BW window seat (rounded rectangle)": {
+     "min_gap_mm": 2.47,
+     "to": "CYLINDER",
+     "at": [
+      -152.0,
+      107.0,
+      58.0
+     ]
+    },
+    "BW clamp-frame hole 1 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": {
+     "min_gap_mm": 6.05,
+     "to": "CYLINDER",
+     "at": [
+      -135.0,
+      90.0,
+      60.0
+     ]
+    },
+    "BW clamp-frame hole 2 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": null,
+    "BW clamp-frame hole 3 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": {
+     "min_gap_mm": 2.11,
+     "to": "CYLINDER",
+     "at": [
+      -82.0,
+      107.0,
+      0.8
+     ]
+    },
+    "BW light-bracket hole 1 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": {
+     "min_gap_mm": 5.0,
+     "to": "CYLINDER",
+     "at": [
+      -152.0,
+      107.0,
+      58.0
+     ]
+    },
+    "BW light-bracket hole 2 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": {
+     "min_gap_mm": 6.0,
+     "to": "CYLINDER",
+     "at": [
+      -135.0,
+      90.0,
+      60.0
+     ]
+    }
+   },
+   "bw_shift_search": [
+    {
+     "z_shift": 0.0,
+     "seat_z_min": 7.34,
+     "seat_x_min": -146.34
+    }
+   ]
+  }
+ },
+ "camotics": {
+  "part": {
+   "target_cm3": 1548.88,
+   "simulated_cm3": 1555.49,
+   "stock_cm3": 2821.81,
+   "gouge_all_cm3": 0.177,
+   "leftover_all_cm3": 6.784,
+   "gouge_deeper_than_min_cm3": 0.0,
+   "leftover_deeper_than_min_cm3": 0.025,
+   "min_depth_mm": 1.0,
+   "n_gouge_regions": 0,
+   "n_leftover_regions": 74,
+   "max_gouge_depth_mm": 0.5,
+   "max_leftover_mm": 1.22,
+   "loose_pieces": [],
+   "n_loose_pieces": 0,
+   "gouges": [],
+   "leftovers": [
+    {
+     "volume_mm3": 0.8,
+     "max_depth_mm": 1.12,
+     "deepest_at": [
+      -155.75,
+      -19.75,
+      67.25
+     ],
+     "bbox": [
+      [
+       -156.0,
+       -155.5
+      ],
+      [
+       -20.5,
+       -17.5
+      ],
+      [
+       67.0,
+       67.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.8,
+     "max_depth_mm": 1.12,
+     "deepest_at": [
+      -155.75,
+      -13.75,
+      71.75
+     ],
+     "bbox": [
+      [
+       -156.0,
+       -155.5
+      ],
+      [
+       -14.0,
+       -13.5
+      ],
+      [
+       71.0,
+       74.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.8,
+     "max_depth_mm": 1.12,
+     "deepest_at": [
+      99.25,
+      110.75,
+      94.75
+     ],
+     "bbox": [
+      [
+       98.5,
+       101.5
+      ],
+      [
+       110.5,
+       111.0
+      ],
+      [
+       94.5,
+       95.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.8,
+     "max_depth_mm": 1.12,
+     "deepest_at": [
+      99.25,
+      110.75,
+      105.25
+     ],
+     "bbox": [
+      [
+       98.5,
+       101.5
+      ],
+      [
+       110.5,
+       111.0
+      ],
+      [
+       105.0,
+       105.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.8,
+     "max_depth_mm": 1.12,
+     "deepest_at": [
+      155.75,
+      -40.75,
+      12.75
+     ],
+     "bbox": [
+      [
+       155.5,
+       156.0
+      ],
+      [
+       -41.5,
+       -38.5
+      ],
+      [
+       12.5,
+       13.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.8,
+     "max_depth_mm": 1.12,
+     "deepest_at": [
+      155.75,
+      -40.75,
+      23.25
+     ],
+     "bbox": [
+      [
+       155.5,
+       156.0
+      ],
+      [
+       -41.5,
+       -38.5
+      ],
+      [
+       23.0,
+       23.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.6,
+     "max_depth_mm": 1.22,
+     "deepest_at": [
+      155.75,
+      -43.75,
+      14.75
+     ],
+     "bbox": [
+      [
+       155.0,
+       156.0
+      ],
+      [
+       -44.0,
+       -43.0
+      ],
+      [
+       14.0,
+       15.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.6,
+     "max_depth_mm": 1.22,
+     "deepest_at": [
+      155.75,
+      -43.75,
+      21.25
+     ],
+     "bbox": [
+      [
+       155.0,
+       156.0
+      ],
+      [
+       -44.0,
+       -43.0
+      ],
+      [
+       21.0,
+       22.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.6,
+     "max_depth_mm": 1.22,
+     "deepest_at": [
+      155.75,
+      -36.75,
+      14.25
+     ],
+     "bbox": [
+      [
+       155.0,
+       156.0
+      ],
+      [
+       -37.0,
+       -36.0
+      ],
+      [
+       14.0,
+       15.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.6,
+     "max_depth_mm": 1.22,
+     "deepest_at": [
+      155.75,
+      -36.75,
+      21.75
+     ],
+     "bbox": [
+      [
+       155.0,
+       156.0
+      ],
+      [
+       -37.0,
+       -36.0
+      ],
+      [
+       21.0,
+       22.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.5,
+     "max_depth_mm": 1.12,
+     "deepest_at": [
+      -155.75,
+      -24.25,
+      72.25
+     ],
+     "bbox": [
+      [
+       -156.0,
+       -155.5
+      ],
+      [
+       -24.5,
+       -24.0
+      ],
+      [
+       71.5,
+       73.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.5,
+     "max_depth_mm": 1.22,
+     "deepest_at": [
+      -155.75,
+      -20.25,
+      77.25
+     ],
+     "bbox": [
+      [
+       -156.0,
+       -155.0
+      ],
+      [
+       -21.5,
+       -20.0
+      ],
+      [
+       77.0,
+       77.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.5,
+     "max_depth_mm": 1.12,
+     "deepest_at": [
+      -155.75,
+      -18.75,
+      77.75
+     ],
+     "bbox": [
+      [
+       -156.0,
+       -155.5
+      ],
+      [
+       -20.0,
+       -18.0
+      ],
+      [
+       77.5,
+       78.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.5,
+     "max_depth_mm": 1.12,
+     "deepest_at": [
+      94.75,
+      110.75,
+      99.25
+     ],
+     "bbox": [
+      [
+       94.5,
+       95.0
+      ],
+      [
+       110.5,
+       111.0
+      ],
+      [
+       99.0,
+       101.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.5,
+     "max_depth_mm": 1.12,
+     "deepest_at": [
+      105.25,
+      110.75,
+      99.25
+     ],
+     "bbox": [
+      [
+       105.0,
+       105.5
+      ],
+      [
+       110.5,
+       111.0
+      ],
+      [
+       99.0,
+       101.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.5,
+     "max_depth_mm": 1.12,
+     "deepest_at": [
+      155.75,
+      -45.25,
+      17.25
+     ],
+     "bbox": [
+      [
+       155.5,
+       156.0
+      ],
+      [
+       -45.5,
+       -45.0
+      ],
+      [
+       17.0,
+       19.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.5,
+     "max_depth_mm": 1.12,
+     "deepest_at": [
+      155.75,
+      -34.75,
+      17.25
+     ],
+     "bbox": [
+      [
+       155.5,
+       156.0
+      ],
+      [
+       -35.0,
+       -34.5
+      ],
+      [
+       17.0,
+       19.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.4,
+     "max_depth_mm": 1.12,
+     "deepest_at": [
+      -155.75,
+      -23.75,
+      70.25
+     ],
+     "bbox": [
+      [
+       -156.0,
+       -155.0
+      ],
+      [
+       -24.0,
+       -23.5
+      ],
+      [
+       70.0,
+       71.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.4,
+     "max_depth_mm": 1.22,
+     "deepest_at": [
+      -155.75,
+      -20.75,
+      67.75
+     ],
+     "bbox": [
+      [
+       -156.0,
+       -155.0
+      ],
+      [
+       -21.5,
+       -20.5
+      ],
+      [
+       67.5,
+       68.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.4,
+     "max_depth_mm": 1.22,
+     "deepest_at": [
+      -155.75,
+      -17.25,
+      67.75
+     ],
+     "bbox": [
+      [
+       -156.0,
+       -155.0
+      ],
+      [
+       -17.5,
+       -16.5
+      ],
+      [
+       67.5,
+       68.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.4,
+     "max_depth_mm": 1.22,
+     "deepest_at": [
+      -155.75,
+      -16.25,
+      68.25
+     ],
+     "bbox": [
+      [
+       -156.0,
+       -155.0
+      ],
+      [
+       -16.5,
+       -15.5
+      ],
+      [
+       68.0,
+       68.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.4,
+     "max_depth_mm": 1.22,
+     "deepest_at": [
+      -155.75,
+      -14.75,
+      69.75
+     ],
+     "bbox": [
+      [
+       -156.0,
+       -155.0
+      ],
+      [
+       -15.0,
+       -14.5
+      ],
+      [
+       69.0,
+       70.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.4,
+     "max_depth_mm": 1.22,
+     "deepest_at": [
+      -155.75,
+      -14.25,
+      70.75
+     ],
+     "bbox": [
+      [
+       -156.0,
+       -155.0
+      ],
+      [
+       -14.5,
+       -14.0
+      ],
+      [
+       70.0,
+       71.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.4,
+     "max_depth_mm": 1.22,
+     "deepest_at": [
+      -155.75,
+      -14.25,
+      74.25
+     ],
+     "bbox": [
+      [
+       -156.0,
+       -155.0
+      ],
+      [
+       -14.5,
+       -14.0
+      ],
+      [
+       74.0,
+       75.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.4,
+     "max_depth_mm": 1.12,
+     "deepest_at": [
+      95.25,
+      110.75,
+      97.75
+     ],
+     "bbox": [
+      [
+       95.0,
+       95.5
+      ],
+      [
+       110.0,
+       111.0
+      ],
+      [
+       97.5,
+       98.5
+      ]
+     ]
+    }
+   ]
+  },
+  "setups": {
+   "frame_B": {
+    "removed_cm3": 444.99,
+    "n_rapids_through_stock": 0,
+    "rapids": [],
+    "time": {
+     "camotics_min": 7.28,
+     "camotics_feed_min": 6.64,
+     "camotics_rapid_min": 0.64,
+     "with_vf4_rapids_min": 6.89,
+     "freecad_job_cycle_time": "00:11:24",
+     "freecad_sum_of_ops_min": 11.4,
+     "recount_min": 6.9
+    },
+    "drills": [
+     {
+      "label": "Drill 18 M4 tap holes 3.3 mm",
+      "drill_mm": 3.3,
+      "model_floor_z": -5.5,
+      "tip_z": -5.5,
+      "full_diameter_to_z": -4.509,
+      "full_diameter_short_by_mm": 0.99
+     },
+     {
+      "label": "Drill 2 dowel holes 5.8 mm, ream 6 H7 after",
+      "drill_mm": 5.8,
+      "model_floor_z": -6.5,
+      "tip_z": -6.5,
+      "full_diameter_to_z": -4.758,
+      "full_diameter_short_by_mm": 1.74
+     }
+    ],
+    "pieces_free_after_setup_cm3": []
+   },
+   "frame_A": {
+    "removed_cm3": 426.31,
+    "n_rapids_through_stock": 0,
+    "rapids": [],
+    "time": {
+     "camotics_min": 41.9,
+     "camotics_feed_min": 41.42,
+     "camotics_rapid_min": 0.47,
+     "with_vf4_rapids_min": 41.61,
+     "freecad_job_cycle_time": "00:47:17",
+     "freecad_sum_of_ops_min": 47.28,
+     "recount_min": 41.63
+    },
+    "drills": [
+     {
+      "label": "Drill 20 M5 STI insert holes 5.3 mm, 10.5 deep",
+      "drill_mm": 5.3,
+      "model_floor_z": 109.5,
+      "tip_z": 109.5,
+      "full_diameter_to_z": 111.092,
+      "full_diameter_short_by_mm": 1.59
+     }
+    ],
+    "pieces_free_after_setup_cm3": []
+   },
+   "frame_C0": {
+    "removed_cm3": 323.17,
+    "n_rapids_through_stock": 0,
+    "rapids": [],
+    "time": {
+     "camotics_min": 11.11,
+     "camotics_feed_min": 10.14,
+     "camotics_rapid_min": 0.96,
+     "with_vf4_rapids_min": 10.52,
+     "freecad_job_cycle_time": "00:15:51",
+     "freecad_sum_of_ops_min": 15.85,
+     "recount_min": 10.53
+    },
+    "drills": [],
+    "pieces_free_after_setup_cm3": []
+   },
+   "frame_C90": {
+    "removed_cm3": 20.6,
+    "n_rapids_through_stock": 0,
+    "rapids": [],
+    "time": {
+     "camotics_min": 2.84,
+     "camotics_feed_min": 2.69,
+     "camotics_rapid_min": 0.15,
+     "with_vf4_rapids_min": 2.75,
+     "freecad_job_cycle_time": "00:06:47",
+     "freecad_sum_of_ops_min": 6.78,
+     "recount_min": 2.79
+    },
+    "drills": [
+     {
+      "label": "Left wall: drill 4 x 3.3 mm for 4.000 mm, z 146.00..156.00",
+      "drill_mm": 3.3,
+      "model_floor_z": 146.0,
+      "tip_z": 146.0,
+      "full_diameter_to_z": 146.991,
+      "full_diameter_short_by_mm": 0.99
+     },
+     {
+      "label": "Left wall: drill 1 x 3.3 mm for 4.000 mm, z 140.00..144.50, through",
+      "drill_mm": 3.3,
+      "model_floor_z": 140.0,
+      "tip_z": 139.028,
+      "full_diameter_to_z": 140.019,
+      "full_diameter_short_by_mm": 0.02
+     },
+     {
+      "label": "Left wall: drill 1 x 5.2 mm for 6.000 mm, z 140.00..154.68, through",
+      "drill_mm": 5.2,
+      "model_floor_z": 140.0,
+      "tip_z": 138.468,
+      "full_diameter_to_z": 140.03,
+      "full_diameter_short_by_mm": 0.03
+     }
+    ],
+    "pieces_free_after_setup_cm3": []
+   },
+   "frame_C180": {
+    "removed_cm3": 17.74,
+    "n_rapids_through_stock": 0,
+    "rapids": [],
+    "time": {
+     "camotics_min": 2.41,
+     "camotics_feed_min": 2.1,
+     "camotics_rapid_min": 0.31,
+     "with_vf4_rapids_min": 2.22,
+     "freecad_job_cycle_time": "00:05:59",
+     "freecad_sum_of_ops_min": 5.98,
+     "recount_min": 2.24
+    },
+    "drills": [
+     {
+      "label": "Back wall: drill 4 x 3.3 mm for 4.000 mm, z 95.00..111.00, through",
+      "drill_mm": 3.3,
+      "model_floor_z": 95.0,
+      "tip_z": 94.028,
+      "full_diameter_to_z": 95.019,
+      "full_diameter_short_by_mm": 0.02
+     },
+     {
+      "label": "Back wall: drill 1 x 3.3 mm for 4.000 mm, z 95.00..99.50, through",
+      "drill_mm": 3.3,
+      "model_floor_z": 95.0,
+      "tip_z": 94.028,
+      "full_diameter_to_z": 95.019,
+      "full_diameter_short_by_mm": 0.02
+     },
+     {
+      "label": "Back wall: drill 7 x 4.2 mm for 4.908 mm, z 99.50..111.00",
+      "drill_mm": 4.2,
+      "model_floor_z": 99.5,
+      "tip_z": 99.5,
+      "full_diameter_to_z": 100.762,
+      "full_diameter_short_by_mm": 1.26
+     },
+     {
+      "label": "Back wall: drill 2 x 2.9 mm for 3.000 mm, z 105.50..111.00",
+      "drill_mm": 2.9,
+      "model_floor_z": 105.5,
+      "tip_z": 105.5,
+      "full_diameter_to_z": 106.371,
+      "full_diameter_short_by_mm": 0.87
+     }
+    ],
+    "pieces_free_after_setup_cm3": []
+   },
+   "mon_C180": {
+    "removed_cm3": 18.42,
+    "n_rapids_through_stock": 0,
+    "rapids": [],
+    "time": {
+     "camotics_min": 5.28,
+     "camotics_feed_min": 5.0,
+     "camotics_rapid_min": 0.28,
+     "with_vf4_rapids_min": 5.11,
+     "freecad_job_cycle_time": "00:09:15",
+     "freecad_sum_of_ops_min": 9.25,
+     "recount_min": 5.11
+    },
+    "drills": [
+     {
+      "label": "BW clamp-frame holes: drill 3 x 3.3 mm, M4 tapped after, 10 deep",
+      "drill_mm": 3.3,
+      "model_floor_z": 101.0,
+      "tip_z": 101.0,
+      "full_diameter_to_z": 101.991,
+      "full_diameter_short_by_mm": 0.99
+     },
+     {
+      "label": "BW light-bracket holes: drill 2 x 3.3 mm, M4 tapped after, 10 deep",
+      "drill_mm": 3.3,
+      "model_floor_z": 101.0,
+      "tip_z": 101.0,
+      "full_diameter_to_z": 101.991,
+      "full_diameter_short_by_mm": 0.99
+     }
+    ],
+    "pieces_free_after_setup_cm3": []
+   },
+   "frame_C270": {
+    "removed_cm3": 15.09,
+    "n_rapids_through_stock": 0,
+    "rapids": [],
+    "time": {
+     "camotics_min": 1.58,
+     "camotics_feed_min": 1.35,
+     "camotics_rapid_min": 0.23,
+     "with_vf4_rapids_min": 1.44,
+     "freecad_job_cycle_time": "00:06:13",
+     "freecad_sum_of_ops_min": 6.22,
+     "recount_min": 1.47
+    },
+    "drills": [
+     {
+      "label": "Right wall: drill 1 x 3.3 mm for 4.000 mm, z 140.00..144.50, through",
+      "drill_mm": 3.3,
+      "model_floor_z": 140.0,
+      "tip_z": 139.028,
+      "full_diameter_to_z": 140.019,
+      "full_diameter_short_by_mm": 0.02
+     },
+     {
+      "label": "Right wall: drill 4 x 4.2 mm for 4.908 mm, z 148.50..156.00",
+      "drill_mm": 4.2,
+      "model_floor_z": 148.5,
+      "tip_z": 148.5,
+      "full_diameter_to_z": 149.762,
+      "full_diameter_short_by_mm": 1.26
+     },
+     {
+      "label": "Right wall: drill 1 x 5.2 mm for 6.000 mm, z 140.00..154.68, through",
+      "drill_mm": 5.2,
+      "model_floor_z": 140.0,
+      "tip_z": 138.468,
+      "full_diameter_to_z": 140.03,
+      "full_diameter_short_by_mm": 0.03
+     },
+     {
+      "label": "Right wall: drill 4 x 2.9 mm for 3.000 mm, z 150.50..156.00",
+      "drill_mm": 2.9,
+      "model_floor_z": 150.5,
+      "tip_z": 150.5,
+      "full_diameter_to_z": 151.371,
+      "full_diameter_short_by_mm": 0.87
+     },
+     {
+      "label": "Right wall: drill 4 x 5.3 mm for 6.038 mm, z 143.50..156.00",
+      "drill_mm": 5.3,
+      "model_floor_z": 143.5,
+      "tip_z": 143.5,
+      "full_diameter_to_z": 145.092,
+      "full_diameter_short_by_mm": 1.59
+     }
+    ],
+    "pieces_free_after_setup_cm3": []
+   }
+  }
+ },
+ "holder_check": {
+  "setups": {
+   "frame_C90": {
+    "n_collisions": 0,
+    "collisions": [],
+    "tools": {
+     "T3": {
+      "stock": {
+       "c": 0.5,
+       "line": 24,
+       "op": "Left wall: 1 x bore 18.00 mm, helix, z 139.50..156.00",
+       "part": "flutes",
+       "at": [
+        33.8,
+        71.2
+       ],
+       "tip": [
+        40.0,
+        72.0,
+        175.0
+       ]
+      },
+      "fixtures": {
+       "c": 10.0,
+       "line": null,
+       "op": null,
+       "part": null,
+       "what": null
+      },
+      "holder": "04-0001",
+      "stick_out_mm": 38.0,
+      "tight": true
+     },
+     "T6": {
+      "stock": {
+       "c": 0.5,
+       "line": 318,
+       "op": "Left wall: drill 1 x 3.3 mm for 4.000 mm, z 140.00..144.50, through",
+       "part": "flutes",
+       "at": [
+        71.2,
+        -19.8
+       ],
+       "tip": [
+        72.45,
+        -18.97,
+        141.55
+       ]
+      },
+      "fixtures": {
+       "c": 10.0,
+       "line": null,
+       "op": null,
+       "part": null,
+       "what": null
+      },
+      "holder": "04-0006",
+      "stick_out_mm": 30.0,
+      "tight": true
+     },
+     "T9": {
+      "stock": {
+       "c": 0.5,
+       "line": 219,
+       "op": "Left wall: 1 x counterbore 10.80 mm, helix, z 154.68..156.00",
+       "part": "flutes",
+       "at": [
+        2.2,
+        -1.2
+       ],
+       "tip": [
+        5.0,
+        0.0,
+        175.0
+       ]
+      },
+      "fixtures": {
+       "c": 3.85,
+       "line": 222,
+       "op": "Left wall: 1 x counterbore 10.80 mm, helix, z 154.68..156.00",
+       "part": "flutes",
+       "what": "dummy-floor plate",
+       "at": [
+        -4.2,
+        -0.2
+       ],
+       "tip": [
+        3.43,
+        -1.57,
+        155.75
+       ]
+      },
+      "holder": "04-0006",
+      "stick_out_mm": 28.0,
+      "tight": true
+     },
+     "T10": {
+      "stock": {
+       "c": 0.5,
+       "line": 342,
+       "op": "Left wall: drill 1 x 5.2 mm for 6.000 mm, z 140.00..154.68, through",
+       "part": "flutes",
+       "at": [
+        2.8,
+        -1.2
+       ],
+       "tip": [
+        5.0,
+        0.0,
+        141.08
+       ]
+      },
+      "fixtures": {
+       "c": 6.65,
+       "line": 342,
+       "op": "Left wall: drill 1 x 5.2 mm for 6.000 mm, z 140.00..154.68, through",
+       "part": "flutes",
+       "what": "dummy-floor plate",
+       "at": [
+        -4.2,
+        -0.2
+       ],
+       "tip": [
+        5.0,
+        0.0,
+        156.68
+       ]
+      },
+      "holder": "04-0006",
+      "stick_out_mm": 35.0,
+      "tight": true
+     }
+    },
+    "travel": {
+     "table_z_setup": -215.9,
+     "x_span_mm": 74.2,
+     "y_span_mm": 112.4,
+     "x_ok": true,
+     "y_ok": true,
+     "z": [
+      {
+       "tool": 3,
+       "gauge_length_mm": 82.45,
+       "nose_above_table_min": 437.9,
+       "nose_above_table_max": 473.4,
+       "ok": true,
+       "tip_at_z_home_clears_by_mm": 287.2
+      },
+      {
+       "tool": 6,
+       "gauge_length_mm": 93.5,
+       "nose_above_table_min": 448.4,
+       "nose_above_table_max": 484.4,
+       "ok": true,
+       "tip_at_z_home_clears_by_mm": 276.1
+      },
+      {
+       "tool": 9,
+       "gauge_length_mm": 91.5,
+       "nose_above_table_min": 451.9,
+       "nose_above_table_max": 482.4,
+       "ok": true,
+       "tip_at_z_home_clears_by_mm": 278.1
+      },
+      {
+       "tool": 10,
+       "gauge_length_mm": 98.5,
+       "nose_above_table_min": 452.9,
+       "nose_above_table_max": 489.4,
+       "ok": true,
+       "tip_at_z_home_clears_by_mm": 271.1
+      }
+     ]
+    }
+   },
+   "mon_C180": {
+    "n_collisions": 0,
+    "collisions": [],
+    "tools": {
+     "T6": {
+      "stock": {
+       "c": 0.5,
+       "line": 7957,
+       "op": "BW light-bracket holes: drill 2 x 3.3 mm, M4 tapped after, 10 deep",
+       "part": "flutes",
+       "at": [
+        67.8,
+        -141.2
+       ],
+       "tip": [
+        69.25,
+        -141.0,
+        108.05
+       ]
+      },
+      "fixtures": {
+       "c": 10.0,
+       "line": null,
+       "op": null,
+       "part": null,
+       "what": null
+      },
+      "holder": "04-0006",
+      "stick_out_mm": 30.0,
+      "tight": true
+     },
+     "T9": {
+      "stock": {
+       "c": 0.5,
+       "line": 1150,
+       "op": "BW window seat 58 x 27 R4, 4.5 deep, adaptive",
+       "part": "flutes",
+       "at": [
+        13.2,
+        -113.8
+       ],
+       "tip": [
+        16.02,
+        -112.21,
+        106.5
+       ]
+      },
+      "fixtures": {
+       "c": 10.0,
+       "line": null,
+       "op": null,
+       "part": null,
+       "what": null
+      },
+      "holder": "04-0006",
+      "stick_out_mm": 28.0,
+      "tight": true
+     }
+    },
+    "travel": {
+     "table_z_setup": -215.9,
+     "x_span_mm": 69.2,
+     "y_span_mm": 142.3,
+     "x_ok": true,
+     "y_ok": true,
+     "z": [
+      {
+       "tool": 6,
+       "gauge_length_mm": 93.5,
+       "nose_above_table_min": 410.4,
+       "nose_above_table_max": 439.4,
+       "ok": true,
+       "tip_at_z_home_clears_by_mm": 308.6
+      },
+      {
+       "tool": 9,
+       "gauge_length_mm": 91.5,
+       "nose_above_table_min": 401.9,
+       "nose_above_table_max": 437.4,
+       "ok": true,
+       "tip_at_z_home_clears_by_mm": 310.6
+      }
+     ]
+    }
+   }
+  },
+  "stock_vs_model": {
+   "frame": {
+    "gouge_deeper_than_1mm_cm3": 0.0,
+    "n_gouge_regions": 0,
+    "leftover_deeper_than_1mm_cm3": 0.182,
+    "n_leftover_regions": 39,
+    "largest_leftovers": [
+     {
+      "volume_mm3": 18.0,
+      "max_depth_mm": 1.5,
+      "deepest_at": [
+       -155.75,
+       -14.25,
+       72.25
+      ],
+      "bbox": [
+       [
+        -156.0,
+        -145.0
+       ],
+       [
+        -14.5,
+        -13.5
+       ],
+       [
+        70.0,
+        75.0
+       ]
+      ]
+     },
+     {
+      "volume_mm3": 17.8,
+      "max_depth_mm": 1.41,
+      "deepest_at": [
+       95.25,
+       110.75,
+       99.25
+      ],
+      "bbox": [
+       [
+        94.5,
+        95.5
+       ],
+       [
+        100.0,
+        111.0
+       ],
+       [
+        97.5,
+        102.5
+       ]
+      ]
+     },
+     {
+      "volume_mm3": 17.8,
+      "max_depth_mm": 1.41,
+      "deepest_at": [
+       104.75,
+       110.75,
+       99.25
+      ],
+      "bbox": [
+       [
+        104.5,
+        105.5
+       ],
+       [
+        100.0,
+        111.0
+       ],
+       [
+        97.5,
+        102.5
+       ]
+      ]
+     },
+     {
+      "volume_mm3": 17.8,
+      "max_depth_mm": 1.41,
+      "deepest_at": [
+       155.75,
+       -44.75,
+       17.25
+      ],
+      "bbox": [
+       [
+        145.0,
+        156.0
+       ],
+       [
+        -45.5,
+        -44.5
+       ],
+       [
+        15.5,
+        20.5
+       ]
+      ]
+     },
+     {
+      "volume_mm3": 17.8,
+      "max_depth_mm": 1.41,
+      "deepest_at": [
+       155.75,
+       -35.25,
+       17.25
+      ],
+      "bbox": [
+       [
+        145.0,
+        156.0
+       ],
+       [
+        -35.5,
+        -34.5
+       ],
+       [
+        15.5,
+        20.5
+       ]
+      ]
+     }
+    ],
+    "loose_pieces_cm3": []
+   }
+  },
+  "stock_vs_camotics": {
+   "frame": {
+    "camotics_final": "$CAMOTICS_WORK/frame_voxels.npz",
+    "this_cm3": 1556.19,
+    "camotics_cm3": 1555.49,
+    "only_here_cm3": 0.74,
+    "only_in_camotics_cm3": 0.04
+   }
+  }
+ },
+ "LP": {
+  "what": "LP in the chamber lid (lp_cam.py): the \u00d824 bore on the line of sight on a sine plate, the face groove and the adapter's M4 holes flat; FreeCAD 1.0.2, CAMotics 1.2.0 and holder_check.sweep(), the repo's own code",
+  "geometry": {
+   "port_centre": [
+    -40.0,
+    60.0,
+    136.0
+   ],
+   "line_of_sight": [
+    0.25985,
+    -0.38977,
+    -0.88349
+   ],
+   "elevation_deg": 62.07,
+   "off_lid_normal_deg": 27.93,
+   "bore_d": 24.0,
+   "groove": {
+    "id": 31.17,
+    "od": 35.77,
+    "depth": 1.32,
+    "o_ring": "2-025"
+   },
+   "adapter_d": 40.77,
+   "away_from_lid_centre_deg": 123.69,
+   "holes_programmed": [
+    [
+     -16.05,
+     61.54
+    ],
+    [
+     -29.36,
+     81.51
+    ],
+    [
+     -63.95,
+     58.46
+    ],
+    [
+     -50.64,
+     38.49
+    ]
+   ],
+   "holes_as_drawn": [
+    [
+     -24.01,
+     65.41
+    ],
+    [
+     -39.61,
+     76.88
+    ],
+    [
+     -55.73,
+     66.14
+    ],
+    [
+     -51.14,
+     47.32
+    ]
+   ],
+   "bore_volume_in_lid_mm3": 8192.8,
+   "bore_volume_in_a_solid_16_mm_plate_mm3": 8192.8,
+   "lid_cm3": {
+    "stock": 975.851,
+    "target": 967.065
+   },
+   "sine_plate": {
+    "tilt_deg": 27.934,
+    "turn_on_plate_deg": -33.69,
+    "gauge_blocks_mm_for_a_127_mm_plate": 59.493,
+    "gauge_blocks_in_for_a_5_in_plate": 2.3423
+   },
+   "model_lid_vs_target_mm3": {
+    "only_in_model": 273.7,
+    "only_in_target": 237.5
+   },
+   "adapter_holes": [
+    {
+     "which": "drawn",
+     "xy": [
+      -24.01,
+      65.41
+     ],
+     "r_from_port_mm": 16.88,
+     "thread_in_groove_mm3": 11.44,
+     "thread_wall_to_groove_mm": -3.0,
+     "head_in_boss_mm3": 49.0,
+     "key_path_in_boss_mm3": 15.0
+    },
+    {
+     "which": "drawn",
+     "xy": [
+      -39.61,
+      76.88
+     ],
+     "r_from_port_mm": 16.88,
+     "thread_in_groove_mm3": 11.44,
+     "thread_wall_to_groove_mm": -3.0,
+     "head_in_boss_mm3": 102.4,
+     "key_path_in_boss_mm3": 130.6
+    },
+    {
+     "which": "drawn",
+     "xy": [
+      -55.73,
+      66.14
+     ],
+     "r_from_port_mm": 16.88,
+     "thread_in_groove_mm3": 11.44,
+     "thread_wall_to_groove_mm": -3.0,
+     "head_in_boss_mm3": 102.4,
+     "key_path_in_boss_mm3": 130.6
+    },
+    {
+     "which": "drawn",
+     "xy": [
+      -51.14,
+      47.32
+     ],
+     "r_from_port_mm": 16.88,
+     "thread_in_groove_mm3": 11.44,
+     "thread_wall_to_groove_mm": -3.0,
+     "head_in_boss_mm3": 49.0,
+     "key_path_in_boss_mm3": 15.0
+    },
+    {
+     "which": "programmed",
+     "xy": [
+      -16.05,
+      61.54
+     ],
+     "r_from_port_mm": 24.0,
+     "thread_in_groove_mm3": 0.0,
+     "thread_wall_to_groove_mm": 4.12,
+     "head_in_boss_mm3": 0.0,
+     "key_path_in_boss_mm3": 0.0
+    },
+    {
+     "which": "programmed",
+     "xy": [
+      -29.36,
+      81.51
+     ],
+     "r_from_port_mm": 24.0,
+     "thread_in_groove_mm3": 0.0,
+     "thread_wall_to_groove_mm": 4.12,
+     "head_in_boss_mm3": 0.0,
+     "key_path_in_boss_mm3": 0.0
+    },
+    {
+     "which": "programmed",
+     "xy": [
+      -63.95,
+      58.46
+     ],
+     "r_from_port_mm": 24.0,
+     "thread_in_groove_mm3": 0.0,
+     "thread_wall_to_groove_mm": 4.12,
+     "head_in_boss_mm3": 0.0,
+     "key_path_in_boss_mm3": 0.0
+    },
+    {
+     "which": "programmed",
+     "xy": [
+      -50.64,
+      38.49
+     ],
+     "r_from_port_mm": 24.0,
+     "thread_in_groove_mm3": 0.0,
+     "thread_wall_to_groove_mm": 4.12,
+     "head_in_boss_mm3": 0.0,
+     "key_path_in_boss_mm3": 0.0
+    }
+   ]
+  },
+  "frames": {
+   "lid_LP_top": {
+    "R": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "origin": [
+     -40.0,
+     60.0,
+     136.0
+    ],
+    "bbox": [
+     -116.0,
+     196.0,
+     -171.0,
+     51.0,
+     -16.0,
+     0.0
+    ],
+    "fixtures": [
+     "toe clamp",
+     "toe clamp",
+     "toe clamp",
+     "toe clamp",
+     "parallel",
+     "parallel"
+    ],
+    "bore_z": null
+   },
+   "lid_LP_sine": {
+    "R": [
+     [
+      0.83205,
+      0.5547,
+      0.0
+     ],
+     [
+      -0.490072,
+      0.735108,
+      -0.468451
+     ],
+     [
+      -0.25985,
+      0.389775,
+      0.883489
+     ]
+    ],
+    "origin": [
+     -40.0,
+     60.0,
+     136.0
+    ],
+    "bbox": [
+     -188.28,
+     188.28,
+     -219.02,
+     99.1,
+     -130.27,
+     48.57
+    ],
+    "fixtures": [
+     "toe clamp",
+     "toe clamp",
+     "toe clamp",
+     "toe clamp",
+     "parallel",
+     "parallel",
+     "sine plate top plate"
+    ],
+    "bore_z": [
+     -24.836,
+     6.623
+    ]
+   }
+  },
+  "setups": {
+   "lid_LP_top": {
+    "program": "desktop-lpbf/analysis/out/monitoring/fab/gcode/mon_lid_LP_top.ngc",
+    "totals": {
+     "path_feed_mm": 830.5,
+     "path_rapid_mm": 740.8,
+     "cut_time_min": 5.81,
+     "rapid_time_min": 0.03,
+     "total_min": 5.84,
+     "total_hms": "0:05:50",
+     "tool_changes": 2,
+     "freecad_sum_of_op_cycle_times_min": 8.47
+    },
+    "ops": [
+     {
+      "label": "LP face O-ring groove 2-025: ID 31.17, 2.3 wide, 1.32 deep, pocket",
+      "kind": "pocket",
+      "tool": 15,
+      "tool_name": "2.0 mm 2-flute carbide end mill (added: the LP face O-ring groove, 2.3 wide)",
+      "feed_mm_min": 164.6,
+      "start_depth": 0.0,
+      "final_depth": -1.32,
+      "cut_time_min": 5.72,
+      "rapid_time_min": 0.01,
+      "error": null
+     },
+     {
+      "label": "LP adapter holes: drill 4 x 3.3 mm, M4 tapped after, 8 deep",
+      "kind": "drill",
+      "tool": 6,
+      "tool_name": "3.3 mm carbide drill (M4 tap drill)",
+      "feed_mm_min": 500.0,
+      "start_depth": 0.0,
+      "final_depth": -8.0,
+      "cut_time_min": 0.09,
+      "rapid_time_min": 0.02,
+      "error": null
+     }
+    ]
+   },
+   "lid_LP_sine": {
+    "program": "desktop-lpbf/analysis/out/monitoring/fab/gcode/mon_lid_LP_sine.ngc",
+    "totals": {
+     "path_feed_mm": 1207.5,
+     "path_rapid_mm": 123.8,
+     "cut_time_min": 1.04,
+     "rapid_time_min": 0.0,
+     "total_min": 1.05,
+     "total_hms": "0:01:02",
+     "tool_changes": 1,
+     "freecad_sum_of_op_cycle_times_min": 1.75
+    },
+    "ops": [
+     {
+      "label": "LP bore 24.0 mm on the line of sight, helix, lid on a 27.93 deg sine plate, z -25.34..7.62",
+      "kind": "helix_bore",
+      "tool": 16,
+      "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill, 1-1/2 in. LOC, 50 mm stick-out (added: the LP bore)",
+      "feed_mm_min": 1158.2,
+      "start_depth": 7.623,
+      "final_depth": -25.336,
+      "cut_time_min": 1.04,
+      "rapid_time_min": 0.0,
+      "error": null
+     }
+    ]
+   }
+  },
+  "new_tools": {
+   "T15": {
+    "name": "2.0 mm 2-flute carbide end mill (added: the LP face O-ring groove, 2.3 wide)",
+    "shape": "endmill",
+    "d": 2.0,
+    "flutes": 2,
+    "rpm": 8100,
+    "ipt": 0.0004,
+    "length": 10.0,
+    "edge": 6.0,
+    "cutter": {
+     "holder": "04-0006",
+     "loc": 6.0,
+     "oal": 38.0,
+     "bom": "2.0 mm 2-flute carbide end mill, 6 mm LOC, 38 mm OAL (new, not in tooling-bom)"
+    }
+   },
+   "T16": {
+    "name": "1/2 in. (12.7 mm) 3-flute carbide end mill, 1-1/2 in. LOC, 50 mm stick-out (added: the LP bore)",
+    "shape": "endmill",
+    "d": 12.7,
+    "flutes": 3,
+    "rpm": 7600,
+    "ipt": 0.003,
+    "length": 50.0,
+    "edge": 38.1,
+    "cutter": {
+     "holder": "04-0001",
+     "loc": 38.1,
+     "oal": 101.6,
+     "bom": "1/2 x 1-1/2 LOC x 4 OAL 3-flute carbide end mill (new, not in tooling-bom)"
+    }
+   }
+  },
+  "camotics": {
+   "grid": {
+    "lo": [
+     -76.0,
+     24.0,
+     117.0
+    ],
+    "hi": [
+     -4.0,
+     96.0,
+     137.0
+    ],
+    "res": 0.2
+   },
+   "stock_mm3": 80515.1,
+   "target_mm3": 71715.2,
+   "final_mm3": 71718.3,
+   "gouge": {
+    "volume_mm3": 5.1,
+    "max_depth_mm": 0.2,
+    "deeper_than_0p5_mm3": 0.0,
+    "deeper_than_1_mm3": 0.0,
+    "regions": []
+   },
+   "leftover": {
+    "volume_mm3": 8.2,
+    "max_depth_mm": 0.2,
+    "deeper_than_0p5_mm3": 0.0,
+    "deeper_than_1_mm3": 0.0,
+    "regions": []
+   },
+   "pieces": [
+    71718.3
+   ],
+   "note": "the grid holds the lid within 36 mm of the port centre; its edges cut the lid, so 'pieces' counts the lid's own piece in the window first (a slug would show as a second piece)",
+   "setups": {
+    "lid_LP_top": {
+     "seconds": 16.9,
+     "errors": [],
+     "removed_from_stock_mm3": 608.6
+    },
+    "lid_LP_sine": {
+     "seconds": 29.6,
+     "errors": [],
+     "removed_from_stock_mm3": 8188.2
+    }
+   }
+  },
+  "holder_check": {
+   "resolution_mm": 0.5,
+   "setups": {
+    "lid_LP_top": {
+     "moves": 101,
+     "seconds": 0.1,
+     "n_collisions": 0,
+     "collisions": [],
+     "rapids_through_stock": [],
+     "tools": {
+      "T15": {
+       "stock": {
+        "c": 0.5,
+        "line": 29,
+        "op": "LP face O-ring groove 2-025: ID 31.17, 2.3 wide, 1.32 deep, pocket",
+        "part": "flutes",
+        "at": [
+         -3.7,
+         16.2
+        ],
+        "tip": [
+         -2.81,
+         16.65,
+         -0.5
+        ]
+       },
+       "fixture": {
+        "c": 10.0,
+        "line": null,
+        "op": null,
+        "part": null,
+        "what": null
+       },
+       "by_part": {
+        "shank": {
+         "stock": [
+          4.58,
+          52
+         ]
+        },
+        "holder 04-0006": {
+         "stock": [
+          8.58,
+          52
+         ]
+        },
+        "flutes": {
+         "stock": [
+          0.5,
+          29
+         ]
+        }
+       },
+       "gauge_length_mm": 73.5,
+       "holder": "04-0006",
+       "stick_out_mm": 10.0
+      },
+      "T6": {
+       "stock": {
+        "c": 0.5,
+        "line": 92,
+        "op": "LP adapter holes: drill 4 x 3.3 mm, M4 tapped after, 8 deep",
+        "part": "flutes",
+        "at": [
+         -25.2,
+         -2.3
+        ],
+        "tip": [
+         -23.95,
+         -1.54,
+         -0.48
+        ]
+       },
+       "fixture": {
+        "c": 9.07,
+        "line": 86,
+        "op": "LP adapter holes: drill 4 x 3.3 mm, M4 tapped after, 8 deep",
+        "part": "flutes",
+        "what": "parallel",
+        "at": [
+         10.8,
+         32.2
+        ],
+        "tip": [
+         10.64,
+         21.51,
+         -5.17
+        ]
+       },
+       "by_part": {
+        "flutes": {
+         "stock": [
+          0.5,
+          92
+         ],
+         "fixture": [
+          9.07,
+          86
+         ]
+        }
+       },
+       "gauge_length_mm": 93.5,
+       "holder": "04-0006",
+       "stick_out_mm": 30.0
+      }
+     }
+    },
+    "lid_LP_sine": {
+     "moves": 74,
+     "seconds": 0.1,
+     "n_collisions": 0,
+     "collisions": [],
+     "rapids_through_stock": [],
+     "tools": {
+      "T16": {
+       "stock": {
+        "c": 0.5,
+        "line": 95,
+        "op": "LP bore 24.0 mm on the line of sight, helix, lid on a 27.93 deg sine plate, z -25.34..7.62",
+        "part": "flutes",
+        "at": [
+         -5.9,
+         -2.2
+        ],
+        "tip": [
+         5.65,
+         -0.0,
+         -25.34
+        ]
+       },
+       "fixture": {
+        "c": 10.0,
+        "line": null,
+        "op": null,
+        "part": null,
+        "what": null
+       },
+       "by_part": {
+        "flutes": {
+         "stock": [
+          0.5,
+          95
+         ]
+        },
+        "shank": {
+         "stock": [
+          4.25,
+          94
+         ]
+        },
+        "holder 04-0001": {
+         "stock": [
+          8.73,
+          94
+         ]
+        }
+       },
+       "gauge_length_mm": 94.45,
+       "holder": "04-0001",
+       "stick_out_mm": 50.0
+      }
+     }
+    }
+   }
+  }
+ }
+}

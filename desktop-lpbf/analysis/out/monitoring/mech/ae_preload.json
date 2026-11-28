@@ -1,0 +1,646 @@
+{
+ "run_utc": "2026-11-27 09:33",
+ "design": {
+  "wg_r": 3.2,
+  "wg_deg": 120.0,
+  "wg_d": 3.0,
+  "hole_d": 3.4,
+  "head_d": 4.0,
+  "head_t": 1.0,
+  "dome_R": 50.0,
+  "cb_d": 4.4,
+  "cb_depth": 1.3,
+  "delta0": 0.6,
+  "cart_r": 2.8,
+  "cart_deg": 126.0,
+  "cart_od": 6.3,
+  "cart_id": 5.6,
+  "floor_z": 9.0,
+  "leg_top": 12.9,
+  "seat_z": 13.9,
+  "slot_y": [
+   -0.3,
+   4.3
+  ],
+  "cap_t": 1.0,
+  "cap_hole": 3.3,
+  "cable_slot_w": 2.8,
+  "spring_od": 4.78,
+  "spring_wire": 0.74,
+  "spring_L0": 19.05,
+  "spring_L_stop": 15.88,
+  "spring_L_solid": 8.93,
+  "spring_n": 12,
+  "spring_k": 3.94,
+  "spring_su_MPa": 1690.0,
+  "sensor_d": 5.0,
+  "sensor_h": 4.0,
+  "boot_d": 2.4,
+  "boot_L": 4.1,
+  "ft_x": 4.5,
+  "ft_z": 15.0,
+  "ft_face_y": 7.3,
+  "ft_flange_d": 6.35,
+  "ft_cb_d": 6.43,
+  "ft_cb": 0.51,
+  "ft_bore_d": 5.18,
+  "ft_body_d": 4.83,
+  "ft_body_L": 6.0,
+  "ft_pin_d": 1.07,
+  "ft_pin_L": 3.8,
+  "ft_thread_L": 3.3,
+  "spot": 7.4,
+  "plug_d": 6.5,
+  "plug_L": 14.0,
+  "cable_d": 3.0,
+  "cable_L": 16.0,
+  "dome_h": 0.04001601281281353
+ },
+ "geometry": {
+  "zc": -141.0,
+  "z_tip": -14.0,
+  "seat": -127.1,
+  "cap": -107.22,
+  "foot_on": -107.82,
+  "wg_len": 92.82,
+  "head_bottom_on": -15.040016012812814,
+  "head_clear_on": 0.5599839871871879
+ },
+ "stroke": [
+  {
+   "case": "M50_start_ch25_e0.5",
+   "T_plate": 200.009,
+   "T_block": 206.0285,
+   "T_head": 74.52012049636878,
+   "T_rod_end": 41.551379293877545,
+   "loop_growth_mm": 0.11831627485020654,
+   "parts_mm": {
+    "block": 0.0614638164,
+    "spigot": -0.0169928496,
+    "macor": 0.008948408682464921,
+    "head": 0.018013447812000243,
+    "rod": 0.04340074866185076,
+    "rod_end": 0.005172331030530611,
+    "cartridge": -0.0016896281366399998
+   },
+   "waveguide_growth_mm": 0.12064512721054899,
+   "sensor_growth_mm": 0.0006896441374040814,
+   "spring_length_change_mm": -0.003018496497746524,
+   "T_foot": 63.821456500219504
+  },
+  {
+   "case": "M50_start_ch60_e0.5",
+   "T_plate": 200.0022,
+   "T_block": 204.9943,
+   "T_head": 92.72364292129437,
+   "T_rod_end": 51.36590044489797,
+   "loop_growth_mm": 0.14312560655238302,
+   "parts_mm": {
+    "block": 0.06112211672,
+    "spigot": -0.01699220768,
+    "macor": 0.00958710747667215,
+    "head": 0.02402789162119566,
+    "rod": 0.06031196890261969,
+    "rod_end": 0.007527816106775512,
+    "cartridge": -0.002459086594880001
+   },
+   "waveguide_growth_mm": 0.1353589528328342,
+   "sensor_growth_mm": 0.001003708814236735,
+   "spring_length_change_mm": 0.0067629449053120865,
+   "T_foot": 74.93846182491909
+  },
+  {
+   "case": "M50_end_ch60_e0.5",
+   "T_plate": 200.001,
+   "T_block": 203.9593,
+   "T_head": 123.18463235723928,
+   "T_rod_end": 60.67215229115646,
+   "loop_growth_mm": 0.18131011229704463,
+   "parts_mm": {
+    "block": 0.06078015272000001,
+    "spigot": -0.0169920944,
+    "macor": 0.010681754283689303,
+    "head": 0.03409220253083186,
+    "rod": 0.08617547735227259,
+    "rod_end": 0.009761316549877549,
+    "cartridge": -0.0031886967396266667
+   },
+   "waveguide_growth_mm": 0.16670913509959076,
+   "sensor_growth_mm": 0.0013015088733170067,
+   "spring_length_change_mm": 0.013299468324136867,
+   "T_foot": 98.1365472009445
+  },
+  {
+   "case": "M50_end_ch25_e0.5",
+   "T_plate": 200.0095,
+   "T_block": 204.6909,
+   "T_head": 118.24483832552048,
+   "T_rod_end": 58.73130706394558,
+   "loop_growth_mm": 0.17524887230652963,
+   "parts_mm": {
+    "block": 0.06102187336,
+    "spigot": -0.0169928968,
+    "macor": 0.01052520946570936,
+    "head": 0.03246009458275197,
+    "rod": 0.08197561247653472,
+    "rod_end": 0.009295513695346938,
+    "cartridge": -0.0030365344738133336
+   },
+   "waveguide_growth_mm": 0.1626862763421362,
+   "sensor_growth_mm": 0.0012394018260462585,
+   "spring_length_change_mm": 0.011323194138347177,
+   "T_foot": 95.20122043258921
+  },
+  {
+   "case": "M50_start_powdergaps",
+   "T_plate": 200.0,
+   "T_block": 216.4267,
+   "T_head": 117.84821648986527,
+   "T_rod_end": 63.91777270884354,
+   "loop_growth_mm": 0.18119027268183274,
+   "parts_mm": {
+    "block": 0.06489938168,
+    "spigot": -0.016992,
+    "macor": 0.01094702689342299,
+    "head": 0.032329050728251485,
+    "rod": 0.08290970131040913,
+    "rod_end": 0.01054026545012245,
+    "cartridge": -0.003443153380373334
+   },
+   "waveguide_growth_mm": 0.15705659261591365,
+   "sensor_growth_mm": 0.0014053687266829932,
+   "spring_length_change_mm": 0.022728311339236102,
+   "T_foot": 89.96476492277738
+  },
+  {
+   "case": "M50_end_powdergaps",
+   "T_plate": 200.0,
+   "T_block": 207.6484,
+   "T_head": 157.26593092273947,
+   "T_rod_end": 73.5299076394558,
+   "loop_growth_mm": 0.2258899173521318,
+   "parts_mm": {
+    "block": 0.061999031360000005,
+    "spigot": -0.016992,
+    "macor": 0.01208681311032591,
+    "head": 0.04535266357687312,
+    "rod": 0.1147929762303967,
+    "rod_end": 0.01284717783346939,
+    "cartridge": -0.004196744758933335
+   },
+   "waveguide_growth_mm": 0.19562043304280247,
+   "sensor_growth_mm": 0.0017129570444625855,
+   "spring_length_change_mm": 0.02855652726486674,
+   "T_foot": 118.29921893439926
+  },
+  {
+   "case": "M50_start_tierB",
+   "T_plate": 499.9983,
+   "T_block": 519.5376,
+   "T_head": 36.89461229061071,
+   "T_rod_end": 36.574460527891155,
+   "loop_growth_mm": 0.16620001497693315,
+   "parts_mm": {
+    "block": 0.16504722304,
+    "spigot": -0.04531183952,
+    "macor": 0.01921127829721072,
+    "head": 0.0037843931530967987,
+    "rod": 0.020790527185318423,
+    "rod_end": 0.0039778705266938766,
+    "cartridge": -0.0012994377053866667
+   },
+   "waveguide_growth_mm": 0.23526989181400487,
+   "sensor_growth_mm": 0.000530382736892517,
+   "spring_length_change_mm": -0.06960025957396423,
+   "T_foot": 79.07980606702614
+  },
+  {
+   "case": "M50_end_tierB",
+   "T_plate": 499.9971,
+   "T_block": 514.3072,
+   "T_head": 41.06538046718939,
+   "T_rod_end": 49.84257682312926,
+   "loop_growth_mm": 0.19664610323449724,
+   "parts_mm": {
+    "block": 0.16331909887999999,
+    "spigot": -0.04531172624,
+    "macor": 0.019171859993379444,
+    "head": 0.004718645224650424,
+    "rod": 0.0499256649618497,
+    "rod_end": 0.007162218437551021,
+    "cartridge": -0.002339658022933334
+   },
+   "waveguide_growth_mm": 0.2505580343065172,
+   "sensor_growth_mm": 0.0009549624583401362,
+   "spring_length_change_mm": -0.054866893530360075,
+   "T_foot": 94.7739341462248
+  }
+ ],
+ "spring": {
+  "k_N_per_mm": 3.94,
+  "L0_mm": 19.05,
+  "L_stop_mm": 15.88,
+  "L_solid_mm": 8.93,
+  "F_stop_N": [
+   8.900459999999999,
+   16.599220000000003
+  ],
+  "F_nominal_N": 14.8538,
+  "F_range_N": [
+   10.21759855431878,
+   20.368067524993563
+  ],
+  "pass_window": 0.0,
+  "min_length_mm": 15.010399740426037,
+  "margin_to_solid_mm": 6.080399740426037,
+  "index_C": 5.45945945945946,
+  "wahl_K": 1.2808303330333033,
+  "tau_at_Fmax_MPa": 662.3198183148928,
+  "tau_solid_MPa": 1296.5660890165575,
+  "tau_allow_MPa": 760.5,
+  "pass_stress": 1.0,
+  "safe_at_solid": false,
+  "thermal_range_mm": [
+   -0.06960025957396423,
+   0.02855652726486674
+  ],
+  "corners": 48,
+  "src": "302/316 stainless spring wire: G 69 GPa (10.0 Mpsi); allowable static shear 45 % of the wire's minimum tensile (AE_CART spring_su_MPa) for set-removed compression springs (Shigley Table 10-6 / Associated Spring practice)",
+  "F_head_bottomed_N": 21.626590600469275,
+  "L_head_bottomed_mm": 14.720016012812813,
+  "F_range_shimmed_N": [
+   13.317138554318783,
+   16.76884752499356
+  ],
+  "pass_window_shimmed": 1.0
+ },
+ "tip": [
+  {
+   "R_mm": 25.0,
+   "F_N": 10.21759855431878,
+   "contact_d_um": 308.6035651559511,
+   "p0_MPa": 204.9030085830337,
+   "limit_MPa": 164.8,
+   "yields_hot_6061": 1.0
+  },
+  {
+   "R_mm": 25.0,
+   "F_N": 20.368067524993563,
+   "contact_d_um": 388.3899073466791,
+   "p0_MPa": 257.8786167891607,
+   "limit_MPa": 164.8,
+   "yields_hot_6061": 1.0
+  },
+  {
+   "R_mm": 25.0,
+   "F_N": 20.0,
+   "contact_d_um": 386.0361648409105,
+   "p0_MPa": 256.3158061955175,
+   "limit_MPa": 164.8,
+   "yields_hot_6061": true
+  },
+  {
+   "R_mm": 50.0,
+   "F_N": 10.21759855431878,
+   "contact_d_um": 388.8161278125868,
+   "p0_MPa": 129.08080685027704,
+   "limit_MPa": 164.8,
+   "yields_hot_6061": 0.0
+  },
+  {
+   "R_mm": 50.0,
+   "F_N": 20.368067524993563,
+   "contact_d_um": 489.3406198328005,
+   "p0_MPa": 162.4533488052185,
+   "limit_MPa": 164.8,
+   "yields_hot_6061": 0.0
+  },
+  {
+   "R_mm": 50.0,
+   "F_N": 20.0,
+   "contact_d_um": 486.37509010375027,
+   "p0_MPa": 161.46883982325363,
+   "limit_MPa": 164.8,
+   "yields_hot_6061": false
+  },
+  {
+   "R_mm": 100.0,
+   "F_N": 10.21759855431878,
+   "contact_d_um": 489.87762396969356,
+   "p0_MPa": 81.3158128440392,
+   "limit_MPa": 164.8,
+   "yields_hot_6061": 0.0
+  },
+  {
+   "R_mm": 100.0,
+   "F_N": 20.368067524993563,
+   "contact_d_um": 616.5305474959499,
+   "p0_MPa": 102.33919689280447,
+   "limit_MPa": 164.8,
+   "yields_hot_6061": 0.0
+  },
+  {
+   "R_mm": 100.0,
+   "F_N": 20.0,
+   "contact_d_um": 612.7942141662305,
+   "p0_MPa": 101.71899509771043,
+   "limit_MPa": 164.8,
+   "yields_hot_6061": false
+  }
+ ],
+ "loss": {
+  "freqs_kHz": [
+   100.0,
+   300.0,
+   500.0
+  ],
+  "tip": [
+   {
+    "f_kHz": 100.0,
+    "dB": [
+     -0.027901538116613694,
+     -0.03015033726169689
+    ],
+    "k_N_per_m": [
+     1086211706.0601168,
+     1044783202.3256584
+    ]
+   },
+   {
+    "f_kHz": 300.0,
+    "dB": [
+     -0.2448863768723497,
+     -0.2641016260734632
+    ],
+    "k_N_per_m": [
+     1086211706.0601168,
+     1044783202.3256584
+    ]
+   },
+   {
+    "f_kHz": 500.0,
+    "dB": [
+     -0.6488129830661248,
+     -0.69728444840929
+    ],
+    "k_N_per_m": [
+     1086211706.0601168,
+     1044783202.3256584
+    ]
+   }
+  ],
+  "tip_dry": [
+   {
+    "f_kHz": 100.0,
+    "dB": [
+     -12.899717970450082,
+     -11.030535603161555
+    ],
+    "k_N_per_m": [
+     20275965.72601368,
+     25518112.357876737
+    ]
+   },
+   {
+    "f_kHz": 300.0,
+    "dB": [
+     -22.239489967412144,
+     -20.257265953047856
+    ],
+    "k_N_per_m": [
+     20275965.72601368,
+     25518112.357876737
+    ]
+   },
+   {
+    "f_kHz": 500.0,
+    "dB": [
+     -26.65983671394304,
+     -24.66796545668821
+    ],
+    "k_N_per_m": [
+     20275965.72601368,
+     25518112.357876737
+    ]
+   }
+  ],
+  "cold": [
+   {
+    "f_kHz": 100.0,
+    "dB": [
+     -0.0026431144798543314,
+     -0.06560002652800376
+    ],
+    "k_N_per_m": [
+     3534291735.2885175,
+     706858347.0577035
+    ]
+   },
+   {
+    "f_kHz": 300.0,
+    "dB": [
+     -0.023730319719403797,
+     -0.5575152192190337
+    ],
+    "k_N_per_m": [
+     3534291735.2885175,
+     706858347.0577035
+    ]
+   },
+   {
+    "f_kHz": 500.0,
+    "dB": [
+     -0.06560002652800376,
+     -1.4003342909368888
+    ],
+    "k_N_per_m": [
+     3534291735.2885175,
+     706858347.0577035
+    ]
+   }
+  ],
+  "budget_dB": {
+   "tip_dome_greased": [
+    0.027901538116613694,
+    3.0
+   ],
+   "Al_to_316": [
+    0.9737313434757124,
+    0.9737313434757124
+   ],
+   "waveguide_attenuation": [
+    0.009382,
+    0.04691
+   ],
+   "rubbing_in_holes": [
+    0.0,
+    1.0
+   ],
+   "cold_end_greased": [
+    0.0026431144798543314,
+    3.0
+   ]
+  },
+  "total_dB": [
+   1.0136579960721805,
+   8.020641343475713
+  ],
+  "tier_b_dry_tip_total_dB": [
+   12.016292061117122,
+   31.680478057418753
+  ],
+  "rod_end_route_dB": [
+   26.265595430652624,
+   52.265595430652624
+  ],
+  "previous_waveguide_budget_dB": [
+   3.1727735746506283,
+   9.076231343475712
+  ],
+  "gain_over_rod_end_dB": [
+   18.24495408717691,
+   51.25193743458044
+  ],
+  "src": "couplant film: bulk modulus ~1 GPa for a PFPE or silicone grease (assumed); minimum film 1 um (the surfaces' roughness); a flat greased joint at 10-20 N squeezes to 2-10 um (assumed)",
+  "method": "contacts as normal springs between two rods of the waveguide's impedance (mech_monitoring check 6): a Hertz dome plus the couplant film round it (dk = K dA / h, h = h0 + r^2/2R out to the head's edge); the flat cold end as a film K A / h; impedance step Al/316 at normal incidence; attenuation 0.1-0.5 dB/m"
+ },
+ "temperatures": [
+  {
+   "case": "M50_start_ch25_e0.5",
+   "T_plate": 200.009,
+   "T_rod_end": 41.551379293877545,
+   "T_sensor_max": 63.821456500219504,
+   "margin_C": 113.17854349978049
+  },
+  {
+   "case": "M50_start_ch60_e0.5",
+   "T_plate": 200.0022,
+   "T_rod_end": 51.36590044489797,
+   "T_sensor_max": 74.93846182491909,
+   "margin_C": 102.06153817508091
+  },
+  {
+   "case": "M50_end_ch60_e0.5",
+   "T_plate": 200.001,
+   "T_rod_end": 60.67215229115646,
+   "T_sensor_max": 98.1365472009445,
+   "margin_C": 78.8634527990555
+  },
+  {
+   "case": "M50_end_ch25_e0.5",
+   "T_plate": 200.0095,
+   "T_rod_end": 58.73130706394558,
+   "T_sensor_max": 95.20122043258921,
+   "margin_C": 81.79877956741079
+  },
+  {
+   "case": "M50_start_powdergaps",
+   "T_plate": 200.0,
+   "T_rod_end": 63.91777270884354,
+   "T_sensor_max": 89.96476492277738,
+   "margin_C": 87.03523507722262
+  },
+  {
+   "case": "M50_end_powdergaps",
+   "T_plate": 200.0,
+   "T_rod_end": 73.5299076394558,
+   "T_sensor_max": 118.29921893439926,
+   "margin_C": 58.70078106560074
+  },
+  {
+   "case": "M50_start_tierB",
+   "T_plate": 499.9983,
+   "T_rod_end": 36.574460527891155,
+   "T_sensor_max": 79.07980606702614,
+   "margin_C": 97.92019393297386
+  },
+  {
+   "case": "M50_end_tierB",
+   "T_plate": 499.9971,
+   "T_rod_end": 49.84257682312926,
+   "T_sensor_max": 94.7739341462248,
+   "margin_C": 82.2260658537752
+  }
+ ],
+ "plate": {
+  "M50": {
+   "weight_N": 0.530524,
+   "bare_lift_mm": 0.312773,
+   "foil_needs_N": 173.038923,
+   "disc_spring_clamp_N": 216.298654,
+   "left_on_foil_N": [
+    195.93058647500644,
+    206.08105544568122
+   ],
+   "still_meets_foil": 1.0,
+   "lifts_bare_plate": 1.0,
+   "twist_Nm": 0.608814,
+   "ae_twist_Nmm": 9.77667241199691,
+   "drawbar_clamp_N": 216.298654
+  },
+  "L75": {
+   "weight_N": 1.195256,
+   "bare_lift_mm": 0.3375,
+   "foil_needs_N": 423.998769,
+   "disc_spring_clamp_N": 529.998462,
+   "left_on_foil_N": [
+    509.6303944750065,
+    519.7808634456812
+   ],
+   "still_meets_foil": 1.0,
+   "lifts_bare_plate": 1.0,
+   "twist_Nm": 1.491781,
+   "ae_twist_Nmm": 9.77667241199691,
+   "drawbar_clamp_N": 529.998462
+  },
+  "push_to_seat_N": 20.368067524993563,
+  "src": "analysis/out/hotswap/joint_calcs.json (hot-swap.md \u00a73.1): plate weight, bare lift, foil's 0.1 MPa, the 97125K111 target"
+ },
+ "column": {
+  "length_mm": 92.82,
+  "P_cr_N": 879.0808993554912,
+  "ratio": 43.15975967169075
+ },
+ "parts": {
+  "sensor": {
+   "vendor": "MISTRAS",
+   "pn": "PICO",
+   "desc": "miniature AE sensor \u00d85 x 4 mm, stainless case and face, 200-750 kHz (resonance 250 kHz), 54 dB ref V/(m/s), integral coax from the side to a BNC; quote only",
+   "url": "https://www.mistrasgroup.com/media/x13nu1vw/model_pico.pdf",
+   "read_utc": "2026-11-27T08:27Z",
+   "t_min_C": -65.0,
+   "t_max_C": 177.0
+  },
+  "sensor_alt": {
+   "vendor": "QingCheng (Qawrums)",
+   "pn": "WM500/1",
+   "desc": "\u00d84.7 x 4.0 mm, 100-1000 kHz (resonance 500 kHz), > 58 dB, -20 to 120 C, integral side cable; maker's sheet only; quote only",
+   "url": "https://aendt.com/sds/WM500-1.pdf",
+   "read_utc": "2026-11-27T08:33Z",
+   "t_min_C": -20.0,
+   "t_max_C": 120.0
+  },
+  "spring": {
+   "vendor": "Lee Spring",
+   "pn": "LC 029BB 09S316",
+   "desc": "316 compression spring, squared and ground: OD 4.78, ID 3.30, wire 0.74, free 19.05, solid 8.93 mm, 3.94 N/mm, 39.4 N at solid; $8.87 each (1-19)",
+   "url": "https://www.leespring.com/node/329221",
+   "read_utc": "2026-11-27T08:48Z"
+  },
+  "feedthrough": {
+   "vendor": "Solid Sealing Technology",
+   "pn": "FA40102",
+   "desc": "Microdot (10-32) coaxial feedthrough, grounded shield, weld-in (laser or e-beam), Inconel pin, -269 to 450 C, He leak < 1e-10 atm cc/s; $34.50",
+   "url": "https://www.solidsealing.com/products/2052/Microdot-Feedthrough-1KV-2-Amp-0-042-inch-Inconel-Conductor-Weld-In-Without-Plug/",
+   "read_utc": "2026-11-27T08:29Z"
+  },
+  "couplant": {
+   "vendor": "Chemours (McMaster 10195K41)",
+   "pn": "Krytox LVP",
+   "desc": "PFPE vacuum grease, -15 to 300 C, 1e-13 Torr at 20 C, 1e-5 Torr at 200 C; $178.91 per 2 oz",
+   "url": "https://www.mcmaster.com/products/krytox-grease/?s=krytox-grease",
+   "read_utc": "2026-11-27T08:34Z"
+  }
+ },
+ "pass_": true
+}
