@@ -1,12 +1,247 @@
 # CFD of FT-1's gas: the cross-flow over the plate and the purge from air to argon
 
-For [issue #260](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/260), PR 294 round 2, 2026-11-27.
+For [issue #260](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/260), PR 294 rounds 2 (2026-11-27, CAD v1) and 3 (2026-11-28, CAD v2).
 OpenFOAM v2406 (Docker image `opencfd/openfoam-run:2406`) on the gas inside the CadQuery model of FT-1
 ([`../../../cad/ft_model.py`](../../../cad/ft_model.py), `build("FT-1")`: the 16 × 12 × 8 in. box, the deck cassette, the
 plate at the start of a build, the hopper at its right park; and `build("FT-1V")`, §3). Scripts: [`../../cfd/`](../../cfd/). Numbers:
 [`cfd.json`](cfd.json). Nothing here has been checked against a measurement.
 
-## Short answer
+# Round 3 (2026-11-28): CAD v2, leaks, FT-1V's purge, heat
+
+For PR 294 round 3. The main cases re-run on the current model (CAD v2), plus what round 2 left out: the O₂ that
+leaks in, FT-1V's purge, and heat. Same OpenFOAM image and scripts; new: [`o2_budget.py`](../../cfd/o2_budget.py)
+(0-D leak budget and pump-purge), `make_case.py --kind leak` and `--kind heat`. Numbers: [`cfd.json`](cfd.json) (v2
+runs are the entries named `v2-…`; `leak`) and [`o2_budget.json`](o2_budget.json). The runner was shared by ~8 jobs
+(load average 9–14 on 4 cores), so runs were kept short; what that cost is stated with each. Nothing here has been
+checked against a measurement.
+
+## Short answer (round 3)
+
+- **The cross-flow is unchanged on v2.** k-ω SST: 2.50 m/s 3 mm over the build area (v1 2.57), 0.055 Pa mean bed
+  shear (0.053), 94–99 % of the fume from 0.5–3 mm caught or held at the collector, half of what rises above the jet
+  caught, escaped fume passing the cover slide at 103 mm (89), 87 Pa (88). Nothing to change.
+- **The low-diffuser, high-vent purge is a little slower on v2: 3.1 / ≈ 4.9 min to 1000 / 100 ppm** (box average;
+  v1 2.6 / ≈ 5.0; well mixed 6.4 / 9.1). The Saginaw's dished door and rim lip hold 1.2 L above the highest a wall
+  vent can go, and the last third of the O₂ waits there. **Put the vent through the door,** at its top.
+- **Leaks set the floor the exhaust reads at a few ppm, if the lid is seated and the box is at +5–10 mbar** (0-D,
+  estimates): argon 5.0
+  gives 2 ppm, permeation through the silicone sponge gasket 0.1–0.5 ppm at 27 L/min, the X-LSM100B's trapped air
+  up to ~2 ppm in the first hour; the worst gap under the gasket (≈ 3 µm, Péclet ≈ 1) along the whole seam adds
+  2.9 ppm. Larger gaps blow argon out too fast for O₂ to diffuse back. At a 2 L/min dwell the same sources give
+  9–48 ppm; with the vent open (no overpressure) a 30 µm gap along the seam would hold the purge at ~60 ppm.
+- **With the cross-flow on, O₂ that leaks in at the lid stays in the box, not over the plate** (CFD, R3.5): 1 mm over
+  the build area it is about a tenth of what the exhaust analyzer reads (a hundredth at the plate's centre), while
+  the box holds 5–10× the exhaust's value. The exhaust reading is the conservative number for the process.
+
+### R3.1 The model, ported to CAD v2
+
+[`geom.py`](../../cfd/geom.py) now builds the gas from the current `cad/ft_model.py` (CAD v2, round 2's model with the g3
+gantry, which is outside the box). What changed in the gas, v1 → v2:
+
+| | v1 (round 2's runs) | v2 (round 3) |
+|---|---|---|
+| enclosure | a plain 406.4 × 304.8 × 203.2 mm box to the rim | the Saginaw SCE-16EL1208SSLP: 402.6 × 301.0 mm inside, 199.4 mm to its 22 mm rim lip; above that the poured gasket's inner face (369.7 × 271.4 mm) and the door's dish (389.9 × 291.6 mm) up to the door's inner face, 210.8 mm above the floor |
+| deck | 250 × 250 mm | 245 × 245 mm, with its four clamps on the panel studs |
+| recoater | an X-LSQ075B-sized block at y = 95.5 mm | the X-LSM100B (239.2 × 45 × 21 mm) at y = 82 mm under its MK-12 shield (one block, the shield's envelope), the motor end and controller box as the vendor's boxes |
+| window stack | on the plate's axis, Ø40 holder bore, slide 129 mm over the bed | at y = −11 mm (box) with the Ø44 holder, slide 130 mm over the bed; in the cube a Ø64 drop tube at y = −16 mm, slide 130 mm over the bed (v1: 221 mm) |
+| lid | — | the hinges and the latch inside the dish |
+| gas volume (meshed) | 23.19 L (cube 21.9 L) | 23.88 L (cube 22.22 L); `ft_checks`: 24.04 / 22.64 L |
+| purge ports (assumed) | 40 × 40 mm diffuser low on the left wall, 40 × 20 mm vent high on the right wall, 3 mm under the rim | the same, the vent's top 3 mm under the rim lip (the highest a wall fitting can go; the 1.2 L above the lip is the door's dish); in the cube 15 mm in from the plates, clear of the frame's bars |
+
+The monitoring ports (the camera port in the door, the light ports in the left and front walls) are bores with a
+window ring outside: recesses of 1–3 cm³ in the walls, left out. The gas bulkheads' bores, the heater and stage cables,
+and the box-air thermocouple are left out too (geom.py's docstring lists every simplification). The purge diffuser and
+vent are still not in the CAD model (parts.csv G9); as in round 2 they are this CFD's assumption.
+
+### R3.2 The cross-flow on v2
+
+k-ω SST, steady, on the v2 mesh (245,939 cells; 3 prism layers on the bed, 94 % coverage; max skewness 6.5 on 9
+faces, "Failed 1 mesh checks" as in v1; 77 s to mesh). 600 iterations: the probe speeds over the plate were steady to
+3–4 digits from iteration ~100 (std over the last 20 %: 0.3 mm/s at 1 and 3 mm), while the box circulation kept
+moving (final initial residuals 1 × 10⁻³ for Ux and Uz, 8 × 10⁻⁴ for p, against v1's 3–6 × 10⁻⁴ at 904 iterations).
+
+| | v1, k-ω SST (§1) | v2, k-ω SST |
+|---|---|---|
+| speed 1 / 3 / 5 mm over the Ø30 build area, mean, m/s | 1.62 / 2.57 / 1.62 | 1.69 / 2.50 / 1.55 |
+| spread at 3 mm (std/mean) | 4 % | 5 % |
+| bed shear, Ø30 build area: mean / max, Pa | 0.053 / 0.067 | 0.055 / 0.071 |
+| Ø40 plate: mean / max, Pa; area over 0.053 Pa | 0.049 / 0.100; 43 % | 0.050 / 0.083; 48 % |
+| tracers 0.5–3 mm into the collector (held under its lower lip) | 99 % (1 %) | 94 % (6 %) |
+| tracers from 0.5 mm into the collector | 95 % | 64 % |
+| tracers 4–15 mm: into the collector / escaped to the box | 49 % / 31 % | 50 % / 28 % |
+| escaped tracers: median closest approach to the slide | 89 mm | 103 mm |
+| tracers within 30 mm of the slide | 1 % | 1 % |
+| gas speed 2 mm under the slide, mean | 0.9 mm/s | 3.8 mm/s |
+| jet flow at y = 25 mm, forward / back | 41.6 / 2.3 L/min | 42.4 / 1.7 L/min |
+| pressure drop, nozzle channel to collector port | 88 Pa | 87 Pa |
+| y⁺ on the plate, mean / max | 0.82 / 1.19 | 0.83 / 1.08 |
+
+- **The jet over the plate is round 2's** (the slot, the collector and the bed round them did not change): 2.50 m/s
+  3 mm up, 0.055 Pa mean bed shear over the build area, at the bottom of the 63 µm pick-up band as before, 87 Pa.
+- **Fume released 0.5–3 mm up is all caught or held:** 94 % into the collector, 6 % in the slow vortex under its lower
+  lip, none into the box. The lip's share grew (1 → 6 %, all of it from 0.5 mm): that vortex is the least converged
+  part of the jet in both runs (v1's FT-1V run gave 5 % there), so read 94–99 % as the range.
+- **Fume above the jet behaves as before:** half of what rises 4–15 mm is caught, 28 % reaches the box, and it passes
+  the cover slide no closer than 103 mm (median); 1 % comes within 30 mm. The slide is now at y = −11 mm and 130 mm up;
+  the gas under it moves at 4 mm/s.
+
+![v2 box section](box_section_v2-sst.png)
+
+*v2, the x = 0 section, k-ω SST, log speed scale. As in v1, the jet's surplus leaves over the collector and
+circulates through the box at 1–100 mm/s. Red: the cover slide (y = −11 mm); orange: the plate.*
+
+### R3.3 The buoyant purge on v2: low diffuser, high vent
+
+As round 2's best case (§2.2): nozzle off, 20 L/min of argon in through a 40 × 40 mm diffuser low on the left wall, out
+through a 40 × 20 mm vent high on the right wall at the back (outflow only), rhoReactingBuoyantFoam from air at rest,
+on the coarse purge mesh (35,374 cells; max skewness 15.7 on 28 faces). 3.5 min of purge (444 s on two shared cores),
+then the run's own exponential tail for 100 ppm.
+
+| | v1 (§2.2, 5 min run) | v2 (3.5 min run) |
+|---|---|---|
+| gas volume | 23.19 L | 23.88 L |
+| box average to 1000 / 100 ppm | 2.6 / (≈ 5.0) min | 3.1 / (≈ 4.9) min |
+| exhaust (the analyzer on the vent line) | 2.8 / 4.7 min | 3.4 / (≈ 4.9) min |
+| 1 mm over the plate | 1.4 / 3.5 min | 1.5 / 2.5 min |
+| well mixed, same flow and volume | 6.2 / 8.9 min | 6.4 / 9.1 min |
+| O₂ at 3.5 min: box / exhaust / plate / under the slide | – | 620 / 851 / 46 / 168 ppm |
+
+- **Argon still fills the box from the floor up:** 1000 ppm in 3.1 min and ≈ 4.9 min to 100 ppm (box average), against
+  6.4 / 9.1 min well mixed. The plate is under 100 ppm after 2.5 min.
+- **But v2's box keeps its last air in the door.** The vent's top can be no higher than the body's rim lip, 11 mm
+  under the door's inner face. Above it, the dished door, the gasket band and the lip hold 1.23 L (5 % of the gas),
+  which the vent drains only by mixing: at 2, 3 and 3.5 min that layer is at 36,500, 7,400 and 3,700 ppm against a box
+  average of 5,100, 1,100 and 610 ppm, and holds a third of the box's O₂. That is most of the 0.5 min v2 loses to v1
+  in reaching 1000 ppm.
+- **So vent through the door, not the wall:** a bulkhead at the door's highest point (it is the top of the box) drains
+  that layer as the wall vent drained v1's. Not run; with v1's numbers as a guide it should recover the 0.5 min.
+
+![v2 purge sections](purge_sections_v2.png)
+
+*O₂ on the y = 45 mm section (through the diffuser) at 1, 2, 3 and 3.5 min, log scale: argon (white) fills from the
+floor; the last air is under the door.*
+
+### R3.4 Leaks: what sets the real O₂ floor (0-D, estimates)
+
+[`../../cfd/o2_budget.py`](../../cfd/o2_budget.py) ([`o2_budget.json`](o2_budget.json)). A well-mixed balance at steady
+state: x_O₂ = x_O₂,argon + (O₂ that gets in) / (argon flow). Each input is an estimate or a datasheet value, marked
+below; none is measured on this box.
+
+![O2 floor](o2_floor.png)
+
+*Left: what each source adds, over the argon flow. Right: the steady O₂ in the box for a few leak cases. Grey band:
+the purge's 20 L/min and the cross-flow's 27 L/min.*
+
+| Source | O₂ in (mL/min) | adds at 27 L/min (ppm) | at 2 L/min (ppm) | basis |
+|---|---|---|---|---|
+| argon 5.0 itself | | 2 | 2 | O₂ ≤ 2 ppm, H₂O ≤ 3 ppm (Linde, Messer datasheets) |
+| argon 4.8 itself | | 3 (3–4) | 3 (3–4) | O₂ 3–4 ppm, H₂O 3–5 ppm, by supplier |
+| lid gasket, permeation, dense silicone (600 Barrer) | 2.8 × 10⁻³ | 0.10 | 1.4 | [Robb 1968](https://doi.org/10.1111/j.1749-6632.1968.tb20277.x); PDMS ~800 Barrer at 35 °C in [Merkel et al. 2000](https://doi.org/10.1002/(SICI)1099-0488(20000201)38:3<415::AID-POLB8>3.0.CO;2-Z) |
+| lid gasket, permeation, sponge (5× dense, estimate) | 1.4 × 10⁻² | 0.51 | 6.9 | 1.28 m seam, 3 mm compressed height, 8 mm across |
+| FKM O-rings (rod gland, window, ports, glands, bulkheads) | 2.6 × 10⁻⁵ | 0.001 | 0.013 | Parker's formula, F = 1.7 × 10⁻⁸ (round 1's `seals.py`) |
+| 2 m of polymer feed tube, 1/4 in. (1–20 Barrer) | 0.3–6.2 × 10⁻³ | 0.01–0.23 | 0.2–3.1 | estimate; stainless or copper tube adds none |
+| lid gap, 3 µm along the whole seam, +5 mbar (the worst gap size) | 7.8 × 10⁻² | 2.9 | 39 | back-diffusion against the outflow, below |
+| air in the hopper's powder, after 5 / 10 min of purge | 3.2 × 10⁻² / 5 × 10⁻⁴ | (1.6 / 0.03 at 20 L/min) | | 13.5 cm³ of air in ~30 cm³ of powder, τ = 74 s |
+| air in the X-LSM100B's body (10–40 cm³, τ 5–60 min), 1 h in | 0–6.5 × 10⁻² | 0–2.4 | 0–33 | estimate: the stage is not sealed or vacuum-rated |
+| water through the silicone gasket (dense, 50 % RH) | (H₂O) 1.1 × 10⁻² | (0.4 ppm H₂O) | (5.4) | 36,000 Barrer (Robb 1968) |
+
+**Gaps under the lid gasket.** A gap of height h across the 8 mm gasket land carries argon out at the box's
+overpressure ΔP; O₂ can only get in by diffusing against that flow. For a slit (plane Poiseuille), the outflow speed
+is u = h²ΔP/(12 μ L) and the Péclet number Pe = uL/D = h²ΔP/(12 μ D), independent of the land's width. The 1-D
+advection-diffusion solution gives O₂ in = x_air · Q_gap / (e^Pe − 1), which tends to the pure-diffusion value
+x_air D w h / L as ΔP → 0. Along the whole 1.28 m seam:
+
+| gap h | at +5 mbar: outflow, Péclet, O₂ in | at 0 mbar (vent open): O₂ in |
+|---|---|---|
+| 1 µm | 0.018 mL/min, 0.09, 0.039 mL/min | 0.040 mL/min |
+| 3 µm | 0.48 mL/min, 0.83, 0.078 mL/min | 0.12 mL/min |
+| 10 µm | 17.7 mL/min, 9.2, 4 × 10⁻⁴ mL/min | 0.40 mL/min |
+| 30 µm | 479 mL/min, 83, nothing | 1.2 mL/min |
+
+- **At +5 mbar a gap lets O₂ in only if it is about 1–5 µm.** Smaller gaps pass little of anything; larger ones blow
+  argon out fast enough (Pe > 10) that no O₂ diffuses back. The worst size, 3.1 µm (Pe ≈ 0.87), along the whole seam
+  adds 2.9 ppm at 27 L/min and 39 ppm at 2 L/min. A 20 mm defect of the same size adds 1/64 of that.
+- **With the vent open the box sits only a few Pa over the room,** and every gap lets O₂ diffuse in: a 30 µm gap
+  along the whole seam adds 63 ppm at 20 L/min, which would be the purge's floor. Seat the lid before the purge and
+  close the vent when it ends, so the check valve holds +5–10 mbar.
+- **Buoyancy is small against that.** Argon is 0.46 kg/m³ heavier than air: across the box's 0.2 m that is 0.9 Pa,
+  against the check valve's 500–1000 Pa.
+
+**The floor during a build**, well mixed, argon 5.0 (table: `o2_budget.json`, `box_floor_table`):
+
+| case | 1 L/min | 2 | 5 | 10 | 20 | 27 L/min |
+|---|---|---|---|---|---|---|
+| tight: argon + permeation (sponge gasket, FKM) | 16 | 8.9 | 4.8 | 3.4 | 2.7 | 2.5 |
+| tight, dense silicone gasket | 4.8 | 3.4 | 2.6 | 2.3 | 2.1 | 2.1 |
+| + 1 µm gap along the whole seam, +5 mbar | 54 | 28 | 13 | 7.2 | 4.6 | 3.9 |
+| + 3 µm gap along the whole seam, +5 mbar (worst) | 93 | 48 | 20 | 11 | 6.6 | 5.4 |
+| + 3 µm, 20 mm defect, +5 mbar | 17 | 9.5 | 5.0 | 3.5 | 2.8 | 2.6 |
+| + 30 µm along the whole seam, 0 mbar (vent open) | 1,220 | 613 | 246 | 124 | 63 | 47 |
+| + stage body (40 cm³ of air, τ 60 min), 1 h in | 67 | 35 | 15 | 8.5 | 5.3 | 4.4 |
+| argon 4.8 instead of 5.0 | +1 | +1 | +1 | +1 | +1 | +1 |
+
+- **At the cross-flow's 27 L/min the box sits at 2–6 ppm O₂,** set by the argon (2 ppm for 5.0) plus a few ppm from
+  the gasket and the stage, if the lid is seated and the box is held at +5 mbar. That is two orders under the
+  100 ppm the study works to.
+- **At low flow it is the leaks that count:** at 2 L/min (a dwell), 9–48 ppm. Keep ≥ 10 L/min through a build, or
+  expect the analyzer to read tens of ppm.
+- **Water** comes in the same way but more of it: 0.4–2 ppm H₂O through the gasket at 27 L/min, ≤ 3 ppm from argon
+  5.0, and far more from the powder (round 1: 150–300 ppm by mass in the powder, `../../../../vacuum-and-purge.md`).
+
+
+### R3.5 Where O₂ that leaks in goes, with the cross-flow on (CFD)
+
+On the v2 k-ω SST cross-flow (27 L/min, R3.2): two scalars carried by the solved flow, each with a constant source in
+cells along the lid seam (the gasket's inner face, 139–143 mm over the bed, 6 mm deep): `sAll` along the whole 1.28 m
+seam (a lid not quite seated), `sLoc` along 20 mm of it at the front over the plate (a hair or a grain under the
+gasket). Diffusivity 2 × 10⁻⁵ m²/s plus the turbulence's ν_t/0.7 (OpenFOAM's `scalarTransport` function object, run
+on with simpleFoam). The problem is linear, so results are ratios to the exhaust's flow-weighted value: what the
+analyzer on the exhaust reads, and what the well-mixed balance of R3.4 gives (1 mL/min of O₂ in is 37 ppm there).
+
+**Not converged in amplitude.** The function object advanced the scalar by about 1 s of flow time per iteration
+whatever the time step was set to, so in 140 iterations the exhaust carried only 41 % (`sAll`) and 35 % (`sLoc`) of
+the source, still rising 18–22 % over the last fifth of the run. The box's gas exchanges with the jet slowly (below),
+so it takes minutes of flow time to fill. The ratios below had settled to within ~20 % over the last half of the run
+(the box average over the exhaust fell from ~8 to 6.4 as the exhaust caught up); read them to one figure.
+
+![Leak section](leak_section.png)
+
+*Leaked O₂ over its exhaust value on the x = 0 section, log scale: the box fills to 5–10× the exhaust's value, the jet
+over the plate (dark) stays clean. Left: the whole seam; right: 20 mm of it at the front.*
+
+| leaked O₂, over its value at the exhaust | whole seam (`sAll`) | 20 mm at the front (`sLoc`) |
+|---|---|---|
+| 1 mm over the Ø30 build area: mean (max) | 0.10 (0.45) | 0.12 (0.44) |
+| 1 mm over the plate's centre (probe) | ~0.01 | ~0.01 |
+| 3 mm over the build area: mean (max) | 0.26 (0.45) | 0.26 (0.47) |
+| 5 mm over the build area: mean | 1.6 | 1.5 |
+| box average | 6.4 | 9.5 |
+| bed to 30 mm up, whole box | 5.2 | 6.4 |
+| 30 mm up to the rim lip | 6.6 | 10 |
+| above the lip (the door's dish, by the seam) | 17 | 27 |
+| 2 mm under the cover slide | 7.4 | 20 |
+
+- **The cross-flow keeps the plate's gas close to the argon's purity.** 1 mm over the build area the leaked O₂ is
+  about a tenth of what the exhaust analyzer reads (a hundredth at the plate's centre, up to half at the edges of the
+  build area, where the jet's side vortices bring box gas down), a quarter at 3 mm, and 1.5× at 5 mm, in the jet's
+  upper shear layer, which entrains box gas.
+- **The box holds 5–10 times what the exhaust reads.** With the cross-flow on the box exchanges with the jet at only
+  ~3 L/min (round 2 found the same, §2.1), so O₂ from a wall leak builds up in it, most of all in the door's dish next
+  to the seam (17–27×) and, for a leak at the front, under the cover slide (20×).
+- **For the 0-D floor (R3.4)** the tables give what the exhaust analyzer reads. With the worst lid gap (3 µm along the
+  whole seam, +2.9 ppm at the exhaust at 27 L/min) the box would hold ~20 ppm of leaked O₂ and the gas 1 mm over the
+  build area ~0.3 ppm, on top of the argon's 2 ppm, which comes in through the nozzle and is everywhere.
+- **The analyzer on the collector's exhaust under-reads the box during a build** (by 5–10× for O₂ that leaks in at
+  the walls) and over-reads the plate (by ~10×). For the box, sample under the lid; for the process, the exhaust is
+  the conservative number.
+
+# Round 2 (2026-11-27): the CAD v1 model
+
+Everything from here to the end ran on round 1's CAD model (v1: the box as a plain 406.4 × 304.8 × 203.2 mm inside, a
+250 mm deck, an X-LSQ075B-sized recoater block at y = 95.5 mm, the window stack on the plate's axis with a Ø40 slide
+holder; in FT-1V the slide 221 mm above the bed). Round 3 re-ran the main cases on CAD v2 (above).
+
+## Short answer (v1)
 
 - **Cross-flow (FT-1, isothermal): it works as drawn.** The slot jet crosses the Ø30 build area at 2.6–2.7 m/s (3 mm
   up) and carries 96–99 % of the fume released 0.5–3 mm over the bed into the collector. Its shear on the powder over
@@ -27,7 +262,7 @@ plate at the start of a build, the hopper at its right park; and `build("FT-1V")
   the cross-flow. Purge before heating the plate. Every run here is isothermal and leak-free, with no air or water in
   the powder, so the O₂ the real box reaches is set by its leaks (study §3.4), not by these times.
 
-## 1. The cross-flow over the plate
+## 1. The cross-flow over the plate (v1)
 
 Slot nozzle MK-11 (45 × 4 mm, its bottom edge 2 mm above the bed) at 27 L/min (2.5 m/s mean in the slot,
 Re = ρUh/μ = 730 on the 4 mm height), along +Y over the Ø40 plate into the exhaust collector 54 mm downstream (50 × 6 mm
@@ -126,7 +361,7 @@ tracers) and stays at or under the lowest pick-up threshold over the build area,
 poor result (a 0–12 mm collector opening, a 10 L/min purge bleed during the build) were left unrun to give the CPU to
 the purge.
 
-## 2. The purge from air to argon
+## 2. The purge from air to argon (v1)
 
 The meshed box holds 23.19 L of gas (the model's 23.5 L, §4). Every run purges at 20 L/min, so the well-mixed ideal
 is 6.2 min to 1000 ppm and 8.9 min to 100 ppm (the study's 6.3 / 9.0 min for 23.5 L; study §3.4 expects 13–31 /
@@ -242,7 +477,7 @@ The collector's port, the as-drawn exhaust, sits 2–8 mm above the deck and 65�
 is a low exhaust. Purging out through it leaves the air above it to be stirred out, as in the high-diffuser, low-vent
 run, with the analyzer on that line reading low. (A buoyant run through the port itself was not affordable, §4.)
 
-## 3. FT-1V
+## 3. FT-1V (v1)
 
 The same deck cassette in the Ideal Vacuum cube (289.6 mm inside; `geom.py --state FT-1V`: 21.9 L of gas, the cube
 frame's edge bars included, the bed 21 mm higher than in the box, the cover slide 221 mm above the bed against FT-1's
@@ -273,7 +508,7 @@ MEM=3g /tmp/tools/capmem 3 bash $D/run_case.sh /tmp/ft-cfd/ft1v-sst mesh solve
 $PY $D/post.py figures --name ft1v --cases "FT-1 box, k-omega SST=/tmp/ft-cfd/cross-sst" "FT-1V cube, k-omega SST=/tmp/ft-cfd/ft1v-sst"
 ```
 
-## 4. Method
+## 4. Method (v1)
 
 ### Geometry
 
@@ -357,7 +592,7 @@ model's (§4, geometry). The steady purge flows were computed laminar and withou
 own gas moves at mm/s to cm/s, so a 1–2 K temperature difference in the room would move it as much (not modelled).
 
 
-### What was not done
+### What was not done (round 2; round 3 did some of it, above)
 
 - **A time-averaged laminar run** of the cross-flow (pimpleFoam with `fieldAverage`, set up as
   `make_case.py --transient` and `run_case.sh <case> map <steady case> pimple`): not run, for lack of CPU time on a
@@ -385,7 +620,7 @@ own gas moves at mm/s to cm/s, so a 1–2 K temperature difference in the room w
 - **Leaks and permeation** set the real O₂ floor (study §3.4); none are modelled.
 
 
-## Re-run
+## Re-run (v1)
 
 ```bash
 D=desktop-lpbf/fast-track/analysis/cfd; PY=/tmp/venv/bin/python

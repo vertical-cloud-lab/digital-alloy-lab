@@ -8,6 +8,8 @@
 #   run_case.sh <case> copymesh <src> buoyant     # rhoReactingBuoyantFoam on <src>'s mesh
 #   run_case.sh <case> map <src> pimple           # pimpleFoam (time-averaged) from <src>'s steady solution
 #   run_case.sh <case> recon                      # reconstruct the time directories left in <case>/processor*
+#   run_case.sh <case> leak <src>                 # round 3: O2 from the lid seam on <src>'s solved cross-flow
+#   run_case.sh <case> heat <src>                 # round 3: buoyantSimpleFoam (200 C bed and block) from <src>
 #
 # Wrap it in the memory ledger:  /tmp/tools/capmem 4 bash run_case.sh ...  (capmem drops the docker group, so the
 # client runs under sudo -n). MEM sets the container's memory cap (default 4g); reserve the same in the ledger, e.g.
@@ -53,6 +55,17 @@ while [ $# -gt 0 ]; do
       par scalarTransportFoam; shift 2 ;;
     buoyant)
       par rhoReactingBuoyantFoam; shift ;;
+    leak)       # round 3: <src>'s mesh and last U p k omega nut phi, the seam zones, then simpleFoam + scalarTransport
+      SRC=$(realpath "$2"); MOUNTS+=(-v "$SRC":/src:ro)
+      CMD+='rm -rf constant/polyMesh; cp -r /src/constant/polyMesh constant/; '
+      CMD+='T=$(foamListTimes -case /src -latestTime | tail -1); for f in U p k omega nut phi; do [ -f /src/$T/$f ] && cp /src/$T/$f 0/; done; '
+      CMD+='topoSet > log.topoSet.leak 2>&1; '
+      par simpleFoam; shift 2 ;;
+    heat)       # round 3: <src>'s mesh and last U k omega nut as the start, then buoyantSimpleFoam
+      SRC=$(realpath "$2"); MOUNTS+=(-v "$SRC":/src:ro)
+      CMD+='rm -rf constant/polyMesh; cp -r /src/constant/polyMesh constant/; '
+      CMD+='T=$(foamListTimes -case /src -latestTime | tail -1); for f in U k omega nut; do [ -f /src/$T/$f ] && cp /src/$T/$f 0/; done; '
+      par buoyantSimpleFoam; shift 2 ;;
     recon)
       CMD+='reconstructPar > log.reconstructPar.recon 2>&1; rm -rf processor*; '; shift ;;
     *) echo "unknown step $1"; exit 2 ;;

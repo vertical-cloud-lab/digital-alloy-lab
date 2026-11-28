@@ -26,6 +26,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import os
 import pathlib
 import re
 
@@ -38,7 +39,7 @@ from scipy.interpolate import RegularGridInterpolator   # noqa: E402
 
 HERE = pathlib.Path(__file__).resolve().parent
 OUT = HERE.parents[0] / "out" / "cfd"
-SCR = pathlib.Path("/tmp/ft-cfd/post")               # resampled fields (not committed)
+SCR = pathlib.Path(os.environ.get("FT_CFD_SCR", "/tmp/ft-cfd/post"))   # resampled fields (not committed)
 RHO, MU, G = 1.65, 2.26e-5, 9.81
 RHO_P = 2670.0                                       # AlSi10Mg, kg/m3
 X_O2_AIR = 0.2095
@@ -138,7 +139,7 @@ def bed_speed(cs):
 def bed_shear(cs):
     b = cs.bnd["bed"]
     c = np.asarray(b.cell_centers().points) * 1000.0
-    tau = np.linalg.norm(np.asarray(b.cell_data[cs.wf]), axis=1) * RHO
+    tau = np.linalg.norm(np.asarray(b.cell_data[cs.wf]), axis=1) * (1.0 if cs.meta.get("kind") == "heat" else RHO)
     area = np.asarray(b.compute_cell_sizes(length=False, volume=False).cell_data["Area"]) * 1e6
     r = np.hypot(c[:, 0], c[:, 1])
     hx = cs.g["hx"]
@@ -185,11 +186,12 @@ def fo_file(cs, fo, name):
 
 
 def convergence(cs):
-    lf = cs.path / ("log.pimpleFoam" if cs.meta.get("transient") else "log.simpleFoam")
+    lf = cs.path / ("log.pimpleFoam" if cs.meta.get("transient") else
+                    "log.buoyantSimpleFoam" if cs.meta.get("kind") == "heat" else "log.simpleFoam")
     log = lf.read_text(errors="replace")
     its = re.findall(r"^Time = ([0-9.eE+-]+)", log, re.M)
     res = {}
-    for v in ("Ux", "Uy", "Uz", "p", "k", "omega"):
+    for v in ("Ux", "Uy", "Uz", "p", "p_rgh", "h", "k", "omega"):
         m = re.findall(r"Solving for %s, Initial residual = ([0-9.eE+-]+)" % v, log)
         if m:
             res[v] = float(m[-1])
@@ -289,6 +291,7 @@ def trace(near, boxf, p0, cs, ds_near=0.15, ds_box=1.0, n_near=4000, n_box=6000)
     fate[fate == 0] = 3
     # escaped: on through the box field
     zs, rs = cs.g["z_slide"], 30.0
+    scx, scy = cs.g.get("slide_c", (0.0, 0.0))
     esc = np.where(fate == 2)[0]
     dmin = np.full(n, np.nan)
     t_win = np.full(n, np.nan)
@@ -310,7 +313,7 @@ def trace(near, boxf, p0, cs, ds_near=0.15, ds_box=1.0, n_near=4000, n_box=6000)
             li = np.where(live)[0]
             q[li] = q[li] + ds_box * d2
             te[li] += ds_box * 1e-3 / np.maximum(s2, 1e-6)
-            r = np.hypot(q[li, 0], q[li, 1])
+            r = np.hypot(q[li, 0] - scx, q[li, 1] - scy)
             d = np.where(r < rs, zs - q[li, 2], np.hypot(r - rs, zs - q[li, 2]))
             newmin = d < dm[li]
             dm[li[newmin]] = d[newmin]
@@ -479,7 +482,8 @@ def fig_box(cs, boxf, title, name):
     pc = ax.pcolormesh(Y, Z, np.maximum(sp, 1e-4), cmap="Blues", norm=matplotlib.colors.LogNorm(1e-3, 3), shading="auto", rasterized=True)
     ax.streamplot(ys, zs, U[:, :, 1].T, U[:, :, 2].T, color=INK2, linewidth=0.5, density=1.4, arrowsize=0.6)
     zsl = cs.g["z_slide"]
-    ax.plot([-20, 20], [zsl, zsl], color=C8, lw=2.5, solid_capstyle="butt")
+    scy = cs.g.get("slide_c", (0.0, 0.0))[1]
+    ax.plot([scy - 20, scy + 20], [zsl, zsl], color=C8, lw=2.5, solid_capstyle="butt")
     ax.plot([-20, 20], [cs.zb, cs.zb], color=C2, lw=2.5, solid_capstyle="butt")
     ax.set_aspect("equal")
     ax.set_xlabel("y (mm)")
@@ -512,12 +516,12 @@ def do_cross(a):
     res["speed_over_build_area"] = bed_speed(cs)
     sh, (c, tau) = bed_shear(cs)
     res["bed_shear_Pa"] = sh
-    res["pressure"] = pressure(cs)
+    res["pressure"] = pressure(cs) if cs.meta.get("kind") != "heat" else {}
     res["jet_flow"] = spill(cs, near)
     cap, (p0, fate, paths) = capture(cs, near, boxf)
     res["capture"] = cap
     # gas speed just under the slide
-    s = cs.sample(disc(19.0, cs.g["z_slide"] - 2.0, n=10))
+    s = cs.sample(disc(19.0, cs.g["z_slide"] - 2.0, n=10) + np.array(list(cs.g.get("slide_c", (0.0, 0.0))) + [0.0]))
     res["speed_2mm_under_slide"] = dict(mean=float(np.linalg.norm(s["U"][s["valid"]], axis=1).mean()),
                                         max=float(np.linalg.norm(s["U"][s["valid"]], axis=1).max()))
     d = load_json()
@@ -834,7 +838,7 @@ def fig_purge_snap(items, t_snaps, fname):
         pc = ax.pcolormesh(X, Z, np.clip(v, 10, 2.1e5), cmap="Blues", norm=matplotlib.colors.LogNorm(10, 2.1e5),
                            shading="auto", rasterized=True)
         ax.set_aspect("equal")
-        ax.set_title(f"{lab}, t = {tt / 60:.0f} min" if j == 0 else f"t = {tt / 60:.0f} min", loc="left", fontsize=8)
+        ax.set_title(f"{lab}, t = {tt / 60:g} min" if j == 0 else f"t = {tt / 60:g} min", loc="left", fontsize=8)
         if j == 0:
             ax.set_ylabel("z (mm)")
         if i < n - 1:
@@ -940,9 +944,151 @@ def do_tables(a):
         print("\n".join(P))
 
 
+# -------------------------------------------------------------------------------------------------- round 3
+def fo_last(case, fo, name):
+    d = pathlib.Path(case) / "postProcessing" / fo
+    ts = sorted(d.iterdir(), key=lambda p: float(p.name))
+    rows = []
+    for t in ts:
+        f = t / name
+        if f.exists():
+            rows += [[float(v.strip("()")) for v in ln.split()] for ln in f.read_text().splitlines()
+                     if ln.strip() and not ln.startswith("#")]
+    return np.array(rows)
+
+
+def section(cs, fields, x=0.0, h=1.5):
+    """Fields on the plane x = const over the whole enclosure (y-z), point-sampled."""
+    e = cs.g["enclosure"]
+    ys = np.arange(e[2] + 0.5, e[3], h)
+    zs = np.arange(e[4] + 0.5, e[5], h)
+    Y, Z = np.meshgrid(ys, zs, indexing="ij")
+    pts = np.stack([np.full(Y.size, x), Y.ravel(), Z.ravel()], axis=1)
+    s = cs.sample(pts, fields=fields)
+    out = {f: s[f].reshape(Y.shape + s[f].shape[1:]) for f in fields if f in s}
+    out["valid"] = s["valid"].reshape(Y.shape)
+    return ys, zs, out
+
+
+def do_leak(a):
+    """O2 leaking in at the lid seam with the cross-flow on (make_case --kind leak): where it goes, as the ratio to
+    the exhaust's flow-weighted value (what a well-mixed box would hold at that leak rate)."""
+    cs = Case(a.case)
+    q_out = 27.0 / 60000.0
+    src = cs.meta.get("source_m3s", 1e-6)
+    exh = fo_last(cs.path, "exhaust", "surfaceFieldValue.dat")
+    box = fo_last(cs.path, "boxAvg", "volFieldValue.dat")
+    res = dict(case=str(cs.path), iterations=float(exh[-1, 0]), source_m3s=src, expected_exhaust=src / q_out,
+               ppm_at_exhaust_per_mL_min_O2=1.0 / 27000 * 1e6)
+    m = cs.mesh
+    vol = np.asarray(m.compute_cell_sizes(length=False, area=False, volume=True).cell_data["Volume"])
+    zc = np.asarray(m.cell_centers().points)[:, 2] * 1000.0
+    for k, fld in enumerate(("sAll", "sLoc")):
+        se = exh[-1, 1 + k]
+        hist = exh[:, 1 + k]
+        n = len(hist)
+        r = dict(exhaust=float(se), exhaust_change_last_20pct=float(abs(hist[-1] - hist[int(0.8 * n)]) / max(hist[-1], 1e-30)),
+                 mass_balance=float(se * q_out / src), box_avg_over_exhaust=float(box[-1, 1 + k] / se))
+        for z in (1.0, 3.0, 5.0):
+            s = cs.sample(disc(15.0, cs.zb + z), fields=(fld,))
+            v = s[fld][s["valid"]]
+            r[f"build_area_z{z:g}_over_exhaust"] = dict(mean=float(v.mean() / se), max=float(v.max() / se))
+        sc = np.array(list(cs.g.get("slide_c", (0.0, 0.0))) + [0.0])
+        s = cs.sample(disc(19.0, cs.g["z_slide"] - 2.0, n=10) + sc, fields=(fld,))
+        r["under_slide_over_exhaust"] = float(s[fld][s["valid"]].mean() / se)
+        c = np.asarray(m.cell_data[fld])
+        for lab, msk in (("below_bed", zc < cs.zb), ("bed_to_30mm", (zc >= cs.zb) & (zc < cs.zb + 30)),
+                         ("30mm_to_lip", (zc >= cs.zb + 30) & (zc < cs.g["wall_top"])), ("above_lip", zc >= cs.g["wall_top"])):
+            r[f"band_{lab}_over_exhaust"] = float((c[msk] * vol[msk]).sum() / vol[msk].sum() / se)
+        res[fld] = r
+    d = load_json()
+    d.setdefault("leak", {})[a.name] = res
+    save_json(d)
+    # figure: x = 0 section, each scalar over its exhaust value (log)
+    ys, zs, f = section(cs, ("sAll", "sLoc"))
+    fig, axs = plt.subplots(1, 2, figsize=(11.0, 4.3), constrained_layout=True)
+    for ax, fld, title in zip(axs, ("sAll", "sLoc"), ("O2 leaking in along the whole lid seam", "O2 leaking in at 20 mm of the seam (front, x = 0)")):
+        v = np.where(f["valid"], f[fld] / res[fld]["exhaust"], np.nan)
+        pc = ax.pcolormesh(ys, zs, v.T, cmap="viridis", norm=matplotlib.colors.LogNorm(0.1, 10), shading="auto", rasterized=True)
+        ax.plot([cs.g["slide_c"][1] - 22, cs.g["slide_c"][1] + 22], [cs.g["z_slide"]] * 2, color=C8, lw=2.5, solid_capstyle="butt")
+        ax.plot([-20, 20], [cs.zb, cs.zb], color=C2, lw=2.5, solid_capstyle="butt")
+        ax.set_aspect("equal")
+        ax.set_xlabel("y (mm)")
+        ax.set_ylabel("z (mm)")
+        r = res[fld]
+        ax.set_title(f"{title}\nbuild area 1 mm up: {r['build_area_z1_over_exhaust']['mean']:.2f} x the exhaust; box average "
+                     f"{r['box_avg_over_exhaust']:.1f} x", loc="left", fontsize=8.5)
+    fig.colorbar(pc, ax=axs, label="leaked O2 / its exhaust value (log)", shrink=0.85)
+    fig.suptitle("FT-1 (CAD v2), cross-flow on (k-omega SST, 27 L/min), x = 0 section; red: cover slide, orange: plate",
+                 x=0.01, ha="left", fontsize=9)
+    fig.savefig(OUT / (a.figname or "leak_section.png"), dpi=120)
+    plt.close(fig)
+    print(json.dumps(res, indent=1, default=float))
+
+
+def do_heat(a):
+    """The heated cross-flow (make_case --kind heat): the cross-flow numbers (do_cross) plus temperatures, the
+    plume's speed and a section figure."""
+    a.figs = False
+    do_cross(a)
+    cs = Case(a.case)
+    d = load_json()
+    res = d["cross"][a.name]
+    th = cs.meta.get("t_hot_C", 200.0)
+    out = {}
+    for z in (1.0, 3.0, 5.0, 10.0):
+        s = cs.sample(disc(15.0, cs.zb + z), fields=("T", "U"))
+        t = s["T"][s["valid"]] - 273.15
+        out[f"T_build_area_z{z:g}_C"] = dict(mean=float(t.mean()), max=float(t.max()))
+    sc = np.array(list(cs.g.get("slide_c", (0.0, 0.0))) + [0.0])
+    s = cs.sample(disc(19.0, cs.g["z_slide"] - 2.0, n=10) + sc, fields=("T", "U"))
+    out["T_under_slide_C"] = float(s["T"][s["valid"]].mean() - 273.15)
+    out["Uz_under_slide_mean_mm_s"] = float(s["U"][s["valid"]][:, 2].mean() * 1000)
+    m = cs.mesh
+    vol = np.asarray(m.compute_cell_sizes(length=False, area=False, volume=True).cell_data["Volume"])
+    T = np.asarray(m.cell_data["T"])
+    U = np.asarray(m.cell_data["U"])
+    cc = np.asarray(m.cell_centers().points) * 1000.0
+    out["T_box_mean_C"] = float((T * vol).sum() / vol.sum() - 273.15)
+    for z in (20.0, 50.0, 100.0):
+        msk = (np.abs(cc[:, 2] - (cs.zb + z)) < 3.0) & (np.hypot(cc[:, 0], cc[:, 1]) < 80)
+        out[f"Uz_max_within_80mm_z{z:g}_mm_s"] = float(U[msk, 2].max() * 1000) if msk.any() else None
+    up = U[:, 2] > 0
+    out["box_speed_mean_mm_s"] = float((np.linalg.norm(U, axis=1) * vol).sum() / vol.sum() * 1000)
+    f = fo_file(cs, "tOut", "surfaceFieldValue.dat")
+    if f:
+        out["T_exhaust_C"] = last_line(f)[1] - 273.15
+    res["heat"] = dict(t_hot_C=th, **out)
+    d["cross"][a.name] = res
+    save_json(d)
+    ys, zs, sec = section(cs, ("T", "U"))
+    fig, axs = plt.subplots(1, 2, figsize=(11.0, 4.3), constrained_layout=True)
+    v = np.where(sec["valid"], sec["T"] - 273.15, np.nan)
+    pc = axs[0].pcolormesh(ys, zs, v.T, cmap="inferno", vmin=25, vmax=max(60, np.nanpercentile(v, 99.5)), shading="auto", rasterized=True)
+    fig.colorbar(pc, ax=axs[0], label="T (C)", shrink=0.85)
+    sp = np.where(sec["valid"], np.linalg.norm(sec["U"], axis=2), np.nan)
+    pc2 = axs[1].pcolormesh(ys, zs, np.maximum(sp, 1e-4).T, cmap="Blues", norm=matplotlib.colors.LogNorm(1e-3, 3), shading="auto", rasterized=True)
+    Uy = np.nan_to_num(sec["U"][:, :, 1]).T
+    Uz = np.nan_to_num(sec["U"][:, :, 2]).T
+    axs[1].streamplot(ys, zs, Uy, Uz, color=INK2, linewidth=0.5, density=1.4, arrowsize=0.6)
+    fig.colorbar(pc2, ax=axs[1], label="|U| (m/s), log", shrink=0.85)
+    for ax in axs:
+        ax.plot([cs.g["slide_c"][1] - 22, cs.g["slide_c"][1] + 22], [cs.g["z_slide"]] * 2, color=C8, lw=2.5, solid_capstyle="butt")
+        ax.plot([-20, 20], [cs.zb, cs.zb], color=C2, lw=2.5, solid_capstyle="butt")
+        ax.set_aspect("equal")
+        ax.set_xlabel("y (mm)")
+        ax.set_ylabel("z (mm)")
+    axs[0].set_title(f"Temperature, x = 0 (bed and well block at {th:g} C, walls 25 C)", loc="left", fontsize=8.5)
+    axs[1].set_title("Gas speed and streamlines, x = 0", loc="left", fontsize=8.5)
+    fig.savefig(OUT / (a.figname or "heat_section.png"), dpi=120)
+    plt.close(fig)
+    print(json.dumps(res["heat"], indent=1, default=float))
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("what", choices=("cross", "purge", "figures", "purgefigs", "snaps", "tables"))
+    ap.add_argument("what", choices=("cross", "purge", "figures", "purgefigs", "snaps", "tables", "leak", "heat"))
+    ap.add_argument("--figname", default="", help="leak, heat: the PNG's file name")
     ap.add_argument("--t-snap", type=float, default=600.0)
     ap.add_argument("--times", type=float, nargs="*", default=[], help="snaps: snapshot times, s (one column each)")
     ap.add_argument("--tmax", type=float, default=None, help="purgefigs: x-axis limit, min")
@@ -955,7 +1101,7 @@ def main():
     SCR.mkdir(parents=True, exist_ok=True)
     OUT.mkdir(parents=True, exist_ok=True)
     {"cross": do_cross, "purge": do_purge, "figures": do_figures, "purgefigs": do_purgefigs, "snaps": do_snaps,
-     "tables": do_tables}[a.what](a)
+     "tables": do_tables, "leak": do_leak, "heat": do_heat}[a.what](a)
 
 
 if __name__ == "__main__":

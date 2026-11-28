@@ -36,21 +36,27 @@ D_O2_AR = 2.0e-5      # m2/s, O2 in Ar at 298 K, 1 atm (Chapman-Enskog; ~0.20 cm
 X_O2_AIR = 0.2095
 
 PATCHES_STL = ("inlet", "outlet", "bed", "slide", "nozzle", "collector", "hopper", "blade", "block", "deck",
-               "recoater", "pipes", "window", "frame")
+               "recoater", "pipes", "window", "frame", "lid")
 
 
-def ports(enc):
+def ports(g):
     """Purge ports on the enclosure walls (estimates; the CAD model has only the nozzle feed and the exhaust
-    bulkheads). (x0, x1, y0, y1, z0, z1) in mm, as thin boxes straddling the wall."""
+    bulkheads). (x0, x1, y0, y1, z0, z1) in mm, as thin boxes straddling the wall. g: geom.json (or, for v1 cases,
+    the enclosure tuple). CAD v2: a high port's top is 3 mm under 'wall_top' (the box's rim lip; the cube's top plate)
+    and every port keeps 'port_margin' from the floor and the top (15 mm in the cube, clear of the frame's edge bars)."""
+    if isinstance(g, dict):
+        enc, zt, mg = g["enclosure"], g.get("wall_top", g["enclosure"][5]), g.get("port_margin", 3.0)
+    else:
+        enc, zt, mg = g, g[5], 3.0
     x0, x1, y0, y1, z0, z1 = enc
     ym = 0.5 * (y0 + y1)
     return {
         # 40 x 40 mm diffuser faces (a sintered-metal or mesh diffuser on the bulkhead), left wall, mid-depth
-        "purge_low": (x0 - 1, x0 + 1, ym - 20, ym + 20, z0 + 3, z0 + 43),
-        "purge_high": (x0 - 1, x0 + 1, ym - 20, ym + 20, z1 - 43, z1 - 3),
+        "purge_low": (x0 - 1, x0 + 1, ym - 20, ym + 20, z0 + mg, z0 + mg + 40),
+        "purge_high": (x0 - 1, x0 + 1, ym - 20, ym + 20, zt - mg - 40, zt - mg),
         # 40 x 20 mm vents, right wall, at the back
-        "vent_high": (x1 - 1, x1 + 1, y1 - 60, y1 - 20, z1 - 23, z1 - 3),
-        "vent_low": (x1 - 1, x1 + 1, y1 - 60, y1 - 20, z0 + 3, z0 + 23),
+        "vent_high": (x1 - 1, x1 + 1, y1 - 60, y1 - 20, zt - mg - 20, zt - mg),
+        "vent_low": (x1 - 1, x1 + 1, y1 - 60, y1 - 20, z0 + mg, z0 + mg + 20),
     }
 
 
@@ -88,10 +94,11 @@ boundary ( walls {{ type wall; faces ( (0 3 2 1) (4 5 6 7) (0 4 7 3) (1 2 6 5) (
            (sl["w"] / 2 + 8) * m, (co["y_outlet"] + 1) * m, (zb + max(sl["z0"] + sl["h"], co["z1"]) + 5) * m)
     near = (-50 * m, -55 * m, (zb - 2) * m, 55 * m, 50 * m, (zb + 30) * m)
     zs = g["z_slide"]
-    top = (-45 * m, -45 * m, (zs - 12) * m, 45 * m, 45 * m, (z1 + 1) * m)
+    scx, scy = g.get("slide_c", (0.0, 0.0))
+    top = ((scx - 45) * m, (scy - 45) * m, (zs - 12) * m, (scx + 45) * m, (scy + 45) * m, (z1 + 1) * m)
     regions = "\n".join(f"            {r} {{ name {r}; }}" for r in PATCHES_STL if r in g["regions"])
     lv = dict(inlet=3, outlet=3, bed=3, nozzle=3, collector=3, blade=3, hopper=2, block=2, pipes=2, window=1, slide=2,
-              deck=1, recoater=1, frame=1)
+              deck=1, recoater=1, frame=1, lid=1)
     if profile == "purge":          # box-scale purge runs: no jet refinement, so the time step is set by the box flow
         lv = {k: min(v, 3 if k in ("inlet", "outlet", "nozzle", "collector") else 1) for k, v in lv.items()}
     rs = "\n".join(f"                {r} {{ level ({lv[r]} {lv[r]}); patchInfo {{ type {'patch' if r in ('inlet', 'outlet') else 'wall'}; }} }}"
@@ -196,7 +203,7 @@ meshQualityControls
 }}
 mergeTolerance 1e-6;
 """
-    P = ports(g["enclosure"])
+    P = ports(g)
     actions = "\n".join(f"    {{ name {k}Faces; type faceSet; action new; source boxToFace; box ({b[0] * m:.6g} {b[2] * m:.6g} {b[4] * m:.6g}) ({b[1] * m:.6g} {b[3] * m:.6g} {b[5] * m:.6g}); }}\n"
                         f"    {{ name {k}Faces; type faceSet; action subset; source patchToFace; patch walls; }}"
                         for k, b in P.items())
@@ -209,7 +216,13 @@ mergeTolerance 1e-6;
                                                              zip(((x0, x1), (y0, y1), (z0, z1)), n)])
 
 
-WALLS = '"(walls|bed|slide|nozzle|collector|hopper|blade|block|deck|recoater|pipes|window|frame)"'
+WALLS = '"(walls|bed|slide|nozzle|collector|hopper|blade|block|deck|recoater|pipes|window|frame|lid)"'
+
+
+def slide_pt(g, dz=2.0):
+    """Probe point dz mm under the cover slide's centre, in metres, as an OpenFOAM vector."""
+    sx, sy = g.get("slide_c", (0.0, 0.0))
+    return f"({sx * 1e-3:.6g} {sy * 1e-3:.6g} {(g['z_slide'] - dz) * 1e-3:.6g})"
 PORTS = ("purge_low", "purge_high", "vent_high", "vent_low")
 
 
@@ -285,7 +298,7 @@ def steady_files(a, g):
     files["constant/transportProperties"] = hdr("dictionary", "transportProperties") + f"transportModel Newtonian;\nnu {NU:.6g};\n"
     zb = g["zb"]
     probes = " ".join(f"(0 0 {(zb + z) * 1e-3:.6g})" for z in (1, 3, 5)) + \
-        f" (0 -0.015 {(zb + 3) * 1e-3:.6g}) (0 0.015 {(zb + 3) * 1e-3:.6g}) (0 0 {(g['z_slide'] - 2) * 1e-3:.6g})"
+        f" (0 -0.015 {(zb + 3) * 1e-3:.6g}) (0 0.015 {(zb + 3) * 1e-3:.6g}) {slide_pt(g)}"
     turb_fo = "    yPlus { type yPlus; libs (fieldFunctionObjects); writeControl writeTime; log false; }\n" if a.model == "sst" else ""
     files["system/controlDict"] = hdr("dictionary", "controlDict") + f"""application simpleFoam;
 startFrom latestTime;
@@ -400,7 +413,7 @@ def scalar_files(a, g):
           f'    "({WALLS[2:-2]}{"|" + "|".join(closed) if closed else ""})" {{ type zeroGradient; }}']
     files = {"0/T": hdr("volScalarField", "T") + "dimensions [0 0 0 0 0 0 0];\ninternalField uniform 1;\nboundaryField\n{\n" + "\n".join(cb) + "\n}\n"}
     zb = g["zb"]
-    pts = f"(0 0 {(zb + 1) * 1e-3:.6g}) (0 0 {(zb + 5) * 1e-3:.6g}) (0 0 {(g['z_slide'] - 2) * 1e-3:.6g})"
+    pts = f"(0 0 {(zb + 1) * 1e-3:.6g}) (0 0 {(zb + 5) * 1e-3:.6g}) {slide_pt(g)}"
     files["system/controlDict"] = hdr("dictionary", "controlDict") + f"""application scalarTransportFoam;
 startFrom startTime;
 startTime 0;
@@ -544,7 +557,7 @@ foamChemistryFile "<constant>/reactions";
 foamChemistryThermoFile "<constant>/thermo.compressibleGas";
 """
     zb = g["zb"]
-    pts = f"(0 0 {(zb + 1) * 1e-3:.6g}) (0 0 {(zb + 5) * 1e-3:.6g}) (0 0 {(g['z_slide'] - 2) * 1e-3:.6g})"
+    pts = f"(0 0 {(zb + 1) * 1e-3:.6g}) (0 0 {(zb + 5) * 1e-3:.6g}) {slide_pt(g)}"
     f["system/controlDict"] = hdr("dictionary", "controlDict") + f"""application rhoReactingBuoyantFoam;
 startFrom latestTime;
 startTime 0;
@@ -605,6 +618,284 @@ relaxationFactors { equations { ".*" 1; } }
     return f, dict(inlets=ins, outlet=out, closed=closed)
 
 
+def leak_files(a, g):
+    """Round 3: O2 leaking in at the lid seam, carried by a solved cross-flow (k-omega SST). simpleFoam continues from
+    the cross case's last solution (run_case.sh 'leak <src>') with two scalarTransport function objects, each a steady
+    scalar with a source in a cell zone: 'sAll' along the whole seam (the gasket's inner face, 6 mm deep), 'sLoc' along
+    20 mm of it at the front (y-), over the plate's x. D = nu/Sc + nut/Sc_t (Sc = 0.68: D = 2e-5 m2/s; Sc_t = 0.7).
+    Linear, so any source rate scales: results are given as the ratio to the exhaust's flow-weighted value."""
+    files, ins, out, closed = u_p_files(a, g)
+    files = {}                                                         # U, p, k, omega, nut, phi come from the src case
+    sm = g["seam"]
+    m = 1e-3
+    (x0, x1), (y0, y1), (z0, z1) = sm["x"], sm["y"], sm["z"]
+    band = 6.0
+    xm = 0.0
+    files["system/topoSetDict"] = hdr("dictionary", "topoSetDict") + f"""actions
+(
+    {{ name seamOut; type cellSet; action new; source boxToCell; box ({(x0 - 1) * m:.6g} {(y0 - 1) * m:.6g} {(z0 - 1) * m:.6g}) ({(x1 + 1) * m:.6g} {(y1 + 1) * m:.6g} {(z1 + 3) * m:.6g}); }}
+    {{ name seamIn; type cellSet; action new; source boxToCell; box ({(x0 + band) * m:.6g} {(y0 + band) * m:.6g} {(z0 - 2) * m:.6g}) ({(x1 - band) * m:.6g} {(y1 - band) * m:.6g} {(z1 + 4) * m:.6g}); }}
+    {{ name seam; type cellSet; action new; source cellToCell; sets (seamOut); }}
+    {{ name seam; type cellSet; action subtract; source cellToCell; sets (seamIn); }}
+    {{ name seam; type cellZoneSet; action new; source setToCellZone; set seam; }}
+    {{ name seamLoc; type cellSet; action new; source boxToCell; box ({(xm - 10) * m:.6g} {(y0 - 1) * m:.6g} {(z0 - 1) * m:.6g}) ({(xm + 10) * m:.6g} {(y0 + band) * m:.6g} {(z1 + 3) * m:.6g}); }}
+    {{ name seamLoc; type cellZoneSet; action new; source setToCellZone; set seamLoc; }}
+);
+"""
+    shut = "|".join(closed)
+    for fld in ("sAll", "sLoc"):                                         # the function object needs the field on disk
+        files[f"0/{fld}"] = hdr("volScalarField", fld) + f"""dimensions [0 0 0 0 0 0 0];
+internalField uniform 0;
+boundaryField
+{{
+    inlet {{ type fixedValue; value uniform 0; }}
+    {out} {{ type inletOutlet; inletValue uniform 0; value uniform 0; }}
+    {WALLS} {{ type zeroGradient; }}
+{('    "(' + shut + ')" { type zeroGradient; }') if shut else ''}
+}}
+"""
+    q_src = 1e-6                                                         # m3/s of "s" (any: the problem is linear)
+    zb = g["zb"]
+    pts = " ".join(f"(0 0 {(zb + z) * 1e-3:.6g})" for z in (1, 3, 5)) + f" {slide_pt(g)}"
+    fo = ""
+    for fld, zone in (("sAll", "seam"), ("sLoc", "seamLoc")):
+        fo += f"""    {fld}
+    {{
+        type scalarTransport; libs (solverFunctionObjects); field {fld}; phi phi;
+        alphaD {D_O2_AR / NU:.4g}; alphaDt {1 / 0.7:.4g}; nCorr 1; schemesField sAll; resetOnStartUp false;
+        writeControl writeTime;
+        fvOptions {{ src {{ type scalarSemiImplicitSource; selectionMode cellZone; cellZone {zone}; volumeMode absolute;
+                          injectionRateSuSp {{ {fld} ({q_src:g} 0); }} }} }}
+    }}
+"""
+    files["system/controlDict"] = hdr("dictionary", "controlDict") + f"""application simpleFoam;
+startFrom latestTime;
+startTime 0;
+stopAt endTime;
+endTime {a.iters};
+deltaT 1;
+writeControl timeStep;
+writeInterval {a.iters};
+purgeWrite 1;
+writeFormat binary;
+writePrecision 8;
+writeCompression off;
+timeFormat general;
+runTimeModifiable true;
+functions
+{{
+{fo}    boxAvg {{ type volFieldValue; libs (fieldFunctionObjects); fields (sAll sLoc); operation volAverage; regionType all; writeFields false; writeControl timeStep; writeInterval 5; log false; }}
+    exhaust {{ type surfaceFieldValue; libs (fieldFunctionObjects); regionType patch; name {out}; operation weightedAverage; weightField phi; fields (sAll sLoc); writeFields false; writeControl timeStep; writeInterval 5; log false; }}
+    probes {{ type probes; libs (sampling); writeControl timeStep; writeInterval 5; fields (sAll sLoc); probeLocations ({pts}); }}
+}}
+"""
+    files["system/fvSchemes"] = hdr("dictionary", "fvSchemes") + """ddtSchemes { default steadyState; }
+gradSchemes { default Gauss linear; grad(U) cellLimited Gauss linear 1; grad(k) cellLimited Gauss linear 1; grad(omega) cellLimited Gauss linear 1; }
+divSchemes
+{
+    default none;
+    div(phi,U) bounded Gauss linearUpwind grad(U);
+    div(phi,k) bounded Gauss limitedLinear 1;
+    div(phi,omega) bounded Gauss limitedLinear 1;
+    div((nuEff*dev2(T(grad(U))))) Gauss linear;
+    div(phi,sAll) bounded Gauss limitedLinear01 1;
+}
+laplacianSchemes { default Gauss linear limited corrected 0.5; }
+interpolationSchemes { default linear; }
+snGradSchemes { default limited corrected 0.5; }
+wallDist { method meshWave; }
+"""
+    files["system/fvSolution"] = hdr("dictionary", "fvSolution") + """solvers
+{
+    p { solver GAMG; tolerance 1e-8; relTol 0.05; smoother GaussSeidel; }
+    "(U|k|omega)" { solver smoothSolver; smoother symGaussSeidel; tolerance 1e-9; relTol 0.1; }
+    "(sAll|sLoc)" { solver PBiCGStab; preconditioner DILU; tolerance 1e-12; relTol 0.01; maxIter 500; }
+}
+SIMPLE
+{
+    nNonOrthogonalCorrectors 1;
+    consistent yes;
+}
+relaxationFactors
+{
+    fields { p 1; }
+    equations { U 0.7; k 0.6; omega 0.6; "(sAll|sLoc)" 0.95; }
+}
+"""
+    return files, dict(inlets=ins, outlet=out, closed=closed, source_m3s=q_src, seam=sm, band_mm=band)
+
+
+def heat_files(a, g):
+    """Round 3: the cross-flow with heat. buoyantSimpleFoam (steady, k-omega SST, gravity -z), argon as a perfect gas
+    (Cp 520 J/kg K, Sutherland viscosity fitted to 22.6 uPa s at 25 C, Pr 0.67). The bed (block top and plate) and the
+    well block's sides at --t-hot (200 C), the enclosure's walls and the deck at 25 C, every other part adiabatic.
+    Starts from a solved isothermal case (run_case.sh 'heat <src>': U, k, omega, nut copied)."""
+    ins, out = {"inlet": a.nozzle_lpm}, "outlet"
+    closed = [p for p in ("inlet", "outlet") + PORTS if p not in ins and p != out]
+    p0 = 101325.0 + 700.0
+    t0, th = 298.15, 273.15 + a.t_hot
+    walls_adiab = "nozzle|collector|hopper|blade|recoater|pipes|window|frame|lid|slide"
+    shut = "|".join(closed)
+    allw = "walls|bed|block|deck|" + walls_adiab
+    cl = lambda bc: (f'    "({shut})" {{ {bc} }}' if shut else '')
+    f = {}
+    q = ins["inlet"] / 60000.0
+    f["0/U"] = hdr("volVectorField", "U") + f"""dimensions [0 1 -1 0 0 0 0];
+internalField uniform (0 0 0);
+boundaryField
+{{
+    inlet {{ type flowRateInletVelocity; volumetricFlowRate constant {q:.6g}; extrapolateProfile no; value uniform (0 0 0); }}
+    outlet {{ type inletOutlet; inletValue uniform (0 0 0); value uniform (0 0 0); }}
+    "({allw})" {{ type noSlip; }}
+{cl('type noSlip;')}
+}}
+"""
+    f["0/p"] = hdr("volScalarField", "p") + f"""dimensions [1 -1 -2 0 0 0 0];
+internalField uniform {p0};
+boundaryField {{ ".*" {{ type calculated; value uniform {p0}; }} }}
+"""
+    f["0/p_rgh"] = hdr("volScalarField", "p_rgh") + f"""dimensions [1 -1 -2 0 0 0 0];
+internalField uniform {p0};
+boundaryField
+{{
+    inlet {{ type fixedFluxPressure; value uniform {p0}; }}
+    outlet {{ type prghPressure; p uniform {p0}; value uniform {p0}; }}
+    "({allw})" {{ type fixedFluxPressure; value uniform {p0}; }}
+{cl(f'type fixedFluxPressure; value uniform {p0};')}
+}}
+"""
+    f["0/T"] = hdr("volScalarField", "T") + f"""dimensions [0 0 0 1 0 0 0];
+internalField uniform {t0};
+boundaryField
+{{
+    inlet {{ type fixedValue; value uniform {t0}; }}
+    outlet {{ type inletOutlet; inletValue uniform {t0}; value uniform {t0}; }}
+    "(bed|block)" {{ type fixedValue; value uniform {th}; }}
+    "(walls|deck)" {{ type fixedValue; value uniform {t0}; }}
+    "({walls_adiab})" {{ type zeroGradient; }}
+{cl('type zeroGradient;')}
+}}
+"""
+    f["0/alphat"] = hdr("volScalarField", "alphat") + f"""dimensions [1 -1 -1 0 0 0 0];
+internalField uniform 0;
+boundaryField
+{{
+    "(inlet|outlet)" {{ type calculated; value uniform 0; }}
+    "({allw})" {{ type compressible::alphatJayatillekeWallFunction; Prt 0.85; value uniform 0; }}
+{cl('type calculated; value uniform 0;')}
+}}
+"""
+    a_in = 45e-3 * 4e-3
+    k_in = 1.5 * (0.05 * q / a_in) ** 2
+    lm = 0.07 * 4e-3
+    w_in = math.sqrt(k_in) / (0.09 ** 0.25 * lm)
+    for name, val, inbc, wall in (("k", k_in, f"turbulentIntensityKineticEnergyInlet; intensity 0.05; value uniform {k_in:.4g}", "kqRWallFunction"),
+                                  ("omega", w_in, f"turbulentMixingLengthFrequencyInlet; mixingLength {lm:.4g}; value uniform {w_in:.4g}", "omegaWallFunction")):
+        dim = "[0 2 -2 0 0 0 0]" if name == "k" else "[0 0 -1 0 0 0 0]"
+        f[f"0/{name}"] = hdr("volScalarField", name) + f"""dimensions {dim};
+internalField uniform {val:.4g};
+boundaryField
+{{
+    inlet {{ type {inbc}; }}
+    outlet {{ type inletOutlet; inletValue uniform {val:.4g}; value uniform {val:.4g}; }}
+    "({allw})" {{ type {wall}; value uniform {val:.4g}; }}
+{cl('type zeroGradient;')}
+}}
+"""
+    f["0/nut"] = hdr("volScalarField", "nut") + f"""dimensions [0 2 -1 0 0 0 0];
+internalField uniform 0;
+boundaryField
+{{
+    "(inlet|outlet)" {{ type calculated; value uniform 0; }}
+    "({allw})" {{ type nutLowReWallFunction; value uniform 0; }}
+{cl('type calculated; value uniform 0;')}
+}}
+"""
+    f["constant/g"] = hdr("uniformDimensionedVectorField", "g") + "dimensions [0 1 -2 0 0 0 0];\nvalue (0 0 -9.81);\n"
+    f["constant/turbulenceProperties"] = hdr("dictionary", "turbulenceProperties") + \
+        "simulationType RAS;\nRAS\n{\n    RASModel kOmegaSST;\n    turbulence on;\n    printCoeffs on;\n}\n"
+    f["constant/thermophysicalProperties"] = hdr("dictionary", "thermophysicalProperties") + """thermoType
+{
+    type heRhoThermo;
+    mixture pureMixture;
+    transport sutherland;
+    thermo hConst;
+    equationOfState perfectGas;
+    specie specie;
+    energy sensibleEnthalpy;
+}
+mixture
+{
+    specie { molWeight 39.948; }
+    thermodynamics { Cp 520.3; Hf 0; }
+    transport { As 1.93e-06; Ts 144.0; }
+}
+"""
+    zb = g["zb"]
+    probes = " ".join(f"(0 0 {(zb + z) * 1e-3:.6g})" for z in (1, 3, 5)) + \
+        f" (0 -0.015 {(zb + 3) * 1e-3:.6g}) (0 0.015 {(zb + 3) * 1e-3:.6g}) {slide_pt(g)}"
+    f["system/controlDict"] = hdr("dictionary", "controlDict") + f"""application buoyantSimpleFoam;
+startFrom latestTime;
+startTime 0;
+stopAt endTime;
+endTime {a.iters};
+deltaT 1;
+writeControl timeStep;
+writeInterval {max(100, a.iters // 4)};
+purgeWrite 0;
+writeFormat binary;
+writePrecision 8;
+writeCompression off;
+timeFormat general;
+runTimeModifiable true;
+functions
+{{
+    wallShearStress {{ type wallShearStress; libs (fieldFunctionObjects); patches (bed slide); writeControl writeTime; log false; }}
+    wallHeatFlux {{ type wallHeatFlux; libs (fieldFunctionObjects); writeControl writeTime; log false; }}
+    qOut {{ type surfaceFieldValue; libs (fieldFunctionObjects); regionType patch; name outlet; operation sum; fields (phi); writeFields false; writeControl timeStep; writeInterval 10; log false; }}
+    tOut {{ type surfaceFieldValue; libs (fieldFunctionObjects); regionType patch; name outlet; operation weightedAverage; weightField phi; fields (T); writeFields false; writeControl timeStep; writeInterval 10; log false; }}
+    probes {{ type probes; libs (sampling); writeControl timeStep; writeInterval 10; fields (U T p_rgh); probeLocations ({probes}); }}
+}}
+"""
+    f["system/fvSchemes"] = hdr("dictionary", "fvSchemes") + """ddtSchemes { default steadyState; }
+gradSchemes { default Gauss linear; grad(U) cellLimited Gauss linear 1; grad(k) cellLimited Gauss linear 1; grad(omega) cellLimited Gauss linear 1; }
+divSchemes
+{
+    default none;
+    div(phi,U) bounded Gauss linearUpwind grad(U);
+    div(phi,h) bounded Gauss limitedLinear 1;
+    div(phi,K) bounded Gauss linear;
+    div(phi,k) bounded Gauss limitedLinear 1;
+    div(phi,omega) bounded Gauss limitedLinear 1;
+    div(((rho*nuEff)*dev2(T(grad(U))))) Gauss linear;
+}
+laplacianSchemes { default Gauss linear limited corrected 0.5; }
+interpolationSchemes { default linear; }
+snGradSchemes { default limited corrected 0.5; }
+wallDist { method meshWave; }
+"""
+    f["system/fvSolution"] = hdr("dictionary", "fvSolution") + """solvers
+{
+    p_rgh { solver GAMG; tolerance 1e-8; relTol 0.01; smoother GaussSeidel; }
+    "(U|h|k|omega)" { solver PBiCGStab; preconditioner DILU; tolerance 1e-9; relTol 0.1; }
+}
+SIMPLE
+{
+    momentumPredictor yes;
+    nNonOrthogonalCorrectors 1;
+    pRefCell 0;
+    pRefValue 102025;
+    residualControl { p_rgh 1e-5; U 1e-6; h 1e-6; "(k|omega)" 1e-6; }
+}
+relaxationFactors
+{
+    fields { rho 1; p_rgh 0.7; }
+    equations { U 0.5; h 0.5; k 0.5; omega 0.5; }
+}
+"""
+    return f, dict(inlets=ins, outlet=out, closed=closed, t_hot_C=a.t_hot)
+
+
 def build(a):
     g = json.loads((pathlib.Path(a.geom) / "geom.json").read_text())
     out = pathlib.Path(a.out)
@@ -616,6 +907,12 @@ def build(a):
         f2, fm = steady_files(a, g)
     elif a.kind == "scalar":
         f2, fm = scalar_files(a, g)
+    elif a.kind == "leak":
+        f2, fm = steady_files(a, g)
+        f3, fm = leak_files(a, g)
+        f2.update(f3)
+    elif a.kind == "heat":
+        f2, fm = heat_files(a, g)
     else:
         f2, fm = buoyant_files(a, g)
     files.update(f2)
@@ -623,7 +920,7 @@ def build(a):
     for name, txt in files.items():
         (out / name).write_text(txt)
     (out / "case.foam").write_text("")
-    meta = dict(kind=a.kind, model=a.model, res=a.res, transient=a.transient, avg_from=a.avg_from, geom=g, ports=ports(g["enclosure"]), rho=RHO, mu=MU, nu=NU,
+    meta = dict(kind=a.kind, model=a.model, res=a.res, transient=a.transient, avg_from=a.avg_from, geom=g, ports=ports(g), rho=RHO, mu=MU, nu=NU,
                 nozzle_lpm=a.nozzle_lpm, purge_lpm=a.purge_lpm if a.kind != "cross" else 0.0, **mesh_meta, **fm)
     (out / "case_meta.json").write_text(json.dumps(meta, indent=1, default=float))
     print(f"{out}: {a.kind} {a.model} {a.res}; background {mesh_meta['background_cells']} cells of {mesh_meta['background_h_mm']} mm; "
@@ -634,7 +931,8 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--geom", required=True, help="folder written by geom.py (ft.stl, geom.json)")
     ap.add_argument("--out", required=True)
-    ap.add_argument("--kind", choices=("cross", "purge", "scalar", "buoyant"), default="cross")
+    ap.add_argument("--kind", choices=("cross", "purge", "scalar", "buoyant", "leak", "heat"), default="cross")
+    ap.add_argument("--t-hot", type=float, default=200.0, help="heat: the bed and the well block, C")
     ap.add_argument("--model", choices=("laminar", "sst"), default="laminar")
     ap.add_argument("--res", choices=("coarse", "medium", "fine"), default="medium")
     ap.add_argument("--nozzle-lpm", type=float, default=27.0)

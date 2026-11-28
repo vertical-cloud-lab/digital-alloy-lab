@@ -581,6 +581,200 @@
     "mean": 0.00020874528854619712,
     "max": 0.0005036278744228184
    }
+  },
+  "v2-sst": {
+   "case": "/tmp/r3-cfd/v2-cross-sst",
+   "model": "sst",
+   "nozzle_lpm": 27.0,
+   "geom": {
+    "slot": {
+     "w": 45.0,
+     "h": 4.0,
+     "z0": 2.0,
+     "chan": 11.0,
+     "y_exit": -27.0,
+     "y_inlet": -38.0
+    },
+    "collector": {
+     "w": 50.0,
+     "z0": 2.0,
+     "z1": 8.0,
+     "y_face": 27.0,
+     "port": [
+      -5.0,
+      5.0,
+      2.0,
+      8.0
+     ],
+     "y_outlet": 39.5,
+     "lip": 0.0
+    }
+   },
+   "cells": 245939,
+   "time": 600.0,
+   "convergence": {
+    "iterations": 600.0,
+    "steps": 600,
+    "final_initial_residuals": {
+     "Ux": 0.00092316022,
+     "Uy": 0.00017207763,
+     "Uz": 0.0014346949,
+     "p": 0.00081316462,
+     "k": 0.00063366626,
+     "omega": 5.2300049e-05
+    },
+    "probe_speed_last20pct": {
+     "mean": [
+      1.9553,
+      2.4961,
+      1.4611,
+      2.6834,
+      2.2881,
+      0.0059
+     ],
+     "std": [
+      0.00033,
+      0.00037,
+      0.00149,
+      5e-05,
+      0.00045,
+      0.00241
+     ],
+     "labels": [
+      "z1",
+      "z3",
+      "z5",
+      "y-15 z3",
+      "y+15 z3",
+      "under slide"
+     ]
+    }
+   },
+   "speed_over_build_area": {
+    "z1": {
+     "mean": 1.693846344947815,
+     "min": 1.5262625217437744,
+     "max": 1.8269463777542114,
+     "cov": 0.03972571715712547,
+     "uy_mean": 1.693656086921692,
+     "uz_mean": 0.002416033297777176,
+     "frac_reversed": 0.0,
+     "n": 5030
+    },
+    "z3": {
+     "mean": 2.501211643218994,
+     "min": 2.292781352996826,
+     "max": 2.661677598953247,
+     "cov": 0.04687639698386192,
+     "uy_mean": 2.5007081031799316,
+     "uz_mean": 0.01564987748861313,
+     "frac_reversed": 0.0,
+     "n": 5030
+    },
+    "z5": {
+     "mean": 1.5511444807052612,
+     "min": 1.3644633293151855,
+     "max": 1.70980703830719,
+     "cov": 0.06619969010353088,
+     "uy_mean": 1.550418496131897,
+     "uz_mean": 0.034115638583898544,
+     "frac_reversed": 0.0,
+     "n": 5030
+    }
+   },
+   "bed_shear_Pa": {
+    "build_area_d30": {
+     "mean": 0.0550400800475736,
+     "max": 0.07051607966423035,
+     "p95": 0.06888151168823242,
+     "frac_area_above_63um_low": 0.5936172880933923,
+     "frac_area_above_63um_high": 0.0,
+     "frac_area_above_20um_low": 0.0
+    },
+    "plate_d40": {
+     "mean": 0.05046093624171936,
+     "max": 0.08301808685064316,
+     "p95": 0.06882267445325851,
+     "frac_area_above_63um_low": 0.4779419602846537,
+     "frac_area_above_63um_high": 0.0,
+     "frac_area_above_20um_low": 0.0
+    },
+    "strip_outside_plate": {
+     "mean": 0.022946364535700644,
+     "max": 0.09616000205278397,
+     "p95": 0.07805445045232773,
+     "frac_area_above_63um_low": 0.15026500055935704,
+     "frac_area_above_63um_high": 0.0,
+     "frac_area_above_20um_low": 0.0
+    },
+    "whole_block_top": {
+     "mean": 0.026496339066762666,
+     "max": 0.12977734208106995,
+     "p95": 0.06883079558610916,
+     "frac_area_above_63um_low": 0.2057689507339119,
+     "frac_area_above_63um_high": 0.0007700180226569868,
+     "frac_area_above_20um_low": 0.0018530848659962336
+    },
+    "yplus_plate": {
+     "mean": 0.8332740664482117,
+     "max": 1.0840771198272705
+    }
+   },
+   "pressure": {
+    "inlet_minus_outlet_Pa": 86.55464466,
+    "outlet_flow_L_min": 27.00017424,
+    "box_under_slide_minus_outlet_Pa": 85.28944545,
+    "over_plate_z3_minus_outlet_Pa": 85.31902665
+   },
+   "jet_flow": {
+    "y-20": {
+     "forward_L_min": 32.980463519771874,
+     "backward_L_min": 0.06869947993456534
+    },
+    "y0": {
+     "forward_L_min": 37.38280438464398,
+     "backward_L_min": 9.084573378934929e-13
+    },
+    "y20": {
+     "forward_L_min": 42.097884208576524,
+     "backward_L_min": 0.4293560223225405
+    },
+    "y25": {
+     "forward_L_min": 42.42479718400436,
+     "backward_L_min": 1.7408027732967577
+    }
+   },
+   "capture": {
+    "n": 2730,
+    "captured": 0.9399267399267399,
+    "escaped": 0.0,
+    "stalled": 0.060073260073260075,
+    "captured_from_z0.5": 0.6395604395604395,
+    "captured_from_z1": 1.0,
+    "captured_from_z2": 1.0,
+    "captured_from_z3": 1.0,
+    "transit_s_median_captured": 0.015242337985558782,
+    "stalled_at_collector_lower_lip": 0.060073260073260075,
+    "above_jet_4_15mm": {
+     "n": 1020,
+     "captured": 0.5,
+     "escaped": 0.28431372549019607,
+     "stalled": 0.21568627450980393,
+     "captured_from_z4": 1.0,
+     "captured_from_z6": 0.7107843137254902,
+     "captured_from_z8": 0.3872549019607843,
+     "captured_from_z10": 0.22549019607843138,
+     "captured_from_z15": 0.17647058823529413,
+     "frac_all_within_10mm_of_slide": 0.0,
+     "frac_all_within_30mm_of_slide": 0.013725490196078431,
+     "escaped_closest_to_slide_mm_median": 103.30418256538438,
+     "escaped_back_to_jet": 0.06896551724137931
+    }
+   },
+   "speed_2mm_under_slide": {
+    "mean": 0.0037531417328864336,
+    "max": 0.006685594562441111
+   }
   }
  },
  "threshold_shao_lu_Pa": {
@@ -1075,6 +1269,111 @@
      "t_1000ppm_min_extrapolated": 9.454541185092046,
      "t_100ppm_min_extrapolated": 14.121500699352918
     }
+   }
+  },
+  "v2-buoyant-LH": {
+   "case": "/tmp/r3-cfd/v2-buoy-LH",
+   "kind": "buoyant",
+   "inlets": {
+    "purge_low": 20.0
+   },
+   "outlet": "vent_high",
+   "q_total_L_min": 20.0,
+   "gas_L": 23.88,
+   "t_end_s": 209.161,
+   "t_10000ppm_min": {
+    "box": 1.6670358013046342,
+    "exhaust": 2.0289548300140847,
+    "plate": 0.7287577195248292,
+    "well_mixed_ideal": 3.632313543763567
+   },
+   "t_1000ppm_min": {
+    "box": 3.083697512115175,
+    "exhaust": 3.376888189934243,
+    "plate": 1.4886708869941356,
+    "well_mixed_ideal": 6.3816001447984565
+   },
+   "t_100ppm_min": {
+    "box": null,
+    "exhaust": null,
+    "plate": 2.5355889026654377,
+    "well_mixed_ideal": 9.130886745833347
+   },
+   "ppm_at_end": {
+    "box": 619.7123964928013,
+    "exhaust": 851.4337829962518,
+    "plate": 45.849098124744586,
+    "slide": 167.78380525214973
+   },
+   "tail": {
+    "box": {
+     "decay_per_min_last20pct": 1.2480227271350184,
+     "t_100ppm_min_extrapolated": 4.947596867205071
+    },
+    "exhaust": {
+     "decay_per_min_last20pct": 1.5575912627842239,
+     "t_100ppm_min_extrapolated": 4.861057473031739
+    },
+    "plate": {
+     "decay_per_min_last20pct": 0.65469647540258
+    }
+   },
+   "tail_decay_per_min": 1.3492984728618003,
+   "ideal_decay_per_min": 0.8375209380234506
+  }
+ },
+ "leak": {
+  "v2-leak": {
+   "case": "/tmp/r3-cfd/v2-leak",
+   "iterations": 2356.0,
+   "source_m3s": 1e-06,
+   "expected_exhaust": 0.0022222222222222222,
+   "ppm_at_exhaust_per_mL_min_O2": 37.03703703703704,
+   "sAll": {
+    "exhaust": 0.000912712264,
+    "exhaust_change_last_20pct": 0.18123822208222237,
+    "mass_balance": 0.41072051880000005,
+    "box_avg_over_exhaust": 6.42021292046537,
+    "build_area_z1_over_exhaust": {
+     "mean": 0.1042406868144218,
+     "max": 0.45166522666244324
+    },
+    "build_area_z3_over_exhaust": {
+     "mean": 0.2620566538376306,
+     "max": 0.44693897095976304
+    },
+    "build_area_z5_over_exhaust": {
+     "mean": 1.618611426150635,
+     "max": 1.7529848150860627
+    },
+    "under_slide_over_exhaust": 7.35999739070927,
+    "band_below_bed_over_exhaust": 5.001405322101267,
+    "band_bed_to_30mm_over_exhaust": 5.182811669838688,
+    "band_30mm_to_lip_over_exhaust": 6.563359418099715,
+    "band_above_lip_over_exhaust": 16.98491989346173
+   },
+   "sLoc": {
+    "exhaust": 0.000777824835,
+    "exhaust_change_last_20pct": 0.22465445063861963,
+    "mass_balance": 0.35002117575,
+    "box_avg_over_exhaust": 9.457004789516652,
+    "build_area_z1_over_exhaust": {
+     "mean": 0.11590029289543194,
+     "max": 0.4434121096066883
+    },
+    "build_area_z3_over_exhaust": {
+     "mean": 0.25563359067061286,
+     "max": 0.4743710410417116
+    },
+    "build_area_z5_over_exhaust": {
+     "mean": 1.5439633132645638,
+     "max": 1.9839602658876396
+    },
+    "under_slide_over_exhaust": 19.75689743705227,
+    "band_below_bed_over_exhaust": 6.321730841852856,
+    "band_bed_to_30mm_over_exhaust": 6.358561816375436,
+    "band_30mm_to_lip_over_exhaust": 10.176153786390497,
+    "band_above_lip_over_exhaust": 27.252587272322064
    }
   }
  }
