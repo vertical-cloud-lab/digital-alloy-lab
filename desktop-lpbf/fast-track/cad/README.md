@@ -305,9 +305,9 @@ along the door's axis the cassette sweeps 245.0 x 107.7 mm, and the same along x
 each face's opening runs straight through as a pocket, and each plate's 7.6 mm boss sits in its pocket (the model
 draws it so; the brochure's 11.4 in. plate to plate inside a 12 in. frame fits 0.3 in. bosses). The deck rests on the
 bottom plate's boss, and the side pockets' lower edges are above it (11.8 mm above the floor with the 266 mm
-estimate, over a 10 mm deck), so it lies in the bottom face's pocket, which is exactly as big as the face opening. The opening
-therefore has to hold the deck's footprint, whichever way the cassette comes in, and has to be square (or square with
-small corner radii). The deck's sharp corners meet the pocket's corner radius r first: the pocket needs a side of
+estimate, over a 10 mm deck), so it lies in the bottom face's pocket, which is exactly as big as the face opening.
+The opening therefore has to hold the deck's footprint, whichever way the cassette comes in, and has to be square (or
+square with small corner radii). The deck's sharp corners meet the pocket's corner radius r first: the pocket needs a side of
 **245 + 0.586 r** (zero clearance). A python-fcl run confirms it: the frame redrawn with a parametric pocket on all six
 faces and the five closed plates' bosses, the cassette carried in through the door at mid-height of the opening
 (2 mm steps), then lowered onto the floor (1 mm steps), bisection on the opening's side:
@@ -369,11 +369,11 @@ the shield too 192.6 mm, down to the bare deck's 180.3 mm.
    back-left corner (1.7 mm from the deck's left edge, 23.2 mm from its back) leaves the deck; the M6 deck-screw holes
    stay 7 mm inside the edge. Example: a 254 mm opening with 1 in. corners needs R_d of 10 mm or more (13.5 mm with
    1 mm a side).
-2. **Under 245 mm:** the 245 mm deck can't lie in the cube with anything taken off it. The parts themselves span
-   241.8 mm in x (the X-LSM100B and its shield) and 196.3 mm in y (nozzle to stage), so a cube deck cut to about
-   243 x 200 mm with rounded corners gains about 2 mm; below about 243 mm the X-LSM100B (239.2 mm) can't sit square in
-   the cube at all. Then the Lesker BX1212S (304.8 mm inside, a full-face door) or a welded cube with a door is the
-   chamber.
+2. **Under 245 mm:** the 245 mm deck can't lie in the cube with anything taken off it. A deck cut to the parts' own
+   spread, 240.2 x 197.3 mm (the X-LSM100B's 239.2 mm plus 0.5 mm a side; nozzle to stage), with the stage shield cut
+   back 2.1 mm to the stage's end, needs 240.2 mm with sharp corners (fcl) and takes a 243 mm opening with corner radii
+   up to 25.4 mm. Under about 241 mm the X-LSM100B itself can't sit square in the cube; then the Lesker BX1212S
+   (304.8 mm inside, a full-face door) or a welded cube with a door is the chamber.
 3. **Whatever it is,** the P108171 plate's boss, which fits the opening, gives its size and corner radius, and so do
    the 12 x 12 in. faces of the short-cube frame P108364, which take the same plates. Both STEP files were read once,
    on 2026-11-25, for their outside sizes only
