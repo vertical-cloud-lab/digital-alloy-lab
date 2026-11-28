@@ -31,7 +31,7 @@ TOOLS = {
             rpm=4000, mm_rev=0.08, length=40.0, angle=90.0),
 }
 # drills by diameter (carbide jobber unless noted); T numbers 20+
-DRILL_D = [1.6, 2.0, 2.05, 2.2, 2.4, 2.5, 3.3, 3.4, 4.2, 4.5, 5.0, 5.5, 6.4, 6.6, 9.6, 10.0]
+DRILL_D = [1.6, 2.0, 2.05, 2.2, 2.4, 2.5, 3.3, 3.4, 4.2, 4.5, 5.0, 5.5, 6.4, 6.6, 9.6, 10.0, 6.1]   # 6.1: v2 heaters
 for _i, _d in enumerate(DRILL_D):
     TOOLS[20 + _i] = dict(name="%.2f mm carbide drill" % _d, shape="drill", d=_d,
                           rpm=min(8100, int(round(60000 / _d / 10.0)) * 10),     # ~60-70 m/min surface speed in 6061

@@ -1,6 +1,6 @@
 (Exported by FreeCAD)
 (Post Processor: Path.Post.scripts.linuxcnc_post)
-(Output Time:2026-11-27 09:06:12.958942)
+(Output Time:2026-11-28 09:56:41.829034)
 (begin preamble)
 G17 G54 G40 G49 G80 G90
 G21
@@ -12,24 +12,26 @@ M6 T26
 G43 H26 
 M3 S8100 
 (finish operation: TC26_Job_MK_13_B)
-(begin operation: Drill 3 x 3.30 M4, z 0.00 to -10.99)
+(begin operation: Drill 4 x 3.30 M4, z 0.00 to -9.99)
 (machine units: mm/min)
 (Coolant On:Flood)
 M8
-(Drill 3 x 3.30 M4, z 0.00 to -10.99) 
+(Drill 4 x 3.30 M4, z 0.00 to -9.99) 
 (Begin Drilling) 
 G0 Z5.000 
 G90 
 G98 
-G0 X28.000 Y15.000 
-G83 X28.000 Y15.000 Z-10.990 F672.300 Q2.475 R2.000 
-G0 X-2.000 Y45.000 
-G83 X-2.000 Y45.000 Z-10.990 F672.300 Q2.475 R2.000 
-G0 X28.000 Y75.000 
-G83 X28.000 Y75.000 Z-10.990 F672.300 Q2.475 R2.000 
+G0 X13.267 Y20.431 
+G83 X13.267 Y20.431 Z-9.990 F672.300 Q2.475 R2.000 
+G0 X-7.569 Y70.733 
+G83 X-7.569 Y70.733 Z-9.990 F672.300 Q2.475 R2.000 
+G0 X42.733 Y91.569 
+G83 X42.733 Y91.569 Z-9.990 F672.300 Q2.475 R2.000 
+G0 X63.569 Y41.267 
+G83 X63.569 Y41.267 Z-9.990 F672.300 Q2.475 R2.000 
 G80 
 G0 Z5.000 
-(finish operation: Drill 3 x 3.30 M4, z 0.00 to -10.99)
+(finish operation: Drill 4 x 3.30 M4, z 0.00 to -9.99)
 (Coolant Off:Flood)
 M9
 (begin postamble)

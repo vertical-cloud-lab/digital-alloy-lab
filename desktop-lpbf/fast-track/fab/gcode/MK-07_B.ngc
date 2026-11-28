@@ -1,6 +1,6 @@
 (Exported by FreeCAD)
 (Post Processor: Path.Post.scripts.linuxcnc_post)
-(Output Time:2026-11-27 09:06:12.958942)
+(Output Time:2026-11-28 09:56:41.829034)
 (begin preamble)
 G17 G54 G40 G49 G80 G90
 G21
@@ -207,6 +207,32 @@ G1 X-4.119 Y-36.425 F1737.360
 G0 Z5.350 
 G0 Z5.350 
 (finish operation: Outside, adaptive, z 0.00 to -12.30)
+(Coolant Off:Flood)
+M9
+(begin operation: TC25_Job_MK_07_B)
+(machine units: mm/min)
+(TC25_Job_MK_07_B) 
+M5
+M6 T25 
+G43 H25 
+M3 S8100 
+(finish operation: TC25_Job_MK_07_B)
+(begin operation: Drill 2 x 2.50 M3, z 0.00 to -6.75)
+(machine units: mm/min)
+(Coolant On:Flood)
+M8
+(Drill 2 x 2.50 M3, z 0.00 to -6.75) 
+(Begin Drilling) 
+G0 Z5.350 
+G90 
+G98 
+G0 X-12.000 Y25.000 
+G83 X-12.000 Y25.000 Z-6.750 F502.200 Q1.875 R2.000 
+G0 X12.000 Y25.000 
+G83 X12.000 Y25.000 Z-6.750 F502.200 Q1.875 R2.000 
+G80 
+G0 Z5.350 
+(finish operation: Drill 2 x 2.50 M3, z 0.00 to -6.75)
 (Coolant Off:Flood)
 M9
 (begin operation: TC31_Job_MK_07_B)

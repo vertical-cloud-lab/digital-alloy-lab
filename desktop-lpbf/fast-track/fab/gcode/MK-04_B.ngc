@@ -1,6 +1,6 @@
 (Exported by FreeCAD)
 (Post Processor: Path.Post.scripts.linuxcnc_post)
-(Output Time:2026-11-27 09:06:12.958942)
+(Output Time:2026-11-28 09:56:41.829034)
 (begin preamble)
 G17 G54 G40 G49 G80 G90
 G21
@@ -12,24 +12,24 @@ M6 T20
 G43 H20 
 M3 S8100 
 (finish operation: TC20_Job_MK_04_B)
-(begin operation: Drill 3 x 1.60 M2, z 28.00 to 24.02)
+(begin operation: Drill 3 x 1.60 M2, z 24.00 to 20.02)
 (machine units: mm/min)
 (Coolant On:Flood)
 M8
-(Drill 3 x 1.60 M2, z 28.00 to 24.02) 
+(Drill 3 x 1.60 M2, z 24.00 to 20.02) 
 (Begin Drilling) 
-G0 Z33.000 
+G0 Z29.000 
 G90 
 G98 
 G0 X0.000 Y17.100 
-G83 X0.000 Y17.100 Z24.020 F324.000 Q1.200 R30.000 
+G83 X0.000 Y17.100 Z20.020 F324.000 Q1.200 R26.000 
 G0 X14.809 Y-8.550 
-G83 X14.809 Y-8.550 Z24.020 F324.000 Q1.200 R30.000 
+G83 X14.809 Y-8.550 Z20.020 F324.000 Q1.200 R26.000 
 G0 X-14.809 Y-8.550 
-G83 X-14.809 Y-8.550 Z24.020 F324.000 Q1.200 R30.000 
+G83 X-14.809 Y-8.550 Z20.020 F324.000 Q1.200 R26.000 
 G80 
-G0 Z33.000 
-(finish operation: Drill 3 x 1.60 M2, z 28.00 to 24.02)
+G0 Z29.000 
+(finish operation: Drill 3 x 1.60 M2, z 24.00 to 20.02)
 (Coolant Off:Flood)
 M9
 (begin postamble)

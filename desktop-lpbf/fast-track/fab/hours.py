@@ -38,13 +38,15 @@ STUDY = {"FT-0": (10, 15), "FT-1": (25, 40), "FT-1V": (30, 48)}       # fast_tra
 A = T.ALLOW
 HIGH = dict(setup_vise=1.5, setup_large=2.0, setup_lathe=1.0, est_factor=1.5)
 REMAKE = {"MK-03", "MK-07", "MK-02a"}      # tightest fits: made twice in the high case
-LATHE_SETUPS = {"MK-03s": 2, "MK-04": 2, "MK-05": 2, "MK-06a": 2, "MK-06b": 2, "MK-07": 1, "MK-10a": 2, "MK-10b": 2}
+LATHE_SETUPS = {"MK-03s": 2, "MK-04": 2, "MK-05": 2, "MK-06a": 2, "MK-06b": 2, "MK-07": 1, "MK-10a": 2, "MK-10b": 2,
+                "MK-02f": 2, "MK-20a": 2, "MK-20c": 2}
 # outsourced split: sheet parts and flat plates go out; turned, sealing and precision pieces stay in
-OUT_SHEET = {"MK-08a", "MK-08b", "MK-12", "MK-18b"}
-OUT_PLATE = {"MK-01", "MK-09a", "MK-15a", "MK-15b", "MK-02c", "MK-02d", "MK-02e"}
+OUT_SHEET = {"MK-08a", "MK-08b", "MK-12", "MK-18b", "MK-17b"}
+OUT_PLATE = {"MK-01", "MK-09a", "MK-09d", "MK-09f", "MK-15a", "MK-15b", "MK-02c", "MK-02d", "MK-02e"}
 # what BYU still does on an outsourced plate: (setups, minutes of machine time) for c'bores, c'sinks and taps
-PLATE_SECONDARY = {"MK-01": "8 c'bores and 15 taps by hand after SendCutSend cuts the profile and drills",
-                   "MK-09a": "6 taps by hand", "MK-15a": "4 c'bores", "MK-15b": "8 taps by hand (both faces)",
+PLATE_SECONDARY = {"MK-01": "4 c'bores and 15 taps by hand after SendCutSend cuts the profile and drills",
+                   "MK-09a": "4 c'bores, 6 c'sinks, 8 taps (one setup and hand taps)",
+                   "MK-09d": "12 c'bores (one setup)", "MK-09f": "4 c'bores, 4 taps (one setup)", "MK-15a": "4 c'bores", "MK-15b": "8 taps by hand (both faces)",
                    "MK-02c": "11 taps by hand", "MK-02d": "slide pocket 1.2 deep (one mill setup)", "MK-02e": "none"}
 
 
@@ -64,9 +66,9 @@ def piece_hours(p, cam_setups):
     buy = route == "buy"
     bb = p["blank"]["box"] if p.get("blank") and p["blank"]["type"] == "box" else None
     large = bb is not None and max(bb[1] - bb[0], bb[3] - bb[2]) > 200.0
-    prog_min = sum(s["total_min"] for s in cam_setups)
-    tool_changes = sum(s["tool_changes"] for s in cam_setups)
-    fc_min = sum(s["freecad_cycle_min"] for s in cam_setups)
+    prog_min = sum(s["total_min"] * s.get("repeat", 1) for s in cam_setups)       # repeat: an indexed feature
+    tool_changes = sum(s["tool_changes"] * s.get("repeat", 1) for s in cam_setups)
+    fc_min = sum(s["freecad_cycle_min"] * s.get("repeat", 1) for s in cam_setups)
     mill_min = prog_min + tool_changes * A["tool_change_s"] / 60 + taps * A["tap_s_per_hole"] / 60
     if pid == "MK-03":
         mill_min += A["bore_head_min"]

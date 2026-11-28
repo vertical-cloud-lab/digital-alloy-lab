@@ -14,6 +14,13 @@ unchanged pieces keep their posted programs' minutes.
 """
 from __future__ import annotations
 
+import sys as _sys
+
+if __name__ == "__main__":
+    _sys.exit("v2_delta.py estimated the v2 hours from the v1 set (round 2). Round 3 ported the set itself to CAD v2, so "
+              "out/hours.json, cam.json and pieces.json are now v2; out/v2/ (delta.md, hours.json, plan.md) is kept as the "
+              "record of the estimate. To reproduce it, run this file at commit e3853cf.")
+
 import copy
 import json
 import pathlib
