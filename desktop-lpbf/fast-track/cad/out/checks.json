@@ -1,0 +1,1583 @@
+{
+ "gantry": "four_post_braced_front_g3",
+ "states": {
+  "S1": {
+   "n_parts": 29,
+   "clashes": [],
+   "contacts": [
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 5294.3,
+     "why": "brace bolted to the post"
+    },
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1312.0,
+     "why": "brace bolted to the post"
+    },
+    {
+     "a": "Gantry cross-beam (clamped at the head height)",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Gantry cross-beam, front (under the head plate's front end)",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Scan-head flange plate (MK-09)",
+     "b": "Head-plate top flange on both cross-beams (MK-09)",
+     "volume_mm3": 43084.8,
+     "why": "top flange welded to the flange plate"
+    },
+    {
+     "a": "Fibre bend restrictor",
+     "b": "Process fibre",
+     "volume_mm3": 563.1,
+     "why": "fibre in its bend restrictor"
+    }
+   ],
+   "beam_hits": [],
+   "beam_nearest": []
+  },
+  "S2": {
+   "n_parts": 53,
+   "clashes": [],
+   "contacts": [
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 5294.3,
+     "why": "brace bolted to the post"
+    },
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1312.0,
+     "why": "brace bolted to the post"
+    },
+    {
+     "a": "Gantry cross-beam (clamped at the head height)",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Gantry cross-beam, front (under the head plate's front end)",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Scan-head flange plate (MK-09)",
+     "b": "Head-plate top flange on both cross-beams (MK-09)",
+     "volume_mm3": 43084.8,
+     "why": "top flange welded to the flange plate"
+    },
+    {
+     "a": "Fibre bend restrictor",
+     "b": "Process fibre",
+     "volume_mm3": 563.1,
+     "why": "fibre in its bend restrictor"
+    },
+    {
+     "a": "Water-cooled beam dump, 1 kW (EKSMA 990-0820 class, envelope)",
+     "b": "Dump water lines",
+     "volume_mm3": 26.3,
+     "why": "hose on the dump"
+    },
+    {
+     "a": "Window retaining flange (MK-02)",
+     "b": "Window-stack screws, M4 x 12 flat head, flush",
+     "volume_mm3": 443.2,
+     "why": "screws"
+    }
+   ],
+   "beam_hits": [],
+   "beam_nearest": [
+    {
+     "part": "Water-cooled beam dump, 1 kW (EKSMA 990-0820 class, envelope)",
+     "clearance_mm": 2.7
+    },
+    {
+     "part": "Cover-slide holder, \u00d844 opening (MK-02)",
+     "clearance_mm": 5.6
+    },
+    {
+     "part": "Window retaining flange (MK-02)",
+     "clearance_mm": 7.04
+    },
+    {
+     "part": "Window ring (MK-02)",
+     "clearance_mm": 7.53
+    },
+    {
+     "part": "Inner clamp ring (MK-02)",
+     "clearance_mm": 7.54
+    },
+    {
+     "part": "Beam tube centre section, split, long (MK-10)",
+     "clearance_mm": 9.33
+    },
+    {
+     "part": "Beam-tube lens collar, clamped on the lens (MK-10)",
+     "clearance_mm": 11.68
+    },
+    {
+     "part": "Box door (the lid): window bore, camera port",
+     "clearance_mm": 12.1
+    }
+   ],
+   "apertures": {
+    "window (ring ledge / flange \u00d844)": {
+     "height_above_bed_mm": 152.0,
+     "envelope_r_mm": 13.86,
+     "offset_mm": 0.61,
+     "opening_r_mm": 22.0,
+     "margin_mm": 7.54
+    },
+    "window top": {
+     "height_above_bed_mm": 161.6,
+     "envelope_r_mm": 13.46,
+     "offset_mm": 1.34,
+     "opening_r_mm": 22.0,
+     "margin_mm": 7.2
+    },
+    "cover slide holder (\u00d844)": {
+     "height_above_bed_mm": 130.0,
+     "envelope_r_mm": 14.76,
+     "offset_mm": 1.07,
+     "opening_r_mm": 22.0,
+     "margin_mm": 6.17
+    },
+    "beam tube lower spigot (\u00d850)": {
+     "height_above_bed_mm": 166.0,
+     "envelope_r_mm": 13.28,
+     "offset_mm": 4.32,
+     "opening_r_mm": 25.0,
+     "margin_mm": 7.4
+    },
+    "beam tube upper spigot (\u00d850)": {
+     "height_above_bed_mm": 286.5,
+     "envelope_r_mm": 8.33,
+     "offset_mm": 4.88,
+     "opening_r_mm": 25.0,
+     "margin_mm": 11.79
+    }
+   }
+  },
+  "FT-0": {
+   "n_parts": 88,
+   "clashes": [],
+   "contacts": [
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 5294.3,
+     "why": "brace bolted to the post"
+    },
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1312.0,
+     "why": "brace bolted to the post"
+    },
+    {
+     "a": "Gantry cross-beam (clamped at the head height)",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Gantry cross-beam, front (under the head plate's front end)",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Scan-head flange plate (MK-09)",
+     "b": "Head-plate top flange on both cross-beams (MK-09)",
+     "volume_mm3": 43084.8,
+     "why": "top flange welded to the flange plate"
+    },
+    {
+     "a": "Fibre bend restrictor",
+     "b": "Process fibre",
+     "volume_mm3": 563.1,
+     "why": "fibre in its bend restrictor"
+    },
+    {
+     "a": "Window retaining flange (MK-02)",
+     "b": "Window-stack screws, M4 x 12 flat head, flush",
+     "volume_mm3": 443.2,
+     "why": "screws"
+    },
+    {
+     "a": "Rod gland plate, 2 O-rings (MK-07)",
+     "b": "Gland screws M5 x 25 with bonded seals (4)",
+     "volume_mm3": 1134.9,
+     "why": "screws"
+    },
+    {
+     "a": "Lead terminal block, 6-way pluggable",
+     "b": "Lead pigtail, 4 heater + 2 TC wires",
+     "volume_mm3": 6.0,
+     "why": "wires in the terminal block"
+    },
+    {
+     "a": "Layer camera: Pi HQ, C-mount lens, FESH1000 (MON1)",
+     "b": "Camera post, arm and foot (MK-20)",
+     "volume_mm3": 242.9,
+     "why": "clamp on the camera's mount ring"
+    }
+   ],
+   "beam_hits": [],
+   "beam_nearest": [
+    {
+     "part": "Well block, \u00d840.00 bore (MK-03)",
+     "clearance_mm": 0.0
+    },
+    {
+     "part": "Substrate disc \u00d839.8 x 6 (MK-05)",
+     "clearance_mm": 0.0
+    },
+    {
+     "part": "Cover-slide holder, \u00d844 opening (MK-02)",
+     "clearance_mm": 5.6
+    },
+    {
+     "part": "FT-0 spreader bar, 48 mm, ground edge, parked (M4)",
+     "clearance_mm": 5.9
+    },
+    {
+     "part": "Heater plate \u00d839.8 x 24 (MK-04)",
+     "clearance_mm": 6.0
+    },
+    {
+     "part": "Slot nozzle 45 x 4 mm (MK-11)",
+     "clearance_mm": 6.61
+    },
+    {
+     "part": "Exhaust collector (MK-11)",
+     "clearance_mm": 6.9
+    },
+    {
+     "part": "Window retaining flange (MK-02)",
+     "clearance_mm": 7.04
+    }
+   ],
+   "sight": {
+    "hopper at the right park (hx 37.5)": {
+     "camera_sees_pct": 100.0,
+     "MON2_lights_pct": 100.0,
+     "MON3_lights_pct": 90.8
+    },
+    "hopper at the left park (hx -33.1)": {
+     "camera_sees_pct": 100.0,
+     "MON2_lights_pct": 100.0,
+     "MON3_lights_pct": 90.8
+    }
+   }
+  },
+  "FT-1": {
+   "n_parts": 106,
+   "clashes": [],
+   "contacts": [
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 5294.3,
+     "why": "brace bolted to the post"
+    },
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1312.0,
+     "why": "brace bolted to the post"
+    },
+    {
+     "a": "Gantry cross-beam (clamped at the head height)",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Gantry cross-beam, front (under the head plate's front end)",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Scan-head flange plate (MK-09)",
+     "b": "Head-plate top flange on both cross-beams (MK-09)",
+     "volume_mm3": 43084.8,
+     "why": "top flange welded to the flange plate"
+    },
+    {
+     "a": "Fibre bend restrictor",
+     "b": "Process fibre",
+     "volume_mm3": 563.1,
+     "why": "fibre in its bend restrictor"
+    },
+    {
+     "a": "Window retaining flange (MK-02)",
+     "b": "Window-stack screws, M4 x 12 flat head, flush",
+     "volume_mm3": 443.2,
+     "why": "screws"
+    },
+    {
+     "a": "Rod gland plate, 2 O-rings (MK-07)",
+     "b": "Gland screws M5 x 25 with bonded seals (4)",
+     "volume_mm3": 1134.9,
+     "why": "screws"
+    },
+    {
+     "a": "IP68 cable glands M16 (2, back wall)",
+     "b": "Recoater M8 data and power cable",
+     "volume_mm3": 245.3,
+     "why": "cable through the gland"
+    },
+    {
+     "a": "Layer camera: Pi HQ, C-mount lens, FESH1000 (MON1)",
+     "b": "Camera post, arm and foot (MK-20)",
+     "volume_mm3": 242.9,
+     "why": "clamp on the camera's mount ring"
+    }
+   ],
+   "beam_hits": [],
+   "beam_nearest": [
+    {
+     "part": "Well block, \u00d840.00 bore (MK-03)",
+     "clearance_mm": 0.0
+    },
+    {
+     "part": "Substrate disc \u00d839.8 x 6 (MK-05)",
+     "clearance_mm": 0.0
+    },
+    {
+     "part": "Cord clamp (MK-08)",
+     "clearance_mm": 3.52
+    },
+    {
+     "part": "Silicone-cord blade, 3 mm",
+     "clearance_mm": 3.96
+    },
+    {
+     "part": "Cover-slide holder, \u00d844 opening (MK-02)",
+     "clearance_mm": 5.6
+    },
+    {
+     "part": "Heater plate \u00d839.8 x 24 (MK-04)",
+     "clearance_mm": 6.0
+    },
+    {
+     "part": "Slot nozzle 45 x 4 mm (MK-11)",
+     "clearance_mm": 6.61
+    },
+    {
+     "part": "Exhaust collector (MK-11)",
+     "clearance_mm": 6.9
+    }
+   ],
+   "apertures": {
+    "window (ring ledge / flange \u00d844)": {
+     "height_above_bed_mm": 152.0,
+     "envelope_r_mm": 13.86,
+     "offset_mm": 0.61,
+     "opening_r_mm": 22.0,
+     "margin_mm": 7.54
+    },
+    "window top": {
+     "height_above_bed_mm": 161.6,
+     "envelope_r_mm": 13.46,
+     "offset_mm": 1.34,
+     "opening_r_mm": 22.0,
+     "margin_mm": 7.2
+    },
+    "cover slide holder (\u00d844)": {
+     "height_above_bed_mm": 130.0,
+     "envelope_r_mm": 14.76,
+     "offset_mm": 1.07,
+     "opening_r_mm": 22.0,
+     "margin_mm": 6.17
+    },
+    "beam tube lower spigot (\u00d850)": {
+     "height_above_bed_mm": 166.0,
+     "envelope_r_mm": 13.28,
+     "offset_mm": 4.32,
+     "opening_r_mm": 25.0,
+     "margin_mm": 7.4
+    },
+    "beam tube upper spigot (\u00d850)": {
+     "height_above_bed_mm": 286.5,
+     "envelope_r_mm": 8.33,
+     "offset_mm": 4.88,
+     "opening_r_mm": 25.0,
+     "margin_mm": 11.79
+    }
+   },
+   "recoater_clashes": [],
+   "recoater_gaps": [
+    {
+     "mover": "Carriage bracket and arm (MK-08)",
+     "part": "Stage shield (MK-12)",
+     "min_gap_mm": 2.0,
+     "at_hx": -45.8
+    },
+    {
+     "mover": "X-LSM carriage",
+     "part": "Stage shield (MK-12)",
+     "min_gap_mm": 3.0,
+     "at_hx": -45.8
+    },
+    {
+     "mover": "Cord clamp (MK-08)",
+     "part": "Well block, \u00d840.00 bore (MK-03)",
+     "min_gap_mm": 3.0,
+     "at_hx": -28.9
+    },
+    {
+     "mover": "Cord clamp (MK-08)",
+     "part": "Substrate disc \u00d839.8 x 6 (MK-05)",
+     "min_gap_mm": 3.0,
+     "at_hx": -3.5
+    },
+    {
+     "mover": "X-LSM carriage",
+     "part": "Deck plate (MK-01)",
+     "min_gap_mm": 3.77,
+     "at_hx": -45.8
+    },
+    {
+     "mover": "Hopper, ~30 cm3 (MK-08)",
+     "part": "Slot nozzle 45 x 4 mm (MK-11)",
+     "min_gap_mm": 4.0,
+     "at_hx": -37.3
+    },
+    {
+     "mover": "Hopper, ~30 cm3 (MK-08)",
+     "part": "Exhaust collector (MK-11)",
+     "min_gap_mm": 4.0,
+     "at_hx": -37.3
+    },
+    {
+     "mover": "Silicone-cord blade, 3 mm",
+     "part": "Slot nozzle 45 x 4 mm (MK-11)",
+     "min_gap_mm": 4.0,
+     "at_hx": -11.9
+    },
+    {
+     "mover": "Silicone-cord blade, 3 mm",
+     "part": "Exhaust collector (MK-11)",
+     "min_gap_mm": 4.0,
+     "at_hx": -11.9
+    },
+    {
+     "mover": "Cord clamp (MK-08)",
+     "part": "Slot nozzle 45 x 4 mm (MK-11)",
+     "min_gap_mm": 4.0,
+     "at_hx": -11.9
+    }
+   ],
+   "piston": {
+    "pz=-15": {
+     "clashes": [],
+     "plate_bottom_above_deck_mm": 7.7,
+     "block_top_below_gland_mm": 23.0,
+     "rope_inside_bore": true
+    },
+    "pz=+5": {
+     "clashes": [],
+     "plate_bottom_above_deck_mm": 27.7,
+     "block_top_below_gland_mm": 3.0,
+     "rope_inside_bore": true
+    },
+    "rod_length_mm": 84.6,
+    "stage_stroke_used_mm": 20.0,
+    "stage_travel_mm": 20.0,
+    "atm_force_on_rod_N": 12.8
+   },
+   "mesh": {
+    "recoater": {
+     "poses": 41,
+     "contacts": [],
+     "n_contacts": 0,
+     "nearest": [
+      {
+       "sweep": "recoater",
+       "mover": "Carriage bracket and arm (MK-08)",
+       "part": "Stage shield (MK-12)",
+       "min_dist_mm": 2.0,
+       "at": -50.8
+      },
+      {
+       "sweep": "recoater",
+       "mover": "Hopper, ~30 cm3 (MK-08)",
+       "part": "Well block, \u00d840.00 bore (MK-03)",
+       "min_dist_mm": 2.0,
+       "at": -25.8
+      },
+      {
+       "sweep": "recoater",
+       "mover": "Hopper, ~30 cm3 (MK-08)",
+       "part": "Substrate disc \u00d839.8 x 6 (MK-05)",
+       "min_dist_mm": 2.0,
+       "at": -23.3
+      },
+      {
+       "sweep": "recoater",
+       "mover": "X-LSM carriage",
+       "part": "Stage shield (MK-12)",
+       "min_dist_mm": 3.0,
+       "at": -50.8
+      },
+      {
+       "sweep": "recoater",
+       "mover": "Cord clamp (MK-08)",
+       "part": "Well block, \u00d840.00 bore (MK-03)",
+       "min_dist_mm": 3.0,
+       "at": -13.3
+      },
+      {
+       "sweep": "recoater",
+       "mover": "Cord clamp (MK-08)",
+       "part": "Substrate disc \u00d839.8 x 6 (MK-05)",
+       "min_dist_mm": 3.0,
+       "at": -13.3
+      },
+      {
+       "sweep": "recoater",
+       "mover": "X-LSM carriage",
+       "part": "Deck plate (MK-01)",
+       "min_dist_mm": 3.77,
+       "at": -50.8
+      },
+      {
+       "sweep": "recoater",
+       "mover": "Hopper, ~30 cm3 (MK-08)",
+       "part": "Slot nozzle 45 x 4 mm (MK-11)",
+       "min_dist_mm": 4.0,
+       "at": -40.8
+      },
+      {
+       "sweep": "recoater",
+       "mover": "Hopper, ~30 cm3 (MK-08)",
+       "part": "Exhaust collector (MK-11)",
+       "min_dist_mm": 4.0,
+       "at": -43.3
+      },
+      {
+       "sweep": "recoater",
+       "mover": "Silicone-cord blade, 3 mm",
+       "part": "Slot nozzle 45 x 4 mm (MK-11)",
+       "min_dist_mm": 4.0,
+       "at": -20.8
+      }
+     ]
+    },
+    "piston": {
+     "poses": 21,
+     "contacts": [],
+     "n_contacts": 0,
+     "nearest": [
+      {
+       "sweep": "piston",
+       "mover": "Piston rod (MK-06)",
+       "part": "Rod gland plate, 2 O-rings (MK-07)",
+       "min_dist_mm": 0.09,
+       "at": -15.0
+      },
+      {
+       "sweep": "piston",
+       "mover": "Substrate disc \u00d839.8 x 6 (MK-05)",
+       "part": "Well block, \u00d840.00 bore (MK-03)",
+       "min_dist_mm": 0.1,
+       "at": 0.0
+      },
+      {
+       "sweep": "piston",
+       "mover": "Heater plate \u00d839.8 x 24 (MK-04)",
+       "part": "Well block, \u00d840.00 bore (MK-03)",
+       "min_dist_mm": 0.1,
+       "at": -6.0
+      },
+      {
+       "sweep": "piston",
+       "mover": "Heater plate \u00d839.8 x 24 (MK-04)",
+       "part": "Overflow cup (MK-16)",
+       "min_dist_mm": 1.6,
+       "at": -15.0
+      },
+      {
+       "sweep": "piston",
+       "mover": "Rod-end block: clamp, lead pocket, AE face (MK-15)",
+       "part": "Rod gland plate, 2 O-rings (MK-07)",
+       "min_dist_mm": 3.0,
+       "at": 5.0
+      },
+      {
+       "sweep": "piston",
+       "mover": "Rod-end block: clamp, lead pocket, AE face (MK-15)",
+       "part": "Gland screws M5 x 25 with bonded seals (4)",
+       "min_dist_mm": 3.0,
+       "at": 5.0
+      },
+      {
+       "sweep": "piston",
+       "mover": "Substrate disc \u00d839.8 x 6 (MK-05)",
+       "part": "Cord clamp (MK-08)",
+       "min_dist_mm": 3.6,
+       "at": 3.0
+      },
+      {
+       "sweep": "piston",
+       "mover": "Piston rod (MK-06)",
+       "part": "Deck plate (MK-01)",
+       "min_dist_mm": 3.62,
+       "at": -15.0
+      },
+      {
+       "sweep": "piston",
+       "mover": "Piston rod (MK-06)",
+       "part": "Saginaw SCE-16EL1208SSLP 304 box, 16 x 12 x 8 in. (body)",
+       "min_dist_mm": 3.63,
+       "at": -15.0
+      },
+      {
+       "sweep": "piston",
+       "mover": "Fibreglass rope wiper",
+       "part": "Well-block heaters, 4 x \u00d86 x 20, 50 W",
+       "min_dist_mm": 3.83,
+       "at": -10.0
+      }
+     ]
+    }
+   },
+   "sight": {
+    "hopper at the right park (hx 37.5)": {
+     "camera_sees_pct": 100.0,
+     "MON2_lights_pct": 100.0,
+     "MON3_lights_pct": 90.8
+    },
+    "hopper at the left park (hx -33.1)": {
+     "camera_sees_pct": 78.0,
+     "MON2_lights_pct": 0.0,
+     "MON3_lights_pct": 90.8
+    }
+   }
+  },
+  "FT-1V": {
+   "n_parts": 108,
+   "clashes": [],
+   "contacts": [
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 5294.3,
+     "why": "brace bolted to the post"
+    },
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1312.0,
+     "why": "brace bolted to the post"
+    },
+    {
+     "a": "Gantry cross-beam (clamped at the head height)",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Gantry cross-beam, front (under the head plate's front end)",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Scan-head flange plate (MK-09)",
+     "b": "Head-plate top flange on both cross-beams (MK-09)",
+     "volume_mm3": 43084.8,
+     "why": "top flange welded to the flange plate"
+    },
+    {
+     "a": "Fibre bend restrictor",
+     "b": "Process fibre",
+     "volume_mm3": 587.8,
+     "why": "fibre in its bend restrictor"
+    },
+    {
+     "a": "KF-25 ports: pump, Pirani, argon, exhaust, 2 electrical feedthroughs",
+     "b": "KF-25 pump hose and valve",
+     "volume_mm3": 47.6,
+     "why": "hose on the pump port"
+    },
+    {
+     "a": "Rotary-vane pump (McMaster 4396K21 class, envelope est.)",
+     "b": "KF-25 pump hose and valve",
+     "volume_mm3": 598.5,
+     "why": "hose on the pump inlet"
+    },
+    {
+     "a": "Window retaining flange (MK-02)",
+     "b": "Window-stack screws, M4 x 12 flat head, flush",
+     "volume_mm3": 443.2,
+     "why": "screws"
+    },
+    {
+     "a": "Rod gland plate, 2 O-rings (MK-07)",
+     "b": "Gland screws M5 x 25 with bonded seals (4)",
+     "volume_mm3": 1134.9,
+     "why": "screws"
+    },
+    {
+     "a": "Layer camera: Pi HQ, C-mount lens, FESH1000 (MON1)",
+     "b": "Camera post, arm and foot (MK-20)",
+     "volume_mm3": 141.8,
+     "why": "clamp on the camera's mount ring"
+    }
+   ],
+   "beam_hits": [],
+   "beam_nearest": [
+    {
+     "part": "Well block, \u00d840.00 bore (MK-03)",
+     "clearance_mm": 0.0
+    },
+    {
+     "part": "Substrate disc \u00d839.8 x 6 (MK-05)",
+     "clearance_mm": 0.0
+    },
+    {
+     "part": "Cord clamp (MK-08)",
+     "clearance_mm": 3.52
+    },
+    {
+     "part": "Silicone-cord blade, 3 mm",
+     "clearance_mm": 3.96
+    },
+    {
+     "part": "Cover-slide holder, \u00d844 opening (MK-02)",
+     "clearance_mm": 5.6
+    },
+    {
+     "part": "Heater plate \u00d839.8 x 24 (MK-04)",
+     "clearance_mm": 6.0
+    },
+    {
+     "part": "Slot nozzle 45 x 4 mm (MK-11)",
+     "clearance_mm": 6.61
+    },
+    {
+     "part": "Exhaust collector (MK-11)",
+     "clearance_mm": 6.9
+    }
+   ],
+   "apertures": {
+    "window (ring ledge / flange \u00d844)": {
+     "height_above_bed_mm": 251.8,
+     "envelope_r_mm": 9.76,
+     "offset_mm": 1.77,
+     "opening_r_mm": 22.0,
+     "margin_mm": 10.47
+    },
+    "window top": {
+     "height_above_bed_mm": 261.3,
+     "envelope_r_mm": 9.37,
+     "offset_mm": 1.05,
+     "opening_r_mm": 22.0,
+     "margin_mm": 11.59
+    },
+    "cover slide holder (\u00d844)": {
+     "height_above_bed_mm": 130.0,
+     "envelope_r_mm": 14.76,
+     "offset_mm": 1.07,
+     "opening_r_mm": 22.0,
+     "margin_mm": 6.17
+    },
+    "beam tube lower spigot (\u00d850)": {
+     "height_above_bed_mm": 265.8,
+     "envelope_r_mm": 9.18,
+     "offset_mm": 3.7,
+     "opening_r_mm": 25.0,
+     "margin_mm": 12.11
+    },
+    "beam tube upper spigot (\u00d850)": {
+     "height_above_bed_mm": 286.5,
+     "envelope_r_mm": 8.33,
+     "offset_mm": 2.12,
+     "opening_r_mm": 25.0,
+     "margin_mm": 14.54
+    }
+   },
+   "recoater_clashes": [],
+   "recoater_gaps": [
+    {
+     "mover": "Carriage bracket and arm (MK-08)",
+     "part": "Stage shield (MK-12)",
+     "min_gap_mm": 2.0,
+     "at_hx": -45.8
+    },
+    {
+     "mover": "X-LSM carriage",
+     "part": "Stage shield (MK-12)",
+     "min_gap_mm": 3.0,
+     "at_hx": -45.8
+    },
+    {
+     "mover": "Cord clamp (MK-08)",
+     "part": "Well block, \u00d840.00 bore (MK-03)",
+     "min_gap_mm": 3.0,
+     "at_hx": -28.9
+    },
+    {
+     "mover": "Cord clamp (MK-08)",
+     "part": "Substrate disc \u00d839.8 x 6 (MK-05)",
+     "min_gap_mm": 3.0,
+     "at_hx": -3.5
+    },
+    {
+     "mover": "X-LSM carriage",
+     "part": "Deck plate (MK-01)",
+     "min_gap_mm": 3.77,
+     "at_hx": -45.8
+    },
+    {
+     "mover": "Hopper, ~30 cm3 (MK-08)",
+     "part": "Slot nozzle 45 x 4 mm (MK-11)",
+     "min_gap_mm": 4.0,
+     "at_hx": -37.3
+    },
+    {
+     "mover": "Hopper, ~30 cm3 (MK-08)",
+     "part": "Exhaust collector (MK-11)",
+     "min_gap_mm": 4.0,
+     "at_hx": -37.3
+    },
+    {
+     "mover": "Silicone-cord blade, 3 mm",
+     "part": "Slot nozzle 45 x 4 mm (MK-11)",
+     "min_gap_mm": 4.0,
+     "at_hx": -11.9
+    },
+    {
+     "mover": "Silicone-cord blade, 3 mm",
+     "part": "Exhaust collector (MK-11)",
+     "min_gap_mm": 4.0,
+     "at_hx": -11.9
+    },
+    {
+     "mover": "Cord clamp (MK-08)",
+     "part": "Slot nozzle 45 x 4 mm (MK-11)",
+     "min_gap_mm": 4.0,
+     "at_hx": -11.9
+    }
+   ],
+   "piston": {
+    "pz=-15": {
+     "clashes": [],
+     "plate_bottom_above_deck_mm": 7.7,
+     "block_top_below_gland_mm": 23.0,
+     "rope_inside_bore": true
+    },
+    "pz=+5": {
+     "clashes": [],
+     "plate_bottom_above_deck_mm": 27.7,
+     "block_top_below_gland_mm": 3.0,
+     "rope_inside_bore": true
+    },
+    "rod_length_mm": 105.6,
+    "stage_stroke_used_mm": 20.0,
+    "stage_travel_mm": 20.0,
+    "atm_force_on_rod_N": 12.8
+   },
+   "mesh": {
+    "recoater": {
+     "poses": 41,
+     "contacts": [],
+     "n_contacts": 0,
+     "nearest": [
+      {
+       "sweep": "recoater",
+       "mover": "Carriage bracket and arm (MK-08)",
+       "part": "Stage shield (MK-12)",
+       "min_dist_mm": 2.0,
+       "at": -50.8
+      },
+      {
+       "sweep": "recoater",
+       "mover": "Hopper, ~30 cm3 (MK-08)",
+       "part": "Well block, \u00d840.00 bore (MK-03)",
+       "min_dist_mm": 2.0,
+       "at": -45.8
+      },
+      {
+       "sweep": "recoater",
+       "mover": "Hopper, ~30 cm3 (MK-08)",
+       "part": "Substrate disc \u00d839.8 x 6 (MK-05)",
+       "min_dist_mm": 2.0,
+       "at": -25.8
+      },
+      {
+       "sweep": "recoater",
+       "mover": "X-LSM carriage",
+       "part": "Stage shield (MK-12)",
+       "min_dist_mm": 3.0,
+       "at": -50.8
+      },
+      {
+       "sweep": "recoater",
+       "mover": "Cord clamp (MK-08)",
+       "part": "Well block, \u00d840.00 bore (MK-03)",
+       "min_dist_mm": 3.0,
+       "at": -33.3
+      },
+      {
+       "sweep": "recoater",
+       "mover": "Cord clamp (MK-08)",
+       "part": "Substrate disc \u00d839.8 x 6 (MK-05)",
+       "min_dist_mm": 3.0,
+       "at": -13.3
+      },
+      {
+       "sweep": "recoater",
+       "mover": "X-LSM carriage",
+       "part": "Deck plate (MK-01)",
+       "min_dist_mm": 3.77,
+       "at": -50.8
+      },
+      {
+       "sweep": "recoater",
+       "mover": "Hopper, ~30 cm3 (MK-08)",
+       "part": "Slot nozzle 45 x 4 mm (MK-11)",
+       "min_dist_mm": 4.0,
+       "at": -40.8
+      },
+      {
+       "sweep": "recoater",
+       "mover": "Hopper, ~30 cm3 (MK-08)",
+       "part": "Exhaust collector (MK-11)",
+       "min_dist_mm": 4.0,
+       "at": -43.3
+      },
+      {
+       "sweep": "recoater",
+       "mover": "Silicone-cord blade, 3 mm",
+       "part": "Slot nozzle 45 x 4 mm (MK-11)",
+       "min_dist_mm": 4.0,
+       "at": -20.8
+      }
+     ]
+    },
+    "piston": {
+     "poses": 21,
+     "contacts": [],
+     "n_contacts": 0,
+     "nearest": [
+      {
+       "sweep": "piston",
+       "mover": "Piston rod, long, for the cube (MK-06)",
+       "part": "Rod gland plate, 2 O-rings (MK-07)",
+       "min_dist_mm": 0.09,
+       "at": -15.0
+      },
+      {
+       "sweep": "piston",
+       "mover": "Substrate disc \u00d839.8 x 6 (MK-05)",
+       "part": "Well block, \u00d840.00 bore (MK-03)",
+       "min_dist_mm": 0.1,
+       "at": 0.0
+      },
+      {
+       "sweep": "piston",
+       "mover": "Heater plate \u00d839.8 x 24 (MK-04)",
+       "part": "Well block, \u00d840.00 bore (MK-03)",
+       "min_dist_mm": 0.1,
+       "at": -1.0
+      },
+      {
+       "sweep": "piston",
+       "mover": "Heater plate \u00d839.8 x 24 (MK-04)",
+       "part": "Overflow cup (MK-16)",
+       "min_dist_mm": 1.6,
+       "at": -15.0
+      },
+      {
+       "sweep": "piston",
+       "mover": "Rod-end block: clamp, lead pocket, AE face (MK-15)",
+       "part": "Rod gland plate, 2 O-rings (MK-07)",
+       "min_dist_mm": 3.0,
+       "at": 5.0
+      },
+      {
+       "sweep": "piston",
+       "mover": "Rod-end block: clamp, lead pocket, AE face (MK-15)",
+       "part": "Gland screws M5 x 25 with bonded seals (4)",
+       "min_dist_mm": 3.0,
+       "at": 5.0
+      },
+      {
+       "sweep": "piston",
+       "mover": "Substrate disc \u00d839.8 x 6 (MK-05)",
+       "part": "Cord clamp (MK-08)",
+       "min_dist_mm": 3.6,
+       "at": 3.0
+      },
+      {
+       "sweep": "piston",
+       "mover": "Piston rod, long, for the cube (MK-06)",
+       "part": "Deck plate (MK-01)",
+       "min_dist_mm": 3.62,
+       "at": -15.0
+      },
+      {
+       "sweep": "piston",
+       "mover": "Piston rod, long, for the cube (MK-06)",
+       "part": "Cube bottom plate, bored for the rod gland (MK-14)",
+       "min_dist_mm": 3.63,
+       "at": -15.0
+      },
+      {
+       "sweep": "piston",
+       "mover": "Fibreglass rope wiper",
+       "part": "Well-block heaters, 4 x \u00d86 x 20, 50 W",
+       "min_dist_mm": 3.83,
+       "at": -10.0
+      }
+     ]
+    }
+   },
+   "sight": {
+    "hopper at the right park (hx 37.5)": {
+     "camera_sees_pct": 100.0,
+     "MON2_lights_pct": 100.0,
+     "MON3_lights_pct": 92.7
+    },
+    "hopper at the left park (hx -33.1)": {
+     "camera_sees_pct": 82.6,
+     "MON2_lights_pct": 0.0,
+     "MON3_lights_pct": 92.7
+    }
+   }
+  },
+  "FT-1 (Thorlabs piston)": {
+   "n_parts": 105,
+   "clashes": [],
+   "contacts": [
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 5294.3,
+     "why": "brace bolted to the post"
+    },
+    {
+     "a": "Gantry uprights",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1312.0,
+     "why": "brace bolted to the post"
+    },
+    {
+     "a": "Gantry cross-beam (clamped at the head height)",
+     "b": "Gantry braces: a diagonal per side, two knee braces at the back",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Gantry cross-beam, front (under the head plate's front end)",
+     "b": "Gantry knee braces, front (2)",
+     "volume_mm3": 1891.4,
+     "why": "knee brace bolted under the cross-beam"
+    },
+    {
+     "a": "Scan-head flange plate (MK-09)",
+     "b": "Head-plate top flange on both cross-beams (MK-09)",
+     "volume_mm3": 43084.8,
+     "why": "top flange welded to the flange plate"
+    },
+    {
+     "a": "Fibre bend restrictor",
+     "b": "Process fibre",
+     "volume_mm3": 563.1,
+     "why": "fibre in its bend restrictor"
+    },
+    {
+     "a": "Window retaining flange (MK-02)",
+     "b": "Window-stack screws, M4 x 12 flat head, flush",
+     "volume_mm3": 443.2,
+     "why": "screws"
+    },
+    {
+     "a": "Rod gland plate, 2 O-rings (MK-07)",
+     "b": "Gland screws M5 x 25 with bonded seals (4)",
+     "volume_mm3": 1134.9,
+     "why": "screws"
+    },
+    {
+     "a": "IP68 cable glands M16 (2, back wall)",
+     "b": "Recoater M8 data and power cable",
+     "volume_mm3": 245.3,
+     "why": "cable through the gland"
+    },
+    {
+     "a": "Layer camera: Pi HQ, C-mount lens, FESH1000 (MON1)",
+     "b": "Camera post, arm and foot (MK-20)",
+     "volume_mm3": 242.9,
+     "why": "clamp on the camera's mount ring"
+    }
+   ],
+   "beam_hits": [],
+   "beam_nearest": [
+    {
+     "part": "Well block, \u00d840.00 bore (MK-03)",
+     "clearance_mm": 0.0
+    },
+    {
+     "part": "Substrate disc \u00d839.8 x 6 (MK-05)",
+     "clearance_mm": 0.0
+    },
+    {
+     "part": "Cord clamp (MK-08)",
+     "clearance_mm": 3.52
+    },
+    {
+     "part": "Silicone-cord blade, 3 mm",
+     "clearance_mm": 3.96
+    },
+    {
+     "part": "Cover-slide holder, \u00d844 opening (MK-02)",
+     "clearance_mm": 5.6
+    },
+    {
+     "part": "Heater plate \u00d839.8 x 24 (MK-04)",
+     "clearance_mm": 6.0
+    },
+    {
+     "part": "Slot nozzle 45 x 4 mm (MK-11)",
+     "clearance_mm": 6.61
+    },
+    {
+     "part": "Exhaust collector (MK-11)",
+     "clearance_mm": 6.9
+    }
+   ],
+   "piston": {
+    "pz=-15": {
+     "clashes": [],
+     "plate_bottom_above_deck_mm": 7.7,
+     "block_top_below_gland_mm": 23.0,
+     "rope_inside_bore": true
+    },
+    "pz=+5": {
+     "clashes": [],
+     "plate_bottom_above_deck_mm": 27.7,
+     "block_top_below_gland_mm": 3.0,
+     "rope_inside_bore": true
+    },
+    "rod_length_mm": 84.6,
+    "stage_stroke_used_mm": 20.0,
+    "stage_travel_mm": 50.0,
+    "atm_force_on_rod_N": 12.8
+   }
+  }
+ },
+ "tube_removal": {
+  "FT-1": {
+   "slide_axis": "x",
+   "-x half-shell": {
+    "poses": 31,
+    "travel_mm": 60.0,
+    "n_contacts": 0,
+    "contacts": [],
+    "nearest": [
+     {
+      "mover": "Tube section -x half-shell",
+      "part": "Window retaining flange (MK-02)",
+      "min_dist_mm": 0.2,
+      "at": 0.0
+     },
+     {
+      "mover": "Tube section -x half-shell",
+      "part": "Window-stack screws, M4 x 12 flat head, flush",
+      "min_dist_mm": 0.2,
+      "at": 2.0
+     },
+     {
+      "mover": "Tube section -x half-shell",
+      "part": "Beam-tube lens collar, clamped on the lens (MK-10)",
+      "min_dist_mm": 0.2,
+      "at": 0.0
+     },
+     {
+      "mover": "Tube section -x half-shell",
+      "part": "Layer camera: Pi HQ, C-mount lens, FESH1000 (MON1)",
+      "min_dist_mm": 4.26,
+      "at": 60.0
+     }
+    ]
+   },
+   "+x half-shell": {
+    "poses": 31,
+    "travel_mm": 60.0,
+    "n_contacts": 0,
+    "contacts": [],
+    "nearest": [
+     {
+      "mover": "Tube section +x half-shell",
+      "part": "Window retaining flange (MK-02)",
+      "min_dist_mm": 0.2,
+      "at": 0.0
+     },
+     {
+      "mover": "Tube section +x half-shell",
+      "part": "Window-stack screws, M4 x 12 flat head, flush",
+      "min_dist_mm": 0.2,
+      "at": 2.0
+     },
+     {
+      "mover": "Tube section +x half-shell",
+      "part": "Beam-tube lens collar, clamped on the lens (MK-10)",
+      "min_dist_mm": 0.2,
+      "at": 0.0
+     },
+     {
+      "mover": "Tube section +x half-shell",
+      "part": "Window, \u00d850.8 x 9.53 fused silica, 1064 V-coat",
+      "min_dist_mm": 4.67,
+      "at": 0.0
+     }
+    ]
+   },
+   "section_length_mm": 123.5
+  },
+  "FT-1V": {
+   "slide_axis": "y",
+   "-y half-shell": {
+    "poses": 31,
+    "travel_mm": 60.0,
+    "n_contacts": 0,
+    "contacts": [],
+    "nearest": [
+     {
+      "mover": "Tube section -y half-shell",
+      "part": "Window retaining flange (MK-02)",
+      "min_dist_mm": 0.2,
+      "at": 0.0
+     },
+     {
+      "mover": "Tube section -y half-shell",
+      "part": "Window-stack screws, M4 x 12 flat head, flush",
+      "min_dist_mm": 0.2,
+      "at": 6.0
+     },
+     {
+      "mover": "Tube section -y half-shell",
+      "part": "Beam-tube lens collar, clamped on the lens (MK-10)",
+      "min_dist_mm": 0.2,
+      "at": 0.0
+     },
+     {
+      "mover": "Tube section -y half-shell",
+      "part": "Window, \u00d850.8 x 9.53 fused silica, 1064 V-coat",
+      "min_dist_mm": 5.01,
+      "at": 0.0
+     }
+    ]
+   },
+   "+y half-shell": {
+    "poses": 31,
+    "travel_mm": 60.0,
+    "n_contacts": 0,
+    "contacts": [],
+    "nearest": [
+     {
+      "mover": "Tube section +y half-shell",
+      "part": "Window retaining flange (MK-02)",
+      "min_dist_mm": 0.2,
+      "at": 0.0
+     },
+     {
+      "mover": "Tube section +y half-shell",
+      "part": "Window-stack screws, M4 x 12 flat head, flush",
+      "min_dist_mm": 0.2,
+      "at": 12.0
+     },
+     {
+      "mover": "Tube section +y half-shell",
+      "part": "Beam-tube lens collar, clamped on the lens (MK-10)",
+      "min_dist_mm": 0.2,
+      "at": 0.0
+     },
+     {
+      "mover": "Tube section +y half-shell",
+      "part": "Window, \u00d850.8 x 9.53 fused silica, 1064 V-coat",
+      "min_dist_mm": 4.67,
+      "at": 0.0
+     }
+    ]
+   },
+   "section_length_mm": 23.7
+  }
+ },
+ "removal": {
+  "gland_bottom_below_rail_tops_mm": 12.0,
+  "rod_in_rod_end_block_mm": 22.0,
+  "rod_length_box_mm": 84.6,
+  "rod_length_cube_mm": 105.6,
+  "rod_bottom_below_block_top_at_pz_top_mm": 101.6,
+  "lift_to_free_rod_from_bore_mm": 103.6,
+  "block_top_below_gland_at_pz_top_mm": 3.0,
+  "block_top_below_gland_at_pz_bot_mm": 23.0
+ },
+ "door": {
+  "hinge_axis_y": 192.7,
+  "hinge_axis_z": 150.0,
+  "camera_on_door": true,
+  "first_contact": {
+   "angle_deg": 25.0,
+   "contacts": [
+    {
+     "pose": 25.0,
+     "mover": "Layer camera: Pi HQ, C-mount lens, FESH1000 (MON1)",
+     "part": "Beam-tube lens collar, clamped on the lens (MK-10)"
+    }
+   ]
+  },
+  "last_free_deg": 24.0,
+  "front_edge_rise_mm": 120.2
+ },
+ "door_no_camera": {
+  "hinge_axis_y": 192.7,
+  "hinge_axis_z": 150.0,
+  "camera_on_door": false,
+  "first_contact": {
+   "angle_deg": 27.0,
+   "contacts": [
+    {
+     "pose": 27.0,
+     "mover": "Quarter-turn latch",
+     "part": "Beam-tube lens collar, clamped on the lens (MK-10)"
+    }
+   ]
+  },
+  "last_free_deg": 26.0,
+  "front_edge_rise_mm": 129.5
+ },
+ "camera": {
+  "FT-0": {
+   "lens_f_mm": 16.0,
+   "tilt_deg": 30.7,
+   "distance_mm": 199.4,
+   "um_per_px_across": 17.8,
+   "um_per_px_along": 20.7,
+   "field_mm": [
+    72.1,
+    54.0
+   ],
+   "scheimpflug_deg": 2.96,
+   "dof_mm_f2_8": 2.48,
+   "plate_depth_range_mm": 20.4,
+   "rayleigh_um_f2_8": 21.5,
+   "video_2028x1520_40fps_um_px": 35.5
+  },
+  "FT-1V": {
+   "lens_f_mm": 25.0,
+   "tilt_deg": 24.1,
+   "distance_mm": 298.7,
+   "um_per_px_across": 17.0,
+   "um_per_px_along": 18.6,
+   "field_mm": [
+    68.8,
+    51.6
+   ],
+   "scheimpflug_deg": 2.34,
+   "dof_mm_f2_8": 2.27,
+   "plate_depth_range_mm": 16.3,
+   "rayleigh_um_f2_8": 20.6,
+   "video_2028x1520_40fps_um_px": 33.9
+  }
+ },
+ "travel": {
+  "beam_r_at_hopper_top_mm": 18.13,
+  "left_park": -31.1,
+  "right_park": 35.5,
+  "travel_needed_mm": 66.6,
+  "stage_travel_mm": 101.6,
+  "travel_range": [
+   -45.8,
+   55.8
+  ],
+  "spare_left_mm": 14.7,
+  "spare_right_mm": 20.3
+ },
+ "fit": {
+  "deck_mm": [
+   245.0,
+   245.0
+  ],
+  "box_inside_mm": [
+   402.6,
+   301.0,
+   210.8
+  ],
+  "box_door_opening_mm_est": [
+   358.6,
+   257.0
+  ],
+  "deck_in_box_margins_mm": [
+   78.8,
+   28.0
+  ],
+  "cube_inside_mm": 289.6,
+  "cube_face_opening_mm_est": 266.0,
+  "deck_through_opening_margin_mm": 21.0,
+  "cube_opening_needed_mm": 247.0,
+  "lesker_bx1212s_inside_mm": 304.8,
+  "deck_in_lesker_margin_mm": 29.9,
+  "X-LSM100B-E03 (used)_length_mm": 239.2,
+  "X-LSM100B-E03 (used)_fits_deck": true,
+  "X-LSM100B-E03 (used)_fits_cube_inside": true,
+  "X-LSQ075B-E01 (rejected)_length_mm": 285.85,
+  "X-LSQ075B-E01 (rejected)_fits_deck": false,
+  "X-LSQ075B-E01 (rejected)_fits_cube_inside": false,
+  "X-LSQ150B-E01 (rejected)_length_mm": 360.9,
+  "X-LSQ150B-E01 (rejected)_fits_deck": false,
+  "X-LSQ150B-E01 (rejected)_fits_cube_inside": false,
+  "window_above_bed_box_mm": 152.0,
+  "beam_at_window_box_mm": 2.99,
+  "window_irradiance_box_kW_cm2_at_400W": 5.7,
+  "cover_slide_above_bed_box_mm": 130.0,
+  "window_above_bed_cube_mm": 251.8,
+  "beam_at_window_cube_mm": 4.95,
+  "window_irradiance_cube_kW_cm2_at_400W": 2.1,
+  "cover_slide_above_bed_cube_mm": 130.0,
+  "cassette_height_above_floor_mm": 107.7,
+  "cube_inside_height_mm": 289.6,
+  "box_inside_height_mm": 210.8,
+  "head_top_above_bed_box_mm": 528.1,
+  "head_top_above_bed_cube_mm": 528.1,
+  "substrate_M3_head_outer_r_mm": 21.0,
+  "substrate_M3_fits": false,
+  "substrate_M2.5_head_outer_r_mm": 20.0,
+  "substrate_M2.5_fits": false,
+  "substrate_M2_head_outer_r_mm": 19.0,
+  "substrate_M2_fits": true,
+  "plate_heater_holes_mm": "2 x \u00d86.1 x 21.0 deep in a 24.0 mm plate"
+ },
+ "gas": {
+  "FT-0": {
+   "inside_L": 25.29,
+   "vendor_L": null,
+   "parts_inside_L": 1.05,
+   "gas_L": 24.24
+  },
+  "FT-1": {
+   "inside_L": 25.29,
+   "vendor_L": null,
+   "parts_inside_L": 1.25,
+   "gas_L": 24.04
+  },
+  "FT-1V": {
+   "inside_L": 23.83,
+   "vendor_L": 22.6,
+   "parts_inside_L": 1.19,
+   "gas_L": 22.64
+  }
+ },
+ "purge": [
+  {
+   "state": "FT-0",
+   "method": "flow purge at 20 L/min",
+   "target_ppm": 1000,
+   "minutes": "6.5 ideal, 13-32 expected",
+   "argon_L": "259-647"
+  },
+  {
+   "state": "FT-0",
+   "method": "flow purge at 20 L/min",
+   "target_ppm": 100,
+   "minutes": "9.3 ideal, 19-46 expected",
+   "argon_L": "371-927"
+  },
+  {
+   "state": "FT-1",
+   "method": "flow purge at 20 L/min",
+   "target_ppm": 1000,
+   "minutes": "6.4 ideal, 13-32 expected",
+   "argon_L": "257-642"
+  },
+  {
+   "state": "FT-1",
+   "method": "flow purge at 20 L/min",
+   "target_ppm": 100,
+   "minutes": "9.2 ideal, 18-46 expected",
+   "argon_L": "368-919"
+  },
+  {
+   "state": "FT-1V",
+   "method": "pump to 1 mbar, backfill argon",
+   "target_ppm": 100,
+   "minutes": "2 cycles x (2.6 min pump + ~1 min fill) = 7",
+   "argon_L": "45"
+  },
+  {
+   "state": "FT-1V",
+   "method": "pump to 1 mbar, backfill argon",
+   "target_ppm": 10,
+   "minutes": "2 cycles x (2.6 min pump + ~1 min fill) = 7",
+   "argon_L": "45"
+  },
+  {
+   "state": "FT-1V",
+   "method": "pump to 5 mbar, backfill argon",
+   "target_ppm": 100,
+   "minutes": "2 cycles x (2.0 min pump + ~1 min fill) = 6",
+   "argon_L": "45"
+  },
+  {
+   "state": "FT-1V",
+   "method": "pump to 5 mbar, backfill argon",
+   "target_ppm": 10,
+   "minutes": "2 cycles x (2.0 min pump + ~1 min fill) = 6",
+   "argon_L": "45"
+  }
+ ],
+ "heat": [
+  {
+   "enclosure": "box (FT-0, FT-1)",
+   "area_m2": 0.537,
+   "cooling": "still air",
+   "rise_K": "32-46",
+   "air_C": "71",
+   "stage_limit_C": 50.0
+  },
+  {
+   "enclosure": "box (FT-0, FT-1)",
+   "area_m2": 0.537,
+   "cooling": "fan",
+   "rise_K": "10-14",
+   "air_C": "39",
+   "stage_limit_C": 50.0
+  },
+  {
+   "enclosure": "cube (FT-1V)",
+   "area_m2": 0.675,
+   "cooling": "still air",
+   "rise_K": "25-36",
+   "air_C": "61",
+   "stage_limit_C": 50.0
+  },
+  {
+   "enclosure": "cube (FT-1V)",
+   "area_m2": 0.675,
+   "cooling": "fan",
+   "rise_K": "8-11",
+   "air_C": "36",
+   "stage_limit_C": 50.0
+  }
+ ],
+ "runtime_s": 655
+}

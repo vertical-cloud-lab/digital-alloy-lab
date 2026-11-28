@@ -1,0 +1,67 @@
+(Exported by FreeCAD)
+(Post Processor: Path.Post.scripts.linuxcnc_post)
+(Output Time:2026-11-28 10:33:04.783722)
+(begin preamble)
+G17 G54 G40 G49 G80 G90
+G21
+(begin operation: TC8_Job_MK_06a_A)
+(machine units: mm/min)
+(TC8_Job_MK_06a_A) 
+M5
+M6 T8 
+G43 H8 
+M3 S5000 
+(finish operation: TC8_Job_MK_06a_A)
+(begin operation: lead notch 3 x 3.5 through one wall, x3: index 120 deg, custom zig-zag)
+(machine units: mm/min)
+(Coolant On:Flood)
+M8
+(lead notch 3 x 3.5 through one wall, x3: index 120 deg, custom zig-zag) 
+(Begin Custom) 
+G0 X-0.500 Y-78.105 
+G0 Z8.350 
+G1 Z6.550 F38.100 
+G1 X-0.500 Y-76.605 Z6.050 F38.100 
+G1 X-0.500 Y-78.105 F76.200 
+G1 X-0.500 Y-78.105 F76.200 
+G1 X-0.500 Y-76.605 F76.200 
+G1 X0.500 Y-76.605 F76.200 
+G1 X0.500 Y-78.105 F76.200 
+G1 X-0.500 Y-78.105 F76.200 
+G1 X-0.500 Y-76.605 Z5.750 F38.100 
+G1 X-0.500 Y-78.105 F76.200 
+G1 X-0.500 Y-78.105 F76.200 
+G1 X-0.500 Y-76.605 F76.200 
+G1 X0.500 Y-76.605 F76.200 
+G1 X0.500 Y-78.105 F76.200 
+G1 X-0.500 Y-78.105 F76.200 
+G1 X-0.500 Y-76.605 Z5.450 F38.100 
+G1 X-0.500 Y-78.105 F76.200 
+G1 X-0.500 Y-78.105 F76.200 
+G1 X-0.500 Y-76.605 F76.200 
+G1 X0.500 Y-76.605 F76.200 
+G1 X0.500 Y-78.105 F76.200 
+G1 X-0.500 Y-78.105 F76.200 
+G1 X-0.500 Y-76.605 Z5.150 F38.100 
+G1 X-0.500 Y-78.105 F76.200 
+G1 X-0.500 Y-78.105 F76.200 
+G1 X-0.500 Y-76.605 F76.200 
+G1 X0.500 Y-76.605 F76.200 
+G1 X0.500 Y-78.105 F76.200 
+G1 X-0.500 Y-78.105 F76.200 
+G1 X-0.500 Y-76.605 Z4.860 F38.100 
+G1 X-0.500 Y-78.105 F76.200 
+G1 X-0.500 Y-78.105 F76.200 
+G1 X-0.500 Y-76.605 F76.200 
+G1 X0.500 Y-76.605 F76.200 
+G1 X0.500 Y-78.105 F76.200 
+G1 X-0.500 Y-78.105 F76.200 
+G0 Z11.350 
+(End Custom) 
+(finish operation: lead notch 3 x 3.5 through one wall, x3: index 120 deg, custom zig-zag)
+(Coolant Off:Flood)
+M9
+(begin postamble)
+M05
+G17 G54 G90 G80 G40
+M2

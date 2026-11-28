@@ -1,0 +1,1158 @@
+{
+ "method": "Need dates: cad/ft_progression.py's network, scenario A (stages on PCards, cube ordered on day 0). Each shop task of the\nnetwork (\"deck plate and target stand made\", \"window stack and beam tube made\", \"FT-0 parts made\", \"FT-1 parts made\",\n\"cube plates machined\") is replaced by a fixed finish day; the need date is the latest finish that delays none of the\nmilestones, with the other shop tasks at the network's own finishes. Days are working days from the order (day 0).",
+ "need": {
+  "S1": {
+   "early": 4.0,
+   "network_finish_early": 3.4,
+   "late": 14.0,
+   "network_finish_late": 11.2
+  },
+  "S2": {
+   "early": 5.0,
+   "network_finish_early": 5.3,
+   "late": 17.0,
+   "network_finish_late": 17.0
+  },
+  "FT-0": {
+   "early": 9.0,
+   "network_finish_early": 9.2,
+   "late": 28.5,
+   "network_finish_late": 28.6
+  },
+  "FT-1": {
+   "early": 11.0,
+   "network_finish_early": 11.1,
+   "late": 35.0,
+   "network_finish_late": 35.2
+  },
+  "FT-1V": {
+   "early": 16.0,
+   "network_finish_early": 13.3,
+   "late": 44.0,
+   "network_finish_late": 22.8
+  },
+  "_cube_arrives": [
+   11,
+   16
+  ],
+  "_milestones_weeks": {
+   "S1 guide-laser and scanner checks": [
+    1.4,
+    3.8
+   ],
+   "S2 FULL POWER INTO THE DUMP": [
+    1.7,
+    4.6
+   ],
+   "FT-0 FIRST TRACKS": [
+    2.4,
+    6.9
+   ],
+   "FT-1 FIRST COUPONS": [
+    3.6,
+    9.8
+   ],
+   "FT-1V FIRST COUPONS (< 100 ppm)": [
+    4.2,
+    11.0
+   ]
+  }
+ },
+ "network_milestones_weeks": {
+  "S1 guide-laser and scanner checks": 1.4,
+  "S2 FULL POWER INTO THE DUMP": 1.66,
+  "FT-0 FIRST TRACKS": 2.44,
+  "FT-1 FIRST COUPONS": 3.64,
+  "FT-1V FIRST COUPONS (< 100 ppm)": 4.24
+ },
+ "runs": [
+  {
+   "case": "low",
+   "people": 1,
+   "variant": "base",
+   "done_day": {
+    "S1": 2.59,
+    "S2": 4.35,
+    "FT-0": 8.24,
+    "FT-1": 10.16,
+    "FT-1V": 12.41
+   },
+   "late_days": {
+    "S1": 0.0,
+    "S2": 0.0,
+    "FT-0": 0.0,
+    "FT-1": 0.0,
+    "FT-1V": 0.0
+   },
+   "milestones_weeks": {
+    "S1 guide-laser and scanner checks": 1.4,
+    "S2 FULL POWER INTO THE DUMP": 1.6,
+    "FT-0 FIRST TRACKS": 2.25,
+    "FT-1 FIRST COUPONS": 3.45,
+    "FT-1V FIRST COUPONS (< 100 ppm)": 4.05
+   },
+   "log": null
+  },
+  {
+   "case": "low",
+   "people": 2,
+   "variant": "base",
+   "done_day": {
+    "S1": 1.9,
+    "S2": 2.48,
+    "FT-0": 5.17,
+    "FT-1": 5.26,
+    "FT-1V": 11.55
+   },
+   "late_days": {
+    "S1": 0.0,
+    "S2": 0.0,
+    "FT-0": 0.0,
+    "FT-1": 0.0,
+    "FT-1V": 0.0
+   },
+   "milestones_weeks": {
+    "S1 guide-laser and scanner checks": 1.4,
+    "S2 FULL POWER INTO THE DUMP": 1.6,
+    "FT-0 FIRST TRACKS": 1.8,
+    "FT-1 FIRST COUPONS": 2.83,
+    "FT-1V FIRST COUPONS (< 100 ppm)": 3.43
+   },
+   "log": null
+  },
+  {
+   "case": "low",
+   "people": 3,
+   "variant": "base",
+   "done_day": {
+    "S1": 1.64,
+    "S2": 2.01,
+    "FT-0": 5.03,
+    "FT-1": 5.07,
+    "FT-1V": 11.35
+   },
+   "late_days": {
+    "S1": 0.0,
+    "S2": 0.0,
+    "FT-0": 0.0,
+    "FT-1": 0.0,
+    "FT-1V": 0.0
+   },
+   "milestones_weeks": {
+    "S1 guide-laser and scanner checks": 1.4,
+    "S2 FULL POWER INTO THE DUMP": 1.6,
+    "FT-0 FIRST TRACKS": 1.8,
+    "FT-1 FIRST COUPONS": 2.81,
+    "FT-1V FIRST COUPONS (< 100 ppm)": 3.41
+   },
+   "log": null
+  },
+  {
+   "case": "exp",
+   "people": 1,
+   "variant": "base",
+   "done_day": {
+    "S1": 5.72,
+    "S2": 9.36,
+    "FT-0": 16.62,
+    "FT-1": 20.73,
+    "FT-1V": 24.96
+   },
+   "late_days": {
+    "S1": 1.72,
+    "S2": 4.36,
+    "FT-0": 7.62,
+    "FT-1": 9.73,
+    "FT-1V": 8.96
+   },
+   "milestones_weeks": {
+    "S1 guide-laser and scanner checks": 1.74,
+    "S2 FULL POWER INTO THE DUMP": 2.47,
+    "FT-0 FIRST TRACKS": 3.92,
+    "FT-1 FIRST COUPONS": 5.55,
+    "FT-1V FIRST COUPONS (< 100 ppm)": 6.15
+   },
+   "log": null
+  },
+  {
+   "case": "exp",
+   "people": 2,
+   "variant": "base",
+   "done_day": {
+    "S1": 3.18,
+    "S2": 4.82,
+    "FT-0": 8.41,
+    "FT-1": 10.62,
+    "FT-1V": 12.63
+   },
+   "late_days": {
+    "S1": 0.0,
+    "S2": 0.0,
+    "FT-0": 0.0,
+    "FT-1": 0.0,
+    "FT-1V": 0.0
+   },
+   "milestones_weeks": {
+    "S1 guide-laser and scanner checks": 1.4,
+    "S2 FULL POWER INTO THE DUMP": 1.6,
+    "FT-0 FIRST TRACKS": 2.28,
+    "FT-1 FIRST COUPONS": 3.52,
+    "FT-1V FIRST COUPONS (< 100 ppm)": 4.12
+   },
+   "log": [
+    {
+     "who": 0,
+     "kind": "cam",
+     "pid": "MK-01",
+     "state": "S1",
+     "start": 0.0,
+     "end": 2.04
+    },
+    {
+     "who": 1,
+     "kind": "cam",
+     "pid": "MK-09a",
+     "state": "S1",
+     "start": 0.0,
+     "end": 2.57
+    },
+    {
+     "who": 0,
+     "kind": "cam",
+     "pid": "MK-09c",
+     "state": "S1",
+     "start": 2.04,
+     "end": 3.78
+    },
+    {
+     "who": 1,
+     "kind": "cam",
+     "pid": "MK-09d",
+     "state": "S1",
+     "start": 2.57,
+     "end": 4.48
+    },
+    {
+     "who": 0,
+     "kind": "cam",
+     "pid": "MK-09e",
+     "state": "S1",
+     "start": 3.78,
+     "end": 6.14
+    },
+    {
+     "who": 1,
+     "kind": "cam",
+     "pid": "MK-09f",
+     "state": "S1",
+     "start": 4.48,
+     "end": 6.3
+    },
+    {
+     "who": 0,
+     "kind": "cam",
+     "pid": "MK-18a",
+     "state": "S1",
+     "start": 6.14,
+     "end": 8.02
+    },
+    {
+     "who": 1,
+     "kind": "cam",
+     "pid": "MK-18b",
+     "state": "S1",
+     "start": 6.3,
+     "end": 6.8
+    },
+    {
+     "who": 1,
+     "kind": "cam",
+     "pid": "MK-22a",
+     "state": "S1",
+     "start": 6.8,
+     "end": 8.62
+    },
+    {
+     "who": 0,
+     "kind": "floor",
+     "pid": "MK-01",
+     "state": "S1",
+     "start": 8.02,
+     "end": 11.02
+    },
+    {
+     "who": 1,
+     "kind": "floor",
+     "pid": "MK-09a",
+     "state": "S1",
+     "start": 8.62,
+     "end": 13.05
+    },
+    {
+     "who": 0,
+     "kind": "floor",
+     "pid": "MK-09c",
+     "state": "S1",
+     "start": 11.02,
+     "end": 12.94
+    },
+    {
+     "who": 0,
+     "kind": "floor",
+     "pid": "MK-09d",
+     "state": "S1",
+     "start": 12.94,
+     "end": 16.36
+    },
+    {
+     "who": 1,
+     "kind": "floor",
+     "pid": "MK-09e",
+     "state": "S1",
+     "start": 13.05,
+     "end": 15.82
+    },
+    {
+     "who": 1,
+     "kind": "floor",
+     "pid": "MK-09f",
+     "state": "S1",
+     "start": 15.82,
+     "end": 18.79
+    },
+    {
+     "who": 0,
+     "kind": "floor",
+     "pid": "MK-18a",
+     "state": "S1",
+     "start": 16.36,
+     "end": 18.17
+    },
+    {
+     "who": 0,
+     "kind": "floor",
+     "pid": "MK-18b",
+     "state": "S1",
+     "start": 18.17,
+     "end": 18.52
+    },
+    {
+     "who": 0,
+     "kind": "floor",
+     "pid": "MK-22a",
+     "state": "S1",
+     "start": 18.52,
+     "end": 20.39
+    },
+    {
+     "who": 1,
+     "kind": "cam",
+     "pid": "MK-22b",
+     "state": "S1",
+     "start": 18.79,
+     "end": 21.73
+    },
+    {
+     "who": 0,
+     "kind": "cam",
+     "pid": "MK-02a",
+     "state": "S2",
+     "start": 20.39,
+     "end": 22.21
+    },
+    {
+     "who": 1,
+     "kind": "floor",
+     "pid": "MK-22b",
+     "state": "S1",
+     "start": 21.73,
+     "end": 25.4
+    },
+    {
+     "who": 0,
+     "kind": "floor",
+     "pid": "MK-02a",
+     "state": "S2",
+     "start": 22.21,
+     "end": 25.1
+    },
+    {
+     "who": 0,
+     "kind": "cam",
+     "pid": "MK-02b",
+     "state": "S2",
+     "start": 25.1,
+     "end": 26.92
+    },
+    {
+     "who": 1,
+     "kind": "cam",
+     "pid": "MK-02c",
+     "state": "S2",
+     "start": 25.4,
+     "end": 26.67
+    },
+    {
+     "who": 1,
+     "kind": "floor",
+     "pid": "MK-02c",
+     "state": "S2",
+     "start": 26.67,
+     "end": 27.78
+    },
+    {
+     "who": 0,
+     "kind": "floor",
+     "pid": "MK-02b",
+     "state": "S2",
+     "start": 26.92,
+     "end": 28.84
+    },
+    {
+     "who": 1,
+     "kind": "cam",
+     "pid": "MK-02d",
+     "state": "S2",
+     "start": 27.78,
+     "end": 28.93
+    },
+    {
+     "who": 0,
+     "kind": "cam",
+     "pid": "MK-02e",
+     "state": "S2",
+     "start": 28.84,
+     "end": 29.99
+    },
+    {
+     "who": 1,
+     "kind": "floor",
+     "pid": "MK-02d",
+     "state": "S2",
+     "start": 28.93,
+     "end": 30.01
+    },
+    {
+     "who": 0,
+     "kind": "floor",
+     "pid": "MK-02e",
+     "state": "S2",
+     "start": 29.99,
+     "end": 31.05
+    },
+    {
+     "who": 1,
+     "kind": "cam",
+     "pid": "MK-10a",
+     "state": "S2",
+     "start": 30.01,
+     "end": 32.83
+    },
+    {
+     "who": 0,
+     "kind": "cam",
+     "pid": "MK-10c",
+     "state": "S2",
+     "start": 31.05,
+     "end": 33.41
+    },
+    {
+     "who": 1,
+     "kind": "floor",
+     "pid": "MK-10a",
+     "state": "S2",
+     "start": 32.83,
+     "end": 36.26
+    },
+    {
+     "who": 0,
+     "kind": "floor",
+     "pid": "MK-10c",
+     "state": "S2",
+     "start": 33.41,
+     "end": 36.37
+    },
+    {
+     "who": 1,
+     "kind": "cam",
+     "pid": "MK-23",
+     "state": "S2",
+     "start": 36.26,
+     "end": 37.37
+    },
+    {
+     "who": 0,
+     "kind": "cam",
+     "pid": "MK-03",
+     "state": "FT-0",
+     "start": 36.37,
+     "end": 38.86
+    },
+    {
+     "who": 1,
+     "kind": "floor",
+     "pid": "MK-23",
+     "state": "S2",
+     "start": 37.37,
+     "end": 38.54
+    },
+    {
+     "who": 1,
+     "kind": "cam",
+     "pid": "MK-03s",
+     "state": "FT-0",
+     "start": 38.54,
+     "end": 38.79
+    },
+    {
+     "who": 1,
+     "kind": "floor",
+     "pid": "MK-03s",
+     "state": "FT-0",
+     "start": 38.79,
+     "end": 40.72
+    },
+    {
+     "who": 0,
+     "kind": "floor",
+     "pid": "MK-03",
+     "state": "FT-0",
+     "start": 38.86,
+     "end": 41.75
+    },
+    {
+     "who": 1,
+     "kind": "cam",
+     "pid": "MK-04",
+     "state": "FT-0",
+     "start": 40.72,
+     "end": 44.12
+    },
+    {
+     "who": 0,
+     "kind": "cam",
+     "pid": "MK-05",
+     "state": "FT-0",
+     "start": 41.75,
+     "end": 43.9
+    },
+    {
+     "who": 0,
+     "kind": "floor",
+     "pid": "MK-05",
+     "state": "FT-0",
+     "start": 43.9,
+     "end": 46.84
+    },
+    {
+     "who": 1,
+     "kind": "floor",
+     "pid": "MK-04",
+     "state": "FT-0",
+     "start": 44.12,
+     "end": 47.76
+    },
+    {
+     "who": 0,
+     "kind": "cam",
+     "pid": "MK-06a",
+     "state": "FT-0",
+     "start": 46.84,
+     "end": 49.55
+    },
+    {
+     "who": 1,
+     "kind": "cam",
+     "pid": "MK-07",
+     "state": "FT-0",
+     "start": 47.76,
+     "end": 50.55
+    },
+    {
+     "who": 0,
+     "kind": "floor",
+     "pid": "MK-06a",
+     "state": "FT-0",
+     "start": 49.55,
+     "end": 52.99
+    },
+    {
+     "who": 1,
+     "kind": "floor",
+     "pid": "MK-07",
+     "state": "FT-0",
+     "start": 50.55,
+     "end": 53.83
+    },
+    {
+     "who": 0,
+     "kind": "cam",
+     "pid": "MK-11a",
+     "state": "FT-0",
+     "start": 52.99,
+     "end": 55.93
+    },
+    {
+     "who": 1,
+     "kind": "cam",
+     "pid": "MK-11b",
+     "state": "FT-0",
+     "start": 53.83,
+     "end": 56.77
+    },
+    {
+     "who": 0,
+     "kind": "floor",
+     "pid": "MK-11a",
+     "state": "FT-0",
+     "start": 55.93,
+     "end": 59.39
+    },
+    {
+     "who": 1,
+     "kind": "floor",
+     "pid": "MK-11b",
+     "state": "FT-0",
+     "start": 56.77,
+     "end": 60.23
+    },
+    {
+     "who": 0,
+     "kind": "cam",
+     "pid": "MK-16",
+     "state": "FT-0",
+     "start": 59.39,
+     "end": 61.09
+    },
+    {
+     "who": 1,
+     "kind": "cam",
+     "pid": "MK-17b",
+     "state": "FT-0",
+     "start": 60.23,
+     "end": 60.73
+    },
+    {
+     "who": 1,
+     "kind": "floor",
+     "pid": "MK-17b",
+     "state": "FT-0",
+     "start": 60.73,
+     "end": 60.98
+    },
+    {
+     "who": 1,
+     "kind": "cam",
+     "pid": "MK-19",
+     "state": "FT-0",
+     "start": 60.98,
+     "end": 62.74
+    },
+    {
+     "who": 0,
+     "kind": "floor",
+     "pid": "MK-16",
+     "state": "FT-0",
+     "start": 61.09,
+     "end": 62.86
+    },
+    {
+     "who": 1,
+     "kind": "floor",
+     "pid": "MK-19",
+     "state": "FT-0",
+     "start": 62.74,
+     "end": 65.65
+    },
+    {
+     "who": 0,
+     "kind": "cam",
+     "pid": "MK-20a",
+     "state": "FT-0",
+     "start": 62.86,
+     "end": 63.11
+    },
+    {
+     "who": 0,
+     "kind": "floor",
+     "pid": "MK-20a",
+     "state": "FT-0",
+     "start": 63.11,
+     "end": 64.43
+    },
+    {
+     "who": 0,
+     "kind": "cam",
+     "pid": "MK-20c",
+     "state": "FT-0",
+     "start": 64.43,
+     "end": 64.68
+    },
+    {
+     "who": 0,
+     "kind": "floor",
+     "pid": "MK-20c",
+     "state": "FT-0",
+     "start": 64.68,
+     "end": 67.3
+    },
+    {
+     "who": 1,
+     "kind": "cam",
+     "pid": "MK-08a",
+     "state": "FT-1",
+     "start": 65.65,
+     "end": 66.15
+    },
+    {
+     "who": 1,
+     "kind": "floor",
+     "pid": "MK-08a",
+     "state": "FT-1",
+     "start": 66.15,
+     "end": 66.73
+    },
+    {
+     "who": 1,
+     "kind": "cam",
+     "pid": "MK-08b",
+     "state": "FT-1",
+     "start": 66.73,
+     "end": 67.23
+    },
+    {
+     "who": 1,
+     "kind": "floor",
+     "pid": "MK-08b",
+     "state": "FT-1",
+     "start": 67.23,
+     "end": 67.81
+    },
+    {
+     "who": 0,
+     "kind": "cam",
+     "pid": "MK-08c",
+     "state": "FT-1",
+     "start": 67.3,
+     "end": 69.63
+    },
+    {
+     "who": 1,
+     "kind": "cam",
+     "pid": "MK-08d",
+     "state": "FT-1",
+     "start": 67.81,
+     "end": 70.15
+    },
+    {
+     "who": 0,
+     "kind": "floor",
+     "pid": "MK-08c",
+     "state": "FT-1",
+     "start": 69.63,
+     "end": 72.2
+    },
+    {
+     "who": 1,
+     "kind": "floor",
+     "pid": "MK-08d",
+     "state": "FT-1",
+     "start": 70.15,
+     "end": 72.68
+    },
+    {
+     "who": 0,
+     "kind": "cam",
+     "pid": "MK-08e",
+     "state": "FT-1",
+     "start": 72.2,
+     "end": 74.58
+    },
+    {
+     "who": 1,
+     "kind": "cam",
+     "pid": "MK-12",
+     "state": "FT-1",
+     "start": 72.68,
+     "end": 73.18
+    },
+    {
+     "who": 1,
+     "kind": "floor",
+     "pid": "MK-12",
+     "state": "FT-1",
+     "start": 73.18,
+     "end": 73.43
+    },
+    {
+     "who": 1,
+     "kind": "cam",
+     "pid": "MK-15a",
+     "state": "FT-1",
+     "start": 73.43,
+     "end": 75.25
+    },
+    {
+     "who": 0,
+     "kind": "floor",
+     "pid": "MK-08e",
+     "state": "FT-1",
+     "start": 74.58,
+     "end": 77.25
+    },
+    {
+     "who": 1,
+     "kind": "floor",
+     "pid": "MK-15a",
+     "state": "FT-1",
+     "start": 75.25,
+     "end": 78.22
+    },
+    {
+     "who": 0,
+     "kind": "cam",
+     "pid": "MK-15b",
+     "state": "FT-1",
+     "start": 77.25,
+     "end": 79.07
+    },
+    {
+     "who": 1,
+     "kind": "cam",
+     "pid": "MK-15c",
+     "state": "FT-1",
+     "start": 78.22,
+     "end": 81.2
+    },
+    {
+     "who": 0,
+     "kind": "floor",
+     "pid": "MK-15b",
+     "state": "FT-1",
+     "start": 79.07,
+     "end": 80.9
+    },
+    {
+     "who": 0,
+     "kind": "cam",
+     "pid": "MK-02f",
+     "state": "FT-1V",
+     "start": 80.9,
+     "end": 83.7
+    },
+    {
+     "who": 1,
+     "kind": "floor",
+     "pid": "MK-15c",
+     "state": "FT-1",
+     "start": 81.2,
+     "end": 84.95
+    },
+    {
+     "who": 0,
+     "kind": "floor",
+     "pid": "MK-02f",
+     "state": "FT-1V",
+     "start": 83.7,
+     "end": 86.93
+    },
+    {
+     "who": 1,
+     "kind": "cam",
+     "pid": "MK-06b",
+     "state": "FT-1V",
+     "start": 84.95,
+     "end": 87.66
+    },
+    {
+     "who": 0,
+     "kind": "cam",
+     "pid": "MK-10b",
+     "state": "FT-1V",
+     "start": 86.93,
+     "end": 89.75
+    },
+    {
+     "who": 1,
+     "kind": "floor",
+     "pid": "MK-06b",
+     "state": "FT-1V",
+     "start": 87.66,
+     "end": 91.1
+    },
+    {
+     "who": 0,
+     "kind": "floor",
+     "pid": "MK-10b",
+     "state": "FT-1V",
+     "start": 89.75,
+     "end": 93.18
+    },
+    {
+     "who": 1,
+     "kind": "cam",
+     "pid": "MK-13",
+     "state": "FT-1V",
+     "start": 91.1,
+     "end": 93.04
+    },
+    {
+     "who": 1,
+     "kind": "floor",
+     "pid": "MK-13",
+     "state": "FT-1V",
+     "start": 93.04,
+     "end": 97.7
+    },
+    {
+     "who": 0,
+     "kind": "cam",
+     "pid": "MK-14",
+     "state": "FT-1V",
+     "start": 93.18,
+     "end": 95.0
+    },
+    {
+     "who": 0,
+     "kind": "floor",
+     "pid": "MK-14",
+     "state": "FT-1V",
+     "start": 95.0,
+     "end": 98.58
+    },
+    {
+     "who": 1,
+     "kind": "cam",
+     "pid": "MK-21c",
+     "state": "FT-1V",
+     "start": 97.7,
+     "end": 97.7
+    },
+    {
+     "who": 1,
+     "kind": "floor",
+     "pid": "MK-21c",
+     "state": "FT-1V",
+     "start": 97.7,
+     "end": 101.08
+    }
+   ]
+  },
+  {
+   "case": "exp",
+   "people": 3,
+   "variant": "base",
+   "done_day": {
+    "S1": 2.41,
+    "S2": 3.23,
+    "FT-0": 5.62,
+    "FT-1": 7.16,
+    "FT-1V": 11.58
+   },
+   "late_days": {
+    "S1": 0.0,
+    "S2": 0.0,
+    "FT-0": 0.0,
+    "FT-1": 0.0,
+    "FT-1V": 0.0
+   },
+   "milestones_weeks": {
+    "S1 guide-laser and scanner checks": 1.4,
+    "S2 FULL POWER INTO THE DUMP": 1.6,
+    "FT-0 FIRST TRACKS": 1.8,
+    "FT-1 FIRST COUPONS": 2.92,
+    "FT-1V FIRST COUPONS (< 100 ppm)": 3.52
+   },
+   "log": null
+  },
+  {
+   "case": "high",
+   "people": 1,
+   "variant": "base",
+   "done_day": {
+    "S1": 7.84,
+    "S2": 13.48,
+    "FT-0": 25.29,
+    "FT-1": 31.1,
+    "FT-1V": 36.97
+   },
+   "late_days": {
+    "S1": 3.84,
+    "S2": 8.48,
+    "FT-0": 16.29,
+    "FT-1": 20.1,
+    "FT-1V": 20.97
+   },
+   "milestones_weeks": {
+    "S1 guide-laser and scanner checks": 2.17,
+    "S2 FULL POWER INTO THE DUMP": 3.3,
+    "FT-0 FIRST TRACKS": 5.66,
+    "FT-1 FIRST COUPONS": 7.62,
+    "FT-1V FIRST COUPONS (< 100 ppm)": 8.39
+   },
+   "log": null
+  },
+  {
+   "case": "high",
+   "people": 2,
+   "variant": "base",
+   "done_day": {
+    "S1": 4.32,
+    "S2": 6.88,
+    "FT-0": 12.87,
+    "FT-1": 15.88,
+    "FT-1V": 18.66
+   },
+   "late_days": {
+    "S1": 0.32,
+    "S2": 1.88,
+    "FT-0": 3.87,
+    "FT-1": 4.88,
+    "FT-1V": 2.66
+   },
+   "milestones_weeks": {
+    "S1 guide-laser and scanner checks": 1.46,
+    "S2 FULL POWER INTO THE DUMP": 1.98,
+    "FT-0 FIRST TRACKS": 3.17,
+    "FT-1 FIRST COUPONS": 4.58,
+    "FT-1V FIRST COUPONS (< 100 ppm)": 5.18
+   },
+   "log": null
+  },
+  {
+   "case": "high",
+   "people": 3,
+   "variant": "base",
+   "done_day": {
+    "S1": 3.32,
+    "S2": 4.69,
+    "FT-0": 8.62,
+    "FT-1": 10.79,
+    "FT-1V": 12.5
+   },
+   "late_days": {
+    "S1": 0.0,
+    "S2": 0.0,
+    "FT-0": 0.0,
+    "FT-1": 0.0,
+    "FT-1V": 0.0
+   },
+   "milestones_weeks": {
+    "S1 guide-laser and scanner checks": 1.4,
+    "S2 FULL POWER INTO THE DUMP": 1.6,
+    "FT-0 FIRST TRACKS": 2.32,
+    "FT-1 FIRST COUPONS": 3.56,
+    "FT-1V FIRST COUPONS (< 100 ppm)": 4.16
+   },
+   "log": null
+  },
+  {
+   "case": "exp",
+   "people": 1,
+   "variant": "FT-1 plates out",
+   "done_day": {
+    "S1": 5.72,
+    "S2": 9.36,
+    "FT-0": 16.62,
+    "FT-1": 20.08,
+    "FT-1V": 24.3
+   },
+   "late_days": {
+    "S1": 1.72,
+    "S2": 4.36,
+    "FT-0": 7.62,
+    "FT-1": 9.08,
+    "FT-1V": 8.3
+   },
+   "milestones_weeks": {
+    "S1 guide-laser and scanner checks": 1.74,
+    "S2 FULL POWER INTO THE DUMP": 2.47,
+    "FT-0 FIRST TRACKS": 3.92,
+    "FT-1 FIRST COUPONS": 5.42,
+    "FT-1V FIRST COUPONS (< 100 ppm)": 6.02
+   },
+   "log": null
+  },
+  {
+   "case": "exp",
+   "people": 2,
+   "variant": "FT-1 plates out",
+   "done_day": {
+    "S1": 3.18,
+    "S2": 4.82,
+    "FT-0": 8.41,
+    "FT-1": 10.42,
+    "FT-1V": 12.3
+   },
+   "late_days": {
+    "S1": 0.0,
+    "S2": 0.0,
+    "FT-0": 0.0,
+    "FT-1": 0.0,
+    "FT-1V": 0.0
+   },
+   "milestones_weeks": {
+    "S1 guide-laser and scanner checks": 1.4,
+    "S2 FULL POWER INTO THE DUMP": 1.6,
+    "FT-0 FIRST TRACKS": 2.28,
+    "FT-1 FIRST COUPONS": 3.48,
+    "FT-1V FIRST COUPONS (< 100 ppm)": 4.08
+   },
+   "log": null
+  },
+  {
+   "case": "exp",
+   "people": 2,
+   "variant": "stock day 2",
+   "done_day": {
+    "S1": 3.84,
+    "S2": 4.73,
+    "FT-0": 8.44,
+    "FT-1": 10.59,
+    "FT-1V": 12.61
+   },
+   "late_days": {
+    "S1": 0.0,
+    "S2": 0.0,
+    "FT-0": 0.0,
+    "FT-1": 0.0,
+    "FT-1V": 0.0
+   },
+   "milestones_weeks": {
+    "S1 guide-laser and scanner checks": 1.4,
+    "S2 FULL POWER INTO THE DUMP": 1.6,
+    "FT-0 FIRST TRACKS": 2.29,
+    "FT-1 FIRST COUPONS": 3.52,
+    "FT-1V FIRST COUPONS (< 100 ppm)": 4.12
+   },
+   "log": null
+  },
+  {
+   "case": "exp",
+   "people": 3,
+   "variant": "stock day 2",
+   "done_day": {
+    "S1": 3.55,
+    "S2": 4.01,
+    "FT-0": 5.66,
+    "FT-1": 7.14,
+    "FT-1V": 11.58
+   },
+   "late_days": {
+    "S1": 0.0,
+    "S2": 0.0,
+    "FT-0": 0.0,
+    "FT-1": 0.0,
+    "FT-1V": 0.0
+   },
+   "milestones_weeks": {
+    "S1 guide-laser and scanner checks": 1.4,
+    "S2 FULL POWER INTO THE DUMP": 1.6,
+    "FT-0 FIRST TRACKS": 1.8,
+    "FT-1 FIRST COUPONS": 2.93,
+    "FT-1V FIRST COUPONS (< 100 ppm)": 3.53
+   },
+   "log": null
+  }
+ ]
+}

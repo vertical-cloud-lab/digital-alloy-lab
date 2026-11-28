@@ -1,0 +1,1620 @@
+diff --git a/desktop-lpbf/fast-track/video/audit.py b/desktop-lpbf/fast-track/video/audit.py
+index ca44526..1166c86 100644
+--- a/desktop-lpbf/fast-track/video/audit.py
++++ b/desktop-lpbf/fast-track/video/audit.py
+@@ -5,8 +5,10 @@ fibre's blended vertices) and the solid effects (the coupons). This replays the
+ against everything drawn that is solid and at least 30 % opaque in the model (OPAQUE; a part faded for a cutaway view still
+ counts): python-fcl BVH collision on the drawn triangles, the mover shrunk 0.3 mm, the translational penetration depth
+ over 26 directions on the 1.5 mm ladder, containment by winding numbers (collide.py). A pair deeper than 1.5 mm is a
+-violation unless it is on the short ALLOWED list below. A pair whose relative pose never changes in the chapter is how the
+-model is drawn (the CAD's own overlap) and is listed apart as "rigid".
++violation unless it is on the short ALLOWED list below, or unless the CAD model itself draws the two parts overlapping at
++rest (a brace's end buried in a post, a flange over a beam: rest_depth) and the pair never goes deeper than that (+0.5 mm)
++while one of them moves in or out. A pair whose relative pose never changes in the chapter is how the model is drawn
++(the CAD's own overlap) and is listed apart as "rigid".
+ 
+     /tmp/tools/capmem 2 /tmp/venv/bin/python desktop-lpbf/fast-track/video/audit.py 1 2 3     # -> video/out/audit.json
+ """
+@@ -36,11 +38,37 @@ ALLOWED = [
+      "the hose's clamp end is drawn over its KF-25 port's flange (the model's hose ends in the flange)"),
+     (r"^KF-25 pump hose", r"^Rotary-vane pump", 15.0,
+      "the hose's other end is drawn down into the pump's inlet on its top face"),
++    (r"^Quarter-turn latch", r"^Poured-in-place door gasket", 3.0,
++     "the latch's cam is drawn hooked under the body's lip; the quarter turn that frees it before the door lifts off is "
++     "not drawn"),
+     (r"^Process fibre", r"^IPG YLR-400", 3.5,
+      "the fibre's laser end starts 3 mm inside the laser envelope's top face, where the fibre leaves the laser (the model)"),
+ ]
+ 
+ 
++_REST = {}
++
++
++def _bb_match(V, W, tol=0.05):
++    return np.allclose(V.min(0), W.min(0), atol=tol) and np.allclose(V.max(0), W.max(0), atol=tol)
++
++
++def rest_depth(la, Va, lb, Vb):
++    """The depth (mm) the CAD model draws between parts la and lb at rest, from a model state that has both at the places
++    these meshes are drawn from; None when no state has both there (a part that never meets the other in the model)."""
++    key = (la, lb, tuple(np.round(Va.min(0), 1)), tuple(np.round(Vb.min(0), 1)))
++    if key in _REST:
++        return _REST[key]
++    out = None
++    for st in S.model().STATES:
++        m = S.state_meshes(st)
++        if la in m and lb in m and _bb_match(m[la]["V"], Va) and _bb_match(m[lb]["V"], Vb):
++            out = C.depth(C.Geom(m[la]["V"], m[la]["F"]), np.zeros(3), C.Geom(m[lb]["V"], m[lb]["F"]), np.zeros(3))
++            break
++    _REST[key] = out
++    return out
++
++
+ def allowed(la, lb):
+     for pa, pb, lim, why in ALLOWED:
+         if (re.search(pa, la) and re.search(pb, lb)) or (re.search(pa, lb) and re.search(pb, la)):
+@@ -144,6 +172,10 @@ def run(ch):
+                 la = meshes[a]["label"] if a in meshes else a
+                 lb = meshes[b]["label"] if b in meshes else b
+                 al = allowed(la, lb)
++                if al is None and dep > C.DEPTH_MM and a in meshes and b in meshes:
++                    rd = rest_depth(la, meshes[a]["V"], lb, meshes[b]["V"])
++                    if rd is not None and rd > C.DEPTH_MM:
++                        al = (rd + 0.5, "the CAD model draws these two overlapping at rest; never deeper while moving")
+                 lim = al[0] if al else C.DEPTH_MM
+                 if dep > 0 and al:
+                     h = allow_hits.setdefault(al[1], dict(pairs=set(), frames=0, worst=0.0))
+@@ -163,7 +195,7 @@ def run(ch):
+         (rigid if len(rigid_rel[pair]) == 1 and _both_move_together(pair, seen) else rows).append(r)
+     out = dict(chapter=ch, frames_checked=frames, movers=len(movers), threshold_mm=C.DEPTH_MM, opaque_min=OPAQUE,
+                violations=len(rows), worst_mm=rows[0]["worst_mm"] if rows else 0.0, pairs=rows[:60], rigid_pairs=rigid[:40],
+-               allowed=[dict(reason=k, pairs=sorted(h["pairs"])[:6], pair_frames=h["frames"], worst_mm=round(h["worst"], 1))
++               allowed=[dict(reason=k, pairs=sorted(h["pairs"])[:24], pair_frames=h["frames"], worst_mm=round(h["worst"], 1))
+                         for k, h in allow_hits.items()],
+                seconds=round(time.time() - t0, 1))
+     print(f"ch{ch}: {frames} drawn frames, {len(movers)} movers, {len(rows)} violating pairs "
+diff --git a/desktop-lpbf/fast-track/video/compose.py b/desktop-lpbf/fast-track/video/compose.py
+index 123e803..7d1b0ac 100644
+--- a/desktop-lpbf/fast-track/video/compose.py
++++ b/desktop-lpbf/fast-track/video/compose.py
+@@ -1,10 +1,11 @@
+ """Compose the fast-track video: the rendered 3-D frames, the panels drawn over them, one H.264 MP4.
+ 
+-    /tmp/venv/bin/python desktop-lpbf/fast-track/video/compose.py            # every chapter rendered under /tmp/ft-video/frames
++    /tmp/venv/bin/python desktop-lpbf/fast-track/video/compose.py            # every chapter rendered under /tmp/r3-video/frames
+     ... compose.py --stills                                                   # also the stills and the contact sheet
+ 
+ Layout (1920 x 1080): the 3-D picture on the left (1440 x 1080) with a caption bar along its top; a 480 px panel on the
+-right with the calendar (scenario A of ft_progression.py), the state, the running spend (parts.csv), what is being added or
++right with the calendar (scenario A of ft_progression.py, round 2's schedule), the state, the running spend (parts.csv,
++round 2's prices, as of AS_OF), what is being added or
+ moved (with its parts.csv line or MK number) and how fast the picture runs; a thin progress bar with a tick per chapter
+ along the bottom. Writes video/out/fast-track-progression.mp4, video/out/chapters.txt and video/out/compose.json, and with
+ --stills img/video/*.jpg.
+@@ -27,7 +28,7 @@ HERE = Path(__file__).resolve().parent
+ sys.path.insert(0, str(HERE))
+ import engine as E  # noqa: E402
+ 
+-FR = Path(os.environ.get("FT_VIDEO", "/tmp/ft-video")) / "frames"
++FR = Path(os.environ.get("FT_VIDEO", "/tmp/r3-video")) / "frames"
+ OUT = HERE / "out"
+ IMG = HERE.parent / "img" / "video"
+ W, H = 1920, 1080
+@@ -35,6 +36,9 @@ PW = W - E.W3
+ FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+ BOLD = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+ INK, MUTED, PANEL, ACCENT = "#f2f5f8", "#a9b6c3", "#1f2a36", "#f0a63a"
++AS_OF = "2026-11-28"                   # the date the schedule (ft_progression.py) and prices (parts.csv) were read
++WEEKS = 10                             # calendar axes: weeks from the order (FT-1V's latest is 9.3)
++SPEND_K = 70                           # spend axis, US$ k (FT-1V's high is $61.0k)
+ MILESTONES = [("S1", "S1 guide-laser and scanner checks"), ("S2", "S2 FULL POWER INTO THE DUMP"), ("FT-0", "FT-0 FIRST TRACKS"),
+               ("FT-1", "FT-1 FIRST COUPONS"), ("FT-1V", "FT-1V FIRST COUPONS (< 100 ppm)")]
+ F = {}
+@@ -66,6 +70,11 @@ def money(x):
+     return f"${x / 1000:.1f}k"
+ 
+ 
++def dd(x):
++    """Working days, to 0.1 (shop days from fab/out/hours.json are fractional)."""
++    return f"{x:.1f}".rstrip("0").rstrip(".")
++
++
+ def sched():
+     import story as ST
+     return {m: ST.sched(m) for _, m in MILESTONES}
+@@ -86,7 +95,7 @@ def panel(ov, ms, total_hi):
+     # calendar
+     d.line((x0, y, PW - x0, y), fill="#3a4856", width=1)
+     y += 12
+-    d.text((x0, y), "CALENDAR (weeks from the order, scenario A)", font=font(13, True), fill=MUTED)
++    d.text((x0, y), f"CALENDAR (weeks from the order, scenario A, {AS_OF})", font=font(13, True), fill=MUTED)
+     y += 24
+     cal = ov.get("calendar")
+     if cal:
+@@ -94,7 +103,7 @@ def panel(ov, ms, total_hi):
+         big = "Day 0" if hi == 0 else f"Week {lo / 5:.1f}-{hi / 5:.1f}"
+         d.text((x0, y), big, font=font(34, True), fill=ACCENT)
+         y += 46
+-        sub = "the orders go out" if hi == 0 else f"working days {lo}-{hi}: {task}"
++        sub = "the orders go out" if hi == 0 else f"working days {dd(lo)}-{dd(hi)}: {task}"
+         for ln in wrap(d, sub, font(14), PW - 2 * x0)[:2]:
+             d.text((x0, y), ln, font=font(14), fill=INK)
+             y += 19
+@@ -102,10 +111,10 @@ def panel(ov, ms, total_hi):
+             for ln in wrap(d, note, font(13), PW - 2 * x0)[:2]:
+                 d.text((x0, y), ln, font=font(13), fill=MUTED)
+                 y += 18
+-        # mini timeline: 0-8 weeks, each milestone's range, the current one outlined
++        # mini timeline: 0-WEEKS weeks, each milestone's range, the current one outlined
+         y += 8
+-        X = lambda wk: x0 + (PW - 2 * x0) * min(wk, 8.0) / 8.0  # noqa: E731
+-        for k in range(9):
++        X = lambda wk: x0 + (PW - 2 * x0) * min(wk, float(WEEKS)) / WEEKS  # noqa: E731
++        for k in range(WEEKS + 1):
+             d.line((X(k), y + 64, X(k), y + 68), fill=MUTED)
+             d.text((X(k) - 4, y + 70), str(k), font=font(11), fill=MUTED)
+         for i, (stn, m) in enumerate(MILESTONES):
+@@ -119,7 +128,7 @@ def panel(ov, ms, total_hi):
+     # spend
+     d.line((x0, y, PW - x0, y), fill="#3a4856", width=1)
+     y += 12
+-    d.text((x0, y), "SPENT SO FAR (parts.csv, low-high)", font=font(13, True), fill=MUTED)
++    d.text((x0, y), f"SPENT SO FAR (parts.csv {AS_OF}, low-high)", font=font(13, True), fill=MUTED)
+     y += 24
+     sp = ov.get("spend") or (0, 0, [])
+     lo, hi, recent = sp
+@@ -171,8 +180,8 @@ def panel(ov, ms, total_hi):
+         for ln in wrap(d, "scan vectors: " + ov["scan"], font(11), bw)[:2]:
+             d.text((x0, yb), ln, font=font(11), fill=MUTED)
+             yb += 15
+-    d.text((x0, H - 42), "Round-1 schedule and prices (see PR 294 for round 2's)", font=font(11), fill=MUTED)
+-    d.text((x0, H - 24), "Model: ft_model.py round 1; bought parts are envelopes (estimates)", font=font(11), fill=MUTED)
++    d.text((x0, H - 42), f"Round 2's schedule and prices, read {AS_OF} (estimates)", font=font(11), fill=MUTED)
++    d.text((x0, H - 24), "Model: CAD v2 (ft_model.py, g3 gantry); bought parts to vendor sizes", font=font(11), fill=MUTED)
+     return im
+ 
+ 
+@@ -248,23 +257,24 @@ def card(ov):
+         im = Image.new("RGBA", (w, h), (31, 42, 54, 246))
+         d = ImageDraw.Draw(im)
+         x, y = 36, 28
+-        rows = [(m.replace(" (< 100 ppm)", ", < 100 ppm"), lo / 5, hi / 5, f"weeks {wk(lo)}-{wk(hi)}  (days {lo}-{hi})")
+-                for m, lo, hi in sm["milestones"]]
+-        y = range_chart(d, x, y, w - 2 * x, rows, 8.0, range(0, 9), lambda t: f"{t}", "Milestones: weeks from the order",
+-                        f"working days / 5; earliest to latest, round-1 scenario {sm.get('scenario', '')} (PR 294 has "
+-                        "round 2's)", label_w=380, row_h=34,
+-                        val_w=230)
++        rows = [(m.replace(" (< 100 ppm)", ", < 100 ppm"), lo / 5, hi / 5,
++                 f"weeks {wk(lo)}-{wk(hi)}  (days {dd(lo)}-{dd(hi)})") for m, lo, hi in sm["milestones"]]
++        y = range_chart(d, x, y, w - 2 * x, rows, float(WEEKS), range(0, WEEKS + 1), lambda t: f"{t}",
++                        "Milestones: weeks from the order",
++                        f"working days / 5; earliest to latest; scenario {sm.get('scenario', '')} "
++                        f"(ft_progression.py, {AS_OF})", label_w=380, row_h=34,
++                        val_w=250)
+         d.text((x + 380, y - 4), "weeks", font=font(12), fill=MUTED)
+         y += 34
+         sp = sm["spend"]
+         order = [st for st in ("S1", "S2", "FT-0", "FT-1", "FT-1V") if st in sp]
+         rows = [(f"{st} built", sp[st][0] / 1000, sp[st][1] / 1000, f"{money(sp[st][0])} - {money(sp[st][1])}")
+                 for st in order]
+-        y = range_chart(d, x, y, w - 2 * x, rows, 50.0, range(0, 51, 10), lambda t: f"${t}k",
++        y = range_chart(d, x, y, w - 2 * x, rows, float(SPEND_K), range(0, SPEND_K + 1, 10), lambda t: f"${t}k",
+                         "Running spend when each state is built (US$)",
+-                        "round-1 parts.csv low and high list prices, counted as ft_progression.spend() counts them "
+-                        "(PR 294 has round 2's)", label_w=380,
+-                        row_h=34, val_w=230)
++                        f"parts.csv low and high list prices as of {AS_OF}, counted as ft_progression.spend() counts "
++                        "them", label_w=380,
++                        row_h=34, val_w=250)
+         return im, ((E.W3 - w) // 2, 150)
+     orders = ov["orders"]
+     w = 820
+@@ -274,7 +284,7 @@ def card(ov):
+     rows = [(o, lo / 5, hi / 5, f"weeks {wk(lo)}-{wk(hi)}") for o, lo, hi in orders]
+     xmax = max(4.0, float(np.ceil(max(r[2] for r in rows))))
+     range_chart(d, 28, 22, w - 56, rows, xmax, range(0, int(xmax) + 1), lambda t: f"{t}",
+-                "When each order is in hand", "weeks from day 0 (working days / 5), earliest to latest, round-1 scenario A",
++                "When each order is in hand", f"weeks from day 0 (working days / 5), earliest to latest, scenario A, {AS_OF}",
+                 label_w=300, row_h=27, val_w=130)
+     return im, (40, 118)
+ 
+diff --git a/desktop-lpbf/fast-track/video/engine.py b/desktop-lpbf/fast-track/video/engine.py
+index f5f5ec5..4a91b8c 100644
+--- a/desktop-lpbf/fast-track/video/engine.py
++++ b/desktop-lpbf/fast-track/video/engine.py
+@@ -280,16 +280,21 @@ class Timeline:
+                 pids.append(a.pid)
+         return [(self.actors[n].label or n, self.actors[n].pid) for n in names], pids
+ 
+-    def insert(self, names, prefs=None, way=None, seat_v=SEAT_V, ignore=(), verb="adding", gap=0.25, label=None):
++    def insert(self, names, prefs=None, way=None, seat_v=SEAT_V, ignore=(), verb="adding", gap=0.25, label=None, extra=()):
+         names = [n for n in names if n in self.actors]
+         if not names:
+             return None
+         grp = [n for n in names if self.actors[n].solid]
+-        for n in grp:
+-            if n not in self.world.g:
+-                self.world.put(n, self.actors[n].V, self.actors[n].F)
++        added = [n for n in grp if n not in self.world.g]
++        for n in added:
++            self.world.put(n, self.actors[n].V, self.actors[n].F)
+         if way is None:
+-            how, way = PL.plan(self.world, grp, prefs=prefs, ignore=ignore)
++            try:
++                how, way = PL.plan(self.world, grp, prefs=prefs, ignore=ignore, extra=extra)
++            except RuntimeError:
++                for n in added:                       # leave the world as it was, so the caller can try again
++                    self.world.drop(n)
++                raise
+         else:
+             bad = PL.check(self.world, grp, way, ignore)
+             how = "given"
+@@ -326,15 +331,16 @@ class Timeline:
+         self.t = max(t0 + 0.5, t1 + gap)
+         return P
+ 
+-    def remove(self, names, prefs=None, way=None, verb="taking out", gap=0.25, label=None, seat_v=SEAT_V):
+-        """way: from the place (0, 0, 0) out of the scene (the reverse of an insertion path)."""
++    def remove(self, names, prefs=None, way=None, verb="taking out", gap=0.25, label=None, seat_v=SEAT_V, extra=()):
++        """way: from the place (0, 0, 0) out of the scene (the reverse of an insertion path); extra: hand-given insertion
++        paths [(name, way)] tried before the planner's candidates (reversed for the removal)."""
+         names = [n for n in names if n in self.actors]
+         if not names:
+             return None
+         grp = [n for n in names if self.actors[n].solid]
+         base = {n: self.world.t.get(n, np.zeros(3)).copy() for n in grp}
+         if way is None:
+-            how, w_in = PL.plan(self.world, grp, prefs=prefs, ignore=ignore_of(grp))
++            how, w_in = PL.plan(self.world, grp, prefs=prefs, ignore=ignore_of(grp), extra=extra)
+             way = w_in[::-1]
+         else:
+             how = "given"
+diff --git a/desktop-lpbf/fast-track/video/plan.py b/desktop-lpbf/fast-track/video/plan.py
+index 6d5b014..9e92776 100644
+--- a/desktop-lpbf/fast-track/video/plan.py
++++ b/desktop-lpbf/fast-track/video/plan.py
+@@ -25,6 +25,8 @@ class World:
+ 
+     def __init__(self):
+         self.g, self.t = {}, {}
++        self.allow = {}          # (a, b) -> depth (mm) the CAD model itself draws a and b overlapping at rest
++        self.overlaps = []       # those pairs, as found, for the report
+ 
+     def put(self, name, V, F, t=(0.0, 0.0, 0.0)):
+         self.g[name] = C.Geom(V, F)
+@@ -56,11 +58,25 @@ class World:
+             ov = np.all((mlo <= hi) & (lo <= mhi), axis=1)
+             for j in np.nonzero(ov)[0]:
+                 n = others[j]
+-                d = C.depth(gm, tm, self.g[n], self.t[n], need=need)
+-                if d > need:
++                lim = max(need, self.allow.get((m, n), 0.0))
++                d = C.depth(gm, tm, self.g[n], self.t[n], need=lim)
++                if d > lim:
+                     out.append((m, n, d))
+         return out
+ 
++    def allow_model_overlaps(self, group, ignore=()):
++        """Pairs the group overlaps at its own place (the model draws them so: a brace's end buried in a post, a flange
++        over a beam): along any path, each such pair may go no deeper than it is at rest (+0.5 mm). A part whose place is
++        filled by another (DEEP) is not allowed."""
++        at = self.hits(group, (0.0, 0.0, 0.0), ignore)
++        bad = [x for x in at if x[2] >= C.DEEP]
++        if bad:
++            return bad
++        for m, n, d in at:
++            self.allow[(m, n)] = self.allow[(n, m)] = d + 0.5
++            self.overlaps.append((m, n, round(float(d), 1)))
++        return []
++
+ 
+ def samples(way, step=STEP_MM):
+     """Offsets along the legs of a path, every `step` mm, ending at the last waypoint."""
+@@ -120,7 +136,7 @@ def plan(world, group, prefs=None, ignore=(), extra=()):
+     """The first clear path for a group: hand-given ones (`extra`, tried first), then candidates(prefs). Every path ends
+     at the place itself (offset 0), so when the place is already taken it fails at once rather than after sampling all
+     ~1300 candidates to their last point (which took minutes per part)."""
+-    at = world.hits(group, (0.0, 0.0, 0.0), ignore)
++    at = world.allow_model_overlaps(group, ignore)
+     if at:
+         raise RuntimeError(f"no clear path for {group[:3]}...: the place itself is taken: {at[0]}")
+     tried = []
+diff --git a/desktop-lpbf/fast-track/video/render.py b/desktop-lpbf/fast-track/video/render.py
+index d091a0e..0b08bca 100644
+--- a/desktop-lpbf/fast-track/video/render.py
++++ b/desktop-lpbf/fast-track/video/render.py
+@@ -4,7 +4,7 @@
+     ... render.py N --plan        # plan and check the chapter, print its paths and the end-state check; no frames
+     ... render.py N --stills 6    # only six frames spread over the chapter (for a contact sheet)
+ 
+-Writes /tmp/ft-video/frames/chN/: NNNNN.jpg (only frames that differ from the one before), meta.jsonl (every frame: time,
++Writes /tmp/r3-video/frames/chN/: NNNNN.jpg (only frames that differ from the one before), meta.jsonl (every frame: time,
+ shot, camera, which image to show, the overlay data), plan.json (every insertion, removal and move with its checked path),
+ and for the audit audit.pkl (every drawn frame's actors: what is visible, where, at which scale) and meshes.pkl.
+ """
+@@ -99,7 +99,7 @@ def one(a):
+     probs = ST.verify_end(s) if a.chapter not in (0,) else []
+     unpl = s.unplaced() if a.chapter in (1, 2, 3, 4, 6) else []
+     rep = dict(chapter=a.chapter, title=tl.title, seconds=round(T, 2), frames=nfr, plan=plan_report(s),
+-               end_state_problems=probs, never_placed=unpl,
++               end_state_problems=probs, never_placed=unpl, model_overlaps=tl.world.overlaps,
+                shots=[(round(x[0], 2), round(x[1], 2), x[3]) for x in tl.shots],
+                planning_s=round(time.time() - t_start, 1))
+     (d / "plan.json").write_text(json.dumps(rep, indent=1))
+diff --git a/desktop-lpbf/fast-track/video/scene.py b/desktop-lpbf/fast-track/video/scene.py
+index a4ebbd0..11264d7 100644
+--- a/desktop-lpbf/fast-track/video/scene.py
++++ b/desktop-lpbf/fast-track/video/scene.py
+@@ -4,7 +4,7 @@ Everything drawn is a triangle mesh in mm, in ft_model's frame (origin at the ce
+ build, +X the recoat direction, +Y to the back, +Z up). The same triangles are drawn by render.py and checked by plan.py
+ and audit.py, so what the audit checks is what the video shows.
+ 
+-    /tmp/venv/bin/python desktop-lpbf/fast-track/video/scene.py      # builds the mesh cache (/tmp/ft-video/cache)
++    /tmp/venv/bin/python desktop-lpbf/fast-track/video/scene.py      # builds the mesh cache (/tmp/r3-video/cache)
+ """
+ from __future__ import annotations
+ 
+@@ -20,17 +20,16 @@ import numpy as np
+ HERE = pathlib.Path(__file__).resolve().parent
+ FT = HERE.parent
+ REPO = FT.parents[1]
+-SCRATCH = pathlib.Path(os.environ.get("FT_VIDEO", "/tmp/ft-video"))
++SCRATCH = pathlib.Path(os.environ.get("FT_VIDEO", "/tmp/r3-video"))
+ CACHE = SCRATCH / "cache"
+-# The video shows the round-1 model: ft_model.py, ft_progression.py, ft_checks.py, fast_track.py, parts.csv and
+-# lpbf_model.py are read
+-# from git revision MODEL_REV (d117ba8: ft_model.py as of 91c1931, X-LSQ075B recoater, lens on the plate axis), written
+-# once under SCRATCH/pin-<rev>/ in the repo's layout, so the CAD v2 model and round 2's schedule and prices on the branch
+-# change nothing drawn. FT_MODEL_REV="" uses the working tree instead.
+-MODEL_REV = os.environ.get("FT_MODEL_REV", "d117ba8")
++# Round 3 (2026-11-28): the video shows the CAD v2 model on this branch's working tree (cad/ft_model.py with the g3 gantry,
++# ft_progression.py, ft_checks.py, fast_track.py, parts.csv, lpbf_model.py). Round 2's video pinned the round-1 files with
++# FT_MODEL_REV=d117ba8; setting FT_MODEL_REV to a revision still reads those files from git, written once under
++# SCRATCH/pin-<rev>/ in the repo's layout.
++MODEL_REV = os.environ.get("FT_MODEL_REV", "")
+ PIN_FILES = ("desktop-lpbf/fast-track/cad/ft_model.py", "desktop-lpbf/fast-track/cad/ft_progression.py",
+-             "desktop-lpbf/fast-track/cad/ft_checks.py", "desktop-lpbf/fast-track/fast_track.py",
+-             "desktop-lpbf/fast-track/parts.csv", "desktop-lpbf/cad/lpbf_model.py")
++             "desktop-lpbf/fast-track/cad/ft_checks.py", "desktop-lpbf/fast-track/cad/ft_vendor.py",
++             "desktop-lpbf/fast-track/fast_track.py", "desktop-lpbf/fast-track/parts.csv", "desktop-lpbf/cad/lpbf_model.py")
+ 
+ 
+ def _pin(rev):
+@@ -40,15 +39,16 @@ def _pin(rev):
+         p = root / rel
+         if not p.exists():
+             p.parent.mkdir(parents=True, exist_ok=True)
+-            out = subprocess.run(["git", "-C", str(REPO), "show", f"{rev}:{rel}"], check=True, capture_output=True).stdout
+-            p.write_bytes(out)
++            r = subprocess.run(["git", "-C", str(REPO), "show", f"{rev}:{rel}"], capture_output=True)
++            if r.returncode == 0:
++                p.write_bytes(r.stdout)
+     return root
+ 
+ 
+ MROOT = _pin(MODEL_REV) if MODEL_REV else REPO
+ FTM = MROOT / "desktop-lpbf" / "fast-track"          # where ft_model, ft_progression, fast_track and parts.csv come from
+ for d in (FT / "cad", FT, FT.parent / "cad", FTM / "cad", FTM, FTM.parent / "cad"):
+-    sys.path.insert(0, str(d))                        # the pinned files first; the working tree for anything else
++    sys.path.insert(0, str(d))                        # the model's files first; the working tree for anything else
+ TOL, ANG = 0.25, 0.3                      # tessellation: chord tolerance (mm), angular tolerance (rad)
+ 
+ 
+@@ -60,7 +60,7 @@ def model():
+ def model_sig():
+     """A hash of the model's source, so the cache follows the CAD worker's changes."""
+     h = hashlib.blake2b(digest_size=6)
+-    for p in (FTM / "cad" / "ft_model.py", FTM.parent / "cad" / "lpbf_model.py"):
++    for p in (FTM / "cad" / "ft_model.py", FTM / "cad" / "ft_vendor.py", FTM.parent / "cad" / "lpbf_model.py"):
+         if p.exists():
+             h.update(p.read_bytes())
+     return h.hexdigest()
+diff --git a/desktop-lpbf/fast-track/video/story.py b/desktop-lpbf/fast-track/video/story.py
+index 4ec8ec7..7a10ecf 100644
+--- a/desktop-lpbf/fast-track/video/story.py
++++ b/desktop-lpbf/fast-track/video/story.py
+@@ -1,6 +1,7 @@
+ """The fast-track video, chapter by chapter: which parts come in, in what order, along which checked path, under which fixed
+ camera, with the calendar (scenario A of ft_progression.py), the running spend (parts.csv, as ft_progression.spend()
+-counts it) and the captions.
++counts it) and the captions. Round 3 (2026-11-28): the CAD v2 model (ft_model.py with the g3 gantry), its parts and
++order of work (cad/out/progression.md), and round 2's schedule and prices.
+ 
+     build(n) -> engine.Timeline for chapter n (0-7)
+ """
+@@ -19,10 +20,10 @@ M = S.model()
+ P = M.P
+ FAR = 1500.0
+ LEFT_PARK, RIGHT_PARK = S.parks()
+-HX0 = P["rc_travel"] / 2                          # the model draws the hopper here (hx=None)
++HX0 = P.get("hx_default", P["rc_travel"] / 2)     # the model draws the hopper here (hx=None)
+ LAYER = 0.030                                     # mm, fast_track.LAYER_UM
+ SPREAD_V = 10.0                                   # mm/s: Heriot-Watt's recoater (Bidare et al. 2017, the study's 3.3)
+-RETURN_V = 40.0                                   # mm/s: the return stroke (estimate; X-LSQ075B tops out at 280 mm/s)
++RETURN_V = 40.0                                   # mm/s: the return stroke (estimate; the X-LSM100B tops out at 104 mm/s)
+ PISTON_V = 10.0                                   # mm/s: plate moves other than the layer step (X-VSR20A max 48 mm/s)
+ OPTICS_V = 5.0                                    # mm/s: sliding the cross-beam up by hand (estimate)
+ 
+@@ -80,9 +81,9 @@ def line_costs():
+             else:
+                 lo, hi = q * float(r["unit_low"]), q * float(r["unit_high"])
+             out[(st, i)] = (lo, hi, r["item"])
+-        if st == "FT-1":
+-            out[("FT-1", "H1b")] = (2 * float(rows["H1"]["unit_low"]), 2 * float(rows["H1"]["unit_high"]),
+-                                    "two more heaters, for the well block")
++        if st == "FT-1":                     # the well block's four cartridges (ft_progression.spend: H1 FT-0 2, FT-1 6)
++            out[("FT-1", "H1b")] = (4 * float(rows["H1"]["unit_low"]), 4 * float(rows["H1"]["unit_high"]),
++                                    "four more heaters, for the well block")
+     return out
+ 
+ 
+@@ -212,6 +213,9 @@ def split_part(s, name, side):
+     return out
+ 
+ 
++PAIR_ALLOW = [("Quarter-turn latch", "Poured-in-place door gasket", 3.0)]   # the latch's cam is drawn under the lip
++
++
+ class Story:
+     def __init__(self, num, title, a, b, state_title=None, person=None):
+         acts, present, self.Am, self.Bm = actors_for(a, b, person=person)
+@@ -220,6 +224,11 @@ class Story:
+         self.tl.overlay("chapter", (num, title), 0.0)
+         self.tl.overlay("state", state_title or (M.TITLES[b] if b else ""), 0.0)
+         self.book = Book(self.tl, b, bought=(a == b)) if b else None
++        # contacts the model draws that a translation cannot undo (audit.ALLOWED has the same list)
++        for pa, pb, lim in PAIR_ALLOW:
++            for ka in [k for k, x in self.tl.actors.items() if x.label.startswith(pa)]:
++                for kb in [k for k, x in self.tl.actors.items() if x.label.startswith(pb)]:
++                    self.tl.world.allow[(ka, kb)] = self.tl.world.allow[(kb, ka)] = lim
+ 
+     def A(self, *subs):
+         return [k for n, k in self.Am.items() if any(s in n for s in subs)]
+@@ -316,113 +325,186 @@ def beam_mesh(state):
+ 
+ 
+ # ------------------------------------------------------------------------------------------------ shared moves
+-OPTICS = ("Gantry cross-beam", "Scan-head plate", "SCANLAB", "f-theta lens", "Collimator")
+-LID = ("Box lid", "Inner clamp ring", "Window ring", "Window, ", "Window retaining flange", "Cover-slide holder", "Cover slide,",
+-       "Continuous hinge")
+-_FIB = {}
++# The optics that ride on the gantry cross-beams (moved 21 mm up for the cube in the model, FT-1 -> FT-1V)
++OPTICS = ("Gantry cross-beam", "Gantry knee braces, front", "SCANLAB hurrySCAN", "LINOS F-Theta", "Scan-head flange plate",
++          "Flange-to-beam angle brackets", "Head-plate top flange", "Head-plate gussets", "Head far-side support plate",
++          "Far-side support angle brackets", "hurrySCAN input turret", "hurrySCAN 45 deg input-mirror block", "Collimator",
++          "+-15 V supply", "Head cables and hoses", "Photodiode branch", "Beam-tube lens collar", "Beam-tube interlock switch")
++# the box door (the lid) and what rides on it: ft_model.DOOR_GROUP (the concealed hinges stay on the body)
++DOOR = tuple(M.DOOR_GROUP)
++CAMERA = ("Layer camera", "Camera post")
++STACK = ("Substrate disc", "Heater plate", "Fibreglass rope", "Plate heaters", "Plate thermocouple", "Piston rod",
++         "Potted lead plug")
++HAND = "by hand: 0.8 m/s, set down at 90 mm/s (estimates)"
++
++
++def fmt_days(lo, hi):
++    f = lambda x: f"{x:.1f}".rstrip("0").rstrip(".")  # noqa: E731
++    return f"{f(lo)}-{f(hi)}"
++
++
++def keys_of(s, which, subs, new=False):
++    """Actor keys of the start ('A') or target ('B') state whose model name starts with one of subs."""
++    mp = s.Am if which == "A" else s.Bm
++    out = [k for n, k in mp.items() if n.startswith(tuple(subs))]
++    if which == "B" and new:
++        out = [k for k in out if k.startswith("B|")]
++    return list(dict.fromkeys(out))
++
++
++def ins(s, keys, prefs=None, way=None, extra=(), label=None, gap=0.25, verb="adding", seat_v=E.SEAT_V, ignore=()):
++    """Insert a group along a checked path (given, hand-given candidates, then the planner's); if the group has no clear
++    path, each part on its own; a part with none is reported (and left for place_rest)."""
++    tl = s.tl
++    keys = [k for k in dict.fromkeys(keys) if k in tl.actors]
++    if not keys:
++        return None
++    try:
++        return tl.insert(keys, prefs=prefs, way=way, extra=extra, label=label, gap=gap, verb=verb, seat_v=seat_v,
++                         ignore=ignore)
++    except RuntimeError as e:
++        print(f"  ! ch{tl.chapter}: no path for the group {keys[0]} (+{len(keys) - 1}): {str(e)[:160]}", flush=True)
++    if len(keys) == 1:
++        tl.notes.append(dict(t=round(tl.t, 2), names=keys, collision="no clear path"))
++        return None
++    for k in keys:
++        try:
++            tl.insert([k], prefs=FALLBACK, gap=gap, verb=verb)
++        except RuntimeError as e:
++            tl.notes.append(dict(t=round(tl.t, 2), names=[k], collision=f"no clear path: {str(e)[:160]}"))
++            print(f"  ! ch{tl.chapter}: no clear path for {k}", flush=True)
++    return None
+ 
+ 
+-def fibre_mesh(state, lift):
+-    """The process fibre as ft_model draws it with the head `lift` mm higher (its laser end stays put)."""
+-    key = (state, round(lift, 3))
+-    if key not in _FIB:
+-        old = P["lens_wd"]
+-        try:
+-            P["lens_wd"] = old + lift
+-            part = [p for p in M.build(state) if p.name == "Process fibre"][0]
+-        finally:
+-            P["lens_wd"] = old
+-        _FIB[key] = S.tess(part.shape)
+-    return _FIB[key]
+-
+-
+-def lid_group(s, which):
+-    return s.A(*LID) if which == "A" else [s.Bm[n] for n in s.Bm if any(x in n for x in LID)]
+-
+-
+-def tube_group(s, which="A", long=True):
+-    nm = "Beam tube, long" if long else "Beam tube, short"
+-    if which == "A":
+-        return s.A(nm, "Beam-tube interlock switch")
+-    return [s.Bm[n] for n in s.Bm if nm in n or "Beam-tube interlock switch" in n]
+-
+-
+-def free_rise(tl, tube, lens, hp):
+-    """How far the beam tube can slide up the lens: until its collar's floor ring meets the lens bottom, or its collar the
+-    head plate (from the drawn meshes, so a v2 collar changes it)."""
+-    T = tl.actors[tube].V
+-    Lv, H = tl.actors[lens].V, tl.actors[hp].V
+-    lens_r = float(np.hypot(Lv[:, 0], Lv[:, 1]).max())
+-    lens_bot = float(Lv[:, 2].min())
+-    r = np.hypot(T[:, 0], T[:, 1])
+-    below = T[(r < lens_r - 0.5) & (T[:, 2] <= lens_bot + 1e-6)]
+-    ring_top = float(below[:, 2].max()) if len(below) else -1e9
+-    return min(lens_bot - ring_top, float(H[:, 2].min()) - float(T[:, 2].max())) - 0.5
+-
+-
+-def access(s, tube_keys, lid_keys, body_keys, under=0.0):
+-    """What opening the box takes on this model: the lid's lift (its lowest part over the gasket), the tube's rise (its
+-    bottom over the lid's window stack once lifted, and over the rim by `under`, the tallest part that has to pass
+-    under the tube) and the optics' lift (what the tube's own travel up the lens lacks)."""
++def rem(s, keys, prefs=None, way=None, extra=(), label=None, gap=0.25, verb="taking out"):
++    """Take a group out along a checked path (the reverse of a planned insertion); on failure, each part on its own."""
+     tl = s.tl
+-    tube = [k for k in tube_keys if "Beam tube" in k][0]
+-    lens = [k for k in tl.actors if "f-theta lens" in k and tl.actors[k].label.startswith("f-theta")][0]
+-    hp = [k for k in tl.actors if "Scan-head plate" in k][0]
+-    zl = min(float(tl.actors[k].V[:, 2].min()) for k in lid_keys)
+-    zt = max(float(tl.actors[k].V[:, 2].max()) for k in lid_keys)
+-    zg = max(float(tl.actors[k].V[:, 2].max()) for k in body_keys)
+-    lift_lid = math.ceil(zg - zl + 1.0)
+-    zb = float(tl.actors[tube].V[:, 2].min())
+-    rise = math.ceil(max(zt + lift_lid + 2.0, zg + under + 2.5) - zb)
+-    fr = free_rise(tl, tube, lens, hp)
+-    lift_o = max(0, math.ceil(rise - fr))
+-    return dict(lift_lid=lift_lid, rise=rise, free_rise=round(fr, 1), lift_optics=lift_o)
+-
+-
+-def optics_move(s, state, dz_from, dz_to, verb, v=None, extra=()):
+-    """Slide the gantry cross-beam with the head, lens and collimator (and `extra` parts); the fibre follows."""
++    st = tl.state(tl.t)
++    keys = [k for k in dict.fromkeys(keys) if k in tl.actors and st[k]["vis"]]
++    if not keys:
++        return None
++    try:
++        return tl.remove(keys, prefs=prefs, way=way, extra=extra, label=label, gap=gap, verb=verb)
++    except RuntimeError as e:
++        print(f"  ! ch{tl.chapter}: no removal path for the group {keys[0]} (+{len(keys) - 1}): {str(e)[:160]}",
++              flush=True)
++    for k in keys:
++        try:
++            tl.remove([k], prefs=FALLBACK, gap=gap, verb=verb)
++        except RuntimeError as e:
++            tl.notes.append(dict(t=round(tl.t, 2), names=[k], collision=f"no removal path: {str(e)[:160]}"))
++            print(f"  ! ch{tl.chapter}: no removal path for {k}", flush=True)
++    return None
++
++
++FALLBACK = ["down", "front-down", "front", "front-up", "right-down", "left-down", "back-down", "right", "left", "back",
++            "front-step", "right-step", "left-step"]
++
++
++def tube_halves(s, which):
++    """The beam tube's centre section is one solid in the model (MK-10: split lengthwise, two half-shells held by two
++    toggle clamps). Cut it in the plane through its axis normal to P['tube_split'] (x in the box, y in the cube), as
++    ft_checks.tube_removal does, into two actors with the model's label. Returns {'-x': key, '+x': key} (or -y/+y)."""
+     tl = s.tl
+-    keys = [k for k in tl.actors if k.startswith("A|") and any(x in k for x in OPTICS + tuple(extra))]
+-    fib = [k for k in tl.actors if k.startswith("A|") and "Process fibre" in k]
+-    t0 = tl.t
+-    Pm = tl.move(keys, [(0, 0, 0), (0, 0, dz_to - dz_from)], v=v or OPTICS_V, a=20, verb=verb,
+-                 label=[("Gantry cross-beam with the head and lens", "E4, L3, L4, MK-09")])
+-    if fib:
+-        V0 = fibre_mesh(state, dz_from)[0]
+-        V1 = fibre_mesh(state, dz_to)[0]
+-        if len(V0) == len(tl.actors[fib[0]].V) == len(V1):
+-            tl.morph(fib[0], V1, t0, t0 + Pm.T, V0=V0)
+-        else:
+-            print(f"  ! fibre mesh changes topology with the head height: drawn rigid", flush=True)
+-            tl.move(fib, [(0, 0, 0), (0, 0, dz_to - dz_from)], v=v or OPTICS_V, overlay=False)
+-    return Pm
++    mp = s.Am if which == "A" else s.Bm
++    names = [n for n in mp if n.startswith("Beam tube centre section")]
++    done = {n.split(" [")[1].split(" ")[0]: mp[n] for n in names if " [" in n}
++    if done:
++        return done
++    name = names[0]
++    k = mp[name]
++    a = tl.actors[k]
++    lo, hi = a.V.min(0), a.V.max(0)
++    cx, cy = float(lo[0] + hi[0]) / 2, float(lo[1] + hi[1]) / 2
++    state = s.a if k.startswith("A|") else s.b
++    ax = P["tube_split"]["cube" if state == "FT-1V" else "box"]
++    shell = M.tube(float(hi[0] - lo[0]) / 2, 27.0, (cx, cy, float(lo[2])), "z", float(hi[2] - lo[2]))
++    out = {}
++    for sgn, tag in ((-1, f"-{ax}"), (1, f"+{ax}")):
++        c = cx if ax == "x" else cy
++        a0, a1 = (c, 1e3) if sgn > 0 else (-1e3, c)
++        cut = (M.box(a0, a1, -1e3, 1e3, float(lo[2]) - 1, float(hi[2]) + 1) if ax == "x" else
++               M.box(-1e3, 1e3, a0, a1, float(lo[2]) - 1, float(hi[2]) + 1))
++        V, F = S.tess(shell.intersect(cut))
++        kk = f"{k} [{tag} half-shell]"
++        tl.actors[kk] = E.Actor(kk, V, F, a.color, a.opacity, a.pid, group=a.group, label=a.label)
++        out[tag] = kk
++    del tl.actors[k]
++    if k in tl.present0:
++        tl.present0.discard(k)
++        tl.present0.update(out.values())
++    if k in tl.world.g:
++        t = tl.world.t[k]
++        tl.world.drop(k)
++        for kk in out.values():
++            tl.world.put(kk, tl.actors[kk].V, tl.actors[kk].F, t)
++    for m in (s.Am, s.Bm):
++        for n in [n for n, v in m.items() if v == k]:
++            m.pop(n)
++            for tag, kk in out.items():
++                m[f"{n} [{tag} half-shell]"] = kk
++    return out
++
++
++def half_ways(ax, sgn):
++    """Hand-given insertion paths of a half-shell: slid on sideways at its own height from 70 mm out, after coming in
++    from the back or the front (the braces and the camera are in the way of a straight side approach)."""
++    if ax == "x":
++        return [("side, then along y", [(70.0 * sgn, FAR * sgn * -1, 0.0), (70.0 * sgn, 0.0, 0.0), (0.0, 0.0, 0.0)]),
++                ("side, then along y (other)", [(70.0 * sgn, FAR * sgn, 0.0), (70.0 * sgn, 0.0, 0.0), (0.0, 0.0, 0.0)])]
++    return [("straight along y", [(0.0, FAR * sgn, 0.0), (0.0, 0.0, 0.0)]),
++            ("along y, then x", [(70.0, 70.0 * sgn, 0.0), (0.0, 70.0 * sgn, 0.0), (0.0, 0.0, 0.0)])]
+ 
+ 
+-def open_box(s, tube, lid, body, state, under=0.0):
++def tube_off(s):
+     tl = s.tl
+-    acc = access(s, tube, lid, body, under)
+-    s.speed("by hand: 0.8 m/s, set down at 90 mm/s (estimates)")
+-    if acc["lift_optics"]:
+-        tl.caption("Optics up, tube up, lid off", f"the beam tube is captive: head and lens slide up {acc['lift_optics']} mm")
+-        optics_move(s, state, 0.0, acc["lift_optics"], "sliding up")
+-    else:
+-        tl.caption("Tube up, lid off", f"the beam tube slides up the lens {acc['rise']} mm")
+-    tl.move(tube, [(0, 0, 0), (0, 0, acc["rise"])], v=30, verb="sliding up",
+-            label=[("Beam tube and its interlock switch", "MK-10, S1")])
+-    tl.remove(lid, way=[(0, 0, 0), (0, 0, acc["lift_lid"]), (0, -FAR, acc["lift_lid"])], verb="lifting off",
+-              label=[("Box lid with the window stack", "E1, MK-02, L8")])
+-    return acc
+-
+-
+-def close_box(s, lid, tube, acc, state):
++    tc = keys_of(s, "A", ["Surface thermocouples"])
++    if tc:
++        rem(s, tc, prefs=["front", "front-down", "right", "down"], verb="taking off",
++            label=[("Surface thermocouples, beam tube and window ring", "MON6")])
++    h = tube_halves(s, "A")
++    for tag, k in sorted(h.items()):
++        sgn = -1 if tag.startswith("-") else 1
++        rem(s, [k], extra=half_ways(tag[1], sgn), prefs=["left" if sgn < 0 else "right", "back", "front"],
++            verb="sliding off", label=[(f"Beam tube half-shell ({tag})", "MK-10")])
++
++
++def tube_on(s, which="B"):
++    h = tube_halves(s, which)
++    for tag, k in sorted(h.items()):
++        sgn = -1 if tag.startswith("-") else 1
++        ins(s, [k], extra=half_ways(tag[1], sgn), prefs=["left" if sgn < 0 else "right", "back", "front"],
++            verb="sliding on", label=[(f"Beam tube half-shell ({tag})", "MK-10")])
++    tc = keys_of(s, which, ["Surface thermocouples"])
++    if tc:
++        ins(s, tc, prefs=["front", "front-down", "right", "down"], label=[("Surface thermocouples", "MON6")])
++
++
++def open_box(s):
++    """The model's order of work: the beam tube's two half-shells off sideways, then the door. The door comes off its
++    hinges here (the model opens it 24 deg, the free angle with the camera on it; the video's moves are translations)."""
+     tl = s.tl
+-    tl.caption("Lid on, tube down", "the window stack rides on the lid; the tube sits on its flange")
+-    tl.insert(lid, way=[(0, -FAR, acc["lift_lid"]), (0, 0, acc["lift_lid"]), (0, 0, 0)],
+-              label=[("Box lid with the window stack", "E1, MK-02, L8")])
+-    tl.move(tube, [(0, 0, 0), (0, 0, -acc["rise"])], v=30, verb="sliding down", label=[("Beam tube onto the flange", "MK-10")])
+-    if acc["lift_optics"]:
+-        tl.caption("Optics back to the lens height", "then refocus: the focus ladder again")
+-        optics_move(s, state, acc["lift_optics"], 0.0, "sliding down")
++    s.speed(HAND)
++    tl.caption("Tube off, door off", "two toggle clamps: the half-shells slide off sideways; the door lifts off its hinges")
++    tube_off(s)
++    cam = keys_of(s, "A", CAMERA)
++    if cam:
++        rem(s, cam, prefs=["down", "front-down", "left-down", "front"], verb="unclipping",
++            label=[("Layer camera on its post", "MON1, MK-20")])
++    rem(s, [k for k in keys_of(s, "A", DOOR) if k not in cam], prefs=["front-down"], verb="lifting off",
++        label=[("Box door with the window stack", "E1, MK-02, L8")])
++
++
++def close_box(s, which="B"):
++    tl = s.tl
++    s.speed(HAND)
++    tl.caption("Door on, tube on", "the window stack rides on the door; the half-shells clamp round the spigots")
++    cam = keys_of(s, which, CAMERA)
++    ins(s, [k for k in keys_of(s, which, DOOR) if k not in cam], prefs=["front-down"],
++        label=[("Box door with the window stack", "E1, MK-02, L8")])
++    if cam:
++        ins(s, cam, prefs=["down", "front-down", "left-down", "front"], label=[("Layer camera on its post", "MON1, MK-20")])
++    tube_on(s, which)
+ 
+ 
+ def in_place(s, k):
+@@ -443,8 +525,8 @@ def in_place(s, k):
+ 
+ 
+ def place_rest(s, prefs=None):
+-    """Any part of the target state the script has not placed (a v2 addition, say) comes in on a planned path; a part
+-    that a move has already brought to its target place is only recorded."""
++    """Any part of the target state the script has not placed comes in on a planned path; a part that a move has already
++    brought to its target place is only recorded."""
+     tl = s.tl
+     rest = sorted(s.unplaced())
+     for k in rest:
+@@ -452,11 +534,8 @@ def place_rest(s, prefs=None):
+         if k2:
+             tl.notes.append(dict(t=round(tl.t, 2), names=[k], already_in_place_as=k2))
+             continue
+-        try:
+-            tl.insert([k], prefs=prefs)
+-        except RuntimeError as e:
+-            tl.notes.append(dict(t=round(tl.t, 2), names=[k], collision=f"no clear path: {e}"))
+-            print(f"  ! no clear path for {k}", flush=True)
++        print(f"  place_rest: {k}", flush=True)
++        ins(s, [k], prefs=prefs or FALLBACK)
+     return rest
+ 
+ 
+@@ -464,16 +543,17 @@ def place_rest(s, prefs=None):
+ def ch0():
+     s = Story(0, "The bench and the room", None, "S1", state_title="Day 0: nothing has arrived",
+               person=(1000.0, -260.0, S.floor_z()))
+-    tl, b = s.tl, s.book
++    tl = s.tl
+     tl.overlay("spend", (0.0, 0.0, []), 0.0)
+     tl.overlay("calendar", ("orders out", 0, 0, "every order goes out on day 0"), 0.0)
+     tl.shot(CAMS["room"])
+-    tl.caption("An empty lab bench", "1.46 x 0.79 m top, 0.9 m high; the person is 1.75 m")
++    tl.caption("An empty lab bench", "1.50 x 0.79 m top, 0.9 m high; the person is 1.75 m")
+     s.speed("")
+     tl.wait(8.0)
+     tl.shot(CAMS["bench"])
+     tl.caption("Day 0: every order out", "laser chain, stock, box, stages on PCards, cube on a PO")
+-    orders = ["used optics chain arrives", "McMaster stock and hardware", "PC + RTC5 software", "enclosure arrives",
++    import ft_progression as FP
++    orders = ["used optics chain arrives", "McMaster stock and hardware", FP.RTC, "enclosure arrives",
+               "stages arrive", "cube frame and plates arrive (PO)", "LSO registration and SOP", "EHS review (Al powder)"]
+     tl.overlay("orders", [(o, *sched(o)) for o in orders])
+     tl.wait(9.0)
+@@ -483,44 +563,65 @@ def ch0():
+ 
+ # ================================================================================================ chapter 1: S1
+ def ch1():
++    import ft_progression as FP
+     s = Story(1, "S1: optics on the frame", None, "S1")
+     tl, b = s.tl, s.book
++    B = lambda *x: keys_of(s, "B", x, new=True)  # noqa: E731
+     tl.shot(CAMS["wide"])
+-    s.speed("by hand: 0.8 m/s, set down at 90 mm/s (estimates)")
++    s.speed(HAND)
+     s.cal("McMaster stock and hardware", "T-slot frame")
+-    tl.caption("The T-slot frame", "30 mm extrusion: base, support rails, gantry")
+-    tl.insert(s.B("T-slot base and support rails"), prefs=["down"])
++    tl.caption("The T-slot frame", "four 45 mm posts, two cross-beams, braces (FEA: 62 Hz)")
++    ins(s, B("T-slot base and support rails"), prefs=["down"])
+     b.buy("E4")
+-    tl.insert(s.B("Gantry uprights"), prefs=["down"])
+-    tl.insert(s.B("Gantry cross-beam"), prefs=["down", "front"])
++    ins(s, B("Front-post foot brackets"), prefs=["down", "front-down"], gap=-0.6)
++    ins(s, B("Gantry uprights"), prefs=["down"])
++    ins(s, B("Gantry cross-beam (clamped"), prefs=["down", "back-down"], gap=-0.8)
++    ins(s, B("Gantry cross-beam, front"), prefs=["down", "front-down"])
++    ins(s, B("Gantry braces"), prefs=["down", "back-down"], gap=-0.8)
++    ins(s, B("Gantry knee braces, front"), prefs=["down", "front-down"])
+     s.cal("deck plate and target stand made", "made parts MK-01, MK-18")
+-    tl.caption("Deck plate on the rails", "250 x 250 x 10 mm 6061: the cassette from day 0")
+-    tl.insert(s.B("Deck plate"), prefs=["down", "front-down"])
+-    s.cal("PC + RTC5 software")
+-    tl.caption("PC with the RTC5 card", "used RTC5 PCIe, tested with an IPG YLR")
+-    tl.insert(s.B("PC with the RTC5"), prefs=["down", "right"])
+-    b.buy("C1", "L5", "L7")
+-    s.cal("S1 optics bench assembled", "used optics chain in: day " + "%d-%d" % sched("used optics chain arrives"))
++    tl.caption("Deck plate on the rails", "245 x 245 x 10 mm 6061: the cassette from day 0")
++    ins(s, B("Deck plate"), prefs=["down", "front-down"])
++    s.cal(FP.RTC)
++    tl.caption("PC with the RTC4 card", "RTC4 PCIe drives the XY2-100 head")
++    ins(s, B("PC with the RTC4"), prefs=["down", "right"])
++    b.buy("C1", "L5b")
++    s.cal("S1 optics bench assembled", "used optics chain in: day " + fmt_days(*sched("used optics chain arrives")))
+     tl.shot(CAMS["optics"])
+-    tl.caption("The scan head goes on", "used hurrySCAN 25 on a 12 mm head plate")
+-    tl.insert(s.B("Scan-head plate"), prefs=["front", "front-down", "down"])
+-    tl.insert(s.B("SCANLAB hurrySCAN 25"), prefs=["down", "front-down"])
+-    b.buy("L3", "L10")
+-    tl.insert(s.B("f-theta lens"), prefs=["front-up", "down"])
++    tl.caption("The head plate on both cross-beams", "MK-09: flange plate, top flange, gussets")
++    ins(s, B("Scan-head flange plate"), prefs=["down", "front", "back-down"])
++    ins(s, B("Flange-to-beam angle brackets"), prefs=["down", "left-down", "left"], gap=-0.8)
++    ins(s, B("Head-plate top flange"), prefs=["down", "left-down"], gap=-0.8)
++    ins(s, B("Head-plate gussets"), prefs=["down", "left-down", "left", "front"])
++    tl.caption("The scan head goes on", "used hurrySCAN 25 against the flange plate")
++    ins(s, B("SCANLAB hurrySCAN 25"), prefs=["down", "right-down", "front-down", "right"])
++    b.buy("L3", "L10", "L11")
++    tl.caption("The far-side plate (g3)", "the head held from both cross-beams on its far side too")
++    ins(s, B("Head far-side support plate", "Far-side support angle brackets"), prefs=["down", "right-down", "right"])
++    tl.caption("Input turret, mirror block, photodiode", "MON4: a dichroic in place of the input mirror")
++    ins(s, B("hurrySCAN input turret"), prefs=["left", "left-down", "down", "front"], gap=-0.8)
++    ins(s, B("hurrySCAN 45 deg input-mirror block"), prefs=["left", "left-down", "down", "front"], gap=-0.8)
++    ins(s, B("Photodiode branch"), prefs=["left", "left-down", "down", "front"])
++    b.buy("MON4")
++    tl.caption("f-theta lens, 30 mm in front of the plate axis", "LINOS f = 254 mm: no specular return into the fibre")
++    ins(s, B("LINOS F-Theta"), prefs=["front-up", "down", "left-up", "right-up"])
+     b.buy("L4")
+-    tl.insert(s.B("Collimator"), prefs=["left", "down", "front-down", "left-down"])
++    ins(s, B("Collimator"), prefs=["front", "left", "down", "front-down", "left-down"])
+     b.buy("L2")
+-    tl.insert(s.B("+-15 V supply"), prefs=["front", "right", "down", "front-down"])
++    ins(s, B("+-15 V supply"), prefs=["down", "back", "right", "back-down"], gap=-0.8)
+     b.buy("L6")
++    ins(s, B("Head cables and hoses"), prefs=["down", "front-down", "front"])
++    b.buy("L7")
+     tl.shot(CAMS["wide"])
+     tl.caption("Laser and fibre on the bench", "used IPG YLR-400-SM, 400 W CW, 1070 nm")
+-    tl.insert(s.B("IPG YLR-400", "Process fibre"), prefs=["down", "left-down", "front-down"])
++    ins(s, B("IPG YLR-400", "Fibre bend restrictor", "Process fibre"), prefs=["down", "left-down", "front-down"])
+     b.buy("L1")
++    place_rest(s, prefs=["down", "front-down", "left-down", "right-down", "front", "left", "right"])
+     s.cal("deck plate and target stand made", "MK-18")
+     tl.shot(CAMS["target"])
+     tl.caption("Target at the powder plane", "anodised 6061, 80 x 80 x 3 mm, on its stand")
+-    tl.insert(s.B("Guide-laser target stand", "Anodised target"), prefs=["front-down", "left-down", "right-down"])
+-    # the guide-laser check: a 5 mm grid over the 40 mm field, traced at 100 mm/s (a test pattern)
++    ins(s, B("Guide-laser target stand", "Anodised target"), prefs=["front-down", "left-down", "right-down"])
++    # the guide-laser check: a 5 mm grid over the 40 mm field, traced at 100 mm/s (a test pattern), from the lens axis
+     s.cal("S1 guide-laser and scanner checks", "LSO registration gates the late end")
+     b.buy("S2")
+     tl.caption("Guide laser on the target", "field size and distortion at the powder plane")
+@@ -529,10 +630,10 @@ def ch1():
+     for k, y in enumerate(np.arange(-20, 20.1, 5.0)):
+         xs = (-20.0, 20.0) if k % 2 == 0 else (20.0, -20.0)
+         pts += [(xs[0], y), (xs[1], y)]
+-    pts = [p for p in pts if math.hypot(*p) <= 20.01 or True]
+     path = E.Path([(x, y, 0.0) for x, y in pts], [100.0] * (len(pts) - 1), [2000.0] * (len(pts) - 1), pause=0.0)
+     t0 = tl.t + 0.5
+     zl = P["lens_wd"]
++    lax, lay = P["axis_off"]
+ 
+     def guide(st, t, path=path, t0=t0):
+         if t < t0:
+@@ -549,13 +650,13 @@ def ch1():
+         st["_fx"]["guide trace"] = fx_lines("guide trace", [((a[0], a[1], z), (c[0], c[1], z)) for a, c in done],
+                                             "#ff3b30", 2.0)
+         if t - t0 <= path.T + 0.5:
+-            st["_fx"]["guide beam"] = fx_lines("guide beam", [((0, 0, zl), (q[0], q[1], z))], "#ff2d2d", 2.0)
++            st["_fx"]["guide beam"] = fx_lines("guide beam", [((lax, lay, zl), (q[0], q[1], z))], "#ff2d2d", 2.0)
+             V, F = disc(0.9, z, z + 0.05)
+             st["_fx"]["guide spot"] = dict(kind="mesh", data=(V + np.array([q[0], q[1], 0], np.float32), F),
+                                            color="#ff1a1a", opacity=1.0, solid=False, key=f"spot{q[0]:.2f},{q[1]:.2f}")
+     tl.fx(guide, t0)
+     tl.wait(0.5 + path.T + 1.5)
+-    tl.caption("S1 done: the optics answer", "head and RTC5 talk; field measured")
++    tl.caption("S1 done: the optics answer", "head and RTC4 talk; field measured")
+     tl.wait(3.0)
+     b.close()
+     tl.end()
+@@ -566,58 +667,53 @@ def ch1():
+ def ch2():
+     s = Story(2, "S2: the box closed round the beam", "S1", "S2")
+     tl, b = s.tl, s.book
++    A = lambda *x: keys_of(s, "A", x)  # noqa: E731
++    B = lambda *x: keys_of(s, "B", x, new=True)  # noqa: E731
+     tl.shot(CAMS["core"])
+-    s.speed("by hand: 0.8 m/s, set down at 90 mm/s (estimates)")
++    s.speed(HAND)
+     s.cal("enclosure arrives", "the box arrives; the target makes way")
+     tl.caption("Target and deck off the rails", "the box goes on the rails where the deck was")
+-    tl.remove(s.A("Guide-laser target stand", "Anodised target"), prefs=["front-down", "left-down", "right-down"])
+-    tl.remove(s.A("Deck plate"), prefs=["front-down", "front", "down"])
+-    s.cal("box cut and fitted", "window bore, bulkheads, glands, rod hole")
+-    tl.caption("The 304 NEMA 4X box", "16 x 12 x 8 in., 14 ga, cut for everything FT-1 needs")
+-    body = s.B("304 NEMA 4X box", "Lid gasket", "Lid clamps")
+-    tl.insert(body, prefs=["front-down", "down"])
++    rem(s, A("Guide-laser target stand", "Anodised target"), prefs=["front-down", "left-down", "right-down"])
++    rem(s, A("Deck plate"), prefs=["front-down", "front", "down"])
++    s.cal("box cut and fitted", "window bore, bulkheads, glands, light ports, rod hole")
++    tl.caption("The Saginaw 304 box", "16 x 12 x 8 in., 0.075 in. 304; door, latch, concealed hinges")
++    ins(s, B("Saginaw SCE-16EL1208SSLP", "Poured-in-place door gasket", "Panel studs", "Concealed hinges"),
++        prefs=["front-down", "down"],
++        label=[("Saginaw SCE-16EL1208SSLP 304 box with its gasket and panel studs", "E1")])
+     b.buy("E1")
+-    tl.caption("Deck plate into the box", "the same plate, now on the box floor")
+-    tl.insert(s.B("Deck plate"), prefs=["front-down", "front-step"])
++    tl.caption("Deck plate into the box", "the same plate, clamped on the panel studs")
++    ins(s, B("Deck plate"), prefs=["front-down", "front-step", "down"])
++    ins(s, B("Deck clamps on the panel studs", "Stud nuts"), prefs=["down", "front-down", "front-step"])
+     s.cal("window, cover slides, beam dump (Edmund, Thorlabs)")
+-    tl.caption("A 500 W water-cooled dump", "for calorimetry of the used laser")
+-    tl.insert(s.B("Water-cooled beam dump", "Dump water lines"), prefs=["front-down", "front-step"])
++    tl.caption("A 1 kW water-cooled dump", "for calorimetry of the used laser")
++    ins(s, B("Water-cooled beam dump", "Dump water lines"), prefs=["front-down", "front-step", "down"])
+     b.buy("L9")
+     s.cal("window stack and beam tube made", "MK-02, MK-10")
+-    tube, lid = tube_group(s, "B", long=True), lid_group(s, "B")
+-    acc = access(s, tube, lid, body)
+-    tl.overlay("access", acc)
+     tl.shot(CAMS["box"])
+-    if acc["lift_optics"]:
+-        tl.caption("Optics up to fit the tube", f"its collar slides only {acc['free_rise']:.0f} mm up the lens")
+-        optics_move(s, "S2", 0.0, acc["lift_optics"], "sliding up")
+-    tl.caption("Beam tube onto the lens", "it waits up the lens while the lid goes on")
+-    lo = -(float(tl.actors[tube[0]].V[:, 2].max()) - (float(tl.actors[[k for k in tl.actors if 'f-theta' in k][0]].V[:, 2].min())
+-                                                      + acc["lift_optics"]) + 2.0)
+-    tl.insert(tube, way=[(0, -FAR, lo), (0, 0, lo), (0, 0, acc["rise"])],
+-              label=[("Beam tube, long, with lens collar", "MK-10"), ("Beam-tube interlock switch", "S1")])
+-    tl.caption("Lid with the window stack", "fused silica window, cover slide below it")
+-    tl.insert(lid, way=[(0, -FAR, acc["lift_lid"]), (0, 0, acc["lift_lid"]), (0, 0, 0)],
+-              label=[("Box lid with the window stack", "E1, MK-02, L8")])
++    tl.caption("The door with the window stack", "fused silica window; a cover slide 130 mm above the bed")
++    ins(s, [k for k in keys_of(s, "B", DOOR, new=True) if k not in keys_of(s, "B", CAMERA)], prefs=["front-down"],
++        label=[("Box door with the window stack", "E1, MK-02, L8")])
+     b.buy("L8")
+-    tl.move(tube, [(0, 0, 0), (0, 0, -acc["rise"])], v=30, verb="sliding down", label=[("Beam tube onto the flange", "MK-10")])
+-    if acc["lift_optics"]:
+-        tl.caption("Optics back to the lens height", "the focus is set again in the full-power check")
+-        optics_move(s, "S2", acc["lift_optics"], 0.0, "sliding down")
++    tl.caption("Beam tube: a collar and two half-shells", "the collar clamps on the lens; the halves slide on sideways")
++    ins(s, B("Beam-tube lens collar"), prefs=["front-up", "left-up", "right-up"])
++    tube_on(s, "B")
++    ins(s, B("Beam-tube interlock switch"), prefs=["right", "front", "down", "right-down"])
++    b.buy("MON6", "S6")
+     s.cal("S2 interlocks wired and proven")
+     tl.shot(CAMS["core"])
+-    tl.caption("Interlocks", "coded lid switches, E-stop, key switch, lamp")
+-    tl.insert(s.B("Coded lid switches"), prefs=["front", "front-down", "down"], gap=-2.5)
+-    tl.insert(s.B("Safety relay box", "E-stop", "Key switch"), prefs=["down", "front-down"], gap=-2.5)
+-    tl.insert(s.B("Emission lamp"), prefs=["down", "back-down"])
+-    b.buy("S1")
++    tl.caption("Interlocks", "tongue switches on the door and the tube, E-stop, key switch, lamp")
++    ins(s, B("Lid interlock"), prefs=["front", "front-down", "down"], gap=-0.8)
++    b.buy("S5")
++    ins(s, B("Safety relay box", "E-stop", "Key switch"), prefs=["down", "front-down"], gap=-0.8)
++    ins(s, B("Emission lamp"), prefs=["down", "back-down"])
++    b.buy("S1", "C3", "C4")
+     place_rest(s)
+     tl.shot(CAMS["box"])
+     s.cal("S2 FULL POWER INTO THE DUMP", "inside the laser's return window")
+     tl.caption("Full power into the dump", "400 W CW in a closed Class 1 box")
+     s.speed("real time")
+     t0 = tl.t + 1.0
+-    tl.paint(s.B("Emission lamp", new=False)[0], "#ff2020", t0, t0 + 9.0)
++    tl.paint(keys_of(s, "B", ["Emission lamp"])[0], "#ff2020", t0, t0 + 9.0)
+     bm = beam_mesh("S2")
+ 
+     def beam(st, t, t0=t0, bm=bm):
+@@ -636,98 +732,107 @@ def ch2():
+ 
+ # ================================================================================================ chapter 3: FT-0
+ def ch3():
++    import ft_progression as FP
+     s = Story(3, "FT-0: single tracks", "S2", "FT-0")
+     tl, b = s.tl, s.book
++    A = lambda *x: keys_of(s, "A", x)  # noqa: E731
++    B = lambda *x: keys_of(s, "B", x, new=True)  # noqa: E731
+     tl.shot(CAMS["core"])
+-    s.cal("FT-0 assembled in the box", "FT-0 parts made: day %d-%d" % sched("FT-0 parts made"))
+-    tube, lid = tube_group(s, "A"), lid_group(s, "A")
+-    body = s.A("304 NEMA 4X box", "Lid gasket", "Lid clamps")
+-    hb = max(float(np.ptp(d["V"][:, 2])) for n, d in S.state_meshes("FT-0").items() if n.startswith("Well block"))
+-    acc = open_box(s, tube, lid, body, "S2", under=hb)
+-    tl.overlay("access", acc)
+-    tl.caption("The dump comes out", "slid out from under the tube, then lifted")
+-    zr = max(float(tl.actors[k].V[:, 2].max()) for k in body)
+-    dump = s.A("Water-cooled beam dump", "Dump water lines")
+-    hd = math.ceil(zr + 1.5 - min(float(tl.actors[k].V[:, 2].min()) for k in dump))
+-    tl.remove(dump, way=[(0, 0, 0), (-100, 0, 0), (-100, 0, hd), (-100, -FAR, hd)])
++    s.cal("FT-0 assembled in the box", "FT-0 parts made: day %s" % fmt_days(*sched("FT-0 parts made")))
++    open_box(s)
++    tl.caption("The dump comes out", "lifted clear of the rim, out to the front")
++    rem(s, A("Water-cooled beam dump", "Dump water lines"), prefs=["front-down", "front-step", "down"])
+     tl.shot(CAMS["box"])
+     tl.caption("The well block on Macor", "80 x 80 x 40 mm 6061, a 40.00 mm bore")
+-    tl.insert(s.B("Rod gland plate"), prefs=["front-up", "left", "right", "front"])
+-    tl.insert(s.B("Macor standoffs"), prefs=["front-down", "front-step"])
++    ins(s, B("Rod gland plate", "Gland screws"), prefs=["front-up", "left-up", "right-up", "front", "left", "right"],
++        label=[("Rod gland plate under the floor, 2 O-rings", "MK-07")])
++    ins(s, B("Macor standoffs"), prefs=["front-down", "front-step", "down"])
+     b.buy("H4")
+-    tl.insert(s.B("Well block"), prefs=["front-down", "front-step"])
++    ins(s, B("FT-0 rod collar"), prefs=["front-down", "down", "front-step"])
++    ins(s, B("Well block"), prefs=["front-down", "front-step", "down"])
+     b.buy("F1", "F2a")
+-    tl.insert(s.B("FT-0 rod collar"), prefs=["front-down", "front-step"])
+     tl.caption("The plate on its rod", "heater plate, substrate, rope wiper; leads down the rod")
+-    stack = s.B("Substrate disc", "Heater plate", "Fibreglass rope", "Plate heaters", "Piston rod")
+-    tl.insert(stack, prefs=["front-step", "front-down"])
+-    b.buy("H1", "H2", "H3")
+-    tl.caption("Overflow cup under the slot", "slides into its pocket in the deck")
+-    cup = s.B("Overflow cup")
+-    zr = max(float(tl.actors[k].V[:, 2].max()) for k in body)
+-    hc = math.ceil(zr + 1.5 - float(tl.actors[cup[0]].V[:, 2].min()))
+-    tl.insert(cup, way=[(24, -FAR, hc), (24, 0, hc), (24, 0, 0), (0, 0, 0)])
+-    tl.insert(s.B("Film applicator"), prefs=["front-down", "front-step"])
++    ins(s, B(*STACK), prefs=["front-down", "down", "front-step"], label=[("The plate on its rod", "MK-04, MK-05, MK-06")])
++    b.buy("H1", "H2", "H3", "MON6")
++    tl.shot(CAMS["under"])
++    tl.caption("Under the box: the lead terminal", "MK-17 bracket, 6-way terminal block, pigtail")
++    ins(s, B("FT-0 lead terminal bracket", "Lead terminal block", "Lead pigtail"), prefs=["front-up", "front", "right-up"],
++        label=[("FT-0 lead terminal bracket with its terminal block", "MK-17, H2, H3")])
++    tl.wait(1.0)
++    tl.shot(CAMS["box"])
++    tl.caption("Cup, nozzle, collector, spreader", "argon across the plate through a 45 x 4 mm slot")
++    zr = max(float(tl.actors[k].V[:, 2].max()) for k in keys_of(s, "B", ["Saginaw"]))
++    cup = B("Overflow cup")
++    if cup:
++        hc = math.ceil(zr + 1.5 - float(tl.actors[cup[0]].V[:, 2].min()))
++        ins(s, cup, extra=[("given", [(24, -FAR, hc), (24, 0, hc), (24, 0, 0), (0, 0, 0)])], prefs=["front-step"])
++    ins(s, B("Slot nozzle"), prefs=["front-down", "front-step", "down"], gap=-0.8)
++    ins(s, B("Exhaust collector"), prefs=["front-down", "front-step", "back-down", "down"])
++    ins(s, B("FT-0 spreader bar"), prefs=["down", "front-down", "front-step"])
+     b.buy("M4")
+-    # the hand-spread layer, before the nozzle and the collector go on (the 70 mm applicator does not fit between them)
++    feed = B("Argon feed tube")
++    if feed:
++        hf = math.ceil(zr + 2.0 - float(tl.actors[feed[0]].V[:, 2].min()))
++        ins(s, feed, extra=[("given", [(10, -FAR, hf), (10, 0, hf), (10, 0, 0), (0, 0, 0)])], prefs=["front-step"])
++    exh = B("Exhaust hose to the HEPA")
++    if exh:
++        he = math.ceil(zr + 2.0 - float(tl.actors[exh[0]].V[:, 2].min()))
++        ins(s, exh, extra=[("given", [(-15, -FAR, he), (-15, 15, he), (-15, 15, 0), (0, 0, 0)])], prefs=["front-step"])
++    b.buy("G3")
++    ins(s, B("Well-block heater and TC leads"), prefs=["front-down", "back-down", "down", "front-step"])
++    ins(s, B("IP68 cable glands", "Box-air thermocouple"), prefs=["back", "back-down", "down"])
++    # the hand-spread layer: the spreader bar from its park onto the block's left edge, pushed across the plate
+     tl.shot(CAMS["well"])
+     s.cal("FT-0 hand-spread layers and pads", "a 50 um layer by hand")
+-    tl.caption("A layer spread by hand", "film applicator on shims: 50 um")
+-    app = s.B("Film applicator", new=False)
+-    lo = tl.actors[app[0]].V.min(0)
+-    hi = tl.actors[app[0]].V.max(0)
+-    xc_app = 0.5 * (lo[0] + hi[0])
+-    lift = 0.0 - lo[2] + 0.0                     # its foot on the block top
+-    x_start = -40.0 + (hi[0] - lo[0]) / 2 - xc_app
+-    x_end = 36.0 - xc_app
+-    way = [(0, 0, 0), (0, 0, lift + 30), (x_start, 0, lift + 30), (x_start, 0, lift)]
+-    tl.move(app, way, v=120, a=400, verb="lifting onto the block", label=[("Film applicator", "M4")])
+-    s.speed("hand speed, ~20 mm/s (estimate)")
+-    t0 = tl.t
+-    Pp = tl.move(app, [(0, 0, 0), (x_end - x_start, 0, 0)], v=20, a=60, verb="spreading", label=[("Film applicator", "M4")])
+-    blade0 = lo[0] + x_start
+-
+-    def layer(st, t, t0=t0, T=Pp.T, x0=-20.0, x1=20.0):
+-        if t < t0:
+-            return
+-        s_ = min(1.0, (t - t0) / max(T, 1e-6))
+-        xm = x0 + (x1 - x0 + 2) * s_ - 1
+-        if xm <= x0:
+-            return
+-        V, F = disc(19.9, 0.0, 0.05, x_max=xm)
+-        st["_fx"]["powder layer"] = dict(kind="mesh", data=(V, F), color="#8b8d8f", opacity=1.0, solid=False,
+-                                         key=f"layer{xm:.2f}")
+-    tl.fx(layer, t0)
+-    s.speed("by hand: 0.8 m/s, set down at 90 mm/s (estimates)")
+-    tl.move(app, [(0, 0, 0), (0, 0, 30), (-x_end, 0, 30), (-x_end, 0, -lift)], v=120, a=400, verb="parking",
+-            label=[("Film applicator", "M4")])
+-    tl.shot(CAMS["box"])
+-    tl.caption("Nozzle and exhaust collector", "45 x 4 mm slot: argon across the plate")
+-    tl.insert(s.B("Slot nozzle"), prefs=["front-down", "front-step"])
+-    tl.insert(s.B("Exhaust collector"), prefs=["front-down", "front-step", "back-down"])
+-    # the tubes' ends sit in bulkheads in the side walls, under the gasket's overhang: lowered clear of the wall, then
+-    # slid into the bulkhead
+-    feed = s.B("Argon feed tube")
+-    hf = math.ceil(zr + 2.0 - float(tl.actors[feed[0]].V[:, 2].min()))
+-    tl.insert(feed, way=[(10, -FAR, hf), (10, 0, hf), (10, 0, 0), (0, 0, 0)])
+-    exh = s.B("Exhaust hose to the HEPA")
+-    he = math.ceil(zr + 2.0 - float(tl.actors[exh[0]].V[:, 2].min()))
+-    tl.insert(exh, way=[(-15, -FAR, he), (-15, 15, he), (-15, 15, 0), (0, 0, 0)])
+-    b.buy("G3")
++    tl.caption("A layer spread by hand", "48 mm bar on shims, between nozzle and collector: 50 um")
++    app = keys_of(s, "B", ["FT-0 spreader bar"])
++    if app:
++        lo = tl.actors[app[0]].V.min(0)
++        hi = tl.actors[app[0]].V.max(0)
++        w = float(hi[0] - lo[0])
++        x_start = -40.0 - float(lo[0])                 # its -x face at the block's left edge
++        way = [(0, 0, 0), (0, 0, 40), (x_start, 0, 40), (x_start, 0, 0)]
++        tl.move(app, way, v=120, a=400, verb="lifting onto the block", label=[("FT-0 spreader bar", "M4")])
++        s.speed("hand speed, ~20 mm/s (estimate)")
++        t0 = tl.t
++        Pp = tl.move(app, [(0, 0, 0), (-x_start, 0, 0)], v=20, a=60, verb="spreading", label=[("FT-0 spreader bar", "M4")])
++
++        def layer(st, t, t0=t0, T=Pp.T, x0=-20.0, x1=20.0, w=w, xs=-40.0, xe=float(lo[0])):
++            if t < t0:
++                return
++            s_ = min(1.0, (t - t0) / max(T, 1e-6))
++            xm = xs + (xe - xs) * s_                     # the bar's leading (-x) face... trailing edge of the layer
++            if xm <= x0:
++                return
++            V, F = disc(19.9, 0.0, 0.05, x_max=xm)
++            st["_fx"]["powder layer"] = dict(kind="mesh", data=(V, F), color="#8b8d8f", opacity=1.0, solid=False,
++                                             key=f"layer{xm:.2f}")
++        tl.fx(layer, t0)
+     tl.shot(CAMS["wide"])
+-    s.cal("FT-0 purge and heat (O2 log)", "O2 analyzer in: day %d-%d" % sched("O2 analyzer (used)"))
+-    tl.caption("Gas, filter and O2 analyzer", "argon in, HEPA out, trace O2 logged")
+-    tl.insert(s.B("Argon regulator"), prefs=["down", "front-down"], gap=-3.0)
+-    b.buy("G1", "G2", "C2")
+-    tl.insert(s.B("Exhaust HEPA"), prefs=["down", "front-down"], gap=-3.0)
++    s.speed(HAND)
++    s.cal("FT-0 purge and heat (O2 log)", "O2 analyzer in: day %s" % fmt_days(*sched(FP.O2)))
++    tl.caption("Gas, filter, O2 and the digitizer", "argon in, HEPA out, trace O2 logged; 8 channels on one clock")
++    ins(s, B("Argon regulator"), prefs=["down", "front-down"], gap=-1.0)
++    b.buy("G1", "G2", "C2", "G7")
++    ins(s, B("Exhaust HEPA"), prefs=["down", "front-down"], gap=-1.0)
+     b.buy("G4")
+-    tl.insert(s.B("Trace O2 analyzer"), prefs=["down", "back-down"])
+-    b.buy("G5")
+-    place_rest(s, prefs=["front-step", "front-down", "down"])
+-    close_box(s, lid, tube, acc, "FT-0")
+-    tl.caption("Purge to 1000 ppm, plate to 200 C", "13-31 min expected at 20 L/min (flow purge)")
+-    tl.overlay("panel", ["O2: 20.9 % -> 1000 ppm", "23.5 L box, 20 L/min argon", "ideal 6.3 min, expected 13-31 min",
+-                         "plate heaters 2 x 50 W to 200 C"])
++    ins(s, B("Trace O2 analyzer"), prefs=["down", "back-down"], gap=-1.0)
++    b.buy("G5", "G6", "G8")
++    ins(s, B("Digitizer"), prefs=["down", "front-down"])
++    b.buy("MON8")
++    tl.shot(CAMS["core"])
++    tl.caption("Raking lights from -x and -y", "MON2, MON3: LED and condenser through light ports in the walls")
++    ins(s, B("Light port ring and window (MK-21, MON2)"), prefs=["left", "left-down", "down"], gap=-0.8)
++    ins(s, B("Raking light from -x"), prefs=["left", "left-down", "down"], gap=-0.8)
++    ins(s, B("Light port ring and window (MK-21, MON3)"), prefs=["front", "front-down", "down"], gap=-0.8)
++    ins(s, B("Raking light from -y"), prefs=["front", "front-down", "down"])
++    b.buy("MON2")
++    close_box(s, "B")
++    b.buy("MON1")
++    place_rest(s, prefs=["front-step", "front-down", "down", "front", "back", "left", "right"])
++    tl.caption("Purge to 1000 ppm, plate to 200 C", "flow purge at 20 L/min (estimate)")
++    tl.overlay("panel", ["O2: 20.9 % -> 1000 ppm", "argon at 20 L/min through the slot", "plate heaters 2 x 50 W to 200 C",
++                         "layer camera, photodiode and digitizer on"])
+     tl.wait(6.0)
+     tl.overlay("panel", None)
+     # first tracks, slow motion
+@@ -781,46 +886,66 @@ def ch3():
+ def ch4():
+     s = Story(4, "FT-0 to FT-1: stages and recoater", "FT-0", "FT-1")
+     tl, b = s.tl, s.book
++    A = lambda *x: keys_of(s, "A", x)  # noqa: E731
++    B = lambda *x: keys_of(s, "B", x, new=True)  # noqa: E731
+     tl.shot(CAMS["core"])
+-    s.cal("FT-0 -> FT-1 upgrade", "stages arrived day %d-%d (PCards)" % sched("stages arrive"))
+-    tube, lid = tube_group(s, "A"), lid_group(s, "A")
+-    body = s.A("304 NEMA 4X box", "Lid gasket", "Lid clamps")
+-    hb = max(float(np.ptp(d["V"][:, 2])) for n, d in S.state_meshes("FT-0").items() if n.startswith("Well block"))
+-    acc = open_box(s, tube, lid, body, "FT-0", under=hb)
+-    tl.overlay("access", acc)
+-    tl.remove(s.A("Film applicator"), prefs=["front-step", "front-down"])
++    s.cal("FT-0 -> FT-1 upgrade", "stages arrived day %s (PCards)" % fmt_days(*sched("stages arrive")))
++    open_box(s)
++    rem(s, A("FT-0 spreader bar"), prefs=["down", "front-down", "front-step"])
+     tl.shot(CAMS["box"])
+-    tl.caption("Plate up, collar off", "the rod comes out of the collar; the collar leaves")
+-    stack = s.A("Substrate disc", "Heater plate", "Fibreglass rope", "Plate heaters", "Piston rod")
+-    tl.move(stack, [(0, 0, 0), (0, 0, 140), (75, 0, 140)], v=40, verb="lifting aside",
+-            label=[("The plate on its rod", "MK-04, MK-05, MK-06")])
+-    tl.remove(s.A("FT-0 rod collar"), prefs=["front-down", "front-step"])
++    tl.caption("Plate up, collar out", "the rod comes up out of the FT-0 collar; the collar slides out")
++    stack = A(*STACK)
++    tl.move(stack, [(0, 0, 0), (0, 0, 140)], v=40, verb="lifting", label=[("The plate on its rod", "MK-04, MK-05, MK-06")])
++    rem(s, A("FT-0 rod collar"), prefs=["front-step", "front-down", "right-step", "left-step"])
+     tl.shot(CAMS["under"])
+-    tl.caption("The X-VSR20A under the box", "20 mm lift, 100 N continuous")
+-    tl.insert(s.B("Piston-stage bracket plate", "Zaber X-VSR20A", "X-VSR20A platform", "X-VSR20A lift column"),
+-              prefs=["front", "front-up"])
+-    b.buy("M2", "F2b")
+-    tl.insert(s.B("Rod clamp"), way=[(FAR, -40, 0), (0, -40, 0), (0, 0, 0)])
++    tl.caption("Under the box: the X-VSR20A", "20 mm lift, 100 N; the rod-end block on its platform")
++    rem(s, A("FT-0 lead terminal bracket", "Lead terminal block", "Lead pigtail"), prefs=["front-up", "front", "right-up"],
++        label=[("FT-0 lead terminal bracket with its terminal block", "MK-17, H2, H3")])
++    ins(s, B("Piston-stage bracket plate", "Bracket-plate screws", "Zaber X-VSR20A-E01", "X-VSR20A M8 cable"),
++        prefs=["front", "front-up", "right", "left"],
++        label=[("Zaber X-VSR20A-E01 on its bracket plate and riser", "M2, MK-15")])
++    b.buy("M2", "F2b", "C5")
++    # the platform with the rod-end block comes in at the bottom of the stroke (its top then clears the front support
++    # rail), then the stage lifts it 15 mm
++    pis = B("X-VSR20A platform", "Rod-end block", "Rod clamp screw", "Lead terminal block, 6-way pluggable, on",
++            "Lead pigtail", "AE sensor")
++    tl.insert(pis, way=[(0, -FAR, -15.0), (0, 0, -15.0)], label=[("Rod-end block on the X-VSR20A platform, stage down",
++                                                                   "MK-15, H2, MON5")])
++    b.buy("MON5")
++    s.speed("real time (stage at 10 mm/s)")
++    tl.move(pis, [(0, 0, 0), (0, 0, 15.0)], v=PISTON_V, a=50.0, verb="stage up 15 mm",
++            label=[("X-VSR20A platform with the rod-end block", "M2, MK-15")])
++    s.speed(HAND)
++    ins(s, B("AE cable", "Heater and TC cable"), prefs=["front", "front-up", "down", "right"])
+     tl.shot(CAMS["box"])
+-    tl.caption("Rod down into the clamp", "through the deck, the floor and the O-ring gland")
+-    tl.move(stack, [(0, 0, 0), (-75, 0, 0), (-75, 0, -140)], v=40, verb="lowering",
+-            label=[("The plate on its rod", "MK-04, MK-05, MK-06")])
+-    tl.caption("The X-LSQ075B recoater", "75 mm travel, behind the well")
+-    tl.insert(s.B("Zaber X-LSQ075B", "X-LSQ carriage"), prefs=["back-down", "back-step", "front-step", "front-down", "right-down", "left-down"])
+-    b.buy("M1b")
+-    tl.insert(s.B("Stage shield"), prefs=["back-down", "back-step", "front-step", "front-down"])
++    tl.caption("Rod down into the clamp", "through the deck, the floor and the gland: 22 mm in the block")
++    tl.move(stack, [(0, 0, 0), (0, 0, -140)], v=40, verb="lowering", label=[("The plate on its rod", "MK-04, MK-05, MK-06")])
++    tl.caption("Leads aside; the X-LSM100B recoater", "101.6 mm travel, behind the well")
++    leads = A("Well-block heater and TC leads")
++    rem(s, leads, prefs=["front-down", "back-down", "down"], verb="unplugging",
++        label=[("Well-block heater and TC leads", "H3")])
++    ins(s, B("Zaber X-LSM100B", "X-LSM carriage"), prefs=["front-down", "back-down", "front-step", "down", "right-down",
++                                                          "left-down"],
++        label=[("Zaber X-LSM100B-E03 recoater stage", "M1c")])
++    b.buy("M1c")
++    ins(s, B("Stage shield"), prefs=["front-down", "back-down", "front-step", "down"])
+     tl.caption("Arm, hopper and blade", "~30 cm3 hopper, 3 mm silicone cord")
+-    tl.insert(s.B("Carriage bracket and arm", "Vibration motor"), prefs=["back-down", "back-step", "front-step", "front-down", "right-down"])
+-    tl.insert(s.B("Hopper, ~30"), prefs=["back-down", "back-step", "front-step", "front-down", "right-down"])
+-    tl.insert(s.B("Silicone-cord blade", "Cord clamp"), prefs=["back-down", "back-step", "front-step", "front-down", "right-down"])
++    ins(s, B("Carriage bracket and arm", "Vibration motor"), prefs=["front-down", "back-down", "front-step", "down",
++                                                                    "right-down"])
++    ins(s, B("Hopper, ~30"), prefs=["front-down", "down", "back-down", "front-step", "right-down"])
++    ins(s, B("Silicone-cord blade", "Cord clamp"), prefs=["front-down", "down", "back-down", "front-step", "right-down"])
+     b.buy("M3")
+-    tl.caption("Two heaters into the block", "the block is held at the plate's 200 C")
+-    tl.insert(s.B("Well-block heaters"), way=[(-60, -FAR, 200), (-60, 0, 200), (-60, 0, 0), (0, 0, 0)])
+-    b.buy("H1b")
++    ins(s, B("Recoater M8 data"), prefs=["back", "back-down", "front-down", "down"])
++    tl.caption("Four heaters into the block", "block and plate held at 200 C on two zones")
++    ins(s, B("Well-block heaters"), extra=[("given", [(-60, -FAR, 200), (-60, 0, 200), (-60, 0, 0), (0, 0, 0)])],
++        prefs=["front-step", "left-step"])
++    b.buy("H1b", "H5")
++    ins(s, leads, prefs=["front-down", "back-down", "down"], verb="plugging in",
++        label=[("Well-block heater and TC leads", "H3")])
+     tl.shot(CAMS["core"])
+-    tl.insert(s.B("120 mm fan"), prefs=["left", "left-down", "front-down", "down"])
+-    place_rest(s, prefs=["front-step", "front-down", "down"])
+-    close_box(s, lid, tube, acc, "FT-1")
++    ins(s, B("120 mm fan"), prefs=["left", "left-down", "front-down", "down"])
++    place_rest(s, prefs=["front-step", "front-down", "down", "front", "back", "left", "right"])
++    close_box(s, "B")
+     s.cal("FT-1 re-commission", "home both stages, purge, heat")
+     tl.shot(CAMS["well"])
+     tl.caption("Home both stages", "plate to +5 mm and back; hopper park to park")
+@@ -842,27 +967,19 @@ def ch4():
+ 
+ 
+ def add_stages(tl, piston, rec, pz_fn, hx_fn, t0, t1):
+-    """The piston group follows pz(t) (the lift column stretches with it); the recoater group follows hx(t) - HX0."""
++    """The piston group follows pz(t); the recoater group follows hx(t) - HX0 (the model draws the hopper at HX0)."""
+     col = [k for k in piston if tl.actors[k].group == "column"]
+     pis = [k for k in piston if k not in col]
+-    h0 = float(P["vs_plat"][2])                                  # unused; column height from the model
+     a = tl.actors[col[0]] if col else None
+     z_lo = float(a.V[:, 2].min()) if a else 0.0
+     z_hi = float(a.V[:, 2].max()) if a else 1.0
+ 
+-    def off_p(t):
+-        return (0.0, 0.0, pz_fn(t))
+-
+-    def off_r(t):
+-        return (hx_fn(t), 0.0, 0.0)
+-
+     def fn(st, t):
+         tt = min(max(t, t0), t1)
+         pz = pz_fn(tt)
+         for k in pis:
+             st[k]["stage"] = np.array([0.0, 0.0, pz])
+         for k in col:
+-            # the column's bottom stays on the stage body; its top follows the platform: scale z about z_lo
+             sc = (z_hi - z_lo + pz) / (z_hi - z_lo)
+             st[k]["scale"] = (1.0, 1.0, sc, z_lo)
+         hx = hx_fn(tt)
+@@ -887,8 +1004,6 @@ def ch5():
+     tl.caption("One layer, in real time", f"spread at {SPREAD_V:.0f} mm/s, hatch at "
+                + (f"{vh[0]:.0f}-{vh[-1]:.0f}" if len(vh) > 1 else f"{vh[0]:.0f}") + " mm/s")
+     s.speed("real time")
+-    # one full layer cycle in real time: (hopper at the left park) plate down one layer, spread to the right park, scan,
+-    # return to the left park
+     L = RIGHT_PARK - LEFT_PARK
+     t_sp = E.trapezoid(L, SPREAD_V, 50.0)[0]
+     t_ret = E.trapezoid(L, RETURN_V, 200.0)[0]
+@@ -896,7 +1011,6 @@ def ch5():
+     tt0 = SC.timeline(vec0, cp.get("timing"))
+     t_scan = tt0[-1][1]
+     t0 = tl.t + 0.6
+-    # timeline of the cycle
+     a_ret0 = t0                                           # from the model's park (right) to the left park first
+     t_ret0 = E.trapezoid(RIGHT_PARK - LEFT_PARK, RETURN_V, 200.0)[0]
+     a_sp = a_ret0 + t_ret0 + 0.6
+@@ -938,7 +1052,6 @@ def ch5():
+             st["_fx"]["scan hot"] = fx_lines("scan hot", hots, hot, 2.5)
+ 
+     def bed(st, t):
+-        # the fresh layer behind the blade during the spread
+         if a_sp <= t < a_scan:
+             xb = LEFT_PARK + E.trapezoid(L, SPREAD_V, 50.0)[1](t - a_sp) - P["hopper"][0] / 2 - 2.0
+             if xb > -20:
+@@ -954,17 +1067,16 @@ def ch5():
+                          f"spread {L:.1f} mm at {SPREAD_V:.0f} mm/s: {t_sp:.1f} s", f"scan: {t_scan:.1f} s",
+                          f"return at {RETURN_V:.0f} mm/s: {t_ret:.1f} s"], t0)
+     tl.t = t_end + 0.5
+-    # the time-lapse: one frame per layer, taken after each layer's scan
+     tl.shot(CAMS["lowwell"])
+     n = int(cp["n_layers"])
+-    step = max(1, math.ceil(n / 340))                 # at most ~340 frames (11 s): 500 layers -> one frame per 2 layers
++    step = max(1, math.ceil(n / 340))
+     s.cal("FT-1 FIRST COUPONS", "milestone")
+     cyc = t_sp + t_scan + t_ret + 1.4
+     per = "one frame per layer" if step == 1 else f"one frame per {step} layers"
+     tl.caption("Coupons growing", f"{n} layers, {n * LAYER:.0f} mm: {per}")
+     s.speed(f"time-lapse x{cyc * step * E.FPS:.0f}: {per} ({cyc * step:.0f} s of build)")
+     for k in tl.actors:
+-        if "Well block" in tl.actors[k].label or "Box lid" in tl.actors[k].label:
++        if tl.actors[k].label.startswith(("Well block", "Box door", "Saginaw")):
+             tl.fade(k, 0.22, tl.t)
+     t1 = tl.t + 1.0
+     T = math.ceil(n / step) / E.FPS
+@@ -1009,21 +1121,35 @@ def ch5():
+ 
+ 
+ # ================================================================================================ chapter 6: FT-1 -> FT-1V
++CASSETTE = ("Deck plate", "Macor standoffs", "Well block", "Well-block heaters", "Well-block thermocouple", "Overflow cup",
++            "Slot nozzle", "Exhaust collector", "Argon feed tube", "Exhaust hose", "Well-block heater and TC leads",
++            "Zaber X-LSM", "X-LSM carriage", "Carriage bracket", "Stage shield", "Hopper", "Silicone-cord", "Cord clamp",
++            "Vibration motor")
++
++
+ def ch6():
+     s = Story(6, "FT-1 to FT-1V: into the vacuum cube", "FT-1", "FT-1V")
+     tl, b = s.tl, s.book
++    A = lambda *x: keys_of(s, "A", x)  # noqa: E731
++    B = lambda *x: keys_of(s, "B", x, new=True)  # noqa: E731
++    Ball = lambda *x: keys_of(s, "B", x)  # noqa: E731
+     tl.shot(CAMS["cube"])
+-    s.cal("FT-1 -> FT-1V transfer", "cube in: day %d-%d; plates machined day %d-%d" % (
+-        *sched("cube frame and plates arrive (PO)"), *sched("cube plates machined")))
+-    s.speed("by hand: 0.8 m/s, set down at 90 mm/s (estimates)")
+-    drive = s.A("X-VSR20A platform", "X-VSR20A lift column", "Rod clamp")
+-    col = [k for k in drive if tl.actors[k].group == "column"]
+-    drv = [k for k in drive if k not in col]
+-    zc0 = float(tl.actors[col[0]].V[:, 2].min()) if col else 0.0
+-    stack = s.A("Substrate disc", "Heater plate", "Fibreglass rope", "Plate heaters", "Piston rod")
+-    STACK_UP, BOX_UP = 30.0, 17.0
+-    tl.caption("Rod unclamped; stage down 15 mm", "then the plate is lifted 30 mm by hand")
++    s.cal("FT-1 -> FT-1V transfer", "cube in: day %s; plates machined day %s" % (
++        fmt_days(*sched("cube frame and plates arrive (PO)")), fmt_days(*sched("cube plates machined"))))
++    open_box(s)
++    tl.caption("The plate on its rod comes out", "rod clamp loosened; lifted straight up out of the bore")
++    stack = A(*STACK)
++    rem(s, stack, prefs=["front-down", "down"], label=[("The plate on the box's rod", "MK-04, MK-05, MK-06")])
++    tl.caption("Deck clamps off; the cassette out", "M8 and leads unplugged at the glands")
++    rem(s, A("Stud nuts", "Deck clamps on the panel studs"), prefs=["down", "front-down"],
++        label=[("Deck clamps and stud nuts", "MK-23")])
++    rem(s, A("Recoater M8 data"), prefs=["back", "back-down", "front-down", "down"], verb="unplugging")
++    rem(s, A(*CASSETTE), prefs=["front-down", "down"], label=[("The deck cassette with the recoater", "MK-01 + all on it")])
+     s.speed("real time (stage at 10 mm/s)")
++    tl.shot(CAMS["under"])
++    tl.caption("Stage down 15 mm; the gland out", "the gland plate hangs 12 mm below the rail tops")
++    drv = [k for k in tl.actors if k.startswith("A|") and tl.actors[k].group == "piston" and k not in stack
++           and tl.state(tl.t)[k]["vis"]]
+     t0 = tl.t
+     pz_path = E.Path([(0, 0, 0), (0, 0, -15)], [PISTON_V], [50.0])
+ 
+@@ -1033,83 +1159,49 @@ def ch6():
+         z = pz_path.at(t - t0)[2]
+         for k in drv:
+             st[k]["stage"] = np.array([0.0, 0.0, z])
+-        for k in col:
+-            st[k]["scale"] = (1.0, 1.0, (17.0 + z) / 17.0, zc0)
+     tl.events.append((t0, t0 + pz_path.T, drop))
++    tl.overlay("adding", ("moving", [("X-VSR20A to the bottom of its stroke", "M2")]), t0, t0 + pz_path.T + 0.5)
+     tl.wait(pz_path.T + 0.3)
+     for k in drv:
+         if k in tl.world.g:
+             tl.world.move(k, np.array([0.0, 0.0, -15.0]))
+-    s.speed("by hand: 0.8 m/s, set down at 90 mm/s (estimates)")
+-    tl.move(stack, [(0, 0, 0), (0, 0, STACK_UP)], v=15, verb="lifting", label=[("The plate on its rod", "MK-04, MK-05, MK-06")])
++    s.speed(HAND)
++    gland = A("Rod gland plate", "Gland screws")
++    rem(s, gland, prefs=["left", "right", "front", "left-down", "front-up"], label=[("Rod gland plate", "MK-07")])
++    tl.shot(CAMS["cube"])
++    tl.caption("The box slides off the rails", "lights and fan off first; no lift needed")
++    rem(s, A("Raking light from -y"), prefs=["front", "front-down", "down"], gap=-0.6)
++    rem(s, A("Raking light from -x"), prefs=["left", "left-down", "down"], gap=-0.6)
++    rem(s, A("120 mm fan"), prefs=["left", "left-down", "down"])
++    box = A("Saginaw", "Poured-in-place", "Panel studs", "Concealed hinges", "Light port ring", "Lid interlock",
++            "IP68 cable glands", "Box-air thermocouple")
++    rem(s, box, extra=[("given", [(0, -FAR, 0), (0, 0, 0)])], prefs=["front", "front-down"], verb="sliding off",
++        label=[("The Saginaw box", "E1")])
+     tl.caption("Optics up 21 mm for the cube", "its floor plate is 21 mm thicker than the box's sheet")
+-    optics_move(s, "FT-1", 0.0, 21.0, "sliding up", extra=("+-15 V supply",))   # the model draws it 21 mm up too
+-    tube = tube_group(s, "A", long=True)
+-    lid = lid_group(s, "A")
+-    zt = max(float(tl.actors[k].V[:, 2].max()) for k in lid)
+-    rise = math.ceil(zt + BOX_UP + 2.0 - float(tl.actors[tube[0]].V[:, 2].min()))
+-    tl.caption("Tube up; the box slides out", "with the cassette, the gland and the lid in it")
+-    tl.move(tube, [(0, 0, 0), (0, 0, rise)], v=30, verb="sliding up", label=[("Beam tube, long", "MK-10")])
+-    inside = [k for k in s.Am.values() if k.startswith("A|") and any(x in k for x in (
+-        "304 NEMA", "Lid gasket", "Box lid", "Continuous hinge", "Lid clamps", "Inner clamp ring", "Window ring", "Window, ",
+-        "Window retaining", "Cover-slide holder", "Cover slide,", "Coded lid switches", "120 mm fan", "Deck plate",
+-        "Macor standoffs", "Well block", "Well-block heaters", "Overflow cup", "Slot nozzle", "Exhaust collector",
+-        "Argon feed tube", "Exhaust hose", "Zaber X-LSQ", "X-LSQ carriage", "Carriage bracket", "Stage shield",
+-        "Hopper", "Silicone-cord", "Cord clamp", "Vibration motor", "Rod gland plate"))]
+-    inside = [k for k in inside if k not in tube] + stack
+-    tl.remove(inside, way=[(0, 0, 0), (0, 0, BOX_UP), (0, -FAR, BOX_UP)], verb="sliding out",
+-              label=[("The box with the cassette in it", "E1 + cassette")])
+-    lens_bot = float(tl.actors[[k for k in tl.actors if "f-theta" in k][0]].V[:, 2].min()) + 21.0
+-    off = math.floor(lens_bot - 2.0 - float(tl.actors[tube[0]].V[:, 2].max()))
+-    tl.caption("The long tube comes off", "down off the lens, out to the front")
+-    tl.remove(tube, way=[(0, 0, 0), (0, 0, off - rise), (0, -FAR, off - rise)], verb="taking off",
+-              label=[("Beam tube, long", "MK-10")])
+-    st_ = tube_group(s, "B", long=False)
+-    sh = [k for k in st_ if "Beam tube" in k][0]
+-    Tv = tl.actors[sh].V
+-    r = np.hypot(Tv[:, 0], Tv[:, 1])
+-    lens_r = 55.0
+-    below = Tv[(r < lens_r - 0.5) & (Tv[:, 2] <= lens_bot + 1e-6)]
+-    ring_top = float(below[:, 2].max()) if len(below) else -1e9
+-    hp_bot = float(tl.actors[[k for k in tl.actors if "Scan-head plate" in k][0]].V[:, 2].min()) + 21.0
+-    fr = math.floor(min(lens_bot - ring_top, hp_bot - float(Tv[:, 2].max())) - 0.5)
+-    lo = math.floor(lens_bot - 2.0 - float(Tv[:, 2].max()))
+-    tl.caption("Short tube onto the lens", f"it waits {fr:.0f} mm up the lens until the cube is in")
+-    tl.insert(st_, way=[(0, -FAR, lo), (0, 0, lo), (0, 0, fr)],
+-              label=[("Beam tube, short, with lens collar", "MK-10"), ("Beam-tube interlock switch", "S1")])
++    optics_move(s, 21.0)
++    tl.caption("The 12 in. aluminium cube", "Ideal Vacuum frame, plates MK-13 and MK-14")
+     kfn = [n for n in s.Bm if n.startswith("KF-25 ports")][0]
+     F_ = P["cube_frame"]
+     xc_, yc_ = P["deck_c"]
+     ports = split_part(s, kfn, lambda c: "left" if c[0] < xc_ - F_ / 2 else "right" if c[0] > xc_ + F_ / 2 else "back")
+-    tl.caption("The 12 in. aluminium cube", "Ideal Vacuum frame, plates MK-13 and MK-14")
+-    cube = [s.Bm[n] for n in s.Bm if any(x in n for x in ("cube frame", "Cube top plate", "Cube bottom plate", "Cube back",
+-                                                          "Window ring", "Window, ", "Window retaining", "Cover-slide holder",
+-                                                          "Cover slide,"))] + [ports["back"]]
+-    tl.insert(cube, way=[(0, -FAR, 3), (0, 0, 3), (0, 0, 0)], label=[("Ideal Vacuum 12 in. cube with the window stack",
+-                                                                     "E2, MK-13, MK-14, MK-02, L8")])
++    cube = B("Ideal Vacuum 12 in. cube frame", "Cube top plate", "Cube bottom plate", "Cube back") + [ports["back"]]
++    ins(s, cube, extra=[("given", [(0, -FAR, 3), (0, 0, 3), (0, 0, 0)])], prefs=["front-down", "front"],
++        label=[("Ideal Vacuum 12 in. cube: frame, top, bottom and back plates", "E2, MK-13, MK-14")])
+     b.buy("E2", "F2c")
+     tl.shot(CAMS["under"])
+     tl.caption("Gland under the cube floor", "the same O-ring gland, re-bolted")
+-    tl.insert([s.Bm["Rod gland plate, 2 O-rings (MK-07)"]], prefs=["left", "front-up", "right"])
+-    tl.wait(2.2)                                  # hold: no shot under 2 s (the insertion alone was 1.8 s)
++    ins(s, gland, prefs=["left", "right", "front", "front-up"], label=[("Rod gland plate", "MK-07")])
++    tl.wait(1.0)
+     tl.shot(CAMS["cube"])
+-    tl.caption("The cassette goes in", "250 mm deck through the face opening (266 mm, est.)")
+-    cas = [s.Bm[n] for n in s.Bm if s.Bm[n].startswith("B|") and any(x in n for x in (
+-        "Deck plate", "Macor standoffs", "Well block", "Well-block heaters", "Overflow cup", "Slot nozzle", "Exhaust collector",
+-        "Zaber X-LSQ", "X-LSQ carriage", "Carriage bracket", "Stage shield", "Hopper",
+-        "Silicone-cord", "Cord clamp", "Vibration motor"))]
+-    tl.insert(cas, way=[(0, -FAR, 14), (0, 0, 14), (0, 0, 0)], label=[("Deck cassette with the recoater", "MK-01 + all on it")])
+-    tl.caption("Gas tubes in from the sides", "they reach past the front opening; side plates after")
+-    tl.insert(s.B("Argon feed tube"), prefs=["left", "left-step", "left-down"], gap=-2.0)
+-    tl.insert(s.B("Exhaust hose to the HEPA"), prefs=["right", "right-step", "right-down"])
+-    tl.insert(s.B("Cube left plate") + [ports["left"]], way=[(-10, -FAR, 0), (-10, 0, 0), (0, 0, 0)], gap=-2.0,
+-              label=[("Cube left plate with its KF-25 ports", "E2, E3")])
+-    tl.insert(s.B("Cube right plate") + [ports["right"]], way=[(10, -FAR, 0), (10, 0, 0), (0, 0, 0)],
+-              label=[("Cube right plate with its KF-25 ports", "E2, E3")])
+-    tl.caption("Plate on the long rod", "21 mm longer rod, down into the clamp")
+-    stack_b = [s.Bm[n] for n in s.Bm if any(x in n for x in ("Substrate disc", "Heater plate", "Fibreglass rope",
+-                                                             "Plate heaters", "Piston rod"))]
+-    tl.insert(stack_b, way=[(0, -FAR, 145), (0, 0, 145), (0, 0, 0)])
++    tl.caption("The cassette goes in", "245 mm deck through the face opening (266 mm, est.)")
++    cas = [k for k in Ball(*CASSETTE) if not tl.actors[k].label.startswith(("Argon feed tube", "Exhaust hose"))]
++    ins(s, cas, extra=[("given", [(0, -FAR, 14), (0, 0, 14), (0, 0, 0)])], prefs=["front-down", "front"],
++        label=[("Deck cassette with the recoater", "MK-01 + all on it")])
++    ins(s, B("Deck screws into the bottom plate"), prefs=["down", "front-down", "front"])
++    ins(s, B("Recoater M8 data"), prefs=["front", "front-down", "back-down", "down"])
++    tl.caption("Plate on the long rod", "21 mm longer rod, down through the bore and the gland")
++    stack_b = Ball(*STACK)
++    ins(s, stack_b, prefs=["front-down", "down"], label=[("The plate on the long rod", "MK-04, MK-05, MK-06")])
+     t0 = tl.t
+     up = E.Path([(0, 0, -15), (0, 0, 0)], [PISTON_V], [50.0])
+     s.speed("real time (stage at 10 mm/s)")
+@@ -1120,27 +1212,41 @@ def ch6():
+         z = up.at(t - t0)[2]
+         for k in drv:
+             st[k]["stage"] = np.array([0.0, 0.0, z])
+-        for k in col:
+-            st[k]["scale"] = (1.0, 1.0, (17.0 + z) / 17.0, zc0)
+     tl.events.append((t0, t0 + up.T, rise_))
+     tl.overlay("adding", ("moving", [("X-VSR20A up to the rod, clamped", "M2, MK-15")]), t0, t0 + up.T + 0.5)
+     tl.wait(up.T + 0.4)
+     for k in drv:
+         if k in tl.world.g:
+             tl.world.move(k, np.zeros(3))
+-    s.speed("by hand: 0.8 m/s, set down at 90 mm/s (estimates)")
+-    tl.caption("Door, ports and pump", "KF-25 ports, Pirani, feedthroughs, rotary-vane pump")
+-    tl.insert([s.Bm[n] for n in s.Bm if "Cube front plate" in n or "Door hinges" in n], prefs=["front", "front-down"])
+-    # the hose is drawn with its end in the pump's inlet, and its other end over the KF port's flange (clamped): the pump
+-    # comes with its hose, and the hose's clamp end meets the port (an allowed contact in the audit, up to 5 mm)
+-    tl.insert([s.Bm[n] for n in s.Bm if "Rotary-vane pump" in n or "KF-25 pump hose" in n],
+-              prefs=["down", "front-down", "left-down"], ignore=[ports["left"]],
+-              label=[("Rotary-vane pump with its KF-25 hose and valve", "E3")])
++    s.speed(HAND)
++    tl.caption("Window stack on the top plate", "drop tube and cover slide inside; camera on the top plate")
++    ins(s, B("Cover-slide drop tube", "Cover-slide holder", "Cover slide,"), prefs=["front-up", "front", "front-down"],
++        label=[("Cover-slide drop tube with the holder and slide", "MK-02, L8")])
++    ins(s, Ball("Window ring", "Window, ", "Window retaining flange", "Window-stack screws"),
++        prefs=["front", "front-down", "down"], label=[("Window stack on the top plate", "MK-02, L8")])
++    ins(s, B("Camera port ring", "Camera port window"), prefs=["front", "front-down", "down", "left"])
++    ins(s, B("Layer camera", "Camera post"), prefs=["front-down", "left-down", "down", "front"],
++        label=[("Layer camera on its post", "MON1, MK-20")])
++    tl.caption("Side plates, gas tubes, lights", "argon in from the left, exhaust out to the right")
++    ins(s, B("Argon feed tube"), prefs=["left", "left-step", "left-down", "front"], gap=-1.0)
++    ins(s, B("Exhaust hose to the HEPA"), prefs=["right", "right-step", "right-down", "front"])
++    ins(s, B("Cube left plate", "Light port ring and window (MK-21, MON2)") + [ports["left"]],
++        extra=[("given", [(-10, -FAR, 0), (-10, 0, 0), (0, 0, 0)])], prefs=["left", "front"], gap=-1.0,
++        label=[("Cube left plate with its KF-25 ports and light port", "E2, E3, MK-21")])
++    ins(s, B("Cube right plate") + [ports["right"]], extra=[("given", [(10, -FAR, 0), (10, 0, 0), (0, 0, 0)])],
++        prefs=["right", "front"], label=[("Cube right plate with its KF-25 ports", "E2, E3")])
++    ins(s, B("Raking light from -x"), prefs=["left", "left-down", "down", "front"])
++    tl.caption("Door, pump and interlocks", "KF-25 ports, Pirani, feedthroughs, rotary-vane pump")
++    ins(s, B("Cube front plate", "Door hinges", "Light port ring and window (MK-21, MON3)"), prefs=["front", "front-down"],
++        label=[("Cube front plate = door, with its hinges and light port", "E2, MK-21")])
++    ins(s, B("Raking light from -y"), prefs=["front", "front-down", "down"], gap=-0.6)
++    ins(s, B("Rotary-vane pump", "KF-25 pump hose"), prefs=["down", "front-down", "left-down"], ignore=[ports["left"]],
++        label=[("Rotary-vane pump with its KF-25 hose and valve", "E3")])
+     b.buy("E3", "E5")
+-    tl.insert(s.B("Coded lid switches"), prefs=["front", "front-down", "down"])
+-    tl.insert(s.B("120 mm fan"), prefs=["back", "back-down", "down"])
++    ins(s, B("Door interlock"), prefs=["front", "front-down", "down"], gap=-0.6)
++    ins(s, B("120 mm fan"), prefs=["back", "back-down", "down"])
++    tube_on(s, "B")
+     place_rest(s)
+-    tl.move(st_, [(0, 0, 0), (0, 0, -fr)], v=30, verb="sliding down", label=[("Short beam tube onto the flange", "MK-10")])
+     tl.shot(CAMS["cube"])
+     s.cal("FT-1V leak check and pump-purge")
+     tl.caption("Leak check, then pump-purge", "two pump-and-fill cycles to ~1 mbar")
+@@ -1156,6 +1262,26 @@ def ch6():
+     return s
+ 
+ 
++def optics_move(s, dz):
++    """Slide the gantry cross-beams up the posts with the head, lens, collar and collimator (and the supply, cables and
++    photodiode branch on them); the fibre follows (its FT-1V shape from the model, blended)."""
++    tl = s.tl
++    keys = [k for n, k in s.Am.items() if n.startswith(OPTICS)]
++    keys = [k for k in keys if tl.state(tl.t)[k]["vis"]]
++    fib = [k for n, k in s.Am.items() if n.startswith("Process fibre")]
++    t0 = tl.t
++    Pm = tl.move(keys, [(0, 0, 0), (0, 0, dz)], v=OPTICS_V, a=20, verb="sliding up",
++                 label=[("Gantry cross-beams with the head and lens", "E4, L3, L4, MK-09")])
++    if fib:
++        V1 = S.state_meshes(s.b)["Process fibre"]["V"]
++        if len(V1) == len(tl.actors[fib[0]].V):
++            tl.morph(fib[0], V1, t0, t0 + Pm.T)
++        else:
++            print("  ! fibre mesh changes topology with the head height: drawn rigid", flush=True)
++            tl.move(fib, [(0, 0, 0), (0, 0, dz)], v=OPTICS_V, overlay=False)
++    return Pm
++
++
+ # ================================================================================================ chapter 7: summary
+ def ch7():
+     s = Story(7, "Summary: weeks and dollars", "FT-1V", "FT-1V")
+@@ -1166,7 +1292,7 @@ def ch7():
+     ms = ["S1 guide-laser and scanner checks", "S2 FULL POWER INTO THE DUMP", "FT-0 FIRST TRACKS", "FT-1 FIRST COUPONS",
+           "FT-1V FIRST COUPONS (< 100 ppm)"]
+     tl.overlay("summary", dict(milestones=[(m, *sched(m)) for m in ms], spend=cumulative(), scenario=_SCHED["_scenario"]))
+-    tl.wait(15.0)                                 # 15 s keeps the whole video under 6 min (358 s)
++    tl.wait(15.0)
+     tl.end()
+     return s
+ 

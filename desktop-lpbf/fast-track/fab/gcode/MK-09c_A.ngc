@@ -1,0 +1,36 @@
+(Exported by FreeCAD)
+(Post Processor: Path.Post.scripts.linuxcnc_post)
+(Output Time:2026-11-28 10:33:04.783722)
+(begin preamble)
+G17 G54 G40 G49 G80 G90
+G21
+(begin operation: TC31_Job_MK_09c_A)
+(machine units: mm/min)
+(TC31_Job_MK_09c_A) 
+M5
+M6 T31 
+G43 H31 
+M3 S8100 
+(finish operation: TC31_Job_MK_09c_A)
+(begin operation: Drill 2 x 5.50 M5, z 4.76 to -2.15)
+(machine units: mm/min)
+(Coolant On:Flood)
+M8
+(Drill 2 x 5.50 M5, z 4.76 to -2.15) 
+(Begin Drilling) 
+G0 Z43.100 
+G90 
+G98 
+G0 X14.760 Y15.000 
+G83 X14.760 Y15.000 Z-2.150 F1117.800 Q5.500 R6.760 
+G0 X29.760 Y15.000 
+G83 X29.760 Y15.000 Z-2.150 F1117.800 Q5.500 R6.760 
+G80 
+G0 Z43.100 
+(finish operation: Drill 2 x 5.50 M5, z 4.76 to -2.15)
+(Coolant Off:Flood)
+M9
+(begin postamble)
+M05
+G17 G54 G90 G80 G40
+M2

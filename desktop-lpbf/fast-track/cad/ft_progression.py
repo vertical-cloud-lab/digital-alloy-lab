@@ -1,0 +1,327 @@
+"""The progression S1 -> S2 -> FT-0 -> FT-1 -> FT-1V as parts arrive: one build path, with its schedule and spend.
+
+fast_track.py schedules FT-0, FT-1 and FT-1V as three separate machines, each started on day 0. This script
+schedules them as one machine that grows: every order goes out on day 0 (except the cube in path B), and each
+state starts as soon as its parts are in and the state before it has done its job. The durations are
+fast_track.py's (vendor statements read 2026-11-25/26, or estimates where marked), plus the upgrade steps.
+
+    python desktop-lpbf/fast-track/cad/ft_progression.py   # out/progression.csv, out/progression.md, img/progression-gantt.png
+"""
+from __future__ import annotations
+
+import csv
+import pathlib
+import sys
+
+HERE = pathlib.Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE.parent))
+import fast_track as F  # noqa: E402
+
+OUT, IMG = HERE / "out", HERE.parent / "img"
+
+STATE_OF_TASK = {}
+
+
+def T(state, dur, deps, basis):
+    return (dur, deps, basis, state)
+
+
+def _common(*names):
+    """fast_track.COMMON's entry under the first of these names that exists (the lead renames tasks as facts land)."""
+    for n in names:
+        if n in F.COMMON:
+            return n, F.COMMON[n]
+    raise KeyError(names)
+
+
+def _shop(state, fallback):
+    """Shop days for a state's made parts: fab/out/hours.json through fast_track.shop_days() when there, else ours."""
+    if hasattr(F, "shop_days"):
+        d, (lo, hi) = F.shop_days(state)
+        return d, f"fab/out/hours.json: {lo:.1f}-{hi:.1f} shop h (fast_track.shop_days, estimate)"
+    return fallback
+
+
+RTC, RTC_T = _common("RTC4 card + PC and software", "PC + RTC5 software")
+O2, O2_T = _common("O2 analyzers arrive", "O2 analyzer (used)")
+MAINS = "208/240 V circuit for the laser"
+
+ORDERS = {
+    "used optics chain arrives": T("orders", *F.COMMON["used optics chain arrives"]),
+    "McMaster stock and hardware": T("orders", *F.COMMON["McMaster stock and hardware"]),
+    "safety parts and eyewear": T("orders", *F.COMMON["safety parts and eyewear"]),
+    "window, cover slides, beam dump (Edmund, Thorlabs)": T("orders", (2, 5), [], "Edmund 38-990 '5 In Stock'; Thorlabs in-stock items"),
+    O2: T("orders", *O2_T),
+    "argon cylinder and regulator": T("orders", *F.COMMON["argon cylinder and regulator"]),
+    RTC: T("orders", *RTC_T),
+    "enclosure arrives": T("orders", (3, 8), [], "estimate: distributor stock (Saginaw SCE-16EL1208SSLP), ground"),
+    "LSO registration and SOP": T("approvals", *F.COMMON["LSO registration and SOP"]),
+    "EHS review (Al powder)": T("approvals", *F.COMMON["EHS review (Al powder)"]),
+}
+if MAINS in F.COMMON:
+    ORDERS[MAINS] = T("orders", *F.COMMON[MAINS])
+S1_NEEDS = ["S1 optics bench assembled", "LSO registration and SOP", "safety parts and eyewear"] + (
+    [MAINS] if MAINS in F.COMMON else [])
+
+PATH = {
+    # S1: optics on the frame, guide laser onto a target on the deck plate
+    "deck plate and target stand made": T("S1", _shop("S1", ((1, 2), "estimate: two plates, ~3 shop hours"))[0],
+                                          ["McMaster stock and hardware"],
+                                          _shop("S1", ((1, 2), "estimate: two plates, ~3 shop hours"))[1]),
+    "S1 optics bench assembled": T("S1", (1, 1), ["used optics chain arrives", RTC, "deck plate and target stand made"],
+                                   "estimate"),
+    "S1 guide-laser and scanner checks": T("S1", (2, 4), S1_NEEDS, "fast_track.py's bench check"),
+    # S2: the box round the beam, full power into the dump
+    "window stack and beam tube made": T("S2", _shop("S2", ((2, 3), "estimate: MK-02, MK-10, ~8 shop hours"))[0],
+                                         ["deck plate and target stand made"],
+                                         _shop("S2", ((2, 3), "estimate: MK-02, MK-10, ~8 shop hours"))[1]),
+    "box cut and fitted": T("S2", (1, 2), ["enclosure arrives", "window stack and beam tube made",
+                                          "window, cover slides, beam dump (Edmund, Thorlabs)"],
+                            "estimate: window bore, bulkheads, glands, rod hole"),
+    "S2 interlocks wired and proven": T("S2", (1, 2), ["box cut and fitted", "safety parts and eyewear"], "estimate"),
+    "S2 FULL POWER INTO THE DUMP": T("S2", (1, 2), ["S1 guide-laser and scanner checks", "S2 interlocks wired and proven"],
+                                     "milestone: calorimetry, focus ladder; inside the laser's return window"),
+    # FT-0
+    "FT-0 parts made": T("FT-0", _shop("FT-0", ((3, 5), "estimate: ~12 shop hours after the window parts"))[0],
+                         ["window stack and beam tube made"],
+                         _shop("FT-0", ((3, 5), "estimate: ~12 shop hours after the window parts"))[1]),
+    "FT-0 assembled in the box": T("FT-0", (1, 2), ["FT-0 parts made", "box cut and fitted"], "estimate"),
+    "FT-0 purge and heat (O2 log)": T("FT-0", (1, 2), ["FT-0 assembled in the box", O2,
+                                                     "argon cylinder and regulator"], "estimate"),
+    "FT-0 FIRST TRACKS": T("FT-0", (1, 2), ["S2 FULL POWER INTO THE DUMP", "FT-0 purge and heat (O2 log)",
+                                           "EHS review (Al powder)"], "milestone"),
+    "FT-0 hand-spread layers and pads": T("FT-0", (2, 4), ["FT-0 FIRST TRACKS"], "estimate"),
+    # FT-1
+    "FT-1 parts made": T("FT-1", _shop("FT-1", ((3, 5), "estimate: MK-08, 12, 15, ~12 shop hours"))[0],
+                         ["FT-0 parts made"], _shop("FT-1", ((3, 5), "estimate: MK-08, 12, 15, ~12 shop hours"))[1]),
+    "FT-0 -> FT-1 upgrade": T("FT-1", (1, 2), ["FT-1 parts made", "stages arrive", "FT-0 purge and heat (O2 log)"],
+                              "estimate: tube half-shells off and door open, collar off, rod clamped in the rod-end block "
+                              "on the stage, recoater on the deck, four block heaters in"),
+    "FT-1 re-commission": T("FT-1", (1, 2), ["FT-0 -> FT-1 upgrade"], "estimate: purge, heat both, home stages, interlocks"),
+    "FT-1 powder layers: dose, spread, pads": T("FT-1", (3, 5), ["FT-1 re-commission", "FT-0 FIRST TRACKS"], "estimate"),
+    "FT-1 FIRST COUPONS": T("FT-1", (2, 5), ["FT-1 powder layers: dose, spread, pads"], "milestone"),
+    # FT-1V
+    "pump, KF parts, Pirani, feedthroughs": T("FT-1V", (2, 7), [], "fast_track.py (McMaster next day, or used IDP-3)"),
+    "cube plates machined": T("FT-1V", _shop("FT-1V", ((2, 3), "estimate: MK-13, MK-14"))[0],
+                              ["cube frame and plates arrive (PO)"], _shop("FT-1V", ((2, 3), "estimate: MK-13, MK-14"))[1]),
+    "FT-1 -> FT-1V transfer": T("FT-1V", (1, 2), ["cube plates machined", "pump, KF parts, Pirani, feedthroughs",
+                                                "FT-1 powder layers: dose, spread, pads"],
+                                "estimate: see the sequence below; cassette, gland, window stack across; optics up 21 mm"),
+    "FT-1V leak check and pump-purge": T("FT-1V", (2, 4), ["FT-1 -> FT-1V transfer"], "fast_track.py"),
+    "FT-1V FIRST COUPONS (< 100 ppm)": T("FT-1V", (2, 5), ["FT-1V leak check and pump-purge"], "milestone"),
+}
+
+STAGES = {
+    "PCard": T("orders", (3, 10), [], "Zaber X-LSM100B 'Lead Time 1-5 Days' (read 2026-11-27) + Thorlabs MTS50/M-Z8 "
+                                     "'Available Today'; each vendor under $3,500"),
+    "PO": T("orders", (11, 20), [], "both Zaber stages (X-VSR20A, X-LSM100B) on one PO: BYU PO 10-14 days + 1-5 days "
+                                  "+ transit"),
+}
+CUBE = {
+    "day 0": T("orders", (11, 16), [], "Ideal Vacuum 'Available now' (2026-11-25) + BYU PO + LTL (fast_track.py)"),
+    "after the O2 log": T("orders", (11, 16), ["FT-0 purge and heat (O2 log)"],
+                          "ordered only if FT-0's first purge stalls above the target"),
+}
+
+SCENARIOS = {
+    "A: stages on PCards, cube ordered on day 0": ("PCard", "day 0"),
+    "B: stages on PCards, cube ordered after FT-0's O2 log": ("PCard", "after the O2 log"),
+    "C: both stages on one Zaber PO, cube after the O2 log": ("PO", "after the O2 log"),
+}
+
+MILESTONES = ("S1 guide-laser and scanner checks", "S2 FULL POWER INTO THE DUMP", "FT-0 FIRST TRACKS",
+              "FT-1 FIRST COUPONS", "FT-1V FIRST COUPONS (< 100 ppm)")
+COLORS = {"orders": "#8c96a0", "approvals": "#b9b9b9", "S1": "#5b7fb5", "S2": "#8e6bbf", "FT-0": "#e08a3c",
+          "FT-1": "#3a9a5b", "FT-1V": "#2a9fb0"}
+
+
+def tasks_for(scn):
+    st, cube = SCENARIOS[scn]
+    t = {**ORDERS, **PATH}
+    t["stages arrive"] = STAGES[st]
+    t["cube frame and plates arrive (PO)"] = CUBE[cube]
+    return t
+
+
+def run():
+    res = {}
+    for scn in SCENARIOS:
+        tasks = tasks_for(scn)
+        f = F.forward({k: (v[0], v[1], v[2]) for k, v in tasks.items()})
+        res[scn] = (tasks, f)
+    return res
+
+
+# Parts.csv lines by the first state that needs them (S1 = the optics bench)
+FIRST_STATE = {
+    "S1": ["L1", "L2", "L3", "L4", "L5", "L5b", "L6", "L7", "L10", "L11", "C1", "E4", "S2", "MON4"],
+    "S2": ["L8", "L9", "E1", "S1", "S5", "S6", "C2", "C3", "C4", "MON6"],
+    "FT-0": ["H1", "H2", "H3", "H4", "G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8", "G9", "E6", "M4", "S3", "S4", "F1",
+             "F2a", "P1", "MON1", "MON2", "MON3", "MON7", "MON8"],
+    "FT-1": ["M1c", "M2", "M3", "H5", "C5", "F2b", "MON5"],
+    "FT-1V": ["E2", "E3", "E5", "F2c"],
+}
+
+
+def spend():
+    rows = {r["id"]: r for r in csv.DictReader(open(HERE.parent / "parts.csv"))}
+    out, lo_c, hi_c = [], 0.0, 0.0
+    for st, ids in FIRST_STATE.items():
+        lo = hi = 0.0
+        for i in ids:
+            r = rows.get(i)
+            if r is None:
+                continue
+            q = float(r["FT1V"] if st == "FT-1V" else r["FT1"] if st == "FT-1" else r["FT0"] or 0) or float(r["FT1"] or 0)
+            if i == "H1":
+                q = 2.0          # two plate heaters in FT-0; the block's four come with FT-1
+            if i in ("F2b",):    # FT-1's shop time less FT-0's, already counted
+                lo += float(r["unit_low"]) - float(rows["F2a"]["unit_low"])
+                hi += float(r["unit_high"]) - float(rows["F2a"]["unit_high"])
+                continue
+            if i in ("F2c",):
+                lo += float(r["unit_low"]) - float(rows["F2b"]["unit_low"])
+                hi += float(r["unit_high"]) - float(rows["F2b"]["unit_high"])
+                continue
+            lo += q * float(r["unit_low"])
+            hi += q * float(r["unit_high"])
+        if st == "FT-1":                                  # the well block's 4 cartridges (H1: FT-0 2, FT-1 6)
+            lo += 4 * float(rows["H1"]["unit_low"])
+            hi += 4 * float(rows["H1"]["unit_high"])
+        lo_c += lo
+        hi_c += hi
+        out.append(dict(state=st, adds=", ".join(ids), added_low=round(lo), added_high=round(hi),
+                        cumulative_low=round(lo_c), cumulative_high=round(hi_c)))
+    return out
+
+
+def gantt(res):
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    from matplotlib.patches import Patch
+
+    keep_orders = ("used optics chain arrives", "enclosure arrives", "stages arrive", "cube frame and plates arrive (PO)",
+                   "LSO registration and SOP", "EHS review (Al powder)")
+    scns = list(res)[:2]
+    shown = {s: [k for k in res[s][1] if res[s][0][k][3] not in ("orders", "approvals") or k in keep_orders] for s in scns}
+    n = [len(shown[s]) for s in scns]
+    fig, axes = plt.subplots(len(scns), 1, figsize=(12, 1.6 + 0.27 * sum(n)), gridspec_kw=dict(height_ratios=n))
+    for ax, scn in zip(axes, scns):
+        tasks, f = res[scn]
+        names = sorted(shown[scn], key=lambda k: (f[k][2], f[k][3]))
+        for i, k in enumerate(names):
+            sl, sh, fl, fh = f[k]
+            st = tasks[k][3]
+            ms = k in MILESTONES
+            col = "#b2182b" if ms else COLORS[st]
+            ax.barh(i, fl - sl, left=sl, color=col, alpha=0.95, height=0.6)
+            ax.barh(i, fh - fl, left=fl, color=col, alpha=0.3, height=0.6)
+            if ms:
+                ax.text(fh + 0.4, i, f"{fl / 5:.1f}-{fh / 5:.1f} wk", va="center", fontsize=7.5, color=col, weight="bold")
+        ax.set_yticks(range(len(names)))
+        ax.set_yticklabels(names, fontsize=7)
+        ax.invert_yaxis()
+        ax.set_xlim(0, 56)
+        ax.set_xticks(range(0, 56, 5))
+        ax.set_xticklabels([f"{d // 5}" for d in range(0, 56, 5)], fontsize=8)
+        ax.axvspan(15, 30, color="#4daf4a", alpha=0.06)
+        ax.grid(axis="x", color="#dddddd", lw=0.6)
+        ax.set_axisbelow(True)
+        ax.set_title(scn, fontsize=9.5, loc="left")
+    fig.legend(handles=[Patch(color=c, label=k) for k, c in COLORS.items()] + [Patch(color="#b2182b", label="milestone")],
+               fontsize=7.5, ncol=8, loc="lower center")
+    axes[-1].set_xlabel("weeks from the decision (5 working days); dark = earliest, light = to the late estimate; "
+                        "green band = 3-6 weeks", fontsize=8)
+    fig.suptitle("One machine that grows: S1 -> S2 -> FT-0 -> FT-1 -> FT-1V as the parts arrive (estimates; scenario C in out/progression.md)", fontsize=10.5)
+    fig.tight_layout(rect=(0, 0.035, 1, 0.975))
+    fig.savefig(IMG / "progression-gantt.png", dpi=125)
+    plt.close(fig)
+
+
+def sequence_md(M):
+    """The order of work at the two upgrade steps, with the numbers that decide it (from the model's levels)."""
+    P, Lb, Lc = M.P, M.levels("FT-1"), M.levels("FT-1V")
+    rod_b, rod_c = Lb["rod_vis"] + P["socket"], Lc["rod_vis"] + P["socket"]
+    in_blk = P["blk_h"] - P["rod_end_z"]
+    rod_bot = P["pz_top"] - P["sub_t"] - P["hp_t"] - Lb["rod_vis"]
+    gap_bot = P["gap_top"] + P["pz_top"] - P["pz_bot"]
+    deg = P["door_open_deg"]
+    return ["## Order of work at the upgrade steps", "",
+            "Both steps start the same way: plate to the top of its stroke, heaters off and cool, substrate off, the "
+            "beam tube's two half-shells off sideways (two toggle clamps), and the box door open "
+            f"({deg:g} deg, the free angle with the layer camera on the door).", "",
+            "**FT-0 -> FT-1** (inside the box, it stays on the rails):", "",
+            "1. Under the box: the stage, its riser and bracket plate in from the front onto the base rails, the rod-end "
+            "block on the stage's platform; the FT-0 lead terminal bracket off.",
+            f"2. Inside: the FT-0 collar off the rod; the rod clamped in the rod-end block ({in_blk:g} mm of rod in it), "
+            "the pigtail on its terminal block.",
+            "3. The recoater stage, shield, arm and hopper bolted onto the deck; the four block heaters in; the M8 cable "
+            "out through the back-wall gland.", "",
+            "**FT-1 -> FT-1V** (the box comes off; the gland plate hangs "
+            f"{P['gland_t']:g} mm below the support rails' tops, so it comes off first and the box needs no lift):", "",
+            "1. Unwire the pigtail at the rod-end block (or unplug a circular plug of 12 mm or less: the gland's bore is "
+            f"12.9 mm), loosen the rod clamp, and lift the heater plate with its {rod_b:.1f} mm rod straight up out of "
+            f"the bore ({-rod_bot + 2:.1f} mm of lift).",
+            "2. Deck clamps off (4 stud nuts), the recoater's M8 and the well block's leads unplugged at the glands; the "
+            "cassette out through the door opening.",
+            f"3. Stage to the bottom of its stroke (the block is then {gap_bot:g} mm under the gland, {P['gap_top']:g} mm "
+            "at the top); unbolt the gland plate (4 x M5 from below) and take it out sideways.",
+            "4. Unbolt the box from the support rails and slide it forward off them.",
+            "5. The cube onto the rails (its underside lands where the box's was; the X-VSR20A stays), the gland onto its "
+            "bottom plate; the hopper and the overflow cup emptied, the cassette carried in level through the door at "
+            "mid-height of the opening and set down on the floor, M6 deck screws. The deck lies in the bottom face's "
+            "pocket, as big as the face opening, so the opening must be at least 245 mm plus clearance with sharp "
+            "corners, more with radiused ones (ft_cassette.py; tilting the cassette does not lower it).",
+            f"6. The long rod's plate assembly ({rod_c:.1f} mm rod; a second assembly made ahead, or the leads "
+            "re-potted) down through the bore and the gland into the rod-end block; window stack on the top plate, the "
+            f"cover-slide drop tube, the short half-shells; both cross-beams up {Lc['dz']:.1f} mm on the posts, carrying "
+            "the head with its flange plate, top flange, gussets and far-side support plate (MK-09), the lens and the "
+            "input stack as one unit; the knee braces re-bolted under the beams.", ""]
+
+
+def main():
+    OUT.mkdir(exist_ok=True)
+    res = run()
+    rows = []
+    for scn, (tasks, f) in res.items():
+        for k, (sl, sh, fl, fh) in f.items():
+            rows.append(dict(scenario=scn, task=k, state=tasks[k][3], start_low_d=sl, start_high_d=sh, finish_low_d=fl,
+                             finish_high_d=fh, basis=tasks[k][2]))
+    with open(OUT / "progression.csv", "w", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=list(rows[0]))
+        w.writeheader()
+        w.writerows(rows)
+    md = ["# Progression schedule (`ft_progression.py`)", "", "Milestones in weeks (5 working days), earliest to latest:", "",
+          "| Milestone | " + " | ".join(s.split(":")[0] for s in res) + " |", "|---|" + "---|" * len(res)]
+    for m in MILESTONES:
+        md.append(f"| {m} | " + " | ".join(f"{res[s][1][m][2] / 5:.1f}-{res[s][1][m][3] / 5:.1f}" for s in res) + " |")
+    md += ["", "Scenarios: " + "; ".join(res), "", "Spend by the state that first needs each parts.csv line:", ""]
+    sp = spend()
+    md += ["| State | Lines | Adds | Cumulative |", "|---|---|---:|---:|"]
+    for r in sp:
+        md.append(f"| {r['state']} | {r['adds']} | ${r['added_low']:,}-{r['added_high']:,} | "
+                  f"${r['cumulative_low']:,}-{r['cumulative_high']:,} |")
+    sys.path.insert(0, str(HERE))
+    import ft_model as M
+    md += ["", "What changes at each step (from the CAD model; moved = the part's bounding box shifted):", ""]
+    s1 = M.build("S1")
+    names = lambda lst: "; ".join(f"{p.name} [{p.pid}]" if p.pid else p.name for p in lst) or "none"  # noqa: E731
+    mounts = [p for p in s1 if p.sub == "frame" or p.pid == "MK-09"]
+    md += [f"**S1** (the first state, {len(s1)} parts, all new; the gantry is `P['gantry'] = \"{M.P['gantry']}\"`)", "",
+           f"- the frame and the head's mounts ({len(mounts)}): {names(mounts)}",
+           f"- the rest ({len(s1) - len(mounts)}): {names([p for p in s1 if all(p is not q for q in mounts)])}", ""]
+    for x, y in zip(M.STATES[:-1], M.STATES[1:]):
+        d = M.diff_states(x, y)
+        fmt = lambda lst: "; ".join(f"{n} [{pid}]" if pid else n for n, pid in lst) or "none"  # noqa: E731
+        md += [f"**{x} -> {y}** ({len(d['added'])} added, {len(d['moved'])} moved, {len(d['removed'])} removed, "
+               f"{d['kept']} unchanged)", "", f"- added: {fmt(d['added'])}", f"- moved: {fmt(d['moved'])}",
+               f"- removed: {fmt(d['removed'])}", ""]
+    md += sequence_md(M)
+    (OUT / "progression.md").write_text("\n".join(md) + "\n")
+    gantt(res)
+    print("\n".join(md))
+
+
+if __name__ == "__main__":
+    main()

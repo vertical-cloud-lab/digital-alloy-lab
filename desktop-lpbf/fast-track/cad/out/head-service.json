@@ -1,0 +1,180 @@
+{
+ "gantry": "four_post_braced_front_g3",
+ "FT-1": [
+  {
+   "route": "A1 MK-09 with the head, lens, input stack and collimator lifted straight up",
+   "free": false,
+   "blocked_at_mm": 12.0,
+   "mover": "Collimator (L2 if the fibre has none)",
+   "part": "Gantry cross-beam, front (under the head plate's front end)",
+   "overlap_mm3": 65.3
+  },
+  {
+   "route": "A2 the same with the collimator off the mirror block first",
+   "free": true,
+   "travel_mm": 160.0,
+   "nearest": [
+    {
+     "mover": "SCANLAB hurrySCAN 25 (20/30 housing, drawing)",
+     "part": "Head far-side support plate, between both cross-beams (MK-09)",
+     "min_gap_mm": 1.0,
+     "at_mm": 126.0
+    },
+    {
+     "mover": "Head-plate top flange on both cross-beams (MK-09)",
+     "part": "Gantry cross-beam (clamped at the head height)",
+     "min_gap_mm": 2.0,
+     "at_mm": 2.0
+    },
+    {
+     "mover": "Head-plate top flange on both cross-beams (MK-09)",
+     "part": "Gantry cross-beam, front (under the head plate's front end)",
+     "min_gap_mm": 2.0,
+     "at_mm": 2.0
+    },
+    {
+     "mover": "Flange-to-beam angle brackets (MK-09)",
+     "part": "Gantry cross-beam (clamped at the head height)",
+     "min_gap_mm": 2.0,
+     "at_mm": 32.0
+    }
+   ]
+  },
+  {
+   "route": "B1 head alone (mirror block off) slid +x 46 mm then lifted, far-side plate in place",
+   "free": false,
+   "blocked_at_mm": 2.0,
+   "mover": "SCANLAB hurrySCAN 25 (20/30 housing, drawing)",
+   "part": "Head far-side support plate, between both cross-beams (MK-09)",
+   "overlap_mm3": 33150.0
+  },
+  {
+   "route": "B2 the same with the far-side plate and its brackets off first",
+   "free": true,
+   "travel_mm": 206.0,
+   "nearest": [
+    {
+     "mover": "hurrySCAN input turret (focusing lens; by eye from listing photos)",
+     "part": "Scan-head flange plate (MK-09)",
+     "min_gap_mm": 1.0,
+     "at_mm": 2.0
+    },
+    {
+     "mover": "SCANLAB hurrySCAN 25 (20/30 housing, drawing)",
+     "part": "Head-plate top flange on both cross-beams (MK-09)",
+     "min_gap_mm": 2.0,
+     "at_mm": 2.0
+    },
+    {
+     "mover": "SCANLAB hurrySCAN 25 (20/30 housing, drawing)",
+     "part": "Scan-head flange plate (MK-09)",
+     "min_gap_mm": 2.0,
+     "at_mm": 2.0
+    },
+    {
+     "mover": "LINOS F-Theta-Ronar f = 254 mm (datasheet)",
+     "part": "Scan-head flange plate (MK-09)",
+     "min_gap_mm": 5.0,
+     "at_mm": 0.0
+    }
+   ]
+  },
+  {
+   "route": "C  head alone lifted straight up (mirror block and far-side plate off)",
+   "free": false,
+   "blocked_at_mm": 2.0,
+   "mover": "hurrySCAN input turret (focusing lens; by eye from listing photos)",
+   "part": "Scan-head flange plate (MK-09)",
+   "overlap_mm3": 418.9
+  }
+ ],
+ "FT-1V": [
+  {
+   "route": "A1 MK-09 with the head, lens, input stack and collimator lifted straight up",
+   "free": false,
+   "blocked_at_mm": 12.0,
+   "mover": "Collimator (L2 if the fibre has none)",
+   "part": "Gantry cross-beam, front (under the head plate's front end)",
+   "overlap_mm3": 65.3
+  },
+  {
+   "route": "A2 the same with the collimator off the mirror block first",
+   "free": true,
+   "travel_mm": 160.0,
+   "nearest": [
+    {
+     "mover": "SCANLAB hurrySCAN 25 (20/30 housing, drawing)",
+     "part": "Head far-side support plate, between both cross-beams (MK-09)",
+     "min_gap_mm": 1.0,
+     "at_mm": 126.0
+    },
+    {
+     "mover": "Head-plate top flange on both cross-beams (MK-09)",
+     "part": "Gantry cross-beam (clamped at the head height)",
+     "min_gap_mm": 2.0,
+     "at_mm": 2.0
+    },
+    {
+     "mover": "Head-plate top flange on both cross-beams (MK-09)",
+     "part": "Gantry cross-beam, front (under the head plate's front end)",
+     "min_gap_mm": 2.0,
+     "at_mm": 2.0
+    },
+    {
+     "mover": "Flange-to-beam angle brackets (MK-09)",
+     "part": "Gantry cross-beam (clamped at the head height)",
+     "min_gap_mm": 2.0,
+     "at_mm": 32.0
+    }
+   ]
+  },
+  {
+   "route": "B1 head alone (mirror block off) slid +x 46 mm then lifted, far-side plate in place",
+   "free": false,
+   "blocked_at_mm": 2.0,
+   "mover": "SCANLAB hurrySCAN 25 (20/30 housing, drawing)",
+   "part": "Head far-side support plate, between both cross-beams (MK-09)",
+   "overlap_mm3": 33150.0
+  },
+  {
+   "route": "B2 the same with the far-side plate and its brackets off first",
+   "free": true,
+   "travel_mm": 206.0,
+   "nearest": [
+    {
+     "mover": "hurrySCAN input turret (focusing lens; by eye from listing photos)",
+     "part": "Scan-head flange plate (MK-09)",
+     "min_gap_mm": 1.0,
+     "at_mm": 2.0
+    },
+    {
+     "mover": "SCANLAB hurrySCAN 25 (20/30 housing, drawing)",
+     "part": "Head-plate top flange on both cross-beams (MK-09)",
+     "min_gap_mm": 2.0,
+     "at_mm": 2.0
+    },
+    {
+     "mover": "SCANLAB hurrySCAN 25 (20/30 housing, drawing)",
+     "part": "Scan-head flange plate (MK-09)",
+     "min_gap_mm": 2.0,
+     "at_mm": 2.0
+    },
+    {
+     "mover": "LINOS F-Theta-Ronar f = 254 mm (datasheet)",
+     "part": "Scan-head flange plate (MK-09)",
+     "min_gap_mm": 5.0,
+     "at_mm": 0.0
+    }
+   ]
+  },
+  {
+   "route": "C  head alone lifted straight up (mirror block and far-side plate off)",
+   "free": false,
+   "blocked_at_mm": 2.0,
+   "mover": "hurrySCAN input turret (focusing lens; by eye from listing photos)",
+   "part": "Scan-head flange plate (MK-09)",
+   "overlap_mm3": 418.9
+  }
+ ],
+ "runtime_s": 167
+}

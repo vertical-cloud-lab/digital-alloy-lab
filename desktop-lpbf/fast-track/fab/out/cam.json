@@ -1,0 +1,6934 @@
+{
+ "tool": "FreeCAD 1.0.2 (39319 (Git)) CAM workbench, freecadcmd headless; linuxcnc post",
+ "tools": {
+  "T1": {
+   "name": "2.5 in. (63.5 mm) indexable face mill, 4 inserts",
+   "shape": "endmill",
+   "d": 63.5,
+   "flutes": 4,
+   "rpm": 3000,
+   "ipt": 0.004,
+   "length": 60.0,
+   "edge": 8.0,
+   "feed_mm_min": 1219.2
+  },
+  "T2": {
+   "name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+   "shape": "endmill",
+   "d": 12.7,
+   "flutes": 3,
+   "rpm": 7600,
+   "ipt": 0.003,
+   "length": 45.0,
+   "edge": 32.0,
+   "feed_mm_min": 1737.4
+  },
+  "T3": {
+   "name": "1/4 in. (6.35 mm) 3-flute carbide end mill, 1 in. flutes (long reach)",
+   "shape": "endmill",
+   "d": 6.35,
+   "flutes": 3,
+   "rpm": 8100,
+   "ipt": 0.0015,
+   "length": 38.0,
+   "edge": 25.4,
+   "feed_mm_min": 925.8
+  },
+  "T4": {
+   "name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+   "shape": "endmill",
+   "d": 3.175,
+   "flutes": 2,
+   "rpm": 8100,
+   "ipt": 0.0008,
+   "length": 16.0,
+   "edge": 9.5,
+   "feed_mm_min": 329.2
+  },
+  "T5": {
+   "name": "2.0 mm 2-flute carbide end mill (O-ring grooves: Parker's vacuum widths are 2.13-2.26 and 3.05-3.18 mm), 15 mm stick-out",
+   "shape": "endmill",
+   "d": 2.0,
+   "flutes": 2,
+   "rpm": 8100,
+   "ipt": 0.0005,
+   "length": 15.0,
+   "edge": 6.0,
+   "feed_mm_min": 205.7
+  },
+  "T6": {
+   "name": "3/4 in. (19.05 mm) 3-flute carbide end mill",
+   "shape": "endmill",
+   "d": 19.05,
+   "flutes": 3,
+   "rpm": 5100,
+   "ipt": 0.005,
+   "length": 66.0,
+   "edge": 38.1,
+   "feed_mm_min": 1943.1
+  },
+  "T7": {
+   "name": "1/2 in. 90 deg carbide spot drill (spotting, countersinks, chamfers)",
+   "shape": "chamfer",
+   "d": 12.7,
+   "rpm": 4000,
+   "mm_rev": 0.08,
+   "length": 40.0,
+   "angle": 90.0,
+   "feed_mm_min": 320.0
+  },
+  "T8": {
+   "name": "2.0 mm 2-flute carbide end mill for 304 stainless (MK-06 lead notches; ramp entry)",
+   "shape": "endmill",
+   "d": 2.0,
+   "flutes": 2,
+   "rpm": 5000,
+   "ipt": 0.0003,
+   "length": 15.0,
+   "edge": 6.0,
+   "feed_mm_min": 76.2
+  },
+  "T9": {
+   "name": "1/8 in. (3.175 mm) 2-flute carbide end mill, long reach (2.5 in. reach, necked)",
+   "shape": "endmill",
+   "d": 3.175,
+   "flutes": 2,
+   "rpm": 8100,
+   "ipt": 0.0006,
+   "length": 66.0,
+   "edge": 9.5,
+   "feed_mm_min": 246.9
+  },
+  "T20": {
+   "name": "1.60 mm drill, jobber (20 mm flutes)",
+   "shape": "drill",
+   "d": 1.6,
+   "rpm": 8100,
+   "mm_rev": 0.04,
+   "length": 26.0,
+   "edge": 20.0,
+   "angle": 118.0,
+   "feed_mm_min": 324.0
+  },
+  "T21": {
+   "name": "2.00 mm drill, long series (56 mm flutes)",
+   "shape": "drill",
+   "d": 2.0,
+   "rpm": 8100,
+   "mm_rev": 0.05,
+   "length": 66.0,
+   "edge": 56.0,
+   "angle": 118.0,
+   "feed_mm_min": 405.0
+  },
+  "T22": {
+   "name": "2.05 mm drill, jobber (24 mm flutes)",
+   "shape": "drill",
+   "d": 2.05,
+   "rpm": 8100,
+   "mm_rev": 0.051,
+   "length": 30.0,
+   "edge": 24.0,
+   "angle": 118.0,
+   "feed_mm_min": 413.1
+  },
+  "T23": {
+   "name": "2.20 mm drill, jobber (27 mm flutes)",
+   "shape": "drill",
+   "d": 2.2,
+   "rpm": 8100,
+   "mm_rev": 0.055,
+   "length": 33.0,
+   "edge": 27.0,
+   "angle": 118.0,
+   "feed_mm_min": 445.5
+  },
+  "T24": {
+   "name": "2.40 mm drill, jobber (30 mm flutes)",
+   "shape": "drill",
+   "d": 2.4,
+   "rpm": 8100,
+   "mm_rev": 0.06,
+   "length": 36.0,
+   "edge": 30.0,
+   "angle": 118.0,
+   "feed_mm_min": 486.0
+  },
+  "T25": {
+   "name": "2.50 mm drill, jobber (30 mm flutes)",
+   "shape": "drill",
+   "d": 2.5,
+   "rpm": 8100,
+   "mm_rev": 0.062,
+   "length": 36.0,
+   "edge": 30.0,
+   "angle": 118.0,
+   "feed_mm_min": 502.2
+  },
+  "T26": {
+   "name": "3.30 mm drill, jobber (36 mm flutes)",
+   "shape": "drill",
+   "d": 3.3,
+   "rpm": 8100,
+   "mm_rev": 0.083,
+   "length": 42.0,
+   "edge": 36.0,
+   "angle": 118.0,
+   "feed_mm_min": 672.3
+  },
+  "T27": {
+   "name": "3.40 mm drill, long series (73 mm flutes)",
+   "shape": "drill",
+   "d": 3.4,
+   "rpm": 8100,
+   "mm_rev": 0.085,
+   "length": 83.0,
+   "edge": 73.0,
+   "angle": 118.0,
+   "feed_mm_min": 688.5
+  },
+  "T28": {
+   "name": "4.20 mm drill, jobber (43 mm flutes)",
+   "shape": "drill",
+   "d": 4.2,
+   "rpm": 8100,
+   "mm_rev": 0.105,
+   "length": 49.0,
+   "edge": 43.0,
+   "angle": 118.0,
+   "feed_mm_min": 850.5
+  },
+  "T29": {
+   "name": "4.50 mm drill, long series (82 mm flutes)",
+   "shape": "drill",
+   "d": 4.5,
+   "rpm": 8100,
+   "mm_rev": 0.113,
+   "length": 92.0,
+   "edge": 82.0,
+   "angle": 118.0,
+   "feed_mm_min": 915.3
+  },
+  "T30": {
+   "name": "5.00 mm drill, jobber (52 mm flutes)",
+   "shape": "drill",
+   "d": 5.0,
+   "rpm": 8100,
+   "mm_rev": 0.125,
+   "length": 58.0,
+   "edge": 52.0,
+   "angle": 118.0,
+   "feed_mm_min": 1012.5
+  },
+  "T31": {
+   "name": "5.50 mm drill, long series (91 mm flutes)",
+   "shape": "drill",
+   "d": 5.5,
+   "rpm": 8100,
+   "mm_rev": 0.138,
+   "length": 101.0,
+   "edge": 91.0,
+   "angle": 118.0,
+   "feed_mm_min": 1117.8
+  },
+  "T32": {
+   "name": "6.40 mm drill, jobber (63 mm flutes)",
+   "shape": "drill",
+   "d": 6.4,
+   "rpm": 8100,
+   "mm_rev": 0.15,
+   "length": 69.0,
+   "edge": 63.0,
+   "angle": 118.0,
+   "feed_mm_min": 1215.0
+  },
+  "T33": {
+   "name": "6.60 mm drill, jobber (69 mm flutes)",
+   "shape": "drill",
+   "d": 6.6,
+   "rpm": 8100,
+   "mm_rev": 0.15,
+   "length": 75.0,
+   "edge": 69.0,
+   "angle": 118.0,
+   "feed_mm_min": 1215.0
+  },
+  "T34": {
+   "name": "9.60 mm drill, jobber (87 mm flutes)",
+   "shape": "drill",
+   "d": 9.6,
+   "rpm": 6250,
+   "mm_rev": 0.15,
+   "length": 93.0,
+   "edge": 87.0,
+   "angle": 118.0,
+   "feed_mm_min": 937.5
+  },
+  "T35": {
+   "name": "10.00 mm drill, jobber (87 mm flutes)",
+   "shape": "drill",
+   "d": 10.0,
+   "rpm": 6000,
+   "mm_rev": 0.15,
+   "length": 93.0,
+   "edge": 87.0,
+   "angle": 118.0,
+   "feed_mm_min": 900.0
+  },
+  "T36": {
+   "name": "6.10 mm drill, jobber (63 mm flutes)",
+   "shape": "drill",
+   "d": 6.1,
+   "rpm": 8100,
+   "mm_rev": 0.15,
+   "length": 69.0,
+   "edge": 63.0,
+   "angle": 118.0,
+   "feed_mm_min": 1215.0
+  }
+ },
+ "setups": [
+  {
+   "pid": "MK-01",
+   "setup": "MK-01_A",
+   "up": "-Z",
+   "label": "bottom up: face, c'bores and drill every through hole",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "stock_box_setup": [
+    -155.5,
+    -172.5,
+    -11.35,
+    255.0,
+    255.0,
+    12.7
+   ],
+   "gcode": "gcode/MK-01_A.ngc",
+   "ops": [
+    {
+     "label": "Face top 1.35 to z 0.00",
+     "tool": 1,
+     "tool_name": "2.5 in. (63.5 mm) indexable face mill, 4 inserts",
+     "feed_mm_min": 1219.2,
+     "kind": "face",
+     "freecad_cycle_time": "00:01:44",
+     "commands": 21,
+     "cut_min": 1.63,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Drill 4 x 3.40 M3, z 0.00 to -11.52",
+     "tool": 27,
+     "tool_name": "3.40 mm drill, long series (73 mm flutes)",
+     "feed_mm_min": 688.5,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:23",
+     "commands": 15,
+     "cut_min": 0.08,
+     "rapid_min": 0.03
+    },
+    {
+     "label": "C'bore 6.5 x 3.4 at -33.0 33.0, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:00:51",
+     "commands": 55,
+     "cut_min": 0.62,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "C'bore 6.5 x 3.4 at -33.0 -33.0, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:00:51",
+     "commands": 55,
+     "cut_min": 0.62,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "C'bore 6.5 x 3.4 at 33.0 33.0, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:00:51",
+     "commands": 55,
+     "cut_min": 0.62,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "C'bore 6.5 x 3.4 at 33.0 -33.0, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:00:51",
+     "commands": 55,
+     "cut_min": 0.62,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 3,
+   "cut_min": 4.2,
+   "rapid_min": 0.05,
+   "total_min": 4.25,
+   "freecad_cycle_min": 5.52,
+   "freecad_job_cycle": "00:05:31"
+  },
+  {
+   "pid": "MK-01",
+   "setup": "MK-01_B",
+   "up": "+Z",
+   "label": "top up: face to 10.0, rod hole, cut-out, outline through",
+   "repeat": 1,
+   "g0_links_to_g1": 33,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -155.5,
+    -82.5,
+    -1.35,
+    255.0,
+    255.0,
+    12.7
+   ],
+   "gcode": "gcode/MK-01_B.ngc",
+   "ops": [
+    {
+     "label": "Face top 11.35 to z 10.00",
+     "tool": 1,
+     "tool_name": "2.5 in. (63.5 mm) indexable face mill, 4 inserts",
+     "feed_mm_min": 1219.2,
+     "kind": "face",
+     "freecad_cycle_time": "00:01:49",
+     "commands": 21,
+     "cut_min": 1.63,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Outside, adaptive, z 10.00 to -0.30",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 14.35,
+     "freecad_cycle_time": "00:02:29",
+     "commands": 536,
+     "cut_min": 2.36,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "overflow-cup cut-out, profile to z -0.30",
+     "tool": 3,
+     "tool_name": "1/4 in. (6.35 mm) 3-flute carbide end mill, 1 in. flutes (long reach)",
+     "feed_mm_min": 925.8,
+     "kind": "opening",
+     "freecad_cycle_time": "00:00:51",
+     "commands": 47,
+     "cut_min": 0.73,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "rod hole, helix z 10.00 to -0.50",
+     "tool": 3,
+     "tool_name": "1/4 in. (6.35 mm) 3-flute carbide end mill, 1 in. flutes (long reach)",
+     "feed_mm_min": 925.8,
+     "kind": "bore",
+     "freecad_cycle_time": "00:02:14",
+     "commands": 97,
+     "cut_min": 1.32,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Drill 8 x 2.50 M3, z 10.00 to -1.25",
+     "tool": 25,
+     "tool_name": "2.50 mm drill, jobber (30 mm flutes)",
+     "feed_mm_min": 502.2,
+     "kind": "drill",
+     "holes": 8,
+     "freecad_cycle_time": "00:00:44",
+     "commands": 23,
+     "cut_min": 0.23,
+     "rapid_min": 0.04
+    },
+    {
+     "label": "Drill 3 x 2.50 M3, z 10.00 to -1.25",
+     "tool": 25,
+     "tool_name": "2.50 mm drill, jobber (30 mm flutes)",
+     "feed_mm_min": 502.2,
+     "kind": "drill",
+     "holes": 3,
+     "freecad_cycle_time": "00:00:35",
+     "commands": 13,
+     "cut_min": 0.09,
+     "rapid_min": 0.02
+    },
+    {
+     "label": "Drill 4 x 4.20 M5, z 10.00 to -1.76",
+     "tool": 28,
+     "tool_name": "4.20 mm drill, jobber (43 mm flutes)",
+     "feed_mm_min": 850.5,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:08",
+     "commands": 15,
+     "cut_min": 0.07,
+     "rapid_min": 0.02
+    },
+    {
+     "label": "Drill 4 x 6.60 M6, z 10.00 to -2.48",
+     "tool": 33,
+     "tool_name": "6.60 mm drill, jobber (69 mm flutes)",
+     "feed_mm_min": 1215.0,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:35",
+     "commands": 15,
+     "cut_min": 0.05,
+     "rapid_min": 0.04
+    }
+   ],
+   "errors": [],
+   "tool_changes": 6,
+   "cut_min": 6.48,
+   "rapid_min": 0.15,
+   "total_min": 6.63,
+   "freecad_cycle_min": 9.42,
+   "freecad_job_cycle": "00:09:25"
+  },
+  {
+   "pid": "MK-02a",
+   "setup": "MK-02a_A",
+   "up": "-Z",
+   "label": "bottom up: face, base O-ring groove, outline half",
+   "repeat": 1,
+   "g0_links_to_g1": 540,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "stock_box_setup": [
+    -53.0,
+    -53.0,
+    -15.55,
+    106.0,
+    106.0,
+    19.05
+   ],
+   "gcode": "gcode/MK-02a_A.ngc",
+   "ops": [
+    {
+     "label": "Face top 3.50 to z 0.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:01:41",
+     "commands": 60,
+     "cut_min": 1.63,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Outside, adaptive, z 0.00 to -6.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 6.5,
+     "freecad_cycle_time": "00:02:19",
+     "commands": 2250,
+     "cut_min": 1.76,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "base O-ring groove, AS568-140",
+     "tool": 5,
+     "tool_name": "2.0 mm 2-flute carbide end mill (O-ring grooves: Parker's vacuum widths are 2.13-2.26 and 3.05-3.18 mm), 15 mm stick-out",
+     "feed_mm_min": 205.7,
+     "kind": "groove",
+     "freecad_cycle_time": "00:07:56",
+     "commands": 44,
+     "cut_min": 7.52,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 2,
+   "cut_min": 10.9,
+   "rapid_min": 0.01,
+   "total_min": 10.91,
+   "freecad_cycle_min": 11.93,
+   "freecad_job_cycle": "00:11:56"
+  },
+  {
+   "pid": "MK-02a",
+   "setup": "MK-02a_B",
+   "up": "+Z",
+   "label": "top up: face to 12.0, aperture, seat, window groove, holes, the outline down to 5.5 (A cut 0-6)",
+   "repeat": 1,
+   "g0_links_to_g1": 540,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -53.0,
+    -53.0,
+    -3.5,
+    106.0,
+    106.0,
+    19.05
+   ],
+   "gcode": "gcode/MK-02a_B.ngc",
+   "ops": [
+    {
+     "label": "Face top 15.55 to z 12.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:01:42",
+     "commands": 60,
+     "cut_min": 1.63,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Outside, adaptive, z 12.00 to 5.50",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 18.55,
+     "freecad_cycle_time": "00:02:20",
+     "commands": 2250,
+     "cut_min": 1.76,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "window seat bore",
+     "tool": 3,
+     "tool_name": "1/4 in. (6.35 mm) 3-flute carbide end mill, 1 in. flutes (long reach)",
+     "feed_mm_min": 925.8,
+     "kind": "pocket",
+     "freecad_cycle_time": "00:03:44",
+     "commands": 193,
+     "cut_min": 2.76,
+     "rapid_min": 0.02
+    },
+    {
+     "label": "window O-ring groove, AS568-030",
+     "tool": 5,
+     "tool_name": "2.0 mm 2-flute carbide end mill (O-ring grooves: Parker's vacuum widths are 2.13-2.26 and 3.05-3.18 mm), 15 mm stick-out",
+     "feed_mm_min": 205.7,
+     "kind": "groove",
+     "freecad_cycle_time": "00:04:55",
+     "commands": 39,
+     "cut_min": 4.28,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "beam aperture, helix z 12.00 to -0.50",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "bore",
+     "freecad_cycle_time": "00:02:41",
+     "commands": 109,
+     "cut_min": 1.55,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Drill 8 x 5.50 M5, z 12.00 to -2.15",
+     "tool": 31,
+     "tool_name": "5.50 mm drill, long series (91 mm flutes)",
+     "feed_mm_min": 1117.8,
+     "kind": "drill",
+     "holes": 8,
+     "freecad_cycle_time": "00:00:16",
+     "commands": 23,
+     "cut_min": 0.12,
+     "rapid_min": 0.03
+    }
+   ],
+   "errors": [],
+   "tool_changes": 5,
+   "cut_min": 12.09,
+   "rapid_min": 0.07,
+   "total_min": 12.16,
+   "freecad_cycle_min": 15.63,
+   "freecad_job_cycle": "00:15:38"
+  },
+  {
+   "pid": "MK-02b",
+   "setup": "MK-02b_A",
+   "up": "-Z",
+   "label": "bottom up: face, window recess",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "stock_box_setup": [
+    -53.0,
+    -53.0,
+    -9.265,
+    106.0,
+    106.0,
+    9.53
+   ],
+   "gcode": "gcode/MK-02b_A.ngc",
+   "ops": [
+    {
+     "label": "Face top 0.27 to z 0.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:52",
+     "commands": 33,
+     "cut_min": 0.81,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "window recess, 2.2 deep: window + 0.8 mm FKM cushion ring",
+     "tool": 3,
+     "tool_name": "1/4 in. (6.35 mm) 3-flute carbide end mill, 1 in. flutes (long reach)",
+     "feed_mm_min": 925.8,
+     "kind": "pocket",
+     "freecad_cycle_time": "00:00:59",
+     "commands": 67,
+     "cut_min": 0.79,
+     "rapid_min": 0.01
+    }
+   ],
+   "errors": [],
+   "tool_changes": 2,
+   "cut_min": 1.6,
+   "rapid_min": 0.01,
+   "total_min": 1.61,
+   "freecad_cycle_min": 1.85,
+   "freecad_job_cycle": "00:01:51"
+  },
+  {
+   "pid": "MK-02b",
+   "setup": "MK-02b_B",
+   "up": "+Z",
+   "label": "top up: face the spigot top, cut round the spigot to 6.0, inside it, aperture, c'sinks, outline",
+   "repeat": 1,
+   "g0_links_to_g1": 785,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -53.0,
+    -53.0,
+    -0.265,
+    106.0,
+    106.0,
+    9.53
+   ],
+   "gcode": "gcode/MK-02b_B.ngc",
+   "ops": [
+    {
+     "label": "Face top 9.27 to z 9.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:17",
+     "commands": 21,
+     "cut_min": 0.25,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Outside, adaptive, z 9.00 to -0.30",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 12.265,
+     "freecad_cycle_time": "00:02:19",
+     "commands": 2250,
+     "cut_min": 1.76,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "beam-tube spigot 53 x 1.5 wall x 3 tall, centred on the tube, round it: down to the face, adaptive outside to z 6.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "boss",
+     "safe_z": 12.265,
+     "freecad_cycle_time": "00:03:52",
+     "commands": 3358,
+     "cut_min": 3.59,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "inside the spigot, outside the aperture, crescent, down to the face",
+     "tool": 3,
+     "tool_name": "1/4 in. (6.35 mm) 3-flute carbide end mill, 1 in. flutes (long reach)",
+     "feed_mm_min": 925.8,
+     "kind": "pocket",
+     "freecad_cycle_time": "00:00:54",
+     "commands": 59,
+     "cut_min": 0.76,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "beam aperture 37.6, from the spigot top, helix z 9.00 to -0.50",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "bore",
+     "freecad_cycle_time": "00:02:09",
+     "commands": 91,
+     "cut_min": 1.22,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Drill 8 x 5.50 M5, z 6.00 to -2.15",
+     "tool": 31,
+     "tool_name": "5.50 mm drill, long series (91 mm flutes)",
+     "feed_mm_min": 1117.8,
+     "kind": "drill",
+     "holes": 8,
+     "freecad_cycle_time": "00:00:15",
+     "commands": 23,
+     "cut_min": 0.07,
+     "rapid_min": 0.02
+    },
+    {
+     "label": "Countersink 8 x 11.40 , z 6.00 to 0.30",
+     "tool": 7,
+     "tool_name": "1/2 in. 90 deg carbide spot drill (spotting, countersinks, chamfers)",
+     "feed_mm_min": 320.0,
+     "kind": "csk",
+     "holes": 8,
+     "freecad_cycle_time": "00:00:55",
+     "commands": 23,
+     "cut_min": 0.19,
+     "rapid_min": 0.02
+    }
+   ],
+   "errors": [],
+   "tool_changes": 5,
+   "cut_min": 7.86,
+   "rapid_min": 0.06,
+   "total_min": 7.91,
+   "freecad_cycle_min": 10.68,
+   "freecad_job_cycle": "00:10:41"
+  },
+  {
+   "pid": "MK-02c",
+   "setup": "MK-02c_A",
+   "up": "+Z",
+   "label": "top up: face, aperture, holes, outline",
+   "repeat": 1,
+   "g0_links_to_g1": 540,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -53.0,
+    -53.0,
+    0.0,
+    106.0,
+    106.0,
+    6.35
+   ],
+   "gcode": "gcode/MK-02c_A.ngc",
+   "ops": [
+    {
+     "label": "Face top 6.35 to z 6.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:52",
+     "commands": 33,
+     "cut_min": 0.81,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Outside, adaptive, z 6.00 to -0.30",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 9.35,
+     "freecad_cycle_time": "00:02:19",
+     "commands": 2250,
+     "cut_min": 1.75,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "aperture, helix z 6.00 to -0.50",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "bore",
+     "freecad_cycle_time": "00:02:36",
+     "commands": 95,
+     "cut_min": 1.43,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Drill 3 x 3.30 M4, z 6.00 to -1.49",
+     "tool": 26,
+     "tool_name": "3.30 mm drill, jobber (36 mm flutes)",
+     "feed_mm_min": 672.3,
+     "kind": "drill",
+     "holes": 3,
+     "freecad_cycle_time": "00:00:12",
+     "commands": 13,
+     "cut_min": 0.04,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Drill 8 x 4.20 M5, z 6.00 to -1.76",
+     "tool": 28,
+     "tool_name": "4.20 mm drill, jobber (43 mm flutes)",
+     "feed_mm_min": 850.5,
+     "kind": "drill",
+     "holes": 8,
+     "freecad_cycle_time": "00:00:20",
+     "commands": 23,
+     "cut_min": 0.1,
+     "rapid_min": 0.02
+    }
+   ],
+   "errors": [],
+   "tool_changes": 3,
+   "cut_min": 4.14,
+   "rapid_min": 0.05,
+   "total_min": 4.19,
+   "freecad_cycle_min": 6.32,
+   "freecad_job_cycle": "00:06:19"
+  },
+  {
+   "pid": "MK-02d",
+   "setup": "MK-02d_A",
+   "up": "+Z",
+   "label": "top up: face, aperture, slide pocket, holes, outline",
+   "repeat": 1,
+   "g0_links_to_g1": 332,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -38.0,
+    -38.0,
+    0.0,
+    76.0,
+    76.0,
+    6.35
+   ],
+   "gcode": "gcode/MK-02d_A.ngc",
+   "ops": [
+    {
+     "label": "Face top 6.35 to z 5.60",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:23",
+     "commands": 25,
+     "cut_min": 0.36,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Outside, adaptive, z 5.60 to -0.30",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 9.35,
+     "freecad_cycle_time": "00:01:20",
+     "commands": 1485,
+     "cut_min": 1.03,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "aperture, helix z 5.60 to -0.50",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "bore",
+     "freecad_cycle_time": "00:02:36",
+     "commands": 95,
+     "cut_min": 1.43,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Drill 3 x 4.50 M4, z 5.60 to -1.85",
+     "tool": 29,
+     "tool_name": "4.50 mm drill, long series (82 mm flutes)",
+     "feed_mm_min": 915.3,
+     "kind": "drill",
+     "holes": 3,
+     "freecad_cycle_time": "00:00:09",
+     "commands": 13,
+     "cut_min": 0.03,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "slide pocket 50.6 x 1.2 deep, open to +x, raster",
+     "tool": 3,
+     "tool_name": "1/4 in. (6.35 mm) 3-flute carbide end mill, 1 in. flutes (long reach)",
+     "feed_mm_min": 925.8,
+     "kind": "custom_gcode",
+     "freecad_cycle_time": "00:04:05",
+     "commands": 5414,
+     "cut_min": 2.14,
+     "rapid_min": 0.06
+    }
+   ],
+   "errors": [],
+   "tool_changes": 3,
+   "cut_min": 4.99,
+   "rapid_min": 0.08,
+   "total_min": 5.07,
+   "freecad_cycle_min": 8.55,
+   "freecad_job_cycle": "00:08:33"
+  },
+  {
+   "pid": "MK-02e",
+   "setup": "MK-02e_A",
+   "up": "+Z",
+   "label": "top up: face, aperture, holes, outline",
+   "repeat": 1,
+   "g0_links_to_g1": 332,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -38.0,
+    -38.0,
+    0.0,
+    76.0,
+    76.0,
+    12.7
+   ],
+   "gcode": "gcode/MK-02e_A.ngc",
+   "ops": [
+    {
+     "label": "Face top 12.70 to z 11.02",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:28",
+     "commands": 25,
+     "cut_min": 0.41,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Outside, adaptive, z 11.02 to -0.30",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 15.7,
+     "freecad_cycle_time": "00:01:21",
+     "commands": 1485,
+     "cut_min": 1.04,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "aperture, helix z 11.02 to -0.50",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "bore",
+     "freecad_cycle_time": "00:03:55",
+     "commands": 135,
+     "cut_min": 2.23,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Drill 3 x 4.50 M4, z 11.02 to -1.85",
+     "tool": 29,
+     "tool_name": "4.50 mm drill, long series (82 mm flutes)",
+     "feed_mm_min": 915.3,
+     "kind": "drill",
+     "holes": 3,
+     "freecad_cycle_time": "00:00:09",
+     "commands": 13,
+     "cut_min": 0.05,
+     "rapid_min": 0.01
+    }
+   ],
+   "errors": [],
+   "tool_changes": 2,
+   "cut_min": 3.73,
+   "rapid_min": 0.03,
+   "total_min": 3.76,
+   "freecad_cycle_min": 5.88,
+   "freecad_job_cycle": "00:05:53"
+  },
+  {
+   "pid": "MK-02f",
+   "setup": "MK-02f_A",
+   "up": "-Z",
+   "label": "bottom flange up: 3 x M4",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "stock_box_setup": [
+    -44.0,
+    -44.0,
+    -84.8,
+    88.0,
+    88.0,
+    84.8
+   ],
+   "gcode": "gcode/MK-02f_A.ngc",
+   "ops": [
+    {
+     "label": "Drill 3 x 3.30 M4, z 0.00 to -5.99",
+     "tool": 26,
+     "tool_name": "3.30 mm drill, jobber (36 mm flutes)",
+     "feed_mm_min": 672.3,
+     "kind": "drill",
+     "holes": 3,
+     "freecad_cycle_time": "00:00:11",
+     "commands": 13,
+     "cut_min": 0.04,
+     "rapid_min": 0.01
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.04,
+   "rapid_min": 0.01,
+   "total_min": 0.05,
+   "freecad_cycle_min": 0.18,
+   "freecad_job_cycle": "00:00:11"
+  },
+  {
+   "pid": "MK-02f",
+   "setup": "MK-02f_B",
+   "up": "+Z",
+   "label": "top flange up: 4 x 4.5",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -44.0,
+    -44.0,
+    0.0,
+    88.0,
+    88.0,
+    84.8
+   ],
+   "gcode": "gcode/MK-02f_B.ngc",
+   "ops": [
+    {
+     "label": "Drill 4 x 4.50 M4, z 84.80 to -1.85",
+     "tool": 29,
+     "tool_name": "4.50 mm drill, long series (82 mm flutes)",
+     "feed_mm_min": 915.3,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:25",
+     "commands": 15,
+     "cut_min": 0.41,
+     "rapid_min": 0.29
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.41,
+   "rapid_min": 0.29,
+   "total_min": 0.7,
+   "freecad_cycle_min": 0.42,
+   "freecad_job_cycle": "00:00:25"
+  },
+  {
+   "pid": "MK-03",
+   "setup": "MK-03_A",
+   "up": "+Z",
+   "label": "top up: face, outline to mid-height, bore, slot half, top holes",
+   "repeat": 1,
+   "g0_links_to_g1": 126,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -42.0,
+    -44.45,
+    -2.2,
+    84.0,
+    88.9,
+    44.45
+   ],
+   "gcode": "gcode/MK-03_A.ngc",
+   "ops": [
+    {
+     "label": "Face top 42.25 to z 40.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:01:12",
+     "commands": 52,
+     "cut_min": 1.11,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Outside, adaptive, z 40.00 to 19.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 45.25,
+     "freecad_cycle_time": "00:01:22",
+     "commands": 436,
+     "cut_min": 1.0,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "overflow slot 7 x 44, top half, profile to z 19.20",
+     "tool": 3,
+     "tool_name": "1/4 in. (6.35 mm) 3-flute carbide end mill, 1 in. flutes (long reach)",
+     "feed_mm_min": 925.8,
+     "kind": "opening",
+     "freecad_cycle_time": "00:00:49",
+     "commands": 63,
+     "cut_min": 0.63,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "40.00 H7 bore, top half, rough by helix; finish with a boring head, helix z 40.00 to 19.50",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "bore",
+     "freecad_cycle_time": "00:03:30",
+     "commands": 157,
+     "cut_min": 2.5,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Drill 2 x 2.50 M3, z 40.00 to 31.25",
+     "tool": 25,
+     "tool_name": "2.50 mm drill, jobber (30 mm flutes)",
+     "feed_mm_min": 502.2,
+     "kind": "drill",
+     "holes": 2,
+     "freecad_cycle_time": "00:00:19",
+     "commands": 11,
+     "cut_min": 0.05,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Drill 2 x 2.50 M3, z 40.00 to 31.026",
+     "tool": 25,
+     "tool_name": "2.50 mm drill, jobber (30 mm flutes)",
+     "feed_mm_min": 502.2,
+     "kind": "drill",
+     "holes": 2,
+     "freecad_cycle_time": "00:00:19",
+     "commands": 11,
+     "cut_min": 0.05,
+     "rapid_min": 0.01
+    }
+   ],
+   "errors": [],
+   "tool_changes": 4,
+   "cut_min": 5.33,
+   "rapid_min": 0.04,
+   "total_min": 5.37,
+   "freecad_cycle_min": 7.52,
+   "freecad_job_cycle": "00:07:31"
+  },
+  {
+   "pid": "MK-03",
+   "setup": "MK-03_B",
+   "up": "-Z",
+   "label": "bottom up: face to 40.00, outline, slot half, standoff taps",
+   "repeat": 1,
+   "g0_links_to_g1": 126,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "stock_box_setup": [
+    -42.0,
+    -44.45,
+    -42.25,
+    84.0,
+    88.9,
+    44.45
+   ],
+   "gcode": "gcode/MK-03_B.ngc",
+   "ops": [
+    {
+     "label": "Face top 2.20 to z 0.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:01:09",
+     "commands": 52,
+     "cut_min": 1.11,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Outside, adaptive, z 0.00 to -21.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 5.200000000000003,
+     "freecad_cycle_time": "00:01:20",
+     "commands": 436,
+     "cut_min": 1.0,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "overflow slot, bottom half, profile to z -20.80",
+     "tool": 3,
+     "tool_name": "1/4 in. (6.35 mm) 3-flute carbide end mill, 1 in. flutes (long reach)",
+     "feed_mm_min": 925.8,
+     "kind": "opening",
+     "freecad_cycle_time": "00:00:44",
+     "commands": 63,
+     "cut_min": 0.63,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "40.00 H7 bore, bottom half, rough by helix from below, helix z 0.00 to -20.50",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "bore",
+     "freecad_cycle_time": "00:04:08",
+     "commands": 157,
+     "cut_min": 2.5,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Drill 4 x 2.50 M3, z 0.00 to -8.75",
+     "tool": 25,
+     "tool_name": "2.50 mm drill, jobber (30 mm flutes)",
+     "feed_mm_min": 502.2,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:31",
+     "commands": 15,
+     "cut_min": 0.09,
+     "rapid_min": 0.02
+    }
+   ],
+   "errors": [],
+   "tool_changes": 4,
+   "cut_min": 5.33,
+   "rapid_min": 0.04,
+   "total_min": 5.37,
+   "freecad_cycle_min": 7.87,
+   "freecad_job_cycle": "00:07:52"
+  },
+  {
+   "pid": "MK-03",
+   "setup": "MK-03_C",
+   "up": "-X",
+   "label": "-X face up: four heater holes and the thermocouple hole",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     -1,
+     0,
+     0
+    ]
+   ],
+   "stock_box_setup": [
+    -44.45,
+    -2.2,
+    -42.0,
+    88.9,
+    44.45,
+    84.0
+   ],
+   "gcode": "gcode/MK-03_C.ngc",
+   "ops": [
+    {
+     "label": "Drill 1 x 2.00 2.0, z 40.00 to 24.40",
+     "tool": 21,
+     "tool_name": "2.00 mm drill, long series (56 mm flutes)",
+     "feed_mm_min": 405.0,
+     "kind": "drill",
+     "holes": 1,
+     "freecad_cycle_time": "00:00:15",
+     "commands": 9,
+     "cut_min": 0.05,
+     "rapid_min": 0.02
+    },
+    {
+     "label": "Drill 4 x 6.10 6.1, z 40.00 to 17.17",
+     "tool": 36,
+     "tool_name": "6.10 mm drill, jobber (63 mm flutes)",
+     "feed_mm_min": 1215.0,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:08",
+     "commands": 15,
+     "cut_min": 0.09,
+     "rapid_min": 0.03
+    }
+   ],
+   "errors": [],
+   "tool_changes": 2,
+   "cut_min": 0.14,
+   "rapid_min": 0.04,
+   "total_min": 0.18,
+   "freecad_cycle_min": 0.38,
+   "freecad_job_cycle": "00:00:23"
+  },
+  {
+   "pid": "MK-04",
+   "setup": "MK-04_A",
+   "up": "-Z",
+   "label": "bottom up in a 5C collet block: heater and thermocouple holes, three lead grooves",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "stock_box_setup": [
+    -19.9,
+    -19.9,
+    -24.0,
+    39.8,
+    39.8,
+    24.0
+   ],
+   "gcode": "gcode/MK-04_A.ngc",
+   "ops": [
+    {
+     "label": "Drill 1 x 2.00 2.0, z 0.00 to -21.60",
+     "tool": 21,
+     "tool_name": "2.00 mm drill, long series (56 mm flutes)",
+     "feed_mm_min": 405.0,
+     "kind": "drill",
+     "holes": 1,
+     "freecad_cycle_time": "00:00:06",
+     "commands": 9,
+     "cut_min": 0.07,
+     "rapid_min": 0.02
+    },
+    {
+     "label": "Drill 2 x 6.10 6.1, z 0.00 to -22.83",
+     "tool": 36,
+     "tool_name": "6.10 mm drill, jobber (63 mm flutes)",
+     "feed_mm_min": 1215.0,
+     "kind": "drill",
+     "holes": 2,
+     "freecad_cycle_time": "00:00:03",
+     "commands": 11,
+     "cut_min": 0.04,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "lead groove 1, 3 x 2.5 deep, socket to the heater hole",
+     "tool": 5,
+     "tool_name": "2.0 mm 2-flute carbide end mill (O-ring grooves: Parker's vacuum widths are 2.13-2.26 and 3.05-3.18 mm), 15 mm stick-out",
+     "feed_mm_min": 205.7,
+     "kind": "custom_gcode",
+     "freecad_cycle_time": "00:01:05",
+     "commands": 44,
+     "cut_min": 0.63,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "lead groove 2, 3 x 2.5 deep, socket to the heater hole",
+     "tool": 5,
+     "tool_name": "2.0 mm 2-flute carbide end mill (O-ring grooves: Parker's vacuum widths are 2.13-2.26 and 3.05-3.18 mm), 15 mm stick-out",
+     "feed_mm_min": 205.7,
+     "kind": "custom_gcode",
+     "freecad_cycle_time": "00:01:05",
+     "commands": 44,
+     "cut_min": 0.63,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "lead groove 3, 3 x 2.5 deep, socket to the thermocouple hole",
+     "tool": 5,
+     "tool_name": "2.0 mm 2-flute carbide end mill (O-ring grooves: Parker's vacuum widths are 2.13-2.26 and 3.05-3.18 mm), 15 mm stick-out",
+     "feed_mm_min": 205.7,
+     "kind": "custom_gcode",
+     "freecad_cycle_time": "00:01:05",
+     "commands": 44,
+     "cut_min": 0.63,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 3,
+   "cut_min": 2.01,
+   "rapid_min": 0.04,
+   "total_min": 2.06,
+   "freecad_cycle_min": 3.4,
+   "freecad_job_cycle": "00:03:24"
+  },
+  {
+   "pid": "MK-04",
+   "setup": "MK-04_B",
+   "up": "+Z",
+   "label": "top up in the collet block: 3 x M2",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -19.9,
+    -19.9,
+    0.0,
+    39.8,
+    39.8,
+    24.0
+   ],
+   "gcode": "gcode/MK-04_B.ngc",
+   "ops": [
+    {
+     "label": "Drill 3 x 1.60 M2, z 24.00 to 20.02",
+     "tool": 20,
+     "tool_name": "1.60 mm drill, jobber (20 mm flutes)",
+     "feed_mm_min": 324.0,
+     "kind": "drill",
+     "holes": 3,
+     "freecad_cycle_time": "00:00:21",
+     "commands": 13,
+     "cut_min": 0.06,
+     "rapid_min": 0.01
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.06,
+   "rapid_min": 0.01,
+   "total_min": 0.07,
+   "freecad_cycle_min": 0.35,
+   "freecad_job_cycle": "00:00:21"
+  },
+  {
+   "pid": "MK-04",
+   "setup": "MK-04_C",
+   "up": "+X",
+   "label": "collet block on its side: radial M3 set-screw hole",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     1,
+     0,
+     0
+    ]
+   ],
+   "stock_box_setup": [
+    -19.9,
+    0.0,
+    -19.9,
+    39.8,
+    24.0,
+    39.8
+   ],
+   "gcode": "gcode/MK-04_C.ngc",
+   "ops": [
+    {
+     "label": "Drill 1 x 2.50 M3, z 19.90 to 6.15",
+     "tool": 25,
+     "tool_name": "2.50 mm drill, jobber (30 mm flutes)",
+     "feed_mm_min": 502.2,
+     "kind": "drill",
+     "holes": 1,
+     "freecad_cycle_time": "00:00:05",
+     "commands": 9,
+     "cut_min": 0.04,
+     "rapid_min": 0.01
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.04,
+   "rapid_min": 0.01,
+   "total_min": 0.05,
+   "freecad_cycle_min": 0.08,
+   "freecad_job_cycle": "00:00:05"
+  },
+  {
+   "pid": "MK-05",
+   "setup": "MK-05_A",
+   "up": "+Z",
+   "label": "top up, ten at a time in a fixture plate with ten 39.85 pockets",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -19.9,
+    -19.9,
+    0.0,
+    39.8,
+    39.8,
+    6.0
+   ],
+   "gcode": "gcode/MK-05_A.ngc",
+   "ops": [
+    {
+     "label": "Drill 3 x 2.40 M2, z 6.00 to -1.22",
+     "tool": 24,
+     "tool_name": "2.40 mm drill, jobber (30 mm flutes)",
+     "feed_mm_min": 486.0,
+     "kind": "drill",
+     "holes": 3,
+     "freecad_cycle_time": "00:00:12",
+     "commands": 13,
+     "cut_min": 0.06,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Countersink 3 x 4.40 , z 6.00 to 3.80",
+     "tool": 7,
+     "tool_name": "1/2 in. 90 deg carbide spot drill (spotting, countersinks, chamfers)",
+     "feed_mm_min": 320.0,
+     "kind": "csk",
+     "holes": 3,
+     "freecad_cycle_time": "00:00:17",
+     "commands": 13,
+     "cut_min": 0.04,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 2,
+   "cut_min": 0.1,
+   "rapid_min": 0.01,
+   "total_min": 0.11,
+   "freecad_cycle_min": 0.48,
+   "freecad_job_cycle": "00:00:29"
+  },
+  {
+   "pid": "MK-06a",
+   "setup": "MK-06a_A",
+   "up": "-Y",
+   "label": "in a V-block on a 5C indexer: lead notch, then index 120 deg and repeat twice",
+   "repeat": 3,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     0,
+     -1,
+     0
+    ]
+   ],
+   "stock_box_setup": [
+    -6.35,
+    -84.605,
+    -6.35,
+    12.7,
+    84.605,
+    12.7
+   ],
+   "gcode": "gcode/MK-06a_A.ngc",
+   "ops": [
+    {
+     "label": "lead notch 3 x 3.5 through one wall, x3: index 120 deg, custom zig-zag",
+     "tool": 8,
+     "tool_name": "2.0 mm 2-flute carbide end mill for 304 stainless (MK-06 lead notches; ramp entry)",
+     "feed_mm_min": 76.2,
+     "kind": "custom_slot",
+     "freecad_cycle_time": "00:02:05",
+     "commands": 42,
+     "cut_min": 0.68,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.68,
+   "rapid_min": 0.0,
+   "total_min": 0.68,
+   "freecad_cycle_min": 2.08,
+   "freecad_job_cycle": "00:02:05"
+  },
+  {
+   "pid": "MK-06a",
+   "setup": "MK-06a_B",
+   "up": "+X",
+   "label": "turned 90 deg: set-screw dimple",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     1,
+     0,
+     0
+    ]
+   ],
+   "stock_box_setup": [
+    -6.35,
+    0.0,
+    -6.35,
+    12.7,
+    84.605,
+    12.7
+   ],
+   "gcode": "gcode/MK-06a_B.ngc",
+   "ops": [
+    {
+     "label": "Drill 1 x 2.50 2.5, z 6.35 to 4.41",
+     "tool": 25,
+     "tool_name": "2.50 mm drill, jobber (30 mm flutes)",
+     "feed_mm_min": 502.2,
+     "kind": "drill",
+     "holes": 1,
+     "freecad_cycle_time": "00:00:11",
+     "commands": 9,
+     "cut_min": 0.01,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.01,
+   "rapid_min": 0.0,
+   "total_min": 0.01,
+   "freecad_cycle_min": 0.18,
+   "freecad_job_cycle": "00:00:11"
+  },
+  {
+   "pid": "MK-06b",
+   "setup": "MK-06b_A",
+   "up": "-Y",
+   "label": "in a V-block on a 5C indexer: lead notch, then index 120 deg and repeat twice",
+   "repeat": 3,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     0,
+     -1,
+     0
+    ]
+   ],
+   "stock_box_setup": [
+    -6.35,
+    -105.6,
+    -6.35,
+    12.7,
+    105.6,
+    12.7
+   ],
+   "gcode": "gcode/MK-06b_A.ngc",
+   "ops": [
+    {
+     "label": "lead notch 3 x 3.5 through one wall, x3: index 120 deg, custom zig-zag001",
+     "tool": 8,
+     "tool_name": "2.0 mm 2-flute carbide end mill for 304 stainless (MK-06 lead notches; ramp entry)",
+     "feed_mm_min": 76.2,
+     "kind": "custom_slot",
+     "freecad_cycle_time": "00:02:21",
+     "commands": 42,
+     "cut_min": 0.68,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.68,
+   "rapid_min": 0.0,
+   "total_min": 0.68,
+   "freecad_cycle_min": 2.35,
+   "freecad_job_cycle": "00:02:21"
+  },
+  {
+   "pid": "MK-06b",
+   "setup": "MK-06b_B",
+   "up": "+X",
+   "label": "turned 90 deg: set-screw dimple",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     1,
+     0,
+     0
+    ]
+   ],
+   "stock_box_setup": [
+    -6.35,
+    0.0,
+    -6.35,
+    12.7,
+    105.6,
+    12.7
+   ],
+   "gcode": "gcode/MK-06b_B.ngc",
+   "ops": [
+    {
+     "label": "Drill 1 x 2.50 2.5, z 6.35 to 4.042",
+     "tool": 25,
+     "tool_name": "2.50 mm drill, jobber (30 mm flutes)",
+     "feed_mm_min": 502.2,
+     "kind": "drill",
+     "holes": 1,
+     "freecad_cycle_time": "00:00:14",
+     "commands": 9,
+     "cut_min": 0.01,
+     "rapid_min": 0.01
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.01,
+   "rapid_min": 0.01,
+   "total_min": 0.01,
+   "freecad_cycle_min": 0.23,
+   "freecad_job_cycle": "00:00:14"
+  },
+  {
+   "pid": "MK-07",
+   "setup": "MK-07_A",
+   "up": "+Z",
+   "label": "top up: face, outline, face O-ring groove",
+   "repeat": 1,
+   "g0_links_to_g1": 12,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -32.0,
+    -32.0,
+    -0.35,
+    64.0,
+    64.0,
+    12.7
+   ],
+   "gcode": "gcode/MK-07_A.ngc",
+   "ops": [
+    {
+     "label": "Face top 12.35 to z 12.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:22",
+     "commands": 23,
+     "cut_min": 0.32,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Outside, adaptive, z 12.00 to 3.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 15.35,
+     "freecad_cycle_time": "00:00:17",
+     "commands": 84,
+     "cut_min": 0.2,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "face O-ring groove, AS568-031",
+     "tool": 5,
+     "tool_name": "2.0 mm 2-flute carbide end mill (O-ring grooves: Parker's vacuum widths are 2.13-2.26 and 3.05-3.18 mm), 15 mm stick-out",
+     "feed_mm_min": 205.7,
+     "kind": "groove",
+     "freecad_cycle_time": "00:04:38",
+     "commands": 39,
+     "cut_min": 4.36,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 2,
+   "cut_min": 4.88,
+   "rapid_min": 0.01,
+   "total_min": 4.89,
+   "freecad_cycle_min": 5.28,
+   "freecad_job_cycle": "00:05:17"
+  },
+  {
+   "pid": "MK-07",
+   "setup": "MK-07_B",
+   "up": "-Z",
+   "label": "bottom up: face to 12.0, the outline's last 3.5 mm, c'bores",
+   "repeat": 1,
+   "g0_links_to_g1": 12,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "stock_box_setup": [
+    -32.0,
+    -32.0,
+    -12.35,
+    64.0,
+    64.0,
+    12.7
+   ],
+   "gcode": "gcode/MK-07_B.ngc",
+   "ops": [
+    {
+     "label": "Face top 0.35 to z 0.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:21",
+     "commands": 23,
+     "cut_min": 0.32,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Outside, adaptive, z 0.00 to -3.50",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 3.3499999999999996,
+     "freecad_cycle_time": "00:00:15",
+     "commands": 81,
+     "cut_min": 0.19,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Drill 2 x 2.50 M3, z 0.00 to -6.75",
+     "tool": 25,
+     "tool_name": "2.50 mm drill, jobber (30 mm flutes)",
+     "feed_mm_min": 502.2,
+     "kind": "drill",
+     "holes": 2,
+     "freecad_cycle_time": "00:00:08",
+     "commands": 11,
+     "cut_min": 0.04,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Drill 4 x 5.50 M5, z 0.00 to -14.15",
+     "tool": 31,
+     "tool_name": "5.50 mm drill, long series (91 mm flutes)",
+     "feed_mm_min": 1117.8,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:06",
+     "commands": 15,
+     "cut_min": 0.06,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "C'bore 9.5 x 5.5 at -12.5 12.5, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:01:59",
+     "commands": 103,
+     "cut_min": 1.91,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "C'bore 9.5 x 5.5 at -12.5 -12.5, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:01:59",
+     "commands": 103,
+     "cut_min": 1.91,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "C'bore 9.5 x 5.5 at 12.5 12.5, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:01:59",
+     "commands": 103,
+     "cut_min": 1.91,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "C'bore 9.5 x 5.5 at 12.5 -12.5, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:01:59",
+     "commands": 103,
+     "cut_min": 1.91,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 4,
+   "cut_min": 8.22,
+   "rapid_min": 0.04,
+   "total_min": 8.26,
+   "freecad_cycle_min": 8.77,
+   "freecad_job_cycle": "00:08:46"
+  },
+  {
+   "pid": "MK-08c",
+   "setup": "MK-08c_A",
+   "up": "+Z",
+   "label": "top up: face, outline",
+   "repeat": 1,
+   "g0_links_to_g1": 78,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -2.0,
+    -25.0,
+    -1.5,
+    6.35,
+    50.0,
+    12.7
+   ],
+   "gcode": "gcode/MK-08c_A.ngc",
+   "ops": [
+    {
+     "label": "Face top 11.20 to z 10.50",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:05",
+     "commands": 21,
+     "cut_min": 0.05,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Outside, adaptive, z 10.50 to 1.20",
+     "tool": 3,
+     "tool_name": "1/4 in. (6.35 mm) 3-flute carbide end mill, 1 in. flutes (long reach)",
+     "feed_mm_min": 925.8,
+     "kind": "outline",
+     "safe_z": 14.2,
+     "freecad_cycle_time": "00:00:51",
+     "commands": 368,
+     "cut_min": 0.57,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 2,
+   "cut_min": 0.62,
+   "rapid_min": 0.01,
+   "total_min": 0.63,
+   "freecad_cycle_min": 0.93,
+   "freecad_job_cycle": "00:00:56"
+  },
+  {
+   "pid": "MK-08c",
+   "setup": "MK-08c_B",
+   "up": "-Z",
+   "label": "bottom up: face, cord groove",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "stock_box_setup": [
+    -2.0,
+    -25.0,
+    -11.2,
+    6.35,
+    50.0,
+    12.7
+   ],
+   "gcode": "gcode/MK-08c_B.ngc",
+   "ops": [
+    {
+     "label": "Face top 1.50 to z -1.50",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:05",
+     "commands": 36,
+     "cut_min": 0.07,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "cord slot 3.2 x 1.6 along y",
+     "tool": 5,
+     "tool_name": "2.0 mm 2-flute carbide end mill (O-ring grooves: Parker's vacuum widths are 2.13-2.26 and 3.05-3.18 mm), 15 mm stick-out",
+     "feed_mm_min": 205.7,
+     "kind": "pocket",
+     "freecad_cycle_time": "00:03:48",
+     "commands": 52,
+     "cut_min": 2.99,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 2,
+   "cut_min": 3.05,
+   "rapid_min": 0.01,
+   "total_min": 3.06,
+   "freecad_cycle_min": 3.88,
+   "freecad_job_cycle": "00:03:53"
+  },
+  {
+   "pid": "MK-08c",
+   "setup": "MK-08c_C",
+   "up": "-X",
+   "label": "wall face up: 2 x M2",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     -1,
+     0,
+     0
+    ]
+   ],
+   "stock_box_setup": [
+    -25.0,
+    -1.5,
+    -4.35,
+    50.0,
+    12.7,
+    6.35
+   ],
+   "gcode": "gcode/MK-08c_C.ngc",
+   "ops": [
+    {
+     "label": "Drill 2 x 1.60 M2, z 0.00 to -3.98",
+     "tool": 20,
+     "tool_name": "1.60 mm drill, jobber (20 mm flutes)",
+     "feed_mm_min": 324.0,
+     "kind": "drill",
+     "holes": 2,
+     "freecad_cycle_time": "00:00:11",
+     "commands": 11,
+     "cut_min": 0.04,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.04,
+   "rapid_min": 0.0,
+   "total_min": 0.05,
+   "freecad_cycle_min": 0.18,
+   "freecad_job_cycle": "00:00:11"
+  },
+  {
+   "pid": "MK-08d",
+   "setup": "MK-08d_A",
+   "up": "+Z",
+   "label": "top up: face, outline through (on parallels, tabs kept by 0.3 skin), c'bores",
+   "repeat": 1,
+   "g0_links_to_g1": 21,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -9.53,
+    21.0,
+    -0.76,
+    19.06,
+    49.0,
+    9.53
+   ],
+   "gcode": "gcode/MK-08d_A.ngc",
+   "ops": [
+    {
+     "label": "Face top 8.77 to z 8.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:09",
+     "commands": 21,
+     "cut_min": 0.1,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Outside, adaptive, z 8.00 to -0.30",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 11.77,
+     "freecad_cycle_time": "00:00:10",
+     "commands": 86,
+     "cut_min": 0.12,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Drill 1 x 3.40 M3, z 8.00 to -1.52",
+     "tool": 27,
+     "tool_name": "3.40 mm drill, long series (73 mm flutes)",
+     "feed_mm_min": 688.5,
+     "kind": "drill",
+     "holes": 1,
+     "freecad_cycle_time": "00:00:08",
+     "commands": 9,
+     "cut_min": 0.02,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "C'bore 6.5 x 3.4 at 0.0 64.0, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:01:09",
+     "commands": 55,
+     "cut_min": 0.62,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 3,
+   "cut_min": 0.85,
+   "rapid_min": 0.01,
+   "total_min": 0.86,
+   "freecad_cycle_min": 1.6,
+   "freecad_job_cycle": "00:01:36"
+  },
+  {
+   "pid": "MK-08d",
+   "setup": "MK-08d_B",
+   "up": "-Z",
+   "label": "bottom up: face to 8.0",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "stock_box_setup": [
+    -9.53,
+    -70.0,
+    -8.77,
+    19.06,
+    49.0,
+    9.53
+   ],
+   "gcode": "gcode/MK-08d_B.ngc",
+   "ops": [
+    {
+     "label": "Face top 0.76 to z 0.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:07",
+     "commands": 21,
+     "cut_min": 0.1,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.1,
+   "rapid_min": 0.0,
+   "total_min": 0.1,
+   "freecad_cycle_min": 0.12,
+   "freecad_job_cycle": "00:00:07"
+  },
+  {
+   "pid": "MK-08d",
+   "setup": "MK-08d_C",
+   "up": "-Y",
+   "label": "hopper end up (vise): 2 x M3",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     0,
+     -1,
+     0
+    ]
+   ],
+   "stock_box_setup": [
+    -9.53,
+    -8.77,
+    -70.0,
+    19.06,
+    9.53,
+    49.0
+   ],
+   "gcode": "gcode/MK-08d_C.ngc",
+   "ops": [
+    {
+     "label": "Drill 2 x 2.50 M3, z -23.00 to -31.75",
+     "tool": 25,
+     "tool_name": "2.50 mm drill, jobber (30 mm flutes)",
+     "feed_mm_min": 502.2,
+     "kind": "drill",
+     "holes": 2,
+     "freecad_cycle_time": "00:00:05",
+     "commands": 11,
+     "cut_min": 0.05,
+     "rapid_min": 0.01
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.05,
+   "rapid_min": 0.01,
+   "total_min": 0.05,
+   "freecad_cycle_min": 0.08,
+   "freecad_job_cycle": "00:00:05"
+  },
+  {
+   "pid": "MK-08e",
+   "setup": "MK-08e_A",
+   "up": "+X",
+   "label": "L profile up (x up): face, outline of the L to x 0",
+   "repeat": 1,
+   "g0_links_to_g1": 660,
+   "rotation": [
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     1,
+     0,
+     0
+    ]
+   ],
+   "stock_box_setup": [
+    57.8,
+    -36.2,
+    -21.5,
+    44.45,
+    76.2,
+    43.0
+   ],
+   "gcode": "gcode/MK-08e_A.ngc",
+   "ops": [
+    {
+     "label": "Face top 21.50 to z 20.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:21",
+     "commands": 25,
+     "cut_min": 0.25,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Outside, adaptive, z 20.00 to 0.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 24.5,
+     "freecad_cycle_time": "00:04:11",
+     "commands": 3536,
+     "cut_min": 2.97,
+     "rapid_min": 0.01
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 3.23,
+   "rapid_min": 0.01,
+   "total_min": 3.24,
+   "freecad_cycle_min": 4.53,
+   "freecad_job_cycle": "00:04:32"
+  },
+  {
+   "pid": "MK-08e",
+   "setup": "MK-08e_B",
+   "up": "-X",
+   "label": "flip: face to 40.0 wide, the rest of the outline (20.5)",
+   "repeat": 1,
+   "g0_links_to_g1": 738,
+   "rotation": [
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     -1,
+     0,
+     0
+    ]
+   ],
+   "stock_box_setup": [
+    -102.25,
+    -36.2,
+    -21.5,
+    44.45,
+    76.2,
+    43.0
+   ],
+   "gcode": "gcode/MK-08e_B.ngc",
+   "ops": [
+    {
+     "label": "Face top 21.50 to z 20.001",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:20",
+     "commands": 25,
+     "cut_min": 0.25,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Outside, adaptive, z 20.00 to -0.50",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 24.5,
+     "freecad_cycle_time": "00:04:20",
+     "commands": 4032,
+     "cut_min": 3.06,
+     "rapid_min": 0.01
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 3.31,
+   "rapid_min": 0.01,
+   "total_min": 3.32,
+   "freecad_cycle_min": 4.67,
+   "freecad_job_cycle": "00:04:40"
+  },
+  {
+   "pid": "MK-08e",
+   "setup": "MK-08e_C",
+   "up": "+Z",
+   "label": "foot down on parallels: arm notch, M3, c'bores (long-reach 1/8 in. cutter)",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -21.5,
+    57.8,
+    -36.2,
+    43.0,
+    44.45,
+    76.2
+   ],
+   "gcode": "gcode/MK-08e_C.ngc",
+   "ops": [
+    {
+     "label": "arm notch 16 x 8",
+     "tool": 3,
+     "tool_name": "1/4 in. (6.35 mm) 3-flute carbide end mill, 1 in. flutes (long reach)",
+     "feed_mm_min": 925.8,
+     "kind": "pocket",
+     "freecad_cycle_time": "00:00:19",
+     "commands": 22,
+     "cut_min": 0.11,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Drill 1 x 2.50 M3, z 27.00 to 18.25",
+     "tool": 25,
+     "tool_name": "2.50 mm drill, jobber (30 mm flutes)",
+     "feed_mm_min": 502.2,
+     "kind": "drill",
+     "holes": 1,
+     "freecad_cycle_time": "00:00:16",
+     "commands": 9,
+     "cut_min": 0.02,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Drill 4 x 3.40 M3, z -25.70 to -33.22",
+     "tool": 27,
+     "tool_name": "3.40 mm drill, long series (73 mm flutes)",
+     "feed_mm_min": 688.5,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:23",
+     "commands": 15,
+     "cut_min": 0.06,
+     "rapid_min": 0.03
+    },
+    {
+     "label": "C'bore 6.5 x 3.4 at -15.0 77.0, helix",
+     "tool": 9,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill, long reach (2.5 in. reach, necked)",
+     "feed_mm_min": 246.9,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:02:53",
+     "commands": 55,
+     "cut_min": 0.83,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "C'bore 6.5 x 3.4 at -15.0 97.0, helix",
+     "tool": 9,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill, long reach (2.5 in. reach, necked)",
+     "feed_mm_min": 246.9,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:02:58",
+     "commands": 55,
+     "cut_min": 0.83,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "C'bore 6.5 x 3.4 at 15.0 77.0, helix",
+     "tool": 9,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill, long reach (2.5 in. reach, necked)",
+     "feed_mm_min": 246.9,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:02:53",
+     "commands": 55,
+     "cut_min": 0.83,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "C'bore 6.5 x 3.4 at 15.0 97.0, helix",
+     "tool": 9,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill, long reach (2.5 in. reach, necked)",
+     "feed_mm_min": 246.9,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:02:58",
+     "commands": 55,
+     "cut_min": 0.83,
+     "rapid_min": 0.01
+    }
+   ],
+   "errors": [],
+   "tool_changes": 4,
+   "cut_min": 3.5,
+   "rapid_min": 0.07,
+   "total_min": 3.57,
+   "freecad_cycle_min": 12.67,
+   "freecad_job_cycle": "00:12:40"
+  },
+  {
+   "pid": "MK-09a",
+   "setup": "MK-09a_A",
+   "up": "-Z",
+   "label": "head face up: face, gusset c'sinks",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "stock_box_setup": [
+    -5.0,
+    -105.0,
+    -12.35,
+    309.2,
+    110.0,
+    12.7
+   ],
+   "gcode": "gcode/MK-09a_A.ngc",
+   "ops": [
+    {
+     "label": "Face top 0.35 to z 0.001",
+     "tool": 1,
+     "tool_name": "2.5 in. (63.5 mm) indexable face mill, 4 inserts",
+     "feed_mm_min": 1219.2,
+     "kind": "face",
+     "freecad_cycle_time": "00:01:06",
+     "commands": 15,
+     "cut_min": 1.08,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Drill 6 x 5.50 M5, z 0.00 to -14.15",
+     "tool": 31,
+     "tool_name": "5.50 mm drill, long series (91 mm flutes)",
+     "feed_mm_min": 1117.8,
+     "kind": "drill",
+     "holes": 6,
+     "freecad_cycle_time": "00:00:16",
+     "commands": 19,
+     "cut_min": 0.09,
+     "rapid_min": 0.02
+    },
+    {
+     "label": "Countersink 6 x 11.40 , z 0.00 to -5.70",
+     "tool": 7,
+     "tool_name": "1/2 in. 90 deg carbide spot drill (spotting, countersinks, chamfers)",
+     "feed_mm_min": 320.0,
+     "kind": "csk",
+     "holes": 6,
+     "freecad_cycle_time": "00:00:56",
+     "commands": 19,
+     "cut_min": 0.14,
+     "rapid_min": 0.02
+    }
+   ],
+   "errors": [],
+   "tool_changes": 3,
+   "cut_min": 1.31,
+   "rapid_min": 0.04,
+   "total_min": 1.35,
+   "freecad_cycle_min": 2.3,
+   "freecad_job_cycle": "00:02:18"
+  },
+  {
+   "pid": "MK-09a",
+   "setup": "MK-09a_B",
+   "up": "+Z",
+   "label": "outer face up: face to 12.0, turret opening, c'bores, bracket taps, outline",
+   "repeat": 1,
+   "g0_links_to_g1": 44,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -5.0,
+    -5.0,
+    -0.35,
+    309.2,
+    110.0,
+    12.7
+   ],
+   "gcode": "gcode/MK-09a_B.ngc",
+   "ops": [
+    {
+     "label": "Face top 12.35 to z 12.001",
+     "tool": 1,
+     "tool_name": "2.5 in. (63.5 mm) indexable face mill, 4 inserts",
+     "feed_mm_min": 1219.2,
+     "kind": "face",
+     "freecad_cycle_time": "00:01:11",
+     "commands": 15,
+     "cut_min": 1.08,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Outside, adaptive, z 12.00 to -0.30",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 15.35,
+     "freecad_cycle_time": "00:04:09",
+     "commands": 870,
+     "cut_min": 3.9,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "input-turret opening 52, helix z 12.00 to -0.50",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "bore",
+     "freecad_cycle_time": "00:01:48",
+     "commands": 143,
+     "cut_min": 2.82,
+     "rapid_min": 0.02
+    },
+    {
+     "label": "Drill 4 x 4.20 M5, z 12.00 to -1.76",
+     "tool": 28,
+     "tool_name": "4.20 mm drill, jobber (43 mm flutes)",
+     "feed_mm_min": 850.5,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:28",
+     "commands": 15,
+     "cut_min": 0.08,
+     "rapid_min": 0.03
+    },
+    {
+     "label": "Drill 4 x 6.60 M6, z 12.00 to -2.48",
+     "tool": 33,
+     "tool_name": "6.60 mm drill, jobber (69 mm flutes)",
+     "feed_mm_min": 1215.0,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:12",
+     "commands": 15,
+     "cut_min": 0.06,
+     "rapid_min": 0.03
+    },
+    {
+     "label": "C'bore 11.0 x 6.6 at 50.0 10.0, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:01:43",
+     "commands": 159,
+     "cut_min": 3.57,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "C'bore 11.0 x 6.6 at 50.0 70.0, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:04:16",
+     "commands": 159,
+     "cut_min": 3.57,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "C'bore 11.0 x 6.6 at 100.0 10.0, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:01:19",
+     "commands": 159,
+     "cut_min": 3.57,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "C'bore 11.0 x 6.6 at 100.0 70.0, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:03:19",
+     "commands": 159,
+     "cut_min": 3.57,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 5,
+   "cut_min": 22.22,
+   "rapid_min": 0.11,
+   "total_min": 22.32,
+   "freecad_cycle_min": 18.42,
+   "freecad_job_cycle": "00:18:25"
+  },
+  {
+   "pid": "MK-09a",
+   "setup": "MK-09a_C",
+   "up": "+Y",
+   "label": "top edge up: 4 x M5 for the top flange",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     0,
+     1,
+     0
+    ]
+   ],
+   "stock_box_setup": [
+    -5.0,
+    -12.35,
+    -5.0,
+    309.2,
+    12.7,
+    110.0
+   ],
+   "gcode": "gcode/MK-09a_C.ngc",
+   "ops": [
+    {
+     "label": "Drill 4 x 4.20 M5, z 100.00 to 86.74",
+     "tool": 28,
+     "tool_name": "4.20 mm drill, jobber (43 mm flutes)",
+     "feed_mm_min": 850.5,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:27",
+     "commands": 15,
+     "cut_min": 0.08,
+     "rapid_min": 0.03
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.08,
+   "rapid_min": 0.03,
+   "total_min": 0.1,
+   "freecad_cycle_min": 0.45,
+   "freecad_job_cycle": "00:00:27"
+  },
+  {
+   "pid": "MK-09c",
+   "setup": "MK-09c_A",
+   "up": "+X",
+   "label": "leg B down in the vise: 2 x 5.5 in leg A",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     1,
+     0,
+     0
+    ]
+   ],
+   "stock_box_setup": [
+    0.0,
+    0.0,
+    0.0,
+    38.1,
+    30.0,
+    38.1
+   ],
+   "gcode": "gcode/MK-09c_A.ngc",
+   "ops": [
+    {
+     "label": "Drill 2 x 5.50 M5, z 4.76 to -2.15",
+     "tool": 31,
+     "tool_name": "5.50 mm drill, long series (91 mm flutes)",
+     "feed_mm_min": 1117.8,
+     "kind": "drill",
+     "holes": 2,
+     "freecad_cycle_time": "00:00:06",
+     "commands": 11,
+     "cut_min": 0.02,
+     "rapid_min": 0.01
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.02,
+   "rapid_min": 0.01,
+   "total_min": 0.03,
+   "freecad_cycle_min": 0.1,
+   "freecad_job_cycle": "00:00:06"
+  },
+  {
+   "pid": "MK-09c",
+   "setup": "MK-09c_B",
+   "up": "+Y",
+   "label": "leg A down: 6.6 in leg B",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     0,
+     1,
+     0
+    ]
+   ],
+   "stock_box_setup": [
+    0.0,
+    -30.0,
+    0.0,
+    38.1,
+    30.0,
+    38.1
+   ],
+   "gcode": "gcode/MK-09c_B.ngc",
+   "ops": [
+    {
+     "label": "Drill 1 x 6.60 M6, z 4.76 to -2.48",
+     "tool": 33,
+     "tool_name": "6.60 mm drill, jobber (69 mm flutes)",
+     "feed_mm_min": 1215.0,
+     "kind": "drill",
+     "holes": 1,
+     "freecad_cycle_time": "00:00:05",
+     "commands": 9,
+     "cut_min": 0.01,
+     "rapid_min": 0.01
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.01,
+   "rapid_min": 0.01,
+   "total_min": 0.01,
+   "freecad_cycle_min": 0.08,
+   "freecad_job_cycle": "00:00:05"
+  },
+  {
+   "pid": "MK-09d",
+   "setup": "MK-09d_A",
+   "up": "-Z",
+   "label": "underside up: face",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "stock_box_setup": [
+    -133.3,
+    -197.35,
+    -12.35,
+    80.0,
+    367.2,
+    12.7
+   ],
+   "gcode": "gcode/MK-09d_A.ngc",
+   "ops": [
+    {
+     "label": "Face top 0.35 to z 0.002",
+     "tool": 1,
+     "tool_name": "2.5 in. (63.5 mm) indexable face mill, 4 inserts",
+     "feed_mm_min": 1219.2,
+     "kind": "face",
+     "freecad_cycle_time": "00:01:05",
+     "commands": 27,
+     "cut_min": 0.9,
+     "rapid_min": 0.01
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.9,
+   "rapid_min": 0.01,
+   "total_min": 0.9,
+   "freecad_cycle_min": 1.08,
+   "freecad_job_cycle": "00:01:05"
+  },
+  {
+   "pid": "MK-09d",
+   "setup": "MK-09d_B",
+   "up": "+Z",
+   "label": "top up: face to 12.0, c'bores, outline",
+   "repeat": 1,
+   "g0_links_to_g1": 138,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -133.3,
+    -169.85,
+    -0.35,
+    80.0,
+    367.2,
+    12.7
+   ],
+   "gcode": "gcode/MK-09d_B.ngc",
+   "ops": [
+    {
+     "label": "Face top 12.35 to z 12.002",
+     "tool": 1,
+     "tool_name": "2.5 in. (63.5 mm) indexable face mill, 4 inserts",
+     "feed_mm_min": 1219.2,
+     "kind": "face",
+     "freecad_cycle_time": "00:01:07",
+     "commands": 27,
+     "cut_min": 0.9,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Outside, adaptive, z 12.00 to -0.031",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 15.35,
+     "freecad_cycle_time": "00:04:31",
+     "commands": 816,
+     "cut_min": 4.19,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Drill 4 x 5.50 M5, z 12.00 to -2.15",
+     "tool": 31,
+     "tool_name": "5.50 mm drill, long series (91 mm flutes)",
+     "feed_mm_min": 1117.8,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:21",
+     "commands": 15,
+     "cut_min": 0.06,
+     "rapid_min": 0.03
+    },
+    {
+     "label": "Drill 6 x 5.50 M5, z 12.00 to -2.15",
+     "tool": 31,
+     "tool_name": "5.50 mm drill, long series (91 mm flutes)",
+     "feed_mm_min": 1117.8,
+     "kind": "drill",
+     "holes": 6,
+     "freecad_cycle_time": "00:00:18",
+     "commands": 19,
+     "cut_min": 0.09,
+     "rapid_min": 0.03
+    },
+    {
+     "label": "Drill 4 x 6.60 M6, z 12.00 to -2.049",
+     "tool": 33,
+     "tool_name": "6.60 mm drill, jobber (69 mm flutes)",
+     "feed_mm_min": 1215.0,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:29",
+     "commands": 15,
+     "cut_min": 0.06,
+     "rapid_min": 0.03
+    },
+    {
+     "label": "C'bore 11.0 x 6.6 at -111.3 -150.8, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:04:32",
+     "commands": 159,
+     "cut_min": 3.57,
+     "rapid_min": 0.02
+    },
+    {
+     "label": "C'bore 11.0 x 6.6 at -111.3 178.3, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:04:47",
+     "commands": 159,
+     "cut_min": 3.57,
+     "rapid_min": 0.02
+    },
+    {
+     "label": "C'bore 11.0 x 6.6 at -87.3 -150.8, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:04:45",
+     "commands": 159,
+     "cut_min": 3.57,
+     "rapid_min": 0.02
+    },
+    {
+     "label": "C'bore 11.0 x 6.6 at -87.3 178.3, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:04:58",
+     "commands": 159,
+     "cut_min": 3.57,
+     "rapid_min": 0.02
+    },
+    {
+     "label": "C'bore 9.5 x 5.5 at -63.3 -95.8, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:02:37",
+     "commands": 103,
+     "cut_min": 1.91,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "C'bore 9.5 x 5.5 at -63.3 -25.8, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:01:28",
+     "commands": 103,
+     "cut_min": 1.91,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "C'bore 9.5 x 5.5 at -63.3 54.2, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:02:06",
+     "commands": 103,
+     "cut_min": 1.91,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "C'bore 9.5 x 5.5 at -63.3 124.2, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:02:49",
+     "commands": 103,
+     "cut_min": 1.91,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "C'bore 9.5 x 5.5 at -84.3 -100.6, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:02:31",
+     "commands": 103,
+     "cut_min": 1.91,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "C'bore 9.5 x 5.5 at -84.3 -15.0, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:01:04",
+     "commands": 103,
+     "cut_min": 1.91,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "C'bore 9.5 x 5.5 at -84.3 15.0, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:01:04",
+     "commands": 103,
+     "cut_min": 1.91,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "C'bore 9.5 x 5.5 at -109.3 -100.6, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:02:21",
+     "commands": 103,
+     "cut_min": 1.91,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "C'bore 9.5 x 5.5 at -109.3 -15.0, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:01:02",
+     "commands": 103,
+     "cut_min": 1.91,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "C'bore 9.5 x 5.5 at -109.3 15.0, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:01:02",
+     "commands": 103,
+     "cut_min": 1.91,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 5,
+   "cut_min": 38.62,
+   "rapid_min": 0.22,
+   "total_min": 38.84,
+   "freecad_cycle_min": 43.87,
+   "freecad_job_cycle": "00:43:52"
+  },
+  {
+   "pid": "MK-09e",
+   "setup": "MK-09e_A",
+   "up": "+Y",
+   "label": "flat up: outline of the triangle",
+   "repeat": 1,
+   "g0_links_to_g1": 481,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     0,
+     1,
+     0
+    ]
+   ],
+   "stock_box_setup": [
+    -59.0,
+    -104.0,
+    -3.969,
+    63.0,
+    108.0,
+    7.938
+   ],
+   "gcode": "gcode/MK-09e_A.ngc",
+   "ops": [
+    {
+     "label": "Outside, adaptive, z 3.97 to -4.27",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 6.96875,
+     "freecad_cycle_time": "00:03:10",
+     "commands": 2013,
+     "cut_min": 2.24,
+     "rapid_min": 0.01
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 2.24,
+   "rapid_min": 0.01,
+   "total_min": 2.24,
+   "freecad_cycle_min": 3.17,
+   "freecad_job_cycle": "00:03:10"
+  },
+  {
+   "pid": "MK-09e",
+   "setup": "MK-09e_B",
+   "up": "+X",
+   "label": "plate edge up (vise): 2 x M5",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     1,
+     0,
+     0
+    ]
+   ],
+   "stock_box_setup": [
+    -3.969,
+    -4.0,
+    -59.0,
+    7.938,
+    108.0,
+    63.0
+   ],
+   "gcode": "gcode/MK-09e_B.ngc",
+   "ops": [
+    {
+     "label": "Drill 2 x 4.20 M5, z 0.00 to -13.26",
+     "tool": 28,
+     "tool_name": "4.20 mm drill, jobber (43 mm flutes)",
+     "feed_mm_min": 850.5,
+     "kind": "drill",
+     "holes": 2,
+     "freecad_cycle_time": "00:00:08",
+     "commands": 11,
+     "cut_min": 0.04,
+     "rapid_min": 0.01
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.04,
+   "rapid_min": 0.01,
+   "total_min": 0.05,
+   "freecad_cycle_min": 0.13,
+   "freecad_job_cycle": "00:00:08"
+  },
+  {
+   "pid": "MK-09e",
+   "setup": "MK-09e_C",
+   "up": "+Z",
+   "label": "top edge up (vise): 2 x M5",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -59.0,
+    -3.969,
+    -4.0,
+    63.0,
+    7.938,
+    108.0
+   ],
+   "gcode": "gcode/MK-09e_C.ngc",
+   "ops": [
+    {
+     "label": "Drill 2 x 4.20 M5, z 100.00 to 86.74",
+     "tool": 28,
+     "tool_name": "4.20 mm drill, jobber (43 mm flutes)",
+     "feed_mm_min": 850.5,
+     "kind": "drill",
+     "holes": 2,
+     "freecad_cycle_time": "00:00:12",
+     "commands": 11,
+     "cut_min": 0.04,
+     "rapid_min": 0.01
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.04,
+   "rapid_min": 0.01,
+   "total_min": 0.05,
+   "freecad_cycle_min": 0.2,
+   "freecad_job_cycle": "00:00:12"
+  },
+  {
+   "pid": "MK-09f",
+   "setup": "MK-09f_A",
+   "up": "-Z",
+   "label": "head face up: face",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "stock_box_setup": [
+    -5.0,
+    -125.0,
+    -11.35,
+    309.2,
+    130.0,
+    12.7
+   ],
+   "gcode": "gcode/MK-09f_A.ngc",
+   "ops": [
+    {
+     "label": "Face top 1.35 to z 0.001",
+     "tool": 1,
+     "tool_name": "2.5 in. (63.5 mm) indexable face mill, 4 inserts",
+     "feed_mm_min": 1219.2,
+     "kind": "face",
+     "freecad_cycle_time": "00:01:09",
+     "commands": 15,
+     "cut_min": 1.11,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 1.11,
+   "rapid_min": 0.0,
+   "total_min": 1.12,
+   "freecad_cycle_min": 1.15,
+   "freecad_job_cycle": "00:01:09"
+  },
+  {
+   "pid": "MK-09f",
+   "setup": "MK-09f_B",
+   "up": "+Z",
+   "label": "outer face up: face to 10.0, c'bores, taps, outline",
+   "repeat": 1,
+   "g0_links_to_g1": 19,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -5.0,
+    -5.0,
+    -1.35,
+    309.2,
+    130.0,
+    12.7
+   ],
+   "gcode": "gcode/MK-09f_B.ngc",
+   "ops": [
+    {
+     "label": "Face top 11.35 to z 10.001",
+     "tool": 1,
+     "tool_name": "2.5 in. (63.5 mm) indexable face mill, 4 inserts",
+     "feed_mm_min": 1219.2,
+     "kind": "face",
+     "freecad_cycle_time": "00:01:13",
+     "commands": 15,
+     "cut_min": 1.11,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Outside, adaptive, z 10.00 to -0.031",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 14.35,
+     "freecad_cycle_time": "00:02:15",
+     "commands": 431,
+     "cut_min": 2.04,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Drill 4 x 4.20 M5, z 10.00 to -1.077",
+     "tool": 28,
+     "tool_name": "4.20 mm drill, jobber (43 mm flutes)",
+     "feed_mm_min": 850.5,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:28",
+     "commands": 15,
+     "cut_min": 0.07,
+     "rapid_min": 0.03
+    },
+    {
+     "label": "Drill 4 x 5.50 M5, z 10.00 to -2.15",
+     "tool": 31,
+     "tool_name": "5.50 mm drill, long series (91 mm flutes)",
+     "feed_mm_min": 1117.8,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:18",
+     "commands": 15,
+     "cut_min": 0.05,
+     "rapid_min": 0.03
+    },
+    {
+     "label": "C'bore 9.5 x 5.5 at 35.9 20.0, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:01:39",
+     "commands": 103,
+     "cut_min": 1.91,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "C'bore 9.5 x 5.5 at 35.9 100.0, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:02:51",
+     "commands": 103,
+     "cut_min": 1.91,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "C'bore 9.5 x 5.5 at 145.9 20.0, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:01:07",
+     "commands": 103,
+     "cut_min": 1.91,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "C'bore 9.5 x 5.5 at 145.9 100.0, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:02:11",
+     "commands": 103,
+     "cut_min": 1.91,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 5,
+   "cut_min": 10.9,
+   "rapid_min": 0.1,
+   "total_min": 11.0,
+   "freecad_cycle_min": 12.03,
+   "freecad_job_cycle": "00:12:02"
+  },
+  {
+   "pid": "MK-10a",
+   "setup": "MK-10a_A",
+   "up": "+Y",
+   "label": "+y seam up in V-blocks: 4 x M3 for its toggle clamp",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     0,
+     1,
+     0
+    ]
+   ],
+   "stock_box_setup": [
+    -30.16,
+    -121.475,
+    -30.16,
+    60.32,
+    121.475,
+    60.32
+   ],
+   "gcode": "gcode/MK-10a_A.ngc",
+   "ops": [
+    {
+     "label": "Drill 4 x 2.50 M3, z 27.67 to 22.42",
+     "tool": 25,
+     "tool_name": "2.50 mm drill, jobber (30 mm flutes)",
+     "feed_mm_min": 502.2,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:18",
+     "commands": 15,
+     "cut_min": 0.06,
+     "rapid_min": 0.01
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.06,
+   "rapid_min": 0.01,
+   "total_min": 0.07,
+   "freecad_cycle_min": 0.3,
+   "freecad_job_cycle": "00:00:18"
+  },
+  {
+   "pid": "MK-10a",
+   "setup": "MK-10a_B",
+   "up": "-Y",
+   "label": "-y seam up: 4 x M3",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     0,
+     -1,
+     0
+    ]
+   ],
+   "stock_box_setup": [
+    -30.16,
+    -121.475,
+    -30.16,
+    60.32,
+    121.475,
+    60.32
+   ],
+   "gcode": "gcode/MK-10a_B.ngc",
+   "ops": [
+    {
+     "label": "Drill 4 x 2.50 M3, z 27.67 to 22.043",
+     "tool": 25,
+     "tool_name": "2.50 mm drill, jobber (30 mm flutes)",
+     "feed_mm_min": 502.2,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:18",
+     "commands": 15,
+     "cut_min": 0.06,
+     "rapid_min": 0.01
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.06,
+   "rapid_min": 0.01,
+   "total_min": 0.07,
+   "freecad_cycle_min": 0.3,
+   "freecad_job_cycle": "00:00:18"
+  },
+  {
+   "pid": "MK-10b",
+   "setup": "MK-10b_A",
+   "up": "+X",
+   "label": "+x seam up in V-blocks: 4 x M3 for its toggle clamp",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     1,
+     0,
+     0
+    ]
+   ],
+   "stock_box_setup": [
+    -30.16,
+    0.0,
+    -30.16,
+    60.32,
+    21.7,
+    60.32
+   ],
+   "gcode": "gcode/MK-10b_A.ngc",
+   "ops": [
+    {
+     "label": "Drill 4 x 2.50 M3, z 27.67 to 22.044",
+     "tool": 25,
+     "tool_name": "2.50 mm drill, jobber (30 mm flutes)",
+     "feed_mm_min": 502.2,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:13",
+     "commands": 15,
+     "cut_min": 0.06,
+     "rapid_min": 0.01
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.06,
+   "rapid_min": 0.01,
+   "total_min": 0.07,
+   "freecad_cycle_min": 0.22,
+   "freecad_job_cycle": "00:00:13"
+  },
+  {
+   "pid": "MK-10b",
+   "setup": "MK-10b_B",
+   "up": "-X",
+   "label": "-x seam up: 4 x M3",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     -1,
+     0,
+     0
+    ]
+   ],
+   "stock_box_setup": [
+    -30.16,
+    0.0,
+    -30.16,
+    60.32,
+    21.7,
+    60.32
+   ],
+   "gcode": "gcode/MK-10b_B.ngc",
+   "ops": [
+    {
+     "label": "Drill 4 x 2.50 M3, z 27.67 to 22.045",
+     "tool": 25,
+     "tool_name": "2.50 mm drill, jobber (30 mm flutes)",
+     "feed_mm_min": 502.2,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:13",
+     "commands": 15,
+     "cut_min": 0.06,
+     "rapid_min": 0.01
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.06,
+   "rapid_min": 0.01,
+   "total_min": 0.07,
+   "freecad_cycle_min": 0.22,
+   "freecad_job_cycle": "00:00:13"
+  },
+  {
+   "pid": "MK-10c",
+   "setup": "MK-10c_A",
+   "up": "+Z",
+   "label": "open end up: face to 40, outline to z 18, lens bore",
+   "repeat": 1,
+   "g0_links_to_g1": 1676,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -70.0,
+    -70.0,
+    -3.7,
+    140.0,
+    140.0,
+    44.45
+   ],
+   "gcode": "gcode/MK-10c_A.ngc",
+   "ops": [
+    {
+     "label": "Face top 40.75 to z 40.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:01:31",
+     "commands": 41,
+     "cut_min": 1.42,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Outside, adaptive, z 40.00 to 18.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 43.75,
+     "freecad_cycle_time": "00:07:42",
+     "commands": 6412,
+     "cut_min": 5.51,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "lens bore 121.2 x 34, adaptive, 3/4 in.",
+     "tool": 6,
+     "tool_name": "3/4 in. (19.05 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1943.1,
+     "kind": "adaptive",
+     "safe_z": 43.75,
+     "freecad_cycle_time": "00:05:16",
+     "commands": 7540,
+     "cut_min": 5.1,
+     "rapid_min": 0.01
+    }
+   ],
+   "errors": [],
+   "tool_changes": 2,
+   "cut_min": 12.03,
+   "rapid_min": 0.02,
+   "total_min": 12.06,
+   "freecad_cycle_min": 14.48,
+   "freecad_job_cycle": "00:14:29"
+  },
+  {
+   "pid": "MK-10c",
+   "setup": "MK-10c_B",
+   "up": "-Z",
+   "label": "floor up: face to the spigot, the outline's rest, round the spigot, the 50 bore",
+   "repeat": 1,
+   "g0_links_to_g1": 2102,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "stock_box_setup": [
+    -70.0,
+    -70.0,
+    -40.75,
+    140.0,
+    140.0,
+    44.45
+   ],
+   "gcode": "gcode/MK-10c_B.ngc",
+   "ops": [
+    {
+     "label": "Face top 3.70 to z 3.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:17",
+     "commands": 21,
+     "cut_min": 0.25,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Outside, adaptive, z 3.00 to -17.50",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 6.700000000000003,
+     "freecad_cycle_time": "00:07:39",
+     "commands": 6412,
+     "cut_min": 5.51,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "spigot 53 x 1.5 wall x 3, inside the centre section's upper end, adaptive outside to z 0.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "boss",
+     "safe_z": 6.700000000000003,
+     "freecad_cycle_time": "00:07:17",
+     "commands": 5893,
+     "cut_min": 6.8,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "tube bore 50 through the floor and the spigot, helix z 3.00 to -6.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "bore",
+     "freecad_cycle_time": "00:03:07",
+     "commands": 111,
+     "cut_min": 1.99,
+     "rapid_min": 0.01
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 14.55,
+   "rapid_min": 0.02,
+   "total_min": 14.57,
+   "freecad_cycle_min": 18.33,
+   "freecad_job_cycle": "00:18:20"
+  },
+  {
+   "pid": "MK-10c",
+   "setup": "MK-10c_C",
+   "up": "+X",
+   "label": "on its side: interlock-switch taps, two set screws",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     1,
+     0,
+     0
+    ]
+   ],
+   "stock_box_setup": [
+    -70.0,
+    -3.7,
+    -70.0,
+    140.0,
+    44.45,
+    140.0
+   ],
+   "gcode": "gcode/MK-10c_C.ngc",
+   "ops": [
+    {
+     "label": "Drill 2 x 2.50 M3, z 68.00 to 62.25",
+     "tool": 25,
+     "tool_name": "2.50 mm drill, jobber (30 mm flutes)",
+     "feed_mm_min": 502.2,
+     "kind": "drill",
+     "holes": 2,
+     "freecad_cycle_time": "00:00:13",
+     "commands": 11,
+     "cut_min": 0.03,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Drill 2 x 3.30 M4, z 63.24 to 53.22",
+     "tool": 26,
+     "tool_name": "3.30 mm drill, jobber (36 mm flutes)",
+     "feed_mm_min": 672.3,
+     "kind": "drill",
+     "holes": 2,
+     "freecad_cycle_time": "00:00:16",
+     "commands": 11,
+     "cut_min": 0.04,
+     "rapid_min": 0.01
+    }
+   ],
+   "errors": [],
+   "tool_changes": 2,
+   "cut_min": 0.07,
+   "rapid_min": 0.02,
+   "total_min": 0.09,
+   "freecad_cycle_min": 0.48,
+   "freecad_job_cycle": "00:00:29"
+  },
+  {
+   "pid": "MK-11a",
+   "setup": "MK-11a_A",
+   "up": "-Z",
+   "label": "bottom up: face, plenum",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "stock_box_setup": [
+    -32.5,
+    22.75,
+    -15.55,
+    65.0,
+    31.75,
+    19.05
+   ],
+   "gcode": "gcode/MK-11a_A.ngc",
+   "ops": [
+    {
+     "label": "Face top 3.50 to z 0.001",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:22",
+     "commands": 24,
+     "cut_min": 0.33,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "plenum 45 x 10 x 8, open below, closed by the block top",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "pocket",
+     "freecad_cycle_time": "00:12:43",
+     "commands": 380,
+     "cut_min": 8.04,
+     "rapid_min": 0.04
+    }
+   ],
+   "errors": [],
+   "tool_changes": 2,
+   "cut_min": 8.37,
+   "rapid_min": 0.05,
+   "total_min": 8.41,
+   "freecad_cycle_min": 13.08,
+   "freecad_job_cycle": "00:13:05"
+  },
+  {
+   "pid": "MK-11a",
+   "setup": "MK-11a_B",
+   "up": "+Z",
+   "label": "top up: face to 12, outline with the boss, c'bores",
+   "repeat": 1,
+   "g0_links_to_g1": 288,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -32.5,
+    -54.5,
+    -3.5,
+    65.0,
+    31.75,
+    19.05
+   ],
+   "gcode": "gcode/MK-11a_B.ngc",
+   "ops": [
+    {
+     "label": "Face top 15.55 to z 12.001",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:23",
+     "commands": 24,
+     "cut_min": 0.33,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Outside, adaptive, z 12.00 to -0.032",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 18.55,
+     "freecad_cycle_time": "00:01:42",
+     "commands": 1402,
+     "cut_min": 1.18,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Drill 2 x 3.40 M3, z 12.00 to -1.52",
+     "tool": 27,
+     "tool_name": "3.40 mm drill, long series (73 mm flutes)",
+     "feed_mm_min": 688.5,
+     "kind": "drill",
+     "holes": 2,
+     "freecad_cycle_time": "00:00:12",
+     "commands": 11,
+     "cut_min": 0.05,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "C'bore 6.5 x 3.4 at -27.0 -33.5, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:01:01",
+     "commands": 55,
+     "cut_min": 0.62,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "C'bore 6.5 x 3.4 at 27.0 -33.5, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:01:01",
+     "commands": 55,
+     "cut_min": 0.62,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 3,
+   "cut_min": 2.79,
+   "rapid_min": 0.03,
+   "total_min": 2.82,
+   "freecad_cycle_min": 4.32,
+   "freecad_job_cycle": "00:04:19"
+  },
+  {
+   "pid": "MK-11a",
+   "setup": "MK-11a_C",
+   "up": "+Y",
+   "label": "front face up: slot exit (1/8 in. end mill)",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     0,
+     1,
+     0
+    ]
+   ],
+   "stock_box_setup": [
+    -32.5,
+    -15.55,
+    -54.5,
+    65.0,
+    19.05,
+    31.75
+   ],
+   "gcode": "gcode/MK-11a_C.ngc",
+   "ops": [
+    {
+     "label": "slot exit 45 x 4 through the 2 mm front wall, profile to z -29.80",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "opening",
+     "freecad_cycle_time": "00:01:05",
+     "commands": 22,
+     "cut_min": 0.84,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.84,
+   "rapid_min": 0.0,
+   "total_min": 0.84,
+   "freecad_cycle_min": 1.08,
+   "freecad_job_cycle": "00:01:05"
+  },
+  {
+   "pid": "MK-11a",
+   "setup": "MK-11a_D",
+   "up": "-Y",
+   "label": "boss up: feed-tube hole",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     0,
+     -1,
+     0
+    ]
+   ],
+   "stock_box_setup": [
+    -32.5,
+    -15.55,
+    22.75,
+    65.0,
+    19.05,
+    31.75
+   ],
+   "gcode": "gcode/MK-11a_D.ngc",
+   "ops": [
+    {
+     "label": "Drill 1 x 6.40 6.40, z 52.00 to 35.08",
+     "tool": 32,
+     "tool_name": "6.40 mm drill, jobber (63 mm flutes)",
+     "feed_mm_min": 1215.0,
+     "kind": "drill",
+     "holes": 1,
+     "freecad_cycle_time": "00:00:04",
+     "commands": 9,
+     "cut_min": 0.02,
+     "rapid_min": 0.01
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.02,
+   "rapid_min": 0.01,
+   "total_min": 0.02,
+   "freecad_cycle_min": 0.07,
+   "freecad_job_cycle": "00:00:04"
+  },
+  {
+   "pid": "MK-11b",
+   "setup": "MK-11b_A",
+   "up": "-Z",
+   "label": "bottom up: face, plenum",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "stock_box_setup": [
+    -35.0,
+    -57.75,
+    -16.55,
+    70.0,
+    31.75,
+    19.05
+   ],
+   "gcode": "gcode/MK-11b_A.ngc",
+   "ops": [
+    {
+     "label": "Face top 2.50 to z 0.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:23",
+     "commands": 24,
+     "cut_min": 0.34,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "plenum 50 x 7 x 10, open below",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "pocket",
+     "freecad_cycle_time": "00:12:52",
+     "commands": 354,
+     "cut_min": 7.32,
+     "rapid_min": 0.05
+    }
+   ],
+   "errors": [],
+   "tool_changes": 2,
+   "cut_min": 7.66,
+   "rapid_min": 0.06,
+   "total_min": 7.72,
+   "freecad_cycle_min": 13.25,
+   "freecad_job_cycle": "00:13:15"
+  },
+  {
+   "pid": "MK-11b",
+   "setup": "MK-11b_B",
+   "up": "+Z",
+   "label": "top up: face to 14, outline with the boss, c'bores",
+   "repeat": 1,
+   "g0_links_to_g1": 490,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -35.0,
+    26.0,
+    -2.5,
+    70.0,
+    31.75,
+    19.05
+   ],
+   "gcode": "gcode/MK-11b_B.ngc",
+   "ops": [
+    {
+     "label": "Face top 16.55 to z 14.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:24",
+     "commands": 24,
+     "cut_min": 0.34,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Outside, adaptive, z 14.00 to -0.30",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 19.55,
+     "freecad_cycle_time": "00:02:08",
+     "commands": 2216,
+     "cut_min": 1.51,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Drill 2 x 3.40 M3, z 14.00 to -1.52",
+     "tool": 27,
+     "tool_name": "3.40 mm drill, long series (73 mm flutes)",
+     "feed_mm_min": 688.5,
+     "kind": "drill",
+     "holes": 2,
+     "freecad_cycle_time": "00:00:12",
+     "commands": 11,
+     "cut_min": 0.05,
+     "rapid_min": 0.02
+    },
+    {
+     "label": "C'bore 6.5 x 3.4 at -29.5 33.5, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:01:00",
+     "commands": 55,
+     "cut_min": 0.62,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "C'bore 6.5 x 3.4 at 29.5 33.5, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:01:00",
+     "commands": 55,
+     "cut_min": 0.62,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 3,
+   "cut_min": 3.15,
+   "rapid_min": 0.03,
+   "total_min": 3.18,
+   "freecad_cycle_min": 4.73,
+   "freecad_job_cycle": "00:04:44"
+  },
+  {
+   "pid": "MK-11b",
+   "setup": "MK-11b_C",
+   "up": "-Y",
+   "label": "front face up: inlet window",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     0,
+     -1,
+     0
+    ]
+   ],
+   "stock_box_setup": [
+    -35.0,
+    -16.55,
+    -57.75,
+    70.0,
+    19.05,
+    31.75
+   ],
+   "gcode": "gcode/MK-11b_C.ngc",
+   "ops": [
+    {
+     "label": "inlet window 50 x 6 through the 2 mm front wall, profile to z -29.80",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "opening",
+     "freecad_cycle_time": "00:01:12",
+     "commands": 22,
+     "cut_min": 0.95,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.95,
+   "rapid_min": 0.0,
+   "total_min": 0.95,
+   "freecad_cycle_min": 1.2,
+   "freecad_job_cycle": "00:01:12"
+  },
+  {
+   "pid": "MK-11b",
+   "setup": "MK-11b_D",
+   "up": "+Y",
+   "label": "boss up: exhaust-tube hole",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     0,
+     1,
+     0
+    ]
+   ],
+   "stock_box_setup": [
+    -35.0,
+    -16.55,
+    26.0,
+    70.0,
+    19.05,
+    31.75
+   ],
+   "gcode": "gcode/MK-11b_D.ngc",
+   "ops": [
+    {
+     "label": "Drill 1 x 9.60 9.6, z 48.00 to 32.12",
+     "tool": 34,
+     "tool_name": "9.60 mm drill, jobber (87 mm flutes)",
+     "feed_mm_min": 937.5,
+     "kind": "drill",
+     "holes": 1,
+     "freecad_cycle_time": "00:00:06",
+     "commands": 9,
+     "cut_min": 0.02,
+     "rapid_min": 0.01
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.02,
+   "rapid_min": 0.01,
+   "total_min": 0.02,
+   "freecad_cycle_min": 0.1,
+   "freecad_job_cycle": "00:00:06"
+  },
+  {
+   "pid": "MK-13",
+   "setup": "MK-13_A",
+   "up": "+Z",
+   "label": "outside face up: spot face, window bore, 8 x M5, 4 x M3",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -150.9,
+    -150.9,
+    0.0,
+    301.8,
+    301.8,
+    22.9
+   ],
+   "gcode": "gcode/MK-13_A.ngc",
+   "ops": [
+    {
+     "label": "spot face 104 x 0.3 for the window ring's O-ring, Ra 0.8",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "pocket",
+     "freecad_cycle_time": "00:00:44",
+     "commands": 74,
+     "cut_min": 0.78,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "window bore 53, helix z 22.90 to -0.50",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "bore",
+     "freecad_cycle_time": "00:06:09",
+     "commands": 231,
+     "cut_min": 4.98,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Drill 4 x 2.50 M3, z 22.90 to 14.15",
+     "tool": 25,
+     "tool_name": "2.50 mm drill, jobber (30 mm flutes)",
+     "feed_mm_min": 502.2,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:27",
+     "commands": 15,
+     "cut_min": 0.09,
+     "rapid_min": 0.02
+    },
+    {
+     "label": "Drill 8 x 4.20 M5, z 22.60 to 9.34",
+     "tool": 28,
+     "tool_name": "4.20 mm drill, jobber (43 mm flutes)",
+     "feed_mm_min": 850.5,
+     "kind": "drill",
+     "holes": 8,
+     "freecad_cycle_time": "00:00:21",
+     "commands": 23,
+     "cut_min": 0.15,
+     "rapid_min": 0.04
+    }
+   ],
+   "errors": [],
+   "tool_changes": 3,
+   "cut_min": 6.01,
+   "rapid_min": 0.07,
+   "total_min": 6.08,
+   "freecad_cycle_min": 7.68,
+   "freecad_job_cycle": "00:07:41"
+  },
+  {
+   "pid": "MK-13",
+   "setup": "MK-13_B",
+   "up": "-Z",
+   "label": "boss face up: 4 x M4 for the drop tube",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "stock_box_setup": [
+    -150.9,
+    -150.9,
+    -22.9,
+    301.8,
+    301.8,
+    22.9
+   ],
+   "gcode": "gcode/MK-13_B.ngc",
+   "ops": [
+    {
+     "label": "Drill 4 x 3.30 M4, z 0.00 to -9.99",
+     "tool": 26,
+     "tool_name": "3.30 mm drill, jobber (36 mm flutes)",
+     "feed_mm_min": 672.3,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:18",
+     "commands": 15,
+     "cut_min": 0.08,
+     "rapid_min": 0.02
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.08,
+   "rapid_min": 0.02,
+   "total_min": 0.09,
+   "freecad_cycle_min": 0.3,
+   "freecad_job_cycle": "00:00:18"
+  },
+  {
+   "pid": "MK-14",
+   "setup": "MK-14_A",
+   "up": "+Z",
+   "label": "outside face up: spot face, gland holes",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -150.9,
+    -150.9,
+    0.0,
+    301.8,
+    301.8,
+    22.9
+   ],
+   "gcode": "gcode/MK-14_A.ngc",
+   "ops": [
+    {
+     "label": "spot face 56 x 0.3 for the gland's AS568-031, Ra 0.8",
+     "tool": 3,
+     "tool_name": "1/4 in. (6.35 mm) 3-flute carbide end mill, 1 in. flutes (long reach)",
+     "feed_mm_min": 925.8,
+     "kind": "pocket",
+     "freecad_cycle_time": "00:00:49",
+     "commands": 75,
+     "cut_min": 0.89,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Drill 4 x 5.50 M5, z 22.60 to -2.15",
+     "tool": 31,
+     "tool_name": "5.50 mm drill, long series (91 mm flutes)",
+     "feed_mm_min": 1117.8,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:09",
+     "commands": 15,
+     "cut_min": 0.1,
+     "rapid_min": 0.03
+    }
+   ],
+   "errors": [],
+   "tool_changes": 2,
+   "cut_min": 0.99,
+   "rapid_min": 0.03,
+   "total_min": 1.02,
+   "freecad_cycle_min": 0.97,
+   "freecad_job_cycle": "00:00:58"
+  },
+  {
+   "pid": "MK-14",
+   "setup": "MK-14_B",
+   "up": "-Z",
+   "label": "boss face up: rod hole, deck taps",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "stock_box_setup": [
+    -150.9,
+    -150.9,
+    -22.9,
+    301.8,
+    301.8,
+    22.9
+   ],
+   "gcode": "gcode/MK-14_B.ngc",
+   "ops": [
+    {
+     "label": "rod hole 20, helix z 0.00 to -23.40",
+     "tool": 3,
+     "tool_name": "1/4 in. (6.35 mm) 3-flute carbide end mill, 1 in. flutes (long reach)",
+     "feed_mm_min": 925.8,
+     "kind": "bore",
+     "freecad_cycle_time": "00:03:08",
+     "commands": 175,
+     "cut_min": 2.65,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Drill 4 x 5.00 M6, z 0.00 to -13.50",
+     "tool": 30,
+     "tool_name": "5.00 mm drill, jobber (52 mm flutes)",
+     "feed_mm_min": 1012.5,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:45",
+     "commands": 15,
+     "cut_min": 0.06,
+     "rapid_min": 0.04
+    }
+   ],
+   "errors": [],
+   "tool_changes": 2,
+   "cut_min": 2.71,
+   "rapid_min": 0.05,
+   "total_min": 2.76,
+   "freecad_cycle_min": 3.88,
+   "freecad_job_cycle": "00:03:53"
+  },
+  {
+   "pid": "MK-15a",
+   "setup": "MK-15a_A",
+   "up": "-Z",
+   "label": "bottom up: face, c'bores, drill through",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "stock_box_setup": [
+    -95.0,
+    -198.35,
+    -11.35,
+    190.0,
+    306.7,
+    12.7
+   ],
+   "gcode": "gcode/MK-15a_A.ngc",
+   "ops": [
+    {
+     "label": "Face top 1.35 to z 0.002",
+     "tool": 1,
+     "tool_name": "2.5 in. (63.5 mm) indexable face mill, 4 inserts",
+     "feed_mm_min": 1219.2,
+     "kind": "face",
+     "freecad_cycle_time": "00:01:34",
+     "commands": 23,
+     "cut_min": 1.46,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Drill 4 x 5.50 M5, z 0.00 to -12.15",
+     "tool": 31,
+     "tool_name": "5.50 mm drill, long series (91 mm flutes)",
+     "feed_mm_min": 1117.8,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:07",
+     "commands": 15,
+     "cut_min": 0.05,
+     "rapid_min": 0.02
+    },
+    {
+     "label": "C'bore 9.5 x 5.5 at -15.0 15.0, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:02:00",
+     "commands": 103,
+     "cut_min": 1.91,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "C'bore 9.5 x 5.5 at -15.0 -15.0, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:02:00",
+     "commands": 103,
+     "cut_min": 1.91,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "C'bore 9.5 x 5.5 at 15.0 15.0, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:02:00",
+     "commands": 103,
+     "cut_min": 1.91,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "C'bore 9.5 x 5.5 at 15.0 -15.0, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:02:00",
+     "commands": 103,
+     "cut_min": 1.91,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 3,
+   "cut_min": 9.13,
+   "rapid_min": 0.04,
+   "total_min": 9.17,
+   "freecad_cycle_min": 9.68,
+   "freecad_job_cycle": "00:09:41"
+  },
+  {
+   "pid": "MK-15a",
+   "setup": "MK-15a_B",
+   "up": "+Z",
+   "label": "top up: face to 10, outline",
+   "repeat": 1,
+   "g0_links_to_g1": 7,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -95.0,
+    -108.35,
+    -1.35,
+    190.0,
+    306.7,
+    12.7
+   ],
+   "gcode": "gcode/MK-15a_B.ngc",
+   "ops": [
+    {
+     "label": "Face top 11.35 to z 10.002",
+     "tool": 1,
+     "tool_name": "2.5 in. (63.5 mm) indexable face mill, 4 inserts",
+     "feed_mm_min": 1219.2,
+     "kind": "face",
+     "freecad_cycle_time": "00:01:39",
+     "commands": 23,
+     "cut_min": 1.46,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Outside, adaptive, z 10.00 to -0.032",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 14.35,
+     "freecad_cycle_time": "00:02:25",
+     "commands": 506,
+     "cut_min": 2.31,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Drill 4 x 6.60 M6, z 10.00 to -2.049",
+     "tool": 33,
+     "tool_name": "6.60 mm drill, jobber (69 mm flutes)",
+     "feed_mm_min": 1215.0,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:34",
+     "commands": 15,
+     "cut_min": 0.05,
+     "rapid_min": 0.04
+    }
+   ],
+   "errors": [],
+   "tool_changes": 3,
+   "cut_min": 3.81,
+   "rapid_min": 0.05,
+   "total_min": 3.87,
+   "freecad_cycle_min": 4.63,
+   "freecad_job_cycle": "00:04:38"
+  },
+  {
+   "pid": "MK-15b",
+   "setup": "MK-15b_A",
+   "up": "+Z",
+   "label": "top up: face to 20.0, outline to z 4, stage taps",
+   "repeat": 1,
+   "g0_links_to_g1": 60,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -35.0,
+    -35.0,
+    -2.5,
+    70.0,
+    70.0,
+    25.4
+   ],
+   "gcode": "gcode/MK-15b_A.ngc",
+   "ops": [
+    {
+     "label": "Face top 22.90 to z 20.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:49",
+     "commands": 44,
+     "cut_min": 0.75,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Outside, adaptive, z 20.00 to 4.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 25.9,
+     "freecad_cycle_time": "00:00:50",
+     "commands": 308,
+     "cut_min": 0.7,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Drill 4 x 5.00 M6, z 20.00 to 4.50",
+     "tool": 30,
+     "tool_name": "5.00 mm drill, jobber (52 mm flutes)",
+     "feed_mm_min": 1012.5,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:14",
+     "commands": 15,
+     "cut_min": 0.07,
+     "rapid_min": 0.02
+    }
+   ],
+   "errors": [],
+   "tool_changes": 2,
+   "cut_min": 1.52,
+   "rapid_min": 0.03,
+   "total_min": 1.55,
+   "freecad_cycle_min": 1.88,
+   "freecad_job_cycle": "00:01:53"
+  },
+  {
+   "pid": "MK-15b",
+   "setup": "MK-15b_B",
+   "up": "-Z",
+   "label": "bottom up: face, the outline's last 4.5 mm, riser taps",
+   "repeat": 1,
+   "g0_links_to_g1": 33,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "stock_box_setup": [
+    -35.0,
+    -35.0,
+    -22.9,
+    70.0,
+    70.0,
+    25.4
+   ],
+   "gcode": "gcode/MK-15b_B.ngc",
+   "ops": [
+    {
+     "label": "Face top 2.50 to z 0.001",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:47",
+     "commands": 44,
+     "cut_min": 0.75,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Outside, adaptive, z 0.00 to -4.50",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 5.5,
+     "freecad_cycle_time": "00:00:24",
+     "commands": 156,
+     "cut_min": 0.34,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Drill 4 x 4.20 M5, z 0.00 to -11.26",
+     "tool": 28,
+     "tool_name": "4.20 mm drill, jobber (43 mm flutes)",
+     "feed_mm_min": 850.5,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:09",
+     "commands": 15,
+     "cut_min": 0.07,
+     "rapid_min": 0.02
+    }
+   ],
+   "errors": [],
+   "tool_changes": 2,
+   "cut_min": 1.15,
+   "rapid_min": 0.02,
+   "total_min": 1.18,
+   "freecad_cycle_min": 1.33,
+   "freecad_job_cycle": "00:01:20"
+  },
+  {
+   "pid": "MK-15c",
+   "setup": "MK-15c_A",
+   "up": "+Z",
+   "label": "top up: face, outline to z 10, rod bore, c'bores",
+   "repeat": 1,
+   "g0_links_to_g1": 135,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -34.9,
+    -22.2,
+    -1.5,
+    69.8,
+    44.4,
+    43.0
+   ],
+   "gcode": "gcode/MK-15c_A.ngc",
+   "ops": [
+    {
+     "label": "Face top 41.50 to z 40.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:20",
+     "commands": 19,
+     "cut_min": 0.25,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Outside, adaptive, z 40.00 to 10.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 44.5,
+     "freecad_cycle_time": "00:01:08",
+     "commands": 440,
+     "cut_min": 0.9,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "rod bore 12.95, helix z 40.00 to 16.00",
+     "tool": 3,
+     "tool_name": "1/4 in. (6.35 mm) 3-flute carbide end mill, 1 in. flutes (long reach)",
+     "feed_mm_min": 925.8,
+     "kind": "bore",
+     "freecad_cycle_time": "00:01:41",
+     "commands": 119,
+     "cut_min": 1.14,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Drill 4 x 6.60 M6, z 40.00 to -2.48",
+     "tool": 33,
+     "tool_name": "6.60 mm drill, jobber (69 mm flutes)",
+     "feed_mm_min": 1215.0,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:11",
+     "commands": 15,
+     "cut_min": 0.15,
+     "rapid_min": 0.06
+    },
+    {
+     "label": "C'bore 11.0 x 6.6 at -25.0 -12.5, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:04:24",
+     "commands": 159,
+     "cut_min": 3.57,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "C'bore 11.0 x 6.6 at -25.0 12.5, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:04:24",
+     "commands": 159,
+     "cut_min": 3.57,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "C'bore 11.0 x 6.6 at 25.0 -12.5, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:04:24",
+     "commands": 159,
+     "cut_min": 3.57,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "C'bore 11.0 x 6.6 at 25.0 12.5, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:04:24",
+     "commands": 159,
+     "cut_min": 3.57,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 4,
+   "cut_min": 16.73,
+   "rapid_min": 0.09,
+   "total_min": 16.82,
+   "freecad_cycle_min": 20.93,
+   "freecad_job_cycle": "00:20:56"
+  },
+  {
+   "pid": "MK-15c",
+   "setup": "MK-15c_B",
+   "up": "-Z",
+   "label": "bottom up: face to 40, the outline's last 10.5 mm",
+   "repeat": 1,
+   "g0_links_to_g1": 45,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "stock_box_setup": [
+    -34.9,
+    -22.2,
+    -41.5,
+    69.8,
+    44.4,
+    43.0
+   ],
+   "gcode": "gcode/MK-15c_B.ngc",
+   "ops": [
+    {
+     "label": "Face top 1.50 to z 0.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:17",
+     "commands": 19,
+     "cut_min": 0.25,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Outside, adaptive, z 0.00 to -10.50",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 4.5,
+     "freecad_cycle_time": "00:00:21",
+     "commands": 148,
+     "cut_min": 0.29,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.54,
+   "rapid_min": 0.01,
+   "total_min": 0.54,
+   "freecad_cycle_min": 0.63,
+   "freecad_job_cycle": "00:00:38"
+  },
+  {
+   "pid": "MK-15c",
+   "setup": "MK-15c_C",
+   "up": "-Y",
+   "label": "-y face up: lead pocket",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     0,
+     -1,
+     0
+    ]
+   ],
+   "stock_box_setup": [
+    -34.9,
+    -41.5,
+    -22.2,
+    69.8,
+    43.0,
+    44.4
+   ],
+   "gcode": "gcode/MK-15c_C.ngc",
+   "ops": [
+    {
+     "label": "lead pocket 16 x 28 x 12, open to -y",
+     "tool": 3,
+     "tool_name": "1/4 in. (6.35 mm) 3-flute carbide end mill, 1 in. flutes (long reach)",
+     "feed_mm_min": 925.8,
+     "kind": "pocket",
+     "freecad_cycle_time": "00:02:41",
+     "commands": 164,
+     "cut_min": 1.45,
+     "rapid_min": 0.02
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 1.45,
+   "rapid_min": 0.02,
+   "total_min": 1.48,
+   "freecad_cycle_min": 2.68,
+   "freecad_job_cycle": "00:02:41"
+  },
+  {
+   "pid": "MK-15c",
+   "setup": "MK-15c_D",
+   "up": "+X",
+   "label": "+x (AE) face up: clamp-screw hole",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     1,
+     0,
+     0
+    ]
+   ],
+   "stock_box_setup": [
+    -22.2,
+    -1.5,
+    -34.9,
+    44.4,
+    43.0,
+    69.8
+   ],
+   "gcode": "gcode/MK-15c_D.ngc",
+   "ops": [
+    {
+     "label": "Drill 1 x 4.50 M4, z 32.00 to -33.85",
+     "tool": 29,
+     "tool_name": "4.50 mm drill, long series (82 mm flutes)",
+     "feed_mm_min": 915.3,
+     "kind": "drill",
+     "holes": 1,
+     "freecad_cycle_time": "00:00:09",
+     "commands": 9,
+     "cut_min": 0.08,
+     "rapid_min": 0.05
+    },
+    {
+     "label": "C'bore 8.0 x 4.5 at 12.0 30.0, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:01:35",
+     "commands": 63,
+     "cut_min": 0.92,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 2,
+   "cut_min": 1.0,
+   "rapid_min": 0.05,
+   "total_min": 1.04,
+   "freecad_cycle_min": 1.73,
+   "freecad_job_cycle": "00:01:44"
+  },
+  {
+   "pid": "MK-16",
+   "setup": "MK-16_A",
+   "up": "+Z",
+   "label": "top up: face, outline, pocket",
+   "repeat": 1,
+   "g0_links_to_g1": 70,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    19.15,
+    -25.4,
+    -1.5,
+    12.7,
+    50.8,
+    25.0
+   ],
+   "gcode": "gcode/MK-16_A.ngc",
+   "ops": [
+    {
+     "label": "Face top 23.50 to z 21.70",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:08",
+     "commands": 21,
+     "cut_min": 0.08,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Outside, adaptive, z 21.70 to -0.30",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 26.5,
+     "freecad_cycle_time": "00:00:22",
+     "commands": 272,
+     "cut_min": 0.23,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "cup 7.5 x 46.5 x 20.7 deep",
+     "tool": 3,
+     "tool_name": "1/4 in. (6.35 mm) 3-flute carbide end mill, 1 in. flutes (long reach)",
+     "feed_mm_min": 925.8,
+     "kind": "pocket",
+     "freecad_cycle_time": "00:00:49",
+     "commands": 77,
+     "cut_min": 0.68,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 2,
+   "cut_min": 0.99,
+   "rapid_min": 0.01,
+   "total_min": 1.0,
+   "freecad_cycle_min": 1.32,
+   "freecad_job_cycle": "00:01:19"
+  },
+  {
+   "pid": "MK-16",
+   "setup": "MK-16_B",
+   "up": "-Z",
+   "label": "bottom up: face to height",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "stock_box_setup": [
+    19.15,
+    -25.4,
+    -23.5,
+    12.7,
+    50.8,
+    25.0
+   ],
+   "gcode": "gcode/MK-16_B.ngc",
+   "ops": [
+    {
+     "label": "Face top 1.50 to z 0.001",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:07",
+     "commands": 21,
+     "cut_min": 0.08,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.08,
+   "rapid_min": 0.0,
+   "total_min": 0.08,
+   "freecad_cycle_min": 0.12,
+   "freecad_job_cycle": "00:00:07"
+  },
+  {
+   "pid": "MK-18a",
+   "setup": "MK-18a_A",
+   "up": "+Z",
+   "label": "top up: face, outline to z 25, wells, M3",
+   "repeat": 1,
+   "g0_links_to_g1": 144,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -31.75,
+    -31.75,
+    -1.7,
+    63.5,
+    63.5,
+    54.83
+   ],
+   "gcode": "gcode/MK-18a_A.ngc",
+   "ops": [
+    {
+     "label": "Face top 53.13 to z 51.43",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:25",
+     "commands": 23,
+     "cut_min": 0.32,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Outside, adaptive, z 51.43 to 25.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 56.13000000000001,
+     "freecad_cycle_time": "00:01:00",
+     "commands": 365,
+     "cut_min": 0.62,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Drill 4 x 2.50 M3, z 51.43 to 42.68",
+     "tool": 25,
+     "tool_name": "2.50 mm drill, jobber (30 mm flutes)",
+     "feed_mm_min": 502.2,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:30",
+     "commands": 15,
+     "cut_min": 0.09,
+     "rapid_min": 0.02
+    },
+    {
+     "label": "Drill 4 x 10.00 10.0, z 51.43 to 12.00",
+     "tool": 35,
+     "tool_name": "10.00 mm drill, jobber (87 mm flutes)",
+     "feed_mm_min": 900.0,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:13",
+     "commands": 15,
+     "cut_min": 0.19,
+     "rapid_min": 0.04
+    }
+   ],
+   "errors": [],
+   "tool_changes": 3,
+   "cut_min": 1.22,
+   "rapid_min": 0.08,
+   "total_min": 1.3,
+   "freecad_cycle_min": 2.13,
+   "freecad_job_cycle": "00:02:08"
+  },
+  {
+   "pid": "MK-18a",
+   "setup": "MK-18a_B",
+   "up": "-Z",
+   "label": "bottom up: face to height, the outline's rest (25.5), holes A",
+   "repeat": 1,
+   "g0_links_to_g1": 144,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "stock_box_setup": [
+    -31.75,
+    -31.75,
+    -53.13,
+    63.5,
+    63.5,
+    54.83
+   ],
+   "gcode": "gcode/MK-18a_B.ngc",
+   "ops": [
+    {
+     "label": "Face top 1.70 to z 0.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:21",
+     "commands": 23,
+     "cut_min": 0.32,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Outside, adaptive, z 0.00 to -25.50",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 4.700000000000003,
+     "freecad_cycle_time": "00:00:56",
+     "commands": 365,
+     "cut_min": 0.61,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Drill 4 x 5.50 M5, z 0.00 to -15.80",
+     "tool": 31,
+     "tool_name": "5.50 mm drill, long series (91 mm flutes)",
+     "feed_mm_min": 1117.8,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:06",
+     "commands": 15,
+     "cut_min": 0.07,
+     "rapid_min": 0.02
+    }
+   ],
+   "errors": [],
+   "tool_changes": 2,
+   "cut_min": 1.0,
+   "rapid_min": 0.03,
+   "total_min": 1.03,
+   "freecad_cycle_min": 1.38,
+   "freecad_job_cycle": "00:01:23"
+  },
+  {
+   "pid": "MK-19",
+   "setup": "MK-19_A",
+   "up": "-Z",
+   "label": "face side up: face, O-ring groove",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "stock_box_setup": [
+    -28.0,
+    -28.0,
+    -8.26,
+    56.0,
+    56.0,
+    9.53
+   ],
+   "gcode": "gcode/MK-19_A.ngc",
+   "ops": [
+    {
+     "label": "Face top 1.27 to z 0.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:16",
+     "commands": 21,
+     "cut_min": 0.24,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "face O-ring groove, AS568-026",
+     "tool": 5,
+     "tool_name": "2.0 mm 2-flute carbide end mill (O-ring grooves: Parker's vacuum widths are 2.13-2.26 and 3.05-3.18 mm), 15 mm stick-out",
+     "feed_mm_min": 205.7,
+     "kind": "groove",
+     "freecad_cycle_time": "00:03:30",
+     "commands": 36,
+     "cut_min": 3.2,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 2,
+   "cut_min": 3.44,
+   "rapid_min": 0.0,
+   "total_min": 3.45,
+   "freecad_cycle_min": 3.77,
+   "freecad_job_cycle": "00:03:46"
+  },
+  {
+   "pid": "MK-19",
+   "setup": "MK-19_B",
+   "up": "+Z",
+   "label": "top up: face to 7, aperture, window seat, holes, outline",
+   "repeat": 1,
+   "g0_links_to_g1": 194,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -28.0,
+    -28.0,
+    -1.27,
+    56.0,
+    56.0,
+    9.53
+   ],
+   "gcode": "gcode/MK-19_B.ngc",
+   "ops": [
+    {
+     "label": "Face top 8.26 to z 7.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:16",
+     "commands": 21,
+     "cut_min": 0.24,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Outside, adaptive, z 7.00 to -0.30",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 11.26,
+     "freecad_cycle_time": "00:00:49",
+     "commands": 977,
+     "cut_min": 0.65,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "window seat 25.6 x 4.1, 25.4 x 3 window over a 1.0 cover slide",
+     "tool": 3,
+     "tool_name": "1/4 in. (6.35 mm) 3-flute carbide end mill, 1 in. flutes (long reach)",
+     "feed_mm_min": 925.8,
+     "kind": "pocket",
+     "freecad_cycle_time": "00:00:39",
+     "commands": 56,
+     "cut_min": 0.42,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "aperture 20, helix z 7.00 to -0.50",
+     "tool": 3,
+     "tool_name": "1/4 in. (6.35 mm) 3-flute carbide end mill, 1 in. flutes (long reach)",
+     "feed_mm_min": 925.8,
+     "kind": "bore",
+     "freecad_cycle_time": "00:01:46",
+     "commands": 79,
+     "cut_min": 1.02,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Drill 4 x 3.40 M3, z 7.00 to -1.52",
+     "tool": 27,
+     "tool_name": "3.40 mm drill, long series (73 mm flutes)",
+     "feed_mm_min": 688.5,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:12",
+     "commands": 15,
+     "cut_min": 0.07,
+     "rapid_min": 0.01
+    }
+   ],
+   "errors": [],
+   "tool_changes": 3,
+   "cut_min": 2.39,
+   "rapid_min": 0.03,
+   "total_min": 2.42,
+   "freecad_cycle_min": 3.7,
+   "freecad_job_cycle": "00:03:42"
+  },
+  {
+   "pid": "MK-22a",
+   "setup": "MK-22a_A",
+   "up": "-Z",
+   "label": "block face up: face",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "stock_box_setup": [
+    -32.0,
+    -32.0,
+    -8.77,
+    64.0,
+    64.0,
+    9.53
+   ],
+   "gcode": "gcode/MK-22a_A.ngc",
+   "ops": [
+    {
+     "label": "Face top 0.76 to z 0.001",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:21",
+     "commands": 23,
+     "cut_min": 0.32,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.32,
+   "rapid_min": 0.0,
+   "total_min": 0.32,
+   "freecad_cycle_min": 0.35,
+   "freecad_job_cycle": "00:00:21"
+  },
+  {
+   "pid": "MK-22a",
+   "setup": "MK-22a_B",
+   "up": "+Z",
+   "label": "top up: face to 8, SM1 bore, cage holes, c'bores, outline",
+   "repeat": 1,
+   "g0_links_to_g1": 12,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -32.0,
+    -32.0,
+    -0.76,
+    64.0,
+    64.0,
+    9.53
+   ],
+   "gcode": "gcode/MK-22a_B.ngc",
+   "ops": [
+    {
+     "label": "Face top 8.77 to z 8.001",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:22",
+     "commands": 23,
+     "cut_min": 0.32,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Outside, adaptive, z 8.00 to -0.031",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 11.77,
+     "freecad_cycle_time": "00:00:17",
+     "commands": 84,
+     "cut_min": 0.2,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "SM1 bore 25.6, SM1 thread: Thorlabs SM1 tap, helix z 8.00 to -0.50",
+     "tool": 3,
+     "tool_name": "1/4 in. (6.35 mm) 3-flute carbide end mill, 1 in. flutes (long reach)",
+     "feed_mm_min": 925.8,
+     "kind": "bore",
+     "freecad_cycle_time": "00:03:19",
+     "commands": 111,
+     "cut_min": 1.91,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Drill 4 x 4.50 M4, z 8.00 to -1.85",
+     "tool": 29,
+     "tool_name": "4.50 mm drill, long series (82 mm flutes)",
+     "feed_mm_min": 915.3,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:12",
+     "commands": 15,
+     "cut_min": 0.05,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "Drill 4 x 6.10 6.1, z 8.00 to -2.33",
+     "tool": 36,
+     "tool_name": "6.10 mm drill, jobber (63 mm flutes)",
+     "feed_mm_min": 1215.0,
+     "kind": "drill",
+     "holes": 4,
+     "freecad_cycle_time": "00:00:06",
+     "commands": 15,
+     "cut_min": 0.04,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "C'bore 8.0 x 4.5 at -22.0 -22.0, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:01:08",
+     "commands": 63,
+     "cut_min": 0.92,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "C'bore 8.0 x 4.5 at -22.0 22.0, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:01:08",
+     "commands": 63,
+     "cut_min": 0.92,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "C'bore 8.0 x 4.5 at 22.0 -22.0, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:01:08",
+     "commands": 63,
+     "cut_min": 0.92,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "C'bore 8.0 x 4.5 at 22.0 22.0, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:01:08",
+     "commands": 63,
+     "cut_min": 0.92,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 5,
+   "cut_min": 6.19,
+   "rapid_min": 0.05,
+   "total_min": 6.25,
+   "freecad_cycle_min": 8.8,
+   "freecad_job_cycle": "00:08:48"
+  },
+  {
+   "pid": "MK-22b",
+   "setup": "MK-22b_A",
+   "up": "+Z",
+   "label": "bore face up: face, outline, collimator bore",
+   "repeat": 1,
+   "g0_links_to_g1": 216,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -44.45,
+    -38.0,
+    -0.2,
+    88.9,
+    71.5,
+    25.4
+   ],
+   "gcode": "gcode/MK-22b_A.ngc",
+   "ops": [
+    {
+     "label": "Face top 25.20 to z 25.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:31",
+     "commands": 25,
+     "cut_min": 0.46,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Outside, adaptive, z 25.00 to -0.30",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 28.2,
+     "freecad_cycle_time": "00:01:51",
+     "commands": 689,
+     "cut_min": 1.37,
+     "rapid_min": 0.01
+    },
+    {
+     "label": "collimator bore 40.10, helix z 25.00 to -0.50",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "bore",
+     "freecad_cycle_time": "00:04:55",
+     "commands": 187,
+     "cut_min": 3.05,
+     "rapid_min": 0.01
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 4.88,
+   "rapid_min": 0.02,
+   "total_min": 4.9,
+   "freecad_cycle_min": 7.28,
+   "freecad_job_cycle": "00:07:17"
+  },
+  {
+   "pid": "MK-22b",
+   "setup": "MK-22b_B",
+   "up": "-Z",
+   "label": "flip: face to 25.0",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "stock_box_setup": [
+    -44.45,
+    -33.5,
+    -25.2,
+    88.9,
+    71.5,
+    25.4
+   ],
+   "gcode": "gcode/MK-22b_B.ngc",
+   "ops": [
+    {
+     "label": "Face top 0.20 to z 0.00",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "face",
+     "freecad_cycle_time": "00:00:30",
+     "commands": 25,
+     "cut_min": 0.46,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 1,
+   "cut_min": 0.46,
+   "rapid_min": 0.0,
+   "total_min": 0.46,
+   "freecad_cycle_min": 0.5,
+   "freecad_job_cycle": "00:00:30"
+  },
+  {
+   "pid": "MK-22b",
+   "setup": "MK-22b_C",
+   "up": "-Y",
+   "label": "bottom up: 2 x M6 c'bores",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     0,
+     -1,
+     0
+    ]
+   ],
+   "stock_box_setup": [
+    -44.45,
+    -25.2,
+    -33.5,
+    88.9,
+    25.4,
+    71.5
+   ],
+   "gcode": "gcode/MK-22b_C.ngc",
+   "ops": [
+    {
+     "label": "Drill 2 x 6.60 M6, z 36.00 to -33.98",
+     "tool": 33,
+     "tool_name": "6.60 mm drill, jobber (69 mm flutes)",
+     "feed_mm_min": 1215.0,
+     "kind": "drill",
+     "holes": 2,
+     "freecad_cycle_time": "00:00:10",
+     "commands": 11,
+     "cut_min": 0.12,
+     "rapid_min": 0.07
+    },
+    {
+     "label": "C'bore 11.0 x 6.6 at 30.0 -12.5, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:04:02",
+     "commands": 159,
+     "cut_min": 3.57,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "C'bore 11.0 x 6.6 at -30.0 -12.5, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:04:02",
+     "commands": 159,
+     "cut_min": 3.57,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 2,
+   "cut_min": 7.26,
+   "rapid_min": 0.08,
+   "total_min": 7.34,
+   "freecad_cycle_min": 8.23,
+   "freecad_job_cycle": "00:08:14"
+  },
+  {
+   "pid": "MK-22b",
+   "setup": "MK-22b_D",
+   "up": "+X",
+   "label": "+x end up: clamp-screw hole",
+   "repeat": 1,
+   "g0_links_to_g1": 0,
+   "rotation": [
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     1,
+     0,
+     0
+    ]
+   ],
+   "stock_box_setup": [
+    -38.0,
+    -0.2,
+    -44.45,
+    71.5,
+    25.4,
+    88.9
+   ],
+   "gcode": "gcode/MK-22b_D.ngc",
+   "ops": [
+    {
+     "label": "Drill 1 x 5.50 M5, z 40.00 to -42.15",
+     "tool": 31,
+     "tool_name": "5.50 mm drill, long series (91 mm flutes)",
+     "feed_mm_min": 1117.8,
+     "kind": "drill",
+     "holes": 1,
+     "freecad_cycle_time": "00:00:09",
+     "commands": 9,
+     "cut_min": 0.08,
+     "rapid_min": 0.06
+    },
+    {
+     "label": "C'bore 9.5 x 5.5 at -28.0 12.5, helix",
+     "tool": 4,
+     "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill",
+     "feed_mm_min": 329.2,
+     "kind": "cbore",
+     "freecad_cycle_time": "00:02:34",
+     "commands": 103,
+     "cut_min": 1.91,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 2,
+   "cut_min": 1.98,
+   "rapid_min": 0.06,
+   "total_min": 2.04,
+   "freecad_cycle_min": 2.72,
+   "freecad_job_cycle": "00:02:43"
+  },
+  {
+   "pid": "MK-23",
+   "setup": "MK-23_A",
+   "up": "+Z",
+   "label": "four in the vise: hole, outline (ends rounded R3)",
+   "repeat": 1,
+   "g0_links_to_g1": 48,
+   "rotation": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "stock_box_setup": [
+    -1.0,
+    -9.525,
+    0.0,
+    42.375,
+    19.05,
+    4.76
+   ],
+   "gcode": "gcode/MK-23_A.ngc",
+   "ops": [
+    {
+     "label": "Outside, adaptive, z 4.76 to -0.30",
+     "tool": 2,
+     "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
+     "feed_mm_min": 1737.4,
+     "kind": "outline",
+     "safe_z": 7.76,
+     "freecad_cycle_time": "00:00:12",
+     "commands": 155,
+     "cut_min": 0.12,
+     "rapid_min": 0.0
+    },
+    {
+     "label": "Drill 1 x 5.50 M5, z 4.76 to -2.15",
+     "tool": 31,
+     "tool_name": "5.50 mm drill, long series (91 mm flutes)",
+     "feed_mm_min": 1117.8,
+     "kind": "drill",
+     "holes": 1,
+     "freecad_cycle_time": "00:00:01",
+     "commands": 9,
+     "cut_min": 0.01,
+     "rapid_min": 0.0
+    }
+   ],
+   "errors": [],
+   "tool_changes": 2,
+   "cut_min": 0.13,
+   "rapid_min": 0.01,
+   "total_min": 0.13,
+   "freecad_cycle_min": 0.22,
+   "freecad_job_cycle": "00:00:13"
+  }
+ ]
+}

@@ -1,0 +1,871 @@
+{
+ "sources": {
+  "1": "Argon O2/H2O maxima: 5.0 (99.999 %) O2 <= 2 ppm, H2O <= 3 ppm (Linde ICP-grade argon 5.0 datasheet; Messer 5.0); 4.8 (99.998 %) O2 3-4 ppm, H2O 3-5 ppm depending on the supplier (Linde spectrometry 4.8, Messer, Airgas). Check the cylinder's certificate.",
+  "2": "Robb (1968), Thin silicone membranes - their permeation properties and some applications, Ann. N.Y. Acad. Sci. 146, 119, https://doi.org/10.1111/j.1749-6632.1968.tb20277.x: silicone rubber O2 ~600 Barrer, H2O ~36,000 Barrer.",
+  "3": "Merkel et al. (2000), Gas sorption, diffusion, and permeation in poly(dimethylsiloxane), J. Polym. Sci. B 38, 415, https://doi.org/10.1002/(SICI)1099-0488(20000201)38:3<415::AID-POLB8>3.0.CO;2-Z: PDMS O2 ~800 Barrer at 35 C.",
+  "4": "Parker O-ring handbook ORD 5700 section 3.12 (leak rate L = 0.7 F D P Q (1-S)^2), FKM O2 F = 1.7e-8 std cc cm/(cm2 s bar); as desktop-lpbf/analysis/seals/seals.py (round 1).",
+  "5": "McMaster 4396K21: 3 cfm, ultimate 1e-2 Torr (desktop-lpbf/mcmaster-parts.csv, read 2026-11-17)."
+ },
+ "inputs": {
+  "geom": {
+   "box_gas_L": 23.88,
+   "cube_gas_L": 22.22,
+   "seam_m": 1.282,
+   "gasket_w_mm": 8.0,
+   "gasket_h_mm": 4.0,
+   "gasket_compressed_mm": 3.0
+  },
+  "argon_ppm": {
+   "5.0": {
+    "O2": 2.0,
+    "H2O": 3.0
+   },
+   "4.8": {
+    "O2": 3.0,
+    "H2O": 5.0
+   }
+  },
+  "permeability": {
+   "pdms_O2": 600.0,
+   "pdms_H2O": 36000.0,
+   "sponge_factor": 5.0,
+   "fkm_O2_F": 1.7e-08,
+   "tube_O2": [
+    1.0,
+    20.0
+   ]
+  },
+  "powder": {
+   "hopper_cm3": 30.0,
+   "solid_frac": 0.55,
+   "depth_mm": 33.0,
+   "tortuosity": 1.5
+  },
+  "stage": {
+   "void_cm3": [
+    10.0,
+    40.0
+   ],
+   "tau_min": [
+    5.0,
+    60.0
+   ]
+  },
+  "pump": {
+   "S0_L_s": 1.41584,
+   "p_ult_mbar": 0.0133322,
+   "line_d_mm": 9.5,
+   "line_L_mm": 60.0,
+   "hose_d_mm": 25.0,
+   "hose_L_mm": 1000.0
+  },
+  "box_orings_id_mm": {
+   "rod_gland_2x": 24.8,
+   "gland_face": 30.0,
+   "window": 48.0,
+   "window_ring_to_door": 55.0,
+   "light_ports_2x": 116.0,
+   "camera_port": 50.0,
+   "cable_glands_2x": 48.0,
+   "bulkheads_4x": 40.0
+  },
+  "cube_orings_id_mm": {
+   "plates_6x": 2139.0424351550732,
+   "kf25_6x": 150.0,
+   "window": 100.0,
+   "rod_gland": 54.8,
+   "light_and_camera_ports": 168.0
+  }
+ },
+ "box": {
+  "permeation_mL_min": {
+   "gasket_O2_dense_silicone": 0.0027556281548619123,
+   "gasket_O2_sponge_x5": 0.013778140774309562,
+   "gasket_H2O_dense_silicone_50pctRH": 0.010904336868633832,
+   "fkm_orings_O2": 2.5460010093645843e-05,
+   "feed_tubing_O2_1_to_20_barrer": [
+    0.0003116551588011145,
+    0.006233103176022289
+   ]
+  },
+  "gaps": [
+   {
+    "h_um": 1.0,
+    "where": "whole seam",
+    "dp_mbar": 0.0,
+    "outflow_mL_min": 0.0,
+    "peclet": 0.0,
+    "O2_in_mL_min": 0.040286850000000006
+   },
+   {
+    "h_um": 1.0,
+    "where": "whole seam",
+    "dp_mbar": 5.0,
+    "outflow_mL_min": 0.01772676991150442,
+    "peclet": 0.09218289085545721,
+    "O2_in_mL_min": 0.038458495560090664
+   },
+   {
+    "h_um": 1.0,
+    "where": "whole seam",
+    "dp_mbar": 10.0,
+    "outflow_mL_min": 0.03545353982300884,
+    "peclet": 0.18436578171091442,
+    "O2_in_mL_min": 0.03668714210016381
+   },
+   {
+    "h_um": 1.0,
+    "where": "20 mm defect",
+    "dp_mbar": 0.0,
+    "outflow_mL_min": 0.0,
+    "peclet": 0.0,
+    "O2_in_mL_min": 0.0006285
+   },
+   {
+    "h_um": 1.0,
+    "where": "20 mm defect",
+    "dp_mbar": 5.0,
+    "outflow_mL_min": 0.0002765486725663717,
+    "peclet": 0.09218289085545722,
+    "O2_in_mL_min": 0.0005999765297986064
+   },
+   {
+    "h_um": 1.0,
+    "where": "20 mm defect",
+    "dp_mbar": 10.0,
+    "outflow_mL_min": 0.0005530973451327434,
+    "peclet": 0.18436578171091444,
+    "O2_in_mL_min": 0.0005723423104549736
+   },
+   {
+    "h_um": 2.0,
+    "where": "whole seam",
+    "dp_mbar": 0.0,
+    "outflow_mL_min": 0.0,
+    "peclet": 0.0,
+    "O2_in_mL_min": 0.08057370000000001
+   },
+   {
+    "h_um": 2.0,
+    "where": "whole seam",
+    "dp_mbar": 5.0,
+    "outflow_mL_min": 0.14181415929203536,
+    "peclet": 0.36873156342182883,
+    "O2_in_mL_min": 0.06662952470188425
+   },
+   {
+    "h_um": 2.0,
+    "where": "whole seam",
+    "dp_mbar": 10.0,
+    "outflow_mL_min": 0.2836283185840707,
+    "peclet": 0.7374631268436577,
+    "O2_in_mL_min": 0.054482636674743255
+   },
+   {
+    "h_um": 2.0,
+    "where": "20 mm defect",
+    "dp_mbar": 0.0,
+    "outflow_mL_min": 0.0,
+    "peclet": 0.0,
+    "O2_in_mL_min": 0.001257
+   },
+   {
+    "h_um": 2.0,
+    "where": "20 mm defect",
+    "dp_mbar": 5.0,
+    "outflow_mL_min": 0.0022123893805309734,
+    "peclet": 0.3687315634218289,
+    "O2_in_mL_min": 0.001039462163835948
+   },
+   {
+    "h_um": 2.0,
+    "where": "20 mm defect",
+    "dp_mbar": 10.0,
+    "outflow_mL_min": 0.004424778761061947,
+    "peclet": 0.7374631268436578,
+    "O2_in_mL_min": 0.000849963130651221
+   },
+   {
+    "h_um": 3.0,
+    "where": "whole seam",
+    "dp_mbar": 0.0,
+    "outflow_mL_min": 0.0,
+    "peclet": 0.0,
+    "O2_in_mL_min": 0.12086055000000001
+   },
+   {
+    "h_um": 3.0,
+    "where": "whole seam",
+    "dp_mbar": 5.0,
+    "outflow_mL_min": 0.4786227876106195,
+    "peclet": 0.8296460176991151,
+    "O2_in_mL_min": 0.0775790514456637
+   },
+   {
+    "h_um": 3.0,
+    "where": "whole seam",
+    "dp_mbar": 10.0,
+    "outflow_mL_min": 0.957245575221239,
+    "peclet": 1.6592920353982301,
+    "O2_in_mL_min": 0.04712460707449908
+   },
+   {
+    "h_um": 3.0,
+    "where": "20 mm defect",
+    "dp_mbar": 0.0,
+    "outflow_mL_min": 0.0,
+    "peclet": 0.0,
+    "O2_in_mL_min": 0.0018855000000000002
+   },
+   {
+    "h_um": 3.0,
+    "where": "20 mm defect",
+    "dp_mbar": 5.0,
+    "outflow_mL_min": 0.007466814159292036,
+    "peclet": 0.8296460176991148,
+    "O2_in_mL_min": 0.0012102816138169067
+   },
+   {
+    "h_um": 3.0,
+    "where": "20 mm defect",
+    "dp_mbar": 10.0,
+    "outflow_mL_min": 0.014933628318584071,
+    "peclet": 1.6592920353982297,
+    "O2_in_mL_min": 0.0007351732772932777
+   },
+   {
+    "h_um": 5.0,
+    "where": "whole seam",
+    "dp_mbar": 0.0,
+    "outflow_mL_min": 0.0,
+    "peclet": 0.0,
+    "O2_in_mL_min": 0.20143424999999998
+   },
+   {
+    "h_um": 5.0,
+    "where": "whole seam",
+    "dp_mbar": 5.0,
+    "outflow_mL_min": 2.2158462389380524,
+    "peclet": 2.30457227138643,
+    "O2_in_mL_min": 0.05146622716325214
+   },
+   {
+    "h_um": 5.0,
+    "where": "whole seam",
+    "dp_mbar": 10.0,
+    "outflow_mL_min": 4.431692477876105,
+    "peclet": 4.60914454277286,
+    "O2_in_mL_min": 0.009340605026811322
+   },
+   {
+    "h_um": 5.0,
+    "where": "20 mm defect",
+    "dp_mbar": 0.0,
+    "outflow_mL_min": 0.0,
+    "peclet": 0.0,
+    "O2_in_mL_min": 0.0031425
+   },
+   {
+    "h_um": 5.0,
+    "where": "20 mm defect",
+    "dp_mbar": 5.0,
+    "outflow_mL_min": 0.03456858407079646,
+    "peclet": 2.3045722713864305,
+    "O2_in_mL_min": 0.0008029052599571313
+   },
+   {
+    "h_um": 5.0,
+    "where": "20 mm defect",
+    "dp_mbar": 10.0,
+    "outflow_mL_min": 0.06913716814159292,
+    "peclet": 4.609144542772861,
+    "O2_in_mL_min": 0.00014571926718894408
+   },
+   {
+    "h_um": 10.0,
+    "where": "whole seam",
+    "dp_mbar": 0.0,
+    "outflow_mL_min": 0.0,
+    "peclet": 0.0,
+    "O2_in_mL_min": 0.40286849999999996
+   },
+   {
+    "h_um": 10.0,
+    "where": "whole seam",
+    "dp_mbar": 5.0,
+    "outflow_mL_min": 17.72676991150442,
+    "peclet": 9.21828908554572,
+    "O2_in_mL_min": 0.0003684721261543161
+   },
+   {
+    "h_um": 10.0,
+    "where": "whole seam",
+    "dp_mbar": 10.0,
+    "outflow_mL_min": 35.45353982300884,
+    "peclet": 18.43657817109144,
+    "O2_in_mL_min": 7.310371878502643e-08
+   },
+   {
+    "h_um": 10.0,
+    "where": "20 mm defect",
+    "dp_mbar": 0.0,
+    "outflow_mL_min": 0.0,
+    "peclet": 0.0,
+    "O2_in_mL_min": 0.006285
+   },
+   {
+    "h_um": 10.0,
+    "where": "20 mm defect",
+    "dp_mbar": 5.0,
+    "outflow_mL_min": 0.27654867256637167,
+    "peclet": 9.218289085545722,
+    "O2_in_mL_min": 5.748395103811473e-06
+   },
+   {
+    "h_um": 10.0,
+    "where": "20 mm defect",
+    "dp_mbar": 10.0,
+    "outflow_mL_min": 0.5530973451327433,
+    "peclet": 18.436578171091444,
+    "O2_in_mL_min": 1.140463631591672e-09
+   },
+   {
+    "h_um": 20.0,
+    "where": "whole seam",
+    "dp_mbar": 0.0,
+    "outflow_mL_min": 0.0,
+    "peclet": 0.0,
+    "O2_in_mL_min": 0.8057369999999999
+   },
+   {
+    "h_um": 20.0,
+    "where": "whole seam",
+    "dp_mbar": 5.0,
+    "outflow_mL_min": 141.81415929203536,
+    "peclet": 36.87315634218288,
+    "O2_in_mL_min": 2.878029838450575e-15
+   },
+   {
+    "h_um": 20.0,
+    "where": "whole seam",
+    "dp_mbar": 10.0,
+    "outflow_mL_min": 283.6283185840707,
+    "peclet": 73.74631268436576,
+    "O2_in_mL_min": 5.575925443846843e-31
+   },
+   {
+    "h_um": 20.0,
+    "where": "20 mm defect",
+    "dp_mbar": 0.0,
+    "outflow_mL_min": 0.0,
+    "peclet": 0.0,
+    "O2_in_mL_min": 0.01257
+   },
+   {
+    "h_um": 20.0,
+    "where": "20 mm defect",
+    "dp_mbar": 5.0,
+    "outflow_mL_min": 2.2123893805309733,
+    "peclet": 36.87315634218289,
+    "O2_in_mL_min": 4.489906144228635e-17
+   },
+   {
+    "h_um": 20.0,
+    "where": "20 mm defect",
+    "dp_mbar": 10.0,
+    "outflow_mL_min": 4.424778761061947,
+    "peclet": 73.74631268436578,
+    "O2_in_mL_min": 8.698791644066716e-33
+   },
+   {
+    "h_um": 30.0,
+    "where": "whole seam",
+    "dp_mbar": 0.0,
+    "outflow_mL_min": 0.0,
+    "peclet": 0.0,
+    "O2_in_mL_min": 1.2086055
+   },
+   {
+    "h_um": 30.0,
+    "where": "whole seam",
+    "dp_mbar": 5.0,
+    "outflow_mL_min": 478.6227876106194,
+    "peclet": 82.9646017699115,
+    "O2_in_mL_min": 9.334878231950261e-35
+   },
+   {
+    "h_um": 30.0,
+    "where": "whole seam",
+    "dp_mbar": 10.0,
+    "outflow_mL_min": 957.2455752212388,
+    "peclet": 165.929203539823,
+    "O2_in_mL_min": 1.738080595115088e-70
+   },
+   {
+    "h_um": 30.0,
+    "where": "20 mm defect",
+    "dp_mbar": 0.0,
+    "outflow_mL_min": 0.0,
+    "peclet": 0.0,
+    "O2_in_mL_min": 0.018854999999999997
+   },
+   {
+    "h_um": 30.0,
+    "where": "20 mm defect",
+    "dp_mbar": 5.0,
+    "outflow_mL_min": 7.466814159292034,
+    "peclet": 82.96460176991148,
+    "O2_in_mL_min": 1.4562992561545074e-36
+   },
+   {
+    "h_um": 30.0,
+    "where": "20 mm defect",
+    "dp_mbar": 10.0,
+    "outflow_mL_min": 14.933628318584068,
+    "peclet": 165.92920353982296,
+    "O2_in_mL_min": 2.711514188947172e-72
+   },
+   {
+    "h_um": 100.0,
+    "where": "whole seam",
+    "dp_mbar": 0.0,
+    "outflow_mL_min": 0.0,
+    "peclet": 0.0,
+    "O2_in_mL_min": 4.028685
+   },
+   {
+    "h_um": 100.0,
+    "where": "whole seam",
+    "dp_mbar": 5.0,
+    "outflow_mL_min": 17726.769911504423,
+    "peclet": 921.8289085545722,
+    "O2_in_mL_min": 0.0
+   },
+   {
+    "h_um": 100.0,
+    "where": "whole seam",
+    "dp_mbar": 10.0,
+    "outflow_mL_min": 35453.53982300885,
+    "peclet": 1843.6578171091444,
+    "O2_in_mL_min": 0.0
+   },
+   {
+    "h_um": 100.0,
+    "where": "20 mm defect",
+    "dp_mbar": 0.0,
+    "outflow_mL_min": 0.0,
+    "peclet": 0.0,
+    "O2_in_mL_min": 0.06285
+   },
+   {
+    "h_um": 100.0,
+    "where": "20 mm defect",
+    "dp_mbar": 5.0,
+    "outflow_mL_min": 276.54867256637164,
+    "peclet": 921.8289085545722,
+    "O2_in_mL_min": 0.0
+   },
+   {
+    "h_um": 100.0,
+    "where": "20 mm defect",
+    "dp_mbar": 10.0,
+    "outflow_mL_min": 553.0973451327433,
+    "peclet": 1843.6578171091444,
+    "O2_in_mL_min": 0.0
+   }
+  ],
+  "worst_gap_um_at_5mbar": 3.0791479340882604,
+  "worst_gap_O2_mL_min_whole_seam_5mbar": 0.07763746015967614,
+  "powder": {
+   "air_cm3": 13.499999999999998,
+   "O2_cm3": 2.8282499999999997,
+   "D_eff_m2_s": 6e-06,
+   "tau_s": 73.55917932433724,
+   "O2_mL_min_after": {
+    "5min": 0.03166780620841096,
+    "10min": 0.0005363070978364276,
+    "20min": 1.538171205071932e-07
+   }
+  },
+  "stage_O2_mL_min": {
+   "10cm3_tau5min": {
+    "10min": 0.056705483676140714,
+    "30min": 0.001038597162023204,
+    "60min": 2.5744249760445195e-06
+   },
+   "10cm3_tau60min": {
+    "10min": 0.02955632022743061,
+    "30min": 0.02117802886829945,
+    "60min": 0.012845123820902861
+   },
+   "40cm3_tau5min": {
+    "10min": 0.22682193470456286,
+    "30min": 0.004154388648092816,
+    "60min": 1.0297699904178078e-05
+   },
+   "40cm3_tau60min": {
+    "10min": 0.11822528090972244,
+    "30min": 0.0847121154731978,
+    "60min": 0.051380495283611445
+   }
+  }
+ },
+ "box_floor_table": [
+  {
+   "case": "tight (argon 5.0, permeation: sponge gasket + FKM)",
+   "O2_in_mL_min": 0.013803600784403208,
+   "1_L_min_ppm_5.0": 15.803600784403208,
+   "2_L_min_ppm_5.0": 8.901800392201604,
+   "5_L_min_ppm_5.0": 4.760720156880641,
+   "10_L_min_ppm_5.0": 3.3803600784403205,
+   "20_L_min_ppm_5.0": 2.6901800392201602,
+   "27_L_min_ppm_5.0": 2.511244473496415,
+   "2_L_min_ppm_4.8": 9.901800392201604,
+   "27_L_min_ppm_4.8": 3.511244473496415
+  },
+  {
+   "case": "tight, dense silicone gasket",
+   "O2_in_mL_min": 0.002781088164955558,
+   "1_L_min_ppm_5.0": 4.781088164955558,
+   "2_L_min_ppm_5.0": 3.390544082477779,
+   "5_L_min_ppm_5.0": 2.5562176329911117,
+   "10_L_min_ppm_5.0": 2.2781088164955556,
+   "20_L_min_ppm_5.0": 2.139054408247778,
+   "27_L_min_ppm_5.0": 2.1030032653687245,
+   "2_L_min_ppm_4.8": 4.3905440824777795,
+   "27_L_min_ppm_4.8": 3.1030032653687245
+  },
+  {
+   "case": "1 um gap along the whole seam, +5 mbar",
+   "O2_in_mL_min": 0.05226209634449387,
+   "1_L_min_ppm_5.0": 54.26209634449388,
+   "2_L_min_ppm_5.0": 28.13104817224694,
+   "5_L_min_ppm_5.0": 12.452419268898774,
+   "10_L_min_ppm_5.0": 7.226209634449387,
+   "20_L_min_ppm_5.0": 4.613104817224693,
+   "27_L_min_ppm_5.0": 3.9356331979442176,
+   "2_L_min_ppm_4.8": 29.13104817224694,
+   "27_L_min_ppm_4.8": 4.935633197944218
+  },
+  {
+   "case": "3 um gap along the whole seam, +5 mbar (worst size)",
+   "O2_in_mL_min": 0.0913826522300669,
+   "1_L_min_ppm_5.0": 93.3826522300669,
+   "2_L_min_ppm_5.0": 47.69132611503345,
+   "5_L_min_ppm_5.0": 20.27653044601338,
+   "10_L_min_ppm_5.0": 11.13826522300669,
+   "20_L_min_ppm_5.0": 6.569132611503345,
+   "27_L_min_ppm_5.0": 5.384542675187663,
+   "2_L_min_ppm_4.8": 48.69132611503345,
+   "27_L_min_ppm_4.8": 6.384542675187663
+  },
+  {
+   "case": "10 um gap along the whole seam, +5 mbar",
+   "O2_in_mL_min": 0.014172072910557524,
+   "1_L_min_ppm_5.0": 16.172072910557524,
+   "2_L_min_ppm_5.0": 9.086036455278762,
+   "5_L_min_ppm_5.0": 4.8344145821115045,
+   "10_L_min_ppm_5.0": 3.4172072910557523,
+   "20_L_min_ppm_5.0": 2.708603645527876,
+   "27_L_min_ppm_5.0": 2.524891589279908,
+   "2_L_min_ppm_4.8": 10.086036455278762,
+   "27_L_min_ppm_4.8": 3.524891589279908
+  },
+  {
+   "case": "3 um gap, 20 mm defect, +5 mbar",
+   "O2_in_mL_min": 0.015013882398220116,
+   "1_L_min_ppm_5.0": 17.013882398220115,
+   "2_L_min_ppm_5.0": 9.506941199110058,
+   "5_L_min_ppm_5.0": 5.002776479644023,
+   "10_L_min_ppm_5.0": 3.5013882398220115,
+   "20_L_min_ppm_5.0": 2.7506941199110058,
+   "27_L_min_ppm_5.0": 2.556069718452597,
+   "2_L_min_ppm_4.8": 10.506941199110058,
+   "27_L_min_ppm_4.8": 3.556069718452597
+  },
+  {
+   "case": "30 um gap, whole seam, 0 mbar (vent open)",
+   "O2_in_mL_min": 1.2224091007844031,
+   "1_L_min_ppm_5.0": 1224.409100784403,
+   "2_L_min_ppm_5.0": 613.2045503922016,
+   "5_L_min_ppm_5.0": 246.48182015688062,
+   "10_L_min_ppm_5.0": 124.24091007844031,
+   "20_L_min_ppm_5.0": 63.120455039220154,
+   "27_L_min_ppm_5.0": 47.27441114016308,
+   "2_L_min_ppm_4.8": 614.2045503922016,
+   "27_L_min_ppm_4.8": 48.27441114016308
+  },
+  {
+   "case": "100 um gap, 20 mm defect, 0 mbar (vent open)",
+   "O2_in_mL_min": 0.07665360078440321,
+   "1_L_min_ppm_5.0": 78.65360078440321,
+   "2_L_min_ppm_5.0": 40.326800392201605,
+   "5_L_min_ppm_5.0": 17.330720156880645,
+   "10_L_min_ppm_5.0": 9.665360078440322,
+   "20_L_min_ppm_5.0": 5.832680039220161,
+   "27_L_min_ppm_5.0": 4.8390222512741925,
+   "2_L_min_ppm_4.8": 41.326800392201605,
+   "27_L_min_ppm_4.8": 5.8390222512741925
+  },
+  {
+   "case": "stage body 40 cm3, tau 60 min, at 1 h",
+   "O2_in_mL_min": 0.06518409606801465,
+   "1_L_min_ppm_5.0": 67.18409606801464,
+   "2_L_min_ppm_5.0": 34.59204803400732,
+   "5_L_min_ppm_5.0": 15.036819213602929,
+   "10_L_min_ppm_5.0": 8.518409606801464,
+   "20_L_min_ppm_5.0": 5.259204803400732,
+   "27_L_min_ppm_5.0": 4.414225780296839,
+   "2_L_min_ppm_4.8": 35.59204803400732,
+   "27_L_min_ppm_4.8": 5.414225780296839
+  },
+  {
+   "case": "stage body 10 cm3, tau 5 min, at 30 min",
+   "O2_in_mL_min": 0.014842197946426413,
+   "1_L_min_ppm_5.0": 16.84219794642641,
+   "2_L_min_ppm_5.0": 9.421098973213205,
+   "5_L_min_ppm_5.0": 4.968439589285282,
+   "10_L_min_ppm_5.0": 3.484219794642641,
+   "20_L_min_ppm_5.0": 2.7421098973213205,
+   "27_L_min_ppm_5.0": 2.5497110350528303,
+   "2_L_min_ppm_4.8": 10.421098973213205,
+   "27_L_min_ppm_4.8": 3.5497110350528303
+  }
+ ],
+ "cube_pump_purge": [
+  {
+   "base_mbar": 0.1,
+   "target_ppm": 1000,
+   "cycles": 1,
+   "pump_min": 2.6464145283670897,
+   "fill_min": 0.6779197104310628,
+   "total_min": 3.3243342387981527,
+   "argon_L": 22.371350444225072,
+   "ppm_after": 22.53901960784314
+  },
+  {
+   "base_mbar": 0.1,
+   "target_ppm": 100,
+   "cycles": 1,
+   "pump_min": 2.6464145283670897,
+   "fill_min": 0.6779197104310628,
+   "total_min": 3.3243342387981527,
+   "argon_L": 22.371350444225072,
+   "ppm_after": 22.53901960784314
+  },
+  {
+   "base_mbar": 0.1,
+   "target_ppm": 10,
+   "cycles": 2,
+   "pump_min": 2.6464145283670897,
+   "fill_min": 0.6779197104310628,
+   "total_min": 6.648668477596305,
+   "argon_L": 44.742700888450145,
+   "ppm_after": 2.0978198586674135
+  },
+  {
+   "base_mbar": 0.5,
+   "target_ppm": 1000,
+   "cycles": 1,
+   "pump_min": 2.04019958566868,
+   "fill_min": 0.6776538334978611,
+   "total_min": 2.7178534191665418,
+   "argon_L": 22.362576505429416,
+   "ppm_after": 104.69509803921568
+  },
+  {
+   "base_mbar": 0.5,
+   "target_ppm": 100,
+   "cycles": 2,
+   "pump_min": 2.04019958566868,
+   "fill_min": 0.6776538334978611,
+   "total_min": 5.4357068383330835,
+   "argon_L": 44.72515301085883,
+   "ppm_after": 2.1152960380432537
+  },
+  {
+   "base_mbar": 0.5,
+   "target_ppm": 10,
+   "cycles": 2,
+   "pump_min": 2.04019958566868,
+   "fill_min": 0.6776538334978611,
+   "total_min": 5.4357068383330835,
+   "argon_L": 44.72515301085883,
+   "ppm_after": 2.1152960380432537
+  },
+  {
+   "base_mbar": 1.0,
+   "target_ppm": 1000,
+   "cycles": 1,
+   "pump_min": 1.8316670060312177,
+   "fill_min": 0.677321487331359,
+   "total_min": 2.508988493362577,
+   "argon_L": 22.351609081934846,
+   "ppm_after": 207.39019607843136
+  },
+  {
+   "base_mbar": 1.0,
+   "target_ppm": 100,
+   "cycles": 2,
+   "pump_min": 1.8316670060312177,
+   "fill_min": 0.677321487331359,
+   "total_min": 5.017976986725154,
+   "argon_L": 44.70321816386969,
+   "ppm_after": 2.2609487771751304
+  },
+  {
+   "base_mbar": 1.0,
+   "target_ppm": 10,
+   "cycles": 2,
+   "pump_min": 1.8316670060312177,
+   "fill_min": 0.677321487331359,
+   "total_min": 5.017976986725154,
+   "argon_L": 44.70321816386969,
+   "ppm_after": 2.2609487771751304
+  },
+  {
+   "base_mbar": 5.0,
+   "target_ppm": 1000,
+   "cycles": 2,
+   "pump_min": 1.3896866802288321,
+   "fill_min": 0.6746627179993419,
+   "total_min": 4.128698796456348,
+   "argon_L": 44.527739387956565,
+   "ppm_after": 7.088763444543357
+  },
+  {
+   "base_mbar": 5.0,
+   "target_ppm": 100,
+   "cycles": 2,
+   "pump_min": 1.3896866802288321,
+   "fill_min": 0.6746627179993419,
+   "total_min": 4.128698796456348,
+   "argon_L": 44.527739387956565,
+   "ppm_after": 7.088763444543357
+  },
+  {
+   "base_mbar": 5.0,
+   "target_ppm": 10,
+   "cycles": 2,
+   "pump_min": 1.3896866802288321,
+   "fill_min": 0.6746627179993419,
+   "total_min": 4.128698796456348,
+   "argon_L": 44.527739387956565,
+   "ppm_after": 7.088763444543357
+  },
+  {
+   "base_mbar": 10.0,
+   "target_ppm": 1000,
+   "cycles": 2,
+   "pump_min": 1.2061942722309522,
+   "fill_min": 0.6713392563343205,
+   "total_min": 3.755067057130545,
+   "argon_L": 44.30839091806515,
+   "ppm_after": 22.19010552148304
+  },
+  {
+   "base_mbar": 10.0,
+   "target_ppm": 100,
+   "cycles": 2,
+   "pump_min": 1.2061942722309522,
+   "fill_min": 0.6713392563343205,
+   "total_min": 3.755067057130545,
+   "argon_L": 44.30839091806515,
+   "ppm_after": 22.19010552148304
+  },
+  {
+   "base_mbar": 10.0,
+   "target_ppm": 10,
+   "cycles": 3,
+   "pump_min": 1.2061942722309522,
+   "fill_min": 0.6713392563343205,
+   "total_min": 5.632600585695817,
+   "argon_L": 66.46258637709772,
+   "ppm_after": 2.2522815518914365
+  },
+  {
+   "base_mbar": 20.0,
+   "target_ppm": 1000,
+   "cycles": 2,
+   "pump_min": 1.0242025309868354,
+   "fill_min": 0.6646923330042777,
+   "total_min": 3.3777897279822264,
+   "argon_L": 43.86969397828233,
+   "ppm_after": 82.59814998340273
+  },
+  {
+   "base_mbar": 20.0,
+   "target_ppm": 100,
+   "cycles": 2,
+   "pump_min": 1.0242025309868354,
+   "fill_min": 0.6646923330042777,
+   "total_min": 3.3777897279822264,
+   "argon_L": 43.86969397828233,
+   "ppm_after": 82.59814998340273
+  },
+  {
+   "base_mbar": 20.0,
+   "target_ppm": 10,
+   "cycles": 3,
+   "pump_min": 1.0242025309868354,
+   "fill_min": 0.6646923330042777,
+   "total_min": 5.06668459197334,
+   "argon_L": 65.80454096742349,
+   "ppm_after": 3.6343696455325363
+  },
+  {
+   "base_mbar": 50.0,
+   "target_ppm": 1000,
+   "cycles": 2,
+   "pump_min": 0.7852711399321087,
+   "fill_min": 0.6447515630141493,
+   "total_min": 2.860045405892516,
+   "argon_L": 42.55360315893385,
+   "ppm_after": 505.45855142769716
+  },
+  {
+   "base_mbar": 50.0,
+   "target_ppm": 100,
+   "cycles": 3,
+   "pump_min": 0.7852711399321087,
+   "fill_min": 0.6447515630141493,
+   "total_min": 4.290068108838775,
+   "argon_L": 63.83040473840079,
+   "ppm_after": 26.733059042198683
+  },
+  {
+   "base_mbar": 50.0,
+   "target_ppm": 10,
+   "cycles": 4,
+   "pump_min": 0.7852711399321087,
+   "fill_min": 0.6447515630141493,
+   "total_min": 5.720090811785032,
+   "argon_L": 85.1072063178677,
+   "ppm_after": 3.2662461887217167
+  }
+ ],
+ "cube_floor": {
+  "fkm_O2_std_cc_s": 2.6913361972665006e-06,
+  "fkm_O2_mL_min": 0.00016148017183599002,
+  "sealed_no_flow_ppm_per_h": 0.4360400679639695,
+  "sealed_no_flow_ppm_per_h_at_60C": 1.3081202038919086,
+  "leak_at_acceptance_ppm_per_h": 12.408687068114512,
+  "with_27_L_min_ppm": 2.0059807471050366
+ },
+ "cube_pump_down_min": {
+  "100mbar": 0.6044871903670104,
+  "10mbar": 1.2061874521676834,
+  "1mbar": 1.8315911523663257,
+  "0.5mbar": 2.0400319670398543,
+  "0.1mbar": 2.6449732065912874,
+  "0.05mbar": 3.007913343697472
+ },
+ "s_eff_L_s": {
+  "1000mbar": 1.4156752191917439,
+  "100mbar": 1.4141947589169261,
+  "10mbar": 1.399639823248647,
+  "1mbar": 1.2752738694245385,
+  "0.1mbar": 0.793845863335948,
+  "0.05mbar": 0.6208717108284616
+ }
+}

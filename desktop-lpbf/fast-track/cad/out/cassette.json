@@ -1,0 +1,1037 @@
+{
+ "note": "cube frame: x, y from the cube's axis (= the deck's centre), z above the floor (the bottom plate's boss); hopper at the right park unless stated",
+ "cube_inside_mm": 289.59999999999997,
+ "cube_open_est_mm": 266.0,
+ "frame_mm": 304.8,
+ "envelope": {
+  "right park (hx 37.5, where it waits while lasing)": {
+   "x_mm": [
+    -122.5,
+    122.5
+   ],
+   "y_mm": [
+    -122.5,
+    122.5
+   ],
+   "width_x_mm": 245.0,
+   "depth_y_mm": 245.0,
+   "height_mm": 107.7,
+   "tallest_part": "Vibration motor",
+   "tops_mm": {
+    "Deck plate (MK-01)": 10.0,
+    "Macor standoffs under the well block (4)": 22.7,
+    "Well block, \u00d840.00 bore (MK-03)": 62.7,
+    "Well-block heaters, 4 x \u00d86 x 20, 50 W": 45.7,
+    "Well-block thermocouple, 1/16 in. type K (MON6)": 55.5,
+    "Overflow cup (MK-16)": 21.7,
+    "Slot nozzle 45 x 4 mm (MK-11)": 71.7,
+    "Exhaust collector (MK-11)": 72.7,
+    "Zaber X-LSM100B-E03 recoater stage": 30.8,
+    "X-LSM carriage": 31.0,
+    "Carriage bracket and arm (MK-08)": 97.7,
+    "Stage shield (MK-12)": 40.0,
+    "Hopper, ~30 cm3 (MK-08)": 97.7,
+    "Silicone-cord blade, 3 mm": 65.7,
+    "Cord clamp (MK-08)": 74.7,
+    "Vibration motor": 107.7
+   }
+  },
+  "left park (hx -33.1)": {
+   "x_mm": [
+    -122.5,
+    122.5
+   ],
+   "y_mm": [
+    -122.5,
+    122.5
+   ],
+   "width_x_mm": 245.0,
+   "depth_y_mm": 245.0,
+   "height_mm": 107.7,
+   "tallest_part": "Vibration motor",
+   "tops_mm": {
+    "Deck plate (MK-01)": 10.0,
+    "Macor standoffs under the well block (4)": 22.7,
+    "Well block, \u00d840.00 bore (MK-03)": 62.7,
+    "Well-block heaters, 4 x \u00d86 x 20, 50 W": 45.7,
+    "Well-block thermocouple, 1/16 in. type K (MON6)": 55.5,
+    "Overflow cup (MK-16)": 21.7,
+    "Slot nozzle 45 x 4 mm (MK-11)": 71.7,
+    "Exhaust collector (MK-11)": 72.7,
+    "Zaber X-LSM100B-E03 recoater stage": 30.8,
+    "X-LSM carriage": 31.0,
+    "Carriage bracket and arm (MK-08)": 97.7,
+    "Stage shield (MK-12)": 40.0,
+    "Hopper, ~30 cm3 (MK-08)": 97.7,
+    "Silicone-cord blade, 3 mm": 65.7,
+    "Cord clamp (MK-08)": 74.7,
+    "Vibration motor": 107.7
+   }
+  },
+  "left end of travel (hx -45.8)": {
+   "x_mm": [
+    -122.5,
+    122.5
+   ],
+   "y_mm": [
+    -122.5,
+    122.5
+   ],
+   "width_x_mm": 245.0,
+   "depth_y_mm": 245.0,
+   "height_mm": 107.7,
+   "tallest_part": "Vibration motor",
+   "tops_mm": {
+    "Deck plate (MK-01)": 10.0,
+    "Macor standoffs under the well block (4)": 22.7,
+    "Well block, \u00d840.00 bore (MK-03)": 62.7,
+    "Well-block heaters, 4 x \u00d86 x 20, 50 W": 45.7,
+    "Well-block thermocouple, 1/16 in. type K (MON6)": 55.5,
+    "Overflow cup (MK-16)": 21.7,
+    "Slot nozzle 45 x 4 mm (MK-11)": 71.7,
+    "Exhaust collector (MK-11)": 72.7,
+    "Zaber X-LSM100B-E03 recoater stage": 30.8,
+    "X-LSM carriage": 31.0,
+    "Carriage bracket and arm (MK-08)": 97.7,
+    "Stage shield (MK-12)": 40.0,
+    "Hopper, ~30 cm3 (MK-08)": 97.7,
+    "Silicone-cord blade, 3 mm": 65.7,
+    "Cord clamp (MK-08)": 74.7,
+    "Vibration motor": 107.7
+   }
+  }
+ },
+ "face": {
+  "as it is | right park (hx 37.5, where it waits while lasing)": {
+   "door (front face), along +y": {
+    "flat_square_mm": 245.0,
+    "rolled_square_mm": 207.3,
+    "roll_deg": 39.3,
+    "round_hole_mm": 246.9,
+    "rolled_square_r12_7_mm": 207.3,
+    "rolled_square_r25_4_mm": 208.0
+   },
+   "side plate, along x": {
+    "flat_square_mm": 245.0,
+    "rolled_square_mm": 196.2,
+    "roll_deg": 50.8,
+    "round_hole_mm": 245.2,
+    "rolled_square_r12_7_mm": 197.2,
+    "rolled_square_r25_4_mm": 200.6
+   },
+   "top plate off, lowered flat": {
+    "flat_square_mm": 245.0,
+    "rolled_square_mm": 245.0,
+    "roll_deg": 0.0,
+    "round_hole_mm": 346.5,
+    "rolled_square_r12_7_mm": 252.4,
+    "rolled_square_r25_4_mm": 259.9
+   }
+  },
+  "as it is | left park (hx -33.1)": {
+   "door (front face), along +y": {
+    "flat_square_mm": 245.0,
+    "rolled_square_mm": 196.9,
+    "roll_deg": 43.6,
+    "round_hole_mm": 246.9,
+    "rolled_square_r12_7_mm": 196.9,
+    "rolled_square_r25_4_mm": 197.3
+   },
+   "side plate, along x": {
+    "flat_square_mm": 245.0,
+    "rolled_square_mm": 196.2,
+    "roll_deg": 50.8,
+    "round_hole_mm": 245.2,
+    "rolled_square_r12_7_mm": 197.2,
+    "rolled_square_r25_4_mm": 200.6
+   },
+   "top plate off, lowered flat": {
+    "flat_square_mm": 245.0,
+    "rolled_square_mm": 245.0,
+    "roll_deg": 0.0,
+    "round_hole_mm": 346.5,
+    "rolled_square_r12_7_mm": 252.4,
+    "rolled_square_r25_4_mm": 259.9
+   }
+  },
+  "as it is | left end of travel (hx -45.8)": {
+   "door (front face), along +y": {
+    "flat_square_mm": 245.0,
+    "rolled_square_mm": 196.9,
+    "roll_deg": 43.6,
+    "round_hole_mm": 246.9,
+    "rolled_square_r12_7_mm": 196.9,
+    "rolled_square_r25_4_mm": 197.3
+   },
+   "side plate, along x": {
+    "flat_square_mm": 245.0,
+    "rolled_square_mm": 196.2,
+    "roll_deg": 50.8,
+    "round_hole_mm": 245.2,
+    "rolled_square_r12_7_mm": 197.2,
+    "rolled_square_r25_4_mm": 200.6
+   },
+   "top plate off, lowered flat": {
+    "flat_square_mm": 245.0,
+    "rolled_square_mm": 245.0,
+    "roll_deg": 0.0,
+    "round_hole_mm": 346.5,
+    "rolled_square_r12_7_mm": 252.4,
+    "rolled_square_r25_4_mm": 259.9
+   }
+  },
+  "hopper, arm, cord, clamp and vibration motor off (MK-08, M3) | right park (hx 37.5, where it waits while lasing)": {
+   "door (front face), along +y": {
+    "flat_square_mm": 245.0,
+    "rolled_square_mm": 196.9,
+    "roll_deg": 43.6,
+    "round_hole_mm": 246.9,
+    "rolled_square_r12_7_mm": 196.9,
+    "rolled_square_r25_4_mm": 197.3
+   },
+   "side plate, along x": {
+    "flat_square_mm": 245.0,
+    "rolled_square_mm": 195.2,
+    "roll_deg": 50.4,
+    "round_hole_mm": 245.2,
+    "rolled_square_r12_7_mm": 196.2,
+    "rolled_square_r25_4_mm": 199.6
+   },
+   "top plate off, lowered flat": {
+    "flat_square_mm": 245.0,
+    "rolled_square_mm": 245.0,
+    "roll_deg": 0.0,
+    "round_hole_mm": 346.5,
+    "rolled_square_r12_7_mm": 252.4,
+    "rolled_square_r25_4_mm": 259.9
+   }
+  },
+  "... and the stage shield (MK-12) | right park (hx 37.5, where it waits while lasing)": {
+   "door (front face), along +y": {
+    "flat_square_mm": 245.0,
+    "rolled_square_mm": 192.6,
+    "roll_deg": 45.25,
+    "round_hole_mm": 245.5,
+    "rolled_square_r12_7_mm": 192.6,
+    "rolled_square_r25_4_mm": 193.4
+   },
+   "side plate, along x": {
+    "flat_square_mm": 245.0,
+    "rolled_square_mm": 195.2,
+    "roll_deg": 50.4,
+    "round_hole_mm": 245.2,
+    "rolled_square_r12_7_mm": 196.2,
+    "rolled_square_r25_4_mm": 199.6
+   },
+   "top plate off, lowered flat": {
+    "flat_square_mm": 245.0,
+    "rolled_square_mm": 245.0,
+    "roll_deg": 0.0,
+    "round_hole_mm": 346.5,
+    "rolled_square_r12_7_mm": 252.4,
+    "rolled_square_r25_4_mm": 259.9
+   }
+  },
+  "... and the X-LSM100B with its carriage (M1c) | right park (hx 37.5, where it waits while lasing)": {
+   "door (front face), along +y": {
+    "flat_square_mm": 245.0,
+    "rolled_square_mm": 180.3,
+    "roll_deg": 45.0,
+    "round_hole_mm": 245.2,
+    "rolled_square_r12_7_mm": 182.1,
+    "rolled_square_r25_4_mm": 188.8
+   },
+   "side plate, along x": {
+    "flat_square_mm": 245.0,
+    "rolled_square_mm": 195.2,
+    "roll_deg": 50.4,
+    "round_hole_mm": 245.2,
+    "rolled_square_r12_7_mm": 196.2,
+    "rolled_square_r25_4_mm": 199.6
+   },
+   "top plate off, lowered flat": {
+    "flat_square_mm": 245.0,
+    "rolled_square_mm": 245.0,
+    "roll_deg": 0.0,
+    "round_hole_mm": 346.5,
+    "rolled_square_r12_7_mm": 252.4,
+    "rolled_square_r25_4_mm": 259.9
+   }
+  },
+  "... and the nozzle and collector (MK-11): deck, standoffs, well block, cup | right park (hx 37.5, where it waits while lasing)": {
+   "door (front face), along +y": {
+    "flat_square_mm": 245.0,
+    "rolled_square_mm": 180.3,
+    "roll_deg": 45.0,
+    "round_hole_mm": 245.2,
+    "rolled_square_r12_7_mm": 182.1,
+    "rolled_square_r25_4_mm": 188.8
+   },
+   "side plate, along x": {
+    "flat_square_mm": 245.0,
+    "rolled_square_mm": 186.8,
+    "roll_deg": 47.3,
+    "round_hole_mm": 245.2,
+    "rolled_square_r12_7_mm": 187.8,
+    "rolled_square_r25_4_mm": 191.4
+   },
+   "top plate off, lowered flat": {
+    "flat_square_mm": 245.0,
+    "rolled_square_mm": 245.0,
+    "roll_deg": 0.0,
+    "round_hole_mm": 346.5,
+    "rolled_square_r12_7_mm": 252.4,
+    "rolled_square_r25_4_mm": 259.9
+   }
+  },
+  "bare deck plate | right park (hx 37.5, where it waits while lasing)": {
+   "door (front face), along +y": {
+    "flat_square_mm": 245.0,
+    "rolled_square_mm": 180.3,
+    "roll_deg": 45.0,
+    "round_hole_mm": 245.2,
+    "rolled_square_r12_7_mm": 182.1,
+    "rolled_square_r25_4_mm": 188.8
+   },
+   "side plate, along x": {
+    "flat_square_mm": 245.0,
+    "rolled_square_mm": 180.3,
+    "roll_deg": 45.0,
+    "round_hole_mm": 245.2,
+    "rolled_square_r12_7_mm": 182.1,
+    "rolled_square_r25_4_mm": 188.8
+   },
+   "top plate off, lowered flat": {
+    "flat_square_mm": 245.0,
+    "rolled_square_mm": 245.0,
+    "roll_deg": 0.0,
+    "round_hole_mm": 346.5,
+    "rolled_square_r12_7_mm": 252.4,
+    "rolled_square_r25_4_mm": 259.9
+   }
+  }
+ },
+ "floor": {
+  "r=0": {
+   "pocket_side_needed_mm": 245.0
+  },
+  "r=6.35": {
+   "pocket_side_needed_mm": 248.72
+  },
+  "r=12.7": {
+   "pocket_side_needed_mm": 252.44
+  },
+  "r=19.05": {
+   "pocket_side_needed_mm": 256.16
+  },
+  "r=25.4": {
+   "pocket_side_needed_mm": 259.88
+  },
+  "r=38.1": {
+   "pocket_side_needed_mm": 267.32
+  },
+  "round_pocket_mm": 346.5,
+  "deck_corner_rule": "s >= 245 + 0.586 (r - R_d), R_d = the deck's corner radius (0 as drawn)"
+ },
+ "door_3d": {
+  "r=0": {
+   "smallest_opening_mm": 245.02,
+   "with_1mm_a_side_mm": 247.0,
+   "slid_on_the_sill_mm": 245.02
+  },
+  "r=6.35": {
+   "smallest_opening_mm": 248.76,
+   "with_1mm_a_side_mm": 250.8,
+   "slid_on_the_sill_mm": 252.78
+  },
+  "r=12.7": {
+   "smallest_opening_mm": 252.44,
+   "with_1mm_a_side_mm": 254.4,
+   "slid_on_the_sill_mm": 263.4
+  },
+  "r=19.05": {
+   "smallest_opening_mm": 256.17,
+   "with_1mm_a_side_mm": 258.2,
+   "slid_on_the_sill_mm": 274.5
+  },
+  "r=25.4": {
+   "smallest_opening_mm": 259.91,
+   "with_1mm_a_side_mm": 261.9,
+   "slid_on_the_sill_mm": 285.79
+  },
+  "r=38.1": {
+   "smallest_opening_mm": 267.32,
+   "with_1mm_a_side_mm": 269.3,
+   "slid_on_the_sill_mm": "over 289"
+  },
+  "model_266_sharp_passes": true
+ },
+ "rolled_wall_3d": {
+  "roll_deg": 39.3,
+  "square_needed_mm": 207.3,
+  "hole 207.8 mm": "passes",
+  "hole 206.8 mm": "blocked at step 4"
+ },
+ "runtime_s": 337,
+ "estimates": {
+  "openings_mm": [
+   243.0,
+   250.0,
+   255.0,
+   260.0
+  ],
+  "corner_radii_mm": [
+   0.0,
+   6.35,
+   12.7,
+   25.4
+  ],
+  "rows": [
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck as drawn (245 x 245, sharp corners)",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 15",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": false
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "deck corners rounded to R 30",
+    "deck_mm": [
+     245.0,
+     245.0
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 243.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 250.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 255.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 0.0,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 6.35,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 12.7,
+    "goes_in_flat": true
+   },
+   {
+    "cassette": "cube deck cut to the parts' spread, shield cut back",
+    "deck_mm": [
+     240.2,
+     197.3
+    ],
+    "opening_mm": 260.0,
+    "corner_r_mm": 25.4,
+    "goes_in_flat": true
+   }
+  ],
+  "cube_deck_smallest_sharp_opening_mm": 240.21,
+  "cube_deck_mm": [
+   240.2,
+   197.3
+  ]
+ }
+}

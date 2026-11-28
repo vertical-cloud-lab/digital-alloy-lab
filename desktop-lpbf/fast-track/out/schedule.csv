@@ -1,0 +1,87 @@
+alternative,task,start_low_d,start_high_d,finish_low_d,finish_high_d,basis
+FT-0 single-track bench,used optics chain arrives,0,0,3,8,eBay windows to 84602 read 2026-11-27 (Nov 30-Dec 3) and LTL freight for the laser (estimate)
+FT-0 single-track bench,McMaster stock and hardware,0,0,1,2,McMaster: most orders arrive same or next day
+FT-0 single-track bench,safety parts and eyewear,0,0,2,5,"Digi-Key in stock (D4NS-2CF 360 in stock, 2026-11-27) / Thorlabs LG1 'Available: Today'"
+FT-0 single-track bench,O2 analyzers arrive,0,0,4,10,"eBay window Dec 1-7 (Alpha Omega Series 3000, read 2026-11-27); Kele OX-6 lead time not read (estimate)"
+FT-0 single-track bench,argon cylinder and regulator,0,0,2,5,estimate (gas supplier delivery; McMaster regulator next day)
+FT-0 single-track bench,RTC4 card + PC and software,0,0,3,7,"eBay 366737163447 'Estimated between Wed, Dec 2 and Tue, Dec 8' (read 2026-11-27); lab PC with a PCIe slot"
+FT-0 single-track bench,208/240 V circuit for the laser,0,0,3,15,"estimate: a Physical Facilities work order, unless the room already has a 208/240 V outlet (check on day 0)"
+FT-0 single-track bench,LSO registration and SOP,0,0,5,15,estimate: BYU's laser-safety pages need a login; start on day 0
+FT-0 single-track bench,EHS review (Al powder),0,0,5,15,"estimate: dust hazard analysis scope, start on day 0"
+FT-0 single-track bench,S1 parts made,1,2,3.4,11.2,fab/out/hours.json: 19.3-45.8 shop h at 8-5 h a working day (estimate)
+FT-0 single-track bench,S2 parts made,3.4,11.2,5.3,17.0,fab/out/hours.json: 15.5-29.1 shop h at 8-5 h a working day (estimate)
+FT-0 single-track bench,FT-0 parts made,5.3,17.0,9.2,28.6,fab/out/hours.json: 31.1-58.1 shop h at 8-5 h a working day (estimate)
+FT-0 single-track bench,enclosure arrives,0,0,3,8,"estimate: distributor stock (Saginaw SCE-16EL1208SSLP, $694.24, stock not stated), ground"
+FT-0 single-track bench,bench check of laser + scan head,5,15,7,19,estimate
+FT-0 single-track bench,"assemble box, heater, gas",9.2,28.6,10.2,30.6,estimate
+FT-0 single-track bench,purge and heat commissioning,10.2,30.6,11.2,32.6,estimate
+FT-0 single-track bench,FIRST TRACKS,11.2,32.6,12.2,34.6,milestone
+FT-0 single-track bench,hand-spread single layers and pads,12.2,34.6,14.2,38.6,estimate
+FT-1 purge-box LPBF (stages on one PO),used optics chain arrives,0,0,3,8,eBay windows to 84602 read 2026-11-27 (Nov 30-Dec 3) and LTL freight for the laser (estimate)
+FT-1 purge-box LPBF (stages on one PO),McMaster stock and hardware,0,0,1,2,McMaster: most orders arrive same or next day
+FT-1 purge-box LPBF (stages on one PO),safety parts and eyewear,0,0,2,5,"Digi-Key in stock (D4NS-2CF 360 in stock, 2026-11-27) / Thorlabs LG1 'Available: Today'"
+FT-1 purge-box LPBF (stages on one PO),O2 analyzers arrive,0,0,4,10,"eBay window Dec 1-7 (Alpha Omega Series 3000, read 2026-11-27); Kele OX-6 lead time not read (estimate)"
+FT-1 purge-box LPBF (stages on one PO),argon cylinder and regulator,0,0,2,5,estimate (gas supplier delivery; McMaster regulator next day)
+FT-1 purge-box LPBF (stages on one PO),RTC4 card + PC and software,0,0,3,7,"eBay 366737163447 'Estimated between Wed, Dec 2 and Tue, Dec 8' (read 2026-11-27); lab PC with a PCIe slot"
+FT-1 purge-box LPBF (stages on one PO),208/240 V circuit for the laser,0,0,3,15,"estimate: a Physical Facilities work order, unless the room already has a 208/240 V outlet (check on day 0)"
+FT-1 purge-box LPBF (stages on one PO),LSO registration and SOP,0,0,5,15,estimate: BYU's laser-safety pages need a login; start on day 0
+FT-1 purge-box LPBF (stages on one PO),EHS review (Al powder),0,0,5,15,"estimate: dust hazard analysis scope, start on day 0"
+FT-1 purge-box LPBF (stages on one PO),S1 parts made,1,2,3.4,11.2,fab/out/hours.json: 19.3-45.8 shop h at 8-5 h a working day (estimate)
+FT-1 purge-box LPBF (stages on one PO),S2 parts made,3.4,11.2,5.3,17.0,fab/out/hours.json: 15.5-29.1 shop h at 8-5 h a working day (estimate)
+FT-1 purge-box LPBF (stages on one PO),FT-0 parts made,5.3,17.0,9.2,28.6,fab/out/hours.json: 31.1-58.1 shop h at 8-5 h a working day (estimate)
+FT-1 purge-box LPBF (stages on one PO),FT-1 parts made,9.2,28.6,11.1,35.2,fab/out/hours.json: 15.4-32.9 shop h at 8-5 h a working day (estimate)
+FT-1 purge-box LPBF (stages on one PO),Zaber stages arrive (PO),0,0,11,20,BYU PO 10-14 days (capstone.byu.edu) + Zaber 'Lead Time: 1-5 Days' + transit
+FT-1 purge-box LPBF (stages on one PO),enclosure arrives,0,0,3,8,"estimate: distributor stock, ground"
+FT-1 purge-box LPBF (stages on one PO),bench check of laser + scan head,5,15,7,19,estimate
+FT-1 purge-box LPBF (stages on one PO),assemble mechanism in the box,11.1,35.2,14.1,40.2,estimate
+FT-1 purge-box LPBF (stages on one PO),purge and heat commissioning,14.1,40.2,15.1,43.2,estimate
+FT-1 purge-box LPBF (stages on one PO),interlock commissioning,14.1,40.2,15.1,42.2,estimate
+FT-1 purge-box LPBF (stages on one PO),FIRST TRACKS,15.1,43.2,16.1,45.2,milestone
+FT-1 purge-box LPBF (stages on one PO),"powder layers: dose, spread, pads",16.1,45.2,19.1,50.2,estimate
+FT-1 purge-box LPBF (stages on one PO),FIRST COUPONS,19.1,50.2,21.1,55.2,milestone
+FT-1 purge-box LPBF (stages on PCards),used optics chain arrives,0,0,3,8,eBay windows to 84602 read 2026-11-27 (Nov 30-Dec 3) and LTL freight for the laser (estimate)
+FT-1 purge-box LPBF (stages on PCards),McMaster stock and hardware,0,0,1,2,McMaster: most orders arrive same or next day
+FT-1 purge-box LPBF (stages on PCards),safety parts and eyewear,0,0,2,5,"Digi-Key in stock (D4NS-2CF 360 in stock, 2026-11-27) / Thorlabs LG1 'Available: Today'"
+FT-1 purge-box LPBF (stages on PCards),O2 analyzers arrive,0,0,4,10,"eBay window Dec 1-7 (Alpha Omega Series 3000, read 2026-11-27); Kele OX-6 lead time not read (estimate)"
+FT-1 purge-box LPBF (stages on PCards),argon cylinder and regulator,0,0,2,5,estimate (gas supplier delivery; McMaster regulator next day)
+FT-1 purge-box LPBF (stages on PCards),RTC4 card + PC and software,0,0,3,7,"eBay 366737163447 'Estimated between Wed, Dec 2 and Tue, Dec 8' (read 2026-11-27); lab PC with a PCIe slot"
+FT-1 purge-box LPBF (stages on PCards),208/240 V circuit for the laser,0,0,3,15,"estimate: a Physical Facilities work order, unless the room already has a 208/240 V outlet (check on day 0)"
+FT-1 purge-box LPBF (stages on PCards),LSO registration and SOP,0,0,5,15,estimate: BYU's laser-safety pages need a login; start on day 0
+FT-1 purge-box LPBF (stages on PCards),EHS review (Al powder),0,0,5,15,"estimate: dust hazard analysis scope, start on day 0"
+FT-1 purge-box LPBF (stages on PCards),S1 parts made,1,2,3.4,11.2,fab/out/hours.json: 19.3-45.8 shop h at 8-5 h a working day (estimate)
+FT-1 purge-box LPBF (stages on PCards),S2 parts made,3.4,11.2,5.3,17.0,fab/out/hours.json: 15.5-29.1 shop h at 8-5 h a working day (estimate)
+FT-1 purge-box LPBF (stages on PCards),FT-0 parts made,5.3,17.0,9.2,28.6,fab/out/hours.json: 31.1-58.1 shop h at 8-5 h a working day (estimate)
+FT-1 purge-box LPBF (stages on PCards),FT-1 parts made,9.2,28.6,11.1,35.2,fab/out/hours.json: 15.4-32.9 shop h at 8-5 h a working day (estimate)
+FT-1 purge-box LPBF (stages on PCards),stages arrive (PCard),0,0,3,10,Zaber X-LSM100B 'Lead Time: 1-5 Days' + transit; Thorlabs MTS50/M-Z8 + KDC101 'Available: Today'
+FT-1 purge-box LPBF (stages on PCards),enclosure arrives,0,0,3,8,"estimate: distributor stock, ground"
+FT-1 purge-box LPBF (stages on PCards),bench check of laser + scan head,5,15,7,19,estimate
+FT-1 purge-box LPBF (stages on PCards),assemble mechanism in the box,11.1,35.2,14.1,40.2,estimate
+FT-1 purge-box LPBF (stages on PCards),purge and heat commissioning,14.1,40.2,15.1,43.2,estimate
+FT-1 purge-box LPBF (stages on PCards),interlock commissioning,14.1,40.2,15.1,42.2,estimate
+FT-1 purge-box LPBF (stages on PCards),FIRST TRACKS,15.1,43.2,16.1,45.2,milestone
+FT-1 purge-box LPBF (stages on PCards),"powder layers: dose, spread, pads",16.1,45.2,19.1,50.2,estimate
+FT-1 purge-box LPBF (stages on PCards),FIRST COUPONS,19.1,50.2,21.1,55.2,milestone
+"FT-1V same, in a stock vacuum chamber",used optics chain arrives,0,0,3,8,eBay windows to 84602 read 2026-11-27 (Nov 30-Dec 3) and LTL freight for the laser (estimate)
+"FT-1V same, in a stock vacuum chamber",McMaster stock and hardware,0,0,1,2,McMaster: most orders arrive same or next day
+"FT-1V same, in a stock vacuum chamber",safety parts and eyewear,0,0,2,5,"Digi-Key in stock (D4NS-2CF 360 in stock, 2026-11-27) / Thorlabs LG1 'Available: Today'"
+"FT-1V same, in a stock vacuum chamber",O2 analyzers arrive,0,0,4,10,"eBay window Dec 1-7 (Alpha Omega Series 3000, read 2026-11-27); Kele OX-6 lead time not read (estimate)"
+"FT-1V same, in a stock vacuum chamber",argon cylinder and regulator,0,0,2,5,estimate (gas supplier delivery; McMaster regulator next day)
+"FT-1V same, in a stock vacuum chamber",RTC4 card + PC and software,0,0,3,7,"eBay 366737163447 'Estimated between Wed, Dec 2 and Tue, Dec 8' (read 2026-11-27); lab PC with a PCIe slot"
+"FT-1V same, in a stock vacuum chamber",208/240 V circuit for the laser,0,0,3,15,"estimate: a Physical Facilities work order, unless the room already has a 208/240 V outlet (check on day 0)"
+"FT-1V same, in a stock vacuum chamber",LSO registration and SOP,0,0,5,15,estimate: BYU's laser-safety pages need a login; start on day 0
+"FT-1V same, in a stock vacuum chamber",EHS review (Al powder),0,0,5,15,"estimate: dust hazard analysis scope, start on day 0"
+"FT-1V same, in a stock vacuum chamber",S1 parts made,1,2,3.4,11.2,fab/out/hours.json: 19.3-45.8 shop h at 8-5 h a working day (estimate)
+"FT-1V same, in a stock vacuum chamber",S2 parts made,3.4,11.2,5.3,17.0,fab/out/hours.json: 15.5-29.1 shop h at 8-5 h a working day (estimate)
+"FT-1V same, in a stock vacuum chamber",FT-0 parts made,5.3,17.0,9.2,28.6,fab/out/hours.json: 31.1-58.1 shop h at 8-5 h a working day (estimate)
+"FT-1V same, in a stock vacuum chamber",FT-1 parts made,9.2,28.6,11.1,35.2,fab/out/hours.json: 15.4-32.9 shop h at 8-5 h a working day (estimate)
+"FT-1V same, in a stock vacuum chamber",FT-1V parts made,11.1,35.2,13.399999999999999,42.0,fab/out/hours.json: 18.1-33.8 shop h at 8-5 h a working day (estimate)
+"FT-1V same, in a stock vacuum chamber",Zaber stages arrive (PO),0,0,11,20,BYU PO + Zaber 1-5 days + transit
+"FT-1V same, in a stock vacuum chamber",chamber frame and plates arrive (PO),0,0,11,16,Ideal Vacuum P107540 frame and P108171 plates 'Available now' (2026-11-25) + BYU PO + LTL
+"FT-1V same, in a stock vacuum chamber","pump, KF parts, Pirani",0,0,2,7,"McMaster 4396K21 next day, or used IDP-3 (eBay window Dec 2-8, read 2026-11-27)"
+"FT-1V same, in a stock vacuum chamber",bench check of laser + scan head,5,15,7,19,estimate
+"FT-1V same, in a stock vacuum chamber",assemble mechanism in the chamber,13.399999999999999,42.0,16.4,48.0,estimate
+"FT-1V same, in a stock vacuum chamber","leak check, pump-purge, heat",16.4,48.0,18.4,52.0,estimate
+"FT-1V same, in a stock vacuum chamber",interlock commissioning,16.4,48.0,17.4,50.0,estimate
+"FT-1V same, in a stock vacuum chamber",FIRST TRACKS,18.4,52.0,19.4,54.0,milestone
+"FT-1V same, in a stock vacuum chamber","powder layers: dose, spread, pads",19.4,54.0,22.4,59.0,estimate
+"FT-1V same, in a stock vacuum chamber",FIRST COUPONS,22.4,59.0,24.4,64.0,milestone

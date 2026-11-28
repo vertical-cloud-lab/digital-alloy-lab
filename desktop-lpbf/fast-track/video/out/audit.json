@@ -1,0 +1,215 @@
+{
+ "ch0": {
+  "chapter": 0,
+  "frames_checked": 2,
+  "movers": 0,
+  "threshold_mm": 1.5,
+  "opaque_min": 0.3,
+  "violations": 0,
+  "worst_mm": 0.0,
+  "pairs": [],
+  "rigid_pairs": [],
+  "allowed": [],
+  "seconds": 0.0
+ },
+ "ch1": {
+  "chapter": 1,
+  "frames_checked": 419,
+  "movers": 14,
+  "threshold_mm": 1.5,
+  "opaque_min": 0.3,
+  "violations": 0,
+  "worst_mm": 0.0,
+  "pairs": [],
+  "rigid_pairs": [],
+  "allowed": [
+   {
+    "reason": "the fibre's laser end starts 3 mm inside the laser envelope's top face, where the fibre leaves the laser (the model)",
+    "pairs": [
+     "IPG YLR-400-SM-EOS (envelope, est.) / Process fibre"
+    ],
+    "pair_frames": 141,
+    "worst_mm": 3.0
+   }
+  ],
+  "seconds": 1.7
+ },
+ "ch2": {
+  "chapter": 2,
+  "frames_checked": 353,
+  "movers": 30,
+  "threshold_mm": 1.5,
+  "opaque_min": 0.3,
+  "violations": 0,
+  "worst_mm": 0.0,
+  "pairs": [],
+  "rigid_pairs": [],
+  "allowed": [
+   {
+    "reason": "the fibre's laser end starts 3 mm inside the laser envelope's top face, where the fibre leaves the laser (the model)",
+    "pairs": [
+     "Process fibre / IPG YLR-400-SM-EOS (envelope, est.)"
+    ],
+    "pair_frames": 353,
+    "worst_mm": 2.9
+   }
+  ],
+  "seconds": 36.7
+ },
+ "ch3": {
+  "chapter": 3,
+  "frames_checked": 900,
+  "movers": 36,
+  "threshold_mm": 1.5,
+  "opaque_min": 0.3,
+  "violations": 0,
+  "worst_mm": 0.0,
+  "pairs": [],
+  "rigid_pairs": [],
+  "allowed": [
+   {
+    "reason": "the fibre's laser end starts 3 mm inside the laser envelope's top face, where the fibre leaves the laser (the model)",
+    "pairs": [
+     "Process fibre / IPG YLR-400-SM-EOS (envelope, est.)"
+    ],
+    "pair_frames": 900,
+    "worst_mm": 2.9
+   }
+  ],
+  "seconds": 47.9
+ },
+ "ch4": {
+  "chapter": 4,
+  "frames_checked": 941,
+  "movers": 38,
+  "threshold_mm": 1.5,
+  "opaque_min": 0.3,
+  "violations": 0,
+  "worst_mm": 0.0,
+  "pairs": [],
+  "rigid_pairs": [
+   {
+    "a": "Carriage bracket and arm (MK-08)",
+    "b": "Vibration motor",
+    "worst_mm": 4.9,
+    "worst_frame": 1174,
+    "frames": 394,
+    "first": 1174,
+    "last": 2076
+   }
+  ],
+  "allowed": [
+   {
+    "reason": "the fibre's laser end starts 3 mm inside the laser envelope's top face, where the fibre leaves the laser (the model)",
+    "pairs": [
+     "Process fibre / IPG YLR-400-SM-EOS (envelope, est.)"
+    ],
+    "pair_frames": 941,
+    "worst_mm": 2.9
+   }
+  ],
+  "seconds": 52.5
+ },
+ "ch5": {
+  "chapter": 5,
+  "frames_checked": 341,
+  "movers": 14,
+  "threshold_mm": 1.5,
+  "opaque_min": 0.3,
+  "violations": 0,
+  "worst_mm": 0.0,
+  "pairs": [],
+  "rigid_pairs": [
+   {
+    "a": "Carriage bracket and arm (MK-08)",
+    "b": "Vibration motor",
+    "worst_mm": 4.9,
+    "worst_frame": 0,
+    "frames": 341,
+    "first": 0,
+    "last": 784
+   }
+  ],
+  "allowed": [],
+  "seconds": 4.0
+ },
+ "ch6": {
+  "chapter": 6,
+  "frames_checked": 652,
+  "movers": 92,
+  "threshold_mm": 1.5,
+  "opaque_min": 0.3,
+  "violations": 0,
+  "worst_mm": 0.0,
+  "pairs": [],
+  "rigid_pairs": [
+   {
+    "a": "Rotary-vane pump (McMaster 4396K21 class, envelope est.)",
+    "b": "KF-25 pump hose and valve",
+    "worst_mm": 17.7,
+    "worst_frame": 1296,
+    "frames": 121,
+    "first": 1296,
+    "last": 1554
+   },
+   {
+    "a": "Carriage bracket and arm (MK-08)",
+    "b": "Vibration motor",
+    "worst_mm": 4.9,
+    "worst_frame": 0,
+    "frames": 157,
+    "first": 0,
+    "last": 396
+   },
+   {
+    "a": "Carriage bracket and arm (MK-08)",
+    "b": "Vibration motor",
+    "worst_mm": 4.9,
+    "worst_frame": 763,
+    "frames": 363,
+    "first": 763,
+    "last": 1554
+   }
+  ],
+  "allowed": [
+   {
+    "reason": "the fibre's laser end starts 3 mm inside the laser envelope's top face, where the fibre leaves the laser (the model)",
+    "pairs": [
+     "Process fibre / IPG YLR-400-SM-EOS (envelope, est.)"
+    ],
+    "pair_frames": 652,
+    "worst_mm": 2.9
+   },
+   {
+    "reason": "the hose's other end is drawn down into the pump's inlet on its top face",
+    "pairs": [
+     "Rotary-vane pump (McMaster 4396K21 class, envelope est.) / KF-25 pump hose and valve"
+    ],
+    "pair_frames": 121,
+    "worst_mm": 17.7
+   },
+   {
+    "reason": "the hose's clamp end is drawn over its KF-25 port's flange (the model's hose ends in the flange)",
+    "pairs": [
+     "KF-25 pump hose and valve / KF-25 ports: pump, Pirani, argon, exhaust, 2 electrical feedthroughs"
+    ],
+    "pair_frames": 96,
+    "worst_mm": 5.1
+   }
+  ],
+  "seconds": 44.4
+ },
+ "ch7": {
+  "chapter": 7,
+  "frames_checked": 1,
+  "movers": 0,
+  "threshold_mm": 1.5,
+  "opaque_min": 0.3,
+  "violations": 0,
+  "worst_mm": 0.0,
+  "pairs": [],
+  "rigid_pairs": [],
+  "allowed": [],
+  "seconds": 0.0
+ }
+}

@@ -1,0 +1,530 @@
+{
+ "method": "The same idea as PR 266's gcode_sim.py, in a simpler form: each setup's tool axis is one of the piece's axes, so a\nsetup's cut is a height field over the setup's XY (the lowest point the tool reaches over each column, for a flat end\nmill swept exactly along each linear move, drills and the spot drill with their cone). Everything above that field is\nremoved (tool and holder come from above). Setups run in order on one voxel grid in the part frame.",
+ "pieces": [
+  {
+   "pid": "MK-02a",
+   "res_mm": 0.279,
+   "grid": [
+    390,
+    390,
+    79
+   ],
+   "setups": [
+    {
+     "setup": "MK-02a_A",
+     "up": "-Z",
+     "segments": 2667,
+     "removed_cm3": 62.26,
+     "minutes_from_moves": 10.9,
+     "minutes_recount": 10.91,
+     "minutes_freecad": 11.93,
+     "stamp_s": 0.9,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-02a_B",
+     "up": "+Z",
+     "segments": 4849,
+     "removed_cm3": 85.93,
+     "minutes_from_moves": 12.13,
+     "minutes_recount": 12.16,
+     "minutes_freecad": 15.63,
+     "stamp_s": 3.1,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 217.52,
+   "target_cm3": 69.3,
+   "expected_removal_cm3": 148.21,
+   "removed_cm3": 148.19,
+   "removed_pct_of_expected": 100.0,
+   "gouge_cm3": 0.031,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.28,
+   "left_cm3": 0.059,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 0.56,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 12.7
+  },
+  {
+   "pid": "MK-03",
+   "res_mm": 0.316,
+   "grid": [
+    275,
+    291,
+    150
+   ],
+   "setups": [
+    {
+     "setup": "MK-03_A",
+     "up": "+Z",
+     "segments": 2765,
+     "removed_cm3": 70.11,
+     "minutes_from_moves": 5.35,
+     "minutes_recount": 5.37,
+     "minutes_freecad": 7.52,
+     "stamp_s": 1.5,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-03_B",
+     "up": "-Z",
+     "segments": 2765,
+     "removed_cm3": 66.05,
+     "minutes_from_moves": 5.35,
+     "minutes_recount": 5.37,
+     "minutes_freecad": 7.87,
+     "stamp_s": 2.8,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-03_C",
+     "up": "-X",
+     "segments": 38,
+     "removed_cm3": 2.58,
+     "minutes_from_moves": 0.18,
+     "minutes_recount": 0.18,
+     "minutes_freecad": 0.38,
+     "stamp_s": 3.8,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 329.59,
+   "target_cm3": 190.19,
+   "expected_removal_cm3": 139.4,
+   "removed_cm3": 138.74,
+   "removed_pct_of_expected": 99.5,
+   "gouge_cm3": 0.008,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.32,
+   "left_cm3": 0.661,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 0.63,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 16.4
+  },
+  {
+   "pid": "MK-06a",
+   "res_mm": 0.122,
+   "grid": [
+    129,
+    129,
+    720
+   ],
+   "setups": [
+    {
+     "setup": "MK-06a_A",
+     "up": "-Y",
+     "segments": 31,
+     "removed_cm3": 0.01,
+     "minutes_from_moves": 0.69,
+     "minutes_recount": 0.68,
+     "minutes_freecad": 2.08,
+     "stamp_s": 0.2,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-06a_B",
+     "up": "+X",
+     "segments": 2,
+     "removed_cm3": 0.0,
+     "minutes_from_moves": 0.01,
+     "minutes_recount": 0.01,
+     "minutes_freecad": 0.18,
+     "stamp_s": 0.2,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 2.8,
+   "target_cm3": 2.79,
+   "expected_removal_cm3": 0.01,
+   "removed_cm3": 0.01,
+   "removed_pct_of_expected": 93.9,
+   "gouge_cm3": 0.0,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.0,
+   "left_cm3": 0.001,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 0.49,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 4.0
+  },
+  {
+   "pid": "MK-06b",
+   "res_mm": 0.131,
+   "grid": [
+    120,
+    120,
+    831
+   ],
+   "setups": [
+    {
+     "setup": "MK-06b_A",
+     "up": "-Y",
+     "segments": 31,
+     "removed_cm3": 0.01,
+     "minutes_from_moves": 0.69,
+     "minutes_recount": 0.68,
+     "minutes_freecad": 2.35,
+     "stamp_s": 0.2,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-06b_B",
+     "up": "+X",
+     "segments": 2,
+     "removed_cm3": 0.0,
+     "minutes_from_moves": 0.01,
+     "minutes_recount": 0.01,
+     "minutes_freecad": 0.23,
+     "stamp_s": 0.3,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 3.47,
+   "target_cm3": 3.46,
+   "expected_removal_cm3": 0.01,
+   "removed_cm3": 0.01,
+   "removed_pct_of_expected": 88.4,
+   "gouge_cm3": 0.0,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.0,
+   "left_cm3": 0.002,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 0.52,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 4.1
+  },
+  {
+   "pid": "MK-07",
+   "res_mm": 0.18,
+   "grid": [
+    371,
+    371,
+    87
+   ],
+   "setups": [
+    {
+     "setup": "MK-07_A",
+     "up": "+Z",
+     "segments": 389,
+     "removed_cm3": 6.33,
+     "minutes_from_moves": 4.87,
+     "minutes_recount": 4.89,
+     "minutes_freecad": 5.28,
+     "stamp_s": 0.5,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-07_B",
+     "up": "-Z",
+     "segments": 2791,
+     "removed_cm3": 5.19,
+     "minutes_from_moves": 8.03,
+     "minutes_recount": 8.26,
+     "minutes_freecad": 8.77,
+     "stamp_s": 4.3,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 50.14,
+   "target_cm3": 38.49,
+   "expected_removal_cm3": 11.66,
+   "removed_cm3": 11.52,
+   "removed_pct_of_expected": 98.8,
+   "gouge_cm3": 0.005,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.18,
+   "left_cm3": 0.146,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 0.72,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 12.9
+  },
+  {
+   "pid": "MK-08e",
+   "res_mm": 0.243,
+   "grid": [
+    189,
+    195,
+    325
+   ],
+   "setups": [
+    {
+     "setup": "MK-08e_A",
+     "up": "+X",
+     "segments": 3419,
+     "removed_cm3": 57.97,
+     "minutes_from_moves": 3.24,
+     "minutes_recount": 3.24,
+     "minutes_freecad": 4.53,
+     "stamp_s": 0.7,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-08e_B",
+     "up": "-X",
+     "segments": 3899,
+     "removed_cm3": 58.62,
+     "minutes_from_moves": 3.32,
+     "minutes_recount": 3.32,
+     "minutes_freecad": 4.67,
+     "stamp_s": 0.8,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-08e_C",
+     "up": "+Z",
+     "segments": 1152,
+     "removed_cm3": 1.54,
+     "minutes_from_moves": 3.42,
+     "minutes_recount": 3.57,
+     "minutes_freecad": 12.67,
+     "stamp_s": 1.1,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 146.05,
+   "target_cm3": 27.78,
+   "expected_removal_cm3": 118.27,
+   "removed_cm3": 118.13,
+   "removed_pct_of_expected": 99.9,
+   "gouge_cm3": 0.0,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.0,
+   "left_cm3": 0.142,
+   "left_thick_cm3": 0.017,
+   "left_max_thickness_mm": 1.38,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 6.3
+  },
+  {
+   "pid": "MK-10c",
+   "res_mm": 0.432,
+   "grid": [
+    331,
+    331,
+    110
+   ],
+   "setups": [
+    {
+     "setup": "MK-10c_A",
+     "up": "+Z",
+     "segments": 13675,
+     "removed_cm3": 515.07,
+     "minutes_from_moves": 12.06,
+     "minutes_recount": 12.06,
+     "minutes_freecad": 14.48,
+     "stamp_s": 1.0,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-10c_B",
+     "up": "-Z",
+     "segments": 13564,
+     "removed_cm3": 175.86,
+     "minutes_from_moves": 14.56,
+     "minutes_recount": 14.57,
+     "minutes_freecad": 18.33,
+     "stamp_s": 1.2,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-10c_C",
+     "up": "+X",
+     "segments": 16,
+     "removed_cm3": 0.18,
+     "minutes_from_moves": 0.09,
+     "minutes_recount": 0.09,
+     "minutes_freecad": 0.48,
+     "stamp_s": 0.5,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 874.29,
+   "target_cm3": 178.76,
+   "expected_removal_cm3": 695.53,
+   "removed_cm3": 691.12,
+   "removed_pct_of_expected": 99.4,
+   "gouge_cm3": 0.178,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.43,
+   "left_cm3": 4.591,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 0.86,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 5.9
+  },
+  {
+   "pid": "MK-15b",
+   "res_mm": 0.233,
+   "grid": [
+    314,
+    314,
+    122
+   ],
+   "setups": [
+    {
+     "setup": "MK-15b_A",
+     "up": "+Z",
+     "segments": 310,
+     "removed_cm3": 28.97,
+     "minutes_from_moves": 1.55,
+     "minutes_recount": 1.55,
+     "minutes_freecad": 1.88,
+     "stamp_s": 0.9,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-15b_B",
+     "up": "-Z",
+     "segments": 183,
+     "removed_cm3": 16.36,
+     "minutes_from_moves": 1.18,
+     "minutes_recount": 1.18,
+     "minutes_freecad": 1.33,
+     "stamp_s": 1.8,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 125.69,
+   "target_cm3": 80.16,
+   "expected_removal_cm3": 45.53,
+   "removed_cm3": 45.33,
+   "removed_pct_of_expected": 99.6,
+   "gouge_cm3": 0.002,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.23,
+   "left_cm3": 0.202,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 0.66,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 10.8
+  },
+  {
+   "pid": "MK-15c",
+   "res_mm": 0.236,
+   "grid": [
+    308,
+    200,
+    195
+   ],
+   "setups": [
+    {
+     "setup": "MK-15c_A",
+     "up": "+Z",
+     "segments": 6040,
+     "removed_cm3": 30.4,
+     "minutes_from_moves": 16.43,
+     "minutes_recount": 16.82,
+     "minutes_freecad": 20.93,
+     "stamp_s": 3.7,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-15c_B",
+     "up": "-Z",
+     "segments": 142,
+     "removed_cm3": 10.16,
+     "minutes_from_moves": 0.54,
+     "minutes_recount": 0.54,
+     "minutes_freecad": 0.63,
+     "stamp_s": 0.3,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-15c_C",
+     "up": "-Y",
+     "segments": 100,
+     "removed_cm3": 5.13,
+     "minutes_from_moves": 1.48,
+     "minutes_recount": 1.48,
+     "minutes_freecad": 2.68,
+     "stamp_s": 1.9,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-15c_D",
+     "up": "+X",
+     "segments": 376,
+     "removed_cm3": 0.96,
+     "minutes_from_moves": 1.01,
+     "minutes_recount": 1.04,
+     "minutes_freecad": 1.73,
+     "stamp_s": 0.8,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 133.52,
+   "target_cm3": 85.49,
+   "expected_removal_cm3": 48.03,
+   "removed_cm3": 46.65,
+   "removed_pct_of_expected": 97.1,
+   "gouge_cm3": 0.001,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.24,
+   "left_cm3": 1.381,
+   "left_thick_cm3": 0.04,
+   "left_max_thickness_mm": 1.06,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 14.8
+  },
+  {
+   "pid": "MK-18a",
+   "res_mm": 0.277,
+   "grid": [
+    240,
+    240,
+    209
+   ],
+   "setups": [
+    {
+     "setup": "MK-18a_A",
+     "up": "+Z",
+     "segments": 381,
+     "removed_cm3": 29.14,
+     "minutes_from_moves": 1.29,
+     "minutes_recount": 1.3,
+     "minutes_freecad": 2.13,
+     "stamp_s": 1.6,
+     "rapid_moves_through_target": 0
+    },
+    {
+     "setup": "MK-18a_B",
+     "up": "-Z",
+     "segments": 357,
+     "removed_cm3": 18.94,
+     "minutes_from_moves": 1.03,
+     "minutes_recount": 1.03,
+     "minutes_freecad": 1.38,
+     "stamp_s": 1.7,
+     "rapid_moves_through_target": 0
+    }
+   ],
+   "start_cm3": 221.28,
+   "target_cm3": 170.77,
+   "expected_removal_cm3": 50.51,
+   "removed_cm3": 48.08,
+   "removed_pct_of_expected": 95.2,
+   "gouge_cm3": 0.006,
+   "gouge_deep_cm3": 0.0,
+   "gouge_max_depth_mm": 0.28,
+   "left_cm3": 2.432,
+   "left_thick_cm3": 0.0,
+   "left_max_thickness_mm": 0.55,
+   "rapid_hits": [],
+   "slugs_dropped_cm3": 0.0,
+   "seconds": 9.4
+  }
+ ]
+}

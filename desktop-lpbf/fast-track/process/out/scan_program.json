@@ -1,0 +1,228 @@
+{
+ "parts": {
+  "A": {
+   "pset": "nominal",
+   "cx": -6.0,
+   "cy": 5.15,
+   "sx": 10.0,
+   "sy": 10.0,
+   "energy_J_layer1": 208.08720000000025,
+   "laser_on_s": 0.836389999999999,
+   "list_s": 0.9542600000000044,
+   "vectors": 102
+  },
+  "B": {
+   "pset": "wide",
+   "cx": 6.0,
+   "cy": 5.15,
+   "sx": 10.0,
+   "sy": 10.0,
+   "energy_J_layer1": 175.32480000000018,
+   "laser_on_s": 0.7079099999999993,
+   "list_s": 0.8136200000000026,
+   "vectors": 86
+  },
+  "C": {
+   "pset": "slow",
+   "cx": 0.0,
+   "cy": -6.9,
+   "sx": 10.0,
+   "sy": 10.0,
+   "energy_J_layer1": 256.5677999999999,
+   "laser_on_s": 1.0265100000000014,
+   "list_s": 1.1432900000000024,
+   "vectors": 102
+  },
+  "d": {
+   "pset": "nominal",
+   "cx": -9.50000000000002,
+   "cy": -4.400000000000038,
+   "sx": 5.0,
+   "sy": 5.0,
+   "energy_J_layer1": 52.99470000000004,
+   "laser_on_s": 0.21789000000000017,
+   "list_s": 0.3042699999999999,
+   "vectors": 52
+  },
+  "e": {
+   "pset": "nominal",
+   "cx": 9.499999999999915,
+   "cy": -4.400000000000038,
+   "sx": 5.0,
+   "sy": 5.0,
+   "energy_J_layer1": 52.99470000000004,
+   "laser_on_s": 0.21789000000000017,
+   "list_s": 0.3030599999999999,
+   "vectors": 52
+  }
+ },
+ "psets": {
+  "nominal": {
+   "name": "nominal",
+   "P_hatch": 255.0,
+   "v_hatch": 1250.0,
+   "hatch": 0.1,
+   "P_contour": 150.0,
+   "v_contour": 800.0,
+   "contour_offset": 0.08,
+   "hatch_offset": 0.06,
+   "layer": 0.03,
+   "rot_deg": 67.0,
+   "exclude_deg": 30.0,
+   "note": "recommended starting set"
+  },
+  "wide": {
+   "name": "wide",
+   "P_hatch": 255.0,
+   "v_hatch": 1250.0,
+   "hatch": 0.12,
+   "P_contour": 150.0,
+   "v_contour": 800.0,
+   "contour_offset": 0.08,
+   "hatch_offset": 0.06,
+   "layer": 0.03,
+   "rot_deg": 67.0,
+   "exclude_deg": 30.0,
+   "note": "hatch at Tang 0.60 (200 C)"
+  },
+  "slow": {
+   "name": "slow",
+   "P_hatch": 255.0,
+   "v_hatch": 1000.0,
+   "hatch": 0.1,
+   "P_contour": 150.0,
+   "v_contour": 800.0,
+   "contour_offset": 0.08,
+   "hatch_offset": 0.06,
+   "layer": 0.03,
+   "rot_deg": 67.0,
+   "exclude_deg": 30.0,
+   "note": "20 % slower, King 24.7"
+  }
+ },
+ "timing": {
+  "tick": 1e-05,
+  "tracking_error": 0.0005,
+  "v_jump": 7000.0,
+  "jump_delay": 0.0007,
+  "jump_delay_min": 0.0003,
+  "jump_limit": 5.0,
+  "mark_delay": 0.00055,
+  "polygon_delay": 0.00025,
+  "laser_on_delay": 0.00025,
+  "laser_off_delay": 0.0005,
+  "list_overhead": 0.05,
+  "source": "SCANLAB hurrySCAN 25 data (tracking error 0.50 ms, 7.95 m/s positioning at f = 254.4); delays from the tracking error; tune with a delay test pattern"
+ },
+ "recoat": {
+  "Zaber X-LSM100B-E03, spread 10 mm/s": {
+   "stage": "Zaber X-LSM100B-E03",
+   "v_return": 104.0,
+   "v_spread": 10.0,
+   "t_return": 0.7424615384615385,
+   "t_spread": 6.65,
+   "t_step": 0.12449489742783179,
+   "t_overhead": 0.5,
+   "t_recoat": 8.016956435889371
+  },
+  "Zaber X-LSM100B-E03, spread 20 mm/s": {
+   "stage": "Zaber X-LSM100B-E03",
+   "v_return": 104.0,
+   "v_spread": 20.0,
+   "t_return": 0.7424615384615385,
+   "t_spread": 3.3400000000000003,
+   "t_step": 0.12449489742783179,
+   "t_overhead": 0.5,
+   "t_recoat": 4.706956435889371
+  },
+  "Zaber X-LSM100B-E03, spread 40 mm/s": {
+   "stage": "Zaber X-LSM100B-E03",
+   "v_return": 104.0,
+   "v_spread": 40.0,
+   "t_return": 0.7424615384615385,
+   "t_spread": 1.7000000000000002,
+   "t_step": 0.12449489742783179,
+   "t_overhead": 0.5,
+   "t_recoat": 3.0669564358893706
+  },
+  "Zaber X-LSM100B-E03, spread 80 mm/s": {
+   "stage": "Zaber X-LSM100B-E03",
+   "v_return": 104.0,
+   "v_spread": 80.0,
+   "t_return": 0.7424615384615385,
+   "t_spread": 0.91,
+   "t_step": 0.12449489742783179,
+   "t_overhead": 0.5,
+   "t_recoat": 2.27695643588937
+  },
+  "Zaber X-LSQ075B-E01, spread 10 mm/s": {
+   "stage": "Zaber X-LSQ075B-E01",
+   "v_return": 280.0,
+   "v_spread": 10.0,
+   "t_return": 0.5153639490690051,
+   "t_spread": 6.65,
+   "t_step": 0.12449489742783179,
+   "t_overhead": 0.5,
+   "t_recoat": 7.789858846496838
+  },
+  "Zaber X-LSQ075B-E01, spread 20 mm/s": {
+   "stage": "Zaber X-LSQ075B-E01",
+   "v_return": 280.0,
+   "v_spread": 20.0,
+   "t_return": 0.5153639490690051,
+   "t_spread": 3.3400000000000003,
+   "t_step": 0.12449489742783179,
+   "t_overhead": 0.5,
+   "t_recoat": 4.479858846496837
+  },
+  "Zaber X-LSQ075B-E01, spread 40 mm/s": {
+   "stage": "Zaber X-LSQ075B-E01",
+   "v_return": 280.0,
+   "v_spread": 40.0,
+   "t_return": 0.5153639490690051,
+   "t_spread": 1.7000000000000002,
+   "t_step": 0.12449489742783179,
+   "t_overhead": 0.5,
+   "t_recoat": 2.839858846496837
+  },
+  "Zaber X-LSQ075B-E01, spread 80 mm/s": {
+   "stage": "Zaber X-LSQ075B-E01",
+   "v_return": 280.0,
+   "v_spread": 80.0,
+   "t_return": 0.5153639490690051,
+   "t_spread": 0.91,
+   "t_step": 0.12449489742783179,
+   "t_overhead": 0.5,
+   "t_recoat": 2.0498588464968366
+  }
+ },
+ "tracking_error_sensitivity": {
+  "list_s_mean_0p5ms": 3.3961821600000204,
+  "list_s_mean_0p7ms": 3.568928160000009
+ },
+ "npz": {
+  "path": "build_first_coupons_15mm.npz",
+  "kB": 750.089,
+  "vectors": 252486,
+  "layers": 500
+ },
+ "energy_J_mean": 746.3666022000001,
+ "mean_W_mean": 115.48216963811659,
+ "period_s_mean": 6.463138595889392,
+ "ladder_programs": {
+  "rung1_bare_plate": {
+   "lines": 18,
+   "r_max_mm": 13.695345924802337,
+   "list_s": 0.44176999999999994,
+   "energy_J": 78.025,
+   "path": "rung1_bare_plate.npz"
+  },
+  "rung2_single_tracks": {
+   "lines": 25,
+   "r_max_mm": 13.945967159003352,
+   "list_s": 0.31739999999999996,
+   "energy_J": 52.657500000000006,
+   "path": "rung2_single_tracks.npz"
+  }
+ }
+}
