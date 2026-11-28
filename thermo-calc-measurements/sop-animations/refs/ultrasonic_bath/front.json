@@ -1,0 +1,7 @@
+{"source": "https://youtu.be/iGkhh2gYXN4?t=19", "video": "iGkhh2gYXN4", "t": 19.0, "camera": "front",
+ "note": "getMedOnline, 'Branson CPX Ultrasonic Cleaners Overview': a CPX bath from the front, a little from the left; the lower housing is out of frame",
+ "pose": {},
+ "points": {"front top left": [153, 428], "front top right": [1180, 430], "lip front bottom left": [155, 458],
+            "lip front bottom right": [1178, 462], "badge tl": [786, 462], "badge tr": [1140, 461],
+            "tower foot left": [278, 331], "tower foot right": [900, 331]},
+ "holdout": false}

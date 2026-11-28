@@ -46,7 +46,7 @@ MATERIALS = {
     "dsc_brass": (0.80, 0.64, 0.30, 1.0, 0.60),
     "dsc_cyl_grey": (0.40, 0.43, 0.46, 1.0, 0.40),          # gas cylinder (argon: grey body, colours vary by country)
     "dsc_cyl_green": (0.18, 0.42, 0.30, 1.0, 0.40),         # argon shoulder band (EN 1089-3: dark green)
-    "dsc_hot": (0.92, 0.38, 0.10, 1.0, 0.10),               # dull orange: a hot furnace inside, a glowing melt
+    "dsc_hot": (0.80, 0.42, 0.20, 1.0, 0.10),               # dull orange: a hot furnace inside, a glowing melt
     "dsc_ethanol_bottle": (0.95, 0.95, 0.93, 0.80, 0.20),  # LDPE wash bottle
     "dsc_ethanol_cap": (0.15, 0.45, 0.80, 1.0, 0.25),
     "dsc_indium": (0.72, 0.73, 0.76, 1.0, 0.60),
@@ -84,8 +84,9 @@ def _loft_rect(w0, d0, z0, w1, d1, z1, x=0.0, y=0.0) -> cq.Workplane:
 # globalgilson.com/jones-micro-splitters): a square funnel hopper on top, the riffle bank between two bolted upright
 # plates with feet, a pan each side under the chutes, the pans' backs higher than their fronts. Heights and pan sizes
 # are scaled from those photos (overall height about 1.3 x the hopper's width) and are estimates.
-RIFFLE = dict(hopper=114.0, hopper_h=38.0, slot_w=20.0, n=16, chute=3.2, wall=0.8, bank_w=40.0, bank_z0=56.0,
-              bank_z1=112.0, plate_w=28.0, plate_t=2.0, foot=20.0, pan_x0=21.0, pan_x1=55.0, pan_d=84.0, pan_h=40.0,
+# hopper_h and plate_w fitted with register.py to two Gilson SP-171X product photos (refs/riffle_splitter/fit.json)
+RIFFLE = dict(hopper=114.0, hopper_h=35.8, slot_w=20.0, n=16, chute=3.2, wall=0.8, bank_w=40.0, bank_z0=56.0,
+              bank_z1=112.0, plate_w=54.2, plate_t=2.0, foot=20.0, pan_x0=21.0, pan_x1=55.0, pan_d=84.0, pan_h=40.0,
               pan_back=88.0, sheet=0.8)
 SPECS["riffle_splitter"] = {
     "model": "Humboldt H-3971C Micro Riffle Splitter (Jones type)",
@@ -181,7 +182,12 @@ def riffle_splitter() -> Instrument:
         pts = [(sx * xi, 0.0), (sx * xo, 0.0), (sx * xo, pb), (sx * xi, ph)]
         side_f = cq.Workplane("XZ").polyline(pts).close().extrude(-t).translate((0, -pd / 2, 0))
         side_b = cq.Workplane("XZ").polyline(pts).close().extrude(t).translate((0, pd / 2, 0))
-        pan.add(f"{side} sheet", floor.union(wall_in).union(wall_out).union(side_f).union(side_b), "dsc_stainless")
+        sheet = floor.union(wall_in).union(wall_out).union(side_f).union(side_b)
+        nx0, nx1 = sorted((sx * (xi - 1.0), sx * (p["plate_w"] / 2 + 2.0)))
+        for sy in (-1, 1):                                       # the notch the upright and its foot pass through
+            ya, yb = sorted((sy * (L / 2 - 2.0), sy * (pd / 2 + 2.0)))
+            sheet = sheet.cut(box(nx0, ya, -1.0, nx1, yb, ph + 1.0))
+        pan.add(f"{side} sheet", sheet, "dsc_stainless")
         split = _piece(inst, f"split_{side[-1]}")
         hx = (xi + xo) / 2
         heap = (cq.Workplane("XY").rect(xo - xi - 2 * t - 2, pd - 2 * t - 4).workplane(offset=6.0)
@@ -227,6 +233,22 @@ def riffle_splitter() -> Instrument:
     inst.notes = ["Humboldt H-3971C: chutes and hopper published; heights and pans scaled from Gilson's SP-171X photos"]
     return inst
 
+
+def riffle_anchors(p, pose=None) -> dict:
+    """Named points for register.py: the hopper's rim corners and the front upright's top corners."""
+    n, ch, wl = p["n"], p["chute"], p["wall"]
+    L = n * (ch + wl) + wl
+    H, z = p["hopper"], p["bank_z1"] + p["hopper_h"]
+    yu = -(L / 2 + p["plate_t"])
+    zt = p["bank_z1"] + 3.0
+    return {"rim front left": (-H / 2, -H / 2, z), "rim front right": (H / 2, -H / 2, z),
+            "rim back left": (-H / 2, H / 2, z), "rim back right": (H / 2, H / 2, z),
+            "upright top left": (-p["plate_w"] / 2, yu, zt), "upright top right": (p["plate_w"] / 2, yu, zt)}
+
+
+ANCHORS["riffle_splitter"] = (RIFFLE, riffle_anchors)
+FREE["riffle_splitter"] = ["hopper_h", "bank_z1", "plate_w"]
+CHECKS["riffle_splitter"] = lambda p: [p["bank_z1"] - p["bank_z0"] - 30, p["hopper_h"] - 20, p["hopper"] / 2 - p["plate_w"] / 2 - 20]
 
 RIFFLE_POINTS = dict(hopper_rim=(0.0, 0.0, RIFFLE["bank_z1"] + RIFFLE["hopper_h"]),
                      pan_l_floor=(-(RIFFLE["pan_x0"] + RIFFLE["pan_x1"]) / 2, 0.0, RIFFLE["sheet"]),
@@ -427,8 +449,10 @@ PUMP_POINTS = {"inlet": (PUMP["L"] / 2 - 60.0, 0.0, 220.0)}
 # stepped top, the round glass chamber on a white pedestal at its front end with a blue strip beside it, the flat
 # electronics module in front carrying the tilted display. The door: a curved glass segment that turns round the
 # chamber to open its front (the motorized shield's opening), modelled as a 120 deg segment turning 130 deg.
-BALANCE = dict(L=340.0, W=139.0, H=129.0, ped_d=104.0, ped_h=24.0, ch_d=86.0, ch_h=70.0, pan_d=30.0, pan_z=36.0,
-               el_L=355.0, el_W=260.0, el_H=61.0, door_deg=120.0)
+# fitted with register.py to youtu.be/7EjFumYx1eo at 1:49 (refs/microbalance/fit.json)
+BALANCE = dict(L=340.0, W=139.0, H=129.0, H_low=103.9, step=165.1, front=50.6, ped_d=104.0, ped_h=24.1, ch_d=88.3,
+               ch_h=70.9,
+               pan_d=30.0, pan_z=36.0, el_L=355.0, el_W=260.0, el_H=61.0, door_deg=120.0)
 SPECS["microbalance"] = {
     "model": "Sartorius Cubis II MCA6.6S-2S00-M (6.1 g x 1 ug)",
     "weighing module": "340 x 139 x 129 mm (L x W x H): Sartorius Cubis II data sheet p. 3",
@@ -461,10 +485,13 @@ def microbalance() -> Instrument:
     body = _piece(inst, "body")
     L, W, H = p["L"], p["W"], p["H"]
     cy = -L / 2 + p["ped_d"] / 2                                   # the chamber's axis, at the module's front end
-    y0 = cy + p["ped_d"] / 2                                       # the box starts behind the pedestal
-    box_ = box(-W / 2, y0, 0, W / 2, L / 2, H - 24).union(box(-W / 2, y0 + 95, 0, W / 2, L / 2, H))
+    y0 = cy + p["front"]                                           # the module's front face, behind the chamber's axis
+    # the module: full height behind the chamber, a step down to the lower back part (as in Sartorius's video), and
+    # a round recess the chamber and its turning door sit in
+    box_ = box(-W / 2, y0, 0, W / 2, y0 + p["step"], H).union(box(-W / 2, y0, 0, W / 2, L / 2, p["H_low"]))
+    box_ = box_.cut(cyl(p["ch_d"] + 14, H, y=cy, z=p["ped_h"] - 1))
     body.add("weighing module", box_.edges("|Y").fillet(6), "dsc_white")
-    body.add("blue strip", box(W / 2 - 26, y0 - 1.0, 18, W / 2 - 12, y0, H - 34), "dsc_blue")
+    body.add("blue strip", box(-W / 2 + 12, y0 - 1.0, 18, -W / 2 + 26, y0, H - 34), "dsc_blue")
     body.add("pedestal", cyl(p["ped_d"], p["ped_h"], y=cy), "dsc_white")
     zc0 = p["ped_h"]
     r = p["ch_d"] / 2
@@ -494,6 +521,25 @@ def microbalance() -> Instrument:
     inst.props = ()
     return inst
 
+
+def bal_anchors(p, pose=None) -> dict:
+    """Named points of the weighing module (the electronics module is placed freely, so it has none)."""
+    L, W, H = p["L"], p["W"], p["H"]
+    cy = -L / 2 + p["ped_d"] / 2
+    y0 = cy + p["front"]
+    ys = y0 + p["step"]
+    return {"back bottom near": (-W / 2, L / 2, 0.0), "back top near": (-W / 2, L / 2, p["H_low"]),
+            "step low near": (-W / 2, ys, p["H_low"]), "step top near": (-W / 2, ys, H),
+            "front top near": (-W / 2, y0, H), "front bottom near": (-W / 2, y0, 0.0),
+            "strip top": (-W / 2 + 19, y0, H - 34), "strip bottom": (-W / 2 + 19, y0, 18.0),
+            "chamber top": ("circle", (0.0, cy, p["ped_h"] + p["ch_h"]), p["ch_d"] / 2),
+            "pedestal top": ("circle", (0.0, cy, p["ped_h"]), p["ped_d"] / 2)}
+
+
+ANCHORS["microbalance"] = (BALANCE, bal_anchors)
+FREE["microbalance"] = ["H_low", "step", "front", "ped_h", "ch_d", "ch_h"]
+CHECKS["microbalance"] = lambda p: [p["H"] - p["H_low"] - 5, p["ped_d"] - p["ch_d"] - 6, p["L"] - p["ped_d"] - p["step"] - 40,
+                                    150.0 - p["ped_h"] - p["ch_h"], p["front"] - 20, p["ped_d"] / 2 + 20 - p["front"]]
 
 _bcy = -BALANCE["L"] / 2 + BALANCE["ped_d"] / 2
 BAL_POINTS = {"pan": (0.0, _bcy, BALANCE["pan_z"]), "chamber": (0.0, _bcy, BALANCE["ped_h"] + 35.0),
@@ -593,9 +639,9 @@ def dsc_sta() -> Instrument:
     """NETZSCH STA 449 F5 Jupiter.
 
     Pieces: ``body`` (base, deck plate, sensor carrier with its shields and the sensor's sample (front) and reference
-    (back) positions, wire guard, gas valves, panel); ``hoist`` (the lifting column and the white housing, slides up
-    250 mm); ``furnace`` (the furnace and its arm: a hinge about the column, riding on the hoist; v = 1 swung 70 deg to
-    the right); ``glow`` (fade: the furnace's hot inside, dull orange); ``asc`` (fade: the optional 20-position sample
+    (back) positions, wire guard, gas valves, panel); ``hoist`` (the lifting column, slides up by ``lift``);
+    ``furnace`` (the furnace, its arm and the white head on the column: a hinge about the column's axis, riding on the
+    hoist; v = 1 swung 70 deg to the right); ``glow`` (fade: the furnace's hot inside, dull orange); ``asc`` (fade: the optional 20-position sample
     changer); ``leds`` (fade: the purge and protective gas lamps). ``STA_POINTS``: the sample and reference positions,
     the gas inlet, the vacuum port, the panel's buttons.
     """
@@ -677,12 +723,13 @@ def dsc_sta() -> Instrument:
     body.add("column collar", box(xc - cw / 2 - 18, yc - cw / 2 - 18, dk, xc + cw / 2 + 18, yc + cw / 2 + 18, dk + 26)
              .edges("|Z").fillet(8).cut(hole), "dsc_dark")
     zh0 = g["ztop"] - hh                                           # the housing's foot, furnace closed
-    hoist.add("lifting column", box(xc - cw / 2, yc - cw / 2, p["feet"] + 30, xc + cw / 2, yc + cw / 2, zh0 + 20)
-              .edges("|Z").fillet(6), "dsc_stainless")
-    hoist.add("housing", box(xc - hw / 2, yc - hw / 2 + 10, zh0, xc + hw / 2, yc + hw / 2 + 10, zh0 + hh)
-              .edges("|Z").fillet(14).edges(">Z").fillet(10), "dsc_white")
-    # the furnace on its arm (swings about the column's axis), its bands, cap and top fitting
+    hoist.add("lifting column", box(xc - cw / 2, yc - cw / 2, p["feet"] + 30, xc + cw / 2, yc + cw / 2, zh0 - 2)
+              .edges("|Z").fillet(6).union(cyl(60, 24, x=xc, y=yc, z=zh0 - 3)), "dsc_stainless")   # the head turns on its pin
+    # the furnace on its arm and the white head it hangs from: they swing together about the column's axis
     fur = _piece(inst, "furnace")
+    fur.add("housing", box(xc - hw / 2, yc - hw / 2, zh0, xc + hw / 2, yc + hw / 2, zh0 + hh)
+            .edges("|Z").fillet(14).edges(">Z").fillet(10).cut(cyl(66, 26, x=xc, y=yc, z=zh0 - 1)),
+            "dsc_white")
     r = p["f_d"] / 2
     zf = g["zf"]
     shell = cyl(p["f_d"], p["f_h"], x=xs, y=ys, z=zf).cut(cyl(64, p["f_h"] - 30, x=xs, y=ys, z=zf - 1))
@@ -700,17 +747,17 @@ def dsc_sta() -> Instrument:
         cyl(46, 12, x=xs, y=ys, z=g["ztop"] - 12)), "dsc_glassy")
     fur.add("protective tube", tube(40, 33, p["f_h"] - 52, x=xs, y=ys, z=zf + 22), "dsc_alumina")
     arm_y0 = ys + r - 8
-    fur.add("arm", box(xs - 32, arm_y0, g["zt"] - 140, xs + 32, yc - hw / 2 + 10, g["zt"] - 20), "dsc_white")
+    fur.add("arm", box(xs - 32, arm_y0, g["zt"] - 140, xs + 32, yc - hw / 2 + 1, g["zt"] - 20), "dsc_white")
     glow = _piece(inst, "glow")
     glow.add("hot zone", tube(58, 52, p["f_h"] - 90, x=xs, y=ys, z=zf + 45), "dsc_hot")
     # the optional sample changer: a 20-position arc tray on the deck at the right and its gripper turret
     asc = _piece(inst, "asc")
     ax_, ay_ = 150.0, -40.0
-    arc = cq.Workplane("XY").circle(120).circle(84).extrude(14).translate((ax_, ay_, dk))
+    arc = cq.Workplane("XY").circle(120).circle(84).extrude(14).translate((ax_, ay_, dk + 4.0))
     arc = arc.cut(box(ax_ - 130, ay_ - 10, dk - 1, ax_ + 130, ay_ + 130, dk + 20))
     for k in range(20):
         t = math.radians(190 + 8.0 * k)
-        arc = arc.cut(cyl(7.6, 10, x=ax_ + 102 * math.cos(t), y=ay_ + 102 * math.sin(t), z=dk + 6))
+        arc = arc.cut(cyl(7.6, 10, x=ax_ + 102 * math.cos(t), y=ay_ + 102 * math.sin(t), z=dk + 9))
     asc.add("changer tray", arc, "dsc_stainless")
     asc.add("changer turret", cyl(96, 330, x=ax_, y=ay_ + 60, z=dk).union(cyl(70, 40, x=ax_ - 55, y=ay_ - 30, z=dk + 250)), "dsc_white")
     leds = _piece(inst, "leds")

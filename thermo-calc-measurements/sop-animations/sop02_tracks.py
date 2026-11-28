@@ -205,8 +205,9 @@ def panel_design(d, u=1.0):
     ax.set_xscale("log")
     ax.set_xlabel("scan speed v (mm/s)")
     ax.set_ylabel("laser power P (W)")
-    ax.set_xticks([500, 700, 1000, 2000, 3000])
-    ax.set_xticklabels(["500", "700", "1000", "2000", "3000"])
+    ax.set_xticks([500, 1000, 2000, 3000])
+    ax.set_xticklabels(["500", "1000", "2000", "3000"])
+    ax.minorticks_off()
     _axes(ax)
     ax.legend(loc="upper left", bbox_to_anchor=(1.0, 1.0), fontsize=7.5, frameon=False)
     fig.text(0.02, 0.95, "Power-speed design: scrambled Sobol, not a grid", fontsize=10.5, weight="bold", color=INK)
@@ -341,6 +342,9 @@ def panel_eta_w(d, u=1.0):
     ax.axhline(d["eta_fit"], color=INK2, lw=0.9, ls="--")
     ax.text(0.02, d["eta_fit"] + 0.008, "fitted eta", color=INK2, fontsize=7.5, transform=ax.get_yaxis_transform())
     ax.set_xscale("log")
+    ax.set_xticks([0.05, 0.1, 0.2, 0.5, 1.0])
+    ax.set_xticklabels(["0.05", "0.1", "0.2", "0.5", "1"])
+    ax.minorticks_off()
     ax.set_xlabel("P/v (J/mm)")
     ax.set_ylabel("eta from width alone")
     _axes(ax)
@@ -365,6 +369,9 @@ def panel_ke(d, u=1.0):
     for yv in (0.5, 0.75):
         ax.axhline(yv, color=INK2, lw=0.7, ls=":")
     ax.set_xscale("log")
+    ax.set_xticks([3, 5, 10, 20, 30])
+    ax.set_xticklabels(["3", "5", "10", "20", "30"])
+    ax.minorticks_off()
     ax.set_xlabel("keyhole number Ke (Gan et al. 2021)")
     ax.set_ylabel("depth / width")
     _axes(ax)
@@ -758,8 +765,8 @@ def c1():
     # 1. the printer
     top = (-2600.0 - 290.0, -150.0, 1300.0)
     cam_hold(sc, S.look((-2600.0, 0.0, 1150.0), 9000.0, -28.0, 12.0))
-    sc.step("Samples", "Utah's Aconity MIDI prints the first Al tracks | P1, Dec 2-3; else the desktop LPBF (#260) "
-            "or BYU's M2 (#243)", 4.5, hold=1.5,
+    sc.step("Samples", "First Al tracks: Utah's Aconity MIDI, or the desktop LPBF | P1 at Utah, Dec 2-3; the "
+            "desktop machine is #260; the layout follows BYU's M2 plan (#243)", 4.5, hold=1.5,
             cam_to=S.look((-2600.0 - 150.0, -150.0, 1150.0), 6200.0, -24.0, 12.0),
             labels=[("Aconity MIDI\n2450 x 1500 x 2320 mm", (-2600.0 + 400.0, -750.0, 1900.0), (0.80, 0.18)),
                     ("process chamber\n170 mm build platform", top, (0.18, 0.30))])
@@ -780,7 +787,8 @@ def c1():
     row_c = (CX, CY + ROW_Y["bare"], CZ)
     sc.step("Samples · bare-plate tracks", "Bare-plate tracks first: absorptivity of dense metal | no powder yet",
             3.0, hold=0.6, cam_to=S.look(row_c, 95.0, -10.0, 48.0), update=beam_on(1.0),
-            labels=[("beam: 1/e2 radius r0 ~40 um", (CX + 21.0, CY + ROW_Y["bare"] - 6.0, CZ + 8.0), (0.80, 0.22))])
+            labels=[("beam: ~70 um spot at focus (r0 ~35 um)", (CX + 21.0, CY + ROW_Y["bare"] - 6.0, CZ + 8.0),
+                     (0.78, 0.22))])
     sc.step("Samples · bare-plate tracks", "18 tracks, 12 mm long at 2 mm pitch | exposed outlet side first, "
             "all scanned in +y", 9.0, hold=1.0, update=scan_row("bare", d["bare"]),
             labels=[("gas flow, inlet -> outlet (+x)", (CX + 30.0, CY + ROW_Y["bare"] + 8.0, CZ), (0.82, 0.18)),
@@ -824,7 +832,7 @@ def c1():
             cam_to=S.look(rowA, 110.0, -12.0, 50.0),
             labels=[("control set (2 per row)", (CX + row_x([t for t in d["tracks"] if t["block"] == "A"
                                                                and t["control"]][0]["pos"]),
-                                                  CY + ROW_Y["A"] + 6.0, CZ), (0.82, 0.22))])
+                                                  CY + ROW_Y["A"] + 6.0, CZ), (0.40, 0.16))])
     sc.step("Samples · Sobol blocks", "Blocks B, C and D: 72 tracks on the plate | denuded powder beside each track",
             5.0, hold=1.5, update=S.together(beam_on(0.0), S.staged((0.0, 0.33, show_row("B", 0, 1)),
                                                                      (0.33, 0.66, show_row("C", 0, 1)),
@@ -936,8 +944,10 @@ def c2():
                     at=T((0.0, -40.0, 232.0)), parent=vhx.group("turntable"))
     vhx.set(table=0.10)                                 # the plate's top at the focal point
     au = audit_for(sc, allow=[("plate/*", "vhx:turntable*"), ("plate/*", "vhx:table*"),
-                              ("vhx:table*", "vhx:turntable*")])
+                              ("vhx:table*", "vhx:turntable*"), ("vhx:body*", "vhx:table*")])
     stage_c = (0.0, -40.0, zs + PLATE_T)
+    sc.card("Preparation 1 · Image first", ["Top views of every track at 50-100x, before any cutting: continuity, "
+                                             "balling and the denuded band."], seconds=2.5, label="Preparation 1")
     cam_hold(sc, S.look((0.0, 0.0, BENCH_H + 250.0), 3600.0, -30.0, 14.0))
     sc.step("Preparation 1", "Image first: top views of every track | Keyence VHX-7000 digital microscope", 4.0,
             hold=1.2, cam_to=S.look((0.0, -20.0, BENCH_H + 280.0), 1900.0, -34.0, 18.0),
@@ -1021,12 +1031,15 @@ def c3():
                               ("precision_saw:weight*", "precision_saw:arm*"), ("op/*glove*", "precision_saw:specimen*"),
                               ("mount_press:pour*", "mount_press:*"), ("mount_press:charge*", "mount_press:stopper*"),
                               ("mount_press:doser*", "mount_press:body*"),
+                              ("mount_press:charge*", "mount_press:closure*"),
                               ("piece*", "mat*"), ("strip/*", "*"), ("plate/*", "mat*"), ("cutline/*", "*"),
                               ("precision_saw:slice*", "*"), ("precision_saw:specimen*", "precision_saw:wheel*"),
-                              ("precision_saw:wheel*", "precision_saw:tank*"), ("mpiece*", "mount_press:*"),
+                              ("precision_saw:wheel*", "precision_saw:tank*"), ("pair*", "mount_press:*"), ("op/*glove*", "pair*"),
                               ("op/*glove*", "precision_saw:cover*"), ("op/*glove*", "precision_saw:carriage*"),
                               ("op/*glove*", "precision_saw:body*"), ("op/*glove*", "mount_press:*")])
     # -------------------------------------------------------------------------- the strip
+    sc.card("Preparation 2 · Section and hot-mount", ["Each track is cut at mid-length and mounted in conductive "
+                                                       "compound (#243 section 3)."], seconds=2.5, label="Preparation 2")
     cam_hold(sc, S.look((-200.0, 0.0, BENCH_H + 300.0), 4200.0, -22.0, 14.0))
     pc = (mat_c[0], mat_c[1], pz + PLATE_T)
     sc.step("Preparation 2", "Section every track at mid-length | the rows are cut out of the plate first", 4.0,
@@ -1079,16 +1092,16 @@ def c3():
     # to the mat for the first piece, and back
     g1 = "piece0"
     pick = np.array(sc.world(g1)[:3, 3]) + np.array([0.0, -2.0, 34.0])
-    xm = mat_c[0] + 230.0
+    xm = float(pick[0]) - 170.0                               # the right shoulder over the piece
     sc.step("Preparation 2 · saw", "Fetch the first piece from the mat", 3.5, hold=0.0,
             update=S.together(S.staged((0.0, 0.3, reach(op, "r", cov_up, None, grip=(0.7, 0.3), lean=0.0))),
                               S.staged((0.25, 1.0, walk(op, -40.0, -650.0, xm, -650.0)))),
             cam_to=S.look(((xm - 40.0) / 2, -300.0, BENCH_H + 200.0), 2400.0, 28.0, 20.0))
     op.set(hd=0.0, amp=0.0)
-    pick = pick + np.array([0.0, 0.0, 12.0])
+    pick = pick + np.array([0.0, 0.0, 58.0])
     sc.step("Preparation 2 · saw", "Pick it up by its ends", 2.0, hold=0.2,
-            update=reach(op, "r", None, pick, grip=(0.3, 0.8), look=tuple(pick), lean=20.0),
-            cam_to=S.look(pick, 900.0, 62.0, 26.0))
+            update=reach(op, "r", None, pick, grip=(0.3, 0.6), look=tuple(pick), lean=22.0),
+            cam_to=S.look(pick + np.array([-60.0, 0.0, 120.0]), 1400.0, 58.0, 28.0))
     op.hold("r", g1)
     carry = (230.0, 330.0, 1060.0)
     sc.step("Preparation 2 · saw", "Back to the saw", 3.5, hold=0.0,
@@ -1104,7 +1117,7 @@ def c3():
     saw.set(arm=-1.0)
     spec_pose = sc.world(saw.group("specimen"))
     vise_hand = np.array(label_pt(saw, (sp["strip"][0], sp["strip"][1], sp["strip"][2] + 60.0), "arm"))
-    over = vise_hand + np.array([0.0, -60.0, 140.0])
+    over = vise_hand + np.array([-30.0, -70.0, 180.0])
     start_pose = sc.world(g1)
     hand_now = op.hand_point("r")
     up_first = hand_now + np.array([0.0, 0.0, 150.0])
@@ -1130,7 +1143,7 @@ def c3():
     _ = start_pose
     sc.gmat[g1] = sc.world(g1)
     sc.parent.pop(g1, None)
-    knob = np.array(label_pt(saw, (sp["strip"][0] - 12.0, sp["strip"][1] - 60.0, sp["strip"][2] - 2.0), "arm"))
+    knob = np.array(label_pt(saw, (sp["strip"][0] - 12.0, sp["strip"][1] - 78.0, sp["strip"][2] + 16.0), "arm"))
     sc.step("Preparation 2 · saw", "Tighten the vise's knurled screw", 2.5, hold=0.3,
             update=S.together(S.staged((0.0, 0.6, seat)),
                               reach(op, "r", vise_hand, knob, grip=(0.8, 0.9), look=tuple(vise))),
@@ -1149,7 +1162,7 @@ def c3():
                                        (0.55, 0.75, reach(op, "r", cov_front, clear_front, grip=(0.7, 0.4))),
                                        (0.75, 1.0, reach(op, "r", clear_front, start_btn, grip=(0.4, 0.2),
                                                          lean=12.0)))),
-            cam_to=S.look(vise + np.array([-150.0, -120.0, -20.0]), 1100.0, 58.0, 20.0))
+            cam_to=S.look(vise + np.array([-150.0, -120.0, -20.0]), 1350.0, 66.0, 22.0))
 
     def cutting(u):
         saw.v["wheel"] = 3.0 * u
@@ -1175,31 +1188,60 @@ def c3():
         sc.gmat[saw.group("slice")] = T((4.0 * u, 0.0, -40.0 * u * u)) @ J["slice"].matrix(1.0)
     sc.step("Preparation 2 · saw", "The 2 mm sliver falls into the tank; auto shut-off | grinding takes the last "
             "0.5 mm", 3.0, hold=1.0, update=fall)
-    sc.step("Preparation 2 · saw", "The second piece the same way | 18 tracks: one mount", 2.5, hold=0.8,
-            update=S.together(saw.move({"arm": (1.0, -0.6), "cover": (0.0, 1.0)}), fade(sc, pieces[1], 1.0, 0.0)),
-            cam_to=S.look(vise, 700.0, 55.0, 30.0))
+    # both cut pieces, section faces down, side by side on the bench beside the saw (the second was cut the same way);
+    # the operator carries them, as one 22 x 22 mm pair, to the press
+    pair_at = T((150.0, -300.0, BENCH_H))
+    pair = []
+    for h, dx in ((0, -6.0), (1, 6.0)):
+        pair += add_set(sc, piece_meshes(d, "A", h, T((dx, 0.0, 3.0)) @ R((0, 1, 0), 90.0)), f"pair{h}", "pair",
+                        shown=False)
+    sc.gmat["pair"] = pair_at
+    sc.step("Preparation 2 · saw", "The second piece the same way | both on the bench, section faces down", 2.5,
+            hold=0.8, update=S.together(saw.move({"arm": (1.0, -0.6), "cover": (0.0, 1.0), "specimen": (1.0, 0.0)}),
+                                        fade(sc, pieces[1], 1.0, 0.0), S.staged((0.5, 1.0, fade(sc, pair, 0.0, 1.0)))),
+            cam_to=S.look((60.0, -250.0, BENCH_H + 80.0), 900.0, 50.0, 30.0),
+            labels=[("both pieces: 18 tracks, one mount", (150.0, -300.0, BENCH_H + 12.0), (0.78, 0.30))])
     # -------------------------------------------------------------------------- the hot mount
     pr = press
-    two = {}
-    for h, dx in ((0, -26.0), (1, -14.0)):
-        # stood on its section face (local +x down) on the ram, press frame
-        local = T((dx, -40.0, 405.0)) @ T((0.0, 0.0, 3.0)) @ R((0, 1, 0), 90.0)
-        two[h] = add_set(sc, piece_meshes(d, "A", h, np.eye(4)), f"mpiece{h}", f"mpiece{h}", at=local,
-                         parent=pr.group("ram"), shown=False)
+    grab = np.array([150.0, -300.0, BENCH_H + 12.0 + 58.0])
+    sc.step("Preparation 2 · mount", "Pick up the pair", 2.0, hold=0.2,
+            update=S.together(saw.move({"cover": (1.0, 0.0)}),
+                              reach(op, "r", None, grab, grip=(0.3, 0.6), look=tuple(grab), lean=16.0)))
+    op.hold("r", "pair")
     xp = 620.0 - 25.0 - 150.0
+    carry2 = (230.0, 330.0, 1080.0)
     sc.step("Preparation 2 · mount", "Hot-mount both pieces in one mould | LECO MX400, 1.5 in (38 mm)", 4.0,
-            hold=0.4, update=S.together(saw.move({"cover": (1.0, 0.0)}), walk(op, -40.0, -650.0, xp, -570.0),
+            hold=0.4, update=S.together(S.staged((0.0, 0.2, reach(op, "r", grab, grab + np.array([0.0, 0.0, 120.0]),
+                                                                  grip=(0.6, 0.6), lean=6.0)),
+                                                 (0.2, 1.0, walk(op, -40.0, -650.0, xp, -650.0, carry=carry2))),
                                         pr.move({"closure": (0.0, 1.0)})),
-            cam_to=S.look(label_pt(pr, (0.0, -40.0, 420.0)), 1700.0, 32.0, 20.0))
+            cam_to=S.look(label_pt(pr, (0.0, -40.0, 420.0)), 1900.0, 62.0, 22.0))
     op.set(hd=0.0, amp=0.0)
-    ram_up = np.array(label_pt(pr, (-25.0, -40.0, 405.0 + 75.0 + 110.0)))
-    sc.step("Preparation 2 · mount", "Ram up; both pieces on it, section face down", 3.0, hold=0.4,
-            update=S.together(pr.move({"ram": (0.0, 1.0)}),
-                              S.staged((0.2, 0.7, reach(op, "r", None, ram_up, grip=(0.3, 0.8), look=tuple(ram_up),
-                                                        lean=14.0)),
-                                       (0.6, 0.8, fade(sc, two[0] + two[1], 0.0, 1.0)),
-                                       (0.8, 1.0, reach(op, "r", ram_up, None, grip=(0.8, 0.3), lean=0.0)))),
-            cam_to=S.look(label_pt(pr, (-25.0, -40.0, 470.0)), 520.0, 55.0, 38.0))
+    pr.set(ram=1.0)
+    ram_tgt = sc.world(pr.group("ram")) @ T((-25.0, -40.0, 405.0))
+    pr.set(ram=0.0)
+    hand_c = op.hand_point("r")
+    hover = np.array(ram_tgt[:3, 3]) + np.array([0.0, -20.0, 58.0 + 110.0])
+    down = np.array(ram_tgt[:3, 3]) + np.array([0.0, 0.0, 58.0])
+    seat2 = {}
+
+    def seat_pair(u):
+        if "m" not in seat2:
+            op.let_go("r")
+            seat2["m"] = sc.world("pair").copy()
+        sc.gmat["pair"] = S.blend(seat2["m"], ram_tgt, u)
+        if u >= 0.999:
+            sc.parent["pair"] = pr.group("ram")
+            sc.gmat["pair"] = np.linalg.inv(sc.world(pr.group("ram"))) @ ram_tgt
+    sc.step("Preparation 2 · mount", "Ram up; both pieces on it, section face down", 3.5, hold=0.4,
+            update=S.together(S.staged((0.0, 0.55, pr.move({"ram": (0.0, 1.0)}))),
+                              S.staged((0.0, 0.45, reach(op, "r", hand_c, hover, grip=(0.6, 0.6), look=tuple(down),
+                                                         lean=16.0)),
+                                       (0.45, 0.7, reach(op, "r", hover, down, grip=(0.6, 0.6))),
+                                       (0.7, 0.8, seat_pair),
+                                       (0.8, 0.9, reach(op, "r", down, hover, grip=(0.6, 0.3))),
+                                       (0.9, 1.0, reach(op, "r", hover, None, grip=(0.3, 0.3), lean=0.0)))),
+            cam_to=S.look(label_pt(pr, (-25.0, -40.0, 470.0)), 800.0, 62.0, 34.0))
     sc.step("Preparation 2 · mount", "Ram down; conductive (carbon-filled) phenolic in | so the SEM won't charge",
             4.0, hold=0.6, update=S.staged((0.0, 0.4, pr.move({"ram": (1.0, 0.0)})),
                                            (0.4, 0.7, pr.move({"doser": (1.0, 0.0), "pour": (0.0, 1.0),
@@ -1216,7 +1258,8 @@ def c3():
             3.5, hold=1.5, update=S.together(S.staged((0.0, 0.35, pr.move({"closure": (0.0, 1.0)})),
                                                       (0.35, 0.6, pr.move({"stopper": (1.0, 0.0)})),
                                                       (0.6, 1.0, pr.move({"ram": (0.47, 1.0)}))),
-                                             fade(sc, two[0] + two[1], 1.0, 0.0)))
+                                             S.staged((0.0, 0.3, reach(op, "r", None, None, lean=0.0))),
+                                             fade(sc, pair, 1.0, 0.0)))
     sc.save()
     au.save()
 
@@ -1237,6 +1280,8 @@ def c4():
                               ("polisher:powder*", "*"), ("polisher:head*", "polisher:body/inst_grey*"),
                               ("polisher:platen*", "polisher:body/inst_grey*")])
     hold_pt = label_pt(pol, (-82.0, -94.5, 300.0))
+    sc.card("Preparation 3 · Grind and polish", ["SiC 320, 800, 1200; 3 and 1 um diamond; 0.05 um colloidal silica "
+                                                  "for Al."], seconds=2.5, label="Preparation 3")
     cam_hold(sc, S.look((0.0, 0.0, BENCH_H + 300.0), 3400.0, -28.0, 14.0))
     sc.step("Preparation 3", "Grind and polish on the LECO PX500 | six mounts in the holder", 3.5, hold=1.0,
             cam_to=S.look((-50.0, -60.0, BENCH_H + 330.0), 1700.0, -32.0, 18.0),
@@ -1284,8 +1329,8 @@ def c5():
     drop_pieces(hood, ("load",), match=("body/r7_pc", "body/r7_keller", "body/water", "body/inst_white",
                                         "body/inst_red"))
     props = MT.etch_props()
-    place = {"keller": (-340.0, -150.0), "ptfe_dish": (-170.0, -270.0), "rinse_dish": (20.0, -270.0),
-             "wash_water": (190.0, -210.0), "wash_ethanol": (290.0, -150.0), "aps": (-440.0, -60.0)}
+    place = {"keller": (-430.0, -110.0), "ptfe_dish": (-170.0, -270.0), "rinse_dish": (20.0, -270.0),
+             "wash_water": (190.0, -210.0), "wash_ethanol": (290.0, -120.0), "aps": (390.0, -230.0)}
     pn = {}
     for k, (x, y) in place.items():
         pn[k] = S.add_entries(sc, S.props(k, props[k]), f"prop/{k}", f"prop_{k}", at=T((x, y, z0)))
@@ -1306,7 +1351,7 @@ def c5():
     S.add_entries(sc, S.props("tongs", tg), "prop/tongs", "tongs")
     add_set(sc, mount_meshes(face_up=False), "mount", "mountg")
     # the operator: HF-rated (neoprene) gloves over nitrile, a face shield over the safety glasses
-    op = person(sc, "op", x=-120.0, y=-720.0, hd=0.0)
+    op = person(sc, "op", x=-120.0, y=-790.0, hd=0.0)
     for n in op.names():
         if n.endswith("/glove"):
             sc.color[n] = S.MATS["neoprene"][:3]
@@ -1315,7 +1360,7 @@ def c5():
 
     def shield_on(sc_):
         Mh = sc_.gmat[op.group] @ op.S[op.bi["head"]]
-        sc_.gmat["shield"] = Mh @ T((hp[0], hp[1] + 10.0, hp[2] - 60.0))
+        sc_.gmat["shield"] = Mh @ T((hp[0], hp[1] + 18.0, hp[2] - 95.0))
     sc.frame_hooks.append(shield_on)
     shield_on(sc)
     au = audit_for(sc, allow=[("prop/*", "fumehood:body/r7_epoxy*"), ("mount/*", "prop/*dish/keller*"),
@@ -1324,26 +1369,13 @@ def c5():
     hood.set(sash=1.0)
     dish = np.array([place["ptfe_dish"][0], place["ptfe_dish"][1], z0])
     rinse = np.array([place["rinse_dish"][0], place["rinse_dish"][1], z0])
-    cam_hold(sc, S.look((300.0, -200.0, 1350.0), 4600.0, -22.0, 12.0))
-    sc.step("Preparation 4", "Etch right after polishing, in the fume hood | Labconco XStream, sash at its 18 in "
-            "stop", 4.0, hold=1.0, cam_to=S.look((150.0, -150.0, 1300.0), 3000.0, -28.0, 14.0))
-    sc.step("Preparation 4 · HF", "Keller's reagent contains HF | 2 mL HF, 3 HCl, 5 HNO3, 190 water",
-            3.5, hold=1.2, cam_to=S.look((-150.0, -220.0, z0 + 60.0), 900.0, 35.0, 34.0),
-            labels=[("Keller's reagent (HF)", (place["keller"][0], place["keller"][1], z0 + 150.0), (0.20, 0.22)),
-                    ("PTFE dish: no glass with HF", (dish[0], dish[1], z0 + 25.0), (0.22, 0.72)),
-                    ("water rinse (PP dish)", (rinse[0], rinse[1], z0 + 25.0), (0.78, 0.72))])
-    sc.step("Preparation 4 · HF", "HF-rated gloves over nitrile, face shield | calcium gluconate gel at hand",
-            3.5, hold=1.5, cam_to=S.look((200.0, -620.0, 1250.0), 1700.0, 62.0, 14.0),
-            labels=[("face shield", (-120.0, -600.0, 1640.0), (0.30, 0.18)),
-                    ("neoprene gloves over nitrile", tuple(op.hand_point("r")), (0.22, 0.62)),
-                    ("2.5 % calcium gluconate gel", (gel_at[0], gel_at[1], gel_at[2] + 28.0), (0.84, 0.70))])
     # the mount, face down in the tongs; the tongs in the right hand (200 mm long, tipped 25 deg down). The tongs
     # follow a planned path and the hand holds their handle, so the mount goes exactly where it is drawn
     tip_rel = np.array([0.0, 181.3, -84.5])
     tongs_R = R((0, 0, 1), 90.0) @ R((0, 1, 0), 25.0)
     sc.gmat["mountg"] = T((200.0, 0.0, 0.0)) @ R((0, 1, 0), -25.0) @ T((0.0, 0.0, -10.0))
     sc.parent["mountg"] = "tongs"
-    grip_off = np.array([0.0, -25.0, 18.0])            # the palm on the handle, just behind the hinge
+    grip_off = np.array([0.0, 30.0, 14.0])             # the palm on the legs, 30 mm past the hinge
 
     def tongs_at(tip):
         tip = np.asarray(tip, float)
@@ -1359,10 +1391,26 @@ def c5():
             op.set(hands={"r": tuple(hand)}, grip={"r": 0.8}, look=tuple(look))
         return up
     tip0 = dish + np.array([0.0, -70.0, 130.0])
-    op.set(hands={"r": tuple(tongs_at(tip0))}, grip={"r": 0.8}, lean=8.0, look=tuple(dish + np.array([0, 0, 30.0])))
+    op.set(hands={"r": tuple(tongs_at(tip0))}, grip={"r": 0.8}, lean=4.0, look=tuple(dish + np.array([0, 0, 30.0])))
+    sc.card("Preparation 4 · Etch", ["Al: Keller's reagent, 10-20 s. It contains HF.",
+                                      "Cu alloys: ammonium persulfate or ferric chloride."], seconds=2.5,
+            label="Preparation 4")
+    cam_hold(sc, S.look((300.0, -200.0, 1350.0), 4800.0, 30.0, 12.0))
+    sc.step("Preparation 4", "Etch right after polishing, in the fume hood | Labconco XStream, sash at its 18 in "
+            "stop", 4.0, hold=1.0, cam_to=S.look((150.0, -250.0, 1300.0), 3200.0, 36.0, 14.0))
+    sc.step("Preparation 4 · HF", "Keller's reagent contains HF | 2 mL HF, 3 HCl, 5 HNO3, 190 water",
+            3.5, hold=1.2, cam_to=S.look((-150.0, -220.0, z0 + 60.0), 900.0, 35.0, 34.0),
+            labels=[("Keller's reagent (HF)", (place["keller"][0], place["keller"][1], z0 + 150.0), (0.20, 0.22)),
+                    ("PTFE dish: no glass with HF", (dish[0], dish[1], z0 + 25.0), (0.22, 0.72)),
+                    ("water rinse (PP dish)", (rinse[0], rinse[1], z0 + 25.0), (0.78, 0.72))])
+    sc.step("Preparation 4 · HF", "HF-rated gloves over nitrile, face shield | calcium gluconate gel at hand",
+            3.5, hold=1.5, cam_to=S.look((200.0, -620.0, 1250.0), 1700.0, 62.0, 14.0),
+            labels=[("face shield", (-120.0, -680.0, 1640.0), (0.30, 0.18)),
+                    ("neoprene gloves over nitrile", tuple(op.hand_point("r")), (0.22, 0.62)),
+                    ("2.5 % calcium gluconate gel", (gel_at[0], gel_at[1], gel_at[2] + 28.0), (0.84, 0.70))])
     above = dish + np.array([0.0, 0.0, 85.0])
     inside = dish + np.array([0.0, 0.0, 21.0])
-    close = S.look(dish + np.array([30.0, 0.0, 40.0]), 520.0, 50.0, 24.0)
+    close = S.look(dish + np.array([20.0, 0.0, 50.0]), 480.0, 48.0, 12.0)
     sc.step("Preparation 4 · Al", "Polished face down into Keller's | plastic tongs", 3.0, hold=0.2,
             update=move_tip(tip0, above, dish), cam_to=close)
     sc.step("Preparation 4 · Al", "10-20 s, then straight out | 15 s here", 4.0, hold=0.3,
@@ -1373,13 +1421,13 @@ def c5():
     sc.step("Preparation 4 · rinse", "Rinse in water at once | then a stream from the wash bottle", 4.0, hold=0.3,
             update=S.staged((0.0, 0.45, move_tip(above, above_r, rinse)), (0.45, 0.65, move_tip(above_r, in_r, rinse)),
                             (0.8, 1.0, move_tip(in_r, above_r, rinse))),
-            cam_to=S.look(rinse + np.array([0.0, 0.0, 40.0]), 560.0, 50.0, 24.0))
+            cam_to=S.look(rinse + np.array([0.0, 0.0, 50.0]), 520.0, 48.0, 12.0))
     sc.step("Preparation 4 · rinse", "Ethanol, then the hot-air dryer | on the side bench", 3.0,
             hold=1.0, cam_to=S.look((450.0, -250.0, z0 + 80.0), 1700.0, 40.0, 18.0),
             labels=[("ethanol", (place["wash_ethanol"][0], place["wash_ethanol"][1], z0 + 160.0), (0.56, 0.20)),
                     ("hot-air dryer", (1000.0, -80.0, BENCH_H + 160.0), (0.86, 0.35))])
     sc.step("Preparation 4 · Cu", "Cu alloys: ammonium persulfate or ferric chloride | instead of Keller's", 3.5,
-            hold=1.5, cam_to=S.look((place["aps"][0], place["aps"][1], z0 + 60.0), 700.0, 30.0, 26.0),
+            hold=1.5, cam_to=S.look((place["aps"][0], place["aps"][1], z0 + 60.0), 750.0, -20.0, 28.0),
             labels=[("ammonium persulfate: 10 g in 90 mL water", (place["aps"][0], place["aps"][1], z0 + 120.0),
                      (0.30, 0.22))])
     sc.save()
@@ -1396,13 +1444,16 @@ def c6():
     sem = S.place(sc, "sem", 520.0, 20.0)
     vhx_clear(vhx)
     drop_pieces(sem, ("readout",))
+    sem.set(stub=1.0)                                    # a mount of the same row, already in the SEM's cup
     zs = 232.0
     mnt = add_set(sc, mount_meshes(face_up=True), "mount", "mountg", at=T((0.0, -40.0, zs)),
                   parent=vhx.group("turntable"))
     vhx.set(table=0.0)
     au = audit_for(sc, allow=[("mount/*", "vhx:turntable*"), ("mount/*", "vhx:table*"),
-                              ("sem:stub*", "sem:drawer*"), ("vhx:table*", "vhx:turntable*")])
+                              ("sem:stub*", "sem:drawer*"), ("sem:drawer*", "sem:body*"), ("vhx:table*", "vhx:turntable*"), ("vhx:body*", "vhx:table*")])
     stage_w = (-450.0, -40.0, BENCH_H + zs + 20.0)
+    sc.card("Preparation 5 · Image and measure", ["Every track at one fixed magnification; width, depth, height and "
+                                                   "fused area in Fiji."], seconds=2.5, label="Preparation 5")
     cam_hold(sc, S.look((0.0, 0.0, BENCH_H + 250.0), 3000.0, -20.0, 15.0))
     sc.step("Preparation 5", "Image each track at one fixed magnification | optical, 200x", 4.0, hold=1.0,
             cam_to=S.look(stage_w, 900.0, -40.0, 22.0),
@@ -1473,9 +1524,12 @@ def c7():
     vhx_clear(vhx)
     add_set(sc, mount_meshes(face_up=True), "mount", "mountg", at=T((0.0, -40.0, 232.0)),
             parent=vhx.group("turntable"))
-    au = audit_for(sc, allow=[("mount/*", "vhx:turntable*")])
+    au = audit_for(sc, allow=[("mount/*", "vhx:turntable*"), ("vhx:table*", "vhx:turntable*"),
+                              ("vhx:body*", "vhx:table*")])
     m = d["material"]
     rect = (0.64, 0.09, 0.34)
+    sc.card("Analysis and acceptance", ["melt_pool_calibration.py: absorptivity from conduction tracks, Ke for "
+                                         "every track, the AM Module's bias."], seconds=2.5, label="Analysis")
     cam_hold(sc, S.look((-150.0, 0.0, BENCH_H + 280.0), 1900.0, -24.0, 14.0))
     sc.panel("inputs", _cached(panel_table, "Inputs, from our own measurements",
                                [("T_liquidus", "SOP 01 (DSC)"), ("k, thermal conductivity",
@@ -1496,10 +1550,11 @@ def c7():
            ("acc", panel_acceptance, "Acceptance", "Acceptance: 3+ conduction and 3+ keyhole tracks | controls "
                                                    "within 5 %; eta within 0.03 leaving one out")]
     prev = "inputs"
-    for key, fn, label, cap in seq:
+    for i, (key, fn, label, cap) in enumerate(seq):
         sc.panel(key, _cached(fn, d), rect=rect, alpha=0.0)
         sc.step(label, cap, 4.5, hold=2.5, update=S.together(sc.fade_panel(prev, 1.0, 0.0),
-                                                              sc.fade_panel(key, 0.0, 1.0)))
+                                                              sc.fade_panel(key, 0.0, 1.0)),
+                cam_to=S.look((-250.0, 0.0, BENCH_H + 280.0), 1500.0 - 40.0 * i, -30.0 + 5.0 * i, 14.0 + 1.0 * i))
         prev = key
     sc.step("Acceptance", "Bare-plate tracks get the same checks | per alloy and substrate condition", 3.0, hold=1.5,
             update=sc.fade_panel(prev, 1.0, 0.0), cam_to=S.look((-150.0, 0.0, BENCH_H + 280.0), 1900.0, -24.0, 14.0))
@@ -1514,6 +1569,147 @@ def c7():
     au.save()
 
 
+
+# ================================================================================= notes/sop02.md
+SOP_MAP = [
+    ("Checks: width, depth, D/W, regime, balling; calibrates the AM Module heat source (#238, #249)",
+     ["SOP 02 · Single tracks and the heat-source fit"]),
+    ("Plate layout, cutting and mounting follow the M2 plan of PR #243", ["SOP 02 · Single tracks and the heat-source fit",
+                                                                         "A 10 mm strip"]),
+    ("Samples: which machine (desktop #260, Utah MIDI P1, BYU M2 #243)", ["Utah's Aconity MIDI"]),
+    ("Samples: tracks 12 mm long at 2 mm spacing", ["18 tracks, 12 mm long"]),
+    ("Samples: all scanned in one direction across or into the gas flow", ["Each track scanned across the gas flow",
+                                                                           "18 tracks, 12 mm long"]),
+    ("Samples: exposed from the outlet side toward the inlet", ["18 tracks, 12 mm long", "Block A: random positions"]),
+    ("Samples: scrambled-Sobol power-speed blocks, not a grid", ["Scrambled-Sobol power-speed blocks"]),
+    ("Samples: repeated control sets on every plate", ["Scrambled-Sobol power-speed blocks", "Block A: random positions"]),
+    ("Samples: substrate 6061/6063 for Al, a Cu alloy for Cu, or a printed pad", ["Substrate: a 6061 plate"]),
+    ("Samples: bare-plate tracks calibrate the absorptivity of dense metal", ["Bare-plate tracks first"]),
+    ("Samples: one-powder-layer tracks (30-50 um) reproduce LPBF", ["Then one powder layer", "Per alloy: bare-plate"]),
+    ("Samples: a few grams of powder for one layer; fits the 100-300 g atomized", ["About 1.2 g covers"]),
+    ("Preparation 1: top views of every track at 50-100x: continuity, balling, denudation width",
+     ["Image first", "Each track at 50-100x", "Denuded band", "Bare-plate tracks: continuity"]),
+    ("Preparation 2: section at mid-length", ["Section every track at mid-length", "The fine cut",
+                                              "Micrometer: cut 0.5 mm", "~300 rpm"]),
+    ("Preparation 2: hot-mount in conductive compound (#243 section 3)", ["Hot-mount both pieces",
+                                                                          "Ram down; conductive"]),
+    ("Preparation 3: SiC 320 -> 800 -> 1200", ["SiC 320, water", "SiC 800, water", "SiC 1200, water"]),
+    ("Preparation 3: then 3 um and 1 um diamond", ["3 um diamond", "1 um diamond"]),
+    ("Preparation 3: for Al, 0.05 um colloidal silica", ["Al: 0.05 um colloidal silica"]),
+    ("Preparation 4: Al: Keller's reagent, 10-20 s", ["Keller's reagent contains HF", "10-20 s, then straight out"]),
+    ("Preparation 4: HF: fume hood, HF-rated gloves, calcium gluconate gel at hand",
+     ["Etch right after polishing, in the fume hood", "HF-rated gloves over nitrile"]),
+    ("Preparation 4: Cu alloys: ammonium persulfate or ferric chloride", ["Cu alloys: ammonium persulfate"]),
+    ("Preparation 4: etch right after polishing", ["Mirror finish; etch straight away", "Etch right after polishing"]),
+    ("Preparation 5: image each track at a fixed magnification (optical 200x or SEM-BSE)",
+     ["Image each track at one fixed magnification", "Or SEM-BSE"]),
+    ("Preparation 5: measure in Fiji W, D, H, fused area", ["Fiji: W at the original surface", "Set the scale once"]),
+    ("Preparation 5: on one plate grind 1.5 mm further and section again (along-track scatter)",
+     ["On one plate: grind 1.5 mm further"]),
+    ("Time: ~18 tracks per mount, 3-4 h per batch, ~2 h to measure 72 tracks", ["About 18 tracks per mount"]),
+    ("Analysis: inputs T_liquidus (SOP 01), k (SOP 04 / LFA), rho (SOP 03), cp (DSC), r0 (beam profile)",
+     ["Inputs: T_liquidus"]),
+    ("Analysis: fit on conduction-mode tracks only (D/W < 0.5); the fitted absorptivity",
+     ["Fit on conduction tracks only"]),
+    ("Analysis: width-only absorptivity per track, rising with P/v", ["Width-only absorptivity"]),
+    ("Analysis: Ke per track", ["Ke for each track"]),
+    ("Analysis: the AM Module's bias and RMSE", ["The AM Module's bias and RMSE"]),
+    ("Analysis: a single Ke threshold for keyhole onset (#249)", ["Ke for each track"]),
+    ("Acceptance: >= 3 conduction and >= 3 keyhole tracks per alloy and substrate condition",
+     ["Acceptance: 3+ conduction", "Bare-plate tracks get the same checks"]),
+    ("Acceptance: controls repeat within +-5 % in width", ["Acceptance: 3+ conduction"]),
+    ("Acceptance: absorptivity stable within +-0.03 leaving any one track out", ["Acceptance: 3+ conduction"]),
+    ("Open questions: desktop machine (#260) or Utah MIDI (P1, Dec 2-3)?; AM Module grid export as CSV",
+     ["Open questions"]),
+]
+
+
+def write_notes() -> Path:
+    meta = json.loads((S.OUT / "sop02.json").read_text())
+    fps = meta["fps"]
+    subs = meta["substeps"]
+
+    def t(fr):
+        sec = fr / fps
+        return f"{int(sec // 60)}:{sec % 60:04.1f}"
+    rows = []
+    for line, keys in SOP_MAP:
+        hits = []
+        for k in keys:
+            for s_ in subs:
+                if s_["caption"].startswith(k) or (s_.get("card") and k in s_["caption"]):
+                    hits.append(f"{t(s_['start_frame'])}-{t(s_['end_frame'])} ({s_['chapter'][-2:]}, "
+                                f"\"{s_['caption'][:48]}\")")
+                    break
+        rows.append(f"| {line} | {'; '.join(hits) if hits else '**not found**'} |")
+    out = HERE / "notes" / "sop02.md"
+    body = NOTES_HEAD + "\n".join(rows) + "\n" + NOTES_TAIL.format(
+        dur=f"{meta['n_frames'] / fps:.0f}", n=len(subs), chapters=", ".join(meta["chapters"]))
+    out.write_text(body)
+    return out
+
+
+NOTES_HEAD = """# SOP 02 in 3-D: what each line of the SOP maps to
+
+The video: `out/mp4/sop02.mp4` (chapters `sop02_c1` ... `sop02_c7`), its sub-steps on the joined clock in
+`out/sop02.json`, a contact sheet `out/sop02_steps.jpg` and a preview `out/sop02_preview.gif`. Script:
+`sop02_tracks.py`. Times below are on the joined clock (m:ss).
+
+| SOP line | Sub-step(s) that show it |
+|---|---|
+"""
+
+NOTES_TAIL = """
+Length: {dur} s, {n} sub-steps, chapters {chapters}.
+
+## Equipment and what it rests on
+
+| Station | Model | Validation |
+|---|---|---|
+| Build area at the plate | `lpbf_chamber` (ours) | plate, layer and tracks at real size (DAL PR #169, #243); the chamber's inside a typical layout (notes/lpbf_chamber.md) |
+| Printer, context | `lpbf_exterior`: byu-vcl's Aconity MIDI | Aconity's configurator data and photos (byu-vcl) |
+| Section | `precision_saw`: LECO VC50 (ours) | registered: two views fitted (5.9, 11.5 px), two held out (30, 28 px); notes/precision_saw.md |
+| Hot mount | `mount_press`: LECO MX400 (byu-vcl) | the lab's own video |
+| Grind and polish | `polisher`: LECO PX500 (byu-vcl) | fitted to the lab's SOP videos |
+| Etch | `fumehood`: Labconco XStream (byu-vcl); etching props (ours, `models_track.etch_props`) | catalogue sizes |
+| Top views, sections | `vhx`: Keyence VHX-7000 (byu-vcl) | fitted to Keyence's video |
+| SEM-BSE | `sem`: Hitachi TM4000PlusII (byu-vcl) | fitted |
+
+## Sources for the details on screen
+
+- The SOP (`../sops/02-single-track-melt-pool.md`) and PR #243's `lpbf-runs/m2-single-track-schedule.md` (§3 cutting
+  without wire EDM, §4 the track layout, the order and direction of exposure, the second plane).
+- Edison literature answer `edison/v2-metallography-density/answer.md` (and artifacts 00-02): the 40 um layer for
+  AlSi10Mg single tracks (Aboulkhair et al.), ~70 um spot at focus on Aconity systems (Maddison 2022), argon cross-flow
+  at 2.5-4 m/s, top views by stereo/digital microscope; hot mounting at 150-180 C with 6 min heat and 3 min cool on a
+  25 mm mould, graphite-filled phenolic for SEM; the Al sequence (ASTM MNL46 method C-42: SiC to P1200 and beyond, 3 and
+  1 um diamond, colloidal silica at 15 N, contra-rotation, 1-2 min; platen 300/150 rpm, 25 N per specimen); Keller's
+  reagent (2 mL HF, 3 mL HCl, 5 mL HNO3, 190 mL water; 10-20 s; rinse at once), HF precautions (fume hood, HF-rated
+  neoprene or nitrile gloves, face shield, 2.5 % calcium gluconate gel at the workstation); Cu etchants (FeCl3 / HCl,
+  ammonium persulfate 10 g in 90 mL water); Fiji: Set Scale, line tool for W, D, H, freehand selection for the area,
+  three or more spots in the steady part of each track.
+- LECO VC50 brochure (form 200-952) for the saw; byu-vcl's notes for the reused models.
+
+## Data on screen
+
+Every plot is drawn from `out/sop02_data.json`, made by `sop02_tracks.data()`: 72 synthetic one-layer tracks (four
+scrambled-Sobol blocks of 16, 100-370 W and 500-3000 mm/s, plus two controls at 300 W and 1300 mm/s per block) and 18
+bare-plate tracks, their widths and depths from the repo's Eagar-Tsai field (`melt_pool_calibration.TrackField`, on a
+coarser grid that agrees to 0.1 um) with an absorptivity that rises with Ke and a keyhole deepening, plus 2-5 % noise.
+The fit, the width-only absorptivity, Ke and the AM Module comparison are the repo's own `fit_eta`,
+`keyhole_number` and `compare_am_module`; the "AM Module" is Eagar-Tsai at eta = 0.36 standing in for its CSV export.
+Every panel says "synthetic example" (the design panel: "design, illustrative window"; the time panel: "estimate").
+
+## Left out, and why
+
+- The bandsaw that cuts the strip out of the plate (#243 §3) is not modelled; the strip appears cut, and the caption
+  says so.
+- Paper and cloth changes on the polisher are fades, as in byu-vcl's PX500 clip; the operator is not drawn there.
+- The second piece of each row is cut the same way as the first; the video shows the first and says so.
+- The machine's own steps (job file, inerting, the laser's parameters in the software) belong to the printing SOP, not
+  this one.
+"""
+
 if __name__ == "__main__":
     arg = sys.argv[1] if len(sys.argv) > 1 else "sop02_c1"
     if arg == "data":
@@ -1525,5 +1721,8 @@ if __name__ == "__main__":
         print(S.join("sop02", parts))
         print(S.contact_sheet("sop02"))
         print(S.preview_gif("sop02"))
+        print(write_notes())
+    elif arg == "notes":
+        print(write_notes())
     else:
         run(arg)

@@ -270,13 +270,24 @@ def check(model_size: str = "base.en"):
 
 def _norm(s: str) -> str:
     from num2words import num2words
-    s = s.replace("°", " degrees").replace("%", " percent")
+    s = s.replace("°", " degrees").replace("%", " percent ")
+    s = re.sub(r"(?<=[A-Za-z])(?=\d)", " ", s)
     s = re.sub(r"(\d),(\d{3})", r"\1\2", s)
     s = re.sub(r"\d+(\.\d+)?", lambda m: " " + num2words(float(m.group()) if "." in m.group() else int(m.group()))
                + " ", s)
+    s = re.sub(r"(?<=[A-Z])-(?=[A-Z])", "", s)                   # ICP-OES -> ICPOES
+    s = re.sub(r"(?<=[A-Z])(?=\d)|(?<=\d)(?=[A-Z])", " ", s)       # HV0.5 -> HV 0.5
     s = s.lower().replace("-", " ")
     s = re.sub(r"[^a-z' ]", " ", s)
-    return " ".join(s.split())
+    out, single = [], False
+    for w in s.split():                       # letters said one by one, written as one word: i c p -> icp
+        one = len(w) == 1 and w != "a"
+        if one and single:
+            out[-1] += w
+        else:
+            out.append(w)
+        single = one
+    return " ".join(out)
 
 
 # =================================================================================================== small copies

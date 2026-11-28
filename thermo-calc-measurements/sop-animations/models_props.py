@@ -247,12 +247,52 @@ def lab_timer() -> Model:
     return m
 
 
+def tc_reader() -> Model:
+    """A handheld type K thermocouple reader, 75 x 32 x 150 mm, on its tilt stand; the display faces -y."""
+    m = Model("p4_tc_reader", "Thermocouple reader")
+    m.add("case", rbox(75, 32, 150, 8).edges(">Z").fillet(5), "p4_yellow")
+    m.add("lcd", box(-28, -16.6, 92, 28, -16.0, 132), "p4_lcd")
+    for i, x in enumerate((-18, 0, 18)):
+        m.add(f"key {i}", _ycyl(10, 2.0, x=x, y=-16.0, z=60), "p4_dark")
+    m.add("socket", box(-12, -6, 150, 12, 6, 158), "p4_dark")
+    return m
+
+
 def thermometer() -> Model:
     """A digital room thermometer / hygrometer, 100 x 25 x 100 mm, on its stand; the display faces -y."""
     m = Model("p4_thermometer", "Room thermometer")
     m.add("case", rbox(100, 22, 100, 8).edges(">Z").fillet(6), "p4_white")
     m.add("lcd", box(-42, -11.6, 26, 42, -11.0, 88), "p4_lcd")
     m.add("stand", box(-40, 8, 0, 40, 30, 3), "p4_white")
+    return m
+
+
+def tweezers() -> Model:
+    """Straight lab tweezers, 120 mm: the tips at the origin, the handle towards +x."""
+    m = Model("p4_tweezers", "Tweezers, 120 mm")
+    for s_ in (-1, 1):
+        blade = (cq.Workplane("XY").polyline([(0, 0.2 * s_), (0, 1.2 * s_), (118, 4.5 * s_), (118, 1.0 * s_)]).close()
+                 .extrude(1.0).translate((0, 0, -0.5)))
+        m.add(f"blade {s_}", blade, "p4_steel")
+    m.add("hinge", box(110, -4.5, -0.6, 120, 4.5, 0.6), "p4_steel")
+    return m
+
+
+def lfa_disc(coated: bool = False) -> Model:
+    """A laser-flash disc, 12.7 mm x 2.5 mm (NETZSCH's reference size), bare or sprayed with graphite."""
+    m = Model("p4_disc", "LFA disc 12.7 x 2.5 mm")
+    m.add("disc", cyl(12.7, 2.5), "p4_graphite" if coated else "p4_coupon")
+    return m
+
+
+def spray_can() -> Model:
+    """A 400 mL aerosol can of graphite spray, 65 x 200 mm."""
+    m = Model("p4_spray", "Graphite spray")
+    m.add("can", cyl(65, 170).edges(">Z").fillet(8), "p4_black")
+    m.add("shoulder", cq.Workplane("XY").circle(31).workplane(offset=18).circle(14).loft().translate((0, 0, 170)),
+          "p4_grey")
+    m.add("cap", cyl(18, 12, z=188), "p4_white")
+    m.add("label", tube(65.4, 64.6, 70, z=50), "p4_white")
     return m
 
 
@@ -371,7 +411,7 @@ def hv_manual() -> Instrument:
     wheel = wheel.union(_xcyl(14, 30, x=-w / 2 - 50, y=ay + 40, z=90 + 46))
     hw.add("handwheel", wheel, "p4_mitu_dk")
     sz = _piece(inst, "stage_z")
-    sz.add("elevating screw", cyl(90, 150, x=ax, y=ay, z=p["base_h"] - 90), "p4_mitu_dk")
+    sz.add("elevating screw", cyl(90, 120, x=ax, y=ay, z=p["base_h"] - 60), "p4_mitu_dk")
     sz.add("Y carriage", box(-90, ay - 90, 200, 90, ay + 90, 222), "p4_mitu_dk")
     sy = _piece(inst, "stage_y")
     sy.add("X carriage", box(-75, ay - 65, 222, 75, ay + 65, 244), "p4_mitu_dk")
@@ -440,9 +480,9 @@ SPECS["hv_manual"] = [
 # the F1-F4 row, the navigation block round the F key, the 4 x 3 number block, the connector block at the top end) are
 # read off Foerster's "SIGMATEST Unpacking and Setup" video (youtu.be/l8calAolJpM, 4:32-4:38, top down) and fitted
 # with register.py (refs/eddy_meter/). Frame: the meter lying face up, its display end towards +y.
-EDDY = dict(W=102.0, L=211.0, T=40.0, taper=7.0, waist_hw=40.0, waist_y=-18.0, bot_hw=50.4, face_hw=36.0, face_t=3.0,
-            bez_w=69.0, bez_h=78.0, bez_y=61.0, scr_w=54.0, scr_h=65.0, scr_y=58.6, key_px=14.2, f_row_y=6.5,
-            nav_y=-23.7, num_y0=-53.0, num_dy=15.5, conn_w=60.0, conn_x=4.3, conn_l=12.0, probe_head=8.0)
+EDDY = dict(W=102.0, L=211.0, T=40.0, taper=7.0, waist_hw=40.9, waist_y=-18.6, bot_hw=50.0, face_hw=36.0, face_t=3.0,
+            bez_w=69.0, bez_h=78.0, bez_y=61.0, scr_w=57.1, scr_h=73.7, scr_y=56.4, key_px=14.5, f_row_y=6.4,
+            nav_y=-23.8, num_y0=-53.0, num_dy=15.2, conn_w=60.0, conn_x=4.3, conn_l=12.0, probe_head=8.0)
 
 
 def _eddy_hw(p, y):
@@ -621,6 +661,152 @@ SPECS["eddy_meter"] = [
 ]
 
 
+
+# ===================================================================================================== laser flash
+# NETZSCH LFA 717 HyperFlash (successor of the LFA 467; README section 5.1), drawn as at the contract lab. NETZSCH's
+# specification sheet: -100 to 500 C (LN2 cooling to -100 C); xenon flash lamp, up to 10 J a pulse, 10-1500 us; InSb
+# or MCT detector, LN2-cooled; sample changer of 4 holders x 4 samples (16 x 12.7 mm round or 10 mm square, or 4 x
+# 25.4 mm); samples 0.01-6 mm thick; vertical layout, the flash at the bottom, the sample in the middle, the detector
+# on top (LFA 467 brochure p.4). NETZSCH publishes no external dimensions: the width (620 mm) is an estimate from the
+# operator beside a HyperFlash in NETZSCH's e-learning video (youtu.be/vkHcL_8jTZE, 1:35), and the proportions are read
+# off NETZSCH's LFA 717 product video (youtu.be/vxowKxtTS0A, 0:06 front, 0:52 three-quarter), then fitted with
+# register.py (refs/laser_flash/). Look: a white box on a dark grey plinth, a dark front panel with the touch display
+# wrapping over the front edge, teal light strips along the top edges, the detector's white tower with a grey collar
+# left of centre on top, a block behind it; the loading opening in the top cover in front of the tower.
+LFA = dict(W=620.0, D=626.1, base_h=349.0, plinth_h=49.9, panel_w=296.4, panel_h=134.7, panel_x=0.0,
+           disp_w=175.0, disp_h=50.0, tower_d=147.6, tower_h=191.1, collar_d=148.0, collar_h=36.5, tower_x=-99.4,
+           tower_y=40.0, block_w=222.2, block_h=139.7, block_d=150.0, open_w=160.0, open_d=120.0, open_y=-150.0)
+
+
+def lfa_anchors(p, pose=None) -> dict:
+    W, D, H = p["W"], p["D"], p["base_h"]
+    yf = -D / 2
+    a = {"base front top left": (-W / 2, yf, H), "base front top right": (W / 2, yf, H),
+         "plinth front left": (-W / 2 + 8, yf + 8, p["plinth_h"]), "plinth front right": (W / 2 - 8, yf + 8, p["plinth_h"]),
+         "panel bottom left": (p["panel_x"] - p["panel_w"] / 2 + 12, yf - 10, H - p["panel_h"]),
+         "panel bottom right": (p["panel_x"] + p["panel_w"] / 2 - 12, yf - 10, H - p["panel_h"]),
+         "display tl": (p["panel_x"] - p["disp_w"] / 2, yf - 12, H - 14), "display tr": (p["panel_x"] + p["disp_w"] / 2,
+                                                                                       yf - 12, H - 14),
+         "display bl": (p["panel_x"] - p["disp_w"] / 2, yf - 12, H - 14 - p["disp_h"]),
+         "display br": (p["panel_x"] + p["disp_w"] / 2, yf - 12, H - 14 - p["disp_h"]),
+         "tower top": ("circle", (p["tower_x"], p["tower_y"], H + p["collar_h"] + p["tower_h"]), p["tower_d"] / 2),
+         "collar top": ("circle", (p["tower_x"], p["tower_y"], H + p["collar_h"]), p["collar_d"] / 2),
+         "block top left": (p["tower_x"] - p["block_w"] / 2, p["tower_y"] - p["block_d"] / 2 + 40, H + p["block_h"]),
+         "block top right": (p["tower_x"] + p["block_w"] / 2, p["tower_y"] - p["block_d"] / 2 + 40, H + p["block_h"]),
+         "left side": ("line", (-W / 2, yf, H - 40), (-W / 2, yf, p["plinth_h"] + 30)),
+         "right side": ("line", (W / 2, yf, H - 40), (W / 2, yf, p["plinth_h"] + 30)),
+         "top back left": (-W / 2, D / 2, H)}
+    return a
+
+
+def laser_flash() -> Instrument:
+    p = LFA
+    W, D, H = p["W"], p["D"], p["base_h"]
+    yf = -D / 2
+    inst = Instrument("laser_flash", "Flash thermal diffusivity analyser (contract lab)", "NETZSCH LFA 717 HyperFlash",
+                      (W, D, round(H + p["collar_h"] + p["tower_h"])),
+                      "NETZSCH LFA 717 specification sheet (ranges, changer); dimensions not published: estimated "
+                      "from NETZSCH's videos and fitted with register.py")
+    body = _piece(inst, "body")
+    ph = p["plinth_h"]
+    body.add("feet", cyl(30, 12, x=-W / 2 + 50, y=yf + 50).union(cyl(30, 12, x=W / 2 - 50, y=yf + 50))
+             .union(cyl(30, 12, x=-W / 2 + 50, y=D / 2 - 50)).union(cyl(30, 12, x=W / 2 - 50, y=D / 2 - 50)),
+             "p4_black")
+    body.add("plinth", box(-W / 2 + 6, yf + 6, 12, W / 2 - 6, D / 2 - 6, ph), "p4_dark")
+    ox, oy, ow, od = p["tower_x"], p["open_y"], p["open_w"], p["open_d"]
+    shell = box(-W / 2, yf, ph, W / 2, D / 2, H).edges("|Z").fillet(8)
+    shell = shell.cut(box(ox - ow / 2, oy - od / 2, H - 70, ox + ow / 2, oy + od / 2, H + 1))   # the loading well
+    zc0 = H - 58.0
+    shell = shell.cut(box(ox - 76, oy - 56, zc0 - 9, ox + 76, p["tower_y"] + 62, zc0 + 13))      # the changer's run
+    body.add("housing", shell, "p4_white")
+    body.add("top cover", box(-W / 2 + 4, yf + 4, H, W / 2 - 4, D / 2 - 4, H + 2).cut(
+        box(ox - ow / 2, oy - od / 2, H - 1, ox + ow / 2, oy + od / 2, H + 3)), "p4_light")
+    for sx in (-1, 1):                                    # the teal light strips along the top front edges
+        x0 = p["panel_x"] + sx * (p["panel_w"] / 2 + 8)
+        x1 = sx * (W / 2 - 6)
+        xa, xb = sorted((x0, x1))
+        body.add(f"light strip {sx}", box(xa, yf - 1.5, H - 12, xb, yf + 0.5, H - 4), "p4_netzsch_green")
+    pw, pnh = p["panel_w"], p["panel_h"]
+    panel = (cq.Workplane("YZ").polyline([(yf - 14, H - pnh), (yf + 2, H - pnh), (yf + 2, H + 2), (yf + 40, H + 2),
+                                          (yf + 40, H + 6), (yf - 6, H + 6), (yf - 14, H - 10)]).close()
+             .extrude(pw).translate((p["panel_x"] - pw / 2, 0, 0)))
+    body.add("front panel", panel, "p4_netzsch_dk")
+    dw, dh = p["disp_w"], p["disp_h"]
+    disp = box(-dw / 2, -1.0, -dh, dw / 2, 0.0, 0.0).rotate((0, 0, 0), (1, 0, 0), -6.0).translate(
+        (p["panel_x"], yf - 12.6, H - 14))
+    body.add("display", disp, "p4_screen")
+    tx, ty = p["tower_x"], p["tower_y"]
+    body.add("rear block", box(tx - p["block_w"] / 2, ty - p["block_d"] / 2 + 40, H, tx + p["block_w"] / 2,
+                               ty + p["block_d"] / 2 + 40, H + p["block_h"]).edges("|Z").fillet(10), "p4_offwhite")
+    body.add("detector collar", cyl(p["collar_d"], p["collar_h"], x=tx, y=ty, z=H), "p4_grey")
+    body.add("detector tower", cyl(p["tower_d"], p["tower_h"] - 8, x=tx, y=ty, z=H + p["collar_h"])
+             .edges(">Z").fillet(6), "p4_white")
+    body.add("dewar cap", cyl(36, 14, x=tx, y=ty, z=H + p["collar_h"] + p["tower_h"] - 8), "p4_steel")
+    # the loading lid over the well, hinged at its back edge
+    lid = _piece(inst, "lid")
+    lid.add("lid", box(ox - ow / 2 - 6, oy - od / 2 - 6, H + 2, ox + ow / 2 + 6, oy + od / 2 + 6, H + 12)
+            .edges("|Z").fillet(6), "p4_light")
+    lid.add("lid knob", cyl(26, 14, x=ox, y=oy - od / 2 + 12, z=H + 12), "p4_black")
+    # the sample changer in the well: a plate with four holders, four sample places each (12.7 mm)
+    ch = _piece(inst, "changer")
+    zc = H - 58.0
+    ch.add("holder plate", box(ox - 70, oy - 52, zc - 6, ox + 70, oy + 52, zc), "p4_steel")
+    for i, (hx, hy) in enumerate(((-33, -24), (33, -24), (-33, 24), (33, 24))):
+        holder = cyl(54, 8, x=ox + hx, y=oy + hy, z=zc)
+        for k, (sx_, sy_) in enumerate(((-11, -11), (11, -11), (-11, 11), (11, 11))):
+            holder = holder.cut(cyl(13.4, 6, x=ox + hx + sx_, y=oy + hy + sy_, z=zc + 3)).cut(
+                cyl(9.0, 10, x=ox + hx + sx_, y=oy + hy + sy_, z=zc - 1))
+        ch.add(f"holder {i + 1}", holder, "p4_sic")
+    # inside, for the cutaway: the flash lamp under the measuring place, the furnace round it, the detector above
+    ins = _piece(inst, "internals")
+    mx, my = ox, p["tower_y"]                             # the measuring place: under the detector
+    ins.add("xenon lamp housing", cyl(96, 70, x=mx, y=my, z=ph + 20), "p4_grey")
+    ins.add("reflector", cq.Workplane("XY").circle(40).workplane(offset=30).circle(18).loft()
+            .translate((mx, my, ph + 90)), "p4_steel")
+    ins.add("xenon lamp", cyl(14, 22, x=mx, y=my, z=ph + 96), "p4_glow_lamp")
+    ins.add("light guide", cyl(16, zc - 6 - (ph + 120) - 8, x=mx, y=my, z=ph + 120), "p4_glass")
+    ins.add("furnace", tube(130, 104, 50, x=mx, y=my, z=zc - 30), "p4_hot")
+    ins.add("optics", cq.Workplane("XY").circle(10).workplane(offset=H + 30 - (zc + 10)).circle(28).loft()
+            .translate((mx, my, zc + 10)), "p4_glass")
+    ins.add("IR detector", cyl(40, 50, x=mx, y=my, z=H + 30), "p4_dark")
+    ins.add("detector dewar", cyl(100, 110, x=tx, y=ty, z=H + p["collar_h"] + 20), "p4_steel")
+    inst.joints = {"lid": Joint("hinge", axis=(1, 0, 0), pivot=(0, oy + od / 2 + 6, H + 12), deg=-105.0),
+                   "changer": Joint("slide", vec=(0, 1.0, 0)),          # v in mm back, to the detector
+                   "internals": Joint("fade")}
+    inst.anchors = lfa_anchors(p)
+    inst.props = ("internals",)
+    return inst
+
+
+def lfa_measure_xy(p=None):
+    """(x, y) of the well (loading) and how far the changer runs back to the measuring place."""
+    p = p or LFA
+    return (p["tower_x"], p["open_y"]), p["tower_y"] - p["open_y"]
+
+
+ANCHORS["laser_flash"] = (LFA, lfa_anchors)
+FREE["laser_flash"] = ["D", "base_h", "plinth_h", "panel_w", "panel_h", "disp_w", "disp_h", "tower_d", "tower_h",
+                       "collar_h", "tower_x", "block_w", "block_h"]
+CHECKS["laser_flash"] = lambda p: [p["W"] / 2 - p["panel_w"] / 2 - 40, p["panel_w"] - p["disp_w"] - 10,
+                                   p["base_h"] - p["panel_h"] - 60, p["block_w"] - p["tower_d"],
+                                   p["W"] / 2 - abs(p["tower_x"]) - p["block_w"] / 2]
+SPECS["laser_flash"] = [
+    ("temperature", "-100 to 500 C (LN2 to -100 C, compressed air to 0 C); HT version RT-1250 C",
+     "NETZSCH Technical Specifications LFA 717 HyperFlash Series (analyzing-testing.netzsch.com, PDF)"),
+    ("flash", "xenon lamp, up to 10 J a pulse, 10-1500 us", "same sheet; LFA 467 sheet"),
+    ("detector", "InSb (RT-500 C) or MCT (-100 to 500 C), LN2-cooled", "same sheet; LFA 467 brochure p.12"),
+    ("sample changer", "4 holders x 4 samples: 16 x 12.7 mm round or 10 mm square; or 4 x 25.4 mm", "same sheet"),
+    ("sample thickness", "0.01-6 mm; NETZSCH reference discs 12.7 x 2.5, 10 x 2.0 mm (diameter/thickness > 5)",
+     "NETZSCH Accessories LFA brochure p.8, p.46-47"),
+    ("layout", "flash at the bottom, sample in the middle, detector on top", "LFA 467 HyperFlash brochure p.4"),
+    ("coating", "graphite spray, both faces, thin (about 5 um); too thick biases Al and Cu low",
+     "NETZSCH tips: 'When and how must samples be coated during LFA measurements'"),
+    ("width", "620 mm (estimate)", "the operator beside a HyperFlash in youtu.be/vkHcL_8jTZE at 1:35 (estimate)"),
+    ("proportions", "base 287 mm, tower 131 x 171 mm on a 40 mm collar, panel 232 mm wide (estimates, fitted)",
+     "NETZSCH LFA 717 video youtu.be/vxowKxtTS0A at 0:06 and 0:52"),
+]
+
+
 # ===================================================================================================== registry
 REGISTRY = {"aging_rack": aging_rack, "tongs": tongs, "quench_bath": quench_bath, "hv_manual": hv_manual,
-            "furnace_hinged": furnace_hinged, "eddy_meter": eddy_meter}
+            "furnace_hinged": furnace_hinged, "eddy_meter": eddy_meter, "laser_flash": laser_flash}

@@ -1,0 +1,170 @@
+{
+ "key": "drying_oven",
+ "free": [
+  "door_z1",
+  "panel_x0",
+  "panel_x1",
+  "panel_z0",
+  "disp_x0",
+  "disp_x1",
+  "disp_z0",
+  "disp_z1",
+  "knob_x",
+  "knob_z",
+  "handle_x",
+  "handle_z0",
+  "handle_z1"
+ ],
+ "params": {
+  "door_z1": 540.3,
+  "panel_x0": -234.0,
+  "panel_x1": 237.0,
+  "panel_z0": 592.0,
+  "disp_x0": -185.0,
+  "disp_x1": -90.0,
+  "disp_z0": 639.0,
+  "disp_z1": 693.0,
+  "knob_x": 3.5,
+  "knob_z": 603.5,
+  "handle_x": -215.7,
+  "handle_z0": 40.4,
+  "handle_z1": 550.6
+ },
+ "start": {
+  "door_z1": 540.0,
+  "panel_x0": -234.0,
+  "panel_x1": 237.0,
+  "panel_z0": 592.0,
+  "disp_x0": -185.0,
+  "disp_x1": -90.0,
+  "disp_z0": 639.0,
+  "disp_z1": 693.0,
+  "knob_x": 3.5,
+  "knob_z": 600.0,
+  "handle_x": -217.0,
+  "handle_z0": 40.0,
+  "handle_z1": 520.0
+ },
+ "lenses": {
+  "front": {
+   "focal_px": 1140.0,
+   "k1": -0.0004,
+   "hfov_deg": 58.6,
+   "width_px": 1280,
+   "fitted_from": [
+    "front"
+   ]
+  },
+  "left3q": {
+   "focal_px": 825.4,
+   "k1": -0.0005,
+   "hfov_deg": 75.6,
+   "width_px": 1280,
+   "fitted_from": [
+    "left3q"
+   ]
+  }
+ },
+ "views": {
+  "front": {
+   "source": "https://youtu.be/sRsm8SS_LyM?t=10",
+   "size": [
+    1280,
+    720
+   ],
+   "holdout": false,
+   "camera": [
+    2.006696358084139,
+    0.031767583434096025,
+    -0.003119707860082225,
+    -3.254106575300288,
+    282.0907049601363,
+    1656.8132889430424,
+    7.03875885856837,
+    -0.00044261155547138133
+   ],
+   "focal_px": 1140.0,
+   "k1": -0.0004,
+   "hfov_deg": 58.6,
+   "lens": "fitted, shared by 1 view(s) of front",
+   "rms_px_camera_only": 9.72,
+   "rms_px": 2.45,
+   "residual_px": {
+    "top front left": 3.2,
+    "top front right": 0.2,
+    "panel bottom left": 3.2,
+    "panel bottom right": 2.1,
+    "knob": 3.6,
+    "handle top": 1.3,
+    "handle bottom": 1.6
+   }
+  },
+  "left3q": {
+   "source": "https://youtu.be/sRsm8SS_LyM?t=24",
+   "size": [
+    1280,
+    720
+   ],
+   "holdout": false,
+   "camera": [
+    2.0517228938862915,
+    -0.6510722606714892,
+    0.39370292779755606,
+    12.777528323696014,
+    269.37830201166105,
+    1617.473835434829,
+    6.715918914073993,
+    -0.0005499847230554039
+   ],
+   "focal_px": 825.4,
+   "k1": -0.0005,
+   "hfov_deg": 75.6,
+   "lens": "fitted, shared by 1 view(s) of left3q",
+   "rms_px_camera_only": 5.88,
+   "rms_px": 6.04,
+   "residual_px": {
+    "top front left": 5.1,
+    "top front right": 2.0,
+    "top back left": 7.0,
+    "bottom front left": 1.0,
+    "bottom back left": 5.1,
+    "knob": 12.0,
+    "panel bottom left": 2.2
+   }
+  },
+  "open": {
+   "source": "https://youtu.be/sRsm8SS_LyM?t=19",
+   "size": [
+    1280,
+    720
+   ],
+   "holdout": true,
+   "camera": [
+    2.0058971789469404,
+    -0.004150733197802379,
+    0.014339880080364725,
+    -163.84630441355316,
+    107.63082419800392,
+    3002.988827152946,
+    7.272089458748481,
+    0.0
+   ],
+   "focal_px": 1439.6,
+   "k1": 0.0,
+   "hfov_deg": 47.9,
+   "lens": "its own (no fitted view of this video)",
+   "rms_px_camera_only": 5.07,
+   "rms_px": 4.89,
+   "residual_px": {
+    "top front left": 1.7,
+    "top front right": 3.3,
+    "chamber tl": 3.2,
+    "chamber tr": 3.1,
+    "chamber bl": 6.4,
+    "chamber br": 2.6,
+    "panel bottom left": 9.7,
+    "knob": 4.0
+   }
+  }
+ }
+}

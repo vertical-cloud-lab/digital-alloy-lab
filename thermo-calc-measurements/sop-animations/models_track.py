@@ -317,7 +317,7 @@ def precision_saw() -> "Instrument":
     arm.add("arm boss", _xcyl(22, 20, x=ax - 10, y=piv[1], z=piv[2]).cut(bore), "stainless")
     arm.add("weight rail", box(ax - 4, ay0 + 30, arm_z + 14, ax + 4, piv[1] - 20, arm_z + 18), "steel")
     wt = _piece(inst, "weight")
-    wy = ay0 + 50.0
+    wy = ay0 + 95.0                                    # back toward the pivot; it slides forward for more load
     wt.add("sliding weight", box(ax - 14, wy, arm_z + 18, ax + 14, wy + 34, arm_z + 40), "stainless")
     wt.add("weight screw", _xcyl(8, 8, x=ax + 14, y=wy + 17, z=arm_z + 30), "steel")
     spec = _piece(inst, "specimen")
@@ -330,14 +330,16 @@ def precision_saw() -> "Instrument":
     cz0, cz1 = gz1, gz1 + p["cover_h"]
     lean = 34.0                                        # the front face leans back by this much at the top (photos)
     cb = cy1 + 2                                       # the cover's back, behind the pivot casting
-    ct = mic[2] + 26.0                                 # the casting's top: the cover's back half sits on it
+    ct = mic[2] + 27.0                                 # the casting's top (+1 mm): the cover's back half sits on it
     prof = [(gy0 - 2, cz0), (cy0 - 1, cz0), (cy0 - 1, ct), (cb, ct), (cb, cz1), (gy0 - 2 + lean, cz1)]
     shell = cq.Workplane("YZ").polyline(prof).close().extrude(cx1 - cx0).translate((cx0, 0, 0))
     inner = cq.Workplane("YZ").polyline([(gy0 + 1, cz0 - 1), (cy0 + 2, cz0 - 1), (cy0 + 2, ct - 1), (cb - 3, ct - 1),
                                          (cb - 3, cz1 - 3),
                                          (gy0 + 1 + lean, cz1 - 3)]).close().extrude(cx1 - cx0 - 6).translate(
         (cx0 + 3, 0, 0))
-    cov.add("clear cover", shell.cut(inner), "clear_cover")
+    # the step where the back half sits on the casting is only on the side walls: the arm passes under the cover
+    shell = shell.cut(inner).cut(box(cx0 + 3, cy0 - 4, ct - 3, cx1 - 3, cy0 + 5, cz0 + 1))
+    cov.add("clear cover", shell, "clear_cover")
     cov.add("cover top", box(cx0, gy0 - 2 + lean, cz1 - 2, cx1, cb, cz1 + 1), "vc_grey")
     cov.add("cover front strip", box(cx0 + 12, gy0 - 5, cz0 - 30, cx1 - 12, gy0 - 2, cz0 + 4), "stainless")
     # the arm's travel: the vise moves on a circle about the pivot; 24 mm down at the vise

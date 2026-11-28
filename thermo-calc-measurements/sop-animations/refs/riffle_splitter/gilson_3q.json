@@ -1,0 +1,34 @@
+{
+ "source": "Gilson SP-171X product photo (certifiedmtp.com product page, 1280x1280 image 193673... 273537)",
+ "camera": "gilson_a",
+ "pose": {
+  "feed": 0,
+  "stream": 0,
+  "split_l": 0,
+  "split_r": 0
+ },
+ "points": {
+  "rim front left": [
+   200,
+   162
+  ],
+  "rim front right": [
+   545,
+   278
+  ],
+  "rim back right": [
+   778,
+   192
+  ],
+  "rim back left": [
+   425,
+   88
+  ],
+  "upright top left": [
+   318,
+   287
+  ]
+ },
+ "holdout": false,
+ "note": "the upright's top right corner is under the hopper's slope, not picked"
+}

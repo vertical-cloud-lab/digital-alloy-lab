@@ -52,7 +52,7 @@ MATERIALS = {
     "leco_white": (0.90, 0.91, 0.91, 1.0, 0.20),      # LECO's light grey-white cabinet
     "leco_grey": (0.70, 0.72, 0.73, 1.0, 0.30),
     "leco_screen": (0.08, 0.10, 0.14, 1.0, 0.50),
-    "leco_ui": (0.80, 0.66, 0.30, 1.0, 0.10),         # Cornerstone's gold-on-dark rows
+    "leco_ui": (0.52, 0.46, 0.30, 1.0, 0.10),         # Cornerstone's muted gold-on-dark rows
     "graphite_cr": (0.16, 0.16, 0.17, 1.0, 0.25),     # graphite crucible
     "tin": (0.78, 0.79, 0.80, 1.0, 0.60),
     "nickel": (0.66, 0.66, 0.62, 1.0, 0.60),
@@ -188,7 +188,8 @@ def icp_oes() -> Instrument:
     inst = Instrument("icp_oes", "ICP-OES with autosampler", "Agilent 5900 ICP-OES (SVDV) + SPS 4", (W, D, H),
                       "Agilent 5800/5900 Site Preparation Guide G8020-90003 (W x D x H, chimney, SPS 4); look from "
                       "two labs' videos of a 5900 (youtu.be/SU6AoWTDZcY, youtu.be/VkMy6cp2-Y0), fitted with register.py",
-                      props=("sps", "sps_arm", "sps_probe", "tubes", "plasma", "beam", "sample", "flow", "glow"))
+                      props=("sps", "sps_lid", "sps_arm", "sps_probe", "tubes", "plasma", "beam", "sample", "flow",
+                             "glow"))
     body = _piece(inst, "body")
     shell = _piece(inst, "shell")
     t = 6.0
@@ -292,9 +293,14 @@ def icp_oes() -> Instrument:
     sps.add("SPS 4 beam", box(sx - sw / 2 + 10, sy + sd / 2 - 60, sh - 80, sx + sw / 2 - 5, sy + sd / 2 - 26, sh - 40),
             "ag_white")
     sps.add("SPS 4 badge", box(sx - 60, sy + sd / 2 - 61, sh - 70, sx + 20, sy + sd / 2 - 60, sh - 55), "ag_blue")
-    cover = box(sx - sw / 2, sy - sd / 2, 60, sx + sw / 2, sy + sd / 2, sh).cut(
-        box(sx - sw / 2 + 4, sy - sd / 2 + 4, 59, sx + sw / 2 - 4, sy + sd / 2 - 4, sh - 4))
+    # the clear cover: its sides and back fixed, its top and front a lid hinged at the back (as byu-vcl's SPS 4)
+    cover = box(sx - sw / 2, sy - sd / 2 + 4, 60, sx + sw / 2, sy + sd / 2, sh - 4).cut(
+        box(sx - sw / 2 + 4, sy - sd / 2, 59, sx + sw / 2 - 4, sy + sd / 2 - 4, sh))
     sps.add("SPS 4 cover", cover, "ag_cover")
+    lid = _piece(inst, "sps_lid")
+    lid.add("SPS 4 lid top", box(sx - sw / 2, sy - sd / 2 - 1, sh - 3, sx + sw / 2, sy + sd / 2, sh + 1), "ag_cover")
+    lid.add("SPS 4 lid front", box(sx - sw / 2, sy - sd / 2 - 1, 200, sx + sw / 2, sy - sd / 2 + 3, sh - 3), "ag_cover")
+    lid.add("SPS 4 lid edge", box(sx - sw / 2, sy - sd / 2 - 3, 200, sx + sw / 2, sy - sd / 2 + 3, 212), "inst_light")
     tubes = _piece(inst, "tubes")
     rack_parts, tube_parts = None, None
     for r in range(4):
@@ -312,8 +318,8 @@ def icp_oes() -> Instrument:
     arm = _piece(inst, "sps_arm")
     ax0, ay0 = g["probe"]
     tip = g["probe_tip"]
-    arm.add("SPS 4 carriage", box(ax0 - 22, sy + sd / 2 - 60, sh - 92, ax0 + 22, sy + sd / 2 - 26, sh - 30), "inst_light")
-    arm.add("SPS 4 probe arm", box(ax0 - 10, ay0 - 60, sh - 62, ax0 + 10, sy + sd / 2 - 60, sh - 48), "ag_white")
+    arm.add("SPS 4 carriage", box(ax0 - 22, sy + sd / 2 - 72, sh - 92, ax0 + 22, sy + sd / 2 - 61, sh - 30), "inst_light")
+    arm.add("SPS 4 probe arm", box(ax0 - 10, ay0 - 60, sh - 62, ax0 + 10, sy + sd / 2 - 72, sh - 48), "ag_white")
     probe = _piece(inst, "sps_probe")
     probe.add("SPS 4 probe holder", box(ax0 - 9, ay0 - 9, tip + 150, ax0 + 9, ay0 + 9, sh - 62), "inst_dark")
     probe.add("SPS 4 probe", cyl(2.5, 150, x=ax0, y=ay0, z=tip), "stainless")
@@ -323,6 +329,7 @@ def icp_oes() -> Instrument:
         "door": Joint("hinge", axis=(0, 0, 1), pivot=(x0 + 2, yf, 0), deg=-105.0),
         "pump_rotor": Joint("spin", axis=(0, 1, 0), pivot=(px, 0, pzp), deg=-1440.0),
         "plasma": Joint("fade"), "beam": Joint("fade"),
+        "sps_lid": Joint("hinge", axis=(1, 0, 0), pivot=(0, sy + sd / 2, sh), deg=-100.0),
         "sps_arm": Joint("slide", vec=(tgt[0] - ax0, 0.0, 0.0)),
         "sps_probe": Joint("path", path=((0, 0, 0), (0, tgt[1] - ay0, 0), (0, tgt[1] - ay0, -dip)), parent="sps_arm"),
     }
@@ -432,9 +439,11 @@ def onh_analyzer() -> Instrument:
     fx, fy, yh, hz0, hz1, bz0 = g["fx"], g["fy"], g["yh"], g["hz0"], g["hz1"], g["bz0"]
     # the cabinet: a box, its furnace bay cut from the front right; a lid over the top
     cab = box(x0, yf, 15.0, W / 2, -yf, H - p["lid_h"])
-    bay = box(bay_x0, yf - 1, bz0, W / 2 - 30, yf + 230, hz0 + 30)
+    bay = box(bay_x0, yf - 1, bz0 - 8, W / 2 - 30, yf + 230, hz0 + 30)
     hollow = box(x0 + t, yf + t, 15 + t, W / 2 - t, -yf - t, H - p["lid_h"] - t)
-    shell.add("cabinet", cab.cut(bay).cut(hollow), "leco_white")
+    head_cut = box(g["hx0"] - 1, yf - 1, hz0 - 1, g["hx1"] + 1, g["yh"] + 221, hz1 + 1)
+    well_cut = cyl(126.0, bz0, x=fx, y=fy, z=0.0)
+    shell.add("cabinet", cab.cut(bay).cut(hollow).cut(head_cut).cut(well_cut), "leco_white")
     shell.add("lid", rbox(W + 10, D + 10, p["lid_h"], 12, x=0, y=0, z=H - p["lid_h"]).edges(">Z").fillet(8),
               "leco_white")
     body.add("bay back", box(bay_x0, yf + 225, bz0, W / 2 - 30, yf + 232, hz0 + 30), "label_w")
@@ -449,9 +458,9 @@ def onh_analyzer() -> Instrument:
     body.add("screen bezel", box(g["sx0"] - 8, yp - 3, g["sz0"] - 10, g["sx1"] + 8, yp, g["sz1"] + 10), "inst_dark")
     body.add("touchscreen", box(g["sx0"], yp - 4, g["sz0"], g["sx1"], yp - 3, g["sz1"]), "leco_screen")
     rows = None
-    for k in range(9):
-        z = g["sz1"] - 25 - k * 18
-        r_ = box(g["sx0"] + 15, yp - 4.6, z, g["sx1"] - 15, yp - 4.0, z + 5)
+    for k in range(7):
+        z = g["sz1"] - 40 - k * 24
+        r_ = box(g["sx0"] + 18, yp - 4.6, z, g["sx1"] - 18, yp - 4.0, z + 2.5)
         rows = r_ if rows is None else rows.union(r_)
     body.add("screen rows", rows, "leco_ui")
     # the plinth under the bay, its front rounded, with the electrode's well
@@ -513,12 +522,12 @@ def onh_analyzer() -> Instrument:
     det.add("catalyst heater", cyl(70, 160, x=x0 + 390, y=60, z=dz - 40), "inst_grey")
     det.add("reagent tubes", cyl(36, 200, x=x0 + 460, y=-60, z=dz - 120).union(cyl(36, 200, x=x0 + 510, y=-60,
                                                                                   z=dz - 120)), "reagent")
-    det.add("TC cell", box(x0 + 330, -150, dz - 150, x0 + 430, -70, dz - 80), "cell_body")
+    det.add("TC cell", box(x0 + 230, -150, dz - 150, x0 + 330, -70, dz - 80), "cell_body")
     gas = _piece(inst, "gas")
     gas.add("gas path", hose([(fx, fy + 40, hz0 - 15), (fx, 80, hz0 - 15), (x0 + 390, 80, dz + 130),
                               (x0 + 340, 0, dz + 70), (x0 + 330, 0, dz + 70)], 6.0).union(
         hose([(x0 + 60, 0, dz + 70), (x0 + 30, 0, dz + 40), (x0 + 60, 0, dz + 10)], 6.0)).union(
-        hose([(x0 + 330, 0, dz + 10), (x0 + 460, -60, dz + 90), (x0 + 510, -60, dz + 90), (x0 + 430, -110, dz - 80)],
+        hose([(x0 + 330, 0, dz + 10), (x0 + 460, -60, dz + 90), (x0 + 510, -60, dz + 90), (x0 + 330, -110, dz - 80)],
              6.0)), "light_path")
     inst.joints = {
         "lower_electrode": Joint("slide", vec=(0, 0, -g["travel"]), v0=1.0),
@@ -576,12 +585,12 @@ def microwave_digester() -> Instrument:
     door.add("door handle", box(dx1 - 40, yf - 70, dz0 + 80, dx1 - 20, yf - 40, dz1 - 80), "steel")
     car = _piece(inst, "carousel")
     ccx, ccy, ccz = 0.5 * (dx0 + dx1), yf + 230, dz0 + 15
-    car.add("turntable", cyl(330, 10, x=ccx, y=ccy, z=ccz), "tfm")
+    car.add("turntable", cyl(330, 10, x=ccx, y=ccy, z=ccz + 1.0), "tfm")
     ves = _piece(inst, "vessels")
     vs = None
     for k in range(12):
         a = 2 * math.pi * k / 12
-        v = cyl(40, 120, x=ccx + 130 * math.cos(a), y=ccy + 130 * math.sin(a), z=ccz + 10)
+        v = cyl(40, 120, x=ccx + 130 * math.cos(a), y=ccy + 130 * math.sin(a), z=ccz + 11.5)
         vs = v if vs is None else vs.union(v)
     ves.add("vessel sleeves", vs, "vessel_sleeve")
     inst.joints = {"door": Joint("hinge", axis=(0, 0, 1), pivot=(dx0, yf - 40, 0), deg=-100.0),
@@ -613,25 +622,31 @@ def heat_sealer() -> Instrument:
     p = SEAL
     W, D, H, L = p["W"], p["D"], p["H"], p["L"]
     inst = Instrument("heat_sealer", "Impulse heat sealer", "Uline H-163 class, 8 in", (W, D, H),
-                      "the maker's published size; look from product photos", props=("bag",))
+                      "Uline H-163's published size (12.6 x 3.2 x 5.9 in); look from Uline's photos", props=("bag",))
     body = _piece(inst, "body")
     x0, yf = -W / 2, -D / 2
-    body.add("base", box(x0, yf, 0, W / 2, -yf, 60).union(box(x0, yf + 20, 60, x0 + 70, -yf, 110)), "sealer_blue")
-    body.add("lower jaw", box(x0 + 80, yf + 8, 60, x0 + 80 + L, yf + 30, 66), "ptfe")
-    body.add("timer dial", _ycyl(30, 10, x=x0 + 35, y=yf - 10, z=60), "inst_black")
-    body.add("lamp", _ycyl(8, 4, x=x0 + 35, y=yf - 4, z=90), "led_red")
+    jz = SEAL_JAW_Z
+    body.add("base", box(x0, yf, 0, W / 2, -yf, jz - 6).union(box(x0, yf + 10, jz - 6, x0 + 70, -yf, H - 20)),
+             "sealer_blue")
+    body.add("lower jaw", box(x0 + 80, yf + 8, jz - 6, x0 + 80 + L, yf + 30, jz), "ptfe")
+    body.add("timer dial", _ycyl(30, 10, x=x0 + 35, y=yf, z=jz - 40), "inst_black")
+    body.add("lamp", _ycyl(8, 4, x=x0 + 35, y=yf + 6, z=jz + 5), "led_red")
     arm = _piece(inst, "arm")
-    arm.add("arm", box(x0 + 70, yf + 4, 70, W / 2, -yf - 5, 95), "sealer_blue")
-    arm.add("upper jaw", box(x0 + 80, yf + 8, 66.6, x0 + 80 + L, yf + 30, 70), "pp_black")
-    arm.add("arm grip", box(W / 2 - 60, yf + 4, 95, W / 2, -yf - 5, 107), "inst_black")
-    inst.joints = {"arm": Joint("hinge", axis=(1, 0, 0), pivot=(0, -yf - 5, 70), deg=-35.0, v0=1.0)}   # v 0 closed, 1 open
+    arm.add("arm", box(x0 + 70, yf + 4, jz + 4, W / 2, -yf - 5, H - 15), "sealer_blue")
+    arm.add("upper jaw", box(x0 + 80, yf + 8, jz + 0.6, x0 + 80 + L, yf + 30, jz + 4), "pp_black")
+    arm.add("arm grip", box(W / 2 - 60, yf + 4, H - 15, W / 2, -yf - 5, H), "inst_black")
+    inst.joints = {"arm": Joint("hinge", axis=(1, 0, 0), pivot=(0, -yf - 5, jz + 4), deg=-35.0, v0=1.0)}   # v 0 closed
     return inst
+
+
+SEAL_JAW_Z = 101.0          # the lower jaw's top (estimate, from Uline's photos: about two thirds of the 150 mm)
 
 
 def seal_geom() -> dict:
     p = SEAL
     x0, yf = -p["W"] / 2, -p["D"] / 2
-    return dict(jaw_x0=x0 + 80, jaw_x1=x0 + 80 + p["L"], jaw_y=yf + 19, jaw_z=66.0)
+    return dict(jaw_x0=x0 + 80, jaw_x1=x0 + 80 + p["L"], jaw_y=yf + 19, jaw_z=SEAL_JAW_Z, grip=(p["W"] / 2 - 30, 0.0,
+                p["H"]))
 
 
 # ==================================================================================================== shipping box
@@ -652,8 +667,7 @@ def ship_box() -> Instrument:
     foam = foam.cut(box(-120, 15, 25, 120, 85, 95))
     body.add("foam insert", foam, "foam")
     lid = _piece(inst, "lid")
-    lid.add("lid", box(-W / 2, -D / 2, H - 4, W / 2, D / 2, H), "kraft")
-    lid.add("lid flap", box(-W / 2, -D / 2 - 3, H - 40, W / 2, -D / 2, H), "kraft")
+    lid.add("lid", box(-W / 2, -D / 2, H - 3.5, W / 2, D / 2, H), "kraft")
     inst.joints = {"lid": Joint("hinge", axis=(1, 0, 0), pivot=(0, D / 2, H), deg=-110.0, v0=1.0)}
     return inst
 

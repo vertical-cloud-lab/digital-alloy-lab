@@ -103,7 +103,7 @@ def panel_table(rows_hi: int | None):
         y += 32
         for i, r in enumerate(rows):
             if rows_hi is not None and i == rows_hi:
-                d.rounded_rectangle((8, y - 4, W - 8, y + 34), 6, fill=(37, 125, 224, 46), outline=(37, 125, 224, 255),
+                d.rounded_rectangle((8, y - 4, W - 8, y + 34), 6, fill=(226, 237, 251, 255), outline=(37, 125, 224, 255),
                                     width=2)
             col = (25, 25, 25) if rows_hi is None or i == rows_hi else (120, 120, 120)
             for c, t in zip(cols, r):
@@ -167,8 +167,8 @@ def panel_scheil(u):
     n = max(2, int(len(T) * min(1.0, 0.15 + u)))
     ax.plot(fs_nom[::-1][:n], T[::-1][:n], color=C1, lw=2)
     ax.plot(fs_meas[::-1][:n], T[::-1][:n], color=C2, lw=2, ls="--")
-    ax.text(0.30, 652.5, "nominal", color=INK, fontsize=10)
-    ax.text(0.55, 657.0, "measured", color=INK, fontsize=10)
+    ax.text(0.05, 641.0, "nominal (solid)", color=INK, fontsize=10)
+    ax.text(0.45, 659.0, "measured (dashed)", color=INK, fontsize=10)
     ax.set_xlabel("solid fraction")
     ax.set_ylabel("T, °C")
     ax.set_xlim(0, 1)
@@ -180,7 +180,7 @@ def panel_scheil(u):
 
 def panel_evaporation(u):
     fig, plt = _fig(5.4, 3.4)
-    ax = fig.add_axes([0.14, 0.17, 0.80, 0.64])
+    ax = fig.add_axes([0.14, 0.15, 0.80, 0.62])
     _ax_style(ax)
     els = ["Mg", "Zn", "Li"]
     meas = [(POWDER["Mg"] - PRINT["Mg"]) / POWDER["Mg"], (POWDER["Zn"] - PRINT["Zn"]) / POWDER["Zn"], 0.24]
@@ -198,7 +198,8 @@ def panel_evaporation(u):
     ax.set_ylabel("loss, % of the powder's")
     ax.set_ylim(0, 34)
     ax.legend(frameon=False, fontsize=9, loc="upper left")
-    fig.text(0.03, 0.92, "Evaporation: ΔX/X = (X_powder − X_print)/X_powder", fontsize=11, weight="bold", color=INK)
+    fig.text(0.03, 0.92, "Evaporation loss, powder to print", fontsize=12, weight="bold", color=INK)
+    fig.text(0.03, 0.85, "ΔX/X = (X_powder − X_print) / X_powder", fontsize=9.5, color=INK2)
     _badge(fig, "synthetic example")
     return _img(fig)
 
@@ -222,15 +223,15 @@ def panel_oxygen(u):
     ax.text(52, oxygen_ppm(52) + 40, "4 nm Al2O3 on spheres", color=INK, fontsize=9)
     if u > 0.4:
         ax.errorbar([38], [520], yerr=[[40], [40]], fmt="o", color=C2, ms=7, lw=2, capsize=4)
-        ax.text(40.5, 540, "run A1 (synthetic):\n~1.6x the skin", color=INK, fontsize=9)
+        ax.text(40.5, 560, "run A1 (synthetic):\n~1.5x the skin estimate", color=INK, fontsize=9)
     ax.set_xlabel("D50, µm")
     ax.set_ylabel("O, ppm (wt)")
     ax.set_ylim(0, 1300)
-    fig.text(0.03, 0.92, f"Oxygen vs surface area: {oxygen_ppm(38):.0f} ppm at D50 = 38 µm", fontsize=11.5,
-             weight="bold", color=INK)
-    fig.text(0.03, 0.06, "w_O = 6/(ρ_Al·D50) · t · ρ_ox · 3M_O/M_Al2O3;  ρ_Al 2.70, ρ_ox 3.05 g/cm³ (assumed), "
-             "t = 4 nm (to check by XPS)", fontsize=8.2, color=INK2)
-    _badge(fig, "computed + synthetic point")
+    fig.text(0.03, 0.92, "Oxygen vs surface area", fontsize=12, weight="bold", color=INK)
+    ax.text(12, 1150, f"skin estimate at D50 = 38 µm: {oxygen_ppm(38):.0f} ppm", fontsize=9, color=INK)
+    fig.text(0.03, 0.10, "w_O = 6/(ρ_Al·D50) · t · ρ_ox · 3M_O/M_Al2O3", fontsize=9, color=INK2)
+    fig.text(0.03, 0.04, "ρ_Al 2.70, ρ_ox 3.05 g/cm³ (assumed); t = 4 nm, to check by XPS", fontsize=9, color=INK2)
+    _badge(fig, "computed; point synthetic")
     return _img(fig)
 
 
@@ -285,15 +286,15 @@ def panel_onh(u):
     ax = fig.add_axes([0.12, 0.20, 0.82, 0.58])
     _ax_style(ax)
     t = np.linspace(0, 60, 400)
-    g = lambda c, w, a: a * np.exp(-0.5 * ((t - c) / w) ** 2) * (1 + np.tanh((t - c) / (0.6 * w))) / 2 * 2
+    g = lambda c, w, a: a * np.exp(-0.5 * ((t - c) / w) ** 2)
     co = g(14, 4.0, 1.0)
     n2 = g(24, 6.0, 0.25)
     m = max(2, int(len(t) * min(1.0, u * 1.3)))
     ax.plot(t[:m], co[:m], color=C2, lw=2)
     ax.plot(t[:m], n2[:m], color=C1, lw=2)
     if u > 0.75:
-        ax.text(17, 0.95, "O (as CO, CO2): IR", fontsize=9, color=INK)
-        ax.text(30, 0.30, "N2: thermal conductivity", fontsize=9, color=INK)
+        ax.text(19, 0.92, "O (as CO, CO2): infrared", fontsize=9, color=INK)
+        ax.text(31, 0.28, "N2: thermal conductivity", fontsize=9, color=INK)
     ax.set_xlabel("time after the drop, s")
     ax.set_ylabel("detector signal")
     ax.set_yticks([])
@@ -472,6 +473,7 @@ XJ, XR, XB, XV, XS, XD, XF, XC, XK = -1560, -1250, -930, -650, -330, 80, 420, 56
 YF = -380.0                                     # the bench's front edge
 YOP = -640.0                                    # where the operator stands to work at the bench
 YDR = -60.0                                     # the bench drill's centre (its feed handle within reach)
+XO = 300.0                                      # the ONH836's centre on the contract lab's bench (chapter 5)
 BAL_LIFT = 4.0                                  # the HR-202i model's feet reach 4 mm under its origin
 
 
@@ -559,8 +561,8 @@ def our_lab(sc, person=True, x_op=-1250.0):
     h["feed"] = put(sc, "feedstock", MC.prop_feedstock(), Tz(XF, -150, zb))
     h["master"] = put(sc, "master", MC.prop_master(), Tz(XF + 60, -150, zb))
     h["crm"] = put(sc, "crm", MC.prop_crm_bottle(), Tz(XC, -60, zb))
-    h["coc"] = put(sc, "coc", MC.prop_coc_form(), Tz(XK - 220, -170, zb))
-    h["box"] = S.place(sc, "ship_box", XK + 80, 0)
+    h["coc"] = put(sc, "coc", MC.prop_coc_form(), Tz(XK - 170, -250, zb) @ R((0, 0, 1), 90))
+    h["box"] = S.place(sc, "ship_box", XK + 150, 0)
     if person:
         h["op"] = Op(sc, x_op, YOP)
     return h
@@ -618,7 +620,7 @@ def overview_cam(x, dist=2600, az=-12, el=22, z=250):
 def c1():
     sc = new_scene("sop05_c1", -1900, 1300)
     h = our_lab(sc, person=False)
-    au = audit.Audit(sc, allow=[])
+    au = audit.Audit(sc, allow=[("bench_drill:quill*", "bench_drill:body*"), ("hose/*", "*")])
     sc.cam = overview_cam(-300, dist=3600, az=-8, el=24)
     sc.card("SOP 05 · Composition and O/N/H", [
         "ICP-OES for the alloying elements; inert gas fusion for O, N and H.",
@@ -692,7 +694,7 @@ def c2():
     sc.step("Send 1", "Powder from every run: split the 20-63 µm cut | a riffle splitter halves it without bias",
             4.0, S.together(op.walk(XJ + 130, YOP), op.reach("r", None), body_fade(sc, op, 1.0, 0.25)), hold=1.0,
             cam_to=cam_r)
-    grip = (0.0, -34.0, 60.0)                      # the jar's front, where the right hand holds it
+    grip = (0.0, -34.0, 82.0)                      # the jar's front, where the right hand holds it
     lift = Tz(XJ + 100, -250, BH + 120)
     over = Tz(hop[0] - 80, hop[1] - 5, hop[2] + 60)
     tilt = T((hop[0] - 15, hop[1] - 5, hop[2] + 40 - 112)) @ R((0, 1, 0), 105, pivot=(0, 0, 112))
@@ -720,8 +722,8 @@ def c2():
     pitch = R((0, 1, 0), 25)
     s_in = T((pan_r[0], pan_r[1] - 62 * math.cos(math.radians(25)), pan_r[2] + 30)) @ rz90 @ pitch
     s_up = T((pan_r[0] + 10, pan_r[1] - 80, pan_r[2] + 130)) @ rz90
-    s_boat = T((boat_c[0], boat_c[1] - 62, boat_c[2] + 40)) @ rz90
-    s_dump = T((boat_c[0], boat_c[1] - 62, boat_c[2] + 40)) @ rz90 @ R((1, 0, 0), 100)
+    s_boat = T((boat_c[0], boat_c[1] - 62, boat_c[2] + 70)) @ rz90
+    s_dump = T((boat_c[0], boat_c[1] - 62, boat_c[2] + 70)) @ rz90 @ R((1, 0, 0), 100)
     sc.step("Send 1", "Weigh 2-5 g on the balance | a stainless spatula into a weigh boat", 2.0,
             op.reach("r", wpt(sc, "spatula", sp_grip), lean=12), hold=0.1)
     sp0 = np.array(sc.gmat["spatula"])
@@ -785,14 +787,13 @@ def c2():
     sc.step("Send 2", "Heat-seal it at once | an impulse sealer: a seal across the mouth", 3.0,
             S.together(mov(sc, "bag", bag_seal), mov(sc, "bag_sealed", bag_seal), op.follow("l", "bag", bg)), hold=0.1,
             cam_to=S.look((jaw[0] - 40, jaw[1] - 60, jaw[2]), dist=800, az=-60, el=30))
-    arm_grip = tuple(h["sealer"].world((MC.SEAL["W"] / 2 - 30, 0, 104), "arm"))
+    arm_grip = tuple(h["sealer"].world(sg["grip"], "arm"))
     sc.step("Send 2", "Heat-seal it at once | an impulse sealer: a seal across the mouth", 3.0,
             S.together(op.reach("r", arm_grip), op.follow("l", "bag", bg),
                        S.staged((0.45, 1.0, h["sealer"].move({"arm": (1, 0)}))),
-                       S.staged((0.45, 1.0, op.follow("r", "heat_sealer:arm",
-                                                     (MC.SEAL["W"] / 2 - 30, 0, 104))))), hold=1.0)
+                       S.staged((0.45, 1.0, op.follow("r", "heat_sealer:arm", sg["grip"])))), hold=1.0)
     sc.step("Send 2", "Sealed: O, N and H by inert gas fusion | label it with the time it was sealed", 3.5,
-            S.together(h["sealer"].move({"arm": (0, 1)}), op.follow("r", "heat_sealer:arm", (MC.SEAL["W"] / 2 - 30, 0, 104)),
+            S.together(h["sealer"].move({"arm": (0, 1)}), op.follow("r", "heat_sealer:arm", sg["grip"]),
                        fade(sc, "bag", 1, 0), fade(sc, "bag_sealed", 0, 1), op.follow("l", "bag_sealed", bg)), hold=0.5)
     sc.step("Send 2", "Sealed: O, N and H by inert gas fusion | label it with the time it was sealed", 2.5,
             S.together(mov(sc, "bag_sealed", Tz(XS - 10, -230, BH)), op.follow("l", "bag_sealed", bg),
@@ -934,42 +935,46 @@ def c3():
     op = h["op"]
     # the state at the end of c2: the vial filled and capped, the bag sealed, the chips in the boat, the CRM forward
     show(sc, "vialfill", 1.0)
+    sc.gmat["vial"] = Tz(750, -80, BH)
+    sc.gmat["vialfill"] = sc.gmat["vial"]
     vc = (sc.world("vial") @ np.array([0, 0, 0, 1.0]))[:3]
     sc.gmat["cap"] = Tz(vc[0], vc[1], vc[2] + 50)
-    sc.gmat["bag_sealed"] = Tz(XS - 10, -200, BH)
+    sc.gmat["bag_sealed"] = Tz(650, -80, BH) @ R((0, 0, 1), 90)
     show(sc, "bag_sealed", 1.0)
     show(sc, "chips2", 1.0)
-    sc.gmat["crm"] = Tz(XC - 120, -150, BH)
-    env = put(sc, "envelope", envelope_model(), Tz(XV - 260, -200, BH))
+    sc.gmat["crm"] = Tz(470, -80, BH)
+    env = put(sc, "envelope", envelope_model(), Tz(400, -270, BH))
     show(sc, "envelope", 0.0)
     au = audit.Audit(sc, allow=[("op/glove*", "vial*"), ("op/glove*", "coc/*"), ("op/glove*", "pen/*"),
                                 ("vial*/*", "ship_box:*"), ("bag_sealed/*", "ship_box:*"), ("cap/*", "vial/*"),
-                                ("pen/*", "coc/*")])
+                                ("pen/*", "coc/*"), ("op/glove*", "ship_box:*"), ("op/glove*", "cap/*"),
+                                ("bench_drill:quill*", "bench_drill:body*"), ("vialfill/*", "vial/*"),
+                                ("hose/*", "*")])
     sc.cam = overview_cam(-300, dist=3400, az=-8, el=24)
-    cam_t = S.look((XV - 80, -120, BH + 60), dist=950, az=-10, el=30)
-    spat = put(sc, "spatula", MC.prop_spatula(), Tz(XV - 180, -100, BH))
+    cam_t = S.look((600, -150, BH + 50), dist=950, az=-35, el=35)
+    spat = put(sc, "spatula", MC.prop_spatula(), Tz(560, -80, BH + 1.2) @ R((0, 0, 1), 90))
     sc.step("Handling", "Clean, dry plastic or stainless tools | new screw-cap vials, or heat-sealed bags flushed with Ar",
-            4.5, None, hold=1.5, cam_to=cam_t,
-            labels=[("stainless spatula", (XV - 180, -100, BH + 2), (0.12, 0.30)),
-                    ("new HDPE screw-cap vial", (vc[0], vc[1], BH + 60), (0.62, 0.25)),
-                    ("heat-sealed bag (Ar)", (XS - 10, -200, BH + 3), (0.80, 0.62))])
+            4.5, S.together(op.walk(920, YOP), body_fade(sc, op, 1.0, 0.15)), hold=1.5, cam_to=cam_t,
+            labels=[("stainless spatula", (560, -100, BH + 2), (0.12, 0.30)),
+                    ("new HDPE screw-cap vial", (vc[0], vc[1], BH + 60), (0.70, 0.25)),
+                    ("heat-sealed bag (Ar)", (650, -80, BH + 3), (0.80, 0.62))])
     sc.step("Handling", "No paper envelopes | only sealed vials or bags", 4.0, fade(sc, "envelope", 0, 1), hold=1.5,
-            labels=[("paper envelope: no", (XV - 260, -200, BH + 4), (0.14, 0.62))])
+            labels=[("paper envelope: no", (400, -270, BH + 4), (0.12, 0.62))])
     sc.step("Labels", "Label every container | run ID, sieve cut, date atomized, date sealed, analytes", 4.5,
             S.together(fade(sc, "envelope", 1, 0), panel_on(sc, "label", label_panel, (0.60, 0.10, 0.36))), hold=2.5,
             cam_to=S.look((vc[0], vc[1], BH + 40), dist=420, az=-5, el=14))
-    pen = put(sc, "pen", _pen_model(), Tz(XK - 160, -230, BH + 3.5) @ R((0, 0, 1), 30))
+    pen = put(sc, "pen", _pen_model(), Tz(XK - 170, -330, BH + 3.5) @ R((0, 0, 1), 30))
     coc_c = (sc.world("coc") @ np.array([0, 0, 0, 1.0]))[:3]
     sc.step("Custody", "Log each sample in the run record (#159) | with its chain of custody", 4.0,
-            S.together(panel_off(sc, "label"), op.walk(XK - 250), op.reach("r", None)), hold=0.5,
-            cam_to=S.look((XK - 220, -170, BH + 60), dist=900, az=-12, el=35))
-    pgrip = (0.0, 0.0, 8.0)
+            S.together(panel_off(sc, "label"), op.walk(XK - 300, YOP), op.reach("r", None)), hold=0.5,
+            cam_to=S.look((XK - 170, -250, BH + 60), dist=900, az=55, el=40))
+    pgrip = (0.0, 0.0, 40.0)
     sc.step("Custody", "Log each sample in the run record (#159) | with its chain of custody", 4.0,
             S.together(panel_on(sc, "coc", coc_panel, (0.56, 0.10, 0.42)),
                        S.staged((0.0, 0.3, op.reach("r", (sc.world("pen") @ np.array([*pgrip, 1.0]))[:3], lean=15)),
-                                (0.3, 1.0, path(sc, "pen", [Tz(coc_c[0] - 40, coc_c[1] + 40, BH + 12) @ R((0, 0, 1), 30),
-                                                             Tz(coc_c[0] + 40, coc_c[1] + 20, BH + 12) @ R((0, 0, 1), 30),
-                                                             Tz(coc_c[0] - 40, coc_c[1], BH + 12) @ R((0, 0, 1), 30)])),
+                                (0.3, 1.0, path(sc, "pen", [Tz(coc_c[0] - 40, coc_c[1] + 40, BH + 16) @ R((0, 0, 1), 30),
+                                                             Tz(coc_c[0] + 40, coc_c[1] + 20, BH + 16) @ R((0, 0, 1), 30),
+                                                             Tz(coc_c[0] - 40, coc_c[1], BH + 16) @ R((0, 0, 1), 30)])),
                                 (0.3, 1.0, op.follow("r", "pen", pgrip)))), hold=1.5)
     # ten vials: the blind duplicate
     sc.step("Duplicates", "A blind duplicate of every tenth sample | a second split under its own ID", 4.5,
@@ -986,22 +991,18 @@ def c3():
             S.together(panel_off(sc, "dup"), panel_on(sc, "ask", ask, (0.56, 0.10, 0.42))), hold=3.0)
     # pack: the vial, the sealed bag and the CRM into the shipper's foam
     bx = h["box"]
-    sc.step("Pack", "Pack the vials and bags in the foam | the CoC form goes in the box", 3.5,
-            S.together(panel_off(sc, "ask"), op.walk(XK - 50), bx.move({"lid": (1, 1)})), hold=0.3,
-            cam_to=S.look((XK + 60, -80, BH + 80), dist=1100, az=-10, el=35))
+    sc.step("Pack", "Pack each container in the foam | the chain-of-custody form goes in the box", 3.5,
+            S.together(panel_off(sc, "ask"), op.walk(XK - 60, YOP), bx.move({"lid": (1, 1)})), hold=0.3,
+            cam_to=S.look((XK + 40, -100, BH + 80), dist=1150, az=-50, el=40))
     slot_v = bx.world((-90, -40, 25))
-    slot_b = bx.world((0, 50, 25))
-    sc.gmat["vial"] = Tz(slot_v[0] - 300, slot_v[1] - 120, BH)
-    sc.gmat["vialfill"] = sc.gmat["vial"]
-    sc.gmat["cap"] = sc.gmat["vial"] @ T((0, 0, 50))
-    vg = (0.0, -16.0, 40.0)
-    sc.step("Pack", "Pack the vials and bags in the foam | the CoC form goes in the box", 2.0,
+    vg = (0.0, -16.0, 52.0)
+    sc.step("Pack", "Pack each container in the foam | the chain-of-custody form goes in the box", 2.0,
             op.reach("r", (sc.world("vial") @ np.array([*vg, 1.0]))[:3], lean=12), hold=0.1)
     sc.parent["vialfill"] = "vial"
     sc.gmat["vialfill"] = np.eye(4)
     sc.parent["cap"] = "vial"
     sc.gmat["cap"] = T((0, 0, 50))
-    sc.step("Pack", "Pack the vials and bags in the foam | the CoC form goes in the box", 3.0,
+    sc.step("Pack", "Pack each container in the foam | the chain-of-custody form goes in the box", 3.0,
             S.together(path(sc, "vial", [Tz(slot_v[0], slot_v[1], BH + 120), Tz(slot_v[0], slot_v[1], slot_v[2])]),
                        op.follow("r", "vial", vg)), hold=0.3)
     sc.step("Pack", "Close the shipper | it leaves with the form; the run record logs it", 3.5,
@@ -1021,6 +1022,7 @@ def _pen_model():
 def c4():
     sc = new_scene("sop05_c4", -650, 2300)
     au = audit.Audit(sc, allow=[("op/glove*", "*vessel*"), ("op/glove*", "acid*"), ("op/glove*", "tube50*"),
+                                ("op/glove*", "icp_oes:tubes*"), ("icp_oes:door*", "icp_oes:shell*"),
                                 ("op/glove*", "microwave_digester:door*"), ("op/glove*", "icp_oes:door*"),
                                 ("*vessel*/*", "microwave_digester:*"), ("tube50*/*", "icp_oes:*"),
                                 ("icp_oes:sps_probe*", "icp_oes:tubes*"), ("acid*/*", "*vessel*"),
@@ -1031,7 +1033,10 @@ def c4():
     icp = S.place(sc, "icp_oes", 780, 0)
     g = MC.icp_geom()
     mg = MC.mars_geom()
-    op = Op(sc, -1250, -1050)
+    hood.set(sash=1.0)
+    for piece in ("load",) + tuple(f"flow{k}" for k in range(8)):       # byu-vcl's beakers and airflow: not ours
+        sc.show(hood.names.get(piece, []), 0.0)
+    op = Op(sc, -700, -1150)
     op.p.set(hd=0)
     sc.cam = S.look((150, 0, BH + 300), dist=4600, az=-8, el=18)
     sc.card("At the contract lab: digestion and ICP-OES", [
@@ -1040,65 +1045,72 @@ def c4():
         seconds=3.5, label="Lab", note="Masses, acids and programs here are typical, not the lab's: ask for theirs.")
     sc.step("Lab", "At the contract lab: digest, then ICP-OES | ASTM E3061: ICP-AES/OES for Al alloys", 4.5, None,
             hold=1.0, cam_to=S.look((-500, 0, BH + 300), dist=3600, az=-8, el=18),
-            labels=[("fume hood", (-1320, -480, 1500), (0.10, 0.20)), ("CEM MARS 6", (-230, -300, BH + 660), (0.38, 0.18)),
+            labels=[("fume hood, sash raised", (-1320, -480, 1500), (0.10, 0.20)), ("CEM MARS 6", (-230, -300, BH + 640), (0.38, 0.18)),
                     ("Agilent 5900 ICP-OES\n+ SPS 4 autosampler", (780, -370, BH + 625), (0.70, 0.18))])
     # weigh into the vessel and add acids, in the hood
     ws = 932.0                                        # the hood's work surface (byu-vcl's fumehood: 900 + 32)
     vx, vy = -1320, -250
     ves = put(sc, "vessel", MC.prop_digest_vessel(open_=True), Tz(vx, vy, ws))
     acid = put(sc, "acid", MC.prop_bottle("pp_white", 70, 150), Tz(vx + 250, -150, ws))
-    cam_h = S.look((vx + 80, -250, ws + 120), dist=1200, az=-8, el=18)
-    sc.step("Digest", "Weigh ~0.2 g of powder or chips into a TFM vessel | typical: the lab's method sets the mass",
-            4.0, S.together(op.walk(-1300, -800)), hold=1.5, cam_to=cam_h,
+    cam_h = S.look((vx + 100, -260, ws + 110), dist=1150, az=-40, el=34)
+    sc.step("Digest", "Weigh ~0.15 g into a TFM vessel | powder or chips; typical (Edison: 150 mg, then HNO3 + HCl)",
+            4.0, S.together(op.walk(-1200, -900), body_fade(sc, op, 1.0, 0.15)), hold=1.5, cam_to=cam_h,
             labels=[("TFM vessel in its sleeve", (vx, vy - 20, ws + 112), (0.25, 0.35))])
     agrip = (0.0, -36.0, 90.0)
     sc.step("Digest", "Acids, in the hood: HCl and HNO3, with HF for Si | or a fusion: Si stays in solution", 2.5,
-            op.reach("r", (sc.world("acid") @ np.array([*agrip, 1.0]))[:3], lean=10), hold=0.1)
-    pour = Tz(vx + 60, vy - 10, ws + 200) @ R((0, 1, 0), -100, pivot=(0, 0, 150))
+            op.reach("r", (sc.world("acid") @ np.array([*agrip, 1.0]))[:3], lean=5), hold=0.1)
+    pour = Tz(vx + 75, vy, ws + 150 - 150 + 30) @ R((0, 1, 0), -105, pivot=(0, 0, 150))
     sc.step("Digest", "Acids, in the hood: HCl and HNO3, with HF for Si | or a fusion: Si stays in solution", 4.0,
             S.together(path(sc, "acid", [Tz(vx + 150, vy - 40, ws + 120), pour]), op.follow("r", "acid", agrip)),
-            hold=1.0)
+            hold=1.0, cam_to=S.look((vx + 60, -260, ws + 160), dist=1000, az=-40, el=26))
     sc.step("Digest", "Acids, in the hood: HCl and HNO3, with HF for Si | or a fusion: Si stays in solution", 3.0,
             S.together(path(sc, "acid", [Tz(vx + 150, vy - 40, ws + 120), Tz(vx + 250, -150, ws)]),
                        op.follow("r", "acid", agrip)), hold=0.3)
     # the vessel into the microwave
+    sc.step("Digest", "Cap the vessel; into the microwave | sealed vessels, many at a time", 1.5,
+            op.reach("r", None, lean=0), hold=0.1)
     sc.step("Digest", "Cap the vessel; into the microwave | sealed vessels, many at a time", 4.0,
-            S.together(op.reach("r", None), op.walk(-230 - 60, -700), mw.move({"door": (0, 1)})), hold=0.5,
-            cam_to=S.look((-230, -100, BH + 250), dist=1500, az=-12, el=18))
+            S.together(op.walk(-230 + 330, -900), S.staged((0.6, 1.0, mw.move({"door": (0, 1)})))), hold=0.5,
+            cam_to=S.look((-230, -100, BH + 250), dist=1500, az=35, el=24))
     car = (mg["cx"] - 230 + 130, mg["cy"] + 40, BH + mg["cz"] + 10)
     sc.step("Digest", "Ramp to ~200 °C and hold | typical program; then cool", 4.5,
             S.together(mw.move({"door": (1, 0), "carousel": (0, 1), "vessels": (0, 1)}),
-                       panel_on(sc, "mw", panel_digest, (0.60, 0.10, 0.36)), sc.drive_panel("mw", 0, 1)), hold=2.0)
-    tb = put(sc, "tube50", MC.prop_tube50(0.8), Tz(-60, -260, BH))
+                       panel_on(sc, "mw", panel_digest, (0.67, 0.10, 0.31)), sc.drive_panel("mw", 0, 1)), hold=2.0)
+    tb = put(sc, "tube50", MC.prop_tube50(0.8), Tz(170, -250, BH))
     show(sc, "tube50", 0.0)
     sc.step("Digest", "Vent in the hood, dilute to 50 mL | boric acid ties up the fluoride if HF was used", 4.0,
             S.together(panel_off(sc, "mw"), fade(sc, "tube50", 0, 1)), hold=1.5,
-            labels=[("50 mL PP tube", (-60, -260, BH + 120), (0.35, 0.40))])
+            labels=[("50 mL PP tube", (170, -250, BH + 120), (0.75, 0.40))])
     # the ICP-OES: the tube into the SPS 4 rack, then the probe takes it up
     tgt = g["tgt"]
     tube_pos = Tz(780 + tgt[0], tgt[1], BH + 66.0)
-    tg = (0.0, -15.0, 80.0)
-    sc.step("ICP-OES", "The tubes go in the autosampler's racks | blank, standards, samples, the CRM, duplicates", 3.0,
-            S.together(op.walk(780 + g["sps_x"] - 220, -650), op.reach("r", None)), hold=0.2,
-            cam_to=S.look((780 + 300, -150, BH + 250), dist=2000, az=-10, el=20))
-    sc.gmat["tube50"] = Tz(780 + g["sps_x"] - 420, -300, BH + 0.0)
+    tg = (0.0, -15.0, 85.0)
+    t0 = wpt(sc, "tube50", (0, 0, 0))
+    sc.step("ICP-OES", "The tubes go in the autosampler's racks | blank, standards, samples, the CRM, duplicates", 2.5,
+            S.together(op.walk(t0[0] - 130, -700), op.reach("r", None)), hold=0.1,
+            cam_to=S.look((300, -250, BH + 200), dist=2300, az=35, el=26))
     sc.step("ICP-OES", "The tubes go in the autosampler's racks | blank, standards, samples, the CRM, duplicates", 2.0,
-            op.reach("r", (sc.world("tube50") @ np.array([*tg, 1.0]))[:3], lean=10), hold=0.1)
-    sc.step("ICP-OES", "The tubes go in the autosampler's racks | blank, standards, samples, the CRM, duplicates", 3.5,
-            S.together(path(sc, "tube50", [Tz(780 + tgt[0], tgt[1], BH + 300), tube_pos]), op.follow("r", "tube50", tg)),
-            hold=0.5)
+            S.together(op.reach("r", wpt(sc, "tube50", tg), lean=5), icp.move({"sps_lid": (0, 1)})), hold=0.1)
+    xa = op.p.st["x"]
+    xb = 780 + tgt[0] - 150
+    carry = [Tz(t0[0], t0[1] - 60, BH + 200), Tz(t0[0] + (xb - xa) * 0.5, -440, BH + 230),
+             Tz(780 + tgt[0], -440, BH + 330), Tz(780 + tgt[0], tgt[1] - 40, BH + 330)]
+    sc.step("ICP-OES", "The tubes go in the autosampler's racks | blank, standards, samples, the CRM, duplicates", 5.0,
+            S.together(S.staged((0.0, 0.85, path(sc, "tube50", carry)), (0.85, 1.0, path(sc, "tube50", [T((0, 0, 260)) @ tube_pos, tube_pos]))),
+                       S.staged((0.1, 0.8, op.walk(xb, -720))), op.follow("r", "tube50", tg)), hold=0.3,
+            cam_to=S.look((780 + g["sps_x"] - 150, -150, BH + 200), dist=1500, az=50, el=30))
     pr_path = icp.inst.joints["sps_probe"].path
     yseg = abs(pr_path[1][1])
     k_y = yseg / (yseg + abs(pr_path[2][2]))
-    cam_icp = S.look((780 + 100, -150, BH + 330), dist=1800, az=-14, el=14)
+    cam_icp = S.look((780 + 250, -150, BH + 300), dist=1900, az=28, el=20)
     sc.step("ICP-OES", "The probe takes up the sample | a peristaltic pump feeds the nebulizer", 4.5,
-            S.together(op.reach("r", None), op.walk(780 - 300, -900),
+            S.together(op.reach("r", None), op.walk(-60, -950), icp.move({"sps_lid": (1, 0)}),
                        S.staged((0.0, 0.5, icp.move({"sps_arm": (0, 1), "sps_probe": (0, k_y)})),
                                 (0.5, 1.0, icp.move({"sps_probe": (k_y, 1.0)}))),
                        icp.move({"pump_rotor": (0, 1)})), hold=0.5, cam_to=cam_icp,
             labels=[("peristaltic pump", (780 + g["px"], g["yf"], g["pzp"] + BH), (0.20, 0.75))])
     tx, ty = 780 + g["tx"], g["ty"]
-    cam_t = S.look((tx, ty - 40, BH + g["zs"] + 120), dist=780, az=-12, el=8)
+    cam_t = S.look((tx, ty - 40, BH + g["zs"] + 110), dist=760, az=32, el=10)
     sc.step("ICP-OES", "Nebulizer and spray chamber make a fine mist | only the finest droplets reach the torch", 4.5,
             S.together(icp.move({"pump_rotor": (1, 2), "door": (0, 1)})), hold=1.0, cam_to=cam_t,
             labels=[("concentric nebulizer", (tx + 60, ty - 14, BH + g["sz"] + 52), (0.80, 0.82)),
@@ -1114,7 +1126,7 @@ def c4():
             labels=[("radial view", (tx + 80, ty, BH + g["rz"]), (0.80, 0.30)),
                     ("axial view", (tx, ty, BH + g["zs"] + 260), (0.30, 0.18))])
     sc.step("ICP-OES", "Line intensities against standards give wt% | Mg 279.553 nm shown; Si 251.611, Fe 238.204", 5.0,
-            S.together(panel_on(sc, "spec", panel_spectrum, (0.58, 0.10, 0.40)), sc.drive_panel("spec", 0, 1),
+            S.together(panel_on(sc, "spec", panel_spectrum, (0.66, 0.10, 0.32)), sc.drive_panel("spec", 0, 1),
                        icp.move({"pump_rotor": (4, 5)})), hold=2.5)
     res = panel_text("The lab's report", [
         "wt% of each element with its uncertainty",
@@ -1122,9 +1134,10 @@ def c4():
         "the digestion used, and how Si was kept",
         "QC: blank, CRM recovery, duplicate agreement"], badge=None, w=720)
     sc.step("ICP-OES", "The report: wt% with uncertainty and detection limits | and the CRM's recovery", 4.5,
-            S.together(panel_off(sc, "spec"), panel_on(sc, "res", res, (0.58, 0.10, 0.40)),
-                       icp.move({"~shell": (1, 0), "door": (1, 0), "plasma": (1, 1), "beam": (1, 0)})), hold=2.5,
-            cam_to=S.look((780 + 200, -100, BH + 300), dist=2400, az=-10, el=16))
+            S.together(panel_off(sc, "spec"), panel_on(sc, "res", res, (0.66, 0.10, 0.32)),
+                       icp.move({"~shell": (1, 0), "door": (1, 0), "plasma": (1, 1), "beam": (1, 0)}),
+                       body_fade(sc, op, 0.25, 1.0)), hold=2.5,
+            cam_to=S.look((780 + 200, -100, BH + 300), dist=2600, az=30, el=18))
     sc.save()
     au.save()
 
@@ -1133,86 +1146,128 @@ def c4():
 def c5():
     sc = new_scene("sop05_c5", -1100, 900)
     au = audit.Audit(sc, allow=[("op/glove*", "tongs/*"), ("op/glove*", "capsule/*"), ("tongs/*", "newcru/*"),
+                                ("op/glove*", "tweezers/*"), ("tweezers/*", "capsule/*"), ("tweezers/*", "balance/*"),
+                                ("capsule/*", "balance/*"),
                                 ("tongs/*", "onh_analyzer:*"), ("newcru/*", "onh_analyzer:*"),
                                 ("capsule/*", "onh_analyzer:*"), ("onh_analyzer:crucible*", "onh_analyzer:body*"),
                                 ("onh_analyzer:glow*", "onh_analyzer:*"), ("onh_analyzer:sample*", "onh_analyzer:*"),
                                 ("onh_analyzer:gas*", "*"), ("op/glove*", "onh_analyzer:*")])
-    onh = S.place(sc, "onh_analyzer", 150, 0)
+    onh = S.place(sc, "onh_analyzer", XO, 0)
     g = MC.onh_geom()
     import labware as LW2
-    bal = put(sc, "balance", LW2.balance_hr202i(), Tz(-650, 30, BH))
+    bal = put(sc, "balance", LW2.balance_hr202i(door_open=150.0), Tz(-650, 30, BH + 4.0))
+    tweezers = put(sc, "tweezers", tongs_model(), Tz(-880, -260, BH))
     tray = put(sc, "tray", _tray_model(), Tz(-330, -150, BH))
-    tongs = put(sc, "tongs", tongs_model(), Tz(-330 + 150, -260, BH))
-    cap = put(sc, "capsule", MC.prop_capsule_basket(), Tz(-650, 30 - 214 + 163, BH + 50))
+    tongs = put(sc, "tongs", tongs_model(), Tz(-330 + 160, -200, BH) @ R((0, 0, 1), 90))
+    cap = put(sc, "capsule", MC.prop_capsule_basket(), Tz(-650, 30 - 214 + 163, BH + 54))
     op = Op(sc, -400, -760)
-    fx, fy = 150 + g["fx"], g["fy"]
+    fx, fy = XO + g["fx"], g["fy"]
     sc.cam = S.look((-100, 0, BH + 350), dist=3600, az=-10, el=18)
     sc.card("At the contract lab: O, N and H", ["Inert gas fusion: the sample melts in a graphite crucible;",
-                                                 "O leaves as CO, N as N2, H as H2, swept to the detectors."],
+                                                 "O leaves as CO, N as N2, H as H2, swept to the detectors.",
+                                                 "Shown with a LECO ONH836; settings from Edison's sources."],
             seconds=3.5, label="O/N/H", note="Masses, flux and power settings are typical: the lab's method sets them.")
     sc.step("O/N/H", "O, N and H by inert gas fusion | a LECO ONH836-class analyzer", 4.0, None, hold=1.0,
             cam_to=S.look((0, 0, BH + 350), dist=2600, az=-12, el=16),
-            labels=[("LECO ONH836", (150 - g["W"] / 2, g["yf"], BH + g["H"] * 0.9), (0.40, 0.15)),
+            labels=[("LECO ONH836", (XO - g["W"] / 2, g["yf"], BH + g["H"] * 0.9), (0.40, 0.15)),
                     ("loading head", (fx, fy, BH + g["hz1"] + 20), (0.85, 0.20))])
-    sc.step("O/N/H", "Weigh ~0.1 g of the sealed powder into a tin capsule | in a nickel basket, the flux (typical)", 4.5,
-            S.together(op.walk(-650, -720)), hold=1.5, cam_to=S.look((-650, -120, BH + 80), dist=650, az=-10, el=24),
+    sc.step("O/N/H", "Weigh ~0.1 g of sealed powder into a tin capsule | 80-150 mg; nickel basket or flux as the lab's method says", 4.5,
+            S.together(op.walk(-650, -760), body_fade(sc, op, 1.0, 0.15),
+                       S.staged((0.6, 1.0, gauge(sc, [("balance", "0.0985 g")])))), hold=1.5,
+            cam_to=S.look((-650, -120, BH + 80), dist=700, az=50, el=30),
             labels=[("tin capsule in a\nnickel basket", (-650, 30 - 214 + 163, BH + 60), (0.70, 0.30))])
     # the crucible: open the electrode, set a new crucible with the tongs, close
-    cam_f = S.look((fx - 20, fy - 40, BH + g["bz0"] + 120), dist=850, az=-14, el=10)
+    cam_f = S.look((fx - 20, fy - 40, BH + g["bz0"] + 120), dist=900, az=-50, el=18)
+    sc.gauges = []
     sc.step("Crucible", "Open the furnace: the lower electrode drops", 3.5,
-            S.together(op.walk(fx - 300, -760), onh.move({"lower_electrode": (1, 1), "crucible": (0, 0)})), hold=0.5,
-            cam_to=cam_f)
-    ncru = put(sc, "newcru", MC.prop_graphite_crucible(), Tz(-330, -150, BH + 10))
-    tg = (-95.0, 0.0, 1.0)
+            S.together(op.walk(-330 + 60, -760), onh.move({"lower_electrode": (1, 1), "crucible": (0, 0)})), hold=0.5,
+            cam_to=S.look((-200, -150, BH + 150), dist=1300, az=-40, el=24))
+    ncru = put(sc, "newcru", MC.prop_graphite_crucible(), Tz(-330 + 70, -150 + 30, BH + 3))
+    CR = T((100.0, 0.0, -12.0))                      # the crucible's foot in the tongs' frame: held at mid-height
+
+    def tongs_for(pos):
+        """The tongs' pose holding the crucible with its foot at pos, pointing away from the operator (+y)."""
+        return T(pos) @ R((0, 0, 1), 90) @ np.linalg.inv(CR)
+    tg = (-85.0, 0.0, 22.0)
     ped = onh.world((g["fx"], g["fy"], g["ped_top"]), "lower_electrode")
+    c0 = wpt(sc, "newcru", (0, 0, 0))
+    sc.step("Crucible", "A new graphite crucible on the lower electrode | with clean tongs", 2.0,
+            op.reach("r", wpt(sc, "tongs", tg), lean=8), hold=0.1)
     sc.step("Crucible", "A new graphite crucible on the lower electrode | with clean tongs", 2.5,
-            S.together(op.reach("r", (sc.world("tongs") @ np.array([*tg, 1.0]))[:3], lean=10)), hold=0.1)
+            S.together(path(sc, "tongs", [tongs_for((c0[0], c0[1], c0[2] + 60)), tongs_for(c0)]),
+                       op.follow("r", "tongs", tg)), hold=0.1)
     sc.parent["newcru"] = "tongs"
     sc.gmat["newcru"] = np.linalg.inv(sc.world("tongs")) @ sc.world("newcru")
-    tong_at = lambda p: T((p[0] - 95, p[1], p[2] + 12))
-    cru_rel = sc.gmat["newcru"]
-    sc.gmat["tongs"] = np.array(sc.world("newcru") @ np.linalg.inv(cru_rel))
-    sc.step("Crucible", "A new graphite crucible on the lower electrode | with clean tongs", 4.0,
-            S.together(path(sc, "tongs", [T((fx - 140, fy - 80, BH + g["ped_top"] - g["travel"] + 120)) @ np.linalg.inv(cru_rel) @ cru_rel,
-                                          T((ped[0], ped[1], ped[2] + 0.5)) @ np.linalg.inv(cru_rel)]),
-                       op.follow("r", "tongs", tg)), hold=0.3)
-    # hand the crucible over to the electrode: the drawn one (rides on the lower electrode) takes over
-    sc.step("Crucible", "Close: the crucible is clamped between the electrodes", 3.5,
-            S.together(fade(sc, "newcru", 1, 0), onh.move({"crucible": (0, 1)}),
-                       path(sc, "tongs", [T((fx - 200, fy - 150, BH + g["bz0"] + 150)) @ np.linalg.inv(cru_rel)]),
-                       op.follow("r", "tongs", tg), S.staged((0.4, 1.0, onh.move({"lower_electrode": (1, 0)})))),
-            hold=0.5)
-    sc.step("Outgas", "Outgas the empty crucible first | high power, swept by the carrier gas", 4.0,
-            S.together(op.reach("r", None), path(sc, "tongs", [Tz(-330 + 150, -260, BH)]),
+    sc.step("Crucible", "A new graphite crucible on the lower electrode | with clean tongs", 4.5,
+            S.together(path(sc, "tongs", [tongs_for((c0[0], c0[1], c0[2] + 120)),
+                                          tongs_for((ped[0], ped[1] - 170, ped[2] + 140)),
+                                          tongs_for((ped[0], ped[1], ped[2] + 0.5))]),
+                       S.staged((0.0, 0.6, op.walk(fx + 60, -780))), op.follow("r", "tongs", tg)), hold=0.3,
+            cam_to=cam_f)
+    # hand the crucible over to the electrode: the drawn one (riding on the lower electrode) takes over, the tongs
+    # come away empty, then the electrode closes
+    W = sc.world("newcru")
+    sc.parent.pop("newcru", None)
+    sc.gmat["newcru"] = W
+    sc.step("Crucible", "Close: the crucible is clamped between the electrodes", 4.0,
+            S.together(S.staged((0.0, 0.25, fade(sc, "newcru", 1, 0)), (0.0, 0.25, onh.move({"crucible": (0, 1)})),
+                                (0.25, 0.6, path(sc, "tongs", [tongs_for((ped[0], ped[1] - 170, ped[2] + 100))])),
+                                (0.55, 1.0, onh.move({"lower_electrode": (1, 0)}))),
+                       op.follow("r", "tongs", tg)), hold=0.5)
+    sc.step("Outgas", "Outgas the empty crucible first | ONH836: 5.5 kW for 20 s, swept by helium (Edison: Liu 2025)", 4.0,
+            S.together(path(sc, "tongs", [Tz(-330 + 160, -330, BH + 150) @ R((0, 0, 1), 90),
+                                          Tz(-330 + 160, -200, BH) @ R((0, 0, 1), 90)]),
+                       S.staged((0.0, 0.8, op.follow("r", "tongs", tg)), (0.8, 1.0, op.reach("r", None))),
                        S.staged((0.2, 0.6, onh.move({"glow": (0, 1)})), (0.7, 1.0, onh.move({"glow": (1, 0.0)})))),
             hold=1.0)
-    # the sample into the loading head, then dropped
-    cg = (0.0, 0.0, 4.0)
+    # the sample into the loading head, then dropped: tweezers take the capsule off the balance's pan through its
+    # open side door, carry it to the loading head and let it fall into the port
+    twg = (-85.0, 0.0, 20.0)
+    capw = wpt(sc, "capsule", (0, 0, 0))
+    TW = T((100.0, 0.0, 4.0))                     # the capsule's foot in the tweezers' frame, at the jaws
+
+    def tw_for(pos, rz=0.0):
+        return T(pos) @ R((0, 0, 1), rz) @ np.linalg.inv(TW)
     sc.step("Drop", "The capsule goes in the loading head | sealed against air before it drops", 3.5,
-            S.together(op.walk(-650 + 80, -720)), hold=0.1, cam_to=S.look((-300, -100, BH + 400), dist=1600, az=-10, el=16))
+            S.together(op.walk(-920, -720)), hold=0.1, cam_to=S.look((-700, -150, BH + 150), dist=1100, az=-50, el=28))
     sc.step("Drop", "The capsule goes in the loading head | sealed against air before it drops", 2.0,
-            op.reach("r", (sc.world("capsule") @ np.array([*cg, 1.0]))[:3], lean=10), hold=0.1)
+            op.reach("r", wpt(sc, "tweezers", twg), lean=6), hold=0.1)
+    sc.step("Drop", "The capsule goes in the loading head | sealed against air before it drops", 3.0,
+            S.together(path(sc, "tweezers", [tw_for((capw[0] - 160, capw[1], capw[2] + 40)), tw_for((capw[0] - 60, capw[1], capw[2] + 2)),
+                                             tw_for(capw)]), op.follow("r", "tweezers", twg)), hold=0.1)
+    sc.parent["capsule"] = "tweezers"
+    sc.gmat["capsule"] = np.linalg.inv(sc.world("tweezers")) @ sc.world("capsule")
     port = g["port"]
-    sc.step("Drop", "The capsule goes in the loading head | sealed against air before it drops", 4.5,
-            S.together(op.walk(fx - 330, -700), path(sc, "capsule", [Tz(-500, -300, BH + 400), Tz(150 + port[0], port[1], BH + port[2] + 40),
-                                                                     Tz(150 + port[0], port[1], BH + g["smp_z0"])]),
-                       op.follow("r", "capsule", cg)), hold=0.3, cam_to=cam_f)
+    over = (XO + port[0], port[1], BH + port[2] + 60)
+    sc.step("Drop", "The capsule goes in the loading head | sealed against air before it drops", 5.0,
+            S.together(path(sc, "tweezers", [tw_for((capw[0] - 160, capw[1], capw[2] + 4)), tw_for((capw[0] - 160, -330, BH + 300)),
+                                             tw_for((over[0] - 60, over[1] - 120, over[2] + 40), 60), tw_for(over, 90)]),
+                       S.staged((0.2, 0.9, op.walk(fx + 120, -800))), op.follow("r", "tweezers", twg)), hold=0.3,
+            cam_to=S.look((fx - 20, fy - 40, BH + g["hz0"]), dist=1100, az=-50, el=22))
+    W = sc.world("capsule")
+    sc.parent.pop("capsule", None)
+    sc.gmat["capsule"] = W
+    sc.step("Drop", "The capsule goes in the loading head | sealed against air before it drops", 1.5,
+            S.together(path(sc, "capsule", [Tz(XO + port[0], port[1], BH + g["smp_z0"])])), hold=0.3)
+    sc.step("Drop", "The capsule goes in the loading head | sealed against air before it drops", 2.0,
+            S.together(path(sc, "tweezers", [tw_for((over[0] - 100, over[1] - 200, over[2] + 20), 90)]),
+                       S.staged((0.0, 0.7, op.follow("r", "tweezers", twg)), (0.7, 1.0, op.reach("r", None)))), hold=0.1)
     show(sc, "capsule", 0.0)
     onh.set(**{"~housing": 0.0})
     sc.step("Drop", "Dropped into the outgassed crucible | through the upper electrode", 3.5,
-            S.together(op.reach("r", None), onh.move({"~housing": (0, 1), "sample": (0, 1)})), hold=0.8,
+            S.together(onh.move({"~housing": (0, 1), "sample": (0, 1)})), hold=0.8,
             labels=[("upper electrode", (fx, fy, BH + g["tip"] + 10), (0.80, 0.30)),
                     ("graphite crucible", (fx, fy - 11, BH + g["ped_top"] + 12), (0.20, 0.60))])
-    sc.step("Fusion", "Fusion: well over 2,000 °C | O leaves as CO with the crucible's carbon; N as N2, H as H2", 4.5,
+    sc.step("Fusion", "Fusion at about 5 kW | O leaves as CO with the crucible's carbon; N as N2, H as H2", 4.5,
             S.together(onh.move({"glow": (0, 1), "sample": (1, 1)}), fade_sample(sc, onh)), hold=1.5)
     onh.set(**{"~shell": 0.0})
-    sc.step("Detect", "Carrier gas sweeps them to the detectors | IR cells: CO and CO2; thermal conductivity: N2, H2", 5.0,
+    sc.step("Detect", "The carrier gas sweeps them to the detectors | IR: CO, CO2 and H2O (for H); thermal conductivity: N2", 5.0,
             S.together(onh.move({"~housing": (1, 0), "~shell": (0, 1), "gas": (0, 1)}),
-                       panel_on(sc, "onh", panel_onh, (0.58, 0.10, 0.40)), sc.drive_panel("onh", 0, 1)), hold=2.0,
-            cam_to=S.look((100, -100, BH + 420), dist=1900, az=-14, el=16),
-            labels=[("IR cells (CO, CO2)", (150 - g["W"] / 2 + 190, 0, BH + g["H"] * 0.5 + 70), (0.15, 0.30)),
-                    ("catalyst: CO to CO2", (150 - g["W"] / 2 + 390, 60, BH + g["H"] * 0.5 + 120), (0.30, 0.15)),
-                    ("thermal-conductivity cell", (150 - g["W"] / 2 + 380, -110, BH + g["H"] * 0.5 - 115),
+                       panel_on(sc, "onh", panel_onh, (0.66, 0.10, 0.32)), sc.drive_panel("onh", 0, 1)), hold=2.0,
+            cam_to=S.look((100, -100, BH + 420), dist=1900, az=-45, el=20),
+            labels=[("IR cells (CO, CO2)", (XO - g["W"] / 2 + 190, 0, BH + g["H"] * 0.5 + 70), (0.15, 0.30)),
+                    ("heated reagent: CO to CO2,\nH2 to H2O", (XO - g["W"] / 2 + 390, 60, BH + g["H"] * 0.5 + 120), (0.30, 0.15)),
+                    ("thermal-conductivity cell", (XO - g["W"] / 2 + 380, -110, BH + g["H"] * 0.5 - 115),
                      (0.15, 0.70))])
     rep = panel_text("Result (one powder, triplicate)", [
         "*O   0.052 ± 0.003 wt%  (520 ppm)",
@@ -1220,9 +1275,9 @@ def c5():
         "*H   0.0011 ± 0.0003 wt%",
         "-blank-corrected; checked against a reference"], badge="synthetic example", w=720)
     sc.step("Result", "O, N and H in wt% | each run blank-corrected; the electrode brushed clean", 4.5,
-            S.together(panel_off(sc, "onh"), panel_on(sc, "rep", rep, (0.58, 0.10, 0.40)),
+            S.together(panel_off(sc, "onh"), panel_on(sc, "rep", rep, (0.66, 0.10, 0.32)), body_fade(sc, op, 0.25, 1.0),
                        onh.move({"glow": (1, 0), "gas": (1, 0), "~shell": (1, 0), "lower_electrode": (0, 1)})),
-            hold=2.5, cam_to=S.look((-100, 0, BH + 350), dist=2600, az=-12, el=16))
+            hold=2.5, cam_to=S.look((-100, 0, BH + 350), dist=2800, az=-35, el=20))
     sc.save()
     au.save()
 
@@ -1253,35 +1308,35 @@ def _tray_model():
 def c6():
     sc = new_scene("sop05_c6", -1900, 1300)
     h = our_lab(sc, person=False)
-    au = audit.Audit(sc, allow=[])
+    au = audit.Audit(sc, allow=[("bench_drill:quill*", "bench_drill:body*"), ("hose/*", "*")])
     sc.cam = overview_cam(-900, dist=2600, az=-12, el=22)
     sc.card("Analysis", ["Recalculate at the measured composition; keep both results.",
                          "Evaporation loss against the AM Module; oxygen against a surface-area estimate."],
             seconds=3.5, label="Analysis")
     sc.step("Recalculate", "Store both the nominal and the measured composition | the lab's wt% go in the run record",
-            5.0, panel_on(sc, "comp", panel_composition, (0.50, 0.09, 0.48)), hold=2.5,
+            5.0, panel_on(sc, "comp", panel_composition, (0.62, 0.09, 0.36)), hold=2.5,
             cam_to=overview_cam(-1200, dist=2000, az=-14, el=22))
     sc.step("Recalculate", "Recalculate equilibrium and Scheil at the measured composition | Thermo-Calc / pycalphad",
-            5.0, S.together(panel_off(sc, "comp"), panel_on(sc, "scheil", panel_scheil, (0.52, 0.09, 0.46)),
+            5.0, S.together(panel_off(sc, "comp"), panel_on(sc, "scheil", panel_scheil, (0.64, 0.09, 0.34)),
                             sc.drive_panel("scheil", 0, 1)), hold=2.5)
     sc.step("Evaporation", "Evaporation loss for each volatile element | against the AM Module at the same P, v, hatch",
-            5.5, S.together(panel_off(sc, "scheil"), panel_on(sc, "evap", panel_evaporation, (0.52, 0.09, 0.46)),
+            5.5, S.together(panel_off(sc, "scheil"), panel_on(sc, "evap", panel_evaporation, (0.64, 0.09, 0.34)),
                             sc.drive_panel("evap", 0, 1)), hold=3.0,
-            cam_to=S.look((XJ + 20, 40, BH + 40), dist=900, az=-25, el=30))
+            cam_to=S.look((XJ - 170, -80, BH + 40), dist=900, az=-30, el=32))
     sc.step("Oxygen", "Oxygen against a surface-area estimate | D50 and a ~4 nm native oxide (check by XPS)", 5.5,
-            S.together(panel_off(sc, "evap"), panel_on(sc, "oxy", panel_oxygen, (0.50, 0.09, 0.48)),
-                       sc.drive_panel("oxy", 0, 1)), hold=3.0, cam_to=S.look((XJ, -170, BH + 70), dist=800, az=-10, el=18))
+            S.together(panel_off(sc, "evap"), panel_on(sc, "oxy", panel_oxygen, (0.62, 0.09, 0.36)),
+                       sc.drive_panel("oxy", 0, 1)), hold=3.0, cam_to=S.look((XJ, -230, BH + 70), dist=800, az=-25, el=20))
     sc.step("Oxygen", "A large excess points to oxide inclusions from the melt | not just the particles' skins", 4.0,
             None, hold=2.0)
     q1 = panel_text("Open questions", [
         "*An on-campus ICP-OES with HF or fusion digestion?",
         "-   BYU: Geological Sciences and the Environmental",
-        "-   Analytical Lab run iCAP 7400s (README access table)",
+        "-   Analytical Lab run iCAP 7400s; HF? (README access)",
         "-   If not, budget a commercial lab",
         "*Spark-OES or XRF on printed coupons, for speed",
         "-   only after validating against ICP-OES on 3-4 alloys"], w=760)
     sc.step("Open", "Open: an on-campus ICP-OES that digests Si-bearing Al? | else a commercial lab", 5.0,
-            S.together(panel_off(sc, "oxy"), panel_on(sc, "q1", q1, (0.54, 0.10, 0.44))), hold=2.5,
+            S.together(panel_off(sc, "oxy"), panel_on(sc, "q1", q1, (0.62, 0.10, 0.36))), hold=2.5,
             cam_to=overview_cam(-300, dist=3200, az=-10, el=22))
     sc.step("Open", "Faster routine checks: spark-OES or XRF | validated against ICP-OES on 3-4 alloys first", 4.5,
             None, hold=2.5)

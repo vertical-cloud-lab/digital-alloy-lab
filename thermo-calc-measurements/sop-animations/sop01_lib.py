@@ -22,13 +22,13 @@ from people import Person
 BH = S.BENCH_H
 # stations: (x, y) of each model's origin on the bench (the front edge is at y = -380, the wall at y = +382)
 RIF = (-1450.0, -200.0)
-JAR = (-1330.0, -265.0)
+JAR = (-1245.0, -255.0)
 PAN_SPOT = (-1060.0, -290.0)      # where the split half is set down, left of the balance
 TRAY = (-960.0, -170.0)           # the crucible tray
-TRAY_STA = (-110.0, -300.0)       # ... and where it goes beside the STA
+TRAY_STA = (-105.0, -335.0)       # ... and where it goes beside the STA
 TOOLS = (-900.0, -320.0)          # tweezers and spatula lie here
-BOTTLE = (-1260.0, -110.0)
-CHIPS = (-1185.0, -255.0)         # the printed cube and its chip, on a wipe
+BOTTLE = (-1265.0, -30.0)
+CHIPS = (-1150.0, -115.0)         # the printed cube and its chip, on a wipe
 BAL = (-800.0, -110.0)
 STDS = (-300.0, -250.0)           # the calibration set
 STA = (250.0, 0.0)
@@ -36,8 +36,9 @@ PC = (960.0, 60.0)
 GAS = (1560.0, 220.0)             # the argon cylinder on the floor, past the bench end (x = 1300)
 PUMP = (1560.0, -170.0)           # the vacuum pump on the floor
 OP_Y = -650.0                     # where the operator stands, facing the bench (+y)
-OP_Y_STA = -600.0                 # ... at the STA, a step closer (its sensor is 280 mm behind its front)
-STA_OP_X = STA[0] - 106.5 - 150.0  # ... and a little left of the sensor, between it and the tray
+WALK_Y = -740.0                   # the lane walks bow out to, clear of the bench's kick plate
+OP_Y_STA = -640.0                 # ... at the STA (its sensor is 280 mm behind its front)
+STA_OP_X = -60.0                  # ... left of the sensor, between it and the tray (turned 30 deg to reach the tray)
 JAR_D, JAR_H, JAR_LID = 58.0, 76.0, 16.0      # the lab's 125 mL powder jar (vl/r8_store.py JARS)
 
 
@@ -96,12 +97,13 @@ class Lab:
         c = M.CRUCIBLE
         # the crucible tray: a dark block with eight pockets (crucibles A, B, the reference R, C for a chip; lids)
         tray = LM.Model("cru_tray", "crucible tray")
-        blk = LM.box(-46, -18, 0, 46, 18, 8)
+        blk = LM.box(-56, -18, 0, 56, 18, 8)
         self.pocket = []
-        for i in range(8):
-            x, y = -38.5 + 11.0 * i, 0.0
-            blk = blk.cut(LM.cyl(c["od"] + 1.0, 3.0, x=x, y=y, z=5.0))
-            self.pocket.append(np.array((TRAY[0] + x, TRAY[1] + y, BH + 5.0)))
+        for i in range(8):                       # four pockets for crucibles; the four lids lie on the top beside them
+            x, y = -30.0 + 11.0 * i + (4.0 if i >= 4 else 0.0), 0.0
+            if i < 4:
+                blk = blk.cut(LM.cyl(c["od"] + 1.0, 3.0, x=x, y=y, z=5.0))
+            self.pocket.append(np.array((TRAY[0] + x, TRAY[1] + y, BH + (5.0 if i < 4 else 8.0))))
         tray.add("tray", blk, "dsc_dark")
         prop(sc, "tray", tray, T((TRAY[0], TRAY[1], BH)))
         for k, nm in enumerate(("cruA", "cruB", "cruR", "cruC")):
@@ -144,16 +146,22 @@ class Lab:
         fl = c["floor"]
         import pyvista as pv
         bed = pv.Cylinder(center=(0, 0, fl + 0.9), direction=(0, 0, 1), radius=ri - 0.05, height=1.8, resolution=40)
+        bed.points[:, 2] += 0.0
         cake = pv.Cylinder(center=(0, 0, fl + 0.75), direction=(0, 0, 1), radius=ri - 0.35, height=1.5, resolution=40)
         bead = pv.Sphere(radius=1.75, center=(0, 0, fl + 1.05), theta_resolution=40, phi_resolution=30)
         bead.points[:, 2] = np.maximum(bead.points[:, 2], fl + 0.02)          # flat where it sits on the floor
         P = S.MATERIALS
-        sc.add(f"{nm}/bed", bed, P["al_powder"][:3], nm, specular=0.02)
+        sc.add(f"{nm}/bed", bed, VP.POWDER, nm, specular=0.02)
         sc.add(f"{nm}/cake", cake, (0.52, 0.53, 0.55), nm, specular=0.05)
         sc.add(f"{nm}/melt", bead.copy(), M.MATERIALS["dsc_hot"][:3], nm, specular=0.3, ambient=0.6, diffuse=0.5)
         sc.add(f"{nm}/bead", bead, M.MATERIALS["dsc_bead"][:3], nm, specular=0.85)
         for k in ("bed", "cake", "melt", "bead"):
             sc.alpha[f"{nm}/{k}"] = 0.0
+
+    def chip_in_c(self):
+        """The cleaned chip in crucible C, flat side down (where chapter 1 leaves it)."""
+        self.sc.parent["chip"] = "cruC"
+        self.sc.gmat["chip"] = T((0.0, 0.0, M.CRUCIBLE["floor"]))
 
     def fill(self, nm, **a):
         """Set what crucible `nm` shows: fill(nm, bed=1, cake=0, melt=0, bead=0)."""
@@ -204,21 +212,27 @@ class Op:
             self.hands.update(kw["hands"])
         self.p.set(**kw)
 
-    def walk(self, x1, y1=None, hd1=None, look=None):
-        """update(u): walk in steps to (x1, y1), turning to hd1; the gait's phase follows the distance walked."""
+    def walk(self, x1, y1=None, hd1=None, look=None, lane=WALK_Y):
+        """update(u): walk in steps to (x1, y1), turning to hd1. Over a longer walk the path bows out to y = lane, clear
+        of the bench's kick plate (a stride reaches 350 mm ahead of the hips); the gait's phase follows the distance
+        actually walked, frame by frame, so the feet don't slide."""
         y1 = self.y if y1 is None else y1
         st = {}
 
         def up(u):
             if not st:
-                st.update(x0=self.x, y0=self.y, hd0=self.hd, ph0=self.phase)
+                st.update(x0=self.x, y0=self.y, hd0=self.hd, ph=self.phase, last=(self.x, self.y), d=0.0)
                 st["L"] = math.hypot(x1 - st["x0"], y1 - st["y0"])
             L = st["L"]
             x = st["x0"] + (x1 - st["x0"]) * u
             y = st["y0"] + (y1 - st["y0"]) * u
-            d = L * u
-            ph = st["ph0"] + 2 * math.pi * d / Person.STRIDE
-            amp = min(1.0, d / 250.0, (L - d) / 250.0) if L > 1 else 0.0
+            if L > 300.0 and lane is not None:
+                y = y + (min(lane, y) - y) * min(1.0, 2.2 * math.sin(math.pi * u))
+            st["d"] += math.hypot(x - st["last"][0], y - st["last"][1])
+            st["last"] = (x, y)
+            ph = st["ph"] + 2 * math.pi * st["d"] / Person.STRIDE
+            Lw = max(L, 1.0)
+            amp = min(1.0, st["d"] / 250.0, max(0.0, (Lw - L * u) / 250.0)) if L > 1 else 0.0
             hd = st["hd0"] + ((hd1 if hd1 is not None else st["hd0"]) - st["hd0"]) * u
             self.x, self.y, self.hd, self.phase = x, y, hd, ph
             self.p.set(x=x, y=y, hd=hd, phase=ph, amp=max(0.0, amp), look=look)

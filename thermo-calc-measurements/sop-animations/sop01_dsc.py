@@ -32,12 +32,13 @@ CR = M.CRUCIBLE
 PR = (0.69, 0.075, 0.30)           # a data panel, top right (under the step label)
 PL = (0.01, 0.075, 0.30)           # ... top left (under the title)
 TW_GRIP = (105.0, 0.0, 0.0)        # where the hand holds the tweezers (the tips are at the origin)
-TW_PARK = T((L.TRAY_STA[0] + 60.0, L.TRAY_STA[1] - 30.0, BH + 0.6)) @ R((0, 0, 1), 200)   # tweezers set down by the tray
+TW_PARK = T((L.TRAY_STA[0] - 20.0, L.TRAY_STA[1] + 60.0, BH + 0.6)) @ R((0, 0, 1), 200)   # tweezers by the tray
 SP_GRIP = (118.0, 0.0, 1.0)        # ... and the spatula
 ALLOW = [("person*glove*", "tweezers*"), ("person*glove*", "spatula*"), ("person*glove*", "jar*"),
          ("person*glove*", "pan_carry*"), ("person*glove*", "riffle_splitter:pan_r*"), ("person*glove*", "bottle*"),
          ("person*glove*", "dsc_sta:furnace*"), ("person*glove*", "dsc_sta:body/dsc_grey*"),
-         ("person*glove*", "tray*"), ("tweezers*", "cru*"), ("tweezers*", "chip*"), ("spatula*", "cru*"),
+         ("person*glove*", "tray*"), ("person*glove*", "dsc_sta:body/dsc_blue_navy*"),
+         ("person*glove*", "dsc_sta:body/dsc_teal*"), ("person*glove*", "dsc_sta:leds*"), ("tweezers*", "cru*"), ("tweezers*", "chip*"), ("spatula*", "cru*"),
          ("spatula*", "pan_carry*"), ("cru*", "microbalance:body*"), ("cru*", "dsc_sta:body*"), ("cru*", "tray*"),
          ("chip*", "cru*"), ("cru*", "cru*"), ("jar*", "riffle_splitter:body*"), ("pan_carry*", "pan_carry*"),
          ("ethanol*", "*"), ("spoon_heap*", "spatula*"), ("spoon_heap*", "pan_carry*"), ("tray*", "bench/top"),
@@ -82,8 +83,9 @@ def up_(Mw, dz):
     return T((0, 0, dz)) @ Mw
 
 
-def carry(sc, op, group, poses, side="r", grip=TW_GRIP, lean=None, look=None, extra=None):
-    """update(u): `group` along the world poses, the operator's hand on its grip point (the hand follows the tool)."""
+def carry(sc, op, group, poses, side="r", grip=TW_GRIP, lean=None, look=None, extra=None, palm_up=20.0):
+    """update(u): `group` along the world poses, the operator's hand on its grip point (the hand follows the tool);
+    the palm `palm_up` mm over the grip point, so the fingers close on it from above and stay out of the bench."""
     mv = S.path_mover(sc, group, poses)
     st = {}
 
@@ -92,7 +94,7 @@ def carry(sc, op, group, poses, side="r", grip=TW_GRIP, lean=None, look=None, ex
             st["lean0"] = op.lean
         mv(u)
         w = sc.world(group)
-        g = (w @ np.r_[grip, 1.0])[:3]
+        g = (w @ np.r_[grip, 1.0])[:3] + np.array([0.0, 0.0, palm_up])
         kw = {"hands": {side: tuple(g)}}
         if lean is not None:
             op.lean = st["lean0"] + (lean - st["lean0"]) * u
@@ -146,7 +148,7 @@ def c1():
     op = lab.op
     rif, bal, sta = lab.rig["riffle"], lab.rig["bal"], lab.rig["sta"]
     au = audit.Audit(sc, allow=ALLOW)
-    op.set(x=-1150.0, y=L.OP_Y - 60.0, hd=0.0)
+    op.set(x=-1060.0, y=L.OP_Y - 60.0, hd=0.0)
     sc.card(TITLE, ["Checks: liquidus, solidus, incipient melting, freezing range, fs(T), latent heat",
                     "against Thermo-Calc and pycalphad (equilibrium and Scheil)",
                     "Draft SOP: nothing here has been run on our instrument yet"],
@@ -168,7 +170,7 @@ def c1():
     def jar_pose(u):
         a = T((jx, jy, BH))
         lift = T((jx, jy, BH + 120))
-        over = T((hop[0] + 62, hop[1] - 4, hop[2] + 48))
+        over = T((hop[0] + 70, hop[1] - 4, hop[2] + 70))
         if u < 0.3:
             return S.blend(a, lift, S.ease(u / 0.3))
         if u < 0.65:
@@ -187,7 +189,7 @@ def c1():
                      look=(jx, jy, BH + 60)), hold=0.1)
     sc.step("Samples", "A riffle-split sub-sample, not a scoop off the top", 4.0,
             carry(sc, op, "jar", [jar_pose(k / 12) for k in range(13)], grip=grip, lean=14.0, look=tuple(hop),
-                  extra=lambda u: rif.set(feed=min(1.0, max(0.0, (u - 0.82) / 0.15)))),
+                  extra=lambda u: rif.set(feed=min(1.0, max(0.0, (u - 0.82) / 0.15))), palm_up=0.0),
             hold=0.3)
     sc.step("Samples", "Half runs to each pan through alternate chutes", 3.5,
             rif.move({"feed": (1.0, 0.0), "stream": (0.0, 1.0), "split_l": (0.0, 1.0), "split_r": (0.0, 1.0)}),
@@ -195,7 +197,8 @@ def c1():
             labels=[("receiving pans", rif.world((-38, -42, 30)), (0.20, 0.70))])
     sc.step("Samples", "Repeat on one half, down to about 1 g", 3.5,
             S.together(rif.move({"stream": (1.0, 0.0)}),
-                       carry(sc, op, "jar", [jar_pose(1 - k / 12) for k in range(13)], grip=grip, lean=10.0)),
+                       carry(sc, op, "jar", [jar_pose(1 - k / 12) for k in range(13)], grip=grip, lean=10.0,
+                             palm_up=0.0)),
             hold=0.5, cam_to=near)
     # the right pan out, swapped for its carried copy, and to the balance
     pan_grip = np.array([M.RIFFLE["pan_x1"] + 8.0, 0.0, 74.0])      # on the pan's high back
@@ -216,8 +219,9 @@ def c1():
     over = T((0, 0, 60)) @ dest
     walk = op.walk(L.PAN_SPOT[0] + 90.0, L.OP_Y, 0.0)
     sc.step("Samples", "Take one half to the balance", 4.0,
-            S.together(walk, carry(sc, op, "pan_carry", [p_out, up1, mid, over, dest], grip=pan_grip, lean=8.0)),
-            hold=0.2, cam_to=cam((L.BAL[0] - 120, L.BAL[1] - 140, BH + 90), 1150, 50, 30))
+            S.together(walk, carry(sc, op, "pan_carry", [p_out, up1, mid, over, dest], grip=pan_grip, lean=8.0,
+                                   palm_up=0.0)),
+            hold=0.2, cam_to=cam((L.BAL[0] - 120, L.BAL[1] - 150, BH + 60), 1400, 74, 30))
     bal_close = cam(np.add(bal.world(M.BAL_POINTS["pan"]), (-40, -40, 25)), 440, 50, 28)
     sc.step("Weigh", "Tare an empty alumina crucible on the microbalance", 2.0,
             S.together(release(op, lean=0.0), bal.move({"door": (0.0, 1.0)})), hold=0.3,
@@ -302,15 +306,15 @@ def c1():
     sc.panel("record", P.panel_record(), rect=(0.68, 0.075, 0.30), alpha=0.0)
     sc.step("Record", "Record run ID, sieve cut, humidity, days since atomization", 1.0,
             S.together(sc.fade_panel("record", 0.0, 1.0), release(op)), hold=4.0,
-            cam_to=cam((L.BAL[0] - 140, L.BAL[1] - 110, BH + 60), 1250, -42, 30))
+            cam_to=cam((L.BAL[0] - 60, L.BAL[1] - 110, BH + 60), 1350, 76, 30))
     sc.step("Record", "Record run ID, sieve cut, humidity, days since atomization", 0.6,
             sc.fade_panel("record", 1.0, 0.0), hold=0.0)
     # the printed or cast chip
     chip_c = np.array([L.CHIPS[0] + 25, L.CHIPS[1], BH + 0.3])
     cube_c = np.array([L.CHIPS[0], L.CHIPS[1], BH + 0.3])
-    chip_cam = cam((chip_c[0] - 12, chip_c[1] + 5, BH + 8), 300, -52, 38)
+    chip_cam = cam((chip_c[0] - 12, chip_c[1] + 5, BH + 8), 400, -48, 45)
     sc.step("Chip", "Printed or cast: a chip of similar mass | from a cube or the crucible remnant", 3.0,
-            op.walk(L.CHIPS[0] + 120.0, L.OP_Y, 0.0), hold=1.2, cam_to=chip_cam,
+            op.walk(L.CHIPS[0] + 130.0, L.OP_Y, 0.0), hold=1.2, cam_to=chip_cam,
             labels=[("10 mm printed cube", tuple(cube_c + (0, 0, 10)), (0.25, 0.25)),
                     ("chip, about 15 mg, ground flat on one side", tuple(chip_c + (0, 0, 1.1)), (0.70, 0.30))])
 
@@ -336,7 +340,7 @@ def c1():
                        carry(sc, op, "bottle", [bot, T((0, 0, 70)) @ bot, squirt_at], side="l",
                              grip=(-36.0, 0.0, 70.0), lean=12.0,
                              extra=lambda u: sc.alpha.__setitem__(f"{stream}/jet", 1.0 if u > 0.85 else 0.0))),
-            hold=1.0, cam_to=cam((chip_c[0] - 20, chip_c[1] + 10, BH + 30), 380, -55, 30))
+            hold=1.0, cam_to=cam((chip_c[0] - 20, chip_c[1] + 10, BH + 30), 520, -55, 36))
     sc.alpha[f"{stream}/jet"] = 0.0
     pC = lab.pocket[3]
     drop = tw_chip(np.add(pC, (0, 0, CR["floor"] + 0.1)), pitch=62.0)
@@ -345,7 +349,7 @@ def c1():
                              grip=(-36.0, 0.0, 70.0), lean=10.0),
                        carry(sc, op, tw, [held, up_(held, 40), up_(drop, 40), up_(drop, 6), drop], lean=14.0,
                              look=tuple(pC))),
-            hold=0.2, cam_to=cam((pC[0], pC[1], BH + 8), 260, 40, 40))
+            hold=0.2, cam_to=cam((pC[0], pC[1], BH + 8), 420, 30, 55))
     L.attach(sc, "chip", "cruC")
     sc.step("Chip", "Dried, into a crucible, flat side down", 2.2,
             S.together(tool_to(sc, op, tw, drop, tw0, via_dz=70, lean=6.0), release(op, side="l"),
@@ -370,12 +374,13 @@ def c2():
     au = audit.Audit(sc, allow=ALLOW)
     lab.fill("cruA", bed=1.0)
     lab.fill("cruB", bed=1.0)
+    lab.chip_in_c()
     # crucible A and its lid sit in the tray (the lid on it), as at the end of chapter 1
     sc.gmat["cruA_lid"] = T(np.add(lab.pocket[0], (0, 0, CR["h"])))
     L.attach(sc, "cruA_lid", "cruA")
     sc.gmat["cruR_lid"] = T(np.add(lab.pocket[2], (0, 0, CR["h"])))
     L.attach(sc, "cruR_lid", "cruR")
-    op.set(x=L.TRAY[0] + 10.0, y=L.OP_Y, hd=0.0)
+    op.set(x=L.TRAY[0] + 10.0, y=L.OP_Y - 50.0, hd=0.0)
     sc.cam = cam((700, 0, 900), 3600, 28, 16)
     gas, pump = lab.rig["gas"], lab.rig["pump"]
     sc.step("Set-up", "A heat-flux DSC/STA to 750 C (Al), 1150 C (Cu) | here a NETZSCH STA 449 F5: RT-1600 C, vacuum-tight",
@@ -400,25 +405,25 @@ def c2():
     for nm in ("cruA", "cruB", "cruR", "cruC", "cruB_lid", "cruC_lid"):
         L.attach(sc, nm, "tray")
     tray0 = sc.world("tray")
-    tgrip = (0.0, -26.0, 10.0)
+    tgrip = (-61.0, 0.0, 10.0)                                      # pinching the tray's left end
     sc.step("Load", "Take the crucibles to the STA", 5.0,
             S.together(op.walk(L.STA_OP_X, L.OP_Y_STA, 0.0),
                        carry(sc, op, "tray", [tray0, up_(tray0, 140), up_(tray_dest, 140), tray_dest], grip=tgrip,
-                             lean=12.0)),
+                             lean=12.0, palm_up=30.0)),
             hold=0.2, cam_to=cam((0, -150, BH + 200), 1900, -35, 22))
     # open the furnace: press safety + up together, the hoist lifts it, then it swings aside
     btn = sta.world(M.STA_POINTS["btn_open"])
     sc.step("Load", "Open the furnace: safety and up together", 2.6,
             S.together(release(op, lean=0.0),
-                       S.staged((0.4, 1.0, op.reach("r", [op.p.rest_hand("r"), btn + (0, -22, 0)], lean=6.0)))),
+                       S.staged((0.4, 1.0, op.reach("r", [op.p.rest_hand("r"), btn + (0, -80, 8)], lean=6.0)))),
             hold=0.2, cam_to=cam(np.add(sta.world(M.STA_POINTS["sensor"]), (60, -60, -80)), 1500, 52, 22))
     sc.step("Load", "Open the furnace: the hoist lifts it", 3.0,
             S.together(sta.move({"hoist": (0.0, 1.0)}), release(op)), hold=0.2)
     fgrip = sta.world((M.STA_P["xs"] + M.STA_P["f_d"] / 2 + 6, M.STA_P["ys"], M._g["zf"] + 60), piece="furnace")
     sc.step("Load", "Swing the furnace to the side", 3.0,
             S.together(sta.move({"furnace": (0.0, 1.0)}),
-                       op.reach("r", lambda u: sta.world((M.STA_P["xs"] - M.STA_P["f_d"] / 2 - 10, M.STA_P["ys"] - 20,
-                                                          M._g["zf"] + 60), piece="furnace"), lean=8.0)),
+                       op.reach("r", lambda u: sta.world((M.STA_P["xs"] - M.STA_P["f_d"] / 2 - 16, M.STA_P["ys"] - 20,
+                                                          M._g["zf"] + 140), piece="furnace"), lean=8.0)),
             hold=0.3,
             labels=[("TG-DSC sensor: sample front, reference back", sta.world(M.STA_POINTS["sensor"]), (0.20, 0.30))])
     # tweezers: the empty reference crucible (with lid) on the back position, then the sample crucible on the front
@@ -427,40 +432,47 @@ def c2():
     tw_cur = sc.world(tw)
     sens_cam = cam(np.add(sta.world(M.STA_POINTS["sensor"]), (0, -6, 4)), 230, 42, 24)
     pR = lab.tray_world(2)
-    pickR = tw_at(pR, pitch=30)
+    pickR = tw_at(pR, yaw=-130, pitch=30)
     placeR = tw_at(r_pos, yaw=-100, pitch=30)
+    tray_cam = cam(np.add(pR, (0, 0, 10)), 330, 40, 42)
+    turn_l = op.walk(L.STA_OP_X, L.OP_Y_STA, 30.0)
+    turn_r = op.walk(L.STA_OP_X, L.OP_Y_STA, 0.0)
     sc.step("Load", "Empty reference crucible, with lid, on the back position", 3.2,
-            S.together(release(op), fade_body(op, 1.0, 0.15),
+            S.together(release(op), fade_body(op, 1.0, 0.15), turn_l,
                        tool_to(sc, op, tw, tw_cur, pickR, via_dz=60, lean=10.0, look=tuple(pR))),
-            hold=0.1, cam_to=cam(np.add(pR, (0, 0, 10)), 330, -40, 40))
+            hold=0.1, cam_to=tray_cam)
     L.attach(sc, "cruR", tw)
-    sc.step("Load", "Empty reference crucible, with lid, on the back position", 3.6,
-            carry(sc, op, tw, [pickR, up_(pickR, 120), up_(placeR, 60), up_(placeR, 3), placeR], lean=10.0,
-                  look=tuple(r_pos)),
+    sc.step("Load", "Empty reference crucible, with lid, on the back position", 3.8,
+            S.together(turn_r, carry(sc, op, tw, [pickR, up_(pickR, 340), up_(placeR, 60), up_(placeR, 3), placeR],
+                                     lean=6.0, look=tuple(r_pos))),
             hold=0.1, cam_to=sens_cam)
     L.attach(sc, "cruR", sta.group("body"))
     pA = lab.tray_world(0)
-    pickA = tw_at(pA, pitch=30)
+    pickA = tw_at(pA, yaw=-130, pitch=30)
     placeA = tw_at(s_pos, yaw=-100, pitch=30)
-    sc.step("Load", "Sample crucible on the front position, close to you", 3.2,
-            tool_to(sc, op, tw, placeR, pickA, via_dz=150, lean=10.0, look=tuple(pA)), hold=0.1,
-            cam_to=cam(np.add(pA, (0, 0, 10)), 330, -40, 40))
+    sc.step("Load", "Sample crucible on the front position, close to you", 3.4,
+            S.together(op.walk(L.STA_OP_X, L.OP_Y_STA, 30.0),
+                       carry(sc, op, tw, [placeR, up_(placeR, 60), up_(pickA, 340), up_(pickA, 30), pickA], lean=10.0,
+                             look=tuple(pA))), hold=0.1,
+            cam_to=cam(np.add(pA, (0, 0, 10)), 330, 40, 42))
     L.attach(sc, "cruA", tw)
-    sc.step("Load", "Sample crucible on the front position, close to you", 3.6,
-            carry(sc, op, tw, [pickA, up_(pickA, 120), up_(placeA, 60), up_(placeA, 3), placeA], lean=10.0,
-                  look=tuple(s_pos)),
+    sc.step("Load", "Sample crucible on the front position, close to you", 3.8,
+            S.together(op.walk(L.STA_OP_X, L.OP_Y_STA, 0.0),
+                       carry(sc, op, tw, [pickA, up_(pickA, 340), up_(placeA, 60), up_(placeA, 3), placeA], lean=6.0,
+                             look=tuple(s_pos))),
             hold=0.6, cam_to=sens_cam,
             labels=[("sample, 15.20 mg, lid on", tuple(np.add(s_pos, (0, 0, CR["h"]))), (0.25, 0.70)),
                     ("reference: empty crucible and lid", tuple(np.add(r_pos, (0, 0, CR["h"]))), (0.72, 0.22))])
     L.attach(sc, "cruA", sta.group("body"))
     sc.step("Load", "Swing the furnace back and lower it", 3.0,
-            S.together(tool_to(sc, op, tw, placeA, TW_PARK, via_dz=150, lean=6.0),
+            S.together(carry(sc, op, tw, [placeA, up_(placeA, 60), up_(TW_PARK, 340), up_(TW_PARK, 40), TW_PARK],
+                             lean=6.0),
                        S.staged((0.3, 1.0, sta.move({"furnace": (1.0, 0.0)}))), fade_body(op, 0.15, 1.0)),
             hold=0.1, cam_to=cam(np.add(sta.world(M.STA_POINTS["sensor"]), (60, -60, -80)), 1500, 52, 22))
     sc.step("Load", "Swing the furnace back and lower it", 2.6,
             S.together(sta.move({"hoist": (1.0, 0.0)}), release(op)), hold=0.4)
     # pump down and backfill, three times; then the purge
-    p_cam = cam((900, -150, 650), 2700, 30, 16)
+    p_cam = cam((1000, -150, 650), 2900, 42, 20)
 
     def cycles(u):
         k = min(2, int(u * 3))
@@ -481,7 +493,7 @@ def c2():
         gauge(sc, [("purge 1", "Ar 50 mL/min"), ("protective", "Ar 20 mL/min"), ("pressure", "1,013 mbar")])
         sta.set(leds=1.0)
     sc.step("Purge", "Purge with argon at about 50 mL/min | >= 99.999 %, through the mass-flow controllers", 1.0,
-            purge, hold=4.0, cam_to=cam(np.add(sta.world(M.STA_POINTS["panel"]), (0, 0, 60)), 900, 25, 18),
+            purge, hold=4.0, cam_to=cam(np.add(sta.world(M.STA_POINTS["panel"]), (90, 0, 60)), 950, 48, 16),
             labels=[("purge 1, purge 2, protective", sta.world((-120, -350, 150)), (0.75, 0.70))])
     sc.save()
     au.save()
@@ -504,15 +516,15 @@ def c3():
             hold=0.5, cam_to=cam(std + (0, 0, 4), 300, -20, 50), labels=labels)
     sc.step("Calibrate", "In, Zn, Al for the Al alloys; Ag, Au for Cu | same crucibles, gas and rate as the samples",
             0.5, None, hold=4.0, labels=labels)
-    sc.panel("tau", P.panel_tau(), rect=PL, alpha=0.0)
+    sc.panel("tau", P.panel_tau(), rect=PR, alpha=0.0)
     sens = sta.world(M.STA_POINTS["sensor"])
-    sta_cam = cam(np.add(sens, (120, -100, -150)), 1500, 38, 20)
+    sta_cam = cam(np.add(sens, (330, -100, -150)), 1700, 38, 20)
     sc.step("Calibrate", "Fit the time constant tau to the trailing edge | of the Zn or Al standard's peak", 1.2,
             S.together(sc.fade_panel("tau", 0.0, 1.0), sta.move({"glow": (0.0, 0.35)}),
                        lambda u: gauge(sc, [("standard", "Zn, 419.5 C"), ("furnace", f"{30 + 400 * u:.0f} C")])),
             hold=4.5, cam_to=sta_cam)
     sc.step("Calibrate", "Check tau weekly | and after any change of crucible type", 0.5, None, hold=3.5)
-    sc.panel("al", P.panel_al(), rect=PL, alpha=0.0)
+    sc.panel("al", P.panel_al(), rect=PR, alpha=0.0)
     sc.step("Calibrate", "Al standard: onset 660.3 +- 0.5 K | heat of fusion about 397 J/g, within 3 %", 1.2,
             S.together(sc.fade_panel("tau", 1.0, 0.0), sc.fade_panel("al", 0.0, 1.0),
                        sta.move({"glow": (0.35, 0.6)}),
@@ -543,11 +555,13 @@ def c4():
     op.set(x=L.PC[0] - 150.0, y=L.OP_Y, hd=-15.0)
     prog = P.program()
     total = prog["total_min"]
+    st_see = [0.0]
     sc.panel("prog", P.panel_program(), rect=PR, alpha=0.0)
     sens = sta.world(M.STA_POINTS["sensor"])
     sta_cam = cam(np.add(sens, (100, -100, -150)), 1600, -30, 18)
-    inside = cam(np.add(s_pos, (0, 0, 2.5)), 95, -28, 22)
+    inside = cam(np.add(s_pos, (0, 0, 2.0)), 62, -25, 48)
     lid_names = sc.members("cruA_lid")
+    wall_names = [n for n in sc.members("cruA") if "alumina" in n]
     names = {k: f"cruA/{k}" for k in ("bed", "cake", "melt", "bead")}
 
     def glow_for(Tc):
@@ -559,20 +573,25 @@ def c4():
             tm = t0 + (t1 - t0) * u
             Tc = P.program_T(tm)
             sc.panels["prog"]["u"] = tm / total
-            sta.set(glow=0.75 * glow_for(Tc))
+            sta.set(glow=0.75 * glow_for(Tc) * (1.0 - st_see[0]))
             gauge(sc, [("time", f"{int(tm // 60)} h {int(tm % 60):02d} min"), ("furnace", f"{Tc:.0f} C"),
                        ("segment", P.segment_at(tm))])
             if extra is not None:
                 extra(u, Tc)
         return up
     sc.cam = sta_cam
-    sc.step("Program 1", "Hold at 30 C, then 20 K/min to 450 C", 1.0, sc.fade_panel("prog", 0.0, 1.0), hold=0.2)
+    sc.step("Program 1", "The program for Al alloys | for Cu alloys every temperature is about 450 K higher", 1.0,
+            sc.fade_panel("prog", 0.0, 1.0), hold=3.0)
     sc.step("Program 1", "Hold at 30 C, then 20 K/min to 450 C", 4.0, run(0.0, 26.0), hold=0.4)
-    # inside the furnace, see-through only now: the powder sinters, melts into a bead, freezes, melts again
+    # inside the furnace, see-through only now: the powder sinters, melts into a bead, freezes, melts again. The
+    # furnace, the crucible's wall and its lid go see-through; the furnace's glow is left out so the melt can be seen
     def see(a):
-        sta.set(**{"~furnace": a, "~hoist": 0.0})
+        st_see[0] = a
+        sta.set(**{"~furnace": 1.13 * a, "~hoist": 1.13 * a, "glow": sta.v["glow"] * (1.0 - a)})
         for n in lid_names:
             sc.alpha[n] = 1.0 - 0.8 * a
+        for n in wall_names:
+            sc.alpha[n] = 1.0 - 0.6 * a
 
     def heat1(u, Tc):
         sinter = min(1.0, max(0.0, (Tc - 560.0) / 50.0))
@@ -610,7 +629,7 @@ def c4():
             S.together(sc.fade_panel("beta", 1.0, 0.0), sc.fade_panel("base", 0.0, 1.0)), hold=5.0)
     sc.step("Time", "About 2-2.5 h a run: three rates fill a day | with an autosampler they run overnight", 1.5,
             S.together(sc.fade_panel("base", 1.0, 0.0), sta.move({"asc": (0.0, 1.0)})), hold=4.0,
-            cam_to=cam(np.add(sens, (120, -60, -100)), 1500, 35, 24),
+            cam_to=cam(np.add(sens, (180, -60, -120)), 1700, -32, 24),
             labels=[("automatic sample changer, 20 positions (option)", sta.world((150.0, -160.0, 300.0)),
                      (0.78, 0.30))])
     sc.step("Time", "About 20 min hands-on per sample", 1.0, sta.move({"asc": (1.0, 0.0)}), hold=3.0)
@@ -632,6 +651,8 @@ def c5():
         L.attach(sc, f"{nm}_lid", nm)
         L.attach(sc, nm, sta.group("body"))
     lab.fill("cruA", bead=1.0)
+    lab.fill("cruB", bed=1.0)
+    lab.chip_in_c()
     # the tray waits beside the STA, as in chapter 2
     for nm in ("cruB", "cruC", "cruB_lid", "cruC_lid"):
         L.attach(sc, nm, "tray")
@@ -643,25 +664,28 @@ def c5():
     sc.cam = cam(np.add(sens, (60, -60, -80)), 1500, 52, 22)
     btn = sta.world(M.STA_POINTS["btn_open"])
     sc.step("After the run", "Cool, open the furnace, take the crucible out", 2.0,
-            op.reach("r", [op.p.rest_hand("r"), btn + (0, -22, 0)], lean=6.0), hold=0.1)
+            op.reach("r", [op.p.rest_hand("r"), btn + (0, -80, 8)], lean=6.0), hold=0.1)
     sc.step("After the run", "Cool, open the furnace, take the crucible out", 3.0,
             S.together(sta.move({"hoist": (0.0, 1.0)}), release(op)), hold=0.1)
     sc.step("After the run", "Cool, open the furnace, take the crucible out", 2.6, sta.move({"furnace": (0.0, 1.0)}),
             hold=0.1)
     pickA = tw_at(s_pos, yaw=-100, pitch=30)
     tw0 = sc.world(tw)
-    sc.step("After the run", "Cool, open the furnace, take the crucible out", 3.0,
-            S.together(fade_body(op, 1.0, 0.15), tool_to(sc, op, tw, tw0, pickA, via_dz=150, lean=10.0)),
+    sc.step("After the run", "Cool, open the furnace, take the crucible out", 3.4,
+            S.together(fade_body(op, 1.0, 0.15),
+                       carry(sc, op, tw, [tw0, up_(tw0, 340), up_(pickA, 60), up_(pickA, 3), pickA], lean=6.0)),
             hold=0.1, cam_to=cam(np.add(sens, (0, -6, 4)), 230, 42, 24))
     L.attach(sc, "cruA", tw)
     pocket0 = lab.tray_world(0)
-    dropA = tw_at(pocket0, pitch=30)
-    sc.step("After the run", "Cool, open the furnace, take the crucible out", 3.2,
-            carry(sc, op, tw, [pickA, up_(pickA, 60), up_(dropA, 120), up_(dropA, 4), dropA], lean=8.0),
-            hold=0.2, cam_to=cam(np.add(pocket0, (0, 0, 8)), 360, -40, 40))
+    dropA = tw_at(pocket0, yaw=-130, pitch=30)
+    sc.step("After the run", "Cool, open the furnace, take the crucible out", 3.6,
+            S.together(op.walk(L.STA_OP_X, L.OP_Y_STA, 30.0),
+                       carry(sc, op, tw, [pickA, up_(pickA, 60), up_(dropA, 340), up_(dropA, 4), dropA], lean=10.0)),
+            hold=0.2, cam_to=cam(np.add(pocket0, (0, 0, 8)), 480, 40, 45))
     L.attach(sc, "cruA", "tray")
     # the mass check at the balance (a cut: the crucible already on the pan)
     pan_pt = bal.world(M.BAL_POINTS["pan"])
+    L.attach(sc, "cruA", None)
     sc.gmat["cruA"] = T(pan_pt)
     L.attach(sc, "cruA", bal.group("body"))
     sc.gmat[tw] = T((L.TOOLS[0], L.TOOLS[1], BH + 0.6)) @ R((0, 0, 1), 200)
@@ -673,7 +697,8 @@ def c5():
             cam_to=cam(np.add(pan_pt, (-40, -40, 25)), 480, 50, 28),
             labels=[("15.170 mg after the run", bal.world(M.BAL_POINTS["display"]), (0.82, 0.62))])
     # the bead (lid off, a close look)
-    sc.gmat["cruA_lid"] = T(np.add(pan_pt, (14.0, -6.0, 0.0)))
+    L.attach(sc, "cruA_lid", None)
+    sc.gmat["cruA_lid"] = T(np.add(pan_pt, (8.0, -4.0, 0.0)))
     L.attach(sc, "cruA_lid", bal.group("body"))
     sc.step("Bead", "The solidified bead: keep it for XRD and SEM", 1.0, sc.fade_panel("mass", 1.0, 0.0), hold=3.5,
             cam_to=cam(np.add(pan_pt, (0, 0, 2)), 70, 30, 55),
@@ -712,7 +737,8 @@ def c6():
     L.attach(sc, "cruA", bal.group("body"))
     lab.fill("cruA", bead=1.0)
     lab.fill("cruB", bed=1.0)
-    op.set(x=L.PC[0] - 200.0, y=L.OP_Y, hd=-10.0)
+    lab.chip_in_c()
+    op.set(x=L.BAL[0] - 170.0, y=L.OP_Y, hd=0.0)
     sens = sta.world(M.STA_POINTS["sensor"])
     sc.cam = cam(np.add(sens, (300, -100, -250)), 2300, 20, 16)
     sc.panel("acc", P.panel_accept(), rect=(0.66, 0.075, 0.33), alpha=0.0)

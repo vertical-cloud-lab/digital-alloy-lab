@@ -1,0 +1,37 @@
+{
+ "source": "Gilson SP-171X product photo (globalgilson.com, 0017428_micro-riffle-splitters_600.jpeg)",
+ "camera": "gilson_b",
+ "pose": {
+  "feed": 0,
+  "stream": 0,
+  "split_l": 0,
+  "split_r": 0
+ },
+ "points": {
+  "rim front left": [
+   135,
+   44
+  ],
+  "rim front right": [
+   298,
+   95
+  ],
+  "rim back right": [
+   445,
+   59
+  ],
+  "rim back left": [
+   282,
+   19
+  ],
+  "upright top left": [
+   204,
+   115
+  ],
+  "upright top right": [
+   288,
+   136
+  ]
+ },
+ "holdout": true
+}

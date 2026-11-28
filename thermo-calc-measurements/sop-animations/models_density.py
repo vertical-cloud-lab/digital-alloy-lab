@@ -87,7 +87,8 @@ DK_VIDEO = "Mettler Toledo, 'How to mount XPR/XSR Analytical density kit' (youtu
 
 # ===================================================================================================== the balance
 # Mettler Toledo XPR225DR. The drawing (XPR_RM, 9.4.1): 336 mm deep without the terminal (486 with it, the terminal
-# 150), 195 wide, 292 high (282 to the top frame, the top door's handle to 292); a 57 mm base; the rear housing 170.5
+# 150), 195 wide overall (the draft shield's glass box about 170, read off the front view: 160 clear inside; the door
+# grips stand out at the sides), 292 high (282 to the top frame, the top door's handle to 292); a 57 mm base; the rear housing 170.5
 # deep, 154 wide, 194 high; the chamber 165.5 deep, 160 wide clear, 150 deep clear at the top (134 at the floor, where
 # the weighing cell's housing comes forward), 235 usable above the pan; the pan 78.5 x 73.5 (a grid), its top 42 above
 # the bench and its centre (the weighing hook's axle) 80.5 behind the front; front feet 39 behind the front and 130
@@ -96,13 +97,13 @@ DK_VIDEO = "Mettler Toledo, 'How to mount XPR/XSR Analytical density kit' (youtu
 # goes into the support plate and carries the beaker (not weighed); the sample is weighed in air on one of the
 # bracket's two small pans, and in the liquid in the holder's basket. Heights of the kit parts are read off the video
 # (the 80 mm beaker sets the scale) and fitted (refs/density_balance).
-XPR = dict(W=195.0, Wb=190.0, D=336.0, Hf=282.0, Hcap=292.0, base_h=57.0, floor_z=36.0, pan_top=42.0, rear_w=154.0,
+XPR = dict(W=170.0, W_all=195.0, Wb=190.0, D=336.0, Hf=282.0, Hcap=292.0, base_h=57.0, floor_z=36.0, pan_top=42.0, rear_w=154.0,
            rear_d=170.5, rear_h=194.0, ch_d=165.5, clear_w=160.0, clear_d=150.0, glass=4.0, foot_y=39.0, foot_r=32.0,
            foot_x=65.0, pan_x=0.0, pan_dy=80.5, pan_w=78.5, pan_d=73.5, term_w=195.0, term_d=150.0, term_h0=20.0,
-           term_h1=44.0, term_gap=6.0, label_x=-38.0, label_z=150.0, door_travel=150.0,
-           kit_pan_d=100.0, kit_pan_h=10.0, beaker_d=80.0, beaker_h=85.0, water_h=68.0, arm_z=168.0, dish_d=38.0,
-           basket_d=56.0, basket_z=56.0, susp_dy=44.0, susp_w=56.0, susp_h=64.0, bpan_x=64.0, bpan_dy=-18.0,
-           bpan_d=28.0)
+           term_h1=44.0, term_gap=6.0, label_x=-38.0, label_z=138.0, door_travel=150.0,
+           kit_pan_d=88.0, kit_pan_h=10.0, beaker_d=80.0, beaker_h=74.0, water_h=56.0, arm_z=155.0, dish_d=42.0,
+           basket_d=46.0, basket_z=53.0, susp_dy=44.0, susp_w=56.0, susp_h=64.0, bpan_x=62.0, bpan_dy=-18.0,
+           bpan_d=34.0)
 
 SPECS["density_balance"] = {
     "model": "Mettler Toledo XPR225DR analytical balance with the density kit for XPR/XSR analytical balances "
@@ -180,9 +181,11 @@ def density_balance_anchors(p, pose=None) -> dict:
          "label bl": (p["label_x"] - 30, g["ywall"], p["label_z"] - 11), "label br": (p["label_x"] + 30, g["ywall"], p["label_z"] - 11),
          "kit pan rim": ("circle", (0.0, py, g["kit_z0"] + p["kit_pan_h"]), p["kit_pan_d"] / 2),
          "beaker rim": ("circle", (0.0, py, g["beaker_z0"] + p["beaker_h"]), p["beaker_d"] / 2),
-         "holder dish": ("circle", (0.0, py, p["arm_z"] + 10.0), p["dish_d"] / 2),
+         "holder dish": ("circle", (0.0, py, p["arm_z"] + 11.0), p["dish_d"] / 2),
          "arm top": (0.0, py + 16.0, p["arm_z"] + 1.5),
-         "bracket pan left": ("circle", (-p["bpan_x"], py + p["bpan_dy"], p["pan_top"] + 2.0), p["bpan_d"] / 2),
+         "bracket pan left": ("circle", (-p["bpan_x"], py + p["bpan_dy"], p["pan_top"] + 3.8), p["bpan_d"] / 2),
+         "basket rim": ("circle", (0.0, py, p["basket_z"] + 3.0), p["basket_d"] / 2),
+         "thermo top": (4.0, py - 27.0, g["beaker_z0"] + 146.0),
          "grid front left": (-p["pan_w"] / 2, py - p["pan_d"] / 2, p["pan_top"]),
          "grid front right": (p["pan_w"] / 2, py - p["pan_d"] / 2, p["pan_top"]),
          "susp top left": (-p["susp_w"] / 2, py + p["susp_dy"], p["pan_top"] + p["susp_h"]),
@@ -278,7 +281,7 @@ def density_balance() -> Instrument:
         d = _piece(inst, side)
         x0, x1 = sorted((sx * (hw - 1), sx * (hw - 1 - p["glass"])))
         d.add("door glass", box(x0, yf + 7, p["base_h"] + 1, x1, -6.0, p["Hf"] - 7), "d3_glass")
-        ga, gb = sorted((sx * (hw - 1), sx * (hw + 7)))
+        ga, gb = sorted((sx * (hw - 1), sx * (p["W_all"] / 2 - 1)))
         d.add("door grip", box(ga, yf + 8, p["base_h"] + 1, gb, yf + 30, p["base_h"] + 42).union(
             box(ga, yf + 8, p["base_h"] + 1, gb + (0 if sx < 0 else 0), yf + 44, p["base_h"] + 10)), "d3_grey")
         d.add("door top strip", box(x0, yf + 7, p["Hf"] - 12, x1, -6.0, p["Hf"] - 7), "d3_light")
@@ -321,12 +324,16 @@ def density_balance() -> Instrument:
                "d3_steel")
         br.add(f"small pan {sx:+d}", cyl(p["bpan_d"], 1.2, x=x, y=py + p["bpan_dy"], z=p["pan_top"] + 0.8).union(
             tube(p["bpan_d"], p["bpan_d"] - 2.4, 3.0, x=x, y=py + p["bpan_dy"], z=p["pan_top"] + 0.8)), "d3_steel")
-    zt = g["beaker_z0"] + p["beaker_h"] + 8.0                 # the plate leans forward above the beaker's rim
-    pts = [(sy - 1.0, sz), (rear, sz + 4), (rear, zt), (py + 14.0, p["arm_z"]), (py + 14.0, p["arm_z"] + 1.5),
-           (rear + 1.5, zt + 0.5), (rear + 1.5, sz + 4), (sy + 0.5, sz)]
-    br.add("riser", cq.Workplane("YZ").polyline(pts).close().extrude(12, both=True), "d3_steel")
-    arm = box(-9, py - 6, p["arm_z"], 9, py + 16, p["arm_z"] + 1.5).cut(cyl(5, 4, y=py, z=p["arm_z"] - 1))
-    arm = arm.cut(box(-2.5, py - 7, p["arm_z"] - 1, 2.5, py, p["arm_z"] + 3))
+    ry = py + 8.0                                            # the riser's plane, just behind the holder's wires
+    az = p["arm_z"]
+    pts = [(-p["bpan_x"] - 2.0, p["pan_top"] + 13.0), (-p["bpan_x"] + 12.0, p["pan_top"] + 13.0), (-18.0, az),
+           (-32.0, az)]
+    br.add("riser", cq.Workplane("XZ").polyline(pts).close().extrude(-1.5).translate((0, ry, 0)), "d3_steel")
+    br.add("riser foot", box(-p["bpan_x"] - 2.0, ry, p["pan_top"] - 1, -p["bpan_x"] + 12.0, sy + 0.5, p["pan_top"] + 13.0)
+           .cut(box(-p["bpan_x"] - 3.0, ry + 1.5, p["pan_top"] + 0.5, -p["bpan_x"] + 13.0, sy - 2.5, p["pan_top"] + 14.0)),
+           "d3_steel")
+    arm = box(-32.0, py - 6, az, 10.0, ry + 1.5, az + 1.5).cut(cyl(5, 4, y=py, z=az - 1))
+    arm = arm.cut(box(-2.5, py - 7, az - 1, 2.5, py, az + 3))
     br.add("arm", arm, "d3_steel")
     # the beaker, its water and the thermometer (clip on the rim, probe down the back)
     bk = _piece(inst, "beaker")
@@ -336,15 +343,14 @@ def density_balance() -> Instrument:
     wat = _piece(inst, "water")
     wat.add("water", cyl(p["beaker_d"] - 3.4, p["water_h"], y=py, z=bz0 + 2.0), "d3_water")
     th = _piece(inst, "thermo")
-    tx, ty = -26.0, py + 24.0                                   # inside the beaker, at its back left
-    th.add("probe", cyl(4.0, 120.0, x=tx, y=ty, z=bz0 + 12), "d3_steel")
-    th.add("clip", box(tx - 5, ty - 4, bz0 + p["beaker_h"] - 14, tx + 5, py + p["beaker_d"] / 2 + 3,
-                       bz0 + p["beaker_h"] + 4).cut(box(tx - 6, py + p["beaker_d"] / 2 - 2.5, bz0 + p["beaker_h"] - 15,
-                                                       tx + 6, py + p["beaker_d"] / 2 + 0.5, bz0 + p["beaker_h"])),
-           "d3_light")
-    th.add("probe head", cyl(9.0, 18.0, x=tx, y=ty, z=bz0 + 132), "d3_dark")
-    th.add("probe cable", hose([(tx, ty, bz0 + 150), (tx, ty, bz0 + 162), (tx - 30, ty + 10, bz0 + 172),
-                                (-hw + 10, ty + 20, bz0 + 172)], 3.0), "d3_dark")
+    tx, ty = 4.0, py - 27.0                                     # the kit's precision thermometer, in front of the holder
+    th.add("thermometer", cyl(6.0, 130.0, x=tx, y=ty, z=bz0 + 16).edges(">Z").fillet(2.5), "d3_beaker")
+    th.add("bulb", cyl(4.0, 12.0, x=tx, y=ty, z=bz0 + 17), "d3_red")
+    th.add("column", cyl(1.2, 70.0, x=tx, y=ty - 2.2, z=bz0 + 28), "d3_red")
+    yb_ = py - p["beaker_d"] / 2                                # the beaker's front wall
+    th.add("clip", box(tx - 5, yb_ - 3, bz0 + p["beaker_h"] - 14, tx + 5, ty + 4, bz0 + p["beaker_h"] + 4).cut(
+        box(tx - 6, yb_ - 0.5, bz0 + p["beaker_h"] - 15, tx + 6, yb_ + 2.5, bz0 + p["beaker_h"])).cut(
+        cyl(6.4, 40, x=tx, y=ty, z=bz0 + p["beaker_h"] - 20)), "d3_light")
     # the holder: the top dish, its stem through the arm, two wires down to the basket (a perforated dish)
     hd = _piece(inst, "holder")
     az = p["arm_z"]
@@ -352,7 +358,7 @@ def density_balance() -> Instrument:
         tube(p["dish_d"], p["dish_d"] - 2.0, 3.0, y=py, z=az + 8.0)), "d3_steel")
     hd.add("collar", cyl(9.0, 6.0, y=py, z=az + 1.6).union(cyl(3.0, 2.0, y=py, z=az + 7.0)), "d3_steel")
     bz = p["basket_z"]
-    wx = p["basket_d"] / 2 - 6.0
+    wx = p["basket_d"] / 2 - 4.0
     wires = None
     for sx in (-1, 1):
         w = hose([(0.0, py, az + 2.0), (0.0, py, az - 22.0), (sx * wx, py, az - 46.0), (sx * wx, py, bz + 14.0),
@@ -423,8 +429,8 @@ CHECKS["density_balance"] = lambda p: [p["arm_z"] - (p["floor_z"] + 4 + p["beake
 # panel with the display; a blue BRANSON badge low on the right of the front. Mesh basket 100-916-334 (sold
 # separately), 8 x 4 x 3 in by a reseller's listing.
 BATH = dict(L=337.0, W=304.0, H=302.0, tank_l=230.0, tank_w=140.0, tank_d=100.0, deck=190.0, front_t=26.0,
-            tower_w=270.0, tower_d=118.0, slope_d=70.0, panel_w=210.0, badge_w=96.0, badge_h=34.0, water=72.0,
-            basket=(203.0, 102.0, 76.0))
+            lip_h=11.0, lip_out=5.0, tower_w=300.0, tower_d=118.0, slope_d=74.0, tower_r=70.0, panel_w=150.0,
+            badge_w=136.0, badge_h=150.0, badge_x=12.0, recess_w=170.0, water=45.0, basket=(203.0, 102.0, 76.0))
 
 SPECS["ultrasonic_bath"] = {
     "model": "Branson Bransonic CPX2800H ultrasonic cleaner (2.8 L, 40 kHz)",
@@ -470,8 +476,11 @@ def ultrasonic_bath_anchors(p, pose=None) -> dict:
          "tank back left": (-p["tank_l"] / 2, g["ty1"], dk), "tank back right": (p["tank_l"] / 2, g["ty1"], dk),
          "tower top left": (-tw / 2, tw0 + p["slope_d"], H), "tower top right": (tw / 2, tw0 + p["slope_d"], H),
          "tower foot left": (-tw / 2, tw0, dk), "tower foot right": (tw / 2, tw0, dk),
-         "badge tl": (L / 2 - 24 - p["badge_w"], yf, 70 + p["badge_h"]), "badge tr": (L / 2 - 24, yf, 70 + p["badge_h"]),
-         "badge bl": (L / 2 - 24 - p["badge_w"], yf, 70), "badge br": (L / 2 - 24, yf, 70)}
+         "badge tl": (L / 2 - p["badge_x"] - p["badge_w"], yf + p["lip_out"], dk - p["lip_h"] - 4),
+         "badge tr": (L / 2 - p["badge_x"], yf + p["lip_out"], dk - p["lip_h"] - 4),
+         "badge bl": (L / 2 - p["badge_x"] - p["badge_w"], yf + p["lip_out"], dk - p["lip_h"] - 4 - p["badge_h"]),
+         "badge br": (L / 2 - p["badge_x"], yf + p["lip_out"], dk - p["lip_h"] - 4 - p["badge_h"]),
+         "lip front bottom left": (-L / 2, yf, dk - p["lip_h"]), "lip front bottom right": (L / 2, yf, dk - p["lip_h"])}
     return a
 
 
@@ -486,35 +495,47 @@ def ultrasonic_bath() -> Instrument:
     inst = Instrument("ultrasonic_bath", "Ultrasonic cleaner", "Branson Bransonic CPX2800H", (L, W, H),
                       "Branson spec sheet BCL-0002-12; manual 100-214-294; the look from Branson's CPX video")
     body = _piece(inst, "body")
-    shell = rbox(L, W, dk, 22, y=0.0, z=0.0).edges(">Z").fillet(6)
+    lo, lh = p["lip_out"], p["lip_h"]
     tz0 = dk - p["tank_d"]
-    shell = shell.cut(box(-p["tank_l"] / 2 - 4, g["ty0"] - 4, tz0 - 2, p["tank_l"] / 2 + 4, g["ty1"] + 4, dk + 1))
+    shell = rbox(L - 2 * lo, W - 2 * lo, dk - lh, 18, y=0.0, z=0.0)
     body.add("housing", shell, "d3_white")
+    lip = rbox(L, W, lh, 22, y=0.0, z=dk - lh).edges(">Z").fillet(4)
+    lip = lip.cut(box(-p["tank_l"] / 2 - 4, g["ty0"] - 4, dk - lh - 1, p["tank_l"] / 2 + 4, g["ty1"] + 4, dk + 1))
+    body.add("collar", lip, "d3_white")
     tank = box(-p["tank_l"] / 2 - 4, g["ty0"] - 4, tz0 - 2, p["tank_l"] / 2 + 4, g["ty1"] + 4, dk).cut(
         box(-p["tank_l"] / 2, g["ty0"], tz0, p["tank_l"] / 2, g["ty1"], dk + 1))
     body.add("tank", tank, "d3_steel")
     body.add("tank rim", box(-p["tank_l"] / 2 - 8, g["ty0"] - 8, dk - 1, p["tank_l"] / 2 + 8, g["ty1"] + 8, dk + 1.5)
              .cut(box(-p["tank_l"] / 2, g["ty0"], dk - 2, p["tank_l"] / 2, g["ty1"], dk + 3)), "d3_steel")
-    # the control tower: a rounded block behind the tank, its front sloped back, the blue panel on the slope
+    # the front: a recessed panel at the left, the blue BRANSON badge at the right
+    yfr = yf + lo
+    body.add("recess", box(-L / 2 + lo + 16, yfr - 0.8, 24, -L / 2 + lo + 16 + p["recess_w"], yfr + 0.2, dk - lh - 8)
+             .cut(box(-L / 2 + lo + 20, yfr - 1.0, 28, -L / 2 + lo + 12 + p["recess_w"], yfr + 0.4, dk - lh - 12)),
+             "d3_light")
+    bx1 = L / 2 - p["badge_x"]
+    bz1 = dk - lh - 4
+    body.add("badge", box(bx1 - p["badge_w"], yfr - 0.8, bz1 - p["badge_h"], bx1, yfr + 0.2, bz1), "d3_blue")
+    body.add("badge text", box(bx1 - p["badge_w"] + 12, yfr - 1.2, bz1 - 26, bx1 - 12, yfr - 0.6, bz1 - 12), "d3_white")
+    # the control tower: a loaf behind the tank, its front sloped back, the blue panel on the slope
     tw = p["tower_w"]
     prof = [(tw0, dk - 1), (yb - 6, dk - 1), (yb - 6, H), (tw0 + p["slope_d"], H), (tw0, dk + 26)]
     tower = cq.Workplane("YZ").polyline(prof).close().extrude(tw / 2, both=True)
-    body.add("tower", tower.edges("|Y").fillet(18), "d3_white")
+    tower = tower.edges("|Y and >Z").fillet(p["tower_r"])
+    body.add("tower", tower, "d3_white")
     ang = math.atan2(H - dk - 26, p["slope_d"])
-    u0, u1 = 0.18, 0.92
+    u0, u1 = 0.10, 0.80
     for nm, (w, mat, a0, a1, dz) in {"panel": (p["panel_w"], "d3_blue", u0, u1, 0.8),
-                                     "display": (74.0, "d3_display", 0.45, 0.80, 1.3)}.items():
-        s = math.hypot(p["slope_d"], H - dk - 26)
+                                     "display": (64.0, "d3_display", 0.40, 0.72, 1.3)}.items():
+        s_ = math.hypot(p["slope_d"], H - dk - 26)
         uc = (a0 + a1) / 2
         org = (0.0, tw0 + p["slope_d"] * uc, dk + 26 + (H - dk - 26) * uc)
         pl = cq.Plane(origin=org, xDir=(1, 0, 0), normal=(0, -math.sin(ang), math.cos(ang)))
-        body.add(nm, cq.Workplane(pl).rect(w, s * (a1 - a0)).extrude(dz), mat)
+        body.add(nm, cq.Workplane(pl).rect(w, s_ * (a1 - a0)).extrude(dz), mat)
     for i in range(5):                                         # the keys under the display
-        uc = 0.30
-        org = (-60.0 + 30.0 * i, tw0 + p["slope_d"] * uc, dk + 26 + (H - dk - 26) * uc)
+        uc = 0.24
+        org = (-44.0 + 22.0 * i, tw0 + p["slope_d"] * uc, dk + 26 + (H - dk - 26) * uc)
         pl = cq.Plane(origin=org, xDir=(1, 0, 0), normal=(0, -math.sin(ang), math.cos(ang)))
-        body.add(f"key {i}", cq.Workplane(pl).rect(18, 13).extrude(1.6), "d3_white")
-    body.add("badge", box(L / 2 - 24 - p["badge_w"], yf - 0.8, 70, L / 2 - 24, yf + 1, 70 + p["badge_h"]), "d3_blue")
+        body.add(f"key {i}", cq.Workplane(pl).rect(15, 12).extrude(1.6), "d3_white")
     for sx in (-1, 1):
         for sy in (-1, 1):
             body.add(f"foot {sx}{sy}", cyl(22, 6, x=sx * (L / 2 - 30), y=sy * (W / 2 - 30), z=-5.5), "d3_dark")
@@ -550,7 +571,7 @@ def ultrasonic_bath() -> Instrument:
         rr = s if rr is None else rr.union(s)
     rip.add("cavitation", rr, "d3_glass")
     inst.joints = {
-        "lid": Joint("path", path=((0, 0, 0), (0, 0, 40.0), (L / 2 + 140.0, 0, 20.0), (L / 2 + 160.0, 0, -dk + 4.0))),
+        "lid": Joint("path", path=((0, 0, 0), (0, 0, 40.0), (L / 2 + 140.0, 0, 20.0), (L / 2 + 160.0, 0, -dk + 9.0))),
         "basket": Joint("slide", vec=(0, 0, 110.0)),
         "water": Joint("fade", v0=1.0),
         "ripple": Joint("fade", v0=0.0),
@@ -561,10 +582,11 @@ def ultrasonic_bath() -> Instrument:
 
 
 ANCHORS["ultrasonic_bath"] = (BATH, ultrasonic_bath_anchors)
-FREE["ultrasonic_bath"] = ["deck", "front_t", "tower_w", "tower_d", "slope_d", "badge_w", "badge_h"]
+FREE["ultrasonic_bath"] = ["lip_h", "tower_w", "slope_d", "badge_w", "badge_x"]
 CHECKS["ultrasonic_bath"] = lambda p: [p["deck"] - p["tank_d"] - 30, p["H"] - p["deck"] - 60,
                                        p["W"] - p["front_t"] - p["tank_w"] - p["tower_d"] - 8,
-                                       p["L"] - p["tower_w"] - 10, p["tower_d"] - p["slope_d"] - 25]
+                                       p["L"] - p["tower_w"] - 10, p["tower_d"] - p["slope_d"] - 25,
+                                       p["L"] / 2 - p["badge_x"] - p["badge_w"] - 20, p["lip_h"] - 6]
 
 
 # ===================================================================================================== drying oven
@@ -577,8 +599,8 @@ CHECKS["ultrasonic_bath"] = lambda p: [p["deck"] - p["tank_d"] - 30, p["H"] - p[
 # middle, the logo at the right). Panel and handle positions are read off that drawing.
 OVEN = dict(W=585.0, H=704.0, D=434.0, handle=56.0, feet=30.0, ch_w=400.0, ch_h=320.0, ch_d=250.0, ch_z0=120.0,
             ch_y=88.0, door_t=39.0, door_z0=28.0, door_z1=540.0, panel_x0=-234.0, panel_x1=237.0, panel_z0=592.0,
-            disp_x0=-185.0, disp_x1=-90.0, disp_z0=639.0, disp_z1=693.0, knob_x=3.5, knob_z=600.0, knob_d=56.0,
-            handle_x=-217.0, handle_z0=40.0, handle_z1=520.0, grid_z=250.0)
+            disp_x0=-185.0, disp_x1=-90.0, disp_z0=639.0, disp_z1=693.0, knob_x=3.5, knob_z=603.5, knob_d=56.0,
+            handle_x=-216.0, handle_z0=40.0, handle_z1=550.0, grid_z=250.0)
 
 SPECS["drying_oven"] = {
     "model": "Memmert UN30 universal oven (32 L, natural convection)",
@@ -836,7 +858,7 @@ def brush() -> Model:
     m = Model("brush", "fine brush")
     m.add("bristles", cq.Workplane("YZ").circle(0.3).workplane(offset=9.0).circle(1.3).loft(), "d3_hair")
     m.add("ferrule", _xcyl(2.8, 14.0, x=9.0), "d3_steel")
-    m.add("handle", cq.Workplane("YZ").circle(1.6).workplane(offset=140.0).circle(2.6).loft().translate((23.0, 0, 0)),
+    m.add("handle", cq.Workplane("YZ").circle(1.6).workplane(offset=90.0).circle(2.6).loft().translate((23.0, 0, 0)),
           "d3_wood")
     return m
 
@@ -881,8 +903,9 @@ def beaker_small(liquid: bool = True) -> Model:
 
 def al_dish() -> Model:
     m = Model("al_dish", "aluminium weighing dish, 57 mm")
-    m.add("dish", cq.Workplane("XY").circle(24.0).workplane(offset=14.0).circle(28.5).loft().faces(">Z").shell(-0.3),
-          "d3_al_dish")
+    outer = cq.Workplane("XY").circle(24.0).workplane(offset=14.0).circle(28.5).loft()
+    inner = cq.Workplane("XY").circle(23.6).workplane(offset=14.2).circle(28.1).loft().translate((0, 0, 0.4))
+    m.add("dish", outer.cut(inner), "d3_al_dish")
     return m
 
 

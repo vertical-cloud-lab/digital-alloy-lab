@@ -1,0 +1,7 @@
+{"source": "https://youtu.be/sRsm8SS_LyM?t=19", "video": "sRsm8SS_LyM", "t": 19.5, "camera": "open",
+ "note": "the same video: the door open, the chamber and its grid; held out of the fit",
+ "pose": {"door": 1.0},
+ "points": {"top front left": [381, 108], "top front right": [717, 112], "chamber tl": [448, 230],
+            "chamber tr": [664, 232], "chamber bl": [450, 388], "chamber br": [662, 388],
+            "panel bottom left": [398, 199], "knob": [551, 162]},
+ "holdout": true}

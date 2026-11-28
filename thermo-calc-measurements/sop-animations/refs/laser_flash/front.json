@@ -1,0 +1,94 @@
+{
+ "source": "https://youtu.be/vxowKxtTS0A?t=6",
+ "video": "vxowKxtTS0A",
+ "t": 6,
+ "camera": "netzsch-render-6",
+ "pose": {
+  "lid": 0.0
+ },
+ "points": {
+  "base front top left": [
+   361,
+   282
+  ],
+  "base front top right": [
+   918,
+   282
+  ],
+  "plinth front left": [
+   372,
+   545
+  ],
+  "plinth front right": [
+   910,
+   545
+  ],
+  "panel bottom left": [
+   517,
+   403
+  ],
+  "panel bottom right": [
+   763,
+   403
+  ],
+  "block top left": [
+   478,
+   155
+  ],
+  "block top right": [
+   650,
+   155
+  ]
+ },
+ "curves": {
+  "tower top": [
+   [
+    506,
+    90
+   ],
+   [
+    559,
+    85
+   ],
+   [
+    612,
+    90
+   ]
+  ],
+  "collar top": [
+   [
+    503,
+    236
+   ],
+   [
+    559,
+    238
+   ],
+   [
+    615,
+    236
+   ]
+  ],
+  "left side": [
+   [
+    361,
+    330
+   ],
+   [
+    361,
+    520
+   ]
+  ],
+  "right side": [
+   [
+    918,
+    330
+   ],
+   [
+    918,
+    520
+   ]
+  ]
+ },
+ "holdout": false
+}
