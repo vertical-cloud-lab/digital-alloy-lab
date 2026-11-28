@@ -1,0 +1,32 @@
+part,case,quantity,2743 K (used),"2791 K (NIST-JANAF, pure Al)","alloy at 1 atm (#249): AlSi10Mg 2814 K, blend 2852 K"
+AM-module maps,"alsi10mg, pool edge liquidus-867K, A = 0.307",visible grid points,58,58,58
+AM-module maps,"alsi10mg, pool edge liquidus-867K, A = 0.307",points where eagar-tsai's peak reaches T_b,53,52,52
+AM-module maps,"alsi10mg, pool edge liquidus-867K, A = 0.307",... of which the AM module calls keyhole,15,15,15
+AM-module maps,"alsi10mg, pool edge liquidus-867K, A = 0.307","keyhole-or-not agreement with the AM map, calling keyhole where the peak reaches T_b",20,21,21
+AM-module maps,"alsi10mg, pool edge liquidus-867K, A = 0.307","boiling line ÷ the AM module's keyhole power, min (%)",30.3,30.9,31.2
+AM-module maps,"alsi10mg, pool edge liquidus-867K, A = 0.307","boiling line ÷ the AM module's keyhole power, max (%)",46.5,47.5,48.0
+AM-module maps,"byu-blend, pool edge eutectic-850K, A = 0.384",visible grid points,27,27,27
+AM-module maps,"byu-blend, pool edge eutectic-850K, A = 0.384",points where eagar-tsai's peak reaches T_b,21,21,21
+AM-module maps,"byu-blend, pool edge eutectic-850K, A = 0.384",... of which the AM module calls keyhole,5,5,5
+AM-module maps,"byu-blend, pool edge eutectic-850K, A = 0.384","keyhole-or-not agreement with the AM map, calling keyhole where the peak reaches T_b",11,11,11
+AM-module maps,"byu-blend, pool edge eutectic-850K, A = 0.384","boiling line ÷ the AM module's keyhole power, min (%)",29.5,30.1,30.9
+AM-module maps,"byu-blend, pool edge eutectic-850K, A = 0.384","boiling line ÷ the AM module's keyhole power, max (%)",47.5,48.4,49.6
+AM-module maps,"byu-blend, pool edge liquidus-1019K, A = 0.384",visible grid points,27,27,27
+AM-module maps,"byu-blend, pool edge liquidus-1019K, A = 0.384",points where eagar-tsai's peak reaches T_b,21,21,21
+AM-module maps,"byu-blend, pool edge liquidus-1019K, A = 0.384",... of which the AM module calls keyhole,5,5,5
+AM-module maps,"byu-blend, pool edge liquidus-1019K, A = 0.384","keyhole-or-not agreement with the AM map, calling keyhole where the peak reaches T_b",11,11,11
+AM-module maps,"byu-blend, pool edge liquidus-1019K, A = 0.384","boiling line ÷ the AM module's keyhole power, min (%)",29.5,30.1,30.9
+AM-module maps,"byu-blend, pool edge liquidus-1019K, A = 0.384","boiling line ÷ the AM module's keyhole power, max (%)",47.5,48.4,49.6
+transient (one track),alsi10mg,"surface first reaches T_b after switch-on, between samples (µs)",1.4–2.0,1.4–2.0,1.4–2.0
+transient (one track),alsi10mg,"peak falls below T_b after switch-off, between samples (µs)",4.2–8.3,4.2–8.3,4.2–8.3
+transient (one track),byu-blend,"surface first reaches T_b after switch-on, between samples (µs)",0.0–1.0,0.0–1.0,0.0–1.0
+transient (one track),byu-blend,"peak falls below T_b after switch-off, between samples (µs)",20.0–30.0,20.0–30.0,20.0–30.0
+Sobol sweep (AlSi10Mg box),"Xavier's design, 2 µm grid","first 1,024 rows: melting rows",755,755,755
+Sobol sweep (AlSi10Mg box),"Xavier's design, 2 µm grid","first 1,024 rows: melting rows whose peak is above T_b",281,278,275
+Sobol sweep (AlSi10Mg box),"Xavier's design, 2 µm grid","4,096 rows: melt, peak below T_b",1963,1986,2000
+Sobol sweep (AlSi10Mg box),"Xavier's design, 2 µm grid","4,096 rows: melt, peak above T_b",1097,1074,1060
+Sobol sweep (AlSi10Mg box),"Xavier's design, 2 µm grid","4,096 rows: defect-free and peak below T_b",697,711,717
+Sobol sweep (AlSi10Mg box),"Xavier's design, 2 µm grid","4,096 rows: 'defect-free' with the surface above T_b",148,134,128
+Sobol sweep (AlSi10Mg box),"Xavier's design, 2 µm grid","4,096 rows: eagar-tsai 'keyhole' rows",855,855,855
+Sobol sweep (AlSi10Mg box),"Xavier's design, 2 µm grid","4,096 rows: ... of which the peak is above T_b",842,840,839
+Sobol sweep (AlSi10Mg box),"Xavier's design, 2 µm grid","boiling threshold on Θ·G(p), (T_b − 298) / (867 − 298)",4.3,4.38,4.42
