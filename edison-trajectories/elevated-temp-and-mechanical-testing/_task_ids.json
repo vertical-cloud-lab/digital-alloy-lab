@@ -20,14 +20,16 @@
     "job": "LITERATURE_HIGH",
     "job_name": "job-futurehouse-paperqa3-high",
     "submitted_utc": "2026-11-28T08:50:24Z",
-    "status": "in progress"
+    "status": "success",
+    "fetched_utc": "2026-11-28T09:24:29Z"
   },
   "04-strain-rate-and-test-settings": {
     "task_id": "3e8ecc0e-60e6-4a27-b51f-b9579e2503d9",
     "job": "LITERATURE_HIGH",
     "job_name": "job-futurehouse-paperqa3-high",
     "submitted_utc": "2026-11-28T08:50:25Z",
-    "status": "in progress"
+    "status": "success",
+    "fetched_utc": "2026-11-28T09:24:30Z"
   },
   "05-precedent-sc-free-lpbf-al-creep": {
     "task_id": "f9528333-5325-4e15-8b3a-a9fa72e2f559",
