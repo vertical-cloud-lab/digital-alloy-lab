@@ -14,7 +14,8 @@ deck cassette through the cube's face, and taking the scan head off for service.
   sweep), the box door's swing, taking the beam tube off, fit, the layer camera's and lights' sight lines, gas volume;
   the cassette's way into the cube and the scan head's way off the gantry.
 - **The schedule and spend:** when each state can start, and what it adds to the cost.
-- **The images:** each state, each step between states, the monitoring parts, the camera's view, the Thorlabs variant.
+- **The images:** each state, each step between states, the monitoring parts, the camera's view, the Thorlabs variant,
+  the head's mounts on the g3 gantry, and the cassette going into the cube.
 
 It extends the study in [`../README.md`](../README.md).
 
