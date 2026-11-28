@@ -3,7 +3,152 @@
 The thermal cases (1-3: the heated cassette at 200 °C, warm-up, the laser's heat during a build) are in
 [`thermal.md`](thermal.md).
 
-### Short answer
+### Round 3 (2026-11-28): 4a, 4b and 4d on CAD v2, and the gantry's bolted joints
+
+Rounds 1-2 ran 4a, 4b and 4d on the round-1 model (v1, model `d117ba8`); only 4c used CAD v2. This round runs all
+three on CAD v2 (the current `cad/ft_model.py`, model `e3853cf`), with the same method, and compares them with v1. The
+gantry (4c, the g3 frame) gets compliant bolted joints, the head's rotary inertia and a mesh check. The v1 results
+are kept further down, labelled v1.
+
+What v2 changed for these cases:
+
+- **4a:** the lid is now the Saginaw SCE-16EL1208SSLP's own door: 0.075 in. (1.905 mm) 304, 393.7 x 295.4 mm, a
+  dished panel whose return is drawn 5.5 mm deep. It sits on the box's poured-in-place gasket (8 x 4 mm, 4 mm in
+  from the door's edge, a 1,314 mm line). One quarter-turn latch at the middle of the front edge and two concealed
+  hinges at the back hold it, all inside the gasket line. v1 had a custom 14 ga lid with a 15 mm skirt on four
+  clamps and a hinge line. The window stack moved to (0, -11), and the door has a second bore (Ø28) for the layer
+  camera's port ring (MK-19) at (-70, -55).
+- **4b:** the cube top plate (MK-13) has the 53 mm window bore at (0, -21) and a tilted Ø26 camera bore at
+  (-100, -50) under the camera port ring. The light ports are in the cube's door and left plate, not the top plate.
+- **4d:** the heater plate (MK-04) is 24 mm (was 28), the rod (MK-06) has a potted vacuum-epoxy plug in its lower
+  end and three lead notches at its top, and the rod-end block (MK-15) replaces the rod clamp. It grips the rod's
+  bottom 22 mm.
+
+#### Short answer (v2)
+
+- **Box door (4a): as drawn, it does not hold the gasket at a +50 mbar fault, and only just at +10 mbar.** Between
+  one latch and two hinges, the 1.9 mm door with a 5.5 mm return bows up at both front corners. The foam gasket
+  (ASTM D1056 2A2 grade, 25 % squeeze) takes 507 N to close. Closed, the corners keep only 0.16 mm of the 1.0 mm
+  squeeze, and 0.09 mm at +10 mbar; the line starts to open at about +22 mbar. At +50 mbar (NLGEOM) 155 mm of it is
+  open: about 120 mm round the front-left corner (the side with the camera bore) and 35 mm at the front-right
+  corner. A stiffer foam (2A4) opens 20 mm as soon as the door is latched. v1's lid on four clamps kept ≥ 0.67 mm of
+  0.75 mm at +50 mbar. **A deeper door return or two more clamps fix it** (+50 mbar, linear): a 10 mm return keeps
+  ≥ 0.18 mm, 15 mm ≥ 0.51 mm, 20 mm ≥ 0.68 mm; the drawn door with a clamp over the gasket 47 mm in from each front
+  corner keeps ≥ 0.54 mm, at about 90 N per clamp closed and 140 N at +50 mbar. **Change: measure the delivered
+  door's return** (the CAD draws an envelope, and the maker's render shows a deeper one). If it is under about 15 mm,
+  add the two front clamps (toggle clamps on the body's front wall); either way set the purge's relief below
+  +20 mbar. The door's stress peaks at 112 MPa (+50 mbar, NLGEOM) at its return next to the latch: safety factor 1.9
+  on 304's 215 MPa yield (v1: 3.6).
+- **Cube top plate and window (4b): still pass by a wide margin.** Moving the window bore to (0, -21) and adding
+  the camera bore change little: 20-33 µm and 8.6 MPa at 1 atm (bolted to simply supported), against v1's 21-35 µm
+  and 8.1 MPa. The peak moved to the camera bore's edge. Safety factor 32 on yield (v1: 34). The window ring's seat
+  tilts 0.18-0.26 mrad, which shifts the beam under 1 µm. The window is the same part on the same seat: 0.71 MPa,
+  factor 74 on the abraded modulus of rupture and 9.8 on 6.9 MPa (unchanged).
+- **Piston rod (4d): passes; the column and bending numbers move 1-15 % from v1.** The free length grows to 54.6 mm (box) and
+  75.6 mm (cube), against 50.6 and 71.6 mm. Euler buckling at 200 °C drops to 88 kN and 46 kN (v1: 103 and 51 kN),
+  still over 800 times the load. A 5 N blade drag moves the substrate's top 9.0 µm and 18.0 µm (v1: 8.9 and 17.8).
+  The lead notches leave 76 % of the rod's section, over 1 mm of free length: 2.2 MPa there under 5 N. The stage
+  now lifts 4.2 N, not 2.4 N, because the rod-end block (234 g) is heavier than v1's clamp (51 g). The O-ring drag is
+  unchanged (same gland): 8-25 N running and 42 N at breakout for two O-rings at 15 %. The X-VSR20A's worst case is
+  56 N of its 100 N (v1: 58 N). The MTS50/M-Z8 verdicts are unchanged: two O-rings at 15 % are fine only while
+  friction stays at running levels (78-88 % of 44 N), and one O-ring at 10 % is fine (≤ 57 %).
+- **Gantry (4c) with bolted joints:** being run (round 3); until then the bonded g3 result stands: 62.0 / 100.6 / 179.4 Hz.
+
+#### 4a on v2: the Saginaw door on its poured gasket
+
+Same method as v1: the door, the window stack (inner clamp ring, window ring, retaining flange) and the camera port
+ring are bonded together and to a 10 mm spring bed on the drawn gasket's footprint, whose stiffness per length is the
+foam's at its squeeze (25 % of 4 mm, estimate). The bed's bottom is fixed in z. The latch pulls a Ø25 mm patch of the
+door down by the squeeze; each hinge holds its 40 x 15 mm leaf on the door's inner face in x and y and pulls it down
+by the squeeze. Pressure acts on the 989 cm² inside the gasket (101 N at +10 mbar, 503 N at +50 mbar; v1 had
+1,147 cm²). The gasket maker's data were not found, so two ASTM D1056 grades bracket the poured foam: 2A2
+(5-9 psi at 25 %, taken as 7 psi) and 2A4 (13-17 psi, taken as 15 psi). The maker's render of this enclosure shows a
+door with a deeper formed return than the CAD envelope's 5.5 mm, so a 20 mm return was run as well.
+
+![Door gasket compression (v2)](struct-lid-gasket-v2.png)
+
+![Door at +50 mbar (v2, as drawn, foam 2A2, linear; deformation x50)](struct-lid-v2.png)
+
+| | v1: 14 ga lid, 4 clamps + hinge line, sponge 3 x 7.9 mm (2A2) | **v2 as drawn: 5.5 mm return, foam 2A2** | v2 as drawn, foam 2A4 | v2, 20 mm return, foam 2A2 |
+|---|---|---|---|---|
+| Force to close at the full squeeze | 536 N | **507 N** | 1,087 N | 507 N |
+| Latch / hinge loads, closed | clamps 90, 78 N, hinge 197 N | **129 / 111, 114 N** | 216 / 212, 217 N | 215 / 123, 124 N |
+| Latch / hinge loads at +50 mbar (NLGEOM) | clamps 176, 156 N, hinge 432 N (linear) | **307 / 210, 225 N** | 375 / 295, 312 N | 419 / 223, 237 N |
+| Least gasket compression: closed / +10 mbar / +50 mbar linear / +50 mbar NLGEOM (of the set squeeze) | 0.735 / 0.722 / 0.662 / 0.667 mm (of 0.75) | **0.157 / 0.088 / -0.192 / -0.176 mm** (of 1.0) | -0.033 / -0.068 / -0.210 / -0.197 mm | 0.791 / 0.769 / 0.683 / 0.695 mm |
+| Gasket line open (compression < 0): closed / +10 / +50 mbar NLGEOM | 0 / 0 / 0 mm | **0 / 0 / 155 mm** | 20 / 55 / 245 mm | 0 / 0 / 0 mm |
+| Where it opens at +50 mbar | – | 120 mm round the front-left corner, 35 mm at the front-right | 135 mm front-left, 110 mm front-right | – |
+| Window seat height, closed → +10 → +50 mbar NLGEOM | -718 → -576 → -38 µm | -969 → -922 → -734 µm | -959 → -913 → -730 µm | -989 → -947 → -776 µm |
+| Peak von Mises in the lid more than 30 mm from the latch, hinges or clamps, +50 mbar NLGEOM | 60 MPa | **112 MPa** (the return next to the latch; 96 MPa on the panel at the window ring's edge) | 128 MPa | 69 MPa |
+| Safety factor on 304's 215 MPa yield | 3.6 | **1.9** | 1.7 | 3.1 |
+
+Door return and extra clamps, foam 2A2 (linear; struct.json `4a_extra`):
+
+| Door | Least compression: closed / +10 mbar / +50 mbar (of 1.0 mm) | Length under half the squeeze at +50 mbar | Latch / hinge / extra clamp loads at +50 mbar |
+|---|---|---|---|
+| 5.5 mm return, as drawn | 0.157 / 0.088 / -0.192 mm (open 180 mm) | – | 316 / 221, 237 N |
+| 10 mm return | 0.440 / 0.388 / 0.180 mm | 420 mm | 368 / 229, 245 N |
+| 15 mm return | 0.669 / 0.637 / 0.506 mm | 0 mm | 415 / 235, 250 N |
+| 20 mm return | 0.791 / 0.769 / 0.683 mm | 0 mm | 441 / 238, 253 N |
+| 5.5 mm return + a clamp over the gasket 47 mm in from each front corner (Ø25 pads) | 0.720 / 0.684 / 0.541 mm | 0 mm | 195 / 223, 234 / 142, 134 N |
+
+- **Why it opens:** the gasket's reaction acts round the edge, and the door is held at three points inside that line,
+  so the edges between them bow up. The front corners are 190 mm from the latch along the edge. A 1.9 mm sheet with a
+  5.5 mm return is too soft to carry the foam's 0.39 N/mm (2A2) that far. A 20 mm return makes the edge (a 30 mm
+  strip of panel with its return) about 24 times stiffer in bending, and the whole line then stays at ≥ 70 % of its
+  squeeze. The front-left corner opens first because the camera bore softens that quarter of the panel.
+- **The supports are idealised:** the latch and hinges pull their patches down by exactly the squeeze. A real latch
+  has some play, and a formed door may also bottom on the body's rim, which would help. The peak stress at the return
+  next to the latch comes from that idealised patch. It drops to 61 MPa (closed) and 96 MPa (+50 mbar) 50 mm away.
+- **Left out, as in v1:** the cover-slide holder (now open to Ø44) hangs under the inner clamp ring and carries no
+  pressure load; the layer camera (MON1) on its post, the window-stack screws and the latch's own body are not
+  modelled (the stack is bonded).
+- **Mesh check:** the plate check of v1 repeated at the door's 1.905 mm gauge: a clamped 400 x 300 mm plate at 1 kPa
+  deflects 130.2 µm against Timoshenko's 131.0 µm (ratio 0.994). The door model has 53k nodes (58k with the 20 mm return).
+
+#### 4b on v2: the cube top plate and window at 1 atm
+
+| | v1, bolted | **v2, bolted** | v1, simply supported | **v2, simply supported** |
+|---|---|---|---|---|
+| Largest deflection | 21.3 µm | **19.9 µm** | 34.9 µm | **32.8 µm** |
+| Deflection at the window bore | 17.2 µm | **14.0 µm** | 29.1 µm | **24.7 µm** |
+| Tilt of the window ring's seat (about x, y) | – | 184, 61 µrad | – | 262, 92 µrad |
+| Deflection at the camera bore | – | 5.7 µm | – | 11.2 µm |
+| Peak von Mises (99.5 %) | 5.7 (4.2) MPa | **5.9 (4.1) MPa** | 8.1 (5.6) MPa | **8.6 (5.3) MPa**, at the camera bore's edge |
+| Safety factor on 6061-T6 yield (276 MPa) | 48 | **47** | 34 | **32** |
+
+Load: 1 atm on the outer face, the window ring's 224 N round its bore (r 26.5-50 mm) and the camera port ring's
+54 N round its bore (r 15-22 mm). The supports and the estimated 266 mm frame opening are as in v1. The window
+(Ø50.8 x 9.53 mm fused silica on its O-ring) is unchanged: 0.706 MPa peak, 0.46 µm, factor 74 on 52.4 MPa and 9.8 on
+6.9 MPa. The cube's door and left plate are the same 22.9 mm blank with one tilted Ø24 light-port bore each, smaller
+than the top plate's two bores, so the top plate bounds them (not run).
+
+#### 4d on v2: the piston rod
+
+| | v1 box | **v2 box** | v1 cube | **v2 cube** |
+|---|---|---|---|---|
+| Free length (rod-end block's top to the heater plate) | 50.6 mm | **54.6 mm** | 71.6 mm | **75.6 mm** |
+| Lever, plate's underside to the substrate's top | 34 mm | **30 mm** | 34 mm | **30 mm** |
+| Euler load, fixed-free, 20 °C / 200 °C | 108 / 103 kN | **92 / 88 kN** | 54 / 51 kN | **48 / 46 kN** |
+| 5 N blade drag: shift, tilt | 8.9 µm, 141 µrad | **9.0 µm, 147 µrad** | 17.8 µm, 234 µrad | **18.0 µm, 240 µrad** |
+| Bending stress under 5 N drag: at the block / at the lead notches | – | 4.6 / 2.2 MPa | – | 5.8 / 2.2 MPa |
+| Thermal growth, 20 → 200 °C (estimate) | 108 µm | **115 µm** | 143 µm | **149 µm** |
+| Weight the stage lifts (plate stack, rod, rod-end block, 45 g build) | 2.42 N | **4.21 N** | 2.48 N | **4.27 N** |
+
+| Axial load on the stage, worst case (running / breakout) | v1 | **v2** |
+|---|---|---|
+| X-VSR20A (100 N), two O-rings at 15 %, FT-1 / FT-1V | 33 / 50 N, 41 / 58 N | **35 / 51 N, 39 / 56 N**: yes |
+| MTS50/M-Z8 (44 N), two O-rings at 15 %, FT-1 / FT-1V | 74 / 113 %, 92 / 130 % | **78 / 116 %, 88 / 126 %**: only while friction stays at running levels |
+| MTS50/M-Z8, one O-ring at 10 %, FT-1 / FT-1V | 32 / 43 %, 50 / 61 % | **36 / 47 %, 46 / 57 %**: yes |
+
+- The lead notches (three 3 mm slots through the wall at the rod's top, 1 mm of them below the plate) leave 75 % of
+  the section's area and second moment, where the bending moment is smallest. They don't change the column or the
+  lateral numbers.
+- The potted plug (2.5 g, estimate) closes the rod's lower end, as v1 assumed: 1 atm on the Ø12.7 mm section is still
+  12.8 N upward in FT-1V.
+- The heavier rod-end block helps the pull-down: lowering in FT-1 now needs 5-43 N (v1: 7-45 N). Lifting needs
+  14-51 N (v1: 12-50 N).
+
+### Short answer (rounds 1-2: 4a, 4b and 4d on the round-1 model, v1)
 
 - **Box lid (4a): it seals at +10 mbar and at a +50 mbar fault with either gasket, and the 14 ga lid does not yield, but the solid FKM cord is the wrong gasket.** Squeezing a Ø3 mm 75A FKM cord by 22 % round the 1,406 mm gasket line takes 4.0 kN: about 616 N on each front clamp, 547 N on each side clamp and 1,455 N on the hinge, and the lid's middle then sits 224 µm higher than its clamped edges before any pressure. A closed-cell silicone sponge strip (ASTM D1056 2A2, like the box's own foam) needs 536 N in all and stays at ≥ 0.67 mm of its 0.75 mm squeeze at +50 mbar. **Change: keep a soft sponge or hollow-bulb silicone gasket, not a solid cord**, and add a relief valve set below +50 mbar if the purge line has none.
 - **Cube top plate and window (4b): pass by a wide margin.** The 22.9 mm blank bored for the window ring deflects 21-35 µm at 1 atm (bolted to simply supported), peak 8.1 MPa: safety factor 34 on yield. The Ø50.8 x 9.53 mm window on its O-ring peaks at 0.71 MPa (Roark simply supported 0.74): factor 74 on Corning 7980's abraded modulus of rupture and 9.8 on a 6.9 MPa (1000 psi) design stress.
@@ -11,7 +156,7 @@ The thermal cases (1-3: the heated cassette at 200 °C, warm-up, the laser's hea
 - **Piston rod (4d): passes as a column and laterally; the stage's direction of load is the open point.** Euler buckling (fixed-free, 200 °C) is 103 kN in the box and 51 kN in the cube, against < 60 N. A 5 N blade drag moves the substrate top 9 µm (box) and 18 µm (cube), inside the 100 µm clearance. The two greased O-rings' friction (estimate 8-25 N running, up to 42 N at breakout) is 3-17 times the plate stack's 2.4 N weight, so the X-VSR20A has to pull the rod down every layer: 7-45 N in the box and 20-58 N in the cube, where the vacuum adds 12.8 N. Pushing, the worst case is 50 N of its 100 N. **Check that the X-VSR20A takes a pulling load** (its datasheet gives a centred load); if not, use one O-ring at about 10 % squeeze, a PTFE lip seal, or a return spring.
 - **Thorlabs MTS50/M-Z8 (the PCard route, 4.5 kg = 44 N vertical):** with the gland as drawn (two O-rings at 15 %) it is not acceptable in FT-1 (up to 33 N running, 50 N at breakout) and not acceptable in FT-1V, where pulling the rod down against the vacuum takes up to 41 N running (92 % of 44 N) and 58 N at breakout. With one O-ring at 10 % it is acceptable in FT-1 and acceptable in FT-1V (worst 27 N, 61 %), pull-down included: its leadscrew drives both ways. One O-ring gives up the second seal, so check the leak in FT-1V. At 2.4-3 mm/s a 30 µm layer step is instant and the 20 mm lift for removal takes 7-8 s. The X-VSR20A carries every case with either seal (worst 58 N of 100 N) if it can pull.
 
-### 4a FT-1 box lid on its gasket
+### 4a FT-1 box lid on its gasket (v1: round-1 model)
 
 The lid as drawn (14 ga 304, 1.9 mm, 416 x 315 mm with a 15 mm skirt and the Ø53 mm window bore), bonded to the window stack (inner clamp ring, window ring and retaining flange, 6061) and to a spring bed on the drawn gasket's 7.9 mm wide footprint: a 10 mm layer with ν = 0 whose stiffness per length is the cord's secant stiffness at its squeeze (on the drawn 1 mm layer the squeeze would be a 66 % strain, too large for NLGEOM's linear material). The four clamps pull the skirt's lower edge down by the squeeze over 24 mm each; the hinge is a pin line at its height along the back face. Pressure acts on the 1,147 cm² inside the gasket (116 N at +10 mbar, 582 N at +50 mbar, with the window's load on its retaining flange).
 
@@ -36,7 +181,7 @@ The lid as drawn (14 ga 304, 1.9 mm, 416 x 315 mm with a 15 mm skirt and the Ø5
 - **Clamp loads:** no load rating for the box's clamps was found. They are made for a foam gasket, so the 0.55-0.62 kN each (1.5 kN on the hinge) that the FKM cord needs is probably beyond them; with the sponge each clamp carries about 0.1 kN. The clamps are modelled as rigid, so a real clamp that gives a little loses some of the squeeze.
 - **Stress at the clamps:** the clamp patches are 24 x 2 mm areas of prescribed displacement, so the peak at their ends is a singularity of the model, not a number to design to. Away from them the sheet stays below a third of its yield.
 
-### 4b FT-1V: cube top plate and window at 1 atm
+### 4b FT-1V: cube top plate and window at 1 atm (v1: round-1 model)
 
 | | Bolted (z fixed on the land outside the frame opening) | Simply supported (z fixed on a 4 mm band at the opening's edge) |
 |---|---|---|
@@ -56,7 +201,7 @@ Load: 1 atm on the outer face, and the window ring's 224 N spread round the bore
 | Roark simply supported at the window's edge, a = 25.4 mm (upper bound) | 0.853 MPa | 0.54 µm | 61 | 8.1 |
 | FT-1 box, +50 mbar (window pushed up against its flange) | 0.0348 MPa | – | – | 198 |
 
-### 4c Scan-head plate MK-09 on the T-slot gantry
+### 4c Scan-head plate MK-09 on the T-slot gantry (round 1: equivalent frames on v1; addendum: CAD v2's frame, bonded joints)
 
 ![Gantry mode 1](struct-gantry-mode1.png)
 
@@ -132,7 +277,7 @@ mass on the flange face under the head's footprint, and the base rails are rigid
 - The joints are bonded and the base is rigid, so the real frame (bolted T-slot joints) will be softer than these
   numbers.
 
-### 4d Piston rod MK-06 (analytic)
+### 4d Piston rod MK-06 (analytic; v1: round-1 model)
 
 Rod: 1/2 in. x 0.035 in. 304 tube, A = 33.0 mm², I = 579 mm⁴. Free length = the visible rod less the 23 mm in the clamp; the heater plate is a rigid lever from the socket to the substrate top.
 
@@ -167,7 +312,7 @@ Rod: 1/2 in. x 0.035 in. 304 tube, A = 33.0 mm², I = 579 mm⁴. Free length = t
 - The rod grows about 0.1 mm as the plate heats, 3-4 layers of 30 µm: set the plate's zero height at temperature.
 - Not included: the stage's own tilt stiffness (not published), the gland's centring of the rod (which helps), and side loads from the blade on the plate's rim.
 
-### Method and assumptions (case 4)
+### Method and assumptions (case 4, rounds 1-2)
 
 - **Script:** `desktop-lpbf/fast-track/analysis/fea/ft_struct.py` (cases `4a_check 4a 4b 4c 4d`). Geometry from `cad/ft_model.py` (`build('FT-1')`, `build('FT-1V')`, `P`, `levels()`), exported as BREP, meshed by gmsh 4.15 (quadratic tetrahedra, straight-sided), solved by CalculiX 2.21 (SPOOLES; NLGEOM for the lid at +50 mbar), read from the .frd/.dat. Bodies of different materials are fragmented into one conformal mesh and bonded where they touch. Meshes: lid 61k nodes, cube plate 34k, window 18k, gantry 51k-141k (the larger gantry variants' modal solves exceed the usual 60k-node SPOOLES limit; peak 2.7 GB). Images: `render_fea.py` from PR 266.
 - **Materials:** 6061-T6: E 68.9 GPa, ν 0.33, yield 276 MPa (ASM / MatWeb). 304 annealed sheet: E 193 GPa, ν 0.29, yield 215 MPa (ASTM A240 minimum 205 MPa); at 200 °C E = 184 GPa (ASME BPVC II-D, Table TM-1). Fused silica: Corning 7980 data sheet, E 72.7 GPa, ν 0.16, modulus of rupture 52.4 MPa abraded; the 1000 psi (6.9 MPa) design stress is the usual allowable for glass windows under steady pressure.
