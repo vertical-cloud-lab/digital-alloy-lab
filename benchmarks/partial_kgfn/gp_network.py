@@ -23,6 +23,7 @@ from botorch.posteriors import TorchPosterior
 from botorch.sampling import MCSampler
 from gpytorch.mlls import ExactMarginalLogLikelihood
 from torch import Tensor
+from torch import nn
 
 from benchmarks.partial_kgfn.dag import DAG
 
@@ -46,6 +47,7 @@ class GaussianProcessNetwork(Model):
         node_GPs: list[Model] | None = None,
         noisy: bool = False,
     ) -> None:
+        super().__init__()
         self.train_X = train_X
         self.train_Y = train_Y
         self.dag = dag
@@ -64,16 +66,17 @@ class GaussianProcessNetwork(Model):
             ]
 
         if node_GPs is not None:
-            self.node_GPs = node_GPs
+            self.node_GPs = nn.ModuleList(node_GPs)
         else:
-            self.node_GPs = []
+            gps = []
             for k in range(self.n_nodes):
                 gp = _initialize_gp(
                     train_X=self.train_X[k],
                     train_Y=self.train_Y[k],
                     noisy=self.noisy,
                 )
-                self.node_GPs.append(gp)
+                gps.append(gp)
+            self.node_GPs = nn.ModuleList(gps)
 
     @property
     def num_outputs(self) -> int:
@@ -85,9 +88,7 @@ class GaussianProcessNetwork(Model):
 
     @property
     def batch_shape(self) -> torch.Size:
-        return torch.broadcast_shapes(
-            *[gp.batch_shape for gp in self.node_GPs]
-        )
+        return torch.broadcast_shapes(*[gp.batch_shape for gp in self.node_GPs])
 
     def posterior(self, X: Tensor, observation_noise: bool = False, **kwargs):
         """Return a MultivariateNormalNetwork posterior."""
@@ -114,13 +115,17 @@ class GaussianProcessNetwork(Model):
                 )
                 # Ensure cache is populated before conditioning
                 _dummy = torch.rand(
-                    1, self.train_X[k].shape[-1],
+                    1,
+                    self.train_X[k].shape[-1],
                     dtype=self.train_X[k].dtype,
                     device=self.train_X[k].device,
                 )
                 _ = self.node_GPs[k].posterior(_dummy)
+                # Do NOT call transform_inputs() here — condition_on_observations()
+                # applies the input transform internally, so pre-transforming
+                # would double-normalize the conditioning point.
                 fantasy_model = self.node_GPs[k].condition_on_observations(
-                    X=self.node_GPs[k].transform_inputs(X[k]),
+                    X=X[k],
                     Y=Y[k],
                     noise=Yvar_k,
                 )
@@ -148,9 +153,7 @@ class GaussianProcessNetwork(Model):
     ) -> GaussianProcessNetwork:
         """Construct a fantasy model for the selected nodes."""
         if len(X) != int(evaluation_mask.sum()):
-            raise ValueError(
-                "Length of X must match the number of nodes to fantasize."
-            )
+            raise ValueError("Length of X must match the number of nodes to fantasize.")
 
         X_for_cond = [None] * self.n_nodes
         Y_for_cond = [None] * self.n_nodes
@@ -230,7 +233,11 @@ class MultivariateNormalNetwork(TorchPosterior):
         available = [False] * self.n_nodes
 
         for k in self.root_nodes:
-            X_k = self.X[..., self.active_input_indices[k]] if self.active_input_indices else self.X
+            X_k = (
+                self.X[..., self.active_input_indices[k]]
+                if self.active_input_indices
+                else self.X
+            )
             post_k = self.node_GPs[k].posterior(X_k)
             nodes_out[..., k] = post_k.rsample(sample_shape)[..., 0]
             available[k] = True
@@ -240,12 +247,20 @@ class MultivariateNormalNetwork(TorchPosterior):
                 parents = self.dag.get_parent_nodes(k)
                 if not available[k] and all(available[j] for j in parents):
                     parent_samples = nodes_out[..., parents]
-                    X_k = self.X[..., self.active_input_indices[k]] if self.active_input_indices else self.X
+                    active_idx = self.active_input_indices[k]
+                    if active_idx:
+                        X_k = self.X[..., active_idx]
+                    else:
+                        # Node has no external inputs — use only parent samples
+                        X_k = None
                     # Expand X_k to match sample_shape
-                    if sample_shape:
-                        expand_shape = list(sample_shape) + [1] * X_k.ndim
+                    if X_k is not None and sample_shape:
+                        expand_shape = list(sample_shape) + [-1] * X_k.ndim
                         X_k = X_k.unsqueeze(0).expand(*expand_shape)
-                    X_k = torch.cat([X_k, parent_samples], -1)
+                    if X_k is not None:
+                        X_k = torch.cat([X_k, parent_samples], -1)
+                    else:
+                        X_k = parent_samples
                     post_k = self.node_GPs[k].posterior(X_k)
                     nodes_out[..., k] = post_k.rsample(torch.Size([1]))[0, ..., 0]
                     available[k] = True
@@ -265,22 +280,22 @@ class MultivariateNormalNetwork(TorchPosterior):
         """
         nodes_samples = base_samples.new_empty(base_samples.shape)
         available = [False] * self.n_nodes
-        batch_shape = base_samples.shape[len(sample_shape):-2]
+        batch_shape = base_samples.shape[len(sample_shape) : -2]
 
         if len(batch_shape) > 0:
-            self.X = torch.broadcast_to(self.X, batch_shape + self.X.shape[-2:])
+            X = torch.broadcast_to(self.X, batch_shape + self.X.shape[-2:])
+        else:
+            X = self.X
 
         for k in self.root_nodes:
             X_k = (
-                self.X[..., self.active_input_indices[k]]
-                if self.active_input_indices
-                else self.X
+                X[..., self.active_input_indices[k]] if self.active_input_indices else X
             )
             post_k = self.node_GPs[k].posterior(X_k)
-            # Use rsample_from_base_samples with correct signature
+            # Use rsample_from_base_samples — base_samples must be (n_samples, n_points)
             nodes_samples[..., k] = post_k.rsample_from_base_samples(
                 sample_shape=sample_shape,
-                base_samples=base_samples[..., [k]],
+                base_samples=base_samples[..., k],
             )[..., 0]
             available[k] = True
 
@@ -289,10 +304,14 @@ class MultivariateNormalNetwork(TorchPosterior):
                 parents = self.dag.get_parent_nodes(k)
                 if not available[k] and all(available[j] for j in parents):
                     parent_samples = nodes_samples[..., parents]
-                    X_k = self.X[..., self.active_input_indices[k]]
-                    aux_shape = [sample_shape[0]] + [1] * X_k.ndim
-                    X_k = X_k.unsqueeze(0).repeat(*aux_shape)
-                    X_k = torch.cat([X_k, parent_samples], -1)
+                    active_idx = self.active_input_indices[k]
+                    if active_idx:
+                        X_k = X[..., active_idx]
+                        aux_shape = [sample_shape[0]] + [1] * X_k.ndim
+                        X_k = X_k.unsqueeze(0).repeat(*aux_shape)
+                        X_k = torch.cat([X_k, parent_samples], -1)
+                    else:
+                        X_k = parent_samples
                     post_k = self.node_GPs[k].posterior(X_k)
                     # For non-root nodes, draw a single sample per existing
                     # outer sample to avoid compounding dimensionality

@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "alsi10mg",
+    "title": "AlSi10Mg (commercial reference)",
+    "task_id": "616b8cf9-3840-4d59-9dc5-c0744da27e5f",
+    "status": "submitted"
+  },
+  {
+    "slug": "byu-blend",
+    "title": "BYU AA1100 + Si + AlSi10Mg blend (Al 75.56 / Si 24.30 / Mg 0.14 wt%)",
+    "task_id": "fe1fee02-ba7a-4a46-9da8-529bc13169cc",
+    "status": "submitted"
+  },
+  {
+    "slug": "mehta-alloy-c",
+    "title": "Mehta et al. \"Alloy C\" \u2014 Al-5.0Mn-0.8Cr-0.5Zr (wt%)",
+    "task_id": "bbf94a9b-c51b-47ca-b623-9788d3f57634",
+    "status": "submitted"
+  },
+  {
+    "slug": "glerum-al-1-5zr",
+    "title": "Glerum et al. Al-1.5 Zr supersaturated LPBF (wt%)",
+    "task_id": "5e833ec8-8bbd-4ada-8eb6-0e6b04391224",
+    "status": "submitted"
+  }
+]

@@ -13,7 +13,7 @@ The complete DOE Title Page content has been drafted and saved to `doe-title-pag
 
 ## 2. Challenge and Focus Area
 
-**Topic 3, Focus Area B:** Securing America's Critical Minerals Supply | AI-Enabled Materials Discovery and Engineering (AMMTO)
+**Topic 3B:** Securing America's Critical Minerals Supply | AI-Enabled Materials Discovery and Engineering (AMMTO)
 
 *RFA Number:* DE-FOA-0003612
 
@@ -75,7 +75,7 @@ All FOA-prescribed fields are present:
 - ✅ Lead PI name, telephone, email
 - ✅ Administrative POC (placeholder — to be filled by BYU OSR)
 - ✅ RFA Number (DE-FOA-0003612)
-- ✅ Challenge and Focus Area (Topic 3-B, AMMTO)
+- ✅ Challenge and Focus Area (Topic 3B, AMMTO)
 - ✅ Senior/Key Personnel table (all partner institutions listed)
 - ✅ Summary Budget table (all institutions, single period, whole dollars)
 - ✅ No additional material beyond prescribed fields (FOA: "Additional material is not allowed")

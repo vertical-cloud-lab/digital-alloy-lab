@@ -11,7 +11,6 @@ Requires:
 import os
 import sys
 import time
-import glob as glob_mod
 import pathlib
 
 from edison_client import EdisonClient, TaskRequest, JobNames
@@ -48,10 +47,17 @@ def upload_files(client: EdisonClient, file_paths: list[str | pathlib.Path]) -> 
         if fp.stat().st_size == 0:
             print(f"  WARNING: skipping empty file: {fp}", file=sys.stderr)
             continue
-        # Skip binary files that Edison can't parse (images, PDFs over 50MB, etc.)
+        # Skip binary files that Edison can't parse.
         suffix = fp.suffix.lower()
         if suffix in {".png", ".jpg", ".jpeg", ".gif", ".bmp", ".ico", ".svg"}:
             print(f"  INFO: skipping image file: {fp.name}", file=sys.stderr)
+            continue
+        # Skip very large files (>50 MB) to avoid server-side failures / stalls.
+        if fp.stat().st_size > 50 * 1024 * 1024:
+            print(
+                f"  INFO: skipping large file (>50 MB): {fp.name}",
+                file=sys.stderr,
+            )
             continue
         try:
             fid = client.upload_file(str(fp))
