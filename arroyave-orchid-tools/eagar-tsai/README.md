@@ -7,6 +7,11 @@ preliminary Genesis Mission results from the Thermo-Calc AM module. For Xavier's
 error, and the slow-integrand problem in the Linux wheels, see
 [`../../edison-trajectories/eagar-tsai-alsi10mg-inputs/sobol-check/`](../../edison-trajectories/eagar-tsai-alsi10mg-inputs/sobol-check/).
 
+**Later work:** #249, stacked on this PR, takes the AM-module comparison further. It runs CFD, writes our own
+keyhole model, and corrects the boiling point of Al used here. See
+[What #249's later testing changes here](#what-249s-later-testing-changes-here), and the comparison of eagar-tsai
+with its CFD runs [at the same absorbed power and time](#against-249s-laserbeamfoam-runs-at-the-same-absorbed-power-and-time).
+
 ## Install and tests
 
 Built from the clone with `uv pip install -e ".[plot]" pytest` (Python 3.12). The compiled integrand loads:
@@ -84,7 +89,9 @@ comparison in [`../pycalphad-al-cu/`](../pycalphad-al-cu/) still rests on publis
     eagar-tsai has no keyhole. Thermo-Calc's fallback for a heat source without keyhole geometry is pool W/D ≤ 1,
     and a conduction pool never gets there: eagar-tsai's W/D is 2.02–2.62 on the AlSi10Mg grid.
   - So I compared keyholing against eagar-tsai's own W/D ≤ 2.5 and against the peak temperature reaching Al's
-    boiling point (2743 K).
+    boiling point (2743 K). #249 later showed that 2743 K is an out-of-range extrapolation; NIST-JANAF gives
+    2,791 K. The numbers here keep 2743 K. [The boiling-point check](#what-249s-later-testing-changes-here) shows
+    that no count below moves by more than one grid point, and no share by more than one percentage point.
 - **Dh.** eagar-tsai only evaluates the surface and the centre-line planes. So the script uses eagar-tsai's own
   compiled integrand and scaling to build max-over-x temperature profiles per absorbed watt, and reads W, D, L, Dh and
   the peak off them for any A·P.
@@ -148,6 +155,8 @@ half-width. The AM render's D/W is then 0.76.
      The proposal budgets 0.5–2 CPU-hours per AM-module evaluation.
    - Not for keyholing, or for pool size anywhere near keyhole mode. Its W/D ≤ 2.5 keyhole test shouldn't be used with
      these beams at all.
+   - #249 has since found open methods for the keyhole side, and showed that the absorptivity behind this point is
+     still open ([below](#what-249s-later-testing-changes-here)).
 
 **Caveats.**
 - Everything is read off images. The boundaries are Thermo-Calc's contours between grid points 50–60 W and
@@ -273,6 +282,158 @@ python scripts/eagar_tsai_transient_meltpool.py all --out arroyave-orchid-tools/
     --am-png-dir arroyave-orchid-tools/eagar-tsai/am-module-inhouse
 ```
 
+### Against #249's laserbeamFoam runs, at the same absorbed power and time
+
+[#249](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/249) ran the open CFD code laserbeamFoam at the
+AM module's two render points (7 runs, 0.8–1.6 ms of track, 15–25 µm cells). Its tables compare each run's pool,
+averaged over the second half of the run, with eagar-tsai's *steady* pool. But eagar-tsai's pool takes 0.8 ms
+(AlSi10Mg) to 2.8 ms (blend) to reach 99 % of its steady length (above), as long as the runs or longer.
+[`scripts/eagar_tsai_transient_vs_laserbeamfoam.py`](../../scripts/eagar_tsai_transient_vs_laserbeamfoam.py)
+compares them at the same time after switch-on instead, using the time-dependent eagar-tsai above.
+- **Same inputs as the CFD:** the absorbed power each run logged (taken from its log over time, so the 65 µΩ cm run's
+  change from dimple to keyhole is included), the beam, the plate temperature, the same constant k, ρ and c_p, and the
+  CFD's own mc_al liquidus and solidus.
+- **So the difference is the physics laserbeamFoam adds:** latent heat, melt flow, evaporation and a free surface
+  that can open a keyhole, plus its finite domain and mesh.
+- **Checks:** the code first reproduces three rows of the committed eagar-tsai history to 0.001 µm. Splitting a
+  constant power into time bins changes the field by under 10⁻⁵ K.
+- **Run time:** 2.3 min on 4 vCPUs.
+- **Data:** #249's results at `cc25b6f`, its original runs and its 2026-11-27 reruns.
+
+![laserbeamFoam pools and eagar-tsai's at the same absorbed power, against time](am-module-inhouse/transient/vs-laserbeamfoam/eagar-tsai-vs-laserbeamfoam-liquidus.png)
+
+| laserbeamFoam run (#249) | Absorbed | CFD keyhole | Pool depth / width / length at the liquidus: CFD ÷ eagar-tsai at the same times | Length: CFD ÷ eagar-tsai's steady pool (#249's comparison) |
+|---|---|---|---|---|
+| AlSi10Mg 250 W, own Fresnel A (40 µΩ cm) | 35 W | 10 µm dimple | 0.96 / 0.83 / 1.18 | 1.17 |
+| Blend 375 W, own Fresnel A (40 µΩ cm) | 52 W | 13 µm dimple | 1.00 / 0.92 / 0.91 | 0.87 |
+| AlSi10Mg 250 W, AM module's A·P | 76 W | 40 µm dimple | 0.99 / 0.81 / 1.04 | 1.01 |
+| AlSi10Mg 350 W, AM module's A·P | 106 W | 83 µm (Wk/Dk 1.4) | 1.09 / 0.79 / 1.06 | 0.98 |
+| Blend 375 W, AM module's A·P | 142 W | 172 µm | 1.52 / 0.78 / 0.72 | 0.66 |
+| Same, 25 µm mesh | 142 W | 131 µm | 1.37 / 0.79 / 0.80 | 0.69 |
+| Blend 375 W, Fresnel A at 65 µΩ cm | 74 W at first, 247 W in the second half | 211 µm | 1.48 / 0.87 / 0.80 | 0.56 |
+
+Ratios are means over the second half of each original run, as in #249's tables. The reruns give the same to within
+0.03, apart from the blend's depth at the AM module's A·P (1.43 instead of 1.52), whose keyhole changed between runs.
+Per write: [csv](am-module-inhouse/transient/vs-laserbeamfoam/laserbeamfoam-vs-eagar-tsai-per-write.csv). At the
+solidus: [figure](am-module-inhouse/transient/vs-laserbeamfoam/eagar-tsai-vs-laserbeamfoam-solidus.png),
+[summary](am-module-inhouse/transient/vs-laserbeamfoam/summary.json).
+
+**What it shows**
+1. **Without a real keyhole, eagar-tsai's time-dependent pool tracks the CFD at every write.** That covers the first
+   four rows: conduction mode, or a dimple.
+   - **Depth:** within 4 % after the first 0.1 ms in the three conduction and dimple runs. At 350 W, where
+     laserbeamFoam opens an 83 µm keyhole, the CFD's pool is 7–20 % deeper.
+   - **Length:** the CFD's is 0.87–1.18× eagar-tsai's at every write. At the AM module's 250 W render point, given
+     the AM module's absorbed power, the CFD's pool lengthens along eagar-tsai's start-up curve: 0.96–1.09× at every
+     write from 0.05 to 0.8 ms.
+   - That is an independent check of the start-up times above: about 0.5 mm of track to 95 % of the steady length,
+     for AlSi10Mg.
+2. **Width is where they differ.** laserbeamFoam's pools end 8–21 % narrower. Their width stops growing after
+   0.1–0.2 ms, while eagar-tsai's keeps growing. This comparison can't say why: latent heat, flow and the 15–17.5 µm
+   cells are all candidates.
+3. **Where laserbeamFoam keyholes (the blend runs), its pool has a different shape from eagar-tsai's at the same
+   power and time.**
+   - It is 37–52 % deeper, 13–22 % narrower and 20–28 % shorter.
+   - The keyhole carries heat down, as the AM module's render suggests.
+4. **Comparing at the same time matters for the blend.**
+   - Against eagar-tsai's steady pool, as #249 compared, the CFD's keyhole-mode pools look 31–44 % shorter. At the
+     same time they are 20–28 % shorter.
+   - So between a fifth and over half of that shortfall is eagar-tsai's own start-up. At 0.8–1.6 ms its blend pool
+     is still 9–30 % short of its steady length; for the 65 µΩ cm run, part of that is the lower power before the
+     keyhole opened.
+   - For AlSi10Mg, whose pools settle sooner, the two ways of comparing differ by 0.08 at most.
+5. **At the solidus, laserbeamFoam's AlSi10Mg pools are 1.30–1.37× eagar-tsai's length.** In the two runs at the
+   AM module's absorbed power, they are still growing when the runs stop.
+   - eagar-tsai has no latent heat, so its solidus pool is barely longer than its liquidus pool.
+   - For the blend, whose solidus is 173 K below its liquidus, the solidus lengths agree to within 7 %.
+6. **Neither gets near the AM module's 1.47 mm blend pool.** Over the last 0.4 ms of the runs at the AM module's
+   absorbed power, laserbeamFoam's liquidus pool is 245–285 µm long. eagar-tsai's reaches 374 µm by 1.6 ms, and its
+   steady pool is 394 µm.
+
+```bash
+# #249's results, from its branch at cc25b6f (once #249 merges: arroyave-orchid-tools/keyhole-alternatives/cfd)
+git fetch origin claude/issue-235-keyhole-open-alternatives
+mkdir -p /tmp/lbf && git archive cc25b6f arroyave-orchid-tools/keyhole-alternatives/cfd | tar -x -C /tmp/lbf
+python scripts/eagar_tsai_transient_vs_laserbeamfoam.py --self-check \
+    --cfd-dir /tmp/lbf/arroyave-orchid-tools/keyhole-alternatives/cfd \
+    --out arroyave-orchid-tools/eagar-tsai/am-module-inhouse/transient/vs-laserbeamfoam
+```
+
+## What #249's later testing changes here
+
+[#249](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/249) is stacked on this PR, and starts where
+the AM-module comparison above stops.
+- It ran laserbeamFoam at the AM module's render points.
+- It wrote a first-principles keyhole model of our own. Version 2 adds its own melt-flow solver.
+- It reran everything on 2026-11-27.
+
+Its write-ups (at `cc25b6f`) are
+[keyhole alternatives](https://github.com/vertical-cloud-lab/digital-alloy-lab/blob/cc25b6f/arroyave-orchid-tools/keyhole-alternatives/README.md)
+and the
+[first-principles model, version 2](https://github.com/vertical-cloud-lab/digital-alloy-lab/blob/cc25b6f/arroyave-orchid-tools/keyhole-alternatives/first-principles/v2/README.md).
+Here is what that work changes in this folder's conclusions.
+
+- **Keyholing now has an answer.** This folder only says what not to use: eagar-tsai's W/D ≤ 2.5, and the boiling
+  line.
+  - #249 found that the AM module's keyhole boundary follows a near-constant keyhole number
+    ([Gan et al. 2021](https://doi.org/10.1038/s41467-021-22704-0)). So the keyhole number gives the boundary's
+    shape, and one threshold, calibrated on our own tracks, sets its level.
+  - Its first-principles model, with nothing fitted, makes the AM module's keyhole-or-not call at 58 of 58 AlSi10Mg
+    points and 25 of 27 blend points.
+  - For keyhole depth it recommends Gan et al.'s depth law. For keyhole-mode pool width and length, it recommends a
+    CFD code (laserbeamFoam first), run a few times for calibration.
+- **Lack of fusion: of the models tried, eagar-tsai still matches the AM module best, but only at the AM module's
+  absorptivity.**
+  - At A = 0.307 and 250 W / 0.9 m/s, three models give pools within about 30 % of each other. eagar-tsai, with the
+    AM module's own tests, and #249's version 2 both call this point no defect, as the AM module does:
+
+    | Model at the AM module's absorbed power | Depth / width / length at the liquidus (µm) |
+    |---|---|
+    | eagar-tsai (this folder) | 106 / 221 / 317 |
+    | laserbeamFoam (#249) | 103 / 176 / 314 |
+    | #249's version 2: temperature-dependent properties, latent heat, Marangoni flow | 77 / 182 / 322 |
+
+  - In conduction mode, laserbeamFoam's pool depth agrees with eagar-tsai's to within 4 % at the same time
+    ([above](#against-249s-laserbeamfoam-runs-at-the-same-absorbed-power-and-time)).
+  - #249's own model computes its own absorptance, and it agrees with far fewer of the AM module's classes: 18–25
+    of 58 AlSi10Mg points and 7–8 of 27 blend points (versions 1 and 2, with and without melt flow or raised
+    optics). Its pools at the AM module's no-defect points come out too narrow for the hatch, mainly because its
+    liquid surface absorbs 0.18–0.20, where the AM module has 0.31.
+  - Measurements don't settle which is right for our machine. In a commercial LPBF machine (a Renishaw AM 400),
+    [Allen 2023](https://hdl.handle.net/1974/32579) measured AlSi10Mg in conduction mode at 0.16–0.23 on an as-built
+    surface, and 0.65–0.76 with a powder layer. The AM module's 0.31 is in between.
+  - #249's
+    [single-track plan](https://github.com/vertical-cloud-lab/digital-alloy-lab/blob/cc25b6f/arroyave-orchid-tools/keyhole-alternatives/first-principles/v2/README.md#what-would-settle-it-single-tracks-on-our-own-machine)
+    would settle it, with the low-power AlSi10Mg tracks run on both surfaces.
+  - Until then, point 4 under [Results](#results) holds as "a cheap stand-in for the AM module's lack-of-fusion
+    side", not yet as "a prediction of our machine's lack of fusion".
+- **Keyhole-mode pools.**
+  - At the AM module's absorbed power, laserbeamFoam's blend pool is deeper than eagar-tsai's but shorter
+    ([above](#against-249s-laserbeamfoam-runs-at-the-same-absorbed-power-and-time)).
+  - Neither laserbeamFoam nor #249's melt-flow solver reaches the AM module's 1.47 mm.
+  - #249 points to a synchrotron study it couldn't read (Guo et al. 2020), which suggests AlSi10Mg pools that long are
+    real. If so, every model here is short.
+- **Al's boiling point is 2,791 K, not 2,743 K.**
+  - #249 traced 2,743 K to Alcock et al. 1984's vapour-pressure equation, extrapolated beyond its 1,800 K range.
+    NIST-JANAF and the CRC Handbook give 2,790.8 K. Raoult's law on Al gives 2,814 K for AlSi10Mg and 2,852 K for the
+    blend, at 1 atm.
+  - The committed files here keep 2,743 K, because #249's scorer reads their `et_boiling` column.
+  - [`scripts/eagar_tsai_boiling_point_check.py`](../../scripts/eagar_tsai_boiling_point_check.py) recounts every
+    number that uses the boiling point, from the committed CSVs ([table](boiling-point-check.csv)). No conclusion
+    changes:
+    - **AM-module maps:** eagar-tsai's boiling line moves from 30–47 % to 31–48 % of the AM module's keyhole power
+      for AlSi10Mg, and one fewer AlSi10Mg point boils (52 of 58). The blend's counts don't change.
+    - **One track:** no change at the history's sampling. The surface boils within 1–2 µs of switch-on, and the
+      peak drops back below boiling 4–8 µs (AlSi10Mg) and 20–30 µs (blend) after switch-off.
+    - **Xavier's Sobol sweep:** the share of the 4,096 rows that boil goes from 26.8 % to 26.2 %. The share that are
+      defect-free and below boiling goes from 17.0 % to 17.4 %.
+- **What the AM module does,** from the public pages #249 read:
+  - It gets absorptivity from a Lorentz–Drude model of the liquid's electrical resistivity and the wavelength.
+  - Its keyhole is an "analytic" model. Its absorption comes from "multiple reflections of laser rays" (thermocalc.com's
+    AM-module page and the TC-Python docs).
+  - The printability criteria used here (D/t, Dh/t, Wk/Dk ≤ 0.7) still come from search-engine summaries.
+    help.thermocalc.com still needs a login.
+
 ## Comparing with measured AlSi10Mg single tracks
 
 Thermo-Calc's own AM-module worked examples on help.thermocalc.com need a login, so I couldn't take numbers from
@@ -376,3 +537,7 @@ python scripts/eagar_tsai_vs_am_module.py published --out arroyave-orchid-tools/
 | `am-module-inhouse/transient/eagar-tsai-transient-history.*` | L, W, D (both isotherms) and peak T at 374 times along one track; the plot; the start-up and freezing times |
 | `am-module-inhouse/transient/transient-check-vs-compute_single_point.csv` | the transient's convergence to eagar-tsai's own steady state |
 | `am-module-inhouse/transient/transient-render-summary.json` | A, q0 and the steady pool at each render's settings |
+| `am-module-inhouse/transient/vs-laserbeamfoam/laserbeamfoam-vs-eagar-tsai-per-write.csv` | every write of #249's 7 laserbeamFoam runs and their reruns: the CFD pool (liquidus and solidus), eagar-tsai's at the same time and absorbed power, and eagar-tsai's steady pool |
+| `am-module-inhouse/transient/vs-laserbeamfoam/eagar-tsai-at-laserbeamfoam-times.csv` | eagar-tsai's pool at each time computed (the CFD writes plus a finer grid for the curves) |
+| `am-module-inhouse/transient/vs-laserbeamfoam/eagar-tsai-vs-laserbeamfoam-{liquidus,solidus}.png`, `summary.json` | the two figures, and the second-half means and ratios quoted above |
+| `boiling-point-check.csv` | every number that uses Al's boiling point, recounted at 2743 K (as committed), 2,791 K (NIST-JANAF) and the alloys' 1 atm values |

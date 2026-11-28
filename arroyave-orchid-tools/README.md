@@ -42,6 +42,16 @@ or example run.
        and colour scales, its pool is a smooth half-ellipsoid with no keyhole or flow. It reaches steady width and depth
        within 0.3–0.45 mm of track and freezes 0.12–0.33 ms after the beam switches off
        ([renders and animations](eagar-tsai/README.md#time-dependent-melt-pools-drawn-like-the-am-modules-renders)).
+     - **Later testing in #249** (stacked on this PR; [what it changes here](eagar-tsai/README.md#what-249s-later-testing-changes-here)):
+       - Keyholing now has open answers: a keyhole number with one calibrated threshold, and a first-principles
+         model that makes the AM module's keyhole-or-not call at 58 of 58 and 25 of 27 points, unfitted.
+       - At the same absorbed power and time, #249's laserbeamFoam runs match eagar-tsai's time-dependent pool depth
+         to within 4 % in conduction mode. Their pools are 8–21 % narrower. Where the CFD keyholes, its pool is 37–52 %
+         deeper and 20–28 % shorter.
+       - The lack-of-fusion agreement holds at the AM module's absorptivity, 0.31. Measured AlSi10Mg absorptance is
+         0.16–0.23 on an as-built surface and 0.65–0.76 with powder, so our own single tracks still decide which
+         applies.
+       - Al boils at 2,791 K (NIST-JANAF), not the 2,743 K used here. Rechecked, no conclusion changes.
    - eagar-tsai was also checked against what a printability map is meant to predict: measured AlSi10Mg single tracks
      ([arXiv:2507.23422](https://arxiv.org/abs/2507.23422)), using that study's calibrated absorptivity.
    - With its default criteria, only 9 of 420 points come out defect-free. It flags keyholing at 78 points where the

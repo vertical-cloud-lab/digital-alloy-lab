@@ -96,6 +96,12 @@ row failed. The results are in `sobol-m12-4096-rows-2um.csv`, and its first 1,02
 | Melt, peak below Al's boiling point (2743 K) | 1,963 | 47.9% |
 | Melt, peak above Al's boiling point: conduction-only physics no longer holds | 1,097 | 26.8% |
 
+2743 K, used throughout this page, is an extrapolation of Alcock et al. 1984 beyond its range (found in #249).
+NIST-JANAF gives 2,791 K for pure Al. With that value, 1,986 rows (48.5%) melt below boiling and 1,074 (26.2%) above,
+and 711 rows (17.4%) are defect-free below boiling instead of 697. No conclusion here changes
+([recount](../../../arroyave-orchid-tools/eagar-tsai/boiling-point-check.csv), from the committed CSVs by
+`scripts/eagar_tsai_boiling_point_check.py`).
+
 ### eagar-tsai's answer depends on two numbers
 
 eagar-tsai (`_core.py`) computes T = T0 + S · J(x/s, y/s, z/ζ; p), where J is the Eagar–Tsai integral and
