@@ -1,0 +1,23 @@
+{
+  "film": {
+    "fe": 482.422,
+    "analytic": 482.422,
+    "error_K": -0.0
+  },
+  "radiation": {
+    "fe": 492.744,
+    "analytic": 492.744,
+    "error_K": -0.0
+  },
+  "dflux": {
+    "fe": 100.038,
+    "analytic": 100.038,
+    "error_K": -0.0
+  },
+  "transient": {
+    "fe": 339.586,
+    "analytic": 337.124,
+    "t": 600.0,
+    "error_K": 2.461
+  }
+}

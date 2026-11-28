@@ -1,0 +1,1043 @@
+{
+ "_about": "Vendor dimensions (mm) for the collection-cup CAD, from public catalogue pages, drawings and free STEP files, fetched 2026-11-27. Keyed by part number. '_vs_params' compares them with params.py.",
+ "_vs_params": {
+  "KF50.flange_od": {
+   "params": 75.0,
+   "vendor": 74.93,
+   "src": "all vendors: 2.95 in (Lesker, MDC, McMaster, A&N, Duniway)",
+   "differs": false
+  },
+  "KF50.lip (flange thickness face to back at the hub)": {
+   "params": 7.0,
+   "vendor": 5.08,
+   "src": "Lesker QF50-200-SB 0.200 in; MDC 713022 drawing .20 in; McMaster 4518K61 STEP 5.08; A&N QF50-000 0.2 in",
+   "differs": true
+  },
+  "KF50 flange rim thickness at OD": {
+   "params": 4.59,
+   "vendor": 2.9,
+   "src": "McMaster 4518K38 STEP (approximate model)",
+   "differs": true
+  },
+  "KF50.taper_deg": {
+   "params": 15.0,
+   "vendor": 15.0,
+   "src": "McMaster 4518K38 and 4518K61 STEP",
+   "differs": false
+  },
+  "KF50.hub_od (derived)": {
+   "params": 57.0,
+   "vendor": 58.6,
+   "src": "derived: rim 2.9 at r 37.47, 5.08 at the hub, 15 deg taper",
+   "differs": true
+  },
+  "KF50 face recess for the centring ring (dia x depth)": {
+   "params": null,
+   "vendor": "52.32 x 2.6",
+   "src": "McMaster 4518K38 STEP; Lesker QF50-200-SB drawing shows the recess",
+   "differs": true
+  },
+  "KF50.ring_id": {
+   "params": 48.0,
+   "vendor": "49.4 (Lesker) / 50.0 (McMaster STEP, A&N, Lesker SCV)",
+   "src": "Lesker QF50-200-SRV Dim A 1.95 in; McMaster 4518K65 STEP 50.01; A&N 1.97 in",
+   "differs": true
+  },
+  "KF50.ring_od (ring body OD)": {
+   "params": 55.0,
+   "vendor": 51.9,
+   "src": "Lesker QF50-200-SRV Dim B 2.05 in (ring body OD; the O-ring sits outside it on the centre rib)",
+   "differs": true
+  },
+  "KF50.ring_thk (axial)": {
+   "params": 4.0,
+   "vendor": 7.98,
+   "src": "McMaster 4518K65 STEP; Lesker SCV (outer-ring type) 8.0. The ring body sits in the 2.6 mm face recesses, so the face-to-face gap is less than this.",
+   "differs": true
+  },
+  "KF50.oring_cs": {
+   "params": 5.0,
+   "vendor": 5.33,
+   "src": "AS568-330, 2.100 in ID x 0.210 in (53.34 x 5.33, OD 64.0): Lesker O-V330/O-S330, A&N 2-330-OV. McMaster's STEP draws 53.8 x 6.2.",
+   "differs": true
+  },
+  "KF50.clamp_od (ring body, without wing nut)": {
+   "params": 96.0,
+   "vendor": "82 (Lesker SS QF50-200-SSC) / 87.4 (MDC Al 701003) / 94.0 (McMaster Al 4518K74 STEP, A&N Al)",
+   "src": "vendor drawings and STEP",
+   "differs": true
+  },
+  "KF50.clamp_w (axial)": {
+   "params": 24.0,
+   "vendor": "20 (Lesker SS wing-nut and chain clamps) / 26.4 (McMaster 4518K74 STEP) / 16 (A&N CNC SS)",
+   "src": "vendor drawings and STEP",
+   "differs": true
+  },
+  "KF50 clamp overall incl. hinge and wing nut": {
+   "params": null,
+   "vendor": "112 (Lesker SSC) / 115.3 (MDC) / 116.4 (McMaster 4518K74) / 121.9 (A&N)",
+   "src": "",
+   "differs": null
+  },
+  "B.stub_len (KF weld stub face to tube end)": {
+   "params": 25.0,
+   "vendor": "19.05 short (Lesker QF50-200-SS/SSL/SST, MDC 715104, McMaster 4518K38, A&N) / 40.1 long (Lesker QF50-200-LFT, MDC 715109, McMaster 4518K43 39.7, A&N)",
+   "src": "",
+   "differs": true
+  },
+  "B stub tube length below the flange taper": {
+   "params": null,
+   "vendor": 12.6,
+   "src": "McMaster 4518K38 STEP",
+   "differs": null
+  },
+  "A.nipple_len (KF-50 full nipple face to face)": {
+   "params": 200.0,
+   "vendor": "139.7-140 (Lesker QF50-200-N, McMaster 4518K877, A&N) / 160.0 (Duniway KF50-NP) / 163.3 (MDC 721003) / 317.5-320 (McMaster 4518K878, Lesker NL, A&N)",
+   "src": "no stock 200 or 250 mm KF-50 full nipple found; Lesker's nipple builder makes any length (~10 days)",
+   "differs": true
+  },
+  "A.blank_t": {
+   "params": 12.0,
+   "vendor": 5.08,
+   "src": "Lesker QF50-200-SB, McMaster 4518K61, A&N QF50-000; Lesker QF50-200-US solid blank stub is 25.4 overall",
+   "differs": true
+  },
+  "B.reducer_len (2 x 3 in concentric reducer, butt weld)": {
+   "params": 64.0,
+   "vendor": 101.6,
+   "src": "McMaster 5237K471 / 5237K47 (4 in, STEP measured 101.600) and Wayland 31W catalogue table A = 4.00 in (BuyFittingsOnline BF631W-3X2-7)",
+   "differs": true
+  },
+  "B reducer straight (tangent) ends (cad/parts.py tan_len)": {
+   "params": 8.0,
+   "vendor": "not stated by any vendor; McMaster's STEP is a plain cone end to end",
+   "src": "",
+   "differs": null
+  },
+  "B.body_od x body_wall": {
+   "params": "76.2 x 1.65",
+   "vendor": "76.2 x 1.65 (3 in x 0.065 in: McMaster 4466K62 A270, OnlineMetals 4256 A269)",
+   "src": "",
+   "differs": false
+  },
+  "B.liner_od x liner_wall": {
+   "params": "69.85 x 1.24",
+   "vendor": "69.85 x 1.65 (2-3/4 in x 0.065 in; 0.049 in wall not stocked at McMaster, OnlineMetals or Speedy Metals); or 63.5 x 1.24 (2-1/2 in x 0.049 in, McMaster 11116N839)",
+   "src": "",
+   "differs": true
+  },
+  "A.liner_od x liner_wall": {
+   "params": "44.45 x 1.24",
+   "vendor": "44.45 x 1.24 (McMaster 11116N835)",
+   "src": "",
+   "differs": false
+  },
+  "B tri-clamp variant: 2 in short weld ferrule (14WMP)": {
+   "params": null,
+   "vendor": "length 12.7; flange OD 63.91; flange land 2.84; straight weld stub 7.04; bore 47.50",
+   "src": "McMaster 50485K213 STEP; BuyFittingsOnline BF614WMP-2 table",
+   "differs": null
+  },
+  "C.quartz_od x quartz_wall": {
+   "params": "100.0 x 5.0",
+   "vendor": "100 x 5 not stocked (custom quote); stock: 100 x 4 (MTI HQT100, 300 long, one end closed), 100 x 3 (MTI TQ4D650), 100 x 2.5 (TGP, Wale)",
+   "src": "",
+   "differs": true
+  },
+  "C glass-groove seal": {
+   "params": "groove 8 wide x 4 deep, centred on the glass wall (r 43.5-51.5)",
+   "vendor": "AS568-342 (91.44 x 5.33) or -341 (88.27 x 5.33) FKM O-ring sits centred under the glass wall",
+   "src": "Global O-Ring V75342 / V75341",
+   "differs": null
+  },
+  "Capacity with vendor sizes (params.option_capacity_cm3 recomputed)": {
+   "params": "A liner+puck 203; A bare 328; B bare 770; B liner+puck 587 cm3",
+   "vendor": "A (160 mm nipple) 148 / 257; B (19.05 stub, 101.6 reducer, 0.065 in liner) 694 / 522 cm3; B straight 3 in section 121.4 mm instead of 153 at body_len 250",
+   "src": "computed",
+   "differs": true
+  }
+ },
+ "QF50-200-SSL": {
+  "vendor": "Kurt J. Lesker",
+  "description": "KF-50 short weld stub, 316L, 2 in OD tube",
+  "material": "316L",
+  "flange_od": 74.93,
+  "tube_od": 50.8,
+  "bore": 46.61,
+  "tube_wall": 2.1,
+  "overall_length_face_to_tube_end": 19.05,
+  "source_url": "https://www.lesker.com/newweb/flanges/flanges_kf_weld.cfm?pgid=weld3",
+  "drawing": "https://www.lesker.com/part/api/qf50-200-ssl.svg",
+  "note": "Drawing (not to scale) shows the stub tube running ~11 mm past the flange hub."
+ },
+ "QF50-200-SS": {
+  "vendor": "Kurt J. Lesker",
+  "description": "KF-50 short weld stub, 304L, 2 in OD tube",
+  "material": "304L",
+  "flange_od": 74.93,
+  "tube_od": 50.8,
+  "bore": 46.61,
+  "tube_wall": 2.1,
+  "overall_length_face_to_tube_end": 19.05,
+  "source_url": "https://www.lesker.com/newweb/flanges/flanges_kf_weld.cfm?pgid=weld3"
+ },
+ "QF50-200-SST": {
+  "vendor": "Kurt J. Lesker",
+  "description": "KF-50 short weld stub, 304L, for 2 in x 0.065 in tube",
+  "material": "304L",
+  "flange_od": 74.93,
+  "tube_od": 50.8,
+  "bore": 47.5,
+  "tube_wall": 1.65,
+  "overall_length_face_to_tube_end": 19.05,
+  "source_url": "https://www.lesker.com/newweb/flanges/flanges_kf_weld.cfm?pgid=weld3"
+ },
+ "QF50-200-LFT": {
+  "vendor": "Kurt J. Lesker",
+  "description": "KF-50 long butt-weld half nipple, 304L, 2 in x 0.065 in",
+  "material": "304L",
+  "flange_od": 74.93,
+  "tube_od": 50.8,
+  "bore": 47.63,
+  "tube_wall": 1.59,
+  "overall_length_face_to_tube_end": 40.13,
+  "price_usd": 34.85,
+  "source_url": "https://www.lesker.com/newweb/flanges/fittings_kf_nipples.cfm?pgid=half1"
+ },
+ "QF50-200-SF": {
+  "vendor": "Kurt J. Lesker",
+  "description": "KF-50 short weld (socket) flange, 304L",
+  "material": "304L",
+  "bore": 49.28,
+  "counterbore": 51.05,
+  "overall_length": 15.75,
+  "setback": 4.32,
+  "source_url": "https://www.lesker.com/newweb/flanges/flanges_kf_weld.cfm?pgid=weld2"
+ },
+ "715104 (K200-SWS)": {
+  "vendor": "MDC Precision",
+  "description": "KF-50 half nipple, short weld stub, 304",
+  "material": "304",
+  "flange_od": 74.93,
+  "tube_od": 50.8,
+  "tube_wall": 1.65,
+  "overall_length_face_to_tube_end": 19.05,
+  "source_url": "https://www.mdcprecision.com/parts/half-nipple-nw50-short-weld-stub-w2tube"
+ },
+ "715109 (K200-LWS)": {
+  "vendor": "MDC Precision",
+  "description": "KF-50 half nipple, long weld stub, 304",
+  "material": "304",
+  "flange_od": 74.93,
+  "tube_od": 50.8,
+  "tube_wall": 1.65,
+  "overall_length_face_to_tube_end": 40.13,
+  "source_url": "https://www.mdcprecision.com/parts/half-nipple-nw50-long-weld-stub-w2-tube"
+ },
+ "713022 (K200W-200)": {
+  "vendor": "MDC Precision",
+  "description": "KF-50 weld flange (ring type), 304",
+  "material": "304",
+  "flange_od": 74.93,
+  "flange_thickness_overall": 5.08,
+  "bore": 47.63,
+  "tube_socket": 51.05,
+  "source_url": "https://www.mdcprecision.com/parts/iso-kf-flange-nw50-2-weld",
+  "drawing": "MDC drawing PG092: .20 in overall thickness; also labels .10 in (upper left, a face step) and .04 in (tube end set back from the back face)"
+ },
+ "QF50-200-N": {
+  "vendor": "Kurt J. Lesker",
+  "description": "KF-50 full nipple",
+  "material": "304L",
+  "flange_od": 74.93,
+  "tube_od": 50.8,
+  "tube_wall": 1.65,
+  "bore": 47.5,
+  "face_to_face": 139.95,
+  "source_url": "https://www.lesker.com/newweb/flanges/fittings_kf_nipples.cfm?pgid=full1"
+ },
+ "QF50-200-NL": {
+  "vendor": "Kurt J. Lesker",
+  "description": "KF-50 full nipple, long",
+  "material": "304L",
+  "flange_od": 74.93,
+  "tube_od": 50.8,
+  "tube_wall": 1.65,
+  "bore": 47.5,
+  "face_to_face": 320.04,
+  "source_url": "https://www.lesker.com/newweb/flanges/fittings_kf_nipples.cfm?pgid=full1"
+ },
+ "721003 (K200-2)": {
+  "vendor": "MDC Precision",
+  "description": "KF-50 full nipple",
+  "material": "304",
+  "flange_od": 74.93,
+  "tube_od": 50.8,
+  "tube_wall": 1.65,
+  "bore": 47.5,
+  "face_to_face": 163.32,
+  "source_url": "https://www.mdcprecision.com/parts/nipple-nw50-w2-tube"
+ },
+ "QF50-200-SB": {
+  "vendor": "Kurt J. Lesker",
+  "description": "KF-50 blank flange",
+  "material": "304L",
+  "flange_od": 74.93,
+  "thickness_face_to_back": 5.08,
+  "edge_thickness_from_drawing_approx": 3.0,
+  "source_url": "https://www.lesker.com/newweb/flanges/flanges_kf_blank.cfm?pgid=flange1",
+  "drawing": "https://www.lesker.com/part/api/qf50-200-sb.svg",
+  "note": "Drawing shows the centring-ring recess in the sealing face and the back taper; edge thickness scaled from a drawing that may not be to scale."
+ },
+ "QF50-200-US": {
+  "vendor": "Kurt J. Lesker",
+  "description": "KF-50 blank stub (solid)",
+  "material": "304L",
+  "flange_od": 74.93,
+  "overall_length": 25.4,
+  "stub_od": 50.8,
+  "source_url": "https://www.lesker.com/newweb/flanges/flanges_kf_blank.cfm?pgid=stub1"
+ },
+ "QF50-200-SRV": {
+  "vendor": "Kurt J. Lesker",
+  "description": "KF-50 centring ring, stainless, FKM",
+  "ring_id": 49.4,
+  "ring_body_od": 51.9,
+  "oring": "AS568-330",
+  "oring_id": 53.34,
+  "oring_cs": 5.33,
+  "oring_od": 64.0,
+  "source_url": "https://www.lesker.com/newweb/flanges/hardware_kf_centeringrings.cfm?pgid=ss",
+  "drawing": "https://www.lesker.com/newweb/images/product_drawings/Dwg-HD-QF-CENTERING-RING.svg",
+  "note": "Dim A = ring bore, Dim B = OD of the ring body; the O-ring sits outside B on the centre rib. Axial ring thickness not given."
+ },
+ "QF50-200-ARV": {
+  "vendor": "Kurt J. Lesker",
+  "description": "KF-50 centring ring, aluminium, FKM",
+  "ring_id": 49.4,
+  "ring_body_od": 51.9,
+  "oring": "AS568-330",
+  "oring_id": 53.34,
+  "oring_cs": 5.33,
+  "source_url": "https://www.lesker.com/newweb/flanges/hardware_kf_centeringrings.cfm?pgid=al"
+ },
+ "QF50-200-SCV": {
+  "vendor": "Kurt J. Lesker",
+  "description": "KF-50 centring ring with outer ring, captured FKM O-ring",
+  "ring_id": 50.0,
+  "outer_od": 77.5,
+  "thickness": 8.0,
+  "oring": "FKM 2.100 in ID x 0.210 in (AS568-330)",
+  "source_url": "https://www.lesker.com/newweb/flanges/hardware_kf_centeringrings.cfm?pgid=outerring-oring",
+  "drawing": "https://www.lesker.com/newweb/images/product_drawings/Dwg-HD-QF50-200-SCV.svg"
+ },
+ "QF50-200-OPR": {
+  "vendor": "Kurt J. Lesker",
+  "description": "KF-50 over-pressure ring (goes around the O-ring of a standard centring ring)",
+  "od": 69.85,
+  "id": 66.55,
+  "width": 3.9,
+  "source_url": "https://www.lesker.com/newweb/flanges/hardware_over_pressure_rings.cfm?pgid=0"
+ },
+ "O-V330 / O-S330 / O-K330": {
+  "vendor": "Kurt J. Lesker",
+  "description": "KF-50 O-rings FKM / silicone / Kalrez",
+  "oring": "AS568-330",
+  "oring_id": 53.34,
+  "oring_cs": 5.33,
+  "oring_od": 64.0,
+  "temp_range_c": {
+   "FKM 9505-75": [
+    -26,
+    210
+   ],
+   "silicone 1200-70": [
+    -50,
+    230
+   ],
+   "Kalrez 4079 (DuPont)": [
+    -19,
+    316
+   ]
+  },
+  "source_url": "https://www.lesker.com/newweb/flanges/hardware_kf_orings.cfm?pgid=0"
+ },
+ "QF50-200-SSC": {
+  "vendor": "Kurt J. Lesker",
+  "description": "KF-50 hinged clamp, stainless, wing nut",
+  "clamp_overall_width_hinge_to_lug": 112.0,
+  "clamp_body_od": 82.0,
+  "clamp_axial_width": 20.0,
+  "source_url": "https://www.lesker.com/newweb/flanges/hardware-kf-wingnut-clamp-ss.cfm?pgid=0",
+  "drawing": "https://www.lesker.com/newweb/images/product_drawings/Dwg-HD-21010941.svg"
+ },
+ "QF50-200-CCL": {
+  "vendor": "Kurt J. Lesker",
+  "description": "KF-50 chain clamp, 6061-T6",
+  "dim_a": 96,
+  "dim_b": 67,
+  "clamp_axial_width": 20,
+  "dim_d": 54,
+  "dim_e": 13,
+  "torque_ft_lb": 4.43,
+  "source_url": "https://www.lesker.com/newweb/flanges/hardware_kf_clamps_chain.cfm?pgid=al"
+ },
+ "QF50-200-TCL": {
+  "vendor": "Kurt J. Lesker",
+  "description": "KF-50 toggle clamp, Al",
+  "dim_a": 118,
+  "dim_b": 165,
+  "clamp_axial_width": 23,
+  "dim_d": 115,
+  "dim_e": 43,
+  "source_url": "https://www.lesker.com/newweb/flanges/hardware-kf-toggle-clamp.cfm?pgid=0"
+ },
+ "701003 (K200-C)": {
+  "vendor": "MDC Precision",
+  "description": "KF-50 hinged clamp, Al, wing nut",
+  "clamp_overall_width": 115.3,
+  "clamp_body_od": 87.4,
+  "source_url": "https://www.mdcprecision.com/parts/hinged-clamp-nw50-1-per-pack",
+  "drawing": "MDC drawing PG080 (A overall incl. hinge, B ring body)"
+ },
+ "4518K38": {
+  "vendor": "McMaster-Carr",
+  "description": "KF-50 x 2 in OD butt-weld stub, 304 SS, 3/4 in long (dims from vendor STEP measured with CadQuery; McMaster's models are approximate)",
+  "flange_od": 74.93,
+  "length": 19.05,
+  "tube_od": 50.8,
+  "tube_wall": 1.651,
+  "bore": 47.498,
+  "tube_stub_len_below_taper": 12.6,
+  "taper_deg": 15.0,
+  "flange_rim_thk": 2.9,
+  "face_recess_dia": 52.32,
+  "face_recess_depth": 2.6,
+  "volume_mm3": 14605.2,
+  "mass_g_304": 115.8,
+  "source_url": "https://www.mcmaster.com/4518K38/"
+ },
+ "4518K43": {
+  "vendor": "McMaster-Carr",
+  "description": "KF-50 x 2 in OD butt-weld stub, 304 SS, 1-9/16 in long (dims from vendor STEP measured with CadQuery; McMaster's models are approximate)",
+  "flange_od": 74.93,
+  "length": 39.69,
+  "tube_od": 50.8,
+  "tube_wall": 1.651,
+  "bore": 47.498,
+  "taper_deg": 15.0,
+  "volume_mm3": 19866.2,
+  "mass_g_304": 157.5,
+  "source_url": "https://www.mcmaster.com/4518K43/"
+ },
+ "5786N27": {
+  "vendor": "McMaster-Carr",
+  "description": "KF-50 x 2 in OD butt-weld, aluminum, 3/4 in long (catalog values)",
+  "flange_od": 74.93,
+  "length": 19.05,
+  "tube_od": 50.8,
+  "tube_wall": 2.108,
+  "source_url": "https://www.mcmaster.com/5786N27/"
+ },
+ "4518K877": {
+  "vendor": "McMaster-Carr",
+  "description": "KF-50 full nipple (straight connector), 304 SS, 5-1/2 in (dims from vendor STEP measured with CadQuery; McMaster's models are approximate)",
+  "flange_od": 74.93,
+  "length": 139.7,
+  "tube_od": 50.8,
+  "tube_wall": 1.651,
+  "bore": 47.498,
+  "volume_mm3": 55127.0,
+  "mass_g_304": 437.2,
+  "source_url": "https://www.mcmaster.com/4518K877/"
+ },
+ "4518K878": {
+  "vendor": "McMaster-Carr",
+  "description": "KF-50 full nipple (straight connector), 304 SS, 12-1/2 in (dims from vendor STEP measured with CadQuery; McMaster's models are approximate)",
+  "flange_od": 74.93,
+  "length": 317.5,
+  "tube_od": 50.8,
+  "tube_wall": 1.651,
+  "bore": 47.498,
+  "volume_mm3": 100452.5,
+  "mass_g_304": 796.6,
+  "source_url": "https://www.mcmaster.com/4518K878/"
+ },
+ "4518K61": {
+  "vendor": "McMaster-Carr",
+  "description": "KF-50 cap (blank), 304 SS (dims from vendor STEP measured with CadQuery; McMaster's models are approximate); catalog length 3/16 in (4.76)",
+  "flange_od": 74.93,
+  "flange_thickness": 5.08,
+  "taper_deg": 15.0,
+  "volume_mm3": 19052.8,
+  "mass_g_304": 151.1,
+  "source_url": "https://www.mcmaster.com/4518K61/"
+ },
+ "4518K65": {
+  "vendor": "McMaster-Carr",
+  "description": "KF-50 centring ring, 304 SS + Viton (dims from vendor STEP measured with CadQuery; McMaster's models are approximate)",
+  "ring_id": 50.01,
+  "ring_thk": 7.98,
+  "oring_id": 53.78,
+  "oring_cs": 6.19,
+  "oring_od": 66.17,
+  "volume_mm3": 7289.6,
+  "temp_range_c": [
+   -18,
+   149
+  ],
+  "source_url": "https://www.mcmaster.com/4518K65/"
+ },
+ "5777N15": {
+  "vendor": "McMaster-Carr",
+  "description": "KF-50 centring ring, aluminum + Viton (same STEP geometry as 4518K65)",
+  "ring_id": 50.01,
+  "ring_thk": 7.98,
+  "oring_id": 53.78,
+  "oring_cs": 6.19,
+  "oring_od": 66.17,
+  "temp_range_c": [
+   -18,
+   177
+  ],
+  "source_url": "https://www.mcmaster.com/5777N15/"
+ },
+ "4518K771": {
+  "vendor": "McMaster-Carr",
+  "description": "KF-50 centring ring, 304 SS + silicone (same STEP geometry as 4518K65)",
+  "ring_id": 50.01,
+  "ring_thk": 7.98,
+  "oring_id": 53.78,
+  "oring_cs": 6.19,
+  "oring_od": 66.17,
+  "temp_range_c": [
+   -46,
+   199
+  ],
+  "source_url": "https://www.mcmaster.com/4518K771/"
+ },
+ "4518K69": {
+  "vendor": "McMaster-Carr",
+  "description": "KF-50 pressure-rated ring: 304 SS centring ring + Viton + aluminum outer ring, 50 psi @ 72 F (dims from vendor STEP measured with CadQuery; McMaster's models are approximate)",
+  "ring_id": 50.038,
+  "outer_ring_od": 76.71,
+  "outer_ring_lip_id": 75.18,
+  "outer_ring_mid_id": 67.56,
+  "ring_thk": 7.87,
+  "volume_mm3": 11077.9,
+  "max_pressure_psi": 50,
+  "source_url": "https://www.mcmaster.com/4518K69/"
+ },
+ "4518K74": {
+  "vendor": "McMaster-Carr",
+  "description": "KF-50 hinged wing-nut clamp, aluminum (dims from vendor STEP measured with CadQuery; McMaster's models are approximate)",
+  "clamp_od": 93.98,
+  "clamp_width": 26.4,
+  "overall_incl_wingnut": 116.43,
+  "clamp_groove_min_dia": 61.98,
+  "volume_mm3": 66231.6,
+  "source_url": "https://www.mcmaster.com/4518K74/"
+ },
+ "4518K78": {
+  "vendor": "McMaster-Carr",
+  "description": "KF-50 lever (toggle) clamp, aluminum (dims from vendor STEP measured with CadQuery; McMaster's models are approximate)",
+  "clamp_od": 93.98,
+  "clamp_width": 26.54,
+  "envelope": [
+   111.35,
+   119.84,
+   26.54
+  ],
+  "volume_mm3": 95993.9,
+  "source_url": "https://www.mcmaster.com/4518K78/"
+ },
+ "4518K895": {
+  "vendor": "McMaster-Carr",
+  "description": "KF-50 manual gate valve, 304 SS body (catalog values)",
+  "flange_od": 74.6,
+  "length": 114.3,
+  "height": 203.2,
+  "source_url": "https://www.mcmaster.com/4518K895/"
+ },
+ "4000126": {
+  "vendor": "A&N Corporation (ANCORP)",
+  "description": "QF50-200-HNM-0.75 stub weld flange, 304L (page A/B/C, A/B/C not defined on page)",
+  "tube_od": 50.8,
+  "bore": 47.63,
+  "tube_wall": 1.59,
+  "length": 19.05,
+  "source_url": "https://ancorp.com/product/4000126/"
+ },
+ "4003138": {
+  "vendor": "A&N Corporation (ANCORP)",
+  "description": "QF50-200-HNM-1.58-316 machined half nipple, 316 SS",
+  "tube_od": 50.8,
+  "length": 40.13,
+  "B_undefined": 52.32,
+  "source_url": "https://ancorp.com/product/4003138/"
+ },
+ "4000418": {
+  "vendor": "A&N Corporation (ANCORP)",
+  "description": "QF50-200-N-5.51 nipple, 304L",
+  "tube_od": 50.8,
+  "length": 139.95,
+  "source_url": "https://ancorp.com/product/4000418/"
+ },
+ "4000420": {
+  "vendor": "A&N Corporation (ANCORP)",
+  "description": "QF50-200-N-12.60 nipple, 304L",
+  "tube_od": 50.8,
+  "length": 320.04,
+  "source_url": "https://ancorp.com/product/4000420/"
+ },
+ "4000163": {
+  "vendor": "A&N Corporation (ANCORP)",
+  "description": "QF50-000 blank, 304L",
+  "flange_thickness": 5.08,
+  "source_url": "https://ancorp.com/product/4000163/"
+ },
+ "4000168": {
+  "vendor": "A&N Corporation (ANCORP)",
+  "description": "QF50-000-AL blank, 6061-T6",
+  "flange_thickness": 5.08,
+  "source_url": "https://ancorp.com/product/4000168/"
+ },
+ "4000008": {
+  "vendor": "A&N Corporation (ANCORP)",
+  "description": "QF50-200-CTR-VT centring ring, 316 SS + FKM",
+  "ring_id": 50.04,
+  "oring_cs": 5.33,
+  "source_url": "https://ancorp.com/product/4000008/"
+ },
+ "4000023": {
+  "vendor": "A&N Corporation (ANCORP)",
+  "description": "QF50-200-CTR-AL-VT centring ring, Al + FKM",
+  "ring_id": 50.04,
+  "oring_cs": 5.33,
+  "source_url": "https://ancorp.com/product/4000023/"
+ },
+ "4000018": {
+  "vendor": "A&N Corporation (ANCORP)",
+  "description": "QF50-200-CTR-SN centring ring, 316 SS + silicone",
+  "ring_id": 50.04,
+  "oring_cs": 5.33,
+  "source_url": "https://ancorp.com/product/4000018/"
+ },
+ "0600330": {
+  "vendor": "A&N Corporation (ANCORP)",
+  "description": "2-330-OV FKM O-ring for QF50 (AS568-330)",
+  "oring_id": 53.57,
+  "oring_cs": 5.33,
+  "source_url": "https://ancorp.com/product/0600330/"
+ },
+ "4000076": {
+  "vendor": "A&N Corporation (ANCORP)",
+  "description": "QF50-200-OPR over-pressure ring, 304L, max 50 psig",
+  "ring_od": 69.85,
+  "ring_id": 66.55,
+  "ring_thk": 3.81,
+  "max_pressure_psig": 50,
+  "source_url": "https://ancorp.com/product/4000076/"
+ },
+ "4040003": {
+  "vendor": "A&N Corporation (ANCORP)",
+  "description": "QF50-WNC-AL wing-nut clamp, aluminum",
+  "clamp_overall": 121.92,
+  "clamp_od": 93.98,
+  "source_url": "https://ancorp.com/product/4040003/"
+ },
+ "4050018": {
+  "vendor": "A&N Corporation (ANCORP)",
+  "description": "QF50-CLMP-SS CNC stainless clamp; max closing torque 6 ft-lb",
+  "clamp_od": 100.08,
+  "clamp_width": 16.0,
+  "source_url": "https://ancorp.com/product/4050018/"
+ },
+ "3002035": {
+  "vendor": "A&N Corporation (ANCORP)",
+  "description": "F4200-QF50 manual 2-way ball valve",
+  "ball_dia": 47.5,
+  "tube_od": 50.8,
+  "source_url": "https://ancorp.com/product/3002035/"
+ },
+ "KF50-NP": {
+  "vendor": "Duniway Stockroom",
+  "description": "KF50 full nipple, OAL 6.30 in",
+  "length": 160.02,
+  "tube_od": 50.8,
+  "flange_od": 74.93,
+  "source_url": "https://www.duniway.com/part/kf50-np"
+ },
+ "KF50-HN": {
+  "vendor": "Duniway Stockroom",
+  "description": "KF50 half nipple, OAL 3.15 in",
+  "length": 80.01,
+  "tube_od": 50.8,
+  "flange_od": 74.93,
+  "source_url": "https://www.duniway.com/catalog/hardware/kf%C2%AE-flangesfittings"
+ },
+ "KF50-200": {
+  "vendor": "Duniway Stockroom",
+  "description": "KF50 flange, 2.00 in socket weld",
+  "tube_od": 50.8,
+  "flange_od": 74.93,
+  "source_url": "https://www.duniway.com/part/kf50-200"
+ },
+ "50485K213": {
+  "vendor": "McMaster-Carr",
+  "description": "2 in tri-clamp x butt-weld short ferrule (14WMP style), 316/316L, 1/2 in long",
+  "overall_length": 12.7,
+  "flange_od": 63.906,
+  "tube_od": 50.8,
+  "wall": 1.651,
+  "id": 47.498,
+  "flange_land_thickness": 2.84,
+  "flange_back_taper_to": 5.08,
+  "weld_stub_straight_length": 7.04,
+  "cad_volume_mm3": 7338.6,
+  "cad_mass_g_at_8.0": 58.7,
+  "source_url": "https://www.mcmaster.com/50485K213/",
+  "cad": "vendor STEP (free download) measured with CadQuery; file not committed"
+ },
+ "BF614WMP-2": {
+  "vendor": "BuyFittingsOnline",
+  "description": "2 in 14WMP short weld ferrule 316L (Wayland W14WMP equiv.)",
+  "overall_length": 12.7,
+  "id": 47.498,
+  "tube_od": 50.8,
+  "wall": 1.651,
+  "flange_od": "not in vendor table (2.516 in nominal = 63.91)",
+  "weight_g": 59.0,
+  "source_url": "https://www.buyfittingsonline.com/stainless-steel-sanitary-fittings-clamp-short-weld-ferrule-614wmp-2/"
+ },
+ "5237K471": {
+  "vendor": "McMaster-Carr",
+  "description": "3 in x 2 in butt-weld concentric (straight) reducer, 316/316L dull",
+  "overall_length": 101.6,
+  "straight_end_length": "not shown; CAD is a plain cone with no tangents",
+  "od_large": 76.2,
+  "od_small": 50.8,
+  "wall": 1.651,
+  "cad_volume_mm3": 32592.9,
+  "cad_mass_g_at_8.0": 260.7,
+  "source_url": "https://www.mcmaster.com/5237K471/",
+  "cad": "vendor STEP (free download) measured with CadQuery; file not committed"
+ },
+ "5237K47": {
+  "vendor": "McMaster-Carr",
+  "description": "3 in x 2 in butt-weld concentric reducer, 316/316L polished, 3-A",
+  "overall_length": 101.6,
+  "straight_end_length": "not shown",
+  "od_large": 76.2,
+  "od_small": 50.8,
+  "wall": 1.651,
+  "source_url": "https://www.mcmaster.com/5237K47/"
+ },
+ "BF631W-3X2-7": {
+  "vendor": "BuyFittingsOnline (Wayland W631W-3X2-7)",
+  "description": "3 in x 2 in 31W polished concentric weld reducer 316L",
+  "overall_length": 101.6,
+  "straight_end_length": "not shown in Wayland catalog",
+  "od_large": 76.2,
+  "od_small": 50.8,
+  "wall": 1.651,
+  "weight_g": 254.0,
+  "source_url": "https://www.buyfittingsonline.com/stainless-steel-fittings-sanitary-butt-weld-l31-concentric-reducer-3a-316l-3-in-x-2-in-212-wu/",
+  "length_source": "https://www.buyfittingsonline.com/content/Wayland-Industries-Sanitary-Catalog-2025.pdf (31W table, A = 4.00 in)"
+ },
+ "4322K153": {
+  "vendor": "McMaster-Carr",
+  "description": "304 SS wing-nut (single-hinge) clamp for 2 in quick-clamp (tri-clamp) fittings",
+  "dims_mm": {
+   "for_tube_od": 50.8,
+   "flange_od": 63.91
+  },
+  "other": {
+   "max_pressure": "450 psi @ 72 F",
+   "vacuum": "not rated"
+  },
+  "source_url": "https://www.mcmaster.com/4322K153/"
+ },
+ "TC20CLAMP": {
+  "vendor": "Brewers Hardware",
+  "description": "Heavy-duty 304 SS single-pin clamp with wing nut, 2 in TC",
+  "dims_mm": {
+   "flange_od": 63.91
+  },
+  "source_url": "https://www.brewershardware.com/tri-clover-compatible-heavy-duty-clamp?attribute_values[778]=2554"
+ },
+ "5044K55": {
+  "vendor": "McMaster-Carr",
+  "description": "FKM gasket for 2 in quick-clamp fittings",
+  "dims_mm": {
+   "for_tube_od": 50.8,
+   "id": 49.02,
+   "od": 64.01,
+   "thickness": 5.08
+  },
+  "temp_range_F": "-15 to 400",
+  "source_url": "https://www.mcmaster.com/products/sanitary-gaskets/chemical-resistant-fluoroelastomer-gaskets-for-quick-clamp-tube-fittings~~/"
+ },
+ "43315K55": {
+  "vendor": "McMaster-Carr",
+  "description": "PTFE gasket for 2 in quick-clamp fittings",
+  "dims_mm": {
+   "for_tube_od": 50.8,
+   "id": 47.75,
+   "od": 64.01,
+   "thickness": 4.57
+  },
+  "temp_range_F": "-100 to 500",
+  "source_url": "https://www.mcmaster.com/products/sanitary-gaskets/ultra-chemical-resistant-ptfe-gaskets-for-quick-clamp-tube-fittings~~/"
+ },
+ "4520K45": {
+  "vendor": "McMaster-Carr",
+  "description": "Silicone gasket for 2 in quick-clamp fittings",
+  "dims_mm": {
+   "for_tube_od": 50.8,
+   "id": 48.26,
+   "od": 64.01,
+   "thickness": 5.16
+  },
+  "temp_range_F": "-40 to 450",
+  "source_url": "https://www.mcmaster.com/products/sanitary-gaskets/high-temperature-silicone-gaskets-for-quick-clamp-tube-fittings~~/"
+ },
+ "TC20GASVIT": {
+  "vendor": "Brewers Hardware",
+  "description": "2 in TC gasket, FKM (Viton)",
+  "dims_mm": {
+   "id": 47.75,
+   "od": 62.74
+  },
+  "temp_range_F": "-25 to 400",
+  "source_url": "https://www.brewershardware.com/2-tri-clover-compatible-gasket?attribute_values[749]=2415"
+ },
+ "TC20GASPTFE": {
+  "vendor": "Brewers Hardware",
+  "description": "2 in TC gasket, PTFE",
+  "dims_mm": {
+   "id": 47.75,
+   "od": 62.74
+  },
+  "temp_range_F": "-100 to 500",
+  "source_url": "https://www.brewershardware.com/2-tri-clover-compatible-gasket?attribute_values[749]=2414"
+ },
+ "TC20GASSIL": {
+  "vendor": "Brewers Hardware",
+  "description": "2 in TC gasket, silicone",
+  "dims_mm": {
+   "id": 47.75,
+   "od": 62.74
+  },
+  "temp_range_F": "-58 to 446",
+  "source_url": "https://www.brewershardware.com/2-tri-clover-compatible-gasket?attribute_values[749]=2412"
+ },
+ "TC20GASEPDM": {
+  "vendor": "Brewers Hardware",
+  "description": "2 in TC gasket, EPDM",
+  "dims_mm": {
+   "id": 47.75,
+   "od": 62.74
+  },
+  "temp_range_F": "-30 to 300",
+  "source_url": "https://www.brewershardware.com/2-tri-clover-compatible-gasket?attribute_values[749]=2413"
+ },
+ "4820K23": {
+  "vendor": "McMaster-Carr",
+  "description": "316 SS body butterfly valve, quick-clamp x quick-clamp, 2 in tube OD, silicone seat, lever handle",
+  "dims_mm": {
+   "for_tube_od": 50.8,
+   "flange_od": 63.9,
+   "face_to_face": 79.38,
+   "overall_height_lever": 161.92,
+   "overall_length_lever": 228.6
+  },
+  "seat_temp_range_F": "-80 to 450",
+  "source_url": "https://www.mcmaster.com/products/sanitary-butterfly-valves/"
+ },
+ "4820K117": {
+  "vendor": "McMaster-Carr",
+  "description": "316 SS body butterfly valve, quick-clamp x quick-clamp, 2 in tube OD, EPDM seat, lever handle",
+  "dims_mm": {
+   "for_tube_od": 50.8,
+   "flange_od": 63.9,
+   "face_to_face": 79.38,
+   "overall_height_lever": 161.92,
+   "overall_length_lever": 228.6
+  },
+  "seat_temp_range_F": "-20 to 300",
+  "source_url": "https://www.mcmaster.com/products/sanitary-butterfly-valves/"
+ },
+ "4820K63": {
+  "vendor": "McMaster-Carr",
+  "description": "316 SS body butterfly valve, quick-clamp x quick-clamp, 2 in tube OD, FKM seat, lever handle",
+  "dims_mm": {
+   "for_tube_od": 50.8,
+   "flange_od": 63.9,
+   "face_to_face": 79.38,
+   "overall_height_lever": 161.92,
+   "overall_length_lever": 228.6
+  },
+  "seat_temp_range_F": "-20 to 400",
+  "source_url": "https://www.mcmaster.com/products/sanitary-butterfly-valves/"
+ },
+ "4820K136": {
+  "vendor": "McMaster-Carr",
+  "description": "316 SS body butterfly valve, quick-clamp x quick-clamp, 2 in tube OD, PTFE seat, lever handle",
+  "dims_mm": {
+   "for_tube_od": 50.8,
+   "flange_od": 63.9,
+   "face_to_face": 79.38,
+   "overall_height_lever": 161.92,
+   "overall_length_lever": 228.6
+  },
+  "seat_temp_range_F": "-40 to 450",
+  "source_url": "https://www.mcmaster.com/products/sanitary-butterfly-valves/"
+ },
+ "TC20VBFVPT-EPDM": {
+  "vendor": "Brewers Hardware",
+  "description": "304 SS 2 in TC butterfly valve, pull trigger, EPDM seat",
+  "dims_mm": {
+   "flange_od": 63.91,
+   "bore": 47.62,
+   "face_to_face": 73.02
+  },
+  "source_url": "https://www.brewershardware.com/tri-clamp-compatible-fittings/Shop-By-Size/2-tri-clamp-compatible-fittings/2-Tri-Clover-Butterfly-Valve-Pull-Trigger.html"
+ },
+ "DER0316": {
+  "vendor": "Dernord",
+  "description": "SUS316 2 in tri-clamp butterfly valve, pull handle (seat material not stated)",
+  "dims_mm": {
+   "for_tube_od": 50.8,
+   "flange_od": 64.0
+  },
+  "temp_rating_F": "15 to 200",
+  "source_url": "https://www.dernord.com/products/sanitary-butterfly-valve-tri-clamp-clover-with-pull-handle-stainless-steel-304"
+ },
+ "BFVPC-2": {
+  "vendor": "Steel & O'Brien",
+  "description": "2 in manual butterfly valve, pull handle, 304 or 316L, seat BFV-SEAT-2 (no public price)",
+  "dims_mm": {
+   "A_face_to_face": 69.85
+  },
+  "source_url": "https://www.steelobrien.com/products/valves-and-actuators/butterfly-valves/standard-manual-butterfly-valves/pull-handle/"
+ },
+ "DER018": {
+  "vendor": "Dernord",
+  "description": "304 SS single-pin heavy-duty clamp, 2 in tube OD",
+  "dims_mm": {
+   "for_tube_od": 50.8,
+   "flange_od_nominal": 63.91
+  },
+  "source_url": "https://www.dernord.com/products/stainless-steel-304-sanitary-fitting-heavy-duty-tri-clamp-ferrule-tc"
+ },
+ "4466K62": {
+  "vendor": "McMaster-Carr",
+  "description": "316/316L extra-high-polish sanitary tube, welded, A270, 3 in OD x 0.065 in",
+  "od": 76.2,
+  "wall": 1.651,
+  "id": 72.9,
+  "length_options": [
+   304.8,
+   914.4,
+   1828.8
+  ],
+  "source_url": "https://www.mcmaster.com/products/tubing/specifications-met~astm-a270/"
+ },
+ "BFO316SAN-3": {
+  "vendor": "BuyFittingsOnline",
+  "description": "316/L polished 3-A sanitary tube 3 in OD x 0.065 in x 5 ft",
+  "od": 76.2,
+  "wall": 1.651,
+  "id": 72.9,
+  "length_options": [
+   1524.0
+  ],
+  "source_url": "https://www.buyfittingsonline.com/stainless-steel-sanitary-tubing-5-ft-length-pre-cut-316l-san-3/"
+ },
+ "S62TP66030": {
+  "vendor": "Titan Fittings",
+  "description": "3 in 316 sanitary tubing, A269/A270, 20 ft lengths, 200 ft MOQ",
+  "od": 76.2,
+  "wall": null,
+  "length_options": [
+   6096.0
+  ],
+  "source_url": "https://www.titanfittings.com/tubing-and-fittings/metal-tubing/seamless-tubing-stainless/snt6"
+ },
+ "4256": {
+  "vendor": "OnlineMetals",
+  "description": "316 welded round tube 3 in OD x 0.065 in x 2.87 in ID, A269/A249",
+  "od": 76.2,
+  "wall": 1.651,
+  "id": 72.898,
+  "length_options": [
+   304.8,
+   609.6,
+   914.4,
+   1219.2,
+   1828.8,
+   2438.4,
+   3048.0,
+   6096.0
+  ],
+  "custom_cut": true,
+  "source_url": "https://www.onlinemetals.com/en/buy/stainless-steel/3-od-x-0-065-wall-x-2-87-id-stainless-round-tube-316-welded/pid/4256"
+ },
+ "mp-00038303": {
+  "vendor": "OnlineMetals marketplace (Stainless Headers Mfg.)",
+  "description": "304 welded round tube 2.75 in OD x 0.065 in x 2.62 in ID",
+  "od": 69.85,
+  "wall": 1.651,
+  "id": 66.548,
+  "length_options": [
+   304.8,
+   609.6,
+   914.4,
+   1219.2,
+   1524.0
+  ],
+  "custom_cut": true,
+  "source_url": "https://www.onlinemetals.com/en/buy/2-75-od-x-0-065-wall-x-2-62-id-304-stainless-steel-round-tube-welded/pid/mp-00038303"
+ },
+ "11116N839": {
+  "vendor": "McMaster-Carr",
+  "description": "304/304L welded round tube 2-1/2 in OD x 0.049 in (largest 0.049 in wall 304 at McMaster)",
+  "od": 63.5,
+  "wall": 1.245,
+  "id": 61.0,
+  "length_options": [
+   304.8,
+   914.4,
+   1828.8
+  ],
+  "source_url": "https://www.mcmaster.com/products/stainless-steel-round-tubes/multipurpose-304-stainless-steel-round-tubes~~/wall-thickness~0-049/"
+ },
+ "11116N835": {
+  "vendor": "McMaster-Carr",
+  "description": "304/304L welded round tube 1-3/4 in OD x 0.049 in",
+  "od": 44.45,
+  "wall": 1.245,
+  "id_listed": 41.275,
+  "length_options": [
+   304.8,
+   914.4,
+   1828.8
+  ],
+  "source_url": "https://www.mcmaster.com/products/stainless-steel-round-tubes/multipurpose-304-stainless-steel-round-tubes~~/wall-thickness~0-049/"
+ },
+ "11116N864": {
+  "vendor": "McMaster-Carr",
+  "description": "304/304L welded round tube 2-3/4 in OD x 0.065 in (no 0.049 in at this OD)",
+  "od": 69.85,
+  "wall": 1.651,
+  "id": 66.548,
+  "length_options": [
+   304.8,
+   914.4,
+   1828.8
+  ],
+  "source_url": "https://www.mcmaster.com/products/stainless-steel-round-tubes/multipurpose-304-stainless-steel-round-tubes~~/wall-thickness~0-065/"
+ }
+}

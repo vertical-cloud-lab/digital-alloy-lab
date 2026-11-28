@@ -1,0 +1,248 @@
+{
+  "_about": "Stock collection cup and its joint to the cone, measured from photos and video frames (issue 269). Lengths in mm. pm = +- uncertainty (about 1 sigma, judgement included). confidence: high / medium / low / not_determined. measure.py reproduces every number marked method=fit or method=read.",
+  "_sources": {
+    "k0": "4K photo image-1795800846956-0.jpg (issue 269, Nov 17): top flange face with the centring ring removed",
+    "k1": "4K photo image-1795800846973-1.jpg (issue 269, Nov 17): cracked glass, guard, bottom plate with tie rods, 18 mm wrench",
+    "p04": "WhatsApp photo 04 (Nov 16): cup top with the KF centring ring and O-ring in place",
+    "p09": "WhatsApp photo 09 (Nov 17): AMAZEMET's metal cup on another machine",
+    "t4_545": "https://www.youtube.com/watch?v=1F9_4ccwhss&t=545s",
+    "t5_0034": "https://www.youtube.com/watch?v=58wJ_Khwgyk&t=34s",
+    "t5_0135": "https://www.youtube.com/watch?v=58wJ_Khwgyk&t=135s",
+    "t5_0179": "https://www.youtube.com/watch?v=58wJ_Khwgyk&t=179s",
+    "t6_0040": "https://www.youtube.com/watch?v=tfb4fsVNIFI&t=40s",
+    "bw_0482": "https://www.youtube.com/watch?v=boWsO0rxHvU&t=482s"
+  },
+  "joint": {
+    "type": {
+      "value": "ISO-KF (ISO 2861): centring ring with O-ring, hinged two-segment clamp with wing nut",
+      "confidence": "high",
+      "source": "p04, k0, t4_545, t6_0040",
+      "method": "visual: metal centring ring inside a brown (FKM-coloured) O-ring on a flat face; with the ring off, the face is flat with a counterbore step at the bore and no gasket groove (a tri-clamp ferrule has a bead groove and a flat gasket, no metal ring)"
+    },
+    "size": {
+      "value": "KF-50 (DN50 / NW50)",
+      "confidence": "medium-high",
+      "source": "p04",
+      "method": "ellipse fits: O-ring OD / flange OD = 0.827 (rms < 1 px); nominal KF-50 0.867, ISO-K 63 0.901, KF-40 0.945, KF-25 0.950. Training video calls the stack's flange 'K50'."
+    },
+    "flange_od": {
+      "value": 75.0,
+      "pm": 2.0,
+      "confidence": "medium-high",
+      "source": "p04",
+      "reference": "ISO 2861 KF-50 flange OD 75.0",
+      "method": "standard size of the identified flange; cross-check: if the O-ring is the standard 55 x 5 (OD 65), the fits give 78.6, so check with calipers"
+    },
+    "oring_od_seen": {
+      "value": 62.0,
+      "pm": 2.0,
+      "source": "p04",
+      "method": "fit ratio 0.827 x 75"
+    },
+    "centring_ring_bore_seen": {
+      "value": 43.9,
+      "pm": 2.5,
+      "confidence": "low",
+      "source": "p04",
+      "method": "fit ratio 0.585 x 75; smaller than the ~50 mm bore of common KF-50 rings, so either a reduced-bore ring or the edge found is deeper in the bore"
+    },
+    "clamp": {
+      "value": "hinged KF clamp, wing nut, finger-tightened",
+      "source": "t6_0040 (clamp on the mat), t4_545 (on the joint); training video 5 at 4:48 'just finger tightening for the flange'"
+    }
+  },
+  "room_under_cone": {
+    "z_joint_face_above_mat": {
+      "value": null,
+      "rough": 300,
+      "pm": 50,
+      "confidence": "not_determined",
+      "method": "no frame shows the mounted cup side-on with the floor at a known scale; 300 is the Oct 2026 viz3d estimate from 720p frames"
+    },
+    "cup_hangs_on_clamp": {
+      "value": true,
+      "confidence": "high",
+      "source": "t4_545; training video 5 at 3:45",
+      "method": "the cup stays on the cone when the cone swings out; the trainer says to lift the container and clamp it at the same time"
+    },
+    "drop_to_unclamp": {
+      "value": "a few mm to clear the centring ring's lips, then slide sideways",
+      "confidence": "medium",
+      "method": "KF geometry, not measured"
+    }
+  },
+  "stock_cup": {
+    "stack_top_to_bottom": [
+      "KF-50 flange",
+      "conical reducer (KF-50 up to the valve body)",
+      "sanitary butterfly valve, two bolted halves, EPDM seat, lever with ball knob on a side hub",
+      "top plate",
+      "glass tube in a perforated guard, 4 tie rods",
+      "bottom plate with the glass seal groove and a shallow pocket"
+    ],
+    "overall_height": {
+      "value": 225,
+      "pm": 30,
+      "confidence": "low",
+      "method": "sum of parts: KF face to valve flange 53 (measured, low) + valve body ~50 + top plate ~12 + glass gap ~100 + bottom plate ~6; not measured directly"
+    },
+    "bottom_plate_od": {
+      "value": 170.5,
+      "pm": 9.0,
+      "confidence": "medium",
+      "source": "k1",
+      "reference": "18 mm wrench box end (154 px -> 8.4 px/mm) and tie-rod shank if 12 mm (107 px -> 8.9 px/mm), mean 8.67 px/mm",
+      "method": "RANSAC ellipse fit of the plate's top edge, major axis 1478 px (rms 1.6 px)"
+    },
+    "bottom_plate_rim_t": {
+      "value": 6.0,
+      "pm": 1.5,
+      "confidence": "low",
+      "source": "k1",
+      "method": "chamfer + side band at the front, 32 px, divided by sin(38 deg view tilt)"
+    },
+    "top_plate_od": {
+      "value": null,
+      "confidence": "not_determined",
+      "method": "looks the same as the bottom plate in t5_0034 and t6_0040"
+    },
+    "glass_od": {
+      "value": 96.0,
+      "pm": 6.0,
+      "confidence": "medium",
+      "source": "k1",
+      "method": "silhouette width at the table (859 px) over the plate's major axis, 3 % depth correction; bracketed by the gasket band 92-107"
+    },
+    "glass_wall": {
+      "value": 5.7,
+      "pm": 1.0,
+      "confidence": "medium-low",
+      "source": "k1",
+      "method": "rim seen edge-on at its left extreme (64 px) over the rim's width (1078 px)"
+    },
+    "glass_len": {
+      "value": 110,
+      "pm": 15,
+      "confidence": "low",
+      "source": "k1, t6_0040",
+      "method": "k1 rim ellipses give ~98 (weak-perspective model, top rim 25 % nearer the camera); t6 side view gives guard height 0.70 x plate OD ~ 120"
+    },
+    "glass_seal_band_od": {
+      "value": 107,
+      "pm": 6,
+      "confidence": "medium-low",
+      "source": "k1",
+      "method": "outer edge of the black gasket band, 931 px over the plate's 1478 px"
+    },
+    "glass_seal_band_id": {
+      "value": 92,
+      "pm": 6,
+      "confidence": "medium-low",
+      "source": "k1",
+      "method": "inner edge of the band, 794 px; the gasket is lifted and twisted, so the groove itself may differ"
+    },
+    "glass_seal_groove_depth": {
+      "value": null,
+      "confidence": "not_determined"
+    },
+    "tie_rods": {
+      "n": 4,
+      "d": 12.7,
+      "d_pm": 1.6,
+      "thread": "M12 (likely)",
+      "confidence": "medium",
+      "source": "k1",
+      "method": "rod shank 107 px at the wrench scale; nut silhouette / rod = 1.63 (ISO M12 nut 18 AF: AF/d 1.50, AC/d 1.73); an 18 mm wrench lay with the parts; smooth rods with threaded ends, plain hex nuts on the bottom plate, acorn nuts on top"
+    },
+    "tie_rod_bolt_circle": {
+      "value": 145,
+      "pm": 10,
+      "confidence": "low",
+      "source": "k1",
+      "method": "each nut's outer face sits 2-5 mm inside the plate rim: 170.5 - 2 x (9.3 + 3.5)"
+    },
+    "guard_od": {
+      "value": 116,
+      "pm": 15,
+      "confidence": "low",
+      "source": "t6_0040",
+      "method": "0.68 x plate width in a low side view"
+    },
+    "guard_height": {
+      "value": 120,
+      "pm": 18,
+      "confidence": "low",
+      "source": "t6_0040",
+      "method": "0.70 x plate width"
+    },
+    "mass_estimate_kg": {
+      "value": 6,
+      "pm": 2,
+      "confidence": "low",
+      "method": "plates, valve, reducer, glass and rods by volume"
+    },
+    "kf_face_to_valve_flange_top": {
+      "value": 53,
+      "pm": 10,
+      "confidence": "low",
+      "source": "bw_0482",
+      "reference": "KF-50 flange OD 75 (472 px)",
+      "method": "centre-to-centre image offset of the KF face and the 4-bolt valve flange over sin(67 deg) view tilt, mean scale with a 7 % depth correction"
+    },
+    "reducer_large_end_od": {
+      "value": 65,
+      "pm": 6,
+      "confidence": "low",
+      "source": "bw_0482",
+      "reference": "KF-50 flange OD 75",
+      "method": "390 px vs the flange's 472 px, 5 % depth correction; fits 2.5 in (63.5 mm) tube, so likely a 2 in to 2.5 in reducer and a DN65-class valve"
+    },
+    "valve_body_flange_od": {
+      "value": 111,
+      "pm": 15,
+      "confidence": "low",
+      "source": "bw_0482",
+      "reference": "KF-50 flange OD 75",
+      "method": "650 px vs 472 px, 7 % depth correction; 4 bolts with acorn nuts"
+    }
+  },
+  "valve": {
+    "type": {
+      "value": "sanitary butterfly valve with an EPDM seat ring; lever with a black ball knob on a cylindrical side hub; body halves bolted with acorn nuts",
+      "confidence": "medium-high",
+      "source": "p04, k0, t5_0034, t6_0040, t4_545; AMAZEMET: 'the rubber that is around the valve part', EPDM"
+    },
+    "seat_axial_height": {
+      "value": 20,
+      "pm": 5,
+      "confidence": "low",
+      "source": "k0; Gage: 'about 3/4 in tall'"
+    },
+    "bore": {
+      "value": 60,
+      "pm": 8,
+      "confidence": "low",
+      "method": "inferred from the reducer's ~65 mm large end (2.5 in tube); not seen directly"
+    }
+  },
+  "splash_plate": {
+    "value": "curved stainless strip/plate across about half the bore below the valve seat, a semicircular notch near each end",
+    "size": null,
+    "confidence": "low",
+    "source": "k0, p04",
+    "method": "visual only; strong perspective and unknown depth, so no size"
+  },
+  "cone_shields": {
+    "value": "thin round discs laid in the mouth of the swing-out cone; splashes stick to them and the powder falls past; one for aluminium, more for hot metals such as copper",
+    "diameter_rough": 200,
+    "pm": 30,
+    "confidence": "low for size, high for what and where",
+    "source": "t5_0135, t5_0179; training video 5 at 2:21-3:08"
+  },
+  "amazemet_metal_cup": {
+    "value": "plain stainless tube hung from the cone outlet with hinged sanitary clamps; a lever (ball knob) butterfly valve on a side branch below the outlet; a second valve and clamp mid-height; the tube runs down to near the floor of the frame",
+    "sizes": null,
+    "confidence": "low",
+    "source": "p09; training video 5 at 0:00-0:35 'a very simple tube and the valve is added separately'"
+  }
+}

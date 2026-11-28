@@ -1,0 +1,67 @@
+{
+  "joint": "KF-50",
+  "z_joint_face_mm": 300.0,
+  "assemblies": {
+    "stock": {
+      "parts": 38,
+      "mass_kg": 8.05,
+      "lowest_point_z_mm": -234.0,
+      "length_below_joint_mm": 234.0,
+      "max_radius_mm": 183.3,
+      "gap_to_mat_mm": 66.0,
+      "drop_needed_to_remove_mm": 7.0,
+      "fits": true,
+      "interferences": []
+    },
+    "option_a": {
+      "parts": 11,
+      "mass_kg": 2.04,
+      "lowest_point_z_mm": -175.0,
+      "length_below_joint_mm": 175.0,
+      "max_radius_mm": 66.0,
+      "gap_to_mat_mm": 125.0,
+      "drop_needed_to_remove_mm": 7.0,
+      "fits": true,
+      "interferences": []
+    },
+    "option_b": {
+      "parts": 18,
+      "mass_kg": 3.42,
+      "lowest_point_z_mm": -252.0,
+      "length_below_joint_mm": 252.0,
+      "max_radius_mm": 99.3,
+      "gap_to_mat_mm": 48.0,
+      "drop_needed_to_remove_mm": 7.0,
+      "fits": true,
+      "interferences": []
+    },
+    "option_c": {
+      "parts": 27,
+      "mass_kg": 8.06,
+      "lowest_point_z_mm": -234.0,
+      "length_below_joint_mm": 234.0,
+      "max_radius_mm": 85.0,
+      "gap_to_mat_mm": 66.0,
+      "drop_needed_to_remove_mm": 7.0,
+      "fits": true,
+      "interferences": []
+    },
+    "option_b_adapter": {
+      "parts": 16,
+      "mass_kg": 3.64,
+      "lowest_point_z_mm": -252.0,
+      "length_below_joint_mm": 252.0,
+      "max_radius_mm": 99.3,
+      "gap_to_mat_mm": 48.0,
+      "drop_needed_to_remove_mm": 7.0,
+      "fits": true,
+      "interferences": []
+    }
+  },
+  "capacity_cm3": {
+    "A (liner + puck)": 159,
+    "A (no liner, no puck)": 257,
+    "B (no liner, no puck)": 694,
+    "B (liner + puck)": 522
+  }
+}

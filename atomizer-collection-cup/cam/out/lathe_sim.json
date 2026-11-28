@@ -1,0 +1,130 @@
+[
+  {
+    "part": "B_bottom_cap",
+    "material": "316L",
+    "gouge_area_mm2": 0.0,
+    "gouge_max_mm": 0.05,
+    "leftover_area_mm2": 0.28,
+    "leftover_max_mm": 0.1,
+    "rapids_through_stock": 0,
+    "crashes": [],
+    "cut_time_min": 13.9,
+    "programs": [
+      "setup 1",
+      "setup 2 (flipped)"
+    ],
+    "note": "3-1/4 in. 316/316L bar. An end cap: 8 mm floor, 12 mm rim the tube's wall (W3 is a square butt weld 20 mm up), R6 inside corner (no sharp welded corner where the floor's thermal stress peaks)."
+  },
+  {
+    "part": "B_puck",
+    "material": "304",
+    "gouge_area_mm2": 0.0,
+    "gouge_max_mm": 0.05,
+    "leftover_area_mm2": 0.0,
+    "leftover_max_mm": 0.05,
+    "rapids_through_stock": 0,
+    "crashes": [],
+    "cut_time_min": 5.5,
+    "programs": [
+      "setup 1",
+      "setup 2 (flipped)"
+    ],
+    "note": "3 in. 304 bar. Sits loose on the floor; the liner stands on it."
+  },
+  {
+    "part": "A_puck",
+    "material": "304",
+    "gouge_area_mm2": 0.0,
+    "gouge_max_mm": 0.05,
+    "leftover_area_mm2": 0.0,
+    "leftover_max_mm": 0.05,
+    "rapids_through_stock": 0,
+    "crashes": [],
+    "cut_time_min": 3.3,
+    "programs": [
+      "setup 1",
+      "setup 2 (flipped)"
+    ],
+    "note": "2 in. 304 bar. Sits loose on the floor; the liner stands on it."
+  },
+  {
+    "part": "B_liner",
+    "material": "304",
+    "gouge_area_mm2": 0.0,
+    "gouge_max_mm": 0.05,
+    "leftover_area_mm2": 0.0,
+    "leftover_max_mm": 0.0,
+    "rapids_through_stock": 0,
+    "crashes": [],
+    "cut_time_min": 2.0,
+    "programs": [
+      "setup 1",
+      "setup 2 (flipped)"
+    ],
+    "note": "2-3/4 in. x 0.065 in. 304 tube (McMaster 11116N864), sawn to 82 mm and faced to 78.9 mm; held on its OD in a collet or soft jaws with 12 mm out. Deburr the bore by hand."
+  },
+  {
+    "part": "B_body_tube",
+    "material": "316L",
+    "gouge_area_mm2": 0.0,
+    "gouge_max_mm": 0.0,
+    "leftover_area_mm2": 0.0,
+    "leftover_max_mm": 0.0,
+    "rapids_through_stock": 0,
+    "crashes": [],
+    "cut_time_min": 1.9,
+    "programs": [
+      "setup 1",
+      "setup 2 (flipped)"
+    ],
+    "note": "3 in. x 0.065 in. 316/316L tube, sawn to 85 mm and faced square to 82.3 mm (weld ends square and burr-free, no gap). Spider or plug in the bore against chatter."
+  },
+  {
+    "part": "B_adapter",
+    "material": "316L",
+    "gouge_area_mm2": 0.0,
+    "gouge_max_mm": 0.05,
+    "leftover_area_mm2": 0.01,
+    "leftover_max_mm": 0.1,
+    "rapids_through_stock": 0,
+    "crashes": [],
+    "cut_time_min": 58.3,
+    "programs": [
+      "setup 1",
+      "setup 2 (flipped)"
+    ],
+    "note": "4 in. 316/316L bar. B' upper part (concept, sheet 5): TC end first, then the KF face and its centring-ring recess on soft jaws. Copy the TC face's gasket groove from a bought ferrule."
+  },
+  {
+    "part": "C_sleeve",
+    "material": "304",
+    "gouge_area_mm2": 0.04,
+    "gouge_max_mm": 0.1,
+    "leftover_area_mm2": 0.008,
+    "leftover_max_mm": 0.1,
+    "rapids_through_stock": 0,
+    "crashes": [],
+    "cut_time_min": 36.3,
+    "programs": [
+      "setup 1",
+      "setup 2 (flipped)"
+    ],
+    "note": "2-3/4 in. 304 bar, turned lip-end first (the lip sits toward the chuck). Hangs lip up."
+  },
+  {
+    "part": "C_spacer",
+    "material": "316L",
+    "gouge_area_mm2": 0.0,
+    "gouge_max_mm": 0.05,
+    "leftover_area_mm2": 0.073,
+    "leftover_max_mm": 0.15,
+    "rapids_through_stock": 0,
+    "crashes": [],
+    "cut_time_min": 37.1,
+    "programs": [
+      "setup 1",
+      "setup 2 (flipped)"
+    ],
+    "note": "Valve-delete spacer: the stock valve body's height, OD and tie-rod pattern (measure first). Bottom-face groove for the glass and its gasket. Tie-rod holes on the mill."
+  }
+]
