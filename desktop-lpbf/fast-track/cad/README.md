@@ -89,6 +89,12 @@ PyVista, python-fcl and trimesh.
   through MK-09, so either MK-09 lifts off with the head on it (after the collimator comes off, or it catches under
   the front cross-beam), or the far-side plate and the mirror block come off and the head slides 46 mm toward +x
   before it lifts. Details in [the head section](#taking-the-scan-head-off-on-g3).
+- **Bracing the portals (round 3, not the default) works in the box but not with the cube.** With bolted joints the
+  FEA puts g3 at 47-57 Hz. g4b adds a lower front diagonal and a back diagonal (70.7 Hz feet fixed, 62.0 Hz on foot
+  plates). It draws clean in FT-0, FT-1, S1 and S2, and leaves the box lid's front gap and swing as on g3. g4 adds
+  an upper front diagonal as well (72.8 / 64.4 Hz); it cuts the clear height at the plate's x from 91-120 mm to
+  50-70 mm. In FT-1V the back diagonal runs through the cube, and the front diagonal stops the cube's door at
+  8 degrees. Details in [g4b and g4](#g4b-and-g4-bracing-the-portals-round-3-not-the-default).
 - **Gas volume from the model:** FT-0 24.2 L, FT-1 24.0 L, FT-1V 22.6 L (Ideal Vacuum gives the empty cube 22.6 L).
 - **Monitoring (MON1-MON9)** is drawn: a Raspberry Pi HQ layer camera through its own window port (17.8 µm per pixel
   across the plate in the box), two raking LED lights through wall ports, a coaxial photodiode behind the head's input
@@ -438,8 +444,8 @@ Nothing traps the head for good, but on g3 it can't simply be lifted out of its 
 
 ## g4b and g4: bracing the portals (round 3, not the default)
 
-Round 3's joint FEA (`analysis/fea/ft_joints.py`, joints worker) models g3's bolted joints as springs instead of
-bonded. That drops mode 1 from 62 Hz to 47-57 Hz, and diagonals in the portals (the frames between the two front posts
+Round 3's joint FEA (`analysis/fea/ft_joints.py`, joints worker) models g3's bolted joints as springs rather than
+bonded joints. That drops mode 1 from 62 Hz to 47-57 Hz, and diagonals in the portals (the frames between the two front posts
 and between the two back posts) bring it back. Both variants below are g3 plus Ø30 mm diagonals in the portal planes,
 drawn like g3's side diagonals (round stand-ins for 30 mm T-slot, tagged E4, square ends on the posts' inner faces).
 `P["gantry"]` stays g3; set it to one of these to build them.
@@ -457,7 +463,7 @@ back right knee brace. The FEA has not been re-run with 255; the change should b
 
 | Check | g3 (default) | g4b | g4 |
 |---|---|---|---|
-| clashes in FT-0, FT-1, S1, S2 (89, 107, 30, 54 parts) | 0 | 0 | 0 |
+| clashes in FT-0, FT-1, S1, S2 (g4b and g4: 89, 107, 30, 54 parts) | 0 | 0 | 0 |
 | clashes in FT-1V | 0 | **5: the back diagonal runs through the cube** (its frame and top, back, left and right plates) | 5, the same |
 | parts in the scanned-beam envelope | 0 | 0 | 0 |
 | box lid's free swing (FT-1), camera on / unclipped | 24 / 26 deg | 24 / 26 deg | 24 / 26 deg |
@@ -495,9 +501,9 @@ with the diagonals and without them, and gives the clear height across each line
   Two options, neither checked: a back diagonal from the left post just over the cube (z ≈ 290 mm) up to the back
   cross-beam's underside, or the cube bolted to the back posts so it acts as the shear panel.
 - **The cube's door is its front plate, hinged along its bottom edge** (y -128.7, z -27.8 mm as drawn). It drops
-  forward through the front portal, and the lower front diagonal's tube is only 13 mm in front of it: it stops the door at
-  8 degrees, so in FT-1V that diagonal has to come off for every plate change: quick-release pins, or two bolts into
-  T-nuts at each end.
+  forward through the front portal, and the lower front diagonal's tube is only 13 mm in front of it. The diagonal
+  stops the door at 8 degrees, so in FT-1V it has to come off for every plate change (quick-release pins, or two
+  bolts into T-nuts at each end).
 - **The FEA so far is FT-1's frame only.** For FT-1V it needs the head and both cross-beams 21 mm higher, whatever back
   brace fits over the cube, and the front diagonal's ends as pinned.
 
