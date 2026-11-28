@@ -30,7 +30,7 @@ Optics (f = 254 mm, M2 1.1):
 
 Cost by alternative (parts.csv):
 
-- **FT0**: $22,660-39,739 (without the monitoring group: $17,961-33,292); vendors at or over $3,500 (PO): McMaster ($4,210); on cards (every other vendor, high prices): $26,891, 2.7x one card's $10,000 monthly limit (1.3x a department custodian card's $20,000)
+- **FT0**: $22,671-39,751 (without the monitoring group: $17,972-33,304); vendors at or over $3,500 (PO): McMaster ($4,210); on cards (every other vendor, high prices): $26,891, 2.7x one card's $10,000 monthly limit (1.3x a department custodian card's $20,000)
   - Laser and optics (used): $4,757-7,946
   - Scan control and computing: $1,183-2,473
   - Motion: $30-80
@@ -38,10 +38,10 @@ Cost by alternative (parts.csv):
   - Heated plate: $610-1,010
   - Gas and O2: $2,731-4,320
   - Safety: $2,772-3,634
-  - Stock and fabrication: $4,623-9,238
+  - Stock and fabrication: $4,634-9,250
   - Powder handling: $0-2,730
   - Monitoring: $4,699-6,447
-- **FT1**: $30,633-49,790 (without the monitoring group: $25,429-42,160); vendors at or over $3,500 (PO): Zaber ($5,896), McMaster ($4,130); on cards (every other vendor, high prices): $28,992, 2.9x one card's $10,000 monthly limit (1.4x a department custodian card's $20,000)
+- **FT1**: $30,649-49,806 (without the monitoring group: $25,445-42,176); vendors at or over $3,500 (PO): Zaber ($5,896), McMaster ($4,130); on cards (every other vendor, high prices): $28,992, 2.9x one card's $10,000 monthly limit (1.4x a department custodian card's $20,000)
   - Laser and optics (used): $4,757-7,946
   - Scan control and computing: $1,375-2,794
   - Motion: $5,976-6,096
@@ -49,10 +49,10 @@ Cost by alternative (parts.csv):
   - Heated plate: $946-1,406
   - Gas and O2: $2,731-4,320
   - Safety: $2,772-3,634
-  - Stock and fabrication: $5,617-11,372
+  - Stock and fabrication: $5,633-11,389
   - Powder handling: $0-2,730
   - Monitoring: $5,204-7,630
-- **FT1V**: $42,080-63,485 (without the monitoring group: $36,876-55,855); vendors at or over $3,500 (PO): Zaber ($5,896), Ideal Vacuum ($9,450), McMaster ($3,740); on cards (every other vendor, high prices): $31,432, 3.1x one card's $10,000 monthly limit (1.6x a department custodian card's $20,000)
+- **FT1V**: $42,099-63,503 (without the monitoring group: $36,895-55,873); vendors at or over $3,500 (PO): Zaber ($5,896), Ideal Vacuum ($9,450), McMaster ($3,740); on cards (every other vendor, high prices): $31,432, 3.1x one card's $10,000 monthly limit (1.6x a department custodian card's $20,000)
   - Laser and optics (used): $4,757-7,946
   - Scan control and computing: $1,375-2,794
   - Motion: $5,976-6,096
@@ -60,13 +60,13 @@ Cost by alternative (parts.csv):
   - Heated plate: $946-1,406
   - Gas and O2: $2,651-4,130
   - Safety: $2,772-3,634
-  - Stock and fabrication: $6,788-13,568
+  - Stock and fabrication: $6,806-13,586
   - Powder handling: $0-2,730
   - Monitoring: $5,204-7,630
 
 Milestones (working days -> weeks):
 
-- FT-0 single-track bench: FIRST TRACKS at 12-34 working days = 2.4-6.9 weeks
+- FT-0 single-track bench: FIRST TRACKS at 12-35 working days = 2.4-6.9 weeks
 - FT-1 purge-box LPBF (stages on one PO): FIRST TRACKS at 16-45 working days = 3.2-9.0 weeks
 - FT-1 purge-box LPBF (stages on one PO): FIRST COUPONS at 21-55 working days = 4.2-11.0 weeks
 - FT-1 purge-box LPBF (stages on PCards): FIRST TRACKS at 16-45 working days = 3.2-9.0 weeks
@@ -76,8 +76,8 @@ Milestones (working days -> weeks):
 
 Shop throughput against FT-1 purge-box LPBF (stages on PCards): FIRST COUPONS (early with the low hours, late with the full hours):
 
-- 5 shop h a working day: 5.4-11.0 weeks
-- 8 shop h a working day: 4.2-8.6 weeks
+- 5 shop h a working day: 5.5-11.0 weeks
+- 8 shop h a working day: 4.2-8.5 weeks
 - 12 shop h a working day: 3.6-7.1 weeks
 
 Layout sketch: bed 63 mm above the box floor, 140 mm below the window; lens 363 mm above the floor; overall ~768 mm with the stage below.

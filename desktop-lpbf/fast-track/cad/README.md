@@ -478,9 +478,9 @@ Spend by the state that first needs each `parts.csv` line (round 3's file, with 
 |---|---:|---:|
 | S1 | $6.5k-11.2k | $6.5k-11.2k |
 | S2 | $3.1k-4.0k | $9.7k-15.1k |
-| FT-0 | $13.0k-24.6k | $22.7k-39.7k |
+| FT-0 | $13.0k-24.6k | $22.7k-39.8k |
 | FT-1 | $8.0k-10.1k | $30.7k-49.9k |
-| FT-1V | $12.3k-14.8k | $42.9k-64.7k |
+| FT-1V | $12.3k-14.8k | $43.0k-64.7k |
 
 The FT-1 and FT-1V sums are the study's stand-alone totals (`fast_track.py`, from the same `parts.csv`) plus what
 growing costs: FT-0's spreader M4 ($150-600) and, at FT-1V, the box E1 ($694-760), which then becomes the

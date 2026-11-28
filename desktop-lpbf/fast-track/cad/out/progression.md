@@ -18,9 +18,9 @@ Spend by the state that first needs each parts.csv line:
 |---|---|---:|---:|
 | S1 | L1, L2, L3, L4, L5, L5b, L6, L7, L10, L11, C1, E4, S2, MON4 | $6,521-11,160 | $6,521-11,160 |
 | S2 | L8, L9, E1, S1, S5, S6, C2, C3, C4, MON6 | $3,133-3,958 | $9,654-15,118 |
-| FT-0 | H1, H2, H3, H4, G1, G2, G3, G4, G5, G6, G7, G8, G9, E6, M4, S3, S4, F1, F2a, P1, MON1, MON2, MON3, MON7, MON8 | $13,006-24,620 | $22,660-39,739 |
-| FT-1 | M1c, M2, M3, H5, C5, F2b, MON5 | $8,003-10,131 | $30,663-49,870 |
-| FT-1V | E2, E3, E5, F2c | $12,281-14,846 | $42,945-64,715 |
+| FT-0 | H1, H2, H3, H4, G1, G2, G3, G4, G5, G6, G7, G8, G9, E6, M4, S3, S4, F1, F2a, P1, MON1, MON2, MON3, MON7, MON8 | $13,017-24,633 | $22,671-39,751 |
+| FT-1 | M1c, M2, M3, H5, C5, F2b, MON5 | $8,008-10,135 | $30,679-49,886 |
+| FT-1V | E2, E3, E5, F2c | $12,284-14,848 | $42,963-64,733 |
 
 What changes at each step (from the CAD model; moved = the part's bounding box shifted):
 
