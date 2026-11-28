@@ -1,4 +1,4 @@
-"""CalculiX FEA of the fast-track machines' structure (#260, PR 294 round 2): the box lid, the cube's top plate and window,
+"""CalculiX FEA of the fast-track machines' structure (#260, PR 294 rounds 2-3): the box lid, the cube's top plate and window,
 the scan-head plate on its gantry, and the piston rod.
 
 Geometry comes from the fast-track CadQuery model (cad/ft_model.py: build(state, pz), P, levels()), so the script re-runs on a
@@ -8,23 +8,31 @@ are put on faces picked geometrically; ccx 2.21 solves; results are read back fr
 The helpers follow PR 266's desktop-lpbf/analysis/fea/fea.py (mesh, C3D10 node order, face loads, .frd reader, child-process
 rendering with render_fea.py).
 
+Round 3 (2026-11-28): 4a, 4b and 4d read CAD v2 (the Saginaw door, the window stack at P['win_c'], the camera port, the
+24 mm heater plate, the rod's potted plug, lead notches and rod-end block). Round 1's results on the old model stay in
+struct.json under "v1"; struct.md is kept by hand (write_md is round 1's generator, run only with the argument "md").
+
 Cases
-  4a  FT-1 box lid (14 ga 304, 1.9 mm, with the window stack) on its lid gasket, held by the four lid clamps and the hinge:
-      gasket preload, +10 mbar purge overpressure, +50 mbar fault (linear, and NLGEOM at +50 mbar). Two gaskets: a solid
-      FKM cord and a closed-cell silicone sponge strip. 4a-check: a clamped 1.9 mm plate on the same mesh size against
-      Timoshenko, to show what one quadratic tet through the sheet gives.
-  4b  FT-1V: the Ideal Vacuum 12 in. top plate blank bored for the window ring (MK-13) at 1 atm, clamped and simply
-      supported on the cube frame; the Ø50.8 x 9.53 mm fused-silica window on its O-ring at 1 atm (Roark + FEA), and the
-      same window in the box at +50 mbar.
+  4a  FT-1 box door (the Saginaw SCE-16EL1208SSLP's own door, 0.075 in. 304, with the window stack and the camera port ring)
+      on the box's poured foam gasket, held by its quarter-turn latch and two concealed hinges: closing, +10 mbar purge
+      overpressure, +50 mbar fault (linear, and NLGEOM at +50 mbar). Foam as ASTM D1056 2A2 and 2A4 sponge; the door as drawn
+      (5.5 mm return) and with a 20 mm return. Env: FT_LID_CONFIGS (drawn, deep_return, returnNN, corners = two more clamps
+      near the front corners), FT_LID_GASKETS, FT_LID_NL=0 (skip NLGEOM), FT_LID_KEY (struct.json key, default 4a).
+      4a-check: a clamped plate of the door's gauge on the same mesh size against Timoshenko.
+  4b  FT-1V: the Ideal Vacuum 12 in. top plate blank bored for the window ring and the camera port (MK-13) at 1 atm, clamped
+      and simply supported on the cube frame; the Ø50.8 x 9.53 mm fused-silica window on its O-ring at 1 atm (Roark + FEA),
+      and the same window in the box at +50 mbar.
   4c  the scan-head plate MK-09 under the T-slot gantry cross-beam, with the hurrySCAN 25 and the lens as one rigid mass:
-      gravity sag and tilt, the beam's position error at the bed, and the first modes of plate + cross-beam + uprights.
-  4d  the piston rod MK-06 (analytic): Euler buckling, lateral stiffness under the blade's drag, the axial load on the
-      Zaber X-VSR20A, and the rod's thermal growth.
+      gravity sag and tilt, the beam's position error at the bed, and the first modes of plate + cross-beam + uprights
+      (round 1's equivalent frames). 4c_model: the frame as the CAD model draws it (env FT_GANTRY_MODEL = a P['gantry']
+      option, FT_GANTRY_HMAX = mesh size). Bolted joints, the head's inertia and the mesh check: ft_joints.py.
+  4d  the piston rod MK-06 (analytic): Euler buckling, lateral stiffness under the blade's drag, the lead notches, the axial
+      load on the Zaber X-VSR20A and the Thorlabs MTS50/M-Z8, and the rod's thermal growth.
 
 Run:  cd <repo> && OMP_NUM_THREADS=2 /tmp/tools/capmem 3 xvfb-run -a -s "-screen 0 1920x1080x24" \\
-          /tmp/venv/bin/python desktop-lpbf/fast-track/analysis/fea/ft_struct.py [4a 4b 4c 4d]
+          /tmp/venv/bin/python desktop-lpbf/fast-track/analysis/fea/ft_struct.py [4a_check 4a 4b 4d 4c 4c_model plot]
 Scratch (.brep/.inp/.frd/.dat) goes to /tmp/workerA/struct/ (env FT_STRUCT_RUN); results to analysis/out/fea/ (struct.json,
-struct.md, struct-*.png). Cases not run keep their previous results in struct.json.
+struct-*.png). Cases not run keep their previous results in struct.json.
 """
 from __future__ import annotations
 
@@ -545,9 +553,18 @@ def case4a(R):
     z_gb = g["zr"] - SPRING_T                                     # the spring bed's fixed bottom (the body's lip, moved down)
     spring = M.box(go[0], go[1], go[2], go[3], z_gb, g["zr"]).cut(M.box(gi[0], gi[1], gi[2], gi[3], z_gb - 1, g["zr"] + 1))
     door_drawn = part(parts, "Box door (the lid)").shape
-    configs = {"drawn": door_drawn}
-    if os.environ.get("FT_LID_DEEP", "1") == "1":
-        configs["deep_return"] = door_shape(g, DOOR_RETURN_DEEP)
+    # FT_LID_CONFIGS: "drawn" (the model's door, 5.5 mm return), "deep_return" (20 mm), "returnNN" (NN mm), "corners" (the
+    # drawn door with two more clamps over the gasket line near the front corners); FT_LID_KEY: the struct.json key
+    configs, returns = {}, {}
+    for cn in os.environ.get("FT_LID_CONFIGS", "drawn,deep_return").split(","):
+        if cn in ("drawn", "corners"):
+            configs[cn], returns[cn] = door_drawn, g["zr"] - g["skirt_bot"]
+        elif cn == "deep_return":
+            configs[cn], returns[cn] = door_shape(g, DOOR_RETURN_DEEP), DOOR_RETURN_DEEP
+        elif cn.startswith("return"):
+            configs[cn], returns[cn] = door_shape(g, float(cn[6:])), float(cn[6:])
+    do_nl = os.environ.get("FT_LID_NL", "1") == "1"
+    corner_xy = [(g["xc"] + sx * 150.0, go[2] + g["gasket_w"] / 2) for sx in (-1, 1)]     # 47 mm in from each front corner
     xc, yc = g["xc"], g["yc"]
     width = g["gasket_w"]
     cx0, cx1, cy0, cy1 = go[0] + width / 2, go[1] - width / 2, go[2] + width / 2, go[3] - width / 2
@@ -598,7 +615,12 @@ def case4a(R):
             dmin = np.minimum(dmin, np.hypot(np.maximum(np.maximum(hx0 - q[:, 0], q[:, 0] - hx1), 0), np.maximum(np.maximum(hy0 - q[:, 1], q[:, 1] - hy1), 0)))
         away = dmin > 30.0
         ring_zone = np.hypot(q[:, 0] - g["win"][0], q[:, 1] - g["win"][1]) <= 75.0
-        set_names = ["LATCH"] + list(hinges)
+        corners = {}
+        if cname == "corners":
+            for k, (cxx, cyy) in enumerate(corner_xy):
+                corners[f"CORNER{k + 1}"] = m["ntags"][in_door & (np.abs(q[:, 2] - g["ltop"]) < 1e-3) & (np.hypot(q[:, 0] - cxx, q[:, 1] - cyy) <= 12.5)]
+            print(f"  4a {cname}: corner clamps {[len(v) for v in corners.values()]} nodes")
+        set_names = ["LATCH"] + list(hinges) + list(corners)
 
         def profile(U):
             comp = -U[gtop, 2]
@@ -618,9 +640,9 @@ def case4a(R):
                 continue
             gp = gasket_props(gk, width)
             mats = [MAT["ss304"], dict(E=gp["E_layer"], nu=0.0, rho=gk["rho"]), MAT["al6061"], MAT["al6061"], MAT["al6061"], MAT["al6061"]]
-            sets = nset("GBOT", gb) + nset("LATCH", latch) + "".join(nset(k, v) for k, v in hinges.items())
+            sets = nset("GBOT", gb) + nset("LATCH", latch) + "".join(nset(k, v) for k, v in hinges.items()) + "".join(nset(k, v) for k, v in corners.items())
             d0 = gp["squeeze_mm"]
-            bc = f"GBOT,3,3\nLATCH,3,3,{-d0}\n" + "".join(f"{k},1,2\n{k},3,3,{-d0}\n" for k in hinges)
+            bc = f"GBOT,3,3\nLATCH,3,3,{-d0}\n" + "".join(f"{k},1,2\n{k},3,3,{-d0}\n" for k in hinges) + "".join(f"{k},3,3,{-d0}\n" for k in corners)
             prints = "".join(f"*NODE PRINT, NSET={k}, TOTALS=ONLY\nRF\n" for k in set_names) + "*NODE PRINT, NSET=GBOT, TOTALS=ONLY\nRF\n"
 
             def loads(pr):
@@ -666,10 +688,15 @@ def case4a(R):
                     steps[tag]["_U"], steps[tag]["_vm"] = U, vm
             # NLGEOM at +50 mbar: preload then pressure, in increments
             job_nl = f"c4a_door_{cname}_{gname}_nl"
-            write_model(job_nl, m, mats, sets)
-            append(job_nl, f"*STEP, NLGEOM, INC=100\n*STATIC, SOLVER={sol}\n0.5,1.0,1e-4,1.0\n*BOUNDARY\n{bc}" + prints + "*NODE FILE\nU\n*EL FILE\nS\n*END STEP\n"
-                   + f"*STEP, NLGEOM, INC=100\n*STATIC, SOLVER={sol}\n0.25,1.0,1e-4,0.5\n" + loads(0.005) + prints + "*NODE FILE\nU\n*EL FILE\nS\n*END STEP\n")
+            if not do_nl:
+                job_nl = None
+            else:
+                write_model(job_nl, m, mats, sets)
+                append(job_nl, f"*STEP, NLGEOM, INC=100\n*STATIC, SOLVER={sol}\n0.5,1.0,1e-4,1.0\n*BOUNDARY\n{bc}" + prints + "*NODE FILE\nU\n*EL FILE\nS\n*END STEP\n"
+                       + f"*STEP, NLGEOM, INC=100\n*STATIC, SOLVER={sol}\n0.25,1.0,1e-4,0.5\n" + loads(0.005) + prints + "*NODE FILE\nU\n*EL FILE\nS\n*END STEP\n")
             try:
+                if job_nl is None:
+                    raise RuntimeError("NLGEOM not run (FT_LID_NL=0)")
                 t_nl = run_ccx(job_nl)
                 U, S, vm = step_results(m, job_nl)[-1]
                 prof = profile(U)
@@ -699,7 +726,7 @@ def case4a(R):
                 f"{k}: lid uz max {v['lid_uz_max_mm']:.3f} mm, vm away {v['vm_lid_away_max']:.0f} MPa, gasket comp min {v['gasket_comp_min_mm']:.3f} mm, open {v['gasket_open_length_mm']:.0f} mm"
                 for k, v in steps.items()) + f"; NLGEOM +50: comp min {nl.get('gasket_comp_min_mm', float('nan')):.3f} mm, open {nl.get('gasket_open_length_mm', float('nan')):.0f} mm", flush=True)
         out_cfg[cname] = dict(gaskets=out, nodes=int(len(m["ntags"])), elements=int(len(m["tets"])), pressure_area_mm2=float(A_p),
-                              door_return_mm=(g["zr"] - g["skirt_bot"]) if cname == "drawn" else DOOR_RETURN_DEEP)
+                              door_return_mm=returns[cname], corner_clamps_xy=corner_xy if corners else None)
     r = dict(case="4a (CAD v2) FT-1 box door (Saginaw SCE-16EL1208SSLP) on its poured gasket: latch and hinges closed, +10 mbar purge, +50 mbar fault",
              material="door: " + MAT["ss304"]["label"] + f" {g['t']:.3f} mm; rings: " + MAT["al6061"]["label"],
              window_seal_r_mm=r_seal, gasket_width_mm=width, perimeter_mm=2 * (Lx + Ly), support_s_mm=s_sup,
@@ -708,12 +735,12 @@ def case4a(R):
              supports="gasket bottom (the body's lip) fixed in z; the latch pulls a Ø25 patch of the door's top face down by the squeeze; "
                       "each concealed hinge holds its 40 x 15 mm leaf on the door's inner face in x and y and pulls it down by the squeeze",
              configs=out_cfg)
-    A_p = out_cfg["drawn"]["pressure_area_mm2"]
+    A_p = next(iter(out_cfg.values()))["pressure_area_mm2"]
     r["force_10mbar_N"] = 0.001 * A_p + 0.001 * math.pi * r_seal ** 2
     r["force_50mbar_N"] = 0.005 * A_p + 0.005 * math.pi * r_seal ** 2
     r["run"] = dict(utc=time.strftime("%Y-%m-%d %H:%M", time.gmtime()), commit=model_commit(), solver=sol, hmax=hmax,
                     nodes={k: v["nodes"] for k, v in out_cfg.items()})
-    R["4a"] = r
+    R[os.environ.get("FT_LID_KEY", "4a")] = r
 
 
 # --------------------------------------------------------------------------------------------
