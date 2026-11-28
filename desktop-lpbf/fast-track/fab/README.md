@@ -262,7 +262,8 @@ in [`drawings/v1/`](drawings/v1/).
   - ramp entries into `Pocket` and `Profile`;
   - a Haas post, and a prove-out on the Haas's graphics (the setup sheets' G54 shifts are untested);
   - higher adaptive chip loads.
-- **MK-15c_C:** T3 cuts beside a 28 mm wall with 25.4 mm of flute.
+- **MK-15c_C:** T3 cuts the 16 x 28 x 12 lead pocket beside a 28 mm wall with 25.4 mm of flute. A 1/4 in. end mill
+  with 1-1/4 in. (32 mm) flutes would do. MK-11b_A's T4 is 0.5 mm over its flutes, about two voxels.
 - **The voxel cut ran on 10 of v2's 37 milled pieces.** The other 27 have only the two G-code checks.
 
 ## Short answer (round 2, v1)
