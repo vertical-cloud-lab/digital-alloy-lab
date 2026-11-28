@@ -131,8 +131,8 @@ P = dict(
     portal_diag={                 # the added portal diagonals: portal, z on the left post's axis, z on the right post's
                                   # axis (world mm, FT-1 frame), as the FEA's VARIANTS (analysis/fea/ft_joints.py, round 3)
         "four_post_braced_front_g4": (("front", 160.0, 285.0), ("front", -240.0, 140.0), ("back", 185.0, 275.0)),
-        "four_post_braced_front_g4b": (("front", -240.0, 140.0), ("back", 185.0, 275.0)),
-    },
+        "four_post_braced_front_g4b": (("front", -240.0, 140.0), ("back", 185.0, 255.0)),   # the back one's right end
+    },                            # 20 mm lower than the FEA's (275): it grazed the back right knee brace (joints worker)
     post=45.0, front_post_gap=25.0, knee=120.0,   # post size; front posts this far in front of the front rail; knee brace
     knee_front=80.0,              # front knee braces ("four_post_braced_front"): clear of the collimator
     head_flange=60.0, head_gussets_y=(-10.0, 40.0, 90.0),   # MK-09's top flange depth (-x) on both beams, gusset positions

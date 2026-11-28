@@ -852,7 +852,7 @@ def write_md(res):
 PORTAL = "Gantry portal diagonals"
 
 
-def front_gap_access(state="FT-0", pitches=(0.0, 30.0, 45.0), dx=4.0, dz=1.0, y0=-420.0):
+def front_gap_access(state="FT-0", pitches=(0.0, 30.0, 45.0), dx=4.0, dz=2.0, y0=-420.0):
     """The opened door's front gap seen from the front, with and without the portal diagonals. The door (the lid,
     hinged at the back) open to P['door_open_deg'] and the beam tube's centre section off (M.open_door). Straight
     lines (a forearm's axis) come from the front (y0) at a downward pitch and end 5 mm behind the opened door's front
@@ -895,11 +895,12 @@ def front_gap_access(state="FT-0", pitches=(0.0, 30.0, 45.0), dx=4.0, dz=1.0, y0
         L_ = (y_end - y0) / ca
         res = {}
         for lab, mesh in meshes.items():
-            dirs = np.tile(d, (len(org), 1))
-            locs, idx, _ = mesh.ray.intersects_location(org, dirs, multiple_hits=False)
             clear = np.ones(len(org), bool)
-            hit_d = np.linalg.norm(locs - org[idx], axis=1)
-            clear[idx[hit_d < L_]] = False
+            for c0 in range(0, len(org), 1000):                 # in chunks: trimesh's candidate lists grow fast
+                o_ = org[c0:c0 + 1000]
+                locs, idx, _ = mesh.ray.intersects_location(o_, np.tile(d, (len(o_), 1)), multiple_hits=False)
+                hit_d = np.linalg.norm(locs - o_[idx], axis=1)
+                clear[c0 + idx[hit_d < L_]] = False
             clear &= org[:, 2] - (y_end - y0) * ta < z_edge         # under the door's edge: into the box, not over it
             G = clear.reshape(X.shape)
             j0 = int(np.argmin(abs(xs - 0.0)))                    # the plate's x
@@ -938,6 +939,30 @@ def front_gap_access(state="FT-0", pitches=(0.0, 30.0, 45.0), dx=4.0, dz=1.0, y0
             res[lab] = dict(clear_fraction=round(float(G.mean()), 3), at_plate_x=runs, tallest_window=win)
         out["pitches"][f"{a:g} deg down"] = res
     return out
+
+
+def cube_door_swing(state="FT-1V", max_deg=90, step=1.0):
+    """FT-1V: the cube's front plate (its door, hinge kit along x at its bottom, as drawn) and the MON3 light on it
+    rotated forward and down about the hinge's axis; the first angle at which they touch a fixed part outside the
+    cube (python-fcl), and what."""
+    parts = M.build(state)
+    hb = [p for p in parts if p.name.startswith("Door hinges")][0].shape.BoundingBox()
+    y_h, z_h = (hb.ymin + hb.ymax) / 2, (hb.zmin + hb.zmax) / 2
+    door = [p for p in parts if p.name.startswith(("Cube front plate", "Raking light from -y", "Light port ring and window (MK-21, MON3)"))]
+    statics = [p for p in parts if p not in door and not p.name.startswith(("Ideal Vacuum", "Cube ", "Door hinges", "Door interlock", "Bench top",
+                                                                             "Surface thermocouples"))]
+    pivot = np.array([0.0, y_h, z_h])
+    poses = []
+    for k in range(0, int(max_deg / step) + 1):
+        R = _rot_x(math.radians(k * step))                      # the top goes forward (-y) and down
+        poses.append((k * step, R, pivot - R @ pivot))
+    rows, hits = fcl_sweep(statics, door, poses, "cube door")
+    first = None
+    if hits:
+        a0 = min(h["pose"] for h in hits)
+        first = dict(angle_deg=float(a0), contacts=[h for h in hits if h["pose"] == a0][:6])
+    return dict(hinge_axis_y=round(y_h, 1), hinge_axis_z=round(z_h, 1), first_contact=first,
+                last_free_deg=(first["angle_deg"] - step) if first else max_deg)
 
 
 def portal_diagonal_bands():
@@ -993,6 +1018,7 @@ def gantry_variant(gantry, states=("FT-0", "FT-1", "FT-1V", "S1", "S2"), extras=
     if extras:
         res["door"] = door_swing("FT-1")
         res["door_no_camera"] = door_swing("FT-1", camera=False)
+        res["cube_door"] = cube_door_swing("FT-1V")
         save()
         print(f"{g}: door {res['door']['last_free_deg']} / {res['door_no_camera']['last_free_deg']} deg "
               f"({time.time() - t0:.0f} s)", flush=True)
