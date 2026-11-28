@@ -544,6 +544,11 @@ VARIANTS = {
     # post at z 275, under the back right knee brace (its lower end at z ~300); 30 mm over the door at the box's left edge
     "portals_braced": lambda yf, yb, xl, xr: [((xl, yf, 160.0), (xr, yf, 285.0)), ((xl, yf, -240.0), (xr, yf, 140.0)),
                                              ((xl, yb, 185.0), (xr, yb, 275.0))],
+    # fallbacks that keep the door's front gap (above the box, z 150-285) clear: the back diagonal alone; the lower
+    # front diagonal alone (below z 155 everywhere, under the box's top inside its width); both
+    "back_diagonal": lambda yf, yb, xl, xr: [((xl, yb, 185.0), (xr, yb, 275.0))],
+    "front_lower": lambda yf, yb, xl, xr: [((xl, yf, -240.0), (xr, yf, 140.0))],
+    "front_lower_back": lambda yf, yb, xl, xr: [((xl, yf, -240.0), (xr, yf, 140.0)), ((xl, yb, 185.0), (xr, yb, 275.0))],
 }
 
 
@@ -647,43 +652,50 @@ def cmd_plot(hmax=12):
 
 
 OPTIONS = [
-    # (label, run key with the feet fixed, run key with the feet on a bolted plate, run key at the soft corner of the range)
-    ("bonded joints (the g3 FEA)", "bonded_h12_inertia", None, None),
-    ("bolted, single brackets", "joints_h12_kr3e6_kt2e4", "joints_h12_kr3e6_kt2e4_base3e7", "joints_h12_kr1e6_kt1e4"),
-    ("+ brace ends stiffened", "joints_h12_kr3e6_braces1e8", None, None),
-    ("+ front diagonal", "variant_front_diagonal_h12_kr3e6_kt2e4", "variant_front_diagonal_h12_kr3e6_kt2e4_base3e7",
+    # (label, run keys: feet fixed, feet on a bolted plate, feet on a thick plate, feet fixed at the soft end of the range)
+    ("bonded joints (the g3 FEA)", "bonded_h12_inertia", None, None, None),
+    ("bolted, single brackets", "joints_h12_kr3e6_kt2e4", "joints_h12_kr3e6_kt2e4_base3e7", "joints_h12_kr3e6_kt2e4_base1e8",
+     "joints_h12_kr1e6_kt1e4"),
+    ("+ brace ends stiffened", "joints_h12_kr3e6_braces1e8", None, None, None),
+    ("+ front diagonal", "variant_front_diagonal_h12_kr3e6_kt2e4", "variant_front_diagonal_h12_kr3e6_kt2e4_base3e7", None,
      "variant_front_diagonal_h12_kr1e6_kt1e4"),
-    ("+ front diagonal, brace ends stiffened", "variant_front_diagonal_h12_kr3e6_braces1e8", None, None),
-    ("+ front zigzag", "variant_front_zigzag_h12_kr3e6_kt2e4", "variant_front_zigzag_h12_kr3e6_kt2e4_base3e7",
+    ("+ front diagonal, brace ends stiffened", "variant_front_diagonal_h12_kr3e6_braces1e8", None, None, None),
+    ("+ front zigzag", "variant_front_zigzag_h12_kr3e6_kt2e4", "variant_front_zigzag_h12_kr3e6_kt2e4_base3e7", None,
      "variant_front_zigzag_h12_kr1e6_kt1e4"),
-    ("+ front zigzag, brace ends stiffened", "variant_front_zigzag_h12_kr3e6_braces1e8", "variant_front_zigzag_h12_kr3e6_braces1e8_base3e7", None),
-    ("+ both portals braced", "variant_portals_braced_h12_kr3e6_kt2e4", None, None),
+    ("+ front zigzag, brace ends stiffened", "variant_front_zigzag_h12_kr3e6_braces1e8", "variant_front_zigzag_h12_kr3e6_braces1e8_base3e7",
+     "variant_front_zigzag_h12_kr3e6_braces1e8_base1e8", None),
+    ("+ both portals braced", "variant_portals_braced_h12_kr3e6_kt2e4", None, None, None),
     ("+ both portals braced, brace ends stiffened", "variant_portals_braced_h12_kr3e6_braces1e8",
-     "variant_portals_braced_h12_kr3e6_braces1e8_base3e7", None),
+     "variant_portals_braced_h12_kr3e6_braces1e8_base3e7", "variant_portals_braced_h12_kr3e6_braces1e8_base1e8", None),
 ]
 
 
 def cmd_plot_options():
-    """struct-joints-options.png: mode 1 of each option, feet fixed (as the bonded model) and on a bolted foot plate
-    (30 kN m/rad, 50 kN/mm per foot, estimate), against the 60 Hz minimum. A thin line runs down to the soft corner of
-    the single-bracket range (1 kN m/rad, 10 kN/mm) where it was run."""
+    """struct-joints-options.png: mode 1 of each option with the feet fixed (as the bonded model), on a bolted foot plate
+    (30 kN m/rad, 50 kN/mm per foot) and on a thick one (100 kN m/rad, 100 kN/mm; both estimates), against the 60 Hz
+    minimum. A light line runs down to the soft end of the single-bracket range (1 kN m/rad, 10 kN/mm) where it was run."""
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     R = load_json()["runs"]
     f1 = lambda k: R[k]["freqs_hz"][0] if k and k in R else None
-    rows = [(lab, f1(a), f1(b), f1(c)) for lab, a, b, c in OPTIONS if f1(a) is not None]
+    rows = [(lab, f1(a), f1(b), f1(c), f1(d)) for lab, a, b, c, d in OPTIONS if f1(a) is not None]
     ink, ink2, grid = "#191919", "#666666", "#e6e6e6"
-    cols = ["#257de0", "#f47230"]                        # categorical slots 1-2 (validated, light mode)
+    cols = ["#257de0", "#f47230", "#00b894"]             # categorical slots 1-3 (validated, light mode)
     fig, ax = plt.subplots(figsize=(10.5, 0.42 * len(rows) + 1.6), dpi=140)
-    for i, (lab, fx, fb, fl) in enumerate(rows):
+    for i, (lab, fx, fb, ft, fl) in enumerate(rows):
         y = len(rows) - 1 - i
         if fl is not None:
             ax.plot([fl, fx], [y, y], color=cols[0], lw=2.0, alpha=0.35, solid_capstyle="round", zorder=2)
+        lo = min(v for v in (fx, fb, ft) if v is not None)
+        ax.plot([lo, fx], [y, y], color="#bdbdbd", lw=1.0, zorder=1)
+        for v, c, dy in ((fb, cols[1], 0.0), (ft, cols[2], 0.0)):
+            if v is not None:
+                ax.plot(v, y + dy, ls="none", marker="o", ms=8, mfc=c, mec="white", mew=1.5, zorder=4)
         if fb is not None:
-            ax.plot([fb, fx], [y, y], color="#bdbdbd", lw=1.0, zorder=1)
-            ax.plot(fb, y, ls="none", marker="o", ms=8, mfc=cols[1], mec="white", mew=1.5, zorder=4)
             ax.text(fb - 0.8, y + 0.02, f"{fb:.1f}", ha="right", va="center", color=ink2, fontsize=8)
+        if ft is not None:
+            ax.text(ft, y - 0.36, f"{ft:.1f}", ha="center", va="center", color=ink2, fontsize=7.5)
         ax.plot(fx, y, ls="none", marker="o", ms=8, mfc=cols[0], mec="white", mew=1.5, zorder=4)
         ax.text(fx + 0.8, y + 0.02, f"{fx:.1f}", ha="left", va="center", color=ink, fontsize=8.5)
     ax.axvline(60.0, color=ink2, lw=1.0, ls=(0, (4, 3)), zorder=0)
@@ -691,7 +703,7 @@ def cmd_plot_options():
     ax.set_yticks(range(len(rows)))
     ax.set_yticklabels([r[0] for r in rows][::-1], color=ink, fontsize=9)
     ax.set_ylim(-0.6, len(rows) - 0.2)
-    ax.set_xlim(20, 72)
+    ax.set_xlim(20, 80)
     ax.set_xlabel("mode 1, Hz (12 mm mesh, head and lens inertia)", color=ink, fontsize=9.5)
     ax.grid(axis="x", color=grid, lw=0.8)
     ax.set_axisbelow(True)
@@ -699,12 +711,13 @@ def cmd_plot_options():
         ax.spines[s_].set_visible(False)
     ax.spines["bottom"].set_color("#bdbdbd")
     ax.tick_params(colors=ink2, labelsize=8.5, left=False)
-    h1, = ax.plot([], [], ls="none", marker="o", ms=8, mfc=cols[0], mec="white", label="feet fixed (as the bonded model)")
-    h2, = ax.plot([], [], ls="none", marker="o", ms=8, mfc=cols[1], mec="white", label="feet on a bolted plate (estimate)")
-    h3, = ax.plot([], [], color=cols[0], lw=2.0, alpha=0.35, label="down to the soft end of the bracket range")
-    ax.legend(handles=[h1, h2, h3], loc="lower center", bbox_to_anchor=(0.45, 1.0), ncol=3, frameon=False, fontsize=8.5,
+    h1, = ax.plot([], [], ls="none", marker="o", ms=8, mfc=cols[0], mec="white", label="feet fixed")
+    h2, = ax.plot([], [], ls="none", marker="o", ms=8, mfc=cols[1], mec="white", label="bolted foot plate")
+    h4, = ax.plot([], [], ls="none", marker="o", ms=8, mfc=cols[2], mec="white", label="thick foot plate")
+    h3, = ax.plot([], [], color=cols[0], lw=2.0, alpha=0.35, label="soft end of the bracket range (feet fixed)")
+    ax.legend(handles=[h1, h2, h4, h3], loc="lower center", bbox_to_anchor=(0.4, 1.0), ncol=4, frameon=False, fontsize=8.2,
               labelcolor=ink)
-    fig.suptitle("g3 gantry, mode 1 with bolted joints (3 kN·m/rad, 20 kN/mm per joint unless stated): options",
+    fig.suptitle("g3 gantry, mode 1 with bolted joints (3 kN·m/rad, 20 kN/mm per joint unless stated); foot plates are estimates",
                  color=ink, fontsize=11, x=0.01, ha="left")
     fig.tight_layout()
     fig.savefig(OUT / "struct-joints-options.png")
