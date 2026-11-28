@@ -83,22 +83,22 @@ PRINT = {"Mg": 0.44, "Si": 0.44, "Fe": 0.17, "Cu": 0.04, "Mn": 0.03, "Zn": 0.039
 
 def panel_table(rows_hi: int | None):
     """The SOP's 'What to send' table, the current row highlighted."""
-    rows = [("Powder, every run (20-63 µm)", "2-5 g", "riffle", "ICP-OES: all intended + Fe, Si"),
-            ("Powder, Ar-sealed ≤ 48 h", "1-2 g", "the same", "O, N, H: inert gas fusion"),
-            ("Printed cube, 1/alloy/build", "~1 g chips", "dry-cut", "ICP-OES: Mg, Zn, volatiles"),
-            ("Feedstock: bar, master alloys", "2 g", "–", "ICP-OES: mass balance"),
-            ("Certified reference material", "per lab", "–", "the same: lab accuracy")]
+    rows = [("Powder, every run, 20-63 µm", "2-5 g", "ICP-OES: all + Fe, Si"),
+            ("Powder, Ar-sealed in 48 h", "1-2 g", "O, N, H: gas fusion"),
+            ("Printed cube, 1/alloy/build", "~1 g chips", "ICP-OES: Mg, Zn"),
+            ("Feedstock: bar, master alloys", "2 g", "ICP-OES: mass balance"),
+            ("Reference material (CRM)", "per lab", "the same: accuracy")]
 
     def fn(u):
         from PIL import Image, ImageDraw
-        W, H = 980, 300
+        W, H = 760, 300
         im = Image.new("RGBA", (W, H), (255, 255, 255, 238))
         d = ImageDraw.Draw(im)
-        fb, fr = S.font(20, bold=True), S.font(18)
-        d.text((16, 10), "What to send (SOP 05)", font=S.font(22, bold=True), fill=(25, 25, 25))
-        cols = [16, 370, 500, 610]
+        fb, fr = S.font(20, bold=True), S.font(19)
+        d.text((16, 10), "What to send (SOP 05)", font=S.font(23, bold=True), fill=(25, 25, 25))
+        cols = [16, 330, 450]
         y = 48
-        for c, h in zip(cols, ("Sample", "Mass", "Split", "Measure")):
+        for c, h in zip(cols, ("Sample", "Mass", "Measure")):
             d.text((c, y), h, font=fb, fill=(102, 102, 102))
         y += 32
         for i, r in enumerate(rows):
@@ -385,8 +385,9 @@ class Op:
                   phase=2 * math.pi * dist * u / p.STRIDE, hands={"l": None, "r": None})
         return up
 
-    def reach(self, side, target, lean=None, look=None):
-        """Move one hand from where it is to `target` (world xyz, or None: back to rest)."""
+    def reach(self, side, target, lean=None, look=None, lift=90.0):
+        """Move one hand from where it is to `target` (world xyz, or None: back to rest), in an arc `lift` mm high
+        so it clears the bench's edge."""
         st = {}
 
         def up(u):
@@ -396,7 +397,7 @@ class Op:
                 st["a"] = np.array(h if h is not None else p.rest_hand(side), float)
                 st["lean"] = p.st["lean"]
             b = np.array(target if target is not None else p.rest_hand(side), float)
-            pt = st["a"] + (b - st["a"]) * u
+            pt = st["a"] + (b - st["a"]) * u + np.array([0.0, 0.0, lift * math.sin(math.pi * u)])
             kw = dict(hands={side: (None if (target is None and u >= 1.0) else tuple(pt))})
             if lean is not None:
                 kw["lean"] = st["lean"] + (lean - st["lean"]) * u
@@ -467,8 +468,11 @@ def new_scene(name, x0, x1):
 # along the bench (x): the atomizer's powder jar and a build plate with cubes; the riffle splitter; the analytical
 # balance; new vials; the argon line and the impulse sealer; the bench drill; the feedstock and the CRM; the CoC form
 # and the shipper.
-XJ, XR, XB, XV, XS, XD, XF, XC, XK = -1560, -1250, -930, -650, -330, 80, 420, 620, 900
+XJ, XR, XB, XV, XS, XD, XF, XC, XK = -1560, -1250, -930, -650, -330, 80, 420, 560, 980
 YF = -380.0                                     # the bench's front edge
+YOP = -640.0                                    # where the operator stands to work at the bench
+YDR = -60.0                                     # the bench drill's centre (its feed handle within reach)
+BAL_LIFT = 4.0                                  # the HR-202i model's feet reach 4 mm under its origin
 
 
 def jar_model(fill=0.62):
@@ -525,11 +529,11 @@ def our_lab(sc, person=True, x_op=-1250.0):
     from lab_models import labware as LW  # noqa: F401
     import labware as LW2
     zb = BH
-    h["jar"] = put(sc, "jar", jar_model(), Tz(XJ, -170, zb))
-    h["plate"] = put(sc, "plate", plate_model(), Tz(XJ + 20, 60, zb))
+    h["jar"] = put(sc, "jar", jar_model(), Tz(XJ, -230, zb))
+    h["plate"] = put(sc, "plate", plate_model(), Tz(XJ - 170, -80, zb))
     h["riffle"] = S.place(sc, "riffle_splitter", XR, -190)
-    h["bal"] = put(sc, "balance", LW2.balance_hr202i(), Tz(XB, 30, zb))
-    h["boat"] = put(sc, "boat", MC.prop_weigh_boat(), Tz(XB, 30 - 428 / 2 + 163, zb + 50))
+    h["bal"] = put(sc, "balance", MC.prop_toploader(), Tz(XB, -60, zb))
+    h["boat"] = put(sc, "boat", MC.prop_weigh_boat(), Tz(XB, -60 + 30, zb + 89))
     # new vials, capped, in a row; one open vial and its cap for the powder
     for i in range(3):
         put(sc, f"vialnew{i}", MC.prop_vial(label=False, fill=0.0), Tz(XV - 40 + 40 * i, 80, zb))
@@ -539,26 +543,26 @@ def our_lab(sc, person=True, x_op=-1250.0):
     h["cap"] = put(sc, "cap", MC.prop_vial_cap(), Tz(XV + 60, -200, zb))
     # the argon line: a regulator on the wall, its hose down to the nozzle on the bench
     h["reg"] = put(sc, "regulator", MC.prop_regulator(), Tz(XS - 30, 372, zb + 380) @ R((0, 0, 1), 180))
-    h["nozzle"] = put(sc, "nozzle", MC.prop_ar_nozzle(), Tz(XS - 120, -150, zb + 6) @ R((0, 1, 0), 90))
-    h["hose"] = put(sc, "hose", _hose_model([(XS - 30, 330, zb + 425), (XS - 30, 330, zb + 20), (XS - 110, 200, zb + 6),
-                                             (XS - 120 + 80, -150, zb + 6)]), np.eye(4))
+    h["nozzle"] = put(sc, "nozzle", MC.prop_ar_nozzle(), Tz(XS - 150, -130, zb + 6) @ R((0, 1, 0), 90))
+    h["hose"] = LiveHose(sc, (XS - 30, 330, zb + 425), "nozzle", (0.0, 0.0, 90.0))
     h["sealer"] = S.place(sc, "heat_sealer", XS + 120, 20)
-    h["bag"] = put(sc, "bag", MC.prop_bag(False), Tz(XS - 10, -200, zb))
+    h["bag"] = put(sc, "bag", MC.prop_bag(False), Tz(XS + 30, -250, zb))
     show(sc, "bag", 0.0)
-    h["bag_sealed"] = put(sc, "bag_sealed", MC.prop_bag(True), Tz(XS - 10, -200, zb))
+    h["bag_sealed"] = put(sc, "bag_sealed", MC.prop_bag(True), Tz(XS + 30, -250, zb))
     show(sc, "bag_sealed", 0.0)
-    h["drill"] = S.place(sc, "bench_drill", XD, 60)
+    h["drill"] = S.place(sc, "bench_drill", XD, YDR)
     dg = MC.drill_geom()
-    h["cube"] = put(sc, "cube", MC.prop_cube(), Tz(XD + dg["bit_x"], 60 + dg["vise_y"], zb + dg["vise_top"]))
+    h["cube"] = put(sc, "cube", MC.prop_cube(), Tz(XD + dg["bit_x"], YDR + dg["vise_y"], zb + dg["vise_top"]))
     h["boat2"] = put(sc, "boat2", MC.prop_weigh_boat(), Tz(XD - 190, -230, zb))
     h["chips2"] = put(sc, "chips2", MC.prop_chip_pile(30, 9), Tz(XD - 190, -230, zb + 1.0))
     show(sc, "chips2", 0.0)
     h["feed"] = put(sc, "feedstock", MC.prop_feedstock(), Tz(XF, -150, zb))
-    h["crm"] = put(sc, "crm", MC.prop_crm_bottle(), Tz(XC, 60, zb))
+    h["master"] = put(sc, "master", MC.prop_master(), Tz(XF + 60, -150, zb))
+    h["crm"] = put(sc, "crm", MC.prop_crm_bottle(), Tz(XC, -60, zb))
     h["coc"] = put(sc, "coc", MC.prop_coc_form(), Tz(XK - 220, -170, zb))
     h["box"] = S.place(sc, "ship_box", XK + 80, 0)
     if person:
-        h["op"] = Op(sc, x_op, -700.0)
+        h["op"] = Op(sc, x_op, YOP)
     return h
 
 
@@ -567,6 +571,36 @@ def _vial_fill_model():
     m = Model("vialfill", "powder in the vial")
     m.add("powder", cyl(25.6, 16, z=1.2), "al_powder")
     return m
+
+
+class LiveHose:
+    """The argon hose from the line's outlet to the nozzle's stub, re-drawn every frame so it follows the nozzle: a
+    sagging spline, 7 mm across."""
+
+    def __init__(self, sc, outlet, group, stub_local):
+        import pyvista as pv
+        self.sc, self.outlet, self.group, self.stub = sc, np.asarray(outlet, float), group, np.asarray(stub_local, float)
+        self.pv = pv
+        self.name = "hose/hose_black0"
+        self.last = None
+        sc.add(self.name, self._mesh(), S.MATS["hose_black"][:3] if S.MATS else (0.12, 0.12, 0.13), "hose",
+               specular=0.2)
+        sc.frame_hooks.insert(0, self)
+
+    def _mesh(self):
+        end = (self.sc.world(self.group) @ np.array([*self.stub, 1.0]))[:3]
+        a = self.outlet
+        mid1 = np.array([a[0], a[1] - 30, BH + 40.0])
+        mid2 = np.array([(a[0] + end[0]) / 2, (a[1] + end[1]) / 2, BH + 3.5])
+        pts = np.array([a, mid1, mid2, end])
+        pts = pts[np.r_[True, np.linalg.norm(np.diff(pts, axis=0), axis=1) > 1.0]]
+        return self.pv.Spline(pts, 60).tube(radius=3.5, n_sides=10)
+
+    def __call__(self, sc):
+        key = np.round(sc.world(self.group), 2).tobytes()
+        if key != self.last:
+            self.last = key
+            sc.set_mesh(self.name, self._mesh())
 
 
 def _hose_model(pts):
@@ -594,19 +628,19 @@ def c1():
              "computed or illustrative are not measurements.")
     sc.step("Why", "Why it comes first: the model needs the measured composition",
             4.0, None, hold=1.5, cam_to=overview_cam(-900, dist=2300, az=-14, el=22),
-            labels=[("atomized powder\n(run A1, 20-63 µm)", (XJ, -170, BH + 120), (0.10, 0.30)),
-                    ("printed cubes\non the build plate", (XJ + 20, 60, BH + 22), (0.30, 0.22))])
+            labels=[("atomized powder\n(run A1, 20-63 µm)", (XJ, -230, BH + 120), (0.30, 0.22)),
+                    ("printed cubes\non the build plate", (XJ - 170, -80, BH + 22), (0.08, 0.30))])
     sc.step("Why 1", "Every Thermo-Calc and pycalphad number: measured composition | "
             "not the nominal one, which the atomizer and the laser change", 4.0, None, hold=2.0)
     sc.step("Why 2", "EDS isn't accurate enough at 0.2-0.5 wt% | #255 transcript, 10:36-11:29", 4.0,
-            panel_on(sc, "eds", panel_eds_vs_icp, (0.60, 0.12, 0.38)), hold=2.5)
+            panel_on(sc, "eds", panel_eds_vs_icp, (0.67, 0.09, 0.31)), hold=2.5)
     sc.step("Why 3", "It also checks the AM Module's evaporation mode | Mg (and Zn, Li) lost between powder and print",
             4.0, panel_off(sc, "eds"), hold=2.0,
-            cam_to=S.look((XJ + 20, 40, BH + 40), dist=700, az=-25, el=30),
-            labels=[("10 mm cubes, as built", (XJ + 25, 45, BH + 22), (0.70, 0.30))])
+            cam_to=S.look((XJ - 170, -80, BH + 30), dist=620, az=-30, el=38),
+            labels=[("10 mm cubes, as built", (XJ - 165, -95, BH + 22), (0.70, 0.30))])
     sc.step("Why 4", "And the powder's oxide | it drives lack of fusion and balling in Al", 4.0, None, hold=2.0,
-            cam_to=S.look((XJ, -170, BH + 70), dist=600, az=-10, el=18),
-            labels=[("every particle carries a native oxide\n(~4 nm assumed; check by XPS)", (XJ, -200, BH + 80),
+            cam_to=S.look((XJ, -230, BH + 70), dist=600, az=-10, el=18),
+            labels=[("every particle carries a native oxide\n(~4 nm assumed; check by XPS)", (XJ, -262, BH + 60),
                      (0.66, 0.30))])
     sc.step("Why", "So the chemistry goes out before the other measurements | "
             "ICP-OES and O/N/H of every powder, plus one print per alloy", 4.0, None, hold=1.5,
@@ -616,152 +650,197 @@ def c1():
 
 
 # ============================================================================================ c2: what to send
+def body_fade(sc, op, a0, a1):
+    """Fade the operator's body (not the gloves) for a close-up of the hands' work."""
+    names = [n for n in op.p.names() if "glove" not in n]
+
+    def up(u):
+        for n in names:
+            sc.alpha[n] = a0 + (a1 - a0) * u
+    return up
+
+
+def wpt(sc, group, local):
+    return tuple((sc.world(group) @ np.array([*local, 1.0]))[:3])
+
+
 def c2():
     sc = new_scene("sop05_c2", -1900, 1300)
-    h = our_lab(sc, person=True, x_op=XR - 60)
+    h = our_lab(sc, person=True, x_op=XR + 40)
     op = h["op"]
     rf = h["riffle"]
     au = audit.Audit(sc, allow=[("op/glove*", "jar/*"), ("op/glove*", "spatula/*"), ("op/glove*", "nozzle/*"),
-                                ("op/glove*", "heat_sealer:arm*"), ("op/glove*", "bench_drill:*handles*"),
-                                ("op/glove*", "crm/*"), ("op/glove*", "boat/*"), ("op/glove*", "boat2/*"),
+                                ("op/glove*", "heat_sealer:arm*"), ("op/glove*", "bench_drill:*"), ("op/glove*", "crm/*"),
+                                ("op/glove*", "boat/*"), ("op/glove*", "cap/*"), ("op/glove*", "bag*/*"),
                                 ("nozzle/*", "bag/*"), ("bag*/*", "heat_sealer:*"), ("cube/*", "bench_drill:*"),
-                                ("feedstock/*", "bench_drill:*"), ("spatula/*", "*riffle*"), ("spatula/*", "boat*"),
-                                ("jar/*", "*riffle*body*")])
-    TAB = (0.585, 0.085, 0.40)
+                                ("feedstock/*", "bench_drill:*"), ("spatula/*", "riffle_splitter:*"),
+                                ("spatula/*", "boat*"), ("bench_drill:quill*", "bench_drill:body*"),
+                                ("cap/*", "vial/*"), ("boat/*", "balance/*"), ("boatpowder/*", "boat/*"),
+                                ("riffle_splitter:split*", "riffle_splitter:pan*"), ("riffle_splitter:feed*", "*"),
+                                ("riffle_splitter:stream*", "*"), ("vialfill/*", "vial/*"), ("bag_sealed/*", "bag/*"),
+                                ("hose/*", "*"), ("op/glove*", "vial*")])
+    TAB = (0.665, 0.085, 0.32)
     sc.cam = overview_cam(-300, dist=3600, az=-8, el=24)
-    op.p.set(x=XR - 60, y=-700, hd=0)
+    sc.cam = overview_cam(-300, dist=3600, az=20, el=28)
     sc.step("Send", "What to send: five kinds of sample | powder, sealed powder, a printed cube, feedstock, a CRM", 4.0,
-            panel_on(sc, "tab", panel_table(None), TAB), hold=2.0, cam_to=overview_cam(-700, dist=2600, az=-12, el=22))
-    # ---- row 1: the riffle split
+            panel_on(sc, "tab", panel_table(None), TAB), hold=2.0, cam_to=overview_cam(-700, dist=2600, az=35, el=30))
+    # ---- row 1: the riffle split -------------------------------------------------------------------------------
     sc.panel("tab", panel_table(0), rect=TAB, alpha=1.0)
     jar0 = np.array(sc.gmat["jar"])
     hop = rf.world((0, 0, MCRF["hopper_rim"][2]))
-    cam_r = S.look((XR - 100, -150, BH + 120), dist=1150, az=-18, el=20)
+    cam_r = S.look((XR - 150, -230, BH + 110), dist=1150, az=55, el=28)
     sc.step("Send 1", "Powder from every run: split the 20-63 µm cut | a riffle splitter halves it without bias",
-            4.0, S.together(op.walk(XJ + 150), op.reach("r", None)), hold=1.0, cam_to=cam_r)
+            4.0, S.together(op.walk(XJ + 130, YOP), op.reach("r", None), body_fade(sc, op, 1.0, 0.25)), hold=1.0,
+            cam_to=cam_r)
     grip = (0.0, -34.0, 60.0)                      # the jar's front, where the right hand holds it
-    lift = Tz(XJ + 120, -230, BH + 120)
-    over = T((hop[0] - 75, hop[1] - 10, hop[2] + 60)) @ R((0, 1, 0), 0)
-    tilt = T((hop[0] - 45, hop[1] - 10, hop[2] + 80)) @ R((0, 1, 0), 105, pivot=(0, 0, 112))
-    sc.step("Send 1", "Pour the powder into the hopper", 2.5,
-            S.together(op.reach("r", (sc.world("jar") @ np.array([*grip, 1.0]))[:3], lean=12)), hold=0.2)
+    lift = Tz(XJ + 100, -250, BH + 120)
+    over = Tz(hop[0] - 80, hop[1] - 5, hop[2] + 60)
+    tilt = T((hop[0] - 15, hop[1] - 5, hop[2] + 40 - 112)) @ R((0, 1, 0), 105, pivot=(0, 0, 112))
+    sc.step("Send 1", "Pour the powder into the hopper", 2.0,
+            op.reach("r", wpt(sc, "jar", grip), lean=12, look=hop), hold=0.1)
     sc.step("Send 1", "Pour the powder into the hopper", 3.0,
-            S.together(path(sc, "jar", [lift, over]), op.walk(XR - 160), op.follow("r", "jar", grip)), hold=0.2)
-    sc.step("Send 1", "It runs through 16 chutes, half to each pan | repeat on one half to reach 2-5 g", 3.5,
+            S.together(path(sc, "jar", [lift, over]), op.walk(XR - 170, YOP), op.follow("r", "jar", grip)), hold=0.1)
+    sc.step("Send 1", "It runs through 16 chutes, half to each pan | split one half again until it is 2-5 g", 4.0,
             S.together(path(sc, "jar", [tilt]), op.follow("r", "jar", grip),
-                       S.staged((0.3, 0.7, rf.move({"feed": (0, 1)})), (0.55, 1.0, rf.move({"stream": (0, 1)})),
-                                (0.7, 1.0, rf.move({"split_l": (0, 1), "split_r": (0, 1)})))),
-            hold=1.5, live=False)
-    sc.step("Send 1", "It runs through 16 chutes, half to each pan | repeat on one half to reach 2-5 g", 2.5,
-            S.together(path(sc, "jar", [over, lift, jar0]), op.follow("r", "jar", grip),
-                       rf.move({"stream": (1, 0), "feed": (1, 0)})), hold=0.2)
-    # weigh 2-5 g into the boat with the spatula; then into a new vial
-    spat = put(sc, "spatula", MC.prop_spatula(), Tz(XB - 160, -250, BH))
+                       S.staged((0.3, 0.7, rf.move({"feed": (0, 1)})), (0.5, 1.0, rf.move({"stream": (0, 1)})),
+                                (0.65, 1.0, rf.move({"split_l": (0, 1), "split_r": (0, 1)})))), hold=1.5)
+    sc.step("Send 1", "It runs through 16 chutes, half to each pan | split one half again until it is 2-5 g", 3.0,
+            S.together(path(sc, "jar", [over, lift, jar0]), op.walk(XJ + 130, YOP), op.follow("r", "jar", grip),
+                       rf.move({"stream": (1, 0), "feed": (1, 0)})), hold=0.1)
+    # weigh 2-5 g with the spatula into the boat on the balance
+    spat = put(sc, "spatula", MC.prop_spatula(), Tz(XB - 170, -300, BH + 1.2) @ R((0, 0, 1), 90))
+    cam_b = S.look((XB - 150, -160, BH + 90), dist=950, az=60, el=32)
+    sc.step("Send 1", "Weigh 2-5 g on the balance | a stainless spatula into a weigh boat", 3.5,
+            S.together(op.reach("r", None), op.walk(XB - 230, YOP), rf.move({"pan_r": (0, 1)})), hold=0.3,
+            cam_to=cam_b)
     pan_r = rf.world(MCRF["pan_r_floor"], "pan_r")
-    boat_c = (sc.world("boat") @ np.array([0, 0, 0, 1.0]))[:3]
-    cam_b = S.look((XB - 120, -120, BH + 90), dist=900, az=-14, el=24)
-    sc.step("Send 1", "Weigh 2-5 g on the balance", 3.0,
-            S.together(op.walk(XB - 200), rf.move({"pan_r": (0, 1)}), op.reach("r", None)), hold=0.3, cam_to=cam_b)
+    boat_c = wpt(sc, "boat", (0, 0, 0))
+    sp_grip = (-60.0, 0.0, 22.0)
+    rz90 = R((0, 0, 1), 90)
+    pitch = R((0, 1, 0), 25)
+    s_in = T((pan_r[0], pan_r[1] - 62 * math.cos(math.radians(25)), pan_r[2] + 30)) @ rz90 @ pitch
+    s_up = T((pan_r[0] + 10, pan_r[1] - 80, pan_r[2] + 130)) @ rz90
+    s_boat = T((boat_c[0], boat_c[1] - 62, boat_c[2] + 40)) @ rz90
+    s_dump = T((boat_c[0], boat_c[1] - 62, boat_c[2] + 40)) @ rz90 @ R((1, 0, 0), 100)
+    sc.step("Send 1", "Weigh 2-5 g on the balance | a stainless spatula into a weigh boat", 2.0,
+            op.reach("r", wpt(sc, "spatula", sp_grip), lean=12), hold=0.1)
     sp0 = np.array(sc.gmat["spatula"])
-    sp_grip = (-60.0, 0.0, 2.0)
-    s_in = T((pan_r[0] + 70 + 90, pan_r[1], pan_r[2] + 12)) @ R((0, 0, 1), 180)
-    s_up = T((pan_r[0] + 140, pan_r[1] - 40, pan_r[2] + 120)) @ R((0, 0, 1), 180)
-    s_boat = T((boat_c[0] + 60, boat_c[1] - 70, boat_c[2] + 40)) @ R((0, 0, 1), 125)
-    sc.step("Send 1", "Weigh 2-5 g on the balance | stainless spatula, weigh boat", 2.0,
-            op.reach("r", (sc.world("spatula") @ np.array([*sp_grip, 1.0]))[:3], lean=10), hold=0.2)
-    sc.step("Send 1", "Weigh 2-5 g on the balance | stainless spatula, weigh boat", 4.0,
-            S.together(path(sc, "spatula", [s_up, s_in, s_up, s_boat]), op.follow("r", "spatula", sp_grip),
-                       S.staged((0.75, 1.0, gauge(sc, [("balance", "3.214 g")])))), hold=1.5)
-    vf = put(sc, "boatpowder", _boat_powder(), np.eye(4), parent="boat")
+    put(sc, "boatpowder", _boat_powder(), np.eye(4), parent="boat")
     show(sc, "boatpowder", 0.0)
-    sc.step("Send 1", "2-5 g into a new screw-cap vial | ICP-OES: all intended elements, plus Fe and Si", 3.5,
-            S.together(path(sc, "spatula", [s_up, sp0]), op.follow("r", "spatula", sp_grip), fade(sc, "boatpowder", 0, 1),
-                       fade(sc, "vialfill", 0, 0)), hold=0.3)
-    v_c = (sc.world("vial") @ np.array([0, 0, 0, 1.0]))[:3]
+    sc.step("Send 1", "Weigh 2-5 g on the balance | a stainless spatula into a weigh boat", 4.5,
+            S.together(path(sc, "spatula", [s_up, s_in, s_up, s_boat, s_dump]), op.follow("r", "spatula", sp_grip),
+                       S.staged((0.85, 1.0, fade(sc, "boatpowder", 0, 1)),
+                                (0.85, 1.0, gauge(sc, [("balance", "3.214 g")])))), hold=1.5)
+    sc.step("Send 1", "2-5 g into a new screw-cap vial | ICP-OES: all intended elements, plus Fe and Si", 2.5,
+            S.together(path(sc, "spatula", [s_up, sp0]), op.follow("r", "spatula", sp_grip)), hold=0.1)
+    v_c = wpt(sc, "vial", (0, 0, 0))
     b0 = np.array(sc.gmat["boat"])
-    b_tilt = T((v_c[0] + 10, v_c[1], v_c[2] + 75)) @ R((0, 1, 0), -80, pivot=(-20, 0, 0))
     bgrip = (20.0, 0.0, 6.0)
+    b_tilt = T((v_c[0] + 10, v_c[1], v_c[2] + 75)) @ R((0, 1, 0), -80, pivot=(-20, 0, 0))
+    cam_v = S.look((v_c[0] - 60, v_c[1] - 20, BH + 70), dist=760, az=58, el=30)
     sc.step("Send 1", "2-5 g into a new screw-cap vial | ICP-OES: all intended elements, plus Fe and Si", 2.0,
-            S.together(op.reach("r", (sc.world("boat") @ np.array([*bgrip, 1.0]))[:3]), gauge(sc, [])), hold=0.1)
+            S.together(op.reach("r", wpt(sc, "boat", bgrip), lean=8), gauge(sc, [])), hold=0.1)
     sc.step("Send 1", "2-5 g into a new screw-cap vial | ICP-OES: all intended elements, plus Fe and Si", 4.0,
             S.together(path(sc, "boat", [T((v_c[0] + 40, v_c[1], v_c[2] + 110)) @ R((0, 1, 0), -20), b_tilt]),
-                       op.walk(XV - 120), op.follow("r", "boat", bgrip),
-                       S.staged((0.7, 1.0, fade(sc, "boatpowder", 1, 0)), (0.7, 1.0, fade(sc, "vialfill", 0, 1)))),
-            hold=0.5, cam_to=S.look((XV, -160, BH + 70), dist=700, az=-12, el=22))
+                       op.walk(XV - 130, YOP), op.follow("r", "boat", bgrip),
+                       S.staged((0.75, 1.0, fade(sc, "boatpowder", 1, 0)), (0.75, 1.0, fade(sc, "vialfill", 0, 1)))),
+            hold=0.5, cam_to=cam_v)
+    sc.step("Send 1", "Cap it", 3.0,
+            S.together(path(sc, "boat", [T((v_c[0] + 40, v_c[1] - 40, v_c[2] + 110)), b0]),
+                       op.walk(XV - 100, YOP), op.follow("r", "boat", bgrip)), hold=0.1)
     capg = (0.0, 0.0, 13.0)
-    sc.step("Send 1", "Cap it | the vial's label: run ID, sieve cut, dates, analytes", 3.5,
-            S.together(path(sc, "boat", [T((v_c[0] + 40, v_c[1] + 40, v_c[2] + 110)), b0]), op.follow("r", "boat", bgrip),
-                       S.staged((0.4, 1.0, path(sc, "cap", [Tz(v_c[0], v_c[1], v_c[2] + 80), Tz(v_c[0], v_c[1], v_c[2] + 50, 360)])),
-                                (0.4, 1.0, op.follow("l", "cap", capg)))), hold=1.0)
-    # ---- row 2: sealed under Ar for O/N/H
+    cap0 = wpt(sc, "cap", (0, 0, 0))
+    sc.step("Send 1", "Cap it", 2.0, op.reach("r", wpt(sc, "cap", capg), lean=8), hold=0.1)
+    sc.step("Send 1", "Cap it", 3.0,
+            S.together(path(sc, "cap", [Tz(v_c[0], v_c[1], v_c[2] + 85), Tz(v_c[0], v_c[1], v_c[2] + 50, 170)]),
+                       op.follow("r", "cap", capg)), hold=1.0)
+    # ---- row 2: sealed under Ar for O/N/H --------------------------------------------------------------------
     sc.panel("tab", panel_table(1), rect=TAB, alpha=1.0)
     show(sc, "bag", 1.0)
-    bag_c = (sc.world("bag") @ np.array([0, 0, 0, 1.0]))[:3]
-    cam_s = S.look((XS, -100, BH + 70), dist=1000, az=-14, el=28)
+    bag_c = wpt(sc, "bag", (0, 0, 0))
+    cam_s = S.look((XS + 20, -160, BH + 80), dist=1000, az=-58, el=32)
     sc.step("Send 2", "Powder for O/N/H: 1-2 g of the same split | sealed under Ar within 48 h of atomizing", 4.0,
-            S.together(op.walk(XS - 150), op.reach("l", None), op.reach("r", None),
-                       gauge(sc, [("balance", "1.512 g")])), hold=1.5, cam_to=cam_s,
-            labels=[("4-mil poly bag, 1.5 g powder", (bag_c[0], bag_c[1] - 30, BH + 4), (0.20, 0.70))])
+            S.together(op.walk(XS - 40, YOP), op.reach("r", None), gauge(sc, [("balance", "1.512 g")])), hold=1.5,
+            cam_to=cam_s, labels=[("4-mil poly bag, 1.5 g of powder", (bag_c[0], bag_c[1] - 30, BH + 4), (0.12, 0.72))])
     noz0 = np.array(sc.gmat["nozzle"])
-    ngrip = (0.0, 0.0, 35.0)
-    n_in = Tz(bag_c[0], bag_c[1] + 45, BH + 70) @ R((1, 0, 0), -150)
-    sc.step("Send 2", "Flush the bag with argon | a few seconds at low flow, from the lab's argon line", 4.0,
-            S.together(gauge(sc, []), S.staged((0.0, 0.4, op.reach("l", (sc.world("nozzle") @ np.array([*ngrip, 1.0]))[:3], lean=10)),
-                                               (0.4, 1.0, path(sc, "nozzle", [n_in])), (0.4, 1.0, op.follow("l", "nozzle", ngrip)))),
-            hold=2.0, labels=[("argon line and regulator", (XS - 30, 360, BH + 470), (0.80, 0.22))])
+    noz_up = T((0, 0, 90)) @ noz0
+    ngrip = (-20.0, 0.0, 35.0)
+    tip = (bag_c[0], bag_c[1] + 50, BH + 4)
+    n_in = T((tip[0], tip[1] + 30, tip[2] + 52)) @ R((1, 0, 0), -30)
+    sc.step("Send 2", "Flush the bag with argon | low flow, a few seconds, from the lab's argon line", 2.0,
+            S.together(gauge(sc, []), op.reach("r", wpt(sc, "nozzle", ngrip), lean=10)), hold=0.1,
+            labels=[("argon regulator on the line", (XS - 30, 330, BH + 470), (0.80, 0.22))])
+    sc.step("Send 2", "Flush the bag with argon | low flow, a few seconds, from the lab's argon line", 4.0,
+            S.together(path(sc, "nozzle", [noz_up, n_in]), op.follow("r", "nozzle", ngrip)), hold=1.5)
     sg = MC.seal_geom()
-    sx = XS + 120
-    bag_seal = Tz(sx + (sg["jaw_x0"] + sg["jaw_x1"]) / 2 - 0, 20 + sg["jaw_y"] - 41 - 0, BH + sg["jaw_z"] - 1.5)
-    sc.step("Send 2", "Heat-seal the bag at once | an impulse sealer: the seal across its mouth", 3.5,
-            S.together(path(sc, "nozzle", [noz0]), op.follow("l", "nozzle", ngrip),
-                       S.staged((0.3, 1.0, mov(sc, "bag", bag_seal)), (0.3, 1.0, mov(sc, "bag_sealed", bag_seal)))),
-            hold=0.3)
-    arm_grip = h["sealer"].world((MC.SEAL["W"] / 2 - 30, 0, 104), "arm")
-    sc.step("Send 2", "Heat-seal the bag at once | an impulse sealer: the seal across its mouth", 3.5,
-            S.together(op.reach("l", None), op.reach("r", tuple(arm_grip)),
-                       S.staged((0.5, 1.0, h["sealer"].move({"arm": (0, 1)})))), hold=0.5)
-    sc.step("Send 2", "Sealed: O, N and H by inert gas fusion | label it; log the time sealed", 3.0,
-            S.together(h["sealer"].move({"arm": (1, 0)}), fade(sc, "bag", 1, 0), fade(sc, "bag_sealed", 0, 1),
-                       op.reach("r", None)), hold=1.5)
-    # ---- row 3: the printed cube, dry-cut chips
+    sx_, sy_ = XS + 120, 20
+    jaw = (sx_ + 0.5 * (sg["jaw_x0"] + sg["jaw_x1"]), sy_ + sg["jaw_y"], BH + sg["jaw_z"])
+    bag_seal = Tz(jaw[0], jaw[1] - 39.5, jaw[2] - 1.5)
+    bg = (0.0, -46.0, 20.0)
+    sc.step("Send 2", "Heat-seal it at once | an impulse sealer: a seal across the mouth", 3.0,
+            S.together(path(sc, "nozzle", [noz_up, noz0]), op.follow("r", "nozzle", ngrip)), hold=0.1)
+    sc.step("Send 2", "Heat-seal it at once | an impulse sealer: a seal across the mouth", 2.0,
+            S.together(op.reach("l", wpt(sc, "bag", bg), lean=10), op.reach("r", None)), hold=0.1)
+    sc.gmat["bag_sealed"] = np.array(sc.gmat["bag"])
+    sc.step("Send 2", "Heat-seal it at once | an impulse sealer: a seal across the mouth", 3.0,
+            S.together(mov(sc, "bag", bag_seal), mov(sc, "bag_sealed", bag_seal), op.follow("l", "bag", bg)), hold=0.1,
+            cam_to=S.look((jaw[0] - 40, jaw[1] - 60, jaw[2]), dist=800, az=-60, el=30))
+    arm_grip = tuple(h["sealer"].world((MC.SEAL["W"] / 2 - 30, 0, 104), "arm"))
+    sc.step("Send 2", "Heat-seal it at once | an impulse sealer: a seal across the mouth", 3.0,
+            S.together(op.reach("r", arm_grip), op.follow("l", "bag", bg),
+                       S.staged((0.45, 1.0, h["sealer"].move({"arm": (1, 0)}))),
+                       S.staged((0.45, 1.0, op.follow("r", "heat_sealer:arm",
+                                                     (MC.SEAL["W"] / 2 - 30, 0, 104))))), hold=1.0)
+    sc.step("Send 2", "Sealed: O, N and H by inert gas fusion | label it with the time it was sealed", 3.5,
+            S.together(h["sealer"].move({"arm": (0, 1)}), op.follow("r", "heat_sealer:arm", (MC.SEAL["W"] / 2 - 30, 0, 104)),
+                       fade(sc, "bag", 1, 0), fade(sc, "bag_sealed", 0, 1), op.follow("l", "bag_sealed", bg)), hold=0.5)
+    sc.step("Send 2", "Sealed: O, N and H by inert gas fusion | label it with the time it was sealed", 2.5,
+            S.together(mov(sc, "bag_sealed", Tz(XS - 10, -230, BH)), op.follow("l", "bag_sealed", bg),
+                       op.reach("r", None)), hold=0.3)
+    sc.step("Send 2", "Sealed: O, N and H by inert gas fusion | label it with the time it was sealed", 1.5,
+            op.reach("l", None), hold=0.5)
+    # ---- row 3: the printed cube, dry-cut chips ----------------------------------------------------------------
     sc.panel("tab", panel_table(2), rect=TAB, alpha=1.0)
     dr = h["drill"]
-    cam_d = S.look((XD, -60, BH + 260), dist=1250, az=-18, el=18)
-    handle = dr.world((150 + 40, MC.DRILL["D"] / 2 - 60 - 60, MC.DRILL["H"] - 60))
-    sc.step("Send 3", "One printed cube per alloy per build | cut dry: no coolant, no oil", 4.0,
-            S.together(op.walk(XD - 80), op.reach("r", None)), hold=1.0, cam_to=cam_d,
-            labels=[("cube in the vise", (XD, 60 - 40, BH + 235), (0.20, 0.45))])
-    sc.step("Send 3", "Drill ~1 g of chips | a clean carbide bit, low speed", 4.0,
-            S.together(op.reach("r", tuple(handle), lean=5), S.staged((0.3, 1.0, dr.move({"quill": (0, 1), "chips": (0, 1)})))),
-            hold=1.0)
-    sc.step("Send 3", "Chips into a vial for ICP-OES | Mg, Zn and other volatiles: the evaporation check", 3.5,
-            S.together(dr.move({"quill": (1, 0)}), fade(sc, "chips2", 0, 1), op.reach("r", None)), hold=1.5,
-            labels=[("~1 g of chips", (XD - 190, -230, BH + 8), (0.25, 0.70))])
-    # ---- row 4: feedstock
-    sc.panel("tab", panel_table(3), rect=TAB, alpha=1.0)
     dg = MC.drill_geom()
+    handle = tuple(dr.world(dg["handle"]))
+    cam_d = S.look((XD, YDR - 40, BH + 250), dist=1300, az=-55, el=22)
+    sc.step("Send 3", "One printed cube per alloy per build | cut dry: no coolant, no oil", 4.0,
+            S.together(op.walk(XD + 120, YOP), op.reach("r", None)), hold=1.0, cam_to=cam_d,
+            labels=[("printed cube in the vise", (XD, YDR - 40, BH + 235), (0.16, 0.40))])
+    sc.step("Send 3", "Drill about 1 g of chips | a clean bit, slowly", 4.5,
+            S.together(op.reach("r", handle, lean=6), S.staged((0.35, 1.0, dr.move({"quill": (0, 1), "chips": (0, 1)})))),
+            hold=1.0)
+    sc.step("Send 3", "Chips into a new vial for ICP-OES | Mg, Zn and other volatiles: the evaporation check", 3.5,
+            S.together(dr.move({"quill": (1, 0)}), fade(sc, "chips2", 0, 1), op.reach("r", None)), hold=1.5,
+            labels=[("about 1 g of chips", (XD - 190, -230, BH + 8), (0.25, 0.70))])
+    # ---- row 4: feedstock ------------------------------------------------------------------------------------
+    sc.panel("tab", panel_table(3), rect=TAB, alpha=1.0)
+    fz = Tz(XD, YDR + dg["vise_y"], BH + dg["vise_top"])
     sc.step("Send 4", "Feedstock: the bar and the master alloys, 2 g | ICP-OES: mass balance through the atomizer", 4.0,
-            S.together(fade(sc, "cube", 1, 0), dr.move({"chips": (1, 0)}),
-                       mov(sc, "feedstock", Tz(XD + 20, 60 + dg["vise_y"], BH + dg["vise_top"]))), hold=1.0,
-            labels=[("bar and master alloy pieces\n(from the cups and plugs)", (XD + 20, 20, BH + 240), (0.20, 0.45))])
-    sc.step("Send 4", "The same: chips cut dry into a new vial", 3.5,
-            S.together(op.reach("r", tuple(handle)), dr.move({"quill": (0, 1), "chips": (0, 1)})), hold=1.0)
-    sc.step("Send 4", "The same: chips cut dry into a new vial", 2.0,
+            S.together(S.staged((0.0, 0.35, fade(sc, "cube", 1, 0)), (0.0, 0.35, dr.move({"chips": (1, 0)})),
+                                (0.4, 1.0, path(sc, "feedstock", [T((0, 0, 120)) @ fz, fz])))), hold=1.0,
+            labels=[("bar (the cups' and plugs' stock)", (XD, YDR - 40, BH + 245), (0.16, 0.40)),
+                    ("master alloy pieces", (XF + 60, -150, BH + 9), (0.75, 0.70))])
+    sc.step("Send 4", "The same: chips cut dry, into a new vial", 3.5,
+            S.together(op.reach("r", handle), dr.move({"quill": (0, 1), "chips": (0, 1)})), hold=1.0)
+    sc.step("Send 4", "The same: chips cut dry, into a new vial", 2.0,
             S.together(dr.move({"quill": (1, 0)}), op.reach("r", None)), hold=0.5)
-    # ---- row 5: a CRM
+    # ---- row 5: a CRM ----------------------------------------------------------------------------------------
     sc.panel("tab", panel_table(4), rect=TAB, alpha=1.0)
     crm_grip = (0.0, -30.0, 60.0)
-    sc.step("Send 5", "A certified reference material of a similar alloy | Al (or Cu) alloy chips: the lab's accuracy",
-            4.0, S.together(op.walk(XC - 60), op.reach("r", None)), hold=1.0,
-            cam_to=S.look((XC - 200, -40, BH + 120), dist=1100, az=-12, el=22),
-            labels=[("certified reference\nmaterial (chips)", (XC, 60, BH + 100), (0.75, 0.40))])
-    sc.step("Send 5", "It goes with the samples, under its own ID | measured the same way", 3.5,
-            S.together(op.reach("r", (sc.world("crm") @ np.array([*crm_grip, 1.0]))[:3], lean=8)), hold=0.2)
-    sc.step("Send 5", "It goes with the samples, under its own ID | measured the same way", 3.0,
-            S.together(path(sc, "crm", [Tz(XC - 60, -60, BH + 60), Tz(XC - 120, -150, BH)]),
+    sc.step("Send 5", "A certified reference material of a similar alloy | e.g. Al casting alloy 356 millings",
+            4.0, S.together(op.walk(XC - 40, YOP), op.reach("r", None)), hold=1.0,
+            cam_to=S.look((XC - 150, -120, BH + 120), dist=1100, az=-55, el=25),
+            labels=[("certified reference\nmaterial (chips)", (XC, -60, BH + 100), (0.75, 0.40))])
+    sc.step("Send 5", "It goes with the samples, under its own ID | the lab's accuracy check", 2.0,
+            op.reach("r", wpt(sc, "crm", crm_grip), lean=8), hold=0.1)
+    sc.step("Send 5", "It goes with the samples, under its own ID | the lab's accuracy check", 3.0,
+            S.together(path(sc, "crm", [Tz(XC - 40, -160, BH + 60), Tz(XC - 60, -260, BH)]),
                        op.follow("r", "crm", crm_grip)), hold=0.2)
     sc.step("Send", "Five kinds of sample, each in a new container", 3.5,
-            S.together(op.reach("r", None)), hold=2.0, cam_to=overview_cam(-300, dist=3200, az=-10, el=24))
+            S.together(op.reach("r", None), panel_off(sc, "tab"), body_fade(sc, op, 0.25, 1.0)), hold=2.0,
+            cam_to=overview_cam(-300, dist=3400, az=-30, el=30))
     sc.save()
     au.save()
 

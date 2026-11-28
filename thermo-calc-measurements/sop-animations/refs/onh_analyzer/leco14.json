@@ -1,0 +1,29 @@
+{
+ "source": "https://youtu.be/W5IGSUMWQq8?t=14",
+ "video": "W5IGSUMWQq8",
+ "t": 14,
+ "camera": "leco14",
+ "pose": {},
+ "points": {
+  "screen tl": [
+   440,
+   180
+  ],
+  "screen tr": [
+   605,
+   205
+  ],
+  "screen bl": [
+   445,
+   585
+  ],
+  "screen br": [
+   612,
+   597
+  ],
+  "head bottom left": [
+   680,
+   392
+  ]
+ }
+}

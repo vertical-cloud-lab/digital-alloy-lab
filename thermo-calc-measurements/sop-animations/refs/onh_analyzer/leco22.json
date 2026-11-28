@@ -1,0 +1,49 @@
+{
+ "source": "https://youtu.be/W5IGSUMWQq8?t=22",
+ "video": "W5IGSUMWQq8",
+ "t": 22,
+ "pose": {},
+ "points": {
+  "screen tl": [
+   660,
+   238
+  ],
+  "screen tr": [
+   808,
+   238
+  ],
+  "screen bl": [
+   660,
+   505
+  ],
+  "screen br": [
+   808,
+   505
+  ],
+  "cabinet top left": [
+   650,
+   165
+  ],
+  "head top left": [
+   847,
+   232
+  ],
+  "head top right": [
+   1003,
+   232
+  ],
+  "head bottom left": [
+   847,
+   360
+  ],
+  "head bottom right": [
+   1003,
+   360
+  ],
+  "bay floor right": [
+   985,
+   460
+  ]
+ },
+ "camera": "leco22"
+}

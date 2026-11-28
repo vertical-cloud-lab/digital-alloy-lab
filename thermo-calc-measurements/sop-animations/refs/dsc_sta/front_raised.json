@@ -1,0 +1,89 @@
+{
+ "source": "https://youtu.be/XDOAhT8CybU?t=45",
+ "video": "XDOAhT8CybU",
+ "t": 45,
+ "camera": "netzsch_video",
+ "pose": {
+  "hoist": 1.0,
+  "furnace": 0.0
+ },
+ "points": {
+  "deck front left": [
+   782,
+   507
+  ],
+  "deck front right": [
+   1165,
+   507
+  ],
+  "foot front left": [
+   781,
+   668
+  ],
+  "foot front right": [
+   1168,
+   668
+  ],
+  "panel top left": [
+   857,
+   513
+  ],
+  "panel top right": [
+   972,
+   513
+  ],
+  "panel bottom left": [
+   857,
+   640
+  ],
+  "panel bottom right": [
+   972,
+   640
+  ],
+  "logo": [
+   1118,
+   650
+  ],
+  "furnace top left": [
+   866,
+   237
+  ],
+  "furnace top right": [
+   960,
+   237
+  ],
+  "band high left": [
+   866,
+   283
+  ],
+  "band high right": [
+   960,
+   283
+  ],
+  "band low left": [
+   866,
+   358
+  ],
+  "band low right": [
+   960,
+   358
+  ],
+  "light low left": [
+   866,
+   404
+  ],
+  "light low right": [
+   959,
+   404
+  ],
+  "fitting top": [
+   912,
+   195
+  ],
+  "sensor": [
+   912,
+   421
+  ]
+ },
+ "holdout": false
+}

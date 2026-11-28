@@ -1,0 +1,68 @@
+{
+ "source": "https://youtu.be/BkWFULiNy-k?t=70 (Leco VC 50 Precision Diamond Saw Instructional Video)",
+ "video": "BkWFULiNy-k",
+ "t": 70,
+ "camera": "BkWFULiNy-k_side",
+ "pose": {
+  "cover": 1.0
+ },
+ "points": {
+  "base front top right": [
+   355,
+   518
+  ],
+  "base back top right": [
+   1140,
+   478
+  ],
+  "plinth back right": [
+   1110,
+   652
+  ],
+  "guard front top right": [
+   468,
+   205
+  ],
+  "guard front bottom right": [
+   470,
+   498
+  ],
+  "mic end": [
+   1178,
+   405
+  ],
+  "mic root": [
+   942,
+   338
+  ],
+  "drawer knob": [
+   320,
+   548
+  ]
+ },
+ "lines": {
+  "z": [
+   [
+    [
+     470,
+     210
+    ],
+    [
+     472,
+     495
+    ]
+   ],
+   [
+    [
+     1140,
+     480
+    ],
+    [
+     1112,
+     650
+    ]
+   ]
+  ]
+ },
+ "holdout": true
+}

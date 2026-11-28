@@ -419,39 +419,87 @@ def vacuum_pump() -> Instrument:
 PUMP_POINTS = {"inlet": (PUMP["L"] / 2 - 60.0, 0.0, 220.0)}
 
 
-# ============================================================================================ microbalance (provisional)
-BALANCE = dict(W=128.0, D=290.0, H=110.0, ch_w=100.0, ch_d=110.0, ch_h=95.0, ch_y=-60.0, pan_d=27.0, pan_z=40.0,
-               term_w=240.0, term_d=170.0, term_h=60.0)
-SPECS["microbalance"] = {"model": "provisional", "estimates": "all"}
+# ============================================================================================ microbalance
+# Sartorius Cubis II MCA6.6S-2S00-M micro balance: 6.1 g x 0.001 mg (1 ug); weighing module 340 x 139 x 129 mm
+# (L x W x H), electronics module 355 x 260 x 61 mm, pan 30 mm (Sartorius Cubis II data sheet p. 3); "automatic,
+# motorized, round 100 % glass" draft shield (p. 15) with a 70 mm chamber (Rice Lake catalogue, Cubis II MCA micro);
+# a separate 7 in touch display. Look from Sartorius's video (youtu.be/7EjFumYx1eo, 1:49): a long white module with a
+# stepped top, the round glass chamber on a white pedestal at its front end with a blue strip beside it, the flat
+# electronics module in front carrying the tilted display. The door: a curved glass segment that turns round the
+# chamber to open its front (the motorized shield's opening), modelled as a 120 deg segment turning 130 deg.
+BALANCE = dict(L=340.0, W=139.0, H=129.0, ped_d=104.0, ped_h=24.0, ch_d=86.0, ch_h=70.0, pan_d=30.0, pan_z=36.0,
+               el_L=355.0, el_W=260.0, el_H=61.0, door_deg=120.0)
+SPECS["microbalance"] = {
+    "model": "Sartorius Cubis II MCA6.6S-2S00-M (6.1 g x 1 ug)",
+    "weighing module": "340 x 139 x 129 mm (L x W x H): Sartorius Cubis II data sheet p. 3",
+    "electronics module": "355 x 260 x 61 mm: same",
+    "pan": "30 mm: same",
+    "draft shield": "automatic, motorized, round, glass (data sheet p. 15); chamber height 70 mm (Rice Lake catalogue)",
+    "estimates": "chamber 86 mm across on a 104 mm pedestal, the module's step, the door's segment and turn (from "
+                 "Sartorius's video frames)",
+}
+
+
+def _arc_shell(r_out, r_in, h, a0, a1, z0=0.0, x=0.0, y=0.0) -> cq.Workplane:
+    """A curved shell (part of a tube) from angle a0 to a1 (deg, from +x), standing on z0."""
+    full = cq.Workplane("XY").circle(r_out).circle(r_in).extrude(h)
+    n = 24
+    pts = [(0.0, 0.0)] + [((r_out + 5) * 1.5 * math.cos(math.radians(a0 + (a1 - a0) * k / n)),
+                           (r_out + 5) * 1.5 * math.sin(math.radians(a0 + (a1 - a0) * k / n))) for k in range(n + 1)]
+    wedge = cq.Workplane("XY").polyline(pts).close().extrude(h + 2).translate((0, 0, -1))
+    return full.intersect(wedge).translate((x, y, z0))
 
 
 def microbalance() -> Instrument:
+    """Sartorius Cubis II micro balance. Pieces: ``body`` (weighing module, pedestal, fixed glass, pan, top);
+    ``door`` (the turning glass segment: v = 1 open, its gap to the front); ``electronics`` (the electronics module and
+    the tilted 7 in display, in front at the right). BAL_POINTS: the pan, the display, the chamber."""
     p = BALANCE
-    inst = Instrument("microbalance", "Microbalance", "provisional", (p["W"], p["D"], p["H"] + p["ch_h"]), "provisional")
+    inst = Instrument("microbalance", "Micro balance, 1 ug", "Sartorius Cubis II MCA6.6S-2S00-M", (p["W"], p["L"], p["H"]),
+                      "Sartorius Cubis II data sheet (module 340 x 139 x 129 mm, electronics 355 x 260 x 61 mm); "
+                      "the look from Sartorius's video")
     body = _piece(inst, "body")
-    W, D = p["W"], p["D"]
-    body.add("base", box(-W / 2, -D / 2, 0, W / 2, D / 2, 30), "dsc_lightgrey")
-    cy = -D / 2 + p["ch_d"] / 2 + 10
-    body.add("pan", cyl(p["pan_d"], 1.0, y=cy, z=p["pan_z"] - 1).union(cyl(4, p["pan_z"] - 31, y=cy, z=30)), "dsc_stainless")
-    body.add("tower", box(-W / 2, cy + p["ch_d"] / 2, 0, W / 2, D / 2, 30 + p["ch_h"] + 20), "dsc_lightgrey")
-    body.add("front glass", box(-W / 2 + 5, cy - p["ch_d"] / 2 - 3, 30, W / 2 - 5, cy - p["ch_d"] / 2, 30 + p["ch_h"]), "dsc_glass")
-    body.add("top frame", box(-W / 2, cy - p["ch_d"] / 2 - 3, 30 + p["ch_h"], W / 2, cy + p["ch_d"] / 2, 30 + p["ch_h"] + 6).cut(
-        box(-W / 2 + 8, cy - p["ch_d"] / 2 + 5, 30 + p["ch_h"] - 1, W / 2 - 8, cy + p["ch_d"] / 2 - 5, 30 + p["ch_h"] + 7)), "dsc_lightgrey")
-    for nm, sx in (("door_l", -1), ("door_r", 1)):
-        d = _piece(inst, nm)
-        d.add(nm, box(sx * W / 2 + sx * 0.5 - 2 + 2 * sx, cy - p["ch_d"] / 2, 31, sx * W / 2 + sx * 0.5 + 2 + 2 * sx, cy + p["ch_d"] / 2, 30 + p["ch_h"] - 1), "dsc_glass")
-        d.add(nm + " grip", box(sx * W / 2 - 3 + sx * 3, cy - p["ch_d"] / 2 + 5, 60, sx * W / 2 + 3 + sx * 3, cy - p["ch_d"] / 2 + 15, 100), "dsc_grey")
-    term = _piece(inst, "terminal")
-    term.add("terminal", box(-p["term_w"] / 2, -D / 2 - p["term_d"] - 20, 0, p["term_w"] / 2, -D / 2 - 20, p["term_h"]), "dsc_lightgrey")
-    inst.joints = {"door_l": Joint("slide", vec=(0, p["ch_d"] * 0.8, 0)), "door_r": Joint("slide", vec=(0, p["ch_d"] * 0.8, 0)),
-                   "terminal": Joint("fade", v0=1.0)}
+    L, W, H = p["L"], p["W"], p["H"]
+    cy = -L / 2 + p["ped_d"] / 2                                   # the chamber's axis, at the module's front end
+    y0 = cy + p["ped_d"] / 2                                       # the box starts behind the pedestal
+    box_ = box(-W / 2, y0, 0, W / 2, L / 2, H - 24).union(box(-W / 2, y0 + 95, 0, W / 2, L / 2, H))
+    body.add("weighing module", box_.edges("|Y").fillet(6), "dsc_white")
+    body.add("blue strip", box(W / 2 - 26, y0 - 1.0, 18, W / 2 - 12, y0, H - 34), "dsc_blue")
+    body.add("pedestal", cyl(p["ped_d"], p["ped_h"], y=cy), "dsc_white")
+    zc0 = p["ped_h"]
+    r = p["ch_d"] / 2
+    # the fixed glass: the back 240 deg of the chamber (open over the front 120 deg); its top glass and rim
+    body.add("chamber glass", _arc_shell(r, r - 2.0, p["ch_h"], 30.0, 270.0 + 0.0, z0=zc0, y=cy).union(
+        _arc_shell(r, r - 2.0, p["ch_h"], -90.0, 30.0 - 120.0 + 0.0, z0=zc0, y=cy)) if False else
+        _arc_shell(r, r - 2.0, p["ch_h"], -30.0, 210.0, z0=zc0, y=cy), "dsc_glass")
+    body.add("chamber top", cyl(p["ch_d"] + 6, 4.0, y=cy, z=zc0 + p["ch_h"]), "dsc_glass")
+    body.add("top rim", tube(p["ch_d"] + 8, p["ch_d"] - 6, 4.0, y=cy, z=zc0 + p["ch_h"] + 4.0), "dsc_white")
+    body.add("pan", cyl(p["pan_d"], 1.0, y=cy, z=p["pan_z"] - 1.0).union(cyl(5, p["pan_z"] - 1 - zc0, y=cy, z=zc0)),
+             "dsc_stainless")
+    body.add("pan ring", tube(48, 44, 6.0, y=cy, z=zc0), "dsc_lightgrey")
+    door = _piece(inst, "door")
+    door.add("door glass", _arc_shell(r + 3.5, r + 1.5, p["ch_h"] - 1.0, 210.0, 330.0, z0=zc0 + 0.5, y=cy), "dsc_glass")
+    door.add("door edge", _arc_shell(r + 4.5, r + 1.5, p["ch_h"] - 1.0, 326.0, 330.0, z0=zc0 + 0.5, y=cy), "dsc_lightgrey")
+    el = _piece(inst, "electronics")
+    ex, ey = W / 2 + 40 + p["el_W"] / 2, cy + 40
+    el.add("electronics module", box(ex - p["el_W"] / 2, ey - p["el_L"] / 2 + 60, 0, ex + p["el_W"] / 2,
+                                     ey + p["el_L"] / 2 + 60, p["el_H"]).edges("|Z").fillet(8), "dsc_white")
+    disp = box(-95, -8, 0, 95, 8, 118).rotate((0, 0, 0), (1, 0, 0), -62).translate((ex, ey - 40, p["el_H"] + 6))
+    scr = box(-82, -9.0, 10, 82, -8.0, 108).rotate((0, 0, 0), (1, 0, 0), -62).translate((ex, ey - 40, p["el_H"] + 6))
+    el.add("display", disp, "dsc_white")
+    el.add("display glass", scr, "dsc_black")
+    el.add("display stand", box(ex - 40, ey - 40, p["el_H"], ex + 40, ey + 40, p["el_H"] + 14), "dsc_lightgrey")
+    inst.joints = {"door": Joint("spin", axis=(0, 0, 1), pivot=(0.0, cy, 0.0), deg=-130.0),
+                   "electronics": Joint("fade", v0=1.0)}
+    inst.props = ()
     return inst
 
 
-_bcy = -BALANCE["D"] / 2 + BALANCE["ch_d"] / 2 + 10
-BAL_POINTS = {"pan": (0.0, _bcy, BALANCE["pan_z"]), "top": (0.0, 0.0, 30 + BALANCE["ch_h"] + 6),
-              "display": (0.0, -BALANCE["D"] / 2 - 100, BALANCE["term_h"]),
-              "door_r_grip": (BALANCE["W"] / 2 + 6, _bcy - BALANCE["ch_d"] / 2 + 10, 80.0)}
+_bcy = -BALANCE["L"] / 2 + BALANCE["ped_d"] / 2
+BAL_POINTS = {"pan": (0.0, _bcy, BALANCE["pan_z"]), "chamber": (0.0, _bcy, BALANCE["ped_h"] + 35.0),
+              "top": (0.0, _bcy, BALANCE["ped_h"] + BALANCE["ch_h"] + 8.0),
+              "display": (BALANCE["W"] / 2 + 40 + BALANCE["el_W"] / 2, _bcy, BALANCE["el_H"] + 50.0),
+              "door_grip": (0.0, _bcy - BALANCE["ch_d"] / 2 - 4.0, BALANCE["ped_h"] + 40.0)}
 
 
 # ============================================================================================ the STA
@@ -470,10 +518,11 @@ BAL_POINTS = {"pan": (0.0, _bcy, BALANCE["pan_z"]), "top": (0.0, 0.0, 30 + BALAN
 # radiation shields, a thin carrier tube and the sensor on top) inside a wire guard; the furnace, 150 mm across, light
 # grey with a dark middle band and a gas fitting on top, on an arm from a white housing that rides up on a stainless
 # lifting column behind it; green solenoid valves and gas fittings on the left side.
-STA_P = dict(W=600.0, D=700.0, deck=320.0, feet=10.0, xs=-90.0, ys=-70.0, plate_d=380.0, f_d=150.0, f_h=250.0,
-             band_lo=70.0, band_dark=110.0, cap_h=15.0, fit_h=62.0, lift=250.0, arm_r=175.0, swing=70.0,
-             sens_h=140.0, shield_d=26.0, n_shield=8, col_w=100.0, house_w=150.0, house_h=220.0,
-             pan_x0=-175.0, pan_x1=-5.0, pan_z0=60.0, pan_z1=292.0, logo_x=210.0)
+# fitted with register.py to youtu.be/XDOAhT8CybU at 0:45 and youtu.be/mmuGqG-1LNE at 1:04 (refs/dsc_sta/fit.json)
+STA_P = dict(W=600.0, D=700.0, deck=283.6, feet=30.0, xs=-106.5, ys=-70.0, plate_d=380.0, f_d=159.3, f_h=311.7,
+             foot_h=27.5, band_lo=77.1, band_dark=124.3, cap_h=15.0, fit_h=50.0, lift=137.5, arm_r=180.0, swing=70.0,
+             sens_h=127.5, shield_d=26.0, n_shield=7, col_w=100.0, house_w=150.0, house_h=230.0,
+             pan_x0=-179.5, pan_x1=-2.2, pan_z0=70.5, pan_z1=268.6, logo_x=224.4)
 SPECS["dsc_sta"] = {
     "model": "NETZSCH STA 449 F5 Jupiter (TG-DSC); successor STA 509 Jupiter Classic",
     "envelope": "600 x 700 x 650 mm, 900 mm furnace raised, 83 kg w/o PC: NETZSCH Key technical data STA 449 F5 "
@@ -490,8 +539,8 @@ SPECS["dsc_sta"] = {
                  "frames",
 }
 
-_STA_FRONT = [(-330.0, 0.0), (-343.0, 40.0), (-350.0, 110.0), (-349.0, 170.0), (-341.0, 230.0), (-327.0, 275.0),
-              (-312.0, 305.0), (-300.0, 320.0)]                  # (y, z) of the front's curve, foot to deck
+_STA_FRONT = [(-330.0, 0.0), (-343.0, 36.0), (-350.0, 100.0), (-349.0, 155.0), (-341.0, 210.0), (-327.0, 250.0),
+              (-312.0, 276.0), (-300.0, 286.0)]                  # (y, z) of the front's curve over the feet, to the deck
 
 
 def _sta(p) -> dict:
@@ -520,16 +569,23 @@ def sta_anchors(p, pose=None) -> dict:
          "bulge left": (-W / 2, -350.0, 110.0), "bulge right": (W / 2, -350.0, 110.0),
          "panel top left": (p["pan_x0"], -313.0, p["pan_z1"] - 2), "panel top right": (p["pan_x1"], -313.0, p["pan_z1"] - 2),
          "panel bottom left": (p["pan_x0"], -344.0, p["pan_z0"]), "panel bottom right": (p["pan_x1"], -344.0, p["pan_z0"]),
-         "logo": (p["logo_x"], -345.0, 55.0),
+         "logo": (p["logo_x"], -347.0, 55.0),
+         "panel band left": (p["pan_x0"], -320.0, p["pan_z1"] - 42.0),
          "sensor": (p["xs"], p["ys"], g["zs"]),
          "plate": ("circle", (p["xs"], p["ys"], dk + 3.0), p["plate_d"] / 2),
          "furnace foot left": fpt(p["xs"] - r, p["ys"], g["zf"]), "furnace foot right": fpt(p["xs"] + r, p["ys"], g["zf"]),
          "furnace top left": fpt(p["xs"] - r, p["ys"], g["zt"]), "furnace top right": fpt(p["xs"] + r, p["ys"], g["zt"]),
-         "band low left": fpt(p["xs"] - r, p["ys"], g["zf"] + p["band_lo"]),
-         "band low right": fpt(p["xs"] + r, p["ys"], g["zf"] + p["band_lo"]),
-         "band high left": fpt(p["xs"] - r, p["ys"], g["zf"] + p["band_lo"] + p["band_dark"]),
-         "band high right": fpt(p["xs"] + r, p["ys"], g["zf"] + p["band_lo"] + p["band_dark"]),
+         "light low left": fpt(p["xs"] - r, p["ys"], g["zf"] + p["foot_h"]),
+         "light low right": fpt(p["xs"] + r, p["ys"], g["zf"] + p["foot_h"]),
+         "band low left": fpt(p["xs"] - r, p["ys"], g["zf"] + p["foot_h"] + p["band_lo"]),
+         "band low right": fpt(p["xs"] + r, p["ys"], g["zf"] + p["foot_h"] + p["band_lo"]),
+         "band high left": fpt(p["xs"] - r, p["ys"], g["zf"] + p["foot_h"] + p["band_lo"] + p["band_dark"]),
+         "band high right": fpt(p["xs"] + r, p["ys"], g["zf"] + p["foot_h"] + p["band_lo"] + p["band_dark"]),
          "fitting top": fpt(p["xs"], p["ys"], g["ztop"])}
+    zl = g["zf"] + p["foot_h"]
+    for nm, z in (("light low ring", zl), ("band low ring", zl + p["band_lo"]),
+                  ("band high ring", zl + p["band_lo"] + p["band_dark"]), ("furnace top ring", g["zt"])):
+        a[nm] = ("circle", fpt(p["xs"], p["ys"], z), r)
     return a
 
 
@@ -551,16 +607,22 @@ def dsc_sta() -> Instrument:
                       "and a lab's operating video, fitted with register.py")
     body = _piece(inst, "body")
     # the base: the front's curve extruded across, the back square, the vertical corners rounded
-    prof = [(y, z + p["feet"]) for y, z in _STA_FRONT[:-1]] + [(-300.0, dk), (D / 2, dk), (D / 2, p["feet"])]
+    kz = (dk - p["feet"]) / _STA_FRONT[-1][1]                    # the curve scaled to the deck's height
+    prof = [(y, z * kz + p["feet"]) for y, z in _STA_FRONT[:-1]] + [(-300.0, dk), (D / 2, dk), (D / 2, p["feet"])]
     base = cq.Workplane("YZ").polyline(prof).close().extrude(W).translate((-W / 2, 0, 0))
     base = base.edges("|Z").fillet(18.0)
+    g0 = _sta(p)
+    hole = box(g0["xc"] - p["col_w"] / 2 - 2, g0["yc"] - p["col_w"] / 2 - 2, -1, g0["xc"] + p["col_w"] / 2 + 2,
+               g0["yc"] + p["col_w"] / 2 + 2, dk + 40)                 # the lifting column comes up through here
+    base = base.cut(box(g0["xc"] - p["col_w"] / 2 - 2, g0["yc"] - p["col_w"] / 2 - 2, p["feet"] + 20,
+                        g0["xc"] + p["col_w"] / 2 + 2, g0["yc"] + p["col_w"] / 2 + 2, dk + 1))
     body.add("base", base, "dsc_lightgrey")
     for fx in (-W / 2 + 45, W / 2 - 45):
         for fy in (-280.0, D / 2 - 45):
             body.add(f"foot {fx:+.0f} {fy:+.0f}", cyl(34, p["feet"], x=fx, y=fy), "dsc_dark")
     # the navy panel with its teal band, following the front's curve
     def front_y(z):
-        zz = [q[1] + p["feet"] for q in _STA_FRONT]
+        zz = [q[1] * kz + p["feet"] for q in _STA_FRONT]
         yy = [q[0] for q in _STA_FRONT]
         return float(np.interp(z, zz, yy))
     zs_ = np.linspace(p["pan_z0"], p["pan_z1"], 12)
@@ -581,7 +643,7 @@ def dsc_sta() -> Instrument:
              "dsc_blue_navy")
     # the deck: the round grey plate, the sensor flange, shields, carrier tube and sensor; the wire guard
     xs, ys = p["xs"], p["ys"]
-    body.add("deck plate", cyl(p["plate_d"], 3.0, x=xs, y=ys, z=dk), "dsc_grey")
+    body.add("deck plate", cyl(p["plate_d"], 3.0, x=xs, y=ys, z=dk).cut(hole), "dsc_grey")
     body.add("flange", cyl(62, 14, x=xs, y=ys, z=dk + 3).cut(cyl(20, 20, x=xs, y=ys, z=dk)), "dsc_copper")
     body.add("carrier tube", cyl(8, 75, x=xs, y=ys, z=dk + 10), "dsc_alumina")
     for k in range(p["n_shield"]):
@@ -593,14 +655,13 @@ def dsc_sta() -> Instrument:
     body.add("sensor plate", box(xs - 4.6, ys - sp - 4.0, g["zs"] - 3.0, xs + 4.6, ys + sp + 4.0, g["zs"] - 2.4), "dsc_pt")
     for sy in (-1, 1):
         body.add(f"sensor disc {sy:+d}", cyl(7.4, 2.4, x=xs, y=ys + sy * sp, z=g["zs"] - 2.4), "dsc_pt")
-    gr = 112.0                                                     # the wire guard's ring radius (clears the furnace)
+    gr = p["f_d"] / 2 + 14.0                                       # the wire guard's ring: clears the furnace by 14 mm
     guard = None
     for ang in (115.0, 245.0):
         gx, gy = xs + gr * math.cos(math.radians(ang)), ys + gr * math.sin(math.radians(ang))
-        post = cyl(6, 150, x=gx, y=gy, z=dk + 3)
+        post = cyl(6, 100, x=gx, y=gy, z=dk + 3)
         guard = post if guard is None else guard.union(post)
-    ring = cq.Workplane("XY").circle(gr + 3).circle(gr - 3).extrude(5).translate((xs, ys, dk + 150))
-    ring = ring.cut(box(xs + 40, ys - 200, dk + 140, xs + 200, ys + 200, dk + 160))   # open on the right: the swing
+    ring = cq.Workplane("XY").circle(gr + 3).circle(gr - 3).extrude(5).translate((xs, ys, dk + 100))
     body.add("wire guard", guard.union(ring), "dsc_stainless")
     body.add("crucible pad", box(110, 120, dk, 270, 300, dk + 3), "dsc_dark")
     # the gas side: two green solenoid valves and their fittings on the left side, the vacuum port behind on the right
@@ -614,9 +675,9 @@ def dsc_sta() -> Instrument:
     xc, yc = g["xc"], g["yc"]
     cw, hw, hh = p["col_w"], p["house_w"], p["house_h"]
     body.add("column collar", box(xc - cw / 2 - 18, yc - cw / 2 - 18, dk, xc + cw / 2 + 18, yc + cw / 2 + 18, dk + 26)
-             .edges("|Z").fillet(8), "dsc_dark")
+             .edges("|Z").fillet(8).cut(hole), "dsc_dark")
     zh0 = g["ztop"] - hh                                           # the housing's foot, furnace closed
-    hoist.add("lifting column", box(xc - cw / 2, yc - cw / 2, dk - 230, xc + cw / 2, yc + cw / 2, zh0 + 20)
+    hoist.add("lifting column", box(xc - cw / 2, yc - cw / 2, p["feet"] + 30, xc + cw / 2, yc + cw / 2, zh0 + 20)
               .edges("|Z").fillet(6), "dsc_stainless")
     hoist.add("housing", box(xc - hw / 2, yc - hw / 2 + 10, zh0, xc + hw / 2, yc + hw / 2 + 10, zh0 + hh)
               .edges("|Z").fillet(14).edges(">Z").fillet(10), "dsc_white")
@@ -625,19 +686,23 @@ def dsc_sta() -> Instrument:
     r = p["f_d"] / 2
     zf = g["zf"]
     shell = cyl(p["f_d"], p["f_h"], x=xs, y=ys, z=zf).cut(cyl(64, p["f_h"] - 30, x=xs, y=ys, z=zf - 1))
-    lo = box(xs - r - 1, ys - r - 1, zf - 1, xs + r + 1, ys + r + 1, zf + p["band_lo"])
-    mid = box(xs - r - 1, ys - r - 1, zf + p["band_lo"], xs + r + 1, ys + r + 1, zf + p["band_lo"] + p["band_dark"])
+    fh = p["foot_h"]
+    foot = box(xs - r - 1, ys - r - 1, zf - 1, xs + r + 1, ys + r + 1, zf + fh)
+    lo = box(xs - r - 1, ys - r - 1, zf + fh, xs + r + 1, ys + r + 1, zf + fh + p["band_lo"])
+    mid = box(xs - r - 1, ys - r - 1, zf + fh + p["band_lo"], xs + r + 1, ys + r + 1,
+              zf + fh + p["band_lo"] + p["band_dark"])
+    fur.add("furnace foot", shell.intersect(foot), "dsc_dark")
     fur.add("furnace lower", shell.intersect(lo), "dsc_lightgrey")
     fur.add("furnace band", shell.intersect(mid), "dsc_dark")
-    fur.add("furnace upper", shell.cut(lo).cut(mid), "dsc_lightgrey")
+    fur.add("furnace upper", shell.cut(foot).cut(lo).cut(mid), "dsc_lightgrey")
     fur.add("cap", cyl(p["f_d"] - 20, p["cap_h"], x=xs, y=ys, z=g["zt"]), "dsc_grey")
     fur.add("top fitting", cyl(34, p["fit_h"] - 12, x=xs, y=ys, z=g["zc"]).union(
         cyl(46, 12, x=xs, y=ys, z=g["ztop"] - 12)), "dsc_glassy")
-    fur.add("protective tube", tube(40, 33, p["f_h"] - 32, x=xs, y=ys, z=zf + 2), "dsc_alumina")
+    fur.add("protective tube", tube(40, 33, p["f_h"] - 52, x=xs, y=ys, z=zf + 22), "dsc_alumina")
     arm_y0 = ys + r - 8
     fur.add("arm", box(xs - 32, arm_y0, g["zt"] - 140, xs + 32, yc - hw / 2 + 10, g["zt"] - 20), "dsc_white")
     glow = _piece(inst, "glow")
-    glow.add("hot zone", tube(33, 31, p["f_h"] - 80, x=xs, y=ys, z=zf + 40), "dsc_hot")
+    glow.add("hot zone", tube(58, 52, p["f_h"] - 90, x=xs, y=ys, z=zf + 45), "dsc_hot")
     # the optional sample changer: a 20-position arc tray on the deck at the right and its gripper turret
     asc = _piece(inst, "asc")
     ax_, ay_ = 150.0, -40.0
@@ -679,11 +744,13 @@ STA_POINTS = {"sample": (STA_P["xs"], STA_P["ys"] - 5.6, _g["zs"]),          # c
               "btn_open": (STA_P["pan_x0"] + 85.0, -345.0, 200.0),
               "panel": ((STA_P["pan_x0"] + STA_P["pan_x1"]) / 2, -345.0, 180.0)}
 ANCHORS["dsc_sta"] = (STA_P, sta_anchors)
-FREE["dsc_sta"] = ["deck", "xs", "f_d", "f_h", "band_lo", "band_dark", "pan_x0", "pan_x1", "pan_z0", "pan_z1",
-                   "logo_x", "plate_d"]
+FREE["dsc_sta"] = ["deck", "xs", "f_d", "f_h", "foot_h", "band_lo", "band_dark", "pan_x0", "pan_x1", "pan_z0",
+                   "pan_z1", "logo_x", "lift", "sens_h"]
 CHECKS["dsc_sta"] = lambda p: [p["deck"] - p["pan_z1"] - 15, p["pan_x1"] - p["pan_x0"] - 100,
-                               p["W"] / 2 + p["xs"] - p["f_d"] / 2 - 40, p["f_h"] - p["band_lo"] - p["band_dark"] - 30,
-                               650.0 - (p["deck"] + 3 + p["f_h"] + p["cap_h"] + p["fit_h"]) + 15]
+                               p["W"] / 2 + p["xs"] - p["f_d"] / 2 - 40,
+                               p["f_h"] - p["foot_h"] - p["band_lo"] - p["band_dark"] - 30,
+                               650.0 - (p["deck"] + 3 + p["f_h"] + p["cap_h"] + p["fit_h"]) + 25,
+                               p["lift"] - p["sens_h"] - 10]
 
 
 REGISTRY = {"microbalance": microbalance, "dsc_sta": dsc_sta, "riffle_splitter": riffle_splitter, "gas_supply": gas_supply,

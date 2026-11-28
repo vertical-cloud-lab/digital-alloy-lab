@@ -95,45 +95,61 @@ def _zcyl_at(d, h, x, y, z):
 
 
 # ==================================================================================================== ICP-OES
-# Agilent 5900 ICP-OES (synchronous vertical dual view, SVDV) with an Agilent SPS 4 autosampler at its right, as in
-# ASU's Core Research Facilities video "Agilent 5900 ICP-OES" (youtu.be/VkMy6cp2-Y0, 0:04-0:06 the whole instrument
-# from the front left; 0:09-0:16 the torch compartment door opened; 0:18-0:26 the sample introduction bay; 0:27-0:33
-# the SPS 4). Look: a white upper housing the full width of the instrument, most of its front a black glass door
-# (the torch compartment behind its left part); the Agilent badge top left. Under it, set back on the left, a white
-# pedestal, and to its right the open sample introduction bay with dark navy walls: the peristaltic pump low on the
-# right, the cyclonic spray chamber high on the left with the concentric nebulizer entering it from the side, the
-# vertical torch above it, through the compartment's floor. The proportions are fractions of the front read off the
-# 0:05.6 frame, fitted with register.py (refs/icp_oes/); W x D x H are Agilent's (SPECS).
-ICP = dict(W=887.0, D=740.0, H=625.0, split_k=0.40, ped_x0=0.19, ped_x1=0.39, bay_x1=0.97, bay_d=260.0,
-           win_x0=0.12, win_x1=0.91, win_z0=0.50, win_z1=0.84, torch_k=0.52, sps_gap=60.0, sps_W=600.0,
-           sps_D=363.0, sps_H=510.0, top_r=22.0)
+# Agilent 5900 ICP-OES (synchronous vertical dual view, SVDV) with an Agilent SPS 4 autosampler at its right.
+# Size: 625 W x 740 D x 887 H mm, 90 kg (Agilent 5800/5900 Site Preparation Guide G8020-90003, Ed. 4, 2024, p. 19,
+# Table 3); the 887 mm is to the top of the exhaust chimney, whose 150 mm flue is 887 mm above the bench, its centre
+# 520 mm from the rear and 210 mm from the side (same guide, pp. 15, 21). SPS 4: 600 x 363 x 510 mm, 15 kg (p. 19).
+# Look, from a lab's walk-round of its 5900 (Pro Lab Support, youtu.be/SU6AoWTDZcY: 0:24 square-on, 2:10 with the
+# torch compartment open) and ASU's (youtu.be/VkMy6cp2-Y0, 0:04-0:33): a white upper housing the full width, most of
+# its front a door hinged at the left with a black glass window (the torch compartment behind it); a fixed strip at
+# the right with the status light; the chimney box on top, right of centre. Under the housing, set back on the left
+# (the housing overhangs there), a white pedestal, and to its right the open sample introduction bay with dark navy
+# walls: the peristaltic pump low on the right, the cyclonic spray chamber high on the left with the concentric
+# nebulizer entering it from the side, the vertical torch above it through the compartment's floor. The fractions of
+# the front are read off the 0:24 frame and fitted with register.py (refs/icp_oes/).
+# fitted (refs/icp_oes/fit.json; started from top 740, split 350, ped 110-230, window 70-512 x 426-647, door 554,
+# chimney x 440): the front's features in mm from its left edge and from the bench
+ICP = dict(W=625.0, D=740.0, H=887.0, top=748.3, split=358.4, ped0=101.1, ped1=230.1, bay1=616.0, bay_d=300.0,
+           wx0=66.7, wx1=520.5, wz0=438.5, wz1=655.3, dx1=563.8, torch_k=0.60, sps_gap=80.0,
+           sps_W=600.0, sps_D=363.0, sps_H=510.0, top_r=14.0, chim_w=252.1, chim_d=200.0, chim_x=454.5)
 SPECS["icp_oes"] = {
     "model": "Agilent 5900 ICP-OES (SVDV) with SPS 4 autosampler",
-    "size": "W x D x H filled in from Agilent's published figures (see notes/icp_oes.md); until checked: estimate",
-    "sps4": "SPS 4: 600 x 363 x 510 mm, 15 kg (Agilent 7800/7900 ICP-MS site preparation checklist G8400-90020, "
-            "the autosampler table; byu-vcl notes/icpms.md A1)",
-    "look": "ASU Core Research Facilities video youtu.be/VkMy6cp2-Y0 (0:04-0:33)",
-    "estimates": "the front's split, window, pedestal and bay fractions are read off the 0:05.6 frame and fitted; "
-                 "the bay's depth (260 mm), the torch's x, the pump head (90 mm) and spray chamber are estimates",
+    "size": "625 W x 740 D x 887 H mm, 90 kg: Agilent 5800/5900 Site Preparation Guide G8020-90003 Ed. 4 (2024), "
+            "p. 19 Table 3 (www.agilent.com/cs/library/usermanuals/public/G8020-90003%20ICP-OES%20Site%20Prep"
+            "%20Guide.pdf, read from the Wayback copy of 2026-01-03)",
+    "exhaust": "150 mm flue 887 mm above the bench; chimney centre 520 mm from the rear, 210 mm from the side: SPG pp. 15, 21",
+    "sps4": "SPS 4: 600 x 363 x 510 mm, 15 kg: SPG p. 19; 4 racks (Agilent SPS 4 page)",
+    "torch": "vertical one-piece Easy-fit torch; 5900 views: radial, axial, SVDV with the dichroic spectral combiner "
+             "(Agilent technical overview 5994-1514EN, p. 2); 1.8 mm quartz injector for the dual-view torch (user's "
+             "guide G8020-90002 pp. 26-27); RF 27 MHz, 750-1500 W (5994-1514EN p. 3)",
+    "sample introduction": "SeaSpray concentric glass nebulizer, double-pass glass cyclonic spray chamber (app note "
+                           "5994-5874EN p. 2); 3- or 5-channel peristaltic pump (Agilent ICP-OES help, About the "
+                           "instrument); argon 12.0 plasma, 1.00 auxiliary, 0.7 nebulizer L/min (5994-5874EN Table 1)",
+    "look": "youtu.be/SU6AoWTDZcY (0:24, 2:10); youtu.be/VkMy6cp2-Y0 (0:04-0:33)",
+    "estimates": "the box's top (the chimney the rest of the 887 mm), the front's split, door, window, pedestal "
+                 "and bay fractions are read off the 0:24 frame and fitted; the bay's depth (300 mm), the torch's x, "
+                 "the pump head (92 mm), the spray chamber (46 mm) and the compartment's inside are estimates",
 }
 
 
 def _icp(p) -> dict:
     W, D, H = p["W"], p["D"], p["H"]
     x0 = -W / 2
-    zs = p["split_k"] * H
-    g = dict(W=W, D=D, H=H, x0=x0, yf=-D / 2, zs=zs,
-             ped0=x0 + p["ped_x0"] * W, ped1=x0 + p["ped_x1"] * W, bay1=x0 + p["bay_x1"] * W,
-             wx0=x0 + p["win_x0"] * W, wx1=x0 + p["win_x1"] * W, wz0=p["win_z0"] * H, wz1=p["win_z1"] * H,
-             tx=x0 + p["torch_k"] * W)
-    g["ty"] = g["yf"] + 150.0                                   # the torch's axis, 150 mm behind the front
+    top = p["top"]
+    zs = p["split"]
+    g = dict(W=W, D=D, H=H, top=top, x0=x0, yf=-D / 2, zs=zs,
+             ped0=x0 + p["ped0"], ped1=x0 + p["ped1"], bay1=x0 + min(p["bay1"], W - 6.0),
+             wx0=x0 + p["wx0"], wx1=x0 + p["wx1"], wz0=p["wz0"], wz1=p["wz1"],
+             dx1=x0 + p["dx1"], tx=x0 + p["torch_k"] * W)
+    g["ty"] = g["yf"] + 160.0                                   # the torch's axis, 160 mm behind the front
+    g["chx"], g["chy"] = x0 + p["chim_x"], D / 2 - 520.0        # the chimney's centre (SPG: 520 mm from the rear)
     g["sps_x"] = W / 2 + p["sps_gap"] + p["sps_W"] / 2
     g["sps_y"] = g["yf"] + p["sps_D"] / 2
-    g["tz0"] = zs - 80.0                                        # the torch's foot, in the bay's top
+    g["tz0"] = zs - 60.0                                        # the torch's foot, in the bay's top
     g["pz"] = g["tz0"] + 172.0                                  # the plasma's foot, in the torch's mouth
-    g["rz"] = g["pz"] + 50.0                                    # the radial view's height
+    g["rz"] = g["pz"] + 45.0                                    # the radial view's height
     g["sz"] = g["tz0"] - 75.0                                   # the spray chamber's foot
-    g["px"], g["pzp"] = g["bay1"] - 95.0, 135.0                 # the pump head's centre
+    g["px"], g["pzp"] = g["bay1"] - 85.0, 120.0                 # the pump head's centre
     sx, sy, sw, sd, sh = g["sps_x"], g["sps_y"], p["sps_W"], p["sps_D"], p["sps_H"]
     g["rack_x0"] = sx - sw / 2 + 80.0                           # rack 0's centre
     g["probe"] = (sx + sw / 2 - 50.0, sy - 20.0)                # the probe parks over the rinse station
@@ -143,66 +159,71 @@ def _icp(p) -> dict:
     return g
 
 
+def icp_geom() -> dict:
+    return _icp(ICP)
+
+
 def icp_anchors(p, pose=None) -> dict:
     g = _icp(p)
-    W, H, yf, x0, zs = g["W"], g["H"], g["yf"], g["x0"], g["zs"]
+    W, top, yf, x0, zs = g["W"], g["top"], g["yf"], g["x0"], g["zs"]
     x1 = W / 2
-    a = {"top front left": (x0, yf, H - p["top_r"] * 0.3), "top front right": (x1, yf, H - p["top_r"] * 0.3),
+    a = {"top front left": (x0, yf, top), "top front right": (x1, yf, top),
          "upper bottom left": (x0, yf, zs), "upper bottom right": (x1, yf, zs),
          "window tl": (g["wx0"], yf, g["wz1"]), "window tr": (g["wx1"], yf, g["wz1"]),
          "window bl": (g["wx0"], yf, g["wz0"]), "window br": (g["wx1"], yf, g["wz0"]),
-         "pedestal foot left": (g["ped0"], yf + 15.0, 0.0), "pedestal top left": (g["ped0"], yf + 15.0, zs),
-         "bay foot right": (g["bay1"], yf, 0.0),
-         "top back left": (x0, -yf, H - p["top_r"] * 0.3),
-         "badge left": (g["wx0"], yf, H - 0.085 * H)}
-    sx, sy, sw, sd, sh = g["sps_x"], g["sps_y"], p["sps_W"], p["sps_D"], p["sps_H"]
-    a.update({"sps base front left": (sx - sw / 2, sy - sd / 2, 0.0), "sps base front right": (sx + sw / 2, sy - sd / 2, 0.0),
-              "sps cover top front left": (sx - sw / 2, sy - sd / 2, sh)})
+         "pedestal foot left": (g["ped0"], yf, 0.0), "pedestal top left": (g["ped0"], yf, zs),
+         "bay foot right": (g["bay1"], yf, 0.0), "bay top left": (g["ped1"], yf, zs),
+         "chimney top front left": (g["chx"] - p["chim_w"] / 2, g["chy"] - p["chim_d"] / 2, g["H"]),
+         "chimney top front right": (g["chx"] + p["chim_w"] / 2, g["chy"] - p["chim_d"] / 2, g["H"]),
+         "chimney foot front left": (g["chx"] - p["chim_w"] / 2, g["chy"] - p["chim_d"] / 2, top),
+         "door seam top": (g["dx1"], yf, top), "door seam bottom": (g["dx1"], yf, zs),
+         "top back left": (x0, -yf, top)}
     return a
 
 
 def icp_oes() -> Instrument:
     p = ICP
     g = _icp(p)
-    W, D, H, yf, x0, zs = g["W"], g["D"], g["H"], g["yf"], g["x0"], g["zs"]
+    W, D, H, top, yf, x0, zs = g["W"], g["D"], g["H"], g["top"], g["yf"], g["x0"], g["zs"]
     inst = Instrument("icp_oes", "ICP-OES with autosampler", "Agilent 5900 ICP-OES (SVDV) + SPS 4", (W, D, H),
-                      "Agilent's published W x D x H; look from ASU's 5900 video (youtu.be/VkMy6cp2-Y0), fitted "
-                      "with register.py; SPS 4 from Agilent's site preparation checklist",
+                      "Agilent 5800/5900 Site Preparation Guide G8020-90003 (W x D x H, chimney, SPS 4); look from "
+                      "two labs' videos of a 5900 (youtu.be/SU6AoWTDZcY, youtu.be/VkMy6cp2-Y0), fitted with register.py",
                       props=("sps", "sps_arm", "sps_probe", "tubes", "plasma", "beam", "sample", "flow", "glow"))
     body = _piece(inst, "body")
     shell = _piece(inst, "shell")
-    # --- the upper housing: white, full width; a shell (front, top, sides, back) around the torch compartment and
-    # the optics, so it can be made see-through for the cutaway
     t = 6.0
-    up = rbox(W, D, H - zs, 18.0, x=0, y=0, z=zs).edges(">Z and <Y").fillet(p["top_r"])
-    inner = box(x0 + t, yf + t, zs + t, W / 2 - t, -yf - t, H - t)
-    win = box(g["wx0"], yf - 2, g["wz0"], g["wx1"], yf + t + 2, g["wz1"])
-    shell.add("upper housing", up.cut(inner).cut(win), "ag_white")
-    shell.add("badge", box(g["wx0"], yf - 1.0, H - 0.105 * H, g["wx0"] + 0.15 * W, yf, H - 0.065 * H), "ag_blue")
-    shell.add("model label", box(g["wx0"] + 0.18 * W, yf - 0.6, H - 0.095 * H, g["wx0"] + 0.28 * W, yf, H - 0.080 * H),
-              "inst_grey")
-    # --- the lower body: the white pedestal (gas box, power) and the bay's frame; set back on the left
-    lower = box(g["ped0"], yf + 15.0, 0, W / 2, -yf, zs)
-    bay = box(g["ped1"], yf - 1, 30.0, g["bay1"], yf + p["bay_d"], zs + 1)
+    # --- the upper housing: white, full width; a shell round the torch compartment and the optics (see-through in
+    # the cutaway); its front's left 85 % is the door's opening
+    up = rbox(W, D, top - zs, 12.0, x=0, y=0, z=zs).edges(">Z and <Y").fillet(p["top_r"])
+    inner = box(x0 + t, yf + t, zs + t, W / 2 - t, -yf - t, top - t)
+    opening = box(x0 + 1, yf - 2, zs + 1, g["dx1"], yf + 42, top - 1)
+    shell.add("upper housing", up.cut(inner).cut(opening), "ag_white")
+    shell.add("status light", box(g["dx1"] + 12, yf - 0.8, top - 34, g["dx1"] + 40, yf, top - 28), "inst_orange")
+    shell.add("chimney", rbox(p["chim_w"], p["chim_d"], H - top - 6, 10, x=g["chx"], y=g["chy"], z=top)
+              .union(cyl(150, 6, x=g["chx"], y=g["chy"], z=H - 6)), "ag_white")
+    # --- the lower body: the white pedestal and the bay's frame; the housing overhangs the pedestal on the left
+    lower = box(g["ped0"], yf + 10.0, 14.0, W / 2, -yf, zs)
+    bay = box(g["ped1"], yf - 1, 14.0, g["bay1"], yf + p["bay_d"], zs + 1)
     body.add("lower body", lower.cut(bay), "ag_white")
-    body.add("bay walls", box(g["ped1"], yf + p["bay_d"] - 6, 30.0, g["bay1"], yf + p["bay_d"], zs)
-             .union(box(g["ped1"], yf + 15, 30.0, g["ped1"] + 6, yf + p["bay_d"], zs))
-             .union(box(g["bay1"] - 6, yf, 30.0, g["bay1"], yf + p["bay_d"], zs))
-             .union(box(g["ped1"], yf, 30.0, g["bay1"], yf + p["bay_d"], 36.0)), "ag_navy")
-    body.add("power LED", box(g["ped0"] + 0.45 * (g["ped1"] - g["ped0"]) - 4, yf + 14.0, 14.0,
-                              g["ped0"] + 0.45 * (g["ped1"] - g["ped0"]) + 4, yf + 15.0, 18.0), "led_green")
-    body.add("feet", box(g["ped0"] + 10, yf + 30, -0.0, W / 2 - 10, -yf - 20, 1.0), "inst_dark")
-    # --- the torch compartment (behind the door's left part): stainless walls, the torch box floor
+    body.add("base strip", box(g["ped0"], yf + 4, 0.0, g["bay1"], -yf - 10, 14.0), "ag_white")
+    body.add("bay walls", box(g["ped1"], yf + p["bay_d"] - 6, 14.0, g["bay1"], yf + p["bay_d"], zs)
+             .union(box(g["ped1"], yf + 10, 14.0, g["ped1"] + 6, yf + p["bay_d"], zs))
+             .union(box(g["bay1"] - 6, yf, 14.0, g["bay1"], yf + p["bay_d"], zs))
+             .union(box(g["ped1"], yf, 14.0, g["bay1"], yf + p["bay_d"], 20.0)), "ag_navy")
+    body.add("power LED", box(g["ped0"] + 0.4 * (g["ped1"] - g["ped0"]) - 5, yf + 3.0, 5.0,
+                              g["ped0"] + 0.4 * (g["ped1"] - g["ped0"]) + 5, yf + 4.0, 9.0), "led_green")
+    # --- the torch compartment behind the door: stainless walls, the torch box's floor; the optics to its right
     tx, ty = g["tx"], g["ty"]
-    cx0, cx1 = g["wx0"] + 10, tx + 150.0
-    comp = box(cx0, yf + t, zs + t, cx1, yf + 300, H - 60).cut(box(cx0 + 3, yf + t - 1, zs + t + 3, cx1 - 3, yf + 297,
-                                                                     H - 63))
+    cx0, cx1 = x0 + 30, g["dx1"] - 20
+    comp = box(cx0, yf + 44, zs + t, cx1, yf + 330, top - 40).cut(box(cx0 + 3, yf + 43, zs + t + 3, cx1 - 3, yf + 327,
+                                                                     top - 43))
     body.add("torch compartment", comp, "stainless")
-    body.add("optics housing", box(cx1 + 10, yf + 40, zs + 40, W / 2 - 30, -yf - 40, H - 50), "inst_dark")
-    body.add("radial view port", _xcyl(40, 12, x=cx1 - 12, y=ty, z=zs + 175), "inst_black")
-    body.add("axial interface", cyl(70, 22, x=tx, y=ty, z=zs + 280).union(cyl(30, 40, x=tx, y=ty, z=zs + 302)),
+    body.add("compartment panel", box(cx0 + 3, yf + 40, zs + 30, cx0 + 8, yf + 300, top - 70), "ag_white")
+    body.add("optics housing", box(cx1 + 10, yf + 40, zs + 30, W / 2 - 15, -yf - 40, top - 30), "inst_dark")
+    body.add("radial view port", _xcyl(40, 12, x=cx1 - 15, y=ty, z=g["rz"]), "inst_black")
+    body.add("axial interface", cyl(70, 20, x=tx, y=ty, z=g["pz"] + 120).union(cyl(30, 30, x=tx, y=ty, z=g["pz"] + 140)),
              "copper")
-    # --- the torch: quartz tubes, the load coil, standing through the compartment's floor
+    # --- the torch: quartz tubes and the load coil, standing through the compartment's floor
     tz0 = g["tz0"]
     torch = _piece(inst, "torch")
     torch.add("torch outer tube", tube(20, 18, 150, x=tx, y=ty, z=tz0 + 60), "quartz")
@@ -216,66 +237,69 @@ def icp_oes() -> Instrument:
     torch.add("load coil", coil.union(box(tx + 14, ty - 3, tz0 + 175, tx + 60, ty + 3, tz0 + 197)), "copper")
     plasma = _piece(inst, "plasma")
     pz = g["pz"]
-    plasma.add("plasma", cq.Workplane("XY").ellipse(9.0, 9.0).workplane(offset=34).ellipse(8.5, 8.5).loft()
-               .union(cq.Workplane("XY").sphere(8.6).translate((0, 0, 34))).union(
-                   cq.Workplane("XY").workplane(offset=40).circle(7.5).workplane(offset=26).circle(2.0).loft())
+    plasma.add("plasma", cq.Workplane("XY").circle(8.5).workplane(offset=34).circle(8.5).loft()
+               .union(cq.Workplane("XY").sphere(8.4).translate((0, 0, 34))).union(
+                   cq.Workplane("XY").workplane(offset=40).circle(7.0).workplane(offset=26).circle(2.0).loft())
                .translate((tx, ty, pz)), "icp_plasma")
     plasma.add("plasma core", cyl(6.0, 30.0, x=tx, y=ty, z=pz + 4), "icp_core")
     beam = _piece(inst, "beam")
-    # radial: sideways from the plasma's normal analytical zone to the port; axial: up the plasma's axis to the
-    # interface, then over to the optics (the 5900's DSC combines the two)
     rz = g["rz"]
-    beam.add("radial view", hose([(tx + 6, ty, rz), (cx1 - 14, ty, rz)], 5.0), "light_path")
-    beam.add("axial view", hose([(tx, ty, pz + 70), (tx, ty, zs + 300)], 5.0), "light_path")
-    beam.add("to optics", hose([(cx1 - 14, ty, rz), (cx1 + 60, ty, rz), (cx1 + 60, ty, zs + 330)], 4.0)
-             .union(hose([(tx, ty, zs + 330), (cx1 + 60, ty, zs + 330), (cx1 + 200, ty + 60, zs + 330)], 4.0)),
+    beam.add("radial view", hose([(tx + 10, ty, rz), (cx1 - 22, ty, rz)], 5.0), "light_path")
+    beam.add("axial view", hose([(tx, ty, pz + 70), (tx, ty, pz + 118)], 5.0), "light_path")
+    beam.add("to optics", hose([(cx1 - 22, ty, rz), (cx1 + 60, ty, rz), (cx1 + 60, ty, pz + 175)], 4.0)
+             .union(hose([(tx, ty, pz + 175), (cx1 + 60, ty, pz + 175), (cx1 + 120, ty + 80, pz + 175)], 4.0)),
              "light_path")
     # --- the sample introduction: spray chamber under the torch, nebulizer from the right, pump low right
     sz = g["sz"]
     body.add("spray chamber", cyl(46, 70, x=tx, y=ty, z=sz).union(
         cq.Workplane("XY").circle(23).workplane(offset=-30).circle(6).loft().translate((tx, ty, sz))), "quartz")
     body.add("chamber to torch", tube(12, 9, 6, x=tx, y=ty, z=sz + 70), "quartz")
-    body.add("nebulizer", _xcyl(9, 90, x=tx + 18, y=ty - 14, z=sz + 52), "quartz")
-    body.add("nebulizer gas line", hose([(tx + 108, ty - 14, sz + 52), (tx + 140, ty - 14, sz + 70),
-                                         (tx + 160, ty + 60, zs - 20)], 4.0), "pump_tube")
-    body.add("chamber drain", hose([(tx, ty, sz - 30), (tx, ty, 80.0), (tx + 20, ty + 20, 40.0)], 6.0), "pump_tube")
-    body.add("spray chamber clamp", box(tx - 30, ty + 20, sz + 20, tx + 30, ty + 30, sz + 55), "inst_dark")
+    body.add("nebulizer", _xcyl(9, 80, x=tx + 18, y=ty - 14, z=sz + 52), "quartz")
+    body.add("nebulizer gas line", hose([(tx + 98, ty - 14, sz + 52), (tx + 120, ty - 14, sz + 70),
+                                         (tx + 120, ty + 80, zs - 20)], 4.0), "pump_tube")
+    body.add("chamber drain", hose([(tx, ty, sz - 30), (tx, ty, 60.0), (tx - 20, ty + 30, 30.0)], 6.0), "pump_tube")
+    body.add("spray chamber clamp", box(tx - 30, ty + 23, sz + 20, tx + 30, ty + 33, sz + 55), "inst_dark")
     px, pzp = g["px"], g["pzp"]
-    body.add("pump body", box(px - 75, yf + 90, pzp - 70, px + 75, yf + p["bay_d"] - 6, pzp + 70), "inst_black")
+    body.add("pump body", box(px - 70, yf + 90, pzp - 70, px + 65, yf + p["bay_d"] - 6, pzp + 70), "inst_black")
     rotor = _piece(inst, "pump_rotor")
     head = _ycyl(92, 40, x=px, y=yf + 50, z=pzp)
     for k in range(8):
-        a = 2 * math.pi * k / 8
-        head = head.union(_ycyl(12, 42, x=px + 36 * math.cos(a), y=yf + 49, z=pzp + 36 * math.sin(a)))
+        a_ = 2 * math.pi * k / 8
+        head = head.union(_ycyl(12, 42, x=px + 36 * math.cos(a_), y=yf + 49, z=pzp + 36 * math.sin(a_)))
     rotor.add("pump head", head, "inst_dark")
     rotor.add("pump rollers", _ycyl(14, 2, x=px, y=yf + 48, z=pzp), "stainless")
-    body.add("pump clamps", box(px - 70, yf + 46, pzp + 50, px + 70, yf + 92, pzp + 62), "inst_grey")
-    body.add("pump tubing", hose([(px - 70, yf + 60, pzp + 52), (px - 20, yf + 58, pzp + 50), (px + 40, yf + 58, pzp + 50),
-                                  (px + 70, yf + 60, pzp + 52)], 3.0).union(
-        hose([(px - 70, yf + 60, pzp + 52), (tx + 60, yf + 70, sz + 30), (tx + 108, ty - 14, sz + 52)], 2.5)), "pump_tube")
-    # --- the door: the black glass front, hinged at its left edge
+    body.add("pump clamps", box(px - 62, yf + 46, pzp + 50, px + 58, yf + 92, pzp + 62), "inst_grey")
+    body.add("pump tubing", hose([(px - 62, yf + 60, pzp + 52), (px - 20, yf + 58, pzp + 50), (px + 30, yf + 58, pzp + 50),
+                                  (px + 58, yf + 60, pzp + 52)], 3.0).union(
+        hose([(px - 62, yf + 60, pzp + 52), (tx + 60, yf + 70, sz + 30), (tx + 98, ty - 14, sz + 52)], 2.5)), "pump_tube")
+    # --- the door: a white frame round the black glass window, hinged at the housing's left edge
     door = _piece(inst, "door")
-    door.add("door glass", box(g["wx0"], yf - 8, g["wz0"], g["wx1"], yf + 2, g["wz1"]), "ag_glass")
-    door.add("door grip", box(g["wx1"] - 30, yf - 10, g["wz0"] + 10, g["wx1"] - 4, yf - 8, g["wz0"] + 16), "inst_grey")
+    dz0, dz1 = zs + 3, top - 3
+    fr = box(x0 + 2, yf, dz0, g["dx1"] - 1, yf + 40, dz1).cut(box(g["wx0"], yf - 1, g["wz0"], g["dx1"] - 4, yf + 41,
+                                                                g["wz1"]))
+    door.add("door frame", fr, "ag_white")
+    door.add("door glass", box(g["wx0"], yf + 3, g["wz0"], g["wx1"], yf + 36, g["wz1"]), "ag_glass")
+    door.add("door grip", box(g["wx1"], yf + 6, g["wz0"] + 15, g["dx1"] - 4, yf + 36, g["wz1"] - 10), "inst_grey")
+    door.add("door inside", box(x0 + 40, yf + 40, zs + 40, g["dx1"] - 40, yf + 42, top - 40), "stainless")
+    door.add("badge", box(x0 + 0.075 * W, yf - 0.8, top - 0.075 * top, x0 + 0.20 * W, yf, top - 0.045 * top), "ag_blue")
     # --- the SPS 4 at the right
     sx, sy, sw, sd, sh = g["sps_x"], g["sps_y"], p["sps_W"], p["sps_D"], p["sps_H"]
     sps = _piece(inst, "sps")
     sps.add("SPS 4 base", rbox(sw, sd, 60, 10, x=sx, y=sy, z=0), "ag_white")
-    sps.add("SPS 4 tray", box(sx - sw / 2 + 15, sy - sd / 2 + 15, 60, sx + sw / 2 - 90, sy + sd / 2 - 70, 66), "inst_light")
+    sps.add("SPS 4 tray", box(sx - sw / 2 + 15, sy - sd / 2 + 15, 60, sx + sw / 2 - 90, sy + sd / 2 - 70, 63), "inst_light")
     sps.add("SPS 4 rinse station", rbox(60, 110, 70, 6, x=sx + sw / 2 - 50, y=sy - 20, z=60), "ag_white")
     sps.add("SPS 4 tower", box(sx + sw / 2 - 40, sy + sd / 2 - 60, 60, sx + sw / 2 - 5, sy + sd / 2 - 5, sh - 30), "ag_white")
-    sps.add("SPS 4 beam", box(sx - sw / 2 + 10, sy + sd / 2 - 60, sh - 80, sx + sw / 2 - 5, sy + sd / 2 - 25, sh - 40),
+    sps.add("SPS 4 beam", box(sx - sw / 2 + 10, sy + sd / 2 - 60, sh - 80, sx + sw / 2 - 5, sy + sd / 2 - 26, sh - 40),
             "ag_white")
     sps.add("SPS 4 badge", box(sx - 60, sy + sd / 2 - 61, sh - 70, sx + 20, sy + sd / 2 - 60, sh - 55), "ag_blue")
     cover = box(sx - sw / 2, sy - sd / 2, 60, sx + sw / 2, sy + sd / 2, sh).cut(
         box(sx - sw / 2 + 4, sy - sd / 2 + 4, 59, sx + sw / 2 - 4, sy + sd / 2 - 4, sh - 4))
     sps.add("SPS 4 cover", cover, "ag_cover")
-    # racks: four racks of 50 mL tubes (3 x 7 each at 30 mm)
     tubes = _piece(inst, "tubes")
     rack_parts, tube_parts = None, None
     for r in range(4):
         cx = g["rack_x0"] + r * 112
-        rk = box(cx - 50, sy - sd / 2 + 25, 60, cx + 50, sy + sd / 2 - 80, 96).cut(
+        rk = box(cx - 50, sy - sd / 2 + 25, 63, cx + 50, sy + sd / 2 - 80, 96).cut(
             box(cx - 44, sy - sd / 2 + 31, 66, cx + 44, sy + sd / 2 - 86, 97))
         rack_parts = rk if rack_parts is None else rack_parts.union(rk)
         for i in range(3):
@@ -296,27 +320,25 @@ def icp_oes() -> Instrument:
     tgt = g["tgt"]
     dip = tip - (g["tube_floor"] + 8.0)
     inst.joints = {
-        "door": Joint("hinge", axis=(0, 0, 1), pivot=(g["wx0"], yf - 8, 0), deg=-100.0),
+        "door": Joint("hinge", axis=(0, 0, 1), pivot=(x0 + 2, yf, 0), deg=-105.0),
         "pump_rotor": Joint("spin", axis=(0, 1, 0), pivot=(px, 0, pzp), deg=-1440.0),
         "plasma": Joint("fade"), "beam": Joint("fade"),
         "sps_arm": Joint("slide", vec=(tgt[0] - ax0, 0.0, 0.0)),
         "sps_probe": Joint("path", path=((0, 0, 0), (0, tgt[1] - ay0, 0), (0, tgt[1] - ay0, -dip)), parent="sps_arm"),
     }
     inst.anchors = icp_anchors(p)
-    inst.labels = [("Agilent 5900 ICP-OES", (x0, yf, H * 0.9), (0.10, 0.20)),
+    inst.labels = [("Agilent 5900 ICP-OES", (x0, yf, top * 0.9), (0.10, 0.20)),
                    ("SPS 4 autosampler", (sx, sy - sd / 2, sh), (0.85, 0.20))]
-    inst.notes = ["torch at x %.0f, y %.0f; spray chamber top z %.0f" % (tx, ty, sz + 70)]
     inst.cam = (0.6, -1.6, 0.7)
     return inst
 
 
-def icp_geom() -> dict:
-    return _icp(ICP)
 ANCHORS["icp_oes"] = (ICP, icp_anchors)
-FREE["icp_oes"] = ["split_k", "ped_x0", "ped_x1", "win_x0", "win_x1", "win_z0", "win_z1", "bay_x1"]
-CHECKS["icp_oes"] = lambda p: [p["win_z0"] - p["split_k"] - 0.03, p["win_z1"] - p["win_z0"] - 0.15,
-                               p["ped_x1"] - p["ped_x0"] - 0.08, p["bay_x1"] - p["ped_x1"] - 0.3,
-                               0.99 - p["win_z1"], p["win_x1"] - p["win_x0"] - 0.5]
+FREE["icp_oes"] = ["top", "split", "ped0", "ped1", "wx0", "wx1", "wz0", "wz1", "bay1", "dx1", "chim_x", "chim_w"]
+CHECKS["icp_oes"] = lambda p: [p["wz0"] - p["split"] - 30, p["wz1"] - p["wz0"] - 100, p["ped1"] - p["ped0"] - 50,
+                               p["bay1"] - p["ped1"] - 200, p["top"] - p["wz1"] - 20, p["wx1"] - p["wx0"] - 300,
+                               p["H"] - p["top"] - 60, p["dx1"] - p["wx1"] - 10, p["W"] - p["bay1"],
+                               p["W"] - p["dx1"] - 20]
 
 
 # ==================================================================================================== ONH836
@@ -328,12 +350,21 @@ CHECKS["icp_oes"] = lambda p: [p["win_z0"] - p["split_k"] - 0.03, p["win_z1"] - 
 # electrode housing ("LECO") with the loading head on top (a round black port, a black handle on its right), under it
 # a lit bay with the lower electrode (a black cylinder, steel rim and crucible pedestal) that drops to open, the
 # electrode cleaner's brush beside it on the left, and a rounded plinth below; a lid over the whole top.
-ONH = dict(W=762.0, D=724.0, H=813.0, scr_x0=0.05, scr_x1=0.52, scr_z0=0.19, scr_z1=0.74, head_x0=0.55,
-           head_x1=0.86, head_z0=0.53, head_z1=0.82, bay_z0=0.30, plinth_x1=0.88, head_proud=60.0, scr_proud=35.0,
-           lid_h=30.0)
+# fitted (refs/onh_analyzer/fit.json, to LECO's renders; started from H 914, screen 40-396 x 175-665, head 419-655 x
+# 484-750, bay floor 274): mm from the front's left edge and from the bench
+ONH = dict(W=762.0, D=711.0, H=928.4, sx0=39.8, sx1=324.1, sz0=176.8, sz1=719.1, hx0=414.0, hx1=705.8,
+           hz0=461.9, hz1=718.2, bz0=271.4, px1=668.4, head_proud=60.0, scr_proud=35.0, lid_h=40.0)
 SPECS["onh_analyzer"] = {
     "model": "LECO ONH836 (oxygen/nitrogen/hydrogen by inert gas fusion)",
-    "size": "W x D x H filled in from LECO's published figures (see notes/onh_analyzer.md); until checked: estimate",
+    "size": "762 W x 711 D x 914 H mm (30 x 28 x 36 in), ~186 kg: a resale listing's figures (EquipNet; marked there "
+            "as estimates). LECO publishes no envelope for the 836 series that we found: third party, unverified",
+    "method": "LECO application notes 203-821-459 (O in aluminium: crucible 776-247 for solids, 782-720 for chips and "
+              "powder; ~0.25 g solid) and 203-821-427 (powders: 0.10-0.15 g in a 502-822 nickel capsule with ~0.4 g "
+              "501-598 nickel flux; solids in 502-344 nickel baskets); furnace 4.1-5.8 kW in those methods; Edison "
+              "v3 (Liu et al. 2025, doi:10.1088/1742-6596/2959/1/012001): 80-100 mg powder in a tin capsule, ONH836 "
+              "degas 5.5 kW 20 s, analysis 5.0 kW 45 s",
+    "detection": "ONH836: O as CO and CO2 by NDIR (two cells), H as H2O by NDIR, N by thermal conductivity; He or Ar "
+                 "carrier; ~3 min cycles (leco.com/instrument/onh-elemental-analyzers, model comparison)",
     "look": "LECO 'ONH836 Series' video youtu.be/W5IGSUMWQq8 (renders 0:13-0:29); dealer video youtu.be/SJcUGXPb1Dw "
             "(0:34-3:30); LECO talk youtu.be/bmuEksg945g (0:18-0:27)",
     "estimates": "the front's screen, head and bay fractions are read off the frames and fitted; the lower "
@@ -346,9 +377,9 @@ def _onh(p) -> dict:
     W, D, H = p["W"], p["D"], p["H"]
     x0, yf = -W / 2, -D / 2
     g = dict(W=W, D=D, H=H, x0=x0, yf=yf,
-             sx0=x0 + p["scr_x0"] * W, sx1=x0 + p["scr_x1"] * W, sz0=p["scr_z0"] * H, sz1=p["scr_z1"] * H,
-             hx0=x0 + p["head_x0"] * W, hx1=x0 + p["head_x1"] * W, hz0=p["head_z0"] * H, hz1=p["head_z1"] * H,
-             bz0=p["bay_z0"] * H, px1=x0 + p["plinth_x1"] * W)
+             sx0=x0 + p["sx0"], sx1=x0 + p["sx1"], sz0=p["sz0"], sz1=p["sz1"],
+             hx0=x0 + p["hx0"], hx1=x0 + min(p["hx1"], W - 20.0), hz0=p["hz0"], hz1=p["hz1"],
+             bz0=p["bz0"], px1=x0 + min(p["px1"], W - 10.0))
     g["yh"] = yf - p["head_proud"]                              # the electrode housing's front
     g["fx"] = 0.5 * (g["hx0"] + g["hx1"])                       # the furnace axis, under the loading head
     g["fy"] = g["yh"] + 90.0
@@ -374,12 +405,13 @@ def onh_anchors(p, pose=None) -> dict:
     yh = g["yh"]
     a = {"screen tl": (g["sx0"], yp, g["sz1"]), "screen tr": (g["sx1"], yp, g["sz1"]),
          "screen bl": (g["sx0"], yp, g["sz0"]), "screen br": (g["sx1"], yp, g["sz0"]),
-         "top front left": (x0, yf, H), "top front right": (W / 2, yf, H),
-         "foot front left": (x0, yp, 0.0),
+         "cabinet top left": (x0, yf, H - p["lid_h"]), "lid top front left": (x0 - 5, yf - 5, H),
+         "foot front left": (x0 + 8, yp, 0.0),
          "head top left": (g["hx0"], yh, g["hz1"]), "head top right": (g["hx1"], yh, g["hz1"]),
          "head bottom left": (g["hx0"], yh, g["hz0"]), "head bottom right": (g["hx1"], yh, g["hz0"]),
          "port": g["port"],
          "bay floor right": (g["px1"], yf - 40.0, g["bz0"]),
+         "plinth label": (g["fx"], yf - 46.0, g["bz0"] - 64.0),
          "top back right": (W / 2, -yf, H)}
     return a
 
@@ -502,19 +534,21 @@ def onh_analyzer() -> Instrument:
 
 
 ANCHORS["onh_analyzer"] = (ONH, onh_anchors)
-FREE["onh_analyzer"] = ["scr_x0", "scr_x1", "scr_z0", "scr_z1", "head_x0", "head_x1", "head_z0", "head_z1", "bay_z0",
-                        "head_proud", "scr_proud"]
-CHECKS["onh_analyzer"] = lambda p: [p["scr_x1"] - p["scr_x0"] - 0.3, p["head_x0"] - p["scr_x1"] - 0.01,
-                                    p["head_z1"] - p["head_z0"] - 0.15, p["head_z0"] - p["bay_z0"] - 0.12,
-                                    0.97 - p["head_x1"], p["scr_z1"] - p["scr_z0"] - 0.3]
+FREE["onh_analyzer"] = ["sx0", "sx1", "sz0", "sz1", "hx0", "hx1", "hz0", "hz1", "bz0", "px1", "H"]
+CHECKS["onh_analyzer"] = lambda p: [p["sx1"] - p["sx0"] - 200, p["hx0"] - p["sx1"] - 10, p["hz1"] - p["hz0"] - 150,
+                                    p["hz0"] - p["bz0"] - 150, p["W"] - p["hx1"] - 20, p["sz1"] - p["sz0"] - 250,
+                                    p["H"] - p["hz1"] - 60, p["bz0"] - 150]
 
 
 # ==================================================================================================== MARS 6
-MARS = dict(W=560.0, D=610.0, H=660.0, door_w=420.0, door_h=330.0, door_z0=150.0)
+MARS = dict(W=533.0, D=635.0, H=635.0, door_w=400.0, door_h=320.0, door_z0=150.0)
 SPECS["microwave_digester"] = {
     "model": "CEM MARS 6 microwave digestion system",
-    "size": "W x D x H from CEM's published figures (see notes/microwave_digester.md); until checked: estimate",
-    "estimates": "door and cavity proportions from CEM's product photos; the 12-vessel rotor and the vessels' sizes",
+    "size": "21 W x 25 D x 25 H in (533 x 635 x 635 mm), 140 lb (63.6 kg): CEM MARS 6 Operation Manual rev. 8 (2011), "
+            "specifications (p. 97); 1800 W at 2450 MHz; PFA-coated 316 stainless cavity (CEM brochure B098)",
+    "vessels": "EasyPrep Plus: 12 x 100 mL, 300 C, 800 psi; MARSXpress: 40; iPrep: 16 (CEM brochure B098 p. 6; manual "
+               "p. 33)",
+    "estimates": "door and cavity proportions; the 12-vessel rotor's radius and the vessels' sizes",
 }
 
 
@@ -566,17 +600,19 @@ def mars_geom() -> dict:
 
 
 # ==================================================================================================== impulse sealer
-SEAL = dict(W=330.0, D=95.0, H=150.0, L=200.0)
+SEAL = dict(W=320.0, D=81.0, H=150.0, L=203.0)
 SPECS["heat_sealer"] = {
-    "model": "hand impulse heat sealer, 8 in (200 mm) seal",
-    "size": "W x D x H from the maker's published figures (see notes/heat_sealer.md); until checked: estimate",
+    "model": "hand impulse heat sealer, 8 in seal (Uline H-163 class)",
+    "size": "12.6 W x 3.2 D x 5.9 H in (320 x 81 x 150 mm), 6.45 lb, 410 W; seal 8 x 1/16 in (203 x 1.6 mm): "
+            "uline.com/Product/Detail/H-163",
+    "estimates": "the base, arm and jaw proportions, from Uline's photos",
 }
 
 
 def heat_sealer() -> Instrument:
     p = SEAL
     W, D, H, L = p["W"], p["D"], p["H"], p["L"]
-    inst = Instrument("heat_sealer", "Impulse heat sealer", "hand impulse sealer, 8 in", (W, D, H),
+    inst = Instrument("heat_sealer", "Impulse heat sealer", "Uline H-163 class, 8 in", (W, D, H),
                       "the maker's published size; look from product photos", props=("bag",))
     body = _piece(inst, "body")
     x0, yf = -W / 2, -D / 2
@@ -585,10 +621,10 @@ def heat_sealer() -> Instrument:
     body.add("timer dial", _ycyl(30, 10, x=x0 + 35, y=yf - 10, z=60), "inst_black")
     body.add("lamp", _ycyl(8, 4, x=x0 + 35, y=yf - 4, z=90), "led_red")
     arm = _piece(inst, "arm")
-    arm.add("arm", box(x0 + 70, yf + 4, 66, W / 2, -yf - 5, 92), "sealer_blue")
-    arm.add("upper jaw", box(x0 + 80, yf + 8, 64, x0 + 80 + L, yf + 30, 67), "pp_black")
-    arm.add("arm grip", box(W / 2 - 60, yf + 4, 92, W / 2, -yf - 5, 104), "inst_black")
-    inst.joints = {"arm": Joint("hinge", axis=(1, 0, 0), pivot=(0, -yf - 5, 66), deg=-35.0, v0=0.0)}
+    arm.add("arm", box(x0 + 70, yf + 4, 70, W / 2, -yf - 5, 95), "sealer_blue")
+    arm.add("upper jaw", box(x0 + 80, yf + 8, 66.6, x0 + 80 + L, yf + 30, 70), "pp_black")
+    arm.add("arm grip", box(W / 2 - 60, yf + 4, 95, W / 2, -yf - 5, 107), "inst_black")
+    inst.joints = {"arm": Joint("hinge", axis=(1, 0, 0), pivot=(0, -yf - 5, 70), deg=-35.0, v0=1.0)}   # v 0 closed, 1 open
     return inst
 
 
@@ -644,10 +680,11 @@ def bench_drill() -> Instrument:
         hose([(150, yb - 60, H - 100), (190, yb - 60, H - 60)], 10)), "chrome")
     quill = _piece(inst, "quill")
     qx, qy = 0, -40
-    quill.add("quill", cyl(40, 50, x=qx, y=qy, z=H - 210), "chrome")
-    quill.add("chuck", cyl(36, 50, x=qx, y=qy, z=H - 260).union(
-        cq.Workplane("XY").circle(18).workplane(offset=-15).circle(8).loft().translate((qx, qy, H - 260))), "steel")
-    quill.add("drill bit", cyl(6, 80, x=qx, y=qy, z=H - 355), "inst_dark")
+    # the bit's tip 27 mm over the 10 mm cube in the vise (its top at 235); the quill runs up inside the head
+    quill.add("quill", cyl(40, 120, x=qx, y=qy, z=365), "chrome")
+    quill.add("chuck", cyl(36, 50, x=qx, y=qy, z=315).union(
+        cq.Workplane("XY").circle(18).workplane(offset=-15).circle(8).loft().translate((qx, qy, 315))), "steel")
+    quill.add("drill bit", cyl(6, 60, x=qx, y=qy, z=262), "inst_dark")
     chips = _piece(inst, "chips")
     rng = np.random.default_rng(3)
     ch = None
@@ -663,7 +700,7 @@ def bench_drill() -> Instrument:
 
 
 def drill_geom() -> dict:
-    return dict(bit_x=0.0, bit_y=-40.0, bit_tip=DRILL["H"] - 355, vise_top=225.0, vise_y=-40.0)
+    return dict(bit_x=0.0, bit_y=-40.0, bit_tip=262.0, vise_top=225.0, vise_y=-40.0, handle=(190.0, 60.0, 500.0))
 
 
 # ==================================================================================================== props
@@ -728,6 +765,20 @@ def prop_regulator() -> Model:
     return m
 
 
+def prop_toploader() -> Model:
+    """A precision top-loading balance (0.001 g class): 200 x 300 x 85 mm body, 120 mm pan, display at the front.
+    Sizes are an estimate for the class (no maker's figure used): a 1-5 g sample needs no analytical draft shield."""
+    m = Model("toploader", "precision top-loading balance")
+    m.add("body", rbox(200, 300, 70, 12, z=4).union(box(-100, -150, 4, 100, -95, 85).edges(">Z").chamfer(20)),
+          "paint_white")
+    m.add("feet", box(-90, -140, 0, 90, 140, 4), "pp_black")
+    m.add("pan support", cyl(40, 12, x=0, y=30, z=74), "steel")
+    m.add("pan", cyl(120, 3, x=0, y=30, z=86), "steel")
+    m.add("display", box(-60, -151, 40, 60, -149, 70), "screen")
+    m.add("keys", box(-80, -151, 18, 80, -149, 30), "inst_grey")
+    return m
+
+
 def prop_coc_form() -> Model:
     """A chain-of-custody form on a clipboard (letter size, 216 x 279 mm)."""
     m = Model("coc", "chain-of-custody form on a clipboard")
@@ -760,10 +811,16 @@ def prop_cube(on_plate: bool = True) -> Model:
 
 
 def prop_feedstock() -> Model:
-    """Feedstock: a piece of 3/4 in (19 mm) bar, 40 mm long, lying down, and two master alloy pieces."""
-    m = Model("feedstock", "feedstock bar and master alloys")
+    """Feedstock: a piece of 3/4 in (19 mm) bar, 40 mm long, lying down."""
+    m = Model("feedstock", "feedstock bar")
     m.add("bar", _xcyl(19, 40, x=-20, y=0, z=9.5), "al_metal")
-    m.add("master alloy", box(30, -8, 0, 46, 6, 9).union(box(34, 12, 0, 46, 24, 7)), "al_part")
+    return m
+
+
+def prop_master() -> Model:
+    """Two master alloy pieces (as cut for the cups and plugs)."""
+    m = Model("master", "master alloy pieces")
+    m.add("master alloy", box(-8, -8, 0, 8, 6, 9).union(box(-4, 12, 0, 8, 24, 7)), "al_part")
     return m
 
 

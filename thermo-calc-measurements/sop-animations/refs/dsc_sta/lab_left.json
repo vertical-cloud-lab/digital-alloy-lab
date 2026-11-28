@@ -1,0 +1,57 @@
+{
+ "source": "https://youtu.be/mmuGqG-1LNE?t=184",
+ "video": "mmuGqG-1LNE",
+ "t": 184,
+ "camera": "lab_phone",
+ "pose": {
+  "hoist": 0.0,
+  "furnace": 0.0
+ },
+ "points": {
+  "band high left": [
+   553,
+   212
+  ],
+  "band high right": [
+   678,
+   214
+  ],
+  "band low left": [
+   553,
+   299
+  ],
+  "band low right": [
+   678,
+   302
+  ],
+  "light low left": [
+   553,
+   374
+  ],
+  "light low right": [
+   678,
+   376
+  ]
+ },
+ "curves": {
+  "band high ring": [
+   [
+    616,
+    218
+   ]
+  ],
+  "band low ring": [
+   [
+    616,
+    307
+   ]
+  ],
+  "light low ring": [
+   [
+    616,
+    384
+   ]
+  ]
+ },
+ "holdout": true
+}

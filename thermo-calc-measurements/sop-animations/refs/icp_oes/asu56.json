@@ -1,0 +1,41 @@
+{
+ "source": "https://youtu.be/VkMy6cp2-Y0?t=5.6",
+ "video": "VkMy6cp2-Y0",
+ "t": 5.6,
+ "pose": {},
+ "holdout": true,
+ "points": {
+  "top front left": [
+   221.7,
+   52.7
+  ],
+  "window tl": [
+   253,
+   90
+  ],
+  "window bl": [
+   254,
+   173
+  ],
+  "window tr": [
+   431.7,
+   90
+  ],
+  "window br": [
+   431.7,
+   172
+  ],
+  "upper bottom left": [
+   221.7,
+   198.3
+  ],
+  "pedestal top left": [
+   268.3,
+   200
+  ],
+  "bay top left": [
+   317,
+   200
+  ]
+ }
+}

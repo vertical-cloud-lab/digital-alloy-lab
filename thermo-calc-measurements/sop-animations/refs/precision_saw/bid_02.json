@@ -1,0 +1,64 @@
+{
+ "source": "https://youtu.be/WqqdOjjtBu0?t=2 (Leco VC-50 Diamond Saw #59586, Bid Service LLC)",
+ "video": "WqqdOjjtBu0",
+ "t": 2,
+ "camera": "WqqdOjjtBu0",
+ "pose": {
+  "cover": 1.0
+ },
+ "points": {
+  "ctrl front top left": [
+   130,
+   322
+  ],
+  "ctrl front top right": [
+   558,
+   435
+  ],
+  "base front top left": [
+   607,
+   490
+  ],
+  "base front top right": [
+   840,
+   573
+  ],
+  "guard front top left": [
+   627,
+   275
+  ],
+  "guard front top right": [
+   878,
+   330
+  ],
+  "guard front bottom right": [
+   880,
+   520
+  ],
+  "mic end": [
+   1200,
+   197
+  ],
+  "mic root": [
+   1003,
+   178
+  ],
+  "meter tl": [
+   370,
+   425
+  ],
+  "meter tr": [
+   523,
+   465
+  ],
+  "speed knob": [
+   468,
+   600
+  ],
+  "drawer knob": [
+   722,
+   600
+  ]
+ },
+ "holdout": true
+}

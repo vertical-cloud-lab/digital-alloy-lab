@@ -344,7 +344,7 @@ def hv_manual() -> Instrument:
     ax, ay = p["ax"]
     tx, ty = p["tur_c"]
     body = _piece(inst, "body")
-    base = rbox(w, d, p["base_h"], 24).edges(">Z").fillet(10).cut(cyl(96, 60, x=ax, y=ay, z=p["base_h"] - 50))
+    base = rbox(w, d, p["base_h"], 24).edges(">Z").fillet(10).cut(cyl(96, p["base_h"] + 2, x=ax, y=ay, z=-1))
     body.add("base", base, "p4_mitu")
     body.add("base panel", box(-110, -d / 2 - 1, 40, 110, -d / 2, 110), "p4_mitu_dk")
     body.add("screw collar", tube(110, 96, 6, x=ax, y=ay, z=p["base_h"]), "p4_mitu_dk")
@@ -352,7 +352,6 @@ def hv_manual() -> Instrument:
     body.add("head", rbox(230, 586, 180, 30, y=d / 2 - 293, z=380).edges(">Z").fillet(14), "p4_mitu")
     body.add("head band", box(-116, -251, 470, 116, d / 2 - 30, 480), "p4_mitu_dk")
     body.add("camera", rbox(50, 60, 35, 8, x=ax, y=ay, z=560), "p4_mitu_dk")
-    body.add("lens tube", cyl(40, 0.5 + 380 - 360, x=tx, y=ty, z=360), "p4_mitu_dk")
     # the AVPAK PC, its monitor and the joystick box at the right (estimate, as byu-vcl's)
     body.add("PC", box(185, 0, 0, 355, 335, 330), "p4_dark")
     body.add("PC light", box(250, -1.5, 280, 290, 0, 286), "p4_blue")
@@ -372,7 +371,7 @@ def hv_manual() -> Instrument:
     wheel = wheel.union(_xcyl(14, 30, x=-w / 2 - 50, y=ay + 40, z=90 + 46))
     hw.add("handwheel", wheel, "p4_mitu_dk")
     sz = _piece(inst, "stage_z")
-    sz.add("elevating screw", cyl(90, 110, x=ax, y=ay, z=p["base_h"] - 50), "p4_mitu_dk")
+    sz.add("elevating screw", cyl(90, 150, x=ax, y=ay, z=p["base_h"] - 90), "p4_mitu_dk")
     sz.add("Y carriage", box(-90, ay - 90, 200, 90, ay + 90, 222), "p4_mitu_dk")
     sy = _piece(inst, "stage_y")
     sy.add("X carriage", box(-75, ay - 65, 222, 75, ay + 65, 244), "p4_mitu_dk")
@@ -432,6 +431,196 @@ SPECS["hv_manual"] = [
 ]
 
 
+
+# ===================================================================================================== eddy current
+# Foerster SIGMATEST 2.070, a handheld eddy-current conductivity meter (README section 5.1). Foerster's datasheet:
+# 211 x 102 x 40 mm (H x W x D), 0.62 kg; 60/120/240/480/960 kHz; 0.5-65 MS/m (1-112 %IACS); +-0.7 % of reading
+# (60 kHz, 14 mm probe); lift-off compensation to 750 um; readings normalised to 20 C from the probe's own temperature
+# sensor; probes with 5, 8 and 14 mm heads. The look and the proportions in between (the waisted bumper, the screen,
+# the F1-F4 row, the navigation block round the F key, the 4 x 3 number block, the connector block at the top end) are
+# read off Foerster's "SIGMATEST Unpacking and Setup" video (youtu.be/l8calAolJpM, 4:32-4:38, top down) and fitted
+# with register.py (refs/eddy_meter/). Frame: the meter lying face up, its display end towards +y.
+EDDY = dict(W=102.0, L=211.0, T=40.0, taper=7.0, waist_hw=40.0, waist_y=-18.0, bot_hw=50.4, face_hw=36.0, face_t=3.0,
+            bez_w=69.0, bez_h=78.0, bez_y=61.0, scr_w=54.0, scr_h=65.0, scr_y=58.6, key_px=14.2, f_row_y=6.5,
+            nav_y=-23.7, num_y0=-53.0, num_dy=15.5, conn_w=60.0, conn_x=4.3, conn_l=12.0, probe_head=8.0)
+
+
+def _eddy_hw(p, y):
+    """The bumper's half-width at y (the waisted outline)."""
+    top, w, b = p["W"] / 2, p["waist_hw"], p["bot_hw"]
+    y0 = p["waist_y"]
+    if y >= y0 + 40:
+        return top
+    if y >= y0 + 6:
+        t = (y - (y0 + 6)) / 34.0
+        return w + (top - w) * (0.5 - 0.5 * math.cos(math.pi * t))
+    if y >= y0 - 6:
+        return w
+    if y >= y0 - 60:
+        t = ((y0 - 6) - y) / 54.0
+        return w + (b - w) * (0.5 - 0.5 * math.cos(math.pi * t))
+    return b
+
+
+def _eddy_outline(p, r=12.0, n=60):
+    L = p["L"]
+    pts = []
+    ys = np.linspace(L / 2 - r, -L / 2 + r, n)
+    for y in ys:                                          # right side, top to bottom
+        pts.append((_eddy_hw(p, y), y))
+    hb = _eddy_hw(p, -L / 2 + r)
+    for a in np.linspace(0, -90, 7)[1:]:                  # bottom right corner
+        t = math.radians(a)
+        pts.append((hb - r + r * math.cos(t), -L / 2 + r + r * math.sin(t)))
+    for a in np.linspace(-90, -180, 7)[1:]:               # bottom left
+        t = math.radians(a)
+        pts.append((-hb + r + r * math.cos(t), -L / 2 + r + r * math.sin(t)))
+    for y in ys[::-1][1:]:                                # left side, bottom to top
+        pts.append((-_eddy_hw(p, y), y))
+    ht = _eddy_hw(p, L / 2 - r)
+    for a in np.linspace(180, 90, 7)[1:]:                 # top left
+        t = math.radians(a)
+        pts.append((-ht + r + r * math.cos(t), L / 2 - r + r * math.sin(t)))
+    for a in np.linspace(90, 0, 7)[1:-1]:                 # top right
+        t = math.radians(a)
+        pts.append((ht - r + r * math.cos(t), L / 2 - r + r * math.sin(t)))
+    return pts
+
+
+def _eddy_keys(p):
+    """(name, x, y, w, h) of every key, in the meter's frame."""
+    k = p["key_px"]
+    keys = [(f"F{i + 1}", (i - 1.5) * k, p["f_row_y"], 9.0, 8.0) for i in range(4)]
+    ny = p["nav_y"]
+    keys += [("home", -1.5 * k, ny + 14.0, 9.0, 8.0), ("power", 1.5 * k, ny + 14.0, 9.0, 8.0),
+             ("up", 0.0, ny + 13.0, 9.0, 7.0), ("left", -1.0 * k, ny, 8.0, 9.0), ("F", 0.0, ny, 11.0, 10.0),
+             ("right", 1.0 * k, ny, 8.0, 9.0), ("help", -1.5 * k, ny - 14.0, 9.0, 8.0),
+             ("down", 0.0, ny - 13.0, 9.0, 7.0), ("lamp", 1.5 * k, ny - 14.0, 9.0, 8.0)]
+    labels = ("1 2 3 0", "4 5 6 -", "7 8 9 .")
+    for r_, row in enumerate(labels):
+        for c_, lab in enumerate(row.split()):
+            keys.append((f"key {lab}", (c_ - 1.5) * k * 1.03, p["num_y0"] - r_ * p["num_dy"], 9.0, 8.0))
+    return keys
+
+
+def eddy_anchors(p, pose=None) -> dict:
+    L, T = p["L"], p["T"]
+    zf = T
+    a = {}
+    for nm, sx, sy in (("tl", -1, 1), ("tr", 1, 1), ("bl", -1, -1), ("br", 1, -1)):
+        a[f"screen {nm}"] = (sx * p["scr_w"] / 2, p["scr_y"] + sy * p["scr_h"] / 2, zf + 0.6)
+        a[f"bezel {nm}"] = (sx * p["bez_w"] / 2, p["bez_y"] + sy * p["bez_h"] / 2, zf + 0.4)
+    for name, x, y, w, h in _eddy_keys(p):
+        a[name if name.startswith("key") else f"key {name}"] = (x, y, zf + 1.5)
+    a["waist left"] = (-p["waist_hw"], p["waist_y"], T - 3)
+    a["waist right"] = (p["waist_hw"], p["waist_y"], T - 3)
+    a["top edge"] = ("line", (-p["W"] / 2 + 14, L / 2, T - 3), (p["W"] / 2 - 14, L / 2, T - 3))
+    a["bottom edge"] = ("line", (-p["bot_hw"] + 14, -L / 2, T - 3), (p["bot_hw"] - 14, -L / 2, T - 3))
+    a["left side top"] = ("line", (-p["W"] / 2, L / 2 - 14, T - 3), (-p["W"] / 2, p["waist_y"] + 42, T - 3))
+    a["right side top"] = ("line", (p["W"] / 2, L / 2 - 14, T - 3), (p["W"] / 2, p["waist_y"] + 42, T - 3))
+    a["left side bottom"] = ("line", (-p["bot_hw"], -L / 2 + 14, T - 3), (-p["bot_hw"], p["waist_y"] - 62, T - 3))
+    a["right side bottom"] = ("line", (p["bot_hw"], -L / 2 + 14, T - 3), (p["bot_hw"], p["waist_y"] - 62, T - 3))
+    a["bottom left base"] = (-p["bot_hw"] + 4, -L / 2 + 4, 0.0)
+    a["bottom right base"] = (p["bot_hw"] - 4, -L / 2 + 4, 0.0)
+    a["connector"] = (p["conn_x"] + p["conn_w"] / 2 - 12, L / 2 + p["conn_l"], T / 2)
+    return a
+
+
+def probe_model(head: float = 8.0, mat_body: str = "p4_black") -> list:
+    """The pencil probe's parts [(name, Workplane, material)], its measuring face at the origin, axis +z: a steel
+    head `head` mm across, a ribbed black grip 19 mm across, a strain relief, as in Foerster's video (the 14 mm head)."""
+    parts = [("probe head", cyl(head, 3.0).union(cq.Workplane("XY").circle(head / 2).workplane(offset=9.0)
+                                                    .circle(8.0).loft().translate((0, 0, 3.0))), "p4_steel"),
+             ("probe grip", cyl(19.0, 62.0, z=12.0), mat_body)]
+    for i in range(6):
+        parts.append((f"probe rib {i}", tube(20.5, 18.0, 3.0, z=30.0 + 7.0 * i), mat_body))
+    relief = cq.Workplane("XY").circle(6.0).workplane(offset=24.0).circle(3.5).loft().translate((0, 0, 74.0))
+    parts.append(("probe relief", relief, mat_body))
+    return parts
+
+
+PROBE_LEN = 98.0           # the probe's measuring face to the end of its strain relief
+
+
+def eddy_meter() -> Instrument:
+    p = EDDY
+    L, T = p["L"], p["T"]
+    inst = Instrument("eddy_meter", "Eddy-current conductivity meter", "Foerster SIGMATEST 2.070",
+                      (p["W"], L, T), "Foerster datasheet (211 x 102 x 40 mm, 0.62 kg); the look from Foerster's "
+                      "setup video, fitted with register.py")
+    body = _piece(inst, "body")
+    outline = _eddy_outline(p)
+    # the bumper tapers towards the back (the three-quarter photo's silhouette): the back outline inset `taper` mm
+    k = (p["W"] / 2 - p["taper"]) / (p["W"] / 2)
+    back = [(x * k, y * (L / 2 - p["taper"] / 2) / (L / 2)) for x, y in outline]
+    shell = (cq.Workplane("XY").polyline(back).close().workplane(offset=T - p["face_t"]).polyline(outline).close()
+             .loft(ruled=True))
+    body.add("bumper", shell, "p4_dark")
+    fw = 2 * p["face_hw"]
+    face = rbox(fw, L - 12.0, p["face_t"] + 0.01, 8.0, y=2.0, z=T - p["face_t"])
+    body.add("face", face, "p4_light")
+    body.add("display window", box(-p["bez_w"] / 2, p["bez_y"] - p["bez_h"] / 2, T, p["bez_w"] / 2,
+                                   p["bez_y"] + p["bez_h"] / 2, T + 0.4), "p4_offwhite")
+    body.add("screen", box(-p["scr_w"] / 2, p["scr_y"] - p["scr_h"] / 2, T + 0.4, p["scr_w"] / 2,
+                           p["scr_y"] + p["scr_h"] / 2, T + 0.6), "p4_screen_ui")
+    keys = None
+    for name, x, y, w, h in _eddy_keys(p):
+        k = rbox(w, h, 1.5, 1.5, x=x, y=y, z=T)
+        keys = k if keys is None else keys.union(k)
+    body.add("keys", keys, "p4_grey")
+    cx = p["conn_x"]
+    body.add("connector block", box(cx - p["conn_w"] / 2, L / 2 - 2, 8.0, cx + p["conn_w"] / 2, L / 2 + p["conn_l"],
+                                    T - 8.0), "p4_dark")
+    lx = cx + p["conn_w"] / 2 - 12
+    body.add("LEMO socket", _ycyl(11.0, 9.0, x=lx, y=L / 2 + p["conn_l"], z=T / 2), "p4_steel")
+    body.add("SD and RJ45", box(cx - p["conn_w"] / 2 + 6, L / 2 + p["conn_l"] - 0.5, 14, cx + 4, L / 2 + p["conn_l"]
+                                + 0.3, T - 14), "p4_black")
+    # the probe, on its own piece: placed by the scene (its face at the piece's origin, axis +z)
+    pr = _piece(inst, "probe")
+    for name, w, mat in probe_model(p["probe_head"]):
+        pr.add(name, w, mat)
+    # the standards: a black carrier with two discs, as in Foerster's photo; values to bracket 25-60 %IACS
+    st = _piece(inst, "standards")
+    car = cq.Workplane("XY").slot2D(96.0, 48.0).extrude(10.0)
+    car = car.cut(cyl(33.0, 4.0, x=-23.0, z=7.0)).cut(cyl(33.0, 4.0, x=23.0, z=7.0))
+    st.add("carrier", car, "p4_black")
+    st.add("standard low", cyl(32.0, 3.0, x=-23.0, z=7.0), "p4_brass")
+    st.add("standard high", cyl(32.0, 3.0, x=23.0, z=7.0), "p4_coupon_6063")
+    inst.anchors = eddy_anchors(p)
+    inst.props = ("probe", "standards")
+    return inst
+
+
+def eddy_lemo(p=None):
+    p = p or EDDY
+    return (p["conn_x"] + p["conn_w"] / 2 - 12, p["L"] / 2 + p["conn_l"] + 9.0, p["T"] / 2)
+
+
+ANCHORS["eddy_meter"] = (EDDY, eddy_anchors)
+FREE["eddy_meter"] = ["waist_hw", "waist_y", "bot_hw", "bez_w", "bez_h", "bez_y", "scr_w", "scr_h", "scr_y",
+                      "key_px", "f_row_y", "nav_y", "num_y0", "num_dy"]
+CHECKS["eddy_meter"] = lambda p: [p["W"] / 2 - p["waist_hw"] - 3, p["face_hw"] - p["bez_w"] / 2, p["bez_w"] - p["scr_w"],
+                                  p["bez_h"] - p["scr_h"], p["L"] / 2 - (p["bez_y"] + p["bez_h"] / 2) - 3,
+                                  p["bez_y"] - p["bez_h"] / 2 - p["f_row_y"] - 5]
+SPECS["eddy_meter"] = [
+    ("housing", "211 x 102 x 40 mm (H x W x D), 0.62 kg", "Foerster SIGMATEST datasheet, "
+     "https://www.foerstergroup.com/web2print/en/mobile-testing/SIGMATEST.pdf p.3"),
+    ("display", "LCD 240 x 320 px; window about 69 x 78 mm, active about 54 x 65 mm", "datasheet p.3 (pixels); mm "
+     "measured off youtu.be/l8calAolJpM at 4:32-4:38 with the 102 mm width as the scale (estimate, then fitted)"),
+    ("frequencies", "60 / 120 / 240 / 480 / 960 kHz", "datasheet p.3"),
+    ("range", "0.5-65 MS/m (1-112 %IACS)", "datasheet p.3"),
+    ("accuracy", "+-0.7 % of reading at 60 kHz with the 14 mm probe; resolution 0.1 %", "datasheet p.3"),
+    ("lift-off compensation", "automatic, to 750 um", "datasheet p.2-3"),
+    ("temperature", "normalised to 20 C from the probe's built-in sensor (or an external one)", "datasheet p.1"),
+    ("probes", "heads 5, 8 and 14 mm; the 14 mm shielded probe reads a 14 mm bar's end face", "Foerster SIGMATEST "
+     "PROBES sheet p.1-2; SIGMATEST 2.069 manual p.65 (bergeng.com)"),
+    ("minimum thickness", "3 delta, delta [mm] = 503 / sqrt(sigma [MS/m] f [Hz])", "SIGMATEST 2.069 manual p.62"),
+    ("probe body", "19 mm grip, ~98 mm long, ribbed, black", "estimate from the video (4:32-4:38, 2:08)"),
+    ("standards", "two discs in a black stadium-shaped carrier (Foerster: NPL-traceable); disc size 32 mm estimated",
+     "Foerster REFERENCE STANDARD CONDUCTIVITY sheet p.1 (photo); values chosen to bracket 25-60 %IACS"),
+]
+
+
 # ===================================================================================================== registry
 REGISTRY = {"aging_rack": aging_rack, "tongs": tongs, "quench_bath": quench_bath, "hv_manual": hv_manual,
-            "furnace_hinged": furnace_hinged}
+            "furnace_hinged": furnace_hinged, "eddy_meter": eddy_meter}

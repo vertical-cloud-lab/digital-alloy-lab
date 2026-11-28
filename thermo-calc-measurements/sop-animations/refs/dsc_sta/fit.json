@@ -1,0 +1,190 @@
+{
+ "key": "dsc_sta",
+ "free": [
+  "deck",
+  "xs",
+  "f_d",
+  "f_h",
+  "foot_h",
+  "band_lo",
+  "band_dark",
+  "pan_x0",
+  "pan_x1",
+  "pan_z0",
+  "pan_z1",
+  "logo_x",
+  "lift",
+  "sens_h"
+ ],
+ "params": {
+  "deck": 283.6,
+  "xs": -106.5,
+  "f_d": 159.3,
+  "f_h": 311.7,
+  "foot_h": 27.5,
+  "band_lo": 77.1,
+  "band_dark": 124.3,
+  "pan_x0": -179.5,
+  "pan_x1": -2.2,
+  "pan_z0": 70.5,
+  "pan_z1": 268.6,
+  "logo_x": 224.4,
+  "lift": 137.5,
+  "sens_h": 127.5
+ },
+ "start": {
+  "deck": 283.0,
+  "xs": -94.0,
+  "f_d": 147.0,
+  "f_h": 286.0,
+  "foot_h": 28.0,
+  "band_lo": 71.0,
+  "band_dark": 116.0,
+  "pan_x0": -179.0,
+  "pan_x1": -2.0,
+  "pan_z0": 77.0,
+  "pan_z1": 274.0,
+  "logo_x": 225.0,
+  "lift": 150.0,
+  "sens_h": 118.0
+ },
+ "lenses": {
+  "netzsch_video": {
+   "focal_px": 2104.2,
+   "k1": -0.0007,
+   "hfov_deg": 33.8,
+   "width_px": 1280,
+   "fitted_from": [
+    "front_raised"
+   ]
+  },
+  "lab_phone": {
+   "focal_px": 1178.9,
+   "k1": 0.0001,
+   "hfov_deg": 57.0,
+   "width_px": 1280,
+   "fitted_from": [
+    "lab_front"
+   ]
+  }
+ },
+ "views": {
+  "front_raised": {
+   "source": "https://youtu.be/XDOAhT8CybU?t=45",
+   "size": [
+    1280,
+    720
+   ],
+   "holdout": false,
+   "camera": [
+    1.5221839954535086,
+    0.14886797635154297,
+    -0.16068154386865258,
+    586.2486993939723,
+    524.4007515053937,
+    3622.833126534802,
+    7.651707850494553,
+    -0.000748145559735445
+   ],
+   "focal_px": 2104.2,
+   "k1": -0.0007,
+   "hfov_deg": 33.8,
+   "lens": "fitted, shared by 1 view(s) of netzsch_video",
+   "rms_px_camera_only": 5.03,
+   "rms_px": 2.75,
+   "residual_px": {
+    "deck front left": 3.8,
+    "deck front right": 2.9,
+    "foot front left": 5.0,
+    "foot front right": 2.0,
+    "panel top left": 1.6,
+    "panel top right": 2.9,
+    "panel bottom left": 0.6,
+    "panel bottom right": 2.2,
+    "logo": 3.7,
+    "furnace top left": 0.9,
+    "furnace top right": 2.5,
+    "band high left": 2.1,
+    "band high right": 1.0,
+    "band low left": 0.7,
+    "band low right": 1.9,
+    "light low left": 1.8,
+    "light low right": 2.8,
+    "fitting top": 3.4,
+    "sensor": 4.7
+   }
+  },
+  "lab_front": {
+   "source": "https://youtu.be/mmuGqG-1LNE?t=64",
+   "size": [
+    1280,
+    720
+   ],
+   "holdout": false,
+   "camera": [
+    1.8385488095194435,
+    0.05120750352936366,
+    -0.04750071256807699,
+    59.3320711852685,
+    121.30917205117483,
+    1251.219020455564,
+    7.07236798784492,
+    8.1879078172274e-05
+   ],
+   "focal_px": 1178.9,
+   "k1": 0.0001,
+   "hfov_deg": 57.0,
+   "lens": "fitted, shared by 1 view(s) of lab_phone",
+   "rms_px_camera_only": 6.59,
+   "rms_px": 5.42,
+   "residual_px": {
+    "panel top left": 5.6,
+    "panel top right": 7.8,
+    "panel bottom left": 3.8,
+    "panel bottom right": 3.3,
+    "logo": 1.5,
+    "light low left": 2.6,
+    "light low right": 0.8,
+    "band low left": 1.5,
+    "band low right": 1.0,
+    "deck front left": 12.8,
+    "deck front right": 5.4
+   }
+  },
+  "lab_left": {
+   "source": "https://youtu.be/mmuGqG-1LNE?t=184",
+   "size": [
+    1280,
+    720
+   ],
+   "holdout": true,
+   "camera": [
+    1.5939308996834858,
+    -0.15305019060554043,
+    0.15547927591537447,
+    59.36936301627902,
+    327.91705997648455,
+    1571.8250740485446,
+    7.07236798784492,
+    8.1879078172274e-05
+   ],
+   "focal_px": 1178.9,
+   "k1": 0.0001,
+   "hfov_deg": 57.0,
+   "lens": "held fixed at the lens of lab_front",
+   "rms_px_camera_only": 6.26,
+   "rms_px": 6.06,
+   "residual_px": {
+    "band high left": 2.4,
+    "band high right": 1.6,
+    "band low left": 11.7,
+    "band low right": 9.5,
+    "light low left": 1.1,
+    "light low right": 3.4,
+    "band high ring (1)": 0.9,
+    "band low ring (1)": 3.2,
+    "light low ring (1)": 8.5
+   }
+  }
+ }
+}

@@ -50,7 +50,7 @@ MATERIALS = {
     "chamber_wall": (0.78, 0.79, 0.80, 1.0, 0.35),
     "chamber_floor": (0.66, 0.67, 0.69, 1.0, 0.45),
     "recoater_blade": (0.30, 0.31, 0.33, 1.0, 0.40),
-    "gas_arrow": (0.35, 0.55, 0.80, 0.55, 0.0),
+    "gas_arrow": (0.40, 0.55, 0.72, 0.45, 0.0),
     "denuded": (0.70, 0.71, 0.73, 1.0, 0.45),
     # etching props
     "hdpe_white": (0.94, 0.94, 0.91, 1.0, 0.15),
@@ -87,9 +87,11 @@ CHECKS: dict = {}
 # control box, its +x face behind a green window in the guard; the arm pivots at the back of the guard and carries the
 # vise over the blade; the micrometer comes out of the right side at the back; a clear cover hinged at the back closes
 # over the arm.
-VC50 = dict(W=356.0, D=440.0, plinth=17.0, ctrl_w=247.0, ctrl_h=168.0, deck=102.0, gy0=60.0, gd=220.0, gh=100.0,
-            blade_d=127.0, blade_t=0.36, blade_yk=0.45, blade_dz=22.0, piv_dz=160.0, mic_dz=118.0, mic_len=76.0,
-            mic_y=95.0, cover_h=118.0, meter_x=0.62, meter_z=0.66)
+# fitted to LECO's photo and a front frame of the instructional video (refs/precision_saw/fit.json, 2026-11-28); D and
+# the micrometer's reach are held at the published envelope
+VC50 = dict(W=364.2, D=440.0, plinth=17.5, ctrl_w=252.0, ctrl_h=170.4, deck=105.0, gy0=56.7, gd=173.4, gh=108.1,
+            blade_d=127.0, blade_t=0.36, blade_yk=0.50, blade_dz=22.0, piv_dz=160.0, mic_dz=70.8, mic_len=76.0,
+            mic_y=133.0, cover_h=116.9, meter_x=0.70, meter_z=0.60)
 
 SPECS["precision_saw"] = {
     "model": "LECO VC50 Vari/Cut precision diamond saw (low speed)",
@@ -137,7 +139,8 @@ def saw_points(p=None) -> dict:
     return dict(blade_centre=(g["bx"], g["by"], g["bz"]), blade_top=(g["bx"], g["by"], g["top"]),
                 strip=(g["bx"] - 2.5, g["by"], g["top"] + 5.0 + 3.2), pivot=tuple(g["piv"]),
                 oil_level=p["deck"] - 18.0,
-                drawer_knob=(g["xr0"] + (g["W"] / 2 - g["xr0"]) / 2, g["yf"] - 22.0, (p["plinth"] + p["deck"]) / 2),
+                drawer_knob=(g["xr0"] + (g["W"] / 2 - g["xr0"]) / 2, g["yf"] - 22.0,
+                             p["plinth"] + 0.55 * (p["deck"] - p["plinth"])),
                 cover_hinge=(g["bx"], g["gy1"], g["gz1"]), guard=(g["gx0"], g["gx1"], g["gy0"], g["gy1"], g["gz0"],
                                                                   g["gz1"]))
 
@@ -163,7 +166,7 @@ def precision_saw_anchors(p, pose=None) -> dict:
     a.update({"meter tl": (mx - 40, yf - 3, mz + 25), "meter tr": (mx + 40, yf - 3, mz + 25),
               "meter bl": (mx - 40, yf - 3, mz - 37), "meter br": (mx + 40, yf - 3, mz - 37),
               "speed knob": (mx, yf - 12, pl + 0.20 * (ch - pl)),
-              "drawer knob": (xr0 + (W / 2 - xr0) / 2, yf - 14, pl + 0.45 * (dk - pl))})
+              "drawer knob": (xr0 + (W / 2 - xr0) / 2, yf - 14, pl + 0.55 * (dk - pl))})
     return a
 
 
@@ -178,8 +181,8 @@ def precision_saw() -> "Instrument":
     vise, a prop: fade it in or out); ``slice`` (the section that falls off, a prop); ``cover`` (the clear cover).
 
     Joints: ``cover`` hinge about x at the guard's back top edge, 0 closed -> 1 open (105 deg up and back);
-    ``arm`` hinge about the pivot (the feed): 0 = the strip 5 mm over the blade, 1 = 14 mm lower (through the 6.4 mm
-    strip; values below 0 lift the arm, above 1 go deeper); ``wheel`` spin about the spindle (x), 0 -> 1 = 12 turns
+    ``arm`` hinge about the pivot (the feed): 0 = the piece 5 mm over the blade, 1 = 16 mm lower (through the 10 mm
+    piece; values below 0 lift the arm, above 1 go deeper); ``wheel`` spin about the spindle (x), 0 -> 1 = 12 turns
     (scale the step time for rpm); ``carriage`` slide along -x, 0 -> 1 = 25 mm (the micrometer's travel: 0 puts the
     cut 0.5 mm from the strip's target plane); ``weight`` slide along the arm,
     0 -> 1 = 80 mm toward the vise (more load); ``tank`` slide toward you (-y), 0 -> 1 = 150 mm (the drawer out).
@@ -198,7 +201,11 @@ def precision_saw() -> "Instrument":
     # the plinth, the control box and the right base
     body.add("plinth", box(-W / 2, yf, 0, W / 2, yb, pl).edges("|Z").fillet(3), "vc_grey")
     body.add("control box", box(-W / 2, yf, pl, xr0, yb, ch).edges(">Z").fillet(3), "vc_grey")
-    body.add("right base", box(xr0, yf + 8, pl, W / 2, yb, dk).edges(">Z and >X").fillet(2), "vc_grey")
+    gxa, gxb, gya, gyb = xr0 + 4.0 + 1.5, W / 2 - 4.0 - 4.0, yf + p["gy0"] + 1.5, yf + p["gy0"] + p["gd"] - 1.5
+    base = box(xr0, yf + 8, pl, W / 2, yb, dk).edges(">Z and >X").fillet(2)
+    base = base.cut(box(xr0 + 3, yf + 6, pl + 4, W / 2 - 3, gyb, dk - 2))          # the drawer's cavity
+    base = base.cut(box(gxa, gya, dk - 3, gxb, gyb, dk + 1))                      # open under the guard
+    body.add("right base", base, "vc_grey")
     # the front panel, inset, with its four screws
     px0, px1, pz0, pz1 = -W / 2 + 4, xr0 - 4, pl + 3, ch - 4
     body.add("front panel", box(px0, yf - 1.2, pz0, px1, yf + 0.5, pz1), "vc_panel")
@@ -239,8 +246,8 @@ def precision_saw() -> "Instrument":
         box(g["bx"] - 4, g["by"] - g["R"] - 3, gz0 - 2, g["bx"] + 4, g["by"] + g["R"] + 3, gz0 + 1))
     body.add("strainer", strainer, "perf")
     # the spindle housing through the left wall, from the control box
-    body.add("spindle", _xcyl(16, g["bx"] - gx0 + 2, x=gx0 - 2, y=g["by"], z=g["bz"]), "steel")
-    body.add("spindle boss", _xcyl(30, 14, x=gx0 + t, y=g["by"], z=g["bz"]), "vc_grey")
+    body.add("spindle boss", _xcyl(30, 14, x=gx0 + t, y=g["by"], z=g["bz"]).cut(
+        _xcyl(17, 20, x=gx0 - 2, y=g["by"], z=g["bz"])), "vc_grey")
     # the casting at the back of the base that carries the arm's pivot and the micrometer, out of its right side
     mic = g["mic"]
     piv = g["piv"]
@@ -256,8 +263,8 @@ def precision_saw() -> "Instrument":
     tx0, tx1 = xr0 + 6, W / 2 - 6
     tank.add("drawer front", box(xr0 + 2, yf, pl + 3, W / 2 - 2, yf + 8, dk - 3), "vc_grey")
     kx = (xr0 + W / 2) / 2
-    tank.add("drawer knob", _ycyl(18, 12, x=kx, y=yf - 12, z=pl + 0.45 * (dk - pl)).union(
-        _ycyl(10, 3, x=kx, y=yf - 15, z=pl + 0.45 * (dk - pl))), "inst_black")
+    tank.add("drawer knob", _ycyl(18, 12, x=kx, y=yf - 12, z=pl + 0.55 * (dk - pl)).union(
+        _ycyl(10, 3, x=kx, y=yf - 15, z=pl + 0.55 * (dk - pl))), "inst_black")
     trough = (box(tx0, yf + 8, pl + 8, tx1, gy1 - 4, dk - 6)
               .cut(box(tx0 + 2, yf + 10, pl + 10, tx1 - 2, gy1 - 6, dk)))
     tank.add("trough", trough, "stainless")
@@ -269,6 +276,7 @@ def precision_saw() -> "Instrument":
     wheel.add("blade core", _xcyl(2 * R - 6, bt, x=bx - bt / 2, y=by, z=bz), "blade_core")
     wheel.add("diamond rim", _xcyl(2 * R, bt + 0.1, x=bx - bt / 2 - 0.05, y=by, z=bz).cut(
         _xcyl(2 * R - 6, bt + 2, x=bx - bt / 2 - 1, y=by, z=bz)), "blade_rim")
+    wheel.add("spindle", _xcyl(16, bx - bt / 2 - 5 - (g["gx0"] - 2), x=g["gx0"] - 2, y=by, z=bz), "steel")
     wheel.add("flange in", _xcyl(46, 5, x=bx - bt / 2 - 5, y=by, z=bz), "stainless")
     wheel.add("flange out", _xcyl(46, 5, x=bx + bt / 2, y=by, z=bz), "stainless")
     nut = _xcyl(30, 24, x=bx + bt / 2 + 5, y=by, z=bz)
@@ -284,36 +292,29 @@ def precision_saw() -> "Instrument":
     car.add("micrometer thimble", _xcyl(26, 32 * f, x=W / 2 + 34 * f, y=mic[1], z=mic[2]), "chrome")
     car.add("micrometer ratchet", _xcyl(12, 10 * f, x=W / 2 + 66 * f, y=mic[1], z=mic[2]), "chrome")
     arm = _piece(inst, "arm")
-    vtop = g["top"] + 5.0 + 6.0 + 12.0                 # the vise's top: 5 mm gap + 6 mm strip + 12 mm jaw
-    arm_z = vtop + 6.0                                 # the arm's underside, over the vise
-    # the arm: a 20 x 14 mm bar from the pivot forward over the blade, the vise hanging under its front end
-    ay0 = by - 34.0
-    arm.add("arm bar", box(bx - 10, ay0, arm_z, bx + 10, piv[1] + 4, arm_z + 14), "stainless")
-    arm.add("arm link", box(bx - 8, piv[1] - 8, min(arm_z, piv[2] - 6), bx + 8, piv[1] + 8, max(arm_z + 14, piv[2] + 6))
-            .union(_xcyl(18, 30, x=bx - 15, y=piv[1], z=piv[2])), "stainless")
-    arm.add("weight rail", box(bx - 4, ay0 + 40, arm_z + 14, bx + 4, piv[1] - 20, arm_z + 18), "steel")
     # the vise clamps the strip by its front and back ends (screw along y, knurled knob at the front); its jaws stay on
     # the -x side of the blade, and the strip sticks out 2.5 mm past them, so the blade takes a sliver off its +x side
     # and leaves the section face on the clamped piece (#243 section 3: cut 0.5 mm from the target plane)
     sx0, sx1 = bx - 7.5, bx + 2.5                      # the strip: 10 mm across the blade (x)
     sy0, sy1 = by - 11.0, by + 11.0                    # 22 mm along it (y): nine tracks at 2 mm pitch
     s_z0 = g["top"] + 5.0                              # its underside, 5 mm over the blade with the arm up
-    s_z1 = s_z0 + 6.4                                  # a 1/4 in (6.35 mm) 6061 plate
+    s_z1 = s_z0 + 10.0                                 # cut ~10 mm below the tracks (#243 section 3)
     jx0, jx1 = bx - 26.0, bx - 1.8
     arm_z = piv[2] - 7.0                               # the arm bar's underside: the bar runs level through the pivot
     vtop = s_z1 + 8.0
     arm.add("vise fixed jaw", box(jx0, sy1, s_z0 + 1.0, jx1, sy1 + 10, arm_z), "stainless")
     arm.add("vise moving jaw", box(jx0, sy0 - 10, s_z0 + 1.0, jx1, sy0, vtop), "stainless")
     arm.add("vise column", box(jx0, sy0 - 12, vtop, jx1, sy0 + 6, arm_z), "stainless")
-    arm.add("vise screw block", box(jx0, sy0 - 44, s_z0 - 1, jx1, sy0 - 12, s_z0 + 12), "stainless")
-    arm.add("vise screw", _ycyl(10, 32, x=(jx0 + jx1) / 2, y=sy0 - 42, z=s_z0 + 5), "steel")
-    arm.add("vise knob", _ycyl(24, 14, x=(jx0 + jx1) / 2, y=sy0 - 58, z=s_z0 + 5), "stainless")
-    arm.add("brass insert", _xcyl(14, 10, x=jx0 - 10, y=sy0 - 28, z=s_z0 + 5), "brass")
+    arm.add("vise screw block", box(jx0, sy0 - 30, s_z0 - 1, jx1, sy0 - 12, s_z0 + 12), "stainless")
+    arm.add("vise screw", _ycyl(10, 22, x=(jx0 + jx1) / 2, y=sy0 - 30, z=s_z0 + 5), "steel")
+    arm.add("vise knob", _ycyl(24, 12, x=(jx0 + jx1) / 2, y=sy0 - 42, z=s_z0 + 5), "stainless")
+    arm.add("brass insert", _xcyl(14, 10, x=jx0 - 10, y=sy0 - 22, z=s_z0 + 5), "brass")
     # the arm: a 20 x 14 mm bar from the pivot forward over the vise
     ax = (jx0 + jx1) / 2
     ay0 = sy0 - 14.0
-    arm.add("arm bar", box(ax - 10, ay0, arm_z, ax + 10, piv[1] + 12, arm_z + 14), "stainless")
-    arm.add("arm boss", _xcyl(22, 20, x=ax - 10, y=piv[1], z=piv[2]), "stainless")
+    bore = _xcyl(11, 40, x=ax - 20, y=piv[1], z=piv[2])
+    arm.add("arm bar", box(ax - 10, ay0, arm_z, ax + 10, piv[1] + 12, arm_z + 14).cut(bore), "stainless")
+    arm.add("arm boss", _xcyl(22, 20, x=ax - 10, y=piv[1], z=piv[2]).cut(bore), "stainless")
     arm.add("weight rail", box(ax - 4, ay0 + 30, arm_z + 14, ax + 4, piv[1] - 20, arm_z + 18), "steel")
     wt = _piece(inst, "weight")
     wy = ay0 + 50.0
@@ -329,18 +330,20 @@ def precision_saw() -> "Instrument":
     cz0, cz1 = gz1, gz1 + p["cover_h"]
     lean = 34.0                                        # the front face leans back by this much at the top (photos)
     cb = cy1 + 2                                       # the cover's back, behind the pivot casting
-    prof = [(gy0 - 2, cz0), (cb, cz0), (cb, cz1), (gy0 - 2 + lean, cz1)]
+    ct = mic[2] + 26.0                                 # the casting's top: the cover's back half sits on it
+    prof = [(gy0 - 2, cz0), (cy0 - 1, cz0), (cy0 - 1, ct), (cb, ct), (cb, cz1), (gy0 - 2 + lean, cz1)]
     shell = cq.Workplane("YZ").polyline(prof).close().extrude(cx1 - cx0).translate((cx0, 0, 0))
-    inner = cq.Workplane("YZ").polyline([(gy0 + 1, cz0 - 1), (cb - 3, cz0 - 1), (cb - 3, cz1 - 3),
+    inner = cq.Workplane("YZ").polyline([(gy0 + 1, cz0 - 1), (cy0 + 2, cz0 - 1), (cy0 + 2, ct - 1), (cb - 3, ct - 1),
+                                         (cb - 3, cz1 - 3),
                                          (gy0 + 1 + lean, cz1 - 3)]).close().extrude(cx1 - cx0 - 6).translate(
         (cx0 + 3, 0, 0))
     cov.add("clear cover", shell.cut(inner), "clear_cover")
     cov.add("cover top", box(cx0, gy0 - 2 + lean, cz1 - 2, cx1, cb, cz1 + 1), "vc_grey")
-    cov.add("cover front strip", box(cx0 + 12, gy0 - 4, cz0, cx1 - 12, gy0 - 1, cz0 + 26), "stainless")
+    cov.add("cover front strip", box(cx0 + 12, gy0 - 5, cz0 - 30, cx1 - 12, gy0 - 2, cz0 + 4), "stainless")
     # the arm's travel: the vise moves on a circle about the pivot; 24 mm down at the vise
     rv = math.hypot(piv[1] - by, piv[2] - s_z0)        # the strip's radius about the pivot
-    feed_deg = math.degrees(14.0 / rv)
-    hinge = (0.0, cb, cz0)
+    feed_deg = math.degrees(16.0 / rv)
+    hinge = (0.0, cb, ct)
     inst.joints = {
         "cover": Joint("hinge", axis=(1, 0, 0), pivot=hinge, deg=-105.0),
         "carriage": Joint("slide", vec=(-25.0, 0, 0)),
@@ -366,8 +369,10 @@ def precision_saw() -> "Instrument":
 
 
 ANCHORS["precision_saw"] = (VC50, precision_saw_anchors)
-FREE["precision_saw"] = ["W", "D", "plinth", "ctrl_w", "ctrl_h", "deck", "gy0", "gd", "gh", "mic_dz", "mic_y",
-                         "mic_len", "meter_x", "meter_z"]
+# D (440: the published 457 less the knobs) and the micrometer's reach (76: the published 432 less the chassis) are
+# held at the published envelope; no view pins the depth down (fit.json, notes/precision_saw.md)
+FREE["precision_saw"] = ["W", "plinth", "ctrl_w", "ctrl_h", "deck", "gy0", "gd", "gh", "mic_dz", "mic_y",
+                         "meter_x", "meter_z"]
 CHECKS["precision_saw"] = lambda p: [p["ctrl_h"] - p["deck"] - 20, p["deck"] - p["plinth"] - 40,
                                      p["D"] - p["gy0"] - p["gd"] - 60, p["W"] - p["ctrl_w"] - 80,
                                      p["gd"] - p["blade_d"] - 20]
@@ -449,13 +454,14 @@ def lpbf_chamber() -> "Instrument":
     y0 = -300.0
     rec.add("recoater holder", box(-L / 2 - 20, y0 - 14, 6, L / 2 + 20, y0 + 14, 40), "stainless")
     rec.add("recoater blade", box(-L / 2, y0 + 8, 0.06, L / 2, y0 + 11, 12), "recoater_blade")
-    rec.add("recoater arm", box(L / 2 + 20, y0 - 10, 20, fx - 2, y0 + 10, 34), "stainless")
+    rec.add("recoater riser", box(L / 2 + 20, y0 - 10, 6, L / 2 + 40, y0 + 10, 92), "stainless")
+    rec.add("recoater arm", box(L / 2 + 40, y0 - 10, 78, fx - 2, y0 + 10, 92), "stainless")     # over the outlet duct
     gas = _piece(inst, "gas")
-    for i, yy in enumerate((-60.0, 0.0, 60.0)):
-        for j, x0 in enumerate((-250.0, -80.0, 90.0)):
-            shaft = box(x0, yy - 1.5, 18.5, x0 + 120, yy + 1.5, 21.5)
-            head = (cq.Workplane("XY").polyline([(x0 + 120, yy - 8), (x0 + 140, yy), (x0 + 120, yy + 8)]).close()
-                    .extrude(3).translate((0, 0, 18.5)))
+    for i, yy in enumerate((-95.0, 95.0)):
+        for j, x0 in enumerate((-250.0, -70.0, 110.0)):
+            shaft = box(x0, yy - 1.0, 28.0, x0 + 90, yy + 1.0, 30.0)
+            head = (cq.Workplane("XY").polyline([(x0 + 90, yy - 6), (x0 + 106, yy), (x0 + 90, yy + 6)]).close()
+                    .extrude(2).translate((0, 0, 28.0)))
             gas.add(f"gas arrow {i}{j}", shaft.union(head), "gas_arrow")
     beam = _piece(inst, "beam")
     beam.add("beam cone", cq.Workplane("XY").circle(0.06).workplane(offset=220).circle(6.0).loft(), "laser_beam")
@@ -538,8 +544,8 @@ def etch_props() -> dict:
     m.add("label", tube(80.6, 79.8, 45, z=30), "paper")
     out["aps"] = m
     m = Model("face_shield", "face shield on its headband")
-    m.add("visor", tube(230, 226, 220, z=0).cut(box(-130, -10, -1, 130, 130, 230)), "face_shield")
-    m.add("band", tube(232, 222, 24, z=220).cut(box(-130, -10, 200, 130, 130, 260)), "pp_black")
+    m.add("visor", tube(230, 226, 200, z=0).cut(box(-130, -130, -1, 130, 10, 230)), "face_shield")
+    m.add("band", tube(232, 222, 22, z=200), "pp_black")
     out["face_shield"] = m
     return out
 

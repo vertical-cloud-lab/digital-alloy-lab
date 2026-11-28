@@ -1,0 +1,111 @@
+{
+ "source": "https://www.leco.com/wp-content/uploads/2026/03/leco-vc50-wafering-saw.webp (LECO's VC50 product photo, https://www.leco.com/instrument/vc50-precision-wafering-saw/)",
+ "camera": "leco_photo",
+ "pose": {
+  "cover": 0.0,
+  "arm": 0.0
+ },
+ "points": {
+  "ctrl front top left": [
+   241,
+   345
+  ],
+  "ctrl front top right": [
+   628,
+   398
+  ],
+  "ctrl front bottom left": [
+   247,
+   572
+  ],
+  "ctrl back top left": [
+   464,
+   160
+  ],
+  "base front top left": [
+   633,
+   480
+  ],
+  "base front top right": [
+   800,
+   503
+  ],
+  "plinth front right": [
+   805,
+   655
+  ],
+  "guard front top left": [
+   652,
+   282
+  ],
+  "guard front top right": [
+   822,
+   300
+  ],
+  "guard front bottom right": [
+   820,
+   474
+  ],
+  "guard back top right": [
+   888,
+   245
+  ],
+  "mic root": [
+   906,
+   268
+  ],
+  "mic end": [
+   1050,
+   290
+  ],
+  "meter tl": [
+   452,
+   412
+  ],
+  "meter tr": [
+   578,
+   430
+  ],
+  "meter bl": [
+   451,
+   505
+  ],
+  "meter br": [
+   576,
+   523
+  ],
+  "speed knob": [
+   512,
+   563
+  ],
+  "drawer knob": [
+   715,
+   545
+  ]
+ },
+ "lines": {
+  "z": [
+   [
+    [
+     241,
+     345
+    ],
+    [
+     247,
+     572
+    ]
+   ],
+   [
+    [
+     820,
+     300
+    ],
+    [
+     820,
+     474
+    ]
+   ]
+  ]
+ },
+ "holdout": false
+}
