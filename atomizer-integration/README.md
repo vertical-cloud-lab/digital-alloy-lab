@@ -86,8 +86,9 @@ the lenses' fields of view:
 
 ## Order list
 
-All 45 vendor pages were loaded through the CubXL Pi, the only lab Pi online that day. 23 were fetched with curl on the
-Pi, and the Amazon pages with a headless browser tunnelled through the same Pi. Prices are from 28 November 2026.
+Every vendor page was loaded through the CubXL Pi, the only lab Pi online that day: 45 page loads in all. 23 were
+fetched with curl on the Pi, 21 Amazon pages in a headless browser tunnelled through the same Pi, and one load checked
+the tunnel's exit network. Prices are from 28 November 2026.
 The full list, alternatives, connector details and what to check first are in
 [`shopping/order_list_2026-11-28.md`](shopping/order_list_2026-11-28.md). Every candidate, with URL, stock and
 fetch time, is in [`shopping/order_list_2026-11-28.json`](shopping/order_list_2026-11-28.json).

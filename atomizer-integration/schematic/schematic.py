@@ -85,7 +85,7 @@ def system():
          ["X3 DB15: power OUT 0-10 V, amplitude IN 0-10 V,",
           "   start, clear error, 24 V status lines",
           "X5/X6 RJ45: RS-485 Modbus RTU, address 170",
-          "BASIC variant (no screen): the HMI is its only display"])
+          "looks like the BASIC variant (no screen), so the HMI is its display"])
     # existing links inside the machine
     line(ax, [(6.0, 13.5), (6.0, 26.5)], C["rs485"], lw=2.0)
     tag(ax, 6.4, 19.0, "RS-485 Modbus RTU\n(PLC is the one master)", color=C["rs485"], size=7.0, bg=FILL["amazemet"])

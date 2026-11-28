@@ -1,0 +1,125 @@
+{
+ "name": "integration_steps",
+ "fps": 15,
+ "n_frames": 1185,
+ "size": [
+  1280,
+  720
+ ],
+ "substeps": [
+  {
+   "label": "0",
+   "caption": "Getting settings and readings off the rePowder, in four add-ons from least to most intrusive. Steps 1 and 2 only watch screens, so they need nothing from AMAZEMET. Steps 3 and 4 connect to AMAZEMET's controls, so they wait for AMAZEMET's OK.",
+   "start_frame": 0,
+   "end_frame": 86
+  },
+  {
+   "label": "1.1",
+   "caption": "HMI camera. Clean the glass and lay a matte anti-glare film (15.6 in, 16:9, 344 × 194 mm) over the screen. Use plain matte film, not privacy film, which would black out a camera looking from above.",
+   "start_frame": 87,
+   "end_frame": 140
+  },
+  {
+   "label": "1.2",
+   "caption": "A super clamp on the HMI's own top edge, rubber pads on both jaws, nothing drilled. The camera then swings with the HMI and stays framed wherever the arm is turned.",
+   "start_frame": 141,
+   "end_frame": 191
+  },
+  {
+   "label": "1.3",
+   "caption": "Articulating arm, then the printed case with a Camera Module 3 Wide (102° × 67°) about 260 mm from the screen and 50° above it. The whole screen fills 86° × 36° of the frame, and the camera is above the operator's line of sight.",
+   "start_frame": 192,
+   "end_frame": 251
+  },
+  {
+   "label": "1.4",
+   "caption": "Its flat cable runs over the top edge to the HMI camera Pi (the existing one), in a case on the HMI's back.",
+   "start_frame": 252,
+   "end_frame": 305
+  },
+  {
+   "label": "1.5",
+   "caption": "What the camera has to see (yellow): the screen's corners are at most 43° left and right of its axis and 18° above and below, inside the Wide's 51° and 33.5°.",
+   "start_frame": 306,
+   "end_frame": 359
+  },
+  {
+   "label": "1.6",
+   "caption": "Before anyone types a password on the HMI, flip the shutter down. Flip it up afterwards. The stream itself can stay public.",
+   "start_frame": 360,
+   "end_frame": 428
+  },
+  {
+   "label": "2.1",
+   "caption": "Furnace panel camera. The GU 500's LCD gets a piece of the same film, cut a little larger than the display.",
+   "start_frame": 429,
+   "end_frame": 479
+  },
+  {
+   "label": "2.2",
+   "caption": "The cabinet is painted steel, so a switchable magnetic base holds a short arm, with nothing drilled. A Camera Module 3 (66°) in the same printed case sits about 200 mm from the LCD, 30° above it.",
+   "start_frame": 480,
+   "end_frame": 539
+  },
+  {
+   "label": "2.3",
+   "caption": "The panel camera Pi (the existing one) sits on the cabinet's top on magnets. The LCD's corners fall within 17° and 8° of the camera's axis.",
+   "start_frame": 540,
+   "end_frame": 596
+  },
+  {
+   "label": "3.1",
+   "caption": "HMI Ethernet, if AMAZEMET agrees. The HMI has one Ethernet port. If it is free, one patch cable from the Pi is enough. If it already goes to the PLC (likely), a 5-port switch goes on that link, on the HMI's back.",
+   "start_frame": 597,
+   "end_frame": 656
+  },
+  {
+   "label": "3.2",
+   "caption": "Move the HMI's cable to the switch, then patch the switch to the HMI and to the Pi. The Pi joins the HMI's subnet on its Ethernet port only. Its Wi-Fi stays on the lab network, and it routes nothing between the two.",
+   "start_frame": 657,
+   "end_frame": 719
+  },
+  {
+   "label": "3.3",
+   "caption": "With a History-level password from AMAZEMET: VNC in view-only monitor mode (port 5900) gives a pixel-exact copy of the screen, and EasyWeb 2.0 or FTP exports the HMI's data, event and operation logs.",
+   "start_frame": 720,
+   "end_frame": 785
+  },
+  {
+   "label": "4.1",
+   "caption": "STG1 power tap, if AMAZEMET agrees. Main switch off, then open the right-hand side door. The STG1 ultrasonic generator is at the top, with the PLC and terminals on DIN rails. Positions are approximate, from training video 1 at 9:58.",
+   "start_frame": 786,
+   "end_frame": 854
+  },
+  {
+   "label": "4.2",
+   "caption": "Unplug the cable from the STG1's DB15 port (X3), fit the DB15 pass-through breakout, and plug the cable back into its other end. Every pin still goes straight through, so the PLC sees exactly what it did before.",
+   "start_frame": 855,
+   "end_frame": 923
+  },
+  {
+   "label": "4.3",
+   "caption": "Two wires from the breakout's power-out and 0 V terminals (pins per the STG1 manual) to the isolated ADC box, which clips on the DIN rail.",
+   "start_frame": 924,
+   "end_frame": 983
+  },
+  {
+   "label": "4.4",
+   "caption": "Inside the box: a 200 k / 100 k divider (0–10 V to 0–3.3 V), an ADS1115 16-bit ADC, an MCP2221A USB-to-I2C bridge and a USB isolator. The input side floats on the STG1's 0 V. The red line marks the isolation barrier.",
+   "start_frame": 984,
+   "end_frame": 1049
+  },
+  {
+   "label": "4.5",
+   "caption": "A USB cable leaves the cabinet through an existing cable entry (AMAZEMET to say which) to the HMI camera Pi, which can then log ultrasonic power at any rate. Close the door.",
+   "start_frame": 1050,
+   "end_frame": 1115
+  },
+  {
+   "label": "",
+   "caption": "All four on the machine. Nothing is bought or printed yet, and AMAZEMET's positions are estimates. The three viewport camera units (front, left, top) are in PR #189, with their own assembly animation.",
+   "start_frame": 1116,
+   "end_frame": 1184
+  }
+ ]
+}
