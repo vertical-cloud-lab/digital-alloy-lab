@@ -1,5 +1,5 @@
 {
- "made": "2026-11-28 10:23 UTC",
+ "made": "2026-11-28 10:33 UTC",
  "pieces": [
   {
    "pid": "MK-01",
@@ -13361,9 +13361,9 @@
      ],
      "outline": [
       2,
-      5.0
+      10.0
      ],
-     "label": "top up: face, outline to z 5, rod bore, c'bores",
+     "label": "top up: face, outline to z 10, rod bore, c'bores",
      "hold": "vise on the blank's y faces, on parallels",
      "stock_note": "",
      "repeat": 1
@@ -13377,9 +13377,9 @@
      ],
      "outline": [
       2,
-      -5.5
+      -10.5
      ],
-     "label": "bottom up: face to 40, the outline's last 5.5 mm",
+     "label": "bottom up: face to 40, the outline's last 10.5 mm",
      "hold": "vise on the outline A cut",
      "stock_note": "",
      "repeat": 1

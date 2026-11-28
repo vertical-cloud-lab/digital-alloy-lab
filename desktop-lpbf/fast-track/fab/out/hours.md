@@ -22,7 +22,7 @@
 | MK-09a | Scan-head flange plate (on the head's entrance face, between the cross-beams) | S1 | 1 | CNC mill | 3 / 0 | 18 (8) | 23.8 | 2.57 | 3.75 | 0.43 | 0.25 | 2.4 | **7.0** | 9.2 |
 | MK-09c | Angle brackets, plates to the cross-beams (4: 2 flange plate, 2 far-side plate) | S1 | 4 | saw + CNC mill | 2 / 0 | 3 (0) | 0.2 | 1.74 | 1.50 | 0.01 | 0.40 | 1.8 | **3.7** | 5.2 |
 | MK-09d | Head-plate top flange on both cross-beams | S1 | 1 | CNC mill | 2 / 0 | 14 (0) | 39.7 | 1.91 | 2.50 | 0.67 | 0.25 | 2.3 | **5.3** | 6.9 |
-| MK-09e | Head-plate gussets (3) | S1 | 3 | CNC mill | 3 / 0 | 4 (4) | 7.1 | 2.36 | 2.25 | 0.17 | 0.35 | 2.2 | **5.1** | 7.4 |
+| MK-09e | Head-plate gussets (3) | S1 | 3 | CNC mill | 3 / 0 | 4 (4) | 7.0 | 2.36 | 2.25 | 0.17 | 0.35 | 2.2 | **5.1** | 7.4 |
 | MK-09f | Head far-side support plate, between both cross-beams (g3) | S1 | 1 | CNC mill | 2 / 0 | 8 (4) | 12.1 | 1.82 | 2.50 | 0.22 | 0.25 | 1.8 | **4.8** | 6.3 |
 | MK-10a | Beam tube centre section, long (121.5 long), split in two half-shells | S2 | 1 | saw + lathe + CNC mill + slitting saw | 2 / 2 | 8 (8) | 0.1 | 2.82 | 2.50 | 0.68 | 0.25 | 3.0 | **6.2** | 9.1 |
 | MK-10b | Beam tube centre section, short (21.7 long), split in two half-shells | FT-1V | 1 | saw + lathe + CNC mill + slitting saw | 2 / 2 | 8 (8) | 0.1 | 2.82 | 2.50 | 0.68 | 0.25 | 3.0 | **6.2** | 9.1 |
@@ -46,13 +46,13 @@
 | MK-21c | Light-port bores in the cube's left plate and door (2 Ideal Vacuum E2 plates) | FT-1V | 2 | tilted setup on the mill | 0 / 0 | 0 (0) | 0.0 | 0.00 | 0.00 | 2.33 | 1.05 | 3.4 | **3.4** | 4.5 |
 | MK-22a | Coaxial branch plate: SM1 bore and 30 mm cage on the mirror block's back face | S1 | 1 | CNC mill | 2 / 0 | 8 (0) | 6.6 | 1.82 | 1.50 | 0.12 | 0.25 | 1.7 | **3.7** | 5.2 |
 | MK-22b | Collimator clamp block, hung under the front cross-beam | S1 | 1 | CNC mill + saw slit | 4 / 0 | 3 (0) | 14.7 | 2.94 | 3.00 | 0.42 | 0.25 | 2.7 | **6.6** | 9.8 |
-| MK-23 | Deck clamps on the box's panel studs (4) | S2 | 4 | saw + CNC mill | 1 / 0 | 1 (0) | 0.6 | 1.11 | 0.75 | 0.02 | 0.40 | 1.4 | **2.3** | 3.0 |
+| MK-23 | Deck clamps on the box's panel studs (4) | S2 | 4 | saw + CNC mill | 1 / 0 | 1 (0) | 0.5 | 1.11 | 0.75 | 0.02 | 0.40 | 1.4 | **2.3** | 3.0 |
 
 | State | Pieces | Low / expected / high h | Cumulative low / expected / high h | Study | Cumulative at $65/h, low / expected / high | Outsourced split, BYU h (cumulative) |
 |---|---:|---|---|---|---|---:|
 | S1 | 10 | 19.3 / 45.8 / 62.7 | 19.3 / **45.8** / 62.7 | - | $1,260 / 2,980 / 4,080 | 30.3 (30.3) |
 | S2 | 8 | 15.5 / 29.1 / 45.1 | 34.8 / **74.9** / 107.9 | - | $2,260 / 4,870 / 7,010 | 26.4 (56.7) |
-| FT-0 | 14 | 31.1 / 58.2 / 94.6 | 65.9 / **133.1** / 202.5 | 10-15 h | $4,280 / 8,650 / 13,160 | 58.2 (114.8) |
+| FT-0 | 14 | 31.1 / 58.1 / 94.6 | 65.9 / **133.1** / 202.5 | 10-15 h | $4,280 / 8,650 / 13,160 | 58.1 (114.8) |
 | FT-1 | 9 | 15.4 / 32.9 / 46.5 | 81.3 / **166.0** / 248.9 | 25-40 h | $5,280 / 10,790 / 16,180 | 27.7 (142.5) |
 | FT-1V | 6 | 18.1 / 33.8 / 47.0 | 99.3 / **199.8** / 295.9 | 30-48 h | $6,460 / 12,990 / 19,230 | 33.8 (176.3) |
 

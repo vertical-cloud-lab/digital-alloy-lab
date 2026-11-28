@@ -40,15 +40,19 @@ TOOLS = {
 # drills by diameter (jobber length unless noted); T numbers 20+
 DRILL_D = [1.6, 2.0, 2.05, 2.2, 2.4, 2.5, 3.3, 3.4, 4.2, 4.5, 5.0, 5.5, 6.4, 6.6, 9.6, 10.0, 6.1]   # 6.1: v2 heaters
 # round 3 (review-r3.md section 7): each drill gets a flute length and a stick-out. Flute lengths are DIN 338's jobber
-# series (DIN 340's long series for the 2.0 mm drill, which MK-03 and MK-04 need 30+ mm deep); the stick-out is the
-# flute length plus 6 mm, so the collet grips the shank only. Round 2 had no flute length and a 30 mm (12 x D) stick-out.
-DRILL_FLUTE = {1.6: 20.0, 2.0: 56.0, 2.05: 24.0, 2.2: 27.0, 2.4: 30.0, 2.5: 30.0, 3.3: 36.0, 3.4: 39.0, 4.2: 43.0,
-               4.5: 47.0, 5.0: 52.0, 5.5: 57.0, 6.4: 63.0, 6.6: 69.0, 9.6: 87.0, 10.0: 87.0, 6.1: 63.0}
+# series, and DIN 340's long series for the four sizes that go deep or sit close to a wall on CAD v2 (2.0 mm: MK-03,
+# MK-04; 3.4 mm: MK-08e's foot; 4.5 mm: MK-02f, MK-15c; 5.5 mm: MK-22b). The stick-out is the flute length plus 6 mm
+# (jobber) or 10 mm (long series), so the collet grips the shank only. Round 2 had no flute length and a 30 mm (12 x D)
+# stick-out, which the CAM review's holder check failed on MK-03_D.
+DRILL_FLUTE = {1.6: 20.0, 2.0: 56.0, 2.05: 24.0, 2.2: 27.0, 2.4: 30.0, 2.5: 30.0, 3.3: 36.0, 3.4: 73.0, 4.2: 43.0,
+               4.5: 82.0, 5.0: 52.0, 5.5: 91.0, 6.4: 63.0, 6.6: 69.0, 9.6: 87.0, 10.0: 87.0, 6.1: 63.0}
+DRILL_LONG = {2.0, 3.4, 4.5, 5.5}
 for _i, _d in enumerate(DRILL_D):
     TOOLS[20 + _i] = dict(name="%.2f mm drill, %s (%.0f mm flutes)" % (
-                              _d, "long series" if _d == 2.0 else "jobber", DRILL_FLUTE[_d]), shape="drill", d=_d,
+                              _d, "long series" if _d in DRILL_LONG else "jobber", DRILL_FLUTE[_d]), shape="drill", d=_d,
                           rpm=min(8100, int(round(60000 / _d / 10.0)) * 10),     # 60000/d rpm = 60/pi ~ 19 m/min surface speed
-                          mm_rev=round(min(0.15, 0.025 * _d), 3), length=DRILL_FLUTE[_d] + 6.0, edge=DRILL_FLUTE[_d],
+                          mm_rev=round(min(0.15, 0.025 * _d), 3),
+                          length=DRILL_FLUTE[_d] + (10.0 if _d in DRILL_LONG else 6.0), edge=DRILL_FLUTE[_d],
                           angle=118.0)
 
 

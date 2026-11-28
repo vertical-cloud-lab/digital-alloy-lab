@@ -116,7 +116,7 @@
    "d": 2.0,
    "rpm": 8100,
    "mm_rev": 0.05,
-   "length": 62.0,
+   "length": 66.0,
    "edge": 56.0,
    "angle": 118.0,
    "feed_mm_min": 405.0
@@ -177,13 +177,13 @@
    "feed_mm_min": 672.3
   },
   "T27": {
-   "name": "3.40 mm drill, jobber (39 mm flutes)",
+   "name": "3.40 mm drill, long series (73 mm flutes)",
    "shape": "drill",
    "d": 3.4,
    "rpm": 8100,
    "mm_rev": 0.085,
-   "length": 45.0,
-   "edge": 39.0,
+   "length": 83.0,
+   "edge": 73.0,
    "angle": 118.0,
    "feed_mm_min": 688.5
   },
@@ -199,13 +199,13 @@
    "feed_mm_min": 850.5
   },
   "T29": {
-   "name": "4.50 mm drill, jobber (47 mm flutes)",
+   "name": "4.50 mm drill, long series (82 mm flutes)",
    "shape": "drill",
    "d": 4.5,
    "rpm": 8100,
    "mm_rev": 0.113,
-   "length": 53.0,
-   "edge": 47.0,
+   "length": 92.0,
+   "edge": 82.0,
    "angle": 118.0,
    "feed_mm_min": 915.3
   },
@@ -221,13 +221,13 @@
    "feed_mm_min": 1012.5
   },
   "T31": {
-   "name": "5.50 mm drill, jobber (57 mm flutes)",
+   "name": "5.50 mm drill, long series (91 mm flutes)",
    "shape": "drill",
    "d": 5.5,
    "rpm": 8100,
    "mm_rev": 0.138,
-   "length": 63.0,
-   "edge": 57.0,
+   "length": 101.0,
+   "edge": 91.0,
    "angle": 118.0,
    "feed_mm_min": 1117.8
   },
@@ -336,7 +336,7 @@
     {
      "label": "Drill 4 x 3.40 M3, z 0.00 to -11.52",
      "tool": 27,
-     "tool_name": "3.40 mm drill, jobber (39 mm flutes)",
+     "tool_name": "3.40 mm drill, long series (73 mm flutes)",
      "feed_mm_min": 688.5,
      "kind": "drill",
      "holes": 4,
@@ -704,7 +704,7 @@
     {
      "label": "Drill 8 x 5.50 M5, z 12.00 to -2.15",
      "tool": 31,
-     "tool_name": "5.50 mm drill, jobber (57 mm flutes)",
+     "tool_name": "5.50 mm drill, long series (91 mm flutes)",
      "feed_mm_min": 1117.8,
      "kind": "drill",
      "holes": 8,
@@ -881,7 +881,7 @@
     {
      "label": "Drill 8 x 5.50 M5, z 6.00 to -2.15",
      "tool": 31,
-     "tool_name": "5.50 mm drill, jobber (57 mm flutes)",
+     "tool_name": "5.50 mm drill, long series (91 mm flutes)",
      "feed_mm_min": 1117.8,
      "kind": "drill",
      "holes": 8,
@@ -1083,7 +1083,7 @@
     {
      "label": "Drill 3 x 4.50 M4, z 5.60 to -1.85",
      "tool": 29,
-     "tool_name": "4.50 mm drill, jobber (47 mm flutes)",
+     "tool_name": "4.50 mm drill, long series (82 mm flutes)",
      "feed_mm_min": 915.3,
      "kind": "drill",
      "holes": 3,
@@ -1183,7 +1183,7 @@
     {
      "label": "Drill 3 x 4.50 M4, z 11.02 to -1.85",
      "tool": 29,
-     "tool_name": "4.50 mm drill, jobber (47 mm flutes)",
+     "tool_name": "4.50 mm drill, long series (82 mm flutes)",
      "feed_mm_min": 915.3,
      "kind": "drill",
      "holes": 3,
@@ -1293,7 +1293,7 @@
     {
      "label": "Drill 4 x 4.50 M4, z 84.80 to -1.85",
      "tool": 29,
-     "tool_name": "4.50 mm drill, jobber (47 mm flutes)",
+     "tool_name": "4.50 mm drill, long series (82 mm flutes)",
      "feed_mm_min": 915.3,
      "kind": "drill",
      "holes": 4,
@@ -2234,7 +2234,7 @@
     {
      "label": "Drill 4 x 5.50 M5, z 0.00 to -14.15",
      "tool": 31,
-     "tool_name": "5.50 mm drill, jobber (57 mm flutes)",
+     "tool_name": "5.50 mm drill, long series (91 mm flutes)",
      "feed_mm_min": 1117.8,
      "kind": "drill",
      "holes": 4,
@@ -2535,14 +2535,14 @@
      "kind": "outline",
      "safe_z": 11.77,
      "freecad_cycle_time": "00:00:10",
-     "commands": 85,
+     "commands": 86,
      "cut_min": 0.12,
      "rapid_min": 0.0
     },
     {
      "label": "Drill 1 x 3.40 M3, z 8.00 to -1.52",
      "tool": 27,
-     "tool_name": "3.40 mm drill, jobber (39 mm flutes)",
+     "tool_name": "3.40 mm drill, long series (73 mm flutes)",
      "feed_mm_min": 688.5,
      "kind": "drill",
      "holes": 1,
@@ -2686,7 +2686,7 @@
    "up": "+X",
    "label": "L profile up (x up): face, outline of the L to x 0",
    "repeat": 1,
-   "g0_links_to_g1": 676,
+   "g0_links_to_g1": 660,
    "rotation": [
     [
      0,
@@ -2733,7 +2733,7 @@
      "kind": "outline",
      "safe_z": 24.5,
      "freecad_cycle_time": "00:04:11",
-     "commands": 3568,
+     "commands": 3536,
      "cut_min": 2.97,
      "rapid_min": 0.01
     }
@@ -2872,7 +2872,7 @@
     {
      "label": "Drill 4 x 3.40 M3, z -25.70 to -33.22",
      "tool": 27,
-     "tool_name": "3.40 mm drill, jobber (39 mm flutes)",
+     "tool_name": "3.40 mm drill, long series (73 mm flutes)",
      "feed_mm_min": 688.5,
      "kind": "drill",
      "holes": 4,
@@ -2982,7 +2982,7 @@
     {
      "label": "Drill 6 x 5.50 M5, z 0.00 to -14.15",
      "tool": 31,
-     "tool_name": "5.50 mm drill, jobber (57 mm flutes)",
+     "tool_name": "5.50 mm drill, long series (91 mm flutes)",
      "feed_mm_min": 1117.8,
      "kind": "drill",
      "holes": 6,
@@ -3065,7 +3065,7 @@
      "kind": "outline",
      "safe_z": 15.35,
      "freecad_cycle_time": "00:04:09",
-     "commands": 872,
+     "commands": 870,
      "cut_min": 3.9,
      "rapid_min": 0.01
     },
@@ -3249,7 +3249,7 @@
     {
      "label": "Drill 2 x 5.50 M5, z 4.76 to -2.15",
      "tool": 31,
-     "tool_name": "5.50 mm drill, jobber (57 mm flutes)",
+     "tool_name": "5.50 mm drill, long series (91 mm flutes)",
      "feed_mm_min": 1117.8,
      "kind": "drill",
      "holes": 2,
@@ -3436,7 +3436,7 @@
     {
      "label": "Drill 4 x 5.50 M5, z 12.00 to -2.15",
      "tool": 31,
-     "tool_name": "5.50 mm drill, jobber (57 mm flutes)",
+     "tool_name": "5.50 mm drill, long series (91 mm flutes)",
      "feed_mm_min": 1117.8,
      "kind": "drill",
      "holes": 4,
@@ -3448,7 +3448,7 @@
     {
      "label": "Drill 6 x 5.50 M5, z 12.00 to -2.15",
      "tool": 31,
-     "tool_name": "5.50 mm drill, jobber (57 mm flutes)",
+     "tool_name": "5.50 mm drill, long series (91 mm flutes)",
      "feed_mm_min": 1117.8,
      "kind": "drill",
      "holes": 6,
@@ -3638,7 +3638,7 @@
    "up": "+Y",
    "label": "flat up: outline of the triangle",
    "repeat": 1,
-   "g0_links_to_g1": 470,
+   "g0_links_to_g1": 481,
    "rotation": [
     [
      1,
@@ -3673,8 +3673,8 @@
      "feed_mm_min": 1737.4,
      "kind": "outline",
      "safe_z": 6.96875,
-     "freecad_cycle_time": "00:03:11",
-     "commands": 2000,
+     "freecad_cycle_time": "00:03:10",
+     "commands": 2013,
      "cut_min": 2.24,
      "rapid_min": 0.01
     }
@@ -3683,9 +3683,9 @@
    "tool_changes": 1,
    "cut_min": 2.24,
    "rapid_min": 0.01,
-   "total_min": 2.25,
-   "freecad_cycle_min": 3.18,
-   "freecad_job_cycle": "00:03:11"
+   "total_min": 2.24,
+   "freecad_cycle_min": 3.17,
+   "freecad_job_cycle": "00:03:10"
   },
   {
    "pid": "MK-09e",
@@ -3857,7 +3857,7 @@
    "up": "+Z",
    "label": "outer face up: face to 10.0, c'bores, taps, outline",
    "repeat": 1,
-   "g0_links_to_g1": 17,
+   "g0_links_to_g1": 19,
    "rotation": [
     [
      1,
@@ -3904,7 +3904,7 @@
      "kind": "outline",
      "safe_z": 14.35,
      "freecad_cycle_time": "00:02:15",
-     "commands": 428,
+     "commands": 431,
      "cut_min": 2.04,
      "rapid_min": 0.01
     },
@@ -3923,7 +3923,7 @@
     {
      "label": "Drill 4 x 5.50 M5, z 10.00 to -2.15",
      "tool": 31,
-     "tool_name": "5.50 mm drill, jobber (57 mm flutes)",
+     "tool_name": "5.50 mm drill, long series (91 mm flutes)",
      "feed_mm_min": 1117.8,
      "kind": "drill",
      "holes": 4,
@@ -4211,7 +4211,7 @@
    "up": "+Z",
    "label": "open end up: face to 40, outline to z 18, lens bore",
    "repeat": 1,
-   "g0_links_to_g1": 3232,
+   "g0_links_to_g1": 3238,
    "rotation": [
     [
      1,
@@ -4270,14 +4270,14 @@
      "kind": "adaptive",
      "safe_z": 43.75,
      "freecad_cycle_time": "00:07:22",
-     "commands": 17838,
-     "cut_min": 5.86,
+     "commands": 17842,
+     "cut_min": 5.85,
      "rapid_min": 0.01
     }
    ],
    "errors": [],
    "tool_changes": 2,
-   "cut_min": 12.79,
+   "cut_min": 12.78,
    "rapid_min": 0.03,
    "total_min": 12.81,
    "freecad_cycle_min": 16.58,
@@ -4522,7 +4522,7 @@
    "up": "+Z",
    "label": "top up: face to 12, outline with the boss, c'bores",
    "repeat": 1,
-   "g0_links_to_g1": 280,
+   "g0_links_to_g1": 288,
    "rotation": [
     [
      1,
@@ -4568,15 +4568,15 @@
      "feed_mm_min": 1737.4,
      "kind": "outline",
      "safe_z": 18.55,
-     "freecad_cycle_time": "00:01:43",
-     "commands": 1392,
-     "cut_min": 1.19,
+     "freecad_cycle_time": "00:01:42",
+     "commands": 1402,
+     "cut_min": 1.18,
      "rapid_min": 0.01
     },
     {
      "label": "Drill 2 x 3.40 M3, z 12.00 to -1.52",
      "tool": 27,
-     "tool_name": "3.40 mm drill, jobber (39 mm flutes)",
+     "tool_name": "3.40 mm drill, long series (73 mm flutes)",
      "feed_mm_min": 688.5,
      "kind": "drill",
      "holes": 2,
@@ -4610,11 +4610,11 @@
    ],
    "errors": [],
    "tool_changes": 3,
-   "cut_min": 2.8,
+   "cut_min": 2.79,
    "rapid_min": 0.03,
-   "total_min": 2.84,
-   "freecad_cycle_min": 4.33,
-   "freecad_job_cycle": "00:04:20"
+   "total_min": 2.82,
+   "freecad_cycle_min": 4.32,
+   "freecad_job_cycle": "00:04:19"
   },
   {
    "pid": "MK-11a",
@@ -4850,7 +4850,7 @@
     {
      "label": "Drill 2 x 3.40 M3, z 14.00 to -1.52",
      "tool": 27,
-     "tool_name": "3.40 mm drill, jobber (39 mm flutes)",
+     "tool_name": "3.40 mm drill, long series (73 mm flutes)",
      "feed_mm_min": 688.5,
      "kind": "drill",
      "holes": 2,
@@ -5191,7 +5191,7 @@
     {
      "label": "Drill 4 x 5.50 M5, z 22.60 to -2.15",
      "tool": 31,
-     "tool_name": "5.50 mm drill, jobber (57 mm flutes)",
+     "tool_name": "5.50 mm drill, long series (91 mm flutes)",
      "feed_mm_min": 1117.8,
      "kind": "drill",
      "holes": 4,
@@ -5323,7 +5323,7 @@
     {
      "label": "Drill 4 x 5.50 M5, z 0.00 to -12.15",
      "tool": 31,
-     "tool_name": "5.50 mm drill, jobber (57 mm flutes)",
+     "tool_name": "5.50 mm drill, long series (91 mm flutes)",
      "feed_mm_min": 1117.8,
      "kind": "drill",
      "holes": 4,
@@ -5623,7 +5623,7 @@
    "pid": "MK-15c",
    "setup": "MK-15c_A",
    "up": "+Z",
-   "label": "top up: face, outline to z 5, rod bore, c'bores",
+   "label": "top up: face, outline to z 10, rod bore, c'bores",
    "repeat": 1,
    "g0_links_to_g1": 135,
    "rotation": [
@@ -5665,15 +5665,15 @@
      "rapid_min": 0.0
     },
     {
-     "label": "Outside, adaptive, z 40.00 to 5.00",
+     "label": "Outside, adaptive, z 40.00 to 10.00",
      "tool": 2,
      "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
      "feed_mm_min": 1737.4,
      "kind": "outline",
      "safe_z": 44.5,
-     "freecad_cycle_time": "00:01:09",
+     "freecad_cycle_time": "00:01:08",
      "commands": 440,
-     "cut_min": 0.91,
+     "cut_min": 0.9,
      "rapid_min": 0.01
     },
     {
@@ -5746,17 +5746,17 @@
    ],
    "errors": [],
    "tool_changes": 4,
-   "cut_min": 16.74,
+   "cut_min": 16.73,
    "rapid_min": 0.09,
    "total_min": 16.82,
-   "freecad_cycle_min": 20.95,
-   "freecad_job_cycle": "00:20:57"
+   "freecad_cycle_min": 20.93,
+   "freecad_job_cycle": "00:20:56"
   },
   {
    "pid": "MK-15c",
    "setup": "MK-15c_B",
    "up": "-Z",
-   "label": "bottom up: face to 40, the outline's last 5.5 mm",
+   "label": "bottom up: face to 40, the outline's last 10.5 mm",
    "repeat": 1,
    "g0_links_to_g1": 45,
    "rotation": [
@@ -5798,25 +5798,25 @@
      "rapid_min": 0.0
     },
     {
-     "label": "Outside, adaptive, z 0.00 to -5.50",
+     "label": "Outside, adaptive, z 0.00 to -10.50",
      "tool": 2,
      "tool_name": "1/2 in. (12.7 mm) 3-flute carbide end mill",
      "feed_mm_min": 1737.4,
      "kind": "outline",
      "safe_z": 4.5,
-     "freecad_cycle_time": "00:00:20",
+     "freecad_cycle_time": "00:00:21",
      "commands": 148,
-     "cut_min": 0.28,
+     "cut_min": 0.29,
      "rapid_min": 0.0
     }
    ],
    "errors": [],
    "tool_changes": 1,
-   "cut_min": 0.53,
+   "cut_min": 0.54,
    "rapid_min": 0.01,
    "total_min": 0.54,
-   "freecad_cycle_min": 0.62,
-   "freecad_job_cycle": "00:00:37"
+   "freecad_cycle_min": 0.63,
+   "freecad_job_cycle": "00:00:38"
   },
   {
    "pid": "MK-15c",
@@ -5909,7 +5909,7 @@
     {
      "label": "Drill 1 x 4.50 M4, z 32.00 to -33.85",
      "tool": 29,
-     "tool_name": "4.50 mm drill, jobber (47 mm flutes)",
+     "tool_name": "4.50 mm drill, long series (82 mm flutes)",
      "feed_mm_min": 915.3,
      "kind": "drill",
      "holes": 1,
@@ -6219,7 +6219,7 @@
     {
      "label": "Drill 4 x 5.50 M5, z 0.00 to -15.80",
      "tool": 31,
-     "tool_name": "5.50 mm drill, jobber (57 mm flutes)",
+     "tool_name": "5.50 mm drill, long series (91 mm flutes)",
      "feed_mm_min": 1117.8,
      "kind": "drill",
      "holes": 4,
@@ -6384,7 +6384,7 @@
     {
      "label": "Drill 4 x 3.40 M3, z 7.00 to -1.52",
      "tool": 27,
-     "tool_name": "3.40 mm drill, jobber (39 mm flutes)",
+     "tool_name": "3.40 mm drill, long series (73 mm flutes)",
      "feed_mm_min": 688.5,
      "kind": "drill",
      "holes": 4,
@@ -6527,7 +6527,7 @@
     {
      "label": "Drill 4 x 4.50 M4, z 8.00 to -1.85",
      "tool": 29,
-     "tool_name": "4.50 mm drill, jobber (47 mm flutes)",
+     "tool_name": "4.50 mm drill, long series (82 mm flutes)",
      "feed_mm_min": 915.3,
      "kind": "drill",
      "holes": 4,
@@ -6846,7 +6846,7 @@
     {
      "label": "Drill 1 x 5.50 M5, z 40.00 to -42.15",
      "tool": 31,
-     "tool_name": "5.50 mm drill, jobber (57 mm flutes)",
+     "tool_name": "5.50 mm drill, long series (91 mm flutes)",
      "feed_mm_min": 1117.8,
      "kind": "drill",
      "holes": 1,
@@ -6881,7 +6881,7 @@
    "up": "+Z",
    "label": "four in the vise: hole, outline (ends rounded R3)",
    "repeat": 1,
-   "g0_links_to_g1": 76,
+   "g0_links_to_g1": 48,
    "rotation": [
     [
      1,
@@ -6916,15 +6916,15 @@
      "feed_mm_min": 1737.4,
      "kind": "outline",
      "safe_z": 7.76,
-     "freecad_cycle_time": "00:00:14",
-     "commands": 208,
-     "cut_min": 0.13,
+     "freecad_cycle_time": "00:00:12",
+     "commands": 155,
+     "cut_min": 0.12,
      "rapid_min": 0.0
     },
     {
      "label": "Drill 1 x 5.50 M5, z 4.76 to -2.15",
      "tool": 31,
-     "tool_name": "5.50 mm drill, jobber (57 mm flutes)",
+     "tool_name": "5.50 mm drill, long series (91 mm flutes)",
      "feed_mm_min": 1117.8,
      "kind": "drill",
      "holes": 1,
@@ -6936,11 +6936,11 @@
    ],
    "errors": [],
    "tool_changes": 2,
-   "cut_min": 0.14,
+   "cut_min": 0.13,
    "rapid_min": 0.01,
-   "total_min": 0.14,
-   "freecad_cycle_min": 0.25,
-   "freecad_job_cycle": "00:00:15"
+   "total_min": 0.13,
+   "freecad_cycle_min": 0.22,
+   "freecad_job_cycle": "00:00:13"
   }
  ]
 }

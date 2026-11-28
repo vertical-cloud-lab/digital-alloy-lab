@@ -1610,9 +1610,9 @@ def mk15_clamp():
     pc.cam_solid = pc.solid
     pc.cut(box(-0.75, 0.75, 0, 21, 20.0, bh + 1))
     pc.manual.append(("slit 1.5 wide from the bore to +y, z 20 to the top (slitting saw or bandsaw)", 10.0))
-    pc.setup("+Z", face=(2, bh), outline=(2, 5.0), label="top up: face, outline to z 5, rod bore, c'bores",
+    pc.setup("+Z", face=(2, bh), outline=(2, 10.0), label="top up: face, outline to z 10, rod bore, c'bores",
              hold="vise on the blank's y faces, on parallels")
-    pc.setup("-Z", face=(2, 0.0), outline=(2, -5.5), label="bottom up: face to 40, the outline's last 5.5 mm",
+    pc.setup("-Z", face=(2, 0.0), outline=(2, -10.5), label="bottom up: face to 40, the outline's last 10.5 mm",
              hold="vise on the outline A cut")
     pc.setup("-Y", label="-y face up: lead pocket", hold="vise on the x ends")
     pc.setup("+X", label="+x (AE) face up: clamp-screw hole", hold="vise on the y faces")
