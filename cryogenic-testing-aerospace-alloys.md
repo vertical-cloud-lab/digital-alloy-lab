@@ -1,6 +1,7 @@
 # Cryogenic testing of aerospace alloys, with a focus on aluminum
 
-*Issue [#254](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/254), 2026-11-12.*
+*Issue [#254](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/254), 2026-11-12. The second round, on elevated-temperature testing, tests beyond tensile and strain rate, is
+[`elevated-temperature-and-mechanical-testing.md`](elevated-temperature-and-mechanical-testing.md).*
 
 **Sources.** Six Edison Scientific tasks: two `LITERATURE_HIGH` reviews, two `PRECEDENT` searches
 and two `LITERATURE` questions. All answers and full trajectories are in
