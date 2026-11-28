@@ -177,6 +177,14 @@ the other chapters').
 ## Not done, or uncertain
 
 - **Not re-rendered on the CAD v2 model** (vendor geometry, monitoring parts): the frames show round 1.
+  - *Round 3 (2026-11-28):* a port of this pipeline to CAD v2 (the g3 gantry, the X-LSM100B, the 30 mm lens offset,
+    the monitoring parts; round 2's schedule and prices) was about half done when round 3's first attempt ran out of
+    credits. It is kept as [`v2-port-wip.patch`](v2-port-wip.patch) (`git apply` from the repo root; it changes
+    `story.py`, `scene.py`, `plan.py`, `engine.py`, `render.py`, `audit.py` and `compose.py`). Its last plan run still
+    failed in three places: chapter 4's given path for the rod-end block (MK-15) hits the X-VSR20A's platform; the
+    well-block heater and thermocouple leads have no removal path past the door gasket and the box; and chapter 6
+    finds no removal path for the deck-plate group. Fixes it made after the patch's commit were lost with its
+    worktree. Rendering takes about an hour on a shared runner, so round 3's retry didn't re-render.
 - **Round-1 schedule and prices on screen** (labelled); round 2's are in the study's README.
 - Hand speeds, the optics' slide speed and the return stroke are estimates; lead times and prices are scenario A of
   `ft_progression.py` and parts.csv list prices (low-high).
