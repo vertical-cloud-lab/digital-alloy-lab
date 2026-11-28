@@ -20,7 +20,11 @@ needs, from the model's solids:
    lowered onto the floor in 1 mm steps (to 0.5 mm above it); bisection on s for the smallest opening that passes.
    And the rolled passage through a 19.4 mm wall with a square hole (a welded box with a smaller door), to check 2.
 
-Run:  python desktop-lpbf/fast-track/cad/ft_cassette.py     # out/cassette.json, out/cassette.md (~3 min)
+5. The live-reads worker's estimated openings (243, 250, 255, 260 mm) with the deck as drawn, with rounded corners,
+   and with a deck cut to the parts' own spread (`estimates` mode; adds section 5 to the existing outputs).
+
+Run:  python desktop-lpbf/fast-track/cad/ft_cassette.py             # out/cassette.json, out/cassette.md (~6 min)
+      python desktop-lpbf/fast-track/cad/ft_cassette.py estimates   # then section 5 (~2 min)
 """
 from __future__ import annotations
 

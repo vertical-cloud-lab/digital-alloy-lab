@@ -36,7 +36,8 @@ python desktop-lpbf/fast-track/cad/ft_model.py                      # STEP files
 python desktop-lpbf/fast-track/cad/ft_vendor.py verify              # needs the vendor files in /tmp/ft-vcad/
 python desktop-lpbf/fast-track/cad/ft_checks.py                     # out/checks.*  (11-26 min on one core)
 python desktop-lpbf/fast-track/cad/ft_progression.py                # out/progression.*, img/progression-gantt.png
-python desktop-lpbf/fast-track/cad/ft_cassette.py                   # out/cassette.*  (~5 min)
+python desktop-lpbf/fast-track/cad/ft_cassette.py                   # out/cassette.*  (~6 min)
+python desktop-lpbf/fast-track/cad/ft_cassette.py estimates         # adds the estimated openings (~2 min)
 python desktop-lpbf/fast-track/cad/ft_head_service.py               # out/head-service.*  (~2 min)
 xvfb-run -a -s "-screen 0 1920x1080x24" python desktop-lpbf/fast-track/cad/ft_render.py
 ```
