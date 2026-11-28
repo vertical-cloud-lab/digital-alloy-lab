@@ -78,7 +78,7 @@ hours, shop plan and voxel check are in [`out/v1/`](out/v1/). See [Round 3](#rou
 
 - **In-process stock (`gcheck3d.py`):**
   - no dogleg link into material;
-  - the holder clears the stock in every setup but MK-10c_C (its 3.3 mm tap drill, below);
+  - the holder clears the stock in every setup;
   - rapids into material only where the checker models a bought shape as a solid box: MK-09c (an angle, so the 31 mm
     is the angle's open corner) and MK-10a/b (0.4-0.6 mm on the crown of a 60 mm tube in V-blocks);
   - walls over flute length: MK-15c_C's T3, 28 mm against 25.4 mm, and MK-11b_A's T4, 10.0 mm against 9.5 mm (about
@@ -241,6 +241,13 @@ progression network's date):
 | expected | 3 | stock day 2 | 3.5 (4) | 4.0 (5) | 5.7 (9) | 7.1 (11) | 11.6 (16) | 1.4 / 1.6 / 1.8 / 2.9 / 3.5 |
 | *network as drawn* | | | 3.4 | 5.3 | 9.2 | 11.1 | 13.3 | 1.4 / 1.7 / 2.4 / 3.6 / 4.2 |
 <!-- /R3_PLAN -->
+
+- **Two people who both program and cut meet every need date at the expected hours:** S1 day 3.2 (need 4), S2 4.8
+  (5), FT-0 8.4 (9), FT-1 10.6 (11). FT-1's coupons then come at 3.5 weeks.
+- **One person** finishes FT-0's pieces on day 16.6 and FT-1's on day 20.7, so FT-1's coupons come at 5.5 weeks.
+- **At the high hours** two people are 4-5 days late on FT-0 and FT-1. Three people meet the dates (FT-0 day 8.6,
+  FT-1 day 10.8).
+- Round 2 asked for two people full time for the first 8 working days on v1. On v2 that becomes about 11 days.
 
 ### Drawings
 
