@@ -23,11 +23,15 @@ checked against a measurement.
 - **The low-diffuser, high-vent purge is a little slower on v2: 3.1 / ≈ 4.9 min to 1000 / 100 ppm** (box average;
   v1 2.6 / ≈ 5.0; well mixed 6.4 / 9.1). The Saginaw's dished door and rim lip hold 1.2 L above the highest a wall
   vent can go, and the last third of the O₂ waits there. **Put the vent through the door,** at its top.
-- **Leaks set the floor at a few ppm, if the lid is seated and the box is at +5–10 mbar** (0-D, estimates): argon 5.0
+- **Leaks set the floor the exhaust reads at a few ppm, if the lid is seated and the box is at +5–10 mbar** (0-D,
+  estimates): argon 5.0
   gives 2 ppm, permeation through the silicone sponge gasket 0.1–0.5 ppm at 27 L/min, the X-LSM100B's trapped air
   up to ~2 ppm in the first hour; the worst gap under the gasket (≈ 3 µm, Péclet ≈ 1) along the whole seam adds
   2.9 ppm. Larger gaps blow argon out too fast for O₂ to diffuse back. At a 2 L/min dwell the same sources give
   9–48 ppm; with the vent open (no overpressure) a 30 µm gap along the seam would hold the purge at ~60 ppm.
+- **With the cross-flow on, O₂ that leaks in at the lid stays in the box, not over the plate** (CFD, R3.5): 1 mm over
+  the build area it is about a tenth of what the exhaust analyzer reads (a hundredth at the plate's centre), while
+  the box holds 5–10× the exhaust's value. The exhaust reading is the conservative number for the process.
 
 ### R3.1 The model, ported to CAD v2
 
@@ -184,6 +188,52 @@ x_air D w h / L as ΔP → 0. Along the whole 1.28 m seam:
 - **Water** comes in the same way but more of it: 0.4–2 ppm H₂O through the gasket at 27 L/min, ≤ 3 ppm from argon
   5.0, and far more from the powder (round 1: 150–300 ppm by mass in the powder, `../../../../vacuum-and-purge.md`).
 
+
+### R3.5 Where O₂ that leaks in goes, with the cross-flow on (CFD)
+
+On the v2 k-ω SST cross-flow (27 L/min, R3.2): two scalars carried by the solved flow, each with a constant source in
+cells along the lid seam (the gasket's inner face, 139–143 mm over the bed, 6 mm deep): `sAll` along the whole 1.28 m
+seam (a lid not quite seated), `sLoc` along 20 mm of it at the front over the plate (a hair or a grain under the
+gasket). Diffusivity 2 × 10⁻⁵ m²/s plus the turbulence's ν_t/0.7 (OpenFOAM's `scalarTransport` function object, run
+on with simpleFoam). The problem is linear, so results are ratios to the exhaust's flow-weighted value: what the
+analyzer on the exhaust reads, and what the well-mixed balance of R3.4 gives (1 mL/min of O₂ in is 37 ppm there).
+
+**Not converged in amplitude.** The function object advanced the scalar by about 1 s of flow time per iteration
+whatever the time step was set to, so in 140 iterations the exhaust carried only 41 % (`sAll`) and 35 % (`sLoc`) of
+the source, still rising 18–22 % over the last fifth of the run. The box's gas exchanges with the jet slowly (below),
+so it takes minutes of flow time to fill. The ratios below had settled to within ~20 % over the last half of the run
+(the box average over the exhaust fell from ~8 to 6.4 as the exhaust caught up); read them to one figure.
+
+![Leak section](leak_section.png)
+
+*Leaked O₂ over its exhaust value on the x = 0 section, log scale: the box fills to 5–10× the exhaust's value, the jet
+over the plate (dark) stays clean. Left: the whole seam; right: 20 mm of it at the front.*
+
+| leaked O₂, over its value at the exhaust | whole seam (`sAll`) | 20 mm at the front (`sLoc`) |
+|---|---|---|
+| 1 mm over the Ø30 build area: mean (max) | 0.10 (0.45) | 0.12 (0.44) |
+| 1 mm over the plate's centre (probe) | ~0.01 | ~0.01 |
+| 3 mm over the build area: mean (max) | 0.26 (0.45) | 0.26 (0.47) |
+| 5 mm over the build area: mean | 1.6 | 1.5 |
+| box average | 6.4 | 9.5 |
+| bed to 30 mm up, whole box | 5.2 | 6.4 |
+| 30 mm up to the rim lip | 6.6 | 10 |
+| above the lip (the door's dish, by the seam) | 17 | 27 |
+| 2 mm under the cover slide | 7.4 | 20 |
+
+- **The cross-flow keeps the plate's gas close to the argon's purity.** 1 mm over the build area the leaked O₂ is
+  about a tenth of what the exhaust analyzer reads (a hundredth at the plate's centre, up to half at the edges of the
+  build area, where the jet's side vortices bring box gas down), a quarter at 3 mm, and 1.5× at 5 mm, in the jet's
+  upper shear layer, which entrains box gas.
+- **The box holds 5–10 times what the exhaust reads.** With the cross-flow on the box exchanges with the jet at only
+  ~3 L/min (round 2 found the same, §2.1), so O₂ from a wall leak builds up in it, most of all in the door's dish next
+  to the seam (17–27×) and, for a leak at the front, under the cover slide (20×).
+- **For the 0-D floor (R3.4)** the tables give what the exhaust analyzer reads. With the worst lid gap (3 µm along the
+  whole seam, +2.9 ppm at the exhaust at 27 L/min) the box would hold ~20 ppm of leaked O₂ and the gas 1 mm over the
+  build area ~0.3 ppm, on top of the argon's 2 ppm, which comes in through the nozzle and is everywhere.
+- **The analyzer on the collector's exhaust under-reads the box during a build** (by 5–10× for O₂ that leaks in at
+  the walls) and over-reads the plate (by ~10×). For the box, sample under the lid; for the process, the exhaust is
+  the conservative number.
 
 # Round 2 (2026-11-27): the CAD v1 model
 

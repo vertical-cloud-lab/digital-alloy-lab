@@ -1321,5 +1321,60 @@
    "tail_decay_per_min": 1.3492984728618003,
    "ideal_decay_per_min": 0.8375209380234506
   }
+ },
+ "leak": {
+  "v2-leak": {
+   "case": "/tmp/r3-cfd/v2-leak",
+   "iterations": 2356.0,
+   "source_m3s": 1e-06,
+   "expected_exhaust": 0.0022222222222222222,
+   "ppm_at_exhaust_per_mL_min_O2": 37.03703703703704,
+   "sAll": {
+    "exhaust": 0.000912712264,
+    "exhaust_change_last_20pct": 0.18123822208222237,
+    "mass_balance": 0.41072051880000005,
+    "box_avg_over_exhaust": 6.42021292046537,
+    "build_area_z1_over_exhaust": {
+     "mean": 0.1042406868144218,
+     "max": 0.45166522666244324
+    },
+    "build_area_z3_over_exhaust": {
+     "mean": 0.2620566538376306,
+     "max": 0.44693897095976304
+    },
+    "build_area_z5_over_exhaust": {
+     "mean": 1.618611426150635,
+     "max": 1.7529848150860627
+    },
+    "under_slide_over_exhaust": 7.35999739070927,
+    "band_below_bed_over_exhaust": 5.001405322101267,
+    "band_bed_to_30mm_over_exhaust": 5.182811669838688,
+    "band_30mm_to_lip_over_exhaust": 6.563359418099715,
+    "band_above_lip_over_exhaust": 16.98491989346173
+   },
+   "sLoc": {
+    "exhaust": 0.000777824835,
+    "exhaust_change_last_20pct": 0.22465445063861963,
+    "mass_balance": 0.35002117575,
+    "box_avg_over_exhaust": 9.457004789516652,
+    "build_area_z1_over_exhaust": {
+     "mean": 0.11590029289543194,
+     "max": 0.4434121096066883
+    },
+    "build_area_z3_over_exhaust": {
+     "mean": 0.25563359067061286,
+     "max": 0.4743710410417116
+    },
+    "build_area_z5_over_exhaust": {
+     "mean": 1.5439633132645638,
+     "max": 1.9839602658876396
+    },
+    "under_slide_over_exhaust": 19.75689743705227,
+    "band_below_bed_over_exhaust": 6.321730841852856,
+    "band_bed_to_30mm_over_exhaust": 6.358561816375436,
+    "band_30mm_to_lip_over_exhaust": 10.176153786390497,
+    "band_above_lip_over_exhaust": 27.252587272322064
+   }
+  }
  }
 }

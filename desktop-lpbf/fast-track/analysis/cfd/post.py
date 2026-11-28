@@ -1018,7 +1018,7 @@ def do_leak(a):
         r = res[fld]
         ax.set_title(f"{title}\nbuild area 1 mm up: {r['build_area_z1_over_exhaust']['mean']:.2f} x the exhaust; box average "
                      f"{r['box_avg_over_exhaust']:.1f} x", loc="left", fontsize=8.5)
-    fig.colorbar(pc, ax=axs, label="O2 over the exhaust's (log): 1 = what the analyzer on the exhaust reads", shrink=0.85)
+    fig.colorbar(pc, ax=axs, label="leaked O2 / its exhaust value (log)", shrink=0.85)
     fig.suptitle("FT-1 (CAD v2), cross-flow on (k-omega SST, 27 L/min), x = 0 section; red: cover slide, orange: plate",
                  x=0.01, ha="left", fontsize=9)
     fig.savefig(OUT / (a.figname or "leak_section.png"), dpi=120)
