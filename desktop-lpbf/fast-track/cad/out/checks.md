@@ -1,6 +1,7 @@
-# Checks on the fast-track model (`ft_checks.py`, round 2)
+# Checks on the fast-track model (`ft_checks.py`)
 
-Generated from `ft_model.py` (2026-11-27). The stages are drawn from Zaber's and Thorlabs' STEP files, the box,
+Generated from `ft_model.py` with the gantry `P['gantry'] = "four_post_braced_front_g3"` (the g3 frame: the head's far face held from both cross-beams, the default since round 3, 2026-11-28).
+The stages are drawn from Zaber's and Thorlabs' STEP files, the box,
 head and lens from their makers' drawings (`ft_vendor.py`, `out/vendor-verify.json`); other bought parts are
 envelopes (sizes marked in `ft_model.P`). A clash with an envelope means 'check the maker's drawing'.
 

@@ -25,6 +25,9 @@ MAT = dict(smooth_shading=True, specular=0.3, specular_power=18, ambient=0.22, d
 CONTEXT = ("Bench top", "Gantry", "PC with", "IPG YLR", "Process fibre", "Safety relay", "E-stop", "Key switch", "Argon regulator",
            "Exhaust HEPA", "Trace O2", "Rotary-vane", "KF-25 pump hose", "Digitizer", "Fibre bend restrictor", "Emission lamp")
 ADDED, MOVED, REMOVED, KEPT = "#2bb24c", "#2b6cd2", "#d22b2b", "#c9ced4"
+# MK-09's top flange and gussets, g3's far-side plate and its brackets, the head's supply: hidden with the head in the
+# views from below
+HEAD_MOUNTS = ("Head-plate", "Head far-side", "Far-side support", "+-15 V supply")
 
 
 def hex2rgb(h):
@@ -142,7 +145,8 @@ def shot(pl):
 
 
 SUBS = {
-    "S1": "deck on the support rails, target at the powder plane; hurrySCAN hung by its entrance face, lens axis at y -30",
+    "S1": "deck on the support rails, target at the powder plane; hurrySCAN hung by its entrance face and held on its far "
+          "face from both cross-beams (g3 gantry), lens axis at y -30",
     "S2": "Saginaw 16 x 12 x 8 in. box on the rails; window, split beam tube, D4NS-2CF tongue switches: Class 1; 1 kW dump at the plate",
     "FT-0": "well block, plate on a collar-held rod, argon nozzle; 48 mm spreader bar; layer camera, raking lights, TCs",
     "FT-1": "rod clamped in the rod-end block on the X-VSR20A; X-LSM100B, shield, arm and hopper-blade on the deck; AE sensor",
@@ -294,7 +298,8 @@ def monitoring():
     pl = plotter()
     add_parts(pl, parts, hide=("Bench top", "PC with", "IPG YLR", "Safety relay", "E-stop", "Key switch", "Argon regulator",
                                "Exhaust HEPA", "Trace O2", "Gantry", "SCANLAB", "LINOS", "Scan-head", "Flange-to-beam",
-                               "hurrySCAN", "Collimator", "Photodiode", "Process fibre", "Fibre bend", "Head cables"))
+                               "hurrySCAN", "Collimator", "Photodiode", "Process fibre", "Fibre bend", "Head cables")
+                         + HEAD_MOUNTS)
     cam(pl, LOW)
     img = caption(shot(pl), "FT-1 under the box: rod-end block with the potted plug's pigtail and terminal block, AE sensor, "
                   "X-VSR20A (Zaber STEP)", "the rod's lower end is potted flush, so the rod lifts out through the gland")
@@ -338,7 +343,8 @@ def thorlabs():
     parts = M.build("FT-1", piston="thorlabs")
     pl = plotter()
     add_parts(pl, parts, hide=("Bench top", "PC with", "IPG YLR", "Gantry", "SCANLAB", "LINOS", "Scan-head", "hurrySCAN",
-                               "Collimator", "Photodiode", "Process fibre", "Fibre bend", "Head cables", "Flange-to-beam"))
+                               "Collimator", "Photodiode", "Process fibre", "Fibre bend", "Head cables", "Flange-to-beam")
+                         + HEAD_MOUNTS)
     cam(pl, LOW)
     img = caption(shot(pl), "FT-1 with the PCard route's piston stage: Thorlabs MTS50/M-Z8 on end (Thorlabs STEP)",
                   "tower plate on the bracket plate, the stage's lower end through a cut-out; L-arm to the same rod-end block")
@@ -346,8 +352,64 @@ def thorlabs():
     print("wrote cad-ft-1-thorlabs.png")
 
 
+def gantry():
+    """The head's mounts on the default gantry, seen from the far (+x) side: MK-09 on the entrance face, and g3's
+    support plate on the far face (hidden behind the head in the iso views)."""
+    parts = M.build("FT-1")
+    far = ("Head far-side", "Far-side support")
+    colors, opac = {}, {}
+    for p in parts:
+        k = key(p)
+        if any(f in p.name for f in far):
+            colors[k] = ADDED
+        elif p.pid == "MK-09":
+            colors[k] = "#e0a030"
+        elif p.sub == "frame":
+            colors[k], opac[k] = KEPT, 0.55
+    pl = plotter()
+    add_parts(pl, parts, colors, opac, hide=("Bench top", "PC with", "IPG YLR", "Safety relay", "E-stop", "Key switch",
+                                             "Argon regulator", "Exhaust HEPA", "Trace O2", "Digitizer", "120 mm fan"))
+    cam(pl, dict(pos=(1050, -760, 900), focal=(40, 10, 360), view_angle=30))
+    img = caption(shot(pl), f"FT-1: the head's mounts on the default gantry (P['gantry'] = \"{M.P['gantry']}\"), from the +x side",
+                  "amber: MK-09 flange plate on the entrance face, top flange on both cross-beams, gussets under the head; "
+                  "green: the 10 mm support plate on the far face and its angle brackets (g3)",
+                  legend=[("MK-09", "#e0a030"), ("g3 far-side plate", ADDED)])
+    Image.fromarray(img).save(IMG / "cad-gantry-g3.png")
+    print("wrote cad-gantry-g3.png")
+
+
+def cassette_in():
+    """FT-1V's cassette carried halfway in through the cube's door at mid-height of the opening, and (green, faint)
+    where it ends up: down in the bottom face's pocket, which is as big as the face opening (ft_cassette.py)."""
+    import ft_cassette as K
+    parts = M.build("FT-1V")
+    cas = [p for p in parts if p.group != "piston" and not p.name.startswith(K.LOOSE)
+           and (p.sub in ("cassette", "recoater") or p.name.startswith(K.ON_DECK))]
+    L = M.levels("FT-1V")
+    h = max(p.shape.BoundingBox().zmax for p in cas) - L["floor_top"]
+    lift = K.HALF_IN - h / 2                                   # underside at mid-height of the opening, less half its height
+    dy = -M.P["cube_frame"] / 2 - 10.0                         # the deck's centre 10 mm outside the door's plane
+    keep = ("Ideal Vacuum 12", "Cube bottom plate", "Cube back plate", "Cube left plate", "Cube right plate")
+    pl = plotter()
+    add_parts(pl, [p for p in parts if p.name.startswith(keep)], opac={key(p): 0.55 for p in parts})
+    for p in cas:
+        m = tess(p.shape)
+        if m is None:
+            continue
+        pl.add_mesh(m.translate((0.0, dy, lift), inplace=False), color=hex2rgb(p.color), opacity=1.0, **MAT)
+        pl.add_mesh(m, color=hex2rgb(ADDED), opacity=0.22, **MAT)
+    xc, yc = M.P["deck_c"]
+    cam(pl, dict(pos=(xc - 620, yc - 980, L["cube_c"] + 560), focal=(xc, yc - 90, L["cube_c"] - 40), view_angle=30))
+    img = caption(shot(pl), f"FT-1V: the cassette (245 x 245 x {h:.1f} mm) carried in through the cube's door at "
+                  "mid-height of the opening", "green, faint: where it ends up, in the bottom face's pocket, which is as "
+                  "big as the face opening (266 mm est.): so the opening must be >= 245 mm + clearance (ft_cassette.py)")
+    Image.fromarray(img).save(IMG / "cad-cassette-into-cube.png")
+    print("wrote cad-cassette-into-cube.png")
+
+
 if __name__ == "__main__":
     IMG.mkdir(exist_ok=True)
-    what = sys.argv[1:] or ["states", "sections", "steps", "strip", "monitoring", "camera_view", "thorlabs", "door", "gif"]
+    what = sys.argv[1:] or ["states", "sections", "steps", "strip", "monitoring", "camera_view", "thorlabs", "door", "gantry",
+                            "cassette_in", "gif"]
     for w in what:
         globals()[w]()

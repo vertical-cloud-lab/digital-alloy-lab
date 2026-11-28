@@ -269,8 +269,10 @@ def sequence_md(M):
             "at the top); unbolt the gland plate (4 x M5 from below) and take it out sideways.",
             "4. Unbolt the box from the support rails and slide it forward off them.",
             "5. The cube onto the rails (its underside lands where the box's was; the X-VSR20A stays), the gland onto its "
-            "bottom plate, the cassette in through a face opening of at least 247 mm (or the bare deck edge-on and the "
-            "cassette built inside), M6 deck screws.",
+            "bottom plate; the hopper and the overflow cup emptied, the cassette carried in level through the door at "
+            "mid-height of the opening and set down on the floor, M6 deck screws. The deck lies in the bottom face's "
+            "pocket, as big as the face opening, so the opening must be at least 245 mm plus clearance with sharp "
+            "corners, more with radiused ones (ft_cassette.py; tilting the cassette does not lower it).",
             f"6. The long rod's plate assembly ({rod_c:.1f} mm rod; a second assembly made ahead, or the leads "
             "re-potted) down through the bore and the gland into the rod-end block; window stack on the top plate, the "
             f"cover-slide drop tube, the short half-shells; both cross-beams up {Lc['dz']:.1f} mm on the posts, carrying "
