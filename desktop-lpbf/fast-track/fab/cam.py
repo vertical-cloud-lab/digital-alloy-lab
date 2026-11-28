@@ -68,12 +68,17 @@ def custom_slot_gcode(cx, cy, z_top, w, h, depth, tool_d, feed, plunge):
     xa, xb = cx - w / 2 + tool_d / 2, cx + w / 2 - tool_d / 2
     ya, yb = cy - h / 2 + tool_d / 2, cy + h / 2 - tool_d / 2
     z = z_top
+    if xb < xa:                                   # slot narrower than two radii: one pass down the middle
+        xa = xb = cx
     lines.append("G0 X%.3f Y%.3f" % (xa, ya))
     lines.append("G0 Z%.3f" % (z_top + 2.0))
+    lines.append("G1 Z%.3f F%.1f" % (z_top + 0.2, plunge))
     step = 0.3
     while z > z_top - depth + 1e-6:
         z = max(z - step, z_top - depth)
-        lines.append("G1 Z%.3f F%.1f" % (z, plunge))
+        # ramp down along y (review-r3: no straight plunge), then back to the corner
+        lines.append("G1 X%.3f Y%.3f Z%.3f F%.1f" % (xa, yb, z, plunge))
+        lines.append("G1 X%.3f Y%.3f F%.1f" % (xa, ya, feed))
         n = max(1, int(math.ceil((xb - xa) / (0.6 * tool_d))))
         for i in range(n + 1):
             x = xa + (xb - xa) * i / n
@@ -82,6 +87,37 @@ def custom_slot_gcode(cx, cy, z_top, w, h, depth, tool_d, feed, plunge):
         lines.append("G1 X%.3f Y%.3f F%.1f" % (xa, ya, feed))
     lines.append("G0 Z%.3f" % (z_top + 5.0))
     return lines
+
+
+def g0_links_to_g1(text, safe, feed=5000.0):
+    """review-r3: FreeCAD's Adaptive links sideways with G0 below the operation's safe height, and a Haas G00 is a
+    dogleg, not a straight line. Inside each Adaptive operation, a G0 with no Z move made below its safe height becomes
+    a G1 at `feed`, and the next cutting move gets its own feed back. Returns (text, number of links changed)."""
+    out, cur_op, z, last_f, restore, n = [], None, None, None, False, 0
+    for ln in text.splitlines():
+        m = re.match(r"\(begin operation: (.*)\)", ln)
+        if m:
+            cur_op = m.group(1)
+        elif ln.startswith("(finish operation"):
+            cur_op = None
+        words = dict(re.findall(r"([XYZF])([-+]?\d*\.?\d+)", ln))
+        code = ln.split()[0] if ln.split() else ""
+        if code == "G0" and "Z" not in words and ("X" in words or "Y" in words) and cur_op in safe and z is not None \
+                and z < safe[cur_op] - 1e-6:
+            ln = ln.rstrip().replace("G0", "G1", 1) + " F%.3f" % feed
+            restore = True
+            n += 1
+        elif code in ("G1", "G2", "G3"):
+            if "F" in words:
+                last_f = float(words["F"])
+                restore = False
+            elif restore and last_f is not None:
+                ln = ln.rstrip() + " F%.3f" % last_f
+                restore = False
+        if "Z" in words and code in ("G0", "G1", "G2", "G3"):
+            z = float(words["Z"])
+        out.append(ln)
+    return "\n".join(out) + "\n", n
 
 
 def per_second(lines):
@@ -240,6 +276,8 @@ def run():
             def finish(op, label, t, meta):
                 op.Label = FC.clean_label(label)
                 op.ToolController = tc_for(t)
+                if op.Name.startswith("Adaptive"):
+                    meta["safe_z"] = "adaptive"
                 if hasattr(op, "CoolantMode"):
                     op.CoolantMode = "Flood"
                 ops.append((op, dict(label=op.Label, tool=t, tool_name=T.TOOLS[t]["name"],
@@ -409,7 +447,7 @@ def run():
                         op.StepOver = 40
                         op.Direction = "CCW"
                         op.StartSide = "Inside"
-                        set_depths(op, z_hi, z_lo - (0.5 if through else 0.0), 1.0)
+                        set_depths(op, z_hi + 1.0, z_lo - (0.5 if through else 0.0), 1.0)   # review-r3: start 1 above
                         finish(op, "%s, helix z %.2f to %.2f" % (lab, z_hi, z_lo - (0.5 if through else 0)), t,
                                dict(kind=k))
                     elif k in ("drill", "csk"):
@@ -442,6 +480,7 @@ def run():
                             op.RetractMode = "G98"
                             if k == "drill":
                                 op.PeckEnabled = True
+                                op.setExpression("PeckDepth", None)     # review-r3: else every G83 pecks 0.75 D
                                 op.PeckDepth = max(0.5, T.TOOLS[t]["d"] * (1.0 if f["depth"] < 4 * d or f["through"]
                                                                             else 0.5))
                             set_depths(op, zs_, zf_)
@@ -464,7 +503,7 @@ def run():
                             op.StepOver = 40
                             op.Direction = "CCW"
                             op.StartSide = "Inside"
-                            set_depths(op, ps[2], ps[2] - f["depth"], 0.5)
+                            set_depths(op, ps[2] + 1.0, ps[2] - f["depth"], 0.5)
                             finish(op, "C'bore %.1f x %.1f at %.1f %.1f, helix" % (f["d"], f["depth"], ps[0], ps[1]), t,
                                    dict(kind=k))
                 attempt(lab, _do)
@@ -472,6 +511,11 @@ def run():
             doc.recompute()
             posted, cur, metas = [], None, []
             for op, meta in ops:
+                if meta.get("safe_z") == "adaptive":
+                    try:
+                        meta["safe_z"] = float(op.SafeHeight.Value)
+                    except Exception:
+                        meta["safe_z"] = stock_top + 1.0
                 meta["freecad_cycle_time"] = getattr(op, "CycleTime", None)
                 meta["commands"] = len(op.Path.Commands)
                 if meta["commands"] == 0:
@@ -488,6 +532,8 @@ def run():
             text = linuxcnc_post.export(posted, gpath, "--no-show-editor --precision 3") if posted else ""
             if posted and not text:
                 text = open(gpath).read()
+            safe = {m["label"]: m["safe_z"] for m in metas if m.get("safe_z") is not None}
+            text, n_links = g0_links_to_g1(text, safe)
             if posted:
                 with open(gpath, "w") as fh:
                     fh.write(text)
@@ -507,6 +553,7 @@ def run():
                     h_, mi_, s_ = (int(x) for x in ct.split(":"))
                     fc_s += 3600 * h_ + 60 * mi_ + s_
             res = dict(pid=pc["pid"], setup=su["name"], up=up, label=su.get("label"), repeat=su.get("repeat", 1),
+                       g0_links_to_g1=n_links,
                        rotation=[list(r) for r in R],
                        stock_box_setup=[round(v, 3) for v in (sx0, sy0, sz0, sL, sW, sH)],
                        gcode=os.path.relpath(gpath, HERE) if posted else None, ops=metas, errors=errors,

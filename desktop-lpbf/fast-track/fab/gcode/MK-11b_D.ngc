@@ -1,6 +1,6 @@
 (Exported by FreeCAD)
 (Post Processor: Path.Post.scripts.linuxcnc_post)
-(Output Time:2026-11-28 09:56:41.829034)
+(Output Time:2026-11-28 10:23:42.136786)
 (begin preamble)
 G17 G54 G40 G49 G80 G90
 G21
@@ -22,7 +22,7 @@ G0 Z62.750
 G90 
 G98 
 G0 X0.000 Y-7.000 
-G83 X0.000 Y-7.000 Z32.120 F937.500 Q7.200 R50.000 
+G83 X0.000 Y-7.000 Z32.120 F937.500 Q9.600 R50.000 
 G80 
 G0 Z62.750 
 (finish operation: Drill 1 x 9.60 9.6, z 48.00 to 32.12)

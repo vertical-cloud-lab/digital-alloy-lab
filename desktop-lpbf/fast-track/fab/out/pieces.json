@@ -1,5 +1,5 @@
 {
- "made": "2026-11-28 10:01 UTC",
+ "made": "2026-11-28 10:23 UTC",
  "pieces": [
   {
    "pid": "MK-01",
@@ -706,10 +706,10 @@
      ],
      "outline": [
       2,
-      -0.3
+      5.5
      ],
-     "label": "top up: face to 12.0, aperture, seat, window groove, holes, rest of the outline",
-     "hold": "soft jaws on the OD",
+     "label": "top up: face to 12.0, aperture, seat, window groove, holes, the outline down to 5.5 (A cut 0-6)",
+     "hold": "soft jaws on the OD's lower 5 mm",
      "stock_note": "",
      "repeat": 1
     }
@@ -7188,7 +7188,7 @@
    "features": [
     {
      "kind": "bore",
-     "name": "40.00 H7 bore (rough 39.6 by helix; finish with a boring head)",
+     "name": "40.00 H7 bore, top half (rough by helix; finish with a boring head)",
      "axis": "-z",
      "tool": 2,
      "r": 20.0,
@@ -7197,8 +7197,22 @@
       0
      ],
      "z_top": 40.0,
-     "z_bot": 0,
+     "z_bot": 19.5,
      "finish": "boring head to 40.000-40.025, Ra 0.8"
+    },
+    {
+     "kind": "bore",
+     "name": "40.00 H7 bore, bottom half (rough by helix from below)",
+     "axis": "+z",
+     "tool": 2,
+     "r": 20.0,
+     "xy": [
+      0,
+      0
+     ],
+     "z_top": 0.0,
+     "z_bot": 20.5,
+     "finish": null
     },
     {
      "kind": "opening",
@@ -8195,7 +8209,7 @@
      "kind": "custom_slot",
      "name": "lead notch 3 x 3.5 through one wall (x3: index 120 deg)",
      "axis": "+y",
-     "tool": 4,
+     "tool": 8,
      "center": [
       0.0,
       -6.35,
@@ -8333,7 +8347,7 @@
      "kind": "custom_slot",
      "name": "lead notch 3 x 3.5 through one wall (x3: index 120 deg)",
      "axis": "+y",
-     "tool": 4,
+     "tool": 8,
      "center": [
       0.0,
       -6.35,
@@ -8649,10 +8663,10 @@
      ],
      "outline": [
       2,
-      -12.3
+      -3.5
      ],
-     "label": "bottom up: face to 12.0, rest of outline, c'bores",
-     "hold": "",
+     "label": "bottom up: face to 12.0, the outline's last 3.5 mm, c'bores",
+     "hold": "vise on the outline A cut",
      "stock_note": "",
      "repeat": 1
     }
@@ -9393,7 +9407,7 @@
      "axis": "-z",
      "d": 6.5,
      "depth": 3.4,
-     "tool": 4,
+     "tool": 9,
      "pts": [
       [
        -15.0,
@@ -9476,10 +9490,10 @@
      ],
      "outline": [
       2,
-      -19.0
+      0.0
      ],
-     "label": "L profile up (x up): face, outline of the L to x -19",
-     "hold": "bar in the vise, 41 mm out",
+     "label": "L profile up (x up): face, outline of the L to x 0",
+     "hold": "bar in the vise, 22 mm out",
      "stock_note": "",
      "repeat": 1
     },
@@ -9492,10 +9506,10 @@
      ],
      "outline": [
       2,
-      18.5
+      -0.5
      ],
-     "label": "flip: face to 40.0 wide, last 1.5 mm of the outline",
-     "hold": "",
+     "label": "flip: face to 40.0 wide, the rest of the outline (20.5)",
+     "hold": "vise on the outline A cut",
      "stock_note": "",
      "repeat": 1
     },
@@ -9504,7 +9518,7 @@
      "up": "+Z",
      "face": null,
      "outline": null,
-     "label": "foot down on parallels: arm notch, M3, c'bores",
+     "label": "foot down on parallels: arm notch, M3, c'bores (long-reach 1/8 in. cutter)",
      "hold": "vise on the upright's y faces",
      "stock_note": "",
      "repeat": 1
@@ -11384,9 +11398,9 @@
    "features": [
     {
      "kind": "adaptive",
-     "name": "lens bore 121.2 x 34 (adaptive)",
+     "name": "lens bore 121.2 x 34 (adaptive, 3/4 in.)",
      "axis": "-z",
-     "tool": 2,
+     "tool": 6,
      "probe": [
       52.6,
       0.0,
@@ -11520,9 +11534,9 @@
      ],
      "outline": [
       2,
-      -3.3
+      18.0
      ],
-     "label": "open end up: face to 40, outline, lens bore",
+     "label": "open end up: face to 40, outline to z 18, lens bore",
      "hold": "blank on parallels, toe clamps",
      "stock_note": "",
      "repeat": 1
@@ -11534,8 +11548,11 @@
       2,
       3.0
      ],
-     "outline": null,
-     "label": "floor up: face to the spigot, round the spigot, the 50 bore",
+     "outline": [
+      2,
+      -17.5
+     ],
+     "label": "floor up: face to the spigot, the outline's rest, round the spigot, the 50 bore",
      "hold": "soft jaws in the lens bore (ID clamp)",
      "stock_note": "",
      "repeat": 1
@@ -13091,10 +13108,10 @@
      ],
      "outline": [
       2,
-      -0.3
+      4.0
      ],
-     "label": "top up: face to 20.0, outline, stage taps",
-     "hold": "",
+     "label": "top up: face to 20.0, outline to z 4, stage taps",
+     "hold": "vise on the blank's margins",
      "stock_note": "",
      "repeat": 1
     },
@@ -13105,9 +13122,12 @@
       2,
       0.0
      ],
-     "outline": null,
-     "label": "bottom up: face, riser taps",
-     "hold": "",
+     "outline": [
+      2,
+      -4.5
+     ],
+     "label": "bottom up: face, the outline's last 4.5 mm, riser taps",
+     "hold": "vise on the outline A cut",
      "stock_note": "",
      "repeat": 1
     }
@@ -13341,9 +13361,9 @@
      ],
      "outline": [
       2,
-      -0.3
+      5.0
      ],
-     "label": "top up: face, outline, rod bore, c'bores",
+     "label": "top up: face, outline to z 5, rod bore, c'bores",
      "hold": "vise on the blank's y faces, on parallels",
      "stock_note": "",
      "repeat": 1
@@ -13355,9 +13375,12 @@
       2,
       0.0
      ],
-     "outline": null,
-     "label": "bottom up: face to 40",
-     "hold": "vise",
+     "outline": [
+      2,
+      -5.5
+     ],
+     "label": "bottom up: face to 40, the outline's last 5.5 mm",
+     "hold": "vise on the outline A cut",
      "stock_note": "",
      "repeat": 1
     },
@@ -13872,10 +13895,10 @@
      ],
      "outline": [
       2,
-      1.0
+      25.0
      ],
-     "label": "top up: face, outline, wells, M3",
-     "hold": "",
+     "label": "top up: face, outline to z 25, wells, M3",
+     "hold": "vise on the bar's lower 25 mm",
      "stock_note": "",
      "repeat": 1
     },
@@ -13888,10 +13911,10 @@
      ],
      "outline": [
       2,
-      -51.730000000000004
+      -25.5
      ],
-     "label": "bottom up: face to height, holes A",
-     "hold": "",
+     "label": "bottom up: face to height, the outline's rest (25.5), holes A",
+     "hold": "vise on the outline A cut",
      "stock_note": "",
      "repeat": 1
     }
