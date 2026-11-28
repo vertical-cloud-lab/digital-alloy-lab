@@ -123,7 +123,16 @@ P = dict(
                                   # FEA addendum) and at the front, MK-09 with a top flange on both beams and gussets under
                                   # the head (g2), and a 10 mm plate on the head's far (+x) face from both beams (g3):
                                   # 62.0 / 100.6 / 179.4 Hz, the only variant over the 60 Hz minimum (default since round 3);
-                                  # "four_post_braced_front" 50.0 Hz, "four_post" 43.1 Hz, "two_post" = round 1's frame (13 Hz)
+                                  # "four_post_braced_front" 50.0 Hz, "four_post" 43.1 Hz, "two_post" = round 1's frame (13 Hz);
+                                  # round 3, not the default: "four_post_braced_front_g4" = g3 + both portals braced, 72.8 Hz
+                                  # with bolted joints and stiffened brace ends (ft_joints.py "portals_braced");
+                                  # "four_post_braced_front_g4b" = g3 + the lower front and the back diagonal, 70.7 Hz
+                                  # ("front_lower_back"): no upper front diagonal across the opened door's front gap
+    portal_diag={                 # the added portal diagonals: portal, z on the left post's axis, z on the right post's
+                                  # axis (world mm, FT-1 frame), as the FEA's VARIANTS (analysis/fea/ft_joints.py, round 3)
+        "four_post_braced_front_g4": (("front", 160.0, 285.0), ("front", -240.0, 140.0), ("back", 185.0, 275.0)),
+        "four_post_braced_front_g4b": (("front", -240.0, 140.0), ("back", 185.0, 275.0)),
+    },
     post=45.0, front_post_gap=25.0, knee=120.0,   # post size; front posts this far in front of the front rail; knee brace
     knee_front=80.0,              # front knee braces ("four_post_braced_front"): clear of the collimator
     head_flange=60.0, head_gussets_y=(-10.0, 40.0, 90.0),   # MK-09's top flange depth (-x) on both beams, gusset positions
@@ -393,9 +402,11 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
     z_beam_max = P["lens_ffl"] + P["dz_cube"] + 90.0
     z_up_top = z_beam_max + h + 10.0
     four = P["gantry"].startswith("four_post")
-    front_braced = P["gantry"] in ("four_post_braced_front", "four_post_braced_front_g2", "four_post_braced_front_g3")
-    g2 = P["gantry"] in ("four_post_braced_front_g2", "four_post_braced_front_g3")
-    g3 = P["gantry"] == "four_post_braced_front_g3"   # g2 + a support plate on the head's far face (FEA on g2)
+    g4s = ("four_post_braced_front_g4", "four_post_braced_front_g4b")   # g3 + portal diagonals (round 3 joint FEA)
+    front_braced = P["gantry"] in ("four_post_braced_front", "four_post_braced_front_g2", "four_post_braced_front_g3",
+                                   *g4s)
+    g2 = P["gantry"] in ("four_post_braced_front_g2", "four_post_braced_front_g3", *g4s)
+    g3 = P["gantry"] in ("four_post_braced_front_g3", *g4s)   # g2 + a support plate on the head's far face (FEA on g2)
     hp = P["post"] / 2 if four else h                 # post half-width
     y_f = ry[0] - h - P["front_post_gap"] - hp        # front posts: in front of the front rail, on foot brackets
     if four:
@@ -424,6 +435,16 @@ def build(state="FT-1", pz=0.0, hx=None, lid_open=False, piston="zaber", monitor
             fk = [polyline_pipe([(ux[0] + hp, y_f, z_beam - h - kf), (ux[0] + hp + kf, y_f, z_beam - h)], 15.0, smooth=False),
                   polyline_pipe([(ux[1] - hp, y_f, z_beam - h - kf), (ux[1] - hp - kf, y_f, z_beam - h)], 15.0, smooth=False)]
             add("Gantry knee braces, front (2)", comp(fk), C["tslot"], "E4", "frame")
+        if P["gantry"] in g4s:  # round 3 joint FEA (bolted joints, stiffened brace ends): g4 72.8 Hz (feet fixed),
+            pd = []             # 64.4 Hz (thick foot plate); g4b 70.7 / 62.0 Hz
+            for side, zl, zr in P["portal_diag"][P["gantry"]]:   # z on the post axes; drawn between the posts' inner
+                yd = y_f if side == "front" else ry[1]             # faces, like the side diagonals
+                zx = lambda x: zl + (x - ux[0]) / (ux[1] - ux[0]) * (zr - zl)
+                pd.append(polyline_pipe([(ux[0] + hp, yd, zx(ux[0] + hp)), (ux[1] - hp, yd, zx(ux[1] - hp))], 15.0,
+                                        smooth=False))
+            nf = sum(s == "front" for s, _, _ in P["portal_diag"][P["gantry"]])
+            add(f"Gantry portal diagonals ({P['gantry'][-3:].lstrip('_')}): {nf} in the front portal, 1 in the back",
+                comp(pd), C["tslot"], "E4", "frame")
         ft_ = []
         for x in ux:                                  # L feet: under the post, up the front base rail's front face
             ft_.append(box(x - hp - 10, x + hp + 10, y_f - hp - 10, ry[0] - h, zb, zb + 6.0))
