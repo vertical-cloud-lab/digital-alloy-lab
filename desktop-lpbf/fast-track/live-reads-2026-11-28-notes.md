@@ -28,6 +28,10 @@ Not published anywhere we can reach, so the number below is an estimate.
 | The same 0.95 in rail as the 6x6x6 | 256.5 mm (10.1 in) |
 | The brochure's volume with square-section rails (the same model gives the 6x6x6's opening as 4.085 in against the drawn 4.100 in) | 243 mm (9.58 in) |
 
+**Round 3's retry (10:34Z) read three more archived manuals**: the Cube Plate Installation Manual (V 1.3.2, archived
+2025-08-11, and V1.2, archived 2023-08-10) and the Cube Coupling Kit manual (V 1.02, archived 2025-08-03). None gives
+the 12 in. frame's face opening: their figures are renders without dimensions. So the estimate below stands.
+
 The volume fits 1.21 in square rails or 0.95 in wide by about 1.6 in deep rails equally well, so it does not settle
 it; the render points to the second. **So the 247 mm cassette probably passes a face (most likely about 255 mm, 8 mm
 to spare), but this is not confirmed.** Ask Ideal Vacuum for P107540's drawing or STEP by phone or e-mail before
