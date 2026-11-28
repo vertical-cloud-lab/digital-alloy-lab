@@ -21,8 +21,11 @@ the real mass distribution is not published).
 Run:  cd <repo> && OMP_NUM_THREADS=2 /tmp/tools/capmem 4 /tmp/venv/bin/python desktop-lpbf/fast-track/analysis/fea/ft_joints.py <cmd>
   bonded <hmax> <point|inertia>     the bonded g3 model (mesh check, inertia check)
   sweep <hmax>                      the joint model on one mesh, every stiffness case in SWEEP
-  variant <name> <hmax>             a geometric option (extra braces), with the joint model
+  variant <name> <hmax> [cases]     a geometric option (extra braces, VARIANTS: front_diagonal, front_zigzag,
+                                    portals_braced, back_diagonal, front_lower, front_lower_back), with the joint model
   plot                              struct-joints-mode1.png and struct-joints-options.png from struct-joints.json
+Cases (SWEEP) set kr and kt per joint, per joint class (beam-post, brace, mount) and for the feet (kr_base, kt_base).
+Eight runs of the first round-3 attempt were added to the JSON from its run log (frequencies only, 'source' says so).
 Scratch goes to /tmp/r3-fea-joints/struct (env FT_STRUCT_RUN); results to analysis/out/fea/struct-joints.json.
 """
 from __future__ import annotations

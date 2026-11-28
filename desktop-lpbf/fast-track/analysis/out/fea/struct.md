@@ -255,7 +255,9 @@ drawn posts' axes, with the same joints as the rest). None is drawn in the CAD y
 - **The door's front gap.** The upper front diagonal (z 160-285) runs across the gap the open door leaves at the
   front, where hands and the spreader bar go in. Leaving it out costs about 2 Hz (above). The lower front diagonal
   stays under z 155, and under the box's top (z 139) across the box's width; the back diagonal runs over the box. The
-  lower front diagonal alone, with stiffened ends, just misses on the thick plate: 68.7 and 59.9 Hz.
+  lower front diagonal alone, with stiffened ends, just misses on the thick plate: 68.7 and 59.9 Hz. Above z 285
+  there is no room for a front diagonal: the front knee braces, the collimator (z 372-412) and the head-mount
+  plates' front edges, at the front beam's back face, fill it. The knee braces' ends are among the 16 to stiffen.
 - **Why the low front diagonal matters most.** The front posts stand 751 mm from the bench. One diagonal across their
   middle (z 160-285) adds 1.4 Hz. The lower one starts at the left post's foot, so the portal's sway goes into the
   foot as axial force instead of bending the post down to its foot: with stiffened ends, 68.7 Hz against 55.3 Hz
