@@ -58,13 +58,15 @@
     "job": "LITERATURE",
     "job_name": "job-futurehouse-paperqa3",
     "submitted_utc": "2026-11-28T08:50:28Z",
-    "status": "in progress"
+    "status": "success",
+    "fetched_utc": "2026-11-28T09:21:53Z"
   },
   "09-industry-documented-usage": {
     "task_id": "3504bd05-6cf5-416e-87b4-8f581829577a",
     "job": "LITERATURE",
     "job_name": "job-futurehouse-paperqa3",
     "submitted_utc": "2026-11-28T08:50:29Z",
-    "status": "in progress"
+    "status": "success",
+    "fetched_utc": "2026-11-28T09:21:54Z"
   }
 }
