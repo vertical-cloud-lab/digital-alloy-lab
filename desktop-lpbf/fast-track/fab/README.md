@@ -29,8 +29,8 @@ hours, shop plan and voxel check are in [`out/v1/`](out/v1/). See [Round 3](#rou
 
 - **CAD v2 makes 47 pieces** (v1 35) in 85 mill setups (v1 63) and 21 lathe setups (v1 15): 261 FreeCAD operations,
   all posted, no errors and no empty operations.
-- **The CAM review's fixes are in and checked,** except ramp entries into pockets and profiles, setup sheets and a
-  Haas post. Checked with the review's own checkers on all 85 programs:
+- **The CAM review's fixes are in and checked,** except ramp entries into pockets and profiles and a Haas post.
+  [Setup sheets](out/setup-sheets.md) are new. Checked with the review's own checkers on all 85 programs:
   - no Adaptive link would cut material as a Haas dogleg rapid (v1: 194 links in 12 setups);
   - the review's six setups that couldn't run with the tools now pass the holder and flute checks (MK-09b_C, one of
     the six, is not in v2);
@@ -69,7 +69,7 @@ hours, shop plan and voxel check are in [`out/v1/`](out/v1/). See [Round 3](#rou
 | 3. Peck depth | `setExpression("PeckDepth", None)` before setting it | G83 Q is 1.0 D on 247 cycles and 0.5 D on 3, as `cam.py` intends (v1: 0.75 D on all) |
 | 4. Outline depths and holding | B's outline cuts only through what A left, plus 0.5 mm: MK-02a, MK-07, MK-15b, MK-15c (split at z 10) and MK-18a (split at z 25). MK-08e's 39 mm L and MK-10c's outline are split between two setups. MK-03's bore is roughed from both sides. Each changed setup's label says how it is held | no flute or holder problem left on these pieces, except MK-15c_C's T3 wall (below) |
 | 5. Ramp entries | the 304 notch (a custom op) ramps down along the slot | `Pocket` and `Profile` still plunge: **not done** |
-| 6. Setup sheets and a Haas post | – | **not done.** The programs are still `linuxcnc` posts, with G54 at the model's origin |
+| 6. Setup sheets and a Haas post | [`setup_sheets.py`](setup_sheets.py) writes [`out/setup-sheets.md`](out/setup-sheets.md): for each of the 85 setups, the program, the face up, the holding, the stock, G54 as a shift from the stock's top front-left corner, the tools in order with stick-out and flute length, and the run time | the sheets are generated, not checked by a machinist. **No Haas post:** the programs are still `linuxcnc` posts (`M2`, no `%`), with G54 at the model's origin |
 | 7. Tools | T5: 15 mm stick-out. **T8:** 2.0 mm carbide for the 304 notch, 5000 rpm (31 m/min) and 76 mm/min with a ramp. The notch is 3.0 mm wide, so the review's 1/8 in. T4 doesn't fit. **T9:** 1/8 in. long reach (66 mm) for MK-08e's foot counterbores. MK-10c's 34 mm lens bore is on the 3/4 in. T6 (38 mm flutes). Every drill has a flute length and a stick-out: DIN 338 jobber, and DIN 340 long series for 2.0, 3.4, 4.5 and 5.5 mm. The drills' speed comment is corrected (60000/d rpm is about 19 m/min). No long-flute 1/2 in. cutter was added: the splits keep T2 within its 32 mm. The adaptive feeds were not raised (optional) | holder check: the review's six setups pass (MK-03_A and _D, MK-08e_A, MK-18a_A and _B; MK-09b is not in v2). The first pass found holder hits on five more v2 setups (MK-02f_B, MK-08e_C, MK-15c_D, MK-22b_D, MK-10c_C). The long-series drills clear the first four. MK-10c_C's M4 set-screw holes were set `through=True`, so they ran 128 mm, across the bore and through the far wall: now 9 mm, through the near wall |
 | 8. MK-09b's counterbores | MK-09b is gone in v2: the collimator hangs in MK-22's clamp block | – |
 | 9. Holding the through-cut plates; fixtures | fixtures, loading the tools and sawing are in the reviewed hours case below, not in low / expected / high | holding not yet recorded per plate |
@@ -159,7 +159,7 @@ Cumulative, at the round-2 allowances (unchanged):
 <!-- /R3_REVIEWED -->
 
   The set's expected FT-1 (165.9 h) sits inside the student band, as it did on v1. The extras still count the
-  review's 3-6 h of CAM fixes, since setup sheets, a Haas post and ramp entries are still to do.
+  review's 3-6 h of CAM fixes, since a Haas post, ramp entries and checking the setup sheets are still to do.
 
 <details><summary>Hours per piece, v2 (round 3)</summary>
 
@@ -260,8 +260,7 @@ in [`drawings/v1/`](drawings/v1/).
   estimate.
 - **Not done from the review:**
   - ramp entries into `Pocket` and `Profile`;
-  - setup sheets with touch-off datums;
-  - a Haas post, and a prove-out on the Haas's graphics;
+  - a Haas post, and a prove-out on the Haas's graphics (the setup sheets' G54 shifts are untested);
   - higher adaptive chip loads.
 - **MK-15c_C:** T3 cuts beside a 28 mm wall with 25.4 mm of flute.
 - **The voxel cut ran on 10 of v2's 37 milled pieces.** The other 27 have only the two G-code checks.
@@ -357,6 +356,7 @@ in [`drawings/v1/`](drawings/v1/).
 | [`hours.py`](hours.py) | shop hours per piece and per state at the low, expected and high allowances, for an outsourced split, and (round 3) the reviewed case → [`out/hours.md`](out/hours.md), `out/hours.csv`, `out/hours.json` (`by_state`, `cumulative`, `reviewed`) |
 | [`plan.py`](plan.py) | the shop calendar: the progression network's need dates, and when each state's pieces are done for one to three people → [`out/plan.md`](out/plan.md), `out/plan.json` |
 | [`v2_delta.py`](v2_delta.py) | what the CAD v2 model changes in each piece, and the v2 hours (estimate) → [`out/v2/delta.md`](out/v2/delta.md), `out/v2/hours.json`; `plan.py out/v2/hours.json out/v2` → [`out/v2/plan.md`](out/v2/plan.md) |
+| [`setup_sheets.py`](setup_sheets.py) | round 3: a setup sheet per posted mill setup (holding, stock, G54 from a stock corner, tools with stick-outs) → [`out/setup-sheets.md`](out/setup-sheets.md) |
 | [`tables.py`](tables.py) | fills this README's round-3 tables from `out/` (the round-2 tables describe v1 and are no longer regenerated) |
 | [`drawings.py`](drawings.py) | one sheet per piece → [`drawings/`](drawings/) (PDF), [`img/drawings-contact.png`](img/drawings-contact.png) |
 | [`out/dxf/`](out/dxf/) | flat patterns of the four sheet pieces (cut layer only; bends on the drawings) |
