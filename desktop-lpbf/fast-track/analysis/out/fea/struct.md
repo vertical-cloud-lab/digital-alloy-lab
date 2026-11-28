@@ -52,7 +52,14 @@ What v2 changed for these cases:
   unchanged (same gland): 8-25 N running and 42 N at breakout for two O-rings at 15 %. The X-VSR20A's worst case is
   56 N of its 100 N (v1: 58 N). The MTS50/M-Z8 verdicts are unchanged: two O-rings at 15 % are fine only while
   friction stays at running levels (78-88 % of 44 N), and one O-ring at 10 % is fine (≤ 57 %).
-- **Gantry (4c) with bolted joints:** being run (round 3); until then the bonded g3 result stands: 62.0 / 100.6 / 179.4 Hz.
+- **Gantry (4c) with bolted joints: under the 60 Hz minimum as drawn. Two more diagonals, stiffer brace ends and
+  stiff feet bring it back.** With each joint a single T-slot bracket (estimated 1-10 kN·m/rad and 10-50 kN/mm),
+  mode 1 drops from 61.9 Hz (bonded) to 43.9-54.4 Hz with the feet fixed, and to 34.1 Hz with the feet on a bolted
+  plate (41.1 Hz on a thick plate; both estimates). Of the joints, the 12 brace ends matter most; the feet matter
+  more. **Change: a diagonal low in the front portal (from the left post's foot to the right post at z 140) and one
+  in the back portal over the box, a second bracket or a doweled end plate at all 16 brace ends, and a thick plate
+  under each foot:** 62.0 Hz (70.7 Hz with the feet fixed). A third diagonal higher in the front portal adds about
+  2 Hz (64.4 Hz) but crosses the door's front gap. Then tap-test the built frame (procedure below).
 
 #### 4a on v2: the Saginaw door on its poured gasket
 
@@ -147,6 +154,166 @@ than the top plate's two bores, so the top plate bounds them (not run).
   12.8 N upward in FT-1V.
 - The heavier rod-end block helps the pull-down: lowering in FT-1 now needs 5-43 N (v1: 7-45 N). Lifting needs
   14-51 N (v1: 12-50 N).
+
+#### 4c on g3 with bolted joints (round 3)
+
+![g3 gantry with its bolted joints as springs: modes 1-3 against joint stiffness](struct-joints-mode1.png)
+
+![g3 gantry, mode 1 of each option, feet fixed and on a bolted plate](struct-joints-options.png)
+
+**What was run** (`ft_joints.py`; struct-joints.json). The bonded g3 model fuses every member into one mesh, so
+each joint is as stiff as solid metal. Here each member is meshed on its own: 4 posts, 2 cross-beams, 6 braces and
+the two head-mount assemblies, each bonded inside itself (14 groups, 97k nodes, 12 mm mesh). Where two members touch,
+each side's nodes are tied to a rigid patch, and the two patches are joined by three translational springs (kt,
+per joint) and three rotational springs (kr, per joint). That is 20 joints: 4 beam-to-post, 12 brace ends and 4
+head-mount-to-beam. The post feet are fixed, as in the bonded model, or rigid patches on springs to the bench. The
+head and lens are one rigid body on both support plates, with their rotary inertia (a uniform box and cylinder,
+estimate). Each ccx run took 25-90 s.
+
+**Checks.**
+
+- Mesh: the bonded model on the 12 mm mesh gives 62.02 / 100.57 / 179.69 Hz, against 62.0 / 100.6 / 179.4 Hz on
+  the g3 FEA's 10 mm mesh.
+- Head inertia: 61.91 / 100.31 / 171.81 Hz, so -0.2 %, -0.3 % and -4.4 % on modes 1-3. All runs below include it.
+- Rigid springs: 64.61 / 103.34 / 176.41 Hz. The rigid patches stiffen the frame 4 % over bonded; that run is the
+  sweep's stiff end.
+
+**What joint stiffness is realistic (estimates, not measured).**
+
+- **Translational, 10-50 kN/mm per joint.** Huth's fastener-flexibility formula (H. Huth, 1986, ASTM STP 927,
+  pp. 221-250) gives about 46 kN/mm for one M6 bolt in single shear through a 4 mm bracket leg into a 2.5 mm slot
+  lip (aluminium, steel bolt). A corner bracket puts one such bolt into each member, in series: 23 kN/mm. A joint has
+  one or two brackets: 23-46 kN/mm. The slot lips bending under the T-nut add compliance, so 10-50 kN/mm.
+- **Rotational, 1-10 kN·m/rad per joint.** The same bolt stiffness on a 15-20 mm lever from a 30-series bracket's
+  heel gives 5-9 kN·m/rad, less the cast bracket's own bending.
+- **Published check.** Güler and Karagülle ([DOI 10.1590/1679-78252755](https://doi.org/10.1590/1679-78252755))
+  measured three Bosch Rexroth profile frames. Beam models with each connector as an elastic solid (in effect
+  bonded) ran 0-16 % above the measured frequencies (43.7 against 38.9 Hz, 50.6 against 43.5 Hz, for example). Here
+  the single-bracket range puts mode 1 12-29 % under the bonded model, the same direction and a little more.
+- **The bench.** The back posts stand on the T-slot base rails and the front posts on 6 mm L foot brackets; neither
+  is in the FE. The feet were run fixed, on a bolted foot plate (30 kN·m/rad and 50 kN/mm per foot, estimate), on a
+  thick plate (100 kN·m/rad, 100 kN/mm), and on the same springs as one bracket.
+
+| Joints, per joint (kr, kt) | Feet | Modes 1 / 2 / 3 | Mode 1 vs bonded |
+|---|---|---|---:|
+| Bonded (the g3 model, 12 mm mesh) | fixed | 61.9 / 100.3 / 171.8 Hz | – |
+| Rigid springs | fixed | 64.6 / 103.3 / 176.4 Hz | +4 % |
+| Single brackets, stiff end (10 kN·m/rad, 50 kN/mm) | fixed | 54.4 / 80.1 / 149.8 Hz | -12 % |
+| **Single brackets, middle (3 kN·m/rad, 20 kN/mm)** | fixed | **48.8 / 70.2 / 131.9 Hz** | **-21 %** |
+| Single brackets, soft end (1 kN·m/rad, 10 kN/mm) | fixed | 43.9 / 62.1 / 115.2 Hz | -29 % |
+| Middle | thick plate (100 kN·m/rad, 100 kN/mm) | 41.1 / 64.4 / 117.3 Hz | -34 % |
+| Middle | bolted plate (30 kN·m/rad, 50 kN/mm) | 34.1 / 59.4 / 105.2 Hz | -45 % |
+| Middle | one bracket's springs (3 kN·m/rad, 20 kN/mm) | 25.4 / 50.7 / 88.2 Hz | -59 % |
+
+**Which joints matter** (middle joints, feet fixed, one change at a time; mode 1 48.8 Hz before):
+
+| Change | Mode 1 |
+|---|---:|
+| The 12 brace ends to 100 kN·m/rad and 100 kN/mm | 55.3 Hz (+6.5) |
+| The 12 brace ends rigid | 57.4 Hz (+8.6) |
+| The 12 brace ends to 100 kN/mm only | 53.0 Hz (+4.2) |
+| The 4 head-mount joints to 100 kN·m/rad and 100 kN/mm | 50.7 Hz (+1.9) |
+| The 4 beam-to-post joints to 100 kN·m/rad | 49.7 Hz (+0.9) |
+| Brace ends and beam-to-post joints to 100 kN·m/rad and 100 kN/mm | 56.4 Hz (+7.6) |
+| Every joint to 100 kN/mm | 54.8 Hz (+6.0) |
+| Every joint's kr 0.3 / 1 / 3 / 10 / 30 / 100 kN·m/rad / rigid (kt 20 kN/mm) | 47.1 / 47.8 / 48.8 / 50.4 / 52.1 / 53.6 / 55.0 Hz |
+| Every joint's kt 5 / 20 / 50 / 100 kN/mm / rigid (kr 10 kN·m/rad) | 43.2 / 50.4 / 54.4 / 56.5 / 59.4 Hz |
+
+- **Mode 1 is the same shape in every run:** the frame sways along the beams (x) and the head yaws, with the largest
+  motion at a front post's top, as in the bonded model. Mode 2 is fore-aft (y).
+- **The translational stiffness matters more than the rotational.** The braces carry the frame's racking as axial
+  force through their end joints, so the 12 brace ends matter most. The beam-to-post and head-mount joints matter
+  little.
+- **The bench matters most of all.** The front posts are 751 mm tall, from the bench to above the beams, and in x only
+  the front beam and two short knee braces at their tops hold them. On a bolted foot plate, mode 1 drops from 48.8 to 34.1 Hz.
+
+**Options to get back over 60 Hz** (`ft_joints.py variant <name>`; the added braces are 30-series members on the
+drawn posts' axes, with the same joints as the rest). None is drawn in the CAD yet.
+
+| Option: what the CAD would add | Feet fixed: modes 1 / 2 | Bolted foot plate (30 kN·m/rad, 50 kN/mm) | Thick foot plate (100 kN·m/rad, 100 kN/mm) |
+|---|---|---|---|
+| As drawn (single brackets, middle) | 48.8 / 70.2 Hz (soft end 43.9 / 62.1) | 34.1 / 59.4 Hz | 41.1 / 64.4 Hz |
+| Brace ends stiffened: a second bracket, or an end plate with a dowel, at each of the 12 brace ends (100 kN·m/rad and 100 kN/mm each, estimate) | 55.3 / 77.7 Hz | – | – |
+| Front diagonal: one brace across the front portal, left post at z 160 to right post at z 285 (about 490 mm between the posts), 2 end brackets | 50.2 / 70.1 Hz (soft end 45.0 / 62.0) | 35.0 / 59.4 Hz | – |
+| Front diagonal, brace ends stiffened | 58.3 / 78.0 Hz | – | – |
+| Front zigzag: the front diagonal plus a lower one from the left post's foot (z -240) to the right post at z 140 (about 590 mm), 4 end brackets | 58.2 / 70.2 Hz (soft end 51.0 / 62.0) | 44.8 / 59.5 Hz | – |
+| Front zigzag, all 16 brace ends stiffened | 71.0 / 78.4 Hz (mode 3 150.7) | 55.5 / 65.3 Hz | 62.4 / 71.2 Hz (mode 3 134.3; 60.8 Hz with the other joints at the soft end) |
+| Both portals braced: the front zigzag plus a back diagonal over the box, left post at z 185 to right post at z 275 (about 480 mm); 3 braces, 6 end brackets | 59.3 / 70.1 Hz | – | – |
+| Both portals braced, all 18 brace ends stiffened | 72.8 / 79.1 Hz (mode 3 151.9) | 57.5 / 64.9 Hz | 64.4 / 71.1 Hz (62.7 Hz with the other joints at the soft end) |
+| Back diagonal only, all 14 brace ends stiffened | 57.8 / 77.9 Hz | – | 49.0 / 70.5 Hz |
+| Lower front diagonal only, all 14 brace ends stiffened | 68.7 / 77.9 Hz | – | 59.9 / 70.9 Hz |
+| **Lower front diagonal and back diagonal, all 16 brace ends stiffened** (the door's front gap stays clear) | **70.7 / 78.4 Hz** (mode 3 150.4) | 54.8 / 64.7 Hz | **62.0 / 70.7 Hz** (mode 3 132.5; 60.1 Hz with the other joints at the soft end) |
+
+- **What clears 60 Hz: a low diagonal in the front portal, stiffened brace ends and stiff feet, together.** The
+  lower front diagonal and the back diagonal, with all 16 brace ends stiffened, give 70.7 Hz with the feet fixed and
+  62.0 Hz on a thick foot plate (60.1 Hz with the other joints at the soft end of the range), but 54.8 Hz on a plain
+  bolted plate. Adding the upper front diagonal (both portals braced) gives 72.8, 64.4 and 57.5 Hz. No single change
+  does it: the front zigzag alone 58.2 Hz, the brace ends alone 55.3 Hz, the back diagonal with stiffened ends 57.8 Hz.
+- **The door's front gap.** The upper front diagonal (z 160-285) runs across the gap the open door leaves at the
+  front, where hands and the spreader bar go in. Leaving it out costs about 2 Hz (above). The lower front diagonal
+  stays under z 155, and under the box's top (z 139) across the box's width; the back diagonal runs over the box. The
+  lower front diagonal alone, with stiffened ends, just misses on the thick plate: 68.7 and 59.9 Hz.
+- **Why the low front diagonal matters most.** The front posts stand 751 mm from the bench. One diagonal across their
+  middle (z 160-285) adds 1.4 Hz. The lower one starts at the left post's foot, so the portal's sway goes into the
+  foot as axial force instead of bending the post down to its foot: with stiffened ends, 68.7 Hz against 55.3 Hz
+  without it (feet fixed).
+- **Why the brace ends.** On single brackets the braces give away much of what they add: the front zigzag goes from
+  58.2 to 71.0 Hz when its 16 brace ends are stiffened.
+- **On a plain bolted plate, mode 2 (fore-aft) sits at 59.4-59.5 Hz** in every option with single-bracket brace ends.
+  The side diagonals carry it, and stiffening their ends lifts it to 65 Hz.
+- **Cost in parts (estimate; the CAD would have to add them).** For the lower front and back diagonals: two 30-series
+  braces (about 590 and 480 mm between the posts) with 4 end brackets. A second bracket, or a doweled end plate, at
+  all 16 brace ends (16 brackets, 32 T-nuts and screws). A 12-15 mm plate under each front post, bolted to the bench
+  with 4 screws, in place of the 6 mm L feet, and each back post bolted to its base rail through an end plate. The
+  upper front diagonal, if wanted, is one more 490 mm brace and 2 stiffened ends.
+- **What the CAD must check.**
+  - The front diagonals run 29 mm in front of the box's front face. The upper one passes 60-70 mm over the latch;
+    the lower one passes 60 mm under MON3's light. The latch stays reachable between them.
+  - The back diagonal passes 30 mm over the door at the box's left edge, next to the hinges: check the door's 24°
+    swing. Its right end grazes the back-right knee brace's lower end (one node within 0.05 mm in the mesh), so end
+    it 15-20 mm lower.
+  - Route the process fibre around the new braces.
+- **The bench is not in the FE.** The base rails under the back posts are bolted T-slot too, and the plate values are
+  estimates. The tap test below measures the whole.
+
+#### Tap test for the built frame
+
+What it checks: the frame's first modes with the head on it, against the 60 Hz minimum (100 Hz goal) and the FE
+above. Needs: a rubber or nylon mallet (or a screwdriver's plastic handle), and a phone with phyphox
+(free; "Acceleration (without g)", which records the three axes) or a small accelerometer logged at ≥ 400 Hz.
+Phones sample at about 100-500 Hz: check the rate in phyphox first, because it must be at least twice the highest
+mode you want to see (≥ 200 Hz for 100 Hz).
+
+1. **Build state.** The frame bolted to the bench as it will run, every joint tightened, the head and lens (or a
+   7.1 kg dummy on the head's footprint) on the mount, cables dressed as in use, the box in place. Note anything
+   left off, and how the feet are fixed to the bench.
+2. **Sensor.** Clamp or tape the phone flat and tight on the head's top face, its long side along x (the beams).
+   A loose phone rattles and adds its own peaks. Repeat with the phone on the front-left post's top, where the FE
+   puts mode 1's largest motion.
+3. **Taps.** Five taps per direction, about 3 s apart so each ring dies away. Hit firmly, but don't lean on the
+   frame.
+   - Mode 1, sideways (x): hit the front-left post's top along the beams.
+   - Mode 2, fore-aft (y): hit the side of the head's far-side support plate, or a post's top, along y.
+   - Mode 3: hit the front beam next to the head, downward.
+4. **Read the first mode.** Export the record (CSV) and take the spectrum of each tap's ring: 1-2 s from the
+   tap, a Hann window, frequency resolution ≤ 1 Hz (phyphox's own spectrum view is fine for a first look).
+   Mode 1 is the lowest clear peak above about 20 Hz in the x-axis spectrum after an x tap, at the same frequency
+   on the post and on the head and within ±1 Hz from tap to tap. Peaks that appear in every axis whatever you hit
+   are usually the phone or the bench.
+5. **Pass line:** mode 1 ≥ 60 Hz. The FE gives 62.0 Hz with bonded joints, an upper bound;
+   with single-bracket joints it gives 43.9-54.4 Hz with the feet fixed, and 34.1-41.1 Hz on a bolted or
+   thick foot plate, for the g3 frame as drawn. With a low front diagonal, a back diagonal and stiffened
+   brace ends: 70.7 Hz with the feet fixed and 62.0 Hz on a thick plate. A frame as drawn that rings at
+   35-55 Hz behaves as the FE says.
+6. **If it fails,** look at which direction rings and stiffen that first.
+   In the FE, mode 1 is always the frame swaying along the beams (x), largest at a front post's top. In the
+   order the FE gains: a second bracket at each brace end (+6.5 Hz as drawn), the low front diagonal
+   (+13.4 Hz more), then the feet (a bolted plate to a thick one: +7 Hz as drawn). If a phone on a post's
+   foot or on the base rail shows the same peak as on the head, the feet or the bench are the limit: fix them
+   first. Fore-aft (mode 2) is 59.4 Hz on a bolted plate as drawn; if y rings lowest, stiffen the side
+   diagonals' ends.
+7. **Record** the date, the build state, the sensor and its rate, the five peak frequencies per direction and a
+   spectrum image, and add them to this file next to the FE.
 
 ### Short answer (rounds 1-2: 4a, 4b and 4d on the round-1 model, v1)
 
@@ -275,7 +442,7 @@ mass on the flange face under the head's footprint, and the base rails are rigid
   - Run on a 10 mm mesh (145k nodes, ccx 20 + 41 s): at 8 mm the modal step needed more than the 4 GB cap.
     Gravity agrees between the two meshes (pitch 14.2 against 14.0 µrad).
 - The joints are bonded and the base is rigid, so the real frame (bolted T-slot joints) will be softer than these
-  numbers.
+  numbers. Round 3 ran the bolted joints and the feet: see "4c on g3 with bolted joints (round 3)" above.
 
 ### 4d Piston rod MK-06 (analytic; v1: round-1 model)
 

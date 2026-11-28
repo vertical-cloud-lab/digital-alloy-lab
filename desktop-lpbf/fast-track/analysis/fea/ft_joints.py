@@ -615,7 +615,8 @@ def cmd_plot(hmax=12):
             if xs and xs[-1] == RIG and fin:
                 ax.plot([xs[fin[-1]], xs[-1]], [ys[fin[-1]], ys[-1]], color=cols[k], lw=1.2, ls=(0, (1, 2)), zorder=2)
             ax.plot(xs, ys, ls="none", marker="o", ms=6.5, mfc=cols[k], mec="white", mew=1.5, zorder=4)
-            ax.text(xs[-1] * 1.3, ys[-1], f"mode {k + 1}", color=ink, fontsize=9, va="center")
+            yl = ys[-1] - 4.0 if k == 0 and abs(ys[-1] - 60.0) < 3.0 else ys[-1]     # clear of the 60 Hz line
+            ax.text(xs[-1] * 1.3, yl, f"mode {k + 1}", color=ink, fontsize=9, va="center")
         ax.set_xscale("log")
         ax.set_xticks(ticks)
         ax.set_xticklabels(labels)
@@ -636,12 +637,12 @@ def cmd_plot(hmax=12):
     if base:
         a0.plot([b[0] for b in base], [b[1] for b in base], color=cols[0], lw=2.0, ls=(0, (5, 3)), zorder=3, label="mode 1, feet on the same springs")
         a0.plot([b[0] for b in base], [b[1] for b in base], ls="none", marker="o", ms=6.5, mfc="white", mec=cols[0], mew=1.8, zorder=4)
-        a0.text(base[0][0] * 0.9, base[0][1] - 3, "mode 1, feet on\nthe same springs", color=ink, fontsize=8.5, ha="right", va="top")
+        a0.text(base[-1][0] * 1.3, base[-1][1], "mode 1, feet on\nthe same springs", color=ink, fontsize=8.5, ha="left", va="center")
     panel(a1, pb, "translational stiffness of every frame joint, kN/mm\n(rotational 10 kN·m/rad, feet fixed)",
           [5, 20, 100, RIG], ["5", "20", "100", "rigid"], (10.0, 50.0), "bolted T-nut joints\n(estimate)")
     a0.text(0.24, 58.5, "60 Hz minimum", color=ink2, fontsize=8.5, va="top")
     if bonded:
-        a1.text(3.8, bonded + 1.5, f"bonded model, mode 1 ({bonded:.1f} Hz)", color=ink2, fontsize=8.5, va="bottom")
+        a1.text(110.0, bonded + 1.5, f"bonded model, mode 1 ({bonded:.1f} Hz)", color=ink2, fontsize=8.5, va="bottom")
     a0.set_ylabel("frequency, Hz", color=ink, fontsize=9.5)
     a0.legend(loc="upper left", frameon=False, fontsize=8.5, labelcolor=ink, ncol=2)
     fig.suptitle("g3 gantry with its bolted joints as springs: the first three modes (12 mm mesh, head and lens inertia)",
@@ -664,8 +665,14 @@ OPTIONS = [
      "variant_front_zigzag_h12_kr1e6_kt1e4"),
     ("+ front zigzag, brace ends stiffened", "variant_front_zigzag_h12_kr3e6_braces1e8", "variant_front_zigzag_h12_kr3e6_braces1e8_base3e7",
      "variant_front_zigzag_h12_kr3e6_braces1e8_base1e8", None),
-    ("+ both portals braced", "variant_portals_braced_h12_kr3e6_kt2e4", None, None, None),
-    ("+ both portals braced, brace ends stiffened", "variant_portals_braced_h12_kr3e6_braces1e8",
+    ("+ back diagonal, brace ends stiffened", "variant_back_diagonal_h12_kr3e6_braces1e8", None,
+     "variant_back_diagonal_h12_kr3e6_braces1e8_base1e8", None),
+    ("+ lower front diagonal, brace ends stiffened", "variant_front_lower_h12_kr3e6_braces1e8", None,
+     "variant_front_lower_h12_kr3e6_braces1e8_base1e8", None),
+    ("+ lower front and back diagonals, brace ends stiffened", "variant_front_lower_back_h12_kr3e6_braces1e8",
+     "variant_front_lower_back_h12_kr3e6_braces1e8_base3e7", "variant_front_lower_back_h12_kr3e6_braces1e8_base1e8", None),
+    ("+ both portals braced (three diagonals)", "variant_portals_braced_h12_kr3e6_kt2e4", None, None, None),
+    ("+ both portals braced (three diagonals), brace ends stiffened", "variant_portals_braced_h12_kr3e6_braces1e8",
      "variant_portals_braced_h12_kr3e6_braces1e8_base3e7", "variant_portals_braced_h12_kr3e6_braces1e8_base1e8", None),
 ]
 
