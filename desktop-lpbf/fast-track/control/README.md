@@ -408,7 +408,7 @@ Prices as read on 2026-11-27 (by the lead or by the research for this folder); "
 | add (or replaces L5) | SCANLAB RTC4 PCIe, used (eBay 366737163447) | $400.00 | drives the XY2-100 head; the RTC5 would need a converter (quote) |
 | add | Omron D4NS-2CF lid switch (Digi-Key Z4035-ND) + D4DS-K operation key | $79.27 + ~$15 (estimate) | documented G9SE input; one switch in the chain |
 | add | beam-tube switch, D4NS class | ~$80 (estimate) | 2 NC, direct opening |
-| add | 4 bimetal NC temperature switches, ~75 °C | ~$60 (estimate) | stray-beam backstop, one per channel per location |
+| add | 4 bimetal NC temperature switches, 75 °C: Sensata-Airpax **67L075** (normally closed; the 67F075 is normally open) | 4 × $8.11, 1,368 in stock (Digi-Key, 2026-11-28) | stray-beam backstop, one per channel per location |
 | add | percent O₂ transmitter on the exhaust (second Macurco OX-6, 4-20 mA on) | $553.50-663.00 | the trace analyzer stops at 10,000 ppm |
 | add | 3 × 24 VDC NC solenoid valves (argon low flow, vent, trace-cell isolation; ASCO 8262 class) + a needle valve | 3 × $159 + ~$50 (estimate) | hold flow in dwells, slow vent, keep the trace cell out of air |
 | maybe | Alpha Omega PMP-24 sample pump | $791 | the analyzer wants 0.1-1.5 psig; the box gives 0.07-0.15 |
@@ -417,10 +417,10 @@ Prices as read on 2026-11-27 (by the lead or by the research for this folder); "
 | add | K3, K4: 24 VDC signal relays | ~$40 (estimate) | RTC5 /STOP from the chain; argon cut by the room monitor |
 | add | MCC 134 + MCC 128 HATs, ULN2803A relay interface, 8 DIN relays, 16-ch opto input board, USB-RS485 | ~$700 (estimate) | the Pi I/O node |
 | add | Zaber PS14S-48V37 (48 V 3.75 A) | $112 | one supply for the chain |
-| add | 24 V 10 A control supply (Mean Well SDR-240-24 class) | ~$100 (estimate) | G9SE, PIDs, CN708, coils, valves, analyzers |
+| add | 24 V 10 A control supply (SDR-240-24) | $209 (Antaira's, Digi-Key Marketplace, 2026-11-28; Digi-Key doesn't sell Mean Well's) or ~$100 elsewhere (estimate) | G9SE, PIDs, CN708, coils, valves, analyzers |
 | add | water flow switch for the scan head | ~$60 (estimate) | COOLING_FAULT |
-| monitoring | PicoScope 4824A | £2,189 ex VAT (RS UK; US price not read) | 8 channels on one clock: photodiode, AE, LASERON, marker, power monitor |
-| monitoring | MISTRAS R15I-AST + Vallen DCPL2 | not read | AE sensor with its 28 V phantom-power decoupler |
+| monitoring | PicoScope 4824A | US$2,999 (US$3,135 with four probes), in stock, ships from Texas (picotech.com, 2026-11-28) | 8 channels on one clock: photodiode, AE, LASERON, marker, power monitor |
+| monitoring | MISTRAS R15I-AST + Vallen DCPL2 class (by quote); listed instead: PXR15 $270.82 + PAC 1220A preamp $169 + $14.96 (eBay, 2026-11-28), or a used PAC R15α $899 | ~$505-1,183 with a 28 V supply and decoupler (parts.csv MON5) | AE sensor with its 28 V phantom-power decoupler |
 
 ## 11. Not done
 
