@@ -24,7 +24,7 @@ It extends the study in [`../README.md`](../README.md).
 | [`ft_model.py`](ft_model.py) | the model: parameters with sources (`P`), `build(state, pz, hx, lid_open, piston, monitoring)`, the made parts (`MADE`, MK-01 to MK-23), the monitoring parts (`MON`, MON1 to MON9), the diff between states, STEP export |
 | [`ft_vendor.py`](ft_vendor.py) → [`out/vendor-verify.json`](out/vendor-verify.json) | the bought parts drawn to the makers' dimensions, with `measure` and `verify` modes against the vendors' STEP files |
 | [`vendor-cad-manifest.csv`](vendor-cad-manifest.csv) | where each vendor file came from (URL, sha256, date); the files themselves are not committed |
-| [`ft_checks.py`](ft_checks.py) → [`out/checks.md`](out/checks.md), [`out/checks.json`](out/checks.json) | all the checks above, by state |
+| [`ft_checks.py`](ft_checks.py) → [`out/checks.md`](out/checks.md), [`out/checks.json`](out/checks.json) | all the checks above, by state; round 3: `gantry <name>` checks a gantry variant → [`out/checks-g4b.json`](out/checks-g4b.json), [`out/checks-g4.json`](out/checks-g4.json) ([g4b and g4](#g4b-and-g4-bracing-the-portals-round-3-not-the-default)) |
 | [`ft_progression.py`](ft_progression.py) → [`out/progression.md`](out/progression.md), [`out/progression.csv`](out/progression.csv) | the schedule of the five states (three ordering scenarios), the spend by state, what each step adds, moves and removes, and the assembly order at each step |
 | [`ft_cassette.py`](ft_cassette.py) → [`out/cassette.md`](out/cassette.md), [`out/cassette.json`](out/cassette.json) | round 3: what the deck cassette needs to get into the cube (envelope, the smallest square or round opening at every roll angle, the pocket it sits in, a python-fcl insertion through a parametric opening) |
 | [`ft_head_service.py`](ft_head_service.py) → [`out/head-service.md`](out/head-service.md), [`out/head-service.json`](out/head-service.json) | round 3: taking the scan head off the g3 gantry (python-fcl and exact booleans along each route) |
@@ -39,7 +39,9 @@ python desktop-lpbf/fast-track/cad/ft_progression.py                # out/progre
 python desktop-lpbf/fast-track/cad/ft_cassette.py                   # out/cassette.*  (~6 min)
 python desktop-lpbf/fast-track/cad/ft_cassette.py estimates         # adds the estimated openings (~2 min)
 python desktop-lpbf/fast-track/cad/ft_head_service.py               # out/head-service.*  (~2 min)
+python desktop-lpbf/fast-track/cad/ft_checks.py gantry four_post_braced_front_g4b,four_post_braced_front_g4   # ~9 min
 xvfb-run -a -s "-screen 0 1920x1080x24" python desktop-lpbf/fast-track/cad/ft_render.py
+xvfb-run -a -s "-screen 0 1920x1080x24" python desktop-lpbf/fast-track/cad/ft_render.py gantry_g4   # img/cad-gantry-g4.png
 ```
 
 All of it is on the g3 gantry (`P["gantry"] = "four_post_braced_front_g3"`, the default since round 3): the checks,
