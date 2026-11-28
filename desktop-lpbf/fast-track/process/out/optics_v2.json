@@ -1,0 +1,5425 @@
+{
+ "model": "cad/ft_model.py (CAD v2)",
+ "axis": [
+  0.0,
+  -30.0
+ ],
+ "window_c": {
+  "box": [
+   0.0,
+   -11.0
+  ],
+  "cube": [
+   0.0,
+   -21.0
+  ]
+ },
+ "cover_slide_c": [
+  0.0,
+  -11.0
+ ],
+ "cover_slide_z": 130.0,
+ "cs_id": 44.0,
+ "lens_wd": 299.5,
+ "pupil": {
+  "m2_before_first_surface_mm": 27.5,
+  "m1_before_first_surface_mm": 57.9,
+  "EP_above_focus_mm": 403.5,
+  "k_range": [
+   0.5782232704402515,
+   0.8321540880503145
+  ],
+  "v1": {
+   "m2": 23.0,
+   "m1_head": 52.879999999999995,
+   "m1_linos": 48.6,
+   "EP_above_focus_mm": 396.6,
+   "k_range": [
+    0.6,
+    0.86
+   ]
+  },
+  "cad_pivot_above_bed_mm": 392.90000000000003,
+  "cad_k": 0.6529203109489129
+ },
+ "k_values": [
+  0.58,
+  0.65,
+  0.86
+ ],
+ "stacks": {
+  "box": {
+   "state": "box",
+   "model": "FT-1",
+   "dz": 0.0,
+   "slide": [
+    130.0,
+    131.0
+   ],
+   "window": [
+    152.025,
+    161.555
+   ],
+   "lens_bot": 299.5,
+   "lens_flange": 348.1,
+   "window_c": [
+    0.0,
+    -11.0
+   ],
+   "slide_c": [
+    0.0,
+    -11.0
+   ],
+   "roof_in": 148.12,
+   "roof_out": 150.025
+  },
+  "cube": {
+   "state": "cube",
+   "model": "FT-1V",
+   "dz": 20.994999999999997,
+   "slide": [
+    130.0,
+    131.0
+   ],
+   "window": [
+    251.79999999999995,
+    261.3299999999999
+   ],
+   "lens_bot": 299.5,
+   "lens_flange": 348.1,
+   "window_c": [
+    0.0,
+    -21.0
+   ],
+   "slide_c": [
+    0.0,
+    -11.0
+   ],
+   "roof_in": 226.89999999999995,
+   "roof_out": 249.79999999999995
+  }
+ },
+ "clearance": {
+  "FT-1, build area \u00d830, k 0.58": [
+   {
+    "part": "Heater plate \u00d839.8 x 24 (MK-04)",
+    "pid": "MK-04",
+    "clearance_mm": 6.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -30.0,
+     -6.0
+    ]
+   },
+   {
+    "part": "Cover-slide holder, \u00d844 opening (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 6.39,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     125.5,
+     142.1
+    ]
+   },
+   {
+    "part": "Window retaining flange (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 6.48,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     160.0,
+     169.0
+    ]
+   },
+   {
+    "part": "Inner clamp ring (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 7.73,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     142.1,
+     148.1
+    ]
+   },
+   {
+    "part": "Window ring (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 8.39,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     150.0,
+     160.0
+    ]
+   },
+   {
+    "part": "Beam tube centre section, split, long (MK-10)",
+    "pid": "MK-10",
+    "clearance_mm": 8.47,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     166.0,
+     289.5
+    ]
+   },
+   {
+    "part": "Cord clamp (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 8.5,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     3.0,
+     12.0
+    ]
+   },
+   {
+    "part": "Silicone-cord blade, 3 mm",
+    "pid": "M3",
+    "clearance_mm": 8.96,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.0,
+     3.0
+    ]
+   },
+   {
+    "part": "Plate heaters, 2 x \u00d86 x 20, 50 W",
+    "pid": "H1",
+    "clearance_mm": 9.8,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -29.5,
+     -9.5
+    ]
+   },
+   {
+    "part": "Plate thermocouple, 1/16 in. type K (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 9.8,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -29.5,
+     -9.5
+    ]
+   },
+   {
+    "part": "Fibreglass rope wiper",
+    "pid": "H4",
+    "clearance_mm": 10.46,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -13.0,
+     -10.0
+    ]
+   },
+   {
+    "part": "Slot nozzle 45 x 4 mm (MK-11)",
+    "pid": "MK-11",
+    "clearance_mm": 11.54,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -1.0,
+     9.0
+    ]
+   },
+   {
+    "part": "Beam-tube lens collar, clamped on the lens (MK-10)",
+    "pid": "MK-10",
+    "clearance_mm": 11.57,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     286.5,
+     329.5
+    ]
+   },
+   {
+    "part": "Exhaust collector (MK-11)",
+    "pid": "MK-11",
+    "clearance_mm": 11.95,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.0,
+     10.0
+    ]
+   },
+   {
+    "part": "Well-block thermocouple, 1/16 in. type K (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 12.45,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -8.8,
+     -7.2
+    ]
+   },
+   {
+    "part": "Hopper, ~30 cm3 (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 12.56,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     2.0,
+     35.0
+    ]
+   },
+   {
+    "part": "Box door (the lid): window bore, camera port",
+    "pid": "E1",
+    "clearance_mm": 12.71,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     142.6,
+     150.0
+    ]
+   },
+   {
+    "part": "Surface thermocouples: beam tube, window ring (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 17.44,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     152.0,
+     181.0
+    ]
+   },
+   {
+    "part": "Well-block heaters, 4 x \u00d86 x 20, 50 W",
+    "pid": "H1",
+    "clearance_mm": 20.0,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -23.0,
+     -17.0
+    ]
+   },
+   {
+    "part": "Piston rod (MK-06)",
+    "pid": "MK-06",
+    "clearance_mm": 22.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -106.6,
+     -22.0
+    ]
+   },
+   {
+    "part": "Window-stack screws, M4 x 12 flat head, flush",
+    "pid": "MK-02",
+    "clearance_mm": 23.13,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     163.7,
+     166.0
+    ]
+   },
+   {
+    "part": "Carriage bracket and arm (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 23.92,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -31.7,
+     35.0
+    ]
+   },
+   {
+    "part": "Exhaust hose to the HEPA",
+    "pid": "G3",
+    "clearance_mm": 24.95,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -1.0,
+     11.0
+    ]
+   },
+   {
+    "part": "Vibration motor",
+    "pid": "M3",
+    "clearance_mm": 29.56,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     35.0,
+     45.0
+    ]
+   },
+   {
+    "part": "Well-block heater and TC leads",
+    "pid": "H3",
+    "clearance_mm": 32.03,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -23.7,
+     -6.3
+    ]
+   },
+   {
+    "part": "Argon feed tube to the nozzle",
+    "pid": "G3",
+    "clearance_mm": 36.54,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.8,
+     7.2
+    ]
+   },
+   {
+    "part": "Quarter-turn latch",
+    "pid": "E1",
+    "clearance_mm": 45.01,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     128.7,
+     164.0
+    ]
+   },
+   {
+    "part": "Camera port ring with a \u00d81 in. window and cover slide (MK-19)",
+    "pid": "MK-19",
+    "clearance_mm": 48.14,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     150.0,
+     157.0
+    ]
+   },
+   {
+    "part": "Saginaw SCE-16EL1208SSLP 304 box, 16 x 12 x 8 in. (body)",
+    "pid": "E1",
+    "clearance_mm": 60.96,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -64.6,
+     138.6
+    ]
+   },
+   {
+    "part": "Poured-in-place door gasket",
+    "pid": "E1",
+    "clearance_mm": 67.94,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     138.6,
+     142.6
+    ]
+   },
+   {
+    "part": "Gantry braces: a diagonal per side, two knee braces at the back",
+    "pid": "E4",
+    "clearance_mm": 205.67,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -42.1,
+     461.6
+    ]
+   },
+   {
+    "part": "Gantry uprights",
+    "pid": "E4",
+    "clearance_mm": 225.05,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -266.6,
+     484.1
+    ]
+   }
+  ],
+  "FT-1, build area \u00d830, k 0.65": [
+   {
+    "part": "Heater plate \u00d839.8 x 24 (MK-04)",
+    "pid": "MK-04",
+    "clearance_mm": 6.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -30.0,
+     -6.0
+    ]
+   },
+   {
+    "part": "Cover-slide holder, \u00d844 opening (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 7.93,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     125.5,
+     142.1
+    ]
+   },
+   {
+    "part": "Window retaining flange (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 8.48,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     160.0,
+     169.0
+    ]
+   },
+   {
+    "part": "Cord clamp (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 8.51,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     3.0,
+     12.0
+    ]
+   },
+   {
+    "part": "Silicone-cord blade, 3 mm",
+    "pid": "M3",
+    "clearance_mm": 8.97,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.0,
+     3.0
+    ]
+   },
+   {
+    "part": "Window ring (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 9.2,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     150.0,
+     160.0
+    ]
+   },
+   {
+    "part": "Inner clamp ring (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 9.41,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     142.1,
+     148.1
+    ]
+   },
+   {
+    "part": "Plate heaters, 2 x \u00d86 x 20, 50 W",
+    "pid": "H1",
+    "clearance_mm": 9.8,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -29.5,
+     -9.5
+    ]
+   },
+   {
+    "part": "Plate thermocouple, 1/16 in. type K (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 9.8,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -29.5,
+     -9.5
+    ]
+   },
+   {
+    "part": "Beam-tube lens collar, clamped on the lens (MK-10)",
+    "pid": "MK-10",
+    "clearance_mm": 10.39,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     286.5,
+     329.5
+    ]
+   },
+   {
+    "part": "Fibreglass rope wiper",
+    "pid": "H4",
+    "clearance_mm": 10.46,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -13.0,
+     -10.0
+    ]
+   },
+   {
+    "part": "Beam tube centre section, split, long (MK-10)",
+    "pid": "MK-10",
+    "clearance_mm": 10.47,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     166.0,
+     289.5
+    ]
+   },
+   {
+    "part": "Slot nozzle 45 x 4 mm (MK-11)",
+    "pid": "MK-11",
+    "clearance_mm": 11.5,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -1.0,
+     9.0
+    ]
+   },
+   {
+    "part": "Exhaust collector (MK-11)",
+    "pid": "MK-11",
+    "clearance_mm": 11.96,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.0,
+     10.0
+    ]
+   },
+   {
+    "part": "Well-block thermocouple, 1/16 in. type K (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 12.45,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -8.8,
+     -7.2
+    ]
+   },
+   {
+    "part": "Hopper, ~30 cm3 (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 12.59,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     2.0,
+     35.0
+    ]
+   },
+   {
+    "part": "Box door (the lid): window bore, camera port",
+    "pid": "E1",
+    "clearance_mm": 13.8,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     142.6,
+     150.0
+    ]
+   },
+   {
+    "part": "Surface thermocouples: beam tube, window ring (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 18.13,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     152.0,
+     181.0
+    ]
+   },
+   {
+    "part": "Well-block heaters, 4 x \u00d86 x 20, 50 W",
+    "pid": "H1",
+    "clearance_mm": 20.0,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -23.0,
+     -17.0
+    ]
+   },
+   {
+    "part": "Piston rod (MK-06)",
+    "pid": "MK-06",
+    "clearance_mm": 22.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -106.6,
+     -22.0
+    ]
+   },
+   {
+    "part": "Window-stack screws, M4 x 12 flat head, flush",
+    "pid": "MK-02",
+    "clearance_mm": 22.64,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     163.7,
+     166.0
+    ]
+   },
+   {
+    "part": "Carriage bracket and arm (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 24.16,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -31.7,
+     35.0
+    ]
+   },
+   {
+    "part": "Exhaust hose to the HEPA",
+    "pid": "G3",
+    "clearance_mm": 24.96,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -1.0,
+     11.0
+    ]
+   },
+   {
+    "part": "Vibration motor",
+    "pid": "M3",
+    "clearance_mm": 29.93,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     35.0,
+     45.0
+    ]
+   },
+   {
+    "part": "Well-block heater and TC leads",
+    "pid": "H3",
+    "clearance_mm": 32.04,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -23.7,
+     -6.3
+    ]
+   },
+   {
+    "part": "Argon feed tube to the nozzle",
+    "pid": "G3",
+    "clearance_mm": 36.51,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.8,
+     7.2
+    ]
+   },
+   {
+    "part": "Quarter-turn latch",
+    "pid": "E1",
+    "clearance_mm": 44.46,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     128.7,
+     164.0
+    ]
+   },
+   {
+    "part": "Camera port ring with a \u00d81 in. window and cover slide (MK-19)",
+    "pid": "MK-19",
+    "clearance_mm": 48.1,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     150.0,
+     157.0
+    ]
+   },
+   {
+    "part": "Saginaw SCE-16EL1208SSLP 304 box, 16 x 12 x 8 in. (body)",
+    "pid": "E1",
+    "clearance_mm": 60.37,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -64.6,
+     138.6
+    ]
+   },
+   {
+    "part": "Poured-in-place door gasket",
+    "pid": "E1",
+    "clearance_mm": 67.34,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     138.6,
+     142.6
+    ]
+   },
+   {
+    "part": "Gantry braces: a diagonal per side, two knee braces at the back",
+    "pid": "E4",
+    "clearance_mm": 206.74,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -42.1,
+     461.6
+    ]
+   },
+   {
+    "part": "Gantry uprights",
+    "pid": "E4",
+    "clearance_mm": 225.16,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -266.6,
+     484.1
+    ]
+   }
+  ],
+  "FT-1, build area \u00d830, k 0.86": [
+   {
+    "part": "Heater plate \u00d839.8 x 24 (MK-04)",
+    "pid": "MK-04",
+    "clearance_mm": 6.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -30.0,
+     -6.0
+    ]
+   },
+   {
+    "part": "Window retaining flange (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 6.53,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     160.0,
+     169.0
+    ]
+   },
+   {
+    "part": "Beam-tube lens collar, clamped on the lens (MK-10)",
+    "pid": "MK-10",
+    "clearance_mm": 6.84,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     286.5,
+     329.5
+    ]
+   },
+   {
+    "part": "Window ring (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 7.32,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     150.0,
+     160.0
+    ]
+   },
+   {
+    "part": "Inner clamp ring (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 7.58,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     142.1,
+     148.1
+    ]
+   },
+   {
+    "part": "Cover-slide holder, \u00d844 opening (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 8.0,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     125.5,
+     142.1
+    ]
+   },
+   {
+    "part": "Cord clamp (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 8.55,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     3.0,
+     12.0
+    ]
+   },
+   {
+    "part": "Beam tube centre section, split, long (MK-10)",
+    "pid": "MK-10",
+    "clearance_mm": 8.84,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     166.0,
+     289.5
+    ]
+   },
+   {
+    "part": "Silicone-cord blade, 3 mm",
+    "pid": "M3",
+    "clearance_mm": 8.98,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.0,
+     3.0
+    ]
+   },
+   {
+    "part": "Plate heaters, 2 x \u00d86 x 20, 50 W",
+    "pid": "H1",
+    "clearance_mm": 9.8,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -29.5,
+     -9.5
+    ]
+   },
+   {
+    "part": "Plate thermocouple, 1/16 in. type K (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 9.8,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -29.5,
+     -9.5
+    ]
+   },
+   {
+    "part": "Fibreglass rope wiper",
+    "pid": "H4",
+    "clearance_mm": 10.46,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -13.0,
+     -10.0
+    ]
+   },
+   {
+    "part": "Slot nozzle 45 x 4 mm (MK-11)",
+    "pid": "MK-11",
+    "clearance_mm": 11.39,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -1.0,
+     9.0
+    ]
+   },
+   {
+    "part": "Box door (the lid): window bore, camera port",
+    "pid": "E1",
+    "clearance_mm": 11.94,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     142.6,
+     150.0
+    ]
+   },
+   {
+    "part": "Exhaust collector (MK-11)",
+    "pid": "MK-11",
+    "clearance_mm": 11.97,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.0,
+     10.0
+    ]
+   },
+   {
+    "part": "Well-block thermocouple, 1/16 in. type K (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 12.46,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -8.8,
+     -7.2
+    ]
+   },
+   {
+    "part": "Hopper, ~30 cm3 (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 12.66,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     2.0,
+     35.0
+    ]
+   },
+   {
+    "part": "Well-block heaters, 4 x \u00d86 x 20, 50 W",
+    "pid": "H1",
+    "clearance_mm": 20.0,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -23.0,
+     -17.0
+    ]
+   },
+   {
+    "part": "Surface thermocouples: beam tube, window ring (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 20.2,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     152.0,
+     181.0
+    ]
+   },
+   {
+    "part": "Window-stack screws, M4 x 12 flat head, flush",
+    "pid": "MK-02",
+    "clearance_mm": 21.26,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     163.7,
+     166.0
+    ]
+   },
+   {
+    "part": "Piston rod (MK-06)",
+    "pid": "MK-06",
+    "clearance_mm": 22.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -106.6,
+     -22.0
+    ]
+   },
+   {
+    "part": "Carriage bracket and arm (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 24.86,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -31.7,
+     35.0
+    ]
+   },
+   {
+    "part": "Exhaust hose to the HEPA",
+    "pid": "G3",
+    "clearance_mm": 24.97,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -1.0,
+     11.0
+    ]
+   },
+   {
+    "part": "Vibration motor",
+    "pid": "M3",
+    "clearance_mm": 31.0,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     35.0,
+     45.0
+    ]
+   },
+   {
+    "part": "Well-block heater and TC leads",
+    "pid": "H3",
+    "clearance_mm": 32.04,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -23.7,
+     -6.3
+    ]
+   },
+   {
+    "part": "Argon feed tube to the nozzle",
+    "pid": "G3",
+    "clearance_mm": 36.39,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.8,
+     7.2
+    ]
+   },
+   {
+    "part": "Quarter-turn latch",
+    "pid": "E1",
+    "clearance_mm": 42.86,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     128.7,
+     164.0
+    ]
+   },
+   {
+    "part": "Camera port ring with a \u00d81 in. window and cover slide (MK-19)",
+    "pid": "MK-19",
+    "clearance_mm": 48.07,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     150.0,
+     157.0
+    ]
+   },
+   {
+    "part": "Saginaw SCE-16EL1208SSLP 304 box, 16 x 12 x 8 in. (body)",
+    "pid": "E1",
+    "clearance_mm": 58.62,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -64.6,
+     138.6
+    ]
+   },
+   {
+    "part": "Poured-in-place door gasket",
+    "pid": "E1",
+    "clearance_mm": 65.53,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     138.6,
+     142.6
+    ]
+   },
+   {
+    "part": "Gantry braces: a diagonal per side, two knee braces at the back",
+    "pid": "E4",
+    "clearance_mm": 210.01,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -42.1,
+     461.6
+    ]
+   },
+   {
+    "part": "Gantry uprights",
+    "pid": "E4",
+    "clearance_mm": 225.62,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -266.6,
+     484.1
+    ]
+   }
+  ],
+  "FT-1, plate \u00d840, k 0.58": [
+   {
+    "part": "Cover-slide holder, \u00d844 opening (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 2.83,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     125.5,
+     142.1
+    ]
+   },
+   {
+    "part": "Window retaining flange (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 3.34,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     160.0,
+     169.0
+    ]
+   },
+   {
+    "part": "Cord clamp (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 3.54,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     3.0,
+     12.0
+    ]
+   },
+   {
+    "part": "Silicone-cord blade, 3 mm",
+    "pid": "M3",
+    "clearance_mm": 3.98,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.0,
+     3.0
+    ]
+   },
+   {
+    "part": "Inner clamp ring (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 4.36,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     142.1,
+     148.1
+    ]
+   },
+   {
+    "part": "Window ring (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 5.1,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     150.0,
+     160.0
+    ]
+   },
+   {
+    "part": "Beam tube centre section, split, long (MK-10)",
+    "pid": "MK-10",
+    "clearance_mm": 5.33,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     166.0,
+     289.5
+    ]
+   },
+   {
+    "part": "Heater plate \u00d839.8 x 24 (MK-04)",
+    "pid": "MK-04",
+    "clearance_mm": 6.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -30.0,
+     -6.0
+    ]
+   },
+   {
+    "part": "Slot nozzle 45 x 4 mm (MK-11)",
+    "pid": "MK-11",
+    "clearance_mm": 6.64,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -1.0,
+     9.0
+    ]
+   },
+   {
+    "part": "Exhaust collector (MK-11)",
+    "pid": "MK-11",
+    "clearance_mm": 6.96,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.0,
+     10.0
+    ]
+   },
+   {
+    "part": "Hopper, ~30 cm3 (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 7.63,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     2.0,
+     35.0
+    ]
+   },
+   {
+    "part": "Well-block thermocouple, 1/16 in. type K (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 8.99,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -8.8,
+     -7.2
+    ]
+   },
+   {
+    "part": "Box door (the lid): window bore, camera port",
+    "pid": "E1",
+    "clearance_mm": 9.4,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     142.6,
+     150.0
+    ]
+   },
+   {
+    "part": "Plate heaters, 2 x \u00d86 x 20, 50 W",
+    "pid": "H1",
+    "clearance_mm": 9.8,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -29.5,
+     -9.5
+    ]
+   },
+   {
+    "part": "Plate thermocouple, 1/16 in. type K (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 9.8,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -29.5,
+     -9.5
+    ]
+   },
+   {
+    "part": "Beam-tube lens collar, clamped on the lens (MK-10)",
+    "pid": "MK-10",
+    "clearance_mm": 9.84,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     286.5,
+     329.5
+    ]
+   },
+   {
+    "part": "Fibreglass rope wiper",
+    "pid": "H4",
+    "clearance_mm": 10.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -13.0,
+     -10.0
+    ]
+   },
+   {
+    "part": "Surface thermocouples: beam tube, window ring (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 14.35,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     152.0,
+     181.0
+    ]
+   },
+   {
+    "part": "Well-block heaters, 4 x \u00d86 x 20, 50 W",
+    "pid": "H1",
+    "clearance_mm": 18.06,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -23.0,
+     -17.0
+    ]
+   },
+   {
+    "part": "Carriage bracket and arm (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 19.22,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -31.7,
+     35.0
+    ]
+   },
+   {
+    "part": "Exhaust hose to the HEPA",
+    "pid": "G3",
+    "clearance_mm": 19.96,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -1.0,
+     11.0
+    ]
+   },
+   {
+    "part": "Window-stack screws, M4 x 12 flat head, flush",
+    "pid": "MK-02",
+    "clearance_mm": 20.0,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     163.7,
+     166.0
+    ]
+   },
+   {
+    "part": "Piston rod (MK-06)",
+    "pid": "MK-06",
+    "clearance_mm": 22.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -106.6,
+     -22.0
+    ]
+   },
+   {
+    "part": "Vibration motor",
+    "pid": "M3",
+    "clearance_mm": 25.0,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     35.0,
+     45.0
+    ]
+   },
+   {
+    "part": "Well-block heater and TC leads",
+    "pid": "H3",
+    "clearance_mm": 27.96,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -23.7,
+     -6.3
+    ]
+   },
+   {
+    "part": "Argon feed tube to the nozzle",
+    "pid": "G3",
+    "clearance_mm": 31.65,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.8,
+     7.2
+    ]
+   },
+   {
+    "part": "Quarter-turn latch",
+    "pid": "E1",
+    "clearance_mm": 41.87,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     128.7,
+     164.0
+    ]
+   },
+   {
+    "part": "Stage shield (MK-12)",
+    "pid": "MK-12",
+    "clearance_mm": 42.68,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -52.7,
+     -22.7
+    ]
+   },
+   {
+    "part": "Camera port ring with a \u00d81 in. window and cover slide (MK-19)",
+    "pid": "MK-19",
+    "clearance_mm": 44.91,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     150.0,
+     157.0
+    ]
+   },
+   {
+    "part": "X-LSM carriage",
+    "pid": "M1c",
+    "clearance_mm": 52.65,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -48.9,
+     -31.7
+    ]
+   },
+   {
+    "part": "Zaber X-LSM100B-E03 recoater stage",
+    "pid": "M1c",
+    "clearance_mm": 53.57,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -52.7,
+     -32.0
+    ]
+   },
+   {
+    "part": "Camera port window, \u00d825.4 x 3 fused silica",
+    "pid": "MK-19",
+    "clearance_mm": 54.22,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     152.0,
+     155.0
+    ]
+   },
+   {
+    "part": "Saginaw SCE-16EL1208SSLP 304 box, 16 x 12 x 8 in. (body)",
+    "pid": "E1",
+    "clearance_mm": 57.57,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -64.6,
+     138.6
+    ]
+   },
+   {
+    "part": "Poured-in-place door gasket",
+    "pid": "E1",
+    "clearance_mm": 64.6,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     138.6,
+     142.6
+    ]
+   },
+   {
+    "part": "Gantry braces: a diagonal per side, two knee braces at the back",
+    "pid": "E4",
+    "clearance_mm": 203.37,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -42.1,
+     461.6
+    ]
+   },
+   {
+    "part": "Gantry uprights",
+    "pid": "E4",
+    "clearance_mm": 223.43,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -266.6,
+     484.1
+    ]
+   }
+  ],
+  "FT-1, plate \u00d840, k 0.65": [
+   {
+    "part": "Cord clamp (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 3.55,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     3.0,
+     12.0
+    ]
+   },
+   {
+    "part": "Silicone-cord blade, 3 mm",
+    "pid": "M3",
+    "clearance_mm": 3.99,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.0,
+     3.0
+    ]
+   },
+   {
+    "part": "Cover-slide holder, \u00d844 opening (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 4.54,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     125.5,
+     142.1
+    ]
+   },
+   {
+    "part": "Window retaining flange (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 5.56,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     160.0,
+     169.0
+    ]
+   },
+   {
+    "part": "Window ring (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 6.14,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     150.0,
+     160.0
+    ]
+   },
+   {
+    "part": "Inner clamp ring (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 6.29,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     142.1,
+     148.1
+    ]
+   },
+   {
+    "part": "Heater plate \u00d839.8 x 24 (MK-04)",
+    "pid": "MK-04",
+    "clearance_mm": 6.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -30.0,
+     -6.0
+    ]
+   },
+   {
+    "part": "Slot nozzle 45 x 4 mm (MK-11)",
+    "pid": "MK-11",
+    "clearance_mm": 6.61,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -1.0,
+     9.0
+    ]
+   },
+   {
+    "part": "Exhaust collector (MK-11)",
+    "pid": "MK-11",
+    "clearance_mm": 6.96,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.0,
+     10.0
+    ]
+   },
+   {
+    "part": "Beam tube centre section, split, long (MK-10)",
+    "pid": "MK-10",
+    "clearance_mm": 7.55,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     166.0,
+     289.5
+    ]
+   },
+   {
+    "part": "Hopper, ~30 cm3 (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 7.66,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     2.0,
+     35.0
+    ]
+   },
+   {
+    "part": "Well-block thermocouple, 1/16 in. type K (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 8.99,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -8.8,
+     -7.2
+    ]
+   },
+   {
+    "part": "Beam-tube lens collar, clamped on the lens (MK-10)",
+    "pid": "MK-10",
+    "clearance_mm": 9.05,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     286.5,
+     329.5
+    ]
+   },
+   {
+    "part": "Plate heaters, 2 x \u00d86 x 20, 50 W",
+    "pid": "H1",
+    "clearance_mm": 9.8,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -29.5,
+     -9.5
+    ]
+   },
+   {
+    "part": "Plate thermocouple, 1/16 in. type K (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 9.8,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -29.5,
+     -9.5
+    ]
+   },
+   {
+    "part": "Fibreglass rope wiper",
+    "pid": "H4",
+    "clearance_mm": 10.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -13.0,
+     -10.0
+    ]
+   },
+   {
+    "part": "Box door (the lid): window bore, camera port",
+    "pid": "E1",
+    "clearance_mm": 10.72,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     142.6,
+     150.0
+    ]
+   },
+   {
+    "part": "Surface thermocouples: beam tube, window ring (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 15.27,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     152.0,
+     181.0
+    ]
+   },
+   {
+    "part": "Well-block heaters, 4 x \u00d86 x 20, 50 W",
+    "pid": "H1",
+    "clearance_mm": 18.06,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -23.0,
+     -17.0
+    ]
+   },
+   {
+    "part": "Carriage bracket and arm (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 19.49,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -31.7,
+     35.0
+    ]
+   },
+   {
+    "part": "Window-stack screws, M4 x 12 flat head, flush",
+    "pid": "MK-02",
+    "clearance_mm": 19.73,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     163.7,
+     166.0
+    ]
+   },
+   {
+    "part": "Exhaust hose to the HEPA",
+    "pid": "G3",
+    "clearance_mm": 19.96,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -1.0,
+     11.0
+    ]
+   },
+   {
+    "part": "Piston rod (MK-06)",
+    "pid": "MK-06",
+    "clearance_mm": 22.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -106.6,
+     -22.0
+    ]
+   },
+   {
+    "part": "Vibration motor",
+    "pid": "M3",
+    "clearance_mm": 25.42,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     35.0,
+     45.0
+    ]
+   },
+   {
+    "part": "Well-block heater and TC leads",
+    "pid": "H3",
+    "clearance_mm": 27.96,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -23.7,
+     -6.3
+    ]
+   },
+   {
+    "part": "Argon feed tube to the nozzle",
+    "pid": "G3",
+    "clearance_mm": 31.63,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.8,
+     7.2
+    ]
+   },
+   {
+    "part": "Quarter-turn latch",
+    "pid": "E1",
+    "clearance_mm": 41.55,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     128.7,
+     164.0
+    ]
+   },
+   {
+    "part": "Stage shield (MK-12)",
+    "pid": "MK-12",
+    "clearance_mm": 42.69,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -52.7,
+     -22.7
+    ]
+   },
+   {
+    "part": "Camera port ring with a \u00d81 in. window and cover slide (MK-19)",
+    "pid": "MK-19",
+    "clearance_mm": 45.09,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     150.0,
+     157.0
+    ]
+   },
+   {
+    "part": "X-LSM carriage",
+    "pid": "M1c",
+    "clearance_mm": 52.65,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -48.9,
+     -31.7
+    ]
+   },
+   {
+    "part": "Zaber X-LSM100B-E03 recoater stage",
+    "pid": "M1c",
+    "clearance_mm": 53.57,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -52.7,
+     -32.0
+    ]
+   },
+   {
+    "part": "Camera port window, \u00d825.4 x 3 fused silica",
+    "pid": "MK-19",
+    "clearance_mm": 54.4,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     152.0,
+     155.0
+    ]
+   },
+   {
+    "part": "Saginaw SCE-16EL1208SSLP 304 box, 16 x 12 x 8 in. (body)",
+    "pid": "E1",
+    "clearance_mm": 57.18,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -64.6,
+     138.6
+    ]
+   },
+   {
+    "part": "Poured-in-place door gasket",
+    "pid": "E1",
+    "clearance_mm": 64.2,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     138.6,
+     142.6
+    ]
+   },
+   {
+    "part": "Gantry braces: a diagonal per side, two knee braces at the back",
+    "pid": "E4",
+    "clearance_mm": 204.74,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -42.1,
+     461.6
+    ]
+   },
+   {
+    "part": "Gantry uprights",
+    "pid": "E4",
+    "clearance_mm": 223.94,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -266.6,
+     484.1
+    ]
+   }
+  ],
+  "FT-1, plate \u00d840, k 0.86": [
+   {
+    "part": "Cord clamp (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 3.6,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     3.0,
+     12.0
+    ]
+   },
+   {
+    "part": "Silicone-cord blade, 3 mm",
+    "pid": "M3",
+    "clearance_mm": 4.01,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.0,
+     3.0
+    ]
+   },
+   {
+    "part": "Window retaining flange (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 4.29,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     160.0,
+     169.0
+    ]
+   },
+   {
+    "part": "Window ring (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 4.89,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     150.0,
+     160.0
+    ]
+   },
+   {
+    "part": "Inner clamp ring (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 5.09,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     142.1,
+     148.1
+    ]
+   },
+   {
+    "part": "Cover-slide holder, \u00d844 opening (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 5.41,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     125.5,
+     142.1
+    ]
+   },
+   {
+    "part": "Heater plate \u00d839.8 x 24 (MK-04)",
+    "pid": "MK-04",
+    "clearance_mm": 6.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -30.0,
+     -6.0
+    ]
+   },
+   {
+    "part": "Slot nozzle 45 x 4 mm (MK-11)",
+    "pid": "MK-11",
+    "clearance_mm": 6.55,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -1.0,
+     9.0
+    ]
+   },
+   {
+    "part": "Beam-tube lens collar, clamped on the lens (MK-10)",
+    "pid": "MK-10",
+    "clearance_mm": 6.69,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     286.5,
+     329.5
+    ]
+   },
+   {
+    "part": "Exhaust collector (MK-11)",
+    "pid": "MK-11",
+    "clearance_mm": 6.97,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.0,
+     10.0
+    ]
+   },
+   {
+    "part": "Hopper, ~30 cm3 (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 7.75,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     2.0,
+     35.0
+    ]
+   },
+   {
+    "part": "Beam tube centre section, split, long (MK-10)",
+    "pid": "MK-10",
+    "clearance_mm": 8.69,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     166.0,
+     289.5
+    ]
+   },
+   {
+    "part": "Well-block thermocouple, 1/16 in. type K (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 8.99,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -8.8,
+     -7.2
+    ]
+   },
+   {
+    "part": "Box door (the lid): window bore, camera port",
+    "pid": "E1",
+    "clearance_mm": 9.48,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     142.6,
+     150.0
+    ]
+   },
+   {
+    "part": "Plate heaters, 2 x \u00d86 x 20, 50 W",
+    "pid": "H1",
+    "clearance_mm": 9.8,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -29.5,
+     -9.5
+    ]
+   },
+   {
+    "part": "Plate thermocouple, 1/16 in. type K (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 9.8,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -29.5,
+     -9.5
+    ]
+   },
+   {
+    "part": "Fibreglass rope wiper",
+    "pid": "H4",
+    "clearance_mm": 10.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -13.0,
+     -10.0
+    ]
+   },
+   {
+    "part": "Surface thermocouples: beam tube, window ring (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 18.02,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     152.0,
+     181.0
+    ]
+   },
+   {
+    "part": "Well-block heaters, 4 x \u00d86 x 20, 50 W",
+    "pid": "H1",
+    "clearance_mm": 18.06,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -23.0,
+     -17.0
+    ]
+   },
+   {
+    "part": "Window-stack screws, M4 x 12 flat head, flush",
+    "pid": "MK-02",
+    "clearance_mm": 19.03,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     163.7,
+     166.0
+    ]
+   },
+   {
+    "part": "Exhaust hose to the HEPA",
+    "pid": "G3",
+    "clearance_mm": 19.97,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -1.0,
+     11.0
+    ]
+   },
+   {
+    "part": "Carriage bracket and arm (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 20.31,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -31.7,
+     35.0
+    ]
+   },
+   {
+    "part": "Piston rod (MK-06)",
+    "pid": "MK-06",
+    "clearance_mm": 22.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -106.6,
+     -22.0
+    ]
+   },
+   {
+    "part": "Vibration motor",
+    "pid": "M3",
+    "clearance_mm": 26.64,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     35.0,
+     45.0
+    ]
+   },
+   {
+    "part": "Well-block heater and TC leads",
+    "pid": "H3",
+    "clearance_mm": 27.97,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -23.7,
+     -6.3
+    ]
+   },
+   {
+    "part": "Argon feed tube to the nozzle",
+    "pid": "G3",
+    "clearance_mm": 31.55,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.8,
+     7.2
+    ]
+   },
+   {
+    "part": "Quarter-turn latch",
+    "pid": "E1",
+    "clearance_mm": 40.62,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     128.7,
+     164.0
+    ]
+   },
+   {
+    "part": "Stage shield (MK-12)",
+    "pid": "MK-12",
+    "clearance_mm": 42.7,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -52.7,
+     -22.7
+    ]
+   },
+   {
+    "part": "Camera port ring with a \u00d81 in. window and cover slide (MK-19)",
+    "pid": "MK-19",
+    "clearance_mm": 45.7,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     150.0,
+     157.0
+    ]
+   },
+   {
+    "part": "X-LSM carriage",
+    "pid": "M1c",
+    "clearance_mm": 52.66,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -48.9,
+     -31.7
+    ]
+   },
+   {
+    "part": "Zaber X-LSM100B-E03 recoater stage",
+    "pid": "M1c",
+    "clearance_mm": 53.58,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -52.7,
+     -32.0
+    ]
+   },
+   {
+    "part": "Camera port window, \u00d825.4 x 3 fused silica",
+    "pid": "MK-19",
+    "clearance_mm": 55.0,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     152.0,
+     155.0
+    ]
+   },
+   {
+    "part": "Saginaw SCE-16EL1208SSLP 304 box, 16 x 12 x 8 in. (body)",
+    "pid": "E1",
+    "clearance_mm": 56.02,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -64.6,
+     138.6
+    ]
+   },
+   {
+    "part": "Poured-in-place door gasket",
+    "pid": "E1",
+    "clearance_mm": 63.0,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     138.6,
+     142.6
+    ]
+   },
+   {
+    "part": "Gantry braces: a diagonal per side, two knee braces at the back",
+    "pid": "E4",
+    "clearance_mm": 208.83,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -42.1,
+     461.6
+    ]
+   },
+   {
+    "part": "Gantry uprights",
+    "pid": "E4",
+    "clearance_mm": 225.29,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -266.6,
+     484.1
+    ]
+   }
+  ],
+  "FT-1V, build area \u00d830, k 0.58": [
+   {
+    "part": "Heater plate \u00d839.8 x 24 (MK-04)",
+    "pid": "MK-04",
+    "clearance_mm": 6.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -30.0,
+     -6.0
+    ]
+   },
+   {
+    "part": "Cover-slide holder, \u00d844 opening (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 6.39,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     125.5,
+     140.0
+    ]
+   },
+   {
+    "part": "Window ring (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 6.67,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     249.8,
+     259.8
+    ]
+   },
+   {
+    "part": "Window retaining flange (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 7.4,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     259.8,
+     268.8
+    ]
+   },
+   {
+    "part": "Cover-slide drop tube from the top plate (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 7.56,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     140.0,
+     226.9
+    ]
+   },
+   {
+    "part": "Cord clamp (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 8.5,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     3.0,
+     12.0
+    ]
+   },
+   {
+    "part": "Silicone-cord blade, 3 mm",
+    "pid": "M3",
+    "clearance_mm": 8.96,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.0,
+     3.0
+    ]
+   },
+   {
+    "part": "Cube top plate, bored for the window ring and the camera port (MK-13)",
+    "pid": "MK-13",
+    "clearance_mm": 9.26,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     226.9,
+     249.8
+    ]
+   },
+   {
+    "part": "Beam-tube lens collar, clamped on the lens (MK-10)",
+    "pid": "MK-10",
+    "clearance_mm": 9.46,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     286.5,
+     329.5
+    ]
+   },
+   {
+    "part": "Beam tube centre section, split, short (MK-10)",
+    "pid": "MK-10",
+    "clearance_mm": 9.74,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     265.8,
+     289.5
+    ]
+   },
+   {
+    "part": "Plate heaters, 2 x \u00d86 x 20, 50 W",
+    "pid": "H1",
+    "clearance_mm": 9.8,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -29.5,
+     -9.5
+    ]
+   },
+   {
+    "part": "Plate thermocouple, 1/16 in. type K (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 9.8,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -29.5,
+     -9.5
+    ]
+   },
+   {
+    "part": "Fibreglass rope wiper",
+    "pid": "H4",
+    "clearance_mm": 10.46,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -13.0,
+     -10.0
+    ]
+   },
+   {
+    "part": "Slot nozzle 45 x 4 mm (MK-11)",
+    "pid": "MK-11",
+    "clearance_mm": 11.54,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -1.0,
+     9.0
+    ]
+   },
+   {
+    "part": "Exhaust collector (MK-11)",
+    "pid": "MK-11",
+    "clearance_mm": 11.95,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.0,
+     10.0
+    ]
+   },
+   {
+    "part": "Well-block thermocouple, 1/16 in. type K (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 12.45,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -8.8,
+     -7.2
+    ]
+   },
+   {
+    "part": "Hopper, ~30 cm3 (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 12.56,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     2.0,
+     35.0
+    ]
+   },
+   {
+    "part": "Surface thermocouples: beam tube, window ring (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 18.89,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     251.8,
+     280.8
+    ]
+   },
+   {
+    "part": "Well-block heaters, 4 x \u00d86 x 20, 50 W",
+    "pid": "H1",
+    "clearance_mm": 20.0,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -23.0,
+     -17.0
+    ]
+   },
+   {
+    "part": "Window-stack screws, M4 x 12 flat head, flush",
+    "pid": "MK-02",
+    "clearance_mm": 22.06,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     263.5,
+     265.8
+    ]
+   },
+   {
+    "part": "Piston rod, long, for the cube (MK-06)",
+    "pid": "MK-06",
+    "clearance_mm": 22.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -127.6,
+     -22.0
+    ]
+   },
+   {
+    "part": "Carriage bracket and arm (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 23.92,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -31.7,
+     35.0
+    ]
+   },
+   {
+    "part": "Exhaust hose to the HEPA",
+    "pid": "G3",
+    "clearance_mm": 24.95,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -1.0,
+     11.0
+    ]
+   },
+   {
+    "part": "Vibration motor",
+    "pid": "M3",
+    "clearance_mm": 29.56,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     35.0,
+     45.0
+    ]
+   },
+   {
+    "part": "Well-block heater and TC leads",
+    "pid": "H3",
+    "clearance_mm": 32.03,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -23.7,
+     24.2
+    ]
+   },
+   {
+    "part": "Argon feed tube to the nozzle",
+    "pid": "G3",
+    "clearance_mm": 36.54,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.8,
+     7.2
+    ]
+   },
+   {
+    "part": "Ideal Vacuum 12 in. cube frame P107540 (face opening est.)",
+    "pid": "E2",
+    "clearance_mm": 60.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -70.3,
+     234.5
+    ]
+   },
+   {
+    "part": "KF-25 ports: pump, Pirani, argon, exhaust, 2 electrical feedthroughs",
+    "pid": "E3",
+    "clearance_mm": 124.94,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     2.1,
+     42.0
+    ]
+   },
+   {
+    "part": "Gantry braces: a diagonal per side, two knee braces at the back",
+    "pid": "E4",
+    "clearance_mm": 205.37,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -63.1,
+     440.6
+    ]
+   },
+   {
+    "part": "Gantry uprights",
+    "pid": "E4",
+    "clearance_mm": 225.05,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -287.6,
+     463.1
+    ]
+   }
+  ],
+  "FT-1V, build area \u00d830, k 0.65": [
+   {
+    "part": "Heater plate \u00d839.8 x 24 (MK-04)",
+    "pid": "MK-04",
+    "clearance_mm": 6.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -30.0,
+     -6.0
+    ]
+   },
+   {
+    "part": "Cover-slide holder, \u00d844 opening (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 7.93,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     125.5,
+     140.0
+    ]
+   },
+   {
+    "part": "Cord clamp (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 8.51,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     3.0,
+     12.0
+    ]
+   },
+   {
+    "part": "Silicone-cord blade, 3 mm",
+    "pid": "M3",
+    "clearance_mm": 8.97,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.0,
+     3.0
+    ]
+   },
+   {
+    "part": "Cover-slide drop tube from the top plate (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 9.27,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     140.0,
+     226.9
+    ]
+   },
+   {
+    "part": "Window ring (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 9.74,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     249.8,
+     259.8
+    ]
+   },
+   {
+    "part": "Plate heaters, 2 x \u00d86 x 20, 50 W",
+    "pid": "H1",
+    "clearance_mm": 9.8,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -29.5,
+     -9.5
+    ]
+   },
+   {
+    "part": "Plate thermocouple, 1/16 in. type K (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 9.8,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -29.5,
+     -9.5
+    ]
+   },
+   {
+    "part": "Fibreglass rope wiper",
+    "pid": "H4",
+    "clearance_mm": 10.46,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -13.0,
+     -10.0
+    ]
+   },
+   {
+    "part": "Window retaining flange (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 10.59,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     259.8,
+     268.8
+    ]
+   },
+   {
+    "part": "Slot nozzle 45 x 4 mm (MK-11)",
+    "pid": "MK-11",
+    "clearance_mm": 11.5,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -1.0,
+     9.0
+    ]
+   },
+   {
+    "part": "Exhaust collector (MK-11)",
+    "pid": "MK-11",
+    "clearance_mm": 11.96,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.0,
+     10.0
+    ]
+   },
+   {
+    "part": "Cube top plate, bored for the window ring and the camera port (MK-13)",
+    "pid": "MK-13",
+    "clearance_mm": 12.04,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     226.9,
+     249.8
+    ]
+   },
+   {
+    "part": "Well-block thermocouple, 1/16 in. type K (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 12.45,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -8.8,
+     -7.2
+    ]
+   },
+   {
+    "part": "Hopper, ~30 cm3 (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 12.59,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     2.0,
+     35.0
+    ]
+   },
+   {
+    "part": "Beam-tube lens collar, clamped on the lens (MK-10)",
+    "pid": "MK-10",
+    "clearance_mm": 12.94,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     286.5,
+     329.5
+    ]
+   },
+   {
+    "part": "Beam tube centre section, split, short (MK-10)",
+    "pid": "MK-10",
+    "clearance_mm": 12.97,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     265.8,
+     289.5
+    ]
+   },
+   {
+    "part": "Surface thermocouples: beam tube, window ring (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 19.99,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     251.8,
+     280.8
+    ]
+   },
+   {
+    "part": "Well-block heaters, 4 x \u00d86 x 20, 50 W",
+    "pid": "H1",
+    "clearance_mm": 20.0,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -23.0,
+     -17.0
+    ]
+   },
+   {
+    "part": "Piston rod, long, for the cube (MK-06)",
+    "pid": "MK-06",
+    "clearance_mm": 22.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -127.6,
+     -22.0
+    ]
+   },
+   {
+    "part": "Carriage bracket and arm (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 24.16,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -31.7,
+     35.0
+    ]
+   },
+   {
+    "part": "Window-stack screws, M4 x 12 flat head, flush",
+    "pid": "MK-02",
+    "clearance_mm": 24.96,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     263.5,
+     265.8
+    ]
+   },
+   {
+    "part": "Exhaust hose to the HEPA",
+    "pid": "G3",
+    "clearance_mm": 24.96,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -1.0,
+     11.0
+    ]
+   },
+   {
+    "part": "Vibration motor",
+    "pid": "M3",
+    "clearance_mm": 29.93,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     35.0,
+     45.0
+    ]
+   },
+   {
+    "part": "Well-block heater and TC leads",
+    "pid": "H3",
+    "clearance_mm": 32.04,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -23.7,
+     24.2
+    ]
+   },
+   {
+    "part": "Argon feed tube to the nozzle",
+    "pid": "G3",
+    "clearance_mm": 36.51,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.8,
+     7.2
+    ]
+   },
+   {
+    "part": "Ideal Vacuum 12 in. cube frame P107540 (face opening est.)",
+    "pid": "E2",
+    "clearance_mm": 59.32,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -70.3,
+     234.5
+    ]
+   },
+   {
+    "part": "KF-25 ports: pump, Pirani, argon, exhaust, 2 electrical feedthroughs",
+    "pid": "E3",
+    "clearance_mm": 124.99,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     2.1,
+     42.0
+    ]
+   },
+   {
+    "part": "Gantry braces: a diagonal per side, two knee braces at the back",
+    "pid": "E4",
+    "clearance_mm": 206.35,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -63.1,
+     440.6
+    ]
+   },
+   {
+    "part": "Gantry uprights",
+    "pid": "E4",
+    "clearance_mm": 225.16,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -287.6,
+     463.1
+    ]
+   }
+  ],
+  "FT-1V, build area \u00d830, k 0.86": [
+   {
+    "part": "Heater plate \u00d839.8 x 24 (MK-04)",
+    "pid": "MK-04",
+    "clearance_mm": 6.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -30.0,
+     -6.0
+    ]
+   },
+   {
+    "part": "Cover-slide holder, \u00d844 opening (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 8.15,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     125.5,
+     140.0
+    ]
+   },
+   {
+    "part": "Cord clamp (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 8.55,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     3.0,
+     12.0
+    ]
+   },
+   {
+    "part": "Silicone-cord blade, 3 mm",
+    "pid": "M3",
+    "clearance_mm": 8.98,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.0,
+     3.0
+    ]
+   },
+   {
+    "part": "Window retaining flange (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 9.5,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     259.8,
+     268.8
+    ]
+   },
+   {
+    "part": "Plate heaters, 2 x \u00d86 x 20, 50 W",
+    "pid": "H1",
+    "clearance_mm": 9.8,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -29.5,
+     -9.5
+    ]
+   },
+   {
+    "part": "Plate thermocouple, 1/16 in. type K (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 9.8,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -29.5,
+     -9.5
+    ]
+   },
+   {
+    "part": "Window ring (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 10.29,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     249.8,
+     259.8
+    ]
+   },
+   {
+    "part": "Fibreglass rope wiper",
+    "pid": "H4",
+    "clearance_mm": 10.46,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -13.0,
+     -10.0
+    ]
+   },
+   {
+    "part": "Slot nozzle 45 x 4 mm (MK-11)",
+    "pid": "MK-11",
+    "clearance_mm": 11.39,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -1.0,
+     9.0
+    ]
+   },
+   {
+    "part": "Exhaust collector (MK-11)",
+    "pid": "MK-11",
+    "clearance_mm": 11.97,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.0,
+     10.0
+    ]
+   },
+   {
+    "part": "Cover-slide drop tube from the top plate (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 12.03,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     140.0,
+     226.9
+    ]
+   },
+   {
+    "part": "Well-block thermocouple, 1/16 in. type K (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 12.46,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -8.8,
+     -7.2
+    ]
+   },
+   {
+    "part": "Hopper, ~30 cm3 (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 12.66,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     2.0,
+     35.0
+    ]
+   },
+   {
+    "part": "Beam-tube lens collar, clamped on the lens (MK-10)",
+    "pid": "MK-10",
+    "clearance_mm": 13.83,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     286.5,
+     329.5
+    ]
+   },
+   {
+    "part": "Cube top plate, bored for the window ring and the camera port (MK-13)",
+    "pid": "MK-13",
+    "clearance_mm": 14.91,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     226.9,
+     249.8
+    ]
+   },
+   {
+    "part": "Beam tube centre section, split, short (MK-10)",
+    "pid": "MK-10",
+    "clearance_mm": 15.82,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     265.8,
+     289.5
+    ]
+   },
+   {
+    "part": "Well-block heaters, 4 x \u00d86 x 20, 50 W",
+    "pid": "H1",
+    "clearance_mm": 20.0,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -23.0,
+     -17.0
+    ]
+   },
+   {
+    "part": "Piston rod, long, for the cube (MK-06)",
+    "pid": "MK-06",
+    "clearance_mm": 22.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -127.6,
+     -22.0
+    ]
+   },
+   {
+    "part": "Surface thermocouples: beam tube, window ring (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 23.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     251.8,
+     280.8
+    ]
+   },
+   {
+    "part": "Window-stack screws, M4 x 12 flat head, flush",
+    "pid": "MK-02",
+    "clearance_mm": 24.26,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     263.5,
+     265.8
+    ]
+   },
+   {
+    "part": "Carriage bracket and arm (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 24.86,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -31.7,
+     35.0
+    ]
+   },
+   {
+    "part": "Exhaust hose to the HEPA",
+    "pid": "G3",
+    "clearance_mm": 24.97,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -1.0,
+     11.0
+    ]
+   },
+   {
+    "part": "Vibration motor",
+    "pid": "M3",
+    "clearance_mm": 31.0,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     35.0,
+     45.0
+    ]
+   },
+   {
+    "part": "Well-block heater and TC leads",
+    "pid": "H3",
+    "clearance_mm": 32.04,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -23.7,
+     24.2
+    ]
+   },
+   {
+    "part": "Argon feed tube to the nozzle",
+    "pid": "G3",
+    "clearance_mm": 36.39,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.8,
+     7.2
+    ]
+   },
+   {
+    "part": "Ideal Vacuum 12 in. cube frame P107540 (face opening est.)",
+    "pid": "E2",
+    "clearance_mm": 56.38,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -70.3,
+     234.5
+    ]
+   },
+   {
+    "part": "KF-25 ports: pump, Pirani, argon, exhaust, 2 electrical feedthroughs",
+    "pid": "E3",
+    "clearance_mm": 125.12,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     2.1,
+     42.0
+    ]
+   },
+   {
+    "part": "Gantry braces: a diagonal per side, two knee braces at the back",
+    "pid": "E4",
+    "clearance_mm": 209.33,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -63.1,
+     440.6
+    ]
+   },
+   {
+    "part": "Gantry uprights",
+    "pid": "E4",
+    "clearance_mm": 225.62,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -287.6,
+     463.1
+    ]
+   }
+  ],
+  "FT-1V, plate \u00d840, k 0.58": [
+   {
+    "part": "Cover-slide holder, \u00d844 opening (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 2.83,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     125.5,
+     140.0
+    ]
+   },
+   {
+    "part": "Cord clamp (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 3.54,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     3.0,
+     12.0
+    ]
+   },
+   {
+    "part": "Silicone-cord blade, 3 mm",
+    "pid": "M3",
+    "clearance_mm": 3.98,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.0,
+     3.0
+    ]
+   },
+   {
+    "part": "Cover-slide drop tube from the top plate (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 4.16,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     140.0,
+     226.9
+    ]
+   },
+   {
+    "part": "Window ring (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 4.52,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     249.8,
+     259.8
+    ]
+   },
+   {
+    "part": "Window retaining flange (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 5.34,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     259.8,
+     268.8
+    ]
+   },
+   {
+    "part": "Heater plate \u00d839.8 x 24 (MK-04)",
+    "pid": "MK-04",
+    "clearance_mm": 6.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -30.0,
+     -6.0
+    ]
+   },
+   {
+    "part": "Slot nozzle 45 x 4 mm (MK-11)",
+    "pid": "MK-11",
+    "clearance_mm": 6.64,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -1.0,
+     9.0
+    ]
+   },
+   {
+    "part": "Cube top plate, bored for the window ring and the camera port (MK-13)",
+    "pid": "MK-13",
+    "clearance_mm": 6.85,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     226.9,
+     249.8
+    ]
+   },
+   {
+    "part": "Exhaust collector (MK-11)",
+    "pid": "MK-11",
+    "clearance_mm": 6.96,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.0,
+     10.0
+    ]
+   },
+   {
+    "part": "Hopper, ~30 cm3 (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 7.63,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     2.0,
+     35.0
+    ]
+   },
+   {
+    "part": "Beam-tube lens collar, clamped on the lens (MK-10)",
+    "pid": "MK-10",
+    "clearance_mm": 7.69,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     286.5,
+     329.5
+    ]
+   },
+   {
+    "part": "Beam tube centre section, split, short (MK-10)",
+    "pid": "MK-10",
+    "clearance_mm": 7.73,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     265.8,
+     289.5
+    ]
+   },
+   {
+    "part": "Well-block thermocouple, 1/16 in. type K (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 8.99,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -8.8,
+     -7.2
+    ]
+   },
+   {
+    "part": "Plate heaters, 2 x \u00d86 x 20, 50 W",
+    "pid": "H1",
+    "clearance_mm": 9.8,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -29.5,
+     -9.5
+    ]
+   },
+   {
+    "part": "Plate thermocouple, 1/16 in. type K (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 9.8,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -29.5,
+     -9.5
+    ]
+   },
+   {
+    "part": "Fibreglass rope wiper",
+    "pid": "H4",
+    "clearance_mm": 10.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -13.0,
+     -10.0
+    ]
+   },
+   {
+    "part": "Surface thermocouples: beam tube, window ring (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 16.93,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     251.8,
+     280.8
+    ]
+   },
+   {
+    "part": "Well-block heaters, 4 x \u00d86 x 20, 50 W",
+    "pid": "H1",
+    "clearance_mm": 18.06,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -23.0,
+     -17.0
+    ]
+   },
+   {
+    "part": "Carriage bracket and arm (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 19.22,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -31.7,
+     35.0
+    ]
+   },
+   {
+    "part": "Exhaust hose to the HEPA",
+    "pid": "G3",
+    "clearance_mm": 19.96,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -1.0,
+     11.0
+    ]
+   },
+   {
+    "part": "Window-stack screws, M4 x 12 flat head, flush",
+    "pid": "MK-02",
+    "clearance_mm": 20.04,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     263.5,
+     265.8
+    ]
+   },
+   {
+    "part": "Piston rod, long, for the cube (MK-06)",
+    "pid": "MK-06",
+    "clearance_mm": 22.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -127.6,
+     -22.0
+    ]
+   },
+   {
+    "part": "Vibration motor",
+    "pid": "M3",
+    "clearance_mm": 25.0,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     35.0,
+     45.0
+    ]
+   },
+   {
+    "part": "Well-block heater and TC leads",
+    "pid": "H3",
+    "clearance_mm": 27.96,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -23.7,
+     24.2
+    ]
+   },
+   {
+    "part": "Argon feed tube to the nozzle",
+    "pid": "G3",
+    "clearance_mm": 31.65,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.8,
+     7.2
+    ]
+   },
+   {
+    "part": "Stage shield (MK-12)",
+    "pid": "MK-12",
+    "clearance_mm": 42.68,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -52.7,
+     -22.7
+    ]
+   },
+   {
+    "part": "X-LSM carriage",
+    "pid": "M1c",
+    "clearance_mm": 52.65,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -48.9,
+     -31.7
+    ]
+   },
+   {
+    "part": "Zaber X-LSM100B-E03 recoater stage",
+    "pid": "M1c",
+    "clearance_mm": 53.57,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -52.7,
+     -32.0
+    ]
+   },
+   {
+    "part": "Ideal Vacuum 12 in. cube frame P107540 (face opening est.)",
+    "pid": "E2",
+    "clearance_mm": 58.01,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -70.3,
+     234.5
+    ]
+   },
+   {
+    "part": "KF-25 ports: pump, Pirani, argon, exhaust, 2 electrical feedthroughs",
+    "pid": "E3",
+    "clearance_mm": 120.08,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     2.1,
+     42.0
+    ]
+   },
+   {
+    "part": "Gantry braces: a diagonal per side, two knee braces at the back",
+    "pid": "E4",
+    "clearance_mm": 202.84,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -63.1,
+     440.6
+    ]
+   },
+   {
+    "part": "Gantry uprights",
+    "pid": "E4",
+    "clearance_mm": 223.43,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -287.6,
+     463.1
+    ]
+   }
+  ],
+  "FT-1V, plate \u00d840, k 0.65": [
+   {
+    "part": "Cord clamp (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 3.55,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     3.0,
+     12.0
+    ]
+   },
+   {
+    "part": "Silicone-cord blade, 3 mm",
+    "pid": "M3",
+    "clearance_mm": 3.99,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.0,
+     3.0
+    ]
+   },
+   {
+    "part": "Cover-slide holder, \u00d844 opening (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 4.54,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     125.5,
+     140.0
+    ]
+   },
+   {
+    "part": "Cover-slide drop tube from the top plate (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 6.06,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     140.0,
+     226.9
+    ]
+   },
+   {
+    "part": "Heater plate \u00d839.8 x 24 (MK-04)",
+    "pid": "MK-04",
+    "clearance_mm": 6.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -30.0,
+     -6.0
+    ]
+   },
+   {
+    "part": "Slot nozzle 45 x 4 mm (MK-11)",
+    "pid": "MK-11",
+    "clearance_mm": 6.61,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -1.0,
+     9.0
+    ]
+   },
+   {
+    "part": "Exhaust collector (MK-11)",
+    "pid": "MK-11",
+    "clearance_mm": 6.96,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.0,
+     10.0
+    ]
+   },
+   {
+    "part": "Hopper, ~30 cm3 (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 7.66,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     2.0,
+     35.0
+    ]
+   },
+   {
+    "part": "Window ring (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 7.92,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     249.8,
+     259.8
+    ]
+   },
+   {
+    "part": "Window retaining flange (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 8.88,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     259.8,
+     268.8
+    ]
+   },
+   {
+    "part": "Well-block thermocouple, 1/16 in. type K (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 8.99,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -8.8,
+     -7.2
+    ]
+   },
+   {
+    "part": "Plate heaters, 2 x \u00d86 x 20, 50 W",
+    "pid": "H1",
+    "clearance_mm": 9.8,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -29.5,
+     -9.5
+    ]
+   },
+   {
+    "part": "Plate thermocouple, 1/16 in. type K (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 9.8,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -29.5,
+     -9.5
+    ]
+   },
+   {
+    "part": "Cube top plate, bored for the window ring and the camera port (MK-13)",
+    "pid": "MK-13",
+    "clearance_mm": 9.94,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     226.9,
+     249.8
+    ]
+   },
+   {
+    "part": "Fibreglass rope wiper",
+    "pid": "H4",
+    "clearance_mm": 10.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -13.0,
+     -10.0
+    ]
+   },
+   {
+    "part": "Beam tube centre section, split, short (MK-10)",
+    "pid": "MK-10",
+    "clearance_mm": 11.31,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     265.8,
+     289.5
+    ]
+   },
+   {
+    "part": "Beam-tube lens collar, clamped on the lens (MK-10)",
+    "pid": "MK-10",
+    "clearance_mm": 11.55,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     286.5,
+     329.5
+    ]
+   },
+   {
+    "part": "Well-block heaters, 4 x \u00d86 x 20, 50 W",
+    "pid": "H1",
+    "clearance_mm": 18.06,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -23.0,
+     -17.0
+    ]
+   },
+   {
+    "part": "Surface thermocouples: beam tube, window ring (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 18.4,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     251.8,
+     280.8
+    ]
+   },
+   {
+    "part": "Carriage bracket and arm (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 19.49,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -31.7,
+     35.0
+    ]
+   },
+   {
+    "part": "Exhaust hose to the HEPA",
+    "pid": "G3",
+    "clearance_mm": 19.96,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -1.0,
+     11.0
+    ]
+   },
+   {
+    "part": "Piston rod, long, for the cube (MK-06)",
+    "pid": "MK-06",
+    "clearance_mm": 22.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -127.6,
+     -22.0
+    ]
+   },
+   {
+    "part": "Window-stack screws, M4 x 12 flat head, flush",
+    "pid": "MK-02",
+    "clearance_mm": 23.29,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     263.5,
+     265.8
+    ]
+   },
+   {
+    "part": "Vibration motor",
+    "pid": "M3",
+    "clearance_mm": 25.42,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     35.0,
+     45.0
+    ]
+   },
+   {
+    "part": "Well-block heater and TC leads",
+    "pid": "H3",
+    "clearance_mm": 27.96,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -23.7,
+     24.2
+    ]
+   },
+   {
+    "part": "Argon feed tube to the nozzle",
+    "pid": "G3",
+    "clearance_mm": 31.63,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.8,
+     7.2
+    ]
+   },
+   {
+    "part": "Stage shield (MK-12)",
+    "pid": "MK-12",
+    "clearance_mm": 42.69,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -52.7,
+     -22.7
+    ]
+   },
+   {
+    "part": "X-LSM carriage",
+    "pid": "M1c",
+    "clearance_mm": 52.65,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -48.9,
+     -31.7
+    ]
+   },
+   {
+    "part": "Zaber X-LSM100B-E03 recoater stage",
+    "pid": "M1c",
+    "clearance_mm": 53.57,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -52.7,
+     -32.0
+    ]
+   },
+   {
+    "part": "Ideal Vacuum 12 in. cube frame P107540 (face opening est.)",
+    "pid": "E2",
+    "clearance_mm": 57.35,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -70.3,
+     234.5
+    ]
+   },
+   {
+    "part": "KF-25 ports: pump, Pirani, argon, exhaust, 2 electrical feedthroughs",
+    "pid": "E3",
+    "clearance_mm": 120.14,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     2.1,
+     42.0
+    ]
+   },
+   {
+    "part": "Gantry braces: a diagonal per side, two knee braces at the back",
+    "pid": "E4",
+    "clearance_mm": 204.09,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -63.1,
+     440.6
+    ]
+   },
+   {
+    "part": "Gantry uprights",
+    "pid": "E4",
+    "clearance_mm": 223.94,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -287.6,
+     463.1
+    ]
+   }
+  ],
+  "FT-1V, plate \u00d840, k 0.86": [
+   {
+    "part": "Cord clamp (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 3.6,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     3.0,
+     12.0
+    ]
+   },
+   {
+    "part": "Silicone-cord blade, 3 mm",
+    "pid": "M3",
+    "clearance_mm": 4.01,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.0,
+     3.0
+    ]
+   },
+   {
+    "part": "Cover-slide holder, \u00d844 opening (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 5.52,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     125.5,
+     140.0
+    ]
+   },
+   {
+    "part": "Heater plate \u00d839.8 x 24 (MK-04)",
+    "pid": "MK-04",
+    "clearance_mm": 6.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -30.0,
+     -6.0
+    ]
+   },
+   {
+    "part": "Slot nozzle 45 x 4 mm (MK-11)",
+    "pid": "MK-11",
+    "clearance_mm": 6.55,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -1.0,
+     9.0
+    ]
+   },
+   {
+    "part": "Exhaust collector (MK-11)",
+    "pid": "MK-11",
+    "clearance_mm": 6.97,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.0,
+     10.0
+    ]
+   },
+   {
+    "part": "Hopper, ~30 cm3 (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 7.75,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     2.0,
+     35.0
+    ]
+   },
+   {
+    "part": "Window retaining flange (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 8.95,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     259.8,
+     268.8
+    ]
+   },
+   {
+    "part": "Well-block thermocouple, 1/16 in. type K (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 8.99,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -8.8,
+     -7.2
+    ]
+   },
+   {
+    "part": "Window ring (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 9.55,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     249.8,
+     259.8
+    ]
+   },
+   {
+    "part": "Plate heaters, 2 x \u00d86 x 20, 50 W",
+    "pid": "H1",
+    "clearance_mm": 9.8,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -29.5,
+     -9.5
+    ]
+   },
+   {
+    "part": "Plate thermocouple, 1/16 in. type K (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 9.8,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -29.5,
+     -9.5
+    ]
+   },
+   {
+    "part": "Fibreglass rope wiper",
+    "pid": "H4",
+    "clearance_mm": 10.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -13.0,
+     -10.0
+    ]
+   },
+   {
+    "part": "Cover-slide drop tube from the top plate (MK-02)",
+    "pid": "MK-02",
+    "clearance_mm": 10.87,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     140.0,
+     226.9
+    ]
+   },
+   {
+    "part": "Beam-tube lens collar, clamped on the lens (MK-10)",
+    "pid": "MK-10",
+    "clearance_mm": 13.68,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     286.5,
+     329.5
+    ]
+   },
+   {
+    "part": "Cube top plate, bored for the window ring and the camera port (MK-13)",
+    "pid": "MK-13",
+    "clearance_mm": 14.14,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     226.9,
+     249.8
+    ]
+   },
+   {
+    "part": "Beam tube centre section, split, short (MK-10)",
+    "pid": "MK-10",
+    "clearance_mm": 15.68,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     265.8,
+     289.5
+    ]
+   },
+   {
+    "part": "Well-block heaters, 4 x \u00d86 x 20, 50 W",
+    "pid": "H1",
+    "clearance_mm": 18.06,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -23.0,
+     -17.0
+    ]
+   },
+   {
+    "part": "Exhaust hose to the HEPA",
+    "pid": "G3",
+    "clearance_mm": 19.97,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -1.0,
+     11.0
+    ]
+   },
+   {
+    "part": "Carriage bracket and arm (MK-08)",
+    "pid": "MK-08",
+    "clearance_mm": 20.31,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -31.7,
+     35.0
+    ]
+   },
+   {
+    "part": "Piston rod, long, for the cube (MK-06)",
+    "pid": "MK-06",
+    "clearance_mm": 22.3,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -127.6,
+     -22.0
+    ]
+   },
+   {
+    "part": "Surface thermocouples: beam tube, window ring (MON6)",
+    "pid": "MON6",
+    "clearance_mm": 22.8,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     251.8,
+     280.8
+    ]
+   },
+   {
+    "part": "Window-stack screws, M4 x 12 flat head, flush",
+    "pid": "MK-02",
+    "clearance_mm": 23.72,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     263.5,
+     265.8
+    ]
+   },
+   {
+    "part": "Vibration motor",
+    "pid": "M3",
+    "clearance_mm": 26.64,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     35.0,
+     45.0
+    ]
+   },
+   {
+    "part": "Well-block heater and TC leads",
+    "pid": "H3",
+    "clearance_mm": 27.97,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -23.7,
+     24.2
+    ]
+   },
+   {
+    "part": "Argon feed tube to the nozzle",
+    "pid": "G3",
+    "clearance_mm": 31.55,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     0.8,
+     7.2
+    ]
+   },
+   {
+    "part": "Stage shield (MK-12)",
+    "pid": "MK-12",
+    "clearance_mm": 42.7,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -52.7,
+     -22.7
+    ]
+   },
+   {
+    "part": "X-LSM carriage",
+    "pid": "M1c",
+    "clearance_mm": 52.66,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -48.9,
+     -31.7
+    ]
+   },
+   {
+    "part": "Zaber X-LSM100B-E03 recoater stage",
+    "pid": "M1c",
+    "clearance_mm": 53.58,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -52.7,
+     -32.0
+    ]
+   },
+   {
+    "part": "Ideal Vacuum 12 in. cube frame P107540 (face opening est.)",
+    "pid": "E2",
+    "clearance_mm": 55.4,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -70.3,
+     234.5
+    ]
+   },
+   {
+    "part": "KF-25 ports: pump, Pirani, argon, exhaust, 2 electrical feedthroughs",
+    "pid": "E3",
+    "clearance_mm": 120.27,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     2.1,
+     42.0
+    ]
+   },
+   {
+    "part": "Gantry braces: a diagonal per side, two knee braces at the back",
+    "pid": "E4",
+    "clearance_mm": 207.78,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -63.1,
+     440.6
+    ]
+   },
+   {
+    "part": "Gantry uprights",
+    "pid": "E4",
+    "clearance_mm": 225.29,
+    "hit_mm3": 0.0,
+    "z_above_bed_mm": [
+     -287.6,
+     463.1
+    ]
+   }
+  ]
+ },
+ "analytic": {
+  "FT-1, build area \u00d830, k 0.58": {
+   "window CA, lower face": 9.44,
+   "window CA, upper face": 9.99,
+   "lens exit (\u00d870, CAD est.)": 14.57,
+   "cover slide (holder \u00d844), lower face": 6.78
+  },
+  "FT-1, build area \u00d830, k 0.65": {
+   "window CA, lower face": 10.06,
+   "window CA, upper face": 9.68,
+   "lens exit (\u00d870, CAD est.)": 18.24,
+   "cover slide (holder \u00d844), lower face": 8.39
+  },
+  "FT-1, build area \u00d830, k 0.86": {
+   "window CA, lower face": 8.18,
+   "window CA, upper face": 7.72,
+   "lens exit (\u00d870, CAD est.)": 29.16,
+   "cover slide (holder \u00d844), lower face": 8.85
+  },
+  "FT-1, plate \u00d840, k 0.58": {
+   "window CA, lower face": 6.17,
+   "window CA, upper face": 6.79,
+   "lens exit (\u00d870, CAD est.)": 12.95,
+   "cover slide (holder \u00d844), lower face": 3.26
+  },
+  "FT-1, plate \u00d840, k 0.65": {
+   "window CA, lower face": 7.0,
+   "window CA, upper face": 6.7,
+   "lens exit (\u00d870, CAD est.)": 17.02,
+   "cover slide (holder \u00d844), lower face": 5.05
+  },
+  "FT-1, plate \u00d840, k 0.86": {
+   "window CA, lower face": 5.75,
+   "window CA, upper face": 5.4,
+   "lens exit (\u00d870, CAD est.)": 29.16,
+   "cover slide (holder \u00d844), lower face": 6.05
+  },
+  "FT-1V, build area \u00d830, k 0.58": {
+   "window CA, lower face": 7.72,
+   "window CA, upper face": 8.26,
+   "lens exit (\u00d870, CAD est.)": 14.57,
+   "cover slide (holder \u00d844), lower face": 6.78
+  },
+  "FT-1V, build area \u00d830, k 0.65": {
+   "window CA, lower face": 10.83,
+   "window CA, upper face": 11.46,
+   "lens exit (\u00d870, CAD est.)": 18.24,
+   "cover slide (holder \u00d844), lower face": 8.39
+  },
+  "FT-1V, build area \u00d830, k 0.86": {
+   "window CA, lower face": 11.16,
+   "window CA, upper face": 10.7,
+   "lens exit (\u00d870, CAD est.)": 29.16,
+   "cover slide (holder \u00d844), lower face": 8.85
+  },
+  "FT-1V, plate \u00d840, k 0.58": {
+   "window CA, lower face": 5.58,
+   "window CA, upper face": 6.21,
+   "lens exit (\u00d870, CAD est.)": 12.95,
+   "cover slide (holder \u00d844), lower face": 3.26
+  },
+  "FT-1V, plate \u00d840, k 0.65": {
+   "window CA, lower face": 9.04,
+   "window CA, upper face": 9.76,
+   "lens exit (\u00d870, CAD est.)": 17.02,
+   "cover slide (holder \u00d844), lower face": 5.05
+  },
+  "FT-1V, plate \u00d840, k 0.86": {
+   "window CA, lower face": 10.41,
+   "window CA, upper face": 10.06,
+   "lens exit (\u00d870, CAD est.)": 29.16,
+   "cover slide (holder \u00d844), lower face": 6.05
+  }
+ },
+ "specular_landing": {
+  "FT-1, k 0.58": {
+   "Cover-slide holder, \u00d844 opening (MK-02)": 39.4,
+   "Inner clamp ring (MK-02)": 22.1,
+   "LINOS lens, inside its \u00d870 exit (back toward the head)": 15.6,
+   "Beam tube centre section, split, long (MK-10)": 10.3,
+   "Window retaining flange (MK-02)": 5.4,
+   "LINOS lens barrel": 3.6,
+   "Beam-tube lens collar, clamped on the lens (MK-10)": 3.0,
+   "Window ring (MK-02)": 0.6
+  },
+  "FT-1, k 0.86": {
+   "Cover-slide holder, \u00d844 opening (MK-02)": 36.8,
+   "Inner clamp ring (MK-02)": 28.7,
+   "Beam tube centre section, split, long (MK-10)": 9.0,
+   "LINOS lens, inside its \u00d870 exit (back toward the head)": 8.9,
+   "Box door (the lid): window bore, camera port": 5.9,
+   "Window retaining flange (MK-02)": 5.5,
+   "Beam-tube lens collar, clamped on the lens (MK-10)": 2.7,
+   "LINOS lens barrel": 2.0,
+   "Window ring (MK-02)": 0.6
+  },
+  "FT-1V, k 0.58": {
+   "Cover-slide holder, \u00d844 opening (MK-02)": 39.2,
+   "Cube top plate, bored for the window ring and the camera port (MK-13)": 32.0,
+   "LINOS lens, inside its \u00d870 exit (back toward the head)": 10.0,
+   "Cover-slide drop tube from the top plate (MK-02)": 9.9,
+   "Window ring (MK-02)": 6.1,
+   "Beam-tube lens collar, clamped on the lens (MK-10)": 1.7,
+   "Window retaining flange (MK-02)": 1.1
+  },
+  "FT-1V, k 0.86": {
+   "Cube top plate, bored for the window ring and the camera port (MK-13)": 42.3,
+   "Cover-slide holder, \u00d844 opening (MK-02)": 35.7,
+   "Cover-slide drop tube from the top plate (MK-02)": 10.0,
+   "LINOS lens, inside its \u00d870 exit (back toward the head)": 5.8,
+   "Window ring (MK-02)": 5.3,
+   "Beam-tube lens collar, clamped on the lens (MK-10)": 0.9
+  }
+ },
+ "scan_angles": {
+  "build area \u00d830": {
+   "theta_x_max_rad": 0.0589622641509434,
+   "theta_y_max_rad": 0.17688679245283018,
+   "theta_y_min_rad": 0.0589622641509434,
+   "theta_r_max_rad": 0.17688679245283018,
+   "r_min_mm": 15.0,
+   "r_max_mm": 45.0,
+   "mech_max_deg": 5.067433329576856,
+   "galvo1_limit_rad": 0.26,
+   "galvo2_limit_rad": 0.4,
+   "lens_limit_rad": 0.3089232776029963,
+   "margin_vs_tighter_galvo_rad": 0.08311320754716983
+  },
+  "plate \u00d840": {
+   "theta_x_max_rad": 0.07861635220125786,
+   "theta_y_max_rad": 0.19654088050314464,
+   "theta_y_min_rad": 0.03930817610062893,
+   "theta_r_max_rad": 0.19654088050314464,
+   "r_min_mm": 10.0,
+   "r_max_mm": 50.0,
+   "mech_max_deg": 5.630481477307618,
+   "galvo1_limit_rad": 0.26,
+   "galvo2_limit_rad": 0.4,
+   "lens_limit_rad": 0.3089232776029963,
+   "margin_vs_tighter_galvo_rad": 0.06345911949685537
+  }
+ },
+ "return_chain": {
+  "build area \u00d830": [
+   {
+    "r_rel_mm": 15.0,
+    "k": 0.58,
+    "delta_mm": 17.4,
+    "returned_W": 342.0,
+    "miss_mirror_edge_mm": -0.10000000000000142,
+    "miss_entrance_edge_mm": 3.3999999999999986,
+    "miss_turret_edge_mm": 4.399999999999999,
+    "W_on_mirrors": 0.012696775035773555,
+    "W_past_entrance": 2.215330629703028e-09,
+    "W_past_turret": 6.295821894623167e-12,
+    "W_core": 3.134054406761319e-19,
+    "angle_at_fibre_x_divergence": 6.959999999999999
+   },
+   {
+    "r_rel_mm": 15.0,
+    "k": 0.65,
+    "delta_mm": 19.5,
+    "returned_W": 342.0,
+    "miss_mirror_edge_mm": 2.0,
+    "miss_entrance_edge_mm": 5.5,
+    "miss_turret_edge_mm": 6.5,
+    "W_on_mirrors": 2.9121042770159655e-06,
+    "W_past_entrance": 5.1505817710566364e-15,
+    "W_past_turret": 3.892696013742564e-18,
+    "W_core": 1.2928550229134257e-24,
+    "angle_at_fibre_x_divergence": 7.8
+   },
+   {
+    "r_rel_mm": 15.0,
+    "k": 0.86,
+    "delta_mm": 25.8,
+    "returned_W": 342.0,
+    "miss_mirror_edge_mm": 8.3,
+    "miss_entrance_edge_mm": 11.8,
+    "miss_turret_edge_mm": 12.8,
+    "W_on_mirrors": 2.3013266730260142e-24,
+    "W_past_entrance": 3.5442299437084364e-39,
+    "W_past_turret": 4.90328245131086e-44,
+    "W_core": 1.9081893894166097e-44,
+    "angle_at_fibre_x_divergence": 10.32
+   }
+  ],
+  "plate \u00d840": [
+   {
+    "r_rel_mm": 10.0,
+    "k": 0.58,
+    "delta_mm": 11.6,
+    "returned_W": 342.0,
+    "miss_mirror_edge_mm": -5.9,
+    "miss_entrance_edge_mm": -2.4000000000000004,
+    "miss_turret_edge_mm": -1.4000000000000004,
+    "W_on_mirrors": 255.79488052061097,
+    "W_past_entrance": 5.516614771873342,
+    "W_past_turret": 0.5527919906178865,
+    "W_core": 1.527002079446242e-07,
+    "angle_at_fibre_x_divergence": 4.64
+   },
+   {
+    "r_rel_mm": 10.0,
+    "k": 0.65,
+    "delta_mm": 13.0,
+    "returned_W": 342.0,
+    "miss_mirror_edge_mm": -4.5,
+    "miss_entrance_edge_mm": -1.0,
+    "miss_turret_edge_mm": 0.0,
+    "W_on_mirrors": 111.72383012569324,
+    "W_past_entrance": 0.19213931593150582,
+    "W_past_turret": 0.008360949259807996,
+    "W_core": 6.175943516295181e-10,
+    "angle_at_fibre_x_divergence": 5.2
+   },
+   {
+    "r_rel_mm": 10.0,
+    "k": 0.86,
+    "delta_mm": 17.2,
+    "returned_W": 342.0,
+    "miss_mirror_edge_mm": -0.3000000000000007,
+    "miss_entrance_edge_mm": 3.1999999999999993,
+    "miss_turret_edge_mm": 4.199999999999999,
+    "W_on_mirrors": 0.024494822433095753,
+    "W_past_entrance": 6.596101236223642e-09,
+    "W_past_turret": 2.1256536276224092e-11,
+    "W_core": 9.483253977561123e-19,
+    "angle_at_fibre_x_divergence": 6.88
+   }
+  ]
+ },
+ "irradiance": {
+  "box": [
+   {
+    "element": "cover slide",
+    "face": "lower face",
+    "h_mm": 130.0,
+    "h_air_mm": 129.999999999,
+    "beam_d_mm": 2.5561689283335323,
+    "peak_kW_cm2": 15.589098556408281,
+    "mean_kW_cm2": 7.794549278204141
+   },
+   {
+    "element": "cover slide",
+    "face": "upper face",
+    "h_mm": 131.0,
+    "h_air_mm": 130.6898454746137,
+    "beam_d_mm": 2.56972121051294,
+    "peak_kW_cm2": 15.42510351607774,
+    "mean_kW_cm2": 7.71255175803887
+   },
+   {
+    "element": "window",
+    "face": "lower face",
+    "h_mm": 152.025,
+    "h_air_mm": 151.7148454736137,
+    "beam_d_mm": 2.9827916639141683,
+    "peak_kW_cm2": 11.448649620991674,
+    "mean_kW_cm2": 5.724324810495837
+   },
+   {
+    "element": "window",
+    "face": "upper face",
+    "h_mm": 161.555,
+    "h_air_mm": 158.28907284768212,
+    "beam_d_mm": 3.111961636396611,
+    "peak_kW_cm2": 10.517962951136017,
+    "mean_kW_cm2": 5.258981475568008
+   }
+  ],
+  "cube": [
+   {
+    "element": "cover slide",
+    "face": "lower face",
+    "h_mm": 130.0,
+    "h_air_mm": 129.999999999,
+    "beam_d_mm": 2.5561689283335323,
+    "peak_kW_cm2": 15.589098556408281,
+    "mean_kW_cm2": 7.794549278204141
+   },
+   {
+    "element": "cover slide",
+    "face": "upper face",
+    "h_mm": 131.0,
+    "h_air_mm": 130.6898454746137,
+    "beam_d_mm": 2.56972121051294,
+    "peak_kW_cm2": 15.42510351607774,
+    "mean_kW_cm2": 7.71255175803887
+   },
+   {
+    "element": "window",
+    "face": "lower face",
+    "h_mm": 251.79999999999995,
+    "h_air_mm": 251.48984547361366,
+    "beam_d_mm": 4.943391649104052,
+    "peak_kW_cm2": 4.168214561514286,
+    "mean_kW_cm2": 2.084107280757143
+   },
+   {
+    "element": "window",
+    "face": "upper face",
+    "h_mm": 261.3299999999999,
+    "h_air_mm": 258.06407284768204,
+    "beam_d_mm": 5.072587112989413,
+    "peak_kW_cm2": 3.958595052692151,
+    "mean_kW_cm2": 1.9792975263460755
+   }
+  ]
+ },
+ "thermal_static": [
+  {
+   "state": "box",
+   "element": "cover slide \u00d850 x 1",
+   "absorption": "clean: 20 ppm/cm bulk + 0.1 % coatings",
+   "a_tot": 0.001002,
+   "P_abs_W": 0.40080000000000005,
+   "h_air_mm": 130.0,
+   "w_mm": 1.2780844641765883,
+   "dT_centre_K": 120.75966719425121,
+   "D_per_m": 0.27267767216839717,
+   "focus_shift_mm": 4.450491213705236,
+   "x_zR": 1.1471683626047775
+  },
+  {
+   "state": "box",
+   "element": "cover slide \u00d850 x 1",
+   "absorption": "dirty slide: 1 % at the lower face",
+   "a_tot": 0.01,
+   "P_abs_W": 4.0,
+   "h_air_mm": 130.0,
+   "w_mm": 1.2780844641765883,
+   "dT_centre_K": 1203.963187477175,
+   "D_per_m": 2.718648644052735,
+   "focus_shift_mm": 33.94734473071563,
+   "x_zR": 8.750341928457125
+  },
+  {
+   "state": "box",
+   "element": "cover slide \u00d850 x 1",
+   "absorption": "dirty slide: 2 % at the lower face",
+   "a_tot": 0.02,
+   "P_abs_W": 8.0,
+   "h_air_mm": 130.0,
+   "w_mm": 1.2780844641765883,
+   "dT_centre_K": 2407.92637495435,
+   "D_per_m": 5.43729728810547,
+   "focus_shift_mm": 53.836246292877284,
+   "x_zR": 13.876948755319571
+  },
+  {
+   "state": "box",
+   "element": "window \u00d850.8 x 9.53",
+   "absorption": "clean: 20 ppm/cm bulk + 0.1 % coatings",
+   "a_tot": 0.00101906,
+   "P_abs_W": 0.407624,
+   "h_air_mm": 151.7148454746137,
+   "w_mm": 1.4913958319669076,
+   "dT_centre_K": 15.62443484156007,
+   "D_per_m": 0.2082166903929317,
+   "focus_shift_mm": 4.6458454430499225,
+   "x_zR": 1.1975232966208555
+  },
+  {
+   "state": "cube",
+   "element": "cover slide \u00d850 x 1",
+   "absorption": "clean: 20 ppm/cm bulk + 0.1 % coatings",
+   "a_tot": 0.001002,
+   "P_abs_W": 0.40080000000000005,
+   "h_air_mm": 130.0,
+   "w_mm": 1.2780844641765883,
+   "dT_centre_K": 120.75966719425121,
+   "D_per_m": 0.27267767216839717,
+   "focus_shift_mm": 4.450491213705236,
+   "x_zR": 1.1471683626047775
+  },
+  {
+   "state": "cube",
+   "element": "cover slide \u00d850 x 1",
+   "absorption": "dirty slide: 1 % at the lower face",
+   "a_tot": 0.01,
+   "P_abs_W": 4.0,
+   "h_air_mm": 130.0,
+   "w_mm": 1.2780844641765883,
+   "dT_centre_K": 1203.963187477175,
+   "D_per_m": 2.718648644052735,
+   "focus_shift_mm": 33.94734473071563,
+   "x_zR": 8.750341928457125
+  },
+  {
+   "state": "cube",
+   "element": "cover slide \u00d850 x 1",
+   "absorption": "dirty slide: 2 % at the lower face",
+   "a_tot": 0.02,
+   "P_abs_W": 8.0,
+   "h_air_mm": 130.0,
+   "w_mm": 1.2780844641765883,
+   "dT_centre_K": 2407.92637495435,
+   "D_per_m": 5.43729728810547,
+   "focus_shift_mm": 53.836246292877284,
+   "x_zR": 13.876948755319571
+  },
+  {
+   "state": "cube",
+   "element": "window \u00d850.8 x 9.53",
+   "absorption": "clean: 20 ppm/cm bulk + 0.1 % coatings",
+   "a_tot": 0.00101906,
+   "P_abs_W": 0.407624,
+   "h_air_mm": 251.48984547461365,
+   "w_mm": 2.471695824561852,
+   "dT_centre_K": 13.132864658977411,
+   "D_per_m": 0.07522459817776932,
+   "focus_shift_mm": 4.669404046168118,
+   "x_zR": 1.2035958137580944
+  }
+ ],
+ "thermal_transient": [
+  {
+   "state": "box",
+   "element": "slide",
+   "a_tot": 0.001002,
+   "centre": [
+    0.0,
+    -11.0
+   ],
+   "period_s": 6.381306435889375,
+   "steady_dz_mm": [
+    0.007916840707919365,
+    0.04824809860014453
+   ],
+   "mean_dz_mm": 0.05939479981344245,
+   "max_dz_mm": 0.11935432506257532,
+   "max_x_zR": 0.03076503223513639,
+   "T_max_K": 10.72876338252398
+  },
+  {
+   "state": "box",
+   "element": "slide",
+   "a_tot": 0.01,
+   "centre": [
+    0.0,
+    -11.0
+   ],
+   "period_s": 6.381306435889375,
+   "steady_dz_mm": [
+    0.07901038630658049,
+    0.4815179501012427
+   ],
+   "mean_dz_mm": 0.5927624731880483,
+   "max_dz_mm": 1.1911609287682166,
+   "max_x_zR": 0.30703624985166056,
+   "T_max_K": 107.07348685153671
+  },
+  {
+   "state": "box",
+   "element": "slide",
+   "a_tot": 0.02,
+   "centre": [
+    0.0,
+    -11.0
+   ],
+   "period_s": 6.381306435889375,
+   "steady_dz_mm": [
+    0.15802077261316097,
+    0.9630359002024854
+   ],
+   "mean_dz_mm": 1.1855249463760966,
+   "max_dz_mm": 2.382321857536433,
+   "max_x_zR": 0.6140724997033211,
+   "T_max_K": 214.14697370307343
+  },
+  {
+   "state": "box",
+   "element": "window",
+   "a_tot": 0.00101906,
+   "centre": [
+    0.0,
+    -11.0
+   ],
+   "period_s": 6.381306435889375,
+   "steady_dz_mm": [
+    0.021706879006762603,
+    0.09473750468858226
+   ],
+   "mean_dz_mm": 0.09847601863380578,
+   "max_dz_mm": 0.17179233222855064,
+   "max_x_zR": 0.0442815678107156,
+   "T_max_K": 2.044613362038215
+  },
+  {
+   "state": "cube",
+   "element": "slide",
+   "a_tot": 0.001002,
+   "centre": [
+    0.0,
+    -11.0
+   ],
+   "period_s": 6.381306435889375,
+   "steady_dz_mm": [
+    0.007916840707919365,
+    0.04824809860014453
+   ],
+   "mean_dz_mm": 0.05939479981344245,
+   "max_dz_mm": 0.11935432506257532,
+   "max_x_zR": 0.03076503223513639,
+   "T_max_K": 10.72876338252398
+  },
+  {
+   "state": "cube",
+   "element": "slide",
+   "a_tot": 0.01,
+   "centre": [
+    0.0,
+    -11.0
+   ],
+   "period_s": 6.381306435889375,
+   "steady_dz_mm": [
+    0.07901038630658049,
+    0.4815179501012427
+   ],
+   "mean_dz_mm": 0.5927624731880483,
+   "max_dz_mm": 1.1911609287682166,
+   "max_x_zR": 0.30703624985166056,
+   "T_max_K": 107.07348685153671
+  },
+  {
+   "state": "cube",
+   "element": "slide",
+   "a_tot": 0.02,
+   "centre": [
+    0.0,
+    -11.0
+   ],
+   "period_s": 6.381306435889375,
+   "steady_dz_mm": [
+    0.15802077261316097,
+    0.9630359002024854
+   ],
+   "mean_dz_mm": 1.1855249463760966,
+   "max_dz_mm": 2.382321857536433,
+   "max_x_zR": 0.6140724997033211,
+   "T_max_K": 214.14697370307343
+  },
+  {
+   "state": "cube",
+   "element": "window",
+   "a_tot": 0.00101906,
+   "centre": [
+    0.0,
+    -21.0
+   ],
+   "period_s": 6.381306435889375,
+   "steady_dz_mm": [
+    0.2075708535416654,
+    0.5680690339802278
+   ],
+   "mean_dz_mm": 0.5624557300428513,
+   "max_dz_mm": 0.8190920598718751,
+   "max_x_zR": 0.21113096330854303,
+   "T_max_K": 2.6602966030073087
+  }
+ ],
+ "lens_ghosts_v2": [
+  {
+   "ghost_mm": 14.2,
+   "mirror": "M2 (Y)",
+   "mirror_mm": 27.5,
+   "gap_mm": -13.3,
+   "spot_d_mm": 4.683,
+   "W_cm2_per_W": 5.8
+  },
+  {
+   "ghost_mm": 14.2,
+   "mirror": "M1 (X)",
+   "mirror_mm": 57.9,
+   "gap_mm": -43.7,
+   "spot_d_mm": 15.387,
+   "W_cm2_per_W": 0.5
+  },
+  {
+   "ghost_mm": 19.6,
+   "mirror": "M2 (Y)",
+   "mirror_mm": 27.5,
+   "gap_mm": -7.9,
+   "spot_d_mm": 2.015,
+   "W_cm2_per_W": 31.3
+  },
+  {
+   "ghost_mm": 19.6,
+   "mirror": "M1 (X)",
+   "mirror_mm": 57.9,
+   "gap_mm": -38.3,
+   "spot_d_mm": 9.77,
+   "W_cm2_per_W": 1.3
+  },
+  {
+   "ghost_mm": 52.6,
+   "mirror": "M2 (Y)",
+   "mirror_mm": 27.5,
+   "gap_mm": 25.1,
+   "spot_d_mm": 2.386,
+   "W_cm2_per_W": 22.4
+  },
+  {
+   "ghost_mm": 52.6,
+   "mirror": "M1 (X)",
+   "mirror_mm": 57.9,
+   "gap_mm": -5.3,
+   "spot_d_mm": 0.504,
+   "W_cm2_per_W": 501.6
+  },
+  {
+   "ghost_mm": 71.3,
+   "mirror": "M2 (Y)",
+   "mirror_mm": 27.5,
+   "gap_mm": 43.8,
+   "spot_d_mm": 3.072,
+   "W_cm2_per_W": 13.5
+  },
+  {
+   "ghost_mm": 71.3,
+   "mirror": "M1 (X)",
+   "mirror_mm": 57.9,
+   "gap_mm": 13.4,
+   "spot_d_mm": 0.94,
+   "W_cm2_per_W": 144.2
+  },
+  {
+   "ghost_mm": 72.4,
+   "mirror": "M2 (Y)",
+   "mirror_mm": 27.5,
+   "gap_mm": 44.9,
+   "spot_d_mm": 3.101,
+   "W_cm2_per_W": 13.2
+  },
+  {
+   "ghost_mm": 72.4,
+   "mirror": "M1 (X)",
+   "mirror_mm": 57.9,
+   "gap_mm": 14.5,
+   "spot_d_mm": 1.001,
+   "W_cm2_per_W": 127.0
+  },
+  {
+   "ghost_mm": 142.8,
+   "mirror": "M2 (Y)",
+   "mirror_mm": 27.5,
+   "gap_mm": 115.3,
+   "spot_d_mm": 4.037,
+   "W_cm2_per_W": 7.8
+  },
+  {
+   "ghost_mm": 142.8,
+   "mirror": "M1 (X)",
+   "mirror_mm": 57.9,
+   "gap_mm": 84.9,
+   "spot_d_mm": 2.973,
+   "W_cm2_per_W": 14.4
+  },
+  {
+   "ghost_mm": 457.8,
+   "mirror": "M2 (Y)",
+   "mirror_mm": 27.5,
+   "gap_mm": 430.3,
+   "spot_d_mm": 4.7,
+   "W_cm2_per_W": 5.8
+  },
+  {
+   "ghost_mm": 457.8,
+   "mirror": "M1 (X)",
+   "mirror_mm": 57.9,
+   "gap_mm": 399.9,
+   "spot_d_mm": 4.368,
+   "W_cm2_per_W": 6.7
+  }
+ ],
+ "lens_ghosts_v1": [
+  {
+   "ghost_mm": 14.2,
+   "mirror": "M2 (Y)",
+   "mirror_mm": 23.0,
+   "gap_mm": -8.8,
+   "spot_d_mm": 3.099,
+   "W_cm2_per_W": 13.3
+  },
+  {
+   "ghost_mm": 14.2,
+   "mirror": "M1 (X)",
+   "mirror_mm": 52.88,
+   "gap_mm": -38.68,
+   "spot_d_mm": 13.62,
+   "W_cm2_per_W": 0.7
+  },
+  {
+   "ghost_mm": 19.6,
+   "mirror": "M2 (Y)",
+   "mirror_mm": 23.0,
+   "gap_mm": -3.4,
+   "spot_d_mm": 0.867,
+   "W_cm2_per_W": 169.2
+  },
+  {
+   "ghost_mm": 19.6,
+   "mirror": "M1 (X)",
+   "mirror_mm": 52.88,
+   "gap_mm": -33.28,
+   "spot_d_mm": 8.49,
+   "W_cm2_per_W": 1.8
+  },
+  {
+   "ghost_mm": 52.6,
+   "mirror": "M2 (Y)",
+   "mirror_mm": 23.0,
+   "gap_mm": 29.6,
+   "spot_d_mm": 2.814,
+   "W_cm2_per_W": 16.1
+  },
+  {
+   "ghost_mm": 52.6,
+   "mirror": "M1 (X)",
+   "mirror_mm": 52.88,
+   "gap_mm": -0.28,
+   "spot_d_mm": 0.029,
+   "W_cm2_per_W": 154964.0
+  },
+  {
+   "ghost_mm": 71.3,
+   "mirror": "M2 (Y)",
+   "mirror_mm": 23.0,
+   "gap_mm": 48.3,
+   "spot_d_mm": 3.387,
+   "W_cm2_per_W": 11.1
+  },
+  {
+   "ghost_mm": 71.3,
+   "mirror": "M1 (X)",
+   "mirror_mm": 52.88,
+   "gap_mm": 18.42,
+   "spot_d_mm": 1.292,
+   "W_cm2_per_W": 76.3
+  },
+  {
+   "ghost_mm": 72.4,
+   "mirror": "M2 (Y)",
+   "mirror_mm": 23.0,
+   "gap_mm": 49.4,
+   "spot_d_mm": 3.412,
+   "W_cm2_per_W": 10.9
+  },
+  {
+   "ghost_mm": 72.4,
+   "mirror": "M1 (X)",
+   "mirror_mm": 52.88,
+   "gap_mm": 19.52,
+   "spot_d_mm": 1.348,
+   "W_cm2_per_W": 70.1
+  },
+  {
+   "ghost_mm": 142.8,
+   "mirror": "M2 (Y)",
+   "mirror_mm": 23.0,
+   "gap_mm": 119.8,
+   "spot_d_mm": 4.195,
+   "W_cm2_per_W": 7.2
+  },
+  {
+   "ghost_mm": 142.8,
+   "mirror": "M1 (X)",
+   "mirror_mm": 52.88,
+   "gap_mm": 89.92,
+   "spot_d_mm": 3.148,
+   "W_cm2_per_W": 12.8
+  },
+  {
+   "ghost_mm": 457.8,
+   "mirror": "M2 (Y)",
+   "mirror_mm": 23.0,
+   "gap_mm": 434.8,
+   "spot_d_mm": 4.749,
+   "W_cm2_per_W": 5.6
+  },
+  {
+   "ghost_mm": 457.8,
+   "mirror": "M1 (X)",
+   "mirror_mm": 52.88,
+   "gap_mm": 404.92,
+   "spot_d_mm": 4.422,
+   "W_cm2_per_W": 6.5
+  }
+ ],
+ "v1": {
+  "stacks": {
+   "box": {
+    "slide": [
+     129.0,
+     130.0
+    ],
+    "window": [
+     145.4,
+     154.93
+    ],
+    "lens_bot": 300.0
+   },
+   "cube": {
+    "slide": [
+     221.39999999999995,
+     222.39999999999995
+    ],
+    "window": [
+     251.79999999999995,
+     261.3299999999999
+    ],
+    "lens_bot": 300.0
+   }
+  },
+  "irradiance": {
+   "box, D 5.0 mm": [
+    {
+     "element": "cover slide",
+     "face": "lower face",
+     "h_mm": 129.0,
+     "h_air_mm": 128.999999999,
+     "beam_d_mm": 2.536523654002143,
+     "peak_kW_cm2": 15.831507549867508,
+     "mean_kW_cm2": 7.915753774933754
+    },
+    {
+     "element": "cover slide",
+     "face": "upper face",
+     "h_mm": 130.0,
+     "h_air_mm": 129.6898454746137,
+     "beam_d_mm": 2.5500758430859736,
+     "peak_kW_cm2": 15.663683933850635,
+     "mean_kW_cm2": 7.831841966925317
+    },
+    {
+     "element": "window",
+     "face": "lower face",
+     "h_mm": 145.4,
+     "h_air_mm": 145.0898454736137,
+     "beam_d_mm": 2.852627822636437,
+     "peak_kW_cm2": 12.517277437596006,
+     "mean_kW_cm2": 6.258638718798003
+    },
+    {
+     "element": "window",
+     "face": "upper face",
+     "h_mm": 154.93,
+     "h_air_mm": 151.66407284768212,
+     "beam_d_mm": 2.9817941004583375,
+     "peak_kW_cm2": 11.45631122639466,
+     "mean_kW_cm2": 5.72815561319733
+    }
+   ],
+   "box, D 7.5 mm": [
+    {
+     "element": "cover slide",
+     "face": "lower face",
+     "h_mm": 129.0,
+     "h_air_mm": 128.999999999,
+     "beam_d_mm": 3.8034057424346264,
+     "peak_kW_cm2": 7.041331481925947,
+     "mean_kW_cm2": 3.5206657409629734
+    },
+    {
+     "element": "cover slide",
+     "face": "upper face",
+     "h_mm": 130.0,
+     "h_air_mm": 129.6898454746137,
+     "beam_d_mm": 3.8237413612175404,
+     "peak_kW_cm2": 6.966635492073027,
+     "mean_kW_cm2": 3.4833177460365135
+    },
+    {
+     "element": "window",
+     "face": "lower face",
+     "h_mm": 145.4,
+     "h_air_mm": 145.0898454736137,
+     "beam_d_mm": 4.2777149329648765,
+     "peak_kW_cm2": 5.566425821587918,
+     "mean_kW_cm2": 2.783212910793959
+    },
+    {
+     "element": "window",
+     "face": "upper face",
+     "h_mm": 154.93,
+     "h_air_mm": 151.66407284768212,
+     "beam_d_mm": 4.47151750690637,
+     "peak_kW_cm2": 5.094367073387181,
+     "mean_kW_cm2": 2.5471835366935904
+    }
+   ],
+   "cube, D 5.0 mm": [
+    {
+     "element": "cover slide",
+     "face": "lower face",
+     "h_mm": 221.39999999999995,
+     "h_air_mm": 221.39999999899996,
+     "beam_d_mm": 4.352083089802066,
+     "peak_kW_cm2": 5.3778136485547225,
+     "mean_kW_cm2": 2.6889068242773613
+    },
+    {
+     "element": "cover slide",
+     "face": "upper face",
+     "h_mm": 222.39999999999995,
+     "h_air_mm": 222.08984547461364,
+     "beam_d_mm": 4.365639298940398,
+     "peak_kW_cm2": 5.344467065161012,
+     "mean_kW_cm2": 2.672233532580506
+    },
+    {
+     "element": "window",
+     "face": "lower face",
+     "h_mm": 251.79999999999995,
+     "h_air_mm": 251.48984547361366,
+     "beam_d_mm": 4.943391649104052,
+     "peak_kW_cm2": 4.168214561514286,
+     "mean_kW_cm2": 2.084107280757143
+    },
+    {
+     "element": "window",
+     "face": "upper face",
+     "h_mm": 261.3299999999999,
+     "h_air_mm": 258.06407284768204,
+     "beam_d_mm": 5.072587112989413,
+     "peak_kW_cm2": 3.958595052692151,
+     "mean_kW_cm2": 1.9792975263460755
+    }
+   ],
+   "cube, D 7.5 mm": [
+    {
+     "element": "cover slide",
+     "face": "lower face",
+     "h_mm": 221.39999999999995,
+     "h_air_mm": 221.39999999899996,
+     "beam_d_mm": 6.527320578257919,
+     "peak_kW_cm2": 2.3907282858182133,
+     "mean_kW_cm2": 1.1953641429091066
+    },
+    {
+     "element": "cover slide",
+     "face": "upper face",
+     "h_mm": 222.39999999999995,
+     "h_air_mm": 222.08984547461364,
+     "beam_d_mm": 6.5476573890324055,
+     "peak_kW_cm2": 2.3759003007430124,
+     "mean_kW_cm2": 1.1879501503715062
+    },
+    {
+     "element": "window",
+     "face": "lower face",
+     "h_mm": 251.79999999999995,
+     "h_air_mm": 251.48984547361366,
+     "beam_d_mm": 7.414379605004259,
+     "peak_kW_cm2": 1.8528935548641026,
+     "mean_kW_cm2": 0.9264467774320513
+    },
+    {
+     "element": "window",
+     "face": "upper face",
+     "h_mm": 261.3299999999999,
+     "h_air_mm": 258.06407284768204,
+     "beam_d_mm": 7.608190831438241,
+     "peak_kW_cm2": 1.7596946401705442,
+     "mean_kW_cm2": 0.8798473200852721
+    }
+   ]
+  },
+  "thermal_static": {
+   "D 5.0": [
+    {
+     "state": "box",
+     "element": "cover slide \u00d850 x 1",
+     "absorption": "clean: 20 ppm/cm bulk + 0.1 % coatings",
+     "a_tot": 0.001002,
+     "P_abs_W": 0.40080000000000005,
+     "h_air_mm": 129.0,
+     "w_mm": 1.268261827010894,
+     "dT_centre_K": 121.1131058641301,
+     "D_per_m": 0.27702316227872253,
+     "focus_shift_mm": 4.450885647679339,
+     "x_zR": 1.1472700327698222
+    },
+    {
+     "state": "box",
+     "element": "cover slide \u00d850 x 1",
+     "absorption": "dirty slide: 1 % at the lower face",
+     "a_tot": 0.01,
+     "P_abs_W": 4.0,
+     "h_air_mm": 129.0,
+     "w_mm": 1.268261827010894,
+     "dT_centre_K": 1207.4871662592927,
+     "D_per_m": 2.761975710473428,
+     "focus_shift_mm": 33.88793906702351,
+     "x_zR": 8.735029394474973
+    },
+    {
+     "state": "box",
+     "element": "cover slide \u00d850 x 1",
+     "absorption": "dirty slide: 2 % at the lower face",
+     "a_tot": 0.02,
+     "P_abs_W": 8.0,
+     "h_air_mm": 129.0,
+     "w_mm": 1.268261827010894,
+     "dT_centre_K": 2414.9743325185855,
+     "D_per_m": 5.523951420946856,
+     "focus_shift_mm": 53.67547977689463,
+     "x_zR": 13.835509226052878
+    },
+    {
+     "state": "box",
+     "element": "window \u00d850.8 x 9.53",
+     "absorption": "clean: 20 ppm/cm bulk + 0.1 % coatings",
+     "a_tot": 0.00101906,
+     "P_abs_W": 0.407624,
+     "h_air_mm": 145.0898454746137,
+     "w_mm": 1.4263139113280419,
+     "dT_centre_K": 15.845520230524254,
+     "D_per_m": 0.2277865608131723,
+     "focus_shift_mm": 4.641741971639547,
+     "x_zR": 1.1964655768427916
+    },
+    {
+     "state": "cube",
+     "element": "cover slide \u00d850 x 1",
+     "absorption": "clean: 20 ppm/cm bulk + 0.1 % coatings",
+     "a_tot": 0.001002,
+     "P_abs_W": 0.40080000000000005,
+     "h_air_mm": 221.39999999999995,
+     "w_mm": 2.1760415449108583,
+     "dT_centre_K": 96.67047190421457,
+     "D_per_m": 0.09064582701253318,
+     "focus_shift_mm": 4.355855910934615,
+     "x_zR": 1.1227749596946306
+    },
+    {
+     "state": "cube",
+     "element": "cover slide \u00d850 x 1",
+     "absorption": "dirty slide: 1 % at the lower face",
+     "a_tot": 0.01,
+     "P_abs_W": 4.0,
+     "h_air_mm": 221.39999999999995,
+     "w_mm": 2.1760415449108583,
+     "dT_centre_K": 963.7872981458859,
+     "D_per_m": 0.9037312035665136,
+     "focus_shift_mm": 36.913235152709966,
+     "x_zR": 9.51483633945312
+    },
+    {
+     "state": "cube",
+     "element": "cover slide \u00d850 x 1",
+     "absorption": "dirty slide: 2 % at the lower face",
+     "a_tot": 0.02,
+     "P_abs_W": 8.0,
+     "h_air_mm": 221.39999999999995,
+     "w_mm": 2.1760415449108583,
+     "dT_centre_K": 1927.5745962917717,
+     "D_per_m": 1.8074624071330272,
+     "focus_shift_mm": 63.27658943203978,
+     "x_zR": 16.31031227888534
+    },
+    {
+     "state": "cube",
+     "element": "window \u00d850.8 x 9.53",
+     "absorption": "clean: 20 ppm/cm bulk + 0.1 % coatings",
+     "a_tot": 0.00101906,
+     "P_abs_W": 0.407624,
+     "h_air_mm": 251.48984547461365,
+     "w_mm": 2.471695824561852,
+     "dT_centre_K": 13.132864658977411,
+     "D_per_m": 0.07522459817776932,
+     "focus_shift_mm": 4.669404046168118,
+     "x_zR": 1.2035958137580944
+    }
+   ],
+   "D 7.5": [
+    {
+     "state": "box",
+     "element": "cover slide \u00d850 x 1",
+     "absorption": "clean: 20 ppm/cm bulk + 0.1 % coatings",
+     "a_tot": 0.001002,
+     "P_abs_W": 0.40080000000000005,
+     "h_air_mm": 129.0,
+     "w_mm": 1.9017028712320525,
+     "dT_centre_K": 102.71134568188464,
+     "D_per_m": 0.12010400068879777,
+     "focus_shift_mm": 1.968157197079654,
+     "x_zR": 1.141462146893361
+    },
+    {
+     "state": "box",
+     "element": "cover slide \u00d850 x 1",
+     "absorption": "dirty slide: 1 % at the lower face",
+     "a_tot": 0.01,
+     "P_abs_W": 4.0,
+     "h_air_mm": 129.0,
+     "w_mm": 1.9017028712320525,
+     "dT_centre_K": 1024.015454230039,
+     "D_per_m": 1.1974324342686409,
+     "focus_shift_mm": 17.260296176451615,
+     "x_zR": 10.010366427448712
+    },
+    {
+     "state": "box",
+     "element": "cover slide \u00d850 x 1",
+     "absorption": "dirty slide: 2 % at the lower face",
+     "a_tot": 0.02,
+     "P_abs_W": 8.0,
+     "h_air_mm": 129.0,
+     "w_mm": 1.9017028712320525,
+     "dT_centre_K": 2048.030908460078,
+     "D_per_m": 2.3948648685372818,
+     "focus_shift_mm": 30.446789251350427,
+     "x_zR": 17.658069932840647
+    },
+    {
+     "state": "box",
+     "element": "window \u00d850.8 x 9.53",
+     "absorption": "clean: 20 ppm/cm bulk + 0.1 % coatings",
+     "a_tot": 0.00101906,
+     "P_abs_W": 0.407624,
+     "h_air_mm": 145.0898454746137,
+     "w_mm": 2.1388574664971776,
+     "dT_centre_K": 13.844209997826635,
+     "D_per_m": 0.1007135331535151,
+     "focus_shift_mm": 2.0895927604187072,
+     "x_zR": 1.2118905146293708
+    },
+    {
+     "state": "cube",
+     "element": "cover slide \u00d850 x 1",
+     "absorption": "clean: 20 ppm/cm bulk + 0.1 % coatings",
+     "a_tot": 0.001002,
+     "P_abs_W": 0.40080000000000005,
+     "h_air_mm": 221.39999999999995,
+     "w_mm": 3.2636602891436994,
+     "dT_centre_K": 78.8383395482321,
+     "D_per_m": 0.03827211279727731,
+     "focus_shift_mm": 1.8602580980938543,
+     "x_zR": 1.0788844537299598
+    },
+    {
+     "state": "cube",
+     "element": "cover slide \u00d850 x 1",
+     "absorption": "dirty slide: 1 % at the lower face",
+     "a_tot": 0.01,
+     "P_abs_W": 4.0,
+     "h_air_mm": 221.39999999999995,
+     "w_mm": 3.2636602891436994,
+     "dT_centre_K": 786.0014439825748,
+     "D_per_m": 0.3815662994726652,
+     "focus_shift_mm": 17.246627570955066,
+     "x_zR": 10.00243911564746
+    },
+    {
+     "state": "cube",
+     "element": "cover slide \u00d850 x 1",
+     "absorption": "dirty slide: 2 % at the lower face",
+     "a_tot": 0.02,
+     "P_abs_W": 8.0,
+     "h_air_mm": 221.39999999999995,
+     "w_mm": 3.2636602891436994,
+     "dT_centre_K": 1572.0028879651495,
+     "D_per_m": 0.7631325989453304,
+     "focus_shift_mm": 32.00048023368068,
+     "x_zR": 18.55915621138132
+    },
+    {
+     "state": "cube",
+     "element": "window \u00d850.8 x 9.53",
+     "absorption": "clean: 20 ppm/cm bulk + 0.1 % coatings",
+     "a_tot": 0.00101906,
+     "P_abs_W": 0.407624,
+     "h_air_mm": 251.48984547461365,
+     "w_mm": 3.707189802516869,
+     "dT_centre_K": 11.147738581976915,
+     "D_per_m": 0.033111065293037645,
+     "focus_shift_mm": 2.076885831694749,
+     "x_zR": 1.204520941628194
+    }
+   ]
+  },
+  "thermal_transient": [
+   {
+    "state": "box",
+    "element": "slide",
+    "a_tot": 0.001002,
+    "period_s": 6.381306435889375,
+    "steady_dz_mm": [
+     0.007724773748613664,
+     0.04724504990126154
+    ],
+    "mean_dz_mm": 0.058055305792937294,
+    "p95_dz_mm": 0.10369237231023128,
+    "max_dz_mm": 0.11729499778277433,
+    "max_x_zR": 0.030234215525205214,
+    "T_max_K": 10.687466583591776
+   },
+   {
+    "state": "box",
+    "element": "slide",
+    "a_tot": 0.01,
+    "period_s": 6.381306435889375,
+    "steady_dz_mm": [
+     0.0770935503853659,
+     0.4715074840445263
+    ],
+    "mean_dz_mm": 0.5793942693905917,
+    "p95_dz_mm": 1.0348540150721683,
+    "max_dz_mm": 1.170608760307129,
+    "max_x_zR": 0.3017386778962596,
+    "T_max_K": 106.66134314961852
+   },
+   {
+    "state": "box",
+    "element": "slide",
+    "a_tot": 0.02,
+    "period_s": 6.381306435889375,
+    "steady_dz_mm": [
+     0.1541871007707318,
+     0.9430149680890526
+    ],
+    "mean_dz_mm": 1.1587885387811834,
+    "p95_dz_mm": 2.0697080301443367,
+    "max_dz_mm": 2.341217520614258,
+    "max_x_zR": 0.6034773557925192,
+    "T_max_K": 213.32268629923703
+   },
+   {
+    "state": "box",
+    "element": "window",
+    "a_tot": 0.00101906,
+    "period_s": 6.381306435889375,
+    "steady_dz_mm": [
+     0.018696285519913307,
+     0.08228886583837168
+    ],
+    "mean_dz_mm": 0.08807457771782785,
+    "p95_dz_mm": 0.14370594668782163,
+    "max_dz_mm": 0.15880278805386713,
+    "max_x_zR": 0.04093335445485815,
+    "T_max_K": 2.0111921355209947
+   },
+   {
+    "state": "cube",
+    "element": "slide",
+    "a_tot": 0.001002,
+    "period_s": 6.381306435889375,
+    "steady_dz_mm": [
+     0.07454582704363165,
+     0.26700540615883833
+    ],
+    "mean_dz_mm": 0.2816806050481917,
+    "p95_dz_mm": 0.43410548279551026,
+    "max_dz_mm": 0.4710706650781551,
+    "max_x_zR": 0.12142420635832361,
+    "T_max_K": 14.992075125901906
+   },
+   {
+    "state": "cube",
+    "element": "slide",
+    "a_tot": 0.01,
+    "period_s": 6.381306435889375,
+    "steady_dz_mm": [
+     0.7439703297767629,
+     2.664724612363656
+    ],
+    "mean_dz_mm": 2.811183683115685,
+    "p95_dz_mm": 4.332390047859383,
+    "max_dz_mm": 4.701304042696158,
+    "max_x_zR": 1.2118184267297765,
+    "T_max_K": 149.62150824253396
+   },
+   {
+    "state": "cube",
+    "element": "slide",
+    "a_tot": 0.02,
+    "period_s": 6.381306435889375,
+    "steady_dz_mm": [
+     1.4879406595535258,
+     5.329449224727312
+    ],
+    "mean_dz_mm": 5.62236736623137,
+    "p95_dz_mm": 8.664780095718767,
+    "max_dz_mm": 9.402608085392316,
+    "max_x_zR": 2.423636853459553,
+    "T_max_K": 299.2430164850679
+   },
+   {
+    "state": "cube",
+    "element": "window",
+    "a_tot": 0.00101906,
+    "period_s": 6.381306435889375,
+    "steady_dz_mm": [
+     0.2075708535416654,
+     0.5680690339802278
+    ],
+    "mean_dz_mm": 0.5624557300428513,
+    "p95_dz_mm": 0.7660178888759079,
+    "max_dz_mm": 0.8190920598718751,
+    "max_x_zR": 0.21113096330854303,
+    "T_max_K": 2.6602966030073087
+   }
+  ]
+ },
+ "run_s": 682.6,
+ "sight_lines": {
+  "FT-1": {
+   "hopper at the right park (hx 37.5)": {
+    "camera_sees_pct": 100.0,
+    "MON2_lights_pct": 100.0,
+    "MON3_lights_pct": 90.8
+   },
+   "hopper at the left park (hx -33.1)": {
+    "camera_sees_pct": 78.0,
+    "MON2_lights_pct": 0.0,
+    "MON3_lights_pct": 90.8
+   }
+  },
+  "FT-1V": {
+   "hopper at the right park (hx 37.5)": {
+    "camera_sees_pct": 100.0,
+    "MON2_lights_pct": 100.0,
+    "MON3_lights_pct": 92.7
+   },
+   "hopper at the left park (hx -33.1)": {
+    "camera_sees_pct": 82.6,
+    "MON2_lights_pct": 0.0,
+    "MON3_lights_pct": 92.7
+   }
+  }
+ },
+ "camera": {
+  "FT-1": {
+   "lens_f_mm": 16.0,
+   "tilt_deg": 30.7,
+   "distance_mm": 199.4,
+   "um_per_px_across": 17.8,
+   "um_per_px_along": 20.7,
+   "field_mm": [
+    72.1,
+    54.0
+   ],
+   "scheimpflug_deg": 2.96,
+   "dof_mm_f2_8": 2.48,
+   "plate_depth_range_mm": 20.4,
+   "rayleigh_um_f2_8": 21.5,
+   "video_2028x1520_40fps_um_px": 35.5
+  },
+  "FT-1V": {
+   "lens_f_mm": 25.0,
+   "tilt_deg": 24.1,
+   "distance_mm": 298.7,
+   "um_per_px_across": 17.0,
+   "um_per_px_along": 18.6,
+   "field_mm": [
+    68.8,
+    51.6
+   ],
+   "scheimpflug_deg": 2.34,
+   "dof_mm_f2_8": 2.27,
+   "plate_depth_range_mm": 16.3,
+   "rayleigh_um_f2_8": 20.6,
+   "video_2028x1520_40fps_um_px": 33.9
+  }
+ }
+}

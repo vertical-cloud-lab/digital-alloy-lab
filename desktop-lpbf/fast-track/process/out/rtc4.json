@@ -1,0 +1,179 @@
+{
+ "card": "SCANLAB RTC4 PCIe (control/README.md \u00a76)",
+ "backend": "control/ftctl/hw/rtc4.py",
+ "K16_bits_per_mm": 368.5939257592801,
+ "K16_LINOS_bits_per_mm": 417.4267515923567,
+ "K20_bits_per_mm": 5897.502812148482,
+ "axis": [
+  0.0,
+  -30.0
+ ],
+ "park_bits": [
+  0,
+  0
+ ],
+ "list_capacity": 4000,
+ "field_max_bits": 32767,
+ "layer1": {
+  "commands": 803,
+  "dry_run_s": 3.319220000000004,
+  "laser_on_s": 3.0067699999999986,
+  "energy_J": 745.8466471163293,
+  "layer_time_s": 3.3143500000000046,
+  "layer_energy_J": 745.9692000000034,
+  "max_abs_bits": 14770,
+  "quantisation": {
+   "K_bits_per_mm": 368.5939257592801,
+   "um_per_bit": 2.7130126953124996,
+   "endpoint_error_max_um": 1.8368495542495824,
+   "hatch_spacing_dev_um": {
+    "rms": 0.9903572702876157,
+    "max": 2.3315429687528475,
+    "n": 369
+   }
+  },
+  "quantisation_K_LINOS": {
+   "K_bits_per_mm": 417.4267515923567,
+   "um_per_bit": 2.3956298828125,
+   "endpoint_error_max_um": 1.5555436733718686,
+   "hatch_spacing_dev_um": {
+    "rms": 0.9770816410373141,
+    "max": 2.1771240234375044,
+    "n": 369
+   }
+  }
+ },
+ "commands_min": 803,
+ "commands_max": 1105,
+ "worst_layer": 2,
+ "layers": 500,
+ "layers_over_list": 0,
+ "dry_run_vs_layer_time": [
+  {
+   "layer": 1,
+   "dry_run_s": 3.3192,
+   "layer_time_s": 3.3144
+  },
+  {
+   "layer": 2,
+   "dry_run_s": 3.4345,
+   "layer_time_s": 3.4287
+  },
+  {
+   "layer": 3,
+   "dry_run_s": 3.3984,
+   "layer_time_s": 3.3936
+  },
+  {
+   "layer": 51,
+   "dry_run_s": 3.4253,
+   "layer_time_s": 3.4202
+  },
+  {
+   "layer": 101,
+   "dry_run_s": 3.415,
+   "layer_time_s": 3.4093
+  },
+  {
+   "layer": 151,
+   "dry_run_s": 3.3136,
+   "layer_time_s": 3.3097
+  },
+  {
+   "layer": 201,
+   "dry_run_s": 3.367,
+   "layer_time_s": 3.3616
+  },
+  {
+   "layer": 251,
+   "dry_run_s": 3.4147,
+   "layer_time_s": 3.4095
+  },
+  {
+   "layer": 301,
+   "dry_run_s": 3.3184,
+   "layer_time_s": 3.3136
+  },
+  {
+   "layer": 351,
+   "dry_run_s": 3.3633,
+   "layer_time_s": 3.3579
+  },
+  {
+   "layer": 401,
+   "dry_run_s": 3.4113,
+   "layer_time_s": 3.406
+  },
+  {
+   "layer": 451,
+   "dry_run_s": 3.3244,
+   "layer_time_s": 3.3195
+  }
+ ],
+ "mark_speed_bits_per_ms": {
+  "1250 mm/s": 460.74240719910017,
+  "800 mm/s": 294.8751406074241
+ },
+ "jump_speed_bits_per_ms": 2580.1574803149606,
+ "laser_delays_us": [
+  250,
+  500
+ ],
+ "scanner_delays_10us": [
+  70,
+  55,
+  25
+ ],
+ "control": [
+  [
+   "set_delay_mode",
+   [
+    0,
+    0,
+    65500,
+    30,
+    1843
+   ]
+  ]
+ ],
+ "da": {
+  "50 W": 128,
+  "150 W": 384,
+  "255 W": 652,
+  "400 W": 1023
+ },
+ "da_step_W": 0.39100684261974583,
+ "da_step_W_rtc5": 0.09768009768009768,
+ "ladder": {
+  "rung1_bare_plate": {
+   "commands": 68,
+   "dry_run_s": 0.44674999999999987,
+   "laser_on_s": 0.34468,
+   "energy_J": 78.08284652981428,
+   "layer_time_s": 0.44176999999999994,
+   "max_abs_bits": 15757,
+   "powers_da": {
+    "50 W": 128,
+    "100 W": 256,
+    "200 W": 512,
+    "300 W": 767,
+    "400 W": 1023
+   }
+  },
+  "rung2_single_tracks": {
+   "commands": 90,
+   "dry_run_s": 0.3222,
+   "laser_on_s": 0.2066,
+   "energy_J": 52.66987292277615,
+   "layer_time_s": 0.31739999999999996,
+   "max_abs_bits": 15923,
+   "powers_da": {
+    "155 W": 396,
+    "205 W": 524,
+    "255 W": 652,
+    "305 W": 780,
+    "355 W": 908
+   }
+  }
+ }
+}
